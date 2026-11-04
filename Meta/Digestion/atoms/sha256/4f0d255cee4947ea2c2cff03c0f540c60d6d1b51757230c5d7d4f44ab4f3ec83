@@ -1,0 +1,59 @@
+**Theorem 6.1 (acquisition is additive to original normalization and
+installation).** After Theorem 5.1, the exact original installed tuple
+remains
+
+$$
+(P,K_d(P),n,B_n),\qquad B_n=F_{n+1}-1,
+$$
+
+with the original first-passing convention
+
+$$
+K_d(P)=(\rho_d(i_P),P[0:d]),\qquad
+i_P=\min\{i:H(P)\rho_d(i)=b(P)\}.
+$$
+
+Here $H(P)_{ij}=s_{i+j}$ and $b(P)_i=s_{i+d}$ are formed from the
+acquired original prefix; $\rho_d$ is exactly ACR Definition 21.1's
+fixed enumeration. The empty descriptor is retained at $d=0$.
+The acquisition work/write bounds add to, and do not replace, the
+original $C_{\rm norm}(P),W_{\rm norm}(P),V_{\rm norm}(P)$ and the
+Fibonacci, physical-write, optional phase and handoff bills of ACR
+Theorems 26.1 and 29.2.
+
+**Proof.** Acquisition has produced authentic explicit $P,n$, so the
+normalizer's input hypotheses now hold without a conditional sample
+oracle. The auxiliary minimal core and the Gaussian verification row
+are different typed data from the first passing original row. At full
+rank $\operatorname{rank}H(P)=d$, the solution is unique, so Gaussian
+elimination returns precisely that original row independently of
+$\rho_d$. Equivalently, if the least all-index annihilator is $E^ag$
+with $a+\deg g=d$, ACR Theorem 21.2 supplies this full rank. The
+polynomial full-rank normalizer can therefore follow the new acquisition
+on every such source, without a sparse-core or short-period condition.
+
+At deficient rank the original first-passing normalization remains
+separately charged, including $e_d,\omega_d,v_d$, transfers of tested
+rows and all row-test writes in ACR (ACR.90). A minimal polynomial or
+an arbitrary passing solution does not prove firstness under $\rho_d$.
+ACR §§31--32 concerns an auxiliary enumeration and establishes neither
+a hardness nor a polynomial selection theorem for this original one.
+No new deficient-rank firstness theorem is supplied here.
+
+The remaining binary Fibonacci arithmetic and installed payload/control
+writes have their unchanged bills. Ready and completed handoff require
+actual granted readable backing, completed field writes, bindings,
+permissions and synchronization, as in ACR Theorem 29.2. A local
+arithmetic count supplies no grant, uniform tariff, lease duration or
+indefinite stationary interval. Only after that original canonical
+installation do GPO Theorems 34.2--34.3 and 39.4 supply the same-source
+spatial incidence, terminal boundary, actual birth chronology and
+synchronized memory views and their finite continuation. Later updates,
+Reads, local commits and requested outputs retain their actual charges;
+whole-tree or whole-chronology output pays its full length. Recovery
+of an arbitrary erased journal or private generator presentation is not
+a consequence. Thus the acquisition obstacle is removed at ordinary
+mathematical proof level, while original deficient-rank normalization,
+physical completion and the broader economical four-view recovery
+problem retain their separate unresolved obligations. $\square$
+

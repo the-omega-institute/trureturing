@@ -1,0 +1,85 @@
+**定理 86.1（包括奇异校准的全部仿射项消去）。** 在 (85.8) 及整个 $0<d<1$ 的适用域内，原集合上的正性迫使 $\nu=0$；特别包括 $d=2/3,p_*=1/2$。
+
+证明。在该校准，
+
+$$
+G_*^2=\frac{\operatorname{diag}(2,1,1)}{1+c},\qquad
+\sigma(\rho)=G_*\rho G_*+\nu sH,\quad
+H=\operatorname{diag}(1,-1/2,-1/2).
+\tag{86.1}
+$$
+
+对其作 $G_*^{-1}$ 合同，正性等价于
+
+$$
+\rho+\eta sJ\succeq0,\qquad
+\eta=\nu(1+c)/2,\qquad
+J=\operatorname{diag}(1,-1,-1)=C-I.
+\tag{86.2}
+$$
+
+在 $(a,h_{\rm out},g)$ 基中，$J=\left(\begin{smallmatrix}0&1&0\\1&0&0\\0&0&-1\end{smallmatrix}\right)$。置 $\beta=1-d$、$\alpha=(2+\sqrt2)/\sqrt{12}$、$\gamma=(2-\sqrt2)/\sqrt{12}$；原 $\ell=(-\gamma,\alpha,0)^{\mathsf T}$，$N=\operatorname{span}\{(\alpha,\gamma,0)^{\mathsf T},g\}$。对实数 $v$ 取
+
+$$
+\begin{gathered}
+\psi_0=(\sqrt d,0,\mathrm i\sqrt\beta)^{\mathsf T},\quad
+n_v=(\sqrt\beta,v,-\mathrm i\sqrt d)^{\mathsf T},\\
+w_v=(\alpha,\gamma,
+\mathrm i(\alpha\sqrt\beta+\gamma v)/\sqrt d)^{\mathsf T}.
+\end{gathered}
+\tag{86.3}
+$$
+
+直接内积给 $\psi_0^\dagger n_v=w_v^\dagger n_v=0$、$w_v\in N$，且
+
+$$
+n_v^\dagger Jn_v=2\sqrt\beta v-d.
+\tag{86.4}
+$$
+
+选 $v_-=0$、$v_+=d/\sqrt\beta$，符号分别为 $-d,+d$。固定任一选择及对应 $w=w_v$。以 $u=(x,r+\mathrm i h,\mathrm i g_0)^{\mathsf T}$ 的四个实坐标 $(x,h,r,g_0)$，在 $(\sqrt d,0,0,\sqrt\beta)$ 附近对约束
+
+$$
+\begin{pmatrix}
+\|u\|^2+\epsilon\|w\|^2\\ |u_a|^2\\
+\operatorname{Tr}(C[uu^\dagger+\epsilon ww^\dagger])\\
+\operatorname{Tr}(E[uu^\dagger+\epsilon ww^\dagger])
+\end{pmatrix}
+=\begin{pmatrix}1\\d\\d\\(6-5d)/16\end{pmatrix}
+\tag{86.5}
+$$
+
+应用实隐函数定理。基点导数完整为
+
+$$
+\begin{pmatrix}
+2\sqrt d&0&0&2\sqrt\beta\\
+2\sqrt d&0&0&0\\
+2\sqrt d&0&2\sqrt d&0\\
+\sqrt d/8&3\sqrt6\sqrt\beta/8&3\sqrt d/8&3\sqrt\beta/4
+\end{pmatrix},\qquad
+\det=3\sqrt6\,\beta d\ne0.
+\tag{86.6}
+$$
+
+故对各选择及所有足够小的 $\epsilon>0$，有 $u_\epsilon\to\psi_0$ 满足全部等式。令
+
+$$
+A_\epsilon=u_\epsilon u_\epsilon^\dagger,\quad
+D_\epsilon=\epsilon w_vw_v^\dagger,\quad
+\rho_\epsilon=A_\epsilon+D_\epsilon,
+\qquad s(\rho_\epsilon)=\epsilon\alpha^2>0.
+\tag{86.7}
+$$
+
+$A_\epsilon,D_\epsilon\succeq0$、$D_\epsilon\ell=0$、$(A_\epsilon)_{aa}=d$，加上 (86.5) 证明这是原 (54.2) 中的态。$\ell^\dagger\psi_0=-\gamma\sqrt d\ne0$ 而 $w_v\in N$，所以两列 $(\psi_0,w_v)$ 独立，且 $(u_\epsilon,w_v)$ 对小 $\epsilon$ 保持秩二。$\rho_\epsilon$ 秩二，其核可取连续非零向量 $n_\epsilon\to n_v$。这里连续的是两列支持矩阵的核；虽极限密度矩阵降为秩一，两列支持矩阵在 $\epsilon=0$ 并未降秩。
+
+将 (86.2) 在 $n_\epsilon$ 上求值，给
+
+$$
+0\le\eta\,\epsilon\alpha^2 n_\epsilon^\dagger Jn_\epsilon.
+\tag{86.8}
+$$
+
+两个选择的严格相反符号在足够小正 $\epsilon$ 保留，分别迫使 $\eta\le0$ 和 $\eta\ge0$。因此 $\eta=\nu=0$。没有使用放松集合，也没有要求一个对所有 $d$ 一致的 $\epsilon$ 邻域。$d=2/3$ 时 $\beta d>0$、$G_*$ 可逆，(86.6) 不退化，故端点校准 $p_*=1/2$ 同样包含。∎
+

@@ -1,0 +1,19 @@
+**Definition 9.1 (Deletion faces on the same original vertices).** For
+any $2\le a\le b\le c$, let $\mathcal D_{IJ}$ consist of the connected
+nonnegative assignments on the original $K_{a,b,c}$ whose entire $IJ$
+edge class is zero. The other two edge classes are nonnegative; their
+strictly positive subdomain is included. Deleting $AB$, $AC$ or $BC$
+gives, respectively, the labelled bipartite graphs
+
+$$
+K_{a+b,c}\text{ on }(A\sqcup B,C),\quad
+K_{a+c,b}\text{ on }(A\sqcup C,B),\quad
+K_{b+c,a}\text{ on }(B\sqcup C,A).
+\tag{9.1}
+$$
+These are actual vertex bijections with identical edge sets after
+deletion. Their ordinary $n$ by $n$ Laplacians and all unordered
+original-pair resistances coincide, including pairs lying in different
+original parts that become nonedges. No vertices are identified and
+no pair is removed from the resistance sum.
+

@@ -1,0 +1,55 @@
+**Corollary 8.6.1 (No independent M pair along the finite J arc).** For
+each $0<h\le1/250$, the literal same-child independent relation
+(6.8.5) has no solution at
+$(p,v)=(\bar p(h),\bar v(h))$, irrespective of cross-pair overlap or
+of the common terminal values assigned separately to the two pairs.
+
+Proof. Theorem 7.3.1 supplies its two distinct legal $J$ endpoints in
+that entire child, each with its own whole gain, fixed drift and the
+original common acquired history. Equations (8.1.4) put this same
+actual base strictly in $\mathcal B$. The rectangle assertion of
+Theorem 8.1.2 excludes every distinct equal-$M$ pair in that entire
+child, including pairs selected independently of the supplied $J$
+endpoints. The two pairs required in (6.8.5) therefore cannot coexist
+there. No endpoints at different parameters or different bases have
+been combined. ∎
+
+The source-specific content is the explicit closed rectangle,
+exhaustive legality filter and forced-M separation, together with
+containment of the whole previously constructed finite graph. Support
+VII, Theorem 25.2 and Sections 28–30, already give unspecified open
+neighborhoods of M-injectivity; they do not specify (8.1.3) or contain
+the whole finite arc by a stated radius. Theorem 7.3.1 supplies that
+arc, its local-germ and finite-pair attachments, and its singular
+crossing. Their existence and attachment proofs are reused, not
+replaced by a new choice of graph. Tube uniqueness serves only to
+identify that supplied graph; the entire-child inventory reduction
+comes instead from Support VII's all-world carrier and faithful
+reconstruction. Support, Corollary 18.2, already excludes chosen-M
+singular endpoints in the original joint relation, but no regular-only
+restriction is needed for the stronger rectangle theorem here.
+
+The fixed-node interpolation in (8.2.6) is the classical formula of
+J.-P. Berrut and L. N. Trefethen, *Barycentric Lagrange Interpolation*,
+SIAM Review 46, 501–517, §2,
+[doi:10.1137/S0036144502417715](https://doi.org/10.1137/S0036144502417715).
+The fixed Sylvester determinant is the classical resultant construction;
+see S. Basu, R. Pollack and M.-F. Roy, *Algorithms in Real Algebraic
+Geometry*, second edition, Chapter 8,
+[doi:10.1007/3-540-33099-2](https://doi.org/10.1007/3-540-33099-2).
+Their mathematical content is reused. The root-retaining inclusion and
+the centred response estimate follow from the ordinary real mean-value
+formula as shown above; the endpoint enclosure property follows by
+induction on the displayed rational operations. No new general
+interpolation, resultant or interval theorem is asserted. The finite
+quantitative conclusions of Section 8 are repo-derived; they make no
+worldwide priority claim.
+
+This exclusion is confined to (8.1.3) and the entire stated finite XI7
+arc. The all-real independent J/M question outside that rectangle,
+fixed48 V(18.12)(i), rootQ, the common-tree/ancestor obligations and the
+original full-domain eight/nine-read recovery problem remain open.
+In particular a changed actual parent response has not resolved the
+fixed48 problem, and no selected-source bounds have replaced the
+original world domain.
+

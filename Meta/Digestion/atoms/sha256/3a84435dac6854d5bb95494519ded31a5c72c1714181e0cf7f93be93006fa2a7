@@ -1,0 +1,32 @@
+**Proposition 80.5 (full wire traffic and return costs).** For a request
+with address length $d$, the input is exactly $2d+4$ bits; for index $k$
+it is $k+4$ bits; the unused tag costs three. The full replies have the
+following bit lengths, before the additional End and local-ACK actions:
+
+| Reply | Bit length |
+| --- | --- |
+| Tag | $5$ |
+| Boolean | $4$ |
+| Refusal | $5$ |
+| Growth or Recall at address $p$ | $2|p|+5$ |
+| Next with addresses $p,q$ | $2(|p|+|q|)+7$ |
+| OutOfRange or BadFrame | $3$ |
+
+Every complete outer request also pays its actual root Return and
+occupied-work cleanup. A proper finite input prefix pays its acquired
+bits, marks and occupied pending storage even if its suffix never
+arrives. Very long out-of-range indices or absent-address frames have
+no bound in terms of source $N$ alone; their full acquired input,
+parsing and clearing remain separate costs. For successful growths the
+source templates have the original initial three edge-field assignments
+and $4P_0+8S_0'$ later structural assignments, with $V$ auxiliary-slot
+initializations and the global binding/link operations additionally paid.
+
+Proof. Count each three-bit tag and its specified unary/address or kind
+payload from Definition 78.1. Next contains one outer tag and two
+kind/address pairs, not two separately tagged Recall replies. Theorem
+78.2 supplies each actual finite lifecycle. The source assignments are
+those of the unchanged original material templates; the supplement does
+not remove any of them. All extra fields and the wire/return actions
+are distinct from conditional history data bits. $\square$
+

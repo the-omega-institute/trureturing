@@ -1,0 +1,39 @@
+## 固定来源与前篇
+
+<a id="ref-head"></a>
+
+**[1]**
+
+The Omega Institute, *trureturing*,
+[固定 dev 提交 d81fb8920f72f3d5f46221f6655627e7df791d3f](https://github.com/the-omega-institute/trureturing/commit/d81fb8920f72f3d5f46221f6655627e7df791d3f)，
+2026-10-31 00:15:55 Asia/Singapore。
+
+<a id="ref-quantum"></a>
+
+**[2]**
+
+项目，[《AURIC FIB ATOM 与量子基本原则：续卷 II》](https://github.com/the-omega-institute/trureturing/blob/d81fb8920f72f3d5f46221f6655627e7df791d3f/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md)，固定版本，
+新增 §§111--114，继承 §§103--107 的指定假设与原生边界。
+本轮新增文本完整读取；旧密度与调和分解作为已标明的来源依赖消费。
+
+<a id="ref-typed"></a>
+
+**[3]**
+
+项目，[《Typed Residual Cocycle Reconstruction》](https://github.com/the-omega-institute/trureturing/blob/d81fb8920f72f3d5f46221f6655627e7df791d3f/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TYPED_RESIDUAL_COCYCLE_RECONSTRUCTION.md)，新增 §24，尤其定理 24.4。
+其最终真实源商取得、完整状态和仅名称更新合同均保留。
+
+<a id="ref-v30"></a>
+
+**[4]**
+
+项目，[《唯一静态本体、内生观察者与黄金递归时钟》](https://github.com/the-omega-institute/trureturing/blob/d81fb8920f72f3d5f46221f6655627e7df791d3f/docs/develop/theory/AURIC_UNIQUE_STATIC_ONTOLOGY_ENDOGENOUS_OBSERVERS_AND_GOLDEN_RECURSIVE_CLOCKS_V30.md)，v30。
+文件明确标注作者源稿转换归属；入库不构成独立证明认证。
+
+<a id="ref-v31"></a>
+
+**[5]**
+
+前篇，*AURIC：内生记录、长期稳定与时钟几何重建*，v31，2026-10-30。
+[原 LaTeX 源稿](https://chatgpt.com/library?file_id=libfile_3ba793f8512c819192e6dae38b90baa9&account_id=personal)。
+本稿对守恒、稳定与记忆的新证明在正文给出；不宣称这些纸面推演已由 Lean 验证。

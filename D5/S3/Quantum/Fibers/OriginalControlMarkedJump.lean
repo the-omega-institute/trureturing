@@ -45,7 +45,7 @@ private def originalProbability (c k : ℝ) (hc : c < 1 / 2) (hk : k ∈ Ioo 0 c
 theorem p_pos (c k : ℝ) (hc : c < 1 / 2) (hk : k ∈ Ioo 0 c) (i : Fin 5) :
     0 < p c k i := (originalProbability c k hc hk).positive i
 
-private theorem p_sum (c k : ℝ) (hc : c < 1 / 2) (hk : k ∈ Ioo 0 c) :
+theorem p_sum (c k : ℝ) (hc : c < 1 / 2) (hk : k ∈ Ioo 0 c) :
     ∑ i, p c k i = 1 := (originalProbability c k hc hk).total
 
 /-- The original fixed preparation, including its unknown common phase and parity. -/

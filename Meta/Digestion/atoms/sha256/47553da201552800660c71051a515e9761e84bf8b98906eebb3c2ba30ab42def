@@ -1,0 +1,4 @@
+**约定 81.6（适用域与中间工具）。** 定理 81.2 先固定 $n$；不能把随 $n$ 增长的 $t^{-2}$ 系数直接代入 joint scale。定理 81.5 有独立的 moving-horizon proof，且 compact bound 不统一于无界 $\kappa$。定理 81.4 只解 $n=2,0<q\le1/1000$；它没有给出更大 $q$、其他 active sets、$n\ge3$ 的 finite-$q$ root rule 或 interior $p,q,r>0$ 的一般 optimum。
+
+承重推导使用标准 convex support duality、Hermitian norm duality、解析隐函数定理与 supplier 的 observable-correction interface；一般 simultaneous observable correction 的先例为 [Bény–Kempf–Kribs 的现有文献条目](../../../Library/Quantum/benykempfkribs2007observables.md)。这些成熟中间工具不承担本节具体 branch、admissible interval 或 joint constants 的数值结论。
+

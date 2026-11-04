@@ -1,0 +1,69 @@
+**Theorem 133.1 (Scalar growth restrictions at the original thresholds; repo-derived).**
+For each fixed source, $0<A<1$, unit $f\perp e$ and $j=f,a$,
+shrink the positive interval of Theorem 132.1 if necessary.
+Each of its two extremal scalar radii is either identically zero
+there or is positive there and satisfies
+
+$$
+r_j^\pm(\eta)=c_j^\pm\eta^{q_j^\pm}
+                         +o(\eta^{q_j^\pm}),
+\qquad c_j^\pm>0,\quad q_j^\pm\in\mathbb Q,\quad q_j^\pm\ge1.
+\tag{133.1}
+$$
+
+Only radii that are positive have coefficients in (133.1).
+If $\delta_j=n_j-m_j=0$, the original nonnegative nonlinear gap
+either vanishes identically on a final positive interval or obeys
+
+$$
+\nu_j(\eta)-\mu_j(\eta)
+       =d_j^{\rm gap}\eta^{q_j^{\rm gap}}
+                         +o(\eta^{q_j^{\rm gap}}),
+\qquad d_j^{\rm gap}>0,\quad q_j^{\rm gap}\in\mathbb Q,
+\quad q_j^{\rm gap}\ge2.
+\tag{133.2}
+$$
+
+Thus a positive gap cannot be flatter than every power of $\eta$.
+These statements concern the extremal scalar functions themselves,
+not arbitrary selections from the minimizer relation. They allow
+positive retention of order $o(\eta)$, and do not select an endpoint
+type in a tangent tie. All intervals and coefficients are for the
+fixed source and fixed interior $A$; no uniformity at $A=0,1$ or
+over sources is asserted.
+
+*Proof.* The zero sets of the nonnegative semialgebraic functions
+$r_j^-,r_j^+$ and $\nu_j-\mu_j$ have finitely many boundary
+points. On a sufficiently small positive interval each function
+is therefore either zero everywhere or positive everywhere.
+For a nonzero scalar semialgebraic function $u$ on $(0,\epsilon)$,
+the classical growth dichotomy gives
+$u(\eta)=c\eta^q+o(\eta^q)$ with $c\ne0$ and $q\in\mathbb Q$.
+The intermediate is Duan–Jiao–Wu–Zhou,
+[*Existence of Pareto solutions for vector polynomial optimization
+problems with constraints*, arXiv:2109.07304v1, §2, Lemma 2.2](https://arxiv.org/pdf/2109.07304v1).
+Its hypotheses here hold for the scalar functions by Theorem 131.2,
+without any analyticity assumption on a chosen minimizer. Positivity
+forces $c>0$.
+
+For either positive radius, Theorem 126.3 gives $u(\eta)\le G\eta$.
+If its growth exponent were $q<1$, then
+$u(\eta)/\eta\sim c\eta^{q-1}\to+\infty$, contradicting this
+bound. Hence $q\ge1$. When $\delta_j=0$, the two remainder
+bounds in (126.8), with the same original minima, give
+
+$$
+0\le\nu_j(\eta)-\mu_j(\eta)\le2E\eta^2.
+\tag{133.3}
+$$
+
+For a positive gap the same argument after division by $\eta^2$
+forces its rational exponent to be at least two, proving (133.2).
+A positive function with the asymptotic (133.2) is not
+$o(\eta^{q_j^{\rm gap}})$ and hence is not smaller than every
+power. Identically zero gaps occur in both patterns (I) and (II)
+of Theorem 132.1, whereas a positive gap occurs in (III).
+Consequently a zero tangent gap and even equality of the nonlinear
+values do not decide punctured attainment. No regularity of an
+arbitrarily varying choice of minimizers has been inferred. $\square$
+

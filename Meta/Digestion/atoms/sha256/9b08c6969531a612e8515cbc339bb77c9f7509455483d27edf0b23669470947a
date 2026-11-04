@@ -1,0 +1,29 @@
+### 17.3. Cancellation under the actual law gives the full-exterior posterior
+
+Fix $S_0=s$. Conditional on this event, the visible chain has the inhomogeneous transition rule $K_{s+i}(X_i\mid X_{i-1})$. Indeed (17.6), summed over the deterministic phases, gives exactly these transition factors on every finite interval. For a finite exterior window $[-L,-1]\cup[1,R]$ with $L,R\ge1$, its initial stationary factor is strictly to the left of zero and is common to both center completions. Every transition factor cancels between them except those at zero and one. On $F_0=\{X_{-1}=X_1=0\}$ the remaining weights are
+
+$$
+X_0=1:\ a_s,\qquad
+X_0=0:\ (1-a_s)(1-a_{s+1}).
+\tag{17.12}
+$$
+
+Interior legal cylinder factors are positive, so this ratio is legitimate on each positive conditioning atom. Off $F_0$, legality forces the center to zero. Increasing these exterior windows and using bounded conditional-expectation convergence yields
+
+$$
+\mathbb E_{J_\theta}[X_0\mid\sigma(S_0)\vee\mathcal E_0]
+=\mathbf1_{F_0}b_{S_0}.
+\tag{17.13}
+$$
+
+The function $s\mapsto b_s$ is constant on $H(a)$-cosets by (17.4). By (17.11) its coset is measurable from the visible exterior alone, using either tail. Thus the right side of (17.13) is $\mathcal E_0$-measurable modulo null sets. The tower property proves that it is the original $P_\theta$ full-exterior posterior, without phase averaging from a different model.
+
+For a globally Borel exterior version, use the plus profile at cut zero whenever its ratios exist and equal a rotation of $a$; select any fixed representative of the resulting finite coset and set
+
+$$
+q_0^*(x)=\mathbf1_{F_0(x)}b_s.
+\tag{17.14}
+$$
+
+Set $q_0^*=0$ if this profile fails. This definition uses no $x_0$, is independent of the coset representative, and is a version of (17.13) under the visible law. Let $q_i^*=q_0^*\circ T^i$. On $\Gamma$ it has the form (17.5), with $b_i(x)=b_s$ for $s+H(a)=\sigma_i(x)$. Each coefficient is unchanged by every legal finite modification. Its observation range can be infinite, although its values belong to the finite set $\{b_s:s\in\mathbb Z/m\mathbb Z\}\subset(0,1)$.
+

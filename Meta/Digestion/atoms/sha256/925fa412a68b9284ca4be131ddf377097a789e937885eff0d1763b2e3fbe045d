@@ -1,0 +1,34 @@
+**假设 B-38.1（固定标号域与完整完成）。** 取假设B-37.1中任意一个固定的严格凸标号十四边形、六条两两不交叉实际耳 $D$、四个任意指定的实际见证 $T_a$ 及同一个完整耳相交族 $\mathcal F$。仍要求
+
+$$
+\operatorname{Ear}(T_a)=S_a,\qquad
+\{T_1,T_2,T_3,T_4\}\subseteq\mathcal F\subseteq\mathcal T_{14}.
+$$
+
+沿用 $M_i,Q_i,\Gamma,u_0,w_r,L$，并置
+
+$$
+\mathcal A_i=\mathcal F\cap\Gamma(M_i),\qquad
+a_i=|\mathcal A_i|>0,\qquad A=a_1+a_2+a_3.
+$$
+
+这里 $\Gamma(R)$ 始终是 $D$ 迹恰为 $R$ 的全部实际完成纤维，其他耳和其他对角线任取。令 $\mathcal E_{14}$ 为全部十四条实际耳，对 $g\in\mathcal E_{14}\setminus D$ 定义
+
+$$
+B(g)=\{d\in D:d\text{ 与 }g\text{ 内部交叉}\},\qquad
+E_0=\{g\notin D:B(g)=\varnothing\},\qquad
+E_i=\{g\notin D:\varnothing\ne B(g)\subseteq M_i\}.
+\tag{38.1}
+$$
+
+本节附加 $E_0=\varnothing$。等价地，六个选中耳中心之间的循环间隙，按未选中中心的个数计长，恰有两个长二、四个长一。没有完整双耳或完整三耳核成员、包含极大性、纤维饱和性或放置对称性的附加条件。约定B-32.2及式(33.10)、(37.2)在此给
+
+$$
+\begin{gathered}
+c_r=C_{12-r},\qquad c_4=1430,\quad c_5=429,\quad c_6=132,\\
+w_2=4344,\qquad w_4=704,\qquad
+L=u_0+w_2+2w_4+6w_3.
+\end{gathered}
+\tag{38.2}
+$$
+

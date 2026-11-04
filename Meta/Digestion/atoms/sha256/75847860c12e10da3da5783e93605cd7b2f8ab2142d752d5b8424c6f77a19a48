@@ -1,0 +1,6 @@
+### 115.7 Unresolved limits
+
+The gap disproves general equality of $H_{\rm resp}$ with the least event-aware supplementary alphabet; it does not provide an arbitrary-selector minimization theorem, a general compatible-cover formula, or an unbounded family of such gaps. Whether event access is necessary for every two-state realization is not established. Suppressing the event input changes the contract and requires a separate capacity analysis.
+
+Selector control, seed acquisition, parser, current/frozen boundary, ROM and table generation/addressing, field and integer computations, transaction workspace, full decoder domain, output storage, Read/return/retry costs, time and energy are all separate supplied resources. No total-memory, paid-cost, physical implementation or Pareto optimum follows from the alphabet count. The construction does not recover return histories, acquisition transcripts, hidden depth, a physical metric or an absolute clock. Broader relation-level recovery and infinite-parameter extensions remain open.
+

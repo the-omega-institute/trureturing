@@ -1,0 +1,76 @@
+**Theorem 273.2 (the source-specific Cauchy spectral bridge).**
+For all $F,G\in L^2(M;\mathbb C)$ and $t\in\mathbb R$,
+
+$$
+\langle I_0F,\mathcal R_t I_0G\rangle_{\mathscr P_{\mathbb C}}
+ =\langle F,T(|t|)G\rangle_{\mathscr G_{\mathbb C}}.
+\tag{273.3}
+$$
+
+Let $E_H$ and $E_K$ be the spectral resolutions of $H_{\mathbb C}$ and
+$K$.  Define finite complex measures
+
+$$
+\nu_{F,G}(B)=\langle F,E_H(B)G\rangle,\qquad
+\rho_{F,G}(B)=\langle I_0F,E_K(B)I_0G\rangle.
+\tag{273.4}
+$$
+
+Then
+
+$$
+\rho_{F,G}
+ =\nu_{F,G}(\{0\})\,\delta_0
+ +\int_{(0,\infty)}
+     \frac{\lambda}{\pi(\lambda^2+\xi^2)}\,d\xi\,d\nu_{F,G}(\lambda).
+\tag{273.5}
+$$
+
+Equivalently,
+
+$$
+\int_{\mathbb R}e^{-it\xi}\,d\rho_{F,G}(\xi)
+ =\int_{[0,\infty)}e^{-|t|\lambda}\,d\nu_{F,G}(\lambda).
+\tag{273.6}
+$$
+
+The zero frequency in (273.5) is exactly the zero mode of $H$: since its
+kernel is $\mathbb C\mathbf1$, it is the mass of the constant component and
+there are no additional contributions from $\ker\Sigma$.  Formulae
+(273.3)--(273.6) hold for complex inputs without a form or operator-domain
+assumption.
+
+*Proof.*  The stationary reversible Markov law of Theorem 270.4 gives
+
+$$
+\mathbb E_{\mathbb P}\bigl[\overline{F(X_0)}G(X_t)\bigr]
+ =\langle F,T(|t|)G\rangle_M,
+\tag{273.7}
+$$
+
+including negative $t$ by reversibility.  The spectral theorem for $H$ writes
+the right side as the Laplace integral in (273.6).  For every $\lambda>0$,
+
+$$
+\int_{\mathbb R}e^{-it\xi}
+   \frac{\lambda}{\pi(\lambda^2+\xi^2)}\,d\xi=e^{-\lambda|t|},
+\tag{273.8}
+$$
+
+while $\lambda=0$ gives the Fourier transform of $\delta_0$.  The finite
+variation of the cross spectral measures and the fact that each density in
+(273.8) has mass one permit Fubini.  Hence the measure on the right side of
+(273.5) has the same Fourier transform as $\rho_{F,G}$; uniqueness of the
+Fourier transform of finite complex Borel measures proves (273.5).
+The Cauchy-mixture dilation (273.8) is the mature reflection-positive
+intermediate of Neeb--Olafsson, *Reflection positive one-parameter groups
+and dilations*, arXiv:1312.6161v2, Example 3.4 and §4
+([primary text](https://arxiv.org/html/1312.6161v2)); the Markov and
+reflection quotient realization is the corresponding application of
+Jorgensen--Neeb--Ólafsson, arXiv:1510.07445v3, Lemma 3.16 and Theorem 3.22.
+Their general dilation statements are not being substituted for the
+source-derived law: (273.7) identifies the measures using the same
+$\mathbb P$, $M$, and $I_0$ fixed above.  The identification (273.2) then
+gives the asserted relation to the already supplied quotient generator
+$H$. $\square$
+

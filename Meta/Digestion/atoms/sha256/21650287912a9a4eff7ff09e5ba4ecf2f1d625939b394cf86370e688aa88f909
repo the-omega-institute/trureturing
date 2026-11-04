@@ -1,0 +1,26 @@
+### 115.1 Fixed source, observations and decoder
+
+Use Boundary Dynamics §§105.1, 108.1 and 114.1 with $r=3,m=2,d=1$, $\mathbb F_2=\{0,1\}$ and
+
+$$
+Q=3,\quad L=28,\quad\ell=29,\quad n=58,\quad B=27,\quad c_0=30.
+$$
+
+The source has one actual hidden depth $K=k\ge1$, or one fixed common prior $\mu$, throughout seed acquisition and payload. Restored fresh Reads are conditionally independent given $k$, with $\Pr(\alpha)=r_k=F_{k+1}/F_{k+3}$. Paid pairs $\alpha\beta$ and $\beta\alpha$ produce seed bits 0 and 1; equal pairs are discarded with paid retries. The acquired seed $R=\rho$ is retained. Both seeds have probability $1/2$ before acceptance; no seed is conditioned away.
+
+The original parser recognizes $w_{j,0}=(\beta\alpha)^j\alpha$ and $w_{j,1}=(\beta\alpha)^j\beta\beta$. All original returns, retries, unfinished parsing, rejected executions and infinite noncompletion remain. Only completed markers count toward $n$. The passive selector does not query, stop or resample the source; the payload continues after its bookmark to the actual original $\mathrm{Stop}_{b_{58}}$, after which there is no Read.
+
+For a marker prefix $u$ of length $c$, define the original bare boundary
+
+$$
+v_i=\rho^{i-1},\quad v_{29+i}=v_i\ (1\le i\le29),\quad
+C_\rho=\sum_{i=1}^{29}v_i,\qquad
+b_\rho(u)=(c,\beta,h)=\left(c,|u|,C_\rho+\sum_{i=1}^c v_i u_i\right).
+$$
+
+Here $|u|$ is integer Hamming weight, field sums are in $\mathbb F_2$, and $0^0=1$. Correct recovery is required exactly on $E_\rho=\{R=\rho,Q_{58}=(0,29),h(w)=0\}$. Every compatible balanced zero-return word has joint mass $\frac12\sum_k\mu(k)r_k^{29}(1-r_k)^{58}>0$, or the corresponding fixed-depth term. This reuses the original positive-source law; it does not assert seed independence after acceptance.
+
+For each bare address $b$, let $U_b$ be all prefixes with that address, $\mathcal F_b$ all length-$58-c$ suffixes with weight $29-\beta$ and field sum $h$, and $N_b=|\mathcal F_b|$. Let $W_b\subseteq U_b$ be prefixes still active after the current selector decision, and $\mathcal S_b\subseteq U_b$ those first selected exactly there. The decoder $\mathscr D_{\pi^-}$ is the original total decoder of §§105–106, 113–114, instantiated with the fixed selector below: nonterminal codes are zero-based colex ranks in the entire $\mathcal S_b$; terminal codes use the entire actual-Stop block. Colex compares from the last differing position, with $0<1$.
+
+The receiver obtains only frozen $(\rho,\ell,c,\beta,h)$, frozen $z$, actual suffix $Y$ and actual Stop. Keep the decoder's full nonnegative-integer code domain, original interface checks and fixed empty-word default. In particular, do not add an acceptance or $N_b>0$ check, truncate its code domain to $\{0,1\}$, or change its behavior on zero-completion addresses with legal dictionary ranks.
+

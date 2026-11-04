@@ -1,0 +1,11 @@
+**Proposition 89.1 (the growth squares that do commute).** Before the diagnostic, successful encoding append has exactly the commuting squares (84.2). In particular decoding the endpoint of an encoding extension $wg$ yields the previous decoded $w$ followed by $g$. For one fixed law the phase correspondence in (86.2) commutes with these paired encoding steps and with fixed-tree autonomous Tick. None of these assertions identifies a sampled cut with its historical pre-assay endpoint.
+
+Proof. For $+$ the physical successful step is raw zero extension followed by the new-tree Tick, precisely $x\mapsto T_{t'}\iota_gx$. For $-$ the physical encoding pair is old-tree Tick followed by raw zero extension, precisely $x\mapsto\iota_gT_tx$. These give (84.2), and the inverse identities give the append assertion. Proposition 86.2 proves the same-law phase square. But at the acquired cut the field is $T_t^{d(t)}x_h$. A subsequent $+$ growth sends it to
+
+$$
+T_{t'}\iota_gT_t^{d(t)}x_h,
+\tag{89.1}
+$$
+
+whereas a newly encoded word $wg$ followed by its own complete assay would have field $T_{t'}^{d(t')+1}\iota_gx_h$. No equality between these different runs has been established. A subsequent raw $-$ growth sends the acquired field to $\iota_gT_t^{d(t)}x_h$; a separately requested Tick before it instead gives $\iota_gT_t^{d(t)+1}x_h$. Each is its own actual successor, not an unnoticed return to the encoding image. $\square$
+

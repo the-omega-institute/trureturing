@@ -1,0 +1,12 @@
+**Definition 8.3 (Remaining comparison and its method boundary).** For $r\ge11$ outside the unconditional region of Theorem 8.1, and without the support hypothesis of Theorem 4.1, the remaining comparison asks whether every genuine profile of mean $q\in[r-1,r]$ and finite $s\ge r$ satisfies
+
+$$
+J_s(x)\ge F_r(q).
+$$
+
+Theorem 4.2 specifies a necessary weighted low-cardinality defect for any counterexample, and (8.2) already excludes sufficiently large $s$. This unrestricted comparison for $r\ge11$ remains open in that range; the conditional graph minimum of Theorem 6.1 does not settle it.
+
+For $r=9$, the full interval $q\in[8,9]$ is covered by Theorem 3.2. At $q=8$, $s=10$, (2.9) supplies the quantitative compensation above the moment-relaxation optimum $516+16\sqrt{63}$, with a strict margin greater than $32$ beyond the $132-16\sqrt{63}$ needed to reach $2F_9(8)=648$. The exact actual-array minimum and all minimizing arrays at that point are not determined here. For $r=10$, Theorem 2.4 settles the comparison for the full interval $q\in[9,10]$ and every finite $s\ge11$; optimality of its numerical gap is not determined here. The overlap constraints (2.2)–(2.3) are necessary, with no claim that they characterize every realizable joint law. The certificate (2.5) is asserted only for $q\in[8,9]$, and (2.10) only for $q\in[9,10]$. Theorem 9.2 shows that even the self-consistent distribution-dependent $m_k$ constraints are insufficient by themselves to prove the all-$r$ comparison. Theorem 10.1 gives a genuine-array restriction on the scale of a possible uniform all-$r$ gap.
+
+The shared-budget certificates, their nine- and ten-hub graph consequences, the rational relaxation obstruction of Theorem 9.2 and the genuine-array gap family of Theorem 10.1 are repo-derived for the classes defined here. The fixed-cost reduction, the actual-edge expansion and the two-hub convexity argument are supplied by the two cited repository volumes with the scope specified above; the original CDSO papers supply the definition and historical comparisons, not these higher-capacity minima. No new literature priority claim is made. The full text of the Zhao–Zhao work has not been obtained here, so its hypotheses, conclusions and possible overlap are not assessed and it is not used as an input theorem.
+

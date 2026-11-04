@@ -1,0 +1,99 @@
+## 64. The exact \(p_J\) acquired-\(M\) child as an action-labelled support
+
+Let \(\mathscr W_{H_4}^{\mathrm{comp}}\) denote the complete-world domain of
+the common-parent source at the fixed parent \(H_4\). Here \(H_4\) is the
+parent object, \(p_J\) is the exact algebraic parameter inherited from
+Theorem 8.1, and \(u_M(W)\) is the sixth-\(M\) response function. For a
+scalar response \(v\), put
+
+$$
+\mathcal C_v=\{W\in\mathscr W_{H_4}^{\mathrm{comp}}:
+                 p(W)=p_J,\ u_M(W)=v\}.
+$$
+
+Thus \(v\) is a candidate sixth-\(M\) response label here; this definition
+does not by itself assert that a live reader has acquired it. The complete
+worlds and terminal maps are taken from
+[FIB common-parent geometry, §§18--23](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md);
+the source notation \(\mathcal F(H_4,M,p_J,M,v)\) is the same set.
+
+For the two terminal actions \(a_J,a_M\), define the pre-contract
+action/response relation
+
+$$
+\mathcal R_v\subseteq\{J,M\}\times
+    \mathscr W_{H_4}^{\mathrm{comp}}\times\mathbb R
+$$
+
+by
+
+$$
+\mathcal R_v
+ =\{(F,W,y):W\in\mathcal C_v,\ F\in\{J,M\},\ y=f_{MF}(W)\},
+$$
+
+where \(f_{MJ}\) and \(f_{MM}\) are respectively the final-\(J\) and final-\(M\)
+response functions, \(f_{MF}=f_{MJ}\) for \(F=J\), and
+\(f_{MF}=f_{MM}\) for \(F=M\). The guard \(L_1\) is the recursive guard from
+the same source, not an additional response coordinate. The action \(a_F\)
+carries response \(y\). This relation is not yet a
+candidate relation \(B\subseteq Z\times S\) of Definition 60.1: it has no
+declared target/state encoding. It supplies neither a successor map, an
+action domain, a permission contract, nor a live acquisition step; those
+fields must be added before this source-specific relation can enter
+Definition 60.1 or Theorem 62.2.
+
+The source-specific results give two exact boundaries. First, at the response
+\(v_\star\) of Theorem 18.2, with the response enclosure and terminal
+separation supplied by Theorem 19.1, Theorem 23.1 states
+
+$$
+\mathcal C_{v_\star}=\{A,B,C,D\},
+\qquad f_{MJ}(A)=f_{MJ}(B),
+\qquad f_{MM}\ \text{is injective on }\mathcal C_{v_\star},
+$$
+
+and hence \(\neg L_1(S,(H_4,M,p_J,M,v_\star))\) for every support \(S\) in
+this child. The final-\(J\) pair is real, while no final-\(M\) collision pair
+exists in this exact four-world support.
+
+The current `dev` geometry also supplies an exact off-\(24\) collision in
+the full complete-world domain: two distinct regular worlds realize the same
+three-response tuple \((p_\ast,u_\ast,m_\ast)\), with
+\(p_\ast\in(2,3)\) and unequal analytical ratios. This is a rational
+contraction certificate for the response map, not a \(p_J\) result. The
+analytical ratio is only a separating coordinate in that construction; it is
+not an acquired response. Consequently, any global claim that collisions are
+confined to the \(p=24\) mirror sector is false, while the exact-\(p_J\) joint
+witness question is resolved below by global branch injectivity.
+
+Second, Theorem 31.1 gives a finite necessary response reduction. If one
+child contains both a distinct final-\(J\) collision pair and a distinct
+final-\(M\) collision pair, then
+
+$$
+Q(p_J,v)=0\quad\text{or}\quad v=s_-(p_J)\quad\text{or}\quad v=s_+(p_J),
+$$
+
+so at most \(74937\) scalar responses can support that joint collision
+pattern. This is a response/action-support restriction, not an acquisition
+protocol and not a finite-controller construction.
+
+The newer all-response geometry closes the exact-\(p_J\) witness question
+that this finite reduction left open. Its global two-branch parametrization,
+opposite-branch order, lower-branch order, and upper-branch joint-response
+injectivity imply
+
+$$
+f_{MM}\!\restriction_{\mathcal C_v}\ \text{is injective}
+\qquad\text{for every }v\in\mathbb R,
+$$
+
+where \(\mathcal C_v=\mathcal F(H_4,M,p_J,M,v)\). Consequently no exact
+acquired-\(M\) child contains a distinct terminal-\(M\) collision pair, and
+the unchanged same-child predicate requiring both a terminal-\(J\) pair and a
+terminal-\(M\) pair is false. The earlier \(74937\)-response reduction is
+still a valid necessary sieve, but it is no longer an open existence test at
+\(p_J\). The theorem does not decide other fifth responses, ancestor
+conditions, or arbitrary adaptive readers.
+

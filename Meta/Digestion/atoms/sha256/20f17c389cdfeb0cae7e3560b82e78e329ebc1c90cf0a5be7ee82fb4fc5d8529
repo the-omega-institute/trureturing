@@ -1,0 +1,49 @@
+**Theorem 48.3 (actual indexed FetchGrowth without literal tapes).**
+At any Ready cut satisfying Definition 47.2, a finite paid procedure
+using only the retained source, its bound local headers and the actually
+received $U(k)$ returns exactly AA Theorem 19.2's indexed event, including
+OutOfRange at $k=0$ or beyond the complete current event count. It
+preserves all persistent source and record contents. Every descent
+uses an actual child and returns the literal event kind and full logical
+address, rather than a code for that address.
+
+Proof. The last-symbol block partition used in Theorem 47.3 proves that
+each peeling step of Definition 48.2 removes exactly the last symbol
+of its valid work word. The residual rank is valid in the indicated
+shorter constant-weight set. Empty blocks cause no ambiguity: a
+zero last-$R$ block forces $L$, and a zero last-$L$ block forces $R$.
+The decreasing nonnegative $i$ makes every requested peel finite.
+At $i=j$, exactly $h$ left symbols occur in that first-$j$ prefix.
+Consequently (AAII.5) is its actual last symbol and its actual within-side
+count. A chosen side has a positive count at most its total multiplicity.
+This also proves the forced-coordinate clauses.
+
+Start at the bound root with its acquired $U(k)$ and an empty accumulated
+address. Compute $N=e_\alpha(t)$ from a real traversal. To reject zero or
+$k>N$, compare a decreasing work copy of $N$ with the actual unary
+index marks, stopping as soon as an $(N+1)$st mark is found. This needs
+no binary integer of width $\log k$ on an arbitrarily long out-of-range
+request. In range, a backed binary index has value $k\le N$; the original
+input backing and marks remain paid until cleanup. At a present subtree
+root $p$, its birth type is AA (AA.66).
+Its forced local prefix is empty, $P_p$, $S_p$, or $P_pS_p$, according
+to that birth type and its present constructor, exactly as in AA
+Theorem 19.2. If the requested index falls in that prefix, construct
+the corresponding literal event and acquired accumulated address.
+Otherwise subtract the prefix length. The subtree is a branch, and
+its remaining index $j$ lies in $1,\ldots,x_p+y_p$. Obtain the two
+counts from its actual child subtrees and use Definition 48.2.
+Descend to the actual child $d$ with the returned within-side index
+$q$, append $d$ to the backed address, and repeat.
+
+This is exactly the child-shuffle recursion of AA Theorem 19.2, with
+its tape scan replaced by its equal indexed side/occurrence result.
+Each descent goes to a smaller current logical subtree. Its new index
+is in that child's event range, so a nonexistent edge is never
+followed. Termination and the correct literal event follow by induction
+on the current finite subtree. The work copy and backed address supply
+the real Recall payload; there is no unbound external answer provider.
+Nothing in this construction writes the retained ranks or the source.
+Cleaning its scratch after output preserves the same Ready record.
+$\square$
+

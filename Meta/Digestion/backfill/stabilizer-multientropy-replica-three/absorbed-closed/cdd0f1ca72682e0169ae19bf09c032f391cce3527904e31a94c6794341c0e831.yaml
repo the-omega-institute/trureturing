@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:cdd0f1ca72682e0169ae19bf09c032f391cce3527904e31a94c6794341c0e831
+  normalized_sha256: sha256:cdd0f1ca72682e0169ae19bf09c032f391cce3527904e31a94c6794341c0e831
+cas_ref: sha256:cdd0f1ca72682e0169ae19bf09c032f391cce3527904e31a94c6794341c0e831
+coverage_gids:
+  - gid: D5/S3/Quantum/Entanglement/StabilizerMultiEntropy/StabilizerMultiEntropyReplicaThree.coarse_linear_combination_and_vanishing_criterion
+    target_statement_id: sha256:b2714af3bcea07b50433a5e26e3b5b3d8727aab6f7c02e7aa1f6acc100cecee7
+  - gid: D5/S3/Quantum/Entanglement/StabilizerMultiEntropyCollapse.GM4
+    target_statement_id: sha256:2012753d1afb1d4bc36242a4cc1247416e5ae925227cc9bb59269355b67d8ed7
+  - gid: D5/S3/Quantum/Entanglement/StabilizerMultiEntropyCollapse.I3
+    target_statement_id: sha256:a784264b3f0f76d9f34e61dca3aad039e798b034f4a2bd1b01b129c089742c37
+  - gid: D5/S3/Quantum/Entanglement/StabilizerMultiEntropyCollapse.result
+    target_statement_id: sha256:22e959e28055a09148222953a819dd9ed1c924acc40720eeb4b40849663a8058
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,9 @@
+**假设 3.1（Flat complex least mode）。** In addition to Definition 1.1, suppose there is a vector $z\in\mathbb C^m$ satisfying
+
+$$
+az=\lambda z,\qquad |z_i|=1\quad(1\leq i\leq m).
+\tag{3.1}
+$$
+
+This is a separate hypothesis on $H$. Its normalization is $\|z\|^2=m$. In particular it is stronger than the mere existence of a least eigenvector.
+

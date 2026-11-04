@@ -76,7 +76,19 @@ Lean statement: `D5/S3/Combinatorics/CycleSums/ConsecutiveCycleSumsGraph.added_e
 
 For every natural n and k with n positive, the natural cardinality of the edge set of completion n k minus the edge set of cycleGraph n is at most k minus one. The difference is contained in the star edges, indexed by vertex values from two through k.
 
-**Theorem 1.7 (Core subsets with a tail prefix).**
+**Theorem 1.7 (Lower-labelled predecessors give connectedness).**
+
+Lean statement: `D5/S3/Combinatorics/CycleSums/ConsecutiveCycleSumsGraph.connected_of_predecessor`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CycleSums/ConsecutiveCycleSumsGraph.connected_of_predecessor` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural n, simple graph G on Fin n, finite vertex set C, root r in Fin n and proof that r belongs to C, suppose every v in C distinct from r has a vertex u in C with u.val < v.val and G.Adj u v. Then the subgraph of G induced by C is connected. Strong induction on the vertex value constructs a path from r to every vertex of C. The hub-tail and interval constructions use this same supplier. Applied with C equal to the full vertex set, it also supplies connectedness of the domination construction's base graph through the induced-universe isomorphism.
+
+**Theorem 1.8 (Core subsets with a tail prefix).**
 
 Lean statement: `D5/S3/Combinatorics/CycleSums/ConsecutiveCycleSumsGraph.hub_tail_connected`
 
@@ -88,7 +100,7 @@ Lean statement: `D5/S3/Combinatorics/CycleSums/ConsecutiveCycleSumsGraph.hub_tai
 
 Let n be positive and let k and j satisfy k < n and k ≤ j ≤ n. For every finite set S of natural labels, if every x in S lies between two and k, the subgraph of completion n k induced by vertices with labels in {1} ∪ S ∪ {k + 1, …, j} is connected. Core vertices and the first tail vertex are adjacent to the hub; every later tail vertex has its predecessor in the set.
 
-**Theorem 1.8 (Consecutive labels induce a connected graph).**
+**Theorem 1.9 (Consecutive labels induce a connected graph).**
 
 Lean statement: `D5/S3/Combinatorics/CycleSums/ConsecutiveCycleSumsGraph.interval_connected`
 
@@ -104,6 +116,7 @@ For every natural n, k, l and j with n positive and 1 ≤ l ≤ j ≤ n, the sub
 
 - Truth anchor: `D5/S3/Combinatorics/CycleSums/ConsecutiveCycleSumsGraph.added_edges_le`
 - Truth anchor: `D5/S3/Combinatorics/CycleSums/ConsecutiveCycleSumsGraph.completion`
+- Truth anchor: `D5/S3/Combinatorics/CycleSums/ConsecutiveCycleSumsGraph.connected_of_predecessor`
 - Truth anchor: `D5/S3/Combinatorics/CycleSums/ConsecutiveCycleSumsGraph.cycle_le_completion`
 - Truth anchor: `D5/S3/Combinatorics/CycleSums/ConsecutiveCycleSumsGraph.hub_tail_connected`
 - Truth anchor: `D5/S3/Combinatorics/CycleSums/ConsecutiveCycleSumsGraph.interval_connected`

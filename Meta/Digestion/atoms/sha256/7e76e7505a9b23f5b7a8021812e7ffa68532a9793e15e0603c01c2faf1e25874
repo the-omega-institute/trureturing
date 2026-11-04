@@ -1,0 +1,33 @@
+若每个 $e_i$ 动态充分，则：
+
+1. 当
+   \[
+   \ker e_i=\sim_{\mathscr T}\qquad\text{对所有 }i
+   \tag{MPC.15}
+   \]
+   时，存在唯一保持类型的双射
+   \[
+   \bar e_i:C_{\mathscr T}\xrightarrow{\;\cong\;}\operatorname{im}(e_i),
+   \qquad
+   \bar e_i([z])=e_i(z).
+   \tag{MPC.16}
+   \]
+   因而四个状态视图两两唯一可恢复，且
+   \[
+   \chi_{ji}=\bar e_j\circ\bar e_i^{-1}
+   \tag{MPC.17}
+   \]
+   满足 $\chi_{ki}=\chi_{kj}\circ\chi_{ji}$。
+2. 当
+   \[
+   \ker e_i\subseteq\sim_{\mathscr T},
+   \tag{MPC.18}
+   \]
+   时，存在唯一满射
+   \[
+   d_i:\operatorname{im}(e_i)\twoheadrightarrow C_{\mathscr T},
+   \qquad d_i(e_i(z))=[z].
+   \tag{MPC.19}
+   \]
+   该视图可能保留任务无关的额外细节，但它仍能恢复最小预测核心。
+

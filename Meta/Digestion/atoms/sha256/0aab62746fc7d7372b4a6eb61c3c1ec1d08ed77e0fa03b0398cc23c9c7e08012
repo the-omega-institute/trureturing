@@ -1,0 +1,84 @@
+**引理 131.1（实际配分的定量对数转移）。** 对 $p=p(Q)$，
+
+$$
+N_p\left(\log\frac{G_y(\alpha)}{\mathcal C_P(\alpha,y)}\right)
+ \le \exp\{-\mu Q^3/64+CQ^2+C(p+1)\log[Q(p+2)]\}
+ +\exp\{-cQ^4+L+CQ^2+C(p+1)\log[Q(p+2)]\}.
+\tag{131.1}
+$$
+
+$s=0,\eta$ 的计数/比较配分之对数有同一界。
+
+**证明。** 先说明由 (130.14) 产生的零点控制尺度。
+选择 $b_0=C\delta^5$ 大于 $\sup_m\ell(m)$ 及 $c_0$，并令
+
+$$
+\widehat G_y(z)=e^{-zb_0}G_y(z),\qquad
+\widehat C_y(z)=e^{-zb_0}\mathcal C_P(z,y).
+\tag{131.2}
+$$
+
+第一函数是有限个 $e^{-zH_m}$ 的和，其中
+$H_m=A_y+b_0-\ell(m)\ge0$；第二函数是相同类型的正测度积分，
+势能为 $S_L+S_G+\lambda_y^G+\eta\mathcal D_G^2+b_0-c_0\ge0$。
+其有限正实点积分与一阶矩均存在。
+对两者中任一个 $Z$，置 $f(b)=\log Z(b)$。
+对数配分的凸性与单调性，加上 (130.14)，给
+
+$$
+0\le -f'(b)=\mathbb E_bH\le CQ^2,
+\qquad a-h/2\le b\le a.
+\tag{131.3}
+$$
+
+具体地，令 $r=h/2$。由 $H\ge0$，$Z$ 随实参数递减；于是
+$b-r\ge a-h$、$b\le a$ 蕴含
+
+$$
+\mathbb E_b e^{rH}=\frac{Z(b-r)}{Z(b)}
+ \le\frac{Z(a-h)}{Z(a)}\le e^{CQ^2}.
+$$
+
+Jensen 不等式给 $r\mathbb E_bH\le CQ^2$；乘 $e^{-zb_0}$ 的变化仅为
+$O(h\delta^5)$。沿 $[a-h/2,a]$ 积分 (131.3)，对 $0\le r\le h/2$ 有
+
+$$
+\frac{Z(a-r)}{Z(a)}\le e^{CQ^2r}.
+$$
+若 $|z-a|\le r$，正势能的积分表示又给
+
+$$
+\frac{|Z(z)-Z(a)|}{Z(a)}
+ \le\mathbb E_a(e^{rH}-1)
+ =\frac{Z(a-r)}{Z(a)}-1
+ \le e^{CQ^2r}-1.
+\tag{131.4}
+$$
+
+取固定小 $d>0$ 及 $r_Q=dQ^{-2}$，右侧至多 $1/4$。
+于是 $\widehat G_y,\widehat C_y$ 在 $|z-a|\le r_Q$ 上均非零，
+并且 $|\mathcal C_P(z,y)|\ge\mathcal C_P(a,y)/2$。
+这里只得到随 $Q$ 缩小的圆盘，不要求实际配分在固定复条带非零。
+
+由整个固定圆盘上的 (130.2)，在这个小圆盘上有
+
+$$
+\left|\frac{G_y(z)}{\mathcal C_P(z,y)}-1\right|\le2\mathcal E_Q.
+\tag{131.5}
+$$
+
+$\mathcal E_Q\to0$，所以从实轴正值延拓的对数满足
+$|\log(G_y/\mathcal C_P)|\le4\mathcal E_Q$。
+在半径 $r_Q$ 用 Cauchy 系数估计，得
+
+$$
+\mathfrak n_{p,a}\left(\log\frac{G_y}{\mathcal C_P}\right)
+ \le4\mathcal E_Q\sum_{k=0}^p(\rho/r_Q)^k
+ \le\mathcal E_Q\exp\{C(p+1)\log[Q(p+2)]\}.
+\tag{131.6}
+$$
+
+所有实基点与输出共享常数，故得 (131.1)。
+其它配分函数本身已有非负势能，重复同一论证即可。
+全过程没有从实点零阶误差直接微分，也没有假定固定的实际零点排除区。∎
+

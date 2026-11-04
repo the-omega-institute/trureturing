@@ -1,0 +1,90 @@
+**Theorem 12.2 (finite conversion and request bounds).** There is one
+fixed finite sequential algorithm for Theorems 8.2--11.2. With
+$A=d+m+b_T+\Gamma+2$, conversion from the acquired three-prefix record
+at the first sufficient $s$ satisfies, for an absolute constant $c$,
+
+$$
+ C_{\rm cv},W_{\rm cv}\le c A^{12},\qquad
+ V_{\rm cv}\le c A^4,\qquad Q_{\rm cv}=U_{\rm cv}=0.
+ \tag{PCR.32}
+$$
+
+Reading/transferring the actual record and its metadata is included
+when it has been materialized in the supplied sequential backing;
+external transfer/acquisition services remain charged in addition. The
+retained mathematical data have length
+
+$$
+ 4r+m+b_T+O(\log(d+2)+1)
+ \tag{PCR.33}
+$$
+
+at $r>0$, using four length-$r$ coefficient/seed/operator strings,
+with the supplied metadata of size $\Gamma$ added separately. For
+zero only $v,T$ and a zero tag are needed. A self-delimiting integer
+encoding changes these lengths by at most a constant factor and
+logarithmic delimiters. No bound here treats $T$ as a unit-cost integer.
+
+For a request of suffix length $h$, an optional binary forecast offset
+$u$, and explicitly requested output of length $L_{\rm out}$, put
+
+$$
+ A_q=d+m+h+b_T+b_u+\Gamma+L_{\rm out}+2.
+$$
+
+The local work and cumulative writes are at most $cA_q^{12}$ and peak
+backing at most $cA_q^4$, including full literal construction and copying
+the requested output. The one presence answer has length one. A real
+presence request additionally has $Q=1$, $M=J=m+h$ and its physical
+Read cost. Pure prediction has $Q=0$ and must be identified as such.
+A counter commit after one completed update has local work and writes
+$O(b_{T+1}+1)$ plus the actual writer-record and binding cost. Adding
+an authentic binary count $u$ costs $O(b_T+b_u+1)$ locally, in addition
+to those $u$ original updates. The field-algebra construction never
+uses a numerical operand of length proportional to the core period.
+
+Proof. The input prefixes have $6d$ bits. Minimal Hankel rank and solves
+use $O((d+1)^2)$ bits of matrices and polynomially many binary row
+operations. The two solves (PCR.26), monic polynomial multiplication,
+reduction and extended Euclid use $O((d+1)^3)$ elementary bit operations
+per operation under ordinary dense implementations. There are
+$O(\log(d+2))$ reverse steps. Sequential scans can implement all of them
+on polynomially bounded strings; even a scan for every indexed access
+and a further quadratic sequential simulation are absorbed in (PCR.32).
+The retained strings are $g$'s $r$ coefficients below its implicit monic
+term, $r$ seed bits and two $r$-bit operators. Their degree and framing,
+the literal $v$, age and metadata give (PCR.33).
+
+For a request, an ancestor of relative depth $i$ has branch time at
+most $2i+1$. Only proper prefixes of $w$ need bits, so $k\le2h-1$ at
+$h>0$. Precompute $Q_1,\ldots,Q_{2h}$ by (PCR.27), or stream and
+recompute as needed; this uses $O(h)$ ring products and $O(rh)$ bits
+if the table is kept. Fibonacci numbers through $2h+2$ have $O(h+1)$
+bits. Their table occupies $O((h+1)^2)$ bits and can be constructed by
+ordinary binary addition. Each $D_q$ is a sum of at most $h$ sibling
+masses; on the actual local tree it is less than $F_k$, since it counts
+beta parents strictly preceding $q$ in that batch. Even using the loose
+sum bound, it has $O(h+\log(h+2))$ bits. The algorithm never writes
+$I_k$ or $J_v(q)$: it represents their powers by $r$ coefficients.
+Binary powering of $x^{D_q}$ uses $O(h+\log(h+2))$ ring products, each
+of degree-less-than-$r$ operands. There are at most $h$ such evaluations.
+The remaining path times, sibling labels, additions and comparisons
+with $T+u$ are polynomial in $h,b_T,b_u$. This is the classical
+supplied-recurrence quotient evaluation of [Bostan--Mori, §1.3][PCR-BM], with the
+actual index split proved in (PCR.31). No field or square-free quotient
+is required.
+
+All temporary tables, counters, prefix descriptors and literal buffers
+fit a polynomial in $A_q$. Each arithmetic operation admits a sequential
+scan implementation with polynomial head motion and writes. Allowing
+$A_q^4$ backing and $A_q^{12}$ time/writes is a conservative common
+envelope for these explicit loops, not a fast-arithmetic claim. It
+also covers $h=0$, $d=0$, reading the metadata and output copies.
+The binary addition/commit bounds include carry propagation. The
+physical service must actually execute its call; $m+h$ literal letters
+must be materialized even when arithmetic uses the suffix locally. No
+construction here supplies a missing allocation, grant, binding or
+synchronization service; their availability and actual physical duration
+remain explicit premises rather than inferred machine-operation bounds.
+$\square$
+

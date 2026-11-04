@@ -1,0 +1,17 @@
+#### 定义 7.1（相干前缀程序）
+
+令 $X_{\rm prog}=\{0,1\}^{\mathbb{N}}$，在内部代数
+$C(X_{\rm prog},\mathcal{A})$ 中取自伴场 $A_k(b)$，
+它只依赖前 $k$ 位，且 $\sup_{k,b}\left\lVert A_k(b)\right\rVert\le M$。
+对 $0<r<1$，置
+
+$$
+c_k=(1-r)r^{k-1},\quad
+ V_k(b)=e^{-ic_kA_k(b)},\quad U_n(b)=V_n(b)\cdots V_1(b).
+$$
+
+程序标签的投影可以对易，而数据操作不要求对易；
+整体控制保持相干，未将叠加程序先变成一个外部经典选择。
+
+<a id="statement-7-2"></a>
+

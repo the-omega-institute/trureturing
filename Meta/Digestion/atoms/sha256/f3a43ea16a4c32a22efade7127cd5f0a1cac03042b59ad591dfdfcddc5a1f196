@@ -1,0 +1,45 @@
+**Definition 25.1 (raw digital law and two compared placements).** Use the
+raw digital installation AD of Definition 17.1, not the post-growth-clock
+adapter C. A native $P/S$ birth retains all old cells, values and edges
+and includes the field by fresh zeros, without an attached Tick. On a
+current material tree $t$ the actual rational transition is
+
+$$
+T_t=(4I+A_t)/8.
+\tag{25.1}
+$$
+
+Material degree is at most three. Thus $T_t$ has nonnegative entries,
+positive diagonal and $\|T_t\|_\infty\le7/8$. Digital Read$(j,p)$
+at a valid current terminal returns exactly one of
+
+$$
+\mathcal D_p(x_j)=\{\lfloor2^p x_j\rfloor,
+                         \lfloor2^p x_j\rfloor+1\}.
+\tag{25.2}
+$$
+
+Both choices remain legal after every enabled prefix, with no additional
+persistent provider constraint or provider side channel. Precision is a
+nonnegative integer. There is no exact Read bypass. Reset, Add, Hold,
+growth guards, raw-label inheritance, complete refusals, pending frames,
+rights and Return retain §§7–8 and Definition 18.2's meanings. Exact
+rational local computation is a paid observer operation, not an exact
+source Read. Authentic context, serialization, held computation and adequate
+finite backing are explicit installation premises, not authenticated by
+(25.2).
+
+Let a finite sequence of unticked births extend earned $s$ to $u$, with
+old-cell zero-inclusion $E$. Let $R\subset V(s)$ be the old vertices
+incident to an edge joining an old to a fresh vertex. For a nonnegative
+rational old field $x$, put
+
+$$
+D_x=\operatorname{dist}_s(\operatorname{supp}_+(x),R),\qquad
+\Delta_r=T_u^rEx-ET_s^rx\quad(r\in\mathbb N).
+\tag{25.3}
+$$
+
+Distance is the minimum graph distance; it is $\infty$ if either set is
+empty. Inequalities of fields are coordinatewise.
+

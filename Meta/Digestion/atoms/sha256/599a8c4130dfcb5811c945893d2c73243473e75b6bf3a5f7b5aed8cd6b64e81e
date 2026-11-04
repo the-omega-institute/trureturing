@@ -1,0 +1,15 @@
+For the lower bound, the same cylinder space $V_t$ is contained in
+$\mathcal D$: if $F=\sum_{p\in A_t}x_p\mathbf1_{[p]}$, use the actual
+increment vector $z=\sum_{p\in A_t}x_p\delta_p$ and root value zero.
+It has trace $F$ and energy $\sum x_p^2$. Accordingly, for $F\ne0$,
+
+$$
+\|F\|_{\mathscr G}^2=\sum_{p\in A_t}m(p)|x_p|^2
+   >bt\sum_{p\in A_t}|x_p|^2,\qquad
+\mathcal E(F)\le\sum_{p\in A_t}|x_p|^2
+   <\frac1{bt}\|F\|_{\mathscr G}^2.
+\tag{2.10}
+$$
+
+Minimality of $z_F$ can only improve this bound; no equality between
+this chosen extension and the minimizing one is required.

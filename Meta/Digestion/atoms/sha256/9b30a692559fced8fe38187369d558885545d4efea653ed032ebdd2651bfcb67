@@ -1,0 +1,69 @@
+**Definition 35.1 (the literal word and its fixed factors).** Work in
+finite-dimensional complex Hilbert spaces with specified orthonormal
+coordinate bases. Put $k=\overline{\mathbb Q}\subset\mathbb C$, the field
+of all algebraic complex numbers, and $M_a=M_a(\mathbb C)$.
+An algebraic linear map between matrix spaces means a complex-linear map
+whose coefficients in the matrix-unit bases belong to $k$.
+Write $\operatorname{Ad}_U(X)=UXU^\dagger$.
+
+Fix any one finite actual classical source/control execution of the
+[source-owned actuator, §§60.1--60.3 and 62.1](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md#60-a-source-owned-finite-actuator-for-the-installed-whole-rho-interaction).
+Its original source is the authentic PR57 packet with fixed leaf cap
+$H\ge1$, original INITIAL and preparation occurrence, $2H-1$ token
+slots, original guard and original chronological records. Its address
+bank has $K=2^H-1$ qubits and the distinct reference qubit $r$;
+§62 additionally supplies $c,u,v$. Its actual private enables are obtained
+by the locked, paid packet scan and flag computation of §60, with all
+borrowed cursors restored. The original source service, refusals, copies
+and absorbing Stop keep their original meanings. A finite quantum word
+considered here finishes before Stop.
+
+Let $\mathscr K=(\mathbb C^2)^{\otimes n}$ contain all the finitely many
+qubits used in the word. A qubit constructed later in the run can be
+represented mathematically by its stipulated initial factor and identity
+evolution until its construction cut; this changes no actual construction
+order or price. The word $W=U_L\cdots U_1$, $L\ge0$, uses the literal
+actuator factors
+
+$$
+\begin{aligned}
+P_p(v,\xi)&=\operatorname{diag}(1,e^{-iv\xi})_p,\\
+B_{pq}(v,\xi)|_{\operatorname{span}\{|10\rangle,|01\rangle\}}
+ &=\begin{pmatrix}\cos(v\xi)&i\sin(v\xi)\\
+                    i\sin(v\xi)&\cos(v\xi)\end{pmatrix},
+\qquad B_{pq}|00\rangle=|00\rangle,\quad
+B_{pq}|11\rangle=|11\rangle,
+\end{aligned}
+\tag{35.1}
+$$
+
+where $p\ne q$, $v\in\{0,1\}$ and
+$\xi\in\mathbb Z[1/2]$ is an angle in radians. Untouched factors are
+identities. The other allowed factors are explicitly specified fixed
+unitaries $G$ with **all** their matrix entries algebraic, on their
+specified physical supports. Their number, order and positions are part
+of this word. Classical service and ideal holds act as quantum identity.
+There is no intermediate quantum measurement, quantum-dependent branch,
+reset, postselection or discarding inside $W$. The chosen classical
+execution determines $W$ independently of its logical matrix input;
+it does not obtain quantum amplitudes as classical control data.
+
+Freeze the actual classical choices, private enables, signs, denominators,
+wiring and fixed factors of this execution. Define $W_0$ by replacing
+every $P/B$ occurrence by identity and retaining every $G$ occurrence in
+its original position. This is a mathematical comparison of the chosen
+word, not a rerun of its controller with altered replies. In particular
+an executed physical SWAP, the signed fermionic-swap matrix or another
+algebraic permutation gate is a fixed factor if separately supplied as
+such, and remains in $W_0$ with its complete matrix.
+Descriptions of wires and tensor-coordinate identifications are not
+additional executed permutation gates. If a swap is instead synthesized
+from $P/B$ factors, those factors remain subject to (35.1).
+
+The signed-dyadic convention is the executed catalog of §§60.1 and 62.9.
+The real-angle $\pi/2,\pi/4$ factors in §62.7's reference word are
+rounded in that catalog; they are not extra exact factors of (35.1).
+The full algebraicity premise on each $G$ also applies to any balanced
+preparation completion admitted as a fixed factor. Knowing only its
+action on $|r\rangle$ does not specify its other columns.
+

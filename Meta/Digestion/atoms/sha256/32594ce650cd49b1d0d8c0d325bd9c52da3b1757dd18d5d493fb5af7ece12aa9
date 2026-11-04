@@ -1,0 +1,8 @@
+## 4. Boundary and source correspondence
+
+The construction uses ordinary powers, with a black source required at every force. It remains valid when some or all legs have the boundary length $k+1$; it also includes $m=2$ and $k=1$. For $k=1$, $C$ is empty and the recurrence consists of consecutive two-term windows, while (3.8) still has the exact tree support. No strict-distance power, positive-semidefinite requirement, multiple-center extension, or equal-length restriction is used.
+
+The equal-leg statement in Abiad, Flagg, Ghasemi Nezhad and Zeijlemaker, *The Zero Forcing Number of Graph Powers*, arXiv:2610.03892v1, §3, Proposition 9 and Conjecture 10, is the supplied equal-length case. The repository source `D5/S3/Combinatorics/SpectralGraph/SpiderPowerZeroForcing` and its problem record `Problems/abiad-equal-legged-spider-power-zero-forcing.md` correspond to that case and its nonsymmetric matrix argument; they are used here as the original source correspondence, while (3.6)--(3.10) give the independent-length symmetric construction. The row-kernel restriction argument is the classical propagation lemma in Alon, *A propagation process on Cayley graphs*, Theorem 2.1. Path-power and tree-power minimum-rank facts are classical intermediate supplies in DeAlba et al., *Minimum rank of powers of trees*, ELA 23 (2012), DOI 10.13001/1081-3810.1511; no separate equal-leg, path, or tree theorem is asserted here.
+
+The theorem settles the stated independently varying-length family. It makes no claim about hypotheses outside Definition 1.1 or about a broader external mixed-length problem.
+

@@ -1,0 +1,21 @@
+**Corollary 24.1 (No independent terminal pairs at the identical base).**
+At every base in Theorem 19.2 both original clock-seven functions
+$f_{MJ}$ and $f_{MM}$ are injective on the entire child. In particular
+there are no four actual worlds in that child satisfying
+
+$$
+W_0\ne W_1,\quad f_{MJ}(W_0)=f_{MJ}(W_1),\qquad
+W_2\ne W_3,\quad f_{MM}(W_2)=f_{MM}(W_3).
+\tag{24.2}
+$$
+
+The two pairs may otherwise share any labels, have independent gains
+and drifts, and have unrelated common terminal values. The locator
+need not be any $W_i$.
+
+Proof. Theorem 19.2 identifies every actual label in this one child
+with $W$. Each within-pair distinctness in (24.2) is therefore
+impossible, and each of the two functions is injective. Both use the
+same source, gain, drift and clock seven of their respective worlds,
+as in F, (30.9); the alternatives are not acquired as extra ports. ∎
+

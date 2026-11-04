@@ -1,0 +1,38 @@
+**Lemma 12.2 (Faithful generic J equation).** The polynomial
+$J_{\rm lin}$ is primitive, has $647$ monomials, $x$-degree $18$,
+$z$-degree $1$, and total degree $21$. It represents the robust
+$\tau_J$ of (9.2) in the generic carrier field, both in characteristic
+zero and after reduction modulo $101$.
+
+Proof. Before substituting $d=\delta$ put
+$B_n=294D-10dD-5a_2$, $C_n=25D^2d^2+B_n^2$ and
+$N_n=-5dDa_0+B_na_2$. Coefficient expansion gives
+
+$$
+5dDN_n+a_0C_n-B_nf=0.
+\tag{12.2}
+$$
+
+Dividing only in the generic field shows
+$dN_0+H_0C_0=0$ on $f=0$. Hence $C_0/N_0=-d/H_0$ where the latter
+expression is defined generically. Substitution in (9.2), followed by
+multiplication by $2Da_0a_1$, gives exactly $G=0$.
+Polynomial division also gives
+
+$$
+f\mid a^2G-L_Jd-T_J^{\rm rem},\qquad a=-10A_6.
+\tag{12.3}
+$$
+
+Combining the linear remainder with $\alpha d+\beta=0$ gives (12.1).
+The exact divisions and the generic cancellations are specified by these
+finite tests:
+
+| Quantity | Result over $\mathbb Q$ and over $\mathbb F_{101}$ |
+| --- | --- |
+| $T_J^{\rm rem}\alpha-L_J\beta-6400D^6F_0A_6^2J_{\rm lin}$ | $0$ |
+| $\gcd_x(R,6400D^6F_0A_6^2)$ | $1$ |
+| $\gcd_x(R,a)$ | $1$ |
+| $\gcd_x(R,\alpha)$ | $1$ |
+| $\gcd_x(R,([d^0]a_0)\alpha-([d]a_0)\beta)$ | $1$ |
+| $\gcd_x(R,[z]J_{\rm lin})$ | $1$ |

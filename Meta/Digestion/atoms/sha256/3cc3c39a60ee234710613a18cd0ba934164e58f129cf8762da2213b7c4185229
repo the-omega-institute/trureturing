@@ -1,0 +1,178 @@
+**Theorem 40.2 (An exact information profile for the common-copy seam).**
+The separator observation of §39 has the following three properties.
+For $P_3$, nonnegative integer data $(m,X,Z,Y)$ determine precisely
+the histogram family
+
+$$
+h=(m-X-Y-Z+K,\ X-K,\ Z,\ Y-K,\ K),
+\qquad
+\max(0,X+Y+Z-m)\le K\le\min(X,Y),
+\tag{40.2}
+$$
+
+where $K$ ranges over integers. If the interval is empty there is
+no separator realization. Given equal $(m,X,Z,Y)$, prescribed
+histograms agree if and only if their $K$ values agree; for total
+fibres the exact global criterion is instead
+$\bigcap_a\mathcal K_a\ne\varnothing$.
+
+For an arbitrary finite separator $H$ with $q$ vertices and
+$D_H=|\operatorname{Ind}(H)|$, normalization and the $q$ vertex
+means have rank $q+1$. Exactly $D_H-q-1$ further independent
+linear statistics are necessary and sufficient to recover every
+real probability law on its legal patterns. They may be chosen as
+
+$$
+\mu_T=\sum_{I\supseteq T}p_I,
+\qquad T\in\operatorname{Ind}(H),\quad |T|\ge2.
+\tag{40.3}
+$$
+
+Finally, let $P$ and $Q$ be fixed full probability laws on the
+independent sets of two branches, with separator laws $p$ and $q'$.
+Among couplings of these full branch laws, the least probability
+that their two separator patterns disagree is
+
+$$
+\operatorname{TV}(p,q')
+=\frac12\sum_{J\in\operatorname{Ind}(H)}|p_J-q'_J|.
+\tag{40.4}
+$$
+
+For $P_3$, write $\kappa_P=\kappa(p)$ and
+$\kappa_Q=\kappa(q')$. With identical three vertex means,
+(40.4) equals $2|\kappa_P-\kappa_Q|$. For two fixed arrays with the same
+positive common degree $m$ and the same three totals, the minimum
+number of mismatched rows under permutation is
+$2|K_P-K_Q|$.
+
+Proof. Solving (40.1) and the normalization equation gives every
+entry in (40.2). Requiring all five entries to be nonnegative
+gives exactly the displayed interval, since $Z\ge0$ is already
+assumed. Conversely any integer in that interval yields a histogram
+of $m$ legal separator rows: simply take each pattern its stated
+number of times. Extension to a branch with prescribed private
+totals can restrict this interval further; that restriction is
+exactly what $\mathcal K_a$ records. By (40.2), $K\mapsto h$ is
+injective at fixed totals. Substituting it in (39.4) proves the
+intersection criterion. No assertion that $\mathcal K_a$ is the
+whole separator interval, or even an interval, is needed.
+
+For example, at $m=2$, $(X,Z,Y)=(1,0,1)$, the endpoint values
+$K=0,1$ give respectively the arrays
+$\{\{1\},\{3\}\}$ and $\{\varnothing,\{1,3\}\}$.
+Their means coincide and their histograms differ. If both branches
+are just $P_3$ with these totals, each has $\mathcal K_a=\{0,1\}$.
+Choosing different endpoint arrays does not obstruct existence:
+one can replace a chosen array and align at either common $K$.
+In contrast, the private paths of Theorem 39.2, attached at the
+nonedge $1,3$ and with occupancy zero at $2$, force the attainable
+sets $\{1\}$ and $\{0\}$. This pair does obstruct existence.
+At $m=0$ all totals and $K$ are zero; no normalized $\kappa$ is
+defined or needed.
+
+For the general rank statement, form the $(q+1)$-by-$D_H$ matrix
+whose column at $I$ is $(1,\mathbf1_I)$. The empty-set column is
+$(1,0)$, and subtracting it from the singleton columns gives
+$(0,e_v)$. These $q+1$ columns are independent, so the rank is
+exactly $q+1$ and its real kernel has dimension $D_H-q-1$.
+Adding fewer than this many scalar linear statistics leaves a
+nonzero kernel vector $v$. Its coordinate sum is zero. Starting
+from the uniform strictly positive legal-pattern law $p_*$,
+both $p_*+\varepsilon v$ and $p_*-\varepsilon v$ remain probability
+laws for sufficiently small $\varepsilon>0$. They have identical
+augmented observations and differ. Thus the lower bound applies
+to recovery of all real probability laws, including a neighborhood
+of a full-support law. A particular face of the probability
+simplex can have a smaller fibre dimension.
+
+For attainability of the bound set $\mu_\varnothing=1$ and include
+the singleton moments as the already observed means. The inverse
+of the complete moment transform is
+
+$$
+p_I=\sum_{\substack{T\in\operatorname{Ind}(H)\\T\supseteq I}}
+(-1)^{|T|-|I|}\mu_T.
+\tag{40.5}
+$$
+
+To check it, substitute $\mu_T=\sum_{J\supseteq T}p_J$.
+The coefficient of $p_J$ is zero unless $J\supseteq I$; in that
+case it is $\sum_{I\subseteq T\subseteq J}(-1)^{|T|-|I|}$.
+All intermediate $T$ are legal because $J$ is independent, so
+this sum is $(1-1)^{|J\setminus I|}$, equal to one precisely
+when $I=J$. For the reverse composition, the coefficient of
+$\mu_T$ in $\sum_{I\supseteq B}p_I$ is
+$\sum_{B\subseteq I\subseteq T}(-1)^{|T|-|I|}$ when $T\supseteq B$,
+and zero otherwise. The displayed sum is $(1-1)^{|T|-|B|}$,
+so only $T=B$ remains. In particular taking $B=\varnothing$
+gives total mass $\mu_\varnothing$.
+Therefore candidate moments specify a probability law exactly
+when $\mu_\varnothing=1$ and all inverse coordinates are
+nonnegative; those conditions give both total mass one and every
+stated moment. The full moment matrix is invertible. Its rows
+with $|T|\ge2$ number $D_H-q-1$ and complete the rank.
+
+This is incidence-algebra Möbius inversion on Boolean intervals,
+as in Rota, *On the foundations of combinatorial theory I. Theory
+of Möbius functions*, §3 [Rota40]. The legal-set poset itself
+need not be a Boolean lattice: a union of legal sets can be
+illegal. The corresponding path-law suppliers are *Hidden
+Relations*, C-28.3.2–C-28.3.3 and C-28.5.1 [Hidden40]; their
+support and inversion arguments are used here for a shared
+separator. For a clique, $D_H=q+1$ and there are no extra
+coordinates. For $P_3$, $D_H=5$, $q=3$, and the sole extra
+coordinate is $\mu_{\{1,3\}}=\kappa$. This is a dimension
+bound for independent linear observations. It is not a bound
+on integer bit encodings, nonlinear injections, storage, or
+computational resources.
+
+For (40.4), any boundary coupling $\pi$ has
+$\pi(J,J)\le\min(p_J,q'_J)$, so its agreement probability is
+at most $M=\sum_J\min(p_J,q'_J)$. Since both masses sum to
+one, $1-M=\frac12\sum_J|p_J-q'_J|$. To attain this bound,
+put the common mass $\min(p_J,q'_J)$ on each diagonal entry.
+The residual nonnegative masses
+$r_J=p_J-\min(p_J,q'_J)$ and
+$s_J=q'_J-\min(p_J,q'_J)$ have equal total $d=1-M$ and
+disjoint supports. If $d>0$, add $r_Js_L/d$ at $(J,L)$;
+all this added mass is off diagonal. If $d=0$, the diagonal
+already supplies the coupling. This is the finite maximal-coupling
+construction, the classical tool also developed for Markov
+chains by Griffeath, *A maximal coupling for Markov chains*
+[Griffeath40].
+
+It remains to preserve the full original branch laws, not merely
+their separator marginals. For every $(J,L)$ having positive
+coupling mass, one has $p_J>0$ and $q'_L>0$. Draw a left
+independent set conditionally under $P$ given separator $J$,
+and a right set conditionally under $Q$ given separator $L$,
+independently conditional on that pair. Summing over the other
+side gives $P$ and $Q$ back exactly. Zero-probability separator
+events receive no coupling mass and require no conditional law.
+This extension proves the optimum for the full branch laws.
+
+For arbitrary real $P_3$ laws with equal means, solving the
+same linear equations as (40.2) with total mass one gives
+
+$$
+p-q'=(\kappa_P-\kappa_Q)(1,-1,0,-1,1).
+\tag{40.6}
+$$
+
+Its $\ell^1$ norm is $4|\kappa_P-\kappa_Q|$, proving the
+factor two in (40.4). In two integer arrays match
+$\min(h_J,h'_J)$ rows in each block. All remaining rows can be
+paired arbitrarily; their pattern supports are disjoint, so all
+are mismatches. Conversely no permutation matches more rows of
+pattern $J$ than that minimum. The exact unmatched count is
+
+$$
+m-\sum_J\min(h_J,h'_J)
+=\frac12\sum_J|h_J-h'_J|=2|K_P-K_Q|.
+\tag{40.7}
+$$
+
+All match counts are integers, so the optimum is achieved by an
+actual permutation, without a rounding step. $\square$
+

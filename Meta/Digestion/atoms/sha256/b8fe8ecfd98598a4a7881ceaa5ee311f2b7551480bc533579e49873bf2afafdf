@@ -1,0 +1,30 @@
+**Proposition 15.2 (Equal physical length with unequal guarded likelihood ratios).** Fix $c\in D$ and $l,r\ge2$, and put
+
+$$
+M=f_c(l+r),\quad B=f_c(l)f_{\tau_l(c)}(r),\quad
+ a=\tau_{l+r}(c),\quad b=\tau_r(\tau_l(c)).
+\tag{15.1}
+$$
+
+If $F_a\ne F_b$, there are two finite gap words $u,u'$ ending in $w$ with the same physical length and
+
+$$
+0<\frac{L_b(u)}{L_a(u)}\ne\frac{L_b(u')}{L_a(u')}<\infty.
+\tag{15.2}
+$$
+
+This assertion applies also to the gaps preceding the periodic threshold in Proposition 14.1 and does not require choosing its period $L$.
+
+Proof. The two initial predictive states have the same absolute-continuity phase by (4.11). Every word ending in $w$ therefore merges their terminal predictive states. Once this pair has merged, any suffix multiplies both likelihoods by the same positive number and preserves their ratio.
+
+Suppose instead that all words ending in $w$ of each fixed physical length had a single ratio. Take any two such words $v,v'$ with physical lengths $h,h'$. Choose an integer $J$ so large that $J-h-W\ge2$ and $J-h'-W\ge2$. The two gap words
+
+$$
+v\,(J-h-W)\,w,\qquad v'\,(J-h'-W)\,w
+\tag{15.3}
+$$
+
+both have physical length $J$. Their ratios equal those of $v,v'$ respectively, since merging has already occurred after $v,v'$. The assumed equality at length $J$ forces the original ratios to agree. Thus every guard-ending word has one ratio $k>0$.
+
+On each of these cylinders the two entire future measures factor into their finite likelihoods and a common terminal predictive law. Hence $dF_b/dF_a=k$ there. Proposition 5.3 makes the union of cylinders containing a completed guard have full measure for both laws. Normalization gives $k=1$, so $F_a=F_b$, a contradiction. Positivity of all finite likelihoods follows from (4.7). This argument gives no bound on $J$ or on the witness lengths. The premise $F_a\ne F_b$ can in particular be supplied by a nonzero tested binary cylinder in Proposition 10.2. $\square$
+

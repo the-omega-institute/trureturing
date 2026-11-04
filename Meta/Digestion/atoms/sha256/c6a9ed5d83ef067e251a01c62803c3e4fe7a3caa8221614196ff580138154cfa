@@ -1,0 +1,86 @@
+**full-root** literal $vwa$. A negative reply marks $w$ terminal; a
+positive reply schedules both children, since the actual tree is full
+binary. This is a finite scan of the existing cone with one query per
+node, including every terminal's absent-child query. It uses no age
+bound, orientation guess or hidden semantic navigation. Count the
+acquired leaves; their number $F_{T+2}$ uniquely gives $T$. If a supplied
+maturity premise is absent, this test may instead certify that the
+scanned cone is too young; the present theorem authorizes no update or
+free recut to make it mature.
+
+Decode the visible chronological batches by Theorem 2.1. Take the first
+$2D$ entries of batch $s_D$ as a word $w$. Find the smallest
+$q\in\{1,\ldots,D\}$ for which
+
+$$
+ w_i=w_{i\bmod q}\quad(0\le i<2D).
+ \tag{PCR.12}
+$$
+
+The actual least period $p$ passes, so a candidate exists. Conversely
+extend $w_0\cdots w_{q-1}$ periodically. This extension and the actual
+shifted core have periods $q,p\le D$ and agree for $2D$ entries. They
+are equal: their difference is annihilated by
+$(E^p-1)(E^q-1)$, of degree $p+q\le2D$ with nonzero constant term,
+and the zero-block recurrence argument of Theorem 4.1 applies. Therefore
+$p\le q$, and the smallest passing value is exactly $p$.
+
+This is also a direct application, with slack, of the classical
+Fine--Wilf periodic extension boundary $p+q-\gcd(p,q)$; see [Rankin,
+Introduction][RAN] and [Karhumaki, §1, Theorem 5, printed pp. 9--10][KAR].
+The product proof above gives
+all the weaker $2D$ bound needed here without requiring that sharp
+boundary or a new periodicity theorem.
+
+Put $x_i=w_{i\bmod p}$, so $x_i=y_{I_{s_D}-1+i}$. Match the first $p$
+entries of each of the next two decoded batches against the $p$ cyclic
+shifts of $x$. Their unique phases $b,c\in\mathbb Z/p\mathbb Z$ satisfy
+
+$$
+ b=I_{s_D+1}-I_{s_D},\qquad
+ c=I_{s_D+2}-I_{s_D},\qquad
+ I_{s_D}=c-b,\qquad I_{s_D+1}=c.
+ \tag{PCR.13}
+$$
+
+Existence follows from the actual source correspondence; uniqueness
+follows from the least period of $x$. The last two equalities follow
+by the Fibonacci recurrence, not by an external clock observation.
+Recover the aligned core by
+
+$$
+ y_i=x_{i-I_{s_D}+1}\qquad(i\in\mathbb Z/p\mathbb Z),
+ \tag{PCR.14}
+$$
+
+and iterate (PCR.6) backwards to obtain both initial residues.
+For $p=1$, the two phases and all residues are zero; (PCR.14) still
+returns the actually observed constant, so zero is not confused with
+one. The zero core may separately use an empty clock record, but its
+least positive period remains one.
+
+For the evaluator, start the normalized root descriptor at $(0,\beta)$.
+At a relative node with descriptor $(b,\sigma)$, its branch time is
+$\theta=b+2-\mathbf1_{\sigma=\beta}$. Compute the actual event index
+modulo $p$ by ACR (ACR.115):
+
+$$
+ J(w)=I_{\theta_w}+
+   \sum_{ub\preceq w}\lambda_{\sigma_{ua}}(\theta_w-1-\theta_u)
+       \pmod p,\qquad
+ \lambda_\alpha(h)=F_h,\quad\lambda_\beta(h)=F_{h+1}.
+ \tag{PCR.15}
+$$
+
+Its orientation is $y_{J(w)-1}$. Create the corresponding two initial
+child descriptors and continue only along the requested word, stopping
+at a node not yet branched at $T$. Descriptor ages determine absence,
+terminal alpha/beta, or branch exactly as in GPO (GPO.98), with the
+normalized beta root exception. The ACR index proof and induction on
+word length show that these are the actual local answers. In particular
+the presence projection evaluates the acquired support and every future
+normalized cut on the same core-only source. No exterior roster or
+integer clock is used. The final installation writes the entire payload
+and evaluator's actual callable control before exposing ready; binding,
+grants and completion remain separate physical relations. $\square$
+

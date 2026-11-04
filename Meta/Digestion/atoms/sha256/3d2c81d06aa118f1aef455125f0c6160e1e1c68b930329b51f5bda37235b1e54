@@ -1,0 +1,12 @@
+**Theorem 4.2 (one controller for every positive entry).** There is an acquisition-and-behavior-return controller for every $C_0\ge1$, receiving its acquired $\eta_o(C_0)$, if and only if on every prime axis
+
+$$
+\boxed{\quad e=0\quad\text{or}\quad e=e_o\quad\text{or}\quad
+(p=2,\ e_o=h,\ e=h-1).\quad}
+\tag{AQBR.14}
+$$
+
+**Proof.** The unit old fiber has $r_p=0$ on every axis, realized by the same source $1$. Whenever $e>0$, Theorem 4.1 therefore requires $m_p=1$. If $e_o<h$, (AQBR.12) is $p^{e_o-e}$, equal to one exactly when $e=e_o$. If $e_o=h$, it is $\varphi(p^{h-e})$, equal to one exactly when $h-e=0$, or when $p=2$ and $h-e=1$. These are precisely the alternatives in (AQBR.14), together with $e=0$, which has no low axes to obstruct return. A violating axis supplies the CRT witness in the proof of Theorem 4.1 on the old unit fiber, giving necessity.
+
+Under (AQBR.14), every old fiber satisfies (AQBR.13). There are finitely many old labels, all computable on residues. A single public procedure takes the received label, constructs its full-fiber table, and runs Theorem 3.1 followed by Theorem 5.1. This gives sufficiency on all positive entries with a common finite algorithm. $\square$
+

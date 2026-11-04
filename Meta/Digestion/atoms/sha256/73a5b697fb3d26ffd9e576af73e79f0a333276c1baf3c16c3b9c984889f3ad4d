@@ -1,0 +1,109 @@
+**Theorem 12.2 (finite supplementation for arbitrary joint support on this source).** Under Definition 12.1, for every prescribed $\epsilon>0$ the following are equivalent:
+
+1. A successful finite static supplement exists on the entire language (12.3).
+2. A successful complete finite names-only online supplement exists on that language.
+3. Either $A,B$ are real-linearly independent, or
+   $B=\lambda A$ for a positive irrational $\lambda$ and $A\notin L$.
+
+The criterion is independent of the positive values of $\epsilon$ and of the fixed arbitrary crossing and exit vectors $C,E$. Registers may be chosen separately at each tolerance. An explicit achieved complete-state bound is as follows. In the independent case define
+
+$$
+\begin{aligned}
+S_{\epsilon,K}
+ &=\{(j,k)\in\mathbb Z^2:jA+kB\in\epsilon\Delta K\},\\
+q_{\epsilon,K}
+ &=1+\max_{(j,k)\in S_{\epsilon,K}}\max(|j|,|k|).
+\end{aligned}
+\tag{12.4}
+$$
+
+The set is finite and contains $(0,0)$. The common update (10.8), with $q=q_{\epsilon,K}$, has exactly $q_{\epsilon,K}^2$ reachable complete states and succeeds. In the irrational collinear case with $A\notin L$, one state succeeds at every tolerance. These are construction bounds, not a general minimum formula.
+
+Proof. First specialize the observation-intersection principle of Lemma 9.2 and (10.6) to the actual support. Two final vector sets intersect exactly when
+
+$$
+\bigl(T(u)+\epsilon K\bigr)\cap
+\bigl(T(v)+\epsilon K\bigr)\ne\varnothing
+\quad\Longleftrightarrow\quad
+T(u)-T(v)\in\epsilon\Delta K.
+\tag{12.5}
+$$
+
+Indeed, an intersection gives $T(u)-T(v)=\epsilon(w-v')$ with $w,v'\in K$, and such an equality gives an intersection by reversing the calculation. This also holds at $\epsilon=0$. Thus an arbitrary static label $h$ succeeds exactly when
+
+$$
+u\ne v,\quad z(u)=z(v),\quad h(u)=h(v)
+\quad\Longrightarrow\quad
+T(u)-T(v)\notin\epsilon\Delta K.
+\tag{12.6}
+$$
+
+Failure supplies the same allowed decoder input for two different words. Sufficiency returns the unique compatible legal word and rejects outside their observation union. This is a support-relative use of the existing overlap criterion, without assuming that overlap is transitive or that a label admits an online update.
+
+For complete explicitness, in the $p$ row the difference is $(m-m')A$, with equal labels $h(a^m)=h(a^{m'})$. In either the $s$ or the $t$ row it is $(m-m')A+(n-n')B$, with labels compared within that row. Different rows never compete because their typed endpoints are exact. Every integer pair $(j,k)$ is realized as a same-endpoint difference at $s$: take $(m,n)=(\max(j,0),\max(k,0))$ and $(m',n')=(\max(-j,0),\max(-k,0))$. For $(j,k)\ne(0,0)$ these are distinct actual words, even if their totals coincide. In particular, no supplement is needed exactly when
+
+$$
+(j,k)\in\mathbb Z^2\setminus\{(0,0)\}
+\quad\Longrightarrow\quad
+jA+kB\notin\epsilon\Delta K.
+\tag{12.7}
+$$
+
+The endpoint offsets $C$ and $C+E$ cancel; no comparison has substituted independent coordinates from different histories. An online register induces a static label by $h=\mu$, proving $2\Rightarrow1$.
+
+Suppose $A,B$ are independent. To see that (12.4) is finite, choose any invertible two-row submatrix $D$ of the matrix with columns $A,B$, and set
+
+$$
+R=\max_{v\in K}\|v\|_\infty,\qquad
+\kappa=\max_i\sum_j|(D^{-1})_{ij}|.
+\tag{12.8}
+$$
+
+If $(j,k)\in S_{\epsilon,K}$, restriction to these two rows and the row-inverse estimate already used in (11.13) give
+
+$$
+\max(|j|,|k|)\le 2\epsilon R\kappa.
+\tag{12.9}
+$$
+
+Hence (12.4) is a maximum over a finite subset of the integer square of that radius. In particular $q_{\epsilon,K}\le\lfloor2\epsilon R\kappa\rfloor+1$; the latter integer can also be used as a conservative modulus. This estimate is an existing finite-dimensional supplier, not a new rank or packing assertion.
+
+Use exactly the complete state and update of (10.8):
+
+$$
+\begin{gathered}
+M=(\mathbb Z/q\mathbb Z)^2,\qquad m_0=(0,0),\\
+U_a(x,y)=(x+1,y),\qquad U_c(x,y)=(0,x),\qquad
+U_e(x,y)=(x,y).
+\end{gathered}
+\tag{12.10}
+$$
+
+The same $U_a$ applies at both loop vertices. The already established induction (10.9) gives $(m,0)$ on the $p$ row and $(n,m)$ on both other rows, modulo $q$. Every persistent component is one of these two residues. There is no stored or externally read phase, selector, vertex, clock, event index or terminal flag. Every pair of residues is reached at $s$ by legal nonnegative exponents, so exactly $q^2$ full states, including initialization and all cuts, are charged.
+
+Distinct same-endpoint histories with equal states have a nonzero integer difference pair in $q\mathbb Z^2$; on the $p$ row its second component is zero. If their observation sets overlapped, that pair would belong to $S_{\epsilon,K}$, where both absolute coordinates are less than $q$ by construction. This is impossible for a nonzero pair in $q\mathbb Z^2$. Thus (12.6) holds at every endpoint and cut. This proves sufficiency in the independent case by reusing the delivered online construction, without applying a static-to-online principle to an arbitrary label.
+
+If $A,B$ are dependent, their strict coordinatewise positivity gives a unique $\lambda>0$ with $B=\lambda A$. Suppose first that $\lambda$ is irrational and $A\notin L$. For a nonzero integer pair, $j+\lambda k\ne0$, and $(j+\lambda k)A\notin L$. Since $\epsilon\Delta K\subseteq L$, condition (12.7) holds for every tolerance. The constant register therefore succeeds.
+
+It remains to prove impossibility in the other dependent cases. If $\lambda=b/a$ with positive integers $a,b$, then for every $N\ge0$ the $N+1$ distinct legal histories
+
+$$
+a^{bj}c\,a^{a(N-j)},\qquad 0\le j\le N,
+\tag{12.11}
+$$
+
+have endpoint $s$ and identical total $C+bNA$. Their observation sets share that center because $0\in K$. For any $Q$-valued static label take $N=Q$. Two labels agree, so (12.6) fails, including at error zero. Appending $e$ also gives terminal witnesses.
+
+Finally suppose that $\lambda$ is irrational and $A\in L$. Relative interior supplies $\rho>0$ such that $[-\rho,\rho]A\subseteq K$. For any proposed alphabet size $Q\ge1$, choose an integer $J>0$ with $\lambda/J<2\epsilon\rho$ and an integer $N$ with $N+1>QJ$. Reuse the finite-bin mechanism of Theorem 10.3 on the fractional parts $\{m/\lambda\}$, $0\le m\le N$. One of $J$ half-open bins contains $Q+1$ distinct indices $m_i$. Choose an integer $H\ge\max_i\lfloor m_i/\lambda\rfloor$ and let $n_i=H-\lfloor m_i/\lambda\rfloor\ge0$. The actual words $u_i=a^{m_i}ca^{n_i}$ have totals
+
+$$
+T(u_i)=C+t_i A,\qquad
+t_i=\lambda\bigl(H+\{m_i/\lambda\}\bigr),\qquad
+\max_i t_i-\min_i t_i<2\epsilon\rho.
+\tag{12.12}
+$$
+
+The single vector $y_*=C+\tfrac12(\max_i t_i+\min_i t_i)A$ lies in every $T(u_i)+\epsilon K$: each required error belongs to $[-\epsilon\rho,\epsilon\rho]A$. All these distinct histories end at $s$. Two share any $Q$-valued label, precluding recovery. This adapts the delivered obstruction to the actual noisy direction inside the support; a small maximum-norm distance alone would not imply overlap for a singular support. Translation by $E$ gives the same terminal obstruction. These alternatives exhaust dependent positive vectors and prove necessity. $\square$
+
+The finite candidate decoder remains a mathematical construction under the arbitrary-real contract. For a given endpoint subtract its offset $b\in\{0,C,C+E\}$. In the last two rows every compatible pair satisfies $mA_1+nB_1\le y_1-b_1+\epsilon R$; positivity bounds both indices. At $p$ there is only $m$. Enumerate these finitely many nonnegative candidates, check the final state or label and the exact membership $y-T(u)\in\epsilon K$, and use (12.6). This does not supply effective equality, irrationality, span or support-membership decisions for unspecified real constants or an unspecified compact set.
+

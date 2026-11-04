@@ -60,7 +60,7 @@ private theorem referenceTensorJump_eq (c a k S : ℝ) (g : Fin 5 → ℝ) (i : 
   rw [← OriginalReferenceLegOutput.tensor_jump_intertwining,
     LinearIsometryEquiv.apply_symm_apply]
 
-private theorem source_coefficient (c a beta : ℝ) (m : ℤ) (theta : Fin 5 → ℝ)
+theorem source_coefficient (c a beta : ℝ) (m : ℤ) (theta : Fin 5 → ℝ)
     (k : ℝ → ℝ) (i : Fin 5) (t : ℝ) (hc : c < 1 / 2) (ha : a ∈ Ioo 0 c) :
     failureDensity c a beta m theta k i t = modeCoefficient c a k i t * p c a i := by
   rw [failureDensity, jump_action]

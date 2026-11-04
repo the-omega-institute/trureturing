@@ -1,0 +1,43 @@
+**Definition 24.2 (the actual periodic-branch source).** Let the actual image consist of the following distinct states, all of the one type:
+
+$$
+X=\{o,w,v,s\}\ \sqcup\ \{t_j:1\le j\le13\}
+ \ \sqcup\ \{c_{m,j}:m\in\{3,7,4\},\ 0\le j<m\}.
+\tag{24.2}
+$$
+
+The fixed actual root is $o$. In transition formulas only write $t_0=v$. Put
+
+$$
+W_3=aab,\qquad W_7=aaaaabb,\qquad W_4=aaab.
+\tag{24.3}
+$$
+
+The entire legal transition table outside the cycles is
+
+| Actual state | Successor under $a$ | Successor under $b$ |
+| --- | --- | --- |
+| $o$ | $v$ | $w$ |
+| $w$ | $t_5$ | $t_{13}$ |
+| $t_j$, $1\le j\le13$ | $t_{j-1}$ | illegal |
+| $v$ | $c_{3,0}$ | $s$ |
+| $s$ | $c_{7,0}$ | $c_{4,0}$ |
+
+At $c_{m,j}$ precisely the token in position $j$ of $W_m$, counting from zero, is legal, and it leads to $c_{m,(j+1)\bmod m}$. The other token is illegal. There are no further edges. The indices in (24.2) describe actual source states, not operation parameters, aliases or additional executed symbols. Every legal edge has native duration exactly one in the same unit.
+
+Declare the current readout to be the same value $\ast$ at every actual state, and the complete legal-edge record to be $(c,1,\mathrm{ok})$ for an executed token $c$. There are no other fields, executed failure edges or terminal outcomes in this source. Missing transitions are illegal attempts, distinguished as in Definition 1.1. Complete responses retain all its stipulated readouts, records and legality distinctions. The actual image is closed under the displayed partial maps. No stopping operation is added, and no finite horizon is imposed: all legal finite root histories, including arbitrarily many cycle laps, the empty history and every stopping cut, remain in scope.
+
+For $0\le j<m$, let $W_m[0:j]$ denote the prefix of length $j$, including the empty prefix when $j=0$. Set
+
+$$
+\begin{aligned}
+&p_0=a,\qquad p_1=ba^6,\qquad p_2=bba^{13},
+ &&(n_0,n_1,n_2)=(1,7,15),\\
+&\rho_3=a,\qquad \rho_7=ba,\qquad \rho_4=bb,
+ &&r_m=|\rho_m|.
+\end{aligned}
+\tag{24.4}
+$$
+
+Thus $n_i=|p_i|$. All three $p_i$ end at $v$, and $\rho_m$ is the specified route from $v$ to $c_{m,0}$.
+

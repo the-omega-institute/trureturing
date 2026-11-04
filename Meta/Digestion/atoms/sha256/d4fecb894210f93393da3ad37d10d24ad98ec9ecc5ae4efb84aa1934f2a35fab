@@ -1,0 +1,91 @@
+**Theorem 42.4 (attained phase value and exact original minimizing
+preimage).** For every $0<\xi\le R$,
+
+$$
+          m(\xi)=m_{\mathrm{ph}}(\xi),\qquad
+          \mathcal A_{\mathrm{ph},\xi}
+                         =\mathcal A_\xi\cap\mathcal P_\xi.
+\tag{42.24}
+$$
+
+For any $X=(E,U)$ at that level and any spectral/Birkhoff
+decomposition in Theorem 42.3,
+
+$$
+\begin{aligned}
+ X\in\mathcal A_\xi
+ \quad\Longleftrightarrow\quad&
+  (E,U_j)\in\mathcal A_{\mathrm{ph},\xi}
+                          \quad\hbox{for every }j,\\
+ & (a_j-a)F^{1/2}=0\quad\hbox{for every }j.
+\end{aligned}
+\tag{42.25}
+$$
+
+This condition holds for every such decomposition when $X$ minimizes,
+and its validity for one such decomposition is sufficient.
+Moreover,
+
+$$
+       \mathcal A_\xi=\mathcal G_\xi
+       \quad\Longleftrightarrow\quad
+       \mathcal A_{\mathrm{ph},\xi}=\mathcal G_\xi.
+\tag{42.26}
+$$
+
+Every nongeometric original global minimizer has a nongeometric phase
+global replacement with exactly the same effect. In particular, a
+mixed original global minimizer exists at a level in this interval
+if and only if a mixed phase global minimizer exists there.
+
+*Proof.* Theorem 42.3 compares every original pair with a phase pair
+at the same original level, giving $m\ge m_{\mathrm{ph}}$.
+The reverse inequality is set inclusion. Both minima are attained
+by compactness, proving (42.24).
+Every summand $f(E,U_j)$ in (42.16) is at least their common
+minimum and every variance summand is nonnegative. All weights
+are positive. Equality to $m(\xi)$ is therefore equivalent to
+exactly the two conditions in (42.25).
+For positive definite $F$, the variance condition forces $a_j=a$.
+For rank-one $F$ it only forces the displayed seminorm condition,
+and is not replaced by equality of the two amplitude rows.
+
+Suppose now that every phase global minimizer belongs to
+$\mathcal G_\xi$, and let $X\in\mathcal A_\xi$.
+By (42.25), all its positive-weight replacements lie in
+$\mathcal G_\xi$. The selected effects for its two orientations
+are distinct because the selected $p,q$ are positive.
+Since $E$ is unchanged, it fixes one orientation $\tau$ for all
+these replacements. Every selected geometric pair has unique
+minimizing sign $+$ by (37.23), so the common sign in (42.15)
+must be $+$. Write their feedbacks as
+$\lambda_j\operatorname{diag}(w_\tau)U_+$, using exactly (39.2).
+The preserved complex active trace equals
+
+$$
+       \operatorname{Tr}(U_jU_+^\dagger)=2(1+x)\lambda_j,
+\tag{42.27}
+$$
+
+with the same selected $x>0$. It fixes $\lambda_j$, so all $U_j$
+coincide. Their averaged diagonal $w$ is consequently that same
+selected diagonal, with every coordinate of modulus one.
+For the actual unitary $UU_+^\dagger$, each row's entire squared
+norm is then already supplied by its diagonal entry. All its
+off-diagonal entries vanish. Thus $U$ is that selected feedback
+itself, and $X\in\mathcal G_\xi$.
+The phase assumption also gives $m=N$ and hence
+$\mathcal G_\xi\subseteq\mathcal A_\xi$, proving the forward
+rigidity needed in (42.26).
+Conversely, if $\mathcal A_\xi=\mathcal G_\xi$, (42.24) and
+$\mathcal G_\xi\subseteq\mathcal P_\xi$ prove its phase version.
+
+The same rigidity argument shows that a nongeometric original
+minimizer cannot have only geometric positive-weight replacements.
+At least one is nongeometric and keeps its exact original $E$.
+For a mixed original minimizer all replacements are mixed; in the
+opposite direction a phase mixed minimizer is already an original
+one by (42.24). No assertion that every original minimizer itself
+has phase feedback is made when the phase minimizing set is larger
+than $\mathcal G_\xi$. $\square$
+

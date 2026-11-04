@@ -1,0 +1,102 @@
+ The decoder $D$ is well-defined on every matching in $\mathcal M_L$,
+takes values in $\mathcal C_n$, and satisfies
+
+$$
+D(\rho M)=R_eD(M)\qquad(M\in\mathcal M_L) \tag{2.8}
+$$
+
+for every complete legal reverse extension $e$. If $I\in\mathcal F_n$
+and $M=D_0^{-1}(I)$, then for every integer $t\ge0$,
+
+$$
+R_e^tI=D(\rho^tM),\qquad
+R_e^tI=I\ \Longleftrightarrow\ \rho^tM=M. \tag{2.9}
+$$
+
+In particular $R_e^{n+4}I=I$, and its exact least period equals the
+rotational period of this matching.
+
+*Proof.* For any noncrossing matching cut on a line, the closing endpoint
+of a pair must match the most recent unmatched opening. Otherwise an
+opening between the proposed pair's endpoints would have to match a
+later closing, giving alternating endpoints. Therefore the opening/closing
+word determines the matching uniquely, by matching each close to that
+most recent opening. Conversely this rule constructs a noncrossing
+matching for every parenthesis word whose initial segments have at least
+as many openings as closings and whose total numbers agree.
+
+In particular $s_j<t_j$, and the separation gives $t_j-s_j\ge8$.
+For an ordinary matching, all sites are at most $n+2$. Each opening
+has a later partner, so $s_j\le n-6$; each closing has an earlier
+partner, so $t_j\ge9$. Consequently (2.7) gives nonempty intervals
+in $[n]$, with strictly decreasing starts and ends in row order. They
+are interval-closed by Proposition 2.2. Their shifted coordinates are
+exactly the original six sites, hence they belong to $\mathcal F_n$.
+
+Conversely, the starts $a_3<a_2<a_1$ and shifted ends
+$b_3+2<b_2+2<b_1+2$ of $I\in\mathcal F_n$ satisfy
+$a_{4-j}<b_{4-j}+2$. They form such a parenthesis word; the matching
+just constructed is the unique inverse of (2.7). This proves the
+bijection. In particular it recovers the matched pairs from the actual
+state; the matched pairs need not be its row-endpoint pairs.
+
+If $M$ contains one of $n+3,n+4$, eight-unit separation forbids any
+other endpoint among the sites that could cross the cut on rotating back
+by $j=1$ or $2$. The matching $\rho^{-j}M$ is therefore ordinary,
+with largest site $n+2$. Its decoder has $b_1=n$. Lemma 2.3 applies,
+so the nonordinary part of $D$ is well-defined, and all its values are
+actual interval-closed states.
+
+It remains to compare the last line of the boundary evolution with
+rotation. Start with an ordinary matching whose largest site is $n+2$,
+and write its raw endpoints as in Lemma 2.3. The partner of $n+2$
+is respectively
+
+$$
+\begin{array}{c|ccccc}
+\text{order}&W_1&W_2&W_3&W_4&W_5\\ \hline
+\text{partner}&u&u&w&v&w.
+\end{array} \tag{2.10}
+$$
+
+This follows directly from the most-recent-opening rule. Adding two to
+the ends does not change these orders because raw endpoints are
+separated by six. Under $\rho^3$, $n+2$ becomes $1$. Its partner
+changes from an opening to a closing; every other opening or closing
+keeps its type. There are no other crossings of the cut, because the
+second largest endpoint is at most $n-6$.
+
+For $W_1,W_2$, the new opening sites are $1,v+3,w+3$, and the
+new closing sites are $u+3,x+5,y+5$. Formula (2.7) gives the first
+$t=3$ line of (2.6). For $W_4$, they are $1,u+3,w+3$ and
+$x+5,v+3,y+5$, giving the second line. For $W_3,W_5$, they are
+$1,u+3,v+3$ and $x+5,y+5,w+3$, giving the third line. All these
+listed sequences are strictly increasing. Rotation preserves
+noncrossing, so the uniqueness of the matching from its word also
+proves equality of matched pairs, not only equality of site sets.
+We have established
+
+$$
+D_0(\rho^3M)=R^3D_0(M) \tag{2.11}
+$$
+
+at every such boundary configuration.
+
+If an ordinary matching has largest site less than $n+2$, then its
+decoder has $b_1<n$. Its rotation is ordinary, all endpoints translate
+by one, and Proposition 2.2 proves (2.8). If its largest site is
+$n+2$, the next matching has endpoint $n+3$, and the definition of
+$D$ and the $t=1$ line give (2.8). A matching with endpoint $n+3$
+rotates to one with endpoint $n+4$, and the $t=1,2$ lines give
+(2.8). Finally a matching with endpoint $n+4$ rotates to an ordinary
+matching, and (2.11), together with the $t=2,3$ lines, gives (2.8).
+These exhaust all matchings in $\mathcal M_L$. Induction proves the
+first equality in (2.9).
+
+If $R^tI=I$, its value has both endpoint sequences strictly decreasing.
+The decoder of a nonordinary matching has an endpoint equality, by
+Lemma 2.3, and thus cannot equal $I$. Hence $\rho^tM$ is ordinary.
+Injectivity of $D_0$ gives $\rho^tM=M$. The converse follows from
+the first equality in (2.9). Since $\rho^L$ is the identity, the least
+positive return times are equal and divide $L$. $\square$
+

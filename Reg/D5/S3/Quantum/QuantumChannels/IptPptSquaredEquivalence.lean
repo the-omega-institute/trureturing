@@ -104,6 +104,96 @@ def registration :
   familyRecord := none
   options := #[] }
 
+namespace AmplKron
+
+abbrev signature : Signature where
+  Params := Σ _𝕜 : Type, Σ _m : ℕ, ℕ
+  State p := Matrix (Fin p.2.1 × Fin p.2.2) (Fin p.2.1 × Fin p.2.2) p.1
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := Matrix (Fin p.2.1 × Fin p.2.2) (Fin p.2.1 × Fin p.2.2) p.1 → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+/-- Read equality on amplified output matrices at fixed scalar and dimensions. -/
+def actual : Realization signature :=
+  realize signature (fun _ _ X Y => X = Y) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ X Y => X ≠ Y) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {𝕜 : Type} [RCLike 𝕜] {n m : ℕ}
+    (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) (r : ℕ)
+    (A : Matrix (Fin n) (Fin n) 𝕜) (B : Matrix (Fin r) (Fin r) 𝕜),
+    R.readout () ⟨𝕜, m, r⟩
+      (MatrixMap.kron Phi (LinearMap.id : MatrixMap (Fin r) (Fin r) 𝕜)
+        (Matrix.kroneckerMap (· * ·) A B))
+      (Matrix.kroneckerMap (· * ·) (Phi A) B)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact @h ℂ inferInstance 1 1 LinearMap.id 1 1 1
+    (ampl_kron (LinearMap.id : MatrixMap (Fin 1) (Fin 1) ℂ) 1 1 1)
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨⟨ℂ, 1, 1⟩, 0, 1, ?_⟩
+  intro h
+  exact one_ne_zero (Eq.mp (congrFun h 0) rfl)
+
+def source_registration : Registration arena (type_of% @ampl_kron) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@ampl_kron, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@ampl_kron) (Realization signature) Unit Unit := {
+  unitName := `D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence.ampl_kron.__information_unit
+  realizationName := ``source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ X Y => X = Y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
+    definition := none
+    coordinates := #[0, 3, 5]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end AmplKron
+
 #print axioms source_registration
 #print axioms registration
 

@@ -1,7 +1,7 @@
 import Lake
 import Lake.CLI.Build
 import Lake.Util.StoreInsts
-import Std.Sync.Mutex
+import Std.Sync.Semaphore
 open Lake DSL System
 open Lean (Json)
 
@@ -48,24 +48,48 @@ private def nativeCommand (pkg : Package) (args : Array String) : IO IO.Process.
     cwd := some root }
 -- Direct observations survive buffered process output. They never participate
 -- in traces, reuse or admission decisions, and cannot replace a build outcome.
-private def observePhase (phase boundary : String) : IO Unit := do
+private def observePhase (phase boundary : String)
+    (moduleName : String := "") (operation : String := "") : IO Unit := do
   if let some path ← IO.getEnv "STRATALINT_INSPECTOR_PHASES" then
     try
       let now ← IO.monoMsNow
-      IO.FS.withFile path .append fun out => out.putStrLn <| (Lean.Json.mkObj [
+      let context := (if moduleName.isEmpty then [] else [("module", Lean.toJson moduleName)]) ++
+        (if operation.isEmpty then [] else [("operation", Lean.toJson operation)])
+      IO.FS.withFile path .append fun out => out.putStrLn <| (Lean.Json.mkObj ([
         ("phase", Lean.toJson phase), ("boundary", Lean.toJson boundary),
-        ("monotonic_ms", Lean.toJson now)]).compress
+        ("monotonic_ms", Lean.toJson now)] ++ context)).compress
     catch error =>
       try IO.eprintln s!"LEAN_INSPECTOR_DIAGNOSTIC_UNAVAILABLE lake phase: {error}" catch _ => pure ()
+
+-- Compiler graph fetches may await Lake jobs. A thread mutex held across an
+-- await can deadlock when the runtime runs a contending callback on that same
+-- worker. Keep the state exclusive with a task-aware semaphore instead.
+private structure CompilerMutex (α : Type) where
+  value : IO.Ref α
+  gate : Std.Semaphore
+
+private def CompilerMutex.new (value : α) : BaseIO (CompilerMutex α) :=
+  return ⟨← IO.mkRef value, ← Std.Semaphore.new 1⟩
+
+private def CompilerMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadFinally m]
+    (mutex : CompilerMutex α) (action : IO.Ref α → m β) : m β := do
+  discard <| IO.wait (← mutex.gate.acquire).result!
+  try action mutex.value finally mutex.gate.release
+
+private def CompilerMutex.tryAtomically [Monad m] [MonadLiftT BaseIO m] [MonadFinally m]
+    (mutex : CompilerMutex α) (action : IO.Ref α → m β) : m (Option β) := do
+  if ← mutex.gate.tryAcquire then
+    try some <$> action mutex.value finally mutex.gate.release
+  else return none
 
 private structure ReportState where
   started : IO.Ref Lean.NameSet
   batch : IO.Ref (Option (Lean.NameSet × Job Unit))
   sourcePaths : IO.Ref (Std.HashMap String (Option String))
-  graphFetch : Std.Mutex Unit
+  graphFetch : CompilerMutex Unit
 
 package_facet reportBatch (_pkg : Package) : ReportState := do
-  Job.async do return ⟨← IO.mkRef {}, ← IO.mkRef none, ← IO.mkRef {}, ← Std.Mutex.new ()⟩
+  Job.async do return ⟨← IO.mkRef {}, ← IO.mkRef none, ← IO.mkRef {}, ← CompilerMutex.new ()⟩
 
 -- A compiler import is shared by many report targets. Resolve its source path
 -- once in this Lake invocation, including paths excluded from the whitelist.
@@ -179,12 +203,16 @@ module_facet judgeInputs (mod : Module) : FilePath := withCurrPackage mod.pkg do
   discard <| (← fetch <| pkg.facet `reportInputs).await
   let root ← repositoryDir pkg
   let deps ← fetch <| pkg.facet `reportProducer
-  observePhase "lake-compiler-inputs" "start"
+  observePhase "lake-compiler-inputs" "start" mod.name.toString "compiler-inputs"
+  observePhase "lake-export-fetch" "start" mod.name.toString "export-info-fetch"
   let exportJob ← mod.exportInfo.fetch
+  observePhase "lake-export-fetch" "finish" mod.name.toString "export-info-fetch"
   let discovery ← inputDiscovery.fetch
+  observePhase "lake-compiler-continuation" "start" mod.name.toString "compiler-continuation"
   (deps.add exportJob |>.add discovery).mapM fun _ => do
     let info ← exportJob.await
-    observePhase "lake-compiler-inputs" "finish"
+    observePhase "lake-compiler-continuation" "finish" mod.name.toString "compiler-continuation"
+    observePhase "lake-compiler-inputs" "finish" mod.name.toString "compiler-inputs"
     addTrace (info.allArtsTrace.mix info.legacyTransTrace)
     let file := root / ".lake/build/lean-inspector" / "judge-inputs" / s!"{mod.name}.json"
     buildFileUnlessUpToDate' file do
@@ -478,13 +506,17 @@ private def collectNativeReports (pkg : Package) (names : Array String) :
       let some mod := (← getWorkspace).findModule? name.toName
         | error s!"registered report module is not in the Lake workspace: {name}"
       unless alreadyStarted.contains mod.name do
+        observePhase "lake-prepare-module" "start" name "judge-inputs-fetch"
         discard <| fetch <| mod.facet `judgeInputs
+        observePhase "lake-prepare-module" "finish" name "judge-inputs-fetch"
   for name in names do
     let some mod := (← getWorkspace).findModule? name.toName
       | error s!"registered report module is not in the Lake workspace: {name}"
     unless alreadyStarted.contains mod.name do
       members := members.insert mod.name
+      observePhase "lake-prepare-module" "start" name "prepared-report-fetch"
       prepared := prepared.push (← preparedModuleReport mod)
+      observePhase "lake-prepare-module" "finish" name "prepared-report-fetch"
   try observePhase "lake-prepare-register" "finish" catch _ => pure ()
   let batch ← (collectModuleJobs prepared).mapM fun artifacts => do
     observePhase "lake-prepare" "finish"

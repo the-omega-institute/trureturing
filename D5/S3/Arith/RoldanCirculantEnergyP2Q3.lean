@@ -8,20 +8,14 @@
 
 /-
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19204.
+Published Fourier and Ramanujan owners: unfinished escape audit
+https://github.com/the-omega-institute/trureturing/issues/22671.
 
 admission_basis: open-problem-resolution (#19144; Proved).
 proof_shape: result: content; escape_witness: none.
 Direct frozen dependencies (declaration identities on the dev base):
   D5/S3/ConceptDynamics/Coding/CountedOriginalOrbitGyration.finEquiv_eq_natCast
   statement_id sha256:6062729cd00b090edb5dfcccd635f4a563a8a66f60deb5d1c6d91f2195edc1b1.
-  D5/S3/Quantum/Dynamics/PolygonalFourierCouplings.circulant_spectral
-  statement_id sha256:c0c4758ccc24a85ddcb6430f1368fa477dcc97806137246966f740473972a4c0.
-  D5/S3/Quantum/Dynamics/PolygonalFourierCouplings.transform_unitary
-  statement_id sha256:efa8366c2ffbe97c466a47cde0fa1bf8aea043e2121045f7338c075daf53d748.
-  D5/S3/Quantum/Dynamics/PolygonalFourierCouplings.transform
-  statement_id sha256:bc5ccc0b9c6c5a7a63a3c96211c723596ca12ab786b9c0cf4cbd4907f812603f.
-  D5/S3/Quantum/Dynamics/PolygonalFourierCouplings.spectralValue
-  statement_id sha256:5c76af6f912bc476b8b2627b4c4e4af6068c4792ec7ead5d9e1752cbc0ce33fc.
   D5/S3/Analytic/Certified/FiniteRamanujanDivisorIdentity.sum_ramanujanSum_divisors
   statement_id sha256:e84aedcf519a93b3d92c3f00b87b1f2f24ad6024a3148bd06815f5e546b64020.
   D5/S3/Analytic/Certified/FiniteRamanujanDivisorIdentity.ramanujanSum
@@ -83,7 +77,6 @@ Declaration classification:
   result: content; consumers: none (settling result).
 -/
 
-import D5.S3.Quantum.Dynamics.PolygonalFourierCouplings
 import D5.S3.Quantum.Matrix.CirculantCharpoly
 import D5.S3.Analytic.Certified.FiniteRamanujanDivisorIdentity
 import D5.S3.Arith.RoldanCirculantEnergyP2Q3Certificate
@@ -114,7 +107,7 @@ set_option maxHeartbeats 1000000
 set_option linter.unusedTactic false
 set_option linter.unreachableTactic false
 open D5.S3.Analytic.Certified.FiniteRamanujanDivisorIdentity
-private theorem ramanujan_prime_power (p j k : ℕ) (hp : p.Prime) :
+theorem ramanujan_prime_power (p j k : ℕ) (hp : p.Prime) :
     ramanujanSum (p ^ (k + 1)) j =
       (if p ^ (k + 1) ∣ j then (p ^ (k + 1) : ℂ) else 0) -
       (if p ^ k ∣ j then (p ^ k : ℂ) else 0) := by
@@ -195,7 +188,7 @@ private theorem ramanujan_gcd_of_dvd (m n j : ℕ) (hm : 0 < m) (hmn : m ∣ n) 
   have hi : x.2 ∣ j ↔ x.2 ∣ n.gcd j := by
     exact ⟨fun h => Nat.dvd_gcd hxn h, fun h => h.trans (Nat.gcd_dvd_right _ _)⟩
   simp only [hi]
-private theorem ramanujan_one (j : ℕ) : ramanujanSum 1 j = 1 := by
+theorem ramanujan_one (j : ℕ) : ramanujanSum 1 j = 1 := by
   simpa using sum_ramanujanSum_divisors 1 j Nat.zero_lt_one
 private theorem prime_power_dvd_mixed_power (p q k a b : ℕ)
     (hp : p.Prime) (hq : q.Prime) (hne : p ≠ q) :
@@ -312,7 +305,7 @@ namespace D5.S3.Arith.RoldanCirculantEnergyP2Q3
 open D5.S3.Analytic.Certified.FiniteRamanujanDivisorIdentity
 open scoped BigOperators
 noncomputable section
-private theorem gcdRow_dft_ramanujan (n : ℕ) [NeZero n] (D : Finset ℕ)
+theorem gcdRow_dft_ramanujan (n : ℕ) [NeZero n] (D : Finset ℕ)
     (hD : D ⊆ n.divisors) (j : ZMod n) :
     ZMod.dft (fun k => ((fun k : ZMod n => if n.gcd k.val ∈ D then (1 : ℝ) else 0) k : ℂ)) j =
       ∑ d ∈ D, ramanujanSum (n / d) j.val := by

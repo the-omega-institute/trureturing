@@ -1,0 +1,53 @@
+**Definition 24.1 (fixed selection and the two access representations).**
+Retain exactly the LAB source, event identities and all finite lawful
+schedules of §§17–19. Fix a total predicate
+$\chi:\{P,S\}\times\{L,R\}^*\to\{0,1\}$ before the history varies.
+For $t\in\mathcal D$, put $E_\chi(t)=\{e\in E(t):\chi(e)=1\}$.
+For $w\in\mathcal H(t)$ let $\nu_\chi(w)$ be its subword of selected
+event identities, retaining their actual order. Selection here reads only
+kind and logical address. It reads neither an occurrence number nor an
+answer, elapsed work, controller history, future choice or tape value.
+A total predicate is enough for the mathematical statements; finite
+execution of it requires the additional program premise in §26.
+
+At a branch $p$, let $x_p,y_p$ be the full child-event counts of (AA.73),
+and define
+
+$$
+\begin{aligned}
+a_p&=|\{e\in E_\chi(t):\operatorname{addr}(e)\text{ extends }pL\}|,\\
+b_p&=|\{e\in E_\chi(t):\operatorname{addr}(e)\text{ extends }pR\}|,\\
+o_p&=|\{e\in E_\chi(t):\operatorname{addr}(e)
+                   \text{ is prefix-incomparable with }p\}|.
+\end{aligned}
+\tag{AA.81}
+$$
+
+Thus $o_p$ excludes events at $p$ and at its ancestors. All five counts
+are fixed by $(t,\chi)$, independently of the serial extension. Define
+
+$$
+\begin{aligned}
+H_\chi(t)&=\{p\in I(t):a_pb_p>0\},\\
+R_\chi(t)&=\{p\in I(t):a_pb_p>0
+                  \ \text{or}\ o_p(a_py_p+b_px_p)>0\}.
+\end{aligned}
+\tag{AA.82}
+$$
+
+An old full-tape observation with access set $A\subseteq I(t)$ is
+$(t,(W_p(w))_{p\in A})$. It supplies those complete §19 coordinates,
+including their lengths, at fixed binding, authority and settled phase.
+The quantifier is over the entire $\mathcal H(t)$ with this same $A$;
+there is no extra request archive, visible allocation order, runtime
+length or order-bearing input. Recovery means a single-valued map on
+that actual observation image returning $\nu_\chi(w)$ for every $w$.
+It does not mean that missing tapes can be read.
+
+For comparison, an already acquired selected tape $V_p(w)$ lists just
+the first sides below $p$ of selected strict-descendant events, in their
+actual order. Its multiplicities are $a_p,b_p$. Access to $V_p$ and
+access to $W_p$ are different interfaces: the latter has no selection
+marks identifying which of its equal side symbols came from selected
+events. Write $\mathcal V_\chi(w)=(V_p(w))_{p\in I(t)}$.
+

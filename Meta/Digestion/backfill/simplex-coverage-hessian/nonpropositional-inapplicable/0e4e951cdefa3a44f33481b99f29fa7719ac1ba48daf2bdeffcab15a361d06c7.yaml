@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0e4e951cdefa3a44f33481b99f29fa7719ac1ba48daf2bdeffcab15a361d06c7
+  normalized_sha256: sha256:0e4e951cdefa3a44f33481b99f29fa7719ac1ba48daf2bdeffcab15a361d06c7
+cas_ref: sha256:0e4e951cdefa3a44f33481b99f29fa7719ac1ba48daf2bdeffcab15a361d06c7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The source title and reference-input notice describe provenance, atomization and the Lean truth-source boundary. They assert no mathematical proposition. No theorem or proof paragraph is settled by this receipt.
+    previous_atom_id: null
+    next_atom_id: eec1e812ec54ce367055225cf77d6e6acc6e193759679a95ad399224fe83cc30

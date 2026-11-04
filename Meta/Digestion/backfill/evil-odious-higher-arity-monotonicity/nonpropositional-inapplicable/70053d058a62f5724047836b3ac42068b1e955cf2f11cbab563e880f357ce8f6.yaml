@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:70053d058a62f5724047836b3ac42068b1e955cf2f11cbab563e880f357ce8f6
+  normalized_sha256: sha256:70053d058a62f5724047836b3ac42068b1e955cf2f11cbab563e880f357ce8f6
+cas_ref: sha256:70053d058a62f5724047836b3ac42068b1e955cf2f11cbab563e880f357ce8f6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definition 2.1 introduces the integer forward difference, integer negative part, and finite-prefix downward variation implemented in D5/S1/Words/EvilOdious/HigherArityMonotonicity.{fwdDiff, negPart, prefixVarInt, prefixVar} together with empty-sum and binomial zero conventions, stating no standalone propositional theorem claim.
+    previous_atom_id: a36985d3a8f8f4dbfa7453bb4c55861d75081a3119c63e93fc39026dd2c7728a
+    next_atom_id: a5abf7c834091a70ac1f666ff8ac481170dc839c9a13038104237c1b0abb8f8e

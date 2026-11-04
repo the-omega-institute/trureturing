@@ -1,0 +1,10 @@
+**Theorem 33.2 (universal soundness and existential completeness).**
+For every actual source, actual cut $n\ge2$, proposed $\nu\ge2$ and
+supplied well-formed $x,y$:
+
+1. A present word $x$ of length $\nu-1$ implies $n\ge\nu$.
+   An arbitrary word of that length need not be present when $n\ge\nu$.
+2. For $|x|=\nu-1$, a negative reply has the alternatives $n<\nu$, or
+   $n\ge\nu$ and $x$ attempts to continue beyond a terminal node.
+3. $C_n(\nu;x,y)$ implies $\nu=n$, and
+

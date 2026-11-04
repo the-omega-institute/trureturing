@@ -1,0 +1,27 @@
+### 定理 3.2（二元关系守恒自动迫出复线性）
+
+<a id="thm-c117-linear"></a>
+
+满足式 [(7)](#eq-c117-pair-law) 的函数 $V$ 必为复线性等距映射，故 $V^*V=I_H$。无需另行假设线性。
+
+**证明。**
+首先 $\|V0\|^2=0$，所以 $V0=0$。令 $A=V(u+v)$、$B=Vu+Vv$。比较守恒给
+
+$$
+\|A\|^2=\|B\|^2=\|u+v\|^2,
+ \qquad
+ \langle A,B\rangle=\langle u+v,u\rangle+\langle u+v,v\rangle=\|u+v\|^2.
+$$
+
+因此 $\|A-B\|^2=0$，即 $V(u+v)=Vu+Vv$。再令
+$A=V(\lambda u)$、$B=\lambda Vu$。两者平方范数均为 $|\lambda|^2\|u\|^2$，而
+
+$$
+\langle A,B\rangle=\lambda\langle V(\lambda u),Vu\rangle
+ =\lambda\langle \lambda u,u\rangle=|\lambda|^2\|u\|^2.
+$$
+
+所以 $V(\lambda u)=\lambda Vu$。复线性与保内积合起来就是 $V^*V=I_H$。
+
+若只保留 $|\langle u,v\rangle|^2$，复共轭这类反酉映射也可以通过检验，因此不能用它替代式 [(7)](#eq-c117-pair-law) 中包含取向的比较值。
+

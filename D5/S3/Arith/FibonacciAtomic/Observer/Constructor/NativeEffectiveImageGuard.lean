@@ -506,7 +506,7 @@ private theorem normalizeFuel_guarded {k m : Nat} (f : Nat) (S : System k m)
 /-- Compute root-link normalization while retaining both original expression maps. -/
 def effectiveNormalForm {k m : Nat} (S : System k m) : Presentation k m := normalizeFuel m S
 
-private theorem effectiveNormalForm_law {k m : Nat} (S : System k m) :
+theorem effectiveNormalForm_law {k m : Nat} (S : System k m) :
     Guarded (effectiveNormalForm S).equations ∧ Correct S (effectiveNormalForm S) := by
   classical
   refine ⟨normalizeFuel_guarded m S ?_,normalizeFuel_correct m S⟩

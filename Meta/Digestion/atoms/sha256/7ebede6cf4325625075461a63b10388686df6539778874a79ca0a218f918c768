@@ -1,0 +1,18 @@
+### 命题 14.2（全部量子平方规则成立，仍可没有质量隙）
+
+存在具有唯一真空的正 Hamiltonian，满足通常 Hilbert 与 Born 结构，却没有任何 $\Delta>0$ 使上述统一界成立。
+
+**证明。**在正交归一基 $e_0,e_1,\ldots$ 上定义有界自伴算符
+
+$$
+He_0=0,\qquad He_n=\frac1n e_n\quad(n\ge1).
+$$
+
+其零特征空间只有 $\mathbb Ce_0$，但非零能量趋于零。取 $A_n=|e_n\rangle\langle e_0|+|e_0\rangle\langle e_n|$，则 $\|A_n\|=1$、$\nu_{A_n}=e_n$，且
+
+$$
+K_\tau(A_n,A_n)=e^{-\tau/n},\qquad\sup_{n\ge1}K_\tau(A_n,A_n)=1\quad(\tau<\infty).
+$$
+
+对每个固定 $n$ 相关随 $\tau\to\infty$ 消失；对全部 $n$ 没有一致衰减。这个反例精准删除从平方相容到统一场间隙的未经证明步骤，不是 Yang–Mills 模型或其反例。
+

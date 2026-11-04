@@ -1,0 +1,10 @@
+**Theorem 7.1 (Order-two multi-entropy).** In the setting of Definition 6.3 with $n=2$ and any $\mathtt q\ge2$,
+
+$$
+S^{(\mathtt q)}_2=2^{2-\mathtt q}\sum_{S}S^{(2)}_2(S),
+$$
+
+the sum running over the $2^{\mathtt q-1}-1$ bipartitions of the parties. Stance: suspected-novel. For $\mathtt q=3$ it is the fully symmetric case of $\mathrm{GM}^{(3)}_2=0$, literature-attested for all pure bosonic Gaussian states (Camargo and Nishida, §4); the Gaussian replica reduction is essential (Remark 8.3).
+
+**Proof.** Put $M=2^{\mathtt q-1}$. By Theorem 5.3(4), $\sum_S\log\Delta_2^{(p_S)}=\log\Delta_{\mathtt q}+(M-2)\log\varepsilon$. Then $\sum_SS^{(2)}_2(S)=-\tfrac12\sum_S\big(2\log\varepsilon-\log\Delta_2^{(p_S)}\big)=-\tfrac12\big(2(M-1)-(M-2)\big)\log\varepsilon+\tfrac12\log\Delta_{\mathtt q}=-\tfrac M2\log\varepsilon+\tfrac12\log\Delta_{\mathtt q}$, while $S^{(\mathtt q)}_2=-2^{2-\mathtt q}\cdot\tfrac12\big(M\log\varepsilon-\log\Delta_{\mathtt q}\big)$. ∎
+

@@ -1,0 +1,57 @@
+## 75. 同一六长度标架的八个实际支撑半空间与面片
+
+**定义与约定。** 沿用定理 66.1–66.2 的标签 $I=\{0,1,2,3\}$、原六长度 $l$、Gram 矩阵 $G$、共同截断域 $C_l$、二次式 $q_l$、径向映射 $r_l$ 和 Lorentz 形式 $B$。六个槽位的顺序仍为 $(01,02,03,23,13,12)$。写 $M$ 的原四行为 $m_i$；系数向量 $x$ 的行乘积记为 $xM=\sum_i x_i m_i$，而 $(Gx)_i=\sum_jG_{ij}x_j$。本节全部三维内部、闭性和边界均在实际双曲度量空间 $H^3$ 中取；$H^2=\{u+iv:v>0\}$ 也取其标准双曲距离和拓扑。
+
+为明确上半空间与 Lorentz 坐标的对应，对 $p=(u+iv,h)\in H^3$，记
+
+$$
+L(p)=\left(\frac{u}{h},\frac{v}{h},
+\frac{u^2+v^2+h^2-1}{2h},
+\frac{u^2+v^2+h^2+1}{2h}\right).
+$$
+
+它与第 66 节的 $\Psi$ 互为未来单位双曲面上的逆。使用既有的提升和距离接口
+
+$$
+B(L(p),L(p))=-1,\qquad L(p)_3>0,\qquad
+B(L(p),L(q))=-\cosh d_{H^3}(p,q).
+$$
+
+令支撑标签为不交并 $\mathcal S=\{\mathrm L_i:i\in I\}\sqcup\{\mathrm C_i:i\in I\}$，定义系数支撑线性式
+
+$$
+S_{\mathrm L_i}(x)=-x_i,\qquad S_{\mathrm C_i}(x)=(Gx)_i.
+$$
+
+因而 $C_l$ 是总和为一的系数中全部 $S_a\le0$ 的集合。以下逆矩阵、权重和法向量均由同一 $l,M$ 定义：
+
+$$
+\begin{aligned}
+D_i&=\sum_j(G^{-1})_{ij}m_j,\\
+w_{\mathrm L_i}&=\sqrt{(G^{-1})_{ii}},&w_{\mathrm C_i}&=1,\\
+n_{\mathrm L_i}&=-w_{\mathrm L_i}^{-1}D_i,&n_{\mathrm C_i}&=m_i.
+\end{aligned}
+$$
+
+权重的严格正性是下面的结论及其证明的一部分。记
+
+$$
+\begin{aligned}
+V_a(p)&=B(L(p),n_a),& H_a^-&=\{p\in H^3:V_a(p)\le0\},\\
+P_a&=\{p\in H^3:V_a(p)=0\},& R&=\{p\in H^3:\forall a\in\mathcal S,\ V_a(p)\le0\},\\
+R^{<}&=\{p\in H^3:\forall a\in\mathcal S,\ V_a(p)<0\},& F_a&=\{\lambda\in C_l:S_a(\lambda)=0\}.
+\end{aligned}
+$$
+
+这里 $F_a$ 是原系数域的等式截面，$R$ 是由所定义法向量给出的半空间交；二者与给定映射之像的关系须由定理证明。再记 $b=(1/4,1/4,1/4,1/4)$，并定义
+
+$$
+A_i=\sum_{j\ne i}(-G_{ij}),\qquad
+\begin{aligned}
+\operatorname{facetWitness}(l,\mathrm L_i)_j
+&=\begin{cases}0&j=i,\\1/3&j\ne i,\end{cases}\\
+\operatorname{facetWitness}(l,\mathrm C_i)_j
+&=\begin{cases}A_i/(A_i+3)&j=i,\\1/(A_i+3)&j\ne i.\end{cases}
+\end{aligned}
+$$
+

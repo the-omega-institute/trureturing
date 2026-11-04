@@ -16,9 +16,9 @@ Direct frozen dependencies (declaration statement_id):
     sha256:12ad034b5758446e6d628c75121b3ad5f0c80bb305937e8c9ff87e82076bc059
   D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability.swap
     sha256:af00961077f2b900aa4516b8bd97fa47e80318e7fde839e758a281d3e541b1de
-  D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.swapHermitian
+  D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.swapHermitian
     sha256:f54d121473ff7089d6a4e4ddb59f07c052a2b01de8dbb2be98989df6087984d7
-  D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone.swapSquare
+  D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.swapSquare
     sha256:e38cf16db43e5fa807ef6b0b29d793ec6e2f3c6755db13a2496a370e78352442
   D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.replicaSwap_commutes
     sha256:4e959fbf6211116c2b2f1192bc6dcc6b24a3bbd20d41e9f98e2cae0823852cc8
@@ -47,14 +47,13 @@ Private proof declarations, each with proof_shape: bind-only and escape_witness:
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19279
 The amplitude vector is Function.uncurry C, definitionally the literal entry
 map fun x => C x.1 x.2. The swap is the frozen conical-design swap matrix.
-The published swap owner audits are unfinished under issue #19279: CHaarConcatenationNonmonotone.swapHermitian (statement_id sha256:f54d121473ff7089d6a4e4ddb59f07c052a2b01de8dbb2be98989df6087984d7), CHaarConcatenationNonmonotone.swapSquare (statement_id sha256:e38cf16db43e5fa807ef6b0b29d793ec6e2f3c6755db13a2496a370e78352442), and HaarTwoCopyTwirl.replicaSwap_commutes (statement_id sha256:4e959fbf6211116c2b2f1192bc6dcc6b24a3bbd20d41e9f98e2cae0823852cc8).
+The published swap owner audits are unfinished under issue #19279: HaarTwoCopyTwirl.swapHermitian (statement_id sha256:f54d121473ff7089d6a4e4ddb59f07c052a2b01de8dbb2be98989df6087984d7), HaarTwoCopyTwirl.swapSquare (statement_id sha256:e38cf16db43e5fa807ef6b0b29d793ec6e2f3c6755db13a2496a370e78352442), and HaarTwoCopyTwirl.replicaSwap_commutes (statement_id sha256:4e959fbf6211116c2b2f1192bc6dcc6b24a3bbd20d41e9f98e2cae0823852cc8).
 The ordered half-sums and real-amplitude transpose condition are those of #19208.
 -/
 
 import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
 import D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
-import D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone
 import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 
 /-! Binding conventions for P. M. Alsing and R. J. Birrittella, "Numerical Evidence for a Bipartite Pure State
@@ -137,7 +136,7 @@ private theorem swap_selfAdjoint (d : ℕ) : (D5.S3.Quantum.Entanglement.Conical
     simp [D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.swap,
       Matrix.one_apply, Prod.ext_iff, and_comm, eq_comm]
   rw [hS]
-  exact D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone.swapHermitian (n := Fin d)
+  exact D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.swapHermitian (n := Fin d)
 
 private theorem swap_square (d : ℕ) : D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.swap d * D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.swap d = 1 := by
   classical
@@ -148,7 +147,7 @@ private theorem swap_square (d : ℕ) : D5.S3.Quantum.Entanglement.ConicalDesign
     simp [D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.swap,
       Matrix.one_apply, Prod.ext_iff, and_comm, eq_comm]
   rw [hS]
-  exact D5.S3.Quantum.RandomCircuits.CHaarConcatenationNonmonotone.swapSquare (n := Fin d)
+  exact D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.swapSquare (n := Fin d)
 
 private theorem factorization {d K : ℕ} (p : Fin K → ℝ)
     (C : Fin K → Matrix (Fin d) (Fin d) ℂ)

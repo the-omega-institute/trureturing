@@ -1,0 +1,40 @@
+**Theorem 4.3 (Sharpness of the stability exponent).** Along the balanced opposite-phase angle family
+
+$$
+a=b>0,\qquad \omega=-1,\qquad r=\frac35+h,
+$$
+
+with $h\to0$ and $0<r<1$, one has
+
+$$
+\epsilon=\frac{625}{1024}h^2+o(h^2),\qquad
+\Delta=\frac54|h|+o(|h|).
+\tag{4.12}
+$$
+
+In particular, for no exponent $\alpha>1/2$ does there exist a finite constant $K$ such that $\Delta\leq K\epsilon^\alpha$ for all such pairs in a neighborhood of the extremal locus.
+
+*Proof.* This family is realized, for each $r\in(0,1)$ and each $n\geq2$, by the projections in (2.4) on a fixed two-dimensional subspace, extended by zero on its orthogonal complement. It is the supplied angle family cited in Convention 1.2. Here $q=\eta=1$, $W=0$, $x=x_0=r$ and $y=\sqrt{1-r^2}$. The coefficient in Theorem 2.1 consequently reduces to the balanced value
+
+$$
+c_*=C_0=\frac{r+\sqrt{1-r^2}-1}{1+r}.
+$$
+
+At $r=3/5$, the derivative of $\sqrt{1-r^2}$ is $-3/4$. Therefore
+
+$$
+y=\frac45-\frac34h+O(h^2),\qquad
+d^2=h^2+\left(-\frac34h+O(h^2)\right)^2
+=\frac{25}{16}h^2+o(h^2).
+$$
+
+The first summand of (3.3) is now the entire defect. Since $1+x_0\to8/5$,
+
+$$
+\epsilon=\frac{5d^2}{8(1+x_0)}
+=\frac{25}{64}\cdot\frac{25}{16}h^2+o(h^2)
+=\frac{625}{1024}h^2+o(h^2).
+$$
+
+Also $\Delta=\sqrt{d^2}=(5/4)|h|+o(|h|)$. For $\alpha>1/2$, the ratio $\Delta/\epsilon^\alpha$ is a positive constant times $|h|^{1-2\alpha}(1+o(1))$, which tends to infinity as nonzero $h\to0$. This proves the exponent assertion. $\square$
+

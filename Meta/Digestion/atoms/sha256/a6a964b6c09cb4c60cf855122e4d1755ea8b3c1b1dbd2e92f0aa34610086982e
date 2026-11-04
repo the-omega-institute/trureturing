@@ -1,0 +1,36 @@
+**引理 70.2（纯曲线上的完整仿射函数空间）。** 令 $x=\cos t$、$y=\sin t$、$f=f_d(t)$。当实仿射泛函 $\Lambda$ 遍历 $\mathcal K_d$ 的仿射包络上的所有泛函时，$\Lambda(\rho_t)$ 所成的实函数空间恰为
+
+$$
+\operatorname{span}_{\mathbb R}\{1,x,y,f,xf,yf\}.
+\tag{70.8}
+$$
+
+证明。有限维仿射泛函可延伸到环境 Hermitian 空间。各矩阵条目直接为
+
+$$
+\begin{gathered}
+(\rho_t)_{aa}=d,\qquad
+(\rho_t)_{h_{\rm out}h_{\rm out}}=2d(1-x),\qquad
+(\rho_t)_{gg}=1-3d+2dx,\\
+(\rho_t)_{a h_{\rm out}}=d(x-1)-\mathrm i d y,\\
+(\rho_t)_{ag}=-3\sqrt d\,yf-\mathrm i\sqrt d(3x-2)f,\\
+(\rho_t)_{h_{\rm out}g}=\sqrt d\,yf+5\mathrm i\sqrt d(x-1)f.
+\end{gathered}
+\tag{70.9}
+$$
+
+因此每个仿射泛函均在 (70.8) 中。反向，常函数由迹得到，而
+
+$$
+\begin{aligned}
+x&=1-\frac{(\rho_t)_{h_{\rm out}h_{\rm out}}}{2d},
+&y&=-\frac{\Im(\rho_t)_{a h_{\rm out}}}{d},\\
+yf&=\frac{\Re(\rho_t)_{h_{\rm out}g}}{\sqrt d},
+&f&=-\frac{\Im(\rho_t)_{ag}+(3/5)\Im(\rho_t)_{h_{\rm out}g}}{\sqrt d},\\
+xf&=f+\frac{\Im(\rho_t)_{h_{\rm out}g}}{5\sqrt d}.
+\end{aligned}
+\tag{70.10}
+$$
+
+所以六个生成函数全部都是矩阵条目的实仿射组合。结论是函数空间的张成等式，不需要先假定它们线性独立。∎
+

@@ -1,0 +1,44 @@
+**定义 B-33.5（保留全部实际完成的全耳邻域）。** 令 $G_q$ 的顶点集为 $\mathcal H$，在不同剖分 $U,V$ 之间连边，当且仅当
+
+$$
+\operatorname{Ear}(U)\cap\operatorname{Ear}(V)=\varnothing.
+\tag{33.19}
+$$
+
+故全耳相交族就是 $G_q$ 的独立集。邻域使用式(33.19)，不以 $\tau(U)\cap\tau(V)=\varnothing$ 代替。对下面指定的两个互不交顶点类 $\mathcal X,\mathcal Y$，定义
+
+$$
+\begin{aligned}
+N_{\mathcal Y}(Z)&=\{V\in\mathcal Y:\exists U\in Z,
+\ \operatorname{Ear}(U)\cap\operatorname{Ear}(V)=\varnothing\},\\
+\delta(\mathcal X,\mathcal Y)&=
+\max_{Z\subseteq\mathcal X}\bigl(|Z|-|N_{\mathcal Y}(Z)|\bigr).
+\end{aligned} \tag{33.20}
+$$
+
+称 $Z$ 为紧集，若 $|Z|=|N_{\mathcal Y}(Z)|$；空集按此定义也是紧集。
+
+当 $q=1$ 时，取
+
+$$
+\mathcal X=\Gamma[\{A,A\cup\{x\},A\cup\{y\}\}],\qquad
+\mathcal Y=\Gamma[\{B,B\cup\{x\},B\cup\{y\}\}],\qquad
+\delta_1=\delta(\mathcal X,\mathcal Y).
+\tag{33.21}
+$$
+
+当 $q=0$ 时，对每个 $i$ 及其余指标 $j<k$，令
+
+$$
+\begin{aligned}
+\mathcal H_i&=\{T\in\mathcal H:\tau(T)\cap M_i\ne\varnothing\},\\
+\mathcal X_{i,x}&=\Gamma(M_j\cup\{x\}),\qquad
+\mathcal Y_{i,x}=\Gamma\bigl(M_k\cup(M_i\setminus\{x\})\bigr)
+\quad(x\in M_i),\\
+\delta_{i,x}&=\delta(\mathcal X_{i,x},\mathcal Y_{i,x}),\\
+\mathcal H^+&=\{T\in\mathcal H:|\operatorname{Ear}(T)|\ne2\}.
+\end{aligned} \tag{33.22}
+$$
+
+最后，$K_q$ 表示问题B-32.10的最大值；$K_0^+$ 表示其另加 $\mathcal F\subseteq\mathcal H^+$ 限制后的最大值。这里排除的是完整耳集恰有两条的实际剖分，不是排除全部二元迹纤维。
+

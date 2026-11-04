@@ -1,0 +1,37 @@
+**Theorem 73.2 (first sweep and retained live word).** The first sweep
+makes exactly $n$ split calls, of which $b$ succeed. It makes no promotion
+call, adds $2b$ material vertices, and ends with $N+2b$ source vertices.
+Its addressed payloads are
+
+$$
+I_1=2D+4n,\qquad O_1=5n+2D_\beta.
+$$
+
+There are $n$ full End/acknowledgement/return cycles, $D$ source-navigation
+descents and $D$ ascents when each call returns along the parent chain,
+and $8b$ source structural assignments. Its live word has $2n$ constructor
+content bits. These statements hold simultaneously on the run of Theorem
+69.2 and do not include the additional backing listed below.
+
+Proof. Theorem 69.2 visits each entry logical position exactly once,
+with success exactly at its beta leaves. Each success adds two vertices.
+Every request at depth $d$ has $2d+4$ bits. A success reply has $2d+5$
+bits and every refusal has five. Summing separately over all positions
+and successful leaves gives the two payload formulas and completion
+count. Each navigation uses its entry depth, giving $D$ in each direction.
+The original split template gives $8b$ assignments. Two bits per visited
+constructor give $2n$. No read-free synthesis or preliminary traversal
+has been added to these counts. $\square$
+
+An attained observer implementation uses a linked mutable address, backed
+ancestor flags and a tail-appended constructor word. Scheduling appends
+and deletes each entry-tree edge once and changes $O(n)$ flags. Formatting
+addresses, consuming replies and constructing the output use
+$O(n+D)$ symbol operations in addition to source navigation. The address
+and flags have $O(h+1)$ symbols at peak; their links, literal references,
+end pointers, counters, parser and latch backing are additional material.
+Every received/transmitted bit, sealed reply, pending frame and actual
+copy is backed as used. The root, dispatcher, adapter code, source and
+work ownership/grant records are retained for their whole actual lifetime.
+A two-bit constructor payload is not a total memory bound.
+

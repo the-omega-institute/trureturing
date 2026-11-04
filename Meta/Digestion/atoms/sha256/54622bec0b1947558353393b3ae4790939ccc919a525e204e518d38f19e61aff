@@ -1,0 +1,45 @@
+### 定理 9.2（内在的最小平行搬运）
+
+给定光滑非零停住生成元 $A(t)$ 和一条归一的光滑核向量 $n(t)$，
+
+$$
+\boxed{M_{\mathrm{hor}}
+=\frac{[A,\dot A]}{\kappa(A,A)}
+=R_{n\times\dot n}}
+\tag{9.2}
+$$
+
+满足 $M_{\mathrm{hor}}n=\dot n$。所有满足 $Mn=\dot n$ 的 $M\in\mathfrak g$ 恰为
+
+$$
+\boxed{M=R_{n\times\dot n}+\alpha(t)R_n.}
+\tag{9.3}
+$$
+
+其中 $M_{\mathrm{hor}}$ 唯一正交于 $\mathfrak g_n$，也唯一最小化 $\kappa(M,M)$。将 $A(t)$ 换成任意光滑非零 $c(t)A(t)$，式 (9.2) 不变。
+
+**证明。**
+写 $A=\lambda R_n$，则
+
+$$
+\dot A=\dot\lambda R_n+\lambda R_{\dot n},\qquad
+[A,\dot A]=\lambda^2R_{n\times\dot n},\qquad
+\kappa(A,A)=\lambda^2.
+$$
+
+三重积给 $(n\times\dot n)\times n=\dot n$。两份搬运之差固定 $n$，所以必在 $\mathfrak g_n=\mathbb R R_n$。两项正交，且
+
+$$
+\kappa(M,M)=\|\dot n\|^2+\alpha^2,
+$$
+
+得到最小性。重标后，交换子中的 $c\dot c[A,A]$ 为零，分子分母同乘 $c^2$，所以比值不变。
+
+这里 $A(t)n(t)=0$，而 $M(t)n(t)=\dot n(t)$。把这两个生成元混为一谈，就会把“内容正在改变”和“它被当前转向停住”写成矛盾。候选中的 $K=\dot A$ 也不是 $M$：它们的横向部分经
+
+$$
+M_{\mathrm{hor}}=\frac{[A,K]}{\lambda^2}
+$$
+
+联系。这个交换子正是一条“关系的关系”。
+

@@ -1,0 +1,56 @@
+**Definition 35.3 (the coordinate and single-pair class).** Choose ten
+distinct physical data modes $D=\{p_{jb}:0\le j\le4,\ b=0,1\}$ and
+any finite disjoint set of work modes $A$. Define one fixed isometry,
+used at both input and output,
+
+$$
+C:H_5\otimes E_2\longrightarrow(\mathbb C^2)^{\otimes D},
+\qquad C(e_jf_b)=|p_{jb}\rangle,
+\tag{35.7}
+$$
+
+where $|p\rangle$ has its single excitation at $p$ and zeros at all
+other data modes. Every work mode starts in one fixed computational
+basis string $|\omega\rangle$, $\omega\in\{0,1\}^{A}$, independent
+of the logical input. It is retained. This is a conditional encoding
+class, not an assertion that the original observer has acquired this
+encoder or any new preparation.
+
+Within Definition 35.1 allow arbitrary finite $P/B$ words on these
+modes. Restrict the fixed algebraic factors to arbitrary two-qubit
+unitaries on the **one** distinguished physical pair $(r,o)$,
+$o=\varepsilon$, and one-qubit monomial unitaries on every other mode.
+The pair can meet $D$ or $A$ in any way. A one-qubit monomial unitary is
+a diagonal unitary or a diagonal unitary times $X$; its entries are
+algebraic. This includes the fixed local phases and bit flips of §60.6.
+Allowing all algebraic pair unitaries, their inverses and arbitrary live
+interleavings is a generous enlargement of any specified algebraic
+balanced completion on this pair. It does not assert that §60.6, which
+specifies a preparation action on one vector, licenses that whole menu
+or that every possible completion is algebraic.
+
+In particular a separately supplied fixed permutation moving quantum
+states between other modes is outside this single-pair class; it would
+still remain among the fixed factors in the general condition below.
+The class places no restriction on length, private finite classical
+computation, dyadic precision, signs or $P/B$ routing. It does not
+identify the original $N$ or its instruments with bank gates. Any use
+of such an operation inside an attempted realization needs its actual
+matrix and support and must be checked against this class.
+
+The required reduced data map, even if arbitrary final work is allowed,
+is
+
+$$
+\operatorname{Tr}_{A}\!\left[
+ W\bigl(CXC^\dagger\otimes|\omega\rangle\langle\omega|\bigr)W^\dagger
+ \right]
+ =C\mathsf JX\mathsf J^\dagger C^\dagger\qquad(X\in M_{10}).
+\tag{35.8}
+$$
+
+All work remains in the actual carrier; the trace here only states a
+necessary marginal equality. It neither authorizes discarding work
+nor projects away data leakage. A full carrier implementation must
+satisfy at least (35.8), including every untouched-reference extension.
+

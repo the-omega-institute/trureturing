@@ -1,0 +1,21 @@
+**Corollary 30.1 (small intrinsic core and exact full-rank output).**
+For every fixed $\kappa$, acquisition on sources with
+$r\le\kappa\log_2 S$ has polynomial every-execution local work,
+cumulative writes, Reads, traffic and backing in $d+H+2$, hence in
+$d+n+2$. The algorithm is still the same full-class controller and
+does not take this promise or $r$ as an input. If also $a+r=d$,
+the exact original output (ACR.123) has polynomial total local work,
+writes and backing, including its normalization and final copies.
+Physical tariffs and durations remain those of Theorem 29.2.
+
+Proof. Substitute $4^r\le S^{2\kappa}$ in (ACR.121).
+Since $n\le H\le2n-1$, the parameter conversions preserve polynomial
+bounds. By Theorem 21.2, the Hankel rank is the degree of the least
+all-index annihilator, here $a+r=d$. Thus its order-$d$ solution is
+unique, independent of where that row occurs in $\rho_d$. The full-rank
+Gaussian normalization (ACR.89) returns exactly the original row,
+without enumerating earlier rows. The remaining explicit output
+arithmetic and copies in Theorem 29.2 are polynomial. A requested
+phase keeps its specified additional bill and output size; no
+unbounded future-output budget is included. $\square$
+

@@ -1,0 +1,58 @@
+**Theorem 8.2 (a coherent physical path from each clock hypothesis).**
+For each $(A,B)\in\mathcal A_m$, the following recursion over ordinary
+integers defines a single infinite physical word $R_{A,B}=c_1c_2\cdots$,
+independent of a proposed rank, cut or terminal tie:
+
+$$
+\begin{aligned}
+J_1&=A,&J_2&=B,\\
+b_k&=y_{J_k-1},&
+c_k&=\begin{cases}a,&b_k=1,\\b,&b_k=0,\end{cases}\\
+J_{k+2}&=J_{k+1}+J_k+1-b_k &&(k\ge1).
+\end{aligned}
+\tag{PSA.8.2}
+$$
+
+The letters are computed physical port names, not semantic-port
+observations. At the actual pair $(I_p(1),I_p(2))$, the present part
+of this word always selects the child initially labelled beta. If the
+actual frontier has rank $q\ge2$, its longest present prefix therefore
+has length $q-1$, including the final rank-two branch.
+
+**Proof.** Fix any positive pair and extend $I_1=A,I_2=B$ by
+$I_{k+2}=I_{k+1}+I_k$. In the hypothetical normalized beta-root history,
+always choosing the initial-beta child makes the $k$th branch occur at
+normalized update $k$. A chosen $b$ edge skips an initial-alpha sibling;
+its beta mass immediately before branch $k$ is $F_{k-1-i}$ if that
+sibling was created at branch $i<k$. Thus ACR (ACR.115) specializes to
+
+$$
+J_k=I_k+D_k,\qquad
+D_k=\sum_{1\le i<k}\mathbf1_{c_i=b}F_{k-1-i}.
+\tag{PSA.8.3}
+$$
+
+In particular $D_1=D_2=0$; a newly created skipped alpha sibling
+contributes $F_0=0$, not one. The Fibonacci identity gives
+$D_{k+2}=D_{k+1}+D_k+\mathbf1_{c_k=b}$. Adding the recurrence for
+$I_k$ proves (PSA.8.2). This also proves that the recursion and the
+full skipped-sibling formula specify the same word for every pair.
+All $J_k$ are positive, so every referenced core index is nonnegative.
+
+At the included actual pair, the external-forest clock and the
+skipped-sibling sum are actual chronological indices by ACR Theorem
+27.2. Because the entire frontier is genuinely core-only, its bit at
+that index is $y_{J_k-1}$. Induction consequently identifies each
+computed letter with the actual initial-beta port, for as long as the
+path is present. The normalized coordinate is used in this proof of
+correspondence; no physical recutting or relative-root call occurs.
+
+On an actual nonterminal rank-$q$ cone, the initial-beta child has
+rank $q-1$, even when $q=2$ and both children have singleton support.
+Successive beta choices reach rank one after $q-1$ edges. No path is
+longer, since each edge drops rank at least one. Choosing beta at the
+last cherry is compatible with every longer hypothetical continuation:
+there is no cut-dependent final physical tie. Continuing the local
+recursion beyond the current leaf computes words only and does not
+update the actual source. $\square$
+

@@ -1,0 +1,25 @@
+## 7. 一个严格的黄金分形参数谱
+
+本节是新增的递归编码方案，并非声称五点原子图单独迫使所有参数采用它。
+它把用户所说的“递归、黄金尺度和分形”联系成一个有完整证明的模型。
+
+令
+
+$$
+\varphi=\frac{1+\sqrt5}{2},\qquad
+r=\varphi^{-2}<\frac12,\qquad 1-r=\varphi^{-1}.
+$$
+
+定理 [6.3](#thm-parameter) 的权重成为
+
+<a id="eq-goldtail"></a>
+
+$$
+c_k=\varphi^{-(2k-1)},\qquad
+\|\Theta-\Theta_n\|\le\varphi^{-2n},\qquad
+\|U-U_n\|\le\|A\|\varphi^{-2n}.
+\tag{4}
+$$
+
+此处自相似缩放已经作为编码关系写入，而不是从“递归”二字推出。
+

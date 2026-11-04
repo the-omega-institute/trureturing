@@ -1,0 +1,24 @@
+**定义 1.2（Finite matroids and their duals）。** A matroid $P$ on a finite
+set $E$ is a family of independent subsets containing the empty set, closed
+under taking subsets, and satisfying augmentation: if $I,J$ are independent
+and $|I|<|J|$, some $e\in J\setminus I$ makes $I\cup\{e\}$ independent.
+Its rank function is
+
+$$
+\rho_P(X)=\max\{|I|:I\subseteq X,\ I\text{ independent}\}.
+$$
+
+A basis is a maximal independent set; all bases have size
+$\rho_P(E)$. Write $\mathcal B(P)$ for the set of bases. A circuit is a
+minimal dependent set. The closure of $X$ is
+$\operatorname{cl}_P(X)=\{e\in E:\rho_P(X\cup\{e\})=\rho_P(X)\}$.
+A flat equals its closure; a hyperplane is a flat of rank
+$\rho_P(E)-1$. A circuit-hyperplane is both a circuit and a hyperplane.
+A loop has dependent singleton; a coloop belongs to every basis.
+The dual $P^*$ has bases $E\setminus Q$, for $Q\in\mathcal B(P)$,
+and rank $|E|-\rho_P(E)$.
+A rank-$k$ matroid is paving if it has no circuit of cardinality less
+than $k$. For $k\ge1$, this is equivalent to independence of every
+$(k-1)$-subset; rank-zero paving imposes no condition.
+A matroid is sparse paving if it and its dual are paving.
+

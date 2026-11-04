@@ -1,0 +1,37 @@
+**Theorem 3.3 (All-domain covariance funding).**
+For every complex PSD trace-one $\rho$ and every $a,b\in[0,1]$,
+
+$$
+\boxed{\Delta\ge I_P+I_Q+
+ \int_0^1w_a(t)\bigl[3d_t^{\mathsf T}V_t^+d_t+3\mathcal R_t-2s_t\bigr]dt.}
+\tag{3.13}
+$$
+
+Moreover,
+
+$$
+\boxed{d_t^{\mathsf T}V_t^+d_t\ge\frac{s_t}{1+\kappa_t}},
+\tag{3.14}
+$$
+
+and hence
+
+$$
+\boxed{\Delta\ge I_P+I_Q+\int_0^1w_a(t)
+ \left[\frac{1-2\kappa_t}{1+\kappa_t}s_t+3\mathcal R_t\right]dt.}
+\tag{3.15}
+$$
+
+In particular, if $\kappa_t\leq1/2$ for $w_a(t)s_t\,dt$-almost every
+$t$, then $\Delta\ge I_P+I_Q\geq0$.
+
+Proof.
+Equation (3.13) is exactly the substitution described above;
+(3.14) is (3.10); and (3.15) follows by inserting
+(3.14).  Mutual information is relative entropy to a product
+state, so $I_P,I_Q\geq0$.  All endpoint statements are the improper integral or support limits of
+Definition 3.1, preserving all stated quantifiers. The nonnegative
+Schur bound is bounded by the integrable global curvature; moreover
+$0\leq s_t\leq2G_{A_t}(H)$ by metric DPI, so the signed integrals
+in these estimates are well defined.
+

@@ -1,0 +1,13 @@
+**约定 90.4（大 slack、零端点与资源范围）。** (90.4) 的 $1+x$ 保留 one-name range。由 (90.3) 也有明确 sufficient condition
+
+$$
+\delta\ge2h+4h^2\quad\Longrightarrow\quad
+M_q(\delta)=1,\qquad\ell_q(\delta)=0.
+$$
+
+这里没有 exact one-label threshold 或 sharp constants 结论。正参数中两项 $\delta^{-1/2}$、$\sqrt q/\delta$ 在 $\delta=q$ 交会，只表示字典阶数的两个尺度，不把这个交点解释为 exact threshold。每个固定正 $q$ 的 $\delta\downarrow0$ 尾段回到 $\delta^{-1/2}$，而 (90.4) 对联合变化的正参数也保持绝对 constants；这不要求跨参数共用一个 dictionary。
+
+端点必须另述：$q=0$ 时全部 tasks 合为同一个 $P$，原 preserving decoder 给 $M_0(\delta)=1$、$\ell_0(\delta)=0$，$\delta\ge0$。对每个 $0<q\le1/1000$，$\delta=0$ 时定理 83.1，或 (89.2) 的 zero-slack case，使每个 label 至多服务一个 phase，因此整个 circle 没有 finite dictionary 或有限 naming length。含 $1/\mu$、$1/\sqrt q$ 的正参数证明不延伸到 $q=0$。
+
+(90.5)–(90.7) 只翻译已供应 static task labels 的精度与名字容量。它们不计 map descriptions、phase acquisition、online updates、program counter、quantum program/storage dimension、paid read ports 或 physical cost，也不由 names 的存在推断这些资源的 minimum。一个 name 选定的是一个完整 map；若同一 name 另获未计入的连续 phase 参数，已经不再是这里的 dictionary 合同。
+

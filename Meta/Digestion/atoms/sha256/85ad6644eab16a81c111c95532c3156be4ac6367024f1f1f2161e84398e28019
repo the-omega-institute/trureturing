@@ -1,0 +1,20 @@
+**Proposition 40.6 (sharp change when macro length is exposed).** If,
+in addition to public $n$ and $Q_n$, the decoder receives the actual
+number $\ell$ of macro calls, then $\ell=3n+r$, where $r$ is the number
+of $B$ blocks. For each fixed $0\le r\le n$, exact recovery requires
+and permits $\binom nr$ record values, equivalently a fixed-width
+payload of $\lceil\log_2\binom nr\rceil$ bits. A common width for all
+$r$ is sharply
+$\lceil\log_2\binom n{\lfloor n/2\rfloor}\rceil$.
+
+Proof. The two block lengths are three and four, so $\ell$ determines
+$r$. There are exactly $\binom nr$ binary choices of that weight, all
+with the same exposed archive and length, and their targets are
+distinct. The preceding injectivity argument gives the lower bound.
+For the upper bound index the weight-$r$ words in lexicographic order
+and retain the index. Fixed public $n,r$ supply a finite decoder. The
+ratio of consecutive binomial coefficients is $(n-r)/(r+1)$, placing
+the maximum at the central coefficient. This is an information
+capacity statement; it grants neither free ranking work nor free
+storage or acquisition of the exposed length. $\square$
+

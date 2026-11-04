@@ -1,0 +1,15 @@
+**Equation 3.2 (`eq:evacuate`).**
+
+$$
+[X_{e,c}]\longmapsto\sum_{h\ne e}b_{uh}[X_{h,c}],\qquad
+ [X_{h,c}]\longmapsto[X_{h,c}]\quad(h\ne e).
+$$
+
+For a cochain $a$, extending its image back by zero gives
+$a+a_e\delta\mathbf1_u$, hence the same class. This proves both
+inverse equations directly. Using the head instead gives
+$-\sum_{h\ne e}b_{vh}X_{h,c}$; the difference is the vertex relation
+at the merged vertex. Equivalently $r_u$ maps to zero, $r_v$ maps to
+the merged-vertex relation, and every other relation maps to its
+corresponding relation. $\square$
+

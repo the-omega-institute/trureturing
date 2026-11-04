@@ -1,0 +1,14 @@
+**定义 3.1（受限联合残差）。** 使用单位输入，令
+
+$$
+\begin{aligned}
+\Delta_A(\lambda)&=\sup_{\|a\|=\|c\|=\|e\|=1}
+\|([L_a,L_e]+\lambda[D_a,D_e])c\|,\\
+\beta_B&=\sup_{\|b\|=\|d\|=1}\|B_B(b,d)\|,\\
+\mathcal L_A(\lambda)&=\sup_{\|a\|=\|b\|=\|c\|=\|d\|=\|e\|=1}
+\|R_\lambda(a\otimes b,c\otimes d,e\otimes1_B)\|.
+\end{aligned}
+$$
+
+定义 $\mathcal L_B$ 时交换因子，并令 $\mathcal L=\max\{\mathcal L_A,\mathcal L_B\}$。这里始终只有简单张量输入，且一个比较元局限在单边；不把 $\mathcal L$ 等同于全部联合输入的残差上确界。
+

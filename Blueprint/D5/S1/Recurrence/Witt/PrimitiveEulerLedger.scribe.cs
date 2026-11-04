@@ -12,7 +12,29 @@ internal sealed class PrimitiveEulerLedgerDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A constant-one integer power series has a unique locally finite primitive Euler ledger.",
         H("Unique Primitive Euler Ledger"),
-        Blocks(Describe.Lean(
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("euler-factor-prefix-stability"),
+                DeclarationHandle.Create("D5/S1/Recurrence/Witt/PrimitiveEulerLedger.coeff_mul_eulerFactor_of_lt"),
+                H("A later Euler factor preserves earlier coefficients"),
+                StatementSource.FromAuthor(PrefixStabilityFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For an integer power series p, multiplication by "
+                    + "the Euler factor of degree n+1 leaves every coefficient of degree "
+                    + "k<n+1 unchanged, for every signed exponent c. This gives coefficient "
+                    + "stabilization in the infinite Euler series."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("euler-ledger-product-successor"),
+                DeclarationHandle.Create("D5/S1/Recurrence/Witt/PrimitiveEulerLedger.ledgerProduct_succ"),
+                H("Extending the finite Euler product"),
+                StatementSource.FromAuthor(ProductSuccessorFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The first n+1 Euler factors are the product of "
+                    + "the first n factors and the factor of degree n+1 with exponent c(n). "
+                    + "This recurrence gives the finite-product differential identity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("unique-primitive-euler-ledger"),
             DeclarationHandle.Create(Declaration),
             H("Every constant-one integer power series has one Euler ledger"),
@@ -70,6 +92,39 @@ internal sealed class PrimitiveEulerLedgerDocument : IScribeDocumentDefinition
             degree, Leq, Sp, cutoff, Sp, Rightarrow, Sp,
             Coeff(degree, product), Eq, Coeff(degree, f), Dot));
     }
+
+    private static Formula PrefixStabilityFormula()
+    {
+        var p = F.Id("p");
+        var n = F.Id("n");
+        var k = F.Id("k");
+        var c = F.Id("c");
+        return Disp(Seq(
+            Bound("p", Call("PowerSeries", Integers())),
+            Bound("n", Naturals()), Bound("k", Naturals()), Bound("c", Integers()),
+            new Formula.Logic(new Formula.Relation(k, FormulaRelationOperator.LessThan,
+                    Add(n, D(1))), FormulaLogicOperator.Implies,
+                Equal(Call("coeff", k, Multiply(p,
+                        Call("eulerFactor", Add(n, D(1)), c))),
+                    Call("coeff", k, p)))));
+    }
+
+    private static Formula ProductSuccessorFormula()
+    {
+        var c = F.Id("c");
+        var n = F.Id("n");
+        return Disp(Seq(Bound("c", Seq(Naturals(), Sp, To, Sp, Integers())),
+            Bound("n", Naturals()),
+            Equal(Call("ledgerProduct", c, Add(n, D(1))),
+                Multiply(Call("ledgerProduct", c, n),
+                    Call("eulerFactor", Add(n, D(1)),
+                        new Formula.Apply(c, [n]))))));
+    }
+
+    private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula Integers() => Seq(Mathbb, Grp(F.Id("Z")));
+    private static Formula Bound(string name, Formula type) =>
+        Seq(Forall, Sp, F.Id(name), Colon, Sp, type, Comma, Sp);
 
     private static Formula Coeff(Formula degree, Formula series) =>
         Seq(Operatorname, Grp(F.Id("coeff")), Open, degree, Comma, Sp, series, Close);

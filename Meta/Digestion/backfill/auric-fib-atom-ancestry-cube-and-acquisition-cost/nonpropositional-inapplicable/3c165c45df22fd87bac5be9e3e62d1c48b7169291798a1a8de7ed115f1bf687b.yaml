@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3c165c45df22fd87bac5be9e3e62d1c48b7169291798a1a8de7ed115f1bf687b
+  normalized_sha256: sha256:3c165c45df22fd87bac5be9e3e62d1c48b7169291798a1a8de7ed115f1bf687b
+cas_ref: sha256:3c165c45df22fd87bac5be9e3e62d1c48b7169291798a1a8de7ed115f1bf687b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section context defining epsilon_p as the membership indicator of p in the actual subset A of P_n. This introduces notation for the following theorem, not an independent propositional assertion. The literal subset family, original domain and subsequent depth claim are retained without alteration.
+    previous_atom_id: 9c5ca82c0d17f3f62ebc00282f455d0ca7215c5fd45c0376ee7aa5657e61ea00
+    next_atom_id: 445af4d259d2bd0eefdd599bf96770f8ca9e1b7d18de90faa14324b9263d60b7

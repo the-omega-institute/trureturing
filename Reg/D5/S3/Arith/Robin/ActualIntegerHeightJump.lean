@@ -208,6 +208,96 @@ def crossingAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+namespace DivisorLogLeLog
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ n => divisorLog n) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ}, 0 < n → R.readout () () n ≤ Real.log (n : ℝ)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ n => Real.log (n : ℝ) + 1) (fun e => nomatch e)
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hbad := h (n := 1) (by norm_num)
+  change Real.log ((1 : ℕ) : ℝ) + 1 ≤ Real.log ((1 : ℕ) : ℝ) at hbad
+  norm_num at hbad
+
+theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 1, 2, ?_⟩
+  change divisorLog 1 ≠ divisorLog 2
+  have h1 : divisorLog 1 = 0 := by
+    norm_num [divisorLog, ArithmeticFunction.sigma]
+  have h2 : divisorLog 2 = Real.log ((3 : ℝ) / 2) := by
+    norm_num [divisorLog, ArithmeticFunction.sigma]
+  rw [h1, h2]
+  exact ne_of_lt (Real.log_pos (by norm_num))
+
+def family : Registration arena (type_of% @divisor_log_le_log) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@divisor_log_le_log, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@divisor_log_le_log) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.ActualIntegerHeightJump.divisor_log_le_log.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.ActualIntegerHeightJump.DivisorLogLeLog.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.ActualIntegerHeightJump
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+#print axioms audit
+
+end DivisorLogLeLog
+
 #print axioms jumpFamily
 #print axioms crossingFamily
 #print axioms jumpAudit

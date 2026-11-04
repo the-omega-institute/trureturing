@@ -1,0 +1,30 @@
+**Theorem 4.5 (The unicyclic case for every order at least seven).** Let $n\ge7$. Then $T_n\in\mathcal G(n,1)$ up to relabelling, $T_n$ has no universal vertex, every graph in $\mathcal G(n,1)$ with a universal vertex has index $\Phi(U_n)$, and $\Phi(T_n)<\Phi(U_n)$. Consequently no minimizer in $\mathcal G(n,1)$ has a universal vertex. Stance: suspected-novel for $n\ge8$ (see §6); the instance $n=7$ was obtained earlier in this project (repo-derived), and the proof below covers it uniformly.
+
+**Proof.** Membership: $T_n$ has the $n$ vertices $h,x,y,z,z_1,\dots,z_{n-4}$ and $n$ edges, and it is connected, so its cyclomatic number is $1$. Its degrees are $d_h=n-2$, $d_x=3$, $d_y=2$ and $1$ for $z$ and each $z_j$; as $n\ge7$ every degree is below $n-1$, so $T_n$ has no universal vertex.
+
+Universal-vertex graphs: if $G\in\mathcal G(n,1)$ has a universal vertex $h$, then exactly one edge avoids $h$, say $xy$; so $d_h=n-1$, $d_x=d_y=2$ and all other vertices are leaves at $h$, and $G$ is a relabelling of $U_n$. With $\psi$ from Convention 2.2,
+
+$$
+E(U_n)=(\sqrt2-1)+2\psi(n-1,2)+(n-3)\psi(n-1,1),
+$$
+
+$$
+E(T_n)=\Big(\tfrac{\sqrt{13}}3-1\Big)+\Big(\tfrac{\sqrt{10}}3-1\Big)+\psi(n-2,3)+\psi(n-2,2)+(n-4)\psi(n-2,1),
+$$
+
+where the two bracketed terms are the edges $xy$ (degrees $3,2$) and $xz$ (degrees $3,1$), and $n-2\ge3$ is the larger endpoint degree on every edge at $h$. Both graphs have $n$ edges, so $\Phi(U_n)-\Phi(T_n)=E(U_n)-E(T_n)$.
+
+For $x\ge0$ put $y=\sqrt{1+x}-1\ge0$, so $x=2y+y^2$; then $x/2-x^2/8=y-y^3/2-y^4/8\le y$, and $\sqrt{1+x}\le1+x/2$ (square both sides). Applying the lower bound $\sqrt{1+x}-1\ge x/2-x^2/8$ with $x=k^2/(n-1)^2$ to $E(U_n)$ and the upper bound $\sqrt{1+x}-1\le x/2$ with $x=k^2/(n-2)^2$ to $E(T_n)$ gives
+
+$$
+E(U_n)\ge(\sqrt2-1)+\frac{n+5}{2(n-1)^2}-\frac{n+29}{8(n-1)^4},\qquad E(T_n)\le\frac{\sqrt{13}+\sqrt{10}}3-2+\frac{n+9}{2(n-2)^2}.
+$$
+
+Hence $E(U_n)-E(T_n)\ge K-g(n)$ with
+
+$$
+K=\sqrt2+1-\frac{\sqrt{13}+\sqrt{10}}3,\qquad g(n)=\frac{n+9}{2(n-2)^2}-\frac{n+5}{2(n-1)^2}+\frac{n+29}{8(n-1)^4}.
+$$
+
+From $1.41421^2<2$, $3.60556^2>13$ and $3.16228^2>10$ we get $K>2.41421-6.76784/3=47479/300000>0.1582$. Exact evaluation gives $g(7)=1129/7200<0.1569$, $g(8)=9109/86436<0.106$ and $g(9)=60579/802816<0.076$. For $n\ge10$, the inequality $4(n+5)(n-1)^2\ge n+29$ shows that the last two terms of $g(n)$ have a nonpositive sum, so $g(n)\le(n+9)/(2(n-2)^2)$; this bound decreases in $n$ for $n>2$, because its derivative is $-(n+20)/(2(n-2)^3)$, and at $n=10$ it equals $19/128<0.1485$. Thus $g(n)<K$ for every $n\ge7$, and $\Phi(T_n)<\Phi(U_n)$. Every minimizer $G^\ast$ satisfies $\Phi(G^\ast)\le\Phi(T_n)<\Phi(U_n)$, so it has no universal vertex. ∎
+

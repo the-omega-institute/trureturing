@@ -1,0 +1,100 @@
+**Theorem 12.1 (Structure forced by asymptotically minimizing dense laws).** Let $J$ be a fixed compact interval in $(0,1)$. For each sufficiently large integer $a$, choose $\lambda_a\in J$, set $\delta_a=\lambda_a/a$, and let $x_a$ be any actual dense law satisfying
+
+$$
+H(x_a)-\mathscr D_a(\delta_a)=o(a^{-2}).
+\tag{12.1}
+$$
+
+Then there exist pairs $P_a\subset[s]$ such that
+
+$$
+\begin{aligned}
+\mathbb P_{x_a}(K=a)&=\delta_a+o(a^{-3}),\\
+\mathbb P_{x_a}(K\notin\{a,r\})&=o(a^{-3}),\\
+\mathbb P_{x_a}(T=[s]\setminus P_a\mid K=a)&=1-o(1),\\
+\left\|y-\mu\mathbf1
+ -\frac{(2r-1)\delta_a}{r^2}
+ \left(\mathbf1_{P_a}-\frac2s\mathbf1\right)\right\|
+ &=o(a^{-2}).
+\end{aligned}\tag{12.2}
+$$
+
+All little-oh assertions are along the given sequence $a\to\infty$; $\lambda_a$ need not converge. The conditional law is defined eventually by the first line. This is a necessary asymptotic structure, not a finite-$a$ equality classification or a sufficiency assertion for arbitrary laws satisfying (12.2).
+
+**Proof.** Since $\lambda_a$ stays bounded away from zero, $Q_*$ is bounded below by a positive constant times $a^{-2}$. Theorem 11.4 and (12.1) therefore put $x_a$ in $H<H_d$ eventually. The left side of (11.12) is $o(a^{-2})$, and its error is $O_J(a^{-4})$. Consequently
+
+$$
+\Delta=o(a^{-2}),\qquad
+\left\|d-\frac{c^\circ}{r^2}\right\|=o(a^{-2}).
+\tag{12.3}
+$$
+
+For $z\ge2$, $\Phi(z)\ge2rz(z-1)$, while $\Phi(-1)=6r$. Hence, with $p_j=\mathbb P(z=j)$,
+
+$$
+p_{-1}+\sum_{j\ge2}p_j=O(\Delta/r),\qquad
+\left|p_1-\delta_a\right|
+=\left|p_{-1}-\sum_{j\ge2}j p_j\right|
+=O(\Delta/r).
+$$
+
+These estimates prove the first two lines of (12.2).
+
+Let $e=d-c^\circ/r^2$. Rewriting (11.11) gives
+
+$$
+H-H_d=-\frac{\|c^\circ\|^2}{r^2\mu^3}
+ +\frac\Delta{\mu^2}+\frac{r^2}{\mu^3}\|e\|^2+E.
+$$
+
+Equations (12.1), (12.3) and Theorem 11.4 imply
+
+$$
+\|c^\circ\|^2=A^2+o(1).
+\tag{12.4}
+$$
+
+Write $p=\mathbb P(K=a)$ and
+
+$$
+v=\mathbb E\left[I-\frac as\mathbf1\ \middle|\ K=a\right].
+$$
+
+The other cardinalities in (11.4) have total projected contribution $O(\Delta)$ by (11.5), and therefore
+
+$$
+c^\circ=-(2r-1)p v+O_{\|\cdot\|}(\Delta).
+\tag{12.5}
+$$
+
+Here $O_{\|\cdot\|}(\Delta)$ denotes a vector of Euclidean norm $O(\Delta)$. The scalar $(2r-1)p$ is bounded above and away from zero, and $p/\delta_a\to1$. Combining (12.4)–(12.5) yields
+$\|v\|^2=\kappa^2-o(1)$, since each centered cardinality-$a$ incidence vector has squared norm $\kappa^2$.
+
+Take independent conditional draws $U,U'$ given $K=a$. The Euclidean variance identity gives
+
+$$
+\mathbb E\|\mathbf1_U-\mathbf1_{U'}\|^2
+=2(\kappa^2-\|v\|^2)=o(1).
+$$
+
+Two distinct $a$-subsets have squared incidence distance at least two. Thus their conditional coincidence probability tends to one. If $\pi_U=\mathbb P(T=U\mid K=a)$, then
+
+$$
+1-o(1)=\sum_U\pi_U^2\le\max_U\pi_U\le1.
+$$
+
+Choose a largest atom $U_a=[s]\setminus P_a$. This proves the third line of (12.2). Since all the centered incidence vectors have norm $\kappa\le\sqrt2$, their mean differs from the vector at this atom by norm at most $2\sqrt2(1-\pi_{U_a})=o(1)$. Hence
+
+$$
+v=\mathbf1_{[s]\setminus P_a}-\frac as\mathbf1+o_{\|\cdot\|}(1).
+$$
+
+Equation (12.5) and $p=\delta_a+o(a^{-3})$ now give
+
+$$
+c^\circ=(2r-1)\delta_a
+ \left(\mathbf1_{P_a}-\frac2s\mathbf1\right)+o_{\|\cdot\|}(1).
+$$
+
+Together with (12.3) this proves the final line of (12.2). In particular the two enhanced marginals and the concentrated omitted pair are properties of the same actual law. ∎
+

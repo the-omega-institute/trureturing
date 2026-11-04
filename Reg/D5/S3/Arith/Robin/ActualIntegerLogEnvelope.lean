@@ -133,8 +133,158 @@ def envelopeAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+abbrev epsilonArena : Arena where
+  signature := signature
+  Law R := ∀ epsilon : ℝ, 0 < epsilon →
+    ∃ A : ℝ, 286 ≤ A ∧ ∀ n : ℕ, 0 < n → A ≤ Real.log (n : ℝ) →
+      R.readout () () n - Real.eulerMascheroniConstant ≤
+        ((19 / 10 : ℝ) + epsilon) / Real.log (Real.log (n : ℝ))
+
+theorem epsilon_rejected_law : ¬ epsilonArena.Law rejected := by
+  intro h
+  apply rejected_law
+  simpa only [show (19 / 10 : ℝ) + 1 / 10 = 2 by norm_num] using
+    h (1 / 10) (by norm_num)
+
+def epsilonFamily : Registration epsilonArena (type_of% @eventual_actual_integer_envelope_epsilon) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨eventual_actual_integer_envelope_epsilon, rejected, epsilon_rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, epsilon_rejected_law⟩
+      intro j h
+      exact (h (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+def epsilonAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@eventual_actual_integer_envelope_epsilon) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.ActualIntegerLogEnvelope.eventual_actual_integer_envelope_epsilon.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.ActualIntegerLogEnvelope.epsilonFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨epsilonArena⟩
+  objectArena := .source ⟨epsilonArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source epsilonArena ⟨epsilonFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.ActualIntegerLogEnvelope
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "arg", "body", "arg", "body", "body", "body", "fn", "arg", "fn", "arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms epsilonAudit
+
 #print axioms envelopeFamily
 #print axioms envelopeAudit
+
+namespace SupportedSigmaBound
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ n => (ArithmeticFunction.sigma 1 n : ℝ) / n)
+    (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {U : ℕ}, 0 < U → ∀ {x : ℝ},
+    (∀ p ∈ U.primeFactors, (p : ℝ) ≤ x) →
+    R.readout () () U ≤
+      ∏ p ∈ Finset.Ioc (0 : ℕ) ⌊x⌋₊ with p.Prime, (1 - 1 / (p : ℝ))⁻¹
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 2) (fun e => nomatch e)
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := h (U := 1) (by norm_num) (x := 0) (by simp)
+  change (2 : ℝ) ≤ ∏ p ∈ Finset.Ioc (0 : ℕ) ⌊(0 : ℝ)⌋₊ with p.Prime,
+    (1 - 1 / (p : ℝ))⁻¹ at hb
+  norm_num at hb
+
+theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  norm_num [actual, realize]
+
+def family : Registration arena (type_of% @supported_sigma_bound) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@supported_sigma_bound, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@supported_sigma_bound) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.ActualIntegerLogEnvelope.supported_sigma_bound.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.ActualIntegerLogEnvelope.SupportedSigmaBound.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.ActualIntegerLogEnvelope
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+#print axioms audit
+
+end SupportedSigmaBound
 
 end
 end Reg.D5.S3.Arith.Robin.ActualIntegerLogEnvelope

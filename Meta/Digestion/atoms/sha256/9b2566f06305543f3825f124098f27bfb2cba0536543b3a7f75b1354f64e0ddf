@@ -1,0 +1,9 @@
+**Theorem 1.5 (Two-color four-loop vanishing; `thm:main`).**
+For every $p,q\geq0$ with $p+q$ odd,
+
+$$
+\mathcal{P}_{4,(p,q)}=0.
+$$
+
+Consequently $\mathcal{P}_{4,(1,\ell-1)}=0$ for every odd $\ell\geq1$.
+

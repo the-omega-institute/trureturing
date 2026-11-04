@@ -1,0 +1,5 @@
+source_id = "fib-sparse-coherent-exact-first-sensitive-horizon"
+path = "docs/develop/theory/FIB_SPARSE_COHERENT_EXACT_FIRST_SENSITIVE_HORIZON.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,102 @@
+### 14.2. Closed-box coefficient bounds for the carrier
+
+The following notation specifies the finite rational inequalities used
+below. If $L(z)=\sum_\alpha c_\alpha z^\alpha$ is a polynomial on
+$Z=\prod_{j=1}^s[l_j,u_j]$, let $n_j=\deg_{z_j}L$ and, for
+$0\le t_j\le n_j$, set
+
+$$
+\begin{aligned}
+\beta_t(L;Z)
+ &=\sum_\alpha c_\alpha\prod_{j=1}^s
+ \left\{\sum_{k=0}^{\min(\alpha_j,t_j)}
+ \binom{\alpha_j}{k}l_j^{\alpha_j-k}(u_j-l_j)^k
+ \frac{\binom{t_j}{k}}{\binom{n_j}{k}}\right\},\\
+\mathfrak b_Z(L)&=\min_{0\le t_j\le n_j}\beta_t(L;Z),\qquad
+\mathfrak B_Z(L)=\max_{0\le t_j\le n_j}\beta_t(L;Z).
+\end{aligned}
+\tag{14.2}
+$$
+
+Include every index in this rectangular tensor, including coefficients
+that are zero. Constant polynomials have degree zero in every
+variable. Expanding $z_j=l_j+(u_j-l_j)y_j$ and then using
+
+$$
+y^k=\sum_{t=k}^n\frac{\binom tk}{\binom nk}
+                 \binom nt y^t(1-y)^{n-t}
+\quad(0\le k\le n)
+\tag{14.3}
+$$
+
+gives the Bernstein expansion with coefficients (14.2).
+Its basis functions are nonnegative and sum to one on the entire
+closed box, so $\mathfrak b_Z(L)\le L\le\mathfrak B_Z(L)$ there.
+This is the classical convex-hull bound; see Mourrain, Rouillier and
+Roy, *Bernstein's basis and real root isolation*, INRIA RR-5149,
+[Proposition 2.8](https://inria.hal.science/inria-00071434/document).
+The tensor statement follows by the same partition of unity in each
+coordinate. No generic specialization or square-free assumption is
+used in this bound.
+
+Put
+
+$$
+\widetilde R(x,p,w)=R\left(x,p,\frac{46}{25}p+w\right),\qquad
+Z_{pw}=[-534,-457]\times[-1877/50,-3749/100].
+\tag{14.4}
+$$
+
+Applying the exact sums (14.2) to (12.10)–(12.12) gives the following
+strict rational inequalities. The degree vector for each row is
+$(18,6,6)$, so each comparison includes $19\cdot7\cdot7=931$
+coefficients.
+
+| Closed $x$ interval $I$ | Sign $\epsilon$ | $\mathfrak b_{I\times Z_{pw}}(\epsilon\widetilde R)>$ |
+| --- | --- | --- |
+| $[0,343/1000]$ | $+1$ | $6\cdot10^{23}$ |
+| $[344/1000,407/1000]$ | $-1$ | $10^{24}$ |
+| $[409/1000,24/25]$ | $+1$ | $10^{24}$ |
+| $[501/500,1917/1000]$ | $+1$ | $10^{24}$ |
+| $[1927/1000,2493/1000]$ | $-1$ | $2\cdot10^{28}$ |
+| $[1259/500,27]$ | $+1$ | $3\cdot10^{29}$ |
+
+The two polynomial divisions in (12.12) have zero remainder; the
+resulting carrier has 512 nonzero monomials in $(x,p,v)$ and degree
+vector $(18,6,6)$. These facts and (14.2) specify the comparisons
+without selecting any roots. For $x\ge34$, the source-equation
+exclusion in Section 14.3 below applies directly to actual worlds.
+Finally,
+
+$$
+\mathfrak b_{[24/25,501/500]\times Z_{pw}}
+                 (\partial_x^2\widetilde R)>264\cdot10^{26}.
+\tag{14.6}
+$$
+
+Here the degree vector is $(16,6,6)$ and all 833 tensor coefficients
+are included. Equations (14.2), (14.4), (14.6) and the displayed
+polynomial definitions are finite rational expressions for all the
+bounds; in particular (14.6) holds at the strip faces as well.
+
+For an actual source with $0<x\le34$, the finite comparisons above
+place every possible carrier root in the union
+
+$$
+\begin{aligned}
+\mathcal I={}&[343/1000,344/1000]\cup[407/1000,409/1000]\cup I_c\\
+ &\cup[1917/1000,1927/1000]\cup[2493/1000,1259/500]
+       \cup[27,34],\\
+I_c={}&[24/25,501/500].
+\end{aligned}
+\tag{14.7}
+$$
+
+The closed complementary intervals include every boundary; allowing
+those boundary points again in (14.7) only enlarges the possible root
+set. Strict positivity of the second derivative on
+$I_c$ implies at most two distinct roots there: three distinct roots
+would, by two applications of Rolle's theorem, force a zero of the
+second derivative. This argument includes repeated-root
+specializations and does not require a root to lift to a world.
+

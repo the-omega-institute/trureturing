@@ -1,0 +1,34 @@
+**Proposition 5.1 (scope of the Born substitution).** In the domain of
+Definition 1.1, $\mu$ is orthogonally additive and strictly increasing on
+subspace inclusions. It is modular on the full subspace lattice if and
+only if $\rho=I_H/n$. For nonscalar $\rho$, its orthogonal additivity does
+not imply even supermodularity on arbitrary pairs. For every nonscalar
+$\rho$ with $n\ge3$ and $c=0$, there are triangle-violating interval
+witnesses with $R\ne0$, and $f_0$ is strictly positive on the entire interval.
+
+*Proof.* Orthogonal additivity follows from $P_{X\oplus Z}=P_X+P_Z$
+when $X\perp Z$, and strict increase was proved in Definition 1.1.
+For the scalar density operator, (4.1) proves modularity.
+For a nonscalar density operator take $T$ spanned by eigenvectors with
+unequal eigenvalues and use any $0<r<1$ in (2.7). Equations (1.7), (1.8)
+and (2.8) give, with $E_L=R\oplus L$ and $E_N=R\oplus N$,
+
+$$
+f_c(E_L)+f_c(E_N)-f_c(S)-f_c(R)
+=a_L+a_N-s=r(M-m)>0.
+\tag{5.1}
+$$
+
+With $R=0$, this disproves supermodularity and hence modularity on the
+full lattice. The same pair gives positive triangle defect by (2.4).
+This is exactly the obstruction tested by the join-middle substitution
+in the necessity proof of [B1, Theorem 4], quantitatively optimized here.
+
+If $n\ge3$, choose a third eigenvector and let $R$ be its span, leaving
+$T$ as above. Then $R\perp T$ and $\mu(R)>0$; at $c=0$ every
+$X\in[R,R\oplus T]$ satisfies $f_0(X)\ge\mu(R)>0$.
+Equation (5.1) and Theorem 2.1 supply the required violation wholly within
+this strictly positive interval. If $n=2$, the choice $R=0$, $T=H$ still
+gives the violation with an actual density matrix; no representation of
+all two-dimensional probability measures is used. $\square$
+

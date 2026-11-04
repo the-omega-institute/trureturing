@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0156b31e28810681a554f93b272ec7b6f4868289dd0c521107a6c6c17125960e
+  normalized_sha256: sha256:0156b31e28810681a554f93b272ec7b6f4868289dd0c521107a6c6c17125960e
+cas_ref: sha256:0156b31e28810681a554f93b272ec7b6f4868289dd0c521107a6c6c17125960e
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/SixIndependentLengthStability.asymmetry_remainder_le_envelope
+    target_statement_id: sha256:a09d3e95a35fdcac3140b391fb587c66c17af2fff591b2710c1260725557e553
+receipts:
+  unresolved_subitems: []

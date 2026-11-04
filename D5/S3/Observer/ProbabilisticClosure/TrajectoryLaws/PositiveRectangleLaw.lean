@@ -345,7 +345,7 @@ private theorem exclusion (θ : Presentation H)
   obtain ⟨ε,hε,hguard⟩ := actual_finite_guard θ w R hp
   exact no_uniform_exterior_guard θ hfull (guard w) hG ε hε (w.length+1) hguard
 
-private theorem product_ofFn (θ : Presentation H) (n : ℕ) (w : Fin n → Bool) :
+theorem product_ofFn (θ : Presentation H) (n : ℕ) (w : Fin n → Bool) :
     product θ (List.ofFn w) = wordMatrix θ.matrix n w := by
   induction n with
   | zero => simp [product,wordMatrix]
@@ -439,7 +439,7 @@ theorem actual_every_presentation (θ : Presentation H)
     exact TwelveStatePresentation.actual_visible_support t n w
   exact supported_word_obstruction θ hf (fun t n w hw => (hs t n w).mpr hw) n w hw
 
-private theorem irreducible_initial_positive (θ : Presentation H)
+theorem irreducible_initial_positive (θ : Presentation H)
     (hirr : ∀ i j : H, ∃ n : ℕ, 0 < ((θ.matrix false+θ.matrix true)^n) i j) :
     ∀ j, 0 < θ.initial j := by
   let A := θ.matrix false+θ.matrix true

@@ -1,0 +1,29 @@
+**Theorem 25.4 (short common lists exist without a uniform constructor).**
+For each $d,H$ in Definition 25.1 there is a polynomial-total-length
+list hitting all its source-specific acceptance functions. This
+existence does not supply the algorithm assumed in Theorem 25.3.
+
+Proof. Pad every order-at-most-$d$ all-index source to order $d$ by
+multiplying its annihilator by $E^{d-r}$. At most
+$M=4^d(H+1)$ row/seed/cut presentations must be covered, including
+all singular, nonminimal and finite-transient sources. Restricting
+to the fixed earned spine only decreases this number. Independently
+sample $m_* =\lceil\log_4(2M)\rceil$ tapes of length $b(d,H)$.
+By (ACR.105), a particular function misses them all with probability
+at most $4^{-m_*}$. A union bound over the at-most-$M$ functions
+is at most $1/2$. Hence some list hits them all, and its length
+$m_*b(d,H)$ is polynomial in $d+H+2$.
+
+This proof neither identifies the list nor tests its universality in
+polynomial work. Exhaustively checking it over these presentations
+retains the source catalogue. ACR §14 already supplies common lists
+with charged exponential construction for the stronger pointwise
+measurement requirement; the new sufficient condition concerns
+successful certified transcripts. No generic derandomization lower
+bound, arbitrary-circuit encoding, hardness-based generator corollary
+or space-generator resource bound follows from the one-direction
+source-to-circuit correspondence proved here. The unresolved step is
+a uniform polynomial-total constructor for this native hitting
+condition, or another source-faithful polynomial-total acquisition
+method. $\square$
+

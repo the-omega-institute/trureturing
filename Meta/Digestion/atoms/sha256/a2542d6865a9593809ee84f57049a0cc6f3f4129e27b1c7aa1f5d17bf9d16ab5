@@ -1,0 +1,57 @@
+#### 定理 6.2（Gibbs、软 Bellman 与条件转移）
+
+令
+
+$$
+Z(v)=\sum_{h:v\leadsto t}Q(h\mid v)e^{-C(h)/\tau},\qquad Z(t)=1.
+$$
+
+则唯一最优路径律、最优值及递归分别为
+
+<a id="equation-7"></a>
+
+$$
+\begin{aligned}
+P_*(h)&=\frac{Q(h)e^{-C(h)/\tau}}{Z(s)},&
+\min_P\mathcal F_\tau(P)&=-\tau\log Z(s),
+\end{aligned}
+\tag{7}
+$$
+
+<a id="equation-8"></a>
+
+$$
+\begin{aligned}
+Z(v)&=\sum_{v\to w}q(w\mid v)e^{-c_{vw}/\tau}Z(w),&
+V_\tau(v)&=-\tau\log Z(v).
+\end{aligned}
+\tag{8}
+$$
+
+特别
+
+$$
+V_\tau(v)=-\tau\log\sum_{v\to w}q(w\mid v)
+e^{-[c_{vw}+V_\tau(w)]/\tau},
+$$
+
+而 $P_*$ 的实际条件转移为
+
+$$
+q_*(w\mid v)=\frac{q(w\mid v)e^{-c_{vw}/\tau}Z(w)}{Z(v)}.
+$$
+
+对任何 $P$ 还有精确误差身份
+
+$$
+\mathcal F_\tau(P)=-\tau\log Z(s)+\tau D(P\Vert P_*).
+$$
+
+**证明。**
+
+把 $\log P_* =\log Q-C/\tau-\log Z(s)$ 代入相对熵，即得最后身份。有限 KL 非负且仅在两律相同取零，给唯一性。按首边分解后缀路径得 $Z$ 递归；条件转移公式随之归一化。沿完整路径相乘时所有中间 $Z$ 抵消，恢复 $P_*$。
+
+∎
+
+<a id="statement-6-3"></a>
+

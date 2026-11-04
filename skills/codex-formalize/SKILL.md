@@ -41,9 +41,20 @@ Helpers in `Reg`, `Interface` and `Impl` create no recursive D5 audit target and
 - skip Steps 1–2 and 4–7: run the canonical writers (`make cover` / `cover-batch`, `make settle` / `make -C tools settle-batch` / `make settle-clear`, `make decompose`) and commit their delta;
 - per-sentence probes, evidence archives and live-closure readings are not required, and no review triplet, evidence seat or repair seat is dispatched;
 - in Step 8, open the PR with `AUTO_MERGE=0` and merge once the writers exited 0 and the required checks are green on the exact head; the required checks, including `current`, carry §4.3 consumer validation;
-- report the ledger moves and unsettled atoms truthfully, and note ledger deviations under §1.2 for later correction by the writers.
+- account for every atom encountered by the selection that led to this route; each has a canonical writer result or a named mathematical or writer blocker with its next handling. A bare `open`, recommendation, skip, defer, or unexecuted handoff is not processing.
 
 All other deliveries follow the steps below.
+
+### Encountered digestion set
+
+When topic selection uses digestion, the encountered set is the atoms returned or examined by `search-atoms`, plus context and child atoms actually read through `show-atom` or `atom-context`. It includes rejected and unsuitable candidates and is limited to that selection; it is not a global backlog sweep. Before a route-specific exit, process every encountered atom through the existing route that its content permits:
+
+- use `make cover` or `cover-batch` for an exact existing frozen declaration after reading the required context and prerequisites;
+- use `make settle`, `make -C tools settle-batch`, or `make settle-clear` only where the current writer permits a genuinely nonpropositional or upstream-only closure; an unresolved proposition remains mathematically `open`;
+- use `make decompose` for mixed or multi-clause atoms, then process the parent and every resulting child to clause-complete chain state;
+- write admissible new D5 content and use its normal deposit and coverage route when no existing result closes the clause.
+
+Unsuitability alone never supplies a proof or a nonpropositional settlement. A missing writer outcome or a genuine mathematical gap remains an explicitly named blocker with concrete next handling, and prevents claiming that all encountered atoms were processed. The pure digestion route stays minimal: canonical writers and their required checks suffice, with no process archive or extra review.
 
 Follow these steps in order. Do not pass a step until its postcondition holds.
 
@@ -80,7 +91,7 @@ Before any deposit, require `git status --short` to print nothing except the int
 
 Postcondition for mutation tasks: the pinned toolchain is on PATH; `pwd -P` and `git rev-parse --show-toplevel` agree with the reused or created isolated lane; `make -C tools dotnet` has built the CLI so `make show-atom` succeeds; and no unrelated or unexplained change is present.
 
-### 1. Choose exactly one target
+### 1. Choose one primary target and account for the selection
 
 The target is either an open atom or, when the content has no atom, a statement source: a preregistered issue, a published source, or the dispatcher's brief, quoted verbatim.
 
@@ -92,7 +103,7 @@ For an explicitly requested source or atom target, use `make search-atoms SOURCE
 make show-atom ATOM_ID=<id>
 ```
 
-Search reports stored paths and states. Read the ATOM and its context before choosing an elementary, self-contained statement.
+Search reports stored paths and states. Read the ATOM and its context before choosing an elementary, self-contained primary target. If digestion was used, apply the encountered-set rule above to every returned or read atom before reporting a route exit; do not turn an unsuitable candidate into an unowned open item.
 
 The required delivery surfaces are the D5 Lean module and its Blueprint Scribe (`CLAUDE.md` §1.2). Before starting, check with `make show-atom`/`make atom-context` whether the content already has an atom: if it does, deposit and cover that atom in the same delivery; if it does not, write the D5 Lean and Scribe directly and freeze through `make deposit-uncovered`. Do not add a theory volume or run `make ingest` as a precondition for formalization. A target with no atom is still judged by §3.2 proof shape and admission basis, §3.3 utility and §3.7 literature status.
 
@@ -105,7 +116,7 @@ Triage the claim class before committing to it; each class below is named by lan
 - **Do not encode — institutional/philosophical prose clauses** (governance clauses, postmortem narratives, interpretive premises): they have no mathematical content, and encoding them as generic set/logic predicates is how thin deposits happen. Report them as not-formalizable prose rather than dressing them in Lean.
 - **Do not attempt without a machinery plan — heavy universal claims** (representation theorems, general-dimension obstructions): landed lanes on these either time out or fabricate. If the machinery gap is real, `open` naming the gap is the valuable output.
 
-Postcondition: one target is selected and its claim class is named in the report; the statement source is retained, either the verified `make show-atom` output of the atom or the verbatim statement source of a target with no atom.
+Postcondition: one primary target is selected and its claim class is named in the report; the statement source is retained, either the verified `make show-atom` output of the atom or the verbatim statement source of a target with no atom. When digestion was used, every encountered atom has a canonical route result or a named blocker with concrete next handling.
 
 ### 2. Echo the statement before proving it
 
@@ -119,7 +130,7 @@ Postcondition: every source clause has one intended Lean counterpart, or the tas
 
 Apply `CLAUDE.md` 11, "library before proof." Search pinned mathlib and the repository's `D5/` declarations for the complete statement and for lemmas that close its dependencies. Record every query verbatim and record whether it hit.
 
-Check the bind path first: the cheapest faithful discharge is an existing frozen theorem, and dozens of residues have been discharged with zero new Lean. If a frozen declaration already covers the residue leg verbatim (not narrower — watch the grader traps below), the correct deliverable is a bind recommendation naming that declaration and the evidence, not a new module. Ledger surgery itself is dispatcher-owned; your report carries the finding.
+Check the bind path first: the cheapest faithful discharge is an existing frozen theorem, and dozens of residues have been discharged with zero new Lean. If a frozen declaration already covers the residue leg verbatim, use the canonical coverage route naming that declaration and the evidence, not a new module or a recommendation for another worker. If the writer cannot run, name that blocker and its next command; do not claim the atom is processed.
 
 A delivery that adds or first-freezes no D5 declaration follows the pure digestion route under "State machine" instead of a new module.
 
@@ -132,11 +143,11 @@ grep -rn "≡ -1 \[ZMOD" D5/ --include='*.lean'
 grep -rn "jacobiSym\|J(" D5/ --include='*.lean' | grep -i <conclusion-token>
 ```
 
-If the identity already exists in equal or stronger form, the correct output is the reuse or an `open`/abstain naming the frozen declaration — never a new module. A hypothesis derivable from your other hypotheses (parity from a congruence, coprimality from an inverse relation) must be derived, not assumed: assuming it makes your theorem strictly weaker than the source claim and reviewers reject it as a weaker duplicate.
+If the identity already exists in equal or stronger form, use the reuse and canonical coverage route, never a new module. Retain `open` only for a named mathematical or writer blocker with concrete next handling. A hypothesis derivable from your other hypotheses (parity from a congruence, coprimality from an inverse relation) must be derived, not assumed: assuming it makes your theorem strictly weaker than the source claim and reviewers reject it as a weaker duplicate.
 
 Postcondition: the search trace is recorded and every hit is either reused or accompanied by a concrete explanation of why it is not the same claim.
 
-If the search cannot be completed faithfully, end the task as `open` with no deposit, carrying the Step 8 evidence: statement echo, search trace, failed approaches with reasons, and machine diagnostics.
+If the search cannot be completed faithfully, end the task as `open` with no deposit, naming the missing capability or mathematical gap and its concrete next handling, and carrying the Step 8 evidence: statement echo, search trace, failed approaches with reasons, and machine diagnostics. Do not claim that the encountered set was processed.
 
 ### 4. Learn the current artifact shape
 
@@ -447,9 +458,7 @@ A landed pull request consisting of one generic one-line `def` plus two `simp`-t
 
 ### Cover and ATOM processing
 
-Use `show-atom` and `atom-context` to read the selected ATOM and its source context.
-A cover attempt must verify the exact Lean declaration and current frozen state. Successful coverage is written through `cover-atom`; a failed attempt writes no new disposition and returns its diagnostic to the AI for correction and retry.
-Use `decompose-atom` when a multi-clause ATOM needs child processing. LEAN proof, freeze, deposit, cover, and the ATOM's local chain state remain the required delivery surface.
+Use `show-atom` and `atom-context` to read every selected or examined ATOM and its source context. A cover attempt must verify the exact Lean declaration, current frozen state, and the atom's prerequisites. Successful coverage is written through `cover-atom`; a failed attempt leaves a named writer blocker and its next handling, not a completed atom. Use `decompose-atom` when a mixed or multi-clause ATOM needs child processing, then process the parent and every child to clause-complete chain state. Lean proof, freeze, deposit, cover, settle, and the ATOM's local chain state remain the required delivery surface. No bare `open`, recommendation, skip, defer, or unexecuted handoff satisfies the encountered-set obligation; a proposition that remains unresolved stays mathematically `open`.
 
 ### Moving base (multiple drivers, hourly-advancing dev)
 
@@ -463,7 +472,7 @@ Several machines drive this repository concurrently and `dev` advances roughly h
 
 - **Never claim a build result without its exit code.** A seat once reported `lake` green while the build failed; since then the dispatcher re-runs the build at collection and a false green is a terminal lane offense. Report the command and the exit code; quiet output and elapsed time are not evidence.
 - **Recompute every number you copy.** A value taken from a brief, an issue, a search result or another seat (a certificate bound, a table entry, a count) is recomputed from its definition before it is written into Lean, Scribe, a dossier or a PR body, and the recomputation command is reported.
-- **Never touch `Meta/Digestion/**`.** Ledger surgery (coverage, residue removal, state moves) is exclusively the dispatcher's; a seat once edited it and the change was reverted wholesale. The same applies to `Golden/Frozen/**`.
+- **Never hand-edit `Meta/Digestion/**`.** Use the canonical `cover`, `settle`, and `decompose` writers for encountered atoms; a writer or capability blocker is named with its next handling. The same applies to `Golden/Frozen/**`.
 - **When a dispatcher assigns output paths, write exactly those.** `result.json` (a conclusion envelope, no logs inline) and `done.sentinel` at the assigned paths are the deliverable; your final prose message is not. A sentinel written while you keep running is worse than no sentinel — write it last, then stop.
 
 ## Prohibitions
@@ -476,7 +485,7 @@ Several machines drive this repository concurrently and `dev` advances roughly h
 - Never add a declaration to a frozen state member; this is a formalization discipline. State records contain all included module declarations; SL-008 checks the pin and declaration list against the current report and reports pin changes as Observe, with no cross-tree declaration-set monotonicity or invariance gate.
 - Never modify the judge during formalization (CLAUDE.md §1.2 「形式化不改判官」): a formalization lane changes only content surfaces (D5, Blueprint, Reg declaration sources and content templates, digestion ledger, theory volumes); `tools/**` (StrataLint, lean-inspector, report producers and schedulers, scripts), the judge Interface/Impl packages, `.github/**` and other admission surfaces are out of scope. If the judge is wrong or blocks you, open or reuse an issue with the verdict and readings, report the blocker, and continue other mathematical work; do not carry a judge fix in the delivery.
 - Never exceed directory capacity; `tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs` owns this rule.
-- Never edit `Meta/Digestion/**` from a producing seat; digestion-ledger surgery is dispatcher-owned.
+- Never edit `Meta/Digestion/**` directly; use the canonical `cover`, `settle`, and `decompose` writers for encountered atoms, and name any writer or capability blocker with its next handling.
 - Never weaken the echoed statement to make a proof close; the statement echo and this fidelity gate own that obligation.
 - Never deposit a first-freeze module without `admission_basis: escape-witness`; `CLAUDE.md` §3.2 owns the rule. A wholly bind-only module has no admission basis, even with an atom requirement or promised downstream consumer.
 - Never invent a "needs human review" outcome; `CLAUDE.md` 22 forbids human-review gates outright.

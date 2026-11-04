@@ -1,0 +1,33 @@
+**Mathematical source correspondence 44.6.** The identities
+(23.9)--(23.12), the zero-set classification in Lemma 11.2, the actual
+optimizer rows, and the scalar-quotient distance formula (23.11) are
+reused exactly. Theorem 37.5 supplies only the comparison
+$V(13/4)\le G_R$, and Theorem 41.2 supplies monotonicity of the selected
+raw value $V$; neither is treated as a premise for the spectral lower
+bound. The new content is the fixed-$U$ positive residual $K$, its
+population-sensitive two-by-two spectral minimum, the complete equality
+propagation, the strict sector, and the displayed low-impurity
+realization.
+
+For primary literature overlap, compare Bandeira--Boumal--Singer,
+*Tightness of the maximum likelihood semidefinite relaxation for angular
+synchronization*, arXiv:1411.3272v3, Lemmas 4.3--4.4 and Section 4.3
+([primary HTML](https://arxiv.org/html/1411.3272v3)). Their certificate
+has a positive semidefinite Hermitian slack, an annihilation condition,
+and a real-diagonal condition for the angular-synchronization feasible
+set. Those hypotheses explain the shape of a global spectral certificate,
+but the prescribed original distance and variable $F$ here add parameters
+for which no uniform slack is supplied by their lemmas. Tangent-space
+positivity therefore cannot replace (44.3).
+
+Likewise compare Xia--Wang--Sheu, *S-Lemma with Equality and Its
+Applications*, arXiv:1403.2816v3, Theorem 3 and Section 4
+([primary HTML](https://arxiv.org/html/1403.2816v3)). Their exactness
+result concerns one real quadratic equality with its regularity and
+exceptional affine cases. The original problem has four unit-modulus
+constraints together with a prescribed joint distance and a variable
+effect. No correspondence eliminating those constraints was established
+here, so this S-lemma supplies no unclaimed equality theorem for the
+present domain. These are bounded correspondence checks, not literature
+priority claims.
+

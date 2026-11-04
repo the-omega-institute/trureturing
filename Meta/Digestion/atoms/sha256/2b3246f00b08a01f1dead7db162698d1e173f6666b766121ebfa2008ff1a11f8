@@ -1,0 +1,19 @@
+#### 定义 2.1（五模式占位接口）
+
+在 $H_A=\mathbb{C}^5$ 上取基 $\lvert 0\rangle,\lvert 1\rangle,\lvert 2\rangle,\lvert 3\rangle,\lvert 13\rangle$，与项目旧标记 $(0,2,3,5,25)$ 对应。令 $P_s=\lvert s\rangle\langle s\rvert$，并定义
+
+$$
+
+\widehat X=P_1+P_{13},
+ \widehat Y=P_3+P_{13},
+ \widehat Z=P_2.
+
+$$
+
+对密度态 $\rho$ 记 $p_s=\operatorname{Tr}(\rho P_s)$，则
+$X=p_1+p_{13}$、$Y=p_3+p_{13}$、$Z=p_2$。
+
+这正是项目金字塔的占位均值接口。三者同时为一的方式受到排斥规则限制，但 $\widehat X,\widehat Y$ 可以共同取一，且存在全部取零的空模式。[金字塔基础](#ref-pyramid)
+
+
+<a id="thm:auricfiber"></a>

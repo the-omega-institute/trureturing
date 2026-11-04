@@ -1,0 +1,13 @@
+**Proposition 87.2 (constructing the needed inverse from this earned tree).** For every current reachable $t$, the controller can compute a rational matrix $D_d$ from its earned geometry and fixed $a,c$ such that $D_dO_d=\mathrm{Id}_{V_t}$ for every $d\ge I$.
+
+Proof. Initially mark all rooted childless material vertices; their coordinate vectors are columns of $J$. If an unmarked vertex remains, choose a deepest one $u$. It is not rooted childless, so has a child $v$. Every strict descendant of $u$ is marked. Thus $v$ is marked and its only unmarked neighbor is $u$. The actual adjacency law gives
+
+$$
+e_u=c^{-1}(T_te_v-ae_v)-\sum_{\substack{z\sim v\\z\ne u}}e_z .
+\tag{87.3}
+$$
+
+All terms on the right other than the extra $T_t$ have already constructed expressions. Mark $u$ and continue. Each step adds one of the $I$ initially unmarked vertices; it raises the maximum polynomial degree by at most one. This gives explicit vector polynomials in $T_t$ applied to columns of $J$, of degree at most $I$, for every coordinate vector. It is a constructive rational calculation, since $c>0$.
+
+Writing their coefficients as columns of $C$ gives $K_IC=\mathrm{Id}$, where $K_I=[J,T_tJ,\ldots,T_t^IJ]$. Symmetry gives $K_I^{\mathsf T}=O_I$, so $D_I=C^{\mathsf T}$ has $D_IO_I=\mathrm{Id}$. For $d>I$ let $D_d$ apply $D_I$ to the first $b(I+1)$ entries and ignore the rest. This proves the assertion and an actual finite algorithm. If $I=0$ the entire singleton tree is already marked and $D_0=\mathrm{Id}$; beta requires just one application of (87.3). No diagonal sign, spectral simplicity, repeated source preparation or physical internal actuator is used. $\square$
+

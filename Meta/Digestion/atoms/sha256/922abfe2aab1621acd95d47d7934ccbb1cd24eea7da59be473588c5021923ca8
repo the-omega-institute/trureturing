@@ -1,0 +1,33 @@
+**Theorem 63.2 (Candidate graphs and actual multiplicities).** Every actual exceptional parent world has $b=b_-(r)$ or $b=b_+(r)$. For each fixed $0<r<1$ there are at most two such complete worlds, with at most one above either candidate width. There is exactly one above the upper candidate width $b_+(r)$.
+
+**Proof.** An actual $K(W)=0$ implies $N_{\rm exc}=0$ by (63.1), so Theorem 62.1 gives the two candidate widths. At any source with $\Pi\ne0$, (61.2) fixes the unique real number
+
+$$
+\epsilon=-\frac{3S\mathcal J\mathcal N}{5\Pi}.
+\tag{63.3}
+$$
+
+Lemma 48.1 then fixes its complete world. Conversely at a candidate root with $\Pi\ne0$ this world is exceptional by (63.1), since $T,H_2,\Pi$ are nonzero.
+
+If an actual source has $\Pi=0$, (61.2) and $\mathcal J\mathcal N>0$ force $S=0$, hence $b=1/8$. All real $\epsilon$ remain allowed at this singular parent source by Lemma 48.1, but the exceptional equation (61.3) is affine in $\epsilon$. Its constant at this width is
+
+$$
+\left.(\gamma_{\rm w}\beta_{\rm w}-1)\right|_{b=1/8}
+=-\frac{207798820547}{2293695144600}\ne0.
+\tag{63.4}
+$$
+
+Substituting the $H_i$ and $T,U$ in (55.1) gives this fraction. Therefore the affine equation has at most one solution even if its slope $\alpha_{\rm w}(1/n-\gamma_{\rm w})$ vanishes; in that event it has none. This controls all singular actual sources without cancelling $\Pi$. It proves the asserted upper bound at each candidate and hence the bound of two at fixed $r$.
+
+For $b\ge24$, the strict source inequalities give $j>b$ and $n>j>b$, so
+
+$$
+\Lambda=1+6/T+1/U-4/j-4/n>1-8/b>0,
+\qquad \Pi>0.
+\tag{63.5}
+$$
+
+At $b_+(r)\in(24,64)$, (63.3) therefore constructs exactly one complete world and (63.1) makes it exceptional. Lemma 48.1 ensures a strict source and a whole nonzero gain of degree at most three, with its one fixed drift. The lower graph is only a candidate graph at singular sources; no assertion that both roots always support actual worlds is needed or made. $\square$
+
+In particular an actual exceptional world has neither $1\le b\le24$ nor $b\ge64$. A root of $N_{\rm exc}$ alone is not an unrestricted sufficient world criterion at a singular source: its parent equation and the affine $K$ equation remain necessary there.
+

@@ -1,0 +1,14 @@
+### Definition 60.4 (control-compatible history family)
+
+Let \(I\) be a finite set of already acquired history classes, with candidate
+relations \(B_i\subseteq Z\times S\). For a budget \(n\), put
+
+$$
+\mathcal K_n=
+\left\{J\subseteq I:
+J=\varnothing\text{ or }\bigcup_{i\in J}B_i\in\mathcal W_n\right\}.
+$$
+
+An element of \(\mathcal K_n\) is a set of histories that may be forgotten
+inside one memory value while retaining a common protocol of budget \(n\).
+

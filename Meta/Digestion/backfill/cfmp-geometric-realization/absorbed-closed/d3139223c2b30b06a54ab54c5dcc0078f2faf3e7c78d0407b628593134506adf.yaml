@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:d3139223c2b30b06a54ab54c5dcc0078f2faf3e7c78d0407b628593134506adf
+  normalized_sha256: sha256:d3139223c2b30b06a54ab54c5dcc0078f2faf3e7c78d0407b628593134506adf
+cas_ref: sha256:d3139223c2b30b06a54ab54c5dcc0078f2faf3e7c78d0407b628593134506adf
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/WeightedFlatCertificateRefutation.flat_candidate_cycle_and_certificate_refutation
+    target_statement_id: sha256:754e946863e6d52a31e7cdd2b7cea5954df0006409dd942b53e6bf90d29d28bb
+receipts:
+  unresolved_subitems: []

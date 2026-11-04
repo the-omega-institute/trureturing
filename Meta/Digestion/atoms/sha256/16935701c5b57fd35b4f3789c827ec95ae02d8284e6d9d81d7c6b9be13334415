@@ -1,0 +1,79 @@
+**定理 11.2（内部钟率与已取得空间关系的条件几何桥）。**
+
+<a id="thm-lapsebridge"></a>
+
+另行假设内部距离、同步和因果读出已经给出静态局部度量
+
+<a id="eq-lapsemetric"></a>
+
+$$
+ds^2=-c^2N(x)^2dt^2+\delta_{ij}dx^idx^j,
+\qquad c>0,\quad N\in C^2,\quad N>0,
+\tag{10}
+$$
+
+其中 $t$ 是一个已校准的内部参考钟。
+该度量的静止钟比较为
+$d\tau_x/d\tau_{x_0}=N(x)/N(x_0)$。
+对 $dt/d\lambda\ne0$ 的仿射测地线，记 $v^i=dx^i/dt$，
+则相对于参考钟 $t$ 的坐标加速度为
+
+<a id="eq-clockacc"></a>
+
+$$
+\frac{d^2x^i}{dt^2}
+=-c^2N\,\partial_iN
++2v^iv^j\partial_j\log N.
+\tag{11}
+$$
+
+按前述曲率约定，
+
+$$
+R^i{}_{tjt}=c^2N\,\partial_i\partial_jN.
+$$
+
+若类时轨迹瞬间 $v=0$ 且 $N=1+\Phi/c^2$，则精确有
+
+$$
+\frac{d^2x}{dt^2}
+=-\nabla\Phi-\frac{\Phi}{c^2}\nabla\Phi.
+$$
+
+**证明。**
+
+相关非零联络为
+$\Gamma^t_{ti}=\partial_i\log N$、
+$\Gamma^i_{tt}=c^2N\partial_iN$。
+仿射参数方程为
+
+$$
+\ddot t+2(\partial_j\log N)\dot t\,\dot x^j=0,\qquad
+\ddot x^i+c^2N\partial_iN\,\dot t^2=0.
+$$
+
+将 $d^2x^i/dt^2=(\ddot x^i\dot t-\dot x^i\ddot t)/\dot t^3$
+代入即得式 [(11)](#eq-clockacc)。
+曲率直接为
+
+$$
+R^i{}_{tjt}
+=\partial_j(c^2N\partial_iN)
+-(c^2N\partial_iN)\frac{\partial_jN}{N}
+=c^2N\partial_i\partial_jN.
+$$
+
+最后一式是把 $N=1+\Phi/c^2$ 代入静止瞬间的坐标加速度。
+
+□
+
+当 $|\Phi|/c^2$ 小时，主项为 $-\nabla\Phi$。
+这是一个正面的研究接口：内部钟率与已取得的空间和测地线关系
+可以共同产生 Newton 型坐标加速度。
+自由落体自身的四维固有加速度仍为零；
+维持静止的参考钟需要的固有空间加速度则是 $c^2\nabla\log N$。
+在 $N>0$ 的局部图表中，仿射函数 $N$ 可以有非零梯度而全部曲率为零，
+所以钟梯度、参考系加速与潮汐曲率必须区分。
+本定理不推出 $\nabla^2\Phi=4\pi G\rho$，
+也没有从门词直接推出式 [(10)](#eq-lapsemetric) 的空间度量条件。
+

@@ -8,6 +8,8 @@
 import Mathlib.RingTheory.PowerSeries.Binomial
 import Mathlib.Tactic
 
+-- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/21518
+
 /- Duplicate-search audit (2026-09-02):
    * Exact D5 searches for primitive Euler ledgers and unique Euler products found
      no matching theorem.
@@ -58,7 +60,7 @@ theorem coeff_eulerFactor_of_pos_of_lt (n k : Nat) (c : Int)
     coeff (n + 1) (eulerFactor (n + 1) c) = c := by
   simp
 
-private theorem coeff_mul_eulerFactor_of_lt
+theorem coeff_mul_eulerFactor_of_lt
     (p : Int⟦X⟧) (n k : Nat) (c : Int) (hk : k < n + 1) :
     coeff k (p * eulerFactor (n + 1) c) = coeff k p := by
   rw [coeff_mul, Finset.sum_eq_single (k, 0)]
@@ -127,7 +129,7 @@ def Represents (f : Int⟦X⟧) (c : Nat → Int) : Prop :=
     ledgerProduct c 0 = 1 := by
   simp [ledgerProduct]
 
-private theorem ledgerProduct_succ (c : Nat → Int) (n : Nat) :
+theorem ledgerProduct_succ (c : Nat → Int) (n : Nat) :
     ledgerProduct c (n + 1) =
       ledgerProduct c n * eulerFactor (n + 1) (c n) := by
   simp [ledgerProduct, Finset.prod_range_succ]
@@ -212,6 +214,5 @@ theorem unique_primitive_euler_ledger (f : Int⟦X⟧)
   intro c hc
   exact represents_unique f c hc
 
-#print axioms unique_primitive_euler_ledger
 
 end D5.S1.Recurrence.Witt.PrimitiveEulerLedger

@@ -1,0 +1,36 @@
+## 80. Sources and scope of the full-height deduction
+
+The mathematical suppliers are Q (41.3), the bounded corrector and
+general-threshold Azuma estimate in Q Theorem 74.1, Q Corollary 74.2,
+and the scalar law, measurable reconstruction and full-prefix Doob
+identity in (76.8)--(76.18), (76.22). Q Proposition 66.1 supplies a
+height-preserving construction for the moving tubes in its stated
+scope; it supplies no sharp critical coefficient. Theorem 76.1 and
+Corollary 77.1 allow conditioning height on the event $G$ and do not
+assert the extra full-height constraint. The new `repo-derived`
+content here is the integrable random envelope (78.3)--(78.8), the
+uniform linear log-likelihood bound (78.11)--(78.14), and their
+normalized countable-kernel composition (78.15)--(78.24), with the
+same-constrained-class consequence in Corollary 79.1.
+
+OU ground-state conditioning, stopped Girsanov, bounded-corrector
+concentration, conditional densities, variational entropy and data
+processing are classical intermediate tools. The generalized-Doob
+reference used in Q Proposition 66.1 is Chetrite and Touchette,
+*Nonequilibrium Markov processes conditioned on large deviations*,
+[arXiv:1405.5157v2](https://arxiv.org/html/1405.5157v2), §IV.1 and
+Appendix B. Its time-dependent path-density formulas are suppliers;
+its large-deviation conditioning conclusions are not invoked as a
+theorem of the exact full-height-preserving target. No global
+literature-priority claim is made.
+
+The selector $C(K)$ is allowed to depend on the full future height
+path. Equality $K_\#\mathsf V^{\mathsf Q_K}_\star=\mathsf Q_K$ asserts
+the entire height-path distribution, but does not assert that $K$
+retains its $\mathbb Q$ dynamics in the enlarged joint filtration
+containing the changed phase path. The theorem supplies one probability
+law and its full prefixes; it makes no causal, adapted executable-control,
+physical-realization, acquisition or parameter-uniform assertion.
+All G/C/N/F premises remain conditional. These are ordinary mathematical
+deductions, with no Lean-kernel, axiom or freezing certification claim.
+

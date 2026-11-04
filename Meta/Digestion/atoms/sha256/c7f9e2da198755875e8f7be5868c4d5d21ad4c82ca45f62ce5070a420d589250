@@ -1,0 +1,33 @@
+#### 命题 5.1（重编码不改变局部 Euler 因子）
+
+令 $M=F_{Q+2}$，则
+
+$$
+Z_Q^{\rm exp}(x)=\sum_{\eta\in\Omega_Q}x^{E_Q(\eta)}
+=\frac{1-x^M}{1-x}.
+$$
+
+$x=1$ 处按可去延拓取值 $M$。
+$Q\ge1$ 时全部零点满足 $x^M=1$ 且 $x\ne1$。在 $|x|<1$ 上，随 $Q\to\infty$，局部一致收敛到 $(1-x)^{-1}$。
+若 $x=p^{-s}$，有限零点的圆 $|x|=1$ 对应 $\operatorname{Re} s=0$。
+
+**证明。**
+
+双射使求和成为普通有限等比和。单位根结论由分子与分母的可去因子得到；在 $|x|\le r<1$ 上，尾项至多 $r^M/(1-r)$，故局部一致收敛。最后 $|p^{-s}|=p^{-\operatorname{Re} s}$。
+
+∎
+
+若改用占位数 $|\eta|$，则
+$H_Q(z)=\sum_{\eta\in\Omega_Q}z^{|\eta|}$ 满足
+$H_Q=H_{Q-1}+zH_{Q-2}$、$H_0=1,H_1=1+z$。项目已有有限根公式
+
+$$
+H_Q(z)=\prod_{j=1}^{\lfloor(Q+1)/2\rfloor}
+\left(1+4z\cos^2\frac{j\pi}{Q+2}\right)
+=\det(I+z\mathsf K_Q),\quad  \mathsf K_Q>0.
+$$
+
+这是有限负实根定位；$z$ 是占位活动度，既不是 $p^{-s}$，也不是稍后的 Cayley 零点坐标。本文消费该项目已有公式，不将其命名为 RH。
+
+<a id="section-5-2"></a>
+

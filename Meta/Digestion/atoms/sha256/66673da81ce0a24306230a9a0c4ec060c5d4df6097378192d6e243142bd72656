@@ -1,0 +1,17 @@
+**Corollary 2.** If $n\in T$, let $q$ be the integer such that $s(n)=nq$. Then
+$$
+15(15^n-1)=14n(1+14q),
+$$
+and consequently
+$$
+n\mid 15(15^n-1).
+$$
+
+**Proof.** Lemma 1 gives
+$$
+15^{\,n+1}-14n-15=196nq,
+$$
+which rearranges to the displayed identity. The factor $14n$ then gives the divisibility. ∎
+
+For a nonzero integer $x$, let $v_2(x)$ denote the exponent of $2$ in its prime factorization.
+

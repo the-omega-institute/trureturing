@@ -1,0 +1,32 @@
+**Definition 1.3 (Normalized invariants).** Write the pair, after multiplication by one common unit scalar, as
+
+$$
+A=aP,\qquad B=b\omega Q,\qquad
+a,b>0,\quad |\omega|=1,
+\tag{1.4}
+$$
+
+where $P,Q$ are rank-one orthogonal projections. The existence of this representation and its relation to (1.1) are established in Theorem 2.1. Define
+
+$$
+\begin{aligned}
+r&=\sqrt{\operatorname{tr}(PQ)}, &s&=a+b,
+&z&=\frac{a-b}{s}, &q&=\frac{4ab}{s^2}=1-z^2,\\
+\eta&=\frac{1-\operatorname{Re}\omega}{2},
+&x&=\sqrt{1-q(1-r^2)},
+&y&=\sqrt{1-qr^2\eta},\\
+x_0&=\sqrt{1-y^2}=\sqrt q\,r\sqrt\eta,
+&W&=z^2+qr^2(1-\eta)=x^2-x_0^2.
+\end{aligned}
+\tag{1.5}
+$$
+
+All square roots in (1.5) are nonnegative. The nondegenerate domain means precisely
+
+$$
+a,b>0,\qquad 0<r<1,\qquad |\omega|=1,\quad \omega\ne1.
+\tag{1.6}
+$$
+
+In that domain $0<q\leq1$, $0<\eta\leq1$, $0<x<1$, $0<y<1$, $0<x_0<1$, and $x\geq x_0$. The clauses $r=0$, $r=1$ and $\omega=1$ will be treated separately, without divisions by $y$, $x_0$ or $x+x_0$ at their endpoints.
+

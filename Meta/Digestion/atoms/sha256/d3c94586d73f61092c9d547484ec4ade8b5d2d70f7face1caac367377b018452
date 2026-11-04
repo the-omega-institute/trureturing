@@ -1,0 +1,16 @@
+## 3. 一个谱区间条件怎样同时锁定归一、正性与地址一致
+
+<a id="sec-c92-local-consequences"></a>
+
+沿用唯一候选 [(C92)](#eq-c92)。将有限非空 patch 族记为
+$\mathscr C$，总载体为 $\mathcal H$，局部载体为 $\mathcal H_C$。
+输入 $R_C$ 此时只假定为 Hermitian 矩阵。
+嵌入 $\iota_C(h_C)$ 在未显示因子上补单位；记
+
+$$
+W(h)=\sum_{C\in\mathscr C}\iota_C(h_C),
+ \qquad b_R(h)=\sum_{C\in\mathscr C}\operatorname{Tr}(R_Ch_C).
+$$
+
+本节不再提出第二个公理，而是推导同一个全谱上界的后果。
+

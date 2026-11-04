@@ -1,0 +1,29 @@
+#### 定理 10.2（相干、隐藏关联与可见失配的三项分解）
+
+对任意五维密度矩阵 $\rho$，令 $p^*$ 为 $p=\operatorname{diag}\rho$ 的同三均值最大熵完成。对任意满支撑 $q\in\mathcal E$，令 $\sigma=\operatorname{diag} q$。则
+
+$$
+\boxed{ D_Q\!\left(\rho\middle\Vert \sigma\right) 
+=\underbrace{C_{\rm rel}(\rho)}_{\text{记录基相干}}
++\underbrace{R I_0(p)}_{\text{隐藏经典关联}}
++\underbrace{ D\!\left(p^*\middle\Vert q\right) }_{\text{可见读出失配}}.}
+$$
+
+三项均非负。
+
+<a id="proof-10-2"></a>
+
+**证明。** 
+因 $\log\sigma$ 对角，$\operatorname{Tr}\rho\log\sigma=\sum_sp_s\log q_s$，故
+
+$$
+D_Q\!\left(\rho\middle\Vert \sigma\right) =H(p)-S(\rho)+ D\!\left(p\middle\Vert q\right) .
+$$
+
+再用定理 [5.3](#statement-5-3) 及 $D\!\left(p\middle\Vert p^*\right) =R I_0(p)$。相干项等于 $D_Q\!\left(\rho\middle\Vert \Delta\rho\right) \ge0$。若某 $p_s=0$，正半定性给 $|\rho_{st}|^2\le\rho_{ss}\rho_{tt}=0$，该行列全零，因此 $\rho$ 的支撑仍包含于 $\Delta\rho$ 的支撑，散度解释有效。
+ ∎
+
+相干相对熵的标准分解见 [3](#ref-bcp)；本定理把它与 AURIC 的特定条件独立投影组合。将第 5 节的四项 KL 式代入，还能把最后一项拆成三个二元读出损失。
+
+<a id="statement-10-3"></a>
+

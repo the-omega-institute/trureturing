@@ -31,7 +31,7 @@ class NativeReleaseSupport:
     def release_fixture(self):
         """Real publisher/Inspector/Lake, with only GitHub transport replaced."""
         self.reg_package()
-        for name in ('lean-cache-publish.sh', 'lean_cache_release.py'):
+        for name in ('lean-cache-publish.sh', 'lean_cache_release.py', 'lean_cache_topology.py'):
             self.copy('tools/scripts/worktree/' + name)
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
         policy['report_execution'] = json.loads((ROOT / 'lean-report-inputs.json').read_text())['report_execution']

@@ -1,0 +1,13 @@
+#### 定义 10.1（两种门参数提升）
+
+父空间维 $d$，投影 $P$ 的秩为 $q$；子空间维 $m$，$W$ 为酉算子。取
+
+$$
+C_P(W)=(I-P)\otimes I+P\otimes W,\qquad
+L_P(W)=(I-P)\otimes W+P\otimes W^2.
+$$
+
+写 $D_W(u)=\det(I-uW)$。
+
+<a id="thm-recursedet"></a>
+

@@ -1,0 +1,123 @@
+**Lemma 18.3 (Unique exact root and strict capacity slack).** For each fixed $P,h$, the function $\mathcal G_{P,h}$ has exactly one minimum on $\mathcal B_q$. Its coordinates are $u$ on $P$, $w$ at $h$, and $v$ on $N$, independent of the labels. They satisfy
+
+$$
+\begin{gathered}
+ku+w+nv=q,\qquad \tau<v<w<u<1,\\
+\max\{|u-\mu|,|w-\mu|,|v-\mu|\}\le\frac{48L}{a^2},\\
+t=1-u,\qquad d=2\delta-kt,\qquad
+0<d<t,\qquad d>\frac\eta a,\quad
+ t-d>\frac\eta a,\quad 1-w-d>\frac\eta a.
+\end{gathered}
+\tag{18.16}
+$$
+
+Equivalently $(u,w,v)$ is the unique real triple in the legal region
+
+$$
+ku+w+nv=q,\qquad \tau<v<w<u<1
+\tag{18.17}
+$$
+
+solving
+
+$$
+\begin{aligned}
+[a^2u+2c\theta]w^3
+ &=\big[(r^2+c)w+2c(ku+\delta-k)\big]u^3,\\
+[r^2w+2c(ku+\delta-k)]v^3
+ &=[r^2v-2\gamma]w^3.
+\end{aligned}
+\tag{18.18}
+$$
+
+Its value $F_k(u,w)$ is strictly less than $H_d=Z/\mu^2$, where $Z=\delta a^3+\theta r^3$ as in (1.1).
+
+**Proof.** On $\mathcal B$, put $D_y=\sum_{i\in P}y_i+\delta-k\ge-k/10$. The only off-diagonal Hessian entries of $\mathcal G_{P,h}$ are the $P$--$h$ entries $-2c/y_h^3$, each of absolute value at most $9a$. Its diagonal entries have the respective lower bounds
+
+$$
+\begin{aligned}
+(\mathcal G_{P,h})_{ii}
+ &=2a^2/y_i^3+6c\theta/y_i^4\ge2a^2 &&(i\in P),\\
+(\mathcal G_{P,h})_{hh}
+ &=2r^2/y_h^3+6cD_y/y_h^4\ge2a^2-4ka,\\
+(\mathcal G_{P,h})_{jj}
+ &=2r^2/y_j^3-6\gamma/y_j^4\ge2a^2-18L &&(j\in N).
+\end{aligned}
+\tag{18.19}
+$$
+
+Here $c\le3a$, $\gamma\le3L/2$, $z^{-3}<3/2$ and $z^{-4}<2$ on $[9/10,1]$. Subtracting the absolute off-diagonal row sums gives lower bounds $2a^2-9a$, $2a^2-13ka$ and $2a^2-18L$. Each is at least $a^2$ under (18.9). Consequently
+
+$$
+\nabla^2\mathcal G_{P,h}\succeq a^2 I_s\quad\text{on }\mathcal B.
+\tag{18.20}
+$$
+
+For completeness the row estimate follows by applying $2|z_i z_j|\le z_i^2+z_j^2$ to each off-diagonal term of the Hessian quadratic form. The compact convex slice $\mathcal B_q$ contains $\mu\mathbf1$, so it has a unique minimizer $y^*$.
+
+Let $\beta=2\lambda-k\in[2\eta,1-2\eta]$ and $h_0=1-\mu$. The exact identities and bounds
+
+$$
+\begin{gathered}
+h_0=\frac1a+\frac{\lambda-2}{a(a+2)},\qquad
+\frac1a\le h_0\le\frac1a+\frac{L}{2a^2}\le\frac2a,\\
+d_0=2\delta-kh_0=\frac\beta a-k\left(h_0-\frac1a\right),
+\qquad |d_0|\le\frac2a,\qquad \mu^{-3}<2
+\end{gathered}
+\tag{18.21}
+$$
+
+follow from $k\ge4$, $\lambda>2$ and $a\ge1024L^2$. Subtract $g'(\mu)$ from every entry of $\nabla\mathcal G_{P,h}(\mu\mathbf1)$. The resulting vector has entries $-2ch_0/\mu^3$ on $P$, $-2cd_0/\mu^3$ at $h$, and zero on $N$. Each nonzero entry has absolute value at most $24$, so its Euclidean norm is at most $24\sqrt L\le24L$. The sum constraint annihilates the subtracted constant vector. Strong convexity and $\mathcal G_{P,h}(y^*)\le\mathcal G_{P,h}(\mu\mathbf1)$ therefore give
+
+$$
+\frac{a^2}{2}\|y^*-\mu\mathbf1\|^2
+ \le24L\|y^*-\mu\mathbf1\|,
+\qquad \|y^*-\mu\mathbf1\|\le\frac{48L}{a^2}.
+\tag{18.22}
+$$
+
+In particular every coordinate is strictly below one, since $h_0\ge1/a>48L/a^2$, and strictly above $9/10$, since it is at least $1-2/a-48L/a^2>9/10$. Thus the minimum is interior relative to its sum hyperplane. Invariance under permutations of $P$ and of $N$, together with uniqueness, forces coordinates $u,w,v$ of the stated multiplicities. Its Lagrange equations are
+
+$$
+f'(u)+\frac c{w^2}
+ =-\frac{r^2}{w^2}-\frac{2c(ku+\delta-k)}{w^3}
+ =g'(v).
+\tag{18.23}
+$$
+
+We next prove ordering and legal masses. From (18.21)–(18.22),
+
+$$
+\left|t-\frac1a\right|\le\frac{49L}{a^2},\qquad
+\left|d-\frac\beta a\right|\le\frac{49L^2}{a^2},\qquad
+\left|(t-d)-\frac{1-\beta}{a}\right|\le\frac{49L^2}{a^2}.
+\tag{18.24}
+$$
+
+Since $a\eta\ge2^{16}L^2>49L^2$, this implies $d>\eta/a$ and $t-d>\eta/a$.
+
+To compare $u$ and $w$, hold the lower coordinates $v$ fixed and set $z=(ku+w)/L$. The line with high coordinates $z+\varepsilon$ and intermediate coordinate $z-k\varepsilon$ preserves the sum. At $\varepsilon=0$, its derivative is $k$ times the difference of a top partial derivative and the intermediate partial derivative, namely
+
+$$
+\frac{2kc[2\delta-L(1-z)]}{z^3}<0.
+\tag{18.25}
+$$
+
+Indeed $|1-z-1/a|\le49L/a^2$ by the same coordinate bound, and
+$2\delta-L(1-z)\le-(1-\beta)/a+49L^2/a^2<-\eta/a$.
+The line segment from this equalized point to $y^*$ lies inside $\mathcal B_q$. Its one-variable derivative is strictly increasing by (18.20), and vanishes at $y^*$. Its parameter there must therefore be positive. Thus $u>z>w$.
+
+Next hold all high coordinates $u$ fixed, and set $z=(w+nv)/(n+1)$. Along the line increasing the intermediate coordinate and decreasing each lower coordinate by $1/n$ times that increase, the derivative at the equalized point is
+
+$$
+-\frac{2cd}{z^3}<0.
+\tag{18.26}
+$$
+
+The same strict-convexity argument gives $w>z>v$. Also $1-w-d>1-u-d=t-d>\eta/a$. Together with (18.9), (18.22) and $v>9/10$, these prove (18.16).
+
+Clearing the positive denominators in (18.23) gives exactly (18.18). Conversely any real triple satisfying (18.17) has
+$v\ge1-(1+\delta)/n\ge1-3/a>9/10$ by its mean and $u,w\le1$. Its repeated-coordinate vector is therefore interior to $\mathcal B_q$. Equations (18.18), with positive denominators, are equivalent to (18.23); they make this vector a stationary point of $\mathcal G_{P,h}$ on that slice. Strong convexity identifies it with $y^*$. This proves existence, uniqueness, and absence of additional roots in the whole legal region, without interpreting roots outside that region as solutions of the original optimization.
+
+Finally direct substitution gives $\mathcal G_{P,h}(\mu\mathbf1)=Z/\mu^2$. At this point, increasing one coordinate of $P$ and decreasing one coordinate of $N$ has derivative $-2ch_0/\mu^3<0$. Such a sufficiently small displacement is feasible, since $\mu\mathbf1$ is interior and $n>0$. The unique minimum is thus strictly below $H_d$. ∎
+

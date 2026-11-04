@@ -1,0 +1,56 @@
+**引理 39.3（真实锚距离的一阶矩）。** 在全部开参数方形上，
+
+$$
+\mathbb E_J H_- =\mathbb E_J H_+
+=\frac{2+1/p+1/q+1/p^2+1/q^2}{Z}
+=\overline h.
+\tag{39.6}
+$$
+
+**证明。** 对参数 $b\in(0,1)$ 的间隔，写 $G=1+K$，其中 $K$ 在正整数上几何分布，$\Pr(K\ge h)=(1-b)^{h-1}$。非负尾和及几何级数给出
+
+$$
+\mathbb E K=\sum_{h\ge1}(1-b)^{h-1}=1/b,
+$$
+
+$$
+\mathbb E[K(K-1)]
+=2\sum_{h\ge1}h\Pr(K\ge h+1)
+=2\sum_{h\ge1}h(1-b)^h=\frac{2(1-b)}{b^2}.
+\tag{39.7}
+$$
+
+这里 $\sum_{h\ge1}hz^h=z/(1-z)^2$ 可由 $h=\sum_{i=1}^h1$ 后交换非负几何和得到。于是
+
+$$
+\mathbb E\frac{G(G+1)}2
+=\frac12\mathbb E[K(K-1)]+2\mathbb E K+1
+=1+1/b+1/b^2.
+\tag{39.8}
+$$
+
+对任一标签 $c$，再交换非负和，
+
+$$
+\sum_{h\ge1}hT_c(h)
+=\sum_{g\ge2}f_c(g)\sum_{h=1}^g h
+=1+1/a_c+1/a_c^2.
+\tag{39.9}
+$$
+
+按（36.4）的实际锚权重求和，两种方向都遍历参数 $p,q$ 各一次，再除以 $Z$，得到（39.6）。这一锚矩使用原位点选择的权重，不是 Palm 间隔的未加权均值。$\square$
+
+对（39.2）按各侧真实权重平均，再用（38.13）、（39.5）–（39.6），得到非对角线上
+
+$$
+\begin{aligned}
+\mathbb E_P\tau_\epsilon
+&\le\mathbb E_J B_-+\mathbb E_J B_+\\
+&=2\overline h+Z(\mathbb E_J M_-+\mathbb E_J M_+)\\
+&\le2\overline h+144Z\Delta^{-2}\mathcal A<\infty.
+\end{aligned}
+\tag{39.10}
+$$
+
+$\tau_\epsilon$ 只用可见过程，故第一行的期望对应同一实际律。有限上界使 $\tau_\epsilon=\infty$ 的概率为零；否则 $\mathbb E\tau_\epsilon\ge K\Pr(\tau_\epsilon=\infty)$ 对任意 $K$ 成立，矛盾。结合（37.7）即证明（35.9）–（35.10）。期望计算始终在原律上进行，没有条件于 $F$、两侧同时拟合或正确终止后再套用单侧乘积律。
+

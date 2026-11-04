@@ -1,0 +1,20 @@
+#### 定义 4.1（底面关系的三种坐标）
+
+定义
+
+$$
+Q=\begin{pmatrix}p_N&p_3\\p_1&p_{13}\end{pmatrix},\qquad
+\Delta=\det Q=r\kappa-XY.
+$$
+
+当四格全正时，定义赔率与对数赔率
+
+$$
+\eta_{\mathrm{odds}}=\frac{p_Np_{13}}{p_1p_3}>0,\qquad
+\theta=\log\eta_{\mathrm{odds}}.
+$$
+
+这里 $\eta_{\mathrm{odds}}$ 与端点占位函数 $\eta$ 不同。
+
+<a id="thm-entropy"></a>
+

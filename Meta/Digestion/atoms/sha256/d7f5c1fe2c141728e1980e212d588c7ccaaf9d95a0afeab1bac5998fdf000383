@@ -1,0 +1,15 @@
+#### 定义 4.1（共同的基底程序）
+
+设 $B$ 有正交程序标签 $\lvert b\rangle$，每个标签指定一个已知酉矩阵 $U_b\in\operatorname{U} (H_5)$，定义
+
+$$
+W=\sum_b\lvert b\rangle \langle b\rvert \otimes U_b,\qquad
+\widetilde N_i=W(I_B\otimes N_i)W^\dagger.
+$$
+
+一次完整原子内使用同一个 $B$、同一个 $W$，不在三个读口之间另行改写或重新抽取程序。测量本身仍可使程序与指针相关；这里要求固定的是共同读出算符，并非程序的约化态必须完全不变。
+
+<a id="statement-4-2"></a>
+
+<a id="thm-program"></a>
+

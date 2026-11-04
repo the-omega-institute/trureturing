@@ -192,5 +192,13 @@ internal sealed class NormPreservingLiftsDocument : IScribeDocumentDefinition
                         + "The new synthesis supplies the all-choices quantifier needed in the ordinary signed-measure condition (F) of the Talagrand candidate. "
                         + "It proves stability for any already given norm-preserving lifts; it does not construct lifts or prove their existence by Hahn–Banach or Riesz representation. "
                         + "It does not formalize the transfinite recursion, CH bookkeeping, Banach-space preservation theorem or Problem 8.2. No literature novelty or official acceptance of that problem is asserted."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("functional-map"),
+                DeclarationHandle.Create(Owner + "functional_map"),
+                H("Signed integration under continuous pushforward"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For arbitrary compact Borel source X and compact Borel target Y, every signed measure s, continuous p from X to Y and real continuous g on Y satisfy signedFunctional(s.map p)(g) = signedFunctional(s)(g composed with p). No Hausdorff, nonempty or injective-map premise is added. This is the existing private historical-capture integral-map supplier moved to its natural shared owner; historical capture and compact-family variation loss both consume it. The proof uses native vector integral_map and compact-source integrability."))),
                 DescribeRole.Theorem))));
 }

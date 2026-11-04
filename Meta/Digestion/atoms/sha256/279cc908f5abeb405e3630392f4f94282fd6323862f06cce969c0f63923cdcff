@@ -1,0 +1,33 @@
+**Proposition 13.2 (every deterministic forward quotient has a global diameter obstruction).** For the fixed representation (13.1), the only forward-labeled strongly lumpable partition is the identity partition. For every nonempty legal word $w$,
+
+$$
+\delta(M_w)=\delta(\check M_w)=1,
+\tag{13.4}
+$$
+
+where the word in the reverse product is read in reverse-motion order, as in Definition 3.4. Thus this band-preserving component makes every deterministic quotient in Question 11.3 fail (3.7).
+
+**Proof.** Equal blocks of a labeled strongly lumpable partition must have equal total outgoing mass for each label. For label one these masses, in state order, are $1/4,0,1/3,0$. Hence $A,C$ are singleton blocks and only $B,D$ could be merged. But $B$ sends its label-zero mass one to $C$, whereas $D$ sends its label-zero mass one to $A$. These singleton targets differ, excluding that merge.
+
+For any legal word of length $m\ge1$, both starting states $A,C$ have positive word likelihood. Forward evolution is deterministic once a starting state and the emitted word are specified; its endpoint is $(S_0+m\bmod2,x_m)$. The two normalized rows therefore are point masses of opposite phase, with TV distance one.
+
+The canonical reverse matrices (3.1) are
+
+$$
+\check M_0=\begin{pmatrix}
+0&0&3/4&1/4\\
+0&0&0&0\\
+2/3&1/3&0&0\\
+0&0&0&0
+\end{pmatrix},\qquad
+\check M_1=\begin{pmatrix}
+0&0&0&0\\
+0&0&1&0\\
+0&0&0&0\\
+1&0&0&0
+\end{pmatrix}.
+\tag{13.5}
+$$
+
+For a reverse word $w=x_1\cdots x_m$, take the two starting states $(s,x_1)$, $s=0,1$. Each is feasible: a forward path starting at $(s-m\bmod2,0)$ can emit the reversed legal word $x_m\cdots x_1$ with positive probability and end at $(s,x_1)$. Stationary reversal makes the reverse path positive. After $m$ reverse steps the two endpoint distributions are supported on opposite phase classes. Their TV distance is one, whether or not their previous-bit coordinates are deterministic. This proves (13.4). All these words have positive stationary probability since $\lambda$ is strictly positive. $\square$
+

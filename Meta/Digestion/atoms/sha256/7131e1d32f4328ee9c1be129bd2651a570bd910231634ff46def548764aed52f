@@ -1,0 +1,36 @@
+**Definition 47.2 (one installed local layout).** Keep the owned source,
+root slot, grants, endpoint connections and finite work arena of AA
+Assumption 20.1. Each physical source vertex has its one auxiliary
+header-reference slot, initialized null. The three source-edge fields
+remain parent, left and right. These auxiliary slots do not enter bare
+source support or terminal boundary.
+
+At a branch $v\in\mathcal A(t)$ its slot binds one actually allocated
+header with head and tail references, and the header binds a list of
+exactly $b_v$ cells. Each cell has one bit and one next reference. From
+head to tail the bits are the big-endian, zero-padded $b_v$-bit expansion
+of $r_v$. The last next reference is null. The header has no count,
+radix, width, address, timestamp, allocation ordinal or cached history.
+Every branch outside $\mathcal A(t)$ has a null slot, with no header
+and no payload cells for that coordinate. Nonbranches, including unary
+markers, also have null slots. The source's already present slot is
+still material even when null.
+
+All these bindings and the read/write rights are real owned objects.
+A description of their contents does not manufacture authority. The
+program is one fixed finite instruction description for all schedules;
+its unbounded integers and lists have actual finite backing. The initial
+allocated alpha has no record header or cell. No literal routing tape,
+literal event journal, persistent coefficient table or complete-history
+copy is maintained alongside these records.
+
+At Ready the root cursor, input/request fields, pending operation,
+output and scratch contents satisfy the returned domain of AA Definition
+20.2, using the present local layout in place of literal tapes. There
+is no unfinished source edit, rank rewrite or reserved-material transfer.
+The owned work arena and its cleared capacity, if retained for reuse,
+remain material and are counted separately from live persistent records.
+The model admits each stated finite operation with sufficient finite
+fresh material and workspace, as in AA Assumption 20.1; it exposes no
+allocation-failure reply or capacity meter.
+

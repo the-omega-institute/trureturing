@@ -1,0 +1,29 @@
+**Definition 11.1 (streamed joint acquisition).** First acquire $h$ by
+Proposition 9.2. For $d>0$ enumerate the $4^d$ order-$d$ row/seed
+presentations, using ordinary $d$-bit row and seed counters; for $d=0$
+enumerate just the zero presentation. For each presentation $s$, compute
+its first $2d$ bits and (ACR.28), and emit its at most two mature cuts.
+No table of all presentations, transcript of all tests or expanded tree
+is retained. Padding an order-$r$ annihilator by $E^{d-r}$, as in GPO
+Lemma 29.2, ensures that every behavior occurs; repeated presentations
+are allowed. The emitted list has some finite length $K$, with
+
+$$
+ 1\le K\le2\,4^d,\qquad \max\{u:(s,u)\text{ is emitted}\}\le2h+1.
+ \tag{ACR.36}
+$$
+
+Maintain a single current candidate. Initialize it to the first emitted
+datum. Compare each further datum with the current one. If their
+length-$2d$ prefixes and cuts coincide, keep the current one without a
+Read. Otherwise construct the separator of Proposition 10.2, really
+submit that physical word on the genuine stationary root, and keep the
+one of the two candidates whose predicted reply equals the actual
+binary reply. Release the other candidate's scratch. After exhausting
+the counters, generate the surviving prefix $P$, run exactly $K_d(P)$,
+compute $B_n$ by Fibonacci addition, and really write (ACR.25), its
+ready control and any requested behavioral phase. Make the actual
+handoff only after all writes finish, while the same completed cut is
+still stationary. A candidate's computed prediction never stands in
+for the paid call.
+

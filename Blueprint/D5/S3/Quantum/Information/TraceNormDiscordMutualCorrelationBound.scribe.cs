@@ -52,6 +52,24 @@ internal sealed class TraceNormDiscordMutualCorrelationBoundDocument : IScribeDo
                         + "inequality for general two-qubit states."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("trace-norm-discord-mutual-correlation-spin-hermitian"),
+                DeclarationHandle.Create(Prefix + "spin_hermitian"),
+                H("Real Pauli combinations are Hermitian"),
+                StatementSource.FromAuthor(Disp(SpinHermitianFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Every real linear combination of the three Pauli matrices is Hermitian."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("trace-norm-discord-mutual-correlation-spin-anticommutator"),
+                DeclarationHandle.Create(Prefix + "spin_anticommutator"),
+                H("The Pauli anticommutator"),
+                StatementSource.FromAuthor(Disp(SpinAnticommutatorFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The anticommutator of two real Pauli combinations is twice their Euclidean inner product times the identity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("trace-norm-discord-mutual-correlation-spin-square"),
                 DeclarationHandle.Create(Prefix + "spin_square"),
                 H("The square of a real Pauli combination"),
@@ -136,6 +154,25 @@ internal sealed class TraceNormDiscordMutualCorrelationBoundDocument : IScribeDo
     {
         Formula indices = Parenthesized(Seq(Index(), Times, Sp, Index()));
         return Call("Matrix", indices, indices, Complexes());
+    }
+
+    private static Formula RealVector() => Seq(Call("Fin", D(3)), To, Seq(Mathbb, Grp(F.Id("R"))));
+    private static Formula Product(Formula left, Formula right) =>
+        new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
+    private static Formula SpinHermitianFormula()
+    {
+        Formula c = F.Id("c");
+        return All(c, RealVector(), Call("IsHermitian", Call("spin", c)));
+    }
+
+    private static Formula SpinAnticommutatorFormula()
+    {
+        Formula c = F.Id("c"), d = F.Id("d");
+        Formula sc = Call("spin", c), sd = Call("spin", d);
+        Formula left = new Formula.Binary(Product(sc, sd), FormulaBinaryOperator.Add, Product(sd, sc));
+        Formula scalar = Product(D(2), Call("dotProduct", c, d));
+        Formula identity = Typed(D(1), Call("Matrix", Index(), Index(), Complexes()));
+        return All(c, RealVector(), All(d, RealVector(), Equal(left, Seq(Parenthesized(scalar), Cdot, identity))));
     }
 
     private static Formula DiscordFormula()

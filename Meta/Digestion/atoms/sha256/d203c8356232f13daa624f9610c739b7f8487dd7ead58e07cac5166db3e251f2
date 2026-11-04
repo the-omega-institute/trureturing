@@ -1,0 +1,37 @@
+**定理 2.1（紧模型像上的有噪拟合）。** 设 $\Theta$ 为紧空间，$P:\Theta\to\mathbb R^M$ 连续。设 $d_*$ 为参数的预测伪距离并有
+
+<a id="eq-2-u02"></a>
+
+$$
+\alpha d_*(\vartheta,\vartheta')
+\le\|P(\vartheta)-P(\vartheta')\|_\infty,
+\qquad \alpha>0.
+$$
+
+若数据 $y$ 满足真实参数 $\vartheta_*$ 的误差保证 $\|y-P(\vartheta_*)\|_\infty\le\varepsilon$，且 $\widehat\vartheta$ 满足
+
+<a id="eq-2-u03"></a>
+
+$$
+\|P(\widehat\vartheta)-y\|_\infty
+\le \inf_{\vartheta\in\Theta}\|P(\vartheta)-y\|_\infty+\eta,
+$$
+
+则
+
+<a id="eq-2-3"></a>
+
+$$
+\begin{aligned}
+\|P(\widehat\vartheta)-P(\vartheta_*)\|_\infty&\le2\varepsilon+\eta,\\
+d_*(\widehat\vartheta,\vartheta_*)&\le(2\varepsilon+\eta)/\alpha.
+\end{aligned}
+\tag{2.3}
+$$
+
+若未来距离满足 $d_{\rm fut}\le\beta d_*$，还得 $d_{\rm fut}(\widehat\vartheta,\vartheta_*)\le\beta(2\varepsilon+\eta)/\alpha$。
+
+**证明。** 连续残差函数在紧集上取到最小值；真实参数是候选，故最小残差不超过 $\varepsilon$，近似极小点残差不超过 $\varepsilon+\eta$。三角不等式给第一式，再应用度量下界和未来距离控制。
+
+<a id="cor-2-2"></a>
+

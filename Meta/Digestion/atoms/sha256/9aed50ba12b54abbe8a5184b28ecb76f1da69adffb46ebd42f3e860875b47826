@@ -1,0 +1,40 @@
+**Theorem 11.2 (Every positive maximizing sequence).** For every sequence
+$(g_j)$ of arbitrary independent positive original-edge assignments, put
+$h_j=g_j/\lambda_2(g_j)$. Then
+
+$$
+F(g_j)\longrightarrow M
+\quad\Longleftrightarrow\quad
+\operatorname{dist}(h_j,K)\longrightarrow0.
+\tag{11.6}
+$$
+
+Every maximizing sequence $(h_j)$ is bounded. Its cluster points all
+belong to $K$. Conversely, every point of $K$ is the limit of a
+normalized strictly positive maximizing sequence.
+
+*Proof.* If $F(g_j)\to M$, take $\alpha$ as in the proof of
+Theorem 11.1. The tail of $(h_j)$ lies in $\mathcal S_\alpha$; its
+finitely many preceding terms do not affect boundedness. Every cluster
+point has $\lambda_2=1$ and resistance $M$, hence belongs to $K$.
+If the distances failed to tend to zero, a subsequence would have
+distance at least some $\epsilon>0$ from $K$. Compactness supplies a
+further subsequence converging to a point of $K$, a contradiction.
+
+Conversely suppose the distances tend to zero. Compactness of $K$
+allows a nearest $k_j\in K$ to be chosen for each $h_j$.
+Then $\|h_j-k_j\|_2\to0$ and $(h_j)$ is bounded. If
+$R(h_j)$ did not tend to $M$, some subsequence would stay a fixed
+positive distance in resistance from $M$. Pass to a further subsequence
+with $k_j\to k\in K$; then $h_j\to k$. Continuity at this connected
+limit gives $R(h_j)\to R(k)=M$, a contradiction. Since
+$F(g_j)=R(h_j)$, this proves the reverse implication for every positive
+sequence, without any initial boundedness assumption.
+
+For any fixed $k\in K$, the vectors
+$(k+\epsilon\mathbf1_E)/\lambda_2(k+\epsilon\mathbf1_E)$ in (8.3)
+are strictly positive, normalized, and converge to $k$ as
+$\epsilon\downarrow0$. Their resistances tend to $R(k)=M$.
+Choosing any positive sequence $\epsilon_j\downarrow0$ proves the
+last assertion. ∎
+

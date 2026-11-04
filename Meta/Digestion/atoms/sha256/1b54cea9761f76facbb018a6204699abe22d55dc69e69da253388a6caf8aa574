@@ -1,0 +1,19 @@
+**Definition 22.3 (total rational block-image recognition).** For any
+finite candidate term and rational coordinate list, first require
+canonical finite encoding, reachable syntax, exact material support,
+nonzero field and all coordinates in $[0,1]$. At each non-alpha stage,
+start its gap counter at zero. While all coordinates are positive,
+apply its exact rational inverse $T^{-1}$, increment the counter and
+reject any negative, greater-than-one or wholly zero field.
+
+At the first zero require that the positive support is a nonempty
+rooted prefix-closed support $V_s$ parsing to some $s\in\mathcal D$.
+Require that comparison with the entire current term has exactly the
+possibilities in Theorem 22.2, with at least one changed old leaf.
+No old branch is changed except through those recursive comparisons;
+each changed old leaf is edited once. Require positive retained
+coordinates. After the outermost successful collapse, each further
+non-alpha stage must have counter at least one. Restrict and continue.
+At alpha require a scalar in $(0,1]$ and double until reaching or
+exceeding one; accept only equality. Return its block/gap certificate.
+

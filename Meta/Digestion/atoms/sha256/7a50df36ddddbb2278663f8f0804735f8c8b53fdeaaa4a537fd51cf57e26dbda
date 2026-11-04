@@ -1,0 +1,60 @@
+**Theorem 7.2 (complete current continuation, exact in A and set-valued
+in C).** Suppose a settled current state has any $t\in\mathcal D$ and
+any $x\in\mathbb Q^{V_t}$, with its earned current correspondence and
+the actual backed context of Assumption 2.3. Retain a predicted pair
+$(\widehat t,\widehat x)=(t,x)$, and in C the digital contract of §8.
+For every finite sufficiently backed adaptive continuation, an installed
+finite controller maintains this equality at each completed settled cut.
+It predicts each full deterministic response in A and each full set of
+allowed digital responses in C, consumes the actual response, and
+maintains the following actual successors:
+
+| Complete semantic case | Actual successor and reply |
+| --- | --- |
+| Reset | $(t,0)$; fixed acknowledgement |
+| valid Add$(j,q)$ | $(t,x+qe_{\ell_j})$; fixed acknowledgement |
+| Tick | $(t,T_tx)$; fixed acknowledgement |
+| Hold | $(t,x)$; fixed acknowledgement |
+| valid A Read$(j)$ | $(t,x)$; literal rational $x_{\ell_j}$ |
+| valid C Read$(j,p)$ | $(t,x)$; an actual integer in the two-element set (8.1) |
+| enabled A growth $g:t\to t'$ | $(t',\iota_gx)$; complete raw Growth |
+| enabled C growth $g:t\to t'$ | $(t',T_{t'}\iota_gx)$; consumed inner Growth/Tick acknowledgement and complete outward Growth |
+| absent, branch or wrong-type growth | unchanged; its distinct refusal, with no Tick |
+| otherwise valid out-of-roster integer Add/Read | unchanged; RangeRefusal |
+| malformed or noncanonical complete frame | unchanged; BadFrame |
+
+Proper prefixes and disabled calls have exactly Definition 7.1's
+pending/enabledness behavior, not an invented completed table row.
+
+**Proof.** AAII Theorem 89.2 already proves this invariant and its
+acquired-frame implementation for the exact field menu and the raw or
+post-clock material edits. Here A uses its raw zero-extension row with
+law (2.2), and C uses its actual $+$ row with that same law. Geometry,
+roster updates, finite navigation, finite rational arithmetic and actual
+Return correspond exactly to that supplier. The only changed semantic
+row is C Read: its law in §8 leaves the field fixed, predicts its full
+two-element set, and consumes the integer actually returned. It therefore
+preserves the same equality invariant without predicting a hidden bit.
+
+Every other row follows directly from the actual primitive specified in
+the table. The deterministic parser and control fields are updated from
+the same acquired input and reply bits; a proper prefix remains pending
+and a completed call commits at its actual lifecycle completion before
+the next Ready. For C growth, the inner new-tree Tick is actually consumed
+before committing the outward settled pair. Induction on completed calls, with the pending
+prefix behavior between them, covers every finite adaptive continuation.
+If a memory block is desired after an update, construct
+$O_{I(t')}\widehat x'$ on the earned new tree; its entries are local predictions and its
+left inverse still recovers the current field. Their construction and
+coexisting old/new stores are paid. $\square$
+
+This theorem permits later Reset, arbitrary rational Add, extra Ticks,
+refused probes and arbitrary legal further growth. These continuations
+need not remain in either historical image. It is a current-service
+theorem, not an inverse for arbitrary old journals, intermediate busy
+cuts, interrupted transactions or revoked authority.
+Common adaptive continuations use the same accessible side data and, if
+used, the same random tape, together with the responses from the current
+cut onward. A policy consulting unequal old archives or authority/resource
+stores enlarges that task and is not covered by a content-only kernel.
+

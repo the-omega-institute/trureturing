@@ -1,0 +1,121 @@
+## 13. 局部常数与全局常数的下界
+
+定理 12.2 中的局部常数可以只用固定记录的显式数值写出。令
+
+$$
+\kappa_R=\|R_0\|_{\mathrm{op}}^2=2+\frac1{\sqrt2},
+\qquad s=\sin(\pi/8),
+$$
+
+则 $m_+=\min_i|(R_0b_+)_i|=1/\sqrt2$，而
+$m_-=\min_i|(R_0b_-)_i|=s$。在引理 12.1 的邻域中再缩小使所选主系数满足
+$|z_\ell|\ge1/2$，其证明中的同一估计给出
+
+$$
+\rho(E,U)
+\le \left(3200+\frac{51200\kappa_R}{m_\sigma^2}\right)a(E)
+      +\frac{16}{m_\sigma^2}\tau(E,U).
+$$
+
+因此可取局部系数
+
+$$
+C_{+,\mathrm{loc}}=208000+51200\sqrt2,
+\qquad
+C_{-,\mathrm{loc}}=515200+307200\sqrt2.
+$$
+
+这里使用了
+$s^2=(2-\sqrt2)/4$ 及
+$\kappa_R/s^2=10+6\sqrt2$。这些数值是显式的局部上界，不是全局最佳常数。
+
+事实上，固定记录还允许把补集上的紧性最小值替换成显式的缺陷下界。对
+$F=E^{\mathsf T}$ 在 $(b_\sigma,b_{-\sigma})$ 基中的表示
+
+$$
+F=\begin{pmatrix}1-t&z\\\bar z&t\end{pmatrix},
+\qquad t=t_\sigma(E),
+$$
+
+令 $B=F^{1/2}$，并写每列的两个射线坐标平方为 $p_\ell,q_\ell$。正性和
+$\operatorname{Tr}B^2=1$ 给出
+
+$$
+\sum_{\ell=1}^2\min\{p_\ell,q_\ell\}=\min\{t,1-t\}.
+$$
+
+具体地，在该基中写 $B=\left(\begin{smallmatrix}A&C\\\bar C&D\end{smallmatrix}\right)$；标准基的两个坐标模均为
+$1/\sqrt2$，于是
+
+$$
+|p_1-q_1|+|p_2-q_2|=|A-D|(A+D)=|A^2-D^2|=|1-2t|.
+$$
+
+结合定理 8.2，若 $t\in[\delta,1-\delta]$，则
+$a(E)\ge\delta/1600$。
+取 $\delta=1/30$，并令
+$\mathcal N_\sigma=\{E:t_\sigma(E)<\delta\}\times U(4)$。在 $t\le\delta$ 时，二阶正平方根公式
+
+$$
+F^{1/2}=\frac{F+\sqrt{\det F}\,I}{\sqrt{1+2\sqrt{\det F}}}
+$$
+
+保证两个主射线坐标的模大于 $\sqrt\delta$，而每个次坐标平方不超过 $\delta$；故引理 12.1 的同一射线分解在整个 $\mathcal N_\sigma$ 上成立，且可选列满足
+$|z_\ell|^2\ge(1-\delta)/2$。补集满足 $t\in[\delta,1-\delta]$，并且
+$\rho\le10$。因此
+
+$$
+\boxed{
+C_{\mathrm{prod}}
+\le \frac{7\,772\,800+4\,608\,000\sqrt2}{29}
+<493\,000.}
+$$
+
+这里的上界仍然是保守的，但不再含未计算的紧性最小值。
+
+还可以从合法的共享反馈路径得到全局常数的非平凡下界。令
+
+$$
+\xi_t=\cos t,\qquad \eta_t=i\sin t,
+\qquad b(t)=T(\xi_t,\eta_t)^{\mathsf T},
+$$
+
+取 $E_t=\overline{b(t)}\,\overline{b(t)}^\dagger$，并令
+
+$$
+U_t=\operatorname{diag}(e^{-it},e^{it},1,1)U_+.
+$$
+
+当 $|t|<\pi/8$ 时，同一个 $U_t$ 作用于该原始结果的全部谱列，且
+$\tau(E_t,U_t)=0$。此时
+
+$$
+a(E_t)=\delta(b(t))
+= (\sqrt2+2c)^2\cos^2t+(\sqrt2+2s)^2\sin^2t
+  -(\sqrt2+2c\cos t)^2.
+$$
+
+若
+
+$$
+\kappa_*=2-\sqrt2+2\sqrt2(2s-c)>0,
+$$
+
+则在 $t\to0$ 时直接展开得到
+
+$$
+a(E_t)=\kappa_*t^2+O(t^4),\qquad
+\rho(E_t,U_t)=4t^2+O(t^4).
+$$
+
+其中效果项为 $\|E_t-E_+\|_{\mathrm F}^2=2\sin^2t$，反馈相位商项为
+$4(1-\cos t)$。故任何满足定理 12.2 的全局系数都必须满足
+
+$$
+\boxed{
+C_{\mathrm{prod}}\ge\frac4{\kappa_*}
+ =29.1025694938\ldots .}
+$$
+
+该路径保留一个原始结果的共享反馈，因而不使用把谱列拆成独立控制的非法反例。它只给出下界；全局最佳常数仍是开放问题。
+

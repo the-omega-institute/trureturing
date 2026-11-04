@@ -1,0 +1,8 @@
+**定义 33.1（The graphs $Y_n$）。** For each integer $n\geq1$,
+let $Q$ have $r=2n+1$ vertices and take five further distinct
+vertices $u,v,z,\ell_1,\ell_2$. Make $Q\sqcup\{u,v\}$
+a clique. Add exactly the four edges
+$uz,vz,u\ell_1,u\ell_2$, and no other edges. All edge weights
+are one. In particular $z$ has precisely the two neighbors
+$u,v$, and each $\ell_i$ is a leaf at $u$.
+

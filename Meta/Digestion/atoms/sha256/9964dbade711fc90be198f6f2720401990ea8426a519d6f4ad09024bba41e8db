@@ -1,0 +1,74 @@
+#### 定理 5.4（稠密控制、非零对比度与稳健可辨识性）
+
+<a id="thm:tomography"></a>
+
+设 $1\le r_0\le D-1$，$\Pi_{r_0}$ 为秩 $r_0$ 投影，
+内部控制在 $\operatorname{PU}(D)$ 中稠密。令
+
+$$
+R_U(\rho)=c\,\operatorname{Tr}(\rho U^*\Pi_{r_0}U)+b
+$$
+
+采用同一固定 $c\ne0,b$。这些读出分离全部密度态。
+若 $\Delta=\rho-\sigma$ 的特征值按
+$\lambda_1\ge\cdots\ge\lambda_D$ 排列，则
+
+$$
+d_{r_0}(\rho,\sigma)
+ :=\sup_U|\operatorname{Tr}(\Delta U^*\Pi_{r_0}U)|
+ =\max\left\{\sum_{j=1}^{r_0}\lambda_j,
+              -\sum_{j=D-r_0+1}^{D}\lambda_j\right\}.
+ \tag{17}
+$$
+
+记 $D_{\mathrm{tr}}(\rho,\sigma)=\left\lVert \rho-\sigma\right\rVert_1/2$，则
+
+$$
+\frac{\min(r_0,D-r_0)}{D-1}D_{\mathrm{tr}}
+ \le d_{r_0}\le D_{\mathrm{tr}},\qquad
+ \sup_U|R_U(\rho)-R_U(\sigma)|=|c|d_{r_0}.
+ \tag{18}
+$$
+
+**证明。**
+
+连续性将稠密菜单的上确界延拓至全部酉。
+在 $\Delta$ 的本征基中，投影的对角权重 $w_j$ 满足
+$0\le w_j\le1$、$\sum_jw_j=r_0$。
+将权重移动到较大特征值可增加和，因此最大值为前 $r_0$ 项之和，
+最小值为后 $r_0$ 项之和，均由本征子空间达到。
+上界由 $\Delta$ 的正负部分给出。
+若 $\Delta\ne0$，正特征值个数为 $p$，其和为 $D_{\mathrm{tr}}$。
+若 $p\ge r_0$，前 $r_0$ 项之和至少
+$r_0D_{\mathrm{tr}}/p\ge r_0D_{\mathrm{tr}}/(D-1)$。
+若 $p<r_0$，加入的 $r_0-p$ 个最大非正项之和至少
+$-(r_0-p)D_{\mathrm{tr}}/(D-p)$，故总和至少
+$(D-r_0)D_{\mathrm{tr}}/(D-p)$。
+这给所述统一下界。最后相减消去 $b$；下界说明零读出差只可能有 $\rho=\sigma$。
+
+∎
+
+在源式 (1) 中，将对应 $\Pi$ 的五个合法输出聚合，得到
+$c\Pi+bI$ 的效果；其它所有输出仍在补事件中。
+在其标准效果表示的矩阵态延拓内，项目十三维秩五情形给
+
+$$
+\boxed{
+ \frac5{12}cD_{\mathrm{tr}}(\rho,\sigma)
+ \le\sup_U|R_U(\rho)-R_U(\sigma)|
+ \le cD_{\mathrm{tr}}(\rho,\sigma).
+ }
+ \tag{19}
+$$
+
+故全控制读出差至多 $\varepsilon$ 时，
+$D_{\mathrm{tr}}\le12\varepsilon/(5c)$。
+这里是效果表示的数学仿射延拓；若要将其用于实际混态制备，
+还须供应该制备与效果语义，不能声称源已额外证明所有混态操作的仿射性。
+全控制的上确界也不是有限样本已经检验完。
+对应全部 Hermitian 效果的精确线性摘要至少需 $13^2-1=168$ 个实坐标；
+该结论只针对完整凸密度态族与线性摘要，不用于单个实际 $\Omega$、
+仅纯态族、任意编码或存储比特下界。
+
+<a id="statement-5-5"></a>
+

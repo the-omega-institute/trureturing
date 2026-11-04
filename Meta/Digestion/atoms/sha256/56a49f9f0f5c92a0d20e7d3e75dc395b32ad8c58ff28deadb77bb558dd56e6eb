@@ -1,0 +1,4 @@
+**Definition 1.4 (The star comparison).** Write $S_n=K_{1,n-1}$ for $n\ge2$. The adjacency part of Mohan–Tamon–Xu–Zhan, *Laziness of Quantum Walks on Graphs*, [arXiv:2608.20739v1, §8(v)](https://arxiv.org/html/2608.20739v1#S8), asks whether $S_n$ is the second laziest connected graph, with laziness measured by $T_A$. Its comparison domain is the connected noncomplete graphs of order $n$. The bipartite subdomain consists of every connected bipartite graph of order $n\ge3$; at order two its only graph is $K_2=S_2$.
+
+For comparison, the unsigned Laplacian and normalized Laplacian use the Hamiltonians $D+A$ and $I-D^{-1/2}AD^{-1/2}$, where $D$ is the degree matrix. These are separate spectral observables from (1.1).
+

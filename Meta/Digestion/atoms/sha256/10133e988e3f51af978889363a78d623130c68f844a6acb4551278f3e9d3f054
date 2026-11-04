@@ -1,0 +1,30 @@
+**Proposition 8.2 (original-domain embedding and output bound).** Set
+
+$$
+M_0=B=\frac12\begin{pmatrix}1&1\\0&1\end{pmatrix},\qquad
+M_1=\frac12\begin{pmatrix}0&0\\1&0\end{pmatrix},\qquad
+\lambda=(1/2,1/2).
+\tag{8.5}
+$$
+
+This is an irreducible original-domain producer in $\Theta_2$. Its identity quotient satisfies both labeled lumpability identities and (3.7) with $m_+=m_-=1$ and $\rho_+=\rho_-=1/2$. For its actual output law,
+
+$$
+e_L^P(j),e_R^P(j)\le\frac14\,2^{-j},\qquad
+A_P(r)\le\frac{2^{-r/2}}{1-1/\sqrt2}.
+\tag{8.6}
+$$
+
+At the same time every word $0^k$ has positive probability and its forward matrix diameter is $1/(k+1)$.
+
+**Proof.** The matrix $A=M_0+M_1$ has both rows $(1/2,1/2)$, so it is stochastic, irreducible, and stationary under $\lambda$. Also $M_1^2=0$, which verifies the scalar legality condition. With the identity quotient, (3.2) and (3.3) hold exactly. Since $\lambda$ is uniform, $\check M_x=M_x^{\mathsf T}$. The forward $M_0$ has diameter $1/2$ by Lemma 8.1; the reverse $M_0$ has normalized rows $(1,0)$ and $(1/2,1/2)$, again with diameter $1/2$. Each of $M_1$ and $\check M_1$ has only one feasible row and thus diameter zero. Both one-letter words have positive stationary probability. This verifies every feasible word in each length-one hypothesis; Theorem 6.1 gives (8.6) with its exact directional correspondence and constants.
+
+Finally, (8.3) gives
+
+$$
+P(0^k)=\lambda B^k\mathbf1=\frac{k+2}{2^{k+1}}>0.
+\tag{8.7}
+$$
+
+The matrices of these actual words therefore also exhibit the nonmultiplicative image diameter inside the theorem's stated hypothesis class. Their small probabilities are compatible with the averaged output bound; no wordwise contraction was used to prove that bound. $\square$
+

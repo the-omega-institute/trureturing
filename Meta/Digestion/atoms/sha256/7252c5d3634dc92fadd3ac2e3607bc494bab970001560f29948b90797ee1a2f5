@@ -1,0 +1,73 @@
+**Theorem 3.2 (universal finite positive-native image cover).** For every
+finite positive presentation $\mathscr E$ in the entire declared tuple
+$\mathbf x\in\mathcal T^d$, one can effectively construct a finite list
+$(P_b,F_b)_{b\in\mathcal B}$ as in Definition 1.2, with possibly different
+$k_b,m_b$, such that
+
+$$
+\operatorname{Sol}(\mathscr E)
+=
+\bigcup_{b\in\mathcal B}
+\{F_b(\mathbf n,\mathbf z):
+   \mathbf n\in\mathbb N^{k_b},\ P_b(\mathbf n),\
+   \mathbf z\in\mathcal T^{m_b}\}.
+\tag{NIC.12}
+$$
+
+Each $F_b$ has exactly $d$ output components, retaining every declared
+variable. Both inclusions are over actual finite native assignments.
+The cover may overlap and need not have unique arguments. Effectivity
+here is a terminating finite mathematical construction from the supplied
+finite syntax, with no uniform bound on its image's sources.
+
+Proof. Perform Definition 2.2 on the whole declared tuple. There are
+finitely many collapse choices and finitely many finite shape problems.
+Discard a failed shape case. In a successful case form all decorations
+and comparisons of Definition 2.3, without making negative choices or
+replacing residual shapes by markers. Discard a case with an inconsistent
+block cycle, as justified by Lemma 2.5.
+
+For each remaining residual sort $j$, choose the minimum-potential
+vertex $U_{j,0}$. Introduce an independent native parameter $z_j$.
+Replace every occurrence block $U$ of this sort by
+$\tau_{a_U}B(z_j)$, with the same replacement at repeated uses of that
+block. This is allowed for every $z_j\in\mathcal T$, with no relation to
+another sort. The parameters may have equal shapes or equal native
+values across different sorts.
+
+Enumerate all explicit scalar decorations and all natural collapse
+scalars as parameters $n_1,\ldots,n_k$. Keep their scalar offset and
+constant equations, including all of (NIC.8), as $P(\mathbf n)$.
+The requirements that they be natural are in $\mathbb N^k$ itself.
+These are affine integer equalities. An inconsistent scalar case may
+be retained with an empty arithmetic domain or discarded by solving its
+finite offset system. Neither choice changes its image.
+
+After these replacements each name has an ambient code template built
+from $[n_j]$, $F$ and $\tau_a B(z_i)$. Its positive comparisons hold
+for all $P(\mathbf n)$ and all native $\mathbf z$: traverse the compared
+terms. Explicit leaves agree by $P$; residual blocks satisfy every edge
+by (NIC.10); matching $F$ nodes reconstruct the equal codes. The same
+traversal handles a shift by adding its fixed offset at every leaf.
+It handles an ordinary definition by matching $F$ at the root and
+handles primitive definitions by their scalar equations.
+
+Now *omit* all canonical normality restrictions on these assembled
+ambient codes. Their expansion remains sound by Lemma 3.1. In
+particular, a former ordinary case may now fill as
+$F([r+1],[r])$; it expands to $T_{r+2}$ and still satisfies the native
+pairing equation. The case is no longer asserted to record the canonical
+collapse choices of this filling. That loss of canonical branch identity
+creates overlap, not an extra native solution.
+
+Expand the ambient template of each original $x_i$. An explicit
+primitive gives $T_{n_j}$, a residual block gives $\rho^{a_U}z_j$, and
+$F$ gives actual pairing. Constants can be retained as fixed ground
+trees. These are precisely mixed templates (NIC.2). Induction through
+the named subexpression definitions shows that their expanded values
+are the evaluations of the original expressions at these expanded
+$x_i$. Every original positive equality is one of the preserved
+comparisons. Thus every output $F_b(\mathbf n,\mathbf z)$ in (NIC.12)
+satisfies $\mathscr E$. This proves soundness for arbitrary finite
+parameter values, including nonnormal assembled codes.
+

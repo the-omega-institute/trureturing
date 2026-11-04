@@ -1,0 +1,13 @@
+**定理 305.2（随机化的凸包刻画）。** 有
+
+$$
+\boxed{
+V_{\mathrm{rand}}\le V_{\mathrm{det}},
+\qquad
+\{v(\lambda):\lambda\in\Delta_s\}
+=\operatorname{conv}\{v(\pi_i):1\le i\le s\}.
+}
+$$
+
+若确定风险向量的凸包有一点同时严格低于所有确定策略的最坏坐标，则不等式严格。
+

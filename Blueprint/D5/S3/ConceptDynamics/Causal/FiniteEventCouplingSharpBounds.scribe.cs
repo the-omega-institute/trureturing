@@ -63,6 +63,46 @@ internal sealed class FiniteEventCouplingSharpBoundsDocument : IScribeDocumentDe
                     + "At the apex the expectation is f(middle). The parameter f specifies the mathematical "
                     + "target; it defines no aggregate score or acquisition rule. The coupling bounds and "
                     + "affine interval-image identities establish these consequences by normalization.")),
+            Paragraph(Text(
+                "Theorem 18.1 of AURIC_FIB_ATOM_JOINT_PROJECTION_MULTIWINDOW_ORDER_AND_RESPONSE_FIBERS (source part "
+                    + "II, section 6) concerns two laws on the original LiteralWindowEnd.Window. Let mu and nu be arbitrary "
+                    + "nonnegative real masses, each summing to one on all five letters, including zero. Put A(i)=first(i), "
+                    + "B(j)=last(j), a=mu(low)+mu(ends) and b=nu(high)+nu(ends). The source sets R1={low,ends} and "
+                    + "C1={high,ends} are exactly their true fibers; R0 and C0 are the full complements. One nonnegative "
+                    + "table P on Window x Window has every row sum mu(i), every column sum nu(j), and P(i,j)=0 whenever "
+                    + "A(i)&&B(j), if and only if a+b<=1.")),
+            Paragraph(Text(
+                "Push P forward along (i,j) -> (A(i),B(j)). This is an IsEventCoupling with leftMarginal=a, "
+                    + "rightMarginal=b and true-true cell zero. Conversely event_coupling_target_feasible_iff(a,b,0) "
+                    + "reduces, using 0<=a,b<=1, exactly to a+b<=1. Its Boolean witness q has masses (1-a-b,a,b,0) in the "
+                    + "order (false,false), (true,false), (false,true), (true,true). This supplies the event table; "
+                    + "recovering the original marginals also requires the conditional lift.")),
+            Paragraph(Text(
+                "Form piMu(r,i)=mu(i) when A(i)=r and zero otherwise, and the analogous piNu(s,j) for B. Their "
+                    + "Boolean marginals are alpha=(1-a,a) and beta=(1-b,b). TreeMarkovStability.completedConditional gives "
+                    + "kernels Kmu and Knu using fallback laws mu and nu. The existing private "
+                    + "completed_conditional_properties supplies nonnegativity, unit row sums and "
+                    + "alpha(r)*Kmu(r,i)=piMu(r,i), with the analogous identity for nu. Extend q by these two kernels, then "
+                    + "discard the Boolean labels: P(i,j)=sum over r,s of q(r,s)*Kmu(r,i)*Knu(s,j). The existing private "
+                    + "extend_marginals and PushforwardComposition.pushforward_comp recover all row and column masses. On "
+                    + "positive Boolean fibers the kernels are supported on their graph; on zero fibers the existing "
+                    + "private zero_fiber forces the whole q fiber to vanish. Thus the pushforward returns q, and "
+                    + "nonnegativity makes its true-true cell zero equivalent to every cell in R1 x C1 being zero. This "
+                    + "application preserves private visibility.")),
+            Paragraph(Text(
+                "For a,b<1 this is the source's table: mu(i)*nu(j)/(1-b) on R1 x C0, mu(i)*nu(j)/(1-a) on R0 x C1, "
+                    + "(1-a-b)*mu(i)*nu(j)/((1-a)*(1-b)) on R0 x C0, and zero on R1 x C1. When a+b=1 with a,b<1 the R0 x C0 "
+                    + "block vanishes. At a=1 feasibility forces b=0, and the product mu(i)*nu(j) on R1 x C0, zero "
+                    + "elsewhere, suffices; b=1 is symmetric on R0 x C1. No division by zero is used. Zero coordinates, "
+                    + "deterministic laws and null windows remain included.")),
+            Paragraph(Text(
+                "The source reads HIGH-to-LOW: the first window's low bit meets the second window's high bit. "
+                    + "ImmediateWindowStateCapacity.rawTransition from its initial some(false,0) state records first(i), "
+                    + "then rejects j exactly when first(i)&&last(j); none is absorbing. This is the raw transition guard; "
+                    + "LiteralWindowEnd.execution uses the opposite low-to-high order. The application proves no End "
+                    + "acceptance, unique joint law, maximum-entropy characterization, physical implementation, sampling "
+                    + "procedure or resource bound, and does not settle the adjacent cycle-dimension claim. It reuses "
+                    + "existing frozen results without a new Lean declaration.")),
             Describe.Lean(
                 DescribeId.Create("event-coupling-dual-certificate"),
                 DeclarationHandle.Create(

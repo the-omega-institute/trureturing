@@ -1,0 +1,180 @@
+### 49.6. The quartic before and after stable relaxation
+
+In this subsection evaluate all scalar quantities at $t_*=\xi_*/2$
+and its selected point unless a derivative variable is displayed. Put
+
+$$
+\begin{gathered}
+L=1+x,\quad R=hx+c,\quad C=hy,\quad
+\Gamma=\sqrt p\,R+\sqrt q\,C,\\
+\eta=\frac{s\sqrt q}{L_a},\qquad
+\mu=\frac12\left(\frac{h\gamma\sqrt p}{R}
+                     +\frac{h\sqrt q}{y}\right),\qquad
+j=\frac{x^2\eta^2}{L},\\
+\mathcal E=\frac12\left[
+ \frac{x+j}{x^2y^2}-1+\frac{(L+j)^2}{4Lj}\right],\\
+r_2=-\frac{\gamma(R+hj)}{2R},\qquad
+c_2=\frac{-h^2(x+j)+s^2+2hs(\sqrt L\,y/x)\sqrt j}{2C},\\
+\mathcal M=2\mu j\mathcal E
+       +\frac{\sqrt p}{2R}r_2^2+\frac{\sqrt q}{2C}c_2^2.
+\end{gathered}
+\tag{49.26}
+$$
+
+Here $j,\mu>0$; $L_a=2\mu x^2/L$ and $L_aL_b=s^2q$.
+Define
+
+$$
+H_*=\left.\mathcal H_{\delta\delta}\right|_{(t_*,\delta_*)}>0,
+\qquad
+K_\delta=\frac{\left.\partial_\delta D\right|_t}{L_a}.
+\tag{49.27}
+$$
+
+The exact population-relaxed coefficient is
+
+$$
+\boxed{C_{\mathrm{eff}}
+ =8\Gamma\mathcal M-\frac{8\Gamma^2K_\delta^2}{H_*}.}
+\tag{49.28}
+$$
+
+All terms in (49.28) are exact algebraic quantities specified by
+(49.18) and positive radicals. The derivative in (49.27) is fixed
+$t$, so that
+
+$$
+\left.\partial_\delta D\right|_t
+ =-\tfrac12\partial_x\mathfrak D_+(x,q)
+                    -\partial_q\mathfrak D_+(x,q).
+\tag{49.29}
+$$
+
+It differs from (49.13); substituting the along-selector derivative
+would give the wrong relaxation term.
+
+For the fixed-population quartic, use the exact cone remainder
+(46.18)--(46.24) on its positive row. Set
+$B_c=\varepsilon$, $H_c=j\varepsilon$,
+$A_c=(x+j)\varepsilon$, so the squared pair lengths are
+$X_c=x^2+(x+j)\varepsilon$ and $Y_c=1-\varepsilon$.
+They lie in the attained triangle for all sufficiently small
+$\varepsilon>0$, since
+$\Delta=4Lj\varepsilon-(L+j)^2\varepsilon^2>0$.
+The first square and the determinant term of (46.19) vanish on this
+ray: $\sqrt j=t_c/(2\mu)$, where $t_c=s\sqrt q\sqrt L/x$.
+The coherent triangle factor is exactly
+
+$$
+F_c^2=\frac{Ly^2j}{x^2}\varepsilon^2
+ \frac{[1-(x+j)\varepsilon/y^2]
+       [1-(L+j)^2\varepsilon/(4Lj)]}
+      {[1+(x+j)\varepsilon/x^2](1-\varepsilon)}.
+\tag{49.30}
+$$
+
+Its positive square root is
+$F_c=(\sqrt L\,y/x)\sqrt j\,\varepsilon
+ -\mathcal E(\sqrt L\,y/x)\sqrt j\,\varepsilon^2
+ +O(\varepsilon^3)$.
+The half-recoveries in (46.21) have
+$R_{\mathrm{var}}-R=r_2\varepsilon+O(\varepsilon^2)$ and
+$C_{\mathrm{var}}-C=c_2\varepsilon+O(\varepsilon^2)$.
+In (46.19) the coherent remainder coefficient is
+$\sqrt q\,hs(\sqrt L\,y/x)\sqrt j\,\mathcal E/C
+=2\mu j\mathcal E$. The last two terms give exactly the two
+root squares in $\mathcal M$. Hence
+
+$$
+\Gamma-\Gamma_{\mathrm{var}}
+ =\mathcal M\varepsilon^2+O(\varepsilon^3).
+\tag{49.31}
+$$
+
+This cone ray is realized in the original chart, with
+$B_c=\sin^2 b$ and the analytic branch
+
+$$
+\sin a=
+ \frac{\sin b\sqrt{4Lj-(L+j)^2\sin^2b}}
+ {2\sqrt{x^2+(x+j)\sin^2b}\cos b},\qquad
+a=\eta b+O(b^3).
+\tag{49.32}
+$$
+
+Indeed its trace equation gives
+$\Delta=4X_cY_c\sin^2a$; choosing the sign of $a$ equal to
+the sign of $b$ attains the crossed recovery, as also follows from
+the cross term $2hsY\sin a\sin b$ in $|Q|^2/4$.
+Thus both signs of $b$ use an actual whole feedback with the
+correct coherent orientation. Since
+$4(\Gamma^2-\Gamma_{\mathrm{var}}^2)
+=8\Gamma\mathcal M\varepsilon^2+O(\varepsilon^3)$,
+
+$$
+\Psi(t_*,\delta_*,\eta b,b)-N(\xi_*)
+ =8\Gamma\mathcal M b^4+O(b^6).
+\tag{49.33}
+$$
+
+Replacing the analytic ray by its tangent line changes $a$ by
+$O(b^3)$. The quadratic form is $L_a(a-\eta b)^2$ at the zero;
+there are no cubic phase terms. This replacement changes the
+objective only by $O(b^6)$, justifying (49.33).
+
+To eliminate the remaining stable directions set
+$u_\delta=\delta-\delta_*$, $u_a=a-\eta b$ and
+$\mathscr F(u_\delta,u_a,b)=
+\Psi(t_*,\delta_*+u_\delta,\eta b+u_a,b)-N(\xi_*)$.
+Its stable Hessian is
+
+$$
+\nabla^2_{(u_\delta,u_a)}\mathscr F(0)
+ =\operatorname{diag}(H_*,8\Gamma L_a)>0.
+\tag{49.34}
+$$
+
+The scalar--phase entries vanish by (49.25). The analytic implicit
+function theorem applied to the **stable gradient only** gives a
+unique graph $u_\delta^*(b),u_a^*(b)$; it does not assert that its
+nonzero points are full critical points. The symmetry
+$\mathscr F(u_\delta,-u_a,-b)=\mathscr F(u_\delta,u_a,b)$
+makes the first graph even and the second odd. Its first derivatives
+vanish at zero by the null Hessian, so
+$u_\delta^*(b)=O(b^2)$ and $u_a^*(b)=O(b^3)$.
+
+For the fixed critical value of $\eta$, write
+$Q(\delta)=L_a(\delta)\eta^2+L_b(\delta)
+-2s\sqrt{q(\delta)}\eta$, with $q=t_*-\delta$.
+At $\delta_*$,
+
+$$
+Q=0,\quad Q'=K_\delta
+ =\eta^2L_{a,\delta}+L_{b,\delta}
+                      +s\eta/\sqrt q.
+\tag{49.35}
+$$
+
+For example this follows by differentiating
+$L_b-s^2q/L_a=D/L_a$; the stationary minimizing value
+of $a/b$ has zero first variation at the critical point.
+The cubic population coupling is therefore
+$4\Gamma K_\delta u_\delta b^2$.
+Together with (49.33)--(49.34) this yields
+
+$$
+u_\delta^*(b)=-\frac{4\Gamma K_\delta}{H_*}b^2+O(b^4),\qquad
+\mathscr F(u_\delta^*(b),u_a^*(b),b)
+ =\left(8\Gamma\mathcal M-
+ \frac{8\Gamma^2K_\delta^2}{H_*}\right)b^4+O(b^6).
+\tag{49.36}
+$$
+
+There is no additional transverse phase correction at fourth order,
+because its optimizing displacement starts at degree three. Effects
+were eliminated exactly on their full feasible arc in (49.23).
+These facts account for every stable direction in the reduced phase
+problem. Fixed-population positivity alone would be insufficient:
+$F(b,z)=z^2/2+2zb^2+b^4$ has fixed-$z=0$ coefficient $+1$,
+but minimizing over $z$ gives $-b^4$.
+

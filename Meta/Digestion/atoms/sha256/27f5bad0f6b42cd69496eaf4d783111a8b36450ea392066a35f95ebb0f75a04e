@@ -1,0 +1,16 @@
+#### 定义 10.1（记录去相干与量子散度）
+
+在 $\mathcal H_5$ 的指定记录基上，$\Delta\rho$ 表示删除非对角项，$p=\operatorname{diag}\rho$。定义
+
+$$
+S(\rho)=-\operatorname{Tr}\rho\log\rho,\quad
+ D_Q\!\left(\rho\middle\Vert \sigma\right) =\operatorname{Tr}\rho(\log\rho-\log\sigma),\quad
+C_{\rm rel}(\rho)=H(p)-S(\rho).
+$$
+
+对数按支撑解释，参考态满支撑时散度有限。
+
+<a id="statement-10-2"></a>
+
+<a id="thm-qkl"></a>
+

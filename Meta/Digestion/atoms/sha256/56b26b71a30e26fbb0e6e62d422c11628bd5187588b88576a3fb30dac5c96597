@@ -1,0 +1,53 @@
+**Theorem 5.1 (Scaling and attainment for all triples).** Let
+$2\le a\le b\le c$ and $R_0>0$. The set
+
+$$
+\mathcal F_{a,b,c,R_0}
+=\{g\in\mathcal P_{a,b,c}:R(g)=R_0\}
+$$
+
+is nonempty. The maps
+
+$$
+\begin{aligned}
+\Psi_{R_0}:\mathcal N_{a,b,c}&\longrightarrow\mathcal F_{a,b,c,R_0},
+& h&\longmapsto\frac{R(h)}{R_0}h,\\
+\Theta:\mathcal F_{a,b,c,R_0}&\longrightarrow\mathcal N_{a,b,c},
+& g&\longmapsto\frac{g}{\lambda_2(g)}
+\end{aligned}
+\tag{5.1}
+$$
+
+are mutually inverse bijections, and
+
+$$
+\lambda_2(\Psi_{R_0}(h))=\frac{R(h)}{R_0},\qquad
+\sup_{g\in\mathcal F_{a,b,c,R_0}}\lambda_2(g)
+=\frac{M_{a,b,c}}{R_0}.
+\tag{5.2}
+$$
+
+A product supremum is attained in $\mathcal P_{a,b,c}$ if and only
+if the level supremum is attained for one, equivalently every,
+$R_0>0$. Its positive maximizing rays correspond bijectively to
+the normalized maximizers $\{h\in\mathcal N_{a,b,c}:R(h)=M_{a,b,c}\}$,
+and $\Psi_{R_0}$ selects the unique point of each such ray on the
+given level.
+
+*Proof.* For any positive $g$, the assignment $R(g)g/R_0$ is positive
+and has resistance $R_0$ by (1.6), proving nonemptiness.
+For $h\in\mathcal N$, scaling gives
+$R(\Psi_{R_0}(h))=R_0$ and the first formula in (5.2), and then
+$\Theta(\Psi_{R_0}(h))=h$. For $g\in\mathcal F$, writing
+$t=\lambda_2(g)$ gives
+$\lambda_2(g/t)=1$ and $R(g/t)=tR_0$, so
+$\Psi_{R_0}(\Theta(g))=t(g/t)=g$.
+
+For every positive $g$, $F(g)=R(g/\lambda_2(g))$. Thus
+$M=\sup_{h\in\mathcal N}R(h)$. The bijection and its first formula
+in (5.2) prove the second, and show that either supremum is attained
+precisely when a normalized vector has $R(h)=M$.
+Each positive ray has exactly one member of $\mathcal N$ and one
+member of $\mathcal F$, proving the claimed full correspondence
+without evaluating $M$ for any other triple. ∎
+

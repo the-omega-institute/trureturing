@@ -1,0 +1,75 @@
+### 定理 6.4（实际条件态的几乎必然极化）
+
+在上述条件下，存在$q_\infty\in\{0,1\}$，使
+
+$$
+\boxed{q_n\longrightarrow q_\infty\quad\text{几乎必然及 }L^1.}
+ \tag{11}
+$$
+
+极限选择质量满足
+
+$$
+\boxed{|\mathbb{P}(q_\infty=1)-q_0|\le E_*.}
+ \tag{12}
+$$
+
+对每个$0<\eta<1/2$，有驻留次数界
+
+$$
+\boxed{\sum_{n=0}^{\infty}\mathbb{P}(\eta\le q_n\le1-\eta)
+ \le\frac{q_0(1-q_0)+E_*}{c_*\eta^2(1-\eta)^2}.}
+ \tag{13}
+$$
+
+这控制的是中间区域总访问数的期望，不是最后离开时间的期望。
+
+**证明。**
+
+实际和理想完整旗标态的差迹为零。
+以效果$I_Y\otimes P$读它，式 [式 eq:instrumenterror](#eq:instrumenterror) 给
+
+$$
+b_n:=\mathbb{E}[q_{n+1}\mid\mathcal F_n]-q_n,
+ \qquad |b_n|\le\epsilon_{n+1}.
+$$
+
+因此$Z_n=q_n-\sum_{j=0}^{n-1}b_j$是鞅，且$|Z_n|\le1+E_*$。有界鞅几乎必然并在$L^2$收敛；
+绝对可求和的漂移也收敛，所以$q_n$几乎必然收敛。
+这里使用的鞅事实可由$L^2$正交增量和 Doob 最大不等式证明：
+二阶矩有界使增量平方期望总和有限，给$L^2$Cauchy；
+选尾误差快速下降的子序列，最大不等式和 Borel--Cantelli 再给整列几乎必然 Cauchy。
+
+由引理 [lem:impurity](#lem:impurity) 与理想信息增益，
+
+<a id="eq:lyapunov"></a>
+$$
+\mathbb{E}[V(q_{n+1})\mid\mathcal F_n]
+ \le V(q_n)-c_*V(q_n)^2+\epsilon_{n+1}.
+ \tag{14}
+$$
+
+取期望并从$n=0$加到$N-1$，用末项杂质非负，得
+
+$$
+c_*\sum_{n=0}^{N-1}\mathbb{E} V(q_n)^2
+ \le V(q_0)+\sum_{n=1}^N\epsilon_n.
+$$
+
+单调收敛给$\mathbb{E}\sum_nV(q_n)^2<\infty$，
+故该非负级数几乎必然有限，$V(q_n)\to0$。
+结合$q_n$的收敛，极限只能为零或一。
+有界收敛给$L^1$收敛和
+
+$$
+\mathbb{P}(q_\infty=1)-q_0
+ =\lim_N\sum_{n=0}^{N-1}\mathbb{E} b_n,
+$$
+
+从而得到式 [式 eq:weightdefect](#eq:weightdefect)。
+最后，中间区域上$V(q_n)^2\ge\eta^2(1-\eta)^2$，
+代入已证级数界即可。
+
+∎
+
+<a id="thm:conserved"></a>

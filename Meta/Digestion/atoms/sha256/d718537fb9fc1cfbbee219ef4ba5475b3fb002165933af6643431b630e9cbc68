@@ -1,0 +1,60 @@
+**定理 8.2（回放运输的精确条件及共同来源消费者）。** 在假设1.1下，有以下条件。
+
+(a) 对固定已知 $\Lambda$，
+
+$$
+(K_{\pi\sigma})_\#\mathsf P_\Lambda^\pi=\mathsf P_\Lambda^\sigma
+\quad\Longleftrightarrow\quad
+\bar f_r^\pi(u,x)=\bar f_r^\sigma(u,x)
+\quad\text{对每个 }x,r\text{ 及 }\lambda\text{-几乎处处 }u.
+\tag{CPI.43}
+$$
+
+若要求参数对也保持同一个联合律，则精确条件是
+
+$$
+(\mathrm{id},K_{\pi\sigma})_\#\mathsf J_\Lambda^\pi=\mathsf J_\Lambda^\sigma
+\quad\Longleftrightarrow\quad
+f_r^\pi(u,x;\theta)=f_r^\sigma(u,x;\theta)
+\quad (\lambda\otimes\Lambda)\text{-几乎处处，对每个 }x,r.
+\tag{CPI.44}
+$$
+
+(b) 若 $\Lambda(\mathsf D)=1$，式（CPI.44）对任意两等待策略成立。若 $\Lambda(\mathsf D^c)>0$，式（CPI.44）成立的充要条件为
+
+$$
+A_k^\pi(u,x)=A_k^\sigma(u,x)
+\quad\text{对所有 }k\ge1,x\in\{0,1\}\text{ 及 }\lambda\text{-几乎处处 }u.
+\tag{CPI.45}
+$$
+
+固定参数 $\theta$ 的逐参数运输也由此判定：当 $q_L=q_R$ 时总成立；当 $q_L\ne q_R$ 时恰需式（CPI.45）。因此要求对所有参数对逐参数运输，同样等价于式（CPI.45）。该条件只限制机会的侧次序，不强迫全部查询词或支付时间相同。
+
+式（CPI.44）成立时，任意有界可测参数损失 $\ell(\theta,d)$ 的档案决策规则都可沿 $K$ 及其逆运输，保持同一先验的联合风险；逐参数条件成立时逐参数风险也保持。这是 TEE 定理3.1(a)的实验消费者在本源上适用的精确前提。仅有式（CPI.43）的档案边缘同律不保证参数决策风险保持。
+
+(c) 对固定 $\Lambda$，下面的源性质等价：共同参数命题 $\Lambda(\mathsf D)=1$；任意两等待策略都满足式（CPI.44）；任意两等待策略都满足式（CPI.43）。验证最后一项的必要性，只需比较始终向左、始终向右及“先 $L,R$、此后始终向左”这三个确定策略的正规形律。这里比较的是整个律及其可读取根坐标，不是同时执行三份实验。
+
+证明。(a) 用 $F_\sigma K_{\pi\sigma}=F_\pi$ 将两个测度都推到同一正规形空间。定理7.2给出相同支配测度下的密度，密度几乎处处相等恰是测度相等；$p_0,p_1>0$ 使两个根截面都不能略去。联合参数律则再与 $\Lambda$ 取乘积，得到式（CPI.44）。可数的 $x,r$ 允许取一个共同的零集。 联合运输的风险断言由相同联合测度对 $\ell(\theta,d(H))$ 积分得到；反向使用 $K$ 的逆，逐参数时先固定 $\theta$ 作同一计算。
+
+(b) 对角上 $f_r^\pi=q^r(1-q)=f_r^\sigma$，得到充分性，也精确回接 TEE 定理3.1(a)的原共同源结论。机会侧词相同也直接给密度相同。反之，若在一个正种子质量集合上，两词首次在第 $k$ 个机会不同，则前 $k-1$ 个机会侧相同，且
+
+$$
+f_{k-1}^\pi-f_{k-1}^\sigma
+=\left(\prod_{j<k}q_{A_j^\pi}\right)
+   (q_{A_k^\sigma}-q_{A_k^\pi}).
+\tag{CPI.46}
+$$
+
+在所有非对角参数上，这个差严格非零。若两个词并非几乎处处相同，可按根、首次差异序号及两个侧的取值作可数可测分割，选出正质量的一片。它与 $\mathsf D^c$ 的乘积有正 $\lambda\otimes\Lambda$ 质量，违反式（CPI.44）。这证明必要性；固定非对角参数的论证相同。
+
+(c) 对角集中已由(b)给出全部联合运输；联合运输蕴含档案边缘运输。现在假定所列三个策略在式（CPI.43）下相互运输。正规形记录的根零事件有固定正质量 $a$。条件于此可见事件，令 $R$ 是完整档案上的总成功次数。始终向左的 $\Pr(R\ge2\mid X_0=0)$ 是 $\int q_L^2d\Lambda$，始终向右的是 $\int q_R^2d\Lambda$。第三策略的前两个机会正是首次 $L$、首次 $R$，故相应尾概率为 $\int q_Lq_Rd\Lambda$。三个正规形律相等使这三个数相等，于是同一个联合先验下
+
+$$
+\int(q_L-q_R)^2d\Lambda
+=\int q_L^2d\Lambda+\int q_R^2d\Lambda
+ -2\int q_Lq_Rd\Lambda=0.
+\tag{CPI.47}
+$$
+
+非负积分零的源内应用推出对角集中。没有将不同来源各自可达的矩拼成一个联合实现，也没有把根零当成免费预查询端口；它是终止后由实际标记恢复的档案事件。证毕。
+

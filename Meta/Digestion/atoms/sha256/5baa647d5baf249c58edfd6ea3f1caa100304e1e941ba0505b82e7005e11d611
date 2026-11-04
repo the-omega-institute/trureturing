@@ -1,0 +1,25 @@
+**Definition 14.1 (The uniform subcritical domain).** Fix a real number $0<R<\sqrt2$. For integers
+$$
+a\ge4,\qquad 1\le h\le R\sqrt a,\qquad r=a+1,\qquad s=r+h,
+$$
+let $\mathcal X(a,h)$ consist of all probability laws on nonempty subsets $T\subseteq[s]$ with $\mathbb E K=a$ and all actual marginals $y_i=\mathbb P(i\in T)>0$, where $K=|T|$. Write
+$$
+H(x)=\mathbb E\!\left[K^2\sum_{i\in T}y_i^{-2}\right],\qquad
+B_0=ar^2,\qquad d(x)=H(x)-B_0,
+$$
+and use $\Phi_{a,h}$ from (13.1), also for $h=1$. All constants in $O_R(\cdot)$ below are independent of $a,h,x$ and of label permutations. Increasing a threshold depending only on $R$ is permitted in each statement. Put
+$$
+u_0=\frac{h}{\sqrt2\,a^{3/2}}<\frac1a.
+$$
+The law of Definition 13.2, with the same formulas when $h=1$, gives the comparison
+$$
+\Phi_{a,h}(u_0)-B_0
+=2\sqrt2\,h a^{3/2}+O_R(h\sqrt a).
+\tag{14.1}
+$$
+Indeed, the first term is $h^2/u_0=\sqrt2\,h a^{3/2}$, while the other two terms minus $B_0$ equal
+$$
+\left(2a^3+O(a^2)\right)u_0+O_R(a^2u_0^2).
+$$
+Here $u_0=O_R(a^{-1})$ and $a^2u_0^2=O_R(h\sqrt a)$. This comparison uses one actual law and imposes no restriction on other laws in $\mathcal X(a,h)$.
+

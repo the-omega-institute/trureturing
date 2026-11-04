@@ -1,0 +1,158 @@
+**Lemma 13.3 (A cap-adjusted square certificate for every actual type).**
+On the entire sublevel (13.3), let $C,D$ be the partition of Lemma 13.2
+and define
+
+$$
+\begin{gathered}
+t_j=y_j\ (j\in D),\quad u=\sum_{j\in D}t_j,\quad
+\delta=\max_{j\in D}t_j,\quad c=\min_{i\in C}y_i,\\
+B=|T\cap D|,\quad L=|T\cap C|,\quad K=L+B,\quad A=\{B>0\},\\
+\alpha=a(a+1)(2a+1),\quad \beta=3a^2+3a+1,\quad
+Q(l)=\alpha-\beta l+l^3,\\
+\mathcal A=\mathcal A_a(u)
+=\frac{r^2(a^2+3a+1+au)}{(a-u)^2},\qquad
+\eta=\max\{\sqrt{\alpha-\mathcal A},ah\},\\
+\gamma=\eta^2-\alpha+\mathcal A\ge0,\qquad
+f_u(y)=\frac{a^2}{y}-\frac{(2a+1)u}{y^2},\qquad
+\bar y=\frac{a-u}{r},\\
+\mathcal S_f=\sum_{i\in C}f_u(y_i)-r f_u(\bar y).
+\end{gathered}
+\tag{13.7}
+$$
+
+For sufficiently large $a$, the square root is positive. On $A$ put
+
+$$
+V_T=\sum_{j\in T\cap D}t_j^{-1},\qquad
+Z_T=K^2\sum_{j\in T\cap D}t_j^{-2},
+$$
+
+$$
+G_T=Z_T+Q(L)-\mathcal A B-2\eta V_T+\gamma B
+-\frac\gamma a\bigl(r(B-1)+L\bigr).
+\tag{13.8}
+$$
+
+There is $\kappa_R>0$ such that, uniformly over all these laws,
+
+$$
+\begin{aligned}
+G_{\{j\}}&=(t_j^{-1}-\eta)^2\quad(j\in D),\\
+G_T&\ge\kappa_Ra^3\quad(B>0,\ K\ge2),\\
+\mathcal S_f&\ge\frac{a^2}{2}\sum_{i\in C}(y_i-\bar y)^2,\\
+H-B_0&\ge 2\eta h-\frac\gamma a
+ +\mathbb E[G_T;A]+\mathbb E[Q(L);A^c]+\mathcal S_f.
+\end{aligned}
+\tag{13.9}
+$$
+
+**Proof.** Separation gives $t_j<b/a$, $u\le bh/a=O_R(a^{-1/2})$
+and $y_i\ge u/h$ on $C$. In particular
+
+$$
+\mathcal A=a^2+O_R(a),\qquad
+\alpha-\mathcal A=2a^3+O_R(a^2),\qquad
+\eta=O_R(a^{3/2}),\quad \gamma=O_R(a^3).
+\tag{13.10}
+$$
+
+These estimates follow directly from the rational expression in (13.7)
+for $0\le u\le bR_*a^{-1/2}$, where $a-u\ge a/2$ eventually. In
+particular $\alpha-\mathcal A\ge a^3$ eventually. The polynomial
+$Q(l)=(r-l)(a-l)(2a+1+l)$ is nonnegative for every integer
+$0\le l\le r$.
+
+The finite certificate of Incidence Lemma 13.4, equivalently (12.10),
+is applicable because $|C|=r$, $D$ consists of the $h$ smallest actual
+marginals and $a^2\ge3h(2a+1)$ eventually. In fact the stronger condition
+$a^2\ge6h(2a+1)$ holds uniformly for $h\le R_*\sqrt a$. It gives
+
+$$
+f_u''(y)=\frac{2(a^2y-3(2a+1)u)}{y^4}\ge a^2
+\quad(u/h\le y\le1).
+$$
+
+Apply Jensen to $f_u(y)-a^2y^2/2$ at the actual $r$ core marginals, whose
+sum is $a-u$. This gives the third assertion of (13.9) and the retained
+form of that finite certificate,
+
+$$
+H-B_0\ge H_D-u\mathcal A+\mathbb E Q(L)+\mathcal S_f,
+\qquad H_D=\mathbb E[Z_T;A].
+\tag{13.11}
+$$
+
+This is only an algebraic use of Incidence Lemma 13.4, not an application
+of its section's fixed-$h$ asymptotics.
+
+The mean constraint supplies a pointwise-weighted cap correction.
+Since $K=L\le r$ on $A^c$,
+
+$$
+a\le r\mathbb P(A^c)+\mathbb E[L+B;A],\qquad
+au-1\le r\mathbb E[B-1;A]+\mathbb E[L;A].
+\tag{13.12}
+$$
+
+The second inequality follows by rearranging the first and using
+$u=\mathbb E B$; no bound on $u$ by $1/a$ has been assumed. Also
+$\mathbb E[V_T;A]=h$, because each actual positive $t_j$ is the
+probability of its own inclusion event. Substitute (13.8) into
+(13.11) and use (13.12) with the nonnegative multiplier $\gamma/a$.
+This proves the last line of (13.9).
+
+It remains to prove the pointwise signs for every type, rather than for
+a selected support. A tail singleton has $L=0$, $B=K=1$; its cap
+correction in (13.8) is zero and
+$Q(0)-\mathcal A+\gamma=\eta^2$. This proves its exact square identity.
+For $K\ge2$, completing the square in each reciprocal gives
+$K^2z^2-2\eta z\ge-\eta^2/K^2$. As
+
+$$
+\gamma B-\frac\gamma a\bigl(r(B-1)+L\bigr)
+=\gamma\left(1-\frac{K-1}{a}\right),
+$$
+
+we obtain the finite lower bound
+
+$$
+G_T\ge\eta^2\left(1-\frac B{K^2}\right)
+-\mathcal A(B-1)-\beta L+L^3-\frac\gamma a(K-1).
+\tag{13.13}
+$$
+
+If $2\le K\le\sqrt a$, then $B/K^2\le1/2$ and $B,L\le\sqrt a$.
+Equations (13.10) and (13.13) therefore give
+
+$$
+G_T\ge\frac{a^3}{2}-O_R(a^{5/2})\ge\frac{a^3}{4}
+$$
+
+for all sufficiently large $a$. If $K>\sqrt a$, each reciprocal
+$z=t_j^{-1}$ is greater than $a/b$, so
+$K^2z\ge a^2/b>4\eta$ eventually. Thus
+
+$$
+Z_T-2\eta V_T\ge\frac12 Z_T
+\ge\frac{BK^2a^2}{2b^2},
+$$
+
+$$
+G_T\ge\frac{BK^2a^2}{2b^2}-\mathcal A B
++\gamma\left(1-\frac{K-1}{a}\right),
+\tag{13.14}
+$$
+
+where only $Q(L)\ge0$ has been discarded. For
+$\sqrt a<K\le r=a+1$ the last term is nonnegative, and (13.14) is at
+least $Ba^3/(4b^2)$ eventually. For $K>r$, the original domain still
+has $K\le r+h$, so that last term is at least
+$-\gamma h/a=-O_R(a^{5/2})$. In this case the first term is at least
+$Ba^4/(2b^2)$, and hence (13.14) is again at least
+$a^3/(4b^2)$ for all sufficiently large $a$, since $B\ge1$ and
+$\mathcal A=O_R(a^2)$. These ranges exhaust every nonempty type meeting
+$D$, including cardinalities larger than the core. One may therefore
+choose $\kappa_R=\min\{1/4,1/(4b^2)\}$ after increasing the uniform
+threshold. All incidences, reciprocals and cardinalities in the
+argument belong to the original one law. ∎
+

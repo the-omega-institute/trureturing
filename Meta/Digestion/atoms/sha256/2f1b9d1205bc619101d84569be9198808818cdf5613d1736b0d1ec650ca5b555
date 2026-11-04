@@ -1,0 +1,21 @@
+**Definition 1.1 (retained physical meanings).** The source is the actual
+alpha-origin source of [GPO, Definition 27.1][GPO], in its original class
+$\mathscr R_d$ of GPO Definition 29.1. Physical links persist and are ordered
+$a<b$. An old alpha becomes beta; an old beta branches into one alpha and
+one beta, with beta at $a$ precisely when the consumed bit is one. Only old
+leaves are updated. Births in one update consume consecutive source bits
+in the physical lexicographic order of their parent addresses. Write
+$z_j=s_{j-1}$, with the original alignment to the first actual birth, and
+$F_0=0,F_1=1,F_{k+2}=F_{k+1}+F_k$.
+
+Use [ACR, Theorem 27.3][ACR]'s unique decomposition $s=y+t$: the transient
+$t_i$ vanishes for $i\ge a$, and the aligned core $y$ has a least monic
+annihilator $g(E)$ with $g(0)=1$ and $a+\deg g\le d$. At zero, take
+$g=1$ and degree zero. The core is periodic: its companion transition is
+invertible on a finite binary state space. Its least positive period is
+always denoted by $p$, including $p=1$ for either constant. The zero stream
+has degree zero; the all-one stream has degree one. A presented positive
+period $u$ need not be least. Periodic sequences are extended to integer
+indices by their unique periodic extension whenever an index is reduced
+modulo a period.
+

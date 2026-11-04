@@ -1,0 +1,20 @@
+**Remark 10.2 (Pointwise and uniform statements have different scopes).** For $0<d\le1/2$, the grid of Section 8 has $a=1-d$, $b=\sqrt3\,d$. Theorem 9.5 therefore gives the exact uniform value
+
+$$
+E(1-d,\sqrt3\,d)=2-d,
+$$
+
+attained by the quadratic at $x=-1$. On the identical actual grid, Proposition 8.2 and Corollary 8.5 still give
+
+$$
+\sup_{t\ge2}|L_d(m_t)|=d,
+\qquad
+\sup_{g\in\mathscr E_2(\mathbb D)}|L_d(g)|
+\ge d\sqrt{1+d^4/9}>d,
+\qquad 1\notin\mathcal K_d.
+$$
+
+This pointwise strict inequality at $x=1$ is compatible with the uniform value $2-d$; it neither supplies nor refutes the uniform upper bound. Likewise Remark 4.4 remains a refutation of Conjecture 6.2 with value $73/60$ at its stated shifted grid. The sector classification of Theorem 4.1 remains an all-monomial statement, not a characterization of the uniform equality region of Theorem 9.5.
+
+The source's Section 6.3, Proposition 6.2 asserts monomial maximization for a simple grid and a fixed point, and uses a compactness argument followed by an extreme-point assertion. The pointwise separation of Section 8 excludes that proposition on its displayed grids. Theorem 9.5 instead proves the analytic form of equation (36) directly; no compactness, extreme-point description, or asserted reduction to monomials from that section is a premise. The real-grid results of Kallioniemi, Howell and Shadrin, discussed in the source's Section 6.1 and in Remark 4.2, concern real interpolation nodes and are not premises for these nonreal pairs.
+

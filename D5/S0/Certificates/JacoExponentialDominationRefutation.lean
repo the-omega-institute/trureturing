@@ -32,11 +32,11 @@ of the gamma-set assertion and the p-graphical clause are source boundaries and
 are not encoded.
 -/
 
-private def extendEndpoints (table : Array ℕ) (n : ℕ) : Array ℕ :=
+def extendEndpoints (table : Array ℕ) (n : ℕ) : Array ℕ :=
   let indegree := ((Finset.range n).filter fun i => 1 ≤ i ∧ n ≤ table[i]!).card
   table.push (2 * n - indegree)
 
-private def endpointTable : ℕ → Array ℕ
+def endpointTable : ℕ → Array ℕ
   | 0 => #[0]
   | n + 1 => extendEndpoints (endpointTable n) (n + 1)
 

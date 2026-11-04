@@ -1,0 +1,15 @@
+**Definition 39.1 (one source, full profile and actual evidence).** Retain the positive rational source, chronological $L/R$ actions and unclipped, nondisturbing floor services of Assumptions 11.1 and 18.2. Every requested positive integer scale must be supplied, lawful to use, and return its complete binary integer in finite time. Each finite action, local computation and response must complete. There is one source and epoch, with serialized acknowledgements; no reset, copy, source inverse, saved original source or unknown-source advice is supplied. Positivity is a source premise, not a fact bought by an extra unit read.
+
+For $B\ge1$, define the common full future profile, its instantaneous part and its candidate cut set by
+
+$$
+\begin{aligned}
+\mathsf P_B(y)&=\bigl(q_m(f_v(y))\bigr)_{1\le m\le B,\ v\in\{L,R\}^{<\omega}},\\
+\mathsf F_B(y)&=(q_m(y))_{1\le m\le B},\\
+\mathcal H_B&=\{p/q>0:\gcd(p,q)=1,\ 1\le q\le B\}.
+\end{aligned}
+\tag{39.1}
+$$
+
+The words include $\varepsilon$. There is no finite catalogue or word-length restriction in $\mathsf P_B$. It is a semantic family, represented below by a finite cell and a finite evaluation procedure, not by an infinite stored tuple. A prediction indexed by $v$ is not an observation of an executed $v$. The single-scale all-future class $\equiv_m$ remains that of (11.2); it must not be confused with their common refinement over every $m\le B$.
+

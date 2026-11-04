@@ -1,0 +1,102 @@
+### 接回 AURIC 的三轴递归
+
+加入一个新中心 $x$，令它与旧中心的素数幂边权组成向量 $\mathbf a$，并设
+
+
+<a id="display-46"></a>
+
+$$
+\ell_h=\log(1/h)+1-\gamma-\log\pi.
+$$
+
+
+由定理 1，
+
+
+<a id="display-47"></a>
+
+$$
+\frac{W_h}{2h}=\ell_hI-\mathsf A+o(1),
+\qquad
+\frac{\mathbf w_h}{2h}=-\mathbf a+o(1),
+$$
+
+
+其中 $\mathbf w_h$ 是新旧关系列。
+
+已有空间解释的归一比例为
+
+
+<a id="display-48"></a>
+
+$$
+p_h=\frac{\mathbf w_h^*W_h^{-1}\mathbf w_h}{V_h}.
+$$
+
+
+展开逆矩阵，得到
+
+
+<a id="display-49"></a><a id="eq-15"></a>
+
+$$
+\boxed{
+p_h
+=
+\frac{\|\mathbf a\|^2}{\ell_h^2}
++O(\ell_h^{-3}),
+\qquad
+Z_h=1-p_h\longrightarrow1.
+}
+$$
+
+<p align="center" data-equation-number="15"><a href="#eq-15">(15)</a></p>
+
+
+选定一个旧中心 $t_j$，再定义
+
+
+<a id="display-50"></a>
+
+$$
+X_h=\left|\frac{w_{h,j}}{V_h}\right|^2,
+\qquad
+Y_h=p_h-X_h.
+$$
+
+
+则精确地
+
+
+<a id="display-51"></a><a id="eq-16"></a>
+
+$$
+\boxed{
+X_h,Y_h,Z_h\ge0,
+\qquad
+X_h+Y_h+Z_h=1.
+}
+$$
+
+<p align="center" data-equation-number="16"><a href="#eq-16">(16)</a></p>
+
+
+它们分别对应选定旧方向、其余旧方向、新增正交剩余。按项目的原五模式次序，可以使用
+
+
+<a id="display-52"></a>
+
+$$
+\left(
+0,\frac{w_{h,j}}{V_h},
+\sqrt{Z_h},\sqrt{Y_h},0
+\right)
+$$
+
+
+编码该步的三个占据读出，同时保存符号、完整矩阵与总量 $V_h$。这是项目[三轴误差几何](https://github.com/the-omega-institute/trureturing/blob/08e8767227de53351c42cb35028e01de5e88287d/docs/develop/theory/AURIC_THREE_AXIS_ERROR_GEOMETRY_UNITARY_COMPATIBILITY_AND_ENDOGENOUS_STABILITY_V35.md)在这些已证明为正的实际差分关系上的具体应用。
+
+---
+
+<a id="section-5"></a>
+

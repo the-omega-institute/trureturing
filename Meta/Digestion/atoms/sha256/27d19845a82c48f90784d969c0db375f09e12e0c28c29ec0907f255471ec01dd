@@ -1,0 +1,20 @@
+**Definition 5.1 (Full capacity interval and balanced construction).** For $r\ge5$, define
+
+$$
+L_r(n)=(r-2)n-r^2+2r+1,\qquad
+U_r(n)=(r-1)n-r^2+1.
+$$
+
+For integers $n\ge2r$ and $L_r(n)\le\ell\le U_r(n)$ put
+
+$$
+N=n-r,\qquad c=\ell-(r-2)n+r(r-1)-1,\qquad
+b=U_r(n)-\ell.
+$$
+
+Choose nonnegative integers $b_1,\ldots,b_r$ summing to $b$ and differing pairwise by at most one. The graph $H_r(n,\ell)$ has $r$ independent hubs, $c$ distinct sources adjacent to all hubs, and $b_i$ distinct sources adjacent to all hubs except hub $i$. All sources are independent. Put
+
+$$
+M_c(z)=z g((r-1)/z)+c\bigl[g(r/z)-g((r-1)/z)\bigr]\quad(z>0).
+$$
+

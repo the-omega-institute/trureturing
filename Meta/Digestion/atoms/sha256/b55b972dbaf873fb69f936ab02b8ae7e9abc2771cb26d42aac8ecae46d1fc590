@@ -1,0 +1,23 @@
+**Boundary 7.3 (Other budgets and original attainment problem).** No
+larger-budget optimum, expected-paid-cost optimum, or general optimal
+stopping theorem follows from (6.1). Expected paid cost would count
+every actual call on returning and nonreturning paths; a mean
+restricted to returns is a different resource. The finite upper
+family in Risk, Theorem 5.1, retains its existing scope. The original
+arbitrary-finite attainment/separation question for the whole-domain
+harmonic/Brier objective, Original, Open Problem 6.4, remains
+unestablished by this endpoint-classification volume.
+
+The budget here measures actual visible calls. Internal computation,
+address size, return time, program length, counters, persistent state
+and physical storage receive no complexity or bounded-memory
+conclusion. No neural learning, training, generalization or empirical
+learning conclusion is supplied. The fair parameter $p=1/2$ and the
+endpoint parameters $p=0,1$ are outside the theorem. The deterministic
+attainer's all-input finite stopping strengthens its own construction;
+it does not narrow the lower-bound competitor class or settle any
+overall research goal.
+
+[Original]: FIB_LEGAL_EDGE_LOAD_FIXED_STATE_TAIL_NONUNIFORMITY_AND_ERASURE_RISK_JUMP.md
+[Risk]: FIB_PAID_READ_RETURN_MASS_AND_ENDPOINT_RISK_FRONTIER.md
+

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:fb0994221d345dca647a593bb1fea22f115cd9abdbbda68cf83e629e238b639d
+  normalized_sha256: sha256:fb0994221d345dca647a593bb1fea22f115cd9abdbbda68cf83e629e238b639d
+cas_ref: sha256:fb0994221d345dca647a593bb1fea22f115cd9abdbbda68cf83e629e238b639d
+coverage_gids:
+  - gid: D5/S3/Observer/CubicGain/JMJRootPair.canonical_pair_losing
+    target_statement_id: sha256:4b88d81e1ad450c8a087232999de69563e3a165f082ed15c1721b9fd711fa40e
+  - gid: D5/S3/Observer/CubicGain/JMJRootPair.jmjj_pair_losing_iff
+    target_statement_id: sha256:c18c7ae6ce5075add18249321762202502155e55c39d72577d6f3f7c402553dc
+  - gid: D5/S3/Observer/CubicGain/JMJRootPair.jmjm_pair_not_losing
+    target_statement_id: sha256:d7eb38aabd397335bb83e8d94188a4cb726328daa947a1b5c0d5e5f0a2cdc219
+receipts:
+  unresolved_subitems: []

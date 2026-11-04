@@ -12,7 +12,7 @@ namespace Reg.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryFreeRootForm
 
 open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryFreeRootForm
 open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryTrace
-  (G J M cylinder mass cylinder_mass)
+  (G J M cylinder mass cylinder_mass indicator)
 open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryCentering (mean Pi C centered_suffix_residual)
 open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryPathSplit (constG)
 open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.FiniteSourceHardy (H Edge)
@@ -287,5 +287,85 @@ def registration :
   familyRecord := none,
   options := #[] }
 end Graph
+
+namespace MeanIndicator
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := Edge
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ p => mean (indicator p)) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ p : Edge, R.readout () () p = M.real (cylinder p.val)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => (-1 : ℝ)) (fun e => nomatch e)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he := h edge
+  change (-1 : ℝ) = M.real (cylinder edge.val) at he
+  have hp : 0 ≤ M.real (cylinder edge.val) := measureReal_nonneg
+  linarith
+
+def familyRegistration : Registration arena (type_of% mean_indicator) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨mean_indicator, rejected, rejected_law⟩
+  sensitivity := ⟨by
+    intro i
+    refine ⟨rejected, ?_, rfl, rejected_law⟩
+    intro j hji
+    exact (hji (Subsingleton.elim j i)).elim,
+    fun e => nomatch e⟩
+  dependence := by
+    intro i
+    let longer : Edge := ⟨[false, false], by simp⟩
+    refine ⟨(), edge, longer, ?_⟩
+    change mean (indicator edge) ≠ mean (indicator longer)
+    rw [mean_indicator, mean_indicator]
+    simp only [measureReal_def, cylinder_mass]
+    simp only [edge, longer, mass, List.map_cons, List.map_nil,
+      List.prod_cons, List.prod_nil, Bool.false_eq_true, ↓reduceIte, mul_one]
+    have hp := _root_.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryTrace.a_pos
+    have hl := _root_.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryTrace.a_lt_one
+    nlinarith
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@mean_indicator)
+    (type_of% (realize signature (fun _ _ p => mean (indicator p)) (fun e => nomatch e)))
+    Unit Unit := {
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryFreeRootForm.MeanIndicator.unit,
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryFreeRootForm.MeanIndicator.familyRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨familyRegistration⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature (fun _ _ p => mean (indicator p)) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+
+end MeanIndicator
 
 end Reg.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryFreeRootForm

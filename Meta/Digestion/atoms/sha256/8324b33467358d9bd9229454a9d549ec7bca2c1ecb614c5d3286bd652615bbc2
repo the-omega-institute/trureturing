@@ -1,0 +1,23 @@
+#### 推论 4.3（共同近似基底与独立近似基底）
+
+任何共同酉 $V$，即使只近似理想 $U$，都使 $\{VN_iV^\dagger\}$ 精确对易。若各读口独立使用 $V_i$，则只保证
+
+$$
+\left\lVert [V_iN_iV_i^\dagger,V_jN_jV_j^\dagger]\right\rVert 
+\le4\left\lVert V_i-V_j\right\rVert .
+$$
+
+**证明。**
+
+第一条直接用共同共轭。第二条中 $V_iN_iV_i^\dagger$ 与 $V_iN_jV_i^\dagger$ 对易；减去后者后，使用
+$\left\lVert [A,D]\right\rVert \le2\left\lVert A\right\rVert \left\lVert D\right\rVert$ 及
+$\left\lVert V_jN_jV_j^\dagger-V_iN_jV_i^\dagger\right\rVert \le2\left\lVert V_i-V_j\right\rVert$ 即得。
+
+∎
+
+所以有限精度不必破坏原子内部的相容性；共享参考框比把三个基底分别逼近更能保留代数关系。前稿 v20 在指定编码上给出的黄金字编译可服务于这类已知操作，但其单比特稠密性不能直接替换成“任意五维 $U_b$ 均已由单原子精确实现”。
+
+<a id="statement-4-4"></a>
+
+<a id="prop-povm"></a>
+

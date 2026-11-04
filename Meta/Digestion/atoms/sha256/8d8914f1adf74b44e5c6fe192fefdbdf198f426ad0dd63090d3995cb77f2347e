@@ -1,0 +1,23 @@
+**编者说明。** 本标题为描述性拟题；作者原文未提供标题、版本或日期。下方“作者正文”完整保留所供来源的开场、十个有序部分、全部定义、定理、证明、推导、表格、强调、列表、链接、公式内容与结尾。为适配本卷的便携 Markdown 渲染，仅把作者的行内与成对展示数学外层定界符改写为本渲染器支持的美元定界符；公式内部字符不改写。分节与公式锚点以及文末编者条件注均为单独的编辑结构，不替代作者正文。
+
+导航：[开场](#opening) · [一](#section-1) · [二](#section-2) · [三](#section-3) · [四](#section-4) · [五](#section-5) · [六](#section-6) · [七](#section-7) · [八](#section-8) · [九](#section-9) · [十](#section-10)。
+
+<style>
+#auric-prime-kernel-paper .katex-display > .katex { width: max-content; min-width: 100%; }
+#auric-prime-kernel-paper .katex-display > .katex > .katex-html > .katex-tag { position: static; display: inline-block; margin-left: 1em; }
+</style>
+
+<div id="auric-prime-kernel-paper">
+
+<!-- author-begin -->
+<a id="opening"></a>
+
+继续。这一轮可以补上一个实质性的递归步骤：
+
+> **对于由实际素数公式定义的核，存在一个固定的短对数区间，使区间内任意多个互异节点的关系矩阵都严格正定；每次插入新节点，还能给出明确的正余量和误差容忍界。**
+
+这就把你提出的“结果—剩余—总量守恒，再递归用 AURIC 表示”，在一个明确范围内变成了可证明的结构。同时，我们还能给原整数的 Robin 分解增加一条无条件正下界。
+
+下面依次给出定义、定理与证明。**本轮完成的是局部递归与正预算估计；跨越所有尺度的实际算术正性仍有一个明确缺口，尚未完成黎曼猜想的证明。**
+
+<a id="section-1"></a>

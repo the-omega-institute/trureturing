@@ -1,0 +1,10 @@
+**引文与边界 3.2（综合推导的归属）。** 本卷为 `repo-derived` 的实际支撑与条件分量连接。完整外部事件比较复用[普适后验卷][U] 定理 3.1，拆分相容和有限变换分类直接复用[可见相位卷][V] 推论 56.2、定理 57.1；循环有限相型非达到及重置路径接口按[更新分离卷][R] 的原范围消费。命题 1.2、2.1 不要求事件重置或有限隐藏表示；定理 3.1 在其上消费实际重置与有限吸收表示。只有在取得反设下才得到循环分类；一般双侧可见的事件重置律不必满足半群律，相关事件循环反例见[可见相位卷][V] 第 58 节。
+
+外部方法背景为 Marzen–Crutchfield，*Informational and Causal Architecture of Discrete-Time Renewal Processes*，[arXiv:1408.6876v2](https://arxiv.org/html/1408.6876v2)，§II.1、§V、附录 A 的更新与有限隐藏／无限预测记忆边界，以及 Dawid–Lauritzen–Parry，*Proper Local Scoring Rules on Discrete Sample Spaces*，[arXiv:1104.2224v2](https://arxiv.org/html/1104.2224v2)，§4.2、例 4.4、式（14）的条件 Brier 机制。这些文献不供应本卷原 $d,c_\star$ 的非达到结论；其严格正全乘积域也不替代本卷合法、强制及零质量纤维。新增连接不作独立文献新颖性断言。
+
+一般非重置有限隐藏取得问题仍为[更新分离卷][R] 开放问题 9.2。本卷不给所有有限隐藏域的统一正风险差距，不给解码窗口或计算资源上界，也不判定任意有限均值的非相型上下文核是否达到。
+
+[R]: FIB_LEGAL_EDGE_LOAD_RENEWAL_CLOSURE_SEPARATION_AND_OBSERVABLE_DEPENDENCE.md
+[U]: FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md
+[V]: FIB_LEGAL_EDGE_LOAD_VISIBLE_TAIL_PHASE_RIGIDITY_AND_WINDOW_LIMITS.md
+

@@ -1,0 +1,14 @@
+**引理 8.2（先裁剪零平稳质量）。** 对每个 $\theta\in\Theta_N$，令 $I_+=\{i:\lambda_i>0\}$，$N_+=|I_+|$。限制到 $I_+$ 的参数 $\widetilde\theta$ 属于 $\Theta_{N_+}$，保留所有可见柱概率，且
+
+$$
+\widetilde\lambda>0,\qquad\widetilde M_1^2=0,\qquad
+2\operatorname{rank}(\widetilde M_1)\le N_+.
+\tag{8.3}
+$$
+
+证明。若 $j\notin I_+$，$0=\lambda_j=\sum_{i\in I_+}\lambda_iA_{ij}$，非负性和 $\lambda_i>0$ 使所有保留到删去状态的 $A_{ij}$ 为零；同样 $M_x(i,j)=0$。保留集合闭，限制矩阵行和仍一，限制 $\lambda$ 归一化且平稳。任意从正初始质量开始的乘积路径始终在此集合，所以（8.2）的全部柱质量保留。
+
+限制后 $0=\widetilde\lambda\widetilde M_1^2\mathbf1$，$\widetilde\lambda$ 每项正且矩阵非负，强制 $\widetilde M_1^2$ 每项零。其像包含于核，秩零度公式给 $\operatorname{rank}\widetilde M_1\le N_+-\operatorname{rank}\widetilde M_1$。这一步在裁剪后成立。$\square$
+
+未裁剪矩阵的平方零不是（8.1）的结论。例如 $\lambda=(1,0,0)$、$M_0=\operatorname{diag}(1,0,0)$、$M_1=\operatorname{diag}(0,1,1)$ 满足（8.1），输出全零，但原 $M_1$ 秩二且平方非零；裁剪留下一个状态、事件矩阵零。
+

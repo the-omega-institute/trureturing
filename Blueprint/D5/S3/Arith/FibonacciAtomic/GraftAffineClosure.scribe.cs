@@ -44,6 +44,10 @@ internal sealed class GraftAffineClosureDocument : IScribeDocumentDefinition
         Seq(Forall, Sp, Vars(vars), Comma, Sp, body);
     private static Formula Some(string vars, Formula body) =>
         Seq(Exists, Sp, Vars(vars), Comma, Sp, body);
+    private static Formula All(string vars, Formula type, Formula body) =>
+        Seq(Forall, Sp, Par(Seq(Vars(vars), Colon, Sp, type)), Comma, Sp, Par(body));
+    private static Formula Some(string vars, Formula type, Formula body) =>
+        Seq(Exists, Sp, Par(Seq(Vars(vars), Colon, Sp, type)), Comma, Sp, Par(body));
     private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
     private static Formula IffOf(Formula a, Formula b) => Seq(Par(a), Sp, Leftrightarrow, Sp, Par(b));
     private static Formula LeOf(Formula a, Formula b) => Seq(a, Sp, Leq, Sp, b);
@@ -129,12 +133,66 @@ internal sealed class GraftAffineClosureDocument : IScribeDocumentDefinition
                         + "If any representation identifies different residues, its deterministic updates "
                         + "give equal outputs after their common separating word, a contradiction. The "
                         + "minimum image size is therefore H^2, including the one-state case H=1."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            new DocumentBlock.Section(H("Fixed rooted rational words on each positive-beta pair orbit"), Blocks(
+            Paragraph(Text("In this section N includes zero, Npos is the positive naturals, Qpos is the positive rationals, and V=N times Npos. PairWord is the type of all finite chronological words in the pair alphabet {Rpair,Gpair}; RootWord is the type of all finite chronological words in the separate rooted alphabet {Lroot,Rroot}. Both word types include the empty word, and nil:RootWord denotes the empty rooted word. Specialize the pair run to the graft vector alpha=(1,0):N squared. The actions Rpair,Gpair:V to V are defined, for every a:N and b:Npos, by Rpair(a,b)=(b,a+b) and Gpair(a,b)=(a+1,b). Both preserve V, including a=0. For every W:PairWord and z:V, Run(W,z):V is the chronological pair endpoint. For each independently fixed v0:V, define O(v0)={Run(W,v0):W:PairWord}, viewed as the subtype of attained endpoints in V. Write origin(v0):O(v0) for its initial endpoint, attained by the empty pair word. These are entire attained pair-action orbits, with no word-length bound; both pair actions restrict to each O(v0).")),
+            Paragraph(Text("The rooted actions Lroot,Rroot:Qpos to Qpos are defined, for every x:Qpos, by Lroot(x)=x/(1+x) and Rroot(x)=x+1. For every s:RootWord and x:Qpos, E(s,x):Qpos executes s chronologically. For every s,t:RootWord and x:Qpos, E(st,x)=E(t,E(s,x)) and E(nil,x)=x. Here juxtaposition concatenates rooted words. For every v0:V, map iota:O(v0) to Qpos and independently fixed u,w:RootWord, define K(v0,iota,u,w) by the two universal orbit equations below. Separately, for every map iota:V to Qpos and independently fixed u,w:RootWord, define Kglobal(iota,u,w) by the two universal whole-domain equations. In the orbit equations the pair actions mean their restrictions to O(v0). The words may be chosen separately for each initial v0:V, but remain fixed across its orbit, states and histories. No injectivity, effectiveness, acquisition or anchor certificate is assumed. Empty words are allowed.")),
+            new DocumentBlock.DisplayFormula(ApplicationCompatibilityFormula(false)),
+            new DocumentBlock.DisplayFormula(ApplicationCompatibilityFormula(true)),
+            Paragraph(Text("A compatible representation has both rooted words empty and is constant on its entire domain. Conversely every c:Qpos supplies a compatible constant map with both words empty. The following two displays state the full orbit classification and its constant converse, and separately the whole-V classification and its constant converse.")),
+            new DocumentBlock.DisplayFormula(ApplicationClassificationFormula(false)),
+            new DocumentBlock.DisplayFormula(ApplicationClassificationFormula(true)),
+            Paragraph(Text("The exact rational input is the reconstruction theorem original_views_reconstruct in RationalRouting.Views. For every s:RootWord it identifies ratio(encode(s)) with E(s,1) and sends this ratio back to the same literal word s; for every x:Qpos it reconstructs x from originalWord(x):RootWord. For any x:Qpos put d=originalWord(x):RootWord, so E(d,1)=x. For every s,t:RootWord, equality E(s,x)=E(t,x) therefore gives E(ds,1)=E(dt,1), hence ds=dt by the word round trip, and s=t by prefix cancellation. The existing private ratio_fold and pair_ratio_step in Views identify this evaluator with the rational list fold on positive pairs; encode_good and rational_reconstruction supply its initial pair, while Source.attain_control supplies positivity at concatenation cuts. This derives freeness at every positive rational anchor from the supplied reconstruction laws; it is no extra premise and does not follow merely from matrix generation.")),
+            Paragraph(Text("Fix any v0:V, iota:O(v0) to Qpos and u,w:RootWord satisfying K(v0,iota,u,w). Define Phi:PairWord to RootWord by replacing each chronological Gpair letter by u and each Rpair letter by w, preserving concatenation. The list-fold homomorphism law transports the two equations: for every W:PairWord and z:O(v0), iota(Run(W,z))=E(Phi(W),iota(z)), where Run uses its orbit restriction. The literal chronological evaluator, rather than a reversed matrix product, is used. In GraftAffineClosure, false denotes Rpair and true denotes Gpair; in RationalRouting, false denotes Lroot and true denotes Rroot. The correspondence follows the actions and the substitution Phi, without identifying these Boolean names.")),
+            Paragraph(Text("For every v0=(a,b):V with a:N and b:Npos, and every iota:O(v0) to Qpos and u,w:RootWord satisfying K(v0,iota,u,w), the words Gpair Rpair Rpair and Rpair Gpair Rpair Gpair both end at (a+b+1,a+2b+1):V from v0. Transport and rational-anchor freeness give uww=wuwu. Taking word lengths forces u empty. Now Rpair cubed and Rpair Gpair to the power (a+b) Rpair Gpair to the power b both end at (a+2b,2a+3b):V from v0. Iterated translation by alpha gives these exact endpoints and keeps every prefix in V. The exponents depend on the initial pair only as witnesses of a legal native pair equality; they do not change the fixed compiled words. With u empty, the second equality gives www=ww and forces w empty. Transport along any reaching W:PairWord now makes iota equal to iota(origin(v0)) on all of O(v0). The empty-word evaluation law proves the converse for every c:Qpos.")),
+            Paragraph(Text("For any iota:V to Qpos and u,w:RootWord satisfying Kglobal(iota,u,w), restriction to the orbit of (0,1):V first forces both compiled words empty. Gpair invariance and its finite iterates give iota(a,b)=iota(0,b) for every a:N and b:Npos. For each b:Npos, Rpair(b-1,1)=(1,b); applying the same invariance before and after this replacement yields iota(0,b)=iota(0,1). Thus the whole-domain map is constant, and the empty-word law again supplies the constant converse for every c:Qpos.")),
+            Paragraph(Text("This is a composition-level application of the exact rational reconstruction and generic fold and iteration laws. It gives no native root-graft permission: the Gpair composition effect can be realized by the LAB leftmost-beta split under its authentic binding, current rights, tapes, completed replies and sufficient finite material. Whole-frontier replacement uses its acquired entry leaf list and does not edit newly born leaves again. That actual source implementation and its physical or resource obligations remain separate from this pair-action inference. Full native trees or histories, state-dependent compiled words, inverse or signed actions and other codomains are outside this classification. No decoder acquisition, finite observation certificate, retention bound, noise margin or physical realization follows from it."))
+            )))));
 
     private static DocumentBlock Definition(string name, string title, string prose) => Describe.Lean(
         DescribeId.Create("graft-affine-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
         Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+
+    private static Formula ApplicationTelescope(bool wholeDomain, Formula body)
+    {
+        Formula domain = wholeDomain ? V("V") : Call("O", V("v0"));
+        Formula quantified = All("iota", Seq(domain, Sp, To, Sp, V("Qpos")),
+            All("u,w", V("RootWord"), body));
+        return wholeDomain ? quantified : All("v0", V("V"), quantified);
+    }
+
+    private static Formula ApplicationCompatibilityFormula(bool wholeDomain)
+    {
+        Formula domain = wholeDomain ? V("V") : Call("O", V("v0"));
+        Formula compatible = wholeDomain ? Call("Kglobal", V("iota"), V("u"), V("w"))
+            : Call("K", V("v0"), V("iota"), V("u"), V("w"));
+        Formula graftEquation = All("z", domain, EqOf(Call("iota", Call("Gpair", V("z"))),
+            Call("E", V("u"), Call("iota", V("z")))));
+        Formula replacementEquation = All("z", domain, EqOf(Call("iota", Call("Rpair", V("z"))),
+            Call("E", V("w"), Call("iota", V("z")))));
+        return Disp(ApplicationTelescope(wholeDomain,
+            IffOf(compatible, And(graftEquation, replacementEquation))));
+    }
+
+    private static Formula ApplicationClassificationFormula(bool wholeDomain)
+    {
+        Formula domain = wholeDomain ? V("V") : Call("O", V("v0"));
+        Formula nil = Call("nil");
+        Formula compatible = wholeDomain ? Call("Kglobal", V("iota"), V("u"), V("w"))
+            : Call("K", V("v0"), V("iota"), V("u"), V("w"));
+        Formula constant = wholeDomain
+            ? Some("c", V("Qpos"), All("z", domain, EqOf(Call("iota", V("z")), V("c"))))
+            : All("z", domain, EqOf(Call("iota", V("z")), Call("iota", Call("origin", V("v0")))));
+        Formula classification = ApplicationTelescope(wholeDomain, IffOf(compatible,
+            And(EqOf(V("u"), nil), EqOf(V("w"), nil), constant)));
+        Formula constantMap = Par(Seq(V("z"), Colon, Sp, domain, Sp, Mapsto, Sp, V("c")));
+        Formula converse = All("c", V("Qpos"), wholeDomain
+            ? Call("Kglobal", constantMap, nil, nil)
+            : Call("K", V("v0"), constantMap, nil, nil));
+        if (!wholeDomain) converse = All("v0", V("V"), converse);
+        return Disp(And(classification, converse));
+    }
 
     private static Formula ResultFormula()
     {

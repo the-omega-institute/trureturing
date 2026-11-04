@@ -1,0 +1,15 @@
+**Definition 1.2 (Degree orientation and sink incidences).** If every edge has unequal endpoint degrees, orient it from the smaller degree to the larger degree. A source has no incoming edge, a sink has no outgoing edge, and a mixed vertex has both. Let $R$ be the sink set, $s=|R|$, and $D_i=d_i$ for $i\in R$. Put
+
+$$
+\mathcal I_R=\{(i,v):i\in R,\ v\in N(i)\},\qquad
+h(v)=|N(v)\cap R|\quad(v\notin R),
+$$
+
+$$
+T_R=\sum_{v\notin R}\frac{h(v)}{d_v^2},\qquad
+Q_R=\sum_{(i,v)\in\mathcal I_R}\frac{d_v^2}{D_i^2},\qquad
+Q(G)=\sum_{uv\in E(G)}r_{uv}^2.
+$$
+
+The orientation strictly increases degree along every directed edge. A two-layer graph means that every edge joins a source to a sink in this orientation.
+

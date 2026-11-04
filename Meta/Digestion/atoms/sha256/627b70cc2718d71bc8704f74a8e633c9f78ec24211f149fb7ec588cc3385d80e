@@ -1,0 +1,38 @@
+**Definition 20.1 (Algebraic source branch).** In this section $t$ is a
+source parameter, distinct from a companion's variable $x$. Set
+
+$$
+\begin{gathered}
+I=[4719/10000,5453/10000],\qquad
+D_t=t(t+1)(t+2),\qquad c_t=45t^3+89t^2-32t-40,\\
+U_t=-c_t/D_t,\quad b_t=(U_t-1)/2,\quad
+T_t=(U_t+1)/2,\quad n_t=tU_t,\quad q_t=b_t(n_t-b_t),\\
+\Delta_t=T_t^2-4q_t,\qquad
+r_t=(T_t-\sqrt{\Delta_t})/2.
+\end{gathered}
+\tag{20.1}
+$$
+
+The square root is the nonnegative real square root. Its strict domain
+on all of $I$ follows from (23.4). No assertion that every point of
+this larger closed interval is a strict source is made.
+
+The proof of S, Theorem 3.2, supplies the following precise source
+interface. Its complete strict nonzero-drift F0 source locus consists
+of two open arcs. The negative-response arc has
+
+$$
+t\in(a_1,b_1),\quad
+4719/10000<a_1<4720/10000,\quad
+5452/10000<b_1<5453/10000,
+\tag{20.2}
+$$
+
+with source $(r_t,b_t)$ of (20.1). The other arc has positive $p$.
+On each arc the strict root of $z^2-T_tz+q_t$ is the smaller root;
+the other root exceeds one. The source is regular, its parent lift is
+unique, and its drift is nonzero. Every zero-drift strict parent world
+has positive fifth response. These are the supplied classification and
+uniqueness statements, rather than additional classifications here.
+In particular every locator in Theorem 19.2 uses (20.2).
+

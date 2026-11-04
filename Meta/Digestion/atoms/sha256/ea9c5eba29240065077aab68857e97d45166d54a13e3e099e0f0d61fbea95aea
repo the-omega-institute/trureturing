@@ -1,0 +1,33 @@
+#### 定理 8.2（逆族的切向包含微分运输）
+
+设 $F_t$ 是可微微分同胚族，实际 Euler 场为
+$v_t=(\partial_tF_t)\circ F_t^{-1}$。
+令 $G_t=F_t^{-1}$，则
+
+<a id="equation-8-1"></a>
+
+$$
+\boxed{\partial_tG_t(y)=-D(F_t^{-1})_y\,v_t(y).}\tag{8.1}
+$$
+
+**证明。**
+
+对 $F_t(G_t(y))=y$ 求导，得
+$v_t(y)+D(F_t)_{G_t(y)}\,\partial_tG_t(y)=0$。
+左乘逆微分即得。
+
+□
+
+若 $F_t=U(t)$，$\dot U(t)=K(t)U(t)$，则逆族 $`W(t)=U(t)^*`$ 的实际生成元为
+
+<a id="equation-8-2"></a>
+
+$$
+\boxed{\widetilde K(t)=\dot W(t)W(t)^*
+=-U(t)^*K(t)U(t).}\tag{8.2}
+$$
+
+一般时变场不能省去这个共轭。
+
+<a id="statement-8-3"></a>
+

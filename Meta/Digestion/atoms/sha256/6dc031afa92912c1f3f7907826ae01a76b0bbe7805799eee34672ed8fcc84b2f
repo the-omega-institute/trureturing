@@ -1,0 +1,9 @@
+**Definition 3.2 (First sensitivity and character occurrence).** Define
+
+$$
+n_{\rm sens}(K,p)=\min\{n\ge0:\theta\mapsto T_n(\theta)\text{ is nonconstant on }\mathbb T^K\},
+\tag{3.4}
+$$
+
+with value $\infty$ when the set is empty. Entries of $T_n$ will be finite sums of characters $e^{iz\cdot\theta}$ with nonnegative real coefficients. A relation $z$ occurs at a horizon if at least one entry has a nonzero coefficient of its character after grouping equal exponents. Distinct integer exponents are distinct characters on the unrestricted torus $\mathbb T^K$; their coefficients are unique, as follows by integrating against the conjugate character coordinate by coordinate. Occurrence is a statement about the probability-law family, not about separately recovering a character from a single mixed entry at an unknown phase.
+

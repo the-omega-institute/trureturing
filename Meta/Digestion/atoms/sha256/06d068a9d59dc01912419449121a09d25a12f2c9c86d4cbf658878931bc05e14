@@ -1,0 +1,27 @@
+**Definition 14.1 (the finite constraint class).** Given integers
+$d\ge0,H\ge n_0$, enumerate all $4^d$ order-$d$ coefficient-row/seed
+pairs by binary counters; at $d=0$ enumerate just the zero stream.
+For each pair, each $e\in[n_0,H]$ and each word $p$ of length at
+most $h_0$, retain the constraint $f=D_{s,e,p}$ only when $p$ is
+present in that hypothetical source. This is a local computation, not
+a Read of any additional source. Repeated presentations and identical
+constraints remain in the list. Set
+
+$$
+ \begin{aligned}
+ K_0&=4^d(H+1)2^{h_0+1},\\
+ L&=2d+h_0+\lceil\log_2(H+1)\rceil+4,\\
+ T&=64H^2L,\qquad Q_0=4H^2,\qquad \eta=1+Q_0^{-1}.
+ \end{aligned}
+ \tag{ACR.48}
+$$
+
+There are at most $K_0$ constraints. Padding the all-index annihilator
+by $E^{d-r}$ as in GPO Lemma 29.2 covers every lower-order behavior,
+including finite transients, singular and nonminimal presentations and
+equivalent rows. No inverse recurrence is used. For $d>0$,
+$F_{2t+2}\ge2^t$ gives
+$h_0\le2\lceil\log_2(2d+1)\rceil$, and therefore
+$2^{h_0}=O((d+1)^2)$. This shallow prefix class has polynomial size
+per row/seed and cut; its row/seed factor is still $4^d$.
+

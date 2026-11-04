@@ -1,0 +1,55 @@
+## 7. 关系的关系：共同加项的轨道与二元三维提升
+
+加法群 $(H,+)$ 在二元历史空间上作用：
+
+$$
+\tau_c(x,y)=(x+c,y+c).
+$$
+
+两个有序对属于同一轨道，当且仅当它们具有同一差向量：
+
+$$
+(x,y)\sim_\tau(u,v)
+\quad\Longleftrightarrow\quad x-y=u-v.
+$$
+
+反向证明取 $c=u-x$；差向量相同给 $y+c=v$。
+因此
+
+$$
+(H\times H)/\tau\simeq H,\qquad [(x,y)]\longmapsto x-y.
+$$
+
+本轮候选要求过程后的差分强度先沿共同加项单调；
+可逆作用使其必须在轨道上恒定；完整强度再识别该轨道的范数。
+这就是二元条件所属的更大结构。
+它使用幅度关系中的可逆加法，不意味着实际历史事件能够倒退删除。
+
+对非同时为零的 $x,y$，记
+
+$$
+a=\left\lVert x\right\rVert ^2,\quad b=\left\lVert y\right\rVert ^2,\quad
+z=\langle x,y\rangle ,\quad s=a+b>0,
+$$
+
+采用与 v80 相同的坐标约定
+
+<a id="eq-bloch"></a>
+
+$$
+R=\frac1s\begin{pmatrix}a&\bar z\\z&b\end{pmatrix}
+=\frac12(I+\mathbf r\cdot\boldsymbol\sigma),
+\qquad
+\mathbf r=\left(\frac{2\operatorname{Re}  z}{s},\frac{2\operatorname{Im}  z}{s},\frac{a-b}{s}\right).\tag{7.1}
+$$
+
+该矩阵为 Gram 的转置，仍为正。于是
+
+$$
+1-\left\lVert \mathbf r\right\rVert ^2=\frac{4(ab-|z|^2)}{s^2}\ge0.
+$$
+
+完整二元数据是 $(s,\mathbf r)$，不丢掉尺度 $s$。
+
+<a id="statement-7-1"></a>
+

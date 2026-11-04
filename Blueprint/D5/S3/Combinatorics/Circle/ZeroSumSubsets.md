@@ -4,7 +4,29 @@
 
 Cyclic natural carrying gives a unique physical binary endpoint and sharp unit-source relation length; binary masks also bound exact zero subsets and independent zero blocks.
 
-**Theorem 1.1 (Natural cyclic carries and the sharp unit relation length).**
+**Theorem 1.1 (Atomic neutral coefficient paths preserve physical nonnegativity and exact zero).**
+
+$$\forall k \in \mathrm{Nat},\; \forall c \in \operatorname{Fin}\left(k\right) \to \mathrm{Bool},\; \forall s \in \operatorname{Fin}\left(k\right) \to \mathrm{Int},\; \forall N \in \mathrm{Int},\; \forall m \in \operatorname{Fin}\left(k\right) \to \mathrm{Nat},\; \left(\operatorname{sum}\left(s\right) = 0 \land \left(\operatorname{cyclicStep}\left(s, c, N\right) \land \left(\operatorname{physical}\left(m, c\right) \land \operatorname{chargeZero}\left(m, c\right)\right)\right)\right) \Rightarrow \operatorname{neutralCarryPath}\left(k, c, s, N, m\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/ZeroSumSubsets.neutral_carry_path` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Fix k, an arbitrary Boolean labelling c : Fin(k) -> Bool, an arbitrary integer source s : Fin(k) -> Int, and an integer modulus N. Let tau = finRotate(k), pred = tau^{-1}, eps(a) = int(c(a)) - int(c(tau(a))), and q(u,a) = 1 + 2*int(u(a)) - int(u(pred(a))). Assume sum_a s(a) = 0 and 2*s(a) - s(tau(a)) = N*eps(a) for every physical label. For a natural coefficient vector m, assume q(m,a) >= 0 and sum_a int(m(a))*eps(a) = 0.
+
+The theorem constructs a finite list P of natural coefficient vectors with head m and last element zero. Its chain relation is inline: an edge removes one available neutral carry at a label with eps = 0, or removes an atomic pair of available carries at labels with eps = +1 and eps = -1. The singleton packet has cardinality one, the opposite packet has cardinality two, the selected labels are distinct, and the coordinate equations are in Nat, so no truncated subtraction is hidden. Each edge records the corresponding decrease of the total coefficient mass.
+
+At every vertex u in P, q(u,a) >= 0, the Boolean charge sum Q(u) = sum_a int(u(a))*eps(a) is zero, and the source sum sum_a q(u,a)*s(a) is zero. The source-zero clause is obtained by applying the existing carry_charge ledger to the natural vector q(u).toNat; nonnegativity makes its integer cast exactly q(u). The existing carry_length owner is not reproved or used to assert a geometric order.
+
+The selector is the Boolean-partition argument on the live induction path. If no neutral or positive available label exists, summing 2*u(a) <= u(pred(a)) over the true-labelled set forces all true-labelled coefficients to vanish; charge balance then forces the opposite boundary coefficients to vanish, and the global cyclic sum gives u = 0, a contradiction. Complementing c supplies the negative label. The selector itself does not require q >= 0; that hypothesis is used only to preserve q along a packet edge.
+
+For the native circle source, take s = actualSource(k,t), N = modulus(k), and c(a) = decide(0 < actualSource(k,t,a)). The source_cycle identity supplies the displayed step equation and the Boolean sign identity supplies eps. A native application also needs the supplied full-baseline m, q(m) >= 0, and charge-zero hypotheses from cyclic_binary_normal_form; the abstract path theorem does not assert those hypotheses for every native zero relation and introduces no forwarding specialization.
+
+This is an algebraic coefficient path with physical labels retained. It does not quotient labels by a period, realize a word in the half strip, shorten a geometric cycle, or complete the original Circle C3.1 statement. The k = 5, t = 3 example with packet size at most two records the remaining geometric gap: a size-three packet may be needed for strip realization.
+
+**Theorem 1.2 (Natural cyclic carries and the sharp unit relation length).**
 
 $$\forall k \in \mathrm{Nat},\; \forall t \in \mathrm{Nat},\; \forall n \in \operatorname{Fin}\left(k\right) \to \mathrm{Nat},\; \left(0 < k \land \operatorname{ne}\left(n, 0\right)\right) \Rightarrow \left(\exists A \in \operatorname{Finset}\left(\operatorname{Fin}\left(k\right)\right),\; \exists m \in \operatorname{Fin}\left(k\right) \to \mathrm{Nat},\; \left(\operatorname{Nonempty}\left(A\right) \land \left(\left(\forall i \in \operatorname{Fin}\left(k\right),\; \operatorname{int}\left(\operatorname{apply}\left(n, i\right)\right) = \operatorname{indicator}\left(A, i\right) + 2 \cdot \operatorname{int}\left(\operatorname{apply}\left(m, i\right)\right) - \operatorname{int}\left(\operatorname{apply}\left(m, \operatorname{pred}\left(k, i\right)\right)\right)\right) \land \left(\operatorname{L}\left(n\right) = \operatorname{card}\left(A\right) + \operatorname{L}\left(m\right) \land \left(\operatorname{E}\left(n\right) = \operatorname{M}\left(A\right) + \left(2^{k} - 1\right) \cdot \operatorname{apply}\left(m, k - 1\right) \land \left(\operatorname{T}\left(k, t, n\right) = \operatorname{sourceSum}\left(k, t, A\right) + \left(2^{k} - 1\right) \cdot \operatorname{J}\left(k, t, m\right) \land \left(\left(\operatorname{T}\left(k, t, n\right) = 0 \Rightarrow \operatorname{dvd}\left(\operatorname{div}\left(2^{k} - 1, \operatorname{gcd}\left(t, 2^{k} - 1\right)\right), \operatorname{M}\left(A\right)\right)\right) \land \left(\operatorname{Coprime}\left(t, 2^{k} - 1\right) \Rightarrow \left(\operatorname{T}\left(k, t, n\right) = 0 \Rightarrow \left(A = \operatorname{univ}\left(\operatorname{Fin}\left(k\right)\right) \land \left(\operatorname{J}\left(k, t, m\right) = 0 \land \left(\operatorname{L}\left(n\right) = k + \operatorname{L}\left(m\right) \land \left(k \le \operatorname{L}\left(n\right) \land \left(\operatorname{L}\left(n\right) = k \Leftrightarrow \left(\forall i \in \operatorname{Fin}\left(k\right),\; \operatorname{apply}\left(n, i\right) = 1\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right) \land \left(\forall B \in \operatorname{Finset}\left(\operatorname{Fin}\left(k\right)\right),\; \forall v \in \operatorname{Fin}\left(k\right) \to \mathrm{Nat},\; \left(\operatorname{Nonempty}\left(B\right) \land \left(\left(\forall i \in \operatorname{Fin}\left(k\right),\; \operatorname{int}\left(\operatorname{apply}\left(n, i\right)\right) = \operatorname{indicator}\left(B, i\right) + 2 \cdot \operatorname{int}\left(\operatorname{apply}\left(v, i\right)\right) - \operatorname{int}\left(\operatorname{apply}\left(v, \operatorname{pred}\left(k, i\right)\right)\right)\right) \land \left(\operatorname{L}\left(n\right) = \operatorname{card}\left(B\right) + \operatorname{L}\left(v\right) \land \left(\operatorname{E}\left(n\right) = \operatorname{M}\left(B\right) + \left(2^{k} - 1\right) \cdot \operatorname{apply}\left(v, k - 1\right) \land \left(\operatorname{T}\left(k, t, n\right) = \operatorname{sourceSum}\left(k, t, B\right) + \left(2^{k} - 1\right) \cdot \operatorname{J}\left(k, t, v\right) \land \left(\left(\operatorname{T}\left(k, t, n\right) = 0 \Rightarrow \operatorname{dvd}\left(\operatorname{div}\left(2^{k} - 1, \operatorname{gcd}\left(t, 2^{k} - 1\right)\right), \operatorname{M}\left(B\right)\right)\right) \land \left(\operatorname{Coprime}\left(t, 2^{k} - 1\right) \Rightarrow \left(\operatorname{T}\left(k, t, n\right) = 0 \Rightarrow \left(B = \operatorname{univ}\left(\operatorname{Fin}\left(k\right)\right) \land \left(\operatorname{J}\left(k, t, v\right) = 0 \land \left(\operatorname{L}\left(n\right) = k + \operatorname{L}\left(v\right) \land \left(k \le \operatorname{L}\left(n\right) \land \left(\operatorname{L}\left(n\right) = k \Leftrightarrow \left(\forall i \in \operatorname{Fin}\left(k\right),\; \operatorname{apply}\left(n, i\right) = 1\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right) \Rightarrow \left(B = A \land v = m\right)\right)\right)$$
 
@@ -26,7 +48,7 @@ If T(n)=0, then N divides t E(n). The weighted identity and gcd cancellation imp
 
 For a nonunit source the divisibility condition and card(A)<=L(n) are necessary restrictions only. They do not make the endpoint integer-zero, assert a minimum-weight mask is attained by a relation, or realize any ordering in an interval. A closed-walk count vector may use the unit length bound only after an independent telescoping proof of its exact source charge zero. These arithmetic restrictions do not construct a capacity-(N-1)/2 permutation. Damasdi–Frankl–Pach–Palvolgyi, Monochromatic configurations on a circle, arXiv:2504.10687v2, Conjecture 3.1, DOI 10.5070/C6.68671, remains open in its full all-source scope. No literature novelty claim is made.
 
-**Theorem 1.2 (The source gcd bounds the entire zero fibre).**
+**Theorem 1.3 (The source gcd bounds the entire zero fibre).**
 
 $$\forall k \in \mathrm{Nat},\; \forall t \in \mathrm{Nat},\; 3 \le k \Rightarrow \operatorname{card}\left(\operatorname{Z}\left(k, t\right)\right) \le \operatorname{gcd}\left(t, 2^{k} - 1\right) + 1$$
 
@@ -46,7 +68,7 @@ Put g=gcd(t,N) and Q=N/g. Since N is positive, g and Q are positive. Cancel g, t
 
 Mask divisibility is used only as a necessary condition. A mask with Q dividing M(A) need not have exact integer source sum zero: congruence modulo N cannot detect a nonzero multiple of N. The argument counts a superset of the integer-zero fibre and does not replace that fibre by a congruence class.
 
-**Theorem 1.3 (Independent zero blocks consume exponentially many masks).**
+**Theorem 1.4 (Independent zero blocks consume exponentially many masks).**
 
 $$\forall k \in \mathrm{Nat},\; \forall t \in \mathrm{Nat},\; \forall blocks \in \operatorname{Finset}\left(\operatorname{Finset}\left(\operatorname{Fin}\left(k\right)\right)\right),\; 3 \le k \Rightarrow \left(\left(\left(\forall A \in \operatorname{Finset}\left(\operatorname{Fin}\left(k\right)\right),\; \operatorname{mem}\left(A, blocks\right) \Rightarrow \operatorname{Nonempty}\left(A\right)\right) \land \left(\operatorname{PairwiseDisjoint}\left(blocks\right) \land \left(\forall A \in \operatorname{Finset}\left(\operatorname{Fin}\left(k\right)\right),\; \operatorname{mem}\left(A, blocks\right) \Rightarrow \operatorname{sum}\left(A, \operatorname{actualSource}\left(k, t\right)\right) = 0\right)\right)\right) \Rightarrow 2^{\operatorname{card}\left(blocks\right)} \le \operatorname{gcd}\left(t, 2^{k} - 1\right) + 1\right)$$
 
@@ -68,5 +90,6 @@ The source motivation is Damasdi–Frankl–Pach–Palvolgyi, Monochromatic conf
 
 - Truth anchor: `D5/S3/Combinatorics/Circle/ZeroSumSubsets.cyclic_binary_normal_form`
 - Truth anchor: `D5/S3/Combinatorics/Circle/ZeroSumSubsets.disjoint_zero_blocks_bound`
+- Truth anchor: `D5/S3/Combinatorics/Circle/ZeroSumSubsets.neutral_carry_path`
 - Truth anchor: `D5/S3/Combinatorics/Circle/ZeroSumSubsets.zero_subsets_card_le`
 - Dependency: [D5/S3/Combinatorics/Circle/SourceWidth](SourceWidth.md)

@@ -42,7 +42,7 @@ private theorem row_factor (c a k S : ℝ) (g : Fin 5 → ℝ) (i j : Fin 5) :
     rfl
   · rfl
 
-private theorem referenceJump_factor (c a k S : ℝ) (g : Fin 5 → ℝ) (i : Fin 5) :
+theorem referenceJump_factor (c a k S : ℝ) (g : Fin 5 → ℝ) (i : Fin 5) :
     referenceJump (H := H) c a k S g i = amplitude c a k S g i • coordinate i := by
   simp [referenceJump, row_factor, ite_smul]
 

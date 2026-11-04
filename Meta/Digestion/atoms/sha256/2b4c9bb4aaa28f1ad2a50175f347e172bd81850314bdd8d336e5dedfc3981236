@@ -1,0 +1,92 @@
+**Proposition 22.5 (bit costs, polynomial peak space and exponential work).**
+Use explicit binary integers, binary coefficient arrays, delimited literal
+words, and a fixed multitape bit-operation model. Each elementary step
+reads or writes a bounded number of bits; cumulative writes count every
+scratch overwrite as well as retained output. Let $D=d+1$, and let $I$
+include the entire represented input length, including malformed query
+fields. On valid image queries $I=O(D)$. The following bounds concern the
+declared elementary algorithms; no exact numerical envelope is asserted.
+
+The raw synthesis and projections take
+$T_{\rm src}=O(I+2^dD^2+D^4)$ work and $O(I+D^2)$ peak bits. There are
+fewer than $2^{d+1}$ recurrence candidates, each tested in $O(D^2)$ bit
+operations. Schoolbook polynomial division and extended Euclid, and
+forward generation of the $O(D)$ seed entries needed by the projection,
+fit the additional $O(D^4)$ allowance. One coefficient-product-and-reduce
+operation modulo $g$ costs $O(D^2)$ bit operations and $O(D)$ temporary
+bits: form at most $r^2$ binary coefficient products and eliminate at most
+$r$ leading coefficients with at most $r+1$ XORs each. Each shifted-XOR
+pass is a sequential $O(D)$-bit scan; $O(D)$ passes suffice, including
+tape-head movement and loop control. Consequently
+binary powering at an exponent of $L$ bits, including the exponent scan,
+costs $O(D^2(L+1))$, with $O(D+L)$ temporary bits. The dot product with
+the core seed then evaluates $y_i$ at the same bound. This argument
+requires only a monic modulus, not square-freeness.
+
+Period computation costs $O(pD)$ work and $O(D)$ additional space, since
+multiplication by $x$ is one shift/reduction. A residue successor, including
+its core bit at an $O(D)$-bit index and modular integer additions, costs
+$O(D^3)$ work; it is not assigned a quadratic cost merely from a
+ring-operation bound. Enumerating the powers to convert an arbitrary
+operator pair costs a further $O(pD)$, and powering the decoded two
+operators costs $O(D^3)$, plus the $2r$ output bits.
+
+Seeds can be streamed in polynomial space and work. Traverse $H_s$ depth
+first; to decide $v\in U_s$, rescan $H_s$ for a marked descendant. Stream
+exactly the root if $U_s$ is empty, or the children of unsafe parents
+which are not unsafe. Theorem 18.2 bounds each traversal by $O(D^2)$
+nodes of depth $O(\log(D+1))$ with $O(\log(D+1))$-bit integer fields.
+Repeated descendant scans and original-source bit evaluation fit, for
+example, $O(D^8)$ work and $O(D^2)$ space. This generous polynomial
+bound includes all literal comparisons and copies; it is independent of
+$p$. There are $O(D^2)$ seeds and no stored seed/image table is needed.
+
+Put $R=(2N+2)^{\ell+1}$. A reachability call has at most $R$ recursive
+calls: if $R_0=1$, then $R_{j+1}\le1+2NR_j$. Every frame retains only its
+two endpoints, current midpoint, depth and flags, all $O(D)$ bits. Depth
+is $O(\log N)=O(D)$, so its peak stack is $O(D^2)$. Evaluating leaves
+and loop arithmetic costs $O(D^3R)$ work. Implement the calls with
+contiguous $O(D)$-bit frames on a stack tape whose head stays at the top
+frame between calls. Pushing, popping and restoring a frame take $O(D)$
+head moves and bit operations per call, within this allowance. Midpoints,
+image candidates and ranks use $O(D)$-bit binary counters, updated and
+compared by sequential scans. For count, either rank direction,
+and either operator direction, a common upper bound is
+
+$$
+ T_{\rm img}=O\!\left(T_{\rm src}+D^8+pD+
+               N(D^8+D^5R)+I+L_{\rm out}\right)
+           =2^{O(D^2)}+O(I+L_{\rm out}).
+\tag{PCR.56}
+$$
+
+Peak storage is $O(I+D^2+L_{\rm out})$ and cumulative bit writes are
+$O(T_{\rm img})$. A count or one code/operator class has $L_{\rm out}=O(D)$.
+The constants in the $O$ notation are uniform over all such sources.
+These bounds follow from the displayed loops and arithmetic, not from a
+measured running-time constant. A separately requested full image list
+pays its entire delimited output, at most $O(K_sD)$ bits in these formats;
+retaining that list also adds its actual size to peak storage.
+
+The streaming algorithm trades recomputation for peak space; it
+asserts neither polynomial time in $d$ nor sub-period or sub-period-square
+work. Its bound is exponential computation with polynomial peak workspace
+for one class/count output.
+
+Raw zero and constant inputs still pay input inspection and synthesis.
+Only an independently verified constant tag permits constant additional
+image postprocessing; the tag's verification, represented source input,
+acquisition, code schema and output remain charged. In particular $d=0$
+has the known zero law and empty $P$, but not a known physical cut or free
+installation. For a PSA supplier the composition is additive:
+
+$$
+ C_{\rm total}=C_{\rm PSA}(P,n)+T_{\rm img},\qquad
+ W_{\rm total}=W_{\rm PSA}(P,n)+W_{\rm img}.
+\tag{PCR.57}
+$$
+
+Here $W_{\rm img}$ includes its returned output. Source storage, backing,
+full-root Read traffic, synchronization and binding have their original
+bills; discarded expanded records are not refunded.
+

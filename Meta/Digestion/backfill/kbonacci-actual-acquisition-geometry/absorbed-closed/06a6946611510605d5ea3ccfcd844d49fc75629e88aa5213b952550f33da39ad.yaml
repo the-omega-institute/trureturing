@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:06a6946611510605d5ea3ccfcd844d49fc75629e88aa5213b952550f33da39ad
+  normalized_sha256: sha256:06a6946611510605d5ea3ccfcd844d49fc75629e88aa5213b952550f33da39ad
+cas_ref: sha256:06a6946611510605d5ea3ccfcd844d49fc75629e88aa5213b952550f33da39ad
+coverage_gids:
+  - gid: D5/S1/Words/AdmissibleWords/KBonacciActualCommonImagePlateau.kbonacci_actual_common_image_plateau_and_budget
+    target_statement_id: sha256:3132a63885a58f6974203079954493d9fc20892a968b37b81c308aeb1df603af
+  - gid: D5/S1/Words/AdmissibleWords/KBonacciHammingCapacity.kbonacci_actual_hamming_capacity
+    target_statement_id: sha256:8820b1ea817622980754f9d0d6516baac30f4062a9aa9cf4deeea5eaa65aa327
+receipts:
+  unresolved_subitems: []

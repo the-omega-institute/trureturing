@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:07e932d68916ead5e73bfba89f8800c382ea883fb29aefd4d3b0bc4e71dd1ff7
+  normalized_sha256: sha256:07e932d68916ead5e73bfba89f8800c382ea883fb29aefd4d3b0bc4e71dd1ff7
+cas_ref: sha256:07e932d68916ead5e73bfba89f8800c382ea883fb29aefd4d3b0bc4e71dd1ff7
+coverage_gids:
+  - gid: D5/S3/Combinatorics/SetFamily/SimultaneousCompression.exists_terminal_compression
+    target_statement_id: sha256:363dc648bc2bb8bd1193d3711a578cc94c9432d939fdcd656543147d6017c28c
+  - gid: D5/S3/Geometry/Polygons/PolygonCompressionTrace.block_start
+    target_statement_id: sha256:e48638f531e0b64b084d8ec8db0487d1a943ad4dc32ff74a7e86dc847f261027
+  - gid: D5/S3/Geometry/Polygons/PolygonSimultaneousCompression.exists_original_terminal_compression
+    target_statement_id: sha256:0045c20e347d7917c0ac1ddde41487400945ca1769e4f3f9c8655a967a1deb46
+receipts:
+  unresolved_subitems: []

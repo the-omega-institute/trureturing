@@ -1,0 +1,13 @@
+**定义 80.1（保持原定义的四次响应）。** 记 $q_w(\psi)=|\psi_w|^2$，包括所有原始标签（$\psi\in H$ 时非法标签的坐标恒零）。对 $0\le\lambda<1$，原 §73.6 的响应正是
+
+$$
+ \begin{aligned}
+ P^{\lambda}_u&=q_u+\lambda q_uq_v,&
+ P^{\lambda}_v&=q_v-\lambda q_uq_v,\\
+ P^{\lambda}_w&=q_w&& (w\ne u,v).
+ \end{aligned}
+ \tag{80.1}
+$$
+
+这里不更换 $u,v$、扰动、原门、初态或接续列。$q_uq_v$ 是振幅的四次式、概率坐标的二次式。
+

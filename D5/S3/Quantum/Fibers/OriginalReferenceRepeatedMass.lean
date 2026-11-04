@@ -16,7 +16,7 @@ namespace D5.S3.Quantum.Fibers.OriginalReferenceRepeatedMass
 open OriginalControlMarkedJump OriginalReferenceKraus OriginalReferenceOutputMeasure
 open OriginalRepeatedPrefix OriginalControlComposition OriginalMarkedConcatenation
 
-private theorem survival_ac (c T : ℝ) (k : ℝ → ℝ)
+theorem survival_ac (c T : ℝ) (k : ℝ → ℝ)
     (hk : OriginalControl (c, c, 1 - 2*c) T k (fun _ => (0 : ℝ))) :
     AbsolutelyContinuousOnInterval (survival c k) 0 T := by
   let A : ℝ → ℝ := fun t => -(∫ u in (0 : ℝ)..t, hazard c k u)
@@ -69,7 +69,7 @@ private theorem rate_nonneg (c : ℝ) (k : ℝ → ℝ) (t : ℝ)
   simp only [p_explicit]
   fin_cases i <;> simp_all
 
-private theorem native_coefficient_deriv (c a T : ℝ) (k : ℝ → ℝ)
+theorem native_coefficient_deriv (c a T : ℝ) (k : ℝ → ℝ)
     (hc : c < 1 / 2) (ha : a ∈ Ioo 0 c)
     (hk : OriginalControl (c, c, 1 - 2*c) T k (fun _ => (0 : ℝ))) (i : Fin 5) :
     ∀ᵐ t : ℝ, t ∈ uIcc 0 T →
@@ -401,11 +401,11 @@ theorem repeated_reference_distance (B : Band) (n : ℕ) (hn : 1 ≤ n)
 /-! The complete classical--quantum output uses the literal Kraus success
 branch as well as every retained mode/time failure density. -/
 
-private def diagonalAction {m : ℕ} (d : Fin m → ℂ) :
+def diagonalAction {m : ℕ} (d : Fin m → ℂ) :
     Blocks (Fin m) H →L[ℂ] Blocks (Fin m) H :=
   ∑ i, d i • embedding (ContinuousLinearMap.id ℂ H) i
 
-private theorem diagonalAction_apply {m : ℕ} (d : Fin m → ℂ)
+theorem diagonalAction_apply {m : ℕ} (d : Fin m → ℂ)
     (x : Blocks (Fin m) H) (i : Fin m) : diagonalAction d x i = d i • x i := by
   change coordinate i (diagonalAction d x) = _
   simp [diagonalAction, embedding, ContinuousLinearMap.comp_apply, coordinate, PiLp.single_apply]
@@ -421,7 +421,7 @@ def successOutput (c a k S : ℝ) (rho : TraceClass (Blocks (Fin 5) H)) :
     (referenceSuccess c a k S * rho.1 * (referenceSuccess c a k S).adjoint)
     (isTraceClass_mul_mul (TraceClass.isTraceClass_coe rho))
 
-private theorem tensor_diagonal {m : ℕ} (d : Fin m → ℂ)
+theorem tensor_diagonal {m : ℕ} (d : Fin m → ℂ)
     (z : EuclideanSpace ℂ (Fin m) ⊗[ℂ] H) :
     diagonalAction d (tensorCoordinates z) = tensorCoordinates
       (TensorProduct.map (diagonalAction (H := ℂ) d).toLinearMap
@@ -459,7 +459,7 @@ def liveFailure (c a : ℝ) (k : ℝ → ℝ) (i : Fin 5)
     (embedding_traceClass (compression_traceClass (TraceClass.isTraceClass_coe rho) hpos i)
       (compression_nonneg hpos i) (5 : Fin 6))
 
-private theorem liveFailure_diff_norm (c a : ℝ) (k l : ℝ → ℝ) (i : Fin 5)
+theorem liveFailure_diff_norm (c a : ℝ) (k l : ℝ → ℝ) (i : Fin 5)
     (rho : TraceClass (Blocks (Fin 5) H)) (hpos : 0 ≤ rho.1) (t : ℝ) :
     ‖liveFailure c a k i rho hpos t - liveFailure c a l i rho hpos t‖ =
       ‖modeOutput c a k i rho hpos t - modeOutput c a l i rho hpos t‖ := by
@@ -468,7 +468,7 @@ private theorem liveFailure_diff_norm (c a : ℝ) (k l : ℝ → ℝ) (i : Fin 5
   exact (embedding_trace_norm (compression_traceClass (TraceClass.isTraceClass_coe rho) hpos i)
     (compression_nonneg hpos i) (5 : Fin 6)).2
 
-private theorem liveFailure_actual (c a : ℝ) (k : ℝ → ℝ) (i : Fin 5)
+theorem liveFailure_actual (c a : ℝ) (k : ℝ → ℝ) (i : Fin 5)
     (rho : TraceClass (Blocks (Fin 5) H)) (hpos : 0 ≤ rho.1) (t : ℝ) :
     (liveFailure c a k i rho hpos t).1 =
       (absorbingJump c a (k t) (survival c k t) (jumpRate c k t) i).comp
@@ -804,17 +804,17 @@ def operationalDistance (c a T : ℝ) (k l : ℝ → ℝ) : ℝ :=
   sSup {x : ℝ | ∃ s : JointState.{v} 6,
     x = stoppedDistance c a T k l s.rho s.positive}
 
-private abbrev witnessReference := EuclideanSpace ℂ (ULift.{v} Unit)
+abbrev witnessReference := EuclideanSpace ℂ (ULift.{v} Unit)
 
-private def witnessBase : TraceClass witnessReference.{v} :=
+def witnessBase : TraceClass witnessReference.{v} :=
   TraceClass.ofOperator (ContinuousLinearMap.id ℂ _)
     (isTraceClass_of_finiteDimensional _)
 
-private theorem witnessBase_pos : 0 ≤ witnessBase.{v}.1 := by
+theorem witnessBase_pos : 0 ≤ witnessBase.{v}.1 := by
   change (0 : witnessReference.{v} →L[ℂ] witnessReference.{v}) ≤ 1
   exact zero_le_one
 
-private theorem witnessBase_norm : ‖witnessBase.{v}‖ = 1 := by
+theorem witnessBase_norm : ‖witnessBase.{v}‖ = 1 := by
   rw [TraceClass.norm_eq_traceNorm, QuantumLogEnergy.traceNorm_eq_re_trace _ witnessBase_pos]
   have ht : trace witnessBase.{v}.1 (TraceClass.isTraceClass_coe _) = 1 := by
     have hf : HasFiniteMultiplicity (1 : witnessReference.{v} →L[ℂ] witnessReference.{v}) :=

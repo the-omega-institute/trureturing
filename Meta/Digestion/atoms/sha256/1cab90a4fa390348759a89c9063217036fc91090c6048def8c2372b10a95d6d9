@@ -1,0 +1,33 @@
+#### 命题 9.2（记录持续增长与完整过程的范数收敛）
+
+<a id="prop:clock"></a>
+
+若 $W_n$ 为同一固定表示中的酉，单位向量 $\Omega_0$ 的
+$W_n\Omega_0$ 携带彼此正交的保留钟标签，则当 $m\ne n$，
+
+$$
+\left\lVert W_m\Omega_0-W_n\Omega_0\right\rVert=\sqrt2,\qquad
+ \left\lVert W_m-W_n\right\rVert\ge\sqrt2.
+ \tag{44}
+$$
+
+所以完整过程不能同时在该向量上 Cauchy 或在算符范数中收敛。
+
+**证明。**
+
+标签正交使两个单位向量内积为零，展开距离平方并用算符范数定义即可。
+
+∎
+
+例如内部双向计数器 $S\lvert j\rangle=\lvert j+1\rangle$ 给
+$W_n=S^n\otimes U_n$。
+数据修正 $U_n$ 可满足黄金尾界，而完整记录继续增长。
+固定权重 $\alpha_n>0$、$\sum_{n\in\mathbb{Z}}\alpha_n^2=1$
+可将相容条件态族写成一个静态整体
+$\boldsymbol\Omega=\sum_n\alpha_n\lvert n\rangle\otimes\psi_n$；
+v30 已给其正约束核和静态变分表示。
+这里没有要求本体在外部时间中改变。
+需要分别表述的是：全部历史、特定读口的分辨率极限、以及记录条件下的相对态。
+
+<a id="statement-9-3"></a>
+

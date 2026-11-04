@@ -1,0 +1,38 @@
+**Definition 3.1 (Affine quotient and its integer lattice).** Put
+
+$$
+\Gamma_K=\{(a+bk)_{k\in K}:a,b\in\mathbb T\},\qquad
+L_K=\left\{z\in\mathbb Z^K:\sum_kz_k=0,\ \sum_k kz_k=0\right\}.
+\tag{3.1}
+$$
+
+This is the full integer lattice of source (25.4), rather than a real nullspace or a selected list of triple relations. For $0\ne z\in L_K$, write
+
+$$
+\begin{aligned}
+z_k^+&=\max(z_k,0),&z_k^-&=\max(-z_k,0),\\
+m_z&=\sum_k z_k^+=\sum_k z_k^-,&
+s_z&=\sum_k k z_k^+=\sum_k k z_k^-,\\
+\ell_z&=m_z+s_z,&
+P_z&=\max\{k:z_k>0\},\\
+M_z&=\max\{k:z_k<0\},&
+B_z&=\min(P_z,M_z),\\
+\tau(z)&=\ell_z-1-B_z.
+\end{aligned}
+\tag{3.2}
+$$
+
+Both sign supports are nonempty and disjoint. Thus $P_z\ne M_z$, and $m_z\ge2$: degree one would equate two single labels, forcing $z=0$. The parameters $m_z,s_z,\ell_z$ are source (25.5); $B_z$ and $\tau(z)$ encode the terminal endpoint saving.
+
+Equivalently,
+
+$$
+\tau(z)=\max\left\{
+\sum_k(k+1)z_k^+-(P_z+1),\quad
+\sum_k(k+1)z_k^--(M_z+1)
+\right\}.
+\tag{3.3}
+$$
+
+Each term is the duration of the remaining completed blocks after deleting one largest label on that side. It is a nonnegative integer. The two sides are disjoint integer multisets with equal cardinality and equal label sum; the longer remaining completed duration is the cost, and a terminal unfinished tail supplies the duration difference.
+

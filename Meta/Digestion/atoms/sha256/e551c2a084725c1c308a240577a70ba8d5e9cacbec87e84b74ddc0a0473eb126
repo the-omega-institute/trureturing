@@ -1,0 +1,15 @@
+#### 命题 12.3（算符形式的勾股）
+
+用 Pauli 算符写 $F=a\sigma_z+b\sigma_x$。由于
+
+$$
+\sigma_z^2=\sigma_x^2=I,\qquad
+\sigma_z\sigma_x+\sigma_x\sigma_z=0,
+$$
+
+所以 $F^2=(a^2+b^2)I$。这里的反对易算符关系属于所给二维相干块，原始三个可同时读取的占位算符则两两交换。
+
+<a id="statement-12-4"></a>
+
+<a id="thm-braid"></a>
+

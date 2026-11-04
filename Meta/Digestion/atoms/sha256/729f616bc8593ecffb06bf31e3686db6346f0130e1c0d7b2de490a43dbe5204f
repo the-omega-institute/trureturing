@@ -1,0 +1,17 @@
+### 命题 6.5（反射障碍）
+
+对完整 $G\subset O(W,B)$，
+
+$$
+\operatorname{Ad}_gR_x=\det(g)R_{gx}.
+$$
+
+所以轴对应对全部 $G$ 协变，有向线性提升对 $G^\circ=SO(3)$ 协变。若 $G=O(3)$，不存在非零的、对全部 $G$ 无扭曲协变的线性 $W\to\mathfrak g$。
+
+**证明。**
+叉积的体积定义给公式。若存在后一种提升，对 $g=-I$ 有 $\operatorname{Ad}_g=I$，但线性性给 $\Phi(-x)=-\Phi(x)$，二者矛盾。
+
+坐标无关的关系是 $\mathfrak{so}(W,B)\cong\Lambda^2W\cong W\otimes\operatorname{or}(W)$。选一个取向只是把一维取向因子平凡化。原生成元若为 $A=\lambda R_n$，停住关系看不见 $\lambda$ 的大小和符号。日志接续的先后序也不会自动挑选空间取向：对全部内容和控制作镜像运输，日志的前缀顺序可保持不变。把两种手性关联起来需要额外的原耦合关系。
+
+<a id="section-7"></a>
+

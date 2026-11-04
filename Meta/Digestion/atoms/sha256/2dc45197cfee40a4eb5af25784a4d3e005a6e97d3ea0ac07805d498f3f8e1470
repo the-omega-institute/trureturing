@@ -1,0 +1,28 @@
+**Lemma 6.1 (Two simultaneous shears; `lem:shears`).**
+If a polynomial $F\in\mathbb{Q}[a,b,c,d,r,s,t,u]$ is fixed by both
+
+$$
+(d,u)\mapsto(d+a,u+r),\qquad (d,u)\mapsto(d+b,u+s),
+$$
+
+with the other six variables fixed, it is independent of $d,u$.
+
+**Proof.**
+Iteration gives the same identities with each nonnegative integer
+multiple of the direction. Regarding the multiple as a new variable,
+the resulting polynomial identity holds identically: pass to the
+fraction field of the coefficient polynomial domain and use infinitely
+many distinct rational roots. Differentiation at zero gives
+
+$$
+a\partial_dF+r\partial_uF=0,\qquad
+ b\partial_dF+s\partial_uF=0.
+$$
+
+Elimination yields $(as-br)\partial_dF=0$ and
+$(as-br)\partial_uF=0$. The formal polynomial $as-br$ is nonzero
+in an integral domain. Both derivatives vanish and characteristic zero
+implies independence. This uses no nonvanishing after numerical
+specialization and no lower bound on either color population.
+$\square$
+

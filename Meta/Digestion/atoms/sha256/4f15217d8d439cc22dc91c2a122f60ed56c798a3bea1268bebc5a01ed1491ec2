@@ -1,0 +1,49 @@
+**定理 3.2（准确的局部群与五重提升）。**
+
+<a id="thm-center"></a>
+
+$\mathfrak h$ 对应的连通子群为
+
+$$
+H=\frac{\operatorname{SU}(5)\times\operatorname{SU}(5)}{C},
+\qquad
+C=\{(\zeta^aI,\zeta^{2a}I):a\in\mathbb F_5\}.
+$$
+
+它忠实嵌入 $G$，并有中心扩张
+
+<a id="eq-centralextension"></a>
+
+$$
+1\longrightarrow\mu_5\longrightarrow H
+\xrightarrow{p}\operatorname{PU}(5)\times\operatorname{PU}(5)\longrightarrow1.
+\tag{5}
+$$
+
+取 $z=[(\zeta I,I)]$，在伴随复空间 $\mathcal K=\mathfrak g$ 上记其表示为 $Z$，
+则
+
+$$
+Z|_{\mathfrak g_j}=\zeta^j I.
+$$
+
+因此一个已指定的局部射影对恰有五个 $H$ 提升。
+
+**证明。**
+
+紧单连通群 $\operatorname{SU}(5)^2$ 的 Lie 代数嵌入积分为到 $G$ 的群同态。
+核离散且正规，故包含在中心 $\mu_5^2$。
+由命题 [3.1](#prop-grading)，中心元素 $(\zeta^aI,\zeta^bI)$
+在 $\mathfrak g_j$ 上乘以 $\zeta^{j(a+2b)}$。
+它在整个伴随空间上平凡，恰当且仅当 $a+2b=0$，
+亦即 $b=2a$ 于 $\mathbb F_5$。因 $G$ 中心平凡，伴随表示忠实，
+故该同态的核正是 $C$。
+
+到两个射影群的映射核是 $\mu_5^2/C$。
+同态 $(a,b)\mapsto a+2b$ 具有核 $C$，并将商识别为 $\mathbb F_5$，
+从而得到式 [(5)](#eq-centralextension)。
+取 $(a,b)=(1,0)$ 即得 $Z$ 的分级作用及五重纤维。证毕。
+ □
+
+<a id="statement-3-3"></a>
+

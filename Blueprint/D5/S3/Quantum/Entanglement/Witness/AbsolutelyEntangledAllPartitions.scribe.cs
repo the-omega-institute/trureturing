@@ -51,6 +51,24 @@ internal sealed class AbsolutelyEntangledAllPartitionsDocument : IScribeDocument
                     + "reading of the question in main.tex, line 509, with partitions specified "
                     + "by the mixed-radix identifications above.", true),
             Describe.Lean(
+                DescribeId.Create("summand-kernel"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/Witness/AbsolutelyEntangledAllPartitions.summand_kernel"),
+                H("Positive summands annihilate the orthogonal complement"),
+                StatementSource.FromAuthor(Disp(SummandKernelFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Every positively weighted positive semidefinite summand of a real multiple of a rank-one density annihilates every vector orthogonal to its defining vector."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("supported-column"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/Witness/AbsolutelyEntangledAllPartitions.supported_column"),
+                H("Columns supported on one vector"),
+                StatementSource.FromAuthor(Disp(SupportedColumnFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Every column of a Hermitian matrix annihilating the orthogonal complement of a nonzero vector is a complex scalar multiple of that vector."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("result"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("A finite grid supplies a common entangled state"),
@@ -152,6 +170,46 @@ internal sealed class AbsolutelyEntangledAllPartitionsDocument : IScribeDocument
             fromRepo ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
+    private static Formula SummandKernelFormula()
+    {
+        Formula index = X("ι");
+        Formula vector = Arrow(FinOf(X("d")), Complexes());
+        Formula weights = Arrow(index, Reals());
+        Formula matrices = Arrow(index, MatrixType());
+        Formula nonnegative = All("i", index, LessEqual(Typed(D(0), Reals()), At(X("w"), X("i"))));
+        Formula positive = All("i", index, At(Qualified("Matrix", "PosSemidef"), At(X("a"), X("i"))));
+        Formula sum = SumOver("i", index, Smul(At(X("w"), X("i")), At(X("a"), X("i"))));
+        Formula density = At(Qualified("D5", "S3", "Quantum", "PureState", "PureStateHandshake", "rankOneDensity"), X("v"));
+        Formula conclusion = EqualTo(At(Qualified("Matrix", "mulVec"), At(X("a"), X("j")), X("x")),
+            Typed(D(0), vector));
+        Formula body = All("w", weights, All("a", matrices, Imp(nonnegative, Imp(positive,
+            All("v", vector, All("t", Reals(), Imp(EqualTo(sum, Smul(X("t"), density)),
+                All("j", index, Imp(new Formula.Relation(Typed(D(0), Reals()),
+                    FormulaRelationOperator.LessThan, At(X("w"), X("j"))),
+                    All("x", vector, Imp(Orthogonal(), conclusion)))))))))));
+        return All("d", Naturals(), All("ι", Qualified("Type"),
+            Seq(OpenBracket, At(Qualified("Fintype"), index), CloseBracket, Comma, Sp, Parenthesized(body))));
+    }
+
+    private static Formula SupportedColumnFormula()
+    {
+        Formula vector = Arrow(FinOf(X("d")), Complexes());
+        Formula kernel = All("x", vector, Imp(Orthogonal(),
+            EqualTo(At(Qualified("Matrix", "mulVec"), X("a"), X("x")), Typed(D(0), vector))));
+        Formula column = LambdaOf("k", FinOf(X("d")), At(X("a"), X("k"), X("j")));
+        return All("d", Naturals(), All("v", vector,
+            Imp(new Formula.Not(Parenthesized(EqualTo(X("v"), Typed(D(0), vector)))),
+                All("a", MatrixType(), Imp(At(Qualified("Matrix", "IsHermitian"), X("a")),
+                    Imp(kernel, All("j", FinOf(X("d")), Some("z", Complexes(),
+                        EqualTo(Parenthesized(column), Smul(X("z"), X("v")))))))))));
+    }
+
+    private static Formula Orthogonal() => EqualTo(
+        At(Qualified("dotProduct"), At(Qualified("Star", "star"), X("v")), X("x")), Typed(D(0), Complexes()));
+    private static Formula Smul(Formula scalar, Formula value) => At(Qualified("SMul", "smul"), scalar, value);
+    private static Formula SumOver(string name, Formula type, Formula body) =>
+        Seq(Sum, Underscore, Grp(Typed(X(name), type)), Sp, Parenthesized(body));
+
     private static Formula PartitionFormula()
     {
         Formula dimensions = Seq(Sigma, Sp, Typed(X("k"), Naturals()), Comma, Sp,
@@ -223,6 +281,7 @@ internal sealed class AbsolutelyEntangledAllPartitionsDocument : IScribeDocument
     private static Formula LocalCall(string name, params Formula[] arguments) => At(Local(name), arguments);
     private static Formula X(string name) => name switch
     {
+        "ι" => Iota,
         "ρ" => Rho,
         "σ" => SigmaLower,
         "τ" => Tau,

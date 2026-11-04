@@ -1,0 +1,55 @@
+**Definition 7.1 (supplier correspondence).** The load-bearing new
+statements are repository-derived: the paid terminal-spine dichotomy,
+its acquired three-batch alignment inverse, and the composition returning
+the original $(P,n)$ with the counted resource envelope. Their
+classical recurrence steps are literature-attested intermediate results,
+not claims of worldwide originality. The corresponding suppliers have
+the following exact domains.
+
+| Supplier | Input and conclusion used here | Boundary retained |
+| --- | --- | --- |
+| ACR Proposition 9.2 | Paid fixed-port spine earns $h$ and $n\le2h+1$ | No law, cut or support is supplied by the entrance |
+| GPO Definitions 27.1, 29.1 and Theorem 28.2 | Actual alpha source, all-index $\mathscr R_d$, complete-support ordered-prefix inverse | Complete mathematical support is not already acquired support |
+| NRW Lemmas 1.4 and 2.1--2.3; PCR Theorem 2.1 | Rank-at-least-three orientations, beta-origin batches and invisible newest batch | Used on the actually scanned finite cone, with physical child order |
+| ACR Theorems 27.2--27.3 | Actual integer-clock/index formula, two bounded shallow seeds, depth core cutoff | Deep clocks may be large and are never enumerated |
+| ACR Theorem 21.2 | Leading minimal Hankel nonsingularity and rank equal to all-index least order | Classical algebra applied to paid periodic shifts; no free rank input |
+| ACR Definitions 28.1, 28.3 and Theorems 28.2, 28.4 | Singleton-core height search, actual early-parent induction and final verifier | Genuine core and both clock seeds are included; no provisional height is promoted |
+| ACR Theorem 22.2, Corollary 22.3; ACRC Theorems 33.2--33.3 | Actual parity-length rank witnesses and original-prefix authentication | Witness construction is paid; a negative trial is not a bit oracle |
+| ACR Theorem 29.1 | Sequential path/trial layout and represented-index accounting | Trial count is recomputed without the catalogue; physical tariffs remain separate |
+| ACR Theorems 26.1, 29.2; GPO Theorems 34.2--34.3, 39.4 | Original normalization, completed canonical handoff and same-source consumers | No completed installation follows from acquisition alone |
+
+The recurrence references are [Massey][MAS], §§II--IV, Theorems 3--4
+and their corollaries; [Shoup][SHO], second edition, §§16.4, 17.4,
+18.1--18.2, Theorems 16.18, 18.1--18.2 and Exercises 18.2--18.6;
+and [Bostan--Mori][BM], version 1, §§1.2--1.3. Massey supplies shortest
+finite synthesis and its connection-polynomial convention. Shoup
+supplies the forward annihilator ideal, minimal Hankel and reversed
+Laurent conventions and proved-unit criterion. Bostan--Mori supplies
+forward evaluation from an explicit recurrence and seed over a monic
+quotient ring. None supplies paid physical samples, a root age, a
+source conformance certificate or original $\rho_d$ firstness.
+
+The formal declarations `NativeRankedNavigationCompiler.atomic_navigation`
+and `rank_only_refinement_compilation` concern fixed native ranked
+expressions, semantic orientation, four-valued replies and positive
+whole-subtree equality links. `NativeBirthVectorDecoder.decodeBirth_patternVector`
+is correct on recursive code-image vectors, without an acquired
+presence-to-code bridge. `ActualFibonacciSupportChain.actual_fibonacci_support_chain`
+concerns strict native support inclusions and bounded-address agreement.
+`NativeFullSourceProducer.native_source_producer` acquires finite native
+trees with alpha/beta/branch/absent replies. `FiniteCompanionCyclicModule`
+uses its specific polynomial $P(u,q)$, rather than an arbitrary acquired
+binary core. These Lean types and their corresponding Blueprint Scribe
+domains supply no presence-only theorem claiming Theorem 5.1. The
+mathematics here is ordinary proof; no new compiled or kernel-verified
+claim is made.
+
+[ACR]: RECURSIVE_RELATIONAL_OBSERVATION_ACTUAL_CUT_REINSTATEMENT.md
+[ACRC]: RECURSIVE_RELATIONAL_OBSERVATION_ACTUAL_CUT_REINSTATEMENT_CONTINUATION.md
+[GPO]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GLOBAL_PORT_ORIENTATION.md
+[NRW]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RESIDUAL_WIDTH.md
+[PCR]: RECURSIVE_RELATIONAL_OBSERVATION_PERIODIC_CLOCK_RIGIDITY.md
+[MAS]: https://www.isiweb.ee.ethz.ch/archive/massey_pub/pdf/BI411.pdf
+[SHO]: https://shoup.net/ntb/ntb-v2.pdf
+[BM]: https://arxiv.org/html/2008.08822v1
+

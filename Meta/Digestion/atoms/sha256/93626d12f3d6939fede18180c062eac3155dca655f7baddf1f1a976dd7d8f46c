@@ -1,0 +1,71 @@
+**Proposition 9.2 (Two strict failures of whole-deletion comparisons).**
+For $K_{2,2,2}$ the attained positive maximum is $26$, while each of
+the three whole-deletion faces has maximum $51/2<26$. For $K_{2,2,5}$,
+
+$$
+\max_{g\in\mathcal D_{AB}}F(g)=64,\qquad
+\max_{g\in\mathcal D_{AC}}F(g)
+=\max_{g\in\mathcal D_{BC}}F(g)=\frac{450}{7}>64,
+\qquad M_{2,2,5}\ge\frac{450}{7}.
+\tag{9.2}
+$$
+The last bound is obtained by strictly positive approximants on the
+original tripartite graph. These statements refute, respectively, a
+universal reduction to a best whole-deletion face and a universal
+choice of the $AB$-deletion face. They assert neither the exact value
+of $M_{2,2,5}$ nor that a best deletion face always gives the
+tripartite supremum.
+
+*Proof.* Theorem 7.3, or Corollary 8.3 with $m=2$, gives the positive
+$K_{2,2,2}$ maximum $2(18-5)=26$. Every whole deletion is $K_{2,4}$
+on the same six vertices, by (9.1). Apply the whole
+[two-hub theorem](FIEDLER_RESISTANCE_K2M_OPTIMIZER.md), Theorem 2.1,
+with its two hubs equal to one original part and its four
+leaves equal to the union of the other two parts. Its unrestricted
+positive product maximum is
+
+$$
+(4+2)\left(4+\frac14\right)=\frac{51}{2}.
+$$
+Its strictly positive bipartite equality assignments belong to the
+specified deletion face, proving face attainment.
+
+For $K_{2,2,5}$, deleting $AB$ gives $K_{4,5}$. The whole
+[general bipartite theorem](FIEDLER_RESISTANCE_GENERAL_BIPARTITE_OPTIMIZER.md),
+Theorem 4.1, applies with its smaller class of size $4$ mapped
+bijectively onto $A\sqcup B$ and its larger class onto $C$.
+Its hypotheses $4\le4\le5$ hold. Substitution of $n=9$ and $d=1$
+into its constant gives
+
+$$
+9(9-3)+\frac{5(1+3)}{1+1}=64.
+$$
+Deleting $AC$ instead gives $K_{2,7}$ with hubs $B$ and leaves
+$A\sqcup C$; deleting $BC$ gives the same graph with hubs $A$ and
+leaves $B\sqcup C$. The whole two-hub Theorem 2.1 applies with $m=7$
+and gives
+
+$$
+(7+2)\left(7+\frac17\right)=\frac{450}{7},\qquad
+\frac{450}{7}-64=\frac27>0.
+$$
+All these are whole-domain bipartite optimizations, not uniform-weight
+values. Their equality conductances are strictly positive on every
+retained bipartite edge. If a face assignment has further zero
+coordinates but connected support, add $\varepsilon$ to every retained
+edge. This stays in that face and gives positive bipartite conductances
+converging to the given connected assignment. Eigenvalue and resistance
+continuity from Convention 1.2 transfer the same upper bound to it.
+Thus the displayed positive bipartite optimizers attain the maxima on
+the entire connected nonnegative faces as defined in Definition 9.1.
+
+Finally take any bipartite optimizer on the $AC$-deletion face in the
+$K_{2,2,5}$ example. Add $\varepsilon>0$ to every deleted $AC$ edge,
+leaving the positive retained coordinates fixed. These are finite
+strictly positive assignments on all original tripartite edges.
+Their Laplacians tend to the connected face Laplacian on the same nine
+vertices, so their products tend to $450/7$. This proves the last
+inequality in (9.2) within the original positive domain. The two strict
+comparisons prove the stated route failures and give no upper
+comparison for every positive weighting of $K_{2,2,5}$. ∎
+

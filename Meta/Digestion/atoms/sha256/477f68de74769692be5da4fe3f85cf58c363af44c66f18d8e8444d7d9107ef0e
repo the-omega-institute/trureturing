@@ -1,0 +1,15 @@
+**Definition 1.2 (Exact entropy budget).** For $A=P,Q,R$, set
+$I_A=S(A_C)+S(A_D)-S(A)$, and put
+
+$$
+\begin{aligned}
+g&=S(R)-S(P),\qquad h_E=S(R_E)-S(P_E),\qquad h=h_C+h_D,\\
+\Delta&=I_P+I_Q+3g-2h.
+\end{aligned}
+\tag{1.4}
+$$
+
+The last identity follows by grouping the terms in (1.2). The universal
+assertion under consideration is $\Delta(\rho)\geq0$ on the whole domain
+of Definition 1.1; the precise unresolved funding assertion is given in §9.
+

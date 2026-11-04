@@ -1,0 +1,20 @@
+#### 定理 6.3（五模式的完整勾股分解）
+
+$\{1,t_z,t_x,t_y,t_h\}$ 是 $L^2(\Sigma,p^*)$ 的正交归一基。对任意复值函数 $f$，定义 $\operatorname{Var} f=\mathbb{E}|f-\mathbb{E} f|^2$，则
+
+$$
+\boxed{\operatorname{Var}_{p^*}f
+= \left|\mathbb{E}(f t_z)\right| ^2+ \left|\mathbb{E}(f t_x)\right| ^2
+ + \left|\mathbb{E}(f t_y)\right| ^2+ \left|\mathbb{E}(f t_h)\right| ^2.}
+$$
+
+前三个非平凡方向加常数张成 $\operatorname{span}\{1,x,y,z\}$，最后一个方向是唯一均值不可见的交互方向。
+
+<a id="proof-6-3"></a>
+
+**证明。** 
+在 $p^*$ 下，$z$ 为 Bernoulli；给定 $z=0$，$x,y$ 是独立 Bernoulli。条件求期望表明四个 $t$ 均值零、二阶矩一。$t_z$ 在底面为常数，而其余三个的底面条件均值为零。$t_x,t_y$ 的交叉项因独立为零；$t_x,t_h$ 与 $t_y,t_h$ 的交叉项各含一个独立零均值因子。空间维数五，故五个正交单位函数构成基，Parseval 给等式。又合法性给 $(1-z)(x-u)=x-u+uz$，$y$ 同理，遂有可见空间的张成关系。
+ ∎
+
+<a id="statement-6-4"></a>
+

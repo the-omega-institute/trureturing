@@ -1,0 +1,24 @@
+**Proposition 8.4 (a finite native source with exact recovery and no positive tolerance).** There is an actual finite deterministic source satisfying the typed complete response and positive native cocycle contracts for which $F_d$ is injective on *all* finite legal root words, but uniform recovery fails for every $\epsilon>0$. Its graph nevertheless satisfies Theorem 8.3 and thus admits robust designs.
+
+Proof. Take one type and the actual state set $X=\{r,u,v,z\}$, with initial state $r$ and declared current readout $q(x)=x$. The entire legal transition set is
+
+$$
+r\xrightarrow{a}u,\qquad r\xrightarrow{b}v,\qquad
+u\xrightarrow{x}u,\qquad v\xrightarrow{w}v,\qquad
+u\xrightarrow{c}z,\qquad v\xrightarrow{e}z.
+$$
+
+Each operation has the singleton source domain displayed, the displayed successor, and a fixed complete one-step record containing its name, successor and native duration. There are no other operations, failures, resets or archive fields, and $z$ is terminal. Because the empty response contains $q$, distinct states have distinct complete residuals; equal states have identical responses by determinism. Thus the complete residual graph is exactly this four-state actual source, without any fictitious combinations of fields. Set
+
+$$
+d(a)=d(b)=d(c)=d(x)=1,\qquad d(e)=\tfrac32,\qquad d(w)=\sqrt2.
+$$
+
+One-step durations are representative independent and strictly positive, and the native total is their sum. The following is the exhaustive classification by endpoint, with all indices nonnegative:
+
+| Endpoint | All legal root words | Native totals |
+| --- | --- | --- |
+| $r$ | $\varepsilon_r$ | $0$ |
+| $u$ | $ax^n$, $n\ge0$ | $1+n$ |
+| $v$ | $bw^m$, $m\ge0$ | $1+m\sqrt2$ |
+| $z$ | $ax^nc$ or $bw^me$, $n,m\ge0$ | $2+n$ or $\tfrac52+m\sqrt2$ |

@@ -1,0 +1,28 @@
+**定义 1.1（源函数与去零点归一化）。** 设 $d\ge1$，$\boldsymbol{k}=(k_1,\ldots,k_d)\in\mathbb Z_{\ge1}^d$。在 $|z|<1$ 上置
+
+$$
+\operatorname{Li}_{\boldsymbol{k}}(z)
+ =\sum_{n_1>\cdots>n_d>0}
+   \frac{z^{n_1}}{n_1^{k_1}\cdots n_d^{k_d}},\qquad
+ F_{\boldsymbol{k}}(z)=z^{-d}\operatorname{Li}_{\boldsymbol{k}}(z).
+$$
+
+在零点取可去值。对任意正整数组合 $\boldsymbol{s}$，记
+
+$$
+H_{\boldsymbol{s}}(N)
+ =\sum_{N\ge m_1>\cdots>m_r>0}
+   \frac1{m_1^{s_1}\cdots m_r^{s_r}},\qquad
+H_{\varnothing}(N)=1.
+$$
+
+于是 $F_{\boldsymbol{k}}(z)=\sum_{m\ge0}f_mz^m$，其中
+
+$$
+f_m=\frac{H_{(k_2,\ldots,k_d)}(m+d-1)}{(m+d)^{k_1}}>0,
+\qquad
+f_0=\prod_{i=1}^d(d+1-i)^{-k_i}.
+$$
+
+严格正性包括 $d=1$：此时分子为 $1$。一般情形的分子包含严格指标 $(d-1,\ldots,1)$；$m=0$ 时恰好只有这一组指标。
+

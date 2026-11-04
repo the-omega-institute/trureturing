@@ -1,0 +1,106 @@
+**Theorem 9.1 (Pair compression and the Schwarz inequality).** For every integer $d\ge3$ and every pair of real numbers $\lambda,q$, put $p=1-(d-1)q$. If
+
+$$
+0\le q\le\frac1{d-1},\qquad (d-1)^2\lambda^2\le p,
+$$
+
+then the original map
+
+$$
+\Phi_{\lambda,q}(X)=\lambda X+(1-dq-\lambda)\operatorname{diag}(X)
++q\operatorname{tr}(X)I_d
+$$
+
+satisfies
+
+$$
+\forall X\in M_d(\mathbb C)\ \forall v\in\mathbb C^d,\qquad
+v^\ast\bigl(\Phi_{\lambda,q}(X^\ast X)
+-\Phi_{\lambda,q}(X)^\ast\Phi_{\lambda,q}(X)\bigr)v\ge0.
+$$
+
+All inequalities in the hypotheses are weak. In particular $q=0$, $p=0$, $p=1$, equality in $(d-1)^2\lambda^2\le p$, singular defects and probes with zero coordinates are included. In Eq. (6) of Bera, Bhattacharya and Chruściński, arXiv:2604.18600v1, the coordinates are exactly $\alpha=dq$, $\beta=1-dq-\lambda$. This is a sufficient condition for the Schwarz property, without an assumption of complete positivity or $2$-positivity. Stance: repo-derived; the qubit input used below is the cited Proposition 3 of arXiv:2404.10895v1, not a new qubit criterion.
+
+**Proof.** Set $m=d-1$ and $\rho=m\lambda$. The hypotheses give $0\le p\le1$ and $\rho^2\le p$. Consider the unital, Hermiticity-preserving map
+
+$$
+T_{p,\rho}\begin{pmatrix}a&b\\c&e\end{pmatrix}
+=\begin{pmatrix}pa+(1-p)e&\rho b\\\rho c&(1-p)a+pe\end{pmatrix}
+\quad\text{on }M_2(\mathbb C).
+$$
+
+The phase-covariant qubit criterion of Chruściński and Bhattacharya, arXiv:2404.10895v1, Proposition 3, Eq. (27), with their $a=b=p$, says that $T_{p,\rho}$ is Schwarz for $\rho^2\le p$. Its special case needed here also has the following direct proof. For a unital Hermiticity-preserving map the defect is unchanged by adding a scalar matrix, as in Lemma 3.1. Multiplication of the input by a scalar $c$ multiplies the defect by $|c|^2$. Thus every qubit input reduces to
+
+$$
+A=\begin{pmatrix}f&b\\c&-f\end{pmatrix},\qquad f\in\mathbb R,\quad b,c\in\mathbb C:
+$$
+
+subtract half the trace and, if the remaining first diagonal entry is nonzero, multiply by a complex number of modulus one to make it real. At $\rho=\varepsilon\sqrt p$, $\varepsilon\in\{-1,1\}$, multiplication gives
+
+$$
+\begin{aligned}
+T_{p,\rho}(A^\ast A)-T_{p,\rho}(A)^\ast T_{p,\rho}(A)
+&=(1-p)\begin{pmatrix}
+4pf^2+|b|^2&2\varepsilon\sqrt p\,f(b-\bar c)\\
+2\varepsilon\sqrt p\,f(\bar b-c)&4pf^2+|c|^2
+\end{pmatrix},\\
+\det\bigl(T_{p,\rho}(A^\ast A)-T_{p,\rho}(A)^\ast T_{p,\rho}(A)\bigr)
+&=(1-p)^2|4pf^2+bc|^2.
+\end{aligned}
+$$
+
+Both diagonal entries and the determinant are nonnegative, so this Hermitian $2\times2$ matrix is positive semidefinite. These formulas also hold at $p=0$ and $p=1$. If $p>0$, every $\rho\in[-\sqrt p,\sqrt p]$ is a convex combination of the two displayed endpoint multipliers. The convexity identity of Remark 4.4, applied on $M_2$, shows that a convex combination of Schwarz maps is Schwarz: its defect is the same convex combination of the two defects plus $\theta(1-\theta)(T_1(A)-T_2(A))^\ast(T_1(A)-T_2(A))$. If $p=0$, the only allowed multiplier is $\rho=0$, already included. Hence $T=T_{p,\rho}$ is Schwarz throughout the required closed region. It is also positive: if $B\ge0$, write $B=A^\ast A$ and use $T(B)\ge T(A)^\ast T(A)\ge0$.
+
+For $i<j$, let $V_{ij}:\mathbb C^2\to\mathbb C^d$ be the coordinate isometry with columns $e_i,e_j$, put $P_{ij}=V_{ij}V_{ij}^\ast$, and define
+
+$$
+B_{ij}(X)=V_{ij}\,T(V_{ij}^\ast XV_{ij})\,V_{ij}^\ast.
+$$
+
+These maps have output supported on the $\{i,j\}$ coordinate subspace. For every complex $X$, the exact compression identity is
+
+$$
+V_{ij}^\ast X^\ast XV_{ij}
+-(V_{ij}^\ast XV_{ij})^\ast(V_{ij}^\ast XV_{ij})
+=V_{ij}^\ast X^\ast(I_d-P_{ij})XV_{ij}\ge0.
+$$
+
+Applying the positive map $T$, followed by its Schwarz inequality on $V_{ij}^\ast XV_{ij}$, and then embedding back, yields
+
+$$
+B_{ij}(X^\ast X)\ge B_{ij}(X)^\ast B_{ij}(X).
+$$
+
+Define $F(X)=m^{-1}\sum_{i<j}B_{ij}(X)$. Its entries are
+
+$$
+[F(X)]_{ii}=pX_{ii}+\frac{1-p}{m}\sum_{j\ne i}X_{jj},\qquad
+[F(X)]_{ij}=\frac\rho m X_{ij}\quad(i\ne j).
+$$
+
+Since $(1-p)/m=q$ and $\rho/m=\lambda$, these formulas identify $F=\Phi_{\lambda,q}$ on every matrix entry. In particular the source and target algebra is still $M_d(\mathbb C)$.
+
+Fix any $v\in\mathbb C^d$ and abbreviate $w_{ij}=B_{ij}(X)v$, with $w_{ji}=w_{ij}$ when $j<i$. Each coordinate $i$ of the sum $\sum_{i<j}w_{ij}$ receives contributions from exactly the $m$ pairs containing $i$. Complex Cauchy–Schwarz therefore gives
+
+$$
+\begin{aligned}
+\|F(X)v\|^2
+&=\frac1{m^2}\sum_i\left|\sum_{j\ne i}(w_{ij})_i\right|^2\\
+&\le\frac1m\sum_i\sum_{j\ne i}|(w_{ij})_i|^2
+=\frac1m\sum_{i<j}\|B_{ij}(X)v\|^2.
+\end{aligned}
+$$
+
+The last equality uses the support of $w_{ij}$ on $\{i,j\}$. Consequently
+
+$$
+\begin{aligned}
+v^\ast F(X^\ast X)v
+&=\frac1m\sum_{i<j}v^\ast B_{ij}(X^\ast X)v\\
+&\ge\frac1m\sum_{i<j}\|B_{ij}(X)v\|^2
+\ge\|F(X)v\|^2.
+\end{aligned}
+$$
+
+This holds for every complex $X$ and $v$. There is no division by $p$, $q$, a coordinate of $v$, or an eigenvalue of a defect. Thus all zero, singular and equality cases in the statement follow from the same argument. ∎
+

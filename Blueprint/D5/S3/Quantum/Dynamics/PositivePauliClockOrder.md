@@ -276,7 +276,19 @@ $$
 (\operatorname{zplus}\left(\lambda\right) = \operatorname{exp}\left(-i w t_{+} \operatorname{nplus}\left(\lambda\right)\right)) \land\\{}(\operatorname{zminus}\left(\lambda\right) = \operatorname{exp}\left(-i w t_{-} \operatorname{nminus}\left(\lambda\right)\right)) \land\\{}(\operatorname{c}\left(\lambda\right) = (\operatorname{zplus}\left(\lambda\right) \operatorname{zminus}\left(\lambda\right))^{*} \operatorname{zminus}\left(\lambda\right) \operatorname{zplus}\left(\lambda\right))
 $$
 
-**Theorem 1.22 (Fixed-label scalar order).**
+**Theorem 1.22 (Unit modulus of a scalar phase).**
+
+$$\forall t \in R, (\operatorname{exp}\left(-i \operatorname{Complex.ofReal}\left(t\right)\right))^{*} \operatorname{exp}\left(-i \operatorname{Complex.ofReal}\left(t\right)\right) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/PositivePauliClockOrder.phase_unit` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The conjugate of exp minus i theta times the same phase is one for every real theta.
+
+**Theorem 1.23 (Fixed-label scalar order).**
 
 $$\forall \Lambda,\forall nplus,nminus:\Lambda \to R,\forall w,t_{+},t_{-} \in R, \forall \lambda\in\Lambda,(\operatorname{zminus}\left(\lambda\right) \operatorname{zplus}\left(\lambda\right) = \operatorname{zplus}\left(\lambda\right) \operatorname{zminus}\left(\lambda\right)) \land\\{}(\operatorname{c}\left(\lambda\right) = 1) \land\\{}(\operatorname{c}\left(\lambda\right)\neq-1)$$
 
@@ -288,7 +300,7 @@ $$\forall \Lambda,\forall nplus,nminus:\Lambda \to R,\forall w,t_{+},t_{-} \in R
 
 These scalar phases commute and have unit modulus. The relative coefficient is one, so it cannot be minus one.
 
-**Theorem 1.23 (Arbitrary probability averaging).**
+**Theorem 1.24 (Arbitrary probability averaging).**
 
 $$\forall \Lambda,\operatorname{MeasurableSpace}\left(\Lambda\right),\forall \mu\in\operatorname{ProbabilityMeasures}\left(\Lambda\right),\forall nplus,nminus:\Lambda \to R,\forall w,t_{+},t_{-} \in R, (\int \operatorname{c}\left(\lambda\right) d\mu = 1) \land\\{}(\int \operatorname{c}\left(\lambda\right) d\mu\neq-1) \land\\{}(\int \operatorname{zminus}\left(\lambda\right) \operatorname{zplus}\left(\lambda\right) d\mu = \int \operatorname{zplus}\left(\lambda\right) \operatorname{zminus}\left(\lambda\right) d\mu)$$
 
@@ -300,7 +312,7 @@ $$\forall \Lambda,\operatorname{MeasurableSpace}\left(\Lambda\right),\forall \mu
 
 The measure is any probability measure on the label space. Rates need no measurability assumption for the relative coefficient, which is pointwise constant before integration. Pointwise equal ordered amplitudes also have equal Bochner integrals. Their equality alone would not exclude a sign, since both averaged amplitudes can vanish.
 
-**Theorem 1.24 (Positive-frequency source experiment).**
+**Theorem 1.25 (Positive-frequency source experiment).**
 
 $$\forall w \in R, (w>0) \Rightarrow (\forall v \in R, (|v| < \sqrt{\frac{3}{2}}) \Rightarrow (\operatorname{PosDef}\left(\operatorname{R}\left(v\right)\right)) \land\\{}(\operatorname{PosDef}\left(\operatorname{N}\left(v\right)\right)) \land\\{}((\operatorname{N}\left(v\right))^{2} = \operatorname{R}\left(v\right))) \land\\{}((\operatorname{Hermitian}\left(A\right)) \land\\{}(\operatorname{Hermitian}\left(Bcoeff\right)) \land\\{}(\operatorname{Hermitian}\left(Ccoeff\right)) \land\\{}(\frac{1}{2} I \le A) \land\\{}(\forall v \in R, \operatorname{R}\left(v\right) = A+2 v Bcoeff-(v)^{2} Ccoeff) \land\\{}(\forall \xi \in R, (\xi)^{2} Ccoeff = \frac{(\xi)^{2}}{4} I)) \land\\{}((\operatorname{N}\left(1\right) = I+\frac{1}{2} Z) \land\\{}(\operatorname{N}\left(-1\right) = I+\frac{1}{2} X)) \land\\{}((\operatorname{matrix}\left(\operatorname{mixedState}\left(\right)\right) = \sigma) \land\\{}(\operatorname{Surjective}\left(\operatorname{mulVec}\left(\sigma\right)\right))) \land\\{}(\forall v,t \in R, (|v| < \sqrt{\frac{3}{2}}) \Rightarrow \operatorname{Unitary}\left(\operatorname{B}\left(I, \operatorname{V}\left(v, w, t\right)\right)\right)) \land\\{}(\forall t \in R, (\operatorname{chi}\left(1, w, t\right) = \operatorname{exp}\left(-i w t\right) \operatorname{cos}\left(\frac{w t}{2}\right)) \land\\{}(\operatorname{chi}\left(-1, w, t\right) = \operatorname{exp}\left(-i w t\right) \operatorname{cos}\left(\frac{w t}{2}\right))) \land\\{}(\forall t \in R, \forall \rho\in\operatorname{DensityState}\left(\operatorname{Fin}\left(2\right)\right),\operatorname{Phi}\left(1, w, t, \rho\right) = \operatorname{Phi}\left(-1, w, t, \rho\right)) \land\\{}(\forall t_{+},t_{-} \in R, (\operatorname{gamma}\left(w, t_{+}, t_{-}\right) = 1-2 (\operatorname{sin}\left(\frac{w t_{+}}{2}\right))^{2} (\operatorname{sin}\left(\frac{w t_{-}}{2}\right))^{2}) \land\\{}(\operatorname{rhoctrl}\left(w, t_{+}, t_{-}\right) = \frac{1}{2} \begin{pmatrix}1&(\operatorname{gamma}\left(w, t_{+}, t_{-}\right))^{*}\\\operatorname{gamma}\left(w, t_{+}, t_{-}\right)&1\end{pmatrix})) \land\\{}(\forall t \in R, (w t = \pi) \Rightarrow (\operatorname{V}\left(1, w, t\right) = i Z) \land\\{}(\operatorname{V}\left(-1, w, t\right) = i X) \land\\{}(\operatorname{V}\left(-1, w, t\right) \operatorname{V}\left(1, w, t\right) = -(\operatorname{V}\left(1, w, t\right) \operatorname{V}\left(-1, w, t\right))) \land\\{}((\operatorname{H}\left(w, t, t\right) = -I) \land\\{}(\operatorname{gamma}\left(w, t, t\right) = -1) \land\\{}(\operatorname{rhoctrl}\left(w, t, t\right) = \frac{1}{2} \begin{pmatrix}1&-1\\-1&1\end{pmatrix}))) \land\\{}(w \frac{\pi}{w} = \pi) \land\\{}(\forall \Lambda,\operatorname{MeasurableSpace}\left(\Lambda\right),\forall \mu\in\operatorname{ProbabilityMeasures}\left(\Lambda\right),\forall nplus,nminus:\Lambda \to R,\forall t_{+},t_{-} \in R, (\int \operatorname{c}\left(\lambda\right) d\mu = 1) \land\\{}(\int \operatorname{c}\left(\lambda\right) d\mu\neq-1) \land\\{}(\int \operatorname{zminus}\left(\lambda\right) \operatorname{zplus}\left(\lambda\right) d\mu = \int \operatorname{zplus}\left(\lambda\right) \operatorname{zminus}\left(\lambda\right) d\mu))$$
 
@@ -329,6 +341,7 @@ The exclusion concerns only fixed commuting scalar clocks. Time-varying classica
 - Truth anchor: `D5/S3/Quantum/Dynamics/PositivePauliClockOrder.mixed_state_full_support`
 - Truth anchor: `D5/S3/Quantum/Dynamics/PositivePauliClockOrder.order_control_marginal`
 - Truth anchor: `D5/S3/Quantum/Dynamics/PositivePauliClockOrder.order_interference_formula`
+- Truth anchor: `D5/S3/Quantum/Dynamics/PositivePauliClockOrder.phase_unit`
 - Truth anchor: `D5/S3/Quantum/Dynamics/PositivePauliClockOrder.pi_clock_orders_anticommute`
 - Truth anchor: `D5/S3/Quantum/Dynamics/PositivePauliClockOrder.pi_clock_pulses`
 - Truth anchor: `D5/S3/Quantum/Dynamics/PositivePauliClockOrder.pi_order_relative_phase`

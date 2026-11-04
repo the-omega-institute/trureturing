@@ -1,0 +1,11 @@
+### 3.1 从根格到标准 Lie 代数
+
+以下选 $\Gamma=\Gamma_+$。按经典 Chevalley–Serre 根系构造，
+得到复单 Lie 代数 $\mathfrak g=\mathfrak e_{8,\mathbb C}$ 及其紧实型 $\mathfrak k$。
+这里采用标准构造连同 Jacobi 恒等式和根串括号定理；
+没有把任意 $248$ 维向量空间直接称为 E8。
+与本节对应的显式五分级及子群见 Yokota [[3](#ref-yokota)]，
+尤其其定理 5.12.1、5.12.5。
+
+<a id="statement-3-1"></a>
+

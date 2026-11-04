@@ -1,0 +1,132 @@
+**Theorem 18.4 (Exact full-law dense minimum and all labeled closed fibres).** For all parameters (18.1), let $(u,w,v)$ be the unique legal root (18.17)–(18.18), and put $t=1-u$ and $d=2\delta-kt$. Then the exact infimum in Definition 11.1 is an attained minimum, equal to
+
+$$
+\boxed{\quad
+\mathscr D_a(\delta)
+ =k\left(\frac{a^2}{u}+\frac{c\theta}{u^2}\right)
+  +\frac{r^2}{w}+\frac{c(d-\delta)}{w^2}
+  +n\left(\frac{r^2}{v}-\frac\gamma{v^2}\right)
+ =F_k(u,w)<\frac Z{\mu^2}.
+\quad}
+\tag{18.27}
+$$
+
+The exact dense minimum of $d(x)$ from Definition 1.1 is (18.27) minus $B$.
+
+All labeled minimizing actual laws are given as follows. Choose $P\subseteq[s]$ with $|P|=k$ and $h\notin P$, and set $S=P\cup\{h\}$ and $N=[s]\setminus S$. On the unordered edges of the complete graph $K_S$, choose any array in the closed polytope
+
+$$
+\begin{aligned}
+\mathcal Q_{P,h}(t,d)=\bigg\{(z_{ij})_{\{i,j\}\in\binom S2}:\;&z_{ij}\ge0,\\
+&\sum_{j\in S\setminus\{i\}}z_{ij}=t\quad(i\in P),\qquad
+\sum_{i\in P}z_{ih}=d\bigg\}.
+\end{aligned}
+\tag{18.28}
+$$
+
+Here $z_{ij}=z_{ji}$ denotes one unordered-edge coordinate. The masses of the law are
+
+$$
+\begin{aligned}
+\bar x_{\{i,j\}}&=z_{ij} &&(\{i,j\}\in\tbinom S2),\\
+\bar x_{\{h\}}&=1-w-d,\\
+\bar x_{\{j\}}&=1-v &&(j\in N),\\
+\bar x_J&=0 &&\text{for every other proper subset }J\subsetneq[s].
+\end{aligned}
+\tag{18.29}
+$$
+
+Every edge coordinate in (18.28) is allowed to be zero, subject only to its displayed degree equations. There are exactly
+
+$$
+\binom sk(s-k)
+\tag{18.30}
+$$
+
+distinct labeled marginal patterns, recovered from each actual minimizing law as its $k$ largest-marginal labels $P$ and sole intermediate-marginal label $h$. For each such pattern, (18.29) is an affine bijection from the entire compact polytope (18.28) onto the full minimizing-law fibre, with inverse $z_{ij}=\bar x_{\{i,j\}}$. Its affine dimension is
+
+$$
+\binom{k+1}{2}-(k+1)=\frac{(k+1)(k-2)}2.
+\tag{18.31}
+$$
+
+More precisely the following describes every support stratum and boundary of each law fibre. For $E\subseteq\binom S2$, let $\mathcal Q_E$ be the subset of (18.28) with $z_e=0$ for $e\notin E$, and let $\mathcal Q_E^+$ additionally require $z_e>0$ for all $e\in E$. When $\mathcal Q_E^+$ is nonempty, it is the relative interior of $\mathcal Q_E$, its closure is $\mathcal Q_E$, and
+
+$$
+\dim\mathcal Q_E=|E|-|S|+B(E),
+\tag{18.32}
+$$
+
+where $B(E)$ is the number of bipartite components of the spanning graph $(S,E)$. These $\mathcal Q_E$ are exactly all nonempty faces when $E$ is taken to be the positive support of a relative interior point of that face. Under (18.29), the relative interior of the full law fibre consists exactly of the laws with every $z_e>0$, and its relative boundary consists exactly of the laws with at least one $z_e=0$. The singleton masses in (18.29) stay strictly positive throughout. The vertex laws are exactly those whose positive pair-support components are trees or contain exactly one cycle, of odd length.
+
+Two minimizing laws are related by a label permutation exactly when, after identifying their recovered $P,h$, their edge arrays are related by a permutation of $P$ fixing $h$. Permutations of $N$ act trivially on the array. Thus every labeled fibre and also the set of minimizing laws modulo all label permutations contain uncountably many laws.
+
+**Proof.** The inequalities $0<d<t$ in (18.16) give a strictly positive member of (18.28):
+
+$$
+z_{ih}^{\circ}=\frac dk\quad(i\in P),\qquad
+z_{ij}^{\circ}=\frac{t-d/k}{k-1}\quad(i,j\in P,\ i\ne j).
+\tag{18.33}
+$$
+
+Its degrees at $P$ are $(k-1)(t-d/k)/(k-1)+d/k=t$, and its degree at $h$ is $d$. Thus the polytope is nonempty; it is closed and bounded, since every coordinate is between zero and the positive degree at either endpoint.
+
+For any member of this whole polytope, double counting degrees gives total pair mass
+
+$$
+\sum_{\{i,j\}\in\binom S2}z_{ij}=\frac{kt+d}{2}=\delta.
+\tag{18.34}
+$$
+
+The mean constraint of the root gives $kt+(1-w)+n(1-v)=s-q=1+\delta$, hence
+
+$$
+(1-w-d)+n(1-v)=1-\delta.
+\tag{18.35}
+$$
+
+All masses in (18.29) are nonnegative, and its displayed singleton masses are strictly positive by (18.16). Equations (18.34)–(18.35) prove total mass one. All its atoms are nonempty, since their omission sizes are one or two. Its actual mean is $a\delta+r(1-\delta)=q$. Its omission probabilities are exactly $t$ on $P$, $d+(1-w-d)=1-w$ at $h$, and $1-v$ on $N$. Consequently its actual marginals are $u$ on $P$, $w$ at $h$ and $v$ on $N$, and these exceed $\tau$.
+
+The same masses give the actual incidence second moments
+
+$$
+\begin{aligned}
+\mathbb E_x[|T|^2I_i]
+ &=r^2u-c(\delta-t)=a^2u+c\theta &&(i\in P),\\
+\mathbb E_x[|T|^2I_h]
+ &=r^2w-c(\delta-d),\\
+\mathbb E_x[|T|^2I_j]
+ &=r^2v-c\delta &&(j\in N).
+\end{aligned}
+\tag{18.36}
+$$
+
+For example the probability of a cardinality-$a$ atom containing a high label is $\delta-t$; subtracting $c=r^2-a^2$ times this probability from $r^2u$ gives its first expression. The other two follow from probabilities $\delta-d$ and $\delta$. Dividing (18.36) by the squares of these actual marginals proves energy (18.27), since $d-\delta=ku+\delta-k$. These computations hold at every boundary point of the polytope as well as at its positive member.
+
+Now take an arbitrary dense actual law with every cardinality still allowed. Sort its marginals and apply Lemma 18.2. Its grouped vector lies in $\mathcal B_q$, and therefore
+
+$$
+H(x)\ge F_k(u',w')
+       \ge\min_{\mathcal B_q}\mathcal G_{P,h}
+       =F_k(u,w).
+\tag{18.37}
+$$
+
+The minimum of the auxiliary function is independent of the chosen labels. Lemma 18.3 identifies it exactly, and (18.29) attains it using an actual law. This proves the full-domain minimum, without assuming realizability of arbitrary auxiliary vectors.
+
+If an actual law attains this value, equality must hold in both inequalities (18.37). Strict convexity fixes the grouped vector to the root. The strict Jensen conditions of Lemma 18.2 then fix all its individual marginals to $u$ on $P$, $w$ at $h$ and $v$ on $N$. The strict inequalities $u>w>v$ uniquely recover these label groups, irrespective of any initial tie-breaking in sorting. Equality in (18.7) forces residual zero on each positive-mass atom. At these strict marginal groups, (18.6) permits exactly singleton omissions outside $P$ and pair omissions within $S$. Every other cardinality and support atom has strictly positive residual.
+
+The mean, with only these two cardinalities remaining, forces total pair mass $\delta$. A label in $P$ has no singleton omission, so its pair degree equals its omission probability $t$. The remaining pair degree at $h$ is $2\delta-kt=d$. Its singleton omission is therefore $1-w-d$, and the singleton omission at each lower label is $1-v$. All remaining freedom is exactly the nonnegative array (18.28). This proves exhaustive necessity, including every zero pair-mass boundary, as well as the asserted affine inverse. The strict marginal groups also prove disjointness and the count (18.30).
+
+The geometry used at this point is classical intermediate geometry. In the notation of Roger E. Behrend, *Fractional Perfect b-Matching Polytopes. I: General Theory*, [arXiv:1301.7356v1](https://arxiv.org/html/1301.7356v1), definition (2), DOI [10.1016/j.laa.2013.10.001](https://doi.org/10.1016/j.laa.2013.10.001), (18.28) is $\mathcal P(K_S,b)$ with $b_i=t$ for $i\in P$ and $b_h=d$. The graph is finite, loopless and undirected, and its prescribed degrees are positive. Equation (18.33) supplies a strictly positive feasible element, the required hypothesis of Behrend's Corollary 19. The complete graph $K_{k+1}$ is connected and nonbipartite, so that corollary gives dimension $|E|-|S|$, exactly (18.31). The affine bijection transfers that dimension to the actual-law fibre.
+
+For precision about all boundaries, in the affine space of the degree equations a point with every edge positive has a neighborhood with every edge positive; it is a relative interior point. A feasible point with $z_e=0$ lies in a supporting coordinate hyperplane. This is a proper supporting hyperplane because (18.33) has $z_e>0$. Thus the relative boundary is exactly the union of these coordinate-zero sets, with any empty sets contributing nothing. The same argument applied to the coordinates $E$ shows that if $\mathcal Q_E^+$ is nonempty, it is exactly $\operatorname{relint}\mathcal Q_E$. Blending any point of $\mathcal Q_E$ with a point of $\mathcal Q_E^+$ gives a positive point on $E$ and converges back to the former point, proving the closure assertion. For the graph $(S,E)$, the positive element of $\mathcal Q_E^+$ permits the same Corollary 19 and yields (18.32). Its hypotheses hold separately for every claimed support stratum; no dimension is assigned by this formula to an empty stratum.
+
+Every nonempty face is of this form. Indeed take a relative interior point $z$ of a face and let $E$ be its positive support. Every other point of the face has support in $E$: otherwise extending the segment slightly past $z$ inside the face would make a zero coordinate of $z$ negative. Conversely, for any $y\in\mathcal Q_E$, all coordinates of $z$ in $E$ are positive, so for sufficiently small $\varepsilon>0$ the point $z+\varepsilon(z-y)$ is feasible. The point $z$ lies in the open segment between this point and $y$. The defining face property implies $y$ belongs to the face. Hence that face is exactly $\mathcal Q_E$.
+
+Behrend's Theorem 22 applies to any element of this same $\mathcal P(K_S,b)$: it is a vertex if and only if each component of its positive-support graph is acyclic or has just one odd cycle. Since $b_i>0$, there are no isolated vertices in a feasible positive-support graph, so acyclic components here are trees with at least one edge. This proves the stated vertex-law characterization. It is also a finite exact description: enumerate such spanning subgraphs of $K_S$ and retain precisely their strictly positive solutions to the degree equations. Each candidate has at most one solution. On a tree, remove a leaf, assign its sole edge the remaining required degree at that leaf, and subtract it at the neighbor; the last residual must vanish. On an odd unicyclic component, remove its attached leaves in this way. The remaining odd cycle equations $z_{i-1}+z_i=b_i'$ have a unique solution, obtained by alternating substitution around the cycle and division by two. Retaining only positive edge weights and vanishing final residuals gives exactly all vertex laws. A solution with some zero edge weights is represented by its smaller positive support. Arbitrary feasible arrays, not merely these vertices, are included in (18.28)–(18.29).
+
+Finally a label permutation relating two minimizing laws must carry their actual marginal vectors to one another. It must therefore carry $P$ to $P$, $h$ to $h$, and $N$ to $N$ after the two recovered patterns have been identified. Its only nontrivial effect on the edge array is the indicated permutation of $P$. Conversely each such permutation, extended arbitrarily on $N$, gives the corresponding relabeling of (18.29). The dimension (18.31) is positive for $k\ge4$, and the positive member has an open neighborhood in that affine space, so each fibre is uncountable. Quotienting finitely many such fibres by the finite label-permutation group still leaves uncountably many laws.
+
+The new all-law optimization and inverse reconstruction in (18.27)–(18.37) use weak duality, finite Jensen, and Behrend's geometry only in the attributed intermediate roles above. Their scope is the fixed-$k$, fixed-$\eta$ interval (18.1); they assert no endpoint or transition-layer classification, growing-$k$ asymptotic regime, small-$a$ classification, least sufficient threshold, global rare/dense comparison, or prescribed finite-graph realization. The full text of Zhao–Zhao, DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26), is not an input, and its possible overlap remains unassessed. No worldwide priority claim is made. ∎
+

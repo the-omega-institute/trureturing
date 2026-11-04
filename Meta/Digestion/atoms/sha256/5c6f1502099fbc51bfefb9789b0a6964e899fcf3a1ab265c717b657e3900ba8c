@@ -1,0 +1,16 @@
+## 4. Native source, metric, and companion dependencies
+
+The notation [F] denotes *Native FIB on the full open domain: affine
+approximation and finite attainment*, including its continuation §11.
+The native results used here have the following precise source locations.
+
+| Native input | Location in [F] | Use here |
+| --- | --- | --- |
+| Probability law, phase transport, arbitrary preparation, and full current-ray reachability | §§1.1–1.2, Lemma 1.1 and Proposition 1.2 | Actual source and finite lawful chains |
+| Original five expectation pairs and their Gram matrix | §1.3, Lemma 1.3 | Original ten-output Euclidean error |
+| Exact affine contract and bounded-observable loss of the beta phase | Definition 2.1 and Theorem 3.3 | Beta-independent finite-error readout |
+| Orthogonal output decomposition and worst-phase error | Proposition 4.1; §11.1, equation (11.3) | Fixed scalar residual |
+| Finite relaxation and implicit selector and gap | §§11.2–11.4 | The quantities refined by (1.3) and §7 |
+| Polynomial and height witnesses | §§7–8 and §11.6 | Upper estimates in the same model classes |
+| Simultaneous paths and full all-times guards | §9 and §11.7 | Contract restrictions and upper witnesses |
+| Literal dimension zero and guard-recovery exception | §11.5 | Boundary cases in §8 |

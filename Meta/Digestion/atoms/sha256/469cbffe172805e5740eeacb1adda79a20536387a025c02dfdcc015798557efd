@@ -1,0 +1,73 @@
+**Theorem 22.2 (soundness, completeness and the terminal boundary).**
+For every actual source and cut of Definition 9.1, the relation in
+Definition 22.1 has an accepting certificate for $(\nu,A)$ exactly
+when
+
+$$
+\nu=n,\qquad A=P=z_1\cdots z_{2d}.
+\tag{ACR.96}
+$$
+
+Checking a supplied certificate uses at most $2d+3$ source Reads,
+maximum literal length at most $\nu$, and literal traffic
+$O((d+1)(\nu+1))$. A certificate has $O((d+1)(\nu+1))$ bits.
+Checking has uniform polynomial local bit work, cumulative writes
+and backing in $d+H+2$, including parsing and old-tree construction.
+These statements include $d=0$, singular and nonminimal laws, and
+finite transients in the all-index class. They do not distinguish
+the two terminal ranks zero and one of a general present cone.
+
+Proof. Definition 10.1 implies that a cone of rank $q\ge1$ has
+maximum present suffix depth $q-1$, whereas rank zero has depth zero.
+For $q\ge2$, following a rank-$(q-1)$ child until the final branch
+attains depth $q-1$; either child of the final rank-two branch is
+adequate. Every descent subtracts either one or two before it reaches
+a terminal rank. In particular every word of length $\ell$ is
+present whenever $q\ge2\ell$.
+
+The positive length $\nu-1$ witness forces $q\ge\nu$. If
+$\nu=2k+1$ and $q\ge\nu+1=2k+2$, every word of length $k+1$
+would be present, contradicting the odd test in (ACR.94). If
+$\nu=2k$ and $q\ge\nu+1=2k+1$, every length-$(k-1)$ prefix $y$
+would be present with residual rank at least three. At least one of
+its two children then has rank at least two, so at least one of
+$yaa,yba$ is present. This contradicts the even tests. Thus a passing
+rank certificate forces $q=\nu$ even when the supplied short prefix
+was not separately queried. Conversely, at $q=\nu$, a longest path
+supplies $x$. Repeatedly choose a rank-$(q-2)$ child for $y$: the
+odd case ends at rank one after $k$ steps; the even case ends at
+rank two after $k-1$ steps. The required absences follow. At $\nu=2$
+the even prefix is empty and the tests are $aa,ba$ absent. Ranks
+zero and one cannot pass any $\nu\ge2$ test and have identical
+singleton presence supports. No terminal-rank sensor is inferred.
+
+Applied to the root, this proves $\nu=n$. Suppose inductively that
+the bits before $j$ have been authenticated. The old tree used in
+Definition 22.1 is then the actual $X_{\tau_j-1}$. GPO Proposition
+39.2 and the actual chronological rule make $p_j(A)$ the actual
+birth parent, independently of every later bit. This old tree has
+$2B_{\tau_j-1}+1\le2j-1$ nodes. Maturity gives
+$\tau_j\le n_0-1\le n-1$, and $|p_j|\le\tau_j-2$.
+At cut $n$ the original beta child has rank $t_j+1$, and the original
+alpha child has rank $t_j$, where $t_j=n-\tau_j\ge1$. A wrong
+proposed orientation therefore has no present suffix of length $t_j$;
+a correct orientation has one. Hence (ACR.95) authenticates the
+proposed bit. Conversely, for the authentic prefix, choose a longest
+path in the larger child for each $v_j$. Induction proves (ACR.96)
+and completeness. The birth literal has length at most
+$\tau_j-2+1+n-\tau_j=n-1$.
+
+Only the rank tests can require length $\nu$, at the endpoint
+$\nu=2$. The number and lengths of the supplied words give the
+Read, traffic and certificate-size bounds. Constructing each small
+old tree, sorting or traversing its leaves in physical order, and
+copying its literal are polynomial operations on explicitly stored
+finite words. Sequential scans as in §21 pay for every index,
+marker, intermediate copy and head return, so they retain polynomial
+work and writes without a unit-cost address assumption. No recurrence
+needs to be synthesized to check the relation. At $d=0$, the birth
+loop and prefix are empty and the root certificate still identifies
+every allowed $n\ge2$. All source-law qualifications follow because
+the proof uses actual chronological replacement and maturity, not
+invertibility or a minimal presentation. $\square$
+

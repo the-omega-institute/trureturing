@@ -1,0 +1,39 @@
+**Lemma 55.2 (The affine solution line in drift coordinates).** For a
+full-parent world of width $b>0$, the equations
+$p(W)=p,v(W)=v,m(W)=w$ are equivalent to
+
+$$
+n=X+\alpha_{\rm w}\epsilon,\qquad
+\epsilon n=Y+\beta_{\rm w}\epsilon,\qquad
+\epsilon/n=Z+\gamma_{\rm w}\epsilon.
+\tag{55.5}
+$$
+
+**Proof.** By (50.2),
+$\det\mathsf V=-3H_2/(10T)\ne0$ at every positive width.
+Substitution of (49.1) in (55.2) and multiplication by (55.4)
+gives the identity matrix, proving the displayed inverse.
+Dividing the kernel vector (50.1) by its nonzero third coordinate
+$-3TUH_2$ gives
+
+$$
+\frac{K_{\rm w}}{-3TUH_2}
+=(\alpha_{\rm w},\beta_{\rm w},1,\gamma_{\rm w})^{\mathsf T},
+\qquad
+\mathsf V
+\begin{pmatrix}\alpha_{\rm w}\\\beta_{\rm w}\\\gamma_{\rm w}\end{pmatrix}
+=-(L_{\rm w})_{\bullet,3}.
+\tag{55.6}
+$$
+
+Thus (49.3) says exactly that
+
+$$
+\mathsf V(n,\epsilon n,\epsilon/n)^{\mathsf T}
+=q_{\rm rec}-\epsilon(L_{\rm w})_{\bullet,3}.
+$$
+
+Applying (55.4) gives (55.5). Reversing these equalities proves the
+converse. This uses the existing cofactor line, without a new parent
+or cofactor argument. $\square$
+

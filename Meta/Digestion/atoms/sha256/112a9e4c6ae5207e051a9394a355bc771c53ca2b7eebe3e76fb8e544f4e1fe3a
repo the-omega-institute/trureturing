@@ -1,0 +1,36 @@
+**Theorem 11.2 (all nominal inverses and route agreement).** On the
+entire nominal image of Definition 11.1, each view recovers the other
+three and the unique $w$. Every round trip is identity on its image,
+and every route through an intermediate view equals the direct route.
+The actual scheduled raw reports determine the nominal Boundary by
+(10.2); the nominal views do not determine the raw report block or
+the literal noisy journal.
+
+**Proof.** From Time evaluate the literal material edits and recurrence
+(8.2) from the earned unit seed, then compute $O_nx_w$, $T_t^nx_w$ and
+$O_nT_t^nx_w$. From Boundary parse $t$ by terminal prefix closure,
+find $n=I(t)$, construct $D_n$, and compute $x_w=D_nY$. From Space
+compute $x_w=T_t^{-n}x_{\rm now}$ on the parsed tree. From Memory compute
+$x_{\rm now}=D_nm_{\rm now}$ and use the Space route. In all four
+cases AAII Theorem 85.1 returns exactly the original $w$. Its replay
+identity and Theorem 10.2 then reconstruct all the original nominal
+data, including the actual advanced field. These calculations prove
+the directions without defining their exposed content by an inverse.
+
+Writing the independently defined rows as $E_i(w)$ and these decoders
+as $R_i$, we have $R_iE_i=\operatorname{Id}_{\mathcal W}$. Thus the
+explicit routes $E_jR_i$ obey $E_kR_jE_jR_i=E_kR_i$ and their round
+trips are identity on their images, exactly with these physical epoch
+and clock conventions. This algebra uses the established extraction,
+forcing and serial-inverse equations, not an assumed common apparatus.
+
+Equation (10.2) maps each actual report to the same nominal value under
+either nuisance bit. Conversely choose either legal nuisance bit at one
+scheduled Read, leaving all others fixed. It changes that literal
+integer by one and changes no field or nominal datum. Both executions
+are permitted by Definition 8.1, so the nominal views cannot decide which
+raw block occurred. Already the seed Read can be $2$ or $3$ at the same
+unit alpha. Consequently the inverse from nominal observations to raw
+records is a set of allowed records, not a single inverse. No chronology
+of noise choices is recovered. $\square$
+

@@ -1,0 +1,15 @@
+**命题 5.3（Dual paving cannot simply be dropped）。** The strict-gap
+conclusion of Theorem 2.1 can fail if dual paving is omitted, even over
+$\mathbb Z$ with a one-element gap.
+
+Proof. Let $G=\mathbb Z$, $A=\{1,2,3,4\}$, and $M$ be uniform of rank two
+on $A$. Put $B=\{1,2,3,4,5\}$ and define the target to be the
+rank-two partition matroid allowing at most one element from each
+of $\{1,2\}$ and $\{3,4,5\}$. It is loopless and paving.
+For $S=\{1,2\}$ one has $C_S=\{3,4,5\}$ of rank one,
+so $S$ has no matched target basis despite $|B|=|A|+1$ and
+$0\notin B$. The set $\{3,4,5\}$ is a hyperplane of size three;
+its complement is a two-element circuit in the dual, whose rank
+is three. Thus the hyperplane-size bound used in Theorem 2.1 fails without
+dual paving.
+

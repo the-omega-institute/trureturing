@@ -101,7 +101,7 @@ private lemma setting_le_chsh (ρ : TwoQubit) (a a' b b' : Fin 3 → ℝ)
     ‖trace (ρ * bell a a' b b')‖ ≤ chsh ρ :=
   le_csSup (chshValues_bddAbove ρ) ⟨a, a', b, b', ha, ha', hb, hb', rfl⟩
 
-private def delta (X : TwoQubit) : ℝ :=
+def delta (X : TwoQubit) : ℝ :=
   (trace (X * X)).re - (trace (partialTraceRight X * partialTraceRight X)).re
 
 private def filterBob (F : Matrix (Fin 2) (Fin 2) ℂ) (X : TwoQubit) : TwoQubit :=
@@ -242,9 +242,9 @@ private lemma canonical_delta_le (σ : TwoQubit) (hσ : σ.PosSemidef)
   rw [hsq, hpurA]
   nlinarith
 
-private def flipMatrix (n : Fin 3 → ℝ) : TwoQubit := pauli 1 ⊗ₖ (spin n * pauli 1)
+def flipMatrix (n : Fin 3 → ℝ) : TwoQubit := pauli 1 ⊗ₖ (spin n * pauli 1)
 
-private def flipped (X : TwoQubit) (n : Fin 3 → ℝ) : TwoQubit :=
+def flipped (X : TwoQubit) (n : Fin 3 → ℝ) : TwoQubit :=
   flipMatrix n * Xᵀ * (flipMatrix n)ᴴ
 
 private lemma flip_purity_homogeneous (ρ : TwoQubit) (hρ : ρ.IsHermitian)
@@ -282,7 +282,7 @@ private lemma flip_purity_homogeneous (ρ : TwoQubit) (hρ : ρ.IsHermitian)
     Fin.isValue, one_ne_zero, zero_ne_one, ite_true, ite_false]
   ring
 
-private lemma flip_purity_identity (ρ : TwoQubit) (hρ : ρ.IsHermitian)
+lemma flip_purity_identity (ρ : TwoQubit) (hρ : ρ.IsHermitian)
     (htr : trace ρ = 1) (n : Fin 3 → ℝ) (hn : vlen n = 1) :
     2 * (trace (ρ * flipped ρ n)).re + (∑ i, ∑ j, corr ρ i j ^ 2) -
       vlen ((corr ρ) *ᵥ n) ^ 2 + (blochB ρ ⬝ᵥ n) ^ 2 = 1 + 2 * delta ρ := by
@@ -392,13 +392,13 @@ private lemma direction_decomposition (u v : Fin 3 → ℝ) (huv : u ⬝ᵥ v = 
         (normalized_unit u hu).2.symm, (normalized_unit v hv).2.symm⟩
       rw [smul_dotProduct, dotProduct_smul, huv, smul_zero, smul_zero]
 
-private lemma unit_dot_le (a x : Fin 3 → ℝ) (ha : vlen a = 1) :
+lemma unit_dot_le (a x : Fin 3 → ℝ) (ha : vlen a = 1) :
     |a ⬝ᵥ x| ≤ vlen x := by
   simpa only [EuclideanSpace.inner_toLp_toLp, star_trivial, dotProduct_comm x a,
     ← vlen_eq_norm, ha, one_mul] using
     abs_real_inner_le_norm (WithLp.toLp 2 a) (WithLp.toLp 2 x)
 
-private lemma bob_radius_le (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trace ρ = 1) :
+lemma bob_radius_le (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trace ρ = 1) :
     vlen (blochB ρ) ≤ 1 := by
   have hn : vlen (blochB ρ) =
       ‖D5.S3.Quantum.Information.ActualPureQubitCostInfimum.bloch (partialTraceLeft ρ)‖ := by
@@ -463,7 +463,7 @@ private lemma pure_bob_support (ρ : TwoQubit) (hρ : ρ.PosSemidef)
   rw [hI, conjTranspose_sub, conjTranspose_one, hEH]
   noncomm_ring [hρE, hEρ]
 
-private lemma delta_le_centre (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trace ρ = 1) :
+lemma delta_le_centre (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trace ρ = 1) :
     delta ρ ≤ (1 - vlen (blochB ρ) ^ 2) * (1 / 2 - vlen (centre ρ)) := by
   rcases lt_or_eq_of_le (bob_radius_le ρ hρ htr) with hb | hb
   · obtain ⟨σ, F, hσ, hσB, hσA, hback, _, hdet⟩ := canonical_filter ρ hρ htr hb
@@ -488,7 +488,7 @@ theorem trace_pauli_kronecker_eq_corr (ρ : TwoQubit) (hρ : ρ.IsHermitian)
           (D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings.pauli_hermitian i)
           (D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings.pauli_hermitian j)))
 
-private lemma bell_trace_real_expansion (ρ : TwoQubit) (hρ : ρ.IsHermitian)
+lemma bell_trace_real_expansion (ρ : TwoQubit) (hρ : ρ.IsHermitian)
     (a a' b b' : Fin 3 → ℝ) :
     trace (ρ * bell a a' b b') =
       ((a ⬝ᵥ (corr ρ *ᵥ (b + b')) + a' ⬝ᵥ (corr ρ *ᵥ (b - b')) : ℝ) : ℂ) := by
@@ -576,15 +576,15 @@ private lemma universal_bound (ρ : TwoQubit) (hρ : ρ.PosSemidef) (htr : trace
     ring_nf
   exact hc.trans_eq he
 
-private def tightVector (t s : ℝ) : Fin 2 × Fin 2 → ℂ :=
+def tightVector (t s : ℝ) : Fin 2 × Fin 2 → ℂ :=
   fun k => ![![(Real.sqrt (1 + s) : ℂ), 0],
     ![0, (Real.sqrt ((1 - t) * (1 - s)) : ℂ)]] k.1 k.2
 
-private def tightState (t s : ℝ) : TwoQubit :=
+def tightState (t s : ℝ) : TwoQubit :=
   (1 / 2 : ℂ) • vecMulVec (tightVector t s) (star (tightVector t s)) +
     ((t * (1 - s) / 2 : ℝ) : ℂ) • vecMulVec (fun k => (ev k : ℂ)) (star (fun k => (ev k : ℂ)))
 
-private lemma tight_psd (t s : ℝ) (ht : 0 ≤ t) (hs : s ≤ 1) :
+lemma tight_psd (t s : ℝ) (ht : 0 ≤ t) (hs : s ≤ 1) :
     (tightState t s).PosSemidef := by
   rw [tightState.eq_def]
   have hhalf : (0 : ℂ) ≤ (1 / 2 : ℂ) := by norm_num [Complex.le_def]
@@ -593,7 +593,7 @@ private lemma tight_psd (t s : ℝ) (ht : 0 ≤ t) (hs : s ≤ 1) :
   exact ((posSemidef_vecMulVec_self_star _).smul hhalf).add
     ((posSemidef_vecMulVec_self_star _).smul hc)
 
-private lemma tight_readouts (t s : ℝ) (ht₁ : t ≤ 1)
+lemma tight_readouts (t s : ℝ) (ht₁ : t ≤ 1)
     (hs₀ : 0 ≤ s) (hs₁ : s ≤ 1) : trace (tightState t s) = 1 ∧
     blochA (tightState t s) = ![0, 0, t + (1 - t) * s] ∧
     blochB (tightState t s) = ![0, 0, s] ∧
@@ -636,7 +636,7 @@ private lemma tight_readouts (t s : ℝ) (ht₁ : t ≤ 1)
     try push_cast
     try ring
 
-private lemma tight_centre (t s : ℝ) (ht₀ : 0 ≤ t) (ht₁ : t ≤ 1)
+lemma tight_centre (t s : ℝ) (ht₀ : 0 ≤ t) (ht₁ : t ≤ 1)
     (hs₀ : 0 ≤ s) (hs₁ : s < 1) : vlen (centre (tightState t s)) = t := by
   obtain ⟨_, ha, hb, hT⟩ := tight_readouts t s ht₁ hs₀ hs₁.le
   have hbl : vlen (blochB (tightState t s)) = s := by

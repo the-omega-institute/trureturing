@@ -1,0 +1,41 @@
+**定理 12.2（生产者层线性 coercivity）。** 在定义 11.1 的同一 $\rho$ 与 $g$ 下，存在
+$C_{\mathrm{prod}}<\infty$，仅依赖固定记录 $R_0,b_\pm,U_\pm$，使得
+
+$$
+\boxed{\qquad
+\rho(E,U)\le C_{\mathrm{prod}}\,g(E,U)
+\qquad((E,U)\in\mathcal K).}
+$$
+
+因此定义 1.2 的任意有限全结果协议都满足
+
+$$
+\boxed{\qquad
+\int_{\mathcal K}\rho(E,U)\,d\mu(E,U)
+\le8C_{\mathrm{prod}}\,\varepsilon,\qquad}
+$$
+
+只要 $\|\Phi_\mu-\operatorname{id}_{M_4}\|_\diamond\le q+\varepsilon$。
+
+**证明。** 由引理 12.1，在每个 $\mathcal N_\sigma$ 中，以 $\sigma$ 作为定义 11.1
+中最小值的候选，得到
+
+$$
+\rho(E,U)
+\le \|E-E_\sigma\|_{\mathrm F}^2
++\min_{|\mu|=1}\|U-\mu U_\sigma\|_{\mathrm F}^2
+\le C'_\sigma g(E,U).
+$$
+
+取两个邻域的不交并 $\mathcal N$。引理 11.2 表明
+$g^{-1}(0)=\mathcal S\subset\mathcal N$，故紧集
+$\mathcal K\setminus\mathcal N$ 上 $g$ 有严格正的最小值 $m$。令
+$R_\rho=\max_\mathcal K\rho$，则该补集上
+$\rho\le(R_\rho/m)g$。与两个局部常数取最大即得全局
+$C_{\mathrm{prod}}$。
+
+最后对协议的测度积分，并使用引理 9.3 的实际缺陷预算
+$\int g\,d\mu\le8\varepsilon$，得到第二式。该结论不改变原始结果的反馈共享，也不对结果数或最小结果权重作假设。$\square$
+
+定理 12.2 关闭问题 11.4 的存在性版本。这里的常数来自固定记录的局部非退化下界与紧性，尚未给出显式闭式或最佳值；这两个量化问题仍可单独研究。定理 10.3 的通道距离平方根上界及命题 10.4 的锐性不受影响：生产者距离是平方 Frobenius 距离，而通道范数仍可只呈平方根级稳定。
+

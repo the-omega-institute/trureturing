@@ -92,7 +92,21 @@ $$\forall (U: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \oper
 
 Conjugation by U* on the first qubit expresses the state in the basis U.
 
-**Theorem 1.8 (Rotated spin correlations).**
+**Theorem 1.8 (Density matrix expectation bound).**
+
+$$\forall n \in \operatorname{Type},\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall (rho: \operatorname{Matrix}\left(n, n, \mathbb{C}\right)), (\forall (X: \operatorname{Matrix}\left(n, n, \mathbb{C}\right)), ((\operatorname{PosSemidef}\left(rho\right)) \Rightarrow ((\operatorname{trace}\left(rho\right) = 1) \Rightarrow (\left\lVert \operatorname{trace}\left(rho \cdot X\right) \right\rVert \le \left\lVert X \right\rVert))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.density_expectation_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Marek Gwóźdź; Lech Jakóbczyk (2014). *Spontaneous emission can locally create quantum discord out of classical correlations*. DOI: [10.1007/s11128-013-0639-0](https://doi.org/10.1007/s11128-013-0639-0). URL: <https://arxiv.org/abs/1306.0130v2>.
+
+*Commentary.*
+
+For every finite index type, a positive semidefinite complex matrix of trace one bounds the modulus of each trace expectation by the Euclidean operator norm.
+
+**Theorem 1.9 (Rotated spin correlations).**
 
 $$\forall (\rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right)\times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right)\times \operatorname{Fin}\left(2\right)), \mathbb{C}\right)), ((\operatorname{PosSemidef}\left(\rho\right)) \Rightarrow ((\operatorname{trace}\left(\rho\right) = 1) \Rightarrow (\forall (U: \operatorname{unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right)), (\forall (c: \operatorname{Fin}\left(3\right)\to \mathbb{R}), (\forall (d: \operatorname{Fin}\left(3\right)\to \mathbb{R}), ((\operatorname{vlen}\left(c\right) = 1) \Rightarrow ((\operatorname{vlen}\left(d\right) = 1) \Rightarrow (\lvert \operatorname{dotProduct}\left(c, \operatorname{mulVec}\left(\operatorname{connectedCorrelation}\left(\operatorname{rotateState}\left(U, \rho\right)\right), d\right)\right)\rvert \le \operatorname{maximalMutualCorrelation}\left(\rho\right)))))))))$$
 
@@ -106,7 +120,7 @@ $$\forall (\rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right)\ti
 
 Unit spin observables in any local basis provide admissible covariance values, so the absolute connected correlation is bounded by maximal mutual correlation.
 
-**Theorem 1.9 (A basis for the first marginal).**
+**Theorem 1.10 (A basis for the first marginal).**
 
 $$\forall (\rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right)\times \operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right)\times \operatorname{Fin}\left(2\right)), \mathbb{C}\right)), ((\operatorname{PosSemidef}\left(\rho\right)) \Rightarrow (\exists (U: \operatorname{unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right)), ((\operatorname{blochA}\left(\operatorname{rotateState}\left(U, \rho\right), 0\right) = 0) \land (\operatorname{blochA}\left(\operatorname{rotateState}\left(U, \rho\right), 1\right) = 0))))$$
 
@@ -120,7 +134,7 @@ $$\forall (\rho: \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right)\ti
 
 The spectral basis of the first marginal makes its first two Bloch coordinates zero. The construction includes a marginal proportional to the identity.
 
-**Theorem 1.10 (Maximal mutual correlation bounds geometric discord).**
+**Theorem 1.11 (Maximal mutual correlation bounds geometric discord).**
 
 $$\operatorname{claim}$$
 
@@ -148,6 +162,7 @@ Both quantities are nonnegative. The density-matrix estimate |tr(ρX)| ≤ ‖X�
 
 - Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.claim`
 - Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.connectedCorrelation`
+- Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.density_expectation_bound`
 - Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.geometricDiscord`
 - Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.localCovariance`
 - Truth anchor: `D5/S3/Quantum/Information/GeometricDiscordMutualCorrelationBound.marginal_basis`

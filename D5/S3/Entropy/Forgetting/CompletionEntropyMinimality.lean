@@ -74,7 +74,7 @@ theorem pushforward_is_law {X Y : Type*} [Fintype X] [Fintype Y]
         simp
       _ = 1 := hp.2
 
-private theorem marginal_eq_pushforward_fst {O W : Type*} [Fintype O] [Fintype W]
+theorem marginal_eq_pushforward_fst {O W : Type*} [Fintype O] [Fintype W]
     (p : O × W -> Real) :
     marginal p = pushforward (fun x : O × W => x.1) p := by
   classical

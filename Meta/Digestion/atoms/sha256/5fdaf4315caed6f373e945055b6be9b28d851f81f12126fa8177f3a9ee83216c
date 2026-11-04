@@ -1,0 +1,82 @@
+**Definition 51.1 (positive row on the original level).** Put
+
+$$
+h=1/\sqrt2,\quad c=\cos(\pi/8),\quad s=\sin(\pi/8),\quad
+k=c-h,\quad d=2(h+c),\quad e=2(h+s).
+\tag{51.1}
+$$
+
+The matrix $T=(b_+\ b_-)$ is the fixed certificate basis of the source,
+and not a new optimizer. Every normalized pure original effect has the form
+
+$$
+\beta=\begin{pmatrix}\sqrt{1-q}\\e^{i\phi}\sqrt q\end{pmatrix},\qquad
+E=(T\beta\beta^\dagger T^\dagger)^{\mathsf T},\qquad 0\le q\le1.
+\tag{51.2}
+$$
+
+The superscript $\mathsf T$ is ordinary transpose. For the one actual
+$U\in U(4)$ define $w=\operatorname{diag}(UU_+^\dagger)$ and
+
+$$
+\begin{aligned}
+A&=\left|\sum_{j=1}^4w_j\right|,
+&B&=|w_1-w_2+i(w_3-w_4)|,\\
+P&=h(w_1+w_2)+c(w_3+w_4),
+&Q&=h(w_1-w_2)+is(w_3-w_4).
+\end{aligned}
+\tag{51.3}
+$$
+
+These are the same-feedback quantities in (23.2), (23.9)--(23.12):
+
+$$
+\begin{aligned}
+\rho_+&=8+2q-2A,&\rho_-&=10-2q-2B,&
+\rho&=\min\{\rho_+,\rho_-\},\\
+g(E,U)&=d^2(1-q)+e^2q
+ -|\sqrt{1-q}P+e^{i\phi}\sqrt q Q|^2.
+\end{aligned}
+\tag{51.4}
+$$
+
+The ambient domain remains $\operatorname{Dens}_2\times U(4)$.
+A scalar representative always acts on the entire feedback; there is
+no separate column scalar or independently attainable recovery optimum.
+For $\rho_+=\rho=\xi$, the feasible population interval is
+$0\le q\le\min\{1,\xi/2\}$. Write $q_\xi$ for the unique interior
+positive geometric selector of Theorem 37.5 and put
+
+$$
+\begin{gathered}
+x=1-\xi/4+q/2,\quad y=\sqrt{1-x^2},\quad L=1+x,\quad
+R=hx+c,\quad u=\sqrt{1-q},\quad v=\sqrt q,\\
+\Gamma_0=uR+hvy,\qquad
+C_\xi(q)=d^2(1-q)+e^2q-4\Gamma_0^2.
+\end{gathered}
+\tag{51.5}
+$$
+
+Thus $V(\xi)=C_\xi(q_\xi)$ and $C'_\xi(q_\xi)=0$.
+For $x<1$ define exactly the positive row of (46.13), (47.1) and (50.3):
+
+$$
+\begin{aligned}
+\mu&=\tfrac12\left(\frac{hku}{R}+\frac{hv}{y}\right),&
+\nu&=\tfrac12\left(ku+\frac{(x/2-s^2)v}{hy}\right),\\
+Z&=\frac{s^2qL}{x^2},&
+\omega&=\nu-\frac Z{4\mu}
+ =\frac{L\mathfrak D_+(x,q)}{4\mu x^2},\\
+\eta&=\max\{0,-\omega\},&
+K&=\frac{k^2u}{8R}+\frac{2svL}{3\sqrt3\,x},\qquad
+J=\frac{\eta^2}{4K}.
+\end{aligned}
+\tag{51.6}
+$$
+
+Here $K=C_{\mathrm{gain},+}$; it is distinct from $C_\xi$, the trace
+modulus $B$, and the ambient domain. On this nonsingular domain
+$x,\mu,K$ are positive, including at $q=0,1$. Write
+$\Omega(\xi,q)=\omega(1-\xi/4+q/2,q)$ and use $K(\xi,q)$ for the
+same substitution in $K$.
+

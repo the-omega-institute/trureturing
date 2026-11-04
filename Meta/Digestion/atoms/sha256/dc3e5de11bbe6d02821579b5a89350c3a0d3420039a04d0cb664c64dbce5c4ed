@@ -1,0 +1,19 @@
+**Theorem 4.4 (Matching global limits at every positive even ratio).** For every fixed positive integer $j$ and every sequence of integers with $a_n\to\infty$ and $h_n/\sqrt{a_n}\to2j$,
+
+$$
+\lim_{n\to\infty}
+\frac{M(a_n,h_n)-a_n(a_n+1)^2}{a_n^2}
+=8j-2.
+\tag{4.5}
+$$
+
+In particular this is a limit of the infimum over all actual laws, independent of the chosen sequence at that ratio.
+
+**Proof.** The universal lower bound in Theorem 4.2 is $4(2j)-2=8j-2$. The single law (3.1) with this same fixed $j$ has, by (3.3), limiting normalized gap
+
+$$
+F_j(2j)=\frac{4j^2}{j}+4j-2=8j-2.
+$$
+
+It supplies a matching upper bound for the unrestricted infimum. Squeezing proves (4.5); no finite minimizer is required. ∎
+

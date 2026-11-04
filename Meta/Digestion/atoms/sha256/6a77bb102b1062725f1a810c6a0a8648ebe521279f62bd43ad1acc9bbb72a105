@@ -1,0 +1,38 @@
+**Theorem 15.2 (one actual source realizing every prescribed finite hard prefix).** For any finite distinct odd primes $p_1,\ldots,p_n$ and any recursively chosen $z_i\in Z_i$, there exists one original $v_0\in\mathbb N^2$ on which the restarting strategy enters stage $i$ at residue $z_i$ and uses exactly $2(p_i-1)$ paid reads there, for all $i\le n$ on its single continuous trajectory. The choice of $z_i$ may depend on the already prescribed finite action words of preceding stages. In particular
+
+$$
+C_n^{\rm restart}=2\sum_{i=1}^n(p_i-1),\qquad
+Q_{\rm ret}\!\left(\prod_{i=1}^np_i\right)=2\max_{i\le n}(p_i-1).
+\tag{AQBRO.10}
+$$
+
+These ratios are unbounded over finite prime lists and their actual common sources. For every $n$ there are $n$ distinct odd primes in a dyadic interval $(P,2P]$ for which the ratio in (AQBRO.10) exceeds $n/2$. The envelope policy of Theorem 14.1, on that same chosen original pair and request list, retains its bound (AQBRO.6) on its own actual trajectory.
+
+**Proof (the common-source construction).** The scalar test count follows from Definition 15.1 and the actual reset-to-current-residue simulation of Theorem 10.2. Fix $z_i$ at the current stage. Running that finite controller on $z_i$ modulo $p_i$ determines all its replies and actual selected letters, including closing letters. Its hard path costs $2(p_i-1)$. Call the resulting chronological source word $S_i$. It is a definite public word once this prescribed branch is fixed. Let $A_{i-1}=S_1\cdots S_{i-1}$, with its affine coefficients from (AQBRO.3). Its reduction is bijective on $(\mathbb Z/p_i\mathbb Z)^2$, even though its integer action need not be onto $\mathbb N^2$. Prescribe the original congruence
+
+$$
+v_0\equiv M^{-k_{i-1}}(z_i-z_{i-1}^{\rm aff})\pmod{p_i},
+\qquad
+A_{i-1}(v)=M^{k_{i-1}}v+z_{i-1}^{\rm aff}.
+\tag{AQBRO.11}
+$$
+
+The superscript distinguishes the accumulated affine offset from the chosen hard state $z_i$. All primes are distinct, so ordinary finite integer CRT gives a simultaneous nonnegative representative for each coordinate of $v_0$ modulo $\prod_i p_i$. This is one pair, chosen once. Induction in $i$ now shows that its actual entry to stage $i$ is $z_i$ modulo $p_i$, its genuine replies are precisely the prescribed branch replies, and its actual word is $S_i$. No earlier source is replaced when imposing a later congruence. This proves (AQBRO.10). It combines integer congruences of the same original pair after invertible affine transport, rather than unrelated rational floor reports.
+
+**Proof (arbitrarily many comparable primes).** The elementary Euler argument supplies the required existence without a prime-asymptotic estimate. If $\sum_p1/p$ were finite, then
+
+$$
+\prod_{p\le x}(1-1/p)^{-1}
+\le\exp\!\left(2\sum_{p\le x}1/p\right)
+$$
+
+would remain bounded, since $-\log(1-t)\le2t$ for $0\le t\le1/2$. Expansion of each finite geometric product contains $1/k$ for every $1\le k\le\lfloor x\rfloor$, by prime factorization. The harmonic sums are unbounded, a contradiction. If the numbers of primes in all dyadic intervals $(2^j,2^{j+1}]$ had a common finite bound $N$, their reciprocal sum would instead be bounded by a finite initial part plus $\sum_jN/2^j$, also a contradiction. Thus these counts are unbounded. For each $n$ choose such an interval containing $n$ odd primes, put $P=2^j$, and apply the already proved common-source construction. Then
+
+$$
+\frac{\sum_i(p_i-1)}{\max_i(p_i-1)}
+\ge\frac{nP}{2P-1}>\frac n2.
+\tag{AQBRO.12}
+$$
+
+This classical prime argument is an intermediate existence step; the source-specific assertion is the simultaneous actual execution in (AQBRO.11). The policy of Theorem 14.1 is correct on every natural pair and every list under the same variable-port premise, so it also applies to this chosen pair. The two strategies execute different actual words; no equality of endpoints or of their action, memory or service-work costs is asserted. $\square$
+

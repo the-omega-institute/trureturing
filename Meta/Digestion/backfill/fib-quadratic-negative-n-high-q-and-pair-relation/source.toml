@@ -1,0 +1,5 @@
+source_id = "fib-quadratic-negative-n-high-q-and-pair-relation"
+path = "docs/develop/theory/FIB_QUADRATIC_NEGATIVE_N_HIGH_Q_AND_PAIR_RELATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

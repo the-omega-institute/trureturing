@@ -1,0 +1,8 @@
+**正性。**若 $x\ge0$，则 $y=E(x)$ 为 Hermitian。若 $y$ 有负谱，取其负谱投影 $p\in A$，则 $pyp\le0$ 且非零，忠实性给 $\phi_\rho(pyp)<0$。另一方面双模性和保校准性给
+
+$$
+\phi_\rho(pyp)=\phi_\rho(E(pxp))=\phi_\rho(pxp)\ge0,
+$$
+
+矛盾，故 $E(x)\ge0$。
+

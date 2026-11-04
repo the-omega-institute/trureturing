@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:4cba3e7149c4a9baefc184b5d48a612e7a8feb2934a12427c4ad9f56256eea53
+  normalized_sha256: sha256:4cba3e7149c4a9baefc184b5d48a612e7a8feb2934a12427c4ad9f56256eea53
+cas_ref: sha256:4cba3e7149c4a9baefc184b5d48a612e7a8feb2934a12427c4ad9f56256eea53
+coverage_gids:
+  - gid: D5/S3/HomologicalAlgebra/AbelianExtensionH1.classification
+    target_statement_id: sha256:14d8632ba8a8eaed0186b40a935ec7a324a53065193da6fa720d049ae07a9c6a
+receipts:
+  unresolved_subitems: []

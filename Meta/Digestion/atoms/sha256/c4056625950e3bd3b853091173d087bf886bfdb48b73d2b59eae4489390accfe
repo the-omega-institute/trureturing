@@ -1,0 +1,6 @@
+#### 定义 6.2（自适应量子仪器记录）
+
+固定有限深度、有限结果菜单的记录树。给定 $\rho\ge0$、$\operatorname{Tr}\rho=1$，令 $\sigma_\varnothing=\rho$。每条已记录历史 $h$ 之后提供仪器 $\{\Phi_a^h\}_a$，其中各映射完全正且其和保迹。令 $\sigma_h$ 为沿实际历史复合得到的未归一态，$p(h)=\operatorname{Tr}\sigma_h$。
+
+<a id="thm-instrument"></a>
+

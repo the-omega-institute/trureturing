@@ -1,0 +1,53 @@
+**Definition 1.1 (source and two address alphabets).** Use the free ordered
+algebra $\mathcal T$, substitution $\rho$, leaf count $\ell$, four-valued
+response $r_t$, and presence $P_t$ of [Atomic Boundary Trichotomy][ABT]
+(ABT), Definitions 2.1,33.1. Thus the atomic labels are $\alpha,\beta$,
+the constructor is the ordered, nonassociative $\langle s,t\rangle$, and
+
+$$
+ \rho\alpha=\beta,\qquad
+ \rho\beta=\langle\beta,\alpha\rangle,\qquad
+ \rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+ \tag{GPO.1}
+$$
+
+These are two labels and one specified substitution, not two universal
+operations. Semantic addresses have alphabet $\{L,R\}$. Physical addresses
+have two distinguishable names $\{a,b\}$ and the same empty root word.
+A realization has one bijection
+$\pi:\{a,b\}\longrightarrow\{L,R\}$, extended letterwise to words as
+$\pi_*$. It is the same bijection at every branch, including branches
+created by later substitutions. Put
+
+$$
+ P^\pi_t(w)=P_t(\pi_*w),\qquad
+ r^\pi_t(w)=r_t(\pi_*w).
+ \tag{GPO.2}
+$$
+
+For $1\le A\le B<2A$, the entrance domain is
+
+$$
+ \mathcal E_{[A,B]}=
+ \{(u,k,\pi,v): A\le n=\ell(u)\le B,\quad k\ge1,
+                           \quad v=\rho^{2k}u\}.
+ \tag{GPO.3}
+$$
+
+Here $u$ is the authentic entrance original, and $2k$ counts its actual
+forward substitutions before entrance. The recovery target is
+$(\pi,u,k,n)$, not an arbitrary predecessor or a primitive endpoint.
+The passive domain $\mathcal E^{\rm pass}_{[A,B]}$ restricts $k\ge2$;
+the preparation domain retains every $k\ge1$. The fixed global bijection
+is a realization premise; (GPO.1) does not prove its physical persistence.
+ABT16.2 leaves root and ordered-reference acquisition separate. Here
+the bound root remains supplied, while the interpretation $\pi$ does not.
+
+The ordered algebra and homomorphic extension are the existing
+`FreeMagma.of`, `FreeMagma.mul`, `FreeMagma.lift` of Kenny Lau,
+`Mathlib/Algebra/Free.lean`, revision
+`56a005855ea17e0b0958f73ec801ae140b0a1679`, instantiated as
+`Source = FreeMagma Bool` with substitution and composition in
+[GenealogicalFiberTransport][GFT]. Their supplied order is the semantic
+order whose physical correspondence is unknown here.
+

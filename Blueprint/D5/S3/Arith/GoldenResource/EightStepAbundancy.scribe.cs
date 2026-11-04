@@ -26,6 +26,27 @@ internal sealed class EightStepAbundancyDocument : IScribeDocumentDefinition
                         + "positive layer k, the multiplicative abundancy gain is 1 + 1/D(p,k)."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("denominator-mono"),
+                DeclarationHandle.Create(Prefix + "denominator_mono"),
+                H("Monotonicity in the layer depth"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(Wu),
+                Blocks(Paragraph(Text("For every natural p and depths a<=b, B(p,a)<=B(p,b). This is finite-sum monotonicity on nested ranges and supplies the denominator comparison in an actual prime-layer exchange."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("denominator-pos"),
+                DeclarationHandle.Create(Prefix + "denominator_pos"),
+                H("Positive prime-layer denominator"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(Wu),
+                Blocks(Paragraph(Text("For every prime p and positive depth k, B(p,k)>0. The first layer equals p and every later layer adds a nonnegative natural power."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("layer-ratio-identity"),
+                DeclarationHandle.Create(Prefix + "layer_ratio_identity"),
+                H("The exact multiplicative gain"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(Wu),
+                Blocks(Paragraph(Text("For every prime p and positive depth k, (1-p^(-(k+1)))/(1-p^(-k))=1+1/B(p,k), interpreted in the reals. The finite geometric sum gives this identity and hence the exact gain used in actual one-layer abundancy comparisons."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("eight-step-layer-cutoff"),
                 DeclarationHandle.Create(Prefix + "eight_step_layer_cutoff"),
                 H("The strict eighth-layer boundary"),

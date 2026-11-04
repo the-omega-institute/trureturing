@@ -1,0 +1,34 @@
+### 定义 2.1（合法路径空间）
+
+令
+
+$$
+\mathcal B_m=
+\left\{
+b_1\cdots b_m\in\{0,1\}^m:
+b_jb_{j+1}=0
+\right\},
+\qquad
+\mathcal H_m=\mathbb C^{\mathcal B_m}.
+$$
+
+这里禁止相邻两个位置同时为 $1$。当 $m=3$ 时，合法词恰有
+
+$$
+000,\quad100,\quad010,\quad001,\quad101.
+$$
+
+采用项目模式标签，可写为
+
+$$
+|\mathrm{null}\rangle,\quad|1\rangle,\quad|2\rangle,\quad|3\rangle,\quad|13\rangle.
+$$
+
+合法词数满足
+
+$$
+\dim\mathcal H_m=F_{m+2},
+$$
+
+因为按首位分类后得到 Fibonacci 递推。
+

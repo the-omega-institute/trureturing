@@ -1,0 +1,4 @@
+## 10. Quantitative square-root transport through actual feedback
+
+The preceding section used compactness to obtain a qualitative modulus. The next estimate keeps the same feedback-preserving refinement as Section 8 and supplies a direct quantitative bridge from its two defect budgets to the implemented channel. No outcome weight is bounded below, and no feedback is re-optimized after spectral refinement.
+

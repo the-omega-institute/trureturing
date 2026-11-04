@@ -43,6 +43,14 @@ internal sealed class GurvitsBarnumBallDocument : IScribeDocumentDefinition
         "Block positivity bounds the Frobenius sum by the real trace and gives a separable ball about a scalar identity.",
         H("The Gurvits--Barnum separable ball"), Blocks(
             Paragraph(Text("All matrices act on the product index set Fin m times Fin n. SeparableCone consists of finite sums of Kronecker products of positive semidefinite factors. BlockPositive means that the real quadratic form is nonnegative on every product vector. The Frobenius sum below is the sum of squared entry norms, independently of any default norm on matrices. Empty index sets and a ball of radius zero are included.")),
+            Describe.Lean(DescribeId.Create("gb-flip"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumBall.flip"),
+                H("Interchanging the two tensor factors"), StatementSource.FromAuthor(Disp(FlipDefinition())),
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("The flip of a matrix is its submatrix along the product-index swap in both arguments. It acts on Fin n times Fin m when the original matrix acts on Fin m times Fin n, and is defined for all natural dimensions, including zero."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("gb-trace-flip"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumBall.trace_flip"),
+                H("Tensor-factor interchange preserves the trace"), StatementSource.FromAuthor(Disp(TraceFlipFormula())),
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text("Interchanging both product indices only reorders the diagonal entries. Expanding the trace as the two finite coordinate sums and interchanging those sums proves equality of the complex traces."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("gb-psd-trace-square"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumBall.psd_trace_sq"),
                 H("Positive semidefinite trace-square bound"), StatementSource.FromAuthor(Disp(PsdTraceSquare())),
@@ -118,4 +126,25 @@ internal sealed class GurvitsBarnumBallDocument : IScribeDocumentDefinition
             Imp(And(Herm(q), And(Eq(Mul(q, q), q), And(Eq(Tr(q), ell), Le(D(1), ell)))),
                 SEP(ray)))));
     }
+
+    private static Formula FlipAll(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, Parenthesized(Seq(F.Id(name), Colon, Sp, type)), Comma, Sp, Parenthesized(body));
+    private static Formula FlipProduct(Formula left, Formula right) =>
+        Parenthesized(Seq(left, Sp, Times, Sp, right));
+    private static Formula FlipMatrixType(string rows, string columns)
+    {
+        Formula index = FlipProduct(Call("Fin", F.Id(rows)), Call("Fin", F.Id(columns)));
+        return Call("Matrix", index, index, C);
+    }
+    private static Formula FlipBinders(Formula body) => FlipAll("m", N, FlipAll("n", N,
+        FlipAll("H", FlipMatrixType("m", "n"), body)));
+    private static Formula FlipDefinition()
+    {
+        Formula swap = Seq(Operatorname, Grp(F.Id("Prod")), Dot, Operatorname, Grp(F.Id("swap")));
+        Formula left = Parenthesized(Seq(Call("flip", F.Id("H")), Colon, Sp, FlipMatrixType("n", "m")));
+        return FlipBinders(Eq(left, QualifiedCall("Matrix", "submatrix", F.Id("H"), swap, swap)));
+    }
+    private static Formula TraceFlipFormula() => FlipBinders(Eq(
+        QualifiedCall("Matrix", "trace", Call("flip", F.Id("H"))),
+        QualifiedCall("Matrix", "trace", F.Id("H"))));
 }

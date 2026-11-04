@@ -1,0 +1,54 @@
+### 命题 13.4（一般来源的一个充分误差裕量）
+
+固定 $R\in\mathcal M_k$ 及使 $K_q(R)$ 无解的 $q$，简记
+$a=(a_0,\ldots,a_q)$、$b=b^{(q)}$、$m=\min_jb_j>0$、$t=a_0>0$。
+对 $x\in\mathbb R^k$ 定义
+
+$$
+ (B_q(b)x)_i=\sum_{h=0}^{k-1-i}x_hb_{h+i},\qquad
+ H=1+\frac{2(t+1)}m,\qquad
+ X=\left\{x\ge0:\sum_{h=0}^{k-1-q}x_h=1,\quad\sum_{h=0}^{k-1}x_h\le H\right\},
+\tag{13.10}
+$$
+
+并置
+
+$$
+ r=\min_{x\in X}\|a-B_q(b)x\|_\infty,\qquad
+ \gamma_q(R)=\min\left\{\frac m4,\frac12,\frac{r}{2(1+H)}\right\}.
+\tag{13.11}
+$$
+
+则 $r,\gamma_q(R)>0$。任何 $0<\varepsilon<\gamma_q(R)$ 均使定理 13.3 的
+规范词和完整相容性排除规则对 $R$ 的全部允许报告成功。
+该裕量只作充分界，不断言为本词或所有协议的最大容限。
+
+**证明。** $H>1$，故 $X$ 非空，例如取 $x=e_0$。$X$ 闭且有界；由有限维
+Heine--Borel 和连续函数最小值定理，(13.11) 的最小值达到。若 $r=0$，其达到点
+解 (13.3)，矛盾。因此 $r>0$。
+
+假设 $R$ 的某份允许规范报告也由一个严格正秩一来源 $S$ 相容。
+归一化 $S=xv^{\mathsf T}$，两来源与同一报告各相差至多 $\varepsilon$，故
+$|v_j-b_j|\le2\varepsilon$、$|a_i(S)-a_i|\le2\varepsilon$。
+由 $2\varepsilon<m/2$ 和 $2\varepsilon<1$，
+
+$$
+ v_j>m/2,\qquad
+ \sum_hx_h\le\frac{2a_0(S)}m
+ <\frac{2(t+1)}m<H.
+\tag{13.12}
+$$
+
+所以同一个归一化 $x$ 属于 $X$，且逐行有
+
+$$
+ |a_i-(B_q(b)x)_i|
+ \le |a_i-a_i(S)|+
+       \sum_{h=0}^{k-1-i}x_h|v_{h+i}-b_{h+i}|
+ \le2\varepsilon(1+H)<r,
+\tag{13.13}
+$$
+
+与 $r$ 的定义矛盾。此估计控制了有误差的系数 $v$ 与同一组全部未知 $x$，
+不把各行的分别可行解拼成共同来源。∎
+

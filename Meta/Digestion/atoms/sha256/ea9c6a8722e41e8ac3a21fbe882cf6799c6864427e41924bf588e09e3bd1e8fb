@@ -1,0 +1,38 @@
+**Lemma 56.3 (A positive remainder prevents an infinite branch).**
+For every $b>0$, $\alpha_{\rm w}=0$ implies $\kappa_{\rm rec}>0$,
+independently of $(p,v,w)$. Hence
+
+$$
+\kappa_{\rm rec}=0\quad\Longrightarrow\quad\alpha_{\rm w}\ne0.
+\tag{56.5}
+$$
+
+**Proof.** Define the polynomial
+$P_*=H_1H_3-T^2UH_2^2$. Its exact division identity is
+
+$$
+\begin{aligned}
+31250P_*={}&H_0\bigl(1611250000b^3+10453832500b^2
+                  +67037081050b+1318823177377\bigr)\\
+&+1544327184292999b^3+1181902158153034b^2\\
+&+1962712091375234b+1661282250974774.
+\end{aligned}
+\tag{56.6}
+$$
+
+Multiplying the polynomials in (47.2) proves this identity coefficient
+by coefficient. If $\alpha_{\rm w}=0$, the positive denominator in
+(55.1) implies $H_0=0$. Every coefficient of the displayed remainder
+is strictly positive, so $P_*>0$ for $b>0$. In this case the term
+$\alpha_{\rm w}Z$ vanishes and
+
+$$
+\kappa_{\rm rec}=\gamma_{\rm w}\beta_{\rm w}-1
+=\frac{P_*}{T^2UH_2^2}>0.
+\tag{56.7}
+$$
+
+This proves (56.5). In particular, simultaneous vanishing of the
+linear consistency equation's coefficients cannot leave an
+identically zero quadratic. $\square$
+

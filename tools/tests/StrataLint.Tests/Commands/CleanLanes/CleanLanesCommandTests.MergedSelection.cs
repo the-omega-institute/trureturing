@@ -6,26 +6,6 @@ namespace StrataLint.Tests;
 
 public sealed partial class CleanLanesCommandTests
 {
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void MergedCleanLaneAtThreeHoursBypassesOriginalAgeAndBehind(bool force)
-    {
-        using var fixture = new CleanLanesFixture();
-        var lane = fixture.AddWorkedLane("harness/merged-work");
-        var head = fixture.Head(lane);
-        var arguments = force ? new[] { "--lanes-only", "--force" } : ["--lanes-only"];
-
-        var result = fixture.RunAt(fixture.LastUpdate(lane).AddSeconds(10800), arguments);
-
-        Assert.True(result.Success, result.Error);
-        Assert.Contains(ReadItems(result.Output), item =>
-            ItemMatches(item, lane, force ? "removed" : "would_remove", "merged_to_dev"));
-        Assert.Equal(!force, Directory.Exists(lane));
-        Assert.True(fixture.BranchExists("harness/merged-work"));
-        Assert.Equal(head, ReadSummary(result.Output).GetProperty("dev_commit").GetString());
-    }
-
     [Fact]
     public void ReusedLaneCheckoutToOldDevDoesNotRenewSavedWorkOrAllocation()
     {
@@ -39,7 +19,7 @@ public sealed partial class CleanLanesCommandTests
 
         Assert.True(result.Success, result.Error);
         Assert.False(Directory.Exists(lane));
-        Assert.Equal("merged_to_dev", ReasonFor(result.Output, lane));
+        Assert.Equal("head_commit_age", ReasonFor(result.Output, lane));
     }
 
     [Theory]
@@ -47,7 +27,7 @@ public sealed partial class CleanLanesCommandTests
     [InlineData("untracked", false)]
     [InlineData("staged", false)]
     [InlineData("untracked", true)]
-    public void MergedDirtyLaneUsesOriginalSelectorsAndCheckpoint(string shape, bool stale)
+    public void CommitAgeSelectedDirtyLaneIsCheckpointed(string shape, bool stale)
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddWorkedLane("harness/dirty-landed");
@@ -55,13 +35,13 @@ public sealed partial class CleanLanesCommandTests
         File.WriteAllText(file, "recover this snapshot\n");
         if (shape == "staged") CleanLanesFixture.Git(lane, "add", "changes.txt");
         if (stale) fixture.AdvanceBase(300);
-        var now = fixture.LastUpdate(lane).AddSeconds(stale ? 86400 : 60);
+        var now = fixture.LastUpdate(lane).AddSeconds(stale ? 86401 : 60);
 
         var result = fixture.RunAt(now, "--force", "--lanes-only");
 
         Assert.True(result.Success, result.Error);
         Assert.Equal(!stale, Directory.Exists(lane));
-        Assert.Equal(stale ? "stale_behind" : "recently_updated", ReasonFor(result.Output, lane));
+        Assert.Equal(stale ? "head_commit_age" : "recently_updated", ReasonFor(result.Output, lane));
         if (stale)
         {
             CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory, "worktree", "add", lane, "harness/dirty-landed");
@@ -69,29 +49,8 @@ public sealed partial class CleanLanesCommandTests
         }
     }
 
-    [Theory]
-    [InlineData(299, 86400, "not_far_behind")]
-    [InlineData(300, 86399, "recently_updated")]
-    [InlineData(300, 86400, "stale_behind")]
-    public void UnmergedWorkedLaneStillRequiresBothBoundaries(int behind, int seconds, string reason)
-    {
-        using var fixture = new CleanLanesFixture();
-        var lane = fixture.AddWorkedLane("harness/unmerged-work", landed: false);
-        fixture.AdvanceBase(behind);
-        var now = fixture.LastUpdate(lane).AddSeconds(seconds);
-
-        var preview = fixture.RunAt(now, "--lanes-only");
-        var force = fixture.RunAt(now, "--force", "--lanes-only");
-
-        Assert.True(preview.Success, preview.Error);
-        Assert.True(force.Success, force.Error);
-        Assert.Equal(reason, ReasonFor(preview.Output, lane));
-        Assert.Equal(reason, ReasonFor(force.Output, lane));
-        Assert.Equal(reason != "stale_behind", Directory.Exists(lane));
-    }
-
     [Fact]
-    public void AlternateBaseCannotCertifyLaneMergedToDev()
+    public void AlternateBaseDoesNotVetoOldCommitRemoval()
     {
         using var fixture = new CleanLanesFixture();
         const string branch = "harness/alternate-base-only";
@@ -100,14 +59,14 @@ public sealed partial class CleanLanesCommandTests
         var result = fixture.RunWithBase(branch, "--force", "--lanes-only");
 
         Assert.True(result.Success, result.Error);
-        Assert.True(Directory.Exists(lane));
-        Assert.Equal("not_far_behind", ReasonFor(result.Output, lane));
+        Assert.False(Directory.Exists(lane));
+        Assert.Equal("head_commit_age", ReasonFor(result.Output, lane));
         Assert.Equal(fixture.Head(fixture.RepositoryWorkingDirectory),
             ReadSummary(result.Output).GetProperty("dev_commit").GetString());
     }
 
     [Fact]
-    public void AlternateBaseCannotPreventActualDevMergeShortcut()
+    public void AlternateBaseDoesNotChangeCommitAgeSelection()
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddWorkedLane("harness/landed-before-base");
@@ -117,35 +76,13 @@ public sealed partial class CleanLanesCommandTests
 
         Assert.True(result.Success, result.Error);
         Assert.False(Directory.Exists(lane));
-        Assert.Equal("merged_to_dev", ReasonFor(result.Output, lane));
-    }
-
-    [Theory]
-    [InlineData("missing", "reflog_missing")]
-    [InlineData("corrupt", "reflog_invalid")]
-    [InlineData("mismatch", "reflog_head_mismatch")]
-    public void UnreadableReflogRetainsLaneWithNamedReason(string shape, string detail)
-    {
-        using var fixture = new CleanLanesFixture();
-        var lane = fixture.AddWorkedLane("harness/unknown-update");
-        fixture.AdvanceBase(300);
-        var log = Path.Combine(fixture.WorktreeGitDirectory(lane), "logs", "HEAD");
-        if (shape == "missing") File.Delete(log);
-        else if (shape == "corrupt") File.AppendAllText(log, "not a reflog record\n");
-        else fixture.RewriteLastRecord(lane, newHead: CleanLanesFixture.Git(lane, "rev-parse", "HEAD^").Trim());
-
-        var result = fixture.Run("--force", "--lanes-only");
-
-        Assert.True(result.Success, result.Error);
-        Assert.True(Directory.Exists(lane));
-        Assert.Equal("update_unknown", ReasonFor(result.Output, lane));
-        AssertItemProperty(ReadItems(result.Output), "path", lane, "selection_detail", detail);
+        Assert.Equal("head_commit_age", ReasonFor(result.Output, lane));
     }
 
     [Theory]
     [InlineData("dev")]
     [InlineData("ancestry")]
-    public void UnknownMergeEvidenceRetainsEvenOldFarBehindLane(string failure)
+    public void UnknownMergeEvidenceDoesNotGateOldCommitRemoval(string failure)
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddWorkedLane("harness/unknown-merge");
@@ -158,15 +95,13 @@ public sealed partial class CleanLanesCommandTests
         var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
 
         Assert.True(result.Success, result.Error);
-        Assert.True(Directory.Exists(lane));
-        Assert.Equal(failure == "dev" ? "dev_unknown" : "merged_state_unknown", ReasonFor(result.Output, lane));
+        Assert.False(Directory.Exists(lane));
+        Assert.Equal("head_commit_age", ReasonFor(result.Output, lane));
     }
 
     [Theory]
     [InlineData("head")]
     [InlineData("branch")]
-    [InlineData("reflog")]
-    [InlineData("dirty")]
     public void ForceReobservesSelectionAndReportsRaceChanged(string change)
     {
         using var fixture = new CleanLanesFixture();
@@ -179,9 +114,6 @@ public sealed partial class CleanLanesCommandTests
                 injected = true;
                 if (change == "head") CleanLanesFixture.Git(lane, "commit", "--allow-empty", "-m", "new task");
                 else if (change == "branch") CleanLanesFixture.Git(lane, "switch", "-c", "harness/replacement-task");
-                else if (change == "dirty") File.WriteAllText(Path.Combine(lane, "new-task.txt"), "new task\n");
-                else fixture.RewriteLastRecord(lane,
-                    newHead: CleanLanesFixture.Git(lane, "rev-parse", "HEAD^").Trim());
             }
             return null;
         });
@@ -207,7 +139,7 @@ public sealed partial class CleanLanesCommandTests
         var result = fixture.Run("--force", "--lanes-only");
 
         Assert.True(result.Success, result.Error);
-        Assert.Equal(landed ? "merged_to_dev" : "stale_behind", ReasonFor(result.Output, lane));
+        Assert.Equal(landed ? "head_commit_age" : "head_commit_age", ReasonFor(result.Output, lane));
         Assert.False(Directory.Exists(lane));
     }
 
@@ -216,7 +148,7 @@ public sealed partial class CleanLanesCommandTests
     [InlineData("unmerged", "preservation-entry")]
     [InlineData("dirty", "head-read")]
     [InlineData("dirty", "preservation-entry")]
-    public void OriginalSelectorsCheckpointLateOrdinaryChanges(string shape, string boundary)
+    public void CommitAgeSelectionCheckpointsLateOrdinaryChanges(string shape, string boundary)
     {
         using var fixture = new CleanLanesFixture();
         const string branch = "harness/original-selector-race";
@@ -243,7 +175,7 @@ public sealed partial class CleanLanesCommandTests
 
         Assert.True(result.Success, result.Error);
         Assert.True(injected);
-        Assert.Equal("stale_behind", ReasonFor(result.Output, lane));
+        Assert.Equal("head_commit_age", ReasonFor(result.Output, lane));
         Assert.False(Directory.Exists(lane));
         Assert.NotEqual(head, CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory, "rev-parse", branch).Trim());
         Assert.Equal("latest task\n", CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory,
@@ -274,11 +206,11 @@ public sealed partial class CleanLanesCommandTests
         Assert.False(Directory.Exists(lane));
         Assert.Equal(1, reads);
         Assert.Equal(dev, ReadSummary(result.Output).GetProperty("dev_commit").GetString());
-        Assert.Equal("merged_to_dev", ReasonFor(result.Output, lane));
+        Assert.Equal("head_commit_age", ReasonFor(result.Output, lane));
     }
 
     [Fact]
-    public void SquashMergeDoesNotSupplyAncestryEvidence()
+    public void SquashMergeDoesNotLowerCommitAgeThreshold()
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddMergedLane("harness/squashed");
@@ -302,7 +234,7 @@ public sealed partial class CleanLanesCommandTests
     [InlineData("rebase-merge")]
     [InlineData("rebase-apply")]
     [InlineData("sequencer")]
-    public void UnfinishedOperationPreventsMergedShortcut(string marker)
+    public void UnfinishedOperationStillPreventsNativeRemoval(string marker)
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddWorkedLane("harness/unfinished-landed");
@@ -310,15 +242,15 @@ public sealed partial class CleanLanesCommandTests
         if (marker.EndsWith("HEAD", StringComparison.Ordinal)) File.WriteAllText(path, fixture.Head(lane) + "\n");
         else Directory.CreateDirectory(path);
 
-        var result = fixture.RunAt(fixture.LastUpdate(lane).AddSeconds(10800), "--force", "--lanes-only");
+        var result = fixture.RunAt(fixture.LastUpdate(lane).AddSeconds(86401), "--force", "--lanes-only");
 
         Assert.True(result.Success, result.Error);
         Assert.True(Directory.Exists(lane));
-        Assert.DoesNotContain(ReadItems(result.Output), item => ItemMatches(item, lane, "removed", "merged_to_dev"));
+        Assert.DoesNotContain(ReadItems(result.Output), item => ItemMatches(item, lane, "removed", "head_commit_age"));
     }
 
     [Fact]
-    public void DetachedWorkedHeadUsesShortcutAndRetainsRecoveryBranchThroughOrphanSweep()
+    public void OldDetachedHeadRetainsRecoveryBranch()
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddDetachedJudge("trureturing-detached-work");
@@ -326,12 +258,12 @@ public sealed partial class CleanLanesCommandTests
         var head = fixture.Head(lane);
         CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory, "merge", "--ff-only", head);
 
-        var result = fixture.RunAt(fixture.LastUpdate(lane).AddSeconds(10800), "--force");
+        var result = fixture.RunAt(fixture.LastUpdate(lane).AddSeconds(86401), "--force");
 
         Assert.True(result.Success, result.Error);
         Assert.False(Directory.Exists(lane));
         var item = ReadItems(result.Output).Single(item => item.GetProperty("path").GetString() == lane);
-        Assert.Equal("merged_to_dev", item.GetProperty("reason").GetString());
+        Assert.Equal("head_commit_age", item.GetProperty("reason").GetString());
         var branch = item.GetProperty("recovery_branch").GetString()!;
         Assert.True(fixture.BranchExists(branch["refs/heads/".Length..]));
         Assert.Equal(head, CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory, "rev-parse", branch).Trim());

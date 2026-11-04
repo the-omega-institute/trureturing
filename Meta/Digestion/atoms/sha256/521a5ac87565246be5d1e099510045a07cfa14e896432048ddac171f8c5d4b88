@@ -1,0 +1,98 @@
+**Theorem 27.2 (external-forest clock and exact local index).** Fix any
+physical cone $p$ of depth $m$, considered through its full forward
+origin orbit, and put $e=e_p$. Its preceding exterior forest is
+
+$$
+ \mathcal E_p=\{ua:ub\preceq p\}.
+ \tag{ACR.112}
+$$
+
+The roots in this set are pairwise prefix-incomparable, and all have
+been created by cut $e$. Let $L_p(t)$ count their beta leaves at cut
+$t\ge e$, using their actual immutable descriptors and the actual
+forward substitution. The first global birth index inside $p$ in
+normalized update $k\ge1$ is
+
+$$
+ I_p(k)=F_{e+k}+L_p(e+k-1).
+ \tag{ACR.113}
+$$
+
+It satisfies, over the integers rather than modulo two,
+
+$$
+ I_p(k+2)=I_p(k+1)+I_p(k),\qquad
+ 1\le I_p(1),I_p(2)<F_{2m+4}.
+ \tag{ACR.114}
+$$
+
+To recover every descendant's actual index from these two integers,
+give a relative node $v$ the normalized immutable descriptor
+$(\beta_v,\varsigma_v)$, with $(\beta_\varepsilon,
+\varsigma_\varepsilon)=(0,\beta)$, and write
+$\theta_v=\beta_v+2-\mathbf1_{\varsigma_v=\beta}$.
+At its branch time $k=\theta_v$, its global birth index is exactly
+
+$$
+ J_p(v)=I_p(k)+
+ \sum_{\substack{wb\preceq v}}
+ \lambda_{\varsigma_{wa}}(k-1-\theta_w),\qquad
+ \lambda_\alpha(t)=F_t,\quad\lambda_\beta(t)=F_{t+1}.
+ \tag{ACR.115}
+$$
+
+Its orientation is $z_{J_p(v)}$. Its two children have normalized
+creation time $\theta_v$ and initial labels $(\beta,\alpha)$ at
+$(a,b)$ for bit one, and $(\alpha,\beta)$ for bit zero. Thus the
+aligned output stream and the two clock seeds determine the entire
+local forward tree and each finite local support, without an exterior
+label roster, the global value $e$, or a separate chronology input.
+
+Proof. The siblings skipped at the successive physical $b$ edges
+partition precisely the leaves lexicographically before the cone $p$.
+Every one was created at a proper ancestor's branch, strictly before
+$p$ branches. Consequently the forest exists at $e$. For a forest of
+old leaves, if its alpha and beta counts at $t$ are $A(t),L(t)$, then
+
+$$
+ (A(t+1),L(t+1))=(L(t),A(t)+L(t)).
+ \tag{ACR.116}
+$$
+
+Port orientations do not affect these counts. It follows that
+$L(t+2)=L(t+1)+L(t)$ for every $t\ge e$. This includes forests with
+mixed initial labels and the empty forest at the root.
+
+At cut $e+k-1$ the normalized cone has $F_k$ beta leaves, by NRW
+Lemma 2.1. They form one nonempty interval in the global beta-leaf
+list. Before update $e+k$ there have been
+$B_{e+k-1}=F_{e+k}-1$ births, and exactly $L_p(e+k-1)$ beta leaves
+precede that interval. The first birth inside it therefore has index
+$B_{e+k-1}+L_p(e+k-1)+1$, proving (ACR.113), including its one-based
+index cancellation. Applying the Fibonacci recurrence to its two
+summands proves (ACR.114)'s recurrence for $k\ge1$.
+
+The root branches at two. Each physical edge increases branch time
+by one or two, whence $m+2\le\tau_p\le2m+2$. Each of the first two
+normalized batches lies by update $\tau_p+1\le2m+3$, so its first
+index is positive and at most $B_{2m+3}=F_{2m+4}-1$. This proves
+both strict seed bounds without knowing any orientations.
+
+For a branch descendant $v$, partition the beta leaves inside $p$
+preceding $v$ by its skipped relative $a$-siblings. A sibling rooted
+at $wa$ was created at normalized time $\theta_w$. Its beta mass
+at $k-1$ is exactly $\lambda_{\varsigma_{wa}}(k-1-\theta_w)$,
+using GPO Definition 39.1. The ages are nonnegative because these
+proper ancestors have already branched. Adding their masses to the
+first index of the whole $p$ block proves (ACR.115).
+
+Inductively, the bit at that actual index assigns exactly the two
+actual initial child labels. For every nonempty relative word $v$,
+its global creation time is $e+\beta_v$ and its immutable initial
+label is $\varsigma_v$. The local root is the sole coordinate
+exception described in Definition 27.1. This proves the global/local
+correspondence for both creation types and for every descendant;
+no shift of the output stream or inversion of its law occurs.
+At local cut $q-1$, the normalized root has rank $q$, explaining
+why $q$ itself is not the elapsed local time. $\square$
+

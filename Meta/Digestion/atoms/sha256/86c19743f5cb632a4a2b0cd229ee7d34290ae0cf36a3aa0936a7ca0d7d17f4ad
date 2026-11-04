@@ -1,0 +1,43 @@
+**Definition 30.1 (an event-only adaptive selector).** Retain exactly LAB,
+its known allocated $\alpha$ seed, its persistent logical addresses and
+all finite lawful successful generation words of Definition 17.1. An
+installed selector $C$ consists of a finite nonempty state set $Q$, one
+fixed initial state $q_0$, and a deterministic terminating finite program
+for
+
+$$
+C:Q\times\bigl(\{P,S\}\times\{L,R\}^*\bigr)
+       \longrightarrow Q\times\{0,1\}.
+\tag{AA.96}
+$$
+
+The program receives each actual successful event once, with its literal
+kind and acquired finite address. It receives no refused request, ordinary
+query, elapsed time, allocation ordinal, future endpoint, unselected-history
+oracle or additional source readout. In particular its transition uses the
+old selection state, not a state chosen retrospectively at the endpoint.
+For a lawful word $w$, define $q_C(w)$ and the selected identity word
+$\nu_C(w)$ by starting from $(q_0,\varepsilon)$ and, for each successive
+event $e$, applying $C(q,e)=(q',b)$ and appending $e$ precisely when $b=1$.
+This is ordinary deterministic state transduction; its iteration is the
+fold-and-append method, not a new transducer theorem. Finite $Q$ does not
+bound the address input, program workspace, source or retained records.
+
+For each current branch $v$, let $V^C_v(w)$ project the selected events
+strictly below $v$ to their first side below $v$, in actual selected order.
+This has the selected-tape meaning of Definition 24.1, with history-dependent
+membership replacing fixed $\chi$. At fixed installation, binding, current
+rights and settled phase the observation being tested is
+
+$$
+O_C(w)=\bigl(t,(V^C_v(w))_{v\in I(t)},q_C(w)\bigr),
+\qquad w\in\mathcal H(t).
+\tag{AA.97}
+$$
+
+Every selected side coordinate and its length is included. No accessible
+full tape, input archive, membership marks, timing field or observable
+capacity is included. Such extra inputs would define a different
+observation. Recovery here means a single-valued decoder on this actual
+image, not an ability to obtain an inaccessible record.
+

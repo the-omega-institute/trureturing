@@ -1,0 +1,4 @@
+**Remark 10.3 (Multiplicity and parameter boundaries).** A pair $(a+ib,a-ib)$ with $b>0$ satisfies the source's Definition 6.1 directly: each nonreal conjugate occurs once, and each real number has multiplicity zero. This fact does not identify arbitrary lists satisfying conjugate membership with lists having equal multiplicities for nonreal conjugates. Conjugate membership alone imposes no such multiplicity equality; the two-node simple case has no multiplicity ambiguity.
+
+The condition $b=0$ is outside Definition 9.1 and Theorem 9.5, irrespective of any confluent convention used for separate results on doubled real nodes. The classification includes all admissible points with $b>0$, so there is no remaining admissible subregion of simple pairs requiring negative witnesses. The cases $k=0$, larger numbers of nodes, and general grids in the original all-$n$, all-$k$ Conjecture 6.3 are not settled by this two-node derivative theorem.
+

@@ -20,6 +20,10 @@ The right subtree has two leaf classes. If it is a branch, the complete future r
 
 Equality of the two reply trajectories at every supplied count is equivalent to equality of the eleven-valued joint class. Generic minimum sufficient coding is supplied by target_family_minimal_quotient; the native calculation specifies its attained joint fibers.
 
+For an acquisition consumer, v must be supplied by a selected occurrence in the same actual source U, not extracted from an unrelated representative. The root selection U=mul(of true,v) makes the correspondence to the two actual RL/RR replies literal for every count. A source without that selected root has no label under this selection and remains in the acquisition domain. The boundedSources(4) root slice cannot attain the branch/branch pair because its full source would need at least five leaves. The all-source eleven-class theorem does not assert eleven attained labels in every bounded slice.
+
+This observation quotient forgets descendants and acquisition history. The actual numbered-path response quotient instead compares full resulting states, including any retained immutable source, chronological prefix and returned phase. The two quotients need no common equivalence relation: matching native labels alone supplies neither action-enabledness, target-certificate reuse nor equality of full successor states. The owning ActualTreeReadoutAcquisition exposition specifies an actual Next/Return lift and the separate completion and cost obligations.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/FutureResponses/NativeJointFutureClasses.native_joint_future_classification`

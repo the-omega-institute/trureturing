@@ -1,0 +1,40 @@
+**定理 30.2（Coverage with the original quantifiers）。** For every
+integer $S\geq1$ and every $H\in\mathcal U_s^{\rm mp}$,
+every ground vector on (28.1) is fibre symmetric and all the
+qualitative spectral, operator and mass conclusions (28.6) hold
+at the same actual whole-space $E_s$. The inclusion
+$\mathcal U_s^{\rm diamond}\subsetneq\mathcal U_s^{\rm mp}$
+is strict at every even scale, witnessed by all $X_r$, $r\geq2$.
+
+Proof. Proposition 26.2 supplies the unchanged conclusions for
+$\mathcal U_s^{\rm diamond}$ with exactly the two flat-mode
+regimes and the separate $S=1$ neighborhood endpoint stated
+there. Theorem 28.2 and Corollary 28.3 supply the added class.
+Taking their union proves the first assertion without intersecting
+the old domains with the new condition. Proposition 29.2 gives
+both membership and nonmembership needed for strictness at every
+scale. The singlet thresholds, classical coupling, clique,
+bipartite and diamond calculations are the attributed support
+within Theorem 27.2; the additional local inference is its strict
+zero-weight separation for arbitrary complete multipartite
+components and the exact exceptional ground classification.
+Its insertion into the supplied actual-component condition, with
+the supplied spin-one actual-cone comparison at the exception,
+gives the original-model extension and its infinite consumer.
+
+For an arbitrary connected even-order $H$ outside (30.2),
+every-ground confinement remains unresolved here at that scale.
+The simultaneous all-even question retains this union separately
+for every $S\geq1$; a scale-dependent sufficient hypothesis is
+not silently promoted to an all-scale graph hypothesis.
+The component inclusions (19.4) and spin-one cone equalities
+(20.2) remain necessary conditions, not an if-and-only-if test.
+In particular the local strict comparisons do not construct an
+actual original-$E_s$ nonsymmetric ground counterexample.
+All assertions retain simple unit-weight graphs, positive
+coefficient-one adjacency, equal even fibres, global half filling,
+and the full complex carrier. They determine neither the exact
+original $E_s$ nor a numerical or scale-uniform gap, and give
+no extension to other signs, weights, fibres or fillings.
+$\square$
+

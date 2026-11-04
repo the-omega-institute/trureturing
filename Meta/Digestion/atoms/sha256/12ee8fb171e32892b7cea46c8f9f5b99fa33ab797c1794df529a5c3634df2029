@@ -1,0 +1,34 @@
+## 38. Global and exceptional-source boundaries
+
+Within $\mathcal N_{\rm f}$ the counts are zero below the fold, one at
+the fold, and two above it, for the target strip of Section 35. This proves only a lower bound of two
+for the entire child at (36.1). No upper bound on that entire child is
+established here. The two-world statement of Theorem 28.1 for $\Omega_*$ cannot be transferred to these bases without proving
+component membership and the required continuation.
+
+Boundary properness, where available, is relative to an explicitly
+excluded escape barrier. It can prevent a lift from escaping over a
+compact subset of that region. It does not construct a path from a seed,
+prove that two specified bases share a regular component, or supply
+missing terminal collision worlds. The fold value itself is critical,
+so a covering theorem for regular values does not include it. No path to
+the previously studied M-collision seed component is assumed or proved.
+
+The entire child still quantifies over all strict original sources,
+including unbounded off-diagonal parameters, all regular charts and the
+singular branch in Section 31. Sampled gain zeros, degree drops, repeated
+roots and zero drift remain legal throughout the original problem.
+Our construction divides by none of them. Positivity and pole separation
+justify only the explicit source chart in use; they do not delete
+exceptional worlds elsewhere. Original strict boundaries $r=0,1$
+and $b=0$ remain excluded as before, without imposing a positive
+uniform distance from them on all worlds.
+
+The fold is specified by the exact
+polynomial (32.2), root (32.4), base enclosures (32.7), rank (33.6) and curvature
+(33.7). The terminal separation at the specified positive displacement is (37.1). The degree-fifteen polynomial is a critical
+polynomial on the slice $b=1$, not a claim about a minimal polynomial
+or the entire critical set. Nothing here solves the unrestricted
+independent-pair existence question of Definition 1.2.
+
+

@@ -1,0 +1,27 @@
+**定义 7.1（两个独立误差合同）。**
+
+对实际历史过滤 $\mathcal F_n$ 和实际条件态 $\rho_n$，令
+$q_n=\operatorname{Tr}(P\rho_n)$、$V(q)=q(1-q)$。
+从固定 $q_0$ 开始，要求
+
+<a id="eq:drift"></a>
+
+$$
+|\mathbb{E}[q_{n+1}\mid\mathcal F_n]-q_n|\le d_n,
+ \qquad D_*:=\sum_nd_n<\infty.
+ \tag{15}
+$$
+
+其中 $d_n$ 是确定的非负误差包络。
+每个实际历史上，再给一个平均保 $P$ 的参考仪器，
+其理想后验杂质满足统一信息增益
+
+$$
+\mathbb{E}_0[V(q')\mid\rho_n]\le V(q_n)-\kappa V(q_n)^2,
+ \qquad\kappa>0.
+$$
+
+实际与参考在该实际输入上的完整旗标半迹距离至多 $e_n(h_n)$，
+且 $e_n(h_n)\to0$ 几乎必然。
+这里不要求 $\sum_ne_n<\infty$。
+

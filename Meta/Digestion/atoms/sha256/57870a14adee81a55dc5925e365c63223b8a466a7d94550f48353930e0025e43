@@ -1,0 +1,163 @@
+**引理 133.1（实轴外领的二次总导数与精确核因子）。** 取引理 129.1 的共同半径 $h$，
+缩小到 $h<1/32$，并固定 $\varepsilon=h/8$。
+在 $I_*=[1-2h,2+2h]$ 上仍用同一个完整根 $t_b$，同一个
+$W_H$、$\epsilon_H$ 及同一个高组特征函数 (123.9)。记
+
+$$
+Q_y(b)=q_b(z_y(b)),\qquad
+z_y(b)=\frac{\sqrt\delta y+\epsilon_H(b)}{\sqrt{W_H(b)}},\qquad
+h_y=V+\sqrt\delta y.
+\tag{133.1}
+$$
+
+这里 $q_b$ 是标准化倾斜能量的实际 Gaussian 比较密度，
+与支持大小的整数 $q$ 不同。在全部 $b\in I_*,|y|\le R$ 上，充分大层级满足
+
+$$
+Q_y(b)\ge c_R>0,\qquad
+|Q_y(b)|+|Q_y'(b)|+|Q_y''(b)|\le C_R,
+$$
+
+$$
+\left|\frac{d^k}{db^k}
+ \log\frac{\mathcal J_\eta(b,y)}{\mathcal J_0(b,y)}\right|
+ \le C_R\eta\quad(0\le k\le2).
+\tag{133.2}
+$$
+
+所有导数是固定纤维和固定物理输出的总导数。若
+$Z_H^G(b)=\prod_{j\in H}\sqrt{2\pi v_j/b}$，则精确地
+
+$$
+\mathcal J_0(b,y)=Z_H^G(b)\frac{\sqrt{2\pi}\sigma}{\sqrt b}\,g_b(y),
+$$
+
+$$
+g_b(y)=\frac{\sqrt\delta}{\sqrt{W_H(b)}}
+ \exp\{K_H(b,t_b)-t_bh_y\}\,Q_y(b).
+\tag{133.3}
+$$
+
+$K_H(b,t)$ 表示原 $K_b(t)$ 仅删除低组坐标项，仍保留原噪声。
+特别地，(133.2)–(133.3) 包含 $b=1,2$ 及其两侧，
+没有借用仅定义在 $[1,2]$ 的范数来推断外侧结论。
+
+**证明。** 引理 129.1 已将完整根从整个 $[1,2]$ 延伸到 $I_*$。
+其证明的压缩映射只使用分母与 $G_s$ 的共同上下界，
+故延伸过两端的实根仍由 $K_b''>0$ 的唯一性识别。
+在这个同一实区间，对 $k=0,1,2$ 有
+
+$$
+c\le1-2t_bv_j/b\le C,\quad
+|t_b^{(k)}|\le C/\delta,\quad
+|w_j^{(k)}|\le Cv_j,\quad |m_j^{(k)}|\le C|e_j|,
+$$
+
+$$
+W_H\asymp\delta,\quad |W_H^{(k)}|\le C\delta,\quad
+|\epsilon_H^{(k)}|+|(W-W_H)^{(k)}|
+ \le\operatorname{poly}(Q)e^{-(c_q-2\chi)Q^3}.
+\tag{133.4}
+$$
+
+$k=0$ 时关于 $t_b$ 的界包括它本身。原核心没有落入低组：
+核心的 $v_j\asymp\delta$ 和 $p_j(1-p_j)\asymp1$ 给
+$C_j\asymp B^2\delta=\exp(c_qQ^3+O(\log Q))$，大于 $e^{\chi Q^3}$。
+因此在 $I_*$ 上，标准化系数仍满足
+$\max a_j\le C\sqrt\delta$、$a_j^2\asymp\delta$ 的核心有 $c/\delta$ 项，
+而 $a_j,\beta_j,\beta_G$ 的前两次导数分别由本身的模乘常数控制。
+由 $W_H\asymp\delta$ 和 (133.4)，$z_y,z_y',z_y''$ 均有统一界。
+
+以下是对既有精确 Fourier 公式的固定二阶使用。对 (123.9) 求导，
+中心对数因子的前两次导数均至多 $C\xi^2a_j^2$；
+非中心因子与噪声因子分别至多 $C\xi^2\beta_j^2$ 和
+$C\xi^2\beta_G^2$。分母界
+$|1-2i\xi a_j|\ge1$ 及 $|\xi a_j|/|1-2i\xi a_j|\le1/2$
+在所有实 $b\in I_*$ 成立。精确方差一使平方系数和有界，故
+
+$$
+|\psi_b|\le E_Q(\xi),\quad
+|\partial_b\psi_b|\le C\xi^2 E_Q(\xi),\quad
+|\partial_b^2\psi_b|\le C(\xi^2+\xi^4)E_Q(\xi).
+\tag{133.5}
+$$
+
+这里使用的 $E_Q$ 仍是 (123.10) 的原核心包络。
+其每个固定多项式矩一致可积、尾部一致消失，是第 129 节的既有实 Fourier 输入。
+在固定频率紧集上，精确方差标准化使二次项的两次 $b$ 导数均为零，
+其余项由 $C\sqrt\delta|\xi|^3$ 控制。因此 Fourier 反演、支配收敛及空间导数插入给
+
+$$
+\sup_{b\in I_*,u\in\mathbb R}
+|\partial_u^j(q_b(u)-\varphi(u))|\longrightarrow0\quad(0\le j\le2),
+$$
+
+$$
+\sup_{b\in I_*,u\in\mathbb R}
+\bigl(|\partial_bq_b|+|\partial_b\partial_uq_b|
+                         +|\partial_b^2q_b|\bigr)\longrightarrow0.
+\tag{133.6}
+$$
+
+这些结论来自同一可积包络，故亦证明所用导数存在。
+具体的总导数为
+
+$$
+Q_y'=\partial_bq_b(z_y)+z_y'\partial_uq_b(z_y),
+$$
+
+$$
+Q_y''=\partial_b^2q_b(z_y)+2z_y'\partial_b\partial_uq_b(z_y)
+       +(z_y')^2\partial_u^2q_b(z_y)+z_y''\partial_uq_b(z_y).
+\tag{133.7}
+$$
+
+取 $Z_R$ 使 $|z_y|\le Z_R$。充分大层级上可取
+$c_R=\frac12\min_{|u|\le Z_R}\varphi(u)>0$。
+(133.6)–(133.7) 同时给出正下界和两个总导数界；
+$\log Q_y$ 的前两次总导数也有界。
+
+秩一插入使用同一个频率 $u=\xi/\sqrt{W_H}$ 和 (125.3)–(125.6)。
+由 (133.4) 及商法则，对 $k\le2$ 和全部实频率，
+
+$$
+|\partial_b^k S_b(\xi)|\le C\sum_Hw_j\le C,\qquad
+|\partial_b^k M_b(\xi)|\le C\sum_H|e_j|\le C\delta^3.
+\tag{133.8}
+$$
+
+最后一步使用 $\sqrt{m_Q}\|e\|\le C\delta^3$。
+$b>0$、$\eta\ge0$、$\Re S_b\ge0$ 给
+$\Re(1+2b\eta S_b)\ge1$。将前两次导数直接代入 (125.6)，得到
+
+$$
+|\mathcal R_b-1|+|\partial_b\mathcal R_b|
+                      +|\partial_b^2\mathcal R_b|\le C\eta.
+\tag{133.9}
+$$
+
+精确条件积分比仍为
+
+$$
+\frac{\mathcal J_\eta(b,y)}{\mathcal J_0(b,y)}
+=1+\frac{(2\pi)^{-1}\int_{\mathbb R}
+ e^{-i\xi z_y}\psi_b(\xi)(\mathcal R_b(\xi)-1)\,d\xi}{Q_y(b)}.
+\tag{133.10}
+$$
+
+分子的前两次总导数由
+$C\eta(1+|\xi|^6)E_Q(\xi)$ 支配。结合已证的 $Q_y$ 正下界及两个导数界，
+比值减一及其前两次导数均为 $O(\eta)$。
+比值是正实数且最终在 $[1/2,3/2]$ 内，对数求导即给 (133.2)。
+这不要求输出条件后的坐标独立。
+
+最后，原高组正态在未倾斜时的密度恰为
+$e^{-bS_G}/Z_H^G(b)$。噪声 $N(0,\sigma^2/b)$ 的密度核为
+$\sqrt b\,e^{-b\lambda_y^G}/(\sqrt{2\pi}\sigma)$，
+故第一条 (133.3) 是精确积分恒等式。
+以 $t_b$ 倾斜高能量与原能量噪声，实际平均能量为 $K_H'(b,t_b)$，
+标准化位置正是 (133.1)；撤倾斜给第二条 (133.3)。
+原能量转为物理输出的 Jacobian 是 $\sqrt\delta$，
+倾斜密度标准差是 $\sqrt{W_H}$。
+这些因子均在式中保留，特别包括两个端点。∎
+

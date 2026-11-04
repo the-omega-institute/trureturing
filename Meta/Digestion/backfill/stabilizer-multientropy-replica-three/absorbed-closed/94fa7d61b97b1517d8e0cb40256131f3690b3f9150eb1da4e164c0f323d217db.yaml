@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:94fa7d61b97b1517d8e0cb40256131f3690b3f9150eb1da4e164c0f323d217db
+  normalized_sha256: sha256:94fa7d61b97b1517d8e0cb40256131f3690b3f9150eb1da4e164c0f323d217db
+cas_ref: sha256:94fa7d61b97b1517d8e0cb40256131f3690b3f9150eb1da4e164c0f323d217db
+coverage_gids:
+  - gid: D5/S3/Quantum/Entanglement/StabilizerMultiEntropy/GraphFormReplicaThreeRank.replica_three_coarse_partition_sum
+    target_statement_id: sha256:34a56d8652bf7937b8a1ee592ca7de7c27aa02fbd484581188e98aa5b9314026
+receipts:
+  unresolved_subitems: []

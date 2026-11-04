@@ -1,0 +1,101 @@
+**Proposition 16.2 (Actual-reset response identity and a sufficient contrast).** On the fibre of Proposition 15.3,
+
+$$
+\begin{aligned}
+\sum_{y,v}(\widehat p-p)(y,v)S_P(y,v)
+&=2\operatorname{Var}_{p_V}(a)+\sum_{i\in J}G_i+\sum_{j\in F}\Gamma_j\\
+&=2\operatorname{Var}_{p_V}(a)+\sum_{i\in J}G_i
+-\operatorname{Cov}_{p_V}(a,D_F),\qquad G_i\ge0.
+\end{aligned}
+\tag{16.4}
+$$
+
+Every frozen-site posterior, including either boundary anchor, has the following original finite-likelihood expression. Keep the unchanged anchor $T_\ast<A_\ast$ from Proposition 15.3 and its actual row $r_\ast=r_{c_\ast}$. For $j\in F$, let $z_{j,e}^{y,v}$ be the binary completion on $(T_\ast,R]$ obtained by setting site $j$ to $e$. With $M_z$ denoting the spatially ordered product of the original $M_0,M_1$, put
+
+$$
+W_{j,e}(y,v)=r_\ast M_{z_{j,e}^{y,v}}\mathbf1,
+\qquad
+q_j^P(x^{y,v})=\frac{W_{j,1}(y,v)}{W_{j,0}(y,v)+W_{j,1}(y,v)}.
+\tag{16.5}
+$$
+
+An illegal completion has weight zero, and the denominator is positive on the actual pattern. A legal flip is retained even if it leaves the chosen Cartesian fibre or destroys the first or second guard.
+
+Under the attainment assumption, Proposition 7.1 gives the necessary identity
+
+$$
+\operatorname{Cov}_{p_V}(a,D_F)
+=2\operatorname{Var}_{p_V}(a)+\sum_{i\in J}G_i>0.
+\tag{16.6}
+$$
+
+Consequently a witness satisfying the additional inequality
+
+$$
+\operatorname{Cov}_{p_V}(a,D_F)<2\operatorname{Var}_{p_V}(a)
+\tag{16.7}
+$$
+
+contradicts the original guarded-score identity. A constant $D_F$ is sufficient. More generally it is sufficient that some $\delta>0$ satisfy, for every $v,v'\in\mathcal V$,
+
+$$
+(a(v)-a(v'))(D_F(v)-D_F(v'))
+\le(2-\delta)(a(v)-a(v'))^2.
+\tag{16.8}
+$$
+
+Proof. At the center the original conditional loss at $v$ is $a(v)-a(v)^2$. The product coefficients give $\alpha-2\alpha a(v)+a(v)^2$. Since $\mathbb E_{p_V}a=\alpha$, their averaged difference is $2\operatorname{Var}_{p_V}(a)$.
+
+At a variable future site $i$, condition on $Z_i=z$ and abbreviate $a_{i,y}(z),\pi_{i,y}(z),m_i(z)$ by $a_y,\pi_y,m$. Proposition 15.3 identifies the unchanged predictor with $a_y$. Under the original coefficients the conditional loss is $m-\sum_y\pi_y a_y^2$. The product coefficients have the same $Z_i$ marginal and the same conditional mean $m$ of $V_i$, while their $Y$ weights are $p_Y$. Their conditional loss is $m-2m\sum_y p_Y(y)a_y+\sum_y p_Y(y)a_y^2$. Subtraction gives
+
+$$
+\sum_y\pi_y a_y^2-2m\sum_y p_Y(y)a_y+\sum_y p_Y(y)a_y^2
+=\operatorname{Var}_{\pi}(a_Y)+\sum_y p_Y(y)(a_y-m)^2.
+\tag{16.9}
+$$
+
+Averaging proves exactly the term $G_i$, with its nonnegative sign. A forced site has the same deterministic value for both $y$, so contributes zero to (16.9). Every other site of $I$ is in $F$, and its contribution is exactly $\Gamma_j$. This proves the first line of (16.4), with no unscored scaffold terms.
+
+To prove (16.5), start the original future disintegration at $T_\ast$. Both completions have the same physical endpoint $R$ and an intact third guard. At its starting anchor their phases agree by their common physical displacement from $T_\ast$. The third guard then merges their predictive states by (5.5). Hence their complete remaining future channels cancel, and their finite original weights are precisely $W_{j,0},W_{j,1}$. At least the actual completion has positive weight. Illegal completions have zero visible probability; a forced site gives the deterministic original posterior. Deleting $A_\ast$ or $B_\ast$ can break the first or second guard, but leaves this third guard intact, so it does not invalidate the formula. Structural zeros in the matrices do not invalidate the positive scalar weights of legal gap words.
+
+For each fixed $v$,
+
+$$
+(\widehat p-p)(1,v)=p_V(v)(\alpha-a(v)),\qquad
+(\widehat p-p)(0,v)=-p_V(v)(\alpha-a(v)).
+\tag{16.10}
+$$
+
+Thus summing the frozen contributions gives
+
+$$
+\sum_{j\in F}\Gamma_j
+=\mathbb E_{p_V}[(\alpha-a)D_F]
+=-\operatorname{Cov}_{p_V}(a,D_F).
+\tag{16.11}
+$$
+
+This proves the second line of (16.4). Proposition 7.1 makes the inclusive $S_P$ constant on this entire fibre. The coefficients $\widehat p-p$ sum to zero, so (16.4) has left side zero. Positive variance in (15.5) now gives (16.6). Under (16.7) the right side of (16.4) is strictly positive, a contradiction. For two independent samples $V,V'$ with law $p_V$,
+
+$$
+\operatorname{Cov}(a,D_F)
+=\tfrac12\mathbb E[(a(V)-a(V'))(D_F(V)-D_F(V'))],\qquad
+\operatorname{Var}(a)=\tfrac12\mathbb E[(a(V)-a(V'))^2].
+\tag{16.12}
+$$
+
+Consequently (16.8) implies (16.7), since $\operatorname{Var}(a)>0$.
+
+Constant total original score alone does not justify deleting a frozen separator's response. As an intermediate finite illustration, take the unique positive optimizer of the original open-path $\Phi_3$ on $\{000,100,010,001,101\}$ supplied by [Positive unique optimizer, Theorem 3.1](FIB_LEGAL_EDGE_LOAD_POSITIVE_UNIQUE_OPTIMIZER.md#3-唯一性与全部原坐标的正性). Reuse its uniqueness, full support and vertex-score equation (3.8), rather than a new optimizer assertion. Reflection and uniqueness put its masses in the form $(\xi,\eta,\delta,\eta,\zeta)$ in the displayed word order. Write $u=\eta/(\xi+\eta)$, $v=\zeta/(\eta+\zeta)$ and $w=\delta/(\xi+\delta)$. Its complete original scores are
+
+$$
+S_{000}=2u^2+w^2,\quad
+S_{100}=S_{001}=(1-u)^2+v^2,\quad
+S_{101}=2(1-v)^2,\quad S_{010}=(1-w)^2.
+\tag{16.13}
+$$
+
+They are equal by the supplied vertex-score equation. If the endpoints were independent conditional on the middle bit being zero, then $\xi\zeta=\eta^2$ and $u=v$. Equality of $S_{100},S_{101}$ would force $u=v=1/2$. Equality of $S_{000},S_{010}$ would then force $w=1/4$, but $S_{101}=1/2\ne9/16=S_{010}$. Thus the endpoints are dependent on that Cartesian fibre. The frozen middle loss equals $w^2$ at $000$ and zero at $100,001,101$, so it supplies a genuine nonconstant response. This illustration concerns the existing finite optimizer only, and supplies no stationary attaining law or counterexample to the original actual-reset assertion.
+
+Neither (16.7) nor (16.8) has been deduced from Assumption 15.1. They are sufficient conditions on a witness, not additional conclusions of attainment. In particular the threshold $2\operatorname{Var}(a)$ is not asserted necessary for every possible exclusion: the complete contrast in (16.4) also contains the nonnegative $G_i$. $\square$
+

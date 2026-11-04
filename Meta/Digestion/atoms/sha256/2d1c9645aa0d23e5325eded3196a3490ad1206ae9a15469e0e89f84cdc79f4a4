@@ -1,0 +1,42 @@
+**定理 19.1（全部正序列的等号判别）。** 令 $c[k]\in(0,\infty)^6$ 为任意
+正电导序列，并记 $\lambda_k=\lambda_2(L(c[k]))$。则
+
+$$
+\lambda_kR(c[k])\longrightarrow\frac{35}{2}
+$$
+
+当且仅当
+
+$$
+\left(\frac{c_0[k]}{\lambda_k},\ldots,
+\frac{c_5[k]}{\lambda_k}\right)\longrightarrow(1,1,1,1,1,1).
+\tag{19.1}
+$$
+
+**证明。** 对每个 $k$ 置 $r_i[k]=c_i[k]^{-1}$、
+$s_k=\sum_ir_i[k]$、$p_i[k]=r_i[k]/s_k$。由 (5.5)，
+
+$$
+\lambda_kR(c[k])=\Phi(p[k]),\qquad
+\frac{c_i[k]}{\lambda_k}=\frac{\rho(p[k])}{p_i[k]} .
+\tag{19.2}
+$$
+
+若左式趋于 $35/2$，定理 7.2 给出一个只依赖于 $n=6$ 的
+$\delta>0$，使充分大的 $k$ 满足 $p_i[k]\ge\delta$。因此这些 $p[k]$
+落在紧子集上；取任意收敛子列 $p[k_j]\to p^*$，连续性与定理 18.3
+给出 $\Phi(p^*)=35/2$，故 $p^*$ 为均匀向量。每个收敛子列均有同一
+极限，所以 $p[k]\to(1/6,\ldots,1/6)$。再由连续性
+$\rho(p[k])\to1/6$，式 (19.2) 即得 (19.1)。
+
+反过来，若 (19.1) 成立，则归一化电导
+$\widehat c[k]=c[k]/\lambda_k$ 逐坐标趋于单位向量。其 Laplacian
+特征值连续，且 $\lambda_2(L(\widehat c[k]))=1$；全点对电阻也是正定
+矩阵伪逆的连续函数，故
+
+$$
+\lambda_kR(c[k])=R(\widehat c[k])
+\longrightarrow R(\mathbf1)=\frac{35}{2}.
+$$
+证毕。
+

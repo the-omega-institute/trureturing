@@ -5,9 +5,10 @@ year: 2025
 title: Shadowing with small diameter sets of bounded cardinality
 doi: null
 url: https://arxiv.org/abs/2509.04312v1
-claim: Question 5.3 asks whether a subshift can have neighborhood 2-shadowing without being of quasi-finite type in the exact-length sense of Definition 3.5.
+claim: Question 5.3 asks for neighborhood two-shadowing without exact-length quasi-finite type; Question 5.6 asks for weak mixing and neighborhood N-shadowing without dense small periodic sets.
 strata_touched:
   - D5/S1/Dynamics/Shadowing/PowersTwoReturnDistances
+  - D5/S1/Dynamics/Shadowing/ProgressionExample
 license: citation-only
 triage: anchor
 ---
@@ -51,6 +52,32 @@ infimum zero. The finite-window arguments use the actual product
 uniformity, and the QFT obstruction uses nonempty words with
 $n=\max(M,1)$.
 
+## Weak mixing without nonempty small periodic sets
+
+Question 5.6 in the same primary version asks:
+
+> Is there a weakly mixing system which has the neighborhood N-shadowing property (N>1) that does not have dense small periodic sets?
+
+The source's compact metric system uses a continuous map; it does not
+require invertibility. Its small-periodic-set definition omits explicit
+nonemptiness. The intended nonempty reading is necessary, since the empty
+set is compact, contained in every open set and periodic for every map.
+
+`D5/S1/Dynamics/Shadowing/ProgressionExample.quadratic_progression_example`
+uses the one-sided binary carrier with a zero in every progression
+{s+jp : 0<=j<=p^2+2}, for every s>=0 and p>=1. It has the genuine
+first-disagreement metric, a continuous onto mixing shift, and original
+neighborhood two-shadowing. The nonempty clopen cylinder [1] contains no
+nonempty forward power-invariant subset, hence no nonempty compact periodic
+set. The exact construction and proof are exposed in its Blueprint source
+and [problem entry](../../Problems/meddaugh-stephens-2025-mixing-small-periodic-sets.md).
+
+The arithmetic-progression construction, two rotation masks and constants
+are attributed to the supplied completed Pro proposal. Native implementation
+and its verification are separate from its isolated ordinary mathematical
+review. The current arXiv metadata lookup returns v1; no exhaustive
+literature novelty or priority exclusion is claimed.
+
 ## Literature boundary
 
 The inspected primary version lists Question 5.3 as a question. A bounded
@@ -81,4 +108,6 @@ Theorem 3.2 and is not used as proof.
 
 Versioned primary: https://arxiv.org/abs/2509.04312v1.
 Full-text primary: https://arxiv.org/html/2509.04312v1.
-The relevant locators are Definition 2.1, Definition 3.5 and Question 5.3.
+The relevant locators are Definition 2.1, Definition 3.5, Question 5.3,
+the small-periodic-set definition immediately before Proposition 4.3,
+and Question 5.6.

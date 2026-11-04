@@ -1,0 +1,22 @@
+## 5. 二态关系怎样锁定对偶过程的像
+
+<a id="sec-c94-dual-range"></a>
+
+令 $E=R^*$ 为迹配对下的对偶，即
+
+$$
+\operatorname{Tr}(R(X)B)=\operatorname{Tr}(XE(B))\qquad(X,B\in B(H)).
+$$
+
+$R$ 正且保迹，所以 $E$ 正且保持单位。
+$\operatorname{id}_2\otimes E$ 是 $\operatorname{id}_2\otimes R$ 的伴随；
+有限矩阵正锥在迹内积下自对偶，故 $E$ 同样二正。
+参照固定等价于
+
+<a id="eq-c94-dual-reference"></a>
+
+$$
+\operatorname{Tr}(\tau E(B))=\operatorname{Tr}(\tau B)\qquad(B\in B(H)).
+\tag{5.1}
+$$
+

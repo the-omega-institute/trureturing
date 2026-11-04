@@ -1,0 +1,38 @@
+## 24. Proof of the singleton theorem and its independent-pair consumer
+
+Proof of Theorem 19.2. Fix the stated real $(p,v)$ and locator $W$.
+The supplied classification (20.2) puts $t=x(W)$ in $(a_1,b_1)$,
+which is contained in $I\cap(2/5,3/5)$. Lemma 20.3 identifies its
+actual base with $(p_t,v_t)$. In particular (23.6) gives
+$(p,v-11p/2)\in Z$.
+
+Take an arbitrary actual companion $W'\in C(p,v)$. Use its own
+source, gain and drift, and put $x'=x(W')>0$, $U'=1+2b(W')>1$.
+The all-world carrier (22.2) gives $R(x',p,v)=0$, without any
+regularity assumption on $W'$. Corollary 23.3 excludes the three
+intervals (23.12) and all their listed endpoints. Lemma 21.2, using
+this companion's own strict source inequality and the same exact
+$(p,w)$, excludes $[1/5,3/10]$ and $[4/5,+\infty)$.
+The only remaining possibility is
+
+$$
+x'\in(2/5,3/5).
+\tag{24.1}
+$$
+
+The locator itself also satisfies $R(t,p,v)=0$ by (22.2).
+Corollary 23.3 bounds the number of roots in this interval by one,
+so $x'=t$. Consequently $F_0(x',p,v)=0$.
+
+A zero-drift companion is impossible: the zero-drift part of the
+proof of S, Theorem 3.2, gives positive $p$ for every strict
+zero-drift world of the parent, contrary to the fixed $p<0$.
+Thus $W'$ lies on the nonzero-drift F0 source classification. At
+this fixed tail ratio $t$ the supplied quadratic source equation has
+one strict root, namely $r_t$, and fixes $b_t$; the parent lift is
+regular and unique. Hence its fixed drift and entire interpolating
+gain coincide with those of $W$, and $W'=W$. Since $W'$ was
+arbitrary, (19.5) follows. In particular singular companions and
+failed inverse charts have been retained until this argument identifies
+or excludes them; they were never removed as initial assumptions. ∎
+

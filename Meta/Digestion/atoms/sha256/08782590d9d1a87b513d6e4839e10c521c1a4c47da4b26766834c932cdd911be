@@ -1,0 +1,25 @@
+#### 定理 5.2（递归系数的完整相容方程）
+
+上述映射在任意相干输入及任意内部向量上等距，当且仅当对全部 $i,k$ 有
+
+<a id="eq-blockcondition"></a>
+
+$$
+
+\boxed{\sum_j\sqrt{T_{ji}T_{jk}}
+\langle e_{ji},e_{jk}\rangle U_{ji}^\dagger U_{jk}
+=\delta_{ik}I_K.}
+\tag{3}
+
+$$
+
+逐列概率归一化只检验了 $i=k$；把每个系数独立替换成某个酉门，不保证 $i\ne k$ 的交叉条件。
+
+**证明。** 
+计算 $\langle V(\lvert i\rangle\psi),V(\lvert k\rangle\phi)\rangle$，输出配置正交使两重求和只剩同一 $j$。所得为 $\langle\psi,A_{ik}\phi\rangle$，其中 $A_{ik}$ 恰为框中左侧。要求其等于 $\delta_{ik}\langle\psi,\phi\rangle$ 对任意 $\psi,\phi$ 成立，等价于该算符恒等式。
+ ∎
+
+这一条件正是项目《最小纯记录扩张》式 (1.5) 的同一结构，其中本文 $T_{ji}$ 对应原文的源行矩阵 $P_{ij}$。该来源证明一个共同二维记录构造可在全十维输入上等距，并非仅在五个基输入上概率归一。它的两个记录结果对应两种整体酉变换；取得记录并施加相应逆门，可以恢复输入及其参考纠缠。记录标签的含义必须由这套共同构造决定。
+
+<a id="statement-5-3"></a>
+

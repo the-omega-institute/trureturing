@@ -1,0 +1,9 @@
+**命题 B-29.2（截面恰为全部可达目标值）。** 对每个 &#x1D45A;&#x2208;&#x1D4AB;，有
+
+```math
+\mathcal K_f\cap(\{m\}\times\mathbb R)
+=\{m\}\times[\underline f(m),\overline f(m)].
+```
+
+证明。提升点的凸组合给前三坐标 &#x2211;<sub>&#x1D43C;</sub>&#x1D45D;<sub>&#x1D43C;</sub>&#x1D463;<sub>&#x1D43C;</sub> 及第四坐标 &#x2211;<sub>&#x1D43C;</sub>&#x1D45D;<sub>&#x1D43C;</sub>&#x1D453;<sub>&#x1D43C;</sub>，故截面的每一点来自相容律，必在区间内。反之取达到两个端点的律 &#x1D45D;<sup>&#x2212;</sup>&#x2C;&#x1D45D;<sup>&#x2B;</sup>；&#x28;&#x31;&#x2212;&#x3BB;&#x29;&#x1D45D;<sup>&#x2212;</sup>&#x2B;&#x3BB;&#x1D45D;<sup>&#x2B;</sup> 仍有均值 &#x1D45A;，且目标值遍历整个端点区间。零宽度时同一个端点已足够。∎
+

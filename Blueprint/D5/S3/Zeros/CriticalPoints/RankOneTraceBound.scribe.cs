@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Zeros.CriticalPoints;
 
@@ -8,6 +10,14 @@ internal sealed class RankOneTraceBoundDocument : IScribeDocumentDefinition
         "Unitary rank-one trace and scalar analytic certificates for the spectral moment argument.",
         H("Trace bounds, interpolation and phase rigidity"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("rank-one-trace-sum"),
+                DeclarationHandle.Create("D5/S3/Zeros/CriticalPoints/RankOneTraceBound.trace_rank_one_sum"),
+                H("The finite rank-one trace identity"),
+                StatementSource.FromAuthor(Disp(TraceRankOneSumFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any finite family of complex Euclidean vectors, real coefficients a, complex coefficients γ and complex matrix V, the trace of V times their weighted rank-one sum is the corresponding weighted sum of quadratic inner products. No positivity, normalization or unitarity is assumed. Complex.ofReal displays the real coefficients as complex scalars, and WithLp.ofLp reads the coordinate functions."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("rank-one-trace-bound"),
                 DeclarationHandle.Create("D5/S3/Zeros/CriticalPoints/RankOneTraceBound.norm_trace_rank_one_sum_le"),
@@ -44,4 +54,36 @@ internal sealed class RankOneTraceBoundDocument : IScribeDocumentDefinition
                 Blocks(
                     Paragraph(Text("For complex u,v with u nonzero and real a,b, if u exp(iya)=v exp(iyb) for every real y, then u=v and a=b. Evaluation at zero determines the phase, and equality of derivatives at zero determines the frequency."))),
                 DescribeRole.Theorem))));
+
+    private static Formula X(string name) => name switch
+    {
+        "ι" => Iota, "γ" => GammaLower, _ => F.Id(name)
+    };
+    private static Formula Qualified(params string[] parts) => Seq(Operatorname,
+        Grp(Seq(parts.SelectMany((part, i) => i == 0
+            ? new Formula[] { F.Id(part) } : new Formula[] { Dot, F.Id(part) }).ToArray())));
+    private static Formula At(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
+    private static Formula Call(string name, params Formula[] args) => At(Qualified(name), args);
+    private static Formula C(string owner, string name, params Formula[] args) => At(Qualified(owner, name), args);
+    private static Formula Parenthesized(Formula body) => Seq(Open, body, Close);
+    private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(Parenthesized(a), Parenthesized(b));
+    private static Formula All(string name, Formula type, Formula body) => Seq(Forall, Sp,
+        Parenthesized(Seq(X(name), Colon, Sp, type)), Comma, Sp, Parenthesized(body));
+    private static Formula Instance(Formula type, Formula body) => Seq(OpenBracket, type, CloseBracket, Comma, Sp, Parenthesized(body));
+    private static Formula SumOver(Formula body) => Seq(Sum, Underscore, Grp(X("j"), Colon, Sp, Iota), Sp, Parenthesized(body));
+    private static Formula TraceRankOneSumFormula()
+    {
+        var complex = Seq(Mathbb, Grp(F.Id("C"))); var real = Seq(Mathbb, Grp(F.Id("R")));
+        var r = At(X("r"), X("j"));
+        var coefficient = Multiply(C("Complex", "ofReal", At(X("a"), X("j"))), At(GammaLower, X("j")));
+        var coordinate = C("WithLp", "ofLp", r);
+        var rankOne = C("Matrix", "vecMulVec", coordinate, Call("star", coordinate));
+        var lhs = C("Matrix", "trace", Multiply(X("V"), SumOver(C("HSMul", "hSMul", coefficient, rankOne))));
+        var rhs = SumOver(Multiply(coefficient, Call("inner", complex, r, At(C("Matrix", "toEuclideanLin", X("V")), r))));
+        var parameters = All("r", Arrow(Iota, Call("EuclideanSpace", complex, X("n"))),
+            All("a", Arrow(Iota, real), All("γ", Arrow(Iota, complex),
+                All("V", Call("Matrix", X("n"), X("n"), complex), Equal(lhs, rhs)))));
+        return All("ι", X("Type"), Instance(Call("Fintype", Iota), All("n", X("Type"),
+            Instance(Call("Fintype", X("n")), Instance(Call("DecidableEq", X("n")), parameters)))));
+    }
 }

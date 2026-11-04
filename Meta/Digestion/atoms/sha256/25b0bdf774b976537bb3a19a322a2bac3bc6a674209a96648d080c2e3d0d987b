@@ -1,0 +1,44 @@
+### 引理 9.2（任意有限历史的正秩二伴随来源）
+
+设 $R=c\ell$ 是一个正秩一来源，$A_0,\ldots,A_m$ 为某个有限实际历史的
+累计矩阵，包括 $m=0$ 和全程没有 $L_0$ 的情形。
+若存在非零列向量 $u,v\in\mathbb R^k$ 满足
+
+$$
+ v^{\mathsf T}A_i u=0\quad\text{对该历史的所有 }i,
+ \qquad u\not\parallel c,\quad v\not\parallel\ell^{\mathsf T},
+\tag{9.4}
+$$
+
+则同一历史还由一个正秩二来源产生。
+
+**证明。** 取足够小的 $\delta,\varepsilon>0$，使
+
+$$
+ c_+=\tfrac12(c+\delta u),\quad c_-=\tfrac12(c-\delta u),\qquad
+ \ell_+=\ell+\varepsilon v^{\mathsf T},\quad
+ \ell_-=\ell-\varepsilon v^{\mathsf T}
+$$
+
+的全部坐标严格为正。令
+
+$$
+ R'=c_+\ell_++c_-\ell_-
+    =R+\delta\varepsilon\,u v^{\mathsf T}.
+\tag{9.5}
+$$
+
+对每个实际读数，
+
+$$
+ \operatorname{tr}(A_iR')-\operatorname{tr}(A_iR)
+ =\delta\varepsilon\,v^{\mathsf T}A_i u=0.
+$$
+
+从初读起按历史长度归纳：相同父历史迫使协议选择同一下一动作，而上述等式给出
+相同下一读数；在停止层，同一历史迫使同一停止与输出。因此 $R'$ 在同一层停止。
+两组正因子一次性固定在运行前，不随读数或动作更换。
+由于 $c,u$ 线性无关且
+$\ell^{\mathsf T},v$ 线性无关，两个正因子族各自秩二，因而 $R'$ 的秩恰为二，
+且 $R'\in\mathcal M_k$。这一步只使用实际历史，不要求协议函数有任何正则性。∎
+

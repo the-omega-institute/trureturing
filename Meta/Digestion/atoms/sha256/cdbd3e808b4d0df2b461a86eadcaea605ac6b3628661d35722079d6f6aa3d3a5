@@ -1,0 +1,56 @@
+**Theorem 34.2 (an exact order-$2$ source feeding an exact order-$5$ law).**
+Let
+
+$$
+p(E)=E^2+E+1,\qquad q(E)=E^3+E+1.
+$$
+
+Take $s_0=0,s_1=1$, $s_{i+2}=s_i+s_{i+1}$, and initialize
+$y_0=y_1=y_2=0$. Define the feedback output by
+
+$$
+y_{i+3}=y_i+y_{i+1}+s_i\quad(i\ge0).
+\tag{ACRC.3}
+$$
+
+Then $s$ has least all-index order two, while $y$ has least all-index order
+five and satisfies
+
+$$
+y_{i+5}=y_{i+4}+y_i,\qquad
+ y[0{:}21]=000011111010100110001.
+\tag{ACRC.4}
+$$
+
+Proof. The $2$ by $2$ Hankel matrix of $s$ beginning at zero is
+$\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$, of rank two.
+Multiplication over $\mathbb F_2$ gives
+
+$$
+(E^2+E+1)(E^3+E+1)=E^5+E^4+1,
+$$
+
+so Lemma 34.1 gives (ACRC.4). Direct forward substitution gives the stated
+prefix and its first five Hankel rows:
+
+$$
+\begin{pmatrix}
+0&0&0&0&1\\
+0&0&0&1&1\\
+0&0&1&1&1\\
+0&1&1&1&1\\
+1&1&1&1&1
+\end{pmatrix}.
+$$
+
+This matrix is anti-triangular with anti-diagonal one and has rank five.
+An order-$r<5$ all-index recurrence would express every column after the
+first $r$ as a combination of its preceding columns, contradicting that
+rank. Thus an order-two driver does not impose order two on its feedback
+output. Installed as $z_j=y_{j-1}$, this is a legal autonomous source with
+public bound $d=5$. Its first ten bits are mature for $n\ge7$ and can be
+consumed by Theorem 33.3 with paid root and birth witnesses. This supplies
+no free installation or acquisition. Singular examples such as $p(E)=E^2$
+with seed $10$, a finite impulse, and $q(E)=E^3+1$ use the same forward
+product argument. $\square$
+

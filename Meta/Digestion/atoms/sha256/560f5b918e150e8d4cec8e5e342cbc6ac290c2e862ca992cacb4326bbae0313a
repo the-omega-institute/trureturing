@@ -1,0 +1,7 @@
+**Theorem 12.2 (finite supplementation for arbitrary joint support on this source).** Under Definition 12.1, for every prescribed $\epsilon>0$ the following are equivalent:
+
+1. A successful finite static supplement exists on the entire language (12.3).
+2. A successful complete finite names-only online supplement exists on that language.
+3. Either $A,B$ are real-linearly independent, or
+   $B=\lambda A$ for a positive irrational $\lambda$ and $A\notin L$.
+

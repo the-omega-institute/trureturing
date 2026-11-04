@@ -1,0 +1,25 @@
+#### 命题 2.7（参考模式上的实际期望读出）
+
+在 $\widetilde\Psi_R(q)$ 中记第三个参考振幅为 $r>0$，参考模式为 $\lvert a\rangle$。经过 $M_D\oplus1$ 后，设前两振幅为 $w_1,w_2$。
+定义 Hermitian 观察量
+$X_j=\lvert j\rangle \langle a\rvert +\lvert a\rangle \langle j\rvert$，$j=1,2$，则
+
+$$
+p_a=r^2,\qquad
+ (\pi_D(q))_j=\frac{R}{\sqrt{2p_a}}\,\langle X_j\rangle.
+$$
+
+故在具备同源重复制备及这些相干观察量的接口时，有限补丁的 Hat 坐标可由 Born 期望恢复。
+
+**证明。**
+
+$\langle X_j\rangle=2r\,\operatorname{Re}w_j$，而定理 [2.4](#statement-2-4) 给
+$\operatorname{Re}w_j=(\pi_D(q))_j/(\sqrt2R)$，代入即可。
+参考振幅严格正使分母非零，也固定了前两模式相对于参考的相位。此处的 $j=1,2$ 是三模式编码索引，不是前文的几何角点编号。
+
+∎
+
+式中是统计期望，不是一次测量同时精确读出全部坐标。正实参考分量使该编码在射线意义下也单射；单独两个振幅没有这项性质。
+
+<a id="statement-2-8"></a>
+

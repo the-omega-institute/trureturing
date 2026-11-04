@@ -1,0 +1,50 @@
+**定义 137.1（实际全盒）。** 固定定义 121.1 的 $r,\beta$、全部整数取整、均匀大小 $q$ 先验、完整 pair 与均匀初态 path 实验。对本节及第 138 节，$\sigma=(\sigma_n)$ 是任意确定正数序列，不要求 (122.1)。对实际记录 $x$，置
+
+$$
+N_J=\sum_jC_j,\qquad N_c=M-N_J,\qquad
+\mathcal B_x=\left\{m\in\prod_j\{0,\ldots,C_j\}:0\le q-\sum_jm_j\le N_c\right\}.
+\tag{137.1}
+$$
+
+空组仍保留为 $C_j=0$。补集权重严格为正，故 (137.1) 正是 (121.6) 的完整实际支持；没有删去二项多重度或补集质量。令
+
+$$
+L_x=\max(0,q-N_c),\qquad U_x=\min(q,N_J),\qquad
+|\mathcal B_x|=\sum_{s=L_x}^{U_x}[u^s]\prod_j(1+u+\cdots+u^{C_j}).
+\tag{137.2}
+$$
+
+一般整数盒的约束为空当且仅当 $L_x>U_x$；但实际合法模型中 $0\le q\le M=N_J+N_c$，所以 $L_x\le U_x$，这种空支持不发生。若另行考虑空支持，其配分恒零，不能归一化。$J=\varnothing$ 时实际支持是只含空元组的 singleton。对任何非空实际支持，(137.2) 右端等于 $1$ 当且仅当支持为 singleton；此时实际配分是一个非零指数函数。
+
+全 Cartesian 盒的精确可行条件为
+
+$$
+\mathcal B_x=\prod_j\{0,\ldots,C_j\}
+\quad\Longleftrightarrow\quad N_J\le q\le N_c.
+\tag{137.3}
+$$
+
+这是分别考察总计数 $N_J$ 和 $0$ 的必要条件，也使其间每个计数可行。
+在实际支持上沿用 (132.1)，写
+
+$$
+F_{x,y}(m)=A_x(m)-\frac{yT_x(m)}{\sigma^2}+\frac{y^2}{2\sigma^2},\qquad
+A_x(m)=S_Q(m)-\ell(m)+\frac{T_x(m)^2}{2\sigma^2},
+\tag{137.4}
+$$
+
+$$
+G_{x,y}(z)=\sum_{m\in\mathcal B_x}e^{-zF_{x,y}(m)}.
+\tag{137.5}
+$$
+
+这些是实际有限整个函数。若 $\mathfrak m_x=\prod_j\max_k q_j(k)>0$，其中 $q_j$ 是 (121.7) 的组二项质量，则精确地
+
+$$
+\sum_{m\in\mathcal B_x}(P_x(m)e^{-\lambda_y(m)})^z
+ =\mathfrak m_x^{\,z}G_{x,y}(z).
+\tag{137.6}
+$$
+
+幂均用正实底数的实对数定义，整个元组质量一起取幂。因子与 $y$ 无关且无零，所以两种写法的零点及重数相同。
+

@@ -1,0 +1,28 @@
+**定义 47.1（分别供给的破坏性查询）。** 固定 $n$。复模型使用 (45.13) 的
+复 Hilbert 载体 $\mathcal H_{\mathrm c}$；实模核模型使用 (46.9) 的实空间的复化
+$\mathcal H_{R,\mathbb C}=\mathcal H_R\otimes_{\mathbb R}\mathbb C$，其源向量仍有全实坐标。
+记对应源向量为 $v_t^{\mathrm c}=\eta_n^{\mathrm c}(t)$ 与 $v_t^R=\eta_n^R(t)$。
+以下密度算子及 CP 映射都在这些复 Hilbert 空间上定义；实模型的所用制备及仪器
+保持实坐标子理论。这一步只统一数学记号，不由实 Gram 数据推断物理复标量。
+
+在每个载体中另取正交单位失败标记 $|\mathrm{fail}\rangle$，置
+$\widetilde H_{\mathrm c}=\mathcal H_{\mathrm c}\oplus\mathbb C|\mathrm{fail}\rangle$、
+$\widetilde H_R=\mathcal H_{R,\mathbb C}\oplus\mathbb C|\mathrm{fail}\rangle$ 以及
+$\widetilde P_t^X=|v_t^X\rangle\langle v_t^X|\oplus0$。对迹类算子 $Y$，查询 $t$ 的两支为
+
+$$
+\begin{aligned}
+J_{t,X}^{+}(Y)&=\widetilde P_t^X Y\widetilde P_t^X,\\
+J_{t,X}^{-}(Y)&=\operatorname{Tr}\!\left[(I-\widetilde P_t^X)Y\right]
+ |\mathrm{fail}\rangle\langle\mathrm{fail}|,\qquad X\in\{\mathrm c,R\}.
+\end{aligned}
+\tag{47.1}
+$$
+
+正支是单 Kraus CP 映射，负支是正效果后制备固定态的 CP 映射；两支迹和为
+$\operatorname{Tr}Y$。这在可分无限维载体也成立：若 $E=I-\widetilde P_t^X$，
+取任意可数正交基 $f_j$，则负支的 Kraus 算子可取
+$|\mathrm{fail}\rangle\langle f_j|\sqrt E$，其和在正迹类输入上按迹范数收敛。
+失败标记在继续查询时吸收。协议约定负结果随即 Stop，正结果可继续或 Stop；
+Stop 不改变系统并保留质量。这里的两个菜单分别供给，均不由 Gram 实现或五模原生菜单自动提供。
+

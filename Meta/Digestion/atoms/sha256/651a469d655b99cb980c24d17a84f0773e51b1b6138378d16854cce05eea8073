@@ -1,0 +1,60 @@
+**Theorem 9.3 (finite static labels, finite online registers and the native structural criterion).** For every fixed native \(d:E\to\mathbb R_{>0}\) and every \(\epsilon>0\), the following are equivalent:
+
+1. An admissible finite static supplement exists.
+2. An admissible finite online supplement exists under Definition 9.1.
+3. The two structural requirements of Theorem 7.2 hold: every cyclic SCC has exactly one internal outgoing named edge at each vertex, and every root-starting condensation path meets at most one cyclic SCC.
+
+Proof. An online register is a static supplement by taking \(h=\mu\), so \(2\Rightarrow1\).
+
+Assume \(1\), and write \(q=\lvert H\rvert\). Suppose a reachable cyclic SCC has two distinct internal outgoing named edges at a vertex \(c\). As in Theorems 3.1 and 7.2, choose nonempty return words \(A\) and \(B\) from the two choices back to \(c\), with different first names. For any integer \(k\ge1\), every permutation containing \(k\) copies of \(A\) and \(k\) copies of \(B\) is a legal return word. There are \(\binom{2k}{k}\) such words, all with the same endpoint and the same native duration \(k(\tau_c(A)+\tau_c(B))\), while their named words are different. Choose \(k\) with \(\binom{2k}{k}>q\), prepend one fixed legal path from \(r\) to \(c\), and apply the pigeonhole principle to \(h\). Two distinct words have the same endpoint, label and time, contradicting (9.1). Hence every cyclic SCC has one internal outgoing named edge at each vertex.
+
+Now suppose a root-starting condensation path meets cyclic SCCs \(C_1\) and \(C_2\) in that order. Choose a legal connecting route from a vertex of \(C_1\) to a vertex of \(C_2\), nonempty internal return words \(L_1,L_2\) on that route, and put
+\[
+A=\tau(L_1)>0,\qquad B=\tau(L_2)>0.
+\]
+For the finite range \(H\), choose an integer \(L\) with \(B/L<2\epsilon\). Take \(N+1>(q+1)L\) and divide the unit interval into \(L\) half-open bins. Among the fractional parts
+\[
+\left\{\frac{nA}{B}\right\},\qquad 0\le n\le N,
+\]
+one bin contains \(q+1\) distinct indices \(n_0,\ldots,n_q\). Choose \(K\) so large that
+\[
+m_i=K-\left\lfloor\frac{n_iA}{B}\right\rfloor\ge0
+\]
+for every \(i\). The \(q+1\) legal words
+\[
+p\,L_1^{\,n_i}\,Q\,L_2^{\,m_i}
+\]
+end at the same vertex of \(C_2\), are distinct, and have total durations
+\[
+\tau(pQ)+KB+B\left\{\frac{n_iA}{B}\right\}.
+\]
+Their durations lie in an interval of length \(B/L<2\epsilon\). Two receive the same label, again contradicting (9.1). This finite-bin argument covers rational and irrational period ratios and does not use an uninspected Diophantine theorem. Thus no root condensation path meets two cyclic SCCs, proving \(1\Rightarrow3\).
+
+Assume \(3\). The canonical normal form in the proof of Theorem 7.2 gives a finite set \(\mathcal S\) of simple root paths. Each word is either a singleton family \(P\), or has a unique form
+\[
+u_{P,k}=\alpha L_c^k\gamma\beta,\qquad
+P=\alpha\gamma\beta,\qquad k\in\mathbb N_0,
+\]
+where \(P\) visits one cyclic SCC, \(L_c\) is one named lap, and
+\[
+D_P=\tau(L_c)>0,\qquad \tau(u_{P,k})=\tau(P)+kD_P.
+\]
+Different \(P\)'s give disjoint named families, even when their endpoints agree. For each cyclic family put
+\[
+p_P=\left\lfloor\frac{2\epsilon}{D_P}\right\rfloor+1,
+\]
+and give \(u_{P,k}\) the static label \((P,k\bmod p_P)\). Give a singleton the label \((P,0)\). If two words have the same label and endpoint, they lie in the same family and their lap counts differ by a nonzero multiple of \(p_P\). Their native times therefore differ by at least \(p_PD_P>2\epsilon\). Lemma 9.2 supplies the decoder, proving \(3\Rightarrow1\).
+
+It remains to make the label prefix-compatible. Let \(\mathcal R\) be the finite set of reduced-prefix records: a simple root prefix together with its current cut, and, when a cyclic SCC has been entered, the same finite skeleton together with the current cycle phase and a residue in \(\mathbb Z/p_P\). A complete lap is removed from the skeleton and increments its residue. The uniqueness of the normal form and the fact that a condensation path cannot return to a previously left SCC make this reduction unique. The current vertex and all phase information are retained in the record. Appending a name determines the next record from the current record and that name alone: it either advances the finite skeleton, increments the cycle residue when a lap closes, or follows an external exit. No endpoint, time or hidden edge identifier is read. Set \(M=\mathcal R\), initialize at the empty reduced record, and use this transition as \(U\). The final register state contains at least the family and residue used by the static construction, so Lemma 9.2 proves \(3\Rightarrow2\).
+
+For a concrete finite bound, let \(\mathcal S\) be the simple-root-path set and put \(p(P)=1\) for an acyclic \(P\), and \(p(P)=\lfloor2\epsilon/D_P\rfloor+1\) for a \(P\) visiting a cycle. Retaining every possible cut gives the useful, deliberately nonminimal estimate
+\[
+\lvert M\rvert\ \le\ \sum_{P\in\mathcal S}(\lvert P\rvert+1)p(P)
+\ \le\ \lvert\mathcal S\rvert\,|V|\,
+\max_{P\in\mathcal S}p(P).
+\tag{9.2}
+\]
+The estimate counts complete control state, phase, skeleton and residue; it does not count an uncharged auxiliary counter. It is an upper bound for one construction, not a general minimum. This completes the equivalence. \(\square\)
+
+The theorem uses the fixed native durations throughout. It does not replace them by the design weights of Theorem 8.3. It also separates the arbitrary finite final label from the online register: the static construction may compute a lap residue from the completed word, whereas the online construction must carry the phase needed to know when a lap has completed. The criterion is exactly the §7.2 graph condition, even though the native clock itself can have arbitrarily small cross-family gaps; a finite residue register closes those gaps only when the one-cycle-per-root-path structure makes one lap counter sufficient.
+

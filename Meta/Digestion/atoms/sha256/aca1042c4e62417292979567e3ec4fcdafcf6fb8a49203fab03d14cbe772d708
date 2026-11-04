@@ -1,0 +1,105 @@
+### 62.1. 一个完整世界、原时钟与达到的父
+
+一个世界跨全部原行固定为
+
+$$
+W=(P,g,d),\qquad
+P=\begin{pmatrix}r_0&b\\c_{\rm src}&1-r_0\end{pmatrix},\quad
+0<r_0<1,\quad b,c_{\rm src}>0,\quad bc_{\rm src}=r_0(1-r_0),
+$$
+
+$$
+g(x)=\lambda+\mu x+\nu x^2\in\mathbb R[x]\setminus\{0\},\qquad d\in\mathbb R.
+$$
+
+四源元严格正，迹一，秩恰一。原模型只排除整个零增益，包含全部低次、合法系数零、样本零、观察零及两种非零尺度符号。去重只按整个 $P,g,d$。不同候选可有不同的固定漂移；同一世界不能逐行改变增益或漂移。
+
+实际即时左动作与读数为
+
+$$
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad
+Q_0=I,\quad Q_i=E_iQ_{i-1},\quad y_i=d+\operatorname{tr}(Q_iP)g(i).
+$$
+
+已服务 $JMJMJ$ 给原时钟零至五的六次 TOTAL。时钟六选 $J$ 取得 $z$ 为七次 TOTAL；时钟七只选一个末动作，才有八次 TOTAL。没有重置、复制、跳读、时钟平移、额外端口、隐藏源/根/次数标签、逐行 refit 或未选响应输入。
+
+令 $a_0=y_0$。偶插值 $E=Lx+Ax^2$ 在零、二、四恢复 $y_i-a_0$，奇插值 $R=Dx^2+Bx+C$ 在一、三、五恢复 $y_i-a_0$。次数至多二的差有三个不同根即为零，故它们唯一，$C$ 始终是原奇常数。令 $j=b+c_{\rm src}$，所需 SAME 七行明确为
+
+$$
+\begin{aligned}
+d+g(0)&=a_0,\\
+d+jg(1)&=a_0+R(1),\\
+d+(1+b)g(2)&=a_0+E(2),\\
+d+(j+r_0)g(3)&=a_0+R(3),\\
+d+(1+2b)g(4)&=a_0+E(4),\\
+d+(j+2r_0)g(5)&=a_0+R(5),\\
+d+(1+2b)g(6)&=z.
+\end{aligned}
+\tag{62.1}
+$$
+
+迹恒等式
+
+$$
+\operatorname{tr}(AP)=A_{22}+(A_{11}-A_{22})r_0+A_{21}b+A_{12}c_{\rm src}
+$$
+
+与左 $J$ 交换旧两行、左 $M$ 取旧第二行及旧行和的规则给这些迹。实际末 $JJ,JM$ 的迹分别为 $j+2r_0$、$1+j+r_0+2b$。重复乘积仍使用新时钟的增益样本。
+
+固定
+
+$$
+a=\frac{\sqrt{17}-1}{4},\quad a^2+\frac a2=1,\quad \frac34<a<\frac45,
+$$
+
+$$
+\Sigma:\ B+5D=a(L+5A),\quad \tau=\frac{D-aA}{3a}\ne0,\quad
+U_0=x(x-2)(x-4),\quad V_o=(x-1)(x-3)(x-5),
+$$
+
+$$
+\Lambda=\frac{C-15a\tau}{a-1},\qquad
+K=\Lambda+E+\tau U_0=\tau(x+p)(x+v)(x-7),\quad p\ne v,\quad p,v>2a.
+\tag{62.2}
+$$
+
+正数 $x$ 的 $x^2+x/2-1=(x-a)(x+a+1/2)$ 给所用 $a$ 的严格界。固定父即固定 $a_0,\tau$ 及
+
+$$
+Z=p+v=m+1,\quad V=pv=n+2m+15,\quad n=V-2Z-13<0.
+$$
+
+展开 $K$ 并使用父条件得
+
+$$
+\begin{aligned}
+A&=\tau m,&L&=\tau(n-5m),\\
+D&=a\tau(m+3),&B&=a\tau(n-5m-15),\\
+\Lambda&=-7\tau V,&C&=\tau\bar C,\quad \bar C=7(1-a)V+15a,
+\end{aligned}
+$$
+
+$$
+R=aE+a\tau(U_0-V_o)+(a-1)\Lambda.
+\tag{62.3}
+$$
+
+最后式的常数是原 $C$，因为 $U_0-V_o=3x^2-15x+15$。另记 $N=L+5A=\tau n$。
+
+精确父区域为
+
+$$
+Z>4a,\qquad 2aZ-4a^2<V<\frac{Z^2}{4},\qquad n<0,
+$$
+
+或等价地
+
+$$
+m>4a-1>0,\qquad
+(2a-2)m+4a-19<n<\frac{m^2-6m-59}{4},\qquad n<0.
+\tag{62.4}
+$$
+
+必要性由 $p-2a,v-2a$ 的正和、正积及 $(p-v)^2>0$ 给出。反向这些不等式给移位二次式的正判别式、正和、正积，故两根实、不同且都正，加 $2a$ 恢复所需 $p,v$。62.3 的例外构造对每个该参数、任意 $a_0$ 和两种 $\tau$ 符号实际达到此父；这里没有未达到的形式父。
+

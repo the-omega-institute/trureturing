@@ -1,0 +1,44 @@
+**Theorem 3.2 (same-source joint attainment).** The quantities $K_n$ are
+attained on the original source and original seed law. They are
+$$
+K_0=0,\qquad K_1=1,
+$$
+and, for $N\ge1$,
+$$
+\boxed{
+K_{2N}=2J_N-a+aM_N+\sum_{m=1}^{N-1}\min(0,v_m),
+}
+$$
+and
+$$
+\boxed{
+K_{2N+1}=2J_N-a+(1+a)M_N+\sum_{m=1}^{N}\min(0,v_m).
+}
+$$
+At an even horizon, choose any terminal shape $d\in\mathcal D_N$; at all
+earlier even depths choose odd/odd exactly when $v_m<0$ (ties are arbitrary).
+At an odd horizon use the same sign choice through $m=N$.
+
+In fact every fixed-horizon policy, regardless of its terminal error, has
+mean cost at least $K_n$. Thus $K_n$ is also the unrestricted least paid-prefix
+mean at that horizon.
+
+**Proof.** By Lemma 2.1, the cost is affine in the shape indicators. Each
+coefficient before the terminal even depth is $v_m$, so its least value is
+obtained by choosing $\lambda_m=1$ when $v_m<0$ and $0$ when $v_m>0$.
+For $n=0,1$ the statements follow directly. At an odd cap the terminal shape
+does not change risk, so the same choice is
+made at $m=N$. At an even cap the terminal shape is restricted only by
+$d\in\mathcal D_N$ and does not occur in $C_{2N}$; it can therefore be
+chosen independently of the preceding cost-minimizing shapes. Lemma 2.1
+realizes all these choices with a single causal side schedule on the same
+source and the same original seed. The linear lower bound holds for every
+seed-randomized schedule because $0\le\lambda_m\le1$ and
+$\lambda_mv_m\ge\min(0,v_m)$. $\square$
+
+The theorem is a joint statement: the cap-risk attainer and the least actual
+paid-prefix mean are realized by one lawful route. Separate minimization of
+the two coordinates would not establish this. The horizon is a replay index;
+the cost is the expectation of the queries actually paid before a marker or
+the cap.
+

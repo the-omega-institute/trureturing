@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:856f6f02b0eac13c241c276e4eec5cfd505d377c64c10283bc0d875bf2c6416a
+  normalized_sha256: sha256:856f6f02b0eac13c241c276e4eec5cfd505d377c64c10283bc0d875bf2c6416a
+cas_ref: sha256:856f6f02b0eac13c241c276e4eec5cfd505d377c64c10283bc0d875bf2c6416a
+coverage_gids:
+  - gid: D5/S3/Entropy/DeletionChannelEntropyOrdering.embeddings
+    target_statement_id: sha256:c64d6f10bcc70bdad02da8e570c09291631b1e8f893b20c8a0ab6d5a39123a19
+  - gid: D5/S3/Entropy/DeletionChannelEntropyOrdering.embeddings_eq_count
+    target_statement_id: sha256:bfd2142111e46fc1e85f833c4f2bfb8ae5154862e1301b2c7e405c7963a7858f
+  - gid: D5/S3/Entropy/DeletionChannelEntropyOrdering.entropyBits
+    target_statement_id: sha256:6288ba2b70725aea3cb6d03f4f17559bbac5b631d4c6f62336d1f25eec365c7a
+  - gid: D5/S3/Entropy/DeletionChannelEntropyOrdering.kappa2
+    target_statement_id: sha256:a80afde6a25bd5794549ee64601f18065779e9cacc7758301e0b5166e2a3fb5e
+  - gid: D5/S3/Entropy/TwoDeletionChannelEntropy.deletion_total
+    target_statement_id: sha256:45b9d57d43f5b0553156905e7a114b7e944633e993c55822ab87393406b217fc
+receipts:
+  unresolved_subitems: []

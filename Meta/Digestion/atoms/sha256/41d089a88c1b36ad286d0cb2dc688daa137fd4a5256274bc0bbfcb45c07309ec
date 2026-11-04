@@ -1,0 +1,17 @@
+**Proposition 33.2a (the length constraint is necessary).**
+If the parity-dependent $y$ length is omitted, the root conjunction and its
+indexed consequence are false even in ACR's mature domain. On the zero
+all-index source with public $d=1$, actual $n=6$, proposed $\nu=4$,
+$x=aaa$ (also $bbb$) and $y=aaaaaa$ pass the literal positive and two
+negative tests. Yet $n\ne\nu$. Moreover $j=1$ has actual $z_1=0$ and
+$\tau(1)=2$, but proposed $a_1=1$ gives $t_1=2$ and a present suffix
+$aa$ below the proposed child $a$.
+
+Proof. At cut six both constant-port spines have height at least three:
+in the zero source their heights are three at $a$ and five at $b$.
+Thus both choices of $x$ are present. The negative words have length eight,
+exceeding the maximum depth five. The erroneous birth test is $aaa$, which
+is present. The supplier requires $|y|=1$ at $\nu=4$, so this tuple is
+not a well-formed certificate of Definition 33.1. The actual maturity
+threshold for $d=1$ is $n_0=4$. $\square$
+

@@ -1,0 +1,45 @@
+**Theorem 15.2.2 (Exact rank, compatibility roots and strict failures).**
+All quotients in (15.9)–(15.10) are polynomials over $\mathbb Q$.
+For each family,
+
+$$
+FV=0,\quad\gcd(V_0,V_1)=1,\quad
+\operatorname{rank}F(z)=7\quad(z>0),\qquad
+\gcd(Q,D)=\gcd(Q,N_0)=1.
+\tag{15.11}
+$$
+
+Both $Q$ have degree twenty and are squarefree. All their positive real
+roots and the indicated ratio bounds are exhausted by (15.16) below.
+In particular, at a positive $Q_{\mathrm a}$ root the necessary ratios
+$S=N_1/N_0$, $T=N_2/N_0$ fail $0<S<2/z$, $T>0$; at a positive
+$Q_{\mathrm b}$ root they fail $0<S<2$, $T>0$.
+
+Proof. The following coefficient vectors specify a finite rational
+verification of all assertions. For this first table only, a vector
+$[c_0,\ldots,c_d]$ denotes $\sum_{k=0}^dc_kz^k$ in **ascending**
+order. They are the eight $V_j$ of (15.9).
+
+$$
+\begin{array}{c|l}
+\mathrm a,0&[-18384,-74640,64788,510864,372414,-234978,-353586,-134016,-16752]\\
+\mathrm a,1&[31868,146578,99126,-235775,-152253,48549,56186,15992,1792]\\
+\mathrm a,2&[-15192,-67908,-54474,70053,56166,10266,-5457,-5712,-1344]\\
+\mathrm a,3&[1900,8138,6048,-8092,-6549,-1791,709,952,224]\\
+\mathrm a,4&[-2232,29724,247428,397230,-125910,-332562,-135396,-16752]\\
+\mathrm a,5&[-27200,-165800,-309296,-82270,279104,204426,42790,1792]\\
+\mathrm a,6&[12480,68676,106602,5322,-92172,-62121,-15252,-1344]\\
+\mathrm a,7&[-1432,-7432,-10498,262,8578,6045,1826,224]\\
+\mathrm b,0&[-16848,-33504,72132,152376,-86226,-183846,67716,73650,-31650]\\
+\mathrm b,1&[2048,4648,-10144,-39252,3934,70633,-6714,-38494,13007]\\
+\mathrm b,2&[-1536,2832,10116,-9027,-12978,15405,2187,-10554,4131]\\
+\mathrm b,3&[256,-472,-1628,2073,2192,-4192,-231,2848,-1088]\\
+\mathrm b,4&[-16848,-17472,67416,19596,-126162,15420,68700,-25950]\\
+\mathrm b,5&[2048,11288,25426,6390,-40874,-10260,27212,-7174]\\
+\mathrm b,6&[-1536,-3864,-4824,-1725,9324,4005,-6648,1332]\\
+\mathrm b,7&[256,400,-118,129,158,-549,-14,142]
+\end{array}
+\tag{15.12}
+$$
+
+For completeness, the coefficient vectors of the two $Q$ in

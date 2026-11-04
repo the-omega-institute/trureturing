@@ -1,0 +1,32 @@
+**定义 96.1（旋转探测器及全域阈值响应）。** 固定 77.1、90.1 的同一十三维复空间 $H$、十三个计算基向量 $e_\beta$、初态 $v$、七个原生酉 $K_0,\ldots,K_6$、$x=\varphi^{-1}$、全部有限正向字 $\mathsf W$（含空字）及全部原始标签 $\Omega_{10}$。记 $w_\beta=10\beta010$，取两个合法地址
+
+$$
+ a=00000,\qquad b=00100.
+$$
+
+对每个实数 $0<\theta\le1$，置
+
+$$
+ t=\frac{\theta}{16},\qquad d=\frac{t^2}{1+t^2},\qquad
+ u_a=\frac{e_a+t e_b}{\sqrt{1+t^2}},\qquad
+ u_b=\frac{-t e_a+e_b}{\sqrt{1+t^2}},\qquad
+ u_\beta=e_\beta\quad(\beta\notin\{a,b\}).
+ \tag{96.1}
+$$
+
+这是 $H$ 的一个数学正交归一探测器基：两个变化的向量各自范数为一，内积为零，并与其余十一个向量正交。它只用于定义响应，不是一个新增的原生门或准备操作。对整个单位球面上的每个 $\psi$，定义
+
+$$
+ \begin{aligned}
+ Q_\beta(\psi)&=|\langle u_\beta,\psi\rangle|^2,\qquad
+ r_\beta(\psi)=(Q_\beta(\psi)-d)_+,\qquad (s)_+=\max\{s,0\},\\
+ S(\psi)&=\sum_{\gamma\in\mathcal B}r_\gamma(\psi),\\
+ P^\theta_w(\psi)&=
+ \begin{cases}
+ r_\beta(\psi)/S(\psi),&w=w_\beta,\ \beta\in\mathcal B,\\
+ 0,&w\notin\{w_\beta:\beta\in\mathcal B\}.
+ \end{cases}
+ \end{aligned}
+ \tag{96.2}
+$$
+

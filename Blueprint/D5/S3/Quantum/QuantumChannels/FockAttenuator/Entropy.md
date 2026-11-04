@@ -145,6 +145,25 @@ João P. G. Ramos, Eigenfunctions, Free Boundaries, and Time-Frequency Localizat
 Frank, Nicola and Tilli, The generalized Wehrl entropy bound in quantitative form, arXiv:2307.14089v3, Theorem 3 and Remark 4(c) (https://arxiv.org/html/2307.14089v3), compare convex coherent-symbol integrals with the coherent integral, including a nonnegative quantitative remainder. The substitution z=√πw matches d²z/π to their Bargmann normalization. The P3 conversion has that scope; A3 uses its preceding all-sector projection estimate and U≤m, without requiring a new FNT constant uniform in m or a Wehrl identity for the cycle term. Van Herstraeten, Guha and Cerf, Classical capacity of quantum non-Gaussian attenuator and amplifier channels, arXiv:2312.15623v2, equations (44),(45) and Conjecture 1 (https://arxiv.org/html/2312.15623v2), give the physical channel and completed displacement covariance and state coherent minimum output entropy as conjectural. Their numerical observations are not a proof. These positive source comparisons support attribution and exact scope; bounded searches establish no novelty, priority or worldwide absence claim.
 
 The complete native contracts remain F1–F9: F1, completed occupation/Bargmann-to-S₂ vectorization, σₐ=CₐCₐ* and the unnormalized exterior/spectral Newton identities; F2, the normal S₁ channel and actual adjoint trace pairing; F3, the exact invalid-index coefficient formula, fixed-L weights and both compact restrictions; F4, S₁ coherence decay, compact tests, every cubic cross trace and both unnormalized e₂ masses; F5, the exact D1/D2, purity, all-sector projection, completed covariance and C₀-centering dependencies; F6, every-sequence nonvanishing, all mass cases, strict cost, strong convergence and preserved gauge; F7, bounded real-polynomial derivatives, multiplier 3I and full factor-two normalized second variation; F8, compact W_v and Φ* on all compact outputs, positivity and the negative-gap top eigenpair; F9, the cumulative residual and its unresolved same-input boundary. Existing supplier declarations reduce machinery work but do not discharge these exact joins. This existing-owner exposition adds no Lean declaration, theorem Describe, Reg audit, utility/admission result, freeze or ledger entry, and reports no new kernel or global entropy proof.
+R3: the real horizontal Hessian for the conditional R1-R3 package. Use the same actual unit negative minimizer, sigma, mu, B and A of Attenuator, under its explicitly stated A1-A6 prerequisites; all assertions in this addendum remain analytic prose pending native formalization. Let T={h:<a,h>=0}, the complex-perpendicular subspace regarded as a real Hilbert space with inner product Re<h,k>. It is the horizontal or projective tangent. The literal full real sphere tangent is S={h:Re<a,h>=0}=T direct_sum_R R(ia). Put X_h=Phi(|h><a|+|a><h|) and Q(h)=mu||h||^2-<h,Bh>-Tr(A X_h^2). The objective is to represent this actual second-variation coefficient, not a complex-bilinear substitute, on its declared real domain.
+
+Compactness of the physical coherence map. For fixed a, R_a:h -> C_h C_a^* is bounded complex-linear H -> S1 with norm at most ||a||, by the S2 times S2 trace-ideal inequality. A2 and adjoint invariance of trace norm send each bounded weakly-null sequence to zero in S1. The Hilbert weak-sequence criterion gives compactness of R_a. There is also a direct A1 norm-approximation proof. For finite-support b choose fixed L with C_b=C_b P_L. Then R_b h=(C_h P_L)C_b^*, a compact H -> S2 map followed by bounded S2 -> S1 multiplication. Moreover ||R_a-R_b||_(H->S1)<=||a-b||. Finite-support b approximates a, and norm limits of compact operators are compact. This uses actual coefficient localization; generic coefficient symmetry or compactness of C_a alone would not establish the needed H -> S1 map.
+
+Realification and legitimate trace products. The map h -> X_h=R_a h+(R_a h)^* is compact real-linear into self-adjoint S1 and hence into the real Hilbert space S2_R, since ||X||_2<=||X||_1. Its adjoint summand is conjugate-linear, so treating this Hessian as complex-linear would change the claim. Define M_T:T_R -> S2_R by M_T h=A^(1/2)X_h. Bounded left multiplication preserves compactness. With the real Hilbert-Schmidt inner product Re Tr(U^* V), ||M_T h||_2^2=Tr(X_h A X_h)=Tr(A X_h^2). X_h belongs to S1 and S2 and A is bounded, so these are genuine trace-class products; the S2 times S2 ideal estimate and bounded-factor cyclicity justify the equalities. No commutation of A and X_h, trace-class property of A, or cyclic permutation of unbounded products is assumed.
+
+The tangent-domain adjoint and compression. Ba=mu a and self-adjointness make T invariant under B. The real Hilbert adjoint M_T^* has target T_R, giving H_T=mu Id_T-B restricted to T-M_T^*M_T and Q(h)=<h,H_T h>_R. This is bounded real self-adjoint and A6 gives H_T>=0. Both B restricted to T and M_T^*M_T are compact real operators. If M were first defined on all H_R, its expression on T would instead require the real orthogonal compression of M^*M; there is no assumption that unrestricted M^*M preserves T. Defining M_T on T avoids that error.
+
+Fredholm index zero and coercivity off the whole actual kernel. Write C_T=B restricted to T+M_T^*M_T. It is compact positive real self-adjoint with 0<=C_T<=mu Id_T, and H_T=mu Id_T-C_T with mu>7/32. The eigenspace of C_T for the nonzero eigenvalue mu is finite dimensional. On its real orthogonal complement there is no mu-eigenvector; compactness prevents any other eigenvalues accumulating at the nonzero mu. Thus some c_a>0 satisfies Q(h)>=c_a||h||^2 for h real-orthogonal to ker H_T. In particular H_T has closed range and finite kernel; self-adjointness identifies its real cokernel with that kernel, so its Fredholm index is zero. Equivalently its essential spectrum is {mu}, using complexification if that convention is desired. No quantitative or input-uniform c_a is provided. The complement is that of the entire actual kernel, not just selected symmetry vectors.
+
+Exact normalized Taylor expansion and the factor two. For h in either T or S, let c=||h||^2, Y=Phi(|h><h|), and a(t)=(a+t h)/sqrt(1+c t^2). This is a unit curve because Re<a,h>=0. Its output is exactly (sigma+tX_h+t^2Y)/(1+c t^2)=sigma+tX_h+t^2Z+O_S1(t^3), Z=Y-c sigma, and Tr X_h=0. Trace-ideal polynomial expansion gives the t^2 coefficients Tr(X_h^2)+2Tr(sigma Z) for p2 and 3Tr(sigma X_h^2)+3Tr(sigma^2 Z) for p3. The linear coefficient in E=(1-3p2+2p3)/6 is -2Re<h,Ba>=0. Substitution gives E(a(t))=I+t^2[mu c-<h,Bh>-Tr(A X_h^2)]+O(t^3)=I+t^2Q(h)+O(t^3). Therefore the actual constrained second derivative is exactly 2Q(h), and polarization gives the bilinear Hessian 2[mu Re<h,k>-Re<h,Bk>-Re Tr(X_h A X_k)]=2<h,H_T k>_R on T. Q itself is the coefficient of t^2, not the second derivative.
+
+Full sphere, phase and other null directions. On S use M_S:S_R -> S2_R and H_S=mu Id_S-B restricted to S-M_S^*M_S. The same proof gives a nonnegative real Fredholm operator of index zero. For ia, X_(ia)=0 and B(ia)=mu ia, so ia is a phase-null vector; S=T direct_sum_R R(ia). In fact M_S kills ia and the self-adjoint decomposition gives H_S=H_T direct_sum 0. Completed displacement covariance makes E(D(beta)a) constant. R2 proves the orbit differentiable before its tangent vectors are used; after subtracting the phase component their horizontal derivatives lie in ker H_T. Nonnegativity turns a zero quadratic value into a kernel vector. These symmetry directions do not identify the whole kernel. The simple top eigenvalue and gap of B do not imply H_T>0 on all T, because M_T^*M_T can cancel that gap. No strict positivity after phase alone, Morse-Bott theorem, local/global uniqueness or minimizer classification is proved. A finite-dimensional Hessian kernel is not a finite occupation or relative-sector truncation.
+
+All six qualifications for R1-R3. C1: C-infinity means real smoothness in alpha=(x,y), never holomorphy or an operator-norm derivative of the Weyl group itself. C2: auxiliary environmental transfer uses the repository sign D(-alpha), even though the literature uses another splitter convention. C3: the explicit rank-one Pe0 formula needs the positive a_0 gauge; the finite-seed Riesz proof treats every nonzero eigenspace without it or simplicity. C4: T is horizontal, S is the full real sphere tangent, the restricted real adjoint or explicit compression is required, and the actual Hessian is 2Q. C5: coercivity is off the entire real Hessian kernel; the B gap does not identify or remove that kernel. C6: the exact Weyl polynomial/scaling, two zero circles, transfer sign, pure Wirtinger coefficients, rising factorial, real compact correction and factor two are retained. None adds an initial support, rank or energy assumption.
+
+The cumulative residual and the missing same-input inequality. The earlier D/P/T/A analytic packages imply that a negative minimizer would have rank(sigma)>=6, allowing infinity; (17-5sqrt(5))/16<q<3/8-1/[10(2^20+1)]; lambda_max(sigma)<1/2; and sqrt((4-sqrt(10))/24)<m(a)<2^20/(2^20+1). R1-R3 further force the simple top B eigenpair with its individual gap, every photon moment and a finite-dimensional real Hessian kernel. These are necessary conditions, not sufficient conditions for minimality or a characterization of physical realizability. They have not been shown inconsistent. The negative condition is exactly mu>13/32-q/2; the missing complementary same-input estimate is p3>=5/32-(3/2)d, d=3/8-q. Alternatively one must exclude every actual attained smooth negative minimizer satisfying the full nonlinear equation and all complex second variations, or produce a genuine physical counterexample. An arbitrary prescribed spectrum or nonphysical tensor does neither.
+
+Every center and relative-sector obligation remains. The unresolved estimate is (1/16)||P5||_3^2<=(1/64)||P3||_3^2+(3/2)||P4||_3^2+R_mid(f)+R_tail(f), for every actual completed Bargmann input f, with the earlier weighted norms, every center coefficient, every M=6,...,63 contribution and the entire M>=64 tail. The newly proved analytic regularity supplies neither their signs nor permission to drop them; the physical middle-sector obstruction remains. No finite-energy approximation or numerical minimum settles this all-input assertion. Even a future actual e3 counterexample would refute this sufficient determinant route alone and would not automatically refute entropy. The accepted rank<=5 entropy argument is not extended to arbitrary output rank. Unrestricted balanced-Fock-two entropy, the countable spectral/ENNReal entropy bridge, the all-n/all-eta Conjecture 1 and a full description of the Hessian kernel all remain open.
 
 The one-mode space is lp(Function.const(Nat,Complex),2) and the two-mode space is lp(Function.const(Nat,lp(Function.const(Nat,Complex),2)),2). The occupation vector at n is lp.single 2 n (Complex.ofReal 1). All state and environment supports are unrestricted. conjStarAlgEquiv is Mathlib LinearIsometryEquiv.conjStarAlgEquiv, mapping T to U composed with T and U inverse. Function names are the displayed Lean definitions or the explicitly stated Mathlib operations. Application parentheses retain grouping; NatSub is truncated natural subtraction, val is the natural value of a finite index, toReal is the natural-to-real cast and Complex.ofReal is the real-to-complex cast. Fields carrying proofs are omitted from constructor formulas; when a named proof parameter occurs in a function signature it appears as an argument of that function.
 
@@ -169,6 +188,320 @@ Mixed rank five is possible. The explanatory input rho=(|e1><e1|+|e2><e2|)/2 has
 Cumulative remaining region and the global obligation. T2 excludes every pure output of rank at most five. Combining it with the spectral, largest-eigenvalue, coherent-overlap and high-purity exclusions gives the necessary conditions rank sigma>=6 (infinite rank allowed), (17-5sqrt(5))/16<q<3/8-1/[10(2^20+1)], lambda_max(sigma)<1/2 and m(a)<2^20/(2^20+1) for any normalized physical input with G(a)<0. Here q=Tr(sigma^2) and m(a)=sup_alpha |<D(alpha)e0,a>|^2. The upper endpoint is strict: the high-purity implication q>=3/8-1/[10(2^20+1)] already gives G>=0, strictly for noncoherent inputs. That stability implication remains an analytic dependency pending formalization; its proof is not reproduced as part of T1-T3. These conditions establish neither attainability nor a full physical characterization or a uniform lower bound on spectral tail mass. The earlier general entropy-concavity boundary now forces an entropy-violating normal density to have an entropy-violating pure spectral component of output rank at least six, possibly infinite. No finite-rank minimizer or finite cutoff follows.
 
 For normalized pure a, write d=3/8-q and p3=Tr(sigma^3). Newton's identity gives 6G=2p3-5/16+3d, so the missing all-input same-channel estimate is p3>=5/32-(3/2)d. Equivalently it compares the real cycle expectation <a tensor3,T123(a tensor3)> with the swap defect (3/8)I-T12. A purity stability estimate alone supplies no adequate lower bound on that cycle. The exact full-sector identity and remaining inequality above retain every M=6,...,63 contribution, every center coefficient and the entire M>=64 tail. T1-T3 do not remove those terms or prove their remaining compatibility estimate. No physical negative-G example has been produced here, and even one would refute this sufficient e3 route without automatically refuting entropy. The unrestricted balanced two-photon entropy bound and Van Herstraeten-Guha-Cerf Conjecture 1 for every n and eta remain unresolved. All new T1-T3 arguments are analytic and pending formalization; the existing Lean theorems retain their own narrower statements.
+
+**Definition 1.1 (finiteDiagonal).**
+
+$$\forall N : \mathbb{N}, (\forall p : \operatorname{Fin}\left(N\right) \to \mathbb{R}, (\operatorname{finiteDiagonal}\left(N, p\right) = \sum_{k:\operatorname{Fin}\left(N\right)}(\operatorname{smul}\left(\operatorname{ComplexofReal}\left(p\left(k\right)\right), \operatorname{rankOne}\left(\mathbb{C}, \operatorname{lpsingle}\left(2, \operatorname{val}\left(k\right), \operatorname{ComplexofReal}\left(1\right)\right), \operatorname{lpsingle}\left(2, \operatorname{val}\left(k\right), \operatorname{ComplexofReal}\left(1\right)\right)\right)\right))))$$
+
+*Formalization.* `D5/S3/Quantum/QuantumChannels/FockAttenuator/Entropy.finiteDiagonal` (`✓ std3`).
+
+*Citation.* Alfred Wehrl (1978). *General properties of entropy*. DOI: [10.1103/RevModPhys.50.221](https://doi.org/10.1103/RevModPhys.50.221). URL: <https://doi.org/10.1103/RevModPhys.50.221>.
+
+*Commentary.*
+
+The finite diagonal operator is the sum of p(k) times the occupation rank-one projector. Its definition allows arbitrary real entries; the entropy theorem supplies the bounds from zero to one.
+
+**Definition 1.2 (basisEntropy).**
+
+$$\forall T : \operatorname{ContinuousLinearMap}\left(\mathbb{C}, \operatorname{lp}\left(\operatorname{Functionconst}\left(\mathbb{N}, \mathbb{C}\right), 2\right), \operatorname{lp}\left(\operatorname{Functionconst}\left(\mathbb{N}, \mathbb{C}\right), 2\right)\right), (\forall b : \operatorname{HilbertBasis}\left(\mathbb{N}, \mathbb{C}, \operatorname{lp}\left(\operatorname{Functionconst}\left(\mathbb{N}, \mathbb{C}\right), 2\right)\right), (\operatorname{basisEntropy}\left(T, b\right) = \sum'_{n:\mathbb{N}}(\operatorname{ENNRealofReal}\left(\operatorname{negMulLog}\left(\operatorname{Re}\left(\operatorname{inner}\left(\mathbb{C}, b\left(n\right), T\left(b\left(n\right)\right)\right)\right)\right)\right))))$$
+
+*Formalization.* `D5/S3/Quantum/QuantumChannels/FockAttenuator/Entropy.basisEntropy` (`✓ std3`).
+
+*Citation.* Alfred Wehrl (1978). *General properties of entropy*. DOI: [10.1103/RevModPhys.50.221](https://doi.org/10.1103/RevModPhys.50.221). URL: <https://doi.org/10.1103/RevModPhys.50.221>.
+
+*Commentary.*
+
+negMulLog(x)=-x log(x), with its continuous value zero at x=0. ENNReal.ofReal embeds a nonnegative real in the extended nonnegative reals; Complex.ofReal embeds a real scalar in Complex; on a density operator every diagonal probability lies in [0,1]. Natural logarithms give nats.
+
+**Definition 1.3 (vonNeumannEntropy).**
+
+$$\forall T : \operatorname{ContinuousLinearMap}\left(\mathbb{C}, \operatorname{lp}\left(\operatorname{Functionconst}\left(\mathbb{N}, \mathbb{C}\right), 2\right), \operatorname{lp}\left(\operatorname{Functionconst}\left(\mathbb{N}, \mathbb{C}\right), 2\right)\right), (\operatorname{vonNeumannEntropy}\left(T\right) = \operatorname{iInf}\left((b:\operatorname{HilbertBasis}\left(\mathbb{N}, \mathbb{C}, \operatorname{lp}\left(\operatorname{Functionconst}\left(\mathbb{N}, \mathbb{C}\right), 2\right)\right))\mapsto(\operatorname{basisEntropy}\left(T, b\right))\right))$$
+
+*Formalization.* `D5/S3/Quantum/QuantumChannels/FockAttenuator/Entropy.vonNeumannEntropy` (`✓ std3`).
+
+*Citation.* Alfred Wehrl (1978). *General properties of entropy*. DOI: [10.1103/RevModPhys.50.221](https://doi.org/10.1103/RevModPhys.50.221). URL: <https://doi.org/10.1103/RevModPhys.50.221>.
+
+*Commentary.*
+
+The definition is the infimum over complete countable orthonormal bases of the diagonal Shannon entropy. Its equality with spectral von Neumann entropy for every density operator is literature-attested, following the eigenbasis and concavity characterization in Wehrl. The infinite-dimensional equivalence is not kernel-proved here. The kernel proves the finite diagonal spectral formula; the final refutation supplies the needed unitary invariance by transporting all Hilbert bases.
+
+**Theorem 1.4 (finiteDiagonal_entropy).**
+
+$$\forall N : \mathbb{N}, (\forall p : \operatorname{Fin}\left(N\right) \to \mathbb{R}, (((\forall j : \operatorname{Fin}\left(N\right), (0 \le p\left(j\right))) \land (\forall j : \operatorname{Fin}\left(N\right), (p\left(j\right) \le 1))) \Rightarrow (\operatorname{vonNeumannEntropy}\left(\operatorname{finiteDiagonal}\left(N, p\right)\right) = \operatorname{ENNRealofReal}\left(\operatorname{shannonEntropy}\left(\operatorname{Fin}\left(N\right), p\right)\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/FockAttenuator/Entropy.finiteDiagonal_entropy` (`✓ std3`). ∎
+
+*Citation.* Alfred Wehrl (1978). *General properties of entropy*. DOI: [10.1103/RevModPhys.50.221](https://doi.org/10.1103/RevModPhys.50.221). URL: <https://doi.org/10.1103/RevModPhys.50.221>.
+
+*Commentary.*
+
+Concavity of -x log(x), the subprobability row bound and the Parseval column sums give the lower bound in every complete basis. The occupation basis attains it. shannonEntropy is the frozen finite Shannon functional, sum_j negMulLog(p_j). The result does not require the finite entries to sum to one.
+
+## Complete analytical writeback R6, reconciled R7, and the local radius refinement
+
+The following results use the same actual balanced Fock-two channel and all completed Hilbert domains fixed in the Attenuator narrative. They are analytic prose pending native formalization. They quantify over the full center coordinate, infinite sums, arbitrary complex phases and displacements, and the actual output moments; they do not replace C_aC_a* by a prescribed spectrum or globally dephase the environment.
+
+### WHOLE R6: all-degree radial compression, Gaussian sign, intrinsic F3, and a closed Gaussian tube
+
+Put t=(x_1+x_2+x_3)/sqrt(3), u=(x_1-x_2)/sqrt(2), v=(x_1+x_2-2x_3)/sqrt(6), h_2=u^2+v^2, phi_k=h_2^k/(2^k k!), and Rad=closed span{phi_k:k>=0}. For every F=sum_{k>=0} b_k(t)phi_k with arbitrary completed center vectors and sum ||b_k||^2<infinity,
+
+<F,(Q-Id/32)F>=(3/128)||b_2||^2+(7/384)sum_{k>=3}||b_k||^2.
+
+This is a quadratic-form compression on H_center tensor Rad. It does not assert that Rad is invariant under q_rel and it does not turn relative Rayleigh values into output eigenvalues.
+
+For every unit pure Gaussian Bargmann input f(z)=exp(alpha z^2/2+beta z+gamma), r=|alpha|<1, the actual same-input trace satisfies
+
+G(a)>=r^4(9-2r^2)/384,
+
+and therefore p3>=5/32-(3/2)(3/8-q)+r^4(9-2r^2)/128. Equality in this proved Gaussian class occurs exactly at r=0, the coherent vectors up to phase. For a nonzero unnormalized input, E(a)>=||a||^6[1/32+r^4(9-2r^2)/384].
+
+For every nonzero completed Bargmann input the following are equivalent: f has no zero on C; f=exp(alpha z^2/2+beta z+gamma) with |alpha|<1; P3 uses the third derivative expression (f^2 f3-3ff1f2+2f1^3)/2 is identically zero; and the complete relative-degree-three projected vector F_(a,3) is zero. The zero-free/Gaussian classification is classical and is attributed below; the channel-specific sign and full F3 identity are the R6 content. A unit input with G<0 must have a Bargmann zero and nonzero F_(a,3).
+
+Let Gauss be all unit pure Gaussian vectors, including phase and displacement, delta0=1/(2^20+1), and rhoG=7delta0^2/18432. Every unit completed physical a with inf_{b in Gauss}||a-b||<=rhoG satisfies G(a)>=0, whether or not the infimum is attained. Thus G(a)<0 implies distance(a,Gauss)>rhoG. This tube uses P8 as an analytical premise and is not a global nonradial sign theorem.
+
+### R6 proof
+
+**Step 1: Radial normalization, symmetry and Rayleigh reduction.**
+
+The complex coordinate change z_+=(u+i v)/sqrt(2), z_-=(u-i v)/sqrt(2) is unitary. Since h2=2z_+z_-, phi_k=z_+^k z_-^k/k! is exactly the normalized occupation |k,k>. Thus ||h2^k||^2=4^k(k!)^2, and distinct k are orthogonal.
+
+Every real orthogonal transformation of the relative plane preserves h2. In particular copy permutations fix phi_k. The three conjugate transposition expectations therefore agree; call their common value tau_k. For gamma_k=<phi_k,T123 phi_k> and ell_k=<phi_k,q_rel phi_k>, the exact antisymmetrizer gives ell_k=(1-3tau_k+2 Re gamma_k)/6.
+
+Different k have different relative degree. Degree preservation and the identity center factor remove their matrix elements for arbitrary completed b_k(t), regardless of overlaps between the center vectors. No entire-sector eigenvalue or output eigenvalue is being computed: ell_k is the declared relative Rayleigh value.
+
+**Step 2: All swap probabilities and monotonicity.**
+
+Expansion of h2^k gives probability p_j=binom(2j,j)binom(2k-2j,k-j)/4^k for pair-difference occupation 2j, 0<=j<=k. This follows directly from the normalized coefficient binom(k,j)sqrt((2j)!(2k-2j)!)/(2^k k!).
+
+Pairing p_0,p_1,p_2 with the actual swap weights gives tau_0=3/8, tau_1=5/16 and tau_2=11/32. For k>=2, writing A_k=binom(2k,k)/4^k gives tau_k=A_k[3/8+k/(4(2k-1))+9k(k-1)/(16(2k-1)(2k-3))]. In particular tau_3=15/64.
+
+A_(k+1)/A_k=(2k+1)/(2k+2)<1. The second rational factor decreases. For the third, k(k-1)/((2k-1)(2k-3))-(k+1)k/((2k+1)(2k-1))=2k/((2k-1)(2k-3)(2k+1))>0 for k>=2. All factors are positive. Hence tau_k strictly decreases for k>=2, and tau_k<=15/64 for EVERY k>=3. The k=0,1 cases were handled separately, so no invalid denominator is used.
+
+**Step 3: Complete environmental state, coefficients and the precise off-diagonal selection rule.**
+
+The inverse coordinate formulas give x1 x2 x3=[t^3-3t z_+z_- -i(z_+^3-z_-^3)]/(3sqrt(3)). Therefore the normalized environmental triple e2 tensor3 equals that numerator squared divided by 54sqrt(2). The squared denominator is 5832.
+
+The numerator expands to t^6-6t^4z_+z_- -2it^3z_+^3+2it^3z_-^3+9t^2z_+^2z_-^2+6it z_+^4z_- -6it z_+z_-^4-z_+^6+2z_+^3z_-^3-z_-^6. For occupation (s,p,q), its normalized coefficient is the table's numerator coefficient times sqrt(s!p!q!)/(54sqrt(2)); squaring gives every probability below. Their sum is (10+12+2+2+9+12+12+10+10+2)/81=1.
+
+The retained cycle is identity on the retained center; conjugating by the center splitter consequently gives identity on BOTH input/environment centers. Orthogonality removes environmental entries with unequal s. In circular relative coordinates the conjugated cycle splits into two independent input/environment two-mode unitaries. They separately conserve N_input,+ + N_env,+ and N_input,- + N_env,-. Between input bra and ket |k,k>, an environmental entry |p,q><p',q'| therefore contributes only when p=p' and q=q'. This proves removal of the remaining environmental off-diagonal entries in THIS diagonal matrix element. It does not diagonalize the environmental state or justify deleting its coherences for other input bra/ket pairs.
+
+**Step 4: Actual splitter phases and all-k cycle formula.**
+
+For the source one-particle splitter B=[[1,-1],[1,1]]/sqrt(2), B^T diag(exp(i theta),1) B=exp(i theta/2)[[cos(theta/2),-i sin(theta/2)],[-i sin(theta/2),cos(theta/2)]]. A relative retained three-cycle has theta=+/-2pi/3, hence cos(theta/2)=1/2. Reversing the cycle or interchanging the circular labels conjugates the intermediate phases and leaves every table phase unchanged.
+
+The coefficient returning |k,j> to itself is obtained by choosing l exchanged particles from each creation polynomial. Since the same occupations occur in bra and ket, normalization cancels. This yields exp(i theta(k+j)/2)2^(-(k+j))H_j(k), H_j(k)=sum_{l=0}^{min(j,k)}(-3)^l binom(j,l)binom(k,l). The ratio -3 is the square of the off-diagonal/diagonal entry, including its sign.
+
+For environmental (p,q) the two-mode product is exp(i pi(p-q)/3)4^(-k)2^(-(p+q))H_p(k)H_q(k). Its phase is -1 precisely on (3,0),(0,3),(4,1),(1,4), including all relative environmental degree-three and degree-five rows. The degree-six endpoint rows have phase +1.
+
+Summing all ten rows gives gamma_k=4^(-k)/81[10+3H_1^2-H_3/2+9H_2^2/16-3H_1H_4/4+5H_6/16+H_3^2/32]. Thus gamma_k is real for every integer k>=0. The fixed upper environmental occupation six is the exact state support; there is no input-degree cutoff.
+
+**Step 5: Exact polynomial identity, all-degree sign and completed compression.**
+
+Direct expansion of the defining finite binomial sums gives H_1=1-3k; H_2=(9k^2-21k+2)/2; H_3=(-9k^3+54k^2-63k+2)/2; H_4=(27k^4-306k^3+945k^2-762k+8)/8; H_6=(81k^6-2187k^5+20655k^4-83745k^3+142344k^2-78588k+80)/80. These are polynomial identities for all k>=0 because the falling-factorial terms vanish when their index exceeds k, including the small k cases.
+
+Let B_k=320+96H_1^2-16H_3+18H_2^2-24H_1H_4+10H_6+H_3^2. Independently collecting its coefficients gives 8B_k=(243,-2187,8991,-35073,93798,-63828,3240) in descending powers k^6,...,1. This is exactly 81 times (3,-27,111,-433,1158,-788,40). Consequently B_k=(81/8)C(k), and substitution into the preceding cycle expression gives gamma_k=C(k)/(256*4^k), C(k)=3k^6-27k^5+111k^4-433k^3+1158k^2-788k+40.
+
+The exact small values are C(0)=40, C(1)=64, C(2)=736, C(3)=1024. Independently shifting the polynomial gives C(x+4)=3x^6+45x^5+291x^4+863x^3+858x^2-20x+760. At integer x=0 this is 760>0. At every integer x>=1, 858x^2-20x>=838x>=0 and every other displayed term is nonnegative, including the positive constant. This proves C(k)>0 for every natural degree k; it is a finite base-case plus polynomial proof, not sample-based sign evidence.
+
+Thus gamma_0=5/32, gamma_1=1/16, gamma_2=23/128, and the exact swap values give ell_0=ell_1=1/32 and ell_2=7/128. For every k>=3, ell_k-1/32=(13/16-3tau_k+2gamma_k)/6>=7/384; in fact it is strictly greater since gamma_k>0. The k=2 gap is 3/128.
+
+For finite radial sums with arbitrary center vectors the quadratic form is exactly sum_k(ell_k-1/32)||b_k||^2. Boundedness of Q and orthogonal Hilbert convergence extend this identity and its lower bound to every l2 sum. Equivalently the compression P_Rad q_rel P_Rad is diagonal in phi_k. No assertion that q_rel maps Rad to Rad is used, and no radial-angular cross term for a general nonradial input is discarded.
+
+**Step 6: Full physical Gaussian class and its exact infinite cube.**
+
+For arbitrary complex alpha,beta with r=|alpha|<1, choose delta=(beta+alpha conjugate(beta))/(1-r^2). Then delta-alpha conjugate(delta)=beta. In the source convention D(-delta)f(z)=exp(-|delta|^2/2-delta z)f(z+conjugate(delta)); its linear exponent is beta+alpha conjugate(delta)-delta=0. A number rotation makes alpha=r. Covariance preserves the actual output moments, and scalar phase is immaterial.
+
+The normalized representative is a_r(z)=(1-r^2)^(1/4)exp(rz^2/2). Indeed its squared unnormalized norm is sum_{n>=0}binom(2n,n)(r^2/4)^n=(1-r^2)^(-1/2). The coordinate unitary preserves sum_i x_i^2=t^2+h2. Hence the transformed SAME physical cube is exactly a_r(t) sqrt(1-r^2) exp(rh2/2)=a_r(t) sqrt(1-r^2) sum_{k>=0}r^k phi_k. The full center vector a_r(t) has norm one. The relative squared weights are (1-r^2)r^(2k), sum to one, and are nonzero at all k when r>0.
+
+Applying the completed compression yields G(a_r)>=(3/128)(1-r^2)r^4+(7/384)(1-r^2)sum_{k>=3}r^(2k)=r^4(9-2r^2)/384. This keeps the entire center and every middle/high even relative degree. No finite output-rank or energy assumption is used. At r=0 the actual coherent output has spectrum (1/2,1/4,1/4), giving G=0; at every r>0 the displayed lower bound is positive (and the inequality against it is also strict by the positive tail weights and strict Step 5 bound).
+
+Completed displacement and number-phase covariance return every original complex squeezing angle, beta and gamma compatible with unit normalization. Degree-six homogeneity gives the unnormalized statement. Finally p3-5/32+(3/2)d=3G gives precisely the claimed strengthened trace inequality, with denominator 128 in the added term.
+
+**Step 7: Classical zero-free classification and the actual full F3 equivalence.**
+
+A nonzero zero-free entire f on the simply connected plane has an entire logarithm g. Completed coherent evaluation gives Re g(z)=log|f(z)|<=log||a||+|z|^2/2. Borel-Caratheodory on disks of radii R and 2R bounds sup_{|z|<=R}|g(z)-g(0)| by O(1+R^2). Cauchy's estimates imply g^(j)(0)=0 for every j>=3 as R tends to infinity. Thus g=gamma+beta z+alpha z^2/2.
+
+After a rotation making alpha=r>=0, the squared Bargmann integrand has exponent -(1-r)x^2-(1+r)y^2+2 Re(beta)x-2 Im(beta)y+constant. For r>1 its x quadratic grows. For r=1 the x integral is an exponential of a linear function, which diverges whether the slope vanishes or not. For r<1 both quadratic forms decay and any beta is integrable. Thus the precise boundary is |alpha|<1, and conversely every such exponential quadratic is zero-free and belongs to H.
+
+On a zero-free disk P3=f^3(log f)'''/2. At ANY zero z0 of multiplicity m>=1, write f(z)=c(z-z0)^m+O((z-z0)^(m+1)), c!=0. The coefficient in P3 at power 3m-3 is c^3[m(m-1)(m-2)-3m^2(m-1)+2m^3]/2=m c^3, nonzero. This includes m=1 and m=2, with the vanishing falling-factorial terms handled directly. Hence P3 identically zero forbids every zero, and then forces g'''=0; the converse is immediate for exponential quadratics.
+
+The inherited full completed projection is F_(a,3)=P3(t/sqrt(3))h3, h3=(3u^2v-v^3)/(3sqrt(6)), with ||h3||^2=4/9. Its whole center norm is ||P3||_3^2=(3/pi) integral |P3(c)|^2 exp(-3|c|^2)d^2c, so ||F_(a,3)||^2=(4/9)||P3||_3^2. Bounded projections and bounded center evaluation show F_(a,3)=0 iff P3 is identically zero. Individual scalar derivatives need not lie in H. The completed identity, with all center coefficients, is essential; a coefficient evaluated only at center vacuum would be insufficient.
+
+The zero-free/Gaussian equivalence is established classical mathematics, explicitly stated by Chabaud-Markham-Grosshans and attributed there to Lutkenhaus-Barnett. The direct logarithm proof above independently supplies the precise Fock/integrability hypotheses. R6 adds the channel-specific sign and intrinsic use of F3, not a new classification priority claim.
+
+**Step 8: Entire uniform closed tube, both squeezing ranges and a nonattained infimum.**
+
+For unit a,b, tensor telescoping gives ||a tensor3-b tensor3||<=3||a-b||. Since ||Q||<=1, the difference of its quadratic forms is at most 2||a tensor3-b tensor3||, and the two subtractions 1/32 agree. Hence |G(a)-G(b)|<=6||a-b||. Also sqrt(m) is 1-Lipschitz and lies in [0,1], so |m(a)-m(b)|<=2||a-b||.
+
+For the centered real Gaussian b=a_r, its coherent-overlap square at z is sqrt(1-r^2)exp(-|z|^2+r Re z^2). This is maximized at zero since r<1. Displacement, phase and rotation preserve m, so EVERY unit Gaussian has m(b)=sqrt(1-r^2).
+
+If r^2<=delta0/2, m(b)>=1-r^2>=m0+delta0/2. Thus at distance at most rhoG, m(a)>=m0+delta0/2-2rhoG>m0, and P8 gives G(a)>=0, strictly unless a is coherent. The strict margin holds because 2rhoG=7delta0^2/9216<delta0/2.
+
+If r^2>=delta0/2, Step 6 gives G(b)>=7r^4/384>=7delta0^2/1536. Since 6rhoG=7delta0^2/3072, Lipschitz continuity gives G(a)>=7delta0^2/3072>0. The split covers all r<1, including arbitrarily large physical squeezing.
+
+For d=inf_{b in Gauss}||a-b||<=rhoG, choose b_n with ||a-b_n|| tending to d; no minimizer in Gauss is assumed. One of the two ranges contains an infinite subsequence. In the small range pass m(a)>=m0+delta0/2-2||a-b_n|| to the limit. In the large range pass G(a)>=7delta0^2/1536-6||a-b_n|| to the limit. The same strict margins survive at d=rhoG. Therefore the ENTIRE closed tube is excluded without compactness of the Gaussian orbit, an energy premise, or a new sign assumption.
+
+### R6 F0–F7 and exact ten-row environment selection rule
+
+### R6 F0–F7 native interfaces
+
+**F0.** Join the actual completed occupation/Bargmann model, C_a, Phi, V tensor3, antisymmetrizer Q, center/relative unitary, conserved-degree blocks, positive transposition kernel and completed arbitrary-input displacement/number-phase covariance. Preserve sigma_a=C_a C_a*, trace-class moments, the identical input in every factor and source normalization.
+
+Native boundary: The immutable Scribe confirms the analytical contract and provenance. It is not a new Lean theorem inventory, build or axiom receipt. A coherent-only covariance theorem is too weak.
+
+**F1.** Supply the circular relative-mode unitary, normalized occupations phi_k, their orthonormality and permutation invariance, degree-orthogonal matrix elements, and tensoring with every completed center vector. Formulate P_Rad q_rel P_Rad or its quadratic form without asserting Rad invariant.
+
+Native boundary: A finite radial span or center-vacuum lemma is a useful intermediate only; the delivered theorem must quantify over the full Hilbert tensor subspace.
+
+**F2.** Prove the six-photon polynomial and all ten normalized occupation coefficients; derive the source splitter-conjugated cycle and all-k creation-polynomial diagonal amplitude. Establish the two separate conserved occupations to remove environmental coherences solely for the declared diagonal input matrix element.
+
+Native boundary: Replacing the relative environment by a diagonal state globally would change the problem and would lose legitimate nonradial cross terms. Retain odd relative degrees three and five with their phases.
+
+**F3.** Prove the all-k binomial H_j formulas, the exact degree-six identity, shifted positivity for all natural k, swap probabilities and rational monotonicity, and the exact low Rayleigh values. Combine them with the antisymmetrizer identity and legitimate real/conjugate trace conventions.
+
+Native boundary: The displayed exact algebra is independently checked mathematics. Formal arithmetic/binomial/order proofs still need kernel checking on the authorized machine. Neither computed samples nor an invented positivity axiom can supply the all-k theorem.
+
+**F4.** Extend the bounded degree-diagonal quadratic form to all l2 sums with completed center vectors; prove Gaussian normalization, the exact physical cube factorization and its infinite geometric weights. Apply arbitrary complex displacement/phase covariance and degree-six homogeneity.
+
+Native boundary: No invariant-subspace supplier, energy restriction, I<1/32 premise, IFT or Lojasiewicz theorem is needed. A theorem only for finite squeezed-state truncations is insufficient.
+
+**F5.** For the full intrinsic conclusion supply a lawful entire logarithm plus Borel-Caratheodory and Cauchy estimates, or an exactly matching proved zero-free Fock classification. Prove the |alpha|=1 divergence boundary, the zero-multiplicity coefficient for every m, and reuse the actual bounded completed F3/P3 identity with its weighted center norm.
+
+Native boundary: Current native availability is unassessed, not claimed absent. Literature cannot be admitted as a Lean axiom. This conclusion may be independent of the radial proof in dependency order, but remains required for a complete R6 delivery.
+
+**F6.** Reuse P8 through its original owner; prove the 6-Lipschitz G estimate, 2-Lipschitz m estimate, exact Gaussian coherent maximum, both squeezing ranges, constants and the approximating-sequence argument at an unattained infimum.
+
+Native boundary: No compactness of Gauss or differentiability of a maximizing center is required. All unit completed a in the closed tube are included. The P8 analytical statement is a dependency, not a fresh native receipt.
+
+**F7.** Existing authorized same owners retain source search, faithful D5/Blueprint echo, utility and proof-shape obligations, Reg attempt or honest linked-issue exception, scoped kernel/axiom evidence, deposit, independent repository assessment, required checks and lifecycle custody. Preserve all P/T/A/R scopes and global abstentions.
+
+Native boundary: No active owner, native worktree, supplier inventory, CI, publication or merge was inspected or certified. This mathematical assessment is not a repository vote and creates no new implementation owner.
+
+The six-photon environment numerator in circular relative coordinates is
+
+t^6-6t^4 z_+z_- -2i t^3z_+^3+2i t^3z_-^3+9t^2z_+^2z_-^2+6it z_+^4z_- -6it z_+z_-^4-z_+^6+2z_+^3z_-^3-z_-^6,
+
+normalized by 54sqrt(2). The ten rows (s,p,q; numerator coefficient; probability; cycle phase) are:
+
+| (s,p,q) | coefficient | probability | phase | |---|---:|---:|---:| | (6,0,0) | 1 | 10/81 | +1 | | (4,1,1) | -6 | 4/27 | +1 | | (3,3,0) | -2i | 2/81 | -1 | | (3,0,3) | 2i | 2/81 | -1 | | (2,2,2) | 9 | 1/9 | +1 | | (1,4,1) | 6i | 4/27 | -1 | | (1,1,4) | -6i | 4/27 | -1 | | (0,6,0) | -1 | 10/81 | +1 | | (0,0,6) | -1 | 10/81 | +1 | | (0,3,3) | 2 | 2/81 | +1 |
+
+The probabilities sum to one. The cycle is identity on the retained center, and circular input/environment occupations are separately conserved. Therefore an environmental matrix element contributes to this diagonal matrix element only when p=p' and q=q'. This removes off-diagonal environmental entries only for the declared |k,k> input matrix element; it does not diagonalize the environmental state for other input bra/ket pairs. The odd degree-three and degree-five rows retain their negative phases."
+
+### R6 global residuals
+
+The unrestricted physical sign remains open. The full obligation is (1/16)||P5||_3^2 <= (1/64)||P3||_3^2+(3/2)||P4||_3^2+R_mid(f)+R_tail(f), with ||P||_3^2=(3/pi) integral |P(c)|^2 exp(-3|c|^2)d^2c, every M=6,...,63 term, every M>=64 term, and every center coefficient. The invariant relative M=5 vector (3/8)h2h3 has gap -9/1024 on the whole symmetric tensor space but is not a physical tensor cube. The actual e0+epsilon e14 family prevents deleting R_mid even with the full tail, while its actual G is positive near zero. No cutoff, assumed radial invariance, holomorphic-cubic SOS, or arbitrary spectrum replaces the physical problem. A negative minimizer still has rank(sigma)>=6 allowing infinity, (17-5sqrt(5))/16<q<3/8-1/[10(2^20+1)], ||sigma||<1/2, and sqrt((4-sqrt(10))/24)<m(a)<2^20/(2^20+1); R5 additionally supplies uniform sixth-eigenvalue and tail mass near the bottom. These are necessary conditions only.
+
+### WHOLE R7: all N>=3, all amplitudes, a closed completed tube, and exact-family finite-rank entropy
+
+For every integer N>=3, A,B,alpha in C, let a=D(alpha)(A e0+B eN). The actual output trace obeys the homogeneous estimate
+
+G(a)>=[18|A|^4|B|^2+15|A|^2|B|^4+14|B|^6]/768.
+
+This includes A=0, B=0, zero, arbitrary phases, and every displacement. For a unit input w=|B|^2, the same actual output satisfies G(a)>=w(18-21w+17w^2)/768>=w/128 and
+
+p3>=5/32-(3/2)(3/8-q)+w(18-21w+17w^2)/256.
+
+Equality G=0 in this exact family occurs precisely for B=0, the coherent class. N=1,2 retain their separate accepted T1 scope. No all-input sign follows.
+
+Let Vnum={D(alpha)(A e0+B eN): N>=3, |A|^2+|B|^2=1}, delta0=1/(2^20+1), rhoV=delta0/3072. Every unit completed input with inf_{b in Vnum}||a-b||<=rhoV has G(a)>=0, and equality in this closed tube is exactly coherent up to phase. The infimum need not be attained; perturbations in the tube may have arbitrary infinite support and infinite mean photon number.
+
+For every unit member of Vnum, the actual finite-rank output satisfies S(sigma)>=(3/2)log 2 in nats, strictly when B!=0, with equality exactly for coherent inputs. This is an analytical finite-spectrum comparison on the exact family. The source ENNReal vonNeumannEntropy identification still needs the existing finite-rank unitary/basis-transport join and retains the infinite zero kernel. No entropy theorem for the whole tube, all inputs, all mixtures, or a countable spectral bridge is claimed.
+
+### R7 proof
+
+**R7 Step 1.**
+
+The balanced e2 channel is the fixed actual map sigma_a=C_a C_a*. Displacement conjugates sigma by D(alpha/sqrt(2)); scalar and number phase reduce A!=0 to e0+t eN with t>=0 for this one-number family. Degree-six homogeneity restores EVERY complex A,B,alpha. A=0, B=0 and zero are retained. No many-coefficient phase reduction is inferred.
+
+**R7 Step 2.**
+
+H=C_e0 has H02=H20=1/2 and H11=-1/sqrt(2); J=C_eN is real symmetric and supported on i+j=N+2. For EVERY N>=3 its low {0,1,2} compression is zero, hence HJH=0. J^2 is diagonal with beta0=(N+2)(N+1)/2^(N+3), beta1=(N+1)(N-2)^2/2^(N+3), beta2=(N^2-5N+2)^2/2^(N+4). For x=beta0+beta2, b=beta1, the three disjoint partner indices and total mass give x+b<=1/2. Preserve the accepted P8 FULL-G coefficient c_N=7/32-3x/8-b/2=7/32-P(N)/2^(N+7)>=3/128. Here P(N)=3N^4-22N^3+69N^2-42N+56; its N=3,4,5,6 bases satisfy P(N)<=25*2^N and, at N=6+j, 2P(N)-P(N+1)=3j^4+38j^3+153j^2+198j+48>0. This coefficient and induction belong to P8, not new R7 novelty.
+
+**R7 Step 3.**
+
+For the actual two-copy input eN tensor eN, the difference-occupation 2j probability is binom(2j,j)binom(2N-2j,N-j)/4^N. The physical swap weights give q_N=Tr J^4=A_N[3/8+N/(4(2N-1))+9N(N-1)/(16(2N-1)(2N-3))], A_N=binom(2N,N)/4^N, N>=2. A_(N+1)/A_N=(2N+1)/(2N+2)<1; N/(2N-1) decreases and the difference of N(N-1)/((2N-1)(2N-3)) at N and N+1 is 2N/((2N-1)(2N-3)(2N+1))>0. Therefore q_N<=q_3=15/64 for ALL N>=3. The exact beta1 bases are b3=1/16,b4=5/32,b5=27/128,b6=7/32; for N>=6 its decreasing recurrence is equivalent to N^3-6N^2+3N+6>=0, whose N=6+j expansion is j^3+12j^2+39j+24>0. Thus b<=7/32 and U=x+2b<=23/32<3/4. These are all-N analytical identities, not sampling or an arbitrary-spectrum substitution.
+
+**R7 Step 4.**
+
+Only for the lawful real representative, C=H+tJ is self-adjoint and the SAME actual output is C^2. Covariance makes the moment polynomials even. With y=t^2 and v_N=Tr J^6>=0, p2=3/8+U y+q_N y^2 and p3=5/32+W y+V y^2+v_N y^3. U=4Tr(H^2J^2)=x+2b; W=6Tr(H^4J^2)=3x/8+3b/2; V=6Tr(H^2J^4)+3Tr(HJ^2HJ^2)=3(beta0^2+beta2^2+beta0 beta2)/2+9b^2/2. The fourth-power two-J classes have multiplicities 4,2, with HJHJ vanishing. The sixth-power two-J classes have multiplicities 6,6,3 and traces H^4J^2,H^3JHJ,H^2JH^2J; HJH=0 kills the last two. The four-J classes likewise have multiplicities 6,6,3 and traces H^2J^4,HJHJ^3,HJ^2HJ^2; only the middle vanishes. H^2 has diagonal (1/4,1/2,1/4), H^4 has diagonal (1/16,1/4,1/16), and Tr(HJ^2HJ^2)=(beta0 beta2+b^2)/2 is retained and generally NONZERO. No complex-input replacement of CC* by C^2 occurs.
+
+**R7 Step 5.**
+
+Newton gives exactly 6G=2p3-3(1+y)p2+(13/16)(1+y)^3=kappa2*y+kappa4*y^2+kappa6*y^3, with kappa2=2W-3U+21/16=6c_N>=18/128, kappa4=2V-3(U+q_N)+39/16, kappa6=2v_N-3q_N+13/16. Since beta0 beta2<=x^2/4, V>=9x^2/8+9b^2/2>=(9/16)U^2; the latter difference is (9/16)(x-2b)^2. Hence kappa4>=(9/8)U^2-3U+111/64>=15/128 on 0<=U<=3/4. Finally kappa6>=13/16-45/64=7/64=14/128. No discarded sector or assumed middle-sector sign enters.
+
+**R7 Step 6.**
+
+The exact coefficient bounds and homogeneity give G(D(alpha)(A e0+B eN))>=[18|A|^4|B|^2+15|A|^2|B|^4+14|B|^6]/768 for every N>=3 and every complex amplitude/displacement, including A=0 and zero. For unit inputs w=|B|^2, this is w(18-21w+17w^2)/768>=w/128: the bracket minus 6 equals 12(1-w)^2+3w(1-w)+8w^2>=0. Thus G>0 when B!=0 and G=0 exactly on the coherent B=0 class for nonzero inputs in this family. The SAME output obeys p3>=5/32-(3/2)(3/8-q)+w(18-21w+17w^2)/256 by p3-5/32+(3/2)(3/8-q)=3G. This does not assert sharpness or equality of the lower polynomial bound. The separate prior N=1,2 T1 formulas keep their original scope.
+
+**R7 Step 7.**
+
+The original explicitly assigns m(a)>m0 to the w<=delta0/2 branch and G(a)>=delta0/512>0 to the w>=delta0/2 branch. P8 supplies G>=0 and strictness unless coherent only in the first branch. Lipschitz constants 6 and 2, both endpoint-inclusive ranges, the exact rhoV=delta0/3072, and an approximating-sequence argument over unbounded N and displacement give the complete closed tube without attainment, compactness, support, energy or moment assumptions. Exact quotation and the limit proof are in source_adjudication. No substantive Step 7 correction is required.
+
+**R7 Step 8.**
+
+For every UNIT exact family member, support before displacement is rows/columns 0,...,N+2 and covariance preserves rank<=N+3. Physical q<=3/8 gives e2=(1-q)/2>=5/16; e3=1/32+G>=1/32, strictly for B!=0. All higher elementary symmetric coefficients are nonnegative, so D_sigma(t)>=1+t+(5/16)t^2+(1/32)t^3=(1+t/2)(1+t/4)^2=D_star(t) for t>=0. Finite nonnegative eigenvalue lists allow arbitrary zero padding: a zero contributes factor one and 0 log 0=0. Equal trace makes log(D_sigma/D_star)=O(t^2) at zero, while finite rank gives O(log t) at infinity. Thus boundary terms in integration by parts vanish, equal-trace terms cancel, and integral_0^infinity log(D_sigma(t)/D_star(t))dt/t^2=-sum lambda_i log lambda_i+sum lambda_star,j log lambda_star,j=S(sigma)-(3/2)log 2. Strict e3 makes the integrand positive for EVERY t>0 when B!=0. The exact family has S>=(3/2)log 2, with coherent equality. Its repository ENNReal vonNeumannEntropy identification still requires the finite-rank unitary/basis-transport interface, preserving the infinite zero kernel. Neither infinite-rank tube entropy nor the general countable spectral bridge is claimed.
+
+### R7 F0–F5 and the reconciled Step 7
+
+### R7 original F0–F5 mapping
+
+**F0.** Reuse actual completed C_a, Phi, moment/Newton, arbitrary-input covariance, Q and trace joins through existing owners. The real-symmetric trace shortcut must follow phase reduction for this one-number family, never replace C C* on general complex inputs.
+
+Native boundary: Analytical supplier assumptions only; no current native declaration inventory, compilation or axiom receipt.
+
+**F1.** Reuse P8 full-G all-N c_N through its original owner; prove the actual two-copy Fock probability join to the R6 binomial/monotonicity calculation, beta_i formulas, paired endpoint mass, beta1 bound and all-N recurrence.
+
+Native boundary: All hypotheses and exact inequalities are displayed above. These are ordinary all-natural-index algebra/probability statements, not an experimental or numeric oracle.
+
+**F2.** Supply the full fourth/sixth trace word identities with multiplicities, H J H annihilation, diagonal J^2 and the NONVANISHING HJ^2HJ^2 term. Prove coefficient positivity, homogeneity, degenerate cases, normalization and exact same-output trace join.
+
+Native boundary: Complete analytical proof proposed for independent assessment. A near-zero coefficient theorem, a finite list of N or a truncated relative-sector theorem is insufficient.
+
+**F3.** Reuse P8 through its original owner and bounded full Q for both Lipschitz estimates; prove the uniform infimum-distance tube over unbounded N and displacement with both strict margins and all completed perturbations.
+
+Native boundary: No compactness or attainment of Vnum, differentiable center choice, energy or support premise is required.
+
+**F4.** For the restricted finite-rank entropy consequence, supply rank<=N+3 and covariance, finite spectral nonnegativity/Newton, determinant comparison and the zero-allowing integral. Join the analytic spectral entropy to source vonNeumannEntropy by the existing finite-rank unitary/basis-transport interface, preserving the infinite zero kernel.
+
+Native boundary: No countable spectral/ENNReal native bridge is claimed. T3 retains its original rank<=5 theorem scope; this separately proved family consequence does not rewrite it.
+
+**F5.** Existing authorized owners retain source search, D5/Blueprint faithful echo, utility/proof-shape, Reg attempt or honest linked-issue exception, kernel/axiom evidence, deposit, independent repository review, required checks and lifecycle custody.
+
+Native boundary: This worker creates no implementation owner and performs or certifies none of those operations. No native acceptance, publication, merge or original parent completion follows.
+
+The Step 7 wording is valid as originally written. For a unit b=D(alpha)(A e0+B eN), w=|B|^2 and d=||a-b||<=rhoV, respectively means two branches: if w<=delta0/2 then m(a)>=m0+delta0/2-2d>m0, so P8 gives G(a)>=0, with equality exactly when a is coherent; if w>=delta0/2 then G(a)>=delta0/256-6d>=delta0/512>0. For an unattained infimum d*=inf_{b in Vnum}||a-b||, choose b_j with actual distances d_j->d*. One branch occurs infinitely often and the corresponding inequality passes to the limit. Coherent vectors lie in Vnum with B=0, so equality in the closed tube is exactly coherent. No compactness or attainment is used. The earlier assessment's proposed deletion of a small-w G-margin was a source misreading: the original assigns the m-margin to small w and invokes P8 there; the delta0/512 margin belongs to the large-w branch. The retained Sra source bytes are sra-v2.html, 158886 bytes, SHA256 77385ef6c2bf5ed158be92558f7ba039a2fad5718d2a14cc31b56e956c238a84, URL https://arxiv.org/html/1509.05902v2.
+
+### Local full-completed-complex radius refinement
+
+For every complex z and every completed b perpendicular to e0,e1,e2, put u=z e2+b, rho^2=|z|^2+||b||^2 and D=||b||^2+|z|^4. If rho<=1/512, then
+
+G(e0+u)>=(127/32768)D,
+
+strictly for u!=0. The proof begins with the exact operator annihilations K(e0 tensor3)=0 and KS(e2)=0 from the zero relative gaps, not merely a zero quadratic form. The P8 all-N coefficient c_N=7/32-P(N)/2^(N+7)>=3/128 for P(N)=3N^4-22N^3+69N^2-42N+56 is completed over every complex l2 b by total-degree orthogonality and truncation. With w=z^2 and T4=e2 tensor e2 tensor e0+e2 tensor e0 tensor e2+e0 tensor e2 tensor e2, the exact complex phase-sensitive identity is
+
+(1/64)|sqrt(2)b4-sqrt(3)w|^2+(3/2)|b4/(4sqrt(6))+w/8|^2=(3/64)|b4-w/sqrt(6)|^2+|w|^2/16.
+
+For X=S(b)+z^2T4 one gets <X,KX> >=(3/128)D and ||X||^2=3D. The exact remainder in (e0+u) tensor3=e0 tensor3+zS(e2)+X+R is the six placements of z e2,b,e0, the three placements of b,b,e0, and u tensor3, with
+
+||R||^2=6|z|^2||b||^2+3||b||^4+rho^6<=8rho^2D
+
+for rho<=1. Since ||K||<=31/32<1, the annihilations give the full estimate
+
+G(e0+u)>=[3/128-4sqrt(6)rho-8rho^2]D
+
+on the entire rho<=1 expansion domain. At rho<=1/512, 4sqrt(6)<10 gives the coefficient at least 127/32768, strictly for rho>0. This includes all middle sectors, the infinite tail, nonradial cross terms and every center coefficient.
+
+The completed coherent-overlap centering argument attains m(a), moves a maximizing gauge to sqrt(m)(e0+z e2+b), and forces a1=0 by differentiating the scalar Husimi overlap at its maximum. With m=(1+rho^2)^(-1), homogeneity gives
+
+G(a)>=(127/32768)m^3D>=(127/32768)m(1-m)^2.
+
+Thus the new threshold is m>=2^18/(2^18+1), and a negative physical G requires m<2^18/(2^18+1); the prior 2^20/(2^20+1) condition remains valid. No energy, moment, support, rank, global sign, entropy theorem, improved strip, or optimality claim follows.
+
+The scalar statement for a trace-one positive operator with q<=3/8 and largest eigenvalue r>=1/2, namely p3>=(3/2)q-13/32 and e3>=1/32 with equality only at (1/2,1/4,1/4,0,...), is already the published largest-eigenvalue exclusion. Its Cauchy–Schwarz tail proof and the abstract spectrum (49/100,38/125,103/500,0,...) are retained only as explanatory reuse: the example has r<1/2 and is not asserted to be a physical output, and no duplicate theorem wrapper or new residual is counted.
+
+### R6/R7/local native and global boundary
+
+Native availability for these analytical packages is unassessed. No Lean/Lake/LSP/.NET invocation, numerical or symbolic experiment, cutoff scan, sampling, new axiom, source implementation, PR review vote, CI result, publication, merge, or cleanup is certified by this writeback. P1–P8, T1–T3, A1–A6 and R1–R5 retain their original quantifiers, attributions, hypotheses, and native limitations. T3 remains rank<=5; the exact-family R7 entropy argument does not rewrite it. The unrestricted same-input trace, full middle/high sectors, general entropy/ENNReal bridge, all-n/all-eta conjecture, and all-input equality classification remain open.
 
 **Definition 1.1 (finiteDiagonal).**
 

@@ -1,0 +1,12 @@
+**Theorem 66.2 (supplied inverse on the actual current image).** At every
+synchronized cut of Theorem 66.1, let $u$ be the actual reachable current
+term. Select the same four independently meaningful current contents
+as Definition 56.1, with the fixed binding and authority as common
+context:
+
+| View | Exact selected content on this source |
+| --- | --- |
+| Space | Rooted oriented material-address support of $C(u)$, excluding observer-record edges |
+| Boundary | Terminal-material-address antichain of that $C(u)$, including unary beta markers |
+| Time | Labelled causal successful-source-event order $E(u)$ of AA Definition 17.1 |
+| Memory | Actually retained current constructor word, with retained callable binding and current rights |

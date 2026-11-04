@@ -1,0 +1,13 @@
+**Corollary 10.3 (precision index and its resource scope).** For the unprobed acquisition of Theorem 10.2, using the convention $\epsilon=2^{-b}$ with an integer precision index $b\ge0$, the least successful index is
+
+$$
+b_{\min}=\left\lfloor\log_2\bigl(F_{n+1}F_{n+2}\bigr)\right\rfloor+2.
+\tag{10.7}
+$$
+
+For a required fixed probe, replace the Fibonacci product inside the logarithm by $AB$.
+
+Proof. With $D=F_{n+1}F_{n+2}$, the strict inequality $2^{1-b}<1/D$ is equivalent to $b>1+\log_2 D$. The least integer satisfying it is (10.7). When $D$ is a power of two, the preceding index gives equality and is excluded by Theorem 10.2. The same calculation applies to $AB$.
+
+This $b$ indexes a certified absolute radius. It is not the bit length of the rational report, an observer-memory bound, an output-size bound or a computation-cost bound. For example there are $2^{n+1}-1$ possible original words of length at most $n$, so a fixed-length binary encoding of all possible word outputs requires at least $\lceil\log_2(2^{n+1}-1)\rceil=n+1$ bits. That elementary counting bound has a different meaning from (10.7). The finite enumeration above proves attainability under the stated access contract without asserting algorithmic optimality. $\square$
+

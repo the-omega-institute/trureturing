@@ -1,0 +1,18 @@
+**Definition 4.1 (independent contexts).** Let $C_n(i)$ contain every syntactically type-compatible named word of length at most $n$ starting at $i$, including the empty word. It is indexed independently of the state being tested. The response $\operatorname{Resp}(x,w)$ records the current readout, the ordered encountered event labels and cut readouts, and either completion or the first unavailable operation. An executed failure label and an unavailable operation remain distinct. A word that becomes unavailable does not acquire a fictitious successor.
+
+Define $R_n(x)$ to be the response function on $C_n(i)$, retaining $i$. Define the equivalent recursive presentation $p_n$ by
+
+$$
+\begin{aligned}
+p_0(x)&=(i,q_i(x)),\\
+p_{n+1}(x)&=\left(i,q_i(x),\bigl(t_{a,n}(x)\bigr)_{a:i\to j}\right),\\
+t_{a,n}(x)&=
+\begin{cases}
+\operatorname{absent},&x\notin D_a,\\
+\operatorname{present}\bigl(\ell_a(x),p_n(F_a x)\bigr),&x\in D_a.
+\end{cases}
+\end{aligned}
+$$
+
+The sum tags are disjoint. The next level exposes both the legality and event of the first operation and the complete previous-level profile of its successor. It does not merely name an unexplained “response to responses.” On histories these maps mean $p_n\circ\eta$ and $R_n\circ\eta$.
+

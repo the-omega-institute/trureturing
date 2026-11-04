@@ -1,0 +1,53 @@
+**Theorem 24.3 (record criterion and finite-preparation obstruction).**
+Conditioned on an attained $S$ at $n\ge2$, a deterministic supplementary
+record supports exact $\mathcal Q_1$ recovery if and only if it
+separates all $2^c$ terminal vectors. For a finite or countable
+randomized supplementary kernel $r(a\mid\chi)$ the condition is
+
+$$
+ r(a\mid\chi)r(a\mid\chi')>0\quad\Longrightarrow\quad
+                 \chi=\chi'.
+ \tag{GPO.70}
+$$
+
+The minimum supplementary alphabet is $2^c$, attained abstractly by
+the $c$ bits. No presence-only finite adaptive preparation ending at
+such a current cut can actually acquire a sufficient supplement,
+even if the full current $S$ and authentic $n$ are also disclosed.
+
+Proof. Equation (GPO.69) identifies the task classes with the terminal
+vectors. One record used on two different classes cannot return both
+different exact reply maps. This proves necessity, including (GPO.70)
+for positive supports of randomized records. With that support
+condition, select the unique vector attached to a reached value and
+use (GPO.69), proving sufficiency. Each vector requires a nonempty
+disjoint support, giving the alphabet bound. This is an information
+criterion, not an acquisition mechanism.
+
+For the acquisition assertion, fix any finite actual controller run
+ending at epoch $n\ge2$. Freeze its actions, accessible randomness
+if any, and every physical choice before its last update. The beta
+leaves split by that update produce exactly the $F_{n-1}$ current
+terminal forks. Vary only their actual birth-wiring bits. The whole
+current shape, the previous observations and the update's common
+acknowledgement remain identical. Every subsequent stationary presence
+answer is also identical. Induction on the accessible controller steps
+therefore preserves requests, allocations, stopping and all actually
+retained accessible fields across these $2^c$ legal realizations.
+Their $\mathcal Q_1$ maps differ by (GPO.69). The run cannot return
+a sufficient record uniformly. For randomized zero-error procedures,
+couple the same independent accessible randomness; the indistinguishable
+record laws cannot have the required disjoint supports. More explicitly,
+if stopping is random, choose an attained finite epoch and a finite
+pre-last-update birth assignment with positive stopping probability
+with respect to the accessible randomness.
+Such a choice exists for a terminating procedure: there are countably
+many finite epochs and only finitely many birth assignments at each.
+For every extension by the last update's terminal bits, the event of
+stopping there and the retained-record law on that event are identical.
+At least two extensions require different outputs, excluding zero error.
+This argument
+allows arbitrary finite earlier preparation and adaptive updates; it
+is not a finite search limit. The excluded cuts $n=0,1$ have no such
+residual and are not used. $\square$
+

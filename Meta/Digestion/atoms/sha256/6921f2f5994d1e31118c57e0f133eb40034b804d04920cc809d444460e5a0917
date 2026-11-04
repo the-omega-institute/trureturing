@@ -1,0 +1,14 @@
+### 62.6. N8：全部实际 H 零族的取得响应定位
+
+令
+
+$$
+\phi=\frac{1+\sqrt5}{2},\quad \chi=\phi-1,\quad
+m_H=2(a+\chi)=\frac{3a}{\phi-a},\quad Z_H=m_H+1,
+$$
+
+$$
+I_H=\left(2aZ_H-4a^2,\ \frac{Z_H^2}{4}\right).
+\tag{62.22}
+$$
+

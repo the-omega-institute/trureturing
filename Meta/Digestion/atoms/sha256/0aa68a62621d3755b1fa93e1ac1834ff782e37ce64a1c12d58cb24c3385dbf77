@@ -1,0 +1,55 @@
+**Proposition 13.7 (An obstruction to a common threshold at the second
+boundary).** The thresholds in Theorem 13.5 cannot be chosen bounded
+as $R$ increases to $2\sqrt2$. Its strict upper-ratio condition also
+cannot be replaced by $h\le2\sqrt2\sqrt a$ with an eventual threshold.
+Both assertions fail already by comparison with an actual law on
+$a+2$ core labels and $h-1$ singleton labels.
+
+**Proof.** For $h\ge2$ the law (5.6) is actual, with positive marginals,
+and Theorem 3.1 gives its energy
+
+$$
+H_2(a,h)=\frac{(a+2)^3(a+1)}{a-1}
++\frac{(a+1)(h-1)^2}{2}.
+$$
+
+Its exact difference from the cap value $S_{a,h}$ in (12.2) is
+
+$$
+H_2(a,h)-S_{a,h}
+=4a^2+\frac{39a+77}{2}+\frac{46}{a-1}
+-\frac{(a-1)h^2}{2}-(a+1)h.
+\tag{13.24}
+$$
+
+For integers $b\ge8$, first take $a=2b^2+1$, $h=4b$. Then
+$h^2=8a-8<8a$, $h/\sqrt a\to2\sqrt2$ from below, and (13.24) is
+
+$$
+-8b^3+55b^2-8b+62+\frac{23}{b^2}<0.
+$$
+
+Indeed its first two terms sum to at most $-9b^2$, and the remaining
+terms are less than $63$. Also $h^2>\Gamma_a$ since $a\ge14$ and
+$\Gamma_a<2a+7$, so $S_{a,h}=m_{a,h}$ is the minimum of the entire
+scalar family, not merely one member. For each such pair there is
+an $R_b<2\sqrt2$ strictly above $h/\sqrt a$. If all thresholds for
+$R<2\sqrt2$ had a common finite bound, these arbitrarily large pairs
+would contradict (13.18). Thus no such uniform bound exists.
+
+At the second boundary take instead $a=2b^2$, $h=4b$ with $b\ge8$.
+Then $h^2=8a$ exactly, and (13.24) equals
+
+$$
+-8b^3+47b^2-4b+\frac{77}{2}+\frac{46}{2b^2-1}<0.
+$$
+
+Here the first two terms sum to at most $-17b^2$, while the remaining
+terms are less than $39$. Again $h^2>\Gamma_a$, so this actual law
+beats the entire family (13.19) at arbitrarily large boundary pairs.
+These comparisons neither determine the unrestricted minimizer at
+those pairs nor prescribe a connected graph realization. They are
+repo-derived finite comparisons using the already actual construction
+of Theorem 3.1; no asymptotic expansion with varying fixed parameters
+is needed. ∎
+

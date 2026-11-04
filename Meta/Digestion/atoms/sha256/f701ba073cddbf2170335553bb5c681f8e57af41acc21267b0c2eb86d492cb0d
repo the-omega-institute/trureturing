@@ -1,0 +1,35 @@
+**Definition 12.1 (support-relative acquisition on the delivered source).** Keep the entire actual source of Definition 10.2, its one type, fixed root $p$, exact current readout, all four legal named edges and their fixed arbitrary positive native vectors $A,C,B,E\in\mathbb R_{>0}^r$. In particular the two occurrences of $a$ are the same typed parameterized name. Let $K\subseteq\mathbb R^r$ be compact, convex and centrally symmetric, with $0$ in its relative interior, and put
+
+$$
+L=\operatorname{span}_{\mathbb R}K,\qquad
+\Delta K=K-K=\{v-w:v,w\in K\}.
+\tag{12.1}
+$$
+
+Fix a prescribed $\epsilon\ge0$. Replace only the box acquisition of Definition 10.1 by the declared joint observation sets
+
+$$
+\mathcal O_{\epsilon,K}(u)
+ =\{z(u)\}\times\bigl(T(u)+\epsilon K\bigr).
+\tag{12.2}
+$$
+
+Every error in $\epsilon K$ is allowed for every legal history of this same source. The vectors and their calibrations stay fixed. This is a contract for one final joint acquisition, not coordinatewise error bounds interpreted as a joint support. With symmetry about the origin, $\Delta K=2K$; using $\Delta K$ also covers the convention of central symmetry about a different center with $0$ still in the relative interior. Relative interior here is in $L$, since $0\in K$ makes its affine span equal to $L$. Both lower-dimensional supports and $K=\{0\}$ are allowed.
+
+Static labels, complete finite online registers, initialization, exact final supplement acquisition and the decoder have precisely Definition 10.1's restrictions. The register receives only its full current persistent state and each ordered actually executed name. Intermediate endpoints, edge identifiers, clock readings, complete response records, an archive, an external step index, a stop event and future input remain unavailable. A static label need not have an update. The final decoder sees the exact typed endpoint, final label and $y$; the support and tolerance are fixed shared parameters.
+
+The actual-source bridge is unchanged, rather than inferred from possible marginal records. The empty complete response contains $q_i(x)=x$, so distinct $p,s,t$ are distinct complete residuals; equal states have equal responses to every continuation by determinism. The stipulated edge records carry their native vectors, making descent representative independent. Definition 1.2 therefore identifies the actual executions with exactly the three rows of Definition 10.2:
+
+$$
+\begin{array}{c|c|c}
+z(u)&u&T(u)\\ \hline
+p&a^m&mA\\
+s&a^mca^n&C+mA+nB\\
+t&a^mca^ne&C+E+mA+nB
+\end{array}
+\qquad(m,n\in\mathbb N_0).
+\tag{12.3}
+$$
+
+These are all finite legal histories, not selected successful samples. They include the empty word, every stopping prefix, zero exponents, $c$, $ce$ and every terminal word. This actual source has no legal executed failures; none has been deleted to obtain (12.3). Illegal attempts are not executed words, and stopping contributes no extra name. The complete response records certify the source correspondence but are not extra inputs to the register.
+

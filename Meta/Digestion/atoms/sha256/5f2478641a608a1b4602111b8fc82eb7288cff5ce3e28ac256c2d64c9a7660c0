@@ -1,0 +1,21 @@
+**Corollary 37.2 (Precise outside requirement).** For any base with two
+local worlds as in Section 35, every distinct terminal collision pair in
+the entire child, for either $J$ or $M$, has at least one member
+outside $\mathcal N_{\rm f}$. If both pairs in Definition 1.2 exist at (36.1), the entire
+child has at least three worlds.
+
+**Proof.** For a fixed $q$, each of $a_q,m_q$ is strictly increasing
+on $I_r$ by (34.4). Thus two distinct worlds of $\mathcal N_{\rm f}$ with
+the same acquired base cannot collide for either terminal action. Any
+collision pair in the entire child must therefore have a member outside
+$\mathcal N_{\rm f}$. At (36.1), the two local worlds already belong to that
+child, so even one such pair forces a third world. ∎
+
+This is a necessary condition, not an existence assertion. A collision
+pair could consist of one local and one outside world, or of two outside
+worlds. Neither local world is individually guaranteed a companion.
+Independent $J$ and $M$ pairs can share an outside member, use
+different outside members, or have other allowed overlaps. The argument
+imposes no equality between their common terminal values and does not
+exclude all outside realizations.
+

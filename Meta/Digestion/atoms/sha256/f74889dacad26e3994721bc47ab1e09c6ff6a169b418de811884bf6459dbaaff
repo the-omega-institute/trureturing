@@ -1,0 +1,48 @@
+**定义 132.1（实际势能、同一比较与固定常数类）。** 保持定义 121.1–121.3
+的原振幅、每个固定 $\beta\in(1/2,1)$、全部整数与取整、均匀大小 $q$ 支持先验、
+完整分数组、多重度、精确中心及物理输出。固定 $R<\infty$ 和满足 (122.1)
+的任意确定正噪声序列。沿用 (128.1) 的 $l,\chi,H$，仅以 $H$ 分开比较积分的高低组。
+在一个固定的约定 123.1 好纤维常数类上，记
+
+$$
+D_Q=1+m_Q+\delta^{-2}\le C_*Q^2,\qquad
+F_y(m)=S_Q(m)+\lambda_y(m)-\ell(m),
+$$
+
+$$
+G_y(z)=\sum_{m:P_x(m)>0}e^{-zF_y(m)},\qquad
+\nu_{b,y}(m)=\frac{e^{-bF_y(m)}}{G_y(b)}\quad(b\in\mathbb R).
+\tag{132.1}
+$$
+
+$G_y$ 正是 (130.1) 的 $J_P(z,y)$，是有限整个函数。
+每个纤维参数，包括 $\ell$、所有组及 $\lambda_y$ 中的噪声，在 $z,b$ 变化时固定。
+在好纤维上全部原盒均可行；在一般纤维上求和取实际正质量支持。
+令 $\mathfrak m_x=\prod_j\max_k q_j(k)>0$，则精确地
+
+$$
+P_x(m)e^{-\lambda_y(m)}=\mathfrak m_x e^{-F_y(m)},\qquad
+P_x^y(m)=e^{-F_y(m)}/G_y(1),\qquad
+\nu_{b,y}(m)=\frac{P_x^y(m)^b}{\sum_uP_x^y(u)^b}.
+\tag{132.2}
+$$
+
+比较函数始终取原来的
+
+$$
+C_y(z)=\mathcal C_P(z,y)
+=e^{zc_0}B^{|H|}Z_L(z)\mathcal J_\eta(z,y),\qquad \Re z>0.
+\tag{132.3}
+$$
+
+其中 $Z_L$ 包含每一个原低元组，$\eta,c_0$ 如 (124.1)，
+$\mathcal J_\eta$ 如 (125.1)；不改变比较势能或其测度。
+$C_y$ 只在右半平面称为解析函数。它的实 escort 是同一正测度关于势能
+
+$$
+F_y^C=S_L+S_G+\lambda_y^G+\eta\mathcal D_G^2-c_0
+\tag{132.4}
+$$
+
+的指数倾斜，记为 $\nu^C_{b,y}$；测度包含原低组计数测度及 $B^{|H|}dX$。
+

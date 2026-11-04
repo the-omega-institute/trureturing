@@ -1,0 +1,32 @@
+### 12.2 态与 Born 形式
+
+有限复矩阵代数上，每个正归一线性泛函唯一写成
+
+$$
+\omega(B)=\operatorname{Tr}(\rho B),\qquad\rho\ge0,\quad\operatorname{Tr}\rho=1.
+$$
+
+证明可在矩阵单位上定义 $\rho_{ji}=\omega(E_{ij})$，由对所有秩一正矩阵的评价非负得到 $\rho\ge0$。对效果 $E$，
+
+$$
+p(E)=\omega(E)=\operatorname{Tr}(\rho E).
+$$
+
+纯态与秩一效果给 $p(\phi\mid\psi)=|\langle \phi,\psi\rangle|^2$。更一般的含单位复 $C^*$ 代数通过 GNS 商空间
+
+$$
+\mathcal N_\omega=\{a:\omega(a^*a)=0\},\qquad
+\langle [a],[b]\rangle=\omega(a^*b)
+$$
+
+得到表示与 $\Omega_\omega=[I]$，并有
+
+$$
+p(E)=\|\pi_\omega(E^{1/2})\Omega_\omega\|^2.
+$$
+
+这里推导的是正线性评价的平方范数表示，正线性概率评价本身仍是前件。
+
+只有二元互补归一化并不足以推出 Born：在 qubit 球面取
+$f(P_{\mathbf n})=(1+n_z^3)/2$，它连续且 $f(P_{\mathbf n})+f(P_{-\mathbf n})=1$，却不是任何密度矩阵的线性评价。顶点与赤道值会迫出 $\rho=\lvert 0\rangle\langle 0\rvert$，但 $n_z=1/2$ 时该规则给 $9/16$，Born 给 $3/4$。
+

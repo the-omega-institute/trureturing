@@ -273,7 +273,26 @@ def producerValue : Nat := 1
             self.assertEqual(result.returncode, 0, '[FAIL] module_binding_scope\n' + result.stdout + result.stderr)
             return result.stdout + result.stderr
 
+        phases = self.root / 'preparation-phases.jsonl'
+        self.env['STRATALINT_INSPECTOR_PHASES'] = str(phases)
         build()
+        observations = [json.loads(line) for line in phases.read_text().splitlines()]
+        modules = {'D5.A', 'D5.B', 'D5.Alone', 'Fixture'}
+        for phase, operation in [('lake-prepare-module', 'judge-inputs-fetch'),
+                                 ('lake-prepare-module', 'prepared-report-fetch'),
+                                 ('lake-export-fetch', 'export-info-fetch'),
+                                 ('lake-compiler-continuation', 'compiler-continuation'),
+                                 ('lake-compiler-inputs', 'compiler-inputs')]:
+            selected = [row for row in observations if row['phase'] == phase
+                        and row.get('operation') == operation]
+            self.assertEqual({row['module'] for row in selected}, modules)
+            for module in modules:
+                pair = [row for row in selected if row['module'] == module]
+                self.assertEqual([row['boundary'] for row in pair], ['start', 'finish'])
+                self.assertLessEqual(pair[0]['monotonic_ms'], pair[1]['monotonic_ms'])
+        for phase in ['lake-prepare', 'lake-prepare-register']:
+            self.assertEqual([row['boundary'] for row in observations if row['phase'] == phase],
+                             ['start', 'finish'])
         rows = self.report()[0]
         self.assertEqual(len(rows), 4)
         self.assertTrue(all('inputs' not in row['information_templates'] for row in rows))

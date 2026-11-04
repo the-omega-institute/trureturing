@@ -1,0 +1,21 @@
+## 49. 五模原生菜单的相干拒绝障碍
+
+本节固定[原卷定义 20.1、35.1](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md)
+的实际矩阵及模式对应。按顺序
+$(0,1,2,3,13)\leftrightarrow(N,2,3,5,25)$，$H=\mathbb C^5$ 的单位正交基为
+$(e_N,e_2,e_3,e_5,e_{25})$，且
+
+$$
+K=\begin{pmatrix}
+0&1&1&1&0\\
+1&0&0&0&1\\
+1&0&0&0&0\\
+1&0&0&0&1\\
+0&1&0&1&0
+\end{pmatrix},\qquad
+D=\operatorname{diag}(1,i,i,i,1).
+\tag{49.0}
+$$
+
+这里 $K$ 是五模生成元，不是 §§46–48 的来源核；$D$ 只改变坐标，不增加控制权限。
+

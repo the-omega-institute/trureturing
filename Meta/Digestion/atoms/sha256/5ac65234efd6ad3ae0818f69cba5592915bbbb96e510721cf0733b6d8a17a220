@@ -1,0 +1,22 @@
+**定理 6.1（后选择的精确放大界）。** 若共同事件筛选得到成功块 $A,B$ 且 $p,q>0$，完整成功／失败输出距离不超过 $\delta$，则
+
+<a id="eq-6-1"></a>
+
+$$
+|p-q|\le\delta,\qquad
+D(A/p,B/q)
+\le\min\left\{1,\frac{\overline D(A,B)}{\max(p,q)}\right\}
+\le\min\left\{1,\frac{\delta}{\max(p,q)}\right\}.
+\tag{6.1}
+$$
+
+**证明。** 失败块的迹差给出 $|p-q|$。若 $p\ge q$，则
+
+<a id="eq-6-u02"></a>
+
+$$
+ pD(A/p,B/q)\le\tfrac12\|A-B\|_1+\tfrac12(p-q)=\overline D(A,B),
+$$
+
+另一种次序交换两者。归一化态的距离至多一，故得（6.1）。
+

@@ -1,0 +1,48 @@
+**定理 2.1（最小预测商的完成分裂）。** 在命题 1.1 的条件下，$\theta$ 是单射，
+并且
+
+$$
+C_{\mathscr T}\cong B_A.
+\tag{MPC.6}
+$$
+
+此外，$\theta$ 满射当且仅当每个相容 law 线程
+
+$$
+t=(t_n)_{n\ge0}\in L_A
+$$
+
+都存在 $z\in Z$ 使 $a_n(z)=t_n$ 对所有 $n$ 成立。
+
+**证明。** 若 $\theta([z])=\theta([u])$，则 $a_n(z)=a_n(u)$ 对所有 $n$，
+即 $z\,A_n^{\mathrm{law}}\,u$ 对所有 $n$。由 (MPC.3) 得
+$z\sim_{\mathscr T}u$，所以 $\theta$ 单射。像的定义给出 (MPC.6)。满射的定义
+正是每个线程具有同一个来源代表元。$\square$
+
+因此，$L_A$ 不是自动的实际状态空间。它包含全部满足有限层 bonding 方程的
+数学线程；$B_A$ 才是由实际来源产生的线程。完成性与可分性是两个不同条件：
+
+令 $\pi_{\mathscr T}:Z\to C_{\mathscr T}$ 为商投影，并置
+
+$$
+\eta_A:=\theta\circ\pi_{\mathscr T}:Z\to L_A.
+$$
+
+则
+
+$$
+\bigcap_n A_n^{\mathrm{law}}=\Delta_Z
+\quad\Longleftrightarrow\quad
+\eta_A\text{ 是单射},
+\tag{MPC.7}
+$$
+
+而
+
+$$
+B_A=L_A
+\quad\Longleftrightarrow\quad
+\text{所有相容 law 线程都有实际来源实现}.
+\tag{MPC.8}
+$$
+

@@ -1,0 +1,41 @@
+### 定理 7.2（复数就是相容作用于全部括号的标量）
+
+令 $\mathfrak h=\operatorname{span}\{\mathcal R_x,L_x:x\in W\}$，定义它的实重心代数为
+
+$$
+\operatorname{Cent}(\mathfrak h)
+=\{T\in\operatorname{End}_\mathbb R\mathfrak h:T[X,Y]=[TX,Y]=[X,TY]\}.
+$$
+
+则
+
+$$
+\boxed{\operatorname{Cent}(\mathfrak h)=\{aI+bJ:a,b\in\mathbb R\}\cong\mathbb C.}
+\tag{7.2}
+$$
+
+**证明。**
+任何这样的 $T$ 与全部旋转的伴随作用交换。在
+$\mathfrak h=\mathcal R(W)\oplus L(W)$ 的两个标准三维旋转模上，所有交换映射都是标量块，所以
+
+$$
+T\mathcal R_x=a\mathcal R_x+bL_x,\qquad
+TL_x=c\mathcal R_x+dL_x.
+$$
+
+将 $[T\mathcal R_x,L_y]=T[\mathcal R_x,L_y]$ 代入 (7.1)，得到 $c=-b$、$d=a$。反向由 $J$ 的括号相容性直接成立。$J^2=-I$ 使这个二维实结合代数恰为复数。
+
+于是复数可先在“保持所有关系的关系”的变换中被识别：比较与转向可以互换，互换两次得到负号。这是六维比较代数的复标量，不是对原三维内容强行安放一个复结构。后面的 Clifford 中心与振幅仍有独立的表示步骤。
+
+归一截面是三维球；保正行列式的锥内截面是双曲三空间。这里 $t$ 是响应质量或未归一总量，并未被证明是物理时间。$L_x$ 给数学 boost 方向，不自动供应原滤片或精确控制。
+
+| 几何对象 | 含义 | 不应混同的对象 |
+|---|---|---|
+| $\mathbb P(W)\cong\mathbb R P^2$ | 停住关系中的无向内容轴 | 完整纯态 |
+| $S^2$ | 完成中的有向单位内容 | $x$ 与 $-x$ 不同 |
+| $J_n=R_n\vert _{n^\perp}$ | 横向二维平面的复结构 | 完整三维空间的复结构 |
+| $J$ 于 $\mathfrak{so}(1,3)$ | 比较 Lie 代数的六维复结构 | 物理时间、中心复数 |
+| $\mathbb C^2$ 与 $\mathbb C P^1$ | 后续最小振幅与其复射线 | $\mathbb R P^2$ 轴商 |
+
+<a id="section-8"></a>
+

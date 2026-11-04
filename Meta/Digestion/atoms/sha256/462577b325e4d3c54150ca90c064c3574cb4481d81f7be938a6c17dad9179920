@@ -1,0 +1,51 @@
+**定理 81.2（先固定 horizon 的尖锐一阶律）。** 对每个固定整数 $n\ge2$，
+
+$$
+\eta_n(q)=(t^{-2}-1)q+o_n(q)
+          =(4^{n-1}-1)q+o_n(q),\qquad q\downarrow0.
+$$
+
+更具体地，设 $h=\sqrt{q(1-q)}$、$A=t^{-2}-1$。对 $0\le q\le1$ 有
+
+$$
+\eta_n(q)\ge\max\{0,L_t(q)\},\qquad
+L_t(q)=h+\frac{t^2}{2}-\frac t2\sqrt{t^2+4(h+q)}.
+$$
+
+对 $0<q<t^2$ 有
+
+$$
+\eta_n(q)\le Aq+
+\frac{Aq^{3/2}}{\sqrt{1-q}+\sqrt{1-q/t^2}}.
+$$
+
+**证明。** 对任意 complex feasible $K_2=\left(\begin{smallmatrix}x&z\\\overline z&y\end{smallmatrix}\right)$ 与 $d$，令 $\epsilon=\|G_s(K)-E(q)\|_{\rm op}$。矩阵元界及 $I_2-K_2\ge0$ 给出
+
+$$
+x\ge1-q-\epsilon,\quad |sz-h|\le\epsilon,\quad
+|z|^2\le(1-x)(1-y)\le q+\epsilon.
+$$
+
+故 $(h-\epsilon)_+^2\le t^2(q+\epsilon)$。当 $\epsilon\ge h$，所需下界立即成立；当 $\epsilon<h$，解二次不等式得 $\epsilon\ge L_t(q)$，因为其另一根大于 $h$。这覆盖全部 complex effects。将小根有理化，
+
+$$
+L_t(q)=\frac{q(1-q-t^2)}
+ {h+t^2/2+(t/2)\sqrt{t^2+4(h+q)}}.
+$$
+
+对上界取 $d=0$ 与 rank-one projection $K_2=uu^\dagger$，其中
+
+$$
+u=\begin{pmatrix}\sqrt{1-q/t^2}\\ \operatorname{sgn}(s)\sqrt{q/t^2}\end{pmatrix}.
+$$
+
+残余对角为 $(-Aq,(\alpha/t^2-1)q,\beta q/t^2)$，仅有的 off-diagonal residual 的模为
+
+$$
+w=h-\sqrt{q(1-q/t^2)}
+ =\frac{Aq^{3/2}}{\sqrt{1-q}+\sqrt{1-q/t^2}}.
+$$
+
+实际 $n\ge2$ 满足 $-1/2\le s\le1/4$，从而
+$\alpha-t^2=(1-s)(1+2s)/2\ge0$；三个对角绝对值均不超过 $Aq$。三角不等式得上界。固定 $t>0$ 后，$L_t(q)/q\to A$ 且 $w/q\to0$，故两界夹出结论。∎
+

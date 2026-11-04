@@ -1,0 +1,17 @@
+**Proposition 73.5 (a selected source-growth comparison only).** Let
+$c_0=\beta$ and $c_{j+1}=\langle c_j,\alpha\rangle$. On entry $c_j$ the
+split sweep adds two source vertices, while §54's normalization adds
+$j$. Thus the former has a strictly smaller added-source coordinate for
+$j>2$. This comparison does not give total or minimax dominance.
+
+Proof. Induction gives $a=j,b=1$ on this reachable comb. Apply Theorem
+73.2 and Theorem 54.2. The endpoints are $J(c_j)$ and $\nu(c_j)$, and
+their continued tasks differ as specified above. Conversely, on the
+reachable all-beta skeleton with $L$ leaves, normalization adds zero
+vertices while this sweep adds $2L$. Real represented promotions also
+need two inner calls. These same-run coordinates rule out a universal
+source-growth comparison in the opposite direction and supply no total
+ranking. The weighted randomized acquisition optimum of §§61–67 and
+fixed-normalization bounds retain their own tasks, prices and endpoints.
+$\square$
+
