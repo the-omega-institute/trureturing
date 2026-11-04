@@ -26,12 +26,14 @@ theorem LFunction_one_eq_classNumber (hp : 3 < p) :
   have hp2 : p ≠ 2 := by omega
   have ht : Tendsto (fun s : ℝ => (s : ℂ)) (𝓝[>] 1) (𝓝[≠] 1) := by
     apply tendsto_nhdsWithin_iff.mpr
-    refine ⟨by simpa using (Complex.continuous_ofReal.tendsto 1).mono_left
-      nhdsWithin_le_nhds, ?_⟩
-    filter_upwards [self_mem_nhdsWithin] with s hs
-    intro heq
-    apply (ne_of_gt hs)
-    exact_mod_cast heq
+    refine ⟨?_, ?_⟩
+    · exact (Complex.continuous_ofReal.tendsto 1).mono_left nhdsWithin_le_nhds
+    · filter_upwards [self_mem_nhdsWithin] with s hs
+      have hs' : (1 : ℝ) < s := hs
+      intro heq
+      change (s : ℂ) = 1 at heq
+      apply (ne_of_gt hs')
+      exact_mod_cast heq
   have hζ := riemannZeta_residue_one.comp ht
   have hL : Tendsto (fun s : ℝ => LFunction (primeCharacter p) s)
       (𝓝[>] 1) (𝓝 (LFunction (primeCharacter p) 1)) := by
@@ -48,7 +50,8 @@ theorem LFunction_one_eq_classNumber (hp : 3 < p) :
     ring
   have hres := NumberField.tendsto_sub_one_mul_dedekindZeta_nhdsGT (Field p)
   rw [zeta_residue p hp] at hres
-  simpa only [Complex.ofReal_sub, Complex.ofReal_one] using
+  simpa only [Complex.ofReal_sub, Complex.ofReal_one, Complex.ofReal_mul,
+    Complex.ofReal_div] using
     tendsto_nhds_unique hprod hres
 
 /-- The squared functional equation suffices: its sign need not be computed to
@@ -77,6 +80,7 @@ theorem LFunction_zero_sq_classNumber (hp : 3 < p) :
       push_cast
       field_simp [hπ, hsne]
       rw [hs]
+      ring
 
 /-- An integer-valued half-interval character sum, including its zero term.
 The value is independent of the class-number definition. -/
@@ -138,7 +142,7 @@ theorem quadraticExcess_mod_two : (quadraticExcess p : ZMod 2) = 1 := by
       rw [ZMod.val_cast_of_lt hip, ZMod.val_zero] at hv
       omega
     rcases legendreSym.eq_one_or_neg_one p (a := ((i + 1 : ℕ) : ℤ))
-      (by simpa using hiz) with h | h <;> rw [h] <;> norm_num
+      (by simpa using hiz) with h | h <;> rw [h] <;> norm_num <;> decide
   rw [quadraticExcess_eq_range, Int.cast_sum, Finset.sum_range_succ']
   simp only [Nat.cast_zero, legendreSym.at_zero, Int.cast_zero, add_zero]
   calc
@@ -155,11 +159,11 @@ theorem classNumber_odd (hp : 3 < p) : Odd (NumberField.classNumber (Field p)) :
     Ring.two_ne_zero ((ZMod.ringChar_zmod_n p).substr hp2)
   have hcoef : (((2 - legendreSym p 2 : ℤ) : ZMod 2)) = 1 := by
     rcases legendreSym.eq_one_or_neg_one p (a := 2) (by simpa using htwo) with h | h <;>
-      rw [h] <;> norm_num
+      rw [h] <;> norm_num <;> decide
   have h := congrArg (fun z : ℤ => (z : ZMod 2)) (quadraticExcess_sq_classNumber p hp)
   simp only [Int.cast_pow, Int.cast_mul, Int.cast_natCast] at h
   rw [quadraticExcess_mod_two, hcoef, one_pow, one_mul] at h
-  have hsq (x : ZMod 2) : x ^ 2 = x := by fin_cases x <;> norm_num
+  have hsq : ∀ x : ZMod 2, x ^ 2 = x := by decide
   rw [hsq] at h
   apply Nat.odd_iff.mpr
   have hh := (ZMod.natCast_eq_natCast_iff'

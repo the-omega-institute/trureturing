@@ -8,6 +8,7 @@
 
 import D5.S3.Arith.QuadraticCharacterGram
 import D5.S3.Arith.QuadraticPrefixEnergy
+import D5.S3.Arith.QuadraticSignProducts
 
 namespace D5.S3.Arith.CharacterSums.ChenSunDoubleCharacter
 
@@ -317,7 +318,7 @@ theorem odd_energy_exact (m : ℕ) (hpm : p = 4 * m + 3) :
     (p : ℤ) * ((2 * m + 1 : ℕ) : ℤ) -
       (1 + 1 * -1) * (((2 * m + 1 : ℕ) : ℤ) ^ 2) - (1 + 1) * c ^ 2 at hE
   norm_num at hE
-  have hpmz : (p : ℤ) = 4 * m + 1 := by exact_mod_cast hpm
+  have hpmz : (p : ℤ) = 4 * m + 3 := by exact_mod_cast hpm
   rw [hpmz] at hE
   push_cast at hE hAd
   change 2 * doubleSum p = c ^ 2 -

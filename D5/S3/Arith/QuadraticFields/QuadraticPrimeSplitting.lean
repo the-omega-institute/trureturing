@@ -118,7 +118,7 @@ theorem quadratic_euler_polynomial {F : Type*} [Field F] [Fintype F] [DecidableE
         simpa only [C_1, C_neg, one_mul, neg_one_mul, sub_eq_add_neg] using
           (natDegree_quadratic (a := (1 : F)) (b := -1) (c := -a) one_ne_zero)
       have hirr : Irreducible (X ^ 2 - X - C a : F[X]) := by
-        apply irreducible_of_degree_le_three_of_not_isRoot (by simp [hdeg])
+        apply irreducible_of_degree_le_three_of_not_isRoot (by rw [Finset.mem_Icc, hdeg]; norm_num)
         intro x hx
         have hx' : x ^ 2 - x - a = 0 := by simpa [Polynomial.IsRoot] using hx
         let y := quadraticRootEquivSqrts hF a ⟨x, hx'⟩
@@ -241,9 +241,13 @@ theorem integralGenerator_euler_polynomial_two (z : ℂ) :
       apply monic_X_pow_sub
       simpa using! (degree_linear_lt (a := (1 : ZMod 2)) (b := 1))
     have hirr : Irreducible (X ^ 2 - X - C (1 : ZMod 2)) := by
-      apply irreducible_of_degree_le_three_of_not_isRoot (by simp [hdeg])
-      intro x
-      fin_cases x <;> norm_num [Polynomial.IsRoot, eval_sub, eval_pow, eval_X, eval_C]
+      apply irreducible_of_degree_le_three_of_not_isRoot (by rw [Finset.mem_Icc, hdeg]; norm_num)
+      intro x hx
+      have hx' : x ^ 2 - x - (1 : ZMod 2) = 0 := by
+        simpa only [Polynomial.IsRoot, eval_sub, eval_pow, eval_X, eval_C] using hx
+      have hsq : ∀ y : ZMod 2, y ^ 2 = y := by decide
+      rw [hsq, sub_self, zero_sub, neg_eq_zero] at hx'
+      exact one_ne_zero hx'
     rw [haz, normalizedFactors_irreducible hirr, hmonic.normalize_eq_self]
     simp only [Multiset.toFinset_singleton, Finset.prod_singleton, hdeg, hχ,
       Int.cast_neg, Int.cast_one]
@@ -267,7 +271,10 @@ theorem integralGenerator_euler_polynomial_two (z : ℂ) :
       norm_num at this
     rw [haz, hfac, normalizedFactors_mul (monic_X_sub_C _).ne_zero (monic_X_sub_C _).ne_zero,
       hnf, hnf]
-    simp [hfg, hχ]
+    simp only [Multiset.toFinset_add, Multiset.toFinset_singleton, Finset.singleton_union]
+    rw [Finset.prod_insert (by simpa only [Finset.mem_singleton] using hfg),
+      Finset.prod_singleton]
+    simp only [natDegree_X_sub_C, pow_one, hχ, Int.cast_one, one_mul]
 
 /-- Every rational prime, including two and the ramified prime p. -/
 theorem integralGenerator_euler_polynomial_all (ℓ : ℕ) [Fact ℓ.Prime] (z : ℂ) :

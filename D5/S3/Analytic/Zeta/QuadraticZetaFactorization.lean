@@ -59,6 +59,8 @@ theorem hasProd_rationalPrime_factors (K : Type*) [Field K] [NumberField K]
   intro ℓ
   exact hasProd_fintype _
 
+end
+
 end D5.S3.Analytic.Zeta.QuadraticZetaFactorization
 
 namespace D5.S3.Arith.QuadraticFields.QuadraticOrderMaximal.PrimeImaginary
@@ -81,9 +83,9 @@ theorem primeIdeal_euler_factor (ℓ : ℕ) [Fact ℓ.Prime] (s : ℂ) :
     rw [← Ideal.pow_inertiaDeg ℓ P.1, Nat.cast_pow,
       ← Complex.natCast_cpow_natCast_mul, Complex.cpow_nat_mul]
   simp_rw [hnorm]
-  rw [← Finset.prod_inv_distrib, primeIdeal_euler_polynomial p ℓ,
+  rw [Finset.prod_inv_distrib, primeIdeal_euler_polynomial p ℓ,
     mul_inv_rev, mul_comm]
-  rfl
+  simp [primeCharacter, legendreSym]
 
 /-- Quadratic Dedekind-zeta factorization for the actual number field and actual
 Legendre Dirichlet character, proved by convergent local-to-global products. -/
