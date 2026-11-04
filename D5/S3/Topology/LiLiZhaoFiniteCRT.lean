@@ -118,6 +118,8 @@ lemma isOpen_residue_tail {n i a : ℕ} (hin : n ≤ i) (ha : a < primeSeq i) :
 lemma finiteCylinder_isOpen {n : ℕ} (s : Finset ℕ) (a : ℕ → ℕ)
     (hs : ∀ i ∈ s, n ≤ i) (ha : ∀ i ∈ s, a i < primeSeq i) :
     @IsOpen ℕ (tailTopology n) (finiteCylinder s a) := by
+  letI : TopologicalSpace ℕ := tailTopology n
+  change IsOpen (finiteCylinder s a)
   simp only [finiteCylinder]
   exact isOpen_biInter_finset fun i hi =>
     isOpen_residue_tail (hs i hi) (ha i hi)
@@ -125,8 +127,10 @@ lemma finiteCylinder_isOpen {n : ℕ} (s : Finset ℕ) (a : ℕ → ℕ)
 lemma finiteCylinder_mem_nhds {n : ℕ} (s : Finset ℕ) (a : ℕ → ℕ) (x : ℕ)
     (hs : ∀ i ∈ s, n ≤ i) (ha : ∀ i ∈ s, a i < primeSeq i)
     (hx : x ∈ finiteCylinder s a) :
-    finiteCylinder s a ∈ @nhds ℕ (tailTopology n) x :=
-  (finiteCylinder_isOpen s a hs ha).mem_nhds hx
+    finiteCylinder s a ∈ @nhds ℕ (tailTopology n) x := by
+  letI : TopologicalSpace ℕ := tailTopology n
+  change finiteCylinder s a ∈ nhds x
+  exact (finiteCylinder_isOpen s a hs ha).mem_nhds hx
 
 lemma finiteCylinder_basis_of_generateOpen {n : ℕ} {U : Set ℕ}
     (hU : TopologicalSpace.GenerateOpen (tailSubbasis n) U) (x : ℕ) (hx : x ∈ U) :
@@ -176,35 +180,36 @@ lemma finiteCylinder_basis_of_generateOpen {n : ℕ} {U : Set ℕ}
         · exact ht i hit
       · intro i hi
         rcases Finset.mem_union.mp hi with his | hit
-        · exact ha i his
+        · simpa [c, his] using ha i his
         · by_cases his : i ∈ s
-          · exact ha i his
-          · exact hb i hit
+          · simpa [c, his] using ha i his
+          · simpa [c, his] using hb i hit
       · simp [finiteCylinder]
         intro i hi
         rcases Finset.mem_union.mp hi with his | hit
         · simpa [c, his] using hxs' i his
-        · have hnot : i ∉ s := by
-            intro his
-            have hia : a i = b i := by
+        · by_cases hnot : i ∈ s
+          · have hia : a i = b i := by
               apply Nat.ModEq.eq_of_lt_of_lt (m := primeSeq i)
-              · exact (hxs' i his).symm.trans (hxt' i hit)
-              · exact ha i his
+              · exact (hxs' i hnot).symm.trans (hxt' i hit)
+              · exact ha i hnot
               · exact hb i hit
-            simpa [c, his, hia] using hxs' i his
-          simpa [c, hnot] using hxt' i hit
+            simpa [c, hnot, hia] using hxs' i hnot
+          · simpa [c, hnot] using hxt' i hit
       · intro z hz
+        have hz' : ∀ i ∈ u, z ∈ residue i (c i) := by
+          simpa [finiteCylinder] using hz
         have hz_s : z ∈ finiteCylinder s a := by
           simp [finiteCylinder]
           intro i hi
           have hzu : z ∈ residue i (c i) := by
-            exact hz i (Finset.mem_union_left t hi)
+            exact hz' i (Finset.mem_union_left t hi)
           simpa [c, hi] using hzu
         have hz_t : z ∈ finiteCylinder t b := by
           simp [finiteCylinder]
           intro i hi
           have hzu : z ∈ residue i (c i) := by
-            exact hz i (Finset.mem_union_right s hi)
+            exact hz' i (Finset.mem_union_right s hi)
           by_cases his : i ∈ s
           · have hia : a i = b i := by
               apply Nat.ModEq.eq_of_lt_of_lt (m := primeSeq i)
@@ -228,12 +233,15 @@ lemma finiteCylinder_basis_of_isOpen {n : ℕ} {U : Set ℕ}
 
 /- Every tail topology separates two points with one sufficiently large prime. -/
 theorem tailTopology_t2 (n : ℕ) : @T2Space ℕ (tailTopology n) := by
+  letI : TopologicalSpace ℕ := tailTopology n
+  change T2Space ℕ
   refine ⟨?_⟩
   intro x y hxy
   let i := max n (x + y + 1)
   have hi : x + y < primeSeq i := by
     have hilower : x + y + 1 ≤ i := le_max_right _ _
-    have hbound := Nat.add_two_le_nth_prime i
+    have hbound : i + 2 ≤ primeSeq i := by
+      exact Nat.add_two_le_nth_prime i
     omega
   have hxlt : x < primeSeq i := lt_of_le_of_lt (Nat.le_add_right x y) hi
   have hylt : y < primeSeq i := lt_of_le_of_lt (Nat.le_add_left y x) hi
@@ -241,8 +249,8 @@ theorem tailTopology_t2 (n : ℕ) : @T2Space ℕ (tailTopology n) := by
     isOpen_residue_tail (le_max_left _ _) hxlt,
     isOpen_residue_tail (le_max_left _ _) hylt,
     ?_, ?_, ?_⟩
-  · simp [residue]
-  · simp [residue]
+  · exact Nat.ModEq.refl _
+  · exact Nat.ModEq.refl _
   · refine Set.disjoint_left.2 ?_
     intro z hzx hzy
     have hmod : x ≡ y [MOD primeSeq i] := by
@@ -258,10 +266,14 @@ lemma commonTopology_isOpen_iff {U : Set ℕ} :
 
 lemma isClosed_singleton_tail (n x : ℕ) :
     @IsClosed ℕ (tailTopology n) ({x} : Set ℕ) := by
-  letI : @T2Space ℕ (tailTopology n) := tailTopology_t2 n
+  letI : TopologicalSpace ℕ := tailTopology n
+  letI : T2Space ℕ := tailTopology_t2 n
+  change IsClosed ({x} : Set ℕ)
   exact isClosed_singleton
 
 theorem commonTopology_t1 : @T1Space ℕ commonTopology := by
+  letI : TopologicalSpace ℕ := commonTopology
+  change T1Space ℕ
   refine ⟨fun x => ?_⟩
   change @IsClosed ℕ (⨆ n, tailTopology n) ({x} : Set ℕ)
   exact isClosed_iSup_iff.2 (fun n => isClosed_singleton_tail n x)
@@ -275,11 +287,11 @@ theorem commonTopology_univ_irreducible :
   have hU0 : @IsOpen ℕ (tailTopology 0) U := (commonTopology_isOpen_iff.mp hU) 0
   rcases finiteCylinder_basis_of_isOpen hU0 x hxU with
     ⟨s, a, hs, ha, hxs, hsub⟩
-  let m := (∑ i in s, i) + 1
+  let m := s.sum id + 1
   have hsm : ∀ i ∈ s, i < m := by
     intro i hi
-    have hle : i ≤ ∑ j in s, j := by
-      exact Finset.single_le_sum (f := fun j : ℕ => j)
+    have hle : i ≤ s.sum id := by
+      exact Finset.single_le_sum (f := id)
         (fun _ _ => Nat.zero_le _) hi
     dsimp [m]
     omega
@@ -298,14 +310,14 @@ theorem commonTopology_univ_irreducible :
 
 theorem commonTopology_not_quasiSober :
     ¬ @QuasiSober ℕ commonTopology := by
+  letI : TopologicalSpace ℕ := commonTopology
   intro hqs
-  letI : @QuasiSober ℕ commonTopology := hqs
+  letI : QuasiSober ℕ := hqs
   have hirr := commonTopology_univ_irreducible
-  obtain ⟨x, hgeneric⟩ :=
-    QuasiSober.sober (S := (Set.univ : Set ℕ)) hirr (@isClosed_univ ℕ commonTopology)
-  have hsingleton : @closure ℕ commonTopology ({x} : Set ℕ) = {x} := by
-    letI : @T1Space ℕ commonTopology := commonTopology_t1
-    exact (@isClosed_singleton ℕ commonTopology x).closure_eq
+  obtain ⟨x, hgeneric⟩ := QuasiSober.sober hirr isClosed_univ
+  have hsingleton : closure ({x} : Set ℕ) = {x} := by
+    letI : T1Space ℕ := commonTopology_t1
+    exact (@isClosed_singleton ℕ commonTopology _ x).closure_eq
   have heq : ({x} : Set ℕ) = Set.univ := hsingleton.symm.trans hgeneric.def
   have hne : ({x} : Set ℕ) ≠ Set.univ := by
     intro h
