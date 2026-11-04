@@ -180,6 +180,10 @@ $$claim \land \left(\left(\forall a \in (\mathrm{Nat} \to \mathbb{Z}),\; \operat
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/alekseyev-halving-partitions-nonregularity` (refuted) by `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"alekseyev-halving-partitions-nonregularity","declaration_gid":"D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Max A. Alekseyev (2026). *Halving Partitions and Hyperbinary Expansions*. URL: <https://arxiv.org/abs/2611.01243v1>.
