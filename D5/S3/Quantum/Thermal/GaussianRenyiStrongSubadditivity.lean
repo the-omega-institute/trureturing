@@ -345,17 +345,29 @@ private lemma settlement_main
     (hmix : ∀ {ι : Type} [Fintype ι] [DecidableEq ι]
       (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
       (hH : (symplecticOperator V Ω).IsHermitian) {α : ℝ},
-      0 < α → α < 2 → α ≠ 1 → True)
+      0 < α → α < 2 → α ≠ 1 →
+      gaussianRenyiEntropy α V Ω =
+        (Fintype.card ι : ℝ) / 2 *
+            D5.S3.Quantum.Analysis.BosonicRenyiStieltjes.renyiConstant α +
+          ∫ x in Set.Ioo (0 : ℝ) 1,
+            D5.S3.Quantum.Analysis.BosonicRenyiStieltjes.renyiWeight α x *
+              Real.log (((V.map Complex.ofReal) + (x : ℂ) •
+                (Complex.I • Ω.map Complex.ofReal)).det.re))
     (hkotel : ∀ {ι : Type} [DecidableEq ι]
       (H : Matrix ι ι ℂ) (hH : H.PosDef) (A B C : Finset ι),
-      Disjoint A B → Disjoint A C → Disjoint B C → True)
+      Disjoint A B → Disjoint A C → Disjoint B C →
+      Real.log (H.submatrix (Subtype.val : ↥(A ∪ B ∪ C) → ι) Subtype.val).det.re +
+          Real.log (H.submatrix (Subtype.val : ↥B → ι) Subtype.val).det.re ≤
+        Real.log (H.submatrix (Subtype.val : ↥(A ∪ B) → ι) Subtype.val).det.re +
+          Real.log (H.submatrix (Subtype.val : ↥(B ∪ C) → ι) Subtype.val).det.re)
     (ha2 : ∀ {ι : Type} [Fintype ι] [DecidableEq ι]
-      (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω), True) : claim := by
+      (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω),
+      gaussianRenyiEntropy 2 V Ω = (1 / 2 : ℝ) * Real.log (V.det)) : claim := by
   sorry
 
 theorem result : claim :=
   settlement_main physical_posDef reduced_physical symplectic_spectrum_lower_bound
     shifted_posDef determinant_spectral_identity
-    (by intros; exact True.intro) (by intros; exact True.intro) (by intros; exact True.intro)
+    entropy_mixture koteljanskii_log_step alpha_two_entropy
 
 end D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity
