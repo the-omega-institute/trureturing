@@ -1,0 +1,16 @@
+**命题 3.2（完整三次周期与合法商算子）。**若 $(I+S+S^2)E\subseteq\mathcal N$，则 $U^3a\approx a$ 对全部 $a$ 成立，且 $S\mathcal N\subseteq\mathcal N$。商 $V=E/\mathcal N$ 上的诱导算子 $R_0$ 满足
+
+$$
+R_0^2+R_0+I=0,\quad R_0^3=I,\quad
+B(R_0x,R_0y)=B(x,y).
+\tag{3.1}
+$$
+
+**证明。**记 $L_a=(I+S+S^2)e_a=e_a+e_{Ua}+e_{U^2a}-e_{p_1}-e_{p_2}$。则 $L_{p_1}=e_{p_3}$，且 $L_{Ua}-L_a=e_{U^3a}-e_a$，所以这些向量均在 $\mathcal N$。引理 2.3 给完整行列周期，且 $S^3x-x\in\mathcal N$ 对所有 $x$ 成立。对 $n\in\mathcal N,y\in E$，
+
+$$
+B(Sn,y)=B(Sn,S^3y)=B(n,S^2y)=0,
+$$
+
+反向配对同理。根稳定性因此成立，$S$ 才能下降。中心化三相和给 (3.1)，不要求原始 $U$ 满射或三周期。
+

@@ -6,11 +6,33 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence;
 internal sealed class OEISA400644Document : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Recurrence/OEISA400644.";
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The exact rounded three-term norm sequence has the Tribonacci square-root ratio limit.",
         H("OEIS A400644: exact rounded recurrence"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("oeis-a400644-round-agreement"),
+                DeclarationHandle.Create(Prefix + "sourceRound_round"),
+                H("Integer threshold and nearest real rounding agree"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, FormulaDsl.Id("s"), Colon, Sp,
+                    Seq(Mathbb, Grp(FormulaDsl.Id("N"))), Comma, Sp,
+                    new Formula.Relation(
+                        new Formula.Apply(Seq(Operatorname, Grp(FormulaDsl.Id("round"))), [
+                            new Formula.Apply(Seq(Operatorname, Grp(FormulaDsl.Id("Real")), Dot,
+                                Operatorname, Grp(FormulaDsl.Id("sqrt"))), [
+                                Parenthesized(Seq(FormulaDsl.Id("s"), Colon, Sp,
+                                    Mathbb, Grp(FormulaDsl.Id("R"))))])]),
+                        FormulaRelationOperator.Equal,
+                        Parenthesized(Seq(new Formula.Apply(Seq(Operatorname,
+                            Grp(FormulaDsl.Id("sourceRound"))), [FormulaDsl.Id("s")]),
+                            Colon, Sp, Mathbb, Grp(FormulaDsl.Id("Z")))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every natural radicand s, rounding its real square root gives the integer cast of sourceRound s. The strict half-unit error excludes ties."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("oeis-a400644-source-round"),
                 DeclarationHandle.Create(Prefix + "sourceRound"),
