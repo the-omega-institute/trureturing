@@ -18,6 +18,21 @@ open Finset
 
 namespace D5.S3.Analytic.Interpolation.HermiteMomentBounds
 
+/-- Positive coordinates on at least two indices give a strict square-sum bound. -/
+theorem sum_sq_lt_sq_sum {k : ℕ} (hk : 2 ≤ k) (x : Fin k → ℝ)
+    (hx : ∀ i, 0 < x i) : (∑ i, x i ^ 2) < (∑ i, x i) ^ 2 := by
+  let : Nontrivial (Fin k) := Fin.nontrivial_iff_two_le.mpr hk
+  have hxi (i : Fin k) : x i < ∑ j, x j := by
+    obtain ⟨j, hji⟩ := exists_ne i
+    exact single_lt_sum hji (mem_univ i) (mem_univ j) (hx j)
+      (fun l _ _ => (hx l).le)
+  calc
+    (∑ i, x i ^ 2) < ∑ i, x i * (∑ j, x j) := by
+      apply sum_lt_sum_of_nonempty univ_nonempty
+      intro i _
+      simpa only [pow_two] using mul_lt_mul_of_pos_left (hxi i) (hx i)
+    _ = (∑ i, x i) ^ 2 := by rw [← sum_mul, pow_two]
+
 /-- The two nodes determined by the mean and total squared deviation satisfy
 positivity of the lower node and an upper bound for every coordinate. -/
 theorem hermite_moment_bounds {k : ℕ} (hk : 2 ≤ k) (x : Fin k → ℝ)
@@ -58,21 +73,7 @@ theorem hermite_moment_bounds {k : ℕ} (hk : 2 ≤ k) (x : Fin k → ℝ)
     rw [← sum_mul]
     rw [← mul_sum, hsum]
     ring
-  have hstrict : (∑ i, (x i)^2) < (∑ i, x i)^2 := by
-    have hxi : ∀ i, x i < ∑ j, x j := by
-      intro i
-      obtain ⟨j, hji⟩ := exists_ne i
-      have herase : 0 < ∑ l ∈ univ.erase i, x l := by
-        apply sum_pos (fun l _ => hx l)
-        exact ⟨j, mem_erase.mpr ⟨hji, mem_univ j⟩⟩
-      have heq := sum_erase_add univ x (mem_univ i)
-      linarith
-    calc
-      (∑ i, (x i)^2) < ∑ i, x i * (∑ j, x j) := by
-        apply sum_lt_sum_of_nonempty univ_nonempty
-        intro i _
-        simpa only [pow_two] using mul_lt_mul_of_pos_left (hxi i) (hx i)
-      _ = (∑ i, x i)^2 := by rw [← sum_mul, pow_two]
+  have hstrict := sum_sq_lt_sq_sum hk x hx
   have hVlt : V < (k : ℝ) * ((k : ℝ) - 1) * μ^2 := by
     rw [hsum] at hstrict
     nlinarith [hvariance]

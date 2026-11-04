@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2502.05939v1
 claim: "Conjecture 28: Ferrers-board multiset rook-Eulerian real-rootedness and pairwise interlacing of the decreasing first-letter refinements."
 strata_touched:
   - D5/S3/Combinatorics/Permutation/MultisetRookEulerianInterlacingRefutation
+  - D5/S3/Combinatorics/Permutation/MultisetRookEulerianRealRootednessRefutation
 license: citation-only
 triage: anchor
 ---
@@ -50,7 +51,40 @@ arbitrary Ferrers boards.
 
 The six-row board $(3,3,3,3,4,4)$ with content $(2,2,1,1)$ refutes the
 interlacing conjunct: the required bottom comparison is
-$-7\leq-4-\sqrt{13}$. The universal real-rootedness conjunct remains open.
+$-7\leq-4-\sqrt{13}$. The full-polynomial counterexample below refutes the
+universal real-rootedness conjunct.
+
+## Original full-polynomial counterexample
+
+For the first clause, take board runs $(2,3),(3,4),(4,10),(5,2),(6,101)$,
+where each pair is a row bound and its multiplicity, and content
+$(6,1,4,8,1,100)$. The total row count and total content are both $120$.
+The exact ordinary calculation gives
+
+$$
+R(t)=t^2+261t^3+21704t^4+591814t^5+5372605t^6+18550680t^7
++27147806t^8+17137014t^9+4318325t^{10}+352440t^{11}.
+$$
+
+At $x=-1/100$ its Laguerre expression is
+
+$$
+(R'(x))^2-R(x)R''(x)=
+-\frac{2294232329562528073294509555513}{12500000000000000000000000000000000000}<0.
+$$
+
+The real-rootedness-refutation module connects a remaining-content recurrence
+to the original `W`, `asc` and `R`, counting each distinct word once. The first
+19 rows exclude sixes. The remaining 101 positions contain 100 sixes and one
+smaller letter, whose endpoint and internal placements give the exact tail
+polynomial. An induction for that tail and a 664-state prefix certificate
+establish the displayed full polynomial. The original `laguerre_splits`
+supplier turns its negative Laguerre value into `result : ¬ claim`.
+The six-row interlacing result is separate.
+
+The source version uses the arXiv.org non-exclusive license to distribute.
+This note provides a citation and short mathematical definitions; no author
+code or substantial source archive is included.
 
 ## Verified locator
 

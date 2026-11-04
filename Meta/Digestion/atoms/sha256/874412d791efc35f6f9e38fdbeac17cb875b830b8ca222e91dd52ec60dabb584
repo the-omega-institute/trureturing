@@ -1,0 +1,44 @@
+**Correspondence 16.1 (the original source and service conditioning).**
+For every finite $r$, the family (IV.34) starts at the same known alpha,
+uses its forced actual root promotion, and then only the beta-left
+splits and right-born promotions (IV.28). Its counts are
+$a=q_r-r$, $c=r+1$, $N=q_r+r+1$. The native reachability and legality
+argument applies to the entire complete fibre, not just the histories
+passing through the selected cuts. AA Assumption 20.1, Assumption 5.1
+and AAII Theorem 96.2 admit each such finite history by supplying its
+ordinary addressed $P/S$ request frames with sufficient finite backing
+and finite progress. Material may depend on the actual finite execution;
+no one fixed finite-capacity device is assumed to realize all $r$.
+
+The genuine source/root reference, bound journal/input/output references,
+current exclusive source and record rights, installed finite program
+and paid workspace are the same acquired prerequisites as in §11.
+Neither a numerical endpoint description nor (IV.36) creates an object
+reference or grants access. Missing rights or a wrong phase still disable
+the primitive, with no additional refusal reply. The complete original
+Tag, $P$, $S$, HasPromotion, HasSplit, FetchGrowth and Next requests,
+their eight full reply forms, address/index payloads, absence/type
+refusals, OutOfRange and BadFrame cases are exactly those of AAII
+Definition 96.1 and Correspondence 11.1.
+
+Each completed request still reserves its real backing, serializes source
+edit and record maintenance, builds and seals its whole reply, performs
+Print and reply **End**, receives the supplied local ACK, Returns to
+that same actual root and clears occupied work before Ready. Incomplete
+ingress retains only its acquired prefix and pending backed state until
+completion is supplied. Excluding journal end, length and absence as
+decoding observations removes none of these reply, acknowledgement or
+return events. No busy-cut inverse, interrupt or crash recovery follows.
+
+On this conditioning, a hypothetical alternative installation satisfying
+Definition 9.1's binary-only head contract induces a recorder covered by
+Theorem 15.1. Its decoder may acquire the current source and compute any
+finite source-dependent count or codebook in paid scratch; it still
+cannot satisfy a finite uniform additive payload bound. A varying
+observable entry, header, capacity, allocator state or other serial
+archive would be additional conditioning, as already excluded by that
+definition. Paying for such a channel does not make it uninformative.
+This implication supplies no new installation: §11's acquired ordinal
+service remains the existing computable member of the class, with its
+stated nonoptimal upper bound.
+

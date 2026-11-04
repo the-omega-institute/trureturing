@@ -1,0 +1,52 @@
+### 定理 3.3（模相容核定理）
+
+<a id="thm-c123-modular-core"></a>
+
+<a id="eq-c123-modular-core"></a>
+
+$$
+\boxed{\quad
+ \mathfrak F_\sigma
+ =\bigcap_{t\in\mathbb R}
+ \sigma^{it}\mathfrak A_{\mathcal N}\sigma^{-it}.
+ \quad}
+\tag{23}
+$$
+
+因此 $\mathfrak F_\sigma$ 是
+$\mathfrak A_{\mathcal N}$ 中最大的 $\sigma$-模不变含幺子代数。
+在它上面，Petz 回推的 Heisenberg 作用总是同一个规范表示：
+
+<a id="eq-c123-reference-independent-logical-read"></a>
+
+$$
+\mathcal R_\sigma^*(A)=\beta_{\mathcal N}(A),
+ \qquad A\in\mathfrak F_\sigma.
+\tag{24}
+$$
+
+**证明。**
+定理~[2.3](#thm-c123-fixed-blocks) 说明 $\mathfrak F_\sigma$ 模不变，
+而 $\mathcal R_\sigma$ 恢复该代数；最大性定理故给
+$\mathfrak F_\sigma\subseteq\mathfrak A_{\mathcal N}$。
+再施以所有 $\alpha_t^\sigma$，得到式~[(23)](#eq-c123-modular-core) 的正向包含。
+
+为证反向，取任一模不变子代数
+$\mathcal B\subseteq\mathfrak A_{\mathcal N}$。
+规范表示 $\beta_{\mathcal N}|_{\mathcal B}$ 满足双模关系
+[(14)](#eq-c123-bimodule)，所以引理~[2.5](#lem-c123-modular-intertwining) 给
+
+$$
+\mathcal N(\Gamma_\sigma(A))
+ =\Gamma_\tau(\beta_{\mathcal N}(A)),\qquad A\in\mathcal B.
+$$
+
+两侧施以 $\Gamma_\tau^{-1}$，得到
+$\mathcal R_\sigma^*(A)=\beta_{\mathcal N}(A)$，进而
+$\mathcal N^*\mathcal R_\sigma^*(A)=A$。
+故 $\mathcal B\subseteq\mathfrak F_\sigma$。
+式~[(23)](#eq-c123-modular-core) 的右侧本身为含幺 $*$-子代数，且
+$\alpha_s^\sigma$ 只将交集中参数 $t$ 平移为 $t+s$，所以它模不变。
+取其作为 $\mathcal B$ 即得反向包含，也同时证明
+[(24)](#eq-c123-reference-independent-logical-read)。
+

@@ -59,7 +59,7 @@ private lemma row_summable_norm {z : ℂ} (hz : ‖z‖ < 1) (x : H) (n : ℕ) :
         (norm_nonneg _) (by positivity)
     _ = _ := by rw [pow_add]; ring
 
-private lemma original_coordinate_anticommutator (r : ℝ) (n m : ℕ) :
+lemma original_coordinate_anticommutator (r : ℝ) (n m : ℕ) :
     ((n + 1 : ℂ) + (m + 1 : ℂ)) *
         matrixEntry (Real.sqrt r : ℂ) (n + 1) (m + 1) =
       ((n + 1 : ℂ) * sourceValue r n) *
@@ -75,7 +75,7 @@ private lemma original_coordinate_anticommutator (r : ℝ) (n m : ℕ) :
   field_simp [hs, ht, hst]
   <;> ring
 
-private lemma column_pair_normalization {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
+lemma column_pair_normalization {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
     1 + (∑' n : ℕ, weightedSource r hr.le hr1 n * column r hr.le hr1 n) =
       ((B r / F r : ℝ) : ℂ) := by
   have h := (bilinear_resolvent_scalar hr hr1).2
@@ -147,7 +147,7 @@ theorem weightedColumn_equation {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
 /-- Opposite-sign Neumann series for the same literal signed operator. -/
 def oppositeResolvent (z : ℂ) : H →L[ℂ] H := ∑' k : ℕ, (-operator z) ^ k
 
-private lemma operator_norm_lt_one {z : ℂ} (hz : ‖z‖ < 1) :
+lemma operator_norm_lt_one {z : ℂ} (hz : ‖z‖ < 1) :
     ‖operator z‖ < 1 :=
   (operator_norm_le hz).trans_lt
     (pow_lt_one₀ (norm_nonneg z) hz (by norm_num : (2 : ℕ) ≠ 0))
@@ -370,7 +370,7 @@ private lemma weighted_scalar_shifted_sum {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1)
   rw [hsum.tsum_eq_zero_add] at he
   simpa only [Nat.cast_zero, zero_mul, zero_add, Nat.cast_add, Nat.cast_one] using he
 
-private lemma weighted_column_pair {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
+lemma weighted_column_pair {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
     (∑' n : ℕ, weightedSource r hr.le hr1 n * weightedColumn r hr.le hr1 n) =
       ((r * B r / (4 * (1 - r) * F r) : ℝ) : ℂ) := by
   have hterm (n : ℕ) : weightedSource r hr.le hr1 n * weightedColumn r hr.le hr1 n =

@@ -20,6 +20,12 @@ internal sealed class AlbrightKemenyEdgeDerivativeRefutationDocument : IScribeDo
                 "Section 1, page 3, states: “The normalized Laplacian matrix of a graph is given by L = I − D^{−1/2} A D^{−1/2} where A is the adjacency matrix and D is the degree diagonal matrix.” The displayed entries use the row sums of A for those degrees, including for the perturbed adjacency matrix.", AssessedProvenance.FromLiterature(Source)),
             Node("kemeny", "Kemeny's constant", "kemeny", KemenyFormula(),
                 "Section 1, page 3, states: “Kemeny’s constant can be computed as” K(G) = Σ_{λT ≠ 1} 1/(1 − λT) = Σ_{λL ≠ 0} 1/λL, “where each λL is an eigenvalue of L.” The encoding filters the multiset of real characteristic roots by nonzeroness, maps inversion, and sums. For the real symmetric normalized Laplacians in the proof, these roots are the eigenvalues with multiplicity.", AssessedProvenance.FromLiterature(Source)),
+            Node("reciprocal-roots", "Reciprocal nonzero characteristic roots", "reciprocalRoots", ReciprocalRootsFormula(),
+                "For any finite index type, the characteristic-root multiset is filtered by nonzeroness, inverted and summed. Real inversion at zero is zero.", AssessedProvenance.FromRepo()),
+            Node("reciprocal-sum", "The spectral reciprocal sum", "reciprocalRoots_eq_sum", ReciprocalSumFormula(),
+                "For a real Hermitian matrix, the characteristic-root multiset agrees with its real eigenvalues counted with multiplicity.", AssessedProvenance.FromRepo(), DescribeRole.Theorem),
+            Node("reciprocal-trace", "A generalized inverse trace", "reciprocalRoots_eq_trace", ReciprocalTraceFormula(),
+                "The three displayed matrix equations identify the reciprocal sum with the trace of T. This statement concerns arbitrary real Hermitian matrices and does not assume a normalized Laplacian.", AssessedProvenance.FromRepo(), DescribeRole.Theorem),
             Node("claim", "Conjecture 3.5: minimality", "claim", Eqn(Call("claim"), Parenthesized(ClaimBody())),
                 "Conjecture 3.5, page 19, states verbatim: “For a given n, the derivative of Kemeny’s constant on simple graphs of order n is smallest on the path on n vertices with respect to the non-edge connecting the ends of the path. The value of this derivative is O(n³).” The proposition expresses the first sentence for connected graphs on Fin n with n ≥ 2 and a ≠ b. Both derivatives must exist at zero. The path endpoints are the elements of Fin n with values 0 and n − 1; the inequality n ≥ 2 supplies their bounds. The second sentence concerns growth of the path value and is outside this proposition.", AssessedProvenance.FromLiterature(Source)),
             Node("result", "A strict counterexample at order 23", "result", new Formula.Not(Parenthesized(ClaimBody())),
@@ -107,4 +113,32 @@ internal sealed class AlbrightKemenyEdgeDerivativeRefutationDocument : IScribeDo
         return All("n", Nat(), Imp(Leq(D(2), V("n")), GraphBinders(All("a", FinN(), All("b", FinN(),
             All("dG", Real(), All("dP", Real(), comparison)))))));
     }
+    private static Formula GenericMatrix() => Call("Matrix", V("I"), V("I"), Real());
+    private static Formula FiniteIndex(Formula body) => All("I", Call("Type"),
+        Seq(OpenBracket, Call("Fintype", V("I")), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", V("I")), CloseBracket, Sp, body));
+    private static Formula ReciprocalRootsFormula()
+    {
+        Formula roots = QCall("Polynomial", "roots", QCall("Matrix", "charpoly", V("L")));
+        Formula filtered = QCall("Multiset", "filter", Lam("x", Real(), Ne(V("x"), D(0))), roots);
+        Formula mapped = QCall("Multiset", "map", Lam("x", Real(), new Formula.Power(V("x"), new Formula.Negate(D(1)))), filtered);
+        return FiniteIndex(All("L", GenericMatrix(), Eqn(Call("reciprocalRoots", V("L")), QCall("Multiset", "sum", mapped))));
+    }
+    private static Formula ReciprocalSumFormula()
+    {
+        Formula sum = Seq(new Formula.Subscript(Sum, Seq(V("i"), Sp, Colon, Sp, V("I"))), Sp,
+            new Formula.Power(QCall("hL", "eigenvalues", V("i")), new Formula.Negate(D(1))));
+        return FiniteIndex(All("L", GenericMatrix(), All("hL", QCall("Matrix", "IsHermitian", V("L")),
+            Eqn(Call("reciprocalRoots", V("L")), sum))));
+    }
+    private static Formula ReciprocalTraceFormula()
+    {
+        Formula mul(Formula x, Formula y) => Seq(Parenthesized(x), Sp, Cdot, Sp, Parenthesized(y));
+        Formula body = Imp(QCall("Matrix", "IsHermitian", V("L")),
+            Imp(Eqn(mul(V("L"), V("T")), Seq(D(1), Sp, Minus, Sp, V("P"))),
+                Imp(Eqn(mul(V("L"), V("P")), D(0)), Imp(Eqn(mul(V("P"), V("T")), D(0)),
+                    Eqn(Call("reciprocalRoots", V("L")), QCall("Matrix", "trace", V("T")))))));
+        return FiniteIndex(All("L", GenericMatrix(), All("P", GenericMatrix(), All("T", GenericMatrix(), body))));
+    }
+
 }

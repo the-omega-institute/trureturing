@@ -1,0 +1,46 @@
+**Proposition 9.5 (finite realization of every compactified channel).** Every $\mu\in\mathcal M$, including every weak-* limiting measure, has the same moment and channel as an original finite protocol with at most $261$ nonzero outcomes and genuine feedback unitaries in $U(4)$.
+
+Proof. For each atom retain the same normalized Choi convention as in Definition 1.3, even though an atom need not preserve trace:
+
+$$
+J_{G_{(E,U)}}=(\operatorname{id}_{M_4}\otimes G_{(E,U)})(\Pi).
+\tag{9.28}
+$$
+
+This is a Hermitian $16$-by-$16$ matrix. The continuous map
+
+$$
+F:\mathcal K\longrightarrow
+ \operatorname{Herm}_2\oplus\operatorname{Herm}_{16},
+\qquad F(E,U)=(E,J_{G_{(E,U)}})
+\tag{9.29}
+$$
+
+has compact image in a real vector space of dimension at most $4+256=260$. The probability measure $\nu=\mu/2$ has barycenter
+
+$$
+\int_{\mathcal K}F\,d\nu
+ =\left(\frac{I_2}{2},\frac{J_{\Phi_\mu}}{2}\right).
+\tag{9.30}
+$$
+
+This barycenter belongs to the convex hull of $F(\mathcal K)$. Indeed, finite weighted samples approximate its integral by compactness and continuity, and the convex hull of a compact set in finite dimensions is closed. Caratheodory's theorem represents each point of that convex hull using at most $261$ points; it also gives its compactness, since the representations are images of a compact product with the closed probability simplex.
+
+Thus there are $1\le r\le261$, atoms $(E_i,U_i)\in\mathcal K$, and positive weights $p_i$ summing to one, after removal of any zero weights, such that
+
+$$
+\sum_{i=1}^rp_iE_i=\frac{I_2}{2},\qquad
+\sum_{i=1}^rp_iJ_{G_{(E_i,U_i)}}=\frac{J_{\Phi_\mu}}{2}.
+\tag{9.31}
+$$
+
+Set $D_i=2p_iE_i$ and keep these same $U_i$. These effects are Hermitian positive semidefinite and sum to $I_2$. Linearity in the effect and injectivity of the Choi correspondence yield
+
+$$
+\sum_{i=1}^rU_i\bigl((R_0D_i^{\mathsf T}R_0^\dagger)\circ X\bigr)U_i^\dagger
+ =2\sum_{i=1}^rp_iG_{(E_i,U_i)}(X)=\Phi_\mu(X)
+\tag{9.32}
+$$
+
+for every $X$. This is a protocol in exactly Definition 1.2, retaining every outcome. Thus the compact measure description introduces no additional channel obtainable only from diffuse measures. In particular a diffuse optimizing limit cannot evade finite realization. Measures here are an auxiliary compact parameter space, not a claim about physically implementing an infinite-outcome measurement. $\square$
+

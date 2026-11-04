@@ -1,0 +1,64 @@
+**Theorem 27.2 (native reconvergence with every-prefix retention).** Put
+
+$$
+C=\langle\beta,\alpha\rangle,\quad
+A_0=\langle\beta,C\rangle,\quad
+A_1=\langle C,\beta\rangle,\quad
+D=\langle C,C\rangle,
+\qquad B_0(x)=x,\quad B_{k+1}(x)=\langle B_k(x),B_k(x)\rangle.
+\tag{IV.71}
+$$
+
+For every recorder (27.1), every $k\ge0$, and **every** legal prefix $h$
+ending at $B_k(C)$, some legal continuation $v$ ends at $B_{k+1}(C)$ and
+satisfies $|J(hv)|-|J(h)|\ge2^k$. Consequently, for each $n\ge0$ there
+is a history at the fixed endpoint $B_n(C)$ with
+
+$$
+|J(h)|\ge2^n-1=\frac{N(B_n(C))-2}{3},\qquad
+N(B_n(C))=3\cdot2^n-1,\qquad E(U(B_n(C)))=1.
+\tag{IV.72}
+$$
+
+The witnessing histories can be selected as nested continuations.
+
+**Proof.** From the actual term $C$, the two legal addressed words
+$P_R S_R$ and $S_L P_R$ reach $A_0$ and $A_1$, respectively. In the
+first word, $P_R$ supplies precisely the beta guard for $S_R$; in the
+second, $S_L$ uses the left beta and leaves the right alpha available
+for $P_R$. From $A_0$ the event $S_L$, and from $A_1$ the event $S_R$,
+reach the identical $D$. All statements concern actual edits, with
+beta on the left at every split.
+
+AA17.2 excludes $\langle\alpha,\beta\rangle$ from the native fibre of
+$U(C)$, so $C$ is its unique representative. The two child classes
+beta and $C$ can occur in either order, giving exactly $A_0,A_1$ over
+$U(A_0)$. At a pair of equal child classes, the native ordered fibre
+is the Cartesian square of the child fibre, as in (IV.64), without an
+additional exchange factor. Thus $U(B_k(A_0))$ has exactly
+$2^{2^k}$ native ordered representatives, obtained by independently
+putting $A_0$ or $A_1$ at its $2^k$ bottom addresses. The same recursion
+makes $B_k(C)$ and $B_k(D)=B_{k+1}(C)$ singleton orientation fibres.
+
+Starting after the specified $h$, perform one of the two displayed
+words in each disjoint bottom $C$ block, in a fixed block order. Prefix
+each local address by its block address. No event touches another
+block, so all guards remain valid at every intermediate prefix.
+This realizes all $2^{2^k}$ distinct ordered intermediate terms with
+the same $U$. Their complete $J$ values must be distinct by (IV.70),
+and all extend the one fixed word $J(h)$. There are only
+$\sum_{j=0}^{r-1}2^j=2^r-1$ binary suffixes of length less than $r$.
+With $r=2^k$, at least one intermediate continuation therefore adds
+at least $2^k$ bits. Complete its blocks by the respective single
+splits above. Literal prefix preservation retains the length gained,
+even if different records subsequently coincide.
+
+The initial $C$ is reached by $P_\varepsilon S_\varepsilon$. Apply
+the every-prefix conclusion successively for $k=0,\ldots,n-1$;
+$\sum_{k<n}2^k=2^n-1$. The leaf counts at $B_n(C)$ are
+$a=c=2^n$, proving its grade. A fresh static recoding at this endpoint
+needs zero orientation bits, yet a coherent recorder retains the
+mandatory accumulated length. This is a length claim along a selected
+history, not a claim that every history is long or that its earlier
+cuts remain distinguishable. $\square$
+

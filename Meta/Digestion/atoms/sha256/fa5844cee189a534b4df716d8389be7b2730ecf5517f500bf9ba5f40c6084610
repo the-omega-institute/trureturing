@@ -1,0 +1,28 @@
+**Definition 34.3 (resource and parsimony boundaries).** The comparisons
+above separate conditional information, actual recording, and service
+work. Every event receipt and selector evaluation, regular-address scan,
+source guard/edit/navigation, local mark initialization/write, branch
+insertion/lookup, ancestor visit, side-cell allocation/link, request copy,
+backed counter, recall scan, output construction/printing, End,
+acknowledgement, return and scratch clearing is charged on the same
+execution. Driver/control installation, real source and record references,
+grants, occupied input latches, reserved material and unfinished writes
+coexist with their operands. Reference widths, inactive fields and work
+storage have not been replaced by unit-size numerals. A bit-payload
+comparison alone gives no Pareto dominance across these coordinates.
+
+For the declared source task the distinct current $\alpha/\beta$ tags
+and their different enabled $P/S$ operations must remain distinguishable;
+source orientation and the actual binding identify where a continued
+operation occurs. One allocated known $\alpha$ suffices here to produce
+$\beta$ by promotion, as §22 already establishes. Theorems 30.3 and 31.2
+locate an additional indispensable selected-membership distinction for
+this recall task, but do not force local two-bit fields, a particular tape
+layout, three selection states, an external serial clock or any total
+cost optimum. Current $q$ is a sufficient installed update input; it can
+be behaviorally redundant as Theorem 33.2 demonstrates. Source binding
+and current authority are operational premises for live use, not extra
+content inferred from a selected address. Finite control descriptions
+and finite selection state do not bound growing source, records, operands
+or service workspace.
+

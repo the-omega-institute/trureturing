@@ -1,0 +1,18 @@
+## 2. Absolute-discrepancy application
+
+For a sequence of integer discrepancies $E_j$ put
+$$
+ f(x)=\frac{1}{\sqrt{2+|x|}\log(2+|x|)},\qquad
+ w_j=\frac{1}{(j+1)\log(j+2)}.
+$$
+If the marginal bounds $\Pr(|E_j|>C_\delta(j+1)^2)\le\delta$ hold
+uniformly over $j$, then
+$$
+ f(E_j)\ge
+ \frac{w_j}{\sqrt{C_\delta+2}
+ (2+\log(C_\delta+2)/\log 2)}
+$$
+off a set of measure at most $\delta$. The divergent deterministic
+series $\sum_j w_j$ therefore gives $\sum_j f(E_j)=\infty$ almost
+surely by Theorem 1.1.
+

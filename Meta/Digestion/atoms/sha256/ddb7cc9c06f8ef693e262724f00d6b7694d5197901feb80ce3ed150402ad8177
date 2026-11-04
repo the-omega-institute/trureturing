@@ -1,0 +1,32 @@
+**Definition 25.1 (a regular selector and reachable endpoints).** Fix once
+and for all
+
+$$
+\chi(P,p)=0,\qquad
+\chi(S,p)=\mathbf1\{p\in L^*R\}.
+\tag{AA.86}
+$$
+
+A finite automaton checks zero or more $L$ symbols followed by exactly
+one terminal $R$, and checks the kind. Neither a depth parameter nor a
+history is an argument to this program. For each integer $n\ge1$ put
+$p_i=L^i$ for $1\le i\le n+1$ and $q=L^{n+1}R$. Define $t_n$ by the
+following complete event membership:
+
+$$
+\begin{aligned}
+\text{splits: }&S_\varepsilon,
+   \quad S_{p_i}\ (1\le i\le n+1),\quad S_q,S_R,\\
+\text{promotions: }&P_\varepsilon,
+   \quad P_{p_iR}\ (1\le i\le n),\quad P_q,P_R.
+\end{aligned}
+\tag{AA.87}
+$$
+
+These events determine a unique endpoint by Theorem 17.2. They are
+reachable: execute $P_\varepsilon S_\varepsilon$, the spine splits in
+increasing $i$, the indicated right-leaf promotions, then $S_q,S_R$
+after their promotions. The last two splits can occur in either order.
+All omitted leaves remain at their birth type. The only selected events
+are $e=S_q$ and $g=S_R$.
+

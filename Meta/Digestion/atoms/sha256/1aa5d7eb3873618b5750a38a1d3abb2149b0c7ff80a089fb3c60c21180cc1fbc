@@ -1,0 +1,9 @@
+**定义 9.4（C：原子互易）。** 对数学归一化纯态 $\omega$，令 $F_\omega=\mathbb R_+\omega$。幂等性给
+
+$$
+P_{F_\omega}v=e_\omega(v)\omega,\qquad
+ e_\omega=P_{F_\omega}^*u_o,\qquad e_\omega(\omega)=1.
+$$
+
+要求所有纯态对满足 $e_\omega(\nu)=e_\nu(\omega)$。这里的纯态与原子效果属于原响应商与全数学对偶；不增加强对称、跨不等扇区的传递性或独立 signed spectrality。
+

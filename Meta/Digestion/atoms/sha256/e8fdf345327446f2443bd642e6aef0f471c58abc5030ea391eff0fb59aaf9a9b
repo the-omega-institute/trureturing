@@ -1,0 +1,8 @@
+## 126. A strictly hyperideal bipyramid with heterogeneous tetrahedra
+
+Let B be the abstract hexagonal bipyramid with poles A,B and cyclic equatorial vertices V_0,...,V_5 (indices modulo six). Its triangular faces are
+
+    U_i = A V_i V_{i+1},     L_i = B V_i V_{i+1}.
+
+Prescribe the interior dihedral angle π/2 at every pole–equator edge A V_i and B V_i. At V_i V_{i+1}, prescribe π/m_i, where m_i=3 for even i and m_i=4 for odd i.
+

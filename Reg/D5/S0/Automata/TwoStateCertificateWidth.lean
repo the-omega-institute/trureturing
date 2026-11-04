@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S0.Automata.TwoStateCertificateWidth
 import Reg.Support.DependentFamily
+import Reg.Support.SingleDependentReadout
 
 /-! The upper-bound readout is observed over the complete dependent theorem family. -/
 
@@ -110,3 +111,81 @@ noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,
 #print axioms registration
 
 end Reg.D5.S0.Automata.TwoStateCertificateWidth
+
+namespace Reg.D5.S0.Automata.TwoStateCertificateWidth.RotateNe
+
+open _root_.D5.S0.Automata.TwoStateCertificateWidth
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+noncomputable section
+
+/-- Observe cyclic rotation on the theorem's full finite-index domain. -/
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature ℕ Fin Fin
+
+def actual : Realization signature :=
+  realize signature (fun _ m i => finRotate m i) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ i => i) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {m : ℕ}, 2 ≤ m → ∀ i : Fin m, R.readout () m i ≠ i
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h (m := 2) (by decide) 0 rfl
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨2, 0, 1, ?_⟩
+  change finRotate 2 0 ≠ finRotate 2 1
+  exact fun h => (by decide : (0 : Fin 2) ≠ 1) ((finRotate 2).injective h)
+
+def source_registration : Registration arena (type_of% @rotate_ne) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@rotate_ne, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@rotate_ne) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S0.Automata.TwoStateCertificateWidth.RotateNe.unit
+  realizationName := `Reg.D5.S0.Automata.TwoStateCertificateWidth.RotateNe.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ m i => finRotate m i) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S0.Automata.TwoStateCertificateWidth
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end
+end Reg.D5.S0.Automata.TwoStateCertificateWidth.RotateNe

@@ -1,0 +1,2 @@
+**Convention 2.1 (Parties and colourings).** Fix $\mathtt q\ge2$ and write $[\mathtt q]=\{1,\dots,\mathtt q\}$. A $\mathtt q$-party pure qubit state is a unit vector $\psi\in(\mathbb C^2)^{\otimes N}$ together with a colouring $\mathrm{col}:[N]\to[\mathtt q]$ assigning each qubit to a party; party $c$ consists of the qubits $u$ with $\mathrm{col}(u)=c$, and parties may be empty. A stabilizer state is a common eigenvector, with eigenvalue $1$, of $N$ independent commuting elements of the $N$-qubit Pauli group not containing $-I$.
+

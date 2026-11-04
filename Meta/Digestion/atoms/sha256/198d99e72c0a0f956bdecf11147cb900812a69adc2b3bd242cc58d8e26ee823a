@@ -1,0 +1,10 @@
+对上述 Hermitian 的 $A,B$，下列条件等价：
+
+1. $C_{89}$ 成立。
+2. $D(A)=D(B)=0$。
+3. $[P,\pi(A)]=[P,\pi(B)]=0$。
+4. $A,B\in\operatorname{MD}(\Phi)$。
+5. $\mathfrak A\subseteq\operatorname{MD}(\Phi)$。
+6. $\Phi|_{\mathfrak A}$ 是保单位元的 $*$-同态。
+7. 全部非交换多项式满足 $\Phi(p(A,B))=p(\Phi(A),\Phi(B))$。
+

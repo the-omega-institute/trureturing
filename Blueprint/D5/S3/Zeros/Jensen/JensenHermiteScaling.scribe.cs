@@ -8,7 +8,7 @@ internal sealed class JensenHermiteScalingDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Zeros/Jensen/JensenHermiteScaling.";
     private static readonly LibraryNoteRef HermiteZeros =
-        LibraryNoteRef.Create("D5/L/Analytic/nist2026dlmforthogonalzeros");
+        LibraryNoteRef.Create("D5/L/Zeros/nist2026dlmforthogonalzeros");
     private static Formula V(string name) => F.Id(name);
     private static Formula Norm(Formula value) => Seq(Lvert, Sp, value, Rvert, Sp);
     private static Formula Pow(Formula value, Formula power) => Seq(value, Caret, Grp(power));

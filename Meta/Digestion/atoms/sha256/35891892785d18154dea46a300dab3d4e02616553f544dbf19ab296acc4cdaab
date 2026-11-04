@@ -1,0 +1,22 @@
+**Definition 1.1 (the actual arithmetic process).** Fix an integer $H\ge2$, divisors $d_n\mid d_o\mid H$, and a finite indexed list $\mathcal A=(c_1,\ldots,c_s)$ of positive integer addends with $\gcd(H,c_1,\ldots,c_s)=d_n$. For the empty list the gcd is $H$. There is one opaque positive integer source $C$. The permitted source operations are
+
+$$
+\operatorname{Add}_i:C\longmapsto C+c_i\quad(1\le i\le s),
+\qquad
+\operatorname{Mul}_m:C\longmapsto mC\quad(m\in\mathbb Z_{>0}).
+\tag{AQBR.1}
+$$
+
+Every finite word in these operations is legal, including the empty word. Each operation changes this same actual source. A residue is a mathematical description of its action, never a replacement source. The list entries name available positive blocks and their actual values, as in [FARG, Definition 100.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md); a modularly equivalent translation is not an additional primitive. No subtraction, division of the source, reset, clone, preserved entry copy or other source handle is supplied.
+
+There is an explicitly supplied, paid, nondestructive current port
+
+$$
+\operatorname{ReadF}(C)=F_H(C)=H/\gcd(C,H).
+\tag{AQBR.2}
+$$
+
+Only a call actually made returns this value. The observer may compute $\gcd(C,H)=H/\operatorname{ReadF}(C)$ from that acquired answer. The port is an assumption of this process, not a construction from $\alpha,\beta$, a tree evaluator or a finer-summary encoder. Operations are total and expose no additional source-dependent reply, timing, size, failure or cost channel. Source service costs are charged separately in Definition 6.1 and are not extra observations.
+
+The deterministic controller has lawful access to the source handle, the declared operation handles, the current ReadF port, finite public data, its genuinely acquired records, and writable local memory. It may run ordinary exact integer algorithms on these data, with their computation, installation, parameter handling and storage charged. During an acquisition procedure it controls the source exclusively; no unreported external operation occurs. Its program, initialization and every choice depend only on these accessible inputs. In particular, an unknown entry value cannot be built into its code or selector.
+

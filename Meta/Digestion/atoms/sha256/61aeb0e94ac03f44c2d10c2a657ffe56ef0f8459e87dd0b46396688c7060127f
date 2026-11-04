@@ -1,0 +1,12 @@
+**Definition 39.6 (earned localization and exact preimages).** A bounded original interval $I$ is earned when actual replies at authentic cuts, or an actually acquired earlier archive, imply $x\in I$. Write its finite endpoints as $0\le\alpha<\beta<\infty$, with lower endpoint included when positive and upper endpoint excluded. Put $U=\lceil\beta\rceil\ge1$. A unit slice or a previously acquired full-profile cell already supplies this localization; no new bootstrap read is charged in that case.
+
+For clarity, solving a current threshold $f_u(t)=j/m$ gives
+
+$$
+t=\frac{dj-bm}{am-cj}
+\quad\text{when this lies in }(0,\infty).
+\tag{39.11}
+$$
+
+Its displayed denominator is $am-cj$, not $cj+dm$. The latter is the forward denominator in (39.9). For reduced $j/m$ and a positive preimage both entries in (39.11) are positive and coprime, by the inverse determinant-one argument. Endpoint preimages of raw cells are clipped to the actual image $f_u((0,\infty))$ before inversion; an endpoint outside that image is replaced by the corresponding original endpoint $0$ or $\infty$.
+

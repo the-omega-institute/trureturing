@@ -1,0 +1,14 @@
+**Definition 28.1 (balanced colours).** For $0\le k\le2^d$ define
+
+$$
+Q_0(0)=C,\qquad Q_0(1)=\langle\beta,\beta\rangle,
+\qquad
+Q_d(k)=\left\langle
+Q_{d-1}(\lfloor k/2\rfloor),
+Q_{d-1}(\lceil k/2\rceil)\right\rangle\quad(d\ge1).
+\tag{IV.73}
+$$
+
+Put $m=2^d$, $U_{d,k}=U(Q_d(k))$, and let $\operatorname{pop}(k)$
+be the number of ones in the binary expansion of $k$.
+

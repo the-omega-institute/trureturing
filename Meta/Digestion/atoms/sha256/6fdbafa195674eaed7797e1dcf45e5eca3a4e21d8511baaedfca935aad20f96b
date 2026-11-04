@@ -1,0 +1,22 @@
+## 14. 质量间隙的二元关系形式：一致指数衰减
+
+为把“有质量隙”落实到二元关系，先假定已经有 Hilbert 空间 $\mathcal H$、自伴物理 Hamiltonian $H\ge0$，以及唯一归一真空 $\Omega_{\rm vac}$，满足
+
+$$
+\ker H=\mathbb C\Omega_{\rm vac},\qquad P_0=|\Omega_{\rm vac}\rangle\langle\Omega_{\rm vac}|.
+$$
+
+这里真空向量与项目中表示整体和相对锚的 $\Omega$ 分开。采用 $\hbar=c=1$，$\tau$ 为欧氏时间。对有界观察量 $A$，定义中心化向量
+
+$$
+u_A=(A-\langle\Omega_{\rm vac},A\Omega_{\rm vac}\rangle I)\Omega_{\rm vac}\in\Omega_{\rm vac}^\perp,
+$$
+
+及二元相关核
+
+$$
+K_\tau(A,B)=\langle\nu_A,e^{-\tau H}\nu_B\rangle,\qquad\tau\ge0.
+$$
+
+它是向量 $e^{-\tau H/2}\nu_A$ 的 Gram 核，仍使用正二次关系语言。
+

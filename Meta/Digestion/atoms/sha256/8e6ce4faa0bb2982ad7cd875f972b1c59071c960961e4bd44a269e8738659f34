@@ -1,0 +1,163 @@
+### 定义 5：折叠谱与一条矩链
+
+令
+
+$$
+f(w)=iF(-iw)
+=\sum_{n\ge0}\alpha_nw^n.
+$$
+
+由于 $f$ 为奇函数，记
+
+$$
+c_j=\alpha_{2j+1}.
+$$
+
+定义
+
+$$
+\kappa_\rho=i\left(\rho-\frac12\right),
+\qquad
+\lambda_\rho=\kappa_\rho^{-2}
+=-\frac1{(\rho-\frac12)^2}.
+
+$$
+
+<a id="eq-5-1"></a>
+
+(5.1)
+
+<!-- editorial-note: n23 begin -->
+<a id="n23"></a>
+
+**编者注 n23（Taylor 域与折叠权重的符号）。** 令 $R=\min_\rho|\rho-\tfrac12|>0$，最小值存在于离散零点族；Taylor 展开限于 $|w|<R$。任意更小闭盘上的几何展开由绝对权重和控制，可交换求和。代入 $\kappa_\rho=i a_\rho$，单项 $i b_\rho/(-iw-a_\rho)=b_\rho/(\kappa_\rho-w)$，所以奇次系数的符号正是原文所列。碰撞 $\lambda(a)=\lambda(a')$ 当且仅当 $a'=\pm a$；合并这两个位置且仅计一次解析重数 $m_\rho$，利用 $b_\rho=\lambda/(1+\lambda/4)$，得到（5.3）。分母不为零：$\lambda=-4$ 会给出被排除的端点 $a=\pm\tfrac12$。
+
+<!-- editorial-note: n23 end -->
+
+逐项展开给出
+
+$$
+c_j
+=
+\sum_\rho
+b_\rho\kappa_\rho^{-2}
+\left(\kappa_\rho^{-2}\right)^j.
+$$
+
+将 $\rho$ 与 $1-\rho$ 合并，得到不同折叠谱点集合 $\mathcal T$ 及权重 $\omega_\lambda$，使
+
+$$
+\boxed{
+c_j=\sum_{\lambda\in\mathcal T}
+\omega_\lambda\lambda^j.
+}
+
+$$
+
+<a id="eq-5-2"></a>
+
+(5.2)
+
+若对应 ζ 零点的重数为 $m_\rho$，则
+
+$$
+\boxed{
+\omega_\lambda
+=
+\frac{2m_\rho\lambda^2}{1+\lambda/4}.
+}
+
+$$
+
+<a id="eq-5-3"></a>
+
+(5.3)
+
+这些权重绝对可和，$\mathcal T\cup\{0\}$ 紧，唯一可能的聚点为 $0$。
+
+写
+
+$$
+\rho=\frac12+\delta+i\gamma,
+$$
+
+则
+
+$$
+\boxed{
+\lambda_\rho
+=
+\frac{\gamma^2-\delta^2+2i\delta\gamma}
+{(\delta^2+\gamma^2)^2}.
+}
+
+$$
+
+<a id="eq-5-4"></a>
+
+(5.4)
+
+非平凡零点没有实轴位置。因此：
+
+$$
+\delta=0
+\Longrightarrow
+\lambda_\rho=\gamma^{-2}>0,\quad \omega_\lambda>0;
+$$
+
+$$
+\delta\ne0
+\Longrightarrow
+\lambda_\rho\notin\mathbb R.
+$$
+
+一个离线四元组恰好对应一个非实共轭谱点对。
+
+<!-- editorial-note: n24 begin -->
+<a id="n24"></a>
+
+**编者注 n24（谱的紧性、共轭和正性）。** 谱点均非零，受 $R^{-2}$ 控制；实际零点局部有限且高度逃向无穷，故它们唯一可能的聚点为 $0$，每个离零的谱截集有限。又有 $\sum|\omega_\lambda|<\infty$，可由合并前的 $\sum|b_\rho||\lambda_\rho|$ 控制。式（5.4）的虚部为 $2\delta\gamma/(\delta^2+\gamma^2)^2$；实际 $\gamma\ne0$，故非实谱恰对应离线零点，临界线谱为正实且权重正。反射折叠后，共轭零点还给出共轭谱和共轭权重；一个离线四元组恰对应一对这样的谱点。
+
+<!-- editorial-note: n24 end -->
+
+定义实多项式上的泛函
+
+$$
+\mathcal L(p)
+=
+\sum_{\lambda\in\mathcal T}
+\omega_\lambda p(\lambda).
+$$
+
+对
+
+$$
+p(t)=\sum_{j=0}^{N}u_jt^j,\qquad u_j\in\mathbb R,
+$$
+
+有
+
+$$
+\boxed{
+\mathcal L(p^2)
+=
+u^{\mathsf T}J_Nu,
+\qquad
+J_N=(c_{i+j})_{i,j=0}^{N}.
+}
+
+$$
+
+<a id="eq-5-5"></a>
+
+(5.5)
+
+这里必须保留实际表达 $p(\lambda)^2$。在非实谱点上，不能擅自将它替换为 $|p(\lambda)|^2$。
+
+<!-- editorial-note: n25 begin -->
+<a id="n25"></a>
+
+**编者注 n25（实二次型的域）。** 有限实多项式在这个紧谱上有界，故 $\mathcal L$ 绝对定义；共轭配对使其对实多项式取实值。有限展开给出（5.5），其中 $u=(u_0,\ldots,u_N)^{\mathsf T}$，$J_N$ 是 $(N+1)$ 阶实对称矩阵。非实谱处采用 $p(\lambda)^2$ 是本二次型的定义，若换成绝对平方会改变符号问题；此处不是正测度积分的先验假设。
+
+<!-- editorial-note: n25 end -->
+

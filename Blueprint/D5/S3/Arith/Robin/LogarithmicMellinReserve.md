@@ -8,7 +8,19 @@ Let rho be a measurable real function and let d, a and mu be real coefficients. 
 
 For 0<alpha<1 define V(d,a,mu,alpha)=d/(1-alpha)+a/(1-alpha)^2 +mu*(1/alpha+1/alpha^2). The low endpoint imposes alpha<1 and the high endpoint imposes alpha>0. The logarithmic factors give the squared denominators. Real powers denote Real.rpow.
 
-**Theorem 1.1 (The whole absolute Mellin integral is paid).**
+**Theorem 1.1 (Integrability of the low logarithmic moment).**
+
+$$\forall (b: \mathbb{R}), (0 < b) \Rightarrow \operatorname{MeasureTheory.IntegrableOn}\left((y: \mathbb{R} \mapsto -\operatorname{Real.log}\left(y\right) \cdot y^{b-1}), \operatorname{Set.Ioc}\left(0, 1\right), \operatorname{MeasureTheory.volume}\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/LogarithmicMellinReserve.low_log_integrable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive real exponent b, the function -log(y) times y to the power b-1 is Lebesgue integrable on the interval (0,1].
+
+**Theorem 1.2 (The whole absolute Mellin integral is paid).**
 
 Lean statement: `D5/S3/Arith/Robin/LogarithmicMellinReserve.logarithmic_mellin_reserve`
 
@@ -22,7 +34,7 @@ For every measurable rho, every real d, a and mu satisfying the two envelopes, a
 
 On the low interval the majorant is d*y^(-alpha) +a*(-log(y)*y^(-alpha)); its two integrals are d/(1-alpha) and a/(1-alpha)^2. On the high interval the majorant is mu*(1+log(y))*y^(-alpha-1), with integral mu*(1/alpha+1/alpha^2). The low endpoint primitive proves low integrability, while logarithm/power tail integrability pays the high endpoint. The primitives evaluate the logarithmic moments before the two interval integrals are joined.
 
-**Theorem 1.2 (The envelopes bound the complete weighted variation).**
+**Theorem 1.3 (The envelopes bound the complete weighted variation).**
 
 Lean statement: `D5/S3/Arith/Robin/LogarithmicMellinReserve.logarithmic_weighted_variation`
 
@@ -42,4 +54,5 @@ A signed arithmetic coefficient sequence paired with these kernel differences st
 
 - Truth anchor: `D5/S3/Arith/Robin/LogarithmicMellinReserve.logarithmic_mellin_reserve`
 - Truth anchor: `D5/S3/Arith/Robin/LogarithmicMellinReserve.logarithmic_weighted_variation`
+- Truth anchor: `D5/S3/Arith/Robin/LogarithmicMellinReserve.low_log_integrable`
 - Dependency: [D5/S3/Arith/Robin/MellinWeightedVariation](MellinWeightedVariation.md)

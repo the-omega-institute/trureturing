@@ -1,0 +1,10 @@
+### 命题 10.2（稳定关系等价于与全部记录分量相容）
+
+若 $\Phi(x)=\sum_rK_r^\dagger xK_r$，则
+
+$$
+\mathcal F=\{K_r,K_r^\dagger:\text{全部 }r\}'.
+$$
+
+**证明。**若 $x$ 不动，零缺额与有限表示给 $\pi(x)V=V\Phi(x)=Vx$，比较各记录分量得 $xK_r=K_rx$；对 $x^\dagger$ 同理并取伴随。反之与全部 $K_r$ 对易则 $\Phi(x)=\sum_rK_r^\dagger K_rx=x$。
+

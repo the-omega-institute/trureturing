@@ -1,0 +1,25 @@
+**Definition 1.1 (Wootters product frame).** Let $I,X,Y,Z$ be the Pauli
+matrices, with $XY=iZ$, $YZ=iX$ and $ZX=iY$. Order the phase points
+$(q,p)$ as $00,01,10,11$, and put
+
+$$
+A_{q,p}=\frac{I+(-1)^pX+(-1)^{q+p}Y+(-1)^qZ}{2},\qquad
+\rho(r)=\frac{I+r_xX+r_yY+r_zZ}{2}.
+$$
+
+Thus $\rho(r)$ is a density matrix precisely when $\|r\|_2\leq1$, and
+
+$$
+W(r)=\frac14(1+r_x+r_y+r_z,\ 1-r_x-r_y+r_z,
+1+r_x-r_y-r_z,\ 1-r_x+r_y-r_z).
+$$
+
+On two qubits use $A_i\otimes A_j$ and the coordinate $4i+j$,
+with the first qubit as the outer index. Then
+$W_\eta(i,j)=\operatorname{Tr}(\eta(A_i\otimes A_j))/4$ and
+$W_{\rho(r)\otimes\rho(s)}=W(r)\otimes W(s)$.
+These are the frame and measure of Dutta and Tushar,
+[*A Phase-Space Geometric Measure of Magic in Qubit Systems*,
+arXiv:2603.20792v5, §§2.3, 3.1–3.3](https://arxiv.org/html/2603.20792v5),
+also fixed in the [literature note](../../../Library/QuantumStates/dutta2026wignerdistance.md).
+
