@@ -129,7 +129,8 @@ theorem forced_threshold_root {Y : Type u} (Q m a : ℕ) (hQ : 2 ≤ Q)
       (some ⟨v, 0, Q * m - a⟩) = rejected := by simp [initialLabel]
   rw [lowLabel] at low
   rw [highLabel] at high
-  cases d with
+  generalize horizon : d = budget at low high
+  cases budget with
   | zero =>
     have same : NativeExecute (k := Q * m) π 0
         (some ⟨v, 0, Q * m - a - 1⟩) (some v) [] =

@@ -113,7 +113,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
     definition := none,
     coordinates := #[0, 1, 2, 3, 8, 9, 10, 11],
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "domain", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn"],
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "domain", "body", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "fn", "arg", "fn"],
       stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
