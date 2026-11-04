@@ -93,8 +93,6 @@ instance pathNonempty : (T : Tree L) → Nonempty (Path T)
       letI := pathNonempty (U o)
       ⟨⟨o, Classical.choice inferInstance⟩⟩
 
-instance (T : Tree L) : DecidableEq (Path T) := Classical.decEq _
-
 def label : (T : Tree L) → Path T → L
   | .leaf l, _ => l
   | .call _ _ U, p => label U p
