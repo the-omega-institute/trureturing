@@ -68,25 +68,7 @@ internal sealed class HannaA226838CongruenceDocument : IScribeDocumentDefinition
                 + "transfer that identity through the integral composition law. The private "
                 + "BourasA363347PrimeMultiplicity.pow_dvd_factorial_mul supplies the factorial divisibility. "
                 + "Only integers are reduced to ZMod(6); there is no rational-to-residue-ring map. "
-                + "The theorem and its nine consumed private helpers are conservatively classified "
-                + "bind-only under the external named open-problem exception; H, A and innerIntegral "
-                + "are definitions earned by result. This is an unbounded symbolic argument, not a "
-                + "bounded enumeration or a certified finite instance, so utility is none. "
-                + "The proof is repository-derived and is not attributed to OEIS. Bounded literature "
-                + "clearance certifies no global novelty. An independent focused reading of Yuta Nishibuchi, "
-                + "A Unified Framework for p-adic Congruences and p-adic Interpolations of Sequences, "
-                + "arXiv:2610.11648v2 (history https://arxiv.org/abs/2610.11648, v2 abstract "
-                + "https://arxiv.org/abs/2610.11648v2, HTML https://arxiv.org/html/2610.11648v2, "
-                + "PDF https://arxiv.org/pdf/2610.11648v2, source archive https://arxiv.org/src/2610.11648v2) "
-                + "established no exact implication for this series in that source. The paper supplies "
-                + "conditional p-adic criteria, but applying them here would require target-specific "
-                + "normalized coefficient valuations or a valid decomposition, the correct period, prime "
-                + "strength, and base-value links for both p=2 and p=3, all-index coverage including zero, "
-                + "and a global integrality bridge to an integer witness. These conditions remain unverified "
-                + "for this series. This reading does not claim that the conditions are false or rule out "
-                + "the method, and it does not establish a global novelty or priority claim. The paper is "
-                + "prior-work context, not the identifier of the OEIS source and not an asserted proof of "
-                + "this conjecture.",
+                + "The proof is repository-derived and is not attributed to OEIS.",
                 DescribeRole.Theorem, new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("oeis-a226838-square-egf-mod-six"), ResolutionKind.Proved)))));
 
