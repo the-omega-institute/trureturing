@@ -1,0 +1,8 @@
+于是包括拒绝的精确类数是
+
+$$
+C_0=|U|+1,\qquad
+C_h=|U|\bigl[\min(h,k-1)r_h+r_{h-1}\bigr]+1\quad(h\ge1).
+\tag{26}
+$$
+
