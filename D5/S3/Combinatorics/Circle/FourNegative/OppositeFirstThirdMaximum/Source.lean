@@ -69,8 +69,10 @@ private theorem inventory (a b d m : ℕ) (early : Bool)
   rw [←canonical_inventory a b a d ha hb ha hd]
   simp only [←Multiset.coe_add,Multiset.coe_singleton]
   rw [←hv,←hx]
+  have cons_coe (i : ℕ) (xs : List ℕ) :
+      ((i::xs : List ℕ) : Multiset ℕ)={i}+(xs : Multiset ℕ) := rfl
   cases early <;> dsimp [word,banks,rawBanks,terminals]
-  all_goals simp only [←Multiset.coe_add,Multiset.coe_singleton,Multiset.coe_cons]
+  all_goals simp only [cons_coe,←Multiset.coe_add,Multiset.coe_singleton]
   all_goals ac_rfl
 
 private theorem banks_good (a b d m : ℕ) (early : Bool)
@@ -105,7 +107,7 @@ private theorem raw_masses (a b d m : ℕ) (ha : 2≤a) (hb : 2≤b)
   have mv:=stock_mass a b a d 1 _ hn' f F hf
   have nv:=complement_mass a b a d 1 _ hn' f F hf
   funext r
-  fin_cases r <;> dsimp [rawBanks] <;> simp only [List.map_append,List.sum_append]
+  fin_cases r <;> dsimp [rawBanks] <;> try simp only [List.map_append,List.sum_append]
   · exact congrArg₂ (·+·) mu mx
   · exact nx
   · exact congrArg₂ (·+·) mw mv
