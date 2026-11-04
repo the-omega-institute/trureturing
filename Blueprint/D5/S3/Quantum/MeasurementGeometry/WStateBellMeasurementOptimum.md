@@ -48,6 +48,10 @@ $$\operatorname{Real.sqrt}\left(\operatorname{sSup}\left(\{(q: \mathbb{R}) | \ex
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/MeasurementGeometry/WStateBellMeasurementOptimum.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/w-state-bsm-optimum` (proved) by `D5/S3/Quantum/MeasurementGeometry/WStateBellMeasurementOptimum.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"w-state-bsm-optimum","declaration_gid":"D5/S3/Quantum/MeasurementGeometry/WStateBellMeasurementOptimum.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Sudip Chakrabarty and Amit Kundu (2026). *Network nonlocality with tripartite entangled sources*. DOI: [10.48550/arXiv.2610.35838](https://doi.org/10.48550/arXiv.2610.35838). URL: <https://arxiv.org/abs/2610.35838v1>.

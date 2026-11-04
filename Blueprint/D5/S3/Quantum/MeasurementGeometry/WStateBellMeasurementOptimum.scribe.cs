@@ -51,7 +51,9 @@ internal sealed class WStateBellMeasurementOptimumDocument : IScribeDocumentDefi
                     + "give τ₃₃ = −ẑ and τ₁₃ = (2/3)x̂, which are orthogonal and attain 13/9. "
                     + "Taking the nonnegative square root gives √13/3. "
                     + "This statement does not optimize over the larger product-projective class."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("w-state-bsm-optimum"), ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string prose,
