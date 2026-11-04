@@ -68,7 +68,9 @@ private theorem tau_palindrome {w : List Bool} (h : List.Palindrome w) :
     | nil => rfl
     | cons b v ih =>
       rw [show tau (b :: v) = [b, !b, !b, b] ++ tau v from rfl,
-        List.reverse_append, ih, List.reverse_cons, tau_append]
+        List.reverse_append, ih]
+      rw [show (b :: v).reverse = v.reverse ++ [b] by simp only [List.reverse_cons],
+        tau_append]
       simp [tau]
   apply List.Palindrome.of_reverse_eq
   rw [rev, h.reverse_eq]
