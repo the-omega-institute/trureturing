@@ -43,8 +43,8 @@ def arena : Arena where
     (∀ Y : Finset V, Separates G A B Y →
       ∀ (m : Nat) (a b : Fin m → V) (p : ∀ i, G.Walk (a i) (b i)),
         (∀ i, a i ∈ A) → (∀ i, b i ∈ B) →
-        (∀ i j, i ≠ j → ∀ x ∈ R.readout () ⟨V, G, m, a, b, i⟩ (p i),
-          x ∉ (p j).support) → m ≤ Y.card)
+        (∀ i j, i ≠ j → ∀ x : V, @Membership.mem V (List V) inferInstance
+          (R.readout () ⟨V, G, m, a, b, i⟩ (p i)) x → x ∉ (p j).support) → m ≤ Y.card)
 
 def rejected : Realization signature.{u} :=
   realize signature (fun _ _ _ => []) (fun e => nomatch e)
@@ -81,8 +81,14 @@ def family : Registration arena.{u} (type_of% (@exists_separator_paths_and_weak_
     let a : Fin 1 → V := fun _ => ⟨false⟩
     let p : G.Walk ⟨false⟩ ⟨false⟩ := Walk.nil
     let q : G.Walk ⟨false⟩ ⟨false⟩ :=
-      Walk.cons (show G.Adj ⟨false⟩ ⟨true⟩ from by simp [G])
-        (Walk.cons (show G.Adj ⟨true⟩ ⟨false⟩ from by simp [G]) Walk.nil)
+      Walk.cons (show G.Adj ⟨false⟩ ⟨true⟩ from by
+        change (⟨false⟩ : V) ≠ ⟨true⟩
+        intro h
+        cases congrArg ULift.down h)
+        (Walk.cons (show G.Adj ⟨true⟩ ⟨false⟩ from by
+          change (⟨true⟩ : V) ≠ ⟨false⟩
+          intro h
+          cases congrArg ULift.down h) Walk.nil)
     refine ⟨⟨V, G, 1, a, a, 0⟩, p, q, ?_⟩
     change p.support ≠ q.support
     intro h
@@ -90,17 +96,17 @@ def family : Registration arena.{u} (type_of% (@exists_separator_paths_and_weak_
     norm_num [p, q] at hl
 
 noncomputable def registration :
-    Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, _, 0, 0}
       (@exists_separator_paths_and_weak_duality.{u}) (Realization signature.{u}) Type Unit where
   unitName := `D5.S3.Combinatorics.Graph.Walks.MengerCertificates.exists_separator_paths_and_weak_duality.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Graph.Walks.MengerCertificates.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature (fun _ _ p => p.support) (fun e => nomatch e))
@@ -126,4 +132,5 @@ noncomputable def registration :
 
 #print axioms family
 #print axioms registration
+end
 end Reg.D5.S3.Combinatorics.Graph.Walks.MengerCertificates
