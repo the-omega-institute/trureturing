@@ -18,7 +18,7 @@ $$
 
 以下仅消费这个前端所给出的有限实空间、紧有效 $G\subset GL(W)$、非零 $e$ 及 $W=\operatorname{span}(Ge)$。生成元首先属于原控制的数学闭包，不自动是可准确调用的连续设备。原概率前端和同一循环来源取自 [OmegaQ-009 定义 2.1、引理 2.2](https://github.com/the-omega-institute/trureturing/blob/85a80900fe528b1d85ca8b34e3d792fd4c19196c/docs/develop/theory/OMEGAQ_009_SINGLE_AXIS_SANDWICH_RIGIDITY.md#2-定义完整原窗口来源与二元夹持)。
 
-**定理 1.2（前端的紧循环表示与规范比较）。** 定义 1.1 给出 $V=\mathbb Rc\oplus W$、紧有效 $G$、$e\ne0$ 和 $W=\operatorname{span}(Ge)$。令 $n=\dim W$，定义
+**定义 1.2（复用的规范比较）。** 记 $n=\dim W$，采用 [OmegaQ-005 定义 2.3、引理 2.4](https://github.com/the-omega-institute/trureturing/blob/85a80900fe528b1d85ca8b34e3d792fd4c19196c/docs/develop/theory/OMEGAQ_005_ZERO_RESPONSE_COPLANARITY.md) 的原轨道协方差：
 
 $$
 C:W^*\longrightarrow W,\qquad
@@ -27,24 +27,7 @@ q(v,w)=\frac1n(C^{-1}v)(w).
 \tag{1.1}
 $$
 
-则 $C$ 可逆，$q$ 正定、对称、$G$-不变，且 $q(e,e)=1$。
-
-证明。前一部分复用定义 1.1 所引原引理：有限分离评价把接续矩阵及其准确逆置于统一有界集，闭包因而紧且无奇异矩阵；Haar 平均固定 $c$，原行减去 $c$ 的轨道张成 $W$。若 $e=0$，则 $W=0$，矛盾。固定 $c$ 且在 $W$ 恒等的接续在 $V$ 恒等，所以限制有效。
-
-对非零 $\ell$，循环性保证它不在整个轨道上为零；连续性与 Haar 测度的满支撑给
-
-$$
-\ell(C\ell)=\int_G\ell(ge)^2\,dg>0.
-$$
-
-$C$ 对称正定且可逆。Haar 不变性给 $C$ 的协变和 $q$ 的不变性。轨道上的 $q(ge,ge)$ 恒等于 $q(e,e)$，故
-
-$$
-q(e,e)=\int_Gq(ge,ge)\,dg
-=\frac1n\operatorname{Tr}(C^{-1}C)=1.
-$$
-
-此处积分可在任意辅助实基中计算，所得双线性型不依赖该基。∎
+定义 1.1 所引的前端引理给 $V=\mathbb Rc\oplus W$ 与紧有效的循环表示；上述协方差引理给 $C$ 可逆、$q$ 正定对称且 $G$-不变、$q(e,e)=1$。
 
 ## 2. 唯一候选：顺序差的横向响应只余一种
 
@@ -83,7 +66,7 @@ $$
 
 即 $\operatorname{rank}\mathcal C_e=1$。准确的一维同时要求非零与唯一；“至多一维”是另一条条件。全部核、秩与算子作用均在完整 $W$ 中解释。
 
-**定义 2.3（比较口径）。** OmegaQ-009 的入口是存在 $A\in\mathfrak g$，满足 $\ker A=\mathbb Re$ 与 $\operatorname{rank}(K\mapsto AKA)=1$。候选 Q10 不指定 $A$，不另要求其完整核；直接展开的原算子词由三次 $AKA$ 换成二次 $KL-LK$。减少的是特选存在见证、独立限制数和词次数。展开后须掌握全部 $(K,L)\in\mathfrak g^2$，并未减少完整方向域，也未断言总计算成本降低或模型类严格扩大。
+**定义 2.3（比较口径）。** OmegaQ-009 的入口是存在 $A\in\mathfrak g$，满足 $\ker A=\mathbb Re$ 与 $\operatorname{rank}(K\mapsto AKA)=1$。候选 Q10 不指定 $A$，不另要求其完整核；直接展开的原算子词由三次 $AKA$ 换成二次 $KL-LK$。减少的是特选存在见证、显式条件项和词次数；没有另立假设独立性的比较标准。展开后须掌握全部 $(K,L)\in\mathfrak g^2$，并未减少完整方向域，也未断言总计算成本降低或模型类严格扩大。
 
 ## 3. 一条响应如何锁住完整三维
 
@@ -247,16 +230,16 @@ $$
 R(v,w)z=\beta(w,z)v-\beta(v,z)w,
 $$
 
-所以每个正交单位二平面的截面曲率为一。完整 $SO(3)$ 作用给轨道及传播。所有不变正比较只差比例，$q(e,e)=1$ 固定之，故返回定义没有额外比较选择。∎
+所以每个正交单位二平面的截面曲率为一。完整 $SO(3)$ 作用给轨道及传播。所有不变正比较只差比例，$q(e,e)=1$ 固定之，故返回定义没有额外比较选择。
 
-**定理 6.2（从关系构造的局部复量子代数）。** Q10 使 $J=\mathbb R\oplus W$ 上的乘法
+此返回结构的局部量子表示在同一证明内复用标准 Clifford–Pauli 构造，具体推导见 [OmegaQ-008 §8](https://github.com/the-omega-institute/trureturing/blob/85a80900fe528b1d85ca8b34e3d792fd4c19196c/docs/develop/theory/OMEGAQ_008_ONE_POINT_FIRST_ORDER_RECIPROCITY.md#8-复数复二维振幅与原-born-概率)。在 $J=\mathbb R\oplus W$ 上定义乘法
 
 $$
 (t,x)\circ(s,y)=(ts+q(x,y),\ ty+sx)
 \tag{6.2}
 $$
 
-成为与 $\operatorname{Herm}_2(\mathbb C)$ 同构的实 Jordan 代数。任选一个取向，以 $x\times y$ 表示相应叉积，令 $\delta_{(t,x)}(s,y)=(0,x\times y)$。则
+其标准构造给出与 $\operatorname{Herm}_2(\mathbb C)$ 同构的实 Jordan 代数。任选一个取向，以 $x\times y$ 表示相应叉积，令 $\delta_{(t,x)}(s,y)=(0,x\times y)$。则
 
 $$
 \delta_a a=0,\qquad
@@ -265,13 +248,38 @@ $$
 \tag{6.3}
 $$
 
-证明。复用标准 Clifford–Pauli 构造作中间步骤：$xy+yx=2q(x,y)1$ 的实 Clifford 代数在三维有实维数八。对正向正交基，$\jmath=e_1e_2e_3$ 中心、$\jmath^2=-1$。将 $e_i$ 送到 Pauli 矩阵 $\sigma_i$，八元基送到 $I,\sigma_i,iI,i\sigma_i$，故得到 $\mathrm{Cl}_{3,0}\cong M_2(\mathbb C)$，并将 (6.2) 送到对称矩阵乘法。这里是构造出的代数表示；四元数乘法的经典背景参见 [Baez, The Octonions, §2.1](https://math.ucr.edu/home/baez/octonions/node4.html) 及 [OmegaQ-009 §§7–9](https://github.com/the-omega-institute/trureturing/blob/85a80900fe528b1d85ca8b34e3d792fd4c19196c/docs/develop/theory/OMEGAQ_009_SINGLE_AXIS_SANDWICH_RIGIDITY.md)。
+具体地，复用标准 Clifford–Pauli 构造作中间步骤：$xy+yx=2q(x,y)1$ 的实 Clifford 代数在三维有实维数八。对正向正交基，$\jmath=e_1e_2e_3$ 中心、$\jmath^2=-1$。将 $e_i$ 送到 Pauli 矩阵 $\sigma_i$，八元基送到 $I,\sigma_i,iI,i\sigma_i$，故得到 $\mathrm{Cl}_{3,0}\cong M_2(\mathbb C)$，并将 (6.2) 送到对称矩阵乘法。这里是构造出的代数表示；四元数乘法的经典背景参见 [Baez, The Octonions, §2.1](https://math.ucr.edu/home/baez/octonions/node4.html) 及 [OmegaQ-009 §§7–9](https://github.com/the-omega-institute/trureturing/blob/85a80900fe528b1d85ca8b34e3d792fd4c19196c/docs/develop/theory/OMEGAQ_009_SINGLE_AXIS_SANDWICH_RIGIDITY.md)。
 
 三维向量恒等式给 (6.3) 的前两式。任意 Jordan 导子消灭单位；将其作用于 $(0,x)^2=q(x,x)1$，先得其标量分量为零，再极化得向量部分斜对称。反向每个斜算子都是导子，故得最后一式。取向反转使 $\jmath\mapsto-\jmath$，所以复表示确定到共轭；完整 $O(3)$ 不选择绝对手性。∎
 
 ## 7. 全部原读数的 Born 表示与来源半径
 
-**定理 7.1（完整来源轨道的忠实概率表示）。** 在定义 1.1 的前端满足 Q10 时，对其中的全部原行，存在可逆线性表示
+**定义 7.1（完整有限接口）。** 在局部表示之外，若要承接全部有限复量子系统，另要求所消费的实际对象具有以下同一原接口：共同复中心；局部含幺 $*$-嵌入、交换且乘积张成的联合矩阵代数；全部指定联合正锥恰为同一联合矩阵代数的完整标准半正定锥；实际完整矩阵参考；所有原分支在同一实线性 Hermitian 表示中下降，其唯一复线性延拓与恒等参考的张量作用在完整联合正锥上保正。完整装置保留输出、失败、细记录、遗忘、具名返回及全部合法有限历史。对连续动力学另给实际连续确定可逆单参数过程与参数时钟。对理想投影更新另要求支撑内全部态不扰动。这些是实现与相容前件，不由 Q10 单独产生。
+
+**定理 7.2（同一完整空间内更多准备的外半径校准）。** 在定义 1.1 的前端满足 Q10 时，另设 $\mathscr S\subset\{u=1\}\subset V$ 是包含定义 1.1 原行的全部指定归一准备；其完整坐标仍在 $[0,1]$，原可逆接续保持其闭凸包。对每个原结果评价，写 $f(tc+r)=\alpha_f t+q(b_f,r)$。则存在 $R\ge1$，使
+
+$$
+\overline{\operatorname{conv}}(\mathscr S-c)=RB_q,
+\quad
+\Phi_R(tc+r)=\tfrac12(tI+(r/R)\cdot\sigma),
+\quad E_f^{(R)}=\alpha_f I+R b_f\cdot\sigma
+\tag{7.3}
+$$
+
+给全部指定准备和原读口的忠实 Born 表示。原来源的像为 $\tfrac12(I+(e/R)\cdot\sigma)$，仅在 $R=1$ 时为纯态。
+
+若还供应定义 7.1 中相应的实际接口，则这一概率表示接入下表的标准有限量子表述；每行只消费所列前件。
+
+| 量子表述 | Q10 供应的结构与相应原条件 |
+| --- | --- |
+| 复 Hilbert 空间、纯态射线 | 定理 6.1 的标准代数构造给局部 $\mathbb C^2$，定理 7.2 给实际概率表示；实际更高对象和相干参考由原接口供应。 |
+| Born 与混合态 | 原评价的 (7.2)/(7.3)；全数学标准正锥上的归一正泛函是密度矩阵，全部数学态是否实际可准备另列。 |
+| 复合张量积 | 同一复中心、交换的含幺 $*$-嵌入及乘积张成，给 $M_m\otimes_{\mathbb C}M_n\cong M_{mn}$。 |
+| 一般仪器 | 实际完整矩阵参考上的保正性给 CP/Kraus；每支 TNI 与完整结果和 TP 由原质量关系给出。 |
+| 理想投影更新 | CP、投影效果及全部支撑态不扰动给 $\rho\mapsto P\rho P$；成功后才按实际概率条件化。 |
+| 薛定谔形式 | 同一简单块上的连续 CPTP 群且逆 CP，给 $\dot\rho=-i[H,\rho]/\hbar$；原时钟与作用量单位须标定。 |
+
+证明。先对来源轨道复用 [OmegaQ-009 §7 的 Born 构造](https://github.com/the-omega-institute/trureturing/blob/85a80900fe528b1d85ca8b34e3d792fd4c19196c/docs/develop/theory/OMEGAQ_009_SINGLE_AXIS_SANDWICH_RIGIDITY.md#7-简单几何与原-born-概率)：对定义 1.1 的全部原行，置可逆线性表示
 
 $$
 \Phi(tc+r)=\tfrac12(tI+r\cdot\sigma),\qquad r\in W,
@@ -287,46 +295,17 @@ $$
 
 每个完整原菜单的全部结果（含原失败分支）给 $\sum_fE_f=I$。全部统计区别保留。
 
-证明。定理 3.1 给 $\overline{\operatorname{conv}}\{x_a-c\}=B_q$，因为原轨道在 $Ge=S_q^2$ 中稠密。写 $f(tc+r)=\alpha_ft+q(b_f,r)$。$f$ 在全部原行取值于 $[0,1]$，连续仿射性使它在整个球也如此，故
+定理 3.1 给 $\overline{\operatorname{conv}}\{x_a-c\}=B_q$，因为原轨道在 $Ge=S_q^2$ 中稠密。写 $f(tc+r)=\alpha_ft+q(b_f,r)$。$f$ 在全部原行取值于 $[0,1]$，连续仿射性使它在整个球也如此，故
 
 $$
 \|b_f\|_q\le\min(\alpha_f,1-\alpha_f).
 $$
 
-取 $E_f=\alpha_fI+b_f\cdot\sigma$，其两个特征值为 $\alpha_f\pm\|b_f\|$，所以是效果。Pauli 的迹乘法给 (7.2)。完整菜单和等于 $u$，由非退化配对得效果和为 $I$；不能先删去失败再重新归一。$\Phi$ 在四实维上为同构，故不合并任何完整响应区别。∎
+取 $E_f=\alpha_fI+b_f\cdot\sigma$，其两个特征值为 $\alpha_f\pm\|b_f\|$，所以是效果。Pauli 的迹乘法给 (7.2)。完整菜单和等于 $u$，由非退化配对得效果和为 $I$；不能先删去失败再重新归一。$\Phi$ 在四实维上为同构，故不合并任何完整响应区别。
 
-**定理 7.2（同一完整空间内更多准备的外半径校准）。** 在定义 1.1 的前端满足 Q10 时，另设 $\mathscr S\subset\{u=1\}\subset V$ 是包含上述原行的全部指定归一准备；其完整坐标仍在 $[0,1]$，原可逆接续保持其闭凸包。则存在 $R\ge1$，使
+有限组实际分离坐标把全部概率有界性变成 $V$ 的有界性，故闭凸包紧。原接续保持与取逆给闭包 $SO(3)$ 的不变性。取最大半径 $R$；最大半径向量的全旋转轨道之凸包是 $RB_q$，而最大性给反向包含。原 $e$ 在其中且归一长为一，故 $R\ge1$。效果条件改为 $R\|b_f\|\le\min(\alpha_f,1-\alpha_f)$，其余同上面的来源轨道构造。
 
-$$
-\overline{\operatorname{conv}}(\mathscr S-c)=RB_q,
-\quad
-\Phi_R(tc+r)=\tfrac12(tI+(r/R)\cdot\sigma),
-\quad E_f^{(R)}=\alpha_f I+R b_f\cdot\sigma
-\tag{7.3}
-$$
-
-给全部指定准备和原读口的忠实 Born 表示。原来源的像为 $\tfrac12(I+(e/R)\cdot\sigma)$，仅在 $R=1$ 时为纯态。
-
-证明。有限组实际分离坐标把全部概率有界性变成 $V$ 的有界性，故闭凸包紧。原接续保持与取逆给闭包 $SO(3)$ 的不变性。取最大半径 $R$；最大半径向量的全旋转轨道之凸包是 $RB_q$，而最大性给反向包含。原 $e$ 在其中且归一长为一，故 $R\ge1$。效果条件改为 $R\|b_f\|\le\min(\alpha_f,1-\alpha_f)$，其余同定理 7.1。∎
-
-**定义 7.3（纯态边界与操作范围）。** 数学球边界的 $P_n=\tfrac12(I+n\cdot\sigma)$ 是秩一投影，并有 $\operatorname{Tr}(P_nP_m)=(1+q(n,m))/2=\cos^2(\theta/2)$。它给 $S^2\cong\mathbb{CP}^1$ 与单位振幅的 $U(1)$ 相位纤维。定理 7.1 的来源仅相对于其自身可逆轨道凸完成成为边界点；更多原准备须使用定理 7.2 的假设和半径。数学闭球、纯投影和全部 POVM 的存在，不等于每个元素均有实际原准备或原设备。
-
-## 8. 有限量子理论的条件接入与未闭合桥
-
-**定义 8.1（完整有限接口）。** 在局部表示之外，若要承接全部有限复量子系统，另要求所消费的实际对象具有以下同一原接口：共同复中心；局部含幺 $*$-嵌入、交换且乘积张成的联合矩阵代数；全部指定联合正锥恰为同一联合矩阵代数的完整标准半正定锥；实际完整矩阵参考；所有原分支在同一实线性 Hermitian 表示中下降，其唯一复线性延拓与恒等参考的张量作用在完整联合正锥上保正。完整装置保留输出、失败、细记录、遗忘、具名返回及全部合法有限历史。对连续动力学另给实际连续确定可逆单参数过程与参数时钟。对理想投影更新另要求支撑内全部态不扰动。这些是实现与相容前件，不由 Q10 单独产生。
-
-**定理 8.2（Q10 到标准有限量子公理的条件消费者）。** Q10 及定义 8.1 中相应的接口成立时，原表示接入以下有限量子理论；各结论仅消费其行所列条件。
-
-| 量子表述 | Q10 供应的结构与相应原条件 |
-| --- | --- |
-| 复 Hilbert 空间、纯态射线 | 定理 6.2 给局部 $\mathbb C^2$，定理 7.1/7.2 给实际概率表示；实际更高对象和相干参考由原接口供应。 |
-| Born 与混合态 | 原评价的 (7.2)/(7.3)；全数学标准正锥上的归一正泛函是密度矩阵，全部数学态是否实际可准备另列。 |
-| 复合张量积 | 同一复中心、交换的含幺 $*$-嵌入及乘积张成，给 $M_m\otimes_{\mathbb C}M_n\cong M_{mn}$。 |
-| 一般仪器 | 实际完整矩阵参考上的保正性给 CP/Kraus；每支 TNI 与完整结果和 TP 由原质量关系给出。 |
-| 理想投影更新 | CP、投影效果及全部支撑态不扰动给 $\rho\mapsto P\rho P$；成功后才按实际概率条件化。 |
-| 薛定谔形式 | 同一简单块上的连续 CPTP 群且逆 CP，给 $\dot\rho=-i[H,\rho]/\hbar$；原时钟与作用量单位须标定。 |
-
-证明。定理 3.1 是此消费者对旧入口的新增连接；局部代数与原 Born 已由定理 6.2、7.1、7.2 建立。以下复用 [OmegaQ-009 §9 的有限矩阵推导](https://github.com/the-omega-institute/trureturing/blob/85a80900fe528b1d85ca8b34e3d792fd4c19196c/docs/develop/theory/OMEGAQ_009_SINGLE_AXIS_SANDWICH_RIGIDITY.md#9-完整有限量子理论定义定理与接口)，列出其承重步骤以固定条件。
+定理 3.1 与 6.1 给局部表示，以上证明完成原 Born 概率及半径校准。以下复用 [OmegaQ-009 §9 的有限矩阵推导](https://github.com/the-omega-institute/trureturing/blob/85a80900fe528b1d85ca8b34e3d792fd4c19196c/docs/develop/theory/OMEGAQ_009_SINGLE_AXIS_SANDWICH_RIGIDITY.md#9-完整有限量子理论定义定理与接口)，列出其承重步骤以固定条件。
 
 迹配对将正泛函唯一写成 $\operatorname{Tr}(\rho\,\cdot)$；在全部秩一投影非负等价于 $\rho\ge0$，单位评价给 $\operatorname{Tr}\rho=1$。谱分解给自伴观测量及其投影概率。联合映射 $a\otimes b\mapsto\iota_A(a)\iota_B(b)$ 是满射含幺 $*$-同态；源 $M_{mn}$ 单，故核为零。这使用实际联合前件，而非只看局部边缘。
 
@@ -336,7 +315,13 @@ $$
 
 连续可逆 CPTP 群的 Heisenberg 对偶及其逆均为 UCP。两次 Schwarz 不等式相夹迫使取等，极化给乘法保持，故每个为 $*$-自同构。其生成元是内 $*$-导子；在矩阵单位上令 $B=\sum_i\delta(E_{i1})E_{1i}$，得 $\delta(a)=[B,a]$。去掉中心实部后 $B$ 斜自伴，写成 $iH/\hbar$ 即得薛定谔形式。有限中心不能被连续群非平凡置换，故直和逐块适用。
 
-这些步骤也给有限矩阵完成中的无信号性、非交换不确定性与纠缠：完整局部 TP 由 Kraus 完整性保持远端约化态；迹正配对的 Cauchy–Schwarz 给方差乘积界；实际联合标准锥若包含 Bell 投影便有 $2\sqrt2$ 的 CHSH 值。实际供应相应联合锥是此处的前件。有限角与直和在数学上产生所有 $\bigoplus_sM_{d_s}(\mathbb C)$，不因此新增实际对象。∎
+这些步骤也给有限矩阵完成中的无信号性、非交换不确定性与纠缠：完整局部 TP 由 Kraus 完整性保持远端约化态；迹正配对的 Cauchy–Schwarz 给方差乘积界；实际联合标准锥若包含 Bell 投影便有 $2\sqrt2$ 的 CHSH 值。实际供应相应联合锥是此处的前件。有限角与直和在数学上产生所有 $\bigoplus_sM_{d_s}(\mathbb C)$，不因此新增实际对象。
+
+∎
+
+**定义 7.3（纯态边界与操作范围）。** 数学球边界的 $P_n=\tfrac12(I+n\cdot\sigma)$ 是秩一投影，并有 $\operatorname{Tr}(P_nP_m)=(1+q(n,m))/2=\cos^2(\theta/2)$。它给 $S^2\cong\mathbb{CP}^1$ 与单位振幅的 $U(1)$ 相位纤维。定理 7.2 中原轨道情形的来源仅相对于其自身可逆轨道凸完成成为边界点；更多原准备须使用定理 7.2 的假设和半径。数学闭球、纯投影和全部 POVM 的存在，不等于每个元素均有实际原准备或原设备。
+
+## 8. 单体判据的不充分性与原协变桥
 
 **定理 8.3（单体几何不选择参考、更新或时钟）。** Q10 的单体结果不足以单独指定一般 CP 仪器、Lüders 更新或实际连续时钟。
 
@@ -349,7 +334,7 @@ $$
 \tag{8.1}
 $$
 
-在每个原对象、实际联合与原 $K$ 上消失，仍是原候选的未决桥。定理 6.2 构造的 $\delta$ 不能替换原 $D^A$，局部三维表示也不能代替全部对象上的证明。原中心、经典块及只有 $3^k$ 简单块而没有实际 $M_2$ 的满足族继续保留。数学 $\mathbb C^2$ 表示不等于原对象类别已供应实际 qubit。
+在每个原对象、实际联合与原 $K$ 上消失，仍是原候选的未决桥。定理 6.1 中构造的 $\delta$ 不能替换原 $D^A$，局部三维表示也不能代替全部对象上的证明。原中心、经典块及只有 $3^k$ 简单块而没有实际 $M_2$ 的满足族继续保留。数学 $\mathbb C^2$ 表示不等于原对象类别已供应实际 qubit。
 
 ## 9. 来源、选择问题与完整直观解释
 
@@ -359,7 +344,7 @@ $$
 | --- | --- |
 | [Masanes–Müller–Pérez-García–Augusiak, arXiv:1111.4060v4, §II Theorem 1](https://arxiv.org/html/1111.4060v4) | 已给球形单系统、球面传递群及联合产品概率约束后的相互作用选择；不供应本卷完整 $W$ 三维性的证明。 |
 | [de la Torre–Masanes–Short–Müller, arXiv:1110.5482, Theorem 2](https://arxiv.org/html/1110.5482) | 局部层析、相同的实际 qubit 以及连续可逆相互作用下的整体量子理论；“相同”还覆盖任意副本与置换合法性，不能以抽象局部矩阵表示替代。 |
-| [Baez, The Octonions, §2.1](https://math.ucr.edu/home/baez/octonions/node4.html) | 四元数乘法的经典来源；本卷的 Pauli 复表示由定理 6.2 的基像构造给出，不据叉积的存在单独宣称三维。 |
+| [Baez, The Octonions, §2.1](https://math.ucr.edu/home/baez/octonions/node4.html) | 四元数乘法的经典来源；本卷的 Pauli 复表示由定理 6.1 证明中的基像构造给出，不据叉积的存在单独宣称三维。 |
 | [Watrous, The Theory of Quantum Information, §2.2 Theorem 2.22](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf) | 已有完整矩阵输入、输出及参考时的 CP、Choi 与 Kraus 等价。 |
 | [OmegaQ-008](https://github.com/the-omega-institute/trureturing/blob/85a80900fe528b1d85ca8b34e3d792fd4c19196c/docs/develop/theory/OMEGAQ_008_ONE_POINT_FIRST_ORDER_RECIPROCITY.md)、[OmegaQ-009](https://github.com/the-omega-institute/trureturing/blob/85a80900fe528b1d85ca8b34e3d792fd4c19196c/docs/develop/theory/OMEGAQ_009_SINGLE_AXIS_SANDWICH_RIGIDITY.md) | 同一完整前端、旧三维选择准则及其后端量子接口；此处改变选择关系并自证新的秩谱后果，不重复计入经典消费者。 |
 
