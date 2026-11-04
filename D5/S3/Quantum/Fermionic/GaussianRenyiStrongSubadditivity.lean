@@ -142,9 +142,14 @@ private lemma determinant_log_identity {ι : Type*} [Fintype ι] [DecidableEq ι
       (1 / 2 : ℝ) * ∑ i, Real.log (1 - u ^ 2 * h.eigenvalues i ^ 2) := by
   have hd (t : ℝ) : (interpolation G t).det =
       ∏ i, ((1 + t * h.eigenvalues i : ℝ) : ℂ) := by
-    change (1 + (t : ℂ) • (Complex.I • G.map Complex.ofReal)).det = _
-    rw [← RCLike.real_smul_eq_coe_smul (K := ℂ) t (Complex.I • G.map Complex.ofReal)]
-    exact D5.S3.Quantum.Subentropy.DensityKernel.det_spectral h t
+    calc
+      _ = ((1 : Matrix ι ι ℂ) + t • (Complex.I • G.map Complex.ofReal)).det := by
+        apply congrArg Matrix.det
+        change (1 : Matrix ι ι ℂ) + (t : ℂ) • (Complex.I • G.map Complex.ofReal) = _
+        ext i j
+        simp (config := { congrConsts := false }) only
+          [Matrix.add_apply, Matrix.smul_apply, Complex.real_smul, smul_eq_mul]
+      _ = _ := D5.S3.Quantum.Subentropy.DensityKernel.det_spectral h t
   have ht : (interpolation G u)ᵀ = interpolation G (-u) := by
     change (1 + (u : ℂ) • (Complex.I • G.map Complex.ofReal))ᵀ =
       1 + ((-u : ℝ) : ℂ) • (Complex.I • G.map Complex.ofReal)
