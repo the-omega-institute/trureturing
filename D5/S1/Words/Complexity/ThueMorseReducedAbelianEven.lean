@@ -14,8 +14,7 @@ import Mathlib.Data.Fintype.BigOperators
 
 namespace D5.S1.Words.Complexity
 
-open private transition alternations alternations_le runs runs_le
-  transition_two_mul transition_two_mul_add_one
+open private alternations alternations_le runs runs_le
   alternations_double_even alternations_double_odd
   exists_complement_factor reducedAbelianCodes mem_reducedAbelianCodes_iff
   reducedAbelianCodes_card_eq_classes
