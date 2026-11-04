@@ -7,7 +7,7 @@ doi: 10.48550/arXiv.1906.10779
 url: https://arxiv.org/abs/1906.10779
 claim: "Proposition 1 characterizes a dominating set as inclusion-minimal exactly when each selected vertex is isolated within the set or has an outside private neighbour."
 strata_touched:
-  - D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridEncoding
+  - D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridTransfer
 license: citation-only
 triage: anchor
 ---
@@ -30,7 +30,7 @@ vertex must either have no selected neighbour or possess an outside neighbour
 whose unique selected neighbour is that vertex. A closed private witness combines
 these alternatives: an isolated selected vertex witnesses itself, while an
 outside private neighbour supplies the other alternative.
-`BarkerMinimalGridEncoding.minimal_iff_closed_private` expresses this
+`BarkerMinimalGridTransfer.minimal_iff_closed_private` expresses this
 characterization for finite simple graphs and finite vertex subsets. Witness
 existence is propositional and contributes no counting multiplicity.
 
