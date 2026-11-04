@@ -185,16 +185,17 @@ def zeroWord {Y : Type u} {m : ℕ} (π : NarrowWindowCost.Selector m Y)
 private theorem eventual_unique {Y : Type u} (k m : ℕ)
     (π : NarrowWindowCost.Selector m Y) (q : Option (LiveRecord k))
     (free : Option (ZMod 2)) (ar : NarrowWindowCost.Archive m) (x y : Y)
-    (hx : ∃ d c, NativeExecute π d q free ar = some (x,c))
-    (hy : ∃ d c, NativeExecute π d q free ar = some (y,c)) : x = y := by
-  obtain ⟨d,c,ex⟩ := hx
-  obtain ⟨e,f,ey⟩ := hy
+    (hx : ∃ d c, NativeExecute π d q free ar = some (x, c))
+    (hy : ∃ d c, NativeExecute π d q free ar = some (y, c)) : x = y := by
+  obtain ⟨d, c, ex⟩ := hx
+  obtain ⟨e, f, ey⟩ := hy
   have extend (b fee : ℕ) (label : Y)
-      (success : NativeExecute π b q free ar = some (label,fee))
-      (bound : b ≤ max d e) : NativeExecute π (max d e) q free ar = some (label,fee) := by
-    obtain ⟨issued,trace,count,bounded⟩ := (native_execute_paid_trace k m π b q free ar label fee).mp success
+      (success : NativeExecute π b q free ar = some (label, fee))
+      (bound : b ≤ max d e) : NativeExecute π (max d e) q free ar = some (label, fee) := by
+    obtain ⟨issued, trace, count, bounded⟩ :=
+      (native_execute_paid_trace k m π b q free ar label fee).mp success
     exact (native_execute_paid_trace k m π (max d e) q free ar label fee).mpr
-      ⟨issued,trace,count,bounded.trans bound⟩
+      ⟨issued, trace, count, bounded.trans bound⟩
   have same := (extend d c x ex (le_max_left _ _)).symm.trans
     (extend e f y ey (le_max_right _ _))
   exact congrArg Prod.fst (Option.some.inj same)
@@ -203,36 +204,37 @@ private theorem eventual_step {Y : Type u} (k m : ℕ)
     (π : NarrowWindowCost.Selector m Y) (q : Option (LiveRecord k))
     (free : Option (ZMod 2)) (ar : NarrowWindowCost.Archive m) (y : Y)
     (B : Fin m → Bool) (chosen : π free ar = .inr B)
-    (success : ∃ d c, NativeExecute π d q free ar = some (y,c)) :
+    (success : ∃ d c, NativeExecute π d q free ar = some (y, c)) :
     ∃ d c, NativeExecute π d (runBits k B q) free
-      (ar ++ [(B,endpointReading (runBits k B q))]) = some (y,c) := by
-  obtain ⟨d,c,ex⟩ := success
+      (ar ++ [(B, endpointReading (runBits k B q))]) = some (y, c) := by
+  obtain ⟨d, c, ex⟩ := success
   cases d with
-  | zero => simp [NativeExecute,chosen] at ex
+  | zero => simp [NativeExecute, chosen] at ex
   | succ d =>
-    simp only [NativeExecute,chosen] at ex
-    obtain ⟨r,er,eq⟩ := Option.map_eq_some_iff.mp ex
-    refine ⟨d,r.2,?_⟩
-    rw [er]
-    exact congrArg some (Prod.ext (Prod.mk.inj eq).1 rfl)
+    simp only [NativeExecute, chosen] at ex
+    obtain ⟨r, er, eq⟩ := Option.map_eq_some_iff.mp ex
+    refine ⟨d, r.2, ?_⟩
+    change NativeExecute π d (runBits k B q) free
+      (ar ++ [(B, endpointReading (runBits k B q))]) = some r at er
+    exact er.trans (congrArg some (Prod.ext (Prod.mk.inj eq).1 rfl))
 
 private theorem root_band_response (Q m a : ℕ) (hQ : 2 ≤ Q) (ha : 3 ≤ a)
     (ham : a < m) (B : Fin m → Bool) (rest : List Bool)
     (cut : List.ofFn B = List.replicate a true ++ false :: rest)
-    (j : ZMod (Q*m+1)) (positive : 0 < j.val) (band : j.val < a) :
-    wordIncrement (Q*m) (-j) B = 0 := by
+    (j : ZMod (Q * m + 1)) (positive : 0 < j.val) (band : j.val < a) :
+    wordIncrement (Q * m) (-j) B = 0 := by
   have bit (i : ℕ) (hi : i < a) : extendedBit B i = 1 := by
     have im : i < m := by omega
     have e := congrArg (fun w : List Bool => w[i]?) cut
-    simp only [List.getElem?_ofFn, dif_pos im] at e
+    simp only [List.getElem?_ofFn, dite_eq_left im] at e
     have right : (List.replicate a true ++ false :: rest)[i]? = some true := by
       rw [List.getElem?_append_left (by simp; omega)]
       simp [hi]
     rw [right] at e
-    have value : B ⟨i,im⟩ = true := Option.some.inj e
-    simp [extendedBit,im,bitScalar,value]
-  rw [increment_derivative (Q*m) (by nlinarith) m (by nlinarith)]
-  rw [bit j.val band,if_neg (by omega),bit (j.val-1) (by omega)]
+    have value : B ⟨i, im⟩ = true := Option.some.inj e
+    simp [extendedBit, im, bitScalar, value]
+  rw [increment_derivative (Q * m) (by nlinarith) m (by nlinarith)]
+  rw [bit j.val band, ite_eq_right (by omega), bit (j.val - 1) (by omega)]
   exact CharTwo.add_self_eq_zero _
 
 /-- Every correct actual-history controller has one coherent first-tour zero
@@ -241,91 +243,96 @@ same branch, including outside phases; the surviving current tail is chosen
 by the controller and is not asserted to be zero. -/
 theorem first_tour_common_archive {Y : Type u} (Q m a : ℕ) (hQ : 2 ≤ Q)
     (ha : 3 ≤ a) (ham : a < m) (alphabet : Bool)
-    (labels : ZMod (Q*m+1) → Y) (outside rejected bottom : Y)
+    (labels : ZMod (Q * m + 1) → Y) (outside rejected bottom : Y)
     (different : outside ≠ rejected)
-    (nonconstant : ∃ p q : ZMod (Q*m+1),
+    (nonconstant : ∃ p q : ZMod (Q * m + 1),
       (0 < p.val ∧ p.val < a) ∧ (0 < q.val ∧ q.val < a) ∧ labels p ≠ labels q)
     (v : ZMod 2) (π : NarrowWindowCost.Selector m Y)
-    (correct : ∀ history : List (AllowedBlock (Q*m) m alphabet),
+    (correct : ∀ history : List (AllowedBlock (Q * m) m alphabet),
       let w := history.flatMap (fun action => List.ofFn action.val)
-      NarrowWindowCost.output (Q*m) (by nlinarith) w = some v →
-      ∃ budget c, NarrowWindowCost.execute (Q*m) (by nlinarith) π budget w (some v) [] =
-        some (initialLabel (Q*m) a labels outside rejected bottom
-          (OriginalRecord (Q*m) (by nlinarith) w),c)) :
+      NarrowWindowCost.output (Q * m) (by nlinarith) w = some v →
+      ∃ budget c, NarrowWindowCost.execute (Q * m) (by nlinarith) π budget w (some v) [] =
+        some (initialLabel (Q * m) a labels outside rejected bottom
+          (OriginalRecord (Q * m) (by nlinarith) w), c)) :
     (∀ t, t < Q → π (some v) (zeroArchive π v t) = .inr (zeroWord π v t)) ∧
     (∀ t j, t < Q → 0 < j.val → j.val < a →
-      wordIncrement (Q*m) (-j + ((t*m : ℕ) : ZMod (Q*m+1))) (zeroWord π v t) = 0) ∧
-    ∀ t, 1 ≤ t → t ≤ Q → ∃ tail, tail < Q*m ∧
-      ∀ (j : ZMod (Q*m+1)) (s : ℕ), s < Q*m-a →
-        (∀ i, i < t → wordIncrement (Q*m)
-          (-j + ((i*m : ℕ) : ZMod (Q*m+1))) (zeroWord π v i) = 0) →
+      wordIncrement (Q * m) (-j + ((t * m : ℕ) : ZMod (Q * m + 1))) (zeroWord π v t) = 0) ∧
+    ∀ t, 1 ≤ t → t ≤ Q → ∃ tail, tail < Q * m ∧
+      ∀ (j : ZMod (Q * m + 1)) (s : ℕ), s < Q * m - a →
+        (∀ i, i < t → wordIncrement (Q * m)
+          (-j + ((i * m : ℕ) : ZMod (Q * m + 1))) (zeroWord π v i) = 0) →
         (∃ budget c, NativeExecute π budget
-          (some ⟨v,-j + ((t*m : ℕ) : ZMod (Q*m+1)),tail⟩)
+          (some ⟨v, -j + ((t * m : ℕ) : ZMod (Q * m + 1)), tail⟩)
           (some v) (zeroArchive π v t) =
-          some (initialLabel (Q*m) a labels outside rejected bottom (some ⟨v,-j,s⟩),c)) ∧
-        ∀ history : List (AllowedBlock (Q*m) m alphabet),
+          some (initialLabel (Q * m) a labels outside rejected bottom (some ⟨v, -j, s⟩), c)) ∧
+        ∀ history : List (AllowedBlock (Q * m) m alphabet),
           let w := history.flatMap (fun action => List.ofFn action.val)
-          OriginalRecord (Q*m) (by nlinarith) w = some ⟨v,-j,s⟩ →
-          ActualArchive (Q*m) (by nlinarith) w (zeroArchive π v t) ∧
-          OriginalRecord (Q*m) (by nlinarith) (w ++ archiveWords (zeroArchive π v t)) =
-            some ⟨v,-j + ((t*m : ℕ) : ZMod (Q*m+1)),tail⟩ := by
-  have hk : 2 ≤ Q*m := by nlinarith
-  have short : m < Q*m := by nlinarith
-  have native (j : ZMod (Q*m+1)) (s : ℕ) (hs : s < Q*m) :
-      ∃ budget c, NativeExecute π budget (some ⟨v,-j,s⟩) (some v) [] =
-        some (initialLabel (Q*m) a labels outside rejected bottom (some ⟨v,-j,s⟩),c) := by
-    have gcdOne : Nat.gcd m (Q*m+1) = 1 := by
-      have divides : Nat.gcd m (Q*m+1) ∣ 1 := by
-        have h := Nat.dvd_sub (Nat.gcd_dvd_right m (Q*m+1))
-          (dvd_mul_of_dvd_right (Nat.gcd_dvd_left m (Q*m+1)) Q)
-        simpa using h
+          OriginalRecord (Q * m) (by nlinarith) w = some ⟨v, -j, s⟩ →
+          ActualArchive (Q * m) (by nlinarith) w (zeroArchive π v t) ∧
+          OriginalRecord (Q * m) (by nlinarith) (w ++ archiveWords (zeroArchive π v t)) =
+            some ⟨v, -j + ((t * m : ℕ) : ZMod (Q * m + 1)), tail⟩ := by
+  have hk : 2 ≤ Q * m := by nlinarith
+  have short : m < Q * m := by nlinarith
+  have lowPositive : 0 < Q * m - a := Nat.sub_pos_of_lt (ham.trans short)
+  have native (j : ZMod (Q * m + 1)) (s : ℕ) (hs : s < Q * m) :
+      ∃ budget c, NativeExecute π budget (some ⟨v, -j, s⟩) (some v) [] =
+        some (initialLabel (Q * m) a labels outside rejected bottom (some ⟨v, -j, s⟩), c) := by
+    have gcdOne : Nat.gcd m (Q * m + 1) = 1 := by
+      have divides : Nat.gcd m (Q * m + 1) ∣ 1 := by
+        have h := Nat.dvd_sub (Nat.gcd_dvd_right m (Q * m + 1))
+          (dvd_mul_of_dvd_right (Nat.gcd_dvd_left m (Q * m + 1)) Q)
+        simp_all
       exact Nat.dvd_one.mp divides
-    obtain ⟨history,actual⟩ :=
-      ((whole_first_zero_acquisition (Q*m) m hk (by omega) alphabet (fun _ => ())).1
-        (some ⟨v,-j,s⟩)).mp ⟨hs,by rw [gcdOne]; exact one_dvd _⟩
-    have record := (OriginalExecutionBridge.record_history (Q*m) m hk alphabet history).trans actual
-    have free : NarrowWindowCost.output (Q*m) (by omega)
+    obtain ⟨history, actual⟩ :=
+      ((whole_first_zero_acquisition (Q * m) m hk (by omega) alphabet (fun _ => ())).1
+        (some ⟨v, -j, s⟩)).mp ⟨hs, by rw [gcdOne]; exact one_dvd _⟩
+    have record : OriginalRecord (Q * m) (by omega)
+        (history.flatMap (fun action => List.ofFn action.val)) = some ⟨v, -j, s⟩ :=
+      (OriginalExecutionBridge.record_history (Q * m) m hk alphabet history).trans actual
+    have free : NarrowWindowCost.output (Q * m) (by omega)
         (history.flatMap (fun action => List.ofFn action.val)) = some v := by
-      rw [OriginalExecutionBridge.output_record,record]
-      rfl
-    obtain ⟨budget,c,ex⟩ := correct history free
-    rw [OriginalExecutionBridge.execute_same (Q*m) m hk] at ex
-    change NativeExecute π budget (OriginalRecord (Q*m) (by omega) _) (some v) [] =
-      some (initialLabel (Q*m) a labels outside rejected bottom
-        (OriginalRecord (Q*m) (by omega) _),c) at ex
+      calc
+        _ = endpointReading (OriginalRecord (Q * m) (by omega) _) :=
+          OriginalExecutionBridge.output_record (Q * m) (by omega) _
+        _ = _ := congrArg endpointReading record
+    obtain ⟨budget, c, ex⟩ := correct history free
+    rw [OriginalExecutionBridge.execute_same (Q * m) m hk] at ex
+    change NativeExecute π budget (OriginalRecord (Q * m) (by omega) _) (some v) [] =
+      some (initialLabel (Q * m) a labels outside rejected bottom
+        (OriginalRecord (Q * m) (by omega) _), c) at ex
     rw [record] at ex
-    exact ⟨budget,c,ex⟩
-  obtain ⟨B,rest,chosen,cut,rootExec⟩ :=
+    exact ⟨budget, c, ex⟩
+  obtain ⟨B, rest, chosen, cut, rootExec⟩ :=
     forced_threshold_root Q m a hQ ha ham alphabet labels outside rejected bottom different v π correct
-  have rootWord : zeroWord π v 0 = B := by simp [zeroWord,zeroArchive,chosen]
-  have rootAr : zeroArchive π v 1 = [(B,some v)] := by simp [zeroArchive,chosen]
-  have bandzero (j : ZMod (Q*m+1)) (hj : 0 < j.val ∧ j.val < a) (t : ℕ) (ht : t < Q) :
-      wordIncrement (Q*m) (-j + ((t*m : ℕ) : ZMod (Q*m+1))) (zeroWord π v t) = 0 := by
+  have rootWord : zeroWord π v 0 = B := by simp [zeroWord, zeroArchive, chosen]
+  have rootAr : zeroArchive π v 1 = [(B, some v)] := by simp [zeroArchive, chosen]
+  have bandzero (j : ZMod (Q * m + 1)) (hj : 0 < j.val ∧ j.val < a) (t : ℕ) (ht : t < Q) :
+      wordIncrement (Q * m) (-j + ((t * m : ℕ) : ZMod (Q * m + 1))) (zeroWord π v t) = 0 := by
     by_cases first : t = 0
     · subst t
-      simpa only [Nat.zero_mul,Nat.cast_zero,add_zero,rootWord] using
+      simpa only [Nat.zero_mul, Nat.cast_zero, add_zero, rootWord] using
         root_band_response Q m a hQ ha ham B rest cut j hj.1 hj.2
-    · have lower : m ≤ t*m := by simpa using Nat.mul_le_mul_right m (show 1 ≤ t by omega)
-      have jbound : j.val ≤ Q*m := by nlinarith
+    · have lower : m ≤ t * m := by simpa using Nat.mul_le_mul_right m (show 1 ≤ t by omega)
+      have jbound : j.val ≤ Q * m := by nlinarith
       have e := response_off Q m t j.val hQ (by omega) ht jbound
         (Or.inl (by omega)) (zeroWord π v t)
       simpa only [ZMod.natCast_zmod_val] using e
-  obtain ⟨p,q,hp,hq,distinct⟩ := nonconstant
-  have lowLabel (j : ZMod (Q*m+1)) (hj : 0 < j.val ∧ j.val < a) :
-      initialLabel (Q*m) a labels outside rejected bottom (some ⟨v,-j,0⟩) = labels j := by
-    simp [initialLabel,show ¬ Q*m-a ≤ 0 by nlinarith,neg_neg,hj]
-  have walk : ∀ t, 1 ≤ t → t ≤ Q → ∃ tail, tail < Q*m ∧
+  obtain ⟨p, q, hp, hq, distinct⟩ := nonconstant
+  have lowLabel (j : ZMod (Q * m + 1)) (hj : 0 < j.val ∧ j.val < a) :
+      initialLabel (Q * m) a labels outside rejected bottom (some ⟨v, -j, 0⟩) = labels j := by
+    simp [initialLabel, show ¬ Q * m - a ≤ 0 by omega, neg_neg, hj]
+  have walk : ∀ t, 1 ≤ t → t ≤ Q → ∃ tail, tail < Q * m ∧
       (∀ i, i < t → π (some v) (zeroArchive π v i) = .inr (zeroWord π v i)) ∧
-      ∀ (j : ZMod (Q*m+1)) (s : ℕ), s < Q*m-a →
-        (∀ i, i < t → wordIncrement (Q*m) (-j + ((i*m : ℕ) : ZMod (Q*m+1))) (zeroWord π v i) = 0) →
-        (∃ budget c, NativeExecute π budget (some ⟨v,-j + ((t*m : ℕ) : ZMod (Q*m+1)),tail⟩)
-          (some v) (zeroArchive π v t) = some (initialLabel (Q*m) a labels outside rejected bottom (some ⟨v,-j,s⟩),c)) ∧
-        ∀ history : List (AllowedBlock (Q*m) m alphabet),
+      ∀ (j : ZMod (Q * m + 1)) (s : ℕ), s < Q * m - a →
+        (∀ i, i < t → wordIncrement (Q * m) (-j + ((i * m : ℕ) : ZMod (Q * m + 1))) (zeroWord π v i) = 0) →
+        (∃ budget c, NativeExecute π budget (some ⟨v, -j + ((t * m : ℕ) : ZMod (Q * m + 1)), tail⟩)
+          (some v) (zeroArchive π v t) = some (initialLabel (Q * m) a labels outside rejected bottom (some ⟨v, -j, s⟩), c)) ∧
+        ∀ history : List (AllowedBlock (Q * m) m alphabet),
           let w := history.flatMap (fun action => List.ofFn action.val)
-          OriginalRecord (Q*m) (by omega) w = some ⟨v,-j,s⟩ →
-          ActualArchive (Q*m) (by omega) w (zeroArchive π v t) ∧
-          OriginalRecord (Q*m) (by omega) (w ++ archiveWords (zeroArchive π v t)) =
-            some ⟨v,-j + ((t*m : ℕ) : ZMod (Q*m+1)),tail⟩ := by
+          OriginalRecord (Q * m) (by omega) w = some ⟨v, -j, s⟩ →
+          ActualArchive (Q * m) (by omega) w (zeroArchive π v t) ∧
+          OriginalRecord (Q * m) (by omega) (w ++ archiveWords (zeroArchive π v t)) =
+            some ⟨v, -j + ((t * m : ℕ) : ZMod (Q * m + 1)), tail⟩ := by
     intro t
     induction t with
     | zero => intro positive; omega
@@ -333,77 +340,77 @@ theorem first_tour_common_archive {Y : Type u} (Q m a : ℕ) (hQ : 2 ≤ Q)
       intro positive bounded
       by_cases first : t = 0
       · subst t
-        have safe (j : ZMod (Q*m+1)) (s : ℕ) (hs : s < Q*m-a)
-            (zero : ∀ i, i < 1 → wordIncrement (Q*m)
-              (-j + ((i*m : ℕ) : ZMod (Q*m+1))) (zeroWord π v i) = 0) :
-            runBits (Q*m) B (some ⟨v,-j,s⟩) = some ⟨v,-j+(m:ℕ),tailAfter 0 B⟩ := by
+        have safe (j : ZMod (Q * m + 1)) (s : ℕ) (hs : s < Q * m - a)
+            (zero : ∀ i, i < 1 → wordIncrement (Q * m)
+              (-j + ((i * m : ℕ) : ZMod (Q * m + 1))) (zeroWord π v i) = 0) :
+            runBits (Q * m) B (some ⟨v, -j, s⟩) = some ⟨v, -j + (m:ℕ), tailAfter 0 B⟩ := by
           have charge := zero 0 (by omega)
-          simp only [Nat.zero_mul,Nat.cast_zero,add_zero,rootWord] at charge
-          rw [rootExec _ s (by omega),if_pos hs,charge,add_zero]
-        have tailBound : tailAfter 0 B < Q*m := by
-          have ex := safe p 0 (by nlinarith) (fun i hi => bandzero p hp i (by omega))
-          have model := literal_block_execution (Q*m) hk m B v (-p) 0 (by nlinarith)
-          have accepted : runAdmissible (Q*m-1) (Q*m-1-0) m B = true := by
-            cases h : runAdmissible (Q*m-1) (Q*m-1-0) m B with
-            | false => rw [h] at model; simp only [Bool.false_eq_true,if_false] at model; rw [ex] at model; cases model.1
+          simp only [Nat.zero_mul, Nat.cast_zero, add_zero, rootWord] at charge
+          rw [rootExec _ s (by omega), ite_eq_left hs, charge, add_zero]
+        have tailBound : tailAfter 0 B < Q * m := by
+          have ex := safe p 0 (by omega) (fun i hi => bandzero p hp i (by omega))
+          have model := literal_block_execution (Q * m) hk m B v (-p) 0 (by nlinarith)
+          have accepted : runAdmissible (Q * m - 1) (Q * m - 1 - 0) m B = true := by
+            cases h : runAdmissible (Q * m - 1) (Q * m - 1 - 0) m B with
+            | false => rw [h] at model; simp only [Bool.false_eq_true, ite_false] at model; rw [ex] at model; cases model.1
             | true => rfl
           exact model.2 accepted
-        refine ⟨tailAfter 0 B,tailBound,?_,?_⟩
+        refine ⟨tailAfter 0 B, tailBound, ?_, ?_⟩
         · intro i hi
           have : i = 0 := by omega
           subst i
-          simpa only [zeroArchive,rootWord] using chosen
+          simpa only [zeroArchive, rootWord] using chosen
         · intro j s hs zeros
           have next := safe j s hs zeros
-          have future := eventual_step (Q*m) m π (some ⟨v,-j,s⟩) (some v) []
+          have future := eventual_step (Q * m) m π (some ⟨v, -j, s⟩) (some v) []
             _ B chosen (native j s (by omega))
           rw [next] at future
-          refine ⟨?_,?_⟩
-          · simpa only [rootAr,Nat.one_mul,endpointReading,List.nil_append] using future
+          refine ⟨?_, ?_⟩
+          · simpa only [rootAr, Nat.zero_add, Nat.one_mul, endpointReading, List.nil_append] using future
           · intro history w record
-            have updated : OriginalRecord (Q*m) (by omega) (w ++ List.ofFn B) =
-                some ⟨v,-j+(m:ℕ),tailAfter 0 B⟩ := by
-              rw [OriginalExecutionBridge.record_append (Q*m) hk,record]
-              exact next
+            have updated : OriginalRecord (Q * m) (by omega) (w ++ List.ofFn B) =
+                some ⟨v, -j + (m:ℕ), tailAfter 0 B⟩ := by
+              exact (OriginalExecutionBridge.record_append (Q * m) hk w (List.ofFn B)).trans
+                ((congrArg (runBits (Q * m) B) record).trans next)
             rw [rootAr]
             constructor
-            · refine ⟨?_,trivial⟩
-              rw [OriginalExecutionBridge.output_record,updated]
-              rfl
-            · simpa only [archiveWords,List.flatMap_cons,List.flatMap_nil,List.append_nil,Nat.one_mul] using updated
-      · obtain ⟨tail,tailBound,before,survive⟩ := ih (by omega) (by omega)
-        have bandFuture (j : ZMod (Q*m+1)) (hj : 0 < j.val ∧ j.val < a) :
-            ∃ d c, NativeExecute π d (some ⟨v,-j+((t*m:ℕ):ZMod (Q*m+1)),tail⟩)
-              (some v) (zeroArchive π v t) = some (labels j,c) := by
-          have ex := (survive j 0 (by nlinarith) (fun i hi => bandzero j hj i (by omega))).1
+            · refine ⟨?_, trivial⟩
+              exact (OriginalExecutionBridge.output_record (Q * m) (by omega) _).trans
+                (congrArg endpointReading updated)
+            · simpa only [archiveWords, List.flatMap_cons, List.flatMap_nil, List.append_nil, Nat.zero_add, Nat.one_mul] using updated
+      · obtain ⟨tail, tailBound, before, survive⟩ := ih (by omega) (by omega)
+        have bandFuture (j : ZMod (Q * m + 1)) (hj : 0 < j.val ∧ j.val < a) :
+            ∃ d c, NativeExecute π d (some ⟨v, -j + ((t * m:ℕ):ZMod (Q * m + 1)), tail⟩)
+              (some v) (zeroArchive π v t) = some (labels j, c) := by
+          have ex := (survive j 0 (by omega) (fun i hi => bandzero j hj i (by omega))).1
           simpa only [lowLabel j hj] using ex
         have chosenNext : π (some v) (zeroArchive π v t) = .inr (zeroWord π v t) := by
           cases selected : π (some v) (zeroArchive π v t) with
-          | inr C => simp only [zeroWord,selected]
+          | inr C => simp only [zeroWord, selected]
           | inl y =>
-            have stopLabel (j : ZMod (Q*m+1)) (hj : 0 < j.val ∧ j.val < a) : y = labels j := by
-              obtain ⟨d,c,ex⟩ := bandFuture j hj
-              cases d <;> simp only [NativeExecute,selected,Option.some.injEq,Prod.mk.injEq] at ex <;> exact ex.1
+            have stopLabel (j : ZMod (Q * m + 1)) (hj : 0 < j.val ∧ j.val < a) : y = labels j := by
+              exact eventual_unique (Q * m) m π _ (some v) (zeroArchive π v t)
+                y (labels j) ⟨0, 0, by simp [NativeExecute, selected]⟩ (bandFuture j hj)
             exact False.elim (distinct ((stopLabel p hp).symm.trans (stopLabel q hq)))
-        have safe : runAdmissible (Q*m-1) (Q*m-1-tail) m (zeroWord π v t) = true := by
+        have safe : runAdmissible (Q * m - 1) (Q * m - 1 - tail) m (zeroWord π v t) = true := by
           by_contra illegal
-          have dead (j : ZMod (Q*m+1)) : runBits (Q*m) (zeroWord π v t)
-              (some ⟨v,-j+((t*m:ℕ):ZMod (Q*m+1)),tail⟩) = none := by
-            rw [(literal_block_execution (Q*m) hk m (zeroWord π v t) v _ tail tailBound).1,if_neg illegal]
-          have gone (j : ZMod (Q*m+1)) (hj : 0 < j.val ∧ j.val < a) :=
-            eventual_step (Q*m) m π _ (some v) (zeroArchive π v t) (labels j)
+          have dead (j : ZMod (Q * m + 1)) : runBits (Q * m) (zeroWord π v t)
+              (some ⟨v, -j + ((t * m:ℕ):ZMod (Q * m + 1)), tail⟩) = none := by
+            rw [(literal_block_execution (Q * m) hk m (zeroWord π v t) v _ tail tailBound).1, ite_eq_right illegal]
+          have gone (j : ZMod (Q * m + 1)) (hj : 0 < j.val ∧ j.val < a) :=
+            eventual_step (Q * m) m π _ (some v) (zeroArchive π v t) (labels j)
               (zeroWord π v t) chosenNext (bandFuture j hj)
           have ep := gone p hp
           have eq := gone q hq
           rw [dead] at ep eq
-          exact distinct (eventual_unique (Q*m) m π none (some v)
-            (zeroArchive π v t ++ [(zeroWord π v t,endpointReading none)]) _ _ ep eq)
-        have nextAr : zeroArchive π v (t+1) = zeroArchive π v t ++ [(zeroWord π v t,some v)] := by
-          simp only [zeroArchive,chosenNext,zeroWord]
-        have phase (j : ZMod (Q*m+1)) : -j+((t*m:ℕ):ZMod (Q*m+1))+(m:ℕ) =
-            -j+(((t+1)*m:ℕ):ZMod (Q*m+1)) := by push_cast; ring
+          exact distinct (eventual_unique (Q * m) m π none (some v)
+            (zeroArchive π v t ++ [(zeroWord π v t, endpointReading none)]) _ _ ep eq)
+        have nextAr : zeroArchive π v (t + 1) = zeroArchive π v t ++ [(zeroWord π v t, some v)] := by
+          rfl
+        have phase (j : ZMod (Q * m + 1)) : -j + ((t * m:ℕ):ZMod (Q * m + 1)) + (m:ℕ) =
+            -j + (((t + 1) * m:ℕ):ZMod (Q * m + 1)) := by push_cast; ring
         refine ⟨tailAfter tail (zeroWord π v t),
-          (literal_block_execution (Q*m) hk m (zeroWord π v t) v 0 tail tailBound).2 safe,?_,?_⟩
+          (literal_block_execution (Q * m) hk m (zeroWord π v t) v 0 tail tailBound).2 safe, ?_, ?_⟩
         · intro i hi
           by_cases old : i < t
           · exact before i old
@@ -411,39 +418,40 @@ theorem first_tour_common_archive {Y : Type u} (Q m a : ℕ) (hQ : 2 ≤ Q)
             subst i
             exact chosenNext
         · intro j s hs zeros
-          obtain ⟨future,actual⟩ := survive j s hs (fun i hi => zeros i (by omega))
-          have next : runBits (Q*m) (zeroWord π v t)
-              (some ⟨v,-j+((t*m:ℕ):ZMod (Q*m+1)),tail⟩) =
-              some ⟨v,-j+(((t+1)*m:ℕ):ZMod (Q*m+1)),tailAfter tail (zeroWord π v t)⟩ := by
-            rw [(literal_block_execution (Q*m) hk m (zeroWord π v t) v _ tail tailBound).1,
-              if_pos safe,zeros t (by omega),add_zero,phase]
-          have continuation := eventual_step (Q*m) m π _ (some v) (zeroArchive π v t)
+          obtain ⟨future, actual⟩ := survive j s hs (fun i hi => zeros i (by omega))
+          have next : runBits (Q * m) (zeroWord π v t)
+              (some ⟨v, -j + ((t * m:ℕ):ZMod (Q * m + 1)), tail⟩) =
+              some ⟨v, -j + (((t + 1) * m:ℕ):ZMod (Q * m + 1)), tailAfter tail (zeroWord π v t)⟩ := by
+            rw [(literal_block_execution (Q * m) hk m (zeroWord π v t) v _ tail tailBound).1,
+              ite_eq_left safe, zeros t (by omega), add_zero, phase]
+          have continuation := eventual_step (Q * m) m π _ (some v) (zeroArchive π v t)
             _ (zeroWord π v t) chosenNext future
           rw [next] at continuation
-          refine ⟨?_,?_⟩
-          · simpa only [nextAr,endpointReading] using continuation
+          refine ⟨?_, ?_⟩
+          · simpa only [nextAr, endpointReading] using continuation
           · intro history w record
-            obtain ⟨matched,current⟩ := actual history record
-            have updated : OriginalRecord (Q*m) (by omega) ((w ++ archiveWords (zeroArchive π v t)) ++ List.ofFn (zeroWord π v t)) =
-                some ⟨v,-j+(((t+1)*m:ℕ):ZMod (Q*m+1)),tailAfter tail (zeroWord π v t)⟩ := by
-              rw [OriginalExecutionBridge.record_append (Q*m) hk,current]
-              exact next
+            obtain ⟨matched, current⟩ := actual history record
+            have updated : OriginalRecord (Q * m) (by omega) ((w ++ archiveWords (zeroArchive π v t)) ++ List.ofFn (zeroWord π v t)) =
+                some ⟨v, -j + (((t + 1) * m:ℕ):ZMod (Q * m + 1)), tailAfter tail (zeroWord π v t)⟩ := by
+              exact (OriginalExecutionBridge.record_append (Q * m) hk
+                (w ++ archiveWords (zeroArchive π v t)) (List.ofFn (zeroWord π v t))).trans
+                ((congrArg (runBits (Q * m) (zeroWord π v t)) current).trans next)
             rw [nextAr]
             constructor
-            · apply (actual_archive_append (Q*m) (by omega) w (zeroArchive π v t) [(zeroWord π v t,some v)]).mpr
-              refine ⟨matched,?_,trivial⟩
-              rw [OriginalExecutionBridge.output_record,updated]
-              rfl
-            · simpa only [archiveWords,List.flatMap_append,List.flatMap_cons,List.flatMap_nil,List.append_nil,List.append_assoc] using updated
-  refine ⟨?_,?_,?_⟩
+            · apply (actual_archive_append (Q * m) (by omega) w (zeroArchive π v t) [(zeroWord π v t, some v)]).mpr
+              refine ⟨matched, ?_, trivial⟩
+              exact (OriginalExecutionBridge.output_record (Q * m) (by omega) _).trans
+                (congrArg endpointReading updated)
+            · simpa only [archiveWords, List.flatMap_append, List.flatMap_cons, List.flatMap_nil, List.append_nil, List.append_assoc] using updated
+  refine ⟨?_, ?_, ?_⟩
   · intro t ht
-    obtain ⟨tail,tailBound,chosenAll,_⟩ := walk Q (by omega) le_rfl
+    obtain ⟨tail, tailBound, chosenAll, _⟩ := walk Q (by omega) le_rfl
     exact chosenAll t ht
   · intro t j ht positive band
-    exact bandzero j ⟨positive,band⟩ t ht
+    exact bandzero j ⟨positive, band⟩ t ht
   · intro t positive bounded
-    obtain ⟨tail,tailBound,_,survive⟩ := walk t positive bounded
-    exact ⟨tail,tailBound,survive⟩
+    obtain ⟨tail, tailBound, _, survive⟩ := walk t positive bounded
+    exact ⟨tail, tailBound, survive⟩
 
 #print axioms first_tour_common_archive
 
