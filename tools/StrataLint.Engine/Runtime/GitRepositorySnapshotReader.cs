@@ -10,10 +10,8 @@ namespace StrataLint.Engine;
 internal static class GitRepositorySnapshotReader
 {
     private const int MaximumGitOutputBytes = 64 * 1024 * 1024;
-    // A tree is an unbounded collection of individually bounded NUL records. The
-    // aggregate is deliberately streamed; this bound protects the parser from a
-    // malformed path/record without imposing a repository-wide ceiling.
-    private const int MaximumGitTreeRecordBytes = 64 * 1024;
+    // Keep one streamed record within the old buffered output envelope; streaming
+    // changes aggregation, not which individual records were accepted.
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
     // readContents only projects regular bodies, never entries or link bytes.
@@ -760,9 +758,9 @@ internal static class GitRepositorySnapshotReader
                     continue;
                 }
 
-                if (record.Count >= MaximumGitTreeRecordBytes)
+                if (record.Count >= MaximumGitOutputBytes)
                     throw new InvalidOperationException(
-                        $"git tree emitted a record exceeding {MaximumGitTreeRecordBytes} bytes");
+                        $"git tree emitted a record exceeding {MaximumGitOutputBytes} bytes");
                 record.Add(value);
             }
         }

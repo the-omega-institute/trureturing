@@ -193,6 +193,32 @@ public sealed class GitRepositoryGatewayRevisionTests
         }
     }
 
+    [Fact]
+    public void StreamingTreeAcceptsNestedUtf8RecordBeyond64KiBAndMatchesBufferedFallback()
+    {
+        var selectedPath = OversizedUtf8TreePath();
+        var runner = new LargeTreeGitProcessRunner(1, _ => selectedPath);
+        var streamingGateway = new GitRepositoryGateway(Path.GetTempPath(), runner, "git");
+
+        var streamingProjection = streamingGateway.ReadRevisionProjection(
+            "fixture", path => path == selectedPath);
+        var full = streamingGateway.ReadRevision("fixture");
+        var buffered = GitRepositorySnapshotReader.ReadRevision(
+            "fixture",
+            (arguments, maximumOutputBytes, standardInput) => runner.Run(
+                "git", arguments, Path.GetTempPath(), TimeSpan.FromSeconds(120), maximumOutputBytes, standardInput));
+
+        Assert.Equal(selectedPath, Assert.Single(streamingProjection.Entries).Path);
+        Assert.Equal("selected\n", Encoding.UTF8.GetString(Assert.Single(streamingProjection.Entries).Bytes.AsSpan()));
+        Assert.Equal(full.Entries.Select(static entry => entry.Path), buffered.Entries.Select(static entry => entry.Path));
+        Assert.Equal(full.Entries.Single().Bytes.ToArray(), buffered.Entries.Single().Bytes.ToArray());
+        Assert.Equal(full.Entries.Single().Bytes.ToArray(), streamingProjection.Entries.Single().Bytes.ToArray());
+        Assert.True(full.Entries.Single().ContentWasRead);
+        Assert.True(streamingProjection.Entries.Single().ContentWasRead);
+        Assert.True(Encoding.UTF8.GetByteCount(selectedPath) > 64 * 1024);
+        Assert.InRange(runner.TreeBytes, 64 * 1024 + 1, 64 * 1024 * 1024 - 1);
+    }
+
     [Theory]
     [InlineData("malformed")]
     [InlineData("truncated")]
@@ -328,6 +354,9 @@ public sealed class GitRepositoryGatewayRevisionTests
 
     private static string LargeTreePath(int index) =>
         $"src/entry-{index:D6}-{LargeTreePadding}-é.txt";
+
+    private static string OversizedUtf8TreePath() =>
+        $"nested/{new string('é', 33_000)}/leaf.txt";
 
     [Fact]
     public void ReadRevisionBatchesAllBlobReadsIntoOneGitProcess()
@@ -706,8 +735,9 @@ public sealed class GitRepositoryGatewayRevisionTests
             "StrataLint Tests");
     }
 
-    private sealed class LargeTreeGitProcessRunner(int recordCount) : IGitProcessRunner
+    private sealed class LargeTreeGitProcessRunner(int recordCount, Func<int, string>? pathFactory = null) : IGitProcessRunner
     {
+        private readonly Func<int, string> pathFactory = pathFactory ?? LargeTreePath;
         internal long TreeBytes { get; private set; }
         internal int TreeRecords { get; private set; }
         internal int BufferedTreeCalls { get; private set; }
@@ -719,7 +749,7 @@ public sealed class GitRepositoryGatewayRevisionTests
         {
             if (arguments[0] == "ls-tree")
             {
-                using var stream = new GeneratedTreeStream(recordCount);
+                using var stream = new GeneratedTreeStream(recordCount, pathFactory);
                 var output = readStandardOutput(stream, CancellationToken.None).GetAwaiter().GetResult();
                 TreeBytes = stream.BytesProduced;
                 TreeRecords = stream.RecordsProduced;
@@ -744,7 +774,10 @@ public sealed class GitRepositoryGatewayRevisionTests
             if (arguments[0] == "ls-tree")
             {
                 BufferedTreeCalls++;
-                throw new InvalidOperationException("ls-tree unexpectedly used buffered transport");
+                using var stream = new GeneratedTreeStream(recordCount, pathFactory);
+                using var output = new MemoryStream();
+                stream.CopyTo(output);
+                return new(0, output.ToArray(), []);
             }
 
             if (arguments[0] == "cat-file")
@@ -761,21 +794,22 @@ public sealed class GitRepositoryGatewayRevisionTests
             ReadOnlyMemory<byte> standardInput = default)
         {
             if (arguments[0] != "ls-tree") throw new InvalidOperationException("unexpected Git command");
-            var bytes = failure switch
+            Stream stream = failure switch
             {
-                "malformed" => Encoding.UTF8.GetBytes(
-                    $"100644 blob {LargeTreeOid} nope\tbad.txt\0"),
-                "truncated" => Encoding.UTF8.GetBytes(
-                    $"100644 blob {LargeTreeOid} 0\ttruncated.txt"),
-                "oversized-record" => Encoding.UTF8.GetBytes(
-                    $"100644 blob {LargeTreeOid} 0\t{new string('x', 66_000)}\0"),
-                _ => Encoding.UTF8.GetBytes(
-                    $"100644 blob {LargeTreeOid} 0\tok.txt\0"),
+                "malformed" => new MemoryStream(Encoding.UTF8.GetBytes(
+                    $"100644 blob {LargeTreeOid} nope\tbad.txt\0"), writable: false),
+                "truncated" => new MemoryStream(Encoding.UTF8.GetBytes(
+                    $"100644 blob {LargeTreeOid} 0\ttruncated.txt"), writable: false),
+                "oversized-record" => new OversizedTreeRecordStream(),
+                _ => new MemoryStream(Encoding.UTF8.GetBytes(
+                    $"100644 blob {LargeTreeOid} 0\tok.txt\0"), writable: false),
             };
-            using var stream = new MemoryStream(bytes, writable: false);
-            var output = readStandardOutput(stream, CancellationToken.None).GetAwaiter().GetResult();
-            return new(failure == "failed" ? 17 : 0, output,
-                failure == "failed" ? Encoding.UTF8.GetBytes("tree failure") : []);
+            using (stream)
+            {
+                var output = readStandardOutput(stream, CancellationToken.None).GetAwaiter().GetResult();
+                return new(failure == "failed" ? 17 : 0, output,
+                    failure == "failed" ? Encoding.UTF8.GetBytes("tree failure") : []);
+            }
         }
 
         public ProcessOutput Run(string fileName, IReadOnlyList<string> arguments, string workingDirectory,
@@ -784,8 +818,59 @@ public sealed class GitRepositoryGatewayRevisionTests
             throw new InvalidOperationException("unexpected buffered Git command");
     }
 
-    private sealed class GeneratedTreeStream(int recordCount) : Stream
+    private sealed class OversizedTreeRecordStream : Stream
     {
+        private static readonly byte[] Prefix = Encoding.UTF8.GetBytes(
+            $"100644 blob {LargeTreeOid} 0\t");
+        private int prefixOffset;
+        private long bodyRemaining = 64L * 1024 * 1024 + 1;
+
+        public override int Read(byte[] buffer, int offset, int count) => Read(buffer.AsSpan(offset, count));
+
+        public override int Read(Span<byte> buffer)
+        {
+            if (buffer.Length == 0) return 0;
+            if (prefixOffset < Prefix.Length)
+            {
+                var count = Math.Min(buffer.Length, Prefix.Length - prefixOffset);
+                Prefix.AsSpan(prefixOffset, count).CopyTo(buffer);
+                prefixOffset += count;
+                return count;
+            }
+
+            if (bodyRemaining > 0)
+            {
+                var count = (int)Math.Min(buffer.Length, bodyRemaining);
+                buffer[..count].Fill((byte)'x');
+                bodyRemaining -= count;
+                return count;
+            }
+
+            buffer[0] = 0;
+            return 1;
+        }
+
+        public override ValueTask<int> ReadAsync(Memory<byte> buffer,
+            CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            return ValueTask.FromResult(Read(buffer.Span));
+        }
+
+        public override bool CanRead => true;
+        public override bool CanSeek => false;
+        public override bool CanWrite => false;
+        public override long Length => 0;
+        public override long Position { get => 0; set => throw new NotSupportedException(); }
+        public override void Flush() => throw new NotSupportedException();
+        public override long Seek(long offset, SeekOrigin origin) => throw new NotSupportedException();
+        public override void SetLength(long value) => throw new NotSupportedException();
+        public override void Write(byte[] buffer, int offset, int count) => throw new NotSupportedException();
+    }
+
+    private sealed class GeneratedTreeStream(int recordCount, Func<int, string>? pathFactory = null) : Stream
+    {
+        private readonly Func<int, string> pathFactory = pathFactory ?? LargeTreePath;
         private readonly int recordLimit = recordCount;
         private byte[] record = [];
         private int recordOffset;
@@ -804,7 +889,7 @@ public sealed class GitRepositoryGatewayRevisionTests
             {
                 if (nextRecord == recordLimit) return 0;
                 record = Encoding.UTF8.GetBytes(
-                    $"100644 blob {LargeTreeOid} 9\t{LargeTreePath(nextRecord++)}\0");
+                    $"100644 blob {LargeTreeOid} 9\t{pathFactory(nextRecord++)}\0");
                 recordOffset = 0;
                 RecordsProduced++;
             }
