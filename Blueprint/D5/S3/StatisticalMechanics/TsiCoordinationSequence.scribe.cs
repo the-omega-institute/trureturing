@@ -63,14 +63,13 @@ internal sealed class TsiCoordinationSequenceDocument : IScribeDocumentDefinitio
                 Blocks(
                     Paragraph(Text(
                         "First measure the distance of an integer i from the integer interval with endpoints "
-                            + "0 and c. The two nonnegative parts give the following natural number; "
-                            + "Int.toNat sends a negative integer to zero:")),
-                    new DocumentBlock.DisplayFormula(IntervalDistanceFormula()),
+                            + "0 and c as the natural number Int.toNat(min(0, c) − i) + Int.toNat(i − max(0, c)); "
+                            + "Int.toNat sends a negative integer to zero.")),
                     Paragraph(Text(
-                        "For an integer triple (i,j,k), the layer displacement and the two interval distances "
-                            + "give the following natural-valued expression. All divisions in its interval "
-                            + "endpoints are integer divisions:")),
-                    new DocumentBlock.DisplayFormula(RadiusFormula()),
+                        "For an integer triple (i,j,k), add the layer displacement Int.natAbs k, the distance "
+                            + "of i from the interval with endpoints 0 and (k+1)/2, and the distance of j from "
+                            + "the interval with endpoints 0 and k/2. These divisions are integer divisions, "
+                            + "which round down for the divisor 2.")),
                     Paragraph(Text(
                         "A horizontal edge changes this expression by at most one. To check an interlayer edge, "
                             + "split the absolute layer coordinate into the sum of the absolute values of "
@@ -87,7 +86,8 @@ internal sealed class TsiCoordinationSequenceDocument : IScribeDocumentDefinitio
                             + "rectangle. Value zero forces all three coordinates to be zero. Strong induction "
                             + "therefore constructs a walk from the origin with length equal to the expression. "
                             + "This gives the upper bound on distance. Applying the edge estimate to the reverse "
-                            + "reachable pair, with value zero at the origin, gives the lower bound. Hence:")),
+                            + "reachable pair, with value zero at the origin, gives the lower bound. Hence, with "
+                            + "integer division rounding down in the interval endpoints:")),
                     new DocumentBlock.DisplayFormula(MetricFormula()),
                     Paragraph(Text(
                         "Next count the one-dimensional shells. At interval distance zero there are "
@@ -164,16 +164,6 @@ internal sealed class TsiCoordinationSequenceDocument : IScribeDocumentDefinitio
     private static Formula ClosedForm(Formula constant) =>
         Equal(Multiply(D(2), LocalCall("shell", X("n"))),
             Add(Multiply(D(1, 3), new Formula.Power(X("n"), D(2))), constant));
-
-    private static Formula IntervalDistanceFormula() => All("c", Integers(), All("i", Integers(),
-        Equal(GapFormula(X("c"), X("i")),
-            Add(At(Qualified("Int", "toNat"), Subtract(At(Qualified("min"), D(0), X("c")), X("i"))),
-                At(Qualified("Int", "toNat"), Subtract(X("i"), At(Qualified("max"), D(0), X("c"))))))));
-
-    private static Formula RadiusFormula() => IntegerTripleBinders(Equal(RadiusFormulaExpression(),
-        Add(Add(At(Qualified("Int", "natAbs"), X("k")),
-            GapFormula(IntegerDivide(Add(X("k"), D(1)), D(2)), X("i"))),
-            GapFormula(IntegerDivide(X("k"), D(2)), X("j")))));
 
     private static Formula MetricFormula() => IntegerTripleBinders(
         Equal(Distance(Triple(X("i"), X("j"), X("k"))), RadiusFormulaExpression()));
