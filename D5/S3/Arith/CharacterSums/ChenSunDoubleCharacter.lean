@@ -26,7 +26,7 @@ private theorem lower_sign_sq {r : ℕ} (hr : 1 ≤ r) (hn : r ≤ (p - 1) / 2) 
   have hp0 := (Fact.out : p.Prime).pos
   have hrp : r < p := by omega
   apply legendreSym.sq_one
-  change (r : ZMod p) ≠ 0
+  push_cast
   intro h
   have hv := congrArg ZMod.val h
   rw [ZMod.val_cast_of_lt hrp, ZMod.val_zero] at hv
@@ -39,16 +39,15 @@ private theorem reflection (hp : p ≠ 2) {r : ℕ} (hr : 1 ≤ r) (hn : r ≤ (
   have hp0 := (Fact.out : p.Prime).pos
   have hpn : 2 * ((p - 1) / 2) + 1 = p := by omega
   have hrp : r ≤ p := by omega
-  change quadraticChar (ZMod p) ((2 * ((p - 1) / 2) + 1 - r : ℕ) : ZMod p) =
-    quadraticChar (ZMod p) (-1) * quadraticChar (ZMod p) (r : ZMod p)
+  simp only [legendreSym, Int.cast_natCast, Int.cast_neg, Int.cast_one]
   rw [hpn, Nat.cast_sub hrp, ZMod.natCast_self, zero_sub,
     neg_eq_neg_one_mul, map_mul]
 
 private theorem cancellation (hp : p ≠ 2) :
-    (1 + legendreSym p (-1)) * prefix (fun r => legendreSym p (r : ℤ)) ((p - 1) / 2) = 0 := by
+    (1 + legendreSym p (-1)) * partialSum (fun r => legendreSym p (r : ℤ)) ((p - 1) / 2) = 0 := by
   have h := prime_half_character_cancellation p hp
   rw [sum_primeHalf] at h
-  simpa [prefix, legendreSym] using h
+  simpa [partialSum, legendreSym] using h
 
 /-- Multiplicativity changes each summand into the row form used by the Gram identity. -/
 theorem doubleSum_eq_row_sum :
@@ -81,12 +80,12 @@ theorem doubleSum_eq_row_sum :
 /-- Unconditional integral triangular identity for every odd prime; no class-number input. -/
 theorem twice_doubleSum_triangle (hp : p ≠ 2) :
     2 * doubleSum p =
-      -(prefix (fun r => legendreSym p (r : ℤ)) ((p - 1) / 2) ^ 2 +
+      -(partialSum (fun r => legendreSym p (r : ℤ)) ((p - 1) / 2) ^ 2 +
         (((p - 1) / 2 : ℕ) : ℤ)) -
       2 * legendreSym p (-1) *
         (∑ i ∈ Finset.range ((p - 1) / 2),
           legendreSym p ((i + 1 : ℕ) : ℤ) *
-            prefix (fun r => legendreSym p (r : ℤ)) ((p - 1) / 2 - (i + 1))) := by
+            partialSum (fun r => legendreSym p (r : ℤ)) ((p - 1) / 2 - (i + 1))) := by
   rw [doubleSum_eq_row_sum]
   exact twice_triangle (fun r => legendreSym p (r : ℤ)) ((p - 1) / 2)
     (legendreSym p (-1)) (fun _ hr hn => lower_sign_sq p hr hn)
@@ -95,19 +94,19 @@ theorem twice_doubleSum_triangle (hp : p ≠ 2) :
 /-- Actual column sums of the two restricted character matrices, with integer arguments. -/
 def columnSum (t : ℤ) (i : ℕ) : ℤ :=
   ∑ j ∈ Finset.range ((p - 1) / 2),
-    legendreSym p ((j : ℤ) + 1 + i) + t * legendreSym p ((j : ℤ) + 1 - i)
+    (legendreSym p ((j : ℤ) + 1 + i) + t * legendreSym p ((j : ℤ) + 1 - i))
 
 theorem columnSum_eq_prefix (hp : p ≠ 2) (t : ℤ) {i : ℕ}
     (hi₀ : 1 ≤ i) (hi : i ≤ (p - 1) / 2) :
     columnSum p t i =
-      -prefix (fun r => legendreSym p (r : ℤ)) i +
-        (t - legendreSym p (-1)) * prefix (fun r => legendreSym p (r : ℤ)) ((p - 1) / 2 - i) +
-          t * legendreSym p (-1) * prefix (fun r => legendreSym p (r : ℤ)) (i - 1) := by
+      -partialSum (fun r => legendreSym p (r : ℤ)) i +
+        (t - legendreSym p (-1)) * partialSum (fun r => legendreSym p (r : ℤ)) ((p - 1) / 2 - i) +
+          t * legendreSym p (-1) * partialSum (fun r => legendreSym p (r : ℤ)) (i - 1) := by
   have hplus : (∑ j ∈ Finset.range ((p - 1) / 2),
       legendreSym p ((j : ℤ) + 1 + i)) =
-      (1 + legendreSym p (-1)) * prefix (fun r => legendreSym p (r : ℤ)) ((p - 1) / 2) -
-        prefix (fun r => legendreSym p (r : ℤ)) i -
-          legendreSym p (-1) * prefix (fun r => legendreSym p (r : ℤ)) ((p - 1) / 2 - i) := by
+      (1 + legendreSym p (-1)) * partialSum (fun r => legendreSym p (r : ℤ)) ((p - 1) / 2) -
+        partialSum (fun r => legendreSym p (r : ℤ)) i -
+          legendreSym p (-1) * partialSum (fun r => legendreSym p (r : ℤ)) ((p - 1) / 2 - i) := by
     convert reflected_row_sum (fun r => legendreSym p (r : ℤ)) ((p - 1) / 2) i hi
       (legendreSym p (-1)) (fun _ hr hn => reflection p hp hr hn) using 1
     apply Finset.sum_congr rfl
@@ -126,19 +125,19 @@ theorem column_energy (hp : p ≠ 2) (t : ℤ) (ht : t = 1 ∨ t = -1) :
     (∑ i ∈ Finset.range ((p - 1) / 2), columnSum p t (i + 1) ^ 2) =
       (p : ℤ) * (((p - 1) / 2 : ℕ) : ℤ) -
         (1 + t * legendreSym p (-1)) * (((p - 1) / 2 : ℕ) : ℤ) ^ 2 -
-          (1 + t) * prefix (fun r => legendreSym p (r : ℤ)) ((p - 1) / 2) ^ 2 := by
+          (1 + t) * partialSum (fun r => legendreSym p (r : ℤ)) ((p - 1) / 2) ^ 2 := by
   have h := prime_column_energy p hp t ht
   simp_rw [sum_primeHalf] at h
-  simpa [columnSum, prefix, legendreSym, Nat.cast_add, Int.cast_add, Int.cast_sub] using h
+  simpa [columnSum, partialSum, legendreSym, Nat.cast_add, Int.cast_add, Int.cast_sub] using h
 
 private theorem prefix_step (i : ℕ) (hi : 1 ≤ i) :
-    prefix (fun r => legendreSym p (r : ℤ)) i =
-      prefix (fun r => legendreSym p (r : ℤ)) (i - 1) + legendreSym p (i : ℤ) := by
+    partialSum (fun r => legendreSym p (r : ℤ)) i =
+      partialSum (fun r => legendreSym p (r : ℤ)) (i - 1) + legendreSym p (i : ℤ) := by
   have hi' : i - 1 + 1 = i := by omega
-  simpa only [hi'] using
+  simpa only [hi', partialSum] using
     (Finset.sum_range_succ (fun j => legendreSym p ((j + 1 : ℕ) : ℤ)) (i - 1))
 
-/-- The even-case column vector is a+4b, with b an actual integral prefix quotient. -/
+/-- The even-case column vector is a+4b, with b an actual integral partialSum quotient. -/
 theorem even_columnSum (m : ℕ) (hpm : p = 4 * m + 1) {i : ℕ}
     (hi₀ : 1 ≤ i) (hi : i ≤ 2 * m) :
     columnSum p (-1) i = legendreSym p (i : ℤ) +
@@ -189,16 +188,16 @@ theorem even_energy_exact (m : ℕ) (hpm : p = 4 * m + 1) :
   let b : ℕ → ℤ := evenB a (2 * m)
   let A : ℤ := ∑ i ∈ Finset.range (2 * m), a (i + 1) * b (i + 1)
   let B : ℤ := ∑ i ∈ Finset.range (2 * m), b (i + 1) ^ 2
-  let T : ℤ := ∑ i ∈ Finset.range (2 * m), a (i + 1) * prefix a (2 * m - (i + 1))
-  let V : ℤ := ∑ i ∈ Finset.range (2 * m), a (i + 1) * prefix a (i + 1)
+  let T : ℤ := ∑ i ∈ Finset.range (2 * m), a (i + 1) * partialSum a (2 * m - (i + 1))
+  let V : ℤ := ∑ i ∈ Finset.range (2 * m), a (i + 1) * partialSum a (i + 1)
   have hp2 : p ≠ 2 := by omega
   have hn : (p - 1) / 2 = 2 * m := by omega
   have hε : legendreSym p (-1) = 1 := by
     rw [legendreSym.at_neg_one hp2, ZMod.χ₄_nat_one_mod_four (by omega)]
-  have hc : prefix a (2 * m) = 0 := by
+  have hc : partialSum a (2 * m) = 0 := by
     have h := cancellation p hp2
     rw [hε, hn] at h
-    change (1 + 1) * prefix a (2 * m) = 0 at h
+    change (1 + 1) * partialSum a (2 * m) = 0 at h
     linarith
   have hdiag : (∑ i ∈ Finset.range (2 * m), a (i + 1) ^ 2) = (2 * m : ℕ) :=
     sum_lower_sign_sq p (2 * m) (by omega)
@@ -207,18 +206,19 @@ theorem even_energy_exact (m : ℕ) (hpm : p = 4 * m + 1) :
   change 2 * V = 0 ^ 2 + ((2 * m : ℕ) : ℤ) at hV
   have htri := twice_doubleSum_triangle p hp2
   rw [hε, hn] at htri
-  change 2 * doubleSum p = -(prefix a (2 * m) ^ 2 + ((2 * m : ℕ) : ℤ)) - 2 * 1 * T at htri
+  change 2 * doubleSum p = -(partialSum a (2 * m) ^ 2 + ((2 * m : ℕ) : ℤ)) - 2 * 1 * T at htri
   rw [hc] at htri
   have hA : 2 * A = -V - T := by
     calc
       _ = ∑ i ∈ Finset.range (2 * m), a (i + 1) * (2 * b (i + 1)) := by
-        rw [A, Finset.mul_sum]
+        dsimp only [A]
+        rw [Finset.mul_sum]
         apply Finset.sum_congr rfl
         intro i _
         ring
       _ = ∑ i ∈ Finset.range (2 * m),
-          (-a (i + 1) * prefix a (i + 1) -
-            a (i + 1) * prefix a (2 * m - (i + 1))) := by
+          (-a (i + 1) * partialSum a (i + 1) -
+            a (i + 1) * partialSum a (2 * m - (i + 1))) := by
         apply Finset.sum_congr rfl
         intro i hi
         have hi' := Finset.mem_range.mp hi
@@ -244,24 +244,26 @@ theorem even_energy_exact (m : ℕ) (hpm : p = 4 * m + 1) :
         simp only [Finset.sum_add_distrib, ← Finset.mul_sum, hdiag, A, B]
   have hE := column_energy p hp2 (-1) (Or.inr rfl)
   rw [hn, hε, hnorm] at hE
-  rw [hpm] at hE
-  push_cast at hE
+  norm_num at hE
+  have hpmz : (p : ℤ) = 4 * m + 1 := by exact_mod_cast hpm
+  rw [hpmz] at hE
+  push_cast at hE hAd
   change doubleSum p = 2 * (m : ℤ) ^ 2 - 4 * B
   nlinarith [hE, hAd]
 
 /-- Exact odd-case energy identity, before reflection and factorial parity reduce it modulo 32. -/
 theorem odd_energy_exact (m : ℕ) (hpm : p = 4 * m + 3) :
-    2 * doubleSum p = prefix (fun r => legendreSym p (r : ℤ)) (2 * m + 1) ^ 2 -
+    2 * doubleSum p = partialSum (fun r => legendreSym p (r : ℤ)) (2 * m + 1) ^ 2 -
       ((2 * m + 1 : ℕ) : ℤ) * (((2 * m + 1 : ℕ) : ℤ) + 2) +
         8 * (∑ i ∈ Finset.range (2 * m + 1),
           oddB (fun r => legendreSym p (r : ℤ)) (2 * m + 1) (i + 1) ^ 2) := by
   let a : ℕ → ℤ := fun r => legendreSym p (r : ℤ)
   let b : ℕ → ℤ := oddB a (2 * m + 1)
-  let c : ℤ := prefix a (2 * m + 1)
+  let c : ℤ := partialSum a (2 * m + 1)
   let A : ℤ := ∑ i ∈ Finset.range (2 * m + 1), a (i + 1) * b (i + 1)
   let B : ℤ := ∑ i ∈ Finset.range (2 * m + 1), b (i + 1) ^ 2
-  let T : ℤ := ∑ i ∈ Finset.range (2 * m + 1), a (i + 1) * prefix a (2 * m + 1 - (i + 1))
-  let V : ℤ := ∑ i ∈ Finset.range (2 * m + 1), a (i + 1) * prefix a i
+  let T : ℤ := ∑ i ∈ Finset.range (2 * m + 1), a (i + 1) * partialSum a (2 * m + 1 - (i + 1))
+  let V : ℤ := ∑ i ∈ Finset.range (2 * m + 1), a (i + 1) * partialSum a i
   have hp2 : p ≠ 2 := by omega
   have hn : (p - 1) / 2 = 2 * m + 1 := by omega
   have hε : legendreSym p (-1) = -1 := by
@@ -277,12 +279,13 @@ theorem odd_energy_exact (m : ℕ) (hpm : p = 4 * m + 3) :
   have hA : 2 * A = T - V := by
     calc
       _ = ∑ i ∈ Finset.range (2 * m + 1), a (i + 1) * (2 * b (i + 1)) := by
-        rw [A, Finset.mul_sum]
+        dsimp only [A]
+        rw [Finset.mul_sum]
         apply Finset.sum_congr rfl
         intro i _
         ring
       _ = ∑ i ∈ Finset.range (2 * m + 1),
-          (a (i + 1) * prefix a (2 * m + 1 - (i + 1)) - a (i + 1) * prefix a i) := by
+          (a (i + 1) * partialSum a (2 * m + 1 - (i + 1)) - a (i + 1) * partialSum a i) := by
         apply Finset.sum_congr rfl
         intro i hi
         have hi' := Finset.mem_range.mp hi
@@ -313,8 +316,10 @@ theorem odd_energy_exact (m : ℕ) (hpm : p = 4 * m + 3) :
   change ((2 * m + 1 : ℕ) : ℤ) - 8 * A + 16 * B =
     (p : ℤ) * ((2 * m + 1 : ℕ) : ℤ) -
       (1 + 1 * -1) * (((2 * m + 1 : ℕ) : ℤ) ^ 2) - (1 + 1) * c ^ 2 at hE
-  rw [hpm] at hE
-  push_cast at hE
+  norm_num at hE
+  have hpmz : (p : ℤ) = 4 * m + 1 := by exact_mod_cast hpm
+  rw [hpmz] at hE
+  push_cast at hE hAd
   change 2 * doubleSum p = c ^ 2 -
     ((2 * m + 1 : ℕ) : ℤ) * (((2 * m + 1 : ℕ) : ℤ) + 2) + 8 * B
   push_cast

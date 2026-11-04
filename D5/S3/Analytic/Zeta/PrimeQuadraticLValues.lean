@@ -82,7 +82,7 @@ theorem half_sum_eq_LFunction_zero (p : ℕ) [Fact p.Prime] (hp : p ≠ 2)
   have hW : W = χ 2 * (2 * W + p * c) := by
     calc
       W = ∑ x : ZMod p, ((2 * x).val : ℂ) * χ (2 * x) :=
-        ((Equiv.mulLeft₀ (2 : ZMod p) htwo).sum_comp
+        (Equiv.sum_comp (Equiv.mulLeft₀ (2 : ZMod p) htwo)
           (fun x : ZMod p => (x.val : ℂ) * χ x)).symm
       _ = ∑ x : ZMod p,
           χ 2 * (2 * ((x.val : ℂ) * χ x) - (p : ℂ) * χ x +

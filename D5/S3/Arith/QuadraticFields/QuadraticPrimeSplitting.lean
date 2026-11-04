@@ -28,10 +28,12 @@ def quadraticRootEquivSqrts {F : Type*} [Field F] (hF : ringChar F ≠ 2) (a : F
       (2 * x.1 - 1) ^ 2 = 4 * (x.1 ^ 2 - x.1 - a) + (1 + 4 * a) := by ring
       _ = 1 + 4 * a := by rw [x.2]; ring⟩
   invFun y := ⟨(y.1 + 1) / 2, by
+    have h4 : (4 : F) ≠ 0 := by
+      convert mul_ne_zero (Ring.two_ne_zero hF) (Ring.two_ne_zero hF) using 1 <;> norm_num
     calc
       ((y.1 + 1) / 2) ^ 2 - (y.1 + 1) / 2 - a =
           (y.1 ^ 2 - (1 + 4 * a)) / 4 := by
-        field_simp [Ring.two_ne_zero hF]
+        field_simp [Ring.two_ne_zero hF, h4]
         ring
       _ = 0 := by rw [y.2, sub_self, zero_div]⟩
   left_inv x := by
@@ -51,22 +53,24 @@ theorem quadratic_root_card {F : Type*} [Field F] [Fintype F] [DecidableEq F]
     (Fintype.card {x : F // x ^ 2 - x - a = 0} : ℤ) =
       quadraticChar F (1 + 4 * a) + 1 := by
   rw [Fintype.card_congr (quadraticRootEquivSqrts hF a)]
-  simpa only [Fintype.card_subtype] using quadraticChar_card_sqrts hF (1 + 4 * a)
+  simpa [Fintype.card_subtype] using quadraticChar_card_sqrts hF (1 + 4 * a)
 
 private theorem generator_polynomial_factor {F : Type*} [Field F]
     (hF : ringChar F ≠ 2) (a s : F) (hs : s ^ 2 = 1 + 4 * a) :
     (X ^ 2 - X - C a : F[X]) =
       (X - C ((1 + s) / 2)) * (X - C ((1 - s) / 2)) := by
+  have h4 : (4 : F) ≠ 0 := by
+    convert mul_ne_zero (Ring.two_ne_zero hF) (Ring.two_ne_zero hF) using 1 <;> norm_num
   have hsum : (1 + s) / 2 + (1 - s) / 2 = 1 := by
     field_simp [Ring.two_ne_zero hF]
     ring
   have hprod : ((1 + s) / 2) * ((1 - s) / 2) = -a := by
     calc
-      _ = (1 - s ^ 2) / 4 := by field_simp [Ring.two_ne_zero hF]; ring
-      _ = -a := by rw [hs]; ring
+      _ = (1 - s ^ 2) / 4 := by field_simp [Ring.two_ne_zero hF, h4]; ring
+      _ = -a := by rw [hs]; field_simp [h4]; ring
   calc
     _ = X ^ 2 - C ((1 + s) / 2 + (1 - s) / 2) * X +
-        C (((1 + s) / 2) * ((1 - s) / 2)) := by rw [hsum, hprod]; simp
+        C (((1 + s) / 2) * ((1 - s) / 2)) := by rw [hsum, hprod]; simp [sub_eq_add_neg]
     _ = _ := by simp only [map_add, map_mul]; ring
 
 /-- The product over distinct irreducible factors is the local Euler polynomial.
@@ -109,7 +113,7 @@ theorem quadratic_euler_polynomial {F : Type*} [Field F] [Fintype F] [DecidableE
     · have hmonic : (X ^ 2 - X - C a : F[X]).Monic := by
         rw [show (X ^ 2 - X - C a : F[X]) = X ^ 2 - (X + C a) by ring]
         apply monic_X_pow_sub
-        simpa using (degree_linear_lt (a := (1 : F)) (b := a))
+        simpa using! (degree_linear_lt (a := (1 : F)) (b := a))
       have hdeg : (X ^ 2 - X - C a : F[X]).natDegree = 2 := by
         simpa only [C_1, C_neg, one_mul, neg_one_mul, sub_eq_add_neg] using
           (natDegree_quadratic (a := (1 : F)) (b := -1) (c := -a) one_ne_zero)
@@ -166,8 +170,8 @@ theorem integralGenerator_root_card (ℓ : ℕ) [Fact ℓ.Prime] (hℓ : ℓ ≠
         simpa only [QuadraticAlgebra.discr_def, one_pow] using order_discr p)
     simpa using h
   rw [hD]
-  change legendreSym ℓ (-(p : ℤ)) + 1 = _
-  rw [negative_prime_reciprocity p ℓ hℓ]
+  simpa only [legendreSym, Int.cast_neg, Int.cast_natCast] using
+    congrArg (fun v : ℤ => v + 1) (negative_prime_reciprocity p ℓ hℓ)
 
 /-- The local factor supplied to Kummer-Dedekind is expressed by the original
 conductor-p character, at every odd prime including the ramified prime p. -/
@@ -190,8 +194,10 @@ theorem integralGenerator_euler_polynomial (ℓ : ℕ) [Fact ℓ.Prime] (hℓ : 
         simpa only [QuadraticAlgebra.discr_def, one_pow] using order_discr p)
     simpa using h
   rw [hD]
-  change (1 - z) * (1 - (legendreSym ℓ (-(p : ℤ)) : ℂ) * z) = _
-  rw [negative_prime_reciprocity p ℓ hℓ]
+  have hχ : quadraticChar (ZMod ℓ) (-(p : ZMod ℓ)) = legendreSym p (ℓ : ℤ) := by
+    simpa only [legendreSym, Int.cast_neg, Int.cast_natCast] using
+      negative_prime_reciprocity p ℓ hℓ
+  rw [hχ]
 
 /-- At two the half-integral polynomial is irreducible for p congruent to three mod eight
 and has two distinct linear factors for p congruent to seven mod eight. -/
@@ -220,7 +226,9 @@ theorem integralGenerator_euler_polynomial_two (z : ℂ) :
   · have hp8z : (p : ℤ) % 8 = 3 := by exact_mod_cast hp8
     have ha : orderA p % 2 = 1 := by omega
     have haz : (orderA p : ZMod 2) = 1 := by
-      rw [← ZMod.intCast_mod (orderA p) 2, ha]
+      rw [← ZMod.intCast_mod (orderA p) 2]
+      norm_num only [Nat.cast_ofNat]
+      rw [ha]
       norm_num
     have hχ : legendreSym p 2 = -1 := by
       rw [legendreSym.at_two hp2, ZMod.χ₈_nat_mod_eight p, hp8]
@@ -231,18 +239,21 @@ theorem integralGenerator_euler_polynomial_two (z : ℂ) :
     have hmonic : (X ^ 2 - X - C (1 : ZMod 2)).Monic := by
       rw [show (X ^ 2 - X - C (1 : ZMod 2)) = X ^ 2 - (X + C 1) by ring]
       apply monic_X_pow_sub
-      simpa using (degree_linear_lt (a := (1 : ZMod 2)) (b := 1))
+      simpa using! (degree_linear_lt (a := (1 : ZMod 2)) (b := 1))
     have hirr : Irreducible (X ^ 2 - X - C (1 : ZMod 2)) := by
       apply irreducible_of_degree_le_three_of_not_isRoot (by simp [hdeg])
       intro x
-      fin_cases x <;> norm_num [Polynomial.IsRoot]
+      fin_cases x <;> norm_num [Polynomial.IsRoot, eval_sub, eval_pow, eval_X, eval_C]
     rw [haz, normalizedFactors_irreducible hirr, hmonic.normalize_eq_self]
-    simp [hdeg, hχ]
+    simp only [Multiset.toFinset_singleton, Finset.prod_singleton, hdeg, hχ,
+      Int.cast_neg, Int.cast_one]
     ring
   · have hp8z : (p : ℤ) % 8 = 7 := by exact_mod_cast hp8
     have ha : orderA p % 2 = 0 := by omega
     have haz : (orderA p : ZMod 2) = 0 := by
-      rw [← ZMod.intCast_mod (orderA p) 2, ha]
+      rw [← ZMod.intCast_mod (orderA p) 2]
+      norm_num only [Nat.cast_ofNat]
+      rw [ha]
       norm_num
     have hχ : legendreSym p 2 = 1 := by
       rw [legendreSym.at_two hp2, ZMod.χ₈_nat_mod_eight p, hp8]
@@ -254,8 +265,9 @@ theorem integralGenerator_euler_polynomial_two (z : ℂ) :
       intro h
       have := congrArg (fun f : (ZMod 2)[X] => f.coeff 0) h
       norm_num at this
-    rw [haz, hfac, normalizedFactors_mul (monic_X_sub_C _).ne_zero (monic_X_sub_C _).ne_zero]
-    simp [hnf, hfg, hχ]
+    rw [haz, hfac, normalizedFactors_mul (monic_X_sub_C _).ne_zero (monic_X_sub_C _).ne_zero,
+      hnf, hnf]
+    simp [hfg, hχ]
 
 /-- Every rational prime, including two and the ramified prime p. -/
 theorem integralGenerator_euler_polynomial_all (ℓ : ℕ) [Fact ℓ.Prime] (z : ℂ) :
@@ -287,7 +299,10 @@ theorem primeIdeal_euler_polynomial (ℓ : ℕ) [Fact ℓ.Prime] (z : ℂ) :
       rw [NumberField.Ideal.inertiaDeg_primesOverSpanEquivMonicFactorsMod_symm_apply'
         hexp f.property]
     _ = ∏ f ∈ RingOfIntegers.monicFactorsMod (integralGenerator p) ℓ,
-        (1 - z ^ f.natDegree) := Finset.prod_coe_sort _ _
+        (1 - z ^ f.natDegree) := by
+      simpa using (Finset.prod_coe_sort
+        (RingOfIntegers.monicFactorsMod (integralGenerator p) ℓ)
+        (fun f : (ZMod ℓ)[X] => 1 - z ^ f.natDegree))
     _ = _ := integralGenerator_euler_polynomial_all p ℓ z
 
 end PrimeImaginary

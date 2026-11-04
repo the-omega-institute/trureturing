@@ -57,7 +57,7 @@ theorem correlation (hF : ringChar F ≠ 2) (u v : F) :
         intro x _
         rw [← map_mul, hpoly]
       _ = ∑ x : F, quadraticChar F (x ^ 2 - ((u - v) / 2) ^ 2) :=
-        e.sum_comp _
+        Equiv.sum_comp e (fun x : F => quadraticChar F (x ^ 2 - ((u - v) / 2) ^ 2))
       _ = -1 := FiniteFieldQuadraticCharacterSum.quadraticChar_shift_square_sum hF hA
 
 /-- An even function sums twice over any genuine choice of one element from each nonzero
@@ -129,7 +129,7 @@ theorem restricted_gram (hF : ringChar F ≠ 2) (H : Finset F)
       _ = ∑ x : F, quadraticChar F (x - i) * quadraticChar F (x - j) := by
         apply Finset.sum_congr rfl
         intro x _
-        rw [hneg, hneg]
+        rw [hneg i x, hneg j x]
         calc
           _ = ε ^ 2 * (quadraticChar F (x - i) * quadraticChar F (x - j)) := by ring
           _ = _ := by rw [hε, one_mul]
@@ -139,7 +139,7 @@ theorem restricted_gram (hF : ringChar F ≠ 2) (H : Finset F)
       _ = ∑ x : F, ε * (quadraticChar F (x - -i) * quadraticChar F (x - j)) := by
         apply Finset.sum_congr rfl
         intro x _
-        rw [hplus, hneg]
+        rw [hplus i x, hneg j x]
         ring
       _ = ε * ∑ x : F, quadraticChar F (x - -i) * quadraticChar F (x - j) :=
         (Finset.mul_sum _ _ _).symm
@@ -149,7 +149,7 @@ theorem restricted_gram (hF : ringChar F ≠ 2) (H : Finset F)
       _ = ∑ x : F, ε * (quadraticChar F (x - i) * quadraticChar F (x - -j)) := by
         apply Finset.sum_congr rfl
         intro x _
-        rw [hneg, hplus]
+        rw [hneg i x, hplus j x]
         ring
       _ = ε * ∑ x : F, quadraticChar F (x - i) * quadraticChar F (x - -j) :=
         (Finset.mul_sum _ _ _).symm
@@ -171,7 +171,7 @@ theorem restricted_gram (hF : ringChar F ≠ 2) (H : Finset F)
     rcases ht with rfl | rfl <;> simp [f] <;> ring
   have heven (x : F) : f (-x) = f x := by
     rcases ht with rfl | rfl <;> dsimp [f] <;>
-      simp only [sub_neg_eq_add, add_neg_eq_sub] <;> ring
+      simp only [sub_neg_eq_add, ← sub_eq_add_neg] <;> ring
   have hhalf := sum_even H h0 hd hc f heven
   rw [hfull, hzero] at hhalf
   change (∑ x ∈ H, f x) = d - (1 + t * ε) -
@@ -184,7 +184,8 @@ theorem restricted_column_energy (hF : ringChar F ≠ 2) (H : Finset F)
     (h0 : (0 : F) ∉ H) (hd : Disjoint H (H.image fun x => -x))
     (hc : ∀ x : F, x ≠ 0 → x ∈ H ∨ -x ∈ H)
     (t : ℤ) (ht : t = 1 ∨ t = -1) :
-    (∑ x ∈ H, (∑ i ∈ H, quadraticChar F (i + x) + t * quadraticChar F (i - x)) ^ 2) =
+    (∑ x ∈ H, (H.sum (fun i : F =>
+      quadraticChar F (i + x) + t * quadraticChar F (i - x))) ^ 2) =
       (Fintype.card F : ℤ) * H.card -
         (1 + t * quadraticChar F (-1)) * (H.card : ℤ) ^ 2 -
           (1 + t) * (∑ i ∈ H, quadraticChar F i) ^ 2 := by
@@ -193,7 +194,7 @@ theorem restricted_column_energy (hF : ringChar F ≠ 2) (H : Finset F)
   have hdiag : (∑ i ∈ H, ∑ j ∈ H,
       (Fintype.card F : ℤ) * (if i = j then 1 else 0)) =
         (Fintype.card F : ℤ) * H.card := by
-    simp [← Finset.mul_sum]
+    simp [mul_comm]
   have hconst : (∑ i ∈ H, ∑ _j ∈ H, (1 + t * quadraticChar F (-1))) =
       (1 + t * quadraticChar F (-1)) * (H.card : ℤ) ^ 2 := by
     simp only [Finset.sum_const, nsmul_eq_mul]
@@ -201,15 +202,21 @@ theorem restricted_column_energy (hF : ringChar F ≠ 2) (H : Finset F)
   have hrank : (∑ i ∈ H, ∑ j ∈ H,
       (1 + t) * quadraticChar F i * quadraticChar F j) =
         (1 + t) * (∑ i ∈ H, quadraticChar F i) ^ 2 := by
-    simp_rw [pow_two, Finset.mul_sum, Finset.sum_mul]
-    apply Finset.sum_congr rfl
-    intro i _
-    apply Finset.sum_congr rfl
-    intro j _
-    ring
+    calc
+      _ = ∑ i ∈ H, (1 + t) * quadraticChar F i * (∑ j ∈ H, quadraticChar F j) := by
+        apply Finset.sum_congr rfl
+        intro i _
+        rw [Finset.mul_sum]
+      _ = (1 + t) * (∑ i ∈ H, quadraticChar F i) * (∑ j ∈ H, quadraticChar F j) := by
+        rw [← Finset.sum_mul, ← Finset.mul_sum]
+      _ = _ := by ring
   calc
     _ = ∑ x ∈ H, ∑ i ∈ H, ∑ j ∈ H, M i x * M j x := by
-      simp only [M, pow_two, Finset.sum_mul, Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro x _
+      rw [pow_two]
+      change (∑ i ∈ H, M i x) * (∑ j ∈ H, M j x) = _
+      exact Finset.sum_mul_sum H H (fun i => M i x) (fun j => M j x)
     _ = ∑ i ∈ H, ∑ x ∈ H, ∑ j ∈ H, M i x * M j x := Finset.sum_comm
     _ = ∑ i ∈ H, ∑ j ∈ H, ∑ x ∈ H, M i x * M j x := by
       apply Finset.sum_congr rfl
@@ -308,15 +315,17 @@ theorem sum_primeHalf (p : ℕ) [Fact p.Prime] (f : ZMod p → ℤ) :
 
 theorem primeHalf_card (p : ℕ) [Fact p.Prime] : (primeHalf p).card = (p - 1) / 2 := by
   have h := sum_primeHalf p (fun _ => 1)
-  simpa using h
+  simp only [Finset.sum_const, Finset.card_range, nsmul_eq_mul, mul_one] at h
+  exact_mod_cast h
 
 /-- Pairing the complete zero-sum quadratic character gives cancellation of its half sum. -/
 theorem prime_half_character_cancellation (p : ℕ) [Fact p.Prime] (hp : p ≠ 2) :
     (1 + quadraticChar (ZMod p) (-1)) *
       (∑ x ∈ primeHalf p, quadraticChar (ZMod p) x) = 0 := by
   classical
-  have hF := (ZMod.ringChar_zmod_n p).substr hp
-  rcases quadraticChar_dichotomy (F := ZMod p) (neg_ne_zero.mpr one_ne_zero) with h | h
+  have hF : ringChar (ZMod p) ≠ 2 := (ZMod.ringChar_zmod_n p).substr hp
+  rcases quadraticChar_dichotomy (show (-1 : ZMod p) ≠ 0 from neg_ne_zero.mpr one_ne_zero)
+    with h | h
   · have heven (x : ZMod p) : quadraticChar (ZMod p) (-x) = quadraticChar (ZMod p) x := by
       rw [neg_eq_neg_one_mul, map_mul, h, one_mul]
     have hs := sum_even (primeHalf p) primeHalf_zero (primeHalf_disjoint hp)
@@ -331,9 +340,9 @@ theorem prime_half_character_cancellation (p : ℕ) [Fact p.Prime] (hp : p ≠ 2
 neither an assumed Gram identity nor an assumed norm formula. -/
 theorem prime_column_energy (p : ℕ) [Fact p.Prime] (hp : p ≠ 2)
     (t : ℤ) (ht : t = 1 ∨ t = -1) :
-    (∑ x ∈ primeHalf p,
-      (∑ i ∈ primeHalf p,
-        quadraticChar (ZMod p) (i + x) + t * quadraticChar (ZMod p) (i - x)) ^ 2) =
+    ((primeHalf p).sum (fun x : ZMod p =>
+      ((primeHalf p).sum (fun i : ZMod p =>
+        quadraticChar (ZMod p) (i + x) + t * quadraticChar (ZMod p) (i - x))) ^ 2)) =
       (p : ℤ) * (((p - 1) / 2 : ℕ) : ℤ) -
         (1 + t * quadraticChar (ZMod p) (-1)) * (((p - 1) / 2 : ℕ) : ℤ) ^ 2 -
           (1 + t) * (∑ i ∈ primeHalf p, quadraticChar (ZMod p) i) ^ 2 := by

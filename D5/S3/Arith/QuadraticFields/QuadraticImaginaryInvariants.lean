@@ -23,7 +23,7 @@ instance totallyComplex : NumberField.IsTotallyComplex (Field p) where
     rw [← not_isReal_iff_isComplex]
     intro hw
     let φ := embedding_of_isReal hw
-    let ω : Field p := QuadraticAlgebra.ω
+    let ω : Field p := QuadraticAlgebra.omega
     have hω : ω * ω = (orderA p : Field p) + ω := by
       simpa [ω, Algebra.smul_def] using
         (QuadraticAlgebra.omega_mul_omega_eq_add (a := (orderA p : ℚ)) (b := (1 : ℚ)))
@@ -78,7 +78,7 @@ theorem zeta_residue (hp : 3 < p) :
     NumberField.IsTotallyComplex.nrRealPlaces_eq_zero, complexPlaces,
     field_regulator, field_torsionOrder p hp, field_discr]
   simp only [pow_zero, pow_one, one_mul, mul_one, Int.cast_neg, Int.cast_natCast,
-    abs_neg, abs_of_nonneg (Nat.cast_nonneg p), Nat.cast_ofNat]
+    abs_neg, abs_of_nonneg (show (0 : ℝ) ≤ (p : ℝ) from Nat.cast_nonneg p), Nat.cast_ofNat]
   ring
 
 end D5.S3.Arith.QuadraticFields.QuadraticOrderMaximal.PrimeImaginary

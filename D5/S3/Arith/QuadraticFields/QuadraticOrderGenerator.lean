@@ -16,22 +16,22 @@ open Polynomial QuadraticAlgebra
 open scoped NumberField
 
 /-- The defining polynomial of the coordinate generator of an integer quadratic algebra. -/
-def orderPolynomial (a b : ℤ) : ℤ[X] := X ^ 2 - C b * X - C a
+noncomputable def orderPolynomial (a b : ℤ) : ℤ[X] := X ^ 2 - C b * X - C a
 
 /-- The two coordinate basis vectors prove minimality over the integers themselves. -/
 theorem orderGenerator_minpoly (a b : ℤ) :
     minpoly ℤ (ω : QuadraticAlgebra ℤ a b) = orderPolynomial a b := by
-  apply minpoly.eq_of_linearIndependent _ _ 2 _ _
+  apply minpoly.eq_of_linearIndependent (A := ℤ) (x := (ω : QuadraticAlgebra ℤ a b)) (n := 2)
   · rw [show orderPolynomial a b = X ^ 2 - (C b * X + C a) by
       unfold orderPolynomial
       ring]
-    exact monic_X_pow_sub (by simpa using (degree_linear_lt (a := b) (b := a)))
+    exact monic_X_pow_sub (by simpa using! (degree_linear_lt (a := b) (b := a)))
   · simp only [orderPolynomial, map_sub, map_mul, map_pow, aeval_X, aeval_C]
     ext <;> simp [sq] <;> ring
   · rw [show orderPolynomial a b = C 1 * X ^ 2 + C (-b) * X + C (-a) by
-      simp only [orderPolynomial, C_1, C_neg]
+      simp only [orderPolynomial, Polynomial.C_1, Polynomial.C_neg]
       ring]
-    exact degree_quadratic one_ne_zero
+    simpa using! (degree_quadratic (a := (1 : ℤ)) (b := -b) (c := -a) one_ne_zero)
   · convert (QuadraticAlgebra.basis a b).linearIndependent using 1
     funext i
     fin_cases i <;> simp
@@ -51,7 +51,7 @@ theorem integralGenerator_exponent : RingOfIntegers.exponent (integralGenerator 
   have h := AlgHom.map_adjoin_singleton (maximalOrderEquiv p).toAlgHom
     (ω : QuadraticAlgebra ℤ (orderA p) 1)
   rw [QuadraticAlgebra.adjoin_omega_eq_top, Algebra.map_top] at h
-  exact h.symm.trans (AlgHom.range_eq_top.mpr (maximalOrderEquiv p).surjective)
+  exact h.symm.trans ((AlgHom.range_eq_top (maximalOrderEquiv p).toAlgHom).mpr (maximalOrderEquiv p).surjective)
 
 /-- Its integer minimal polynomial is X squared minus X plus (p+1)/4. -/
 theorem integralGenerator_minpoly :

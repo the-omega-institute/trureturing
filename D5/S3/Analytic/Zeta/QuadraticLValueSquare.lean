@@ -26,7 +26,7 @@ theorem completed_zero_sq (N : ℕ) [NeZero N] (χ : DirichletCharacter ℂ N)
   let a : ℂ := completedLFunction χ 0
   let b : ℂ := completedLFunction χ 1
   have hq : q ^ 2 = (N : ℂ) := by
-    simpa only [q, one_div] using
+    simpa [q] using
       (Complex.cpow_nat_inv_pow (N : ℂ) (by norm_num : (2 : ℕ) ≠ 0))
   have hqne : q ≠ 0 := by
     intro h
