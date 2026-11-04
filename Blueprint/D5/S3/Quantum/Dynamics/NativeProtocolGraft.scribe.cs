@@ -63,6 +63,7 @@ internal sealed class NativeProtocolGraftDocument : IScribeDocumentDefinition
             Paragraph(Text("The arithmetic inequalities do not identify q or w as the ideal probabilities of the actual chi/Petz experiments. Their empty-prefix and five-call source-history realization, preservation of original records and failure zeros, graft resource identities and total-variation comparison still require the specified original-object consumers. The cut determinant and spectral clauses of V88 theorem 24.1 remain outside this event result."))),
         DescribeRole.Theorem);
 
+    private static Formula Parenthesized(Formula a) => Seq(Open, a, Close);
     private static Formula Power(Formula a, Formula b) => Seq(Grp(Parenthesized(a)), Caret, Grp(b));
     private static Formula Leq(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
