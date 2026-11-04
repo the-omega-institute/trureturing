@@ -6,12 +6,9 @@
    utility: none
    digest: Conference walks have sharp square-order floors and nonsquare vanishing infima. -/
 
-import Mathlib.Combinatorics.SimpleGraph.StronglyRegular
-import Mathlib.NumberTheory.Real.Irrational
 import D5.S3.Quantum.Dynamics.RationalWeightPathTransfer
 import D5.S3.Quantum.Dynamics.BarrigaTenModeFourierEdgeRefutation
 import D5.S3.Fourier.PositiveFourierApproximationRefutation
-import Mathlib.Topology.Instances.AddCircle.DenseSubgroup
 
 /-! Sharp return probabilities for strongly regular conference graphs. -/
 
