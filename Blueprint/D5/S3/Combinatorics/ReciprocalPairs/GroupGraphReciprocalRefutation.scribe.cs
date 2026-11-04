@@ -8,7 +8,7 @@ internal sealed class GroupGraphReciprocalRefutationDocument : IScribeDocumentDe
 {
     private const string Prefix = "D5/S3/Combinatorics/ReciprocalPairs/GroupGraphReciprocalRefutation.";
     private static readonly LibraryNoteRef Campbell = LibraryNoteRef.Create("D5/L/GraphInvariants/campbell2020reciprocal");
-    private static readonly LibraryNoteRef CameronSemeraro = LibraryNoteRef.Create("D5/L/GraphInvariants/cameronsemeraro2018cycle");
+    private static readonly LibraryNoteRef CameronSemeraro = LibraryNoteRef.Create("D5/L/FiniteGroups/cameronsemeraro2018cycle");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A sign-coupled group on three edges and two four-cliques refutes the reciprocal-pair classification.",
         H("Campbell's group-graph reciprocal-pair conjecture"),
