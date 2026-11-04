@@ -25,7 +25,7 @@ noncomputable section
 
 namespace D5.S3.FiniteGroups.BajnokBeattySquareDisplacementThresholdDistribution
 
-open Filter Set Classical
+open Filter Set
 open scoped Topology BigOperators
 open _root_.D5.S3.FiniteGroups.BajnokBeattySquareDisplacementSingleCrossing
 open _root_.D5.S3.FiniteGroups.BajnokBeattySquareDisplacementLogTwoBracket
@@ -351,6 +351,7 @@ private theorem idealDet_on_cell
   rw [hca, hcb]
   nlinarith
 
+open Classical in
 private theorem ideal_histogram_partition
     (a b : ℕ) (ha : 0 < a) (hb : 0 < b)
     (lam : ℝ) (hlam : Irrational lam) (j : ℤ) (N : ℕ) :
@@ -389,6 +390,7 @@ private theorem ideal_histogram_partition
         rw [hkh]
         exact hhj
 
+open Classical in
 private theorem ideal_cell_sampling
     (a b : ℕ) (ha : 0 < a) (hb : 0 < b)
     (lam : ℝ) (hlam : Irrational lam) (h : ℕ) (hh : h < a * b) :
@@ -453,7 +455,9 @@ private theorem ideal_irrational_histogram
     simpa only [t, Nat.cast_sum, Finset.sum_div] using hp.symm
   rw [hmass] at hs
   simp only [hcounts] at hs
-  simpa only [idealDet, idealOrbit] using hs
+  convert hs using 1
+  funext N
+  congr 2
 
 private theorem ideal_irrational_histogram_support
     (a b : ℕ) (ha : 0 < a) (hb : 0 < b) (hab : Nat.Coprime a b)
@@ -611,9 +615,9 @@ private theorem histogram_difference_le
       (((Finset.range N).filter B).card : ℝ) +
         (((Finset.range N).filter C).card : ℝ) :=
     abs_le.mpr ⟨by linarith, by linarith⟩
-  rw [← sub_div, abs_div]
-  simpa only [abs_of_nonneg (Nat.cast_nonneg N)] using
-    (div_le_div_of_nonneg_right habs (Nat.cast_nonneg N)).trans_eq (add_div _ _ _)
+  have hN : (0 : ℝ) ≤ (N : ℝ) := Nat.cast_nonneg N
+  rw [← sub_div, abs_div, show |(N : ℝ)| = (N : ℝ) from abs_of_nonneg hN]
+  exact (div_le_div_of_nonneg_right habs hN).trans_eq (add_div _ _ _)
 
 open Classical in
 private theorem histogram_transfer
@@ -725,6 +729,7 @@ private theorem ideal_histogram (p r : ℤ) (hp : 0 < p) (hr : 0 < r) (z : ℤ) 
       dsimp only
       rw [hadiv, hbdiv]
       simp only [Int.cast_min, Int.cast_add, Int.cast_sub, Int.cast_natCast]
+      rfl
     have hs := ideal_irrational_histogram_support a b ha hb hab lam hlam (z / d)
     change Tendsto (fun N : ℕ =>
       (((Finset.range N).filter (fun (k : ℕ) => J k = z / d)).card : ℝ) / (N : ℝ))
@@ -739,7 +744,7 @@ private theorem ideal_histogram (p r : ℤ) (hp : 0 < p) (hr : 0 < r) (z : ℤ) 
         r * ⌈(p : ℝ) * (qAt k : ℝ) / (4 * Real.log 2)⌉ -
           p * ⌈(r : ℝ) * (qAt k : ℝ) / (4 * Real.log 2)⌉ = z) = ∅ := by
       ext k
-      simp only [Finset.mem_filter, hfalse, and_false, Finset.mem_empty]
+      simp only [Finset.mem_filter, hfalse, and_false, Finset.notMem_empty]
     have hm : mass p r z = 0 := by
       unfold mass
       change (if _ : d ∣ z then _ else 0) = 0
@@ -747,7 +752,7 @@ private theorem ideal_histogram (p r : ℤ) (hp : 0 < p) (hr : 0 < r) (z : ℤ) 
     simpa only [hzero, Finset.card_empty, Nat.cast_zero, zero_div, hm] using
       (tendsto_const_nhds : Tendsto (fun _ : ℕ => (0 : ℝ)) atTop (𝓝 0))
 
-set_option maxHeartbeats 800000 in
+set_option maxHeartbeats 1200000 in
 private theorem ceiling_bad_density (c : ℤ) (hc : c ≠ 0) (T : ℕ → ℕ)
     (hlo : ∀ k : ℕ,
       ((qAt k : ℝ)^2 - 1) * (c : ℝ) / (4 * (qAt k : ℝ) * Real.log 2) +
@@ -763,55 +768,67 @@ private theorem ceiling_bad_density (c : ℤ) (hc : c ≠ 0) (T : ℕ → ℕ)
   have hcR : (c : ℝ) ≠ 0 := Int.cast_ne_zero.mpr hc
   have hL : Real.log 2 ≠ 0 := ne_of_gt log_two_pos
   have hα := scaled_log_irrational c hc 2 (by norm_num)
-  apply shrinking_target_bad_density_zero hα (3 * (c : ℝ) / (4 * Real.log 2))
-  intro δ hδ _
-  obtain ⟨K, hK⟩ := exists_nat_gt (M / δ)
-  refine ⟨K, ?_⟩
-  intro k hk hbad
-  have hq : (0 : ℝ) < (qAt k : ℝ) := by
-    simp only [qAt, Int.cast_add, Int.cast_mul, Int.cast_ofNat, Int.cast_natCast]
-    positivity
-  have hKk : (K : ℝ) ≤ (k : ℝ) := by exact_mod_cast hk
-  have hqk : (k : ℝ) < (qAt k : ℝ) := by
-    simp only [qAt, Int.cast_add, Int.cast_mul, Int.cast_ofNat, Int.cast_natCast]
-    linarith [Nat.cast_nonneg k]
-  have hM : M < δ * (qAt k : ℝ) := by
-    have hlt : M / δ < (qAt k : ℝ) := lt_trans (lt_of_lt_of_le hK hKk) hqk
-    simpa only [mul_comm] using (div_lt_iff₀ hδ).mp hlt
-  have hAδ : A / (qAt k : ℝ) < δ := by
-    apply (div_lt_iff₀ hq).mpr
-    have hAM : A < M := lt_of_le_of_lt (le_abs_self A) (by dsimp [M]; linarith)
-    linarith
-  let x : ℝ := (c : ℝ) * (qAt k : ℝ) / (4 * Real.log 2)
-  have hrewrite :
-      ((qAt k : ℝ)^2 - 1) * (c : ℝ) / (4 * (qAt k : ℝ) * Real.log 2) +
-        1 / (2 * (qAt k : ℝ)) - 1 / (2 * (qAt k : ℝ) * (c : ℝ)) =
-      x - A / (qAt k : ℝ) := by
-    dsimp [x, A]
-    field_simp [hcR, hL, ne_of_gt hq]
-    <;> ring
-  have hlower : x - A / (qAt k : ℝ) < (T k : ℝ) := by
-    rw [← hrewrite]
-    exact hlo k
-  have hlt : (T k : ℤ) < ⌈x⌉ := by
-    have hu := hup k
-    change (T k : ℤ) ≤ ⌈x⌉ at hu
-    change (T k : ℤ) ≠ ⌈x⌉ at hbad
-    omega
-  have hTx : ((T k : ℤ) : ℝ) < x := Int.lt_ceil.mp hlt
-  have hfloor : (T k : ℤ) ≤ ⌊x⌋ := Int.le_floor.mpr hTx.le
-  have hfloorR : (T k : ℝ) ≤ (⌊x⌋ : ℝ) := by exact_mod_cast hfloor
-  have hfract : Int.fract x < A / (qAt k : ℝ) := by
-    rw [Int.fract]
-    linarith
-  have hphase : 3 * (c : ℝ) / (4 * Real.log 2) +
-      (k : ℝ) * ((c : ℝ) / (2 * Real.log 2)) = x := by
-    dsimp [x]
-    simp only [qAt, Int.cast_add, Int.cast_mul, Int.cast_ofNat, Int.cast_natCast]
-    field_simp [hL]
-    <;> ring
-  rw [hphase]
-  exact hfract.trans hAδ
+  have hshrink : ∀ δ : ℝ, 0 < δ → δ ≤ 1 → ∃ K : ℕ,
+      ∀ k, K ≤ k → ((T k : ℤ) ≠ ⌈(c : ℝ) * (qAt k : ℝ) / (4 * Real.log 2)⌉) →
+        Int.fract (3 * (c : ℝ) / (4 * Real.log 2) +
+          (k : ℝ) * ((c : ℝ) / (2 * Real.log 2))) < δ := by
+    intro δ hδ _
+    obtain ⟨K, hK⟩ := exists_nat_gt (M / δ)
+    refine ⟨K, ?_⟩
+    intro k hk hbad
+    have hq : (0 : ℝ) < (qAt k : ℝ) := by
+      simp only [qAt, Int.cast_add, Int.cast_mul, Int.cast_ofNat, Int.cast_natCast]
+      positivity
+    have hKk : (K : ℝ) ≤ (k : ℝ) := by exact_mod_cast hk
+    have hqk : (k : ℝ) < (qAt k : ℝ) := by
+      simp only [qAt, Int.cast_add, Int.cast_mul, Int.cast_ofNat, Int.cast_natCast]
+      have hk0 : (0 : ℝ) ≤ (k : ℝ) := Nat.cast_nonneg k
+      linarith
+    have hM : M < δ * (qAt k : ℝ) := by
+      have hlt : M / δ < (qAt k : ℝ) := lt_trans (lt_of_lt_of_le hK hKk) hqk
+      simpa only [mul_comm] using (div_lt_iff₀ hδ).mp hlt
+    have hAδ : A / (qAt k : ℝ) < δ := by
+      apply (div_lt_iff₀ hq).mpr
+      have hAM : A < M := lt_of_le_of_lt (le_abs_self A) (by dsimp [M]; linarith)
+      linarith
+    let x : ℝ := (c : ℝ) * (qAt k : ℝ) / (4 * Real.log 2)
+    have hrewrite :
+        ((qAt k : ℝ)^2 - 1) * (c : ℝ) / (4 * (qAt k : ℝ) * Real.log 2) +
+          1 / (2 * (qAt k : ℝ)) - 1 / (2 * (qAt k : ℝ) * (c : ℝ)) =
+        x - A / (qAt k : ℝ) := by
+      dsimp [x, A]
+      field_simp [hcR, hL, ne_of_gt hq]
+      <;> ring
+    have hlower : x - A / (qAt k : ℝ) < (T k : ℝ) := by
+      rw [← hrewrite]
+      exact hlo k
+    have hlt : (T k : ℤ) < ⌈x⌉ := by
+      have hu := hup k
+      change (T k : ℤ) ≤ ⌈x⌉ at hu
+      change (T k : ℤ) ≠ ⌈x⌉ at hbad
+      omega
+    have hTx : ((T k : ℤ) : ℝ) < x := Int.lt_ceil.mp hlt
+    have hfloor : (T k : ℤ) ≤ ⌊x⌋ := Int.le_floor.mpr hTx.le
+    have hfloorR : (T k : ℝ) ≤ (⌊x⌋ : ℝ) := by exact_mod_cast hfloor
+    have hfract : Int.fract x < A / (qAt k : ℝ) := by
+      rw [Int.fract]
+      linarith
+    have hphase : 3 * (c : ℝ) / (4 * Real.log 2) +
+        (k : ℝ) * ((c : ℝ) / (2 * Real.log 2)) = x := by
+      dsimp [x]
+      simp only [qAt, Int.cast_add, Int.cast_mul, Int.cast_ofNat, Int.cast_natCast]
+      field_simp [hL]
+      <;> ring
+    rw [hphase]
+    exact hfract.trans hAδ
+  have hs := shrinking_target_bad_density_zero hα
+    (3 * (c : ℝ) / (4 * Real.log 2))
+    (fun k : ℕ => (T k : ℤ) ≠ ⌈(c : ℝ) * (qAt k : ℝ) / (4 * Real.log 2)⌉) hshrink
+  convert hs using 1
+  funext N
+  apply congrArg (fun s : Finset ℕ => (s.card : ℝ) / (N : ℝ))
+  ext k
+  simp only [Finset.mem_filter]
 
 private theorem actual_histogram (p r : ℤ) (hp5 : 5 ≤ p) (hr5 : 5 ≤ r)
     (T U : ℕ → ℕ) (hT : ∀ k, bracketSC p (qAt k) (T k))
@@ -829,8 +846,18 @@ private theorem actual_histogram (p r : ℤ) (hp5 : 5 ≤ p) (hr5 : 5 ≤ r)
   · intro k hk
     rcases not_or.mp hk with ⟨hp, hr⟩
     rw [not_not.mp hp, not_not.mp hr]
-  · exact ceiling_bad_density p (by omega) T (fun (k : ℕ) => (hT k).2.1) (fun (k : ℕ) => (hT k).2.2)
-  · exact ceiling_bad_density r (by omega) U (fun (k : ℕ) => (hU k).2.1) (fun (k : ℕ) => (hU k).2.2)
+  · convert ceiling_bad_density p (by omega) T (fun (k : ℕ) => (hT k).2.1)
+      (fun (k : ℕ) => (hT k).2.2) using 1
+    funext N
+    apply congrArg (fun s : Finset ℕ => (s.card : ℝ) / (N : ℝ))
+    ext k
+    simp only [Finset.mem_filter]
+  · convert ceiling_bad_density r (by omega) U (fun (k : ℕ) => (hU k).2.1)
+      (fun (k : ℕ) => (hU k).2.2) using 1
+    funext N
+    apply congrArg (fun s : Finset ℕ => (s.card : ℝ) / (N : ℝ))
+    ext k
+    simp only [Finset.mem_filter]
   · exact ideal_histogram p r (by omega) (by omega) z
 
 private theorem originalSC_unique (p q : ℤ) (T U : ℕ)
