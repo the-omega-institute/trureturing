@@ -4,7 +4,19 @@
 
 The complete actual-K moment certificate.
 
-**Theorem 1.1 (complete positive mixture logarithmic).**
+**Theorem 1.1 (Finite Gamma head below the complete mixture).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentMixture.complete_positive_mixture_head_gamma`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentMixture.complete_positive_mixture_head_gamma` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For D>0, q>=1, m>=1 and delta_q<=1/m, the first M terms give Re Q_P >= E sum_{n<M} c_n 2lambda_n/(1+lambda_n^2/m), with the literal positive mixture coefficients and rates. Each term consumes the division-free Gamma gap certificate; positive energy permits cancellation inside that branch, while E=0 follows from the nonnegative exponential form. The existing complete-tail theorem keeps every omitted term nonnegative. The small-window endpoints consume M=20 with m=138 and m=1600.
+
+**Theorem 1.2 (complete positive mixture logarithmic).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentMixture.complete_positive_mixture_logarithmic`
 
@@ -18,5 +30,6 @@ The complete actual P(t)=exp(-abs(t)/2)trivialT(abs(t)) has Re Q_P >= (log(q/D)-
 
 ## References
 
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentMixture.complete_positive_mixture_head_gamma`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentMixture.complete_positive_mixture_logarithmic`
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentArithmetic](ActualKernelMomentArithmetic.md)
