@@ -1,0 +1,16 @@
+using static StrataLint.Scribe.DefinitionDsl;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakIntermediateTail;
+internal sealed class EndpointDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The full original intermediate-tail joint lift", H("Every original 2<=a<=d<b<c"),
+        Blocks(Describe.Lean(DescribeId.Create("third-peak-intermediate-tail-joint-lift"),
+            DeclarationHandle.Create("D5/S3/Combinatorics/Circle/FourNegative/ThirdPeakIntermediateTail/Endpoint.actualSource_third_peak_intermediate_tail_joint_lift"),
+            H("The original eight-binder source family"), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("For all original naturals a,b,c,d with 2<=a<=d<b<c, k is exactly a+b+c+d and the seed is exactly 1+2^a+2^(a+b)+2^(a+b+c). The public endpoint has exactly eight outer binders. It supplies an actual List(Fin k) permutation sigma and natural j=freshCut<k, the full old OriginalOrder, and the full enlarged OriginalOrder at twice the seed and the literal earWord(k,sigma,j). There is no selector, certificate, window premise or exponent upper bound.")),
+                Paragraph(Text("The three physical constructions and four symbolic cases cover every original tuple. I uses s>=4 with W reserve h=3s/4-1 and p=h when r=1, p=sr/2-1 otherwise. II uses s=2,r>=2, W reserve r-1, and the adjacent V split. III uses s=2,r=1, the same V split, W reserve 1, and fresh at the start of bank1. The other cases insert at the start of bank2. Thus j=b in III and j=a+b+1 elsewhere. Negative terminal order is always V,W,X,U.")),
+                Paragraph(Text("Native label, lift_order and marked_word reconstruct the actual original Fin labels and retain the literal insertion cut. The old modulus is modulus(k), the enlarged modulus modulus(k+1), and their repetition caps are respectively modulus(k)/2 and modulus(k). For all natural m,n the prefix of take n of m repetitions lies in the indicated closed interval, including zero repetitions, empty takes and takes beyond the repeated word. Every old repeated total and every new repeated total is independently zero, using native source_totals and zero_period_transport.")),
+                Paragraph(Text("The Reg mirror attempts the entire dependent source family with coordinates [0,1,2,3], both actual OriginalOrder readouts, a lawful enrolled DependentFamily.realize template, source reconstruction, actual-positive law, whole-family nonconstant intervention, role sensitivity and actual observational dependence on the seed. Its selection paths are derived from the eight forall bodies, the two existential bodies and the actual positions of the two readout functions; their state operand is the seed argument. Compilation and inspector binding remain UNVERIFIED.")),
+                Paragraph(Text("This is an intended source delivery based on the supplied independently checked Pro ordinary construction. It asserts no literature novelty, no kernel acceptance and no official completion. The four protected existing families remain byte-identical and uncompiled. Unrestricted four-gap joint lifting and the full Circle/J/C3.1 remain OPEN."))), DescribeRole.Theorem)), []));
+}
