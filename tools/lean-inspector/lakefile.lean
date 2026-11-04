@@ -1,7 +1,7 @@
 import Lake
 import Lake.CLI.Build
 import Lake.Util.StoreInsts
-import Std.Sync.Mutex
+import Std.Sync.Semaphore
 open Lake DSL System
 open Lean (Json)
 
@@ -61,14 +61,35 @@ private def observePhase (phase boundary : String)
     catch error =>
       try IO.eprintln s!"LEAN_INSPECTOR_DIAGNOSTIC_UNAVAILABLE lake phase: {error}" catch _ => pure ()
 
+-- Compiler graph fetches may await Lake jobs. A thread mutex held across an
+-- await can deadlock when the runtime runs a contending callback on that same
+-- worker. Keep the state exclusive with a task-aware semaphore instead.
+private structure CompilerMutex (α : Type) where
+  value : IO.Ref α
+  gate : Std.Semaphore
+
+private def CompilerMutex.new (value : α) : BaseIO (CompilerMutex α) :=
+  return ⟨← IO.mkRef value, ← Std.Semaphore.new 1⟩
+
+private def CompilerMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadFinally m]
+    (mutex : CompilerMutex α) (action : IO.Ref α → m β) : m β := do
+  discard <| IO.wait (← mutex.gate.acquire).result!
+  try action mutex.value finally mutex.gate.release
+
+private def CompilerMutex.tryAtomically [Monad m] [MonadLiftT BaseIO m] [MonadFinally m]
+    (mutex : CompilerMutex α) (action : IO.Ref α → m β) : m (Option β) := do
+  if ← mutex.gate.tryAcquire then
+    try some <$> action mutex.value finally mutex.gate.release
+  else return none
+
 private structure ReportState where
   started : IO.Ref Lean.NameSet
   batch : IO.Ref (Option (Lean.NameSet × Job Unit))
   sourcePaths : IO.Ref (Std.HashMap String (Option String))
-  graphFetch : Std.Mutex Unit
+  graphFetch : CompilerMutex Unit
 
 package_facet reportBatch (_pkg : Package) : ReportState := do
-  Job.async do return ⟨← IO.mkRef {}, ← IO.mkRef none, ← IO.mkRef {}, ← Std.Mutex.new ()⟩
+  Job.async do return ⟨← IO.mkRef {}, ← IO.mkRef none, ← IO.mkRef {}, ← CompilerMutex.new ()⟩
 
 -- A compiler import is shared by many report targets. Resolve its source path
 -- once in this Lake invocation, including paths excluded from the whitelist.
