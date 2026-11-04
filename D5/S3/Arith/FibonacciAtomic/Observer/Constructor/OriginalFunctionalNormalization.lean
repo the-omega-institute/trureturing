@@ -6,7 +6,7 @@
    utility: none
    digest: Literal-Omega functional syntax and exact root-link elimination with every reconstruction. -/
 
-import D5.S3.Arith.FibonacciAtomic.Observer.CompletionHomogeneousFixedPoints
+import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeRootLinkNormalization
 import Mathlib.Data.Fintype.Card
 
 set_option autoImplicit false
@@ -123,20 +123,7 @@ private theorem eliminate_decreases (E : Definitions k m) (i : Fin m)
 
 private theorem positive_period (a : Nat) (ha : 0 < a) (X : CompletionTree)
     (hx : X = rho^[a] X) : X = Omega := by
-  have orbit : ∀ n : Nat, rho^[a*n] X = X := by
-    intro n
-    induction n with
-    | zero => rfl
-    | succ n ih => rw [Nat.mul_succ, Function.iterate_add_apply, ← hx, ih]
-  apply eq_omega_of_full X
-  intro n
-  have arith : a*(2*n) = 2*n + (a-1)*(2*n) := by
-    have h : a = (a-1)+1 := by omega
-    conv_lhs => rw [h]
-    ring
-  have full := iterate_full n (rho^[(a-1)*(2*n)] X)
-  rw [← Function.iterate_add_apply, ← arith, orbit] at full
-  exact full
+  exact NativeRootLinkNormalization.positive_period a ha X hx
 
 private theorem elimination_semantics (E : Definitions k m) (i : Fin m)
     (e : Expr k m) (he : E i = some e) (s : Fin m → Expr k m)
