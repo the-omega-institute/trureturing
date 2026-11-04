@@ -130,7 +130,7 @@ internal sealed class KlandermanConjecture42RefutationDocument : IScribeDocument
             Imp(Call("TwoComponents", t), Imp(Call("TopIsolated", t),
                 And(new Formula.Not(Call("LesserSimplyPaired", t)),
                     Call("Compatible", t, Call("generated", t))))));
-        return Equal(Seq(Named("claim"), Sp, Colon, Sp, Named("Prop")),
+        return Equal(Par(Seq(Named("claim"), Sp, Colon, Sp, Named("Prop"))),
             GroupBody(g, body, true));
     }
 

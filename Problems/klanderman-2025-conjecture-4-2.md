@@ -71,8 +71,12 @@ system is defined by ordinary leastness and identified on every subgroup pair.
 The canonical mathematical source is
 `D5/S3/FiniteGroups/KlandermanConjecture42Refutation.lean`, with mathematical
 exposition in its matching Blueprint Scribe. The designated theorem is
-`result : Not claim`. Validation evidence is pending; no frozen state, PR,
-merged resolution or delivered-solve count is asserted by this dossier.
+`result : Not claim`. The current scoped compiled report validates the literal
+closed negation and the axiom closure. All declarations use only `propext`,
+`Classical.choice` and `Quot.sound`; there is no `sorry`, `native_decide` or new
+axiom. This is a local kernel result, with independent source-fidelity and
+prefreeze judgment pending. No frozen state, PR, merged resolution or
+delivered-solve count is asserted.
 
 The module exports no other theorem: the strict chain, component verification
 and generated-system identification are private, consumed proof helpers.
@@ -82,17 +86,35 @@ CLAUDE §3.9; no additional public theorem audit target is introduced.
 ## Triage
 
 Tier 1 external named conjecture, preregistered before the original probe.
-Intended admission is `open-problem-resolution`; its conditions remain subject
-to independent prefreeze assessment. Every helper must be assessed individually
-with its actual consumer; no new escape-witness or original framework is claimed.
+Admission basis is `open-problem-resolution`, with the source, full-event
+preregistration, bounded literature check and refutation use recorded above.
+Its source-fidelity and admission conditions remain subject to independent
+prefreeze assessment. There are no direct frozen D5 dependencies: all imports
+are pinned Mathlib. No new escape-witness or original framework is claimed.
+
+Theorem-by-theorem shape and live consumers:
+
+| Declaration | Proof shape | Consumer |
+| --- | --- | --- |
+| `proper_star_top_isolated` (private) | bind-only | `proper_star_components`, `result` |
+| `proper_star_components` (private) | bind-only | `result` |
+| `generated_star` (private) | bind-only | `result` |
+| `q8_chain` (private) | bind-only | `result` |
+| `result` | bind-only | the preregistered full external conjecture, by refutation |
+
+These proofs bind pinned group/subgroup/graph results, apply the transfer
+fields, and use logical case analysis and normalization. The external named
+settlement supplies the admission basis; the proof steps are not advertised
+as new mathematical content. The remaining declarations are the definitions,
+structures and instances needed to express the source assertion and its witness.
 
 ### What the settlement shows
 
-The candidate failure mechanism is that ordinary closure supplies all
-bottom-source arrows but need not supply the non-bottom-source arrows demanded
-by compatibility. A chain e < Z < A < G exposes that difference.
-The whole-conjecture refutation would settle the conjunction by its
-compatibility clause; it makes no separate claim that non-LSP is false.
+**Proved by `result`:** the full universal conjunction is false. In the actual
+Q8 witness, ordinary closure supplies all bottom-source arrows and identities
+but omits Z → A, which compatibility demands. The strict chain
+e < Z < A < G exposes that difference. The conjunction is refuted through its
+compatibility clause; this makes no separate claim that non-LSP is false.
 
 Open: whether the non-LSP assertion holds under the stated component
 hypotheses, and which additional hypothesis repairs ordinary-generation
