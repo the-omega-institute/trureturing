@@ -34,6 +34,16 @@ internal sealed class LogDetInformationSubmodularityDocument : IScribeDocumentDe
                         + "regularization-only baseline."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("positive-log-det-monotonicity"),
+                DeclarationHandle.Create(Prefix + "log_det_mono"),
+                H("Log-determinant monotonicity for positive matrices"),
+                StatementSource.FromAuthor(LogDetMonotonicityFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "On a nonempty finite index type, the real log-determinant preserves "
+                        + "the Loewner order between positive definite complex matrices."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("log-det-information-monotone-submodular"),
                 DeclarationHandle.Create(Prefix + "log_det_information_monotone_submodular"),
                 H("Log-determinant information is monotone and submodular"),
@@ -90,6 +100,24 @@ internal sealed class LogDetInformationSubmodularityDocument : IScribeDocumentDe
         for (var index = formulas.Length - 2; index >= 0; index--)
             result = new Formula.Logic(formulas[index], FormulaLogicOperator.And, result);
         return result;
+    }
+
+    private static Formula LogDetMonotonicityFormula()
+    {
+        Formula index = F.Id("Index");
+        Formula complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula matrix = Call("Matrix", index, index, complex);
+        Formula left = F.Id("P");
+        Formula right = F.Id("Q");
+        Formula logDet(Formula value) => Call("log", Call("re", Call("det", value)));
+        Formula premises = And(
+            Call("Fintype", index), Call("DecidableEq", index), Call("Nonempty", index),
+            Call("PosDef", left), Call("PosDef", right), Seq(left, Sp, Leq, Sp, right));
+        return Disp(new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [Bound("Index", Call("Type")), Bound("P", matrix), Bound("Q", matrix)],
+            new Formula.Logic(premises, FormulaLogicOperator.Implies,
+                Seq(logDet(left), Sp, Leq, Sp, logDet(right)))));
     }
 
     private static Formula TheoremFormula()
