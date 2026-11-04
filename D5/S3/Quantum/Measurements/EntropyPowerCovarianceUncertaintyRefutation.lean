@@ -6,7 +6,6 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Measurements/EntropyPowerCovarianceUncertaintyRefutation.claim; result=D5/S3/Quantum/Measurements/EntropyPowerCovarianceUncertaintyRefutation.result; claim=D5/S3/Quantum/Measurements/EntropyPowerCovarianceUncertaintyRefutation.claim
    digest: A binary coherent-state mixture violates the covariance-corrected entropy bound. -/
 
-import Mathlib.Probability.Distributions.Gaussian.Real
 import D5.S3.Entropy.Mixing.MixtureEntropyBracket
 
 /-! A finite Gaussian-mixture counterexample to the covariance-corrected uncertainty relation
