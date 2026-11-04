@@ -4,7 +4,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Zeta;
 
 internal sealed class QuadraticClassNumberSquareDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/ArithSums/chensun2024doublecharacters");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/CharacterSums/chensun2024doublecharacters");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Comparing the actual Dedekind-zeta residue and the proved quadratic factorization identifies L(1). The squared functional equation gives L(0)^2=h^2 for the genuine maximal-order ideal class number. The finite doubling identity gives c^2=(2-chi(2))^2*h^2. Finite sign parity then proves h odd; positivity is the standard cardinality theorem. No class-number formula is an assumed premise.", H("QuadraticClassNumberSquare"), Blocks(
             Paragraph(Text("Comparing the actual Dedekind-zeta residue and the proved quadratic factorization identifies L(1). The squared functional equation gives L(0)^2=h^2 for the genuine maximal-order ideal class number. The finite doubling identity gives c^2=(2-chi(2))^2*h^2. Finite sign parity then proves h odd; positivity is the standard cardinality theorem. No class-number formula is an assumed premise.")),

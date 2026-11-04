@@ -4,7 +4,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.QuadraticFields;
 
 internal sealed class QuadraticOrderMaximalDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/ArithSums/chensun2024doublecharacters");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/CharacterSums/chensun2024doublecharacters");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A squarefree quadratic-order discriminant forces integral coordinates: trace and norm put the imaginary coordinate in Z, then integral closedness of Z handles the real coordinate. This identifies the order with the true ring of integers. For p=3 mod4 the discriminant is -p and the field is Q(sqrt(-p)). The unit norm is a positive definite integral form; p>3 leaves only the two units.", H("QuadraticOrderMaximal"), Blocks(
             Paragraph(Text("A squarefree quadratic-order discriminant forces integral coordinates: trace and norm put the imaginary coordinate in Z, then integral closedness of Z handles the real coordinate. This identifies the order with the true ring of integers. For p=3 mod4 the discriminant is -p and the field is Q(sqrt(-p)). The unit norm is a positive definite integral form; p>3 leaves only the two units.")),

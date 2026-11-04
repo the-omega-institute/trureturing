@@ -4,7 +4,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Zeta;
 
 internal sealed class QuadraticZetaFactorizationDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/ArithSums/chensun2024doublecharacters");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/CharacterSums/chensun2024doublecharacters");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Nonzero prime ideals are partitioned by their actual contraction to the rational integers. The convergent HasProd supplier justifies regrouping by rational primes. The actual local factors, including two and the ramified prime, then prove zeta_K=zeta_Q*L for real part greater than one.", H("QuadraticZetaFactorization"), Blocks(
             Paragraph(Text("Nonzero prime ideals are partitioned by their actual contraction to the rational integers. The convergent HasProd supplier justifies regrouping by rational primes. The actual local factors, including two and the ramified prime, then prove zeta_K=zeta_Q*L for real part greater than one.")),

@@ -10,9 +10,9 @@ Four-slot escape registrations are unfinished, tracked at https://github.com/the
 
 **Theorem 1.1 (correlation).**
 
-Lean statement: `D5/S3/Arith/QuadraticCharacterGram.correlation`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.correlation`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/QuadraticCharacterGram.correlation` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.correlation` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -24,9 +24,9 @@ Correlation of two translates, including the diagonal.
 
 **Theorem 1.2 (sum_even).**
 
-Lean statement: `D5/S3/Arith/QuadraticCharacterGram.sum_even`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.sum_even`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/QuadraticCharacterGram.sum_even` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.sum_even` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -38,9 +38,9 @@ An even function sums twice over any genuine choice of one element from each non
 
 **Theorem 1.3 (restricted_gram).**
 
-Lean statement: `D5/S3/Arith/QuadraticCharacterGram.restricted_gram`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.restricted_gram`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/QuadraticCharacterGram.restricted_gram` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.restricted_gram` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -52,9 +52,9 @@ The restricted row Gram identity used for both signs in the Chen-Sun argument. T
 
 **Theorem 1.4 (restricted_column_energy).**
 
-Lean statement: `D5/S3/Arith/QuadraticCharacterGram.restricted_column_energy`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.restricted_column_energy`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/QuadraticCharacterGram.restricted_column_energy` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.restricted_column_energy` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -66,9 +66,9 @@ Summing the restricted Gram identity gives the integral energy of the column sum
 
 **Definition 1.5 (primeHalf).**
 
-Lean statement: `D5/S3/Arith/QuadraticCharacterGram.primeHalf`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.primeHalf`
 
-*Formalization.* `D5/S3/Arith/QuadraticCharacterGram.primeHalf` (`✓ std3`).
+*Formalization.* `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.primeHalf` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -80,9 +80,9 @@ The actual lower half of the nonzero residues, selected by least natural represe
 
 **Theorem 1.6 (prime_restricted_gram).**
 
-Lean statement: `D5/S3/Arith/QuadraticCharacterGram.prime_restricted_gram`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.prime_restricted_gram`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/QuadraticCharacterGram.prime_restricted_gram` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.prime_restricted_gram` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -94,9 +94,9 @@ Specialization to the genuine lower-half residue set for every odd prime. No hal
 
 **Theorem 1.7 (sum_primeHalf).**
 
-Lean statement: `D5/S3/Arith/QuadraticCharacterGram.sum_primeHalf`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.sum_primeHalf`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/QuadraticCharacterGram.sum_primeHalf` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.sum_primeHalf` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -108,9 +108,9 @@ The residue half-set is precisely the positive interval, with its least represen
 
 **Theorem 1.8 (primeHalf_card).**
 
-Lean statement: `D5/S3/Arith/QuadraticCharacterGram.primeHalf_card`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.primeHalf_card`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/QuadraticCharacterGram.primeHalf_card` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.primeHalf_card` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -118,13 +118,13 @@ Lean statement: `D5/S3/Arith/QuadraticCharacterGram.primeHalf_card`
 
 *Commentary.*
 
-The exact Lean declaration D5.S3.Arith.QuadraticCharacterGram.primeHalf_card supplies this step in the proof chain described above; its complete Lean statement is retained in the scoped report. The pinned projection corpus has no formula for this new declaration.
+The exact Lean declaration D5.S3.Arith.CharacterSums.QuadraticCharacterGram.primeHalf_card supplies this step in the proof chain described above; its complete Lean statement is retained in the scoped report. The pinned projection corpus has no formula for this new declaration.
 
 **Theorem 1.9 (prime_half_character_cancellation).**
 
-Lean statement: `D5/S3/Arith/QuadraticCharacterGram.prime_half_character_cancellation`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.prime_half_character_cancellation`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/QuadraticCharacterGram.prime_half_character_cancellation` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.prime_half_character_cancellation` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -136,9 +136,9 @@ Pairing the complete zero-sum quadratic character gives cancellation of its half
 
 **Theorem 1.10 (prime_column_energy).**
 
-Lean statement: `D5/S3/Arith/QuadraticCharacterGram.prime_column_energy`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.prime_column_energy`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/QuadraticCharacterGram.prime_column_energy` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.prime_column_energy` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -150,14 +150,14 @@ Actual half-residue column energy for every odd prime. Its hypotheses contain ne
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/QuadraticCharacterGram.correlation`
-- Truth anchor: `D5/S3/Arith/QuadraticCharacterGram.primeHalf`
-- Truth anchor: `D5/S3/Arith/QuadraticCharacterGram.primeHalf_card`
-- Truth anchor: `D5/S3/Arith/QuadraticCharacterGram.prime_column_energy`
-- Truth anchor: `D5/S3/Arith/QuadraticCharacterGram.prime_half_character_cancellation`
-- Truth anchor: `D5/S3/Arith/QuadraticCharacterGram.prime_restricted_gram`
-- Truth anchor: `D5/S3/Arith/QuadraticCharacterGram.restricted_column_energy`
-- Truth anchor: `D5/S3/Arith/QuadraticCharacterGram.restricted_gram`
-- Truth anchor: `D5/S3/Arith/QuadraticCharacterGram.sum_even`
-- Truth anchor: `D5/S3/Arith/QuadraticCharacterGram.sum_primeHalf`
-- Dependency: [D5/S3/Arith/FiniteFieldQuadraticCharacterSum](FiniteFieldQuadraticCharacterSum.md)
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.correlation`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.primeHalf`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.primeHalf_card`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.prime_column_energy`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.prime_half_character_cancellation`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.prime_restricted_gram`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.restricted_column_energy`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.restricted_gram`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.sum_even`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticCharacterGram.sum_primeHalf`
+- Dependency: [D5/S3/Arith/FiniteFieldQuadraticCharacterSum](../FiniteFieldQuadraticCharacterSum.md)

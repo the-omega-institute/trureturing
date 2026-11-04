@@ -1,20 +1,20 @@
-/- GID: D5/S3/Arith/QuadraticPrefixParity
+/- GID: D5/S3/Arith/CharacterSums/QuadraticPrefixParity
    generality: G
-   mirror-B: D5/B/S3/Arith/QuadraticPrefixParity
+   mirror-B: D5/B/S3/Arith/CharacterSums/QuadraticPrefixParity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Integral interval parity and reflection norms of finite sign prefixes. -/
 
-import D5.S3.Arith.QuadraticPrefixEnergy
-import D5.S3.Arith.QuadraticSignProducts
+import D5.S3.Arith.CharacterSums.QuadraticPrefixEnergy
+import D5.S3.Arith.CharacterSums.QuadraticSignProducts
 import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
 import Mathlib.Algebra.BigOperators.ModEq
 
-namespace D5.S3.Arith.QuadraticPrefixParity
+namespace D5.S3.Arith.CharacterSums.QuadraticPrefixParity
 
 open scoped BigOperators
-open D5.S3.Arith.QuadraticPrefixEnergy D5.S3.Arith.QuadraticSignProducts
+open D5.S3.Arith.CharacterSums.QuadraticPrefixEnergy D5.S3.Arith.CharacterSums.QuadraticSignProducts
 
 /-- Applying the sign rule to a genuine disjoint union counts repeated signs with
 multiplicity. Neither the total length nor its product is an extra hypothesis. -/
@@ -133,4 +133,4 @@ theorem square_sum_mod_two (b : ℕ → ℤ) (m : ℕ) :
   have hi : b i % 2 = 0 ∨ b i % 2 = 1 := by omega
   rcases hi with hi | hi <;> simp [Int.ModEq, pow_two, Int.mul_emod, hi]
 
-end D5.S3.Arith.QuadraticPrefixParity
+end D5.S3.Arith.CharacterSums.QuadraticPrefixParity

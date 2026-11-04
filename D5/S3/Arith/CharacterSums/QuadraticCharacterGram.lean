@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/QuadraticCharacterGram
+/- GID: D5/S3/Arith/CharacterSums/QuadraticCharacterGram
    generality: G
-   mirror-B: D5/B/S3/Arith/QuadraticCharacterGram
+   mirror-B: D5/B/S3/Arith/CharacterSums/QuadraticCharacterGram
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -13,7 +13,7 @@ import Mathlib.Tactic.Ring
 import Mathlib.Tactic.Linarith
 import Lean.Elab.Tactic.Omega
 
-namespace D5.S3.Arith.QuadraticCharacterGram
+namespace D5.S3.Arith.CharacterSums.QuadraticCharacterGram
 
 open scoped BigOperators
 
@@ -350,4 +350,4 @@ theorem prime_column_energy (p : ℕ) [Fact p.Prime] (hp : p ≠ 2)
     restricted_column_energy ((ZMod.ringChar_zmod_n p).substr hp) (primeHalf p)
       primeHalf_zero (primeHalf_disjoint hp) (primeHalf_cover hp) t ht
 
-end D5.S3.Arith.QuadraticCharacterGram
+end D5.S3.Arith.CharacterSums.QuadraticCharacterGram

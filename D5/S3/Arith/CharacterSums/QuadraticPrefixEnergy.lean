@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/QuadraticPrefixEnergy
+/- GID: D5/S3/Arith/CharacterSums/QuadraticPrefixEnergy
    generality: G
-   mirror-B: D5/B/S3/Arith/QuadraticPrefixEnergy
+   mirror-B: D5/B/S3/Arith/CharacterSums/QuadraticPrefixEnergy
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -14,7 +14,7 @@ import Mathlib.Tactic.Ring
 import Mathlib.Tactic.Linarith
 import Lean.Elab.Tactic.Omega
 
-namespace D5.S3.Arith.QuadraticPrefixEnergy
+namespace D5.S3.Arith.CharacterSums.QuadraticPrefixEnergy
 
 open scoped BigOperators
 
@@ -319,4 +319,4 @@ theorem odd_sign_square_mod32 (h : ℕ) (hh : Odd h) :
     push_cast
     nlinarith [hr]
 
-end D5.S3.Arith.QuadraticPrefixEnergy
+end D5.S3.Arith.CharacterSums.QuadraticPrefixEnergy

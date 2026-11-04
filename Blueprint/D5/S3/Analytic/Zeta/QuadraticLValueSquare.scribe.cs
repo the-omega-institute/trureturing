@@ -4,7 +4,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Zeta;
 
 internal sealed class QuadraticLValueSquareDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/ArithSums/chensun2024doublecharacters");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/CharacterSums/chensun2024doublecharacters");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Two genuine primitive functional equations for a self-dual nonprincipal character eliminate the root-number sign. Nonvanishing at one permits the cancellation. For odd characters the Gamma factors yield L(0)^2=N*(L(1)/pi)^2.", H("QuadraticLValueSquare"), Blocks(
             Paragraph(Text("Two genuine primitive functional equations for a self-dual nonprincipal character eliminate the root-number sign. Nonvanishing at one permits the cancellation. For odd characters the Gamma factors yield L(0)^2=N*(L(1)/pi)^2.")),

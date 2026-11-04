@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/CharacterSums/ChenSunOriginal
-   generality: S
+   generality: I
    mirror-B: D5/B/S3/Arith/CharacterSums/ChenSunOriginal
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -12,8 +12,8 @@ import D5.S3.Analytic.Zeta.QuadraticClassNumberSquare
 namespace D5.S3.Arith.CharacterSums.ChenSunDoubleCharacter
 
 open scoped BigOperators
-open D5.S3.Arith.QuadraticPrefixEnergy
-open D5.S3.Arith.QuadraticCharacterGram
+open D5.S3.Arith.CharacterSums.QuadraticPrefixEnergy
+open D5.S3.Arith.CharacterSums.QuadraticCharacterGram
 
 open D5.S3.Arith.QuadraticFields.QuadraticOrderMaximal
 

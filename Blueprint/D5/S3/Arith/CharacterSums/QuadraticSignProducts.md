@@ -10,9 +10,9 @@ Four-slot escape registrations are unfinished, tracked at https://github.com/the
 
 **Theorem 1.1 (sign_sum_mod_four).**
 
-Lean statement: `D5/S3/Arith/QuadraticSignProducts.sign_sum_mod_four`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.sign_sum_mod_four`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/QuadraticSignProducts.sign_sum_mod_four` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/QuadraticSignProducts.sign_sum_mod_four` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -24,9 +24,9 @@ This integral form of the sign-product parity rule avoids assigning a natural ex
 
 **Definition 1.2 (oddProduct).**
 
-Lean statement: `D5/S3/Arith/QuadraticSignProducts.oddProduct`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.oddProduct`
 
-*Formalization.* `D5/S3/Arith/QuadraticSignProducts.oddProduct` (`✓ std3`).
+*Formalization.* `D5/S3/Arith/CharacterSums/QuadraticSignProducts.oddProduct` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -38,9 +38,9 @@ The odd factors below twice the endpoint.
 
 **Theorem 1.3 (oddProduct_succ).**
 
-Lean statement: `D5/S3/Arith/QuadraticSignProducts.oddProduct_succ`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.oddProduct_succ`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/QuadraticSignProducts.oddProduct_succ` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/QuadraticSignProducts.oddProduct_succ` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -48,13 +48,13 @@ Lean statement: `D5/S3/Arith/QuadraticSignProducts.oddProduct_succ`
 
 *Commentary.*
 
-The exact Lean declaration D5.S3.Arith.QuadraticSignProducts.oddProduct_succ supplies this step in the proof chain described above; its complete Lean statement is retained in the scoped report. The pinned projection corpus has no formula for this new declaration.
+The exact Lean declaration D5.S3.Arith.CharacterSums.QuadraticSignProducts.oddProduct_succ supplies this step in the proof chain described above; its complete Lean statement is retained in the scoped report. The pinned projection corpus has no formula for this new declaration.
 
 **Theorem 1.4 (factorial_even_split).**
 
-Lean statement: `D5/S3/Arith/QuadraticSignProducts.factorial_even_split`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.factorial_even_split`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/QuadraticSignProducts.factorial_even_split` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/QuadraticSignProducts.factorial_even_split` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -66,9 +66,9 @@ Separating the even and odd factors of a factorial, with no quotient in N.
 
 **Definition 1.5 (oddPairProduct).**
 
-Lean statement: `D5/S3/Arith/QuadraticSignProducts.oddPairProduct`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.oddPairProduct`
 
-*Formalization.* `D5/S3/Arith/QuadraticSignProducts.oddPairProduct` (`✓ std3`).
+*Formalization.* `D5/S3/Arith/CharacterSums/QuadraticSignProducts.oddPairProduct` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -80,9 +80,9 @@ Pairing an odd lower-half index j with 2m+1-j gives this integer product.
 
 **Theorem 1.6 (oddPairProduct_eq).**
 
-Lean statement: `D5/S3/Arith/QuadraticSignProducts.oddPairProduct_eq`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.oddPairProduct_eq`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/QuadraticSignProducts.oddPairProduct_eq` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/QuadraticSignProducts.oddPairProduct_eq` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -90,13 +90,13 @@ Lean statement: `D5/S3/Arith/QuadraticSignProducts.oddPairProduct_eq`
 
 *Commentary.*
 
-The exact Lean declaration D5.S3.Arith.QuadraticSignProducts.oddPairProduct_eq supplies this step in the proof chain described above; its complete Lean statement is retained in the scoped report. The pinned projection corpus has no formula for this new declaration.
+The exact Lean declaration D5.S3.Arith.CharacterSums.QuadraticSignProducts.oddPairProduct_eq supplies this step in the proof chain described above; its complete Lean statement is retained in the scoped report. The pinned projection corpus has no formula for this new declaration.
 
 **Theorem 1.7 (oddPairProduct_even).**
 
-Lean statement: `D5/S3/Arith/QuadraticSignProducts.oddPairProduct_even`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.oddPairProduct_even`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/QuadraticSignProducts.oddPairProduct_even` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/QuadraticSignProducts.oddPairProduct_even` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -108,9 +108,9 @@ The even m factorial-product identity used in the odd-prime-family parity proof.
 
 **Theorem 1.8 (oddPairProduct_odd).**
 
-Lean statement: `D5/S3/Arith/QuadraticSignProducts.oddPairProduct_odd`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.oddPairProduct_odd`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/QuadraticSignProducts.oddPairProduct_odd` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/QuadraticSignProducts.oddPairProduct_odd` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -122,9 +122,9 @@ For odd m the corresponding product is twice a square; the supplement at two wil
 
 **Theorem 1.9 (factorial_character_square).**
 
-Lean statement: `D5/S3/Arith/QuadraticSignProducts.factorial_character_square`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.factorial_character_square`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/QuadraticSignProducts.factorial_character_square` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/QuadraticSignProducts.factorial_character_square` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -136,9 +136,9 @@ The denominator factorials in the product identities are genuinely nonzero modul
 
 **Theorem 1.10 (oddPairProduct_character).**
 
-Lean statement: `D5/S3/Arith/QuadraticSignProducts.oddPairProduct_character`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.oddPairProduct_character`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/QuadraticSignProducts.oddPairProduct_character` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/QuadraticSignProducts.oddPairProduct_character` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -150,9 +150,9 @@ The common factorial product has character one or character two according to the
 
 **Definition 1.11 (intervalProduct).**
 
-Lean statement: `D5/S3/Arith/QuadraticSignProducts.intervalProduct`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.intervalProduct`
 
-*Formalization.* `D5/S3/Arith/QuadraticSignProducts.intervalProduct` (`✓ std3`).
+*Formalization.* `D5/S3/Arith/CharacterSums/QuadraticSignProducts.intervalProduct` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -164,9 +164,9 @@ A central interval of even length, before evaluating the sign family.
 
 **Theorem 1.12 (intervalProduct_pair).**
 
-Lean statement: `D5/S3/Arith/QuadraticSignProducts.intervalProduct_pair`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.intervalProduct_pair`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/QuadraticSignProducts.intervalProduct_pair` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/QuadraticSignProducts.intervalProduct_pair` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -178,9 +178,9 @@ Reflection of the upper half pairs j with 2m+1-j.
 
 **Theorem 1.13 (intervalProduct_triangle).**
 
-Lean statement: `D5/S3/Arith/QuadraticSignProducts.intervalProduct_triangle`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.intervalProduct_triangle`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/QuadraticSignProducts.intervalProduct_triangle` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/QuadraticSignProducts.intervalProduct_triangle` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -192,9 +192,9 @@ The actual nested interval product is a weighted triangular product. The finite 
 
 **Theorem 1.14 (weighted_sign_product_even).**
 
-Lean statement: `D5/S3/Arith/QuadraticSignProducts.weighted_sign_product_even`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.weighted_sign_product_even`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/QuadraticSignProducts.weighted_sign_product_even` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/QuadraticSignProducts.weighted_sign_product_even` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -206,9 +206,9 @@ Square-one factors at even weights disappear from the triangular product.
 
 **Theorem 1.15 (weighted_sign_product_odd).**
 
-Lean statement: `D5/S3/Arith/QuadraticSignProducts.weighted_sign_product_odd`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.weighted_sign_product_odd`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/QuadraticSignProducts.weighted_sign_product_odd` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/QuadraticSignProducts.weighted_sign_product_odd` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -220,9 +220,9 @@ The unpaired last odd weight contributes its sign.
 
 **Theorem 1.16 (intervalProduct_character).**
 
-Lean statement: `D5/S3/Arith/QuadraticSignProducts.intervalProduct_character`
+Lean statement: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.intervalProduct_character`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/QuadraticSignProducts.intervalProduct_character` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/CharacterSums/QuadraticSignProducts.intervalProduct_character` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -234,19 +234,19 @@ The full nested product of the genuine Legendre signs is evaluated by the factor
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/QuadraticSignProducts.factorial_character_square`
-- Truth anchor: `D5/S3/Arith/QuadraticSignProducts.factorial_even_split`
-- Truth anchor: `D5/S3/Arith/QuadraticSignProducts.intervalProduct`
-- Truth anchor: `D5/S3/Arith/QuadraticSignProducts.intervalProduct_character`
-- Truth anchor: `D5/S3/Arith/QuadraticSignProducts.intervalProduct_pair`
-- Truth anchor: `D5/S3/Arith/QuadraticSignProducts.intervalProduct_triangle`
-- Truth anchor: `D5/S3/Arith/QuadraticSignProducts.oddPairProduct`
-- Truth anchor: `D5/S3/Arith/QuadraticSignProducts.oddPairProduct_character`
-- Truth anchor: `D5/S3/Arith/QuadraticSignProducts.oddPairProduct_eq`
-- Truth anchor: `D5/S3/Arith/QuadraticSignProducts.oddPairProduct_even`
-- Truth anchor: `D5/S3/Arith/QuadraticSignProducts.oddPairProduct_odd`
-- Truth anchor: `D5/S3/Arith/QuadraticSignProducts.oddProduct`
-- Truth anchor: `D5/S3/Arith/QuadraticSignProducts.oddProduct_succ`
-- Truth anchor: `D5/S3/Arith/QuadraticSignProducts.sign_sum_mod_four`
-- Truth anchor: `D5/S3/Arith/QuadraticSignProducts.weighted_sign_product_even`
-- Truth anchor: `D5/S3/Arith/QuadraticSignProducts.weighted_sign_product_odd`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.factorial_character_square`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.factorial_even_split`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.intervalProduct`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.intervalProduct_character`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.intervalProduct_pair`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.intervalProduct_triangle`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.oddPairProduct`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.oddPairProduct_character`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.oddPairProduct_eq`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.oddPairProduct_even`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.oddPairProduct_odd`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.oddProduct`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.oddProduct_succ`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.sign_sum_mod_four`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.weighted_sign_product_even`
+- Truth anchor: `D5/S3/Arith/CharacterSums/QuadraticSignProducts.weighted_sign_product_odd`

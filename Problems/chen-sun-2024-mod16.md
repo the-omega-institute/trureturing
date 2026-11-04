@@ -41,17 +41,15 @@ in the final theorem. The original natural exponent (h-1)/2 is retained.
 
 ## Evidence and remaining delivery
 
-The implementation is in draft PR26314. Native44716 ran
-`make lean LEAN_TARGETS="D5.S3.Arith.CharacterSums.ChenSunOriginal"` and
-exited0 on 4 November2026, compiling the complete all-prime four-branch theorem.
-The source log is native-build-14.log in the persistent research target.
-Native24439 completed the scoped statement/axiom report with exit0: 39 project
-modules and 1,009 declarations, with only Classical.choice, Quot.sound and
-propext in the complete project axiom closure. Native84125 emitted and checked
-the fifteen corresponding Scribe pages with exit0, reusing the same scoped
-report. Fresh independent formal review, canonical admission and CI delivery
-remain pending. There is no finite-prime cutoff, weakened original, sorry,
-new axiom or native_decide implementation route.
+The implementation is in draft PR26314. The complete all-prime four-branch
+module and its actual import closure compile through the canonical scoped
+build and report entries. The scoped report covers 39 project modules and
+1,009 declarations, with only Classical.choice, Quot.sound and propext in
+the complete project axiom closure. All 125 inventoried new public definitions
+and theorems are present. Source and exact-statement seals are retained in the
+native evidence bundle. Fresh independent formal review, required CI and
+final delivery remain pending. There is no finite-prime cutoff, weakened
+original, sorry, new axiom or native_decide implementation route.
 
 The sealed full ordinary proof was independently approved. That review does
 not certify Lean statement fidelity, novelty, priority, official acceptance

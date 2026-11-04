@@ -4,7 +4,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.QuadraticFields;
 
 internal sealed class QuadraticImaginaryInvariantsDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/ArithSums/chensun2024doublecharacters");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/CharacterSums/chensun2024doublecharacters");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The negative discriminant excludes real embeddings. The field has one complex place and unit rank zero. The regulator is its zero-dimensional determinant and the two actual torsion units give the residue pi times the genuine ideal class number divided by sqrt(p).", H("QuadraticImaginaryInvariants"), Blocks(
             Paragraph(Text("The negative discriminant excludes real embeddings. The field has one complex place and unit rank zero. The regulator is its zero-dimensional determinant and the two actual torsion units give the residue pi times the genuine ideal class number divided by sqrt(p).")),

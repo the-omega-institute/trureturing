@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/QuadraticSignProducts
+/- GID: D5/S3/Arith/CharacterSums/QuadraticSignProducts
    generality: G
-   mirror-B: D5/B/S3/Arith/QuadraticSignProducts
+   mirror-B: D5/B/S3/Arith/CharacterSums/QuadraticSignProducts
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -16,7 +16,7 @@ import Mathlib.NumberTheory.Wilson
 import Mathlib.Tactic.Ring
 import Lean.Elab.Tactic.Omega
 
-namespace D5.S3.Arith.QuadraticSignProducts
+namespace D5.S3.Arith.CharacterSums.QuadraticSignProducts
 
 open scoped BigOperators
 
@@ -283,4 +283,4 @@ theorem intervalProduct_character (p : ℕ) [Fact p.Prime] (m : ℕ) (hm : 2 * m
     _ = legendreSym p (oddPairProduct m : ℤ) := hw.trans hprod.symm
     _ = _ := oddPairProduct_character p m (by omega)
 
-end D5.S3.Arith.QuadraticSignProducts
+end D5.S3.Arith.CharacterSums.QuadraticSignProducts

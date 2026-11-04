@@ -71,4 +71,4 @@ The even-prime-family congruence includes every p congruent to one modulo four.
 - Truth anchor: `D5/S3/Arith/CharacterSums/ChenSunModSixteen.odd_doubleSum_mod32`
 - Truth anchor: `D5/S3/Arith/CharacterSums/ChenSunModSixteen.odd_half_sum_parity`
 - Dependency: [D5/S3/Arith/CharacterSums/ChenSunDoubleCharacter](ChenSunDoubleCharacter.md)
-- Dependency: [D5/S3/Arith/QuadraticPrefixParity](../QuadraticPrefixParity.md)
+- Dependency: [D5/S3/Arith/CharacterSums/QuadraticPrefixParity](QuadraticPrefixParity.md)

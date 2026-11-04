@@ -4,7 +4,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.QuadraticFields;
 
 internal sealed class QuadraticOrderGeneratorDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/ArithSums/chensun2024doublecharacters");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/CharacterSums/chensun2024doublecharacters");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The integral generator has its actual quadratic minimal polynomial. Its basis spans the whole maximal order, so the Kummer-Dedekind index is one. This index condition is proved, not assumed when computing rational-prime splitting.", H("QuadraticOrderGenerator"), Blocks(
             Paragraph(Text("The integral generator has its actual quadratic minimal polynomial. Its basis spans the whole maximal order, so the Kummer-Dedekind index is one. This index condition is proved, not assumed when computing rational-prime splitting.")),

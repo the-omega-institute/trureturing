@@ -4,7 +4,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.QuadraticFields;
 
 internal sealed class QuadraticPrimeSplittingDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/ArithSums/chensun2024doublecharacters");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/CharacterSums/chensun2024doublecharacters");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The minimal polynomial modulo every rational prime gives the actual maximal-order Euler polynomial through index-one Kummer-Dedekind. Quadratic reciprocity identifies the odd-prime factors. At two the polynomial is treated separately in the two mod8 cases; at p it is ramified. No prime is omitted.", H("QuadraticPrimeSplitting"), Blocks(
             Paragraph(Text("The minimal polynomial modulo every rational prime gives the actual maximal-order Euler polynomial through index-one Kummer-Dedekind. Quadratic reciprocity identifies the odd-prime factors. At two the polynomial is treated separately in the two mod8 cases; at p it is ramified. No prime is omitted.")),

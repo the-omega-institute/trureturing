@@ -13,7 +13,7 @@ strata_touched:
 license: citation-only
 triage: anchor
 ---
-<!-- GID: D5/L/ArithSums/chensun2024doublecharacters -->
+<!-- GID: D5/L/CharacterSums/chensun2024doublecharacters -->
 # The full double-character congruence modulo sixteen
 
 The source is arXiv:2409.08213v4, 1 April 2025, Conjecture 1.1,

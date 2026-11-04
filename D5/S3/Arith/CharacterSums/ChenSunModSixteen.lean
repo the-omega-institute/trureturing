@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/CharacterSums/ChenSunModSixteen
-   generality: S
+   generality: I
    mirror-B: D5/B/S3/Arith/CharacterSums/ChenSunModSixteen
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -7,14 +7,14 @@
    digest: The full finite modulo-sixteen and modulo-thirty-two Chen-Sun energy congruences. -/
 
 import D5.S3.Arith.CharacterSums.ChenSunDoubleCharacter
-import D5.S3.Arith.QuadraticPrefixParity
+import D5.S3.Arith.CharacterSums.QuadraticPrefixParity
 
 namespace D5.S3.Arith.CharacterSums.ChenSunDoubleCharacter
 
 open scoped BigOperators
-open D5.S3.Arith.QuadraticPrefixEnergy D5.S3.Arith.QuadraticSignProducts
-open D5.S3.Arith.QuadraticPrefixParity
-open D5.S3.Arith.QuadraticCharacterGram
+open D5.S3.Arith.CharacterSums.QuadraticPrefixEnergy D5.S3.Arith.CharacterSums.QuadraticSignProducts
+open D5.S3.Arith.CharacterSums.QuadraticPrefixParity
+open D5.S3.Arith.CharacterSums.QuadraticCharacterGram
 
 variable (p : ℕ) [Fact p.Prime]
 

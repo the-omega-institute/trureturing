@@ -1,19 +1,19 @@
 /- GID: D5/S3/Arith/CharacterSums/ChenSunDoubleCharacter
-   generality: S
+   generality: I
    mirror-B: D5/B/S3/Arith/CharacterSums/ChenSunDoubleCharacter
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Exact Chen-Sun double sum and its unconditional integral triangular reduction. -/
 
-import D5.S3.Arith.QuadraticCharacterGram
-import D5.S3.Arith.QuadraticPrefixEnergy
-import D5.S3.Arith.QuadraticSignProducts
+import D5.S3.Arith.CharacterSums.QuadraticCharacterGram
+import D5.S3.Arith.CharacterSums.QuadraticPrefixEnergy
+import D5.S3.Arith.CharacterSums.QuadraticSignProducts
 
 namespace D5.S3.Arith.CharacterSums.ChenSunDoubleCharacter
 
 open scoped BigOperators
-open D5.S3.Arith.QuadraticPrefixEnergy D5.S3.Arith.QuadraticCharacterGram
+open D5.S3.Arith.CharacterSums.QuadraticPrefixEnergy D5.S3.Arith.CharacterSums.QuadraticCharacterGram
 
 /-- Literal equation (1.8) of Chen-Sun arXiv:2409.08213v4; both endpoints are inclusive. -/
 def doubleSum (p : ℕ) [Fact p.Prime] : ℤ :=

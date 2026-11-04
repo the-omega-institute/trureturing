@@ -4,7 +4,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Zeta;
 
 internal sealed class PrimeQuadraticLValuesDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/ArithSums/chensun2024doublecharacters");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/CharacterSums/chensun2024doublecharacters");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The character is the actual integer quadratic character mapped to complex coefficients. Nontriviality and prime modulus prove primitivity. Doubling least representatives, with the genuine L(0) finite evaluation, gives the lower-half sum (2-chi(2))*L(0). The L(0) supplier is the existing attributed Yao Xu/cadamcat port, not newly authored source.", H("PrimeQuadraticLValues"), Blocks(
             Paragraph(Text("The character is the actual integer quadratic character mapped to complex coefficients. Nontriviality and prime modulus prove primitivity. Doubling least representatives, with the genuine L(0) finite evaluation, gives the lower-half sum (2-chi(2))*L(0). The L(0) supplier is the existing attributed Yao Xu/cadamcat port, not newly authored source.")),

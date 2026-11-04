@@ -4,7 +4,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.CharacterSums;
 
 internal sealed class ChenSunDoubleCharacterDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/ArithSums/chensun2024doublecharacters");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/CharacterSums/chensun2024doublecharacters");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The defining double sum uses both inclusive natural intervals and the integer symbol of j squared plus j times k. Multiplicativity and reflected prefixes reduce it to a triangle. The genuine restricted Gram norms give exact even and odd energy identities, before any modular or class-number substitution.", H("ChenSunDoubleCharacter"), Blocks(
             Paragraph(Text("The defining double sum uses both inclusive natural intervals and the integer symbol of j squared plus j times k. Multiplicativity and reflected prefixes reduce it to a triangle. The genuine restricted Gram norms give exact even and odd energy identities, before any modular or class-number substitution.")),
@@ -49,5 +49,5 @@ internal sealed class ChenSunDoubleCharacterDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Arith/CharacterSums/ChenSunDoubleCharacter.odd_energy_exact"), H("odd_energy_exact"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Exact odd-case energy identity, before reflection and factorial parity reduce it modulo 32."))), DescribeRole.Theorem)),
-        edges: [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Arith/QuadraticCharacterGram")), DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Arith/QuadraticPrefixEnergy")), DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Arith/QuadraticSignProducts"))]));
+        edges: [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Arith/CharacterSums/QuadraticCharacterGram")), DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Arith/CharacterSums/QuadraticPrefixEnergy")), DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Arith/CharacterSums/QuadraticSignProducts"))]));
 }

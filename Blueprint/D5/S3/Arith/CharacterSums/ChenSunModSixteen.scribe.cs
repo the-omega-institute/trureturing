@@ -4,7 +4,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.CharacterSums;
 
 internal sealed class ChenSunModSixteenDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/ArithSums/chensun2024doublecharacters");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/CharacterSums/chensun2024doublecharacters");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The common factorial product fixes the odd central half-sum parity and the even correction parity. Substitution in the exact energies yields d=-2m^2 modulo16 for every prime p=4m+1 and 2d=c^2+4m^2-3 modulo32 for every prime p=4m+3. The modulus32 is retained until the final factor-two cancellation.", H("ChenSunModSixteen"), Blocks(
             Paragraph(Text("The common factorial product fixes the odd central half-sum parity and the even correction parity. Substitution in the exact energies yields d=-2m^2 modulo16 for every prime p=4m+1 and 2d=c^2+4m^2-3 modulo32 for every prime p=4m+3. The modulus32 is retained until the final factor-two cancellation.")),
@@ -25,5 +25,5 @@ internal sealed class ChenSunModSixteenDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Arith/CharacterSums/ChenSunModSixteen.even_doubleSum_mod16"), H("even_doubleSum_mod16"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The even-prime-family congruence includes every p congruent to one modulo four."))), DescribeRole.Theorem)),
-        edges: [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Arith/CharacterSums/ChenSunDoubleCharacter")), DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Arith/QuadraticPrefixParity"))]));
+        edges: [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Arith/CharacterSums/ChenSunDoubleCharacter")), DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Arith/CharacterSums/QuadraticPrefixParity"))]));
 }

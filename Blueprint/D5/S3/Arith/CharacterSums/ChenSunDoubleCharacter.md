@@ -160,6 +160,6 @@ Exact odd-case energy identity, before reflection and factorial parity reduce it
 - Truth anchor: `D5/S3/Arith/CharacterSums/ChenSunDoubleCharacter.odd_columnSum`
 - Truth anchor: `D5/S3/Arith/CharacterSums/ChenSunDoubleCharacter.odd_energy_exact`
 - Truth anchor: `D5/S3/Arith/CharacterSums/ChenSunDoubleCharacter.twice_doubleSum_triangle`
-- Dependency: [D5/S3/Arith/QuadraticCharacterGram](../QuadraticCharacterGram.md)
-- Dependency: [D5/S3/Arith/QuadraticPrefixEnergy](../QuadraticPrefixEnergy.md)
-- Dependency: [D5/S3/Arith/QuadraticSignProducts](../QuadraticSignProducts.md)
+- Dependency: [D5/S3/Arith/CharacterSums/QuadraticCharacterGram](QuadraticCharacterGram.md)
+- Dependency: [D5/S3/Arith/CharacterSums/QuadraticPrefixEnergy](QuadraticPrefixEnergy.md)
+- Dependency: [D5/S3/Arith/CharacterSums/QuadraticSignProducts](QuadraticSignProducts.md)
