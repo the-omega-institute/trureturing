@@ -84,7 +84,20 @@ private lemma reduced_physical {n : ℕ}
     (V : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ) (hV : physicalCovariance V)
     (X : Finset (Fin n)) :
     physicalOn (reducedCovariance V X) (reducedForm (symplecticForm n) X) := by
-  sorry
+  rcases hV with ⟨hs, hp⟩
+  constructor
+  · exact hs.submatrix (fun p : {q : Fin n × Fin 2 // q.1 ∈ X} => p.1)
+  · let f : {q : Fin n × Fin 2 // q.1 ∈ X} → Fin n × Fin 2 := fun p => p.1
+    have heq : ((V.map Complex.ofReal) + Complex.I • (symplecticForm n).map
+        Complex.ofReal).submatrix f f =
+        (V.submatrix f f).map Complex.ofReal +
+          Complex.I • ((symplecticForm n).submatrix f f).map Complex.ofReal := by
+      ext i j
+      rfl
+    change (((V.submatrix f f).map Complex.ofReal) +
+      Complex.I • ((symplecticForm n).submatrix f f).map Complex.ofReal).PosSemidef
+    rw [← heq]
+    exact hp.submatrix f
 
 private lemma symplectic_spectrum_lower_bound {ι : Type*} [Fintype ι] [DecidableEq ι]
     (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
