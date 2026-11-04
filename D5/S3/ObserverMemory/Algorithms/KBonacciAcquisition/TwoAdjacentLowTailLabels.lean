@@ -30,7 +30,7 @@ def initialLabel {Y : Type u} (Q m : ℕ) (labels : Fin 4 → Y) (bottom : Y) : 
   | some q => if Q * m - 3 ≤ q.tail then labels 3 else if (-q.phase).val = 1 then labels 1 else
       if (-q.phase).val = 2 then labels 2 else labels 0
 
-private theorem first_zero_form (bits : List Bool) : bits = List.replicate bits.length true ∨
+theorem first_zero_form (bits : List Bool) : bits = List.replicate bits.length true ∨
       ∃ a rest, bits = List.replicate a true ++ false :: rest := by
   induction bits with
   | nil => exact Or.inl rfl
