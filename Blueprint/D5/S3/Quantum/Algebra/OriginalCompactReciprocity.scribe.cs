@@ -35,7 +35,7 @@ internal sealed class OriginalCompactReciprocityDocument : IScribeDocumentDefini
 
     private static Formula CurveFormula() => Disp(Seq(
         Call("Lie",F.Id("G")), Eq, OpenBrace, F.Id("K"), Colon, Esc,
-        Exists, Sp, F.Id("c"), Colon, F.Id("R"), Rightarrow, F.Id("G"), Comma, Esc,
+        Exists, Sp, F.Id("c"), Colon, F.Id("R"), Sp, Rightarrow, Sp, F.Id("G"), Comma, Esc,
         Call("c",D(0)), Eq, D(1), Sp, Land, Sp,
         Call("HasDerivAt",Call("originalOperatorCurve",F.Id("c")),F.Id("K"),D(0)), CloseBrace));
 
