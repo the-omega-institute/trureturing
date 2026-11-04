@@ -12,7 +12,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter
 open SourceWidth PeriodicShortening RunFirstEarTransport
-open SecondPeakHighD
+open SecondPeakHighD (Submask)
 open private size sourceMod base newBase charge oldValue newValue chainLength chainStart
   source_totals chain_values nextBase nextNewBase
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
@@ -97,7 +97,7 @@ private theorem palindromic_lift (a b : ℕ) (ha : 2≤a) (hab : a+2≤b) :
     simp only [←Multiset.coe_add,Multiset.coe_singleton] at hu hx' hw' ⊢
     dsimp [bs,blocksWord,P0,P1,P2,P3,PX,PU,U,V,W,X,n]
     split_ifs
-    all_goals simp only [←Multiset.coe_add,Multiset.coe_nil,Multiset.coe_cons,Multiset.coe_singleton,zero_add,add_zero]
+    all_goals simp only [←Multiset.coe_add,Multiset.coe_nil,←Multiset.cons_coe,←Multiset.singleton_add,Multiset.coe_singleton,zero_add,add_zero]
     · rw [←hu,←hx',←hw']; ac_rfl
     · rw [←hw']; ac_rfl
   have hpos : ∀ pkt∈bs, ∀ i∈pkt.1, 0≤oldValue a b b a i ∧ 0≤newValue a b b a i := by
@@ -108,8 +108,14 @@ private theorem palindromic_lift (a b : ℕ) (ha : 2≤a) (hab : a+2≤b) :
     rcases hpk with rfl|rfl|rfl|rfl
     all_goals dsimp [P0,P1,P2,P3,PX,PU,U,V,W,X] at hi
     all_goals try split_ifs at hi
-    all_goals simp only [List.mem_append] at hi
-    all_goals aesop (add safe apply [pos])
+    all_goals try simp only [List.mem_append] at hi
+    all_goals
+      repeat' first
+        | exact pos 0 _ _ hi
+        | exact pos 1 _ _ hi
+        | exact pos 2 _ _ hi
+        | exact pos 3 _ _ hi
+        | rcases hi with hi|hi
   have hneg : ∀ pkt∈bs, oldValue a b b a pkt.2≤0 ∧ newValue a b b a pkt.2≤0 := by
     intro pkt hpk
     simp only [bs,List.mem_cons,List.mem_nil_iff,or_false] at hpk

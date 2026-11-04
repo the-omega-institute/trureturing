@@ -162,7 +162,7 @@ private theorem lower_lift (a b c : ℕ) (hc : 2≤c) (hca : c<a) (hab : a<b) :
     simp only [←Multiset.coe_add,Multiset.coe_singleton] at hu hw ⊢
     dsimp [bs,blocksWord,P0,P1,P2,P3,U,V,W,X,n]
     split_ifs
-    all_goals simp only [←Multiset.coe_add,Multiset.coe_nil,Multiset.coe_cons,Multiset.coe_singleton,zero_add,add_zero]
+    all_goals simp only [←Multiset.coe_add,Multiset.coe_nil,←Multiset.cons_coe,←Multiset.singleton_add,Multiset.coe_singleton,zero_add,add_zero]
     all_goals rw [←hu,←hw]
     all_goals ac_rfl
   have hpos : ∀ pkt∈bs, ∀ i∈pkt.1, 0≤oldValue a b c a i ∧ 0≤newValue a b c a i := by
@@ -174,7 +174,13 @@ private theorem lower_lift (a b c : ℕ) (hc : 2≤c) (hca : c<a) (hab : a<b) :
     all_goals dsimp [P0,P1,P2,P3,U,V,W,X] at hi
     all_goals try split_ifs at hi
     all_goals try simp only [List.append_nil,List.nil_append,List.mem_append,List.not_mem_nil,or_false,false_or] at hi
-    all_goals aesop (add safe apply [pos])
+    all_goals
+      repeat' first
+        | exact pos 0 _ _ hi
+        | exact pos 1 _ _ hi
+        | exact pos 2 _ _ hi
+        | exact pos 3 _ _ hi
+        | rcases hi with hi|hi
   have hneg : ∀ pkt∈bs, oldValue a b c a pkt.2≤0 ∧ newValue a b c a pkt.2≤0 := by
     intro pkt hpk
     simp only [bs,List.mem_cons,List.mem_nil_iff,or_false] at hpk

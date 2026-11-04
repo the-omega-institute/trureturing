@@ -99,8 +99,9 @@ private theorem palin_choices (a b : ℕ) (ha : 2≤a) (hab : a+2≤b) :
     by_cases hn : E0<0
     · have hc:=ceil_remainder E0 (L x y) hL hn
       have cast : (r1:ℤ)=(-E0+L x y-1)/L x y := by
-        dsimp [r1,palin_r1]
-        rw [if_pos hn,Int.toNat_of_nonneg (by omega)]
+        change ((if E0<0 then ((-E0+L x y-1)/L x y).toNat else 0):ℤ)=_
+        rw [if_pos hn]
+        exact Int.toNat_of_nonneg (by omega)
       rw [cast]
       exact hc.2
     · have hr0 : r1=0 := by simp [r1,palin_r1,E0,y,hn]
@@ -109,8 +110,8 @@ private theorem palin_choices (a b : ℕ) (ha : 2≤a) (hab : a+2≤b) :
       exact ⟨by omega,ehi⟩
   have tr:=ceil_remainder F0 (L x y) hL flo
   have tc : (t:ℤ)=(-F0+L x y-1)/L x y := by
-    dsimp [t,palin_t]
-    rw [Int.toNat_of_nonneg (by omega)]
+    change (((-F0+L x y-1)/L x y).toNat:ℤ)=_
+    exact Int.toNat_of_nonneg (by omega)
   have ft : 1≤(t:ℤ) ∧ 0≤F0+(t:ℤ)*L x y ∧ F0+(t:ℤ)*L x y<L x y := by simpa only [tc] using tr
   have rcap : (r1:ℤ)<q := by
     by_contra hn
@@ -120,11 +121,19 @@ private theorem palin_choices (a b : ℕ) (ha : 2≤a) (hab : a+2≤b) :
     by_contra hn
     have hm:=mul_le_mul_of_nonneg_right (show q≤(t:ℤ) by omega) hL.le
     nlinarith only [hm,ft.2.2,fcap]
-  have r1N : r1<2^(b-a) := by exact_mod_cast rcap
-  have tN : t<2^(b-a) := by exact_mod_cast tcap
+  have r1N : r1<2^(b-a) := by exact_mod_cast (show (r1:ℤ)<(2:ℤ)^(b-a) from rcap)
+  have tN : t<2^(b-a) := by exact_mod_cast (show (t:ℤ)<(2:ℤ)^(b-a) from tcap)
   have r2N : r2<2^(b-a) := Nat.or_lt_two_pow tN r1N
-  have sr : Submask r1 r2 := by intro i hi; simp [r2,palin_r2,Nat.testBit_or,hi]
-  have st : Submask t r2 := by intro i hi; simp [r2,palin_r2,Nat.testBit_or,hi]
+  have sr : Submask r1 r2 := by
+    intro i hi
+    change (t ||| r1).testBit i=true
+    rw [Nat.testBit_or]
+    exact Bool.or_eq_true.mpr (Or.inr hi)
+  have st : Submask t r2 := by
+    intro i hi
+    change (t ||| r1).testBit i=true
+    rw [Nat.testBit_or]
+    exact Bool.or_eq_true.mpr (Or.inl hi)
   have rr:=submask_le r1 r2 sr
   have tt:=submask_le t r2 st
   have cost:=or_cost t r1
@@ -156,17 +165,19 @@ private theorem palin_choices (a b : ℕ) (ha : 2≤a) (hab : a+2≤b) :
     dsimp [high] at hi ⊢
     rw [Nat.testBit_two_pow_mul_add (2^(a-1)-1) r1N i] at hi
     rw [Nat.testBit_two_pow_mul_add (2^(a-1)-1) r2N i]
-    split_ifs with hii
-    · exact sr i hi
-    · exact hi
+    by_cases hii : i<b-a
+    · simp only [if_pos hii] at hi ⊢
+      exact sr i hi
+    · simp only [if_neg hii] at hi ⊢
+      exact hi
   have mids (r : ℕ) : ((high+r:ℕ):ℤ)=((2^(b-1):ℕ):ℤ)-q+r := by
-    have hh:=congrArg (fun n : ℕ => (n:ℤ)) highid
-    push_cast at hh ⊢
+    have hh : (high:ℤ)+(2:ℤ)^(b-a)=((2^(b-1):ℕ):ℤ) := by exact_mod_cast highid
+    rw [Nat.cast_add]
     change (high:ℤ)+(r:ℤ)=((2^(b-1):ℕ):ℤ)-(2:ℤ)^(b-a)+(r:ℤ)
-    omega
+    linarith only [hh]
   dsimp only
   exact ⟨by positivity,ft.1,⟨by exact_mod_cast rr,by exact_mod_cast tt,
-      by exact_mod_cast cost,by exact_mod_cast r2N⟩,
+      by exact_mod_cast (show r2≤t+r1 from cost),by exact_mod_cast (show r2<2^(b-a) from r2N)⟩,
     by
       dsimp [E0,y] at er
       constructor <;> nlinarith only [er.1,er.2],

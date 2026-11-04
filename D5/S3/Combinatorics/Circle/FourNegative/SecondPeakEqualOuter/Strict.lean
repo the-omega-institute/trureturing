@@ -170,7 +170,7 @@ private theorem strict_selectors (a b c : ℕ) (ha : 2≤a) (hac : a<c) (hcb : c
             intro e he
             have ee : e=2 := by
               have hh:=bit_below 4 3 e (by decide) he
-              interval_cases e <;> norm_num [Nat.testBit_eq_decide_div_mod_eq] at he ⊢
+              interval_cases e <;> (try norm_num [Nat.testBit_eq_decide_div_mod_eq] at he ⊢)
             subst e
             norm_num [Nat.testBit_eq_decide_div_mod_eq]
           · exact Or.inr (Or.inr (Or.inr (Or.inr ⟨hx8,yz,rfl,rfl⟩)))
@@ -220,7 +220,7 @@ private theorem strict_lift (a b c : ℕ) (ha : 2≤a) (hac : a<c) (hcb : c<b) :
     rw [←chain_inventory a b c a ha hb hc ha]
     simp only [←Multiset.coe_add,Multiset.coe_singleton] at ew ev ⊢
     dsimp [bs,blocksWord,P0,P1,P2,P3,w,u,vv,xx,n] at *
-    simp only [←Multiset.coe_add,Multiset.coe_nil,Multiset.coe_cons,Multiset.coe_singleton,zero_add,add_zero] at *
+    simp only [←Multiset.coe_add,Multiset.coe_nil,←Multiset.cons_coe,←Multiset.singleton_add,Multiset.coe_singleton,zero_add,add_zero] at *
     rw [←ew,←ev]
     ac_rfl
   have hpos : ∀ pkt∈bs, ∀ i∈pkt.1, 0≤oldValue a b c a i ∧ 0≤newValue a b c a i := by
@@ -231,7 +231,13 @@ private theorem strict_lift (a b c : ℕ) (ha : 2≤a) (hac : a<c) (hcb : c<b) :
     rcases hpk with rfl|rfl|rfl|rfl
     all_goals dsimp [P0,P1,P2,P3,w,u,vv,xx] at hi
     all_goals try simp only [List.append_nil,List.nil_append,List.mem_append,List.not_mem_nil,or_false,false_or] at hi
-    all_goals aesop (add safe apply [pos])
+    all_goals
+      repeat' first
+        | exact pos 0 _ _ hi
+        | exact pos 1 _ _ hi
+        | exact pos 2 _ _ hi
+        | exact pos 3 _ _ hi
+        | rcases hi with hi|hi
   have hneg : ∀ pkt∈bs, oldValue a b c a pkt.2≤0 ∧ newValue a b c a pkt.2≤0 := by
     intro pkt hpk
     simp only [bs,List.mem_cons,List.mem_nil_iff,or_false] at hpk
@@ -299,7 +305,6 @@ private theorem strict_lift (a b c : ℕ) (ha : 2≤a) (hac : a<c) (hcb : c<b) :
         rw [sm 3 _ (full_cap a b c 3)]
         have hfresh : f (size a b c a)=E := by simpa only [f,E,ite_true] using fresh
         rw [hfresh]
-        rfl
     have mass2 : (P2.map f).sum=(full a b c a 0:ℤ)*F 0+((v:ℤ)-1)*F 1+((s:ℤ)-(t:ℤ))*F 2 := by
       have mt : (M:ℤ)-(T:ℤ)=(s:ℤ)-(t:ℤ) := by dsimp [M,T]; omega
       simp only [P2,List.map_append,List.sum_append]
