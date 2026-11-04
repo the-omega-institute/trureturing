@@ -320,14 +320,16 @@ private lemma matching_input_injective (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P)
     have he : z 0 = (-1 : ℤ) ^ (n + 1) * z 0 := by
       calc
         z 0 = -z (Fin.last n) := hw
-        _ = -((-1 : ℤ) ^ n * z 0) := by rw [hform n (by omega)]
+        _ = -((-1 : ℤ) ^ n * z 0) := by
+          change -z ⟨n, by omega⟩ = _
+          rw [hform]
         _ = (-1 : ℤ) ^ (n + 1) * z 0 := by rw [pow_succ]; ring
     rw [hodd.neg_one_pow] at he
     linarith
   ext i
   have hi : z i = 0 := by rw [hform i.val i.isLt, hz, mul_zero]
   dsimp only [z] at hi
-  by_cases hm : i ∈ M <;> by_cases hn : i ∈ N <;> simp_all
+  by_cases hm : i ∈ M <;> by_cases hn : i ∈ N <;> simp [hm, hn] at hi ⊢
 
 
 open Classical in
@@ -372,7 +374,6 @@ private lemma pairing_losses (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P)
     (hlegal : locallyLegal P s) (hfixed : fixedMiddle P s)
     (j : Fin P) (hj : edgeCharge P s j = 1) :
     (avoiding P j).card ≤ (Finset.univ.filter (fun x => ¬ wins P s x)).card := by
-  classical
   classical
   have hpair (N : Finset (Fin P)) (hN : N ∈ avoiding P j) :
       wins P s (matchingInput P N) → ¬ wins P s (matchingInput P (insert j N)) := by
