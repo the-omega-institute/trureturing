@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c3a46acc7517dee695f2f47bb9a218b062cd4b23df7439d3326caeaef5b12e6c
+  normalized_sha256: sha256:c3a46acc7517dee695f2f47bb9a218b062cd4b23df7439d3326caeaef5b12e6c
+cas_ref: sha256:c3a46acc7517dee695f2f47bb9a218b062cd4b23df7439d3326caeaef5b12e6c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Explanatory summary of the two conditional routes already stated in Theorem 5.4 and Proposition 5.5; it introduces no independent theorem. Coherent retained-branch control and supplied failure recovery are operational assumptions, neither is supplied by a success flag alone.
+    previous_atom_id: 0a3f88965fce91b97c149afa617ab5cf9f020b6968e03728ee4e50dc8b672851
+    next_atom_id: 11bba56f713a9164c23271ca9d9f374da2d3ac63ee06a2981fbd639e2c66d28e
