@@ -342,6 +342,15 @@ private lemma settlement_main
       Real.log (((V.map Complex.ofReal) + (x : ℂ) •
         (Complex.I • Ω.map Complex.ofReal)).det.re) =
         (1 / 2 : ℝ) * ∑ i, Real.log (hH.eigenvalues i ^ 2 - x ^ 2))
+    (hblock : ∀ {ι : Type} [Fintype ι] [DecidableEq ι]
+      (V Ω : Matrix ι ι ℝ) (X : Finset ι) (x : ℝ),
+      ((V.map Complex.ofReal) + (x : ℂ) • (Complex.I • Ω.map Complex.ofReal)).submatrix
+          (fun i : {j // j ∈ X} => i.1) (fun i : {j // j ∈ X} => i.1) =
+        ((V.submatrix (fun i : {j // j ∈ X} => i.1) (fun i : {j // j ∈ X} => i.1)).map
+            Complex.ofReal) +
+          (x : ℂ) • (Complex.I •
+            (Ω.submatrix (fun i : {j // j ∈ X} => i.1) (fun i : {j // j ∈ X} => i.1)).map
+              Complex.ofReal))
     (hmix : ∀ {ι : Type} [Fintype ι] [DecidableEq ι]
       (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
       (hH : (symplecticOperator V Ω).IsHermitian) {α : ℝ},
@@ -367,7 +376,7 @@ private lemma settlement_main
 
 theorem result : claim :=
   settlement_main physical_posDef reduced_physical symplectic_spectrum_lower_bound
-    shifted_posDef determinant_spectral_identity
+    shifted_posDef determinant_spectral_identity principal_block_identity
     entropy_mixture koteljanskii_log_step alpha_two_entropy
 
 end D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity
