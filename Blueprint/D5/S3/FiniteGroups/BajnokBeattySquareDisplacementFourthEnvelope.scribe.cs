@@ -54,9 +54,7 @@ internal sealed class BajnokBeattySquareDisplacementFourthEnvelopeDocument
                     Paragraph(Text(
                         "The existing FourthCoefficient.quartic_tail gives nu^4*exp(-2nu/3)<6561/400. For j=1,2,3, multiplying nu^j*exp(-nu*s) by nu^(4-j)>=9^(4-j), and using s>=2/3, gives nu^j*exp(-nu*s)<=9^j/400. This reuses one quartic certificate without repeating its exponential lower bound or derivative calculation. Together with exp(s)<=9/4, it bounds the weighted positive error by (1269/25000)*eps^3 and the weighted negative error by (50823/200000)*eps^3. Their sum is exactly (2439/8000)*eps^3.")),
                     Paragraph(Text(
-                        "Finally A/B=exp(s)*exp(dx) and D/B=exp(-nu*s)*exp(-dy). Adding their degree-one and degree-two polynomials in eps reconstructs H(s)*eps and K(s)*eps^2 exactly. This is a finite statement about natural binomial coefficients and the complete quotient counts. The Bajnok-Beatty setting, lattice return classification, centered finite products, cubic moments, quadratic estimates, and Gaussian profile come from the repository priors. No literature novelty, refined threshold, interpolation, or equality claim is made.")),
-                    Paragraph(Text(
-                        "Prepared UNCOMPILED: the displayed proof mechanism describes the submitted source terms; canonical Lean kernel checking and C# compilation remain outstanding."))),
+                        "Finally A/B=exp(s)*exp(dx) and D/B=exp(-nu*s)*exp(-dy). Adding their degree-one and degree-two polynomials in eps reconstructs H(s)*eps and K(s)*eps^2 exactly. This is a finite statement about natural binomial coefficients and the complete quotient counts. The Bajnok-Beatty setting, lattice return classification, centered finite products, cubic moments, quadratic estimates, and Gaussian profile come from the repository priors. No literature novelty, refined threshold, interpolation, or equality claim is made."))),
                 DescribeRole.Theorem)
         )));
 }
