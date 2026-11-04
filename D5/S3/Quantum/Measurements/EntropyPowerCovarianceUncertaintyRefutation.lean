@@ -204,22 +204,135 @@ private lemma binary_entropy_bound (f g : ℝ → ℝ)
 
 private lemma mixture_entropy_integrable (d : ℝ) :
     Integrable (fun x => q d x * Real.log (q d x)) := by
-  sorry
+  have hqi : Integrable (q d) :=
+    ((integrable_gaussianPDFReal d (1 / 2)).add
+      (integrable_gaussianPDFReal (-d) (1 / 2))).div_const 2
+  have hmajor : Integrable (fun x =>
+      -(gaussianPDFReal d (1 / 2) x * Real.log (gaussianPDFReal d (1 / 2) x) +
+        gaussianPDFReal (-d) (1 / 2) x * Real.log (gaussianPDFReal (-d) (1 / 2) x)) / 2 +
+          q d x * Real.log 2) :=
+    (((gaussian_entropy d).1.add (gaussian_entropy (-d)).1).neg.div_const 2).add
+      (hqi.mul_const _)
+  have hle (m x : ℝ) : gaussianPDFReal m (1 / 2) x ≤ 1 := by
+    apply (Real.log_nonpos_iff (gaussianPDFReal_nonneg _ _ _)).1
+    rw [gaussian_log]
+    have hp : 0 ≤ Real.log Real.pi := Real.log_nonneg (le_trans (by norm_num) Real.two_le_pi)
+    nlinarith [sq_nonneg (x - m)]
+  have hnonneg (x : ℝ) : 0 ≤ q d x := by
+    exact div_nonneg (add_nonneg (gaussianPDFReal_nonneg _ _ _)
+      (gaussianPDFReal_nonneg _ _ _)) (by norm_num)
+  have hupper (x : ℝ) : q d x ≤ 1 := by
+    dsimp only [q]
+    linarith [hle d x, hle (-d) x]
+  have hmeas : AEStronglyMeasurable (fun x => q d x * Real.log (q d x)) volume := by
+    apply Continuous.aestronglyMeasurable
+    apply Real.Continuous.mul_log
+    unfold q gaussianPDFReal
+    fun_prop
+  apply hmajor.mono' hmeas
+  filter_upwards [] with x
+  rw [Real.norm_eq_abs, abs_of_nonpos
+    (Real.mul_log_nonpos (hnonneg x) (hupper x))]
+  exact binary_pointwise _ _ (gaussianPDFReal_nonneg _ _ _)
+    (gaussianPDFReal_nonneg _ _ _)
 
 private lemma marginals (d : ℝ) :
     marginalX (witnessW d) = q d ∧ marginalP (witnessW d) = q d := by
-  sorry
+  have hx (x : ℝ) : marginalX (witnessW d) x = q d x := by
+    simp only [marginalX, witnessW, component_factor]
+    rw [integral_div, integral_add
+      ((integrable_gaussianPDFReal d (1 / 2)).const_mul _)
+      ((integrable_gaussianPDFReal (-d) (1 / 2)).const_mul _),
+      integral_const_mul, integral_const_mul,
+      integral_gaussianPDFReal_eq_one _ (by norm_num),
+      integral_gaussianPDFReal_eq_one _ (by norm_num)]
+    simp only [q, mul_one]
+  have hp (p : ℝ) : marginalP (witnessW d) p = q d p := by
+    simp only [marginalP, witnessW, component_factor]
+    rw [integral_div, integral_add
+      ((integrable_gaussianPDFReal d (1 / 2)).mul_const _)
+      ((integrable_gaussianPDFReal (-d) (1 / 2)).mul_const _),
+      integral_mul_const, integral_mul_const,
+      integral_gaussianPDFReal_eq_one _ (by norm_num),
+      integral_gaussianPDFReal_eq_one _ (by norm_num)]
+    simp only [q, one_mul]
+  exact ⟨funext hx, funext hp⟩
+
+private lemma witness_product (d : ℝ) (f g : ℝ → ℝ)
+    (hfp : Integrable (fun x => f x * gaussianPDFReal d (1 / 2) x))
+    (hfn : Integrable (fun x => f x * gaussianPDFReal (-d) (1 / 2) x))
+    (hgp : Integrable (fun x => g x * gaussianPDFReal d (1 / 2) x))
+    (hgn : Integrable (fun x => g x * gaussianPDFReal (-d) (1 / 2) x)) :
+    Integrable (fun r : ℝ × ℝ => f r.1 * g r.2 * witnessW d r.1 r.2) ∧
+    (∫ r : ℝ × ℝ, f r.1 * g r.2 * witnessW d r.1 r.2) =
+      ((∫ x, f x * gaussianPDFReal d (1 / 2) x) *
+        (∫ p, g p * gaussianPDFReal d (1 / 2) p) +
+      (∫ x, f x * gaussianPDFReal (-d) (1 / 2) x) *
+        (∫ p, g p * gaussianPDFReal (-d) (1 / 2) p)) / 2 := by
+  have he (r : ℝ × ℝ) : f r.1 * g r.2 * witnessW d r.1 r.2 =
+      ((f r.1 * gaussianPDFReal d (1 / 2) r.1) *
+        (g r.2 * gaussianPDFReal d (1 / 2) r.2) +
+      (f r.1 * gaussianPDFReal (-d) (1 / 2) r.1) *
+        (g r.2 * gaussianPDFReal (-d) (1 / 2) r.2)) / 2 := by
+    simp only [witnessW, component_factor]
+    ring
+  constructor
+  · exact (((hfp.mul_prod hgp).add (hfn.mul_prod hgn)).div_const 2).congr
+      (Filter.Eventually.of_forall fun r => (he r).symm)
+  · simp_rw [he]
+    rw [MeasureTheory.Measure.volume_eq_prod, integral_div,
+      integral_add (hfp.mul_prod hgp) (hfn.mul_prod hgn),
+      integral_prod_mul (fun x => f x * gaussianPDFReal d (1 / 2) x)
+        (fun p => g p * gaussianPDFReal d (1 / 2) p),
+      integral_prod_mul (fun x => f x * gaussianPDFReal (-d) (1 / 2) x)
+        (fun p => g p * gaussianPDFReal (-d) (1 / 2) p)]
 
 private lemma moments (d : ℝ) :
     meanX (witnessW d) = 0 ∧ meanP (witnessW d) = 0 ∧
     covarianceXX (witnessW d) = d ^ 2 + 1 / 2 ∧
     covariancePP (witnessW d) = d ^ 2 + 1 / 2 ∧
     covarianceXP (witnessW d) = d ^ 2 := by
-  sorry
+  have hi (m : ℝ) : Integrable (fun x => (1 : ℝ) * gaussianPDFReal m (1 / 2) x) := by
+    simpa only [one_mul] using integrable_gaussianPDFReal m (1 / 2)
+  have hn (m : ℝ) : (∫ x, gaussianPDFReal m (1 / 2) x) = 1 :=
+    integral_gaussianPDFReal_eq_one m (by norm_num : (1 / 2 : ℝ≥0) ≠ 0)
+  have hx := (witness_product d (fun x => x) (fun _ => 1)
+    (gaussian_moments d).1 (gaussian_moments (-d)).1 (hi d) (hi (-d))).2
+  have hp := (witness_product d (fun _ => 1) (fun p => p)
+    (hi d) (hi (-d)) (gaussian_moments d).1 (gaussian_moments (-d)).1).2
+  simp only [mul_one, one_mul, hn, (gaussian_moments d).2.2.1,
+    (gaussian_moments (-d)).2.2.1, add_neg_cancel, zero_div] at hx hp
+  have hxx := (witness_product d (fun x => x ^ 2) (fun _ => 1)
+    (gaussian_moments d).2.1 (gaussian_moments (-d)).2.1 (hi d) (hi (-d))).2
+  have hpp := (witness_product d (fun _ => 1) (fun p => p ^ 2)
+    (hi d) (hi (-d)) (gaussian_moments d).2.1 (gaussian_moments (-d)).2.1).2
+  have hxp := (witness_product d (fun x => x) (fun p => p)
+    (gaussian_moments d).1 (gaussian_moments (-d)).1
+    (gaussian_moments d).1 (gaussian_moments (-d)).1).2
+  simp only [mul_one, one_mul, hn, (gaussian_moments d).2.2.2.1,
+    (gaussian_moments (-d)).2.2.2.1] at hxx hpp
+  simp only [(gaussian_moments d).2.2.1, (gaussian_moments (-d)).2.2.1] at hxp
+  change meanX (witnessW d) = 0 at hx
+  change meanP (witnessW d) = 0 at hp
+  refine ⟨hx, hp, ?_, ?_, ?_⟩
+  · simp only [covarianceXX, hx, sub_zero]
+    linarith [hxx]
+  · simp only [covariancePP, hp, sub_zero]
+    linarith [hpp]
+  · simp only [covarianceXP, hx, hp, sub_zero]
+    nlinarith [hxp]
 
 private lemma second_integrable (d : ℝ) :
     Integrable (fun r : ℝ × ℝ => (r.1 ^ 2 + r.2 ^ 2) * witnessW d r.1 r.2) := by
-  sorry
+  have hi (m : ℝ) : Integrable (fun x => (1 : ℝ) * gaussianPDFReal m (1 / 2) x) := by
+    simpa only [one_mul] using integrable_gaussianPDFReal m (1 / 2)
+  have hxx := (witness_product d (fun x => x ^ 2) (fun _ => 1)
+    (gaussian_moments d).2.1 (gaussian_moments (-d)).2.1 (hi d) (hi (-d))).1
+  have hpp := (witness_product d (fun _ => 1) (fun p => p ^ 2)
+    (hi d) (hi (-d)) (gaussian_moments d).2.1 (gaussian_moments (-d)).2.1).1
+  convert hxx.add hpp using 1
+  ext r
+  simp only [Pi.add_apply, mul_one, one_mul, add_mul]
 
 private lemma entropy_upper (d : ℝ) :
     densityEntropy (q d) + densityEntropy (q d) ≤
