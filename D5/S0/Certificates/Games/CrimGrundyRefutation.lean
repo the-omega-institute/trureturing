@@ -10,7 +10,9 @@
    escape_witness: The CRIM row/conjugate-row move graph, cell-count descent,
      and a complete locally checked SG certificate connected to well-founded evaluation.
    admission_basis: escape-witness
-   Direct frozen dependencies: none. -/
+   Direct frozen dependencies: none.
+   Escape audit unfinished for sum_nonzero, move_decreases and grundy_eq:
+   https://github.com/the-omega-institute/trureturing/issues/25535 -/
 
 import Mathlib.Algebra.Order.BigOperators.Group.List
 import Mathlib.Algebra.Order.Group.Nat
@@ -108,7 +110,7 @@ private def sum_heights (p : Position) (w : ℕ) (h : ∀ n ∈ p, n ≤ w) :
     rw [List.sum_map_add, sum_indicator w n (h n (by simp)),
       ih (fun x hx => h x (by simp [hx]))]
 
-private def sum_nonzero (p : Position) : (p.filter (· != 0)).sum = p.sum := by
+def sum_nonzero (p : Position) : (p.filter (· != 0)).sum = p.sum := by
   induction p with
   | nil => rfl
   | cons n p ih =>
@@ -118,7 +120,7 @@ private def conjugate_sum (p : Position) : (conjugate p).sum = p.sum := by
   rw [conjugate, sum_nonzero]
   exact sum_heights p p.sum (fun n hn => List.single_le_sum (fun x _ => Nat.zero_le x) n hn)
 
-private def move_decreases (p q : Position) (h : q ∈ moves p) : q.sum < p.sum := by
+def move_decreases (p q : Position) (h : q ∈ moves p) : q.sum < p.sum := by
   simp only [moves, List.mem_append, List.mem_map] at h
   rcases h with h | ⟨s, hs, rfl⟩
   · exact row_decreases p q h
@@ -155,7 +157,7 @@ def grundy : Position → ℕ :=
   (measure List.sum).wf.fix fun p rec =>
     mex ((moves p).attach.map (fun q => rec q.val (move_decreases p q.val q.property))).toFinset
 
-private def grundy_eq (p : Position) :
+def grundy_eq (p : Position) :
     grundy p = mex ((moves p).map grundy).toFinset := by
   rw [grundy, WellFounded.fix_eq]
   simp
@@ -632,7 +634,5 @@ theorem result : ¬ claim := by
   have predicted : grundy (rectair 7 6 5) = 3 := h 7 5 (by decide) (by decide)
   omega
 
-#print axioms claim
-#print axioms result
 
 end D5.S0.Certificates.Games.CrimGrundyRefutation
