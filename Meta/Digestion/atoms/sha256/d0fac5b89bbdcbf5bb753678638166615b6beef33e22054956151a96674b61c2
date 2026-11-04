@@ -1,0 +1,41 @@
+**编者注 n24（谱的紧性、共轭和正性）。** 谱点均非零，受 $R^{-2}$ 控制；实际零点局部有限且高度逃向无穷，故它们唯一可能的聚点为 $0$，每个离零的谱截集有限。又有 $\sum|\omega_\lambda|<\infty$，可由合并前的 $\sum|b_\rho||\lambda_\rho|$ 控制。式（5.4）的虚部为 $2\delta\gamma/(\delta^2+\gamma^2)^2$；实际 $\gamma\ne0$，故非实谱恰对应离线零点，临界线谱为正实且权重正。反射折叠后，共轭零点还给出共轭谱和共轭权重；一个离线四元组恰对应一对这样的谱点。
+
+<!-- editorial-note: n24 end -->
+
+定义实多项式上的泛函
+
+$$
+\mathcal L(p)
+=
+\sum_{\lambda\in\mathcal T}
+\omega_\lambda p(\lambda).
+$$
+
+对
+
+$$
+p(t)=\sum_{j=0}^{N}u_jt^j,\qquad u_j\in\mathbb R,
+$$
+
+有
+
+$$
+\boxed{
+\mathcal L(p^2)
+=
+u^{\mathsf T}J_Nu,
+\qquad
+J_N=(c_{i+j})_{i,j=0}^{N}.
+}
+
+$$
+
+<a id="eq-5-5"></a>
+
+(5.5)
+
+这里必须保留实际表达 $p(\lambda)^2$。在非实谱点上，不能擅自将它替换为 $|p(\lambda)|^2$。
+
+<!-- editorial-note: n25 begin -->
+<a id="n25"></a>
+

@@ -1,0 +1,11 @@
+**Definition 1.1 (Periodic shared-matrix image).** For a fixed integer $N\ge4$, let $\mathcal H_N=(\mathbb C^2)^{\otimes N}$, with its standard Hermitian inner product. For arbitrary shared matrices $A_0,A_1\in M_2(\mathbb C)$, put
+
+$$
+\Psi_N(A_0,A_1)=\sum_{i_1,\ldots,i_N\in\{0,1\}}
+\operatorname{tr}(A_{i_1}\cdots A_{i_N})\,|i_1\cdots i_N\rangle,
+\qquad
+P_N=\{\Psi_N(A_0,A_1):A_0,A_1\in M_2(\mathbb C)\}.
+$$
+
+Thus $P_N=\mathrm{PB}(2,2,N)$ is the actual image, rather than its closure. This is the model of Critch and Morton, *Algebraic Geometry of Matrix Product States*, [arXiv:1210.2812v4](https://arxiv.org/abs/1210.2812v4), §2, equation (1). Cyclic invariance of the trace gives $\tau\psi=\psi$ for the cyclic site shift $\tau$ and every $\psi\in P_N$. The set $P_N$ is a complex cone: for $c\in\mathbb C$, choose $z$ with $z^N=c$, so that $\Psi_N(zA_0,zA_1)=c\Psi_N(A_0,A_1)$.
+

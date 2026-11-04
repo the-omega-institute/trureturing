@@ -1,0 +1,56 @@
+**Proposition 19.5 (exact width and the missing uniform condition).** For this fixed recorder, at every reachable source,
+
+$$
+\begin{aligned}
+L(t)&=\left\lceil\log_2\bigl(F(t)C(t)\bigr)\right\rceil,\\
+F(t)C(t)&\le 2^{L(t)}<2F(t)C(t),\\
+0&\le L(t)-G(t)\le\left\lceil\log_2C(t)\right\rceil.
+\end{aligned}
+\tag{IV.46b}
+$$
+
+A sufficient all-source inherited-prefix congestion condition for the original logarithmic target is the existence of fixed finite constants $K\ge1$ and $a\ge0$, independent of $t$, such that
+
+$$
+C(t)\le K\bigl(N(t)+2\bigr)^a
+\qquad\text{for every reachable actual source }t.
+\tag{IV.46c}
+$$
+
+Under this condition the same deterministic computable horizon-independent $J$ satisfies
+
+$$
+\begin{aligned}
+M_J(t)=L(t)
+ &\le G(t)+\left\lceil\log_2K+a\log_2(N(t)+2)\right\rceil\\
+ &\le G(t)+a\log_2(N(t)+2)+\log_2K+1\\
+ &\le G(t)+c\log_2(N(t)+2),
+ \qquad c=a+\log_2K+1.
+\end{aligned}
+\tag{IV.46d}
+$$
+
+Conversely, if this fixed $J$ satisfies $L(t)\le G(t)+c\log_2(N(t)+2)$ at every actual source for one finite $c\ge0$, then
+
+$$
+C(t)\le\frac{2^{L(t)}}{F(t)}
+ \le\frac{2^{G(t)}}{F(t)}\bigl(N(t)+2\bigr)^c
+ <2\bigl(N(t)+2\bigr)^c.
+\tag{IV.46e}
+$$
+
+Thus polynomial congestion and logarithmic overhead are equivalent uniform growth conditions for this particular recursively chosen recorder. Finite constants may be enlarged to computable integers without changing either existence assertion; no such constants are needed to run the already specified algorithm.
+
+**Proof.** For noninitial $t$, let $A=\max_{D_t(q)>0}2^{|q|}D_t(q)$. The maximum exists by Definition 19.4 and equals $F(t)C(t)$. Since each $|q|$ is an integer, (IV.40) and (IV.44) give
+
+$$
+L(t)=\max_{D_t(q)>0}\left\lceil\log_2\bigl(2^{|q|}D_t(q)\bigr)\right\rceil
+ =\left\lceil\log_2A\right\rceil.
+$$
+
+Consequently $A\le2^{L(t)}<2A$. The ceiling inequality $\lceil x+y\rceil\le\lceil x\rceil+\lceil y\rceil$, with $x=\log_2F(t)$ and $y=\log_2C(t)$, proves the upper bound on $L-G$; its lower bound is Theorem 19.1. At the initial source, $F=1$, $C=1$ and $L=G=0$, so the same conclusions hold. Singleton native fibres also have $C=1$: their actual inherited words are empty by Theorem 19.1. This does not exclude empty lower words from the finite allocation problem.
+
+Substitute (IV.46c) into the exact first identity of (IV.46b) and use $\lceil x+y\rceil\le\lceil x\rceil+\lceil y\rceil$ again to obtain the first line of (IV.46d). A ceiling adds less than one, and $\log_2(N+2)\ge1$ absorbs the displayed nonnegative constant $\log_2K+1$, proving the other lines. Equation (IV.46e) follows from (IV.46b), the assumed bound on $L$, and $2^{G(t)}/F(t)<2$. These estimates retain the distinction between $\log_2F$, its ceiling $G$, the exact width ceiling, and the additive constant in (IV.46d). $\square$
+
+The all-source polynomial condition (IV.46c) remains unproved. The linear argument (IV.46) supplies only $C(t)<2^{N(t)}$ for $N(t)>0$, not a polynomial bound. Proving (IV.46c) would settle logarithmic sufficiency by this construction under the unchanged source, rights, paid scratch and complete-service hypotheses of Correspondence 19.3. Failure of every polynomial bound for this chosen $J$ would rule out logarithmic overhead for this $J$ only; it would not rule out another deterministic computable coherent recorder. Likewise (IV.46c) is not asserted necessary for the existence of a different recorder. A universal-class negative answer would still require an obstruction applying to every admissible recorder on the original full native domain.
+

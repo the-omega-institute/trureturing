@@ -1,0 +1,26 @@
+### 1.1 本轮快照与实际新增内容
+
+本轮仅核对一次默认分支 `dev`，固定于
+[`4008fb9289d8`](https://github.com/the-omega-institute/trureturing/commit/4008fb9289d85582c68b23a5810474e4463c64ea)，
+提交时间为 2026 年 11 月 4 日 12:30:01 UTC，即新加坡时间 20:30:01。
+相对 C132 续篇的 `30817972a543`，
+[固定两端比较](https://github.com/the-omega-institute/trureturing/compare/30817972a5439293f77c86f4a0aea3d45731083b...4008fb9289d85582c68b23a5810474e4463c64ea)
+有 122 个新增可达提交，第一父链为 6 次合并。
+关闭重命名推断后的真实整树净差分为 319 个路径：168 新增、148 修改、3 删除。
+提交数由两页完整比较响应及父链核对，路径数取自 Git 树差分；
+未把浅缓存的祖先日志或 API 的 300 文件上限当成完整计数。
+
+`docs/develop/theory` 正文没有变化，概念动力学子树也没有变化；
+Quantum 子树新增六份 Lean 文件。
+其中与本轮最相关的是
+[统一相干放大源码](https://github.com/the-omega-institute/trureturing/blob/4008fb9289d85582c68b23a5810474e4463c64ea/D5/S3/Quantum/Recovery/CoherentUniformAmplification.lean)。
+其余五份分别给
+[单模 Rényi 函数的 Stieltjes 表示](https://github.com/the-omega-institute/trureturing/blob/4008fb9289d85582c68b23a5810474e4463c64ea/D5/S3/Quantum/Analysis/BosonicRenyiStieltjes.lean)、
+[其 Poisson 权重变换](https://github.com/the-omega-institute/trureturing/blob/4008fb9289d85582c68b23a5810474e4463c64ea/D5/S3/Quantum/Analysis/BosonicRenyiStieltjes/PoissonWeight.lean)、
+[物理 Gaussian 协方差的 Rényi 强次可加性](https://github.com/the-omega-institute/trureturing/blob/4008fb9289d85582c68b23a5810474e4463c64ea/D5/S3/Quantum/Thermal/GaussianRenyiStrongSubadditivity.lean)、
+[周期格上的有标签 bubble 放置计数](https://github.com/the-omega-institute/trureturing/blob/4008fb9289d85582c68b23a5810474e4463c64ea/D5/S3/Quantum/SpinChains/BubbleEigenstateDegeneracy.lean)及
+[rank-four 周期 MPS 的边界拼接与相位恢复](https://github.com/the-omega-institute/trureturing/blob/4008fb9289d85582c68b23a5810474e4463c64ea/D5/S3/Quantum/TensorNetworks/PeriodicMPSParentIntersection.lean)。
+强次可加声明要求 $0<\alpha\le2$、$\alpha\ne1$ 及物理协方差；
+bubble 模块不承担 Hamiltonian 本征态识别；MPS 的 raw Gram 已由复幅度形成。
+这些结果均未给出本稿未预设正性的实读口 $R$。
+

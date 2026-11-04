@@ -1,0 +1,8 @@
+**Theorem 50.2 (four exact continuous-domain enclosures).** The following rational closed enclosures hold; the derivative in C4 is at fixed $\xi$, evaluated only at $q=9/20$.
+
+| Certificate | Function | Closed variable domain | Required bound | Pieces | Outward enclosure of the entire image |
+| --- | --- | --- | --- | --- | --- |
+| C1 | $\omega(9/4,q)$ | $q\in[0,1/10]$ | $\ge1/10000$ | 10 | $[313809/250000000,23008109/200000000]$ |
+| C2 | $\omega(9/4,q)$ | $q\in[3/8,1]$ | $\ge1/10000$ | 27 | $[129303/1000000000,19833451/31250000]$ |
+| C3 | $\omega(9/4,q)$ | $q\in[1/10,3/8]$ | $\ge-21/1000$ | 132 | $[-20992343/1000000000,4663773/250000000]$ |
+| C4 | $G'_\xi(9/20)$ | $\xi\in I$ | $\le-1/10$ | 1 | $[-453826117/1000000000,-24250863/125000000]$ |

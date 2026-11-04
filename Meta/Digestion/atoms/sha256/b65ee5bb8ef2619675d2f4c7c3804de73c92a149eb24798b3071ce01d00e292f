@@ -1,0 +1,4 @@
+**定义 62.3（内生约束、来源与简洁性的范围）。** 全部量均沿同一 $\Omega$ 的原关系定义：原比较给 $q$ 与 Jordan 乘法，原 AC 给 $d$，$d\circ x=x/2$ 定义横向空间，原 $F$ 给其有向作用。S2 只约束这些既有定义之间的长度比。它比整算子迹 S 的检查范围更局部；定理 61.2 证明在同一背景上等价，不宣称独立物理假设总数最少，也不将满足该约束的分类说成所有整体必满足它。Peirce 分解和二阶矩阵几何是成熟中间工具，参见 [Barnum–Hilgert, arXiv:1904.03753v1, §9 的 Peirce 分解讨论](https://arxiv.org/html/1904.03753v1) 及其引用的 Faraut–Korányi；高秩协变使用定理 57.2 所引 Nagy 的斜延拓分类。候选的新综合是单乘积高秩见证与一对原元素的标定向全部原对象曲率和过程消费者的接入，不以有限检索断言历史优先权。
+
+[Murray, *The Geometry of Bounded Records*, Working v3.1, §2](https://github.com/thantiklermcirony/bounded-observer/blob/33fd77bf10726c06a777eb4c47bfa01ddccb0a4f/papers/library-2026-10-12/papers/paper1.md) 从显式连通等变的读数—导子双射选择简单复块，并以完整交换子恒等式标定尺度；此工作稿保留尺度自由，未提供这里的 S2 入口。这里允许原中心及不等直和，通过原实际联合推出协变，再由一对原元素标定，不借入其双射或简单性假设。
+

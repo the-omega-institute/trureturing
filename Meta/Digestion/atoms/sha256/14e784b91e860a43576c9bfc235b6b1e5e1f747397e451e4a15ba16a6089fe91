@@ -1,0 +1,100 @@
+### 51.5. Curvature and the same-original-pair consumer
+
+For the numerical constant in (51.8), use the scalar expression itself,
+rather than only the weaker curvature constant 4 in (50.11). Put
+
+$$
+F_0=4(1-q)R^2,\qquad F_1=4qh^2y^2.
+\tag{51.22}
+$$
+
+On the same fixed-$\xi$ feasible population interval they are nonnegative
+and concave, since
+
+$$
+F_0''=(1-q)-8hR<0,\qquad F_1''=-4x-q<0.
+\tag{51.23}
+$$
+
+The nonnegative geometric mean is concave and nondecreasing in both
+arguments. Its concave-composition rule therefore makes
+$\sqrt{F_0F_1}$ concave on this interval; endpoint zeros are included
+by continuity. This is the standard composition statement in
+Boyd and Vandenberghe, *Convex Optimization*, Section 3.2.4,
+Example 3.14, applied to these two functions of the same population.
+As $4\Gamma_0^2=F_0+F_1+2\sqrt{F_0F_1}$, in the population interior
+
+$$
+\begin{aligned}
+C_\xi''&\ge-F_0''-F_1''
+ =8hc+8x+2q-1\\
+ &=8hc+7-2\xi+6q>\frac{183}{25}.
+\end{aligned}
+\tag{51.24}
+$$
+
+Here $hc>13/20$ and the existing bound $\xi_*<61/25$ suffice;
+the sharper (51.10) is not needed for this constant. The elementary
+radical comparison $hc>13/20$ follows by squaring
+$(hc)^2=(1+h)/4$ with $h>7/10$.
+Integration from the interior stationary selector and continuity at
+all population endpoints give
+
+$$
+C_\xi(q)-V(\xi)\ge\frac{183}{50}(q-q_\xi)^2.
+\tag{51.25}
+$$
+
+The gain/transport consumer (47.9)--(47.13), applied to the given
+original pair, gives
+
+$$
+g(E,U)\ge C_\xi(q)-8\Gamma_0J-4J^2.
+\tag{51.26}
+$$
+
+It includes every effect phase and arbitrary actual $U$. Its two
+recovery amplitudes come from the same attained triangle and the same
+whole feedback. More explicitly, the same-effect, same-complex-trace
+transport of Theorem 42.3 preserves $q,x,\xi$ and the active sign in
+every positive-weight phase replacement; (42.16) adds a nonnegative
+recovery variance to their weighted defects. It therefore strengthens,
+rather than weakens, (51.26) for the original $U$. No estimate from
+separate recovery optima or from different objects is substituted.
+
+Cauchy--Schwarz yields
+
+$$
+\Gamma_0^2\le R^2+h^2y^2=h^2+c^2+2hcx
+ \le(h+c)^2<(5/3)^2.
+\tag{51.27}
+$$
+
+For the last elementary inequality, $h<71/100$ and $c<93/100$
+give $h+c<41/25<5/3$. Put $\Delta q=q-q_\xi$.
+By T, $J\le(\Delta q)^2/4$. Since $q,q_\xi\in[0,1]$,
+$4J^2\le(\Delta q)^4/4\le(\Delta q)^2/4$.
+Combining (51.25)--(51.27) therefore gives
+
+$$
+g(E,U)-V(\xi)
+ \ge\left[\frac{183}{50}-\frac{10}{3}-\frac14\right](\Delta q)^2
+ =\frac{23}{300}(\Delta q)^2.
+\tag{51.28}
+$$
+
+For $x=1$, use the direct original endpoint (47.11):
+
+$$
+U=\lambda U_+,\qquad \rho=\rho_+=2q=\xi,\qquad
+\rho_-=8+2(1-q)>\xi,\qquad
+g=e^2q=C_\xi(q).
+\tag{51.29}
+$$
+
+Thus (51.25) alone gives the stronger coefficient $183/50$ at this
+endpoint. No $y$ denominator from (51.6) is evaluated. This includes
+$\xi=2,q=1$; the other $q=0,1$ cases lie in the already treated
+nonsingular domain. Hence all required population and trace endpoints
+are included, with the full open lower level boundary $0<\xi$ preserved.
+

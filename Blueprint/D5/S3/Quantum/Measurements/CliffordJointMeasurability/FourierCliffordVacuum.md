@@ -18,7 +18,19 @@ $$\begin{aligned}\forall \{R:\operatorname{Type}*\},\\{}[\operatorname{Ring} R],
 
 In a complex algebra with compatible star, a vanishing self-anticommutator forces the square to vanish. Type* allows the algebra to lie in any universe.
 
-**Definition 1.2 (averaging).**
+**Lemma 1.2 (Anticommutator of linear combinations).**
+
+$$\forall \{R: \operatorname{Type} u_{1}\}, ([\operatorname{Ring}\left(R\right)], ([\operatorname{Algebra}\left(\mathbb{C}, R\right)], (\forall \{\iota: \operatorname{Type} u_{2}\}, ([\operatorname{Fintype}\left(\iota\right)], ([\operatorname{DecidableEq}\left(\iota\right)], (\forall (g: \iota \to R), ((\forall (j: \iota), ((g\left(j\right)) \cdot (g\left(j\right)) = (1: R))) \to ((\forall (j: \iota), (\forall (k: \iota), ((j \ne k) \to ((g\left(j\right)) \cdot (g\left(k\right)) = -((g\left(k\right)) \cdot (g\left(j\right))))))) \to (\forall (c: \iota \to \mathbb{C}), (\forall (d: \iota \to \mathbb{C}), ((\operatorname{Fintype.linearCombination}\left(\mathbb{C}, g, c\right)) \cdot (\operatorname{Fintype.linearCombination}\left(\mathbb{C}, g, d\right)) + (\operatorname{Fintype.linearCombination}\left(\mathbb{C}, g, d\right)) \cdot (\operatorname{Fintype.linearCombination}\left(\mathbb{C}, g, c\right)) = (\operatorname{algebraMap}\left(\mathbb{C}, R, (((2: \mathbb{C})) \cdot (\sum_{j: \iota} ((c\left(j\right)) \cdot (d\left(j\right)))): \mathbb{C})\right)) \cdot ((1: R)))))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurements/CliffordJointMeasurability/FourierCliffordVacuum.cliffordLinear_anticommutator` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For pairwise anticommuting involutions in a complex algebra, the anticommutator of two linear combinations is twice the bilinear pairing of their coefficients times the identity. The algebra and the index type may lie in independent universes u₁ and u₂. Fintype.linearCombination uses the complex scalar action, and the displayed algebraMap explicitly maps the complex coefficient into R: z • x = algebraMap ℂ R z * x.
+
+**Definition 1.3 (averaging).**
 
 $$\begin{aligned}\forall (R : \operatorname{Type}),\\{}[\operatorname{Ring} R] ,\\{}[\operatorname{Algebra} \mathbb{C} R] ,\\\forall (u : R),\\(\operatorname{averaging} (R : = R) (u : = u) : R \to_{l} [\mathbb{C}] R) = ((1 / 2 : \mathbb{C}) \cdot (\operatorname{LinearMap} . \operatorname{id} + (\operatorname{LinearMap} . \operatorname{mulLeftRight} \mathbb{C} (u , u))))\end{aligned}$$
 
@@ -30,7 +42,7 @@ $$\begin{aligned}\forall (R : \operatorname{Type}),\\{}[\operatorname{Ring} R] ,
 
 The displayed expression defines averaging.
 
-**Definition 1.3 (finiteTwirl).**
+**Definition 1.4 (finiteTwirl).**
 
 $$\begin{aligned}\forall (R : \operatorname{Type}),\\{}[\operatorname{Ring} R] ,\\{}[\operatorname{Algebra} \mathbb{C} R] ,\\\forall (g : \mathbb{N} \to R),\\\forall (k : \mathbb{N}),\\(\operatorname{finiteTwirl} (R : = R) (g : = g) (k : = k) : R \to_{l} [\mathbb{C}] R) = (((\operatorname{List} . \operatorname{range} k) . \operatorname{map} (\operatorname{fun} j \mapsto \operatorname{averaging} (g j))) . \operatorname{prod})\end{aligned}$$
 
@@ -42,7 +54,7 @@ $$\begin{aligned}\forall (R : \operatorname{Type}),\\{}[\operatorname{Ring} R] ,
 
 The displayed expression defines finiteTwirl.
 
-**Lemma 1.4 (finiteTwirl step).**
+**Lemma 1.5 (finiteTwirl step).**
 
 $$\begin{aligned}\forall (R : \operatorname{Type}),\\{}[\operatorname{Ring} R] ,\\{}[\operatorname{Algebra} \mathbb{C} R] ,\\\forall (g : \mathbb{N} \to R),\\\forall (k : \mathbb{N}),\\\forall (X : R),\\\operatorname{finiteTwirl} g (k + 1) X = (1 / 2 : \mathbb{C}) \cdot (\operatorname{finiteTwirl} g k X + \operatorname{finiteTwirl} g k (g k \cdot X \cdot g k))\end{aligned}$$
 
@@ -54,7 +66,7 @@ $$\begin{aligned}\forall (R : \operatorname{Type}),\\{}[\operatorname{Ring} R] ,
 
 This finiteTwirl step identity is used in the FourierCliffordVacuum construction.
 
-**Definition 1.5 (vacuumWord).**
+**Definition 1.6 (vacuumWord).**
 
 $$\begin{aligned}\forall (R : \operatorname{Type}),\\{}[\operatorname{Ring} R] ,\\\forall (p : \mathbb{N} \to R),\\\forall (k : \mathbb{N}),\\(\operatorname{vacuumWord} (R : = R) (p : = p) (k : = k) : R) = ((((\operatorname{List} . \operatorname{range} k) . \operatorname{reverse}) . \operatorname{map} p) . \operatorname{prod})\end{aligned}$$
 
@@ -66,7 +78,7 @@ $$\begin{aligned}\forall (R : \operatorname{Type}),\\{}[\operatorname{Ring} R] ,
 
 The displayed expression defines vacuumWord.
 
-**Definition 1.6 (cycleFrequency).**
+**Definition 1.7 (cycleFrequency).**
 
 $$\begin{aligned}\forall (L : \mathbb{N}),\\\forall (r : \operatorname{Fin} L),\\(\operatorname{cycleFrequency} (L : = L) (r : = r) : \mathbb{R}) = ((2 \cdot (r : \mathbb{R}) + 1) \cdot \operatorname{theta} L)\end{aligned}$$
 
@@ -78,7 +90,7 @@ $$\begin{aligned}\forall (L : \mathbb{N}),\\\forall (r : \operatorname{Fin} L),\
 
 The displayed expression defines cycleFrequency.
 
-**Definition 1.7 (modeScale).**
+**Definition 1.8 (modeScale).**
 
 $$\begin{aligned}\forall (L : \mathbb{N}),\\(\operatorname{modeScale} (L : = L) : \mathbb{C}) = (((((\operatorname{Real} . \operatorname{sqrt} ((4 \cdot L : \mathbb{N}) : \mathbb{R})))^{-1} : \mathbb{R}) : \mathbb{C}))\end{aligned}$$
 
@@ -90,7 +102,7 @@ $$\begin{aligned}\forall (L : \mathbb{N}),\\(\operatorname{modeScale} (L : = L) 
 
 The displayed expression defines modeScale.
 
-**Definition 1.8 (modeCoeff).**
+**Definition 1.9 (modeCoeff).**
 
 $$\begin{aligned}\forall (L : \mathbb{N}),\\\forall (r : \operatorname{Fin} L),\\\forall (j : \operatorname{Fin} (2 \cdot L)),\\(\operatorname{modeCoeff} (L : = L) (r : = r) (j : = j) : \mathbb{C}) = (\operatorname{modeScale} L \cdot (\operatorname{fun} x : \mathbb{R} \mapsto (\operatorname{Real} . \operatorname{probChar} x : \mathbb{C})) (- (j : \mathbb{R}) \cdot \operatorname{cycleFrequency} L r))\end{aligned}$$
 
@@ -102,7 +114,7 @@ $$\begin{aligned}\forall (L : \mathbb{N}),\\\forall (r : \operatorname{Fin} L),\
 
 The displayed expression defines modeCoeff.
 
-**Lemma 1.9 (modeScale star).**
+**Lemma 1.10 (modeScale star).**
 
 $$\begin{aligned}\forall (L : \mathbb{N}),\\\operatorname{star} (\operatorname{modeScale} L) = \operatorname{modeScale} L\end{aligned}$$
 
@@ -114,7 +126,7 @@ $$\begin{aligned}\forall (L : \mathbb{N}),\\\operatorname{star} (\operatorname{m
 
 This modeScale star identity is used in the FourierCliffordVacuum construction.
 
-**Lemma 1.10 (modeScale square).**
+**Lemma 1.11 (modeScale square).**
 
 $$\begin{aligned}\forall (L : \mathbb{N}),\\(0 < L) \to\\\operatorname{modeScale} L \cdot \operatorname{modeScale} L = (((4 \cdot L : \mathbb{N}) : \mathbb{C}))^{-1}\end{aligned}$$
 
@@ -126,7 +138,7 @@ $$\begin{aligned}\forall (L : \mathbb{N}),\\(0 < L) \to\\\operatorname{modeScale
 
 This modeScale square identity is used in the FourierCliffordVacuum construction.
 
-**Definition 1.11 (fourierMode).**
+**Definition 1.12 (fourierMode).**
 
 $$\begin{aligned}\forall (R : \operatorname{Type}),\\{}[\operatorname{Ring} R] ,\\{}[\operatorname{Algebra} \mathbb{C} R] ,\\\forall (L : \mathbb{N}),\\\forall (g : \operatorname{Fin} (2 \cdot L) \to R),\\\forall (r : \operatorname{Fin} L),\\(\operatorname{fourierMode} (R : = R) (L : = L) (g : = g) (r : = r) : R) = (\operatorname{Fintype} . \operatorname{linearCombination} \mathbb{C} g (\operatorname{modeCoeff} L r))\end{aligned}$$
 
@@ -138,7 +150,7 @@ $$\begin{aligned}\forall (R : \operatorname{Type}),\\{}[\operatorname{Ring} R] ,
 
 The displayed expression defines fourierMode.
 
-**Definition 1.12 (totalGamma).**
+**Definition 1.13 (totalGamma).**
 
 $$\begin{aligned}\forall (R : \operatorname{Type}),\\{}[\operatorname{Ring} R] ,\\\forall (L : \mathbb{N}),\\\forall (g : \operatorname{Fin} (2 \cdot L) \to R),\\\forall (k : \mathbb{N}),\\(\operatorname{totalGamma} (R : = R) (L : = L) (g : = g) (k : = k) : R) = (\operatorname{if} \operatorname{hk} : k < 2 \cdot L \operatorname{then} g \langle k , \operatorname{hk} \rangle \operatorname{else} 0)\end{aligned}$$
 
@@ -150,7 +162,7 @@ $$\begin{aligned}\forall (R : \operatorname{Type}),\\{}[\operatorname{Ring} R] ,
 
 The displayed expression defines totalGamma.
 
-**Definition 1.13 (cliffordAverage).**
+**Definition 1.14 (cliffordAverage).**
 
 $$\begin{aligned}\forall (R : \operatorname{Type}),\\{}[\operatorname{Ring} R] ,\\{}[\operatorname{Algebra} \mathbb{C} R] ,\\\forall (L : \mathbb{N}),\\\forall (g : \operatorname{Fin} (2 \cdot L) \to R),\\(\operatorname{cliffordAverage} (R : = R) (L : = L) (g : = g) : R \to_{l} [\mathbb{C}] R) = (\operatorname{finiteTwirl} (\operatorname{totalGamma} g) (2 \cdot L))\end{aligned}$$
 
@@ -162,7 +174,7 @@ $$\begin{aligned}\forall (R : \operatorname{Type}),\\{}[\operatorname{Ring} R] ,
 
 The displayed expression defines cliffordAverage.
 
-**Definition 1.14 (totalMode).**
+**Definition 1.15 (totalMode).**
 
 $$\begin{aligned}\forall (R : \operatorname{Type}),\\{}[\operatorname{Ring} R] ,\\{}[\operatorname{Algebra} \mathbb{C} R] ,\\\forall (L : \mathbb{N}),\\\forall (g : \operatorname{Fin} (2 \cdot L) \to R),\\\forall (k : \mathbb{N}),\\(\operatorname{totalMode} (R : = R) (L : = L) (g : = g) (k : = k) : R) = (\operatorname{if} \operatorname{hk} : k < L \operatorname{then} \operatorname{fourierMode} g \langle k , \operatorname{hk} \rangle \operatorname{else} 0)\end{aligned}$$
 
@@ -174,7 +186,7 @@ $$\begin{aligned}\forall (R : \operatorname{Type}),\\{}[\operatorname{Ring} R] ,
 
 The displayed expression defines totalMode.
 
-**Definition 1.15 (numberProjection).**
+**Definition 1.16 (numberProjection).**
 
 $$\begin{aligned}\forall (R : \operatorname{Type}),\\{}[\operatorname{Ring} R] ,\\{}[\operatorname{Algebra} \mathbb{C} R] ,\\{}[\operatorname{StarRing} R] ,\\\forall (L : \mathbb{N}),\\\forall (g : \operatorname{Fin} (2 \cdot L) \to R),\\\forall (k : \mathbb{N}),\\(\operatorname{numberProjection} (R : = R) (L : = L) (g : = g) (k : = k) : R) = (\operatorname{totalMode} g k \cdot \operatorname{star} (\operatorname{totalMode} g k))\end{aligned}$$
 
@@ -186,7 +198,7 @@ $$\begin{aligned}\forall (R : \operatorname{Type}),\\{}[\operatorname{Ring} R] ,
 
 The displayed expression defines numberProjection.
 
-**Definition 1.16 (fourierVacuum).**
+**Definition 1.17 (fourierVacuum).**
 
 $$\begin{aligned}\forall (R : \operatorname{Type}),\\{}[\operatorname{Ring} R] ,\\{}[\operatorname{Algebra} \mathbb{C} R] ,\\{}[\operatorname{StarRing} R] ,\\\forall (L : \mathbb{N}),\\\forall (g : \operatorname{Fin} (2 \cdot L) \to R),\\(\operatorname{fourierVacuum} (R : = R) (L : = L) (g : = g) : R) = (\operatorname{vacuumWord} (\operatorname{numberProjection} g) L)\end{aligned}$$
 
@@ -198,7 +210,7 @@ $$\begin{aligned}\forall (R : \operatorname{Type}),\\{}[\operatorname{Ring} R] ,
 
 The displayed expression defines fourierVacuum.
 
-**Lemma 1.17 (fourierVacuum properties).**
+**Lemma 1.18 (fourierVacuum properties).**
 
 $$\begin{aligned}\forall (R : \operatorname{Type}),\\{}[\operatorname{Ring} R] ,\\{}[\operatorname{Algebra} \mathbb{C} R] ,\\{}[\operatorname{StarRing} R] ,\\{}[\operatorname{StarModule} \mathbb{C} R] ,\\\forall (L : \mathbb{N}),\\(0 < L) \to\\\forall (g : \operatorname{Fin} (2 \cdot L) \to R),\\(\forall j , g j \cdot g j = 1) \to\\(\forall j , \operatorname{star} (g j) = g j) \to\\(\forall j k , j \neq k \to g j \cdot g k = - (g k \cdot g j)) \to\\\operatorname{star} (\operatorname{fourierVacuum} g) = \operatorname{fourierVacuum} g \land \operatorname{fourierVacuum} g \cdot \operatorname{fourierVacuum} g = \operatorname{fourierVacuum} g \land (\forall k , k < L \to \operatorname{totalMode} g k \cdot \operatorname{fourierVacuum} g = 0 \land \operatorname{fourierVacuum} g \cdot \operatorname{star} (\operatorname{totalMode} g k) = 0) \land \operatorname{cliffordAverage} g (\operatorname{fourierVacuum} g) = (((1 / 2 : \mathbb{C}))^{L}) \cdot (1 : R)\end{aligned}$$
 
@@ -210,7 +222,7 @@ $$\begin{aligned}\forall (R : \operatorname{Type}),\\{}[\operatorname{Ring} R] ,
 
 The product of Fourier number projections is a Hermitian idempotent. Every Fourier annihilator kills it on the left and its adjoint kills it on the right. Averaging conjugations by all Majoranas gives exactly 2^(−L) times the identity.
 
-**Lemma 1.18 (fourierVacuum psd).**
+**Lemma 1.19 (fourierVacuum psd).**
 
 $$\begin{aligned}\forall (\iota : \operatorname{Type}),\\{}[\operatorname{Fintype} \iota] ,\\{}[\operatorname{DecidableEq} \iota] ,\\\forall (L : \mathbb{N}),\\(0 < L) \to\\\forall (g : \operatorname{Fin} (2 \cdot L) \to \operatorname{Matrix} \iota \iota \mathbb{C}),\\(\forall j , g j \cdot g j = 1) \to\\(\forall j , \operatorname{star} (g j) = g j) \to\\(\forall j k , j \neq k \to g j \cdot g k = - (g k \cdot g j)) \to\\(\operatorname{fourierVacuum} g) . \operatorname{PosSemidef}\end{aligned}$$
 
@@ -222,7 +234,7 @@ $$\begin{aligned}\forall (\iota : \operatorname{Type}),\\{}[\operatorname{Fintyp
 
 This fourierVacuum psd identity is used in the FourierCliffordVacuum construction.
 
-**Lemma 1.19 (fourierVacuum covariance).**
+**Lemma 1.20 (fourierVacuum covariance).**
 
 $$\begin{aligned}\forall (R : \operatorname{Type}),\\{}[\operatorname{Ring} R] ,\\{}[\operatorname{Algebra} \mathbb{C} R] ,\\{}[\operatorname{StarRing} R] ,\\{}[\operatorname{StarModule} \mathbb{C} R] ,\\\forall (L : \mathbb{N}),\\(0 < L) \to\\\forall (g : \operatorname{Fin} (2 \cdot L) \to R),\\(\forall j , g j \cdot g j = 1) \to\\(\forall j , \operatorname{star} (g j) = g j) \to\\(\forall j k , j \neq k \to g j \cdot g k = - (g k \cdot g j)) \to\\\forall (j : \operatorname{Fin} (2 \cdot L)),\\\forall (k : \operatorname{Fin} (2 \cdot L)),\\\operatorname{cliffordAverage} g (g j \cdot g k \cdot \operatorname{fourierVacuum} g) = (4 \cdot \sum r : \operatorname{Fin} L , \operatorname{star} (\operatorname{modeCoeff} L r j) \cdot \operatorname{modeCoeff} L r k) \cdot \operatorname{cliffordAverage} g (\operatorname{fourierVacuum} g)\end{aligned}$$
 
@@ -239,6 +251,7 @@ This fourierVacuum covariance identity is used in the FourierCliffordVacuum cons
 - Truth anchor: `D5/S3/Quantum/Measurements/CliffordJointMeasurability/FourierCliffordVacuum.CAR_nilpotent`
 - Truth anchor: `D5/S3/Quantum/Measurements/CliffordJointMeasurability/FourierCliffordVacuum.averaging`
 - Truth anchor: `D5/S3/Quantum/Measurements/CliffordJointMeasurability/FourierCliffordVacuum.cliffordAverage`
+- Truth anchor: `D5/S3/Quantum/Measurements/CliffordJointMeasurability/FourierCliffordVacuum.cliffordLinear_anticommutator`
 - Truth anchor: `D5/S3/Quantum/Measurements/CliffordJointMeasurability/FourierCliffordVacuum.cycleFrequency`
 - Truth anchor: `D5/S3/Quantum/Measurements/CliffordJointMeasurability/FourierCliffordVacuum.finiteTwirl`
 - Truth anchor: `D5/S3/Quantum/Measurements/CliffordJointMeasurability/FourierCliffordVacuum.finiteTwirl_step`

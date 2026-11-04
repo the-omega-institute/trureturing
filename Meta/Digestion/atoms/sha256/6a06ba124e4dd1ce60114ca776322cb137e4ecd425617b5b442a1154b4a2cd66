@@ -1,0 +1,26 @@
+**Theorem 50.2 (four exact continuous-domain enclosures).** The following rational closed enclosures hold; the derivative in C4 is at fixed $\xi$, evaluated only at $q=9/20$.
+
+| Certificate | Function | Closed variable domain | Required bound | Pieces | Outward enclosure of the entire image |
+| --- | --- | --- | --- | --- | --- |
+| C1 | $\omega(9/4,q)$ | $q\in[0,1/10]$ | $\ge1/10000$ | 10 | $[313809/250000000,23008109/200000000]$ |
+| C2 | $\omega(9/4,q)$ | $q\in[3/8,1]$ | $\ge1/10000$ | 27 | $[129303/1000000000,19833451/31250000]$ |
+| C3 | $\omega(9/4,q)$ | $q\in[1/10,3/8]$ | $\ge-21/1000$ | 132 | $[-20992343/1000000000,4663773/250000000]$ |
+| C4 | $G'_\xi(9/20)$ | $\xi\in I$ | $\le-1/10$ | 1 | $[-453826117/1000000000,-24250863/125000000]$ |
+
+*Proof.* The derivative expression used in C4 is
+
+$$
+ G'_\xi(q)=-(4h+8s)-4\Gamma_0\left(h\sqrt p-\frac{R_0}{\sqrt p}+\frac{hy}{\sqrt q}-\frac{hx\sqrt q}{y}\right).
+\tag{50.6}
+$$
+
+Indeed $dx/dq=1/2$, $dy/dq=-x/(2y)$, and $d^2-e^2=4h+8s$, using $c^2-s^2=h$ and $h(c-s)=s$. Formula (50.6) is used only at the interior population $9/20$; it is not evaluated at $q=0,1$.
+
+Here is the complete compact partition specification. In each row let $[a,b]$ be its stated variable domain and normalize $z=(v-a)/(b-a)$. A run $(u,v,r)$ with denominator $N$ denotes all consecutive closed intervals $[j/N,(j+r)/N]$, $j=u,u+r,\ldots,v-r$, pulled back by $a+(b-a)z$.
+
+| Certificate | $N$ | All runs, in order |
+| --- | --- | --- |
+| C1 | 32 | $(0,8,4),(8,16,8),(16,24,4),(24,30,2),(30,32,1)$ |
+| C2 | 4096 | $(0,2,1),(2,8,2),(8,16,4),(16,48,8),(48,96,16),(96,192,32),(192,384,64),(384,512,128),(512,1024,256),(1024,2048,512),(2048,4096,1024)$ |
+| C3 | 512 | $(0,32,32),(32,96,16),(96,136,8),(136,172,4),(172,204,2),(204,262,1),(262,296,2),(296,336,4),(336,384,8),(384,448,16),(448,512,32)$ |
+| C4 | 1 | $(0,1,1)$ |

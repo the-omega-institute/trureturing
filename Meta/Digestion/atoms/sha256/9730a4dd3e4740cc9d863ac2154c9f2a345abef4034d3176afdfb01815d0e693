@@ -1,0 +1,2 @@
+The full coefficient space, rather than a known-factor subspace such as $g=(1+t^2)(a+bt)$, is essential in Lemmas 2.2–2.3. No conclusion here changes the validity or scope of the known-factor recovery results cited in IV. Invertible fixed changes of coefficient basis can be absorbed into the output matrix and do not change the capacity conclusions. The restriction $d\ge1$ is essential to the collinearity argument and the pure-$J$ pair; no $d=0$ assertion is made by those proofs.
+

@@ -1,0 +1,52 @@
+#### 定理 9.3（树拼接的质量加权稳定界）
+
+设两套一致边缘与耦合为 $(\mu_i,\pi_e)$、$(\nu_i,\chi_e)$，
+所得 Markov 树律为 $P,Q$，且 $|V|\ge2$。则
+
+$$
+\boxed{
+\operatorname{TV}(P,Q)\le
+\min\left\{1,\
+\sum_{e\in E}\operatorname{TV}(\pi_e,\chi_e)
++\sum_{i\in V}(\deg i-1)\operatorname{TV}(\mu_i,\nu_i)\right\}.
+}
+$$
+
+若全部节点边缘相同，则
+
+$$
+\boxed{\operatorname{TV}(P,Q)\le\min\left\{1,\sum_{e\in E}\operatorname{TV}(\pi_e,\chi_e)\right\}.}
+$$
+
+后一界的边系数一是尖锐的。
+
+**证明。**
+
+选一条根边，以其联合律为初始分布，其余边向外。
+从 $Q$ 出发，按叶到根顺序逐个将条件核 $L_{j|i}$ 换为 $K_{j|i}$，
+最后替换根边。每一步祖先尚未改变，父节点边缘仍为 $\nu_i$。
+替换这一核所产生的 TV 为
+$\sum_a\nu_i(a)\operatorname{TV}(K_{j|i}(\cdot|a),L_{j|i}(\cdot|a))$；
+其余归一化条件因子求和不会增加差异。
+由
+
+$$
+\nu_iK-\nu_iL=(\mu_iK-\nu_iL)+(\nu_i-\mu_i)K
+$$
+
+和三角不等式，该步不超过
+$\operatorname{TV}(\pi_{ij},\chi_{ij})+\operatorname{TV}(\mu_i,\nu_i)$。
+各节点作父节点恰 $\deg i-1$ 次，根边替换贡献该边 TV。
+将各步相加并使用 TV 不超过一，得式。
+若节点边缘相同，第二项为零；
+仅改变一条边时，边投影给反向 TV 下界，所以等号达到。
+
+∎
+
+这说明条件核里的小分母，在无条件全律中可由父节点质量抵消。
+固定极低质量分支的条件预测仍可能敏感。
+对越来越深的树，局部误差可和给统一预算；只要求每条边有同一个固定误差，
+则累计预算仍可随边数增长。归一化本身不提供收敛速度。
+
+<a id="section-10"></a>
+

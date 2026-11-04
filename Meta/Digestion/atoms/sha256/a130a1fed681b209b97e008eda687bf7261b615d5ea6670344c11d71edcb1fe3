@@ -1,0 +1,6 @@
+**定义 21.1（Class $\mathcal C$）。** In Definition 19.1 let
+$H\in\mathcal C$ mean that for every vertex $p$, at least one
+actual connected component of $H[N_H(p)]$ is bipartite or is a
+simple odd cycle $C_n$, $n\geq3$. A singleton component is
+bipartite. All other neighborhood components are unrestricted.
+

@@ -1,0 +1,21 @@
+**Proposition 4.3 (endpoints and a strict conditional example).** The tests include all of the following cases.
+
+(a) If $d_n=d_o$, the old code already determines the new code on every entry; installing its known update program requires no new source operation or read. If $d_n=1$, every axis is in $G$, and the sweep acquires full residues modulo $H$. If the new library is empty, $d_n=d_o=H$, so the first case applies. The same zero-read shortcut applies when a nonempty library has all addends divisible by $H$.
+
+(b) The saturated $2$-axis exception in (AQBR.14) is genuine. For $H=8,d_o=8,d_n=4$, the low new unit modulus is $2$ and has one unit; return is possible on every entry even though some entry depths are below the new translation depth. For $H=2$ all divisor pairs satisfy (AQBR.14). No inverse modulo one is required in any of these cases.
+
+(c) For $H=8,d_o=8,d_n=2$ and actual library $\{2\}$, every odd entry has $r_2=0<e=1$ and $m_2=\varphi(4)/\varphi(1)=2$. Acquisition-and-return on the complete odd fiber is impossible. In contrast, on its genuinely known subdomain $E=\{C\ge1:C\equiv1\pmod4\}$ the new label is constant, so it is possible without a new read. Treating that narrower archive as free would change the initial contract.
+
+(d) A narrower domain need not have a constant new label. Take $H=72,d_o=72,d_n=2$, actual library $\{2\}$, and
+
+$$
+E=\{C\ge1:C\equiv1\text{ or }11\pmod{72}\}.
+\tag{AQBR.15}
+$$
+
+Both alternatives have the same old code, but different new labels. Only the $3$-axis is in $G$; it has full modulus $9$. Its entry residues $1$ and $2$ distinguish the two alternatives. Thus (AQBR.8) holds and the sweep with the genuine domain table acquires the differing $2$-axis label indirectly while returning modulo $72$. On the complete old fiber that return task is impossible.
+
+**Proof.** For (a) use the definitions and $d_n\mid d_o\mid H$; the updater is the supplied FARG100.5 updater. For (b), $\varphi(2)=1$, and at a modulus-one coordinate there is only one label. For (c), an old odd label for $d_o=H$ records only depth zero; the new low coordinate is $C\bmod4$. Theorem 4.1 and then (AQBR.8) give the two assertions.
+
+For (d), $72=2^3 3^2$. Since $d_o=H$, the old labels on both axes are depth zero. The new $2$-axis has $e=1$ and $r_2=0$, while the new $3$-axis has $e=0$, so $G$ is exactly the $3$-axis. Its two full projection residues are $1$ and $2$ modulo $9$. The new $2$-axis units are $1$ and $3$ modulo $4$. Thus the old label is shared, the new labels differ, and the projection separates them, proving (AQBR.8). The complete old unit fiber fails (AQBR.13) on the $2$-axis. $\square$
+

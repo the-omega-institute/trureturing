@@ -1,0 +1,57 @@
+### 与项目原五模式读口的明确对应
+
+项目使用五模式次序
+
+$$
+(N,2,3,5,25).
+$$
+
+在这个次序下，取归一状态
+
+<a id="eq-17"></a>
+
+$$
+\boxed{
+|\chi\rangle
+=
+(0,\ a_0,\ \sqrt Z,\ \sqrt Y,\ 0)^{\mathsf T}.
+}
+\tag{17}
+$$
+
+项目原有的三个对易占据读口
+
+$$
+\begin{aligned}
+N_X&=\operatorname{diag}(0,1,0,0,1),\\
+N_Y&=\operatorname{diag}(0,0,0,1,1),\\
+N_Z&=\operatorname{diag}(0,0,1,0,0)
+\end{aligned}
+$$
+
+恰好读出
+
+$$
+\langle N_X\rangle=X,\qquad
+\langle N_Y\rangle=Y,\qquad
+\langle N_Z\rangle=Z.
+$$
+
+这采用的就是项目原本的占据轴定义。原始定义及其与其他三轴表示的关系，见项目 [AURIC 三轴误差几何文档](https://github.com/the-omega-institute/trureturing/blob/08e8767227de53351c42cb35028e01de5e88287d/docs/develop/theory/AURIC_THREE_AXIS_ERROR_GEOMETRY_UNITARY_COMPATIBILITY_AND_ENDOGENOUS_STABILITY_V35.md)。
+
+这里还必须保存 $a_0$ 的符号，以及完整的 $H,\mathbf b$。因此，完整递归状态可以写成
+
+<a id="eq-18"></a>
+
+$$
+\boxed{
+\bigl(H,\mathbf b;\ a_0,X,Y,Z;\ S\bigr).
+}
+\tag{18}
+$$
+
+三轴负责表达本步的能量分配，矩阵负责保存所有已有关系。
+
+---
+
+<a id="section-6"></a>

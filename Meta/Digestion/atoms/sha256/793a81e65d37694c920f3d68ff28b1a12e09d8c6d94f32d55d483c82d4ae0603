@@ -1,0 +1,20 @@
+因此存在一个固定的
+
+$$
+0<\delta<\log2
+$$
+
+使得
+
+<a id="eq-6"></a>
+
+$$
+\boxed{
+\mathscr K(t)>0,\qquad
+\mathscr K'(t)<0,\qquad
+\mathscr K''(t)>0
+\quad(0<t\le\delta).
+}
+\tag{6}
+$$
+

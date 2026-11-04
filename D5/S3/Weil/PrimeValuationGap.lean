@@ -33,7 +33,7 @@ private theorem reciprocal_prime_bounds {p : ℕ} (hp : p.Prime) :
   exact ⟨inv_pos.mpr (Nat.cast_pos.mpr hp.pos),
     inv_lt_one_of_one_lt₀ (by exact_mod_cast hp.one_lt)⟩
 
-private theorem retention_pos {p : ℕ} (hp : p.Prime) (a : ℕ) :
+theorem retention_pos {p : ℕ} (hp : p.Prime) (a : ℕ) :
     0 < 1 - (p : ℝ)⁻¹ ^ (a + 1) :=
   sub_pos.mpr (pow_lt_one₀ (reciprocal_prime_bounds hp).1.le
     (reciprocal_prime_bounds hp).2 (by omega))
@@ -53,7 +53,7 @@ private theorem normalized_sigma_prime_pow {p : ℕ} (hp : p.Prime) (a : ℕ) :
   simp only [inv_pow, pow_succ]
   field_simp
 
-private theorem normalized_sigma_pow_mul {p m : ℕ} (hp : p.Prime)
+theorem normalized_sigma_pow_mul {p m : ℕ} (hp : p.Prime)
     (hm : p.Coprime m) (a : ℕ) :
     Z (p ^ a * m) =
       (1 - (p : ℝ)⁻¹ ^ (a + 1)) / (1 - (p : ℝ)⁻¹) * Z m := by
@@ -113,7 +113,7 @@ theorem prime_valuation_gap_pos {p : ℕ} (hp : p.Prime) (A : ℕ) :
   apply Real.log_neg (retention_pos hp A)
   exact sub_lt_self 1 (pow_pos (reciprocal_prime_bounds hp).1 _)
 
-private theorem tendsto_loglog_scale {c : ℝ} (hc : 0 < c) :
+theorem tendsto_loglog_scale {c : ℝ} (hc : 0 < c) :
     Tendsto (fun n : ℕ => Real.log (Real.log (c * n)) / Real.log (Real.log n))
       atTop (𝓝 1) := by
   have hlog : Tendsto (fun n : ℕ => Real.log (n : ℝ)) atTop atTop :=

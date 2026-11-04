@@ -1,0 +1,105 @@
+**定理 33.1（同一准备、同一记忆和共同合法后缀）。** 使用定理 32.2 的同一个固定 $\theta$、原仪器和准备 $P_0\otimes\tau$。令 $s_n$ 是先执行 $n$ 次完整调用、再执行一次完整调用时，最后一个新原标签为 $0$ 的未条件化概率。所有先前标签仍保存在档案中。则
+
+$$
+s_n=\frac14+\frac{3^{-n}}8
+\left[\cos(2(n+1)\theta)+\cos(4(n+1)\theta)\right],
+\qquad n\ge0.
+\tag{33.1}
+$$
+
+有限前缀为执行 $a$ 次完整调用，$0\le a\le4$；共同后缀为再执行 $b$ 次完整调用，继以一次完整调用并评价新标签 $0$，$0\le b\le4$。这个 $5\times5$ 原协议响应表
+
+$$
+\mathsf H_{ab}=s_{a+b},\qquad 0\le a,b\le4
+\tag{33.2}
+$$
+
+是实矩阵且可逆。最长条目只调用原仪器九次，不需要记忆读口、中间准备、复位、反馈或额外测量。
+
+证明。先保留全部原词概率。令 $L_{j,b}=K_jU_b$，
+$L_{w,b}=L_{j_m,b}\cdots L_{j_1,b}$ 对 $w=j_1\cdots j_m$，空词取 $I_H$。由 (32.3) 和初始 $\tau$ 的两个对角权重，同一完整历史的概率恰为
+
+$$
+p_\theta(w)=\frac12\sum_{b=1}^2
+\operatorname{Tr}(L_{w,b}P_0L_{w,b}^*),
+\qquad
+\sum_{w\in\{0,1,2,3\}^m}p_\theta(w)=1.
+\tag{33.3}
+$$
+
+每个 $L_{j,b}$ 中的 $1/\sqrt2$、初始 $1/2$、全部原失败词和零叶均保留。这里不存在一次成功后的重归一化，也不把失败权重换成一。原联合态连同档案的一个准确表示是
+$\frac12\sum_{w,b}|w\rangle\langle w|\otimes
+L_{w,b}P_0L_{w,b}^*\otimes Q_b$；
+对后缀继续使用 (32.3) 并追加原标签即可，不需要重新准备 $\tau$。
+
+为计算一个不读旧档案的事件，可以在证明中对旧词求和。写
+$P_j=(I+\mathbf n_j\cdot\boldsymbol\sigma)/2$，所给四面体满足
+$\sum_j\mathbf n_j=0$、$\sum_j\mathbf n_j\mathbf n_j^{\mathsf T}=(4/3)I_3$。
+因此其成熟的非选择性通道在任意 Bloch 坐标上为
+
+$$
+\mathcal D(X):=\sum_jK_jXK_j^*,\qquad
+\mathcal D\!\left(\frac{tI+\mathbf r\cdot\boldsymbol\sigma}{2}\right)
+=\frac{tI+(\mathbf r/3)\cdot\boldsymbol\sigma}{2}.
+\tag{33.4}
+$$
+
+这也可由 $P_jXP_j=\operatorname{Tr}(P_jX)P_j$ 直接代入求和验证，不引入新的设备。给定持续模式 $b$，每次完整调用的系统边缘是
+$\mathcal D\operatorname{Ad}_{U_b}$。从 $P_0$ 的 $\mathbf r_0=\mathbf e_z$ 出发，$n$ 次后
+
+$$
+\mathbf r_{b,n}=3^{-n}R_y(2bn\theta)\mathbf e_z.
+\tag{33.5}
+$$
+
+第 $n+1$ 次调用的新标签 $0$ 的概率是
+$\operatorname{Tr}(E_0U_b\rho_{b,n}U_b^*)
+=\frac14[1+3^{-n}\cos(2b(n+1)\theta)]$。
+对同一初始模式权重各 $1/2$ 求和，得到 (33.1)。这一步使用整个未条件化协议，不假设在给定旧记录之后 $b$ 仍均匀；这种条件分布通常会改变，(33.3) 已包含其改变。
+
+将 (33.1) 写成五个指数的精确和：
+
+$$
+\begin{aligned}
+z_0&=1,& c_0&=1/4,\\
+z_{\pm,b}&=3^{-1}e^{\pm2ib\theta},&
+c_{\pm,b}&=e^{\pm2ib\theta}/16\quad(b=1,2),\\
+s_n&=c_0z_0^n+\sum_{b=1}^2
+(c_{+,b}z_{+,b}^n+c_{-,b}z_{-,b}^n).
+\end{aligned}
+\tag{33.6}
+$$
+
+五个 $z$ 两两不同：$z_0$ 的模为一，其余的模为 $1/3$；
+四个角度 $-4\theta,-2\theta,2\theta,4\theta$ 不同且最大差 $8\theta<2\pi$。
+所有 $c$ 非零。以任意固定次序枚举这五项，令
+$Z_{a\ell}=z_\ell^a$，$0\le a,\ell\le4$。成熟的有限指数矩／Vandermonde 因子化直接给
+
+$$
+\mathsf H=Z\operatorname{diag}(c_\ell)Z^{\mathsf T},
+\qquad
+\det\mathsf H
+=\left(\prod_\ell c_\ell\right)
+\prod_{\ell<k}(z_k-z_\ell)^2
+=2^{-18}\prod_{\ell<k}(z_k-z_\ell)^2\ne0.
+\tag{33.7}
+$$
+
+这里是转置而非共轭转置，不声称 $\mathsf H$ 为正 Gram 阵。
+虽然计算使用复指数，(33.1) 保证原矩阵实；非零行列式故给实秩五。
+
+固定共同载体的准确含义。若存在共同实线性空间 $V$，$\dim_{\mathbb R}V\le4$，为这些原前缀指定共同预测向量 $x_a$，并为每个上述原后缀指定与 $a$ 无关的实线性评价 $\ell_b\in V^*$，使完整未来评价特别包含
+$s_{a+b}=\ell_b(x_a)$，则 $\mathsf H$ 经 $V$ 分解，秩至多四，与 (33.7) 矛盾。这个必要条件甚至不要求再假定时间齐次转移矩阵。若另有一个固定线性步进 $T$，通常写法只是 $x_a=T^ax_0$、$\ell_b=\ell_0T^b$。这是既有有限响应因子化方法的消费，不是本节发明的一般最小实现定理。
+
+档案长度不同不改变所用后缀：在所有有限词标记的档案直和中，调用总是追加一个原标签，旧档案只读保留，$H\otimes M$ 端口始终相同；所选后缀完全不依赖旧词及其长度。对九次内的见证，只需这个类型的有限部分。这是记录的数学类型描述，不增添填充标签或新的原操作。
+
+也可完全留在带原记录的细表中理解该因子化。取细行索引为长度 $0,\ldots,4$ 的原词 $w$，细列索引为长度 $0,\ldots,4$ 的原词 $v$ 后接新标签 $0$，细条目为 $p_\theta(wv0)$。对长度分别为 $a,b$ 的细行、细列求和，恰得
+
+$$
+\mathsf H_{ab}
+=\sum_{\substack{|w|=a\\|v|=b}}p_\theta(wv0).
+\tag{33.8}
+$$
+
+所以 $\mathsf H$ 是完整未归一化细表的固定行、列求和，若细表经某个共同四维空间线性分解，这个求和表也必经它分解。求和未丢失任何原始质量或访问权限；它只选了已有的未来事件。允许按每个旧历史另换载体、评价或装置，就不是本结论所排除的共同预测载体；将这种额外上下文保留为状态时，其维数须一并计入。这里证明的是指定有限表的秩五和任何共同实线性载体的维数下界；没有给出未受限全未来载体的维数上界，尤其不声称其维数恰为五。$\square$
+

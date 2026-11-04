@@ -1,0 +1,16 @@
+**Theorem 3.8 (Reduction to two- and three-party coarse data).** For every $\mathtt q\ge3$, every normalized pure qubit stabilizer state and every colouring,
+
+$$
+S_3^{(\mathtt q)}=3^{2-\mathtt q}\Bigg[\sum_{\pi\in\Pi_3(\mathtt q)}3\,S_3^{(3)}(\pi)+\sum_{\{X,Y\}\in\Pi_2(\mathtt q)}\big(3-2^{|X|-1}-2^{|Y|-1}\big)\,S_3^{(2)}(\{X,Y\})\Bigg].
+$$
+
+Stance: suspected-novel (§6).
+
+**Proof.** Write $K=\tfrac12\log2$. By Corollary 3.5, for $\pi\in\Pi_3(\mathtt q)$ the partitions $\sigma\ge\pi$ with two or three blocks are $\pi$ itself and its three two-block coarsenings, so $3\,S_3^{(3)}(\pi)=K\big(r(\pi)+\sum_{\sigma\in\Pi_2(\mathtt q),\,\sigma\ge\pi}r(\sigma)\big)$, and for $\sigma\in\Pi_2(\mathtt q)$, $S_3^{(2)}(\sigma)=K\,r(\sigma)$. Summing over $\pi\in\Pi_3(\mathtt q)$ and exchanging the order of summation, each $\sigma=\{X,Y\}\in\Pi_2(\mathtt q)$ is counted once for each of its $m(\sigma)=2^{|X|-1}+2^{|Y|-1}-2$ three-block refinements; indeed a three-block partition refining $\{X,Y\}$ keeps one of $X,Y$ as a block and splits the other into two nonempty blocks, which for a set of size $m$ can be done in $S(m,2)=2^{m-1}-1$ ways:
+
+$$
+\sum_{\pi\in\Pi_3(\mathtt q)}3\,S_3^{(3)}(\pi)=K\sum_{\pi\in\Pi_3(\mathtt q)}r(\pi)+K\sum_{\sigma\in\Pi_2(\mathtt q)}m(\sigma)\,r(\sigma).
+$$
+
+Adding $\sum_{\sigma}(1-m(\sigma))S_3^{(2)}(\sigma)=K\sum_\sigma(1-m(\sigma))r(\sigma)$ gives $K\sum_{\pi\in\Pi_2(\mathtt q)\cup\Pi_3(\mathtt q)}r(\pi)$, which by Theorem 3.4 equals $3^{\mathtt q-2}S_3^{(\mathtt q)}$. Since $1-m(\sigma)=3-2^{|X|-1}-2^{|Y|-1}$, the identity follows. ∎
+

@@ -12,6 +12,8 @@ The current is the existing LatticeFiniteNegativeGeneration.neutralMode D i m. F
 
 The grades are the full existing LatticePositiveEnergy.grade D h, defined by exact coefficient support at E(a,d)=bilinear D a a/2 + sum_x (x.2+1)*d(x), with E valued in Int. Same-mode Gram substitution preserves this oscillator weight. The factorial form pairs equal monomial exponents, while B pairs opposite charges, whose quadratic energies agree. Distinct basis energies are orthogonal; linear-span induction extends the conclusion to the entire grades, including infinite-dimensional or negative grades.
 
+substitution_monomial_weight is available at this original owner for direct reuse by OriginalSourceCoevaluation. Its unchanged proof applies to every same-mode complex matrix family and every monomial coefficient: the substituted monomial has integer weighted degree Finsupp.weight (fun x => x.2+1) alpha. The concrete inverse Gram substitution consumes this result to prove support before forming its finite fixed-grade representative.
+
 **Theorem 1.1 (Reflection isometry).**
 
 Lean statement: `D5/S3/VertexAlgebra/SourceBPZ/SourcePairingLaws.sourcePairing_theta`

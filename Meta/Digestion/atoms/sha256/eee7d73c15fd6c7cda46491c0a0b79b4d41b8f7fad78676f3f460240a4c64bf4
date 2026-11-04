@@ -1,0 +1,22 @@
+**Theorem 5.3 (Bipartition factorization).** For each nonempty $S\subseteq\{1,\dots,\mathtt q-1\}$ let $X_S=\{j\in\mathbb Z_n^{\mathtt q-1}:j_k=j_l\text{ for }k,l\in S,\ j_k=0\text{ for }k\notin S\}$, a cyclic subgroup of order $n$. Then:
+
+1. For $j\in X_S$ with common value $c$ on $S$, $\nu_j=p_S(1-p_S)\sin^2(\pi c/n)$; thus the factors of Proposition 5.1 indexed by $X_S$ are exactly the factors of the bipartite determinant $\Delta_2$ with $p=p_S$.
+2. $X_S\cap X_{S'}=\{0\}$ for $S\ne S'$.
+3. With $\mathcal O=\mathbb Z_n^{\mathtt q-1}\setminus\bigcup_SX_S$, the set of $j$ for which $\{0,j_1,\dots,j_{\mathtt q-1}\}$ has at least three elements,
+
+$$
+D_{\mathtt q}(\varepsilon)=\prod_{S}D_{2}^{(p_S)}(\varepsilon)\cdot\Omega_{\mathtt q}(\varepsilon),\qquad \Omega_{\mathtt q}(\varepsilon)=\prod_{j\in\mathcal O}\big(\varepsilon+(1-\varepsilon)^2\nu_j\big),
+$$
+
+where $D_2^{(p)}$ is the bipartite residual polynomial with weight $p$, $|\mathcal O|=n^{\mathtt q-1}-1-(2^{\mathtt q-1}-1)(n-1)$, every factor of $\Omega_{\mathtt q}(0)$ lies in $(0,\tfrac14]$, and
+
+$$
+\Omega_{\mathtt q}(0)=\frac{n^{\mathtt q-1}\kappa(\Gamma_{\mathtt q})}{4^{|\mathcal O|}\,n^{2(2^{\mathtt q-1}-1)}\prod_S\big(p_S(1-p_S)\big)^{n-1}}.
+$$
+
+4. For $n=2$, $\mathcal O=\varnothing$ and $D_{\mathtt q}=\prod_SD_2^{(p_S)}$ identically; equivalently $\varepsilon^{2^{\mathtt q-1}-2}\Delta_{\mathtt q}(\varepsilon)=\prod_S\Delta_2^{(p_S)}(\varepsilon)$.
+
+Stance: suspected-novel. For $\mathtt q=3$, $n=2$ item 4 is the fully symmetric case of the determinant identity behind the literature-attested $\mathrm{GM}^{(3)}_2=0$ of Camargo and Nishida, §4.
+
+**Proof.** (1) For $k<l$ both in $S$ or both outside $S$ (the party $\mathtt q$ is outside, with $j_{\mathtt q}=0$), $j_k=j_l$; for one in $S$ and one outside, $|j_k-j_l|=c$ up to sign. So $\nu_j=\sum_{k\in S,l\notin S}x_kx_l\sin^2(\pi c/n)=p_S(1-p_S)\sin^2(\pi c/n)$, and as $c$ runs over $\mathbb Z_n$ these are the factors of Theorem 5.2 with $p=p_S$. (2) A nonzero $j\in X_S$ has support exactly $S$. (3) By (2), $\prod_{j\ne0}$ splits into the products over $X_S\setminus\{0\}$ and over $\mathcal O$; the former are $D_2^{(p_S)}(\varepsilon)=\prod_{c\ne0}(\varepsilon+b_S\sin^2(\pi c/n))$ by (1), and $D_{\mathtt q}(\varepsilon)=\prod_{j\ne0}(\varepsilon+(1-\varepsilon)^2\nu_j)$ by Proposition 5.1. A vector $j$ lies in some $X_S$ iff its coordinates together with $j_{\mathtt q}=0$ take at most two values (the nonzero value, if any, occupying $S$), which gives the description and the count of $\mathcal O$. For $j\in\mathcal O$ the values are not all equal, so some pair has $j_k\ne j_l$ and $\nu_j>0$; the factor at $\varepsilon=0$ is $\nu_j$, which is at most $\tfrac14$ because $4\nu_j=\mu_{\chi_j}=1-|\lambda_{\chi_j}|^2\le1$. The formula for $\Omega_{\mathtt q}(0)$ divides $D_{\mathtt q}(0)$ from Proposition 5.1 by $\prod_SD_2^{(p_S)}(0)$ from Theorem 5.2 and uses $n^{\mathtt q-1}-1-(2^{\mathtt q-1}-1)(n-1)=|\mathcal O|$. (4) For $n=2$ every coordinate is $0$ or $1$, so $\mathcal O=\varnothing$; multiply by $\varepsilon^{2^{\mathtt q-1}-1}$ using $\Delta=\varepsilon D$. ∎
+

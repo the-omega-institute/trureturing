@@ -661,8 +661,14 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
     if len(parts) > 1:
         with (stage / ASSET).open("wb") as archive:
             for part in parts:
-                with (stage / part["name"]).open("rb") as source:
+                path = stage / part["name"]
+                start = archive.tell()
+                with path.open("rb") as source:
                     shutil.copyfileobj(source, archive, length=1024 * 1024)
+                archive.flush()
+                if archive.tell() - start != part["bytes"]:
+                    raise ValueError("part copy size mismatch: " + part["name"])
+                path.unlink()
     if (manifest.get("archive_sha256") != sha(stage / ASSET)
             or manifest.get("archive_bytes") != (stage / ASSET).stat().st_size):
         raise ValueError("archive checksum or size mismatch")

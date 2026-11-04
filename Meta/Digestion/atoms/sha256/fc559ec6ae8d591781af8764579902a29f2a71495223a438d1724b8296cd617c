@@ -1,0 +1,25 @@
+**Theorem 2.2 (Four-hub profile minimum and all equality cases).** For every $a\in[2,3]$,
+
+$$
+\min_{x\in\mathcal P_4(a)}J_4(x)=F_4(a).
+$$
+
+The unique profile attaining equality is
+
+$$
+x_{[4]}=a-2,
+\qquad
+x_{[4]\setminus\{i\}}=\frac{3-a}{4}\quad(1\le i\le4),
+$$
+
+with all one-, two- and other types of mass zero. The endpoint profiles are included: at $a=2$ the full type has zero mass, and at $a=3$ all mass is on the full type.
+
+**Proof.** Apply Lemma 2.1 with $s=4$ and $q=a+1$. Its lower bound is
+
+$$
+J_4(x)\ge
+\frac{16(37q-84)}{2q^2}=F_4(a),
+$$
+
+and its equality statement gives exactly the stated profile. ∎
+

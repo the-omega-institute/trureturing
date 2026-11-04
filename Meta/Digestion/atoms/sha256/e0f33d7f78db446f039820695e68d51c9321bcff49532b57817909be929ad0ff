@@ -1,0 +1,20 @@
+### 9.1 二元比较球
+
+对两个单位内容 $x,y$，令 $z=\langle x,y\rangle$，采用转置 Gram 的坐标约定
+
+$$
+R_{xy}=\frac12
+\begin{pmatrix}1&\bar z\\z&1\end{pmatrix}
+=\frac12(I+\mathbf r\cdot\boldsymbol\sigma),
+\qquad
+\mathbf r=(\operatorname{Re}  z,\operatorname{Im}  z,0).
+$$
+
+正核给 $|z|\le1$，因此 $\left\lVert \mathbf r\right\rVert \le1$。
+候选 N 起初只约束
+$2-2\operatorname{Re}  z' \le 2-2\operatorname{Re}  z$。
+A 迫出真正的反向输入后，$(x,-y)$ 的同一约束给反向不等式，
+所以实坐标被固定；J 及实际线性再固定虚坐标。
+因此整个二元关系图保持。
+许多这样的局部三维图仍须来自同一个共同正核，不能各自任意拼接。
+

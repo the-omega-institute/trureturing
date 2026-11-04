@@ -1,0 +1,73 @@
+**Theorem 43.6 (uniform separation of original strict global
+minimizers and their actual endpoint limits).** Suppose
+$D_{\mathrm{sel}}(\beta)>0$. Choose $0<r\le1$ as in Theorems
+43.3 and 43.5 near $\beta$. There is $\eta>0$ such that every
+original global minimizer at every level
+$\beta<\xi<\beta+\eta$ satisfies
+
+$$
+              d_U(U,\xi)\ge\frac{r^2}{4}.
+\tag{43.22}
+$$
+
+These minima have $m(\xi)<N(\xi)$; no phase-feedback or rank
+restriction is imposed on the minimizing input. Every subsequential
+actual endpoint limit of such minimizers belongs to
+$\mathcal A_\beta\setminus\mathcal G_\beta$ and retains the same
+positive feedback separation. In particular an original strict global
+minimizing branch coalescing with $\mathcal G_\beta$ can do so only
+if $D_{\mathrm{sel}}(\beta)=0$.
+
+*Proof.* Take $\eta$ small enough that the entire right interval
+lies in $(0,R)$, in the isolation interval, and in (39.29).
+Fix any $X=(E,U)\in\mathcal A_\xi$ there. The same-effect
+spectral/Birkhoff decomposition of Theorem 42.3 has
+$w=\sum_j\theta_jw_j$ with all $\theta_j>0$ and
+$w_j\in\mathbb T^4$. By (42.25), every $(E,U_j)$ is a phase
+global minimizer at this same original level. Their values are
+$m(\xi)<N(\xi)$, so none is geometric and all satisfy
+$d_U(U_j,\xi)\ge r$. This inference uses actual global minimality
+and its equality preimage, not merely existence of a strict competitor.
+
+Let $v$ be any selected diagonal, including either orientation and
+any common scalar representative. Frobenius invariance under
+multiplication by $U_+$ gives $\|w_j-v\|_2\ge r$ for every $j$.
+Since $v,w_j$ have four unit-modulus coordinates,
+
+$$
+\begin{aligned}
+ \operatorname{Re}\langle v,v-w\rangle
+    &=\sum_j\theta_j\bigl(4-
+                          \operatorname{Re}\langle v,w_j\rangle\bigr)\\
+    &=\frac12\sum_j\theta_j\|v-w_j\|_2^2
+      \ge\frac{r^2}{2}.
+\end{aligned}
+\tag{43.23}
+$$
+
+Here $\langle v,w\rangle=\sum_k\bar v_kw_k$ and $\|v\|_2=2$.
+Cauchy--Schwarz therefore implies $\|v-w\|_2\ge r^2/4$.
+The original unitary $V_U=UU_+^\dagger$ has diagonal $w$, so
+
+$$
+ \|U-\operatorname{diag}(v)U_+\|_{\mathrm F}
+   =\|V_U-\operatorname{diag}(v)\|_{\mathrm F}
+   \ge\|w-v\|_2\ge r^2/4.
+\tag{43.24}
+$$
+
+Taking the infimum over all selected $v$ proves (43.22).
+This support calculation compares alternative whole feedbacks from
+the existing transport; it does not assign independent controls to
+spectral pieces of one effect. The input $E$ is unchanged in every
+replacement, including when it is mixed or singular.
+
+The compactness and endpoint continuity of Theorem 39.6 put every
+actual subsequential limit in $\mathcal A_\beta$.
+Continuity of the selected feedback orbits preserves (43.22), excluding
+$\mathcal G_\beta$. Actual global minimizing branches on a short
+right interval exist by that theorem and obey the same uniform
+separation. Finally (43.19) excludes negative determinant at $\beta$,
+and (43.22) excludes coalescence at positive determinant, proving the
+necessary zero-determinant condition. $\square$
+

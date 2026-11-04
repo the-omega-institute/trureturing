@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e24fdc32099df61ac7a5962994e44b289ec76abb83492b5b1f3d9fa8fbe706f0
+  normalized_sha256: sha256:e24fdc32099df61ac7a5962994e44b289ec76abb83492b5b1f3d9fa8fbe706f0
+cas_ref: sha256:e24fdc32099df61ac7a5962994e44b289ec76abb83492b5b1f3d9fa8fbe706f0
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/Walks/AndersonDefectExactNodal.common_root_trace_constraints
+    target_statement_id: sha256:3ed4f0db34006f93fafc27ef88f0129f7311e303d68da2ac0409c1e4ed12a779
+receipts:
+  unresolved_subitems: []

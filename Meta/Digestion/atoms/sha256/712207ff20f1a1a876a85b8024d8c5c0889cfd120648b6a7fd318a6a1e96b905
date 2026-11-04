@@ -1,0 +1,26 @@
+#### 命题 5.5（纤维 Bregman 关系）
+
+对同一正纤维的 $p_\kappa,p_\lambda$，
+
+$$
+\begin{aligned}
+D\!\left(p_\kappa\middle\Vert p_\lambda\right) 
+ &=F(\kappa)-F(\lambda)-\eta(\lambda)(\kappa-\lambda),
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+D\!\left(p_\kappa\middle\Vert p_\lambda\right) + D\!\left(p_\lambda\middle\Vert p_\kappa\right) 
+ &=(\kappa-\lambda)(\eta(\kappa)-\eta(\lambda)).
+\end{aligned}
+$$
+
+<a id="proof-5-5"></a>
+
+**证明。** 
+代入 $p_\kappa-p_\lambda=(\kappa-\lambda)h$，并用 $\sum h_s\log p_\lambda(s)=\eta(\lambda)$ 展开 KL。交换两点相加得到第二式。其非负性来自 $\eta$ 严格递增。
+ ∎
+
+<a id="sec-6"></a>
+

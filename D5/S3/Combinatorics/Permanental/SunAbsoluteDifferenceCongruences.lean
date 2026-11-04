@@ -29,7 +29,8 @@
    The source matrices use the literal one-based integer expression; the proof
    uses Mathlib conjugation directly, without a duplicate shift-action definition.
    The circulant ingredient is the Brualdi-Newman prime-order congruence.
-   Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/22464
+   Escape audit unfinished for the public alternating_sum declaration:
+   https://github.com/the-omega-institute/trureturing/issues/22464
 -/
 
 import Mathlib.FieldTheory.Finite.Basic
@@ -240,7 +241,7 @@ private theorem sign_entry {p : ℕ} (ho : Odd p) (s : ℤ)
     simp only [ZMod.natCast_self, zero_add]
     ring
 
-private theorem alternating_sum (m : ℕ) (s : ℤ) :
+theorem alternating_sum (m : ℕ) (s : ℤ) :
     (∑ r ∈ Finset.range (2*m+1), (-1 : ℤ)^r * ((r : ℤ)+s)) = (m : ℤ)+s := by
   let g : ℕ → ℤ := fun r => (-1)^r * (2*(r : ℤ)+2*s-1)
   have hstep (r : ℕ) : g (r+1) - g r = -4 * ((-1 : ℤ)^r * ((r : ℤ)+s)) := by

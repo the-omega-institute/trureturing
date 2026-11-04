@@ -1,0 +1,18 @@
+**定义 22.1（An infinite family with an unrestricted neighborhood
+component）。** For every odd integer $n\geq7$, define $F_n$ on
+the distinct vertices
+
+$$
+\{p\}\ \sqcup\ \{v_j:j\in\mathbb Z/n\mathbb Z\}
+\ \sqcup\ \{c_1,c_2,c_3,c_4\}
+\ \sqcup\ \{\ell_1,\ell_2,\ell_3,\ell_4\}.
+\tag{22.1}
+$$
+
+Include the rim edges $v_jv_{j+1}$, all spokes $pv_j$, all edges
+$pc_i$, all edges $c_ic_j$ for $i\ne j$, and the four edges
+$c_i\ell_i$. There are no other edges. Write
+$W=\{p\}\cup\{v_j\}$ and
+$Q=\{p,c_1,c_2,c_3,c_4,\ell_1,\ell_2,\ell_3,\ell_4\}$
+for its two overlapping regions.
+

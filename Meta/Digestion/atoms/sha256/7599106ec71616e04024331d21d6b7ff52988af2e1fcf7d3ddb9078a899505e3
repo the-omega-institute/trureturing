@@ -1,0 +1,16 @@
+**定义 35.3（唯一候选 C127）。** 在定义 35.1 的全部保留背景上，以 Z、定义 29.2 的完整 II 及逐字原 S 替换原 D 条款。具体为
+
+$$
+\begin{aligned}
+\mathrm{II}:\quad &[K,D^A_a]=D^A_{Ka}
+&& (K\in\mathfrak k_A,\ a\in E_A,\ \text{每个 }A),\\
+\mathrm S:\quad&
+-\operatorname{Tr}_{\mathbb R,E_P}\bigl((D^P_{d_0})^2\bigr)
+=\operatorname{Tr}_{\mathbb R,E_P}(L_{d_0}^2),
+&&d_0=d-z_P(d),\quad d=T_m(u_I).
+\end{aligned}
+\tag{35.2}
+$$
+
+$z_P$ 仍投影到整个原 Jordan 中心，S 仍在全部 $E_P$ 上取实算子迹。既不新增别的大小条件，也不改变原 $D$、原比较 $q/L$ 或原支持返回数 $q_{\rm ret}$。同一原指针可以有任意不等大小的非经典块和经典块。
+

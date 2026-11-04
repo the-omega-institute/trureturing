@@ -1,0 +1,22 @@
+### 定义 18.1（过程的共同参考记录）
+
+设输入空间 $H_Q$ 维数为 $d$，内部参考 $H_B$ 与它同维并有已对齐的基。
+记
+
+$$
+\lvert \Gamma\rangle_{BQ}=\frac1{\sqrt d}\sum_{j=1}^d\lvert j\rangle_B\lvert j\rangle_Q.
+$$
+
+对复线性、保 Hermitian 的候选过程 $\Lambda:M(H_Q)\to M(H_O)$，
+定义归一 Choi 表
+
+<a id="eq-c92-choi"></a>
+
+$$
+J_\Lambda=(\operatorname{id}_B\otimes\Lambda)(\lvert \Gamma\rangle\langle \Gamma\rvert)
+ =\frac1d\sum_{i,j}\lvert i\rangle\langle j\rvert\otimes\Lambda(\lvert i\rangle\langle j\rvert).
+\tag{18.1}
+$$
+
+它起初只是候选关系表；没有先把它宣称为合法态。
+
