@@ -182,6 +182,9 @@ domains:
   QuantumContext:
     stratum: S3
     definition: Finite-dimensional quantum contextuality witnesses and context-dependent quantities.
+  QuantumEntanglement:
+    stratum: S3
+    definition: Finite-dimensional multipartite entanglement, symmetric extensions and positivity under partial transposition.
   QuantumStates:
     stratum: S3
     definition: Finite-dimensional quantum states and their positive normalized expectation functionals.
