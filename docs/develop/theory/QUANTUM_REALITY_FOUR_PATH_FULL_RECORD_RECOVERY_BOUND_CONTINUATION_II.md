@@ -4537,7 +4537,7 @@ $(h+s)^2<(39/35)^2<5/4$. Finally
 $771/625-17/16=1711/10000$, proving (47.15). $\square$
 
 **Proposition 47.5 (actual core population and nongeometric strict
-exclusions).** The region (47.14) contains actual pairs beyond both
+exclusions).** The slices in (47.14) contain actual pairs beyond both
 older cap sectors, the trace-triangle sector, the population-sensitive
 spectral-exclusion sector (44.12), and the nonnegative-determinant
 slices of Theorem 46.6. It includes nongeometric phase feedbacks in
@@ -4632,7 +4632,8 @@ interior population, so the spectral-exclusion hypothesis remains
 false. The branch distance is still $13/4$ and the other branch is
 strictly larger by (42.20). Strict core inequalities, the sign gap,
 and membership in (47.14) persist on a relative neighborhood in the
-pure original domain, allowing level and population to vary. These
+pure original domain restricted to $0<\rho\le13/4$, allowing level
+and population to vary. These
 are actual unscreened nongeometric pairs, not independent choices of
 recovery moduli. $\square$
 
