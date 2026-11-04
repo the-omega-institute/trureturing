@@ -61,5 +61,5 @@ Finally, the condition at every sink supplies the condition at (0,0), so the div
 - Truth anchor: `D5/S3/StatisticalMechanics/SandpileCompleteMaximalIdentity.claim`
 - Truth anchor: `D5/S3/StatisticalMechanics/SandpileCompleteMaximalIdentity.maximalIdentityAt`
 - Truth anchor: `D5/S3/StatisticalMechanics/SandpileCompleteMaximalIdentity.result`
+- Dependency: [D5/S3/Combinatorics/Graph/Domination/LeeLiuThreeRowIntegerDomination](../Combinatorics/Graph/Domination/LeeLiuThreeRowIntegerDomination.md)
 - Dependency: [D5/S3/Combinatorics/SpectralGraph/TwinFreeThetaRecurrence](../Combinatorics/SpectralGraph/TwinFreeThetaRecurrence.md)
-- Dependency: [D5/S3/StatisticalMechanics/Percolation/DirectProductCyclePathBootstrap](Percolation/DirectProductCyclePathBootstrap.md)
