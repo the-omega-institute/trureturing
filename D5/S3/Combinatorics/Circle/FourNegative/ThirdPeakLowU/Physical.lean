@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:consumed-low-u-support)
    mirror-E: none(waiver:physical-low-u-construction)
-   anchors: [D5/S3/Combinatorics/Circle/FourNegative/PacketNormalForm/Endpoint]
+   anchors: []
    utility: none
    digest: Exact native low-U masses and finite physical endpoint checks. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLowU.Banks

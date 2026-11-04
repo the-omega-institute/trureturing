@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/ThirdPeakLowU/Endpoint
    mirror-E: none(waiver:physical-low-u-construction)
-   anchors: [D5/S3/Combinatorics/Circle/FourNegative/PacketNormalForm/Endpoint]
+   anchors: []
    utility: none
    digest: Both unbounded original-source low-U physical joint lifts. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLowU.Constructors

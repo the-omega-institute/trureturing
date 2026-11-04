@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:consumed-low-u-support)
    mirror-E: none(waiver:physical-low-u-construction)
-   anchors: [D5/S3/Combinatorics/Circle/FourNegative/PacketNormalForm/Endpoint]
+   anchors: []
    utility: none
    digest: Polynomial inequalities for unbounded low-U selection. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLowU.Banks
