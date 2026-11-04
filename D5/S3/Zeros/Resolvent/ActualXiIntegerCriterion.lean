@@ -4,7 +4,7 @@
    mirror-E: none(waiver:actual-analytic-zero-source)
    anchors: []
    utility: none
-   digest: Every failure of standard RH produces a finite integer negative actual xi Hankel direction. -/
+   digest: RH failure produces a finite integer negative actual xi Hankel direction. -/
 
 import D5.S3.Zeros.Resolvent.ActualXiDictionary
 import D5.S3.Zeros.ActualZeroGeometry
@@ -43,7 +43,7 @@ private theorem node_large_finite (r : ℝ) (hr : 0 < r) :
     {n : PositiveZero | r ≤ ‖node n‖}.Finite := by
   have hF : {n : ℕ | ‖actualData.gamma n‖ ≤ r⁻¹}.Finite :=
     actualData.locallyFinite r⁻¹
-  have hpre := hF.preimage (f := fun n : PositiveZero => (n : ℕ)) Subtype.val_injective
+  have hpre := hF.preimage (f := fun n : PositiveZero => (n : ℕ)) Subtype.val_injective.injOn
   apply hpre.subset
   intro n hn
   change ‖actualData.gamma n‖ ≤ r⁻¹
@@ -51,7 +51,7 @@ private theorem node_large_finite (r : ℝ) (hr : 0 < r) :
   have hgp : 0 < ‖actualData.gamma n‖ ^ 2 := by positivity
   have hm : r * ‖actualData.gamma n‖ ^ 2 ≤ 1 := by
     have h := hn
-    rw [Set.mem_setOf_eq, node_norm, inv_eq_one_div] at h
+    rw [Set.mem_ofPred_eq, node_norm, inv_eq_one_div] at h
     exact (le_div_iff₀ hgp).mp h
   rw [inv_eq_one_div]
   apply (le_div_iff₀ hr).mpr
@@ -69,7 +69,7 @@ private theorem rh_failure_nonreal (hRH : ¬ RiemannHypothesis) :
     obtain ⟨n, hn⟩ := actualData.zero_exhaustive (by exact hrho)
     rw [← hn]
     exact hall n
-  push_neg at hfail
+  push Not at hfail
   obtain ⟨n, hn⟩ := hfail
   have him : (actualData.zero n).im ≠ 0 := by
     intro h
@@ -102,8 +102,10 @@ theorem actual_xi_integer_negative_of_not_rh (hRH : ¬ RiemannHypothesis) :
     (fun i => (node_norm_lt_one i).le) node_injective node_conjugation weight_conjugation
     weight_norm_summable node_large_finite n hn (weight_ne_zero n)
   refine ⟨N, u, ?_⟩
-  simpa only [zero_mul, zero_add, pow_zero, one_mul] using
-    (actual_xi_hankel_identity N 0 (fun a => (u a : ℝ))).trans_lt hu
+  have hid := actual_xi_hankel_identity N 0 (fun a => (u a : ℝ))
+  simp only [mul_zero, zero_add, pow_zero, one_mul, Complex.ofReal_intCast] at hid
+  rw [hid]
+  exact hu
 
 /-- RH is equivalent to nonnegativity in every degree for every integer
 coefficient vector. This does not assert either side unconditionally. -/
@@ -113,7 +115,7 @@ theorem rh_iff_actual_xi_integer_hankel_nonnegative :
         (u a : ℝ) * (u b : ℝ) * xiCoefficient ((a : ℕ) + (b : ℕ)) := by
   constructor
   · intro hRH N u
-    simpa only [zero_mul, zero_add] using
+    simpa only [mul_zero, zero_add] using
       actual_xi_hankel_nonnegative_of_rh hRH N 0 (fun a => (u a : ℝ))
   · intro hpos
     by_contra hRH
