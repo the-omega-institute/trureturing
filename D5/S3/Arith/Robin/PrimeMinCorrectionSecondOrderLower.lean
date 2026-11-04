@@ -250,6 +250,7 @@ private theorem profile_last_lipschitz {x : ℝ} (hx : 1 ≤ x) (hxs : x ≤ Rea
       ⟨hs, le_rfl⟩) (show x ∈ Set.Icc 1 (Real.sqrt 2) from ⟨hx, hxs⟩)
   simpa only [Real.norm_eq_abs, F] using hh
 
+-- The four rational and stationary-profile remainders are elaborated in one proof term.
 set_option maxHeartbeats 800000 in
 private theorem profile_error {h x : ℝ} (hh0 : 0 ≤ h) (hh1 : h ≤ 1)
     (hx : 1 ≤ x) (hxs : x ≤ Real.sqrt 2)
@@ -677,13 +678,13 @@ private theorem uniform_finite_lower :
     have hb4 : 6*(r/ρ)*L*(1/Real.log ρ)^4 ≤ 96*h^3 := by
       calc
         _ ≤ 6*1*L*(2*h)^4 := mul_le_mul
-          (by nlinarith [mul_le_mul_of_nonneg_right hratio hL.le]) h4
+          (by nlinarith only [mul_le_mul_of_nonneg_right hratio hL.le]) h4
           (by positivity) (by positivity)
         _ = 96*h^3 := by dsimp [h]; field_simp; ring
     have hb9 : 5*(r/ρ)*L*(1/Real.log ρ)^9 ≤ 2560*h^8 := by
       calc
         _ ≤ 5*1*L*(2*h)^9 := mul_le_mul
-          (by nlinarith [mul_le_mul_of_nonneg_right hratio hL.le]) h9
+          (by nlinarith only [mul_le_mul_of_nonneg_right hratio hL.le]) h9
           (by positivity) (by positivity)
         _ = 2560*h^8 := by dsimp [h]; field_simp; ring
     rw [mul_add, he4, he9]
@@ -698,7 +699,7 @@ private theorem uniform_finite_lower :
       have hid2 : 2/((P:ℝ)*v) = (2*v^2)/((P:ℝ)*v^3) := by field_simp; ring
       rw [hid, hid2]
       apply div_le_div_of_nonneg_right _ (by positivity)
-      nlinarith [sq_nonneg v]
+      nlinarith only [hv9, sq_nonneg v]
     have hnorm : r*L*(2/((P:ℝ)*v)) ≤ 4/(c*r) := by
       rw [← mul_div_assoc]
       apply (div_le_div_iff₀ (mul_pos hP0 hv) (mul_pos hc hr)).mpr
@@ -828,7 +829,7 @@ theorem uniform_min_tail_robin_second_order_lower :
       (x := X) (y := θ (P:ℝ)) hX1 htheta (by linarith)
     have ht' : Real.log (Real.log (θ (P:ℝ))) - Real.log (Real.log X) <
         (θ (P:ℝ)-X)/(X*L) := by
-      simpa only [ActualRobinClockCovariance.g, div_eq_mul_inv, L] using ht
+      simpa only [ActualRobinClockCovariance.g, div_eq_mul_inv, one_mul, L] using ht
     have hclock : 1/(2*L) < Real.log (Real.log X)-Real.log (Real.log (θ (P:ℝ))) := by
       have hcharge : 1/(2*L) < (X-θ (P:ℝ))/(X*L) := by
         apply (div_lt_div_iff₀ (by positivity : 0<2*L) (mul_pos hX0 hL)).mpr
