@@ -64,11 +64,12 @@ private lemma interpolation_diagonal {ι : Type*} [Fintype ι] [DecidableEq ι]
       (Matrix.diagonal (fun i => ((1 + u * h.eigenvalues i : ℝ) : ℂ))) := by
   have hd : Matrix.diagonal (fun i => ((1 + u * h.eigenvalues i : ℝ) : ℂ)) =
       1 + (u : ℂ) • Matrix.diagonal (RCLike.ofReal ∘ h.eigenvalues) := by
-    ext i j
-    by_cases hij : i = j
-    · subst j
-      simp (config := { congrConsts := false }) [Matrix.smul_apply]
-    · simp (config := { congrConsts := false }) [hij, Matrix.smul_apply]
+    rw [← Matrix.diagonal_one, ← Matrix.diagonal_smul, Matrix.diagonal_add]
+    congr 1
+    funext i
+    simp only [Pi.smul_apply, Function.comp_apply, smul_eq_mul,
+      Complex.ofReal_add, Complex.ofReal_one, Complex.ofReal_mul,
+      RCLike.ofReal_eq_complex_ofReal]
   rw [hd, map_add, map_one, map_smul, ← h.spectral_theorem]
   rfl
 
@@ -93,12 +94,19 @@ private lemma interpolation_posDef {ι : Type*} [Fintype ι] [DecidableEq ι]
     (G : Matrix ι ι ℝ) (h : (Complex.I • G.map Complex.ofReal).IsHermitian)
     (hb : ∀ i, |h.eigenvalues i| ≤ 1) {u : ℝ} (hu0 : 0 ≤ u) (hu1 : u < 1) :
     (interpolation G u).PosDef := by
-  rw [interpolation_diagonal G h u, Unitary.conjStarAlgAut_apply,
-    Unitary.isUnit_coe.posDef_star_right_conjugate_iff, Matrix.posDef_diagonal_iff]
-  intro i
-  rw [Complex.zero_lt_real]
-  have hi := (abs_le.mp (hb i)).1
-  nlinarith [mul_nonneg hu0 (by linarith : 0 ≤ h.eigenvalues i + 1)]
+  have hfull : D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.physicalOn
+      (1 : Matrix ι ι ℝ) G := by
+    refine ⟨Matrix.isSymm_one, ?_⟩
+    rw [Matrix.map_one _ Complex.ofReal_zero Complex.ofReal_one]
+    simpa only [interpolation, Complex.ofReal_one, one_smul] using
+      (interpolation_nonneg_iff G h 1).mpr (fun i => by
+        have hi := (abs_le.mp (hb i)).1
+        simpa only [one_mul] using (show 0 ≤ 1 + h.eigenvalues i by linarith))
+  simpa only [interpolation, Matrix.map_one _ Complex.ofReal_zero Complex.ofReal_one] using
+    D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.shifted_posDef
+      (1 : Matrix ι ι ℝ) G hfull
+      (by simpa only [Matrix.map_one _ Complex.ofReal_zero Complex.ofReal_one] using
+        (Matrix.PosDef.one : (1 : Matrix ι ι ℂ).PosDef)) hu0 hu1
 
 private lemma reduced_physical {n : ℕ}
     (G : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ) (hG : physicalCovariance G)
@@ -136,15 +144,8 @@ private lemma determinant_log_identity {ι : Type*} [Fintype ι] [DecidableEq ι
     Real.log (interpolation G u).det.re =
       (1 / 2 : ℝ) * ∑ i, Real.log (1 - u ^ 2 * h.eigenvalues i ^ 2) := by
   have hd (t : ℝ) : (interpolation G t).det =
-      ∏ i, ((1 + t * h.eigenvalues i : ℝ) : ℂ) := by
-    calc
-      _ = ((1 : Matrix ι ι ℂ) + t • (Complex.I • G.map Complex.ofReal)).det := by
-        apply congrArg Matrix.det
-        change (1 : Matrix ι ι ℂ) + (t : ℂ) • (Complex.I • G.map Complex.ofReal) = _
-        ext i j
-        simp (config := { congrConsts := false }) only
-          [Matrix.add_apply, Matrix.smul_apply, Complex.real_smul, smul_eq_mul]
-      _ = _ := D5.S3.Quantum.Subentropy.DensityKernel.det_spectral h t
+      ∏ i, ((1 + t * h.eigenvalues i : ℝ) : ℂ) :=
+    D5.S3.Quantum.Subentropy.DensityKernel.det_spectral h t
   have ht : (interpolation G u)ᵀ = interpolation G (-u) := by
     change (1 + (u : ℂ) • (Complex.I • G.map Complex.ofReal))ᵀ =
       1 + ((-u : ℝ) : ℂ) • (Complex.I • G.map Complex.ofReal)
@@ -223,9 +224,7 @@ private lemma entropy_mixture {n : ℕ}
           exact Finset.sum_congr rfl (fun i _ => (hs i).2)
         _ = _ := by rw [Finset.sum_add_distrib]; simp (config := { congrConsts := false })
     have hcard : Fintype.card {p : Fin n × Fin 2 // p.1 ∈ X} = 2 * X.card := by
-      rw [Fintype.card_congr (Equiv.prodSubtypeFstEquivSubtypeProd
-        (p := fun i => i ∈ X) (β := Fin 2)), Fintype.card_prod]
-      simp (config := { congrConsts := false }) [Nat.mul_comm]
+      exact D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.reduced_card X
     rw [fermionicGaussianRenyiEntropy, dite_eq_left h, hsum, hint, hcard]
     push_cast
     ring
@@ -237,15 +236,11 @@ private lemma mode_interpolation_det {n : ℕ}
     ((interpolation G u).submatrix
       (Subtype.val : ↥Y → Fin n × Fin 2) Subtype.val).det =
       (interpolation (reducedCovariance G X) u).det := by
-  let e : ↥Y ≃ {p : Fin n × Fin 2 // p.1 ∈ X} :=
-    Equiv.subtypeEquivRight hYX
-  rw [interpolation_submatrix G _ Subtype.val_injective]
-  have heq : (interpolation (reducedCovariance G X) u).submatrix e e =
-      interpolation (G.submatrix (Subtype.val : ↥Y → Fin n × Fin 2) Subtype.val) u := by
-    rw [interpolation_submatrix _ e e.injective]
-    rfl
-  rw [← heq]
-  exact Matrix.det_submatrix_equiv_self e _
+  simpa only [interpolation, reducedCovariance,
+    Matrix.submatrix_one _ Subtype.val_injective,
+    Matrix.map_one _ Complex.ofReal_zero Complex.ofReal_one] using
+    D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity.mode_interpolation_det
+      (1 : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ) G Y X hYX u
 
 private lemma settlement_main : claim := by
   intro n G hG A B C hAB hAC hBC α ha0 ha1

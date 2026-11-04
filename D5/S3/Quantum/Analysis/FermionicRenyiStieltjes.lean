@@ -100,14 +100,11 @@ private lemma weight_decomposition {α u : ℝ} (ha0 : 0 < α) (ha1 : α < 1)
     rw [show Real.pi * (2 * α) = 2 * (Real.pi * α) by ring, Real.sin_two_mul]
   have hcos : Real.cos (Real.pi * (2 * α)) = 2 * Real.cos (Real.pi * α) ^ 2 - 1 := by
     rw [show Real.pi * (2 * α) = 2 * (Real.pi * α) by ring, Real.cos_two_mul]
-  have ha := Real.rpow_pos_of_pos hp α
-  have hb := Real.rpow_pos_of_pos hm α
-  have hab : (1 - u) ^ α < (1 + u) ^ α :=
-    Real.rpow_lt_rpow hm.le (by linarith [hu.1]) ha0
   have hdminus : 0 < ((1 + u) ^ α) ^ 2 + ((1 - u) ^ α) ^ 2 -
       2 * ((1 + u) ^ α * (1 - u) ^ α) * Real.cos (Real.pi * α) := by
-    nlinarith [sq_pos_of_pos (sub_pos.mpr hab),
-      mul_le_mul_of_nonneg_left (Real.cos_le_one (Real.pi * α)) (mul_pos ha hb).le]
+    simpa only [htwo _ hp.le, htwo _ hm.le, hprod] using
+      BosonicRenyiStieltjes.weight_denominator_pos ha0 (by linarith)
+        (ne_of_lt ha1) hu.1.le hu.2
   have hdplus := weight_denominator_pos ha0 ha1 hu.1.le hu.2
   rw [htwo _ hp.le, htwo _ hm.le, hprod] at hdplus
   have hdprod : ((1 + u) ^ α) ^ 4 + ((1 - u) ^ α) ^ 4 -

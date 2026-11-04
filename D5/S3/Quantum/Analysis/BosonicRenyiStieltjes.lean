@@ -40,7 +40,7 @@ private def poissonAngle (α p : ℝ) : ℝ :=
 private def weightPrimitive (α x : ℝ) : ℝ :=
   poissonAngle α (((1 - x) / (1 + x)) ^ α) / (Real.pi * (α - 1))
 
-private lemma weight_denominator_pos {α x : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+lemma weight_denominator_pos {α x : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) (hx0 : 0 ≤ x) (hx1 : x < 1) :
     0 < (1 + x) ^ (2 * α) + (1 - x) ^ (2 * α) -
       2 * (1 - x ^ 2) ^ α * Real.cos (Real.pi * α) := by

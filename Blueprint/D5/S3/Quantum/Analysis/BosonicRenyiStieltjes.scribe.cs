@@ -79,6 +79,11 @@ internal sealed class BosonicRenyiStieltjesDocument : IScribeDocumentDefinition
     }
     private static Formula WeightPositive() => All("α", All("x", OrderRange(
         Imp(LE(D(0), X("x")), Imp(LT(X("x"), D(1)), LT(D(0), Local("renyiWeight", Alpha, X("x"))))))));
+    private static Formula WeightDenominatorPositive() => All("α", All("x", OrderRange(
+        Imp(LE(D(0), X("x")), Imp(LT(X("x"), D(1)), LT(D(0),
+            Sub(Add(Pow(Add(D(1), X("x")), Mul(D(2), Alpha)),
+                    Pow(Sub(D(1), X("x")), Mul(D(2), Alpha))),
+                Mul(Mul(D(2), Pow(Sub(D(1), Pow(X("x"), D(2))), Alpha)), CosAngle))))))));
     private static Formula WeightIntegrable() => All("α", OrderRange(Integrable(Local("renyiWeight", Alpha), Ioo01)));
     private static Formula WeightMass() => All("α", OrderRange(
         Equal(Integral("x", Ioo01, Local("renyiWeight", Alpha, X("x"))), Div(D(1), D(2)))));
@@ -110,6 +115,11 @@ internal sealed class BosonicRenyiStieltjesDocument : IScribeDocumentDefinition
                 H("The logarithmic density"), StatementSource.FromAuthor(Disp(WeightDefinition())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The real density combines a signed sine factor with a power of 1−x² and a power Poisson denominator. Its positivity and integrability are asserted only for the order and interval ranges specified below."))), DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("weight-denominator-positive"), DeclarationHandle.Create(Module + ".weight_denominator_pos"),
+                H("Strict positivity of the power denominator"), StatementSource.FromAuthor(Disp(WeightDenominatorPositive())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For nonintegral orders between zero and two and 0≤x<1, the power denominator is a positive multiple of the Poisson quadratic."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("weight-positive"), DeclarationHandle.Create(Module + ".weight_pos"),
                 H("Strict positivity of the density"), StatementSource.FromAuthor(Disp(WeightPositive())),

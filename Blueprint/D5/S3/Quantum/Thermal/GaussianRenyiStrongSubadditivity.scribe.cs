@@ -111,6 +111,36 @@ internal sealed class GaussianRenyiStrongSubadditivityDocument : IScribeDocument
             Equal(Typed(Local("gaussianRenyiEntropy", Alpha, X("V"), Omega), Reals), conditional)))));
     }
     private static Formula Union(Formula left, Formula right) => Seq(Parenthesized(left), Sp, Cup, Sp, Parenthesized(right));
+    private static Formula ReducedCard() => All("n", Naturals,
+        All("X", At(Qualified("Finset"), FinOf(X("n"))),
+            Equal(At(Qualified("Fintype", "card"), ReducedIndices("p")),
+                Mul(D(2), At(Qualified("Finset", "card"), X("X"))))));
+    private static Formula ShiftedMatrix(Formula covariance, Formula form) =>
+        Add(RealMatrixInComplexes(covariance),
+            Smul(At(Qualified("Complex", "ofReal"), X("x")),
+                Smul(Qualified("Complex", "I"), RealMatrixInComplexes(form))));
+    private static Formula ShiftedPositive() => GenericMatrices(
+        Imp(Local("physicalOn", X("V"), Omega),
+            Imp(At(Qualified("Matrix", "PosDef"), RealMatrixInComplexes(X("V"))),
+                All("x", Reals, Imp(LE(D(0), X("x")), Imp(LT(X("x"), D(1)),
+                    At(Qualified("Matrix", "PosDef"), ShiftedMatrix(X("V"), Omega))))))));
+    private static Formula ModeInterpolationDet()
+    {
+        Formula selected = At(Qualified("Subtype"), LambdaOf("p", Indices, Member(X("p"), X("Y"))));
+        Formula projection = LambdaOf("p", selected, At(Qualified("Subtype", "val"), X("p")));
+        Formula correspondence = All("p", Indices, new Formula.Logic(
+            Parenthesized(Member(X("p"), X("Y"))), FormulaLogicOperator.Iff,
+            Parenthesized(Member(At(Qualified("Prod", "fst"), X("p")), X("X")))));
+        Formula equality = Equal(At(Qualified("Matrix", "det"),
+                Submatrix(ShiftedMatrix(X("V"), Omega), projection, projection)),
+            At(Qualified("Matrix", "det"), ShiftedMatrix(
+                Local("reducedCovariance", X("V"), X("X")),
+                Local("reducedCovariance", Omega, X("X")))));
+        return All("n", Naturals, All("V", ModeMatrix, All("ω", ModeMatrix,
+            All("Y", At(Qualified("Finset"), Indices),
+                All("X", At(Qualified("Finset"), FinOf(X("n"))),
+                    Imp(correspondence, All("x", Reals, equality)))))));
+    }
     private static Formula EntropyOn(Formula modes) => Local("gaussianRenyiEntropy", Alpha,
         Local("reducedCovariance", X("V"), modes), Local("reducedCovariance", Local("symplecticForm", X("n")), modes));
     private static Formula ClaimFormula()
@@ -162,6 +192,21 @@ internal sealed class GaussianRenyiStrongSubadditivityDocument : IScribeDocument
                 H("Entropy from the symplectic eigenvalues"), StatementSource.FromAuthor(Disp(EntropyDefinition())),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("When the symplectic operator is Hermitian, sum renyiFunction over the absolute values of all its eigenvalues and divide by two, accounting for the two signs of each symplectic eigenvalue. This gives Eq. renyi_bosonic_1 (RenyiGaussian_v2.tex, lines 216–220). The definition assigns zero in the non-Hermitian case. Empty mode sets also give zero."))), DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("reduced-card"), DeclarationHandle.Create(Module + ".reduced_card"),
+                H("Two indices per selected mode"), StatementSource.FromAuthor(Disp(ReducedCard())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The subtype retaining both quadratures of each mode in X has cardinality twice the cardinality of X."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("shifted-positive"), DeclarationHandle.Create(Module + ".shifted_posDef"),
+                H("Positive definiteness of the interpolation"), StatementSource.FromAuthor(Disp(ShiftedPositive())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("If V+iω is positive semidefinite and V is positive definite, their convex interpolation V+ixω is positive definite for 0≤x<1."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("mode-interpolation-det"), DeclarationHandle.Create(Module + ".mode_interpolation_det"),
+                H("Restriction of the interpolation determinant"), StatementSource.FromAuthor(Disp(ModeInterpolationDet())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("When Y consists exactly of the two quadratures of the modes in X, its principal interpolation determinant equals the determinant formed from the reduced matrices."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("claim"), DeclarationHandle.Create(Module + ".claim"),
                 H("Strong subadditivity for the stated orders"),

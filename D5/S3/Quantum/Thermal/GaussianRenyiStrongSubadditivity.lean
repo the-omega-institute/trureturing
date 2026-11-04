@@ -176,7 +176,7 @@ private lemma reduced_square {n : ℕ} (X : Finset (Fin n)) :
       {p : Fin n × Fin 2 // p.1 ∈ X} ℝ).submatrix f f)
   rw [Matrix.submatrix_one_equiv, Matrix.submatrix_one_equiv]
 
-private lemma reduced_card {n : ℕ} (X : Finset (Fin n)) :
+lemma reduced_card {n : ℕ} (X : Finset (Fin n)) :
     Fintype.card {p : Fin n × Fin 2 // p.1 ∈ X} = 2 * X.card := by
   rw [Fintype.card_congr (Equiv.prodSubtypeFstEquivSubtypeProd
     (p := fun i => i ∈ X) (β := Fin 2)), Fintype.card_prod]
@@ -359,7 +359,7 @@ private lemma symplectic_spectrum_lower_bound {ι : Type*} [Fintype ι] [Decidab
   · rw [abs_of_pos hn]
     nlinarith
 
-private lemma shifted_posDef {ι : Type*} [Fintype ι] [DecidableEq ι]
+lemma shifted_posDef {ι : Type*} [Fintype ι] [DecidableEq ι]
     (V ω : Matrix ι ι ℝ) (hV : physicalOn V ω)
     (hpos : (V.map Complex.ofReal).PosDef) {x : ℝ}
     (hx0 : 0 ≤ x) (hx1 : x < 1) :
@@ -712,7 +712,7 @@ theorem log_koteljanskii {ι : Type*} [DecidableEq ι]
   simpa only [Real.log_mul (hp (A ∪ B ∪ C)).ne' (hp B).ne',
     Real.log_mul (hp (A ∪ B)).ne' (hp (B ∪ C)).ne'] using hl
 
-private lemma mode_interpolation_det {n : ℕ}
+lemma mode_interpolation_det {n : ℕ}
     (V ω : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ)
     (Y : Finset (Fin n × Fin 2)) (X : Finset (Fin n))
     (hYX : ∀ p, p ∈ Y ↔ p.1 ∈ X) (x : ℝ) :
