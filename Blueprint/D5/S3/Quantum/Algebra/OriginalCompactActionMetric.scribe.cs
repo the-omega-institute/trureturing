@@ -36,7 +36,7 @@ internal sealed class OriginalCompactActionMetricDocument : IScribeDocumentDefin
             Open, Forall, Sp, F.Id("h"), Colon, g, Comma, Esc,
                 Forall, Sp, u, Comma, v, Colon, w, Comma, Esc,
                 pair(Call("h",u), Call("h",v)), Eq, pair(u,v), Close, Sp, Land, Sp,
-            Forall, Sp, c, Colon, real, Sp, Rightarrow, Sp, g, Comma, Esc,
+            Forall, Sp, c, Colon, real, Sp, To, Sp, g, Comma, Esc,
                 Call("c",D(0)), Eq, D(1), Sp, Rightarrow, Sp,
             Forall, Sp, k, Colon, Call("End",real,w), Comma, Esc,
                 Call("HasDerivAt",Call("originalOperatorCurve",c),k,D(0)),

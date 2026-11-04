@@ -14,7 +14,7 @@ internal sealed class OriginalCompactReciprocityDocument : IScribeDocumentDefini
             Describe.Lean(DescribeId.Create("actual-curve-lie-algebra"),
                 DeclarationHandle.Create(Prefix + "curveLieAlgebra"), H("The actual matrix tangent Lie algebra"),
                 StatementSource.FromAuthor(CurveFormula()), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Fix any finite-dimensional real inner product space W and an actual subgroup G of the units of its continuous endomorphism algebra. The initially chosen inner product is auxiliary; invariance is derived from compactness. The underlying submodule of curveLieAlgebra G consists exactly of all ambient operator derivatives at zero of actual G-valued curves c with c(0)=1. No abstract algebra, chosen smaller representation, rank or dimension is supplied instead.")),
+                Blocks(Paragraph(Text("Fix any finite-dimensional real inner product space W and an actual subgroup G of the units of its continuous endomorphism algebra. The initially chosen inner product is auxiliary; invariance is derived from compactness. The underlying submodule of curveLieAlgebra G consists exactly of all ambient operator derivatives at zero of actual G-valued curves c with c(0)=1. The curves require the displayed ambient derivative at zero; global regularity is not part of this definition. No abstract algebra, chosen smaller representation, rank or dimension is supplied instead.")),
                     Paragraph(Text("Products of original curves prove addition of velocities, scalar reparametrization proves scalar closure, and constant conjugation preserves velocities. Differentiate the conjugation of a velocity L by a curve with velocity K. Mathlib's derivative of inversion in a normed algebra gives derivative KL-LK. Difference quotients stay in the actual velocity subspace, which is closed because it is finite dimensional. Thus the original matrix commutator closes on exactly this tangent carrier. Compactness is not needed for this construction."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("entire-quotient-relation"),
                 DeclarationHandle.Create(Prefix + "fullRelation"), H("Every solution of the original equation"),
@@ -35,7 +35,7 @@ internal sealed class OriginalCompactReciprocityDocument : IScribeDocumentDefini
 
     private static Formula CurveFormula() => Disp(Seq(
         Call("Lie",F.Id("G")), Eq, OpenBrace, F.Id("K"), Colon, Esc,
-        Exists, Sp, F.Id("c"), Colon, F.Id("R"), Sp, Rightarrow, Sp, F.Id("G"), Comma, Esc,
+        Exists, Sp, F.Id("c"), Colon, F.Id("R"), Sp, To, Sp, F.Id("G"), Comma, Esc,
         Call("c",D(0)), Eq, D(1), Sp, Land, Sp,
         Call("HasDerivAt",Call("originalOperatorCurve",F.Id("c")),F.Id("K"),D(0)), CloseBrace));
 
