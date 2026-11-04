@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-endpoint-implementation)
    mirror-E: none(waiver:private-consumed-endpoint-implementation)
-   anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
+   anchors: [mathlib/module/Mathlib.Data.Int.ModEq]
    utility: none
    digest: Unbounded quotient and residue estimates for the two original opposite-maximum orders. -/
 import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
