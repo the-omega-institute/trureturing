@@ -65,7 +65,7 @@ abbrev coreLaw.{u} (P : Inputs.{u}) (f : candidate P) : Prop :=
 
 abbrev arena.{u} : Arena where
   signature := signature.{u}
-  Law R := ∀ P : Inputs.{u}, coreLaw P (R.readout () P sourceNorm P)
+  Law R := ∀ P : Inputs.{u}, coreLaw P (R.readout () P (sourceNorm P))
 
 theorem core_source_bridge.{u} : coreSourceScope.{u} ↔ arena.{u}.Law actual.{u} := by
   constructor

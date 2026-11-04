@@ -2,9 +2,9 @@
    generality: G
    mirror-B: D5/B/S3/Topology/OrderUnitNorm
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Analysis.Convex.Gauge, mathlib/module/Mathlib.Topology.Algebra.Module.FiniteDimension]
+   anchors: [mathlib/module/Mathlib.Analysis.Convex.Gauge]
    utility: none
-   digest: The original closed salient cone and interior unit determine an attained order norm and exact operator bounds. -/
+   digest: Closed salient cones with interior units yield exact order norms and operator bounds. -/
 
 module
 
@@ -57,13 +57,6 @@ def radii (v : E) : Set ℝ :=
 def orderNorm (v : E) : ℝ := sInf (A.radii v)
 
 private lemma unit_mem : A.unit ∈ A.cone := interior_subset A.interior_unit
-
-private lemma interval_zero : (0 : E) ∈ A.interval := by
-  simpa [interval] using And.intro A.unit_mem A.unit_mem
-
-private lemma interval_closed : IsClosed A.interval := by
-  exact (A.closed.preimage (continuous_const.sub continuous_id)).inter
-    (A.closed.preimage (continuous_const.add continuous_id))
 
 private lemma interval_convex : Convex ℝ A.interval := by
   intro x hx y hy a b ha hb hab
@@ -318,7 +311,6 @@ private lemma centered_bound (x : E) (hx : x ∈ A.cone) (hux : A.unit - x ∈ A
     rw [he]
     exact hx
 
-
 /-- The exponential of the given original operator in the original finite-dimensional space. -/
 def originalFlow [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E) (t : ℝ) : E →L[ℝ] E :=
   NormedSpace.exp (t • LinearMap.toContinuousLinearMap H)
@@ -391,8 +383,6 @@ private lemma centered_orbit_bound [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] 
       gcongr
     _ = β A.unit * ‖A.operator H * A.operator H‖ / 2 := by ring
 
-
-
 private lemma scalar_square_bound (f : ℝ → ℝ) (hf : ContDiff ℝ 2 f)
     (hpos : ∀ t, 0 ≤ f t) (M : ℝ)
     (hsecond : ∀ t, |iteratedDeriv 2 f t| ≤ M) :
@@ -425,8 +415,10 @@ private lemma orbit_hasDerivAt [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E)
   let : CompleteSpace E := FiniteDimensional.complete ℝ E
   have hd := (hasDerivAt_exp_smul_const (LinearMap.toContinuousLinearMap H) t).clm_apply
     (hasDerivAt_const t x)
-  have hb := (LinearMap.toContinuousLinearMap β).hasFDerivAt
-    ((NormedSpace.exp (t • LinearMap.toContinuousLinearMap H)) x)
+  have hb : HasFDerivAt (LinearMap.toContinuousLinearMap β)
+      (LinearMap.toContinuousLinearMap β)
+      ((NormedSpace.exp (t • LinearMap.toContinuousLinearMap H)) x) :=
+    (LinearMap.toContinuousLinearMap β).hasFDerivAt
   have h := hb.comp_hasDerivAt t hd
   simpa [Function.comp_def, originalFlow, mul_apply_eq_comp] using h
 
@@ -438,8 +430,10 @@ private lemma orbit_contDiff [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E)
       (fun s : ℝ => NormedSpace.exp (s • LinearMap.toContinuousLinearMap H)) := by
     apply contDiff_iff_contDiffAt.mpr
     intro s
+    have hs : ContDiff ℝ 2 (fun r : ℝ => r • LinearMap.toContinuousLinearMap H) :=
+      ((1 : ℝ →L[ℝ] ℝ).smulRight (LinearMap.toContinuousLinearMap H)).contDiff
     exact (NormedSpace.exp_analytic (s • LinearMap.toContinuousLinearMap H)).contDiffAt.comp s
-      (contDiff_id.smul contDiff_const).contDiffAt
+      hs.contDiffAt
   exact (LinearMap.toContinuousLinearMap β).contDiff.comp (he.clm_apply contDiff_const)
 
 private lemma reverse_certificate [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E)
