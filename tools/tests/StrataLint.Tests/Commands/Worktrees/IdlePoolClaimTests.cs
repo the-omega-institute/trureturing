@@ -109,10 +109,10 @@ public sealed partial class WorktreeCommandTests
 
         var result = WorktreeCommand.Run(repository.Path, arguments, new UnobservableActivityRunner(lowDisk));
 
-        Assert.Equal(!exact && !lowDisk, result.Success);
+        Assert.True(result.Success == (!exact && !lowDisk), result.Output + result.Error);
         if (exact || lowDisk)
         {
-            Assert.Equal(73, result.ExitCode);
+            Assert.True(result.ExitCode == 73, result.Error);
             Assert.Contains(lowDisk ? "WORKTREE_LOW_DISK_fixture" : "task_activity_unavailable:",
                 result.Error, StringComparison.Ordinal);
             Assert.Equal("", TestGit.Run(repository.Path, "branch", "--list", "lane/math/unobservable"));
@@ -121,8 +121,8 @@ public sealed partial class WorktreeCommandTests
         {
             using var receipt = JsonDocument.Parse(result.Output);
             Assert.Equal("succeeded", receipt.RootElement.GetProperty("status").GetString());
-            Assert.Equal(WorktreeHookFixture.RunGit(fresh, "rev-parse", "--show-toplevel").Trim(),
-                receipt.RootElement.GetProperty("path").GetString());
+            Assert.Equal(fresh, receipt.RootElement.GetProperty("path").GetString());
+            Assert.NotEqual(GitWorktreeDirectory.Read(idle), GitWorktreeDirectory.Read(fresh));
             Assert.Equal("lane/math/unobservable", TestGit.Run(fresh, "branch", "--show-current").Trim());
         }
         Assert.Equal(!exact && !lowDisk, Directory.Exists(fresh));
@@ -449,6 +449,7 @@ public sealed partial class WorktreeCommandTests
                 from pathlib import Path
                 program = Path(sys.argv[1]).read_text()
                 sys.argv = sys.argv[1:]
+                __file__ = sys.argv[0]
                 entry = "sys.exit(sys.modules['worktree_protocol'].main())"
                 fault = "def unavailable(*args, **kwargs):\n    raise PermissionError('fixture activity unavailable')\n"
                 fault += "sys.modules['worktree_pool'].host_cleanup().active_paths = unavailable\n"
