@@ -1,0 +1,15 @@
+### [2]
+
+The Omega Institute，同一固定提交中的量子恢复源码：
+[ReferencePetzChannel.lean](https://github.com/the-omega-institute/trureturing/blob/fc2bf058b103a58ec9ef904e17faba66ba94e383/D5/S3/Quantum/Recovery/ReferencePetzChannel.lean)，
+[CanonicalPetzStability.lean](https://github.com/the-omega-institute/trureturing/blob/fc2bf058b103a58ec9ef904e17faba66ba94e383/D5/S3/Quantum/Recovery/CanonicalPetzStability.lean)，
+[PetzPhysicalWeightedCoordinates.lean](https://github.com/the-omega-institute/trureturing/blob/fc2bf058b103a58ec9ef904e17faba66ba94e383/D5/S3/Quantum/Recovery/PetzPhysicalWeightedCoordinates.lean)，
+[PetzSchwarzRecovery.lean](https://github.com/the-omega-institute/trureturing/blob/fc2bf058b103a58ec9ef904e17faba66ba94e383/D5/S3/Quantum/Recovery/PetzSchwarzRecovery.lean)，
+[FiniteKrausReversibility.lean](https://github.com/the-omega-institute/trureturing/blob/fc2bf058b103a58ec9ef904e17faba66ba94e383/D5/S3/Quantum/Recovery/FiniteKrausReversibility.lean)。
+特别定位：`completed_reference_petz_channel`、
+`supported_entropy_defect_fixed_petz_trace_stability`、
+`scalar_products_construct_left_inverse`。
+本稿核读源码及其前提，未重新执行整个 Lean 构建或项目审计。
+
+<a id="ref-petz1986"></a>
+

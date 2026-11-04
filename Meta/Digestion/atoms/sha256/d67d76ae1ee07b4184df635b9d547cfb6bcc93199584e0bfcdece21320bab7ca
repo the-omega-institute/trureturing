@@ -1,0 +1,96 @@
+## 八、这个下界对原整数 Robin 判据意味着什么？
+
+令
+
+
+<a id="display-123"></a>
+
+$$
+c_0=\frac{\log2}{64\sqrt2},
+\qquad
+Q(T)=\sqrt T\log T\,I_\psi(T).
+$$
+
+
+由式 (29)—(30)，对 $T=\log n\ge2^{19}$，
+
+
+<a id="display-124"></a>
+
+$$
+-\log R(n)
+>
+\mathcal D(n)+
+\frac{Q(T)+c_0}{\sqrt T\log T}.
+$$
+
+
+因此得到两个严格推论：
+
+
+<a id="display-125"></a><a id="eq-36"></a>
+
+$$
+\boxed{
+Q(T)\ge-c_0
+\quad\Longrightarrow\quad
+R(n)<1,
+}
+$$
+
+<p align="center" data-equation-number="36"><a href="#eq-36">(36)</a></p>
+
+
+以及
+
+
+<a id="display-126"></a><a id="eq-37"></a>
+
+$$
+\boxed{
+R(n)\ge1
+\quad\Longrightarrow\quad
+Q(T)<
+-c_0-\sqrt T\log T\,\mathcal D(n).
+}
+$$
+
+<p align="center" data-equation-number="37"><a href="#eq-37">(37)</a></p>
+
+
+所以，在这个范围内，任何弱 Robin 反例都必须产生一个越过固定负阈值的归一化带符号尾项。
+
+若进一步有一个带确定误差的读出
+
+
+<a id="display-127"></a>
+
+$$
+|\widehat Q(T)-Q(T)|\le\varepsilon,
+$$
+
+
+则
+
+
+<a id="display-128"></a><a id="eq-38"></a>
+
+$$
+\boxed{
+\widehat Q(T)\ge\varepsilon-c_0
+\quad\Longrightarrow\quad
+R(n)<1.
+}
+$$
+
+<p align="center" data-equation-number="38"><a href="#eq-38">(38)</a></p>
+
+
+这正好落实“结果、误差、归一尺度一起保存”的要求：误差界直接参与接纳条件。
+
+式 (36) 是充分条件，尚未证明它对全部 $T$ 成立。完整全局目标仍须保留实际的 $\mathcal D(n)$ 与全部 $\mathcal B(T)$。
+
+---
+
+<a id="section-9"></a>
+

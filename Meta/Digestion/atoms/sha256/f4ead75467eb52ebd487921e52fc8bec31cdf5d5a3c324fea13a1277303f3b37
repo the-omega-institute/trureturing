@@ -1,0 +1,25 @@
+**数学引文 46.1（供应与实质增量）。** 第41、45章是带明确同源对应的既有方法应用。第42章对每个 $n$ 的全接口锐下界及共同达到、第43章对应的实际帧交通、第44章在语义有限呈现承诺内且不能由主动增长擦除的当前任务障碍，是 `repo-derived` 普通数学综合。它们不声称全球原创或新的 Lean 认证。相关来源及精确范围为：
+
+| 供应 | 使用的条件与不自动取得的结论 |
+| --- | --- |
+| 本卷 AA17、20、30–40 | 已知种子、出生类型、完整帧、真正选中记录、当前左下降、返回、源合法控制等价、显式地址表的判定与归一化均直接复用。AA39是一个已知固定程序的两个已达到控制之等价不可判定；此处隐藏的是安装标签，程序各有一状态且语义上都有有限地址表，问题是一次主动取得后的自足预测。 |
+| [PCA §§1–3、15、21](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRESCRIBED_CODE_ACQUISITION.md) | 原 prescribed reader 的完整原始入口、静态未知源、固定地址准备和显式有限证书均保持其原范围。PCA15.2已供应“承诺逐个有限可准备仍不统一提取”的一般区分及停机归约方法；PCA21额外供应树自动机及精确对应。这里必须另证改变当前 LAB 之后仍保有共同合法区分，不能把静态原入口下界直接搬来。 |
+| [NASF §§1–2、8–10](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ADAPTIVE_SELECTION_FIBERS.md) | 完整取得纤维、当前可用绑定、有效微步骤及恢复／认证／续用的区别直接复用。其独立 writer、未知 invocation 源、全局 $\rho$ 和清理后来源纤维不是此处的已知种子局部增长，NASF9.3的原问题不因这里的地址表应用而结算。 |
+| [Prior Acquisition Boundary §§1、6–7](RECURSIVE_RELATIONAL_OBSERVATION_PRIOR_ACQUISITION_BOUNDARY.md) | 已有被动充分性不定主动取得费用、同源联合回复及收费范围的区分。本章无来源先验，不把该卷静态 Native 四回复 Read 的期望界当作（AA.126）。 |
+| [PG §§19、32](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) | 合法性、完整报告和后继的共同因子化及全有限续接行为核已供应。有限代码不使整个 LAB 载体有限；取得证书、查询实现及（AA.126）不能从抽象商直接推出。 |
+| [ControlledBehaviorUniversality](../../../D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean) 与 [Scribe](../../../Blueprint/D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.scribe.cs) | `runWord`、`controlledBehavior`、私有 `run_word_intertwines` 和 Scribe 的任意输出全词商供应递推与交织；公开基数结论假设有限源／实现载体，不用于本章无界增长。 |
+| [PredictiveMemoryMinimalQuotient](../../../D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.lean) 与 [Scribe](../../../Blueprint/D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.scribe.cs)；[TypedFiniteViewKernel](../../../D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean) 与 [Scribe](../../../Blueprint/D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.scribe.cs) | 分别需要读数和更新下降；完整路径响应保留合法性与有序标签，有限平台结论以前提形式给出。第41章使用 AA37 的额外算法而不假定存在可识别平台，预测器另给实际取得依据。 |
+| [AdaptiveSeparationDepthUpperBound](../../../D5/S3/Observer/Budget/AdaptiveSeparationDepthUpperBound.lean) 与 [Scribe](../../../Blueprint/D5/S3/Observer/Budget/AdaptiveSeparationDepthUpperBound.scribe.cs) | 公开 `adaptive_separation_depth_upper_bound` 及私有 `exists_bounded_separating_protocol` 的有限候选递归已经供应经典减一方法；其 `readout : Protocol → State → Answer` 访问固定状态。第41章只复用消去思想，另用 AA36–37证明当前真实增长测试及后继对应，不把 $|I|-1$ 当成本章增长界。 |
+| [NativeFullSourceProducer](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean) 与 [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.scribe.cs) | `sourceControl`、`initialControl`、`native_source_producer` 及私有 `traverse`、`production_reads`、`stationary` 已供应未知有限静态 Native 树的真实逐节点取得；其调用并不公开 LAB 隐藏安装身份。本章不重新发明整树取得，也不假定对安装求值工作区有树遍历权限。 |
+
+以下原始文献只在其可读版本的明确条件内使用。
+
+| 原始文献 | 归属及对应限制 |
+| --- | --- |
+| Frohme, [*Active Automata Learning with Adaptive Distinguishing Sequences*, arXiv:1902.01139v1](https://arxiv.org/html/1902.01139v1)，§§5–8.1 | `literature-attested`：有限、确定、完整 Mealy 模型、逐输出自适应区分及模型行为不等于原始实现身份。§8.1明确同时有 reset 与 symbol queries；其学习／等价查询框架不作为本章服务能力，不能用重置消去真实增长费用。 |
+| van den Bos–Vaandrager, [*State Identification for Labeled Transition Systems with Inputs and Outputs*, arXiv:1907.11034v2](https://arxiv.org/html/1907.11034v2)，§§3–4，定义5、7–10及引理6 | `literature-attested`：输入／输出系统中的相容性、有效自适应测试及区分；其有限自动机、测试对源状态集有效等前提必须保留。这里只用作经典辨识方法归属，不声称 LAB 的整个无界源／记录系统是该文有限自动机，也不从成对区分直接推出无条件原身份识别。 |
+| Geffroy–Leroux–Sutre, [*Occam's Razor Applied to the Petri Net Coverability Problem*, arXiv:1607.05956v1](https://arxiv.org/html/1607.05956v1)，§§2–4，引理1–4、定理4.1 | `literature-attested`：普通有限位非负 token 网、向上闭集有限基、覆盖前驱与向后算法终止；第41章只经 AA37 的精确源提升使用它，取全空间不变式。没有零测试或把叶计数当作全部服务状态。 |
+| Turing, [*On Computable Numbers, with an Application to the Entscheidungsproblem*](https://www.cs.virginia.edu/~robins/Turing_Paper_1936.pdf)，§8，印刷页248 | `literature-attested`：任意机器是否曾打印指定符号无统一判定；定理44.2给出有效的两方向停机转换及同一增长源上的归约。 |
+
+钉版 mathlib `56a005855ea17e0b0958f73ec801ae140b0a1679` 的 [`Computability/DFA`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Computability/DFA.lean) 中 `evalFrom`、`evalFrom_of_append`、`evalFrom_append_singleton` 是普通有限词迭代供应；[`Computability/Halting`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Computability/Halting.lean) 的 `halting_problem`、`halting_problem_re`、`halting_problem_not_re` 保持其部分递归代码假设。不以这些声明或本章的散文证明冒领新编译结果。
+

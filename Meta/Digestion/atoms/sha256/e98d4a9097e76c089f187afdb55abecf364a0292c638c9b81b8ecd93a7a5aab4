@@ -1,0 +1,12 @@
+**Corollary 6 (A014865).** For every positive integer $n$ satisfying
+$$
+n\mid s(n),
+$$
+all three conclusions hold:
+
+* $n$ is odd;
+* if $n>7$, then $n$ is composite;
+* if $n>1$, then $3\mid n$ or $5\mid n$ or $7\mid n$.
+
+These conclusions cover every positive qualifying index and make no claim about indices outside $T$.
+

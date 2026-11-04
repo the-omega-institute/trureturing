@@ -10,6 +10,11 @@ internal sealed class SupportPerspectiveTransportDocument : IScribeDocumentDefin
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Signed support transport and ambient unitalization for the supported transformer.",
         H("SupportPerspectiveTransport"), Blocks(
+            Describe.Lean(DescribeId.Create("positive-dominated-support"),
+                DeclarationHandle.Create("D5/S3/Quantum/Lieb/SupportPerspectiveTransport.support_of_nonneg_le_smul"),
+                H("Domination preserves an enclosing support"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For every finite decidable coordinate type n, let C,D,P be complex n by n matrices with P*=P, P C=C and D PSD. For any real r, if D is at most r C in Loewner order, then P D=D and D P=D. Idempotence of P, strict positivity of r, and complete positivity of a map are not hypotheses."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("spectral-square-root-normalization"),
                 DeclarationHandle.Create("D5/S3/Quantum/Lieb/SupportPerspectiveTransport.spectral_sqrt_normalization"),
                 H("Normalize the actual spectral square root"), StatementSource.WithoutFormula(),
@@ -65,10 +70,8 @@ internal sealed class SupportPerspectiveTransportDocument : IScribeDocumentDefin
                     "SupportPerspectiveTransformer consumes these interfaces and supplies "
                     + "the exact kernel-inclusion reconstruction, mixed spectral products "
                     + "and final congruence cancellations. The Jensen and transport "
-                    + "modules and the transformer have passed explicit targeted "
-                    + "Lean builds and a joint scoped report using only standard "
-                    + "Lean axioms. Information-audit binding is assessed separately. "
-                    + "Identity regularization and "
+                    + "modules supply positive-map inequalities without a complete "
+                    + "positivity hypothesis. Identity regularization and "
                     + "trace data processing remain outside this source endpoint."))), DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args)

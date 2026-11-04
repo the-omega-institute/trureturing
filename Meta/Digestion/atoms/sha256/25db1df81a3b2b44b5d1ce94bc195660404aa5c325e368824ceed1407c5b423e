@@ -1,0 +1,35 @@
+**Definition 53.7 (source dependencies and remaining mathematical boundaries).**
+Lemma 46.2 and Definition 47.1 supply exact realization and compact
+attainment. Proposition 51.2 supplies full boundary and ordering
+exclusion, using the strict canonical competitor of Theorem 46.4.
+Theorem 51.3 and Proposition 51.4 supply fibre uniqueness and the
+profile correspondence; Corollary 51.5 supplies the conditional
+endpoint restriction. The added deductions are the localization
+(53.9)--(53.11), the specific Hessian-square calculation
+(53.14)--(53.18), the complete mixed-term positivity
+(53.21)--(53.25), and their use to establish the full-domain
+uniqueness (53.26). The square-root composition and the fact that
+strict concavity on a convex set excludes two maximizing points are
+elementary steps within these proofs, not separate new results.
+No literature-wide originality assertion is made.
+
+Theorem 53.4 and Corollary 53.6 settle the scalar question in (52.1)
+on exactly (53.1) with $D_\sigma<0$. They impose no sign restriction
+on $\nu$ and include $\xi=13/4$. They do not compute $G_*$, choose
+a winning sign or population, evaluate $a_\xi$, identify a
+contributing slice, or establish uniqueness of a whole feedback,
+effect or phase representative. They do not classify all aligning
+phase preimages, the full first-transition ordering, or the exact
+$\alpha,\beta$ of the original optimization. The auxiliary
+coefficients in (53.22) are unrelated to those optimization quantities.
+No physical-acquisition or whole-POVM conclusion follows from ordered
+length uniqueness.
+
+The cases $q=0$, $q=1$, $\xi=0$ and $x=1$ are outside (53.1) and
+receive no new classification here. The separate canonical result
+of Theorem 46.4 for $D_\sigma\ge0$, including determinant zero and
+its original phase-equality conditions, is unchanged. No larger
+distance interval is claimed. The synchronization and semidefinite
+certificate-existence conditions discussed in Definition 52.1 are
+neither used nor established by this curvature argument.
+

@@ -228,7 +228,7 @@ private theorem all_rule_bound (μ₀ μ₁ : V) (σ : ℝ) (hσ : 0 < σ)
   simp_rw (congrConsts := false) [hconvert]
   linarith
 
-private theorem gaussian_right_tail (a : ℝ) :
+theorem gaussian_right_tail (a : ℝ) :
     (gaussianReal 0 1).real (Ici a) = phi (-a) := by
   have hn : (gaussianReal 0 1).map (fun x : ℝ => -x) = gaussianReal 0 1 := by
     simpa only [neg_zero] using (gaussianReal_map_neg (μ := 0) (v := 1))
@@ -245,13 +245,13 @@ private theorem gaussian_right_tail (a : ℝ) :
       constructor <;> intro h <;> linarith
     _ = _ := by rw [hn]
 
-private theorem gaussian_left_tail (a : ℝ) :
+theorem gaussian_left_tail (a : ℝ) :
     (gaussianReal 0 1).real (Iio a) = phi a := by
   letI : NullSingletonClass (gaussianReal 0 1) := nullSingletonClass_gaussianReal one_ne_zero
   change ((gaussianReal 0 1) (Iio a)).toReal = ((gaussianReal 0 1) (Iic a)).toReal
   rw [measure_congr Iio_ae_eq_Iic]
 
-private theorem phi_zero : phi 0 = 1 / 2 := by
+theorem phi_zero : phi 0 = 1 / 2 := by
   have hsum := probReal_add_probReal_compl (μ := gaussianReal 0 1)
     (s := Iio (0 : ℝ)) measurableSet_Iio
   rw [Set.compl_Iio, gaussian_left_tail, gaussian_right_tail, neg_zero] at hsum

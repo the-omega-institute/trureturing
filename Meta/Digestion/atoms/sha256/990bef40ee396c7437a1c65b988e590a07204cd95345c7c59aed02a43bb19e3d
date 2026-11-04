@@ -1,0 +1,21 @@
+### 定义 3.1（同资料二态与可见读出）
+
+<a id="def-c94-same-data"></a>
+
+对密度态 $\rho,\sigma$，定义
+
+$$
+\rho\sim_{\mathcal S}\sigma
+ \quad\Longleftrightarrow\quad
+ \operatorname{Tr}(\rho s)=\operatorname{Tr}(\sigma s)\quad(s\in\mathcal S).
+$$
+
+以 $q_{\mathcal S}(\rho)$ 记泛函
+$s\mapsto\operatorname{Tr}(\rho s)$。同资料态组成 v93 的相容纤维。
+这里同资料只指当前读口不能区分二态，不把它们直接等同为同一完整物理态。
+
+待检查的过程使用前稿的复线性、保迹表示接口
+$R:B(H)\to B(H)$。本轮不把复线性从零前件推出，
+也不在定义中预设 $R$ 完全正、幂等，或预设其对偶的像为代数。
+我们只先给它一个二值量子参考的组合检查。
+

@@ -2746,3 +2746,1242 @@ the literature. These are conditional paper deductions, without Lean compilation
 or physical verification.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 50. Original-interval anchoring outside a three-direction short core
+
+**定义 50.1（Successive minima and fixed reduction constants）。** Retain exactly the single dimension-four original table, all labelled binary and ternary menus, zero and repeated effects, and its original tomography matrix $H$ from [Part I, Definition 16.1](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES.md). Write $R=\mathbb Z[i]$ and $e(X)=p(X)-\operatorname{Tr}(HX)$. Let $\mathcal S_4$ denote the integral matrices expressible as finite sums of $vv^*$ with $v\in R^4$, including the empty sum. For $B\succ0$ integral, define the squared complex successive minima
+
+$$
+\mu_j(B)=\min\left\{t:\text{there are }j\text{ complex-linearly independent }v_a\in R^4
+\text{ with }v_a^*Bv_a\le t\right\},\qquad 1\le j\le4.
+\tag{50.1}
+$$
+
+Fix an integer $\tau\ge5$ at least the threshold $G_{\mathbb Q(i)}(4)$ in Beli--Chan--Icaza--Liu, [*On a Waring's problem for integral quadratic and hermitian forms*, Proposition 5.3](https://arxiv.org/html/1702.08854v1). Thus $\mu_1(F)\ge\tau$ implies $F\in\mathcal S_4$ for every positive-definite integral $F$. Their Proposition 2.3, Lemma 3.3 and equations (3.1)--(3.2), in the fixed field and rank, also give constants $\alpha,c\ge1$ such that every $B$ has a basis $V\in\operatorname{GL}_4(R)$ with
+
+$$
+ V^*BV=X^*\operatorname{diag}(h_1,h_2,h_3,h_4)X,
+ \quad h_1=\mu_1(B),\quad
+ h_i\le\alpha h_j\ (i<j),
+ \quad |X_{ij}|,|(X^{-1})_{ij}|\le c.
+\tag{50.2}
+$$
+
+Here $X$ is upper triangular unipotent and $h_i>0$. Only this established fixed-rank reduction and the established large-minimum representation theorem are used from that paper. Set
+
+$$
+\begin{aligned}
+ L&=64\alpha c^2\tau,& K&=2c^2L,& M&=3c^2L,\\
+ N_c&=4\tau^2L^2+1,&
+ A_*&=1+\max\{44,(\tau+K)^2,2K(\tau+2K),N_c^2\},\\
+ S&=902826,& C_*&=2S+2=1805654.
+\end{aligned}
+\tag{50.3}
+$$
+
+All these constants are fixed independently of $N,p,\epsilon$ and the target. No numerical value of the reduction constants is needed.
+
+**定理 50.2（A third-minimum anchor and a necessary three-dimensional obstruction）。** Let $N=2^m\ge2048$. Let $G\in\operatorname{Herm}_4(R)$ be a positive-definite integral interval atom, with
+
+$$
+ 0\prec G\prec NI_4,\qquad d=\det G\le11,
+ \qquad \lambda_{\max}(G)\le N-A_*/N,
+ \qquad B=NI_4-G.
+$$
+
+For every original table in Definition 50.1,
+
+$$
+ \mu_3(B)>M
+ \quad\Longrightarrow\quad
+ |e(G/N)|\le C_*\epsilon.
+\tag{50.4}
+$$
+
+More generally, if $|e(G/N)|>C_*\epsilon$, there is a unimodular basis $V=(v_1,v_2,v_3,v_4)$ such that the saturated submodule $\Lambda=Rv_1+Rv_2+Rv_3$ and the integral vector $q=V^{-*}e_4$ satisfy
+
+$$
+\begin{gathered}
+ v_j^*Bv_j\le M\quad(1\le j\le3),\qquad
+ 0\ne\tau qq^*\succeq0,\qquad \tau qq^*\preceq B/4,\\
+ \text{there is }0\ne z\in\Lambda\text{ with }2\le z^*Gz<\tau,\\
+ \mu_4(B)\ge(N+d)^{1/4}.
+\end{gathered}
+\tag{50.5}
+$$
+
+Every matrix $\tau qq^*/N$ and $(G+\tau qq^*)/N$ occurring here is an effect on the original grid. Conditions (50.5) are necessary for failure of this absolute anchor, not a converse or a full-event counterexample.
+
+**证明。** The trace grouping in the proof of [Part I, Theorem 57.4](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES.md), applied to a supplied Gram decomposition rather than to an arbitrary extraction order, gives
+
+$$
+ F\in\mathcal S_4,\quad 0\preceq F\prec NI_4
+ \quad\Longrightarrow\quad |e(F/N)|\le S\epsilon.
+\tag{50.6}
+$$
+
+Indeed each Gram summand is a strict rank-one effect; Part I, Lemma 57.2 applies to it. There are at most eleven summands of trace greater than $1/3$ and at most twelve remaining trace groups of norm below $2/3$. The same legal additions and the zero bound $p(0)\le2\epsilon$ give $902824\epsilon+2\epsilon$. This is a reuse of those estimates, not an assertion that an arbitrary extraction residual vanishes whenever a Gram representation exists.
+
+Consequently it suffices to construct an integral $W\in\mathcal S_4$ with
+
+$$
+ 0\preceq W\preceq B/4,\qquad G+W\in\mathcal S_4.
+\tag{50.7}
+$$
+
+Both $W$ and $G+W$ are strictly below $NI_4$. Comparing the actual menus $(G/N,W/N,I_4-(G+W)/N)$ and $((G+W)/N,I_4-(G+W)/N)$ gives
+
+$$
+ |e(G/N)+e(W/N)-e((G+W)/N)|\le2\epsilon.
+\tag{50.8}
+$$
+
+Together with (50.6), this proves the bound $C_*\epsilon$. If instead $B\in\mathcal S_4$, (50.6) and the original complementary binary menu give the stronger bound $(S+10)\epsilon$. The $10\epsilon$ is the binary defect plus the original $|\operatorname{Tr}H-1|\le9\epsilon$.
+
+Choose (50.2) for $B$. If $h_1\ge\tau$, Proposition 5.3 supplies $B\in\mathcal S_4$. Hence assume $h_1<\tau$. First suppose either $h_2>L$, or $h_2\le L<h_3$. Put $k=1$ in the former case and $k=2$ in the latter, and write $V_k=(v_1,\ldots,v_k)$. Then
+
+$$
+ v_j^*Bv_j\le K\quad(j\le k),\qquad
+ h_j>L/\alpha\quad(j>k).
+\tag{50.9}
+$$
+
+The first assertion follows by expanding the corresponding diagonal entries of (50.2), and the second from $h_{k+1}>L$ and $h_{k+1}\le\alpha h_j$.
+
+For $i>k$, let $q_i=V^{-*}e_i\in R^4$. Upper triangularity of $X^{-1}$ gives
+
+$$
+ q_i^*B^{-1}q_i
+ =\sum_{j\ge i}\frac{|(X^{-1})_{ij}|^2}{h_j}
+ <\frac{4\alpha c^2}{L}.
+\tag{50.10}
+$$
+
+Cauchy--Schwarz gives $q_iq_i^*\preceq(q_i^*B^{-1}q_i)B$. Therefore
+
+$$
+ W=\tau\sum_{i>k}q_iq_i^*\in\mathcal S_4,
+ \qquad W\preceq\frac{3}{16}B\preceq B/4.
+\tag{50.11}
+$$
+
+No values of $p$ in the reduced coordinates have been introduced: the $q_i$ and $W$ in (50.10)--(50.11) are integral vectors and matrices in the original coordinates.
+
+We next prove $\mu_1(G+W)\ge\tau$. If $z\in R^4$ lies outside $V_k\mathbb C^k$, some coordinate $(V^{-1}z)_i=q_i^*z$, $i>k$, is a nonzero Gaussian integer. Thus $z^*Wz\ge\tau$. If $z\in V_k\mathbb C^k$, unimodularity gives $z=V_ku$ with $u\in R^k$. Put
+
+$$
+ P=V_k^*V_k,\qquad B_k=V_k^*BV_k,
+ \qquad V_k^*GV_k=NP-B_k.
+\tag{50.12}
+$$
+
+The entries of $P$ are Gaussian integral, so $\det P$ is a positive integer. Also $B\succeq(A_*/N)I_4$ and (50.9) imply
+
+$$
+ \operatorname{Tr}P\le\frac{kKN}{A_*},\qquad
+ \|B_k\|_{\rm op}\le kK.
+\tag{50.13}
+$$
+
+For $k=1$, $P\ge1$ and hence $NP-B_k\succeq(N-K)I_k\succ\tau I_k$. Here $B\prec NI_4$ and $B\succeq(A_*/N)I_4$ force $N^2>A_*>(\tau+K)^2$. For $k=2$, positivity and integrality of $\det P$ give
+
+$$
+ \lambda_{\min}(P)\ge\frac{1}{\operatorname{Tr}P}
+ \ge\frac{A_*}{2KN},\qquad
+ NP-B_k\succeq\left(\frac{A_*}{2K}-2K\right)I_k
+ \succ\tau I_k.
+\tag{50.14}
+$$
+
+Thus every nonzero integral $z$ in this submodule has $z^*Gz>\tau$. In both cases $\mu_1(G+W)\ge\tau$, so Proposition 5.3 supplies the second membership in (50.7). This proves the anchor whenever $h_2>L$ or $h_3>L$. If neither holds, the first three basis vectors have $B$-norm at most $3c^2L=M$. Hence $\mu_3(B)>M$ forces one of the already anchored cases, proving (50.4).
+
+It remains to prove the additional necessary structure. Suppose the anchor bound fails. The preceding argument leaves
+
+$$
+ h_1<\tau,\qquad h_2\le L,\qquad h_3\le L.
+\tag{50.15}
+$$
+
+The small determinant, exact complement relation and the margin $A_*>44$ now have a separate role. [Part II, Theorem 164.2](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_II.md) gives
+
+$$
+ D=\det B\ge N+d.
+\tag{50.16}
+$$
+
+Since $D=h_1h_2h_3h_4$, (50.15) yields $h_4>N/(\tau L^2)$. Put $q=V^{-*}e_4$. The last row of $X^{-1}$ is $e_4^*$, so
+
+$$
+ q^*B^{-1}q=h_4^{-1},\qquad
+ \tau qq^*\preceq\frac{\tau}{h_4}B
+ \prec\frac{\tau^2L^2}{N}B\preceq B/4.
+\tag{50.17}
+$$
+
+The last inequality follows from $N>\sqrt{A_*}>N_c$. The first three columns of $V$ span a saturated rank-three submodule $\Lambda$. If every nonzero $z\in\Lambda$ had $z^*Gz\ge\tau$, the matrix $G+\tau qq^*$ would have arithmetic minimum at least $\tau$: outside $\Lambda$, $|q^*z|^2\ge1$. Equation (50.17), Proposition 5.3 and (50.8) would then prove the anchor, a contradiction. Thus some nonzero $z\in\Lambda$ has $z^*Gz<\tau$.
+
+Atomicity supplies the lower bound in (50.5). If $z^*Gz=1$, Cauchy--Schwarz gives the nonzero integral rank-one matrix $(Gz)(Gz)^*\preceq G$. A positive-definite rank-four interval atom cannot equal this matrix and cannot contain it properly. Since integral Hermitian values are positive integers, $z^*Gz\ge2$ for every nonzero integral $z$.
+
+Finally, for four independent integral vectors $u_j$ with $u_j^*Bu_j\le t$, their column matrix $U$ satisfies
+
+$$
+ D\le|\det U|^2D=\det(U^*BU)\le t^4.
+$$
+
+The first inequality uses the nonzero Gaussian integer $\det U$, and the last is Hadamard's inequality. Taking $t=\mu_4(B)$ and using (50.16) proves the final assertion of (50.5). All additions in (50.8), (50.11) and (50.17) lie in the original interval. $\square$
+
+**命题 50.3（The anchored bounded-minimum branch contains qualifying atoms at arbitrarily large dyadic scales）。** For every dyadic $N\ge8$ there is a positive-definite integral interval atom $G_N$ of determinant one such that, with $B_N=NI_4-G_N$, there is a fixed $\eta>0$ independent of $N$ satisfying
+
+$$
+ B_N\succeq\eta\operatorname{diag}(1,N,N,N),\qquad
+ \mu_1(B_N)\le4,\qquad \mu_2(B_N)\ge\eta N.
+\tag{50.18}
+$$
+
+In particular, for each fixed finite $A>44$, all sufficiently large members satisfy $0\prec G_N\prec NI_4$ and $\lambda_{\max}(G_N)\le N-A/N$. For $A=A_*$ they eventually satisfy (50.4), while their first arithmetic minimum remains below $\tau$.
+
+**证明。** Reuse the even unimodular atom from Part I, Theorem 32.1 at $N=4$:
+
+$$
+ F=\begin{pmatrix}
+ 2&0&\pi&1\\
+ 0&2&-1&\overline\pi\\
+ \overline\pi&-1&2&0\\
+ 1&\pi&0&2
+ \end{pmatrix},\qquad \pi=1+i.
+\tag{50.19}
+$$
+
+Its positivity, determinant one and full integral interval atomicity are supplied there. Lagrange's four-square theorem gives a representation of $2N-9$. This integer is $7$ modulo $8$. In every four-square representation of such an integer exactly three entries are odd and the remaining entry is even. Permute them to write
+
+$$
+ 2N-9=a^2+b^2+c_0^2+d_0^2,
+ \qquad a,b,c_0\text{ odd},\quad d_0\text{ even}.
+$$
+
+Set $x=(a-1)/2+i(b+1)/2$, $y=(c_0-1)/2+id_0/2$, and
+
+$$
+ U=I_4+xe_3e_1^*+ye_4e_1^*,\qquad G_N=U^*FU.
+\tag{50.20}
+$$
+
+The matrix $U$ is Gaussian unimodular. Hence $G_N$ is still positive definite, determinant one and an integral interval atom; this is an order congruence of integral forms, not a covariance assertion about the table. The four-square identity gives
+
+$$
+ 2+2(|x|^2+|y|^2)+2\operatorname{Re}(\pi x+y)=N-4.
+$$
+
+Therefore, for a column $b_N$,
+
+$$
+ G_N=\begin{pmatrix}N-4&b_N^*\\b_N&C\end{pmatrix},
+ \quad
+ C=\begin{pmatrix}2&-1&\overline\pi\\-1&2&0\\\pi&0&2\end{pmatrix},
+ \quad \|C\|_{\rm op}=2+\sqrt3=:c_0'<4.
+\tag{50.21}
+$$
+
+The Schur complement of the first entry gives $b_Nb_N^*\preceq(N-4)C$. In the coordinates scaled by $\operatorname{diag}(1,\sqrt N I_3)$, the complementary form is
+
+$$
+ \begin{pmatrix}4&-b_N^*/\sqrt N\\-b_N/\sqrt N&I_3-C/N\end{pmatrix}.
+$$
+
+Its Schur complement after the first entry is at least
+
+$$
+ I_3-C/N-\frac{b_Nb_N^*}{4N}
+ \succeq I_3-C/4\succeq\beta I_3,
+ \qquad \beta=1-c_0'/4>0.
+$$
+
+Moreover $\|b_N\|/(4\sqrt N)\le\sqrt{c_0'}/4<1/2$. For a scalar $u$ and column $v$, put $a_0=u-b_N^*v/(4\sqrt N)$. Then
+
+$$
+ |u|^2+\|v\|^2\le2(|a_0|^2+\|v\|^2),\qquad
+ 4|a_0|^2+\beta\|v\|^2\ge\frac{\beta}{2}(|u|^2+\|v\|^2).
+$$
+
+Thus (50.18) holds with $\eta=\beta/2$. Also $e_1^*B_Ne_1=4$. Every two independent integral vectors include one with a nonzero last-three-coordinate column, whose $B_N$-norm is at least $\eta N$. This proves the two successive-minimum assertions. Finally $\lambda_{\min}(B_N)\ge\eta$ implies the displayed margin whenever $N\ge A/\eta$, and $\mu_3(B_N)\ge\mu_2(B_N)\to\infty$. This family verifies that the anchored branch includes actual original qualifying atoms with bounded first minimum. $\square$
+
+## 51. The remaining three-direction inference and its parent consumer
+
+**定义 51.1（Unresolved core obligation）。** Retain the full original atom quantifiers and the same table and tomography, without imposing (50.5) as a new premise on that event. Theorem 50.2 supplies a uniform original-interval absolute anchor for the whole branch $\mu_3(B)>M$, including bounded first minima. For the remaining branch, it supplies a saturated rank-three short $B$ submodule, a legal rank-one capacity in its annihilator, and an integral vector in that submodule with $G$-norm in $[2,\tau)$ whenever its displayed error bound fails. It does not assert that these simultaneous conditions are impossible or that the capacity necessarily raises this short $G$ value.
+
+The missing inference is an absolute original-table anchor on this three-direction core, or a different argument covering it. Neither the existence of $q$ in (50.17) nor the bounded list of possible scalar values $z^*Gz$ proves that inference. No parity lift $R\preceq B$, $R\equiv B\pmod2$ has been assumed or proved for the core.
+
+The parent consumer is the unchanged positive-definite determinant-at-most-eleven atom estimate in Part I, (57.15), with the complement-first lower-side transfer in Part II, (164.11). The proved branch can be used directly inside that consumer. The full existence of constants $A>44$ and $C_{\rm atom}$ for every original qualifying atom, and its faithful negation, remain unproved here; (50.4) is not substituted for the full event.
+
+The established balanced HKZ and large-minimum results of Beli--Chan--Icaza--Liu, the original rank-one and trace-group estimates of Part I, and the determinant quantization of Part II are credited intermediate tools. The dual-coordinate thickening, the integral one- and two-dimensional compression bounds, their three-direction obstruction consequence and the qualifying bounded-minimum realization above are repo-derived ordinary mathematical deductions. No global literature priority claim is made.
+
+## 追加锚（本行以下为增补区）
+## 52. A second dual direction reduces the ternary determinant obstruction
+
+**定义 52.1（Fixed kernel-basis constants）。** Retain $R$, $e$, $\mathcal S_4$, $\tau$, $\alpha$, $c$, $L$, $M$, $A_*$ and $C_*$ from Definition 50.1, with the same original table and tomography. Put
+
+$$
+ r_0=\max\left\{1,\left\lceil\frac{3M}{2\tau}\right\rceil\right\},
+ \qquad
+ \mathcal A=\{a\in R^3:a\text{ is primitive},\ 1\le\|a\|^2\le r_0\}.
+\tag{52.1}
+$$
+
+This is a nonempty finite set. For each $a\in\mathcal A$, choose a Gaussian unimodular matrix $T_a$ satisfying $a^*T_a=e_3^*$. Successive elementary Gaussian column operations reduce the primitive row $a^*$ to a unit coordinate row; multiplication by a unit and a column permutation give the stated $T_a$. All these operations are unimodular. Write $u_{a,1},u_{a,2}$ for its first two columns, so they form an $R$-basis of $\ker(a^*:R^3\to R)$. Define the finite constants
+
+$$
+\begin{aligned}
+ J_0&=\max\bigl(\{1\}\cup
+       \{\|u_{a,j}\|^2:a\in\mathcal A,\ 1\le j\le2\}\bigr),\\
+ K_0&=3MJ_0,\\
+ A_\dagger&=1+\max\{A_*,\ (6\tau^2L^2+1)^2,
+                         \ 2K_0(\tau+2K_0)\}.
+\end{aligned}
+\tag{52.2}
+$$
+
+These choices concern only a bounded set of three-coordinate integer vectors, not a restriction of the original targets or menus. They are independent of $N,\epsilon,p$ and $G$.
+
+**定理 52.2（An absolute anchor from the compressed ternary determinant）。** Let $N=2^m\ge2048$ and let $G\in\operatorname{Herm}_4(R)$ be a positive-definite integral interval atom satisfying
+
+$$
+ d=\det G\le11,\qquad
+ 0\prec G\prec NI_4,\qquad
+ \lambda_{\max}(G)\le N-A_\dagger/N.
+\tag{52.3}
+$$
+
+Put $B=NI_4-G$. Choose a balanced basis $V=(v_1,v_2,v_3,v_4)$ as in (50.2), with heights $h_j$, and write
+
+$$
+ V_3=(v_1,v_2,v_3),\qquad
+ C=V_3^*BV_3,\qquad
+ \Delta=\det C=h_1h_2h_3,\qquad
+ \nu(C)=\min_{0\ne a\in R^3}a^*C^{-1}a.
+\tag{52.4}
+$$
+
+For every original table of Definition 50.1, the additional branch
+
+$$
+ h_1<\tau,\qquad h_2,h_3\le L,\qquad
+ \nu(C)\le\frac1{2\tau}
+ \quad\Longrightarrow\quad
+ |e(G/N)|\le C_*\epsilon
+\tag{52.5}
+$$
+
+has an absolute anchor. In particular $\Delta\ge64\tau^3$ is sufficient for this branch. In this branch there are explicitly constructed independent vectors $q,w\in R^4$ such that
+
+$$
+ W=\tau(qq^*+ww^*)\in\mathcal S_4,\qquad
+ W\preceq\tfrac34B,\qquad
+ \mu_1(G+W)\ge\tau,\qquad G+W\in\mathcal S_4.
+\tag{52.6}
+$$
+
+Consequently, if the bound $|e(G/N)|\le C_*\epsilon$ fails, its basis from Theorem 50.2 can be chosen with all the properties there and, in addition,
+
+$$
+ \begin{gathered}
+ \nu(C)>\frac1{2\tau},\qquad
+ 1\le\Delta<64\tau^3,\qquad
+ \det B=d+kN,\quad k\in\mathbb Z_{\ge1},\\
+ q=V^{-*}e_4,\qquad
+ k\|q\|^2<\Delta<64\tau^3.
+ \end{gathered}
+\tag{52.7}
+$$
+
+In particular the original-coordinate normal $q$, up to multiplication by a Gaussian unit, and the positive integer $k$ range over finite sets independent of the scale. The restriction $C$ and the short $G$ vectors within its saturated submodule are not thereby fixed.
+
+**证明。** In the branch of (52.5), expansion of (50.2) gives
+
+$$
+ C_{jj}\le M\quad(1\le j\le3),\qquad
+ \|C\|_{\rm op}\le3M,\qquad
+ \Delta<\tau L^2.
+\tag{52.8}
+$$
+
+Write the full reduced matrix in blocks as
+
+$$
+ V^*BV=\begin{pmatrix}C&b\\b^*&\beta\end{pmatrix},
+ \qquad h_4=\beta-b^*C^{-1}b.
+\tag{52.9}
+$$
+
+The determinant quantization in Part II, Theorem 164.2 applies because $A_\dagger>44$. Therefore
+
+$$
+ \Delta h_4=\det B\ge N+d,\qquad
+ h_4>\frac{N}{\tau L^2}>6\tau.
+\tag{52.10}
+$$
+
+For the last inequality, (52.3) and $G\succ0$ force $N^2>A_\dagger$, while (52.2) forces $\sqrt{A_\dagger}>6\tau^2L^2+1$.
+
+The dual minimum in (52.4) is attained because $C^{-1}$ is positive definite and $R^3$ is discrete. Under the hypothesis of (52.5), choose a nonzero $a\in R^3$ with $\rho:=a^*C^{-1}a\le1/(2\tau)$. For the determinant sufficient condition, use the ordinary real six-dimensional Hermite bound on this dual lattice, exactly with the normalization in Part I, (57.2):
+
+$$
+ \nu(C)\le\gamma_6\Delta^{-1/3}
+ <2\Delta^{-1/3}\le\frac1{2\tau}
+ \qquad(\Delta\ge64\tau^3).
+\tag{52.11}
+$$
+
+Here $\gamma_6=2/3^{1/6}<2$ is an ordinary-lattice bound: Vance, [*A Mordell Inequality for Lattices over Maximal Orders*, §4.2, Table 3 and the paragraph preceding it](https://arxiv.org/html/0810.2336v5#S4.T3), records both this value and ordinary-lattice optimality in dimension six. No Eisenstein-module hypothesis is imposed on $C$. Dividing $a$ by the Gaussian gcd of its coordinates if necessary makes it primitive and cannot increase $\rho$. Moreover
+
+$$
+ \|a\|^2\le\|C\|_{\rm op}\rho
+ \le\frac{3M}{2\tau}\le r_0,
+\tag{52.12}
+$$
+
+so this $a$ belongs to the finite set in Definition 52.1.
+
+Choose a nearest Gaussian integer $s$ to $b^*C^{-1}a$; independent rounding of its real and imaginary parts gives
+
+$$
+ |s-b^*C^{-1}a|^2\le\tfrac12.
+$$
+
+Construct the original-coordinate vectors
+
+$$
+ q=V^{-*}e_4,\qquad
+ w=V^{-*}\binom a s.
+\tag{52.13}
+$$
+
+They are integral and independent, since $V$ is Gaussian unimodular and $a\ne0$. The block inverse formula in (52.9) gives the actual dual costs
+
+$$
+ q^*B^{-1}q=\frac1{h_4},\qquad
+ w^*B^{-1}w
+ =\rho+\frac{|s-b^*C^{-1}a|^2}{h_4}
+ \le\rho+\frac1{2h_4}.
+\tag{52.14}
+$$
+
+For each vector $x$, Cauchy--Schwarz gives $xx^*\preceq(x^*B^{-1}x)B$. Using $\rho\le1/(2\tau)$ and (52.10) therefore proves
+
+$$
+ W=\tau(qq^*+ww^*)
+ \preceq\tau\left(\rho+\frac3{2h_4}\right)B
+ \prec\tfrac34B.
+\tag{52.15}
+$$
+
+The use of $3B/4$ leaves a strictly positive complementary interval; no bound $W\preceq B/4$ is needed.
+
+It remains to control the common kernel, rather than to assume that the new direction detects every short $G$ vector. For $z\in R^4$,
+
+$$
+ q^*z=w^*z=0
+ \quad\Longleftrightarrow\quad
+ z\in F R^2,\qquad
+ F=V_3(u_{a,1},u_{a,2}).
+\tag{52.16}
+$$
+
+Indeed $V^{-1}z$ is integral, its fourth coordinate must vanish, and its first three coordinates then belong exactly to $\ker a^*$. This also proves saturation of the displayed rank-two submodule. Its two basis columns $f_j$ satisfy
+
+$$
+ f_j^*Bf_j=u_{a,j}^*Cu_{a,j}\le3MJ_0=K_0.
+\tag{52.17}
+$$
+
+Set $P=F^*F$ and $D_2=F^*BF$. The Euclidean Gram matrix $P$ is positive definite and integral, so $\det P$ is a positive integer. Since $B\succeq(A_\dagger/N)I_4$,
+
+$$
+ \operatorname{Tr}P\le\frac{2K_0N}{A_\dagger},\qquad
+ \|D_2\|_{\rm op}\le2K_0,\qquad
+ \lambda_{\min}(P)\ge\frac1{\operatorname{Tr}P}
+ \ge\frac{A_\dagger}{2K_0N}.
+\tag{52.18}
+$$
+
+Using the exact original complement identity now gives
+
+$$
+ F^*GF=NP-D_2
+ \succeq\left(\frac{A_\dagger}{2K_0}-2K_0\right)I_2
+ \succ\tau I_2.
+\tag{52.19}
+$$
+
+Thus every nonzero integral vector in the common kernel has $G$-value greater than $\tau$. Outside it, at least one of $q^*z,w^*z$ is a nonzero Gaussian integer, so $z^*Wz\ge\tau$. This proves $\mu_1(G+W)\ge\tau$ without a congruence transformation of any table value.
+
+The large-minimum representation theorem of Beli--Chan--Icaza--Liu, [*On a Waring's problem for integral quadratic and hermitian forms*, Proposition 5.3](https://arxiv.org/html/1702.08854v1), applies to the positive-definite integral rank-four matrix $G+W$, by the fixed choice of $\tau$ in Definition 50.1. Hence $G+W\in\mathcal S_4$. Also $W\in\mathcal S_4$ directly, since $\tau$ is an integer. Equation (52.15) proves
+
+$$
+ 0\preceq W\prec NI_4,\qquad
+ 0\prec G+W\preceq NI_4-B/4\prec NI_4.
+\tag{52.20}
+$$
+
+Both Gram estimates (50.6) therefore concern the supplied original table. The same actual ternary and binary menus as in (50.8) give $|e(G/N)|\le(2S+2)\epsilon=C_*\epsilon$, proving (52.5)--(52.6).
+
+For (52.7), suppose this error bound fails. Theorem 50.2 leaves $h_1<\tau$ and $h_2,h_3\le L$, and the argument just given forces $\nu(C)>1/(2\tau)$ and $\Delta<64\tau^3$. Part II, Theorem 164.2 gives $\det B=d+kN$ with integer $k\ge1$. Since $B\prec NI_4$, its inverse satisfies $B^{-1}\succ N^{-1}I_4$. Equations (52.9) and (52.14) consequently give
+
+$$
+ \frac{\|q\|^2}{N}<\frac1{h_4},\qquad
+ kN+d=\Delta h_4<\frac{\Delta N}{\|q\|^2},
+ \qquad k\|q\|^2<\Delta.
+\tag{52.21}
+$$
+
+This proves the asserted finite ranges. The short-vector obstruction in (50.5) still applies because (52.3) implies its margin hypothesis.
+
+The new capacity in (52.13)--(52.15) uses a ternary dual short vector and a rounded fourth coordinate; (52.16)--(52.19) prove the required rank-two compression for its actual common kernel. These constructions supply the additional branch of the original atom estimate (57.15) of Part I, with the original complementary-menu transfer (164.11) of Part II. The Hermite and large-minimum representation results are credited intermediate tools. No claim of global literature priority is made for this deduction. The cases remaining in (52.7), including their short $G$ vectors from (50.5), have not acquired an absolute error bound here. Neither existence nor nonexistence of uniform constants for the full original event follows from these necessary conditions. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 53. Transverse extraction closes the original upper-margin atom estimate
+
+**定义 53.1（Uniform constants and the unchanged table）。** Retain the single original dimension-four table, all labelled binary and ternary menus including zeros and repetitions, the original tomography matrix $H$, and $e(E)=p(E)-\operatorname{Tr}(HE)$ from Definition 50.1. Retain $\tau$, $A_\dagger$ and $C_*$ from Definitions 50.1 and 52.1. Define the finite constants
+
+$$
+\begin{aligned}
+ D_0&=64\tau^3,&
+ T&=4\tau(D_0+1),&
+ \lambda&=1+\frac1{4\tau},\\
+ K_{\mathrm{tr}}&=53142+2+902824=955968,\\
+ N_0&=1+\max\{2048,\ D_0+64,\ (4\tau+2)D_0,\ 2TD_0\},\\
+ A_0&=2A_\dagger,&
+ C_0&=\max\{C_*+TK_{\mathrm{tr}},\ 33N_0\}.
+\end{aligned}
+\tag{53.1}
+$$
+
+Here $D_0,T,N_0$ are positive integers. None of these constants depends on the scale, table, tolerance, target or reduced basis.
+
+**引理 53.2（A transverse rank-one extraction with determinant growth）。** Let $N=2^m>N_0$. Let $G$ be a positive-definite Gaussian integral interval atom with $0\prec G\prec NI_4$ and $d=\det G\le11$. Put $B=NI_4-G$ and $D=\det B$. Let $V=(V_3,v_4)\in\operatorname{GL}_4(R)$, and set
+
+$$
+ C=V_3^*BV_3,\qquad
+ \Delta=\det C,\qquad
+ q=V^{-*}e_4,\qquad
+ \nu(C)=\min_{0\ne a\in R^3}a^*C^{-1}a.
+$$
+
+Suppose
+
+$$
+ D\ge N,\qquad 1\le\Delta<D_0,\qquad
+ \nu(C)>\frac1{2\tau}.
+\tag{53.2}
+$$
+
+There is an integral matrix $G'$ that is either zero or a positive-definite interval atom with determinant at most $11$, such that, writing $B'=NI_4-G'$,
+
+$$
+\begin{aligned}
+ 0&\preceq G'\prec NI_4,\\
+ B'&\succeq\left(1-\frac{D_0}{N}\right)B,\\
+ \det B'&>\lambda D,\\
+ |e(G'/N)-e(G/N)|&\le K_{\mathrm{tr}}\epsilon.
+\end{aligned}
+\tag{53.3}
+$$
+
+The convention at $G'=0$ is $e(0)=p(0)$. All table evaluations in this conclusion are on the original grid.
+
+**证明。** Cofactors under a Gaussian unimodular change of basis give
+
+$$
+ q^*B^{-1}q=\frac{\Delta}{D}.
+\tag{53.4}
+$$
+
+Indeed the bottom-right entry of $(V^*BV)^{-1}$ is $\Delta/D$, and $\det(V^*BV)=D$. Consequently, for $Q=qq^*$,
+
+$$
+ 0\preceq Q\preceq\frac{\Delta}{D}B
+ \prec\frac{D_0}{N}B\prec B.
+\tag{53.5}
+$$
+
+Thus $F=G+Q\prec NI_4$, and both $Q/N$ and $F/N$ are original-grid effects.
+
+A second cofactor identity, now for $G$, gives the positive integer
+
+$$
+ a_G:=q^*\operatorname{adj}(G)q
+     =\det(V_3^*GV_3).
+\tag{53.6}
+$$
+
+Entrywise reduction modulo $N$ gives $B\equiv-G$ and hence
+
+$$
+ \operatorname{adj}(B)\equiv-\operatorname{adj}(G)\pmod N,
+ \qquad \Delta+a_G\in N\mathbb Z_{>0}.
+\tag{53.7}
+$$
+
+The minus sign is because the cofactors have degree three. The scalar cofactor identity for $B$ is $q^*\operatorname{adj}(B)q=\Delta$. Both scalars in (53.7) are positive real integers, so
+
+$$
+ a_G\ge N-\Delta>N-D_0>64.
+\tag{53.8}
+$$
+
+Write
+
+$$
+ V^*GV=\begin{pmatrix}C_G&b\\b^*&\beta\end{pmatrix},
+ \qquad C_G=V_3^*GV_3.
+$$
+
+Since $V^*q=e_4$, the corresponding block matrix for $F$ has the same $C_G,b$ and bottom-right entry $\beta+1$. Its last Schur complement is
+
+$$
+ h_F=\beta+1-b^*C_G^{-1}b
+     =1+\frac{d}{a_G}>1.
+\tag{53.9}
+$$
+
+Apply the ordinary real six-dimensional Hermite bound, with the dual-lattice normalization of Part I, (57.2), to $C_G$. It supplies $0\ne\eta\in R^3$ such that
+
+$$
+ \rho_G:=\eta^*C_G^{-1}\eta
+ \le\gamma_6a_G^{-1/3}
+ <2a_G^{-1/3}<\frac12.
+\tag{53.10}
+$$
+
+Here $\gamma_6=2/3^{1/6}<2$ is the ordinary-lattice constant recorded by Vance, [*A Mordell Inequality for Lattices over Maximal Orders*, §4.2, Table 3 and the paragraph preceding it](https://arxiv.org/html/0810.2336v5#S4.T3). As in (52.11), no Eisenstein-module hypothesis is used.
+
+Choose a nearest Gaussian integer $s$ to $b^*C_G^{-1}\eta$, and define the original-coordinate vector
+
+$$
+ u=V^{-*}\binom{\eta}{s}\in R^4.
+\tag{53.11}
+$$
+
+It is independent of $q$, because $\eta\ne0$. The block inverse formula and Gaussian rounding give
+
+$$
+ u^*F^{-1}u
+ =\rho_G+\frac{|s-b^*C_G^{-1}\eta|^2}{h_F}
+ \le\rho_G+\frac1{2h_F}<1.
+\tag{53.12}
+$$
+
+Cauchy--Schwarz in the $F$ inner product therefore implies $uu^*\preceq cF$ for $c=u^*F^{-1}u<1$. In particular $F-uu^*\succ0$.
+
+Apply Part I, Theorem 57.3 to $F-uu^*$, and prepend $uu^*$ to its Gram summands. This produces a decomposition
+
+$$
+ F=uu^*+\sum_j w_jw_j^*+G',
+\tag{53.13}
+$$
+
+with $G'$ zero or an atom of the asserted kind. The trace grouping in the proof of Part I, Theorem 57.4 applies to this supplied decomposition: every summand and every partial sum is below $F\prec NI_4$. Hence
+
+$$
+ |e(F/N)-e(G'/N)|\le902824\epsilon.
+\tag{53.14}
+$$
+
+The strict rank-one estimate of Part I, Lemma 57.2 gives $|e(Q/N)|\le53142\epsilon$. Comparing the original menus $(G/N,Q/N,I_4-F/N)$ and $(F/N,I_4-F/N)$ gives
+
+$$
+ |e(F/N)-e(G/N)-e(Q/N)|\le2\epsilon.
+\tag{53.15}
+$$
+
+Equations (53.14)--(53.15) prove the error bound in (53.3). They do not accumulate an error for each individual extracted vector.
+
+It remains to prove the determinant increase. Put $B_-=B-Q\succ0$. By (53.13),
+
+$$
+ B'=B_-+uu^*+\sum_jw_jw_j^*\succeq B_-+uu^*.
+\tag{53.16}
+$$
+
+The matrix determinant lemma and (53.4) give $\det B_-=D-\Delta$. Moreover $B_-^{-1}\succeq B^{-1}$. In the block inverse formula for $V^*BV$, the first three coordinates of $V^*u$ are $\eta$, so
+
+$$
+ u^*B_-^{-1}u\ge u^*B^{-1}u
+ \ge\eta^*C^{-1}\eta
+ \ge\nu(C)>\frac1{2\tau}.
+\tag{53.17}
+$$
+
+Monotonicity of the determinant on positive-definite matrices and another application of the determinant lemma now imply
+
+$$
+ \det B'
+ \ge(D-\Delta)(1+u^*B_-^{-1}u)
+ >(D-\Delta)\left(1+\frac1{2\tau}\right).
+\tag{53.18}
+$$
+
+Since $\Delta/D<D_0/N<1/(4\tau+2)$,
+
+$$
+ \det B'>
+ D\left(1-\frac1{4\tau+2}\right)
+  \left(1+\frac1{2\tau}\right)
+ =\left(1+\frac1{4\tau}\right)D.
+\tag{53.19}
+$$
+
+Finally, (53.5) and (53.16) give $B'\succeq B_-\succeq(1-D_0/N)B$. This proves all of (53.3). Only integral vectors constructed in the original coordinates were added or removed; no transformed probability table or congruence covariance has been used. $\square$
+
+**定理 53.3（Absolute original-table bound for the entire upper-margin atom class）。** Let $N=2^m\ge2048$ and let the single table satisfy Definition 50.1, with its original $H$ and $\epsilon\in[0,1/10]$. For every positive-definite Gaussian integral interval atom $G$ with
+
+$$
+ 0\prec G\prec NI_4,\qquad
+ \det G\le11,\qquad
+ \lambda_{\max}(G/N)\le1-\frac{A_0}{N^2},
+\tag{53.20}
+$$
+
+one has
+
+$$
+ \boxed{\ |p(G/N)-\operatorname{Tr}(HG/N)|
+          \le C_0\left(\epsilon+\frac1N\right).\ }
+\tag{53.21}
+$$
+
+For $N>N_0$, the stronger bound $(C_*+TK_{\mathrm{tr}})\epsilon$ holds. In particular (53.21) covers the entire residual class (52.7), for every residual basis satisfying its stated conditions. No short-$G$-vector condition is an additional premise.
+
+**证明。** First suppose $N\le N_0$. Part I, Theorem 16.2 gives $\|H\|_{\mathrm{op}}\le8$. Since $0\preceq G/N\preceq I_4$ and $p(G/N)\in[0,1]$,
+
+$$
+ |e(G/N)|\le1+8\operatorname{Tr}(G/N)\le33
+ \le\frac{33N_0}{N}\le\frac{C_0}{N}.
+\tag{53.22}
+$$
+
+This accounts for every allowed coarse scale.
+
+Now let $N>N_0$, and suppose for contradiction that $G_0=G$ satisfies
+
+$$
+ |e(G_0/N)|>(C_*+TK_{\mathrm{tr}})\epsilon.
+\tag{53.23}
+$$
+
+We construct $G_0,\ldots,G_T$ using Lemma 53.2. Put $B_k=NI_4-G_k$ and $\mathcal D_k=\det B_k$. At each stage the error transfer gives
+
+$$
+ |e(G_k/N)|>
+   \bigl(C_*+(T-k)K_{\mathrm{tr}}\bigr)\epsilon
+ \ge C_*\epsilon.
+\tag{53.24}
+$$
+
+In particular $G_k\ne0$: the menu hypotheses give $p(0)\le2\epsilon$, while $C_*>2$.
+
+The margin needed to apply Theorems 50.2 and 52.2 persists throughout these $T$ steps. Indeed, the margin part of (53.3), Bernoulli's inequality, $N>2TD_0$, and (53.20) give, for $0\le k\le T$,
+
+$$
+\begin{aligned}
+ B_k
+ &\succeq\left(1-\frac{D_0}{N}\right)^k B_0\\
+ &\succeq\left(1-\frac{kD_0}{N}\right)B_0
+ \succeq\frac12B_0
+ \succeq\frac{A_\dagger}{N}I_4.
+\end{aligned}
+\tag{53.25}
+$$
+
+This is an inductive estimate: the initial inequality holds at $k=0$, and Lemma 53.2 supplies its next step once the current stage has the stated margin and residual conditions.
+
+At every current stage, (53.24)--(53.25) allow the failure implication (52.7) to be applied to $G_k$. It supplies a balanced basis, with its associated $C_k,\Delta_k,q_k$, such that
+
+$$
+ \nu(C_k)>\frac1{2\tau},\qquad
+ 1\le\Delta_k<D_0,\qquad
+ \mathcal D_k=d_k+j_kN,\qquad
+ j_k\ge1,\qquad
+ j_k\|q_k\|^2<\Delta_k.
+\tag{53.26}
+$$
+
+Here $d_k=\det G_k\le11$. Since $q_k$ is a nonzero integral vector, $\|q_k\|^2\ge1$. Thus each such stage satisfies
+
+$$
+ N\le \mathcal D_k<D_0N+11.
+\tag{53.27}
+$$
+
+Equations (53.26)--(53.27) are exactly the input needed for Lemma 53.2. For $k<T$ it produces the next atom $G_{k+1}$ with (53.24), (53.25), and $\mathcal D_{k+1}>\lambda \mathcal D_k$. The zero alternative would contradict (53.24), so the construction reaches $G_T$. The same failure implication at $k=T$ gives the upper bound in (53.27).
+
+On the other hand, the determinant growth and the integer choice of $T$ give
+
+$$
+ \mathcal D_T>\lambda^T\mathcal D_0
+ \ge\lambda^TN
+ \ge\left(1+\frac{T}{4\tau}\right)N
+ =(D_0+2)N>D_0N+11,
+\tag{53.28}
+$$
+
+The initial lower bound $\mathcal D_0\ge N$ follows from (53.27), and the last inequality uses $N\ge2048$. This contradicts (53.27). Consequently (53.23) is impossible, proving the asserted stronger fine-scale bound and, with (53.22), (53.21).
+
+The construction uses only one supplied table at one scale. The constants in (53.1) are independent of every target and every basis; the residual bases may change at successive stages. Theorem 52.2 supplies necessary conditions only when its own bound fails, and those conditions are used here to continue the contradiction, not as a sufficient anchor or as a replacement event. In particular no extra hypothesis from the short-vector consequence (50.5) enters the proof.
+
+The new deduction is the combination of the cofactor congruence (53.7), the transverse extraction (53.10)--(53.12), and the strict determinant increase (53.18)--(53.28). The original rank-one and trace-group estimates of Part I and the failure implication of Theorem 52.2 are reused with their stated hypotheses. The ordinary Hermite bound is credited above; the balanced reduction and large-minimum representation theorem of Beli--Chan--Icaza--Liu, [*On a Waring's problem for integral quadratic and hermitian forms*, Proposition 5.3](https://arxiv.org/html/1702.08854v1), enter through Theorems 50.2 and 52.2. This is a repo-derived ordinary mathematical conclusion, with no global literature-priority assertion. It establishes the upper-margin atom estimate with $A=A_0\ge A_\dagger$, including the entire residual class, and does not assert an unrestricted estimate for the complementary boundary band. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 54. Original-grid face relations and tomography coordinates
+
+**定义 54.1（One grid, its free symbols and its legal rows）。** Fix $m\ge1$, $N=2^m$, and $R=\mathbb Z[i]$. In $\mathbb C^4$ let
+
+$$
+ K_{4,N}=\{E\in\operatorname{Herm}_4(N^{-1}R):0\le E\le I_4\},
+ \qquad W_{4,N}=\bigoplus_{E\in K_{4,N}}\mathbb R\delta_E.
+\tag{54.1}
+$$
+
+A legal row is
+
+$$
+ r(A,B,X)=\delta_{A+X}+\delta_B-\delta_A-\delta_{B+X}
+\tag{54.2}
+$$
+
+when $X\in\operatorname{Herm}_4(N^{-1}R)$ and all five matrices $A,B,A+X,B+X,C=I_4-A-B-X$ belong to $K_{4,N}$. The increment $X$ may have either sign. Write $\mathcal R_{4,N}$ for this finite set of rows. Let $\mathcal B_4$ be precisely the basis of [Part I, Definition 16.1](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES.md):
+
+$$
+ D_i=e_ie_i^*,\qquad
+ R_{ij}=(D_i+D_j+S_{ij})/2,\qquad
+ J_{ij}=(D_i+D_j+T_{ij})/2,
+\tag{54.3}
+$$
+
+where $S_{ij}$ has entries $1,1$ in positions $(i,j),(j,i)$ and $T_{ij}$ has entries $i,-i$ there. The actual anchor set is
+
+$$
+ \mathcal A_N=\mathcal B_4\ \cup\
+ \{F\in K_{4,N}:\|F\|_{\rm op}\le1/52\}.
+\tag{54.4}
+$$
+
+All equalities of symbols below are in the free real vector space (54.1). In particular, matrix addition is not imposed as a relation between symbols.
+
+**定义 54.2（A coordinate face and its own identity）。** For a three-element subset $J\subset\{1,2,3,4\}$ put $S=\sum_{j\in J}D_j$ and
+
+$$
+ K_{S,N}=\{E\in\operatorname{Herm}_4(N^{-1}R):E=SES,\ 0\le E\le S\},
+ \qquad W_{S,N}=\bigoplus_{E\in K_{S,N}}\mathbb R\delta_E.
+\tag{54.5}
+$$
+
+The space $S\mathbb C^4$ is identified with $\mathbb C^3$ by its ordered coordinate basis; its identity is $S$, with $\operatorname{Tr}S=3$. Define $\mathcal R_{S,N}$ by (54.2), with every matrix supported on $S$ and complement $C_3=S-A-B-X$ required to lie in $K_{S,N}$. Let
+
+$$
+ \mathcal B_S=\{D_j:j\in J\}\cup\{R_{jk},J_{jk}:j<k,\ j,k\in J\}.
+\tag{54.6}
+$$
+
+Thus $\mathcal B_S\subset\mathcal B_4$ consists of nine original-grid rank-one projections, all of trace one. The sets $K_{S,N}$ and $\mathcal R_{S,N}$ are finite: an effect has bounded entries on a discrete grid, and a row is determined by its finitely many endpoints.
+
+**定义 54.3（The original real coefficients）。** For $E\in K_{S,N}$ write $E_{jk}=x_{jk}+iy_{jk}$ for $j<k$ in $J$. The coefficients $\alpha_Q(E)$ are exactly those of Part I, (16.6):
+
+$$
+ \begin{aligned}
+ E&=\sum_{j\in J}a_jD_j+
+       \sum_{\substack{j<k\\j,k\in J}}(2x_{jk}R_{jk}+2y_{jk}J_{jk})
+       =\sum_{Q\in\mathcal B_S}\alpha_Q(E)Q,\\
+ a_j&=E_{jj}-\sum_{\substack{k<j\\k\in J}}(x_{kj}+y_{kj})
+                  -\sum_{\substack{k>j\\k\in J}}(x_{jk}+y_{jk}).
+ \end{aligned}
+\tag{54.7}
+$$
+
+Taking traces and using the first coefficient inequality of Part I, (16.7), with $d=3$, gives
+
+$$
+ \sum_Q\alpha_Q(E)=\operatorname{Tr}E,\qquad
+ \sum_Q|\alpha_Q(E)|\le27\|E\|_{\rm op}\le27,\qquad
+ |1-\operatorname{Tr}E|\le2.
+\tag{54.8}
+$$
+
+The coefficient inequality is valid for every effect; its use here does not require the local-ball condition $27\|E\|\le1$ used later in Part I's local proof.
+
+## 55. Perturbing an arbitrary functional and obtaining exact finite coefficients
+
+**定理 55.1（Fine-scale finite-dual face supplier）。** Suppose $N=2^m\ge1024$. For every coordinate face $S$ of Definition 54.2 and every $E\in K_{S,N}$ there are a finite list $r_1,\ldots,r_k\in\mathcal R_{S,N}$ and real coefficients $\lambda_1,\ldots,\lambda_k$ such that
+
+$$
+ \begin{aligned}
+ \delta_E&=R_E+\sum_{Q\in\mathcal B_S}\alpha_Q(E)\delta_Q
+                 +(1-\operatorname{Tr}E)\delta_0,\\
+ R_E&=\sum_{j=1}^k\lambda_jr_j,\qquad
+ \sum_{j=1}^k|\lambda_j|\le664016.
+ \end{aligned}
+\tag{55.1}
+$$
+
+The coefficients $\alpha_Q(E)$ are fixed by (54.7); the row coefficients need not be unique. Counting rows, tomography symbols and the zero symbol together gives total absolute coefficient sum at most $664045$.
+
+Proof. Let $f:K_{S,N}\to\mathbb R$ be arbitrary, and use the same letter for its linear extension to $W_{S,N}$. Set
+
+$$
+ \rho=\max_{r\in\mathcal R_{S,N}}|f(r)|,\qquad
+ g(E)=f(E)-f(0),\qquad
+ h(E)=g(E)-\frac{\operatorname{Tr}E}{3}g(S).
+\tag{55.2}
+$$
+
+For $A,B\ge0$ on the original grid with $A+B\le S$, the row $r(0,B,A)$ has endpoints $0,B,A,A+B$ and complement $S-A-B$. Thus it is legal, and
+
+$$
+ |g(A)+g(B)-g(A+B)|\le\rho.
+\tag{55.3}
+$$
+
+The trace correction is additive. Consequently (55.3) holds with $h$ in place of $g$, and $h(0)=h(S)=0$. For every labelled two-entry menu $E_1+E_2=S$ it follows that
+
+$$
+ |h(E_1)+h(E_2)|\le\rho.
+\tag{55.4}
+$$
+
+For every labelled three-entry menu $E_1+E_2+E_3=S$, the partial sum $E_1+E_2$ is an original-grid effect. Two applications of (55.3) give
+
+$$
+ |h(E_1)+h(E_2)+h(E_3)|\le2\rho.
+\tag{55.5}
+$$
+
+These arguments include every zero entry and every repetition.
+
+There are positive finite endpoint margins. Indeed, positivity implies $\operatorname{Tr}E=0$ only at $E=0$, and positivity of $S-E$ implies $\operatorname{Tr}E=3$ only at $E=S$. Hence, writing $q(E)=\operatorname{Tr}E/3$,
+
+$$
+ \eta=\min_{E\in K_{S,N}\setminus\{0,S\}}
+                  \min\{q(E),1-q(E)\}>0,
+ \qquad M=\max_{E\in K_{S,N}}|h(E)|<\infty.
+\tag{55.6}
+$$
+
+The set defining $\eta$ is nonempty, since it contains the coordinate rank-one projections. Choose, for example,
+
+$$
+ 0<t\le\min\left\{\frac{\eta}{2(1+M)},\frac1{20(1+\rho)}\right\},
+ \qquad p_t(E)=q(E)+t h(E),\qquad \epsilon=2t\rho.
+\tag{55.7}
+$$
+
+At $0,S$ the values are exactly $0,1$. At every other effect, $|t h(E)|\le\eta/2$, so $0\le p_t(E)\le1$. Equations (55.4)--(55.5), together with $\sum_jq(E_j)=1$, verify every two- and three-entry menu condition with defect at most $\epsilon\le1/10$. If $\rho=0$, this choice has $\epsilon=0$. No bound on $f$, and no endpoint margin uniform in $N$, is required.
+
+Apply the fine clause of Part I, Theorem 33.1, namely its bound (33.20), to this complete table on its own three-dimensional identity $S$. Its threshold $N\ge648$ holds here. For any real table $u$ on this face let $H_u$ be the unique Hermitian operator on $S\mathbb C^4$ with $\operatorname{Tr}(H_uQ)=u(Q)$ for every $Q\in\mathcal B_S$. This is a linear function of $u$, and $H_q=S/3$. Therefore
+
+$$
+ \begin{aligned}
+ |p_t(E)-\operatorname{Tr}(H_{p_t}E)|
+   &=t|h(E)-\operatorname{Tr}(H_hE)|\\
+   &\le332008\epsilon=664016t\rho.
+ \end{aligned}
+\tag{55.8}
+$$
+
+Division by $t>0$ is legitimate also when $\rho=0$. By (54.7), $\operatorname{Tr}(H_hE)=\sum_Q\alpha_Q(E)h(Q)$. Since every $Q$ has trace one and $\sum_Q\alpha_Q(E)=\operatorname{Tr}E$, direct substitution from (55.2) cancels the trace correction and gives
+
+$$
+ \begin{aligned}
+ h(E)-\sum_Q\alpha_Q(E)h(Q)
+   &=f(E)-\sum_Q\alpha_Q(E)f(Q)
+                         -(1-\operatorname{Tr}E)f(0),\\
+ v_E&=\delta_E-\sum_Q\alpha_Q(E)\delta_Q
+                         -(1-\operatorname{Tr}E)\delta_0,\\
+ |f(v_E)|&\le664016\max_{r\in\mathcal R_{S,N}}|f(r)|.
+ \end{aligned}
+\tag{55.9}
+$$
+
+This inequality has been established for every real linear functional on the free space, without assuming positivity or normalization of that functional.
+
+Now use the standard finite-dimensional separating-hyperplane theorem, as in R. T. Rockafellar, *Convex Analysis*, §11. This is an intermediate convex-geometric fact. The set
+
+$$
+ C=\operatorname{conv}\bigl(\{0\}\cup
+                    \{r,-r:r\in\mathcal R_{S,N}\}\bigr)
+\tag{55.10}
+$$
+
+is compact, convex and symmetric in the finite-dimensional space $W_{S,N}$. If $v_E\notin664016C$, strict separation from this compact convex set would give a linear functional $f$ with
+
+$$
+ f(v_E)>664016\sup_{c\in C}f(c)
+       =664016\max_{r\in\mathcal R_{S,N}}|f(r)|,
+\tag{55.11}
+$$
+
+contrary to (55.9). Thus $v_E\in664016C$. A finite convex combination in (55.10), with signs absorbed into the coefficients, supplies $v_E=\sum_j\lambda_jr_j$ and $\sum_j|\lambda_j|\le664016$. This is exact equality of free symbols, not equality modulo unspecified relations. Finally (54.8) gives $664016+27+2=664045$. $\square$
+
+## 56. Embedding each five-effect row into the original four-dimensional grid
+
+**定理 56.1（Same-grid face embedding with actual anchors）。** Every row in $\mathcal R_{S,N}$ embeds as a legal row in $\mathcal R_{4,N}$. Every tomography symbol and the zero symbol in (55.1) is an actual anchor in $\mathcal A_N$.
+
+Proof. The four face endpoints embed by zero on the missing coordinate, retain their entries in $N^{-1}R$, and satisfy $0\le E\le S\le I_4$. The signed increment remains an original-grid Hermitian matrix. If the fifth face effect is $C_3=S-A-B-X$, then its four-dimensional complement is
+
+$$
+ C_4=I_4-A-B-X=(I_4-S)+C_3.
+\tag{56.1}
+$$
+
+The two summands have orthogonal supports, with $0\le C_3\le S$. Hence $0\le C_4\le I_4$, and $C_4$ also belongs to the original grid. This checks all five required effects. The embedding $W_{S,N}\to W_{4,N}$ sends distinct effect symbols to distinct effect symbols, so it preserves (55.1) as an exact equality. By (54.6), each $Q\in\mathcal B_S$ is literally a member of $\mathcal B_4$. Also $0\in K_{4,N}$ and $\|0\|=0\le1/52$. Thus all delivered anchors are in $\mathcal B_4\cup\{0\}$; the proof uses no positive-radius small effect as an anchor. $\square$
+
+## 57. A direct certificate for the complementary-column projection family
+
+**定理 57.1（Uniform finite certificate on all dyadic scales at least 1024）。** Let $m\ge10$, $N=2^m$, and let $a,b\in\mathbb Z[i]$ satisfy $|a|^2+|b|^2=N-1$. With the same matrices as Part I, Proposition 19.1, put
+
+$$
+ U=\begin{pmatrix}a&b\\-\overline b&\overline a\end{pmatrix},\qquad
+ V=\begin{pmatrix}I_2\\U\end{pmatrix},\qquad P=VV^*/N.
+\tag{57.1}
+$$
+
+There are finite lists of original legal rows $r_j\in\mathcal R_{4,N}$, actual anchors $F_\ell\in\mathcal B_4\cup\{0\}\subset\mathcal A_N$, and real coefficients with
+
+$$
+ \delta_P=\sum_j\lambda_jr_j+\sum_\ell\beta_\ell\delta_{F_\ell},
+ \qquad \sum_j|\lambda_j|\le1328033,\qquad
+ \sum_\ell|\beta_\ell|\le56.
+\tag{57.2}
+$$
+
+In particular the total coefficient cost is at most $1328089$, independently of $m,a,b$ in this domain. Every symbol uses the one original grid with denominator $N$.
+
+Proof. Reuse the complementary-column identities of Part I, Proposition 19.1. Set
+
+$$
+ W=\begin{pmatrix}-U^*\\I_2\end{pmatrix},\qquad
+ w_j=We_j,\qquad Q_j=w_jw_j^*/N\quad(j=1,2).
+\tag{57.3}
+$$
+
+Here $e_j$ in (57.3) is the $j$th coordinate vector of $\mathbb C^2$. Since $U^*U=UU^*=(N-1)I_2$,
+
+$$
+ W^*W=NI_2,\qquad VV^*+WW^*=NI_4,\qquad
+ Q_1Q_2=0,\qquad Q_1+Q_2=I_4-P.
+\tag{57.4}
+$$
+
+Each $Q_j$ is a rank-one projection with Gaussian-integer numerator and denominator $N$. Explicitly,
+
+$$
+ w_1=(-\overline a,-\overline b,1,0)^{\mathsf T},\qquad
+ w_2=(b,-a,0,1)^{\mathsf T}.
+\tag{57.5}
+$$
+
+Thus $Q_1$ is supported on the coordinate face $\{1,2,3\}$, while $D_3Q_2=0$. Define
+
+$$
+ E=I_4-Q_2-D_3.
+\tag{57.6}
+$$
+
+The orthogonality of $Q_2,D_3$ makes $E$ a rank-two original-grid projection, and $E$ is supported on $\{1,2,4\}$. Put
+
+$$
+ A=D_3,\qquad B=Q_1,\qquad X=P-D_3.
+\tag{57.7}
+$$
+
+Then $X$ is a signed Hermitian matrix on the original grid, and the five effects required for legality are exactly
+
+$$
+ A=D_3,\quad B=Q_1,\quad A+X=P,\quad
+ B+X=P+Q_1-D_3=E,\quad
+ I_4-A-B-X=Q_2.
+\tag{57.8}
+$$
+
+All five are projections in $K_{4,N}$. Hence the original row
+
+$$
+ r=\delta_P+\delta_{Q_1}-\delta_{D_3}-\delta_E
+\tag{57.9}
+$$
+
+is legal, and $\delta_P=r+\delta_{D_3}+\delta_E-\delta_{Q_1}$.
+
+Apply Theorem 55.1 to $E$ on $S_{124}=D_1+D_2+D_4$ and to $Q_1$ on $S_{123}=D_1+D_2+D_3$. Theorem 56.1 embeds their finite row combinations $R_E,R_{Q_1}$ legally into $W_{4,N}$. Their traces are $2,1$, respectively, so substitution gives the exact certificate
+
+$$
+ \begin{aligned}
+ \delta_P={}&r+R_E-R_{Q_1}+\delta_{D_3}-\delta_0\\
+ &+\sum_{Q\in\mathcal B_{S_{124}}}\alpha_Q(E)\delta_Q
+   -\sum_{Q\in\mathcal B_{S_{123}}}\alpha_Q(Q_1)\delta_Q.
+ \end{aligned}
+\tag{57.10}
+$$
+
+There is no residual effect symbol in (57.10). The row cost is at most $1+2\cdot664016=1328033$. The anchor cost is at most $1+1+27+27=56$, where the two unit terms are $D_3$ and $0$. Combining repeated symbols can only decrease the resulting absolute coefficient sum. Altogether,
+
+$$
+ 1+1+2\cdot664016+27+27+1=1328089.
+\tag{57.11}
+$$
+
+Both face lists are finite by the finite convex-combination step in Theorem 55.1, and the direct row adds one further row. $\square$
+
+**定义 57.2（The remaining scale domain）。** The dyadic scales outside Theorem 57.1 are exactly
+
+$$
+ N\in\{2,4,8,16,32,64,128,256,512\}.
+\tag{57.12}
+$$
+
+For every pair $a,b$ with $|a|^2+|b|^2=N-1$ at each of these nine scales, this argument supplies no certificate and claims no finite exact coefficient cost. The term proportional to $N^{-1}$ in the coarse clause of Part I, Theorem 33.1, does not give the homogeneous functional inequality (55.9) by division by arbitrarily small $t$. A finite number of remaining grids alone establishes neither row-and-anchor span nor a finite certificate cost. The assertion of one uniform cost for every $m\ge1$ therefore remains unresolved by these theorems, as does any implication to the parent approximate-density existence question. The fine-scale family result concerns the original-Hermitian error relations of Part I, Definition 18.1, before positivity repair.
+
+## 58. Mathematical sources of the finite-dual application
+
+**文献 58.1（Reused ingredients and precise scope）。** [Part I](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES.md), Definition 16.1 and (16.6)--(16.7), supply the original basis, its sign convention and its coefficient bound. Theorem 33.1, specifically the fine estimate (33.20), supplies the inequality $332008\epsilon$ for a complete table normalized on its own three-dimensional identity when $N\ge648$. Proposition 19.1 supplies the complementary-column projections used in (57.3)--(57.4). R. T. Rockafellar, *Convex Analysis*, Princeton University Press, §11, supplies the standard finite-dimensional separation principle used between (55.9) and (55.11). The perturbation (55.2)--(55.9) and the subsequent exact finite-coefficient conclusion are the interface asserted here; the final direct row reuses the existing projections. The conclusions are ordinary mathematical deductions in the stated finite-grid setting, with no global literature-priority assertion.
+
+## 追加锚（本行以下为增补区）
+
+## 59. Exact integer-norm descent on a three-coordinate face
+
+**定理 59.1（Costed rank-one descent on every original dyadic grid）。** Fix any coordinate face $S$ of Definition 54.2, any $N=2^m$ with $m\ge1$, and any nonzero $v\in\mathbb Z[i]^3$ with $s=\|v\|^2\le N$. Write
+
+$$
+ q_N(v)=\delta_{vv^*/N}-\delta_0,\qquad [E]=\delta_E-\delta_0.
+\tag{59.1}
+$$
+
+Then $q_N(v)$ is a finite real combination of rows in $\mathcal R_{S,N}$ and anchors in $\mathcal B_S\cup\{0\}$ with total absolute coefficient sum at most $100\cdot4^s$. No values of a function on different grids are identified.
+
+Proof. All symbols in this proof have denominator $N$. We first specify the exact row identities and the initial cases, and then give a strict descent. For positive grid matrices with $A+B=C+D\le S$, the identity
+
+$$
+ [A]+[B]-[C]-[D]=r(C,B,A-C)
+\tag{59.2}
+$$
+
+uses a single legal row: its four endpoints are $C,B,A,D$, and its fifth effect is $S-A-B$. In particular $[A]+[B]-[A+B]=r(0,B,A)$. Repeatedly using this last identity gives, whenever $LT\le S$ for a positive integer $L$,
+
+$$
+ [LT]=L[T]-\sum_{k=1}^{L-1}r(0,kT,T).
+\tag{59.3}
+$$
+
+Every complement in (59.3) is $S-(k+1)T\ge0$.
+
+If $s=1$, the matrix $vv^*/N$ is $D_j/N$. Apply (59.3) with $L=N$ to express its centered symbol with cost at most $2/N+(N-1)/N\le3$. For $s=2$, either $vv^*/N=2D_j/N$, or $v$ has two unit coordinates. In the latter case $T=vv^*/2$ is one of the four two-coordinate unit-phase projections. Two are $R_{jk},J_{jk}$ in (54.3); each of the other two is the orthogonal complement of one of these inside $D_j+D_k$. Formula (59.2), comparing the two orthogonal projections with $D_j,D_k$, expresses its centered symbol with cost at most five. Applying (59.3) with $L=N/2$ consequently expresses $q_N(v)$ with cost at most six. The single-coordinate case follows by the same scaling from $D_j$. Thus the bound eleven is valid for every $s\le2$.
+
+For $s=3$, necessarily $N\ge4$. If there are two nonzero coordinates, their squared norms are two and one. Let $w$ vanish on the norm-two coordinate and equal $i$ times the norm-one coordinate of $v$. Then $w\equiv v\pmod{1+i}$, $\|w\|^2=1$, and $\operatorname{Re}(v^*w)=0$. The largest eigenvalue of $vv^*+ww^*$ is $2+\sqrt2<4$. The integral vectors
+
+$$
+ u=(v+w)/(1+i),\qquad z=(v-w)/(1+i)
+\tag{59.4}
+$$
+
+both have squared norm two. Equation (59.2) applied to $vv^*/N+ww^*/N=uu^*/N+zz^*/N\le S$ gives a certificate of cost at most $1+3\cdot11=34$.
+
+In the remaining case write $v_0=(a,b,c)$ with $a,b,c$ units and put $v_1=(-a,b,c)$, $v_2=(a,-b,c)$. For each of the three pairs, $v_i\equiv v_j\pmod{1+i}$ and $|v_i^*v_j|=1$. Hence the largest eigenvalue of $v_iv_i^*+v_jv_j^*$ is four, and (59.4) produces one vector of squared norm two and another of squared norm four. The latter outer product is twice the outer product of a vector of squared norm two. Its centered symbol has cost at most $2\cdot11+1=23$ by (59.3). Thus each equation for $q_N(v_i)+q_N(v_j)$ has right-hand certificate cost at most $1+11+23=35$. Half the sum of the equations for pairs $(0,1),(0,2)$ minus the equation for $(1,2)$ expresses $q_N(v_0)$ with cost at most $105/2<100$. This proves a common initial bound of one hundred for $s\le3$, including all coordinate phases.
+
+Now use strong induction on the positive integer $s\ge4$. Put $\pi=1+i$. If every coordinate of $v$ is divisible by $\pi$, then $v=\pi u$ and $vv^*=2uu^*$. Equation (59.3) with $L=2$ reduces the certificate to two copies at squared norm $s/2<s$, and one row.
+
+Otherwise let $r\in\{1,2,3\}$ be the number of coordinates not divisible by $\pi$. For such a coordinate $v_j=x+iy$, the integers $x,y$ have opposite parity. Choose a unit $w_j$ so that
+
+$$
+ |\operatorname{Re}(\overline{v_j}w_j)|=\min(|x|,|y|)
+ \le (|v_j|^2-1)/4;
+\tag{59.5}
+$$
+
+set the other $w_j$ equal to zero. To check the inequality, put $t=\min(|x|,|y|)$. Opposite parity gives $|v_j|^2\ge t^2+(t+1)^2\ge4t+1$, also when $t=0$. Thus
+
+$$
+ w\equiv v\pmod\pi,\qquad \|w\|^2=r,\qquad
+ |\operatorname{Re}(v^*w)|\le(s-r)/4.
+\tag{59.6}
+$$
+
+First suppose $s<N$ and put $k=N-s$. If $r\le k$, then $vv^*+ww^*\le(s+r)S\le NS$. The vectors (59.4) are integral and satisfy
+
+$$
+ \max(\|u\|^2,\|z\|^2)
+ =\frac{s+r+2|\operatorname{Re}(v^*w)|}{2}
+ \le\frac{3s+r}{4}<s.
+\tag{59.7}
+$$
+
+Also $r<s$. Equation (59.2) therefore expresses $q_N(v)$ using three smaller squared norms and one row.
+
+The congruence $r\equiv s\equiv k\pmod2$ shows that the only omitted possibility is $k=1,r=3$. For $N\ge16$, use the unit choice in Part I, (33.11)--(33.12), which gives $\|w\|^2=3$, $w\equiv v\pmod\pi$ and
+
+$$
+ vv^*+ww^*\le NS,\qquad |v^*w|^2\le N-3.
+\tag{59.8}
+$$
+
+Here $\sqrt{N-3}<(N-4)/2$, because $N^2-12N+28>0$ for $N\ge16$. Consequently the norms in (59.4) are at most $(N+2)/2+\sqrt{N-3}<N-1=s$. This again gives strict descent.
+
+At $N=8$, the omitted vector has squared coordinate norms $5,1,1$. On the norm-five coordinate choose a unit $w_j$ with $\overline{v_j}w_j=1+2i$ or $1-2i$; every Gaussian integer of norm five permits one of these choices. On the other coordinates put $w_j=-v_j$. Then $v^*w=-1\pm2i$, $\|w\|^2=3$ and $w\equiv v\pmod\pi$. The Gram matrix of the two columns $v,w$ has diagonal $7,3$ and off-diagonal squared modulus five. Its complement in $8I_2$ has diagonal $1,5$ and determinant zero, so $vv^*+ww^*\le8S$. The two transformed vectors have squared norms four and six, both below seven. At $N=4$ this exceptional case has $s=3$, already proved; at $N=2$ it is an initial case. These are all dyadic possibilities.
+
+Finally suppose $s=N$. Since $N$ is even, $r=2$. Permute notation so $v=(a,b,c)$ with $a,b$ not divisible by $\pi$ and $c$ divisible by $\pi$. Each of $|a|^2,|b|^2$ is one modulo four. As $s\ge4$ is divisible by four, $|c|^2\equiv2\pmod4$, so $c\ne0$. Put
+
+$$
+ w=(-\overline b,\overline a,0),\qquad r'=\|w\|^2=N-|c|^2<N.
+\tag{59.9}
+$$
+
+Then $v^*w=0$, $w\equiv v\pmod\pi$, and $vv^*+ww^*\le NS$. The two transformed vectors have squared norm $(N+r')/2<N$. This is again a reduction to three smaller positive squared norms and one row. These are the orthogonal parity identities of Part I, (33.16), used here without its large-$N$ estimates.
+
+In every induction step the certificate cost is at most $1+3\cdot100\cdot4^{s-1}\le100\cdot4^s$; the divisible case uses only two smaller terms. All row endpoints and their complements were checked before the induction was applied. Each step lowers a positive integer, so the resulting lists are finite. The initial cases and this induction prove the assertion. $\square$
+
+## 60. Coarse face certificates and the original complementary-column target
+
+**定理 60.1（Exact costed face supply and all-scale original target）。** For every coordinate face $S$ and every dyadic $N\ge2$, each $E\in K_{S,N}$ has a centered certificate using $\mathcal R_{S,N}$ and $\mathcal B_S\cup\{0\}$ with cost at most
+
+$$
+ M_N=3N(100\cdot4^N+1).
+\tag{60.1}
+$$
+
+For every $m\ge1$, $N=2^m$, and every $a,b\in\mathbb Z[i]$ with $|a|^2+|b|^2=N-1$, the projection $P$ of (57.1) has a finite certificate in the original space $W_{4,N}$, using only original legal rows and anchors in $\mathcal B_4\cup\{0\}$, with total absolute coefficient sum at most the single finite real constant
+
+$$
+ L=3072(100\cdot4^{512}+1)+4.
+\tag{60.2}
+$$
+
+Proof. Reuse the integral positive-semidefinite three-dimensional decomposition proved in Part I, (33.5)--(33.8). It applies to $NE$ for every $N$; the large-scale assumption there is needed for the later error estimates, not for this integral decomposition. Thus
+
+$$
+ NE=\sum_{j=1}^{\ell}v_jv_j^*,\qquad
+ v_j\in\mathbb Z[i]^3\setminus\{0\},\qquad \ell\le\operatorname{Tr}(NE)\le3N.
+\tag{60.3}
+$$
+
+Each summand and every partial sum, divided by $N$, lies between zero and $E\le S$. In particular $\|v_j\|^2\le N$. Successive additive rows give
+
+$$
+ [E]=\sum_{j=1}^{\ell}q_N(v_j)
+ -\sum_{j=2}^{\ell}r\left(0,\sum_{h<j}v_hv_h^*/N,v_jv_j^*/N\right).
+\tag{60.4}
+$$
+
+Theorem 59.1 bounds the cost by $\ell\,100\cdot4^N+\ell-1\le M_N$. For $E=0$ the empty certificate suffices.
+
+For the original target use precisely the legal row $r$ in (57.7)--(57.9), with $Q_1,E$ on the two specified coordinate faces. Its identity, in centered symbols, is
+
+$$
+ \delta_P=r+[D_3]+[E]-[Q_1]+\delta_0.
+\tag{60.5}
+$$
+
+Theorem 56.1 embeds each face row with all five legality effects on the original four-dimensional grid. The symbols in $[D_3]$ and $\delta_0$ are actual anchors. Applying (60.1) twice therefore gives total cost at most $1+2+2M_N+1=2M_N+4$ for every original Gaussian pair, with no parameter reduction or covariance assumption. For $N\le512$, monotonicity of the displayed numerical bound gives $2M_N+4\le L$. For $N\ge1024$, reuse Theorem 57.1, whose cost $1328089$ is less than (60.2). These two domains exhaust all $N=2^m$, $m\ge1$. All coefficients are real, all lists are finite, and all equalities used are identities of free symbols generated by the original rows. $\square$
+
+**定义 60.2（Scope and mathematical attribution）。** Theorem 60.1 concerns the exact original-Hermitian relation for the specific family (57.1). It does not assert the parent's approximate-density existence conclusion or a physical realization. The integral decomposition, orthogonal parity exchange and exceptional-margin unit choice are reused from Part I, Theorem 33.1; its cited Hermite bounds and Gaussian module facts retain their original attributions. The new deduction is the strict squared-norm descent (59.5)--(59.9), its complete small-norm initialization and the exact norm-seven exchange, which supply finite coefficient bounds at the formerly omitted scales. The fine constant and the final complementary-column row are reused from Theorem 57.1.
+
+## 追加锚（本行以下为增补区）

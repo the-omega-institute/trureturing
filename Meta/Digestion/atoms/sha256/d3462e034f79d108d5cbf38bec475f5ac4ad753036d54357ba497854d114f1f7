@@ -1,0 +1,21 @@
+**假设 28.2（正权三阶设计上的精确未条件化零泄漏）。** 同一来源及同一仪器不随 $s$ 改变。已合法的有限准备节点 $\{(w_s,p_s)\}_{s\in S}$ 满足 $w_s>0$、$\sum_sw_s=1$，且
+
+$$
+\sum_sw_sp_s^{\otimes3}
+=\int p^{\otimes3}\,d\mu(p)
+=\frac{\Pi_{\rm sym}^{(3)}}{\binom{d+2}{3}}.
+\tag{28.4}
+$$
+
+这里 $\mu$ 为归一复射影 Haar 测度，$\Pi_{\rm sym}^{(3)}$ 为三重对称投影。取偏迹同时给一阶、二阶矩。矩公式复用 [Scott，arXiv:quant-ph/0604049v6，引理 1](https://arxiv.org/pdf/quant-ph/0604049v6) 及 [Roy–Scott，arXiv:quant-ph/0703025v2，定义 2.1、式 (2.2)–(2.3)](https://arxiv.org/pdf/quant-ph/0703025v2)。$w_s$ 是数学求积权，不预设它等于原物理标签概率。
+
+精确合同是
+
+$$
+\mathcal L:=\sum_sw_s\sum_{j\in\mathsf C}
+\operatorname{Tr}\!\left[((I_H-p_s)\otimes I_M)V_j(X_{p_s})\right]=0.
+\tag{28.5}
+$$
+
+所有项都是未条件化的非负质量；没有除以 $\eta_{p_s}$ 或分支成功率。泄漏式使用同一原联合映射的完整输出及系统补投影，不预设系统边缘的某个规范分解。
+

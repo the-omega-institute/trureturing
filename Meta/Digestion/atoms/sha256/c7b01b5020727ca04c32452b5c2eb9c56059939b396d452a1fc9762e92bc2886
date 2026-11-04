@@ -1,0 +1,5 @@
+**Example 19.2 (the first nontrivial native fibre).** At
+$t^*=\langle\langle\beta,\alpha\rangle,\beta\rangle$, the complete histories are
+$P_\varepsilon S_\varepsilon P_R S_L$ and
+$P_\varepsilon S_\varepsilon S_L P_R$. The two incoming lower words at this endpoint are empty, so the rule assigns the distinct one-bit words $0$ and $1$ in the fixed event order. FetchGrowth$(3)$ therefore returns $P_R$ or $S_L$; on the same current source, Next$(3)$ executes $S_R$ or $S_{L^2}$, respectively, while the original full reply, End, supplied ACK and Return phases remain unchanged. This is a concrete native recovery of a serial distinction, not a static endpoint rank.
+

@@ -1,0 +1,37 @@
+### 定理 3.6（从任意统一恢复到固定公式的统一恢复）
+
+<a id="thm-c122-explicit-petz-linear"></a>
+
+若存在 CPTP $\mathcal R$ 满足
+$\|\mathcal R\mathcal N-\operatorname{id}_H\|_\diamond\le e$，$0\le e\le2$，则*预先固定*的 $\pi$-Petz 回接满足
+
+<a id="eq-c122-explicit-linear-error"></a>
+
+$$
+\boxed{\quad
+ \|\mathcal P_{\pi,\mathcal N}\mathcal N-\operatorname{id}_H\|_\diamond
+ \le\min\{2,\,2(d-1)(e-e^2/4)\}.
+ \quad}
+\tag{19}
+$$
+
+公式不使用 $\mathcal R$，不依赖未知输入，且没有输出维数因子。
+
+**证明。**
+在最大纠缠输入上测试理想态投影，diamond 假设直接给出
+$F_e(\pi,\mathcal R\mathcal N)\ge1-e/2$。
+定理~[3.2](#thm-c122-barnum-knill) 因而给出
+$p\ge(1-e/2)^2$。把 $1-p\le e-e^2/4$ 代入
+定理~[3.5](#thm-c122-diamond-defect) 即得。
+
+上述线性界来自均匀参考回接的 Hermitian Kraus 结构。一般通道的小平均保真度损失并不能直接得到同样的线性 diamond 界；相干残余可能产生平方根尺度。本节把结构条件及有限证明全部写出，不宣称这些常数最优或具有首创性。
+
+Ng–Mandayam 的已知近最优界也依赖源维数：在其*最坏纯态平方保真度损失*约定下，
+
+$$
+\eta_P\le\eta_{\rm opt}
+ \frac{(d+1)-\eta_{\rm opt}}{1+(d-1)\eta_{\rm opt}}.
+$$
+
+这是另一个误差指标，不能直接把它称为含纠缠参考的 diamond 界 [7](#ref-ng2010)。本节的式~[(19)](#eq-c122-explicit-linear-error) 通过单参考态定理与显式双交换子结构，单独证明了全参考结论。
+

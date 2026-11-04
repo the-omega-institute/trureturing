@@ -1,0 +1,69 @@
+**推论 17.3（The same graph class at every equal even fibre size）。**
+For precisely the graphs $H$ of Definition 17.1 and every integer
+$S\geq1$, put $s=2S$, $\Omega_s=V(H)\times[s]$ and
+$k_s=mS=ms/2$. On the entire original complex Boolean carrier
+$\mathcal H_{k_s}$ of $H[\mathrm{empty}_s]$, let $K_s$ be positive
+ordinary adjacency and $P_s$ the product of the original symmetric
+fibre projections. With
+
+$$
+E_s=\min\operatorname{spec}K_s,\qquad
+\mathcal N_s=\ker P_s,
+\tag{17.19}
+$$
+
+one has $\ker(K_s-E_sI)\subseteq\operatorname{ran}P_s$.
+The space $\mathcal N_s$ is nonzero and reduces $K_s$, and
+
+$$
+\begin{aligned}
+g_s&=\min\operatorname{spec}(K_s|_{\mathcal N_s})-E_s>0,\\
+K_s-E_sI&\succeq g_s(I-P_s),\\
+\|(I-P_s)\phi\|^2
+&\leq\frac{\langle\phi,K_s\phi\rangle-E_s}{g_s}
+\qquad(\phi\in\mathcal H_{k_s},\ \|\phi\|=1).
+\end{aligned}
+\tag{17.20}
+$$
+
+Each $E_s$ is its own actual whole-space minimum; each $g_s$ is
+defined relative to that same $E_s$.
+
+Proof. At $S=1$ use Theorem 17.2. At $S\geq2$ consume Theorem 15.2
+of the owning volume at its condition (b), whose exact scale
+hypothesis is $s=2S\geq4$. To check this condition, every odd cycle
+$C_n$ in (17.1) has the orthogonal Fourier basis
+$z^{(j)}_a=e^{2\pi\mathrm i ja/n}$, $0\leq j,a<n$.
+A geometric sum proves orthogonality, and cycle adjacency gives
+eigenvalues $2\cos(2\pi j/n)$. The angles nearest $\pi$ give the
+least eigenvalue $-2\cos(\pi/n)$, attained at
+$j=(n-1)/2,(n+1)/2$. Each such vector has modulus-one coordinates.
+This includes $n=3,5$ and every longer odd cycle. The cycle has
+an edge; the bipartite alternative of condition (b) imposes no
+connectedness or nonempty-edge requirement. Thus every vertex
+satisfies its exact condition.
+
+The cited theorem acts on the full carrier in (17.19), including
+all spins $J_i=S-t_i$, $0\leq t_i\leq S$, all multiplicity copies
+$r_{2S}(t_i)=\binom{2S}{t_i}-\binom{2S}{t_i-1}$ and all feasible
+global weights $\sum_i x_i=0$, $|x_i|\leq J_i$.
+Its representation-source map is Boolean rank $2S$, starting rank
+$t_i$, principal number $2S-2t_i$, and ladders $L_i^*,L_i$.
+No assertion at $S=1$ is extracted from condition (b).
+
+For the nonzero-complement endpoint explicitly, choose a nonconstant
+one-particle vector in one fibre, an occupancy-$(2S-1)$ vector in a
+second fibre, and occupancy-$S$ vectors in all remaining fibres.
+Their product is killed by $P_s$ and has total occupancy
+$1+(2S-1)+(m-2)S=mS$. It exists also when $m=2,S=1$.
+Commutation with all fibre permutations gives reduction, and the
+same finite-spectrum argument proves (17.20).
+Thus the additional scale endpoint is $s=2$ for the graph class
+(17.1); the larger even scales are exactly the stated application
+of Section 15. Arbitrary connected even-order bases outside the
+stated neighborhood alternatives remain unresolved here.
+These conclusions supply no necessity criterion, weighted or
+unequal or odd-fibre statement, other filling, changed-sign operator,
+physical realization, exact energy or quantitative gap estimate.
+$\square$
+

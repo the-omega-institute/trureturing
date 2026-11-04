@@ -1,0 +1,41 @@
+#### 定理 14.1（共同幅度固定的圆族）
+
+式[(14.1)](#eq-phasecircle)在实化幅度空间中是仿射圆，中心 $q$，
+半径 $\sqrt{1-p}$，平面为
+$q+\operatorname{span} _\mathbb R \{r,ir\}$。
+在正交基
+$u=q/\sqrt p$、$v=r/\sqrt{1-p}$ 的纯态 Bloch 球中，轨迹为
+
+<a id="eq-latitude"></a>
+
+$$
+\boxed{\mathbf r(\theta)=
+\bigl(2\sqrt{p(1-p)}\cos\theta,
+2\sqrt{p(1-p)}\sin\theta,2p-1\bigr).}\tag{14.2}
+$$
+
+它是纬圆；在 $0<p<1$ 内是大圆当且仅当 $p=1/2$。
+若角度集包含两个模 $2\pi$ 不同的角，该族的最大同幅公共部分恰为 $q$，
+最优强度为 $p$。
+
+**证明。**
+
+$r$ 与 $ir$ 在实内积下正交且等长，给第一句。
+在基 $(u,v)$ 中，态坐标为
+$(\sqrt p,e^{i\theta}\sqrt{1-p})$；直接展开其秩一密度矩阵即得
+式[(14.2)](#eq-latitude)。
+水平截平面经过球心恰在 $2p-1=0$。
+任意两不同角的差为
+
+$$
+x(\theta_2)-x(\theta_1)
+=(e^{i\theta_2}-e^{i\theta_1})r.
+$$
+
+所以差异空间是 $\mathbb C  r$，其正交补中的共同投影就是 $q$。
+最大公共分支定理随即给最优强度 $p$。
+
+□
+
+<a id="statement-14-2"></a>
+

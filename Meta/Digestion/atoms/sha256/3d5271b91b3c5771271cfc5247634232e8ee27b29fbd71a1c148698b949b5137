@@ -1,0 +1,14 @@
+**Definition 6.3 (Gaussian multi-entropies).** Fix $\mathtt q\ge2$, party sizes $N_1,\dots,N_{\mathtt q}\ge1$, $N=\sum N_k$ (so $N\ge2$), $x_k=N_k/N$, $n\ge2$ and $a>1$. The fully symmetric Gaussian state is $\psi_a(y)=\exp(-\frac12y^\top\mathbf Wy)$ on $\mathbb R^N$ with $\mathbf W$ of Definition 6.1, party $k$ owning the coordinates of the block $B_k$ of Theorem 3.8. Let $Z^{(\mathtt q)}_n$ be the normalized twisted replica integral $\mathcal Z(R,g)$ of Theorem 3.8 for $\psi_a$ and the datum of Convention 2.4, and
+$$
+S^{(\mathtt q)}_n=\frac{1}{1-n}\,\frac{1}{n^{\mathtt q-2}}\log Z^{(\mathtt q)}_n .
+$$
+Bipartite entropies $S^{(2)}_n(S)$ use $\mathtt q=2$ with the two merged parties of a bipartition, and
+$$
+\mathrm{GM}^{(3)}_n=S^{(3)}_n-\tfrac12\big(S^{(2)}_n(AB{:}C)+S^{(2)}_n(BC{:}A)+S^{(2)}_n(CA{:}B)\big).
+$$
+Stance: definition; it is the multi-entropy and genuine tripartite multi-entropy of Camargo and Nishida, §2.1 and §2.3, for their fully symmetric state of §3.1 (literature-attested). By Lemma 6.2 and Definition 6.1, $\psi_a$ has the form of Theorem 3.8 with $\lambda=a-e^->0$ and $\varepsilon=\varepsilon(a)\in(0,1)$, so
+$$
+Z^{(\mathtt q)}_n=\Big(\frac{\varepsilon^{n^{\mathtt q-1}}}{\Delta_{\mathtt q}(\varepsilon)}\Big)^{1/2},
+$$
+and $\Delta_{\mathtt q}(\varepsilon)>0$ by Corollary 3.5, so all logarithms are defined. Theorems 6.4–7.2 below concern the quantities so defined.
+

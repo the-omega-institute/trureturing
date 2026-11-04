@@ -37,17 +37,17 @@ open scoped Interval ComplexConjugate
 namespace D5.S3.Analytic.PolynomialL2Derivative
 
 /-- The actual upstream integer shifted Legendre polynomial, mapped to ℂ. -/
-private def legendreC (n : ℕ) : ℂ[X] :=
+def legendreC (n : ℕ) : ℂ[X] :=
   (Polynomial.shiftedLegendre n).map (Int.castRingHom ℂ)
 
 private def rod (n : ℕ) : ℂ[X] := X ^ n * (1 - X) ^ n
 
 /-- A bilinear moment. Conjugation will be supplied explicitly by mapping
 the coefficients of the second polynomial. -/
-private def moment (p q : ℂ[X]) : ℂ :=
+def moment (p q : ℂ[X]) : ℂ :=
   ∫ x : ℝ in 0..1, p.eval (x : ℂ) * q.eval (x : ℂ)
 
-private lemma eval_continuous (p : ℂ[X]) :
+lemma eval_continuous (p : ℂ[X]) :
     Continuous (fun x : ℝ => p.eval (x : ℂ)) :=
   p.continuous.comp Complex.continuous_ofReal
 
@@ -61,7 +61,7 @@ private lemma moment_zero_right (p : ℂ[X]) : moment p 0 = 0 := by
 private lemma moment_zero_left (q : ℂ[X]) : moment 0 q = 0 := by
   simp [moment]
 
-private lemma moment_C_mul_left (a : ℂ) (p q : ℂ[X]) :
+lemma moment_C_mul_left (a : ℂ) (p q : ℂ[X]) :
     moment (C a * p) q = a * moment p q := by
   simp only [moment, eval_mul, eval_C, mul_assoc,
     intervalIntegral.integral_const_mul]
@@ -75,7 +75,7 @@ private lemma moment_comm (p q : ℂ[X]) : moment p q = moment q p := by
 
 /-- A single integration by parts, with all analytic hypotheses supplied
 by continuity of polynomial evaluations on the real interval. -/
-private lemma moment_derivative (p q : ℂ[X]) :
+lemma moment_derivative (p q : ℂ[X]) :
     moment p.derivative q =
       p.eval 1 * q.eval 1 - p.eval 0 * q.eval 0 - moment p q.derivative := by
   have h := intervalIntegral.integral_mul_deriv_eq_deriv_mul_of_hasDerivAt
@@ -194,7 +194,7 @@ private theorem shiftedLegendre_mul_integral_eq_zero (n : ℕ) (p : ℂ[X])
 
 /-- Conjugating coefficients really conjugates polynomial values at real
 arguments; this explicitly retains arbitrary complex coefficients. -/
-private lemma eval_map_conj (p : ℂ[X]) (x : ℝ) :
+lemma eval_map_conj (p : ℂ[X]) (x : ℝ) :
     (p.map (starRingEnd ℂ)).eval (x : ℂ) = conj (p.eval (x : ℂ)) := by
   simpa only [Complex.conj_ofReal] using
     (Polynomial.eval_map_apply (p := p) (starRingEnd ℂ) (x : ℂ))
@@ -227,7 +227,7 @@ private theorem shiftedLegendre_mul_conj_zero (n : ℕ) :
       (legendreC n).eval (x : ℂ) * conj ((0 : ℂ[X]).eval (x : ℂ))) = 0 := by
   simp
 
-private lemma coeff_legendreC (n k : ℕ) :
+lemma coeff_legendreC (n k : ℕ) :
     (legendreC n).coeff k =
       (-1 : ℂ) ^ k * (n.choose k : ℂ) * ((n + k).choose n : ℂ) := by
   simp [legendreC, Polynomial.coeff_shiftedLegendre]
@@ -494,12 +494,12 @@ private lemma legendreC_leadingCoeff_isUnit (n : ℕ) :
   isUnit_iff_ne_zero.mpr
     (Polynomial.leadingCoeff_ne_zero.mpr (legendreSequence.ne_zero n))
 
-private def expansion (d : ℕ) (a : ℕ → ℂ) : ℂ[X] :=
+def expansion (d : ℕ) (a : ℕ → ℂ) : ℂ[X] :=
   ∑ k ∈ Finset.range d, C (a k) * legendreC k
 
 /-- All polynomials in degree < d are actually represented in the first d
 members of this family, using the pinned polynomial-sequence spanning API. -/
-private lemma exists_expansion (d : ℕ) (p : ℂ[X])
+lemma exists_expansion (d : ℕ) (p : ℂ[X])
     (hp : p.degree < (d : WithBot ℕ)) :
     ∃ a : ℕ → ℂ, expansion d a = p := by
   have hs : p ∈ Submodule.span ℂ (legendreC '' (↑(Finset.range d) : Set ℕ)) := by
@@ -515,7 +515,7 @@ private lemma moment_C_mul_right (a : ℂ) (p q : ℂ[X]) :
     moment p (C a * q) = a * moment p q := by
   rw [moment_comm, moment_C_mul_left, moment_comm q p]
 
-private lemma moment_sum_left (s : Finset ℕ) (p : ℕ → ℂ[X]) (q : ℂ[X]) :
+lemma moment_sum_left (s : Finset ℕ) (p : ℕ → ℂ[X]) (q : ℂ[X]) :
     moment (∑ i ∈ s, p i) q = ∑ i ∈ s, moment (p i) q := by
   unfold moment
   simp only [Polynomial.eval_finsetSum, Finset.sum_mul]
@@ -529,12 +529,12 @@ private lemma moment_sum_right (p : ℂ[X]) (s : Finset ℕ) (q : ℕ → ℂ[X]
   exact intervalIntegral.integral_finsetSum
     (fun i _ => ((eval_continuous p).mul (eval_continuous (q i))).intervalIntegrable 0 1)
 
-private lemma expansion_map_conj (d : ℕ) (a : ℕ → ℂ) :
+lemma expansion_map_conj (d : ℕ) (a : ℕ → ℂ) :
     (expansion d a).map (starRingEnd ℂ) = expansion d (fun i => conj (a i)) := by
   simp only [expansion, Polynomial.map_sum, Polynomial.map_mul,
     Polynomial.map_C, legendreC_map_conj]
 
-private lemma moment_expansion_row (d i : ℕ) (a : ℕ → ℂ)
+lemma moment_expansion_row (d i : ℕ) (a : ℕ → ℂ)
     (hi : i ∈ Finset.range d) :
     moment (legendreC i) (expansion d (fun j => conj (a j))) =
       conj (a i) / (2 * (i : ℂ) + 1) := by
@@ -553,11 +553,11 @@ private lemma moment_expansion_row (d i : ℕ) (a : ℕ → ℂ)
   · intro hnot
     exact (hnot hi).elim
 
-private def weight (k : ℕ) : ℝ := 2 * (k : ℝ) + 1
+def weight (k : ℕ) : ℝ := 2 * (k : ℝ) + 1
 
 private lemma weight_pos (k : ℕ) : 0 < weight k := by unfold weight; positivity
 
-private def coefficientEnergy (d : ℕ) (a : ℕ → ℂ) : ℝ :=
+def coefficientEnergy (d : ℕ) (a : ℕ → ℂ) : ℝ :=
   ∑ i ∈ Finset.range d, ‖a i‖ ^ 2 / weight i
 
 private lemma coefficientEnergy_nonneg (d : ℕ) (a : ℕ → ℂ) :
@@ -568,7 +568,7 @@ private lemma coefficientEnergy_nonneg (d : ℕ) (a : ℕ → ℂ) :
   exact div_nonneg (sq_nonneg _) (weight_pos i).le
 
 /-- Exact integral Parseval identity for arbitrary complex coefficients. -/
-private lemma expansion_parseval (d : ℕ) (a : ℕ → ℂ) :
+lemma expansion_parseval (d : ℕ) (a : ℕ → ℂ) :
     (∫ x : ℝ in 0..1, ‖(expansion d a).eval (x : ℂ)‖ ^ 2) =
       coefficientEnergy d a := by
   have h : ((∫ x : ℝ in 0..1,

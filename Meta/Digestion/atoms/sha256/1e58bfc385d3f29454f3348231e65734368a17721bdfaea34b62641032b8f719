@@ -1,0 +1,41 @@
+### 定理 6.5（内部参考的相容性给出完整扩张）
+
+<a id="thm-c122-kraus"></a>
+
+设 $N:M_d(\mathbb C)\to M_k(\mathbb C)$ 复线性、保迹。对全部有限参考，
+$(N\otimes\operatorname{id})(X)\ge0$ 当 $X\ge0$，当且仅当
+
+$$
+N(X)=\sum_a K_aXK_a^*,\qquad \sum_aK_a^*K_a=I.
+$$
+
+这也等价于存在有限记录空间 $E$ 及等距
+$V:H\to K\otimes E$，使 $N(X)=\operatorname{Tr}_E(VXV^*)$。
+
+**证明。**
+取 $\lvert \Gamma\rangle=\sum_re_r\otimes e_r$。完整参考相容给正矩阵
+
+$$
+C_N=(\operatorname{id}_d\otimes N)\lvert \Gamma\rangle\langle \Gamma\rvert
+ =\sum_{r,s}\lvert r\rangle\langle s\rvert\otimes N(\lvert r\rangle\langle s\rvert)\ge0.
+$$
+
+谱分解 $C_N=\sum_aw_aw_a^*$，写
+$w_a=\sum_re_r\otimes K_ae_r$。
+比较矩阵块即得 Kraus 公式；迹对偶给归一化。
+反向，每项联合夹乘 $(K_a\otimes I)X(K_a^*\otimes I)$ 都为正。
+定义 $V\psi=\sum_aK_a\psi\otimes\lvert a\rangle$，
+归一化给 $V^*V=I$，偏迹给 $N$；反向把等距在记录基下展开即可。
+
+这是有限 Choi–Stinespring 构造。 [12](#ref-choi1975)、[13](#ref-stinespring1955)
+它的输入是完整参考相容，不是普通单系统二元概率正性。
+转置 $\Theta(X)=X^{\mathsf T}$ 保持单系统正性及迹，
+但
+
+$$
+(\Theta\otimes\operatorname{id})\lvert \Phi^+\rangle\langle \Phi^+\rvert=\tfrac12\mathsf{Swap}
+$$
+
+在反对称向量上有本征值 $-1/2$，所以不合法。
+它说明即使单系统比较与某些回推几何都成立，也不能删除联合参考条件。
+

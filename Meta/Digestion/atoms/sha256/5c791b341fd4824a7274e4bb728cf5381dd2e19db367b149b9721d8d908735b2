@@ -1,0 +1,40 @@
+**定义 46.2（原样 OR）。** 在定义 46.1 的 $B$ 上保留零正配对 Z、完整 II 和原样 S：
+
+$$
+\begin{aligned}
+\alpha(x)=0&\Longrightarrow\alpha(D^A_ax)=0
+&&\bigl(a\in E_A,\ x\in C_A,\ \alpha\text{ 为原实际准备}\bigr),\\
+[K,D^A_a]&=D^A_{Ka}
+&&\bigl(a\in E_A,\ K\in\mathfrak k_A\bigr),\\
+-\operatorname{Tr}_{\mathbb R,E_P}\bigl((D^P_{d_0})^2\bigr)
+&=\operatorname{Tr}_{\mathbb R,E_P}(L_{d_0}^2),
+&&d_0=d-z_P(d),\quad d=T_m(u_I).
+\end{aligned}
+\tag{46.3}
+$$
+
+前两行量化每个所需原对象和实际联合对象的全部 $a$；$z_P$ 是到整个原 Jordan 中心的固定 $q_P$ 正交投影，S 在全部 $E_P$ 上取原实算子迹。OR 以以下两项替代全事件 R：
+
+$R_0$：每个所需原对象 $A$，包括旧联合、输出、标签和参考，都有某个 $k\ge1$ 的同设备、同记录实际身份旁接 $\operatorname{Id}_A\mid P^{\otimes k}$，连同完整装置和补记录。
+
+$O_3$：对每份原非零 F 细支资料，按 (46.1) 取 $e,h$，令 $g_S=S^Ju_A$，并定义
+
+$$
+Q_z=2L_z^2-L_{z\circ z},\qquad
+\Theta_S=Q_{g_S^{[-1/2]}}S^J|_{E_A(e)},\qquad
+\chi_A(a,b,c)=\tau_A^J(a\circ D_b c).
+\tag{46.4}
+$$
+
+谱逆只在 $h$ 上取。若 $\operatorname{rank}_J(e)\ge2$，则存在秩二幂等元 $r\le e$ 和 $a,b,c\in E_A(r)$，各自 Jordan 迹为零，使
+
+$$
+\chi_A(a,b,c)\,
+\chi_B(\Theta_Sa,\Theta_Sb,\Theta_Sc)>0.
+\tag{46.5}
+$$
+
+秩一不加方向条件，零支保留标签。原数值、实际输出和细记录不变。此条件只要求每份指定细支有一组这样的三量，不要求全部支持面的额外取向合同。
+
+因此 $\mathrm{OR}=B+\mathrm Z+\mathrm{II}+\mathrm S+R_0+O_3$。Xs 的对象是被消费的原准备、比较装置、端点、丢弃及其已声明细化；它不是全部原事件的任意量子旁接条件。
+

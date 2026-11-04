@@ -112,7 +112,31 @@ $$\forall (d1: \mathbb{N}), \forall (r1: \mathbb{N}), \forall (d2: \mathbb{N}), 
 
 After Definition 3.4, page 5: "If Γ is a QSC it induces a map Γ̃ : S(d_1, r_1) → S(d_2, r_2) via Γ̃ = R_2 ∘ Γ ∘ R_1^{−1}." For a full superchannel S the same composition acts on all block matrices. The displayed expression uses the forward and inverse Choi linear equivalences.
 
-**Definition 1.10 (The reduced Choi rank).**
+**Theorem 1.10 (Transport through the Choi map).**
+
+$$\forall (d1: \mathbb{N}), \forall (r1: \mathbb{N}), \forall (d2: \mathbb{N}), \forall (r2: \mathbb{N}), \forall (S: (MatrixMap\left(Fin\left(d1\right), Fin\left(r1\right), \mathbb{C}\right)) \to_{\mathbb{C}} (MatrixMap\left(Fin\left(d2\right), Fin\left(r2\right), \mathbb{C}\right))), \forall (phi: MatrixMap\left(Fin\left(d1\right), Fin\left(r1\right), \mathbb{C}\right)), \operatorname{LiJiangPolarPairOptimalityRefutation.inputFirstChoi}\left(S\left(phi\right)\right) = induced\left(S\right)\left(\operatorname{LiJiangPolarPairOptimalityRefutation.inputFirstChoi}\left(phi\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/DalySuperchannelMinimalExtension.choi_induced_apply` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Applying a linear supermap and then inputFirstChoi equals applying the induced matrix map to inputFirstChoi. All four dimensions and both linear maps are arbitrary.
+
+**Theorem 1.11 (Complete CP preservation on Choi matrices).**
+
+$$\forall (d1: \mathbb{N}), \forall (r1: \mathbb{N}), \forall (d2: \mathbb{N}), \forall (r2: \mathbb{N}), \forall (S: (MatrixMap\left(Fin\left(d1\right), Fin\left(r1\right), \mathbb{C}\right)) \to_{\mathbb{C}} (MatrixMap\left(Fin\left(d2\right), Fin\left(r2\right), \mathbb{C}\right))), (\forall (d: \mathbb{N}), \forall (r: \mathbb{N}), \forall (t: TensorProduct\left(\mathbb{C}, MatrixMap\left(Fin\left(d1\right), Fin\left(r1\right), \mathbb{C}\right), MatrixMap\left(Fin\left(d\right), Fin\left(r\right), \mathbb{C}\right)\right)), (\operatorname{MatrixMap.IsCompletelyPositive}\left(kronLift\left(t\right)\right)) \Rightarrow (\operatorname{MatrixMap.IsCompletelyPositive}\left(kronLift\left(\operatorname{TensorProduct.map}\left(S, \operatorname{LinearMap.id}, t\right)\right)\right))) \Rightarrow (\operatorname{MatrixMap.IsCompletelyPositive}\left(induced\left(S\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/DalySuperchannelMinimalExtension.preserving_cp_induced` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A linear supermap that preserves complete positivity after tensoring with every auxiliary identity induces a completely positive map on the full Choi matrix algebra.
+
+**Definition 1.12 (The reduced Choi rank).**
 
 $$\forall (d1: \mathbb{N}), \forall (r1: \mathbb{N}), \forall (d2: \mathbb{N}), \forall (r2: \mathbb{N}), \forall (S: (MatrixMap\left(Fin\left(d1\right), Fin\left(r1\right), \mathbb{C}\right)) \to_{\mathbb{C}} (MatrixMap\left(Fin\left(d2\right), Fin\left(r2\right), \mathbb{C}\right))), e\left(S\right) = (\operatorname{PartialTraceMutualInformation.partialTraceRight}\left((\operatorname{LiJiangPolarPairOptimalityRefutation.inputFirstChoi}\left(induced\left(S\right)\right)).reindex\left(\operatorname{Equiv.prodProdProdComm}\left(Fin\left(d1\right), Fin\left(r1\right), Fin\left(d2\right), Fin\left(r2\right)\right), \operatorname{Equiv.prodProdProdComm}\left(Fin\left(d1\right), Fin\left(r1\right), Fin\left(d2\right), Fin\left(r2\right)\right)\right)\right)).rank$$
 
@@ -124,7 +148,7 @@ $$\forall (d1: \mathbb{N}), \forall (r1: \mathbb{N}), \forall (d2: \mathbb{N}), 
 
 Section 4, page 10: "The dimension e can be chosen to be the rank of Tr_{r_1} Tr_{r_2} C_{Γ̃}" The permutation Equiv.prodProdProdComm changes ((d1,r1),(d2,r2)) to ((d1,d2),(r1,r2)); partialTraceRight traces out the latter pair, and Matrix.rank takes the complex rank.
 
-**Definition 1.11 (The minimum-rank extremality question).**
+**Definition 1.13 (The minimum-rank extremality question).**
 
 $$claim = (\forall (d1: \mathbb{N}), \forall (r1: \mathbb{N}), \forall (d2: \mathbb{N}), \forall (r2: \mathbb{N}), (1 \le d1) \Rightarrow ((1 \le r1) \Rightarrow ((1 \le d2) \Rightarrow ((1 \le r2) \Rightarrow (\forall (Gamma: (SCPTP\left(d1, r1\right)) \to_{\mathbb{C}} (SCPTP\left(d2, r2\right))), (IsQSC\left(Gamma\right)) \Rightarrow (\forall (S: (MatrixMap\left(Fin\left(d1\right), Fin\left(r1\right), \mathbb{C}\right)) \to_{\mathbb{C}} (MatrixMap\left(Fin\left(d2\right), Fin\left(r2\right), \mathbb{C}\right))), (S \in extensions\left(Gamma\right)) \Rightarrow ((\forall (G: (MatrixMap\left(Fin\left(d1\right), Fin\left(r1\right), \mathbb{C}\right)) \to_{\mathbb{C}} (MatrixMap\left(Fin\left(d2\right), Fin\left(r2\right), \mathbb{C}\right))), (G \in extensions\left(Gamma\right)) \Rightarrow (e\left(S\right) \le e\left(G\right))) \Rightarrow (S \in (extensions\left(Gamma\right)).extremePoints\left(\mathbb{R}\right)))))))))$$
 
@@ -136,7 +160,7 @@ $$claim = (\forall (d1: \mathbb{N}), \forall (r1: \mathbb{N}), \forall (d2: \mat
 
 Remark 4.1, page 11: "The set of possible superchannel extensions of a QSC is a convex set. In the example given the extensions with minimal e are extreme points. A natural question to ask is whether it is generally true that the extensions which give minimal dimensions e are extreme points." The proposition quantifies over four positive dimensions, every QSC Gamma and every minimizing extension S. The comparison includes all extensions G, and extremePoints uses real scalars.
 
-**Theorem 1.12 (A non-extreme minimizing extension).**
+**Theorem 1.14 (A non-extreme minimizing extension).**
 
 $$\neg (\forall (d1: \mathbb{N}), \forall (r1: \mathbb{N}), \forall (d2: \mathbb{N}), \forall (r2: \mathbb{N}), (1 \le d1) \Rightarrow ((1 \le r1) \Rightarrow ((1 \le d2) \Rightarrow ((1 \le r2) \Rightarrow (\forall (Gamma: (SCPTP\left(d1, r1\right)) \to_{\mathbb{C}} (SCPTP\left(d2, r2\right))), (IsQSC\left(Gamma\right)) \Rightarrow (\forall (S: (MatrixMap\left(Fin\left(d1\right), Fin\left(r1\right), \mathbb{C}\right)) \to_{\mathbb{C}} (MatrixMap\left(Fin\left(d2\right), Fin\left(r2\right), \mathbb{C}\right))), (S \in extensions\left(Gamma\right)) \Rightarrow ((\forall (G: (MatrixMap\left(Fin\left(d1\right), Fin\left(r1\right), \mathbb{C}\right)) \to_{\mathbb{C}} (MatrixMap\left(Fin\left(d2\right), Fin\left(r2\right), \mathbb{C}\right))), (G \in extensions\left(Gamma\right)) \Rightarrow (e\left(S\right) \le e\left(G\right))) \Rightarrow (S \in (extensions\left(Gamma\right)).extremePoints\left(\mathbb{R}\right)))))))))$$
 
@@ -161,12 +185,14 @@ For dimensions 2,2,2,2, take the restriction of the map induced by F₀, where F
 - Truth anchor: `D5/S3/QuantumChannels/DalySuperchannelMinimalExtension.SCPTP`
 - Truth anchor: `D5/S3/QuantumChannels/DalySuperchannelMinimalExtension.choi`
 - Truth anchor: `D5/S3/QuantumChannels/DalySuperchannelMinimalExtension.choiEquiv`
+- Truth anchor: `D5/S3/QuantumChannels/DalySuperchannelMinimalExtension.choi_induced_apply`
 - Truth anchor: `D5/S3/QuantumChannels/DalySuperchannelMinimalExtension.claim`
 - Truth anchor: `D5/S3/QuantumChannels/DalySuperchannelMinimalExtension.e`
 - Truth anchor: `D5/S3/QuantumChannels/DalySuperchannelMinimalExtension.extensions`
 - Truth anchor: `D5/S3/QuantumChannels/DalySuperchannelMinimalExtension.induced`
 - Truth anchor: `D5/S3/QuantumChannels/DalySuperchannelMinimalExtension.kronBilin`
 - Truth anchor: `D5/S3/QuantumChannels/DalySuperchannelMinimalExtension.kronLift`
+- Truth anchor: `D5/S3/QuantumChannels/DalySuperchannelMinimalExtension.preserving_cp_induced`
 - Truth anchor: `D5/S3/QuantumChannels/DalySuperchannelMinimalExtension.result`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Quantum/Foundation/FiniteKrausChannel.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteKrausRepresentation](../Quantum/Foundation/FiniteKrausRepresentation.md)

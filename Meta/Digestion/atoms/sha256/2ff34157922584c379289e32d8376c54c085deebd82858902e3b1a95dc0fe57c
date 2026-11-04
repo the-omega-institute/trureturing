@@ -1,0 +1,31 @@
+### 应用 36.2（原始事件 $345,u_0$ 不在裸种子的准确正锥中）
+
+定义 36.1 的 (36.2) 不成立。其原始效果 $E=E_{345,u_0}$ 为非零秩一效果，且
+
+$$
+ c=\operatorname{Tr}E=2x^3,\qquad
+ P=E/c,\qquad P_{00}=x^2/2,\qquad P_{11}=1/(2x),
+ \qquad x=(\sqrt5-1)/2.
+ \tag{36.3}
+$$
+
+$P$ 仅是该效果射线的迹一数学代表；实际事件函数始终是 $\operatorname{Tr}(\rho_nE)$。
+
+证明。沿用 (16.20) 与 (26.4)，置 $y=\sqrt x$ 及
+
+$$
+ A=\zeta[1+(\zeta-1)x],\qquad
+ b=\zeta(\zeta-1)xy,\qquad
+ d=\zeta[1+(\zeta-1)x^2].
+ \tag{36.4}
+$$
+
+原活跃二元块为 $\left(\begin{smallmatrix}A&b\\b&d\end{smallmatrix}\right)$。式 (26.4) 给 $|b|^2=x$、$|d|^2=x^2$；块的酉性与 $x+x^2=1$ 给 $|A|^2=x^2$。为核对原地址及旁观位，取 $u_0=e_{00000}$、$u_1=e_{00001}$、$t=e_{00010}$。三地址在五维角 $\operatorname{span}(u_0,u_1,t,v_0,v_1)$ 的作用逐项为
+
+| 输入 | $K_3$ | $K_4$ | $K_5$ |
+| --- | --- | --- | --- |
+| $u_0$ | $Au_0+bv_0$ | $Au_0+bt$ | $Au_0+bu_1$ |
+| $u_1$ | $Au_1+bv_1$ | $\zeta u_1$ | $bu_0+du_1$ |
+| $t$ | $\zeta t$ | $bu_0+dt$ | $\zeta t$ |
+| $v_0$ | $bu_0+dv_0$ | $\zeta v_0$ | $Av_0+bv_1$ |
+| $v_1$ | $bu_1+dv_1$ | $\zeta^2v_1$ | $bv_0+dv_1$ |
