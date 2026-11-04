@@ -8,9 +8,12 @@
 
 import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.StoppedCoefficientRealization
 
+/-! Complete stopped-cell readings and the shared-support obstruction of Proposition 213.10. -/
+
 set_option autoImplicit false
 noncomputable section
 open scoped BigOperators
+open Classical in
 open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.StoppedCoefficientRealization
 namespace D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.JointRewardFiberObstruction
 
@@ -47,12 +50,14 @@ structure FullScore (L : ℕ) where
 def baseline {L : ℕ} (y : FullScore L) (b : Word L) : ℝ :=
   y.A b + y.P b + if b = (fun _ => true) then y.T else 0
 
+open Classical in
 def numerical {L : ℕ} (y : FullScore L) (i : Fin L) (b : Word L) : ℝ :=
   if FirstZero b i then y.C b + y.P b else 0
 
 def coefficientMass {L : ℕ} (y : FullScore L) : ℝ :=
-  (∑ b, y.A b + y.C b + y.P b) + y.T
+  (∑ b, (y.A b + y.C b + y.P b)) + y.T
 
+open Classical in
 def beta {L : ℕ} (y : FullScore L) (i : Fin L) : ℝ :=
   ∑ b, if FirstZero b i then y.C b - y.A b else 0
 
@@ -65,16 +70,18 @@ private theorem reading_point {L : ℕ} (a : Word L) (t : ℝ)
     (s : Schedule L) (c : Fin 3) :
     reading (point a t) s c = if cell s a = c then t else 0 := by
   classical
-  simp only [reading, point]
-  simp_rw [ite_comm (cell s _ = c) (_ = a)]
-  simp
+  unfold reading
+  rw [Finset.sum_eq_single a]
+  · simp [point]
+  · intro b _ hb; simp [point,hb]
+  · simp
 
 private theorem zero_of_zero_reading {L : ℕ} (μ : Word L → ℝ)
     (hn : ∀ b, 0 ≤ μ b) (s : Schedule L) (c : Fin 3)
     (hz : reading μ s c = 0) (b : Word L) (hb : cell s b = c) : μ b = 0 := by
   classical
   have h := (Finset.sum_eq_zero_iff_of_nonneg (fun w (_ : w ∈ Finset.univ) =>
-    show 0 ≤ (if cell s w = c then μ w else 0) from by split <;> positivity)).mp hz b
+    show 0 ≤ (if cell s w = c then μ w else 0) from by split; exact hn w; exact le_rfl)).mp hz b
       (Finset.mem_univ b)
   simpa [hb] using h
 
@@ -90,7 +97,11 @@ private theorem binary_eq {L : ℕ} {μ ν : Word L → ℝ} (h : SameReadings �
     (i j : Fin L) (hij : i < j) :
     (∑ b, if b i && b j then μ b else 0) = ∑ b, if b i && b j then ν b else 0 := by
   have h' := h (.inr (.inr ⟨(i,j),hij⟩)) 2
-  simpa only [reading, cell] using h'
+  have hc (f : Word L → ℝ) (b : Word L) :
+      (if cell (.inr (.inr (⟨(i,j),hij⟩ : Pair L))) b = 2 then f b else 0) =
+        (if b i && b j then f b else 0) := by
+    cases hi : b i <;> cases hj : b j <;> simp [cell,hi,hj]
+  simpa only [reading,hc] using h'
 
 private theorem point_rigid {L : ℕ} (μ : Word L → ℝ) (a : Word L) (t : ℝ)
     (hn : ∀ b, 0 ≤ μ b) (h : SameReadings μ (point a t)) : μ = point a t := by
@@ -100,9 +111,9 @@ private theorem point_rigid {L : ℕ} (μ : Word L → ℝ) (a : Word L) (t : �
     let c : Fin 3 := if b i then 1 else 0
     have diff : cell (.inr (.inl i)) a ≠ c := by
       cases hbi : b i <;> cases hai : a i <;> simp_all [cell,c]
-    apply zero_of_zero_reading μ hn (.inr (.inl i)) c _ b
-    · rw [h, reading_point, if_neg diff]
-    · cases hbi : b i <;> simp [cell,c,hbi]
+    exact zero_of_zero_reading μ hn (.inr (.inl i)) c
+      (by rw [h, reading_point, ite_eq_right diff]) b
+      (by cases hbi : b i <;> simp [cell,c,hbi])
   have ht := total_eq h
   have ha : μ a = t := by
     rw [Finset.sum_eq_single a (fun b _ hb => off b hb) (by simp)] at ht
@@ -128,6 +139,7 @@ private theorem barrier_eq {L : ℕ} {μ ν : Word L → ℝ} (h : SameReadings 
   classical
   simp_rw [barrier,mul_add,mul_sub,mul_one,mul_ite,mul_zero,
     Finset.sum_add_distrib,Finset.sum_sub_distrib]
+  simp only [mul_one]
   rw [total_eq h, unary_eq h j, unary_eq h k, unary_eq h l,
     binary_eq h j k hjk, binary_eq h j l (hjk.trans hkl), binary_eq h k l hkl]
 
@@ -142,6 +154,14 @@ def threePoints {L : ℕ} (n j k l : Fin L) (t : ℝ) (b : Word L) : ℝ :=
   point (singletonWord n j k l j) t b + point (singletonWord n j k l k) t b +
     point (singletonWord n j k l l) t b
 
+private theorem point_integral {L : ℕ} (a : Word L) (t : ℝ) (f : Word L → ℝ) :
+    (∑ b, point a t b * f b) = t * f a := by
+  classical
+  rw [Finset.sum_eq_single a]
+  · simp [point]
+  · intro b _ hb; simp [point,hb]
+  · simp
+
 private theorem numerical_base_zero {L : ℕ} (ν : Word L → ℝ)
     (n j k l : Fin L) (t : ℝ) (hjk : j < k) (hkl : k < l)
     (hn : ∀ b, 0 ≤ ν b) (h : SameReadings ν (threePoints n j k l t)) :
@@ -149,9 +169,11 @@ private theorem numerical_base_zero {L : ℕ} (ν : Word L → ℝ)
   classical
   have hz := barrier_eq h j k l hjk hkl
   have hzero : (∑ b, threePoints n j k l t b * barrier j k l b) = 0 := by
-    simp [threePoints,point,add_mul,Finset.sum_add_distrib,singletonWord,
-      barrier,baseWord,ne_of_lt hjk,ne_of_lt hkl,ne_of_lt (hjk.trans hkl),
-      Ne.symm (ne_of_lt hjk),Ne.symm (ne_of_lt hkl),Ne.symm (ne_of_lt (hjk.trans hkl))]
+    simp only [threePoints,add_mul,Finset.sum_add_distrib]
+    rw [point_integral,point_integral,point_integral]
+    simp [singletonWord,barrier,baseWord,ne_of_lt hjk,ne_of_lt hkl,
+      ne_of_lt (hjk.trans hkl),Ne.symm (ne_of_lt hjk),Ne.symm (ne_of_lt hkl),
+      Ne.symm (ne_of_lt (hjk.trans hkl))]
   rw [hzero] at hz
   have hb := (Finset.sum_eq_zero_iff_of_nonneg (fun b (_ : b ∈ Finset.univ) =>
     mul_nonneg (hn b) (barrier_nonneg j k l b))).mp hz (baseWord n j k l)
@@ -160,18 +182,286 @@ private theorem numerical_base_zero {L : ℕ} (ν : Word L → ℝ)
 
 /-- The common nonnegative mass is zero on the entire cube, although its
 competitor measures are arbitrary real nonnegative measures on that cube. -/
-theorem shared_mass_vanishes {L : ℕ} (U V p : Word L → ℝ)
+private theorem shared_mass_vanishes {L : ℕ} (U V p : Word L → ℝ)
     (n j k l : Fin L) (t : ℝ) (hjk : j < k) (hkl : k < l)
     (hU : ∀ b, 0 ≤ U b) (hV : ∀ b, 0 ≤ V b) (hp : ∀ b, 0 ≤ p b)
-    (pU : ∀ b, p b ≤ U b) (pV : ∀ b, p b ≤ V b)
+    (pU : ∀ b, p b ≤ U b) (pV : p (baseWord n j k l) ≤ V (baseWord n j k l))
     (readU : SameReadings U (point (baseWord n j k l) t))
     (readV : SameReadings V (threePoints n j k l t)) : ∀ b, p b = 0 := by
   have hu := point_rigid U (baseWord n j k l) t hU readU
   have hv := numerical_base_zero V n j k l t hjk hkl hV readV
   intro b
   by_cases hb : b = baseWord n j k l
-  · subst b; exact le_antisymm (by simpa [hv] using pV _) (hp _)
+  · subst b; exact le_antisymm (by simpa [hv] using pV) (hp _)
   · have hz : U b = 0 := by rw [hu]; simp [point,hb]
     exact le_antisymm (by simpa [hz] using pU b) (hp b)
+
+private theorem firstZero_unique {L : ℕ} {b : Word L} {i j : Fin L}
+    (hi : FirstZero b i) (hj : FirstZero b j) : i = j := by
+  rcases lt_trichotomy i j with h | h | h
+  · have := hj.2 i h; simp [hi.1] at this
+  · exact h
+  · have := hi.2 j h; simp [hj.1] at this
+
+private theorem firstZero_exists {L : ℕ} (b : Word L) (hb : b ≠ (fun _ => true)) :
+    ∃ i, FirstZero b i := by
+  classical
+  obtain ⟨i,hi⟩ : ∃ i, b i = false := by
+    by_contra h
+    push Not at h
+    apply hb
+    funext i
+    cases hbi : b i <;> simp_all
+  let s := Finset.univ.filter (fun i => b i = false)
+  have hs : s.Nonempty := ⟨i,by simp [s,hi]⟩
+  let m := s.min' hs
+  have hm : b m = false := (Finset.mem_filter.mp (Finset.min'_mem s hs)).2
+  refine ⟨m,hm,?_⟩
+  intro a ha
+  cases hba : b a
+  · have hle : m ≤ a := Finset.min'_le s a (by simp [s,hba])
+    exact False.elim (not_le_of_gt ha hle)
+  · rfl
+
+private theorem numerical_total {L : ℕ} (y : FullScore L) (b : Word L) :
+    (∑ i, numerical y i b) = y.C b + y.P b := by
+  classical
+  by_cases hb : b = (fun _ => true)
+  · subst b
+    simp [numerical,FirstZero,y.terminalC,y.terminalP]
+  · obtain ⟨i,hi⟩ := firstZero_exists b hb
+    rw [Finset.sum_eq_single i]
+    · simp [numerical,hi]
+    · intro j _ hji
+      have hj : ¬FirstZero b j := fun hj => hji (firstZero_unique hj hi)
+      simp [numerical,hj]
+    · simp
+
+private theorem mass_identity {L : ℕ} (y : FullScore L) :
+    coefficientMass y = (∑ b, baseline y b) + (∑ i, ∑ b, numerical y i b) - ∑ b, y.P b := by
+  classical
+  rw [Finset.sum_comm]
+  simp_rw [numerical_total,baseline,Finset.sum_add_distrib]
+  simp only [Finset.sum_ite_eq',Finset.mem_univ,ite_true]
+  unfold coefficientMass
+  simp only [Finset.sum_add_distrib]
+  ring
+
+private theorem base_firstZero {L : ℕ} (n j k l : Fin L)
+    (hnj : n < j) (hjk : j < k) (hkl : k < l) : FirstZero (baseWord n j k l) n := by
+  refine ⟨by simp [baseWord],?_⟩
+  intro i hi
+  have hin : i ≠ n := ne_of_lt hi
+  have hij : i ≠ j := ne_of_lt (hi.trans hnj)
+  have hik : i ≠ k := ne_of_lt (hi.trans (hnj.trans hjk))
+  have hil : i ≠ l := ne_of_lt (hi.trans (hnj.trans (hjk.trans hkl)))
+  simp [baseWord,hin,hij,hik,hil]
+
+private theorem singleton_firstZero {L : ℕ} (n j k l a : Fin L)
+    (hnj : n < j) (hjk : j < k) (hkl : k < l) (hna : n < a) :
+    FirstZero (singletonWord n j k l a) n := by
+  have h := base_firstZero n j k l hnj hjk hkl
+  constructor
+  · simpa [singletonWord,ne_of_lt hna] using h.1
+  · intro i hi
+    have hia := ne_of_lt (hi.trans hna)
+    simpa [singletonWord,hia] using h.2 i hi
+
+/-- Full competitors are constrained only by their actual label-cell rewards.
+No cell-to-moment equivalence is a hypothesis. -/
+private theorem full_score_rigidity {L : ℕ} (y : FullScore L) (n j k l : Fin L)
+    (t : ℝ) (hnj : n < j) (hjk : j < k) (hkl : k < l)
+    (readU : SameReadings (baseline y) (point (baseWord n j k l) t))
+    (readV : ∀ i, SameReadings (numerical y i)
+      (if i = n then threePoints n j k l t else fun _ => 0)) :
+    (∀ b, y.P b = 0) ∧ y.T = 0 ∧ y.A (baseWord n j k l) = t ∧
+      coefficientMass y = 4 * t := by
+  classical
+  have hU : ∀ b, 0 ≤ baseline y b := by
+    intro b
+    have := y.nonnegA b; have := y.nonnegP b; have := y.nonnegT
+    unfold baseline; split <;> linarith
+  have hV : ∀ b, 0 ≤ numerical y n b := by
+    intro b
+    have := y.nonnegC b; have := y.nonnegP b
+    unfold numerical; split <;> linarith
+  have hn : FirstZero (baseWord n j k l) n := base_firstZero n j k l hnj hjk hkl
+  have hp := shared_mass_vanishes (baseline y) (numerical y n) y.P n j k l t hjk hkl
+    hU hV y.nonnegP (by
+      intro b
+      have := y.nonnegA b; have := y.nonnegT
+      unfold baseline; split <;> linarith)
+    (by simp only [numerical,ite_eq_left hn]; exact le_add_of_nonneg_left (y.nonnegC _))
+    readU (by simpa using readV n)
+  have hu := point_rigid (baseline y) (baseWord n j k l) t hU readU
+  have hbase : baseWord n j k l ≠ (fun _ => true) := by
+    intro h
+    have := congrFun h n
+    simp [baseWord] at this
+  have hT : y.T = 0 := by
+    have h := congrFun hu (fun _ => true)
+    simpa [baseline,point,y.terminalA,y.terminalP,Ne.symm hbase] using h
+  have hA : y.A (baseWord n j k l) = t := by
+    have h := congrFun hu (baseWord n j k l)
+    simpa [baseline,point,hp,hT] using h
+  refine ⟨hp,hT,hA,?_⟩
+  have ht : (∑ b, baseline y b) = t := by
+    simpa [point] using total_eq readU
+  have hv (i : Fin L) : (∑ b, numerical y i b) = if i = n then 3 * t else 0 := by
+    have h := total_eq (readV i)
+    by_cases hin : i = n
+    · simp only [hin,ite_true,threePoints,Finset.sum_add_distrib] at h ⊢
+      simp only [point,Finset.sum_ite_eq',Finset.mem_univ,ite_true] at h
+      linarith
+    · simpa [hin] using h
+  rw [mass_identity,ht]
+  simp_rw [hv,hp]
+  simp
+  ring
+
+private theorem firstZero_not_terminal {L : ℕ} {b : Word L} {n : Fin L}
+    (h : FirstZero b n) : b ≠ (fun _ => true) := by
+  intro he
+  have := congrFun he n
+  simp [h.1] at this
+
+/-- The actual four-word score, with no restriction on competitor support. -/
+def witnessScore {L : ℕ} (n j k l : Fin L) (hnj : n < j) (hjk : j < k)
+    (hkl : k < l) (t : ℝ) (ht : 0 ≤ t) : FullScore L where
+  A := point (baseWord n j k l) t
+  C := threePoints n j k l t
+  P := fun _ => 0
+  T := 0
+  nonnegA := by intro b; unfold point; split <;> positivity
+  nonnegC := by intro b; unfold threePoints point; split_ifs <;> positivity
+  nonnegP := by simp
+  nonnegT := le_rfl
+  terminalA := by
+    have h := firstZero_not_terminal (base_firstZero n j k l hnj hjk hkl)
+    simp [point,Ne.symm h]
+  terminalC := by
+    have hj := firstZero_not_terminal (singleton_firstZero n j k l j hnj hjk hkl hnj)
+    have hk := firstZero_not_terminal
+      (singleton_firstZero n j k l k hnj hjk hkl (hnj.trans hjk))
+    have hl := firstZero_not_terminal
+      (singleton_firstZero n j k l l hnj hjk hkl (hnj.trans (hjk.trans hkl)))
+    simp [threePoints,point,Ne.symm hj,Ne.symm hk,Ne.symm hl]
+  terminalP := rfl
+
+private theorem mask_point {L : ℕ} (w : Word L) (n i : Fin L) (t : ℝ)
+    (hw : FirstZero w n) (b : Word L) :
+    (if FirstZero b i then point w t b else 0) =
+      if i = n then point w t b else 0 := by
+  classical
+  by_cases hb : b = w
+  · subst b
+    have hc : FirstZero w i ↔ i = n :=
+      ⟨fun h => firstZero_unique h hw,fun h => h ▸ hw⟩
+    simp [hc]
+  · simp [point,hb]
+
+private theorem witness_baseline {L : ℕ} (n j k l : Fin L)
+    (hnj : n < j) (hjk : j < k) (hkl : k < l) (t : ℝ) (ht : 0 ≤ t) :
+    baseline (witnessScore n j k l hnj hjk hkl t ht) = point (baseWord n j k l) t := by
+  funext b
+  simp [baseline,witnessScore]
+
+private theorem witness_numerical {L : ℕ} (n j k l : Fin L)
+    (hnj : n < j) (hjk : j < k) (hkl : k < l) (t : ℝ) (ht : 0 ≤ t) (i : Fin L) :
+    numerical (witnessScore n j k l hnj hjk hkl t ht) i =
+      if i = n then threePoints n j k l t else fun _ => 0 := by
+  funext b
+  have hj := mask_point (singletonWord n j k l j) n i t
+    (singleton_firstZero n j k l j hnj hjk hkl hnj) b
+  have hk := mask_point (singletonWord n j k l k) n i t
+    (singleton_firstZero n j k l k hnj hjk hkl (hnj.trans hjk)) b
+  have hl := mask_point (singletonWord n j k l l) n i t
+    (singleton_firstZero n j k l l hnj hjk hkl (hnj.trans (hjk.trans hkl))) b
+  change (if FirstZero b i then threePoints n j k l t b else 0) =
+    (if i = n then threePoints n j k l t else fun _ => 0) b
+  have hd : (if FirstZero b i then threePoints n j k l t b else 0) =
+      (if FirstZero b i then point (singletonWord n j k l j) t b else 0) +
+      (if FirstZero b i then point (singletonWord n j k l k) t b else 0) +
+      (if FirstZero b i then point (singletonWord n j k l l) t b else 0) := by
+    by_cases h : FirstZero b i <;> simp [h,threePoints]
+  rw [hd,hj,hk,hl]
+  by_cases hin : i = n <;> simp [hin,threePoints]
+
+/-- Proposition 213.10's universal coefficient obstruction, for arbitrary late
+class n and arbitrary real nonnegative full competitors in its complete fiber. -/
+theorem proposition21310_rigidity {L : ℕ} (n j k l : Fin L)
+    (hnj : n < j) (hjk : j < k) (hkl : k < l) (t : ℝ) (ht : 0 < t)
+    (y : FullScore L)
+    (hy : SameFiber y (witnessScore n j k l hnj hjk hkl t ht.le)) :
+    (∀ b, y.P b = 0) ∧ y.T = 0 ∧ y.A (baseWord n j k l) = t ∧
+      coefficientMass y = 4 * t ∧ ¬(∀ b, y.A b = 0) := by
+  have hu : SameReadings (baseline y) (point (baseWord n j k l) t) := by
+    simpa only [witness_baseline] using hy.2.1
+  have hv : ∀ i, SameReadings (numerical y i)
+      (if i = n then threePoints n j k l t else fun _ => 0) := by
+    intro i
+    simpa only [witness_numerical] using hy.2.2 i
+  obtain ⟨hp,hT,hA,hK⟩ := full_score_rigidity y n j k l t hnj hjk hkl hu hv
+  refine ⟨hp,hT,hA,hK,?_⟩
+  intro h
+  have := h (baseWord n j k l)
+  linarith
+
+private theorem untouched_cell {L : ℕ} (n j k l : Fin L)
+    (hjk : j < k) (hkl : k < l) (s : Schedule L) :
+    cell s (singletonWord n j k l j) = cell s (baseWord n j k l) ∨
+    cell s (singletonWord n j k l k) = cell s (baseWord n j k l) ∨
+    cell s (singletonWord n j k l l) = cell s (baseWord n j k l) := by
+  classical
+  cases s with
+  | inl => simp [cell]
+  | inr s =>
+    cases s with
+    | inl i =>
+      by_cases hij : i = j
+      · right; left
+        have hik : i ≠ k := by subst i; exact ne_of_lt hjk
+        simp [cell,singletonWord,hik]
+      · left; simp [cell,singletonWord,hij]
+    | inr a =>
+      have hchoose : (a.val.1 ≠ j ∧ a.val.2 ≠ j) ∨
+          (a.val.1 ≠ k ∧ a.val.2 ≠ k) ∨ (a.val.1 ≠ l ∧ a.val.2 ≠ l) := by
+        by_contra h
+        push Not at h
+        have hjk' : j ≠ k := ne_of_lt hjk
+        have hkl' : k ≠ l := ne_of_lt hkl
+        have hjl' : j ≠ l := ne_of_lt (hjk.trans hkl)
+        tauto
+      rcases hchoose with h | h | h
+      · left; simp [cell,singletonWord,h.1,h.2]
+      · right; left; simp [cell,singletonWord,h.1,h.2]
+      · right; right; simp [cell,singletonWord,h.1,h.2]
+
+/-- Cellwise numerical dominance is compatible with a global obstruction to
+removing A. The rewards are the actual complete stopped cells before maximization. -/
+theorem witness_cell_dominance {L : ℕ} (n j k l : Fin L)
+    (hjk : j < k) (hkl : k < l) (t : ℝ) (ht : 0 ≤ t)
+    (s : Schedule L) (c : Fin 3) :
+    reading (point (baseWord n j k l) t) s c ≤ reading (threePoints n j k l t) s c := by
+  classical
+  have hread : reading (threePoints n j k l t) s c =
+      reading (point (singletonWord n j k l j) t) s c +
+      reading (point (singletonWord n j k l k) t) s c +
+      reading (point (singletonWord n j k l l) t) s c := by
+    unfold reading
+    have hd (b : Word L) : (if cell s b = c then threePoints n j k l t b else 0) =
+        (if cell s b = c then point (singletonWord n j k l j) t b else 0) +
+        (if cell s b = c then point (singletonWord n j k l k) t b else 0) +
+        (if cell s b = c then point (singletonWord n j k l l) t b else 0) := by
+      by_cases h : cell s b = c <;> simp [h,threePoints]
+    simp_rw [hd,Finset.sum_add_distrib]
+  rw [hread]
+  simp only [reading_point]
+  have hm := untouched_cell n j k l hjk hkl s
+  by_cases hb : cell s (baseWord n j k l) = c
+  · rcases hm with h | h | h <;> rw [ite_eq_left hb] <;>
+      simp only [h,hb,ite_true] <;> split_ifs <;> linarith
+  · rw [ite_eq_right hb]
+    split_ifs <;> linarith
 
 end D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.JointRewardFiberObstruction
