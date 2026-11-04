@@ -1702,50 +1702,116 @@ $$
 
 **Proposition 145.2 (the signed-pencil index on every invariant slack set).** For every nonzero $\lambda\in\mathbb R^3$, the symmetric quadratic form $u\mapsto Q_\lambda(u,u)$ has infinite negative index on $\mathcal V_{A,-}$. The same remains true after imposing any finite family of homogeneous real bounded linear constraints on $\mathcal V_{A,-}$.
 
-*Proof.* The functions $g$ and $q_i$ have the invariant analytic representatives on
-$\Omega=\{x^2+y^2>0\}$ supplied by Appendix II §§120, 122 and 133. Hence $q_\lambda$ is analytic and invariant there. It is not zero: if $q_\lambda=0$ almost everywhere, injectivity of $P$ gives $r_\lambda=0$ almost everywhere. Each of $S,C,B$ has positive measure from (136.1), so this forces $\lambda=0$.
+*Proof.* Use the invariant analytic representatives of $g$ and $q_i$ on the connected set $\Omega=\{x^2+y^2>0\}$ supplied by Appendix II §§120, 122 and 133. Write $q=q_\lambda$. This is a real invariant analytic function. Injectivity of the actual $P$ shows that $q\ne0$: otherwise $r_\lambda=0$ almost everywhere, and the positive measure of each cell in (136.1) forces $\lambda=0$.
 
-Let $Q_\lambda^{\rm sym}$ be the symmetric polarization. On the half-circle section $F$ of Theorem 137.1 its localized odd kernel is
+The ratio $q/g$ is not constant almost everywhere. Indeed $g=P\beta$ by Proposition 136.2. If $q=c_0g$, injectivity gives $r_\lambda=c_0\beta$. The case $c_0=0$ has just been excluded. For $c_0\ne0$, this identity makes the analytic representative of $g_d=[\beta]$ constant on each positive-measure cell. Analytic uniqueness on $\Omega$ would make $g_d$ constant everywhere there, contradicting Proposition 135.2. This argument concerns the analytic representative of $g_d$, not the arbitrary values of the Borel representative $\beta$ on null sets.
+
+Let $F$ be the half-circle section of Theorem 137.1, and let $k$ be its nonsingular odd heat kernel (137.3). The localized kernel of the symmetric polarization is
 
 $$
-s_\lambda(x,y)=\frac{g(x)q_\lambda(y)+q_\lambda(x)g(y)}2\,k(x,y),
+s_\lambda(x,y)=\frac{g(x)q(y)+q(x)g(y)}2\,k(x,y).
 \tag{145.4}
 $$
 
-where $k$ is the nonsingular odd heat kernel (137.3). If $q_\lambda$ is negative at a density point of $A\cap\Omega$, continuity gives arbitrarily many disjoint reflected neighborhoods in $A$ on which the matrices in (145.4) converge to a negative multiple of the positive definite Gram matrix of $k$. Their odd localized indicators give arbitrarily large negative subspaces of $\mathcal V_{A,-}$.
-
-It remains to treat the case in which $q_\lambda\geq0$ almost everywhere on $A$. Choose a positive-measure density subset $A_0\subset A\cap F$ and set
+First suppose $m(A\cap\{q<0\})>0$. Intersect with the density points of $A$ and with $\{g>0\}$. In the quotient coordinates of (136.5), Fubini's theorem gives one rotation orbit containing a positive-angular-measure set of these points in $\operatorname{int}F$. For every $n$, choose $n$ distinct such points $x_1,\ldots,x_n$. Invariance makes $g(x_j)=g_0>0$ and $q(x_j)=q_0<0$ independent of $j$. Half-turn invariance of $A$ makes all reflected points density points as well. The bounded odd localized indicators supported in $A$, constructed as in (137.5), have symmetric Gram matrices tending to
 
 $$
-\gamma=\frac{g-q_\lambda}{g+q_\lambda}\quad\text{on }A_0.
+4g_0q_0\bigl(k(x_i,x_j)\bigr)_{i,j=1}^n.
+$$
+
+Nonsingularity makes this limit negative definite. Small enough neighborhoods therefore give an $n$-dimensional negative subspace. This uses a slice of the density set, not invariance of $A$ under the full rotation circle.
+
+It remains to consider $q\ge0$ almost everywhere on $A$. Since $q$ is nonzero analytic, its zero set is null. Choose a relatively compact positive-measure Borel set $A_0\subset A\cap\operatorname{int}F$ on which $g,q\ge\epsilon_0>0$, and let $A_0^*$ be its density points. Continuity gives the same lower bounds at every point of $A_0^*$. Suppose, for a contradiction, that the negative index on $\mathcal V_{A,-}$ is finite, say $\kappa$. Localization as in (137.5) implies that every finite Gram matrix of $s_\lambda$ on $A_0^*$ has at most $\kappa$ negative eigenvalues.
+
+For each positive scalar $\tau$, define on $A_0^*$
+
+$$
+\gamma_\tau=\frac{\tau g-q}{\tau g+q},\qquad |\gamma_\tau|\le1.
 \tag{145.5}
 $$
 
-Here $g>0$ and $|\gamma|\leq1$. If the negative index were finite, the exact Gram identity
+The exact identity
 
 $$
-s_\lambda(x,y)=\frac{(g(x)+q_\lambda(x))(g(y)+q_\lambda(y))}{4}
-\bigl(1-\gamma(x)\gamma(y)\bigr)k(x,y)
+s_\lambda(x,y)=\frac{(\tau g(x)+q(x))(\tau g(y)+q(y))}{4\tau}
+\bigl(1-\gamma_\tau(x)\gamma_\tau(y)\bigr)k(x,y)
 \tag{145.6}
 $$
 
-would give finitely many negative squares for the kernel on the density set $A_0^*$. Agler--Young, [*Functions which are almost multipliers of Hilbert function spaces*, Theorem 2.1](https://arxiv.org/html/math/9605224v1#S2.Thmtheorem1), applies with the actual odd heat space, its nonsingular kernel $k$, uniqueness domain $A_0^*$, real multiplier $\gamma$ and scalar parameter $1$. It supplies a finite-codimensional domain and a bounded multiplication operator $L$ satisfying
+and positive diagonal congruence give at most $\kappa$ negative squares for the last kernel. Use $\mathcal H_-=T_{d/2}L^2_-$ with its inverse-heat norm, restricted to $F$, exactly as in (137.2). Its kernel is nonsingular by (137.4). Every member of $\mathcal H_-$ and every sum of two products of its members is analytic on $\Omega$. Thus $A_0^*$ is a uniqueness set for both classes: apply Mityagin, [*The zero set of a real analytic function*, Proposition 0](https://arxiv.org/html/1512.07276v1), to real and imaginary parts, using local equivalence of $m$ and Lebesgue measure. These are both uniqueness hypotheses of Agler--Young, [*Functions which are almost multipliers of Hilbert function spaces*, Theorem 2.1](https://arxiv.org/html/math/9605224v1#S2.Thmtheorem1).
+
+That theorem, with its kernel parameter equal to $1$, gives a closed finite-codimensional $W_\tau\subset\mathcal H_-$ and a bounded $L_\tau:W_\tau\to\mathcal H_-$ satisfying $L_\tau u=\gamma_\tau u$ on $A_0^*$. Analytic uniqueness extends the product identity to all of $\Omega$:
 
 $$
-(g+q_\lambda)Lu=(g-q_\lambda)u
+(\tau g+q)L_\tau u=(\tau g-q)u\qquad(u\in W_\tau).
 \tag{145.7}
 $$
 
-on $A_0^*$. Both sides are analytic on $\Omega$, so (145.7) holds on all of $\Omega$ by the same positive-measure uniqueness argument as in Theorem 137.1. The commutator argument there applies on any compact patch where $g+q_\lambda>0$: the actual principal symbol (137.12), high-frequency punctured-core tests, and the three-lines bound force the derivatives of $\gamma$ to vanish. Thus $\gamma$ is constant on a nonempty open patch, and analytic continuation in (145.7) gives
+This identity forces $q\ge0$ on all of $\Omega$ under the finite-index supposition. To prove this, if $q<0$ somewhere, continuity and $g>0$ almost everywhere give a point $x_0\in\Omega$ with $g(x_0)>0>q(x_0)$. Choose $\tau=-q(x_0)/g(x_0)>0$. Along the whole rotation orbit of $x_0$, the left coefficient in (145.7) is zero and the right coefficient is the same strictly positive number $2\tau g(x_0)$. Consequently every $u\in W_\tau$ vanishes at every point of that orbit. Choose arbitrarily many distinct representatives $x_1,\ldots,x_n$ in $\operatorname{int}F$. Their evaluation vectors $k(\cdot,x_j)$ are linearly independent by (137.4), and all belong to $W_\tau^\perp$. This contradicts its finite dimension. This is the finite singular-set obstruction underlying Agler--Young Lemma 2.3, applied here to the actual odd heat kernel and the original rotation orbit.
+
+In particular the finite-index supposition now supplies, rather than assumes, a global real invariant multiplier
 
 $$
-q_\lambda=cg\quad\text{on }\Omega
+\gamma=\frac{g-q}{g+q}\quad\text{where }g+q>0,\qquad
+\gamma=0\quad\text{on its null complement},\qquad |\gamma|\le1.
+$$
+
+All possible zeros of the signed denominators have been handled before this step. Zeros of $g+q$ after the deduction $q\ge0$ lie in $\{g=0\}$, which is null. With $\tau=1$, (145.7) gives $L_1u=\gamma u$ globally as $L^2(m)$ classes. Here no global lower bound on $g+q$ is used.
+
+For clarity, the operator steps of (137.8)--(137.13) now have the following global premises. The space
+
+$$
+D=\{u\in\mathcal H_-:\gamma u\in\mathcal H_-\}
+$$
+
+contains the closed finite-codimensional $W_1$, so it is itself closed and finite codimensional: $D/W_1$ is a subspace of the finite-dimensional quotient $\mathcal H_-/W_1$. Its multiplication map has closed graph, because convergence in $\mathcal H_-$ implies convergence in $L^2(m)$ and $M_\gamma$ is bounded on that entire $L^2$ space. The closed graph theorem makes multiplication bounded on $D$ in the heat norm. The full rotation circle preserves $D$ and $D^\perp$. Choose a positive odd angular character $\ell$ absent from the finite-dimensional representation on $D^\perp$. Its entire heat sector is contained in $D$ and is nonzero by injectivity of heat propagation on nonzero smooth punctured character-$\ell$ tests. With $\sigma=d/2$ and the original self-adjoint sector restriction $K_\ell$, it follows that
+
+$$
+B_\ell=e^{\sigma K_\ell}M_\gamma e^{-\sigma K_\ell}
+\quad\text{is bounded on }L^2_\ell.
+$$
+
+For $\Pi_R=\mathbf1_{[0,R]}(K_\ell)$ the entire cutoff functions
+
+$$
+F_R(z)=\Pi_Re^{zK_\ell}M_\gamma e^{-zK_\ell}\Pi_R
+$$
+
+are bounded on each closed vertical strip. On $\Re z=\sigma$ their norms are bounded by $\|B_\ell\|$ through imaginary-time unitary conjugation; on $\Re z=-\sigma$ the same follows by adjointness, since $\gamma$ is real. Three-lines interpolation and Cauchy's estimate give $\|F_R'(0)\|\le2\|B_\ell\|/\sigma$, uniformly in $R$. Since $M_\gamma$ is globally bounded in $L^2$, spectral convergence in the graph norm of $K_\ell$ gives the bounded form
+
+$$
+\left|\langle K_\ell u,\gamma v\rangle_m-
+\langle\gamma u,K_\ell v\rangle_m\right|
+\le\frac{2\|B_\ell\|}{\sigma}\|u\|_2\|v\|_2
+\qquad(u,v\in D(K_\ell)).
+$$
+
+On a rotation-saturated compact patch in $\{r>0,g>0,q>0\}$, $\gamma$ is smooth analytic. Such a patch exists because $g,q>0$ almost everywhere. For
+
+$$
+u_N=e^{i\ell\alpha}\chi(r,z,\xi)e^{iN\omega\cdot(r,z,\xi)},
+\qquad\chi\in C_c^\infty,\quad\omega\in\mathbb R^3,
+$$
+
+with amplitude supported there, both $u_N$ and $\gamma u_N$ are genuine original punctured-core vectors. The form bound identifies and bounds the actual vector commutator on these tests. By the original principal symbol (137.12) and the Leibniz identity (137.13), its order-$N$ term is
+
+$$
+-2iN e^{i\ell\alpha+iN\omega\cdot(r,z,\xi)}\chi
+\left[a\gamma_r\omega_r+a\gamma_z\omega_z+
+\left(\eta+\frac{ar^2}{4}\right)\gamma_\xi\omega_\xi\right],
+$$
+
+and the remainder is bounded in $L^2(m)$ independently of $N$. Divide the commutator bound by $N$ and use arbitrary amplitudes and the three coordinate choices of $\omega$. Since $a,\eta>0$, this forces $\gamma_r=\gamma_z=\gamma_\xi=0$; rotation invariance gives $\gamma_\alpha=0$. On a connected nonempty such patch $\gamma=\gamma_0\in(-1,1)$. Analytic continuation of $g-q-\gamma_0(g+q)$ then yields
+
+$$
+q=c_0g\quad\text{on }\Omega,\qquad
+c_0=\frac{1-\gamma_0}{1+\gamma_0}.
 \tag{145.8}
 $$
 
-for a real constant $c$. Since $g=P\beta$ with the nonconstant positive representative $\beta$ of Proposition 136.2, injectivity of $P$ gives $r_\lambda=c\beta$ almost everywhere. The left side is constant on each of the three positive-measure cells, whereas the analytic function $\beta$ cannot be constant on a positive-measure subset without being constant on the connected $\Omega$. This is impossible; $c=0$ is already excluded by $r_\lambda\ne0$. Therefore the negative index is infinite in the nonnegative case as well.
+This contradicts the nonconstant-ratio conclusion above. The negative index is therefore infinite in this branch too.
 
-For any finite constraints, choose a negative-definite subspace of dimension larger than their number and intersect it with their common kernels. This proves the final assertion. The argument explicitly treats every real signed combination in (145.3); it uses no positivity of the three terminal weights. It also applies to every half-turn-invariant slack set $A$, which is the only support geometry used below. $\square$
+Finally, for any $n$ and any $r$ homogeneous linear constraints, intersect a negative-definite subspace of dimension $n+r$ with their common kernels. The intersection has dimension at least $n$ and remains negative definite. This proves infinite index after every stated finite family of constraints. No sign restriction on $\lambda$, and no full rotation invariance of $A$, has been imposed. $\square$
 
 **Theorem 145.3 (one same sign cancels all three actual terminal forms).** For every original $\theta=(a,\eta,d,b)\in\Theta$, every fixed actual invariant coarse partition $E=(S,C,B)\in\mathscr E_\theta$, and every finite set $\Psi\subset L^1(G,m;\mathbb R)$, there is a bounded whole-$G$ Borel function $v$ such that
 
@@ -1767,7 +1833,7 @@ The three equalities use the same sign and the same actual cells and terminal he
 Let $\mathcal K$ be the set of real classes $w$ with support in $S$, $w\circ\mathscr R=-w$, $\|w\|_\infty\le1$, the moments in $\Psi$ equal to zero, and $Q_i(w,w)=0$ for $i=S,C,B$. It is nonempty by $u$. It is weak-star compact. Indeed the linear conditions are weak-star closed, and each quadratic form is weak-star continuous on the unit ball: its ordered kernel is
 
 $$
-a_i(x,y)=g(x)p_d(x,y)q_i(y)\ge0,qquad
+a_i(x,y)=g(x)p_d(x,y)q_i(y)\ge0,\qquad
 \|a_i\|_{L^1(m^2)}=\int_GgPq_i\,dm\le1,
 \tag{145.10}
 $$
@@ -1781,7 +1847,7 @@ J(w)=\sum_{n\ge1}2^{-n}\left(\int_G\psi_nw\,dm\right)^2.
 \tag{145.11}
 $$
 
-Let $w$ be a maximizer. If the half-turn-invariant slack set
+Let $w$ be a maximizer. Suppose the half-turn-invariant slack set
 
 $$
 A_n=S\cap\{|w|\le1-1/n\}
@@ -1835,9 +1901,9 @@ where $v_n=\mathbf1_{D_{n,0}}-\mathbf1_{D_{n,1}}$. Each equality in the second l
 *Proof.* The determinant-sign and proportional-subdivision construction in (143.7)--(143.15), applied with its exact original marginal measures, supplies invariant coarse partitions $E_n=(S_n,C_n,B_n)\in\mathscr E_\theta$ for which
 
 $$
-\operatorname{rank}A_{E_n}=2,qquad
+\operatorname{rank}A_{E_n}=2,\qquad
 \mathbf1_{E_{n,i}}\overset{*}{\rightharpoonup}u_i^0
-\quad(i=S,C,B),qquad
+\quad(i=S,C,B),\qquad
 A_{E_n}\longrightarrow A(u^0).
 \tag{146.3}
 $$
@@ -1853,7 +1919,7 @@ D_{n,3}=C_n,\quad D_{n,B}=B_n.
 $$
 
 Because the three source densities $g_{2d},g_{3d},g_{4d}$ are invariant under $\mathscr R$, oddness gives
-\(\int g_{jd}v_n\,dm=0\). Together with the nine equations for $E_n$, this proves all twelve original marginal equations for $D_n$.
+$\int g_{jd}v_n\,dm=0$. Together with the nine equations for $E_n$, this proves all twelve original marginal equations for $D_n$.
 
 The half-turn commutation of $P$ gives $P v_n$ odd. Hence $v_nPv_n$ is invariant, $P(v_nPv_n)$ is invariant, and
 
@@ -1903,10 +1969,11 @@ $$
 
 is nonnegative and integrable with mass one. Rectangular-tensor approximation in $L^1(m^3)$, as in Proposition 123.2, makes every one of the 64 trilinear coefficients continuous under these bounded componentwise weak-star limits. Their finite sum is the displayed total-variation convergence.
 
-In the restricted invariant coarse/odd construction, the exact full $F_{64}$ equations split as follows. There are the 27 coarse coefficients
+In the restricted invariant coarse/odd construction, the invertible change of components from $(\mathbf1_{D_0},\mathbf1_{D_1},\mathbf1_{D_3},\mathbf1_{D_B})$ to $(\mathbf1_S,\mathbf1_C,\mathbf1_B,v)$ sends the target tuple to $(u_S^0,u_C^0,u_B^0,0)$ as $m$-classes. Multilinearity makes exact equality of the two 64-coordinate arrays equivalent to equality in these transformed components. There are the 27 coarse equations
 
 $$
-\mathcal C(\mathbf1_{E_i},\mathbf1_{E_j},\mathbf1_{E_k}),
+\mathcal C(\mathbf1_{E_i},\mathbf1_{E_j},\mathbf1_{E_k})
+=\mathcal C(u_i^0,u_j^0,u_k^0),
 \qquad i,j,k\in\{S,C,B\},
 \tag{146.11}
 $$
@@ -1914,12 +1981,12 @@ $$
 and, after the three equations in (145.9) and the automatic cubic identity (146.5), the six remaining ordered quadratic obligations
 
 $$
-\mathcal C(v,\mathbf1_{E_j},v)=0\quad(j=S,C,B),qquad
+\mathcal C(v,\mathbf1_{E_j},v)=0\quad(j=S,C,B),\qquad
 \mathcal C(\mathbf1_{E_i},v,v)=0\quad(i=S,C,B).
 \tag{146.12}
 $$
 
-All terms with exactly one $v$ vanish by half-turn parity. Thus (146.11)--(146.12) describe the obligations left by this restricted construction; they do not exhaust all possible $F_{64}$ witnesses and do not establish the universal target (144.4). $\square$
+The 27 terms with exactly one $v$ and the cubic term vanish by half-turn parity; of the nine terms with exactly two $v$ factors, (145.9) cancels three and (146.12) lists the other six. These counts enumerate ordered coefficients, not independent equations. Thus (146.11)--(146.12) describe the obligations left by this restricted construction; they do not exhaust all possible $F_{64}$ witnesses and do not establish the universal target (144.4). $\square$
 
 The source-specific content of Theorems 145.3 and 146.1 is the signed-pencil-to-extreme-sign composition and its insertion into the actual rank-two coarse sequence. The heat-image analyticity, odd kernel nonsingularity, source boundedness, exact coarse sequence, ordered congruence, and common path density are the supplied results of §§120, 133, 138, 143 and 123. Dvoretzky--Wald--Wolfowitz, [*Relations among certain ranges of vector measures*, §3 Theorem 4 and Lemma 2](https://msp.org/pjm/1951/1-1/pjm-v1-n1-p06-s.pdf), is used only for the finite linear proportional subdivisions in the coarse construction. These results give a conditional actual three-terminal sign and its same-partition sequence consumer; they do not prove attainment of (144.4), nonattainment, a physical realization or the universal $\forall\theta\,F_{64}(\theta)$ statement.
 
