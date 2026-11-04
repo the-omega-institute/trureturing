@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Analysis.BosonicRenyiStieltjes
 import D5.S3.Resource.LogDet.LogDetInformationSubmodularity
+import D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction
 
 /-! Settlement of the bosonic Gaussian Rényi strong-subadditivity line. -/
 
@@ -19,6 +20,7 @@ noncomputable section
 open Matrix
 open scoped ComplexOrder MatrixOrder
 open D5.S3.Resource.LogDet
+open MeasureTheory D5.S3.Quantum.Analysis.BosonicRenyiStieltjes
 
 namespace D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity
 
@@ -74,6 +76,32 @@ def claim : Prop :=
               (reducedForm (symplecticForm n) (A ∪ B ∪ C)) +
             gaussianRenyiEntropy α (reducedCovariance V B)
               (reducedForm (symplecticForm n) B)
+
+private def reducedIndexEquiv {n : ℕ} (X : Finset (Fin n)) :
+    {p : Fin n × Fin 2 // p.1 ∈ X} ≃ (↥X × Fin 2) where
+  toFun p := (⟨p.1.1, p.2⟩, p.1.2)
+  invFun p := ⟨(p.1.1, p.2), p.1.2⟩
+  left_inv _ := rfl
+  right_inv _ := rfl
+
+private lemma reduced_square {n : ℕ} (X : Finset (Fin n)) :
+    reducedForm (symplecticForm n) X * reducedForm (symplecticForm n) X = -1 := by
+  let e := (reducedIndexEquiv X).symm
+  apply Matrix.submatrix_injective e.surjective e.surjective
+  dsimp only
+  rw [Matrix.submatrix_mul _ _ e e e e.bijective]
+  change _ = -((1 : Matrix {p : Fin n × Fin 2 // p.1 ∈ X}
+    {p : Fin n × Fin 2 // p.1 ∈ X} ℝ).submatrix e e)
+  rw [Matrix.submatrix_one_equiv]
+  ext ⟨i, a⟩ ⟨j, b⟩
+  fin_cases a <;> fin_cases b <;>
+    simp [Matrix.mul_apply, Fintype.sum_prod_type, reducedForm, symplecticForm,
+      e, reducedIndexEquiv, Matrix.one_apply, Prod.ext_iff] <;> split_ifs <;> norm_num
+
+private lemma reduced_card {n : ℕ} (X : Finset (Fin n)) :
+    Fintype.card {p : Fin n × Fin 2 // p.1 ∈ X} = 2 * X.card := by
+  rw [Fintype.card_congr (reducedIndexEquiv X), Fintype.card_prod]
+  simp [Nat.mul_comm]
 
 private lemma physical_skew {ι : Type*} [Fintype ι] [DecidableEq ι]
     (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω) : Ωᵀ = -Ω := by
@@ -295,13 +323,87 @@ private lemma determinant_spectral_identity {ι : Type*} [Fintype ι] [Decidable
       Real.log (((V.map Complex.ofReal) + (x : ℂ) •
         (Complex.I • Ω.map Complex.ofReal)).det.re) =
         (1 / 2 : ℝ) * ∑ i, Real.log (hH.eigenvalues i ^ 2 - x ^ 2) := by
-  sorry
+  let S := CFC.sqrt (V.map Complex.ofReal)
+  let J := Complex.I • Ω.map Complex.ofReal
+  let H := fun x : ℝ => V.map Complex.ofReal + (x : ℂ) • J
+  have hSS : S * S = V.map Complex.ofReal := CFC.sqrt_mul_sqrt_self _ hpos.posSemidef.nonneg
+  have hΩC : Ω.map Complex.ofReal * Ω.map Complex.ofReal = -1 := by
+    calc
+      _ = (Ω * Ω).map Complex.ofReal := (Matrix.map_mul (f := Complex.ofRealHom)).symm
+      _ = -1 := by
+        rw [hΩ]
+        ext i j
+        by_cases hij : i = j <;> simp [hij]
+  have hJJ : J * J = 1 := by
+    dsimp only [J]
+    rw [Matrix.smul_mul, Matrix.mul_smul, smul_smul, Complex.I_mul_I, hΩC]
+    simp
+  have hc : (symplecticOperator V Ω).charpoly = (J * V.map Complex.ofReal).charpoly := by
+    change (S * J * S).charpoly = _
+    calc
+      _ = (S * (J * S)).charpoly := by rw [mul_assoc]
+      _ = (J * S * S).charpoly := Matrix.charpoly_mul_comm S (J * S)
+      _ = _ := by rw [mul_assoc, hSS]
+  have hscalar (t : ℝ) : Matrix.scalar ι (t : ℂ) = (t : ℂ) • (1 : Matrix ι ι ℂ) := by
+    ext i j
+    by_cases hij : i = j <;> simp [Matrix.scalar, Matrix.diagonal, Matrix.one_apply, hij]
+  have hd (t : ℝ) : (∏ i, ((t - hH.eigenvalues i : ℝ) : ℂ)) =
+      (-J).det * (H (-t)).det := by
+    rw [← D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.Spectral.det_pencil hH t]
+    change ((t : ℂ) • (1 : Matrix ι ι ℂ) - symplecticOperator V Ω).det = _
+    rw [← hscalar, ← Matrix.eval_charpoly, hc, Matrix.eval_charpoly, hscalar]
+    have heq : (t : ℂ) • (1 : Matrix ι ι ℂ) - J * V.map Complex.ofReal = -J * H (-t) := by
+      dsimp only [H]
+      simp only [Complex.ofReal_neg, neg_smul, Matrix.neg_mul, Matrix.mul_add,
+        Matrix.mul_smul, Matrix.mul_neg, smul_neg, neg_neg, hJJ]
+      abel
+    rw [heq, Matrix.det_mul]
+  have hdetJ : (-J).det ^ 2 = 1 := by
+    rw [pow_two, ← Matrix.det_mul, neg_mul_neg, hJJ, Matrix.det_one]
+  intro x hx0 hx1
+  have ht : (H x)ᵀ = H (-x) := by
+    ext i j
+    have hs := congrArg (fun N : Matrix ι ι ℝ => N i j) (physical_skew V Ω hV)
+    have hv := congrArg (fun N : Matrix ι ι ℝ => N i j) hV.1
+    change Ω j i = -Ω i j at hs
+    change V j i = V i j at hv
+    simp [H, J, hs, hv, smul_eq_mul]
+  have hdt : (H (-x)).det = (H x).det := by rw [← ht, Matrix.det_transpose]
+  have hprod : (∏ i, ((hH.eigenvalues i ^ 2 - x ^ 2 : ℝ) : ℂ)) = (H x).det ^ 2 := by
+    calc
+      _ = (∏ i, ((x - hH.eigenvalues i : ℝ) : ℂ)) *
+          (∏ i, ((-x - hH.eigenvalues i : ℝ) : ℂ)) := by
+        rw [← Finset.prod_mul_distrib]
+        apply Finset.prod_congr rfl
+        intro i hi
+        push_cast
+        ring
+      _ = (-J).det ^ 2 * (H x).det ^ 2 := by rw [hd x, hd (-x), neg_neg, hdt]; ring
+      _ = (H x).det ^ 2 := by rw [hdetJ, one_mul]
+  have hpx : (H x).PosDef := shifted_posDef V Ω hV hpos hx0 hx1
+  have hdr : ((H x).det.re : ℂ) = (H x).det := by
+    apply Complex.ext
+    · rfl
+    · simpa only [Complex.ofReal_im, Complex.zero_im] using hpx.det_pos.2
+  rw [← hdr, ← Complex.ofReal_pow, ← Complex.ofReal_prod] at hprod
+  have hreal := Complex.ofReal_injective hprod
+  have hterms (i : ι) : 0 < hH.eigenvalues i ^ 2 - x ^ 2 := by
+    have he := symplectic_spectrum_lower_bound V Ω hV hpos hΩ hH i
+    nlinarith [sq_abs (hH.eigenvalues i)]
+  have hl := congrArg Real.log hreal
+  rw [Real.log_prod (fun i _ => (hterms i).ne'), Real.log_pow] at hl
+  change Real.log (H x).det.re = _
+  norm_num at hl ⊢
+  linarith only [hl]
 
 private lemma entropy_mixture {ι : Type*} [Fintype ι] [DecidableEq ι]
     (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
     (hpos : (V.map Complex.ofReal).PosDef) (hΩ : Ω * Ω = -1)
     (hH : (symplecticOperator V Ω).IsHermitian) {α : ℝ}
     (ha0 : 0 < α) (ha2 : α < 2) (ha1 : α ≠ 1) :
+    IntegrableOn (fun x : ℝ => renyiWeight α x *
+      Real.log (((V.map Complex.ofReal) + (x : ℂ) •
+        (Complex.I • Ω.map Complex.ofReal)).det.re)) (Set.Ioo 0 1) ∧
     gaussianRenyiEntropy α V Ω =
       (Fintype.card ι : ℝ) / 2 *
           D5.S3.Quantum.Analysis.BosonicRenyiStieltjes.renyiConstant α +
@@ -309,13 +411,68 @@ private lemma entropy_mixture {ι : Type*} [Fintype ι] [DecidableEq ι]
           D5.S3.Quantum.Analysis.BosonicRenyiStieltjes.renyiWeight α x *
             Real.log (((V.map Complex.ofReal) + (x : ℂ) •
               (Complex.I • Ω.map Complex.ofReal)).det.re) := by
-  sorry
+  have hs (i : ι) := stieltjes_representation ha0 ha2 ha1
+    (symplectic_spectrum_lower_bound V Ω hV hpos hΩ hH i)
+  have hi (i : ι) : IntegrableOn (fun x : ℝ => renyiWeight α x *
+      Real.log (hH.eigenvalues i ^ 2 - x ^ 2)) (Set.Ioo 0 1) := by
+    simpa only [sq_abs] using (hs i).1
+  have heq (x : ℝ) (hx : x ∈ Set.Ioo (0 : ℝ) 1) :
+      renyiWeight α x * Real.log (((V.map Complex.ofReal) + (x : ℂ) •
+          (Complex.I • Ω.map Complex.ofReal)).det.re) =
+        (1 / 2 : ℝ) * ∑ i, renyiWeight α x * Real.log (hH.eigenvalues i ^ 2 - x ^ 2) := by
+    rw [determinant_spectral_identity V Ω hV hpos hΩ hH x hx.1.le hx.2,
+      ← Finset.mul_sum]
+    ring
+  have hint := (integrable_finsetSum Finset.univ (fun i _ => hi i)).const_mul (1 / 2 : ℝ)
+  constructor
+  · exact IntegrableOn.congr_fun hint (fun x hx => (heq x hx).symm) measurableSet_Ioo
+  · have hInt : (∫ x in Set.Ioo (0 : ℝ) 1, renyiWeight α x *
+          Real.log (((V.map Complex.ofReal) + (x : ℂ) •
+            (Complex.I • Ω.map Complex.ofReal)).det.re)) =
+        (1 / 2 : ℝ) * ∑ i, ∫ x in Set.Ioo (0 : ℝ) 1,
+          renyiWeight α x * Real.log (hH.eigenvalues i ^ 2 - x ^ 2) := by
+      rw [setIntegral_congr_fun measurableSet_Ioo heq, integral_const_mul,
+        integral_finsetSum Finset.univ (fun i _ => hi i)]
+    have hsum : (∑ i, renyiFunction α |hH.eigenvalues i|) =
+        (Fintype.card ι : ℝ) * renyiConstant α +
+          ∑ i, ∫ x in Set.Ioo (0 : ℝ) 1,
+            renyiWeight α x * Real.log (hH.eigenvalues i ^ 2 - x ^ 2) := by
+      calc
+        _ = ∑ i, (renyiConstant α + ∫ x in Set.Ioo (0 : ℝ) 1,
+              renyiWeight α x * Real.log (hH.eigenvalues i ^ 2 - x ^ 2)) := by
+          apply Finset.sum_congr rfl
+          intro i hi
+          simpa only [sq_abs] using (hs i).2
+        _ = _ := by rw [Finset.sum_add_distrib]; simp
+    rw [gaussianRenyiEntropy, dite_eq_left hH, hsum, hInt]
+    ring
 
 private lemma alpha_two_entropy {ι : Type*} [Fintype ι] [DecidableEq ι]
     (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
     (hpos : (V.map Complex.ofReal).PosDef) (hΩ : Ω * Ω = -1) :
     gaussianRenyiEntropy 2 V Ω = (1 / 2 : ℝ) * Real.log (V.det) := by
-  sorry
+  have hH := symplecticOperator_hermitian V Ω hV hpos
+  have hs (ν : ℝ) : renyiFunction 2 ν = Real.log ν := by
+    dsimp only [renyiFunction]
+    rw [Real.rpow_two, Real.rpow_two]
+    norm_num
+    congr 1
+    ring
+  have hd := determinant_spectral_identity V Ω hV hpos hΩ hH 0 (by norm_num) (by norm_num)
+  simp only [Complex.ofReal_zero, zero_smul, add_zero, zero_pow (by norm_num : 2 ≠ 0),
+    sub_zero] at hd
+  have hmap : (V.map Complex.ofReal).det.re = V.det := by
+    have h := Complex.ofRealHom.map_det V
+    exact congrArg Complex.re h.symm
+  rw [hmap] at hd
+  have hlog (i : ι) : Real.log (hH.eigenvalues i ^ 2) = 2 * Real.log |hH.eigenvalues i| := by
+    rw [← sq_abs, Real.log_pow]
+    norm_num
+  simp_rw [hlog] at hd
+  rw [← Finset.mul_sum] at hd
+  rw [gaussianRenyiEntropy, dite_eq_left hH]
+  simp_rw [hs]
+  linarith only [hd]
 
 private theorem det_mono {α : Type*} [Fintype α] [DecidableEq α]
     {P Q : Matrix α α ℂ} (hP : P.PosDef) (hQ : Q.PosDef)
@@ -504,64 +661,105 @@ private lemma koteljanskii_log_step {ι : Type*} [DecidableEq ι]
         Real.log (H.submatrix (Subtype.val : ↥(B ∪ C) → ι) Subtype.val).det.re := by
   exact log_koteljanskii H hH A B C hAB hAC hBC
 
-private lemma settlement_main
-    (hpos : ∀ {n : ℕ} (V : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ),
-      physicalCovariance V → (V.map Complex.ofReal).PosDef)
-    (hred : ∀ {n : ℕ} (V : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ),
-      physicalCovariance V → ∀ X : Finset (Fin n),
-        physicalOn (reducedCovariance V X) (reducedForm (symplecticForm n) X))
-    (hspec : ∀ {ι : Type} [Fintype ι] [DecidableEq ι]
-      (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
-      (hpos : (V.map Complex.ofReal).PosDef) (hΩ : Ω * Ω = -1)
-      (hH : (symplecticOperator V Ω).IsHermitian), ∀ i, 1 ≤ |hH.eigenvalues i|)
-    (hshift : ∀ {ι : Type} [Fintype ι] [DecidableEq ι]
-      (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
-      (hpos : (V.map Complex.ofReal).PosDef) {x : ℝ}, 0 ≤ x → x < 1 →
-      ((V.map Complex.ofReal) + (x : ℂ) • (Complex.I • Ω.map Complex.ofReal)).PosDef)
-    (hdet : ∀ {ι : Type} [Fintype ι] [DecidableEq ι]
-      (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
-      (hpos : (V.map Complex.ofReal).PosDef) (hΩ : Ω * Ω = -1)
-      (hH : (symplecticOperator V Ω).IsHermitian), ∀ x : ℝ, 0 ≤ x → x < 1 →
-      Real.log (((V.map Complex.ofReal) + (x : ℂ) •
-        (Complex.I • Ω.map Complex.ofReal)).det.re) =
-        (1 / 2 : ℝ) * ∑ i, Real.log (hH.eigenvalues i ^ 2 - x ^ 2))
-    (hblock : ∀ {ι : Type} [Fintype ι] [DecidableEq ι]
-      (V Ω : Matrix ι ι ℝ) (X : Finset ι) (x : ℝ),
-      ((V.map Complex.ofReal) + (x : ℂ) • (Complex.I • Ω.map Complex.ofReal)).submatrix
-          (fun i : {j // j ∈ X} => i.1) (fun i : {j // j ∈ X} => i.1) =
-        ((V.submatrix (fun i : {j // j ∈ X} => i.1) (fun i : {j // j ∈ X} => i.1)).map
-            Complex.ofReal) +
-          (x : ℂ) • (Complex.I •
-            (Ω.submatrix (fun i : {j // j ∈ X} => i.1) (fun i : {j // j ∈ X} => i.1)).map
-              Complex.ofReal))
-    (hmix : ∀ {ι : Type} [Fintype ι] [DecidableEq ι]
-      (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
-      (hpos : (V.map Complex.ofReal).PosDef) (hΩ : Ω * Ω = -1)
-      (hH : (symplecticOperator V Ω).IsHermitian) {α : ℝ},
-      0 < α → α < 2 → α ≠ 1 →
-      gaussianRenyiEntropy α V Ω =
-        (Fintype.card ι : ℝ) / 2 *
-            D5.S3.Quantum.Analysis.BosonicRenyiStieltjes.renyiConstant α +
-          ∫ x in Set.Ioo (0 : ℝ) 1,
-            D5.S3.Quantum.Analysis.BosonicRenyiStieltjes.renyiWeight α x *
-              Real.log (((V.map Complex.ofReal) + (x : ℂ) •
-                (Complex.I • Ω.map Complex.ofReal)).det.re))
-    (hkotel : ∀ {ι : Type} [DecidableEq ι]
-      (H : Matrix ι ι ℂ) (hH : H.PosDef) (A B C : Finset ι),
-      Disjoint A B → Disjoint A C → Disjoint B C →
-      Real.log (H.submatrix (Subtype.val : ↥(A ∪ B ∪ C) → ι) Subtype.val).det.re +
-          Real.log (H.submatrix (Subtype.val : ↥B → ι) Subtype.val).det.re ≤
-        Real.log (H.submatrix (Subtype.val : ↥(A ∪ B) → ι) Subtype.val).det.re +
-          Real.log (H.submatrix (Subtype.val : ↥(B ∪ C) → ι) Subtype.val).det.re)
-    (ha2 : ∀ {ι : Type} [Fintype ι] [DecidableEq ι]
-      (V Ω : Matrix ι ι ℝ) (hV : physicalOn V Ω)
-      (hpos : (V.map Complex.ofReal).PosDef) (hΩ : Ω * Ω = -1),
-      gaussianRenyiEntropy 2 V Ω = (1 / 2 : ℝ) * Real.log (V.det)) : claim := by
-  sorry
+private lemma mode_interpolation_det {n : ℕ}
+    (V Ω : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ)
+    (Y : Finset (Fin n × Fin 2)) (X : Finset (Fin n))
+    (hYX : ∀ p, p ∈ Y ↔ p.1 ∈ X) (x : ℝ) :
+    (((V.map Complex.ofReal) + (x : ℂ) • (Complex.I • Ω.map Complex.ofReal)).submatrix
+      (Subtype.val : ↥Y → Fin n × Fin 2) Subtype.val).det =
+      (((reducedCovariance V X).map Complex.ofReal) + (x : ℂ) •
+        (Complex.I • (reducedForm Ω X).map Complex.ofReal)).det := by
+  let e : ↥Y ≃ {p : Fin n × Fin 2 // p.1 ∈ X} :=
+    Equiv.subtypeEquivRight hYX
+  rw [principal_block_identity]
+  have heq : ((reducedCovariance V X).map Complex.ofReal + (x : ℂ) •
+      (Complex.I • (reducedForm Ω X).map Complex.ofReal)).submatrix e e =
+      (V.submatrix (Subtype.val : ↥Y → Fin n × Fin 2)
+        Subtype.val).map Complex.ofReal + (x : ℂ) •
+          (Complex.I • (Ω.submatrix Subtype.val Subtype.val).map Complex.ofReal) := by
+    ext i j
+    rfl
+  rw [← heq]
+  exact Matrix.det_submatrix_equiv_self e _
 
-theorem result : claim :=
-  settlement_main physical_posDef reduced_physical symplectic_spectrum_lower_bound
-    shifted_posDef determinant_spectral_identity principal_block_identity
-    entropy_mixture koteljanskii_log_step alpha_two_entropy
+private lemma settlement_main : claim := by
+  intro n V hV A B C hAB hAC hBC α ha0 ha2 ha1
+  have hp := physical_posDef V hV
+  have hr (X : Finset (Fin n)) := reduced_physical V hV X
+  have hpr (X : Finset (Fin n)) : ((reducedCovariance V X).map Complex.ofReal).PosDef :=
+    hp.submatrix Subtype.val_injective
+  have hH (X : Finset (Fin n)) := symplecticOperator_hermitian
+    (reducedCovariance V X) (reducedForm (symplecticForm n) X) (hr X) (hpr X)
+  let L := fun (X : Finset (Fin n)) (x : ℝ) =>
+    Real.log (((reducedCovariance V X).map Complex.ofReal + (x : ℂ) •
+      (Complex.I • (reducedForm (symplecticForm n) X).map Complex.ofReal)).det.re)
+  have hk (x : ℝ) (hx0 : 0 ≤ x) (hx1 : x < 1) :
+      L (A ∪ B ∪ C) x + L B x ≤ L (A ∪ B) x + L (B ∪ C) x := by
+    have h := koteljanskii_log_step
+      (V.map Complex.ofReal + (x : ℂ) • (Complex.I • (symplecticForm n).map Complex.ofReal))
+      (shifted_posDef V (symplecticForm n) hV hp hx0 hx1)
+      (A ×ˢ (Finset.univ : Finset (Fin 2))) (B ×ˢ Finset.univ) (C ×ˢ Finset.univ)
+      (Finset.disjoint_product.mpr (Or.inl hAB))
+      (Finset.disjoint_product.mpr (Or.inl hAC))
+      (Finset.disjoint_product.mpr (Or.inl hBC))
+    rw [mode_interpolation_det V (symplecticForm n) _ (A ∪ B ∪ C)
+        (fun p => by simp only [Finset.mem_union, Finset.mem_product, Finset.mem_univ, and_true]) x,
+      mode_interpolation_det V (symplecticForm n) _ B
+        (fun p => by simp only [Finset.mem_product, Finset.mem_univ, and_true]) x,
+      mode_interpolation_det V (symplecticForm n) _ (A ∪ B)
+        (fun p => by simp only [Finset.mem_union, Finset.mem_product, Finset.mem_univ, and_true]) x,
+      mode_interpolation_det V (symplecticForm n) _ (B ∪ C)
+        (fun p => by simp only [Finset.mem_union, Finset.mem_product, Finset.mem_univ, and_true]) x] at h
+    exact h
+  rcases lt_or_eq_of_le ha2 with ha2 | ha2
+  · have hm (X : Finset (Fin n)) :
+        IntegrableOn (fun x => renyiWeight α x * L X x) (Set.Ioo (0 : ℝ) 1) ∧
+        gaussianRenyiEntropy α (reducedCovariance V X) (reducedForm (symplecticForm n) X) =
+          (X.card : ℝ) * renyiConstant α +
+            ∫ x in Set.Ioo (0 : ℝ) 1, renyiWeight α x * L X x := by
+      have h := entropy_mixture (reducedCovariance V X) (reducedForm (symplecticForm n) X)
+        (hr X) (hpr X) (reduced_square X) (hH X) ha0 ha2 ha1
+      have hc : (Fintype.card {p : Fin n × Fin 2 // p.1 ∈ X} : ℝ) / 2 = (X.card : ℝ) := by
+        rw [reduced_card]
+        push_cast
+        ring
+      rw [hc] at h
+      exact h
+    have hpoint : ∀ᵐ x ∂(volume.restrict (Set.Ioo (0 : ℝ) 1)),
+        renyiWeight α x * L (A ∪ B ∪ C) x + renyiWeight α x * L B x ≤
+          renyiWeight α x * L (A ∪ B) x + renyiWeight α x * L (B ∪ C) x := by
+      filter_upwards [ae_restrict_mem measurableSet_Ioo] with x hx
+      simpa only [mul_add] using mul_le_mul_of_nonneg_left (hk x hx.1.le hx.2)
+        (weight_pos ha0 ha2 ha1 hx.1.le hx.2).le
+    have hi := integral_mono_ae ((hm (A ∪ B ∪ C)).1.add (hm B).1)
+      ((hm (A ∪ B)).1.add (hm (B ∪ C)).1) hpoint
+    simp only [Pi.add_apply] at hi
+    rw [integral_add (hm (A ∪ B ∪ C)).1 (hm B).1,
+      integral_add (hm (A ∪ B)).1 (hm (B ∪ C)).1] at hi
+    have hUC : Disjoint (A ∪ B) C := Finset.disjoint_union_left.mpr ⟨hAC, hBC⟩
+    have hc : (A ∪ B).card + (B ∪ C).card = (A ∪ B ∪ C).card + B.card := by
+      rw [Finset.card_union_of_disjoint hAB, Finset.card_union_of_disjoint hBC,
+        Finset.card_union_of_disjoint hUC, Finset.card_union_of_disjoint hAB]
+      omega
+    have hcr : ((A ∪ B).card : ℝ) + (B ∪ C).card = (A ∪ B ∪ C).card + B.card := by
+      exact_mod_cast hc
+    have hconst := congrArg (fun t : ℝ => t * renyiConstant α) hcr
+    rw [(hm (A ∪ B)).2, (hm (B ∪ C)).2, (hm (A ∪ B ∪ C)).2, (hm B).2]
+    linarith only [hi, hconst]
+  · subst α
+    have ht (X : Finset (Fin n)) :
+        gaussianRenyiEntropy 2 (reducedCovariance V X) (reducedForm (symplecticForm n) X) =
+          (1 / 2 : ℝ) * L X 0 := by
+      rw [alpha_two_entropy _ _ (hr X) (hpr X) (reduced_square X)]
+      change (1 / 2 : ℝ) * Real.log (reducedCovariance V X).det =
+        (1 / 2 : ℝ) * Real.log (((reducedCovariance V X).map Complex.ofReal +
+          (0 : ℂ) • (Complex.I • (reducedForm (symplecticForm n) X).map Complex.ofReal)).det.re)
+      rw [zero_smul, add_zero]
+      congr 2
+      exact congrArg Complex.re (Complex.ofRealHom.map_det (reducedCovariance V X))
+    rw [ht (A ∪ B), ht (B ∪ C), ht (A ∪ B ∪ C), ht B]
+    linarith only [hk 0 (by norm_num) (by norm_num)]
+
+theorem result : claim := settlement_main
 
 end D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity
