@@ -161,13 +161,16 @@ private lemma spanning_of_rank (A : Fin 2 → Bond) (r : ℕ)
   let S := Submodule.span ℂ (Set.range fun p : Fin 2 × Fin 2 => A p.1 * A p.2)
   have hmap : S.map L = Submodule.span ℂ (Set.range (twoFlattening A r).row) := by
     dsimp only [S]
-    rw [Submodule.map_span, Set.image_range]
+    rw [Submodule.map_span, ← Set.range_comp]
     have he : (fun p : Fin 2 × Fin 2 => L (A p.1 * A p.2)) =
         (twoFlattening A r).row := by
       funext p b
-      simp [L, gamma, wordMatrix, twoFlattening, Matrix.row,
-        UniformMPSExpectedDimensionRefutation.traceWord, List.ofFn_fin_append,
-        List.ofFn_succ, List.prod_append, Matrix.mul_assoc]
+      change ((A p.1 * A p.2) * (List.ofFn fun i => A (b i)).prod).trace =
+        ((List.ofFn fun i => A (Fin.append ![p.1, p.2] b i)).prod).trace
+      rw [List.ofFn_comp' (Fin.append ![p.1, p.2] b) A,
+        List.ofFn_fin_append, List.map_append, List.prod_append]
+      simp [List.map_ofFn, List.ofFn_succ, Matrix.mul_assoc]
+    change Submodule.span ℂ (Set.range (fun p : Fin 2 × Fin 2 => L (A p.1 * A p.2))) = _
     rw [he]
   have hle : 4 ≤ Module.finrank ℂ S := by
     rw [← hr, Matrix.rank_eq_finrank_span_row, ← hmap]
