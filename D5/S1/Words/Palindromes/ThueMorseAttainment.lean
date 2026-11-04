@@ -9,6 +9,8 @@
 import D5.S1.Words.Palindromes.ThueMorseSignedCut
 import D5.S1.Words.Palindromes.PeriodDoubling.NonadjacentSignedDigits
 
+/-! An attaining family for the literal mixed-cost prefix bound. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -41,7 +43,9 @@ private theorem family_weight (m : ℕ) : signedWeight (attainingLength m : ℤ)
     | succ m ih =>
       refine ⟨?_, ?_, ?_, ?_⟩
       · simpa [digits] using ih.1
-      · simp [digits, List.isChain_cons_cons, ih.2.1]
+      · rw [digits, List.isChain_cons_cons]
+        refine ⟨Or.inr rfl, ?_⟩
+        exact ih.2.1.cons (by intro y hy; exact Or.inl rfl)
       · have hp := family_positive m
         simp only [digits, List.foldr_cons, ih.2.2.1, attainingLength]
         rw [Nat.cast_sub (by omega)]
@@ -54,12 +58,18 @@ private theorem family_weight (m : ℕ) : signedWeight (attainingLength m : ℤ)
 private def tau (w : List Bool) : List Bool :=
   w.flatMap (fun b => [b, !b, !b, b])
 
+private theorem tau_append (u v : List Bool) : tau (u ++ v) = tau u ++ tau v := by
+  simp only [tau, List.flatMap_append]
+
 private theorem tau_palindrome {w : List Bool} (h : List.Palindrome w) :
     List.Palindrome (tau w) := by
   have rev (v : List Bool) : (tau v).reverse = tau v.reverse := by
     induction v with
     | nil => rfl
-    | cons b v ih => simp [tau, List.reverse_append, ih, List.append_assoc]
+    | cons b v ih =>
+      rw [show tau (b :: v) = [b, !b, !b, b] ++ tau v from rfl,
+        List.reverse_append, ih, List.reverse_cons, tau_append]
+      simp [tau]
   apply List.Palindrome.of_reverse_eq
   rw [rev, h.reverse_eq]
 
@@ -70,10 +80,11 @@ private theorem tau_pl (w : List Bool) : FridPrefix.PL (tau w) ≤ FridPrefix.PL
     exact Nat.find_spec _
   apply Nat.find_le (show FridPrefix.PalFactors (tau w) (FridPrefix.PL w) from ?_)
   refine ⟨ps.map tau, ?_, by simpa using hlen, ?_⟩
-  · rw [← hps]
-    induction ps with
-    | nil => rfl
-    | cons p ps ih => simpa [tau, List.flatMap_append] using congrArg (List.append (tau p)) ih
+  · have flatten_tau (qs : List (List Bool)) : (qs.map tau).flatten = tau qs.flatten := by
+      induction qs with
+      | nil => rfl
+      | cons p ps ih => simpa [tau, List.flatMap_append] using congrArg (List.append (tau p)) ih
+    rw [flatten_tau, hps]
   · intro q hq
     obtain ⟨p, hpmem, rfl⟩ := List.mem_map.mp hq
     refine ⟨?_, tau_palindrome (hp p hpmem).2⟩
@@ -114,13 +125,16 @@ private theorem prefix_four_sub_one (n : ℕ) (hn : 0 < n) :
   rw [tau_prefix] at ht
   have hd := FridPrefix.pl_one_letter_lipschitz
     (factor (4 * n - 1) 0) (thueMorse (4 * n - 1))
-  rw [← factor_concat] at hd
+  have hc := factor_concat (4 * n - 1) 0
+  simp only [Nat.zero_add] at hc
+  rw [← hc] at hd
   rw [show 4 * n - 1 + 1 = 4 * n by omega] at hd
   rw [abs_le] at hd
   omega
 
 private theorem family_upper (m : ℕ) :
     FridPrefix.PL (factor (attainingLength m) 0) ≤ m + 1 := by
+  classical
   induction m with
   | zero =>
     apply Nat.find_le (show FridPrefix.PalFactors (factor (attainingLength 0) 0) 1 from ?_)
