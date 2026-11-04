@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:16927d41e8184d6361c4d4327284c247eb74538a863d76d32181b21f8bb97176
   normalized_sha256: sha256:16927d41e8184d6361c4d4327284c247eb74538a863d76d32181b21f8bb97176
 cas_ref: sha256:16927d41e8184d6361c4d4327284c247eb74538a863d76d32181b21f8bb97176
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/QuadraticForms/ThreeWayPositiveKernel.three_way_hilbert_characterization
+    target_statement_id: sha256:ee8b63c146894fc576e993bc680edf5d02be69d9a5e5ea9c5fca29fe24626743
 receipts:
   unresolved_subitems: []
