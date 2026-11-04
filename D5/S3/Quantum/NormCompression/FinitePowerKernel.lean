@@ -4,8 +4,7 @@
    mirror-E: none(waiver:ordinary-finite-power-supplier)
    anchors: []
    utility: none
-   digest: Exact actual Hessian radial kernel on every coupled rank two support face.
--/
+   digest: Exact actual Hessian radial kernel on every coupled rank two support face. -/
 
 import D5.S3.Quantum.NormCompression.FinitePowerConcavity
 import Batteries.Tactic.OpenPrivate

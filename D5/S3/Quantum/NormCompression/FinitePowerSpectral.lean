@@ -4,8 +4,7 @@
    mirror-E: none(waiver:ordinary-finite-power-supplier)
    anchors: []
    utility: none
-   digest: Exact two-eigenvalue trace chart and positive boundary regularization.
--/
+   digest: Exact two-eigenvalue trace chart and positive boundary regularization. -/
 
 import D5.S3.Quantum.NormCompression.FinitePowerTrace
 import Mathlib.Analysis.Convex.Deriv

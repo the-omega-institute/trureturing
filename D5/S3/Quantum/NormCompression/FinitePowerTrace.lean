@@ -4,8 +4,7 @@
    mirror-E: none(waiver:ordinary-finite-power-supplier)
    anchors: []
    utility: none
-   digest: Actual Schatten trace-power supplier for nonnegative two-row tables.
--/
+   digest: Actual Schatten trace-power supplier for nonnegative two-row tables. -/
 
 import D5.S3.Quantum.NormCompression.SchattenContinuity
 import Mathlib.Analysis.Convex.Deriv

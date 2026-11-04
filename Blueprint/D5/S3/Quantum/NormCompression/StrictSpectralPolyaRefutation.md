@@ -82,5 +82,6 @@ Priyanka Grover and Krishna Kumar Gupta, Properties of best approximations with 
 - Truth anchor: `D5/S3/Quantum/NormCompression/StrictSpectralPolyaRefutation.result`
 - Truth anchor: `D5/S3/Quantum/NormCompression/StrictSpectralPolyaRefutation.rpow_square_half`
 - Dependency: [D5/S3/Quantum/Measurement/OccupationPartialTransposeSpectral](../Measurement/OccupationPartialTransposeSpectral.md)
+- Dependency: [D5/S3/Quantum/NormCompression/SchattenContinuity](SchattenContinuity.md)
 - Dependency: [D5/S3/Quantum/NormCompression/UpperBranchReduction](UpperBranchReduction.md)
 - Dependency: [D5/S3/Resource/LogDet/PathSpectralClassical](../../Resource/LogDet/PathSpectralClassical.md)

@@ -4,8 +4,7 @@
    mirror-E: none(waiver:ordinary-finite-power-supplier)
    anchors: []
    utility: none
-   digest: Full symmetric inverse metric and differentiated trace acceleration identity.
--/
+   digest: Full symmetric inverse metric and differentiated trace acceleration identity. -/
 
 import D5.S3.Quantum.NormCompression.FinitePowerSpectral
 import Batteries.Tactic.OpenPrivate

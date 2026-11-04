@@ -4,8 +4,7 @@
    mirror-E: none(waiver:ordinary-finite-power-supplier)
    anchors: []
    utility: none
-   digest: Actual compression budgets glue over orthogonal local output resolutions.
--/
+   digest: Actual compression budgets glue over orthogonal local output resolutions. -/
 
 import D5.S3.Quantum.NormCompression.FinitePowerConcavity
 import D5.S3.Quantum.Lieb.PositiveMapJensen

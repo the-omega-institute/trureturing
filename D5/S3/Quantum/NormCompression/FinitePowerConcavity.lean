@@ -4,8 +4,7 @@
    mirror-E: none(waiver:ordinary-finite-power-supplier)
    anchors: []
    utility: none
-   digest: Full-cone concavity of the actual trace power for every finite two-row table.
--/
+   digest: Full-cone concavity of the actual trace power for every finite two-row table. -/
 
 import D5.S3.Quantum.NormCompression.FinitePowerMetric
 import Batteries.Tactic.OpenPrivate
