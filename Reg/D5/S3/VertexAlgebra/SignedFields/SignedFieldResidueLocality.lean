@@ -1,4 +1,4 @@
-import Reg.D5.S3.VertexAlgebra.SignedFieldNormalProductLocality
+import Reg.D5.S3.VertexAlgebra.SignedFields.SignedFieldNormalProductLocality
 import D5.S3.VertexAlgebra.SignedFields.SignedFieldResidueLocality
 
 /-! Faithful residue-law families; source occurrence enrollment remains unresolved. -/
@@ -10,7 +10,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open Reg.D5.S3.VertexAlgebra.SignedFieldNormalProductLocality
   (Context signature actual rejected)
-open private dependence from Reg.D5.S3.VertexAlgebra.SignedFieldNormalProductLocality
+open private dependence from Reg.D5.S3.VertexAlgebra.SignedFields.SignedFieldNormalProductLocality
 noncomputable section
 namespace Reg.D5.S3.VertexAlgebra.SignedFieldResidueLocality
 universe u

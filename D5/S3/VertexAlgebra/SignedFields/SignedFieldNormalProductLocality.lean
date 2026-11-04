@@ -1,6 +1,6 @@
 /- GID: D5/S3/VertexAlgebra/SignedFields/SignedFieldNormalProductLocality
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/SignedFieldNormalProductLocality
+   mirror-B: D5/B/S3/VertexAlgebra/SignedFields/SignedFieldNormalProductLocality
    mirror-E: none(waiver:algebraic-signed-field-calculus)
    anchors: []
    utility: none

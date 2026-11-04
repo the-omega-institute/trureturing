@@ -1,6 +1,6 @@
 /- GID: D5/S3/VertexAlgebra/SignedFields/SignedFieldResidueLocality
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/SignedFieldResidueLocality
+   mirror-B: D5/B/S3/VertexAlgebra/SignedFields/SignedFieldResidueLocality
    mirror-E: none(waiver:algebraic-signed-field-calculus)
    anchors: []
    utility: none
@@ -34,7 +34,7 @@ open D5.S3.VertexAlgebra.FieldNormalProductLocality
 open D5.S3.VertexAlgebra.SignedFieldNormalProductLocality
 open D5.S3.VertexAlgebra.StateFieldResidueReconstruction (integerBinomial epsilon)
 open private signedTriple signedTriple_coefficients signedPair_low signedPair_high from
-  D5.S3.VertexAlgebra.SignedFieldNormalProductLocality
+  D5.S3.VertexAlgebra.SignedFields.SignedFieldNormalProductLocality
 open private shiftsCommute discrepancyXY residueXY residueYZ intertwiningPowers
   cancellationBound from D5.S3.VertexAlgebra.FieldNormalProductLocality
 
