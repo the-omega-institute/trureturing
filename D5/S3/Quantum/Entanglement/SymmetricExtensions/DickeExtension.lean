@@ -339,10 +339,11 @@ private lemma support_of_columns (E : Matrix (I → L) (I → L) ℂ)
     simpa only [Matrix.conjTranspose_mul, hE.eq, (P_hermitian I L).eq] using h
   rw [hl, hr]
 
-private lemma edge_covariance (E : Matrix (I → L) (I → L) ℂ)
-    (hE : E.IsHermitian) (hcol : ∀ y, IsSymmetricVector (fun x => E x y))
+private lemma edge_covariance_of_conjugation (E : Matrix (I → L) (I → L) ℂ)
     (σ : Equiv.Perm I) (a b : I) (hab : a ≠ b) :
-    edgeMarginal (σ a) (σ b) (σ.injective.ne hab) E = edgeMarginal a b hab E := by
+    (∀ x y, E (x ∘ σ) (y ∘ σ) = E x y) →
+      edgeMarginal (σ a) (σ b) (σ.injective.ne hab) E = edgeMarginal a b hab E := by
+  intro hinv
   classical
   let eR : {k : I // k ≠ a ∧ k ≠ b} ≃
       {k : I // k ≠ σ a ∧ k ≠ σ b} :=
@@ -360,27 +361,24 @@ private lemma edge_covariance (E : Matrix (I → L) (I → L) ℂ)
       simp [edgeSplit, Ne.symm hab]
     simp [edgeSplit, Function.comp_def, ha, hb, eC, eR, Equiv.subtypeEquiv,
       Equiv.arrowCongr, Equiv.refl]
-  have hright (x y : I → L) : E x (y ∘ σ) = E x y := by
-    calc
-      E x (y ∘ σ) = star (E (y ∘ σ) x) := (hE.apply x (y ∘ σ)).symm
-      _ = star (E y x) := congrArg star (hcol x σ y)
-      _ = E x y := hE.apply x y
   ext u v
   simp only [edgeMarginal, partialTraceRight, Matrix.submatrix_apply]
   rw [← eC.sum_comp]
   apply Finset.sum_congr rfl
   intro c hc
-  have h := hcol
-    ((edgeSplit (σ a) (σ b) (σ.injective.ne hab)).symm (v,eC c)) σ
-    ((edgeSplit (σ a) (σ b) (σ.injective.ne hab)).symm (u,eC c))
-  dsimp only at h
-  rw [hf] at h
+  rw [← hinv, hf, hf]
+
+private lemma edge_covariance (E : Matrix (I → L) (I → L) ℂ)
+    (hE : E.IsHermitian) (hcol : ∀ y, IsSymmetricVector (fun x => E x y))
+    (σ : Equiv.Perm I) (a b : I) (hab : a ≠ b) :
+    edgeMarginal (σ a) (σ b) (σ.injective.ne hab) E = edgeMarginal a b hab E := by
+  apply edge_covariance_of_conjugation E σ a b hab
+  intro x y
   calc
-    E _ _ = E ((edgeSplit a b hab).symm (u,c))
-        ((edgeSplit (σ a) (σ b) (σ.injective.ne hab)).symm (v,eC c)) := h.symm
-    _ = E ((edgeSplit a b hab).symm (u,c))
-        (((edgeSplit (σ a) (σ b) (σ.injective.ne hab)).symm (v,eC c)) ∘ σ) := (hright _ _).symm
-    _ = _ := congrArg (fun z => E ((edgeSplit a b hab).symm (u,c)) z) (hf v c)
+    E (x ∘ σ) (y ∘ σ) = E x (y ∘ σ) := hcol (y ∘ σ) σ x
+    _ = star (E (y ∘ σ) x) := (hE.apply x (y ∘ σ)).symm
+    _ = star (E y x) := congrArg star (hcol x σ y)
+    _ = E x y := hE.apply x y
 
 private lemma all_edges_equal (E : Matrix (I → L) (I → L) ℂ)
     (hE : E.IsHermitian) (hcol : ∀ y, IsSymmetricVector (fun x => E x y))
@@ -403,13 +401,18 @@ private lemma all_edges_equal (E : Matrix (I → L) (I → L) ℂ)
 
 /-- Permutations acting trivially on each actual column of an operator. -/
 private def columnStabilizer (E : Matrix (I → L) (I → L) ℂ) :
-    Submonoid (Equiv.Perm I) where
+    Subgroup (Equiv.Perm I) where
   carrier := {sigma | ∀ x y, E (x ∘ sigma) y = E x y}
   one_mem' := by intro x y; rfl
   mul_mem' := by
     intro sigma tau hs ht x y
     change E ((x ∘ sigma) ∘ tau) y = E x y
     rw [ht, hs]
+  inv_mem' := by
+    intro σ hs x y
+    have h := hs (x ∘ σ⁻¹) y
+    simpa only [Function.comp_assoc, Equiv.Perm.inv_def,
+      Equiv.symm_comp_self, Function.comp_id] using h.symm
 
 private lemma columns_fixed_of_reachable (G : SimpleGraph I)
     (E : Matrix (I → L) (I → L) ℂ) (hE : E.PosSemidef)
@@ -448,6 +451,112 @@ theorem support_of_connected_graph (G : SimpleGraph I) (hG : G.Connected)
 
 #print axioms support_of_connected_graph
 
+
+/-- Register permutations preserving every connected component, including singleton components. -/
+def componentGroup (G : SimpleGraph I) : Subgroup (Equiv.Perm I) where
+  carrier := {σ | ∀ i, G.Reachable i (σ i)}
+  one_mem' := fun i => G.Reachable.refl i
+  mul_mem' := by
+    intro σ τ hσ hτ i
+    exact (hτ i).trans (hσ (τ i))
+  inv_mem' := by
+    intro σ hσ i
+    simpa only [Equiv.Perm.apply_inv_self] using (hσ (σ⁻¹ i)).symm
+
+private lemma component_swap_mem (G : SimpleGraph I) {a b : I}
+    (h : G.Reachable a b) : Equiv.swap a b ∈ componentGroup G := by
+  intro i
+  by_cases ha : i = a
+  · subst i
+    simpa only [Equiv.swap_apply_left] using h
+  by_cases hb : i = b
+  · subst i
+    simpa only [Equiv.swap_apply_right] using h.symm
+  simpa only [Equiv.swap_apply_of_ne_of_ne ha hb] using G.Reachable.refl i
+
+private lemma component_group_le_columns (G : SimpleGraph I)
+    (E : Matrix (I → L) (I → L) ℂ) (hE : E.PosSemidef)
+    (hsupport : ∀ a b (h : G.Adj a b),
+      pairSymmetricProjector * edgeMarginal a b h.ne E * pairSymmetricProjector =
+        edgeMarginal a b h.ne E) :
+    componentGroup G ≤ columnStabilizer E := by
+  classical
+  let S : Set (Equiv.Perm I) := {σ | ∃ a b, a ≠ b ∧ G.Reachable a b ∧ σ = Equiv.swap a b}
+  have hS : ∀ σ ∈ S, σ.IsSwap := by
+    rintro σ ⟨a,b,hab,_,rfl⟩
+    exact ⟨a,b,hab,rfl⟩
+  have hcl : Subgroup.closure S ≤ columnStabilizer E := by
+    apply Subgroup.closure_le.mpr
+    rintro σ ⟨a,b,_,hr,rfl⟩
+    exact columns_fixed_of_reachable G E hE hsupport hr
+  intro σ hσ
+  apply hcl
+  apply (Subgroup.mem_closure_isSwap hS).mpr
+  refine ⟨Set.toFinite _, fun x => ?_⟩
+  by_cases hx : x = σ x
+  · rw [← hx]
+    exact MulAction.mem_orbit_self x
+  · exact ⟨⟨Equiv.swap x (σ x), Subgroup.subset_closure ⟨x,σ x,hx,hσ x,rfl⟩⟩,
+      Equiv.swap_apply_left x (σ x)⟩
+
+open private Q_mulVec Q_mul Q_one Q_star
+  Average.expect_formula Average.avg_left Average.avg_idempotent Average.avg_hermitian from
+  D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricAbsolutePPTPermutationFloor
+
+private noncomputable def componentRepresentation (G : SimpleGraph I) :
+    componentGroup G →* Matrix (I → L) (I → L) ℂ where
+  toFun σ := Q σ.val
+  map_one' := Q_one
+  map_mul' σ τ := Q_mul σ.val τ.val
+
+/-- The actual permutation average on each connected component. Its tensor-product
+factorization is given separately; isolated registers contribute their identity factors. -/
+noncomputable def componentProjector (G : SimpleGraph I) :
+    Matrix (I → L) (I → L) ℂ := by
+  classical
+  exact Finset.expect Finset.univ (componentRepresentation (L := L) G)
+
+private lemma component_projector_hermitian (G : SimpleGraph I) :
+    (componentProjector (L := L) G).IsHermitian := by
+  classical
+  exact Average.avg_hermitian (componentRepresentation G) (fun σ => Q_star σ.val)
+
+private lemma component_projector_fix (G : SimpleGraph I) (σ : componentGroup G) :
+    Q σ.val * componentProjector (L := L) G = componentProjector G := by
+  classical
+  exact Average.avg_left (componentRepresentation G) σ
+
+private lemma component_projector_mul_of_columns (G : SimpleGraph I)
+    (E : Matrix (I → L) (I → L) ℂ)
+    (hc : componentGroup G ≤ columnStabilizer E) : componentProjector G * E = E := by
+  classical
+  have hcard : (Fintype.card (componentGroup G) : ℂ) ≠ 0 := by
+    exact_mod_cast Fintype.card_ne_zero
+  have hf (σ : componentGroup G) : Q σ.val * E = E := by
+    ext x y
+    exact congrFun (Q_mulVec σ.val (fun z => E z y)) x |>.trans (hc σ.property x y)
+  simp only [componentProjector, Average.expect_formula, Matrix.smul_mul, Matrix.sum_mul,
+    componentRepresentation, MonoidHom.coe_mk, OneHom.coe_mk, hf, Finset.sum_const,
+    Finset.card_univ]
+  rw [← Nat.cast_smul_eq_nsmul ℂ, smul_smul, inv_mul_cancel₀ hcard, one_smul]
+
+/-- Edge Bose support forces support on the component permutation average.
+No connectedness assumption is made, and no register is discarded. -/
+theorem component_support_of_edges (G : SimpleGraph I)
+    (E : Matrix (I → L) (I → L) ℂ) (hE : E.PosSemidef)
+    (hsupport : ∀ a b (h : G.Adj a b),
+      pairSymmetricProjector * edgeMarginal a b h.ne E * pairSymmetricProjector =
+        edgeMarginal a b h.ne E) :
+    componentProjector G * E * componentProjector G = E := by
+  have hl := component_projector_mul_of_columns G E
+    (component_group_le_columns G E hE hsupport)
+  have hr := congrArg Matrix.conjTranspose hl
+  simp only [Matrix.conjTranspose_mul, hE.isHermitian.eq,
+    (component_projector_hermitian G).eq] at hr
+  rw [hl, hr]
+
+#print axioms component_support_of_edges
+
 /-- Bose-supported root marginals force global Bose support and all ordered marginals.
 No leaf support, normalization, invertibility or partial-transpose premise is used. -/
 theorem support_of_bose_root_marginals (root : I)
@@ -471,6 +580,26 @@ theorem support_of_bose_root_marginals (root : I)
     exact hm b hab
   · rw [all_edges_equal E hE.isHermitian hcol root a a b ha hab]
     exact hm a ha
+
+/-- Mere conjugation invariance of the leaves and one Bose-supported root marginal
+force full Bose support on the same operator, including every ordered marginal. -/
+theorem support_of_leaf_invariance (root leaf : I) (hne : root ≠ leaf)
+    (E : Matrix (I → L) (I → L) ℂ) (hE : E.PosSemidef)
+    (hinv : ∀ σ : Equiv.Perm I, σ root = root →
+      ∀ x y, E (x ∘ σ) (y ∘ σ) = E x y)
+    (hpair : pairSymmetricProjector * edgeMarginal root leaf hne E *
+      pairSymmetricProjector = edgeMarginal root leaf hne E) :
+    P I L * E * P I L = E ∧
+      ∀ a b (hab : a ≠ b), edgeMarginal a b hab E = edgeMarginal root leaf hne E := by
+  apply support_of_bose_root_marginals root _ hpair E hE
+  intro i hi
+  let σ : Equiv.Perm I := Equiv.swap leaf i
+  have hroot : σ root = root := Equiv.swap_apply_of_ne_of_ne hne hi
+  have hleaf : σ leaf = i := Equiv.swap_apply_left leaf i
+  have h := edge_covariance_of_conjugation E σ root leaf hne (hinv σ hroot)
+  simpa only [σ, Equiv.swap_apply_of_ne_of_ne hne hi, Equiv.swap_apply_left] using h
+
+#print axioms support_of_leaf_invariance
 
 /-- Star and complete no-PPT predicates select exactly the same individual matrices.
 This includes zero and singular matrices and arbitrary unnormalized traces. -/

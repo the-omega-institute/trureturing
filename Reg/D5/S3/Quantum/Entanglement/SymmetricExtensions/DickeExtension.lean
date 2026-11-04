@@ -13,6 +13,7 @@ open scoped BigOperators ComplexOrder
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 noncomputable section
 
 structure Parameters where
@@ -230,7 +231,7 @@ private lemma dependence : ObservationalDependence signature.{u,v} actual := by
   have hneg : StarExtensionCore base.root base.rho (-1) := Eq.mp h h0
   have hd := hneg.1.diag_nonneg (i := fun _ => ⟨0⟩)
   have hr := (RCLike.nonneg_iff.mp hd).1
-  norm_num [Matrix.neg_apply, Matrix.one_apply] at hr
+  norm_num [Matrix.neg_apply, Matrix.one_apply, base] at hr
 
 def source_registration : Registration arena.{u,v}
     (type_of% @_root_.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.same_matrix_core.{u,v}) where
@@ -374,7 +375,7 @@ private lemma dependence : ObservationalDependence signature.{u,v} actual := by
   have hneg : StarExtension base.root base.rho (-1) := Eq.mp h h0
   have hd := hneg.1.diag_nonneg (i := fun _ => ⟨0⟩)
   have hr := (RCLike.nonneg_iff.mp hd).1
-  norm_num [Matrix.neg_apply, Matrix.one_apply] at hr
+  norm_num [Matrix.neg_apply, Matrix.one_apply, base] at hr
 
 def source_registration : Registration arena.{u,v}
     (type_of% @_root_.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.same_matrix.{u,v}) where
@@ -489,7 +490,7 @@ private lemma rejected_law : ¬ arena.{u,v}.Law rejected := by
     (base.{u,v}).root (base.{u,v}).rho (base.{u,v}).support 0
       Matrix.PosSemidef.zero zero_marginals).1
   have hd := congrArg (fun M => M (fun _ => ⟨0⟩) (fun _ => ⟨0⟩)) hz
-  norm_num [rejected, realize] at hd
+  norm_num [rejected, realize, base, Matrix.one_apply, Matrix.zero_apply] at hd
 
 private lemma dependence : ObservationalDependence signature.{u,v} actual := by
   intro i
@@ -503,7 +504,7 @@ private lemma dependence : ObservationalDependence signature.{u,v} actual := by
     simpa only [actual, realize, mul_zero, zero_mul, mul_one, P_idempotent] using h
   have hd := congrArg (fun M => (M *ᵥ (fun _ => (1 : ℂ))) (fun _ => ⟨0⟩)) hm
   rw [Matrix.zero_mulVec, hp] at hd
-  norm_num at hd
+  norm_num [Pi.zero_apply] at hd
 
 def source_registration : Registration arena.{u,v}
     (type_of% @_root_.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.support_of_bose_root_marginals.{u,v}) where
