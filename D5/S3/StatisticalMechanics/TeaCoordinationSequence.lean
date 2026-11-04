@@ -7,9 +7,11 @@
    digest: Barker's coordination sequence formula for the tea uniform tiling. -/
 
 import D5.S3.Combinatorics.PositionSets.VertexPositionRatioRefutation
+import D5.S3.VertexAlgebra.LatticeHalfFockVirasoroSpectrum
 import Mathlib.Algebra.BigOperators.Group.Finset.Interval
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Order.SuccPred.Int
 
 /-! The exact graph metric and coordination sequence of the tea slab graph. -/
 
@@ -413,21 +415,22 @@ private lemma hexagon_mem (p q i j : ℤ) :
 
 private lemma twice_sum_interval (a b : ℤ) :
     2 * (∑ i ∈ Finset.Icc a b, i) = (a + b) * (Finset.Icc a b).card := by
-  have hs : (∑ i ∈ Finset.Icc a b, i) = ∑ i ∈ Finset.Icc a b, (a + b - i) := by
-    apply Finset.sum_bij (fun i _ => a + b - i)
-    · intro i hi
-      have hi' := Finset.mem_Icc.mp hi
-      exact Finset.mem_Icc.mpr ⟨by omega, by omega⟩
-    · intro i hi j hj he
-      omega
-    · intro j hj
-      have hj' := Finset.mem_Icc.mp hj
-      exact ⟨a + b - j, Finset.mem_Icc.mpr ⟨by omega, by omega⟩, by omega⟩
-    · intro i hi
-      omega
-  rw [Finset.sum_sub_distrib, Finset.sum_const] at hs
-  simp only [nsmul_eq_mul] at hs
-  nlinarith
+  by_cases hab : a ≤ b
+  · have h := D5.S3.VertexAlgebra.LatticeHalfFockBoundary.sum_Ico_id a (b + 1) (by omega)
+    rw [Finset.Ico_add_one_right_eq_Icc] at h
+    have hcard := Int.card_Icc_of_le a b (by omega)
+    have hcardC : ((Finset.Icc a b).card : ℂ) = (b : ℂ) + 1 - a := by
+      exact_mod_cast hcard
+    have hh : (2 : ℂ) * (∑ i ∈ Finset.Icc a b, (i : ℂ)) =
+        ((a : ℂ) + b) * ((Finset.Icc a b).card : ℂ) := by
+      push_cast at h
+      rw [hcardC, h]
+      ring
+    apply Int.cast_injective (α := ℂ)
+    push_cast
+    exact hh
+  · rw [Finset.Icc_eq_empty_of_lt (by omega)]
+    simp only [Finset.sum_empty, Finset.card_empty, Nat.cast_zero, mul_zero]
 
 private lemma hexagon_card (p q : ℤ) (hp : 0 ≤ p) (hq : 0 ≤ q) :
     2 * ((hexagon p q).card : ℤ) = p^2 + 4*p*q + q^2 + 3*p + 3*q + 2 := by
@@ -442,11 +445,8 @@ private lemma hexagon_card (p q : ℤ) (hp : 0 ≤ p) (hq : 0 ≤ q) :
       rw [Finset.mem_Icc]
       dsimp only
       omega
-    · rintro ⟨i, j⟩ hi ⟨a, b⟩ hj he
-      have hi := congrArg (fun z : Σ _ : ℤ, ℤ => z.1) he
-      have hj := congrArg (fun z : Σ _ : ℤ, ℤ => z.2) he
-      dsimp only at hi hj
-      subst a; subst b; rfl
+    · intro z hz w hw he
+      exact (Equiv.sigmaEquivProd ℤ ℤ).symm.injective he
     · rintro ⟨i, j⟩ hz
       obtain ⟨hi, hj⟩ := Finset.mem_sigma.mp hz
       change i ∈ Finset.Icc (-q) p at hi
@@ -456,16 +456,15 @@ private lemma hexagon_card (p q : ℤ) (hp : 0 ≤ p) (hq : 0 ≤ q) :
       refine ⟨(i, j), (hexagon_mem p q i j).mpr ?_, rfl⟩
       omega
   rw [Finset.card_sigma] at hc
+  have hneg : Finset.Ico (-q) 0 = Finset.Icc (-q) (-1) := by
+    simpa only [neg_add_cancel] using (Finset.Ico_add_one_right_eq_Icc (-q) (-1))
   have hu : Finset.Icc (-q) p = Finset.Icc (-q) (-1) ∪ Finset.Icc 0 p := by
-    ext i
-    simp only [Finset.mem_union, Finset.mem_Icc]
-    omega
+    simpa only [hneg, Finset.Ico_add_one_right_eq_Icc] using
+      (Finset.Ico_union_Ico_eq_Ico (a := -q) (b := 0) (c := p + 1)
+        (by omega) (by omega)).symm
   have hd : Disjoint (Finset.Icc (-q) (-1)) (Finset.Icc (0 : ℤ) p) := by
-    rw [Finset.disjoint_left]
-    intro i hi hj
-    have hi' := Finset.mem_Icc.mp hi
-    have hj' := Finset.mem_Icc.mp hj
-    omega
+    simpa only [hneg, Finset.Ico_add_one_right_eq_Icc] using
+      (Finset.Ico_disjoint_Ico_consecutive (-q) 0 (p + 1))
   have hs : ((hexagon p q).card : ℤ) =
       ∑ i ∈ Finset.Icc (-q) (-1), (p + q + 1 + i) +
       ∑ i ∈ Finset.Icc 0 p, (p + q + 1 - i) := by
@@ -535,14 +534,9 @@ private lemma layer_sum (n : ℕ) :
   let t := (Finset.Icc (-(n : ℤ)) n).sigma
     (fun k => regionShell (plusSlabs k) (minusSlabs k) (n - k.natAbs))
   let f : (Σ _ : ℤ, ℤ × ℤ) → ℤ × ℤ × ℤ := fun z => (z.2.1, z.2.2, z.1)
-  have hf : Function.Injective f := by
-    rintro ⟨k, i, j⟩ ⟨l, a, b⟩ he
-    change (i, j, k) = (a, b, l) at he
-    have hi := congrArg (fun z : ℤ × ℤ × ℤ => z.1) he
-    have hj := congrArg (fun z : ℤ × ℤ × ℤ => z.2.1) he
-    have hk := congrArg (fun z : ℤ × ℤ × ℤ => z.2.2) he
-    dsimp only at hi hj hk
-    subst a; subst b; subst l; rfl
+  have hf : Function.Injective f :=
+    ((Equiv.sigmaEquivProd ℤ (ℤ × ℤ)).trans
+      ((Equiv.prodComm ℤ (ℤ × ℤ)).trans (Equiv.prodAssoc ℤ ℤ ℤ))).injective
   have hs : {v | teaGraph.dist (0, 0, 0) v = n} = (↑(t.image f) : Set _) := by
     ext v
     rcases v with ⟨i, j, k⟩
@@ -651,10 +645,9 @@ private lemma weighted_layer_sum (n : ℕ) (hn : 0 < n) :
     ← Finset.mul_sum, hzero] at hsum
   simp only [Finset.card_range, nsmul_eq_mul] at hsum
   have hgauss : 2 * (∑ m ∈ Finset.range n, (m : ℤ)) = (n : ℤ) * (n - 1) := by
-    have hg := congrArg (fun t : ℕ => (t : ℤ)) (Finset.sum_range_id_mul_two n)
-    push_cast at hg
-    rw [Nat.cast_sub (by omega), Nat.cast_one] at hg
-    nlinarith only [hg]
+    simpa only [Nat.cast_mul, Nat.cast_sum, Nat.cast_ofNat,
+      Nat.cast_sub (Nat.one_le_of_lt hn), Nat.cast_one, mul_comm] using
+      congrArg (fun t : ℕ => (t : ℤ)) (Finset.sum_range_id_mul_two n)
   have hmain : 2 * (∑ k ∈ Finset.Icc (-(n : ℤ)) n, f k) = 15*(n : ℤ)^2 + Q + 4 := by
     nlinarith only [hsum, hend, hgauss]
   have hw : 8 * (w : ℤ) = 60*(n : ℤ)^2 + 4*Q + 16 := by
