@@ -1,0 +1,11 @@
+**定义 56.1（数学引文及归属）。** 以下标签按稳定原始来源定位；引用只承担所列数学中间结果。
+
+| 引文 | 数学条目与使用范围 |
+| --- | --- |
+| [C127]：本卷 [固定原文](https://github.com/the-omega-institute/trureturing/blob/f7ba557ae2a5d2c3a3a519e0713d65ac86af2973/docs/develop/theory/AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md)，blob 69e151f75f2b5dceddd99e8f0d88344aa4ed874d | 定义 1.1、假设 1.2–1.3、2.1–2.3、2.6、定义 10.1–10.2、29.1–29.3、35.1–35.3 固定原签名、背景、同记录范围和原返回；命题 5.1、定义 6.5–6.6、命题 13.1、定理 33.1 给普通迹 tagged-CP 满足族、有限语言及具名伪逆返回。命题 11.1–11.3、定理 12.1、命题 12.2、15.1、定理 30.1、31.1、36.1–36.2 和 §39 仅用于结构、运输、平方根词与其准确条件消费者。 |
+| [C114/118]：[固定原文](https://github.com/the-omega-institute/trureturing/blob/8d60c742f1ad8ffa85ab5d190dc921985f5bcc03/docs/develop/theory/AURIC_COMPOSITE_COMPARISON_REFERENCE_FREE_FILTER_RELATIONS_V96_CONTINUATION.md)，blob f7f1ed3f636b3dbb8f85545099f72e181d942013 | 定义 120.1–120.2、定理 121.1–121.2、命题 121.3、定理 122.1、定义 140.1：支持正常形、一组三量锁定整条返回细支及同一实际 F 到全菜单 CP。定理 143.1 只用于区分“可选择相容取向”与原 D 已固定时的 CP。 |
+| Chruściński–Kossakowski，*On partially entanglement breaking channels*，[arXiv:quant-ph/0511244v1](https://arxiv.org/abs/quant-ph/0511244v1)，§2 式 (8)–(11)、Theorem 1 | 成熟的 Kraus 秩界、向量化与 Choi Schmidt 数对应；定理 50.2 只把所需秩一正矩阵论证嵌入具体反模型证明，对次归一事件不挪用 TP 前件。 |
+| Mori，*Order isomorphisms of operator intervals in von Neumann algebras*，[arXiv:1811.01647v2](https://arxiv.org/html/1811.01647v2)，Theorem 1.1 | [C114/118] 定理 121.1 已归属的 Kadison 幺线性序同构及有限因子分类中间工具；不作为新的正常形结论。 |
+
+标准结构链、$\Theta/\chi$ 换算、支撑正规形、F 到 CP、Kraus/Choi 通用工具均沿上述归属使用。新增承重内容是定义 47.1–49.2 的完整实际供应构造、其全部合法历史闭包以及定理 50.2、51.1 的同设备充分实际参考分离；这不包含穷尽文献或原创优先权断言。
+
