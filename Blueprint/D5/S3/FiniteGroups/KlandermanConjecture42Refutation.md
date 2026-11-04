@@ -40,6 +40,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/KlandermanConjecture42Refutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/klanderman-2025-conjecture-4-2` (refuted) by `D5/S3/FiniteGroups/KlandermanConjecture42Refutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"klanderman-2025-conjecture-4-2","declaration_gid":"D5/S3/FiniteGroups/KlandermanConjecture42Refutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Sarah Klanderman, Chloe Lewis, Harlea Monson, Koki Shibata and Danika Van Niel (2025). *Characterizing Transfer Systems for Non-Abelian Groups*. DOI: [10.48550/arXiv.2511.13439](https://doi.org/10.48550/arXiv.2511.13439). URL: <https://arxiv.org/abs/2511.13439v2>.
