@@ -6,7 +6,7 @@ On Q8, ordinary generation after adding the bottom-to-top arrow fails the compat
 
 **Definition 1.1 (The full universal conjecture).**
 
-$$\operatorname{claim} : \operatorname{Prop} = \forall (G : \operatorname{Type}) [\operatorname{Group}\left(G\right)] [\operatorname{Finite}\left(G\right)] , (\forall T : \operatorname{TransferSystem}\left(G\right), ((\operatorname{TwoComponents}\left(T\right)) \Rightarrow ((\operatorname{TopIsolated}\left(T\right)) \Rightarrow ((\neg \operatorname{LesserSimplyPaired}\left(T\right)) \land (\operatorname{Compatible}\left(T, \operatorname{generated}\left(T\right)\right))))))$$
+$$(\operatorname{claim} : \operatorname{Prop}) = \forall (G : \operatorname{Type}) [\operatorname{Group}\left(G\right)] [\operatorname{Finite}\left(G\right)] , (\forall T : \operatorname{TransferSystem}\left(G\right), ((\operatorname{TwoComponents}\left(T\right)) \Rightarrow ((\operatorname{TopIsolated}\left(T\right)) \Rightarrow ((\neg \operatorname{LesserSimplyPaired}\left(T\right)) \land (\operatorname{Compatible}\left(T, \operatorname{generated}\left(T\right)\right))))))$$
 
 *Formalization.* `D5/S3/FiniteGroups/KlandermanConjecture42Refutation.claim` (`✓ std3`).
 
