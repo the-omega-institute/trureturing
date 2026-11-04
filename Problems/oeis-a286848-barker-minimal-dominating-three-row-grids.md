@@ -72,7 +72,9 @@ full-state count with both open ends, the complete full-state count to a weighte
 quotient orbit, and that orbit to every coefficient of the literal rational
 expression. Finite agreement, rationality alone and an eventual recurrence omit
 parts of this question. The four Lean modules establish these bridges without
-assuming any count identity.
+assuming any count identity. The actual-subset helpers and the all-length
+`runWeight_iff_tests` invariant share the `Transfer` source owner; the helpers
+supply no independent characterization or first-freeze content credit.
 
 ## Route
 
@@ -124,6 +126,11 @@ Lean proofs; no experiment or external program output is a proof premise.
 
 The $31$ authored public theorem escape audits remain **unfinished** under the exact
 [target disclosure](https://github.com/the-omega-institute/trureturing/issues/22395#issuecomment-6421674861).
+The compiled inventory also includes three generated equation theorems:
+`Transfer.runWeight.eq_def`, `Transfer.fullOrbit.eq_def` and
+`Quotient.orbit.eq_def`. These are compiler-generated equations of the recursive
+definitions, rather than additional authored theorem declarations; the authored
+audit target count is $31$. No audit validation is inferred for any declaration.
 No Reg mirror or `declared_validated` claim is supplied. Missing evidence includes
 lawful source-bound enrolled-template readout/application, realization,
 source selection and reconstruction, actual-positive law, whole-family
