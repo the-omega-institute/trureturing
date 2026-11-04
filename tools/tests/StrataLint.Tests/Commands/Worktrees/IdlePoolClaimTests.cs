@@ -59,6 +59,191 @@ public sealed partial class WorktreeCommandTests
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }
 
+    [Fact]
+    public void NativePidfdDistinguishesDeadLeaderFromWholeGroupExit()
+    {
+        if (!OperatingSystem.IsLinux()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorkflowScript.Tests/Fixtures/host_cleanup_tests.py"),
+                Path.Combine(root, "tools/scripts/host-cleanup.py"),
+                "HostCleanupTests.test_native_pidfd_dead_leader_live_worker"],
+            root, TestBudgets.LongWorkflowProcessHangGuard, 1024 * 1024,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture);
+        Console.WriteLine(Encoding.UTF8.GetString(result.StandardOutput));
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Theory]
+    [InlineData(false, false)]
+    [InlineData(true, false)]
+    [InlineData(false, true)]
+    public void UnobservableIdleActivityPreservesCandidateAndOnlyImplicitlyCreatesFresh(bool exact, bool lowDisk)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        TestGit.Run(repository.Path, "update-ref", "refs/remotes/origin/dev", "HEAD");
+        var idle = Path.Combine(repository.Path, "idle");
+        var token = Guid.NewGuid().ToString("N");
+        var idleBranch = "lane/governance/idle-" + token;
+        TestGit.Run(repository.Path, "update-ref", "--create-reflog", "-m", "worktree-idle:" + token,
+            "refs/heads/" + idleBranch, "HEAD");
+        TestGit.Run(repository.Path, "worktree", "add", idle, idleBranch);
+        File.WriteAllText(Path.Combine(repository.Path, ".git", "info", "exclude"), ".lake/\n");
+        Directory.CreateDirectory(Path.Combine(idle, ".lake"));
+        File.WriteAllText(Path.Combine(idle, ".lake", "sentinel"), "cached bytes\n");
+        var metadata = GitWorktreeDirectory.Read(idle)!;
+        var preserved = new[] { Path.Combine(idle, "README.md"), Path.Combine(idle, ".git"),
+            Path.Combine(idle, ".lake", "sentinel"), Path.Combine(metadata, "HEAD"),
+            Path.Combine(metadata, "logs", "HEAD"),
+            Path.Combine(repository.Path, ".git", "refs", "heads", idleBranch),
+            Path.Combine(repository.Path, ".git", "logs", "refs", "heads", idleBranch) }
+            .ToDictionary(path => path, File.ReadAllBytes);
+        var fresh = Path.Combine(repository.Path, "fresh");
+        var arguments = new List<string> { "--kind", "math", "--name", "unobservable",
+            "--base", "dev", "--path", exact ? idle : fresh, "--skip-restore" };
+        if (!exact) arguments.Add("--prefer-idle");
+
+        var result = WorktreeCommand.Run(repository.Path, arguments, new UnobservableActivityRunner(lowDisk));
+
+        Assert.True(result.Success == (!exact && !lowDisk), result.Output + result.Error);
+        if (exact || lowDisk)
+        {
+            Assert.True(result.ExitCode == 73, result.Error);
+            Assert.Contains(lowDisk ? "WORKTREE_LOW_DISK_fixture" : "task_activity_unavailable:",
+                result.Error, StringComparison.Ordinal);
+            Assert.Equal("", TestGit.Run(repository.Path, "branch", "--list", "lane/math/unobservable"));
+        }
+        else
+        {
+            using var receipt = JsonDocument.Parse(result.Output);
+            Assert.Equal("succeeded", receipt.RootElement.GetProperty("status").GetString());
+            Assert.Equal(fresh, receipt.RootElement.GetProperty("path").GetString());
+            var refusal = Assert.Single(receipt.RootElement.GetProperty("idle_claim_refusals").EnumerateArray());
+            Assert.Equal(idle, refusal.GetProperty("path").GetString());
+            Assert.Equal("activity", refusal.GetProperty("stage").GetString());
+            Assert.StartsWith("task_activity_unavailable:", refusal.GetProperty("reason").GetString());
+            Assert.NotEqual(GitWorktreeDirectory.Read(idle), GitWorktreeDirectory.Read(fresh));
+            Assert.Equal("lane/math/unobservable", TestGit.Run(fresh, "branch", "--show-current").Trim());
+        }
+        Assert.Equal(!exact && !lowDisk, Directory.Exists(fresh));
+        Assert.Equal(idleBranch, TestGit.Run(idle, "branch", "--show-current").Trim());
+        foreach (var (path, bytes) in preserved) Assert.Equal(bytes, File.ReadAllBytes(path));
+    }
+
+    [Theory]
+    [InlineData("disk")]
+    [InlineData("preflight")]
+    [InlineData("checkout")]
+    [InlineData("reused")]
+    [InlineData("recovery-refused")]
+    public void ImplicitFallbackTerminalReceiptsRetainExactRefusals(string failure)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var repository = new TemporaryDirectory();
+        using var executables = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        var source = TestGit.Run(repository.Path, "rev-parse", "--show-toplevel").Trim();
+        TestGit.Run(source, "update-ref", "refs/remotes/origin/dev", "HEAD");
+        var idle = Path.Combine(source, "idle");
+        var token = Guid.NewGuid().ToString("N");
+        var idleBranch = "lane/governance/idle-" + token;
+        TestGit.Run(source, "update-ref", "--create-reflog", "-m", "worktree-idle:" + token,
+            "refs/heads/" + idleBranch, "HEAD");
+        TestGit.Run(source, "worktree", "add", idle, idleBranch);
+        File.WriteAllText(Path.Combine(source, ".git", "info", "exclude"), ".lake/\n");
+        Directory.CreateDirectory(Path.Combine(idle, ".lake"));
+        File.WriteAllText(Path.Combine(idle, ".lake", "sentinel"), "cached bytes\n");
+        var metadata = GitWorktreeDirectory.Read(idle)!;
+        var preserved = new[] { Path.Combine(idle, "README.md"), Path.Combine(idle, ".git"),
+            Path.Combine(idle, ".lake", "sentinel"), Path.Combine(metadata, "HEAD"),
+            Path.Combine(metadata, "logs", "HEAD"),
+            Path.Combine(source, ".git", "refs", "heads", idleBranch),
+            Path.Combine(source, ".git", "logs", "refs", "heads", idleBranch) }
+            .ToDictionary(path => path, File.ReadAllBytes);
+        if (failure == "checkout")
+            WorktreeHookFixture.Install(source, "post-checkout", "echo 'fixture checkout failed' >&2\nexit 37\n");
+        var python = TestProcessRunner.Run("python3", ["-I", "-c", "import sys; print(sys.executable)"],
+            source, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+        Assert.Equal(0, python.ExitCode);
+        var shim = Path.Combine(executables.Path, "python3");
+        File.WriteAllText(shim, "#!" + Encoding.UTF8.GetString(python.StandardOutput).Trim() + "\n" + """
+            import os, subprocess, sys
+            from pathlib import Path
+            arguments = sys.argv[1:]
+            while arguments[0].startswith('-'):
+                arguments.pop(0)
+            sys.argv = arguments
+            __file__ = arguments[0]
+            program = Path(__file__).read_text()
+            outcome = os.environ['WORKTREE_TEST_OUTCOME']
+            if 'claim' in arguments:
+                entry = "sys.exit(sys.modules['worktree_protocol'].main())"
+                fault = "def unavailable(*a, **kw):\n    raise PermissionError('fixture activity unavailable')\n"
+                fault += "sys.modules['worktree_pool'].host_cleanup().active_paths = unavailable\n"
+                # Let the claim return no_idle; the deferred fresh disk gate is a separate call.
+                fault += "sys.modules['worktree_pool'].host_cleanup().check_disk = lambda *a: []\n"
+                tail = "code = sys.modules['worktree_protocol'].main()\n"
+                if outcome in ('reused', 'recovery-refused'):
+                    subprocess_args = ['git', 'worktree', 'add', '-b', 'lane/math/terminal',
+                                       os.environ['WORKTREE_TEST_FRESH'], 'HEAD']
+                    tail += "import subprocess\nsubprocess.run(" + repr(subprocess_args) + ", check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)\n"
+                    if outcome == 'recovery-refused':
+                        tail += "from pathlib import Path\nPath(" + repr(os.environ['WORKTREE_TEST_FRESH']) + ", 'lean-toolchain').write_text('wrong pin\\n')\n"
+                elif outcome == 'preflight':
+                    tail += "from pathlib import Path\nPath(" + repr(os.environ['WORKTREE_TEST_FRESH']) + ").write_text('occupied destination')\n"
+                assert program.count(entry) == 1
+                program = program.replace(entry, fault + tail + 'sys.exit(code)')
+            elif 'check-disk' in arguments:
+                entry = "sys.exit(sys.modules['worktree_host_cleanup'].main())"
+                if outcome == 'disk':
+                    fault = "def disk(*a):\n    raise sys.modules['worktree_host_cleanup'].LowDiskSpace('WORKTREE_LOW_DISK_fixture')\n"
+                else:
+                    fault = "def disk(*a):\n    return []\n"
+                fault += "sys.modules['worktree_host_cleanup'].check_disk = disk\n"
+                assert program.count(entry) == 1
+                program = program.replace(entry, fault + entry)
+            exec(compile(program, __file__, 'exec'))
+            """ + "\n");
+        File.SetUnixFileMode(shim, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        var fresh = Path.Combine(source, "fresh");
+        var result = TestProcessRunner.Run("env", ["WORKTREE_REQUIRE_DISK_CHECK=1",
+            "WORKTREE_TEST_OUTCOME=" + failure, "WORKTREE_TEST_FRESH=" + fresh,
+            "PATH=" + executables.Path + Path.PathSeparator + Environment.GetEnvironmentVariable("PATH"),
+            "dotnet", typeof(WorktreeCommand).Assembly.Location, "worktree", "--source", source,
+            "--kind", "math", "--name", "terminal", "--base", "dev", "--path", fresh,
+            "--prefer-idle", "--skip-restore"], source,
+            TestBudgets.ProtocolProbeHangGuard, 1024 * 1024);
+        var stdout = Encoding.UTF8.GetString(result.StandardOutput);
+        var stderr = Encoding.UTF8.GetString(result.StandardError);
+        var expectedExitCode = failure switch { "reused" => 0, "disk" or "recovery-refused" => 73, _ => 2 };
+        Assert.True(result.ExitCode == expectedExitCode, $"exit={result.ExitCode}, expected={expectedExitCode}\n" + stdout + stderr);
+        if (failure == "disk") Assert.StartsWith("WORKTREE_LOW_DISK_fixture\n", stderr);
+        var serialized = failure == "reused" ? stdout
+            : Assert.Single(stderr.Split('\n'), line => line.StartsWith("WORKTREE_FAILED ", StringComparison.Ordinal))["WORKTREE_FAILED ".Length..];
+        using var receipt = JsonDocument.Parse(serialized);
+        var root = receipt.RootElement;
+        Assert.Equal(failure == "reused" ? "reused" : "failed", root.GetProperty("status").GetString());
+        Assert.Equal(fresh, root.GetProperty("path").GetString());
+        if (failure != "reused")
+            Assert.Equal(failure == "recovery-refused" ? "recovery" : failure, root.GetProperty("stage").GetString());
+        var refusal = Assert.Single(root.GetProperty("idle_claim_refusals").EnumerateArray());
+        Assert.Equal(idle, refusal.GetProperty("path").GetString());
+        Assert.Equal("activity", refusal.GetProperty("stage").GetString());
+        Assert.Equal("task_activity_unavailable:fixture activity unavailable", refusal.GetProperty("reason").GetString());
+        var allocated = failure is "checkout" or "reused" or "recovery-refused";
+        Assert.Equal(allocated, Directory.Exists(fresh));
+        Assert.Equal(allocated ? "lane/math/terminal" : "",
+            TestGit.Run(source, "branch", "--list", "lane/math/terminal").Trim().TrimStart('+', '*').Trim());
+        Assert.Equal(allocated ? 3 : 2, TestGit.Run(source, "worktree", "list", "--porcelain")
+            .Split('\n').Count(line => line.StartsWith("worktree ", StringComparison.Ordinal)));
+        Assert.Equal(idleBranch, TestGit.Run(idle, "branch", "--show-current").Trim());
+        foreach (var (path, bytes) in preserved) Assert.Equal(bytes, File.ReadAllBytes(path));
+    }
+
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
@@ -360,6 +545,36 @@ public sealed partial class WorktreeCommandTests
             var fixture = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "tests",
                 "StrataLint.WorktreeContract.Tests", "Fixtures", "activity_fixture.py");
             return inner.Run(fileName, ["-I", "-B", fixture, "--", .. arguments], workingDirectory, budget);
+        }
+    }
+
+    private sealed class UnobservableActivityRunner(bool lowDisk) : IWorktreeProcessRunner
+    {
+        private readonly ProductionWorktreeProcessRunner inner = new ProductionWorktreeProcessRunner()
+            .WithEnvironment(new Dictionary<string, string> { ["WORKTREE_REQUIRE_DISK_CHECK"] = "1" });
+
+        public ProcessOutput Run(string fileName, IReadOnlyList<string> arguments,
+            string workingDirectory, TimeSpan budget)
+        {
+            if (fileName != "python3" || !arguments.Contains("claim"))
+                return inner.Run(fileName, arguments, workingDirectory, budget);
+            const string inject = """
+                import sys
+                from pathlib import Path
+                program = Path(sys.argv[1]).read_text()
+                sys.argv = sys.argv[1:]
+                __file__ = sys.argv[0]
+                entry = "sys.exit(sys.modules['worktree_protocol'].main())"
+                fault = "def unavailable(*args, **kwargs):\n    raise PermissionError('fixture activity unavailable')\n"
+                fault += "sys.modules['worktree_pool'].host_cleanup().active_paths = unavailable\n"
+                if sys.argv.pop(1) == 'low-disk':
+                    fault += "def disk(*args):\n    raise sys.modules['worktree_pool'].host_cleanup().LowDiskSpace('WORKTREE_LOW_DISK_fixture')\n"
+                    fault += "sys.modules['worktree_pool'].host_cleanup().check_disk = disk\n"
+                assert program.count(entry) == 1
+                exec(compile(program.replace(entry, fault + entry), sys.argv[0], 'exec'))
+                """;
+            return inner.Run(fileName, ["-I", "-B", "-c", inject, arguments[2],
+                lowDisk ? "low-disk" : "normal", .. arguments.Skip(3)], workingDirectory, budget);
         }
     }
 
