@@ -82,9 +82,11 @@ Existing `IntegralEGFComposition.eCoeff_composition` and `eCoeff_exp`
 identify the normalized outer coefficients with integral composition.
 `composition_map` transports the integral sequence to $\mathrm{ZMod}(6)$,
 and the original private `QuarticEGFModFour.composition_identity_right`
-evaluates the identity substitution. The original private
-`BourasA363347PrimeMultiplicity.pow_dvd_factorial_mul` supplies the
-positive-index power divisibility. Neither frozen supplier is modified or exposed.
+evaluates the identity substitution. For $m\ge2$, positive-index power
+divisibility follows from the stronger local mod-six divisibility; $m=1$ is
+immediate. The product-factorial step uses the pinned Mathlib theorem
+`Nat.prod_factorial_dvd_factorial_sum`. The frozen composition supplier is
+used without modification or exposure.
 The result is one at every natural index, including zero; integer divisibility
 then supplies $k$ and the exact rational equality.
 No homomorphism from $\mathbb Q$ to $\mathrm{ZMod}(6)$ is used.
@@ -99,7 +101,7 @@ excludes both within the stated rational formal-power-series interpretation.
 
 The mathematical source is
 `D5/S1/Recurrence/Residue/HannaA226838Congruence.lean`, SHA-256
-`f2ac2cf3b8bc55e119e327ada2a1515733e8034650e1b4806a0bb3bd68a06424`.
+`7fc9391bac1fdbd24cbaf003367a4882abd50f3a49c03508be1ea55483ea9834`.
 Its result statement identity is
 `sha256:2a860207ee9913dd8379d7b22c17e7adba350bbb21e6b50e386b7dc2f3a397d1`.
 The source and all accepted dependencies use only `Classical.choice`,
