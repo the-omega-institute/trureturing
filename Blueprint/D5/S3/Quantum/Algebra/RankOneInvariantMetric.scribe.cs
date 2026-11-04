@@ -45,7 +45,7 @@ internal sealed class RankOneInvariantMetricDocument : IScribeDocumentDefinition
             a, Neq, D(0), Sp, Land, Sp,
             Open, Forall, Sp, z, Colon, k, Comma, Esc,
                 Bracket(a,z), Eq, D(0), Sp, Rightarrow, Sp,
-                Exists, Sp, c, Colon, real, Comma, Esc, z, Eq, c, Cdot, a, Close,
+                Exists, Sp, c, Colon, real, Comma, Esc, z, Eq, c, Cdot, Sp, a, Close,
             Sp, Rightarrow, Sp, dim, Eq, D(1), Sp, Lor, Sp, dim, Eq, D(3)));
     }
 }
