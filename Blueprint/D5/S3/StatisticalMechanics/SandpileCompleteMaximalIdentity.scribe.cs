@@ -11,7 +11,7 @@ internal sealed class SandpileCompleteMaximalIdentityDocument : IScribeDocumentD
         LibraryNoteRef.Create("D5/L/StatisticalMechanics/gaoli2020sandpileidentity");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The maximal stable configuration lies in the reduced integer Laplacian image at every sink of a clique–path product exactly for K_4 square P_2.",
+        "For i,j at least two, the maximal stable configuration lies in the reduced integer Laplacian image at every sink of K_i square P_j exactly for K_4 square P_2.",
         H("Complete maximal identity for clique–path products"),
         Blocks(
             Describe.Lean(
@@ -84,8 +84,10 @@ internal sealed class SandpileCompleteMaximalIdentityDocument : IScribeDocumentD
                         + "(i+1)x(j−1)−x(j−2)=i u_j x(0). Compare this with the sink equation and cancel "
                         + "the nonzero integer i. The integer −x(0) then shows u_j divides ij−2.")),
                     Paragraph(Text(
-                        "Induction on n using the Chebyshev recurrence shows (S ℤ n).eval(i+2)≥1 and "
-                        + "(S ℤ (n+1)).eval(i+2)−(S ℤ n).eval(i+2)>i. At j=3, "
+                        "Cast a_n=(S ℤ n).eval(i+2) to the rationals. The second order recurrence growth theorem "
+                        + "with coefficient i+2 makes a_n positive and increasing. Its differences d_n=a_(n+1)−a_n "
+                        + "satisfy the same recurrence; applying the theorem again shows they increase from d_0=i+1. "
+                        + "Hence d_n>i, and a_(n+2)−in is nondecreasing. At j=3, "
                         + "u_j=i²+4i+3>3i−2; the increment bound extends u_j>ij−2 to every j≥3. "
                         + "Since ij−2 is positive, it cannot be divisible by this larger positive integer. "
                         + "For j=2, the divisibility becomes i+2 dividing 2i−2. Subtracting this from "

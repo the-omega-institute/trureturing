@@ -9,6 +9,7 @@
 import Mathlib.Combinatorics.SimpleGraph.LapMatrix
 import D5.S3.Combinatorics.SpectralGraph.TwinFreeThetaRecurrence
 import D5.S3.Combinatorics.Graph.Domination.LeeLiuThreeRowIntegerDomination
+import D5.S3.Factorization.BoninShadowMarkoffPositivity
 
 /-! The complete maximal identity property for Cartesian products of cliques and paths. -/
 
@@ -264,31 +265,57 @@ private lemma identity_divisibility (i j : ℕ) (hi : 2 ≤ i) (hj : 2 ≤ j)
 
 private lemma continuant_growth (i j : ℕ) (hi : 2 ≤ i) (hj : 3 ≤ j) :
     (i : ℤ) * j - 2 < (Polynomial.Chebyshev.S ℤ ((j : ℤ) - 1)).eval (i + 2 : ℤ) := by
-  have hi' : (2 : ℤ) ≤ i := Int.ofNat_le.mpr hi
-  have hg : ∀ n : ℕ, 1 ≤ (S ℤ (n : ℤ)).eval (i + 2 : ℤ) ∧
-      (i : ℤ) < (S ℤ ((n : ℤ) + 1)).eval (i + 2 : ℤ) -
-        (S ℤ (n : ℤ)).eval (i + 2 : ℤ) := by
+  have hi' : (2 : ℚ) ≤ i := by exact_mod_cast hi
+  let a : ℕ → ℚ := fun n => (((S ℤ (n : ℤ)).eval (i + 2 : ℤ) : ℤ) : ℚ)
+  have h0 : a 0 = 1 := by simp [a]
+  have h1 : a 1 = (i : ℚ) + 2 := by simp [a]
+  have hr : ∀ n, a (n + 2) = ((i : ℚ) + 2) * a (n + 1) - a n := by
     intro n
-    induction n with
-    | zero => simp; omega
-    | succ n hn =>
-      have hs := congrArg (Polynomial.eval (i + 2 : ℤ)) (S_add_two ℤ (n : ℤ))
-      simp only [eval_sub, eval_mul, eval_X] at hs
-      push_cast
-      rw [show (n : ℤ) + 1 + 1 = (n : ℤ) + 2 from add_assoc (n : ℤ) 1 1]
-      constructor <;> nlinarith [hn.1, hn.2]
+    have hs := congrArg (Polynomial.eval (i + 2 : ℤ)) (S_add_two ℤ (n : ℤ))
+    simp only [eval_sub, eval_mul, eval_X] at hs
+    dsimp [a]
+    push_cast
+    exact_mod_cast hs
+  have ha := D5.S3.Factorization.BoninShadowMarkoffPositivity.real_recurrence_growth
+    a ((i : ℚ) + 2) (by linarith) (by rw [h0]; norm_num)
+    (by rw [h0, h1]; linarith) (by rw [h0, h1]; simp) hr
+  let d : ℕ → ℚ := fun n => a (n + 1) - a n
+  have hd0 : d 0 = (i : ℚ) + 1 := by dsimp [d]; rw [h0, h1]; ring
+  have hd := D5.S3.Factorization.BoninShadowMarkoffPositivity.real_recurrence_growth
+    d ((i : ℚ) + 2) (by linarith) (by rw [hd0]; linarith)
+    (by
+      have hp := mul_pos (show (0 : ℚ) < i by linarith) (ha 1).1
+      dsimp [d]
+      rw [hr 0]
+      nlinarith)
+    (by dsimp [d]; rw [hr 0, h0, h1]; nlinarith)
+    (by
+      intro n
+      dsimp [d]
+      linear_combination (hr (n + 1)) - (hr n))
+  have hdm : Monotone d := monotone_nat_of_le_succ fun n => (hd n).2.1.le
+  have hbound (n : ℕ) : (i : ℚ) < d n := by
+    have := hdm (Nat.zero_le n)
+    rw [hd0] at this
+    linarith
+  have hb : Monotone (fun n : ℕ => a (n + 2) - (i : ℚ) * n) := by
+    apply monotone_nat_of_le_succ
+    intro n
+    have h := hbound (n + 2)
+    dsimp [d] at h
+    push_cast
+    linarith
   obtain ⟨n, rfl⟩ := Nat.exists_eq_add_of_le' hj
-  clear hj
-  induction n with
-  | zero =>
-    norm_num [S_two]
-    nlinarith
-  | succ n hn =>
-    have hs := (hg (n + 2)).2
-    push_cast at hn hs ⊢
-    rw [show (n : ℤ) + 1 + 3 - 1 = (n : ℤ) + 2 + 1 by ring]
-    rw [show (n : ℤ) + 3 - 1 = (n : ℤ) + 2 from add_sub_assoc (n : ℤ) 3 1] at hn
-    nlinarith
+  have hbase := hr 0
+  rw [h0, h1] at hbase
+  have hm := hb (Nat.zero_le n)
+  have hfinal : (i : ℚ) * (n + 3) - 2 < a (n + 2) := by
+    push_cast at hm ⊢
+    nlinarith [sq_nonneg (i : ℚ)]
+  dsimp [a] at hfinal
+  push_cast at hfinal ⊢
+  rw [show (n : ℤ) + 3 - 1 = (n : ℤ) + 2 by ring]
+  exact_mod_cast hfinal
 
 private lemma divisibility_classification (i j : ℕ) (hi : 2 ≤ i) (hj : 2 ≤ j)
     (h : (Polynomial.Chebyshev.S ℤ ((j : ℤ) - 1)).eval (i + 2 : ℤ) ∣ (i : ℤ) * j - 2) :
