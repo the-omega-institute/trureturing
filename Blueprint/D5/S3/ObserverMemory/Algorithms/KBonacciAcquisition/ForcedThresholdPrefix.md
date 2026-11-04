@@ -1,8 +1,8 @@
-# Forced arbitrary tail thresholds
+# Forced thresholds and actual common branches
 
 ## Abstract
 
-An immutable INITIAL tail threshold forces the first zero of every correct literal root.
+Actual adaptive selectors preserve one coherent first-tour zero archive for arbitrary blind bands.
 
 **Definition 1.1 (Immutable threshold and blind band).**
 
@@ -32,10 +32,55 @@ Only outside != rejected is needed for this root clause. At phase zero, choose t
 
 The remaining suffix is unrestricted and the complete block has m<k bits. The first-zero execution law therefore rejects exactly s>=k-a. All lower INITIAL tails have the same terminal tail tailAfter(0,B), while scalar and phase follow the original executor. These are complete endpoint readings; the internal zero grants no intermediate observation. There is no logarithmic guard or restriction on repeated band labels.
 
-This statement establishes the root clause of the forced-prefix theorem. It does not assert the common first-tour archive, the parity obstruction, an attaining scan, exact surviving phase support, or any total cost formula.
+The root law supplies the clearing step in the common-archive theorem below. It applies the first-zero acquisition, actual-history realization and execution laws to the two INITIAL tails on opposite sides of the threshold.
+
+**Definition 1.3 (The selector's zero-reading branch).**
+
+$$\forall Y \in Type,\; \forall m \in \mathbb{N},\; \forall pi \in \operatorname{Selector}\left(m, Y\right),\; \forall v \in \operatorname{ZMod}\left(2\right),\; \operatorname{zeroArchive}\left(pi, v, 0\right) = nil \land \left(\forall t \in \mathbb{N},\; \operatorname{zeroArchive}\left(pi, v, t + 1\right) = \operatorname{append}\left(\operatorname{zeroArchive}\left(pi, v, t\right), \operatorname{list}\left((\operatorname{zeroWord}\left(pi, v, t\right),\operatorname{some}\left(v\right))\right)\right)\right)$$
+
+*Formalization.* `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/ForcedThresholdPrefix.zeroArchive` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The archive starts empty. At each stage append the literal selected word with the successful endpoint some(v). The definition supplies a dummy all-zero word if the selector stops; the theorem proves that this alternative never occurs at any first-tour action. It is a branch definition, not an assumed legal execution.
+
+**Definition 1.4 (The literal word on that branch).**
+
+$$\forall Y \in Type,\; \forall m \in \mathbb{N},\; \forall pi \in \operatorname{Selector}\left(m, Y\right),\; \forall v \in \operatorname{ZMod}\left(2\right),\; \forall t \in \mathbb{N},\; \operatorname{zeroWord}\left(pi, v, t\right) = \operatorname{selectedWord}\left(\operatorname{applySelector}\left(pi, \operatorname{some}\left(v\right), \operatorname{zeroArchive}\left(pi, v, t\right)\right)\right)$$
+
+*Formalization.* `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/ForcedThresholdPrefix.zeroWord` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+selectedWord is the constructor match: inr(B) returns B, and inl(y) returns the all-false function on Fin(m). Every occurrence refers to the same selector and the same remembered free reading.
+
+**Theorem 1.5 (The generic actual first-tour common archive).**
+
+$$\forall Y \in Type,\; \forall Q \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall a \in \mathbb{N},\; \left(\left(2 \le Q \land 3 \le a\right) \land a < m\right) \Rightarrow \left(\forall alphabet \in Bool,\; \forall labels \in \operatorname{ZMod}\left(Q \cdot m + 1\right) \to Y,\; \forall outside \in Y,\; \forall rejected \in Y,\; \forall bottom \in Y,\; \left(\neg outside = rejected\right) \Rightarrow \left(\left(\exists p \in \operatorname{ZMod}\left(Q \cdot m + 1\right),\; \exists q \in \operatorname{ZMod}\left(Q \cdot m + 1\right),\; \left(\left(0 < \operatorname{val}\left(p\right) \land \operatorname{val}\left(p\right) < a\right) \land \left(0 < \operatorname{val}\left(q\right) \land \operatorname{val}\left(q\right) < a\right)\right) \land \left(\neg labels\left(p\right) = labels\left(q\right)\right)\right) \Rightarrow \left(\forall v \in \operatorname{ZMod}\left(2\right),\; \forall pi \in \operatorname{Selector}\left(m, Y\right),\; \left(\forall history \in \operatorname{List}\left(\operatorname{AllowedBlock}\left(Q \cdot m, m, alphabet\right)\right),\; \operatorname{output}\left(Q \cdot m, \operatorname{flattenHistory}\left(history\right)\right) = \operatorname{some}\left(v\right) \Rightarrow \left(\exists budget \in \mathbb{N},\; \exists c \in \mathbb{N},\; \operatorname{execute}\left(Q \cdot m, pi, budget, \operatorname{flattenHistory}\left(history\right), \operatorname{some}\left(v\right), nil\right) = \operatorname{some}\left((\operatorname{initialLabel}\left(Q \cdot m, a, labels, outside, rejected, bottom\right)\left(\operatorname{OriginalRecord}\left(Q \cdot m, \operatorname{flattenHistory}\left(history\right)\right)\right),c)\right)\right)\right) \Rightarrow \left(\left(\left(\forall t \in \mathbb{N},\; t < Q \Rightarrow \operatorname{applySelector}\left(pi, \operatorname{some}\left(v\right), \operatorname{zeroArchive}\left(pi, v, t\right)\right) = \operatorname{inr}\left(\operatorname{zeroWord}\left(pi, v, t\right)\right)\right) \land \left(\forall t \in \mathbb{N},\; \forall j \in \operatorname{ZMod}\left(Q \cdot m + 1\right),\; \left(t < Q \land \left(0 < \operatorname{val}\left(j\right) \land \operatorname{val}\left(j\right) < a\right)\right) \Rightarrow \operatorname{wordIncrement}\left(Q \cdot m, -j + \operatorname{cast}\left(t \cdot m\right), \operatorname{zeroWord}\left(pi, v, t\right)\right) = 0\right)\right) \land \left(\forall t \in \mathbb{N},\; \left(1 \le t \land t \le Q\right) \Rightarrow \left(\exists tail \in \mathbb{N},\; tail < Q \cdot m \land \left(\forall j \in \operatorname{ZMod}\left(Q \cdot m + 1\right),\; \forall s \in \mathbb{N},\; s < Q \cdot m - a \Rightarrow \left(\left(\forall i \in \mathbb{N},\; i < t \Rightarrow \operatorname{wordIncrement}\left(Q \cdot m, -j + \operatorname{cast}\left(i \cdot m\right), \operatorname{zeroWord}\left(pi, v, i\right)\right) = 0\right) \Rightarrow \left(\left(\exists budget \in \mathbb{N},\; \exists c \in \mathbb{N},\; \operatorname{NativeExecute}\left(pi, budget, \operatorname{some}\left(\langle v,-j + \operatorname{cast}\left(t \cdot m\right),tail\rangle\right), \operatorname{some}\left(v\right), \operatorname{zeroArchive}\left(pi, v, t\right)\right) = \operatorname{some}\left((\operatorname{initialLabel}\left(Q \cdot m, a, labels, outside, rejected, bottom\right)\left(\operatorname{some}\left(\langle v,-j,s\rangle\right)\right),c)\right)\right) \land \left(\forall history \in \operatorname{List}\left(\operatorname{AllowedBlock}\left(Q \cdot m, m, alphabet\right)\right),\; \operatorname{OriginalRecord}\left(Q \cdot m, \operatorname{flattenHistory}\left(history\right)\right) = \operatorname{some}\left(\langle v,-j,s\rangle\right) \Rightarrow \left(\operatorname{ActualArchive}\left(Q \cdot m, \operatorname{flattenHistory}\left(history\right), \operatorname{zeroArchive}\left(pi, v, t\right)\right) \land \operatorname{OriginalRecord}\left(Q \cdot m, \operatorname{append}\left(\operatorname{flattenHistory}\left(history\right), \operatorname{archiveWords}\left(\operatorname{zeroArchive}\left(pi, v, t\right)\right)\right)\right) = \operatorname{some}\left(\langle v,-j + \operatorname{cast}\left(t \cdot m\right),tail\rangle\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/ForcedThresholdPrefix.first_tour_common_archive` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Set k=Qm. Each cast in a phase expression has codomain ZMod(k+1); all subtraction between natural numbers is truncated natural subtraction. The original target initialLabel is evaluated on the immutable INITIAL record. The same actual-history correctness premise as above permits separate terminating horizons for every history. The only band variation premise is the existence of two phases in 0<j.val<a with different labels. Other band labels can repeat and outside can occur among them. Only outside!=rejected is needed from the source's stronger separation of R from all low-tail labels. Both control alphabets and every legal inherited INITIAL tail remain included. There is no logarithmic guard.
+
+The first conjunct proves that each of the Q words really is chosen on this one archive. The second proves zero literal response at every band phase for each such word. The third quantifies one controller-dependent current tail at each paid time 1<=t<=Q. Every low INITIAL tail at every phase whose first t literal responses are zero has its own eventually correct continuation from that same current value, phase and tail. For every actual history realizing that INITIAL record, ActualArchive and the exact OriginalRecord equation hold on that very history after appending archiveWords. Outside sources are covered by this conditional statement even when their label equals a band label. Phases remain separate coordinates and are never identified.
+
+The root law clears all low INITIAL tails, with its arbitrary suffix determining the common terminal tail. Later first-tour windows miss the blind band. Induction transports the actual prefix equations and each source's separate eventual continuation. Two distinct band labels exclude stopping on the common archive. Phase-independent legality at a common tail excludes a uniformly rejecting selected block: its two eventual continuations would then start from the identical absorbing state and could not return distinct INITIAL labels. The remaining action is therefore actually legal for every zero-response source and advances the same archive. The native paid-trace law compares separate finite horizons without imposing one global budget.
+
+This proves the coherent-zero-branch clause of the source theorem. The parity equivalence, actual outside survivor, attaining scan, exact support and total costs require further arguments and are not asserted here. In the even-width odd-threshold obstruction any eventual outside survivor may depend on the policy; phase m is reserved for the canonical scan's claim.
 
 ## References
 
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/ForcedThresholdPrefix.first_tour_common_archive`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/ForcedThresholdPrefix.forced_threshold_root`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/ForcedThresholdPrefix.initialLabel`
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/ForcedThresholdPrefix.zeroArchive`
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/ForcedThresholdPrefix.zeroWord`
 - Dependency: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/TwoAdjacentLowTailLabels](TwoAdjacentLowTailLabels.md)

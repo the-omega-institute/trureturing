@@ -56,7 +56,7 @@ internal sealed class TwoAdjacentLowTailLabelsDocument : IScribeDocumentDefiniti
     {
         var q=F.Id("Q"); var m=F.Id("m"); var t=F.Id("t"); var j=F.Id("j"); var b=F.Id("B");
         var left=Rel(j,Lt,Multiply(t,m)); var right=Rel(Multiply(Add(t,D(1)),m),Lt,j);
-        var off=new Formula.Logic(left,FormulaLogicOperator.Or,right);
+        var off=Seq(Open,new Formula.Logic(left,FormulaLogicOperator.Or,right),Close);
         var phase=Add(Seq(Minus,Call("cast",j)),Call("cast",Multiply(t,m)));
         return All(q,NatType(),All(m,NatType(),All(t,NatType(),All(j,NatType(),
             Imp(And(Rel(D(2),Leq,q),And(Rel(D(4),Leq,m),And(Rel(t,Lt,q),And(Rel(j,Leq,Multiply(q,m)),off)))),

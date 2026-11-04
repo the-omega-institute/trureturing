@@ -80,10 +80,10 @@ internal sealed class ForcedThresholdPrefixDocument : IScribeDocumentDefinition
             Imp(And(Le(D(2),q),Le(D(3),a),Lt(a,m)),All("alphabet",boolType,
                 All("labels",Arrow(recordType,y),All("outside",y,All("rejected",y,All("bottom",y,
                     Imp(new Formula.Not(Equal(outside,rejected)),Imp(varied,All("v",scalar,
-                        All("pi",Call("Selector",m,y),Imp(correct,And(selected,silent,survivors)))))))))))))));
+                        All("pi",Call("Selector",m,y),Imp(correct,And(selected,silent,survivors))))))))))))))));
         var zeroArchiveFormula=All("Y",F.Id("Type"),All("m",nat,All("pi",Call("Selector",m,y),All("v",scalar,And(
             Equal(Ar(D(0)),F.Id("nil")),All("t",nat,Equal(Ar(Add(t,D(1))),
-                Call("append",Ar(t),Call("list",Pair(Word(t),Call("some",v))))))))));
+                Call("append",Ar(t),Call("list",Pair(Word(t),Call("some",v)))))))))));
         var zeroWordFormula=All("Y",F.Id("Type"),All("m",nat,All("pi",Call("Selector",m,y),All("v",scalar,
             All("t",nat,Equal(Word(t),Call("selectedWord",Call("applySelector",pi,Call("some",v),Ar(t)))))))));
         return DocumentDefinition.Create(ScribeNode.Create(
