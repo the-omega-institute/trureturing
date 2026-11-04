@@ -180,10 +180,14 @@ private lemma determinant_log_identity {ι : Type*} [Fintype ι] [DecidableEq ι
   have hr := Complex.ofReal_injective hp
   have hterms (i : ι) : 0 < 1 - u ^ 2 * h.eigenvalues i ^ 2 := by
     have hi := abs_le.mp (hb i)
-    have hs : h.eigenvalues i ^ 2 ≤ 1 := by nlinarith [hi.1, hi.2]
-    nlinarith [sq_nonneg u, mul_nonneg (sq_nonneg u) (sub_nonneg.mpr hs)]
+    have hs : h.eigenvalues i ^ 2 ≤ 1 := by nlinarith only [hi.1, hi.2]
+    nlinarith only [hu0, hu1, sq_nonneg u,
+      mul_nonneg hu0 (sub_pos.mpr hu1).le,
+      mul_nonneg (sq_nonneg u) (sub_nonneg.mpr hs)]
   have hl := congrArg Real.log hr
   rw [Real.log_prod (fun i _ => (hterms i).ne'), Real.log_pow] at hl
+  generalize hx : Real.log (interpolation G u).det.re = x at hl ⊢
+  generalize hy : (∑ i, Real.log (1 - u ^ 2 * h.eigenvalues i ^ 2)) = y at hl ⊢
   norm_num (config := { congrConsts := false }) at hl
   linarith only [hl]
 
