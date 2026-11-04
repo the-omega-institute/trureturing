@@ -8,7 +8,7 @@
 
 import Mathlib.NumberTheory.PrimeCounting
 import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Tactic.Omega
+import Lean.Elab.Tactic.Omega
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

@@ -87,5 +87,5 @@ internal sealed class OeisA222759GrowthDocument : IScribeDocumentDefinition
     private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
-    private static Formula Cube(Formula a) => new Formula.Script(a, null, D(3));
+    private static Formula Cube(Formula a) => new Formula.Power(a, D(3));
 }
