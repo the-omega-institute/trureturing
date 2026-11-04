@@ -141,6 +141,27 @@ internal sealed class GaussianRenyiStrongSubadditivityDocument : IScribeDocument
                 All("X", At(Qualified("Finset"), FinOf(X("n"))),
                     Imp(correspondence, All("x", Reals, equality)))))));
     }
+    private static Formula PrincipalLog(Formula modes)
+    {
+        Formula selected = At(Qualified("Subtype"), LambdaOf("p", Iota, Member(X("p"), modes)));
+        Formula projection = Typed(Qualified("Subtype", "val"), new Formula.TypeArrow(selected, Iota));
+        return At(Qualified("Real", "log"), At(Qualified("Complex", "re"),
+            At(Qualified("Matrix", "det"), Submatrix(X("H"), projection, projection))));
+    }
+    private static Formula LogKoteljanskii()
+    {
+        Formula A = X("A");
+        Formula B = X("B");
+        Formula C = X("C");
+        Formula modeSets = At(Qualified("Finset"), Iota);
+        Formula inequality = LE(Add(PrincipalLog(Union(Union(A, B), C)), PrincipalLog(B)),
+            Add(PrincipalLog(Union(A, B)), PrincipalLog(Union(B, C))));
+        return All("ι", Qualified("Type"), Instance(At(Qualified("DecidableEq"), Iota),
+            All("H", MatrixOf(Iota, Complexes), Imp(At(Qualified("Matrix", "PosDef"), X("H")),
+                All("A", modeSets, All("B", modeSets, All("C", modeSets,
+                    Imp(At(Qualified("Disjoint"), A, B), Imp(At(Qualified("Disjoint"), A, C),
+                        Imp(At(Qualified("Disjoint"), B, C), inequality))))))))));
+    }
     private static Formula EntropyOn(Formula modes) => Local("gaussianRenyiEntropy", Alpha,
         Local("reducedCovariance", X("V"), modes), Local("reducedCovariance", Local("symplecticForm", X("n")), modes));
     private static Formula ClaimFormula()
@@ -202,6 +223,11 @@ internal sealed class GaussianRenyiStrongSubadditivityDocument : IScribeDocument
                 H("Positive definiteness of the interpolation"), StatementSource.FromAuthor(Disp(ShiftedPositive())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("If V+iω is positive semidefinite and V is positive definite, their convex interpolation V+ixω is positive definite for 0≤x<1."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("log-koteljanskii"), DeclarationHandle.Create(Module + ".log_koteljanskii"),
+                H("The logarithmic principal-block inequality"), StatementSource.FromAuthor(Disp(LogKoteljanskii())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For a Hermitian positive definite matrix and three pairwise disjoint finite index sets, the ABC and B principal log determinants sum to at most the AB and BC principal log determinants. Eliminate the common block B by its Schur complement, then apply the Fischer determinant bound to the remaining A and C blocks. The Schur determinant factorizations give the product inequality. Every principal determinant has positive real part and zero imaginary part, so monotonicity of the real logarithm and its product identity give the stated sum inequality. The ambient index type need not be finite; only the selected blocks are finite. Empty blocks have determinant one and logarithm zero."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("mode-interpolation-det"), DeclarationHandle.Create(Module + ".mode_interpolation_det"),
                 H("Restriction of the interpolation determinant"), StatementSource.FromAuthor(Disp(ModeInterpolationDet())),
