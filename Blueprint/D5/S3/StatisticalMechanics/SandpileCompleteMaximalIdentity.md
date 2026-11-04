@@ -36,6 +36,10 @@ $$\forall (i: \mathbb{N}), (\forall (j: \mathbb{N}), ((2 \le i) \Rightarrow ((2 
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/SandpileCompleteMaximalIdentity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gao-li-2020-complete-maximal-identity-clique-path` (proved) by `D5/S3/StatisticalMechanics/SandpileCompleteMaximalIdentity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gao-li-2020-complete-maximal-identity-clique-path","declaration_gid":"D5/S3/StatisticalMechanics/SandpileCompleteMaximalIdentity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Yibo Gao, Rupert Li (2021). *Compatible recurrent identities of the sandpile group and maximal stable configurations*. DOI: [10.1016/j.dam.2020.08.028](https://doi.org/10.1016/j.dam.2020.08.028). URL: <https://arxiv.org/abs/2008.10079v1>.

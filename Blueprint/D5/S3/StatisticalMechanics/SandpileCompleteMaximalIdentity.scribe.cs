@@ -107,7 +107,10 @@ internal sealed class SandpileCompleteMaximalIdentityDocument : IScribeDocumentD
                         + "required condition at every sink to the explicit vectors just constructed. "
                         + "This establishes exactly the integer-image classification in the displayed proposition; "
                         + "the interpretation through recurrent configurations uses the source's sandpile-group characterization."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gao-li-2020-complete-maximal-identity-clique-path"),
+                    ResolutionKind.Proved)))));
 
     private static Formula MaximalIdentityAtFormula()
     {
