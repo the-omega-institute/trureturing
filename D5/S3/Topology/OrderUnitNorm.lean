@@ -16,6 +16,9 @@ public import Mathlib.Analysis.Normed.Algebra.Exponential
 public import Mathlib.Analysis.SpecialFunctions.Exponential
 public import Mathlib.Analysis.Calculus.Taylor
 public import Mathlib.Analysis.Calculus.Deriv.Comp
+public import Mathlib.Analysis.LocallyConvex.Separation
+public import Mathlib.Analysis.Calculus.Deriv.Slope
+public import Mathlib.Topology.Order.Compact
 public import Mathlib.Analysis.Calculus.MeanValue
 public import Mathlib.Geometry.Convex.Cone.Pointed
 public import Mathlib.Algebra.Order.BigOperators.Ring.Finset
@@ -569,6 +572,130 @@ private lemma source_certificate (H : E →ₗ[ℝ] E) (P : Set (E →L[ℝ] ℝ
     exact A.closure_certificate H P K hK hP hcert β (by rwa [hspan])
   exact ⟨hall, fun β hβ => A.scaled_certificate H K β (hall β hβ),
     fun β hβ => A.zero_contact H K β (hall β hβ)⟩
+
+private lemma add_unit_interior (y : E) (hy : y ∈ A.cone) (ε : ℝ) (hε : 0 < ε) :
+    y + ε • A.unit ∈ interior (A.cone : Set E) := by
+  have hscale : ε • A.unit ∈ interior (A.cone : Set E) := by
+    apply interior_mono (s := ε • (A.cone : Set E)) ?_ ?_
+    · rintro v ⟨z, hz, rfl⟩
+      exact A.cone.smul_mem hε hz
+    · rw [interior_smul₀ hε.ne']
+      exact smul_mem_smul_set A.interior_unit
+  apply interior_mono (s := (A.cone : Set E) + (A.cone : Set E)) ?_ ?_
+  · rintro v ⟨z, hz, w, hw, rfl⟩
+    exact A.cone.add_mem hz hw
+  · exact subset_interior_add_right ⟨y, hy, ε • A.unit, hscale, rfl⟩
+
+private lemma boundary_support (z : E) (hz : z ∈ A.cone)
+    (hzi : z ∉ interior (A.cone : Set E)) :
+    ∃ β : E →L[ℝ] ℝ, (∀ v ∈ A.cone, 0 ≤ β v) ∧ β z = 0 ∧ 0 < β A.unit := by
+  obtain ⟨f, hfne, hf⟩ := geometric_hahn_banach_of_nonempty_interior_point
+    A.cone.convex hzi ⟨A.unit, A.interior_unit⟩
+  have hfz : f z = 0 := by
+    have h0 := hf 0 A.zero_mem
+    have h2 := hf ((2 : ℝ) • z) (A.cone.smul_mem (by norm_num) hz)
+    simp only [map_zero, map_smul, smul_eq_mul] at h0 h2
+    linarith
+  let β : E →L[ℝ] ℝ := -f
+  have hβ : ∀ v ∈ A.cone, 0 ≤ β v := by
+    intro v hv
+    change 0 ≤ -f v
+    have := hf v hv
+    linarith
+  refine ⟨β, hβ, by simp [β, hfz], ?_⟩
+  have hmass := hβ A.unit A.unit_mem
+  by_contra hnot
+  have hzβ := A.positive_zero_mass β.toLinearMap hβ (le_antisymm (le_of_not_gt hnot) hmass)
+  have hβ0 : β = 0 := by
+    ext v
+    exact congrArg (fun l : E →ₗ[ℝ] ℝ => l v) hzβ
+  apply hfne
+  simpa [β] using congrArg Neg.neg hβ0
+
+private lemma perturbed_interior [FiniteDimensional ℝ E] (L : E →ₗ[ℝ] E)
+    (hcp : ∀ z ∈ A.cone, ∀ β : E →ₗ[ℝ] ℝ,
+      (∀ v ∈ A.cone, 0 ≤ β v) → β z = 0 → 0 ≤ β (L z))
+    (a : ℝ) (ha : a • A.unit - L A.unit - A.unit ∈ A.cone)
+    (y : E) (hy : y ∈ A.cone) (ε : ℝ) (hε : 0 < ε)
+    (S : ℝ) (hS : 0 ≤ S) :
+    originalFlow L S y + (ε * Real.exp (a * S)) • A.unit ∈ interior (A.cone : Set E) := by
+  let : CompleteSpace E := FiniteDimensional.complete ℝ E
+  let d := a • A.unit - L A.unit
+  let w : ℝ → E := fun t => originalFlow L t y + (ε * Real.exp (a * t)) • A.unit
+  have hd (t : ℝ) : HasDerivAt w
+      (L (w t) + (ε * Real.exp (a * t)) • d) t := by
+    have hflow := (hasDerivAt_exp_smul_const' (LinearMap.toContinuousLinearMap L) t).clm_apply
+      (hasDerivAt_const t y)
+    have hpert := (((hasDerivAt_id t).const_mul a).exp.const_mul ε).smul_const A.unit
+    convert hflow.add hpert using 1 <;>
+      simp only [w, d, originalFlow, mul_apply_eq_comp, LinearMap.toContinuousLinearMap_apply,
+        map_add, map_smul, smul_sub, smul_smul]
+    <;> module
+  have hw : Continuous w := continuous_iff_continuousAt.mpr (fun t => (hd t).continuousAt)
+  have hw0 : w 0 ∈ interior (A.cone : Set E) := by
+    simpa [w, originalFlow] using A.add_unit_interior y hy ε hε
+  by_contra hbad
+  let B : Set ℝ := Icc 0 S ∩ w ⁻¹' (interior (A.cone : Set E))ᶜ
+  have hBc : IsCompact B :=
+    isCompact_Icc.inter_right (isClosed_compl_iff.mpr isOpen_interior |>.preimage hw)
+  obtain ⟨T, hT⟩ := hBc.exists_isLeast ⟨S, ⟨⟨hS, le_rfl⟩, hbad⟩⟩
+  have hTpos : 0 < T := by
+    apply lt_of_le_of_ne hT.1.1.1
+    intro hzero
+    exact hT.1.2 (hzero ▸ hw0)
+  have hbefore (s : ℝ) (hs : s ∈ Ico 0 T) : w s ∈ interior (A.cone : Set E) := by
+    by_contra h
+    have hb : s ∈ B := ⟨⟨hs.1, hs.2.le.trans hT.1.1.2⟩, h⟩
+    exact (not_le_of_gt hs.2) (hT.2 hb)
+  have hwT : w T ∈ A.cone := by
+    have hc : IsClosed (w ⁻¹' (A.cone : Set E)) := A.closed.preimage hw
+    have hs : Ico 0 T ⊆ w ⁻¹' (A.cone : Set E) :=
+      fun s hs => interior_subset (hbefore s hs)
+    apply closure_minimal hs hc
+    rw [closure_Ico hTpos.ne']
+    exact ⟨hTpos.le, le_rfl⟩
+  obtain ⟨β, hβ, hβz, hβu⟩ := A.boundary_support (w T) hwT hT.1.2
+  have hder := β.hasFDerivAt.comp_hasDerivAt T (hd T)
+  have hnonpos : β (L (w T) + (ε * Real.exp (a * T)) • d) ≤ 0 := by
+    apply le_of_tendsto hder.tendsto_slope_zero_left
+    filter_upwards [Ioo_mem_nhdsLT (neg_lt_zero.mpr hTpos)] with h hh
+    have hv : 0 ≤ β (w (T + h)) :=
+      hβ _ (interior_subset (hbefore (T + h) ⟨by linarith [hh.1], by linarith [hh.2]⟩))
+    simp only [Function.comp_apply, hβz, sub_zero, smul_eq_mul]
+    exact mul_nonpos_of_nonpos_of_nonneg (inv_nonpos.mpr hh.2.le) hv
+  have hcpz := hcp (w T) hwT β.toLinearMap hβ hβz
+  have hdpos : 0 < β d := by
+    have := hβ (d - A.unit) ha
+    simp only [map_sub] at this
+    linarith
+  have hεT : 0 < ε * Real.exp (a * T) := mul_pos hε (Real.exp_pos _)
+  have hstrict : 0 < β (L (w T) + (ε * Real.exp (a * T)) • d) := by
+    simp only [map_add, map_smul, smul_eq_mul]
+    exact add_pos_of_nonneg_of_pos hcpz (mul_pos hεT hdpos)
+  exact (not_le_of_gt hstrict) hnonpos
+
+/-- Cross-positivity on the full original algebraic positive dual preserves the
+original cone under the same operator exponential for every nonnegative time.
+No condition on L(u) is imposed. -/
+theorem cross_positive_flow [FiniteDimensional ℝ E] (L : E →ₗ[ℝ] E)
+    (hcp : ∀ z ∈ A.cone, ∀ β : E →ₗ[ℝ] ℝ,
+      (∀ v ∈ A.cone, 0 ≤ β v) → β z = 0 → 0 ≤ β (L z)) :
+    ∀ t : ℝ, 0 ≤ t → ∀ y : E, y ∈ A.cone → originalFlow L t y ∈ A.cone := by
+  intro t ht y hy
+  let a := A.orderNorm (L A.unit) + 1
+  have ha : a • A.unit - L A.unit - A.unit ∈ A.cone := by
+    have h := (A.norm_attained (L A.unit)).2.1
+    convert h using 1 <;> dsimp [a] <;> module
+  have hw (ε : ℝ) (hε : 0 < ε) := A.perturbed_interior L hcp a ha y hy ε hε t ht
+  have hlim : Tendsto
+      (fun ε : ℝ => originalFlow L t y + (ε * Real.exp (a * t)) • A.unit)
+      (𝓝[>] 0) (𝓝 (originalFlow L t y)) := by
+    have hc : Continuous
+        (fun ε : ℝ => originalFlow L t y + (ε * Real.exp (a * t)) • A.unit) := by fun_prop
+    simpa using hc.continuousAt.tendsto.mono_left nhdsWithin_le_nhds
+  apply A.closed.mem_of_tendsto hlim
+  filter_upwards [self_mem_nhdsWithin] with ε hε
+  exact interior_subset (hw ε hε)
 
 /-- The constructed original norm, its dual mass bound, and the exact original
 operator and exponential interfaces. This is a dependency of the quantitative
