@@ -1,9 +1,9 @@
-/- GID: D5/S1/Dynamics/Shadowing/FreeFibreBoundary
+/- GID: D5/S3/Topology/AlmostDisjoint/FreeFibreBoundary
    generality: G
-   mirror-B: D5/B/S1/Dynamics/Shadowing/FreeFibreBoundary
+   mirror-B: D5/B/S3/Topology/AlmostDisjoint/FreeFibreBoundary
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=gid:D5/S1/Dynamics/Shadowing/FreeFibreBoundary.claim; result=D5/S1/Dynamics/Shadowing/FreeFibreBoundary.result; claim=D5/S1/Dynamics/Shadowing/FreeFibreBoundary.claim
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Topology/AlmostDisjoint/FreeFibreBoundary.claim; result=D5/S3/Topology/AlmostDisjoint/FreeFibreBoundary.result; claim=D5/S3/Topology/AlmostDisjoint/FreeFibreBoundary.claim
    digest: A compact Hausdorff shadowing system admits no zero-dimensional compact Hausdorff shadowing cover. -/
 
 import D5.S1.Dynamics.Shadowing.OpenCoreShadowing
