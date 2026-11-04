@@ -24,7 +24,7 @@ C. Godsil, arXiv:1710.11192v1 (the latest version). Quotations are from the v1 T
 
 ## Statement
 
-For a graph $X$ with adjacency matrix $A$ the continuous quantum walk is $U(t)=\exp(itA)$, and the mixing matrix is $M(t):=U(t)\circ\overline{U(t)}=U(t)\circ U(-t)$, so $M(t)_{a,a}=|U(t)_{a,a}|^2$. For strongly regular graphs the paper computes the diagonal of the average mixing matrix, $\frac1{n^2}(1+m_\theta^2+m_\tau^2)$, observes that this is less than $1/2$, so that "we get no useful information about the diagonal entries of $M(t)$", and that the bound is tight for conference graphs, the strongly regular graphs with parameters $\big(n,\tfrac{n-1}2,\tfrac{n-5}4,\tfrac{n-1}4\big)$. Section "Questions?" states:
+For a graph $X$ with adjacency matrix $A$ the continuous quantum walk is $U(t)=\exp(itA)$, and the mixing matrix is $M(t):=U(t)\circ\overline{U(t)}=U(t)\circ U(-t)$, so $M(t)_{a,a}=|U(t)_{a,a}|^2$. For strongly regular graphs the paper computes the diagonal of the average mixing matrix, $\frac1{n^2}(1+m_\theta^2+m_\tau^2)$, derives the lower bound $n^{-2}\big(1+\tfrac12(n-1)^2\big)$, which is less than $1/2$ for $n\ge3$, so that "we get no useful information about the diagonal entries of $M(t)$", and that the bound is tight for conference graphs, the strongly regular graphs with parameters $\big(n,\tfrac{n-1}2,\tfrac{n-5}4,\tfrac{n-1}4\big)$. Section "Questions?" states:
 
 > We do not know whether, for conference graphs, the diagonal entries of $M(t)$ can be bounded away from zero.
 
