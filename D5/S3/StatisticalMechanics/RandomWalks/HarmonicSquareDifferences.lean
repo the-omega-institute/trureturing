@@ -14,6 +14,9 @@ import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
 /-!
 # Harmonic squares on the integer lattice
 
