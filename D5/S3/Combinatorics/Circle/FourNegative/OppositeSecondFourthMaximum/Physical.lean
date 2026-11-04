@@ -136,6 +136,14 @@ private theorem physical_joint (a s c m n : ℕ) (rev : Bool)
   have nt1 := native_masses a s c s ha hs hc hs 1
   have nt2 := native_masses a s c s ha hs hc hs 2
   have nt3 := native_masses a s c s ha hs hc hs 3
+  change ((R 0).map f).sum=((full a s c s 0:ℤ)-m)*AA at mo0
+  change ((R 1).map f).sum=m*AA+(full a s c s 1:ℤ)*BB at mo1
+  change ((R 2).map f).sum=((full a s c s 2:ℤ)-n)*LL at mo2
+  change ((R 3).map f).sum=n*LL+(full a s c s 3:ℤ)*KK at mo3
+  change ((R 0).map g).sum=((full a s c s 0:ℤ)-m)*(2*AA) at mn0
+  change ((R 1).map g).sum=m*(2*AA)+(full a s c s 1:ℤ)*UU at mn1
+  change ((R 2).map g).sum=((full a s c s 2:ℤ)-n)*VV at mn2
+  change ((R 3).map g).sum=n*VV+(full a s c s 3:ℤ)*WW at mn3
   have eu : 0+(s-1)=s-1 := by omega
   have ev : s+(c-1)=s+c-1 := by omega
   have ew : s+c+(s-1)=s+c+s-1 := by omega
@@ -156,9 +164,10 @@ private theorem physical_joint (a s c m n : ℕ) (rev : Bool)
   change (full a s c s 3:ℤ)*KK+f (k-1)=AA-KK ∧
     (full a s c s 3:ℤ)*WW+g (k-1)=AA-WW ∧
     2*f (k-1)=AA-N ∧ 2*g (k-1)=AA-(2*N+1) at nt3
+  dsimp only [AA,BB,LL,KK,UU,VV,WW] at mo0 mo1 mo2 mo3 mn0 mn1 mn2 mn3 nt0 nt1 nt2 nt3
   have totals := source_totals a s c s ha hs hc hs
   have hfzero : (l.map f).sum=0 := (hp.map f).sum_eq.trans totals.1
-  have hear : g k=AA := by simpa [basevec] using totals.2.2
+  have hear : g k=AA := by simpa [basevec,g,k,size] using totals.2.2
   have hgzero : AA+(l.map g).sum=0 := by
     have h := (hp.map g).sum_eq.trans totals.2.1
     change (l.map g).sum= -base a s c s 0 at h
@@ -178,7 +187,7 @@ private theorem physical_joint (a s c m n : ℕ) (rev : Bool)
   have pos (r : Fin 4) (i : ℕ) (hi : i∈P r) : 0≤f i ∧ 0≤g i := by
     cases rev <;> fin_cases r <;> simp only [P,Bool.false_eq_true,if_false,if_true,
       Matrix.cons_val_zero,Matrix.cons_val_one,Matrix.cons_val_two,Matrix.cons_val_three] at hi
-    all_goals exact rpos _ i hi
+    all_goals first | exact rpos 0 i hi | exact rpos 1 i hi | exact rpos 2 i hi | exact rpos 3 i hi
   have hAA : 1≤AA := by simpa only [basevec,Matrix.cons_val_zero] using (cv.1 0).1
   have npos (r : Fin 4) (i : ℕ) (hi : i∈Pn r) : 0≤g i := by
     cases rev <;> fin_cases r <;> simp [Pn] at hi
@@ -232,6 +241,12 @@ private theorem physical_joint (a s c m n : ℕ) (rev : Bool)
   have w0 := hw 0
   have w1 := hw 1
   have w2 := hw 2
+  change window (oldSeams (2^a) (2^s) (2^c) m n rev 0) (oldHeads (2^a) (2^s) (2^c) rev 0) ∧
+    window (newSeams (2^a) (2^s) (2^c) m n rev 0) (newHeads (2^a) (2^s) (2^c) rev 0) at w0
+  change window (oldSeams (2^a) (2^s) (2^c) m n rev 1) (oldHeads (2^a) (2^s) (2^c) rev 1) ∧
+    window (newSeams (2^a) (2^s) (2^c) m n rev 1) (newHeads (2^a) (2^s) (2^c) rev 1) at w1
+  change window (oldSeams (2^a) (2^s) (2^c) m n rev 2) (oldHeads (2^a) (2^s) (2^c) rev 2) ∧
+    window (newSeams (2^a) (2^s) (2^c) m n rev 2) (newHeads (2^a) (2^s) (2^c) rev 2) at w2
   dsimp only [window] at w0 w1 w2
   have t0 := td 0
   have t1 := td 1
