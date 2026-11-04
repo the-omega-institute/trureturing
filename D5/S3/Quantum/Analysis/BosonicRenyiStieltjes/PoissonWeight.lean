@@ -16,6 +16,7 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
 namespace D5.S3.Quantum.Analysis.BosonicRenyiStieltjes.PoissonWeight
 
 open Real Set MeasureTheory
+open scoped Topology ComplexConjugate
 
 noncomputable section
 
@@ -236,6 +237,141 @@ private lemma regularTransform_eq {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2) {z : 
     Complex.ofReal_ne_zero.mpr ha0.ne']
   ring
 
+private lemma exp_eq_one_strip {w : ℂ} (hlo : -(2 * Real.pi) < w.im)
+    (hhi : w.im < 2 * Real.pi) (he : Complex.exp w = 1) : w = 0 := by
+  obtain ⟨n, hn⟩ := Complex.exp_eq_one_iff.mp he
+  have hi := congrArg Complex.im hn
+  norm_num [Complex.mul_im, Complex.mul_re] at hi
+  have hnlo : (-1 : ℝ) < n := by nlinarith [Real.pi_pos]
+  have hnhi : (n : ℝ) < 1 := by nlinarith [Real.pi_pos]
+  have hn0 : n = 0 := by
+    have hlo' : (-1 : ℤ) < n := by exact_mod_cast hnlo
+    have hhi' : n < (1 : ℤ) := by exact_mod_cast hnhi
+    omega
+  simpa [hn0] using hn
+
+private def logTransform (α : ℝ) (w : ℂ) : ℂ :=
+  if w = 0 then regularTransform α 1 else
+    (1 / (1 - Complex.exp w) - (α : ℂ) * Complex.exp ((α : ℂ) * w) /
+      (Complex.exp w * (1 - Complex.exp ((α : ℂ) * w)))) / ((α - 1 : ℝ) : ℂ)
+
+private lemma logTransform_eq_regular {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+    {w : ℂ} (hlo : -Real.pi < w.im) (hhi : w.im < Real.pi) :
+    logTransform α w = regularTransform α (Complex.exp w) := by
+  by_cases hw : w = 0
+  · simp [logTransform, hw]
+  have he1 : Complex.exp w ≠ 1 := fun h => hw (exp_eq_one_strip
+    (by linarith [Real.pi_pos]) (by linarith [Real.pi_pos]) h)
+  rw [logTransform, ite_eq_right hw,
+    regularTransform_eq ha0 ha2 (Complex.exp_ne_zero _) he1]
+  simp only [complexTransform, Complex.cpow_def_of_ne_zero (Complex.exp_ne_zero _),
+    Complex.log_exp hlo hhi.le, mul_comm w (α : ℂ)]
+
+private lemma logTransform_differentiable {α : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+    {w : ℂ} (hw : -Real.pi ≤ w.im ∧ w.im ≤ Real.pi) :
+    DifferentiableAt ℂ (logTransform α) w := by
+  by_cases hw0 : w = 0
+  · subst w
+    have hd := (regularTransform_differentiable ha0 ha2).differentiableAt
+      (Complex.isOpen_slitPlane.mem_nhds Complex.one_mem_slitPlane)
+    have he : Complex.exp 0 = (1 : ℂ) := Complex.exp_zero
+    have hcomp : DifferentiableAt ℂ
+        (fun z => regularTransform α (Complex.exp z)) 0 :=
+      (he ▸ hd).comp 0 Complex.differentiableAt_exp
+    apply hcomp.congr_of_eventuallyEq
+    filter_upwards [show ∀ᶠ z : ℂ in 𝓝 0, -Real.pi < z.im ∧ z.im < Real.pi from
+      ((isOpen_lt continuous_const Complex.continuous_im).inter
+        (isOpen_lt Complex.continuous_im continuous_const)).mem_nhds
+        (by simpa using And.intro (neg_neg_of_pos Real.pi_pos) Real.pi_pos)] with z hz
+    exact logTransform_eq_regular ha0 ha2 hz.1 hz.2
+  have he1 : 1 - Complex.exp w ≠ 0 := by
+    intro h
+    exact hw0 (exp_eq_one_strip (by linarith [Real.pi_pos])
+      (by linarith [Real.pi_pos]) (sub_eq_zero.mp h).symm)
+  have hea : 1 - Complex.exp ((α : ℂ) * w) ≠ 0 := by
+    intro h
+    have hi : ((α : ℂ) * w).im = α * w.im := by simp
+    have hz := exp_eq_one_strip (w := (α : ℂ) * w)
+      (by rw [hi]; nlinarith [mul_le_mul_of_nonneg_left hw.1 ha0.le, Real.pi_pos])
+      (by rw [hi]; nlinarith [mul_le_mul_of_nonneg_left hw.2 ha0.le, Real.pi_pos])
+      (sub_eq_zero.mp h).symm
+    exact hw0 ((mul_eq_zero.mp hz).resolve_left (Complex.ofReal_ne_zero.mpr ha0.ne'))
+  have hd : DifferentiableAt ℂ (fun z : ℂ =>
+      (1 / (1 - Complex.exp z) - (α : ℂ) * Complex.exp ((α : ℂ) * z) /
+        (Complex.exp z * (1 - Complex.exp ((α : ℂ) * z)))) /
+          ((α - 1 : ℝ) : ℂ)) w := by
+    have he : DifferentiableAt ℂ Complex.exp w := Complex.differentiableAt_exp
+    have ha : DifferentiableAt ℂ (fun z : ℂ => Complex.exp ((α : ℂ) * z)) w :=
+      ((differentiableAt_id : DifferentiableAt ℂ (fun z : ℂ => z) w).const_mul
+        (α : ℂ)).cexp
+    have h1 : DifferentiableAt ℂ (fun _ : ℂ => (1 : ℂ)) w := differentiableAt_const _
+    exact ((h1.div (h1.sub he) he1).sub
+      ((ha.const_mul _).div (he.mul (h1.sub ha))
+        (mul_ne_zero (Complex.exp_ne_zero _) hea))).div_const _
+  apply hd.congr_of_eventuallyEq
+  filter_upwards [isOpen_ne.mem_nhds hw0] with z hz
+  exact ite_eq_right hz
+
+private def contourKernel (α r : ℝ) (w : ℂ) : ℂ :=
+  Complex.exp w * dslope (logTransform α) (Real.log r : ℂ) w /
+    dslope Complex.exp (Real.log r : ℂ) w
+
+private lemma expSlope_ne_zero {c : ℝ} {w : ℂ}
+    (hw : -Real.pi ≤ w.im ∧ w.im ≤ Real.pi) :
+    dslope Complex.exp (c : ℂ) w ≠ 0 := by
+  by_cases heq : w = (c : ℂ)
+  · subst w
+    simpa only [dslope_same, Complex.deriv_exp] using Complex.exp_ne_zero (c : ℂ)
+  rw [dslope_of_ne _ heq, slope_def_field]
+  refine div_ne_zero ?_ (sub_ne_zero.mpr heq)
+  intro he
+  have hexp : Complex.exp (w - c) = 1 :=
+    Complex.exp_eq_exp_iff_exp_sub_eq_one.mp (sub_eq_zero.mp he)
+  have hz := exp_eq_one_strip (w := w - c)
+    (by simpa using (show -(2 * Real.pi) < w.im by linarith [Real.pi_pos]))
+    (by simpa using (show w.im < 2 * Real.pi by linarith [Real.pi_pos])) hexp
+  exact heq (sub_eq_zero.mp hz)
+
+private lemma contourKernel_differentiable {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2) :
+    DifferentiableOn ℂ (contourKernel α r)
+      {w : ℂ | -Real.pi ≤ w.im ∧ w.im ≤ Real.pi} := by
+  have hn : {w : ℂ | -Real.pi ≤ w.im ∧ w.im ≤ Real.pi} ∈ 𝓝 (Real.log r : ℂ) := by
+    apply Filter.mem_of_superset
+      (((isOpen_lt continuous_const Complex.continuous_im).inter
+        (isOpen_lt Complex.continuous_im continuous_const)).mem_nhds
+        (show -Real.pi < (Real.log r : ℂ).im ∧ (Real.log r : ℂ).im < Real.pi by
+          simpa using And.intro (neg_neg_of_pos Real.pi_pos) Real.pi_pos))
+    exact fun _ hw => ⟨hw.1.le, hw.2.le⟩
+  have hf : DifferentiableOn ℂ (logTransform α)
+      {w : ℂ | -Real.pi ≤ w.im ∧ w.im ≤ Real.pi} :=
+    fun _ hw => (logTransform_differentiable ha0 ha2 hw).differentiableWithinAt
+  exact (Complex.differentiable_exp.differentiableOn.mul
+    ((Complex.differentiableOn_dslope hn).mpr hf)).div
+      ((Complex.differentiableOn_dslope hn).mpr
+        Complex.differentiable_exp.differentiableOn) (fun _ hw => expSlope_ne_zero hw)
+
+private lemma contourKernel_eq {α r : ℝ} (hr0 : 0 < r) {w : ℂ}
+    (hw : w ≠ (Real.log r : ℂ)) :
+    contourKernel α r w = Complex.exp w *
+      (logTransform α w - logTransform α (Real.log r : ℂ)) / (Complex.exp w - r) := by
+  simp only [contourKernel, dslope_of_ne _ hw, slope_def_field,
+    ← Complex.ofReal_exp, Real.exp_log hr0]
+  field_simp [sub_ne_zero.mpr hw]
+
+private lemma contour_rectangle {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2) (T : ℝ) :
+    (∫ x in (-T)..T, contourKernel α r (x - Real.pi * Complex.I)) -
+      (∫ x in (-T)..T, contourKernel α r (x + Real.pi * Complex.I)) +
+      Complex.I * (∫ y in (-Real.pi)..Real.pi, contourKernel α r (T + y * Complex.I)) -
+      Complex.I * (∫ y in (-Real.pi)..Real.pi, contourKernel α r (-T + y * Complex.I)) = 0 := by
+  have hd := contourKernel_differentiable (r := r) ha0 ha2
+  have h := Complex.integral_boundary_rect_eq_zero_of_differentiableOn
+    (contourKernel α r) ⟨-T, -Real.pi⟩ ⟨T, Real.pi⟩ (hd.mono (by
+      intro w hw
+      have hy : w.im ∈ Set.uIcc (-Real.pi) Real.pi := hw.2
+      change -Real.pi ≤ w.im ∧ w.im ≤ Real.pi
+      simpa only [Set.uIcc_of_le (neg_le_self Real.pi_pos.le), Set.mem_Icc] using hy))
+  simpa only [Complex.ofReal_neg, neg_mul, sub_eq_add_neg, smul_eq_mul] using h
+
 private lemma transform_boundary {α q : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) (hq : 0 < q) :
     -(complexTransform α (-(q : ℂ))).im / Real.pi = density α q := by
@@ -278,6 +414,143 @@ private lemma transform_positive {α r : ℝ} (ha0 : 0 < α) (ha1 : α ≠ 1)
   rw [he, Complex.ofReal_re, Real.rpow_sub_one hr0.ne']
   have hden : 0 < 1 - r ^ α := sub_pos.mpr (Real.rpow_lt_one hr0.le hr1 ha0)
   field_simp (disch := first | positivity | assumption | exact sub_ne_zero.mpr ha1)
+
+private lemma logTransform_boundary (α x : ℝ) :
+    logTransform α (x + Real.pi * Complex.I) =
+      complexTransform α (-(Real.exp x : ℂ)) := by
+  have hw : (x : ℂ) + Real.pi * Complex.I ≠ 0 := by
+    intro h
+    have := congrArg Complex.im h
+    simp at this
+  have he : Complex.exp ((x : ℂ) + Real.pi * Complex.I) = -(Real.exp x : ℂ) := by
+    simpa only [← Complex.ofReal_exp] using Complex.exp_add_pi_mul_I (x : ℂ)
+  have hp : (Complex.exp ((x : ℂ) + Real.pi * Complex.I)) ^ (α : ℂ) =
+      Complex.exp ((α : ℂ) * ((x : ℂ) + Real.pi * Complex.I)) := by
+    rw [Complex.cpow_def_of_ne_zero (Complex.exp_ne_zero _),
+      Complex.log_exp (by simp; linarith [Real.pi_pos]) (by simp)]
+    congr 1
+    ring
+  rw [logTransform, ite_eq_right hw, ← he]
+  simp only [complexTransform, hp]
+
+private lemma logTransform_conj (α : ℝ) {w : ℂ} (hw : w ≠ 0) :
+    logTransform α (conj w) = conj (logTransform α w) := by
+  have hc : conj w ≠ 0 := by simpa using hw
+  simp only [logTransform, ite_eq_right hw, ite_eq_right hc]
+  simp [← Complex.exp_conj]
+
+private lemma logTransform_log {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+    (hr0 : 0 < r) (hr1 : r < 1) :
+    logTransform α (Real.log r : ℂ) = complexTransform α (r : ℂ) := by
+  rw [logTransform_eq_regular ha0 ha2 (by simp [Real.pi_pos]) (by simp [Real.pi_pos]),
+    ← Complex.ofReal_exp, Real.exp_log hr0]
+  exact regularTransform_eq ha0 ha2 (Complex.ofReal_ne_zero.mpr hr0.ne')
+    (by exact_mod_cast hr1.ne)
+
+private lemma transform_im_zero {α r : ℝ} (hr0 : 0 < r) :
+    (complexTransform α (r : ℂ)).im = 0 := by
+  apply Complex.conj_eq_iff_im.mp
+  dsimp only [complexTransform]
+  rw [← Complex.ofReal_cpow hr0.le]
+  simp
+
+private lemma contourKernel_top {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+    (hr0 : 0 < r) (hr1 : r < 1) (x : ℝ) :
+    contourKernel α r (x + Real.pi * Complex.I) =
+      ((Real.exp x / (r + Real.exp x) : ℝ) : ℂ) *
+        (complexTransform α (-(Real.exp x : ℂ)) - complexTransform α (r : ℂ)) := by
+  have hw : (x : ℂ) + Real.pi * Complex.I ≠ (Real.log r : ℂ) := by
+    intro h
+    have := congrArg Complex.im h
+    simp at this
+  rw [contourKernel_eq hr0 hw, logTransform_boundary,
+    logTransform_log ha0 ha2 hr0 hr1, Complex.exp_add_pi_mul_I, ← Complex.ofReal_exp]
+  push_cast
+  field_simp
+  rw [show -Complex.exp (x : ℂ) - (r : ℂ) =
+    -(Complex.exp (x : ℂ) + (r : ℂ)) by ring, div_neg, neg_neg, add_comm]
+
+private lemma contourKernel_top_im {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+    (ha1 : α ≠ 1) (hr0 : 0 < r) (hr1 : r < 1) (x : ℝ) :
+    (contourKernel α r (x + Real.pi * Complex.I)).im =
+      -Real.pi * (Real.exp x * (density α (Real.exp x) / (r + Real.exp x))) := by
+  rw [contourKernel_top ha0 ha2 hr0 hr1, Complex.mul_im, Complex.ofReal_re,
+    Complex.ofReal_im, Complex.sub_im, transform_im_zero hr0]
+  have hb := transform_boundary ha0 ha2 ha1 (Real.exp_pos x)
+  have hi := (div_eq_iff Real.pi_ne_zero).mp hb
+  simp only [zero_mul, add_zero, sub_zero]
+  field_simp
+  nlinarith [hi]
+
+private lemma contourKernel_bottom {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+    (hr0 : 0 < r) (hr1 : r < 1) (x : ℝ) :
+    contourKernel α r (x - Real.pi * Complex.I) =
+      conj (contourKernel α r (x + Real.pi * Complex.I)) := by
+  have hw : (x : ℂ) - Real.pi * Complex.I ≠ (Real.log r : ℂ) := by
+    intro h
+    have := congrArg Complex.im h
+    simp at this
+  have hw0 : (x : ℂ) + Real.pi * Complex.I ≠ 0 := by
+    intro h
+    have := congrArg Complex.im h
+    simp at this
+  have hc : (x : ℂ) - Real.pi * Complex.I = conj ((x : ℂ) + Real.pi * Complex.I) := by
+    simp [sub_eq_add_neg]
+  rw [contourKernel_eq hr0 hw, hc, logTransform_conj α hw0,
+    logTransform_log ha0 ha2 hr0 hr1, contourKernel_top ha0 ha2 hr0 hr1,
+    logTransform_boundary]
+  have hf := Complex.conj_eq_iff_im.mpr (transform_im_zero (α := α) hr0)
+  rw [Complex.exp_conj, Complex.exp_add_pi_mul_I, ← Complex.ofReal_exp]
+  simp only [map_neg, Complex.conj_ofReal, map_mul, map_sub, hf]
+  push_cast
+  field_simp
+  rw [show -Complex.exp (x : ℂ) - (r : ℂ) =
+    -(Complex.exp (x : ℂ) + (r : ℂ)) by ring, div_neg, neg_neg, add_comm]
+
+private lemma contourKernel_line_continuous {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+    {y : ℝ} (hy : -Real.pi ≤ y ∧ y ≤ Real.pi) :
+    Continuous (fun x : ℝ => contourKernel α r (x + y * Complex.I)) := by
+  apply continuousOn_univ.mp
+  apply (contourKernel_differentiable (r := r) ha0 ha2).continuousOn.comp
+    (show ContinuousOn (fun x : ℝ => (x : ℂ) + y * Complex.I) univ by fun_prop)
+  intro x _
+  simpa only [Set.mem_ofPred_eq, Complex.add_im, Complex.ofReal_im, Complex.mul_im,
+    Complex.ofReal_re, Complex.I_im, Complex.I_re, mul_one, mul_zero, add_zero,
+    zero_add] using hy
+
+private lemma contour_balance {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
+    (ha1 : α ≠ 1) (hr0 : 0 < r) (hr1 : r < 1) (T : ℝ) :
+    2 * Real.pi * (∫ x in (-T)..T,
+      Real.exp x * (density α (Real.exp x) / (r + Real.exp x))) =
+      (∫ y in (-Real.pi)..Real.pi, contourKernel α r (-T + y * Complex.I)).re -
+      (∫ y in (-Real.pi)..Real.pi, contourKernel α r (T + y * Complex.I)).re := by
+  have hi : IntervalIntegrable (fun x : ℝ =>
+      contourKernel α r (x + Real.pi * Complex.I)) volume (-T) T :=
+    (contourKernel_line_continuous ha0 ha2
+      ⟨by linarith [Real.pi_pos], le_rfl⟩).intervalIntegrable _ _
+  have ht : (∫ x in (-T)..T, contourKernel α r (x + Real.pi * Complex.I)).im =
+      -Real.pi * (∫ x in (-T)..T,
+        Real.exp x * (density α (Real.exp x) / (r + Real.exp x))) := by
+    rw [← show (∫ x in (-T)..T,
+      (contourKernel α r (x + Real.pi * Complex.I)).im) =
+        (∫ x in (-T)..T, contourKernel α r (x + Real.pi * Complex.I)).im from
+          Complex.imCLM.intervalIntegral_comp_comm hi,
+      ← intervalIntegral.integral_const_mul]
+    exact intervalIntegral.integral_congr
+      (fun x _ => contourKernel_top_im ha0 ha2 ha1 hr0 hr1 x)
+  have hb : (∫ x in (-T)..T, contourKernel α r (x - Real.pi * Complex.I)).im =
+      -(∫ x in (-T)..T, contourKernel α r (x + Real.pi * Complex.I)).im := by
+    have he : (∫ x in (-T)..T, contourKernel α r (x - Real.pi * Complex.I)) =
+        conj (∫ x in (-T)..T, contourKernel α r (x + Real.pi * Complex.I)) := by
+      rw [← intervalIntegral.intervalIntegral_conj]
+      exact intervalIntegral.integral_congr
+        (fun x _ => contourKernel_bottom ha0 ha2 hr0 hr1 x)
+    rw [he, Complex.conj_im]
+  have h := congrArg Complex.im (contour_rectangle (r := r) ha0 ha2 T)
+  simp only [Complex.add_im, Complex.sub_im, Complex.mul_im, Complex.I_re,
+    Complex.I_im, zero_mul, one_mul, zero_add, Complex.zero_im] at h
+  rw [hb, ht] at h
+  nlinarith
 
 private lemma slit_transform_integral {α r : ℝ} (ha0 : 0 < α) (ha2 : α < 2)
     (ha1 : α ≠ 1) (hr0 : 0 < r) (hr1 : r < 1) :
