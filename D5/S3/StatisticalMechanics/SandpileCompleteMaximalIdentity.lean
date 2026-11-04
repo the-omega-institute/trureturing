@@ -6,9 +6,7 @@
    utility: none
    digest: Gao–Li's complete maximal identity conjecture for clique–path products. -/
 
-import Mathlib.Combinatorics.SimpleGraph.Hasse
 import Mathlib.Combinatorics.SimpleGraph.LapMatrix
-import Mathlib.RingTheory.Polynomial.Chebyshev
 import D5.S3.Combinatorics.SpectralGraph.TwinFreeThetaRecurrence
 
 /-! The complete maximal identity property for Cartesian products of cliques and paths. -/
