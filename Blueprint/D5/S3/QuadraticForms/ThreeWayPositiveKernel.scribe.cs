@@ -18,10 +18,10 @@ internal sealed class ThreeWayPositiveKernelDocument : IScribeDocumentDefinition
             Blocks(
                 Paragraph(Text("A is an arbitrary additive commutative group, U an arbitrary additive endomorphism, and q an arbitrary finite real-valued nonnegative function. The balance law is universal in both original labels. There is no topology, rational or real scalar action, divisibility, faithfulness, invertibility, finite dimension or bounded iteration depth on A.")),
                 Paragraph(Text("Rep(U,q) denotes HilbertRepresentation U q: it packages a complex inner-product space H with a normed additive group and completeness, an additive label map iota:A to H, and exactly the following conditions. The carrier universe is arbitrary in the uniqueness clause; the constructed carrier has the original label universe. A linear isometry equivalence over the complex numbers is the unitary appearing in the statement.")),
-                Disp(ModelConditions()),
+                new DocumentBlock.DisplayFormula(ModelConditions()),
                 Paragraph(Text("The phase is omega=-1/2+i sqrt(3)/2. ThreeWayBalance.three_way_quadratic_structure is applied directly to the original A to obtain an integer quadratic map Q. Half its existing polar bilinear companion is the symmetric pairing b(x,y)=(q(x+y)-q(x-y))/4, with b(x,x)=q(x). The original U-invariance and invisible orbit sums imply b(Ux,Uy)=b(x,y) and b(Ux,y)+b(x,Uy)=-b(x,y).")),
                 Paragraph(Text("Nonnegative integer Gram sums are values of b on actual finite integer sums in A. IsLocalization.exist_integer_multiples_of_finite clears rational coefficients; DenseRange.piMap applied to Rat.denseRange_cast and closedness of a finite polynomial inequality then supplies arbitrary real coefficients. Continuity belongs only to the numerical coefficient vector, not to A.")),
-                Disp(KernelFormula()),
+                new DocumentBlock.DisplayFormula(KernelFormula()),
                 Paragraph(Text("The complex Gram K uses the convention conjugate-linear in its first label. For complex coefficients z, its quadratic sum is the real Gram quadratic sum on the same labels x and Ux with coefficients Re(z)+Im(z)/sqrt(3) and 2Im(z)/sqrt(3). This proves positivity for every finite support, including the zero kernel. The covariance is K(Ux,y)=conj(omega)K(x,y).")),
                 Paragraph(Text("The scalar kernel is lifted to K(x,y) times the identity continuous linear map on the complex numbers. RKHS.posSemidef_iff_re_sum_kernel' supplies the exact interface, RKHS.OfKernel supplies the completed carrier, and RKHS.OfKernel.kernel_ofKernel recovers the original entries. Kernel vectors at value 1 define the additive labels. Their diagonal inner product gives q, covariance gives omega, and RKHS.kerFun_dense gives the closed complex span. No independent completion framework is constructed.")),
                 Paragraph(Text("For any two complete minimal representations, real polarization and the specified phase force their full complex Gram to equal K. Each embeds into functions on the original labels by v mapped to the inner products of each label with v; density makes this map injective. The resulting reproducing kernel spaces have identical kernels, so RKHS.equiv and RKHS.equiv_kerFun give a label-preserving complex-linear isometry equivalence. Density of the original label span proves that any other such equivalence agrees everywhere. No nontriviality assumption excludes the zero representation.")),
@@ -43,7 +43,7 @@ internal sealed class ThreeWayPositiveKernelDocument : IScribeDocumentDefinition
         var eq=All("x",a,Equal(Call("e",Call("label",V("R"),x)),Call("label",V("S"),x)));
         var unique=All("R",Rep(),All("S",Rep(),Seq(Exists,Bang,Sp,V("e"),Sp,Colon,Sp,
             Call("LinearIsometryEquiv",Complex,Call("H",V("R")),Call("H",V("S"))),Comma,Sp,eq)));
-        return All("A",Call("Type",V("u")),Seq(OpenBracket,Call("AddCommGroup",a),CloseBracket,Comma,Sp,
+        return All("A",Call("Type"),Seq(OpenBracket,Call("AddCommGroup",a),CloseBracket,Comma,Sp,
             All("U",Call("AddMonoidHom",a,a),All("q",Paren(Seq(a,Sp,To,Sp,Real)),
                 Seq(Paren(nonneg),Sp,Rightarrow,Sp,And(iff,unique))))));
     }
@@ -59,8 +59,9 @@ internal sealed class ThreeWayPositiveKernelDocument : IScribeDocumentDefinition
             All("U",Call("AddMonoidHom",a,a),All("q",Paren(Seq(a,Sp,To,Sp,Real)),
                 All("R",Call("HilbertRepresentation",V("U"),V("q")),And(
                     Call("CompleteSpace",Call("H",r)),
+                    Call("NormedAddCommGroup",Call("H",r)),
                     Call("InnerProductSpace",Complex,Call("H",r)),
-                    All("x",a,All("y",a,Equal(L(Add(x,V("y"))),Add(L(x),L(V("y")))))),norm,phase,dense)))));
+                    All("x",a,All("y",a,Equal(L(Add(x,V("y"))),Add(L(x),L(V("y")))))),norm,phase,dense))))));
     }
 
     private static Formula KernelFormula()
@@ -71,7 +72,7 @@ internal sealed class ThreeWayPositiveKernelDocument : IScribeDocumentDefinition
         var value=Add(B(x,y),Multiply(V("i"),imaginary));
         return All("A",Call("Type"),Seq(OpenBracket,Call("AddCommGroup",a),CloseBracket,Comma,Sp,
             All("U",Call("AddMonoidHom",a,a),All("q",Paren(Seq(a,Sp,To,Sp,Real)),
-                All("x",a,All("y",a,Equal(Call("complexGram",V("U"),V("q"),x,y),value))))));
+                All("x",a,All("y",a,Equal(Call("complexGram",V("U"),V("q"),x,y),value)))))));
     }
 
     private static Formula V(string name)=>F.Id(name);
