@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Analysis.BosonicRenyiStieltjes
 import D5.S3.Resource.LogDet.LogDetInformationSubmodularity
 import D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction
+import Mathlib.LinearAlgebra.SymplecticGroup
 
 /-! Settlement of the bosonic Gaussian Rényi strong-subadditivity line. -/
 
@@ -27,10 +28,10 @@ namespace D5.S3.Quantum.Thermal.GaussianRenyiStrongSubadditivity
 /-! The covariance and entropy interface for the Gaussian Rényi settlement. -/
 
 def symplecticForm (n : ℕ) : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ :=
-  fun (p q : Fin n × Fin 2) => if p.1 = q.1 then
-    if p.2 = 0 ∧ q.2 = 1 then 1
-    else if p.2 = 1 ∧ q.2 = 0 then -1 else 0
-  else 0
+  let e := ((Equiv.prodComm (Fin n) (Fin 2)).trans
+    (Equiv.prodCongr finTwoEquiv (Equiv.refl (Fin n)))).trans
+      (Equiv.boolProdEquivSum (Fin n))
+  (-Matrix.J (Fin n) ℝ).submatrix e e
 
 def physicalOn {ι : Type*} [Fintype ι] [DecidableEq ι]
     (V Ω : Matrix ι ι ℝ) : Prop :=
@@ -73,23 +74,32 @@ def claim : Prop :=
 
 private lemma reduced_square {n : ℕ} (X : Finset (Fin n)) :
     reducedCovariance (symplecticForm n) X * reducedCovariance (symplecticForm n) X = -1 := by
-  let e := (Equiv.prodSubtypeFstEquivSubtypeProd (p := fun i => i ∈ X)
+  let e := ((Equiv.prodComm ↥X (Fin 2)).trans
+    (Equiv.prodCongr finTwoEquiv (Equiv.refl ↥X))).trans
+      (Equiv.boolProdEquivSum ↥X)
+  let f := (Equiv.prodSubtypeFstEquivSubtypeProd (p := fun i => i ∈ X)
     (β := Fin 2)).symm
-  apply Matrix.submatrix_injective e.surjective e.surjective
+  apply Matrix.submatrix_injective f.surjective f.surjective
   dsimp only
-  rw [Matrix.submatrix_mul _ _ e e e e.bijective]
-  change _ = -((1 : Matrix {p : Fin n × Fin 2 // p.1 ∈ X}
-    {p : Fin n × Fin 2 // p.1 ∈ X} ℝ).submatrix e e)
-  rw [Matrix.submatrix_one_equiv]
-  ext ⟨i, a⟩ ⟨j, b⟩
-  change (∑ k : ↥X × Fin 2,
-    symplecticForm n (i.1, a) (k.1.1, k.2) *
-      symplecticForm n (k.1.1, k.2) (j.1, b)) =
-    -((1 : Matrix (↥X × Fin 2) (↥X × Fin 2) ℝ) (i, a) (j, b))
-  delta symplecticForm
-  fin_cases a <;> fin_cases b <;>
-    simp [Fintype.sum_prod_type, Matrix.one_apply, Prod.ext_iff]
-  split_ifs <;> norm_num
+  rw [Matrix.submatrix_mul _ _ f f f f.bijective]
+  have heq :
+      (reducedCovariance
+        (symplecticForm n) X).submatrix f f = (-Matrix.J ↥X ℝ).submatrix e e := by
+    ext ⟨i,a⟩ ⟨j,b⟩
+    fin_cases a <;> fin_cases b
+    · rfl
+    · change -(-(1 : Matrix (Fin n) (Fin n) ℝ) i.val j.val) =
+        -(-(1 : Matrix ↥X ↥X ℝ) i j)
+      simp only [Matrix.one_apply, Subtype.ext_iff]
+    · change -(1 : Matrix (Fin n) (Fin n) ℝ) i.val j.val =
+        -(1 : Matrix ↥X ↥X ℝ) i j
+      simp only [Matrix.one_apply, Subtype.ext_iff]
+    · rfl
+  rw [heq, Matrix.submatrix_mul_equiv, neg_mul_neg, Matrix.J_squared]
+  change -((1 : Matrix (↥X ⊕ ↥X) (↥X ⊕ ↥X) ℝ).submatrix e e) =
+    -((1 : Matrix {p : Fin n × Fin 2 // p.1 ∈ X}
+      {p : Fin n × Fin 2 // p.1 ∈ X} ℝ).submatrix f f)
+  rw [Matrix.submatrix_one_equiv, Matrix.submatrix_one_equiv]
 
 private lemma reduced_card {n : ℕ} (X : Finset (Fin n)) :
     Fintype.card {p : Fin n × Fin 2 // p.1 ∈ X} = 2 * X.card := by
@@ -149,16 +159,10 @@ private lemma uncertainty_posDef {ι : Type*} [Fintype ι] [DecidableEq ι]
   exact (Matrix.mulVec_injective_iff_isUnit.mpr hΩ) (hoz.trans (mulVec_zero _).symm)
 
 private lemma canonical_square (n : ℕ) : symplecticForm n * symplecticForm n = -1 := by
-  ext i j
-  rcases i with ⟨i, a⟩
-  rcases j with ⟨j, b⟩
-  change (∑ k : Fin n × Fin 2,
-    symplecticForm n (i, a) (k.1, k.2) * symplecticForm n (k.1, k.2) (j, b)) =
-    -((1 : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ) (i, a) (j, b))
-  delta symplecticForm
-  fin_cases a <;> fin_cases b <;>
-    simp [Fintype.sum_prod_type, Matrix.one_apply, Prod.ext_iff]
-  split_ifs <;> norm_num
+  dsimp only [symplecticForm]
+  rw [Matrix.submatrix_mul_equiv, neg_mul_neg, Matrix.J_squared]
+  change -((1 : Matrix (Fin n ⊕ Fin n) (Fin n ⊕ Fin n) ℝ).submatrix _ _) = -1
+  rw [Matrix.submatrix_one_equiv]
 
 private lemma physical_posDef {n : ℕ}
     (V : Matrix (Fin n × Fin 2) (Fin n × Fin 2) ℝ)
@@ -745,7 +749,8 @@ private lemma settlement_main : claim := by
       rw [alpha_two_entropy _ _ (hr X) (hpr X) (reduced_square X)]
       change (1 / 2 : ℝ) * Real.log (reducedCovariance V X).det =
         (1 / 2 : ℝ) * Real.log (((reducedCovariance V X).map Complex.ofReal +
-          (0 : ℂ) • (Complex.I • (reducedCovariance (symplecticForm n) X).map Complex.ofReal)).det.re)
+          (0 : ℂ) •
+            (Complex.I • (reducedCovariance (symplecticForm n) X).map Complex.ofReal)).det.re)
       rw [zero_smul, add_zero]
       congr 2
       exact congrArg Complex.re (Complex.ofRealHom.map_det (reducedCovariance V X))
