@@ -1,0 +1,53 @@
+## 来源与版本关系
+
+<a id="ref-omega"></a>
+
+**[1]**
+trureturing，[整体静态相容纤维理论固定原文](https://github.com/the-omega-institute/trureturing/blob/c63ab162315fddd0801cbe9f47dbf3eda6e13360/docs/develop/theory/AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)，第 3--4 节。
+本轮核读配置、严格增长时钟、互斥续接及执行商遗漏历史计数的正文。
+
+<a id="ref-v67"></a>
+
+**[2]**
+trureturing，[V67 历史脚本、内容寻址与唯一来源固定原文](https://github.com/the-omega-institute/trureturing/blob/c63ab162315fddd0801cbe9f47dbf3eda6e13360/docs/develop/theory/AURIC_HISTORY_SCRIPTS_CONTENT_ADDRESSING_AND_QUANTUM_ENTANGLEMENT_IN_ONE_ONTIC_STATE_V67.md)，第 2 节。
+
+<a id="ref-v73"></a>
+
+**[3]**
+trureturing，[V73 最小闭合关系体与酉重构固定原文](https://github.com/the-omega-institute/trureturing/blob/c63ab162315fddd0801cbe9f47dbf3eda6e13360/docs/develop/theory/AURIC_PREFIX_STATES_MINIMAL_CLOSED_RELATIONAL_BODY_AND_UNITARY_RECONSTRUCTION_V73.md)，定义 5.1、定理 5.2、推论 5.3。
+
+<a id="ref-v74"></a>
+
+**[4]**
+trureturing，[V74 平滑历史与内生运动固定原文](https://github.com/the-omega-institute/trureturing/blob/c63ab162315fddd0801cbe9f47dbf3eda6e13360/docs/develop/theory/AURIC_SMOOTH_QUANTUM_HISTORIES_COTANGENT_DYNAMICS_AND_ENDOGENOUS_MOTION_V74.md)，第 2 节。
+
+<a id="ref-v82"></a>
+
+**[5]**
+本对话连续研究，[v82 切向二元相容与内生量子门理论](https://chatgpt.com/space/page_3e3918be4eec8191aef3239016dbff9c)，2026 年 11 月 2 日。
+
+<a id="ref-ding"></a>
+
+**[6]**
+Guanggui Ding.
+*The 1-Lipschitz mapping between the unit spheres of two Hilbert spaces
+can be extended to a real linear isometry of the whole space*.
+Science in China Series A: Mathematics, 45(4), 479--483, 2002.
+[DOI: 10.1007/BF02872336](https://doi.org/10.1007/BF02872336).
+出版者摘要明确给反向像闭合与非扩张的前件；本文独立写出所需有限情形的全部证明。
+
+<a id="ref-nayaksen"></a>
+
+**[7]**
+Ashwin Nayak and Pranab Sen.
+*Invertible Quantum Operations and Perfect Encryption of Quantum States*.
+Quantum Information and Computation, 7(1--2), 103--110, 2007.
+[arXiv:quant-ph/0605041](https://arxiv.org/abs/quant-ph/0605041)，定理 2.1 及同维讨论。
+
+<a id="ref-watrous"></a>
+
+**[8]**
+John Watrous. *The Theory of Quantum Information*.
+[第 2 章作者公开稿](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)，
+态、通道、Kraus 表示和测量仪器。
+

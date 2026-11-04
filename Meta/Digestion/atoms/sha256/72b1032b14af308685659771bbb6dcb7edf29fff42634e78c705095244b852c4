@@ -1,0 +1,17 @@
+## 14. 从二态恢复到稳定关系代数：接回 v88 与 v89
+
+先固定归一忠实态 $\sigma>0$、有限维 CPTP 映射 $\mathcal N$，并设
+$\tau=\mathcal N(\sigma)>0$。本节使用前文已经定义的 Petz 恢复
+$\mathcal R=\mathcal R_{\sigma,\mathcal N}\equiv\mathcal R_\sigma$，
+下标完整写出时同时强调所依赖的通道，不增加新的恢复公理。
+记
+
+$$
+\Gamma_\sigma(X)=\sigma^{1/2}X\sigma^{1/2},\qquad
+\mathcal T=\mathcal R\mathcal N,\qquad
+\Phi_\sigma=\Gamma_\sigma^{-1}\mathcal T\Gamma_\sigma.
+$$
+
+$\mathcal T$ 作用于状态，$\Phi_\sigma$ 作用于加权关系坐标。
+它们的固定对象不同，不能把这两个映射混为同一个状态更新。
+

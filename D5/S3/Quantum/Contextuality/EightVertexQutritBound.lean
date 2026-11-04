@@ -6,6 +6,9 @@
    utility: none
    digest: Both eight-vertex graphs have sharp qutrit value three and minimum dimension four. -/
 
+/- Escape audit unfinished for parseval_three and bessel_pair:
+https://github.com/the-omega-institute/trureturing/issues/25122 -/
+
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.Normed.Module.Normalize
 import Mathlib.Combinatorics.SimpleGraph.Clique
@@ -156,7 +159,7 @@ private theorem force_third_ray {a b c x : E 3}
   exact rayEq_of_common_perp (orthonormal_two ha hb hab).linearIndependent hx hc
     (by rwa [real_inner_comm]) (by rwa [real_inner_comm]) hac hbc
 
-private theorem parseval_three {a b c : E 3}
+theorem parseval_three {a b c : E 3}
     (hON : Orthonormal ℝ ![a, b, c]) (ψ : E 3) :
     overlapSq ψ a + overlapSq ψ b + overlapSq ψ c = ‖ψ‖ ^ 2 := by
   let B := basisOfOrthonormalOfCardEqFinrank hON (by simp)
@@ -171,7 +174,7 @@ private theorem parseval_three {a b c : E 3}
   simpa only [Fin.sum_univ_succ, Matrix.cons_val_zero, Matrix.cons_val_succ,
     Fin.sum_univ_zero, add_zero, overlapSq.eq_1, add_assoc] using h
 
-private theorem bessel_pair {d : ℕ} {x y : E d}
+theorem bessel_pair {d : ℕ} {x y : E d}
     (hx : ‖x‖ = 1) (hy : ‖y‖ = 1) (hxy : ⟪x, y⟫ = 0) (ψ : E d) :
     overlapSq ψ x + overlapSq ψ y ≤ ‖ψ‖ ^ 2 := by
   have h := (orthonormal_two hx hy hxy).sum_inner_products_le ψ (s := Finset.univ)

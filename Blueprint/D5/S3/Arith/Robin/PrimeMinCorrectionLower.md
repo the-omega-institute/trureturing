@@ -22,8 +22,21 @@ The normalized finite lower sum tends to a+2/(r*b)*(1-r^(-N)). Set e=min(epsilon
 
 Fix c=1/(2*log(4)) and enlarge the conditional threshold to max(A0,64), before choosing m. If X/2<=theta(P), Chebyshev's unconditional bound theta(P)<=log(4)*P implies c*X<=P, so the full finite-shell proof applies. Otherwise the strict log-log tangent at X gives a clock gap exceeding 1/(2*log(X)). Since sqrt(X)>=8 and 4*sqrt(2)<8, this exceeds (2*sqrt(2)-epsilon)/(sqrt(X)*log(X)) for every epsilon>0, including epsilon>=2*sqrt(2). The original complete tail is nonnegative. The shared tail_robin_data helper in OriginalEndpointPrimeTail retains the exact same-m margin identity, giving the second strict conclusion. The public telescope has no c or prime-ratio premise. No optimizer hypothesis, full layer inventory equality, record existence, RH hypothesis or signed pure-prime bound is introduced. Control of that signed quantity and the full RH/Robin/5040 goal remain separate obligations.
 
+**Theorem 1.2 (The consumed finite head comparison).**
+
+Lean statement: `D5/S3/Arith/Robin/PrimeMinCorrectionLower.prime_weight_lower`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PrimeMinCorrectionLower.prime_weight_lower` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original head-weight proof is exposed unchanged. PrimeMinCorrectionSecondOrderLower applies it at the exact real root, with D=X*log(X), to the finite head p<=rho. This exposure is reuse, not additional mathematical content.
+
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/PrimeMinCorrectionLower.prime_weight_lower`
 - Truth anchor: `D5/S3/Arith/Robin/PrimeMinCorrectionLower.uniform_min_tail_robin_lower`
 - Dependency: [D5/S3/Arith/Robin/EulerLayerRootCorrection](EulerLayerRootCorrection.md)
 - Dependency: [D5/S3/Arith/Robin/OriginalEndpointPrimeTail](OriginalEndpointPrimeTail.md)

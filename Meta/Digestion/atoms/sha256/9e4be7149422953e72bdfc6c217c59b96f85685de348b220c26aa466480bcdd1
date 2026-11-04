@@ -1,0 +1,42 @@
+**Theorem 51.2 (full positive-prefix cost and original-pair comparison).**
+For every $0<\xi\le\xi_*$ and every feasible population with $x<1$,
+
+$$
+\eta(\xi,q)^2\le K(\xi,q)(q-q_\xi)^2.
+\tag{51.7}
+$$
+
+This is the full-domain population-cost/gain relation T. For every
+normalized pure original $E$ and every single original $U\in U(4)$
+with $\rho_+(E,U)=\rho(E,U)=\xi$,
+
+$$
+g(E,U)-V(\xi)\ge\frac{23}{300}(q-q_\xi)^2.
+\tag{51.8}
+$$
+
+Both population endpoints, every effect phase, arbitrary original
+unitaries and the level $\xi=\xi_*$ are included. Equality $g=V$ holds
+exactly at the following two geometric orientations and all their common
+scalar representatives:
+
+$$
+\begin{gathered}
+x_\xi=1-\xi/4+q_\xi/2,\qquad y_\xi=\sqrt{1-x_\xi^2},\\
+\beta_\tau=\begin{pmatrix}\sqrt{1-q_\xi}\\-\tau i\sqrt{q_\xi}\end{pmatrix},
+\qquad E_\tau=(T\beta_\tau\beta_\tau^\dagger T^\dagger)^{\mathsf T},\\
+U_{\tau,\lambda}=\lambda\operatorname{diag}
+ (x_\xi+\tau iy_\xi,x_\xi-\tau iy_\xi,1,1)U_+,
+\qquad \tau\in\{-1,1\},\quad |\lambda|=1.
+\end{gathered}
+\tag{51.9}
+$$
+
+The two orientations are distinct modulo the one common scalar. The
+selected root also satisfies the refined rational isolation
+
+$$
+                 \frac{59}{25}<\xi_*<\frac{239}{100}.
+\tag{51.10}
+$$
+

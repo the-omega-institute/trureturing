@@ -2261,3 +2261,2504 @@ Proof. Remove duplicate entries from a finite list. If it has at least two membe
 These source correspondences are readings of the actual declarations and primary literature, not a new Lean compilation or kernel verification of §38. The theorem is conditional on the exact supplied service and all exclusions of Definition 38.1; it asserts no physical realization, noise tolerance, physical spacetime identification, full-rational finite acquisition, total-memory optimum or worldwide priority. The full-carrier and presentation obstructions already stated in §§18 and 25 remain. This bounded original-recovery consequence does not complete the continuing RRO programme.
 
 ## 追加锚（本行以下为增补区）
+
+## 39. Acquired full future profiles and recovery after actual motion
+
+### 39.1 All future words, all scales in the requested range
+
+**Definition 39.1 (one source, full profile and actual evidence).** Retain the positive rational source, chronological $L/R$ actions and unclipped, nondisturbing floor services of Assumptions 11.1 and 18.2. Every requested positive integer scale must be supplied, lawful to use, and return its complete binary integer in finite time. Each finite action, local computation and response must complete. There is one source and epoch, with serialized acknowledgements; no reset, copy, source inverse, saved original source or unknown-source advice is supplied. Positivity is a source premise, not a fact bought by an extra unit read.
+
+For $B\ge1$, define the common full future profile, its instantaneous part and its candidate cut set by
+
+$$
+\begin{aligned}
+\mathsf P_B(y)&=\bigl(q_m(f_v(y))\bigr)_{1\le m\le B,\ v\in\{L,R\}^{<\omega}},\\
+\mathsf F_B(y)&=(q_m(y))_{1\le m\le B},\\
+\mathcal H_B&=\{p/q>0:\gcd(p,q)=1,\ 1\le q\le B\}.
+\end{aligned}
+\tag{39.1}
+$$
+
+The words include $\varepsilon$. There is no finite catalogue or word-length restriction in $\mathsf P_B$. It is a semantic family, represented below by a finite cell and a finite evaluation procedure, not by an infinite stored tuple. A prediction indexed by $v$ is not an observation of an executed $v$. The single-scale all-future class $\equiv_m$ remains that of (11.2); it must not be confused with their common refinement over every $m\le B$.
+
+**Theorem 39.2 (complete full-profile cell and continued prediction).** Equality of $\mathsf P_B$, equality of $\mathsf F_B$ and the following no-cut condition are equivalent:
+
+$$
+0<x<y,\qquad \mathcal H_B\cap(x,y]=\varnothing.
+\tag{39.2}
+$$
+
+The cells are $(0,1/B)\cap\mathbb Q$ and $[\ell,r)\cap\mathbb Q$ between successive positive cuts of $\mathcal H_B$. Every cell has finite rational endpoints with reduced denominators at most $B$. There are infinitely many cells on the whole carrier. One cell, together with $B$, suffices to evaluate every coordinate of $\mathsf P_B$ by finite exact arithmetic and to update this profile through any actual finite forward continuation.
+
+Proof. The cut theorem 11.2 gives the cuts $\mathcal C_m$ of the entire single-scale future family. Every reduced denominator there is at most $m$, so $\bigcup_{m\le B}\mathcal C_m\subseteq\mathcal H_B$. Conversely a reduced $p/q$ with $q\le B$ is already a cut of the instantaneous $q_q$, hence belongs to $\mathcal C_q$. Thus this union equals $\mathcal H_B$. The instantaneous grids have the same union, proving both equivalences, with the right endpoint included exactly as in (11.4). Local finiteness follows by counting finitely many numerators at each of the finitely many denominators on a bounded interval. Integer cuts ensure finite upper endpoints. Distinct cuts $p/q,p'/q'$ differ by at least $1/(qq')\ge1/B^2$; this is supporting Farey arithmetic, not a new enumeration theorem.
+
+For evaluation choose $y_0=\ell$ when $\ell>0$, and $y_0=r/2$ in the first cell. Evaluate $q_m(f_v(y_0))$ using the actual matrix convention of §6. The equivalence proves this equals the value for every possible source in the cell, for every finite $v$, not just for words in a stored list. For a new action $a$, equal profiles before it give equal profiles after it by replacing $v$ with the chronological concatenation $av$. Consequently the cell containing $f_a(y_0)$ is the updated full-profile cell. This proves continued use and finite evaluation, without executing a prediction or acquiring a literal original history. $\square$
+
+### 39.2 Two genuine reads at polynomial raw scales
+
+**Theorem 39.3 (acquired full profile at an unchanged attained cut).** For every $B\ge1$, a finite deterministic program acquires the full $\mathsf P_B(z)$ of an unrestricted positive rational current source $z$ with at most two actual replies, zero actions, first scale $D=B^2$ and, if needed, second scale at most $B$. No original-denominator bound is assumed. If existing actual evidence already determines one of these replies, the program derives it and omits that read.
+
+Proof. Obtain the actual reply $r=q_D(z)$, or derive that same integer from retained evidence. Its exact raw cell is
+
+$$
+J_D(r)=\begin{cases}(0,1/D),&r=0,\\\left[r/D,(r+1)/D\right),&r>0.\end{cases}
+\tag{39.3}
+$$
+
+There is at most one distinct $\mathcal H_B$ cut strictly inside this interval: two interior cuts would be separated by less than $1/D=1/B^2$. For each denominator $s=1,\ldots,B$, compute the least numerator $j$ with $j/s>r/D$ and test $j/s<(r+1)/D$. This is one integer division and comparison per denominator; repetitions name the same cut. A cut at the lower endpoint is already owned by the cell, and the upper endpoint is excluded.
+
+If there is no interior cut, no further read is necessary. Otherwise write that cut as $t=p/s$ with $s\le B$ (reduction is optional), obtain the genuine reply $h=q_s(z)$ and decide $z\ge t$ by $h\ge p$. Intersect (39.3) with $[t,\infty)$ or $(0,t)$ accordingly. This is a genuine comparison at the unchanged cut, not a hypothetical continuation. If prior evidence already settles its side, omit it. Select the included positive lower endpoint of the resulting interval, or an interior rational when its lower endpoint is zero. At most one cut was crossed, so this representative has exactly the actual full profile by Theorem 39.2.
+
+For completeness, the exact containing cell is computed with $B$ further local divisions. At representative $y_0$, put $j_s=\lfloor sy_0\rfloor$. Its lower endpoint is the maximum of $0$ and $j_s/s$ over $s\le B$, and its upper endpoint is the minimum of $(j_s+1)/s$. Reduce only these selected endpoints if desired. This produces the entire finite representation, including all future words. In particular
+
+$$
+q_1(z)=\lfloor r/D\rfloor
+\tag{39.4}
+$$
+
+is derived from the first reply. For $B=1$, $D=1$, there is no interior integer cut and exactly this one read suffices unless already earned. The zero report means $(0,1)$, whose upper endpoint is finite and excluded. The construction uses only finitely many binary arithmetic operations and the supplied finite-completing services. $\square$
+
+The two-read result does not contradict the one-read divisibility condition of Theorem 15.2. Its second scale is chosen after an actual first reply; it uses the single unresolved local cut rather than a global LCM. The numerical raw scale $B^2$, as well as its binary name, is polynomially bounded.
+
+### 39.3 The actual original/current recovery square
+
+**Definition 39.4 (earned unit slice and authentic prefix).** An actual original reply $q_1(x)=k$, or a derived value from an actually acquired original archive, earns
+
+$$
+I_k=\begin{cases}(0,1),&k=0,\\\left[k,k+1\right),&k\ge1.\end{cases}
+\qquad k=\lfloor x\rfloor\ge0.
+\tag{39.5}
+$$
+
+Let $u$ be the authentic actually executed chronological prefix, with
+
+$$
+A_u=\begin{pmatrix}a&b\\c&d\end{pmatrix},\quad
+ad-bc=1,\quad a,d\ge1,\quad b,c\ge0,\qquad
+z=f_u(x)=\frac{ax+b}{cx+d}.
+\tag{39.6}
+$$
+
+The square compares the original full profile $\mathsf P_B(x)$ and the current full profile $\mathsf P_C(z)$ on this same slice and actual prefix. The current profile must come from actual current replies, for example Theorem 39.3, or be derived from already acquired evidence. The square's upper map is the real action $u$; mathematical inverse arithmetic below is not a source operation.
+
+**Theorem 39.5 (both factor directions and sharp slice threshold, including zero).** For every $k\ge0$ and $B\ge2$, the current full profile at resolution $C\ge1$ determines the original full profile at resolution $B$ on $I_k$ if and only if
+
+$$
+f_u\bigl(\mathcal H_B\cap(k,k+1)\bigr)\subseteq\mathcal H_C
+\quad\Longleftrightarrow\quad
+C\ge C_*:=B\bigl(c(k+1)+d\bigr)-c.
+\tag{39.7}
+$$
+
+The reverse factor holds if and only if
+
+$$
+f_u^{-1}\bigl(\mathcal H_C\cap f_u((k,k+1))\bigr)
+ \subseteq\mathcal H_B.
+\tag{39.8}
+$$
+
+Mutual recovery holds precisely when the two interior cut sets agree after transport. A current profile with extra cuts can recover the original profile without being recoverable from it. For $B=1$, the original full profile is already known from $k$, with no current read; the reverse factor still requires (39.8).
+
+Proof. By Theorem 39.2 these are exactly the respective half-open interval partitions. A factor from current to original exists precisely when every original interior cut survives in the current partition. Necessity follows by choosing two rational points on opposite sides of a missing cut within one current cell; sufficiency follows because each current cell then lies in one original cell. The same argument with roles reversed gives (39.8). It proves both directions, with cuts at the slice's endpoints irrelevant because the domain is already restricted to that slice.
+
+For the sharp value, any original cut can be written reduced as $j/m$ with $m\le B$ and $mk<j<m(k+1)$. Its image is
+
+$$
+f_u(j/m)=\frac{aj+bm}{cj+dm},\qquad
+cj+dm\le m\bigl(c(k+1)+d\bigr)-c\le C_*.
+\tag{39.9}
+$$
+
+This image is reduced: a common divisor of its two displayed entries divides $j,m$ after applying the integer inverse matrix. This is transformed-column reducedness, not merely lower-row coprimality. Thus $C\ge C_*$ suffices. The last $B$-grid cut
+
+$$
+t_*=k+1-1/B=\frac{B(k+1)-1}{B}
+\tag{39.10}
+$$
+
+is positive even for $k=0$, belongs strictly to the slice, and is reduced. Its image has reduced denominator exactly $C_*$. If $C<C_*$ that image is not in $\mathcal H_C$. Local finiteness gives rationals $x^-<t_*<x^+$ in the same $I_k$ with no current cut between their images. They have identical current full profiles and different original full profiles. This is a strict-below-threshold witness on the declared slice. For $c=0$, determinant one forces $a=d=1$, so $C_*=B$ and the same witness works. For $B=1$ there are no interior integer cuts in $I_k$, proving its separate statement. $\square$
+
+This is a sharp factor condition given only the declared slice and prefix. It is not an acquisition-cost optimum when additional old evidence is retained. The lower endpoint $0$ is always excluded; it causes no missing case in (39.7).
+
+### 39.4 Acquired original-profile upgrades from the actual moving cut
+
+**Definition 39.6 (earned localization and exact preimages).** A bounded original interval $I$ is earned when actual replies at authentic cuts, or an actually acquired earlier archive, imply $x\in I$. Write its finite endpoints as $0\le\alpha<\beta<\infty$, with lower endpoint included when positive and upper endpoint excluded. Put $U=\lceil\beta\rceil\ge1$. A unit slice or a previously acquired full-profile cell already supplies this localization; no new bootstrap read is charged in that case.
+
+For clarity, solving a current threshold $f_u(t)=j/m$ gives
+
+$$
+t=\frac{dj-bm}{am-cj}
+\quad\text{when this lies in }(0,\infty).
+\tag{39.11}
+$$
+
+Its displayed denominator is $am-cj$, not $cj+dm$. The latter is the forward denominator in (39.9). For reduced $j/m$ and a positive preimage both entries in (39.11) are positive and coprime, by the inverse determinant-one argument. Endpoint preimages of raw cells are clipped to the actual image $f_u((0,\infty))$ before inversion; an endpoint outside that image is replaced by the corresponding original endpoint $0$ or $\infty$.
+
+**Theorem 39.7 (two-reply upgrades, polynomial raw scale and attained linear scan).** At any authentic attained prefix $u$, from an earned bounded $I$ and requested $B\ge1$, the controller acquires the original full $\mathsf P_B(x)$ with zero additional actions and at most two genuine current replies. A sufficient explicit raw-scale budget is
+
+$$
+T=cU+d,\qquad Q=BT,\qquad D=Q^2;
+\tag{39.12}
+$$
+
+the optional second scale is at most $Q$. The decoder uses $O(B)$ rational divisions/comparisons and a constant number of gcd computations, with bit costs specified in Proposition 39.10. Its loop runs over original denominators $1,\ldots,B$, not every current denominator up to $Q$. Existing earned evidence is used before either paid read.
+
+Proof. Every original target cut $j/m$ strictly inside $I$ has $m\le B$, $0<j<mU$ and transported reduced denominator
+
+$$
+s=cj+dm\le B(cU+d)=Q.
+\tag{39.13}
+$$
+
+Their distinct images are separated by at least $1/Q^2$. Obtain $r=q_D(z)$ at the actual current cut, unless retained evidence already determines that exact value. Intersect $I$ with the preimage of its actual half-open cell to obtain $J$, which contains the actual $x$. This computation uses (39.11) and image clipping. The interior of $f_u(J)$ lies in one raw interval of width $1/Q^2$, so $J$ contains at most one distinct original target cut strictly in its interior.
+
+To find it, for each $m\le B$ compute the least integer $j$ with $j/m>\inf J$, and test $j/m<\sup J$. If it passes, it is positive and there cannot be a second numerator at that denominator: that would give two distinct target images inside the raw cell. Repeated fractions across denominators identify the same cut. If no cut is found, the first reply already decides the full target. If a cut $t=j/m$ is found, compute
+
+$$
+f_u(t)=p/s,\qquad p=aj+bm,\quad s=cj+dm\le Q.
+\tag{39.14}
+$$
+
+One actual current reply $h=q_s(z)$ decides $x\ge t$ exactly by $h\ge p$. Reduction can only lower the second scale; alternatively use the displayed unreduced $s$, which also works. Restrict $J$ to that side and compute the original full-profile cell by the $B$-division procedure in Theorem 39.3. This proves the promised finite acquisition and endpoint ownership.
+
+Before either read, intersect with all retained actual constraints. If this already makes the target constant, answer without reading. If it makes the proposed current reply constant, derive that reply; its value is not relabelled as a new observation. There is no separate $q_1(z)$ request. Previously earned original $k$ is retained or derived from the original interval; no assertion that an unperformed current unit read took place is needed. All comparisons use current $z$, while all retained constraints refer to the same original $x$ through authentic matrices. Repeated, skipped and noncoprime requested scales cause no divisibility restriction, because the target range is every $m\le B$. $\square$
+
+**Proposition 39.8 (pointwise entrance after contraction without an old source record).** If initialization occurs after an authentic prefix $u$ with no earlier source-dependent record, it need not have a bounded original interval yet. There is nevertheless a pointwise finite zero-action entrance procedure. For $c=0$ the translation formula gives a bounded original interval from one actual $q_1(z)$. For $c>0$, request $q_{2^h}(z)$ for $h=0,1,\ldots$ until the acquired raw upper endpoint is strictly below $a/c$. Clip its lower endpoint to $b/d$, invert, and obtain a bounded earned $I$. Then Theorem 39.7 applies. With
+
+$$
+\delta=a/c-z=\frac1{c(cx+d)},\qquad
+h_* =\max\bigl(0,\lceil\log_2(2/\delta)\rceil\bigr),
+\tag{39.15}
+$$
+
+at most $h_*+1$ entrance replies suffice. This is analysis of the actual run, not $x$ or $\delta$ supplied to the program.
+
+Proof. At scale $D$, the raw upper endpoint is at most $z+1/D$. When $D\ge2/\delta$, it is strictly below $a/c$, so the inverse upper endpoint is finite. The attained $z$ is strictly inside $(b/d,a/c)$ and positive; the clipped lower preimage is either $0$ or a finite nonnegative rational. This earns the interval from actual replies. The dyadic test is an exact rational comparison using known $a,c$; it does not require knowing $\delta$. Translation has no finite upper asymptote, so its inverse of a finite current raw cell is bounded after positivity clipping. If an earlier archive already supplied $I$, this entire entrance phase is omitted. No uniform entrance cap follows. $\square$
+
+### 39.5 Sufficient retained relations and one continuing controller
+
+**Definition 39.9 (joint evidence interval and authentic cut indices).** Retain the source/epoch binding, the serialized actual action/acknowledgement sequence and the actual read records $(t_i,D_i,r_i)$, where $t_i$ is an authentic position in that sequence and $r_i=q_{D_i}(f_{u_{t_i}}(x))$. Authenticity assumes faithful recording and exclusive serialization, not cryptographic protection against a malicious recorder. The semantic source-dependent state can be retained as just
+
+$$
+K=(0,\infty)\cap\bigcap_i f_{u_{t_i}}^{-1}(J_{D_i}(r_i)).
+\tag{39.16}
+$$
+
+This is one interval with rational endpoints, possibly unbounded before entrance. A derived full-profile cell, original band and floor tuple are computed from $K$ when needed. They need not be separately retained as stage archives. A known current matrix is updated by left multiplication on each acknowledged letter; matrices at older authentic cuts can be recomputed from the recorded sequence. Source-blind requests or choices are allowed to depend on earlier exposed data; extra source-dependent request parameters would be additional evidence and must be declared as such.
+
+**Theorem 39.10 (sufficiency, continued use and exact prediction boundary).** The state (39.16), the authentic cut indices and the installed finite arithmetic suffice for original, current and authentically recorded-cut predictions. At a cut $t$, the full resolution-$C$ profile is determined exactly when
+
+$$
+f_{u_t}^{-1}(\mathcal H_C)\cap\operatorname{int}K=\varnothing.
+\tag{39.17}
+$$
+
+For a single prediction $q_m(f_v(f_{u_t}(x)))$, replace that cut set by the preimages of its instantaneous $m$-grid. If $K$ lies in an original $\mathsf P_B$ cell, every original/current/recorded-cut prediction at $m\le B$ and every finite future word is determined, and remains so through further genuine forward actions. Unknown later original resolutions can be acquired by Theorem 39.7 using this same state.
+
+Proof. Each actual read contributes exactly its interval constraint, because every matrix map is strictly increasing. Their intersection is nonempty on the actual run, with positive lower endpoint included and finite upper endpoint excluded. The source-dependent reports, together with source-independent choices and acknowledged actions, impose precisely (39.16); replay on another $y\in K$ gives the same deterministic branch. Thus the target can be computed from these data if and only if it is constant on $K$. A target cut strictly inside $K$ gives two rational realizations with different values; absence of such cuts gives constancy with correct endpoint ownership. Theorem 39.2 proves (39.17) for all continuations simultaneously. The same threshold argument proves the single-coordinate version.
+
+A representative in $K$ therefore computes every permitted prediction. If $K$ lies in one original $\mathsf P_B$ cell, its forward images, including those at each authentic past cut and any continuation from it, have equal $\mathsf P_B$ by forward congruence. On an actual new action update the authentic word/matrix; on an actual new reply intersect its preimage into $K$. Neither update loses a previously established prediction. At an original-precision upgrade, the new $K$ lies in a cell of the finer requested common profile; old covered ranges restrict consistently by the same actual $x$.
+
+Keeping $K$ preserves the entire joint kernel of the numerical evidence in two endpoints. This is a sufficient semantic compression, with no claim of globally minimal binary coding. Authentic provenance still needs the actual action/read record: an interval does not say which observations occurred. Conversely that record permits recomputing $K$, so its endpoints can be a working cache rather than a second source of truth. Predicted values at authentic old cuts remain predictions attached to those cuts; they are actual past observations only where a corresponding read record exists. A fabricated continuation cannot become an authentic cut merely because its matrix can be evaluated. $\square$
+
+**Theorem 39.11 (bounded-overshoot frontiers for unknown original requests).** There is one nonanticipating controller for successive requested original precisions $M_1,M_2,\ldots\ge1$, with arbitrary finite genuine forward continuations between completed requests. It serializes each upgrade and uses Definition 39.9's single boundary. Use the public frontiers
+
+$$
+b_0=1,\quad b_1=2,\quad b_{j+1}=b_j^2\ (j\ge1),\qquad
+b_j=2^{2^{j-1}}\ (j\ge1).
+\tag{39.18}
+$$
+
+On a miss choose the least frontier $b_j\ge M_i$, skip unneeded intervening frontiers, and run Theorem 39.3 at an unchanged original start or Theorem 39.7 at the attained moving cut. A hit is answered from the retained boundary with no paid read. Let $M=\max_{i\le n}M_i$, and let $J$ count frontier acquisitions through that completed finite request prefix. Including a possible acquisition at $b_0$,
+
+$$
+\begin{aligned}
+J&\le 2+\left\lceil\log_2\log_2(\max(2,M))\right\rceil,\\
+b_{\rm final}&\le\max(2,M^2),\\
+R_{\rm paid}&\le R_{\rm start}+E+2J.
+\end{aligned}
+\tag{39.19}
+$$
+
+Here $E$ is the genuine entrance cost only when Proposition 39.8 is needed. The count includes all earlier frontier acquisitions by this same controller in $J$. If accounting begins with an already acquired archive, $R_{\rm start}$ charges its actual paid evidence since binding; it is zero when starting at the original cut or using the separate post-prefix entrance. This starting evidence is reused without paying to acquire it again. No intermediate frontier is paid merely to reach a later one. All upgrades use zero extra source actions. The controller additionally retains whatever genuine continuations the user actually performs.
+
+Proof. At each miss the chosen frontier exceeds the already installed one. For $M>1$ the least covering frontier is strictly below $M^2$ unless $M$ itself is a frontier, in which case it equals $M$; $M=1$ is separate. The indices in (39.18) give the first bound. Acquisition gives the whole original common profile, so every smaller request is answered regardless of repetition, gaps or common factors, and further actions do not invalidate it by Theorem 39.10. If extra earlier evidence already determines the selected frontier, compute it without reading. This can only reduce paid replies. No later request or continuation was used to choose an earlier scale. The two acquisition theorems and the separately charged entrance prove the last inequality. The original denominator remains unrestricted. $\square$
+
+### 39.6 Binary payload, attained work and retention
+
+**Proposition 39.12 (finite-prefix resource vector for that same controller).** Use $\lambda(n)=1+\lceil\log_2(n+1)\rceil$ for nonnegative integer widths, fixed binary delimiters, and schoolbook exact arithmetic. After entrance choose its earned interval as a fixed enclosing $I$ with $U=\lceil\sup I\rceil$, even as the working $K$ shrinks. For a unit slice, $U=k+1$, so source magnitude is explicitly charged. At acquisition $i$ let $B_i$ be its chosen frontier, let $a_i,b_i,c_i,d_i$ be the actual attained matrix entries, and put
+
+$$
+\begin{aligned}
+T_i&=c_iU+d_i,& V_i&=a_iU+b_i+1,\\
+Q_i&=B_iT_i,& \mu_i&=\lambda(\max(a_i,b_i,c_i,d_i)),\\
+W_i&=16\bigl(e_i+\lambda(B_i)+\lambda(U)+\mu_i+1\bigr).
+\end{aligned}
+\tag{39.20}
+$$
+
+Here $e_i$ bounds the binary widths of the endpoints of the working earned $K$ before that acquisition (use $1$ at a fresh unchanged original start). At that fresh start use $Q_i=B_i$, first obtain the band from its actual reply, and use $U=\lfloor x\rfloor+1$ in the ensuing analysis. The constants in $W_i$ cover the finite products, divisions, representative and endpoint computations below. In particular they are independent of the unknown reduced source denominator.
+
+The raw scales and acquired payloads obey
+
+$$
+D_i\le Q_i^2,\quad s_i\le Q_i,\qquad
+0\le r_i<D_iV_i,\quad 0\le h_i<s_iV_i.
+\tag{39.21}
+$$
+
+The total binary lengths of the two scale names and two actual integer replies at this upgrade, omitting any unneeded reads, are at most
+
+$$
+12\bigl(1+\log_2(B_i+1)+\log_2(T_i+1)+\log_2(V_i+1)\bigr).
+\tag{39.22}
+$$
+
+Let $\mu_{\max}$ be the maximum actual matrix width through the finite prefix. If $P_{\rm start}$ is the actual binary payload of starting evidence charged by $R_{\rm start}$ and $P_{\rm ent}$ is the actual sum of entrance scale-name and reply lengths, the cumulative paid binary payload is
+
+$$
+P_{\rm paid}=O\!\left(P_{\rm start}+P_{\rm ent}+\log(M+2)
+       +J\bigl(\mu_{\max}+\log(U+1)+1\bigr)\right).
+\tag{39.23}
+$$
+
+An explicit attained local bit-work bound for the acquisitions is
+
+$$
+O\!\left(\sum_{i=1}^{J}\bigl(B_iW_i^2+W_i^3\bigr)\right).
+\tag{39.24}
+$$
+
+Add entrance processing, all received request-name bits, actual matrix-update work, output work and provenance handling as described in the proof. These are different coordinates from paid reply count, full-profile resolution, raw scale, source-service costs and rights/backing.
+
+Proof. Since $0<x<U$ or $x\le U$ suffices for the bound and $cx+d\ge1$, the actual current value satisfies $0<z<V_i$. This proves (39.21) from the actual floor replies; original magnitude has not disappeared when the source moves. The two scales have logarithms at most $2\log Q_i$ and $\log Q_i$; the two replies have logarithms at most these plus $\log V_i$. The width convention then proves the conservative constant (39.22). On the sparse subsequence of acquired frontiers, the positive numbers $\log_2 B_i$ grow by at least a factor two, apart from the initial $1$ frontier. Their sum is at most $2\log_2 b_{\rm final}$. Also $T_i+1,V_i+1\le 3\cdot2^{\mu_i}(U+1)$. Combining these bounds with (39.19) proves (39.23). Entrance has its actual extra payload; at dyadic exponent $h$ it is $O(h+\lambda(a+b+c+d)+1)$ bits per reply, using $z<a/c\le a$ when $c>0$. Its local scan and arithmetic are charged through the attained final exponent, not hidden in $J$.
+
+For (39.24), compute (39.12), the two inverse endpoints of the first raw cell, their intersection with $K$, the possible transported cut, and the final representative. Each has only a fixed number of products and rational operations on input integers of the widths included in $W_i$. For example an inverse raw endpoint is $(d_ir_i-b_iD_i)/(a_iD_i-c_ir_i)$ before clipping. This also shows why the endpoint formula (39.11) and the forward denominator (39.14) cannot be interchanged. Cross-multiplication compares endpoints without enumerating intervening numerators. The scan for the unique interior cut takes one division and a constant number of comparisons per original denominator. The containing original-cell scan takes another such pass. Arithmetic on $W_i$-bit integers costs $O(W_i^2)$ per division/product. Only a constant number of selected fractions need reduction; Euclid uses $O(W_i)$ such steps, giving the conservative $O(W_i^3)$ term. No loop over all $1,\ldots,Q_i$ or over an LCM is present. The stated $O(B_i)$ scan is therefore attained by this decoder.
+
+Let $H$ be the number of actual post-binding action letters, $R$ the total actual reads including entrance, and $A_{\rm ack}$ the actual acknowledgement/binding encoding size. Updating the current matrix by a generator costs $O(\mu)$ bit work per letter and four integers of $O(\mu)$ space. Each entry is at most $2^H$, but using the measured actual $\mu$ avoids identifying action count with matrix width. Complete provenance can be retained in
+
+$$
+O\bigl(H+P_{\rm paid}+R\lambda(H+1)+A_{\rm ack}\bigr)
+\tag{39.25}
+$$
+
+bits, plus retained request names when they have a consumer. Store the original interval endpoints and current matrix as working state with $O(e+\mu+\lambda(B)+\lambda(U))$ bits, plus arithmetic workspace $O(W)$ and counters; selected endpoints are reduced to keep these widths literal. The next acquisition's $e_i$ charges their actual size. No separate full stage archives or $B_i$-entry tuples are required. Reports kept for provenance remain actual rows; derived floor values have no second paid-evidence status. Processing/encoding these rows costs at least their lengths and is added to (39.24).
+
+If a consumer asks for all instantaneous values through precision $m$, emit them by $m$ exact divisions at a representative, costing $O(mW^2)$ plus their output length. A word prediction at an authentic cut $t$ and continuation $v$ uses the recorded $u_t$ or its computed matrix. Replaying its $|u_t|+|v|$ letters and evaluating at a representative costs $O((|u_t|+|v|+m)\widehat W^2)$ when all $m$ coordinates are emitted, where $\widehat W$ includes that composed matrix, representative and output operand widths. Matrix entries grow by at most doubling per letter. A full-profile answer can instead emit only $B$ and the two cell endpoints; the infinitely many coordinates are available on demand, not emitted in finite time. Charge each received request's entire binary encoding, each chosen finite prediction word, all emitted bits and any replay used to reconstruct an old matrix. Even a hit has request and output work. Entrance rational inversion takes $O(W_{\rm ent}^3)$ per read as a conservative bound, and all its actual payload and acknowledgements enter (39.25).
+
+The installed source must complete every requested service, but no law for its internal time, storage, price or physical backing has been assumed. Those resources and lawful scale access remain separate premises/costs. Equations (39.21)–(39.24) assert neither movement-independent stationary cost nor a worldwide optimum, tariff law, competitive ratio or dominance over a construction with a different resource vector. $\square$
+
+### 39.7 Exact obstructions without earlier original information
+
+**Proposition 39.13 (a fixed finite current profile loses unbounded original unit information).** For every authentic prefix with $c>0$ and finite $C$, the current full $\mathsf P_C(f_u(x))$ fails to recover even the original $q_1(x)$ on the unrestricted positive carrier. In particular it cannot recover the original rational or word. Pure translations have the different exact law
+
+$$
+c=0\ \Longrightarrow\ u=R^b,\ a=d=1,\qquad
+q_m(f_u(x))=q_m(x)+mb,
+\tag{39.26}
+$$
+
+so every original profile through $C$ is recoverable from the corresponding current one and conversely.
+
+Proof. If $c>0$, then
+
+$$
+f_u(x)=a/c-\frac1{c(cx+d)}.
+\tag{39.27}
+$$
+
+Whenever $cx+d>C$, every $m\le C$ has
+
+$$
+q_m(f_u(x))=\lceil ma/c\rceil-1.
+\tag{39.28}
+$$
+
+If $ma/c$ is an integer the subtracted positive amount is less than $1$; otherwise its fractional part is at least $1/c$ while the subtracted amount is less than $1/c$. This proves (39.28) in both cases. Choose an integer $K>C+d+1$, and the two actual originals $x=K+1/3$, $y=K+4/3$. Both satisfy that tail condition, have identical instantaneous and hence full current profiles, but have original unit indices $K$ and $K+1$. This supplies the missing $q_1$ obstruction directly. For the explicit real action $u=L$, their current reports are $m-1$ for every $m\le C$. Both originals are actual reachable rational sources by Theorem 6.2. For $c=0$, the determinant forces $a=d=1$ and the source law is $x\mapsto x+b$; a word containing $L$ has positive lower-left entry, so its authentic word consists only of $R$. The integer floor identity proves both profile factors in (39.26). Earned localization or old retained information changes this global question exactly through (39.7) and (39.17). $\square$
+
+**Theorem 39.14 (no uniform finite read cap, even with further forward actions).** Fix any authentic starting prefix $u$ with $c>0$. A deterministic controller has no source-dependent record from before that cut. Allow arbitrary finite further forward actions, adaptive current scales and local finite computation on the same source. If it terminates correctly for every positive rational original, no uniform finite bound on its number of current replies can recover unbounded original $q_1$. Pointwise finite recovery remains possible by Proposition 39.8 and Theorem 39.7 with $B=1$.
+
+Proof. Assume a cap $N$. For every possible further finite action prefix $v$, the composite matrix $A_vA_u$ still has lower-left entry $c'>0$: its lower row is a nonnegative row with positive lower-right entry, so $c'=\gamma a+\delta c\ge c$. Its attained response approaches $a'/c'$ strictly from below as the original $x\to\infty$. At a requested scale $D$, feed the tail response
+
+$$
+\rho(D,A_vA_u)=\lceil Da'/c'\rceil-1.
+\tag{39.29}
+$$
+
+Every finite sequence of these responses is realized by all sufficiently large rational originals, since the finitely many maps/scales on that deterministic branch each stabilize to this response. Source-independent action acknowledgements also agree.
+
+Each phase between replies on this tail branch must finish its local computation and finite actions, and either stop or issue another read. If a phase instead continued forever without a new reply, the finite earlier tail prefix would be realized by every sufficiently large actual original, giving a nonterminating actual run and contradicting the pointwise completion premise. After at most $N$ replies the branch must stop: a further read would be realized by a sufficiently large actual source and violate the uniform cap. The completed tail branch is finite and therefore realized by every rational original beyond some finite $X$. Choose two such originals with different unit indices. Their entire actual transcripts, decisions, further actions and output coincide, so that output cannot recover both unit indices. This contradicts correctness. The argument covers every $c>0$ and any finite forward action scope; it does not infer $q_1$ failure merely from rational noninjectivity. Earlier source-dependent records or earned bounded localization remove the tail premise; pure translations satisfy (39.26). $\square$
+
+### 39.8 The four expressions, suppliers and finite scope
+
+**Proposition 39.15 (finite relational recovery of the four expressions).** Let the original unknown chronological word be $w$, with rational boundary $x=B(w)$, rooted named-incidence path $S(w)$ and indexed prefix-memory table $M(w)$ as in §§6 and 17. Quotient each of these four expressions by equality of the original $\mathsf P_B(x)$. On their actual images the four quotients recover each other, and their common finite description is the acquired $\mathcal H_B$ cell. Its boundary is the full prediction rule; chronological continuations act on its cells; authentic cut indices relate those predictions to the recorded chronology and memory.
+
+Proof. The exact correspondences of Theorems 6.2 and 17.3 send each exact expression to the same original $x$. Pulling back equality of its cell therefore gives the same quotient on all four actual images. Each quotient label gives the cell and conversely, proving finite-resolution mutual recovery. Theorem 39.2 supplies the complete future evaluator; Theorem 39.10 supplies authentic-cut prediction and synchronized actual continuation, and Theorem 39.7 supplies later finer original cells. This connects space as the rooted named path, time as its ordered actions, boundary as the response rule, and memory as the indexed record only at this declared observational quotient. It does not recover the literal unknown path, original action count or every original prefix row. Each finite cell still contains infinitely many rationals and arbitrarily deep unknown words, by Corollary 11.3 or directly by Theorem 6.2 and finiteness of bounded-length word sets. Actual post-binding events are known because recorded, not because the finite profile reconstructs unknown earlier events. No ambient physical spacetime identification is implied. $\square$
+
+**Definition 39.16 (source correspondence and exact limits).** The source-specific synthesis here is the acquired common all-future profile, the adaptive polynomial-raw-scale construction, its moving-cut earned-interval decoder, the sharp two-direction slice factors, the continuing sufficient boundary and the same-controller resource and obstruction statements. The cut/congruence and one-read LCM results in §§11–12 and 15 are reused, not counted as new proofs. [WordNodesAreReduced](../../../D5/S3/PrimeForms/SternBrocot/WordNodesAreReduced.lean) supplies `leftStep`, `rightStep`, `wordMatrix`, `unimodular_wordMatrix` and `wordMatrix_lower_right_pos`; [UnimodularGeneration](../../../D5/S3/PrimeForms/SternBrocot/UnimodularGeneration.lean) supplies `unimodular_iff_wordMatrix`. Chronological $u$ uses `wordMatrix(reverse u)`. The transformed-column coprimality argument is given explicitly in (39.9), without attributing it to lower-row coprimality. [RationalRouting/Acquisition](../../../D5/S3/Observer/RationalRouting/Acquisition.lean) has its distinct two-band actual-completion contract; it does not supply this unrestricted full-profile archive. The authentic original/current/past-cut architecture in [Arithmetic Acquisition Return, §§13–16](RECURSIVE_RELATIONAL_OBSERVATION_ARITHMETIC_ACQUISITION_RETURN.md) is an analogue; neither its gcd/CRT ports nor its payment rule is used.
+
+The supporting Farey arithmetic corresponds to Glasby, [*Enumerating the rationals from left to right*, arXiv:1011.2823v1](https://arxiv.org/abs/1011.2823v1), introduction and Theorem 3. Actual adaptive experiment terminology corresponds to van den Bos and Vaandrager, [*State Identification for Labeled Transition Systems with Inputs and Outputs*, arXiv:1907.11034v2](https://arxiv.org/abs/1907.11034v2), §4, Definitions 10–11; a semantic test family alone is not an executed adaptive experiment. Chrobak, Kenyon, Noga and Young, [*Incremental Medians via Online Bidding*, arXiv:cs/0504103v3](https://arxiv.org/abs/cs/0504103v3), Theorems 1–2, concerns bidding with sum-of-bids payment and its deterministic/randomized competitive ratios. Only the need to declare the payment coordinate is compared here; no bidding tariff, ratio or optimality conclusion transfers to (39.19)–(39.24). These are primary-source correspondences and repository-derived prose proofs, with no claim of worldwide priority or new Lean verification.
+
+All results retain one actual source/epoch, authentic serialized acknowledgements, exact positive source laws, finite local programs and the declared unclipped finite-completing floor services at every scale actually requested. Finite profile, raw scale, binary payload, local work, actual source service, action rights and physical backing remain distinct. The finite-information and literal-history boundaries of §§5, 16–18 remain in force. This local increment supplies a finite-resolution relation boundary and its recovery conditions; it does not complete the long-horizon RRO objective.
+
+## 追加锚（本行以下为增补区）
+
+## 40. Native pair actions cannot compile into fixed rooted rational words
+
+### 40.1 Two action systems and one actual source
+
+**Definition 40.1 (composition interface and fixed-word compatibility).**
+Let $V=\mathbb N\times\mathbb N_{>0}$ and distinguish the pair actions
+from the rooted actions by their typefaces:
+
+$$
+\mathsf R(a,b)=(b,a+b),\qquad \mathsf G(a,b)=(a+1,b),
+\qquad L(x)=\frac{x}{1+x},\quad R(x)=x+1.
+\tag{40.1}
+$$
+
+All words are finite and chronological. Write $\operatorname{Run}(W,v)$
+for the pair action and $E(w,x)$ for the rooted action, so
+$E(uv,x)=E(v,E(u,x))$ and the empty word acts identically. For a fixed
+$v_0\in V$, put
+
+$$
+O(v_0)=\{\operatorname{Run}(W,v_0):W\in\{\mathsf R,\mathsf G\}^*\}.
+\tag{40.2}
+$$
+
+A fixed-word compatible representation on this orbit consists of a map
+$\iota:O(v_0)\to\mathbb Q_{>0}$ and two words
+$u,w\in\{L,R\}^*$ satisfying, for every $v\in O(v_0)$,
+
+$$
+\iota(\mathsf Gv)=E(u,\iota(v)),\qquad
+\iota(\mathsf Rv)=E(w,\iota(v)).
+\tag{40.3}
+$$
+
+The words are fixed independently of the running composition, native
+tree, history, occurrence and response. They may even be selected
+separately for each fixed $v_0$; the obstruction below still applies.
+No injectivity, computability or acquisition premise is imposed on
+$\iota$. Empty compiled words are allowed.
+
+The native interpretation is [LAB Arithmetic Growth, Definitions 9.1,
+9.3 and Theorems 9.4, 12.2](RECURSIVE_RELATIONAL_OBSERVATION_LAB_ARITHMETIC_GROWTH.md):
+fix one actual attained source $t_0\in\mathcal D_+$, with composition
+$v_0=v(t_0)$, its authentic root binding, current exclusive rights,
+ancestral tapes and sufficient finite material. A logical promotion
+$P_p$ changes an alpha leaf to beta; a split $S_p$ changes beta to
+$\langle\beta,\alpha\rangle$. Whole-frontier $\mathsf R$ acquires the
+entry leaf list and promotes its alpha leaves and splits its beta
+leaves, without editing newly born leaves again. The macro $\mathsf G$
+splits the acquired current leftmost beta. It realizes the composition
+effect of alpha graft, without being a literal root graft. Both macros
+consume their actual replies and return before the next macro.
+
+For every chronological $W$, these same-source procedures give
+
+$$
+v(F_W(t_0))=\operatorname{Run}(W,v_0).
+\tag{40.4}
+$$
+
+Every prefix stays beta-positive. Thus the orbit in (40.2) is realized
+on this one source, without importing another initialization or granting
+an inverse, reset or new primitive. In particular $\mathsf R$ is neither
+a single-leaf promotion nor the rooted translation $R$. A representation
+in (40.3) depends only on composition; a representation of full native
+trees or histories is a different domain.
+
+### 40.2 The action obstruction on every attained orbit
+
+**Theorem 40.2 (only the constant rational representation is compatible).**
+For every $v_0\in V$, every representation (40.3) has
+$u=w=\varepsilon$ and $\iota$ constant on $O(v_0)$. Conversely every
+positive rational constant and these empty words satisfy (40.3).
+On the whole domain $V$, the maps intertwining both actions with fixed
+rooted words are exactly the constant maps with both words empty.
+
+Proof. First use the evaluation freeness actually needed here. For any
+$x\in\mathbb Q_{>0}$, Theorem 6.2 gives a unique word $d_x$ from root
+$1$ to $x$. If $E(s,x)=E(t,x)$, then
+$E(d_xs,1)=E(d_xt,1)$, whence $d_xs=d_xt$ by that theorem, and $s=t$
+by cancellation of the identical prefix. This is freeness of evaluation
+at each rational anchor, not an inference from matrix generation.
+
+Let $\Phi$ replace every $\mathsf G$ by $u$ and every $\mathsf R$ by
+$w$, preserving concatenation. Induction on word length using (40.3)
+gives
+
+$$
+\iota(\operatorname{Run}(W,v))=E(\Phi(W),\iota(v))
+\quad(v\in O(v_0)).
+\tag{40.5}
+$$
+
+The pair actions have the following equality at every $(a,b)\in V$:
+
+$$
+\begin{aligned}
+\operatorname{Run}(\mathsf G\mathsf R\mathsf R,(a,b))
+ &= (a+b+1,a+2b+1)\\
+ &=\operatorname{Run}(\mathsf R\mathsf G\mathsf R\mathsf G,(a,b)).
+\end{aligned}
+\tag{40.6}
+$$
+
+Apply (40.5) at $v_0$. Rational-anchor freeness gives the literal word
+identity $uww=wuwu$. Taking lengths gives
+$|u|+2|w|=2|u|+2|w|$, so $u=\varepsilon$.
+For this same $v_0=(a,b)$ there is a second legal pair equality:
+
+$$
+\begin{aligned}
+\operatorname{Run}(\mathsf R^3,(a,b))
+ &=(a+2b,2a+3b)\\
+ &=\operatorname{Run}
+   (\mathsf R\mathsf G^{a+b}\mathsf R\mathsf G^b,(a,b)).
+\end{aligned}
+\tag{40.7}
+$$
+
+Indeed after the first replacement and $a+b$ graft-effects the pair is
+$(a+2b,a+b)$; replacement followed by $b$ graft-effects gives the
+displayed result. Every prefix is in $V$. With $u$ empty, (40.5) and
+freeness now give $www=ww$, so $3|w|=2|w|$ and $w=\varepsilon$.
+The state-dependent exponents in this equality are witnesses in the
+native process, not a state-dependent choice of compiled word.
+Equation (40.5) then makes $\iota$ constant on its entire orbit. The
+converse follows from the empty-word law.
+
+For a representation on all of $V$, restricting to any orbit first
+forces the two words empty. Graft invariance gives
+$\iota(a,b)=f(b)$ with $f(b)=\iota(0,b)$. Replacement invariance gives
+$f(a+b)=f(b)$ for all $a\ge0,b\ge1$. Taking $b=1$ proves that $f$,
+and hence $\iota$, is constant on $V$. $\square$
+
+**Proposition 40.3 (exact-rational and static-coding boundaries).**
+The empty-word conclusion fails for a positive-real codomain. Also an
+injective coding of pair states into positive rationals need not satisfy
+(40.3), even when all codes are positive integers.
+
+Proof. Put $\varphi=(1+\sqrt5)/2$ and let $\iota$ be the constant
+$\varphi$. The nonempty chronological word $LR$ acts by
+$x\mapsto(1+2x)/(1+x)$ and fixes $\varphi$, since
+$\varphi^2=\varphi+1$. Thus $u=w=LR$ satisfies the real version of
+(40.3). This example refutes the claim that both words must be empty
+over all positive reals; it asserts no nonconstant real representation.
+For every real anchor whose evaluation map is free, the proof of
+Theorem 40.2 still works. Section 20 distinguishes such anchors from
+cyclic quadratic anchors.
+
+For a static injective code take $j(a,b)=2^a(2b-1)$. The power of two
+and odd factor uniquely recover $a,b$. If this code admitted fixed
+compiled words on $V$, the two successors of $(0,1)$ both have code
+$2$, while its code is $1$. The unique rooted word taking $1$ to $2$
+is $R$, forcing $u=w=R$. But $j(0,2)=3$ and
+$j(\mathsf R(0,2))=j(2,2)=12$, whereas $R(3)=4$.
+The code is injective and fails the action condition. The same logical
+distinction applies to the injective syntax code of
+[FARG §9](FIBONACCI_ATOMIC_RELATION_GENERATION.md): unique parsing
+does not establish (40.3). Neither construction acquires a code from an
+opaque source or supplies a right to act on it. $\square$
+
+### 40.3 A native family with an exact retention requirement
+
+**Definition 40.4 (literal block target and retained interface).** Fix
+the same actual $t_0$, a public integer $n\ge0$, and the two blocks
+
+$$
+A=\mathsf G\mathsf R\mathsf R,\qquad
+B=\mathsf R\mathsf G\mathsf R\mathsf G,\qquad
+F(a,b)=(a+b+1,a+2b+1).
+\tag{40.8}
+$$
+
+For $\sigma\in\{0,1\}^n$, let $W_\sigma$ concatenate $A$ for a zero
+and $B$ for a one. Execute each macro by Definition 40.1 on that very
+source. The recovery target is the literal ordered macro-name word
+$W_\sigma$, equivalently $\sigma$. It is not the full addressed
+primitive trace, tree, tape, allocation history or physical duration.
+
+At the completed block cuts expose only the exact composition archive
+$Q_n=(v_0,v_1,\ldots,v_n)$. A retained record $Z(\sigma)$ is allowed in
+addition. A decoder receives $n$, the fixed source contract, $Q_n$ and
+$Z$, and must recover the target for every $\sigma$. Every further
+history-dependent discriminator available to it belongs to $Z$:
+retained requests, within-block readings, tree/tape access, lengths,
+timers, reference identities, dictionaries and external records are not
+unaccounted side information. The actual source and its tapes still
+exist; this restriction specifies the recovery interface, without
+asserting that those objects have equal values or have been erased.
+The archive is a mathematical view, not a new LAB reading primitive.
+If $v_0$ is actually acquired by a lawful paid frontier traversal, its
+rows follow by $F^j$; acquisition, maintenance and materialization of
+these values are separately charged.
+
+**Theorem 40.5 (sharp retention on the equal-composition block family).**
+All $2^n$ histories of Definition 40.4 are legal on the fixed source,
+have pair $F^j(v_0)$ after block $j$, and give the same $Q_n$. Their
+literal macro words are pairwise distinct. Exact recovery through the
+declared interface holds precisely when $Z$ is injective on this family.
+Consequently at least $2^n$ record values are necessary, and an
+$n$-bit fixed-width payload is both necessary and sufficient, with
+$n$ public. This bound remains valid after adding the complete pair
+continuation profile, or a deterministic pair-only future experiment
+whose initial state and choices use only the declared retained inputs.
+
+Proof. Beta positivity and (40.4) make every finite choice legal. Equation
+(40.6) gives the same map $F$ for either block. Induction on $j$ proves
+the asserted archive equality. The block words are a prefix code:
+their first letters differ, and neither is empty. Reading that first
+letter determines the next block and its length; removing it and
+inducting recovers $\sigma$ uniquely. Thus the target has exactly
+$2^n$ values on a single common archive fiber.
+
+If two distinct choices have the same $Z$, the decoder has identical
+inputs and cannot return both targets. Conversely an injective $Z$
+has an inverse on its finite actual image and determines the target.
+A fixed-width $b$-bit payload has at most $2^b$ values, forcing $b\ge n$.
+Retaining the actual block-choice bit at each block supplies $n$ bits
+and decodes by the fixed two-block rule. This is an online record of
+known issued choices, not acquisition of an unknown earlier word.
+For $n=0$ the family is a singleton and the required payload is zero.
+
+At the last block every run has the same exact pair. Any common
+continuation therefore has the same subsequent pairs by induction on
+its letters. A deterministic adaptive pair experiment makes the same
+choices after the same replies, so it also cannot separate this fiber.
+This includes every pair residue, quantity and terminal gcd derived
+from those pairs. Native non-pair observations are outside this claim.
+
+For entry $v_0=(a_0,b_0)$ and final $(a_n,b_n)=F^n(v_0)$, LAB's exact
+count law further gives the same successful promotion and split totals
+on all these histories:
+
+$$
+p=b_n-b_0,\qquad s=a_n+b_n-a_0-b_0.
+\tag{40.9}
+$$
+
+Revealing just these two totals adds no distinction. The records may
+instead be carried by native source features, when accessible and
+counted in $Z$; the information bound does not demand a separately
+allocated auxiliary $n$-bit device. Code, framing when $n$ is not public,
+actual records, workspace and source backing remain additional costs.
+$\square$
+
+**Proposition 40.6 (sharp change when macro length is exposed).** If,
+in addition to public $n$ and $Q_n$, the decoder receives the actual
+number $\ell$ of macro calls, then $\ell=3n+r$, where $r$ is the number
+of $B$ blocks. For each fixed $0\le r\le n$, exact recovery requires
+and permits $\binom nr$ record values, equivalently a fixed-width
+payload of $\lceil\log_2\binom nr\rceil$ bits. A common width for all
+$r$ is sharply
+$\lceil\log_2\binom n{\lfloor n/2\rfloor}\rceil$.
+
+Proof. The two block lengths are three and four, so $\ell$ determines
+$r$. There are exactly $\binom nr$ binary choices of that weight, all
+with the same exposed archive and length, and their targets are
+distinct. The preceding injectivity argument gives the lower bound.
+For the upper bound index the weight-$r$ words in lexicographic order
+and retain the index. Fixed public $n,r$ supply a finite decoder. The
+ratio of consecutive binomial coefficients is $(n-r)/(r+1)$, placing
+the maximum at the central coefficient. This is an information
+capacity statement; it grants neither free ranking work nor free
+storage or acquisition of the exposed length. $\square$
+
+### 40.4 Separating the actual trees and the supplier scopes
+
+**Proposition 40.7 (a concrete native separation inside the common fiber).**
+Take the attained beta source $t_0=\beta$, obtained from the installed
+alpha root by its legal root promotion. The blocks $A,B$ give
+composition $(2,3)$ but different actual logical trees, primitive
+traces and addressed work:
+
+$$
+\begin{aligned}
+F_A(\beta)
+ &=\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,
+                  \langle\beta,\alpha\rangle\rangle,\\
+F_B(\beta)
+ &=\langle\langle\langle\langle\beta,\alpha\rangle,\alpha\rangle,
+                  \beta\rangle,\beta\rangle.
+\end{aligned}
+\tag{40.10}
+$$
+
+Proof. Apply whole-frontier replacement and the leftmost-beta split
+literally at each step. In the left-first entry order of LAB Definition
+9.3, their successful primitive words, with $\varepsilon$ the root
+address, are respectively
+
+$$
+\begin{aligned}
+A:&\quad S_\varepsilon\ S_L\ P_R\ S_{LL}\ P_{LR}\ S_R,\\
+B:&\quad S_\varepsilon\ S_L\ S_{LL}\ P_{LR}\ P_R\ S_{LLL}.
+\end{aligned}
+\tag{40.11}
+$$
+
+Each listed address is a leaf of the required type when edited, and
+the resulting trees are (40.10). Both have two alpha and three beta
+leaves, two promotions and four splits. The original legal read
+Tag at address $R$ returns branch in the first and beta in the second.
+The sums of successful-event address depths are respectively seven
+and nine, so even their addressed-work coordinate is different. The
+authentic root binding and current rights are retained through both
+runs; their replies and source records are not identified by pair
+equality. These are two alternative legal continuations of one fixed
+source, without a reset or a simultaneously available duplicate.
+$\square$
+
+**Definition 40.8 (mathematical suppliers and limits of the bridge).**
+The cross-interface obstruction of Theorem 40.2 and its same-source
+block-retention consequence are `repo-derived` deductions. The pair
+laws, the identity $M^2=M+I$, pair residue recovery and finite-profile
+sufficiency are reused suppliers, not new results of this section.
+[GraftAffineClosure](../../../D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.lean)
+supplies `step`, `run`, the alpha composition $(1,0)$ and the affine
+laws within `result`. Its false/true convention is replacement/graft;
+the named words here require no Boolean conversion. Its arithmetic
+graft is identified only with the composition effect of the LAB split,
+not with a native root-graft permission.
+
+[WordNodesAreReduced](../../../D5/S3/PrimeForms/SternBrocot/WordNodesAreReduced.lean)
+supplies `leftStep`, `rightStep`, `wordMatrix` and
+`unimodular_wordMatrix`. For chronological $w$ the column matrix is
+`wordMatrix(reverse w)`, as in §6.
+[UnimodularGeneration](../../../D5/S3/PrimeForms/SternBrocot/UnimodularGeneration.lean)
+supplies matrix generation; it supplies no substitute for rational
+evaluation freeness. That freeness is the explicitly applied rooted
+uniqueness of §6, also consistent with the free-anchor result of §20.
+
+The supporting rational enumeration is `literature-attested` in Calkin
+and Wilf, [*Recounting the Rationals*, pp. 360–363,
+DOI:10.1080/00029890.2000.12005205](https://doi.org/10.1080/00029890.2000.12005205):
+the root is $1/1$, and the children of $p/q$ are $p/(p+q)$ and
+$(p+q)/q$. These rules and unique enumeration are also stated in Glasby,
+[*Enumerating the rationals from left to right*, introduction, pp. 1–2,
+arXiv:1011.2823v1](https://arxiv.org/abs/1011.2823v1). They supply the
+positive-rational tree, not a LAB compiler. The retention proof uses
+elementary finite counting; its equiprobable interpretation is the
+classical logarithmic measure for $N$ equally likely messages in
+Shannon, [*A Mathematical Theory of Communication*, introduction,
+DOI:10.1002/j.1538-7305.1948.tb01338.x](https://doi.org/10.1002/j.1538-7305.1948.tb01338.x).
+No channel-coding, error, thermodynamic or worldwide originality claim
+follows from these deductions.
+
+Section 39's interval $K$ and full profiles refer to the declared
+rooted source and its authentic action/read sequence. They do not
+turn a composition code into (40.3), or recover the missing block
+choices in Definition 40.4. State-dependent words, signed or inverse
+actions, history-aware representations, other source domains and
+other codomains are outside Theorem 40.2. The retention bounds concern
+only the stated finite family and exposed channels, not all native
+history fibers or minimum whole-installation memory. Finite mathematical
+existence, actual paid acquisition, lawful references, completion,
+resource costs and physical realization remain separate obligations.
+
+## 追加锚（本行以下为增补区）
+
+## 41. Complete fixed-source macro-history fibres and causal recovery
+
+### 41.1 Any attained beta-positive native source
+
+**Definition 41.1 (source, chronological words and exact fibres).** Retain
+§40's one actual source/epoch, authentic root binding, current exclusive
+rights, ancestral tapes and sufficient finite material for each stated
+finite run. Fix any attained $t_0\in\mathcal D_+$ of LAB §§9.1–9.4, with
+composition $v=v(t_0)=(a,b)$, where $a\ge0$ and $b>0$. Here
+$\mathcal D_+=\mathcal D\setminus\{\alpha\}$ is the native **tree** domain,
+not a set of pairs. Use the distinct pair domain
+
+$$
+\mathcal Q_+=\mathbb N_0\times\mathbb N_{>0},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad e=\binom10,
+\qquad F(u)=Mu,\quad G(u)=u+e.
+\tag{41.1}
+$$
+
+Pairs and their column vectors are identified only for this arithmetic.
+The actual macros realizing $F$ and $G$ are respectively LAB Definition
+9.3's whole-frontier $\mathsf R$ and current leftmost-beta $\mathsf G$.
+At an $F$ call, acquire the finite current logical frontier in left-first
+order, seal that entry list, promote each entry-alpha and split each
+entry-beta exactly once. At a $G$ call, acquire the current leftmost beta
+path/reference and split that leaf. Each inner call consumes its complete
+reply, acknowledgement and real return. New leaves do not reenter an
+old frontier list. These procedures supply actual operands and guards;
+pair notation supplies neither a source reference nor permission.
+
+All words are chronological from left to right:
+
+$$
+\operatorname{Run}(\varepsilon,u)=u,\qquad
+\operatorname{Run}(hF,u)=F(\operatorname{Run}(h,u)),\qquad
+\operatorname{Run}(hG,u)=G(\operatorname{Run}(h,u)).
+\tag{41.2}
+$$
+
+LAB Theorems 9.4 and 12.2 give $t_h\in\mathcal D_+$ and
+$v(t_h)=\operatorname{Run}(h,v)$ at every completed prefix, for every
+finite word admitted with the stated sufficient resources. All
+continuations refer to this same bound source; alternatives do not
+supply simultaneous copies, a reset, an inverse edit or another
+initialization. Resource sufficiency is quantified per finite run,
+not by one fixed finite arena that holds every unbounded history.
+
+For an integer pair $q=(A,B)$ and $k\in\mathbb Z$, put
+
+$$
+\begin{aligned}
+\mathcal W_v^{(k)}(q)
+ &=\{h\in\{F,G\}^*:|h|_F=k,\ \operatorname{Run}(h,v)=q\},\\
+\mathcal W_v(q)&=\mathop{\dot\bigcup}_{k\ge0}\mathcal W_v^{(k)}(q),
+&N_v^{(k)}(q)&=|\mathcal W_v^{(k)}(q)|,\quad
+N_v(q)=|\mathcal W_v(q)|.
+\end{aligned}
+\tag{41.3}
+$$
+
+For $q\notin\mathcal Q_+$ or $k<0$ the corresponding set is empty and
+its count is zero. Histories consist of successfully completed macros;
+the empty word is included. The source parameter is always $v$, never
+an unannounced eventual endpoint. Different native trees of composition
+$v$ have the same macro-word dictionaries under this legality contract;
+their actual trees, bindings and tapes are not thereby identified.
+
+### 41.2 Complete affine-action and run-multiplicity classification
+
+**Theorem 41.2 (all chronological runs at every fixed replacement count).**
+Let $f_0=0,f_1=1,f_{j+2}=f_{j+1}+f_j$, and write
+
+$$
+u_0=e=(1,0),\qquad
+u_j=M^je=(f_{j-1},f_j)\quad(j\ge1).
+\tag{41.4}
+$$
+
+For each $k\ge0$, every finite chronological word with exactly $k$
+letters $F$ has a unique form
+
+$$
+h=G^{n_k}F G^{n_{k-1}}F\cdots F G^{n_0},\qquad
+(n_0,\ldots,n_k)\in\mathbb N_0^{k+1}.
+\tag{41.5}
+$$
+
+Thus $n_j$ is the number of $G$ letters in the unique run with exactly
+$j$ later $F$ letters; zero runs are retained. For $k=0$, (41.5) means
+just $G^{n_0}$. This is a bijection of literal words with the displayed
+nonnegative vectors, and its affine action is
+
+$$
+\operatorname{Run}(h,u)=M^ku+\tau(h),\qquad
+\tau(h)=\sum_{j=0}^k n_j u_j
+\quad(u\in\mathcal Q_+).
+\tag{41.6}
+$$
+
+Two words induce the same affine map on the **whole pair domain**
+$\mathcal Q_+$ if and only if their $k$ and $\tau$ agree. The complete
+number of literal words in the affine-action class $(k,(x,y))$, for
+integer $x,y$, is
+
+$$
+P_k(x,y)=
+\#\left\{(n_0,\ldots,n_k)\in\mathbb N_0^{k+1}:
+                  \sum_{j=0}^k n_j u_j=(x,y)\right\}.
+\tag{41.7}
+$$
+
+Define $P_k(x,y)=0$ if $k<0$, $x<0$ or $y<0$. On $x,y\ge0$ its complete
+boundary cases are
+
+$$
+P_0(x,y)=\mathbf1_{\{y=0\}},\qquad
+P_1(x,y)=1,\qquad P_2(x,y)=1+\min(x,y).
+\tag{41.8}
+$$
+
+For every $k\ge2$ an explicit finite count, with no unspecified normal
+form choices, is
+
+$$
+P_k(x,y)=
+\sum_{n_2=0}^{x+y}\cdots\sum_{n_k=0}^{x+y}
+\mathbf1_{\{\sum_{j=2}^k f_{j-1}n_j\le x\}}
+\mathbf1_{\{\sum_{j=2}^k f_jn_j\le y\}}
+\quad(x,y\ge0).
+\tag{41.9}
+$$
+
+Equivalently, for $k\ge1$ and $x,y\ge0$,
+
+$$
+\begin{aligned}
+P_k(x,y)&=\sum_{m=0}^{x+y}
+ P_{k-1}(x-mu_{k,1},y-mu_{k,2}),\\
+\sum_{x,y\ge0}P_k(x,y)X^xY^y
+ &=\prod_{j=0}^k(1-X^{u_{j,1}}Y^{u_{j,2}})^{-1}.
+\end{aligned}
+\tag{41.10}
+$$
+
+These are counts of all run multiplicities, not only binary digits or
+one chosen family of words.
+
+Proof. Cut a word at each occurrence of $F$. This gives precisely the
+$k+1$ runs of $G$ in (41.5), including empty runs, and reassembly is the
+inverse. Each $G$ adds $e$; each later $F$ multiplies that contribution
+by $M$. There are exactly $j$ such later multiplications for the run
+$n_j$, proving (41.6). This specializes the existing chronological
+affine-word supplier of `GraftAffineClosure`; induction using $M$ gives
+(41.4). No new native graft operation is inferred from that supplier.
+
+For completeness of the action classification, suppose
+$M^ku+\tau=M^\ell u+\sigma$ for every $u\in\mathcal Q_+$. Compare its
+values at $(0,1),(1,1),(0,2)$. Subtraction gives equality of both matrix
+columns, hence $M^k=M^\ell$, and then $\tau=\sigma$. These powers are
+distinct: $M^j(1,1)$ stays beta-positive and its coordinate sum strictly
+increases at every step. Thus $M^k=M^\ell$ forces $k=\ell$. The converse
+is immediate from (41.6). This is equality of maps, not conjugacy under
+a change of coordinates.
+
+Every $u_j$ has nonnegative integer coordinates with positive sum. For
+fixed $(x,y)\ge0$, each admissible $n_j$ is at most $x+y$, so (41.7) is
+finite. Since $u_0=(1,0)$ and $u_1=(0,1)$, any chosen $n_2,\ldots,n_k$
+forces
+
+$$
+n_0=x-\sum_{j=2}^k f_{j-1}n_j,\qquad
+n_1=y-\sum_{j=2}^k f_jn_j.
+$$
+
+These two residuals are nonnegative exactly under (41.9)'s inequalities.
+This proves that count, including all tuples and excluding all invalid
+ones. At $k=0$ only $n_0=x,y=0$ is possible; at $k=1$ the tuple is
+$(x,y)$. At $k=2$, $n_2$ ranges from zero through $\min(x,y)$, giving
+(41.8). In particular this last action class consists exactly of
+$G^j F G^{y-j} F G^{x-j}$ for those $j$. Grouping (41.7) by $n_k=m$
+proves the finite sum in (41.10); expanding each geometric series
+proves its coefficient identity. Nonzero generator sums make every
+coefficient finite. Negative residuals and out-of-domain indices give
+zero throughout. $\square$
+
+**Theorem 41.3 (complete fixed-source endpoint fibres).** For every fixed
+attained source $t_0$ of Definition 41.1, every $q\in\mathcal Q_+$ and
+every $k\ge0$,
+
+$$
+\begin{aligned}
+\mathcal W_v^{(k)}(q)&\ \longleftrightarrow\
+ \left\{n\in\mathbb N_0^{k+1}:
+          \sum_{j=0}^k n_j u_j=q-M^kv\right\}\quad(k\ge0),\\
+N_v^{(k)}(q)&=P_k\bigl((q-M^kv)_1,(q-M^kv)_2\bigr).
+\end{aligned}
+\tag{41.11}
+$$
+
+Subtraction here is in $\mathbb Z^2$, so negative residuals invoke the
+zero convention. Put $s_0=a+b$ and $\Delta=A+B-s_0$. If $\Delta<0$ then
+$N_v(q)=0$; otherwise the **full** endpoint count is
+
+$$
+N_v(A,B)=\sum_{k=0}^{\Delta}
+ P_k\bigl(A-(M^kv)_1,B-(M^kv)_2\bigr).
+\tag{41.12}
+$$
+
+In particular $\mathcal W_v(v)=\{\varepsilon\}$, while every other
+endpoint of potential at most $s_0$ has empty fibre. At higher potential
+and for $k\ge0$, the exact last-letter recurrence is
+
+$$
+\begin{aligned}
+\mathcal W_v^{(k)}(A,B)
+ &=\{hF:h\in\mathcal W_v^{(k-1)}(B-A,A)\}
+       \ \dot\cup\
+   \{hG:h\in\mathcal W_v^{(k)}(A-1,B)\},\\
+N_v^{(k)}(A,B)
+ &=\mathbf1_{\{1\le A\le B\}}N_v^{(k-1)}(B-A,A)
+   +\mathbf1_{\{A\ge1\}}N_v^{(k)}(A-1,B).
+\end{aligned}
+\tag{41.13}
+$$
+
+The first set in (41.13) is omitted unless $1\le A\le B$, and the
+second unless $A\ge1$. Its bases, also for total counts, are
+
+$$
+N_v^{(k)}(v)=\mathbf1_{\{k=0\}},\qquad
+N_v^{(k)}(A,B)=0\quad(A+B\le s_0,\ (A,B)\ne v).
+\tag{41.14}
+$$
+
+The invalid-endpoint and negative-$k$ conventions of Definition 41.1
+apply before these formulas. Summing (41.13) over $k$ gives the same
+recurrence for $N_v$, with source base one. Higher-potential unreachable
+endpoints receive zero; no additional base history is inserted there.
+
+Proof. The bijection (41.5) and exact action (41.6) give (41.11) in both
+directions. Every resulting finite word has its legal same-source
+native realization under Definition 41.1's resource premises. There is
+no restriction to selected blocks, and no shape assumption on $t_0$
+beyond membership in $\mathcal D_+$.
+
+For $s(A,B)=A+B$, a forward $F$ increases $s$ by the current beta count,
+which is at least one; a $G$ increases it by one. Every history ending
+at $q$ therefore has length at most $\Delta$, and in particular
+$k\le\Delta$. The empty word alone has potential $s_0$ and ends at $v$.
+This proves finiteness, (41.12) and (41.14), including $\Delta=0$.
+
+Any nonempty word has one last letter. Solving $F(x,y)=(A,B)$ gives
+$(x,y)=(B-A,A)$, which belongs to $\mathcal Q_+$ exactly when
+$1\le A\le B$. Solving $G(x,y)=(A,B)$ gives $(A-1,B)$, valid exactly
+when $A\ge1$ for a valid target. Each last-letter class is in bijection
+with its predecessor fibre. The classes are disjoint as literal words,
+even when their native edits or endpoints coincide. Their predecessor
+potentials are respectively $B$ and $A+B-1$, both strictly below
+$A+B$ on the permitted branches. Induction from (41.14), with zeros
+below the source and outside the pair domain, proves (41.13) and shows
+that it counts exactly the same complete fibres as (41.12). $\square$
+
+At one fixed source, equality of endpoints means only
+$M^kv+\tau=M^\ell v+\sigma$. It need not force $k=\ell$. If $k=\ell$,
+it does force $\tau=\sigma$ and hence equality of the whole affine pair
+actions; neither conclusion identifies the corresponding native tree
+actions. These distinctions are witnessed next.
+
+### 41.3 Beta examples, native trees and primitive traces
+
+**Proposition 41.4 (complete small fibres and their distinct meanings).**
+Take the concrete attained source $t_0=\beta$, obtained by the legal root
+promotion from the installed alpha, so $v=(0,1)$. Its complete fibres are
+
+$$
+\begin{array}{c|c|c|c|c|c|c}
+q&k=0&k=1&k=2&k=3&k\ge4&N_{(0,1)}(q)\\ \hline
+(0,1)&\{\varepsilon\}&\varnothing&\varnothing&\varnothing&\varnothing&1\\
+(1,1)&\{G\}&\{F\}&\varnothing&\varnothing&\varnothing&2\\
+(2,3)&\varnothing&\{GGFG\}&\{GFF,FGFG\}&\{FFF\}&\varnothing&4
+\end{array}
+\tag{41.15}
+$$
+
+In particular $\mathcal W_{(0,1)}(2,3)=\{GGFG,FGFG,GFF,FFF\}$.
+For the two words at $(1,1)$ the actual tree is
+
+$$
+t_F=t_G=\langle\beta,\alpha\rangle,
+\qquad\text{successful primitive trace } S_\varepsilon.
+\tag{41.16}
+$$
+
+For the four words at $(2,3)$, with $\varepsilon$ the root address, the
+actual results and successful primitive edits are
+
+$$
+\begin{array}{c|c|l}
+\text{macro word}&\text{logical tree}&\text{chronological primitive edits}\\ \hline
+GGFG,\ FGFG
+ &\langle\langle\langle\langle\beta,\alpha\rangle,\alpha\rangle,
+       \beta\rangle,\beta\rangle
+ &S_\varepsilon\ S_L\ S_{LL}\ P_{LR}\ P_R\ S_{LLL}\\
+GFF,\ FFF
+ &\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,
+       \langle\beta,\alpha\rangle\rangle
+ &S_\varepsilon\ S_L\ P_R\ S_{LL}\ P_{LR}\ S_R
+\end{array}
+\tag{41.17}
+$$
+
+The first tree is the four-branch left comb. Both trees have two alpha
+and three beta leaves. The words $GFF$ and $FGFG$ have the same affine
+pair action on every $u\in\mathcal Q_+$, namely $M^2u+(1,1)$, yet give
+the two different trees in (41.17). Thus affine-action equality does
+not imply equality of native tree actions. Conversely (41.16) equates
+native results and primitive traces on beta for $F$ and $G$, whose
+whole-domain affine actions are different.
+
+Proof. In (41.11), $M^0v=(0,1)$, $Mv=(1,1)$,
+$M^2v=(1,2)$ and $M^3v=(2,3)$. At $(2,3)$, $k=0$ has residual
+$(2,2)$ and $P_0=0$; $k=1$ has residual $(1,2)$ and unique word
+$G^2FG$; $k=2$ has residual $(1,1)$ and the two words $FGFG,GFF$;
+$k=3$ has zero residual and word $FFF$. At $k=4$ the unshifted endpoint
+is $(3,5)$, with sum eight exceeding five; subsequent sums increase.
+All their residuals therefore give zero. The other two rows follow
+from the source base and the $k=0,1$ cases of the same formulas.
+
+For the native calculations, a beta split replaces its leaf by
+$\langle\beta,\alpha\rangle$ and a promotion replaces alpha by beta.
+At each $F$, list the old leaves left first and edit exactly that list;
+at each $G$, edit the leftmost beta. From beta, the first $F$ or $G$
+is the single split at $\varepsilon$. Successively applying these
+rules gives exactly the enabled addresses, types and trees in
+(41.16)–(41.17). For example $GGF$ gives
+$\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,\beta\rangle$;
+its final $G$ splits the leaf at $LLL$, producing the four-branch comb.
+In (41.6), $GFF$ has translation $u_2$ and $FGFG$ has translation
+$u_1+u_0=u_2$, with two $F$ letters in both. The two displayed trees
+are different ordered terms, so the stated native-action distinction
+follows. $\square$
+
+The selected §40 block family uses only $GFF$ and $FGFG$; it is a proper
+subset of (41.15)'s complete fibre. The initial composition $(0,1)$
+itself forces the singleton beta **logical** tree in nonempty ordered
+binary syntax: the total leaf count is one, so a branch is impossible.
+That fact does not acquire its authentic binding, rights or earlier
+records. For general count pairs, even attained native trees need not
+have unique shape, as (41.17) shows for $(2,3)$.
+
+Literal macro words, successful primitive edit traces, actual logical
+trees, affine pair actions, count endpoints and full native tapes are
+separate objects and equality relations. A primitive trace includes
+addresses and $P/S$ names; it does not include the macro grouping.
+The complete frontier acquisition in $F$ and the leftmost-path
+acquisition in $G$ have their own references, traversal lists, read
+traffic, acknowledgement frames and work storage. Neither a shared
+endpoint nor a shared successful primitive trace proves equality of
+those full records, physical runtime bytes, elapsed time or completion
+schedule. Primitive-event counts are work coordinates, not a clock.
+Recovering macro grouping from primitive expansion alone is a different
+parsing problem, not a premise of the following decoder.
+
+### 41.4 Causal current-endpoint ranks and exact two-sided recovery
+
+**Definition 41.5 (source-relative order, retained information and costs).**
+Fix the supplied source parameter $v$ throughout. At $v$ the sole word
+$\varepsilon$ has rank zero. At every other reachable endpoint $q$,
+order all words ending in $F$ first, by predecessor order, then all
+words ending in $G$, by predecessor order. Empty blocks are skipped.
+Write
+
+$$
+C_F^v(A,B)=
+\begin{cases}N_v(B-A,A),&1\le A\le B,\\0,&\text{otherwise},\end{cases}
+\qquad(q=(A,B)\in\mathcal Q_+).
+\tag{41.18}
+$$
+
+For invalid endpoints take $C_F^v=0$. With zero-based fibre rank
+$\operatorname{rk}^v_q$, retain at every completed prefix
+
+$$
+Z_v(h)=\bigl(q,r(h)\bigr),\qquad
+q=\operatorname{Run}(h,v),\quad r(h)=\operatorname{rk}^v_q(h).
+\tag{41.19}
+$$
+
+The conditional recovery interface supplies the fixed source parameter
+and current **exact** endpoint. For an actual realization, initially
+acquire $v$ by a lawful paid source traversal if it has not already been
+earned. Subsequently maintain its exact binary counts from the completed
+macro and (41.1), or reacquire them by a paid traversal. Neither option
+is a free exact counter or a free source-tree oracle. A modular pair
+field alone is not this exact endpoint. Back all integer fields,
+rank growth and arithmetic workspace by sufficient lawful finite work
+material for the actual finite run, and complete each count/rank
+transaction before declaring its prefix record available. This is an
+additional record contract, not a new source edit or a claim that a
+fixed existing field has unlimited width.
+
+The lower bound below conditions only on $v$ and $q$. If the decoder
+uses additional history-dependent macro labels, primitive addresses,
+source-tree information, tapes, request records, timers or external
+acknowledgements, those distinctions must be included in its record
+or explicitly supplied as additional side information, changing the
+conditional fibre. The actual source is bound and lawful throughout;
+its entire tree and archive are not freely readable decoder inputs.
+
+**Theorem 41.6 (all-prefix causal bijection and sharp payload).** For
+any source of Definition 41.1, initialize $Z_v(\varepsilon)=(v,0)$.
+If $h$ currently ends at $(A,B)$, its causal rank updates are
+
+$$
+\begin{aligned}
+r(hF)&=r(h),\\
+r(hG)&=r(h)+C_F^v(A+1,B),\\
+C_F^v(A+1,B)&=
+\begin{cases}N_v(B-A-1,A+1),&1\le A+1\le B,\\
+0,&\text{otherwise}.
+\end{cases}
+\end{aligned}
+\tag{41.20}
+$$
+
+Only the completed prefix, its current endpoint and the next actual
+completed macro enter this update. No final endpoint, final length or
+future word is supplied. At every completed prefix, $Z_v$ has the exact
+inverse $D_v$ on
+
+$$
+\mathcal I_v=\{(q,r):q\in\mathcal Q_+,\quad 0\le r<N_v(q)\}.
+\tag{41.21}
+$$
+
+For $(q,r)\in\mathcal I_v$, set $D_v(v,0)=\varepsilon$. For $q\ne v$,
+put $C=C_F^v(A,B)$ and define
+
+$$
+D_v(A,B,r)=
+\begin{cases}
+D_v(B-A,A,r)F,&r<C,\\
+D_v(A-1,B,r-C)G,&r\ge C.
+\end{cases}
+\tag{41.22}
+$$
+
+The first branch necessarily has $1\le A\le B$; the second necessarily
+has $A\ge1$ and a nonempty $G$ block. Inputs outside $\mathcal I_v$ are
+rejected, with no fabricated default history. The two inverse laws are
+
+$$
+D_v(Z_v(h))=h,\qquad
+Z_v(D_v(q,r))=(q,r)\quad((q,r)\in\mathcal I_v).
+\tag{41.23}
+$$
+
+For every **nonempty** endpoint fibre, the least number of supplementary
+payload values permitting exact recovery when $v,q$ are supplied is
+$N_v(q)$. Its fixed-fibre binary width is
+
+$$
+b_v(q)=\left\lceil\log_2N_v(q)\right\rceil
+\qquad(N_v(q)\ge1).
+\tag{41.24}
+$$
+
+If $k$ is also supplied, the corresponding number is $N_v^{(k)}(q)$
+and its width is $\lceil\log_2N_v^{(k)}(q)\rceil$ only when that count
+is positive. Empty fibres admit no valid rank and no logarithmic width
+claim. These are conditional payload minima, not optimal total
+physical memory.
+
+Proof. Theorem 41.3 partitions every nonbase dictionary into the two
+last-letter blocks, of sizes $C_F^v(A,B)$ and
+$\mathbf1_{\{A\ge1\}}N_v(A-1,B)$. This is the concrete block partition
+needed for the classical enumerative ranking and inverse of Cover,
+*Enumerative Source Encoding*, §I Propositions 1–2 and inverse algorithm;
+the generic enumeration principle is reused here.
+
+Appending $F$ sends the whole old dictionary bijectively onto the first
+block at the new endpoint, without changing its internal rank.
+Appending $G$ sends it onto the second block, so add the full first
+block at $(A+1,B)$. Its $F$ predecessor is $(B-A-1,A+1)$ exactly under
+(41.20)'s condition. Neither successor can be the source base, since
+potential increases. This proves initialization and the updates,
+including source pairs with $a=0$ and all zero-offset cases.
+
+On a valid nonbase input, $0\le r<N_v(q)$ selects precisely one nonempty
+block interval. If $r<C$, (41.13) gives a valid $F$ predecessor and the
+same in-range predecessor rank. Otherwise it gives a valid $G$
+predecessor and rank $r-C$ in its range. Each step decreases endpoint
+potential as in Theorem 41.3. It cannot stop at a lower-potential or
+unreachable cell, since such cells have no valid ranks. Thus it ends
+at the unique base $(v,0)$. Induction on this decreasing potential
+proves both laws in (41.23), not only decoding of the encoder's outputs.
+Every realized prefix uses exactly that dictionary and those updates;
+no future endpoint participates.
+
+For the lower bound, fix $v,q$ with $N_v(q)>0$. If two distinct words
+in its dictionary have the same supplementary payload, the decoder
+receives identical inputs and cannot return both. Hence at least
+$N_v(q)$ values are necessary. The rank bijection gives exactly that
+many. Applying the same injection argument within a nonempty fixed-$k$
+dictionary gives the conditional version. A fixed-width binary field
+with $d$ bits has $2^d$ values, yielding (41.24), with zero bits for a
+singleton. No distribution or physical storage optimality is used.
+$\square$
+
+At beta's $(2,3)$ endpoint the four histories need four payload values,
+hence two bits under this interface. Conditioning additionally on
+$k=1$ or $k=3$ gives a singleton, and on $k=2$ gives two histories and
+one bit. At beta's $(1,1)$ endpoint one bit distinguishes $F$ and $G$;
+at any fixed source $v$, its empty-history fibre needs no rank data bit.
+The decoder determines $k$ from the recovered word; it never assumes
+that the endpoint has already determined $k$.
+
+**Proposition 41.7 (finite charged arithmetic and the source boundary).**
+For a current endpoint of potential $S=A+B\ge s_0$, a finite exact
+calculation of all counts needed by (41.20)–(41.22) is obtained by filling
+(41.13)'s total-count recurrence over $\mathcal Q_+\cap\{A+B\le S\}$ in
+increasing potential, with base (41.14). It uses $O(S^2)$ table cells,
+each of $O(S+1)$ bits. Use a work-array bit-cost model charging
+$O(S+1)$ bit operations to access and add cells of that width, with
+$O(\log(S+1))$-bit indices. This gives $O((S+1)^3)$ sufficient table
+bits and arithmetic bit work per complete fill.
+A decoder can reuse this table, perform at most $S-s_0$ predecessor
+steps and materialize that many macro letters. Recomputing at every
+completed prefix of a run ending at potential $S_*$ gives a conservative
+$O((S_*+1)^4)$ total arithmetic bit-work upper bound. These bounds
+exclude native source traversal, communication and physical duration.
+
+Proof. There are $\sum_{s=1}^S s=O(S^2)$ valid pair cells. In each
+reachable cell at potential $s$, every word has length at most $s-s_0$,
+so its count is at most $\sum_{i=0}^{s-s_0}2^i=2^{s-s_0+1}-1$.
+Unreachable cells have count zero. Hence $O(S+1)$ bits per cell suffice,
+and each recurrence requires at most one addition of that width.
+Binary indices, comparisons and table addressing also fit the stated
+conservative bounds. The decreasing-potential proof of (41.22) gives
+at most $S-s_0$ rank comparisons/subtractions; their $O(S+1)$-bit work
+and the output fit within the table bound. There are at most
+$S_*-s_0$ nonempty completed prefixes, each with potential at most
+$S_*$; summing fresh-fill bounds proves the last assertion. No eventual
+$S_*$ is used by the algorithm; it is only an analysis parameter.
+$\square$
+
+This is a sufficient arithmetic realization conditional on lawful
+backed binary work records, not a claim about minimum peak workspace.
+The supplementary payload count excludes the source, authentic binding,
+rights, ancestral tapes, installed program, initial/current pair fields,
+width metadata, table, temporary arithmetic, decoder/output buffers and
+reserved cleared capacity. All are charged separately. A native $F$
+performs $a'$ promotions and $b'$ splits at current composition $(a',b')$
+after acquiring its $a'+b'$ entry rows; a $G$ performs one split after
+acquiring its actual leftmost path. Navigation, field operations,
+replies and returns add their own work. No unit-cost integer, default
+acknowledgement or modular field supplies the exact count table.
+
+Recovering $h$ does not recover an unspecified earlier source tree,
+authentic reference, complete tape or physical time. If a logical
+description of $t_0$ has itself been lawfully acquired and supplied,
+evaluating its recovered macros computes $t_h$ and their deterministic
+successful primitive edit trace in the mathematical syntax, with the
+corresponding computation and output costs. Merely supplying $v$ does
+not supply that initial tree description. Evaluation of a description
+is not physical replay, cloning, a source reset or inversion of growth.
+The rank holds at completed transactions; interruption/fault recovery
+inside a transaction requires its own contract.
+
+### 41.5 Suppliers and the exact scope of the synthesis
+
+The source-specific deduction is the exhaustive fixed-$F$ run and
+affine-action-fibre classification, its sum over **all** $k$ for every
+fixed attained beta-positive source, and the concrete current-endpoint
+rank bijection using those complete native macro dictionaries. The
+chronological affine action itself is reused from
+[GraftAffineClosure](../../../D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.lean),
+including `step`, `run`, `atomicBlock`, `matrixM` and the affine supplier
+within `result`. There false denotes replacement and true translation.
+[PositiveClosingExecution](../../../D5/S3/Arith/FibonacciAtomic/Acquisition/PositiveClosingExecution.lean)
+uses the opposite Boolean orientation, as its `residue_run` map by
+`Bool.not` records. This section uses named chronological letters and
+does not transfer a modular closing period into a native inverse.
+
+The actual source correspondence and domain are
+[LAB Arithmetic Growth, §§9.3–9.4 and 12.2](RECURSIVE_RELATIONAL_OBSERVATION_LAB_ARITHMETIC_GROWTH.md).
+The causal counted-block and actual-image interfaces, including their
+separate retained bits, workspace and output costs, are already present
+in [Spatial Records Chronology, §§18–20 and 23.1](RECURSIVE_RELATIONAL_OBSERVATION_SPATIAL_RECORDS_CHRONOLOGY.md)
+and [Boundary Dynamics, Propositions 102.4–102.5](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md).
+The latter are the proposition numbers, distinct from that chapter's
+subsection numbers. The paid source-bound compressed-record interface
+is [AAII §47](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_II.md).
+[FARG](FIBONACCI_ATOMIC_RELATION_GENERATION.md) supplies literal tree
+substitution and the composition/quantity interpretation;
+[Process Geometry](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)
+supplies the typed distinctions among action, boundary, memory and
+process. None of these citations identifies arithmetic alpha
+translation with permission for a literal native root graft.
+
+Cover, *Enumerative Source Encoding*, IEEE Transactions on Information
+Theory **19**(1), 73–77 (1973), [author PDF](https://isl.stanford.edu/~cover/papers/transIT/0073cove.pdf),
+§I Propositions 1–2 and inverse algorithm, supplies the generic finite
+ranking method, not a new coding principle here. Berstel, *An Exercise
+on Fibonacci Representations*, RAIRO–Theoretical Informatics and
+Applications **35**(6), 491–498 (2001), [full text](https://www.numdam.org/item/ITA_2001__35_6_491_0.pdf),
+concerns normalization and counting of binary Fibonacci
+representations; it is generic prior art, not a premise that its
+bounded-digit dictionaries equal (41.7)'s arbitrary nonnegative run
+multiplicities. No Frougny result is a premise. The synthesis is
+`repo-derived`; these searched suppliers do not establish worldwide
+originality, and the prose proofs assert no new Lean verification.
+
+All results concern finite completed histories under the declared
+same-source rights, material and exact-record contract. A policy
+excluding some macro words changes the operational dictionary; the
+unrestricted counts above cannot silently be reused for that policy.
+For the supplied $v$, the literal macro chronology and the enriched
+boundary $(q,r)$ mutually recover on their actual images. A lawfully
+supplied initial logical tree description additionally makes either
+one determine the final tree and successful primitive trace; reversing
+from the final tree alone is not asserted. Endpoint counts alone do not
+recover general shape or chronology. None of these maps supplies
+elapsed time, physical bytes, source authority or unknown prior history.
+This finite synthesis leaves the continuous RRO research objective open.
+
+## 追加锚（本行以下为增补区）
+
+## 42. Recovering an unknown native entry and its completed macro history
+
+### 42.1 The entry event index and the geometry retained by the source
+
+**Definition 42.1 (same-source recovery inputs).** Retain Definition
+41.1's one actual LAB root/source/epoch, authentic binding, current
+exclusive rights, lawful traversals, all-event ancestral tapes and
+sufficient finite material for each finite run. The attained entry
+$t_0$ ranges over the entire tree domain $\mathcal D_+$, not one seed,
+one composition fibre or one prescribed shape. After attachment the
+only source-changing operations are completed native $F/G$ macros:
+$F$ is LAB Definition 9.3's sealed old-frontier replacement $\rho$;
+$G$ is its acquired current leftmost-beta split. There are no
+interleaved source-changing legacy edits. Every inner and outer call
+consumes its full serialized reply, acknowledgement and real return.
+A completed inner primitive alone need not be a completed outer macro.
+
+For a logical tree put
+
+$$
+\ell(t)=a(t)+b(t),\qquad n(t)=a(t)+2b(t)-1.
+\tag{42.1}
+$$
+
+Write $\operatorname{Run}(W,t)$ for the logical tree after the
+chronological completed word $W$; the pair-valued Run of §41 is its
+composition projection. The recovery inputs here are precisely an
+authenticated exact entry index $n_0=n(t_0)$ and the lawfully acquired
+final logical syntax $z=\operatorname{Run}(W,t_0)$. Neither the old
+syntax, its composition, its leftmost depth nor the macro length is an
+additional input. Recovery targets $(t_0,W)$ as logical syntax and a
+literal word. Pointer identity, allocated runtime bytes, authority,
+pre-attachment primitive order and elapsed time are different targets.
+The acquisition conditions are made explicit in Proposition 42.6.
+
+**Lemma 42.2 (exact event count and spine record).** The value $n(t)$ is
+the exact number of successful addressed $P/S$ events from the original
+allocated alpha to any attained $t$. On $\mathcal D_+$, $n(t)=1$ holds
+exactly at beta, and $n(t)>1$ exactly at multileaf entries. Each completed
+macro extends the logical leftmost spine by exactly one.
+
+More precisely let
+
+$$
+\operatorname{Sp}()=\beta,\qquad
+\operatorname{Sp}(r_1,\ldots,r_d)
+ =\langle\operatorname{Sp}(r_2,\ldots,r_d),r_1\rangle.
+\tag{42.2}
+$$
+
+Every $t\in\mathcal D_+$ has one such presentation, where $r_1$ is
+the root's right subtree and $r_d$ is the deepest right subtree.
+With $d$ its logical leftmost depth,
+
+$$
+\begin{aligned}
+F(t)&=\operatorname{Sp}(\rho r_1,\ldots,\rho r_d,\alpha),\\
+G(t)&=\operatorname{Sp}(r_1,\ldots,r_d,\alpha),\\
+n(F(t))-n(t)&=\ell(t),\qquad n(G(t))-n(t)=1.
+\end{aligned}
+\tag{42.3}
+$$
+
+For $W=X_1\cdots X_m$, let $K=|W|_F$ and
+$k_i=|X_{i+1}\cdots X_m|_F$. In the final spine, each entry position
+$j\le d$ has right subtree $\rho^K r_j$, and the position born at
+macro $i$ has right subtree
+
+$$
+\rho^{k_i}\alpha\quad(1\le i\le m).
+\tag{42.4}
+$$
+
+Proof. AA Definition 19.1, equation (AA.73), gives the alpha-origin
+split count $a+b-1$ and promotion count $b$, independently of their
+legal shuffle. Their sum is (42.1). Equivalently every $P$ and $S$
+increments $n$ by one, starting at zero. Since $b\ge1$ on
+$\mathcal D_+$, $a+2b-1=1$ forces $(a,b)=(0,1)$, hence the singleton
+beta tree. Every other entry has a branch. LAB Lemma 2.1 gives a beta
+at the end of its logical left descent; this proves the unique spine
+presentation, including the empty spine at beta.
+
+Global replacement preserves the old spine branches, replaces every
+old right subtree by its $\rho$ image and replaces its terminal beta
+by $\langle\beta,\alpha\rangle$. Native $G$ changes only that terminal
+beta. These are exactly the first two equations of (42.3). LAB Theorem
+9.4 gives their composition laws, whose substitution into (42.1)
+gives the last two equations. Induction on the chronological word now
+proves (42.4): a new spine position has right alpha; every later $F$
+replaces that whole subtree, and every later $G$ leaves it unchanged.
+$\square$
+
+The positions in (42.4) are proof coordinates, not acquired macro
+markers or a stored entry depth. They explain how this restricted
+chronology survives in geometry. The trees $\rho^k\alpha$ are pairwise
+distinct: for every nonempty ordered tree, replacement increases
+$a+2b$ by $a+b>0$. At two consecutive positions known to have been
+born after attachment, their exponents differ by one precisely when
+the later macro is $F$, and otherwise agree. The decoder below also
+locates the entry without being supplied those positions. Logical
+spine depth counts binary source branches. In AA Definition 17.3's
+material realization, a beta has a unary terminal marker; that extra
+material edge is excluded from this depth and from every macro frontier.
+
+### 42.2 The two possible predecessors and a terminating inverse
+
+**Lemma 42.3 (native overlap and its entry boundary).** Let
+$\mathcal O=G[\mathcal D_+]$. It is exactly the set of native trees
+with a nonempty leftmost spine whose deepest right subtree is alpha.
+Its inverse $\operatorname{pr}:\mathcal O\to\mathcal D_+$ collapses
+only the deepest $\langle\beta,\alpha\rangle$ to beta. Every
+nonempty completed macro word ends in $\mathcal O$.
+
+Reuse the actual-image inverse $\delta$ of $\rho$ from PG §37.2,
+(PG.3705), and Theorem 44.6. Thus its domain is the decidable grammar
+
+$$
+I=\rho[\mathcal T]::=\beta\mid\langle\beta,\alpha\rangle
+                              \mid\langle I,I\rangle.
+\tag{42.5}
+$$
+
+For $s=\operatorname{Sp}(r_1,\ldots,r_d)\in\mathcal D_+$ put
+$H(s)=\operatorname{Sp}(\rho r_1,\ldots,\rho r_d)$. Then
+
+$$
+\begin{aligned}
+F(s)&=G(H(s)),&\operatorname{pr}(F(s))&=H(s),\\
+n(H(s))&=n(s)+\ell(s)-1.&&
+\end{aligned}
+\tag{42.6}
+$$
+
+At beta, $H(\beta)=\beta$. At every multileaf $s$, $H(s)\notin
+\mathcal O$ and $n(H(s))>n(s)$. In particular, an overlap
+$F(s)=G(u)$ forces $u=H(s)$; for multileaf $s$, this $u$ cannot itself
+have arisen from a nonempty completed macro word.
+
+Proof. The spine presentation proves the characterization of
+$\mathcal O$, the collapse inverse and injectivity of $G$. Equation
+(42.3) puts both macro outputs in $\mathcal O$ and proves the first
+line of (42.6). The second follows by subtracting the one-event $G$
+increment from $n(F(s))=n(s)+\ell(s)$.
+
+The reused grammar (42.5) has disjoint alternatives because
+$\alpha\notin I$: the special pair has right alpha, whereas an internal
+pair of images has right child in $I$. Recursion on finite subtrees
+decides membership and computes $\delta$; it also supplies the reused
+global injectivity of $\rho$. For multileaf $s$, the deepest right
+subtree of $H(s)$ is $\rho r_d$, which cannot be alpha. Thus it is
+outside $\mathcal O$ and cannot be a nonempty macro output. Its strict
+$n$ inequality follows from $\ell(s)\ge2$. Applying the collapse to
+$F(s)=G(u)$ gives the asserted unique $u$. $\square$
+
+**Theorem 42.4 (unknown-entry recovery and the sole beta ambiguity).**
+For every fixed $n_0>1$, the map
+
+$$
+(t,W)\longmapsto\bigl(n_0,\operatorname{Run}(W,t)\bigr),\qquad
+ t\in\mathcal D_+,\quad n(t)=n_0,\quad
+ W\in\{F,G\}^{<\omega},
+\tag{42.7}
+$$
+
+is injective on its entire stated domain. It has a terminating inverse
+on its actual image, recovering both the unknown initial logical tree
+and the literal macro word, including the empty word. No entry
+composition or depth is supplied.
+
+For $n_0=1$, the entry is beta. The endpoint beta has just its empty
+history. Every nonempty reachable final logical tree has exactly the
+two preimages
+
+$$
+(\beta,FU),\qquad(\beta,GU)
+\tag{42.8}
+$$
+
+for one uniquely determined suffix $U$. Conditional on $n_0=1$, such
+a nonempty final tree and no other distinguishing channel, a supplement
+recovers the target exactly if and only if it separates these two
+preimages. One binary first-macro choice is necessary and sufficient.
+
+Proof. Here is a decoder for $n_0>1$. Reject a nonnative input or one
+with $n(z)<n_0$. If $n(z)=n_0$, return $(z,\varepsilon)$. Otherwise
+require $z\in\mathcal O$ and put $c=\operatorname{pr}(z)$. Select the
+last letter and its predecessor by
+
+$$
+(p,X)=
+\begin{cases}
+(c,G),&n(c)=n_0\ \text{or}\ c\in\mathcal O,\\
+(\delta z,F),&\text{otherwise, provided }z\in I
+                         \text{ and }\delta z\in\mathcal D_+.
+\end{cases}
+\tag{42.9}
+$$
+
+Reject when the second branch has no stated predecessor or when
+$n(p)<n_0$. Recursively decode $(n_0,p)$ as $(t,V)$ and return
+$(t,VX)$. All membership tests, collapse, counts and the actual-image
+inverse are finite syntax operations. In the $G$ branch $n$ decreases
+by one. In the $F$ branch it decreases by $\ell(p)\ge1$. Thus the
+recursion terminates in at most $n(z)-n_0$ predecessor steps, with
+rejection allowed off the image.
+
+To prove that this decoder selects the actual last letter, consider
+any nonempty actual word with input entry index $n_0>1$. Its current
+predecessor $s$ is multileaf, since event count never decreases. If
+its last letter is $G$, then $c=s$. Either the preceding word is empty,
+so $n(c)=n_0$, or it is nonempty, so $c\in\mathcal O$. The first
+branch therefore applies. If its last letter is $F$, Lemma 42.3 gives
+$c=H(s)\notin\mathcal O$ and $n(c)>n(s)\ge n_0$. Neither condition
+of the first branch holds. The second applies and $\delta z=s$.
+Induction on decreasing $n$ proves that the returned pair is exactly
+the actual $(t,W)$. Consequently two such pairs with the same input
+cannot differ, even if their entry trees, depths and word lengths
+were initially unknown.
+
+Conversely every accepted predecessor in (42.9) really satisfies
+$X(p)=z$. At the base the recovered tree is native and has index
+$n_0$. Induction back up the recursion shows that every accepted
+answer belongs to the actual image and replays to the supplied
+logical syntax. This proves both inverse laws on that image, rather
+than merely uniqueness of a promised word.
+
+When $n_0=1$, Lemma 42.2 forces beta and strict event growth separates
+the empty word. Both first letters send beta to
+$K=\langle\beta,\alpha\rangle$, whose index is two. Apply the already
+proved $n_0=2$ inverse to the final tree: it returns $(K,U)$ with a
+unique $U$. This proves exactly (42.8). A decoder receiving identical
+supplementary values on these two targets cannot distinguish them;
+two different values suffice by selecting their first letter. This
+is the ordinary conditional injection bound applied to this concrete
+two-point fibre. $\square$
+
+A retained request, script or controller record can already reveal that
+first choice; the theorem then requires no additional bit beyond those
+supplied inputs. It does not assert that two complete installations
+have identical observations. In particular their macro requests can
+differ even when the successful source edits agree. The inverse
+computes descriptions. It does not undo source edits, restore old
+pointers or grant a reset, deletion or inverse-growth capability.
+
+### 42.3 A sharp bounded INITIAL reference
+
+**Proposition 42.5 (least attachment-reference alphabet).** Fix an
+integer $N\ge2$. The entry is unknown in
+
+$$
+\mathcal E_N=\{t\in\mathcal D_+:2\le n(t)\le N\}.
+\tag{42.10}
+$$
+
+An encoder $E:\mathcal E_N\to A$ is fixed at attachment independently
+of all future macro choices. Supply only $E(t)$ and the final logical
+tree; the target is both $t$ and every finite completed macro word.
+The least possible attained reference alphabet has exactly $N-1$
+values. The exact index $E(t)=n(t)$ attains it, with conditional
+fixed-width binary width $\lceil\log_2(N-1)\rceil$.
+
+Proof. Theorem 42.4 supplies a decoder with the $N-1$ indices
+$2,\ldots,N$. For the reverse inequality, put
+$t_j=G^{j-1}(\beta)$ for $2\le j\le N$. These are actual native
+entries obtained after the original alpha promotion and successive
+leftmost-beta splits. Their indices are $j$, and all have the common
+final logical tree $t_N$, using the future word $G^{N-j}$, including
+the empty word at $j=N$. The targets $(t_j,G^{N-j})$ are distinct.
+Their attachment references must therefore be distinct when the
+final tree is fixed. Hence at least $N-1$ attained reference values
+are necessary. The generic pigeonhole and binary-width principles
+are reused; the native common-endpoint chain gives their lower-bound
+instance and Theorem 42.4 gives the matching upper bound. $\square$
+
+This is a side-information theorem for an attachment reference, not
+a minimum total physical-memory claim. It conditions on the complete
+final syntax and excludes all other history-dependent inputs. Adding
+beta to the entry domain makes this target impossible for an encoder
+of $t$ alone: $E(\beta)$ is the same for $F$ and $G$, which have the
+same final tree. A future first-choice distinction must then be supplied
+through some other channel.
+
+### 42.4 Acquired syntax, old ancestral tapes and macro parsing
+
+**Proposition 42.6 (paid inputs and the addressed-expansion consequence).**
+Under Definition 42.1, an exact entry index can be acquired by a
+stationary finite traversal of the actual bound source, counting its
+logical alpha and beta leaves with backed exact counters and computing
+(42.1). It can instead be supplied by a correctly maintained backed
+exact counter of all successful alpha-origin events. A final stationary
+finite traversal acquires the complete final logical syntax. Conditional
+on these acquired inputs and finite decoding workspace/output, Theorem
+42.4 needs no ancestral-tape contents as decoder input for its target.
+
+For each fixed multileaf entry, the map from completed native macro
+words to their full indexed addressed primitive expansions is injective.
+At beta, its only ambiguity is the first letter in (42.8). If the current
+source and its acquired all-event ancestral tapes are supplied, AA
+Theorem 19.2 recovers their full alpha-origin indexed addressed primitive
+history. An authenticated exact $n_0$ then locates the continuation
+suffix, and replay of the first $n_0$ acquired events on logical syntax
+recovers the entry if needed. These interfaces do not insert macro
+delimiters in the primitive records.
+
+Proof. The traversal uses AA Definitions 17.3 and 20.2's arity parsing
+and LAB's stationary logical-frontier acquisition. From the authentic
+root follow only existing logical child links, check current grants and
+the actual reached references, and exclude beta's unary material marker
+from the logical frontier. A finite traversal stack, acquired address
+backing and exact finite counter fields suffice to count each logical
+leaf once. The same finite traversal, retaining ordered constructors
+and leaf tags, obtains final syntax. Retain the source binding and epoch
+across both acquisitions and the intervening macros. Source stability
+through each traversal and serialization exclude mixing counts or
+subtrees from different cuts. All reference tests, reads, arithmetic,
+list operations, reply transport, workspace, clearing and output are
+charged uses of finite owned material. Counter width must suffice for
+the actual finite value; it is not an unbounded finite-control state.
+Attachment may discard its acquired old syntax after computing $n_0$;
+Theorem 42.4 does not secretly retain it as another decoder input.
+
+The default modular pair fields of LAB §11 give residues, not an exact
+$n_0$. They cannot replace this acquisition without an additional proven
+range/counter contract. Likewise the syntax is acquired data, not a
+free computation oracle, guessed reference or waiting-as-a-clock.
+Every finite syntax operation of the inverse terminates; backing all
+its integers, parsed trees, recursive work and materialized word gives
+a finite computation for each admitted finite input. This is neither
+a runtime bound for the native driver nor an assertion that one fixed
+finite arena handles all future inputs.
+
+For the expansion claim, the primitive list and fixed initial logical
+tree determine the final logical tree by the original addressed rules.
+Theorem 42.4 then recovers the unique word for a multileaf entry. At beta
+the two first macros both expand to the same single $S_\varepsilon$;
+the suffix starts at the same $K$ and has the same deterministic
+expansion. The theorem excludes any further ambiguity. This reuses
+AA19.2 for full-order recall from the current source and all-event tapes:
+its decoded events include both kinds and their logical addresses.
+By Lemma 42.2 the supplied $n_0$ is precisely the old-prefix length,
+so indices $n_0+1,\ldots,n(z)$ select the continuation. Replay of its
+old prefix from the known alpha computes $t_0$ as a description.
+Thereafter the source inverse, or primitive replay followed by it,
+recovers macro grouping with the stated beta qualification. No recall
+request is presumed callable outside the existing Ready contract.
+$\square$
+
+Dispensing with tape contents in this decoder does not remove tapes
+maintained by the installation. It establishes no smaller total storage
+or faster native implementation. Old tape acquisition, source growth,
+frontier acquisition, code, roots, rights, buffers and output retain
+their own costs. Nor does the source-only decoder recover an arbitrary
+pre-attachment primitive shuffle: that separate target still uses the
+appropriate records.
+
+### 42.5 Lawful partial cuts and the limits of content projections
+
+**Proposition 42.7 (equal content at unequal completion cuts).** Start
+from the same attained multileaf $t$, with any one coherent prior
+primitive history and its tapes. Let $p$ be its leftmost beta address.
+Compare these two legal alternative executions: a fully returned $G$,
+and an $F$ paused after its first successful primitive has completed
+maintenance, its literal reply, acknowledgement and inner return. Their
+logical source and all ancestral-tape contents are equal. Their complete
+outer controller/Busy/Ready/return states differ. Thus this content
+projection cannot certify outer completion or distinguish these two
+macro situations.
+
+There is also a stronger source-only collision at every multileaf entry:
+the fully completed word $GF$ and the execution of $F$ followed by
+exactly the first two successful primitives of a second $F$ have the
+same logical source. The latter second macro is genuinely incomplete.
+Their primitive chronologies and coherent tape contents differ.
+
+Proof. The first old-frontier row in $F$ is the acquired current
+leftmost beta. Hence both compared first executions perform exactly
+$S_p$ on the same source. The all-event appends are identical and
+complete at the chosen inner-return cut, giving the same logical
+source and tape words. There is at least one other old-frontier row
+because $t$ is multileaf. The $F$ caller retains those unprocessed rows
+and its continuation and has not returned; $G$ has returned. Even at
+beta the content equality holds if $F$ is paused before its outer
+return, though no further primitive row then remains. Such equality
+is a statement about a projection of legal joint states, not equality
+of full observers.
+
+For the stronger collision, let $E$ be the nonempty left-first sequence
+of edits at all old leaves other than $p$. Its addresses are
+prefix-incomparable with $p$. The successful primitive expansions are
+
+$$
+\begin{aligned}
+GF &: S_p\,S_{pL}\,P_{pR}\,E,\\
+F\text{ then two primitives of }F &: S_p\,E\,S_{pL}\,P_{pR}.
+\end{aligned}
+\tag{42.11}
+$$
+
+Indeed after $G$, the first two frontier leaves are the new beta at
+$pL$ and alpha at $pR$. After the first $F$, exactly these are again
+the first two leaves of the next sealed frontier. Both displayed
+executions replace the old subtree beta at $p$ by
+$\langle\langle\beta,\alpha\rangle,\beta\rangle$ and replace every
+other old leaf once by its $\rho$ image. Edits in $E$ commute with
+those at $pL,pR$ because their target subtrees are disjoint; hence
+the logical endpoints agree. The second frontier also contains
+leaves outside $p$, so after its first two rows that macro still has
+unprocessed rows. The two primitive lists differ: immediately after
+$S_p$, one edits $pL$, the other edits an address outside $p$.
+AA19.2's source-relative tape bijection therefore makes their tape
+contents different at the common endpoint. $\square$
+
+The first comparison uses the source-and-tape-content projection;
+the second uses only logical source. Neither supplies an outer
+FetchGrowth call while busy or during unfinished maintenance. At an
+inner Ready cut the surrounding caller can still be Busy, and the
+outer request contract need not admit recall. Mathematical evaluation
+of a coherent tape word is separate from a lawful callable observation.
+These collisions do not refute the completed-word theorem: one side
+of each comparison is outside its completed-macro domain.
+
+### 42.6 Restricted macro orbits, endpoint archives and supplier scope
+
+**Corollary 42.8 (number of native final trees in a composition fibre).**
+Fix an attained multileaf entry $t$ of composition $v$. With $N_v(q)$
+as already computed in §41, the number of distinct $F/G$-reachable
+final logical trees of composition $q$ is exactly $N_v(q)$. For the
+beta entry and a nonempty reachable endpoint $q\ne(0,1)$ it is
+$N_{(0,1)}(q)/2$. At $q=(0,1)$ there is the one empty-history tree;
+unreachable endpoints give zero.
+
+Proof. LAB12.2 identifies each word's final composition with §41's
+pair Run. For a fixed multileaf entry, Theorem 42.4 makes the map from
+that complete endpoint dictionary to final logical trees injective;
+it is surjective by the definition of its restricted orbit. At beta,
+Theorem 42.4 gives exactly two words per nonempty final tree. Their
+compositions agree, so each nonempty dictionary has even size and
+halving counts its distinct trees. Strict growth excludes a nonempty
+word at the beta endpoint. $\square$
+
+For example §41.3's four words at beta's composition $(2,3)$ yield
+exactly two native trees, as its explicit trees already show. The
+corollary counts the restricted macro orbit. It does not count all
+primitive-reachable trees of that composition, and it does not
+rederive §41's affine-action, full-word counting or ranking theory.
+
+**Proposition 42.9 (every-returned-macro pair archives).** Suppose the
+exact composition at attachment and after every completed macro is
+supplied as an acquired chronological archive. It determines all
+macro choices except the initial choice at beta. A single final pair,
+primitive-kind-only records, unordered work totals or §40's sparse
+block archives are different projections and do not in general
+supply this information.
+
+Proof. At a current composition $(a,b)$ the two possible successors
+are $(b,a+b)$ and $(a+1,b)$. They agree exactly when $a=0,b=1$.
+In $\mathcal D_+$ that pair forces beta. After the first macro its
+index strictly exceeds one and it never returns to beta. Successive
+exact pairs therefore determine every subsequent choice; at beta
+the first pair transition leaves the two choices unresolved.
+
+For the contrasting projections, §41.3's $GFF$ and $FGFG$ have the
+same final pair but different trees, and each has exactly two $F$'s,
+two successful primitive promotions and four splits when started at
+beta; their macro lengths nevertheless differ. At the attained entry
+$\langle\beta,\beta\rangle$, the completed words $F$ and $GG$ expand
+to $S_LS_R$ and $S_LS_{LL}$ respectively. Both have primitive-kind
+word $SS$, zero promotions, two splits and final composition $(2,2)$,
+but their logical endpoints are respectively
+$\langle\langle\beta,\alpha\rangle,\langle\beta,\alpha\rangle\rangle$
+and $\langle\langle\langle\beta,\alpha\rangle,\alpha\rangle,\beta\rangle$.
+Thus even within the completed menu these smaller projections lose
+macro choices. Separately, the arbitrary legal primitive lists
+$S_LS_R$ and $S_RS_L$ from that entry have the same logical endpoint
+and kind word but different addressed order; the latter list is not
+its completed $F$ expansion. The sparse pair-archive collision family
+is exactly §40.3's paid block interface, whose record omits the
+intermediate returned-macro cuts. $\square$
+
+The archive in Proposition 42.9 contains paid cut history; it is not a
+source-only input or a full physical record. A primitive-kind word
+supplies neither its addresses nor macro separators. Conversely
+arbitrary $P/S$ shuffles with the same final source, as in AA17–19,
+do not refute Theorem 42.4's restriction to the completed native menu.
+None of the event counts, macro words or archives is elapsed time.
+
+**Convention 42.10 (reused results and the new correspondence).** The
+substantive correspondence here is between the completed native
+macro history with its unknown entry and the final logical source
+with an exact entry event index, uniformly over all attained
+$\mathcal D_+$. Its proof uses the native leftmost-spine overlap in
+Lemma 42.3. LAB9.3–9.4 and 12.2 supply the actual macro/source bridge;
+AA17 and 19–23 supply attainment, alpha-origin event counting,
+all-event tapes and lawful Ready service. FARG supplies the ordered
+syntax and global substitution. PG37.2's (PG.3705) and PG44.6 supply
+the actual-image parser and global substitution injectivity. In
+[GenealogicalFiberTransport](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean)
+the proof of global substitution injectivity is the local
+`have substitution_injective` inside `result`, not a separately
+exported declaration of that name. These are reused mathematical
+suppliers, without a new compilation or kernel-certification claim.
+
+[Native Entry Reference and Graft Order, §3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ENTRY_REFERENCE_AND_GRAFT_ORDER.md)
+reuses the same $\rho$ parser but has a different $G$, a root graft.
+Its disjoint-menu theorem does not apply to LAB's local leftmost
+split: here the images overlap as (42.6) states. The generic
+actual-image inverse, injection, pigeonhole and coding principles
+are existing suppliers; the bounded reference application is
+Proposition 42.5, not a new generic coding theorem.
+
+Engelfriet, *Tree Automata and Tree Grammars*,
+[arXiv:1510.02036v1, Definition 3.62](https://arxiv.org/html/1510.02036v1),
+defines ranked-tree homomorphisms by recursive substitution. It is a
+framework for $\rho$, not a proof of recognizability for this finite
+local-$G$ menu. Berthé, Steiner, Thuswaldner and Yassawi,
+*Recognizability for sequences of morphisms*,
+[arXiv:1705.00167v2, §2](https://arxiv.org/html/1705.00167v2),
+concerns morphism representations of bi-infinite sequences and their
+recognizability; its domain and hypotheses are not those of (42.7).
+Relative to these inspected frameworks and the cited repository
+suppliers, the native recovery correspondence is `repo-derived`.
+No worldwide originality or formal verification of this append is
+asserted. The results concern finite completed runs and explicitly
+projected partial cuts; they leave the broader RRO recovery questions
+and the continuing research objective open.
+
+## 追加锚（本行以下为增补区）
+
+## 43. Native partial-frontier recognizability and complete unfinished-history fibres
+
+### 43.1 The native prefix and its two admissibility sorts
+
+**Definition 43.1 (coherent prefix syntax).** Retain Definition 42.1's
+one LAB root/source/epoch, authentic operands, exclusive current rights,
+full ancestral tapes and finite backing per finite run. Let $L(u)=\ell(u)$.
+For $u\in\mathcal D_+$ and $0\le j\le L(u)$, define $F_j(u)$ to be the
+logical source after exactly the first $j$ rows of Definition 41.1's
+sealed OLD frontier have completed their guarded primitive, all tape and
+arithmetic maintenance, literal reply, acknowledgement and inner return.
+Newly born leaves are excluded. Thus $F_0(u)=u$, $F_{L(u)}(u)=\rho(u)$,
+and native $G(u)=F_1(u)$. An active outer call has not yet returned;
+even at $j=L(u)$ its pending output/acknowledgement/return is retained.
+At $j=0$ acquisition may still precede sealing or a next-row operand.
+Only such coherent source cuts, and stationary control transitions
+between them, are considered; an unfinished inner commit is excluded.
+
+For the inverse use two syntax sorts, not two new source types:
+
+$$
+\mathcal T_B::=\beta\mid\langle\mathcal T_B,\mathcal T_A\rangle,
+\qquad \mathcal T_A::=\alpha\mid\mathcal T_B.
+\tag{43.1}
+$$
+
+AA Theorem 17.2 gives $\mathcal T_A=\mathcal D$ and
+$\mathcal T_B=\mathcal D_+$. The left child of any branch belongs to
+$\mathcal T_B$, because it is born beta and cannot become alpha;
+the right child may also be an untouched alpha. At the actual root,
+using sort $B$ means that the initial promotion has already happened,
+not that its actual birth type was beta. Extend $F_j$ descriptively to
+either sort by applying $\rho$ once at its first $j$ original leaves.
+This auxiliary extension at alpha gives no native $G$ there.
+
+Reuse the actual-image inverse $\delta:I\to\mathcal T$ of (42.5).
+For $s\in\{A,B\}$ define the decidable full-image predicate
+
+$$
+J_s(y)\quad\Longleftrightarrow\quad y\in I\ \text{and}\
+\delta(y)\in\mathcal T_s.
+\tag{43.2}
+$$
+
+Both conditions matter: $\langle\beta,\beta\rangle\in I$ but its
+inverse $\langle\alpha,\alpha\rangle$ is not attained. Counts use
+$n=a+2b-1$ as in (42.1), not elapsed time or material depth.
+
+### 43.2 A uniform ordinal inverse, including its exact domain
+
+**Theorem 43.2 (all native partial-frontier preimages).** There are finite
+effective functions $K_s(y)$ and $U^s_j(y)$ on the following exact domain:
+$y\in\mathcal T_s$ and integer $0\le j\le K_s(y)$. They satisfy
+
+$$
+\begin{aligned}
+\{(u,j):u\in\mathcal T_s,\ 0\le j\le L(u),\ F_j(u)=y\}
+ &=\{(U^s_j(y),j):0\le j\le K_s(y)\},\\
+U^s_j(F_j(u))&=u,\qquad F_j(U^s_j(y))=y,\\
+n(U^s_j(y))&=n(y)-j.
+\end{aligned}
+\tag{43.3}
+$$
+
+In particular $K=K_B$ and $U_j=U^B_j$ give the required entire
+$\mathcal D_+$ fibre, uniformly over different unknown entry trees.
+For $J_s(y)$ there is the additional saturation identity
+
+$$
+K_s(y)=L(\delta y),\qquad U^s_{K_s(y)}(y)=\delta y.
+\tag{43.4}
+$$
+
+An input outside the stated sort, a negative/noninteger progress, or
+$j>K_s(y)$ rejects. The maximum need not be a fully returned frontier;
+(43.4) applies exactly to native full images, not to every $y$.
+
+Proof. Put $C=\langle\beta,\alpha\rangle$. The recursion starts with
+
+$$
+\begin{array}{c|c|c}
+(s,y)&K_s(y)&\text{positive-progress inverse}\\\hline
+(A,\alpha)&0&\text{none}\\
+(A,\beta)&1&U^A_1(\beta)=\alpha\\
+(B,\beta)&0&\text{none}\\
+(s,C)&1&U^s_1(C)=\beta
+\end{array}
+\tag{43.5}
+$$
+
+Always put $U^s_0(y)=y$. For a branch $y=\langle v,w\rangle\ne C$,
+first decide $J_B(v)$. If true put $k=L(\delta v)$ and set
+
+$$
+\begin{aligned}
+K_s(y)&=k+K_A(w),\\
+U^s_j(y)&=
+\begin{cases}
+\langle U^B_j(v),w\rangle,&0\le j\le k,\\
+\langle\delta v,U^A_{j-k}(w)\rangle,&k<j\le k+K_A(w).
+\end{cases}
+\end{aligned}
+\tag{43.6}
+$$
+
+If $J_B(v)$ is false, set instead
+
+$$
+K_s(y)=K_B(v),\qquad
+U^s_j(y)=\langle U^B_j(v),w\rangle\quad(0\le j\le K_B(v)).
+\tag{43.7}
+$$
+
+These are structural recursions on proper subtrees. Membership in $I$,
+$\delta$, sort tests and leaf counts also recurse on finite syntax.
+They terminate on every finite input, including irregular attained trees.
+
+We prove the complete fibre assertion and (43.4) simultaneously by
+structural induction on $y$. At a leaf alpha, no nonempty edit can have
+produced it. At a leaf beta, the only positive prefix is the one alpha
+promotion, admitted in sort $A$ and excluded in sort $B$. At $C$, a
+positive prefix from a single leaf is precisely the beta split. It
+cannot instead come from a branch: that branch's first original leaf
+lies in its left child of sort $B$, whereas the output left child beta
+has no positive-progress preimage of sort $B$. These observations prove
+(43.5), its uniqueness, and its full-image saturation cases.
+
+Consider now $y=\langle v,w\rangle\ne C$. A preimage with positive
+progress cannot be a leaf, since a one-leaf edit gives only beta or $C$.
+Write it $u=\langle x,z\rangle$. If $j\le L(x)$, the prefix acts only
+on the left: $v=F_j(x)$ and $w=z$. The smaller-tree induction gives
+exactly $x=U^B_j(v)$, for $0\le j\le K_B(v)$. If $j>L(x)$, the
+whole left child has been replaced: $v=\rho x$, so necessarily
+$J_B(v)$, $x=\delta v$, and $L(x)=k$. The right child must then be
+$z=U^A_{j-k}(w)$, with $1\le j-k\le K_A(w)$. These conditions are
+also sufficient by the actual left-first prefix rule.
+
+When $J_B(v)$ fails, the second possibility is absent, giving (43.7).
+When it holds, the smaller-tree saturation identity says
+$K_B(v)=k$ and $U^B_k(v)=\delta v$. Thus the possibilities meet at one
+identical boundary value $j=k$ and give exactly (43.6), with no gap,
+duplicate entry at a fixed $j$, or extra accepted value. This proves
+the complete fibre and the two inverse laws for the branch.
+
+For its saturation case, $J_s(y)$ implies that $\delta y$ is a branch
+$\langle\delta v,\delta w\rangle$: neither exceptional leaf image
+is possible here. Its sorts give $J_B(v)$ and $J_A(w)$. Induction in
+(43.6) gives $K_s(y)=L(\delta v)+L(\delta w)=L(\delta y)$ and the
+inverse at that endpoint is exactly $\delta y$. This closes the
+simultaneous induction. Each scheduled $P/S$ increases $n$ by one,
+so $n(y)=n(u)+j$ and the last identity of (43.3) follows. $\square$
+
+The birth restriction is essential to this theorem, rather than merely
+to its operational interpretation. On unrestricted labelled trees,
+$F_1(\beta)=F_1(\langle\alpha,\alpha\rangle)=C$.
+The second entry is excluded by (43.1). At beta itself the native fibre
+of its current syntax is only $(\beta,0)$; the auxiliary alpha case of
+(43.5) does not enlarge that fibre. Full progress is included by (43.4)
+without treating the outer call as returned.
+
+### 43.3 Joining the completed inverse to the unfinished call
+
+**Theorem 43.3 (complete active-macro history fibres).** For integer
+$n_0\ge1$ let the completed-history supplier be the ENTIRE set
+
+$$
+\mathcal C_{n_0}(u)=\{(t_0,W):t_0\in\mathcal D_+,\ n(t_0)=n_0,
+                         \operatorname{Run}(W,t_0)=u\}.
+\tag{43.8}
+$$
+
+For fixed current syntax $y$, the active-$F$ target is
+$(t_0,W,u,j)$, where $W$ contains only macros whose outer returns have
+actually completed, $u$ is the entry to the present $F$, and this call
+has completed $j$ old rows. Its exact fibre is
+
+$$
+\mathcal A^F_{n_0}(y)=
+\mathop{\dot\bigcup}_{j=0}^{K(y)}
+ \{(t_0,W,U_j(y),j):(t_0,W)\in\mathcal C_{n_0}(U_j(y))\}.
+\tag{43.9}
+$$
+
+Active $G$ restricts the union to $j\in\{0,1\}$; returned idle has
+just $\mathcal C_{n_0}(y)$ and no active progress. Every such set is
+finite and effectively recognizable, with rejection off its image.
+For $n_0>1$, a supplied earned $j$ selects at most one complete target;
+equivalently an exact current entry index $m=n(u)$ selects
+$j=n(y)-m$. For $n_0=1$, each selected nonempty completed prefix has
+exactly §42.4's first-$F/G$-bit pair; an empty prefix remains separate.
+The current macro identity is retained even when its effects coincide.
+
+Proof. Given an actual target, its last coherent source is $F_j(u)$.
+Theorem 43.2 forces $0\le j\le K(y)$ and $u=U_j(y)$; its preceding
+returned word gives a member of (43.8). Conversely any term in the
+right-hand side is realized by its completed word to $U_j(y)$, then
+by the first $j$ rows of a new native $F$, pausing before its outer
+return. LAB9.4 proves guards at all remaining old rows, and LAB11.2
+supplies the finite complete inner calls under the same-source backing
+premises. The proof is existential per finite alternative; it does not
+instantiate simultaneous physical copies. Retaining $j$ makes the union
+disjoint even if other coordinates coincide.
+
+Compute $K,U_j$ and apply Theorem 42.4's actual-image decoder at each
+candidate entry. Its syntax tests and strictly decreasing $n$ give a
+terminating exact recognizer, including the empty word at index $n_0$.
+For $n_0>1$ that theorem makes each summand empty or singleton. For
+$n_0=1$, its empty case is $(\beta,\varepsilon)$; every other accepted
+entry has exactly $(\beta,FV)$ and $(\beta,GV)$ with one unique $V$.
+No choice between them is recovered by their common $j$ or $m$.
+Restriction to $G$ uses its exactly one original beta split, not a new
+macro law. Its genuine outer request still identifies it as $G$ even
+at beta, where it shares the source effect of $F$. Idle follows the
+completed theorem directly. $\square$
+
+Initial-source information, a known script or control subphase can
+restrict (43.9) further. Let $\mathcal A^F_{n_0,\phi,Z}(y)$ denote
+the intersection with those actually supplied predicates, where $\phi$
+is the actual phase and $Z$ any other acquired information. Such a
+filtered set need not have interval progress indices. In the family
+below even completed-history filtering removes $j=1$ while retaining
+$j=0$ and larger values. Conditional cardinalities and supplement
+claims always use this filtered set, not the unfiltered interval of
+Theorem 43.2. Subphase compatibility is tested against the actual saved
+continuation; a source-only fibre does not reconstruct arbitrary
+controller bytes or grant a missing callable observation.
+
+### 43.4 Progress, entry count and the next original boundary mark
+
+**Proposition 43.4 (three equivalent coordinates at a coherent cut).**
+Conditional on current syntax $y$ and the native prefix contract, each
+of the following selects the same unique $(u,j)$ when it is accepted:
+(1) earned progress $j$; (2) exact entry event count $m$; (3) the
+semantic address $p$ of the next untouched ORIGINAL leaf, or exhaustion
+$\top$. With the appropriate current macro/phase and $n_0>1$, any of
+them also selects the unique member of (43.9). At $n_0=1$ the stated
+nonempty-prefix first-bit ambiguity remains. They determine the remaining
+LOGICAL old-leaf schedule, not physical row identities, rights or tapes.
+
+Proof. The first two convert by $m=n(y)-j$ and Theorem 43.2. For the
+third, reuse Native Entry Reference Definition 10.1 and Theorem 10.2,
+(ER.41)–(ER.43), on labelled logical syntax, before that volume's
+$E=\rho^2$ encoding. Their marked prefix is exactly $F_j(u)$ when $p$
+is original leaf $j+1$, or $p=\top$ at exhaustion. Thus their parser
+$D_p(y)$ recovers $u$ if and only if its marked-image tests hold.
+Additionally require $u\in\mathcal D_+$; count original leaves before
+$p$ to obtain $j$, or set $j=L(u)$ for $\top$. Conversely recover
+$u=U_j(y)$ and enumerate its leaf addresses in left-first order to
+obtain that $p$. The marked inverse's two laws prove these conversions
+are inverse on the native actual image, including $j=0$ and exhaustion.
+No encoded-source runtime or root-graft actuator transfers with them.
+
+The recovered tree supplies the ordered list of its original leaves
+from position $j+1$ onward and their old tags. Those untouched addresses
+are still leaves of $y$ with the same tags, so each describes the next
+legal $P$ or $S$. Edits at distinct old leaves preserve each remaining
+guard and address by LAB9.4. This determines all remaining source edits
+and their final syntax, without requiring summaries at every boundary,
+a second old-tree snapshot, or persistent logical copy. It does not
+identify the actual allocated list cells or manufacture bound operands.
+At exhaustion the source-edit schedule is empty but the outer protocol
+may still have work. $\square$
+
+**Proposition 43.5 (causal extraction and lawful continuation).** On the
+coherent cuts of Definition 43.1, LAB's existing frontier, actual saved
+inner continuation/subphase, next links and live bindings suffice for
+its surrounding controller to resolve the next original mark or
+exhaustion whenever such a row is already acquired. Before sealing,
+the actual acquisition phase instead certifies $j=0$ and may have no
+next-row operand. No new counter, permanent tape or external Busy
+interface is required. Exact $j$, $m$ or syntax used as observations
+must be acquired with paid finite backing; otherwise they are internal
+mathematical projections only.
+
+Proof. Stationary frontier acquisition reads actual child links from
+the bound root, excludes beta's unary marker, and seals precisely the
+old rows, with acquired addresses/tags/references and real next links,
+as LAB Definition 9.3 specifies. Before source editing, the partial
+traversal is still an acquisition phase: source and $j=0$ are unchanged,
+but it is not valid to dereference a presumed first sealed row. After
+sealing, the first row is the next original operand.
+
+During each inner call the saved caller continuation and current row
+survive, as LAB Definition 11.1 and Theorem 11.2 state. At the coherent
+cut immediately AFTER inner return but BEFORE list advancement, the raw
+cursor can still name the just-completed row. Resolving the semantic
+next mark then follows that row's actual next link; treating its current
+raw target as untouched would execute the wrong operation. After
+advancement the cursor names the next row or records exhaustion. The
+saved control location distinguishes these cases. Released consumed rows
+are not needed to resolve the next mark from the retained current row
+and suffix. At a last row's completed return, the resolved mark is
+exhaustion even before the raw cursor is cleared. If $F$'s exhausted
+frontier has also been cleared during pending outer output/return, the
+actual exhausted subphase still resolves $\top$ without dereferencing
+any released row. This resolution uses actual subphase/continuation and
+live links, not source geometry alone or a convention that the cursor
+has already advanced.
+
+An optional direct completed-row scan requires the original sealed-list
+head and entire completed prefix, with the links needed to locate the
+resolved cut, to remain actually backed from sealing through that scan.
+Their retention, reads, finite exact counting and later clearing/reuse
+are charged; a raw cursor still on the returned row counts that row as
+completed. LAB13.3 permits consumed rows to be released, so this scan is
+unavailable after the required prefix backing is lost: the retained
+suffix is not a record of the consumed prefix.
+
+For the active $F$ call without that optional retention, paid stationary
+acquisition of current syntax $y$ together with the resolved next mark $p$
+still gives
+$u=D_p(y)$ and exact $j$ by Proposition 43.4. Count the original leaves
+before $p$ in this recovered description; at exhaustion use
+$u=\delta(y)$ and $j=L(u)$, even while outer return is pending and all
+frontier rows have been released. This reconstructs no physical old
+list. Before sealing, the acquisition phase instead determines $j=0$
+without presuming an old list or a next-row operand.
+
+An optional exact progress field may instead be initialized to
+zero and incremented once per completed inner return, retaining its
+actual pending-control distinction during the update. Such a field is
+an additional paid implementation choice, not an existing field assumed
+by the theorem. Exact $m$ can be acquired at macro entry by a stationary
+source count, as in Proposition 42.6, or maintained through successful
+events and latched at entry, with backed finite arithmetic. LAB's modular
+pair fields are residues and supply neither exact count without an
+additional range/backing contract. Exact attachment $n_0$ has the same
+paid acquisition requirement. A stationary traversal at the coherent
+current cut acquires $y$; it is not an external read request during Busy.
+
+At each complete inner return the accepted-event hook has already
+updated the actual source, all ancestral tapes and arithmetic fields.
+Induction over those returns proves the projection $y=F_j(u)$ and the
+one-unit source-event/progress change between successive row cuts.
+Stationary acquisition, list advancement and outer output do not change
+that projection. At $j=L(u)$, preserve sealed outer output, its emission
+cursor, pending acknowledgement, return and clearing. They have not yet
+added the present letter to $W$. Only the real outer return moves that
+letter into $W$ and enters idle; it performs no new source edit or progress
+increment. Active $G$ is handled identically with its single acquired
+leftmost-beta operand. Its request identity is not inferred from its
+possibly coincident effect.
+
+The actual controller can continue with its authentic operand, navigation,
+reference comparison and guard, then complete each inner reply and its
+outer traffic. A descriptive recovered schedule alone does not supply
+these resources. The actual next PROTOCOL instruction still depends on
+the saved subphase: it can be list advancement, output, acknowledgement
+or return rather than a source edit. Legacy indexed recall still requires
+the full tapes, actual controller, current rights and bindings, and AA's
+Ready request contract. An inner Ready does not make its outer caller
+idle. There is no competing outer request or FetchGrowth during Busy.
+No claim extends to an arbitrary in-progress append/arithmetic cut or
+to recovery of the full physical controller from $(y,n_0,j)$. $\square$
+
+### 43.5 A common-initial-source collision strictly inside both calls
+
+**Proposition 43.6 (different remaining addressed actions).** Fix
+$C=\langle\beta,\alpha\rangle$, $n_0=2$, and compare completed $FG$
+followed by active $F$ at progress three, with completed $GF$ followed
+by active $F$ at progress two. Both current entries have four old leaves,
+both cuts are strictly internal, and both sources are
+
+$$
+y=\langle\langle\langle C,\beta\rangle,\beta\rangle,\beta\rangle.
+\tag{43.10}
+$$
+
+Their remaining next source actions differ, even with the same fixed
+initial source and current command $F$.
+
+Proof. Direct addressed expansion from $C$ gives
+
+$$
+\begin{array}{c|c|c}
+W&\text{completed primitive expansion from }C&u=\operatorname{Run}(W,C)\\\hline
+FG&S_L\,P_R\,S_{LL}&\langle\langle C,\alpha\rangle,\beta\rangle\\
+GF&S_L\,S_{LL}\,P_{LR}\,P_R&\langle\langle C,\beta\rangle,\beta\rangle
+\end{array}
+\tag{43.11}
+$$
+
+The chronological old-leaf lists of both displayed entries have addresses
+$LLL,LLR,LR,R$. Their respective tags are $(\beta,\alpha,\alpha,\beta)$
+and $(\beta,\alpha,\beta,\beta)$. In the first case the active edits
+are $S_{LLL}P_{LLR}P_{LR}$; in the second they are
+$S_{LLL}P_{LLR}$. Substituting their guarded effects literally gives
+(43.10) in each case. The first remaining schedule is $S_R$ and the
+second is $S_{LR}S_R$. Hence the next source edits, addresses and their
+resulting trees differ. The entries have $n=5,6$ and the common source
+has $n=8$, agreeing with the two progresses. Coherent post-advancement
+cuts can have the same between-rows subphase. Their full tapes and
+physical controllers are not asserted equal. $\square$
+
+Zero-edit distinctions are separate: an active newly admitted $F$ at
+$j=0$ has the same syntax as its preceding idle cut, and an exhausted
+$F$ before outer return has the same syntax as its following idle cut.
+The latter changes $W$ on real return without a source edit. Neither
+example supplies the strict-interior ambiguity just proved.
+
+### 43.6 A growing family and exclusion of every other history
+
+**Theorem 43.7 (exact full and strict-interior fibres at one fixed seed).**
+Define $B_0(x)=x$, $B_{k+1}(x)=\langle B_k(x),\beta\rangle$.
+For $r\ge0$, $0\le a\le r$, put
+
+$$
+W_a=G^aFG^{r-a},\quad j_a=r-a+2,\quad
+u_a=\operatorname{Run}(W_a,C),\quad y_r=B_{r+2}(C).
+\tag{43.12}
+$$
+
+Then $L(u_a)=r+3$, $0<j_a<L(u_a)$,
+$F_{j_a}(u_a)=y_r$, and $n(y_r)=2r+6$. The active-$F$ fibre conditional
+on this fixed $C$ and $n_0=2$ has EXACTLY the following $r+3$ members:
+
+$$
+\begin{array}{c|c|c}
+\text{completed }W&\text{entry }u&\text{progress }j\\\hline
+G^{r+1}F&y_r&0\\
+W_a\ (0\le a\le r)&u_a&r-a+2\\
+G^{r+1}&G^{r+1}(C)&r+3
+\end{array}
+\tag{43.13}
+$$
+
+Consequently its strictly internal between-row fibre has exactly $r+1$
+members. No selected-family lower bound is substituted for this equality.
+
+Proof. Write $A_0=\beta$, $A_{k+1}=\langle A_k,\alpha\rangle$,
+so $C=A_1$ and $G(A_k)=A_{k+1}$. Applying $F$ to $A_{a+1}$ replaces
+its terminal beta by $C$ and all its $a+1$ right alphas by beta.
+Subsequent $G$ calls split only the terminal leftmost beta. Thus
+
+$$
+u_a=B_{a+1}(A_{r-a+1}).
+\tag{43.14}
+$$
+
+This has $r+3$ old leaves. Its first $r-a+2$ rows are precisely all
+leaves of the inner $A_{r-a+1}$. Full replacement of that inner tree
+is $B_{r-a+1}(C)$; none of the outer $a+1$ beta leaves has been edited.
+The endpoint is $B_{a+1}(B_{r-a+1}(C))=B_{r+2}(C)$. These are literal
+old-address effects because each outer branch persists and the untouched
+outer leaves follow the inner leaves in left-first order. Each $B$
+adds one beta, increasing $n$ by two; $n(C)=2$ gives $2r+6$.
+The progresses range distinctly from $2$ through $r+2$, and all are
+strictly below $r+3$.
+
+For completeness, put $s=r+2\ge2$. The whole-image inverse gives
+$\delta(B_s(C))=A_s$. Theorem 43.2 therefore gives $K(y_r)=s+1$.
+Its recursion, collapsing the innermost $C$ first and then undoing
+successive right beta promotions, yields
+
+$$
+U_0(y_r)=y_r,\qquad
+U_j(y_r)=B_{s-j+1}(A_{j-1})\quad(1\le j\le s+1).
+\tag{43.15}
+$$
+
+This can also be checked without an inverse formula: the inner
+$A_{j-1}$ has $j$ leaves and its full replacement is $B_{j-1}(C)$,
+leaving the $s-j+1$ outer betas untouched; at $j=1$, $A_0$ has just
+one leaf. Their endpoints are all $B_s(C)$, so uniqueness in Theorem
+43.2 establishes the displayed candidates and excludes all other $j$.
+
+At $j=1$ the entry is $B_s(\beta)$, whose deepest right subtree is
+beta. It is outside $\mathcal O$ of Lemma 42.3. Its index is $2s+1>2$,
+so it is neither an empty-word entry at $n_0=2$ nor a nonempty completed
+macro output. Its completed-history summand is empty. At $j=0$ the
+word $G^{s-1}F$ reaches $y_r$ from $C$. At $j=s+1$ the entry is $A_s$,
+reached by $G^{s-1}$ from $C$. At each $2\le j\le s$, put $a=s-j$;
+(43.14) is exactly $U_j(y_r)$ and its word is $W_a$. Theorem 42.4
+excludes every other completed pair at each of these candidates. In
+particular $n_0=2$ already forces $t_0=C$: its counts must be $(1,1)$,
+and (43.1) permits only this two-leaf ordering. This proves the entire
+exhaustion (43.13), not only attainability of its middle rows. All
+$j\ge1$ entries there have $s+1$ leaves, so its last row is exhausted,
+its first row is unstarted, and exactly its $s-1=r+1$ middle rows are
+strictly internal. $\square$
+
+### 43.7 Conditional information bounds under a current-event cap
+
+**Proposition 43.8 (supplement width for the actual filtered fibre).**
+Fix $(y,n_0,\phi,Z)$ as after Theorem 43.3 and let $q$ be the cardinality
+of its nonempty admissible active-$F$ fibre. A supplementary value
+recovers the target exactly if and only if it separates these $q$
+possibilities. Its least conditional alphabet has $q$ values and its
+least fixed-width binary width is $\lceil\log_2q\rceil$. This reuses
+finite-fibre injection, pigeonhole and ranking, rather than asserting a
+new coding theorem or a way to acquire the rank from syntax alone.
+
+Under the explicit alpha-origin current-event cap $n(y)\le N$, for
+$n_0>1$ one has
+
+$$
+q\le n(y)-n_0+1\le N-n_0+1.
+\tag{43.16}
+$$
+
+An earned exact $j\in\{0,\ldots,N-n_0\}$ gives the matching general
+upper bound on conditional width $\lceil\log_2(N-n_0+1)\rceil$.
+For $n_0=1$, allow additionally the nonempty-prefix first-macro bit;
+$q\le2(n(y)-n_0+1)$ and exact progress plus that bit suffice, leaving
+the empty-prefix case separate rather than doubling it.
+
+For the fixed seed $C$, fixed command $F$ and a common strictly internal
+between-row phase, let $b_N$ be the maximum of the least conditional
+binary widths over attained current sources with $n(y)\le N$, with no
+other distinguishing $Z$. For every $N\ge6$,
+
+$$
+\left\lceil\log_2\left(\left\lfloor\frac{N-6}{2}\right\rfloor+1\right)\right\rceil
+\le b_N\le\lceil\log_2(N-1)\rceil.
+\tag{43.17}
+$$
+
+Thus the worst-case supplementary width is logarithmic in this stated
+current-event cap, up to additive constants, with fixed initial source.
+
+Proof. Equal supplements on distinct members give a decoder identical
+inputs but unequal targets. Distinct ranks of the finite recognized
+fibre suffice. These are exactly the reused conditional coding arguments.
+For every nonempty summand, (43.3) and completed event growth give
+$n(y)-j=n(u)\ge n_0$. Hence only $n(y)-n_0+1$ integer progresses are
+possible. Theorem 42.4 gives at most one target per progress for
+$n_0>1$, or at most two for $n_0=1$ with its single empty-word case.
+This proves (43.16), both upper coding statements and their persistence
+under filtering. With $r=\lfloor(N-6)/2\rfloor$, Theorem 43.7 supplies
+exactly $r+1$ strict-interior alternatives at $y_r$ under the cap.
+Their first next marks can be resolved after ordinary list advancement,
+so they all admit that same between-row phase. Apply the first part
+for the lower bound and (43.16) at $n_0=2$ for the upper. $\square$
+
+These bounds condition on current syntax, exact attachment reference,
+phase and every actually supplied $Z$. An actual cursor, saved request,
+tapes or other acquired record may already separate the candidates.
+There is no compulsory extra counter and no lower bound here on total
+physical memory, syntax acquisition, tape storage or whole-run cost.
+Without a current-event cap no fixed supplementary alphabet works for
+all these finite strict-interior histories. This does not prohibit finite
+backing for each particular finite run.
+
+### 43.8 Resource scope and the precise recovery correspondence
+
+**Proposition 43.9 (finite paid descriptions and protocol boundaries).**
+With the acquisition/ownership premises of Definition 43.1 and
+Proposition 43.5, the inverse and fibre recognizers are finite descriptive
+computations. Their availability does not supply physical inverse edits,
+a reset, elapsed-time recovery or a fixed storage bound for all histories.
+Their source-space interpretation is AA Definition 17.3's oriented
+material support or terminal boundary, with auxiliary tape edges excluded.
+
+Proof. Acquire logical syntax by stationary traversal from the authentic
+root, testing actual child arity, current grants and reached references;
+beta's unary material marker is not another scheduled leaf. AA17.3's
+arity representation uniquely distinguishes logical alpha, beta and
+binary branch. Finite support determines its terminal antichain and the
+antichain determines support by prefix closure. Thus an ACQUIRED complete
+source support/boundary determines exactly the $y$ used above. A bare
+untyped logical skeleton, a residue pair or a few frontier summaries need
+not determine it and are not substituted as inputs.
+
+For a parsed syntax with $V$ logical nodes, each $\delta$, sort test,
+count or prefix reconstruction is a finite traversal on at most $V$
+nodes. Theorem 43.2 has $K(y)\le n(y)-1$ on $\mathcal D_+$; moreover
+$n(y)\le2L(y)-1\le V$. Thus there are at most $V$ candidates. A simple
+implementation may retest syntax and counts on every step of Theorem
+42.4's at most $n(y)-n_0$ predecessor descents. It then uses at most
+$O(V^3)$ logical-node visits to list the full fibre, including at most
+two histories per candidate. This is a conservative descriptive bound,
+not an optimal algorithm or the runtime of native macro actuation.
+On accepted inputs, counters and loop indices are $O(\log(V+1))$-bit
+integers; reading supplied integers, binary
+arithmetic, address strings and output copying must also be charged.
+Explicit old-leaf paths may total $O(V^2)$ symbols for a single tree.
+No word, parsed tree, recursive stack or complete answer is costless.
+
+A physical implementation additionally pays actual reference width,
+allocation/grants, field reads/writes, root navigation, frontier traversal,
+link scans, all ancestor tape appends, exact counter backing/maintenance,
+scratch clearing/reuse, and literal input/reply/acknowledgement/return.
+These physical costs are not bounded by counting logical nodes alone;
+the existing LAB13 and AA20–22 accounts remain applicable. Stationary
+acquisition must use the same live source/epoch as the subsequent
+projection. For each finite run all required reference, integer,
+workspace and output backing is finite and supplied; no fixed finite
+arena is asserted for their unbounded union. The inverse operates on
+descriptions and never edits the old source back into existence.
+
+Finally, $y$ or its acquired support/boundary together with a separating
+coordinate recovers the logical macro chronology, active progress and
+remaining logical old-leaf schedule. The same quantities compute the
+corresponding descriptive views, giving the stated conditional
+space/boundary/history/memory correspondence. Actual callable continuation
+still passes through Proposition 43.5's authentic controller and rights.
+For original indexed primitive recall, AA19.2 supplies the full-order
+tape inverse and AA20 supplies its Ready-only service; macro histories
+do not replace those tapes for arbitrary ancestral primitive shuffles.
+None of these coordinates is a physical clock. $\square$
+
+**Convention 43.10 (suppliers and mathematical attribution).** The native
+ordinal inverse (43.3), its complete join (43.9), the exact family
+(43.13) and their conditional consequences are `repo-derived` prose
+results. LAB §§9–13 supply the sealed frontier, actual leftmost-beta
+split, saved inner continuation, accepted-event maintenance and common
+Busy/PairReady protocol. AA §§17,19–23 supply attainment/birth typing,
+alpha-origin counting, support/boundary, all-event tapes and lawful recall.
+FARG §§2–3 supply ordered syntax and global $\rho$. PG §37.2
+(PG.3705) and Theorem 44.6 supply its actual-image parser; the
+`substitution_injective` used in GenealogicalFiberTransport is local
+inside `result`, not an exported declaration. These source correspondences
+are not a new compilation or Lean verification of this section.
+
+[Native Entry Reference §§10.1–10.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ENTRY_REFERENCE_AND_GRAFT_ORDER.md)
+already supplies the marked inverse (ER.41)–(ER.43); its §§13–15 also
+supply generic actual-fibre enumeration and conditional rank coding on
+its own encoded menu. Only the labelled marked parser is reused here.
+Its $\rho^2$ runtime, root graft, held anchors and full-controller recovery
+do not transfer. Section 42 supplies the completed-history inverse.
+This section's new assertion is fixed-progress recognizability across
+ALL native unknown entries and the exhaustive join for unfinished calls,
+not fixed-known-seed injectivity or a new generic zipper/coding principle.
+
+Engelfriet, [arXiv:1510.02036v1, Definition 3.62](https://arxiv.org/html/1510.02036v1),
+defines whole ranked-tree homomorphisms by recursive substitution.
+Its linearity condition does not imply native prefix injectivity: the
+unrestricted-tree collision following (43.7) uses this very $\rho$.
+Huet's [Zipper, §1.1](https://pauillac.inria.fr/~huet/PUBLIC/zip.pdf)
+represents a location by its focused tree and surrounding path/context.
+That context representation is a supplier, not a proof of (43.3) or a
+source of authentic LAB references and rights.
+Bennett's [history-retention construction](https://www.cs.princeton.edu/courses/archive/fall06/cos576/papers/bennett73.html)
+supplies the classical sufficient method for reversible computation,
+with retained records and resources; it does not give this native
+partial-prefix image or exclude its alternatives. Relative to these
+frameworks and the cited repository suppliers, the claimed contribution
+is the displayed native correspondence, with no worldwide originality
+claim. Theorems concern finite coherent prefixes and their stated
+logical projections; the continuing RRO recovery problem remains open.
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,28 @@
+**Definition 38.4 (conditional size and same-run costs).** For fixed
+actually attainable $(t,\nu)$ let
+$A_{t,\nu}=\{q_C(w):w\in\mathcal H(t),\ \nu_C(w)=\nu\}$.
+The attained normalized labels have exactly
+$|A_{t,\nu}/{\equiv_t}|$ values. The usual distinguishing-continuation
+argument, already supplied by PG §32 and the predictive-memory results,
+forces any exact deterministic summary retaining that same $(t,\nu)$
+to distinguish these classes. This is conditional control-value
+minimality on that actual fibre. It is not a minimum of total memory,
+a fixed optimal bit layout across changing sources, or a smaller total
+implementation. Even the normalized label may still use the original
+$Q$-valued field.
+
+Finite threshold constants, classifier and selector tables, their
+installation and precomputation, each full-source scan, finite arithmetic,
+normalization comparisons, temporary counts and traversal storage all
+have separate costs. So do the still-retained source, unary markers,
+local marks, descriptor bindings, side cells, live grants, received
+frames, pending identities, source edits, ancestor maintenance, outputs,
+End, acknowledgement, return and cleanup of §34. None is paid by a claim
+that the class name has fewer possible values. Record and reference
+widths retain their actual backing costs. If an old raw state remains
+accessible in an archive or scratch, it remains memory and is not claimed
+forgotten. The from-seed reduced driver clears its obsolete temporary
+control operands on completed return and never maintains a second raw
+selector-state journal. Finite descriptions do not bound growing source,
+records or normalization workspace.
+

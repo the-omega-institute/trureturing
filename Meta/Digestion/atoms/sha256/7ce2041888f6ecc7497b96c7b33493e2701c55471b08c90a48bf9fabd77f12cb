@@ -1,0 +1,23 @@
+**定义 59.1（连续位移与两种标定步的共同包络）。** 给可用 $\omega$ 和两个非负边预算 $\eta_a,\eta_b$，定义
+
+$$
+D_{\omega,\eta}(s)=
+\inf_{m,n\in\mathbb Z}
+\left\{\omega(|s-ma-nb|)
++|m|\eta_a+|n|\eta_b\right\}.
+\tag{59.1}
+$$
+
+这是同一个对数关系空间的路径预算：沿标定步 $a,b$ 走整数次，余下的一段由共同变化包络支付。它不是实际调用次数或过程费用。对整数 $N\ge0$ 和 $R>0$ 再定义有限点表及其覆盖半径
+
+$$
+\begin{aligned}
+S_N&=\{ma+nb: m,n\in\mathbb Z,\ |m|+|n|\le N\},\\
+r_N(R)&=\max_{s\in[-R,0]}\min_{u\in S_N}|s-u|,\\
+\eta&=\max(\eta_a,\eta_b).
+\end{aligned}
+\tag{59.2}
+$$
+
+有限表的最近距离连续，故最大值存在。$S_N$ 是数学比较表，不另供这些字作为物理过程。
+

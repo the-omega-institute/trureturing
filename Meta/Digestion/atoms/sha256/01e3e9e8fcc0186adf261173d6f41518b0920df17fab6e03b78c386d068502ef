@@ -1,0 +1,56 @@
+### 定理 8.5（内部复代数及最小振幅）
+
+<a id="thm-c123-local-complex"></a>
+
+式 [(44)](#eq-c123-local-product) 给出实八维结合 $*$-代数，伴随为逐分量复共轭，自伴部恰为原来的 $V$。对于正向正交基，
+
+$$
+e_ie_j+e_je_i=2\delta_{ij}1,
+ \qquad \jmath=e_1e_2e_3,
+ \qquad \jmath^2=-1.
+$$
+
+因此 $\jmath$ 实际属于三个实方向生成的闭包；该闭包是 $\operatorname{Cl}_{3,0}\cong M_2(\mathbb C)$，最小左理想为 $H\cong\mathbb C^2$。
+
+**证明。**
+由三线性，只需在三个实向量上核对结合律。两个括号方式的标量项相同，向量差为
+
+$$
+(a\cdot b)c-(b\cdot c)a-(a\times b)\times c+a\times(b\times c)=0,
+$$
+
+这是定理 [8.4](#thm-c123-local-three) 的三重积恒等式。共轭将 $\jmath$ 变号，交换向量次序也使叉积变号，故 $(xy)^*=y^*x^*$。直接计算得 $e_1e_2=\jmath e_3$，从而 $e_1e_2e_3=\jmath$，没有再添独立复方向。
+
+映射
+
+$$
+\alpha1+z\cdot e\longmapsto
+ \begin{pmatrix}\alpha+z_3&z_1-iz_2\\z_1+iz_2&\alpha-z_3\end{pmatrix}
+$$
+
+保持乘法与伴随，且每个复二阶矩阵唯一具有这种展开，所以是同构。
+
+还须排除其他闭包把这个代数进一步压小。令 $\operatorname{Cl}_{3,0}$ 为由
+$e_i^*=e_i$、$e_ie_j+e_je_i=2\delta_{ij}1$ 定义的含幺实结合 $*$-代数。
+反交换关系把全部词约到
+$1,e_1,e_2,e_3,e_1e_2,e_1e_3,e_2e_3,e_1e_2e_3$，故其维数至多为八。
+上述显式模型由三个 $e_i$ 生成，且实维数为八，所以从这个定义代数到模型的满射必为同构。
+
+任意容许闭包 $\mathcal B$ 的三个生成元也满足这些关系，因而是
+$\operatorname{Cl}_{3,0}\cong M_2(\mathbb C)$ 的非零含幺商。$M_2(\mathbb C)$ 作为*实*代数仍然简单：
+若双边理想含非零矩阵 $A$，选取非零条目 $a_{ij}$，则
+$E_{pi}AE_{jq}=a_{ij}E_{pq}$ 属于该理想；再左乘 $(a_{ij}^{-1})I$，得到每个矩阵单位
+$E_{pq}$。左乘 $iI$ 又得到全部 $iE_{pq}$，这些矩阵的实线性张成就是整个代数。
+所以商映射的核只能为零或全体；非零含幺目标排除后者。
+因此任意容许的生成闭包都与显式模型保星同构，不存在更小的非零商。
+
+令 $p=(1+e_3)/2,q=e_1p$。左理想 $\mathcal A p$ 在中心 $\mathbb C_\jmath$ 上由 $p,q$ 张成，且对 $x=\alpha p+\beta q,y=\gamma p+\delta q$，
+
+$$
+x^*y=(\bar\alpha\gamma+\bar\beta\delta)p.
+$$
+
+这个系数给正定复内积。矩阵表示说明它是二维且为最小左理想，代数在其上忠实作用。
+
+自伴元 $sI+r\cdot\sigma$ 的特征值是 $s\pm\|r\|$，所以构造后的矩阵正锥恰好恢复原来的 $C$。其归一化截面是三维球，极点是球面；概率与纯态的严格对应见第 [7](#sec-c123-qm) 节。
+

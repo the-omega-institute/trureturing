@@ -1,0 +1,59 @@
+### 引理 8.1（有限代数的标准块表示）
+
+<a id="lem-c94-finite-algebra-blocks"></a>
+
+任意含单位的有限维 $C^*$ 子代数 $\mathcal A\subseteq B(H)$，
+在共同酉坐标下均有
+
+<a id="eq-c94-finite-blocks"></a>
+
+$$
+H=\bigoplus_k(H_{L,k}\otimes H_{R,k}),\qquad
+ \mathcal A=\bigoplus_k\bigl(B(H_{L,k})\otimes I_{R,k}\bigr).
+\tag{8.1}
+$$
+
+各因子维数为正整数。记对应的最小中央投影为 $P_k$。
+
+**证明。**
+先同时对角化中心中的自伴算符，取其最小中央投影 $P_k$。
+它们把问题分为中心只有标量的有限代数块。
+
+在一个这样的块中，选择极大组互相正交的代数内最小投影
+$e_1,\ldots,e_n$。其和必须是该块单位，否则剩余非零投影中还能继续选取。
+最小性给 $e_i\mathcal Ae_i=\mathbb C e_i$：
+若存在非标量自伴元，其谱投影就给一个更小的非零投影。
+
+若 $0\ne a\in e_i\mathcal Ae_j$，则
+$a^\dagger a=\lambda e_j$、$aa^\dagger=\mu e_i$，
+其中 $\lambda,\mu>0$。由 $aa^\dagger a$ 的两种写法得 $\lambda=\mu$，
+归一后得到连接 $e_j$ 与 $e_i$ 的部分等距。
+任意两个这样的角元相差标量，因为将一个左乘另一个的伴随会落在
+$e_j\mathcal Ae_j=\mathbb C e_j$ 中。
+
+非零角之间的连通关系是等价关系：连接的部分等距可以相乘。
+每个等价类内投影之和与整个代数对易，故是中央投影。
+本块中心只有标量，因此所有 $e_i$ 都连通。
+固定 $e_1$，取部分等距 $v_i$ 满足
+$v_i^\dagger v_i=e_1$、$v_iv_i^\dagger=e_i$，并令 $v_1=e_1$。
+则 $e_{ij}=v_iv_j^\dagger$ 是矩阵单位，张成这个代数块。
+
+令 $H_R=e_1H$、$H_L=\mathbb C^n$。
+映射 $\lvert i\rangle\otimes\xi\mapsto v_i\xi$ 是酉同构，
+并将矩阵单位变成 $\lvert i\rangle\langle j\rvert\otimes I_R$。
+逐块组合即得式 [(8.1)](#eq-c94-finite-blocks)。
+
+可见资料在这些坐标中恰为一组未归一正矩阵
+
+<a id="eq-c94-visible-data"></a>
+
+$$
+a_k(\rho)=\operatorname{Tr}_{R,k}(P_k\rho P_k),\qquad
+ a_k\ge0,\qquad\sum_k\operatorname{Tr} a_k=1.
+\tag{8.2}
+$$
+
+所有 $B(H_{L,k})\otimes I_{R,k}$ 的响应共同确定它们，反过来也一样。
+块标签 $k$ 是可见的经典区块标签，实际取得它仍需相应读出过程；
+每块中的左因子承载可见量子内容。
+

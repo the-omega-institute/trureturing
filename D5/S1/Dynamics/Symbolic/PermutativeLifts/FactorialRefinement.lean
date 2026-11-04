@@ -15,11 +15,11 @@ set_option autoImplicit false
 
 namespace D5.S1.Dynamics.Symbolic.PermutativeLifts
 
-private def cyclicState (W : Bool → List Bool) (a : Bool)
+def cyclicState (W : Bool → List Bool) (a : Bool)
     (ha : 0 < (W a).length) (p : ℕ) : TileState W :=
   ⟨a, ⟨p % (W a).length, Nat.mod_lt _ ha⟩⟩
 
-private theorem cyclicState_next (W : Bool → List Bool) (a : Bool)
+theorem cyclicState_next (W : Bool → List Bool) (a : Bool)
     (ha : 0 < (W a).length) (p : ℕ) :
     TileNext W (cyclicState W a ha p) (cyclicState W a ha (p + 1)) := by
   have hr := Nat.mod_lt p ha
@@ -32,7 +32,7 @@ private theorem cyclicState_next (W : Bool → List Bool) (a : Bool)
   · have hlast : p % (W a).length + 1 = (W a).length := by omega
     exact Or.inr ⟨hlast, by rw [he, hlast, Nat.mod_self]⟩
 
-private theorem mod_before_multiple {p d : ℕ} (hd : 0 < d)
+theorem mod_before_multiple {p d : ℕ} (hd : 0 < d)
     (hp : (p + 1) % d = 0) : p % d + 1 = d := by
   have hr := Nat.mod_lt p hd
   have he : (p % d + 1) % d = 0 := by simpa only [Nat.mod_add_mod] using hp

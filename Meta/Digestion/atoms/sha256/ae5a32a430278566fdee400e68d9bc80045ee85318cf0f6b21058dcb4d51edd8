@@ -1,0 +1,29 @@
+**定理 10.1（原单位及规范 Frobenius 配对）。** A–C 在同一个原效果空间 $E_o$ 上给出 Euclidean Jordan 代数结构，单位恰为 $u_o$，平方锥恰为 $C_o^*$。存在规范序同构 $\phi_o:E_o\to V_o$，使
+
+$$
+\phi_o(e_\omega)=\omega,\qquad
+g_o(a,b)=\langle a,\phi_o(b)\rangle
+=\tau_J(a\circ b),\qquad \tau_J(a)=g_o(u_o,a),
+\tag{10.1}
+$$
+
+其中 $\tau_J$ 是每个原始幂等元迹为一的 Jordan 迹。$g_o$ 正定，并满足 $g_o(a\circ b,c)=g_o(b,a\circ c)$。对原准备 $v$，其 Jordan 密度为 $r_v=\phi_o^{-1}v$，且
+
+$$
+r_v\in C_o^*,\quad u_o(v)=\tau_J(r_v),\qquad
+\langle a,v\rangle=\tau_J(a\circ r_v).
+\tag{10.2}
+$$
+
+证明。命题 9.5 逐项满足 BMU16 的 (a) projectivity、(b) STP、(c) purity preservation，直接得到 formally real Jordan state space。取其保归一化基的序表示，对偶为含幺序表示 $\theta:E_o\to J$，把原 $u_o$ 送到 $1_J$，把全对偶锥送到 Jordan 平方锥。Jordan 的规范谱理论把 projective units 送到幂等元；原滤子的唯一性来自 BBKM Proposition 3.1，因而原子 $e_\omega$ 送到原始幂等元 $p$。该原子的唯一归一化支持态就是 $a\mapsto\tau_J(\theta(a)\circ p)$。这准确对应原 $\omega$，没有扇区权重的自由缩放。
+
+BBKM Proposition 5.1 在有限 projectivity 下给效果的正交 projective-unit 谱展开；把每个单位有限细分为原子，原子张成 $E_o$。BBKM Theorem 6.1 及其 Appendix B 给唯一线性正映射 $\phi_o(e_\omega)=\omega$，并证明它是序同构、$g_o$ 为正定对称内积、全部 compressions 对它自伴随。其假设只是有限 projectivity 与 STP，不需要额外 state spectrality。令 $R_J$ 为规范 Jordan 迹的 Riesz 映射，刚才的原子对应表明
+
+$$
+\phi_o=\theta^*R_J\theta.
+$$
+
+等式在原子上成立，故在整个 $E_o$ 成立。这给出 (10.1)，而非只取得一个任意自对偶内积。特别 $\phi_o(u_o)$ 对应未归一化的 Jordan 单位，$u_o(\phi_o(u_o))=\tau_J(1_J)$ 为总秩。原归一化泛函仍是原 $u_o$，不是把此总秩误当作准备成功率。Jordan 迹的结合性给 Frobenius 恒等式，(10.2) 随之成立。
+
+此处的乘法可通过幂等谱平方与极化在 $E_o$ 上运输：$a=\sum_i\lambda_ip_i$ 时 $a^2=\sum_i\lambda_i^2p_i$，再取 $a\circ b=((a+b)^2-a^2-b^2)/2$。保幺序表示保持这些谱投影，故结构不依赖 $\theta$ 的选择。这里的谱展开与 Jordan 分类均直接消费所引成熟定理，不另立强对称或 signed spectrality。∎
+

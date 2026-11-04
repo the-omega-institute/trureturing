@@ -1,0 +1,62 @@
+### 正块的误差阈值
+
+排序节点，令
+
+
+<a id="display-89"></a>
+
+$$
+h_{\min}=\min_i(t_{i+1}-t_i).
+$$
+
+
+对 $a\in\ker V$，设 $A_i=\sum_{j\le i}a_j$。总质量为零，所以
+
+
+<a id="display-90"></a>
+
+$$
+\|F_{\mu_a}\|_2^2
+=
+\sum_{i=1}^{m-1}
+(t_{i+1}-t_i)|A_i|^2
+\ge
+\frac{h_{\min}}4\|a\|_2^2.
+$$
+
+
+因此
+
+
+<a id="display-91"></a><a id="eq-28"></a>
+
+$$
+\boxed{
+a^*Ha
+\ge
+\frac{\kappa h_{\min}}4\|a\|_2^2
+\qquad(a\in\ker V).
+}
+$$
+
+<p align="center" data-equation-number="28"><a href="#eq-28">(28)</a></p>
+
+
+任何满足
+
+
+<a id="display-92"></a>
+
+$$
+\|E\|_{\mathrm{op}}
+<
+\frac{\kappa h_{\min}}4
+$$
+
+
+的厄米误差，都不会破坏这个已证明正块的正性。完整矩阵的符号则继续由式 (26) 的实际核心决定。
+
+---
+
+<a id="section-7"></a>
+

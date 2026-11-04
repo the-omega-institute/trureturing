@@ -35,3 +35,4 @@ For every k and every bipermutative binary code of length k+2, the entire invers
 - Dependency: [D5/S1/Dynamics/Symbolic/PermutativeLifts/BipermutativeLift](BipermutativeLift.md)
 - Dependency: [D5/S1/Dynamics/Symbolic/PermutativeLifts/FactorialCoboundary](FactorialCoboundary.md)
 - Dependency: [D5/S1/Dynamics/Symbolic/PermutativeLifts/FactorialMinimal](FactorialMinimal.md)
+- Dependency: [D5/S1/Dynamics/Symbolic/PermutativeLifts/FiniteActionTrivialization](FiniteActionTrivialization.md)

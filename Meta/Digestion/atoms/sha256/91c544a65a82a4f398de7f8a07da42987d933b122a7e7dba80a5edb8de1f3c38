@@ -1,0 +1,70 @@
+**Theorem 46.6 (positive-sign whole-class exclusion and separated-contact
+consequence).** At a fixed $0<\xi\le R_\star$, the pure positive-active population
+range is
+
+$$
+ 0\le q\le\min\{1,\xi/2\},\qquad
+ x=1-\frac{\xi}{4}+\frac q2.
+\tag{46.35}
+$$
+
+For $0<x<1$, the canonical value in (46.25) is the positive geometric
+scalar value with $\delta=2(1-x)$ and $q=\xi/2-\delta$. The existing scalar
+ordering of Theorem 37.5 gives
+
+$$
+ G_+^{\mathrm{can}}(x,q)\ge V(\xi),
+\tag{46.36}
+$$
+
+with equality only at the selected geometric population. If $x=1$ the
+slice is treated directly: an actual unitary with active trace modulus four
+is $\lambda I_4$ relative to $U_\sigma$, so
+
+$$
+ \xi=2q,\qquad g=K_{-\sigma}^2q
+\tag{46.37}
+$$
+
+for every relative coherence phase. The other sign distance is
+$8+2p>2q$, so these are the true original distances for both signs.
+At $q=0$ this is the original optimizer at distance zero.
+The positive scalar endpoint in (46.37)
+is strictly above the unique interior value $V(\xi)$ at every feasible positive
+level. Consequently, every nongeometric pure positive-active original pair
+with $g\le V(\xi)$ (equivalently $f\le N_{\mathrm{geo}}(\xi)$) satisfies
+
+$$
+                 0<x<1,\qquad \mathfrak D_+(x,q)<0.
+\tag{46.38}
+$$
+
+All pure original pairs in the positive slices with
+$\mathfrak D_+\ge0$ obey $g\ge V(\xi)$. Equality to $V(\xi)$
+requires the unique selected population of Theorem 37.5 and is exactly
+$\mathcal G_\xi$, the selected $0<q<1$ part of Corollary 46.5.
+By Theorem 45.5 every original global minimizer through $R_\star$ is
+pure, so these slice conclusions apply to every positive-active global
+minimizer in this interval.
+
+At either established boundary $b=\alpha$ or $b=\beta$, the
+selected geometric pair is an original global minimizer. Its determinant cannot
+be negative, because (46.31) would give a strict same-level competitor. Any
+additional pure positive-active global contact at that level therefore has a
+different away-population, even when the selected determinant is zero.
+
+*Proof.* The relation (46.35) is (46.8) solved for $x$, and the displayed
+population range is exactly the pure interval. For $0<x<1$ combine
+(46.27) with (46.36). If a nongeometric pair had
+$\mathfrak D_+\ge0$ and $g\le V$, both inequalities would be equalities;
+Corollary 46.5 and the unique scalar selection would then put the pair
+in $\mathcal G_\xi$, a contradiction. The endpoint
+$x=1$ follows from equality in the trace triangle: all four diagonal entries
+are the same scalar, and (46.37) follows from the inactive recovery being zero.
+No division by $y$ is used there. At either boundary, Theorem 39.5
+gives the attained original minimum $g=V(b)$ and the geometric
+minimizers; (42.3) places these levels below $R_\star$. Theorem 45.5
+provides purity of all their global contacts. A negative selected determinant
+contradicts (46.31), while a zero determinant still has the unique fixed-slice
+equality kernel (46.28); hence another contact must change $q$. $\square$
+

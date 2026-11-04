@@ -342,7 +342,19 @@ Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierGraph.outg
 
 Exact source telescope, in the module declared generic contexts: def outgoingMultiplicity [Fintype E] [DecidableEq V] (multiplicity : E → ℕ) (vertex : V) : ℕ := ∑ edge with G.source edge = vertex, multiplicity edge
 
-**Definition 1.29 (incomingMultiplicity).**
+**Theorem 1.29 (Outgoing multiplicity after appending an edge).**
+
+$$\forall \left(V: \operatorname{Type}\right), \left(\forall \left(E: \operatorname{Type}\right), \left(\forall \left(G: \operatorname{Maths.EdgeGraph}\left(V, E\right)\right), \left(\forall \left(start: V\right), \left(\forall \left(finish: V\right), \left([\operatorname{Fintype}\left(E\right)] [\operatorname{DecidableEq}\left(E\right)] [\operatorname{DecidableEq}\left(V\right)] \forall \left(walk: \operatorname{Maths.EdgeGraph.Walk}\left(G, start, finish\right)\right), \left(\forall \left(edge: E\right), \left(\forall \left(legal: \operatorname{Maths.EdgeGraph.source}\left(G, edge\right) = finish\right), \left(\forall \left(vertex: V\right), \left(\operatorname{Maths.EdgeGraph.outgoingMultiplicity}\left(G, \operatorname{Maths.EdgeGraph.Walk.edgeMultiplicity}\left(\operatorname{Maths.EdgeGraph.Walk.concat}\left(walk, edge, legal\right)\right), vertex\right) = \operatorname{Maths.EdgeGraph.outgoingMultiplicity}\left(G, \operatorname{Maths.EdgeGraph.Walk.edgeMultiplicity}\left(walk\right), vertex\right) + \operatorname{ite}\left(\operatorname{Maths.EdgeGraph.source}\left(G, edge\right) = vertex, 1, 0\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierGraph.outgoingMultiplicity_edgeMultiplicity_concat` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Appending a legal edge increases the outgoing multiplicity at a vertex by one exactly when that vertex is the edge source.
+
+**Definition 1.30 (incomingMultiplicity).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierGraph.incomingMultiplicity`
 
@@ -354,7 +366,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierGraph.inco
 
 Exact source telescope, in the module declared generic contexts: def incomingMultiplicity [Fintype E] [DecidableEq V] (multiplicity : E → ℕ) (vertex : V) : ℕ := ∑ edge with G.target edge = vertex, multiplicity edge
 
-**Theorem 1.30 (edgeMultiplicity balanced).**
+**Theorem 1.31 (edgeMultiplicity balanced).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierGraph.edgeMultiplicity_balanced`
 
@@ -366,7 +378,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierGraph.edge
 
 Exact source telescope, in the module declared generic contexts: theorem edgeMultiplicity_balanced [Fintype E] [DecidableEq E] [DecidableEq V] {base : V} (walk : G.Walk base base) (vertex : V) : G.outgoingMultiplicity walk.edgeMultiplicity vertex = G.incomingMultiplicity walk.edgeMultiplicity vertex
 
-**Definition 1.31 (singleton).**
+**Definition 1.32 (singleton).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierGraph.singleton`
 
@@ -378,7 +390,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierGraph.sing
 
 Exact source telescope, in the module declared generic contexts: def singleton (edge : E) : G.Walk (G.source edge) (G.target edge) := .concat .nil edge rfl
 
-**Theorem 1.32 (exists splitAtEdge).**
+**Theorem 1.33 (exists splitAtEdge).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierGraph.exists_splitAtEdge`
 
@@ -420,6 +432,7 @@ Exact source telescope, in the module declared generic contexts: theorem exists_
 - Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierGraph.length_visited`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierGraph.mem_visited_of_mem_edges`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierGraph.outgoingMultiplicity`
+- Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierGraph.outgoingMultiplicity_edgeMultiplicity_concat`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierGraph.singleton`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierGraph.source_head`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierGraph.target_getLast`

@@ -12,6 +12,21 @@ internal sealed class GridAntidiagonalTrafficBoundDocument : IScribeDocumentDefi
         "A uniform strict binomial-ratio bound for antidiagonal grid obstructions at every n at least 496.",
         H("A Uniform Bound for Antidiagonal Grid Traffic"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("log-factorial-upper-bound"),
+                DeclarationHandle.Create(Prefix + "log_factorial_upper_bound"),
+                H("The upper logarithmic factorial envelope"),
+                StatementSource.FromAuthor(LogFactorialUpperBound()),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(
+                    Paragraph(Text(
+                        "For every positive natural m, the logarithm of m! is at most "
+                        + "m log m minus m plus one half of log m and one half of log(2*pi), "
+                        + "with the explicit remainder 1/(12*m). The proof telescopes the "
+                        + "pinned Robbins successive-difference estimate to the certified "
+                        + "Stirling limit. This is the reusable supplier used by the grid "
+                        + "peak estimate and by the literal factorial floor-cell estimate."))),
+                DescribeRole.Theorem),
             Paragraph(Text(
                 "Gil, Liang, Odetola and Weiner consider north-east lattice paths from (0,0) "
                 + "to (n,n) avoiding an obstruction B. Their Conjecture 7.4 concerns the points "
@@ -143,6 +158,25 @@ internal sealed class GridAntidiagonalTrafficBoundDocument : IScribeDocumentDefi
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("gil-liang-odetola-weiner-antidiagonal-traffic"),
                     ResolutionKind.Proved)))));
+
+    private static Formula LogFactorialUpperBound()
+    {
+        var m = Id("m");
+        var naturals = F.Seq(F.Mathbb, F.Grp(F.Id("N")));
+        var logM = Call("log", m);
+        var lhs = Call("log", Call("factorial", m));
+        var rhs = Add(
+            Add(
+                Subtract(Multiply(m, logM), m),
+                new Formula.Fraction(logM, Num(2))),
+            Add(
+                new Formula.Fraction(Call("log", Multiply(Num(2), F.Pi)), Num(2)),
+                new Formula.Fraction(Num(1), Multiply(Num(12), m))));
+        return F.Disp(F.Seq(
+            F.Forall, F.Sp, m, F.InMacro, F.Sp, naturals, F.Comma, F.Sp,
+            Num(0), F.Sp, F.Lt, F.Sp, m, F.Sp, F.Rightarrow, F.Sp,
+            new Formula.Relation(lhs, FormulaRelationOperator.LessThanOrEqual, rhs)));
+    }
 
     private static Formula Ratio()
     {

@@ -96,7 +96,7 @@ private theorem adjacent_equal_of_zero {k : ℕ} (hk : 0 < k) {N : ℤ} (hN : 0 
   exact_mod_cast (by omega : orbitNegativeCount k hk S b h =
     orbitNegativeCount k hk S b (finRotate k h))
 
-private theorem all_equal_of_adjacent {k : ℕ} (hk : 0 < k) (g : Fin k → ℕ)
+theorem all_equal_of_adjacent {k : ℕ} (hk : 0 < k) (g : Fin k → ℕ)
     (hadj : ∀ h, g h = g (finRotate k h)) :
     ∀ h, g h = g ⟨0, by omega⟩ := by
   letI : NeZero k := ⟨ne_of_gt hk⟩

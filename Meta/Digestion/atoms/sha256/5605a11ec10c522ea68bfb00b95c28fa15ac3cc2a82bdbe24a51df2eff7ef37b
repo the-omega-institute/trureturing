@@ -1,0 +1,25 @@
+#### 定义 3.2（完整强度与有限共同方向）
+
+保留完整强度标定
+
+<a id="eq-mass"></a>
+
+$$
+\boxed{\sum_e\left\lVert F_e(x)\right\rVert ^2=\left\lVert x\right\rVert ^2\qquad(x\in H).}\tag{3.1}
+$$
+
+选择复正交单位基 $a_1,\ldots,a_d$，只要求 $d$ 项方向校准：
+
+<a id="eq-J"></a>
+
+$$
+\boxed{F(ia_j)=iF(a_j),\qquad 1\le j\le d.}\tag{3.2}
+$$
+
+它等价于每个结果分量满足同一式。
+
+式[(3.1)](#eq-mass)包含全部成功、失败、停止和声明记录结果，故 $F(0)=0$。
+概率意义继续采用同根读出标定；本轮推出的是实际分支对输入的二次依赖。
+
+<a id="statement-3-3"></a>
+

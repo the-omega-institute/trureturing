@@ -1,0 +1,29 @@
+#### 命题 6.2（删去二元不扩张 可逆也不酉）
+
+设 $a>b>0$，$A=\operatorname{diag}(a,b)$，定义
+
+$$
+F_A(x)=\frac{Ax}{\left\lVert Ax\right\rVert }\quad(x\in S(\mathbb C ^2)).
+$$
+
+它是光滑、相位协变的球面双射，逆为归一 $A^{-1}$，满足 A 和 J，
+却违反 N。
+
+**证明。**
+
+逆公式直接代入成立。取
+$x=(e_1+e_2)/\sqrt2$、$y=(-e_1+e_2)/\sqrt2$，
+原距离平方为二，而像距离平方为
+
+$$
+\left\lVert F_A(x)-F_A(y)\right\rVert ^2
+=\frac{4a^2}{a^2+b^2}
+=2+\frac{2(a^2-b^2)}{a^2+b^2}>2.
+$$
+
+这同时给出发生关系变形的两个元。
+
+□
+
+<a id="statement-6-3"></a>
+

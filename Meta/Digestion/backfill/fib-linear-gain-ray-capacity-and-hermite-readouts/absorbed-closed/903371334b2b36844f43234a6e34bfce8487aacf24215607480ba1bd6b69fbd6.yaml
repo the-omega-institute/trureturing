@@ -1,0 +1,23 @@
+fingerprints:
+  raw_sha256: sha256:903371334b2b36844f43234a6e34bfce8487aacf24215607480ba1bd6b69fbd6
+  normalized_sha256: sha256:903371334b2b36844f43234a6e34bfce8487aacf24215607480ba1bd6b69fbd6
+cas_ref: sha256:903371334b2b36844f43234a6e34bfce8487aacf24215607480ba1bd6b69fbd6
+coverage_gids:
+  - gid: D5/S3/Observer/Linear/GainRayAdaptive.adaptive_lower
+    target_statement_id: sha256:04a2f3f81ed8c9a6da454e25c3ad8ad380895add05df4da844c9e38ade0a0d59
+  - gid: D5/S3/Observer/Linear/GainRayAdaptive.upper_protocol_correct
+    target_statement_id: sha256:736b76315171578fdbe61bde03c5a93cc783d1b610e2a04b993bc6b9a23bd2b8
+  - gid: D5/S3/Observer/Linear/GainRayCompleteRecovery.complete_recovery
+    target_statement_id: sha256:868704f2dcac59f909df36aa115deaf62bad7cf4cd1a026908301007ad2e1aee
+  - gid: D5/S3/Observer/Linear/GainRayJets.jetMap_bijective
+    target_statement_id: sha256:3d621ddee8141efb3e7a9f14a582c065fd48c9ca42c602377016904961b59157
+  - gid: D5/S3/Observer/Linear/GainRayJets.jet_ofFn
+    target_statement_id: sha256:18007235c9af424a9145d16e42b12df4902f21a5cc8cd300062ca2a3c848330f
+  - gid: D5/S3/Observer/Linear/GainRayJets.pureM_spectral
+    target_statement_id: sha256:57ccbd31ae7f4ff9b400a86299f7a8068fda3ed749601e4cd01a429011c033a5
+  - gid: D5/S3/Observer/Linear/GainRayNuisance.mixed_scalar_obstruction
+    target_statement_id: sha256:63f36c8c02a15f3d38128995986463acae5912695d3ed678a6cf9b707159cb81
+  - gid: D5/S3/Observer/Linear/GainRayNuisance.universal_scalar_identity
+    target_statement_id: sha256:085398f2f731f98e516e2bc0f292eaeaaa269ed9b85eaed88744c4b20e8ffa4d
+receipts:
+  unresolved_subitems: []

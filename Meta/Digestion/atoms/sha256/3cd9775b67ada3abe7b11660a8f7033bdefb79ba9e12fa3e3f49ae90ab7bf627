@@ -1,0 +1,61 @@
+### 归一化后的稳定性
+
+所有对角项相等，记为
+
+
+<a id="display-39"></a>
+
+$$
+V_h=W_h(i,i).
+$$
+
+
+则
+
+
+<a id="display-40"></a><a id="eq-12"></a>
+
+$$
+\boxed{
+G_h:=\frac{W_h}{V_h}\longrightarrow I_m.
+}
+$$
+
+<p align="center" data-equation-number="12"><a href="#eq-12">(12)</a></p>
+
+
+更精确地，
+
+
+<a id="display-41"></a>
+
+$$
+G_h
+=
+I_m-\frac{\mathsf A}{\log(1/h)}
++o\!\left(\frac1{\log(1/h)}\right).
+$$
+
+
+这说明：**对任意固定有限组远距离位置，适当的差分读出在归一化后可以达到统一良好的条件数。**
+
+同时必须保留其总量：
+
+
+<a id="display-42"></a><a id="eq-13"></a>
+
+$$
+\boxed{
+V_h\sim2h\log(1/h)\longrightarrow0.
+}
+$$
+
+<p align="center" data-equation-number="13"><a href="#eq-13">(13)</a></p>
+
+
+归一关系稳定，与未归一信号大小，是这里需要同时记录的两个量。
+
+---
+
+<a id="section-4"></a>
+
