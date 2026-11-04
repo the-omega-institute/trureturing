@@ -8,6 +8,8 @@
 
 import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.TwoAdjacentLowTailLabels
 
+/-! Literal root necessity for arbitrary immutable INITIAL tail thresholds. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -40,22 +42,23 @@ private theorem wrong_root_merge (k m a : ℕ) (ha : 0 < a) (ham : a < m)
   rcases first_zero_form (List.ofFn B) with all | ⟨b, rest, cut⟩
   · have eq : B = allOneBlock m := by
       apply List.ofFn_injective
-      simpa only [List.length_ofFn, allOneBlock, List.ofFn_const] using all
+      change List.ofFn B = List.ofFn (fun _ : Fin m => true)
+      simpa only [List.length_ofFn, List.ofFn_const] using all
     rw [eq]
     have ex (s : ℕ) (hs : s < k) :=
       (all_one_archive_exact k m hk (by omega) 1 v phase s hs (fun _ => 0)).2.2
     change allOneOrbit k m 1 (some ⟨v, phase, k - a - 1⟩) =
       allOneOrbit k m 1 (some ⟨v, phase, k - a⟩)
     rw [ex _ (by omega), ex _ (by omega)]
-    rw [if_neg (by omega), if_neg (by omega)]
+    rw [ite_eq_right (by omega), ite_eq_right (by omega)]
   · have different : b ≠ a := by intro eq; subst b; exact noCut ⟨rest, cut⟩
     rw [first_zero_block_exact k hk m b B rest cut (short_legal k m hk short B)
       v phase (k - a - 1) (by omega),
       first_zero_block_exact k hk m b B rest cut (short_legal k m hk short B)
       v phase (k - a) (by omega)]
     by_cases before : b < a
-    · rw [if_pos (by omega), if_pos (by omega)]
-    · rw [if_neg (by omega), if_neg (by omega)]
+    · rw [ite_eq_left (by omega), ite_eq_left (by omega)]
+    · rw [ite_eq_right (by omega), ite_eq_right (by omega)]
 
 /-- Every selector correct on all actual histories in either free-value fibre
 must issue a root beginning with exactly `a` ones and then zero. Its complete
@@ -83,7 +86,7 @@ theorem forced_threshold_root {Y : Type u} (Q m a : ℕ) (hQ : 2 ≤ Q)
   have short : m < Q * m := by nlinarith
   have hk : 2 ≤ Q * m := by omega
   have native (s : ℕ) (hs : s < Q * m) : ∃ c,
-      NativeExecute π d (some ⟨v, 0, s⟩) (some v) [] =
+      NativeExecute (k := Q * m) π d (some ⟨v, 0, s⟩) (some v) [] =
         some (initialLabel (Q * m) a labels outside rejected bottom
           (some ⟨v, 0, s⟩), c) := by
     obtain ⟨c, _, success⟩ := OwnPathCharges.native_fiber (Q * m) m hk
@@ -128,8 +131,8 @@ theorem forced_threshold_root {Y : Type u} (Q m a : ℕ) (hQ : 2 ≤ Q)
       intro phase s hs
       rw [first_zero_block_exact (Q * m) hk m a B rest cut
         (short_legal (Q * m) m hk short B) v phase s hs]
-      congr 1
-      omega
+      have safe : s + a < Q * m ↔ s < Q * m - a := by omega
+      simp only [safe]
 
 #print axioms forced_threshold_root
 
