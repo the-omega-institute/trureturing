@@ -271,7 +271,8 @@ private theorem high (x t z J : ℤ) (hx : 4≤x) (ht : 2*x≤t)
   have margin : 0<A x z-1-4*B x t z-z*(z+1) := by
     have hid : A x z-1-4*B x t z-z*(z+1)≥
         (x-4)*(z^2+z+1)+z^2-z+4 := by dsimp [A]; nlinarith only [hb2]
-    have h0:=mul_nonneg (show 0≤x-4 by omega) (show 0≤z^2+z+1 by have hz0 : 0≤z := by omega; positivity)
+    have hz0 : 0≤z := by omega
+    have h0:=mul_nonneg (show 0≤x-4 by omega) (show 0≤z^2+z+1 by positivity)
     have h1:=mul_nonneg (show 0≤z by omega) (show 0≤z-1 by omega)
     nlinarith only [hid,h0,h1]
   refine ⟨H,e,p,hH0,hHJ,he,hp,by omega,hold.1,?_⟩
