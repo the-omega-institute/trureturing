@@ -54,7 +54,7 @@ private theorem insert_perm (k j : ℕ) (l : List ℕ) :
     (insertAt k l j).Perm (l++[k]) := by
   unfold insertAt
   have h:=(List.perm_append_singleton k (l.drop j)).symm.append_left (l.take j)
-  simpa only [List.append_assoc,List.singleton_append,List.take_append_drop] using h
+  simpa only [←List.append_assoc,List.take_append_drop] using h
 
 private theorem base_coordinates (a b c d : ℕ) (had : a≤d) (hdb : d<b) (hbc : b<c) :
     ∀ (side : Bool) (i : Fin 4),
@@ -170,7 +170,9 @@ private theorem physical_source (a b c d : ℕ) (ha : 2≤a)
       · dsimp [P,rowBanks] at he
         split_ifs at he with hi
         · rcases List.mem_cons.mp he with he|he
-          · rw [he,totals.2.2]
+          · rw [he]
+            change 0≤newValue a b c d (size a b c d)
+            rw [totals.2.2]
             have hh:=(tab.1 0).1
             omega
           · exact fpos i e he
@@ -189,7 +191,7 @@ private theorem physical_source (a b c d : ℕ) (ha : 2≤a)
       cases side
       · simpa [m,P,rowBanks] using hh
       · by_cases hi : i=earBank mode
-        · simp only [m,P,rowBanks,ite_true,if_pos hi,List.map_cons,List.sum_cons,
+        · simp only [m,P,rowBanks,f,ite_true,if_pos hi,List.map_cons,List.sum_cons,
             totals.2.2,Int.cast_add,hA]
           rw [hh]
           ring
@@ -223,7 +225,7 @@ private theorem physical_source (a b c d : ℕ) (ha : 2≤a)
       fin_cases i <;> cases side
       all_goals dsimp only [j,chainLength,nextBase,nextNewBase] at nr1 nr2
       all_goals dsimp only [F] at nr1 nr2
-      all_goals simp only [oldbc,newbc] at nr1 nr2
+      all_goals try simp only [oldbc,newbc] at nr1 nr2
       all_goals simp (disch := omega) only [half_power,pc.1,pc.2.1,pc.2.2] at nr1
       all_goals dsimp only [rowHeads,rowBase] at nr1 nr2 ⊢
       all_goals norm_num only [Fin.reduceEq,ite_true,ite_false] at nr1 nr2 ⊢
@@ -234,10 +236,12 @@ private theorem physical_source (a b c d : ℕ) (ha : 2≤a)
         (m 0:ℚ)+(dd 0:ℚ)+(m 1:ℚ)+(dd 1:ℚ)=rowSeams mode x r s q side 1 ∧
         (m 0:ℚ)+(dd 0:ℚ)+(m 1:ℚ)+(dd 1:ℚ)+(m 2:ℚ)+(dd 2:ℚ)=rowSeams mode x r s q side 2 := by
       simp only [mass 0,mass 1,mass 2,(terminal 0).2,(terminal 1).2,(terminal 2).2]
-      fin_cases mode <;> cases side
+      generalize hmode : mode=selected at hm ⊢
+      clear hmode
+      fin_cases selected <;> cases side
       all_goals norm_num [rowSeams,rowHeads,rowBase,reserve,bankMasses,earBank]
       all_goals dsimp [x,r,s,q,xval,rval,sval,qval]
-      all_goals simp only [branch] at hm
+      all_goals simp [branch,Matrix.cons_val_zero',Matrix.cons_val_succ',Fin.mk.injEq] at hm
       all_goals first
         | (have er : d-a=0 := by omega
            have es : b-d=1 := by omega
@@ -253,9 +257,11 @@ private theorem physical_source (a b c d : ℕ) (ha : 2≤a)
     -- Independent zero total from the native source, not from these windows.
     have zero : (rowWord mode a b c d side |>.map f).sum=0 := by
       cases side
-      · rw [shape.1]
+      · change ((rowWord mode a b c d false).map (oldValue a b c d)).sum=0
+        rw [shape.1]
         exact ((hp.map (oldValue a b c d)).sum_eq).trans totals.1
-      · rw [shape.2]
+      · change ((rowWord mode a b c d true).map (newValue a b c d)).sum=0
+        rw [shape.2]
         have pp:=(insert_perm (size a b c d) (freshCut a b d) (word mode a b c d)).trans
           (hp.append_right [size a b c d])
         rw [(pp.map (newValue a b c d)).sum_eq]
@@ -266,7 +272,12 @@ private theorem physical_source (a b c d : ℕ) (ha : 2≤a)
         List.sum_singleton,add_assoc] using zero
     have hC : 0≤C := by cases side <;> dsimp only [C] <;> omega
     have hM : (M:ℚ)=2*(C:ℚ)+1 := by
-      have hi : M=2*C+1 := by cases side <;> dsimp only [M,C] <;> omega
+      have hi : M=2*C+1 := by
+        cases side
+        · change N=2*(N/2)+1
+          omega
+        · change 2*N+1=2*N+1
+          rfl
       exact_mod_cast hi
     have gates : Gates C (m 0) (dd 0) (m 1) (dd 1) (m 2) (dd 2) (m 3) (dd 3) :=
       gates_of_windows C M m dd (rowHeads x r s q side) (rowSeams mode x r s q side)
@@ -274,7 +285,7 @@ private theorem physical_source (a b c d : ℕ) (ha : 2≤a)
         (by simp [rowSeams]) z (hw side)
     exact four_strip f C (P 0) (P 1) (P 2) (P 3) (T 0) (T 1) (T 2) (T 3)
       (positive 0) (positive 1) (positive 2) (positive 3) gates
-  exact ⟨hp,cut.1,cut.2.1,by simpa only [shape.1] using row false,
-    by simpa only [shape.2] using row true⟩
+  exact ⟨hp,cut.1,cut.2.1,by simpa [shape.1,N,mode] using row false,
+    by simpa [shape.2,N,mode] using row true⟩
 
 end D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakIntermediateTail
