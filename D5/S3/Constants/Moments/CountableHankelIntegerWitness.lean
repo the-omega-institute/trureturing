@@ -30,7 +30,7 @@ private theorem moment_summable {ι : Type*} (z w : ι → ℂ)
   rw [norm_mul, norm_pow]
   exact mul_le_of_le_one_right (norm_nonneg _) (pow_le_one₀ (norm_nonneg _) (hz i))
 
-private theorem quadratic_identity {ι : Type*} (z w : ι → ℂ)
+theorem quadratic_identity {ι : Type*} (z w : ι → ℂ)
     (hz : ∀ i, ‖z i‖ ≤ 1) (hw : Summable (fun i => ‖w i‖))
     (N : ℕ) (u : Fin (N + 1) → ℝ) :
     (∑' i, w i * (∑ a : Fin (N + 1), (u a : ℂ) * z i ^ (a : ℕ)) ^ 2).re =
