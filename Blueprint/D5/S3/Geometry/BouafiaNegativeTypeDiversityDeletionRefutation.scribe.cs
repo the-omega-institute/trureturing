@@ -61,7 +61,10 @@ internal sealed class BouafiaNegativeTypeDiversityDeletionRefutationDocument : I
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("bouafia-diversity-negative-type"),
+                ResolutionKind.Refuted) : null);
 
     private static string QuestionQuotation() =>
         "Bouafia, arXiv:2605.03681v1, p. 18, §4.1, immediately after Theorem 4, verbatim: “Does DiversityMaximizingMeasure correctly compute the maximizing-diversity measure of all finite subsets of ℝⁿ? Of all finite metric spaces of negative type?”";

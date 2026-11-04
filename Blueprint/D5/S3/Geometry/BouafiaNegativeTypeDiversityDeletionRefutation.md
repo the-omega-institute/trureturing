@@ -132,6 +132,10 @@ $$\neg (\forall n: \mathbb{N}, (0 < n) \Rightarrow (\forall metric: \operatornam
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/BouafiaNegativeTypeDiversityDeletionRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bouafia-diversity-negative-type` (refuted) by `D5/S3/Geometry/BouafiaNegativeTypeDiversityDeletionRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bouafia-diversity-negative-type","declaration_gid":"D5/S3/Geometry/BouafiaNegativeTypeDiversityDeletionRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Philippe Bouafia (2026). *Magnitude and diversity of trees*. DOI: [10.48550/arXiv.2605.03681](https://doi.org/10.48550/arXiv.2605.03681). URL: <https://arxiv.org/abs/2605.03681v1>.
