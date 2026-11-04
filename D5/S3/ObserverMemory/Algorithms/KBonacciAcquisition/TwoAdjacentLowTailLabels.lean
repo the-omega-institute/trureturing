@@ -30,7 +30,7 @@ def initialLabel {Y : Type u} (Q m : ℕ) (labels : Fin 4 → Y) (bottom : Y) : 
   | some q => if Q * m - 3 ≤ q.tail then labels 3 else if (-q.phase).val = 1 then labels 1 else
       if (-q.phase).val = 2 then labels 2 else labels 0
 
-private theorem first_zero_form (bits : List Bool) : bits = List.replicate bits.length true ∨
+theorem first_zero_form (bits : List Bool) : bits = List.replicate bits.length true ∨
       ∃ a rest, bits = List.replicate a true ++ false :: rest := by
   induction bits with
   | nil => exact Or.inl rfl
@@ -108,7 +108,7 @@ private theorem response_at (Q m t i : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m) (hi : 
       -((i : ℕ) : ZMod (Q * m + 1)) := by push_cast; ring
   rw [phase, derivative_at Q m i hQ hm (by nlinarith)]
 
-private theorem response_off (Q m t j : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m)
+theorem response_off (Q m t j : ℕ) (hQ : 2 ≤ Q) (hm : 4 ≤ m)
     (ht : t < Q) (hj : j ≤ Q * m) (off : j < t * m ∨ (t + 1) * m < j) (B : Fin m → Bool) :
     wordIncrement (Q * m) (-((j : ℕ) : ZMod (Q * m + 1)) + ((t * m : ℕ) : ZMod (Q * m + 1))) B = 0 := by
   have short : m < Q * m := by nlinarith

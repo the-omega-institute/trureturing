@@ -1,0 +1,68 @@
+### 定理 5.6（有限回接次数的精确全参考误差）
+
+<a id="thm-c123-finite-horizon"></a>
+
+对 $n\ge1$，$S_r^n$ 的 Bloch 作用为
+
+$$
+(x,y,z)\longmapsto(r,0,a^n z).
+$$
+
+其固定可观测量代数满足
+
+$$
+\operatorname{Fix}S_0^*=\operatorname{span}\{I,Z\},\qquad
+ \operatorname{Fix}S_r^*=\mathbb C I\quad(r\ne0).
+$$
+
+然而对包含任意参考的、未除二的 diamond 距离，有精确公式
+
+<a id="eq-c123-finite-horizon-distance"></a>
+
+$$
+\boxed{\quad
+ \|S_r^n-\mathcal D_Z\|_\diamond
+ =\sqrt{r^2+(1-a^n)^2}
+ \le |r|+nr^2.
+ \quad}
+\tag{34}
+$$
+
+**证明。**
+$N(\sigma_r)=I/2$，所以
+$\mathcal R_{\sigma_r}(W)=2\sigma_r^{1/2}\mathcal D_Z(W)\sigma_r^{1/2}$。
+写 $\sigma_r^{1/2}=uI+vX$，有
+$u^2+v^2=1/2$、$2uv=r/2$、$u^2-v^2=a/2$。
+于是 $\sigma_r^{1/2}Z\sigma_r^{1/2}=aZ/2$，从而一次回接把 Bloch 向量送到 $(r,0,az)$。继续迭代得到所述公式。
+
+在可观测量侧，
+
+$$
+S_r^*(I)=I,\quad S_r^*(X)=rI,\quad
+ S_r^*(Y)=0,\quad S_r^*(Z)=aZ.
+$$
+
+当 $r=0$ 时 $a=1$；当 $r\ne0$ 时 $a<1$，逐项比较系数即得两个固定代数。
+
+为证明 diamond 等式，记 $P_\pm=(I\pm Z)/2$，以及
+
+$$
+\omega_\pm^{(n)}=\frac{I+rX\pm a^n Z}{2},\qquad
+ D_\pm=\omega_\pm^{(n)}-P_\pm
+       =\frac{rX\pm(a^n-1)Z}{2}.
+$$
+
+两个 $D_\pm$ 的迹范数均为
+$c_n=\sqrt{r^2+(1-a^n)^2}$。任意源–参考态 $\rho_{HQ}$ 在源的 $Z$ 基中的对角块 $\rho_{++},\rho_{--}$ 为正，迹之和为 $1$；两通道均先读出同一个 $Z$ 标签，因此
+
+$$
+[(S_r^n-\mathcal D_Z)\otimes\operatorname{id}_Q](\rho_{HQ})
+ =D_+\otimes\rho_{++}+D_-\otimes\rho_{--}.
+$$
+
+三角不等式给范数至多为 $c_n$。输入 $P_+$ 已达到 $c_n$，所以参考不能再把它增大，得到等式。最后
+$1-a^n\le n(1-a)=nr^2/(1+a)\le nr^2$，并使用
+$\sqrt{x^2+y^2}\le|x|+|y|$。
+
+这里比较的是退相干本来保留下来的 $Z$ 对角内容；对该来源代数，$\mathcal D_Z$ 就是准确目标。没有把失去的全部相位说成已经恢复。
+

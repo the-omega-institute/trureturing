@@ -203,3 +203,74 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{_,_
 end Whole
 end
 end Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.TwoAdjacentLowTailLabels
+
+namespace Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.TwoAdjacentLowTailLabels.FirstZeroForm
+noncomputable section
+
+@[reducible] def signature : Signature where
+  Params := Unit
+  State _ := List Bool
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := List Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize signature (fun _ _ bits => bits) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun _ _ _ => []) (fun e => nomatch e)
+
+@[reducible] def arena : Arena where
+  signature := signature
+  Law R := ∀ bits : List Bool,
+    R.readout () () bits = List.replicate bits.length true ∨
+      ∃ a rest, R.readout () () bits = List.replicate a true ++ false :: rest
+
+private theorem positive : arena.Law actual :=
+  _root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.TwoAdjacentLowTailLabels.first_zero_form
+private theorem negative : ¬ arena.Law rejected := by
+  intro law
+  rcases law [true] with equal | ⟨a, rest, equal⟩
+  · cases equal
+  · change ([] : List Bool) = List.replicate a true ++ false :: rest at equal
+    have impossible := congrArg List.length equal
+    simp at impossible
+
+def evidence : Registration arena
+    (type_of% (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.TwoAdjacentLowTailLabels.first_zero_form)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨positive, rejected, negative⟩
+  sensitivity := ⟨fun i => ⟨rejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, negative⟩,
+    fun e => nomatch e⟩
+  dependence := by
+    intro i
+    cases i
+    exact ⟨(), [], [true], by decide⟩
+
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.TwoAdjacentLowTailLabels.first_zero_form)
+    (type_of% (realize signature actual.readout actual.anchor)) Unit Unit := {
+  unitName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.TwoAdjacentLowTailLabels.first_zero_form.__information_unit,
+  realizationName := `Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.TwoAdjacentLowTailLabels.FirstZeroForm.evidence,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena⟩, objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena ⟨evidence⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature actual.readout actual.anchor),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.TwoAdjacentLowTailLabels,
+    definition := none, coordinates := #[],
+    readouts := #[{
+      path := #["body", "fn", "arg", "fn", "arg"],
+      stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+
+#print axioms evidence
+#print axioms registration
+end
+end Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.TwoAdjacentLowTailLabels.FirstZeroForm

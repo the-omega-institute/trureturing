@@ -52,6 +52,20 @@ internal sealed class EightVertexQutritBoundDocument : IScribeDocumentDefinition
             Node("has-violation", "A score above the independence number", "HasViolation", HasViolationFormula(),
                 "A violation is an attained unit-state score strictly above SimpleGraph.indepNum, the noncontextual bound. Equation (25) asks for the minimum dimension with such a violation; its exact minimum for the two graphs is stated using IsLeast below.",
                 AssessedProvenance.FromLiterature(Source)),
+            Describe.Lean(DescribeId.Create("eight-vertex-parseval-three"),
+                DeclarationHandle.Create(Prefix + "parseval_three"),
+                H("Three orthonormal vectors give the squared norm"),
+                StatementSource.FromAuthor(Disp(ParsevalThreeFormula())),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuadraticForms/mathlib2026finiteorthonormal")),
+                Blocks(Paragraph(Text("For every orthonormal triple in real three-dimensional Euclidean space, the three squared overlaps sum to the squared norm of every vector."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("eight-vertex-bessel-pair"),
+                DeclarationHandle.Create(Prefix + "bessel_pair"),
+                H("An orthogonal unit pair bounds the squared overlaps"),
+                StatementSource.FromAuthor(Disp(BesselPairFormula())),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuadraticForms/mathlib2026finiteorthonormal")),
+                Blocks(Paragraph(Text("In every natural dimension, the two squared overlaps with orthogonal unit vectors sum to at most the squared norm."))),
+                DescribeRole.Theorem),
             Node("settled", "The six sharp-bound conclusions", "Settled", SettledFormula(),
                 "The independence number is three. Every natural dimension at most three has the homogeneous upper bound three. Three is the greatest attained unit score in dimension three, and the dimension-three supremum equals three. The dimension-four supremum is strictly larger than three. Finally, four is the least natural dimension admitting an attained violation. IsGreatest includes both attainment and an upper bound; IsLeast includes both a violation at four and exclusion of all smaller dimensions.",
                 AssessedProvenance.FromRepo()),
@@ -106,6 +120,28 @@ internal sealed class EightVertexQutritBoundDocument : IScribeDocumentDefinition
             DescribeId.Create("eight-vertex-" + id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+
+    private static Formula ParsevalThreeFormula()
+    {
+        var a = X("a"); var b = X("b"); var c = X("c"); var psi = X("psi");
+        var triple = Seq(Bang, OpenBracket, a, Comma, Sp, b, Comma, Sp, c, CloseBracket);
+        var lhs = new Formula.Binary(new Formula.Binary(LocalCall("overlapSq", psi, a),
+            FormulaBinaryOperator.Add, LocalCall("overlapSq", psi, b)),
+            FormulaBinaryOperator.Add, LocalCall("overlapSq", psi, c));
+        return All("a", Space(D(3)), All("b", Space(D(3)), All("c", Space(D(3)),
+            Implication(At(Qualified("Orthonormal"), Reals(), triple),
+                All("psi", Space(D(3)), Equal(lhs, Square(Norm(psi))))))));
+    }
+    private static Formula BesselPairFormula()
+    {
+        var d = X("d"); var x = X("x"); var y = X("y"); var psi = X("psi");
+        var lhs = new Formula.Binary(LocalCall("overlapSq", psi, x),
+            FormulaBinaryOperator.Add, LocalCall("overlapSq", psi, y));
+        var conclusion = All("psi", Space(d), LE(lhs, Square(Norm(psi))));
+        var orthogonal = Implication(Equal(Inner(x, y), D(0)), conclusion);
+        var unitPair = Implication(Equal(Norm(x), D(1)), Implication(Equal(Norm(y), D(1)), orthogonal));
+        return All("d", Naturals(), All("x", Space(d), All("y", Space(d), unitPair)));
+    }
 
     private static Formula VertexFormula() => Equal(Local("Vertex"), FinOf(D(8)));
 

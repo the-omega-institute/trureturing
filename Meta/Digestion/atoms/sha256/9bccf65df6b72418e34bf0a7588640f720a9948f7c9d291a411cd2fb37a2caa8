@@ -1,0 +1,50 @@
+### 定义 32.2（实际完整事件行与修复后的正效果接口）
+
+固定定义 30.1 的一个实际事件 $j$。每个所用 $Q_q$ 都须是原完整未来域中的**实际事件—续接程序**，具有共同输入、原完整标签 $u\in\Gamma_{Q_q}$、其中全部 $u=(j,w)$ 以及其它事件结果。实际成员资格、各输入与 $Q_q$ 的合法配对、原始标量因果边际及其对应 $\mathcal D$ 边均为已供应前件。取这些共同合法输入的原方向 $n=n_a$，保留 §17 的稠密、分离输入条件。定义
+
+$$
+\begin{aligned}
+P_j(n;q,w)&=F_{Q_q,(j,w)}(n),&
+ m(n)&=\sum_wP_j(n;q,w),\\
+Q_j(n;q,w)&=G_{Q_q,(j,w)}(n),&
+ M(n)&=\sum_wQ_j(n;q,w),\\
+R_j(n;q,w)&=H_{Q_q,(j,w)}(n),&
+ r(n)&=\sum_wR_j(n;q,w).
+\end{aligned}
+\tag{32.6}
+$$
+
+原因果合同使 $m$ 不依赖 $q$；(32.4) 保留的同一因果边使 $M,r$ 也不依赖 $q$，且完整菜单的正性给 $0\le m,M,r\le1$。由 (32.2)，
+
+$$
+Q_j=tP_j+\gamma R_j,\qquad
+M=tm+\gamma r\ge tm.
+\tag{32.7}
+$$
+
+这是整个 $Q_q$ 的终端行结论，不要求 $j$ 成为新的合法前缀，不要求分支前缀闭合或原生 CP。域外的抽象续接不能代替这里实际的 $Q_q$。
+
+$G_{Q_q,u}(n)=\alpha_{Q_q,u}+\langle\beta_{Q_q,u},n\rangle$ 在**整个球面**正且归一。用 (17.15) 的仿射球—效果对应，选定 $W$ 的正向正交基，得到
+
+$$
+\rho_n=\frac{I+n\cdot\sigma}{2},\qquad
+A_{q,w}=\alpha_{Q_q,(j,w)}I+\beta_{Q_q,(j,w)}\cdot\sigma\ge0,
+\qquad Q_j(n;q,w)=\operatorname{Tr}(\rho_nA_{q,w}).
+\tag{32.8}
+$$
+
+全部其它原事件结果也有其正效果，故完整菜单效果和为 $I$。取任一所用 $q_0$ 并置 $E=\sum_wA_{q_0,w}$，则 $0\le E\le I$。在实际共同输入上，保留的标量因果边给
+
+$$
+\operatorname{Tr}\!\left[\rho_n\!\left(\sum_wA_{q,w}-E\right)\right]=0.
+$$
+
+精确复用定义 30.2 的分离论证：该迹是连续仿射函数，在稠密原方向上为零，因而在全球面为零，其 Hermitian 系数遂为零。因此
+
+$$
+\sum_wA_{q,w}=E,\qquad M(n)=\operatorname{Tr}(\rho_nE).
+\tag{32.9}
+$$
+
+参数对应是 $\rho_a\mapsto\rho_n$、$G_{j,q,w}\mapsto A_{q,w}$、$E_j\mapsto E$、$P_j(a;q,w)\mapsto Q_j(n;q,w)$、$m_j(a)\mapsto M(n)$。这里对应 (30.2) 角色的修复效果 $E$ 由任一实际完整行的修复边际给出，再以同一分离论证识别所有 $q$ 的边际；不预设实际 $m$ 有效果表示。这是**修复族的正效果接口**，不使实际 $F$ 仿射，也不建立原仪器的 CP 或输出更新。
+

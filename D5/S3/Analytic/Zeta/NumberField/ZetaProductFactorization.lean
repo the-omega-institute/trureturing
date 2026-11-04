@@ -209,7 +209,7 @@ private theorem summable_norm_primeIdeal_factor_sub_one
 `Multipliable` (hence the partition / fiberwise-regrouping lemmas) follows from absolute
 convergence (`summable_norm_primeIdeal_factor_sub_one`), and the value is pinned by the
 prime-ideal Euler product `dedekindZeta_eq_tprod_primeIdeal`. -/
-private theorem hasProd_primeIdeal_factor
+theorem hasProd_primeIdeal_factor
     (L : Type*) [Field L] [NumberField L] {s : ℂ} (hs : 1 < s.re) :
     HasProd (fun 𝔓 : {𝔓 : Ideal (𝓞 L) // 𝔓.IsPrime ∧ 𝔓 ≠ ⊥} ↦
         (1 - (Ideal.absNorm 𝔓.1 : ℂ) ^ (-s))⁻¹) (NumberField.dedekindZeta L s) := by
