@@ -1,0 +1,18 @@
+**定理 6.6（实际联合配方的充分接口）。**设两系统与联合系统均满足 (T)，且有双可加原映射 $\tau:A_A\times A_B\to A_{AB}$，模零群满足
+
+$$
+\tau(U_Ax,y)=\tau(x,U_By)=U_{AB}\tau(x,y),\qquad
+q_{AB}(\tau(x,y))=q_A(x)q_B(y).
+\tag{6.5}
+$$
+
+则它诱导等距嵌入 $H_A\widehat\otimes_{\mathbb C}H_B\to H_{AB}$；只有实际乘积配方 $\tau(x,y)$ 的线性包在 $H_{AB}$ 中稠密时，才给整个联合空间的张量同构。
+
+**证明。**质量乘积给分别有界，双可加性延伸到有理和实完成；标记平衡使两槽均复线性。设延伸后的映射为 $T$。先固定 $y$ 作复极化，得 $\langle T(x,y),T(x',y)\rangle=\langle x,x'\rangle\|y\|^2$。对固定 $x,x'$，左侧的双变量版本是 $y,y'$ 的半双线性形式；复极化对任意这种形式都由对角值唯一恢复，故
+
+$$
+\langle T(x,y),T(x',y')\rangle=\langle x,x'\rangle\langle y,y'\rangle.
+$$
+
+因此任意有限乘积和的内积都保持，代数张量上的映射等距并唯一延伸。满射性恰需像的稠密性。
+
