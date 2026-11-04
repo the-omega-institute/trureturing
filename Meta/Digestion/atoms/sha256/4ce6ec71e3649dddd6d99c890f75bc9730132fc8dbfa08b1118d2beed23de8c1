@@ -1,0 +1,88 @@
+**Theorem 46.3 (global coherent cone inequality and the exact five-term
+remainder).** On all of the attained triangle (46.10),
+
+$$
+\begin{aligned}
+ \Delta&:=4XY-(L^2-X-Y)^2
+       =4LH_c-(A_c+B_c)^2,\\
+ F^2&=\frac{(1-X)B_c\Delta}{4XY},\\
+ 0&\le F\le K_c\sqrt{B_cH_c}.
+\end{aligned}
+\tag{46.18}
+$$
+
+Equality in the last inequality holds exactly when $B_c=0$; it is
+strict whenever $B_c>0$. On the same entire triangle,
+
+$$
+\boxed{\begin{aligned}
+ \Gamma_0-\Gamma={}&
+ \mu\left(\sqrt{H_c}-\frac{t_c\sqrt{B_c}}{2\mu}\right)^2
+ +\frac{L\mathfrak D_\sigma(x,q)}{4\mu x^2}B_c\\
+ &+\frac{\sqrt q\,\ell m}{C_0}
+       \left(K_c\sqrt{B_cH_c}-F\right)\\
+ &+\frac{\sqrt p}{2R_0}(R-R_0)^2
+ +\frac{\sqrt q}{2C_0}(C-C_0)^2 .
+\end{aligned}}
+\tag{46.19}
+$$
+
+This identity is valid for $q=0$ and $q=1$, and when $C=0$.
+Its denominators use the positive fixed slice quantities
+$x,y,R_0,C_0,\mu$; the cone identity additionally uses $XY\ge x^2>0$.
+Here $R_0=ax+b>0$, $C_0=\ell y>0$, and $\mu>0$ even at
+$q=0$ or $q=1$, since $a,k,\ell>0$ and $p+q=1$.
+
+*Proof.* Substitution of $X=x^2+A_c$, $Y=1-B_c$ into the first expression
+in (46.18) gives the second expression. Since $\Delta\ge0$ on the attained
+triangle, $H_c\ge0$. From (46.12), $1-X\le y^2$ and $XY\ge x^2$; hence
+
+$$
+ F^2=\frac{(1-X)B_c\Delta}{4XY}
+ \le\frac{y^2}{x^2}B_cLH_c=K_c^2B_cH_c.
+\tag{46.20}
+$$
+
+If $B_c>0$, then $A_c+B_c>0$ and (46.18) gives $H_c>0$ and
+$\Delta<4LH_c$. If $X<1$ the preceding estimates are strict. If $X=1$,
+then $F=0$ whereas $K_c\sqrt{B_cH_c}>0$. Thus the final inequality is
+strict on every such point, including repeated-pair and aligned-center
+boundaries.
+
+The same trace equation gives
+
+$$
+ R^2=R_0^2-akA_c-bkB_c,\qquad
+ C^2=C_0^2-\ell^2A_c+m^2B_c+2\ell mF.
+\tag{46.21}
+$$
+
+For $z\ge0$ and $z_0>0$,
+
+$$
+ z_0-z=-\frac{z^2-z_0^2}{2z_0}
+       +\frac{(z-z_0)^2}{2z_0}.
+\tag{46.22}
+$$
+
+Apply (46.22) to $R,R_0$ and $C,C_0$, with weights $\sqrt p,\sqrt q$.
+After substituting $A_c=H_c+xB_c$, the linear part is
+
+$$
+ \mu H_c+\nu B_c-\frac{\sqrt q\,\ell m}{C_0}F.
+\tag{46.23}
+$$
+
+Since $\sqrt q\,\ell mK_c/C_0=t_c$, completing the square in (46.23) gives
+
+$$
+ \mu H_c+\nu B_c-t_c\sqrt{B_cH_c}
+ =\mu\left(\sqrt{H_c}-\frac{t_c\sqrt{B_c}}{2\mu}\right)^2
+  +\frac{L\mathfrak D_\sigma(x,q)}{4\mu x^2}B_c.
+\tag{46.24}
+$$
+
+Together with the two root remainders this is (46.19). No division by
+$q,p,C$, a variable recovery amplitude, a coherence or a determinant
+was made. $\square$
+
