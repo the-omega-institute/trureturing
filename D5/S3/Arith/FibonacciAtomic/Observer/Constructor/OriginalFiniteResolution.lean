@@ -8,6 +8,7 @@
 
 import D5.S3.Arith.FibonacciAtomic.Observer.CompletionPositiveDriftRegion
 import Mathlib.Data.Fintype.Card
+import Mathlib.Order.Monotone.Basic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -147,34 +148,24 @@ private theorem stable_succ (E : Definitions k m) (mode : Fin k → Bool) (n : N
     (E i).bind (resolve mode (environment E mode (n+1)))
   exact congrArg (fun s => (E i).bind (resolve mode s)) h
 
-/-- A nonstationary round adds a new original state; there are exactly m states. -/
+/-- The monotone support cardinality stabilizes within the original state count. -/
 private theorem saturation_complete (E : Definitions k m) (mode : Fin k → Bool) :
     environment E mode m = environment E mode (m+1) := by
   classical
-  have growth : ∀ n, environment E mode n = environment E mode (n+1) ∨
-      n ≤ (support E mode n).card := by
-    intro n
-    induction n with
-    | zero => exact Or.inr (Nat.zero_le _)
-    | succ n ih =>
-      rcases ih with stable | count
-      · exact Or.inl (stable_succ E mode n stable)
-      · by_cases stable : environment E mode n = environment E mode (n+1)
-        · exact Or.inl (stable_succ E mode n stable)
-        · have strict : support E mode n ⊂ support E mode (n+1) :=
-            (support_subset E mode n).ssubset_of_ne (fun eq =>
-              stable (stable_of_support E mode n eq))
-          exact Or.inr (by have := Finset.card_lt_card strict; omega)
-  rcases growth m with stable | count
-  · exact stable
-  · have bound : (support E mode m).card ≤ m := by
-      simpa using (support E mode m).card_le_univ
-    have all : support E mode m = Finset.univ :=
-      Finset.eq_univ_of_card _ (by simp; omega)
-    funext i
-    have hi : i ∈ support E mode m := by rw [all]; simp
-    obtain ⟨f, hf⟩ := (mem_support E mode m i).mp hi
-    exact hf.trans (environment_extends E mode m i f hf).symm
+  have hcard : (support E mode (m+1)).card = (support E mode m).card :=
+    Nat.stabilises_of_monotone
+      (monotone_nat_of_le_succ (fun n => Finset.card_le_card (support_subset E mode n)))
+      (fun n => by simpa using (support E mode n).card_le_univ)
+      (fun n h => by
+        have henv := stable_of_support E mode n
+          (Finset.eq_of_subset_of_card_le (support_subset E mode n) h.symm.le)
+        exact congrArg
+          (fun s : Fin m → Option (FiniteExpr k) =>
+            (Finset.univ.filter (fun i => (s i).isSome)).card)
+          (stable_succ E mode n henv))
+      (Nat.le_succ m)
+  exact stable_of_support E mode m
+    (Finset.eq_of_subset_of_card_le (support_subset E mode m) hcard.le)
 
 private theorem resolve_derivation (E : Definitions k m) (mode : Fin k → Bool)
     (s : Fin m → Option (FiniteExpr k))
