@@ -8,6 +8,7 @@
 
 import D5.S3.Arith.FibonacciAtomic.Observer.CompletionPositiveDriftRegion
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.OriginalNativeConstruction
+import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeFunctionalEffectivePrefix
 import D5.S3.Arith.FibonacciAtomic.SourceCoordinates.NativeRotationDepthGap
 
 set_option autoImplicit false
@@ -149,38 +150,15 @@ private theorem agree_node (n : Nat) {l r s t : CompletionTree}
       · exact hl a len
       · exact hr a len
 
-private theorem agree_rho (n : Nat) {X Y : CompletionTree}
-    (h : Agree n X Y) : Agree n (rho X) (rho Y) := by
-  induction n generalizing X Y with
-  | zero => intro a ha; simp at ha
-  | succ n ih =>
-    have root := h [] (by simp)
-    induction X using tree_cases with
-    | leaf_case b =>
-      induction Y using tree_cases with
-      | leaf_case c =>
-          have eq : b = c := by cases b <;> cases c <;> simp_all [completionReadout, leaf]
-          subst c
-          intro a _; rfl
-      | node_case l r => cases b <;> simp [completionReadout, leaf, node] at root
-    | node_case l r =>
-      induction Y using tree_cases with
-      | leaf_case b => cases b <;> simp [completionReadout, leaf, node] at root
-      | node_case s t =>
-        rw [rho_node, rho_node]
-        apply agree_node n
-        · apply ih
-          intro a ha
-          exact h (false :: a) (by simpa using ha)
-        · apply ih
-          intro a ha
-          exact h (true :: a) (by simpa using ha)
-
 private theorem agree_power (n a : Nat) {X Y : CompletionTree}
     (h : Agree n X Y) : Agree n (rho^[a] X) (rho^[a] Y) := by
-  induction a with
-  | zero => exact h
-  | succ a ih => simpa only [Function.iterate_succ_apply'] using agree_rho n ih
+  change ∀ b : Address, b.length < n →
+    completionReadout b (rho^[a] X) = completionReadout b (rho^[a] Y)
+  apply (cutoff_readout n (rho^[a] X) (rho^[a] Y)).mp
+  have hcut : cutoff n X = cutoff n Y :=
+    (cutoff_readout n X Y).mpr h
+  rw [← NativeFunctionalEffectivePrefix.iterate_cutoff n a X,
+    ← NativeFunctionalEffectivePrefix.iterate_cutoff n a Y, hcut]
 
 /-- A computable finite filling of the leafless tree through n-1. -/
 def bush : Nat → Source
