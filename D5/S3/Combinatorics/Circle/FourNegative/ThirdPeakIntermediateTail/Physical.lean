@@ -138,6 +138,7 @@ private theorem physical_source (a b c d : ℕ) (ha : 2≤a)
   have hw:=original_windows mode a b c d ha had hdb hbc hm
   have shape:=row_word mode a b c d ha had hdb hbc hm
   have hA : (AA:ℚ)=A x r s q := by simpa [AA,rowBase] using bc false 0
+  change (base a b c d 0:ℚ)=A x r s q at hA
   have hN : 0≤N := by have hh:=tab.1 0; dsimp only [N]; omega
   have oddN : N=2*((2:ℤ)^a*2^b*2^c*2^(d-1))-1 := by
     have he : (2:ℤ)^d=2*2^(d-1) := by
@@ -190,7 +191,8 @@ private theorem physical_source (a b c d : ℕ) (ha : 2≤a)
       rw [ff] at hh
       cases side
       · simpa [m,P,rowBanks] using hh
-      · by_cases hi : i=earBank mode
+      · simp only [f,ite_true] at hh
+        by_cases hi : i=earBank mode
         · simp only [m,P,rowBanks,f,ite_true,if_pos hi,List.map_cons,List.sum_cons,
             totals.2.2,Int.cast_add,hA]
           rw [hh]
@@ -223,12 +225,9 @@ private theorem physical_source (a b c d : ℕ) (ha : 2≤a)
       simp only [Nat.cast_sub hc,Nat.cast_one,Int.cast_add,Int.cast_sub,Int.cast_mul,
         Int.cast_ofNat,Int.cast_natCast,Nat.cast_pow,Nat.cast_ofNat] at nr1 nr2
       fin_cases i <;> cases side
-      all_goals dsimp only [j,chainLength,nextBase,nextNewBase] at nr1 nr2
-      all_goals dsimp only [F] at nr1 nr2
-      all_goals try simp only [oldbc,newbc] at nr1 nr2
-      all_goals simp (disch := omega) only [half_power,pc.1,pc.2.1,pc.2.2] at nr1
-      all_goals dsimp only [rowHeads,rowBase] at nr1 nr2 ⊢
-      all_goals norm_num only [Fin.reduceEq,ite_true,ite_false] at nr1 nr2 ⊢
+      all_goals norm_num [j,chainLength,nextBase,nextNewBase,F,oldbc,newbc] at nr1 nr2
+      all_goals try simp (disch := omega) only [half_power,pc.1,pc.2.1,pc.2.2] at nr1
+      all_goals norm_num [rowHeads,rowBase] at nr1 nr2 ⊢
       all_goals dsimp only [M,F] at nr1 nr2 ⊢
       all_goals constructor <;> linarith only [nr1,nr2]
     have seams :
@@ -254,6 +253,7 @@ private theorem physical_source (a b c d : ℕ) (ha : 2≤a)
            simp only [es,pow_one]
            constructor <;> first | ring | constructor <;> ring)
         | (constructor <;> first | ring | constructor <;> ring)
+      all_goals trivial
     -- Independent zero total from the native source, not from these windows.
     have zero : (rowWord mode a b c d side |>.map f).sum=0 := by
       cases side
