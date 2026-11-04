@@ -41,8 +41,8 @@ complete-graph extension. The sentence preceding Question 8.20 explicitly leaves
 this equality unknown. The exact target excludes the broader comparison for
 arbitrary Bose marginals and Question 8.7.
 
-The bounded literature check linked from [preregistration #26251](https://github.com/the-omega-institute/trureturing/issues/26251#issuecomment-6617097653)
-contains the original-PDF readings of arXiv:2309.16655v2, arXiv:2001.04440v1 and
+The supplied bounded source evidence for the [preregistered event](https://github.com/the-omega-institute/trureturing/issues/26251#issuecomment-6617097653)
+comprises the original-PDF readings of arXiv:2309.16655v2, arXiv:2001.04440v1 and
 arXiv:1706.09423v2, a nine-record INSPIRE citation screen, and HAL, author and
 accepted-source checks. No full resolution of this exact event was found in
 that checked scope. The inspected Section 6 passage of
