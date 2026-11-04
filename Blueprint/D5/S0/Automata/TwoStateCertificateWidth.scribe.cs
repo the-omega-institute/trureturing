@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S0.Automata;
 
@@ -7,7 +9,16 @@ internal sealed class TwoStateCertificateWidthDocument : IScribeDocumentDefiniti
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Original-word certificates for total two-state output automata have linear worst-case width.",
         H("Two-State Short-Word Certificate Width"),
-        Blocks(Describe.Lean(
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("cyclic-rotation-no-fixed-point"),
+                DeclarationHandle.Create("D5/S0/Automata/TwoStateCertificateWidth.rotate_ne"),
+                H("Cyclic rotation has no fixed point"),
+                StatementSource.FromAuthor(RotateNeFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Cyclic successor moves every index when the cycle has at least two vertices."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("two-state-certificate-width"),
             DeclarationHandle.Create(
                 "D5/S0/Automata/TwoStateCertificateWidth.two_state_certificate_width"),
@@ -32,4 +43,20 @@ internal sealed class TwoStateCertificateWidthDocument : IScribeDocumentDefiniti
             DescribeRole.Theorem)),
         [DocumentEdge.Dependency.Create(GidRef.Create(
             "D5/S0/Automata/TwoStateShortWordSampleBound"))]));
+    private static Formula RotateNeFormula()
+    {
+        Formula m = F.Id("m"), i = F.Id("i");
+        Formula type = Seq(Mathbb, Grp(F.Id("N")));
+        Formula bound = new Formula.Relation(D(2), FormulaRelationOperator.LessThanOrEqual, m);
+        Formula fin = new Formula.Apply(Named("Fin"), [m]);
+        Formula rotate = new Formula.Apply(Named("finRotate"), [m, i]);
+        Formula conclusion = new Formula.Relation(rotate, FormulaRelationOperator.NotEqual, i);
+        return Disp(Seq(Forall, Sp, Typed(m, type), Comma, Sp,
+            new Formula.Logic(Parenthesized(bound), FormulaLogicOperator.Implies,
+                Parenthesized(Seq(Forall, Sp, Typed(i, fin), Comma, Sp, conclusion)))));
+    }
+
+    private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula Typed(Formula value, Formula type) => Parenthesized(Seq(value, Sp, Colon, Sp, type));
 }
