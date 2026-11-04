@@ -18,6 +18,8 @@ In the formula, Function(A,B) denotes functions from A to B, and isSome is the B
 
 Successful compilation is equivalent to a finite syntactic derivation from the defining expressions. A compiled finite expression evaluates to the same finite native tree in every solution at every parameter assignment. Repeated names, atomic coincidences, arbitrary powers and zero state or parameter counts are allowed. Stabilization follows because every nonstationary round adds a previously unresolved state.
 
+For the four-state edgeSystem in OriginalCanonicalClassification, encodeDefinitions shifts the two finite parameter names and reserves a fixed divergent slot for literal Omega. Resolving the pair of original states 0 and 1 succeeds after the four state rounds, with no bound on either natural parameter. The original_finite_resolution soundness clause is applied inside OriginalNativeConstruction.finite_compile_sound to the same encoded input and decoded successful expression. Its conclusion fixes that finite ordered pair in every original solution even though the same system also has a recurrent coordinate and an undefined coordinate.
+
 The conclusion does not construct a solution or identify semantic finiteness of a canonical solution. Literal Omega in the larger native source language is handled by a separate exact encoding with a fixed divergent internal slot, followed by decoding to the original finite parameter names. No external literature novelty is asserted.
 
 ## References

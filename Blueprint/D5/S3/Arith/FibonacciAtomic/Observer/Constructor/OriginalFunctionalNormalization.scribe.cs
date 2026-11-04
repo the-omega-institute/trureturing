@@ -14,7 +14,7 @@ internal sealed class OriginalFunctionalNormalizationDocument : IScribeDocumentD
                 DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/Constructor/OriginalFunctionalNormalization.value_subst"),
                 H("Simultaneous substitution preserves evaluation"), SubstitutionStatement(),
                 AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("A reconstruction is one expression for each original state name. Simultaneous substitution evaluates that expression with the same valuation at every occurrence. Parameter names and their coincidences are retained; ordered pairs may evaluate to atomic values. FunctionalCase also retains the arithmetic guard and a finite family of expressions for every designated original residual."))
+                    Paragraph(Text("A reconstruction is one expression for each original state name. Simultaneous substitution evaluates that expression with the same valuation at every occurrence. Parameter names and their coincidences are retained; ordered pairs may evaluate to atomic values. An arithmetic guard restricts the unchanged parameter vector, and any finite family of designated original expressions is evaluated with the same reconstruction."))
                 ), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("root-link-normalization"),
                 DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/Constructor/OriginalFunctionalNormalization.root_link_normalization"),

@@ -3,7 +3,7 @@
    mirror-B: none(waiver:unbounded-symbolic-proof)
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
-   utility: none
+   utility: kind=checker; basis=consumer=D5/S3/Arith/FibonacciAtomic/Observer/Constructor/OriginalCanonicalClassification.original_canonical_synthesis; instance=D5/S3/Arith/FibonacciAtomic/Observer/Constructor/OriginalCanonicalClassification.edgeSystem
    digest: Actual simultaneous native solutions of original functional cases with arbitrary free choices. -/
 
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.OriginalFunctionalNormalization
