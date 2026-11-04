@@ -118,7 +118,7 @@ private lemma chord_sq (N : ℕ) (j k : Fin N) :
   have hab : (a - b) / 2 = Real.pi * ((j.val : ℝ) - k.val) / N := by dsimp [a, b]; ring
   change (Real.cos a - Real.cos b)^2 + (Real.sin a - Real.sin b)^2 = _
   simpa only [sub_zero, Real.cos_zero, mul_one, ← pow_two, hab] using
-    D5.S3.ConceptDynamics.ObservationTopology.HarmonicSensors.PairedDelayGeometry.planar_chord_dot a b 0
+    ConceptDynamics.ObservationTopology.HarmonicSensors.PairedDelayGeometry.planar_chord_dot a b 0
 
 private lemma chord_sq_ne_zero (N : ℕ) (j k : Fin N) (hjk : j ≠ k) :
     (polygon N (Sum.inl j) - polygon N (Sum.inl k))^2 +
@@ -269,7 +269,8 @@ private lemma reflection_pair (m : ℕ) (hm : 3 ≤ m) (j k : Fin (2 * m)) (hkj 
     rw [hc, Real.sin_add_int_mul_two_pi, Real.sin_add]
   have hchord (u v : ℝ) : (Real.cos u-Real.cos v)^2 + (Real.sin u-Real.sin v)^2 =
       2-2*Real.cos (u-v) := by
-    have hp := D5.S3.ConceptDynamics.ObservationTopology.HarmonicSensors.PairedDelayGeometry.planar_chord_dot u v 0
+    have hp :=
+      ConceptDynamics.ObservationTopology.HarmonicSensors.PairedDelayGeometry.planar_chord_dot u v 0
     simp only [sub_zero, Real.cos_zero, mul_one, ← pow_two] at hp
     rw [hp]
     have hcos := Real.cos_two_mul_eq_one_sub ((u-v)/2)
@@ -425,7 +426,8 @@ private lemma rotation_conjugation_entries (N : ℕ)
     Matrix.fromBlocks_multiply, Matrix.fromBlocks_multiply]
   simp only [Matrix.diagonal_transpose]
   refine ⟨?_, ?_, ?_, ?_⟩ <;>
-    simp only [Matrix.add_mul, Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂, Matrix.fromBlocks_apply₂₁, Matrix.fromBlocks_apply₂₂, Matrix.add_apply,
+    simp only [Matrix.add_mul, Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂,
+      Matrix.fromBlocks_apply₂₁, Matrix.fromBlocks_apply₂₂, Matrix.add_apply,
       Matrix.diagonal_mul, Matrix.mul_diagonal] <;> ring
 
 

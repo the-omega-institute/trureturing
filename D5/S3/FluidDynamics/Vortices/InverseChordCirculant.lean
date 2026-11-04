@@ -297,7 +297,8 @@ private lemma spectrum_weights (m : ℕ) [NeZero (2 * m)] :
       push_cast; rw [ha, Real.sin_add_pi]; simp
 
 theorem alternating_weight_sum (m : ℕ) (hm : 3 ≤ m) (j : Fin (2 * m)) :
-    (∑ k : Fin (2*m), (-1 : ℝ) ^ (k.val + 2)*weights m j k) = (-1 : ℝ) ^ (j.val + 2)*diagonalWeight m := by
+    (∑ k : Fin (2*m), (-1 : ℝ) ^ (k.val + 2)*weights m j k) =
+      (-1 : ℝ) ^ (j.val + 2)*diagonalWeight m := by
   classical
   have : NeZero (2*m) := ⟨by omega⟩
   let e := (ZMod.finEquiv (2 * m)).toEquiv
