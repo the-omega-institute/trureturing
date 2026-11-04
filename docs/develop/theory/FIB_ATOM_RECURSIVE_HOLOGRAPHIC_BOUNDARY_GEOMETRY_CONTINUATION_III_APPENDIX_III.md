@@ -2542,7 +2542,7 @@ The prescribed stochastic comparison uses this same $f$ at all three epochs, wit
 $$
 \mathcal C(\mathbf1_{D_y},\mathbf1_{D_z},\mathbf1_{D_w})
 =\mathcal C(f_y,f_z,f_w)
-\quad\left(y,z,w\in\{0,1,3,B\},\ 
+\quad\left(y,z,w\in\{0,1,3,B\},
 \#\{j\in\{1,2,3\}:(y,z,w)_j=B\}\ge2\right).
 $$
 
