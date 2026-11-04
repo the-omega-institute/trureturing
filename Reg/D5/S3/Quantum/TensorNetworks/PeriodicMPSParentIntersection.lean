@@ -60,5 +60,50 @@ theorem actual_observational_dependence : ObservationalDependence signature actu
 #print axioms actual_law
 #print axioms actual_observational_dependence
 
+abbrev recoverySignature : Signature where
+  Params := ℕ
+  State r := Word (r + 4) → ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output r _ := (Word (r + 4) → ℂ) → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def recoveryActual : Realization recoverySignature :=
+  realize recoverySignature (fun _ _ f g => f = g) (fun e => nomatch e)
+
+def recoveryOriginalStatement : Prop :=
+  ∀ r : ℕ, (∃ A : Fin 2 → Bond, (twoFlattening A r).rank = 4) ∧
+    ∀ A B : Fin 2 → Bond, (twoFlattening A r).rank = 4 →
+      (rawThree B r = rawThree A r ↔
+        ∃ c : ℂ, ‖c‖ = 1 ∧ gamma B (r + 4) 1 = c • gamma A (r + 4) 1)
+
+def recoveryArena : Arena where
+  signature := recoverySignature
+  Law R := ∀ r : ℕ, (∃ A : Fin 2 → Bond, (twoFlattening A r).rank = 4) ∧
+    ∀ A B : Fin 2 → Bond, (twoFlattening A r).rank = 4 →
+      (rawThree B r = rawThree A r ↔
+        ∃ c : ℂ, ‖c‖ = 1 ∧ R.readout r () (gamma B (r + 4) 1) (c • gamma A (r + 4) 1))
+
+theorem recovery_source_equivalence :
+    recoveryOriginalStatement ↔ recoveryArena.Law recoveryActual := Iff.rfl
+
+theorem recovery_actual_law : recoveryArena.Law recoveryActual :=
+  rank_locus_inhabited_and_phase_recovery
+
+theorem recovery_observational_dependence :
+    ObservationalDependence recoverySignature recoveryActual := by
+  intro r
+  refine ⟨(), (0 : Word (r + 4) → ℂ), 1, ?_⟩
+  intro he
+  have hbad : (1 : Word (r + 4) → ℂ) = 0 := Eq.mp (congrFun he 0) rfl
+  have hv := congrFun hbad (fun _ => 0)
+  norm_num at hv
+
+#print axioms recovery_source_equivalence
+#print axioms recovery_actual_law
+#print axioms recovery_observational_dependence
+
 end
 end Reg.D5.S3.Quantum.TensorNetworks.PeriodicMPSParentIntersection
