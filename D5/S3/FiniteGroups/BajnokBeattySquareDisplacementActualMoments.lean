@@ -681,9 +681,9 @@ theorem actual_square_displacement_actual_moments :
     ext k
     constructor
     · intro hk
-      exact Finset.mem_filter.mp hk
+      exact Finset.mem_filter.mpr (Finset.mem_filter.mp hk)
     · intro hk
-      exact Finset.mem_filter.mpr hk
+      exact Finset.mem_filter.mpr (Finset.mem_filter.mp hk)
   have hbr : ∀ (p : Params) (k : ℕ), bracketSC p.val (qAt k) (T p k) := fun p k => (hT p k).1
   have hmarg := marginal_limits T hbr hfreq
   refine ⟨T, hT, hmarg, ?_⟩
@@ -713,6 +713,10 @@ theorem actual_square_displacement_actual_moments :
     hpol.congr' (Eventually.of_forall fun N => (polarization_average T p r N).symm)
   refine ⟨hmix, ?_⟩
   have hcov := hmix.sub ((hmarg p).1.mul (hmarg r).1)
-  convert hcov using 1 <;> ring
+  have hvalue : (1 / 4 + (Int.gcd p.val r.val : ℝ)^2 /
+      (12 * (p.val : ℝ) * (r.val : ℝ))) - (1 / 2) * (1 / 2) =
+      (Int.gcd p.val r.val : ℝ)^2 / (12 * (p.val : ℝ) * (r.val : ℝ)) := by ring
+  rw [hvalue] at hcov
+  exact hcov
 
 end D5.S3.FiniteGroups.BajnokBeattySquareDisplacementActualMoments
