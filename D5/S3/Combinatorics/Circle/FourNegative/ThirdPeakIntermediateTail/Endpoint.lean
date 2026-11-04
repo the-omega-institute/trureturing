@@ -71,7 +71,6 @@ theorem actualSource_third_peak_intermediate_tail_joint_lift (a b c d : ℕ)
   have hmod : modulus k=sourceMod a b c d := by
     dsimp [modulus,k,sourceMod]
     simp only [pow_add]
-    ring
   have hmod' : modulus (k+1)=2*sourceMod a b c d+1 := by
     dsimp only [modulus]
     rw [pow_succ]
@@ -85,6 +84,7 @@ theorem actualSource_third_peak_intermediate_tail_joint_lift (a b c d : ℕ)
   have hnewstrip : InStrip (newValue a b c d) (sourceMod a b c d) 0 (pre++k::post) := by
     have hn:=data.2.2.2.2
     rw [hword] at hn
+    change InStrip (newValue a b c d) (sourceMod a b c d) 0 (insertAt k (pre++post) j) at hn
     simpa only [insertAt,←hlen,List.take_append_of_le_length (le_refl pre.length),
       List.drop_append_of_le_length (le_refl pre.length),List.take_length,List.drop_length,
       Nat.sub_self,List.drop_zero,List.nil_append] using hn
@@ -99,8 +99,9 @@ theorem actualSource_third_peak_intermediate_tail_joint_lift (a b c d : ℕ)
     rw [hmod']
     simp only [Nat.cast_mul,Nat.cast_ofNat,hseed]
     change ((List.range (k+1)).map (newValue a b c d)).sum=0
-    rw [List.range_succ,List.map_append,List.sum_append,List.map_singleton,
-      List.sum_singleton,totals.2.1,totals.2.2]
+    rw [List.range_succ,List.map_append,List.sum_append,List.map_singleton,List.sum_singleton]
+    change ((List.range (size a b c d)).map (newValue a b c d)).sum+newValue a b c d (size a b c d)=0
+    rw [totals.2.1,totals.2.2]
     omega
   let sigma:=(pre++post).map (label k hk)
   have old : OriginalOrder k AA sigma := by
