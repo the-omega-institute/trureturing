@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/Products/BoyerKuenzelLylePellicoConjectureTwoRefutation
    mirror-E: none(waiver:open-problem-resolution-has-no-escape-mirror)
-   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Clique, mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex, mathlib/module/Mathlib.Combinatorics.SimpleGraph.Prod]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Prod]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/Products/BoyerKuenzelLylePellicoConjectureTwoRefutation.claim; result=D5/S3/Combinatorics/Graph/Products/BoyerKuenzelLylePellicoConjectureTwoRefutation.result; claim=D5/S3/Combinatorics/Graph/Products/BoyerKuenzelLylePellicoConjectureTwoRefutation.claim
    digest: Conjecture 2 fails on the 3 by 3 rook graph: maximal bipartite orders five and six. -/
 
