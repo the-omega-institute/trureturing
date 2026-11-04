@@ -1,0 +1,24 @@
+**Theorem 3.8 (Gaussian replica integral).** Let $N_1,\dots,N_{\mathtt q}\ge1$, $N=\sum_kN_k$ and $x_k=N_k/N$. Split $\{1,\dots,N\}$ into consecutive blocks $B_1,\dots,B_{\mathtt q}$ with $|B_k|=N_k$ and let $P_k$ be the diagonal projection of $\mathbb R^N$ onto the coordinates in $B_k$. Let $u=N^{-1/2}(1,\dots,1)^\top$, $\lambda>0$, $\varepsilon>0$ and
+$$
+W=\lambda\big(I-(1-\varepsilon)uu^\top\big),\qquad \psi(y)=\exp\big(-\tfrac12y^\top Wy\big)\quad(y\in\mathbb R^N).
+$$
+For a replica datum $(R,g_1,\dots,g_{\mathtt q},x)$ with this weight vector and $X=(y_r)_{r\in R}\in(\mathbb R^N)^R$ put $y'_r=\sum_kP_ky_{g_k(r)}$ and
+$$
+\mathcal Z(R,g)=\frac{\int_{(\mathbb R^N)^R}\prod_{r\in R}\psi(y_r)\,\psi(y'_r)\,dX}{\Big(\int_{\mathbb R^N}\psi(y)^2\,dy\Big)^{|R|}} .
+$$
+Then $\mathcal Z(R,g)=\big(\varepsilon^{|R|}/\Delta(\varepsilon)\big)^{1/2}$, with $\Delta$ the replica determinant of the datum. This holds for every $N\ge2$, including $N_1=N_2=1$. Stance: repo-derived; it uses the literature-attested determinant identities of Sylvester and Schur (§9).
+
+**Proof.** Write $m=|R|$ and $M_k=M_{g_k}$. Let $T=\sum_kM_k^\top\otimes P_k$ act on $\mathbb R^R\otimes\mathbb R^N$; since $(M_k^\top)_{r,s}=[s=g_k(r)]$, $(TX)_r=y'_r$. From $M_kM_l^\top\otimes P_kP_l=\delta_{kl}\,I\otimes P_k$ and $\sum_kP_k=I$ we get $T^\top T=I$. The exponent of the numerator is $-\tfrac12X^\top\mathcal AX$ with $\mathcal A=I\otimes W+T^\top(I\otimes W)T$, which is positive definite because $W$ is ($W$ has eigenvalues $\lambda$ and $\lambda\varepsilon$). The Gaussian integral $\int_{\mathbb R^d}e^{-\frac12z^\top Bz}dz=(2\pi)^{d/2}(\det B)^{-1/2}$ for positive definite $B$ (write $B=O^\top\mathrm{diag}(\beta_i)O$ with $O$ orthogonal and $\beta_i>0$; the substitution $z=O^\top w$ reduces it to $\prod_i\int_{\mathbb R}e^{-\beta_iw_i^2/2}dw_i=\prod_i(2\pi/\beta_i)^{1/2}$), applied to $\mathcal A$ and to $2W$, gives
+$$
+\mathcal Z(R,g)=\Big(\frac{\det(2W)^m}{\det\mathcal A}\Big)^{1/2}.
+$$
+Let $u_k=N_k^{-1/2}\mathbf 1_{B_k}$, $V_0=\mathrm{span}\{u_1,\dots,u_{\mathtt q}\}$ and $V_1=V_0^\perp$, the vectors with zero sum on every block. Then $P_ku_l=\delta_{kl}u_l$, $P_kV_1\subseteq V_1$, and $u=\sum_k\sqrt{x_k}\,u_k\in V_0$, so $W$, $T$ and $\mathcal A$ preserve $\mathbb R^R\otimes V_0$ and $\mathbb R^R\otimes V_1$, and both determinants factor over the two summands. On $V_1$, $W=\lambda I$ and $\mathcal A=\lambda(I+T^\top T)=2\lambda I$, so the $V_1$ factors of $\det(2W)^m$ and $\det\mathcal A$ coincide (both are $1$ when $V_1=0$). In the orthonormal basis $u_1,\dots,u_{\mathtt q}$ of $V_0$, $P_k$ becomes the matrix unit $E_{kk}$ and $W$ becomes $\lambda(I_{\mathtt q}-(1-\varepsilon)vv^\top)$ with the unit vector $v=(\sqrt{x_1},\dots,\sqrt{x_{\mathtt q}})^\top$; hence the $V_0$ factor of $\det(2W)^m$ is $(2\lambda)^{\mathtt qm}\varepsilon^m$. Let $Y=I_R\otimes v$, a $\mathtt qm\times m$ matrix with $Y^\top Y=I_m$, let $T_0=\sum_kM_k^\top\otimes E_{kk}$ and $U=[\,Y\ \ T_0^\top Y\,]$. Then the restriction of $\mathcal A$ is
+$$
+\mathcal A_0=\lambda\big(2I-(1-\varepsilon)(YY^\top+T_0^\top YY^\top T_0)\big)=\lambda\big(2I-(1-\varepsilon)UU^\top\big).
+$$
+Since $Y^\top T_0^\top Y=\sum_kM_k\,(v^\top E_{kk}v)=\sum_kx_kM_k=Q$, we have $U^\top U=\begin{pmatrix}I&Q\\Q^\top&I\end{pmatrix}$. With $h=(1-\varepsilon)/2$, Sylvester's identity $\det(I-hUU^\top)=\det(I-hU^\top U)$ and the Schur complement for the invertible scalar block $(1-h)I$ give
+$$
+\det\mathcal A_0=(2\lambda)^{\mathtt qm}\det\begin{pmatrix}(1-h)I&-hQ\\-hQ^\top&(1-h)I\end{pmatrix}=(2\lambda)^{\mathtt qm}\det\big((1-h)^2I-h^2Q^\top Q\big)=(2\lambda)^{\mathtt qm}\Delta(\varepsilon),
+$$
+because $1-h=(1+\varepsilon)/2$. Dividing, $\det(2W)^m/\det\mathcal A=\varepsilon^m/\Delta(\varepsilon)$. ∎
+

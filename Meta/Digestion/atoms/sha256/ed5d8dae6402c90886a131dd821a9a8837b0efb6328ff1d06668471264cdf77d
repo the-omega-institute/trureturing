@@ -1,0 +1,13 @@
+**命题 18.1（三因子重分组不能替代联合导子律）。** 取两份单位关系球 $\mathbb R1\oplus\mathbb R^3$，$B(u,v)=u\times v$，采用任意共同 $\kappa,\beta$ 的式 (14.3)。它们的关系通道满足定理 15.2 的重分组，但联合导子残差一般不为零。具体取正交向量 $a=b=e_1,e=d=e_2$，则
+
+$$
+\begin{aligned}
+R(e_1\otimes e_1,1\otimes e_2,e_2\otimes1)
+ &=\beta e_3\otimes e_3,\\
+R(e_1\otimes e_1,e_2\otimes e_2,e_2\otimes1)
+ &=(1+\kappa)e_1\otimes e_3.
+\end{aligned}\tag{18.1}
+$$
+
+证明。这里 $v=e_3$，$B(e_1,e_2)=e_3$。式 (16.7) 中 $K_{12}1=D_{e_3}1=0,L_{e_3}1=e_3$，给第一式。第二式用 $K_{12}e_2=e_1,D_{e_3}e_2=-e_1,L_{e_3}e_2=0$。这两个实际残差分别检出额外变化通道和错误比较系数；任意共同参数的形式重分组依然成立。∎
+

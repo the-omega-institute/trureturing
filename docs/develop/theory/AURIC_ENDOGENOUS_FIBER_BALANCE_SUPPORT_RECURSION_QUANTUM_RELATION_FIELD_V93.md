@@ -2948,3 +2948,230 @@ Physical Review D **114**, 065016, 14 September 2026.
 未执行数学程序、CAS、数值求值、枚举、模拟或测试；文档编译与页面渲染仅用于排版检查。
 仓库保持只读，本轮未修改、提交或推送任何项目文件。
 当前公开页面的观察、固定快照的理论核读与本对话前稿的继承，在来源表中分别注明。
+
+## 24. 两参数含噪纤维的精确泄漏与纯态目标距离
+
+<a id="sec-c93-exact-noisy-qutrit"></a>
+
+### 定义 24.1（两项零读数的独立容差）
+
+沿用第 5 节的 $H=\mathbb C^3$、$P_i=\lvert i\rangle\langle i\rvert$ 及
+
+$$
+A=\lvert1\rangle\langle2\rvert+\lvert2\rangle\langle1\rvert+P_3.
+$$
+
+对每个 $(a,b)\in[0,1]^2$，定义
+
+$$
+\mathcal F(a,b)=\left\{\rho\in M_3(\mathbb C):
+\rho=\rho^*,\quad \rho\succeq0,\quad \operatorname{Tr}\rho=1,\quad
+\rho_{11}\le a,\quad |\operatorname{Tr}(\rho A)|\le b\right\}.
+\tag{24.1}
+$$
+
+这里包括全部复 Hermitian 态，不限制相位、秩或其余矩阵元。
+相对于零资料的唯一态 $P_2$，定义支撑外权重及固定目标的最大偏差
+
+$$
+\begin{aligned}
+q(\rho)&=\operatorname{Tr}\bigl(\rho(I-P_2)\bigr)=1-\rho_{22},\\
+q_*(a,b)&=\max_{\rho\in\mathcal F(a,b)}q(\rho),\\
+R_*(a,b)&=\max_{\rho\in\mathcal F(a,b)}\|\rho-P_2\|_1,
+\qquad \|X\|_1=\operatorname{Tr}\sqrt{X^*X}.
+\end{aligned}
+\tag{24.2}
+$$
+
+$P_2\in\mathcal F(a,b)$，且该纤维是密度矩阵紧集的闭子集，故两个最大值均存在。
+$R_*$ 使用完整迹范数；通常的半迹距离最大值为 $R_*/2$。
+这里的参照固定为 $P_2$，并非纤维直径或允许改变中心的最小包围半径。
+
+### 定理 24.2（全复纤维的精确极值与同时达到）
+
+对所有 $(a,b)\in[0,1]^2$，令 $t_+=\max\{t,0\}$，则
+
+$$
+\boxed{\begin{aligned}
+q_*(a,b)&=1-\bigl(\sqrt{1-b}-\sqrt a\bigr)_+^2,\\
+R_*(a,b)&=2\sqrt{q_*(a,b)}.
+\end{aligned}}
+\tag{24.3}
+$$
+
+更具体地，令
+
+$$
+m=\min\{a,1-b\},\qquad
+s=\sqrt{1-b}-\sqrt m,\qquad
+w=b+2\sqrt m\,s.
+\tag{24.4}
+$$
+
+同一个可行纯态
+
+$$
+\begin{aligned}
+\lvert\psi_{a,b}\rangle
+&=\sqrt m\,\lvert1\rangle-s\lvert2\rangle+\sqrt w\,\lvert3\rangle,\\
+\rho_{a,b}&=\lvert\psi_{a,b}\rangle\langle\psi_{a,b}\rvert
+\end{aligned}
+\tag{24.5}
+$$
+
+同时满足 $q(\rho_{a,b})=q_*(a,b)$ 与
+$\|\rho_{a,b}-P_2\|_1=R_*(a,b)$。
+这些公式在全部边界上成立，特别是
+
+$$
+\begin{aligned}
+q_*(0,b)&=b,&R_*(0,b)&=2\sqrt b,\\
+q_*(a,0)&=2\sqrt a-a,&R_*(a,0)&=2\sqrt{2\sqrt a-a},\\
+a+b\ge1&\ \Longrightarrow\ q_*(a,b)=1,
+& R_*(a,b)&=2.
+\end{aligned}
+\tag{24.6}
+$$
+
+在 $(a,b)=(0,0)$，纤维恰为 $\{P_2\}$，两个最大值都为零。
+
+证明。先取任意 $\rho\in\mathcal F(a,b)$，记
+$x=\rho_{11}$、$y=\rho_{22}$、$z=\rho_{33}$ 及 $c=\rho_{12}$。
+正性给 $x,y,z\ge0$、$x+y+z=1$，并由 $\{1,2\}$ 主块得到
+$|c|^2\le xy$。由于 $\rho$ 为 Hermitian，
+
+$$
+\operatorname{Tr}(\rho A)=z+2\operatorname{Re}c.
+$$
+
+从 $z+2\operatorname{Re}c\le b$ 及
+$-\operatorname{Re}c\le|c|\le\sqrt{xy}$ 得
+
+$$
+\begin{aligned}
+z&\le b+2\sqrt{xy},\\
+1-b&\le x+y+2\sqrt{xy}=(\sqrt x+\sqrt y)^2,\\
+\sqrt y&\ge\bigl(\sqrt{1-b}-\sqrt a\bigr)_+.
+\end{aligned}
+\tag{24.7}
+$$
+
+最后一步使用 $x\le a$ 及 $\sqrt y\ge0$。
+这给出式 (24.3) 中 $q_*$ 的上界；推导没有令 $c$ 为实数，也没有消去其余复矩阵元。
+
+对式 (24.4)，有 $m,s,w\ge0$，且
+
+$$
+\begin{aligned}
+m+s^2+w&=(\sqrt m+s)^2+b=1,\\
+s&=\bigl(\sqrt{1-b}-\sqrt a\bigr)_+.
+\end{aligned}
+\tag{24.8}
+$$
+
+故式 (24.5) 的向量归一，其投影为半正定迹一矩阵，并满足
+
+$$
+(\rho_{a,b})_{11}=m\le a,\qquad
+\operatorname{Tr}(\rho_{a,b}A)=w-2\sqrt m\,s=b,\qquad
+(\rho_{a,b})_{22}=s^2.
+\tag{24.9}
+$$
+
+于是 $\rho_{a,b}\in\mathcal F(a,b)$ 并达到 $q_*$ 的上界。
+尤其当 $a+b\ge1$ 时，$s=0$、$m=1-b$、$w=b$，
+达到态仍由同一公式给出；在分界 $a+b=1$ 无需取极限或另选不可兼容的极值态。
+
+对距离上界，使用 Fuchs--van de Graaf 的既有不等式
+[16](#ref-fuchs-vandegraaf)（Theorem 1，式 (46)）。
+以根保真度 $B(\rho,\sigma)=\operatorname{Tr}\sqrt{\sqrt\rho\,\sigma\sqrt\rho}$ 记，
+该不等式的右半边为
+$\frac12\|\rho-\sigma\|_1\le\sqrt{1-B(\rho,\sigma)^2}$。
+对纯态目标 $\sigma=P_2$，有 $B(\rho,P_2)^2=\rho_{22}$，从而对每个可行态
+
+$$
+\|\rho-P_2\|_1\le2\sqrt{1-\rho_{22}}
+\le2\sqrt{q_*(a,b)}.
+\tag{24.10}
+$$
+
+验证同一态的等号。记 $q=1-s^2=m+w$。
+若 $q>0$，取与 $\lvert2\rangle$ 正交的单位向量
+
+$$
+\lvert v\rangle=\frac{\sqrt m\,\lvert1\rangle+\sqrt w\,\lvert3\rangle}{\sqrt q}.
+$$
+
+$\rho_{a,b}-P_2$ 在有序正交基 $(\lvert2\rangle,\lvert v\rangle)$ 上的矩阵为
+
+$$
+\begin{pmatrix}
+-q&-s\sqrt q\\
+-s\sqrt q&q
+\end{pmatrix},
+\tag{24.11}
+$$
+
+并在其正交补上为零。
+该矩阵迹为零、行列式为 $-q(q+s^2)=-q$，故特征值为 $\sqrt q,-\sqrt q$。
+于是 $\|\rho_{a,b}-P_2\|_1=2\sqrt q$，达到式 (24.10) 的上界。
+若 $q=0$，则 $s=1$、$m=w=0$，直接有 $\rho_{a,b}=P_2$，等号仍成立。
+
+最后，将 $a=0$、$b=0$ 或 $a+b\ge1$ 代入式 (24.3) 得式 (24.6)。
+当 $a=b=0$ 时，式 (24.7) 迫使 $y=1$，其余对角元为零，
+正性又迫使其余行列为零，故整个纤维仅有 $P_2$。∎
+
+### 推论 24.3（等容差的完整曲线与四次根尺度）
+
+令 $a=b=\varepsilon\in[0,1]$。则
+
+$$
+q_*(\varepsilon,\varepsilon)=
+\begin{cases}
+2\sqrt{\varepsilon(1-\varepsilon)},&0\le\varepsilon\le\frac12,\\
+1,&\frac12\le\varepsilon\le1,
+\end{cases}
+\qquad
+R_*(\varepsilon,\varepsilon)=
+\begin{cases}
+2\sqrt2\,[\varepsilon(1-\varepsilon)]^{1/4},&0\le\varepsilon\le\frac12,\\
+2,&\frac12\le\varepsilon\le1.
+\end{cases}
+\tag{24.12}
+$$
+
+特别地，
+
+$$
+\lim_{\varepsilon\downarrow0}
+\frac{R_*(\varepsilon,\varepsilon)}{\varepsilon^{1/4}}=2\sqrt2.
+\tag{24.13}
+$$
+
+因此，对每个 $\alpha>1/4$、每个有限 $C\ge0$ 及每个 $\delta>0$，
+都存在 $0<\varepsilon<\min\{\delta,1/2\}$ 使
+$R_*(\varepsilon,\varepsilon)>C\varepsilon^\alpha$。
+
+证明。当 $\varepsilon\le1/2$ 时，
+$(\sqrt{1-\varepsilon}-\sqrt\varepsilon)_+^2
+=1-2\sqrt{\varepsilon(1-\varepsilon)}$；
+当 $\varepsilon\ge1/2$ 时，正部为零。
+定理 24.2 随即给出式 (24.12)，同一 $\rho_{\varepsilon,\varepsilon}$ 达到两个极值，
+包括 $\varepsilon=0$ 与 $\varepsilon=1/2$。
+由式 (24.12) 除以 $\varepsilon^{1/4}$ 得式 (24.13)；
+对 $\alpha>1/4$ 再除以 $\varepsilon^{\alpha-1/4}$，所得比值趋于无穷，给出最后的量词结论。
+面约简的一般 Hölder 指数及其尖锐性是既有结果
+[12](#ref-facial2017)（Theorem 4.5.1、Example 4.5.1）；
+式 (24.12) 给出式 (24.1) 的复迹一纤维在独立容差相等时的精确值与达到态。∎
+
+<a id="ref-fuchs-vandegraaf"></a>
+
+### [16]
+
+Christopher A. Fuchs and Jeroen van de Graaf,
+*Cryptographic Distinguishability Measures for Quantum Mechanical States*，
+[原文](https://arxiv.org/pdf/quant-ph/9712042)。
+Theorem 1，式 (46) 给出完整迹范数的一半与根保真度的上下界；
+式 (24.10) 使用其纯态目标特例。
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,68 @@
+**Definition 32.2 (marked requests and their pending phases).** Use the
+three-bit grammar of Definition 20.2 in this distinct installation,
+replacing FetchGrowth and Next by FetchSelected and NextSelected.
+The other five request kinds and address framing $A(p)=1^{|p|}0p$ are
+unchanged; selected requests take $U(k)=1^k0$. The unused tag returns
+BadFrame. Use the same eight three-bit reply tags and payloads, now with
+Recall returning the literal selected identity and Next returning the
+old selected identity and new actual growth identity. Zero and missing
+indices return OutOfRange. There is no Handoff request in this grammar.
+
+MarkedReady has the actual root cursor, empty request/pending/output
+fields, current rights, committed selection state, and no unfinished
+source, mark, descriptor or tape write. Receive copies each acquired input
+bit from its occupied latch to backing before releasing that latch and
+enabling the next input. Parser marks retain the tag, framing subphase
+and remaining finite length or index. Navigate and Guard use the actual
+root links and logical arity, with the same absent/wrong-type refusals
+and authority/phase guards as §20. Queries and refused growth do not
+feed $C$ and change none of (AA.105).
+
+For a successful addressed growth, or one chosen by NextSelected, retain
+its actual kind, target reference/address, old selection state and
+continuation in pending backing. Reserve the source-template material,
+a possible new branch descriptor and at most one selected cell per proper
+logical ancestor before source editing; any further finite computation
+workspace is supplied under Assumption 32.1. No next request is admitted
+during the following phases.
+
+1. Edit performs exactly the $P$ or $S$ source template of Definition
+   20.2. A promotion preserves its logical root marks and attaches its
+   unary material marker. A split preserves the old root's marks, makes
+   its old marker the new left logical $\beta$ root, attaches that child's
+   fresh marker and the new right logical $\alpha$ root, and initializes
+   the two new logical positions' marks to zero. It constructs and binds
+   an empty selected descriptor at the newly split root. Earlier local
+   events there remain root events, not entries of this new strict-
+   descendant tape. Parent references are the actual source parents.
+2. Evaluate applies the installed $C$ exactly once to the old retained
+   state and this acquired successful event. It retains the resulting
+   $(q',b)$ and an evaluation-complete flag. Its internal work consists
+   of finite charged steps on backed operands. No later phase reevaluates
+   the event using $q'$ as if it were a new receipt.
+3. Mark writes $b$ to the field for this actual event at its logical
+   root, preserving the other local field. Maintain, when $b=1$, walks
+   the target's actual parent chain and appends its actual side at each
+   proper logical ancestor's selected tape. For $b=0$ it appends nothing.
+   Each append initializes its cell before linking it and advancing its
+   tail; pending fields retain unfinished references, append subphases
+   and the remaining ancestor cursor. Newly created branch descriptors
+   remain empty until a later strict-descendant selected event occurs.
+4. Commit installs $q'$ only after source, marks, descriptors and selected
+   appends are complete. BuildAnswer constructs and seals the actual
+   finite reply. Print emits precisely its backing bits, then End. The
+   supplied local acknowledgement enables root Return and finite scratch
+   clearing/reuse. Only after these finish does MarkedReady resume.
+
+FetchSelected uses Theorem 31.2's indexed decoder on the actual mark fields,
+selected descriptors and source. Its index marks, scan cursor, within-side
+counter, accumulated address and pending answer all have backing.
+NextSelected calls that same internal handler, retains its acquired
+result and continuation phase, and follows Definition 20.4's current
+left descent at the returned historical address. It performs that
+leaf's genuinely enabled $P$ or $S$ using the four phases above. Its
+reply contains both literal identities, even if the new event is
+unselected. An out-of-range call performs no growth. These phases are
+finite control with loops over constructed finite operands, not an
+oracle for successful completion or a constant-time whole-word update.
+

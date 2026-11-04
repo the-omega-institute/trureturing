@@ -1,0 +1,6 @@
+### [6] Gurvits–Barnum 正锥工具
+
+<a id="ref-positive-gb"></a>
+
+Leonid Gurvits and Howard Barnum, *Largest separable balls around the maximally mixed bipartite quantum state*, Phys. Rev. A **66**, 062311, DOI [10.1103/PhysRevA.66.062311](https://doi.org/10.1103/PhysRevA.66.062311)，[quant-ph/0204159v2](https://arxiv.org/html/quant-ph/0204159v2)，定理 1：自伴 $\Delta$ 满足 $\|\Delta\|_{\mathrm{HS}}\le1$ 时，$I+\Delta$ 可分。特别取 $\Delta=-|\eta\rangle\langle\eta|$，得到单位向量秩一投影的补可分。这里只复用其数学正锥结论。
+

@@ -1,0 +1,35 @@
+**定理 5.2（精确同步与有限缺陷沿路径的尖锐传播）。** 定义 5.1 的网络中，每个局部向量空间均为三维，存在共同 $a>0$ 使
+
+$$
+|c_v|=a\quad(v\in W),\qquad
+\lambda_{vw}=a^{-2}\quad(vw\in E).
+$$
+
+其复乘法可用同一个 $\sqrt\lambda=1/a$ 合并，并沿所有有限张量积一致延拓。
+
+对另已处在三维的同图参数族，不要求精确 C96，令
+
+$$
+\varepsilon_{vw}=\inf_\lambda\mathcal L_{vw}(\lambda).
+$$
+
+则
+
+$$
+\varepsilon_{vw}=\big||c_v|-|c_w|\big|,\qquad
+\big||c_v|-|c_w|\big|\le\sum_{e\in p}\varepsilon_e
+$$
+
+对任意连接 $v,w$ 的路径 $p$ 成立。特别地，若每条边 $\varepsilon_e\le\varepsilon$，图直径为 $D$，则
+
+$$
+\boxed{\inf_{a_0\in\mathbb R}\max_v\big||c_v|-a_0\big|
+=\tfrac12(\max_v|c_v|-\min_v|c_v|)\le D\varepsilon/2.}\tag{5.1}
+$$
+
+末项常数尖锐。
+
+证明。定理 2.1 在每条边给三维与端点大小相等；沿连通路径传递得到共同 $a$ 及全部边参数。每个局部复结合代数使用同一个系数，普通代数张量积的结合性保证多体括号选择一致；相反的局部取向通过各自的 opposite 识别处理，不必额外设 C96 的多体版本来选绝对单位。
+
+非精确族的边等式是定理 3.2。路径不等式为这些精确差的三角不等式。有限实数集对一个常数的最佳最大偏差等于其极差的一半，取极值中点达到；这一步是标准实数与图路径估计。对长度 $D$ 的路径，取 $|c_k|=a+k\varepsilon$、$a>0$，每条边使用各自的最优 $\lambda$，全部边缺陷恰为 $\varepsilon$，总极差为 $D\varepsilon$，所以常数达到。这里的结论依赖共享同一个局部括号；允许每条边单独改时间单位会消除被比较的同一量。∎
+

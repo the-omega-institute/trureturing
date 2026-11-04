@@ -1,0 +1,21 @@
+对固定忠实校准 $\rho$、可见代数 $A$ 及左比较投影 $E$，下列条件等价：
+
+1. $E$ 满足右序延续相容。
+2. $E$ 保持伴随：$E(x^\dagger)=E(x)^\dagger$。
+3. $E$ 是保持 $\phi_\rho$ 的条件期望：保持单位元、完全正、幂等，像恰为 $A$，且 $E(axb)=aE(x)b$ 对 $a,b\in A$ 成立。
+4. $A$ 对锚的模流稳定：$\rho^{it}A\rho^{-it}=A$ 对所有 $t\in\mathbb R$ 成立。
+5. 在有限子代数标准分块
+
+   $$
+   \mathcal H=\bigoplus_\alpha(\mathbb C^{n_\alpha}\otimes\mathbb C^{m_\alpha}),\qquad
+   A=\bigoplus_\alpha(M_{n_\alpha}\otimes I_{m_\alpha}),
+   $$
+
+   下，
+
+   $$
+   \boxed{\rho=\bigoplus_\alpha p_\alpha\,\sigma_\alpha\otimes\tau_\alpha,}
+   $$
+
+   其中 $p_\alpha>0$、$\sum p_\alpha=1$，$\sigma_\alpha,\tau_\alpha$ 为忠实归一密度矩阵。
+

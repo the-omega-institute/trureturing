@@ -1,0 +1,5 @@
+### 3.2 选择性过程必须把失败分支补回
+
+若成功分支为 $\mathcal I(\rho)=\sum_jK_j\rho K_j^*$，令
+$E=\sum_jK_j^*K_j\le I$。成功概率为 $\operatorname{Tr}(\rho E)$，正概率时的条件后态为 $\mathcal I(\rho)/\operatorname{Tr}(\rho E)$。零概率时不定义这个条件化结果。
+

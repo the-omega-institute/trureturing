@@ -3,6 +3,8 @@ import D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall
 import Reg.Support.DependentFamily
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound audits of the Gurvits--Barnum ball and trace identities. -/
+
 open LeanInformationAudit Matrix
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Resource.CompositeCones
@@ -441,5 +443,86 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 #print axioms registration
 
 end ProjectionRay
+
+namespace TraceFlip
+
+open _root_.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall
+  renaming flip → partySwap
+
+/-- Observe the source matrix trace for each pair of subsystem dimensions. -/
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature (Σ _m : ℕ, ℕ)
+    (fun p => Matrix (Fin p.1 × Fin p.2) (Fin p.1 × Fin p.2) ℂ) (fun _ => ℂ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ H => trace H) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {m n : ℕ} (H : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ),
+    trace (partySwap H) = R.readout () ⟨m, n⟩ H
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hbad := h (m := 1) (n := 1) 0
+  norm_num [partySwap, rejected, realize, Matrix.trace] at hbad
+
+theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨⟨1, 1⟩, 0, 1, ?_⟩
+  change trace (0 : Matrix (Fin 1 × Fin 1) (Fin 1 × Fin 1) ℂ) ≠
+    trace (1 : Matrix (Fin 1 × Fin 1) (Fin 1 × Fin 1) ℂ)
+  norm_num [Matrix.trace]
+
+def source_registration : Registration arena (type_of% @trace_flip) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨trace_flip, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@trace_flip) (Realization signature) Unit Unit := {
+  unitName :=
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall.TraceFlip.unit
+  realizationName := Lean.Name.str
+    `Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall.TraceFlip
+    "source_registration"
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ H => trace H) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end TraceFlip
 
 end Reg.D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumBall

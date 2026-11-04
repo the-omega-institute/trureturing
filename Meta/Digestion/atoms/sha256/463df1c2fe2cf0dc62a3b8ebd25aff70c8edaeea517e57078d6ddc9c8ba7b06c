@@ -1,0 +1,19 @@
+**Corollary 3.2 (Closed boundaries and coordinate regions).** Under the
+closed-domain hypotheses of Theorem 2.1 the algebraic deficit $B-F$ is
+zero if and only if $\alpha=0$ or $t=0$.
+The regions for the minimum coordinate are
+$t=\beta$ when $\beta\leq u,v,w$, $t=u$ when $u\leq\beta,v,w$,
+and the analogous regions for $v,w$. Ties give the same value.
+On the physical domain, whenever $t<1$ the two pieces meet at
+$\alpha=t/(1-t)$. For a fixed physical $\sigma$ in Corollary 3.1,
+the second piece has nonempty relative interior in the nonnegative
+physical equatorial disk precisely when $t<3-2\sqrt2$.
+At equality it touches that disk only at $(1,1,0)/\sqrt2$.
+
+Proof. The minimum of the two nonnegative expressions in Theorem 2.1
+vanishes precisely on the two stated boundaries. The coordinate regions
+are the definition of a minimum. For the last assertion compare
+$t/(1-t)$ with the maximum $(\sqrt2-1)/2$ of $\alpha$;
+equality in the equatorial Cauchy–Schwarz bound occurs only at the
+displayed point in the nonnegative quadrant. $\square$
+

@@ -1,0 +1,24 @@
+**定义 64.2（候选 C106：标定边界上的实际返回连续性）。** 令 $\mathscr C$ 为指定的一类定义 64.1 的关系体；其中各关系体的对象和菜单可以不同，各自内部必须使用上述同一校准对象及分支族。定义完全由实际比较给出的曲面
+
+$$
+\chi_{\mathscr C}(r,\varepsilon)=
+\sup\!\left(
+\{\kappa_\phi(h):M\in\mathscr C,\ \Delta_M\le\varepsilon,
+\ 0\le h\le r\}\cup\{0\}\right).
+\tag{64.3}
+$$
+
+C106 对这类允许比较的关系体提出一条约束：
+
+$$
+\boxed{
+\forall\tau>0\ \exists r_0>0\ \exists\varepsilon_0>0\quad
+\forall M\in\mathscr C\ \forall h\in[0,r_0]:\quad
+\Delta_M\le\varepsilon_0\ \Longrightarrow\quad
+\kappa_{\phi_M}(h)\le\tau .
+}
+\tag{64.4}
+$$
+
+它要求标定亏损和效果到单位的偏离一起趋零时，实际返回概率之差也趋零；不先指定速度或包络。这里的共同量词是类的结构条件，不能由一个固定正亏损关系体的个别连续性代替。该约束不是两个标定读数自动推出的事实。空类或存在正标定间隙的类也可形式上满足 (64.4)，因此具体理论仍须给非空及可逼近零亏损的满足族；命题 67.1 将给出这样的非平凡族。
+

@@ -1,0 +1,13 @@
+**定义 6.1（删除对象、原结构和有限帧）。** 删除族 $\Omega_-$ 的对象是全部非零有限直和 $\bigoplus_\alpha B(H_\alpha)$，$H_\alpha=\mathbb C^{d_\alpha}$，带原基、原块名、原标签副本及普通复张量对象。取普通迹比较 $g^0(x,y)=\sum_\alpha\operatorname{Tr}(x_\alpha y_\alpha)$、$u=I$、矩阵正锥、通常 Jordan 乘法、原 $D_ab=i[a,b]/2$，以及全部逐块可逆共轭组成的指定原比较群。
+
+对每个维数 $d$ 固定一个有限整数 $M_d\ge2d$ 及下列原有序列向量：
+
+$$
+\zeta_d=e^{2\pi i/M_d},\qquad
+f_j=M_d^{-1/2}(1,\zeta_d^j,\ldots,\zeta_d^{(d-1)j})^{\mathsf T},
+\quad 0\le j<M_d.
+\tag{6.1}
+$$
+
+这些列及其标签是各个原丢弃装置的初始细口数据，不能事后换成正交基。它们的 Parseval 恒等式及 full-spark 性质在定理 7.1 中作为成熟 Vandermonde 构造的中间应用。不同张量分解的原丢弃装置可有不同细口，但各自从定义起固定。
+

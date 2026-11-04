@@ -1,0 +1,158 @@
+**Corollary 42.6 (actual phase branches and mixed boundary contact).**
+For $b=\alpha$ or $b=\beta$, there is a sufficiently short interval
+$(b,b+\varepsilon)\subset(0,R)$ with a real analytic semialgebraic
+branch of actual phase global minimizers
+
+$$
+       \xi\longmapsto (E(\xi),U(\xi))
+                              \in\mathcal A_{\mathrm{ph},\xi},
+\tag{42.32}
+$$
+
+having an actual phase limit in $\mathcal A_{\mathrm{ph},b}$.
+At $\beta$ it is strictly below $N$ throughout that interval.
+Whenever every level in a right interval at $b$ has a nongeometric
+original global minimizer, (42.32) can be chosen nongeometric
+throughout a shorter interval. This applies at $\alpha$ when
+$\mathcal A_\alpha=\mathcal G_\alpha$, in which case the endpoint
+limit lies in $\mathcal G_\alpha$.
+
+A mixed original global minimizer at either boundary has a mixed
+phase global replacement with the identical effect. At such a phase
+contact $(E,U_{\mathrm{ph}})$, the family of Theorem 41.3 keeps
+that same actual phase feedback and, for
+$0<\theta\le\min\{\epsilon(E),4-b\}$, satisfies
+
+$$
+\begin{aligned}
+ \rho(E_\theta,U_{\mathrm{ph}})&=b+\theta,\\
+ f(E_\theta,U_{\mathrm{ph}})-N(b+\theta)
+                       &=V(b)-V(b+\theta)<0.
+\end{aligned}
+\tag{42.33}
+$$
+
+These are actual strict competitors, with no assertion of global
+minimality at their new levels. A mixed minimizer at $\alpha$
+still forces $\alpha=\beta$; one at $\beta$ does not exclude an
+earlier pure equality tie.
+
+*Proof.* The actual phase condition is semialgebraic and closed:
+in real and imaginary coordinates it is the condition that
+$UU_+^\dagger$ be diagonal unitary. Intersect the original
+semialgebraic minimizing graph of Theorem 39.4 with this condition.
+By (42.24) every level fiber on $(0,R)$ is nonempty and compact.
+Use the selection argument of Theorem 39.6 on this graph.
+Hardt triviality, in the form of
+[Drusvyatskiy--Lewis, arXiv:1004.0368v1, Theorem 2.25 and
+Corollary 2.27](https://arxiv.org/html/1004.0368v1), applies to its
+continuous semialgebraic coordinate projection, compatibly with
+the geometric subgraph. On a sufficiently short right interval,
+fixing one point of the trivialized fiber gives a continuous
+semialgebraic section. Theorem 3.4 of
+[Drusvyatskiy--Ioffe--Lewis, arXiv:1504.07694v1](https://arxiv.org/html/1504.07694v1)
+applied to this already selected single-valued map makes it
+analytic after shortening the interval. No finite-fiber or
+generic-minimizer assumption is required.
+Its bounded semialgebraic real coordinates have finite one-sided
+limits, by the monotonicity argument used in Theorem 39.6.
+Closedness of the phase condition and value continuity at $b$
+in Theorem 39.5 place the actual limit in
+$\mathcal A_{\mathrm{ph},b}$.
+
+If every original fiber has a nongeometric minimizer, Theorem 42.4
+gives such a phase minimizer in every fiber. Compatible
+trivialization then permits choosing the section outside the
+geometric subgraph. Theorem 39.5 supplies the asserted nongeometric
+right interval at $\alpha$ under its stated endpoint condition,
+and the strict-loss interval at $\beta$.
+If the endpoint has only geometric minimizers, the endpoint limit
+must be geometric. No nongeometric right interval at $\alpha$
+is inferred solely from an extra endpoint minimizer.
+
+For a mixed endpoint minimizer, use (42.25) and unchanged $E$ to
+obtain a mixed phase endpoint minimizer, whose $g$ equals $V(b)$.
+Theorem 41.3 changes only its effect and keeps both original
+distance branches, with their common increment $\theta$.
+Theorem 41.2 supplies the strict increase of $V$, giving (42.33)
+exactly as in Corollary 41.5.
+The coincidence statement at $\alpha$ and its stated limitation at
+$\beta$ are therefore the existing conclusions of that corollary,
+now realized with actual phase feedback. The separated mixed
+feedback alternative of (41.19) remains in force; the transport
+does not exclude it. $\square$
+
+**Mathematical source correspondence 42.7.** The selected scalar,
+its strict convexity and its actual geometric preimage are
+Theorem 37.5 and (39.2). The phase variation, fixed-level identities
+and its determinant are exactly Theorem 36.5; (42.4)--(42.14)
+place the selected point of level $13/4$ inside its strict region.
+The continuity and endpoint inputs are Theorems 39.2 and 39.5.
+The all-effect geometric ordering and selected-feedback margins
+of Section 40 retain their stated domains.
+
+The spectral/Birkhoff replacement, preservation of the complex
+active trace, the sufficient region $\xi+\epsilon<\zeta$, and the
+positive quadratic variance remainder are the inherited
+phase-feedback/mixed-tail transport argument. Its mathematical
+ingredients are used explicitly in (42.17)--(42.23).
+The additional fixed-record consequence is that
+$\zeta>15/4$ and the selected obstruction at $13/4$ put both first
+boundaries and right neighborhoods of them inside a region where
+that transport covers every effect without changing it. The
+complementary impurity region $\epsilon\ge\zeta-\xi$ is empty
+throughout $0<\xi\le R$, since $\epsilon\le1/2$.
+The exact original minimizing preimage, exhaustive-equality
+equivalence and bad-set consequences are (42.25)--(42.31).
+Theorem 41.2 and the exact motion of Theorem 41.3 are the supplied
+inputs to (42.33); the prefix purity of Theorem 41.4 is not used
+to establish the transport region or to certify a proposed $\beta$.
+
+The finite Birkhoff--von Neumann theorem recalled in Vourdas,
+Section II.1, (18), concerns a nonnegative matrix with every row
+and column sum one. Its sole matrix here is
+$D_{ik}=|Z_{ik}|^2$ for the actual four-dimensional spectral
+eigenbasis in (42.21). The finite weights give actual permutation
+unitaries in (42.22), rather than a presumed converse for normal
+diagonals. Thompson's prescribed singular-value theorem, as
+stated in
+[Jasper--Loreaux--Weiss, arXiv:1602.08435v1, Theorem 1.3](https://arxiv.org/html/1602.08435v1#S1.Thmtheorem3),
+with four singular values equal to one gives precisely the
+existing $\mathcal W$ in source Theorem 23.2.
+Its introduction distinguishes this class from a specified normal
+orbit, whose diagonals need not form the full convex hull of
+spectral permutations. The present proof needs only the forward
+spectral representation of its given $U$ and explicit actual
+replacement matrices; it uses no such converse.
+These standard matrix theorems and the semialgebraic selection
+theorems inside Corollary 42.6 are intermediate tools for the
+fixed-record deduction, with no literature-priority or exhaustive
+literature-absence assertion.
+
+**Unresolved mathematical obligations 42.8.** Equations
+(42.24)--(42.31) remove the arbitrary-feedback value comparison
+through $13/4$, but leave the all-effect phase-torus comparison
+(42.31) on the required preceding levels unproved.
+Every mixed and singular arc and both original signs must remain
+in that problem. The pre-$\beta$ purity in Theorem 41.4 cannot be
+used to discard mixed strict competitors while locating $\beta$.
+A strict witness at $R$ supplies only the strict upper bound
+(42.3), not the value of either first boundary.
+
+The exact $\alpha,\beta$, their coincidence or separation, the
+complete phase minimizing sets, and the evaluated original
+variance-zero preimages in (42.25) remain undetermined.
+In particular the endpoint inclusion of exhaustive equality,
+additional pure ties, pure coalescence, separated mixed contact
+at $\beta$, the identity and exhaustion of first competing global
+minimizing branches, and determinant-zero higher-order and global
+ordering are not supplied by these deductions.
+The branches (42.32) give existence and actual limits, and
+(42.33) gives strict competitors; neither identifies or exhausts
+the global minimizing branches.
+Beyond the proved interval the sufficient condition
+$\xi+\epsilon<\zeta$ need not cover every effect.
+All previously unresolved beyond-four geometric comparisons and
+core-attainment obligations retain their stated boundaries.
+The full original first-loss and equality problem remains open.
+

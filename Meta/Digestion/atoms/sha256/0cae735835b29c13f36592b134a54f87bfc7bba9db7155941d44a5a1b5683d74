@@ -1,0 +1,28 @@
+### 定义 15.1（同一个正成功分支与固定读回）
+
+输入仍为原简单块 $H=\mathbb C^d$，输出为原有限空间 $K$。固定已指定的等距嵌入 $J:H\to K$；同一块情形取 $K=H,J=I$。在直和对象中，$J$ 是原输入扇区在原输出中的同名嵌入，不把不同中心扇区补成可相干制备的纯态空间。
+
+取正复线性映射与其通常迹成功效果
+
+$$
+T:\mathcal B(H)\longrightarrow\mathcal B(K),\qquad
+T^\dagger(I_K)=E,\qquad 0\le E\le I_H.
+\tag{15.1}
+$$
+
+这里不假设二正、完全正、Kraus 分解或任何实际参考延伸。输入、输出和成功效果均属于同一个 $T$，不得随校准标签更换分支。
+
+保留定义 2.2 的同一有限正权复射影二阶设计 $\mathscr D=\{(w_s,p_s)\}$，并定义
+
+$$
+\begin{aligned}
+R_{\mathscr D,J}(T)
+ &=\sum_s w_s\operatorname{Tr}_K[Jp_sJ^\dagger T(p_s)],\\
+Q_{\mathscr D}(E)
+ &=\sum_s w_s\bigl(\operatorname{Tr}_H[p_s\sqrt E]\bigr)^2.
+\end{aligned}
+\tag{15.2}
+$$
+
+$Jp_sJ^\dagger$ 是指定的同向读口。一般矩形输出若没有这样的已指定读回对应，不在本合同内。这里的 $J$ 只规定原读口的对应，不供应新的物理嵌入、准备或参考系统。有限设计的矩等式仍是代数关系，不要求未知态的两个副本。
+

@@ -1,0 +1,31 @@
+### 推论 17.2（有限饱和锁住方向与相位）
+
+在 $r>1$ 时，$s^2-z=0$ 使 (17.4) 与 $C_\Phi$ 的每个积项配对均为零。因此 $\Phi$ 固定每个基投影的指定像，以及每对基方向的四个加权相位探针：
+
+$$
+\begin{aligned}
+\Phi(|e_i\rangle\langle e_i|)&=|f_i\rangle\langle f_i|,\\
+\Phi(|\bar x_{ij\theta}\rangle\langle\bar x_{ij\theta}|)
+ &=J|\bar x_{ij\theta}\rangle\langle\bar x_{ij\theta}|J^\dagger.
+\end{aligned}
+\tag{17.6}
+$$
+
+**证明。** 每个配对非负，因为 $C_\Phi$ 块正。$a_i(s-a_i)>0$，且 $s a_i>0$；故所有 $k\ne i$ 上的 $\langle f_k,\Phi(|e_i\rangle\langle e_i|)f_k\rangle$ 为零。输出正性与迹一迫使第一式成立。
+
+令 $u=\bar x_{ij\theta}$。正性及
+$0\le|u\rangle\langle u|\le(a_i+a_j)(|e_i\rangle\langle e_i|+|e_j\rangle\langle e_j|)$
+使 $\Phi(|u\rangle\langle u|)$ 支持在 $\operatorname{span}\{f_i,f_j\}$。$D_{ij}$ 的零配对又给
+
+$$
+\langle y_{ij\theta},\Phi(|u\rangle\langle u|)y_{ij\theta}\rangle=0.
+$$
+
+在这个二维空间中，$y_{ij\theta}\perp Ju$。正性使 $y_{ij\theta}$ 属于输出的核；保迹给输出迹 $a_i+a_j=\|u\|^2$，所以输出正好是 $|Ju\rangle\langle Ju|$。$\theta=0,\pi$ 的差给两个矩阵单位的实组合，$\theta=\pi/2,3\pi/2$ 的差给其虚组合；连同基投影便张成全部矩阵单位。
+
+这把同一分支的饱和解释为：正比较的有限差额不能互相抵消；基方向没有泄漏，两个相位分量也不能再丢失或翻转。重加权后 $\Phi(Y)=JYJ^\dagger$，所以在原正支持上没有额外的信息损失；$A$ 本身的减权与零支持仍保留。
+
+同一几何也可在 (16.9) 中看见：迹为 $s$ 的块正截面包含在半径 $s$ 的 Hilbert–Schmidt 球内，饱和超平面 $\langle v,Gv\rangle=s^2$ 与此球恰在 $G=|v\rangle\langle v|$ 相切。因此有限关系选择一个确定的射线端点，随后才得到原分支的 CP。若另有本卷 §13 的 CP 记录实现，其所选成功环境记录随输入方向不变，直接沿用该节的端点解释。
+
+$r=1$ 只需保留输出补空间的比较，$r=0$ 已由正确成功效果确定。式 (17.3) 的探针是证明中的数学向量；它们不必属于实际校准设计，不由门群的稠密性取得，也没有被追加到实际菜单。实际供应的仍只是原设计及定义 15.1 的读口。$\square$
+

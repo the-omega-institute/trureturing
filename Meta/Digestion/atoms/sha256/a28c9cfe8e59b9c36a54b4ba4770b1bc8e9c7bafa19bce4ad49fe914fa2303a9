@@ -1,0 +1,43 @@
+### 定理 5.1（恒定纯输出分支的完整分类）
+
+<a id="thm-c117-pure-branch"></a>
+
+设 $\mathcal I:M_d(\mathbb C)\to M_m(\mathbb C)$ 为完全正不增迹分支，且每个输出都支持在固定射线 $\mathbb C a$，允许零输出。则恰存在效果 $0\le E\le I$，使
+
+$$
+\mathcal I(\rho)=P_a\operatorname{Tr}(E\rho).
+$$
+
+其最少 Kraus 数为 $\operatorname{rank} E$。对每个归一化输入都有非零成功概率，当且仅当 $E$ 正定。
+
+**证明。**
+取 Kraus 表示 $\mathcal I(\rho)=\sum_\mu K_\mu\rho K_\mu^*$。对纯输入 $\psi$，将输出投影到 $a^\perp$，得到
+
+$$
+\sum_\mu\|(I-P_a)K_\mu\psi\|^2=0.
+$$
+
+每项非负，故全部为零，对所有 $\psi$ 成立。因此每个 $K_\mu$ 的像都包含于 $\mathbb C a$，可写为
+$K_\mu=\lvert a\rangle\langle v_\mu\rvert$。令
+$E=\sum_\mu\lvert v_\mu\rangle\langle v_\mu\rvert$，立即得到所述公式；不增迹给 $E\le I$。反向用 $E$ 的谱分解便得到这样的 Kraus 实现。
+
+$E$ 是若干秩一矩阵之和，所用项数至少为 $\operatorname{rank} E$；谱分解达到这个数。成功概率为 $\operatorname{Tr}(E\rho)$。若 $E$ 有非零核，其中的纯态成功率为零；若 $E>0$，则所有成功率至少为 $\lambda_{\min}(E)>0$。
+
+特别地，单个非零 Kraus 算子必为
+
+$$
+K=\sqrt\eta\,\lvert a\rangle\langle b\rvert,
+ \qquad \|a\|=\|b\|=1,\quad0<\eta\le1,
+$$
+
+其成功概率为 $\eta\langle b,\rho b\rangle$，纯输入时为
+$\eta|\langle b,\psi\rangle|^2$。当 $d>1$，它必在 $b^\perp$ 上失败。因此“一个相干分支恒定输出纯原子”不能同时保证任意输入都有非零成功率。一个可见结果若合并了多个未读记录，则不受单 Kraus 的这个限制；对全部输入成功需要 $E>0$，也就至少需要 $d$ 个 Kraus 记录方向。
+
+若输入输出已经识别为同一空间，并进一步要求单 Kraus 门在自身目标 $a$ 上以概率一成功，则
+
+$$
+1=\eta|\langle b,a\rangle|^2\le\eta\le1.
+$$
+
+所以 $\eta=1$，$b$ 与 $a$ 同射线，$K$ 是投影 $P_a$ 的相位倍数。它保持自身，却必然拒绝正交输入。
+

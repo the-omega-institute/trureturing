@@ -1,0 +1,63 @@
+**Definition 20.2 (requests and phases).** Use disjoint three-bit request
+tags for Tag, $P$, $S$, HasPromotion, HasSplit, FetchGrowth and Next.
+An address payload is $A(p)=1^{|p|}0p$, with $L,R$ encoded by bits.
+An index payload is $U(k)=1^k0$, $k\ge0$. The first five tags take $A(p)$;
+the last two take $U(k)$. The remaining three-bit tag returns BadFrame.
+These are prefix-free complete frames. Growth commands at an absent,
+branch, or wrong-type address return a tagged refusal without a source
+change; a missing right or wrong phase instead disables the primitive.
+Tag returns $\alpha,\beta,\mathsf{branch},\mathsf{absent}$. HasPromotion
+and HasSplit use (AA.67), returning false at absent addresses. FetchGrowth
+uses Theorem 19.2. Invalid indices return OutOfRange. Use distinct fixed
+three-bit reply tags for Tag, Boolean, Refusal, Growth, Recall, Next,
+OutOfRange and BadFrame. Their payloads are respectively a two-bit source
+tag, one Boolean bit, a two-bit refusal reason, a kind bit followed by
+$A(p)$ for Growth or Recall, two such kind/address pairs for Next, and
+empty payloads for the last two cases. Thus the result passed to Print is
+an actual finite word with a specified encoding.
+
+Ready has root cursor, empty request and pending-output fields, no unfinished
+source edit or tape append, and current source/record/input/output rights.
+The following phases are a finite control graph whose loops operate on
+actual finite lists and links.
+
+1. Receive obtains one bit in an occupied pending latch. It writes that bit
+   into the request backing before clearing the latch and enabling the next
+   input. Address-length marks or index marks are really constructed. The
+   parser retains its tag, subphase and remaining-length marks. A proper
+   frame prefix waits for its unsupplied suffix and produces no answer.
+2. Navigate follows the actual root links for acquired address bits, testing
+   logical arity before each child. It retains the root binding, current
+   cursor and remaining path; a unary marker cannot be followed as a logical
+   child. Guard tests the actual target and current authority. A query reads
+   the same source/tapes; it does not consult a prospective endpoint.
+3. For an enabled growth, Reserve obtains its finite required fresh source,
+   header and tape material before editing. Pending retains the actual
+   kind, target reference/address and ancestor-maintenance cursor. For $P$,
+   attach one new terminal left marker. For $S$, reuse the old unary marker
+   as the new left logical $\beta$ root: attach its new left marker, attach
+   the new right $\alpha$ root to the old root, and bind the empty tape
+   header there. Parent fields are initialized to these actual parents.
+   This implements (AA.65) with no source vertex deletion.
+4. Maintain starts from the actual edited target and walks its parent chain.
+   At each proper logical ancestor, compare the traversed child's reference
+   with that ancestor's two child fields, read its bound tape header and
+   append the corresponding side. The pending cursor records exactly which
+   ancestors remain. A new cell is initialized and linked before the header's
+   tail is advanced; pending append references/subphases remain explicit.
+   No input or query is admitted during Reserve, editing or maintenance.
+5. BuildAnswer constructs and seals a finite tagged reply. Print traverses
+   that backing and emits precisely its bits, followed by End. The supplied
+   local acknowledgement then enables Return. Return reaches the same root,
+   clears/reuses the request, index, traversal, append and output scratch,
+   and only then reenters Ready. No external acknowledgement arrival is
+   presumed; the local acknowledgement edge is part of Assumption 20.1.
+
+A recall traversal retains its acquired index marks, current subtree,
+current tape cursor, within-side counter, accumulated address and pending
+answer. Its loops implement Theorem 19.2 with backed counters. Thus an
+unbounded index is not an unbounded finite-control state. During all phases
+the joint state contains these fields, the actual source, auxiliary backing,
+current grants and program counter. The phase graph does not erase busy
+states from the process. Its inverse claims below are only at Ready.
+
