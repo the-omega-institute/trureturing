@@ -35,7 +35,7 @@ private theorem prime_min_nonneg {X : ℝ} (hX : 1 < X) {p : ℕ} (hp : p.Prime)
   · have h := Real.log_le_sub_one_of_pos (sub_pos.mpr hi2)
     nlinarith [sq_nonneg ((p : ℝ)⁻¹)]
 
-private theorem prime_weight_lower {X U D : ℝ} (hX : 1 < X)
+theorem prime_weight_lower {X U D : ℝ} (hX : 1 < X)
     (hD : 0 < D) (hXD : X * Real.log X ≤ D)
     (hUD : U ^ 2 * Real.log U ≤ D) {p : ℕ} (hp : p.Prime)
     (hpU : (p : ℝ) ≤ U) :
