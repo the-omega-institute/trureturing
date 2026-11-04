@@ -780,6 +780,80 @@ class HostCleanupTests(unittest.TestCase):
              contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
             self.assertEqual(1, cleanup.main(["active-paths"]))
 
+    def test_pidfd_current_identity_is_revalidated_and_descriptors_close(self):
+        # Real directory/stat descriptors, with a synthetic /proc endpoint and
+        # ready/nonready pidfd poll. Keeping the inode unchanged isolates pid
+        # and starttime reuse from the simpler directory-replacement case.
+        process = Path("/proc/123")
+        endpoint = self.root / "proc-endpoint"
+        endpoint.mkdir()
+        def write_identity(pid=123, starttime=900):
+            (endpoint / "stat").write_text(str(pid) + " (fixture) " +
+                " ".join(["S"] + ["0"] * 18 + [str(starttime)]) + "\n")
+        real_open, real_close, real_stat = os.open, os.close, os.stat
+        for change in ("pid", "starttime", "unavailable", "malformed", "open-failed", "matched"):
+            for ready in (False, True):
+                with self.subTest(change=change, ready=ready):
+                    write_identity()
+                    opened, closed, live = [], [], set()
+                    def open_fd(name, flags, *args, **kwargs):
+                        fd = real_open(endpoint if name == process else name, flags, *args, **kwargs)
+                        if name == process or str(name) == os.devnull:
+                            opened.append(fd)
+                            self.assertNotIn(fd, live)
+                            live.add(fd)
+                        return fd
+                    def close_fd(fd):
+                        self.assertIn(fd, live)
+                        live.remove(fd)
+                        closed.append(fd)
+                        real_close(fd)
+                    poller = types.SimpleNamespace(register=lambda *a: None,
+                        poll=lambda timeout: [(observer.pidfd, select.POLLIN)] if ready else [])
+                    with patch.object(cleanup.os, "uname", return_value=types.SimpleNamespace(sysname="Linux")), \
+                         patch.object(cleanup.os, "open", side_effect=open_fd), \
+                         patch.object(cleanup.os, "close", side_effect=close_fd), \
+                         patch.object(cleanup.os, "stat", side_effect=lambda name, *a, **kw:
+                                      real_stat(endpoint if name == process else name, *a, **kw)), \
+                         patch.object(cleanup.os, "pidfd_open", create=True,
+                                      side_effect=lambda pid, flags: open_fd(os.devnull, os.O_RDONLY)), \
+                         patch.object(cleanup.LinuxProcessObserver, "pidfd_pid", return_value=123), \
+                         patch.object(cleanup.select, "poll", return_value=poller):
+                        observer = cleanup.LinuxProcessObserver(process)
+                        try:
+                            self.assertEqual("matched", observer.binding["identity"], observer.binding)
+                            anchor = observer.binding["anchor"]
+                            if change == "pid":
+                                write_identity(pid=124)
+                            elif change == "starttime":
+                                write_identity(starttime=901)
+                            elif change == "unavailable":
+                                (endpoint / "stat").unlink()
+                            elif change == "malformed":
+                                (endpoint / "stat").write_text("unreadable proc identity")
+                            elif change == "open-failed":
+                                (endpoint / "stat").unlink()
+                                endpoint.rmdir()
+                            if change in ("pid", "starttime"):
+                                info = endpoint.stat()
+                                self.assertEqual((anchor["device"], anchor["inode"]), (info.st_dev, info.st_ino))
+                            for _ in range(2):
+                                sample = observer.sample(check_current=True)
+                                self.assertIn("wall_time_ns", sample)
+                                self.assertIn("monotonic_ns", sample)
+                                self.assertIn("poll_finished_monotonic_ns", sample)
+                                self.assertEqual("matched" if change == "matched" else "unknown", sample["identity"], sample)
+                                self.assertEqual(("observed" if ready else "not_observed") if change == "matched"
+                                                 else "unknown", sample["group_exit"], sample)
+                                self.assertEqual({observer.proc_fd, observer.pidfd}, live)
+                        finally:
+                            observer.close()
+                            observer.close()  # Closing twice must not close a recycled descriptor.
+                    self.assertFalse(live)
+                    self.assertCountEqual(opened, closed)
+                    if not endpoint.exists():
+                        endpoint.mkdir()
+
     @unittest.skipUnless(sys.platform.startswith("linux"), "requires native Linux proc/pidfd")
     def test_native_pidfd_dead_leader_live_worker(self):
         # Observe the leader's actual Z state: Linux pidfd_poll() can defer even

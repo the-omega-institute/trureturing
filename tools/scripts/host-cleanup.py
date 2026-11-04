@@ -654,9 +654,13 @@ class LinuxProcessObserver:
             result["revents"] = sum(events for _, events in poller.poll(0))
             result["poll_finished_monotonic_ns"] = time.monotonic_ns()
             if check_current:
-                info = os.stat(self.process)
-                anchor = self.binding.get("anchor", {})
-                if (info.st_dev, info.st_ino) != (anchor.get("device"), anchor.get("inode")):
+                current = os.open(self.process, os.O_RDONLY | os.O_DIRECTORY | os.O_CLOEXEC)
+                try:
+                    identity = self.identity(current)
+                finally:
+                    os.close(current)
+                result["current"] = identity
+                if identity != self.binding.get("anchor"):
                     result["identity"] = "unknown"
                     result["unavailable"] = "boundary_proc_identity_changed"
             if result["identity"] == "matched":
