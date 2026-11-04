@@ -119,15 +119,61 @@ private lemma boundary_composition (L n : ℕ) (s : Fin (n + 1) → ℕ)
     omega
   have he : ∀ i : Fin (n + 1), gapPrefix f i.val = s i := by
     intro i
-    induction i using Fin.induction with
-    | zero => simpa only [gapPrefix, Nat.not_lt_zero, Finset.filter_false,
-        Finset.sum_empty, Fin.val_zero] using hz.symm
-    | succ i ih =>
-      simp only [Fin.val_castSucc] at ih
-      rw [Fin.val_succ, gap_prefix_step, ih]
-      have h := hs i
+    let F : ℕ → ℕ := fun k => s ⟨min k n, by omega⟩
+    have hstrict : StrictMono s := Fin.strictMono_iff_lt_succ.mpr (by
+      intro j
+      have h := hs j
+      omega)
+    have hmono : Monotone s := hstrict.monotone
+    have hF : Monotone F := by
+      intro a b hab
+      apply hmono
+      apply Fin.le_def.mpr
+      exact min_le_min hab (le_refl n)
+    have hF_eq (k : ℕ) (hk : k ≤ n) : F k = s ⟨k, by omega⟩ := by
+      dsimp only [F]
+      apply congrArg s
+      apply Fin.ext
+      simp [Nat.min_eq_left hk]
+    have hstep (j : Fin n) : F (j.val + 1) - F j.val = f j + 4 := by
+      have h1 : F (j.val + 1) = s j.succ := by
+        rw [hF_eq (j.val + 1) (by omega)]
+        apply congrArg s
+        apply Fin.ext
+        rfl
+      have h0 : F j.val = s j.castSucc := by
+        rw [hF_eq j.val (by omega)]
+        apply congrArg s
+        apply Fin.ext
+        rfl
+      rw [h1, h0]
       dsimp only [f]
+      have h := hs j
       omega
+    have hsum := Finset.sum_range_tsub hF i.val
+    have hsum' : gapPrefix f i.val = F i.val - F 0 := by
+      rw [show gapPrefix f i.val = ∑ j ∈ Finset.range i.val,
+          (F (j + 1) - F j) by
+        apply Finset.sum_bij (fun j _ => j.val)
+        · intro j hj
+          exact Finset.mem_range.mpr (Finset.mem_filter.mp hj).2
+        · intro a ha b hb h
+          exact Fin.ext h
+        · intro b hb
+          have hb' := Finset.mem_range.mp hb
+          refine ⟨⟨b, by omega⟩, ?_, rfl⟩
+          exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, by omega⟩
+        · intro j hj
+          rw [hstep j]]
+      exact hsum
+    rw [hsum']
+    have hi : F i.val = s i := by
+      rw [hF_eq i.val (by omega)]
+    have hzero : F 0 = s 0 := by
+      rw [hF_eq 0 (by omega)]
+      congr 1
+    rw [hi, hzero, hz]
+    simp
   have hsum : ∑ i, f i = L - 4 * n := by
     have h := he (Fin.last n)
     rw [Fin.val_last, gap_prefix_top, ht] at h
