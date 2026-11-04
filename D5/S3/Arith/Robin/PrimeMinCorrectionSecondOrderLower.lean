@@ -250,8 +250,8 @@ private theorem profile_last_lipschitz {x : ℝ} (hx : 1 ≤ x) (hxs : x ≤ Rea
       ⟨hs, le_rfl⟩) (show x ∈ Set.Icc 1 (Real.sqrt 2) from ⟨hx, hxs⟩)
   simpa only [Real.norm_eq_abs, F] using hh
 
--- The four rational and stationary-profile remainders are elaborated in one proof term.
 set_option maxHeartbeats 800000 in
+-- The four rational and stationary-profile remainders are elaborated in one proof term.
 private theorem profile_error {h x : ℝ} (hh0 : 0 ≤ h) (hh1 : h ≤ 1)
     (hx : 1 ≤ x) (hxs : x ≤ Real.sqrt 2)
     (heq : x ^ 2 * (1 + 2 * h * Real.log x) = 2) :
@@ -553,9 +553,9 @@ private theorem large_clock {X : ℝ} (hX : Real.exp 18 ≤ X) :
   exact ⟨hL, hr, hcube.trans_eq heq⟩
 
 
-/-- Both analytic thresholds are selected before the real clock and finite endpoint. -/
--- The finite endpoint, eighth-power theta and profile budgets are combined before either integer is chosen.
 set_option maxHeartbeats 600000 in
+-- The finite endpoint, eighth-power theta and profile budgets are combined in one proof term.
+/-- Both analytic thresholds are selected before the real clock and finite endpoint. -/
 private theorem uniform_finite_lower :
     ∃ X0 : ℝ, 1 < X0 ∧ Real.exp 18 ≤ X0 ∧ ∀ X : ℝ, X0 ≤ X →
       ∀ P : ℕ, (1 / (2 * Real.log 4)) * X ≤ (P : ℝ) →
