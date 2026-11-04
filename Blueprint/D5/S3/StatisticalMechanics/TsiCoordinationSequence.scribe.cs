@@ -111,7 +111,8 @@ internal sealed class TsiCoordinationSequenceDocument : IScribeDocumentDefinitio
                             + "to 4n−2 Int.natAbs k. Cast the layer counts to integers and use symmetry in k "
                             + "to sum over the nonnegative layers. The sum of the integers from zero through "
                             + "n−1 is evaluated by twice that sum being n(n−1). Converting the resulting "
-                            + "equality back to natural numbers gives:")),
+                            + "equality back to natural numbers gives the following identity, in which the "
+                            + "divisions on natural numbers are floor divisions, exactly Lean's Nat.div:")),
                     new DocumentBlock.DisplayFormula(SumFormula()),
                     Paragraph(Text(
                         "Finally, if n is positive and even, write n=t+t. Both n/2 and (n+1)/2 equal t; "
