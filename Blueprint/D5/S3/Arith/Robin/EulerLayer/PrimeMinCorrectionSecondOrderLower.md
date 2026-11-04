@@ -22,7 +22,7 @@ The stationary profile is x+(1/x)*(2/(1+z)-4*h/(1+z)^2 +16*h^2/(1+z)^3), z=2*h*l
 
 If theta(P)>=X/2, the Chebyshev bound theta(P)<=log(4)*P places P above c*X for c=1/(2*log(4)), and the finite-root estimate applies. If 1<theta(P)<X/2, the existing log-log tangent gives a clock gap >1/(2*L). Nonnegativity of the original tail then closes the same bound. Neither branch inserts an asymptotic threshold depending on m.
 
-For the signed Robin application let M(P) be the finite sum of -log(1-1/p) over primes p<=P and set Etheta(P)=M(P)-gamma-log(log(theta(P))). Full support identifies M(P) with eulerMass(m). The existing exact tail_robin_data identity gives margin(m)=A(m)-Etheta(P), where A(m)=tail(m)+log(log(X))-log(log(theta(P))). Thus Robin positivity still requires the further strict comparison Etheta(P)<(2*s-s*(2+b)/L+c2/L^2-3200/L^3)/(sqrt(X)*L). This lower bound establishes neither that signed comparison nor Robin for all m>5040, RH, the actual-record two-sided expansion, or a sharpness family. Those obligations remain open.
+For the signed Robin application let M(P) be the finite sum of -log(1-1/p) over primes p<=P and set Etheta(P)=M(P)-gamma-log(log(theta(P))). Full support identifies M(P) with eulerMass(m). The existing exact tail_robin_data identity gives margin(m)=A(m)-Etheta(P), where A(m)=tail(m)+log(log(X))-log(log(theta(P))). Thus Robin positivity is equivalent to Etheta(P)<A(m). The displayed lower bound gives the sufficient strict comparison Etheta(P)<(2*s-s*(2+b)/L+c2/L^2-3200/L^3)/(sqrt(X)*L). This lower bound establishes neither that signed comparison nor Robin for all m>5040, RH, the actual-record two-sided expansion, or a sharpness family. Those obligations remain open.
 
 ## References
 
