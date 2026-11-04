@@ -9,7 +9,7 @@
 import Mathlib.Combinatorics.SimpleGraph.Paths
 import Mathlib.Data.Set.Card
 import Mathlib.Data.Fintype.Pigeonhole
-import Mathlib.Order.Finset.MinMax
+import Mathlib.Data.Finset.Max
 import Mathlib.Tactic.Choose
 import Mathlib.Tactic.Push
 
