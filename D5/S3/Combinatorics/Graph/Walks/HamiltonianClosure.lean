@@ -159,11 +159,11 @@ theorem isHamiltonian_sup_edge_iff {u v : V} (huv : u ≠ v) (hnadj : ¬ G.Adj u
       have htransfer : ∀ e, e ∈ q.edges → e ∈ G.edgeSet := by
         intro e heq
         obtain ⟨hep, hne⟩ := (hqEdges e).mp heq
-        have hmem := p.edges_subset_edgeSet e hep
+        have hmem := p.edges_subset_edgeSet hep
         rw [edgeSet_sup] at hmem
         rcases hmem with hmem | hmem
         · exact hmem
-        · simp only [edgeSet_edge huv, Set.mem_singleton_iff] at hmem
+        · simp only [edgeSet_edge_of_ne huv, Set.mem_singleton_iff] at hmem
           exact (hne hmem).elim
       let r := q.transfer G htransfer
       have hr : r.IsHamiltonian := (Walk.isHamiltonian_transfer htransfer).mpr hq
@@ -171,11 +171,11 @@ theorem isHamiltonian_sup_edge_iff {u v : V} (huv : u ≠ v) (hnadj : ¬ G.Adj u
       exact hc.isHamiltonian
     · have htransfer : ∀ e, e ∈ p.edges → e ∈ G.edgeSet := by
         intro e hep
-        have hmem := p.edges_subset_edgeSet e hep
+        have hmem := p.edges_subset_edgeSet hep
         rw [edgeSet_sup] at hmem
         rcases hmem with hmem | hmem
         · exact hmem
-        · simp only [edgeSet_edge huv, Set.mem_singleton_iff] at hmem
+        · simp only [edgeSet_edge_of_ne huv, Set.mem_singleton_iff] at hmem
           exact (he (hmem ▸ hep)).elim
       exact ((Walk.isHamiltonianCycle_transfer htransfer).mpr hp).isHamiltonian
   · intro h
