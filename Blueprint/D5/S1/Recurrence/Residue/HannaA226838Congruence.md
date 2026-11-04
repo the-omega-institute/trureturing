@@ -64,7 +64,7 @@ $$\forall n:\mathbb{N}, \exists k:\mathbb{Z}, \operatorname{natval}\left(n!\righ
 
 *Commentary.*
 
-OEIS A226838 revision #14 states: a(n) == 1 (mod 6) (conjecture - valid up to n=1024; if true for n>=0, why?). The existential integer witness proves integrality and the residue simultaneously for every n, including zero. For m>=2, six_power_dvd_square_factorial proves 6*m^m divides (m^2)!, treating m=2 and m=3 directly and using product-factorial divisibility for larger m. inner_mod_six therefore reduces the integral inner coefficient sequence to the identity sequence. The result uses eCoeff_H, H_zero, inner_mod_six and composition_unit_mod_six. The existing IntegralEGFComposition.eCoeff_composition, eCoeff_exp and composition_map, together with the original private QuarticEGFModFour.composition_identity_right, transfer that identity through the integral composition law. The private BourasA363347PrimeMultiplicity.pow_dvd_factorial_mul supplies the factorial divisibility. Only integers are reduced to ZMod(6); there is no rational-to-residue-ring map. The proof is repository-derived and is not attributed to OEIS.
+OEIS A226838 revision #14 states: a(n) == 1 (mod 6) (conjecture - valid up to n=1024; if true for n>=0, why?). The existential integer witness proves integrality and the residue simultaneously for every n, including zero. For m>=2, six_power_dvd_square_factorial proves 6*m^m divides (m^2)!, treating m=2 and m=3 directly and using product-factorial divisibility for larger m. inner_mod_six therefore reduces the integral inner coefficient sequence to the identity sequence. The result uses eCoeff_H, H_zero, inner_mod_six and composition_unit_mod_six. The existing IntegralEGFComposition.eCoeff_composition, eCoeff_exp and composition_map, together with the original private QuarticEGFModFour.composition_identity_right, transfer that identity through the integral composition law. For m>=2, power_dvd_square_factorial follows from the stronger local six_power_dvd_square_factorial; the remaining positive case m=1 is immediate. The product-factorial step uses Nat.prod_factorial_dvd_factorial_sum. Only integers are reduced to ZMod(6); there is no rational-to-residue-ring map. The proof is repository-derived and is not attributed to OEIS.
 
 ## References
 
@@ -73,4 +73,3 @@ OEIS A226838 revision #14 states: a(n) == 1 (mod 6) (conjecture - valid up to n=
 - Truth anchor: `D5/S1/Recurrence/Residue/HannaA226838Congruence.innerIntegral`
 - Truth anchor: `D5/S1/Recurrence/Residue/HannaA226838Congruence.result`
 - Dependency: [D5/S1/Recurrence/Residue/QuarticEGFModFour](QuarticEGFModFour.md)
-- Dependency: [D5/S3/Arith/Congruence/BourasA363347PrimeMultiplicity](../../../S3/Arith/Congruence/BourasA363347PrimeMultiplicity.md)
