@@ -19,7 +19,7 @@ internal sealed class BajnokBeattySquareDisplacementLogTwoBracketDocument
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An all-q log-two bracket for the unique threshold of actual square-displacement return counts.",
         H("The log-two threshold bracket"),
-        Describe.Lean(
+        Blocks(Describe.Lean(
             DescribeId.Create("square-displacement-log-two-bracket"),
             DeclarationHandle.Create("D5/S3/FiniteGroups/BajnokBeattySquareDisplacementLogTwoBracket.actual_square_displacement_log_two_bracket"),
             H("The complete actual-count threshold and both bounds"),
@@ -35,5 +35,5 @@ internal sealed class BajnokBeattySquareDisplacementLogTwoBracketDocument
                 Paragraph(Text("If s(u)>=2/3, apply exp(L)-exp(s)>=L-s for s>=0 and s<=L. This follows by multiplying exp(L-s)>=1+L-s by exp(s)>=1. The preceding margin gives exp(s(u))+1/(10N)<2, and hence R(u)<2 by the actual band estimate. If s(u)<2/3, the existing finite positive-cone sign applies because s(u)>2/5. In both cases Wa(u)<Wq(u). The original before-threshold law then forbids u<T, proving T<=ceil(pq/(4L)). Only scalar coordinates are evaluated at the real x; counts are evaluated at integer states.")),
                 Paragraph(Text("Fix a signed odd integer p>=5 and set q_k=2k+3 for natural k. Let T(k) be the unique actual threshold satisfying the original five single-crossing clauses for p and q_k. Put r=p/(4log(2)) and delta=r-1/2+1/(2p). Dividing the strict lower bracket by q_k>0 and simplifying gives r-delta/q_k^2<T(k)/q_k. Since ceil(r*q_k)<r*q_k+1, the upper bracket gives T(k)/q_k<=r+1/q_k. Both bounding sequences tend to r as k tends to infinity, so the squeeze theorem yields T(k)/q_k -> p/(4log(2)). The full original single-crossing predicate and uniqueness hold for every k. Here p stays fixed; no estimate uniform in p, irrationality result or distribution theorem is asserted.")),
                 Paragraph(Text("These are the actual marked quotient groups of the square-displacement growth family. On the admissible range, with Dgroup=(m^2-q^2)/2, the underlying groups are isomorphic to ZMod(p.natAbs) times ZMod((p*Dgroup).natAbs), with different coordinate markings. The parameter q varies the groups. The theorem concerns their exact signed-word return thresholds. The original single-crossing theorem supplies all five original clauses and uniqueness; the shared finite-log data, q-scaled fourth-order envelope and exact outside-band signs supply the two additional bounds. The lattice setting follows the Bajnok-Beatty source and the named repository developments; no literature-novelty claim is made."))),
-            DescribeRole.Theorem)));
+            DescribeRole.Theorem))));
 }
