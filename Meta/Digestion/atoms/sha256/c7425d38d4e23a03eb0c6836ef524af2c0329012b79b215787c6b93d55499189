@@ -1,0 +1,24 @@
+### 命题 19.5（不确定性保留为内部比较的约束）
+
+对自伴 $A,B$ 与态 $\rho$，令
+$\widetilde A=A-\operatorname{Tr}(\rho A)I$、$\widetilde B=B-\operatorname{Tr}(\rho B)I$。
+则
+
+$$
+\Delta_\rho A\,\Delta_\rho B
+ \ge\frac12|\operatorname{Tr}(\rho[A,B])|.
+$$
+
+**证明。**
+取 HS 向量 $X=\widetilde A\sqrt\rho$、$Y=\widetilde B\sqrt\rho$。
+其范数分别为两个标准差，内积为 $\operatorname{Tr}(\rho\widetilde A\widetilde B)$。
+Cauchy–Schwarz 说明标准差乘积不小于该内积的绝对值，再取虚部，即得所示界。
+
+**白话图景。**现有量子力学的各条标准规则，可以沿明确的依赖一条条接起来。
+本轮新增加的是可逆性的一个入口：若两个态已经生成全部关系，而且共同平方区别没有损失，
+操作就必须保留全部输入；同维时它就是酉门。
+再给可微的内部时钟，切向变化才写成 Schrödinger 方程。
+完整可逆仍允许读出结果不确定，因为保住的是整套概率关系。
+
+<a id="section-20"></a>
+

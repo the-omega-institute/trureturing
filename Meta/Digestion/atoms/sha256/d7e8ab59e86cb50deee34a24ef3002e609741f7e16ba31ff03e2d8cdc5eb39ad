@@ -1,0 +1,19 @@
+**定理 42.2（归一标签总箭头认证全部仪器分支）。** 若经典标签对象 $\mathbb C^t$ 及对应的实际输出被供应，令一条有结果的总过程在效果方向为
+
+$$
+\Theta:\mathcal B\otimes\mathbb C^t
+=\bigoplus_{u=1}^t\mathcal B\longrightarrow\mathcal A.
+\tag{42.1}
+$$
+
+若这个同一总箭头属于 C102 菜单，则其分量 $\Phi_u(b)=\Theta(b\otimes e_u)$ 全部完全正，并满足
+
+$$
+E_u=\Phi_u(1)\ge0,\qquad\sum_uE_u=1.
+\tag{42.2}
+$$
+
+通常有限迹对偶给完全正、迹不增分支 $\mathcal I_u$，总和保迹，结果概率为 $\operatorname{Tr}(\rho E_u)$。不要求每个非归一分支自己满足“参考边际完全不变”。
+
+证明。推论 40.2 给 $\Theta$ 幺完全正，直和块包含与它复合给每个 $\Phi_u$ 完全正。总单位为各块单位之和，故有 (42.2)。$E_u\le1$ 给状态分支迹不增，总和给保迹。总箭头的实际参考延伸限制到第 $u$ 块，便给同一 $\Phi_u\otimes\operatorname{id}$；无需为每个分支另造独立伙伴。各分支在参考效果上的作用通常为 $E_u\otimes r$，不能误写成 $1\otimes r$。∎
+

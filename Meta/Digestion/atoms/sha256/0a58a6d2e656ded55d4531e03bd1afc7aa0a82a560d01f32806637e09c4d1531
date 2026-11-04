@@ -1,0 +1,23 @@
+### 定义 12.2（内部序半径）
+
+定义正关系的归一截面与其最小响应
+
+<a id="eq-c92-alpha"></a>
+
+$$
+\mathcal B_\tau=\{W\in\mathcal S:W\ge0,\ \operatorname{Tr}(\tau W)=1\},
+ \qquad
+ \alpha=\min_{W\in\mathcal B_\tau}\ell(W).
+\tag{12.2}
+$$
+
+这个量不引入第二个资格公理。它量化 C92 在给定内部参照下的余量。
+集合非空，因为 $I\in\mathcal B_\tau$。
+若 $t=\lambda_{\min}(\tau)>0$，则其中每个 $W$ 都满足
+
+$$
+1=\operatorname{Tr}(\tau W)\ge t\operatorname{Tr} W\ge t\left\lVert W\right\rVert_{\mathrm{op}}.
+$$
+
+该集合闭且有界，有限维下紧；因此最小值有限且达到，并且 $\alpha\le1$。
+

@@ -1,0 +1,8 @@
+If $A_i$ fails, the first refresh encountered along this backward path is at a time strictly greater than $i$. By (1.2), $b_i$ is its fresh label and has birth time greater than $i$, whereas $a_i$ has birth time at most $i$. The disjoint source labels therefore give $a_i\ne b_i$. Equivalently, $\{a_i=b_i\}\subseteq A_i$, and hence
+
+$$
+\mathbb P(a_i=b_i)\leq q^d,\qquad
+\mathbb P(a_i\ne b_i)\geq1-q^d.
+\tag{2.10}
+$$
+

@@ -1,0 +1,14 @@
+### 5.5 把模型误差和实际编译接到共同恢复
+
+为避免支持变化造成未定义操作，名义 Petz 回推可在整个输出空间上补全为
+
+$$
+\mathcal R_0(X)=\mathcal P_{\sigma,\mathcal N_0}(X)
+       +\operatorname{Tr}[(I-P_0)X]\rho_*,\qquad
+ P_0=\operatorname{supp}\mathcal N_0(\sigma),
+$$
+
+其中 $\rho_*$ 是固定源态。它是全空间 CPTP 映射。其在名义向前输出上的误差
+$e_0=\|\mathcal R_0\mathcal N_0-\operatorname{id}\|_\diamond$
+须由前文*针对指定 Petz 回推*的定理或另行验证取得，不能把“某个恢复器存在”的界直接赋给它。
+

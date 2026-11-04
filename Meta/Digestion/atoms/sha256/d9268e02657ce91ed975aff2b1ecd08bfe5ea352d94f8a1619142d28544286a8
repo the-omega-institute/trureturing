@@ -1,0 +1,55 @@
+**Theorem 28.3 (accumulation on one selected history to a singleton).**
+For every recorder (27.1), every $d\ge0$, and every fixed legal prefix
+$h_0$ ending at $Q_d(0)$, there is a continuation $v$ of exactly $m$
+actual promotions such that
+
+$$
+t(h_0v)=Q_d(m),\qquad
+|J(h_0v)|-|J(h_0)|\ge\frac{dm}{2},\qquad
+N(Q_d(m))=4m-1.
+\tag{IV.77}
+$$
+
+In particular the maximum over histories at this recorder-independent
+singleton orientation endpoint is at least
+$\frac m2\log_2m$. The assertion selects a history for each recorder;
+it does not impose this length on every history.
+
+**Proof.** Suppose the already selected prefix $h_k$ has quotient
+$U_{d,k}$ and put $\ell_k=d-\operatorname{pop}(k)$. Theorem 28.2
+supplies $2^{\ell_k}$ legal successors with the same next quotient
+and distinct ordered answers. Their $J$ words must be distinct and
+extend the one word $J(h_k)$. If $\ell_k>0$, the same finite-word
+count used in Theorem 27.2 forces one successor suffix to have length
+at least $\ell_k$; for $\ell_k=0$ prefix preservation suffices.
+Choose that successor as $h_{k+1}$. Uniformity over **every** current
+representative permits this choice for each $k<m$, without discarding
+the previously accumulated prefix. All selected histories are nested.
+
+For $d\ge1$, each of the $d$ binary positions occurs in exactly $m/2$
+of $0,\ldots,m-1$. Thus
+
+$$
+\sum_{k=0}^{m-1}\ell_k
+=dm-\sum_{k=0}^{m-1}\operatorname{pop}(k)=\frac{dm}{2}.
+\tag{IV.78}
+$$
+
+The final singleton in Theorem 28.2 forces the same $Q_d(m)$,
+independently of the recorder and all selected choices. Its grade is
+(IV.75). For $d=0$ there is just $P_R:C\to\langle\beta,\beta\rangle$;
+the bound is zero. This endpoint has the unique full history
+$P_\varepsilon S_\varepsilon P_R$. For $d\ge1$, terminal histories
+need not be unique: the last promotions of two different bottom
+cherries can be interchanged. Singleton orientation is not singleton
+chronology.
+
+For example, at $d=1$, $\langle C,C\rangle$ has promotions $P_{LR}$
+and $P_{RR}$ to the different ordered terms
+$\langle Q_0(1),C\rangle$ and $\langle C,Q_0(1)\rangle$ with equal
+quotient. Promoting the remaining alpha in either reaches the same
+$\langle Q_0(1),Q_0(1)\rangle$. At least one first choice adds a bit;
+reconvergence cannot shorten that selected word. Records on different
+histories may later coincide, so no history recovery is inferred.
+$\square$
+

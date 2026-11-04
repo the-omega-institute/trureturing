@@ -1,0 +1,23 @@
+### 22.2 从可加读出到效果与 Born 概率
+
+在这一表示内，假设二元事件读出对混合仿射、归一且在全部密度态上非负。
+有限维迹配对给唯一 Hermitian $F$，使
+
+$$
+p_F(\rho)=\operatorname{Tr}(\rho F).
+$$
+
+在全部秩一态上有 $0\le p_F\le1$，等价于 $0\le F\le I$。
+互斥穷尽结果的可加性给 $\sum_xF_x=I$，即 POVM 结构。
+当同根相干比较的读出被校准为方向投影
+$F=\lvert \phi\rangle\langle \phi\rvert$ 时，
+
+$$
+p_F(\lvert \psi\rangle\langle \psi\rvert)=|\langle\phi|\psi\rangle|^2.
+$$
+
+因此平方律的表示依赖相干比较、线性混合与共同正性；
+“递归可以停止”本身不能替代这几个前件。
+C94 增加的是平方比较的 Schwarz 缺额如何被忠实参照迫为零，
+从而把已保留的读出锁成普通乘积闭合的代数。
+

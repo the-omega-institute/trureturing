@@ -1,0 +1,136 @@
+**Theorem 2.1 (sharp coherent native complete-word recorder).** There is
+one deterministic computable map $J$ on all finite legal LAB histories,
+independent of any future horizon, such that for every reachable source
+$t$, every $h,h'\in\mathcal H(t)$, every legal next event $e$, and every
+finite binary word $q$,
+
+$$
+\begin{aligned}
+J(h)=J(h')&\Longrightarrow h=h',\\
+J(h)&\preceq J(he),\\
+\lambda_t(q)&\le c_{|q|}(F(t)),\\
+\max_{h\in\mathcal H(t)}|J(h)|&=g(t).
+\end{aligned}
+\tag{IV.5}
+$$
+
+Prefix preservation consequently holds along every finite legal extension.
+At **each** source the displayed maximum is minimal among all full-fibre
+injections into complete observable binary words, even without a coherence
+requirement. The same single recorder attains all these minima while
+preserving literal history prefixes.
+
+Proof. We use finite prefix-subtree allocation inside induction on the
+native grade $N$. The allocation argument is included to specify both the
+chosen codebooks and the strict-ancestor obligation.
+
+For $g=\lfloor\log_2 F\rfloor$, integer division gives
+
+$$
+\begin{gathered}
+c_0(F)=F,\qquad c_g(F)=1,\qquad c_{g+1}(F)=0,\\
+c_d(F)\in\{2c_{d+1}(F),\,2c_{d+1}(F)+1\},\\
+\sum_i c_d(F_i)\le c_d\!\left(\sum_iF_i\right).
+\end{gathered}
+\tag{IV.6}
+$$
+
+For the last inequality write $F_i=2^d k_i+r_i$ with
+$0\le r_i<2^d$ and sum. The preceding identity implies
+$c_d(F)\le1+2c_{d+1}(F)$.
+
+First consider distinct already assigned words $C$ satisfying all quotas
+for this $F$. If $\lambda_C(q)<c_{|q|}(F)$, a new word extending $q$ can
+be inserted while preserving all quotas at or below $q$. If $q$ is not
+occupied, insert $q$ itself. If $q\in C$, put $d=|q|$. Its two child loads
+satisfy
+
+$$
+\lambda_C(q0)+\lambda_C(q1)=\lambda_C(q)-1
+ <c_d(F)-1\le2c_{d+1}(F).
+\tag{IV.7}
+$$
+
+At least one child therefore has strict slack. Descend into the child
+chosen by Convention 1.3 and repeat. Every visited node has strict slack.
+No such node has depth greater than $g$, since its quota would be zero.
+At depth $g$ a slack node cannot be occupied: occupancy would give load
+at least one, equal to its quota. Hence descent reaches a free node $x$
+after finitely many steps. Inserting $x$ raises the loads exactly along
+its ancestor chain, where strict slack has been established below the
+starting $q$. All other loads remain unchanged. Strict ancestors above
+that starting node still need their own slack; this local argument alone
+does not supply it.
+
+Now take exactly $F$ labelled tokens with lower-bound words $b_i$, allowing
+repeated lower bounds, and suppose their multiplicity demand satisfies
+
+$$
+D(q):=|\{i:q\preceq b_i\}|\le c_{|q|}(F)
+\quad\hbox{for every }q.
+\tag{IV.8}
+$$
+
+Process tokens in Convention 1.3's decreasing lower-bound-length order.
+Suppose the current token is $i$ and earlier tokens $j$ have been assigned
+distinct words $x_j\succeq b_j$ obeying all quotas. For **every** ancestor
+$q\preceq b_i$, if $q\preceq x_j$, then
+
+$$
+|b_j|\ge |b_i|\ge |q|,\qquad b_j\preceq x_j
+\quad\Longrightarrow\quad q\preceq b_j.
+$$
+
+The current token itself contributes to $D(q)$, so
+
+$$
+\lambda_C(q)\le|\{\hbox{earlier }j:q\preceq b_j\}|
+\le D(q)-1<c_{|q|}(F).
+\tag{IV.9}
+$$
+
+This supplies strict slack at $b_i$ **and every strict ancestor** of
+$b_i$. Apply the preceding descent starting at $b_i$. The new assignment
+$x_i$ extends its own lower bound, is distinct from earlier assignments,
+and preserves every quota: (IV.9) covers the ancestors above $b_i$, the
+descent covers the path below it, and other nodes are unaffected. Repeat
+for all tokens. The length comparison here is between lower bounds,
+not between the lengths of already assigned words.
+
+Apply this construction to the actual native predecessor partition.
+At alpha assign $J(\varepsilon)=\varepsilon$; its singleton codebook
+satisfies the quotas for $F=1$. Having defined all lower grades, fix a
+noninitial $t$. For every labelled incoming edge $e:u\to t$ and every
+$h\in\mathcal H(u)$, form the token labelled $he$ with lower bound
+$b_{he}=J(h)$. By (IV.3) these are exactly all $F(t)$ distinct histories
+at $t$. For $d=|q|$, the already proved predecessor quotas give
+
+$$
+D_t(q)=\sum_{e:u\to t}\lambda_u(q)
+ \le\sum_{e:u\to t}\left\lfloor\frac{F(u)}{2^d}\right\rfloor
+ \le\left\lfloor\frac{F(t)}{2^d}\right\rfloor.
+\tag{IV.10}
+$$
+
+Multiplicity is over labelled incoming edges; no predecessor fibre or
+history is discarded. Allocate these tokens by the preceding argument
+and define $J(he)$ to be their assigned words. Distinctness gives the
+whole-fibre injection, the lower-bound condition gives the immediate
+prefix law, and all quotas are preserved. Every predecessor grade is
+strictly smaller, so induction defines one family on all finite histories.
+Its choices at $t$ use only predecessor codebooks and the fixed convention;
+no future source or maximum grade is consulted. Iterating the immediate
+prefix law proves preservation along every legal continuation.
+
+The quota at depth $g(t)+1$ forbids any longer codeword, proving the
+upper bound on maximum length. For $g(t)\ge1$, the number of complete
+binary words of length at most $g(t)-1$ is $2^{g(t)}-1<F(t)$. Thus no
+injection of the full fibre can have a smaller maximum. If $g(t)=0$,
+then $F(t)=1$ and the maximum is zero. More generally, maximum $L$ allows
+exactly $1+2+\cdots+2^L=2^{L+1}-1$ complete word values; this is the
+standard complete-word count, already used in EndpointFiniteWordRecovery
+Corollary 90.3. Its application here proves the static lower bound
+$\lfloor\log_2 F(t)\rfloor$. The construction attains it simultaneously
+at every source. The finite algorithm and its inverse are detailed in
+Theorem 3.1. $\square$
+

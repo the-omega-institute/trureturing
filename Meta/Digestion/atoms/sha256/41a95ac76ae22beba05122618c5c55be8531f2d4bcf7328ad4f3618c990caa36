@@ -1,0 +1,77 @@
+### 49.8. Controlled analytic remainder and all-effect local isolation
+
+The stable graph and its reduced objective are analytic. Uniqueness
+and the symmetry in Section 49.6 make the latter even. On a sufficiently
+small closed interval $[-r_0,r_0]$ inside that analytic neighborhood,
+Taylor's theorem gives the actual bound
+
+$$
+|\Phi_{\mathrm{red}}(b)-N(\xi_*)-C_{\mathrm{eff}}b^4|
+ \le M_6|b|^6,\quad
+M_6=\frac1{6!}\max_{|b|\le r_0}|\Phi_{\mathrm{red}}^{(6)}(b)|<\infty.
+\tag{49.40}
+$$
+
+Fix that $M_6$ and shrink the interval so $M_6r^2\le C_{\mathrm{eff}}/2$.
+This supplies a controlled, existential analytic neighborhood; no
+specific numerical radius is claimed. By (49.34) and continuity,
+the stable Hessian is uniformly positive definite on a smaller product
+neighborhood. Taylor's integral formula along each stable-variable
+segment from its graph gives a constant $c_s>0$ with
+
+$$
+\begin{aligned}
+f(E,U)-N(\xi_*)\ \ge{}&
+c_s\left[(u_\delta-u_\delta^*(b))^2
+                 +(u_a-u_a^*(b))^2\right]
+ +\frac{C_{\mathrm{eff}}}{2}b^4
+ +\frac{49}{360}\epsilon(E).
+\end{aligned}
+\tag{49.41}
+$$
+
+The quantifiers are: every phase feedback (49.20) in that neighborhood,
+and **every** $E\in\operatorname{Dens}_2$ satisfying the original
+constraint $\rho(E,U)=\xi_*$. Equation (49.22) is what allows (49.23)
+to pass from the pure reduced calculation to this all-effect statement.
+It includes mixed effects and all coherence phases, without assuming
+that the actual population is the pure endpoint.
+
+Equality $f=N(\xi_*)$ first forces $b=0$ and both stable displacements
+zero. The unique fixed-feedback minimizer in (49.23) then forces
+$E=\widehat E$; purity alone would not fix its coherence phase.
+Conversely these selected pairs attain equality. The two scalar orbits
+are distinct, since $y_*>0$ and the last two selected entries fix the
+common scalar. Compactness of that scalar circle and completeness of
+the chart give a full phase feedback neighborhood of their union.
+With $d_U$ exactly as in (43.1), bounded chart derivatives and
+$u_\delta^*=O(b^2),u_a^*=O(b^3)$ also imply, on a smaller neighborhood,
+
+$$
+f(E,U)-N(\xi_*)\ge c\,d_U(U,\xi_*)^4
+                         +\frac{49}{360}\epsilon(E),\qquad c>0.
+\tag{49.42}
+$$
+
+Indeed the fourth power of the total coordinate displacement is bounded
+by a constant times the two stable squares plus $b^4$ on a bounded
+small ball. The displacement $d_U$ is auxiliary; (49.1) is the
+prescribed distance throughout.
+
+For the pure constructed effect the exact branches satisfy
+
+$$
+\rho_+=2(q+\delta)=\xi_*,\qquad
+\rho_--\rho_+=2(1+2p+2x-2y)>0
+\quad\text{at }a=b=0.
+\tag{49.43}
+$$
+
+For example the root bounds make the expression in parentheses larger
+than $1+24/25+32/25-8/5>0$. By continuity it stays positive for
+the nearby pure constructions. Throughout the chosen neighborhood,
+(49.22) and $t_-<0$ make the positive sign uniquely minimizing for
+every effect at the prescribed level, hence the actual branch statements
+used in (49.21)--(49.23). Both original distance branches, not just
+a formal positive-branch constraint, are accounted for.
+

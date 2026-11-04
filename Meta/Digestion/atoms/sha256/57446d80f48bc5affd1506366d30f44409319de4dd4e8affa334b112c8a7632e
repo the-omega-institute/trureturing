@@ -1,0 +1,54 @@
+**定理 9.4（无小残差门槛的截顶线性证书）。** 在同一实际实现上，若 $k_B>0$ 且已有独立有限数据认证 $s_A>0$，定义
+
+$$
+\kappa_A=\frac{2\sqrt{n_A}\,\max\{c_A d_B,c_Bd_A\}}{k_Bs_A},
+\qquad
+\delta_A^{\rm cap}=\min\{\delta_A,\kappa_A\epsilon\};
+\tag{9.17}
+$$
+
+若条件不具备，则只定义 $\delta_A^{\rm cap}=\delta_A$。交换 $A,B$ 得 $\kappa_B,\delta_B^{\rm cap}$。无论 $\epsilon\ge0$ 大小，均有
+
+$$
+\sup_{\|a\|=1}\|D^A_aa\|\le\delta_A^{\rm cap},
+\quad
+\|D^A_ac+D^A_ca\|\le2\delta_A^{\rm cap}\|a\|\|c\|,
+\quad
+\|D^A_{1_A}\|_{\rm op}\le u_A\min\{d_A,2\delta_A^{\rm cap}\}.
+\tag{9.18}
+$$
+
+最终应把较尖的正分母选项和这个全量选项逐方取最小：
+
+$$
+\delta_A^{\rm all}=\min\{\widehat\delta_A,\delta_A^{\rm cap}\},
+\qquad
+\delta_B^{\rm all}=\min\{\widehat\delta_B,\delta_B^{\rm cap}\}.
+\tag{9.19}
+$$
+
+其中 $\widehat\delta_J$ 仍按 (9.7) 定义；因此在 $W_J\ne\{0\}$ 时，$h_J\le0$ 只使 $\widehat\delta_J$ 回到 $\delta_J$，不关闭 (9.17)。当 $W_J=\{0\}$ 时，$\widehat\delta_J=\delta_J^{\rm all}=0$；此时没有正谱下界可供 (9.17) 使用，故 $\delta_J^{\rm cap}=\delta_J$，在允许的非紧 $d_J$ 上界下未必为零。当 $k_{\rm partner}=0$ 或没有独立正的 $s_J$ 时，(9.17) 不取 $0/0$，回到原证书。式 (9.18) 的三类消费者可同时对两方使用，(9.8) 即按 (9.19) 读取。
+
+证明。对 $A$ 方的单位 $a$ 置 $z=D^A_aa$，并令
+
+$$
+\mu=k_Bs_A,
+\qquad p=\sqrt{n_A}c_A d_B,
+\qquad q=\sqrt{n_A}c_B.
+$$
+
+由 (9.12) 和 $z\in W_A$ 得
+
+$$
+(\mu-q\epsilon)\|z\|\le p\epsilon
+\quad\text{只在左端正时使用}.
+$$
+
+若 $q=0$，该式给 $\|z\|\le p\epsilon/\mu\le\kappa_A\epsilon$。若 $q>0$ 且 $\epsilon\le\mu/(2q)$，则左端系数至少 $\mu/2$，故 $\|z\|\le2p\epsilon/\mu\le\kappa_A\epsilon$；若 $\epsilon\ge\mu/(2q)$，不除以可能为负的左端，而直接用既有 $\|z\|\le d_A$，得到
+
+$$
+\|z\|\le d_A\le\frac{2qd_A}{\mu}\epsilon\le\kappa_A\epsilon.
+$$
+
+这覆盖每个 $\epsilon\ge0$，阈值只出现在证明的二分，未成为证书适用范围的前件。对任意单位向量的界再按齐次性推广，并逐字应用 (6.17) 的极化和 $D^A_a1_A=0$；两方交换。最后与 (9.7) 取最小得到 (9.19)。∎
+

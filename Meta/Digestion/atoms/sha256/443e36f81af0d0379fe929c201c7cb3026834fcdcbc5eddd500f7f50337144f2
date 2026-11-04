@@ -1,0 +1,31 @@
+**Theorem 48.4 (all nonphase pure low-defect inputs descend to phase).** Let
+$F=\psi\psi^\dagger$, $0<\rho(E,U)=\xi\le R_\star$, $g(E,U)<e^2$, and let
+$\sigma$ be the active sign. If $U$ is nonphase relative to $U_\sigma$,
+there is an actual pure phase pair at the same true original level with
+strictly smaller $g$.
+
+**Proof.** Apply Lemma 48.2 whenever some off-diagonal entry of
+$V_\sigma$ connects two unequal labels $\ell_i^\sigma\ne\ell_j^\sigma$.
+Otherwise $V_\sigma$ is block diagonal in the partition defined by equal
+labels: every off-diagonal entry between different blocks is zero. In each
+block diagonalize the unitary block and assign its eigenvalues to the
+coordinates of that block. This produces a phase vector $v$ with the same
+complex trace. Since the label is constant on a block,
+
+$$
+ \sum_{i\ \mathrm{in\ block}}(V_\sigma)_{ii}\ell_i^\sigma
+ =\ell_{\mathrm{block}}\operatorname{Tr}(V_{\sigma,\mathrm{block}})
+ =\ell_{\mathrm{block}}\sum_{i\ \mathrm{in\ block}}v_i.
+\tag{48.18}
+$$
+
+Thus the phase pair has the same $E$, $\psi$, active sign, level, scalar
+recovery and $g$. If all blocks were scalar, $V_\sigma$ would be diagonal,
+contrary to the hypothesis. A nonscalar unitary block has two distinct
+assigned eigenvalues in two positions $i,j$, while their labels agree.
+Since $g<e^2$ and $H_0\succeq e^2I$, the original scalar recovery is
+nonzero: $g=\psi^\dagger H_0\psi-|\chi_\sigma|^2<e^2$ implies
+$|\chi_\sigma|>0$. Theorem 48.3 now gives a strict same-level phase
+improvement. All spectral eigenvalue multiplicities, zero entries of
+$Z$, zero individual recoveries, and repeated labels are allowed. $\square$
+

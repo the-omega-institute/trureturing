@@ -1,0 +1,181 @@
+**Theorem 43.6 (uniform separation of original strict global
+minimizers and their actual endpoint limits).** Suppose
+$D_{\mathrm{sel}}(\beta)>0$. Choose $0<r\le1$ as in Theorems
+43.3 and 43.5 near $\beta$. There is $\eta>0$ such that every
+original global minimizer at every level
+$\beta<\xi<\beta+\eta$ satisfies
+
+$$
+              d_U(U,\xi)\ge\frac{r^2}{4}.
+\tag{43.22}
+$$
+
+These minima have $m(\xi)<N(\xi)$; no phase-feedback or rank
+restriction is imposed on the minimizing input. Every subsequential
+actual endpoint limit of such minimizers belongs to
+$\mathcal A_\beta\setminus\mathcal G_\beta$ and retains the same
+positive feedback separation. In particular an original strict global
+minimizing branch coalescing with $\mathcal G_\beta$ can do so only
+if $D_{\mathrm{sel}}(\beta)=0$.
+
+*Proof.* Take $\eta$ small enough that the entire right interval
+lies in $(0,R)$, in the isolation interval, and in (39.29).
+Fix any $X=(E,U)\in\mathcal A_\xi$ there. The same-effect
+spectral/Birkhoff decomposition of Theorem 42.3 has
+$w=\sum_j\theta_jw_j$ with all $\theta_j>0$ and
+$w_j\in\mathbb T^4$. By (42.25), every $(E,U_j)$ is a phase
+global minimizer at this same original level. Their values are
+$m(\xi)<N(\xi)$, so none is geometric and all satisfy
+$d_U(U_j,\xi)\ge r$. This inference uses actual global minimality
+and its equality preimage, not merely existence of a strict competitor.
+
+Let $v$ be any selected diagonal, including either orientation and
+any common scalar representative. Frobenius invariance under
+multiplication by $U_+$ gives $\|w_j-v\|_2\ge r$ for every $j$.
+Since $v,w_j$ have four unit-modulus coordinates,
+
+$$
+\begin{aligned}
+ \operatorname{Re}\langle v,v-w\rangle
+    &=\sum_j\theta_j\bigl(4-
+                          \operatorname{Re}\langle v,w_j\rangle\bigr)\\
+    &=\frac12\sum_j\theta_j\|v-w_j\|_2^2
+      \ge\frac{r^2}{2}.
+\end{aligned}
+\tag{43.23}
+$$
+
+Here $\langle v,w\rangle=\sum_k\bar v_kw_k$ and $\|v\|_2=2$.
+Cauchy--Schwarz therefore implies $\|v-w\|_2\ge r^2/4$.
+The original unitary $V_U=UU_+^\dagger$ has diagonal $w$, so
+
+$$
+ \|U-\operatorname{diag}(v)U_+\|_{\mathrm F}
+   =\|V_U-\operatorname{diag}(v)\|_{\mathrm F}
+   \ge\|w-v\|_2\ge r^2/4.
+\tag{43.24}
+$$
+
+Taking the infimum over all selected $v$ proves (43.22).
+This support calculation compares alternative whole feedbacks from
+the existing transport; it does not assign independent controls to
+spectral pieces of one effect. The input $E$ is unchanged in every
+replacement, including when it is mixed or singular.
+
+The compactness and endpoint continuity of Theorem 39.6 put every
+actual subsequential limit in $\mathcal A_\beta$.
+Continuity of the selected feedback orbits preserves (43.22), excluding
+$\mathcal G_\beta$. Actual global minimizing branches on a short
+right interval exist by that theorem and obey the same uniform
+separation. Finally (43.19) excludes negative determinant at $\beta$,
+and (43.22) excludes coalescence at positive determinant, proving the
+necessary zero-determinant condition. $\square$
+
+**Mathematical source correspondence 43.7.** The complete chart uses
+the actual phase variation (36.47) and its exact trace and amplitude
+identities, now with its trace coordinate allowed to vary. Its reduced
+scalar block uses the unique interior selector and strict scalar
+convexity of Theorem 37.5. The transverse block is exactly the
+expansion (36.52)--(36.54). The unchanged-effect comparison and its
+uniform impurity coefficient are Theorem 40.4. These inputs do not
+require the selected pair to be globally minimizing. The additional
+fixed-record deductions are complete local phase coverage, the full
+reduced Hessian isolation, the simple reduced null mode, and their
+attained-contact and original-minimizer separation consequences.
+The implicit function theorem and Taylor's integral formula enter
+only with the analytic domains and invertible or positive Hessians
+specified in (43.7)--(43.15).
+
+The boundary arguments use Theorems 39.5--39.6 and the exact
+same-effect phase value and minimizing preimage in Theorems 42.3--42.4.
+The only convex decomposition used in (43.23) is the spectral/Birkhoff
+decomposition of the given actual $U$. Its matrix
+$|Z_{ik}|^2$ is doubly stochastic, as required by the finite
+Birkhoff--von Neumann theorem cited in Section 42.7. No converse
+statement about the convexity of a specified normal-unitary orbit
+is needed. The reduced null mode is a second-derivative conclusion;
+no parameter transversality or higher-order bifurcation condition
+has been established by that calculation.
+
+For comparison with a global certificate,
+[Bandeira--Boumal--Singer, *Tightness of the maximum likelihood
+semidefinite relaxation for angular synchronization*,
+arXiv:1411.3272v3, Lemmas 4.3--4.4 and Section 4.3](https://arxiv.org/html/1411.3272v3),
+consider a Hermitian objective matrix $C$ and the feasible matrices
+$X\succeq0$ with $\operatorname{diag}X=\mathbf1$. Their certificate
+requires a Hermitian slack $S\succeq0$, $SX=0$, and $S+C$ real
+diagonal; rank $n-1$ of the slack yields uniqueness. Their Section
+4.3 distinguishes this full positivity from positivity only on the
+phase tangent space. The prescribed original distance and variable
+effect of (42.31) are additional constraints and parameters. No such
+uniform slack or equality kernel for them is supplied by (43.14).
+
+Likewise [Boumal, *Nonconvex phase synchronization*,
+arXiv:1601.06114v3, Theorem 4](https://arxiv.org/html/1601.06114v3)
+proves global sufficiency of second-order conditions for its
+unconstrained torus quadratic problem with $C=zz^*+\Delta$,
+unit-modulus $z$, $\operatorname{diag}C\ge0$, and the bounds
+
+$$
+ \|\Delta\|_{\mathrm{op}}\le\frac{n^{2/3}}{14},\qquad
+ \|\Delta z\|_\infty\le\frac{n^{2/3}\sqrt{\log n}}{14}.
+\tag{43.25}
+$$
+
+An exact correspondence of its feasible set and these hypotheses
+to the prescribed-distance, all-effect problem is absent here.
+Its global conclusion therefore is not an implication of the local
+Hessian calculation. These cited standard tools are intermediate
+comparisons; Theorems 43.2--43.6 are repo-derived fixed-record
+deductions, with no literature-priority assertion.
+
+**Unresolved mathematical obligations 43.8.** For any proposed
+preceding interval, the full value certificate remains
+
+$$
+ \Delta_\sigma(w)+b_\sigma(w)r
+            -2u(w)v(w)\sqrt{t_\sigma(w,\xi)-r^2}
+       \ge V(\xi)
+ \quad
+ \left\{\begin{array}{l}
+ w\in\mathbb T^4,\quad \sigma\text{ admissible},\\
+ r\in[t_\sigma,\min\{\sqrt{t_\sigma},J_\sigma\}].
+ \end{array}\right.
+\tag{43.26}
+$$
+
+This is (42.31), with the complete effect arc displayed. It requires
+all preceding levels, both original signs, every mixed and singular
+arc, and all zero-amplitude and active-endpoint cases. Theorem 43.3
+controls a neighborhood of the selected phase feedbacks when its
+selected determinant is positive. It supplies no comparison on the
+complement, where separated pure or mixed pairs can tie or win.
+Exact phase equality sets still require (36.7), and all original
+minimizing lifts still require the variance-zero conditions (42.25).
+Their complete evaluation is unresolved.
+
+The exact $\alpha,\beta$, their coincidence or separation, the
+identity and exhaustion of first competing globally minimizing
+branches, separated mixed contact at $\beta$, and any earlier pure
+equality ties remain undetermined. Endpoint exclusion at $\alpha$
+is established by (43.21) only under its positive-determinant
+hypothesis; endpoint inclusion or exclusion at determinant zero is
+unresolved. Nongeometric phase coalescence and original strict global
+minimizer coalescence in the stated scopes require determinant zero,
+but a zero determinant need not produce either coalescence or first
+loss and does not exclude simultaneous separated contact.
+The higher-order and global signs in the simple reduced null direction
+remain unresolved. An attained strict right competitor from a mixed
+contact is still not thereby a globally minimizing branch.
+
+The original mixed-minimizer exclusion near selected feedbacks in
+Theorem 40.4 remains valid without a determinant hypothesis. Purity
+on the already defined pre-$\beta$ prefix is not a certificate for
+locating that prefix, and cannot remove the mixed strict competitors
+in (43.26). Beyond $R$ the same-effect transport retains only its
+proved sufficient domain; all-effect transport outside it, beyond-four
+geometric ordering, and the remaining core-attainment obligations
+retain their unresolved boundaries. The full original first-loss
+ordering and actual equality/attainment problem is not settled by
+these local and endpoint alternatives.
+

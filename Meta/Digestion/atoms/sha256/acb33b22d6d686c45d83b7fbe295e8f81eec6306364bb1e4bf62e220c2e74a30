@@ -1,0 +1,68 @@
+### 定理 15.1（稳定代数、参照分块与全部可恢复态）
+
+在上述条件下，可选择同一有限载体的分解
+
+$$
+\mathcal H=\bigoplus_j(\mathcal H_{L_j}\otimes\mathcal H_{R_j}),
+\qquad
+\mathcal F=\bigoplus_j\bigl(B(\mathcal H_{L_j})\otimes I_{R_j}\bigr),
+$$
+
+使忠实参照具有形式
+
+<a id="eq-v90-shared-reference"></a>
+
+$$
+\sigma=\bigoplus_j p_j\,\sigma_{L_j}\otimes\omega_{R_j},
+\qquad p_j>0,\quad\sum_jp_j=1,
+\tag{15.1}
+$$
+
+其中各因子均为归一忠实态。往返过程固定的*全部*密度矩阵恰好是
+
+<a id="eq-v90-shared-family"></a>
+
+$$
+\boxed{\quad
+\rho=\bigoplus_j q_j\,\rho_{L_j}\otimes\omega_{R_j},
+\qquad q_j\ge0,\quad\sum_jq_j=1.
+\quad}
+\tag{15.2}
+$$
+
+这里 $\rho_{L_j}$ 可为任意密度矩阵；$q_j=0$ 时该因子的选取不影响状态。
+
+**证明。**
+第一步是有限矩阵子代数的标准表示。下面重述 v88 的分块论证，
+以核定哪些因子真的由同一个保态粗化锁住 [8](#ref-v88)。
+令 $P_j$ 为 $\mathcal F$ 的中心块投影。双模性给
+$E(P_jXP_k)=P_jE(X)P_k=0$ 当 $j\ne k$。
+保态性随即使 $\sigma$ 的跨块矩阵元为零。
+
+在第 $j$ 块，$E(I_{L_j}\otimes Y)$ 既属于该块的可见代数，
+又与全部 $X\otimes I$ 对易，故只能为 $f_j(Y)I$。
+$f_j$ 为归一正泛函，可写作 $f_j(Y)=\operatorname{Tr}(\omega_{R_j}Y)$。
+再用双模性得到
+
+$$
+E(X\otimes Y)=\operatorname{Tr}(\omega_{R_j}Y)\,X\otimes I.
+$$
+
+对所有 $X,Y$ 使用 $\phi_\sigma E=\phi_\sigma$，便知该块参照的所有乘积读数
+都等于 $p_j\operatorname{Tr}(\sigma_{L_j}X)\operatorname{Tr}(\omega_{R_j}Y)$，从而得到
+式 [(15.1)](#eq-v90-shared-reference)。整体忠实性迫使块权及两因子均忠实。
+
+最后，$\mathcal T(\rho)=\rho$ 当且仅当
+$X=\Gamma_\sigma^{-1}(\rho)\in\mathcal F$。正性使
+$X=\bigoplus_j X_j\otimes I$ 且 $X_j\ge0$，故
+
+$$
+\rho=\bigoplus_j p_j\,
+\sigma_{L_j}^{1/2}X_j\sigma_{L_j}^{1/2}\otimes\omega_{R_j}.
+$$
+
+把左因子的迹吸收到 $q_j$ 得式 [(15.2)](#eq-v90-shared-family)。
+反向，对该式取
+$X_j=(q_j/p_j)\sigma_{L_j}^{-1/2}\rho_{L_j}\sigma_{L_j}^{-1/2}$，
+即可得到一个正的不动关系元，故列出的每个态都固定。
+

@@ -17,6 +17,9 @@ internal sealed class ChannelTimeReversalNoGoDocument : IScribeDocumentDefinitio
             Describe.Lean(DescribeId.Create("unitarychannel"), DeclarationHandle.Create(Prefix + "unitaryChannel"), H("Conjugation by a matrix"),
                 StatementSource.FromAuthor(Disp(All("d", N, All("U", Mat(V("d")), Eq(Call("unitaryChannel", V("U")), UC(V("U"))))))), AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("For every natural dimension d and every complex d by d matrix U, unitaryChannel U is LinearMap.mulRight ℂ (star U) after LinearMap.mulLeft ℂ U. It sends X to U X (star U). For unitary U this is a completely positive trace-preserving map."))), DescribeRole.Definition),
+            Node("unitary-channel-cptp", "Unitary conjugation is a channel", UnitaryCptpFormula(),
+                "For every natural dimension d and every matrix U in Matrix.unitaryGroup (Fin d) ℂ, unitaryChannel U is completely positive and trace preserving.",
+                "unitaryChannel_cptp"),
             Describe.Lean(DescribeId.Create("claim"), DeclarationHandle.Create(Prefix + "claim"), H("No time reversal on all channels"),
                 StatementSource.FromAuthor(Disp(Eq(V("claim"), ClaimBody()))), AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("Section V.B, PDF page 7: \"We conjecture that this assumption can be lifted, and that the no-go theorem to time reversal applies also to symmetries of the set of quantum channels.\" The dimension d ranges over every natural number at least two. IsCPTP is the existing completely positive trace-preserving predicate on complex-linear maps of d by d matrices. For every natural dimension d and every d by d complex matrix U, conjugation by U is LinearMap.mulRight ℂ (star U) after LinearMap.mulLeft ℂ U, equal to LinearMap.mulLeftRight ℂ (U, star U). The displayed claim uses unitaryChannel in both targets. The two targets are conjugation by star U and by Matrix.transpose U. The quantifier ranges over every randomisation-consistent bijection of this channel set."))), DescribeRole.Definition),
@@ -46,6 +49,8 @@ internal sealed class ChannelTimeReversalNoGoDocument : IScribeDocumentDefinitio
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("chiribella-aurell-zyczkowski-2021-channel-time-reversal"),
                     ResolutionKind.Proved)))));
+    private static Formula UnitaryCptpFormula() => Disp(All("d", N, All("U", Mat(V("d")),
+        Imp(Member(V("U"), App(Q("Matrix", "unitaryGroup"), Fin(V("d")), C)), CPTP(Call("unitaryChannel", V("U")))))));
     private static Formula ClaimBody() => All("d", N, Imp(LE(D(2), V("d")), All("S", Arrow(Map(V("d")), Map(V("d"))),
         Imp(Call("IsChannelSymmetry", V("S")), And(Not(SourceTarget(false)), Not(SourceTarget(true)))))));
     private static Formula SourceTarget(bool transpose) => All("U", Mat(V("d")), Imp(Member(V("U"), App(Q("Matrix", "unitaryGroup"), Fin(V("d")), C)),

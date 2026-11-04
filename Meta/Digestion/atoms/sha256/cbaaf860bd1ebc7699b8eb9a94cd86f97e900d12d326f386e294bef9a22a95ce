@@ -1,0 +1,19 @@
+### 命题 5.1（Bloch 切箭头不是 Hilbert 正交补态）
+
+把 $n$ 与单位切向 $T$ 分别解释成 qubit 纯态投影 $P_n=(I+n\cdot\sigma)/2$、$P_T=(I+T\cdot\sigma)/2$，则
+
+$$
+\operatorname{tr}(P_nP_T)=\frac{1+n\cdot T}{2}=\frac12.
+$$
+
+因此它们不是 Hilbert 正交态。非零水平 ket 切向归一后 $\xi/\|\xi\|\in\psi^\perp$ 在 qubit 中对应的 Bloch 点反而是 $-n$。
+
+**证明。**第一式由 Pauli 乘法与 $n\cdot T=0$ 得到。在二复维空间，$\psi^\perp$ 为唯一正交纯态射线，其投影是 $I-P_n=(I-n\cdot\sigma)/2$，故对应 $-n$。更直接地取 $\psi=(1,0)$、水平切向 $\xi=(0,a)$，则
+
+$$
+\dot P=\ket\xi\bra\psi+\ket\psi\bra\xi,qquad
+\dot n=(2\operatorname{Re}a,2\operatorname{Im}a,0).
+$$
+
+归一 ket 的射线却始终为 $\ket1$；切箭头方向记录在相对相位中。
+
