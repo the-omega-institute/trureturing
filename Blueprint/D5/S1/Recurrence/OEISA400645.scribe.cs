@@ -37,7 +37,8 @@ internal sealed class OEISA400645Document : IScribeDocumentDefinition
             Node("result", "The signed rounded recurrence has the stated infinite limit",
                 ClaimBody(),
                 "The integer rounding bound and monotonicity give a Fibonacci upper estimate. With squaredLimit greater than 17/10, the rounding errors grow more slowly than the dominant mode. The exact value a(26)=324 controls the entire infinite error tail and gives a positive normalized projection limit above 73872/17. A weighted three-coordinate contraction gives a positive limit for normalized squares. Division and continuity of Real.sqrt give the consecutive-ratio limit. The quartic factorization identifies the largest octic root.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("bernath-a400645"), ResolutionKind.Proved)))));
 
     private static Formula RadicandBody() => Sub(
         Add(Add(Pow(Cast(Call("a", V("n")), Int()), D(2)),
@@ -79,9 +80,9 @@ internal sealed class OEISA400645Document : IScribeDocumentDefinition
 
     private static Formula Octic(Formula x) => Add(Sub(Sub(Sub(Pow(x, D(8)), Pow(x, D(6))), Pow(x, D(4))), Pow(x, D(2))), D(1));
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("oeis-a400645-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
-        H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+        H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula V(string name) => F.Id(name);
     private static Formula Named(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula Q(string owner, string name) => Seq(Named(owner), Dot, Named(name));
