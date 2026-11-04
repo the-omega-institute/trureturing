@@ -197,25 +197,19 @@ private lemma affine_matching_rule (P : ℕ) (s : Fin P → Bool → Bool × Boo
     intro i hi himage
     obtain ⟨k, hk, hki⟩ := Finset.mem_image.1 himage
     exact hM k hk (hki ▸ hi)
-  have hU (i : Fin P) : i ∈ U ↔ i ∉ M ∧ (finRotate P).symm i ∉ M := by
-    simp only [U, Finset.mem_filter, Finset.mem_univ, true_and, matchingInput,
-      decide_eq_false_iff_not, not_or]
-  have hdU : Disjoint (M ∪ M.image (finRotate P)) U := by
-    apply Finset.disjoint_left.2
-    intro i hi hu
-    rcases Finset.mem_union.1 hi with hi | hi
-    · exact (hU i).1 hu |>.1 hi
-    · obtain ⟨k, hk, rfl⟩ := Finset.mem_image.1 hi
-      exact (hU _).1 hu |>.2 (by simpa only [Equiv.symm_apply_apply] using hk)
-  have hcover : (M ∪ M.image (finRotate P)) ∪ U = Finset.univ := by
+  have hmem (i : Fin P) : i ∈ M.image (finRotate P) ↔ (finRotate P).symm i ∈ M := by
+    simpa only [← Finset.coe_image, Finset.mem_coe] using
+      (Set.mem_image_equiv (S := (M : Set (Fin P))) (f := finRotate P) (x := i))
+  have hUeq : U = (M ∪ M.image (finRotate P))ᶜ := by
     ext i
-    simp only [Finset.mem_union, Finset.mem_univ, iff_true]
-    by_cases hi : i ∈ M
-    · exact Or.inl (Or.inl hi)
-    · by_cases hp : (finRotate P).symm i ∈ M
-      · exact Or.inl (Or.inr (Finset.mem_image.2
-          ⟨(finRotate P).symm i, hp, Equiv.apply_symm_apply _ _⟩))
-      · exact Or.inr ((hU i).2 ⟨hi, hp⟩)
+    simp only [U, Finset.mem_filter, Finset.mem_univ, true_and, matchingInput,
+      decide_eq_false_iff_not, not_or, Finset.mem_compl, Finset.mem_union, hmem]
+  have hdU : Disjoint (M ∪ M.image (finRotate P)) U := by
+    rw [hUeq]
+    exact disjoint_compl_right
+  have hcover : (M ∪ M.image (finRotate P)) ∪ U = Finset.univ := by
+    rw [hUeq]
+    exact Finset.union_compl _
   have hsplit : baseline P s = (∑ i ∈ M, a i) +
       (∑ i ∈ M, a (finRotate P i)) + ∑ i ∈ U, a i := by
     change (∑ i, a i) = _
@@ -294,13 +288,12 @@ private lemma matching_input_injective (P : ℕ) (hodd : Odd P) (hP : 3 ≤ P)
     dsimp only [z]
     linarith
   have hform (k : ℕ) (hk : k < n + 1) : z ⟨k, hk⟩ = (-1 : ℤ) ^ k * z 0 := by
-    induction k with
-    | zero => simp
-    | succ k ih =>
-      have hk' : k < n := by omega
-      have hr : finRotate (n + 1) ⟨k, by omega⟩ = ⟨k + 1, hk⟩ := finRotate_of_lt hk'
-      rw [← hr, hstep, ih (by omega), pow_succ]
-      ring
+    have ha : Function.Antiperiodic z (1 : Fin (n + 1)) := by
+      intro i
+      simpa only [finRotate_apply] using hstep i
+    have hidx := @nsmul_one (Fin (n + 1)) (Fin.instAddMonoidWithOne (n + 1)) k
+    simpa only [zero_add, hidx, Fin.natCast_eq_mk hk, zsmul_eq_mul,
+      Int.cast_pow, Int.cast_neg, Int.cast_one] using ha.add_nsmul_eq (x := 0) k
   have hz : z 0 = 0 := by
     have hw := hstep (Fin.last n)
     rw [finRotate_last] at hw
