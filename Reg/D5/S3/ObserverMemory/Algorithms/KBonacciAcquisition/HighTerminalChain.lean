@@ -15,11 +15,11 @@ namespace Reg.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.HighTerminalCh
 noncomputable section
 open scoped BigOperators
 
-abbrev Parameters := {L : ℕ // 3 ≤ L}
+abbrev Parameters := ℕ
 
 @[reducible] def signature : Signature :=
   Reg.Support.SingleDependentReadout.signature Parameters
-    (fun p => FullScore p.1) (fun _ => ℝ)
+    (fun L => FullScore L) (fun _ => ℝ)
 
 def actual : Realization signature :=
   realize signature (fun _ _ y => support true y) (fun e => nomatch e)
@@ -29,8 +29,8 @@ def rejected : Realization signature :=
 
 @[reducible] def arena : Arena where
   signature := signature
-  Law R := ∀ (L : ℕ) (hL : 3 ≤ L) (y : FullScore L), EarlyPair y →
-    highLower hL y ≤ R.readout () ⟨L,hL⟩ y - inputAnchor hL y
+  Law R := ∀ {L : ℕ} (hL : 3 ≤ L) (y : FullScore L), EarlyPair y →
+    highLower hL y ≤ R.readout () L y - inputAnchor hL y
 
 private def terminalScore (L : ℕ) (t : ℝ) (ht : 0 ≤ t) : FullScore L where
   A := fun _ => 0
@@ -76,7 +76,7 @@ private theorem faithful_bridge :
 
 private theorem negative : ¬arena.Law rejected := by
   intro h
-  have h := h 3 (by omega) (terminalScore 3 0 le_rfl) (by intro b i hi hlate; rfl)
+  have h := @h 3 (by omega) (terminalScore 3 0 le_rfl) (by intro b i hi hlate; rfl)
   have hn : 0 ≤ highLower (by omega) (terminalScore 3 0 le_rfl) :=
     (le_max_left 0 _).trans (le_max_left _ _)
   change highLower (by omega) (terminalScore 3 0 le_rfl) ≤
@@ -93,7 +93,7 @@ def evidence : Registration arena (type_of% (@arbitrary_input_lower_bound)) wher
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected negative
   dependence := by
     intro i
-    refine ⟨⟨3,by omega⟩, terminalScore 3 0 le_rfl, terminalScore 3 1 (by norm_num), ?_⟩
+    refine ⟨3, terminalScore 3 0 le_rfl, terminalScore 3 1 (by norm_num), ?_⟩
     change support true (terminalScore 3 0 le_rfl) ≠
       support true (terminalScore 3 1 (by norm_num))
     rw [terminal_support,terminal_support]
@@ -114,7 +114,7 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{0,0
   variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
   sourceSelection := some {
     owner := `D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.HighTerminalChain,
-    definition := none, coordinates := #[0,2],
+    definition := none, coordinates := #[0],
     readouts := #[{
       path := #["body","body","body","body","arg","fn","arg"],
       stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
