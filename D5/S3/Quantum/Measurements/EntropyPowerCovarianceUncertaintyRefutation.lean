@@ -91,6 +91,7 @@ private lemma component_factor (u v x p : ℝ) :
   field_simp
   nlinarith
 
+open D5.S3.Fourier.Asymptotics.GaussianComplexMoments in
 private lemma gaussian_moments (m : ℝ) :
     Integrable (fun x => x * gaussianPDFReal m (1 / 2) x) ∧
     Integrable (fun x => x ^ 2 * gaussianPDFReal m (1 / 2) x) ∧
@@ -98,32 +99,37 @@ private lemma gaussian_moments (m : ℝ) :
     (∫ x, x ^ 2 * gaussianPDFReal m (1 / 2) x) = m ^ 2 + 1 / 2 ∧
     (∫ x, (x - m) ^ 2 * gaussianPDFReal m (1 / 2) x) = 1 / 2 := by
   have hv : (1 / 2 : ℝ≥0) ≠ 0 := by norm_num
-  have hlp := memLp_id_gaussianReal (μ := m) (v := (1 / 2)) 2
   have hpdf (x : ℝ) :
-      D5.S3.Fourier.Asymptotics.GaussianComplexMoments.gaussianDensity m (1 / 2) x =
+      gaussianDensity m (1 / 2) x =
         gaussianPDFReal m (1 / 2) x := by
-    simp only [D5.S3.Fourier.Asymptotics.GaussianComplexMoments.gaussianDensity,
+    simp only [gaussianDensity,
       gaussianPDFReal, NNReal.coe_ofNat, NNReal.coe_inv, div_eq_mul_inv, one_mul,
       mul_comm, mul_assoc]
   have hpow (n : ℕ) : Integrable (fun x => x ^ n * gaussianPDFReal m (1 / 2) x) := by
     apply (Integrable.iff_ofReal (𝕜 := ℂ)).mpr
     have h : Integrable (fun x =>
-        D5.S3.Fourier.Asymptotics.GaussianComplexMoments.densityMonomial m (1 / 2) n 0 x) :=
-      D5.S3.Fourier.Asymptotics.GaussianComplexMoments.density_monomial_integrable
+        densityMonomial m (1 / 2) n 0 x) :=
+      density_monomial_integrable
         m (1 / 2) (by norm_num) n 0
-    simpa only [D5.S3.Fourier.Asymptotics.GaussianComplexMoments.densityMonomial,
+    simpa only [densityMonomial,
       zero_mul, Complex.exp_zero, mul_one, hpdf, RCLike.ofReal_eq_complex_ofReal,
       Complex.ofReal_mul, Complex.ofReal_pow] using h
   have hmean : (∫ x, x * gaussianPDFReal m (1 / 2) x) = m := by
-    simpa only [integral_gaussianReal_eq_integral_smul hv, smul_eq_mul, mul_comm]
-      using (integral_id_gaussianReal (μ := m) (v := (1 / 2)))
-  have hvv := variance_eq_sub hlp
-  simp only [variance_id_gaussianReal, Pi.pow_apply, id_eq, integral_id_gaussianReal,
-    NNReal.coe_div, NNReal.coe_one, NNReal.coe_ofNat] at hvv
+    have h := density_moment_one m (1 / 2) (by norm_num) 0
+    simp only [densityMonomial, tiltedMean, gaussianMGF, gaussianExponent, zero_mul,
+      mul_zero, add_zero, Complex.exp_zero, mul_one, pow_one, hpdf,
+      ← Complex.ofReal_mul, integral_complex_ofReal] at h
+    norm_num at h
+    exact h
   have hsecond : (∫ x, x ^ 2 * gaussianPDFReal m (1 / 2) x) = m ^ 2 + 1 / 2 := by
-    rw [integral_gaussianReal_eq_integral_smul hv] at hvv
-    simp only [smul_eq_mul, mul_comm] at hvv
-    linarith
+    have h := density_moment_two m (1 / 2) (by norm_num) 0
+    simp only [densityMonomial, tiltedMean, gaussianMGF, gaussianExponent, zero_mul,
+      mul_zero, add_zero, Complex.exp_zero, mul_one, hpdf, ← Complex.ofReal_pow,
+      ← Complex.ofReal_mul, integral_complex_ofReal] at h
+    norm_num at h
+    apply Complex.ofReal_injective
+    push_cast
+    exact h
   have hc := variance_fun_id_gaussianReal (μ := m) (v := (1 / 2))
   rw [variance_eq_integral measurable_id'.aemeasurable, integral_id_gaussianReal,
     integral_gaussianReal_eq_integral_smul hv] at hc
