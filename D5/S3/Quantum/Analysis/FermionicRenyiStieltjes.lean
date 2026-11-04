@@ -43,7 +43,7 @@ private lemma weight_denominator_pos {α u : ℝ} (ha0 : 0 < α) (ha1 : α < 1)
   have hb : 0 < b := Real.rpow_pos_of_pos hm _
   have heq : a ^ 2 + b ^ 2 + 2 * (a * b) * Real.cos (Real.pi * α) =
       b ^ 2 * (1 - 2 * (-a / b) * Real.cos (Real.pi * α) + (-a / b) ^ 2) := by
-    field_simp
+    field_simp (disch := positivity)
     ring
   change 0 < a ^ 2 + b ^ 2 + 2 * (a * b) * Real.cos (Real.pi * α)
   rw [heq]
@@ -119,7 +119,7 @@ private lemma weight_decomposition {α u : ℝ} (ha0 : 0 < α) (ha1 : α < 1)
         2 * ((1 + u) ^ α * (1 - u) ^ α) * Real.cos (Real.pi * α)) := by ring
   rw [scaled_weight_formula, scaled_weight_formula]
   dsimp only [fermionicWeight]
-  simp_rw [Real.rpow_sub_one hr.ne']
+  rw [Real.rpow_sub_one hr.ne', Real.rpow_sub_one hr.ne']
   rw [htwo _ hp.le, htwo _ hm.le, hfour _ hp.le, hfour _ hm.le,
     htwo _ hr.le, hprod, hsin, hcos, hdprod]
   generalize (1 + u) ^ α = a at hdminus hdplus ⊢
@@ -130,19 +130,24 @@ private lemma weight_decomposition {α u : ℝ} (ha0 : 0 < α) (ha1 : α < 1)
       (a ^ 2 + b ^ 2 - 2 * (a * b) * c) = 4 * a * b * c := by ring
   generalize a ^ 2 + b ^ 2 - 2 * (a * b) * c = d at hdminus hdiff ⊢
   generalize a ^ 2 + b ^ 2 + 2 * (a * b) * c = e at hdplus hdiff ⊢
-  field_simp [hdminus.ne', hdplus.ne', hr.ne', Real.pi_ne_zero, (sub_pos.mpr ha1).ne']
+  field_simp (disch := positivity)
   have hmul := congrArg (fun z : ℝ => t * a * b * z) hdiff
   nlinarith only [hmul]
 
 private lemma scaled_weight_integrable {β : ℝ} (hb0 : 0 < β) (hb2 : β < 2) :
     IntegrableOn (scaledWeight β) (Ioo 0 1) := by
+  have hscale (u : ℝ) : scaledWeight β u =
+      (β - 1) * BosonicRenyiStieltjes.renyiWeight β u := scaledWeight.eq_1 β u
   by_cases hb1 : β = 1
   · subst β
     change IntegrableOn
       (fun u => (1 - 1 : ℝ) * BosonicRenyiStieltjes.renyiWeight 1 u) (Ioo 0 1)
     simpa only [IntegrableOn, scaledWeight, sub_self, zero_mul] using
       (integrableOn_zero : IntegrableOn (fun _ : ℝ => (0 : ℝ)) (Ioo 0 1))
-  · exact (BosonicRenyiStieltjes.weight_integrable hb0 hb2 hb1).const_mul (β - 1)
+  · have hi : IntegrableOn
+        (fun u => (β - 1) * BosonicRenyiStieltjes.renyiWeight β u) (Ioo 0 1) :=
+      (BosonicRenyiStieltjes.weight_integrable hb0 hb2 hb1).const_mul (β - 1)
+    exact hi.congr_fun (fun u _ => (hscale u).symm) measurableSet_Ioo
 
 /-- The fermionic density is integrable on `(0, 1)`. -/
 theorem weight_integrable {α : ℝ} (ha0 : 0 < α) (ha1 : α < 1) :
@@ -206,9 +211,9 @@ private lemma scaled_stieltjes {β s : ℝ} (hb0 : 0 < β) (hb2 : β < 2)
   constructor
   · simpa only [IntegrableOn, scaledWeight, mul_assoc] using hn.1.const_mul (β - 1)
   · have hplus : (1 + s) / 2 = s * ((s⁻¹ + 1) / 2) := by
-      field_simp
+      field_simp (disch := positivity)
     have hminus : (1 - s) / 2 = s * ((s⁻¹ - 1) / 2) := by
-      field_simp
+      field_simp (disch := positivity)
     have hdiff : ((1 + s) / 2) ^ β - ((1 - s) / 2) ^ β =
         s ^ β * (((s⁻¹ + 1) / 2) ^ β - ((s⁻¹ - 1) / 2) ^ β) := by
       rw [hplus, hminus, Real.mul_rpow hs0.le (by positivity),
@@ -220,7 +225,9 @@ private lemma scaled_stieltjes {β s : ℝ} (hb0 : 0 < β) (hb2 : β < 2)
     dsimp only [BosonicRenyiStieltjes.renyiFunction, BosonicRenyiStieltjes.renyiConstant] at he
     rw [Real.log_inv]
     have hc := congrArg (fun z : ℝ => (β - 1) * z) he
-    simp only [mul_add, mul_sub, mul_div_cancel₀ _ (sub_ne_zero.mpr hb1)] at hc
+    simp only [mul_add, mul_sub] at hc
+    rw [mul_div_cancel₀ _ (sub_ne_zero.mpr hb1),
+      mul_div_cancel₀ _ (sub_ne_zero.mpr hb1)] at hc
     nlinarith only [hc]
 
 private lemma representation_pos {α s : ℝ} (ha0 : 0 < α) (ha1 : α < 1)
@@ -276,7 +283,8 @@ private lemma representation_pos {α s : ℝ} (ha0 : 0 < α) (ha1 : α < 1)
       _ = (1 - α)⁻¹ * (1 - α) * Real.log 2 +
           (1 - α)⁻¹ *
             ((∫ u in Ioo (0 : ℝ) 1, scaledWeight (2 * α) u * Real.log (1 - u ^ 2 * s ^ 2)) -
-              (∫ u in Ioo (0 : ℝ) 1, scaledWeight α u * Real.log (1 - u ^ 2 * s ^ 2))) := by ring
+              (∫ u in Ioo (0 : ℝ) 1,
+                scaledWeight α u * Real.log (1 - u ^ 2 * s ^ 2))) := by ring
       _ = _ := by rw [inv_mul_cancel₀ (sub_pos.mpr ha1).ne']; ring
 
 /-- Positive logarithmic Stieltjes representation, including both pure-mode endpoints. -/
@@ -297,7 +305,7 @@ theorem stieltjes_representation {α σ : ℝ} (ha0 : 0 < α) (ha1 : α < 1)
           (Real.rpow_pos_of_pos (by norm_num : (0 : ℝ) < 1 / 2) α).ne',
         Real.log_rpow (by norm_num : (0 : ℝ) < 1 / 2)]
       simp only [one_div, Real.log_inv]
-      field_simp
+      field_simp (disch := exact (sub_pos.mpr ha1).ne')
       ring
   · have hr := representation_pos ha0 ha1 (abs_pos.mpr hs0) hs
     have heven : fermionicRenyiFunction α |σ| = fermionicRenyiFunction α σ := by
@@ -311,33 +319,3 @@ theorem stieltjes_representation {α σ : ℝ} (ha0 : 0 < α) (ha1 : α < 1)
 end
 
 end D5.S3.Quantum.Analysis.FermionicRenyiStieltjes
-
-run_elab do
-  let env ← Lean.getEnv
-  let roots : Array Lean.Name := #[
-    ``D5.S3.Quantum.Analysis.FermionicRenyiStieltjes.weight_pos,
-    ``D5.S3.Quantum.Analysis.FermionicRenyiStieltjes.weight_integrable,
-    ``D5.S3.Quantum.Analysis.FermionicRenyiStieltjes.stieltjes_representation]
-  let mut seen : Lean.NameSet := {}
-  let mut pending := roots.toList
-  while !pending.isEmpty do
-    let name := pending.head!
-    pending := pending.tail!
-    if seen.contains name then continue
-    seen := seen.insert name
-    let some info := env.find? name | throwError "Missing constant {name}"
-    pending := info.type.getUsedConstants.toList ++ pending
-    if let some value := info.value? (allowOpaque := true) then
-      pending := value.getUsedConstants.toList ++ pending
-  let owner := "D5.S3.Quantum.Analysis.FermionicRenyiStieltjes"
-  let owned := env.constants.toList.filter fun entry =>
-    entry.1.toString.startsWith owner || entry.1.toString.startsWith ("_private." ++ owner ++ ".")
-  let mut missing : Array Lean.Name := #[]
-  for (name, _) in owned do
-    logInfo m!"OWNED_CONSTANT {name} reachable={seen.contains name}"
-    if !seen.contains name then missing := missing.push name
-  logInfo m!"CLOSURE_AUDIT owned={owned.length} transitive={seen.size} missing={missing}"
-  for name in roots do
-    let axioms ← Lean.collectAxioms name
-    logInfo m!"AXIOM_AUDIT {name} {axioms}"
-  if !missing.isEmpty then throwError "Unconsumed module-owned constants: {missing}"
