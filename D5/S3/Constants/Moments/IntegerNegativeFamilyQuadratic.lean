@@ -37,11 +37,13 @@ private theorem family_form_gram {k d : ℕ} (M : Fin d → Fin d → ℝ)
   classical
   calc
     _ = ∑ a, ∑ b, ∑ j, ∑ l, t j * t l * (A j a * A l b * M a b) := by
-      simp only [family_form, Finset.sum_mul_sum, Finset.sum_mul]
+      dsimp only [family_form]
       apply Finset.sum_congr rfl
       intro a _
       apply Finset.sum_congr rfl
       intro b _
+      rw [Finset.sum_mul_sum]
+      simp only [Finset.sum_mul]
       apply Finset.sum_congr rfl
       intro j _
       apply Finset.sum_congr rfl
@@ -86,10 +88,10 @@ private theorem family_form_scale_rows {k d : ℕ} (M : Fin d → Fin d → ℝ)
     ring
   dsimp only [family_form]
   simp_rw [hlin]
-  rw [Finset.mul_sum]
+  conv_rhs => rw [Finset.mul_sum]
   apply Finset.sum_congr rfl
   intro a _
-  rw [Finset.mul_sum]
+  conv_rhs => rw [Finset.mul_sum]
   apply Finset.sum_congr rfl
   intro b _
   ring
@@ -216,11 +218,12 @@ theorem exists_integer_negative_family_quadratic {k d : ℕ}
   have hK : IsCompact K := isCompact_sphere _ _
   have hne (t : Fin k → ℝ) (ht : t ∈ K) : t ≠ 0 := by
     intro h
-    simpa [K, h] using ht
+    simp [K, h] at ht
   have hS (t : Fin k → ℝ) (ht : t ∈ K) : 0 < S t := sum_sq_pos t (hne t ht)
   have hc : ContinuousOn (fun t => -family_form M A t / S t) K := by
     apply ContinuousOn.div
-    · exact (show Continuous (fun t => -family_form M A t) by dsimp [family_form]; fun_prop).continuousOn
+    · exact (show Continuous (fun t => -family_form M A t) by
+        dsimp [family_form]; fun_prop).continuousOn
     · exact (show Continuous S by dsimp [S]; fun_prop).continuousOn
     · intro t ht
       exact (hS t ht).ne'

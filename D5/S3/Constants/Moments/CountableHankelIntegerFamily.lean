@@ -4,12 +4,14 @@
    mirror-E: none(waiver:countable-spectrum-classical-analysis)
    anchors: []
    utility: none
-   digest: One integer coefficient matrix realizes a full finite-dimensional negative polynomial subspace. -/
+   digest: One integer matrix realizes a complete-spectrum negative polynomial subspace. -/
 
 import D5.S3.Constants.Moments.CountableHankelIntegerWitness
 import D5.S3.Constants.Moments.CountableHankelNegativeFamily
 import D5.S3.Constants.Moments.IntegerNegativeFamilyQuadratic
 import Mathlib.Algebra.Polynomial.Eval.Degree
+
+/-! A common degree and simultaneous approximation retain the complete spectral form. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
