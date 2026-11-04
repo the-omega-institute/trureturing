@@ -3009,3 +3009,243 @@ $\operatorname{Tr}[(F\otimes t_jI_0)Y]$，故 (31.3) 成立；反之取外部态
 [C122 定理 5.6–5.8](AURIC_INTERNAL_BINARY_RECIPROCITY_AND_EXPLICIT_RECONNECTION_C122.md#thm-c122-finite-tomography) 的系统通道层析及实际恢复证书仍需其自己的同通道、确定性实现与误差前件，不从 (29.2) 的率读数得到全 $\Psi_j$。FIB [定理 143.2 与命题 144.2](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_III.md#143-joint-density-on-the-same-exact-rank-two-common-partitions) 的同见证全 $64$ 坐标逼近不供应这里的精确零式；[C123 §§18–20](AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md#18-保留原返回尺度的指定-lorentz-比较群) 的原返回尺度及指定 $H^0$ 分类也不供应新的准备、仪器或合法操作。各结果的来源、量词和操作域分别保留。
 
 ## 追加锚（本行以下为增补区）
+
+## 32. 小校准缺陷与共同四维实线性预测载体的分离
+
+**定义 32.1（固定仪器的比较族与续接域）。** 本节只在定义 25.1 已假设的有限复矩阵、Born 评价及 CP 仪器类内给反例。取 $H=K=M=\mathbb C^2$，私有记忆基为 $|1\rangle,|2\rangle$，$Q_b=|b\rangle\langle b|$，固定同一校准记忆准备 $\tau=I_M/2$。每个模型成员只有一个反复调用的完整仪器 $\{V_j^\theta\}_{j=0}^3$；参数 $\theta$ 在该成员的全部校准及全部历史中保持不变，不是可调用控制。所有原输出 $j$ 均保留，$0$ 可命名为成功，$1,2,3$ 为失败；每个输出都回到同型端口 $H\otimes M$，其后继续调用仍合法。失败没有被定义为停止或被删除。
+
+原记录档案按 $w\mapsto wj$ 追加，所有有限记录词均有完整概率，包括零概率词。仪器不读取旧档案；本节选用的未来事件只问一个新输出是否为 $0$，也不读取旧档案。计算这种事件的边缘概率是对完整概率表求和，不是实际擦除、屏蔽或撤销旧记录访问权。校准探针及读回沿用定义 25.1 的独立供应前件；见证运行只从同一个 $P_0\otimes\tau$ 开始，之后不重备系统或记忆。
+
+**定理 32.2（忠实且效果独立的小缺陷族）。** 存在定义 32.1 的显式族，参数范围为 $0<\theta\le1/8192$，满足定义 25.1 的全部前件，且同时可取 $\delta_j=2\theta$。其实际 (25.8) 证书满足 $t_j<1$ 及 $\Delta(\theta)\to0$，而第 33 节选定的同仪器有限 $5\times5$ 共同前缀／后缀响应表，对每个这样的 $\theta$ 都有准确实秩五。因此，任何实现该合法族的共同实线性预测载体都至少五维；这些小缺陷前件不蕴含准确的共同四维实线性载体。
+
+证明。先取成熟的 qubit 四面体测量作为中间构件，使用以下固定坐标：
+
+$$
+\begin{aligned}
+\zeta&=e^{2\pi i/3},&
+|\psi_0\rangle&=(1,0)^{\mathsf T},&
+|\psi_k\rangle&=(1/\sqrt3,\sqrt{2/3}\,\zeta^{k-1})^{\mathsf T}
+\quad(1\le k\le3),\\
+P_j&=|\psi_j\rangle\langle\psi_j|,&
+K_j&=P_j/\sqrt2,&
+E_j&=K_j^*K_j=P_j/2,&
+\mathcal A_j&=\operatorname{Ad}_{K_j}.
+\end{aligned}
+\tag{32.1}
+$$
+
+这些是本反例模型的数学数据，不是新增原生准备或相位参考端口。由所给向量，
+$\operatorname{Tr}(P_jP_\ell)=1/3$ 对 $j\ne\ell$ 成立，$\sum_jP_j=2I_H$。因此 $\sum_jE_j=I_H$，四个目标都非零。定义 25.1 的效果对偶可取
+
+$$
+F_j=3P_j-I_H=6E_j-I_H,\qquad
+\operatorname{Tr}(F_jE_\ell)=\delta_{j\ell},\qquad
+\kappa_j=\|F_j\|_1=3.
+\tag{32.2}
+$$
+
+最后一个等式来自 $F_j$ 的本征值 $2,-1$；对偶配对直接证明四个目标效果实线性独立。四面体 SIC 本身是成熟构件，来源范围见定义 35.1，不作为本定理的新内容。
+
+令 $U_b(\theta)=e^{-ib\theta\sigma_y}$，即实矩阵
+$\left(\begin{smallmatrix}\cos(b\theta)&-\sin(b\theta)\\
+\sin(b\theta)&\cos(b\theta)\end{smallmatrix}\right)$。定义每次调用都相同的原联合支
+
+$$
+V_j^\theta(X)=\sum_{b=1}^2
+(K_jU_b(\theta)\otimes Q_b)\,X\,
+(K_jU_b(\theta)\otimes Q_b)^* .
+\tag{32.3}
+$$
+
+每支 CP；全部原记录的联合效果之和为
+
+$$
+\sum_{j,b}(U_b^*E_jU_b)\otimes Q_b
+=\sum_b I_H\otimes Q_b=I_{H\otimes M}.
+\tag{32.4}
+$$
+
+所以完整仪器保迹，未遗漏任何失败补全。$b$ 是原私有记忆的数学基指标，不是添加的原可访问标签。仪器对任意联合输入也由 (32.3) 定义；在本节的对角初始记忆下，$b$ 会持续保留，而不是每轮重新抽样。
+
+校准采用同一个与探针独立的 $\tau$，故 $\lambda=1/2$，并且对于全部系统矩阵 $X$，
+
+$$
+T_j^\theta(X):=\operatorname{Tr}_M V_j^\theta(X\otimes\tau)
+=\frac12\sum_{b=1}^2K_jU_bXU_b^*K_j^* .
+\tag{32.5}
+$$
+
+目标 (32.1)、实际映射 (32.5) 和所有标签在整组校准中固定。以下误差估计只是 (25.15) 所用成熟乘子估计的直接应用。任意数学参考及任意矩阵输入都满足
+
+$$
+\begin{aligned}
+\|\operatorname{Ad}_{K_jU_b}-\operatorname{Ad}_{K_j}\|_\diamond
+&\le2\|K_j\|_{\mathrm{op}}^2\|U_b-I\|_{\mathrm{op}}
+=\|U_b-I\|_{\mathrm{op}}
+=2|\sin(b\theta/2)|\le b\theta,\\
+\|T_j^\theta-\mathcal A_j\|_\diamond
+&\le\frac12(\theta+2\theta)\le2\theta.
+\end{aligned}
+\tag{32.6}
+$$
+
+同一个不等式同时覆盖四个原 $j$，不是将分别拟合的仪器拼起来。若将误差写回第 23 节的有限校准读数，可在每支使用第 4 节同一六方向设计，精确准备及指定读回 $J=I$，名义效果为 $E_j$。因为 $\sqrt{E_j}=K_j$，它恰是定义 27.2 所需的相同目标。实际效果为 $E_j^{\rm act}=\frac12\sum_bU_b^*E_jU_b$，由 (32.6) 有 $\|E_j^{\rm act}-E_j\|_{\mathrm{op}}\le2\theta$。以精确联合读数作 $\widehat R_j$ 时，准备、读回及读数预算可取 $a=b=\nu=0$，而 $|Q(E_j)-\widehat R_j|\le2\theta$。第 23 节的 $u_j=Q(E_j)-\widehat R_j+\omega_2(2\theta)$ 非负且趋零，其 $\beta_0$ 亦趋零；此处在 (25.5) 中使用的是已直接证明的预算 $\delta_j=2\theta$，没有将得分缺口与映射误差混作同一个量。
+
+严格代入本卷 (25.6)，记 $h=\sqrt{8\theta}$、$g=(2+h)h$，则
+
+$$
+h_j=h,\quad e_j=g,\quad e=4g,\quad t_j=12g,\qquad
+\Delta(\theta)=\min\{2,\ 4g+2f(12g)\},
+\quad
+f(t)=\frac{(\sqrt{1+t}+1)t}{1+\sqrt{1-t}}.
+\tag{32.7}
+$$
+
+$\theta\le1/8192$ 给 $h\le1/32$、$12g\le195/256<1$，所以 (25.8) 确有定义，且四个 $t_j$ 同时小于一。$g\to0$ 及 $f(t)\to0$ 给 $\Delta(\theta)\to0$。这就是原证书自身的取值，不以单次系统误差代替联合证书，也没有去掉 $d,\lambda,\kappa_j$ 或任何原效果范数。对每个指定的正容差，都可选足够小的非零 $\theta$ 同时满足它和上述严格前件。剩余的精确容量结论由下节同一 (32.3) 的计算给出。$\square$
+
+## 33. 只读取未来新输出的有限秩五见证
+
+**定理 33.1（同一准备、同一记忆和共同合法后缀）。** 使用定理 32.2 的同一个固定 $\theta$、原仪器和准备 $P_0\otimes\tau$。令 $s_n$ 是先执行 $n$ 次完整调用、再执行一次完整调用时，最后一个新原标签为 $0$ 的未条件化概率。所有先前标签仍保存在档案中。则
+
+$$
+s_n=\frac14+\frac{3^{-n}}8
+\left[\cos(2(n+1)\theta)+\cos(4(n+1)\theta)\right],
+\qquad n\ge0.
+\tag{33.1}
+$$
+
+有限前缀为执行 $a$ 次完整调用，$0\le a\le4$；共同后缀为再执行 $b$ 次完整调用，继以一次完整调用并评价新标签 $0$，$0\le b\le4$。这个 $5\times5$ 原协议响应表
+
+$$
+\mathsf H_{ab}=s_{a+b},\qquad 0\le a,b\le4
+\tag{33.2}
+$$
+
+是实矩阵且可逆。最长条目只调用原仪器九次，不需要记忆读口、中间准备、复位、反馈或额外测量。
+
+证明。先保留全部原词概率。令 $L_{j,b}=K_jU_b$，
+$L_{w,b}=L_{j_m,b}\cdots L_{j_1,b}$ 对 $w=j_1\cdots j_m$，空词取 $I_H$。由 (32.3) 和初始 $\tau$ 的两个对角权重，同一完整历史的概率恰为
+
+$$
+p_\theta(w)=\frac12\sum_{b=1}^2
+\operatorname{Tr}(L_{w,b}P_0L_{w,b}^*),
+\qquad
+\sum_{w\in\{0,1,2,3\}^m}p_\theta(w)=1.
+\tag{33.3}
+$$
+
+每个 $L_{j,b}$ 中的 $1/\sqrt2$、初始 $1/2$、全部原失败词和零叶均保留。这里不存在一次成功后的重归一化，也不把失败权重换成一。原联合态连同档案的一个准确表示是
+$\frac12\sum_{w,b}|w\rangle\langle w|\otimes
+L_{w,b}P_0L_{w,b}^*\otimes Q_b$；
+对后缀继续使用 (32.3) 并追加原标签即可，不需要重新准备 $\tau$。
+
+为计算一个不读旧档案的事件，可以在证明中对旧词求和。写
+$P_j=(I+\mathbf n_j\cdot\boldsymbol\sigma)/2$，所给四面体满足
+$\sum_j\mathbf n_j=0$、$\sum_j\mathbf n_j\mathbf n_j^{\mathsf T}=(4/3)I_3$。
+因此其成熟的非选择性通道在任意 Bloch 坐标上为
+
+$$
+\mathcal D(X):=\sum_jK_jXK_j^*,\qquad
+\mathcal D\!\left(\frac{tI+\mathbf r\cdot\boldsymbol\sigma}{2}\right)
+=\frac{tI+(\mathbf r/3)\cdot\boldsymbol\sigma}{2}.
+\tag{33.4}
+$$
+
+这也可由 $P_jXP_j=\operatorname{Tr}(P_jX)P_j$ 直接代入求和验证，不引入新的设备。给定持续模式 $b$，每次完整调用的系统边缘是
+$\mathcal D\operatorname{Ad}_{U_b}$。从 $P_0$ 的 $\mathbf r_0=\mathbf e_z$ 出发，$n$ 次后
+
+$$
+\mathbf r_{b,n}=3^{-n}R_y(2bn\theta)\mathbf e_z.
+\tag{33.5}
+$$
+
+第 $n+1$ 次调用的新标签 $0$ 的概率是
+$\operatorname{Tr}(E_0U_b\rho_{b,n}U_b^*)
+=\frac14[1+3^{-n}\cos(2b(n+1)\theta)]$。
+对同一初始模式权重各 $1/2$ 求和，得到 (33.1)。这一步使用整个未条件化协议，不假设在给定旧记录之后 $b$ 仍均匀；这种条件分布通常会改变，(33.3) 已包含其改变。
+
+将 (33.1) 写成五个指数的精确和：
+
+$$
+\begin{aligned}
+z_0&=1,& c_0&=1/4,\\
+z_{\pm,b}&=3^{-1}e^{\pm2ib\theta},&
+c_{\pm,b}&=e^{\pm2ib\theta}/16\quad(b=1,2),\\
+s_n&=c_0z_0^n+\sum_{b=1}^2
+(c_{+,b}z_{+,b}^n+c_{-,b}z_{-,b}^n).
+\end{aligned}
+\tag{33.6}
+$$
+
+五个 $z$ 两两不同：$z_0$ 的模为一，其余的模为 $1/3$；
+四个角度 $-4\theta,-2\theta,2\theta,4\theta$ 不同且最大差 $8\theta<2\pi$。
+所有 $c$ 非零。以任意固定次序枚举这五项，令
+$Z_{a\ell}=z_\ell^a$，$0\le a,\ell\le4$。成熟的有限指数矩／Vandermonde 因子化直接给
+
+$$
+\mathsf H=Z\operatorname{diag}(c_\ell)Z^{\mathsf T},
+\qquad
+\det\mathsf H
+=\left(\prod_\ell c_\ell\right)
+\prod_{\ell<k}(z_k-z_\ell)^2
+=2^{-18}\prod_{\ell<k}(z_k-z_\ell)^2\ne0.
+\tag{33.7}
+$$
+
+这里是转置而非共轭转置，不声称 $\mathsf H$ 为正 Gram 阵。
+虽然计算使用复指数，(33.1) 保证原矩阵实；非零行列式故给实秩五。
+
+固定共同载体的准确含义。若存在共同实线性空间 $V$，$\dim_{\mathbb R}V\le4$，为这些原前缀指定共同预测向量 $x_a$，并为每个上述原后缀指定与 $a$ 无关的实线性评价 $\ell_b\in V^*$，使完整未来评价特别包含
+$s_{a+b}=\ell_b(x_a)$，则 $\mathsf H$ 经 $V$ 分解，秩至多四，与 (33.7) 矛盾。这个必要条件甚至不要求再假定时间齐次转移矩阵。若另有一个固定线性步进 $T$，通常写法只是 $x_a=T^ax_0$、$\ell_b=\ell_0T^b$。这是既有有限响应因子化方法的消费，不是本节发明的一般最小实现定理。
+
+档案长度不同不改变所用后缀：在所有有限词标记的档案直和中，调用总是追加一个原标签，旧档案只读保留，$H\otimes M$ 端口始终相同；所选后缀完全不依赖旧词及其长度。对九次内的见证，只需这个类型的有限部分。这是记录的数学类型描述，不增添填充标签或新的原操作。
+
+也可完全留在带原记录的细表中理解该因子化。取细行索引为长度 $0,\ldots,4$ 的原词 $w$，细列索引为长度 $0,\ldots,4$ 的原词 $v$ 后接新标签 $0$，细条目为 $p_\theta(wv0)$。对长度分别为 $a,b$ 的细行、细列求和，恰得
+
+$$
+\mathsf H_{ab}
+=\sum_{\substack{|w|=a\\|v|=b}}p_\theta(wv0).
+\tag{33.8}
+$$
+
+所以 $\mathsf H$ 是完整未归一化细表的固定行、列求和，若细表经某个共同四维空间线性分解，这个求和表也必经它分解。求和未丢失任何原始质量或访问权限；它只选了已有的未来事件。允许按每个旧历史另换载体、评价或装置，就不是本结论所排除的共同预测载体；将这种额外上下文保留为状态时，其维数须一并计入。这里证明的是指定有限表的秩五和任何共同实线性载体的维数下界；没有给出未受限全未来载体的维数上界，尤其不声称其维数恰为五。$\square$
+
+## 34. 活动记忆几何与量子公理接口的准确边界
+
+**定义 34.1（允许的局部对象与被排除的闭合）。** 定理 32.2–33.1 允许一个普通两分量复系统与保留记忆耦合；它没有排除局部 qubit、CP 共同实现或全部原记录的丰富全局载体。其几何机制是：一个持续的私有比特把同一个衰减旋转平面分成两个不同频率的平面，所选标量响应含两个实二维衰减旋转模式和一个常量方向，有限表 (33.2) 已迫使任何共同实线性载体至少五维。这五个模式只是该标量序列的表示，完整细记录表并未被证明只有这些模式。非零 $\theta$ 时五个指数节点分离；$\theta=0$ 时它们合并，所选标量序列退为 $s_n=1/4+3^{-n}/4$。所以很小的旋转差与很小的过程误差并不意味着精确的预测模态已经合并。
+
+完整标签仪器的每支仍可接近同一名义平方根分支，且忠实下界、效果对偶条件数均固定。被否定的仅是从这些近似前件直接推出“原系统在该全部未来域上已有一个闭合四维实线性载体”。若只选更少未来，可以得到较小商；一旦保留 (33.2) 的共同前缀与后缀，就必须承担 (33.7) 给出的至少五维下界。该下界由未来新标签的响应给出，不由旧档案可存多少字节给出，更不是要求全局 $\omega$ 只有四维。
+
+**定义 34.2（精确端点、有限误差与全未来入口）。** 本卷定理 25.2 的零缺陷端点仍沿用原精确因子化机制；其忠实态来源见定义 27.1 所引相界卷引理 141.2，不在此重证。正缺陷时，定理 25.2 及推论 25.3 对同一个仪器仍给正确的 $\Delta$ 和 $\min\{2,N\Delta\}$ 有限协议误差。本例满足它们，并非其反例。固定有限 $N$ 时误差可以趋零，而精确有限响应秩仍为五；这两个结论的量词和拓扑不同。行列式会随 $\theta\to0$ 变小，(33.7) 是准确参数下的数学障碍，不是有限精度频率可稳健判定非零的实验认证，也没有给统一谱隙或统计样本预算。
+
+本卷定理 28.3 的另一条路线消费同一固定相关来源、正权三阶设计和精确未条件化零泄漏，只在来源记忆支撑上给原支的 $\operatorname{id}_H\otimes\mathrm{CP}$ 因子化；定理 29.2 再区分记忆效果的率识别，命题 30.1–30.2 及定义 31.1–31.2 保留设计阶数、不可见效果和支持内接续的边界。这里的正误差预算 (32.6) 不是 (28.5) 的精确零式，名义目标也不是那条路线的系统恒等目标；本例没有将近零校准代入其精确零前件，故不反驳该因子化定理。
+
+同一乘积来源 $\rho_H\otimes\tau$ 的来源可见空间按定义 29.1、定理 29.2 只有 $\mathcal W_{\rho_H\otimes\tau}=\mathbb R\tau$。$\tau\ge\lambda I_M$ 的满秩性质用于 (25.13) 对全部输入记忆列的定量控制，不表示从率识别任意记忆效果方向；率只识别其在 $\mathbb R\tau$ 上的投影。本例直接由 (32.3) 指定原联合仪器，没有从这些率反推出它的记忆动力学。
+
+[C117 定义 16.1–16.2](AURIC_COMMON_SOURCE_SELF_REFERENCE_AND_OBSERVER_SEQUENCES_C117.md#16-受控终端字行到局部-lorentz-预测锥的桥) 要求同一合法域的全未来行及准确实容量四；它随后还要求统计逆与无限不可约作用。本例的完整非选择性调用含衰减，不声称满足那些更强条件。因此本例不反驳 C117 的条件定理，而是把本卷定义 27.3 留住的容量入口具体分离出来。
+
+[C123/C124 定义 18.1、定义 20.2–20.4](AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md#18-保留原返回尺度的指定-lorentz-比较群) 要求加入成功支、记录及新读口之后，局部共同未来载体仍准确四维；本例说明不能用 (25.8) 很小代付这个前件。没有四维入口，就不能对同一个扩充域直接应用其局部 Lorentz 群分类，或把两种归一条件响应当成已锁定的共同量子几何。
+
+同源 C125 定理 23.1、25.1 以及 C126 §§29–34，分别是固定原数据上的等价运输和完整原合同的消费者；其实际参考、单指针精确大小关系、Born 双运输、全事件 CP 与选中平方根词均按原编号复用，不由小校准缺陷取得。C127 定理 36.1、推论 36.2 在其全部保留背景下将零正配对 Z 接回内归属 I，再由推论 39.1 继承原 D、全部过程与合法历史的对应。本例既未声称供应 P/G、AC、Z/I、II/S、X/Xs、全事件 R、原 F 和精确调用，也未将这些完整对象的维数统一限制为四。
+
+C127 定理 37.2、推论 38.1 的全菜单协方差族另给一种准确的混合方向障碍：保留所有过程概率、单标签平方和原历史，却改变具名 D 并失去 Z/I 与混合曲率。它与这里的近似校准／有限秩五见证不同。忘掉 D 的过程投影不能识别原具名 D，不等于该过程不存在量子实现；该族的普通有限复 CP 实现从模型定义起已给定，且过程与其满足完整候选的零扰动成员相同。完整 C127 前件成立时，对同一原 D 的重构与保持仍按推论 36.2、39.1 使用，不受这个前件外反例否定。
+
+本节推进的是“误差很小”到“准确共同实线性局部容量”的必要区分，并没有从原生关系导出复数、Born、完全正、任意联合控制或物理时钟。实际 AURIC 门词是否供应一个排除此类未来模式的准确关系，以及该关系能否在保留全部原记录、失败、成功因素和合法性的同时给 C117 的四维入口，仍须另行建立。数学纯化或膨胀与唯一整体态相容，不授予实际参考、独立副本、外部 ready/reset 或任意准备；此反例不是实际 $\omega$ 的资源供应陈述，也不是整个量子起源目标的完成。
+
+## 35. 反例所用成熟构件与源内增量
+
+**定义 35.1（来源与准确使用范围）。** 下列文献及仓内结果仅为定理 32.2–33.1 的中间构件；本节的 repo-derived 综合是将同一固定原仪器的忠实校准、独立完整目标效果、实际 (25.8) 趋零证书及一个未来新输出的秩五有限见证放在同一模型中。一般秩不连续、四面体测量和有限线性因子化均不另作新内容或优先权声明。
+
+| 来源 | 本节复用的准确内容与限制 |
+| --- | --- |
+| Renes–Blume-Kohout–Scott–Caves, *Symmetric Informationally Complete Quantum Measurements*, [quant-ph/0310075v1](https://arxiv.org/pdf/quant-ph/0310075v1), §IV.A，pp. 5–6 | $d=2$ 四面体 SIC 是成熟构件。(32.1) 选定等价坐标，(32.2)、(33.4) 给这里实际使用的归一化、效果对偶和非选择性收缩；不从 SIC 的数学存在取得任何实际准备或读口。 |
+| Monràs–Winter, *Quantum learning of classical stochastic processes: The Completely-Positive Realization Problem*, [arXiv:1412.3634v1](https://arxiv.org/pdf/1412.3634v1), §4，尤其 Theorem 9 | 有限实线性实现的可达／不可观测商及等价商的同构是成熟背景。本例从指定初态运行，不移入该文平稳过程的额外前提，也不靠其一般定理替代 (33.3)–(33.8) 的有限原协议计算。 |
+| Fanizza–Lumbreras–Winter, *Quantum theory in finite dimension cannot explain every general process with finite memory*, [arXiv:2209.11225v2](https://arxiv.org/pdf/2209.11225v2), §2.1 | 其 $p(u)=\pi D(u)\tau$ 的有限实线性过程表示及平稳性条件说明实现假设必须明列。本例只用有限响应表经共同载体分解的必要秩界，不声称是该文无有限量子实现的分离，也不证明这里不存在有限量子实现。 |
+| Nielsen et al., *Gate Set Tomography*, [arXiv:2009.07301v2](https://arxiv.org/pdf/2009.07301v2), §6.1，p. 25 | 遗漏语境变量、漂移和持续环境可使指定维数的门集模型失配。本例固定联合仪器并明确计入私有记忆；该文不被引用为由有限拟合认证全未来充分性的定理。 |
+| 本卷定义 25.1、定理 25.2、推论 25.3、定义 27.1–27.3；相界卷引理 141.2 | 忠实固定实现的精确因子化、完整原仪器误差证书及有限合法组合均直接复用。(32.7) 保留原常数，(33.7) 只补出正缺陷不供应精确容量的同类反例。 |
+| [Context Geometry](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md) §15，尤其命题 15.2；命题 40.11–40.12 | 全词预测、有限不变张成，以及有限窗口或小谱权不认证精确平台均已有。这里不重提一般障碍为发现；新增限制是反例同时满足本卷的固定完整联合 CP 仪器、忠实乘积校准、效果独立和原定量证书，并仅用一个共同未来事件得到秩至少五。 |
+| [本卷固定来源](https://github.com/the-omega-institute/trureturing/blob/a7f2e0ace4222da66269c16b42ce09cabcd03178/docs/develop/theory/AURIC_INTERNAL_BALANCED_CALIBRATION_AND_FILTER_COMPOSITION_GEOMETRY_C113.md) §§28–31 | 固定相关来源的精确零泄漏因子化、steering 空间的率识别商、设计阶数和不可见效果边界按定义 34.2 引用，不重证这些结果；忠实乘积校准不被解释为满 steering 率识别。 |
+| [C117 固定来源](https://github.com/the-omega-institute/trureturing/blob/a7f2e0ace4222da66269c16b42ce09cabcd03178/docs/develop/theory/AURIC_COMMON_SOURCE_SELF_REFERENCE_AND_OBSERVER_SEQUENCES_C117.md) §16；[C123/C124/C125/C126 固定来源](https://github.com/the-omega-institute/trureturing/blob/a7f2e0ace4222da66269c16b42ce09cabcd03178/docs/develop/theory/AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md) §§18–20、21–34 | 准确全未来容量、局部比较群及固定原合同的等价运输按定义 34.2 的边界消费，不以近似校准替换它们的准确几何或实际供应前件。 |
+| [同源 C127](https://github.com/the-omega-institute/trureturing/blob/a7f2e0ace4222da66269c16b42ce09cabcd03178/docs/develop/theory/AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md) §§35–40，尤其定理 36.1、37.2、推论 36.2、38.1、39.1 | 完整背景中的 Z/I 对应及原 D 保持直接复用；全菜单混合曲率反例只区分具名 D 的锁定，不否定既有量子过程实现。它不供应本例所缺的准确四维共同未来载体。 |
+
+## 追加锚（本行以下为增补区）
