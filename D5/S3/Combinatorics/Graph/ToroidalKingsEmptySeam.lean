@@ -9,6 +9,8 @@ import Mathlib.Data.Finset.Powerset
 import Mathlib.Data.Finset.Prod
 import Mathlib.Data.Finset.Max
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import D5.S3.Combinatorics.Graph.RectangularCountEntropy
+import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Lean.Elab.Tactic.Omega
 
 /-! # Finite king-board counts and empty seams
@@ -20,6 +22,8 @@ all side lengths. The peak counts all cardinality fibers, including the empty se
 namespace D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam
 
 open Finset
+open Filter
+open scoped Topology
 
 noncomputable section
 
@@ -64,6 +68,115 @@ private theorem mem_independentSets {b : Finset (ℕ × ℕ)}
 
 /-- Total free-board and toroidal independent-set counts. -/
 def freeCount (n : ℕ) : ℕ := (independentSets (board n) freeAdjacent).card
+
+/-- Rectangles used to restrict a free configuration along a straight cut. -/
+def rectangleCount (r c : ℕ) : ℕ :=
+  (independentSets ((range r) ×ˢ (range c)) freeAdjacent).card
+
+private theorem freeCount_eq_rectangle (n : ℕ) : freeCount n = rectangleCount n n := rfl
+
+private def lowerPart (r : ℕ) (s : Finset (ℕ × ℕ)) : Finset (ℕ × ℕ) :=
+  s.filter fun u => u.1 < r
+
+private def upperPart (r : ℕ) (s : Finset (ℕ × ℕ)) : Finset (ℕ × ℕ) :=
+  (s.filter fun u => r ≤ u.1).image fun u => (u.1 - r, u.2)
+
+private theorem rectangle_cut (r t c : ℕ) :
+    rectangleCount (r + t) c ≤ rectangleCount r c * rectangleCount t c := by
+  classical
+  let A := independentSets ((range (r + t)) ×ˢ (range c)) freeAdjacent
+  let B := independentSets ((range r) ×ˢ (range c)) freeAdjacent
+  let C := independentSets ((range t) ×ˢ (range c)) freeAdjacent
+  have hmap : Set.MapsTo (fun s => (lowerPart r s, upperPart r s))
+      (↑A : Set _) (↑(B ×ˢ C) : Set _) := by
+    intro s hs
+    obtain ⟨hb, hi⟩ := mem_independentSets.mp hs
+    apply mem_product.mpr
+    constructor
+    · apply mem_independentSets.mpr
+      constructor
+      · intro u hu
+        obtain ⟨hu, hr⟩ := mem_filter.mp hu
+        have hc := (mem_product.mp (hb hu)).2
+        exact mem_product.mpr ⟨mem_range.mpr hr, hc⟩
+      · intro u hu v hv
+        exact hi u (mem_filter.mp hu).1 v (mem_filter.mp hv).1
+    · apply mem_independentSets.mpr
+      constructor
+      · intro u hu
+        obtain ⟨v, hv, rfl⟩ := mem_image.mp hu
+        obtain ⟨hv, hr⟩ := mem_filter.mp hv
+        obtain ⟨hv1, hv2⟩ := mem_product.mp (hb hv)
+        simp only [mem_range] at hv1 hv2
+        simp only [mem_product, mem_range]
+        exact ⟨by omega, hv2⟩
+      · intro u hu v hv hadj
+        obtain ⟨a, ha, rfl⟩ := mem_image.mp hu
+        obtain ⟨b, hb', rfl⟩ := mem_image.mp hv
+        obtain ⟨ha, hra⟩ := mem_filter.mp ha
+        obtain ⟨hb', hrb⟩ := mem_filter.mp hb'
+        apply hi a ha b hb'
+        rcases hadj with ⟨hne, hx, hy⟩
+        refine ⟨?_, ?_, hy⟩
+        · intro heq
+          exact hne (congrArg (fun u : ℕ × ℕ => (u.1 - r, u.2)) heq)
+        · unfold gap at hx ⊢
+          omega
+  have hinj : Set.InjOn (fun s => (lowerPart r s, upperPart r s)) A := by
+    intro s hs t' ht h
+    have hlo := congrArg Prod.fst h
+    have hhi := congrArg Prod.snd h
+    dsimp at hlo hhi
+    ext u
+    have reconstruct (s : Finset (ℕ × ℕ)) :
+        u ∈ s ↔ u ∈ lowerPart r s ∨ r ≤ u.1 ∧ (u.1 - r, u.2) ∈ upperPart r s := by
+      constructor
+      · intro hu
+        by_cases hr : u.1 < r
+        · exact Or.inl (mem_filter.mpr ⟨hu, hr⟩)
+        · exact Or.inr ⟨by omega, mem_image.mpr ⟨u, mem_filter.mpr ⟨hu, by omega⟩, rfl⟩⟩
+      · rintro (hu | ⟨hr, hu⟩)
+        · exact (mem_filter.mp hu).1
+        · obtain ⟨v, hv, heq⟩ := mem_image.mp hu
+          obtain ⟨hv, hrv⟩ := mem_filter.mp hv
+          have hx := congrArg Prod.fst heq
+          have hy := congrArg Prod.snd heq
+          have hvu : v = u := Prod.ext (by dsimp at hx; omega) hy
+          simpa [hvu] using hv
+    rw [reconstruct s, reconstruct t', hlo, hhi]
+  simpa [A, B, C, rectangleCount, card_product] using
+    card_le_card_of_injOn (fun s => (lowerPart r s, upperPart r s)) hmap hinj
+
+private theorem rectangle_symm (r c : ℕ) : rectangleCount r c = rectangleCount c r := by
+  classical
+  have hle (r c : ℕ) : rectangleCount r c ≤ rectangleCount c r := by
+    apply card_le_card_of_injOn (fun s : Finset (ℕ × ℕ) => s.image Prod.swap)
+    · intro s hs
+      obtain ⟨hb, hi⟩ := mem_independentSets.mp hs
+      apply mem_independentSets.mpr
+      constructor
+      · intro u hu
+        obtain ⟨v, hv, rfl⟩ := mem_image.mp hu
+        exact mem_product.mpr ⟨(mem_product.mp (hb hv)).2, (mem_product.mp (hb hv)).1⟩
+      · intro u hu v hv hadj
+        obtain ⟨a, ha, rfl⟩ := mem_image.mp hu
+        obtain ⟨b, hb', rfl⟩ := mem_image.mp hv
+        exact hi a ha b hb' ⟨fun h => hadj.1 (congrArg Prod.swap h), hadj.2.2, hadj.2.1⟩
+    · intro s hs t ht heq
+      have h := congrArg (fun s : Finset (ℕ × ℕ) => s.image Prod.swap) heq
+      simpa [image_image, Function.comp_def] using h
+  exact le_antisymm (hle r c) (hle c r)
+
+private theorem rectangle_pos (r c : ℕ) : 0 < rectangleCount r c := by
+  apply card_pos.mpr
+  exact ⟨∅, mem_independentSets.mpr ⟨empty_subset _, by simp⟩⟩
+
+private theorem rectangle_le_binary (r c : ℕ) : rectangleCount r c ≤ 2 ^ (r * c) := by
+  classical
+  have h := card_le_card (filter_subset
+    (fun s : Finset (ℕ × ℕ) => ∀ u ∈ s, ∀ v ∈ s, ¬ freeAdjacent u v)
+    (((range r) ×ˢ (range c)).powerset))
+  simpa [rectangleCount, independentSets, card_powerset, card_product] using h
 
 def torusCount (n : ℕ) : ℕ := (independentSets (board n) (torusAdjacent n)).card
 
@@ -128,6 +241,65 @@ theorem peak_le_count (n : ℕ) : peak n ≤ torusCount n := by
   apply Finset.sup_le
   intro k hk
   exact card_le_card (filter_subset _ _)
+
+/-- A two-by-two tile is specified by its lower-left cell. -/
+def squareTile (u : ℕ × ℕ) : Finset (ℕ × ℕ) :=
+  ({u.1, u.1 + 1} : Finset ℕ) ×ˢ ({u.2, u.2 + 1} : Finset ℕ)
+
+/-- A tiling by unit and two-by-two squares is encoded by its two-by-two
+placements. Every cell outside those tiles has its unique unit tile. -/
+def tilingPlacements (m : ℕ) : Finset (Finset (ℕ × ℕ)) :=
+  independentSets (board (m - 1))
+    (fun u v => u ≠ v ∧ ¬ Disjoint (squareTile u) (squareTile v))
+
+/-- The literal square-tiling count used by OEIS A063443. -/
+def a063443 (m : ℕ) : ℕ := (tilingPlacements m).card
+
+/-- The complete collection of tiles recovered from a placement encoding. -/
+def tilingBlocks (m : ℕ) (s : Finset (ℕ × ℕ)) : Finset (Finset (ℕ × ℕ)) :=
+  s.image squareTile ∪ (board m \ s.biUnion squareTile).image (fun u => {u})
+
+private theorem tile_overlap (u v : ℕ × ℕ) :
+    ¬ Disjoint (squareTile u) (squareTile v) ↔
+      gap u.1 v.1 ≤ 1 ∧ gap u.2 v.2 ≤ 1 := by
+  simp only [squareTile, disjoint_product, disjoint_insert_left, disjoint_singleton_left,
+    mem_insert, mem_singleton, not_or, not_and, not_not, gap]
+  omega
+
+/-- The tiling encoding and free king-board configurations are the same finite
+objects, with the source's exact side shift m minus one. -/
+theorem tiling_free_identity (m : ℕ) : a063443 m = freeCount (m - 1) := by
+  classical
+  congr 1
+  apply Finset.ext
+  intro s
+  simp only [a063443, freeCount, tilingPlacements, mem_independentSets]
+  simp only [tile_overlap, freeAdjacent]
+
+private theorem rectangle_log_subadditive (c : ℕ) :
+    Subadditive (fun r => Real.log (rectangleCount r c : ℝ)) := by
+  intro r t
+  have hp (r : ℕ) : (0 : ℝ) < rectangleCount r c := by exact_mod_cast rectangle_pos r c
+  have h := Real.log_le_log (hp (r + t)) (by exact_mod_cast rectangle_cut r t c)
+  simpa only [Nat.cast_mul, Real.log_mul (hp r).ne' (hp t).ne'] using h
+
+private theorem rectangle_log_bounds (r c : ℕ) :
+    0 ≤ Real.log (rectangleCount r c : ℝ) ∧
+      Real.log (rectangleCount r c : ℝ) ≤ (r : ℝ) * c * Real.log 2 := by
+  have h1 : (1 : ℝ) ≤ rectangleCount r c := by exact_mod_cast rectangle_pos r c
+  refine ⟨Real.log_nonneg h1, ?_⟩
+  have hp : (0 : ℝ) < rectangleCount r c := by exact_mod_cast rectangle_pos r c
+  have h := Real.log_le_log hp (by exact_mod_cast rectangle_le_binary r c)
+  simpa [Real.log_pow, Nat.cast_mul, mul_assoc, mul_comm, mul_left_comm] using h
+
+private theorem free_log_limit : ∃ s : ℝ, 0 ≤ s ∧
+    Tendsto (fun n : ℕ => Real.log (freeCount n : ℝ) / (n : ℝ) ^ 2) atTop (𝓝 s) := by
+  simpa only [freeCount_eq_rectangle] using
+    RectangularCountEntropy.square_log_limit
+      (fun r c => Real.log (rectangleCount r c : ℝ)) (Real.log 2)
+      (Real.log_nonneg (by norm_num))
+      (fun r c => congrArg (fun n : ℕ => Real.log (n : ℝ)) (rectangle_symm r c))
+      rectangle_log_subadditive rectangle_log_bounds
 
 #print axioms empty_seam_adjacency
 #print axioms free_le_torus
