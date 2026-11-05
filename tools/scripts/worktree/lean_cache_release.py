@@ -20,7 +20,10 @@ import time
 from urllib.parse import quote
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
-from maintenance_log import MaintenanceLog
+try:
+    from maintenance_log import MaintenanceLog
+except ImportError:
+    MaintenanceLog = None
 
 from lean_cache import SHARED_SEED_PLATFORMS, normalized_platform, partition_path, seed_partitions
 from cache_material import sha
@@ -997,7 +1000,7 @@ def _main():
 
 
 def main():
-    log = MaintenanceLog.from_environment()
+    log = MaintenanceLog.from_environment() if MaintenanceLog else None
     if log is not None:
         log.emit("run_started")
     try:
