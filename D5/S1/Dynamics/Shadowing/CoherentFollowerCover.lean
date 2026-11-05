@@ -630,6 +630,29 @@ theorem two_face_restrictPath_surjective [DecidableEq I] {α β : I} (hαβ : α
         simp)) := by
   exact S.restrictPath_surjective _
 
+/-!
+  The corresponding concrete prefix-lifting statement.  As above, the
+  whole-word compatibility supplied by `LanguageSystem.image_eq` remains an
+  explicit premise through `S`; this is only the two-face specialization.
+-/
+theorem two_face_every_prefix_lifts [DecidableEq I] [∀ i, Finite (A i)]
+    {α β : I} (hαβ : α ≠ β) :
+    ∀ p ∈ graphLanguage
+        (S.Edge (F := ({β} : Finset I))) id, ∀ m,
+      PrefixLift (S.Edge (F := ({α, β} : Finset I)))
+        (S.restrictVertex (F := ({β} : Finset I))
+          (G := ({α, β} : Finset I)) (by
+            intro i hi
+            have hi' : i = β := Finset.mem_singleton.mp hi
+            subst i
+            simp)) p m := by
+  intro p hp m
+  exact (S.every_prefix_lifts (h := by
+    intro i hi
+    have hi' : i = β := Finset.mem_singleton.mp hi
+    subst i
+    simp)) p hp m
+
 /-- Whole-path equality, in the existing graph-language interface. -/
 theorem projected_path_language {F G : Finset I} (h : F ⊆ G) :
     graphLanguage (S.Edge (F := G)) (S.restrictVertex h) =
