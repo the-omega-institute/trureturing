@@ -4,15 +4,16 @@
    mirror-E: none(waiver:all-depth-ordered-histories)
    anchors: []
    utility: none
-   digest: Ordered history growth bounds energy increments and raw balance fixes marker readouts. -/
+   digest: Ordered history energy growth and raw balance supply the original Fourier descent. -/
 
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Tactic
 import D5.S3.QuadraticForms.ThreeWayBalance
 
 /-! The all-depth finite-history mechanism of C133 Continuation V, Section 3.
-The ordered energy-growth estimate and its Archimedean bounded-increment
-consequence are combined with the original raw law and derived marker readings.
+The ordered energy-growth estimate is combined with the original raw law and
+derived marker readings. Its bounded-increment consumer uses the Archimedean
+property in RawAnchoredFourierQuotient.
 The phase index is a group; the original label type is only a magma. -/
 
 noncomputable section
@@ -62,7 +63,7 @@ private lemma history_mem {M : Type*} [MulOneClass M]
   | zero => exact h₁
   | succ n ih => exact hs _ (ih w.1) w.2
 
-private lemma history_energy_growth {M : Type*} [MulOneClass M]
+lemma history_energy_growth {M : Type*} [MulOneClass M]
     (U : M → M) (u : M) (N : Set M) (h₁ : (1 : M) ∈ N)
     (hs : ∀ x ∈ N, ∀ k : ZMod 3, x * U^[k.val] u ∈ N)
     (E : M → ℝ) (d : ℝ)
@@ -91,27 +92,6 @@ private lemma history_energy_growth {M : Type*} [MulOneClass M]
       push_cast
       rw [pow_succ]
       nlinarith
-
-lemma bounded_energy_increment_nonpos {M : Type*} [MulOneClass M]
-    (U : M → M) (u : M) (N : Set M) (h₁ : (1 : M) ∈ N)
-    (hs : ∀ x ∈ N, ∀ k : ZMod 3, x * U^[k.val] u ∈ N)
-    (E : M → ℝ) (d C : ℝ) (hb : ∀ x ∈ N, E x ≤ C)
-    (he : ∀ x ∈ N, 3 * (E x + d) ≤ ∑ k : ZMod 3, E (x * U^[k.val] u)) :
-    d ≤ 0 := by
-  have hg (n : ℕ) : E 1 + (n : ℝ) * d ≤ C := by
-    have hl := history_energy_growth U u N h₁ hs E d he n
-    have hu := Finset.sum_le_sum (s := Finset.univ) (fun w _ =>
-      hb (orderedHistory U u n w) (history_mem U u N h₁ hs n w))
-    have hc : (Fintype.card (PhaseWords n) : ℝ) = (3 : ℝ) ^ n := by
-      rw [phaseWords_card]; norm_cast
-    simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul] at hu
-    rw [hc] at hu
-    exact (mul_le_mul_iff_right₀ (by positivity : (0 : ℝ) < 3 ^ n)).mp (hl.trans hu)
-  by_contra hd
-  have hd' : 0 < d := lt_of_not_ge hd
-  obtain ⟨n, hn⟩ := exists_nat_gt ((C - E 1) / d)
-  have hm := (div_lt_iff₀ hd').mp hn
-  linarith [hg n]
 
 end D5.S3.Quantum.Completion.ThreePhaseHistoryRigidity
 

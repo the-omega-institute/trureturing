@@ -881,6 +881,27 @@ open scoped BigOperators ComplexConjugate
 
 namespace D5.S3.Quantum.Completion.ThreePhaseHistoryRigidity
 
+private lemma bounded_energy_increment_nonpos {M : Type*} [MulOneClass M]
+    (U : M → M) (u : M) (N : Set M) (h₁ : (1 : M) ∈ N)
+    (hs : ∀ x ∈ N, ∀ k : ZMod 3, x * U^[k.val] u ∈ N)
+    (E : M → ℝ) (d C : ℝ) (hb : ∀ x ∈ N, E x ≤ C)
+    (he : ∀ x ∈ N, 3 * (E x + d) ≤ ∑ k : ZMod 3, E (x * U^[k.val] u)) :
+    d ≤ 0 := by
+  have hg (n : ℕ) : E 1 + (n : ℝ) * d ≤ C := by
+    have hl := history_energy_growth U u N h₁ hs E d he n
+    have hu := Finset.sum_le_sum (s := Finset.univ) (fun w _ =>
+      hb (orderedHistory U u n w) (history_mem U u N h₁ hs n w))
+    have hc : (Fintype.card (PhaseWords n) : ℝ) = (3 : ℝ) ^ n := by
+      rw [phaseWords_card]; norm_cast
+    simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul] at hu
+    rw [hc] at hu
+    exact (mul_le_mul_iff_right₀ (by positivity : (0 : ℝ) < 3 ^ n)).mp (hl.trans hu)
+  by_contra hd
+  have hd' : 0 < d := lt_of_not_ge hd
+  obtain ⟨n, hn⟩ := exists_nat_gt ((C - E 1) / d)
+  have hm := (div_lt_iff₀ hd').mp hn
+  linarith [hg n]
+
 private lemma phase_energy (χ : AddChar (ZMod 3) ℂ) (hχ : Function.Injective χ)
     (Z A D : ℂ) :
     ∑ k : ZMod 3, Complex.normSq (Z + χ k * A + χ⁻¹ k * D) =

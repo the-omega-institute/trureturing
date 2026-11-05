@@ -13,7 +13,6 @@ internal sealed class ThreePhaseHistoryRigidityDocument : IScribeDocumentDefinit
     private static Formula X => F.Id("x");
     private static Formula T => F.Id("u");
     private static Formula K => F.Id("k");
-    private static Formula C => F.Id("C");
     private static Formula Three => Call("ZMod", D(3));
     private static Formula Child => Seq(X, Sp, Cdot, Sp,
         Call("iterate", U, Call("val", K), T));
@@ -23,7 +22,7 @@ internal sealed class ThreePhaseHistoryRigidityDocument : IScribeDocumentDefinit
     private static Formula InSet(Formula a) => Seq(a, Sp, InMacro, Sp, N);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "All ordered finite histories bound energy increments; raw comparison balance yields marker readouts.",
+        "All ordered finite histories supply an energy-growth estimate; raw comparison balance yields marker readouts.",
         H("Three-Phase History Rigidity"),
         Blocks(
             Entry("three-phase-words", "PhaseWords", "Phase words retain order and multiplicity",
@@ -37,13 +36,13 @@ internal sealed class ThreePhaseHistoryRigidityDocument : IScribeDocumentDefinit
                 HistoryFormula(),
                 "The original type M is any MulOneClass. Each child applies its given binary operation once on the right of the existing history. No associativity or commutativity is used, and no depth cap or deduplication is introduced.",
                 DescribeRole.Definition),
-            Entry("bounded-energy-increment-nonpos", "bounded_energy_increment_nonpos",
-                "Uniformly bounded ordered histories force a nonpositive energy increment", EnergyFormula(),
-                "For every original unital magma, a set containing the unit and closed under each of the three original children, a real energy E, increment d and upper bound C, assume E(x)<=C on that set and 3(E(x)+d)<=sum_k E(x*U^k(u)). Induction over all ordered phase words gives 3^n(E(1)+n*d) as a lower bound. The same-index upper bound is 3^n*C. Division by the positive 3^n and the Archimedean property force d<=0. This estimate is used by the bounded Fourier recursion theorem in RawAnchoredFourierQuotient, which is applied to both actual ordered pairings in RawAnchoredRadicalDescent.",
+            Entry("history-energy-growth", "history_energy_growth",
+                "Energy growth over every ordered history depth", EnergyFormula(),
+                "For every original unital magma, a set containing the unit and closed under each of the three original children, a real energy E and increment d, assume 3(E(x)+d)<=sum_k E(x*U^k(u)) on that set. Induction gives the displayed lower bound for every natural depth n. The sum is over every phase word with its original order and multiplicity, even when labels coincide. The bounded-increment proof in RawAnchoredFourierQuotient compares this same sum with 3^n*C, divides by the positive 3^n and uses the Archimedean property. Its Fourier mode consumer is then applied to both actual ordered pairings in RawAnchoredRadicalDescent.",
                 DescribeRole.Theorem),
             RawReadouts.Balance(),
             RawReadouts.Marker(),
-            Paragraph(Text("The raw law and marker readings feed the ordered Fourier quotient. The bounded-increment estimate supplies its bounded Fourier mode theorem, and the original-domain consumer derives both uniform pairing bounds before applying that theorem twice. The actual original operation is never assumed associative or commutative.")))));
+            Paragraph(Text("The raw law and marker readings feed the ordered Fourier quotient. The ordered energy-growth estimate supplies its bounded-increment and bounded Fourier mode theorems, and the original-domain consumer derives both uniform pairing bounds before applying that theorem twice. The actual original operation is never assumed associative or commutative.")))));
 
     private static Formula HistoryFormula() => Seq(
         Forall, Sp, M, Colon, Sp, F.Id("Type"), Comma, Sp,
@@ -62,22 +61,27 @@ internal sealed class ThreePhaseHistoryRigidityDocument : IScribeDocumentDefinit
     private static Formula EnergyFormula()
     {
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
+        Formula n = F.Id("n");
+        Formula word = F.Id("w");
         Formula closed = All(X, M, Seq(InSet(X), Sp, Rightarrow, Sp,
             All(K, Three, InSet(Child))));
         Formula energy(Formula x) => Call("E", x);
-        Formula bounded = All(X, M, Seq(InSet(X), Sp, Rightarrow, Sp,
-            energy(X), Sp, Le, Sp, C));
         Formula growth = All(X, M, Seq(InSet(X), Sp, Rightarrow, Sp,
             D(3), Sp, Cdot, Sp, Open, energy(X), Sp, Plus, Sp, F.Id("d"), Close,
             Sp, Le, Sp, new Formula.Subscript(Sum, Seq(K, Colon, Sp, Three)), Sp, energy(Child)));
+        Formula total = Seq(new Formula.Subscript(Sum,
+            Seq(word, Colon, Sp, Call("PhaseWords", n))), Sp,
+            energy(Call("orderedHistory", U, T, n, word)));
+        Formula lower = Seq(D(3), Caret, Grp(n), Sp, Cdot, Sp, Open,
+            energy(D(1)), Sp, Plus, Sp, n, Sp, Cdot, Sp, F.Id("d"), Close);
         return Seq(Forall, Sp, M, Colon, Sp, F.Id("Type"), Comma, Sp,
             OpenBracket, Call("MulOneClass", M), CloseBracket, Comma, Sp,
             U, Colon, Sp, M, Sp, To, Sp, M, Comma, Sp, T, Colon, Sp, M, Comma, Sp,
             N, Colon, Sp, Call("Set", M), Comma, Sp,
             F.Id("E"), Colon, Sp, M, Sp, To, Sp, real, Comma, Sp,
-            F.Id("d"), Comma, Sp, C, Colon, Sp, real, Comma, Sp,
-            Open, InSet(D(1)), Sp, Land, Sp, closed, Sp, Land, Sp, bounded,
-            Sp, Land, Sp, growth, Close, Sp, Rightarrow, Sp, F.Id("d"), Sp, Le, Sp, D(0));
+            F.Id("d"), Colon, Sp, real, Comma, Sp,
+            Open, InSet(D(1)), Sp, Land, Sp, closed, Sp, Land, Sp, growth, Close,
+            Sp, Rightarrow, Sp, All(n, Seq(Mathbb, Grp(F.Id("N"))), Seq(lower, Sp, Le, Sp, total)));
     }
 
     private static DocumentBlock Entry(string id, string declaration, string title,
@@ -97,7 +101,6 @@ internal sealed class ThreePhaseHistoryRigidityDocument : IScribeDocumentDefinit
         private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));
         private static Formula Eqn(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
         private static Formula Plus2(Formula a, Formula b) => Seq(a, Sp, Plus, Sp, b);
-        private static Formula Minus2(Formula a, Formula b) => Seq(a, Sp, Minus, Sp, b);
         private static Formula Three(Formula a) => Seq(D(3), Sp, Cdot, Sp, a);
         private static Formula Product(Formula a, Formula b) => Seq(Open, a, Sp, Cdot, Sp, b, Close);
         private static Formula Mark(Formula a) => Call("U", a);
@@ -122,8 +125,6 @@ internal sealed class ThreePhaseHistoryRigidityDocument : IScribeDocumentDefinit
             F.Id("U"), Colon, Sp, M, Sp, To, Sp, M, Comma, Sp,
             F.Id("c"), Colon, Sp, M, Sp, To, Sp, M, Sp, To, Sp, Real, Comma, Sp,
             Arrow(Call("RawBalance", F.Id("U"), F.Id("c")), body));
-
-
 
         internal static DocumentBlock Balance() =>
             Describe.Lean(
