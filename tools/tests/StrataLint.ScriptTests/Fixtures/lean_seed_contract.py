@@ -50,7 +50,8 @@ if sys.argv[0].endswith("lean_cache_release.py"):
     sys.path.insert(0, os.environ["FAKE_REASSEMBLY_HELPER"])
     import cache_material
     original_open, original_unlink = pathlib.Path.open, pathlib.Path.unlink
-    original_copy, original_extract, original_sha = shutil.copyfileobj, tarfile.TarFile.extractall, cache_material.sha
+    import lean_cache_release
+    original_copy, original_extract, original_sha = lean_cache_release.copy_chunks, lean_cache_release.extract_members, lean_cache_release.archive_sha
     failure = os.environ["FAKE_REASSEMBLY_FAILURE"]
     sources, validated = {}, {}
     output = None
@@ -60,8 +61,8 @@ if sys.argv[0].endswith("lean_cache_release.py"):
     def sample(stage, operation):
         files = {p.name: p.stat().st_size for p in stage.glob("lean-build.tgz*") if p.is_file()}
         record(operation=operation, resident=sum(files.values()), files=files)
-    def sha(path):
-        value = original_sha(path)
+    def sha(path, deadline):
+        value = original_sha(path, deadline)
         if path.name.startswith("lean-build.tgz.part-") or path.name == "manifest.json":
             validated[path.name] = validated.get(path.name, 0) + 1
             if path.name.endswith("part-02"):
@@ -99,16 +100,16 @@ if sys.argv[0].endswith("lean_cache_release.py"):
             output = Output(raw, path.parent)
             return output
         return raw
-    def copy(source, target, *args, **kwargs):
+    def copy(source, target, deadline):
         if target is not output:
-            return original_copy(source, target, *args, **kwargs)
+            return original_copy(source, target, deadline)
         sources[pathlib.Path(source.name).name] = source
         if len(sources) == 2 and failure in ("copy", "short", "long"):
             target.write(source.read(1))
             if failure == "copy":
                 raise OSError(errno.EIO, "injected reassembly copy")
             if failure == "short": return
-        result = original_copy(source, target, *args, **kwargs)
+        result = original_copy(source, target, deadline)
         if len(sources) == 2 and failure == "long": target.write(b"extra")
         return result
     def unlink(path, *args, **kwargs):
@@ -120,11 +121,11 @@ if sys.argv[0].endswith("lean_cache_release.py"):
             if failure == "unlink" and len(sources) == 2:
                 raise OSError(errno.EIO, "injected reassembly unlink")
         return original_unlink(path, *args, **kwargs)
-    def extract(archive, path, *args, **kwargs):
+    def extract(archive, path, members, deadline):
         sample(pathlib.Path(archive.name).parent, "extract")
-        return original_extract(archive, path, *args, **kwargs)
+        return original_extract(archive, path, members, deadline)
     pathlib.Path.open, pathlib.Path.unlink = open_path, unlink
-    shutil.copyfileobj, tarfile.TarFile.extractall, cache_material.sha = copy, extract, sha
+    lean_cache_release.copy_chunks, lean_cache_release.extract_members, lean_cache_release.archive_sha = copy, extract, sha
 ''')
         log = self.root / "reassembly-events"
         log.unlink(missing_ok=True)

@@ -167,8 +167,9 @@ os.execv({real_git}, [{real_git}, *sys.argv[1:]])
         material.write_bytes(payload)
         write(self.bin / "sitecustomize.py", '''
 import errno, json, os, pathlib, tarfile
-original_extract = tarfile.TarFile.extractall
-def extract(archive, path, *args, **kwargs):
+import lean_cache_release
+original_extract = lean_cache_release.extract_members
+def extract(archive, path, members, deadline):
     downloaded = pathlib.Path(archive.name).parent
     manifest = json.loads((downloaded / "manifest.json").read_text())
     stage = downloaded.parent
@@ -182,8 +183,8 @@ def extract(archive, path, *args, **kwargs):
     pathlib.Path(os.environ["FAKE_SPACE_READING"]).write_text(json.dumps(reading))
     if resident + unpacked > budget:
         raise OSError(errno.ENOSPC, "verification transport exhausted the restore workspace")
-    return original_extract(archive, path, *args, **kwargs)
-tarfile.TarFile.extractall = extract
+    return original_extract(archive, path, members, deadline)
+lean_cache_release.extract_members = extract
 ''')
         reading = self.root / "space-reading.json"
         result = self.verification("publish", PYTHONPATH=str(self.bin), FAKE_SPACE_READING=str(reading))
