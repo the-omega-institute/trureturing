@@ -1,0 +1,36 @@
+**定理 207.1（全部原消费者）。** 在同一原签名与原历史中，
+
+$$
+\begin{aligned}
+\mathsf C_{\rm hs}(B)&\Longleftrightarrow B+\mathrm Z+\mathrm{SC}+\mathrm{SJ},\\
+\mathsf C_{\rm hs}(\mathsf B_{\rm cl})
+&\Longleftrightarrow\mathsf B_{\rm cl}+\mathsf Q+\mathrm{SC}+\mathrm{SJ}.
+\end{aligned}
+\tag{207.1}
+$$
+
+$\mathsf Q$ 仍取母卷定义 67.2 的原量词，有限非负 $K(A,a)$ 可依赖对象及方向，但统一于全部原实际准备、全部数学效果及任意小原质量。
+
+证明。定理 206.1 已在全部原对象和实际联合恢复同一 $\mathsf F_{\rm cut}$，直接消费定理 198.1 的完整原接口：
+
+| 原关系或资料 | 同一原世界中保留的量子结论 |
+| --- | --- |
+| 原 $q,L,D$、SC、整个原指针 SJ 与参考 | $[D_a,D_b]=-[L_a,L_b]$；$a\cdot b=a\circ b-iD_ab$ 给同空间有限复矩阵直和，中央标签、经典部分、原取向保持。 |
+| 全部原准备及原双对偶运输 | $\alpha(e)=\tau_A(\rho_\alpha e)$，$\rho_\alpha\ge0$，$\tau_A(\rho_\alpha)=\alpha(u_A)$；Born 规则、零及次归一质量与原不等正块权保持。 |
+| 完整 X、全部原实际联合、相关准备及乘积准备 | 已声明实际联合取得普通复张量，原 Jordan/$D$ 嵌入取得含幺 $*$-嵌入；设备身份不按响应合并。 |
+| 同记录参考与全事件 R | 每个原事件 CP/TNI，原完整装置 TP；闭准备背景沿母卷引理 69.2 在完整相关正锥上连续延拓。 |
+| 原指定群、整个 AC、精确 $N_u$、Xs 及原合法连线 | 每个效果有原所选完整有限平方根词，成功支为 $\rho\mapsto\sqrt e\rho\sqrt e$；投影给所选 Lüders 支，各原失败输出、质量及记录保持。 |
+| 原 F、细口、分组及实际遗忘 | $S_\ell=\operatorname{Ad}_{K_\ell}$、$\Phi_f=\sum_\ell S_\ell$；零标签、实际记录及原分组保持。 |
+| 具名同数支持双返回及原同数反向资料 | $U_\ell=q_\ell\operatorname{Ad}_{K_\ell^+}$，保留同一具名正数 $q_\ell$、两侧支持复合、失败完成及全部合法接续。 |
+| 分别具名的完整 $B$ 与完整 $\mathsf B_{\rm cl}$ | 前者给原实际准备的有限正生成；后者只给运输后密度锥的闭覆盖，数学极限不取得实际准备身份。 |
+
+全部原准备、端口、中央细权、细记录、失败及实际遗忘逐条进入原合法有限顺序、自适应和并行历史；若 $h=(f_1,\ldots,f_k)$、末端效果为 $w$，则
+
+$$
+\alpha(T_{f_1}\cdots T_{f_k}w)
+=\tau\!\left(w\,\Phi_{f_k}\cdots\Phi_{f_1}(\rho_\alpha)\right).
+\tag{207.2}
+$$
+
+没有新加连线合法性；数学 Kraus 表示不供应新实际细口，所选完整词不供应任意独立仪器的共同组装。∎
+
