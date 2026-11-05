@@ -4437,7 +4437,7 @@ $$
 \tag{156.5}
 $$
 
-A source-specific finite completion certificate for an original $\theta$ consists of a bounded invariant slack set $E$, a positive Section 155 ray $X$, a number $t_\theta>0$, a bounded ball $B_{20}\subset\mathbb R^{20}$ and pointwise simplex tuples $u^{(t,z)}$ on the original $G$, for $0<t<t_\theta$ and $z\in B_{20}$, such that
+A source-specific finite completion certificate for an original $\theta$ consists of a bounded invariant slack set $E$, a positive Section 155 ray $X$, a number $t_\theta>0$, a closed ball $B_{20}\subset\mathbb R^{20}$ centered at $0$ with positive radius, and pointwise simplex tuples $u^{(t,z)}$ on the original $G$, for $0<t<t_\theta$ and $z\in B_{20}$, such that
 
 $$
 \begin{aligned}
@@ -4445,7 +4445,8 @@ $$
   \mathcal H_{43}(u^{(t,z)})=\mathcal H_{43}(f^0),\\
 &t^{-2}\bigl(\Delta_{\mathcal R_\ast}(u^{(t,z)})\bigr)
    =r_{\theta,\ast}+S_\theta z+\varepsilon_\theta(t,z),\\
-&\sup_{z\in B_{20}}\|\varepsilon_\theta(t,z)\| \longrightarrow0,
+&\sup_{z\in B_{20}}\|\varepsilon_\theta(t,z)\| \longrightarrow0
+\quad(t\downarrow0),
  \qquad \det S_\theta\ne0.
 \end{aligned}
 \tag{156.6}
@@ -4453,26 +4454,41 @@ $$
 
 Here $\Delta_{\mathcal R_\ast}$ is evaluated with the original trilinear form and the common tuple in all three slots. The certificate must also supply a closed-ball degree or boundary estimate that places a zero of the finite map in $B_{20}$; invertibility of $S_\theta$ by itself is not such a degree estimate. Its legal perturbations must preserve the original source marginals, the pointwise simplex inequalities and the actual terminal convention throughout the ball. The constants and the choice of the omitted row may depend on $\theta$, but the original $G$, $m$, $P$, $g$, epochs, source law, readout and permitted representative $b$ may not change.
 
-The intended algebraic mechanism is finite-dimensional. A zero of the twenty rows in (156.6), together with the exact $\mathcal H_{43}$ equations, gives sixty-three exact coordinates. Proposition 156.2 then recovers the omitted $\rho_\ast$ coordinate. The complement identities of Section 154.F recover the coordinates containing $B$, so all sixty-four ordered equations follow for the same whole-$G$ tuple.
+The intended algebraic mechanism is finite-dimensional. A zero of the twenty rows in (156.6), together with the exact $\mathcal H_{43}$ equations, gives sixty-three exact coordinates. Proposition 156.2 then recovers the omitted $\rho_\ast$ coordinate. Proposition 150.3 and its three-slot complement expansion (150.13) recover every coordinate containing $B$, so all sixty-four ordered equations follow for the same whole-$G$ tuple.
 
-**Proposition 156.4 (what an actual-partition realization must add).** Suppose the certificate of Route condition 156.3 is available with a uniform finite-cell realization as follows: there are increasing finite Borel partitions $\mathcal P_n$ of the original $G$ and common quantile maps $u\mapsto D_n(u)$ such that the actual maps
+**Proposition 156.4 (what an actual-partition realization must add).** Suppose the certificate of Route condition 156.3 is available with a same-dimensional finite-cell realization as follows. There are an admissible $t\in(0,t_\theta)$ and an index $n_0$ such that, for every $n\ge n_0$ and $z\in B_{20}$, a finite Borel partition $D_{n,t}(z)$ of the original $G$ is obtained from one common quantile construction, its four cells are Borel, pairwise disjoint and cover $G$, and
 
 $$
-F_n(u)=\left(\mathcal H_{43}(\mathbf1_{D_n(u)})-\mathcal H_{43}(f),
- \Delta_{\mathcal R_\ast}(\mathbf1_{D_n(u)})\right)
+\mathcal H_{43}(\mathbf1_{D_{n,t}(z)})=\mathcal H_{43}(f)
+\quad\text{for every }z\in B_{20}.
 \tag{156.7}
 $$
 
-converge uniformly on the certificate ball, after the same scaling used in (156.6), to the corresponding fractional map. If the degree or boundary estimate persists for one finite $n$, then one actual whole-$G$ Borel partition $D_n$ has all sixty-three displayed coordinates exact, and (156.3) and the complement identities give
+The remaining-coordinate map
 
 $$
-\Delta(D_n)=0.
+R_{n,t}(z)=t^{-2}\Delta_{\mathcal R_\ast}(\mathbf1_{D_{n,t}(z)})
+\colon B_{20}\longrightarrow\mathbb R^{20}
 \tag{156.8}
 $$
 
-*Proof.* The first forty-three coordinates and the twenty coordinates in $\mathcal R_\ast$ form a finite map with sixty-three components. The uniform approximation and the degree or boundary estimate give a zero by the finite-dimensional Brouwer or degree argument used in Section 154.E. The resulting partition is produced by one common quantile construction, so every slot uses its own indicator and propagated terminal. Equation (156.3) supplies the omitted repeated coordinate, while Section 154.F supplies the coordinates with label $B$. No weak fractional limit is substituted for this finite actual partition. $\square$
+is continuous for each $n$ and converges uniformly on $B_{20}$, as $n\to\infty$ with this fixed $t$, to the fractional map
 
-The two propositions isolate the unpaid bridge without changing the original problem. The remaining proof obligations are the existence of the invariant reservoir and twenty legal perturbation directions, the weighted Schur-complement determinant and its nonlinear remainder estimate, pointwise simplex legality, the finite-cell boundary estimate, and preservation of the actual terminal factors. A failure of any one of these conditions for one permitted $\theta$ falsifies this SRS-20 route only; it does not refute $F_{64}(\theta)$ or the universal target.
+$$
+t^{-2}\Delta_{\mathcal R_\ast}(u^{(t,z)})
+ =r_{\theta,\ast}+S_\theta z+\varepsilon_\theta(t,z).
+$$
+
+Assume in addition that one selected $n\ge n_0$ has a boundary or degree estimate for this $20\to20$ map, for example that $R_{n,t}$ is nonzero on $\partial B_{20}$ and has nonzero degree at $0$ relative to $B_{20}$. Uniform approximation alone does not supply this estimate; it is part of the finite completion certificate. Then one actual whole-$G$ Borel partition $D_{n,t}(z_0)$ has all twenty coordinates in $\mathcal R_\ast$ exact for some $z_0\in B_{20}$, and (156.3) and the complement identities give
+
+$$
+\Delta(D_{n,t}(z_0))=0.
+\tag{156.9}
+$$
+
+*Proof.* The exact $\mathcal H_{43}$ condition removes those forty-three coordinates before the degree argument, so $R_{n,t}$ has equal-dimensional domain and codomain. The boundary or degree hypothesis therefore gives $R_{n,t}(z_0)=0$ by the finite-dimensional argument used in Section 154.E. The resulting partition is produced by one common quantile construction, so every slot uses its own indicator and propagated terminal. Equation (156.3) supplies the omitted repeated coordinate, while Proposition 150.3 and (150.13) recover the coordinates containing $B$. No weak fractional limit is substituted for this finite actual partition. $\square$
+
+The two propositions isolate the unpaid bridge without changing the original problem. The remaining proof obligations are the existence of the invariant reservoir and twenty legal perturbation directions, the weighted Schur-complement determinant and its nonlinear remainder estimate, pointwise simplex legality, an exact-$\mathcal H_{43}$ finite-cell family with the stated continuity and boundary estimate, and preservation of the actual terminal factors. A quantile realization that only makes the $\mathcal H_{43}$ coordinates small gives a $20\to43+20$ residual map and is insufficient by itself; it would require a separate $63$-parameter calibration theorem. A failure of any one of these conditions for one permitted $\theta$ falsifies this SRS-20 route only; it does not refute $F_{64}(\theta)$ or the universal target.
 
 The fixed-start summable continuation of Corollary 155.4 remains an independent sufficient route. It is not implied by (156.6), and it is not needed if the finite actual completion succeeds. Conversely, failure of the finite rank certificate leaves the fixed-start route open. The scalar four-score contrast and finite-horizon tests described in the proportional-containment advisory provide a diagnostic for candidate families, but they do not supply the source-specific rank or the actual finite partition required here.
 
