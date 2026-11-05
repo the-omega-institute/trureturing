@@ -308,7 +308,7 @@ private lemma maximal_path_fan_obstruction [DecidableEq V]
     by_cases ht' : endpoint t ≠ b <;> by_cases hs' : endpoint s ≠ b
     · have heq' : (⟨t,ht'⟩ : J) = ⟨s,hs'⟩ := by
         simpa only [f,dite_eq_left ht',dite_eq_left hs',Option.some.injEq] using heq
-      exact congrArg Subtype.val heq' 
+      exact congrArg Subtype.val heq'
     · simp [f,ht',hs'] at heq
     · simp [f,ht',hs'] at heq
     · exact hinj ((not_ne_iff.mp ht').trans (not_ne_iff.mp hs').symm)
