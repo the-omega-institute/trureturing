@@ -32,7 +32,7 @@ counting_bridge: proof_shape=content; consumers=initial, recurrence
 finite_certificate: proof_shape=content; consumers=vector_recurrence
 vector_recurrence: proof_shape=content; consumers=total_recurrence
 total_recurrence: proof_shape=content; consumers=recurrence
-initial: proof_shape=bind-only; consumers=generating_function, result
+initial: proof_shape=content; consumers=generating_function, result
 recurrence: proof_shape=content; consumers=generating_function, result
 generating_function: proof_shape=content; consumers=result
 result: proof_shape=content; consumers=terminal result
