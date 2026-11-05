@@ -21,7 +21,7 @@ open private two_blocks split_perm source_total inserted_perm from
   D5.S3.Combinatorics.Circle.TwoNegativeJointLift
 open private ear_prefix from D5.S3.Combinatorics.Circle.RunFirstEarTransport
 open private first_marked laneWeight lane_bound from
-  D5.S3.Combinatorics.Circle.NarrowChristoffelJointRefutation
+  D5.S3.Combinatorics.Circle.OddTwoSlopeObstruction
 
 private theorem odd_modulus_dvd_iff (p L : ℤ) :
     (2 * L + 1) ∣ (2 * p - L) ↔ (2 * L + 1) ∣ (4 * p + 1) := by
@@ -228,7 +228,9 @@ private theorem high_phase_values (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
         simp only [Fin.val_castSucc, hi0, pow_zero, Nat.cast_mul, Nat.cast_ofNat, hQ]
         rw [hM]; ring
     by_cases hia : i.val = a
-    · simp only [hi0, if_false, hia, if_pos]
+    · simp only [if_neg hi0, if_pos hia]
+      change actualSource r Q i = -(2 * p * L - L - 1) ∧
+        actualSource (r + 1) (2 * Q) i.castSucc = -(4 * p * L - L - 1)
       constructor
       · apply old_value i _ (L + 1) (by constructor <;> nlinarith)
         rw [hia, haE, hQ, hN]; ring
@@ -269,7 +271,7 @@ private theorem high_phase_values (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
       have hz : 2 * z ≤ p := by
         have he := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2)
           (show (i.val - a - 1) + 1 ≤ b - 1 by
-            have := i.isLt; dsimp [r] at this; omega)
+            have := i.isLt; change i.val < a + b at this; omega)
         simpa only [pow_succ, mul_comm, p, z] using he
       have hiE : (2 : ℤ) ^ i.val = 4 * L * z := by
         rw [show i.val = (a + 1) + (i.val - a - 1) by omega,
@@ -324,7 +326,7 @@ private theorem joint_implies_mask (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
   change (if reverse then 2 * p ≤ L else L ≤ p) at hbank
   have hp0 : 0 ≤ p := by dsimp only [p]; positivity
   obtain ⟨hH, hN, hvalues, hfresh⟩ := high_phase_values a b ha hb
-  have hlen : sigma.length = r := by simpa only [r] using hold.1.length_eq
+  have hlen : sigma.length = r := by simpa only [r, List.length_finRange] using hold.1.length_eq
   have hzero : (⟨0, by dsimp [r]; omega⟩ : Fin r) ∈ sigma :=
     hold.1.mem_iff.mpr (by simp)
   obtain ⟨pre, i, post, hs, hi, hpre⟩ :=
@@ -339,9 +341,13 @@ private theorem joint_implies_mask (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
   let x : ℤ := xN
   let y : ℤ := yN
   have hx0 : 0 ≤ x := by dsimp only [x]; positivity
-  have hxL : x < L := by exact_mod_cast lane_bound S 1 (a - 1)
+  have hxL : x < L := by
+    dsimp only [x, xN, L]
+    exact_mod_cast lane_bound S 1 (a - 1)
   have hy0 : 0 ≤ y := by dsimp only [y]; positivity
-  have hyp : y < p := by exact_mod_cast lane_bound S (a + 1) (b - 1)
+  have hyp : y < p := by
+    dsimp only [y, yN, p]
+    exact_mod_cast lane_bound S (a + 1) (b - 1)
   have hsum (v : Fin r → ℤ) : (pre.map v).sum = ∑ j ∈ S, v j :=
     (List.sum_toFinset v hpreND).symm
   have hlinear (j : Fin r) (hj : j ∈ S) :
@@ -357,12 +363,12 @@ private theorem joint_implies_mask (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
     · have hc : 1 ≤ j.val ∧ j.val < 1 + (a - 1) := by omega
       have hc' : ¬(a + 1 ≤ j.val ∧ j.val < a + 1 + (b - 1)) := by omega
       simpa only [f, g, p, L, hj0, hja, hjl, if_false, if_pos, laneWeight,
-        hc, hc', Nat.cast_pow, Nat.cast_ofNat, Nat.cast_zero, mul_zero, add_zero] using hv
+        hc, hc', and_self, ite_true, ite_false, Nat.cast_pow, Nat.cast_ofNat, Nat.cast_zero, mul_zero, add_zero] using hv
     · have hc : ¬(1 ≤ j.val ∧ j.val < 1 + (a - 1)) := by omega
       have hc' : a + 1 ≤ j.val ∧ j.val < a + 1 + (b - 1) := by
         have := j.isLt; dsimp only [r] at this; omega
       simpa only [f, g, p, L, hj0, hja, hjl, if_false, if_pos, laneWeight,
-        hc, hc', Nat.cast_pow, Nat.cast_ofNat, Nat.cast_zero, mul_zero,
+        hc, hc', and_self, ite_true, ite_false, Nat.cast_pow, Nat.cast_ofNat, Nat.cast_zero, mul_zero,
         zero_add, Nat.sub_sub] using hv
   have hcastX : (∑ j ∈ S, (laneWeight 1 (a - 1) j : ℤ)) = x := by
     simp only [x, xN, Nat.cast_sum]
@@ -395,11 +401,13 @@ private theorem joint_implies_mask (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
     change f i = _ at hv
     rw [hv]
     rcases hi with hi | hi
-    · simp only [hi, if_pos]
+    · simp only [if_pos hi]
+      change -(2 * p * L - p - 1) ≤ _
       cases reverse <;>
         simp only [Bool.false_eq_true, ↓reduceIte] at hbank ⊢ <;> omega
     · have hi0 : i.val ≠ 0 := by omega
-      simp only [hi0, hi, if_false, if_pos]
+      simp only [if_neg hi0, if_pos hi]
+      change -(2 * p * L - L - 1) ≤ _
       cases reverse <;>
         simp only [Bool.false_eq_true, ↓reduceIte] at hbank ⊢ <;> omega
   have hgi : g i ≤ -(4 * p * L - (if reverse then L else 2 * p) - 1) := by
@@ -407,11 +415,13 @@ private theorem joint_implies_mask (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
     change g i = _ at hv
     rw [hv]
     rcases hi with hi | hi
-    · simp only [hi, if_pos]
+    · simp only [if_pos hi]
+      change -(4 * p * L - 2 * p - 1) ≤ _
       cases reverse <;>
         simp only [Bool.false_eq_true, ↓reduceIte] at hbank ⊢ <;> omega
     · have hi0 : i.val ≠ 0 := by omega
-      simp only [hi0, hi, if_false, if_pos]
+      simp only [if_neg hi0, if_pos hi]
+      change -(4 * p * L - L - 1) ≤ _
       cases reverse <;>
         simp only [Bool.false_eq_true, ↓reduceIte] at hbank ⊢ <;> omega
   have hPH := (hold.2.2 pre.length).2
@@ -521,13 +531,13 @@ private theorem mask_implies_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
     simpa only [g, gn, beta, Fin.val_mk, hne, if_false, if_pos, A, p, L] using (hvalues beta).2
   have hFresh : gn fresh = 2 * p * L + p := hfresh
   have hB0 : 0 ≤ (if reverse then C else B) := by
-    cases reverse <;> dsimp only [B, C] <;> nlinarith
+    cases reverse <;> simp only [Bool.false_eq_true, ↓reduceIte] <;> dsimp only [B, C] <;> nlinarith
   have hD0 : 0 ≤ (if reverse then A else D) := by
-    cases reverse <;> dsimp only [D, A] <;> nlinarith
+    cases reverse <;> simp only [Bool.false_eq_true, ↓reduceIte] <;> dsimp only [D, A] <;> nlinarith
   have hCcap : 0 ≤ (if reverse then B else C) ∧ (if reverse then B else C) ≤ H := by
-    cases reverse <;> dsimp only [B, C, H] <;> constructor <;> nlinarith
+    cases reverse <;> simp only [Bool.false_eq_true, ↓reduceIte] <;> dsimp only [B, C, H] <;> constructor <;> nlinarith
   have hAcap : 0 ≤ (if reverse then D else A) ∧ (if reverse then D else A) ≤ N := by
-    cases reverse <;> dsimp only [D, A, N] <;> constructor <;> nlinarith
+    cases reverse <;> simp only [Bool.false_eq_true, ↓reduceIte] <;> dsimp only [D, A, N] <;> constructor <;> nlinarith
   have habLabel : alpha ≠ beta := by
     intro he
     have he' := congrArg Fin.val he
@@ -537,9 +547,11 @@ private theorem mask_implies_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
   change y < p at hyp
   let P := (2 * p + 1) * x + (2 * L + 1) * y
   let G := P + 2 * p * x
-  change (if reverse then C else B) ≤ P at hBP
+  have hBP : (if reverse then C else B) ≤ P := by
+    cases reverse <;> simpa only [Bool.false_eq_true, ↓reduceIte, B, C] using hBP
   change P ≤ H at hPH
-  change (if reverse then A else D) ≤ G + (if e then 2 * p * L + p else 0) at hDG
+  have hDG : (if reverse then A else D) ≤ G + (if e then 2 * p * L + p else 0) := by
+    cases reverse <;> simpa only [Bool.false_eq_true, ↓reduceIte, A, D] using hDG
   change G + (if e then 2 * p * L + p else 0) ≤ N at hGN
   have hxNat : x.toNat < 2 ^ (a - 1) := by
     have hxCast : (x.toNat : ℤ) = x := Int.toNat_of_nonneg hx0
