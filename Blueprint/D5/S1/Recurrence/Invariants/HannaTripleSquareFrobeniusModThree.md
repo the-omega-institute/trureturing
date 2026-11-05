@@ -80,9 +80,9 @@ $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{I
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaTripleSquareFrobeniusModThree.resultFourB` (`✓ std3`). ∎
 
-*Resolves.* `Problems/h3894-triple-square-frobenius-mod-three` (proved) by `D5/S1/Recurrence/Invariants/HannaTripleSquareFrobeniusModThree.resultFourB`.
+*Resolves.* `Problems/h3894-a389475-formula-four-b` (proved) by `D5/S1/Recurrence/Invariants/HannaTripleSquareFrobeniusModThree.resultFourB`.
 
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"h3894-triple-square-frobenius-mod-three","declaration_gid":"D5/S1/Recurrence/Invariants/HannaTripleSquareFrobeniusModThree.resultFourB","resolution_kind":"proved"} -->
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"h3894-a389475-formula-four-b","declaration_gid":"D5/S1/Recurrence/Invariants/HannaTripleSquareFrobeniusModThree.resultFourB","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 

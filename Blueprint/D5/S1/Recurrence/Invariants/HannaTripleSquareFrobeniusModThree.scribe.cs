@@ -40,8 +40,14 @@ internal sealed class HannaTripleSquareFrobeniusModThreeDocument : IScribeDocume
             DescribeId.Create("a475-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
             provenance, Blocks(Paragraph(Text(prose))), role,
-            (name == "result" || name == "resultFourB") ? new OpenProblemResolutionClaim(
-                ProblemSlugRef.Create("h3894-triple-square-frobenius-mod-three"), ResolutionKind.Proved) : null);
+            name switch
+            {
+                "result" => new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("h3894-triple-square-frobenius-mod-three"), ResolutionKind.Proved),
+                "resultFourB" => new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("h3894-a389475-formula-four-b"), ResolutionKind.Proved),
+                _ => null
+            });
     private static Formula V(string name) => F.Id(name);
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Q(string owner, string name) => Seq(Named(owner), Dot, Named(name));

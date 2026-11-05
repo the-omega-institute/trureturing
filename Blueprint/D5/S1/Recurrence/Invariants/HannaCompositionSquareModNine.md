@@ -66,9 +66,9 @@ $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{I
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaCompositionSquareModNine.resultFour` (`✓ std3`). ∎
 
-*Resolves.* `Problems/h3894-congruences` (proved) by `D5/S1/Recurrence/Invariants/HannaCompositionSquareModNine.resultFour`.
+*Resolves.* `Problems/h3894-a389474-formula-four` (proved) by `D5/S1/Recurrence/Invariants/HannaCompositionSquareModNine.resultFour`.
 
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"h3894-congruences","declaration_gid":"D5/S1/Recurrence/Invariants/HannaCompositionSquareModNine.resultFour","resolution_kind":"proved"} -->
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"h3894-a389474-formula-four","declaration_gid":"D5/S1/Recurrence/Invariants/HannaCompositionSquareModNine.resultFour","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
