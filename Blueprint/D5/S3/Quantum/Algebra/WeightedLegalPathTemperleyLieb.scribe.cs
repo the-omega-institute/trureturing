@@ -84,7 +84,7 @@ internal sealed class WeightedLegalPathTemperleyLiebDocument : IScribeDocumentDe
                     + "epsilon, sqrt(phi)*epsilon, and -sqrt(phi)*epsilon, and half the trace norm "
                     + "is exactly kappa*epsilon. At the true state rho=I/2 all three exact "
                     + "readouts are 1/2. For every 0<=epsilon<=1/(4*kappa), the noisy readouts "
-                    + "are in [0,1], the reconstructed Bloch radius is at most 1/4, and the "
+                    + "are in [0,1], the reconstructed centered coefficient radius is at most 1/4, and the "
                     + "reconstructed trace-one matrix is positive semidefinite. Its actual "
                     + "P,Q,V readouts equal those same noisy values. This is a positive physical "
                     + "neighborhood, so any constant smaller than kappa fails even there; "
