@@ -2652,3 +2652,198 @@ prefix and the immediate-right classification retain their stated
 ranges.
 
 ## 追加锚（本行以下为增补区）
+
+## 55. An interior obstruction to the fixed upper-endpoint threshold
+
+**Theorem 55.1 (an attained negative value below the fixed comparator).**
+There is an original pure effect and one whole feedback, with the
+negative sign uniquely active at the true distance $13/4$, such that
+
+$$
+g(E,U)<\frac{63272556}{125000000}
+       <\frac{5081}{10000}.
+\tag{55.1}
+$$
+
+In the negative row of Definition 46.1 take
+
+$$
+q=\frac15,\quad p=\frac45,\quad x=\frac{23}{80},\quad
+L=\frac{103}{80},\quad X=\frac15,\quad Y=\frac{17}{20},\quad
+ t_0=L^2-X-Y=\frac{3889}{6400}.
+\tag{55.2}
+$$
+
+*Proof.* All coordinates and populations are strictly between zero
+and one. The exact differences
+$X-(2/5)^2=Y-(9/10)^2=1/25$ imply
+$\sqrt X+\sqrt Y>13/10=L+1/80$.
+Also $|\sqrt X-\sqrt Y|<1<L$. Consequently $-1<Z<1$
+in (46.11), and $t_0>0$ further gives $0<Z<1$.
+This is a strict interior point of the actual triangle, with all
+radicals on their stipulated nonnegative branches.
+
+Here are rational certificates for the required constants:
+
+$$
+\begin{aligned}
+h^2-(7071/10000)^2&=\frac{959}{100000000}>0,\\
+(70711/100000)^2-h^2&=\frac{45521}{10000000000}>0,\\
+s^2-(3826/10000)^2&>\frac{6224}{100000000}>0,\\
+(3827/10000)^2-s^2&>\frac{929}{100000000}>0,\\
+c^2-(4619/5000)^2&>\frac{14356}{100000000}>0,\\
+(9239/10000)^2-c^2&>\frac{3621}{100000000}>0.
+\end{aligned}
+\tag{55.3}
+$$
+
+The last four follow from $s^2=(1-h)/2$ and $c^2=(1+h)/2$,
+using the first two. Every compared quantity is positive, so
+
+$$
+\frac{7071}{10000}<h<\frac{70711}{100000}<\frac{7072}{10000},\quad
+\frac{3826}{10000}<s<\frac{3827}{10000},\quad
+\frac{4619}{5000}<c<\frac{9239}{10000}.
+\tag{55.4}
+$$
+
+Since $(1-X)(1-Y)=3/25$ and $4XY=17/25$, (46.11) gives
+
+$$
+F^2=\frac3{25}-\frac3{17}\left(\frac{3889}{6400}\right)^2,
+\qquad
+F^2-\left(\frac{117}{500}\right)^2
+ =\frac{1443477}{17408000000}>0.
+\tag{55.5}
+$$
+
+Thus $F>117/500$. The negative row has
+$R^2=s^2/5+17/40+sh t_0$ and
+$C^2=4c^2/5+3/40+2chF$. In particular
+$t_0-6076/10000=9/160000>0$. Positive substitutions give
+
+$$
+\begin{aligned}
+&\frac{(3826/10000)^2}{5}+\frac{17}{40}
+ +\frac{3826}{10000}\frac{7071}{10000}\frac{6076}{10000}
+ -\left(\frac{983}{1250}\right)^2
+ =\frac{229545096}{1000000000000}>0,\\
+&\frac45\left(\frac{4619}{5000}\right)^2+\frac3{40}
+ +2\frac{4619}{5000}\frac{7071}{10000}\frac{117}{500}
+ -\left(\frac{1031}{1000}\right)^2
+ =\frac{11765866}{25000000000}>0.
+\end{aligned}
+\tag{55.6}
+$$
+
+Hence $R>983/1250$ and $C>1031/1000$.
+Writing $\mathcal E=4e^2/5+d^2/5$, expand the source constants as
+
+$$
+\mathcal E=4-\frac65h+\frac{32}{5}hs+\frac85hc
+ <4-\frac65\frac{7071}{10000}
+ +\frac{32}{5}\frac{7072}{10000}\frac{3827}{10000}
+ +\frac85\frac{7072}{10000}\frac{9239}{10000}
+ =\frac{2964511072}{500000000}<\frac{593}{100}.
+\tag{55.7}
+$$
+
+The last gap is $488928/500000000>0$. The lower $h$ bound is
+used only in the negative term; the positive products use upper
+bounds. Also $\Gamma=(2R+C)/\sqrt5$ and
+$2R+C>13019/5000>0$. The simultaneously attained defect is therefore
+
+$$
+\mathcal E-4\Gamma^2
+ <\frac{593}{100}-\frac45\left(\frac{13019}{5000}\right)^2
+ =\frac{63272556}{125000000},\qquad
+\frac{5081}{10000}-\frac{63272556}{125000000}
+ =\frac{239944}{125000000}>0.
+\tag{55.8}
+$$
+
+Lower recovery bounds yield this upper defect bound. The original
+attainment and true distance are verified next. $\square$
+
+**Proposition 55.2 (fixed labels, one feedback and ordinary transpose).**
+The value in (55.8) is attained in the original negative row.
+Let $r=\sqrt X$, $z=\sqrt Y$, $a=\sqrt{1-X}$,
+$b=\sqrt{1-Y}$ and $\alpha=\arccos Z\in(0,\pi)$. Set
+
+$$
+(v_3,v_4)=e^{i\alpha}(r+ia,r-ia),\qquad
+(v_1,v_2)=(z+ib,z-ib),\qquad U=\operatorname{diag}(v)U_-.
+\tag{55.9}
+$$
+
+*Proof.* Each entry has modulus one. These are the unchanged pairs
+$J=(3,4)$ and $K=(1,2)$. Relative to $U_+$, the original diagonal
+is $w=(v_1,-v_2,-iv_3,iv_4)$. Source (23.2) gives
+
+$$
+Q=2sr e^{i\alpha}+2hz,\qquad
+P=2ca e^{i\alpha}+2ihb,\qquad |Q|=2R,\quad |P|=2C.
+\tag{55.10}
+$$
+
+Indeed the crossed term in $|P|^2/4$ is
+$2chab\sin\alpha=2chF$. Thus both recoveries occur for this
+same feedback, as in Lemma 46.2. They are nonzero by (55.6).
+With the source certificate-basis matrix $T$, define
+
+$$
+\eta=\frac{P\overline Q}{|P||Q|},\qquad
+\beta=\begin{pmatrix}\sqrt q\\\eta\sqrt p\end{pmatrix},\qquad
+E=(T\beta\beta^\dagger T^\dagger)^{\mathsf T}.
+\tag{55.11}
+$$
+
+The transpose is ordinary. This effect is positive, pure and trace
+one, and its first certificate-basis population is $q=1/5$.
+The equality $\eta Q=P|Q|/|P|$ aligns the source recovery summands,
+so (23.12)--(23.13) give $g(E,U)=\mathcal E-4\Gamma^2$.
+Multiplying $\beta$ by $\overline\eta$ gives the negative-row form
+of Definition 46.1 without changing $E$.
+
+The active trace modulus is $|2r e^{i\alpha}+2z|=2L$.
+Equations (23.9)--(23.11) therefore give
+$\rho_-=8-4L+2q=4(1-23/80)+2/5=13/4$, with zero impurity.
+The original budget (42.17)--(42.20), with $\zeta>15/4$, gives
+$\rho_++\rho_->15/2$, hence $\rho_+>17/4>13/4$.
+Thus the true distance is exactly $13/4$, uniquely negative-active.
+One common scalar may multiply all four entries of $v$; no
+independent pair scalar or label permutation is used. $\square$
+
+**Corollary 55.3 (a relatively open same-level obstruction).**
+There is a neighborhood of $(q,X,Y)=(1/5,1/5,17/20)$, with
+$x=3/16+q/2$, whose reconstructed original pairs are all uniquely
+negative-active at true distance $13/4$ and have $g<5081/10000$.
+
+*Proof.* The strict population, coordinate, curved-triangle and
+$|Z|<1$ inequalities persist near (55.2). There $R,C>0$ and the
+radical defect is continuous. Put $\delta=239944/125000000$.
+By (55.8) its central value is below $5081/10000-\delta$.
+Restrict the neighborhood so its variation is less than $\delta/2$;
+then every value is below $5081/10000-\delta/2$.
+The reconstruction (55.9)--(55.11) is continuous there, and
+$4(1-x)+2q=13/4$ throughout. The same two-sign budget preserves
+unique negative activity. This gives a relatively open family of attained triangle parameters
+on that same level; even fixing $q=1/5$ leaves an open
+two-dimensional family of triangle coordinates. $\square$
+
+**Definition 55.4 (sources and remaining comparison).**
+This is a repository-derived precise obstruction to the universal
+negative threshold $g>5081/10000$ at $\xi=13/4$. The elementary
+rational inequalities and continuity argument above accompany the
+existing original reconstruction: source (23.2), (23.9)--(23.13),
+Continuation II Definition 46.1, Lemma 46.2 and (42.17)--(42.20).
+No literature-priority claim is made. Theorem 54.1 remains an
+attained positive upper comparator. Now both minima of Definition
+54.2 lie below $5081/10000$; their strict ordering
+$A_-(13/4)>A_+(13/4)$ remains unresolved. Neither this feasible
+negative pair nor its open family identifies a global minimizer.
+The original interval sign-selection problem retains its full-domain
+criterion in Definition 54.2; Theorem 52.2 is not extended beyond
+$61/25$, and no determinant or population restriction is introduced.
+
+## 追加锚（本行以下为增补区）
