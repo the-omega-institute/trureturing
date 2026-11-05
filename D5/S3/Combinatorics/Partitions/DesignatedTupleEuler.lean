@@ -75,12 +75,12 @@ private theorem count_eq_coeff_pow (k N : ℕ) :
   have hp : markedSeries ^ k = ∏ _ : Fin k, markedSeries := by simp
   rw [hp, PowerSeries.coeff_prod]
   simp only [Nat.cast_sum, Fintype.card_pi, Nat.cast_prod]
-  rw [Finset.sum_coe_sort]
+  rw [← Finset.sum_coe_sort ((Finset.univ : Finset (Fin k)).finsuppAntidiag N)]
   apply Finset.sum_congr rfl
   intro e he
   apply Finset.prod_congr rfl
   intro i hi
-  simpa only [Nat.card_eq_fintype_card] using card_designated (e i)
+  simpa only [Nat.card_eq_fintype_card] using card_designated (e.1 i)
 
 private def kernel : PowerSeries ℤ :=
   PowerSeries.mk (fun n => if n = 0 then 1 else (n : ℤ))
@@ -90,22 +90,24 @@ private theorem local_factor (t : ℕ) (ht : t ≠ 0) :
       ((j+1 : ℕ) : ℤ) • PowerSeries.X ^ (t*(j+1)) =
     PowerSeries.expand t ht kernel := by
   ext N
-  rw [PowerSeries.coeff_expand, PowerSeries.coeff_mk, map_add,
+  rw [PowerSeries.coeff_expand]
+  simp only [kernel, PowerSeries.coeff_mk]
+  rw [map_add,
     (Nat.Partition.summable_genFun_term' (fun _ m => (m : ℤ)) ht).map_tsum _
       (PowerSeries.WithPiTopology.continuous_coeff _ _)]
   simp only [map_smul, PowerSeries.coeff_X_pow, smul_eq_mul,
     mul_ite, mul_one, mul_zero]
   by_cases hn : N = 0
   · subst N
-    simp [ht, Nat.mul_ne_zero ht (Nat.succ_ne_zero _)]
+    simp [ht]
   · by_cases hd : t ∣ N
-    · rw [if_pos hd]
+    · rw [ite_eq_left hd]
       have hq : 0 < N / t := Nat.div_pos
         (Nat.le_of_dvd (Nat.pos_of_ne_zero hn) hd) (Nat.pos_of_ne_zero ht)
       have hmul : t * (N / t - 1 + 1) = N := by
         rw [Nat.sub_add_cancel hq, Nat.mul_div_cancel' hd]
       rw [tsum_eq_single (N / t - 1)]
-      · simp [hn, hmul, Nat.sub_add_cancel hq, Nat.ne_of_gt hq]
+      · simp [hn, Nat.sub_add_cancel hq, Nat.ne_of_gt hq, Nat.mul_div_cancel' hd]
       · intro j hj
         have hne : N ≠ t * (j+1) := by
           intro heq
@@ -113,7 +115,7 @@ private theorem local_factor (t : ℕ) (ht : t ≠ 0) :
             rw [heq, Nat.mul_div_cancel_left _ (Nat.pos_of_ne_zero ht)]
           omega
         simp [hne]
-    · rw [if_neg hd]
+    · rw [ite_eq_right hd]
       have hz (j : ℕ) : N ≠ t * (j+1) := fun h => hd ⟨j+1,h⟩
       simp [hn, hz]
 
@@ -123,8 +125,10 @@ private theorem kernel_closed :
   cases n with
   | zero => simp [kernel]
   | succ n =>
-    simp [kernel, show (PowerSeries.X : PowerSeries ℤ) = PowerSeries.X ^ 1 by simp,
+    rw [map_add, show PowerSeries.X * PowerSeries.mk (fun n => (n+1 : ℤ)) =
+      PowerSeries.X ^ 1 * PowerSeries.mk (fun n => (n+1 : ℤ)) by rw [pow_one],
       PowerSeries.coeff_X_pow_mul]
+    simp [kernel]
 
 private theorem kernel_identity :
     kernel * (1 - PowerSeries.X) * (1 - PowerSeries.X ^ 2) *
@@ -145,28 +149,37 @@ private theorem continuous_expand (t : ℕ) (ht : t ≠ 0) :
     Continuous (PowerSeries.expand (R := ℤ) t ht) := by
   apply continuous_pi
   intro d
-  have hd : d = Finsupp.single () (d ()) := by ext u; cases u; simp
-  simp only [hd]
-  change Continuous (fun f : PowerSeries ℤ => PowerSeries.coeff (d ())
-    (PowerSeries.expand t ht f))
-  simp_rw [PowerSeries.coeff_expand]
-  split_ifs
-  · exact PowerSeries.WithPiTopology.continuous_coeff _ _
-  · exact continuous_const
+  have hd : d = Finsupp.single () (d ()) := by
+    apply Finsupp.ext
+    intro u
+    cases u
+    simp
+  have h : Continuous (fun f : PowerSeries ℤ => PowerSeries.coeff (d ())
+      (PowerSeries.expand t ht f)) := by
+    simp_rw [PowerSeries.coeff_expand]
+    split_ifs
+    · exact PowerSeries.WithPiTopology.continuous_coeff _ _
+    · exact continuous_const
+  convert h using 1
+  funext f
+  change (PowerSeries.expand t ht f) d =
+    (PowerSeries.expand t ht f) (Finsupp.single () (d ()))
+  rw [← hd]
 
 private theorem hasProd_euler (m : ℕ+) :
     HasProd (fun n : ℕ => (1 - PowerSeries.X ^ (m.1*(n+1)) : PowerSeries ℤ))
       (euler m) := by
   have h := (PowerSeries.WithPiTopology.hasProd_one_sub_X_pow ℤ).map
     (PowerSeries.expand m.1 m.ne_zero) (continuous_expand m.1 m.ne_zero)
-  simpa only [Function.comp_def, map_sub, map_one, map_pow, PowerSeries.expand_X,
+  simpa only [euler, Function.comp_def, map_sub, map_one, map_pow, PowerSeries.expand_X,
     ← pow_mul, mul_comm (m.1)] using h
 
 private theorem euler_constant (m : ℕ+) :
     PowerSeries.constantCoeff (euler m) = 1 := by
   rw [euler, PowerSeries.constantCoeff_expand,
     ← PowerSeries.coeff_zero_eq_constantCoeff_apply]
-  simpa only [Int.coe_negOnePow, Int.natAbs_zero, pow_zero] using
+  simpa only [show pentagonal (0 : ℤ) = 0 by decide,
+    Int.coe_negOnePow, Int.natAbs_zero, pow_zero] using
     PowerSeries.coeff_pentagonalSeries_pentagonal ℤ 0
 
 /-- Division uses the unique inverse with constant term one, entirely over ℤ. -/
@@ -190,10 +203,19 @@ theorem count_six_eq_coeff (N : ℕ) :
     simpa only [map_mul, map_sub, map_one, map_pow, PowerSeries.expand_X,
       ← pow_mul, mul_comm (n+1), mul_assoc] using h
   change HasProd (fun n => _ * _) (markedSeries * (euler 1 * euler 2 * euler 3)) at h
-  simp only [PNat.val_ofNat] at h
-  simp_rw [hlocal] at h
+  have h' : HasProd (fun n : ℕ =>
+      (1 - PowerSeries.X ^ (6*(n+1)) : PowerSeries ℤ))
+      (markedSeries * (euler 1 * euler 2 * euler 3)) := by
+    apply h.congr_fun
+    intro n
+    change (1 - PowerSeries.X ^ (6*(n+1)) : PowerSeries ℤ) =
+      ((1 : PowerSeries ℤ) + ∑' j : ℕ,
+        ((j+1 : ℕ) : ℤ) • PowerSeries.X ^ ((n+1)*(j+1))) *
+        ((1 - PowerSeries.X ^ (1*(n+1))) * (1 - PowerSeries.X ^ (2*(n+1))) *
+          (1 - PowerSeries.X ^ (3*(n+1))))
+    simpa only [one_mul] using (hlocal n).symm
   have heq : markedSeries * (euler 1 * euler 2 * euler 3) = euler 6 :=
-    h.unique (hasProd_euler 6)
+    h'.unique (hasProd_euler 6)
   have hc : PowerSeries.constantCoeff (euler 1 * euler 2 * euler 3) =
       ((1 : ℤˣ) : ℤ) := by simp only [map_mul, euler_constant, one_mul, Units.val_one]
   have hq : markedSeries = quotient := by
