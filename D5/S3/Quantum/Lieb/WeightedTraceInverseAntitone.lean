@@ -1,6 +1,6 @@
 /- GID: D5/S3/Quantum/Lieb/WeightedTraceInverseAntitone
    generality: G
-   mirror-B: D5/B/S3/Quantum/Lieb/WeightedTraceInverseAntitone
+   mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:registration-audit-pending)
    anchors: []
    utility: none
