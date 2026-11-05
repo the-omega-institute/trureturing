@@ -1166,4 +1166,122 @@ $$
 
 本节是理论综合，未新增 Lean/kernel 声明；#26918 的 required CI 通过只证明仓库提交的机器检查状态，不把理论前件变成实际来源事实。
 
+## 25.24 取得层：完成图像充分性与协议可取得性的分离
+
+最新 `dev` 合并的 RRO 续卷 §§14–18（PR #26924）把上一节留下的“实际过程、记录和取得”缺口推进成一个可复用的边界。它没有把 RRO 的递归对象映射成 native89，也没有改变 §25.20–§25.23 的响应前件；它提供的是一个更一般的取得层判据：先完成当前切口仍欠下的原协议义务，再讨论未来任务的最小语义状态。
+
+### 25.24.1 完成图像上的未来充分性
+
+设 $\mathcal K$ 是实际执行的切口集合，令
+
+$$
+\operatorname{ret}(c)
+$$
+
+表示沿原协议完成该切口已经接受但尚未完成的请求后得到的返回切口；这里固定原协议给出的确定 continuation，若给定前件不能唯一完成，则必须先把 continuation 作为来源合同的一部分固定。它包括原有的写入、提交、输出、确认和返回，不是一个只更新数学摘要的抽象跳步。设 $t(c)$ 是当前来源，$\Theta_t(c)$ 是返回后仍影响完整未来任务的 retained routing tapes/records，以及固定 installation/context 中影响 guards、rights、references、finite backing 和 epoch 的剩余数据，而不是由 $t$ 自动推断出的数据。以下把 $Q_g$ 记作完整 future-task behavior function，而不是单个请求标签。RRO 的精确未来准则是：在已经完成的图像上，
+
+$$
+Q_g(\operatorname{ret}(c))=Q_g(\operatorname{ret}(c'))
+\quad\Longleftrightarrow\quad
+t(c)=t(c')\ \land\ \Theta_{t(c)}(c)=\Theta_{t(c')}(c').
+$$
+
+这里的实际完成图像
+
+$$
+\mathcal I=\operatorname{ret}(\mathcal K)
+$$
+
+只包含原协议真正到达的返回切口。它保留来源身份、完整成功/失败/拒绝/停止后继、实际档案、权限、引用、更新、终止和资源账；不能用环境闭包、反事实未来或只保留成功边的子图替代。令 $T:\mathcal I\to\mathcal Y$ 收集完整的未来请求、更新、失败和档案行为（只量化返回后的 Ready cuts），令 $v:\mathcal I\to\mathcal V$ 是在同一实际联合和同一可读历史合同下取得的观察摘要。
+
+因此得到一个适用于自校准的抽象版本。
+
+**定理 25.24（完成图像充分性判据）。** 在上述实际完成图像上，观察 $v$ 对完整未来任务足够，当且仅当
+
+$$
+\ker(v)\subseteq\ker(T),
+\qquad\text{等价地存在唯一 }\bar T:v(\mathcal I)\to\mathcal Y
+\text{ 使 }T=\bar T\circ v.
+$$
+
+若把同一观察沿固定 completion 前移，定义 $A=v\circ\operatorname{ret}:\mathcal K\to\mathcal A$，这等价于条件
+
+$$
+A(c)=A(c')
+\Longrightarrow
+t(c)=t(c')\ \land\ \Theta_{t(c)}(c)=\Theta_{t(c')}(c')
+$$
+
+对所有实际切口 $c,c'$ 成立。
+
+**证明。** 这是目标在观察纤维上因子化的充要条件。充分性由 $T$ 在每个 $v$-纤维上的常值性给出；必要性若失败，则同一观察值对应两个不同的完整未来档案，不能定义单值解码器。对 RRO 的 $T=Q_g$，其 §§15–16 的准则把差异具体化为 $(t,\Theta_t)$，并给出合法的 `FetchGrowth` 或 `Next` 见证。∎
+
+这里的“足够”只针对完成后的 Ready 未来任务。它不恢复某个未完成切口的原始尾指针、程序计数器、调用阶段或返回相位；RRO §§17–18 及其 Busy/Ready 合同明确把这些物理切口区分开来。`FetchGrowth`/`Next` 的见证也只发生在 $\mathcal I=\operatorname{ret}(\mathcal K)$ 的合法返回切口上。
+
+### 25.24.2 语义充分不等于当前可取得
+
+把协议的可执行性也纳入目标。令
+
+$$
+\operatorname{ready}_Q(c)
+$$
+
+表示在切口 $c$ 是否已经满足请求 $Q$ 的原协议门槛。对“既要回答未来任务、又要判断此刻能否发出请求”的联合目标，摘要必须满足更强条件：
+
+$$
+A(c)=A(c')
+\Longrightarrow
+\bigl(t(c),\Theta_t(c),\operatorname{ready}_Q(c)\bigr)
+=
+\bigl(t(c'),\Theta_t(c'),\operatorname{ready}_Q(c')\bigr).
+$$
+
+RRO 的实际延拓给出失败见证：在非根追加中，所有 multiplicity deficit 可以已经归零，但祖先尾指针、pending cursor、arithmetic commit、完整输出、ACK 或 Return 仍未完成；在这些切口，`Q_g` 的未来内容已经可以由完成记录推断，`FetchGrowth`/`Next` 却仍未被原协议启用。因而任何只恢复 $(t,\Theta)$ 的摘要，都不能自动恢复 `ready`。
+
+**推论 25.25（取得门槛不由语义压缩支付）。** 若原协议要求在 `Busy` 期间完成指定写入、提交、输出、确认和返回，则一个只计算 $A(c)$ 的数学解码器不能凭摘要相等取得这些权限，也不能把未完成切口改判为可查询切口。
+
+**证明。** `ready_Q` 是协议状态的一个独立分量。RRO 的零 deficit 但仍 pending 的实际切口说明，内容计数相等并不蕴含 `ready_Q=true`。在原协议中，只有完成这些动作并到达返回切口才打开请求；解码器没有执行它们，所以不能改变门槛。∎
+
+这把“实际取得”中的两个问题分开：
+
+$$
+\boxed{
+\text{完成图像上的信息充分性}
+\neq
+\text{当前切口上的协议可取得性}.
+}
+$$
+
+定义实际消费者还需要第二项：**操作可准入性**。记 $\operatorname{Adm}(v)$ 表示从来源到观察、从观察到完整返回、再到消费者调用的整条路线，逐步满足原菜单、权限/引用、共同历史、有限 backing、更新、失败、完整回执和终止合同。只有
+
+$$
+\boxed{\operatorname{Suff}(v,T)\ \land\ \operatorname{Adm}(v)}
+$$
+
+才能把数学解码接回实际消费者。数值逆、像成员资格、端点相等或相同边缘，都不能单独推出 $\operatorname{Adm}(v)$。
+
+### 25.24.3 与有限读回和自校准闭环的接口
+
+C123 最新 §§88–93 的有限外部读回提供了另一种静态例子：在它自己的 Jordan/EJA、原对象、原 $D$ 和完整联合合同内，有限 primitive 菜单构成补空间的仿射基，可以恢复被删去的 `cross3` 读回；删除整层或删除输入块外读回则留下明确失败。该结果说明“有限读回足够”必须相对于具体来源、操作和目标表述，不能直接搬入 native89。
+
+于是当前统一闭环应写成：
+
+$$
+\boxed{
+\begin{aligned}
+\text{编码/边界摘要}
+&\longrightarrow \text{静态关系或响应核分类}\\
+&\longrightarrow \text{完成图像上的语义充分性}\\
+&\longrightarrow \text{原协议完成与实际取得}\\
+&\longrightarrow \text{未来请求、记录和联合的检验}.
+\end{aligned}
+}
+$$
+
+R5-004 的二元隐藏关系与递归卷可以作为“局部关系反复生成下一层关系”的并行表示路线；当前没有到 native89 的已证对应，因此不把它当作本闭环的消费者。
+
+**本节的自校准内容。** 我们现在不仅检查摘要是否保留未来答案，还检查它是否把“答案已可推断”和“请求已被协议允许”错误地合并。RRO 的实际反例保留了物理阶段、所有未完成义务和资源账；C123 的有限菜单反例保留了删除后仍不可恢复的域方向。两者共同给出的不是一个跨来源同构，而是 `Suff` 与 `Adm` 必须同时通过的双门。
+
+**本节仍未供应的内容。** 未证明 native89 的实际 $\Omega$ 具有同一 `ret`、$\Theta$ 或 `ready` 合同；未给出过程、联合返回核、档案、物理时间、有限样本认证或成本最优性；也未把任意紧凑数学摘要变成可执行的外部访问权限。本节为 `repo-derived` 理论综合，未新增 Lean/kernel 声明。
+
 ## 追加锚（本行以下为增补区）
