@@ -29,7 +29,9 @@ internal sealed class AraujoBrauerCompleteMappingDocument : IScribeDocumentDefin
                 DeclarationHandle.Create(Prefix + "result"), H("The existence classification"),
                 StatementSource.FromAuthor(Disp(ClaimBody())), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Rank fibres are assembled from transversals. The exceptional rank-two and rank-three Brauer factors use supported cycles with one triangle of negative transport sign. Partial Brauer factors in these ranks have even index. Unit groups exclude degrees two and three, and identity maps supply degree one."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("araujo-brauer-complete-mapping"), ResolutionKind.Proved)))));
 
     private static Formula ClaimBody() => All("n", Seq(Mathbb, Grp(F.Id("N"))),
         Imp(Seq(D(1), Sp, Leq, Sp, F.Id("n")),

@@ -22,6 +22,10 @@ $$\forall (n : \mathbb{N}), (1 \leq n) \Rightarrow ((\exists (: \operatorname{Br
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PerfectMatchings/AraujoBrauerCompleteMapping.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/araujo-brauer-complete-mapping` (proved) by `D5/S3/Combinatorics/PerfectMatchings/AraujoBrauerCompleteMapping.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"araujo-brauer-complete-mapping","declaration_gid":"D5/S3/Combinatorics/PerfectMatchings/AraujoBrauerCompleteMapping.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* João Araújo; Wolfram Bentz; Peter J. Cameron; Kevin Hendrey; Michael Kinyon (2026). *Complete Mappings of Semigroups, Problem 15.11*. URL: <https://arxiv.org/abs/2608.25092v1>.
