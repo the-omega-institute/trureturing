@@ -276,10 +276,9 @@ private theorem sector_N_delta :
 
 private theorem sector_N_hdelta :
     nE * (hE * (qE - dE)) = (hE * (qE - dE)) * nE := by
-  letI : Ring (Module.End ℂ E) := inferInstance
   apply sub_eq_zero.mp
   rw [comm_mul, sector_N_h, sector_N_delta]
-  rw [neg_mul hE (qE - dE), neg_add_cancel]
+  rw [neg_mul (α := Module.End ℂ E), neg_add_cancel]
 
 variable (hp : F.pPlus beta ≠ 0) (critical : D.rank = 26)
 
@@ -300,7 +299,6 @@ Ward identity on the actual shell. Neither commutation nor an SDR is input. -/
 theorem B0_corrected_homotopy_compatibility
     (shell : groundEnergy beta + (level : ℂ) - 1 = 0) :
     bE * homotopy + homotopy * bE = 0 := by
-  letI : Ring (Module.End ℂ E) := inferInstance
   have hBQ : bE * qE + qE * bE = 0 := by
     rw [add_comm, sector_B0_original_ward, shell, zero_smul]
   have hBh : bE * hE + hE * bE = 0 :=
@@ -316,12 +314,12 @@ theorem B0_corrected_homotopy_compatibility
     eq_neg_iff_add_eq_zero.mpr hBdelta
   have factorCommute : bE * (hE * (qE - dE)) = (hE * (qE - dE)) * bE := by
     calc
-      _ = (bE * hE) * (qE - dE) := (mul_assoc _ _ _).symm
+      _ = (bE * hE) * (qE - dE) := by simp only [mul_assoc]
       _ = -(hE * bE) * (qE - dE) := by rw [swapH]
-      _ = -hE * (bE * (qE - dE)) := by rw [neg_mul (hE * bE) (qE - dE), mul_assoc, neg_mul hE (bE * (qE - dE))]
+      _ = -hE * (bE * (qE - dE)) := by simp only [neg_mul, mul_assoc]
       _ = _ := by
-        rw [swapDelta, neg_mul hE (-((qE - dE) * bE)),
-          mul_neg hE ((qE - dE) * bE), neg_neg, mul_assoc]
+        rw [swapDelta]
+        simp only [neg_mul, mul_neg, neg_neg, mul_assoc]
   have inverseCommute : bE * FinitePerturbation.Input.K c cutoff = FinitePerturbation.Input.K c cutoff * bE :=
     commutes_inversePolynomial bE (hE * (qE - dE)) factorCommute cutoff
   change bE * (FinitePerturbation.Input.K c cutoff * hE) + (FinitePerturbation.Input.K c cutoff * hE) * bE = 0
@@ -333,21 +331,20 @@ theorem B0_corrected_homotopy_compatibility
 
 private theorem corrected_homotopy_N :
     nE * homotopy - homotopy * nE = -homotopy := by
-  letI : Ring (Module.End ℂ E) := inferInstance
   have inverseCommute : nE * FinitePerturbation.Input.K c cutoff = FinitePerturbation.Input.K c cutoff * nE :=
     commutes_inversePolynomial nE (hE * (qE - dE))
       (sector_N_hdelta F B H hHG hGH beta level) cutoff
   change nE * (FinitePerturbation.Input.K c cutoff * hE) - (FinitePerturbation.Input.K c cutoff * hE) * nE = -(FinitePerturbation.Input.K c cutoff * hE)
   rw [comm_mul, sub_eq_zero.mpr inverseCommute, sector_N_h, zero_mul, zero_add]
-  exact mul_neg (FinitePerturbation.Input.K c cutoff) hE
+  apply LinearMap.ext
+  intro v
+  simp only [Module.End.mul_apply, LinearMap.neg_apply, map_neg]
 
 /-- Every integral ghost degree is retained; corrected H lowers the native
 number eigenvalue by one. This uses the existing number laws for h and Q. -/
 theorem corrected_homotopy_ghost_degree (degree : ℤ) (state : E)
     (homogeneous : N D state.val = (degree : ℂ) • state.val) :
     N D (homotopy state).val = ((degree - 1 : ℤ) : ℂ) • (homotopy state).val := by
-  letI : AddCommGroup E := inferInstance
-  letI : Module ℂ E := inferInstance
   have number : nE state = (degree : ℂ) • state := Subtype.ext homogeneous
   have eq := LinearMap.congr_fun
     (corrected_homotopy_N F B H hHG hGH beta level hp critical) state
@@ -355,7 +352,8 @@ theorem corrected_homotopy_ghost_degree (degree : ℤ) (state : E)
   rw [number, map_smul] at eq
   have lowered : nE (homotopy state) = ((degree - 1 : ℤ) : ℂ) • homotopy state := by
     calc
-      _ = -homotopy state + (degree : ℂ) • homotopy state := sub_eq_iff_eq_add.mp eq
+      _ = -(homotopy state : E) + (degree : ℂ) • (homotopy state : E) := by
+        rwa [sub_eq_iff_eq_add] at eq
       _ = _ := by simp only [Int.cast_sub, Int.cast_one, sub_smul, one_smul]; abel
   exact congrArg Subtype.val lowered
 
