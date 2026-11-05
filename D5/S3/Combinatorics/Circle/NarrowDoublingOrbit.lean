@@ -1091,7 +1091,10 @@ private theorem explicit_point_geometry {r s u : ℕ} (hr : 2 ≤ r)
     have he := Equiv.sum_comp e (fun j : Fin r => (2 : ℕ) ^ j.val)
     change (∑ i : Fin r, (2 : ℕ) ^ gapExponent r u i.val) =
       (∑ i : Fin r, (2 : ℕ) ^ i.val) at he
-    simpa only [Fin.sum_univ_eq_sum_range, P, delta] using he
+    calc
+      P r = ∑ i : Fin r, (2 : ℕ) ^ gapExponent r u i.val := Finset.sum_range _
+      _ = ∑ i : Fin r, (2 : ℕ) ^ i.val := he
+      _ = ∑ i ∈ Finset.range r, (2 : ℕ) ^ i := (Finset.sum_range _).symm
   have htotal : P r = M := by
     have he : (∑ i ∈ Finset.range r, (2 : ℕ) ^ i) + 1 = 2 ^ r := by
       simpa using geom_sum_mul_add (1 : ℕ) r
@@ -1270,8 +1273,7 @@ private theorem anchored_narrow_maximum {X Q : ℕ} (hX : 3 ≤ X) (hodd : Odd X
     obtain ⟨n, _, rfl⟩ := Finset.mem_image.mp hb
     exact ha n
   have hmem : Q ∈ orbit X Q := by
-    rw [← residue_zero hQX]
-    exact residue_mem_orbit hXp hodd Q 0
+    simpa only [residue_zero hQX] using residue_mem_orbit hXp hodd Q 0
   have hgreat : IsGreatest (↑(orbit X Q) : Set ℕ) Q :=
     ⟨hmem, fun b hb => (hbound b hb).1⟩
   have hmax : (orbit X Q).max' hne = Q :=
@@ -1298,8 +1300,8 @@ private theorem explicit_scaled_construction {X Q r s u : ℕ}
   have hMg : M * g = X := Nat.mul_div_cancel' hdiv
   have hg : 0 < g := by
     by_contra hn
-    have : g = 0 := by omega
-    rw [this, Nat.mul_zero] at hMg
+    have hz : g = 0 := Nat.eq_zero_of_not_pos hn
+    rw [hz, Nat.mul_zero] at hMg
     omega
   have hMp : 0 < M := by
     have hp : 1 < (2 : ℕ) ^ r := one_lt_pow' (by omega) (by omega)
@@ -1366,6 +1368,7 @@ private theorem explicit_scaled_construction {X Q r s u : ℕ}
     have hgd := Nat.mul_le_mul_left g hdist
     rw [Nat.mul_add] at hgd
     rw [hres, hmax]
+    change g * a i ≤ g * a w ∧ g * a w ≤ g * a i + (X - 1) / 2
     exact ⟨Nat.mul_le_mul_left g hihi, by omega⟩
   have hnarrow := (anchored_narrow_maximum hX hodd hQX ha).1
   have hdenom : denominator X Q = M := by
@@ -1403,12 +1406,16 @@ theorem anchored_explicit_classification {X Q : ℕ} (hX : 3 ≤ X) (hodd : Odd 
         rw [← hc.2.2.1]
         exact Nat.mul_div_cancel' (Nat.gcd_dvd_left X Q)
       have hdiv : 2 ^ period X Q - 1 ∣ X := by
-        exact ⟨Nat.gcd X Q, by rw [← hprod]; ring⟩
+        exact ⟨Nat.gcd X Q, hprod.symm.trans (Nat.mul_comm _ _)⟩
       have hMp : 0 < 2 ^ period X Q - 1 := by
         have hp : 1 < (2 : ℕ) ^ period X Q := one_lt_pow' (by omega) (by omega)
         omega
       have hscale : X / (2 ^ period X Q - 1) = Nat.gcd X Q := by
-        rw [← hprod, Nat.mul_div_cancel _ hMp]
+        calc
+          X / (2 ^ period X Q - 1) =
+              (Nat.gcd X Q * (2 ^ period X Q - 1)) / (2 ^ period X Q - 1) :=
+            congrArg (fun n => n / (2 ^ period X Q - 1)) hprod.symm
+          _ = _ := Nat.mul_div_cancel _ hMp
       refine ⟨period X Q, s, u, hc.1, hs, hsr, hcop, hu, hunit, hdiv, ?_⟩
       rw [hscale]
       exact heq
