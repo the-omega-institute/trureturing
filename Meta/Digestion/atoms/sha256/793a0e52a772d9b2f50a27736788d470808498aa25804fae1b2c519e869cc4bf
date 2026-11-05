@@ -1,0 +1,41 @@
+### 4.5 沿过程运输参照，不能在每个节点重新归零
+
+下面用一个完全经典的二元过程反推这个条件为何不可删除。
+采用列随机矩阵，输入概率列向量左乘 $N$。设
+
+$$
+N=\begin{pmatrix}1&1/2\\0&1/2\end{pmatrix},\qquad
+ \pi=\binom{1/2}{1/2},\qquad \tau=N\pi=\binom{3/4}{1/4}.
+$$
+
+对于先验 $s$，经典 Petz 反向就是 Bayes 反向
+
+$$
+(R_{s,N})_{ij}=\frac{s_iN_{ji}}{(Ns)_j}.
+$$
+
+从同一源参照 $\pi$ 计算，得到
+
+$$
+R_{\pi,N}=\begin{pmatrix}2/3&0\\1/3&1\end{pmatrix},\qquad
+ R_{\pi,N^2}=\begin{pmatrix}4/7&0\\3/7&1\end{pmatrix}.
+$$
+
+若中间节点擅自把已到达的 $\tau$ 重置为它自己的 $\pi$，逐段反向就变成
+
+$$
+R_{\pi,N}^2=\begin{pmatrix}4/9&0\\5/9&1\end{pmatrix}
+       \ne R_{\pi,N^2}.
+$$
+
+真正继承中间参照则给出
+
+$$
+R_{\tau,N}=\begin{pmatrix}6/7&0\\1/7&1\end{pmatrix},\qquad
+ R_{\pi,N}R_{\tau,N}=R_{\pi,N^2}.
+$$
+
+因此“每个节点都局部无偏”与“同一个过程拥有相容的反向”不是同一约束。
+在声明的源窗口可以用有限换架供应 $\sigma$；沿箭头随后必须运输为 $N\sigma$。
+若要中途改用新参照，应明确检验相应反向是否同类，或把改参照本身作为额外过程。
+

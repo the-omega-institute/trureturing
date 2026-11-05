@@ -1,0 +1,28 @@
+### 命题 22.3（保留全图的一个统一充分证书）
+
+若投影系数对所有原标签满足
+
+$$
+\|\beta_i\|\le(1+\eta)\alpha_i\qquad(\eta\ge0),
+\tag{22.6}
+$$
+
+则同一个变换
+
+$$
+G_i(n)=\alpha_i+\frac{\langle\beta_i,n\rangle}{1+\eta}
+\tag{22.7}
+$$
+
+属于 $\mathcal K_{\mathcal D}$，并满足
+
+$$
+\|G_i-F_i\|_\infty\le5\varepsilon+\eta\alpha_i
+\le5\varepsilon+\eta.
+\tag{22.8}
+$$
+
+这是一项关于原系数族的充分证书；(21.1) 尚未保证可取 $\eta\to0$。它也不是所有共同修复的必要形式。
+
+**证明。** $\alpha_i\ge0$，(22.6) 给 $G_i\ge0$。归一化及所有原边由同一个线性算子 $h\mapsto(Ph+\eta\int h\,d\sigma)/(1+\eta)$ 保留，因此每个 $G_i\le1$。同一菜单内不再单独修分母。又 $\|G_i-PF_i\|_\infty=\eta\|\beta_i\|/(1+\eta)\le\eta\alpha_i$，与 (21.7) 合并即得 (22.8)。均值为零的标签仍为零。一般非负 $F_i$ 只给 $\|\beta_i\|\le3\alpha_i$，所以 $\eta=2$ 总可用，但这个界不随 $\varepsilon$ 消失。若另给更强的相对质量残差 $r_\infty(F_i)\le\xi\alpha_i$，定理 21.2 确实推出 $\eta=5\xi$；这只是额外充分前件，不是对原绝对残差的改写。∎
+
