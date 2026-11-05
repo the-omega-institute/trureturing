@@ -205,6 +205,15 @@ private theorem orbit_card (X Q : ℕ) : (orbit X Q).card = period X Q := by
   · intro i hi j hj hij
     exact residue_injective X Q (Finset.mem_range.mp hi) (Finset.mem_range.mp hj) hij
 
+/-- Actual sorted point; this preserves the original cut at zero. -/
+private noncomputable def sortedPoint (X Q : ℕ) : Fin (period X Q) ↪o ℕ :=
+  (orbit X Q).orderEmbOfFin (orbit_card X Q)
+
+/-- Positive circular adjacent gap, with X added only at the last index. -/
+private noncomputable def directedGap (X Q : ℕ) (i : Fin (period X Q)) : ℤ :=
+  (sortedPoint X Q (cycAdd i 1) : ℤ) - sortedPoint X Q i +
+    if i.val + 1 < period X Q then 0 else (X : ℤ)
+
 private theorem residue_mem_orbit {X : ℕ} (hX : 0 < X) (hodd : Odd X)
     (Q n : ℕ) : residue X Q n ∈ orbit X Q := by
   apply Finset.mem_image.mpr
@@ -601,7 +610,8 @@ private theorem gap_cycle_growth {α : Type*} [DecidableEq α]
     (hearly : ∀ n, 0 < n → n < r → p^[n] w ≠ w)
     (hrec : ∀ i, G (p i) = if i = w then 2 * G i - X else 2 * G i) :
     X = ((2 ^ r - 1 : ℕ) : ℤ) * G (p w) ∧
-      G w = (2 : ℤ) ^ (r - 1) * G (p w) := by
+      G w = (2 : ℤ) ^ (r - 1) * G (p w) ∧
+      (∀ n < r, G (p^[n + 1] w) = (2 : ℤ) ^ n * G (p w)) := by
   have hwalk (n : ℕ) : n < r →
       G (p^[n + 1] w) = (2 : ℤ) ^ n * G (p w) := by
     induction n with
@@ -622,7 +632,7 @@ private theorem gap_cycle_growth {α : Type*} [DecidableEq α]
     have hp : 0 < (2 : ℕ) ^ r := pow_pos (by omega) r
     rw [Nat.cast_sub (by omega : 1 ≤ (2 : ℕ) ^ r)]
     push_cast; rfl
-  refine ⟨?_, hlast⟩
+  refine ⟨?_, hlast, hwalk⟩
   rw [hM, hpow]
   nlinarith [hlast, hfirst]
 
@@ -634,13 +644,21 @@ private theorem narrow_gap_arithmetic {X Q : ℕ}
     (hnarrow : 2 * diameter X Q < X) :
     ∃ d : ℤ, 0 < d ∧ (Nat.gcd X Q : ℤ) ∣ d ∧
       (X : ℤ) = ((2 ^ period X Q - 1 : ℕ) : ℤ) * d ∧
-      2 * (diameter X Q : ℤ) = (X : ℤ) - d := by
+      2 * (diameter X Q : ℤ) = (X : ℤ) - d ∧
+      ∃ s : Fin (period X Q),
+        (∀ i, sortedPoint X Q (cycAdd s i.val) = (2 * sortedPoint X Q i) % X) ∧
+        (∀ i j, ∃ n < period X Q,
+          (fun v : Fin (period X Q) => cycAdd s v.val)^[n] i = j) ∧
+        (∀ n < period X Q, ∀ hw : period X Q - 1 < period X Q,
+          directedGap X Q
+            ((fun v : Fin (period X Q) => cycAdd s v.val)^[n + 1]
+              ⟨period X Q - 1, hw⟩) = (2 : ℤ) ^ n * d) := by
   classical
   have hXp : 0 < X := by omega
   have hr := period_ge_two hXp hodd hQ hQX
   have hrp := period_pos hXp hodd Q
   have hne := orbit_nonempty hXp hodd Q
-  obtain ⟨s, hs, _, hreturn, hearly⟩ :=
+  obtain ⟨s, hs, htrans, hreturn, hearly⟩ :=
     narrow_doubling_sorted_cycle hX hodd hQ hQX hnarrow
   let r := period X Q
   let a : Fin r ↪o ℕ := (orbit X Q).orderEmbOfFin (orbit_card X Q)
@@ -757,7 +775,9 @@ private theorem narrow_gap_arithmetic {X Q : ℕ}
     split_ifs
     · exact dvd_zero _
     · exact hgX
-  exact ⟨G (p w), by omega, hggap (p w), hprod.1, by omega⟩
+  refine ⟨G (p w), by omega, hggap (p w), hprod.1, by omega, s, hs, htrans, ?_⟩
+  intro n hn hw
+  exact hprod.2.2 n hn
 
 /-- All-odd-modulus classification, including nonunit seeds.
 Its source proof uses the actual sorted gap cycle; no transitivity,
@@ -787,7 +807,7 @@ theorem narrow_classification {X Q : ℕ} (hX : 3 ≤ X) (hodd : Odd X)
     simpa only [Nat.cast_pow, Nat.cast_ofNat, Nat.cast_one] using hpow
   have hDM : denominator X Q ∣ 2 ^ period X Q - 1 :=
     (Nat.modEq_iff_dvd' (by omega : 1 ≤ (2 : ℕ) ^ period X Q)).mp hcong
-  obtain ⟨d, hdpos, hgdiv, hprod, hdiam⟩ :=
+  obtain ⟨d, hdpos, hgdiv, hprod, hdiam, _⟩ :=
     narrow_gap_arithmetic hX hodd hQ hQX hnarrow
   obtain ⟨u, hu⟩ := hgdiv
   have hXD : Nat.gcd X Q * denominator X Q = X := by
