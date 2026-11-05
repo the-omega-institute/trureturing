@@ -1,10 +1,17 @@
 /- GID: D5/S3/StatisticalMechanics/FccPointGroupShells
    generality: I
    mirror-B: D5/B/S3/StatisticalMechanics/FccPointGroupShells
-   mirror-E: none(waiver:noncomputational-symbolic-identity)
+   mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
    digest: Signed permutation orbits on contact graph shells of the face centered cubic lattice. -/
+
+/-
+admission_basis: open-problem-resolution (#26900; Proved)
+escape_witness: geodesic (every lattice point has a contact walk of length potential, built by strong induction on an explicit descent; consumed by distance_formula)
+Direct frozen dependencies: D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation.potential_dist (generic potential lower bound, applied in distance_formula).
+proof_shape: content for geodesic, distance_formula, canonicalShell, repShell, orbitEquiv, orbit_count and result; every other declaration is bind-only and consumed on the live path of result (coneEquiv, the cone weights and representatives, the counting-series lemmas and the potential normalisations).
+-/
 
 import D5.S3.Combinatorics.PositionSets.VertexPositionRatioRefutation
 import Mathlib.Data.Fin.Tuple.Sort
