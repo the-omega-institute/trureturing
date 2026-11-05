@@ -71,11 +71,6 @@ internal sealed class NativeProtocolEventArithmeticDocument : IScribeDocumentDef
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
 
-    private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
-
-    private static Formula IfThenElse(Formula condition, Formula yes, Formula no) =>
-        Seq(Named("if"), Sp, condition, Sp, Named("then"), Sp, yes, Sp, Named("else"), Sp, no);
-
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Open, Forall, Sp, F.Id(name), Colon, Sp, type, Comma, Sp, body, Close);
 
@@ -85,6 +80,5 @@ internal sealed class NativeProtocolEventArithmeticDocument : IScribeDocumentDef
     private static Formula And(params Formula[] xs) =>
         xs.Aggregate((a,b) => Rel(a,Land,b));
 
-    private static Formula FiniteSum(Formula i, Formula set, Formula term) =>
-        Seq(Sum, Underscore, Grp(i, Sp, InMacro, Sp, set), Sp, term);
+
 }

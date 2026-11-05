@@ -53,13 +53,6 @@ internal sealed class NativeProtocolGraftDocument : IScribeDocumentDefinition
             All("e", Call("RecordEvent", T), law)))));
     }
 
-    private static Formula Parenthesized(Formula a) => Seq(Open, a, Close);
-
-    private static Formula Power(Formula a, Formula b) => Seq(Grp(Parenthesized(a)), Caret, Grp(b));
-
-    private static Formula Leq(Formula a, Formula b) =>
-        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
-
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
 
