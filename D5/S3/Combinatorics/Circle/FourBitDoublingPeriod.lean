@@ -5,9 +5,8 @@
    anchors: [mathlib/module/Mathlib.Dynamics.PeriodicPts.Defs, mathlib/module/Mathlib.Algebra.Ring.GeomSum]
    utility: none
    digest: Proper four-point binary supports determine the actual doubling period from primitive gap blocks. -/
-module
-public import D5.S3.Combinatorics.Circle.NarrowDoublingOrbit
-public import D5.S3.Combinatorics.Circle.ZeroSumSubsets
+import D5.S3.Combinatorics.Circle.NarrowDoublingOrbit
+import D5.S3.Combinatorics.Circle.ZeroSumSubsets
 
 /-!
 Four-gap doubling periods from proper binary support rotations.
@@ -25,8 +24,6 @@ literature-novelty claim accompanies this candidate.
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-
-@[expose] public section
 
 namespace D5.S3.Combinatorics.Circle.FourBitDoublingPeriod
 
@@ -431,5 +428,8 @@ theorem four_gap_actual_period (a b c d : ℕ)
   rw [residue_iff_periodic hQ h, Function.isPeriodicPt_iff_minimalPeriod_dvd]
   change NarrowDoublingOrbit.period M Q ∣ h ↔ p ∣ h
   rw [heq]
+
+#print axioms four_gap_actual_period
+#check @four_gap_actual_period
 
 end D5.S3.Combinatorics.Circle.FourBitDoublingPeriod
