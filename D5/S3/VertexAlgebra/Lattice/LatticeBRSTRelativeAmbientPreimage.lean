@@ -9,8 +9,6 @@
 import D5.S3.VertexAlgebra.Lattice.LatticeBRSTFullGhostNumberCohomology
 
 /-!
-SOURCE ONLY: this file has not been parsed, elaborated, compiled or accepted.
-
 Faithful current-coordinate port of the supplied historical
 `OriginalQQuartetSource.relative_ambient_boundary_homotopy_preimage` and
 `OriginalQQuartetSource.literal_physical_equality_iff_relative_preimage` in
@@ -102,6 +100,7 @@ private theorem ambientSectorProjection_coefficient (v : State D) (i : StateInde
   classical
   exact diagonal_coefficient (actualBasis F B) _ v i
 
+include hHG hGH in
 private theorem ambientSectorProjection_mem (v : State D) :
     ambientSectorProjection F B beta level v ∈ E := by
   classical
@@ -110,6 +109,7 @@ private theorem ambientSectorProjection_mem (v : State D) :
   by_contra hn
   exact hi (by rw [ambientSectorProjection_coefficient, if_neg hn, zero_mul])
 
+include hHG hGH in
 private theorem ambientSectorProjection_fixed (v : State D) (hv : v ∈ E) :
     ambientSectorProjection F B beta level v = v := by
   classical
@@ -121,6 +121,7 @@ private theorem ambientSectorProjection_fixed (v : State D) (hv : v ∈ E) :
   · have hi := (mem_fixedSector_iff F B H hHG hGH beta level v).mp hv i hz
     rw [if_pos hi, one_mul]
 
+include hHG hGH in
 /-- Incoming ambient projection is a chain map for the original Q.
 This is proved on every actual basis vector, including all other charges,
 all energies and both zero-mode occupations. -/
@@ -234,6 +235,7 @@ private theorem sector_B0_h : bE * hE + hE * bE = 0 := by
   apply Subtype.ext
   exact LinearMap.congr_fun (b0_h F B beta) v.val
 
+include F B hHG hGH in
 private theorem N_preserves_fixedSector (v : State D) (hv : v ∈ E) :
     N D v ∈ E := by
   apply (mem_fixedSector_iff F B H hHG hGH beta level _).mpr
@@ -275,20 +277,19 @@ private theorem sector_N_delta :
 private theorem sector_N_hdelta :
     nE * (hE * (qE - dE)) = (hE * (qE - dE)) * nE := by
   apply sub_eq_zero.mp
-  rw [comm_mul, sector_N_h, sector_N_delta]
-  noncomm_ring
+  rw [comm_mul, sector_N_h, sector_N_delta, neg_mul, neg_add_cancel]
 
 variable (hp : F.pPlus beta ≠ 0) (critical : D.rank = 26)
 
 local notation "c" => finiteInput F B H hHG hGH beta level hp critical
 local notation "cutoff" => (2 * level.toNat + 2)
-local notation "homotopy" => c.H cutoff
-local notation "projection" => c.P cutoff
-local notation "inclusion" => c.I cutoff
-local notation "transferred" => c.transferred cutoff
+local notation "homotopy" => FinitePerturbation.Input.H c cutoff
+local notation "projection" => FinitePerturbation.Input.P c cutoff
+local notation "inclusion" => FinitePerturbation.Input.I c cutoff
+local notation "transferred" => FinitePerturbation.Input.transferred c cutoff
 local notation "U" => LatticeBRSTFiniteTransfer.quartetGround F B H hHG hGH beta level
 
-private theorem input_D : c.D = qE := by
+private theorem input_D : FinitePerturbation.Input.D c = qE := by
   change dE + (qE - dE) = qE
   abel
 
@@ -303,34 +304,35 @@ theorem B0_corrected_homotopy_compatibility
     sector_B0_h F B H hHG hGH beta level
   have hBdelta : bE * (qE - dE) + (qE - dE) * bE = 0 := by
     calc
-      _ = (bE * qE + qE * bE) - (bE * dE + dE * bE) := by noncomm_ring
+      _ = (bE * qE + qE * bE) - (bE * dE + dE * bE) := by
+        rw [mul_sub, sub_mul]
+        abel
       _ = 0 := by rw [hBQ, sector_B0_d0, sub_self]
   have swapH : bE * hE = -(hE * bE) := eq_neg_iff_add_eq_zero.mpr hBh
   have swapDelta : bE * (qE - dE) = -((qE - dE) * bE) :=
     eq_neg_iff_add_eq_zero.mpr hBdelta
   have factorCommute : bE * (hE * (qE - dE)) = (hE * (qE - dE)) * bE := by
     calc
-      _ = (bE * hE) * (qE - dE) := by noncomm_ring
+      _ = (bE * hE) * (qE - dE) := (mul_assoc _ _ _).symm
       _ = -(hE * bE) * (qE - dE) := by rw [swapH]
-      _ = -hE * (bE * (qE - dE)) := by noncomm_ring
-      _ = _ := by rw [swapDelta]; noncomm_ring
-  have inverseCommute : bE * c.K cutoff = c.K cutoff * bE :=
+      _ = -hE * (bE * (qE - dE)) := by rw [neg_mul, mul_assoc, neg_mul]
+      _ = _ := by rw [swapDelta, neg_mul, mul_neg, neg_neg, mul_assoc]
+  have inverseCommute : bE * FinitePerturbation.Input.K c cutoff = FinitePerturbation.Input.K c cutoff * bE :=
     commutes_inversePolynomial bE (hE * (qE - dE)) factorCommute cutoff
-  change bE * (c.K cutoff * hE) + (c.K cutoff * hE) * bE = 0
+  change bE * (FinitePerturbation.Input.K c cutoff * hE) + (FinitePerturbation.Input.K c cutoff * hE) * bE = 0
   calc
-    _ = c.K cutoff * (bE * hE + hE * bE) := by
+    _ = FinitePerturbation.Input.K c cutoff * (bE * hE + hE * bE) := by
       rw [← mul_assoc, inverseCommute]
-      noncomm_ring
+      simp only [mul_assoc, mul_add]
     _ = 0 := by rw [hBh, mul_zero]
 
 private theorem corrected_homotopy_N :
     nE * homotopy - homotopy * nE = -homotopy := by
-  have inverseCommute : nE * c.K cutoff = c.K cutoff * nE :=
+  have inverseCommute : nE * FinitePerturbation.Input.K c cutoff = FinitePerturbation.Input.K c cutoff * nE :=
     commutes_inversePolynomial nE (hE * (qE - dE))
       (sector_N_hdelta F B H hHG hGH beta level) cutoff
-  change nE * (c.K cutoff * hE) - (c.K cutoff * hE) * nE = -(c.K cutoff * hE)
-  rw [comm_mul, sub_eq_zero.mpr inverseCommute, sector_N_h]
-  noncomm_ring
+  change nE * (FinitePerturbation.Input.K c cutoff * hE) - (FinitePerturbation.Input.K c cutoff * hE) * nE = -(FinitePerturbation.Input.K c cutoff * hE)
+  rw [comm_mul, sub_eq_zero.mpr inverseCommute, sector_N_h, zero_mul, zero_add, mul_neg]
 
 /-- Every integral ghost degree is retained; corrected H lowers the native
 number eigenvalue by one. This uses the existing number laws for h and Q. -/
@@ -442,7 +444,7 @@ theorem relative_ambient_boundary_homotopy_preimage
     (ambient_boundary_sector_preimage F B H hHG hGH beta level state).mp ambientBoundary
   have projectionZero : projection state = 0 := by
     have chain := LinearMap.congr_fun laws.projection_chain sectorPreimage
-    have equation : c.D sectorPreimage = state := by
+    have equation : FinitePerturbation.Input.D c sectorPreimage = state := by
       rw [input_D]
       exact sectorEquation
     simpa only [LinearMap.comp_apply, equation, differentialZero, LinearMap.zero_apply]

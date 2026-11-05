@@ -1,5 +1,4 @@
 /-
-Source-only candidate. Not parsed, elaborated, compiled, or natively accepted.
 The current original carrier and the ordinary Hermitian Hm and Hg are used
 literally. No rotated ghost form, parity sign, positivity, or finite global
 cutoff is introduced. The canonical suppliers and their attribution remain
@@ -13,6 +12,8 @@ import D5.S3.Quantum.Fermionic.BcGhostBRSTHermitian
 import D5.S3.VertexAlgebra.Lattice.LatticeBRSTWard
 import Mathlib.LinearAlgebra.TensorProduct.Basis
 import Mathlib.Tactic
+
+/-! Ordinary tensor Hermitian form on the original matter-ghost state space. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -68,25 +69,38 @@ def Hmg (x y : State D) : ℂ :=
     (slices D y).sum fun T w => Hm v w * Hg (ket S) (ket T)
 
 @[simp] theorem Hmg_zero_left (y : State D) : Hmg (0 : State D) y = 0 := by
-  simp [Hmg]
+  unfold Hmg
+  rw [(slices D).map_zero]
+  rfl
 
 @[simp] theorem Hmg_zero_right (x : State D) : Hmg x 0 = 0 := by
-  simp [Hmg]
+  unfold Hmg
+  rw [(slices D).map_zero]
+  exact Finset.sum_eq_zero fun _ _ => rfl
 
 theorem Hmg_add_left (x z y : State D) :
     Hmg (x + z) y = Hmg x y + Hmg z y := by
   classical
   unfold Hmg
-  rw [map_add]
-  exact Finsupp.sum_add_index'
-    (by intro S; simp)
-    (by intro S v w; simp only [Hm_add_left, add_mul, Finsupp.sum_add])
+  rw [(slices D).map_add]
+  refine Finsupp.sum_add_index' (f := slices D x) (g := slices D z) ?_ ?_
+  · intro S
+    apply Finset.sum_eq_zero
+    intro T hT
+    rw [Hm_zero_left, zero_mul]
+  · intro S v w
+    simp only [Hm_add_left, add_mul, Finsupp.sum_add]
 
 theorem Hmg_smul_left (a : ℂ) (x y : State D) :
     Hmg (a • x) y = star a * Hmg x y := by
   classical
   unfold Hmg
-  rw [map_smul, Finsupp.sum_smul_index' (by intro S; simp)]
+  rw [(slices D).map_smul a x]
+  rw [Finsupp.sum_smul_index' (g := slices D x) (b := a) (by
+    intro S
+    apply Finset.sum_eq_zero
+    intro T hT
+    rw [Hm_zero_left, zero_mul])]
   simp only [Hm_smul_left]
   change (∑ S ∈ (slices D x).support,
     ∑ T ∈ (slices D y).support,
@@ -129,15 +143,16 @@ theorem Hmg_smul_right (a : ℂ) (x y : State D) :
 
 theorem Hmg_sub_left (x z y : State D) :
     Hmg (x - z) y = Hmg x y - Hmg z y := by
-  rw [sub_eq_add_neg, Hmg_add_left]
-  have h := Hmg_smul_left (-1) z y
-  simpa using congrArg (fun c : ℂ => Hmg x y + c) h
+  have hn : Hmg (-z) y = -Hmg z y := by
+    simpa only [neg_one_smul, star_neg, star_one, neg_mul, one_mul] using
+      Hmg_smul_left (-1) z y
+  rw [sub_eq_add_neg, Hmg_add_left, hn, sub_eq_add_neg]
 
 theorem Hmg_sub_right (x y z : State D) :
     Hmg x (y - z) = Hmg x y - Hmg x z := by
-  rw [sub_eq_add_neg, Hmg_add_right]
-  have h := Hmg_smul_right (-1) x z
-  simpa using congrArg (fun c : ℂ => Hmg x y + c) h
+  have hn : Hmg x (-z) = -Hmg x z := by
+    simpa only [neg_one_smul, neg_mul, one_mul] using Hmg_smul_right (-1) x z
+  rw [sub_eq_add_neg, Hmg_add_right, hn, sub_eq_add_neg]
 
 private theorem Hmg_tmul_ket (v w : Carrier D) (S T : Finset ℕ) :
     Hmg (v ⊗ₜ[ℂ] ket S) (w ⊗ₜ[ℂ] ket T) =
@@ -283,9 +298,9 @@ private theorem symmetric_capture (x y : State D) :
       rw [← hnm, neg_neg]
       exact Finset.mem_union_left _ hn
 
+include hHG hGH in
 /-- The exact locally finite total matter-c coupling is self-adjoint.
 The two Gram inverse equations are retained, at arbitrary lattice rank. -/
-include hHG hGH in
 theorem Hmg_T (x y : State D) : Hmg (T D H x) y = Hmg x (T D H y) := by
   classical
   obtain ⟨s, hx, hy, hs⟩ := symmetric_capture H x y
@@ -308,9 +323,9 @@ theorem Hmg_T (x y : State D) : Hmg (T D H x) y = Hmg x (T D H y) := by
       · intro m hm
         rfl
 
+include hHG hGH in
 /-- Exact original-Q adjoint for T + the tensor lift of the actual cubic Qg.
 No rank26, relative, ghost-degree, shell, or positivity assumption is used. -/
-include hHG hGH in
 theorem Hmg_totalCharge (x y : State D) :
     Hmg (totalCharge D H x) y = Hmg x (totalCharge D H y) := by
   simp only [totalCharge, LinearMap.add_apply, Hmg_add_left, Hmg_add_right,

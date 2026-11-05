@@ -1,7 +1,5 @@
 /-
-Source-only candidate. Not parsed, elaborated, compiled, or natively accepted.
-The imported relative ambient-preimage candidate is a pinned SOURCE dependency,
-not evidence of native acceptance. The form below is the literal inserted-c0
+The form below is the literal inserted-c0
 form for the current ordinary tensor Hermitian form and current original Q.
 
 Attribution: original BRST (Becchi--Rouet--Stora--Tyutin), Kato--Ogawa,
@@ -16,6 +14,8 @@ import D5.S3.VertexAlgebra.Lattice.LatticeMatterGhostHermitian
 import D5.S3.VertexAlgebra.Lattice.LatticeBRSTRelativeAmbientPreimage
 import Mathlib.LinearAlgebra.Quotient.Bilinear
 import Batteries.Tactic.OpenPrivate
+
+/-! Inserted-c0 Hermitian pairing on the original physical quotient and its image. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
