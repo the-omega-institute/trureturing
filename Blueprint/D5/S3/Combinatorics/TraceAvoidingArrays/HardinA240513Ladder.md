@@ -18,7 +18,21 @@ $$\forall n: Nat, (\operatorname{a}\left(n\right) = \operatorname{card}\left(\{A
 
 The cell type is Fin n × Fin 2 and each board is a function from this type to Bool. False is zero. The displayed finite-set cardinality is the filter cardinality in a: its local neighbor count adds the equal-valued cell in the other column, the previous row when the row index is positive, and the next row when that row remains in the board. In width two, Fin.rev exchanges the two columns. The existential first-row condition makes a 0 = 0; for every positive height it is exactly A(0,0) = false. In height one the two choices for the other entry are both legal, so a 1 = 2.
 
-**Theorem 1.2 (The signed recurrence and formal generating function).**
+**Theorem 1.2 (The finite continuation identity).**
+
+$$\forall r: (\operatorname{Fin}\left(2\right)) \to Bool, (\forall s: (\operatorname{Fin}\left(2\right)) \to Bool, (\operatorname{v}\left(5, r, s\right) = 2 \cdot \operatorname{v}\left(4, r, s\right) + \operatorname{v}\left(3, r, s\right) - \operatorname{v}\left(2, r, s\right) - 2 \cdot \operatorname{v}\left(1, r, s\right) + \operatorname{v}\left(0, r, s\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA240513Ladder.finite_certificate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2014). *OEIS A240513: binary ladders with no exactly-two equal neighbors*. URL: <https://oeis.org/A240513>.
+
+*Commentary.*
+
+Here r and s range over binary rows Fin 2 → Bool. The integer continuation vector starts with v 0 r s = 1 when the last row s satisfies its boundary condition against r, and zero otherwise. Its step sums v k s t over the binary rows t for which s satisfies its interior condition against r and t. The equality holds on every ordered row pair. Applying this same linear step propagates the equality to every shift; taking the boundary-weighted total then gives the recurrence in result. The finite equality is checked by kernel reduction.
+
+**Theorem 1.3 (The signed recurrence and formal generating function).**
 
 $$(\forall n: Nat, ((6 \leq n) \implies ((\operatorname{a}\left(n\right): Int) = 2 \cdot (\operatorname{a}\left(n - 1\right): Int) + (\operatorname{a}\left(n - 2\right): Int) - (\operatorname{a}\left(n - 3\right): Int) - 2 \cdot (\operatorname{a}\left(n - 4\right): Int) + (\operatorname{a}\left(n - 5\right): Int)))) \land ((1 - \operatorname{PowerSeries.X}) \cdot (1 - \operatorname{PowerSeries.X} - 2 \cdot \operatorname{PowerSeries.X}^{2} - \operatorname{PowerSeries.X}^{3} + \operatorname{PowerSeries.X}^{4}) \cdot \operatorname{PowerSeries.mk}\left((\lambda k: Nat \mapsto (\operatorname{a}\left(k\right): Int))\right) = \operatorname{PowerSeries.X} \cdot (2 - \operatorname{PowerSeries.X}) \cdot (1 - \operatorname{PowerSeries.X}^{2} - 2 \cdot \operatorname{PowerSeries.X}^{3}))$$
 
@@ -41,4 +55,5 @@ An internal state is an ordered pair of binary rows, giving sixteen states witho
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA240513Ladder.a`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA240513Ladder.finite_certificate`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA240513Ladder.result`
