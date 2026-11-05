@@ -602,10 +602,25 @@ pathlib.Path.open = open_path
         owner = self.publisher.with_name("lean_cache_release.py")
         owner.write_text(owner.read_text().replace("CHUNK_BYTES = 1610612736", "CHUNK_BYTES = 2097152"))
         self.commit_fixture()
+        # Check the immutable source with real Git before entering the virtual
+        # local-I/O clock; subprocess startup is outside this probe's subject.
+        head = subprocess.check_output(["git", "-C", str(self.root), "rev-parse", "--verify", "HEAD"], text=True)
+        dirty = subprocess.check_output(["git", "-C", str(self.root), "status", "--porcelain"], text=True)
+        self.assertEqual(self.producer_commit, head.strip())
+        self.assertEqual("", dirty)
         environment = self.deadline_probe(1)
         with (self.bin / "sitecustomize.py").open("a") as fixture:
             fixture.write('''
 import tarfile
+preparation_run = subprocess.run
+def run_preparation(args, *rest, **kwargs):
+    root = str(pathlib.Path(os.environ["FAKE_REMOTE"]).parent)
+    if args == ["git", "-C", root, "rev-parse", "--verify", "HEAD"]:
+        return subprocess.CompletedProcess(args, 0, os.environ["FAKE_PREPARATION_HEAD"], "")
+    if args == ["git", "-C", root, "status", "--porcelain"]:
+        return subprocess.CompletedProcess(args, 0, os.environ["FAKE_PREPARATION_DIRTY"], "")
+    return preparation_run(args, *rest, **kwargs)
+subprocess.run = run_preparation
 phase = os.environ["FAKE_PREPARATION_PHASE"]
 archive_opens = 0
 original_open, original_copy = pathlib.Path.open, tarfile.copyfileobj
@@ -638,7 +653,8 @@ def copy(source, target, *args, **kwargs):
 pathlib.Path.open, tarfile.copyfileobj = open_path, copy
 ''')
         (self.root / "preparation-reads").unlink(missing_ok=True)
-        return {**environment, "FAKE_PREPARATION_PHASE": phase}
+        return {**environment, "FAKE_PREPARATION_PHASE": phase,
+                "FAKE_PREPARATION_HEAD": head, "FAKE_PREPARATION_DIRTY": dirty}
 
     def assert_preparation_stopped(self, result, status):
         self.assertEqual(status, result.returncode, result.stdout + result.stderr)
