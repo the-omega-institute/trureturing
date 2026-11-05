@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-exhaustive-coordinates)
    mirror-E: none(waiver:registered-at-owning-endpoint)
-   anchors: [mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Tactic]
    utility: none
    digest: Eight exhaustive natural-gap charts, including both new boundary equalities. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualTailCones.HighAdjacent

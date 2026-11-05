@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-exact-arithmetic)
    mirror-E: none(waiver:registered-at-owning-endpoint)
-   anchors: [mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Tactic]
    utility: none
    digest: Eight exact dyadic rows and safe native-mask coordinate transport. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualTailCones.Seams

@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-ceiling-polynomials)
    mirror-E: none(waiver:registered-at-owning-endpoint)
-   anchors: [mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Tactic]
    utility: none
    digest: Thirteen exact positive polynomials for the unbounded lower cone. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualTailCones.Source

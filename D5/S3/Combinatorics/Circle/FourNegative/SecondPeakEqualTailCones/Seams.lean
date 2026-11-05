@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-seam-polynomials)
    mirror-E: none(waiver:registered-at-owning-endpoint)
-   anchors: [mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Tactic]
    utility: none
    digest: Exact doubled seam gates and exact source-native seam algebra. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualTailCones.Native

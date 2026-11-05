@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-cumulative-seams)
    mirror-E: none(waiver:registered-at-owning-endpoint)
-   anchors: [mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Tactic]
    utility: none
    digest: Local bank increments, cumulative postterminal prefixes and all twelve gates. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualTailCones.LowerCeiling
