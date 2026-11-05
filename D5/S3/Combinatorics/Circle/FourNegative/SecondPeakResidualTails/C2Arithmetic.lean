@@ -78,7 +78,7 @@ theorem c2_alpha_exact (e : ℕ) (he : 1 ≤ e) :
       have hm : 2 ^ e % 5 = 2 := by rw [heq]; exact (c2_residues (e/4)).1
       have hl : 2 ≤ (2 : ℕ) ^ e := by
         simpa using Nat.pow_le_pow_right (by decide : 0 < (2 : ℕ)) he
-      simp only [c2Alpha, h4, h1, ite_false, ite_true]
+      simp [c2Alpha, h4, h1, ite_false, ite_true]
       omega
     · simp only [h1, ite_false]
       by_cases h2 : e % 4 = 2
@@ -87,7 +87,7 @@ theorem c2_alpha_exact (e : ℕ) (he : 1 ≤ e) :
         have hm : 2 ^ e % 20 = 4 := by rw [heq]; exact (c2_residues (e/4)).2.1
         have hl : 4 ≤ (2 : ℕ) ^ e := by
           simpa using Nat.pow_le_pow_right (by decide : 0 < (2 : ℕ)) (show 2 ≤ e by omega)
-        simp only [c2Alpha, h4, h1, h2, ite_false, ite_true]
+        simp [c2Alpha, h4, h1, h2, ite_false, ite_true]
         omega
       · simp only [h2, ite_false]
         by_cases h3 : e % 4 = 3
@@ -96,7 +96,7 @@ theorem c2_alpha_exact (e : ℕ) (he : 1 ≤ e) :
           have hm : 2 ^ e % 20 = 8 := by rw [heq]; exact (c2_residues (e/4)).2.2.1
           have hl : 8 ≤ (2 : ℕ) ^ e := by
             simpa using Nat.pow_le_pow_right (by decide : 0 < (2 : ℕ)) (show 3 ≤ e by omega)
-          simp only [c2Alpha, h4, h1, h2, h3, ite_false, ite_true]
+          simp [c2Alpha, h4, h1, h2, h3, ite_false, ite_true]
           omega
         · simp only [h3, ite_false]
           have he8 : 8 ≤ e := by omega
@@ -105,7 +105,7 @@ theorem c2_alpha_exact (e : ℕ) (he : 1 ≤ e) :
           have hl : 256 ≤ (2 : ℕ) ^ e := by
             simpa using Nat.pow_le_pow_right (by decide : 0 < (2 : ℕ)) he8
           refine ⟨he8, ?_⟩
-          simp only [c2Alpha, h4, h1, h2, h3, ite_false]
+          simp [c2Alpha, h4, h1, h2, h3, ite_false]
           omega
 
 theorem c2_alpha_capacity (e : ℕ) (he : 1 ≤ e) :
@@ -153,37 +153,37 @@ theorem c2_inventory (e ell : ℕ) (he : 1 ≤ e) :
       (by apply inventory_of_finite_bits <;> decide)
     intro chain
     fin_cases chain
-    · convert (show MaskInventory 6 ![45,0,18,0] from by apply inventory_of_finite_bits <;> decide) using 1 <;> ext bank <;> fin_cases bank <;> simp [c2Banks]
-    · convert (show MaskInventory 1 ![0,0,1,0] from by apply inventory_of_finite_bits <;> decide) using 1 <;> ext bank <;> fin_cases bank <;> simp [c2Banks]
-    · convert hW using 1 <;> ext bank <;> fin_cases bank <;> simp [c2Banks, wMasks, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
-    · convert (show MaskInventory 2 ![0,0,0,3] from by apply inventory_of_finite_bits <;> decide) using 1 <;> ext bank <;> fin_cases bank <;> simp [c2Banks]
+    · convert (show MaskInventory 6 ![45,0,18,0] from by apply inventory_of_finite_bits <;> decide) using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [c2Banks])
+    · convert (show MaskInventory 1 ![0,0,1,0] from by apply inventory_of_finite_bits <;> decide) using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [c2Banks])
+    · convert hW using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [c2Banks, wMasks, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm])
+    · convert (show MaskInventory 2 ![0,0,0,3] from by apply inventory_of_finite_bits <;> decide) using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [c2Banks])
   · by_cases h1 : e % 4 = 1
     · have hW := w_inventory e ell 0 3 ![4,0,1,2] hp
         (by apply inventory_of_finite_bits <;> decide)
       intro chain
       fin_cases chain
-      · convert hU using 1 <;> ext bank <;> fin_cases bank <;> simp [c2Banks, h4, h1]
-      · convert (show MaskInventory 1 ![0,0,0,1] from by apply inventory_of_finite_bits <;> decide) using 1 <;> ext bank <;> fin_cases bank <;> simp [c2Banks, h4, h1]
-      · convert hW using 1 <;> ext bank <;> fin_cases bank <;> simp [c2Banks, wMasks, h4, h1, ← Nat.succ_mul]
-      · convert (show MaskInventory 2 ![0,3,0,0] from by apply inventory_of_finite_bits <;> decide) using 1 <;> ext bank <;> fin_cases bank <;> simp [c2Banks, h4, h1]
+      · convert hU using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [c2Banks, h4, h1])
+      · convert (show MaskInventory 1 ![0,0,0,1] from by apply inventory_of_finite_bits <;> decide) using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [c2Banks, h4, h1])
+      · convert hW using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [c2Banks, wMasks, h4, h1, ← Nat.succ_mul])
+      · convert (show MaskInventory 2 ![0,3,0,0] from by apply inventory_of_finite_bits <;> decide) using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [c2Banks, h4, h1])
     · by_cases h2 : e % 4 = 2
       · have hW := w_inventory e ell 0 3 ![5,0,0,2] hp
           (by apply inventory_of_finite_bits <;> decide)
         intro chain
         fin_cases chain
-        · convert hU using 1 <;> ext bank <;> fin_cases bank <;> simp [c2Banks, h4, h1, h2]
-        · convert (show MaskInventory 1 ![0,0,0,1] from by apply inventory_of_finite_bits <;> decide) using 1 <;> ext bank <;> fin_cases bank <;> simp [c2Banks, h4, h1, h2]
-        · convert hW using 1 <;> ext bank <;> fin_cases bank <;> simp [c2Banks, wMasks, h4, h1, h2, ← Nat.succ_mul]
-        · convert (show MaskInventory 2 ![0,3,0,0] from by apply inventory_of_finite_bits <;> decide) using 1 <;> ext bank <;> fin_cases bank <;> simp [c2Banks, h4, h1, h2]
+        · convert hU using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [c2Banks, h4, h1, h2])
+        · convert (show MaskInventory 1 ![0,0,0,1] from by apply inventory_of_finite_bits <;> decide) using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [c2Banks, h4, h1, h2])
+        · convert hW using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [c2Banks, wMasks, h4, h1, h2, ← Nat.succ_mul])
+        · convert (show MaskInventory 2 ![0,3,0,0] from by apply inventory_of_finite_bits <;> decide) using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [c2Banks, h4, h1, h2])
       · by_cases h3 : e % 4 = 3
         · have hW := w_inventory e ell 0 3 ![5,2,0,0] hp
             (by apply inventory_of_finite_bits <;> decide)
           intro chain
           fin_cases chain
-          · convert hU using 1 <;> ext bank <;> fin_cases bank <;> simp [c2Banks, h4, h1, h2, h3]
-          · convert (show MaskInventory 1 ![0,0,0,1] from by apply inventory_of_finite_bits <;> decide) using 1 <;> ext bank <;> fin_cases bank <;> simp [c2Banks, h4, h1, h2, h3]
-          · convert hW using 1 <;> ext bank <;> fin_cases bank <;> simp [c2Banks, wMasks, h4, h1, h2, h3]
-          · convert (show MaskInventory 2 ![0,2,0,1] from by apply inventory_of_finite_bits <;> decide) using 1 <;> ext bank <;> fin_cases bank <;> simp [c2Banks, h4, h1, h2, h3]
+          · convert hU using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [c2Banks, h4, h1, h2, h3])
+          · convert (show MaskInventory 1 ![0,0,0,1] from by apply inventory_of_finite_bits <;> decide) using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [c2Banks, h4, h1, h2, h3])
+          · convert hW using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [c2Banks, wMasks, h4, h1, h2, h3])
+          · convert (show MaskInventory 2 ![0,2,0,1] from by apply inventory_of_finite_bits <;> decide) using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [c2Banks, h4, h1, h2, h3])
         · have hx := c2_alpha_exact e he
           simp only [h4, h1, h2, h3, ite_false] at hx
           have ht := c2_transfer e ell hx.1
@@ -198,9 +198,9 @@ theorem c2_inventory (e ell : ℕ) (he : 1 ≤ e) :
           have hsingle := ht.1
           intro chain
           fin_cases chain
-          · convert hU using 1 <;> ext bank <;> fin_cases bank <;> simp [c2Banks, h4, h1, h2, h3]
-          · convert (show MaskInventory 1 ![0,0,0,1] from by apply inventory_of_finite_bits <;> decide) using 1 <;> ext bank <;> fin_cases bank <;> simp [c2Banks, h4, h1, h2, h3]
-          · convert hW using 1 <;> ext bank <;> fin_cases bank <;> simp [c2Banks, wMasks, h4, h1, h2, h3, hsingle]
-          · convert (show MaskInventory 2 ![0,2,0,1] from by apply inventory_of_finite_bits <;> decide) using 1 <;> ext bank <;> fin_cases bank <;> simp [c2Banks, h4, h1, h2, h3]
+          · convert hU using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [c2Banks, h4, h1, h2, h3])
+          · convert (show MaskInventory 1 ![0,0,0,1] from by apply inventory_of_finite_bits <;> decide) using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [c2Banks, h4, h1, h2, h3])
+          · convert hW using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [c2Banks, wMasks, h4, h1, h2, h3, hsingle])
+          · convert (show MaskInventory 2 ![0,2,0,1] from by apply inventory_of_finite_bits <;> decide) using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [c2Banks, h4, h1, h2, h3])
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails
