@@ -1,13 +1,10 @@
 /- GID: D5/S3/Arith/Robin/EulerLayer/InitialSupportPrimeClockSecondOrderLower
    generality: I
    mirror-B: D5/B/S3/Arith/Robin/EulerLayer/InitialSupportPrimeClockSecondOrderLower
-   mirror-E: none(waiver:source-only-uncompiled)
+   mirror-E: none(waiver:analytic-inequality)
    anchors: []
    utility: none
-   digest: Uniform scalar near/far transfer to the actual largest-prime clock.
-
-   SOURCE ONLY: UNCOMPILED / UNACCEPTED. No compiler was run for this source.
--/
+   digest: Uniform scalar near/far transfer to the actual largest-prime clock. -/
 
 import D5.S3.Arith.Robin.EulerLayer.PrimeMinCorrectionSecondOrderLower
 import D5.S3.Arith.Robin.PriceRecord.LogarithmicLayerRigidity

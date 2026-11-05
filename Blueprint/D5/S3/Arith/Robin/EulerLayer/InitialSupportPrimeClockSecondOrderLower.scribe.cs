@@ -61,10 +61,6 @@ internal sealed class InitialSupportPrimeClockSecondOrderLowerDocument : IScribe
                     + "Then X0<=P/2<=theta(P)<=X, so the X-clock supplier applies to every m. "
                     + "The two branches exhaust X. No restriction on exponents, record or "
                     + "price premise, optimizer substitution, or assumption X/P tending to one "
-                    + "is used.")),
-                Paragraph(Text(
-                    "This is UNCOMPILED/UNACCEPTED source. All three former proof blocks have "
-                    + "explicit tactic proof bodies; neither Lean elaboration nor Scribe generation "
-                    + "has been run. Source inspection and hashes do not establish acceptance."))),
+                    + "is used."))),
             DescribeRole.Theorem))));
 }
