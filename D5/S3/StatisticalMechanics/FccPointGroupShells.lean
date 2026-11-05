@@ -11,7 +11,6 @@ import Mathlib.Data.Fin.Tuple.Sort
 import Mathlib.GroupTheory.GroupAction.Basic
 import Mathlib.RingTheory.PowerSeries.Expand
 import Mathlib.RingTheory.PowerSeries.WellKnown
-import Mathlib.Tactic
 
 /-! Point-group orbit counting in the face centered cubic contact graph. -/
 

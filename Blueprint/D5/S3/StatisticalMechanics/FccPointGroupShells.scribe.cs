@@ -22,7 +22,7 @@ internal sealed class FccPointGroupShellsDocument : IScribeDocumentDefinition
                 "An edge changes exactly two distinct coordinates by one in absolute value and fixes the "
                     + "third. Each of the three choices of a coordinate pair has four sign choices. "
                     + "Both endpoints belong to the lattice."),
-            Definition("origin", "origin", "The specified center", Eq(V("origin"), Call("zero", V("L"))),
+            Definition("origin", "origin", "The specified center", All("i", Call("Fin", D(3)), Eq(App(V("origin"), V("i")), D(0))),
                 "The center has all three coordinates zero."),
             Definition("distance", "d", "Shortest-walk distance", All("x", V("L"),
                 Eq(Call("d", V("x")), App(Q("SimpleGraph", "dist"), V("contactGraph"),
@@ -105,17 +105,25 @@ internal sealed class FccPointGroupShellsDocument : IScribeDocumentDefinition
     {
         var i = V("i"); var x = V("x"); var s = V("s"); var p = V("p");
         var indices = Call("Fin", D(3));
-        return All("w", Call("Perm", Arrow(indices, Integers())), Iff(Call("member", V("w"), V("W")),
-            Ex("p", Call("Perm", indices), Ex("s", Arrow(indices, Integers()),
-                And(All("i", indices, Or(Eq(App(s, i), D(1)), Eq(App(s, i), Sub(D(0), D(1))))),
-                    All("x", Arrow(indices, Integers()), All("i", indices,
-                        Eq(App(App(V("w"), x), i), Mul(App(s, i), App(x, App(p, i))))))))));
+        var signs = All("i", indices,
+            Or(Eq(App(s, i), D(1)), Eq(App(s, i), Sub(D(0), D(1)))));
+        var transform = All("x", Arrow(indices, Integers()), All("i", indices,
+            Eq(App(App(V("w"), x), i), Mul(App(s, i), App(x, App(p, i))))));
+        return All("w", Call("Perm", Arrow(indices, Integers())),
+            Iff(Seq(V("w"), Sp, InMacro, Sp, V("W")),
+                Ex("p", Call("Perm", indices), Ex("s", Arrow(indices, Integers()),
+                    And(signs, transform)))));
+
     }
 
-    private static Formula OrbitFormula() => All("n", Naturals(), Eq(Call("A", V("n")),
-        App(Q("Nat", "card"), Call("Quotient", App(Q("Setoid", "comap"),
-            App(Q("MulAction", "orbitRel"), V("W"), V("L")),
-            Cast(Q("Subtype", "val"), Arrow(Call("Shell", V("n")), V("L"))))))));
+    private static Formula OrbitFormula()
+    {
+        var inclusion = Cast(Q("Subtype", "val"), Arrow(Call("Shell", V("n")), V("L")));
+        var relation = App(Q("MulAction", "orbitRel"), V("W"), V("L"));
+        var restricted = App(Q("Setoid", "comap"), inclusion, relation);
+        return All("n", Naturals(), Eq(Call("A", V("n")),
+            App(Q("Nat", "card"), Call("Quotient", restricted))));
+    }
 
     private static Formula ResultFormula()
     {
