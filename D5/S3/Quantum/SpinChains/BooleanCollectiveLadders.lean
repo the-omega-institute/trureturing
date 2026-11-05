@@ -851,7 +851,7 @@ private lemma rawString_norm_sq (S : ℕ) (a : StringIndex S) :
     (primitiveBasis (2 * S) a.1 a.2.1).property a.2.2.val (by have := a.2.2.isLt; omega)
   have hb := (primitiveBasis (2 * S) a.1).orthonormal.norm_eq_one a.2.1
   rw [inner_self_eq_norm_sq_to_K, inner_self_eq_norm_sq_to_K] at he
-  change (↑‖rawString S a‖ : ℂ) ^ 2 = _ * 
+  change (↑‖rawString S a‖ : ℂ) ^ 2 = _ *
     (↑‖primitiveBasis (2 * S) a.1 a.2.1‖ : ℂ) ^ 2 at he
   rw [hb] at he
   norm_num only [one_pow, Complex.ofReal_one, mul_one] at he
@@ -861,7 +861,7 @@ private lemma rawString_norm_succ (S : ℕ) (t : Fin (S + 1))
     (i : Fin (Module.finrank ℂ (primitive (2 * S) t)))
     (q : Fin (2 * S - 2 * t.val + 1)) (hq : q.val < 2 * S - 2 * t.val) :
     ‖rawString S ⟨t,i,⟨q.val + 1,by omega⟩⟩‖ =
-      Real.sqrt (((q.val:ℝ) + 1) * ((2 * S - 2 * t.val:ℕ) - q.val : ℝ)) * 
+      Real.sqrt (((q.val:ℝ) + 1) * ((2 * S - 2 * t.val:ℕ) - q.val : ℝ)) *
         ‖rawString S ⟨t,i,q⟩‖ := by
   have hp : 0 ≤ ((q.val:ℝ) + 1) * ((2 * S - 2 * t.val:ℕ) - q.val : ℝ) := by
     have : (q.val:ℝ) ≤ (2 * S - 2 * t.val:ℕ) := by exact_mod_cast Nat.le_of_lt hq
@@ -874,7 +874,7 @@ private lemma rawString_norm_succ (S : ℕ) (t : Fin (S + 1))
   rw [Nat.cast_sub (Nat.le_of_lt hq)] at he
   have hs := Real.sq_sqrt hp
   have hn : ‖rawString S ⟨t,i,⟨q.val + 1,by omega⟩⟩‖ ^ 2 =
-      (Real.sqrt (((q.val:ℝ) + 1) * ((2 * S - 2 * t.val:ℕ) - q.val : ℝ)) * 
+      (Real.sqrt (((q.val:ℝ) + 1) * ((2 * S - 2 * t.val:ℕ) - q.val : ℝ)) *
         ‖rawString S ⟨t,i,q⟩‖) ^ 2 := by
     rw [mul_pow, hs, he']
     rw [he, Nat.cast_mul]
@@ -904,7 +904,7 @@ private lemma normalizedString_U_succ (S : ℕ) (t : Fin (S + 1))
   change ‖rawString S a‖⁻¹ = _ * ‖rawString S b‖⁻¹
   have ha' : ‖rawString S a‖ ≠ 0 := norm_ne_zero_iff.mpr (rawString_ne_zero S a)
   have hb' : ‖rawString S b‖ ≠ 0 := norm_ne_zero_iff.mpr (rawString_ne_zero S b)
-  dsimp [a,b] at * 
+  dsimp [a,b] at *
   field_simp
   simpa only [mul_comm] using hn
 
