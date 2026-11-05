@@ -65,7 +65,7 @@ theorem square_log_limit (f : ℕ → ℕ → ℝ) (L : ℝ) (hL : 0 ≤ L)
     have hq : (n / k : ℕ) * k ≤ n := Nat.div_mul_le_self n k
     have hr : n % k < k := Nat.mod_lt n hk
     have hqr := (hsub n).apply_mul_add_le (n / k) k (n % k)
-    rw [Nat.div_add_mod n k] at hqr
+    rw [Nat.mul_comm (n / k) k, Nat.div_add_mod n k] at hqr
     have hqR : (n / k : ℕ) ≤ (n : ℝ) / k := by
       apply (le_div_iff₀ hkR).mpr
       exact_mod_cast hq
