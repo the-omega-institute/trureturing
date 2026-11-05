@@ -30,8 +30,7 @@ open OriginalCompactActionMetric Module
 open scoped Topology InnerProductSpace
 noncomputable section
 universe u
-variable {W : Type u} [NormedAddCommGroup W] [InnerProductSpace ℝ W]
-  [FiniteDimensional ℝ W]
+variable {W : Type u} [NormedAddCommGroup W] [InnerProductSpace ℝ W] [FiniteDimensional ℝ W]
 variable (G : MatrixGroup W)
 
 /-- Velocities in the actual ambient matrix space of actual G-valued curves at 1. -/
@@ -52,10 +51,8 @@ def velocitySpace : Submodule ℝ (W →L[ℝ] W) where
 
 /-- Actual curve velocities are exactly the generators whose entire real
 exponential curve has values in the original compact subgroup. -/
-theorem mem_velocitySpace_iff_exp
-    (hG : IsCompact (G : Set (W →L[ℝ] W)ˣ)) (K : W →L[ℝ] W) :
-    K ∈ velocitySpace G ↔ ∀ t : ℝ, ∃ u : (W →L[ℝ] W)ˣ,
-      u ∈ G ∧ (u : W →L[ℝ] W) = NormedSpace.exp (t • K) := by
+theorem mem_velocitySpace_iff_exp (hG : IsCompact (G : Set (W →L[ℝ] W)ˣ)) (K : W →L[ℝ] W) :
+    K ∈ velocitySpace G ↔ ∀ t : ℝ, ∃ u : (W →L[ℝ] W)ˣ, u ∈ G ∧ (u : W →L[ℝ] W) = NormedSpace.exp (t • K) := by
   letI : CompleteSpace W := FiniteDimensional.complete ℝ W
   constructor
   · rintro ⟨c, hc, hK⟩ t
@@ -65,10 +62,8 @@ theorem mem_velocitySpace_iff_exp
         (ContinuousLinearEquiv.refl ℝ E : E →L[ℝ] E) 0 := by
       simpa using! (hasStrictFDerivAt_exp_zero (𝕂 := ℝ) (𝔸 := E))
     let ell : E → E := hexp.localInverse NormedSpace.exp (ContinuousLinearEquiv.refl ℝ E) 0
-    have hell0 : ell 1 = 0 := by
-      simpa [ell] using hexp.localInverse_apply_image
-    have hell : HasFDerivAt ell (ContinuousLinearMap.id ℝ E) 1 := by
-      simpa [ell] using! hexp.to_localInverse.hasFDerivAt
+    have hell0 : ell 1 = 0 := by simpa [ell] using hexp.localInverse_apply_image
+    have hell : HasFDerivAt ell (ContinuousLinearMap.id ℝ E) 1 := by simpa [ell] using! hexp.to_localInverse.hasFDerivAt
     have hc0 : (c 0).val.val = (1 : E) := by simp [hc]
     have hd : HasDerivAt (fun s => ell ((c s).val.val)) K 0 := by
       simpa only [Function.comp_apply, ContinuousLinearMap.id_apply] using!
@@ -78,8 +73,7 @@ theorem mem_velocitySpace_iff_exp
       have hn : Filter.Tendsto (fun n : ℕ => ‖(n : ℝ)‖) Filter.atTop Filter.atTop := by
         simpa using (tendsto_natCast_atTop_atTop (R := ℝ))
       simpa [hc0, hell0, div_eq_mul_inv, mul_comm] using hd.hasFDerivAt.lim t hn
-    have hinv : ∀ᶠ y in 𝓝 (1 : E), NormedSpace.exp (ell y) = y := by
-      simpa [ell] using hexp.eventually_right_inverse
+    have hinv : ∀ᶠ y in 𝓝 (1 : E), NormedSpace.exp (ell y) = y := by simpa [ell] using hexp.eventually_right_inverse
     have hsample : Filter.Tendsto (fun n : ℕ => (c (t / n)).val.val)
         Filter.atTop (𝓝 (1 : E)) := by
       simpa only [hc0, Function.comp_def] using! hK.continuousAt.tendsto.comp
@@ -89,8 +83,7 @@ theorem mem_velocitySpace_iff_exp
       apply hscale.exp.congr'
       filter_upwards [hsample.eventually hinv] with n hn
       rw [Nat.cast_smul_eq_nsmul ℝ, NormedSpace.exp_nsmul, hn]
-    have hclosed : IsClosed ((Units.val : Eˣ → E) '' (G : Set Eˣ)) :=
-      (hG.image Units.continuous_val).isClosed
+    have hclosed : IsClosed ((Units.val : Eˣ → E) '' (G : Set Eˣ)) := (hG.image Units.continuous_val).isClosed
     exact hclosed.mem_of_tendsto hpow (Filter.Eventually.of_forall fun n =>
       ⟨(c (t / n)).val ^ n, G.pow_mem (c (t / n)).property n, rfl⟩)
   · intro h
@@ -109,34 +102,28 @@ private def exponentialUnit (K : W →L[ℝ] W) : (W →L[ℝ] W)ˣ := by
   letI : NormedAlgebra ℚ (W →L[ℝ] W) := .restrictScalars ℚ ℝ _
   exact (NormedSpace.isUnit_exp K).unit
 
-private theorem exponentialUnit_val (K : W →L[ℝ] W) :
-    (exponentialUnit K : W →L[ℝ] W) = NormedSpace.exp K := by
+private theorem exponentialUnit_val (K : W →L[ℝ] W) : (exponentialUnit K : W →L[ℝ] W) = NormedSpace.exp K := by
   letI : CompleteSpace W := FiniteDimensional.complete ℝ W
   letI : NormedAlgebra ℚ (W →L[ℝ] W) := .restrictScalars ℚ ℝ _
   exact IsUnit.unit_spec _
 
-private theorem exponentialUnit_inv_val (K : W →L[ℝ] W) :
-    ((exponentialUnit K)⁻¹).val = NormedSpace.exp (-K) := by
+private theorem exponentialUnit_inv_val (K : W →L[ℝ] W) : ((exponentialUnit K)⁻¹).val = NormedSpace.exp (-K) := by
   letI : CompleteSpace W := FiniteDimensional.complete ℝ W
   letI : NormedAlgebra ℚ (W →L[ℝ] W) := .restrictScalars ℚ ℝ _
   rw [← Ring.inverse_unit, exponentialUnit_val, Ring.inverse_exp]
 
-private theorem continuous_exponentialUnit (K : W →L[ℝ] W) :
-    Continuous (fun t : ℝ => exponentialUnit (t • K)) := by
+private theorem continuous_exponentialUnit (K : W →L[ℝ] W) : Continuous (fun t : ℝ => exponentialUnit (t • K)) := by
   letI : CompleteSpace W := FiniteDimensional.complete ℝ W
   letI : NormedAlgebra ℚ (W →L[ℝ] W) := .restrictScalars ℚ ℝ _
   have hc : Continuous (fun t : ℝ => t • K) := continuous_id.smul continuous_const
-  have he : Continuous (NormedSpace.exp : (W →L[ℝ] W) → (W →L[ℝ] W)) :=
-    NormedSpace.exp_continuous
+  have he : Continuous (NormedSpace.exp : (W →L[ℝ] W) → (W →L[ℝ] W)) := NormedSpace.exp_continuous
   apply Units.continuous_iff.mpr
   constructor
   · simpa only [Function.comp_def, exponentialUnit_val] using! he.comp hc
   · simpa only [Function.comp_def, exponentialUnit_inv_val] using! he.comp hc.neg
 
-private theorem exponential_in_identityComponent
-    (hG : IsCompact (G : Set (W →L[ℝ] W)ˣ)) (K : W →L[ℝ] W)
-    (hK : K ∈ velocitySpace G) (t : ℝ) :
-    ∃ g : G, g ∈ connectedComponent (1 : G) ∧
+private theorem exponential_in_identityComponent (hG : IsCompact (G : Set (W →L[ℝ] W)ˣ)) (K : W →L[ℝ] W)
+    (hK : K ∈ velocitySpace G) (t : ℝ) : ∃ g : G, g ∈ connectedComponent (1 : G) ∧
       g.val.val = NormedSpace.exp (t • K) := by
   have hm (s : ℝ) : exponentialUnit (s • K) ∈ G := by
     obtain ⟨u, hu, he⟩ := (mem_velocitySpace_iff_exp G hG K).mp hK s
@@ -154,15 +141,13 @@ private theorem exponential_in_identityComponent
   exact (isPreconnected_range hc).subset_connectedComponent ⟨0, hc0⟩ ⟨t, rfl⟩
 
 omit [FiniteDimensional ℝ W] in
-private theorem conjugate_velocity (g : G) (K : W →L[ℝ] W)
-    (hK : K ∈ velocitySpace G) :
+private theorem conjugate_velocity (g : G) (K : W →L[ℝ] W) (hK : K ∈ velocitySpace G) :
     (g.val.val * K * g⁻¹.val.val) ∈ velocitySpace G := by
   obtain ⟨c,hc,hcK⟩ := hK
   refine ⟨fun t => g * c t * g⁻¹,by simp [hc],?_⟩
   simpa [hc] using ((hasDerivAt_const (0 : ℝ) g.val.val).mul hcK).mul_const g⁻¹.val.val
 
-private theorem bracket_velocity (K L : W →L[ℝ] W)
-    (hK : K ∈ velocitySpace G) (hL : L ∈ velocitySpace G) :
+private theorem bracket_velocity (K L : W →L[ℝ] W) (hK : K ∈ velocitySpace G) (hL : L ∈ velocitySpace G) :
     ⁅K,L⁆ ∈ velocitySpace G := by
   obtain ⟨c,hc,hcK⟩ := hK
   have hinv : HasDerivAt (fun t => (c t)⁻¹.val.val) (-K) 0 := by
@@ -173,17 +158,14 @@ private theorem bracket_velocity (K L : W →L[ℝ] W)
   have hh : HasDerivAt (fun t => (c t).val.val * L * (c t)⁻¹.val.val)
       (K*L-L*K) 0 := by
     simpa [hc,sub_eq_add_neg] using! hd
-  have hm : ∀ t : ℝ, (c t).val.val * L * (c t)⁻¹.val.val ∈ velocitySpace G :=
-    fun t => conjugate_velocity G (c t) L hL
+  have hm : ∀ t : ℝ, (c t).val.val * L * (c t)⁻¹.val.val ∈ velocitySpace G := fun t => conjugate_velocity G (c t) L hL
   have hz := mem_closure_of_tendsto hh.tendsto_slope
-    (Filter.Eventually.of_forall fun t =>
-      (velocitySpace G).smul_mem _ ((velocitySpace G).sub_mem (hm t) (hm 0)))
+    (Filter.Eventually.of_forall fun t => (velocitySpace G).smul_mem _ ((velocitySpace G).sub_mem (hm t) (hm 0)))
   rw [(velocitySpace G).closed_of_finiteDimensional.closure_eq] at hz
   exact hz
 
 /-- The actual curve velocities form a Lie algebra under the actual matrix commutator. -/
-def curveLieAlgebra : LieSubalgebra ℝ (W →L[ℝ] W) :=
-  { velocitySpace G with
+def curveLieAlgebra : LieSubalgebra ℝ (W →L[ℝ] W) := { velocitySpace G with
     lie_mem' := fun hK hL => bracket_velocity G _ _ hK hL }
 
 abbrev OriginalLie := curveLieAlgebra G
@@ -201,38 +183,32 @@ def fullRelation (A : OriginalLie G) (x : W) :
     ((Submodule.span ℝ {A}).mkQ.prodMap (Submodule.span ℝ {x}).mkQ)
 
 /-- The first canonical projection of the entire solution relation. -/
-def firstProjection (A : OriginalLie G) (x : W) :
-    fullRelation G A x →ₗ[ℝ] (OriginalLie G ⧸ Submodule.span ℝ {A}) :=
+def firstProjection (A : OriginalLie G) (x : W) : fullRelation G A x →ₗ[ℝ] (OriginalLie G ⧸ Submodule.span ℝ {A}) :=
   (LinearMap.fst ℝ _ _).comp (fullRelation G A x).subtype
 
 /-- The second canonical projection of the entire solution relation. -/
-def secondProjection (A : OriginalLie G) (x : W) :
-    fullRelation G A x →ₗ[ℝ] (W ⧸ Submodule.span ℝ {x}) :=
+def secondProjection (A : OriginalLie G) (x : W) : fullRelation G A x →ₗ[ℝ] (W ⧸ Submodule.span ℝ {x}) :=
   (LinearMap.snd ℝ _ _).comp (fullRelation G A x).subtype
 
 /-- Both projections of the full relation must be bijective. -/
 def FullReciprocity (A : OriginalLie G) (x : W) : Prop :=
   Function.Bijective (firstProjection G A x) ∧ Function.Bijective (secondProjection G A x)
 
-private theorem relation_mem (A K : OriginalLie G) (x y : W)
-    (h : K.val x + A.val y = 0) :
+private theorem relation_mem (A K : OriginalLie G) (x y : W) (h : K.val x + A.val y = 0) :
     ((Submodule.span ℝ {A}).mkQ K,(Submodule.span ℝ {x}).mkQ y) ∈ fullRelation G A x :=
   ⟨(K,y),h,rfl⟩
 
-private theorem fullReciprocity_of_kernels_ranges
-    (A : OriginalLie G) (x : W)
+private theorem fullReciprocity_of_kernels_ranges (A : OriginalLie G) (x : W)
     (hA : LinearMap.ker A.val.toLinearMap = Submodule.span ℝ {x})
     (hE : LinearMap.ker (evaluation G x) = Submodule.span ℝ {A})
-    (hrange : LinearMap.range A.val.toLinearMap = LinearMap.range (evaluation G x)) :
-    FullReciprocity G A x := by
+    (hrange : LinearMap.range A.val.toLinearMap = LinearMap.range (evaluation G x)) : FullReciprocity G A x := by
   constructor
   · constructor
     · rw [injective_iff_map_eq_zero]
       intro r hr
       obtain ⟨⟨K,y⟩, hsol, heq⟩ := r.property
       change K.val x + A.val y = 0 at hsol
-      have hKq : (Submodule.span ℝ {A}).mkQ K = 0 := by
-        exact (congrArg Prod.fst heq).trans hr
+      have hKq : (Submodule.span ℝ {A}).mkQ K = 0 := by exact (congrArg Prod.fst heq).trans hr
       have hKker : K ∈ LinearMap.ker (evaluation G x) := by
         rw [hE]
         exact (Submodule.Quotient.mk_eq_zero _).mp hKq
@@ -253,8 +229,7 @@ private theorem fullReciprocity_of_kernels_ranges
         rw [hrange]
         exact (LinearMap.range (evaluation G x)).neg_mem ⟨K,rfl⟩
       obtain ⟨y, hy⟩ := hneg
-      refine ⟨⟨((Submodule.span ℝ {A}).mkQ K,
-        (Submodule.span ℝ {x}).mkQ y), relation_mem G A K x y ?_⟩, rfl⟩
+      refine ⟨⟨((Submodule.span ℝ {A}).mkQ K, (Submodule.span ℝ {x}).mkQ y), relation_mem G A K x y ?_⟩, rfl⟩
       change K.val x + A.val y = 0
       change A.val y = -K.val x at hy
       rw [hy]
@@ -264,8 +239,7 @@ private theorem fullReciprocity_of_kernels_ranges
       intro r hr
       obtain ⟨⟨K,y⟩, hsol, heq⟩ := r.property
       change K.val x + A.val y = 0 at hsol
-      have hyq : (Submodule.span ℝ {x}).mkQ y = 0 :=
-        (congrArg Prod.snd heq).trans hr
+      have hyq : (Submodule.span ℝ {x}).mkQ y = 0 := (congrArg Prod.snd heq).trans hr
       have hyker : y ∈ LinearMap.ker A.val.toLinearMap := by
         rw [hA]
         exact (Submodule.Quotient.mk_eq_zero _).mp hyq
@@ -286,15 +260,13 @@ private theorem fullReciprocity_of_kernels_ranges
         rw [← hrange]
         exact (LinearMap.range A.val.toLinearMap).neg_mem ⟨y,rfl⟩
       obtain ⟨K, hK⟩ := hneg
-      refine ⟨⟨((Submodule.span ℝ {A}).mkQ K,
-        (Submodule.span ℝ {x}).mkQ y), relation_mem G A K x y ?_⟩, rfl⟩
+      refine ⟨⟨((Submodule.span ℝ {A}).mkQ K, (Submodule.span ℝ {x}).mkQ y), relation_mem G A K x y ?_⟩, rfl⟩
       change K.val x + A.val y = 0
       change K.val x = -A.val y at hK
       rw [hK]
       simp
 
-private theorem kernel_lines (A : OriginalLie G) (x : W)
-    (h : FullReciprocity G A x) :
+private theorem kernel_lines (A : OriginalLie G) (x : W) (h : FullReciprocity G A x) :
     (∀ y : W, A.val y = 0 → y ∈ Submodule.span ℝ {x}) ∧
     (∀ K : OriginalLie G, K.val x = 0 → K ∈ Submodule.span ℝ {A}) := by
   constructor
@@ -311,8 +283,7 @@ private theorem kernel_lines (A : OriginalLie G) (x : W)
     have hq := congrArg (fun q : fullRelation G A x => q.val.1) hz
     exact (Submodule.Quotient.mk_eq_zero (Submodule.span ℝ {A})).mp hq
 
-private theorem dimension_transfer (A : OriginalLie G) (x : W)
-    (ha : A ≠ 0) (hx : x ≠ 0) (h : FullReciprocity G A x) :
+private theorem dimension_transfer (A : OriginalLie G) (x : W) (ha : A ≠ 0) (hx : x ≠ 0) (h : FullReciprocity G A x) :
     finrank ℝ (OriginalLie G) = finrank ℝ W := by
   let e := (LinearEquiv.ofBijective (firstProjection G A x) h.1).symm.trans
     (LinearEquiv.ofBijective (secondProjection G A x) h.2)
@@ -325,8 +296,7 @@ private theorem dimension_transfer (A : OriginalLie G) (x : W)
 
 private theorem centralizer_line (B : InnerProductSpace.Core ℝ W)
     (hskew : ∀ K : OriginalLie G, ∀ u v : W, B.inner (K.val u) v = -B.inner u (K.val v))
-    (A : OriginalLie G) (x : W) (hx : x ≠ 0) (hAx : A.val x = 0)
-    (h : FullReciprocity G A x) :
+    (A : OriginalLie G) (x : W) (hx : x ≠ 0) (hAx : A.val x = 0) (h : FullReciprocity G A x) :
     ∀ K : OriginalLie G, ⁅A,K⁆ = 0 → ∃ c : ℝ, K = c • A := by
   intro K hcomm
   have hAK : A.val (K.val x) = 0 := by
@@ -347,10 +317,8 @@ private theorem centralizer_line (B : InnerProductSpace.Core ℝ W)
   exact ⟨d,hd.symm⟩
 
 private theorem trace_square_positive {V : Type*} [AddCommGroup V] [Module ℝ V]
-    [FiniteDimensional ℝ V] (B : InnerProductSpace.Core ℝ V)
-    (T : V →ₗ[ℝ] V) (hT : T ≠ 0)
-    (hskew : ∀ u v : V, B.inner (T u) v = -B.inner u (T v)) :
-    0 < -LinearMap.trace ℝ V (T*T) := by
+    [FiniteDimensional ℝ V] (B : InnerProductSpace.Core ℝ V) (T : V →ₗ[ℝ] V) (hT : T ≠ 0)
+    (hskew : ∀ u v : V, B.inner (T u) v = -B.inner u (T v)) : 0 < -LinearMap.trace ℝ V (T*T) := by
   classical
   let : NormedAddCommGroup V := B.toNormedAddCommGroup
   let : InnerProductSpace ℝ V := InnerProductSpace.ofCore B.toCore
@@ -377,8 +345,7 @@ private def tracePair (K L : OriginalLie G) : ℝ :=
     (hskew : ∀ K : OriginalLie G, ∀ u v : W, B.inner (K.val u) v = -B.inner u (K.val v)) :
     InnerProductSpace.Core ℝ (OriginalLie G) where
   inner := tracePair G
-  conj_inner_symm K L := by
-    simp only [conj_trivial,tracePair,LinearMap.trace_mul_comm ℝ L.val.toLinearMap]
+  conj_inner_symm K L := by simp only [conj_trivial,tracePair,LinearMap.trace_mul_comm ℝ L.val.toLinearMap]
   re_inner_nonneg K := by
     change 0 ≤ tracePair G K K
     by_cases hK : K = 0
@@ -416,8 +383,7 @@ private def tracePair (K L : OriginalLie G) : ℝ :=
     linarith
 
 private theorem trace_invariant (B : InnerProductSpace.Core ℝ W)
-    (hskew : ∀ K : OriginalLie G, ∀ u v : W, B.inner (K.val u) v = -B.inner u (K.val v))
-    (X Y Z : OriginalLie G) :
+    (hskew : ∀ K : OriginalLie G, ∀ u v : W, B.inner (K.val u) v = -B.inner u (K.val v)) (X Y Z : OriginalLie G) :
     (traceCore G B hskew).inner ⁅X,Y⁆ Z = -(traceCore G B hskew).inner Y ⁅X,Z⁆ := by
   change -(1/2 : ℝ) * LinearMap.trace ℝ W
     ((X.val.toLinearMap*Y.val.toLinearMap-Y.val.toLinearMap*X.val.toLinearMap)*Z.val.toLinearMap) =
@@ -431,12 +397,10 @@ private theorem trace_invariant (B : InnerProductSpace.Core ℝ W)
 /-- On the full original W and the actual curve Lie algebra of its compact matrix
 subgroup, both projections of the full relation force dimension three. -/
 theorem finrank_eq_three (hG : IsCompact (G : Set (W →L[ℝ] W)ˣ))
-    (A : OriginalLie G) (x : W) (ha : A ≠ 0) (hx : x ≠ 0) (hAx : A.val x = 0)
-    (h : FullReciprocity G A x) :
+    (A : OriginalLie G) (x : W) (ha : A ≠ 0) (hx : x ≠ 0) (hAx : A.val x = 0) (h : FullReciprocity G A x) :
     finrank ℝ W = 3 ∧ finrank ℝ (OriginalLie G) = 3 := by
   obtain ⟨B,_hB,hcurves⟩ := compact_action_metric G hG
-  have hskew : ∀ K : OriginalLie G, ∀ u v : W,
-      B.inner (K.val u) v = -B.inner u (K.val v) := by
+  have hskew : ∀ K : OriginalLie G, ∀ u v : W, B.inner (K.val u) v = -B.inner u (K.val v) := by
     intro K
     obtain ⟨c,hc,hcK⟩ := K.property
     exact hcurves c hc K.val hcK
@@ -446,8 +410,7 @@ theorem finrank_eq_three (hG : IsCompact (G : Set (W →L[ℝ] W)ˣ))
   have hthree : finrank ℝ (OriginalLie G) = 3 := by
     rcases hd with hone | hthree
     · have hW : finrank ℝ W = 1 := hdim.symm.trans hone
-      have hspan : Submodule.span ℝ {x} = ⊤ :=
-        Submodule.eq_top_of_finrank_eq (by rw [finrank_span_singleton hx,hW])
+      have hspan : Submodule.span ℝ {x} = ⊤ := Submodule.eq_top_of_finrank_eq (by rw [finrank_span_singleton hx,hW])
       have hAz : A.val = 0 := by
         ext y
         have hy : y ∈ Submodule.span ℝ {x} := by rw [hspan]; trivial
@@ -480,23 +443,18 @@ def skewEndomorphisms {V : Type*} [AddCommGroup V] [Module ℝ V]
 
 private theorem skew_plane_frame {V : Type*} [AddCommGroup V] [Module ℝ V]
     [FiniteDimensional ℝ V] (B : InnerProductSpace.Core ℝ V) (hV : finrank ℝ V = 3) :
-    ∃ (T : V →ₗ[ℝ] V) (x : V), T ∈ skewEndomorphisms B ∧ T ≠ 0 ∧ x ≠ 0 ∧
-      B.inner x x = 1 ∧ T x = 0 ∧
-      LinearMap.ker T = Submodule.span ℝ {x} ∧
-      (∀ y, y ∈ LinearMap.range T ↔ B.inner x y = 0) := by
+    ∃ (T : V →ₗ[ℝ] V) (x : V), T ∈ skewEndomorphisms B ∧ T ≠ 0 ∧ x ≠ 0 ∧ B.inner x x = 1 ∧ T x = 0 ∧
+      LinearMap.ker T = Submodule.span ℝ {x} ∧ (∀ y, y ∈ LinearMap.range T ↔ B.inner x y = 0) := by
   classical
   let : NormedAddCommGroup V := B.toNormedAddCommGroup
   let : InnerProductSpace ℝ V := InnerProductSpace.ofCore B.toCore
   let b : OrthonormalBasis (Fin 3) ℝ V := (stdOrthonormalBasis ℝ V).reindex (finCongr hV)
-  let T : V →ₗ[ℝ] V :=
-    (innerSL ℝ (b 0)).toLinearMap.smulRight (b 1) -
-      (innerSL ℝ (b 1)).toLinearMap.smulRight (b 0)
+  let T : V →ₗ[ℝ] V := (innerSL ℝ (b 0)).toLinearMap.smulRight (b 1) - (innerSL ℝ (b 1)).toLinearMap.smulRight (b 0)
   have hT (y : V) : T y = ⟪b 0,y⟫_ℝ • b 1 - ⟪b 1,y⟫_ℝ • b 0 := rfl
   have hs : T ∈ skewEndomorphisms B := by
     intro u v
     change ⟪T u,v⟫_ℝ = -⟪u,T v⟫_ℝ
-    simp only [hT, inner_sub_left, inner_sub_right, real_inner_smul_left,
-      real_inner_smul_right]
+    simp only [hT, inner_sub_left, inner_sub_right, real_inner_smul_left, real_inner_smul_right]
     simp only [real_inner_comm u (b 0), real_inner_comm u (b 1)]
     ring
   have hT0 : T (b 0) = b 1 := by simp [hT, b.inner_eq_ite]
@@ -507,8 +465,7 @@ private theorem skew_plane_frame {V : Type*} [AddCommGroup V] [Module ℝ V]
     have := congrArg (fun f : V →ₗ[ℝ] V => f (b 0)) hz
     simp only [hT0, LinearMap.zero_apply] at this
     exact b.orthonormal.ne_zero 1 this
-  have hexp (y : V) :
-      y = ⟪b 0,y⟫_ℝ • b 0 + ⟪b 1,y⟫_ℝ • b 1 + ⟪b 2,y⟫_ℝ • b 2 := by
+  have hexp (y : V) : y = ⟪b 0,y⟫_ℝ • b 0 + ⟪b 1,y⟫_ℝ • b 1 + ⟪b 2,y⟫_ℝ • b 2 := by
     simpa [Fin.sum_univ_succ, add_assoc] using (b.sum_repr' y).symm
   have hker : LinearMap.ker T = Submodule.span ℝ {b 2} := by
     apply le_antisymm
@@ -542,19 +499,16 @@ private theorem skew_plane_frame {V : Type*} [AddCommGroup V] [Module ℝ V]
       simpa [hy, add_comm] using (hexp y).symm
 
 private theorem skew_realizes_perp {V : Type*} [AddCommGroup V] [Module ℝ V]
-    (B : InnerProductSpace.Core ℝ V) (x y : V) (hxx : B.inner x x = 1)
-    (hxy : B.inner x y = 0) :
+    (B : InnerProductSpace.Core ℝ V) (x y : V) (hxx : B.inner x x = 1) (hxy : B.inner x y = 0) :
     ∃ S : V →ₗ[ℝ] V, S ∈ skewEndomorphisms B ∧ S x = y := by
   let : NormedAddCommGroup V := B.toNormedAddCommGroup
   let : InnerProductSpace ℝ V := InnerProductSpace.ofCore B.toCore
-  let S : V →ₗ[ℝ] V :=
-    (innerSL ℝ x).toLinearMap.smulRight y - (innerSL ℝ y).toLinearMap.smulRight x
+  let S : V →ₗ[ℝ] V := (innerSL ℝ x).toLinearMap.smulRight y - (innerSL ℝ y).toLinearMap.smulRight x
   have hS (u : V) : S u = ⟪x,u⟫_ℝ • y - ⟪y,u⟫_ℝ • x := rfl
   refine ⟨S, ?_, ?_⟩
   · intro u v
     change ⟪S u,v⟫_ℝ = -⟪u,S v⟫_ℝ
-    simp only [hS, inner_sub_left, inner_sub_right,
-      real_inner_smul_left, real_inner_smul_right]
+    simp only [hS, inner_sub_left, inner_sub_right, real_inner_smul_left, real_inner_smul_right]
     simp only [real_inner_comm u x, real_inner_comm u y]
     ring
   · change ⟪x,x⟫_ℝ = 1 at hxx
@@ -565,10 +519,8 @@ private theorem skew_realizes_perp {V : Type*} [AddCommGroup V] [Module ℝ V]
     simp only [hS, hxx, hyx, one_smul, zero_smul, sub_zero]
 
 private theorem skew_dimension_le_three {V : Type*} [AddCommGroup V] [Module ℝ V]
-    [FiniteDimensional ℝ V] (B : InnerProductSpace.Core ℝ V) (hV : finrank ℝ V = 3)
-    (S : Submodule ℝ (V →ₗ[ℝ] V))
-    (hS : ∀ T : S, ∀ u v : V, B.inner (T.val u) v = -B.inner u (T.val v)) :
-    finrank ℝ S ≤ 3 := by
+    [FiniteDimensional ℝ V] (B : InnerProductSpace.Core ℝ V) (hV : finrank ℝ V = 3) (S : Submodule ℝ (V →ₗ[ℝ] V))
+    (hS : ∀ T : S, ∀ u v : V, B.inner (T.val u) v = -B.inner u (T.val v)) : finrank ℝ S ≤ 3 := by
   classical
   let : NormedAddCommGroup V := B.toNormedAddCommGroup
   let : InnerProductSpace ℝ V := InnerProductSpace.ofCore B.toCore
@@ -622,16 +574,11 @@ def originalAction : OriginalLie G →ₗ[ℝ] (W →ₗ[ℝ] W) where
 /-- The original full relation gives both dimensions and exactly the full
 orthogonal Lie algebra of a metric constructed from the original compact group. -/
 theorem original_rigidity (hG : IsCompact (G : Set (W →L[ℝ] W)ˣ))
-    (A : OriginalLie G) (x : W) (ha : A ≠ 0) (hx : x ≠ 0) (hAx : A.val x = 0)
-    (h : FullReciprocity G A x) :
-    ∃ B : InnerProductSpace.Core ℝ W,
-      (∀ (g : G) (u v : W),
-        B.inner (g.val.val u) (g.val.val v) = B.inner u v) ∧
-      finrank ℝ W = 3 ∧ finrank ℝ (OriginalLie G) = 3 ∧
-      LinearMap.range (originalAction G) = skewEndomorphisms B := by
+    (A : OriginalLie G) (x : W) (ha : A ≠ 0) (hx : x ≠ 0) (hAx : A.val x = 0) (h : FullReciprocity G A x) :
+    ∃ B : InnerProductSpace.Core ℝ W, (∀ (g : G) (u v : W), B.inner (g.val.val u) (g.val.val v) = B.inner u v) ∧
+      finrank ℝ W = 3 ∧ finrank ℝ (OriginalLie G) = 3 ∧ LinearMap.range (originalAction G) = skewEndomorphisms B := by
   obtain ⟨B,hB,hcurves⟩ := compact_action_metric G hG
-  have hskew : ∀ K : OriginalLie G, ∀ u v : W,
-      B.inner (K.val u) v = -B.inner u (K.val v) := by
+  have hskew : ∀ K : OriginalLie G, ∀ u v : W, B.inner (K.val u) v = -B.inner u (K.val v) := by
     intro K
     obtain ⟨c,hc,hcK⟩ := K.property
     exact hcurves c hc K.val hcK
@@ -651,8 +598,7 @@ theorem original_rigidity (hG : IsCompact (G : Set (W →L[ℝ] W)ˣ))
 
 private theorem determinant_sq_of_preserves {V : Type*} [AddCommGroup V] [Module ℝ V]
     [FiniteDimensional ℝ V] (B : InnerProductSpace.Core ℝ V) (e : V ≃ₗ[ℝ] V)
-    (he : ∀ u v : V, B.inner (e u) (e v) = B.inner u v) :
-    LinearMap.det e.toLinearMap ^ 2 = 1 := by
+    (he : ∀ u v : V, B.inner (e u) (e v) = B.inner u v) : LinearMap.det e.toLinearMap ^ 2 = 1 := by
   classical
   let : NormedAddCommGroup V := B.toNormedAddCommGroup
   let : InnerProductSpace ℝ V := InnerProductSpace.ofCore B.toCore
@@ -684,19 +630,12 @@ private theorem determinant_one_on_component (B : InnerProductSpace.Core ℝ W)
 
 /-- Every skew generator for the derived metric exponentiates inside the actual
 identity component of the original group, on the same full W. -/
-theorem original_exponential_rigidity
-    (hG : IsCompact (G : Set (W →L[ℝ] W)ˣ))
-    (A : OriginalLie G) (x : W) (ha : A ≠ 0) (hx : x ≠ 0) (hAx : A.val x = 0)
-    (h : FullReciprocity G A x) :
-    ∃ B : InnerProductSpace.Core ℝ W,
-      (∀ (g : G) (u v : W),
-        B.inner (g.val.val u) (g.val.val v) = B.inner u v) ∧
-      finrank ℝ W = 3 ∧ finrank ℝ (OriginalLie G) = 3 ∧
-      LinearMap.range (originalAction G) = skewEndomorphisms B ∧
-      (∀ g ∈ connectedComponent (1 : G), g.val.val.det = 1) ∧
-      ∀ K : W →L[ℝ] W, K.toLinearMap ∈ skewEndomorphisms B →
-        ∀ t : ℝ, ∃ g : G, g ∈ connectedComponent (1 : G) ∧
-          g.val.val = NormedSpace.exp (t • K) := by
+theorem original_exponential_rigidity (hG : IsCompact (G : Set (W →L[ℝ] W)ˣ))
+    (A : OriginalLie G) (x : W) (ha : A ≠ 0) (hx : x ≠ 0) (hAx : A.val x = 0) (h : FullReciprocity G A x) :
+    ∃ B : InnerProductSpace.Core ℝ W, (∀ (g : G) (u v : W), B.inner (g.val.val u) (g.val.val v) = B.inner u v) ∧
+      finrank ℝ W = 3 ∧ finrank ℝ (OriginalLie G) = 3 ∧ LinearMap.range (originalAction G) = skewEndomorphisms B ∧
+      (∀ g ∈ connectedComponent (1 : G), g.val.val.det = 1) ∧ ∀ K : W →L[ℝ] W, K.toLinearMap ∈ skewEndomorphisms B →
+        ∀ t : ℝ, ∃ g : G, g ∈ connectedComponent (1 : G) ∧ g.val.val = NormedSpace.exp (t • K) := by
   obtain ⟨B, hB, hW, hL, hrange⟩ := original_rigidity G hG A x ha hx hAx h
   refine ⟨B, hB, hW, hL, hrange, determinant_one_on_component G B hB, ?_⟩
   intro K hK t
@@ -710,10 +649,8 @@ theorem original_exponential_rigidity
   exact he ▸ hLmem
 /-- The reverse Q8 implication uses both projections of the entire original
 relation on the original W and original group tangent algebra. -/
-theorem fullReciprocity_of_full_skew
-    (B : InnerProductSpace.Core ℝ W) (hW : finrank ℝ W = 3)
-    (hfull : LinearMap.range (originalAction G) = skewEndomorphisms B) :
-    ∃ (A : OriginalLie G) (x : W),
+theorem fullReciprocity_of_full_skew (B : InnerProductSpace.Core ℝ W) (hW : finrank ℝ W = 3)
+    (hfull : LinearMap.range (originalAction G) = skewEndomorphisms B) : ∃ (A : OriginalLie G) (x : W),
       A ≠ 0 ∧ x ≠ 0 ∧ A.val x = 0 ∧ FullReciprocity G A x := by
   obtain ⟨T,x,hT,hTne,hx,hxx,hTx,hkerT,hrT⟩ := skew_plane_frame B hW
   have hTrange : T ∈ LinearMap.range (originalAction G) := by
@@ -775,11 +712,9 @@ theorem fullReciprocity_of_full_skew
   rw [hAT, hErange]
 
 
-private def axisPlaneAlgebra (b : Basis (Fin 3) ℝ W) :
-    (ℝ × ℂ) →ₐ[ℝ] (W →L[ℝ] W) := by
+private def axisPlaneAlgebra (b : Basis (Fin 3) ℝ W) : (ℝ × ℂ) →ₐ[ℝ] (W →L[ℝ] W) := by
   let q : (ℝ × ℂ) →ₐ[ℝ] (W →ₗ[ℝ] W) := {
-    toFun := fun z => b.constr ℝ ![z.1 • b 0,
-      z.2.re • b 1 + z.2.im • b 2, -z.2.im • b 1 + z.2.re • b 2]
+    toFun := fun z => b.constr ℝ ![z.1 • b 0, z.2.re • b 1 + z.2.im • b 2, -z.2.im • b 1 + z.2.re • b 2]
     map_zero' := by
       apply b.ext
       intro i
@@ -799,8 +734,7 @@ private def axisPlaneAlgebra (b : Basis (Fin 3) ℝ W) :
       intro i
       apply b.repr.injective
       ext j
-      fin_cases i <;> fin_cases j <;>
-        simp [Module.End.mul_apply, map_add, map_smul, map_neg, Complex.mul_re,
+      fin_cases i <;> fin_cases j <;> simp [Module.End.mul_apply, map_add, map_smul, map_neg, Complex.mul_re,
           Complex.mul_im] <;> ring
     commutes' := by
       intro r
@@ -809,12 +743,9 @@ private def axisPlaneAlgebra (b : Basis (Fin 3) ℝ W) :
       fin_cases i <;> simp }
   exact (Module.End.toContinuousLinearMap (𝕜 := ℝ) W).toAlgHom.comp q
 
-private theorem basis_halfturn_exponential (B : InnerProductSpace.Core ℝ W)
-    (b : Basis (Fin 3) ℝ W)
-    (hb : ∀ i j, B.inner (b i) (b j) = if i = j then 1 else 0) :
-    ∃ K : W →L[ℝ] W, K.toLinearMap ∈ skewEndomorphisms B ∧
-      ∀ i : Fin 3, NormedSpace.exp (Real.pi • K) (b i) =
-        if i = 0 then b i else -b i := by
+private theorem basis_halfturn_exponential (B : InnerProductSpace.Core ℝ W) (b : Basis (Fin 3) ℝ W)
+    (hb : ∀ i j, B.inner (b i) (b j) = if i = j then 1 else 0) : ∃ K : W →L[ℝ] W, K.toLinearMap ∈ skewEndomorphisms B ∧
+      ∀ i : Fin 3, NormedSpace.exp (Real.pi • K) (b i) = if i = 0 then b i else -b i := by
   let q := axisPlaneAlgebra b
   let K := q (0, Complex.I)
   have hK0 : K (b 0) = 0 := by simp [K,q,axisPlaneAlgebra, Module.End.toContinuousLinearMap, LinearMap.toContinuousLinearMap]
@@ -852,8 +783,7 @@ private theorem basis_halfturn_exponential (B : InnerProductSpace.Core ℝ W)
 
 private theorem halfturns_generate (H : Subgroup (W ≃ₗ[ℝ] W))
     (hhalf : ∀ v : W, v ≠ 0 → (ℝ ∙ v).reflection.toLinearEquiv ∈ H)
-    (e : W ≃ₗᵢ[ℝ] W) (he : LinearMap.det e.toLinearMap = 1) :
-    e.toLinearEquiv ∈ H := by
+    (e : W ≃ₗᵢ[ℝ] W) (he : LinearMap.det e.toLinearMap = 1) : e.toLinearEquiv ∈ H := by
   classical
   let R (v : W) := (ℝ ∙ v)ᗮ.reflection
   have hword (l : List W) : ∃ a : W ≃ₗ[ℝ] W, a ∈ H ∧
@@ -904,10 +834,8 @@ private def originalUnitHom : (W ≃ₗ[ℝ] W) →* (W →L[ℝ] W)ˣ where
   map_one' := by ext w; rfl
   map_mul' _ _ := by ext w; rfl
 
-private theorem special_orthogonal_in_component (B : InnerProductSpace.Core ℝ W)
-    (hW : finrank ℝ W = 3)
-    (hexp : ∀ K : W →L[ℝ] W, K.toLinearMap ∈ skewEndomorphisms B →
-      ∀ t : ℝ, ∃ g : G, g ∈ connectedComponent (1 : G) ∧
+private theorem special_orthogonal_in_component (B : InnerProductSpace.Core ℝ W) (hW : finrank ℝ W = 3)
+    (hexp : ∀ K : W →L[ℝ] W, K.toLinearMap ∈ skewEndomorphisms B → ∀ t : ℝ, ∃ g : G, g ∈ connectedComponent (1 : G) ∧
         g.val.val = NormedSpace.exp (t • K))
     (u : (W →L[ℝ] W)ˣ)
     (hu : ∀ v w : W, B.inner (u.val v) (u.val w) = B.inner v w)
