@@ -174,17 +174,15 @@ private theorem physical_boundary_transport (a b c d : ℕ)
   obtain ⟨hf,hg,hfresh⟩ := terminal_doubles a b c d ha hb hc hd
   have hf0 := hf 0; have hf1 := hf 1; have hf2 := hf 2; have hf3 := hf 3
   have hg0 := hg 0; have hg1 := hg 1; have hg2 := hg 2; have hg3 := hg 3
-  simp only [nextBase, Matrix.cons_val_zero, Matrix.cons_val_succ] at hf0 hf1 hf2 hf3
-  simp only [nextNewBase, Matrix.cons_val_zero, Matrix.cons_val_succ] at hg0 hg1 hg2 hg3
+  simp [nextBase] at hf0 hf1 hf2 hf3
+  simp [nextNewBase] at hg0 hg1 hg2 hg3
   refine ⟨hm, hn, ?_, ?_⟩
   · intro i
     fin_cases i <;>
-      simp only [physicalOldBoundary, scalarOldBoundary, hm, normalOrder,
-        Matrix.cons_val_zero, Matrix.cons_val_succ] <;> omega
+      simp [physicalOldBoundary, scalarOldBoundary, hm, normalOrder] <;> omega
   · intro i
     fin_cases i <;>
-      simp only [physicalNewBoundary, scalarNewBoundary, hn, hfresh, normalOrder,
-        Matrix.cons_val_zero, Matrix.cons_val_succ] <;> omega
+      simp [physicalNewBoundary, scalarNewBoundary, hn, hfresh, normalOrder] <;> omega
 
 -- This is a consumed transport lemma. Its gate input is discharged below
 -- by the two supplied public universal gate theorems, never exported as an
@@ -276,13 +274,13 @@ private theorem c3_canonical_gates (b d : ℕ) (hd : 7 ≤ d) (hb : d < b) :
   have hnew : newBase 5 b 3 d =
       (![2*A,2*B-1,2*L-z-1,2*K-y*(z+1)-1] : Fin 4 → ℤ) := by
     funext r
-    fin_cases r <;> simp only [newBase, hbase, charge,
-      Matrix.cons_val_zero, Matrix.cons_val_succ, hy, hz] <;> ring
+    fin_cases r <;> simp [newBase, hbase, charge, hy, hz] <;> ring
   have hmod : sourceMod 5 b 3 d = N := by
     simp only [sourceMod, hx, hy, hz, hw]
+    rfl
   have hs := c3_doubled_gates e ell he
-  simpa only [canonicalDoubledSides, scalarOldBoundary, scalarNewBoundary,
-    hbase, hnew, hmod, Matrix.cons_val_zero, Matrix.cons_val_succ] using hs
+  simpa [canonicalDoubledSides, scalarOldBoundary, scalarNewBoundary,
+    hbase, hnew, hmod, A, B, L, K, N, x, y, z, w, h, t, e, ell] using hs
 
 private theorem diagonal_canonical_gates (b c d : ℕ)
     (hc : 3 ≤ c) (hd : 2*c ≤ d) (hb : d < b) :
@@ -335,13 +333,13 @@ private theorem diagonal_canonical_gates (b c d : ℕ)
   have hnew : newBase (c+1) b c d =
       (![2*A,2*B-1,2*L-z-1,2*K-y*(z+1)-1] : Fin 4 → ℤ) := by
     funext r
-    fin_cases r <;> simp only [newBase, hbase, charge,
-      Matrix.cons_val_zero, Matrix.cons_val_succ, hy, hz] <;> ring
+    fin_cases r <;> simp [newBase, hbase, charge, hy, hz] <;> ring
   have hmod : sourceMod (c+1) b c d = N := by
     simp only [sourceMod, hx, hy, hz, hw]
+    rfl
   have hs := diagonal_doubled_gates c delta ell hc
-  simpa only [canonicalDoubledSides, scalarOldBoundary, scalarNewBoundary,
-    hbase, hnew, hmod, Matrix.cons_val_zero, Matrix.cons_val_succ] using hs
+  simpa [canonicalDoubledSides, scalarOldBoundary, scalarNewBoundary,
+    hbase, hnew, hmod, A, B, L, K, N, x, y, z, w, h, t, e, ell] using hs
 
 /-- Full original C3 and diagonal cones, actual banks, original centered
     phases, order [0,3,2,1], literal cut 0 and separate physical totals.

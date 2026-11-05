@@ -18,7 +18,7 @@ set_option maxHeartbeats 4000000
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails
 open PacketNormalForm SourceWidth PeriodicShortening RunFirstEarTransport
 open private seed sourceMod actual_values chain_values source_signs from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open private finiteChecks finiteEarChecks finiteChecks_equiv from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
+open private DataCertificate DataCertificate.mk DataCertificate.positiveLabels DataCertificate.negativeOrder DataCertificate.oldEndpoints DataCertificate.newEndpoints finiteChecks finiteEarChecks finiteChecks_equiv from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
 open private oldMass newMass from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 open private strip_iff_packetChecks from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Packets
 open private zero_period_transport from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
@@ -92,7 +92,6 @@ private theorem residual_native_data (a b c d : ℕ) (hdom : OriginalDomain a b 
     nlinarith only [hB.2,hcycle,hmul]
   have hmod : sourceMod a b c d = (2 : ℤ)^(size a b c d)-1 := by
     simp only [sourceMod,size,pow_add]
-    ring
   have hpow : (2 : ℤ)^(size a b c d) =
       2*(2 : ℤ)^(size a b c d-1) := by
     conv_lhs => rw [show size a b c d = (size a b c d-1)+1 by dsimp [size]; omega,
@@ -152,7 +151,7 @@ private theorem residual_row_charges (a b c d : ℕ) (hdom : OriginalDomain a b 
     let f := fun r => oldValue a b c d (terminalLabel a b c d (residualOrder c d r))
     let g := fun r => newValue a b c d (terminalLabel a b c d (residualOrder c d r))
     (∀ r : Fin 4, 0 ≤ 2*m r-m' r ∧ 0 ≤ 2*f r-g r) ∧
-    (∑ r : Fin 4, (2*m r-m' r)+(2*f r-g r)) = base a b c d 0 := by
+    (∑ r : Fin 4, ((2*m r-m' r)+(2*f r-g r))) = base a b c d 0 := by
   obtain ⟨ha,hb,hc,hd⟩ := residual_bounds a b c d hdom
   classical
   dsimp only
@@ -210,8 +209,9 @@ private theorem residual_row_charges (a b c d : ℕ) (hdom : OriginalDomain a b 
     (((B 2).toList.map chi).sum + (chi (t 2) +
     (((B 3).toList.map chi).sum + chi (t 3))))))) = _ at total
   rw [bank_charge 0,bank_charge 1,bank_charge 2,bank_charge 3] at total
-  simpa only [Fin.sum_univ_succ, Fin.sum_univ_zero, chi, f, g, t, B,
-    add_assoc, add_left_comm, add_comm] using total
+  simp [Fin.sum_univ_succ, Fin.sum_univ_zero]
+  dsimp only [chi, f, g, t] at total
+  linear_combination total
 
 /-- The remaining charge after a seam or a positive bank is a sum of
     charges of the still unused physical labels. -/
@@ -231,10 +231,9 @@ private theorem residual_remaining_charge (a b c d : ℕ) (hdom : OriginalDomain
   have c3 := charges.1 3
   have total := charges.2
   dsimp only at c0 c1 c2 c3 total
-  simp only [Fin.sum_univ_succ, Fin.sum_univ_zero] at total
+  simp [Fin.sum_univ_succ, Fin.sum_univ_zero] at total
   fin_cases row <;> constructor <;>
-    simp only [residualH, residualG, physicalOldBoundary, physicalNewBoundary, fresh, Matrix.cons_val_zero,
-      Matrix.cons_val_succ] <;>
+    simp [residualH, residualG, physicalOldBoundary, physicalNewBoundary, fresh] <;>
     linarith only [total,c0.1,c0.2,c1.1,c1.2,c2.1,c2.2,c3.1,c3.2]
 
 /-- OLD LOWER and NEW UPPER are actual supplied gates. Remaining native
@@ -315,15 +314,7 @@ private noncomputable def residual_certificate (a b c d : ℕ) (hdom : OriginalD
   classical
   have inv := residual_inventory a b c d hdom
   have checks := residual_complete_checks a b c d hdom sides
-  refine {
-    packets := residualPackets a b c d
-    negativeOrder := ?_
-    earSlot := earSlot0
-    positiveLabels := ?_
-    partition := ?_
-    oldEndpoints := checks.1
-    newEndpoints := ?_
-  }
+  refine DataCertificate.mk (residualPackets a b c d) ?_ earSlot0 ?_ ?_ checks.1 ?_
   · exact physical_negative_order a b c d (residualBanks a b c d) (residualOrder c d)
       (residual_order_perm c d)
   · intro p hp i hi
@@ -348,10 +339,10 @@ private theorem residual_physical_strips (a b c d : ℕ) (hdom : OriginalDomain 
   classical
   let cert := residual_certificate a b c d hdom sides
   let bs := orderedPackets (residualPackets a b c d)
-  have hlabels := cert.positiveLabels
+  have hlabels := (DataCertificate.positiveLabels cert)
   change ∀ p ∈ residualPackets a b c d, ∀ i ∈ p.1,
     i < size a b c d ∧ i ∉ negatives a b c d at hlabels
-  have horder := cert.negativeOrder
+  have horder := (DataCertificate.negativeOrder cert)
   change ((residualPackets a b c d).map Prod.snd).Perm (negatives a b c d) at horder
   have hm (p : Finset ℕ × ℕ) (hp : p ∈ residualPackets a b c d) :
       oldMass a b c d p.1 = ∑ i ∈ p.1, oldValue a b c d i ∧
@@ -382,10 +373,10 @@ private theorem residual_physical_strips (a b c d : ℕ) (hdom : OriginalDomain 
   have tab := (chain_values a b c d (by omega) (by omega) (by omega) (by omega)).1 0
   have hN : 0 ≤ sourceMod a b c d := by omega
   have hA : 0 ≤ base a b c d 0 ∧ base a b c d 0 ≤ sourceMod a b c d := by omega
-  have oldchecks := cert.oldEndpoints
+  have oldchecks := (DataCertificate.oldEndpoints cert)
   change finiteChecks (oldMass a b c d) (oldValue a b c d) (sourceMod a b c d/2)
     0 (residualPackets a b c d) at oldchecks
-  have newchecks := cert.newEndpoints
+  have newchecks := (DataCertificate.newEndpoints cert)
   change finiteEarChecks (newMass a b c d) (newValue a b c d) (sourceMod a b c d)
     (base a b c d 0) 0 earSlot0.val (residualPackets a b c d) at newchecks
   have shiftedchecks : finiteChecks (newMass a b c d) (newValue a b c d)
@@ -437,7 +428,6 @@ private theorem residual_original_orders (a b c d : ℕ) (hdom : OriginalDomain 
   have hcast : (A : ℤ) = base a b c d 0 := residual_seed_cast a b c d
   have hmod : modulus k = sourceMod a b c d := by
     simp only [k,size,modulus,sourceMod,pow_add]
-    ring
   have hmod' : modulus (k+1) = 2*sourceMod a b c d+1 := by
     rw [modulus,pow_succ]
     have he : (2 : ℤ)^k = sourceMod a b c d+1 := by
@@ -447,26 +437,42 @@ private theorem residual_original_orders (a b c d : ℕ) (hdom : OriginalDomain 
     rw [he]
     ring
   have hhalf : modulus (k+1)/2 = sourceMod a b c d := by rw [hmod']; omega
+  have oldfun : (fun i => centered (modulus k) ((2 : ℤ)^i*A)) =
+      oldValue a b c d := by
+    funext i
+    rw [hmod,hcast]
+    rfl
+  have newfun : (fun i => centered (modulus (k+1)) ((2 : ℤ)^i*(2*A : ℕ))) =
+      newValue a b c d := by
+    funext i
+    rw [hmod']
+    push_cast
+    rw [hcast]
+    rfl
   have oldstrip : InStrip (fun i => centered (modulus k) ((2 : ℤ)^i*A))
       (modulus k/2) 0 l := by
-    simpa only [hmod,hcast,oldValue] using strips.1
+    rw [oldfun,hmod]
+    exact strips.1
   have newstrip : InStrip (fun i => centered (modulus (k+1)) ((2 : ℤ)^i*(2*A : ℕ)))
       (modulus (k+1)/2) 0 (k::l) := by
     rw [hhalf]
-    simpa only [hmod',Nat.cast_mul,Nat.cast_ofNat,hcast,newValue] using strips.2
+    rw [newfun]
+    exact strips.2
   have oldzero : ((List.range k).map
       (fun i => centered (modulus k) ((2 : ℤ)^i*A))).sum = 0 := by
     have hz := physical_oldzero
     change (l.map (oldValue a b c d)).sum = 0 at hz
     rw [(hp.map (oldValue a b c d)).sum_eq] at hz
-    simpa only [hmod,hcast,oldValue] using hz
+    rw [oldfun]
+    exact hz
   have newzero : ((List.range (k+1)).map
       (fun i => centered (modulus (k+1)) ((2 : ℤ)^i*(2*A : ℕ)))).sum = 0 := by
     have hpEar : (physicalEarWord a b c d).Perm (List.range (k+1)) :=
       Multiset.coe_eq_coe.mp (original_ear_partition a b c d hdom)
     have hz := physical_newzero
     rw [(hpEar.map (newValue a b c d)).sum_eq] at hz
-    simpa only [hmod',Nat.cast_mul,Nat.cast_ofNat,hcast,newValue] using hz
+    rw [newfun]
+    exact hz
   let sigma := l.map (label k hk)
   have ho : OriginalOrder k A sigma :=
     lift_order k A hk l hp oldstrip oldzero
