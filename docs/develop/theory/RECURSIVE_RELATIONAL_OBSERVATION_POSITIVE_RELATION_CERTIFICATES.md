@@ -1485,12 +1485,14 @@ below, rather than a restriction of the full-injection prior. Attaining such a
 set within the original fixed $N$ is a separate acquisition condition.
 
 **Theorem 12.4 (singleton/capacity recognition is complete in this class).**
-On attained evidence in Definition 12.3, the existing algorithm of
+For a positive set in Definition 12.3, the existing algorithm of
 Definition 2.2 accepts if and only if $D$ is a certificate against all of
 $\mathcal G_\theta$. Equivalently, it accepts if and only if the graph
 $\mathcal A_D$ of Definition 12.1 is acyclic. The selected anchors and
 acquired pairs suffice for the algorithm; it needs no actual coordinates,
-true injections, or hidden choice of $p(y)$.
+true injections, or hidden choice of $p(y)$. In particular this is exact
+on attained full-support histories of this class. Testing a mathematical
+witness set does not assert its acquisition within the fixed $N$.
 
 Proof. Reuse the saturated-anchor argument in Theorem 2.1. In any
 compatible generator the anchors' eight-neighbour sets are exact by the
@@ -1511,7 +1513,7 @@ supported generators is exactly the fixed-table uniqueness of Theorem 12.2.
 
 For completeness of the particular algorithm, singleton assignment and
 removal of a type already occupied by nine assigned labels preserve every
-feasible assignment. On this attained domain they cannot produce a wrong
+feasible assignment. On this positive domain they cannot produce a wrong
 assignment, empty domain, or excess capacity, because the actual assignment
 remains feasible throughout. If all labels are assigned, uniqueness follows.
 If the algorithm stalls, consider the types with positive remaining capacity.
