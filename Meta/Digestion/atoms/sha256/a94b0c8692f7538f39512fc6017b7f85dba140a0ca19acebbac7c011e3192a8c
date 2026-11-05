@@ -1,0 +1,17 @@
+**定理 4.2（Optimal-horizon necessity and omissibility）。** In the guarded class of Definition 2.1, put $H=QL+1+\Delta$ as in (3.1). A correct controller of worst cost at most $H$ can omit all post-tour band-silent outside queries if
+
+$$
+m\text{ odd},\quad\text{or }a\text{ even},\quad\text{or }A\in\lambda[I],\quad\text{or }N<2^L.
+\tag{4.1}
+$$
+
+If none of (4.1) holds, every correct controller of worst cost at most $H$ must use at least one such query on an actual mixed archive. The necessity is for arbitrary adaptive controllers within this horizon, rather than a property of one particular scan. It is not a necessity assertion for controllers with an unrestricted larger budget.
+
+Proof of omissibility. The first two conditions let the scan of Theorem 2.2 remove every outside source. Under either of the other conditions a possible phase-$m$ survivor can share the zero code with the label $A$, or receive the reserved zero code, as in Theorem 3.1. That theorem's common stream then omits $J_m$ entirely; the remaining interquery actions are zero waits. All labels, including an outside $A$ when present, are decoded correctly. This is an existence claim about a complete correct controller, not merely a code-count heuristic.
+
+Proof of necessity. Suppose $m$ is even, $a$ is odd, $A\notin\lambda[I]$, and $N=2^L$. Consider the actual common band archive after the first tour in any correct controller. Theorem 2.2 forces at least one outside source there, regardless of its root suffix and subsequent scans. The node contains $N+1=2^L+1$ different original labels and has common current value and tail. Up to total cost $H$ there are at most $L$ band-query opportunities. For $L\ge2$, this is exactly the calendar in (3.3). For $L=1$, $H=Q+2$ allows indices $Q$ and $Q+1$ after the tour, but the latter window starts at $m-1>a-1$, so only $Q$ can query the band.
+
+Assume no block after the tour is a band-silent outside query. At every non-band index, all band candidates in a node have the same zero difference. If the node also contains an outside source, that source must have the same observation under this assumption; otherwise that block would be a query of Definition 4.1. Uniform rejection cannot help a mixed-label node. A node with no band sources has only label $A$ and may stop. Consequently, after deleting single-child nodes and replacing already monochromatic subtrees by leaves, every branching node in the tree from the depth-$Q$ archive must lie at one of its at most $L$ band-query indices. A binary tree with at most $L$ such branch opportunities on each path has at most $2^L$ leaves. It cannot return the $2^L+1$ different INITIAL labels in this archive. This contradiction proves necessity.
+
+The argument does not assume that all controllers retain phase $m$, or that they assign a particular band label the zero code. It uses the all-root survival obstruction and the saturated number of distinct band labels. Theorem 3.1 realizes the required query at $Q+1$ by the same-archive pair $\{m-1,m\}$; when $L\ge2$ it fits in a charged waiting slot. ∎
+

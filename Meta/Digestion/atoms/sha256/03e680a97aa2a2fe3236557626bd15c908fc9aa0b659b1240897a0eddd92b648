@@ -1,0 +1,39 @@
+**Theorem 20.5 (retained order selects a lawful operation on the same
+source).** Under Assumption 20.1, every complete Next request beginning at
+Ready returns as specified. At an in-range index it performs one genuine
+enabled LAB growth on the same source, preserves all earlier recall answers and makes its new
+event callable at the next Ready. Equal source and equal complete split
+chronology can nevertheless lead to different Next outputs and successors.
+The completion and invariant assertions extend to arbitrary finite
+interleavings of all seven request kinds.
+
+Proof. Every historical event address is still a logical position: there
+is no source deletion and a split preserves its root position. Navigation
+to $p$ therefore succeeds. The finite left descent reaches a logical leaf,
+whose tag has exactly one enabled operation in (AA.65). Current exclusive
+rights, retained source binding and finite material give its actual execution,
+rather than a simulation of a different tree. Theorem 20.3 supplies
+maintenance, real output and return. Its invariant says that the new word
+is the old word followed by this actual event; all previous entries persist.
+The same finite-output argument handles OutOfRange without growth.
+Induction on completed requests now extends Theorem 20.3's invariant and
+return assertion to interleavings that include Next.
+
+For a concrete separation take
+$t'=\langle\langle\beta,\alpha\rangle,\beta\rangle$ and the two words
+
+$$
+P_\varepsilon S_\varepsilon S_LP_R,
+\qquad P_\varepsilon S_\varepsilon P_RS_L.
+\tag{AA.75}
+$$
+
+Their common split word is $(\varepsilon,L)$, but FetchGrowth$(3)$ returns
+$S_L$ and $P_R$, respectively. Next$(3)$ thus descends to $LL$ and $R$,
+respectively. Both current leaves are $\beta$, so the actual enabled next
+operations are $S_{LL}$ and $S_R$. Their source successors and returned
+addresses differ. All initial control, current rights and endpoint source
+are the same; the acquired tape distinction is actually consumed. This
+finite witness illustrates the class-level obstruction of §18, rather than
+replacing its proof. $\square$
+

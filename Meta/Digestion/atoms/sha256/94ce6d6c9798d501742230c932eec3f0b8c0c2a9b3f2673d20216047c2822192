@@ -1,0 +1,40 @@
+### 推论 3.5（哪些参照保住全部内禀可恢复内容）
+
+<a id="cor-c123-full-intrinsic-reference"></a>
+
+将 $\mathfrak A_{\mathcal N}$ 分块为
+$\bigoplus_\alpha\mathcal B(L_\alpha)\otimes I_{R_\alpha}$。
+则 $\mathfrak F_\sigma=\mathfrak A_{\mathcal N}$，当且仅当
+
+<a id="eq-c123-fully-compatible-reference"></a>
+
+$$
+\sigma=\bigoplus_\alpha S_\alpha\otimes\omega_\alpha,
+ \qquad S_\alpha>0,\quad \omega_\alpha>0,\quad
+ \operatorname{Tr}\omega_\alpha=1,\quad\sum_\alpha\operatorname{Tr} S_\alpha=1.
+\tag{26}
+$$
+
+这些参照在全部可恢复逻辑效果上的回读都是 $\beta_{\mathcal N}$。
+固定各 $\omega_\alpha$ 而改变 $S_\alpha$，还会保持整个 Petz 回推不变；
+若改变某个 $\omega_\alpha$，则落入不同的整个回推等价类。
+
+**证明。**
+由模核定理，$\mathfrak F_\sigma=\mathfrak A_{\mathcal N}$ 等价于该代数模不变；有限 Takesaki 定理将它化为
+[(26)](#eq-c123-fully-compatible-reference)。
+规范输出表示的结论来自
+[(24)](#eq-c123-reference-independent-logical-read)。
+最后两句由参照等价定理的完整固定状态分类给出。
+
+例如 $\mathcal N=\operatorname{Tr}_R$ 时，
+$\mathfrak A_{\mathcal N}=\mathcal B(L)\otimes I_R$。
+产品参照 $\sigma_L\otimes\omega_R$ 给
+
+$$
+\mathcal R_\sigma(Y)=Y\otimes\omega_R.
+$$
+
+更换 $\sigma_L$ 完全不改变回推；更换 $\omega_R$ 会改变如何填回余量，
+但两种回推都准确恢复逻辑代数。
+因此“恢复同一份逻辑内容”比“整个反向规则相同”弱，二者不能混用。
+

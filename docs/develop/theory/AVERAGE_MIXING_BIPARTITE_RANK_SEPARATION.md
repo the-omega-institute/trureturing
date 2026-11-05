@@ -325,3 +325,254 @@ The complete-graph maximum is a separate supplied comparison, $T_A(G)\le T_A(K_n
 The results here establish the star comparison for the entire bipartite adjacency subdomain. Determining $\beta_n$ for $n\ge5$, establishing (4.2), and obtaining the corresponding extremal comparisons for the two different Laplacian Hamiltonians in Definition 1.4 are distinct additional mathematical problems.
 
 ## 追加锚（本行以下为增补区）
+
+## 5. Strict star comparison for the whole pineapple family
+
+For integers $m\ge2$ and $b\ge1$, put
+
+$$
+G(m,b)=K_1\vee(K_m\sqcup bK_1),\qquad n=m+b+1.
+\tag{5.1}
+$$
+
+Here $\vee$ is the graph join: a hub $h$ is adjacent to every vertex of a clique $C$ of size $m$ and an independent set $L$ of size $b$, and there are no edges between $C$ and $L$. These graphs are finite, simple, undirected, unweighted, connected, nonbipartite and noncomplete: the hub and two clique vertices form a triangle, whereas a leaf and a clique vertex are nonadjacent. They are the pineapple graphs $K_p^q$ with $p=m+1$, $q=b$ in Topcu–Sorgun–Haemers, *On the spectral characterization of pineapple graphs*, [arXiv:1511.08674v3, Proposition 1.1](https://arxiv.org/abs/1511.08674v3).
+
+Use the adjacency observable (1.1),
+
+$$
+T_A(G)=\sum_{v\in V(G)}\sum_{\theta\in\operatorname{spec}(A(G))}(E_\theta)_{vv}^{\,2},
+\tag{5.2}
+$$
+
+where distinct eigenvalues index projections onto entire eigenspaces; there is no division by $n$.
+
+**Theorem 5.1 (Strict pineapple comparison).** For every pair of integers $m\ge2$, $b\ge1$, with $n=m+b+1$,
+
+$$
+T_A(G(m,b))<T_A(K_{1,n-1})
+             =n-\frac52+\frac{3}{2(n-1)}.
+\tag{5.3}
+$$
+
+There is no equality in this parameter domain.
+
+**Proof.** The spectral formula (1.1) and the same-order star value (3.7) are the supplied inputs. Set $d=m-1>0$ and $M=m+b=n-1$. The characteristic polynomial below is the polynomial in the cited Proposition 1.1 under $p=m+1$, $q=b$; the direct orthogonal decomposition is also needed to determine the spectral weights.
+
+Let $U_C$ consist of the vectors supported on $C$ whose coordinates sum to zero, and define $U_L$ similarly. Then $A$ acts as $-I$ on $U_C$ and as zero on $U_L$. Their orthogonal complement $W$ has orthonormal basis
+
+$$
+e_h,\qquad \frac{\mathbf1_C}{\sqrt m},\qquad
+\frac{\mathbf1_L}{\sqrt b}.
+$$
+
+Multiplication by $A$ shows that $W$ is invariant and that its restriction is
+
+$$
+H=\begin{pmatrix}
+0&\sqrt m&\sqrt b\\
+\sqrt m&d&0\\
+\sqrt b&0&0
+\end{pmatrix},\qquad
+f(x)=\det(xI-H)=x^3-dx^2-Mx+bd.
+\tag{5.4}
+$$
+
+The values $f(0)=bd$, $f(d)=-md$ and $f(-1)=bm$ are nonzero. For an eigenvector $(u,v,w)$ of $H$ with eigenvalue $\lambda$, the second and third equations give
+
+$$
+v=\frac{\sqrt m}{\lambda-d}u,\qquad
+w=\frac{\sqrt b}{\lambda}u.
+\tag{5.5}
+$$
+
+Thus $u=0$ forces the vector to vanish, and each eigenspace has dimension one. Since $H$ is real symmetric, its three eigenvalues $\lambda_1,\lambda_2,\lambda_3$ are real and distinct. None equals $0$ or $-1$. Consequently the full $-1$-projection of $A$ is the projection onto $U_C$, with diagonal $1-1/m$ on $C$, and the full zero-projection is the projection onto $U_L$, with diagonal $1-1/b$ on $L$. When $b=1$, $U_L=0$ and zero is absent from the spectrum; the same formula contributes zero. All other projections are the lifts of the three rank-one projections $P_r$ of $H$.
+
+Define the symmetric matrix
+
+$$
+F_{ij}=\sum_{r=1}^3(P_r)_{ij}^{\,2}\quad(1\le i,j\le3).
+$$
+
+Its entries are nonnegative and its row sums equal one, because
+
+$$
+\sum_jF_{ij}=\sum_r(P_r^2)_{ii}=\sum_r(P_r)_{ii}=1.
+\tag{5.6}
+$$
+
+On a clique vertex the lifted $P_r$ has diagonal $(P_r)_{22}/m$, and on a leaf it has diagonal $(P_r)_{33}/b$. Accounting for the two full repeated-eigenvalue projections therefore gives
+
+$$
+\begin{aligned}
+T_A(G(m,b))
+ &=m\left(1-\frac1m\right)^2
+   +b\left(1-\frac1b\right)^2
+   +F_{11}+\frac{F_{22}}m+\frac{F_{33}}b\\
+ &=n-5+\frac1m+\frac1b
+   +F_{11}+\frac{F_{22}}m+\frac{F_{33}}b\\
+ &=n-4+\frac2m+\frac2b-R,
+\end{aligned}
+\tag{5.7}
+$$
+
+where the last equality uses (5.6) and
+
+$$
+R=\left(1+\frac1m\right)F_{12}
+ +\left(1+\frac1b\right)F_{13}
+ +\left(\frac1m+\frac1b\right)F_{23}\ge0.
+\tag{5.8}
+$$
+
+In particular, if $g(m,b)$ denotes the star trace minus the pineapple trace, then
+
+$$
+g(m,b)=\frac32+\frac{3}{2M}-\frac2m-\frac2b+R.
+\tag{5.9}
+$$
+
+First suppose $b\ge2$. If $m,b\ge3$, the part of (5.9) preceding $R$ is at least $1/6+3/(2M)>0$. If one parameter is two and the other is $k\ge3$, that part is
+
+$$
+\frac12+\frac{3}{2(k+2)}-\frac2k.
+\tag{5.10}
+$$
+
+For $k=3$ this is $2/15>0$, and for $k\ge4$ it is positive because $1/2-2/k\ge0$. Thus (5.8) proves all cases with $b\ge2$ except $(m,b)=(2,2)$.
+
+It remains to evaluate (5.8) for that pair and for the entire strip $b=1$. The following calculation is a specialization of the root-deleted-polynomial cancellation described in [the discriminant exposition](../../../Blueprint/D5/S3/Quantum/Dynamics/AverageMixingDiscriminantIntegrality.md). Put
+
+$$
+\Delta=\prod_{r<s}(\lambda_r-\lambda_s)^2>0,\qquad
+S_j=\sum_{r=1}^3\frac{\lambda_r^j}{f'(\lambda_r)^2}
+\quad(j=0,1,2).
+\tag{5.11}
+$$
+
+The projector identity $P_r=\operatorname{adj}(\lambda_r I-H)/f'(\lambda_r)$ follows by writing
+
+$$
+\operatorname{adj}(xI-H)
+ =\sum_r\left(\prod_{s\ne r}(x-\lambda_s)\right)P_r
+$$
+
+for $x$ outside the spectrum and then evaluating the polynomial identity at $x=\lambda_r$. The off-diagonal cofactors of $xI-H$ are respectively $\sqrt m\,x$, $\sqrt b\,(x-d)$ and $\sqrt{mb}$. Hence
+
+$$
+F_{12}=mS_2,\qquad
+F_{13}=b(S_2-2dS_1+d^2S_0),\qquad
+F_{23}=mbS_0.
+\tag{5.12}
+$$
+
+For $\{r,s,t\}=\{1,2,3\}$, cancellation of the two squared factors in $f'(\lambda_r)^2$ gives
+
+$$
+\frac{\Delta}{f'(\lambda_r)^2}
+ =(\lambda_s-\lambda_t)^2
+ =(d-\lambda_r)^2-4(-M-d\lambda_r+\lambda_r^2)
+ =d^2+4M+2d\lambda_r-3\lambda_r^2.
+\tag{5.13}
+$$
+
+Here Vieta gives $\lambda_s+\lambda_t=d-\lambda_r$ and $\lambda_s\lambda_t=-M-d\lambda_r+\lambda_r^2$. The power sums $p_j=\sum_r\lambda_r^j$ are
+
+$$
+\begin{aligned}
+p_0&=3,&p_1&=d,&p_2&=d^2+2M,\\
+p_3&=d^3+3dM-3bd,&
+p_4&=d^4+4d^2M+2M^2-4bd^2.
+\end{aligned}
+\tag{5.14}
+$$
+
+Indeed $p_2$ follows from Vieta, and $f(\lambda_r)=0$ gives $p_3=dp_2+Mp_1-bdp_0$ and $p_4=dp_3+Mp_2-bdp_1$. Multiplying (5.13) by $\lambda_r^j$ and summing now yields
+
+$$
+\begin{aligned}
+\Delta S_0&=2(d^2+3M),\\
+\Delta S_1&=d(9b-M),\\
+\Delta S_2&=2(M^2+3bd^2).
+\end{aligned}
+\tag{5.15}
+$$
+
+Substitution into (5.8) and (5.12) gives the explicit identity
+
+$$
+R=\frac{2\left[(M+5)M^2+(b+1)d^4
+                   +(7mb+5m+2b-2b^2)d^2\right]}{\Delta}.
+\tag{5.16}
+$$
+
+For example, before collecting coefficients its numerator divided by two is
+
+$$
+(m+1)(M^2+3bd^2)
+ +(b+1)\left[M^2+d^4+(4m-2b)d^2\right]
+ +M(d^2+3M),
+$$
+
+which expands to the numerator in brackets in (5.16). Expanding the root-difference product in (5.11), or the cubic discriminant, gives
+
+$$
+\Delta=d^2M^2+4M^3+4bd^4-27b^2d^2+18bMd^2.
+\tag{5.17}
+$$
+
+In detail, for a monic cubic $x^3+ax^2+cx+e$ the root-difference product is $a^2c^2-4c^3-4a^3e-27e^2+18ace$; taking $a=-d$, $c=-M$, $e=bd$ gives (5.17).
+
+At $(m,b)=(2,2)$ we have $d=1$, $M=4$, so (5.17) gives $\Delta=16+256+8-108+144=316$. The numerator in (5.16) is $2(144+3+34)=362$. Thus $R=181/158$, and (5.9) gives
+
+$$
+g(2,2)=-\frac18+\frac{181}{158}
+       =\frac{645}{632}>0.
+\tag{5.18}
+$$
+
+Finally let $b=1$ and keep every integer $m\ge2$. Equations (5.16)–(5.17), with $d=m-1$ and $M=m+1$, become
+
+$$
+\begin{aligned}
+\Delta&=mD,\qquad D=5m^3+6m^2-11m+32>0,\\
+R&=\frac{N}{mD},\qquad
+N=4m^4+10m^3-8m^2+34m+16.
+\end{aligned}
+\tag{5.19}
+$$
+
+The sign of $D$ follows already from $m>0$, $\Delta>0$; directly, $D=m(5m^2-11)+6m^2+32>0$ for $m\ge2$. The part of (5.9) preceding $R$ equals $-(m^2+2m+4)/(2m(m+1))$. Consequently
+
+$$
+\begin{aligned}
+g(m,1)
+ &=\frac{2(m+1)N-(m^2+2m+4)D}{2m(m+1)D}\\
+ &=\frac{3m^5+12m^4-17m^3+18m^2+80m-96}
+         {2m(m+1)(5m^3+6m^2-11m+32)}.
+\end{aligned}
+\tag{5.20}
+$$
+
+For completeness the two products in the first numerator expand to
+
+$$
+\begin{aligned}
+2(m+1)N&=8m^5+28m^4+4m^3+52m^2+100m+32,\\
+(m^2+2m+4)D&=5m^5+16m^4+21m^3+34m^2+20m+128.
+\end{aligned}
+$$
+
+The numerator of the second fraction in (5.20) is
+
+$$
+m^3(3m^2+12m-17)+(18m^2+80m-96)>0,
+\tag{5.21}
+$$
+
+since $3m^2+12m-17\ge19$ and $18m^2+80m-96\ge136$ for every $m\ge2$. Its denominator is positive by (5.19). This proves strict positivity on the entire strip $b=1$, including $m=2$. Together with (5.10) and (5.18), it exhausts all allowed integer pairs and proves (5.3), with no equality. $\square$
+
+The excluded boundary $m=1$ gives $G(1,b)=K_{1,b+1}$, so equality with the same-order star holds there. The boundary $b=0$ gives the complete graph $K_{m+1}$ and is outside the comparison domain. The theorem concerns the adjacency Hamiltonian $A$ alone.
+
+Mohan–Tamon–Xu–Zhan, [arXiv:2608.20739v1, §8(v)](https://arxiv.org/abs/2608.20739v1), ask: “Is $S_n$ the second laziest connected graph on $n$ vertices for the adjacency matrix, unsigned Laplacian matrix and normalized Laplacian matrix?” The family restriction (5.1) belongs to Theorem 5.1, not to that published question. The theorem supplies its strict adjacency comparison on this nonbipartite noncomplete family; the comparison for arbitrary graphs in $\mathcal N_n$, equality outside this family, a reduction of that global problem to this family, and the comparisons for $D+A$ and $I-D^{-1/2}AD^{-1/2}$ remain separate mathematical questions.
+
+## 追加锚（本行以下为增补区）

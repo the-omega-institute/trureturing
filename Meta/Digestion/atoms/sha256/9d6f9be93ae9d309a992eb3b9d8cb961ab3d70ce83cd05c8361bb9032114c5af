@@ -1,0 +1,6 @@
+**命题 16.1（不从纯锐性文献借入额外供应）。** AC 与 Pure Sharpness 有共同的“某效果在某准备上概率一”形式，但定义和依赖不同。Chiribella–Scandolo 的 *Operational axioms for diagonalizing states*，arXiv:1506.00380v3 §2–§4、Axiom 4，将 pure transformation 定义为只具有平凡实际测试细化；*Entanglement as an axiomatic foundation for statistical mechanics*，arXiv:1608.04459v2 §II–III 的 Axiom 3、Definition 3 采用同一操作纯性，并把 Causality、Purity Preservation、Pure Sharpness、Purification 联合定义为 sharp theories with purification。实际菜单中没有某个非平凡细化，不意味着在整个数学正锥中没有正分解；因此操作 Pure Sharpness 不能无条件替代 (10.1) 的 cone atomicity，且单有纯锐配对不排除经典中心原子。
+
+**证明及应用边界。** 本文用极射线的显式正分解定义取得定理 11.2，不借 Purification 得到的态效果 dagger。Barnum–Lee–Scandolo–Selby，*Ruling out higher-order interference from purity principles*，arXiv:1704.05106v3 §4，在 sharp theories with purification 全包前件下给 Theorem 4.6 的态效果对偶、Proposition 4.7 的非扰动变换和 Proposition 4.8 的测试完整性；1506.00380v3 的 Proposition 6、7 同样位于该联合公理语境。这些结果不从单独 Pure Sharpness 产生。C124 没有暗取这些对偶、非扰动、任意归一仪器组装或 face filters；实际滤片由 (12.3) 的原词另行供应。其唯一被迫的配对态是当前 $\alpha$ 的 $B_Px_\alpha=p$，不是全系统操作纯态与操作纯效果的预给双射。
+
+普通乘积中心复合也不支持全体跨中心混态的纯化：在 $\mathcal A_A\otimes\mathcal A_B=\bigoplus_{s,t}B(H_s\otimes K_t)$ 中，归一纯正泛函只支撑某一个 $(s,t)$ 块，其边缘只支撑 $A$ 的一个 $s$。所以在至少两个 $s$ 上有正权的混态不可能是这种纯联合态的边缘。本文的完整满足族允许这些混态，故不能宣称满足文献的普遍 Purification；1608.04459 的其他超选择复合规则也不能不核对就移植到此处普通乘积中心。这里所用有限谱分解、Born 运输、CP 和平方根膨胀各有自身已声明前件，不靠纯化补齐。∎
+

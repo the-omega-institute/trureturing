@@ -1,0 +1,90 @@
+### 定理 3.2（单参考态 Barnum–Knill 界）
+
+<a id="thm-c122-barnum-knill"></a>
+
+对任意忠实 $\sigma$、通道 $\mathcal N$ 及任意 CPTP 恢复 $\mathcal R$，
+
+<a id="eq-c122-barnum-knill"></a>
+
+$$
+F_e(\sigma,\mathcal P_{\sigma,\mathcal N}\mathcal N)
+ \ge F_e(\sigma,\mathcal R\mathcal N)^2.
+\tag{11}
+$$
+
+**证明。**
+先把输出限制到 $\tau=\mathcal N(\sigma)$ 的支撑，故 $\sigma,\tau$ 都可逆。
+取 $E_j$、$R_i$ 为噪声和任意恢复的 Kraus 算子。对有限矩阵
+$X_{ij}=\operatorname{Tr}(\sigma R_iE_j)$ 作奇异值分解；分别酉旋转这两组 Kraus、必要时补零，可令 $X_{ij}=0$ 对所有 $i\ne j$ 成立。
+这些旋转不改变 $\mathcal N,\mathcal R$ 或 Petz 通道。
+
+定义辅助算子及 CP 映射
+
+$$
+B_i^*=\sigma^{-1/2}R_i\tau^{1/2},\qquad
+ \mathcal B(X)=\sum_iB_iXB_i^*.
+$$
+
+于是 $R_i=\sigma^{1/2}B_i^*\tau^{-1/2}$，并由恢复的迹保持性得到
+
+$$
+\mathcal B(\sigma)
+ =\tau^{1/2}\Bigl(\sum_iR_i^*R_i\Bigr)\tau^{1/2}=\tau.
+$$
+
+辅助 $\mathcal B$ 不必是迹保持的；这里只使用这一等式。
+令
+
+$$
+Y_i=\tau^{-1/4}B_i\sigma^{3/4},\qquad
+ Z_i=\tau^{-1/4}E_i\sigma^{3/4},\qquad
+ a_i=\|Y_i\|_2^2,\quad b_i=\|Z_i\|_2^2.
+$$
+
+由迹的循环性及 $X$ 的对角化，
+
+<a id="eq-c122-bk-two-schwarz"></a>
+
+$$
+\begin{aligned}
+F_e(\sigma,\mathcal R\mathcal N)
+ &=\sum_i|\operatorname{Tr}(Y_i^*Z_i)|^2
+ \le\sum_i a_ib_i
+ \le\sqrt{\sum_i a_i^2}\sqrt{\sum_i b_i^2}.
+\end{aligned}
+\tag{12}
+$$
+
+两次不等式分别是矩阵和向量的 Cauchy–Schwarz。
+
+第一因子至多为 $1$。确实，$a_i=\operatorname{Tr}(\sigma R_iB_i)$，而对任意 $C$ 有
+$|\operatorname{Tr}(\sigma C)|^2\le\operatorname{Tr}(C\sigma C^*)$，所以
+
+$$
+\begin{aligned}
+\sum_i a_i^2
+ &\le\sum_i\operatorname{Tr}(R_iB_i\sigma B_i^*R_i^*)\\
+ &\le\sum_{i,j}\operatorname{Tr}(R_iB_j\sigma B_j^*R_i^*)
+ =\operatorname{Tr}\mathcal R(\mathcal B(\sigma))=\operatorname{Tr}\tau=1.
+\end{aligned}
+$$
+
+第二因子可以加入非负交叉项：
+
+$$
+\begin{aligned}
+\sum_i b_i^2
+ &\le\sum_{i,j}|\operatorname{Tr}(Z_i^*Z_j)|^2\\
+ &=\sum_{i,j}|\operatorname{Tr}(\sigma^{3/2}E_i^*\tau^{-1/2}E_j)|^2
+ =F_e(\sigma,\mathcal P_{\sigma,\mathcal N}\mathcal N).
+\end{aligned}
+$$
+
+最后一步使用 Petz 的 Kraus 算子 $\sigma^{1/2}E_i^*\tau^{-1/2}$。
+代回式~[(12)](#eq-c122-bk-two-schwarz) 并平方，得到结论。
+
+这是已知近最优恢复定理的单状态形式 [6](#ref-barnum2026)。
+原论文的多状态平均证明有一处错误，作者在 2026 年 1 月更新的 arXiv v2 中修复；新版末尾明确说明原证明已覆盖单状态纠缠保真度。本章使用上述独立的单状态证明，既不依赖旧的多状态推导，也不把根保真度和平方纠缠保真度混用。
+
+**白话。**参考态是我们先选定的一把尺子。只要有任何修法能很好地保住这把尺子与它的参考记录之间的纠缠，公式直接给出的 Petz 修法就不会差太多。比较用的最优修法可以只存在于证明里；真正定义 Petz 修法时，只需要已有通道和那份已声明的参考。
+

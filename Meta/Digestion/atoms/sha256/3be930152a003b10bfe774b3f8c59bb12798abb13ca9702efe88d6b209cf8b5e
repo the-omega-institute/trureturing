@@ -1,0 +1,45 @@
+### 命题 7.11（Bell 边缘的树形反例）
+
+<a id="prop-c117-bell-tree"></a>
+
+固定三个独立 qubit 因子 $A,B,C$，联合代数为
+$M_2(\mathbb C)\otimes M_2(\mathbb C)\otimes M_2(\mathbb C)$。要求
+
+$$
+\rho_{AB}=\lvert \Phi^+\rangle\langle \Phi^+\rvert,
+ \qquad
+ \rho_{BC}=\lvert \Phi^+\rangle\langle \Phi^+\rvert,
+ \qquad
+ \lvert \Phi^+\rangle=\frac{\lvert 00\rangle+\lvert 11\rangle}{\sqrt2}.
+$$
+
+它们在共同因子 $B$ 上均给出 $I_B/2$，但不存在共同 $\rho_{ABC}$。
+
+**证明。**
+记 $P_{AB}=\lvert \Phi^+\rangle\langle \Phi^+\rvert$、$Q_{AB}=I-P_{AB}$。若联合态存在，则
+
+$$
+\operatorname{Tr}[(Q_{AB}\otimes I_C)\rho_{ABC}]=0.
+$$
+
+对正矩阵 $\rho$ 和投影 $Q$，$\operatorname{Tr}(Q\rho)=0$ 意味着
+$Q\rho^{1/2}=0$，从而 $\rho$ 的支撑包含在 $\ker Q$。因此本例中
+$\operatorname{supp}\rho_{ABC}\subseteq\operatorname{Ran} P_{AB}\otimes H_C$。
+$P_{AB}$ 秩为一，所以必有
+
+$$
+\rho_{ABC}=P_{AB}\otimes\sigma_C,
+ \qquad
+ \rho_{BC}=\frac{I_B}{2}\otimes\sigma_C.
+$$
+
+后者秩至少为二，不可能等于 Bell 纯态。
+
+两个窗口的交叠图在这里已经是一棵树。项目的经典树上记录扩张具有自己的记录及交叠条件 [3](#ref-repo-tree)；不能只凭“树”和“共同边缘相同”把结论移植到量子边缘。量子边缘相容性本身是需要检验的约束 [15](#ref-marginal)。本例固定了三个独立因子；若偷偷把 $A$ 与 $C$ 合并成同一因子，就已改变原问题。
+
+即使存在共同态，也未必唯一。Bell 态与
+$\frac12(\lvert 00\rangle\langle 00\rvert+\lvert 11\rangle\langle 11\rvert)$
+都有相同单体边缘 $I/2$，但其 $X\otimes X$ 期望分别为 $1$ 和 $0$，对应项目的局部边缘盲区 [4](#ref-repo-marginal)。共同窗口须容许相关读出，不能只有各方单体答案。
+
+同时，本节的共同对象是非交换代数上的正泛函，不是给所有不相容测量预先填写一个经典联合结果表。上下文性的经典全局截面障碍与此处量子态的存在不是同一个命题 [14](#ref-contextuality)。
+

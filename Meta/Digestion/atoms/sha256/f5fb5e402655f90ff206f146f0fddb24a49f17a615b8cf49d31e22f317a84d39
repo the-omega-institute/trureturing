@@ -1,0 +1,36 @@
+### 定义 2.4（本轮唯一候选 C90：二元内生平方可恢复相容）
+
+<a id="def-c90"></a>
+
+定义指定通道的二元平方损失
+
+<a id="eq-c90-loss"></a>
+
+$$
+\ell_{\mathcal N}(\rho_0,\rho_1)
+ :=\mathcal I(\rho_0,\rho_1)
+   -\mathcal I(\mathcal N\rho_0,\mathcal N\rho_1).
+\tag{2.2}
+$$
+
+被称为这对内容的*完整二元代表*的转换，采用唯一有限条件
+
+<a id="eq-c90"></a>
+
+$$
+\boxed{\quad \ell_{\mathcal N}(\rho_0,\rho_1)=0.\quad}
+ \tag{C90}
+$$
+
+这是一项带作用范围的成员资格，不要求每种测量或噪声都对全部态对无损。
+它要等价的完整定义是：存在同一个 CPTP 映射 $\mathcal R$，使
+
+$$
+\mathcal R\mathcal N(\rho_0)=\rho_0,
+ \qquad
+ \mathcal R\mathcal N(\rho_1)=\rho_1.
+$$
+
+若每个态分别允许一台依赖未知标签的制备器，问题会变得空洞；
+因此这里必须是**同一个**恢复操作。
+

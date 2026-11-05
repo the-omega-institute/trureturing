@@ -8,6 +8,8 @@ internal sealed class HaarTwoCopyTwirlDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/QuantumStates/belkinallenclark2025secondmoments");
+    private static readonly LibraryNoteRef TwirlSource = LibraryNoteRef.Create(
+        "D5/L/QuantumChannels/duschenesgarciamartinholmescerezo2026moments");
     private static DocumentBlock Node(string id,string title,Formula formula,string prose,string declaration,DescribeRole role,AssessedProvenance? provenance = null) =>
         Describe.Lean(DescribeId.Create("haar-"+id),DeclarationHandle.Create(Prefix+Selector(declaration)),H(title),StatementSource.FromAuthor(Disp(formula)),
             provenance ?? AssessedProvenance.FromLiterature(Source),Blocks(Paragraph(DefinitionDsl.Text(prose))),role);
@@ -46,6 +48,21 @@ internal sealed class HaarTwoCopyTwirlDocument : IScribeDocumentDefinition
             Node("swapcommutes","Replica swap commutes with a tensor square",ReplicaSwapCommutes(),"The replica swap commutes with the tensor square of every complex matrix.","replicaSwap_commutes",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
             Node("imagespan","The image is in the identity/swap span",ImageSpan(),"Two distinct coordinates suffice for the commutant argument. Each averaged vector is a linear combination of the vectorized identity and replica swap.","haarAverage_image_span",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
             Node("fixedpairing","Pairing against a Hermitian fixed vector",FixedPairing(),"Moving a Hermitian matrix to the other side of the pairing preserves every fixed vector.","hermitian_fixed_pairing",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
+            Node("swap-hermitian", "The coordinate swap is Hermitian", Generic(QCall("Matrix", "IsHermitian", ReplicaSwap(F.Id("n")))),
+                "The permutation matrix of the coordinate swap equals its conjugate transpose.",
+                "swapHermitian", DescribeRole.Theorem, AssessedProvenance.FromRepo(TwirlSource)),
+            Node("swap-square", "The coordinate swap is an involution", Generic(Eqn(Mul(ReplicaSwap(F.Id("n")), ReplicaSwap(F.Id("n"))), Cast(D(1), MatrixOf(Product(F.Id("n"), F.Id("n")))))),
+                "Applying the coordinate swap twice gives the identity matrix.",
+                "swapSquare", DescribeRole.Theorem, AssessedProvenance.FromRepo(TwirlSource)),
+            Node("trace-swap", "The trace of the coordinate swap",
+                Generic(Eqn(QCall("Matrix", "trace", ReplicaSwap(F.Id("n"))), Cast(QCall("Fintype", "card", F.Id("n")), Complex()))),
+                "A diagonal entry of the coordinate swap is one exactly when its two coordinates coincide, and zero otherwise. Summing these entries gives the cardinality of n, explicitly cast from the natural numbers to the complex numbers.",
+                "traceSwap", DescribeRole.Theorem, AssessedProvenance.FromRepo(TwirlSource)),
+            Node("twirl-formula", "The general two-copy twirl formula", TwirlFormula(),
+                "For every complex matrix on two copies of a finite space of cardinality at least two, Haar conjugation is the displayed identity/swap combination. Pairing with the identity and swap preserves their traces and determines both coefficients. The pure-state formula is its specialization, with dimension one handled separately.",
+                "twirlFormula", DescribeRole.Theorem, AssessedProvenance.FromRepo(TwirlSource)),
+            Node("trace-one-sandwich","Sandwiching by a trace-one idempotent",TraceOneSandwich(),"For any complex square matrices p and x, an idempotent p with trace one satisfies p x p = trace(p x) p. No self-adjointness assumption is required.","trace_one_sandwich",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
+            Node("pure-quadratic","The pure-projector quadratic Haar integral",PureQuadratic(),"In every positive dimension, averaging trace(P a P a) over the unitary orbit of the first coordinate projector gives (trace(a) squared + trace(a a))/(d(d + 1)). The matrix a is arbitrary and need not be self-adjoint.","pure_quadratic",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
             Node("replicaswap","Entries of the replica swap",ReplicaSwapEntry(),"The permutation matrix has entry one exactly when the row with its coordinates exchanged equals the column.","D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.Commutant.replicaSwap_apply",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source)),
             Node("gram","The physical two-site Gram matrix",Gram(),"The one-site overlap of equal identity/swap choices is one; distinct choices have overlap 1/q. The two-site overlap is the product of the two one-site overlaps.","localPermutation_gram",DescribeRole.Theorem),
             Node("identity","The identity vector is fixed",Fixed(D(0)),"The identity commutes with the two-copy unitary action, so the Haar expectation fixes it.","local_identity_fixed",DescribeRole.Theorem),
@@ -148,6 +165,40 @@ internal sealed class HaarTwoCopyTwirlDocument : IScribeDocumentDefinition
         Formula f=Seq(F.Id("fun"),Sp,u,Colon,Sp,Unit(n),Sp,Mapsto,Sp,
             At(Call("literalMoment",Call("val",u)),R,C));
         return Generic(All("r",Replica(n),All("c",Replica(n),Call("Integrable",Parenthesized(f),Haar(n)))));
+    }
+    private static Formula TwirlFormula()
+    {
+        Formula n=F.Id("n"),y=F.Id("Y"),swap=ReplicaSwap(n);
+        Formula card=Cast(QCall("Fintype","card",n),Complex());
+        Formula tr=QCall("Matrix","trace",y),ts=QCall("Matrix","trace",Mul(swap,y));
+        Formula denominator=new Formula.Binary(new Formula.Power(card,D(2)),FormulaBinaryOperator.Subtract,D(1));
+        Formula alpha=new Formula.Fraction(new Formula.Binary(tr,FormulaBinaryOperator.Subtract,new Formula.Fraction(ts,card)),denominator);
+        Formula beta=new Formula.Fraction(new Formula.Binary(ts,FormulaBinaryOperator.Subtract,new Formula.Fraction(tr,card)),denominator);
+        Formula average=QCall("Matrix","of",QCall("Function","curry",QCall("Function","comp",
+            MulVec(Call("haarAverage",n),QCall("Matrix","vec",y)),QCall("Prod","swap"))));
+        return Generic(All("Y",MatrixOf(Product(n,n)),Implies(Leq(D(2),QCall("Fintype","card",n)),
+            Eqn(average,Add(Smul(alpha,Cast(D(1),MatrixOf(Product(n,n)))),Smul(beta,swap))))));
+    }
+    private static Formula TraceOneSandwich()
+    {
+        Formula d=F.Id("d"),p=F.Id("p"),x=F.Id("x");
+        return All("d",Nat(),All("p",MatrixOf(Fin(d)),All("x",MatrixOf(Fin(d)),
+            Implies(Eqn(Mul(p,p),p),Implies(Eqn(QCall("Matrix","trace",p),D(1)),
+                Eqn(Mul(Mul(p,x),p),Smul(QCall("Matrix","trace",Mul(p,x)),p)))))));
+    }
+    private static Formula PureQuadratic()
+    {
+        Formula d=F.Id("d"),a=F.Id("a"),u=F.Id("u"),uc=Proj(u,1);
+        Formula p=Mul(Mul(uc,QCall("Matrix","single",D(0),D(0),Cast(D(1),Complex()))),
+            QCall("Matrix","conjTranspose",uc));
+        Formula integrand=QCall("Matrix","trace",Mul(Mul(Mul(p,a),p),a));
+        Formula integral=Seq(Int,Underscore,Grp(u,Colon,Sp,Unit(Fin(d))),Sp,
+            Parenthesized(integrand),Sp,F.Id("d"),Parenthesized(Haar(Fin(d))));
+        Formula value=new Formula.Fraction(
+            Add(new Formula.Power(QCall("Matrix","trace",a),D(2)),QCall("Matrix","trace",Mul(a,a))),
+            Mul(Cast(d,Complex()),Add(Cast(d,Complex()),D(1))));
+        return All("d",Nat(),Seq(OpenBracket,Call("NeZero",d),CloseBracket,Sp,
+            All("a",MatrixOf(Fin(d)),Eqn(integral,value))));
     }
     private static Formula Vectorize()
     {

@@ -1,0 +1,13 @@
+反之，设新表为 $B=\left(\begin{smallmatrix}G&b\\b^*&q\end{smallmatrix}\right)\succeq0$。对任意 $u\in\operatorname{ker} G$，在向量 $(tu,1)$ 上评价，得到
+$2\Re(\bar t\,u^*b)+q\ge0$ 对所有复数 $t$ 成立，故 $u^*b=0$。有限维中于是 $b\in\operatorname{Ran} G$。取 $c=G^+b$，其中 $G^+$ 为 Moore–Penrose 逆；在 $(-c,1)$ 上评价得
+
+$$
+s:=q-c^*Gc=q-b^*G^+b\ge0.
+$$
+
+选任意 $r$ 满足 $|r|^2=s$，就得到式 [(1)](#eq-c129-candidate)。这也覆盖 $G=0$、$s=0$ 和所有奇异旧表。
+
+**奇异边界不能省掉。**
+
+若仅检查 $q-b^*G^+b\ge0$，会把 $G=[0],b=1,q=1$ 错判为通过；实际新表 $\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$ 不正。候选的同一个块等式同时保留 $b\in\operatorname{Ran} G$、新行与新列的共轭关系以及非负余量，不能只摘出最后一项。
+

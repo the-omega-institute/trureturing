@@ -1,0 +1,34 @@
+### 4.1 模流在 qubit 上就是绕参照轴旋转
+
+令 $X,Y,Z$ 为 Pauli 矩阵，$\boldsymbol s=(X,Y,Z)$。忠实 qubit 参照写成
+
+$$
+\sigma=\frac{I+\boldsymbol r\cdot\boldsymbol s}{2},\qquad
+ r=|\boldsymbol r|<1.
+$$
+
+当 $r>0$ 时，置 $\boldsymbol n=\boldsymbol r/r$。直接对两个本征值取对数，得到
+
+$$
+\log\sigma=\frac12\log\frac{1-r^2}{4}\,I
+       +b\boldsymbol n\cdot\boldsymbol s,
+ \qquad b=\operatorname{arctanh}r.
+$$
+
+因此模生成元 $L_\sigma(A)=i[\log\sigma,A]$ 满足
+
+<a id="eq-c123-bloch-modular-generator"></a>
+
+$$
+L_\sigma(\boldsymbol a\cdot\boldsymbol s)
+ =-2b(\boldsymbol n\times\boldsymbol a)\cdot\boldsymbol s.
+\tag{30}
+$$
+
+证明只用
+$(\boldsymbol u\cdot\boldsymbol s)(\boldsymbol v\cdot\boldsymbol s)
+=(\boldsymbol u\cdot\boldsymbol v)I+
+i(\boldsymbol u\times\boldsymbol v)\cdot\boldsymbol s$。
+于是 $\operatorname{Ad}_{\sigma^{it}}$ 对 Bloch 向量作绕 $\boldsymbol n$、角度 $-2bt$ 的旋转；$r=0$ 时模流恒等。
+这个三维空间是 qubit 的无迹 Hermitian 算子空间，尚未被识别为空间中的三个位置方向。
+

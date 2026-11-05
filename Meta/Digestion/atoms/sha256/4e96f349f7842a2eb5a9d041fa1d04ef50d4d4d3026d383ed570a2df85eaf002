@@ -1,0 +1,71 @@
+### 定理 9.1（三条对称边际的完整可行区间）
+
+<a id="thm-c92-triangle-range"></a>
+
+式 [(9.1)](#eq-c92-triangle-marginals) 存在共同全态，当且仅当
+
+<a id="eq-c92-triangle-range"></a>
+
+$$
+-\frac13\le r\le1.
+\tag{9.2}
+$$
+
+在这个区间内，一个显式补全是
+
+<a id="eq-c92-triangle-extension"></a>
+
+$$
+\omega_r=\frac18(I+rW_\triangle),
+ \qquad W_\triangle=Z_AZ_B+Z_BZ_C+Z_CZ_A.
+\tag{9.3}
+$$
+
+**证明。**
+令
+
+$$
+E_\triangle=
+ \frac{I+Z_AZ_B}{2}\frac{I+Z_BZ_C}{2}.
+$$
+
+两因子为相互对易的投影，因此乘积仍为投影，且
+
+<a id="eq-c92-triangle-projector"></a>
+
+$$
+W_\triangle=4E_\triangle-I.
+\tag{9.4}
+$$
+
+$E_\triangle$ 投影到 $\operatorname{span}\{\lvert 000\rangle,\lvert 111\rangle\}$，秩为二。
+故 $W_\triangle$ 的谱为 $3,-1$，相应重数为二、六。
+任意兼容全态都必须有
+$\operatorname{Tr}(\rho W_\triangle)=3r\ge-1$，给出 $r\ge-1/3$。
+上界 $r\le1$ 已是单边合法性所需。
+
+反过来，式 [(9.3)](#eq-c92-triangle-extension) 的两个特征值为
+$(1+3r)/8$、$(1-r)/8$，所以在所述区间内为正且迹一。
+对任一端口取部分迹，其余两条含该端口 $Z$ 的项消失，
+恰得到指定的另一条边际。因此补全成立。
+
+对本例，式 [(7.1)](#eq-c92-binary-normalization) 给出
+
+<a id="eq-c92-triangle-bloch"></a>
+
+$$
+E=\frac{W_\triangle+I}{4}=E_\triangle,
+ \qquad q=\frac{1+3r}{4},
+ \qquad z=2q-1=\frac{3r-1}{2}.
+\tag{9.5}
+$$
+
+这个二元问题问“三位是否全部相同”。
+v91 的反例 $r=-1/2$ 要求
+
+$$
+q=-\frac18,\qquad z=-\frac54.
+$$
+
+三张局部图合起来，竟要求一个正投影的概率为负，故其二元赋值落在球外。
+

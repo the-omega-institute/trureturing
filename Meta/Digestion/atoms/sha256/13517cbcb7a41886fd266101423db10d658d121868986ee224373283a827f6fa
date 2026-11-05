@@ -1,0 +1,12 @@
+### 定理 17.2（全效果上的正可加读数给出 Born 迹形式）
+
+在有限维载体上，设 $f$ 定义于全部效果 $0\le E\le I$，满足 $f(E)\ge0$、$f(I)=1$，且 $E+F\le I$ 时 $f(E+F)=f(E)+f(F)$。则存在唯一密度矩阵 $\rho$，使
+
+$$
+ f(E)=\operatorname{tr}(\rho E).
+$$
+
+**证明。**可加性给 $f(0)=0$，正性给单调性。整数细分给有理齐次性，以有理数从两侧逼近并用单调性得到实齐次性。对正算子 $A$，取正整数 $n\ge\|A\|$，定义 $F(A)=nf(A/n)$；比较共同细分知与 $n$ 无关。用共同 $n$ 得 $F(A+B)=F(A)+F(B)$，于是实线性延拓到 Hermitian 空间。有限维迹配对给唯一 Hermitian $\rho$；对秩一正算子测试得 $\rho\ge0$，而 $F(I)=1$ 给 $\operatorname{tr}\rho=1$。
+
+既有强度标定将纯准备 $\psi$ 对应于 $\rho=|\psi\rangle\langle\psi|$，从而 $p(E)=\langle\psi,E\psi\rangle$；概率语义不是由本轮球面递归单独推出的。
+

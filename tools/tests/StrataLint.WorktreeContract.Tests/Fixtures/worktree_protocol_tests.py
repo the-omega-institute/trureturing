@@ -92,9 +92,9 @@ class ProtocolTests(ProtocolTailCases, GitScopeCases, QualificationCases, Scoped
             raise protocol.Refused(result.stderr.strip() or "git failed")
         return result.stdout
 
-    def run_protocol(self, *args, expect=0, env=None):
+    def run_protocol(self, *args, expect=0, env=None, timeout=30):
         command = [sys.executable, "-B", str(SCRIPT), "--source", str(self.main), *map(str, args)]
-        result = self.run_owned_command(command, self.root, phase="protocol", timeout=30, check=False, env=env)
+        result = self.run_owned_command(command, self.root, phase="protocol", timeout=timeout, check=False, env=env)
         self.assertEqual(expect, result.returncode, result.stdout + result.stderr)
         return result
 

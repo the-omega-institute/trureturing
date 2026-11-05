@@ -1,0 +1,9 @@
+**定义 3.2（有限完整标架残差）。** 对 $V$ 的完整正交单位基 $e_1,\ldots,e_n$，令
+
+$$
+\mathfrak F^2=\sum_{i<j}\sum_k\|E_{e_i,e_j}e_k\|^2,
+\qquad Q=-\sum_i\operatorname{ad}_{e_i}^2.
+$$
+
+所有和均为有限和。不把残差除以维数或测试次数，阈值使用这个未平均的规范化。$\Lambda^2V$ 采用 $e_i\wedge e_j$ 为正交单位基的内积。
+

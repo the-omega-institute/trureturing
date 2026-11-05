@@ -1,0 +1,39 @@
+**Theorem 20.3 (completion-conditional acquired service).** Under
+Assumption 20.1, every actually received finite complete request other than
+Next in Definition 20.2, beginning at Ready, has a finite returned reply,
+with real output and return to Ready on that same source binding. Arbitrary
+finite interleavings of these requests preserve the actual-word/tape
+invariant of Theorem 19.2. Every finite legal LAB generation word can occur
+in such an execution. A partial request has only its acquired prefix and pending
+state; supplying a finite completion suffices for return.
+
+Proof. Induction on the number of received bits gives exactly the request
+backing and parser marks for that prefix: a bit is not released from its
+latch before its copy exists. The self-delimiting length or index marks
+therefore supply exactly the requested finite value at completion. A finite
+address traversal either reaches its actual subtree or detects its first
+blocked edge. The source arity decoder gives Tag, legality and the event
+membership tests. Fetch terminates by finite tape scans and strictly smaller
+subtrees, as proved in Theorem 19.2; counters are ordinary finite list
+operations, not answers supplied by a primitive oracle.
+
+The source template is finite. A growth address of depth $d$ has exactly
+$d$ proper logical ancestors; their references remain bound after the local
+edit. Maintain shortens this finite parent chain each iteration and appends
+exactly the required side at each. Pending fields prevent an unfinished
+append from becoming a service cut. The projection identity in Theorem 19.2
+then restores the invariant before printing. Refusals and queries preserve
+the source and tapes. Finite output traversal prints exactly its sealed
+reply; End, local acknowledgement, root return and finite scratch cleanup
+restore Ready. No later operation reads a cleared occupied latch or a
+released scratch field.
+
+Compose these arguments by induction on a finite sequence of completed
+requests. For any given finite legal generation word, supply its addressed
+$P/S$ frames in that order with sufficient finite material; the guards accept
+each by Theorem 17.2. The same fixed driver thus admits all the stated
+schedules. A proper input prefix has no enabled missing bit or premature
+answer; the proof resumes if a finite completion is supplied. No assertion
+of an actually realized infinite input, infinite run or uniform storage
+bound follows. $\square$
+

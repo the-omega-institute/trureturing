@@ -1,0 +1,35 @@
+fingerprints:
+  raw_sha256: sha256:11663d0d68e2df914550000cfdc563ef950f4e441b7993579772925572205485
+  normalized_sha256: sha256:11663d0d68e2df914550000cfdc563ef950f4e441b7993579772925572205485
+cas_ref: sha256:11663d0d68e2df914550000cfdc563ef950f4e441b7993579772925572205485
+coverage_gids:
+  - gid: D5/S1/Words/TwoDeletionRunDecks.runWord
+    target_statement_id: sha256:6b7628812657cf1ac5c92e8fd09ef398cf18945e6b880655fe94f3d2fdf19658
+  - gid: D5/S1/Words/TwoDeletionRunDecks.runWord_length
+    target_statement_id: sha256:1e5a87be4c83a94021a013a4ba1637ac0bec91ed61e92c7e92de59a2207a1e11
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/CommonPredictionWordCounts.pref
+    target_statement_id: sha256:c98cdd02f62521d250fd89c2807d2fefd0bd5e1886d94181a033c22bbceb0e22
+  - gid: D5/S3/Entropy/BinaryRunSupersequenceCounts.oneWordSum
+    target_statement_id: sha256:7ed51d0962b709d156afef298e28bec0667f04e9944a804c84865aeb1d31364e
+  - gid: D5/S3/Entropy/BinaryRunSupersequenceCounts.oneWordSum_runs
+    target_statement_id: sha256:ce3e22e7fe28d08a8d7d00202a621af7407641f3776c0fda3dcc329e229a59e7
+  - gid: D5/S3/Entropy/BinaryRunSupersequenceCounts.wordSum
+    target_statement_id: sha256:bc946132aed417418cd9461f2c4c661b58ecbfed32b2f63a909feae3ec292b48
+  - gid: D5/S3/Entropy/DeletionChannelEntropyOrdering.embeddings
+    target_statement_id: sha256:c64d6f10bcc70bdad02da8e570c09291631b1e8f893b20c8a0ab6d5a39123a19
+  - gid: D5/S3/Entropy/DeletionChannelEntropyOrdering.embeddings_eq_count
+    target_statement_id: sha256:bfd2142111e46fc1e85f833c4f2bfb8ae5154862e1301b2c7e405c7963a7858f
+  - gid: D5/S3/Entropy/DeletionChannelEntropyOrdering.entropyBits
+    target_statement_id: sha256:6288ba2b70725aea3cb6d03f4f17559bbac5b631d4c6f62336d1f25eec365c7a
+  - gid: D5/S3/Entropy/DeletionChannelEntropyOrdering.kappa2
+    target_statement_id: sha256:a80afde6a25bd5794549ee64601f18065779e9cacc7758301e0b5166e2a3fb5e
+  - gid: D5/S3/Entropy/MaxEntropy.shannonEntropy
+    target_statement_id: sha256:0b9b0250c925b41ffab4b8ab0b198871ccb0bb46dd401760ec0158c98ad42e87
+  - gid: D5/S3/Entropy/TwoDeletionRunEntropyBounds.f
+    target_statement_id: sha256:00e1eaae26fe7a70d10261a5af1a26b30baf7cf2d92c7baa1f79e6596404f5e0
+  - gid: D5/S3/Entropy/TwoDeletionRunEntropyBounds.f_mul
+    target_statement_id: sha256:fec7dcf4582cd3e91853ae287d6dd0920e68460fb507fc92f29e3bab68820623
+  - gid: D5/S3/Entropy/TwoDeletionRunEntropyBounds.f_two
+    target_statement_id: sha256:756510cbe5228fc19b626e33436e56459af19721033a0c34576fd364778a5353
+receipts:
+  unresolved_subitems: []

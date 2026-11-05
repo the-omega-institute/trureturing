@@ -1,0 +1,23 @@
+#### 定理 4.2（Gram 纯态与完整线性依赖）
+
+给定不全为零的共同向量 $v_1,\ldots,v_k$，令
+$G_{ij}=\langle v_i,v_j\rangle$。则
+
+$$
+G/\operatorname{Tr} G\text{ 为纯态}\iff
+\dim\operatorname{span}\{v_i\}=1.
+$$
+
+**证明。**
+
+令 $V e_i=v_i$，则 $G=V^\dagger V$ 且 $\ker G=\ker V$，
+所以 $\operatorname{rank} G=\operatorname{rank} V$。非零正迹一矩阵纯恰等价于秩一。[8](#ref-watrous2)
+
+□
+
+这是“纯态对应关系完全线性依赖”的准确版本。二元时等价于
+$\|v_1\|^2\|v_2\|^2=|\langle v_1,v_2\rangle|^2$。
+这些向量是否具有一个共同 Gram 实现仍须先保证，不能仅逐边声明饱和。
+
+<a id="thm:rank-error"></a>
+

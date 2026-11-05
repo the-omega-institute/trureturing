@@ -156,7 +156,7 @@ instance labelMeasurable : MeasurableSpace (Label V) := ⊤
 
 instance labelMeasurableSingleton : MeasurableSingletonClass (Label V) := ⟨fun _ => trivial⟩
 
-private theorem source_measurable [G.LocallyFinite] [MeasurableSpace Ω]
+theorem source_measurable [G.LocallyFinite] [MeasurableSpace Ω]
     (x : (i : Coord V) → Ω → Value G i) (hx : ∀ i, Measurable (x i)) :
     ∀ n v, Measurable (source x n v) := by
   intro n
@@ -514,7 +514,7 @@ private theorem finite_selector_integral {α β : Type} [MeasurableSpace α]
         · exact (hb a ha _).trans (le_max_left _ _)
         · simpa only [norm_zero] using le_max_right C 0))).integrable one_le_two
 
-private theorem fixed_pair_sign_mean [DecidableEq V]
+theorem fixed_pair_sign_mean [DecidableEq V]
     (P : Measure Ω) (M : Model G P) (a b : Label V) :
     (∫ ω, sgn (coin M.coordinate a ω) * sgn (coin M.coordinate b ω) ∂P) =
       if a = b then 1 else 0 := by
@@ -579,7 +579,7 @@ theorem native_pair_sign_mean (P : Measure Ω) (M : Model G P) (n m : ℕ) (u v 
   simpa only [f, A, X, native_source] using hmain
 
 
-private theorem fixed_four_sign_mean [DecidableEq V]
+theorem fixed_four_sign_mean [DecidableEq V]
     (P : Measure Ω) (M : Model G P) (a b c d : Label V) :
     (∫ ω, (sgn (coin M.coordinate a ω) * sgn (coin M.coordinate b ω)) *
       (sgn (coin M.coordinate c ω) * sgn (coin M.coordinate d ω)) ∂P) =

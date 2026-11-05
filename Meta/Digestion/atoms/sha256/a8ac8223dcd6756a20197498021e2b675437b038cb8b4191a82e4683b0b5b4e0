@@ -1,0 +1,32 @@
+## 八、A370630 怎样真正参与递归，以及全局还差什么
+
+> **Editorial note — ordering only.** The exact Zeckendorf source pin is <code style="overflow-wrap:anywhere">9ceb721e13c64eb4b1c71a43238a2b2fc4770093</code> (the full hash is retained in the author URL). Its theorem supplies a permutation/order. To use it for refinement, the fixed dyadic rational list must be explicitly dense, omit already-used nodes, and be inserted into nested finite spaces that contain the coarse grid. This ordering does not provide a uniform bound in $k$ or $D$, nor does it establish the sign condition (27).
+
+项目的 [Zeckendorf 贪心排列定理](https://github.com/the-omega-institute/trureturing/blob/9ceb721e13c64eb4b1c71a43238a2b2fc4770093/Blueprint/D5/S3/Combinatorics/Permutation/ZeckendorfGreedyPermutation.md)证明，该实际贪心序列遍历每个正整数恰好一次。
+
+它在这里可以承担两个明确作用。
+
+第一，按
+
+$$
+n=a_1,a_2,\ldots
+$$
+
+遍历需要研究的原整数，并保留每个整数自己的 $T=\log n$、Euler 层和窗口。
+
+第二，固定一个不重复的二进有理点列表
+
+$$
+d_1,d_2,\ldots\in(0,1),
+$$
+
+按
+
+$$
+t_j=Dd_{a_j}
+$$
+
+安排窗口中的细化节点。因为 $a_j$ 是排列，这些节点的并集仍然稠密，所以上面的变分收敛和残差收敛定理都适用。
+
+这里，“相邻项恰有一个共同 Zeckendorf 项”仍是该贪心排列的实际规则；它保证了一个合法的遍历来源。**实际关系矩阵的符号则由式 (27) 控制。**
+

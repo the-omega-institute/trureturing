@@ -1,0 +1,91 @@
+**Proposition 5.3 (source, operation and resource correspondence).** Every
+member of $\mathcal C_N$ is legally reachable, with exact generation
+grade $5k+4=75N+4$. Every finite original-root Read is either a fixed
+reply or a function of one designated bit. Exactly $k=15N$ Reads suffice
+to invert the encoding on the entire promised family and hence recover
+the current ordered term, AA17.3's oriented material support and
+terminal boundary, and AA17.2's labelled generation causal order.
+Sufficient total and maximum literal operand lengths are respectively
+$k(k+3)/2$ and $k+1$. These are invocation and operand statements,
+with all other resources kept separate.
+
+Proof. For $b=1,\ldots,k$, at $r=R^{b-1}$ perform
+$P_r,S_r,S_{rL}$. The current continuation is $\alpha$, and these
+events produce $\langle C,\alpha\rangle$ there. At $r=R^k$, perform
+$P_r,S_r,S_{rL},S_{rLL}$ to produce the four-leaf $M_*$. Every
+promotion sees $\alpha$ and every split sees $\beta$. This is IV37.1's
+fixed $3k+4$-event preparation. Each still inactive slot is $C$ at
+$q_b=R^{b-1}L$. For bit zero perform
+$P_{q_bR},S_{q_bR}$, obtaining $D_0$; for bit one perform
+$S_{q_bL},P_{q_bR}$, obtaining $D_1$. All guards hold. Slots are
+disjoint, so insertion in any order is legal. Full insertion costs
+exactly $2k$ events, giving $5k+4$ altogether: $45N+4$ fixed
+preparation events and $30N$ insertion events.
+
+Each $D_e$ has one $\alpha$ and two $\beta$ leaves; $M_*$ has three
+$\alpha$ and one $\beta$. Thus the final leaf counts are
+$(n_\alpha,n_\beta)=(k+3,2k+1)$. In any successful LAB history from
+$\alpha$, if $p,s$ are the promotion and split counts, then
+$n_\beta=p$ and $n_\alpha=1-p+s$. Consequently every history to this
+endpoint has $p=2k+1$, $s=3k+3$ and grade $p+s=5k+4$; the grade is
+not an artifact of the chosen insertion order.
+
+For a suffix $u$ at a slot, the complete local reply table is
+
+$$
+\begin{array}{c|ccccccc}
+u&\varepsilon&L&R&LL&LR&RL&RR\\\hline
+\operatorname{Read}_{D_0}(u)&\mathsf b&\beta&\mathsf b&\bot&\bot&\beta&\alpha\\
+\operatorname{Read}_{D_1}(u)&\mathsf b&\mathsf b&\beta&\beta&\alpha&\bot&\bot
+\end{array}
+\tag{UJB.7705}
+$$
+
+All suffixes of length at least three are absent for both bits. Every
+finite root word is uniquely in one of the following classes: a spine
+word $R^j$ with $0\le j<k$ (reply $\mathsf b$); a word $q_bu$ for
+one $1\le b\le k$ (table (UJB.7705)); or a word $R^ku$ (the fixed
+reply $\operatorname{Read}_{M_*}(u)$). This follows by locating the
+first $L$ before the first $k$ right steps, if any; words ending before
+that first $L$ are spine words, and all remaining words enter $M_*$.
+The classes exhaust even excessively long, nested and absent operands.
+In particular no Read traverses two slots or discloses two bits.
+
+The decoder queries, for every $b=1,\ldots,k$,
+
+$$
+w_b=q_bL=R^{b-1}LL.
+\tag{UJB.7706}
+$$
+
+Its reply is $\beta$ for $z_b=0$ and $\mathsf b$ for $z_b=1$.
+This is the **local $L$** reply in (UJB.7705); local $LL$ would instead
+be the different root operand $R^{b-1}LLL$. Thus the $k$ replies
+recover $z$ without any support test, completing the inverse on all
+$2^k$ promised assignments. Rebuilding $F_1(z)$ then answers every
+future Read of this endpoint without further source access.
+
+To specify the recovered views, recursively realize $\alpha$ as a
+terminal, $\beta$ as a unary vertex with a terminal left child, and a
+logical branch as a binary vertex with its ordered realized children.
+Its finite support and maximal-address boundary are AA17.3's $S_0,B_0$.
+The converse arity parser, or prefix closure of the boundary, recovers
+the same term. Its split events are exactly its logical branch
+addresses; promotions are exactly the non-$\alpha$ positions born
+$\alpha$ (root or right child). Add the local $P_p\prec S_p$ and
+parent-creating-split precedence edges of AA17.2 and take their
+transitive closure. These operations compute the labelled causal
+order from the decoded term. Conversely its split/promote labels
+reconstruct the same branches and leaf labels by AA17.2. No source
+identity or chosen serial extension is required for these inverses.
+
+The literal $w_b$ has length $b+1$, so
+$\sum_{b=1}^k|w_b|=k(k+3)/2$ and $\max_b|w_b|=k+1$.
+The $k$ decoded bits are a sufficient payload; operands, counters,
+output representations and scratch are additional. Computation,
+navigation, memory, sampling, map selection, preparation event operands
+and source-blind installation/handoff have not been charged to the Read
+count or bounded by these formulas. In particular the distinct-address
+functional `ActualTreeReadoutAcquisition.paid` is a different tariff;
+here every invocation counts, as in NCO1.1. $\square$
+
