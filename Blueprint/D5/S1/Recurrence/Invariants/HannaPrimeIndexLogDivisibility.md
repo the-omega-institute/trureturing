@@ -48,6 +48,10 @@ $$(\exists (F: \operatorname{PowerSeries}\left(\mathbb{Q}\right)), \operatorname
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaPrimeIndexLogDivisibility.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanna-a381355` (proved) by `D5/S1/Recurrence/Invariants/HannaPrimeIndexLogDivisibility.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna-a381355","declaration_gid":"D5/S1/Recurrence/Invariants/HannaPrimeIndexLogDivisibility.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2025). *OEIS A381355: prime-index divisibility of the logarithmic derivative of A381353*. URL: <https://oeis.org/A381355>.
