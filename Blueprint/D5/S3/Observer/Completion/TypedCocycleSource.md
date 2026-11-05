@@ -25,3 +25,4 @@ This is a mathematical model with fixed native vectors and exact named execution
 ## References
 
 - Truth anchor: `D5/S3/Observer/Completion/TypedCocycleSource.source_correspondence`
+- Dependency: [D5/S0/Automata/TypedPartialDFAOOverBase](../../../S0/Automata/TypedPartialDFAOOverBase.md)
