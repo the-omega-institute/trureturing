@@ -195,3 +195,48 @@ theorem actual_positive : arena.{u}.Law actual :=
   full_telescope_bridge.mp (@fullReciprocity_of_full_skew.{u})
 
 end Reg.D5.S3.Quantum.Algebra.OriginalCompactReciprocity.ReverseFullRelation
+
+
+namespace Reg.D5.S3.Quantum.Algebra.OriginalCompactReciprocity.OriginalGroup
+
+abbrev signature : Signature where
+  Params := CurveExponential.Parameters.{u}
+  State p := OriginalLie p.G × p.W
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} := realize signature.{u}
+  (fun _ p _ => ∃ B : InnerProductSpace.Core ℝ p.W,
+    (∀ (g : p.G) (v w : p.W), B.inner (g.val.val v) (g.val.val w) = B.inner v w) ∧
+    Module.finrank ℝ p.W = 3 ∧ Module.finrank ℝ (OriginalLie p.G) = 3 ∧
+    LinearMap.range (originalAction p.G) = skewEndomorphisms B ∧
+    p.G.subtype '' connectedComponent (1 : p.G) =
+      {v : (p.W →L[ℝ] p.W)ˣ | (∀ x y, B.inner (v.val x) (v.val y) = B.inner x y) ∧
+        v.val.det = 1} ∧
+    ((p.G : Set (p.W →L[ℝ] p.W)ˣ) =
+      {v | (∀ x y, B.inner (v.val x) (v.val y) = B.inner x y) ∧ v.val.det = 1} ∨
+     (p.G : Set (p.W →L[ℝ] p.W)ˣ) =
+      {v | ∀ x y, B.inner (v.val x) (v.val y) = B.inner x y})) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ (p : CurveExponential.Parameters.{u}) (A : OriginalLie p.G) (x : p.W),
+    A ≠ 0 → x ≠ 0 → A.val x = 0 → FullReciprocity p.G A x → R.readout () p (A,x)
+
+/-- Exact reconstruction preserves the intrinsic component image and both full-group cases. -/
+theorem full_telescope_bridge :
+    (type_of% (@original_group_rigidity.{u})) ↔ arena.{u}.Law actual := by
+  constructor
+  · intro h p A x
+    exact h p.G p.compact A x
+  · intro h W _ _ _ G hG A x
+    exact h ⟨W,G,hG⟩ A x
+
+theorem actual_positive : arena.{u}.Law actual :=
+  full_telescope_bridge.mp (@original_group_rigidity.{u})
+
+end Reg.D5.S3.Quantum.Algebra.OriginalCompactReciprocity.OriginalGroup

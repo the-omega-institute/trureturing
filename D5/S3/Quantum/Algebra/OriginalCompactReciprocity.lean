@@ -17,6 +17,8 @@ import Mathlib.Algebra.Lie.OfAssociative
 import Mathlib.LinearAlgebra.Dimension.RankNullity
 import Mathlib.Topology.Algebra.Group.Subgroup
 import Mathlib.Topology.Algebra.Field
+import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 
 namespace D5.S3.Quantum.Algebra.OriginalCompactReciprocity
 
@@ -771,6 +773,298 @@ theorem fullReciprocity_of_full_skew
     omega
   refine ⟨A,x,hAne,hx,hAx,fullReciprocity_of_kernels_ranges G A x hkerA hkerE ?_⟩
   rw [hAT, hErange]
+
+
+private def axisPlaneAlgebra (b : Basis (Fin 3) ℝ W) :
+    (ℝ × ℂ) →ₐ[ℝ] (W →L[ℝ] W) := by
+  let q : (ℝ × ℂ) →ₐ[ℝ] (W →ₗ[ℝ] W) := {
+    toFun := fun z => b.constr ℝ ![z.1 • b 0,
+      z.2.re • b 1 + z.2.im • b 2, -z.2.im • b 1 + z.2.re • b 2]
+    map_zero' := by
+      apply b.ext
+      intro i
+      fin_cases i <;> simp
+    map_one' := by
+      apply b.ext
+      intro i
+      fin_cases i <;> simp
+    map_add' := by
+      intro z w
+      apply b.ext
+      intro i
+      fin_cases i <;> simp [add_smul] <;> module
+    map_mul' := by
+      intro z w
+      apply b.ext
+      intro i
+      apply b.repr.injective
+      ext j
+      fin_cases i <;> fin_cases j <;>
+        simp [Module.End.mul_apply, map_add, map_smul, map_neg, Complex.mul_re,
+          Complex.mul_im] <;> ring
+    commutes' := by
+      intro r
+      apply b.ext
+      intro i
+      fin_cases i <;> simp }
+  exact (Module.End.toContinuousLinearMap (𝕜 := ℝ) W).toAlgHom.comp q
+
+private theorem basis_halfturn_exponential (B : InnerProductSpace.Core ℝ W)
+    (b : Basis (Fin 3) ℝ W)
+    (hb : ∀ i j, B.inner (b i) (b j) = if i = j then 1 else 0) :
+    ∃ K : W →L[ℝ] W, K.toLinearMap ∈ skewEndomorphisms B ∧
+      ∀ i : Fin 3, NormedSpace.exp (Real.pi • K) (b i) =
+        if i = 0 then b i else -b i := by
+  let q := axisPlaneAlgebra b
+  let K := q (0, Complex.I)
+  have hK0 : K (b 0) = 0 := by simp [K,q,axisPlaneAlgebra, Module.End.toContinuousLinearMap, LinearMap.toContinuousLinearMap]
+  have hK1 : K (b 1) = b 2 := by simp [K,q,axisPlaneAlgebra, Module.End.toContinuousLinearMap, LinearMap.toContinuousLinearMap]
+  have hK2 : K (b 2) = -b 1 := by simp [K,q,axisPlaneAlgebra, Module.End.toContinuousLinearMap, LinearMap.toContinuousLinearMap]
+  have he (u : W) : u = b.repr u 0 • b 0 + b.repr u 1 • b 1 + b.repr u 2 • b 2 := by
+    simpa only [Fin.sum_univ_three] using (b.sum_repr u).symm
+  refine ⟨K, ?_, ?_⟩
+  · intro u v
+    change B.inner (K u) v = -B.inner u (K v)
+    letI : AddCommGroup W := inferInstance
+    letI : Module ℝ W := inferInstance
+    let : NormedAddCommGroup W := B.toNormedAddCommGroup
+    let : InnerProductSpace ℝ W := InnerProductSpace.ofCore B.toCore
+    change ⟪K u,v⟫_ℝ = -⟪u,K v⟫_ℝ
+    have hbi (i j : Fin 3) : ⟪b i,b j⟫_ℝ = if i = j then 1 else 0 := hb i j
+    rw [he u, he v]
+    simp only [map_add, map_smul, hK0, hK1, hK2, inner_add_left, inner_add_right,
+      real_inner_smul_left, real_inner_smul_right, inner_neg_left, inner_neg_right,
+      zero_smul, add_zero, zero_add, inner_zero_left, inner_zero_right, hbi]
+    norm_num
+    <;> ring
+  · have hz : NormedSpace.exp (Real.pi • ((0, Complex.I) : ℝ × ℂ)) = (1,-1) := by
+      ext <;> simp [Complex.real_smul, ← Complex.exp_eq_exp_ℂ, Complex.exp_pi_mul_I]
+    letI : CompleteSpace W := FiniteDimensional.complete ℝ W
+    letI : NormedAlgebra ℚ (W →L[ℝ] W) := .restrictScalars ℚ ℝ _
+    have hq : Continuous q := q.toLinearMap.continuous_of_finiteDimensional
+    have hexp : NormedSpace.exp (Real.pi • K) = q (1,-1) := by
+      change NormedSpace.exp (Real.pi • q (0,Complex.I)) = _
+      rw [← map_smul, ← NormedSpace.map_exp q hq, hz]
+    intro i
+    rw [hexp]
+    fin_cases i <;> simp [q,axisPlaneAlgebra, Module.End.toContinuousLinearMap, LinearMap.toContinuousLinearMap]
+
+
+private theorem halfturns_generate (H : Subgroup (W ≃ₗ[ℝ] W))
+    (hhalf : ∀ v : W, v ≠ 0 → (ℝ ∙ v).reflection.toLinearEquiv ∈ H)
+    (e : W ≃ₗᵢ[ℝ] W) (he : LinearMap.det e.toLinearMap = 1) :
+    e.toLinearEquiv ∈ H := by
+  classical
+  let R (v : W) := (ℝ ∙ v)ᗮ.reflection
+  have hword (l : List W) : ∃ a : W ≃ₗ[ℝ] W, a ∈ H ∧
+      (l.map R).prod.toLinearMap = LinearMap.det (l.map R).prod.toLinearMap • a.toLinearMap := by
+    induction l with
+    | nil =>
+      refine ⟨1,H.one_mem,?_⟩
+      change (1 : W →ₗ[ℝ] W) = LinearMap.det (1 : W →ₗ[ℝ] W) • (1 : W →ₗ[ℝ] W)
+      simp
+    | cons v l ih =>
+      obtain ⟨a,ha,hea⟩ := ih
+      by_cases hv : v = 0
+      · have hz : R v = 1 := by
+          subst v
+          ext w
+          apply Submodule.reflection_mem_subspace_eq_self
+          simp
+        simpa [hz] using ⟨a,ha,hea⟩
+      · let t := (ℝ ∙ v).reflection.toLinearEquiv
+        have ht : t ∈ H := hhalf v hv
+        have hd : LinearMap.det (R v).toLinearMap = -1 := by
+          change LinearMap.det (ℝ ∙ v)ᗮ.reflection.toLinearMap = -1
+          rw [Submodule.det_reflection, Submodule.orthogonal_orthogonal, finrank_span_singleton hv]
+          norm_num
+        have hR : (R v).toLinearMap = -t.toLinearMap := by
+          ext w
+          exact Submodule.reflection_orthogonal_apply (ℝ ∙ v) w
+        refine ⟨t*a,H.mul_mem ht ha,?_⟩
+        change (R v).toLinearMap * (l.map R).prod.toLinearMap =
+          LinearMap.det ((R v).toLinearMap * (l.map R).prod.toLinearMap) •
+            (t.toLinearMap * a.toLinearMap)
+        rw [map_mul, hd]
+        conv_lhs => rw [hea, hR]
+        simp only [mul_smul_comm, neg_mul, smul_neg, neg_smul, one_mul]
+  obtain ⟨l,_hl,hel⟩ := e.reflections_generate_dim
+  obtain ⟨a,ha,hea⟩ := hword l
+  have hel' : (l.map R).prod = e := hel.symm
+  have hmap : e.toLinearMap = a.toLinearMap := by
+    rw [hel', he, one_smul] at hea
+    exact hea
+  have hae : e.toLinearEquiv = a := by
+    ext w
+    exact LinearMap.congr_fun hmap w
+  exact hae ▸ ha
+
+private def originalUnitHom : (W ≃ₗ[ℝ] W) →* (W →L[ℝ] W)ˣ where
+  toFun e := e.toContinuousLinearEquiv.toUnit
+  map_one' := by ext w; rfl
+  map_mul' _ _ := by ext w; rfl
+
+private theorem special_orthogonal_in_component (B : InnerProductSpace.Core ℝ W)
+    (hW : finrank ℝ W = 3)
+    (hexp : ∀ K : W →L[ℝ] W, K.toLinearMap ∈ skewEndomorphisms B →
+      ∀ t : ℝ, ∃ g : G, g ∈ connectedComponent (1 : G) ∧
+        g.val.val = NormedSpace.exp (t • K))
+    (u : (W →L[ℝ] W)ˣ)
+    (hu : ∀ v w : W, B.inner (u.val v) (u.val w) = B.inner v w)
+    (hdet : u.val.det = 1) :
+    ∃ g : G, g ∈ connectedComponent (1 : G) ∧ g.val = u := by
+  classical
+  let U := originalUnitHom (W := W)
+  let C := (Module.End.toContinuousLinearMap (𝕜 := ℝ) W).symm.toEquiv
+  let H := (Subgroup.connectedComponentOfOne G).map G.subtype
+  let e := (ContinuousLinearEquiv.unitsEquiv ℝ W u).toLinearEquiv
+  have hframe := basis_halfturn_exponential (W := W) B
+  letI : AddCommGroup W := inferInstance
+  letI : Module ℝ W := inferInstance
+  let : NormedAddCommGroup W := B.toNormedAddCommGroup
+  let : InnerProductSpace ℝ W := InnerProductSpace.ofCore B.toCore
+  have hhalf (v : W) (hv : v ≠ 0) : (ℝ ∙ v).reflection.toLinearEquiv ∈ H.comap U := by
+    let f : Fin 3 → W := fun _ => (‖v‖⁻¹ : ℝ) • v
+    have hn : ‖(‖v‖⁻¹ : ℝ) • v‖ = 1 := by
+      simp [norm_smul, abs_of_nonneg (norm_nonneg v), norm_ne_zero_iff.mpr hv]
+    have hf : Orthonormal ℝ (({0} : Set (Fin 3)).domRestrict f) := by
+      rw [orthonormal_iff_ite]
+      intro i j
+      have hij : i = j := Subtype.ext ((Set.mem_singleton_iff.mp i.property).trans
+        (Set.mem_singleton_iff.mp j.property).symm)
+      subst j
+      simp [f, real_inner_self_eq_norm_sq, hn]
+    obtain ⟨b,hb⟩ := hf.exists_orthonormalBasis_extension_of_card_eq
+      (by simpa using hW)
+    have hb0 : b 0 = (‖v‖⁻¹ : ℝ) • v := hb 0 (by simp)
+    have hline : ℝ ∙ v = ℝ ∙ b 0 := by
+      rw [hb0, Submodule.span_singleton_smul_eq (isUnit_iff_ne_zero.mpr
+        (inv_ne_zero (norm_ne_zero_iff.mpr hv)))]
+    obtain ⟨K,hK,hKi⟩ := hframe b.toBasis (fun i j => b.inner_eq_ite i j)
+    obtain ⟨g,hg,hgv⟩ := hexp K hK Real.pi
+    have hKi' (i : Fin 3) : g.val.val (b i) = if i = 0 then b i else -b i := by
+      rw [hgv]
+      exact hKi i
+    have hval : U (ℝ ∙ v).reflection.toLinearEquiv = g.val := by
+      apply Units.ext
+      apply C.injective
+      apply b.toBasis.ext
+      intro i
+      change (ℝ ∙ v).reflection (b i) = g.val.val (b i)
+      rw [hKi']
+      fin_cases i
+      · apply Submodule.reflection_mem_subspace_eq_self
+        rw [hline]
+        exact Submodule.mem_span_singleton_self _
+      · apply Submodule.reflection_mem_subspace_orthogonalComplement_eq_neg
+        rw [hline, Submodule.mem_orthogonal_singleton_iff_inner_left]
+        simp [b.inner_eq_ite]
+      · apply Submodule.reflection_mem_subspace_orthogonalComplement_eq_neg
+        rw [hline, Submodule.mem_orthogonal_singleton_iff_inner_left]
+        simp [b.inner_eq_ite]
+    change U (ℝ ∙ v).reflection.toLinearEquiv ∈ H
+    rw [hval]
+    exact ⟨g,hg,rfl⟩
+  let eB : W ≃ₗᵢ[ℝ] W := e.isometryOfInner hu
+  have he : eB.toLinearEquiv ∈ H.comap U :=
+    halfturns_generate (H.comap U) hhalf eB hdet
+  have heq : U eB.toLinearEquiv = u := by ext w; rfl
+  change U eB.toLinearEquiv ∈ H at he
+  rw [heq] at he
+  obtain ⟨g,hg,hgu⟩ := he
+  exact ⟨g,hg,hgu⟩
+
+
+/-- The actual intrinsic identity component is the full special orthogonal group
+for the metric derived from G; the same original G is either SO or O. -/
+theorem original_group_rigidity
+    (hG : IsCompact (G : Set (W →L[ℝ] W)ˣ))
+    (A : OriginalLie G) (x : W) (ha : A ≠ 0) (hx : x ≠ 0) (hAx : A.val x = 0)
+    (h : FullReciprocity G A x) :
+    ∃ B : InnerProductSpace.Core ℝ W,
+      (∀ (g : G) (u v : W), B.inner (g.val.val u) (g.val.val v) = B.inner u v) ∧
+      finrank ℝ W = 3 ∧ finrank ℝ (OriginalLie G) = 3 ∧
+      LinearMap.range (originalAction G) = skewEndomorphisms B ∧
+      G.subtype '' connectedComponent (1 : G) =
+        {u : (W →L[ℝ] W)ˣ | (∀ v w, B.inner (u.val v) (u.val w) = B.inner v w) ∧
+          u.val.det = 1} ∧
+      ((G : Set (W →L[ℝ] W)ˣ) =
+        {u | (∀ v w, B.inner (u.val v) (u.val w) = B.inner v w) ∧ u.val.det = 1} ∨
+       (G : Set (W →L[ℝ] W)ˣ) =
+        {u | ∀ v w, B.inner (u.val v) (u.val w) = B.inner v w}) := by
+  obtain ⟨B,hB,hW,hL,hrange,hcomponent,hexp⟩ :=
+    original_exponential_rigidity G hG A x ha hx hAx h
+  have hSO := special_orthogonal_in_component G B hW hexp
+  refine ⟨B,hB,hW,hL,hrange,?_,?_⟩
+  · ext u
+    constructor
+    · rintro ⟨g,hg,rfl⟩
+      exact ⟨hB g,hcomponent g hg⟩
+    · rintro ⟨hu,hd⟩
+      obtain ⟨g,hg,hgu⟩ := hSO u hu hd
+      exact ⟨g,hg,hgu⟩
+  · by_cases hpositive : ∀ g : G, g.val.val.det = 1
+    · left
+      ext u
+      constructor
+      · intro hu
+        exact ⟨hB ⟨u,hu⟩,hpositive ⟨u,hu⟩⟩
+      · rintro ⟨hu,hd⟩
+        obtain ⟨g,_hg,hgu⟩ := hSO u hu hd
+        exact hgu ▸ g.property
+    · push_neg at hpositive
+      obtain ⟨r,hr⟩ := hpositive
+      have hrneg : r.val.val.det = -1 := by
+        have hs := determinant_sq_of_preserves B
+          (ContinuousLinearEquiv.unitsEquiv ℝ W r.val).toLinearEquiv (hB r)
+        rcases (sq_eq_one_iff.mp hs) with hp | hm
+        · exact (hr hp).elim
+        · exact hm
+      have hinv (v : W) : r.val.val ((r.val⁻¹).val v) = v := by
+        change (r.val * r.val⁻¹).val v = v
+        rw [mul_inv_cancel]
+        rfl
+      have hrinv : ∀ v w : W,
+          B.inner ((r.val⁻¹).val v) ((r.val⁻¹).val w) = B.inner v w := by
+        intro v w
+        simpa only [hinv] using (hB r ((r.val⁻¹).val v) ((r.val⁻¹).val w)).symm
+      have hrdetinv : (r.val⁻¹).val.det = -1 := by
+        have hm : r.val.val.det * (r.val⁻¹).val.det = 1 := by
+          rw [← map_mul]
+          change (r.val * r.val⁻¹).val.det = 1
+          rw [mul_inv_cancel]
+          change LinearMap.det (1 : W →ₗ[ℝ] W) = 1
+          exact map_one _
+        rw [hrneg] at hm
+        linarith
+      right
+      ext u
+      constructor
+      · intro hu
+        exact hB ⟨u,hu⟩
+      · intro hu
+        by_cases hd : u.val.det = 1
+        · obtain ⟨g,_hg,hgu⟩ := hSO u hu hd
+          exact hgu ▸ g.property
+        · have hudet : u.val.det = -1 := by
+            have hs := determinant_sq_of_preserves B
+              (ContinuousLinearEquiv.unitsEquiv ℝ W u).toLinearEquiv hu
+            rcases sq_eq_one_iff.mp hs with hp | hm
+            · exact (hd hp).elim
+            · exact hm
+          have hprod : ∀ v w : W,
+              B.inner ((u*r.val⁻¹).val v) ((u*r.val⁻¹).val w) = B.inner v w := by
+            intro v w
+            exact (hu _ _).trans (hrinv v w)
+          have hprod_det : (u*r.val⁻¹).val.det = 1 := by
+            change LinearMap.det (u.val.toLinearMap * (r.val⁻¹).val.toLinearMap) = 1
+            rw [map_mul]
+            change u.val.det * (r.val⁻¹).val.det = 1
+            rw [hudet,hrdetinv]
+            norm_num
+          obtain ⟨g,_hg,hgu⟩ := hSO (u*r.val⁻¹) hprod hprod_det
+          have hmem : u*r.val⁻¹ ∈ G := hgu ▸ g.property
+          simpa using G.mul_mem hmem r.property
 
 
 end
