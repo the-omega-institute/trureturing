@@ -1,0 +1,2 @@
+**定义 14.2（三标签负型条件）。**$\mathrm N_3$ 要求 $c$ 对称，且对每个 $n\le3$、每组原标签 $a_1,\ldots,a_n$ 及全部零和实系数 $\alpha_1,\ldots,\alpha_n$，有 $\sum_{i,j}\alpha_i\alpha_jc(a_i,a_j)\le0$。
+
