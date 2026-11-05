@@ -1,12 +1,12 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
+import D5.S3.QuantumStates.DensitySpan
 import Reg.Support.DependentFamily
 
 /-! # Density-set tomography readout -/
 
-namespace Reg.D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
+namespace Reg.D5.S3.QuantumStates.DensitySpan
 open _root_.D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
-open _root_.D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation (IsDensity)
+open _root_.D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation
 open _root_.D5.S3.Quantum.Measurement.BasisMeasurementProjection (HermitianSpace)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
@@ -68,9 +68,9 @@ def source_registration : Registration arena (type_of% @all_density_tomographica
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@all_density_tomographically_complete) (Realization signature) Unit Unit := {
-  unitName := `Reg.D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation.unit
+  unitName := `Reg.D5.S3.QuantumStates.DensitySpan.unit
   realizationName := .str
-    `Reg.D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
+    `Reg.D5.S3.QuantumStates.DensitySpan
     "source_registration"
   realizationSource := none
   generated := false
@@ -88,7 +88,7 @@ def registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
+    owner := `D5.S3.QuantumStates.DensitySpan
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -105,4 +105,4 @@ def registration :
 #print axioms registration
 
 end
-end Reg.D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
+end Reg.D5.S3.QuantumStates.DensitySpan

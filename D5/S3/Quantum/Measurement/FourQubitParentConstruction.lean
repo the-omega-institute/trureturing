@@ -6,7 +6,6 @@
    utility: none
    digest: Bloch coordinates and an exact joint parent for four noisy qubit POVMs. -/
 /-
-  B_formula: proof_shape: bind-only; escape_witness: none; consumer: scalarB_det.
   B_smul: proof_shape: bind-only; escape_witness: none; consumer: B_real_smul.
   B_real_smul: proof_shape: bind-only; escape_witness: none; consumer: weighted_noisy_unbiased.
   B_neg: proof_shape: bind-only; escape_witness: none;
@@ -32,14 +31,14 @@
       statement_id: sha256:1589788918111821cb994915047b9b43151423396895fcfd849105cc8fe4d481
     D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation.IsPOVM
       statement_id: sha256:218e2b42c4dc29468db56af33ad277eb32b8ed575533012439ed233131c5efa1
-    D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.pauliMatrix
-      statement_id: sha256:7f853eaeda888a9eccbab5fe25474fc62b519a3229013530986887de25cb28d7
     D5/S3/Quantum/Information/ActualPureQubitGeometry.bloch
       statement_id: sha256:cc88c714292e1a1b7f96163a344340fa2144c8b2caffc5cb2196fb9df44fd3e5
     D5/S3/Quantum/FiniteDimensional.qubitX
       statement_id: sha256:cfaddf4a17693b52013e93be8cd6559e7021ed57ca0305492712468b57f882f7
     D5/S3/Quantum/FiniteDimensional.qubitZ
       statement_id: sha256:381a2bec567456715f58fe6c0c413d59d37882b8499fc81a486c49e7c081d78c
+  Shared B, B_formula, scalarB, and the Pauli carrier are supplied by the generic
+  QubitBloch and PauliMatrix sources; this I module consumes those declarations directly.
   Same-delivery prerequisite: FourVectorSignSumBound.four_vector_inequality.
   Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/14767.
   Utility is none: the universal analytic parent construction is the main content;

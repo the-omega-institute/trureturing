@@ -14,13 +14,7 @@ internal sealed class ConcealmentKernelNecessityRefutationDocument : IScribeDocu
         "Complete dephasing and complete depolarization on a qubit conceal every pair of finite POVMs, although their adjoint kernels on Hermitian operators are different.",
         H("Concealment does not determine the adjoint kernel"),
         Blocks(
-            Describe.Lean(DescribeId.Create("concealment-kernel-all-density-tomographically-complete"),
-                DeclarationHandle.Create(Prefix + "all_density_tomographically_complete"),
-                H("All density matrices are tomographically complete"),
-                StatementSource.FromAuthor(Disp(AllDensityFormula())),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("In every natural dimension, the set of all positive semidefinite matrices of trace one is tomographically complete. Its real span is the Hermitian operator space: a Hermitian matrix is a difference of positive semidefinite matrices, and a nonzero positive semidefinite matrix can be normalized by its positive real trace. In dimension zero both the density set and its span are empty and zero, respectively."))),
-                DescribeRole.Theorem),
+
             Node("povm", "Finite POVMs", PovmFormula(), "IsPOVM",
                 "For a finite outcome type Omega, a POVM consists of positive semidefinite complex d by d matrices whose sum is the identity. Zero effects are allowed. Positivity includes Hermitian symmetry."),
             Describe.Lean(DescribeId.Create("concealment-kernel-diagonal-povm"),
@@ -41,8 +35,6 @@ internal sealed class ConcealmentKernelNecessityRefutationDocument : IScribeDocu
                 "Two POVMs with outcome types Omega and Lambda are compatible if a positive normalized family on Omega times Lambda has the two given marginal sums."),
             Node("concealed", "Operational concealment", ConcealedFormula(), "Concealed",
                 "Let E map input matrices of dimension din to output matrices of dimension dout, and let T be a set of input density matrices. Concealment requires compatible output POVMs F and G with the same outcome types as M and N. Each simulated outcome has the same trace probability as the corresponding original outcome on E(rho), for every rho in T. For a Kraus family K the channel is E(rho)=sum over j of K(j) rho K(j) adjoint."),
-            Node("tomographic", "Tomographic completeness", TomographicFormula(), "TomographicallyComplete",
-                "Every member of T is positive semidefinite and has trace one. Its span over the real numbers equals the real vector space of Hermitian matrices. The set of all density matrices has this property: a Hermitian matrix is the difference of two positive semidefinite matrices; each nonzero positive semidefinite matrix is its positive real trace times a density matrix. A positive semidefinite matrix of trace zero is zero."),
             Node("kernel", "The Hermitian adjoint kernel", KernelFormula(), "AdjointKernel",
                 "The trace dual is characterized by tr(E(X)A)=tr(X E adjoint(A)) for every input matrix X and output matrix A. Nondegeneracy and cyclicity of the trace pairing identify the dual of a finite Kraus map with the Heisenberg sum over j of K(j) adjoint A K(j). The kernel here consists only of Hermitian output operators."),
             Node("claim", "Kernel necessity for concealment equivalence", ClaimFormula(), "claim",
@@ -178,16 +170,6 @@ internal sealed class ConcealmentKernelNecessityRefutationDocument : IScribeDocu
                         And(Call("Compatible", f, g), statistics)))))))));
     }
 
-    private static Formula TomographicFormula()
-    {
-        Formula d = V("d"), t = V("T"), rho = V("rho");
-        return All("d", Field("N"), All("T", Set(Mat(d)),
-            Iff(Call("TomographicallyComplete", t),
-                And(All("rho", Mat(d), Imp(Mem(rho, t),
-                    And(Call("PosSemidef", rho), Eq(Trace(rho), D(1))))),
-                    Eq(Call("span", Field("R"), t), Call("HermitianSpace", d))))));
-    }
-
     private static Formula KernelFormula()
     {
         Formula din = V("din"), dout = V("dout"), e = V("E"), a = V("A");
@@ -215,12 +197,5 @@ internal sealed class ConcealmentKernelNecessityRefutationDocument : IScribeDocu
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 
-    private static Formula AllDensityFormula()
-    {
-        Formula d = V("d"), rho = V("rho");
-        Formula density = new Formula.Logic(Parenthesized(Call("PosSemidef", rho)),
-            FormulaLogicOperator.And, Parenthesized(Eq(Trace(rho), D(1))));
-        Formula densities = Seq(OpenBrace, rho, Sp, Colon, Sp, Mat(d), Sp, Bar, Sp, density, CloseBrace);
-        return All("d", Field("N"), Call("TomographicallyComplete", densities));
-    }
+
 }

@@ -6,12 +6,17 @@
    utility: none
    digest: The generic single-qubit Pauli carrier and its matrix representation. -/
 
+/- pauliMatrix: proof_shape: bind-only; escape_witness: none; consumer: B_formula and the
+   stabilizer word construction. -/
+
 import D5.S3.Quantum.FiniteDimensional
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
+
+open D5.S3.Quantum.FiniteDimensional
 
 /-! The Pauli carrier is shared by the generic qubit constructions and by the
     stabilizer counterexample source. -/

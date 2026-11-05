@@ -6,6 +6,9 @@
    utility: none
    digest: Density matrices form the full real Hermitian operator span in every finite dimension. -/
 
+/- all_density_tomographically_complete: proof_shape: bind-only; escape_witness: none;
+   consumer: WeightedRayStochasticRigidity.density_trace_ext and the concealment refutation. -/
+
 import D5.S3.Quantum.Measurement.BasisMeasurementProjection
 import Mathlib.Analysis.CStarAlgebra.SpecialFunctions.PosPart
 
@@ -23,6 +26,12 @@ namespace D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation
 /-- A positive semidefinite trace-one matrix is a density matrix. -/
 def IsDensity {d : ℕ} (A : Matrix (Fin d) (Fin d) ℂ) : Prop :=
   A.PosSemidef ∧ Matrix.trace A = 1
+
+end D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation
+
+namespace D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
+
+open D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation (IsDensity)
 
 /-- A density set spans the real Hermitian operator space. -/
 def TomographicallyComplete {d : ℕ} (T : Set (Matrix (Fin d) (Fin d) ℂ)) : Prop :=
@@ -64,4 +73,4 @@ theorem all_density_tomographically_complete (d : ℕ) :
       (positive_mem _ (Matrix.nonneg_iff_posSemidef.mp (CFC.posPart_nonneg A)))
       (positive_mem _ (Matrix.nonneg_iff_posSemidef.mp (CFC.negPart_nonneg A)))
 
-end D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation
+end D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation

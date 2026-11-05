@@ -6,6 +6,9 @@
    utility: none
    digest: Generic qubit Bloch coordinates used by parent constructions and weighted rays. -/
 
+/- B_formula: proof_shape: bind-only; escape_witness: none; consumer: scalarB_det and the
+   weighted-ray effect factorization. -/
+
 import D5.S3.Quantum.Information.PauliMatrix
 
 set_option autoImplicit false

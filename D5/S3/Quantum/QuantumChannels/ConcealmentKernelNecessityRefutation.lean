@@ -8,6 +8,8 @@
 
 /- dual_kraus: proof_shape: bind-only; escape_witness: none;
    consumers: result, D5.S3.Quantum.Measurements.BroadcastingChannelExtremaRefutation.result. -/
+/- IsDensity, TomographicallyComplete, and all_density_tomographically_complete are supplied by
+   the generic QuantumStates.DensitySpan source and consumed directly here. -/
 
 import D5.S3.Quantum.QuantumChannels.PositiveFilterTransposeRefutation
 import D5.S3.QuantumStates.DensitySpan
@@ -22,6 +24,7 @@ noncomputable section
 open scoped BigOperators ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 open Matrix
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
+open D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation
 open D5.S3.Quantum.Measurement.BasisMeasurementProjection (HermitianSpace)
 open D5.S3.Quantum.FiniteDimensional (qubitX qubitZ)
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence (Pauli pauliMatrix)
