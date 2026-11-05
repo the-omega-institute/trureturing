@@ -1,0 +1,25 @@
+**定义 1.1（固定的数学来源与实际域）。** 数学来源取提交 46927cc328c58a872092e1d1c3bf102e48fa0426 的[续卷 II][II]、[续卷 III][III]、[续卷 V][V]；有限校准选择定理取提交 25318cfe8b6293b3d631371c8882923b69310893 的[续卷 IX][IX]。对象、基、内积和边界均为这些来源的原对象：
+
+$$
+\begin{gathered}
+E=\{s\subseteq\{1,\ldots,9\}:s\text{ 无相邻占据}\},\qquad
+b_k(s)=\mathbf1_{k\in s},\qquad |E|=89,\\
+\mathcal K=\mathbb C^E=V_{12}^{\mathbf1},\qquad
+b_{-1}b_0=10,\qquad b_{10}b_{11}b_{12}=010,\\
+H=V_8^{\mathbf1},\quad \dim_{\mathbb C}H=13,\qquad
+J:H\otimes\mathbb C^2\longrightarrow\mathcal K,\\
+R_0\psi=J(\psi,0),\qquad
+\mathcal C=\operatorname{ran}J,\qquad
+\dim_{\mathbb C}\mathcal C=26,\quad
+\dim_{\mathbb C}\mathcal C^\perp=63.
+\end{gathered}
+\tag{1.1}
+$$
+
+$e_s$ 是配置基向量，唯一实际 ready 为 $e_{\rm r}=R_0v$，$v=e_{00100}$。前读字和后读字仍分别为
+$\mathsf W_{11}=\{0,\ldots,10\}^{<\infty}$、
+$\mathsf W=\{0,\ldots,6\}^{<\infty}$，
+$\chi_a=K_ae_{\rm r}$，$K_{aj}=K_jK_a$。程序 $\mathsf T(a)$ 执行 $a$ 后用旧终端；$\mathsf R(a,f)$ 执行 $a$、读取并保留 $b_9$、执行外生且不依赖读数的 $f\in\mathsf W$、再用同一旧终端。所有字有限，无统一长度截断。
+
+$M_i$ 是 $b_9=i$ 的原坐标投影，$E_i=\{s:b_9(s)=i\}$；$N_w$ 是旧十位 $(b_{-1},\ldots,b_8)=w$ 的投影，$w\in\Omega_{10}=\{0,1\}^{10}$。全部 $1024$ 标签保留，无合法路径的标签仍为零投影。原实际档案、时点、失败、拒绝、停止、告警及有限取得和误差合同均按原域保留；合法的 $63$ 维补空间不作为失败删去。全向量定义域是数学域，不授予新的准备、读口、反馈、辅助系统或连续控制。
+
