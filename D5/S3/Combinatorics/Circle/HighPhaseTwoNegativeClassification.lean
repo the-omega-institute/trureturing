@@ -4,12 +4,9 @@ import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Circle.TwoNegativeJointLift
 import D5.S3.Combinatorics.Circle.OddTwoSlopeObstruction
 
-/-! UNCOMPILED source preparation. No kernel, required-check, or official acceptance.
-The final theorem concerns actualSource, OriginalOrder, and the literal earWord.
-OddTwoSlopeObstruction is the hash-preserved terminal predecessor, not an
-assumed current-main module. Its private generic helpers retain their owner.
-The exact extremal arithmetic below is the supplied 102-line candidate,
-with only its namespace/privacy adapted; it has not been compiled either. -/
+/-! Exact physical high-phase classification via a shared bounded-mask bridge.
+The construction keeps every Fin label distinct and uses one old permutation
+and one literal fresh insertion for both complete prefix conditions. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -685,7 +682,9 @@ private theorem mask_implies_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
       cases reverse with
       | false => exact List.Perm.refl _
       | true => exact List.Perm.swap alpha beta []
-    exact hswap.trans (((hends.append_left F).append_left E).trans hperm)
+    have hends' : (E ++ F ++ [first, last]).Perm (E ++ F ++ [alpha, beta]) := by
+      simpa only [List.append_assoc] using (hends.append_left F).append_left E
+    exact hswap.trans (hends'.trans hperm)
   have hOldZero : (sigma.map f).sum = 0 :=
     source_total (show 0 < r by dsimp [r]; omega) sigma hsperm
   have hs : InStrip f H 0 sigma := by
@@ -769,7 +768,7 @@ private theorem mask_implies_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
     · change 0 ≤ -g last ∧ -g last ≤ N
       rw [hLastNew]; simpa only [neg_neg] using hAcap
   | false =>
-    simp only [ite_false, add_zero] at hDG hGN
+    simp only [Bool.false_eq_true, ↓reduceIte, add_zero] at hDG hGN
     let before := E ++ [first] ++ F
     have hsigma : sigma = before ++ [last] := by
       simp only [sigma, before, List.append_assoc]
@@ -809,7 +808,7 @@ private theorem mask_implies_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
 /-- Complete physical high-phase classification on the original domain.
 Every old Fin label appears once, and the same sigma and literal cut serve
 both OriginalOrder clauses, including their zero sums and all natural takes.
-This source candidate has not been compiled or accepted. -/
+-/
 theorem actualSource_high_phase_two_negative_joint_iff (a b : ℕ)
     (ha : 2 ≤ a) (hab : a ≤ b) :
     (∃ sigma : List (Fin (a + b)), ∃ cut : ℕ, cut ≤ a + b ∧

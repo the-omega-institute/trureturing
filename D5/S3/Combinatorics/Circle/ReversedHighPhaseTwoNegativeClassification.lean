@@ -2,10 +2,9 @@ import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Circle.HighPhaseTwoNegativeClassification
 import D5.S3.Combinatorics.Circle.ReversedTwoBankCriterion
 
-/-! UNCOMPILED source preparation. Apply HighPhasePhysicalGeneralization.patch
-to the immutable owners only at future integration, after their readers join.
-No elaboration, kernel, axiom-closure, fidelity-review, or official acceptance
-is claimed. The physical and arithmetic predecessors are also candidates. -/
+/-! Complete reverse high-phase physical classification. The generalized
+bounded-mask bridge realizes the dyadic arithmetic criterion with distinct
+physical labels, one shared permutation, and a literal fresh insertion. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -14,7 +13,8 @@ namespace D5.S3.Combinatorics.Circle.ReversedHighPhaseTwoNegativeClassification
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open private Mask joint_implies_mask mask_implies_joint from
   D5.S3.Combinatorics.Circle.HighPhaseTwoNegativeClassification
-open private dyadic_bounded_mask_iff from ReversedTwoBankCriterion
+open private dyadic_bounded_mask_iff from
+  D5.S3.Combinatorics.Circle.ReversedTwoBankCriterion
 
 /-- On the full reverse domain, one original physical permutation and one
 literal fresh insertion satisfy both complete OriginalOrders exactly outside
