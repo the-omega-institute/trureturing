@@ -1,0 +1,90 @@
+**Theorem 42.4 (unknown-entry recovery and the sole beta ambiguity).**
+For every fixed $n_0>1$, the map
+
+$$
+(t,W)\longmapsto\bigl(n_0,\operatorname{Run}(W,t)\bigr),\qquad
+ t\in\mathcal D_+,\quad n(t)=n_0,\quad
+ W\in\{F,G\}^{<\omega},
+\tag{42.7}
+$$
+
+is injective on its entire stated domain. It has a terminating inverse
+on its actual image, recovering both the unknown initial logical tree
+and the literal macro word, including the empty word. No entry
+composition or depth is supplied.
+
+For $n_0=1$, the entry is beta. The endpoint beta has just its empty
+history. Every nonempty reachable final logical tree has exactly the
+two preimages
+
+$$
+(\beta,FU),\qquad(\beta,GU)
+\tag{42.8}
+$$
+
+for one uniquely determined suffix $U$. Conditional on $n_0=1$, such
+a nonempty final tree and no other distinguishing channel, a supplement
+recovers the target exactly if and only if it separates these two
+preimages. One binary first-macro choice is necessary and sufficient.
+
+Proof. Here is a decoder for $n_0>1$. Reject a nonnative input or one
+with $n(z)<n_0$. If $n(z)=n_0$, return $(z,\varepsilon)$. Otherwise
+require $z\in\mathcal O$ and put $c=\operatorname{pr}(z)$. Select the
+last letter and its predecessor by
+
+$$
+(p,X)=
+\begin{cases}
+(c,G),&n(c)=n_0\ \text{or}\ c\in\mathcal O,\\
+(\delta z,F),&\text{otherwise, provided }z\in I
+                         \text{ and }\delta z\in\mathcal D_+.
+\end{cases}
+\tag{42.9}
+$$
+
+Reject when the second branch has no stated predecessor or when
+$n(p)<n_0$. Recursively decode $(n_0,p)$ as $(t,V)$ and return
+$(t,VX)$. All membership tests, collapse, counts and the actual-image
+inverse are finite syntax operations. In the $G$ branch $n$ decreases
+by one. In the $F$ branch it decreases by $\ell(p)\ge1$. Thus the
+recursion terminates in at most $n(z)-n_0$ predecessor steps, with
+rejection allowed off the image.
+
+To prove that this decoder selects the actual last letter, consider
+any nonempty actual word with input entry index $n_0>1$. Its current
+predecessor $s$ is multileaf, since event count never decreases. If
+its last letter is $G$, then $c=s$. Either the preceding word is empty,
+so $n(c)=n_0$, or it is nonempty, so $c\in\mathcal O$. The first
+branch therefore applies. If its last letter is $F$, Lemma 42.3 gives
+$c=H(s)\notin\mathcal O$ and $n(c)>n(s)\ge n_0$. Neither condition
+of the first branch holds. The second applies and $\delta z=s$.
+Induction on decreasing $n$ proves that the returned pair is exactly
+the actual $(t,W)$. Consequently two such pairs with the same input
+cannot differ, even if their entry trees, depths and word lengths
+were initially unknown.
+
+Conversely every accepted predecessor in (42.9) really satisfies
+$X(p)=z$. At the base the recovered tree is native and has index
+$n_0$. Induction back up the recursion shows that every accepted
+answer belongs to the actual image and replays to the supplied
+logical syntax. This proves both inverse laws on that image, rather
+than merely uniqueness of a promised word.
+
+When $n_0=1$, Lemma 42.2 forces beta and strict event growth separates
+the empty word. Both first letters send beta to
+$K=\langle\beta,\alpha\rangle$, whose index is two. Apply the already
+proved $n_0=2$ inverse to the final tree: it returns $(K,U)$ with a
+unique $U$. This proves exactly (42.8). A decoder receiving identical
+supplementary values on these two targets cannot distinguish them;
+two different values suffice by selecting their first letter. This
+is the ordinary conditional injection bound applied to this concrete
+two-point fibre. $\square$
+
+A retained request, script or controller record can already reveal that
+first choice; the theorem then requires no additional bit beyond those
+supplied inputs. It does not assert that two complete installations
+have identical observations. In particular their macro requests can
+differ even when the successful source edits agree. The inverse
+computes descriptions. It does not undo source edits, restore old
+pointers or grant a reset, deletion or inverse-growth capability.
+
