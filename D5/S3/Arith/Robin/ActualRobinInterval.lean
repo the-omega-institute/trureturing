@@ -1033,8 +1033,9 @@ private theorem fp_finite_consumer
       hcomplete hlpReal hd hpr
       (hprefixSubset i hi b) (hon i hi b) (hoff i hi b) (hD i hi b) (hL i hi b)
       hll heps
-    push_cast
-    exact_mod_cast (hmargin i hi b).le
+    have hm := (Rat.cast_le (K := ℝ)).2 (hmargin i hi b).le
+    simpa only [Rat.cast_add, Rat.cast_sub, Rat.cast_mul, Rat.cast_div,
+      Rat.cast_pow, Rat.cast_ofNat, Rat.cast_one] using hm
   intro x hx
   have hx0 : (z 0 : ℝ) ≤ x := by rw [hfirst]; norm_num; exact hx.1
   have hxN : x ≤ (z N : ℝ) := by rw [hlast]; norm_num; exact hx.2
