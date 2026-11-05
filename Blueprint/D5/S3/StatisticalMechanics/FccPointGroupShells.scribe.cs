@@ -90,7 +90,7 @@ internal sealed class FccPointGroupShellsDocument : IScribeDocumentDefinition
                         + "three. Clearing the common denominator leaves (1−X³)+X³(1−X²)=1−X⁵. "
                         + "The coefficients and the identity are over the integers, with no convergence "
                         + "condition. At radius zero the first region contributes its zero triple."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("plouffe008368"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string name, string title,
         Formula formula, string prose) =>

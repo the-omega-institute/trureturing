@@ -106,6 +106,10 @@ $$(1 - \operatorname{PowerSeries.X}) \cdot (1 - \operatorname{PowerSeries.X}^{2}
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/FccPointGroupShells.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/plouffe008368` (proved) by `D5/S3/StatisticalMechanics/FccPointGroupShells.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"plouffe008368","declaration_gid":"D5/S3/StatisticalMechanics/FccPointGroupShells.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* J. H. Conway, N. J. A. Sloane (1997). *Low-Dimensional Lattices VII: Coordination Sequences*. DOI: [10.1098/rspa.1997.0126](https://doi.org/10.1098/rspa.1997.0126). URL: <https://doi.org/10.1098/rspa.1997.0126>.
