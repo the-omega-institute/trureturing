@@ -40,6 +40,10 @@ $$\neg (\forall (n: \mathbb{N}), (\forall (\alpha: \mathbb{R}), (\forall (\beta:
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/SeriesInequalities/KarpRisingFactorialHurwitzRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/karp1203` (refuted) by `D5/S3/Analytic/SeriesInequalities/KarpRisingFactorialHurwitzRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"karp1203","declaration_gid":"D5/S3/Analytic/SeriesInequalities/KarpRisingFactorialHurwitzRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* D. Karp (2012). *Positivity of Toeplitz determinants formed by rising factorial series and properties of related polynomials*. DOI: [10.48550/arXiv.1203.1482](https://doi.org/10.48550/arXiv.1203.1482). URL: <https://arxiv.org/abs/1203.1482v1>.

@@ -49,7 +49,9 @@ internal sealed class KarpRisingFactorialHurwitzRefutationDocument : IScribeDocu
                         + "at every point with positive real part. The root-sum identity proves this sign condition term by term. "
                         + "The strict negative sign persists for some positive t<1, giving a root with positive real part and contradicting the claim. "
                         + "This argument proves existence at n=20; it supplies no explicit finite shift threshold or theorem for every larger degree."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("karp1203"), ResolutionKind.Refuted))
         )));
 
     private static Formula QFormula()
