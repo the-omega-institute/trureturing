@@ -788,7 +788,7 @@ x_n=e_{f_n,\{0\}},\qquad p_n=1,\qquad e_n=p_nx_n=x_n\in\mathcal E_L,\\
 \tag{44.10}
 $$
 
-对每个 $\beta\in C^*$、$\beta(x)=0$，同一列满足 $\beta(x_n)/p_n\to0$，即 [C123 定义 76.1](AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md) 的接触速率。这里 $p_n$ 是整个效果对应的衰减因子，恒等于一；它不是事件概率 $\alpha_a(e_n)$，后者仍可随 $a,n$ 变化并取零。
+对每个 $\beta\in C^*$、$\beta(x)=0$，同一列满足 $\beta(x_n)/p_n\to0$，即 [C123 定义 83.1](AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md) 的接触速率。这里 $p_n$ 是整个效果对应的衰减因子，恒等于一；它不是事件概率 $\alpha_a(e_n)$，后者仍可随 $a,n$ 变化并取零。
 
 若另行独立供应同一个正确类型的实线性算子 $T:\operatorname{Herm}(L)\to\operatorname{Herm}(L)$、$T(I_L)=0$，以及它在上述实际程序／准备上的合法有符号评价，并有一个统一有限 $K\ge0$ 使
 
@@ -798,7 +798,7 @@ $$
 \tag{44.11}
 $$
 
-则 C123 定理 76.2 适用于这个同一个 $T$：它满足全部正泛函、全部正元的零接触，$\exp(tT)$ 对每个实 $t$ 保正且保 $I_L$，并可恢复该定理所述的全数学效果区间证书。(44.11) 的 $K$ 不随 $a,f,S,n$ 改变；它是另给的实际统一有符号估计，不是 (44.4)、校准或纯准备闭生成的结论。
+则 C123 定理 83.2 适用于这个同一个 $T$：它满足全部正泛函、全部正元的零接触，$\exp(tT)$ 对每个实 $t$ 保正且保 $I_L$，并可恢复该定理所述的全数学效果区间证书。(44.11) 的 $K$ 不随 $a,f,S,n$ 改变；它是另给的实际统一有符号估计，不是 (44.4)、校准或纯准备闭生成的结论。
 
 证明。对三元组 $(E_0,E_1,E_2)=(x,I_L-x,0)$ 用定理 44.2，取 $\varepsilon_n\downarrow0$。一个共同 $f_n$ 同时给
 
