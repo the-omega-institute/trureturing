@@ -1,0 +1,55 @@
+### 154.A. Two angular modes and original source variation
+
+Let $a_j$ be the coefficients of the actual original orbit kernel in (153.7). Reuse (153.8)–(153.10): $a_j=a_{-j}>0$ for every integer $j$, and $a_j\to0$ as $|j|\to\infty$. Reuse also the consequence in (153.11) that infinitely many odd $n\ge3$ satisfy $a_{n+1}\ne a_{n-1}$. Choose odd integers
+
+$$
+\begin{gathered}
+n_0\ge3,\quad n_1>3n_0+2,\quad
+ a_{n_a+1}\ne a_{n_a-1}\quad(a=0,1),\\
+m_*>3n_1+2,\qquad a_{m_*}\ne a_1,\qquad L=m_*.
+\end{gathered}
+\tag{154.5}
+$$
+
+The last choice is possible because $a_1>0$ and the odd subsequence tends to zero. These choices impose no restriction on $\theta$.
+
+Write $p(q,\alpha)=(q,\alpha)$ in the original symmetric coordinates. For $j\ge0$ put
+
+$$
+\begin{aligned}
+\mathcal K_j(q,\alpha)
+ &=\int_0^{2\pi}p_d(p(q,\alpha),p(q_\circ,\vartheta))
+                         \cos(j\vartheta)\,\frac{d\vartheta}{2\pi},\\
+\mathfrak c_j^q H
+ &=2\int_0^{2\pi}H(q,\alpha)\cos(j\alpha)\,
+                                      \frac{d\alpha}{2\pi}\quad(j>0),\\
+\kappa_j(q)&=\mathfrak c_j^q\mathcal K_j.
+\end{aligned}
+\tag{154.6}
+$$
+
+Joint continuity of the original kernel makes these functions continuous. Rotation equivariance puts $\mathcal K_j$ in the real pure frequency $j$, and symmetry on the original orbit gives
+$\mathcal K_j(q_\circ,\alpha)=a_j\cos(j\alpha)$, hence $\kappa_j(q_\circ)=a_j>0$ for $j>0$. Away from that orbit a sine component is allowed.
+
+The invariant analytic function $g$ is nonconstant by Lemma 147.2, since a constant $g$ would make $g,Pg,P^2g$ dependent. Analytic uniqueness on the connected quotient therefore makes $g$ nonconstant on every quotient neighborhood. By continuity of the three relevant $\kappa_j$, choose $q_\diamond\in U$ sufficiently close to $q_\circ$ that
+
+$$
+g(q_\diamond)\ne g_\circ,\qquad
+\kappa_{n_1+1}(q_\diamond)>0,\quad
+\kappa_{n_1+m_*}(q_\diamond)>0,\quad
+\kappa_{n_0+1}(q_\diamond)>0.
+\tag{154.7}
+$$
+
+For nonnegative $\phi_\epsilon\in C_c^\infty(U)$ with $\int\phi_\epsilon\,d\nu=1$ and supports shrinking to $q_\circ$, set
+
+$$
+V_{j,\epsilon}=\phi_\epsilon(q)\cos(j\vartheta),\qquad
+v_0^\epsilon=V_{n_0,\epsilon},\quad
+v_1^\epsilon=V_{n_1,\epsilon},\quad
+v_3^\epsilon=V_{1,\epsilon}+V_{m_*,\epsilon}.
+\tag{154.8}
+$$
+
+These bounded functions are supported in $E$, odd under the half-turn, and have pairwise disjoint positive angular spectra.
+
