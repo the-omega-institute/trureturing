@@ -1,0 +1,38 @@
+**定理 96.2（原余量预算与等值恢复完整量子候选）。** 在各自完整背景已经取得全导子律与 SC 后，令 $\kappa\ge0$ 为定理 63.3 或 71.1 的同一共同原尺度。则
+
+$$
+\mathsf R_{\rm fin}\Longleftrightarrow\kappa\le1,
+\qquad
+\mathsf R_{\rm fin}\Longrightarrow
+\bigl(\mathsf E_d\Longleftrightarrow\kappa=1\bigr).
+\tag{96.5}
+$$
+
+从而
+
+$$
+\begin{aligned}
+\mathsf C_{\mathbb R}(B)&\Longleftrightarrow B+\mathrm Z+\mathrm{SC}+\mathrm{SJ},\\
+\mathsf C_{\mathbb R}(\mathsf B_{\rm cl})&\Longleftrightarrow\mathsf B_{\rm cl}+\mathsf Q+\mathrm{SC}+\mathrm{SJ}.
+\end{aligned}
+\tag{96.6}
+$$
+
+证明。此时定理 92.2 的原代数论证给 $D_ap=-D_pa$、$D_p$ 对 $q$ 反自伴且湮灭 $\ker P_p$。令 $A_p=2D_p|_{W_p}$，则 $A_p^2=-\kappa I$，$q(A_px,A_px)=\kappa q(x,x)$。对 $x=P_pa$、$y=P_pb$，(96.1) 给
+
+$$
+\begin{aligned}
+G_p(a,b)
+&=\tfrac12q(x,x)+\tfrac12q(y,y)+q(A_px,y)\\
+&=\tfrac12q(y+A_px,y+A_px)
+ +\tfrac12(1-\kappa)q(x,x).
+\end{aligned}
+\tag{96.7}
+$$
+
+若 $\kappa\le1$，所有原子上的预算成立。反向不需另把 $d$ 加入测试：所选 $\mathcal P_P$ 包含原子基，故张成原指针空间。若每个被测原子均有 $W_p=0$，Peirce 规则使 $E=\mathbb Rp\oplus E_0(p)$ 为理想直和，因而每个 $p$ 中央；它们的张成使整个 $E_P$ 中央，与原 AC 和原质量已经给出的非中央 $d$、$W_d\ne0$ 矛盾。所以存在被测 $p$ 与 $0\ne x\in W_p$。取 $y=-A_px$，实输入预算及 (96.7) 给 $\kappa\le1$。该选择只证明原谱表已有足够的数学点，不查看 $D$ 重新选表，也不主张物理认证成本下降。
+
+在预算范围内，$G_d(a,b)=0$ 且 $V_d(a)+V_d(b)>0$ 排除 $x=y=0$。若 $\kappa<1$，(96.7) 先迫使 $x=0$ 再迫使 $y=0$，矛盾。若 $\kappa=1$，取任意 $0\ne x\in W_d$ 与 $y=-A_dx$，即有正余量和等值。由 (96.3) 在全导子律、SC 下对全部原子成立，投影两个输入保留推动项与余量，所以这一条件恰为非零横向饱和，不依赖事先指定横向见证。$\kappa=0$ 被同一论证排除。预算前件不能删除：$\kappa>1$ 时余额可不定，非平凡等值不构成单位标定。
+
+最后定理 96.1 先恢复 Z 或 $\mathsf Q$ 及 SC，(96.5) 锁定单位尺度，再由定理 64.2 或 71.3 得 SJ。反向原完整量子候选给 $\kappa=1$，(96.7) 给全部整数预算与所需等值。经典块、零对象及不等块权均未改动；原指针独立供应非零见证。∎
+
