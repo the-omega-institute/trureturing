@@ -1,0 +1,17 @@
+**定义 83.1（原子关系候选 $\mathrm{C128}^{\perp}$）。** 固定定义 41.1 的同一完整保留背景 $B$，包括全事件 R。原对象、全部实际联合、旧输出、标签、参考、失败输出、中心及所有原 $q_A,L_A,D^A$ 均不改变。记 $\operatorname{Prim}(E_A)$ 为整个原 EJA 的数学原始幂等元集，$F_A(a,b)=D^A_ab$；不同简单块中的原子也在同一量词域内。候选为 $B+\mathrm Z_\pi+\mathrm O_\pi+\mathrm{SJ}$，其中
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm Z_\pi:\quad &q_A(r,F_A(s,p))=0
+&&\bigl(s,p,r\in\operatorname{Prim}(E_A),\ p\circ r=0\bigr),\\
+\mathrm O_\pi:\quad &F_A(p,r)=0
+&&\bigl(p,r\in\operatorname{Prim}(E_A),\ p\circ r=0\bigr),\\
+\mathrm{SJ}:\quad &(D^P_d)^2=L_d^2-L_d
+&&\text{在整个同一原 }E_P\text{ 上}.
+\end{aligned}}
+\tag{83.1}
+$$
+
+前两条逐原对象量化，包括实际联合中的纠缠原子。$d$ 是原 AC 的同一效果；不把数学原子、纯态或秩二角变成实际读口、准备或对象。两条原子关系共享已有的二元零关系 $p\circ r=0$；SJ 保持原标定。简洁性指测试域缩到原子与正交关联，不指独立前提数、实际认证成本或全局最小性。
+
