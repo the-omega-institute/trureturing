@@ -301,7 +301,7 @@ private theorem discrepancy (x u : O) (a K C : ℝ)
   rw [div_le_iff₀ hden]
   nlinarith [hh, abs_nonneg (realPhysical x-a)]
 
-private theorem positive_lower (x : O) (K : ℝ) (hK : 0 < K)
+theorem positive_lower (x : O) (K : ℝ) (hK : 0 < K)
     (hp : 0 < realPhysical x) (hb : |realConjugate x| ≤ K) :
     K⁻¹ ≤ realPhysical x := by
   have hn : QuadraticAlgebra.norm x ≠ 0 := by
