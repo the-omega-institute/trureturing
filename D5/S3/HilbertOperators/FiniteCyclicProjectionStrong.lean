@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Every finite ordered product of Hilbert space orthogonal projections converges strongly under iteration. -/
+   digest: Finite ordered products of orthogonal projections converge strongly under iteration. -/
 
 module
 
@@ -88,7 +88,7 @@ private theorem cycle_energy (Us : List (ClosedSubmodule k H)) (z : H) :
         norm_add_le (b - a) (a - z)
     have hsq : ‖b - z‖ ^ 2 ≤ (‖b - a‖ + ‖z - a‖) ^ 2 :=
       (sq_le_sq₀ (norm_nonneg _) (by positivity)).2 htri
-    have hC : 1 ≤ C := one_le_pow₀ (by norm_num) _
+    have hC : 1 ≤ C := one_le_pow₀ (by norm_num : (1 : ℝ) ≤ 2)
     have hscale : 0 ≤ (C - 1) * ‖z - a‖ ^ 2 :=
       mul_nonneg (sub_nonneg.mpr hC) (sq_nonneg _)
     change ‖b - z‖ ^ 2 ≤ 2 ^ (Us.length + 1) * (‖z‖ ^ 2 - ‖b‖ ^ 2)
@@ -135,7 +135,7 @@ theorem tendsto_cycle_pow (Us : List (ClosedSubmodule k H)) (x : H) :
   have hfix : T.eqLocus (1 : H →L[k] H) = M.toSubmodule := by
     ext z
     change cycle Us z = z ↔ z ∈ sInf {U | U ∈ Us}
-    simpa only [ClosedSubmodule.mem_sInf, Set.mem_setOf_eq] using cycle_fixed_iff Us z
+    simpa only [ClosedSubmodule.mem_sInf, Set.mem_ofPred_eq] using cycle_fixed_iff Us z
   let p := M.toSubmodule.starProjection x
   have hp : T p = p := by
     change p ∈ T.eqLocus (1 : H →L[k] H)
