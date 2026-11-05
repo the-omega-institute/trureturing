@@ -131,4 +131,175 @@ def rootSecondOrderAudit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0
 
 end
 
+namespace ConsumedRootSpec
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x => x) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+abbrev scope := type_of% (@second_cutoff_root_spec)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {t : ℝ}, 2 ≤ t →
+    1 < R.readout () () (second_cutoff_root t) ∧
+      Real.sqrt t < second_cutoff_root t ∧
+      second_cutoff_root t < Real.sqrt (2*t) ∧
+      (second_cutoff_root t)^2 * Real.log (second_cutoff_root t) = t*Real.log t
+
+theorem source_bridge : scope ↔ arena.Law actual := Iff.rfl
+
+theorem actual_law : arena.Law actual := @second_cutoff_root_spec
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := (h (t := 2) (by norm_num)).1
+  norm_num [rejected, realize] at hh
+
+def family : Registration arena scope where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := ⟨fun i => ⟨rejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected_law⟩,
+    fun e => nomatch e⟩
+  dependence := by
+    intro i
+    exact ⟨(), 0, 1, by norm_num [actual, realize]⟩
+
+def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@second_cutoff_root_spec) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.EulerLayerRootSecondOrder.second_cutoff_root_spec.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.EulerLayer.EulerLayerRootSecondOrder.ConsumedRootSpec.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.EulerLayer.EulerLayerRootSecondOrder
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #[]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+#print axioms audit
+
+end ConsumedRootSpec
+
+namespace ConsumedRootMonotonicity
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ → ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ → ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x => x) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => (fun _ => 0)) (fun e => nomatch e)
+
+abbrev scope := type_of% (@second_cutoff_strictMono)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := StrictMonoOn (R.readout () () (fun x : ℝ => x^2*Real.log x)) (Set.Ioi 1)
+
+theorem source_bridge : scope ↔ arena.Law actual := Iff.rfl
+
+theorem actual_law : arena.Law actual := @second_cutoff_strictMono
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h (show (2:ℝ) ∈ Set.Ioi 1 by norm_num)
+    (show (3:ℝ) ∈ Set.Ioi 1 by norm_num) (by norm_num : (2:ℝ)<3)
+  norm_num [rejected, realize] at hh
+
+def family : Registration arena scope where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := ⟨fun i => ⟨rejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected_law⟩,
+    fun e => nomatch e⟩
+  dependence := by
+    intro i
+    refine ⟨(), (fun _ => 0), (fun _ => 1), ?_⟩
+    change (fun _ : ℝ => (0:ℝ)) ≠ (fun _ : ℝ => (1:ℝ))
+    intro hh
+    have := congrFun hh 0
+    norm_num at this
+
+def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@second_cutoff_strictMono) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.EulerLayerRootSecondOrder.second_cutoff_strictMono.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.EulerLayer.EulerLayerRootSecondOrder.ConsumedRootMonotonicity.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.EulerLayer.EulerLayerRootSecondOrder
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #[]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+#print axioms audit
+
+end ConsumedRootMonotonicity
+
 end Reg.D5.S3.Arith.Robin.EulerLayer.EulerLayerRootSecondOrder

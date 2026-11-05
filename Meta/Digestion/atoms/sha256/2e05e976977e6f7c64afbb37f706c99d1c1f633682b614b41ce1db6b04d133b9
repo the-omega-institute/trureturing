@@ -1,0 +1,12 @@
+**定义 28.1（原始来源的消费范围）。** 本附录把下列成熟结果用于定理 22.1–25.1 的推导及定理 23.1 的全锥几何解释；已发表的取向理论、标准正锥分解和 Cartan 计算均只作中间步骤，不另认作新增定理。
+
+| 来源 | 本文消费及不能替代的前件 |
+| --- | --- |
+| 本卷 §§1–17，尤其定义 1.1–2.7、定理 3.1 的 P/G 部分、命题 11.1–11.3、定理 12.1、命题 12.2、13.1–13.2、14.2–14.3、15.1 | 固定于 `3523d9778dd757b35355bf3a51d0846cc58e83f1` 的既有原签名、单位适配构造、Born 双运输、实际张量/参考/滤波、失败与细记录、满足族及完整删除语言。原文此前固定的 V95/C118 引用仍按定义 9.2、17.1 的版本；不改变其前件。 |
+| V95 Definition 1.1、Theorem 2.1；Niestegge, arXiv:1402.0158v2 §5 Definition 1、Theorem 1、Corollary 1，DOI 10.1007/s10701-015-9881-x | `literature-attested` 的动力对应路线和 `repo-derived` 的既有有限 Frobenius 推导按 V95 边界复用。原 $D$ 的导子/曲率条件先取得，才应用复结合结论；原符号、因子和中心核在 (23.3)–(23.8) 明确核对。不把未亲核的 Alfsen–Shultz 全文当作另一个精确引文来源。 |
+| Connes, *Caractérisation des espaces vectoriels ordonnés sous-jacents aux algèbres de von Neumann*, Ann. Inst. Fourier 24(4), 121–155, DOI [10.5802/aif.534](https://doi.org/10.5802/aif.534)，[原文 PDF](https://aif.centre-mersenne.org/item/10.5802/aif.534.pdf)，§4 Definitions 4.8、4.11、Theorem 4.9、Propositions 4.10、4.12，尤其 pp. 146–147 | `literature-attested`：在约化锥 Lie 代数上取质心复结构、与伴随反交换，以及因子上的正负取向，均已有先例。原文 $D$ 表示锥的 Lie 代数，非本文原指派 $a\mapsto D_a$；原文 Definition 4.11 的复结构所在约化代数须结合 4.9 的中心商记号阅读。本文在全部原 $E$ 上用忠实 $\mathfrak h$ 具体实现这种去中心，并另加原 $D$ 锚定，不能直接把二者记号等同。 |
+| Connes 同文 §5 Definition 5.1、Theorem 5.2 | 其“homogène”在此节明确指 facialement homogène，即全部面的相应投影指数保锥；本文未假定这份面齐性，也未以其一般重构定理替代 C123 的指定群 P/G。本文的单位 Jordan 结构仍只来自已核对的 BW 应用；有限矩阵结论来自 V95。 |
+| Benkart–Neher, *The Centroid of Extended Affine and Root Graded Lie Algebras*, [arXiv:math/0502561v1](https://arxiv.org/pdf/math/0502561v1)，§2.1、Lemma 2.1(f) | `literature-attested`：完备代数的质心交换，质心元对不变型对称。本文先在同一原算子表示内证明括号张成性和 $\beta$ 非退化，再使用它们推出原伴随相容，不把这些通用事实另认作新成果。 |
+| Hall–Mitchell, *The Segal–Bargmann Transform for Noncompact Symmetric Spaces of the Complex Type*, [arXiv:quant-ph/0409118v2](https://arxiv.org/pdf/quant-ph/0409118v2)，§3，pp. 7–8 | `literature-attested`：$G/K$ 的复型含义及双曲三空间例子；不声称这些空间因此是复流形，不消费该文的变换公式为量子重构前件。 |
+| C117 Lemma 2.2；本卷定义 9.2 的 BW、Watrous、Robinson、C118 及有限帧来源 | Lorentz/spin 乘法、指定群的 Jordan 构造、CP、有限膨胀、支持返回和端点删除的不变量各按既有条件使用；不重作这些已知结果，不从数学表示取得额外实际装置。 |
+

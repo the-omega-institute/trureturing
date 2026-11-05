@@ -1,0 +1,101 @@
+**Proposition 47.5 (actual core population and nongeometric strict
+exclusions).** The slices in (47.14) contain actual pairs beyond both
+older cap sectors, the trace-triangle sector, the population-sensitive
+spectral-exclusion sector (44.12), and the nonnegative-determinant
+slices of Theorem 46.6. It includes nongeometric phase feedbacks in
+the interior of the attained triangle with both pairs split.
+
+*Proof.* At the certified anchor take either $\tau\in\{+1,-1\}$ and
+one common scalar $|\lambda|=1$, and set
+
+$$
+\begin{aligned}
+ v^\tau&=\left(\frac{1+\tau i\sqrt{15}}4,
+                  \frac{1-\tau i\sqrt{15}}4,1,1\right),\\
+ \beta^\tau&=\begin{pmatrix}\sqrt{7/8}\\-\tau i\sqrt{1/8}\end{pmatrix},
+ \qquad E=(T\beta^\tau(\beta^\tau)^\dagger T^\dagger)^{\mathsf T},
+ \qquad U=\lambda\operatorname{diag}(v^\tau)U_+.
+\end{aligned}
+\tag{47.25}
+$$
+
+This is a pure original effect and a whole unitary. The two trace
+moduli and original sign distances are exactly
+
+$$
+\begin{aligned}
+ A(v^\tau)&=\frac52,& B(v^\tau)&=\frac{\sqrt{15}}2,\\
+ \rho_+(E,U)&=\frac{13}{4},&
+ \rho_-(E,U)&=\frac{39}{4}-\sqrt{15}>\frac{13}{4}.
+\end{aligned}
+\tag{47.26}
+$$
+
+Thus the true original distance, not merely a branch distance, is the
+stated level. Moreover
+
+$$
+ A<2+\sqrt{8/3},\qquad B<2<23/6,\qquad
+ A+B=\frac{5+\sqrt{15}}2>4.
+\tag{47.27}
+$$
+
+These are the strict defining inequalities of the old core
+$\mathcal O$ in (37.1). Since $E$ is pure,
+$\epsilon(E)=0$, $L(p,0)=0$ in (44.2), and
+$\theta(p)>0$ for $p=7/8$; thus (44.12) does not apply. The
+spectral lower bound zero cannot yield the positive strict exclusion
+(47.15). Equation (47.20) separately rules out using the old
+nonnegative-determinant slice theorem.
+
+The anchor feedback itself is canonical, so its scalar comparison is
+already covered by Theorem 37.5. To demonstrate the new whole-slice
+consumer, retain $x=1/4$, $q=1/8$ but put
+
+$$
+ B_c=\varepsilon,\qquad H_c=d_0\varepsilon,\qquad
+ A_c=(x+d_0)\varepsilon,\qquad
+ d_0=\left(\frac{t_c}{2\mu}\right)^2>0.
+\tag{47.28}
+$$
+
+For
+
+$$
+ 0<\varepsilon<\min\left\{1,\frac{y^2}{x+d_0},
+                    \frac{4Ld_0}{(L+d_0)^2}\right\},
+\tag{47.29}
+$$
+
+one has $0<X,Y<1$ and
+$\Delta=4Ld_0\varepsilon-(L+d_0)^2\varepsilon^2>0$.
+Consequently Lemma 46.2 reconstructs actual whole phase feedbacks
+in the strict interior of the same triangle, with the same complex
+active trace $2L\lambda$. Both pairs in (46.14) have distinct entries;
+in particular the last pair is unequal, outside the enlarged geometric
+shape $\mathcal C_{34}$ of Definition 35.4. Choose the crossed
+orientation and effect phase aligning its two weighted recoveries.
+The already established instability formula (46.31) then gives, for
+all sufficiently small positive $\varepsilon$,
+
+$$
+ g(E_\varepsilon,U_\varepsilon)
+       <G_+^{\mathrm{can}}(1/4,1/8),\qquad
+ g(E_\varepsilon,U_\varepsilon)>V(13/4)+\frac{1711}{10000}.
+\tag{47.30}
+$$
+
+The second inequality is the new whole-slice comparison (47.15).
+The first shows why the canonical lower bound alone cannot prove it.
+The reconstruction can be chosen continuously at the canonical
+orientation: $X\to x^2$, $Y\to1$ and the pair centers align. Hence
+(47.27) persists for small $\varepsilon$. The effect stays pure with
+interior population, so the spectral-exclusion hypothesis remains
+false. The branch distance is still $13/4$ and the other branch is
+strictly larger by (42.20). Strict core inequalities, the sign gap,
+and membership in (47.14) persist on a relative neighborhood in the
+pure original domain restricted to $0<\rho\le13/4$, allowing level
+and population to vary. These
+are actual unscreened nongeometric pairs, not independent choices of
+recovery moduli. $\square$
+

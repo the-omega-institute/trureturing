@@ -1,0 +1,106 @@
+**Theorem 46.4 (necessary and sufficient canonical comparison in both signs).**
+For fixed $\sigma$, $0<x<1$ and $q\in[0,1]$, define
+
+$$
+ G_\sigma^{\mathrm{can}}(x,q)
+   =\mathsf E_\sigma(q)-4\Gamma_0^2.
+\tag{46.25}
+$$
+
+Then the canonical corner $(X,Y)=(x^2,1)$ is a minimum of the complete
+pure phase slice with (46.7) and population $q$ if and only if
+
+$$
+                 \mathfrak D_\sigma(x,q)\ge0.
+\tag{46.26}
+$$
+
+If (46.26) holds, every pure phase pair in that slice satisfies
+
+$$
+                   g(E,U)\ge G_\sigma^{\mathrm{can}}(x,q),
+\tag{46.27}
+$$
+
+and equality holds exactly at the canonical pairs
+
+$$
+\begin{array}{c|c|c}
+\sigma&v_\sigma^\tau&\beta_\sigma^\tau\\ \hline
++&(x+\tau iy,x-\tau iy,1,1)&(\sqrt p,-\tau i\sqrt q)\\
+-&(1,1,x+\tau iy,x-\tau iy)&(\tau\sqrt q,\sqrt p),
+\end{array}
+\qquad \tau\in\{\pm1\},
+\tag{46.28}
+$$
+
+up to the one common scalar. This equality statement is unchanged when the
+determinant is zero. For $\mathfrak D_\sigma(x,q)<0$, actual pure phase pairs
+with the same $x,q$ and sign-branch distance have strictly smaller $g$
+than (46.25). When $0<\xi\le R_\star$, that sign is active and
+these are strict competitors at the same true original distance.
+
+*Proof.* By (46.17), the aligned pure recovery is
+$\chi=\sqrt p\,M+e^{i\phi}\sqrt q\,N$, and
+$|\chi|\le2\Gamma$. Every point of the triangle, including the value $2C$,
+is attained by one whole feedback and a phase $\phi$ aligning the two terms;
+if a weighted term is zero, there is no phase condition. The exact
+same-feedback identity (23.12) therefore gives
+$g=\mathsf E_\sigma(q)-|\chi|^2$ and the lower estimate in (46.27).
+The sign-branch distance is (46.8). Whenever $0<\xi\le R_\star$,
+(42.17)--(42.20) makes the other original sign strictly larger, so
+this is also the true joint distance.
+
+If $\mathfrak D_\sigma\ge0$, every term in (46.19) is nonnegative, hence
+$\Gamma\le\Gamma_0$. If $q>0$ and $B_c>0$, the third term is strictly
+positive by (46.18). If $B_c=0$ and $A_c>0$, then (46.21) gives
+$C^2<C_0^2$ and the last square is positive. Thus for $q>0$ equality
+forces $A_c=B_c=0$. For $q=0$, $t_c=0$, $\nu=k/2>0$, and the
+unsquared linear form in (46.23) forces $H_c=B_c=0$, hence $A_c=0$. At
+the corner, on the positive row $M=2\lambda R_0$ and
+$N=2\tau i\lambda C_0$, while on the negative row
+$M=2\lambda R_0$ and $N=2\tau\lambda C_0$. Aligning the two
+weighted terms gives exactly (46.28). If $q=0$ or $q=1$, the unused phase
+represents the same singleton effect; zero recovery amplitudes likewise impose
+no phase condition. This proves necessity and sufficiency and the complete
+phase kernel, including determinant zero.
+
+For the converse, $\mathfrak D_\sigma<0$ implies $q>0$. Put
+$d_0=(t_c/(2\mu))^2>0$. For sufficiently small
+$\varepsilon>0$, set
+
+$$
+ B_c=\varepsilon,\qquad H_c=d_0\varepsilon,\qquad
+ A_c=(x+d_0)\varepsilon.
+\tag{46.29}
+$$
+
+Then $X=x^2+A_c$, $Y=1-B_c$ lie in $(0,1)$ and
+
+$$
+ \Delta=4Ld_0\varepsilon-(1+x+d_0)^2\varepsilon^2>0.
+\tag{46.30}
+$$
+
+Thus (46.29) is an actual interior triangle family. From (46.18),
+$F=K_c\sqrt{d_0}\varepsilon+O(\varepsilon^2)$; substituting in (46.19)
+gives
+
+$$
+ \Gamma-\Gamma_0
+ =\left(\frac{t_c^2}{4\mu}-\nu\right)\varepsilon
+   +O(\varepsilon^2)
+ =-\frac{L\mathfrak D_\sigma(x,q)}{4\mu x^2}\varepsilon
+   +O(\varepsilon^2)>0
+\tag{46.31}
+$$
+
+for all sufficiently small nonzero $\varepsilon$. The reconstruction in
+Lemma 46.2 and the aligning phase give one actual whole unitary and one pure
+effect at the unchanged branch distance, which is the true original
+distance when $0<\xi\le R_\star$. Hence its $g$ is strictly smaller.
+For the positive interior-population sector with (36.42), the local
+same-distance direction already present in Theorem 36.5 is recovered
+as the local part of this construction. The global contribution here is
+(46.18)--(46.24); the positive local instability is the cited result. $\square$
+

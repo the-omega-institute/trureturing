@@ -16,6 +16,10 @@ internal sealed class FourierCliffordVacuumDocument : IScribeDocumentDefinition
             Node("car-nilpotent", "Vanishing self-anticommutator", NilpotentFormula(),
                 "In a complex algebra with compatible star, a vanishing self-anticommutator forces the square to vanish. Type* allows the algebra to lie in any universe.",
                 "CAR_nilpotent", DescribeRole.Lemma, AssessedProvenance.FromRepo()),
+            Node("linear-anticommutator", "Anticommutator of linear combinations",
+                LinearAnticommutatorFormula(),
+                "For pairwise anticommuting involutions in a complex algebra, the anticommutator of two linear combinations is twice the bilinear pairing of their coefficients times the identity. The algebra and the index type may lie in independent universes u₁ and u₂. Fintype.linearCombination uses the complex scalar action, and the displayed algebraMap explicitly maps the complex coefficient into R: z • x = algebraMap ℂ R z * x.",
+                "cliffordLinear_anticommutator", DescribeRole.Lemma, AssessedProvenance.FromRepo()),
             Node("averaging", "averaging", F0(),
                 "The displayed expression defines averaging.", "averaging",
                 DescribeRole.Definition, AssessedProvenance.FromRepo()),
@@ -79,6 +83,46 @@ internal sealed class FourierCliffordVacuumDocument : IScribeDocumentDefinition
 
     private static Formula Call(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
+    private static Formula LinearAnticommutatorFormula()
+    {
+        Formula ComplexType() => Seq(Mathbb, Grp(F.Id("C")));
+        Formula Universe(byte n) => new Formula.Subscript(F.Id("u"), D(n));
+        Formula Typed(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
+        Formula Apply(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
+        Formula Product(Formula left, Formula right) => Multiply(Parenthesized(left), Parenthesized(right));
+        Formula All(Formula name, Formula type, Formula body) =>
+            Seq(Forall, Sp, Typed(name, type), Comma, Sp, Parenthesized(body));
+        Formula Implication(Formula premise, Formula body) =>
+            new Formula.TypeArrow(Parenthesized(premise), Parenthesized(body));
+        Formula Instance(Formula type, Formula body) =>
+            Seq(OpenBracket, type, CloseBracket, Comma, Sp, Parenthesized(body));
+        Formula Implicit(Formula name, Formula type, Formula body) =>
+            Seq(Forall, Sp, OpenBrace, name, Colon, Sp, type, CloseBrace, Comma, Sp, Parenthesized(body));
+        Formula g = F.Id("g"), j = F.Id("j"), k = F.Id("k"), c = F.Id("c"), d = F.Id("d"), R = F.Id("R");
+        Formula gj = Apply(g, j), gk = Apply(g, k);
+        Formula square = All(j, Iota, Equal(Product(gj, gj), Typed(D(1), R)));
+        Formula anti = All(j, Iota, All(k, Iota,
+            Implication(NotEqual(j, k), Equal(Product(gj, gk), new Formula.Negate(Parenthesized(Product(gk, gj)))))));
+        Formula sum = Seq(Sum, Underscore, Grp(Seq(j, Colon, Sp, Iota)), Sp,
+            Parenthesized(Product(Apply(c, j), Apply(d, j))));
+        Formula coefficient = Product(Typed(D(2), ComplexType()), sum);
+        Formula inAlgebra = Apply(Call("algebraMap"), ComplexType(), R, Typed(coefficient, ComplexType()));
+        Formula conclusion = Equal(Add(Product(LinearSum("c"), LinearSum("d")),
+                Product(LinearSum("d"), LinearSum("c"))), Product(inAlgebra, Typed(D(1), R)));
+        Formula coefficients = All(c, new Formula.TypeArrow(Iota, ComplexType()),
+            All(d, new Formula.TypeArrow(Iota, ComplexType()), conclusion));
+        Formula body = All(g, new Formula.TypeArrow(Iota, R), Implication(square, Implication(anti, coefficients)));
+        return Disp(Implicit(R, Seq(Call("Type"), Sp, Universe(1)),
+            Instance(Apply(Call("Ring"), R), Instance(Apply(Call("Algebra"), ComplexType(), R),
+                Implicit(Iota, Seq(Call("Type"), Sp, Universe(2)),
+                    Instance(Apply(Call("Fintype"), Iota), Instance(Apply(Call("DecidableEq"), Iota), body)))))));
+    }
+
+    private static Formula LinearSum(string coefficient) => new Formula.Apply(
+        Seq(Operatorname, Grp(Seq(F.Id("Fintype"), Dot, F.Id("linearCombination")))),
+        [Seq(Mathbb, Grp(F.Id("C"))), F.Id("g"), F.Id(coefficient)]);
+
     private static Formula NilpotentFormula() => Disp(new Formula.Aligned([
         Seq(Forall, Sp, OpenBrace, F.Id("R"), Colon, Seq(Call("Type"), Star), CloseBrace, Comma),
         Seq(Grp(), OpenBracket, Call("Ring"), Sp, F.Id("R"), CloseBracket, Comma),
