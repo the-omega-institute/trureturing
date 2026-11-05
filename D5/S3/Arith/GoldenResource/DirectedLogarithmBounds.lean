@@ -693,8 +693,12 @@ private theorem state_enclosure {c : Coefficients} {z : ℝ} {s : State}
   have htail : (scale : ℝ) *
       (2 * z ^ (2 * s.k + 1) / ((2 * s.k + 1 : ℕ) * (1 - z ^ 2))) ≤ tail c s := by
     apply (mul_le_mul_of_nonneg_left hrem hS.le).trans
-    convert hceil using 1 <;> simp only [tail] <;>
-      field_simp [hS.ne', hdiff.ne', (show (2 : ℝ) * s.k + 1 ≠ 0 by positivity)] <;> ring
+    calc
+      _ = (2 * (s.ph : ℝ) * scale) /
+          ((2 * (s.k : ℝ) + 1) * ((scale : ℝ) - c.b)) := by
+        push_cast
+        field_simp [hS.ne', hdiff.ne', (show (2 : ℝ) * s.k + 1 ≠ 0 by positivity)] <;> ring
+      _ ≤ _ := hceil
   have hlog := public_remainder hz0 hz3 s.k
   have hl := mul_le_mul_of_nonneg_left hlog.1 hS.le
   have hh := mul_le_mul_of_nonneg_left hlog.2 hS.le

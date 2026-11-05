@@ -832,7 +832,7 @@ private structure FPEndpoint where
   logHi : ℚ
   qLo : ℚ
   qHi : ℚ
-  prefix : Finset (ℕ × ℕ)
+  «prefix» : Finset (ℕ × ℕ)
   D : ℚ
   L : ℚ
 
@@ -1033,6 +1033,7 @@ private theorem fp_finite_consumer
       hcomplete hlpReal hd hpr
       (hprefixSubset i hi b) (hon i hi b) (hoff i hi b) (hD i hi b) (hL i hi b)
       hll heps
+    push_cast
     exact_mod_cast (hmargin i hi b).le
   intro x hx
   have hx0 : (z 0 : ℝ) ≤ x := by rw [hfirst]; norm_num; exact hx.1
