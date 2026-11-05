@@ -6,6 +6,10 @@ Complete complex Boolean decomposition into every native spin block, with derive
 
 The carrier is V(N) = EuclideanSpace(ℂ, Fin(N) → Fin(2)), with its complex Hermitian inner product. Every configuration is retained. A zero bit denotes membership. These are the single-block algebra and spanning prerequisites in TOKEN_GRAPH_BLOWUP_DEFECT_DECOMPOSITION, Theorem 6.2, equations (6.6)–(6.8). The classical Boolean representation is cited there to Srinivasan, arXiv:1001.0280v2, and Feinsilver, arXiv:1102.0368v2; no claim of mathematical novelty is made.
 
+The classical statements are literature-attested. Feinsilver, §3, Eq. (8), §3.1, Eq. (10), and §§4.2–4.2.2 give the primitive-string action, cutoff, norms, spanning and orthogonality; Proposition 4.3 on p. 15 gives the primitive multiplicity. Set the paper's site count n=2S, vacuum level ℓ=t and principal number N=2S−2t; its T and T* are U and L, and its diagonal operator is −2Z. Srinivasan, Theorem 1.2 on p. 3, Eqs. (3)–(5) on pp. 4–5, and §2 on p. 8 give the orthogonal chains, their normalized coefficients, multiplicities and unitary coordinates. The papers formulate the Boolean carrier for positive site counts; the empty-site case here is the direct one-dimensional extension with zero collective operators.
+
+Repository-derived nodes describe the bit-zero encoding, conversion of the original collective matrices to Lean linear maps, the natural-number predecessor convention, the choice of mathlib's primitive orthonormal basis, and the reversal into the repository's Jplus/Jz coordinates. They acknowledge the classical sources and assert no new Boolean representation theorem.
+
 **Definition 1.1 (Occupancy).**
 
 $$\forall N \in \mathbb{N},\; \forall x \in \operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(2\right),\; \operatorname{occupancy}\left(x\right) = \sum_{i \in \operatorname{Fin}\left(N\right)} \operatorname{ite}\left(x\left(i\right) = 0, 1, 0\right)$$
@@ -13,6 +17,8 @@ $$\forall N \in \mathbb{N},\; \forall x \in \operatorname{Fin}\left(N\right) \to
 *Formalization.* `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.occupancy` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
 
 *Commentary.*
 
@@ -26,6 +32,8 @@ $$\forall N \in \mathbb{N},\; \operatorname{U}\left(N\right) = \operatorname{toE
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
+
 *Commentary.*
 
 This is the existing unweighted totalPlus matrix acting on Euclidean coordinates.
@@ -37,6 +45,8 @@ $$\forall N \in \mathbb{N},\; \operatorname{L}\left(N\right) = \operatorname{toE
 *Formalization.* `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.L` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
 
 *Commentary.*
 
@@ -50,6 +60,8 @@ $$\forall N \in \mathbb{N},\; \forall v \in \operatorname{V}\left(N\right),\; \f
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
+
 *Commentary.*
 
 The number operator multiplies each configuration coefficient by its occupancy.
@@ -62,6 +74,8 @@ $$\forall N \in \mathbb{N},\; \operatorname{Z}\left(N\right) = \operatorname{num
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
+
 *Commentary.*
 
 The identity shift centers occupancy at half of N, using complex scalar division.
@@ -72,7 +86,7 @@ $$\forall N \in \mathbb{N},\; \forall t \in \mathbb{N},\; \forall v \in \operato
 
 *Formalization.* `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.rankSpace` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
 
 *Commentary.*
 
@@ -84,7 +98,7 @@ $$\forall N \in \mathbb{N},\; \forall t \in \mathbb{N},\; \forall v \in \operato
 
 *Formalization.* `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.primitive` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
 
 *Commentary.*
 
@@ -96,7 +110,7 @@ $$\forall S \in \mathbb{N},\; \forall w \in \operatorname{V}\left(2 \cdot S\righ
 
 *Formalization.* `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.finitePrimitiveStrings` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
 
 *Commentary.*
 
@@ -108,7 +122,7 @@ $$\forall S \in \mathbb{N},\; ((\operatorname{span}\left(\mathbb{C}, \operatorna
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.result` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
 
 *Commentary.*
 
@@ -122,6 +136,8 @@ $$\forall N \in \mathbb{N},\; \forall t \in \mathbb{N},\; \operatorname{previous
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
+
 *Commentary.*
 
 Rank zero has previousChoose(N,0)=0; successor ranks use the preceding binomial coefficient.
@@ -132,7 +148,7 @@ $$\forall S \in \mathbb{N},\; \forall t \in \mathbb{N},\; (t \leq S \Rightarrow 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.primitive_multiplicity` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
 
 *Commentary.*
 
@@ -146,6 +162,10 @@ $$\forall N \in \mathbb{N},\; \forall t \in \mathbb{N},\; \operatorname{primitiv
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Murali K. Srinivasan (2010). *Symmetric chains, Gelfand-Tsetlin chains, and the Terwilliger algebra of the binary Hamming scheme*. URL: <https://arxiv.org/abs/1001.0280v2>.
+
+*Acknowledgement.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
+
 *Commentary.*
 
 The pinned standard orthonormal basis is chosen inside each actual primitive subspace.
@@ -156,7 +176,7 @@ $$\forall S \in \mathbb{N},\; \forall a \in \operatorname{StringIndex}\left(S\ri
 
 *Formalization.* `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.normalizedString` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Murali K. Srinivasan (2010). *Symmetric chains, Gelfand-Tsetlin chains, and the Terwilliger algebra of the binary Hamming scheme*. URL: <https://arxiv.org/abs/1001.0280v2>.
 
 *Commentary.*
 
@@ -168,7 +188,7 @@ $$\forall S \in \mathbb{N},\; \forall a \in \operatorname{StringIndex}\left(S\ri
 
 *Formalization.* `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.stringBasis` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Murali K. Srinivasan (2010). *Symmetric chains, Gelfand-Tsetlin chains, and the Terwilliger algebra of the binary Hamming scheme*. URL: <https://arxiv.org/abs/1001.0280v2>.
 
 *Commentary.*
 
@@ -180,7 +200,7 @@ $$\forall S \in \mathbb{N},\; \operatorname{stringUnitary}\left(S\right) = \oper
 
 *Formalization.* `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.stringUnitary` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Murali K. Srinivasan (2010). *Symmetric chains, Gelfand-Tsetlin chains, and the Terwilliger algebra of the binary Hamming scheme*. URL: <https://arxiv.org/abs/1001.0280v2>.
 
 *Commentary.*
 
@@ -194,6 +214,10 @@ $$\forall S \in \mathbb{N},\; \forall a \in \operatorname{NativeIndex}\left(S\ri
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Murali K. Srinivasan (2010). *Symmetric chains, Gelfand-Tsetlin chains, and the Terwilliger algebra of the binary Hamming scheme*. URL: <https://arxiv.org/abs/1001.0280v2>.
+
+*Acknowledgement.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
+
 *Commentary.*
 
 Native coordinate r reverses the ascending string coordinate k by Fin.rev.
@@ -205,6 +229,10 @@ $$\forall S \in \mathbb{N},\; \operatorname{nativeUnitary}\left(S\right) = \oper
 *Formalization.* `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.nativeUnitary` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Murali K. Srinivasan (2010). *Symmetric chains, Gelfand-Tsetlin chains, and the Terwilliger algebra of the binary Hamming scheme*. URL: <https://arxiv.org/abs/1001.0280v2>.
+
+*Acknowledgement.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
 
 *Commentary.*
 
@@ -218,6 +246,10 @@ $$\forall S \in \mathbb{N},\; \forall A \in \operatorname{SpinMatrixFamily}\left
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Murali K. Srinivasan (2010). *Symmetric chains, Gelfand-Tsetlin chains, and the Terwilliger algebra of the binary Hamming scheme*. URL: <https://arxiv.org/abs/1001.0280v2>.
+
+*Acknowledgement.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
+
 *Commentary.*
 
 Each primitive copy receives the corresponding repository-native spin matrix.
@@ -229,6 +261,10 @@ $$\forall S \in \mathbb{N},\; \operatorname{nativeU}\left(S\right) = \operatorna
 *Formalization.* `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.nativeU` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Murali K. Srinivasan (2010). *Symmetric chains, Gelfand-Tsetlin chains, and the Terwilliger algebra of the binary Hamming scheme*. URL: <https://arxiv.org/abs/1001.0280v2>.
+
+*Acknowledgement.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
 
 *Commentary.*
 
@@ -242,6 +278,10 @@ $$\forall S \in \mathbb{N},\; \operatorname{nativeL}\left(S\right) = \operatorna
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Murali K. Srinivasan (2010). *Symmetric chains, Gelfand-Tsetlin chains, and the Terwilliger algebra of the binary Hamming scheme*. URL: <https://arxiv.org/abs/1001.0280v2>.
+
+*Acknowledgement.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
+
 *Commentary.*
 
 The block operator uses the conjugate transposes of the original Jplus matrices.
@@ -254,6 +294,10 @@ $$\forall S \in \mathbb{N},\; \operatorname{nativeZ}\left(S\right) = \operatorna
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Murali K. Srinivasan (2010). *Symmetric chains, Gelfand-Tsetlin chains, and the Terwilliger algebra of the binary Hamming scheme*. URL: <https://arxiv.org/abs/1001.0280v2>.
+
+*Acknowledgement.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
+
 *Commentary.*
 
 The block operator uses the original Jz matrices.
@@ -265,6 +309,10 @@ $$\forall S \in \mathbb{N},\; ((\forall t \in \operatorname{Fin}\left(S + 1\righ
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.native_decomposition` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Murali K. Srinivasan (2010). *Symmetric chains, Gelfand-Tsetlin chains, and the Terwilliger algebra of the binary Hamming scheme*. URL: <https://arxiv.org/abs/1001.0280v2>.
+
+*Acknowledgement.* Philip Feinsilver (2011). *Representations of sl(2) in the Boolean lattice, and the Hamming and Johnson schemes*. URL: <https://arxiv.org/abs/1102.0368v2>.
 
 *Commentary.*
 
