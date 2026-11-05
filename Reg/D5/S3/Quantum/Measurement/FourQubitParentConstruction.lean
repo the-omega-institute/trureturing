@@ -932,19 +932,24 @@ noncomputable def sumEqualityRegistration : Contract.Registration.{_,_,_,0,0,0,_
   continuation := .unknown, familyRecord := none, options := #[] }
 #print axioms sumEqualityRegistration
 
+def formulaEvidence :
+    Registration _root_.Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch.formulaArena
+      (type_of% (@_root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula)) :=
+  _root_.Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch.formulaEvidence
+
 noncomputable def formulaRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula)
     (type_of% (realize _root_.Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch.vectorSignature (fun _ _ a => B a) (fun e => nomatch e))) Unit Unit := {
   unitName := Lean.Name.str (Lean.Name.str `D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula
     "Reg.D5.S3.Quantum.Measurement.FourQubitParentConstruction/Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch.formulaArena/[anonymous]") "__information_unit",
-  realizationName := `Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch.formulaEvidence,
+  realizationName := ``formulaEvidence,
   realizationSource := none,
   generated := false,
   arena := .source ⟨_root_.Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch.formulaArena⟩,
   objectArena := .source ⟨_root_.Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch.formulaArena⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
-  realization := .source _root_.Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch.formulaArena ⟨_root_.Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch.formulaEvidence⟩,
+  realization := .source _root_.Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch.formulaArena ⟨formulaEvidence⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
   readout := some (realize _root_.Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch.vectorSignature (fun _ _ a => B a) (fun e => nomatch e)),
