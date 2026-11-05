@@ -11,7 +11,9 @@ import Mathlib.LinearAlgebra.Quotient.Bilinear
 import Mathlib.Tactic
 import D5.S3.Quantum.Completion.RawThreePhaseDescent
 import D5.S3.Quantum.Completion.ThreePhaseHistoryRigidity
-import D5.S3.QuadraticForms.ParallelogramConstruction
+import D5.S3.QuadraticForms.ThreeWayPositiveKernel
+import Mathlib.RingTheory.Adjoin.Basic
+import Mathlib.Algebra.Module.TransferInstance
 
 /-! Anchored comparison forms, ordered Fourier constraints and the actual defect quotient.
 The construction retains the original unital magma and both pairing orders. -/
@@ -24,6 +26,10 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Quantum.Completion.RawAnchoredRadicalDescent
 
 open D5.S3.Quantum.Completion.RawThreePhaseDescent
+
+universe u v w
+
+open D5.S3.QuadraticForms.ThreeWayPositiveKernel
 
 abbrev E (M : Type*) := M →₀ ℝ
 
@@ -1393,130 +1399,206 @@ private theorem energy_balance (x y : A) :
   have hb := visibleComparison_balance U c h x 0 y 0
   simpa only [map_zero, add_zero, visibleEnergy] using hb
 
-private theorem energy_neg_marker (x : A) : f (-T x) = f (-x) := by
-  rw [← map_neg, energy_marker]
-
-private theorem energy_double_relation (x : A) : f (x + x) + 2 * f (-x) = 6 * f x := by
-  have hb := energy_balance U c h x x
-  have he₁ : x + T x = -T (T x) := by rw [visible_marker_two]; abel
-  have he₂ : x + T (T x) = -T x := by rw [visible_marker_two]; abel
-  rw [he₁, he₂] at hb
-  simp only [energy_neg_marker] at hb
-  linarith
-
-private theorem energy_four_relation (x : A) :
-    f ((4 : ℤ) • x) + 4 * f ((-2 : ℤ) • x) = 32 * f x := by
-  have h₁ := energy_double_relation U c h x
-  have h₂ := energy_double_relation U c h (-x)
-  have h₃ := energy_double_relation U c h (x + x)
-  have he₁ : (4 : ℤ) • x = (x + x) + (x + x) := by module
-  have he₂ : (-2 : ℤ) • x = -x + -x := by module
-  have he₃ : -(x + x) = -x + -x := by abel
-  rw [he₁, he₂]
-  rw [neg_neg] at h₂
-  rw [he₃] at h₃
-  linarith
-
-private theorem energy_even (x : A) : f (-x) = f x := by
-  let s : ℕ → ℝ := fun n => f (((-2 : ℤ) ^ n) • x) / (4 : ℝ) ^ n
-  have hn (n : ℕ) : 0 ≤ s n := div_nonneg (energy_nonneg U c h _) (by positivity)
-  have hr (n : ℕ) : s (n + 1) + s (n + 2) = 2 * s n := by
-    have he₁ : (-2 : ℤ) ^ (n + 1) = (-2) * (-2) ^ n := by rw [pow_succ]; ring
-    have he₂ : (-2 : ℤ) ^ (n + 2) = 4 * (-2) ^ n := by rw [pow_add]; ring
-    have he := energy_four_relation U c h (((-2 : ℤ) ^ n) • x)
-    dsimp [s]
-    rw [he₁, he₂, mul_smul, mul_smul]
-    simp only [pow_succ]
-    field_simp
-    nlinarith
-  have hc := nonnegative_recurrence_constant s hn hr
-  have hd := energy_double_relation U c h (-x)
-  have hm : (-2 : ℤ) • x = -x + -x := by module
-  norm_num only [s, pow_one, pow_zero, one_smul] at hc
-  rw [hm] at hc
-  rw [neg_neg] at hd
-  linarith
-
-private theorem energy_double (x : A) : f (x + x) = 4 * f x := by
-  have hd := energy_double_relation U c h x
-  rw [energy_even] at hd
-  linarith
-
-private def visibleL : A →+ A := T - (T).comp T
-
-private theorem energy_L (x : A) : f (visibleL U c h x) = 3 * f x := by
-  have hb := energy_balance U c h (-x) x
-  have he₁ : -x + T x = -T (T (visibleL U c h x)) := by
-    simp only [visibleL, AddMonoidHom.sub_apply, AddMonoidHom.comp_apply,
-      map_sub, map_neg, visible_marker_two]
-    abel
-  have he₂ : -x + T (T x) = T (visibleL U c h x) := by
-    simp only [visibleL, AddMonoidHom.sub_apply, AddMonoidHom.comp_apply,
-      map_sub, map_neg, visible_marker_two]
-    abel
-  rw [neg_add_cancel, he₁, he₂] at hb
-  simp only [energy_zero, energy_even, energy_marker] at hb
-  linarith
-
-private def parallelogramDefect (x y : A) : ℝ :=
-  f (x + y) + f (x - y) - 2 * f x - 2 * f y
-
-private theorem parallelogramDefect_symm (x y : A) :
-    parallelogramDefect U c h x y = parallelogramDefect U c h y x := by
-  have he : f (x - y) = f (y - x) := by
-    rw [← energy_even U c h (y - x)]
-    congr 1
-    abel
-  simp only [parallelogramDefect, add_comm x y, he]
-  ring
-
-private theorem parallelogramDefect_L (x y : A) :
-    parallelogramDefect U c h x (visibleL U c h y) =
-      3 * parallelogramDefect U c h x y := by
-  have hb := energy_balance U c h (x + y) (x - y)
-  have he₀ : (x + y) + (x - y) = x + x := by abel
-  have he₁ : (x + y) + T (x - y) = -T (T (x - visibleL U c h y)) := by
-    simp only [visibleL, AddMonoidHom.sub_apply, AddMonoidHom.comp_apply,
-      map_sub, map_add, map_neg, visible_marker_two]
-    abel
-  have he₂ : (x + y) + T (T (x - y)) = -T (x + visibleL U c h y) := by
-    simp only [visibleL, AddMonoidHom.sub_apply, AddMonoidHom.comp_apply,
-      map_sub, map_add, map_neg, visible_marker_two]
-    abel
-  rw [he₀, he₁, he₂] at hb
-  simp only [energy_double, energy_even, energy_marker] at hb
-  dsimp [parallelogramDefect]
-  rw [energy_L]
-  linarith
-
-private theorem visible_parallelogram (x y : A) :
-    f (x + y) + f (x - y) = 2 * f x + 2 * f y := by
-  have h₁ := parallelogramDefect_L U c h (visibleL U c h x) y
-  have h₂ := parallelogramDefect_L U c h y x
-  have h₃ : parallelogramDefect U c h (visibleL U c h x) (visibleL U c h y) =
-      3 * parallelogramDefect U c h x y := by
-    dsimp [parallelogramDefect]
-    rw [← map_add, ← map_sub, energy_L, energy_L, energy_L, energy_L]
-    ring
-  rw [parallelogramDefect_symm U c h (visibleL U c h x) y,
-    h₂, parallelogramDefect_symm U c h y x] at h₁
-  dsimp [parallelogramDefect] at h₁ h₃
-  linarith
-
 /-- The actual visible squared-size function has an integer quadratic-map realization. -/
 theorem raw_visible_quadratic :
     ∃ Q : QuadraticMap ℤ A ℝ, (∀ x, Q x = f x) ∧
       ∀ x y, visibleComparison U c h x y = Q (x - y) := by
-  have ht : IsSMulRegular ℝ (2 : ℕ) := by
-    intro a b hab
-    simp only [two_nsmul] at hab
-    linarith
-  have hp : ∀ x y : A, f (x + y) + f (x - y) = 2 • f x + 2 • f y := by
-    intro x y
-    simpa only [two_nsmul, two_mul] using visible_parallelogram U c h x y
-  let Q : QuadraticMap ℤ A ℝ :=
-    TauCeti.QuadraticMap.ofParallelogram ht hp
-  exact ⟨Q, (fun _ => rfl), comparison_energy U c h⟩
+  obtain ⟨Q, hQ⟩ :=
+    (D5.S3.QuadraticForms.ThreeWayBalance.three_way_quadratic_structure
+      T f (energy_nonneg U c h) (energy_balance U c h)).2.2.2.2
+  exact ⟨Q, hQ, fun x y => (comparison_energy U c h x y).trans (hQ (x-y)).symm⟩
 end SquaredGeometry
+
+
+/-- A complete minimal model on the original magma; no factorization is assumed. -/
+structure RawHilbertRepresentation {M : Type u} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) where
+  carrier : Type v
+  [normed : NormedAddCommGroup carrier]
+  [innerProduct : InnerProductSpace ℂ carrier]
+  [complete : CompleteSpace carrier]
+  label : M → carrier
+  unit : label 1 = 0
+  product : ∀ a b, label (a * b) = label a + label b
+  phase : ∀ a, label (U a) = omega • label a
+  distance : ∀ a b, c a b = ‖label a - label b‖ ^ 2
+  minimal : (Submodule.span ℂ (Set.range label)).topologicalClosure = ⊤
+
+attribute [instance] RawHilbertRepresentation.normed RawHilbertRepresentation.innerProduct
+  RawHilbertRepresentation.complete
+
+private def groupModel {M : Type u} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) :
+    HilbertRepresentation.{u,u} (visibleMarker U c h) (visibleEnergy U c h) :=
+  Classical.choice ((three_way_hilbert_characterization
+    (visibleMarker U c h) (visibleEnergy U c h) (energy_nonneg U c h)).1.mp
+      (energy_balance U c h))
+
+private theorem original_distance {M : Type u} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c)
+    (R : HilbertRepresentation.{u,v} (visibleMarker U c h) (visibleEnergy U c h)) (a b : M) :
+    c a b = ‖R.label (visibleLabel U c h a) - R.label (visibleLabel U c h b)‖ ^ 2 := by
+  rw [← visibleComparison_label U c h a b, comparison_energy, R.normSq, map_sub]
+
+private def originalModel {M : Type u} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c)
+    (R : HilbertRepresentation.{u,v} (visibleMarker U c h) (visibleEnergy U c h)) :
+    RawHilbertRepresentation.{u,v} U c where
+  carrier := R.carrier
+  label a := R.label (visibleLabel U c h a)
+  unit := by rw [show visibleLabel U c h (1 : M) = 0 from Subtype.ext (gamma_one c), map_zero]
+  product a b := by rw [visibleLabel_mul, map_add]
+  phase a := by rw [visibleLabel_marker, R.phase]
+  distance := original_distance U c h R
+  minimal := by
+    have he : Set.range (fun a => R.label (visibleLabel U c h a)) = Set.range R.label :=
+      Set.range_comp R.label (visibleLabel U c h) |>.trans
+        (by rw [Set.range_eq_univ.mpr (visibleLabel_surjective U c h), Set.image_univ])
+    rw [he]
+    exact R.minimal
+
+private theorem rawModel_balance {M : Type u} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (hU : U 1 = 1)
+    (S : RawHilbertRepresentation.{u,v} U c) : RawBalance U c := by
+  let T : S.carrier →+ S.carrier :=
+    (omega • (LinearMap.id : S.carrier →ₗ[ℂ] S.carrier)).toAddMonoidHom
+  let R : HilbertRepresentation T (fun x : S.carrier => ‖x‖ ^ 2) :=
+    { carrier := S.carrier
+      label := AddMonoidHom.id _
+      normSq := fun _ => rfl
+      phase := fun _ => rfl
+      minimal := by simp }
+  have hb := (three_way_hilbert_characterization T (fun x : S.carrier => ‖x‖ ^ 2)
+    (fun x => sq_nonneg ‖x‖)).2.1 R
+  refine ⟨hU, fun a b => by rw [S.distance]; positivity,
+    fun a => by simp [S.distance], ?_⟩
+  intro a b d e
+  have he (a b d e : M) :
+      S.label (a*d) - S.label (b*e) =
+        (S.label a - S.label b) + (S.label d - S.label e) := by
+    rw [S.product, S.product]; abel
+  simp only [S.distance, he, S.phase, ← smul_sub, smul_smul]
+  exact hb (S.label a - S.label b) (S.label d - S.label e)
+
+private theorem visible_label_zero_of_model_zero {M : Type u} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c)
+    (R : HilbertRepresentation.{u,v} (visibleMarker U c h) (visibleEnergy U c h))
+    (a b : M) (he : R.label (visibleLabel U c h a) = R.label (visibleLabel U c h b)) :
+    gamma c a = gamma c b := by
+  have hl (z : M) : c a z = c b z := by
+    rw [original_distance U c h R, original_distance U c h R, he]
+  have hr (z : M) : c z a = c z b := by
+    rw [original_distance U c h R, original_distance U c h R, he]
+  have hq : q c a = q c b := hl 1
+  have hrr : r c a = r c b := hr 1
+  have hv : beta c a = beta c b := by
+    apply sub_eq_zero.mp
+    apply quotient_joint_nondegenerate c (h.diagonal 1)
+    · intro z
+      rw [map_sub, LinearMap.sub_apply, quotientForm_beta c (h.diagonal 1),
+        quotientForm_beta c (h.diagonal 1)]
+      simp only [kernel, hq, hl z, sub_self]
+    · intro z
+      rw [map_sub, quotientForm_beta c (h.diagonal 1), quotientForm_beta c (h.diagonal 1)]
+      simp only [kernel, hrr, hr z, sub_self]
+  exact congrArg (W c).mkQ hv
+
+private theorem visible_energy_definite {M : Type u} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (x : visibleGroup U c h) :
+    visibleEnergy U c h x = 0 ↔ x = 0 := by
+  let R := groupModel U c h
+  constructor
+  · intro hx
+    obtain ⟨a, rfl⟩ := visibleLabel_surjective U c h x
+    have hz : visibleLabel U c h (1 : M) = 0 := Subtype.ext (gamma_one c)
+    have he : R.label (visibleLabel U c h a) = R.label (visibleLabel U c h 1) := by
+      rw [hz, map_zero]
+      have hn := hx
+      rw [R.normSq] at hn
+      exact norm_eq_zero.mp (sq_eq_zero_iff.mp hn)
+    apply Subtype.ext
+    exact (visible_label_zero_of_model_zero U c h R a 1 he).trans (gamma_one c)
+  · rintro rfl
+    exact energy_zero U c h
+
+private theorem raw_zero_comparison_iff {M : Type u} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (a b : M) :
+    c a b = 0 ↔ gamma c a = gamma c b := by
+  rw [← visibleComparison_label U c h a b, comparison_energy, visible_energy_definite,
+    sub_eq_zero]
+  exact Subtype.ext_iff
+
+private theorem model_constant_on_fibres {M : Type u} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c)
+    (S : RawHilbertRepresentation.{u,v} U c) (a b : M)
+    (he : gamma c a = gamma c b) : S.label a = S.label b := by
+  apply sub_eq_zero.mp
+  apply norm_eq_zero.mp
+  apply sq_eq_zero_iff.mp
+  rw [← S.distance]
+  exact (raw_zero_comparison_iff U c h a b).mpr he
+
+private def factoredModel {M : Type u} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c)
+    (S : RawHilbertRepresentation.{u,v} U c) :
+    HilbertRepresentation.{u,v} (visibleMarker U c h) (visibleEnergy U c h) where
+  carrier := S.carrier
+  label :=
+    { toFun x := S.label (originalLabel U c h x)
+      map_zero' := by
+        rw [model_constant_on_fibres U c h S _ 1 (by
+          rw [originalLabel_spec, gamma_one]; rfl), S.unit]
+      map_add' x y := by
+        rw [model_constant_on_fibres U c h S _
+          (originalLabel U c h x * originalLabel U c h y) (by
+            rw [gamma_mul, originalLabel_spec, originalLabel_spec, originalLabel_spec]; rfl), S.product] }
+  normSq x := by
+    change c (originalLabel U c h x) (originalLabel U c h 0) = _
+    rw [model_constant_on_fibres U c h S (originalLabel U c h 0) 1 (by
+      rw [originalLabel_spec, gamma_one]; rfl), S.unit, sub_zero] at *
+    exact S.distance _ _
+  phase x := by
+    change S.label (originalLabel U c h (visibleMarker U c h x)) = _
+    rw [model_constant_on_fibres U c h S _ (U (originalLabel U c h x)) (by
+      rw [gamma_marker, originalLabel_spec, originalLabel_spec]; rfl), S.phase]
+  minimal := by
+    have he : Set.range (fun x => S.label (originalLabel U c h x)) = Set.range S.label := by
+      ext z
+      constructor
+      · rintro ⟨x, rfl⟩; exact ⟨_, rfl⟩
+      · rintro ⟨a, rfl⟩
+        refine ⟨visibleLabel U c h a, ?_⟩
+        exact model_constant_on_fibres U c h S _ a (originalLabel_spec U c h _)
+    rw [he]
+    exact S.minimal
+
+private theorem factoredModel_label {M : Type u} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c)
+    (S : RawHilbertRepresentation.{u,v} U c) (a : M) :
+    (factoredModel U c h S).label (visibleLabel U c h a) = S.label a :=
+  model_constant_on_fibres U c h S _ a (originalLabel_spec U c h _)
+
+/-- The complete Hilbert criterion on the original unital magma, with unique minimal models. -/
+theorem raw_hilbert_characterization {M : Type u} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (hU : U 1 = 1) :
+    (RawBalance U c ↔ Nonempty (RawHilbertRepresentation.{u,u} U c)) ∧
+    (∀ (S : RawHilbertRepresentation.{u,v} U c), RawBalance U c) ∧
+    (∀ (h : RawBalance U c) (S : RawHilbertRepresentation.{u,v} U c)
+      (T : RawHilbertRepresentation.{u,w} U c),
+      ∃! e : S.carrier ≃ₗᵢ[ℂ] T.carrier, ∀ a, e (S.label a) = T.label a) := by
+  refine ⟨⟨fun h => ⟨originalModel U c h (groupModel U c h)⟩,
+    fun ⟨S⟩ => rawModel_balance U c hU S⟩, rawModel_balance U c hU, ?_⟩
+  intro h S T
+  obtain ⟨e, he, hu⟩ :=
+    (three_way_hilbert_characterization (visibleMarker U c h) (visibleEnergy U c h)
+      (energy_nonneg U c h)).2.2 (factoredModel U c h S) (factoredModel U c h T)
+  refine ⟨e, ?_, ?_⟩
+  · intro a
+    simpa only [factoredModel_label] using he (visibleLabel U c h a)
+  · intro e' he'
+    apply hu
+    intro x
+    obtain ⟨a, rfl⟩ := visibleLabel_surjective U c h x
+    simpa only [factoredModel_label] using he' a
 
 end D5.S3.Quantum.Completion.RawAnchoredRadicalDescent
