@@ -108,33 +108,52 @@ internal sealed class PositiveRelationSupportNecessityDocument : IScribeDocument
                 + "Eᵢ = {((v,s),(w,z)) | Bᵢ(v,w) = s}, with "
                 + "B₀(v,w) = (v₁w₁ + v₂w₂, v₁w₂ + v₂w₃) and "
                 + "B₁(v,w) = (v₁w₁ − v₂w₂, v₂w₁ + v₁w₂). The full w₃ coordinate "
-                + "and all nine z coordinates are retained for both sources.")),
-            Paragraph(Text("The literal carriers have cardinalities 72 and 243, while "
+                + "and all nine z values are retained for both sources.")),
+            Paragraph(Text("The nonzero v subtype has cardinality 8, so A has cardinality 8 × 9 = 72, "
+                + "and T has cardinality 27 × 9 = 243. The "
                 + "the ambient word carriers (Fin 7 → Bool) and (Fin 8 → Bool) have "
                 + "cardinalities 128 and 256. Both source relations have every left "
                 + "and right endpoint incident; their literal edge sets each have 1944 "
                 + "pairs. The strict inequalities 72 < 128 and 243 < 256 provide the "
                 + "unused ambient labels required by the support theorem.")),
+            Paragraph(Text("For each nonzero v, each Bᵢ(v,−) takes every s value: "
+                + "there are exactly three w solutions. Each admits all nine z values, "
+                + "giving left degree 27. For fixed (w,z), every one of the eight "
+                + "nonzero v values determines exactly one s, giving right degree 8. "
+                + "In particular left incidence can take any solution w and z = 0; "
+                + "right incidence can take v = (1,0) and s = Bᵢ(v,w). Summing "
+                + "the left degrees gives 72 × 27 = 1944, with no coordinate quotient.")),
             Paragraph(Text("For 0 ≤ θ ≤ 1, a full-map generator at source zero has "
                 + "weight (1 − θ)/((128)₇₂(256)₂₄₃), and a source-one generator has "
                 + "weight θ/((128)₇₂(256)₂₄₃). Thus the zero branch is positive exactly "
                 + "when θ < 1 and the one branch exactly when θ > 0. At θ = 0 only "
                 + "the zero branch is supported; at θ = 1 only the one branch is "
                 + "supported. Any same-source replacement of either full injection keeps "
-                + "the source index and has the same positive prior.")),
+                + "the source index and has the same positive prior. The denominator is "
+                + "strictly positive and equals the number of full injection pairs, "
+                + "by Fintype.card_embedding_eq on both carriers.")),
             Paragraph(Text("The exact source application treats a completed history as "
                 + "samples : List ((Fin 7 → Bool) × (Fin 8 → Bool)) and D = samples.toFinset. "
                 + "Each completed pair is positive attained evidence, and target constancy "
                 + "over the supported generator family restricts to the general theorem's "
                 + "universal premise over every full injection pair for the actual source. "
-                + "The compiled application therefore exposes both full images and gives "
+                + "Attainment already places the actual supported generator in the compatible "
+                + "family, so the constancy premise is not over an empty family. Apply "
+                + "positive_certificate_support_lower_bound with its A replaced by this "
+                + "literal A, its B by T, its L and R by the two word carriers, its E "
+                + "by the actual Eᵢ, and its embeddings by the full λ and ϱ. The source "
+                + "incidence and cardinalities discharge every remaining premise. The "
+                + "two evidence projections equal range λ and range ϱ; max(72,243) = 243 gives "
                 + "243 ≤ D.card and 243 ≤ samples.length for each supported branch.")),
             Paragraph(Text("This application uses only complete positive pairs. Repetitions "
                 + "remain completed slots, while absent pairs, partial-bit caches, support "
                 + "dictionaries, cross-source identification, and the separate 576- and "
                 + "324-pair witness constructions are outside this consequence. The "
                 + "source-specific application check is transient evidence for the existing "
-                + "general theorem; the retained mathematical content is the general "
+                + "general theorem, with no retained specialization declaration. This establishes "
+                + "the PCR 4.1 support-necessity consequence only; it supplies no "
+                + "preparation procedure, native acquisition contract, or source-bit recovery. "
+                + "The retained mathematical content is the general "
                 + "support and slot lower bound and this scope-limited correspondence."))
         )));
 
