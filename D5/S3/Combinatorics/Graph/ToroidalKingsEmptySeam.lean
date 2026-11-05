@@ -292,7 +292,7 @@ private theorem rectangle_log_bounds (r c : ℕ) :
   have h := Real.log_le_log hp (by exact_mod_cast rectangle_le_binary r c)
   simpa [Real.log_pow, Nat.cast_mul, mul_assoc, mul_comm, mul_left_comm] using h
 
-private theorem free_log_limit : ∃ s : ℝ, 0 ≤ s ∧
+theorem free_log_limit : ∃ s : ℝ, 0 ≤ s ∧
     Tendsto (fun n : ℕ => Real.log (freeCount n : ℝ) / (n : ℝ) ^ 2) atTop (𝓝 s) := by
   simpa only [freeCount_eq_rectangle] using
     RectangularCountEntropy.square_log_limit

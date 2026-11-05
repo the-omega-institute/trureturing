@@ -42,7 +42,7 @@ theorem square_log_limit (f : ℕ → ℕ → ℝ) (L : ℝ) (hL : 0 ≤ L)
   have hg0 (c : ℕ) : 0 ≤ g c :=
     ge_of_tendsto' (hg c) fun r => div_nonneg (hbound r c).1 (Nat.cast_nonneg r)
   let S : Set ℝ := (fun k : ℕ => g k / k) '' Ici 1
-  have hne : S.Nonempty := ⟨g 1 / 1, 1, by simp, rfl⟩
+  have hne : S.Nonempty := ⟨g 1 / 1, 1, by simp, by norm_num⟩
   have hS : BddBelow S := by
     refine ⟨0, ?_⟩
     rintro _ ⟨k, hk, rfl⟩
