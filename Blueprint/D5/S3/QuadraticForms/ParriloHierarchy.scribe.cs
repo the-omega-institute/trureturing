@@ -8,7 +8,7 @@ internal sealed class ParriloHierarchyDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The full copositive polynomial SOS hierarchy",
         H("The full copositive polynomial SOS hierarchy"), Blocks(
-            Paragraph(Text("For every level k, K consists of real symmetric M for which (sum_i X_i squared)^k times sum_ij M_ij X_i squared X_j squared is a native real sum of squares. The definitions use the genuine squared-variable substitution and cover every finite dimension, with no normalization. This is the hierarchy used by Gulati-Nechita-Park, not a substitution by the zeroth conic GDNN approximation. Its actual tensor-extension characterization remains a separate obligation.")),
+            Paragraph(Text("For every level k, K consists of real symmetric M for which (sum_i X_i squared)^k times sum_ij M_ij X_i squared X_j squared is a native real sum of squares. The definitions use the genuine squared-variable substitution and cover every finite dimension, with no normalization. This is the hierarchy used by Gulati-Nechita-Park. The separate BoseHierarchy module proves its actual tensor-extension characterization.")),
             Describe.Lean(DescribeId.Create("parrilo-lifted-form"),
                 DeclarationHandle.Create(Prefix + "liftedForm"),
                 H("Homogeneous form before squaring variables"), StatementSource.WithoutFormula(),
@@ -24,11 +24,6 @@ internal sealed class ParriloHierarchyDocument : IScribeDocumentDefinition
                 H("Full native SOS hierarchy"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The predicate is real symmetry and unrestricted native IsSumSq of the actual polynomial. Zero and singular matrices are retained."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("parrilo-monotone"),
-                DeclarationHandle.Create(Prefix + "hierarchy_monotone"),
-                H("Increasing hierarchy"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Multiplication by the genuine sum of squares sum_i X_i squared carries level k into level k+1."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("parrilo-closed"),
                 DeclarationHandle.Create(Prefix + "K_closed"),
                 H("Closedness at every level"), StatementSource.WithoutFormula(),

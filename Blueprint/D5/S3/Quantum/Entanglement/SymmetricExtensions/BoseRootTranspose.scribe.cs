@@ -9,7 +9,7 @@ internal sealed class BoseRootTransposeDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Root partial transpose of actual star witnesses", H("Root partial transpose of actual star witnesses"),
         Blocks(
-            Paragraph(Text("Finite register and local-label types use the original product basis. This is the root-transpose transport underlying the CLDUI companion application in Haobo Ma and Wenlin Zhang's note. The GNP cone characterization remains a separate prerequisite. Full Bose support is not asserted for a companion witness.")),
+            Paragraph(Text("Finite register and local-label types use the original product basis. This is the root-transpose transport underlying the CLDUI companion application in Haobo Ma and Wenlin Zhang's note. The GNP cone characterization is proved separately in BoseHierarchy. Full Bose support is not asserted for a companion witness.")),
             Describe.Lean(DescribeId.Create("boseroottranspose-allcutsppt"),
                 DeclarationHandle.Create(Prefix + "AllCutsPPT"),
                 H("AllCutsPPT"), StatementSource.WithoutFormula(),

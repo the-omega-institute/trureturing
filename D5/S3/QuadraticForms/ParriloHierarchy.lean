@@ -36,11 +36,6 @@ polynomial is a native sum of squares. No trace normalization is imposed. -/
 def K (k : ℕ) : Set (Matrix L L ℝ) :=
   {M | M.IsSymm ∧ IsSumSq (polynomial k M)}
 
-private lemma polynomial_formula (k : ℕ) (M : Matrix L L ℝ) :
-    polynomial k M = (∑ i : L, X i ^ 2) ^ k *
-      ∑ i, ∑ j, C (M i j) * X i ^ 2 * X j ^ 2 := by
-  simp [polynomial,liftedForm]
-
 private lemma liftedForm_homogeneous (k : ℕ) (M : Matrix L L ℝ) :
     (liftedForm k M).IsHomogeneous (k + 2) := by
   apply IsHomogeneous.mul
@@ -60,19 +55,6 @@ open private homogeneous_eq_form from D5.S3.QuadraticForms.HomogeneousSOSGram
 private lemma polynomial_homogeneous (k : ℕ) (M : Matrix L L ℝ) :
     (polynomial k M).IsHomogeneous (2 * (k + 2)) :=
   expand_homogeneous _ _ (liftedForm_homogeneous k M)
-
-/-- The all-level hierarchy is increasing. The extra multiplier is the
-genuine sum of squares Σ X_i², including zero and singular matrices. -/
-theorem hierarchy_monotone (k : ℕ) : K (L := L) k ⊆ K (k + 1) := by
-  intro M hM
-  refine ⟨hM.1,?_⟩
-  have he : polynomial (k + 1) M = (∑ i : L, X i ^ 2) * polynomial k M := by
-    rw [polynomial_formula,polynomial_formula,pow_succ]
-    ring
-  rw [he]
-  exact (IsSumSq.sum_sq Finset.univ (fun i : L => X i)).mul hM.2
-
-#print axioms hierarchy_monotone
 
 /-- Every level of the genuine Parrilo SOS hierarchy is a closed cone of
 real symmetric matrices. The native SOS condition is kept in the definition. -/
