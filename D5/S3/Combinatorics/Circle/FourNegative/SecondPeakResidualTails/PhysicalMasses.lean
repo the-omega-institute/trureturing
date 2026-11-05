@@ -1,7 +1,7 @@
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.Domain
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakParityTail.PhysicalBanks
 
-/- UNCOMPILED.  Additional original-owner publications used directly:
+/-! Prepared residual construction.  Additional original-owner publications used directly:
    PacketNormalForm.Source: chainOf, weightedMask, packet_masses,
      base, newBase, oldValue, newValue;
    SecondPeakParityTail.PhysicalBanks: local_chain.

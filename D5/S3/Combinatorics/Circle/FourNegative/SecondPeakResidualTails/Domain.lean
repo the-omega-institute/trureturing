@@ -1,6 +1,6 @@
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.PhysicalLabels
 
-/- UNCOMPILED.  The original domain is unchanged.  The theorem in this file
+/-! Prepared residual construction.  The original domain is unchanged.  The theorem in this file
    constructs label inventories and multiplicities only.  It does NOT assert
    either OriginalOrder, a joint strip theorem, or a Circle result.
 

@@ -114,7 +114,7 @@ theorem inventory_pair (width m n : ℕ) (hsum : m + n = 2 ^ width - 1)
       by_cases hbi : bank = i
       · exact Or.inl (by simpa [hbi] using hb)
       · by_cases hbj : bank = j
-        · exact Or.inr (by simpa [hbi, hbj] using hb)
+        · exact Or.inr (by simpa [hbi, hbj, hij.symm] using hb)
         · simp [hbi, hbj] at hb
 
 theorem inventory_02 (width m n : ℕ) (hsum : m + n = 2 ^ width - 1) :

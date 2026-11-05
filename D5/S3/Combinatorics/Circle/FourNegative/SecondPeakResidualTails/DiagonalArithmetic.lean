@@ -1,7 +1,7 @@
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.DiagonalSelector
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.C2Arithmetic
 
-/- UNCOMPILED.  Here d=2*c+delta, b=d+1+ell and a=c+1.
+/-! Prepared residual construction.  Here d=2*c+delta, b=d+1+ell and a=c+1.
    The four boundary schedules are retained literally. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

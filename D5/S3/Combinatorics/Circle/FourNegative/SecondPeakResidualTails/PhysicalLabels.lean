@@ -3,7 +3,7 @@ import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.DiagonalA
 import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.PhysicalBanks
 
-/- UNCOMPILED.  Required original-owner publications, with unchanged bodies:
+/-! Prepared residual construction.  Required original-owner publications, with unchanged bodies:
    PacketNormalForm.Source: size, chainStart, chainLength, negatives;
    PacketNormalForm.Structure: blocksWord;
    PacketNormalForm.Certificate: orderedPackets.

@@ -1,6 +1,6 @@
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.C2Arithmetic
 
-/- UNCOMPILED.  Literal fixed tables and the two universal tails are from
+/-! Prepared residual construction.  Literal fixed tables and the two universal tails are from
    uxwv-c3-a5-full-tail-20261102.py.  e=1 is auxiliary; the original public
    c=3,a=5 family starts at d>=7, hence e=d-5>=2. -/
 set_option autoImplicit false

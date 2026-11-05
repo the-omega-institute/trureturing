@@ -1,7 +1,7 @@
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.MaskInventory
 import Mathlib.Data.Int.DivMod
 
-/- UNCOMPILED.  The signed selector is the corrected selector in
+/-! Prepared residual construction.  The signed selector is the corrected selector in
    uxwv-lowest-diagonal-complement-selector-20261102.py.  All subtraction
    inside the selector and its numerator is in integers. -/
 set_option autoImplicit false

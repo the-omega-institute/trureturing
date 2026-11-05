@@ -1,6 +1,6 @@
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.MaskInventory
 
-/- UNCOMPILED translation of the five symbolic charts in
+/-! Arithmetic translation of the five symbolic charts in
    uxwv-c2-a3-full-tail-20261102.py.  This file proves arithmetic and binary
    inventories only; it contains no claim about centered-source strips. -/
 set_option autoImplicit false
