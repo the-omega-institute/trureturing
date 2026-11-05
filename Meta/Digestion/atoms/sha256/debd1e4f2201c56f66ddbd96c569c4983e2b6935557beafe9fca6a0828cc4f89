@@ -1,0 +1,13 @@
+**External-source scope.** The Lacey–Petermichl–Reguera paper was read as the cited $A_2$ Hilbert-transform theorem; the Kedlaya page was read for the unconditional PNT-error setting; the Ramanujan–Robin paper was read as historical/criterion context. These reads establish source scope, not the missing manuscript-specific compositions.
+
+/sshx 继续。这一轮可以补上前面一个真正缺失的环节：
+
+> **不仅证明递归误差可和，还构造一个确实趋于零的误差读数，并用它给每一步有限核心附上严格下界。这个下界允许直接接入 AURIC 的酉守恒结构和 Robin 不等式。**
+
+下面给出定义、定理和证明。**这些结论仍未完成黎曼猜想的证明；尚待证明的是，实际算术核心在窗口不断扩大时，始终满足最后给出的统一不等式。** 但现在，“继续递归”已经有了明确的误差控制和停止条件。
+
+项目依据仍取已经核对过的 [AURIC v37](https://github.com/the-omega-institute/trureturing/blob/18ab178472d8c29eb90d5e5f4e6c8b4c89038e84/docs/develop/theory/AURIC_BINARY_RELATIONS_UNITARY_REPRESENTATION_AND_GOLDEN_GATE_UNIVERSALITY_V37.md)：其第 6 节允许用保留上下文的算子值三轴递归表示完整关系，第 9 节给出酉误差的可和控制。下文的残差定理、有限积分下界和 Robin 接入，是在这个接口上继续作出的纸面推导。
+
+---
+
+<a id="section-1-fixed-arithmetic-object"></a>

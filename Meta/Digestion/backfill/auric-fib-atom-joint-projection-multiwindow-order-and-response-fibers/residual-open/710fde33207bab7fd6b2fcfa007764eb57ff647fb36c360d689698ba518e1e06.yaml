@@ -1,3 +1,6 @@
+# Writer boundary: the full Window coupling uses private TreeMarkovStability lift lemmas;
+# the Boolean feasibility GID alone does not cover it, and project-dependent reuse is not
+# upstream-only settlement. Parent and both listed children await an admissible writer route.
 fingerprints:
   raw_sha256: sha256:710fde33207bab7fd6b2fcfa007764eb57ff647fb36c360d689698ba518e1e06
   normalized_sha256: sha256:710fde33207bab7fd6b2fcfa007764eb57ff647fb36c360d689698ba518e1e06

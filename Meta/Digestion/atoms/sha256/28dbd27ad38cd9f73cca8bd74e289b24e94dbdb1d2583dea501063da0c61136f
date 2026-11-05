@@ -1,0 +1,36 @@
+对上述有限 $(H,\mathcal S,\tau)$，以下条件等价：
+
+1. 存在满足 C94 的映射 $R$；
+
+2. $\mathcal A=\mathcal S+i\mathcal S$ 是通常矩阵乘法下的含单位
+    $C^*$ 子代数，且
+
+
+   <a id="eq-c94-modular-condition"></a>
+
+   $$
+   \tau^{it}\mathcal A\tau^{-it}=\mathcal A
+     \qquad(t\in\mathbb R);
+   \tag{4.2}
+   $$
+
+3. 在某个共同酉坐标下，存在有限直和分解
+
+
+   $$
+   H=\bigoplus_k(H_{L,k}\otimes H_{R,k}),\qquad
+     \mathcal A=\bigoplus_k\bigl(B(H_{L,k})\otimes I_{R,k}\bigr),
+   $$
+
+
+    且忠实参照具有块乘积形式
+
+
+   $$
+   \tau=\bigoplus_kq_k\tau_{L,k}\otimes\tau_{R,k},
+     \qquad q_k>0,\quad\sum_kq_k=1,
+   $$
+
+
+    其中各 $\tau_{L,k},\tau_{R,k}$ 都为忠实密度态。
+

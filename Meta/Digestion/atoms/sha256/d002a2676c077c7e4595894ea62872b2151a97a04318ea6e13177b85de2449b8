@@ -1,0 +1,19 @@
+### 命题 30.5（常数、尖锐性与小成功边界）
+
+(30.12) 是在只知道一个效果和一个状态时的精确测量包络：若完整未来菜单恰好包含 $X$ 的正负谱投影所给的二结果读出，并取纯状态使 $|z|^2=rs$，则等号成立。对题设较弱的 $\sqrt{\lambda_-m}$ 界，取 $\rho_a=P_{v^\perp}$、$m=\lambda_-$，并取该二结果读出，即有
+
+$$
+\frac12\sum_w|P_j(a;q,w)-m c_{q,w}|=\lambda_-=\sqrt{\lambda_-m}.
+$$
+
+所以在不加入关于输入状态或原未来菜单的额外条件时，题设常数不能统一缩小。反之，原实现可能只提供一个严格受限的菜单，实际总变差可以严格小于 (30.12)；数学 Helstrom 读出只是上界的尖锐性见证，不是新增原生端口。
+
+小成功归一化没有统一极限。解析地取
+
+$$
+E_\varepsilon=\begin{pmatrix}1&0\\0&\varepsilon\end{pmatrix},\qquad
+\rho=P_{v^\perp},\qquad 0<\varepsilon<1,\qquad m=\varepsilon,\quad\lambda_-=\varepsilon,
+$$
+
+并取未来二结果 $M_1=P_v,M_2=P_{v^\perp}$。则未归一化距离为 $\varepsilon$，而条件律分别为 $(0,1)$ 与 $c=(1,0)$，条件总变差恰为一。于是 $\lambda_-\to0$ 并不保证 $\sqrt{\lambda_-/m}$ 或两个锚点界趋于零；必须另给 $m\gg\lambda_-$、一个下界 $m\ge m_0>0$，或输入支撑的 $s_a$ 控制。这个边界不产生任何全局信息损失或守恒泛函。
+

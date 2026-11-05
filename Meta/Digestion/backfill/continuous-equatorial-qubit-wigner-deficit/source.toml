@@ -1,0 +1,5 @@
+source_id = "continuous-equatorial-qubit-wigner-deficit"
+path = "docs/develop/theory/CONTINUOUS_EQUATORIAL_QUBIT_WIGNER_DEFICIT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

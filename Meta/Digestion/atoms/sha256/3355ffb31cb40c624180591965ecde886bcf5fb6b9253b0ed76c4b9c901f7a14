@@ -1,0 +1,34 @@
+### 命题 17.1（固定参照下的有限态族证书）
+
+固定同一个 $\sigma>0$、$\mathcal N$ 及 $\tau=\mathcal N\sigma>0$，
+取有限态族 $\rho_1,\ldots,\rho_s$ 和严格正权重 $w_j$，$\sum_jw_j=1$。
+定义
+
+$$
+\ell_j=Q_\sigma(\rho_j)-Q_\tau(\mathcal N\rho_j),\qquad
+L=\sum_jw_j\ell_j.
+$$
+
+则 $L=0$ 当且仅当同一个 $\mathcal R_{\sigma,\mathcal N}$
+恢复整个族 $\{\sigma,\rho_1,\ldots,\rho_s\}$。
+并且
+
+$$
+\sum_jw_j\left[
+\frac12\|\rho_j-\mathcal R_{\sigma,\mathcal N}\mathcal N\rho_j\|_1
+\right]^2\le\frac14 L.
+$$
+
+**证明。**
+每项损失非负且权重严格为正，故 $L=0$ 恰好等价于所有 $\ell_j=0$。
+逐态应用同一参照的主定理；Petz 映射只依赖 $\sigma,\mathcal N$，
+所以得到的是同一个恢复。反向由数据处理两次夹逼给每项零损失。
+最后逐态平方误差界乘 $w_j$ 后相加即可。
+
+这把单一二元证书推广成同一通道下的有限统计模型，既不更换 Born 规则，
+也不增设另一个公理。它承接量子充分性的标准恢复结构 [10](#ref-gaorecovery)、[11](#ref-caolu)。
+若不同局部问题各自更换参照、通道或恢复许可，逐个得到的
+$\forall j\,\exists\mathcal R_j$ 不能直接写成已供应
+$\exists\mathcal R\,\forall j$ 的共同装置；本命题正是利用同一
+$\sigma$ 和同一 $\mathcal N$ 明确完成这一步。
+

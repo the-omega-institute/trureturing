@@ -213,6 +213,7 @@ Choose A={0}, B={1}, D={2} and E={3}, so the five block lengths are (0,1,1,1,1).
 - Truth anchor: `D5/S3/Quantum/SpinChains/ComplexHoppingCoherenceDampingRefutation.result`
 - Truth anchor: `D5/S3/Quantum/SpinChains/ComplexHoppingCoherenceDampingRefutation.spinTrace`
 - Truth anchor: `D5/S3/Quantum/SpinChains/ComplexHoppingCoherenceDampingRefutation.twistedTrace`
+- Dependency: [D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant](../FockSpace/ForbiddenNeighbourDeterminant.md)
 - Dependency: [D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction](../Information/SeparableStateLocalUnitaryStabilizerObstruction.md)
 - Dependency: [D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation](../Measurement/StabilizerPovmMaximalEntanglementRefutation.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/ButterflyLambdaTwoRelativeDesignRefutation](../QuantumChannels/ButterflyLambdaTwoRelativeDesignRefutation.md)

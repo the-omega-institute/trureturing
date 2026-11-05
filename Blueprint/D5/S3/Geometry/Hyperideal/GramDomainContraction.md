@@ -4,9 +4,21 @@
 
 The full six-cosh negative-determinant Gram domain has an explicit contraction.
 
+**Theorem 1.1 (The two-variable arithmetic-geometric mean bound).**
+
+$$\forall u v:\mathbb{R}, 0\le u\implies0\le v\implies2\cdot\sqrt{u\cdot v}\le u+v$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/Hyperideal/GramDomainContraction.twice_sqrt_product_le_add` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Twice the geometric mean of two nonnegative real numbers is bounded by their sum.
+
 Use the edge order (12,13,14,34,24,23). For x in R6, G(x) is the existing OriginalCosineDeterminantInterface.gram: its diagonal is one and its six off-diagonal edge entries are minus the corresponding coordinates of x. Write Delta(x)=-det(G(x)). X is the subtype of R6 defined by x_i>1 for every i and Delta(x)>0, with its inherited Euclidean topology. The center is the vector with every coordinate equal to two.
 
-**Theorem 1.1 (The entire parameter domain is contractible).**
+**Theorem 1.2 (The entire parameter domain is contractible).**
 
 $$ContractibleSpace\left(X\right)$$
 
@@ -29,4 +41,5 @@ The domain includes every six-coordinate point satisfying its two defining condi
 ## References
 
 - Truth anchor: `D5/S3/Geometry/Hyperideal/GramDomainContraction.full_domain_contractible`
+- Truth anchor: `D5/S3/Geometry/Hyperideal/GramDomainContraction.twice_sqrt_product_le_add`
 - Dependency: [D5/S3/Geometry/Hyperideal/OriginalCosineDeterminantInterface](OriginalCosineDeterminantInterface.md)

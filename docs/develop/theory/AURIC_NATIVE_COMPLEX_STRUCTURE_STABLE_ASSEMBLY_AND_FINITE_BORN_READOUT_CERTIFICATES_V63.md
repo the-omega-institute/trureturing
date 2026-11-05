@@ -1227,3 +1227,171 @@ Applied and Computational Harmonic Analysis **30**(1), 20--36 (2011).
 本文引用其 §1 的问题定位、精确树恢复及误差累积背景，不使用其算法或实验结论。
 
 > 作者原稿结束指令：`\end{thebibliography}`、`\end{document}`。
+
+## 10. 原八十九配置的离散端点关系强制实际内部守恒
+
+**定义 10.1（完整原源上的端点前件）。** 固定定义 2.1 的 $m=9$ 来源：$E_9$ 是 $\{1,\ldots,9\}$ 的全部无相邻占据位集，$|E_9|=89$，外边界为 $b_{-1}b_0=10$、$b_{10}b_{11}b_{12}=010$。每个 $V_q$ 是正定实二维内积空间，$L_q$ 是任意实际实线性响应，每条合法翻转边保留实际等距运输 $T_{qr}$ 及其逆 $T_{rq}=T_{qr}^{\dagger}$。全部十一地址的 $B_j$ 逐块仍为定义 2.1 的字面黄金投影：可翻转块使用 $x,x^2,c$，阻塞内点使用 $b_{j-1}b_{j+1}I_q$，边界使用 $B_0=b_1I_q$、$B_{10}=b_9I_q$，其中
+
+$$
+x=\frac{\sqrt5-1}{2},\qquad c=x\sqrt{x},\qquad
+\alpha=\frac{3\pi}{5},\qquad
+\mathcal L=\bigoplus_{q\in E_9}L_q,\qquad
+A_j=\alpha\mathcal L(I+B_j),\qquad \mathsf K_j=e^{A_j}.
+$$
+
+根配置和单位根向量保持原 ready。具体地，[相干重建续卷 II 定义 100.1 的 (100.2)](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md) 将 $v=e_{00100}$ 嵌入 $|10\,00100\,010\,0010\rangle$，故内部根位集为 $q_* =\{3,7\}$。保留
+
+$$
+u_*\in V_{q_*},\qquad \|u_*\|=1,\qquad
+\operatorname{tr}_{\mathbb R}(L_{q_*}^{\dagger}L_{q_*})=2.
+$$
+
+用以下端点方程替代定义 2.2 的全部内部时刻保范数条件：
+
+$$
+\begin{aligned}
+\mathsf K_j^{\dagger}\mathsf K_j&=I,
+&\mathsf K_j^{10}&=I &&(0\le j\le10),\\
+\mathsf K_j\mathsf K_{j+1}\mathsf K_j
+&=\mathsf K_{j+1}\mathsf K_j\mathsf K_{j+1}
+&&&&(0\le j\le9),\\
+\mathsf K_j\mathsf K_k&=\mathsf K_k\mathsf K_j
+&&&&(0\le j,k\le10,\ |j-k|\ge2).
+\end{aligned}
+$$
+
+这些是完整 $178$ 实维载体上的装置恒等式。固定同一个 $\omega$、同一个根及其原有设置、参考、时钟、记录、失败与返回记忆合同；替代准备仅为该根上许可的有限正向原生字。前读域为 $\{0,\ldots,10\}^{<\infty}$，后读域仍为 $\{0,\ldots,6\}^{<\infty}$，实际观察与控制保持原合同。全载体量词不赋予任意准备、独立来源、重置或新读口；内部 $s$ 只作数学参数。
+
+**定理 10.2（原源端点到实际生成元的刚性）。** 对每一组满足定义 10.1 的实际数据，原来指定的全部生成元均满足
+
+$$
+A_j^{\dagger}+A_j=0\qquad(0\le j\le10).
+$$
+
+等价地，对每个 $v\in\mathcal V$、每个原地址及每个 $s\in[0,1]$，有 $\|e^{sA_j}v\|^2=\|v\|^2$。因此定义 2.2 的输入在此来源上成为离散端点前件的结论，定理 2.3 和命题 2.4 的共同复结构及原规范平坦性随之适用。反自伴结论本身只使用端点正交、十次幂和相邻编织；远距交换供命题 2.4 使用。
+
+**证明。** 首先，边界地址 $0$ 在每个纤维上是
+
+$$
+\mathsf K_0|_{V_q}=e^{\alpha h_qL_q},\qquad h_q=1+b_1(q)\in\{1,2\}.
+$$
+
+其正交性及 $\det e^X=e^{\operatorname{tr}X}>0$ 给出
+
+$$
+\operatorname{tr}_{\mathbb R}L_q=0\qquad(q\in E_9).
+\tag{10.1}
+$$
+
+其次，$b_1(q_*)=0$，故 $R_*=e^{\alpha L_{q_*}}$ 是二维正交旋转。根钟给 $\|L_{q_*}\|_{\mathrm{op}}\le\sqrt2<5/3=\pi/\alpha$。若 $R_*=\varepsilon I$、$\varepsilon\in\{1,-1\}$，谱映射使 $L_{q_*}$ 的特征值满足 $e^{\alpha\lambda}=\varepsilon$；这个范数界只允许 $\varepsilon=1$、$\lambda=0$。由 (10.1) 及 Cayley–Hamilton，$L_{q_*}^2=0$，再由 $e^{\alpha L_{q_*}}=I+\alpha L_{q_*}=I$ 得 $L_{q_*}=0$，与根钟矛盾。所以 $R_*$ 非标量。二维非标量旋转的实交换代数是 $\mathbb RI+\mathbb RJ_0$，其中 $J_0$ 是相应正交复结构。$L_{q_*}$ 与自己的指数对易，结合 (10.1) 和根钟即得
+
+$$
+L_{q_*}^{\dagger}=-L_{q_*},\qquad L_{q_*}^2=-I.
+\tag{10.2}
+$$
+
+下面固定任意已经满足 $L_q^{\dagger}=-L_q$、$L_q^2=-I$ 的配置 $q$，记 $J=L_q$。对任一相邻配置 $r$，只在这条边上用等距 $T_{qr}$ 把 $V_r$ 识别到 $V_q$，记
+
+$$
+M=T_{qr}L_rT_{rq}.
+$$
+
+这只是该二点块的坐标选择。把已知的 $q$ 排在第一位后，其原生成元除以 $\alpha$ 为
+
+$$
+N=DC,\qquad
+D=\begin{pmatrix}J&0\\0&M\end{pmatrix},\qquad
+C=\begin{pmatrix}(1+p)I&cI\\cI&(2-p)I\end{pmatrix},
+\qquad p\in\{x,x^2\}.
+\tag{10.3}
+$$
+
+两个 $p$ 分别对应已知配置中心位为 $0$ 或 $1$；未改变原黄金块。$C$ 的特征值为 $2,1$，且 $p(1-p)=c^2>0$。置 $\mathcal J_0=\operatorname{diag}(J,J)$、$\Xi=C\mathcal J_0$。二维迹零恒等式 $M^{\dagger}J+JM=(\operatorname{tr}M)J=0$ 和 $C\mathcal J_0=\mathcal J_0C$ 给
+
+$$
+N^{\dagger}\Xi+\Xi N
+=C(D^{\dagger}\mathcal J_0+\mathcal J_0D)C=0.
+$$
+
+故实际二点端点 $K=e^{\alpha N}$ 保持交替形式 $\Xi$。端点正交性于是给
+
+$$
+K^{\dagger}\Xi K=\Xi,\qquad [K,\Xi]=0,
+\qquad
+\Xi^2=-C^2,\qquad C=\frac{2I-\Xi^2}{3}.
+$$
+
+所以 $K$ 与 $C$、$\mathcal J_0$ 同时对易。在 $C$ 的两个实二维特征空间上，$K$ 分别是旋转 $R_2,R_1$。
+
+若 $M$ 不反自伴，则在 $C$ 的正交特征基中，$N$ 的两个对角块分别为
+
+$$
+2\bigl[pJ+(1-p)M\bigr],\qquad (1-p)J+pM.
+$$
+
+两者迹零且均不反自伴。由 $[N,K]=0$，它们分别与 $R_2,R_1$ 对易。迹零实二维矩阵若与非标量正交旋转对易，就反自伴，故这里必有 $R_2=\varepsilon_2I$、$R_1=\varepsilon_1I$。同一特征基中，$N$ 的非对角块是 $c(M-J)$ 及其两倍，至多同时差一个符号；$M-J\ne0$。再次用 $[N,K]=0$，得 $\varepsilon_2=\varepsilon_1$。因此
+
+$$
+M^{\dagger}\ne-M\quad\Longrightarrow\quad
+K=\varepsilon I_{V_q\oplus V_r},\qquad\varepsilon\in\{1,-1\}.
+\tag{10.4}
+$$
+
+若 $M$ 反自伴，则 $M=\lambda J$，$\lambda\in\mathbb R$。在 $V_r$ 上限制边界关系 $\mathsf K_0^{10}=I$，得到
+
+$$
+e^{10\alpha h_r\lambda J}=I,
+\qquad 3h_r\lambda\in\mathbb Z,
+\qquad\lambda\in\mathbb Q.
+$$
+
+此时仅在当前二点块用 $\mathcal J_0$ 作复数乘法，(10.3) 成为 $N=iH$，其中
+
+$$
+H=\begin{pmatrix}1&0\\0&\lambda\end{pmatrix}
+\begin{pmatrix}1+p&c\\c&2-p\end{pmatrix}.
+$$
+
+实际二点块的 $K^{10}=I$ 以及复行列式恒等式给
+
+$$
+1=\det_{\mathbb C}(K^{10})
+=\exp\!\left(i10\alpha\bigl[(1+p)+(2-p)\lambda\bigr]\right),
+\qquad (1+p)+(2-p)\lambda\in\tfrac13\mathbb Z.
+$$
+
+但该括号是 $1+2\lambda+p(1-\lambda)$，$p$ 无理而 $\lambda$ 有理，故 $\lambda=1$。于是 $M=J$，$N=\mathcal J_0C$，其端点的复谱为 $e^{i\alpha},e^{2i\alpha}$，实谱还包括其共轭；四者均非实数。因此每个已经满足 (10.2) 的配置处，每个地址恰有以下两类之一：
+
+1. 单点块的端点为 $e^{\alpha J}$ 或 $e^{2\alpha J}$；或者二点块满足 $M=J$，端点在该块上没有实特征值。
+2. 二点块的另一响应不反自伴，且整个二点端点是 (10.4) 的 $\varepsilon I$。
+
+现证同一个配置 $q$ 上相邻地址不能分属这两类。令地址 $j$ 为第二类，$k=j\pm1$ 为第一类，记 $V=\mathsf K_j$、$U=\mathsf K_k$。第二类必为内点地址，且 $V|_{V_q}=\varepsilon I$。若 $k$ 在 $q$ 处为单点，则 $V_q$ 对 $U,V$ 都不变，相邻编织限制到该纤维给 $\varepsilon U^2=U$，所以 $U=\varepsilon I$，矛盾。
+
+若 $k$ 在 $q$ 处为二点，记另一配置为 $t$，置 $W=V_q\oplus V_t$。地址 $j$ 在 $q$ 处可翻转，故其邻位 $b_k(q)=0$；地址 $k$ 可翻转又给 $b_j(q)=0$。翻转 $k$ 后 $b_k(t)=1$，所以地址 $j$ 在 $t$ 处是原阻塞单点。于是 $W$ 对 $U,V$ 都不变：$U$ 是其完整二点块，$V$ 在 $V_q$ 上为 $\varepsilon I$，在 $V_t$ 上为阻塞单点。限制到 $W$ 后，两算子可逆，且编织等式给
+
+$$
+V=(UV)U(UV)^{-1}.
+$$
+
+两者必须同谱，但 $U|_W$ 无实特征值，而 $V|_W$ 有特征值 $\varepsilon$，再次矛盾。
+
+全部原地址构成连通的链 $0,1,\ldots,10$。在当前 $q$ 处，边界地址 $0$ 总为第一类；相邻地址不能异类，故全部地址均为第一类。特别地，$q$ 的每条合法翻转边都满足
+
+$$
+L_r=T_{rq}L_qT_{qr},\qquad L_r^{\dagger}=-L_r,\qquad L_r^2=-I.
+\tag{10.5}
+$$
+
+从 (10.2) 的同一个 ready 开始，沿原配置图迭代此结论。删除占据位保持合法，每个配置都可接到空集，故图连通，(10.5) 覆盖全部 $89$ 个配置及全部合法边。因此 $\mathcal L^{\dagger}=-\mathcal L$，并由逐边交织和全部单点标量块得到 $[\mathcal L,B_j]=0$，包括边界 $j=0,10$。实际生成元于是满足
+
+$$
+A_j^{\dagger}
+=-\alpha(I+B_j)\mathcal L
+=-\alpha\mathcal L(I+B_j)=-A_j.
+$$
+
+对数学参数 $s$，$\frac{d}{ds}\|e^{sA_j}v\|^2=0$，故所需内部守恒成立。现在直接应用既有定理 2.3；再以定义 10.1 保留的远距交换应用既有命题 2.4，得到它们已经陈述的共同复结构和根定原规范，无须另加相位、局部不可约性或谱条带条件。
+
+矩阵指数的谱映射、行列式和正交／对数背景采用 Higham 的 [*Functions of Matrices*](https://eprints.maths.manchester.ac.uk/310/1/fm_final.pdf) §§1、3–4；一般指数逆问题及混叠背景见 Yue–Thunberg–Gonçalves，[*Inverse Problems for Matrix Exponential in System Identification: System Aliasing*](https://arxiv.org/abs/1605.06973v1)，§I、Theorems 1–3。行列式为一的实正交矩阵存在反自伴对数这一标准事实不指定实际对数。这里的 `repo-derived` 推导是 (10.3) 的交替形式约束、黄金无理系数与十次幂的相容条件，以及原相邻地址支撑上的编织传播；不主张一般对数理论的新意或全球优先权。V15 定理 3.1、命题 3.2 供应标准黄金端点谱和编织背景；本证明没有把其共同复载体作为前件。[Quantum IV 定义 213.2](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md) 的其他来源输入保持其范围。结论限定于定义 10.1 的完整实际响应类，不从任意正交矩阵的离散数据推出其任意对数反自伴；也不供应新的 Born、组合、独立创新、操作取得或经验实现前件。∎
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,14 @@
+### 命题 7.8（不确定关系来自二元正比较）
+
+对自伴 $A,B$ 与任意状态 $\omega$，有
+
+$$
+\operatorname{Var}_\omega(A)\operatorname{Var}_\omega(B)
+ \ge\left|\omega\bigl((A-\omega(A)I)(B-\omega(B)I)\bigr)\right|^2
+ \ge\frac14|\omega([A,B])|^2.
+$$
+
+**证明。**
+令 $X=A-\omega(A)I$、$Y=B-\omega(B)I$。状态的二元 Gram 矩阵
+$\left(\begin{smallmatrix}\omega(X^2)&\omega(XY)\\\omega(YX)&\omega(Y^2)\end{smallmatrix}\right)$ 为正，行列式非负给出第一项。又 $\omega(YX)=\overline{\omega(XY)}$，所以 $2i\operatorname{Im}\omega(XY)=\omega([A,B])$，给出第二项。
+

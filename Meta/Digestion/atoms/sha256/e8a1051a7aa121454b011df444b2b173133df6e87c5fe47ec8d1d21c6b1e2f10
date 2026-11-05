@@ -1,0 +1,90 @@
+### 应用 36.2（原始事件 $345,u_0$ 不在裸种子的准确正锥中）
+
+定义 36.1 的 (36.2) 不成立。其原始效果 $E=E_{345,u_0}$ 为非零秩一效果，且
+
+$$
+ c=\operatorname{Tr}E=2x^3,\qquad
+ P=E/c,\qquad P_{00}=x^2/2,\qquad P_{11}=1/(2x),
+ \qquad x=(\sqrt5-1)/2.
+ \tag{36.3}
+$$
+
+$P$ 仅是该效果射线的迹一数学代表；实际事件函数始终是 $\operatorname{Tr}(\rho_nE)$。
+
+证明。沿用 (16.20) 与 (26.4)，置 $y=\sqrt x$ 及
+
+$$
+ A=\zeta[1+(\zeta-1)x],\qquad
+ b=\zeta(\zeta-1)xy,\qquad
+ d=\zeta[1+(\zeta-1)x^2].
+ \tag{36.4}
+$$
+
+原活跃二元块为 $\left(\begin{smallmatrix}A&b\\b&d\end{smallmatrix}\right)$。式 (26.4) 给 $|b|^2=x$、$|d|^2=x^2$；块的酉性与 $x+x^2=1$ 给 $|A|^2=x^2$。为核对原地址及旁观位，取 $u_0=e_{00000}$、$u_1=e_{00001}$、$t=e_{00010}$。三地址在五维角 $\operatorname{span}(u_0,u_1,t,v_0,v_1)$ 的作用逐项为
+
+| 输入 | $K_3$ | $K_4$ | $K_5$ |
+| --- | --- | --- | --- |
+| $u_0$ | $Au_0+bv_0$ | $Au_0+bt$ | $Au_0+bu_1$ |
+| $u_1$ | $Au_1+bv_1$ | $\zeta u_1$ | $bu_0+du_1$ |
+| $t$ | $\zeta t$ | $bu_0+dt$ | $\zeta t$ |
+| $v_0$ | $bu_0+dv_0$ | $\zeta v_0$ | $Av_0+bv_1$ |
+| $v_1$ | $bu_1+dv_1$ | $\zeta^2v_1$ | $bv_0+dv_1$ |
+
+此表直接按原三站点投影读取：$K_3$ 的两个活跃对是 $(u_0,v_0),(u_1,v_1)$；$K_4$ 的活跃对是 $(u_0,t)$，在 $u_1,v_0$ 上邻位不同、投影为零，在 $v_1$ 上邻位均一、投影为一；$K_5$ 的活跃对是 $(u_0,u_1),(v_0,v_1)$，在 $t$ 上邻位不同。因而没有遗漏离开该五维角的分量。
+
+对任意数学比较输入 $\psi=z_0v_0+z_1v_1$，由调用顺序 $K_{345}=K_5K_4K_3$ 得
+
+$$
+\begin{aligned}
+ K_4K_3\psi
+ &=bAz_0u_0+b^2z_0t+b\zeta z_1u_1
+   +d\zeta z_0v_0+d\zeta^2z_1v_1,\\
+ \langle u_0,K_{345}\psi\rangle
+ &=bA^2z_0+b^2\zeta z_1.
+\end{aligned}
+ \tag{36.5}
+$$
+
+故令行向量 $\ell=(bA^2,b^2\zeta)$，准确原始效果为 $E=\ell^*\ell$。它正且秩一，且
+
+$$
+ \operatorname{Tr}E=x^5+x^2
+ =x^2(1+x^3)=2x^3>0,
+ \qquad
+ \frac{E_{00}}{\operatorname{Tr}E}=\frac{x^5}{2x^3}=\frac{x^2}{2}.
+ \tag{36.6}
+$$
+
+这里 $x^3=2x-1$；另一对角元是 $x^2/(2x^3)=1/(2x)$。秩一正矩阵满足 $E^2=cE$，所以 $P$ 是迹一秩一投影。此除法只识别射线，未对某次成功事件作条件化，未改变任何原质量。
+
+复用 [V15 §8.1、定理 8.2 的振幅部分](AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md#sec-8-1) 与[续卷 II 定理 82.1 证明](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md)：其 $\beta,t$ 分别对应这里的 $y,x$，原矩阵及原路径基完全相同。环 $\mathcal O=\mathbb Z[\zeta,y]$ 对共轭封闭且由代数整数组成；每个有限原字的矩阵元均在其中。这里只消费有限字振幅的结论，不引入 V15 更宽协议中的寄存器、读数或反馈。特别地，对每个实际 $B\in\mathsf B_{45}$，$L$ 不变且 $U_B$ 酉，故
+
+$$
+ Q_{B,s}=U_B^*P_sU_B\quad(s=0,1)
+ \tag{36.7}
+$$
+
+是迹一秩一投影，每个矩阵元（尤其第 $00$ 元）都是代数整数。零标签拉回仍为零。这覆盖整个实际前缀轨道，不是有限张成射线的假设。
+
+另一方面，在 $\mathbb Q(\sqrt5)$ 中 $x$ 的共轭为 $x'=(-1-\sqrt5)/2$，$xx'=-1$，因此
+
+$$
+ N_{\mathbb Q(\sqrt5)/\mathbb Q}(x^2/2)
+ =\frac{x^2(x')^2}{4}=\frac14.
+ \tag{36.8}
+$$
+
+代数整数的数域范数是整数，故 $x^2/2$ 不是代数整数。代数整数性是满足某个首一整数多项式的性质，扩大数域不会使这个数取得该性质。因此 $P$ 不等于任一 $Q_{B,s}$。
+
+最后须处理任意非负实系数，不能只用系数所在数域排除展开。若 (36.2) 成立，右侧效果为有限和 $S=\sum_r\lambda_r Q_{B_r,s_r}$，零种子项略去但原标签仍保留。命题 18.1 的同一 B45 射影稠密性使 $\{n_a\}$ 稠密于 $S^2$；两边连续，故 $\operatorname{Tr}(\rho_n(E-S))=0$ 对全部数学纯态成立。Hermitian 二次型由全部纯态分离（例如在两基向量及其等幅实、虚叠加上评价），于是 $E=S$。此处的数学测试向量不作为实际新增准备。
+
+取单位 $h\in\ker E$，则
+
+$$
+ 0=\langle h,Eh\rangle
+ =\sum_r\lambda_r\langle h,Q_{B_r,s_r}h\rangle.
+ \tag{36.9}
+$$
+
+各项非负，所以每个 $\lambda_r>0$ 的非零投影都湮灭 $h$；其像只能是 $\operatorname{ran}E$，迹一又迫使它等于 $P$。因 $E\ne0$，至少有一个这样的项，与 (36.8) 矛盾。这正是[续卷 IV 定理 198.2](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md) 的秩一正面论证在此原局部角的应用；该处的 $89$ 维载体及域外方向没有被搬入。原标签的有限粗粒化也只给上述投影的非负和，不能消除矛盾；例如含两个非零裸标签的和为 $I$，不能以正系数支撑于此秩一射线。证毕。
+

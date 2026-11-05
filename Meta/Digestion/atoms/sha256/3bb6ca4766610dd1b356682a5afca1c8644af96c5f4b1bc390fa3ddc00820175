@@ -1,0 +1,74 @@
+### 定理 7.4（有限二元平均选出平方根分支）
+
+<a id="thm-c123-calibrated-filter"></a>
+
+在同一 $H=\mathbb C^d$、有限 $K$ 和指定等距 $J:H\to K$ 上，令
+$T:\mathcal B(H)\to\mathcal B(K)$ 为正复线性映射，
+$T^*(I)=E\in[0,I]$。供应同一有限正权纯态设计
+
+$$
+\sum_s w_s p_s\otimes p_s=\frac{I+\mathsf{Swap}}{d(d+1)},
+ \qquad \sum_s w_s=1,
+$$
+
+以及它们通过同一 $T$ 后的同向读口 $Jp_sJ^*$。定义
+
+$$
+R=\sum_s w_s\operatorname{Tr}[Jp_sJ^*T(p_s)],\qquad
+ Q=\sum_s w_s\bigl(\operatorname{Tr}[p_s\sqrt E]\bigr)^2.
+$$
+
+则 $R\le Q$，且
+
+$$
+R\ge Q\quad\Longleftrightarrow\quad
+ T(A)=J\sqrt E A\sqrt E J^*\quad\text{对全部 }A.
+$$
+
+所选分支的完全正性在这里是结论，无需作为这条定理的前件。
+
+**证明。**
+使用成熟正锥引理：对每个积向量非负的自伴矩阵 $G$，有
+$\|G\|_{\rm HS}\le\operatorname{Tr} G$。它是 Gurvits–Barnum 可分球界的对偶形式，
+包括两因子维数不同的情形。 [10](#ref-gb2002)、[11](#ref-swz2008)
+
+令 $P=\operatorname{supp} E$、$A=\sqrt E$。
+对输出效果 $0\le B\le I$，$0\le T^*(B)\le E$，故
+$T^*(B)=PT^*(B)P$。效果张成和复线性给出 $T(X)=T(PXP)$。
+$E=0$ 时已经得到 $T=0$。其余情形选支持本征基 $Ae_i=a_i e_i$、$a_i>0$，
+令 $s=\sum_i a_i$，并采用输入因子在前的未归一化 Choi 矩阵 $C_T$。
+正性使它块正，而不要求它正半定。设
+
+$$
+G=(A_P^{-1/2}\otimes I)C_T(A_P^{-1/2}\otimes I),\qquad
+ v=\sum_i\sqrt{a_i}\,e_i\otimes Je_i.
+$$
+
+正确效果保证 $\operatorname{Tr} G=s$，且 $\|v\|^2=s$。令
+$z=\langle v,Gv\rangle$、$\ell=\operatorname{Tr}[(I-JJ^*)T(I)]\ge0$。
+设计等式在第一因子转置后，逐块取迹即得
+
+$$
+d(d+1)Q=\operatorname{Tr} E+s^2,
+ \qquad d(d+1)R=\operatorname{Tr} E-\ell+z.
+$$
+
+Hilbert–Schmidt Cauchy–Schwarz 与上述块正界给 $z\le s^2$。
+所以 $d(d+1)(Q-R)=\ell+s^2-z\ge0$。
+若饱和，则 $z=s^2$，从而
+
+$$
+\|G-vv^*\|_{\rm HS}^2
+ =\|G\|_{\rm HS}^2+s^2-2z\le0.
+$$
+
+撤去合同变换得到
+$C_T=|a_J\rangle\langle a_J|$，$a_J=\sum_i a_i e_i\otimes Je_i$。
+比较矩阵单位并使用输入支持，即得 $T(X)=JAXAJ^*$。
+反向直接代入设计矩公式给出饱和。
+
+取 $E=\sigma$、$J=I$ 就得到主文所用参照滤片；取 $E=P$ 是 Lüders 成功分支。
+设计等式的张量记号是有限二阶矩，不要求复制未知输入态。
+所有设计准备、读口、同一分支和成功效果都须来自实际供应；一般物理通道并不被要求达到这个专门滤片的最优端点。
+如果完整菜单还包含别的箭头，只认证这些滤片完全正不等于认证全部菜单完全正。
+

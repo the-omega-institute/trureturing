@@ -153,5 +153,5 @@ Finally take d = 3 and μ = 1/3. Completeness would supply testers with image pr
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/WernerTesterIncompleteness.werner_family`
 - Dependency: [D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumMoments](../AbsoluteSeparability/GurvitsBarnumMoments.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteTraceDistance](../../Foundation/FiniteTraceDistance.md)
-- Dependency: [D5/S3/Quantum/RandomCircuits/CHaarConcatenationNonmonotone](../../RandomCircuits/CHaarConcatenationNonmonotone.md)
+- Dependency: [D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl](../../RandomCircuits/HaarTwoCopyTwirl.md)
 - Dependency: [D5/S3/QuantumBounds/NonlocalityDepthQuantumBound](../../../QuantumBounds/NonlocalityDepthQuantumBound.md)

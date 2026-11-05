@@ -1,0 +1,15 @@
+**Theorem 39.10 (sufficiency, continued use and exact prediction boundary).** The state (39.16), the authentic cut indices and the installed finite arithmetic suffice for original, current and authentically recorded-cut predictions. At a cut $t$, the full resolution-$C$ profile is determined exactly when
+
+$$
+f_{u_t}^{-1}(\mathcal H_C)\cap\operatorname{int}K=\varnothing.
+\tag{39.17}
+$$
+
+For a single prediction $q_m(f_v(f_{u_t}(x)))$, replace that cut set by the preimages of its instantaneous $m$-grid. If $K$ lies in an original $\mathsf P_B$ cell, every original/current/recorded-cut prediction at $m\le B$ and every finite future word is determined, and remains so through further genuine forward actions. Unknown later original resolutions can be acquired by Theorem 39.7 using this same state.
+
+Proof. Each actual read contributes exactly its interval constraint, because every matrix map is strictly increasing. Their intersection is nonempty on the actual run, with positive lower endpoint included and finite upper endpoint excluded. The source-dependent reports, together with source-independent choices and acknowledged actions, impose precisely (39.16); replay on another $y\in K$ gives the same deterministic branch. Thus the target can be computed from these data if and only if it is constant on $K$. A target cut strictly inside $K$ gives two rational realizations with different values; absence of such cuts gives constancy with correct endpoint ownership. Theorem 39.2 proves (39.17) for all continuations simultaneously. The same threshold argument proves the single-coordinate version.
+
+A representative in $K$ therefore computes every permitted prediction. If $K$ lies in one original $\mathsf P_B$ cell, its forward images, including those at each authentic past cut and any continuation from it, have equal $\mathsf P_B$ by forward congruence. On an actual new action update the authentic word/matrix; on an actual new reply intersect its preimage into $K$. Neither update loses a previously established prediction. At an original-precision upgrade, the new $K$ lies in a cell of the finer requested common profile; old covered ranges restrict consistently by the same actual $x$.
+
+Keeping $K$ preserves the entire joint kernel of the numerical evidence in two endpoints. This is a sufficient semantic compression, with no claim of globally minimal binary coding. Authentic provenance still needs the actual action/read record: an interval does not say which observations occurred. Conversely that record permits recomputing $K$, so its endpoints can be a working cache rather than a second source of truth. Predicted values at authentic old cuts remain predictions attached to those cuts; they are actual past observations only where a corresponding read record exists. A fabricated continuation cannot become an authentic cut merely because its matrix can be evaluated. $\square$
+

@@ -6,6 +6,15 @@
    utility: none
    digest: The exact rounded three-term norm sequence has the Tribonacci square-root ratio limit. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/24271.
+sourceRound_round: proof_shape: bind-only; escape_witness: none;
+consumer: D5.S1.Recurrence.OEISA400645.seq_spec.
+Direct frozen dependencies: D5/S1/Recurrence/OEISA400644.sourceRound_nearest_unique (private),
+  statement_id: sha256:5ec7dec0e1b8d40bd3d258db419b6ca6aa6b8cbe6448e9dfdc82bb8a9e169bcc;
+  D5/S1/Recurrence/OEISA400644.sourceRound,
+  statement_id: sha256:14d9dbdd7abf39d4b4ca0cd16e46baad3d229092a6c5bfac7f78ea871c805b2a.
+-/
+
 import Mathlib
 import D5.S0.Tower.Tribonacci.Values
 import D5.S0.Tower.Tribonacci.PerronRoot
@@ -536,7 +545,7 @@ private theorem sourceRound_nearest_unique (s : ℕ) (j : ℤ)
     exact_mod_cast (abs_lt.mp hd).2
   omega
 
-private theorem sourceRound_round (s : ℕ) :
+theorem sourceRound_round (s : ℕ) :
     round (Real.sqrt (s : ℝ)) = (sourceRound s : ℤ) :=
   sourceRound_nearest_unique s _ (abs_sub_round _)
 

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:cfbd49d50401d0dd22f2f2e929e0236b361e67b04c374922c5deafa0ab2a56ff
+  normalized_sha256: sha256:cfbd49d50401d0dd22f2f2e929e0236b361e67b04c374922c5deafa0ab2a56ff
+cas_ref: sha256:cfbd49d50401d0dd22f2f2e929e0236b361e67b04c374922c5deafa0ab2a56ff
+coverage_gids:
+  - gid: D5/S3/Quantum/Matrix/UniformVarianceTraceBound.hermitian_unital_direct_sum_defect_trace_bound
+    target_statement_id: sha256:a8e34831a64d4f523924d69f610aab73ced88a3e51e5ee2b5aeadd7d73235ca4
+receipts:
+  unresolved_subitems: []

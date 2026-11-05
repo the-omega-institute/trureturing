@@ -1,0 +1,6 @@
+**定义 19.3（成熟机制与本候选的具体范围）。** 一般四通道连接及单位归约的原文对应见 [Moldoveanu，*Quantum mechanics from invariance principles*，arXiv:1303.3935，式 (6)–(9)](https://arxiv.org/html/1303.3935)。其中局部不变性对所列运算族施加 Leibniz，包含有向运算自身，并另给 $1\alpha f=0$。这里仅预设局部变化导出交换正比较，$D_1=0$、交替与 Jacobi 均由有限实际报告推出。
+
+复合性与两运算重构的历史背景为 Grgin–Petersen，*Algebraic implications of composability of physical systems*，Commun. Math. Phys. 50，177–188，DOI [10.1007/BF01617995](https://doi.org/10.1007/BF01617995)。一般共同参数及复结构接续使用定理 2.1 已引的 [Kapustin，Theorem 3.1](https://arxiv.org/html/1303.6917v4)，动力对应接续使用比较曲率 V95 的原文对应。二维商代数、实斜伴旋转平面、张量算子范数和正交配方均为标准中间工具。
+
+C98 在当前合同下的具体推导是：有限零矩排除自身报告中的额外混合干扰，同一有限族同时推出模板与量子符号；另有秩一观察的联合盲核、秩二尖锐诊断及额外内部通道反例。这些陈述不据限定检索主张文献原创优先权。四通道闭包、有限维、局部正 Frobenius 比较、活动及完整操作供应仍是明确前件；无限维极限、四通道闭包的唯一来源及物理单位数值不属于上述结论。
+

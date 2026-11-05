@@ -1,0 +1,37 @@
+#### 命题 16.4（完全正性与完整仪器表示）
+
+式[(16.2)](#eq-instrument)给完全正、迹不增的结果映射；
+完整带标签通道为 $\Phi(\rho)=\bigoplus_e\mathcal I_e(\rho)$，它迹保持。
+若各结果共享同一可见输出空间，再忽略标签才可写作 $\sum_e\mathcal I_e$。
+反向，任意有限维完全正仪器都有这样的 Kraus 与完整等距表示。
+
+**证明。**
+
+对任意有限辅助空间和任意 $X\ge0$，
+
+$$
+(\mathcal I_e\otimes\operatorname{id})(X)
+=\sum_\alpha(M_{e\alpha}\otimes I)X(M_{e\alpha}^*\otimes I)\ge0.
+$$
+
+迹结论由效果求和给出。
+反向，完全正映射的 Choi 矩阵
+
+$$
+C_\Phi=\sum_{j,k}|j\rangle \langle k|\otimes\Phi(|j\rangle \langle k|)
+$$
+
+为正，可写成有限个秩一正项之和。
+把各项向量重排为矩阵 $K_\alpha$，逐个矩阵元比较便得
+$`\Phi(\rho)=\sum_\alpha K_\alpha\rho K_\alpha^*`$。
+对各结果作此分解，仪器完整性给
+$`\sum_{e,\alpha}K_{e\alpha}^*K_{e\alpha}=I`$，
+故带全部正交结果与记录的 $Vx=\bigoplus_{e,\alpha}K_{e\alpha}x$ 为等距。
+
+□
+
+这里使用的标准有限维表示可参见 Watrous[12](#ref-watrous)；
+项目 v78 已把它接入实际结果核[7](#ref-synthesis)、[6](#ref-closure)。
+一个效果只确定结果概率，并不唯一确定测后态；
+实际后继与内部记录正是仪器中必须保留的部分。
+

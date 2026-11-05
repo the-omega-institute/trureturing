@@ -1,0 +1,9 @@
+**Definition 18.3 (labelled native substitution).** For a noninitial reachable source $t$, let $\operatorname{Pred}(t)$ be AAII Definition 99.1's complete labelled incoming set. For each edge $e:u\to t$ and each $h\in\mathcal H(u)$, form one token
+
+$$
+(e,h)\longmapsto he,\qquad b_{e,h}=J(h).
+\tag{IV.42}
+$$
+
+The token is retained even when two unlabelled source changes look identical. By the actual last-event partition (IV.3), these are exactly the $F(t)$ histories in the complete fibre, with no selected-schedule restriction. The lower word is the literal old data; it is never replaced by a static rank or a newly chosen entry.
+

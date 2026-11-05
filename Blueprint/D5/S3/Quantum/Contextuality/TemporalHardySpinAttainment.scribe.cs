@@ -53,6 +53,18 @@ internal sealed class TemporalHardySpinAttainmentDocument : IScribeDocumentDefin
                 Blocks(Paragraph(Text(
                     "The raising matrix has the square-root spin coefficient on its superdiagonal and zero elsewhere."))),
                 DescribeRole.Theorem),
+            Node("coeff", "Real binomial coefficients", "coeff", BinomialFormula(false),
+                "For every n, every real r and every index k, coeff(n,r,k)=√C(n,k) r^k. No positivity or nonzero assumption on r is imposed."),
+            Node("binom-vector", "The complex binomial vector", "binomVector", BinomialFormula(true),
+                "The real coefficient vector is included coordinatewise into the complete complex spin space."),
+            Describe.Lean(DescribeId.Create("temporal-hardy-spin-raising-action"),
+                DeclarationHandle.Create(Prefix + "raising_action"), H("Raising a binomial vector"),
+                StatementSource.FromAuthor(Disp(BinomialActionFormula(false))), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("This coordinate identity holds for every n, every real r and every index i, including the last index where raising vanishes."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("temporal-hardy-spin-lowering-action"),
+                DeclarationHandle.Create(Prefix + "lowering_action"), H("Lowering a binomial vector"),
+                StatementSource.FromAuthor(Disp(BinomialActionFormula(true))), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The identity is multiplied by r, so it also holds at r=0. It includes the first index where lowering vanishes."))), DescribeRole.Theorem),
             Node("spectral-projector", "The projector onto an outcome eigenspace", "IsSpectralProjector",
                 SpectralProjectorFormula(),
                 "For complex matrices M and Π and a real outcome a, IsSpectralProjector "
@@ -205,6 +217,30 @@ internal sealed class TemporalHardySpinAttainmentDocument : IScribeDocumentDefin
             Seq(F.Text, Grp(F.Id("otherwise"))), End, Grp(F.Id("cases")));
         return All(n, Naturals(), All(i, SpinIndex(n), All(j, SpinIndex(n),
             Equal(Call("Jplus", n, i, j), entry))));
+    }
+
+    private static Formula BinomialFormula(bool complex)
+    {
+        var n = F.Id("n"); var r = F.Id("r"); var k = F.Id("k");
+        Formula value = Mul(Call("sqrt", Typed(Call("cast", Call("choose", n, Call("val", k))), Reals())),
+            new Formula.Power(r, Call("val", k)));
+        if (complex) value = Call("ofReal", Call("coeff", n, r, k));
+        return All(n, Naturals(), All(r, Reals(), All(k, SpinIndex(n),
+            Equal(Call(complex ? "binomVector" : "coeff", n, r, k), value))));
+    }
+
+    private static Formula BinomialActionFormula(bool lower)
+    {
+        var n = F.Id("n"); var r = F.Id("r"); var i = F.Id("i");
+        var b = Call("binomVector", n, r);
+        Formula op = Call("Jplus", n);
+        if (lower) op = new Formula.Power(Parenthesized(op), Star);
+        Formula lhs = At(Call("mulVec", op, b), i);
+        var iv = Call("ofReal", Typed(Call("cast", Call("val", i)), Reals()));
+        Formula rhs;
+        if (lower) { lhs = Mul(lhs, Call("ofReal", r)); rhs = Mul(iv, At(b, i)); }
+        else rhs = Mul(Mul(Subtract(Call("ofReal", Typed(Call("cast", n), Reals())), iv), Call("ofReal", r)), At(b, i));
+        return All(n, Naturals(), All(r, Reals(), All(i, SpinIndex(n), Equal(lhs, rhs))));
     }
 
     private static Formula SpectralProjectorFormula()

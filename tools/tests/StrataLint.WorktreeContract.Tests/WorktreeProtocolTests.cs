@@ -49,6 +49,23 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
             Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }
 
+    [Fact]
+    public void AggregateCleanupWarnsAndSucceedsForOneRefusedTree()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_make_tests.py"),
+                root, "plain", "clean-all", "directory",
+                "CleanupMakeTests.test_single_tree_refusal_keeps_aggregate_success_and_warning"],
+            root, TestBudgets.ProtocolProbeHangGuard, 1024 * 1024,
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
     [Theory]
     [InlineData("self")]
     [InlineData("stable")]
@@ -253,8 +270,8 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("pool_revalidation_keeps_refusal_and_prior_eviction")]
     [InlineData("pool_removal_qualification_preserves_refusal_and_operational_failure")]
     [InlineData("pool_return_selected_eviction_refusal_fails_public_exit")]
-    [InlineData("pool_final_qualification_defers_later_candidates")]
-    [InlineData("pool_return_final_qualification_defers_later_candidates")]
+    [InlineData("pool_final_qualification_continues_later_candidates")]
+    [InlineData("pool_return_final_qualification_continues_later_candidates")]
     [InlineData("pool_claim_qualification_failure_cannot_become_no_idle")]
     [InlineData("pool_scope_operational_failure_is_failed")]
     [InlineData("qualification_process_boundary_distinguishes_operational_errors")]
@@ -356,12 +373,26 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("pool_return_requires_join_and_real_merge_evidence")]
     [InlineData("pool_return_refuses_unretained_merge_wrong_head_and_busy_writer")]
     [InlineData("pool_return_refuses_conflicts_operations_and_main")]
+    [InlineData("pool_claim_reuses_dormant_unmerged_task_and_cache")]
+    [InlineData("pool_claim_checkpoints_dormant_dirty_and_detached_work")]
+    [InlineData("pool_claim_retains_active_process_cwd_file_and_argv")]
+    [InlineData("pool_claim_retains_active_idle_tree")]
+    [InlineData("pool_claim_unobservable_eligibility_preserves_idle_and_dormant")]
+    [InlineData("pool_candidate_activity_rechecks_only_after_observed_group_exit")]
+    [InlineData("pool_claim_mutation_and_other_io_failures_never_fall_back")]
+    [InlineData("pool_activity_scope_excludes_unrelated_unobservable_process")]
+    [InlineData("pool_claim_retains_recent_checkout_allocation_and_source")]
+    [InlineData("pool_claim_keeps_task_identity_lock_and_operation_guards")]
+    [InlineData("pool_claim_dormant_task_updates_pins_and_rechecks_activity")]
+    [InlineData("pool_claim_low_disk_only_blocks_new_allocation")]
     [InlineData("pool_claim_writes_immutable_allocation_and_preserves_cache")]
     [InlineData("pool_claim_requires_matching_pins_and_clean_idle_attachment")]
     [InlineData("pool_claim_accepts_returned_tip_ahead_of_tracking_dev")]
     [InlineData("pool_claim_refuses_exact_symlink")]
     [InlineData("pool_claim_concurrency_has_one_winner")]
     [InlineData("pool_capacity_and_pressure_use_one_owner")]
+    [InlineData("pool_sweep_excludes_paths_owned_by_commit_age_cleanup")]
+    [InlineData("pool_exclusion_keeps_candidate_resolution_failure_local")]
     [InlineData("pool_return_accepts_squash_and_merge_histories")]
     [InlineData("pool_sweep_confirms_returned_tip_beyond_stale_tracking")]
     [InlineData("pool_sweep_refuses_non_dev_idle_tip")]

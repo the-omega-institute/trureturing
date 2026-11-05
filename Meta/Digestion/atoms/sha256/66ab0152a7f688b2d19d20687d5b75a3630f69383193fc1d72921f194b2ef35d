@@ -1,0 +1,50 @@
+**Theorem 6.2 (faithful returned-image inverses and operation agreement).**
+On the actual image (IV.13), the four views recover the same semantic
+state, all inverse routes agree, and they commute with every original
+$Q_g$ request's full reply and returned successor under the same source
+and rights. They have exactly the original full-task kernel there.
+Bare $S_0$ and $B_0$ do not in general recover serial successful time.
+A semantic inverse supplies no absent live binding, allocation or right.
+
+Proof. Prefix closure of the terminal antichain gives source support,
+and maximal elements of the support give the terminal antichain.
+Arity parsing, including every unary beta marker, recovers $t$ from
+either. The supplemented complete word and Theorem 3.1 then give the
+unique $h$. Traversal of the actual backing selected by $M_J$ gives the
+same $t,J(h)$ and hence that same history.
+
+Conversely replay $h$ from the known alpha using the actual rule (IV.1)
+as a finite semantic calculation. This recovers $t$, its material support
+and terminal antichain. The fixed allocation of Theorem 2.1 recovers its
+unique complete $J(h)$. With the already fixed live context and the
+maintained record of Theorem 5.3, these are the contents selected by
+$M_J$. This last route identifies the corresponding acquired callable
+state; it does not create one from a history string. Physical conversion,
+new object creation, references and grants require their separately
+supplied operations and charges. The reconstruction is asserted on the
+actual maintained image with that context, not on arbitrary unbound
+numbers claimed to be memories.
+
+Every route therefore factors through the same pair $(t,h)$, so inverse
+and triangle identities hold on these images. Theorem 5.3 says that every
+request uses exactly this current $t,h$ for its original reply and
+successor; a successful event gives $(t',he)$ and a query or refusal
+leaves $(t,h)$ unchanged. Its internal Next uses the same decoded pair,
+current navigation and actual new event. Induction on finite request
+sequences gives operation agreement and commuting returned-state routes,
+including complete Next replies and corresponding source changes.
+
+For faithfulness, distinct finite logical terms have different Tag
+answers at a first different constructor/address. At the same term,
+distinct full histories have the same source-derived length $N(t)$ and
+differ in some full indexed event; FetchGrowth at that index separates
+them. Equal $(t,h)$ gives equal replies and related successors by the
+service theorem. Thus the full-task kernel is precisely equality of
+these semantic states in the fixed context. Proposition 4.1 has the
+same bare material tree, support and terminals on its two histories,
+but different indexed recall and actual Next successors. It proves the
+bare-geometry nonrecovery assertion. Successful-generation order is not
+physical duration or the chronology of ingress, maintenance and outputs.
+No busy-cut inverse follows from these returned-image identities.
+$\square$
+

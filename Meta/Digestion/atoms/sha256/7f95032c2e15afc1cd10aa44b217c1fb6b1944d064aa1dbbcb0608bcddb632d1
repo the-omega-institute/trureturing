@@ -1,0 +1,15 @@
+**Lemma 34.2 (edge-specific causal witnesses).** In this contract with
+finite peak and worst-update bound $D$, every edge $xy$ of the Boolean
+cube $Q_k$ has some $a\in R_x$, $b\in R_y$ at tail-tree distance at most
+$2D$. The pair may depend on the edge.
+
+**Proof.** If the edge differs at label $j$, insert the other $k-1$
+labels first, in any one order with their shared bits, and choose one
+allowed prefix run. Causality and future-independent $K_0$ give the same
+prefix word $p$ before either choice of the last bit. Complete this run
+with each last bit; the words $a,b$ obtained are in the respective
+all-history terminal sets. Each actual edit path from $p$ has length at
+most $D$, so the tree triangle inequality gives $d(a,b)\le2D$. A detour
+cannot reduce its charged cost. No choice of one representative per
+assignment has been used. $\square$
+

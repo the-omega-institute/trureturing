@@ -1,0 +1,109 @@
+**Proposition 4.3 (every optimal binary decision discards later uses).**
+For the actual four-sample laws define the exact atoms
+
+$$
+C=(12|34,13|24),\qquad
+U=(1|2|3|4,12|34),\qquad
+V=(12|3|4,13|24).
+$$
+
+Writing $L(h)=p_1(h)/p_0(h)$ on these positive atoms, their counts and
+likelihood ratios are
+
+| Atom $h$ | $N_0(h)/M$ | $N_1(h)/M$ | $L(h)$ |
+| --- | ---: | ---: | ---: |
+| $C$ | $74$ | $182$ | $91/37$ |
+| $U$ | $89916$ | $90132$ | $7511/7493$ |
+| $V$ | $1200$ | $1092$ | $91/100$ |
+
+Any binary summary that retains the equal-prior optimal binary testing
+value merges $C$ and $U$, after labeling its two outputs by their optimal
+decisions. It cannot retain the optimal value for prior
+$\Pr(i=1)=1/3$. Applied separately to two four-sample blocks, its two
+retained bits also fail to retain the equal-prior optimum of the two
+full block records. Both failures hold for every assignment on ties.
+
+Proof. Let $I_i=N_i(C)$. Reusing (UJB.7507), or excluding equal left
+vertices and equal right vertices from the four-cycle homomorphisms,
+gives
+
+$$
+I_i=H_i-\ell d_A^2-rd_T^2+M=H_i-66096.
+\tag{UJB.7605}
+$$
+
+The subtraction removes $\ell d_A^2$ maps with coincident left vertices
+and $rd_T^2$ with coincident right vertices; their intersection has
+$M$ maps and is restored once. Thus $(I_0,I_1)=(143856,353808)$.
+
+For $V$, choose the repeated left vertex, then its ordered two distinct
+right neighbors, and then one further left neighbor at each right
+endpoint, excluding the middle vertex. This gives
+$\ell d_A(d_A-1)(d_T-1)^2$ assignments. The only remaining forbidden
+equality identifies those two outer left vertices. The resulting exact
+four-cycle assignments are counted by $I_i$. Therefore
+
+$$
+N_i(V)=72\cdot27\cdot26\cdot7^2-I_i.
+\tag{UJB.7606}
+$$
+
+For $U$, fix ordered distinct right endpoints $t,t'$ with codegree
+$c=c_i(t,t')$. Each right endpoint must choose two ordered distinct
+left neighbors. Before cross-exclusions there are $56^2$ choices.
+Each of the four cross equalities has $c\cdot7^2$ assignments. The
+only compatible intersections are the two bijections identifying both
+left pairs, each with $c(c-1)$ assignments; three cross equalities
+would violate a within-pair inequality. Inclusion-exclusion therefore
+gives $56^2-196c+2c(c-1)$ assignments. Moreover
+
+$$
+\sum_{t\ne t'}c_i(t,t')=M(d_A-1),\qquad
+\sum_{t\ne t'}c_i(t,t')(c_i(t,t')-1)=I_i.
+$$
+
+The first identity chooses a left vertex and two distinct neighbors;
+the second counts the strict cycles. Consequently
+
+$$
+N_i(U)=243\cdot242\cdot56^2-196M\cdot26+2I_i.
+\tag{UJB.7607}
+$$
+
+Dividing (UJB.7605)–(UJB.7607) by $M=1944$ proves the table. All three
+atoms have positive mass under both sources. In particular $C,U$ have
+strictly positive signed differences and $V$ has a strictly negative
+one. The pointwise optimization in Theorem 4.2 forces the decisions
+$1,1,0$ at these atoms, respectively. More generally a two-output
+summary followed by an optimal decoder must send all strict positive
+atoms to the output decoded as $1$ and all strict negative atoms to
+the other output: mixing strict signs would strictly decrease success.
+This also forces deterministic outputs there for a randomized summary.
+Hence $C$ and $U$ occupy the same summary fiber irrespective of ties.
+
+For prior $q=\Pr(i=1)$ and zero-one loss, the optimal decision chooses
+$1$ precisely when $q p_1(h)>(1-q)p_0(h)$. At $q=1/3$ this is $L>2$.
+Now $91/37>2$ while $7511/7493<2$. The strict decisions at $C,U$ are
+opposite, so any common decision on their summary fiber incurs strictly
+larger Bayes risk. Even with prior $1/2$, their posteriors
+$91/128$ and $7511/15004$ differ, although their optimal actions agree.
+
+For two consecutive blocks of four paid draws, Proposition 3.6 gives
+conditional independence under the same fixed $i$. Retain only the two
+full internal partition records for the moment. Their law is
+$p_i\otimes p_i$, so the joint likelihood ratios multiply:
+
+$$
+L(C)L(V)=\frac{8281}{3700}>1,\qquad
+L(U)L(V)=\frac{683501}{749300}<1.
+\tag{UJB.7608}
+$$
+
+Both block records have the same retained decision bits $(1,0)$, but
+the equal-prior optimal decisions are opposite and strict. Each record
+has positive probability under both sources. The compressed fiber thus
+mixes strictly positive and strictly negative product-law differences,
+strictly decreasing TV and increasing optimal error. Extra permitted
+cross-block comparisons can only improve the full eight-sample
+experiment; no value for its optimum is asserted here. $\square$
+

@@ -1,0 +1,8 @@
+给定 $\Delta>0$，下列三项等价：
+
+1. $H$ 在 $\Omega_{\rm vac}^\perp$ 上的谱包含于 $[\Delta,\infty)$。
+2. 对全部 $u,v\in\Omega_{\rm vac}^\perp$ 及 $\tau\ge0$，
+   $$|\langle u,e^{-\tau H}v\rangle|\le e^{-\Delta\tau}\|u\|\|v\|.$$
+3. 对一个在 $\Omega_{\rm vac}^\perp$ 中稠密的线性子空间 $\mathcal D$，全部 $u\in\mathcal D$、$\tau\ge0$ 都满足
+   $$\langle u,e^{-\tau H}u\rangle\le e^{-\Delta\tau}\|u\|^2.$$
+

@@ -1,0 +1,8 @@
+**Theorem 39.7 (two-reply upgrades, polynomial raw scale and attained linear scan).** At any authentic attained prefix $u$, from an earned bounded $I$ and requested $B\ge1$, the controller acquires the original full $\mathsf P_B(x)$ with zero additional actions and at most two genuine current replies. A sufficient explicit raw-scale budget is
+
+$$
+T=cU+d,\qquad Q=BT,\qquad D=Q^2;
+\tag{39.12}
+$$
+
+the optional second scale is at most $Q$. 

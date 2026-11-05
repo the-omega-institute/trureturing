@@ -6,6 +6,7 @@
    utility: none
    digest: Legal Hamming-one words have a sharp flippable-zero and occupation count. -/
 
+import D5.S1.Words.AdmissibleWords.AdmissibleCount
 import D5.S3.Combinatorics.Graph.Hypercube
 import D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant
 
