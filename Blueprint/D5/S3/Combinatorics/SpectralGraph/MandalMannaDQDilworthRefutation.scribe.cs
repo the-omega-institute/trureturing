@@ -104,7 +104,10 @@ internal sealed class MandalMannaDQDilworthRefutationDocument : IScribeDocumentD
                     DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
                 Node("result", "Refutation with eight singleton blocks", Seq(Neg, Sp, Parenthesized(ClaimBody())),
                     "The source recurrence with eight singleton blocks gives a connected graph with a universal vertex. Its vertices fit in one vicinal chain, and no zero-chain cover exists. Two independent global modes of its distance signless matrix have eigenvalue 8, so its algebraic multiplicity is at least two. All creation blocks have size one, making the local-exception set empty. Consequently this eigenvalue violates the proposed upper bound of one. The proof obtains the two modes from parameterized shifted matrices: their kernel identities hold for every natural R, and independence holds for R ≥ 1. Identification with native recurrence graphs is proved at R = 2 only; the uniform native-graph extension and exact multiplicity two uniformly remain open. The D^L results, local-mode and quotient formulas, and Example 5.4 are not refuted by this witness.",
-                    DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                    DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                    new OpenProblemResolutionClaim(
+                        ProblemSlugRef.Create("mandal-manna-dq-dilworth"),
+                        ResolutionKind.Refuted)))));
     }
 
     private static Formula LocalExceptions()
@@ -137,10 +140,11 @@ internal sealed class MandalMannaDQDilworthRefutationDocument : IScribeDocumentD
     }
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("mandal-manna-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula Carrier(bool finite, bool decidable, Formula body)
     {
         Formula tail = decidable ? Seq(OpenBracket, Call("DecidableEq", V("V")), CloseBracket, Sp, body) : body;

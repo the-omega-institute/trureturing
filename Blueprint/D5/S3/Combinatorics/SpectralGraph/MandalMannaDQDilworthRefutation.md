@@ -154,6 +154,10 @@ $$\neg (\forall alpha \in \operatorname{List}\left(\operatorname{Nat}\right),\; 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/MandalMannaDQDilworthRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mandal-manna-dq-dilworth` (refuted) by `D5/S3/Combinatorics/SpectralGraph/MandalMannaDQDilworthRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mandal-manna-dq-dilworth","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/MandalMannaDQDilworthRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Santanu Mandal and Pallabi Manna (2026). *The Distance Laplacian and Distance Signless Laplacian Spectra of C-Graphs*. DOI: [10.48550/arXiv.2610.08599](https://doi.org/10.48550/arXiv.2610.08599). URL: <https://arxiv.org/abs/2610.08599v1>.
