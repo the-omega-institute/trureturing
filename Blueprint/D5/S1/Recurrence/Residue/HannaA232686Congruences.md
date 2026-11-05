@@ -44,7 +44,7 @@ $$\forall A \in \operatorname{PowerSeries}\left(\mathbb{Q}\right),\; \operatorna
 
 *Commentary.*
 
-An integral triangular recurrence transfers the residues of an approximate solution to every exact solution. The finite polynomial residual has divisible exponential coefficients in every degree. The exponential approximate solution supplies the constant residue where used. HannaA232686Congruences.result settles the two nominated conjectures preregistered in issue #21488 (https://github.com/the-omega-institute/trureturing/issues/21488), recorded in Problems/hefg-a232686.md.
+An integral triangular recurrence transfers the residues of an approximate solution to every exact solution. The finite polynomial residual has divisible exponential coefficients in every degree. The exponential approximate solution supplies the constant residue where used.
 
 ## References
 
