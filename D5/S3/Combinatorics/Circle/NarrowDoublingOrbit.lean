@@ -69,6 +69,11 @@ No orbit or narrowness predicate is used in this arithmetic definition. -/
 def explicitNumerator (r s u : ℕ) : ℕ :=
   2 ^ (r - 1) + ∑ i ∈ Finset.range (s - 1), 2 ^ gapExponent r u i
 
+/-- Increasing points reconstructed from the explicit directed gaps. -/
+def explicitPoint (r s u j : ℕ) : ℕ :=
+  (∑ i ∈ Finset.range s, 2 ^ gapExponent r u i) +
+    ∑ i ∈ Finset.range j, 2 ^ gapExponent r u i
+
 /-- Strict positively oriented circular order, cut at zero. -/
 private def CyclicBetween (a b c : ℤ) : Prop :=
   (a < b ∧ b < c) ∨ (b < c ∧ c < a) ∨ (c < a ∧ a < b)
@@ -900,6 +905,144 @@ theorem narrow_classification {X Q : ℕ} (hX : 3 ≤ X) (hodd : Odd X)
     mul_left_cancel₀ (by exact_mod_cast hM.ne') hcancel
   rw [hdg] at hdiam
   exact ⟨hr, period_eq_order hXp Q, hDeq, by omega⟩
+
+/-- Recover every sorted point and the explicit maximum from the original
+actual narrow orbit. The period and scale are the actual period and gcd;
+the shift, its coprimality and inverse are conclusions. An arbitrary seed
+is not asserted to equal the maximum. -/
+theorem narrow_explicit_numerator {X Q : ℕ} (hX : 3 ≤ X) (hodd : Odd X)
+    (hQ : 0 < Q) (hQX : Q < X) (hnarrow : 2 * diameter X Q < X) :
+    ∃ s u : ℕ, 0 < s ∧ s < period X Q ∧ Nat.Coprime s (period X Q) ∧
+      u < period X Q ∧ (s : ZMod (period X Q)) * u = 1 ∧
+      orbit X Q = (Finset.range (period X Q)).image
+        (fun j => Nat.gcd X Q * explicitPoint (period X Q) s u j) ∧
+      IsGreatest (↑(orbit X Q) : Set ℕ)
+        (Nat.gcd X Q * explicitNumerator (period X Q) s u) := by
+  classical
+  have hXp : 0 < X := by omega
+  have hc := narrow_classification hX hodd hQ hQX hnarrow
+  have hr := hc.1
+  let r := period X Q
+  let g := Nat.gcd X Q
+  letI : NeZero r := ⟨by dsimp [r]; omega⟩
+  have hrp : 0 < r := by dsimp [r]; omega
+  have hgX : g ≤ X := Nat.le_of_dvd hXp (Nat.gcd_dvd_left X Q)
+  obtain ⟨d, _, _, hprod, hdiam, s, hs, htrans, hwalk⟩ :=
+    narrow_gap_arithmetic hX hodd hQ hQX hnarrow
+  obtain ⟨hspos, hcop, u, hu, hunit⟩ := transitive_shift_inverse hr s htrans
+  have hdg : d = (g : ℤ) := by
+    have := hc.2.2.2
+    dsimp [g] at hgX ⊢
+    omega
+  have hgap (i : Fin r) : directedGap X Q i =
+      (g : ℤ) * (2 : ℤ) ^ gapExponent r u i.val := by
+    have he := hwalk (gapExponent r u i.val) (ZMod.val_lt _)
+      (show period X Q - 1 < period X Q by omega)
+    rw [shift_gap_location hrp s i hunit] at he
+    rw [hdg] at he
+    simpa only [mul_comm] using he
+  let a := sortedPoint X Q
+  let z : Fin r := ⟨0, hrp⟩
+  let w : Fin r := ⟨r - 1, by omega⟩
+  have hpre (j : ℕ) (hj : j < r) :
+      (a ⟨j, hj⟩ : ℤ) = (a z : ℤ) +
+        (g : ℤ) * ∑ i ∈ Finset.range j, (2 : ℤ) ^ gapExponent r u i := by
+    induction j with
+    | zero => simp [z]
+    | succ j ih =>
+      have hj' : j < r := by omega
+      have he := hgap (⟨j, hj'⟩ : Fin r)
+      have hn : cycAdd (⟨j, hj'⟩ : Fin r) 1 = ⟨j + 1, hj⟩ := by
+        apply Fin.ext
+        exact Nat.mod_eq_of_lt hj
+      change (a (cycAdd ⟨j, hj'⟩ 1) : ℤ) - a ⟨j, hj'⟩ +
+        (if j + 1 < r then 0 else (X : ℤ)) = _ at he
+      rw [hn, if_pos hj, add_zero] at he
+      rw [Finset.sum_range_succ, mul_add]
+      linarith [ih hj']
+  have hs0 := hs z
+  change a (cycAdd s 0) = (2 * a z) % X at hs0
+  rw [cycAdd_zero] at hs0
+  have hmin : a z ≤ a s := a.monotone (by change 0 ≤ s.val; omega)
+  have hazX : a z < X := orbit_lt hXp Q _
+    ((orbit X Q).orderEmbOfFin_mem (orbit_card X Q) z)
+  have hnowrap : 2 * a z < X := by
+    by_contra hn
+    have hle : X ≤ 2 * a z := by omega
+    have hlt : 2 * a z - X < X := by omega
+    have hm : (2 * a z) % X = 2 * a z - X := by
+      rw [Nat.mod_eq_sub_mod hle, Nat.mod_eq_of_lt hlt]
+    rw [hm] at hs0
+    omega
+  rw [Nat.mod_eq_of_lt hnowrap] at hs0
+  have hs0Z : (a s : ℤ) = 2 * (a z : ℤ) := by exact_mod_cast hs0
+  have hbase : (a z : ℤ) =
+      (g : ℤ) * ∑ i ∈ Finset.range s.val, (2 : ℤ) ^ gapExponent r u i := by
+    have he := hpre s.val s.isLt
+    linarith
+  have hpoint (j : Fin r) : a j = g * explicitPoint r s.val u j.val := by
+    have he := hpre j.val j.isLt
+    rw [hbase, ← mul_add] at he
+    have he' : (a j : ℤ) = ((g * explicitPoint r s.val u j.val : ℕ) : ℤ) := by
+      simpa only [explicitPoint, Nat.cast_mul, Nat.cast_add, Nat.cast_sum,
+        Nat.cast_pow, Nat.cast_ofNat] using he
+    exact_mod_cast he'
+  have hse : gapExponent r u (s.val - 1) = 0 := by
+    have he : (((s.val - 1 : ℕ) : ZMod r) + 1) = (s.val : ZMod r) := by
+      rw [← Nat.cast_one, ← Nat.cast_add, Nat.sub_add_cancel (by omega : 1 ≤ s.val)]
+    unfold gapExponent
+    rw [he, mul_comm, hunit, sub_self]
+    rfl
+  have hsum : (∑ i ∈ Finset.range s.val, (2 : ℤ) ^ gapExponent r u i) =
+      (∑ i ∈ Finset.range (s.val - 1), (2 : ℤ) ^ gapExponent r u i) + 1 := by
+    conv_lhs => rw [← Nat.sub_add_cancel (by omega : 1 ≤ s.val)]
+    rw [Finset.sum_range_succ, hse, pow_zero]
+  have hne := orbit_nonempty hXp hodd Q
+  have hz : a z = (orbit X Q).min' hne :=
+    Finset.orderEmbOfFin_zero (orbit_card X Q) hrp
+  have hw : a w = (orbit X Q).max' hne :=
+    Finset.orderEmbOfFin_last (orbit_card X Q) hrp
+  have hW : (diameter X Q : ℤ) = (a w : ℤ) - a z := by
+    have hle : a z ≤ a w := a.monotone (by change 0 ≤ r - 1; omega)
+    unfold diameter
+    rw [dite_eq_left hne, ← hw, ← hz]
+    omega
+  have hMcast : ((2 ^ r - 1 : ℕ) : ℤ) = (2 : ℤ) ^ r - 1 := by
+    rw [Nat.cast_sub (by positivity : 1 ≤ (2 : ℕ) ^ r)]
+    push_cast
+    rfl
+  change (X : ℤ) = ((2 ^ r - 1 : ℕ) : ℤ) * d at hprod
+  rw [hMcast, hdg] at hprod
+  have hpow : (2 : ℤ) ^ r = 2 * 2 ^ (r - 1) := by
+    calc
+      (2 : ℤ) ^ r = 2 ^ (r - 1 + 1) := by congr 1; omega
+      _ = _ := by rw [pow_succ]; ring
+  have hmaxZ : (a w : ℤ) = (g : ℤ) *
+      ((2 : ℤ) ^ (r - 1) +
+        ∑ i ∈ Finset.range (s.val - 1), (2 : ℤ) ^ gapExponent r u i) := by
+    rw [hsum] at hbase
+    rw [hdg] at hdiam
+    rw [hpow] at hprod
+    nlinarith
+  have hmax : a w = g * explicitNumerator r s.val u := by
+    exact_mod_cast (show (a w : ℤ) =
+      ((g * explicitNumerator r s.val u : ℕ) : ℤ) by
+        simpa only [explicitNumerator, Nat.cast_mul, Nat.cast_add,
+          Nat.cast_pow, Nat.cast_ofNat, Nat.cast_sum] using hmaxZ)
+  refine ⟨s.val, u, hspos, s.isLt, hcop, hu, hunit, ?_, ?_⟩
+  · ext b
+    constructor
+    · intro hb
+      obtain ⟨j, hj⟩ := ((orbit X Q).orderIsoOfFin (orbit_card X Q)).surjective ⟨b, hb⟩
+      have he : a j = b := congrArg Subtype.val hj
+      exact Finset.mem_image.mpr ⟨j.val, Finset.mem_range.mpr j.isLt,
+        (hpoint j).symm.trans he⟩
+    · intro hb
+      obtain ⟨j, hj, rfl⟩ := Finset.mem_image.mp hb
+      rw [← hpoint (⟨j, Finset.mem_range.mp hj⟩ : Fin r)]
+      exact (orbit X Q).orderEmbOfFin_mem (orbit_card X Q) _
+  · rw [← hmax, hw]
+    exact ⟨(orbit X Q).max'_mem hne, fun b hb => Finset.le_max' _ b hb⟩
 
 /-- Finite-horizon reduction: one consecutive block of
 the actual period forces the entire fixed-Q orbit to be narrow and doubling
