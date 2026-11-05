@@ -54,6 +54,10 @@ $$\neg (\forall d \in \mathbb{N}, sigma \in Bool \to \left(Bool \to \operatornam
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/StasiukLutkenhausTanErrorStateErasureRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/stasiuk-lutkenhaus-tan-error-state-erasure` (refuted) by `D5/S3/Quantum/Foundation/StasiukLutkenhausTanErrorStateErasureRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"stasiuk-lutkenhaus-tan-error-state-erasure","declaration_gid":"D5/S3/Quantum/Foundation/StasiukLutkenhausTanErrorStateErasureRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mikka Stasiuk, Norbert Lütkenhaus and Ernest Y.-Z. Tan (2025). *Quantum Chernoff divergence in advantage distillation for quantum key distribution and device-independent quantum key distribution*. DOI: [10.1103/PhysRevA.111.022631](https://doi.org/10.1103/PhysRevA.111.022631). URL: <https://arxiv.org/abs/2212.06975v3>.

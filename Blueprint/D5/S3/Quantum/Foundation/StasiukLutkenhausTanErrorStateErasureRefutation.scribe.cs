@@ -62,7 +62,10 @@ internal sealed class StasiukLutkenhausTanErrorStateErasureRefutationDocument : 
                         "The physical preparation has balanced positive key-event probabilities, distinct flagged states, CHSH violation and Q=9/25<9/16. These physical and Chernoff calculations are additional to the matrix-state refutation.")),
                     Paragraph(Text(
                         "Bhavsar, Moon and Bae, arXiv:2602.05870v2, address neighbouring asymptotic key-rate conditions. Finite-blocklength security, the replacement-realization question, optimality of the disturbance constant and positive erasure with an orthogonal correct/error record remain open here."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("stasiuk-lutkenhaus-tan-error-state-erasure"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock SourceQuote() => Paragraph(
         Text("We remark that it does seem plausible to conjecture that Eve can indeed always perform an operation on her side-information such that this condition is fulfilled (while keeping the states "),
