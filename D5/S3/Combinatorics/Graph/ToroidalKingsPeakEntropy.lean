@@ -64,13 +64,13 @@ private theorem shifted_log_limit (a : ℕ → ℕ) {s : ℝ}
   dsimp
   rw [hc]
   field_simp [hn0, hm0]
-  <;> ring
 
 private theorem polynomial_log_loss :
     Tendsto (fun n : ℕ => Real.log ((n : ℝ) ^ 2 + 1) / (n : ℝ) ^ 2)
       atTop (𝓝 0) := by
   have hx : Tendsto (fun n : ℕ => (n : ℝ) ^ 2 + 1) atTop atTop :=
-    ((tendsto_pow_atTop (by decide : 2 ≠ 0)).comp tendsto_natCast_atTop_atTop).atTop_add_const 1
+    tendsto_atTop_add_const_right atTop 1
+      ((tendsto_pow_atTop (by decide : 2 ≠ 0)).comp tendsto_natCast_atTop_atTop)
   have hlog := Real.isLittleO_log_id_atTop.tendsto_div_nhds_zero.comp hx
   have hi : Tendsto (fun n : ℕ => (1 : ℝ) / n) atTop (𝓝 0) :=
     tendsto_const_nhds.div_atTop tendsto_natCast_atTop_atTop
@@ -84,7 +84,6 @@ private theorem polynomial_log_loss :
   have hx0 : (n : ℝ) ^ 2 + 1 ≠ 0 := ne_of_gt (by positivity)
   dsimp
   field_simp [hn0, hx0]
-  <;> ring
 
 private theorem peak_log_limit {s : ℝ}
     (hf : Tendsto (fun n : ℕ => Real.log (freeCount n : ℝ) / (n : ℝ) ^ 2) atTop (𝓝 s)) :
@@ -97,21 +96,26 @@ private theorem peak_log_limit {s : ℝ}
     have hfpos : (0 : ℝ) < freeCount (n - 1) := by exact_mod_cast free_pos (n - 1)
     have hle : freeCount (n - 1) ≤ (n ^ 2 + 1) * peak n :=
       (free_le_torus n).trans (count_le_mul_peak n)
-    have hlog := Real.log_le_log hfpos (by exact_mod_cast hle)
-    rw [Nat.cast_mul, Nat.cast_add, Nat.cast_pow, Nat.cast_one,
-      Real.log_mul (by positivity) hp.ne'] at hlog
+    have hleR : (freeCount (n - 1) : ℝ) ≤ ((n : ℝ) ^ 2 + 1) * (peak n : ℝ) := by
+      exact_mod_cast hle
+    have hlog := Real.log_le_log hfpos hleR
+    rw [Real.log_mul (by positivity) hp.ne'] at hlog
     have hdiv := div_le_div_of_nonneg_right hlog (sq_nonneg (n : ℝ))
     rw [add_div] at hdiv
     linarith
-  · exact Eventually.of_forall fun n => div_le_div_of_nonneg_right
-      (Real.log_le_log (by exact_mod_cast peak_pos n)
-        (by exact_mod_cast (peak_le_count n).trans (torus_le_free n))) (sq_nonneg _)
+  · apply Eventually.of_forall
+    intro n
+    have hp : (0 : ℝ) < peak n := by exact_mod_cast peak_pos n
+    have hle : (peak n : ℝ) ≤ freeCount n := by
+      exact_mod_cast (peak_le_count n).trans (torus_le_free n)
+    exact div_le_div_of_nonneg_right (Real.log_le_log hp hle) (sq_nonneg _)
 
 private theorem root_of_log_limit (a : ℕ → ℕ) (ha : ∀ n, 0 < a n) {s : ℝ}
     (h : Tendsto (fun n : ℕ => Real.log (a n : ℝ) / (n : ℝ) ^ 2) atTop (𝓝 s)) :
     Tendsto (rootGrowth a) atTop (𝓝 (Real.exp s)) := by
   convert Real.continuous_exp.continuousAt.tendsto.comp h using 1
   ext n
+  simp only [Function.comp_apply]
   rw [rootGrowth, Real.rpow_def_of_pos (by exact_mod_cast ha n), div_eq_mul_inv]
 
 private theorem toroidal_peak_tendsto :

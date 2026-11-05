@@ -270,6 +270,7 @@ private theorem tile_overlap (u v : ℕ × ℕ) :
 objects, with the source's exact side shift m minus one. -/
 theorem tiling_free_identity (m : ℕ) : a063443 m = freeCount (m - 1) := by
   classical
+  change (tilingPlacements m).card = (independentSets (board (m - 1)) freeAdjacent).card
   congr 1
   apply Finset.ext
   intro s
@@ -280,8 +281,11 @@ private theorem rectangle_log_subadditive (c : ℕ) :
     Subadditive (fun r => Real.log (rectangleCount r c : ℝ)) := by
   intro r t
   have hp (r : ℕ) : (0 : ℝ) < rectangleCount r c := by exact_mod_cast rectangle_pos r c
-  have h := Real.log_le_log (hp (r + t)) (by exact_mod_cast rectangle_cut r t c)
-  simpa only [Nat.cast_mul, Real.log_mul (hp r).ne' (hp t).ne'] using h
+  have hle : (rectangleCount (r + t) c : ℝ) ≤
+      (rectangleCount r c : ℝ) * (rectangleCount t c : ℝ) := by
+    exact_mod_cast rectangle_cut r t c
+  simpa only [Real.log_mul (hp r).ne' (hp t).ne'] using
+    Real.log_le_log (hp (r + t)) hle
 
 private theorem rectangle_log_bounds (r c : ℕ) :
     0 ≤ Real.log (rectangleCount r c : ℝ) ∧
@@ -289,7 +293,9 @@ private theorem rectangle_log_bounds (r c : ℕ) :
   have h1 : (1 : ℝ) ≤ rectangleCount r c := by exact_mod_cast rectangle_pos r c
   refine ⟨Real.log_nonneg h1, ?_⟩
   have hp : (0 : ℝ) < rectangleCount r c := by exact_mod_cast rectangle_pos r c
-  have h := Real.log_le_log hp (by exact_mod_cast rectangle_le_binary r c)
+  have hle : (rectangleCount r c : ℝ) ≤ (2 : ℝ) ^ (r * c) := by
+    exact_mod_cast rectangle_le_binary r c
+  have h := Real.log_le_log hp hle
   simpa [Real.log_pow, Nat.cast_mul, mul_assoc, mul_comm, mul_left_comm] using h
 
 theorem free_log_limit : ∃ s : ℝ, 0 ≤ s ∧
@@ -306,5 +312,7 @@ theorem free_log_limit : ∃ s : ℝ, 0 ≤ s ∧
 #print axioms torus_le_free
 #print axioms count_le_mul_peak
 #print axioms peak_le_count
+#print axioms tiling_free_identity
+#print axioms free_log_limit
 end
 end D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam
