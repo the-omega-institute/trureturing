@@ -44,14 +44,16 @@ internal sealed class JonesAloyEntropyConstancyDocument : IScribeDocumentDefinit
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Refutation of line constancy", Disp(Seq(Neg, Parenthesized(ClaimBody()))),
                 "For every 24/25 <= s < 1 and every function HStar satisfying IsSourceRoof, its value at (s squared,-s squared) and energy Real.arcsin(s), plus 7((1-s)/2) squared, is strictly smaller than its value at (1,1-2s squared) at the same energy. An extremal first coordinate forces every positive-weight branch onto the boundary. A strict supporting tangent and the exact energy mean then force all these branches to have the same correlation. At the midpoint, the correlations (s,-s), (1,1) and (-1,-1) with weights s, (1-s)/2 and (1-s)/2 give a cheaper ensemble. Taking s=24/25 contradicts the displayed conjecture. Global existence of the minimum function, persistence into the interior and operator realizations are not proved here.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("jones-aloy-entropy"), ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("jahm-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
 
     private static Formula X(string name) => F.Id(name);
     private static Formula Q(string name) => Seq(Operatorname, Grp(X(name)));
