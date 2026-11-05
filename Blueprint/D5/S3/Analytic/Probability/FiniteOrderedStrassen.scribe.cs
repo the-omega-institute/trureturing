@@ -80,5 +80,5 @@ internal sealed class FiniteOrderedStrassenDocument : IScribeDocumentDefinition
                         Imp(All("x", A, Le(D(0), Call("p", V("x")))),
                             Imp(All("x", A, Le(D(0), Call("q", V("x")))),
                                 Imp(Eqn(SumOver("x", Call("p", V("x"))),
-                                        SumOver("x", Call("q", V("x")))), body)))))));
+                                        SumOver("x", Call("q", V("x")))), Par(body))))))));
 }
