@@ -1,0 +1,35 @@
+**Definition 17.1 (Real field, affine polynomial and root-product polynomial).** Let $F\subseteq\mathbb R$ be a field with its given real embedding, let $d\geq1$, and let
+
+$$
+p(Z,t)=a(Z)+t b(Z)\in F[t,Z],\qquad
+\deg a=d,\quad a\text{ monic},\quad \deg b<d.
+\tag{17.1}
+$$
+
+For real $t$, list the $d$ complex roots of $p(Z,t)$ as $\lambda_1(t),\ldots,\lambda_d(t)$, with algebraic multiplicity, and put
+
+$$
+r(t)=\max_j|\lambda_j(t)|,\qquad s(t)=r(t)^2.
+\tag{17.2}
+$$
+
+The list is a multiset; it imposes no continuous labeling. Define the polynomial
+
+$$
+\begin{aligned}
+p^{\flat}(Z,X,t)&=Z^d p(X/Z,t),\\
+\mathcal R(X,t)&=\operatorname{Res}_Z
+             \bigl(p(Z,t),p^{\flat}(Z,X,t)\bigr).
+\end{aligned}
+\tag{17.3}
+$$
+
+The first line means polynomial expansion, so it is defined also at $Z=0$. The resultant uses the Sylvester determinant, with both degree bounds in $Z$ equal to $d$; vanishing leading coefficients are retained as zero coefficients in that determinant. If the first polynomial is monic, the convention is
+
+$$
+\operatorname{Res}_Z(f,g)=\prod_{f(\lambda)=0}g(\lambda),
+\tag{17.4}
+$$
+
+with multiplicities. This identity remains valid when the degree of $g$ falls. The Sylvester determinant, its root-product formula and its common-root property are classical; see [Sturmfels, *Solving Systems of Polynomial Equations*, §4.1, Theorem 4.1, (4.3) and the product formulas following it](https://math.berkeley.edu/~bernd/cbms.pdf). The root-radius objective is the one in [Eaton, Grundel, Gürbüzbalaban and Overton, *Polynomial root radius optimization with affine constraints*, §2 and §3](https://cs.nyu.edu/overton/papers/pdffiles/PolyRootRadOptAffConPublished.pdf), [DOI 10.1007/s10107-016-1092-5](https://doi.org/10.1007/s10107-016-1092-5).
+

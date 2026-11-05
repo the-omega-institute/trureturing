@@ -1,0 +1,101 @@
+**Theorem 7.2 (Angular divergence under a uniform upper bound).** In Definition 7.1, assume (U). If there are infinitely many events and $\mathcal E_\varepsilon=\infty$, then $u_t\to0$ as $t\to\infty$ for every real $u_0$. This includes arbitrary signs of $\lambda_j$, singular events, rational or irrational $\theta/(2\pi)$, consecutive events, and unbounded gaps.
+
+*Proof.* Use the equality line, projection and rotation from (6.3), (6.7) and (6.10):
+
+$$
+h=(a,a+b)^T,\qquad e=\frac{h}{\|h\|_Q},\qquad
+P=ee^TG,\qquad J=\frac{M-\cos\theta\,I}{\sin\theta}.
+$$
+
+The identities (3.1)–(3.4) and (6.7), applied separately to each $\alpha_j$, give
+
+$$
+N_{\alpha_j}=M K^{(j)},\qquad
+K^{(j)}=P+\lambda_j(I-P),\qquad
+Q(Mz)=Q(z).
+\tag{7.5}
+$$
+
+These use the original first-event loss and equality mechanism: `local_energy_decomposition`, `Q_dampedEvent_loss`, `Q_event`, `Q_sweepTheta_eq_iff`, `dampedEvent_eq_of_fixed`, `sweepTheta_of_fixed` and `source_factorization` in the damped-sweep source cited in Definition 7.1. In the notation of (3.1), $R=2P-I$, $M=SR$, $N_{\alpha_j}=S((1-\tau_j)I+\tau_jR)$ and $R^2=I$, so multiplication gives (7.5). The rotation identities already established in the proof of Theorem 6.2 give $J^2=-I$, $J$ skew-adjoint and isometric for $Q$, and $e,Je$ orthonormal. They also give $M^k=\cos(k\theta)I+\sin(k\theta)J$ for every integer $k$.
+
+For each event define, in the original real coordinates,
+
+$$
+\begin{gathered}
+e_j=M^{-t_j}e,\qquad P_j=e_je_j^TG,\qquad
+\mathcal K_j=P_j+\lambda_j(I-P_j),\\
+V_0=I,\qquad V_{j+1}=\mathcal K_jV_j,\qquad
+v_j=M^{-t_j}u_{t_j}.
+\end{gathered}
+\tag{7.6}
+$$
+
+There are exactly $t_0$ undamped transfers before the first event, hence $v_0=u_0$. Between consecutive event inputs the full chronological formula is
+
+$$
+\begin{gathered}
+u_{t_j+k}=M^{k-1}N_{\alpha_j}u_{t_j}\quad(1\leq k\leq d_j),\\
+u_{t_{j+1}}=M^{d_j}K^{(j)}u_{t_j},\qquad
+v_{j+1}=\mathcal K_jv_j=V_{j+1}u_0.
+\end{gathered}
+\tag{7.7}
+$$
+
+At time $t_j+1$, the interaction vector $M^{-(t_j+1)}u_{t_j+1}$ is $v_{j+1}$ and it stays equal to that vector through the following undamped transfers. For a finite list the first formula holds for every $k\geq1$ after its last event. More generally let $\nu(t)$ be the number of events strictly before $t$. This is finite at every integer time, and (7.5) proves by induction that
+
+$$
+u_t=M^tV_{\nu(t)}u_0,\qquad
+\|u_t\|_Q=\|V_{\nu(t)}u_0\|_Q.
+\tag{7.8}
+$$
+
+Use $V_0=I$ throughout if the event list is empty. Thus the norm limit along an infinite event list is the norm limit of the entire chronological trajectory, including every undamped phase; for $r<\infty$ events it is $\|V_ru_0\|_Q$.
+
+For the infinite list choose oriented representatives of the event lines exactly as in (6.11). Explicitly, put $\chi(x)=1$ for $x\geq0$ and $\chi(x)=-1$ for $x<0$, and define
+
+$$
+\begin{gathered}
+\sigma_0=1,\qquad \sigma_{j+1}=\sigma_j\chi(\cos(d_j\theta)),\qquad
+p_j=\sigma_je_j,\quad q_j=Jp_j,\\
+c_j=|\cos(d_j\theta)|,\qquad
+s_j=-\chi(\cos(d_j\theta))\sin(d_j\theta).
+\end{gathered}
+\tag{7.9}
+$$
+
+Then $(p_j,q_j)$ is $Q$-orthonormal, $c_j\geq0$, $c_j^2+s_j^2=1$ and $s_j^2=\sin^2(d_j\theta)$. Since $e_{j+1}=\cos(d_j\theta)e_j-\sin(d_j\theta)Je_j$, one has
+
+$$
+p_{j+1}=c_jp_j+s_jq_j,\qquad
+q_{j+1}=-s_jp_j+c_jq_j.
+$$
+
+In particular this convention includes zero cosines. Write $v_j=A_jp_j+B_jq_j$. The map $\mathcal K_j$ sends this vector to $A_jp_j+\lambda_jB_jq_j$; taking its coordinates in the next orthonormal frame gives the variable-parameter version of (6.12)–(6.13):
+
+$$
+\begin{aligned}
+A_{j+1}&=c_jA_j+\lambda_js_jB_j,\\
+B_{j+1}&=-s_jA_j+\lambda_jc_jB_j,\\
+\|v_{j+1}\|_Q^2&=\|v_j\|_Q^2-(1-\lambda_j^2)B_j^2.
+\end{aligned}
+\tag{7.10}
+$$
+
+Fix any actual initial vector and choose $\rho$ as in (U). The last identity gives a nonincreasing nonnegative norm sequence with a limit $\ell\geq0$, and telescoping gives
+
+$$
+(1-\rho^2)\sum_{j=0}^\infty B_j^2\leq\|u_0\|_Q^2.
+\tag{7.11}
+$$
+
+Therefore $B_j\to0$. If $\ell>0$, then $A_j^2=\|v_j\|_Q^2-B_j^2\geq\ell^2/2$ for all sufficiently large $j$. The second identity in (7.10) implies
+
+$$
+s_j^2A_j^2=(\lambda_jc_jB_j-B_{j+1})^2
+\leq2\rho^2B_j^2+2B_{j+1}^2.
+$$
+
+Summing on that tail and using (7.11) would give $\sum_js_j^2<\infty$, contradicting $\mathcal E_\varepsilon=\infty$. Hence $\ell=0$, and (7.8) gives $\|u_t\|_Q\to0$ at every chronological time. Since $x_t^2\leq aQ(u_t)$ and $y_t^2\leq cQ(u_t)$, it follows that $u_t\to0$. No inverse of an event factor was used, so zero $\lambda_j$ are included.
+
+For comparison with classical product results, the loss in (7.10) is the paracontraction inequality of [Beyn and Elsner, *Infinite products and paracontracting matrices*, §2](https://doi.org/10.13001/1081-3810.1006): $\mathcal K_jz\ne z$ implies $\|\mathcal K_jz\|_Q<\|z\|_Q$. Their Theorem 2.3 concerns a finite family of matrices. The cyclic projection statement (1.2) in [Badea, Grivaux and Müller, arXiv:1006.2047v1, §1A](https://arxiv.org/html/1006.2047v1#S1.SS1) concerns powers of one cyclic product of a fixed finite family of closed subspaces. Here the possibly infinite family (7.6) has the particular rotation relation (7.9); the conclusion follows from its actual consecutive-input identities (7.10)–(7.11). $\square$
+

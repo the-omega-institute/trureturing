@@ -1,0 +1,24 @@
+**定理 69.1（同一原 AC 准备的固定联合提升）。** 在 $\mathsf B_{\rm cl}$ 中，固定一个原 $A$，先取引理 67.3 已供应的一个 $J=AP^{\otimes k}$ 及同一原嵌入 $i,j$，再作任何逼近。对每个数学归一正态 $\alpha\in\mathsf S(E_A)$，存在这一固定 $E_J$ 上的数学归一正泛函 $\gamma$，使
+
+$$
+\gamma(i(a)\circ j(b))=\alpha(a)\eta(b),\qquad
+\gamma i=\alpha,\quad\gamma j=\eta.
+\tag{69.1}
+$$
+
+其中 $\eta$ 始终是同一个原 AC 准备。更一般地，将指定指针边缘换为任意数学 $\beta\in\mathsf S(E_P)$，也有同一 $J$ 上满足乘积评价 $\alpha(a)\beta(b)$ 的数学态。此结论不消费 $\mathsf Q$、SC 或标定，不供应新的实际准备或新的实际联合对象。
+
+证明。取 $\alpha_n=\sum_r c_{nr}\alpha_{nr}\to\alpha$，$c_{nr}\ge0$，$\alpha_{nr}\in\mathcal P_A$。对每个实际 $\alpha_{nr}$，原 X 在这同一 $J$ 上供应与原 $\eta$ 的 $k$ 重实际乘积 $\zeta_{nr}$。由 $\eta(u_P)=1$，数学正和 $\Gamma_n=\sum_rc_{nr}\zeta_{nr}$ 满足
+
+$$
+\Gamma_n(i(a)\circ j(b))=\alpha_n(a)\eta(b),\qquad
+\Gamma_n(u_J)=\alpha_n(u_A)\longrightarrow1.
+\tag{69.2}
+$$
+
+正泛函的对偶单位范数等于其质量，故 $\|\Gamma_n\|=\Gamma_n(u_J)$ 有界。固定有限维 $E_J^*$ 中可取收敛子列；闭正锥使其极限 $\gamma$ 正，质量为一。对每个固定 $i(a)\circ j(b)$ 评价连续，得到 (69.1)。$i,j$ 含幺，故取 $a=u_A$ 或 $b=u_P$ 得准确边缘。
+
+一般 $\beta$ 的情形，再取 $\beta_n=\sum_s e_{ns}\beta_{ns}\to\beta$，在第一个指针位置用每个原实际 $\beta_{ns}$，其余 $k-1$ 个位置仍用同一 $\eta$。原 X 的实际乘积给相应联合准备；取系数 $c_{nr}e_{ns}$ 的数学正和，其质量为 $\alpha_n(u_A)\beta_n(u_P)\to1$。相同紧性与评价连续性给结论。没有要求在逼近过程中改变 $k,J$、维数、端口或实际连接。
+
+$\Gamma_n$ 是数学正和，$\gamma$ 是数学极限；二者均未被命名为实际准备。若 $\alpha$ 纯，其极端性、或某个效果在边缘上的精确期望一，只在极限 $\gamma$ 及其简单分量中使用，不要求任何 $\alpha_n$ 纯或精确取一。特殊 (69.1) 只需局部 $\mathrm P_{\rm cl}(A)$；一般情形另需 $\mathrm P_{\rm cl}(P)$。完整联合自身的 $\mathrm P_{\rm cl}(J)$ 则仍由背景独立保留，供联合的原 $D$ 及下面全相关锥延拓使用。∎
+

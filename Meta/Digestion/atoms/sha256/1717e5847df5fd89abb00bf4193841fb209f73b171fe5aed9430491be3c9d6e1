@@ -1,0 +1,31 @@
+**命题 11.2（删除非负性后的完整关系与残余缺陷）。**若去掉实际费用非负这一前件，即使保留固定单位标记、三次周期和全部四变量 (R)，也可有非根的乘法缺陷。
+
+**证明。**取 $M=\mathbb C^3$ 为实空间，单位 $1_M=0$，写 $x=(z,w,h)$。定义
+
+$$
+\begin{aligned}
+\beta(x,y)&=\operatorname{Re}(z\overline{w'}+w\overline{z'}+h\overline{h'}),\\
+a\star u&=(z_a+z_u+h_ah_u,\ w_a+w_u,\ h_a+h_u),\\
+U(z,w,h)&=(\omega z,\omega w,\omega^2h),\\
+c_*(a,b)&=\beta(a-b,a-b).
+\end{aligned}
+\tag{11.5}
+$$
+
+$\beta$ 为非退化的不定号对称型；$0$ 为双侧单位，$U0=0$、$U^3=I$，且 $U$ 保持 $\beta$。令 $A=a-b$、$d=u-v$、$v_0=(h_ah_u-h_bh_v,0,0)$，则
+
+$$
+a\star U^ku-b\star U^kv=A+U^kd+\omega^{2k}v_0.
+$$
+
+$v_0$ 的方向各向同性。平方的三个纯项求和给 $3\beta(A,A)+3\beta(d,d)$；含 $A$ 的交叉项按 $\omega^k$ 或 $\omega^{2k}$ 求和为零，$U^kd$ 与 $\omega^{2k}v_0$ 的交叉项也按非平凡三角色求和为零。因此完整 (R) 成立。
+
+自由空间的锚定型满足 $B_*(e_x,e_y)=\beta(x,y)$。取 $a=u=(0,0,1)$、$z=(0,1,0)$，有 $a\star a=(1,0,2)$，故 $B_*(D(a,a),e_z)=1$，缺陷不在根空间。与此同时，实际重复历史 $z^{\star n}=(0,n,0)$ 给
+
+$$
+c_*(a\star a,z^{\star n})=4-2n<0\qquad(n\ge3).
+\tag{11.6}
+$$
+
+所以该模型明确违反原始非负性，不是原始问题的反例。它表明仅有代数三相消去不足；排除其缺陷必须消费实际历史闭包上的非负性。
+
