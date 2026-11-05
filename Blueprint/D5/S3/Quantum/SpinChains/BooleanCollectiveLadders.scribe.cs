@@ -85,14 +85,14 @@ internal sealed class BooleanCollectiveLaddersDocument : IScribeDocumentDefiniti
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
-    private static Formula And(Formula a, Formula b) => Par(Seq(a, Sp, Land, Sp, b));
+    private static Formula And(Formula a, Formula b) => Par(Seq(Par(a), Sp, Land, Sp, Par(b)));
     private static Formula Imp(Formula a, Formula b) => Par(Seq(a, Sp, Rightarrow, Sp, b));
     private static Formula Le(Formula a, Formula b) => Seq(a, Sp, Leq, Sp, b);
     private static Formula Ne(Formula a, Formula b) => Seq(a, Sp, Neq, Sp, b);
     private static Formula Mem(Formula a, Formula b) => Seq(a, Sp, InMacro, Sp, b);
     private static Formula Pow(Formula n, Formula q, Formula v) => At(new Formula.Power(Call("U", n), q), v);
     private static Formula Inner(Formula v, Formula w) => Call("innerC", v, w);
-    private static Formula Smul(Formula c, Formula v) => Seq(c, Sp, Cdot, Sp, v);
+    private static Formula Smul(Formula c, Formula v) => Seq(Par(c), Sp, Cdot, Sp, v);
     private static Formula P(Formula n, Formula t) => Call("primitive", n, t);
     private static Formula Occupancy()
     {
