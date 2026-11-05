@@ -16,11 +16,11 @@ open SourceWidth PeriodicShortening RunFirstEarTransport
 open D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
 open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm
 open private sourceMod base newBase charge oldValue newValue nextBase nextNewBase weightedMask packet_masses chain_values new_base_bounds from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (size negatives chainLength chainStart)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size negatives chainLength chainStart)
 open private oldMass newMass from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 open private DataCertificate DataCertificate.mk orderedPackets finiteChecks finiteEarChecks
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure (blocksWord)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (blocksWord)
 open private native_masses
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 

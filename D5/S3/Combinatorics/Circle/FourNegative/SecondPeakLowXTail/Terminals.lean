@@ -22,7 +22,7 @@ open private qHead qNewHead qModulus qTerminal
 open private terminal physicalValue physical_heads
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.PhysicalBanks
 open private sourceMod base newBase nextBase nextNewBase oldValue newValue from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (size chainStart chainLength)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size chainStart chainLength)
 open private native_masses
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 

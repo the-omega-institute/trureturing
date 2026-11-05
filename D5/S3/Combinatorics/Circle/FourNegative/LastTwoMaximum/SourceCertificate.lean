@@ -26,11 +26,11 @@ open private borrow_selector_windows
   from D5.S3.Combinatorics.Circle.FourNegative.LastTwoMaximum.BorrowArithmetic
 open private full from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.Banks
 open private sourceMod base newBase charge nextBase nextNewBase oldValue newValue chain_values source_signs from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (size chainLength chainStart negatives)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size chainLength chainStart negatives)
 open private native_masses
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 open private insertAt from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure (blocksWord)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (blocksWord)
 open private packetChecks withEar strip_iff_packetChecks withEar_split
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Packets
 open private withEar_positive withEar_negatives

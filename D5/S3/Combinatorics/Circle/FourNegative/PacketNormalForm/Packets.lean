@@ -16,7 +16,7 @@ open SourceWidth
 open private positive_block_strip from D5.S3.Combinatorics.Circle.ThreeBitSource
 open private strip_append_iff from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Transport
 open private insertAt insertAt_add slide_packet from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure (blocksWord)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (blocksWord)
 
 private def packetChecks (f : ℕ → ℤ) (C h : ℤ) : List (List ℕ × ℕ) → Prop
   | [] => True

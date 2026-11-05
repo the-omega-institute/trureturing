@@ -17,7 +17,7 @@ open private Checks equal_checks
   from D5.S3.Combinatorics.Circle.FourNegative.EqualLastThreeUpper.Arithmetic
 open private block_data terminal_signs checks_strip range_end range_join finish
   from D5.S3.Combinatorics.Circle.FourNegative.EqualLastThreeUpper.Physical
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure (blocksWord)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (blocksWord)
 
 set_option maxHeartbeats 2000000 in
 private theorem equal (s : ℕ) (hs : 2 ≤ s) :

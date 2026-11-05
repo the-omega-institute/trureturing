@@ -14,7 +14,7 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm
 open SourceWidth
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure (blocksWord)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (blocksWord)
 open private packetChecks withEar from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Packets
 
 noncomputable def orderedPackets (bs : List (Finset ℕ × ℕ)) : List (List ℕ × ℕ) :=

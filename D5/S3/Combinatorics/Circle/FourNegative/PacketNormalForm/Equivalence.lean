@@ -14,7 +14,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm
 open SourceWidth
 open private blocksWord_flatMap insertAt split_packets from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure (blocksWord)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (blocksWord)
 open private strip_append_iff last_nonpositive ear_not_at_end
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Transport
 open private packetChecks withEar strip_iff_packetChecks normalize_blocks withEar_split

@@ -15,9 +15,9 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.UpperGap
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm
 open private sourceMod base oldValue newValue chain_values source_signs from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (size negatives)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size negatives)
 open private insertAt from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure (blocksWord)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (blocksWord)
 open private packetChecks withEar strip_iff_packetChecks withEar_split
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Packets
 open private withEar_positive withEar_negatives

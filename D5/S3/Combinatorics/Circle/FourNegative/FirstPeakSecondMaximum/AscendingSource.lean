@@ -18,7 +18,7 @@ open SourceWidth PeriodicShortening RunFirstEarTransport
 open D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
 open D5.S3.Combinatorics.Circle.ThreeBitSource (mask_complement)
 open private sourceMod base newBase oldValue newValue chain_values source_signs from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (size chainLength chainStart negatives)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size chainLength chainStart negatives)
 
 /- Both the numeric complement identity and the disjoint physical-bit partition. -/
 private theorem mask_data (e r : ℕ) (hr : 1 ≤ r) (hrn : r ≤ 2 ^ e) :

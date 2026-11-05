@@ -19,7 +19,7 @@ open private MaskPartition MaskPartition.hcap MaskPartition.qcap MaskPartition.l
   partition_labels
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap.NativeMasks
 open private base newBase oldValue newValue chain_values source_signs from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (size chainLength chainStart negatives)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size chainLength chainStart negatives)
 
 /-- Terminal order W,X,U,V; only genuine positive old labels enter each bank. -/
 private def bank (a b c d h m low : ℕ) : Fin 4 → List ℕ :=

@@ -23,7 +23,7 @@ open private word from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.Ba
 open private rowBase rowHeads rowSeams freshCut source_certificate
   from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.SourceCertificate
 open private base newBase charge sourceMod oldValue newValue chain_values from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (size)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size)
 open private insertAt from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
 open private gap_power half_power
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.Arithmetic

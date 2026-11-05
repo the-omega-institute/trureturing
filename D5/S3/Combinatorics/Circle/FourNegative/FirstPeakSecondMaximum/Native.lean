@@ -13,7 +13,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum
 open private sourceMod base newBase charge nextBase nextNewBase oldValue newValue chain_values from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (chainLength chainStart)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (chainLength chainStart)
 open private last_double from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Source
 
 private theorem native_masses (a b c d : ℕ)

@@ -13,7 +13,7 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakA2
 open D5.S3.Combinatorics.Circle.FourNegative
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open private base newBase charge sourceMod oldValue newValue from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (size)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size)
 open private rowBase rowHeads rowSeams literalCut source_certificate
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD.SourceCertificate
 open private word banks banks_inventory

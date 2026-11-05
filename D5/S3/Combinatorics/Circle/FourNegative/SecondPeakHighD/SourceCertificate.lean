@@ -15,12 +15,12 @@ open private full stock complement banks word terminals banks_inventory banks_go
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD.Banks
 open SourceWidth
 open private base newBase charge sourceMod oldValue newValue nextBase nextNewBase chain_values packet_masses source_signs from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (size negatives chainLength chainStart)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size negatives chainLength chainStart)
 open private oldMass newMass from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 open private DataCertificate DataCertificate.mk orderedPackets finiteChecks finiteEarChecks
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
 open private insertAt insertAt_add from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure (blocksWord)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (blocksWord)
 open private native_masses from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 
 open private packetChecks strip_iff_packetChecks

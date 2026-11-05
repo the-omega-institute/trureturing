@@ -14,7 +14,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap
 open D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (size negatives chainStart chainLength)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size negatives chainStart chainLength)
 
 private def pieces (a b c d : ℕ) : Fin 9 → List ℕ :=
   let off := d+c+b

@@ -19,11 +19,11 @@ open private lowUBanks lowUTerminals lowUWord lowU_inventory lowU_good
 open private lowUPackets bank_nodup bank_checks rowBase rowSeams rowHeads
   from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLowU.Physical
 open private base newBase charge sourceMod oldValue newValue from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (size negatives)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size negatives)
 open private oldMass newMass from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 open private DataCertificate DataCertificate.mk orderedPackets finiteChecks finiteEarChecks
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure (blocksWord)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (blocksWord)
 open private A B L K C SU SV SW window from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLowU.Arithmetic
 open private strict_select from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLowU.Selection
 open private fallback_select from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakLowU.Fallback

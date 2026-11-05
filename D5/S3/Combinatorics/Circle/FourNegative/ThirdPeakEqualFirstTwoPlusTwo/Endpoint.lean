@@ -19,7 +19,7 @@ open private allocation
 open private physical_order
   from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualFirstTwoPlusTwo.Physical
 open private seed sourceMod base oldValue newValue source_totals from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (size)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size)
 open private label lift_order marked_word
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 open private zero_period_transport
