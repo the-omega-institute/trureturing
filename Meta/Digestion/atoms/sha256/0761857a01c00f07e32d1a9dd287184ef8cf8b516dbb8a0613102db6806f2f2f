@@ -1,0 +1,22 @@
+### 4.1 不扩大权限的效果族
+
+令 $P_j$ 为 $\mathfrak g_j$ 的正交投影。指定实际允许的效果族
+$\mathscr E\subset\{E:0\le E\le I\}$，并定义
+
+$$
+\mathcal O=\operatorname{span}_{\mathbb C}(\{I\}\cup\mathscr E).
+$$
+
+这里只取线性张成，不自动关闭到乘法代数，也不自动提供谱测量。
+定义 $a\sim_{\mathscr E}b$，当
+
+$$
+\operatorname{tr}(EZ^a\rho Z^{-a})=\operatorname{tr}(EZ^b\rho Z^{-b})
+$$
+
+对所有密度态 $\rho$ 和所有 $E\in\mathscr E$ 成立。
+“所有密度态”是此结构性等价定义的量词；
+若实验只允许部分态，必须另按该来源域计算观察核。
+
+<a id="statement-4-1"></a>
+

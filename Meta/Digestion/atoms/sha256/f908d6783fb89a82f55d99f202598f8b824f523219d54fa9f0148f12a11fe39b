@@ -1,0 +1,2 @@
+**Convention 2.4 (Set partitions).** $\Pi(\mathtt q)$ is the set of set partitions of $[\mathtt q]$, $|\pi|$ the number of blocks of $\pi$, and $\Pi_k(\mathtt q)$ the partitions with exactly $k$ blocks. For $\rho,\sigma\in\Pi(\mathtt q)$, $\rho\le\sigma$ means that $\rho$ refines $\sigma$: every block of $\rho$ lies in a block of $\sigma$. $S(m,k)$ is the Stirling number of the second kind; $S(m,2)=2^{m-1}-1$ for $m\ge1$.
+

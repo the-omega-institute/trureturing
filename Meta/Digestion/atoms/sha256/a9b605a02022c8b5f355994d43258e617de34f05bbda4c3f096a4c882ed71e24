@@ -1,0 +1,68 @@
+**Proposition 4.4 (a legal next-read use lost under either tie choice).**
+Let $Z=(1234,1234)$, the all-same-edge atom. Retain the four old paired
+handles and buy a fifth draw from the same source. Let $J$ report whether
+its paired handle equals any of the old paired handles, using the two
+within-type comparisons at the same old index. Then, for each $i$,
+
+$$
+\Pr_i(J=1\mid Z)=\frac1M,\qquad
+\Pr_i(J=1\mid h)=\frac4M\quad(h=C,U,V).
+\tag{UJB.7609}
+$$
+
+No equal-prior-optimal binary summary alone preserves these conditional
+prediction probabilities. In particular neither historical equality
+sufficiency nor optimal terminal testing implies pointwise descent of
+the actual next-state kernel.
+
+Proof. For a concrete retained edge history $e=(e_1,\ldots,e_4)$ let
+$m(e)$ be the number of distinct edge pairs in that list. The event
+$J=1$ is the disjoint union of those $m(e)$ edge outcomes. The next
+edge is independent and uniform on the same support, so its conditional
+probability given this actual history is exactly $m(e)/M$. This count
+is determined by the intersection of the two equality partitions.
+It equals one on $Z$ and four on each of $C,U,V$, proving (UJB.7609)
+both pointwise for this readout and after conditioning on the observed
+atom. These atoms have positive probability; $p_i(Z)=M/M^4=M^{-3}$.
+
+The atom $Z$ is an equal-prior tie. Every optimal binary summary sends
+$C,U$ to one bit and $V$ to the other by Proposition 4.3. Whichever
+bit receives $Z$, it therefore merges a history with repeat probability
+$1/M$ with one having probability $4/M$. A randomized assignment of
+$Z$ has at least one output of positive probability and has the same
+obstruction there. If old handles are separately retained to execute
+$J$, those handles belong to the full continuation state and cannot be
+counted as part of a state consisting only of the decision bit.
+
+For clarity, an averaged conditional history law always exists here.
+For a general $n$-sample exact record $h$ let $N_i(h)$ count compatible
+ordered edge tuples. For an $(n+1)$-sample record $h'$ restricting to
+$h$, uniform sampling gives, when $N_i(h)>0$,
+
+$$
+Q_i(h,h')=\Pr_i(H_{n+1}=h'\mid H_n=h)
+ =\frac{N_i(h')}{M N_i(h)}.
+\tag{UJB.7610}
+$$
+
+For public prior $q=\Pr(i=1)$ the corresponding mixture kernel is
+
+$$
+Q_q(h,h')=
+\frac{(1-q)N_0(h')+qN_1(h')}
+ {M\bigl((1-q)N_0(h)+qN_1(h)\bigr)}
+\tag{UJB.7611}
+$$
+
+on positive conditioning events. These formulas average over compatible
+actual histories, and in the second case over the posterior source.
+They do not assert that each concrete history inducing $h$ has that
+same next-state row. Proposition 3.5 already gives two positive-mass
+actual histories in $G_0$ with the same $H_2$, but respective next-read
+probabilities $1/M$ and $0$ for $a_3=a_1,t_3=t_2$. That is a pointwise
+failure of descent even for the full equality record. It coexists with
+(UJB.7610), and with the particular readout $J$ whose probability does
+depend only on its full equality record. Any further state quotient
+must preserve the relevant legal actions, available references, joint
+response laws and updates on its fibers, as required in §1. $\square$
+

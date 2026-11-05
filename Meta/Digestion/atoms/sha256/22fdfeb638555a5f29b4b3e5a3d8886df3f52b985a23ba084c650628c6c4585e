@@ -1,0 +1,39 @@
+**Theorem 33.2 (universal soundness and existential completeness).**
+For every actual source, actual cut $n\ge2$, proposed $\nu\ge2$ and
+supplied well-formed $x,y$:
+
+1. A present word $x$ of length $\nu-1$ implies $n\ge\nu$.
+   An arbitrary word of that length need not be present when $n\ge\nu$.
+2. For $|x|=\nu-1$, a negative reply has the alternatives $n<\nu$, or
+   $n\ge\nu$ and $x$ attempts to continue beyond a terminal node.
+3. $C_n(\nu;x,y)$ implies $\nu=n$, and
+
+$$
+\bigl(\exists x,y\;C_n(\nu;x,y)\bigr)\quad\Longleftrightarrow\quad\nu=n.
+$$
+
+The reverse direction quantifies existentially over witnesses. It does not
+say that every well-formed supplied pair passes at the correct cut.
+
+Proof. Use the rank-cone facts of ACR Theorem 22.2. A rank-$q\ge1$
+cone has maximum present suffix depth $q-1$, while rank zero is terminal.
+Every word of length $\ell$ is present for $q\ge2\ell$. The root at
+cut $n$ has rank $n$. These facts prove the first two assertions.
+
+A passing positive test forces $n\ge\nu$. If $\nu=2k+1$ and
+$n\ge\nu+1$, every length-$(k+1)$ word is present. The required
+length $|y|=k$ makes $ya$ such a word, contradicting its absence. If
+$\nu=2k$ and $n\ge\nu+1$, every supplied length-$(k-1)$ word $y$
+is present with residual rank at least three. One of its children has
+rank at least two, so at least one of $yaa,yba$ is present. Thus acceptance
+forces $n=\nu$, for every supplied well-formed pair.
+
+Conversely, at $n=\nu$ choose a longest path for $x$. Repeatedly choosing
+a rank-two decrement gives a length-$k$ path ending at rank one in the odd
+case, or a length-$(k-1)$ path ending at rank two in the even case. These
+supply the required $y$ and absences. At $\nu=2$ this means $y$ is empty,
+$x$ is either child, and $aa,ba$ are absent. Ranks zero and one cannot pass
+any proposed $\nu\ge2$ certificate. For a failure with correct proposed
+cut, the zero source at $n=3$ has $aa$ absent, so the well-formed supplied
+pair $x=aa,y=a$ fails. $\square$
+

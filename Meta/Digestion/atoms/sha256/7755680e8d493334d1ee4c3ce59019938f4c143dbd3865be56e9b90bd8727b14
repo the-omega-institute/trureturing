@@ -1,0 +1,14 @@
+## 12. 一个几何总图：来源、记录与可读窗口
+
+```latex
+\begin{tikzpicture}[>=Latex,font=\small]
+\node[draw,rounded corners,fill=teal!6,minimum width=2.5cm,minimum height=1.25cm,align=center] (src) at (0,0) {共同来源\\$\psi\in H$};
+\node[draw,rounded corners,fill=teal!6,minimum width=5.5cm,minimum height=1.25cm,align=center] (a) at (7.1,1.5) {原子 $a$ 的完整表示\\$a\otimes W_a\psi$};
+\node[draw,rounded corners,fill=blue!5,minimum width=5.5cm,minimum height=1.25cm,align=center] (b) at (7.1,-1.5) {原子 $b$ 的完整表示\\$b\otimes W_b\psi$};
+\draw[->,thick,teal!70!black] (src.north east) -- node[above,sloped] {$V_a$ 保二元比较} (a.west);
+\draw[->,thick,blue!70!black] (src.south east) -- node[below,sloped] {$V_b$ 保二元比较} (b.west);
+\draw[<->,thick] (a.south) -- node[right,align=left] {$T_{ba}=V_bV_a^*$\\仅在合法支持上互逆} (b.north);
+\node[align=center,text width=12.8cm] at (4,-3.25) {显示端可各自固定；来源的全部比较保存在 $W_a\psi,W_b\psi$ 中。\\抹去记录后，两个显示状态不再决定这个运输。};
+\end{tikzpicture}
+```
+

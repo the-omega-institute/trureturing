@@ -1,0 +1,43 @@
+**Definition 1.2 (indices, mathematical coordinates and paid data).**
+The requested acquisition output is exactly
+
+$$
+(P,n),\qquad P=z_1\cdots z_{2d};
+$$
+
+$P$ is empty at $d=0$. It includes the original transient. A descriptor
+of a shifted core, a necklace representative or an equivalent local tree
+is not this output.
+
+For a physical node $p$ let $(b_p,\sigma_p)$ denote its immutable creation
+cut and initial label, and put
+
+$$
+\tau_p=b_p+2-\mathbf1_{\sigma_p=\beta},\qquad
+q_p=n-b_p+\mathbf1_{\sigma_p=\beta}.
+$$
+
+The root has $(b_\varepsilon,\sigma_\varepsilon)=(0,\alpha)$ and rank
+$n$. Ranks zero and one have singleton support. At rank $q\ge2$ the
+child ranks are $q-1,q-2$, with the larger child at $a$ exactly for bit
+one. At cut $e_p=\tau_p-1$ the cone is one beta leaf; its normalized
+current cut is $T=n-e_p=q_p-1$. This is a mathematical coordinate
+change on the same physical cone, not a change of source or observer
+root. None of these coordinates is initially supplied.
+
+The actual least monic annihilator factors as $E^a g(E)$ with $g(0)=1$,
+$a+\deg g\le d$. Its unique coprime decomposition is $s=y+t$, where
+$g(E)y=0$ and $E^at=0$. In particular $t_i=0$ for $i\ge a$, and
+$z_j=y_{j-1}$ for $j>d$. The sequence $y$ retains the original
+index-zero alignment. The invertible companion transition on its finite
+binary state space makes $y$ periodic. These are mathematical properties
+of the authentic promise, as in ACR Theorem 27.3; neither $a,g,y$ nor a
+period is an entrance register. For zero use $g=1$ and degree zero.
+
+A mathematical support denotes the whole finite prefix-closed set. An
+acquired support below $v$ means that a finite paid root-literal scan has
+actually reached every member and paid the terminal absence tests.
+Subsequent ranks, normalized cuts and batches are calculated from that
+acquired finite record. Merely naming a mathematical cone earns none of
+its support.
+

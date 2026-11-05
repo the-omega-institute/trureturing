@@ -1,0 +1,13 @@
+**Corollary 38.4 (acquired distinctions are consumed by short control).** Every successful controller of Definition 38.1 with a uniform action cap at most three must choose its first physical action to be $L$ on original $c_0$ and $R$ on original $c_1$. Therefore its actually acquired records before the first action must distinguish those two endpoint runs. The actual initial report $q_2$ supplies a sufficient routing bit. This is not a one-bit total or permanent memory optimum.
+
+Proof. Neither endpoint can stop before acting by Lemma 38.2. Every length-at-most-three prefix beginning with $R$ misses a dyadic attained endpoint at $c_0$, and every such prefix beginning with $L$ misses one at $c_1$, by the complete table. The finite terminating endpoint branch must contain a grid read, forcing the stated first actions. With common initialization, no hidden advice and no timing input, identical acquired histories would give identical local computations, requests and first actions. Thus the two histories must differ before that choice. Any retained selector or branch of the instruction pointer carrying this distinction is part of the consumed internal control, even if its raw report is later erased. Equation (38.2) supplies that distinction by a genuine source read, without knowledge of the exact original or its index.
+
+For the displayed implementations retain $i$, the executed prefix or its known matrix, the current phase, and then the candidate index $j$, exponent $s$, threshold and cell arithmetic and complete integer report. A controller may consume reports and discard them instead of keeping a permanent archive; keeping them costs their full encodings. On an endpoint run there are two reads, the initial $q_2$ and the attained grid read. On $x_{i,n}$, if comparison $j$ stops at exponent $s_j$, the displayed implementation makes
+
+$$
+2+\sum_{j=12}^{n}(s_j+1)
+\tag{38.11}
+$$
+
+reads. These counts, exponents, scale names, full report payloads, counters, local bit arithmetic, transient and retained workspace, service work and full original outputs remain separately paid. For example, writing the explicit scale integer $2^s$ costs $s+1$ bits; using an exponent name changes the name encoding, not the need to charge it and construct the requested service call. Finite service completion gives no quantitative implementation bound. Original-word decoding takes at most $p+q-2$ subtractions on the recovered pair, and its named path and indexed table must be emitted in full. No uniform bound or optimum for any of these other coordinates follows from (38.7), and no persistent one-bit interface sufficient for all original outputs has been asserted. $\square$
+

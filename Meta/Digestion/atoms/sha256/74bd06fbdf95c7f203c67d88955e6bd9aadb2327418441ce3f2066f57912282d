@@ -1,0 +1,40 @@
+**定理 2.2（相容内部态的整体延拓与 GNS 表示）。**
+
+<a id="thm-gns"></a>
+
+设共享单位的 $C^*$ 子代数 $\mathcal A_n$ 递增，
+$\omega_{n+1}|_{\mathcal A_n}=\omega_n$，且每个 $\omega_n$ 正归一。
+则它们在 $\mathcal A=\overline{\bigcup_n\mathcal A_n}^{\|\cdot\|}$ 上唯一延拓为态 $\omega$。
+存在 Hilbert 空间 $\mathcal H_\omega$、$*$ 表示 $\pi$ 和单位循环向量 $\Omega$，使
+
+$$
+\omega(a)=\langle\Omega,\pi(a)\Omega\rangle,\qquad
+\overline{\pi(\mathcal A)\Omega}=\mathcal H_\omega .
+$$
+
+保持 $\Omega$ 与表示的循环实现，在酉交织意义下唯一。
+
+**证明。**
+
+在代数并上令 $\omega(a)=\omega_n(a)$，相容性使其良定义。
+正性与 Cauchy--Schwarz 给
+$|\omega(a)|^2\le\omega(a^*a)\le\|a\|^2$，故有唯一连续延拓。
+以并中的元素逼近任意正元的平方根，证明延拓仍正。
+令 $\mathcal N=\{a:\omega(a^*a)=0\}$，
+在 $\mathcal A/\mathcal N$ 上定义
+$\langle[a],[b]\rangle=\omega(a^*b)$。
+正性 Cauchy--Schwarz 使它良定义。
+由 $\omega(a^*b^*ba)\le\|b\|^2\omega(a^*a)$，
+$\mathcal N$ 是左理想，左乘 $[a]\mapsto[ba]$ 有界且与伴随相容。
+完成这个内积空间得到 $\mathcal H_\omega$，取 $\Omega=[I]$。
+则 $\pi(a)\Omega=[a]$，得到状态式及循环性。
+任意另一循环实现上的 $[a]\mapsto\pi'(a)\Omega'$ 是稠密等距，
+延拓为所需酉同构。
+
+□
+
+这是标准 GNS 构造及项目既有相容态闭合的应用。 [[8]](#ref-fewster), [[2]](#ref-repoomega)
+表示唯一性针对已经给定的 $\omega$，不是宇宙本体态唯一性的物理证明。
+复代数、正性与标定仍是结构输入；所得平方范数
+$\omega(a^*a)=\|\pi(a)\Omega\|^2$ 是这些前提的表示后果。
+

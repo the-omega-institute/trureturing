@@ -1,0 +1,22 @@
+**Citation convention 1.2 (The target and its suppliers).** The target in (1.1) is the inequality in Bourin–Lee, *Triangle inequalities for the operator symmetric modulus*, [arXiv:2602.19607v1](https://arxiv.org/abs/2602.19607v1), §4, Corollary 4.2:
+
+$$
+|A+B|\leq D+\frac14VDV^*\qquad(A,B\text{ normal}).
+\tag{1.2}
+$$
+
+That corollary states sharpness for $n\geq3$, and its following paragraph asks for the best constant when $n=2$. Its introductory display instead has $V|A+B|V^*/4$ as correction; the correction in (1.1)–(1.2) is $VDV^*/4$, as in §4. The locators here bind to the indicated author version, not to an asserted identity with the journal body associated with DOI [10.1090/proc/17861](https://doi.org/10.1090/proc/17861).
+
+The universal quarter constant is a supplied result. So is the fixed rational pair
+
+$$
+P=\begin{pmatrix}1&0\\0&0\end{pmatrix},\qquad
+Q=\frac1{25}\begin{pmatrix}9&-12\\-12&16\end{pmatrix},\qquad
+(A,B)=(P,-Q),
+\tag{1.3}
+$$
+
+with $|P-Q|=(4/5)I_2$ and eigenvalues $2/5,8/5$ for $P+Q$, in the repository's [normal-modulus source](https://github.com/the-omega-institute/trureturing/blob/e5f431c998df9823e97567e6115f38f6951ebe7f/Problems/bourin-lee-2026-normal-modulus-constant-n2.md) and its [companion declaration source](https://github.com/the-omega-institute/trureturing/blob/e5f431c998df9823e97567e6115f38f6951ebe7f/D5/S3/Quantum/Matrix/NormalModulusTriangleConstant.lean). Neither (1.2) nor (1.3) is a new proposition here.
+
+The spectral theorem for normal and Hermitian matrices, uniqueness of the positive square root, Cayley–Hamilton in dimension two, and the spectral description of unitary orbits are standard matrix-analysis inputs; see Bhatia, *Matrix Analysis*, Springer, Chapters I–II, DOI [10.1007/978-1-4612-0653-8](https://doi.org/10.1007/978-1-4612-0653-8). The two-projection coordinates used below are the rank-one case of Bourin–Lee, *Involutions and angles between subspaces*, [arXiv:2602.19599v1](https://arxiv.org/abs/2602.19599v1), §1, Proposition 1.1 and Corollary 1.2. The balanced opposite-phase family $P,-Q$, including its scalar modulus and its angle parameter, is already present in Bourin–Lee, *Positive linear maps on normal matrices*, [arXiv:2006.09692v1](https://arxiv.org/abs/2006.09692v1), §2, after (2.4), and in *Diagonal and off-diagonal blocks of positive definite partitioned matrices*, [arXiv:2307.02034v3](https://arxiv.org/abs/2307.02034v3), §4 before Corollary 4.3. These classical and supplied calculations occur only as intermediate steps below. The mathematical additions are the coefficient for arbitrary positive magnitudes and complex relative phase, and its exact joint defect and stability.
+

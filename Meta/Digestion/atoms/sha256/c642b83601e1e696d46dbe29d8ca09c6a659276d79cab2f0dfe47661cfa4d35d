@@ -1,0 +1,12 @@
+**Proposition 39.8 (pointwise entrance after contraction without an old source record).** If initialization occurs after an authentic prefix $u$ with no earlier source-dependent record, it need not have a bounded original interval yet. There is nevertheless a pointwise finite zero-action entrance procedure. For $c=0$ the translation formula gives a bounded original interval from one actual $q_1(z)$. For $c>0$, request $q_{2^h}(z)$ for $h=0,1,\ldots$ until the acquired raw upper endpoint is strictly below $a/c$. Clip its lower endpoint to $b/d$, invert, and obtain a bounded earned $I$. Then Theorem 39.7 applies. With
+
+$$
+\delta=a/c-z=\frac1{c(cx+d)},\qquad
+h_* =\max\bigl(0,\lceil\log_2(2/\delta)\rceil\bigr),
+\tag{39.15}
+$$
+
+at most $h_*+1$ entrance replies suffice. This is analysis of the actual run, not $x$ or $\delta$ supplied to the program.
+
+Proof. At scale $D$, the raw upper endpoint is at most $z+1/D$. When $D\ge2/\delta$, it is strictly below $a/c$, so the inverse upper endpoint is finite. The attained $z$ is strictly inside $(b/d,a/c)$ and positive; the clipped lower preimage is either $0$ or a finite nonnegative rational. This earns the interval from actual replies. The dyadic test is an exact rational comparison using known $a,c$; it does not require knowing $\delta$. Translation has no finite upper asymptote, so its inverse of a finite current raw cell is bounded after positivity clipping. If an earlier archive already supplied $I$, this entire entrance phase is omitted. No uniform entrance cap follows. $\square$
+

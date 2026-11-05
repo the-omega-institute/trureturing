@@ -1,0 +1,19 @@
+**Definition 1.3 (norms and Choi normalization).** For a vector $v\in\mathbb C^d$, let $\|v\|_{\ell^1}=\sum_i|v_i|$. For a matrix $X$, let $\|X\|_1=\operatorname{Tr}\sqrt{X^\dagger X}$ be its trace norm. For a linear map $\Lambda:M_4(\mathbb C)\to M_4(\mathbb C)$, use the unhalved diamond norm
+
+$$
+\|\Lambda\|_\diamond
+ =\sup_{n\ge1}\ \sup_{\substack{X\in M_n(\mathbb C)\otimes M_4(\mathbb C)\\X\ne0}}
+ \frac{\|(\operatorname{id}_{M_n}\otimes\Lambda)(X)\|_1}{\|X\|_1}.
+\tag{1.6}
+$$
+
+The reference factor $M_n(\mathbb C)$ is untouched. There is no factor $1/2$ in (1.6). Put
+
+$$
+|\omega\rangle=\frac12\sum_{i=1}^4|i\rangle\otimes|i\rangle,
+\qquad \Pi=|\omega\rangle\langle\omega|.
+\tag{1.7}
+$$
+
+Thus $\|\omega\|=1$ and $\operatorname{Tr}\Pi=1$. For a channel $\Phi$, its normalized Choi state is $J_\Phi=(\operatorname{id}_{M_4}\otimes\Phi)(\Pi)$. The quantity used below is the overlap $\langle\omega|J_\Phi|\omega\rangle$, without a square root.
+

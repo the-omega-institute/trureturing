@@ -30,7 +30,19 @@ $$\forall (J:Type), [Fintype\left(J\right)], \forall (d:J \to \mathbb{C}), \fora
 
 For two complex vectors on a finite index type, the squared modulus of their conjugate dot product is bounded by the product of their squared coordinate norms.
 
-**Theorem 1.3 (A normalized rank-one ray).**
+**Lemma 1.3 (A scalar identity bounds a rank-one matrix).**
+
+$$\forall (J:Type), [Fintype\left(J\right)], [DecidableEq\left(J\right)], \forall (d:J \to \mathbb{C}), PosSemidef\left(smul\left(((\sum_{j: J} \left\lVert d\left(j\right) \right\rVert^{2}: \mathbb{R}): \mathbb{C}), (1: Matrix\left(J, J, \mathbb{C}\right))\right) - vecMulVec\left(d, star\left(d\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRays.rank_one_upper` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every complex vector on a finite index type with decidable equality, its squared coordinate norm times the identity minus its outer product is positive semidefinite.
+
+**Theorem 1.4 (A normalized rank-one ray).**
 
 $$\forall (m:\mathbb{N}), \forall (n:\mathbb{N}), \forall (psi:(Fin\left(m\right)\times Fin\left(n\right))\to \mathbb{C}), (\sum_{ij\in Fin\left(m\right)\times Fin\left(n\right)} \left\lVert psi\left(ij\right) \right\rVert^{2}=1)\Rightarrow separableCone\left(I+2\cdot R\left(psi\right)\right)$$
 
@@ -54,6 +66,7 @@ Every averaged vector is a product vector. The proof uses finite moments and com
 
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRays.cs_sq`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRays.dot_star_self`
+- Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRays.rank_one_upper`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRays.separableCone_one_add_two_rankOne`
 - Dependency: [D5/S3/Quantum/Entanglement/AbsoluteSeparability/LowRankRaysAverages](LowRankRaysAverages.md)
 - Dependency: [D5/S3/Resource/SeparableConeResidualWitness](../../../Resource/SeparableConeResidualWitness.md)

@@ -1,0 +1,152 @@
+**定理 9.3（每个 $m\ge5$ 的唯一最大计数与精确取整）。** 对每个整数 $m\ge5$、每对不交的有限标号集 $A,B$，$|A|=2$、$|B|=m$，定义
+
+$$
+T_m^{\mathrm{int}}=y_m^{-2}+\frac12+\frac{y_m^2}{16},
+\qquad
+J_m=\left\lfloor T_m^{\mathrm{int}}\right\rfloor.
+\tag{9.9}
+$$
+
+其中 $y_m$ 是 (2.7) 的实际有限阶乘分配。则
+
+$$
+\left\lfloor\frac m2\right\rfloor+1
+\le J_m\le m-1,
+\qquad
+J_m<T_m^{\mathrm{int}}<J_m+1,
+\tag{9.10}
+$$
+
+并且原有符号最大赤字及其全部最大联盟为
+
+$$
+\begin{aligned}
+D_{2,m}&=2\sqrt{J_m}-x_m-J_my_m>0,\\
+\{C:\Delta(C;\phi)=D_{2,m}\}
+&=\{\{v\}\sqcup J:v\in A,\ J\subseteq B,\ |J|=J_m\},\\
+\#\{C:\Delta(C;\phi)=D_{2,m}\}&=2\binom m{J_m}.
+\end{aligned}
+\tag{9.11}
+$$
+
+因此唯一最大计数对是 $(1,J_m)$；引理 9.2 同时排除整个 $i=1$ 行的任意两个不同计数并列。
+
+**证明。** 首先给出全部有限端点所用的实际份额界。定理 2.1 的 (2.16) 给出
+
+$$
+U_m>\frac{77}{100\sqrt2}>\frac12.
+\tag{9.12}
+$$
+
+最后一步由 $2\cdot77^2>100^2$ 的正数平方比较成立。上界直接从定理 3.1 的有限前提推出，而不从其极限反推：对每个 $t\in[0,1]$，令 $S_{m,t}\sim\operatorname{Bin}(m,t)$，沿用 (3.3) 的
+
+$$
+\mu_m(t)=\mathbb E\sqrt{S_{m,t}/m},\qquad
+h_2(t)=1+(\sqrt2-2)t>0.
+$$
+
+因为 $\mathbb E(S_{m,t}/m)=t$，平方根的有限 Jensen 不等式给出 $\mu_m(t)\le\sqrt t$，包含 $t=0,1$。将它乘以正的 $h_2(t)$，在 (3.3) 的实际有限分配恒等式中积分，得到
+
+$$
+\begin{aligned}
+U_m&=\sqrt2\int_0^1h_2(t)\mu_m(t)\,dt\\
+&\le\sqrt2\int_0^1h_2(t)\sqrt t\,dt\\
+&=\sqrt2\left(\frac23+\frac25(\sqrt2-2)\right)
+=\frac{12-2\sqrt2}{15}=u_2.
+\end{aligned}
+\tag{9.13}
+$$
+
+这里的 $u_2$ 与命题 4.3 相同；(9.13) 的不等号是对每一个有限 $m$ 在同一个积分中证明的。该积分由独立均匀优先级条件下的有限二项分布给出，与定义 9.1 的全部阶乘权重相同，所需对应已在 (3.3) 中建立。
+
+由效率与正性，
+
+$$
+y_m=\frac{2\sqrt2}{\sqrt m}(1-U_m)>0.
+$$
+
+式 (9.12) 给 $y_m<\sqrt{2/m}<1$；(9.13) 则给有限下界
+
+$$
+\sqrt m\,y_m\ge2\sqrt2(1-u_2)
+=\frac{8+6\sqrt2}{15}>\frac{16}{15}.
+\tag{9.14}
+$$
+
+严格比较用 $\sqrt2>4/3$，由 $18>16$ 得到。另一方面，对所有 $m\ge5$，
+
+$$
+\frac{2\sqrt m}{\sqrt m+\sqrt{m-1}}
+=\frac2{1+\sqrt{1-1/m}}
+\le\frac2{1+2/\sqrt5}<\frac{16}{15}.
+\tag{9.15}
+$$
+
+最后一步等价于 $\sqrt5<16/7$，由 $245<256$ 得到。结合 (9.14)–(9.15)，在每一个实际有限分配处都有
+
+$$
+y_m>\frac2{\sqrt m+\sqrt{m-1}},\qquad
+\Gamma_m(m)-\Gamma_m(m-1)<0.
+\tag{9.16}
+$$
+
+现在处理所有计数行及下端点。置 $\tau_m=(1-U_m)/U_m$。由 (9.12) 及正性，$0<\tau_m<1$。对 $i,j>0$，复用 (2.4)：
+
+$$
+-d_{2,m}(i,j)
+=2\sqrt{2m}\,\frac jm U_m(r-1)(r-\tau_m),
+\qquad r=\sqrt{\frac{im}{2j}}.
+\tag{9.17}
+$$
+
+$i=2,1\le j<m$ 时 $r>1>\tau_m$，故 $d_{2,m}(2,j)<0$；$j=m$ 时 $r=1$，全体联盟赤字为零。$i=0$ 时 $d_{2,m}(0,j)=-jy_m$，仅 $j=0$ 取零；$j=0,i>0$ 时赤字为 $-ix_m<0$。这已覆盖所有纯侧和空联盟。
+
+对于 $i=1$ 且 $1\le j\le\lfloor m/2\rfloor$，(9.17) 有 $r\ge1$，所以 $\Gamma_m(j)\le0$，包括偶数 $m$、$j=m/2$ 的等号。另有 $\Gamma_m(0)=-x_m<0$。令
+
+$$
+j_0=\left\lfloor\frac m2\right\rfloor+1.
+$$
+
+定理 2.1 已给出实际联盟 $(1,j_0)$ 的严格正见证，故
+
+$$
+\Gamma_m(j_0)>0\ge\Gamma_m(j_0-1),\qquad
+\Gamma_m(j_0)-\Gamma_m(j_0-1)>0.
+\tag{9.18}
+$$
+
+于是全部联盟的正最大赤字必来自 $i=1$ 行。
+
+剩下是在这一有限整数行上作精确比较。对实数 $s\ge1$ 定义
+
+$$
+q(s)=2(\sqrt s-\sqrt{s-1})
+=\frac2{\sqrt s+\sqrt{s-1}}.
+$$
+
+分母严格递增，故 $q$ 严格递减。由于 $0<y_m<1<2$，(9.9) 满足
+
+$$
+\sqrt{T_m^{\mathrm{int}}}=y_m^{-1}+y_m/4,
+\qquad
+\sqrt{T_m^{\mathrm{int}}-1}=y_m^{-1}-y_m/4>0,
+\qquad q(T_m^{\mathrm{int}})=y_m.
+\tag{9.19}
+$$
+
+因此对每个整数 $1\le j\le m$，
+
+$$
+\Gamma_m(j)-\Gamma_m(j-1)=q(j)-y_m
+\begin{cases}
+>0,&j<T_m^{\mathrm{int}},\\
+=0,&j=T_m^{\mathrm{int}},\\
+<0,&j>T_m^{\mathrm{int}}.
+\end{cases}
+\tag{9.20}
+$$
+
+式 (9.18) 和 (9.16) 分别给 $j_0<T_m^{\mathrm{int}}<m$。如果 $T_m^{\mathrm{int}}$ 为整数，它必属于 $\{1,\ldots,m\}$，(9.20) 就给出相邻两项相等，与引理 9.2 矛盾。所以 $T_m^{\mathrm{int}}$ 不是整数，取整立即给出 (9.10)。
+
+由 (9.20)，$\Gamma_m$ 在整数 $0,\ldots,J_m$ 上严格递增，在 $J_m,\ldots,m$ 上严格递减。故其唯一最大计数为 $J_m$，且 $\Gamma_m(J_m)\ge\Gamma_m(j_0)>0$。其余两行非正，遂得到原始全部联盟上的 (9.11)。式 (9.2) 给出每个最大计数的全部标号实现；选择 $A$ 侧一名有两种，选择 $B$ 侧 $J_m$ 名有 $\binom m{J_m}$ 种，且不同选择产生不同联盟。这证明数量及完备性。空联盟和全体联盟的赤字虽均为零，因最大值严格为正，都不属于此时的最大联盟。∎
+

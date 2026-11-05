@@ -107,7 +107,7 @@ open Matrix Module
 open D5.S3.Quantum.Entanglement.OccupancyWordSectors
 attribute [local instance] Classical.propDecidable
 variable {N d : ℕ}
-private lemma occupation_fiber_card (x : Fin N → Fin d) (a : Fin d) :
+lemma occupation_fiber_card (x : Fin N → Fin d) (a : Fin d) :
     Fintype.card {i // x i = a} = (occupation x).count a := by
   rw [Fintype.subtype_card]
   simp only [occupation, ← Fin.univ_val_map, Multiset.count_map, ← Finset.filter_val,
@@ -120,7 +120,7 @@ private lemma occupation_same_orbit (x y : Fin N → Fin d) (h : occupation x = 
   refine ⟨Equiv.ofFiberEquiv e, ?_⟩
   funext i
   exact Equiv.ofFiberEquiv_map e i
-private lemma symmetric_occupation_constant (v : (Fin N → Fin d) → ℂ)
+lemma symmetric_occupation_constant (v : (Fin N → Fin d) → ℂ)
     (hv : IsSymmetricVector v) (x y : Fin N → Fin d) (h : occupation x = occupation y) :
     v x = v y := by
   obtain ⟨σ,hσ⟩ := occupation_same_orbit x y h

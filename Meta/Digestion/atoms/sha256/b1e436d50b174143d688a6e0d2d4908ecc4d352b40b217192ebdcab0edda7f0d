@@ -1,0 +1,54 @@
+**Definition 7.1 (Prescribed variable event parameters).** Fix any $a,b,c>0$. Retain the original centered coordinates, zero exterior coordinates, and literal matrices of Definition 3.1:
+
+$$
+A=\begin{pmatrix}1&0\\-2c&b+c\end{pmatrix},\qquad
+B=\begin{pmatrix}-1&\dfrac{2a}{a+b}\\0&-(b+c)\end{pmatrix},\qquad
+B_\alpha=\begin{pmatrix}
+\dfrac{b(1-2\alpha)-\alpha a}{b+\alpha a}&\dfrac{2\alpha a}{b+\alpha a}\\
+0&-(b+c)
+\end{pmatrix},\qquad
+M=A^{-1}B,\quad N_\alpha=A^{-1}B_\alpha.
+\tag{7.1}
+$$
+
+Prescribe a binary schedule $(\varepsilon_t)_{t\geq0}$ and, for its increasingly listed event times $t_j$, parameters $\alpha_j\in(0,1)$. The event list may be empty, finite, or infinite. Both the schedule and all these parameters are fixed before the initial vector is chosen. For every $u_0\in\mathbb R^2$, with no restriction on its norm, define the entire chronological trajectory by
+
+$$
+u_{t+1}=\begin{cases}
+N_{\alpha_j}u_t,&t=t_j,\\
+Mu_t,&\varepsilon_t=0,
+\end{cases}\qquad t\in\mathbb Z_{\geq0}.
+\tag{7.2}
+$$
+
+Put
+
+$$
+\begin{gathered}
+Q(x,y)=\frac{x^2}{a}+\frac{(y-x)^2}{b}+\frac{y^2}{c},\qquad
+\|u\|_Q=\sqrt{Q(u)},\qquad
+G=\begin{pmatrix}1/a+1/b&-1/b\\-1/b&1/b+1/c\end{pmatrix},\\
+\langle z,w\rangle_Q=z^TGw,\qquad
+\theta=\arccos\left(\frac{2ac}{(a+b)(b+c)}-1\right)\in(0,\pi),\\
+\tau_j=\frac{\alpha_j(a+b)}{b+\alpha_j a},\qquad
+\lambda_j=2\tau_j-1=\frac{\alpha_j(a+2b)-b}{b+\alpha_j a}\in(-1,1),\\
+d_j=t_{j+1}-t_j\geq1,\qquad
+\mathcal E_\varepsilon=\sum_j\sin^2(d_j\theta),\qquad
+S_{\varepsilon,\boldsymbol\alpha}=\{u_0:u_t\longrightarrow0\}.
+\end{gathered}
+\tag{7.3}
+$$
+
+The sum has one term for each consecutive event pair, and is zero for fewer than two events. The uniform upper bound hypothesis is
+
+$$
+\mathrm{(U)}\qquad
+\text{there is a }\rho\in[0,1)\text{ such that }|\lambda_j|\leq\rho
+\text{ at every event.}
+\tag{7.4}
+$$
+
+This imposes no positive lower bound on $|\lambda_j|$. The singular parameter at an event is exactly $\alpha_j=b/(a+2b)$, or $\lambda_j=0$. No arithmetic condition on $\theta/(2\pi)$ and no upper bound on the positive integer gaps or on $t_0$ is part of these definitions.
+
+The matrices in (7.1) specialize [Wallner, Krupke, Schmidt and Fekete, arXiv:2608.27085v1, Sections IV.A and IV.B.1](https://arxiv.org/html/2608.27085v1#S4), with $m=2$, $(v_1,v_2,v_3)=(a,b,c)$, $(z_1,z_2)=(x,y)$ and $z_0=z_3=0$. In particular the even-row coefficient is $A_{21}=-2c$. The source's $M_\alpha$ is $N_\alpha$ here. In the [damped-sweep definitions and complete proof](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.lean) and its [Scribe](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.scribe.cs), indices are reduced by one and the local weight named `theta` is $\tau_j$, rather than the angle $\theta$. The weighted Dirichlet form is the same as in [FinitePathDynamics](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.lean) and its [Scribe](../../../Blueprint/D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.scribe.cs). The [source note](../../../Library/Dynamics/wallner2026passbucket.md) and [fixed-map statement](../../../Problems/wallner-krupke-schmidt-fekete-2026-token-spectral-contraction.md) retain one fixed interior parameter for all powers of $N_\alpha$. Equation (7.2) instead prescribes that parameter separately at each event in the same two-coordinate linear recurrence.
+

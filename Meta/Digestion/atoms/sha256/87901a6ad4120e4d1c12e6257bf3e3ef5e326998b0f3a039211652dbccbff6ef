@@ -1,0 +1,94 @@
+**Theorem 14.1 (Sharpness and uniqueness in the four-total-letter literal class).** Among all $(\theta,p)\in\mathcal L_3$ for which $\theta(u_7)$ is rich, has exactly four actual letters, and has ordinary exponent $e_3$, the minimum of
+
+$$
+H(\theta)=\sum_{i=0}^6|\theta(i)|
+$$
+
+is $30$. Every pair attaining $H=30$ is (43), including its marker, up to a bijective renaming of the four output letters.
+
+*Proof.* Corollary 9.2 already supplies $H\ge30$ with precisely these hypotheses and every nonempty marker. Theorems 12.2 and 13.1 supply attainment, so only equality classification remains.
+
+Write $m=|p|$, $h_i=|\theta(i)|$ and $t=h_3$. Theorem 8.2 excludes $m\ge2$, since then $H\ge46$. Thus $p=a$ is a single letter. Cancellation, the complete row parameterization and the size formula are reused from Corollary 3.2 and Theorem 4.2:
+
+$$
+H=4t+8h_0+4h_1+2h_2=30.
+\tag{54}
+$$
+
+Each independent parameter is at least one, and at most one of $h_0,h_1,h_2,t$ can be one, by monoid injectivity. If none is one, the right side of (54) is at least $36$. If its unique one is at $h_1,t,h_2$, the respective minimum values are $32,32,34$. Hence $h_0=1$, the other three parameters are at least two, and (54) reduces to
+
+$$
+4(t-2)+4(h_1-2)+2(h_2-2)=2.
+$$
+
+It forces $(h_0,h_1,h_2,t)=(1,2,3,2)$. Formula (19) gives the full row $(1,2,3,2,3,6,13)$. This arithmetic step establishes row uniqueness only; the following steps determine the words.
+
+Write $\theta(i)=a q_i$ with palindromic, $a$-free $q_i$. Then $q_0=\varepsilon$, $q_1=b$ and $q_3=c$ for distinct nonmarker letters $b,c$. Let $d$ be the third nonmarker. There are exactly these three nonmarkers, since every source letter occurs. The length-two palindromes are
+
+$$
+q_2=z^2,\qquad q_4=y^2,\qquad z,y\in\{b,c,d\},\quad z\ne y.
+\tag{55}
+$$
+
+We use the supplied complete-return characterization of richness, Glen–Justin–Widmer–Zamboni, [*Palindromic richness*, arXiv:0801.1656v1, Theorem 2.14 and Remark 2.15](https://arxiv.org/pdf/0801.1656v1). In particular, a factor from a last previous occurrence of a letter $\ell$ to its first occurrence in a new block is a complete return. Its second and penultimate letters must agree. Also $e_3<15/7$, so any explicitly found repetition of larger exponent is impossible.
+
+First $z\ne c$. Otherwise the actual source factor $2F_2 3F_2 2$ gives the two occurrences of
+
+$$
+v=c\theta(F_2)a c.
+$$
+
+The word $F_2=010$ has image length $4$, so $|v|=7$. The starts are at distance $|\theta(F_2 3)|=6$, since $q_2=cc$ and $q_3=c$. The factor ending at the end of the second occurrence has period $6$ and length $13$, giving $E\ge13/6>15/7$. The source factor used here occurs already in $F_4$.
+
+If $z=d$, or if $y=d$, all three nonmarkers have occurred in the unary blocks $q_1,q_2,q_3,q_4$ before the first $q_5$. Consider the actual prefix $\theta(F_5)a q_5$. For each of these letters its last occurrence in $\theta(F_5)a$ is followed by $a$. If $q_5$ is not constant, take its first letter different from its initial letter. This occurrence is preceded by a nonmarker, and the complete return from its last previous occurrence cannot be a palindrome. If $q_5$ is constant, its length five gives exponent five. Both alternatives are impossible. Consequently (55) forces
+
+$$
+q_2=bb,\qquad q_4=cc.
+\tag{56}
+$$
+
+This accounts for every ordered choice in (55).
+
+The only letters used before $q_5$ are now $a,b,c$. In $\theta(F_5)a$, the last $b$ and last $c$ are followed by $a$. In $q_5$, the first occurrence of either of these two letters cannot be at a noninitial position, by the same complete-return argument. A constant $q_5$ is impossible. It follows that $q_5$ uses exactly $\{x,d\}$, starts with $x\in\{b,c\}$, and contains $d$. Write its length-five palindrome as $xuvux$. There are only three possibilities using both letters:
+
+$$
+xxdxx,\qquad xdxdx,\qquad xdddx.
+$$
+
+Indeed the alternative $u=x,v=x$ is constant. The last two displayed possibilities have exponents $5/2$ and $3$ on their indicated alternating factor or constant run. Thus
+
+$$
+q_5=xxdxx\qquad(x=b\text{ or }c).
+\tag{57}
+$$
+
+We next determine $q_6$ without choosing between these two branches. The ruler identity gives $F_6=F_5 5F_5$. Immediately before the first $q_6$, the last occurrences of $b,c$ are in the final unary-block word $\theta(F_5)$ and are followed by $a$. The last $d$ is the middle of the preceding $q_5=xxdxx$ and is followed by $x$.
+
+The first letter of $q_6$ cannot be $d$: its preceding letter would be the marker $a$, contradicting the complete return from the preceding $d$, whose second letter is $x$. If the first letter is the other letter in $\{b,c\}\setminus\{x\}$, the first subsequent $x$ would contradict its preceding complete return, and a first subsequent $d$ would have to be preceded by $x$, also impossible. This would make $q_6$ constant. Hence $q_6$ starts with $x$, contains no other member of $\{b,c\}$, and contains $d$.
+
+The complete return from the last preceding $d$ to the first $d$ in $q_6$ has the form
+
+$$
+d\,xx\,\theta(F_5)a\,x^j d,
+$$
+
+where $j$ is the initial run length of $x$ in $q_6$. It must be a palindrome. A run of length three is impossible, and $j=1$ makes its third letter $x$ and its third letter from the end $a$. Thus $j=2$. Palindromicity and the even length $12$ now give
+
+$$
+q_6=xxd\,u v w w v u\,dxx,
+\qquad (u,v,w)\in\{x,d\}^3.
+\tag{58}
+$$
+
+All eight branches of (58) are settled by the following table. The indicated obstruction is a factor of the corresponding word in (58).
+
+| $uvw$ | Obstruction or surviving word |
+|---|---|
+| $xxx$ | $xxx$ |
+| $xxd$ | $xxdxxddxxdxx$ |
+| $xdx$ | $xdxdx$ |
+| $xdd$ | $ddd$ |
+| $dxx$ | $xxx$ |
+| $dxd$ | $ddxddxdd$ |
+| $ddx$ | $ddd$ |
+| $ddd$ | $ddd$ |

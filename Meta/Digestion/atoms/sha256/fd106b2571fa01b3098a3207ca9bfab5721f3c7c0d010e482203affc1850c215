@@ -1,0 +1,44 @@
+**定理 5.4（面缺陷、中心校准与提升分类）。**
+
+<a id="thm-celllift"></a>
+
+对边相位余链 $b\in C^1(B;\mathbb F_5)$，换
+$h_e$ 为 $h'_e=z^{b_e}h_e$ 时，
+
+$$
+\eta'=\eta+\delta b.
+$$
+
+因此
+
+<a id="eq-cellcriterion"></a>
+
+$$
+\boxed{\ \text{存在全部面闭合的 }H\text{ 边提升}
+\quad\Longleftrightarrow\quad
+[\eta]=0\in H^2(B;\mathbb F_5).\ }
+\tag{6}
+$$
+
+存在时，固定全部 $G_0$ 边标签，并只商去每个顶点投影为单位元的
+中心顶点规范变换，所得提升类是 $H^1(B;\mathbb F_5)$ 的挠集。
+对连通一维图总可提升，提升类共有 $5^{b_1(B)}$ 个。
+
+**证明。**
+
+不能重排一般边算子，但新增的 $z^{b_e}$ 全是中心元素，
+可以移到乘积前。每条边在面边界中带符号的出现次数，
+恰给 $(\delta b)_f$，所以 $\eta'=\eta+\delta b$。
+因 $B$ 二维，$C^3=0$，$\eta$ 自动为二余循环。
+消除全部面缺陷恰等价于解线性方程 $\delta b=-\eta$，
+也即式 [(6)](#eq-cellcriterion)。
+
+两套平坦提升之差满足 $\delta b=0$。
+中心顶点规范 $u\in C^0$ 改变边相位一个 $\delta u$，
+故差的等价类为 $Z^1/B^1=H^1$，作用自由且传递。
+图没有二胞腔，故不存在面约束；有限连通图的
+$H^1(B;\mathbb F_5)\simeq\mathbb F_5^{b_1(B)}$，得到计数。证毕。
+ □
+
+<a id="statement-5-5"></a>
+

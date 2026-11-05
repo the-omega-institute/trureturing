@@ -1,0 +1,11 @@
+**Definition 1.1 (Flag graphs).** All vector spaces are over $\mathbb{Q}$. A finite graph consists of a finite flag
+set $H$, a fixed-point-free edge involution $\iota$, and a partition of
+$H$ into vertex fibers of size one or three. Each size-three fiber has
+an actual three-cycle $\omega_v$. Loops and parallel edges retain their
+separate edge IDs and flags. One-valent vertices are either numbered
+anchors in a set $A$, or ordinary legs of a specified color. Isomorphisms
+preserve the involution, fibers, three-cycles, anchor numbers, and colors.
+The bare topological circle is included as the usual exceptional
+genus-one graph without vertices. An auxiliary bivalent cell on it is
+only a cellular coordinate device, never a Jacobi vertex or an anchor.
+

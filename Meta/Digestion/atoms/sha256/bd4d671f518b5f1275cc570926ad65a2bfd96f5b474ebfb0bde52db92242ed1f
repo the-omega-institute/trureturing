@@ -1,0 +1,26 @@
+**Proposition 10.1 (Actual reset recursion).** Work in the setting of Definition 4.1. Write
+
+$$
+Z=M_0,\qquad E=M_1,\qquad A_g=Z^{g-1}E\quad(g\ge2).
+\tag{10.1}
+$$
+
+At a Palm anchor let
+$\mathcal H_0=\sigma(C_j:j\le0;G_j:j<0)$. The strict-left decoder and the past gaps recover one another modulo the actual Palm null sets, so $\mathcal H_0$ is the marked strict visible past at the known anchor. If $C_0=c$ and $f_c(g)>0$, then on $\{G_0=g\}$ the next anchor is at $T_1=g$, and the original joint path law gives
+
+$$
+Q\!\left(H_{T_1+1}\in\cdot\mid\mathcal H_0,G_0=g,C_0=c\right)
+=\frac{r_cA_g}{f_c(g)}.
+\tag{10.2}
+$$
+
+The reset condition at index $1$ identifies this conditional row with $r_{\tau_g(c)}$. Hence
+
+$$
+\boxed{\quad r_cA_g=f_c(g)r_{\tau_g(c)}
+\quad(c\in C_+,\ g\ge2,\ f_c(g)>0).\quad}
+\tag{10.3}
+$$
+
+Proof. The path product after the anchor is $r_cM_u$ for a finite future word $u$, and summing its terminal hidden state gives $r_cM_u\mathbf1$. For the word consisting of $g-1$ zeros followed by one this scalar is $r_cA_g\mathbf1=f_c(g)$. Conditioning the original product law on the marked past and on the positive event $G_0=g$ therefore gives (10.2), while $T_1=g$ and $C_1=\tau_g(C_0)$ are deterministic on that event. Palm event stationarity transports the same identity to every integer event index; no negative-index stopping-time argument is used. Under attainment, Proposition 4.2 gives $f_c(g)>0$ for every $c\in C_+$ and every $g\ge2$, so this positivity is a scalar gap-mass conclusion and does not assert entrywise positivity of $Z$, $E$, or any hidden row. Conditioning on a recurrent class preserves (10.3), because its event belongs to every marked history. $\square$
+

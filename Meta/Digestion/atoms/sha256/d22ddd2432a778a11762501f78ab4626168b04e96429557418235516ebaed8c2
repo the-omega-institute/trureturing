@@ -1,0 +1,20 @@
+### 22.4 从内部等距与记录到一般量子过程
+
+若实际整体过程为等距 $V$，只读系统而不读内部记录，
+则 $\Phi(\rho)=\operatorname{Tr}_E(V\rho V^\dagger)$。
+取记录正交基给 $K_j=(I\otimes\langle j\rvert)V$，于是
+
+$$
+\Phi(\rho)=\sum_jK_j\rho K_j^\dagger,
+\qquad\sum_jK_j^\dagger K_j=I.
+$$
+
+附加任意参考后，每一项仍为正算符的共轭变换，故 $\Phi$ 完全正且保迹。
+反向由 Kraus 族可构造 $V=\sum_jK_j\otimes\lvert j\rangle$。
+这里是有限维表示的双向对应；某台具体装置是否实际可制备，还须给其内部资源关系。
+
+C94 对特殊但重要的一类过程完成了更强的推导：
+它只要求一个二元参考的正性，就由同纤维融合、读数保持及忠实参照
+推出全部 Kraus 结构。*这不是任意 2-positive 映射都完全正的命题。*
+全域投影与忠实固定参照是该加强不可省略的条件。
+

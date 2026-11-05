@@ -1,0 +1,28 @@
+#### 命题 10.1（Fibonacci 频率不唯一决定黄金量子门）
+
+经典替代 $A\mapsto AB$、$B\mapsto A$ 的计数矩阵
+$S=\bigl(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\bigr)$
+有归一化正本征向量 $p=(\varphi^{-1},\varphi^{-2})^T$，满足 $Sp=\varphi p$。
+它允许整个相位族
+
+$$
+g_\chi=\sqrt{\varphi^{-1}}\lvert 0\rangle +
+ e^{i\chi}\sqrt{\varphi^{-2}}\lvert 2\rangle
+$$
+
+具有相同基底概率，因而不唯一确定 $P$ 的交叉相位，也不确定 $K$ 的 $\omega$。
+
+**证明。**
+
+利用 $\varphi^2=\varphi+1$ 代入即可验证本征等式与归一化。所有 $g_\chi$ 的振幅模方相同，而其非对角投影元随 $\chi$ 变化。
+
+∎
+
+这给黄金权重一个清楚的经典频率骨架，但它不是 Hat 替代系统与 AURIC 门之间已经证明的交织映射。
+若把替代粗暴写成
+$\lvert A\rangle \mapsto(\lvert A\rangle +\lvert B\rangle )/\sqrt2$、
+$\lvert B\rangle \mapsto\lvert A\rangle$，两像内积为 $1/\sqrt2$，不保持原来的零内积。
+改用明确的词、地址和父类型寄存器可保留记录并建立等距扩展；必须写出这些空间与映射。
+
+<a id="statement-10-2"></a>
+

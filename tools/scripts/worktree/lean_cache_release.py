@@ -19,8 +19,15 @@ import tempfile
 import time
 from urllib.parse import quote
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
+try:
+    from maintenance_log import MaintenanceLog
+except ImportError:
+    MaintenanceLog = None
+
 from lean_cache import SHARED_SEED_PLATFORMS, normalized_platform, partition_path, seed_partitions
 from cache_material import sha
+from lean_cache_topology import checkout_topology, git_absolute_path, warm_dev_remediation
 
 # Use the report entry's declared format and execution capture, never program hashes.
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / "lean-inspector"))
@@ -121,69 +128,6 @@ class RollbackFailed(Exception):
         self.backup = str(backup)
         self.install_error, self.rollback_error = str(install_error), str(rollback_error)
         super().__init__(f"rollback failed: {rollback_error}; installation error: {install_error}")
-
-
-def git_absolute_path(root, *arguments):
-    result = subprocess.run(["git", "-C", str(root), "rev-parse", *arguments],
-                            check=True, capture_output=True, text=True, timeout=10)
-    value = result.stdout.rstrip("\n")
-    if not value or "\n" in value or not pathlib.Path(value).is_absolute():
-        raise ValueError("Git path is not an absolute path")
-    return pathlib.Path(value).resolve()
-
-
-def checkout_topology(root):
-    """Return (linked, validated main path); refuse unknown classification."""
-    try:
-        git_directory = git_absolute_path(root, "--absolute-git-dir")
-        common_directory = git_absolute_path(root, "--path-format=absolute", "--git-common-dir")
-    except (OSError, ValueError, subprocess.SubprocessError) as error:
-        detail = getattr(error, "stderr", None) or str(error)
-        raise ValueError(f"cannot determine checkout Git topology: {detail}") from error
-    linked = git_directory != common_directory
-    try:
-        result = subprocess.run(["git", "-C", str(root), "worktree", "list", "--porcelain", "-z"],
-                                check=True, capture_output=True, text=True, timeout=10)
-        if not result.stdout.endswith("\0\0"):
-            raise ValueError("missing or incomplete Git worktree records")
-        checkouts = []
-        for record in result.stdout[:-2].split("\0\0"):
-            lines = record.split("\0")
-            fields = dict((line.partition(" ")[0], line.partition(" ")[2]) for line in lines)
-            if (not lines[0].startswith("worktree ") or len(fields) != len(lines)
-                    or set(fields) - {"worktree", "HEAD", "branch", "detached", "bare", "locked", "prunable"}
-                    or not fields.get("worktree") or not pathlib.Path(fields["worktree"]).is_absolute()):
-                raise ValueError("unparsable Git worktree record")
-            if "bare" in fields:
-                raise ValueError("Git main checkout is bare")
-            if (not re.fullmatch(r"(?:[0-9a-f]{40}|[0-9a-f]{64})", fields.get("HEAD", ""))
-                    or ("branch" in fields) == ("detached" in fields)
-                    or ("branch" in fields and not fields["branch"].startswith("refs/heads/"))
-                    or fields.get("detached", "")):
-                raise ValueError("unparsable Git worktree HEAD or branch")
-            checkouts.append(pathlib.Path(fields["worktree"]).resolve())
-    except (OSError, ValueError, subprocess.SubprocessError) as error:
-        if linked:
-            return True, None
-        detail = getattr(error, "stderr", None) or str(error)
-        raise ValueError(f"cannot determine checkout Git topology: {detail}") from error
-    if not linked:
-        return False, None
-    candidate = checkouts[0]
-    try:
-        if (git_absolute_path(candidate, "--show-toplevel") != candidate
-                or git_absolute_path(candidate, "--path-format=absolute", "--git-common-dir") != common_directory):
-            return True, None
-    except (OSError, ValueError, subprocess.SubprocessError):
-        return True, None
-    return True, candidate
-
-
-def warm_dev_remediation(main_checkout):
-    if main_checkout is None:
-        return ("sync dev and warm the dev cache in this repository's dev main checkout: "
-                "make warm-donor there (its location cannot be determined from this worktree)")
-    return "sync dev and warm the dev cache: make -C " + shlex.quote(str(main_checkout)) + " warm-donor"
 
 
 def existing_release(tag, deadline):
@@ -723,8 +667,14 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
     if len(parts) > 1:
         with (stage / ASSET).open("wb") as archive:
             for part in parts:
-                with (stage / part["name"]).open("rb") as source:
+                path = stage / part["name"]
+                start = archive.tell()
+                with path.open("rb") as source:
                     shutil.copyfileobj(source, archive, length=1024 * 1024)
+                archive.flush()
+                if archive.tell() - start != part["bytes"]:
+                    raise ValueError("part copy size mismatch: " + part["name"])
+                path.unlink()
     if (manifest.get("archive_sha256") != sha(stage / ASSET)
             or manifest.get("archive_bytes") != (stage / ASSET).stat().st_size):
         raise ValueError("archive checksum or size mismatch")
@@ -980,7 +930,7 @@ def latest_snapshot(root, partition, deadline):
     return None
 
 
-def main():
+def _main():
     parser = argparse.ArgumentParser()
     parser.add_argument("command", choices=("address", "publish", "fetch"))
     parser.add_argument("--repository", type=pathlib.Path, default=pathlib.Path(__file__).resolve().parents[3])
@@ -1047,6 +997,32 @@ def main():
         receipt(args.command, "miss" if args.command == "fetch" else "failed",
                 reason=("verification: " if args.mode == "verification" else "") + str(error))
         return 1 if args.command == "fetch" else 2
+
+
+def main():
+    log = MaintenanceLog.from_environment() if MaintenanceLog else None
+    if log is not None:
+        log.emit("run_started")
+    previous_run_id = os.environ.get("TRURETURING_MAINTENANCE_RUN_ID")
+    if log is not None:
+        os.environ["TRURETURING_MAINTENANCE_RUN_ID"] = log.run_id
+    try:
+        try:
+            exit_code = _main()
+        except BaseException as error:
+            if log is not None:
+                code = error.code if isinstance(error, SystemExit) and isinstance(error.code, int) else 130 \
+                    if isinstance(error, KeyboardInterrupt) else 1
+                log.finish(code, error_type=type(error).__name__)
+            raise
+        if log is not None:
+            log.finish(exit_code)
+        return exit_code
+    finally:
+        if previous_run_id is None:
+            os.environ.pop("TRURETURING_MAINTENANCE_RUN_ID", None)
+        else:
+            os.environ["TRURETURING_MAINTENANCE_RUN_ID"] = previous_run_id
 
 
 if __name__ == "__main__":

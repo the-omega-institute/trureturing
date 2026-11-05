@@ -1,0 +1,16 @@
+**定义 3.3（减少与类比较的精确含义）。** 新旧候选的关系是
+
+$$
+\begin{gathered}
+\mathscr C_{\rm node}\subsetneq
+\mathscr C_{\rm cal}=\mathscr C_2\subseteq\mathscr C_{\rm end},\\
+\{\Pi\in\mathscr C_{\rm node}:\mathrm R\}
+=\{\Pi\in\mathscr C_{\rm cal}:\mathrm R\}
+=\{\Pi\in\mathscr C_2:\mathrm R\}
+=\{\Pi^{\rm B}\}.
+\end{gathered}
+\tag{3.7}
+$$
+
+第一个包含的严格性直接使用 IX 定义 3.1、定理 3.2 的同一个全域固定密度，见 §4.3；该既有严格性不算新的双校准结果。相对 IX，裸类没有扩大。实质增量是原全部切口的表示与轨道传播证明，使独立指定的基态射线由 $89$ 条降为 $2$ 条，另外 $87$ 条沿原关系推出；不是将旧校准打包命名，也不是只删除 IX 证明中未显式使用的基轴。新的传播在 R 之前闭合；一般叠加态的细节点则仍由精确的 IX 选择步骤导出。
+

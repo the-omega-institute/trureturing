@@ -1,0 +1,44 @@
+**Corollary 17.1 (Exclusion below the next length boundary).** For every integer $r\ge4$ and every $(\eta,p)\in\mathcal L_r$ for which $\eta(u_{2r+1})$ is rich, has exactly $r+1$ actual letters and satisfies the ordinary equality $E(\eta(u_{2r+1}))=e_r$, one has
+
+$$
+H\ge2r+3\cdot2^r+2.
+\tag{72}
+$$
+
+In particular $H\ge58$ at $r=4$. This is a necessary boundary, with no assertion of sharpness or attainment. For $r=3$, the existing minimum and equality class remain precisely $H=30$ and (43) up to a bijective renaming, as supplied by Theorems 12.2, 13.1 and 14.1.
+
+*Proof.* Put
+
+$$
+S_r=r+2^{r+1}-1,\qquad H_0=2S_r-2^r=2r+3\cdot2^r-2.
+$$
+
+We reuse the exact-attainment cancellation of Corollary 3.2, its complete positive-integer parameterization in Theorem 4.2, and the marker relaxation of Theorem 8.2. In particular, with $m=|p|$ and $t=h_r$,
+
+$$
+H=(r+1)t+\sum_{i=0}^{r-1}2^{r-i}h_i,
+\qquad H\ge(m+1)S_r-2^r.
+\tag{73}
+$$
+
+If $m\ge2$, the latter inequality gives $H\ge H_0+S_r>H_0+4$, since $r\ge4$. Hence a putative pair with $H<H_0+4$ must have $m=1$.
+
+Among the independent positive integers $h_0,\ldots,h_{r-1},t$, at most one is one, since an image of length one would be the marker itself and $\eta$ is injective. If none is one, (73) gives $H\ge2S_r=H_0+2^r$. If the unique one is not $h_0$, its coefficient in (73) is at most $2^{r-1}$: all the other powers of two are at most this, and $r+1\le2^{r-1}$ for $r\ge4$. In that case
+
+$$
+H\ge2S_r-2^{r-1}=H_0+2^{r-1}\ge H_0+8.
+$$
+
+Both cases contradict $H<H_0+4$. Thus $h_0=1$ and $h_1,\ldots,h_{r-1},t\ge2$. Subtracting their minimum contribution in (73) gives the exact nonnegative integer equation
+
+$$
+H-H_0=(r+1)(t-2)+\sum_{i=1}^{r-1}2^{r-i}(h_i-2).
+\tag{74}
+$$
+
+The only coefficient below four on the right is two, at $h_{r-1}$; the coefficient of $t-2$ is at least five. Consequently $H<H_0+4$ permits exactly two parameter choices: all increments vanish, or $h_{r-1}-2=1$ and all other increments vanish. In the first case Theorem 4.2 gives the full row (34), excluded by the ordinary fifth-power conclusion of Theorem 9.1. In the second case the same parameterization gives exactly (61): the change of $h_{r-1}$ increases only the final dependent coordinate $h_{2r}$, by one. Theorem 16.2 excludes every rich dictionary in that row. Thus no attaining pair has $H<H_0+4$, proving (72).
+
+The range distinction is exact. Substituting $r=3$ into the formula for (61) gives $(1,2,3,2,3,6,13)$, the existing attaining row (43), whose literal construction, infinite richness, ordinary exponent and equality classification are reused from Theorems 12.2–14.1. Its block $q_{r+3}=q_6$ has even length twelve, whereas the obstruction above requires $r+3<2r$ and the odd length eleven. Thus Theorem 16.2 and (72) have the stated range $r\ge4$ and do not displace that construction.
+
+All uses of the marker concern the same morphism $\eta(i)=p q_i$ on the original $u_{2r+1}$. The general overlapping complete-return representation, a conjugated morphism or a derived source does not supply this literal factorization with these lengths, as distinguished in Section 11. The new length exclusion is the combination of the two exact possibilities in (74) with the finite witness of Theorem 16.2; the cancellation and parameterization in (73) are the existing supplied inputs. Cancellation alone still asserts no realizability. Rows of total length at or above (72), and exact rich original-source existence for $r\ge4$, are not settled by this exclusion, even within $\mathcal L_r$. Neither the finite ordinary witness nor the necessary morphic length inequality gives an asymptotic-exponent identity, an impossibility for all literal lengths, or the unrestricted lower inequality for $RT(\mathcal C_{r+1})$ in Definition 3.3. $\square$
+

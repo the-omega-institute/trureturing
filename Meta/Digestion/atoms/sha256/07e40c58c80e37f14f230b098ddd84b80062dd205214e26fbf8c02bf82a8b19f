@@ -1,0 +1,95 @@
+**Theorem 4.1 (Exact two-color formulas and simultaneous condition).**
+For every $r\geq0$ and $j\geq1$,
+
+$$
+\begin{aligned}
+P_2(G_{2r,j})&=q^{rj+5}+q^{rj+7},&
+P_2(H_{2r,j})&=2q^{rj+6},\\
+P_2(G_{2r+1,j})&=q^{(r+1)j+3}+q^{rj+9},&
+P_2(H_{2r+1,j})&=q^{(r+1)j+3}+q^{rj+9}.
+\end{aligned}
+$$
+
+All sums retain multiplicity when exponents coincide. Consequently, for
+every $m\geq0$ and $j\geq1$,
+
+$$
+P_2(G_{m,j})\ne P_2(H_{m,j})
+\quad\Longleftrightarrow\quad m\text{ is even},
+$$
+
+and
+
+$$
+\begin{aligned}
+&P_3(G_{m,j})=P_3(H_{m,j})\ \text{and}\
+ P_2(G_{m,j})\ne P_2(H_{m,j})\\
+&\hspace{15mm}\Longleftrightarrow\quad
+m\text{ is even and }\bigl(m\in\{0,2\}\text{ or }j=3\bigr).
+\end{aligned}
+$$
+
+The formulas and both equivalences also hold after coefficient inclusion
+in $\mathbb C[q]$.
+
+Proof. Use the connected-bipartite coloring fact underlying
+[P1, Proposition 3.16(3) and Corollary 3.17]: a connected bipartite graph with parts of sizes
+$s,t$ has precisely two proper maps into $\{0,1\}$ and therefore has
+$P_2=q^s+q^t$. To see why it applies here, every $C_a$ is a tree; after
+choosing the color of $v_0$, adjacency forces alternation along each
+unique path. Both choices extend to a coloring, and the two parts are
+the vertices at even and odd distance from $v_0$.
+
+Let $U$ be the part containing $v_0$ and let $V$ be the other part.
+For a vector of length $\ell$, the even-index spine vertices belong to
+$U$, and all leaves at odd-index spine vertices also belong to $U$.
+Thus the actual vertex counts, with zero-based indices, are
+
+$$
+|U|=\left\lceil\frac\ell2\right\rceil+
+                  \sum_{i\text{ odd}}(a_i-1),\qquad
+|V|=\left\lfloor\frac\ell2\right\rfloor+
+                  \sum_{i\text{ even}}(a_i-1).
+\tag{4.1}
+$$
+
+For $m=2r$, the repeated positions $1,\ldots,2r$ contain $r$ of each
+parity. The next two positions are odd and even. For $G_{2r,j}$,
+formula (4.1) consequently gives
+
+$$
+|U|=(r+2)+r(j-1)+3=rj+5,\qquad
+|V|=(r+1)+4+r(j-1)+2=rj+7.
+$$
+
+For $H_{2r,j}$, the leaf contributions $3$ and $4$ at the swapped
+blocks exchange roles, giving
+
+$$
+|U|=(r+2)+r(j-1)+4=rj+6,\qquad
+|V|=(r+1)+3+r(j-1)+2=rj+6.
+$$
+
+For $m=2r+1$, there are $r+1$ odd repeated positions and $r$ even
+repeated positions. The two final positions are even and odd, and the
+spine has $r+2$ vertices of each parity. In either graph,
+
+$$
+\begin{aligned}
+|U|&=(r+2)+(r+1)(j-1)+2=(r+1)j+3,\\
+|V|&=(r+2)+4+r(j-1)+3=rj+9.
+\end{aligned}
+$$
+
+The second line uses $4+3$ pendant vertices at the first and penultimate
+blocks in $G$, or $3+4$ in $H$. These calculations prove all four
+formulas, including $r=0$ and leafless repeated parts $j=1$.
+If $j=6$ in the odd case, the two exponents coincide and both
+polynomials are $2q^{6r+9}$, as the formulas prescribe.
+
+In the even case the coefficient at degree $rj+5$ is one for $G$ and
+zero for $H$; in the odd case the displayed polynomials agree.
+This proves the parity equivalence. Intersecting it with Theorem 3.1
+proves the simultaneous condition. Injectivity of $\iota$, as used in
+the proof of Theorem 3.1, preserves all these statements. ∎
+

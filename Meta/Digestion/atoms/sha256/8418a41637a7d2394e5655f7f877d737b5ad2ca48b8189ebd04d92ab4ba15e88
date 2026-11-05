@@ -1,0 +1,22 @@
+## 3. 有限读出、同资料关系与一个二值量子参考
+
+<a id="sec-c94-interface"></a>
+
+本轮继承前稿已经声明的有限复量子接口 [5](#ref-v80)、[8](#ref-v93)。
+令 $H$ 为 $d\ge1$ 维复 Hilbert 空间，
+$\mathcal S\subseteq\operatorname{Herm}(H)$ 为含单位 $I$ 的实线性读出空间，
+并给定同一载体上的忠实内部参照
+
+$$
+\tau>0,\qquad \operatorname{Tr}\tau=1.
+$$
+
+不预设 $\mathcal S$ 对平方或乘积闭合。
+记其复线性包为
+
+$$
+\mathcal A=\mathcal S+i\mathcal S\subseteq B(H).
+$$
+
+它已经含单位并对伴随闭合；是否对通常矩阵乘法闭合，是本轮要推出的结论。
+

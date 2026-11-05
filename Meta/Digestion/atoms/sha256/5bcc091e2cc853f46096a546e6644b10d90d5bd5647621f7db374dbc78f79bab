@@ -1,0 +1,40 @@
+## 8. 二元关系怎样有限提升到三维
+
+主证明中的每一条 Cauchy–Schwarz 关系都有一个准确的 Bloch 图景。令 $E\ne0$、$A=\sqrt E$、$s=\operatorname{Tr} A$、$V_\mu=K_\mu A^\dagger$，并定义
+
+$$
+b_\mu=\operatorname{Tr}(V_\mu A V_\mu^*),\qquad\sum_\mu b_\mu=s.
+$$
+
+对 $b_\mu>0$，在 Hilbert–Schmidt 内积空间中取两个单位向量
+
+$$
+u=\frac{A^{1/2}}{\sqrt s},\qquad
+v_\mu=\frac{V_\mu A^{1/2}}{\sqrt{b_\mu}},\qquad
+z_\mu=\langle u,v_\mu\rangle=\frac{\operatorname{Tr} K_\mu}{\sqrt{s b_\mu}}.
+$$
+
+归一化二元 Gram 矩阵为
+
+$$
+\Gamma_\mu=\frac12
+\begin{pmatrix}1&z_\mu\\\overline z_\mu&1\end{pmatrix}
+=\frac12(I+\mathbf g_\mu\cdot\boldsymbol\sigma),
+\quad\mathbf g_\mu=(\Re z_\mu,-\Im z_\mu,0).
+\tag{16}
+$$
+
+其正性等价于 $|\mathbf g_\mu|\le1$，且
+
+$$
+\boxed{
+(\operatorname{Tr} A)^2-\sum_\mu|\operatorname{Tr} K_\mu|^2
+=s\sum_\mu b_\mu(1-|\mathbf g_\mu|^2).
+}
+\tag{17}
+$$
+
+因此平均饱和使每个有权二元比较到达球面，即两个 Hilbert–Schmidt 向量平行。Kraus 表示中的相位自由被保留，CP 更新则唯一。
+
+这与 v98 的正相干比较有联系，也有范围差别：CP 分支没有确定一个受控实现的全部相对相位。若要比较两种实现的相干相位，必须保留相应仪器、环境与记录结构。
+

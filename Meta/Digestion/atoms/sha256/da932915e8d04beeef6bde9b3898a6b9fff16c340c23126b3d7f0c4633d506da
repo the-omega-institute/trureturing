@@ -1,0 +1,158 @@
+**命题 98.1（单一子列、唯一零对角规范与偏差系数）。** 固定 §§77.1、78.1、79.1、90.1 的完整来源与响应类 $\mathcal C$：$H$ 为原十三维复空间，响应的全部 $1024$ 个坐标在 $S(H)$ 上连续、相位不变、非负且总和为一，满足原同射线终端充分性与全部十三个基底射线、全部标签的精确标定。合法标签记为 $w_a=10a010$，其中 $a\in\mathcal B$，$|\mathcal B|=13$；置
+
+$$
+ A_{w_a}=A_a=|e_a\rangle\langle e_a|,\qquad
+ A_w=0\quad(w\text{ 非法}),\qquad
+ q_w(\psi)=\langle\psi,A_w\psi\rangle.
+ \tag{98.1}
+$$
+
+下标 $a$ 用于响应时表示对应的合法标签 $w_a$。设 $t_n>0$、$t_n\downarrow0$，每个 $P_n\in\mathcal C$，且
+
+$$
+ \mathcal R(P_n)\le t_n^2.
+ \tag{98.2}
+$$
+
+继承 (90.16)–(90.19) 对这个完整类的同一有限常数 $C_0>0$。只需考虑满足 $t_n^2\le1$、$C_0t_n^2\le1$ 的尾部；删去有限项不改变以下结论。
+
+存在一个严格递增的指标子列 $n_j$、一个函数组 $h=(h_w)_{w\in\Omega_{10}}$，以及一个零对角反 Hermitian 矩阵 $T\in M_{13}(\mathbb C)$，使
+
+$$
+ \begin{aligned}
+ &\max_{w\in\Omega_{10}}\sup_{\psi\in S(H)}
+ \left|\frac{P_{n_j,w}(\psi)-q_w(\psi)}{t_{n_j}}-h_w(\psi)\right|
+       \longrightarrow0,\\
+ &T^*=-T,\qquad T_{aa}=0,\\
+ &h_a(\psi)=\langle\psi,[T,A_a]\psi\rangle,
+       \qquad [T,A_a]=TA_a-A_aT,\\
+ &h_w(\psi)=0\qquad(w\text{ 非法},\ \psi\in S(H)).
+ \end{aligned}
+ \tag{98.3}
+$$
+
+这里是同一个子列对所有状态和全部标签的一致收敛；全部 $1011$ 个非法标签的一阶极限均为零。对给定的极限组 $h$，满足 (98.3) 的零对角 $T$ 唯一。沿这个子列，(90.1) 的最大坐标偏差满足
+
+$$
+ \frac{\mathcal D(P_{n_j})}{t_{n_j}}
+ \longrightarrow
+ \max_{a\in\mathcal B}\|Te_a\|
+ =\max_{a\in\mathcal B}
+       \left(\sum_{b\ne a}|T_{ba}|^2\right)^{1/2}.
+ \tag{98.4}
+$$
+
+零对角反 Hermitian 矩阵空间的实维数为 $156$。这是必要一阶参数的环境空间维数，不是残差代价至多一的可行集合维数，也不是整个响应类的维数。
+
+证明。令 $\eta_n=C_0t_n^2$。由 (90.16) 为每个 $n,w$ 选择 Hermitian 矩阵 $E_{n,w}$，满足
+
+$$
+ \|P_{n,w}-q_{E_{n,w}}\|_\infty\le C_0t_n^2,
+ \qquad q_E(\psi)=\langle\psi,E\psi\rangle.
+ \tag{98.5}
+$$
+
+由 (90.19)，在上述尾部上有
+
+$$
+ H_{n,w}=\frac{E_{n,w}-A_w}{t_n},\qquad
+ \|H_{n,w}\|_{\mathrm{op}}
+ \le C_0t_n+12\sqrt{6C_0}.
+ \tag{98.6}
+$$
+
+因此，全部 $1024$ 个 Hermitian 矩阵组成的元组在一个固定有限维实空间中有界。有限维 Bolzano–Weierstrass 紧性给出同一个子列，使每个 $H_{n_j,w}$ 在算子范数中趋于某个 Hermitian $H_w$。有限标签数给
+
+$$
+ \max_w\left\|
+ \frac{P_{n_j,w}-q_w}{t_{n_j}}-q_{H_w}
+ \right\|_\infty
+ \le C_0t_{n_j}+\max_w\|H_{n_j,w}-H_w\|_{\mathrm{op}}
+ \longrightarrow0.
+ \tag{98.7}
+$$
+
+取 $h_w=q_{H_w}$，得到单一子列的全部一致收敛。此处有限维的是近似矩阵元组，不要求整个连续响应空间有限维，也不要求原响应族等度连续。
+
+精确标定与 (98.5) 在每个基向量 $e_b$ 上给
+
+$$
+ |(H_{n,w})_{bb}|\le C_0t_n,
+ \qquad (H_w)_{bb}=0
+ \quad(b\in\mathcal B,\ w\in\Omega_{10}).
+ \tag{98.8}
+$$
+
+这里没有假设 $E_{n,w}$ 自身精确标定。若 $w$ 非法，则 $q_w=0$ 且 $P_{n,w}/t_n\ge0$；由 (98.7)，$q_{H_w}\ge0$ 于整个单位球面。因此 $H_w$ 正半定，而 (98.8) 给其迹为零，故 $H_w=0$。
+
+对合法 $a$，在 $e_a^\perp$ 的单位向量上有 $q_a=0$，原全状态非负性与 (98.7) 给 $q_{H_a}\ge0$。所以 $H_a$ 在 $e_a^\perp$ 上的压缩正半定；由 (98.8)，其对角元全零，迹也为零，故该压缩为零。再用 $(H_a)_{aa}=0$，得到 $H_a$ 只能在第 $a$ 行与第 $a$ 列有非零元。这个压缩步骤使用整个超平面上的非负性，不能只用基底标定替代。
+
+原响应及 $q$ 都精确归一，故每个 $n,\psi$ 有
+
+$$
+ \sum_{w\in\Omega_{10}}
+ \frac{P_{n,w}(\psi)-q_w(\psi)}{t_n}=0.
+$$
+
+对有限标签和取 (98.7) 的极限，得 $q_{\sum_wH_w}=0$。Hermitian 二次型的极化恒等式给 $\sum_wH_w=0$，非法项已为零，因而
+
+$$
+ \sum_{a\in\mathcal B}H_a=0.
+ \tag{98.9}
+$$
+
+没有要求近似矩阵 $E_{n,w}$ 之和等于恒等矩阵。对 $b\ne a$ 定义
+
+$$
+ T_{ba}=(H_a)_{ba},\qquad T_{aa}=0.
+ \tag{98.10}
+$$
+
+在任意非对角位置 $ab$，(98.9) 只有 $H_a,H_b$ 可能贡献。结合 Hermitian 对称性，
+
+$$
+ T_{ab}=(H_b)_{ab}=-(H_a)_{ab}
+       =-\overline{(H_a)_{ba}}=-\overline{T_{ba}}.
+$$
+
+所以 $T^*=-T$。按约定 $[T,A_a]=TA_a-A_aT$，其 $ba$ 元为 $T_{ba}=(H_a)_{ba}$，$ab$ 元为 $-T_{ab}=(H_a)_{ab}$，对角元及其余位置均为零，故 $H_a=[T,A_a]$，证明 (98.3)。
+
+由极化，函数 $h_a=q_{H_a}$ 唯一确定 $H_a$，再由 (98.10) 唯一确定零对角 $T$。更一般地，一个反 Hermitian 矩阵与所有 $A_a$ 对易，当且仅当其为纯虚对角矩阵：对易式在每个 $ba$ 非对角位置迫使该元为零，反向对角矩阵显然对易。因此映射 $T\mapsto([T,A_a])_a$ 的核恰为实维 $13$ 的纯虚对角空间。全部反 Hermitian 矩阵的实维数为 $13^2=169$；零对角条件去掉全部这些核方向，剩余
+
+$$
+ 169-13=2\binom{13}{2}=156.
+ \tag{98.11}
+$$
+
+每个无序非对角地址对提供一个任意复参数，另一方向由反 Hermitian 条件确定。标量整体相位方向已包含在这十三个对角方向中，不再重复扣除。这个唯一性只针对给定极限组，不要求不同序列或不同子列取得相同 $T$。
+
+最后置 $z_a=Te_a$。零对角给 $z_a\perp e_a$，反 Hermitian 性给
+
+$$
+ H_a=[T,A_a]
+     =|z_a\rangle\langle e_a|+|e_a\rangle\langle z_a|.
+ \tag{98.12}
+$$
+
+当 $z_a\ne0$ 时，它在有序正交基 $e_a,z_a/\|z_a\|$ 上的矩阵为
+$\left(\begin{smallmatrix}0&\|z_a\|\\\|z_a\|&0\end{smallmatrix}\right)$，在此二维空间的正交补上为零，故特征值为 $\|z_a\|,-\|z_a\|$ 及零。相应两特征向量为 $(e_a\pm z_a/\|z_a\|)/\sqrt2$。$z_a=0$ 时结论直接成立。因此
+
+$$
+ \sup_{\psi\in S(H)}|h_a(\psi)|
+ =\|H_a\|_{\mathrm{op}}=\|z_a\|
+ =\left(\sum_{b\ne a}|T_{ba}|^2\right)^{1/2}.
+ \tag{98.13}
+$$
+
+对所有标签与状态取上确界的范数在一致范数下为 $1$-Lipschitz；将 (98.7) 代入 (90.1)，并用非法极限为零，即得 (98.4)。这里始终使用最大坐标绝对误差，没有改成总变差和，也没有额外的因子二。∎
+
+命题 98.1 的量词只给每个满足 (98.2) 的序列一个必要聚点约化；它没有给出哪些 $T$ 能由满足该残差界的响应序列取得，也没有给出逆命题、锐残差代价或二阶紧性。$156$ 维环境空间不蕴含这些可行性结论。共同旋转限制在证明中直接决定偏差聚点系数，但不决定整个响应类的最优首项系数；具体地，它没有判定
+
+$$
+ \lim_{\varepsilon\downarrow0}
+ \frac{\sup\{\mathcal D(P):P\in\mathcal C,\ \mathcal R(P)\le\varepsilon\}}
+      {\sqrt\varepsilon}
+$$
+
+的存在性或确切数值。上述数学矩阵也不增加原来源的操作、校准或物理实现前提。
+

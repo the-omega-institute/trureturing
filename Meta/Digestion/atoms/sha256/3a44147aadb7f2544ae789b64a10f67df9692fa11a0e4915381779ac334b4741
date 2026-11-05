@@ -1,0 +1,18 @@
+**定义 157.6（数学来源与配置、记录的不同接口）。** 定理 157.2 的分类结合了 (138.2a)、(145.1)、(146.2) 的原生矩阵、归一节点四次多项式的系数比较及原合法翻转图的删点连通性。它与[续卷 §§69–71](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md#69-黄金模长取样的非幂律余量与额外原生设置) 的共同径向逐坐标响应类不同：这里不预设 $f(|z_q|)$ 的坐标可分性，(157.8) 的非可分系数和相位系数由原生方程消去。续卷 §72 的一般联合响应余量没有满足这里所有 (157.3) 的义务，不能直接作为本类的反例。
+
+已有 [BornReduction](../../../Blueprint/D5/S3/Observer/BornReduction.md) 从给定迹记录权重约化为平方模；[EffectProbabilityExtension](../../../Blueprint/D5/S3/Quantum/Foundation/EffectProbabilityExtension.md) 从全效果上的同一非负有限可加概率推导密度表示，其中的实齐次、正锥与线性扩张步骤也保留这些前件。它们均不选择这里未知的配置 $\Pi$。[AllFutureStatisticsSufficiency](../../../Blueprint/D5/S3/Quantum/Fibers/AllFutureStatisticsSufficiency.md) 比较已有线性迹期望的预测投影；[SelectiveRecordConditioning](../../../Blueprint/D5/S3/Observer/Conditioning/SelectiveRecordConditioning.md) 消去给定非零 Born 分支权重，均不供应配置条件律。[QuarticContextWitness](../../../Blueprint/D5/S3/QuantumContext/QuarticContextWitness.md) 对已有 Born 权重取平方并比较两个三维上下文的总量，与 (157.4) 的归一节点配置密度不同。上述结果与 Galley–Masanes 的对称幂表示是各自前件下的数学供应；定理 157.2 的承重内容是这里全部原生分量上的系数分类。
+
+配置密度、配置过程、记录与档案响应分别是不同的数学对象。即使密度满足 (157.6)，仍未指定配置跳率或同一概率空间上的配置过程，未取得
+
+$$
+\Pr(Q_t=q\mid\mathcal G_t)
+ =\Pi_q(\psi_t)
+\tag{157.24}
+$$
+
+在全部实际可读过去上的成立。在原 $89$ 维来源中，字面报告、保留同一配置、实际后继及 (145.4) 的档案发射条件仍需各自的联合来源。(157.5) 本身不供应 (150.19) 的真实档案桥，不替代 §151 的条件中心权重问题，也不构成满足全部原合同的非 Born 反模型。
+
+§§152–156 则给出另一套有价条件构造：定义 152.1 在额外支付四个 $\tau$ 及指定真空 ready 的完整 $610$ 维载体上，以 $\Xi_0$ 保留全部 $89$ 条源列，定理 152.2 的十五次正向调用产生带保留辅助垃圾 $\eta_i$ 的记录关联。假设 153.1 另付已含平方振幅的 Bell 最小率、固定内部脉冲、独立种子、实际新位报告、理想零失败及旧档案因果拉回；在这些前件下，定理 154.2、155.1 供应完整读器微历史的联合关系及原七地址后续上的投影条件后继，而全局波函数不投影。这是可用的条件记录机制，不选择平方指数；其新增载体、准备和控制权限及这些概率、报告与档案前件均未移入定理 157.2 的原 $89$ 维密度分类。
+
+复载体、欧氏范数、相位约定与复 Hamiltonian 始终是本节的输入；原生分量分类没有给出复相位、非交换、组合和动力学的来源。原始射线问题 (157.22)、其较强向量域扩展、原实际配置与档案接口以及这些结构的来源，均不被四次类的唯一性替代。
+

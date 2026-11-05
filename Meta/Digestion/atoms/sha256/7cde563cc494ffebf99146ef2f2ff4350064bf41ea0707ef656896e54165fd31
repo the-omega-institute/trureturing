@@ -1,0 +1,24 @@
+**定理 264.2（名义分离结构）。** 若
+
+$$
+\rho(A+BK)<1,
+\qquad
+\rho(A-LC)<1,
+$$
+
+则名义输出反馈闭环渐近稳定。其联合状态满足块上三角递推
+
+$$
+\begin{pmatrix}
+x_{t+1}\\e_{t+1}
+\end{pmatrix}
+=
+\begin{pmatrix}
+A+BK&-BK\\
+0&A-LC
+\end{pmatrix}
+\begin{pmatrix}
+x_t\\e_t
+\end{pmatrix}.
+$$
+

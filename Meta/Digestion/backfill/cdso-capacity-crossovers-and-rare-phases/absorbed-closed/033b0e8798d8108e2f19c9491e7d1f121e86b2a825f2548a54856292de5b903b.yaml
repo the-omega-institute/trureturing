@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:033b0e8798d8108e2f19c9491e7d1f121e86b2a825f2548a54856292de5b903b
+  normalized_sha256: sha256:033b0e8798d8108e2f19c9491e7d1f121e86b2a825f2548a54856292de5b903b
+cas_ref: sha256:033b0e8798d8108e2f19c9491e7d1f121e86b2a825f2548a54856292de5b903b
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Probability/CdsoCapacityCertificate.capacity_lemma
+    target_statement_id: sha256:ab11f09eda292c7b692e19fb40c3a451f360bef08d32476f0fadce5309558edb
+receipts:
+  unresolved_subitems: []

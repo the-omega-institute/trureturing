@@ -1,0 +1,34 @@
+**Definition 1.2 (admissible forcing and downward transition).** At an order
+$1<\alpha<2$, the forcing assumptions are exactly
+
+$$
+f\in C([0,1])\cap C^1((0,1]),\quad f(1)=0,\quad
+f\geq0,\quad f\not\equiv0,\quad
+\lim_{x\downarrow0}x^{(3-\alpha)/(2-\alpha)}f'(x)=0.
+\tag{1.3}
+$$
+
+These are [LMS, Theorem 5.2]. A downward strict transition of $F''$ in an
+open interval $(l,r)$ is a point $\xi\in(l,r)$ for which some $\delta>0$
+satisfies
+
+$$
+[\xi-\delta,\xi+\delta]\subset(l,r),\qquad F''(\xi)=0,
+$$
+
+$$
+F''(x)>0\quad(\xi-\delta<x<\xi),\qquad
+F''(x)<0\quad(\xi<x<\xi+\delta).
+\tag{1.4}
+$$
+
+The fixed-order refutation [R] uses $\alpha=3/2$ and
+$f(x)=(1-x)(1+5x^{12})$. The separated-pulse idea is inherited from
+[R, Triage, “Unbounded inflection numbers”]. The assertion in §2 adds a
+common rational polynomial and common rational transition intervals for
+an arbitrary finite multiplicity and a whole compact band of orders.
+The classical approximation statements in [VV, §2] and [HNP, Lemmas 17
+and 19–22], and the weighted approximation results in [LW], supply
+approximation inputs; the interaction and admissibility conclusions in
+§2 concern the fractional equation (1.1).
+

@@ -1,0 +1,89 @@
+**Theorem 18.2 (Actual Type I returns and simultaneous extensions).** There exist actual source factors $w_n$ and actual source return words $R_n$ for every $n\ge0$ such that, with $i=n\bmod8$,
+
+$$
+\begin{gathered}
+\operatorname{Lext}(w_n)=\operatorname{Rext}(w_n)=\{i,8\},\\
+\vec w_n=f_n+M^n b_8,\qquad \vec R_n=M^n b_8.
+\end{gathered}
+\tag{77}
+$$
+
+For every pair in Definition 18.1, the word
+
+$$
+v_n=s_i\eta(w_n)p\widetilde{s_i}
+\tag{78}
+$$
+
+is an actual factor of $x$. There is an actual return word $U_n$ to $v_n$ in $x$ with
+
+$$
+|v_n|=h(f_n+M^n b_8)+C_i,\qquad |U_n|=hM^n b_8.
+\tag{79}
+$$
+
+More precisely, every source occurrence of $w_n$ with a preceding letter extends on both sides to (78), and every occurrence of (78) decodes to an occurrence of that same $w_n$. Apart from a possible initial occurrence at the one-sided boundary, this is a bijection of occurrence sets, translating the starts by $-|s_i|$ after applying $\eta$ to source positions. It preserves consecutive occurrences. Hence the actual complete return
+
+$$
+Z_n=U_n v_n
+$$
+
+has period $|U_n|$, and its ordinary least-period exponent satisfies
+
+$$
+\frac{|Z_n|}{\operatorname{per}(Z_n)}
+\ \ge\ Q_n:=1+\frac{h(f_n+M^n b_8)+C_i}{hM^n b_8}.
+\tag{80}
+$$
+
+These conclusions retain all actual occurrences of the marker $p$.
+
+*Proof.* The source classification, including its word realization, is supplied by Dvořáková–Klouda–Pelantová, [arXiv:2409.06849v1, Corollary 5, Definition 8, Lemma 17 and Proposition 19](https://arxiv.org/pdf/2409.06849v1), with their source-size parameter $d=9$. In that notation the initial Type I triplet is $(0,8,0)$. Its iterated offspring have outer triplet coordinates $n\bmod8$ on both sides. The factors have exactly two left and two right extensions, with $8$ always an extension, so the two sets are precisely those in (77). In word form the update, for $i=n\bmod8$, is
+
+$$
+w_0=8,\qquad
+w_{n+1}=\begin{cases}
+\varphi(w_n)0,&0\le i<7,\\
+8\varphi(w_n)08,&i=7.
+\end{cases}
+\tag{81}
+$$
+
+The same supplier's Lemma 17 transports actual returns. Starting with the return $R_0=8$ to $w_0=8$, realized by the actual factor $88$, it gives
+
+$$
+R_{n+1}=a_i\varphi(R_n)a_i^{-1},\qquad
+ a_i=\begin{cases}\varepsilon,&i<7,\\8,&i=7.\end{cases}
+\tag{82}
+$$
+
+Here $a_i^{-1}$ means deletion of the indicated suffix, as in that lemma, not a group operation. When $i=7$, the last source letter before the second occurrence is $7$ or $8$, and its image ends in $8$, so this deletion is defined. Formula (82) describes actual consecutive source occurrences, not just a vector transformation. Equivalently, their existence and return vectors are the whole Type I conclusion of Dvořáková–Pelantová, [arXiv:2509.06104v1, §3, Remark 7 and Lemmas 8–9](https://arxiv.org/pdf/2509.06104v1), where the spectral parameter is $d=4$, not $9$. The journal counterparts are Remark 8 and Lemmas 9–10 in [EJC 33(2), P2.15](https://doi.org/10.37236/14600). Taking Parikh vectors in (81)–(82) gives exactly (77) with the original $f_n$ of (2). Thus both the extension sets and the return occur in the same source objects.
+
+We establish the output correspondence directly. Write $u_9=u_0u_1\cdots$ and set
+
+$$
+t_j=|\eta(u_0\cdots u_{j-1})|\quad(j\ge0).
+$$
+
+Every occurrence of $p$ in $x$ starts at a position $t_j$. Indeed a start $t_j+a$ with $0<a<h_{u_j}$ has all its $m$ letters inside $\eta(u_j)p$, since the next block begins with $p$. It would be an internal occurrence forbidden by the endpoint condition. Conversely each $t_j$ starts a copy of $p$. This argument includes occurrences crossing an image boundary and self-overlaps of $p$; none are discarded.
+
+Injectivity gives $\eta(i)\ne\eta(8)$. Neither word can be a suffix of the other: a proper such suffix would start with $p$ at a forbidden internal position in the longer word. Consequently
+
+$$
+|s_i|<\min(h_i,h_8).
+\tag{83}
+$$
+
+Both $\eta(i)p$ and $\eta(8)p$ are palindromes. Their longest common suffix is $s_i p$, and reversal therefore gives the exact prefix identity
+
+$$
+\operatorname{lcp}(\eta(i)p,\eta(8)p)=p\widetilde{s_i}.
+\tag{84}
+$$
+
+If $w_n$ occurs at a positive source position $j$, its preceding and following source letters both lie in $\{i,8\}$. Its left output context thus supplies $s_i$ and its right output context supplies $p\widetilde{s_i}$, simultaneously. This proves an occurrence of (78) beginning at $t_j-|s_i|$. By (83), its first complete marker is at offset $|s_i|$, its last is at offset $|s_i|+|\eta(w_n)|$, and its intervening markers are exactly the boundaries between the images of the letters of $w_n$.
+
+These marker offsets are properties of the finite word (78), so every occurrence of it in $x$ has its highlighted first marker at a genuine block boundary. The portion between its first and last markers is $\eta(w_n)$ and consists of whole blocks. If the decoded source portion is $w'$, then $\eta(w')=\eta(w_n)$; monoid injectivity forces $w'=w_n$. This proves the converse correspondence. A prefix occurrence lacking a predecessor is the only possible one-sided exception, and cannot intervene between two positive source positions.
+
+The substitution is primitive: every image contains $0$, every source letter is reached from $0$, and there is a loop at $0$. Hence its fixed point is uniformly recurrent. In particular a complete source return $R_nw_n$ realizing (77), with the finite neighboring context needed above, can be chosen away from the initial boundary. Two consecutive source occurrences then give two consecutive occurrences of (78). Their output starts differ by exactly $|\eta(R_n)|=hM^n b_8$. If $s=s_i$, the word $\eta(R_n)$ ends in $s$, because its last source letter is a left extension of the second occurrence. Thus the actual intervening output return is the word $s\eta(R_n)s^{-1}$, of the asserted length, including when the occurrences overlap. The complete return $U_nv_n$ has prefix and suffix $v_n$, so $|U_n|$ is a period. Its least period can be smaller; this proves (79)–(80) with the ordinary convention. The simultaneous extension and occurrence correspondence are additional deductions from the supplied source returns and the literal marker hypotheses. $\square$
+

@@ -1,0 +1,12 @@
+**主要文献。** Roberto Frigerio and Marco Moraschini, *On volumes of truncated tetrahedra with constrained edge lengths*, arXiv:1801.05326v3，2019-04-11，第 1.1 节公式 (1)、(3)、(4)。角到长度的分母是两个端点的顶点三元组。该文 Theorem 1 是给定边长下限范围内的体积极值结论；本文没有把它解释成最低六度剖分实现，也没有借用它的体积前提作为免费角约束。
+
+https://arxiv.org/abs/1801.05326
+https://arxiv.org/pdf/1801.05326
+
+Luo–Yang arXiv:1404.5365 的 Theorem 6.3 与 Proposition 6.7 在提供相应结论。体积极大点的共同长度与局部凹性仍是已有输入。虹彩颜色运输可与 Michael Joswig, *Projectivities in Simplicial Complexes and Colorings of Simple Polytopes*, arXiv:math/0102186 的 projectivity 框架比较；此背景不提供额外证明输入。引理 72.1 已给出所需的实际端点运输证明。
+
+https://arxiv.org/pdf/1404.5365
+https://arxiv.org/abs/math/0102186
+
+Zhao arXiv:2601.15174v3 的一般最低九度结论不直接覆盖此处六度边；本文不主张文献优先权。
+

@@ -1,0 +1,57 @@
+**Theorem 8.3 (Exact positive-definite norm for a finite-loss nonsingular tail).** Suppose the event list is infinite, every $\lambda_j$ for $j\geq s$ is nonzero, and $D_s<\infty$. Define the prescribed real rows
+
+$$
+b_{s,j}=q_j^TG\Phi_{s,j}\quad(j\geq s),\qquad
+H_{s,n}=G-\sum_{j=s}^{n-1}\delta_j b_{s,j}^Tb_{s,j}.
+$$
+
+Then the following matrix series converges entrywise, with absolute convergence of every entry:
+
+$$
+H_s=G-\sum_{j=s}^\infty\delta_j b_{s,j}^Tb_{s,j}.
+\tag{8.8}
+$$
+
+It is positive definite and satisfies, for every $z\in\mathbb R^2$ and $n\geq s$,
+
+$$
+e^{-2D_s}Q(z)\leq z^TH_sz\leq Q(z),\qquad
+0\leq z^T(H_{s,n}-H_s)z\leq2D_nQ(z).
+\tag{8.9}
+$$
+
+The exact full chronological limiting norm for tail input $z$ is $\sqrt{z^TH_sz}$. Consequently no nonzero vector reaching this tail is erased, and its stable space is $\{0\}$. This plane norm is not the absolute value of one linear functional.
+
+*Proof.* Apply the exact loss (8.7) successively, starting with $z$ at index $s$. For every finite $n$ it gives
+
+$$
+\|\Phi_{s,n}z\|_Q^2
+=Q(z)-\sum_{j=s}^{n-1}\delta_j|b_{s,j}z|^2
+=z^TH_{s,n}z.
+\tag{8.10}
+$$
+
+The nonnegative loss sum is bounded by $Q(z)$. Applied to the two ordinary coordinate vectors this bounds the sums of both diagonal entries of the series in (8.8). Absolute summability of its off-diagonal entries follows from Cauchy--Schwarz:
+
+$$
+\sum_j\delta_j|(b_{s,j})_1(b_{s,j})_2|
+\leq\left(\sum_j\delta_j|(b_{s,j})_1|^2\right)^{1/2}
+     \left(\sum_j\delta_j|(b_{s,j})_2|^2\right)^{1/2}.
+$$
+
+Thus (8.8) exists with the asserted convergence. The lower inequality in (8.7) gives
+
+$$
+\|\Phi_{s,n}z\|_Q\geq
+\exp\left(-\sum_{j=s}^{n-1}-\log|\lambda_j|\right)\|z\|_Q
+\geq e^{-D_s}\|z\|_Q.
+$$
+
+Pass to the limit in (8.10) to obtain positive definiteness and the first two bounds of (8.9). For $0<r<1$, integrating $1/x$ on $[r,1]$ gives $1-r\leq-\log r$, so $1-r^2\leq2(-\log r)$. Since each $\Phi_{s,j}$ is nonexpansive, $|b_{s,j}z|^2\leq Q(z)$. The remaining loss after index $n$ is therefore at most
+
+$$
+Q(z)\sum_{j=n}^\infty\delta_j\leq2D_nQ(z),
+$$
+
+which proves the prescribed-data error bound. In particular it tends to zero independently of any unknown trajectory limit. Formula (8.5) transfers this limiting norm through every undamped phase: the interaction vector is constant between events and $M$ preserves its norm. Every nonzero $z$ has a positive limit. An absolute linear functional on a real plane vanishes on a nonzero vector, whereas this positive-definite norm does not; hence a single covector cannot represent it. $\square$
+

@@ -1,0 +1,40 @@
+## 本轮推进到的准确位置
+
+> **Editorial note — delivery scope.** The displayed chain is the supplied paper's conditional program. The implementation establishes a faithful standalone manuscript and records the local analytic checks and the unresolved bridges; it does not claim a global positive core, a Robin proof, RH, native physical realization, or a fresh Lean/kernel certification.
+
+现在已经证明了：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{实际细节空间严格正}\\
+&\Longrightarrow
+\text{误差可以作酉守恒递归}\\
+&\Longrightarrow
+\text{有显式几何尾界}\\
+&\Longrightarrow
+\text{实际有限核心有趋零的残差下界}\\
+&\Longrightarrow
+\text{允许固定相对容差的 Robin 充分条件。}
+\end{aligned}
+}
+$$
+
+下一步需要攻击的算术命题已经非常具体：
+
+$$
+\boxed{
+\forall D,\quad
+\exists\text{有限 }k,J,\Omega:
+\quad
+\mathcal S_k-c_D\mathcal U_{k,J,\Omega}
++\frac18G_*\succeq0.
+}
+$$
+
+**递归表示、归一化、酉守恒和剩余误差的收敛，这一轮都已经获得了严格控制；仍未证明的是，上述实际算术不等式对不断扩大的全部窗口成立。** 这正是继续证明 RH 时需要新增的全局估计。
+
+
+---
+
+<a id="full-subexponential-kernel-rh"></a>

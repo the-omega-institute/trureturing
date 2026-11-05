@@ -1,0 +1,59 @@
+**Proposition 12.1 (Future-erasure identity).** Under Definition 4.1, define
+
+$$
+\mathcal G=\sigma(X_i:i<0)\vee\sigma(R_+),
+\qquad R_+=\min\{j\ge1:X_j=1\},
+\tag{12.1}
+$$
+
+and its actual-law Brier risk
+
+$$
+ d_{\mathcal G}=\mathbb E_P\left[(X_0-\mathbb E_P[X_0\mid\mathcal G])^2\right].
+\tag{12.2}
+$$
+
+The explicit two-sided unbounded-anchor clause of Definition 4.1 gives $R_+<\infty$ almost surely; this scope is part of the definition and is not inferred merely from $\iota>0$ or $\mu<\infty$. For a positive context $c$ and $l,r\ge2$, put
+
+$$
+\begin{aligned}
+M&=Q(G_0=l+r\mid C_0=c)=r_cA_{l+r}\mathbf1,\\
+B&=Q(G_0=l,G_1=r\mid C_0=c)=r_cA_lA_r\mathbf1,\\
+a&=\tau_{l+r}(c),\qquad b=\tau_r(\tau_l(c)).
+\end{aligned}
+\tag{12.3}
+$$
+
+These actual path masses are defined for every $c\in C_+$ and $l,r\ge2$ before any conditional law at a successor is selected. If $f_c(l)>0$, Palm event stationarity gives $\tau_l(c)\in C_+$, and the actual reset recursion gives $B=f_c(l)f_{\tau_l(c)}(r)$. If $f_c(l)=0$, nonnegativity gives $r_cA_l=0$ and hence $B=0$, without evaluating a row at $\tau_l(c)$. In particular, every positive two-gap path has the conditional-product expression. If $M,B>0$, then $a,b\in C_+$ and $\Delta_{c,l,r}$ is the quantity in (11.1), using its algebra for these two positive actual channels. If $M=0$ or $B=0$, define $\Delta_{c,l,r}=0$ and choose no conditional law at a null successor. Thus every $\Delta_{c,l,r}$ is defined without extending a conditional future law through a zero-mass channel.
+
+Then the exact original-law identity is
+
+$$
+\boxed{\quad
+ d_{\mathcal G}-d(P)
+=\iota\sum_{c\in C_+}\nu_c
+  \sum_{l,r\ge2}\Delta_{c,l,r}.
+\quad}
+\tag{12.4}
+$$
+
+Proof. The original path law (4.2) and actual reset (4.4) give the masses $r_cA_{l+r}\mathbf1$ and $r_cA_lA_r\mathbf1$ for the one-gap and two-gap completions, respectively. On positive completions, (10.3) identifies the terminal hidden rows as $r_a$ and $r_b$; a zero path mass is the zero subprobability channel. Partition the free cells by their nearest anchors $-l,r$ and strict-left context $c$. On a cell with $M,B>0$, the two completion channels after the right anchor, including every full-left-past test, factor as
+
+$$
+\iota\nu_c M\,\kappa_c^-\otimes F_a,
+\qquad
+\iota\nu_c B\,\kappa_c^-\otimes F_b,
+\tag{12.5}
+$$
+
+where $\kappa_c^-$ is the actual left-past channel. The field $\mathcal G$ retains the common strict-left past and the location of the nearest right anchor, while it erases the future after that anchor. The common left factor cancels; the full-exterior conditional risk is the second term of (11.1), and the erased-future risk is its first term. If one channel has zero mass, both its contribution and the corresponding summand are zero, so no successor posterior is selected. Forced cells contribute zero to both risks because $\mathcal G$ retains the left neighbor and reveals whether the right neighbor is an anchor. Tonelli's theorem gives (12.4).
+
+When $d(P)=c_\star$, Proposition 4.2 supplies the recurrent component decomposition and the same identity componentwise with the actual $\iota_D,\nu^D$; the mixture relation is
+
+$$
+P(E_D)\,\iota_D\nu^D_c=\iota\nu_c.
+\tag{12.6}
+$$
+
+Since $\mathcal G\subseteq\mathcal E_0$, conditional-variance monotonicity gives $d_{\mathcal G}\ge d(P)$. The original universal comparison applies only to $d(P)$; (12.4) supplies no conclusion of the form $d_{\mathcal G}\le c_\star$ and does not settle the original attainment event. $\square$
+

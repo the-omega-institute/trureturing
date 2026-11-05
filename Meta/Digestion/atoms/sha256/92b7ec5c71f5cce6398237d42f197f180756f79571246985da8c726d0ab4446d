@@ -1,0 +1,25 @@
+#### 定义 2.1（有类型的截取与投影数据）
+
+取格 $\mathcal L\subset\mathbb{R}^2_{\mathrm{phys}}\oplus\mathbb{R}^2_{\mathrm{int}}$，格点写作 $q=(x,x^\star)$；取类型窗口 $W_i$ 以及窗口边界的取舍规则。由 $x^\star\in W_i$ 选出的点再通过
+
+$$
+\pi_D(q)=x+Dx^\star
+$$
+
+成为类型 $i$ 的控制点。重构瓦片还需指定控制点类型与邻域的对应。这里 $x^\star$ 是格点的内部坐标，不是量子共轭振幅。
+
+对文献选定的 Hat/CAP 控制点与坐标约定，
+
+<a id="eq-d"></a>
+
+$$
+\Lambda_i^{\mathrm{Hat}}
+ =\{x+Dx^\star:x\in\Lambda_i^{\mathrm{CAP}}\},\qquad
+ D=\frac1{16}\begin{pmatrix}-11&3\sqrt{15}\\3\sqrt{15}&11\end{pmatrix}.
+\tag{1}
+$$
+
+CAP 表示保留 24 个形状／朝向类型。特殊窗口相位可能涉及边界点的零密度差异，故不可把所有情形都无条件写成同一闭窗的精确等号。上述 Hat 控制点特意选在反手性 Hat 上，颜色决定邻域；它们不是每片 Hat 的十三个角点。第 [3](#sec-3) 节角点坐标的尺子也与此控制点约定不同。（[5](#ref-diffraction)、[6](#ref-survey)、[7](#ref-hatdynamics)）
+
+<a id="statement-2-2"></a>
+

@@ -1,0 +1,32 @@
+**编者澄清 3（量子归一化更新的定义域）。** 下式中读出概率的表达式适用于全部分支；归一化预测状态 $z'$ 仅在实际结果具有正概率 $zC_{a,y}e_1>0$ 时定义。零概率结果不触发这一条件态更新，不能以除以零的式子指定其后继。
+
+那么仍然有
+
+$$
+\boxed{
+P(y\mid a,z)=zC_{a,y}e_1,
+\qquad
+z'=\frac{zC_{a,y}}{zC_{a,y}e_1}.
+}
+$$
+
+证明直接来自对偶恒等式
+
+$$
+\operatorname{tr}(\mathcal E(\rho)E)
+=
+\operatorname{tr}(\rho\mathcal E^*(E)).
+$$
+
+这里的相位与干涉保留在密度矩阵、通道和效果空间里。它符合项目 V14 对实际记录、相干复合和支撑语义的区分。[来源：V14 §6–7](https://github.com/the-omega-institute/trureturing/blob/388e1086d5de6323c9dd6913d26e72fd91ddfdb6/docs/develop/theory/AURIC_EXISTENTIAL_QUANTIFIERS_CIRCUIT_SEMIRINGS_AND_QUANTUM_RECORDS_V14.md)
+
+一般只有
+
+$$
+r\le d^2.
+$$
+
+对 $n$ 个量子比特，$d=2^n$，所以通用上界是 $4^n$。这不是下界，但显然没有提供全局多项式表示保证。
+
+<a id="golden-protocol-boundary"></a>
+

@@ -1,0 +1,13 @@
+**Open assertion 12.5 (The unchanged original sign question).** For
+every actual complex PSD trace-one two-qubit $\rho$ and independent
+$a,b\in[0,1]$, does
+
+$$
+ \Delta(\rho)=I_P+I_Q+3g-2h\geq0
+$$
+
+hold? The sign on the residual domain (12.10) is not established by the
+preceding sufficient regions. Open assertion 10.5 therefore remains the
+original unrestricted question, with neither an added source restriction
+nor a replacement endpoint budget.
+

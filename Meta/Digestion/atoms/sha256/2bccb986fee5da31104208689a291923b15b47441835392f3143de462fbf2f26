@@ -1,0 +1,36 @@
+**Theorem 21.1 (capacity on the authentic image).** Fix the entire
+aligned source $s$ above as a comparison parameter, and put $K_s=|R_s|$.
+There are exactly $K_s$ distinct complete normalized local forward
+behaviours among its genuinely core-only physical cones. For every
+common normalized age $T\ge0$, the future families $(S_{T+u})_{u\ge0}$
+still have exactly $K_s$ behaviours. At any common normalized age
+satisfying (PCR.5), the same $K_s$ behaviours are already
+distinguished by complete current support. The statement includes the
+constants with $p=1,K_s=1$, without a maturity requirement for clocks.
+It compares cones at their respective actual cuts $e_v+T$; it does not
+assert that they all have the same age at one common global cut.
+
+A deterministic predictor for these behaviours, with aligned source
+and common age fixed, must distinguish $K_s$ configurations and needs
+at least $\lceil\log_2K_s\rceil$ bits in a fixed-length code. For the
+clock distinction alone this many bits suffice as a mathematical index
+into a supplied list of the $K_s$ states. The list, core, age, binding,
+physical address, evaluator and any source-dependent advice contribute
+their own stored data and costs. The two named coordinates are not two
+compulsory physical registers or a claim about total minimal memory.
+
+Proof. Theorem 19.2 identifies exactly the authentic residue image, with
+a real cone for each member. Theorem 3.1 separates any two members by a
+finite presence witness and identifies equal residues with equal full
+local histories; its mature-cut conclusion gives the current-support
+assertion. For a future family beginning at any earlier common age $T$,
+choose a mature age at least $T$; that future cut separates every distinct
+pair as well. Equal residues agree at every future cut. Thus the
+restriction of that earlier exact classification
+has cardinality $K_s$, now with a specified finite source presentation
+and both realization directions instead of an abstract image. The
+configuration lower bound and indexed coding argument are finite
+counting, as in Theorem 15.1. For $s=y$ and $s'$ of Proposition 20.1,
+these are respectively two and four behaviours and one and two bits of
+fixed-core clock capacity, with all other data still charged. $\square$
+

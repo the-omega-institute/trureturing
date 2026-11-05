@@ -1,0 +1,31 @@
+**命题 B-8.2（被缩并记录实际消费的面积接缝）。** 若先走来源段 $`s`$ 再走平移后的段 $`t`$，则
+
+
+```math
+(\mathbf{\text{𝐪}},A)\star(\mathbf{\text{𝐫}},B)
+=(\mathbf{\text{𝐪}}+\mathbf{\text{𝐫}},A+B+\tfrac12\det(\mathbf{\text{𝐪}},\mathbf{\text{𝐫}})).
+```
+
+
+此估值结合，且 $`2A=\sum_{i\lt j}\det(\xi_i,\xi_j)`$，其中 $`\xi_i`$ 是依叶序的逐步向量。命题B-7.4的内部面积记录恰保存被弦替换遗忘的接缝。
+
+证明。把第二段每个顶点平移 $`\mathbf{\text{𝐪}}`$，面积新增
+
+
+```math
+\frac12\sum_j\det(\mathbf{\text{𝐪}},r_j-r_{j-1})
+=\frac12\det(\mathbf{\text{𝐪}},\mathbf{\text{𝐫}}).
+```
+
+
+三段拼接的两种括号相等，因为
+
+
+```math
+\det(\mathbf{\text{𝐪}},\mathbf{\text{𝐫}})+\det(\mathbf{\text{𝐪}}+\mathbf{\text{𝐫}},\mathbf{\text{𝐬}})
+=\det(\mathbf{\text{𝐫}},\mathbf{\text{𝐬}})+\det(\mathbf{\text{𝐪}},\mathbf{\text{𝐫}}+\mathbf{\text{𝐬}}).
+```
+
+
+取四点 $`0,\mathbf{\text{𝐪}},\mathbf{\text{𝐪}}+\mathbf{\text{𝐫}},\mathbf{\text{𝐪}}+\mathbf{\text{𝐫}}+\mathbf{\text{𝐬}}`$，其面积核的两种对角剖分恰给上述两边除二。因此在四点严格凸时，它是定义B-4.1的实际面积翻转；在其他域中仍是有向链恒等式，不授予不合法剖分。由 $`q_{j-1}=\sum_{i\lt j}\xi_i`$ 展开逐边面积，得叶对式。两步换弦丢失 $`\det(\xi_1,\xi_2)/2`$，恰是累计内部记录补回的量。此结合律只说明端点与面积不读括号，不授予对原树的重括号操作。∎
+

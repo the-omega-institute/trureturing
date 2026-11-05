@@ -1,0 +1,45 @@
+**定义 1.1（正电导的标号完全二部图）。** 对每个整数 $m\ge3$，置
+$n=m+2$，令 $K_{2,m}$ 的顶点为 $u,v,x_1,\ldots,x_m$，边恰为
+$\{u,x_i\},\{v,x_i\}$，其中 $1\le i\le m$。分别赋予这些边电导
+$a_i,b_i$，并让
+
+$$
+(a_1,\ldots,a_m,b_1,\ldots,b_m)\in(0,\infty)^{2m}
+$$
+
+独立变化。置 $s_i=a_i+b_i$、$A=\sum_i a_i$、$B=\sum_i b_i$，
+并用 $a,b$ 表示对应的列向量。普通未归一化 Laplacian 为
+
+$$
+L(a,b)=
+\begin{pmatrix}
+A&0&-a^{\mathsf T}\\
+0&B&-b^{\mathsf T}\\
+-a&-b&\operatorname{diag}(s_1,\ldots,s_m)
+\end{pmatrix}.
+$$
+
+其特征值按重数排列为
+$0=\lambda_1<\lambda_2\le\cdots\le\lambda_n$。
+对不同顶点 $p,q$，令 $h$ 满足
+$h_p=1$、$h_q=0$，且 $(Lh)_z=0$ 对所有 $z\notin\{p,q\}$ 成立。
+有效电阻和总电阻定义为
+
+$$
+r(p,q)=\frac1{(Lh)_p},\qquad r(p,p)=0,\qquad
+R(a,b)=\sum_{\{p,q\}\subseteq V,\ p\ne q}r(p,q).
+$$
+
+最后的和对每个无序不同点对恰计一次，包括非相邻点对。
+正电导保证上述调和边值问题存在唯一解，且 $(Lh)_p>0$。
+若把电导写成所有无序点对上的函数 $w$，则只有
+$w(\{u,x_i\})=a_i$、$w(\{v,x_i\})=b_i$ 进入 $L$ 和 $R$；
+非边上的任意取值均无影响。
+
+上述定义采用 Cruz Ortega–Menéndez-Conde，
+[*Maximal algebraic connectivity for paths with fixed total resistance*,
+arXiv:2306.08187v1](https://arxiv.org/pdf/2306.08187v1)，§§2–4 的
+Laplacian、Rayleigh 商、调和电流与全点对约定；§5 式 (3) 的约束是
+$R(a,b)=R(K_{2,m};1)$。这里还允许任意给定的 $R_0>0$。
+不对 $\sum_i(a_i+b_i)$ 施加约束，也不对竞争电导施加对称条件。
+

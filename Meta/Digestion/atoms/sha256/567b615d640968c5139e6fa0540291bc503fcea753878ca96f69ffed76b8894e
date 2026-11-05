@@ -1,0 +1,51 @@
+**定理 167.1（不先用导子律的局部恢复）。** 设 $E$ 为有限 EJA，$q$ 为任意正 Frobenius 型，$D$ 实双线性，且 $D_au=0$ 对所有 $a$ 成立。若 $m=\operatorname{rank}E\ge3$，则
+
+$$
+\mathsf F_{\rm fr}\Longleftrightarrow\mathsf F_{0,h}
+\Longleftrightarrow\mathsf F_{\rm cut}.
+\tag{167.1}
+$$
+
+秩零和秩一也成立；不对裸秩二对象宣称此局部结论。
+
+证明。固定 primitive $p$，取完整 frame $p,e_2,\ldots,e_m$。以 $c=e_j$、输入及读回均为 $p$，三者相容，故 (166.1) 给
+
+$$
+a_j:=\|P_{e_j}D_{e_j}p\|_q^2\ge0,
+\qquad q(D_pe_j,p)=-a_j\quad(j\ge2).
+\tag{167.2}
+$$
+
+原右单位给 $q(D_pp,p)=\sum_{j\ge2}a_j$。再取仍保留的秩二内部自问 $c=p+e_j$、$r=p$。其左边为零，准确得到
+
+$$
+0=\sum_{\substack{k\ge2\\k\ne j}}a_k
++\|P_{p+e_j}D_{p+e_j}p\|_q^2.
+\tag{167.3}
+$$
+
+每项非负。第三个框架顶点使每个 $a_k$ 都能出现在一个这样的和内，故全部 $a_k=0$。任意正交 primitive 对可扩成 frame；交换两者也适用。因此
+
+$$
+P_eD_ep=0,\qquad P_pD_pe=0
+\qquad(e,p\text{ primitive},\ e\perp p).
+\tag{167.4}
+$$
+
+固定这样的 $e,p$，记 $v=D_pe$。新域内全部共同法向读回现在给 $q(v,r)=0$，因为其两项能量均为零。成熟的联合 Peirce 分解给
+
+$$
+N_e\cap N_p=\mathbb Re\oplus\mathbb Rp\oplus E_0(e+p).
+\tag{167.5}
+$$
+
+右边由 $r=e,p$ 以及所有 $r\perp e,p$ 的 primitive 张成，全部是保留的读回。又 $e\perp p$ 使 $L_e,L_p$、从而 $P_e,P_p$ 可交换；它们对原 $q$ 是正交投影。由 (167.4)，$v\in N_p$，所以 $(I-P_e)v\in N_e\cap N_p$。与该共同法向空间正交便给 $(I-P_e)v=0$，即
+
+$$
+D_pe\in T_e,
+\qquad q(D_pe,r)=0\quad(r\in\operatorname{Prim}(E),\ P_er=0).
+\tag{167.6}
+$$
+
+配合 (167.4)，这恢复零输入的全部旧法向读回。半重叠层与秩二层未删，故已得完整 $\mathsf F_{0,h}$；此后才调用定理 161.1 恢复全部 $\mathsf F_{\rm cut}$。没有预先使用导子或交替性，也没有把能量等式线性延拓。反向只限制测试域。秩至多一时原右单位直接给 $D=0$，结论成立。∎
+

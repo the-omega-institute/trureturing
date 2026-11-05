@@ -1,0 +1,7 @@
+**Proposition 5.1 (one common-source existence criterion).** For arbitrary real data $z_0,\ldots,z_{L-1}$ on Definition 3.1's path and clock, the following sequential criterion is necessary and sufficient for a realization in Definition 1.1.
+
+1. Interpolate $P$ and $K$ by Theorem 4.1's formulas. Require $K\not\equiv0$.
+2. Choose the two smallest terminal local indices $u<v$ for which $K(T+j)\ne0$. Compute $W_u,W_v$ and $p$ by the stated inverse. Require $p>0$, then compute $s$ using $p+k+1>0$ and require $s>0$.
+3. Set $q=ps$, $S=(\begin{smallmatrix}p&q\\1&s\end{smallmatrix})$, $a=p+s$, $R_0=S/a$, $H=aK$, and $D=P-aK$. Require $\deg D\le d$, meaning that every coefficient above degree $d$ vanishes.
+4. Require every original observation equation, at all recorded indices:
+

@@ -1,0 +1,41 @@
+#### 定理 5.3（三概率圆盘与法向两分支）
+
+输入纯 qubit 的 Bloch 向量记为 $r$，$r_\parallel=(r_1,r_2,0)$。则
+
+$$
+
+q_j=\frac{1+n_j\cdot r}{3},
+ r_\parallel=2\sum_jq_jn_j,
+ r_1+ir_2=2\sum_j\omega^j q_j,
+
+$$
+
+$$
+
+\sum_jq_j^2=\frac13+\frac{|r_\parallel|^2}{6}.
+
+$$
+
+允许的概率集合恰为
+
+$$
+
+\boxed{q_j\ge0, \sum_jq_j=1, \sum_jq_j^2\le\frac12.}
+
+$$
+
+其内部点有两条纯态原像，法向为
+$r_3=\pm\sqrt{1-|r_\parallel|^2}$；边界两分支合并。
+
+
+**证明。**
+
+展开 $|a_j|^2$，用 $\bar\alpha\beta=(r_1+ir_2)/2$ 得第一式。
+三向量满足 $\sum n_j=0$、$\sum n_jn_j^T=\frac32\Pi_\parallel$，得到逆式及平方和。任意总和为一的实三元组均由该二维线性关系恢复其 $r_\parallel$；平方和条件恰给 $|r_\parallel|\le1$，可补成球面点。该补全所得概率即原三元组，所以条件充分。最后用定理 [定理 3.2](#thm:ball)。
+
+**证明完。** ∎
+
+三概率并非整个单纯形：例如 $(1,0,0)$ 不在允许圆盘内。这里的“两个概率加归一化”补全了同一读口的三个概率，却一般没有补全态的法向分支。
+
+
+<a id="thm:area"></a>

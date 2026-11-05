@@ -1,0 +1,22 @@
+**定义 8.12（精确原始成功滤波词与失败叶）。** 设 $\mathsf F_0\subseteq\mathsf E_0$ 是实际可调用滤波效果。一个原始成功词是
+
+$$
+w=((E_1,\lambda_1),\ldots,(E_n,\lambda_n))\in\mathsf W_{\rm suc}
+$$
+
+其中每个 $T_{E_i,\lambda_i}$ 是定义 8.10 的原细支，前一步的实际输出记录、支撑和权限与下一步完全相容。其原始成功值定义为
+
+$$
+T_w=T_{E_n,\lambda_n}\circ\cdots\circ T_{E_1,\lambda_1},\qquad
+p_{\rm raw}(w\mid\rho)=\tau(T_w(\rho)).
+\tag{8.7}
+$$
+
+不除以 $p_{\rm raw}$，不把条件输出变成新准备。每一个节点同时列出所有原失败叶 $f\in\mathsf F_{\rm fail}$：拒绝、禁用、记录不可达、支撑不相容、返回失败和终止各保留其原标签与实现身份，并记其未归一化失败后继 $T_f$；若总事件为确定性，则
+
+$$
+T_{\rm fail}=T_{\rm total}-\sum_{\lambda\ {\rm success}}T_\lambda,\qquad
+\sum_{\lambda\ {\rm success}}p_\lambda+p_{\rm fail}=1.
+\tag{8.8}
+$$
+

@@ -187,16 +187,6 @@ private theorem map_carry {X : Type u} {Y : Type v}
         (VectorMeasure.variation_map_le (μ := s) (φ := p)) Vᶜ
     _ = 0 := by rw [Measure.map_apply hp hV.compl, preimage_compl, hnull]
 
-private theorem functional_map {X : Type u} {Y : Type v}
-    [TopologicalSpace X] [CompactSpace X] [MeasurableSpace X] [BorelSpace X]
-    [TopologicalSpace Y] [CompactSpace Y] [MeasurableSpace Y] [BorelSpace Y]
-    (s : SignedMeasure X) (p : C(X, Y)) (g : C(Y, ℝ)) :
-    signedFunctional (s.map p) g = signedFunctional s (g.comp p) := by
-  change (∫ᵛ y, g y ∂•s.map p) = ∫ᵛ x, g (p x) ∂•s
-  apply VectorMeasure.integral_map p.continuous.measurable
-    g.continuous.aestronglyMeasurable
-  rw [VectorMeasure.Integrable, ← SignedMeasure.totalVariation_eq_variation]
-  exact (g.comp p).continuous.integrable_of_hasCompactSupport (HasCompactSupport.of_compactSpace _)
 
 
 /-- The stored data used by capture. The domain restriction on U, V and nu

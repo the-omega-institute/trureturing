@@ -1,0 +1,36 @@
+**定理 32.1（量子公理的接续与内积坐标）。** 对逐边满足 C100 的关系体，在所需有限复合与定理 26.1 明列的状态、效果、混合线性过程、内部参考及有标签仪器供应下，仍得到密度矩阵、Born 评价、标准量子张量积、完全正过程与仪器；连续一参数 $*$ 自同构仍具有 Hamilton 形式。任意允许的实际中心权不改变这些结论。
+
+证明。定理 30.1 先给每条实际边的复 $C^*$ 张量乘法。正锥由 $*$ 平方确定，与中心比较权无关。对 $\mathcal A=\bigoplus_sM_{d_s}(\mathbb C)$，所有正归一泛函仍唯一为
+
+$$
+\omega(a)=\sum_s\operatorname{Tr}(\rho_sa_s),
+\qquad \rho_s\ge0,\quad\sum_s\operatorname{Tr}\rho_s=1.
+$$
+
+效果 $0\le E\le1$ 的概率仍为 $\omega(E)$；谱投影和块内秩一纯态给通常 Hilbert 与 Born 表示。若把同一泛函写成实际内积坐标 $\omega(a)=g(r,a)$，而该内积在块 $s$ 是 $w_s\operatorname{Tr}(ab)$，则 $r_s=\rho_s/w_s$；改变权重改变密度坐标，不改变状态泛函和概率。
+
+完全正性的参考判据仅依赖已经重构的代数张量正锥。一个活动内部参考有 $M_r(\mathbb C)$ 块，$r\ge2$；其有限张量幂包含任意所需大小的矩阵角。与这些实际参考联合保正遂给逐输入块的 Choi 正性，得到完全正及 Kraus 仪器；反向完全正保证所有参考上的联合保正。这里逐项使用定理 26.1 的同一过程和实际参考供应，不从单纯内积的分类推出完整操作菜单。
+
+连续一参数自同构固定有限中心，块内生成元是内导子，所以仍为 (26.2) 的 Heisenberg／Schrödinger 形式。Hamiltonian、实际时钟标定与测量后继的选择保持为明确运动或操作数据。
+
+若还要由内部关系选出一个共同态，可直接接续[有限内部约束 V97，定义 2.1、定理 4.1](https://github.com/the-omega-institute/trureturing/blob/f39cb044ab85fe5d0f02ef742b276fa9b84bede7/docs/develop/theory/AURIC_FINITE_INTERNAL_CONSTRAINTS_UNIQUE_WHOLE_SOURCE_AND_STABLE_QUANTUM_READOUT_V97.md)。参数对应是：其含幺复正代数取这里已重构的同一 $\mathcal A$，正关系取 $q_j\in\mathcal A_+$，效果取同一代数中的 $0\le B\le1$。若每份有限正零关系有解，且每个效果、每个精度都有该文 C97 的有限正序夹逼证书，则其定理 4.1 直接给唯一共同纯态。C100 提供的是此结论所需的量子代数输入；证书条件仍是独立的态选择供应，不能由正比较权或活动延伸冒领。以下对比较基准的构造不替代这一步。
+
+为区分“存在可因子化基准”与“实际比较必须因子化”，在上述推导中可采用成熟的有限正则迹工具：仅由已重构的比较乘法定义
+
+$$
+\tau_{\rm can}(a)
+=\frac{\operatorname{Tr}_{\mathbb R}(L_a)}{\dim_{\mathbb R}J}
+=\frac{\sum_sd_s\operatorname{Tr}(a_s)}{\sum_sd_s^2},
+\qquad g_{\rm can}(a,b)=\tau_{\rm can}(S(a,b)).
+\tag{32.1}
+$$
+
+它是正 Frobenius、自对偶的归一比较，且对实际标准复张量结构满足
+
+$$
+g_{{\rm can},AB}=g_{{\rm can},A}\otimes g_{{\rm can},B}.
+\tag{32.2}
+$$
+
+这个正则迹选择不要求既定实际 $G$ 等于它。在 $M_d(\mathbb C)_{\rm sa}$ 上，对角化 $a$ 可直接计算 $\operatorname{Tr}_{\mathbb R}L_a=d\operatorname{Tr}a$：对角坐标贡献 $\sum_pa_p$，每对非对角实坐标贡献 $a_p+a_q$，总计每个 $a_p$ 出现 $d$ 次。故 (32.1) 为严格正逐块迹权，得到正定、Frobenius、自对偶与归一。张量块维数为 $d_se_t$，总实维数为 $(\sum_sd_s^2)(\sum_te_t^2)$；迹与维数都相乘，得到 (32.2)。该构造复用有限正则迹工具，未给实际 $G$ 加任何新等式。∎
+

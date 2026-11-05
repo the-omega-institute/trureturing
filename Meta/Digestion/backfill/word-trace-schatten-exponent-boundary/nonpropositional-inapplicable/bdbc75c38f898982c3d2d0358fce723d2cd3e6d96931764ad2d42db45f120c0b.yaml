@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bdbc75c38f898982c3d2d0358fce723d2cd3e6d96931764ad2d42db45f120c0b
+  normalized_sha256: sha256:bdbc75c38f898982c3d2d0358fce723d2cd3e6d96931764ad2d42db45f120c0b
+cas_ref: sha256:bdbc75c38f898982c3d2d0358fce723d2cd3e6d96931764ad2d42db45f120c0b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Bibliographic citation identifying the Alhejji--Knill publication, version and source location; it contains no mathematical proposition to cover.
+    previous_atom_id: 057d5549c234c727028c8c6ad6a73e87e0454615bda8380141482fe136e6cd9f
+    next_atom_id: 8f35eaf8795877d7cc20a9c2fafd07bddd41eeb4090efce2457450dc6cdea79c

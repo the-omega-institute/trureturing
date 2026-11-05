@@ -1,0 +1,9 @@
+The coalesced pairs contribute $1$ to their sign products, whereas a noncoalesced pair contributes its character. From (2.6), taking the $\mathcal H$-measurable multiplicities outside the conditional expectations,
+
+$$
+\mathbb E(W_t\mid\mathcal H)=\frac{t+C_t}{2},\qquad
+\operatorname{Var}(W_t\mid\mathcal H)
+=\frac14\sum_{e\in\mathcal E}m_e^2.
+\tag{2.8}
+$$
+

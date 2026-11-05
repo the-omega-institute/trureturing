@@ -1,0 +1,18 @@
+**Convention 1.3 (Mathematical citations).** The following source labels
+specify the inputs used in the proofs.
+
+- [XY] H.-Z. Xu and Z.-H. Yang, *Higher order monotonicity involving the
+  Mills ratio with applications*,
+  [DOI 10.1186/s13660-026-03505-9](https://doi.org/10.1186/s13660-026-03505-9):
+  (1.8), (3.7), Theorem 3.3 and its convolution proof, Theorem 4.2,
+  and Conjecture 7.1.
+- [R] The repository's
+  [positive-kernel proof for the Xu–Yang remainders](https://github.com/the-omega-institute/trureturing/blob/c839927b42e1589abf191d336c10b6539a962b85/D5/S3/Analytic/XuYangMillsRemainder/Result.lean),
+  including the private mathematical identities named
+  $\mathtt{convolutionClosed}$, $\mathtt{intPow\_rec}$,
+  $\mathtt{coeff\_sum}$, $\mathtt{coeff\_factorial}$,
+  $\mathtt{expRemainder\_eq}$, $\mathtt{expRemainderBounds}$,
+  $\mathtt{remainderRepresentation}$ and $\mathtt{laplaceCM}$.
+  Their content includes the coefficient correspondence and the
+  positive Laplace representation for every $n\ge2$ at $a=-1$.
+

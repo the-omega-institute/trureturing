@@ -1,0 +1,36 @@
+**Definition 42.1 (actual phase levels).** Retain exactly the original
+$\mathcal K=\operatorname{Dens}_2\times U(4)$, ordinary transpose,
+one shared actual feedback, constants, distances $\rho_\pm,\rho$,
+defect $g$, $f=g-\kappa\rho$, and sets of Definitions 39.1 and 41.1.
+In particular $N=N_{\mathrm{geo}}$, $V(\xi)=N(\xi)+\kappa\xi$,
+and $\mathcal G_\xi$ are the existing selected quantities, without
+an added assertion of global optimality. Put
+
+$$
+\begin{aligned}
+ R&=\frac{13}{4},&
+ L&=4(c+s),& \zeta&=9-L,&
+ \mathbb T&=\{z\in\mathbb C:|z|=1\},\\
+ \mathcal K_{\mathrm{ph}}
+   &=\{(E,\operatorname{diag}(v)U_+):
+                     E\in\operatorname{Dens}_2,\ v\in\mathbb T^4\},\\
+ \mathcal P_\xi&=\{X\in\mathcal K_{\mathrm{ph}}:\rho(X)=\xi\},\\
+ m_{\mathrm{ph}}(\xi)&=\min_{X\in\mathcal P_\xi}f(X),&
+ \mathcal A_{\mathrm{ph},\xi}
+   &=\{X\in\mathcal P_\xi:f(X)=m_{\mathrm{ph}}(\xi)\}.
+\end{aligned}
+\tag{42.1}
+$$
+
+For $0<\xi\le R$ the phase level is compact and nonempty, since it
+contains $\mathcal G_\xi$. Thus its displayed minimum is attained.
+Every common scalar representative remains in these sets. The four
+entries of $v$ are actual feedback parameters; only multiplication
+of the whole feedback by one common scalar has the identification
+already present in (39.1). Effects of every rank remain allowed.
+
+For each actual pair write $F=T^\dagger E^{\mathsf T}T$ as in (23.9)
+and let $a(U)=(P(w),Q(w))$, a row vector, where
+$w=\operatorname{diag}(UU_+^\dagger)$. All of $A,B,P,Q$ always refer
+to this same actual $w$.
+

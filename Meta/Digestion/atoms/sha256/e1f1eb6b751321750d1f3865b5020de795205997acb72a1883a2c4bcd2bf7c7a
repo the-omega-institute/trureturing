@@ -1,0 +1,41 @@
+**Proposition 15.3 (Positive actual fibre and original site conditionals).** For the split and witnesses in Proposition 15.2 there are three fixed intact guards, a center coordinate $Y=X_0$, and a finite future filling variable $V$ with the following properties. The nearest center neighbors occupied in both center completions are at $-l,r$. The first guard precedes the center, the second ends at a common anchor $B_\ast>r$, and the third lies strictly after $B_\ast$. Let $A_\ast$ be the first guard's starting anchor and let $R$ be the third guard's ending anchor. Conditional on a positive strict-left context event, the fixed scaffold and the common actual outside, the original law induces a finite probability $p$ with full Cartesian support
+
+$$
+\{0,1\}\times\mathcal V.
+\tag{15.4}
+$$
+
+Here $\mathcal V$ contains all no11-legal fillings of the chosen segment from $r$ to $B_\ast$, with its endpoints and the entire second guard fixed. If $\gamma(v)$ is the gap word of such a filling after $r$, then
+
+$$
+a(v):=p(Y=1\mid V=v)
+=\frac{B L_b(\gamma(v))}{M L_a(\gamma(v))+B L_b(\gamma(v))},
+\qquad \operatorname{Var}_{p_V}(a)>0.
+\tag{15.5}
+$$
+
+This $a(v)$ is the original full-exterior center posterior. If $i$ is a nonfixed coordinate of $V$ and $Z=V_{-i}$, then
+
+$$
+p(V_i=1\mid Y=y,Z=z)=q_i^P(x^{y,v})
+\tag{15.6}
+$$
+
+on every compatible site fibre. A forced singleton has its common deterministic bit as conditional mean.
+
+Proof. Choose an original positive context $c_\ast\in D$ at an unchanged anchor $T_\ast$. Take a fixed gap, for example $2$, to the starting anchor $A_\ast$ of the first guard. Apply that guard. The resulting original context is still in $D$. Irreducibility of the context chain in (4.9) gives a finite connecting gap word from this context to $c$: each edge of a positive path has at least one gap label realizing it. Fix this connection and place its final anchor at $-l$. All its gap factors, and the two center-completion factors $M,B$, are positive. Thus reaching $c$ after the first guard is part of the construction, rather than an assumption that a guard reaches any prescribed context.
+
+Place $u,u'$ after the common anchor $r$. Their equal physical lengths put the second guard at the same physical coordinates, ending at $B_\ast$. Fix its bits, take a fixed gap after $B_\ast$, and then place the third guard, ending at $R$. Freeze the prefix, the center-neighbor gaps, this later connection and all three guards. Allow every legal filling of the remaining future segment, not only the two witnesses. Legal support is independent of $Y$, since the center is separated from this segment by its fixed right anchor and $l,r\ge2$.
+
+Every filling has a positive finite product by (4.7). Both center choices start the future segment in the same phase, by (4.11). Every filling has the same physical displacement to the second guard's starting anchor, so (5.1) gives the same phase there. Equation (5.5) gives one terminal predictive state at $B_\ast$ for every filling and both center choices. Consequently the finite conditional disintegration has a common left channel and a common entire-right channel; its weights are proportional to
+
+$$
+p(0,v)\ \propto\ M L_a(\gamma(v)),\qquad
+p(1,v)\ \propto\ B L_b(\gamma(v)).
+\tag{15.7}
+$$
+
+The fixed prefix factors cancel as well. This disintegration conditions on the actual exterior sigma-field; it never divides point masses of infinite configurations. The compatible finite-pattern event has positive probability. Its scalar weights are positive and independent of the remaining outside on the corresponding conditional domain. Thus (15.4) and (15.5) follow, with positive variance because the two ratios in (15.2) give different values of the strictly increasing function $t\mapsto Bt/(M+Bt)$.
+
+For (15.6), fixing the entire outside, the scaffold, $Y$ and every coordinate of $V$ except $i$ leaves exactly the legal original single-site completions. Including all legal fillings is essential here: retaining only two witness words could remove a legal completion and change the conditional mean. The original conditional-expectation identity therefore gives (15.6); if only one completion is legal it gives the deterministic value. The common saturated domain and positive-pattern extension of Proposition 7.1 supply these statements simultaneously. Only predictive-state synchronization and the phase quotient law (5.1) were used. Neither an original-context semigroup nor positivity of hidden matrix entries was required. $\square$
+

@@ -1,0 +1,67 @@
+**Definition 52.1 (supplied comparisons and their exact scope).**
+The deduction in Section 51 is a repo-derived application and reduction
+of the four-path formulas, using ordinary real differentiation,
+compactness and the implicit-function theorem. The following source
+correspondence specifies its mathematical premises.
+
+The ordinary-transpose convention, both original optimizer signs,
+joint squared Frobenius metric and same-feedback identity are
+Definition 23.1, (23.9)--(23.13), (39.1), Definition 46.1 and
+Definition 48.1. The attained triangle, its boundary reconstruction,
+and simultaneous $|M_\sigma|=2R$, maximal $|N_\sigma|=2C$ are exactly
+Lemma 46.2. The free effect coherence aligns these same recoveries.
+Definition 47.1 supplies compact attainment. The sign-distance
+identification uses the two-sign budget (42.17)--(42.20) only on
+$0<\xi\le13/4$. These sources do not provide within-slice uniqueness
+when $D_\sigma<0$.
+
+Theorem 46.4 supplies the strict canonical competitor used in
+Proposition 51.2 when $D_\sigma<0$. Its separate canonical uniqueness
+statement for $D_\sigma\ge0$, including $D_\sigma=0$, is retained
+with its original phase-equality conditions. Section 51 neither
+replaces that statement nor imposes a sign condition on $\nu$.
+The new deductions are the exclusion of every other boundary component,
+strict fixed-label ordering, uniqueness on every vertical fibre, and
+the exact scalar-profile comparison (51.23)--(51.26).
+
+The both-sign gain bound of Theorem 47.2 holds on the whole attained
+triangle for $0<x<1$ and $q\in[0,1]$. It is an upper envelope for
+$\Gamma-\Gamma_0$ and supplies no equality characterization which
+would identify a maximizing pair from the envelope's scalar vertex.
+Theorem 37.5 orders rank-one effects only in the enlarged geometric
+feedback family $\mathcal C_{34}$, on its stated levels
+$0<\xi\le4$; that family is not the full fixed-population triangle.
+Theorem 50.3 concerns the positive-active pure branch on
+$[11/5,9/4]$, with $\rho_+=\rho=\xi$, and strictly separates its
+negative-determinant slices from the selected value $V(\xi)$.
+It does not compare two maximizing pairs inside such a slice.
+Theorems 45.7 and 48.5 supply the actual endpoint-set identification
+used in Corollary 51.5. None of these results is promoted to a
+full sign, population or length-uniqueness comparison beyond its domain.
+
+The repository result
+$\texttt{StrongConcavityAttainment.exists\_unique\_maximizer}$
+has premises of a nonempty complete domain, positive strong-concavity
+modulus, upper semicontinuity and boundedness above. Strong concavity
+for this $\Gamma$ has not been established. These are sufficient
+supplier hypotheses, not necessary conditions added to (51.12).
+
+The external synchronization certificates also retain their own
+domains and hypotheses. Boumal,
+[arXiv:1601.06114v3, Lemma 2](https://arxiv.org/html/1601.06114v3),
+uses a positive semidefinite certificate $S(z)$ for phase
+synchronization, with rank $n-1$ giving uniqueness modulo common phase.
+Bandeira--Boumal--Singer,
+[arXiv:1411.3272v3, Lemma 4.3](https://arxiv.org/html/1411.3272v3),
+requires unit diagonal, primal and dual positivity, annihilation and
+a real diagonal shift of the objective matrix; its rank-$n-1$ clause
+gives a unique rank-one semidefinite optimizer.
+[arXiv:1303.0152v1, Theorem 2](https://arxiv.org/html/1303.0152v1)
+requires a unimodular vector in the maximal-eigenvalue subspace of
+the unconstrained quadratic objective; the lifted formulation and its
+semidefinite relaxation are (29)--(30) there.
+No matching certificate or fixed-trace, fixed-population,
+same-realization bridge to (51.6)--(51.12) is supplied by these
+statements. Phase uniqueness is a different conclusion from ordered
+length uniqueness. No literature-wide priority or absence claim is made.
+

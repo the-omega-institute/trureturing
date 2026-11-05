@@ -1,0 +1,91 @@
+## 文献与固定来源
+
+<a id="ref-repohead"></a>
+
+**[1]** 
+The Omega Institute, trureturing.
+[固定 dev 快照 ae852c6f…](https://github.com/the-omega-institute/trureturing/tree/ae852c6f2df9ac7779afc168cb1a1850327e217b)，
+2026-10-30 22:44:57 Asia/Singapore，PR #24257。
+
+<a id="ref-quantumii"></a>
+
+**[2]** 
+项目，
+[《AURIC FIB ATOM 与量子基本原则：原生预测秩与终端响应（续卷 II）》](https://github.com/the-omega-institute/trureturing/blob/ae852c6f2df9ac7779afc168cb1a1850327e217b/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md)。
+本轮新增 §§104--108；消费 §§77--79、85--86、99--103 的明确前置。
+Git blob：
+
+`07b42c289db08b527554cc7890c7932212c8558a`。
+
+<a id="ref-v28"></a>
+
+**[3]** 
+项目，
+[《AURIC：二元读出、全框架相融与 E8 黄金门桥梁》](https://github.com/the-omega-institute/trureturing/blob/ae852c6f2df9ac7779afc168cb1a1850327e217b/docs/develop/theory/AURIC_BINARY_READOUT_FULL_FRAME_COMPATIBILITY_AND_E8_GOLDEN_GATE_BRIDGE_V28.md)，v28 归档。
+消费二元树仪器、完整 POVM 汇总和单份五相位判别范围；
+归档未被当作新的独立验证。
+
+<a id="ref-v15"></a>
+
+**[4]** 
+项目，
+[《AURIC 黄金门、NAND 类通用性与算术边界》](https://github.com/the-omega-institute/trureturing/blob/ae852c6f2df9ac7779afc168cb1a1850327e217b/docs/develop/theory/AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md)，v15。
+本稿经量子续卷 II 的明确接口消费全扇区射影密度、
+逆字规则与精确取得边界，未重证全部编织密度。
+
+<a id="ref-omega"></a>
+
+**[5]** 
+项目，
+[《AURIC $\Omega$ 静态相融纤维理论》](https://github.com/the-omega-institute/trureturing/blob/ae852c6f2df9ac7779afc168cb1a1850327e217b/docs/develop/theory/AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)，
+以及
+[《静态量子历史、内生观察者与关系时钟》](https://github.com/the-omega-institute/trureturing/blob/ae852c6f2df9ac7779afc168cb1a1850327e217b/docs/develop/theory/AURIC_STATIC_QUANTUM_HISTORIES_ENDOGENOUS_OBSERVERS_AND_RELATIONAL_CLOCKS_V21.md)，v21。
+v30 的共同态、静态历史和记录基线以此为前置。
+
+<a id="ref-galley"></a>
+
+**[6]** 
+T. D. Galley and L. Masanes,
+Classification of all alternatives to the Born rule in terms of informational properties,
+*Quantum* **1**, 15 (2017).
+[arXiv:1610.04859v3](https://arxiv.org/abs/1610.04859v3)。
+项目源指定的表示论前置；本稿不将其有限维操作假设补入未知响应合同。
+
+<a id="ref-masanes"></a>
+
+**[7]** 
+L. Masanes, T. D. Galley and M. P. Müller,
+The measurement postulates of quantum mechanics are operationally redundant,
+*Nature Communications* **10**, 1361 (2019).
+[arXiv:1811.11060v2](https://arxiv.org/abs/1811.11060v2)。
+项目源指定的不可约分解参考；其完整重构公理未被自动移用。
+
+<a id="ref-braunstein"></a>
+
+**[8]** 
+S. L. Braunstein and C. M. Caves,
+Statistical Distance and the Geometry of Quantum States,
+*Physical Review Letters* **72**, 3439 (1994).
+[doi:10.1103/PhysRevLett.72.3439](https://doi.org/10.1103/PhysRevLett.72.3439)；
+[作者全文](https://www-users.york.ac.uk/~sb54/papers/bc94.pdf)。
+本稿独立证明使用的纯态 Fisher 上界及其一参数局部达到。
+
+<a id="ref-gillmassar"></a>
+
+**[9]** 
+R. D. Gill and S. Massar,
+State estimation for large ensembles,
+*Physical Review A* **61**, 042312 (2000).
+[arXiv:quant-ph/9902063](https://arxiv.org/abs/quant-ph/9902063)；
+[doi:10.1103/PhysRevA.61.042312](https://doi.org/10.1103/PhysRevA.61.042312)。
+本稿给出基本 qubit 点态信息权衡的直接证明，未移用全部渐近估计结论。
+
+<a id="ref-anandan"></a>
+
+**[10]** 
+J. Anandan and Y. Aharonov,
+Geometry of Quantum Evolution,
+*Physical Review Letters* **65**, 1697--1700 (1990).
+[doi:10.1103/PhysRevLett.65.1697](https://doi.org/10.1103/PhysRevLett.65.1697)；
+[作者全文](https://www.tau.ac.il/~yakir/yahp/yh64)。
+射影路径长度与生成元方差的经典来源；钟的物理标定仍为明确输入。

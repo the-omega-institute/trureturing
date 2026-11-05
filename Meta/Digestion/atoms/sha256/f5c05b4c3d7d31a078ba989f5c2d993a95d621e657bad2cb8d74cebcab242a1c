@@ -1,0 +1,12 @@
+**Definition 33.7 (supplier correspondence).** The recurrence and
+companion-power steps use Bostan--Mori [ACR-BM] only as a forward
+supplier for an explicitly presented finite recurrence; all binary indices,
+modular operations and scans are paid here. Massey [MAS] supplies the
+finite-prefix synthesis and the distinction between register length and a
+chosen denominator; it supplies neither physical acquisition nor the
+original $\rho_d$ ordering. Theorem 33.4 is the source-level composition
+of those suppliers with Theorems 27.2--29.2. It claims no arbitrary
+catalogue normalization, no hidden advice and no worldwide originality;
+the four-view recovery and physical output boundaries of §29 are
+unchanged.
+

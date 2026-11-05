@@ -1,0 +1,36 @@
+**Definition 18.1 (The fixed source and its eight boundaries).** In Sections 18–22 fix $r=4$ in Definitions 1.2–1.3 and 8.1. Thus the source is the original nine-letter fixed point
+
+$$
+A_4=\{0,\ldots,8\},\qquad
+\varphi(i)=0(i+1)\ (0\le i<8),\qquad
+\varphi(8)=088,\qquad u_9=\varphi^\omega(0),
+$$
+
+and $M$, $b_j$, $\mathsf A$, $\mathsf B_i$ and $f_n$ are exactly those of (2), with $0\le i<8$. In particular
+
+$$
+\begin{gathered}
+\Lambda^4(\Lambda-2)=1,\quad 2<\Lambda<3,\qquad
+\beta^4-\beta^3-\beta^2-\beta-1=0,\quad 1<\beta<2,\\
+L=\frac1{3-\Lambda},\qquad e_4=1+L.
+\end{gathered}
+\tag{75}
+$$
+
+Let $(\eta,p)\in\mathcal L_4$, allowing any finite actual output alphabet and every nonempty palindromic marker $p$. Write
+
+$$
+\eta(j)=p q_j,\qquad h_j=|\eta(j)|\in\mathbb Z_{>0},\qquad
+m=|p|,\qquad x=\eta(u_9),
+$$
+
+where each $q_j$ is a palindrome and $\eta(j)p$ has exactly its two endpoint occurrences of $p$. For $0\le i<8$ define
+
+$$
+s_i=\operatorname{lcs}(\eta(i),\eta(8)),\qquad
+C_i=m+2|s_i|,\qquad J_i=h\mathsf B_i b_0.
+\tag{76}
+$$
+
+For a finite word $s$, write $\widetilde s$ for its reversal. No richness or cancellation condition is included in this definition. The literal factorization and injectivity concern this same morphism on this same $u_9$.
+

@@ -1,0 +1,52 @@
+**Theorem 3.1 (Universal longer-marker saturation).** Let $r\ge3$ and $\ell\ge2$ be integers. Let $B$ be a finite alphabet of size $r+1$, let $p\in B^*$ be a palindrome of length $\ell$, and let $`\eta:A_{2r+1}^*\to B^*`$ be an injective monoid morphism whose actual infinite image $x=\eta(u_{2r+1})$ has alphabet exactly $B$. Assume that, for every $0\le i\le2r$, there is a palindrome $q_i$, possibly empty, such that $\eta(i)=p q_i$ and $\eta(i)p$ is a palindromic complete return to $p$. Put $h_i=|\eta(i)|$ and assume
+
+$$
+h_0=\ell,\qquad h_1=\cdots=h_r=\ell+1,
+$$
+
+and
+
+$$
+h_{r+j}=h_r+\sum_{i=0}^{j-1}2^{j-1-i}h_i
+\qquad(1\le j\le r).
+$$
+
+Then
+
+$$
+E\bigl(\eta(u_{2r+1})\bigr)\ge\frac52
+   > E^*(u_{2r+1}).
+$$
+
+Consequently, under these exact hypotheses, $\eta(u_{2r+1})$ is not rich or $`E(\eta(u_{2r+1}))>E^*(u_{2r+1})`$.
+
+*Proof.* Because $\eta(0)$ begins with $p$ and has length $|p|$, it equals $p$. For $1\le i\le r$, the length condition gives a letter $c_i\in B$ with
+
+$$
+\eta(i)=p c_i.
+$$
+
+Injectivity implies that these $r$ letters are pairwise distinct. Thus $S=\{c_1,\ldots,c_r\}$ has cardinality $r=|B|-1$.
+
+Every letter of $A_{2r+1}$ occurs in $u_{2r+1}$. Indeed, $0$ occurs in $\varphi_{2r+1}^0(0)$, and whenever $k<2r$ occurs in $\varphi_{2r+1}^k(0)$, its image contains $k+1$, so $k+1$ occurs in $\varphi_{2r+1}^{k+1}(0)$. These iterates are prefixes of $u_{2r+1}$ because $\varphi_{2r+1}(0)$ begins with $0$.
+
+All images under $\eta$ begin with the nonempty word $p$, so the morphism is nonerasing. An occurrence of any letter $i$ in the one-sided infinite source has a following letter. At the corresponding concatenation boundary in $x$, the factor $\eta(i)p$ therefore occurs. Taking $i=0$ gives $pp$; taking $i=1,\ldots,r$ gives $p c_i p$. Theorem 2.1 now yields $E(x)\ge5/2$. This inference concerns factors in the actual infinite concatenation.
+
+To compare this lower bound with the spectral target, observe that
+
+$$
+\left(\frac73\right)^r\left(\frac73-2\right)
+ =\frac{7^r}{3^{r+1}}
+ \ge\frac{343}{81}>1.
+$$
+
+Since $t^r(t-2)$ is strictly increasing for $t>2$ and has value one at $\Lambda_r$, it follows that $\Lambda_r<7/3$. Hence
+
+$$
+E^*(u_{2r+1})
+ =1+\frac{1}{3-\Lambda_r}
+ <1+\frac{1}{2/3}=\frac52.
+$$
+
+The asserted strict inequality and its disjunctive consequence follow. $\square$
+

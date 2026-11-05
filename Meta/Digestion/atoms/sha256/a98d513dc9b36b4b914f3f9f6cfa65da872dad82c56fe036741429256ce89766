@@ -1,0 +1,47 @@
+**Definition 33.1 (source correspondence and literature scope).**
+The native domain, source-derived grade and orientation fibres are
+[AA17/19](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md)
+and §§23–26; Theorem 28.2 is the uniform outgoing balanced-promotion
+supplier used in (IV.84). The literal-prefix accumulation of Theorem
+28.3 is not a paid-tail lower bound: (IV.86)–(IV.88) replace that step.
+AAII Definition 54.1 supplies constructor serialization; AAII Definition
+94.1 and Theorem 94.2 supply the ordinal journal and replay induction,
+with Theorem 29.2's weaker $U$-input correspondence. Here their replay
+base is an explicitly retained current-term snapshot, so histories before
+that base are not reconstructed.
+
+Finite-degree ball counting, finite-word capacity, serialization,
+finite-set ranking, and balancing snapshot cost against short journals
+are general methods. Cover,
+[*Enumerative Source Encoding*, §§I–II, Proposition 1 and its inverse](https://isl.stanford.edu/~cover/papers/transIT/0073cove.pdf),
+supplies the classical ranking perspective already used for the static
+fibres. The recorder (IV.91) uses the existing constructor and ordinal
+serializations rather than claiming a new enumerative coding theorem.
+
+Varshney–Kusuma–Goyal,
+[*Malleable Coding: Compressed Palimpsests*, §§IV, VI–VII](https://arxiv.org/abs/0806.4722v1),
+formulate correlated random blocks and costs in a codeword edit metric;
+their general metric formulation and coding results are relevant prior
+work. Their
+[*Malleable Coding with Fixed Reuse*, §III and Theorem 1](https://arxiv.org/abs/0809.0737v2),
+uses independent drawings of correlated symbol pairs, block codes with
+vanishing error, and a fixed reused prefix portion. Neither stochastic
+block contract supplies the exact deterministic all-history native
+quantifiers, the uniform actual addressed successors, or the grade-based
+snapshot/replay construction in (IV.97). Conversely (IV.97) makes no
+claim about their stochastic rate regions. The additional deduction is
+the source-specific uniform synthesis under (IV.82), not the general
+coding suppliers or an exhaustive originality claim.
+
+The result concerns present ordered contents, cumulative actual tail
+edits, and maximum retained word length, with all busy word lengths
+counted. It neither strengthens the original append-only record contract
+nor solves a full-history task. Actual physical acquisition of $U$,
+source-bound operand authority, acknowledgements and return, separately
+paid computation and work backing retain their original premises. In
+particular a mathematical address supplies no new physical port. The
+exact all-$k$ worst-individual-update question remains unresolved here:
+the amortized estimate (IV.95) is not an every-step logarithmic bound.
+No sharp constants, complete Pareto frontier, total resource optimality
+or Lean verification is asserted by these ordinary arguments.
+

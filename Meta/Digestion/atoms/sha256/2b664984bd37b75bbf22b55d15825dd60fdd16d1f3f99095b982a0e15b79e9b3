@@ -1,0 +1,84 @@
+### 证明
+
+对任意复系数 $c_1,\ldots,c_m$，令
+
+$$
+C_i=\sum_{j\le i}c_j,\qquad M=C_m,
+\qquad d_i=t_{i+1}-t_i.
+$$
+
+由区间指示函数表示，三角核能量恰为
+
+<a id="eq-22"></a>
+
+$$
+\boxed{
+c^*H_Lc
+=
+(L-D)|M|^2
++
+\sum_{i=1}^{m-1}d_i
+\bigl(|C_i|^2+|M-C_i|^2\bigr).
+}
+\tag{22}
+$$
+
+设
+
+$$
+\mu=\min\{h_{\min},L-\delta\}.
+$$
+
+丢弃一组非负项，得到
+
+$$
+c^*H_Lc\ge\mu\sum_{i=1}^{m}|C_i|^2.
+$$
+
+又因为 $c_i=C_i-C_{i-1}$、$C_0=0$，
+
+$$
+\sum_{i=1}^{m}|c_i|^2
+\le4\sum_{i=1}^{m}|C_i|^2.
+$$
+
+结合 $H\succeq rH_L$，式 (21) 成立。证毕。
+
+若实际读出的近似矩阵为
+
+$$
+\widehat H=H+E,\qquad E=E^*,
+\qquad |E_{ij}|\le\eta,
+$$
+
+则
+
+$$
+|c^*Ec|
+\le
+\eta\left(\sum_i|c_i|\right)^2
+\le m\eta\|c\|^2.
+$$
+
+所以得到明确的误差条件：
+
+<a id="eq-23"></a>
+
+$$
+\boxed{
+m\eta
+<
+\frac r4\min\{h_{\min},L-\delta\}
+\quad\Longrightarrow\quad
+\widehat H\succ0.
+}
+\tag{23}
+$$
+
+对于归一化矩阵 $H/S$，右端再除以 $S$。
+
+这使“控制误差”有了具体内容：**每个有限阶段都存在正的误差容忍量，其大小取决于节点间距和已有矩阵的谱隙。**
+
+---
+
+<a id="section-7"></a>

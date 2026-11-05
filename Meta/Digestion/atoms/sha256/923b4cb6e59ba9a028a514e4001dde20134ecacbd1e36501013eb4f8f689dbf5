@@ -1,0 +1,35 @@
+#### 命题 4.5（单态零误差的支持判据）
+
+<a id="prop:support"></a>
+
+令 $s_\rho=\operatorname{supp}\rho$。对自伴 $A,X$，
+
+$$
+\left\lVert A-X\right\rVert_\rho=0
+ \ \Longleftrightarrow\ (A-X)\rho^{1/2}=0
+ \ \Longleftrightarrow\ (A-X)s_\rho=0.
+ \tag{11}
+$$
+
+若 $\rho$ 忠实，则这等价于 $A=X$。
+所以忠实态下，给定记录 $\mathcal{D}$ 可同时精确重建一族自伴目标，
+当且仅当所有目标均属于 $\mathcal{D}$。
+
+**证明。**
+
+$\operatorname{Tr}\rho(A-X)^2=\left\lVert (A-X)\rho^{1/2}\right\rVert_{\mathrm{HS}}^2$，
+有限维中 $\rho^{1/2}$ 的像为 $s_\rho\mathcal{H}$，即得。
+
+∎
+
+非忠实情形不能任意传递乘积：取
+$\Omega=\lvert +\rangle$、$A=\lvert -\rangle\langle -\rvert$、$B=Z$、
+$X_0=0$、$Y_0=Z$，记录为 $Z$ 对角代数。
+两个预测在 $\Omega$ 上分别零误差，然而
+$[A,B]\Omega=\lvert -\rangle\ne0$，且 $AB\Omega\ne X_0Y_0\Omega$。
+若额外给 $[s_\rho,\mathcal{D}]=0$，
+则 $(A_j-X_j)s_\rho=0$、$X_j\in\mathcal{D}$ 使各目标保持该支持；
+对单词长度归纳才可得到所有多项式的支持上相等。
+
+<a id="statement-4-6"></a>
+

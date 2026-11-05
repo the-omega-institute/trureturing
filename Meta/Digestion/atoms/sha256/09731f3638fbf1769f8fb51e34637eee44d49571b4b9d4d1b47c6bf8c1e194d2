@@ -1,0 +1,9 @@
+**问题 6.1（A precise torsion boundary）。** For a fixed prime $p$,
+classify equal-size failures, and the one-element-gap case, for
+loopless sparse paving targets in $\mathbb Z/p\mathbb Z$ with
+$|A|\le |B|<p$ and $0\notin B$. The torsion-free ordered additive-growth
+argument in Theorem 2.1 cannot be transferred merely by treating cyclic indices as integers.
+The needed replacement is a sumset theorem with its exact equality
+and wraparound alternatives for $X+(U_X\cup\{0\})\subseteq A$.
+Proposition 5.4 does not decide this prime-order problem.
+

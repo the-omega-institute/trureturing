@@ -82,7 +82,60 @@ internal sealed class InhomogeneousMarkovCompletionDocument : IScribeDocumentDef
                         "Strict interiority excludes zero site marginals and zero seams. "
                         + "The statement does not extend this quotient to boundary means. "
                         + "It also does not assert that a general legal law is Markov: "
-                        + "uniqueness is restricted to the stated first-order class."))),
+                        + "uniqueness is restricted to the stated first-order class.")),
+                    Paragraph(Text(
+                        "For positive activities w(i) on a path of length N=n+2, let P(b) "
+                        + "be the product of w(i) over occupied positions, divided by the "
+                        + "sum of those products over legal words. Extend P by zero to "
+                        + "forbidden words. Define u(i) by taking the expectation of the "
+                        + "indicator of occupation at i under this same P. Read false and "
+                        + "true as the indicators zero and one throughout. The all-false word "
+                        + "and every singleton word have positive mass. They give "
+                        + "0<u(i)<1 and 1-u(i)-u(i+1)>0 at every adjacent pair.")),
+                    Paragraph(Text(
+                        "The connection with the Markov completion can be made directly "
+                        + "on these actual weights. Put A(i,s,t)=0 when s=t=true, "
+                        + "A(i,s,false)=1, and A(i,false,true)=w(i+1). Let B(i,s) be "
+                        + "the sum of the remaining edge products after the bit s at i, "
+                        + "with B(N-1,s)=1. Summing the next bit gives "
+                        + "B(i,s)=sum_t A(i,s,t)B(i+1,t). All these suffix sums are "
+                        + "positive, since a continuation using only false bits contributes "
+                        + "one. Consequently K(i,s,t)=A(i,s,t)B(i+1,t)/B(i,s) has "
+                        + "nonnegative stochastic rows. Use initial mass "
+                        + "w(0)^s B(0,s)/Z, where Z is the actual legal-word normalizer. "
+                        + "The suffix factors telescope along each complete word. Thus "
+                        + "this chain has exactly mass P, including zero on forbidden "
+                        + "words. Its cylinder identities include every history. Applying "
+                        + "unique_markov_completion with the actual means identifies P "
+                        + "with completion(u,n).")),
+                    Paragraph(Text(
+                        "Under this common law set R(i)=b(i)-u(i), "
+                        + "alpha(i)=-u(i+1)/(1-u(i)), E(0)=R(0), and "
+                        + "E(i+1)=R(i+1)-alpha(i)R(i). The canonical transition row "
+                        + "has mean zero when applied to E(i+1). The identities "
+                        + "completion_chain and prefix_expect therefore give expectation "
+                        + "zero for E(i+1) times "
+                        + "every real function of b(0),...,b(i). In particular every "
+                        + "distinct pair from the whole family E has product expectation "
+                        + "zero. The finite measure assigning each word its mass P gives "
+                        + "conditional expectation alpha(i)R(i) for R(i+1), by the "
+                        + "characterization ae_eq_condExp_of_forall_setIntegral_eq, both when "
+                        + "conditioning on the whole prefix and when conditioning only "
+                        + "on b(i). These equalities hold almost everywhere under P.")),
+                    Paragraph(Text(
+                        "The same prefix identities and endpoint_canonical reduce the square moments to the "
+                        + "one-site and adjacent two-site tables. They give "
+                        + "expectation E(0)^2=u(0)(1-u(0)) and "
+                        + "expectation E(i+1)^2="
+                        + "u(i+1)(1-u(i)-u(i+1))/(1-u(i)). All means, transitions, "
+                        + "innovations, moments and conditional expectations here belong "
+                        + "to the same activity law. Null histories retain zero mass; "
+                        + "the conditional identities assign no pointwise conditional "
+                        + "probabilities there. The case n=0 has two sites and an empty "
+                        + "internal denominator product equal to one. Paths with fewer "
+                        + "than two sites and boundary means or seams are outside this "
+                        + "application. These are finite classical probability statements; "
+                        + "no physical realization is asserted."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args) => args.Length == 0

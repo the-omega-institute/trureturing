@@ -1,0 +1,21 @@
+### 5.1 固定射影表示的提升
+
+设 $\Pi$ 为离散群，固定
+$\rho:\Pi\to G_0=\operatorname{PU}(5)\times\operatorname{PU}(5)$。
+提升是同态 $\widetilde\rho:\Pi\to H$ 满足 $p\widetilde\rho=\rho$。
+本节固定这份投影识别，不额外按任意 $H$ 共轭取商。
+
+任取集合意义的规范化提升 $s(\gamma)\in H$，
+满足 $p(s(\gamma))=\rho(\gamma)$、$s(1)=1$。唯一的
+$c(\gamma,\delta)\in\mathbb F_5$ 由
+
+$$
+s(\gamma)s(\delta)=z^{c(\gamma,\delta)}s(\gamma\delta)
+$$
+
+定义。这里 $z\in H$ 是群元素，$Z=\operatorname{Ad}(z)$ 才是作用于 $\mathcal K$ 的矩阵。
+这种中心扩张提升障碍的通用背景见 [[6](#ref-neeb)]；
+以下只证明所需的平坦表示版本。
+
+<a id="statement-5-1"></a>
+

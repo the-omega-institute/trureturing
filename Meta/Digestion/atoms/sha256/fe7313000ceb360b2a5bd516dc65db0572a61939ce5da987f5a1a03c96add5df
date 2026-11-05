@@ -1,0 +1,56 @@
+### 引理 3.7（固定参考态的补端到恢复桥梁）
+
+<a id="lem-c122-decoupling-fe"></a>
+
+若某个环境态 $\xi$ 满足
+$\|\widehat{\mathcal N}-\mathcal S_\xi\|_\diamond\le\delta\le2$，则存在 CPTP $\mathcal R$，使
+
+$$
+F_e(\pi,\mathcal R\mathcal N)\ge(1-\delta/2)^2.
+$$
+
+**证明。**
+记最大纠缠向量为 $\Omega_d$，实际等距为 $V:H\to E\otimes K$，并取 $\xi$ 的纯化 $\xi^{1/2}\in E\otimes F$。
+两个单位纯化为
+
+$$
+v=(V\otimes I_H)\Omega_d,\qquad
+ j=\Omega_d\otimes\xi^{1/2},
+$$
+
+其中 $j$ 的因子按 ``环境–参考'' 与 ``源–辅助'' 重排。
+它们在环境–参考上的约化态 $a,b$ 满足
+$\|a-b\|_1\le\delta$，且 $b=\xi\otimes\pi$。
+
+先核两个有限矩阵事实。根保真度
+$f(a,b)=\|\sqrt a\sqrt b\|_1$ 满足 $f(a,b)\ge1-\|a-b\|_1/2$：当 $a>0$ 时取
+
+$$
+G=a^{-1/2}(a^{1/2}ba^{1/2})^{1/2}a^{-1/2},\qquad GaG=b.
+$$
+
+在 $G$ 特征基中，测量概率满足 $q_i=\lambda_i^2p_i$，故
+$\sum_i\sqrt{p_iq_i}=f(a,b)$，而
+$1-\sum_i\sqrt{p_iq_i}\le\sum_i|p_i-q_i|/2\le\|a-b\|_1/2$。
+奇异 $a$ 用满秩混合逼近。
+其次，把 $v,j$ 写成纯化系数矩阵 $X,Y$，迹范数对偶与极分解给出
+
+$$
+\max_{\|A:K\to H\otimes F\|\le1}
+ \operatorname{Re}\langle j,(I\otimes A)v\rangle
+ =\|Y^*X\|_1=f(a,b).
+$$
+
+因而可选择达到最大值 $f(a,b)$ 的固定收缩 $A$，其重叠至少为 $1-\delta/2$。
+
+任取固定源态 $\rho_0$，明确补成
+
+$$
+\mathcal R(X)=\operatorname{Tr}_F(AXA^*)
+ +\operatorname{Tr}[(I_K-A^*A)X]\rho_0.
+$$
+
+两项为 CP，迹之和为 $\operatorname{Tr} X$。第一项的恢复输出在理想投影 $\Psi_\pi$ 上的概率，是对应环境–辅助向量的范数平方，至少为它与单位向量 $\xi^{1/2}$ 重叠的平方，即至少 $f(a,b)^2$；第二项只增加非负贡献。
+故 $F_e(\pi,\mathcal R\mathcal N)\ge(1-\delta/2)^2$。
+该 $\mathcal R$ 只按已固定的 $\pi$ 选择，不依赖以后实际输入。最终 Petz 的全参考保证由其显式缺陷定理给出，无需调用最坏态 minimax 对偶。
+

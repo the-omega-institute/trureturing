@@ -1,0 +1,12 @@
+**引理 88.2（全角域严格凸性）。** 对任意固定 $0<\lambda<1$，令
+
+$$D(\theta)=\sin^2(\theta/2)+\lambda^2\cos^2(\theta/2)>0.$$
+
+则在整个 $0<\theta<\pi$ 上有
+
+$$\boxed{b_\lambda'(\theta)=-\frac{\lambda}{2D(\theta)}<0,\qquad
+b_\lambda''(\theta)=
+\frac{\lambda(1-\lambda^2)\sin\theta}{4D(\theta)^2}>0.} \tag{88.2}$$
+
+**证明。** 对 (88.1) 求导得到第一式；再用 $D'=(1-\lambda^2)\sin\theta/2$ 求导得到第二式。两次求导的分母均正。本节凸性属于单变量函数 $b_\lambda$，没有使用或声称体积函数为凸。
+

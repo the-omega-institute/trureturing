@@ -62,9 +62,22 @@ Lift the two actual Jordan parts by the positive theorem. Pulling the target sep
 
 The theorem is a construction supplier for the existing NormPreservingLifts.arbitrary_lifts_tendsto consumer. It does not construct the CH recursion, supported clopen rows, fibre hypotheses, or any global solution of Kania–Kąkol Problem 8.2.
 
+**Theorem 1.5 (Regularity of a sum of regular positive measures).**
+
+Lean statement: `D5/S3/Topology/Measures/RegularSignedLift.regular_add`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Topology/Measures/RegularSignedLift.regular_add` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+On a compact Hausdorff Borel carrier, the sum of two regular measures is regular. The existing proof obtains outer approximation of each summand, intersects the two open supersets, and combines their mass bounds; native inner regularity supplies the other obligation. This exposes the original consumed helper, preserving its statement and implementation. Its signed-lift consumer and the norm-compact-family variation proof both use it; exposing it is no new mathematical result.
+
 ## References
 
 - Truth anchor: `D5/S3/Topology/Measures/RegularSignedLift.exists_regular_measure_lift`
 - Truth anchor: `D5/S3/Topology/Measures/RegularSignedLift.exists_regular_normPreserving_signedMeasure_lift`
 - Truth anchor: `D5/S3/Topology/Measures/RegularSignedLift.positive_of_norm_le_one`
+- Truth anchor: `D5/S3/Topology/Measures/RegularSignedLift.regular_add`
 - Truth anchor: `D5/S3/Topology/Measures/RegularSignedLift.regular_jordanParts_of_regular_totalVariation`

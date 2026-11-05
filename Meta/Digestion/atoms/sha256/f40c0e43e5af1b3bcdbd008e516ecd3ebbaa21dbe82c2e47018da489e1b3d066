@@ -1,0 +1,117 @@
+**Theorem 15.5 (The unrestricted uniform finite envelope and every
+equality law).** For every fixed finite $R>0$ there is $A_R$ such
+that for all integers $a\ge A_R$, $1\le h\le R\sqrt a$,
+
+$$
+M(a,h)=\min_{1\le j\le h}\mu_j.
+\tag{15.25}
+$$
+
+This value is attained. Every attaining law, up to arbitrary label
+permutations, is exactly $x^{j,p_j}$ from (15.2) for a branch $j$
+attaining the displayed minimum. Each $p_j$ is unique. There are
+no other equality laws, and no nontrivial convex combination of
+distinct minimizing laws is minimizing.
+
+One may take the finite active-index bound
+$J_R=\lceil4((\max\{R,4\})^2+10)\rceil$. Every winning $j$ is at
+most $J_R$, and every winning $j\ge3$ satisfies $p_j=u_j$.
+Equivalently, with the minimum of an empty set interpreted as $+\infty$,
+
+$$
+M(a,h)=\min\left\{m_1(a,h),m_2(a,h),
+                 \min_{3\le j\le\min(h,J_R)}S_j\right\}.
+\tag{15.26}
+$$
+
+The following two exact descriptions overlap:
+
+$$
+\begin{array}{ll}
+1\le h\le4\sqrt a:&M=\min\{m_1,m_2\},\\
+(7/2)\sqrt a\le h\le R\sqrt a:&M=\min_{1\le j\le J_R}S_j.
+\end{array}
+\tag{15.27}
+$$
+
+The second line is used only when its range is nonempty; then
+$h\ge J_R$ for the chosen threshold. On the overlap the unique
+winning index is $2$, and $m_2=S_2<m_1$. Below it the first two
+branches retain exactly their published constrained competition.
+
+**Proof.** For every $1\le j\le h$, $\ell_j<u_j<1$, with
+$u_j-\ell_j=(a-1)/(r(m-2))$ for $j\ge2$. The masses in (15.2)
+are nonnegative on their stated intervals. If $z_0$ is its full-core
+mass and $w_0$ its total missing-one mass, then
+
+$$
+p+z_0+w_0=1,\qquad p+mz_0+rw_0=a,\qquad
+y_k=p/n\ (k\in D),\quad y_i=(a-p)/m\ (i\in C).
+$$
+
+All these actual marginals are positive. Its energy is
+$n^2/p+(m^3z_0+r^3w_0)/((a-p)/m)^2=F_j(p)$.
+Equation (15.22) proves strict convexity on every branch. Compactness
+for $j\ge2$, and divergence at zero for $j=1$, prove existence and
+uniqueness of $p_j$. Thus every $\mu_j$ is attained by an original
+admissible law, giving all required upper bounds.
+
+Apply Lemmas 15.2--15.4 with $R$ replaced by $\max\{R,4\}$ and
+$J=J_R$. On their high-ratio range, a law outside $H\le U$ already
+has $H>U$. A law inside it has a surviving $j$ and satisfies
+$H\ge S_j+a^3e\ge U$. The comparison laws attain $U$, so $M=U$.
+Equality forces $S_j=U$ and the exact cap law by Lemma 15.4.
+Conversely every cap law with $S_j=U$ attains $M$.
+
+For $1\le h\le4\sqrt a$, Theorem 14.5, with fixed upper ratio
+$4<2\sqrt6$, gives the first line of (15.27) and every equality law
+there. The intervals $[1,4\sqrt a]$ and $[(7/2)\sqrt a,R\sqrt a]$
+leave no gap, including bounded $h$ and $h/\sqrt a\to0$.
+Together these arguments classify every equality law on the full
+range without assuming the existence of a global optimizer.
+
+For completeness this also excludes hidden winners of the longer
+envelope. Uniformly over every $j\le h\le R\sqrt a$ and $p\in I_j$,
+the comparison laws have core marginals at least
+$(a-1)/(a+h)>1/2$ and tail marginals at most
+$p\le h/(a+h-1)<1/2$, eventually. Thus their number of marginals
+exceeding $1/2$ is exactly $a+j$. If any $\mu_j=M$, its attaining
+comparison law must be one of the equality laws already classified.
+On the lower interval this forces $j=1,2$; on the higher interval
+it forces $j\le J_R$ and the cap parameter, which is also fixed by
+its total singleton mass. This proves (15.25), the index bound and
+the cap assertion. All terms in (15.26) are admissible comparison
+energies, and the classified law occurs among them, proving its
+equivalence. The overlap assertion follows also from the ordered
+crossings in Proposition 15.6: its first crossing is below
+$(7/2)\sqrt a$ and its second above $4\sqrt a$ eventually.
+
+At $p=u_j$ every missing-one mass vanishes, while the full-core mass
+is $(a-1)/r>0$. At $p=\ell_j$ for $j\ge2$, the full-core mass
+vanishes and each missing-one mass is $(a-1)/(m(m-2))>0$.
+Both endpoint laws have positive actual marginals, so none was
+discarded from comparison. A winning $j=2$ cannot be at the lower
+endpoint: in the lower window Theorem 14.5 gives $ap_2\ge3/2$
+whenever it wins, and in the higher window it is capped. No
+$j\ge3$ lower endpoint wins either. For $j=1$, $p=0$ is excluded
+and its full-core mass $(a-1)p$ is positive. The unique scalar
+minimum is at an allowed lower endpoint if its derivative is
+nonnegative there, at the cap if its derivative is nonpositive
+there, and otherwise at its unique interior derivative zero.
+Zero derivative at an endpoint introduces no additional scalar
+minima. These statements include all vanishing type masses.
+
+The lower-window exclusion of nontrivial minimizing mixtures is
+already part of Theorem 14.5. In the higher window every minimizing
+law has positive singleton masses exactly on its tail and one
+positive nonsingleton mass, exactly its full core. If a convex
+combination of minimizing laws were itself minimizing, every
+component with positive weight would have its full-core type in
+the resulting support. The resulting law has just one nonsingleton
+type, so all such cores must be that same set. Their index and cap
+parameter then agree, and their singleton masses agree individually.
+All components are the identical law. This also treats mixtures
+of the two cap classes at an exact tie. Arbitrary permutations of
+labels are included, since all partitions were allowed, and every
+equality partition is recovered from its actual marginals. ∎
+

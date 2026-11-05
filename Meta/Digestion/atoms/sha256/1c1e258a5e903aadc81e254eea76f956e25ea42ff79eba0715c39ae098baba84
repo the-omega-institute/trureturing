@@ -1,0 +1,52 @@
+### 9.1 补偿的正常形、尺度和准确曲线
+
+现在采用已证明的归一 $B,R$。令 $B(n,n)=1$，并写
+
+$$
+A=\lambda R_n,\quad \lambda\ne0,\qquad K=R_b.
+$$
+
+那么
+
+$$
+K n+A y=R_n(\lambda y-b).
+$$
+
+所以在横向商空间上，
+
+$$
+\boxed{[y]=\frac1\lambda[b],\qquad
+y=\frac{A K n}{\lambda^2}\quad(B(y,n)=0).}
+\tag{9.1}
+$$
+
+后一式来自 $A^2=-\lambda^2 I$ 于 $n^\perp$。若 $K$ 选为 $\kappa$-正交于 $A$ 的代表，则
+
+$$
+\|y\|_B=\frac{\|K\|_\kappa}{|\lambda|}.
+$$
+
+因此候选保证补偿存在唯一，不计算原转速。靠近 $\lambda=0$ 时逆补偿会变得不稳定；非零条件具有真实作用。
+
+写 $\beta=B(b,n)$、$v=b-\beta n$。对实际代数中的直线 $A(t)=A+tK$，准确的归一停住轴为
+
+$$
+n(t)=\frac{n+(t/\lambda)b}{\|n+(t/\lambda)b\|_B}.
+$$
+
+它满足 $A(t)n(t)=0$、$\dot n(0)=v/\lambda$。直接二阶展开得到
+
+$$
+\ddot n(0)=-\frac{2\beta}{\lambda^2}v-\frac{\|v\|^2}{\lambda^2}n.
+$$
+
+特别地，对横向 $v\perp n$，可以选择
+
+$$
+n(t)=\frac{n+tv}{\sqrt{1+t^2\|v\|^2}}
+=\cos\theta(t)n+\sin\theta(t)\frac v{\|v\|},
+\quad \theta(t)=\arctan(t\|v\|).
+$$
+
+这是一段重新参数化的大圆。它给准确积分实例，不意味着任意原历史都必须走大圆。
+

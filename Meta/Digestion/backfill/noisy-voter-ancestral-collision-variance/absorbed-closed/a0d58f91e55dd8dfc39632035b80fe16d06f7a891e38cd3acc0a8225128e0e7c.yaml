@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a0d58f91e55dd8dfc39632035b80fe16d06f7a891e38cd3acc0a8225128e0e7c
+  normalized_sha256: sha256:a0d58f91e55dd8dfc39632035b80fe16d06f7a891e38cd3acc0a8225128e0e7c
+cas_ref: sha256:a0d58f91e55dd8dfc39632035b80fe16d06f7a891e38cd3acc0a8225128e0e7c
+coverage_gids:
+  - gid: D5/S3/StatisticalMechanics/NoisyVoter/PotentialPaths.original_potential_path_bounds
+    target_statement_id: sha256:f9c08502ee8bdf1b06116a687019aa68a8bbe8505daeb61cdc714552e4aa640c
+  - gid: D5/S3/StatisticalMechanics/NoisyVoter/PotentialPaths.potential_path_source_correspondence
+    target_statement_id: sha256:ddd92ac70fc3566c4bf257faa6b9994eeca0d909a3daae8fc21264714053e3c5
+receipts:
+  unresolved_subitems: []

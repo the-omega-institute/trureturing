@@ -1,0 +1,7 @@
+**定义 25.1（The graph $Q$）。** Take six distinct vertices
+$\{a,b,u,v,w,\ell\}$. On the five-vertex set
+$\{a,b,u,v,w\}$ include every edge except $ab$, and add the
+single edge $a\ell$. There are no other edges. Give every edge
+weight one. Write $W=\{u,v,w\}$ for the three mutually adjacent
+vertices of the core.
+

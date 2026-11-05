@@ -1,0 +1,22 @@
+## 128. The general six-factor construction
+
+Choose any integers m_0,...,m_5≥3, with no periodicity assumption. Retain pole-edge interior angles π/2 and prescribe π/m_i on equatorial edge i. The proof of Lemma 126.1 applies verbatim: vertical exterior weights are at least 2π/3, while horizontal weights remain π/2. Lemma 126.2 also applies without change.
+
+Let G=∏_{i=0}^5 D_{m_i}, of order Q=∏_{i=0}^5(2m_i). Denote the two generating reflections in factor i by r_i,s_i. Glue U_i in cell g to U_i in cell gr_i and L_i to L_i in cell gs_i, preserving all vertex labels. Subdivide each cell into its six pole-diagonal tetrahedra.
+
+Exactly the same edge-link proof gives:
+
+- Q distinct central edges, each of degree six.
+- For each of twelve pole-edge labels, Q/4 global edges of degree eight; in total 3Q such edges.
+- For each equatorial label i, Q/(2m_i) edges of degree 2m_i.
+- A total of 6Q genuine tetrahedra, whose geometries are inherited simultaneously from the single actual bipyramid.
+
+There are Q/64 A-links and Q/64 B-links. Each consists of 64 right-angled hexagons, with polygon counts (V,E,F)=(96,192,64), so its genus is 17. At V_i, the incident transports generate exactly D_{m_{i−1}}×D_{m_i}. Writing m=m_{i−1},n=m_i, there are Q/(4mn) such links, each assembled from 4mn quadrilaterals. Their counts are
+
+    F=4mn, E=8mn, V=2mn+2m+2n,
+    genus = 1+mn−m−n.
+
+All these genera are at least two. Connectedness, orientability, full circular edge links, no edge reversals, compatible true lengths and angle sums 2π follow exactly as for the smaller example. Thus this is an explicit family of actual compact manifolds and their geometric ideal triangulations, not independent abstract incidence data.
+
+Pole exchange remains an isometry for arbitrary m_i. Consequently each tetrahedron has equal angles at A V_i and B V_i, and equal angles at A V_{i+1} and B V_{i+1}. It has at most four distinct dihedral angle values. If at least five m_i are distinct, the six tetrahedra cannot all be congruent: their equatorial angles include at least five distinct values, while a common shape could have at most four. In particular, m=(3,4,5,6,7,8) gives a certified heterogeneous six-position construction. Its six tetrahedral degree multisets {6,2m_i,8,8,8,8} are also distinct, so a combinatorial automorphism cannot mix positions.
+

@@ -1,0 +1,69 @@
+#### 定理 9.3（对数关联与相位的双平方恒等式）
+
+设四底角非零，记
+
+$$
+s=\sqrt{p_0p_{13}},\qquad t=\sqrt{p_1p_3}.
+$$
+
+则
+
+<a id="eq-det-sum"></a>
+
+$$
+\begin{aligned}
+\left|\det M\right| ^2
+&=(s-t)^2+4st\sin^2(\Phi/2)
+\end{aligned}
+\tag{2}
+$$
+
+<a id="eq-sinh"></a>
+
+$$
+\begin{aligned}
+&=4st\left[\sinh^2(\eta/4)+\sin^2(\Phi/2)\right].
+\end{aligned}
+\tag{3}
+$$
+
+定义条件纯态的 concurrence 为 $C=2|\det M|/R$，则
+
+$$
+\boxed{C^2=\frac{16\sqrt{p_0p_1p_3p_{13}}}{R^2}
+\left[\sinh^2(\eta/4)+\sin^2(\Phi/2)\right].}
+$$
+
+<a id="proof-9-3"></a>
+
+**证明。** 
+$\det M$ 是模分别为 $s,t$、相位差为 $\Phi$ 的两个复数之差，因此余弦定理给
+
+$$
+\left|\det M\right| ^2=s^2+t^2-2st\cos\Phi.
+$$
+
+加减 $2st$ 并用 $1-\cos\Phi=2\sin^2(\Phi/2)$，得到 [(2)](#eq-det-sum)。又 $s/t=e^{\eta/2}$，所以
+
+$$
+s=\sqrt{st}\,e^{\eta/4},\quad
+t=\sqrt{st}\,e^{-\eta/4},\quad
+(s-t)^2=4st\sinh^2(\eta/4).
+$$
+
+代入并乘 $4/R^2$ 得最后一式。
+ ∎
+
+同一结果也来自
+
+$$
+\left|\sinh(a+ib)\right| ^2=\sinh^2a+\sin^2b,
+\qquad a+ib=\tfrac12\log\Omega.
+$$
+
+复对数换支只使该双曲正弦改变符号，模平方保持不变。因此这个量在相位圆周上良定义。
+
+这是本轮将用户直觉落实得最直接的公式：乘积关系经对数成为 $\eta$，同一振幅比的虚部成为相位 $\Phi$，两者在一个可计算的纠缠量中以非负平方贡献相加。该恒等式是所声明纯态模型内的精确关系；并不等同于断言 $(\eta,\Phi)$ 在全部 Fisher 几何中自动正交。
+
+<a id="statement-9-4"></a>
+

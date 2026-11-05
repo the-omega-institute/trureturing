@@ -1,0 +1,23 @@
+**Theorem 23.3 (exact capacities with constant readout and minimal records).** For every $k\ge1$, Definition 23.1's source with the genuine quotient (23.4) has
+
+$$
+\boxed{(C_{\rm stat},C_{\rm on})=(2,N)=(2,2^k).}
+\tag{23.12}
+$$
+
+The online lower bound quantifies over every finite complete state set, every fixed initialization and every total names-only update. Both upper bounds recover every legal root history, including the empty word and every stopping prefix, for every final error in (23.2). Hence this constant-readout, identical-success-record class has no universal finite online capacity bound even when the static capacity is exactly two.
+
+Proof. Apply Proposition 16.2 with the native total $|u|$, $r=1$, $K=[-1,1]$ and $\epsilon=1/4$. Integer lengths differ either by zero or by at least one, so two whole observation supports overlap exactly when their quotient endpoints and lengths agree. Thus the static problem is precisely equality-fiber repair for the finite carrier $\mathcal P_o$, record $F_{\min}$ of (23.6), and identity target $u\mapsto u$. Directly reuse `DefectGraphMinimumColoring.minimum_repair_labels_eq_chromatic_eq_fiber_diversity` with that correspondence: Proposition 23.2 supplies its largest target diversity, two. Explicitly, within each $F_{\min}$ fiber order its one or two words lexicographically using $a<b$, and let $h(u)$ be the number of preceding words in that fiber. This gives one function $h:\mathcal P_o\to\{0,1\}$ separating every fiber. Return the unique legal word with the acquired endpoint and label whose length differs from $y$ by at most $1/4$, rejecting when none exists. Proposition 16.2 gives uniqueness, and the actual word passes for every allowed $y$, including both interval endpoints. Conversely the two histories (23.9) have the same endpoint and the same allowed clock value $y=N+q$. A one-value label cannot distinguish them, regardless of its definition. Therefore $C_{\rm stat}=2$.
+
+For the online lower bound reuse the pair-dependent common-continuation argument of (22.12)–(22.13), checking its final fields on this new quotient. If a successful complete machine has $\mu(p_i)=\mu(p_j)$ for $i<j$, put $q=\rho(i,j)$. The actual continuation $b^q a$ is legal from both presentation states by (22.7), and both extended words end at the same quotient $\{\varepsilon\}$ with length $N+q$. The append-evaluation law gives
+
+$$
+\mu(p_i b^q a)=U_{b^q a}(\mu(p_i))
+             =U_{b^q a}(\mu(p_j))=\mu(p_j b^q a).
+\tag{23.13}
+$$
+
+At $y=N+q$ all three permitted final fields agree for two distinct words, contradicting successful decoding. These are actual same-source continuations and a common point of their full supports. Thus all $N$ states $\mu(p_i)$ are distinct, proving $|M|\ge N$ for any proposed machine, without restricting its encoding, control arrangement or initialization.
+
+For attainment directly reuse the entire machine (22.14): $M=\mathbb Z/N\mathbb Z$, $m_0=0$, $U(m,a)=m+1$, $U(m,b)=m$. The induction (22.15) is independent of the source records and gives $\mu(u)=\#_a(u)\pmod N$ on every binary word. Proposition 23.2 proves that this residue separates all histories in every $F_{\min}$ fiber, including the newly merged nonterminal classes and the single terminal class. Define the decoder to return the unique legal word satisfying its acquired quotient endpoint, final residue and $|y-|u||\le1/4$, and reject if none exists. A candidate exists at every allowed observation of every actual word, and two candidates would lie in one $F_{\min}$ fiber with equal residues, which is impossible. The argument includes the empty history, all base and selector cuts, all exits and all final errors. The one residue is the complete persistent value; no source vertex, phase, parser, selector, route or clock is stored elsewhere or supplied live. Both updates are total, and all $N$ states are reached on the legal words $p_i$. Hence $C_{\rm on}\le N$, establishing the exact minimum. Choosing $k$ arbitrarily large proves the final assertion. $\square$
+

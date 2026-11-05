@@ -1,0 +1,13 @@
+### 定义 4.1（分支传递缺陷）
+
+在已经取得式 [式 eq:classification](#eq:classification) 的模型类内，令
+
+$$
+t=1-c\in[0,1),\qquad
+ \Delta=\sup_{\|\psi\|=1}\operatorname{TV}(G(\psi),F(\psi)),
+ \qquad \operatorname{TV}(p,r)=\frac12\sum_w|p_w-r_w|.
+$$
+
+求和覆盖全部 1024 个标签。
+
+<a id="thm:calibration"></a><a id="eq:delta"></a><a id="eq:sharpdelta"></a>

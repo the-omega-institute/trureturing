@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:eec1e812ec54ce367055225cf77d6e6acc6e193759679a95ad399224fe83cc30
+  normalized_sha256: sha256:eec1e812ec54ce367055225cf77d6e6acc6e193759679a95ad399224fe83cc30
+cas_ref: sha256:eec1e812ec54ce367055225cf77d6e6acc6e193759679a95ad399224fe83cc30
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This scope paragraph specifies the intended optimizer domain, physical sampling conventions and dependency boundary. It does not assert the optimizer or the following matrix implication. Settling this reference-scope prose supplies no mathematical proof, probability comparison or optimizer coverage.
+    previous_atom_id: 0e4e951cdefa3a44f33481b99f29fa7719ac1ba48daf2bdeffcab15a361d06c7
+    next_atom_id: 470df7839a8b0c78a5f677ddcb977074b00334b4bb5fe5549b562b5ae7f0466e

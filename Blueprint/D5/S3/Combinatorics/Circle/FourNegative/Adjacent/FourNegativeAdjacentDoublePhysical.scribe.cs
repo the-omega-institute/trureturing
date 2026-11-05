@@ -1,0 +1,23 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle.FourNegative.Adjacent;
+
+internal sealed class FourNegativeAdjacentDoublePhysicalDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A literal joint order for adjacent paired gaps with r=s+1",
+        H("Four physical chains and a fixed numeric ear cut"),
+        Blocks(
+            Describe.Lean(DescribeId.Create("actual-source-four-negative-adjacent-double-joint-lift"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/FourNegative/Adjacent/FourNegativeAdjacentDoublePhysical.actualSource_four_negative_adjacent_double_joint_lift"),
+                H("The unbounded r=s+1 branch"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Let r,s be natural coordinates with s>=2 and r=s+1. Put k=2r+2s and A=1+2^r+2^(2r)+2^(2r+s). There exists a permutation sigma of all physical Fin(k) labels satisfying OriginalOrder(k,A); insertion of the fresh physical label k at the fixed numeric cut j=2s+r<=k satisfies OriginalOrder(k+1,2A). Both complete integer sums are zero. Every natural old prefix lies in [0,(2^k-2)/2] and every natural new prefix lies in [0,2^k-1]. Labels are retained literally, including coincident numerical values, nonprimitive orbits and noncoprime seeds.")),
+                    Paragraph(Text("Write n=s and z=2^n. The four original physical chains U_h=h and V_h=n+h have length n, while W_h=2n+h and X_h=3n+1+h have length n+1. Their last labels are U_-=n-1, V_-=2n-1, W_-=3n and X_-=4n+1. Write N=4z^4-1, A=4z^3+4z^2+2z+1, B=4z^3+2z^2+z+1, L=2z^3+z^2+z+1 and M=2z^3+2z^2+2z+1. The positive old coefficients are A,B,L,M, and the new coefficients are 2A,2B-1,2L-1-z,2M-1-2z-2z^2. Centered modular shifts and the existing centered-ladder lemma establish these identities on the original labels. Their last old values are -(N-B)/2, -(N-L)/2, -(N-M)/2 and -(N-A)/2; the new negative values follow the corresponding successor coefficients modulo 2N+1. The fresh value is A.")),
+                    Paragraph(Text("Use sigma=X[1],V^+,V_-,W^+,W_-,U^+,U_-,X[z-2],X_-. Here X[1] is the single original label 3n+1, X[z-2] is the consecutive original range 3n+2,...,4n, and the superscript plus denotes all positive labels of that chain. The masks 1 and z-2 complement each other in the n positive X positions, so the inventory is exhaustive and disjoint. There are 1+n+(n+1)+(n-1)=3n+1=2s+r old labels before U_-. Insert k at exactly that cut, immediately before U_-. No rotation or value-based replacement is used.")),
+                    Paragraph(Text("In negative order V_-,W_-,U_-,X_-, the old seams are (z+1)^2,2z^2+3z+1,2z+1,0. The new seams are z+1,2z+1,A-4z^2,0. The old peak inequalities and the new peak inequalities are established as exact integer polynomial inequalities for every z=2q with q>=2. In particular the new peak after the ear is N-2z^2+z+1<=N. All positive blocks are monotone, so concatenating their strips and their following negatives controls every interior prefix, both sides of the ear, the empty prefix and prefixes longer than the word. The existing full centered-source sum supplies the exact zero totals for both source lengths. The physical-label lift and literal marked-word identity then yield the stated OriginalOrder endpoints.")),
+                    Paragraph(Text("FourNegativeAdjacentNearJointLift combines this exact result with the diagonal repetition and the reverse adjacent ratio. Its same physical source analysis separates the cyclic doubling action from physical occurrence labels: numerical repetition never authorizes collapsing labels, and insertion uses the literal fresh label. FourNegativeAdjacentPairsJointLift adds the explicit far-ratio constructions at r>=s+2 and s>=r+2 to obtain the full independent paired-gap endpoint; unrestricted four-independent-gap physical J and Circle C3.1 remain active and open.")),
+                    Paragraph(Text("This result is one unbounded branch of the adjacent paired-gap family (r,r,s,s). The branches r=s, r>=s+2, s=r+1 and s>=r+2 are outside this theorem. The full independent paired-gap endpoint is supplied by FourNegativeAdjacentPairsJointLift. Unrestricted physical J and Circle C3.1 remain active and open. This is a repository deduction in the investigation of Conjecture 3.1 of Damasdi, Frankl, Pach and Palvolgyi, Monochromatic configurations on a circle, arXiv:2504.10687v2; no literature novelty is asserted."))),
+                DescribeRole.Theorem)), []));
+}

@@ -1,0 +1,97 @@
+**Theorem 5.1 (polynomial paid acquisition).** Under exactly Definition
+1.1, one deterministic source-blind procedure returns and retains the
+authentic $(P,n)$ on every admitted execution, for every $d\ge0$ and
+every mature finite cut. For an absolute constant $C_0$ it admits the
+conservative bounds
+
+$$
+\begin{aligned}
+Q_{\rm acq}&\le C_0(d+1)^{19}(H+1),&
+M_{\rm acq}&\le H,&J_{\rm acq}&\le H Q_{\rm acq},\\
+C_{\rm acq},W_{\rm acq}&\le C_0S^{60},&
+V_{\rm acq}&\le C_0S^8,&U_{\rm source}&=0.
+\end{aligned}
+$$
+
+All preparation and unsuccessful trials are included. The bounds hold
+for zero and constant cores, repeated factors, nonminimal and singular
+presentations, all permitted transients and exponential least periods.
+They are polynomial in $d$ and the actually earned $H$, not asserted
+polynomial in $\log n$.
+
+**Proof.** Earn $h$. At positive $d$ use Theorem 2.1. In its small-root
+branch the complete scan and the finite ordered-prefix decoder already
+return the requested output. In its deep branch use Theorems 2.2, 3.1
+and 4.2. At $d=0$ go directly to the single zero-core height procedure.
+Every search is finitely bounded in terms of earned integers. The
+inclusion and soundness proofs above show termination with exactly the
+claimed output, not a conditional inverse with unearned inputs.
+
+There are at most $4d+1$ height calls: one at the root and two per
+original birth. Each has $O((d+1)^2)$ shallow nodes and frontiers.
+Each frontier tries at most $O((d+1)^{16})$ clock pairs and $H$ ranks,
+with at most three paid certificate Reads per trial. Presence and
+termination tests, the $O((d+1)^4)$ small-root scan or the
+$O((d+1)^2)$ deep scan, the paid spine and the final verifier are
+absorbed in the displayed $Q$ bound. The original core catalogue and
+all its stages are absent: the count is recomputed with one earned
+core, not obtained by calling the exponential bound polynomial.
+No period enumeration, phase search or deep clock enumeration replaces
+that catalogue. Every complete source operand obeys $H$, proving $M,J$.
+
+For bit accounting, an arbitrary shallow trial has seeds below
+$F_{2m+4}$ with $m=O(\log(d+2))$. Up to normalized update $k\le H$,
+its clock values are at most $F_{k+1}\max(A_1,A_2)$. There are at most
+$H$ sibling masses in an index sum. Every resulting index has
+$O(H+\log(d+2))=O(S)$ bits. Thus exponential numerical indices are
+represented with polynomially many bits, and every addition, comparison
+and counter change is paid. Term evaluation from the supplied core
+uses ordinary binary companion powering or monic polynomial reduction.
+Bostan--Mori, §1.3, identifies this as powering in the quotient ring,
+not a field assumption or an acquired random-access interface. Recomputing
+powers at each edge is allowed and polynomial in $d$ and the represented
+index length.
+
+Here is one sequential layout realizing the conservative envelope.
+During the prelude keep the acquired finite tree in delimited records
+with explicit complete physical addresses, two child links, leaf counts,
+heights and traversal markers. There are $O((d+1)^4)$ records even in
+the larger branch, and each record has $O(S)$ bits including its address
+and represented indices. The three prefixes and their rank/matrix
+scratch have polynomial size. Decode by bottom-up finite scans and
+sort parent records by update and physical address, using pairwise
+comparisons if desired. There are at most quadratically many record
+comparisons and at most $H$ scans to propagate heights; allowing even
+$O(S^{12})$ indexed bit operations covers traversal, sorting, Fibonacci
+comparisons, all matrix operations and output copies. No suffix-support
+record is retained without paying its writes.
+
+After keeping the core descriptor, discard the expanded cone records.
+For the height consumer retain the shallow depth-first tree, at most
+two early-parent old trees, a constant number of literal/path buffers,
+immutable path descriptors, a Fibonacci and clock table, companion
+scratch, the two trial seeds, rank counters, one certificate and the
+output. This is the layout in ACR Theorem 29.1, now with one core and
+one stage. Before sequential accesses it needs at most $O(S^6)$ indexed
+bit operations per trial: at most $H$ path edges, at most $H$ index
+summands at an edge and polynomial companion evaluation. The same bound
+covers loop preparation and full literal construction per trial.
+The final verifier constructs at most $O((d+1)(H+1))$ edges, each by
+those same represented operations.
+
+Both layouts and their marker/copy scratch fit $O(S^8)$ visited bits;
+the expanded record estimate is already $O(S^5)$. Implement each
+indexed bit access by an actual scan and return across this layout.
+Allowing $O(S^2)$ work and writes per visited cell for counters and
+markers gives $O(S^{10})$ work and writes per indexed access. There
+are at most $O(S^{20})$ height trials, so their total is at most
+$O(S^{36})$. The prelude and other stated polynomial operations also
+fit $O(S^{60})$, with ample slack for parsing, finite comparisons,
+initialization and the retained acquisition-output copy. Every such
+write, including discarded hypotheses and overwritten buffers, is
+counted in $W$; no transcript archive or unbounded table is retained.
+These are explicit mathematical upper envelopes, not optimized or
+measured running times. Finite completed service and local progress
+make each admitted finite operation complete, without supplying a
+uniform physical duration bound. $\square$
+

@@ -1,0 +1,94 @@
+**Theorem 40.3 (actual selected-feedback endpoint, value and strict arc margin).**
+Fix $0<\xi\le4$, let $t=\xi/2$, $\delta=\delta_\circ(t)$,
+$k=t-\delta$, $x=1-\delta/2$, $y=\sqrt{1-x^2}$,
+and take either selected feedback in $\mathcal G_\xi$.
+Evaluate all amplitudes on that actual feedback as in (40.2).
+In Definition 36.1 one then has
+
+$$
+ 0<k=t_+<1,\qquad k<J_+,\qquad uv>0,\qquad t_-<0.
+\tag{40.15}
+$$
+
+Thus only the positive original sign is admissible. The right derivative
+of its exact effect arc at the pure endpoint is
+
+$$
+ \chi(\xi)=b+2uv\sqrt{\frac{k}{1-k}}>\frac{49}{90}.
+\tag{40.16}
+$$
+
+The actual fixed-feedback profile has the endpoint and value
+
+$$
+ q_+^\sharp=k,\qquad
+ M_+(w,\xi)=N_{\mathrm{geo}}(\xi)+\kappa\xi,\qquad
+ M_-(w,\xi)=+\infty.
+\tag{40.17}
+$$
+
+Its unique minimizing original effect is the selected one at that
+feedback. More quantitatively every original effect at this same
+$U$ and original level satisfies
+
+$$
+ g(E,U)\ge N_{\mathrm{geo}}(\xi)+\kappa\xi
+                         +\frac{\chi(\xi)}2\epsilon(E).
+\tag{40.18}
+$$
+
+Equality to $N_{\mathrm{geo}}(\xi)+\kappa\xi$ holds exactly for
+that selected effect, with its ordinary-transpose convention.
+
+*Proof.* Theorem 37.5 gives $0<\delta<2$ and $0<k<1$;
+hence $x,y,u,v>0$. At its attained scalar pair, the strict original
+sign comparison (37.23) gives $k<J_+$.
+The trace $B=2y<2$ and $\xi\le4$ give
+$t_-=(\xi-8+4y)/2<0$. This proves (40.15), including the original
+negative-sign exclusion rather than an independent sign selection.
+
+The pure-endpoint value of the positive effect arc is the value of
+the actual aligned pair in Theorem 37.5, namely
+$N_{\mathrm{geo}}(\xi)+\kappa\xi$.
+It remains to show that this endpoint minimizes the full mixed arc.
+If $x\ge2/3$, (40.8) and $uv,k>0$ give
+$\chi>b>49/90$ directly.
+If $x<2/3$, use the interior scalar stationarity from Theorem 37.5.
+At fixed $t$, its scalar function is
+$\Phi_t(\delta,t-\delta)-2\kappa t$.
+At the selected argument its derivative vanishes, so
+
+$$
+ 0=\partial_\delta\Phi_t-\partial_r\Phi_t,
+ \qquad
+ \partial_r\Phi_t\big|_{r=k}
+    =b+\frac{2uvk}{\sqrt{k-k^2}}=\chi(\xi).
+\tag{40.19}
+$$
+
+All derivatives are at positive $y$ and positive
+$a=\sqrt{k(1-k)}$. The estimate (40.13), which uses only the
+feasible scalar coordinates, applies there. Therefore
+$\chi>47/75>49/90$. This proves (40.16) at every selected level,
+without assuming that the selected pair is a full-domain minimizer.
+
+By (36.15) the positive effect arc is strictly convex up to its
+possible zero-coherence upper endpoint, and its right derivative at
+$k$ is $\chi>0$. For every feasible population $q\ge k$ its value
+is at least its endpoint value plus $\chi(q-k)$.
+Continuity includes $q=\sqrt k$ if this is the upper endpoint.
+Equation (36.13) gives $2(q-k)=\epsilon(E)$, and phase misalignment
+can only increase $g$. This proves (40.18), and also proves that
+the complete arc minimum is attained only at $q=k$ with aligned phase.
+Thus (40.17) concerns the actual profile $M_+$, not just a candidate
+endpoint value. Since $u,v,k,1-k$ are positive, alignment fixes
+$z=\tau i\sqrt{k(1-k)}$ uniquely. Returning by
+$E=(TFT^\dagger)^{\mathsf T}$ gives exactly the selected effect.
+
+Every entry of the selected diagonal has modulus one. For any
+actual unitary lift $V=UU_+^\dagger$ with that diagonal, the full
+squared norm of each row is already supplied by its diagonal entry.
+All off-diagonal entries vanish. Hence there are no extra
+nondiagonal lifts at these equality feedbacks, while every common
+scalar representative has been retained. $\square$
+

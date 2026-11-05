@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:03d369f3545d69b76a9e1dab9e2156df03a032126fdccc0dea31772353883b47
+  normalized_sha256: sha256:03d369f3545d69b76a9e1dab9e2156df03a032126fdccc0dea31772353883b47
+cas_ref: sha256:03d369f3545d69b76a9e1dab9e2156df03a032126fdccc0dea31772353883b47
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: "This atom records source-convention commentary: the paper's arc and generator conventions, the separate TQ(5,1,2) example versus the N=3 family instance, and the stated k-ranges. It supplies no independent repository proposition or Lean target. The k=1 coincidence and boundary facts remain in the neighboring mathematical atoms; this receipt settles only the commentary scope."
+    previous_atom_id: dbff815cbff83d65b8f2bd51e3814fabfdb132c02af334bcf2be24c779c2e925
+    next_atom_id: null

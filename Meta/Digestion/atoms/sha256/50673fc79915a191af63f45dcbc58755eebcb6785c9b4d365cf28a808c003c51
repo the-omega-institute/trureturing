@@ -1,0 +1,46 @@
+### 连续参数的内生表示及其额外前提
+
+令 $\Lambda$ 为标准 Borel 的光滑数学参数图表，
+$\nu$ 为其上满支撑的概率测度，
+$\lambda\mapsto\psi_\lambda$ 为强可测单位向量场。
+在同一整体的内部坐标
+$L^2(\Lambda,\nu;\mathcal{H})$ 中取固定正规化向量
+
+$$
+\boldsymbol\Omega(\lambda)=\psi_\lambda.
+$$
+
+参数记录 $P_B$ 为集合 $B$ 的乘法投影。对固定数据效果 $E$，
+
+$$
+\omega(P_BE)
+ =\int_B\langle\psi_\lambda,E\psi_\lambda\rangle\,d\nu(\lambda).
+ \tag{34}
+$$
+
+由积分直接验证它是一个固定整体态。
+在 $\nu(B)>0$ 时，有限窗口 $B$ 的条件律是右侧除以 $\nu(B)$；
+连续参数的单点通常为零质量，$\psi_\lambda$ 是正则条件态的版本，
+不能写成不可数个正规化正交点程序。
+若此条件态族在向量范数中为 $C^2$，可在该图表研究微分几何。
+满支撑保证其连续条件版本不因零质量区域的任意修改而改变。
+第 7 节的 Cantor 程序空间自身没有自动提供这种光滑结构。
+
+如果制备和读出基底都在内部变化，设两族酉为 $A(\lambda),B(\lambda)$，
+固定内部参考向量为 $\psi_0$。相对态为
+
+$$
+\psi_\lambda=B(\lambda)^*A(\lambda)\psi_0,\qquad
+ p_j(\lambda)=\langle\psi_\lambda,E_j\psi_\lambda\rangle
+ \tag{35}
+$$
+
+其中 $E_j$ 固定。
+共同左乘任意 $V(\lambda)$ 使 $B^*A$ 逐点不变，
+所以这种相对几何没有选择一个本体外的绝对基底。
+若读口的效果本征值也变化，不能仅靠基底旋转吸收；
+必须将它的程序并入联合输入与固定联合读口，或直接使用完整经典概率族。
+所有相关导数都要保留。
+
+<a id="statement-8-1"></a>
+

@@ -1,0 +1,76 @@
+**Theorem 3.2 (Exact defect and coefficient extremality).** For every pair in Definition 1.1,
+
+$$
+c_*\leq\frac14,
+\qquad
+c_*=\frac14\quad\Longleftrightarrow\quad
+a=b,\quad \omega=-1,\quad r=\frac35.
+\tag{3.2}
+$$
+
+In the nondegenerate domain the following exact identity holds:
+
+$$
+\frac14-c_*
+=\frac{5d^2}{8(1+x_0)}
++\frac{W\left[C_0^2/2+(1-y)/y\right]}
+{(x+x_0)\left[(1+x)(C_0+c_*)/2+1-y\right]}.
+\tag{3.3}
+$$
+
+Every displayed denominator in (3.3) is strictly positive. This identity is asserted only in (1.6).
+
+*Proof.* Throughout the nondegenerate domain $x_0^2+y^2=1$ with $x_0,y\in(0,1)$. It follows that $x_0+y>1$, so $C_0>0$. For $X\geq0$ put
+
+$$
+F_X(t)=\frac{1+X}{2}t^2+(1-y)t-\frac{(1-X)(1-y)}{y}.
+$$
+
+Equation (2.3) says $F_x(c_*)=0$. The balanced-circle value $C_0$ is the positive root of $F_{x_0}$. To verify the substitution directly, use
+
+$$
+\begin{aligned}
+(1+x_0)C_0^2+2(1-y)C_0
+&=\frac{x_0^2-(1-y)^2}{1+x_0}\\
+&=\frac{2y(1-y)}{1+x_0}
+=\frac{2(1-x_0)(1-y)}{y}.
+\end{aligned}
+\tag{3.4}
+$$
+
+Thus $F_{x_0}(C_0)=0$. Since $x\geq x_0$,
+
+$$
+F_x(C_0)=(x-x_0)\left[\frac{C_0^2}{2}+\frac{1-y}{y}\right]\geq0.
+\tag{3.5}
+$$
+
+The strict increase of $F_x$ on $[0,\infty)$ therefore gives $0<c_*\leq C_0$. Cauchy–Schwarz on the unit circle gives $3x_0+4y\leq5$ and
+
+$$
+\frac14-C_0
+=\frac{5-3x_0-4y}{4(1+x_0)}
+=\frac{5d^2}{8(1+x_0)}\geq0.
+\tag{3.6}
+$$
+
+Here the second equality follows by expanding $d^2$ and using $x_0^2+y^2=1$. This proves $c_*\leq1/4$ in (1.6); the boundary cases have $c_*=0$ by Theorem 2.1.
+
+Subtracting the values $F_x(C_0)$ and $F_x(c_*)$ gives the exact factorization
+
+$$
+(C_0-c_*)\left[\frac{(1+x)(C_0+c_*)}{2}+1-y\right]
+=(x-x_0)\left[\frac{C_0^2}{2}+\frac{1-y}{y}\right].
+\tag{3.7}
+$$
+
+Since $x^2-x_0^2=W$, substitute $x-x_0=W/(x+x_0)$ into (3.7) and add (3.6). This proves (3.3). The divisions are legitimate: $y>0$, $1+x_0>0$, $x+x_0>0$, and the last bracket in the denominator is positive because $1-y>0$. The numerator bracket is positive for the same reason. In particular, both summands in (3.3) are nonnegative, and the second vanishes exactly when $W=0$.
+
+Equality $c_*=1/4$ consequently holds exactly when $d^2=0$ and $W=0$. The first condition says $(x_0,y)=(3/5,4/5)$. Since
+
+$$
+W=z^2+qr^2(1-\eta)
+$$
+
+is a sum of nonnegative terms and $qr^2>0$, its vanishing is equivalent to $z=0$ and $\eta=1$. These conditions mean $a=b$ and $\operatorname{Re}\omega=-1$, respectively; $|\omega|=1$ makes the latter equivalent to $\omega=-1$. Then $q=1$ and $x_0=r$, so $r=3/5$. Conversely these three parameter conditions give $W=d^2=0$ and hence $c_*=1/4$. None of the three boundary clauses has that value. This proves (3.2). $\square$
+

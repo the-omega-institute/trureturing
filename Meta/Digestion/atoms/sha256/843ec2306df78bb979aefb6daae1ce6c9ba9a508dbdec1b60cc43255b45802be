@@ -1,0 +1,48 @@
+**Theorem 38.3 (exact acquired-control and preset action prices).** On the ONE prior (38.1), with the complete opponent permissions of Definition 38.1, each exact ORIGINAL view and their joint output have
+
+$$
+\boxed{h_{\rm rec}(V)=2,\qquad h_{\rm pre}(V)=4}
+\qquad\bigl(V\in\{B,T,S,M,(B,T,S,M)\}\bigr).
+\tag{38.7}
+$$
+
+An attaining record-dependent controller uses the acquired band report to execute $LL$ on $P_0$ and $RL$ on $P_1$. An attaining preset schedule is $LLRL$, stopping physical motion after its first $LL$ on $P_0$ and after all four letters on $P_1$. Both complete the requested original output by finitely many stationary reads and finite calculations at their chosen attained cut.
+
+Proof. Lemma 38.2 excludes a uniform record-dependent cap below two. For any preset cap at most three, both finitely terminating endpoint runs must have grid reads at prefixes of one common schedule's first three letters. The two required prefix sets are incompatible. Adaptive scales, arbitrarily long finite computation and early stopping do not change this chain, so the lemma excludes the entire preset opponent class with cap at most three. These lower bounds apply separately to each view and the joint output.
+
+For the upper bounds, first ACTUALLY read $q_2$ at the original cut and retain its report $i$. In the record-dependent construction execute the chronological $u_0=LL$ or $u_1=RL$ as selected by $i$. In the preset construction the schedule is fixed to $LLRL$: execute $LL$ if $i=0$, or continue from that SAME attained cut through $RL$ if $i=1$. The initial report controls only how long this preset schedule runs, never its next letter. The public matrices and attained endpoints are
+
+$$
+A_{LL}=\begin{pmatrix}1&0\\2&1\end{pmatrix},\qquad
+A_{RL}=\begin{pmatrix}1&1\\1&2\end{pmatrix},\qquad
+A_{LLRL}=\begin{pmatrix}3&1\\5&2\end{pmatrix},
+\qquad
+f_{LL}(c_0)=\frac18,\quad
+f_{RL}(c_1)=\frac58,\quad
+f_{LLRL}(c_1)=\frac9{16}.
+\tag{38.8}
+$$
+
+Let $u$ be the executed prefix, $z=f_u(x)$ its current unknown response, and $t=f_u(c_i)=K/D$ the corresponding known endpoint in (38.8), with $(K,D)=(1,8),(5,8)$ or $(9,16)$. Actually read $q_D(z)$. Strict increase of $f_u$ and $x\le c_i$ imply
+
+$$
+q_D(z)=K\quad\Longleftrightarrow\quad x=c_i;
+\qquad x<c_i\quad\Longrightarrow\quad q_D(z)\le K-1.
+\tag{38.9}
+$$
+
+On the equality branch the original rational is the known $c_i$. On the other branch it is some $x_{i,n}$, with unknown finite $n\ge12$. Here is a full stationary decoder, specializing the existing lower-tail procedure (34.2)–(34.3) without adding a source operation. From public $i,u$ and a local integer $j\ge12$, compute
+
+$$
+t_j=f_u(c_i-1/j),\qquad r_j=(t_j+t_{j+1})/2.
+\tag{38.10}
+$$
+
+For this $r_j$, start $s=0$ and ACTUALLY read $k_s=q_{2^s}(z)$ at the SAME current cut. Form the known cell $[\ell_s,v_s)=[k_s/2^s,(k_s+1)/2^s)$. Return below if $v_s\le r_j$, above if $\ell_s>r_j$, and otherwise increment $s$ and read again. These finite instructions use only the complete acquired report and public rational thresholds. The strictly increasing sequence $t_j$ has no term equal to $r_j$. Hence $z=t_n\ne r_j$, and a dyadic width $2^{-s}<|z-r_j|$ suffices for the corresponding stopping inequality. Every comparison therefore finishes finitely on this promised branch, including when $z$ itself is dyadic.
+
+Start $j=12$. On above increment $j$ and make the next stationary comparison; on below output the known original $c_i-1/j$. For $j<n$, $z=t_n\ge t_{j+1}>r_j$; at $j=n$, $z=t_j<r_j$. Thus the first below answer is exactly at $n$. The decoder performs $n-11$ comparisons, each with finitely many finite-completing reads, and returns the exact original rational. It never waits to infer equality with a nondyadic rational from endless refinement. Equality is handled by the attained grid read (38.9). Neither a candidate test nor a refinement loop re-executes $u$ or restarts from the original.
+
+Finally reduce this recovered ORIGINAL rational to its positive pair $(p,q)$. Apply Definition 6.3: for $p<q$ record a peeled $L$ and replace the known pair by $(p,q-p)$; for $p>q$ record $R$ and replace it by $(p-q,q)$; at equality the pair is $(1,1)$. Each step decreases $p+q$, so this calculation terminates. Reverse the peeled labels to get the original chronological word $T$. Compute its prefix pairs from $(1,1)$, the root-oriented incidence path with those named edges $S$, and the table $M=((k,\operatorname{enc}(T|_k)))_{0\le k\le|T|}$, retaining the indices. The recovered rational is $B$. This is precisely the finite four-view transport of Theorems 6.2 and 17.3. Subtractions on the now known output pair are mathematical inverse calculations, not inverse physical source operations. Compute the requested single view or all four and finish its entire finite output; no more source action is needed.
+
+The two constructions therefore stop correctly on EVERY member of $P$, including both accumulation endpoints, with action caps two and four respectively. The lower bounds already proved make both caps minimal. Their equality across targets follows also by composing the existing finite actual-image decoders after any acquired view; that composition adds paid local work and output, and zero source actions. $\square$
+

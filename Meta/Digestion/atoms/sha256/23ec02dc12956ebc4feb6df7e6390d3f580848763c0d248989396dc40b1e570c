@@ -1,0 +1,56 @@
+### 定理 4：有限核心的带误差充分条件
+
+如果某个有限阶段满足
+
+$$
+\boxed{
+\mathcal S_k
+-c_D\mathcal U_{k,J,\Omega}
++\varepsilon G_*
+\succeq0,
+}
+$$
+<a id="eq-27"></a>
+<div class="equation-caption">Equation (27).</div>
+
+那么整个窗口都满足式 (23)。
+
+**证明。**
+
+由式 (15)，
+
+$$
+\mathcal S_D\succeq-\varepsilon G_*.
+$$
+
+对任意实际读出 $\mu$，令 $c=C\mu$。变分定义和式 (26) 给出
+
+$$
+\begin{aligned}
+Q_K(\mu)
+&\geq c^*\mathcal S_Dc\\
+&\geq-\varepsilon c^*G_*c\\
+&\geq-\varepsilon Q_P(\mu).
+\end{aligned}
+$$
+
+证毕。
+
+还有一个关键的完备性结论：
+
+> **如果该固定窗口实际满足 $\mathcal S_D\succeq0$，那么对任意固定 $\varepsilon>0$，式 (27) 最终都会严格成立。**
+
+因为
+
+$$
+\mathcal S_k-c_D\mathcal U_{k,J_k,\Omega_k}
+\longrightarrow\mathcal S_D,
+$$
+
+而 $\varepsilon G_*\succ0$。
+
+因此，允许一个保留尺度的正容差后，即使极限核心存在零特征值，也不会妨碍这个有限步条件最终成立。
+
+---
+
+<a id="section-7-robin-transfer"></a>

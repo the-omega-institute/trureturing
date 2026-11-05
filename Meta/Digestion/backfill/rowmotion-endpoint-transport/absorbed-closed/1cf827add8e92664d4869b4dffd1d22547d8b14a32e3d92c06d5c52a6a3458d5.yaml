@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1cf827add8e92664d4869b4dffd1d22547d8b14a32e3d92c06d5c52a6a3458d5
+  normalized_sha256: sha256:1cf827add8e92664d4869b4dffd1d22547d8b14a32e3d92c06d5c52a6a3458d5
+cas_ref: sha256:1cf827add8e92664d4869b4dffd1d22547d8b14a32e3d92c06d5c52a6a3458d5
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Geometry/RowmotionMatchingDecoder.ordinary_decoder
+    target_statement_id: sha256:cbc1c9f54ba207d02a0b00d67870bfdb9f624566d5bcaa07043f8b3e1f608f98
+receipts:
+  unresolved_subitems: []

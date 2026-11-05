@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d30e2fc02a41ae30ac7654d927f9200e8a1902915beb1a4ac1e9be48d11c0ae7
+  normalized_sha256: sha256:d30e2fc02a41ae30ac7654d927f9200e8a1902915beb1a4ac1e9be48d11c0ae7
+cas_ref: sha256:d30e2fc02a41ae30ac7654d927f9200e8a1902915beb1a4ac1e9be48d11c0ae7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Reference [2]: Singhvi--Sabary--Bar-Lev--Yaakobi, arXiv:2202.03024v2, identifying the one-deletion run-length entropy theorem. This payload is bibliographic metadata, not the entropy theorem itself.'
+    previous_atom_id: 669360f30bcc88753640ac0e5a5a2031d51d6ac5a0ba70aea07f7baf5acda839
+    next_atom_id: 6399df3e65fa6d8fe3eccaa0a9beee69164dfada28f3aab74f25099e840d0241
