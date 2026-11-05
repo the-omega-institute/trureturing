@@ -65,7 +65,7 @@ internal sealed class MarkovKakutaniDocument : IScribeDocumentDefinition
         return All("E", Seq(V("Type"), Star),
             Seq(Inst(Call("NormedAddCommGroup", E)), Inst(Call("NormedSpace", Real, E)),
                 All("K", Call("Set", E),
-                    All("hn", Call("Nonempty", K),
+                    All("hn", Seq(Operatorname, Grp(V("Set"), Dot, V("Nonempty")), Open, K, Close),
                         All("hc", Call("IsCompact", K),
                             All("hv", Call("Convex", Real, K),
                                 All("iota", Seq(V("Type"), Star), family)))))));

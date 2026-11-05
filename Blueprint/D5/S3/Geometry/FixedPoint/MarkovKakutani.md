@@ -6,7 +6,7 @@ Commuting continuous affine self-maps of a compact convex set have a common fixe
 
 **Theorem 1.1 (A common fixed point for an arbitrary commuting affine family).**
 
-$$\forall (E: Type*), [\operatorname{NormedAddCommGroup}(E)] [\operatorname{NormedSpace}(\mathbb{R}, E)] \forall (K: \operatorname{Set}(E)), \forall (hn: \operatorname{Nonempty}(K)), \forall (hc: \operatorname{IsCompact}(K)), \forall (hv: \operatorname{Convex}(\mathbb{R}, K)), \forall (iota: Type*), \forall (F: iota \to \operatorname{ContinuousAffineMap}(\mathbb{R}, E, E)), \forall (hm: \forall (i: iota), \operatorname{MapsTo}(\operatorname{F}(i), K, K)), \forall (hcomm: \forall (i: iota), \forall (j: iota), \forall (x: E), \operatorname{F}(i, \operatorname{F}(j, x)) = \operatorname{F}(j, \operatorname{F}(i, x))), \exists (x: E), (x \in K) \land (\forall (i: iota), \operatorname{F}(i, x) = x)$$
+$$\forall (E: Type*), [\operatorname{NormedAddCommGroup}(E)] [\operatorname{NormedSpace}(\mathbb{R}, E)] \forall (K: \operatorname{Set}(E)), \forall (hn: \operatorname{Set.Nonempty}(K)), \forall (hc: \operatorname{IsCompact}(K)), \forall (hv: \operatorname{Convex}(\mathbb{R}, K)), \forall (iota: Type*), \forall (F: iota \to \operatorname{ContinuousAffineMap}(\mathbb{R}, E, E)), \forall (hm: \forall (i: iota), \operatorname{MapsTo}(\operatorname{F}(i), K, K)), \forall (hcomm: \forall (i: iota), \forall (j: iota), \forall (x: E), \operatorname{F}(i, \operatorname{F}(j, x)) = \operatorname{F}(j, \operatorname{F}(i, x))), \exists (x: E), (x \in K) \land (\forall (i: iota), \operatorname{F}(i, x) = x)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/FixedPoint/MarkovKakutani.exists_common_fixed_point` (`✓ std3`). ∎
 
