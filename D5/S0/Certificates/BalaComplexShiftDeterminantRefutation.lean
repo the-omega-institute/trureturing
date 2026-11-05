@@ -20,7 +20,7 @@ namespace D5.S0.Certificates.BalaComplexShiftDeterminantRefutation
 
 /-- The generalized-binomial determinant with rows and columns numbered from one. -/
 noncomputable def shiftedDet (n : ℕ) (z : ℂ) : ℂ :=
-  Matrix.det (fun i j : Fin n =>
+  Matrix.det (Matrix.of fun i j : Fin n =>
     Ring.choose (((i.val + 1 : ℕ) : ℂ) ^ 2 + z) (j.val + 1))
 
 /-- Bala's arbitrary-complex-shift conjecture, including the empty determinant. -/
@@ -32,6 +32,6 @@ theorem result : ¬ claim := by
   have hbad := h 1 1
   unfold shiftedDet at hbad
   rw [Matrix.det_fin_one, Matrix.det_fin_one] at hbad
-  norm_num [Ring.choose_one_right] at hbad
+  norm_num [Matrix.of_apply, Ring.choose_one_right] at hbad
 
 end D5.S0.Certificates.BalaComplexShiftDeterminantRefutation
