@@ -66,7 +66,7 @@ private theorem split_packets (bad : ℕ → Prop) [DecidablePred bad] (l : List
             · exact hp b (by simp [h]) y hy
           · simpa [hx] using hn
 
-private def insertAt (ear : ℕ) (l : List ℕ) (j : ℕ) : List ℕ :=
+def insertAt (ear : ℕ) (l : List ℕ) (j : ℕ) : List ℕ :=
   l.take j ++ ear :: l.drop j
 
 private theorem insertAt_add (ear : ℕ) (pre post : List ℕ) (j : ℕ) :

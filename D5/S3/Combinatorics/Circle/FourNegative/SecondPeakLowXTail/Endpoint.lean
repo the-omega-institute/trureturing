@@ -30,16 +30,15 @@ open private physical_moduli terminal_index physical_terminal_values
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.Terminals
 open private physical_margins
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.Selection
-open private seed sourceMod base newBase charge nextBase nextNewBase oldValue newValue chainOf chain_index chain_values source_signs source_totals new_base_bounds actual_values from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size chainLength chainStart negatives)
+open private seed sourceMod charge nextBase nextNewBase chain_index chain_values source_signs source_totals new_base_bounds actual_values from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base newBase chainLength chainStart oldValue newValue negatives chainOf)
 open private native_masses
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 open private four_perm four_strip
   from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
 open private sum_linear prefix_nonneg_le strip_of_prefix
   from D5.S3.Combinatorics.Circle.PeriodicShortening
-open private insertAt
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (insertAt)
 open private actual_nat_joint_iff
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 

@@ -16,10 +16,10 @@ open D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open private full stock complement stock_split canonical_inventory stock_good stock_mass complement_mass
   from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.Banks
-open private sourceMod base newBase charge oldValue newValue nextBase nextNewBase chainOf chain_index chain_values source_totals from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size chainLength chainStart negatives)
+open private sourceMod charge nextBase nextNewBase chain_index chain_values source_totals from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base newBase oldValue newValue chainLength chainStart negatives chainOf)
 open private native_masses from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
-open private insertAt from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (insertAt)
 
 private def vMask (a b : ℕ) : ℕ := 2^(a-b-1)
 private def rawBanks (a b d m : ℕ) : Fin 4 → List ℕ :=

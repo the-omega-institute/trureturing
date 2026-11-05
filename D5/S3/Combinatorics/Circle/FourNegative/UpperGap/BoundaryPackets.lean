@@ -12,8 +12,8 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.UpperGap
 open D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
 open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm
-open private sourceMod base newBase charge nextBase nextNewBase oldValue newValue chain_values source_totals from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size chainLength chainStart negatives)
+open private sourceMod charge nextBase nextNewBase chain_values source_totals from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base newBase chainLength chainStart oldValue newValue negatives)
 open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (blocksWord)
 open private packetChecks withEar from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Packets
 open private masked_inventory

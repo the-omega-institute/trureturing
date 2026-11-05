@@ -35,8 +35,8 @@ open private parityMass parityPeak
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakParityTail.StripAlgebra
 open private qTerminal qModulus
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.Model
-open private seed sourceMod base newBase oldValue newValue chain_values source_signs source_totals new_base_bounds actual_values from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size chainLength chainStart negatives)
+open private seed sourceMod chain_values source_signs source_totals new_base_bounds actual_values from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base newBase chainLength chainStart oldValue newValue negatives)
 open private native_masses
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 open private four_perm four_strip

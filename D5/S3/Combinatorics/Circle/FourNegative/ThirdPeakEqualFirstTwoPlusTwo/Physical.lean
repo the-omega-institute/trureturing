@@ -16,8 +16,8 @@ open private A B L K SU SV SW H1 H2 J1 J2 D T window firstTwo windows
   from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualFirstTwoPlusTwo.Parameters
 open private full stock complement terminals banks word banks_inventory banks_good banks_masses
   from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualFirstTwoPlusTwo.Banks
-open private sourceMod base newBase charge nextBase nextNewBase oldValue newValue chain_values new_base_bounds source_signs source_totals from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size chainLength chainStart negatives)
+open private sourceMod charge nextBase nextNewBase chain_values new_base_bounds source_signs source_totals from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base newBase chainLength chainStart oldValue newValue negatives)
 open private native_masses
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (blocksWord)

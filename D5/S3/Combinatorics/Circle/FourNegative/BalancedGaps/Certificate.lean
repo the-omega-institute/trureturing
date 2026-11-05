@@ -19,8 +19,8 @@ open private assigned negativeLabel packets packet_labels negative_order physica
   from D5.S3.Combinatorics.Circle.FourNegative.BalancedGaps.Physical
 open private assigned_masses source_doubles
   from D5.S3.Combinatorics.Circle.FourNegative.BalancedGaps.Source
-open private oldValue newValue base newBase sourceMod charge nextBase nextNewBase from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size chainLength)
+open private sourceMod charge nextBase nextNewBase from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size chainLength oldValue newValue base newBase)
 open private oldMass newMass from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 open private DataCertificate DataCertificate.mk finiteChecks finiteEarChecks
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate

@@ -127,9 +127,8 @@ theorem physical_negative_order (a b c d : ℕ) (M : Fin 4 → Fin 4 → ℕ)
     ((physicalPackets a b c d M order).map Prod.snd).Perm (negatives a b c d) := by
   have ht : ([terminalLabel a b c d 0, terminalLabel a b c d 1,
       terminalLabel a b c d 2, terminalLabel a b c d 3] : List ℕ) = negatives a b c d := by
-    simp only [terminalLabel, chainStart, chainLength, negatives, size,
-      Matrix.cons_val_zero, Matrix.cons_val_succ]
-    congr <;> omega
+    simp [terminalLabel, chainStart, chainLength, negatives, size,
+      Nat.add_assoc, Nat.add_left_comm, Nat.add_comm]
   simpa only [physicalPackets, List.map_cons, List.map_nil, ht] using
     horder.map (terminalLabel a b c d)
 
@@ -193,9 +192,8 @@ theorem physical_partition (a b c d : ℕ)
       fin_cases r <;> decide
   · have hempty (r : Fin 4) : i ∉ B r := fun hh => hi (hlabels r i hh).1
     have hn : i ∉ negatives a b c d := by
-      simp only [negatives, size, List.mem_cons, List.mem_singleton, not_or]
       dsimp only [size] at hi
-      omega
+      simp [negatives, size] <;> omega
     simp [hempty, hn, hi]
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails

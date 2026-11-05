@@ -23,8 +23,8 @@ open private range_positive inserted_perm
 open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (blocksWord)
 open private packetChecks strip_iff_packetChecks
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Packets
-open private chain_signs base oldValue newValue sourceMod from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (chainLength chainStart)
+open private chain_signs sourceMod from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (chainLength chainStart base oldValue newValue)
 
 private theorem block_data (a s : ℕ) (hs : 2 ≤ s) (ha : s ≤ a)
     (r : Fin 4) (lo len : ℕ) (hl : lo + len ≤ length a s r - 1) :

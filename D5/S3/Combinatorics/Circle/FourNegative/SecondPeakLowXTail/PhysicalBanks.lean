@@ -23,8 +23,8 @@ open private physicalDomain eOn rOn collide eExponent rExponent eWeight rWeight
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.PhysicalArithmetic
 open private qHead qNewHead qMask qMass
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.Model
-open private base newBase charge oldValue newValue chain_values chainOf chain_index source_signs from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size chainStart chainLength negatives)
+open private charge chain_values chain_index source_signs from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base newBase chainStart chainLength oldValue newValue negatives chainOf)
 
 private def eBits (a b : ℕ) : Finset ℕ :=
   if eOn a b then {eExponent a b} else ∅

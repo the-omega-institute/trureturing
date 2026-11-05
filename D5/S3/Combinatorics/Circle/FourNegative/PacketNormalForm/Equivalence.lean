@@ -13,18 +13,14 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm
 open SourceWidth
-open private blocksWord_flatMap insertAt split_packets from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (blocksWord)
+open private blocksWord_flatMap split_packets from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (blocksWord insertAt)
 open private strip_append_iff last_nonpositive ear_not_at_end
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Transport
 open private packetChecks withEar strip_iff_packetChecks normalize_blocks withEar_split
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Packets
-open private orderedPackets finiteChecks finiteEarChecks DataCertificate DataCertificate.mk
-  finiteChecks_equiv finiteEarChecks_equiv
-  DataCertificate.packets DataCertificate.negativeOrder DataCertificate.earSlot
-  DataCertificate.positiveLabels DataCertificate.partition
-  DataCertificate.oldEndpoints DataCertificate.newEndpoints
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
+open private finiteChecks finiteEarChecks DataCertificate DataCertificate.mk finiteChecks_equiv finiteEarChecks_equiv DataCertificate.packets DataCertificate.negativeOrder DataCertificate.earSlot DataCertificate.positiveLabels DataCertificate.partition DataCertificate.oldEndpoints DataCertificate.newEndpoints from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (orderedPackets)
 
 private def finitePackets (bs : List (List ℕ × ℕ)) : List (Finset ℕ × ℕ) :=
   bs.map (fun b => (b.1.toFinset,b.2))

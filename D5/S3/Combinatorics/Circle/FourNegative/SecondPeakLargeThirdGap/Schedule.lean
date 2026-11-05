@@ -32,8 +32,8 @@ open private MaskPartition native_partition
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap.NativeMasks
 open private bank terminal word bank_inventory bank_good bank_masses
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap.Source
-open private seed sourceMod base newBase charge nextBase nextNewBase oldValue newValue source_signs chain_values new_base_bounds source_totals from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size chainLength chainStart negatives)
+open private seed sourceMod charge nextBase nextNewBase source_signs chain_values new_base_bounds source_totals from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base newBase chainLength chainStart oldValue newValue negatives)
 open private native_masses
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 open private inserted_perm from D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree.Physical

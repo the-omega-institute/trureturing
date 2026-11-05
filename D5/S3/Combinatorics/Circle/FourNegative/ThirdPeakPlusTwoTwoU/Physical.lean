@@ -18,8 +18,8 @@ open private A B L K SU SV SW oldFirst oldSecond newFirst newSecond D window fir
 open private original_select from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPlusTwoTwoU.Selection
 open private full banks terminals pre post word marked banks_inventory banks_good banks_masses
   from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPlusTwoTwoU.Banks
-open private base newBase charge sourceMod oldValue newValue nextBase nextNewBase chain_values source_signs from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size negatives chainLength chainStart)
+open private charge sourceMod nextBase nextNewBase chain_values source_signs from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base newBase oldValue newValue negatives chainLength chainStart)
 open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (blocksWord)
 open private packetChecks withEar strip_iff_packetChecks
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Packets

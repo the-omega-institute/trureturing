@@ -16,8 +16,8 @@ open PacketNormalForm
 open private correction transfer from D5.S3.Combinatorics.Circle.FourNegative.BalancedGaps.Arithmetic
 open private positivePacket negativeLabel assigned native_labels assigned_labels
   from D5.S3.Combinatorics.Circle.FourNegative.BalancedGaps.Physical
-open private oldValue newValue base newBase sourceMod nextBase nextNewBase charge chain_values packet_masses from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size chainStart chainLength negatives)
+open private sourceMod nextBase nextNewBase charge chain_values from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size chainStart chainLength negatives oldValue newValue base newBase packet_masses)
 open private oldMass newMass from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 
 private theorem length_lower (a b c d : ℕ)

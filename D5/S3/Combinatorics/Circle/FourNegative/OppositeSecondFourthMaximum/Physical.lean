@@ -25,7 +25,7 @@ open private size base newBase charge sourceMod oldValue newValue negatives chai
 open private native_masses from
   D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 open private four_strip from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
-open private insertAt from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (insertAt)
 open private actual_nat_joint_iff from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 
 private def rawBanks (a s c m n : ℕ) : Fin 4 → List ℕ :=
