@@ -1,0 +1,25 @@
+We next strengthen opposite endpoint signs to the strict signed
+neighborhoods required in (1.4). Fix any $\beta\in[A,B]$ and write
+$p(x)=\sum_{k=0}^nd_kx^k$. The classical monomial beta integral gives
+
+$$
+I_{0+}^{\alpha}x^k=\frac{k!}{\Gamma(k+\alpha+1)}x^{k+\alpha}.
+$$
+
+After two ordinary derivatives, (2.6) becomes the polynomial identity
+
+$$
+\begin{aligned}
+x^{2-\beta}T_\beta p(x)&=R_\beta(x),\\
+R_\beta(x)&=(1-\beta)J_\beta(p)
+ +\sum_{k=0}^nd_k\frac{\Gamma(\beta)k!}{\Gamma(k+\beta)}x^{k+1}.
+\end{aligned}
+\tag{2.22}
+$$
+
+This polynomial has real coefficients and degree at most $n+1$;
+its constant term is strictly positive because $1-\beta>0$ and
+$J_\beta(p)>0$. Thus it is not the zero polynomial. For $x>0$ the
+multiplier $x^{2-\beta}\Gamma(\beta)$ relating $F_{\beta+1,p}''$ to
+$R_\beta$ is strictly positive.
+

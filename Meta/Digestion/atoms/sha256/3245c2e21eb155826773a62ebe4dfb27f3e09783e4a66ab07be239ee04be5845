@@ -1,0 +1,14 @@
+A nonzero real polynomial has finitely many roots, and a constant
+strict sign on each interval complementary to its real roots. In
+$(l_j,r_j)$ order its roots increasingly. There is at least one root
+by (2.21) and continuity. The complementary sign interval adjacent to
+$l_j$ has sign $+$, whereas the one adjacent to $r_j$ has sign $-$.
+In this finite list choose the first complementary interval with
+negative sign. Its left endpoint $\xi_{\beta+1,j}$ is a root and the
+preceding complementary interval has positive sign. Choose
+$\delta_{\beta+1,j}>0$ smaller than the distances from that root to
+$l_j,r_j$ and to every other root in $[l_j,r_j]$; when there is no
+other root, only the first two distances are needed. All these
+distances are positive. This gives (1.4) for $R_\beta$, and hence
+for $F_{\beta+1,p}''$. Roots of even multiplicity elsewhere do not
+obstruct this selection. 

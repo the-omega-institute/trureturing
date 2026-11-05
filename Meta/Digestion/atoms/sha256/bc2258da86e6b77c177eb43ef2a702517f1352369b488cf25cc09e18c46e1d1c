@@ -1,0 +1,28 @@
+Finally, $p$ is a polynomial with $p(1)=0$, nonnegative on $[0,1]$,
+and nontrivial. It belongs to both regularity spaces in (1.3), and
+$p'$ is bounded. For each $\alpha\in[a,b]$ the exponent
+$(3-\alpha)/(2-\alpha)$ is positive, proving the weighted derivative
+limit in (1.3). Also $p\in L^1(0,1)$ and $1<\alpha<2$. These are
+precisely the input conditions for the converse direction of [LMS,
+§3, equation (7)] quoted in Definition 1.1. Applying that converse to
+this $p$ proves that (2.2) belongs to the source's
+$H_0^{\alpha/2}(0,1)$ and satisfies (1.1) for every test function
+there, with uniqueness. This application supplies the weak-solution
+bridge, including the space membership, rather than deducing it from
+a pointwise differential identity.
+
+The pointwise identity is consistent with the same equation: the
+classical semigroup and monomial formula give
+
+$$
+I_{0+}^{2-\alpha}F_\alpha(x)
+ =I_{0+}^2p(x)-I_{0+}^{\alpha}p(1)\Gamma(\alpha)x,
+$$
+
+whose second derivative is $p$. The continuous value at zero is $0$,
+since $I_{0+}^{\alpha}p(x)=O(x^\alpha)$ and
+$x^{\alpha-1}\to0$; the value at $1$ is zero by (2.2).
+All choices (2.3), (2.9), (2.10), and (2.17) depend only on $N,a,b$.
+In particular, the construction treats $a=b$ without any limiting
+argument or change of quantifiers. This proves the theorem. $\square$
+
