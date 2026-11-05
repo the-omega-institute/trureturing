@@ -71,7 +71,9 @@ theorem disjoint_cylinders_nonempty (s t : Finset ℕ) (hdis : Disjoint s t)
     (a b : ℕ → ℕ) : (finiteCylinder s a ∩ finiteCylinder t b).Nonempty := by
   let u := s ∪ t
   let c : ℕ → ℕ := fun i => if i ∈ s then a i else b i
-  obtain ⟨z, hz⟩ := finite_crt u c
+  obtain ⟨z, hzmem⟩ := finiteCylinder_nonempty u c
+  have hz : ∀ i ∈ u, z ≡ c i [MOD primeSeq i] := by
+    simpa [finiteCylinder, residue] using hzmem
   have hmem (r : Finset ℕ) (f : ℕ → ℕ) (hr : ∀ i ∈ r, f i = c i)
       (hsub : ∀ i ∈ r, i ∈ u) : z ∈ finiteCylinder r f := by
     simp [finiteCylinder]
@@ -113,7 +115,8 @@ lemma tailTopology_mono {n m : ℕ} (hnm : n ≤ m) :
 
 lemma isOpen_residue_tail {n i a : ℕ} (hin : n ≤ i) (ha : a < primeSeq i) :
     @IsOpen ℕ (tailTopology n) (residue i a) := by
-  exact TopologicalSpace.isOpen_generateFrom_of_mem ⟨i, hin, a, ha, rfl⟩
+  apply tailTopology_mono hin
+  exact TopologicalSpace.isOpen_generateFrom_of_mem ⟨i, le_rfl, a, ha, rfl⟩
 
 lemma finiteCylinder_isOpen {n : ℕ} (s : Finset ℕ) (a : ℕ → ℕ)
     (hs : ∀ i ∈ s, n ≤ i) (ha : ∀ i ∈ s, a i < primeSeq i) :
@@ -235,7 +238,7 @@ lemma finiteCylinder_basis_of_isOpen {n : ℕ} {U : Set ℕ}
 theorem tailTopology_t2 (n : ℕ) : @T2Space ℕ (tailTopology n) := by
   letI : TopologicalSpace ℕ := tailTopology n
   change T2Space ℕ
-  refine ⟨?_⟩
+  apply t2Space_iff_nhds.2
   intro x y hxy
   let i := max n (x + y + 1)
   have hi : x + y < primeSeq i := by
@@ -245,17 +248,27 @@ theorem tailTopology_t2 (n : ℕ) : @T2Space ℕ (tailTopology n) := by
     omega
   have hxlt : x < primeSeq i := lt_of_le_of_lt (Nat.le_add_right x y) hi
   have hylt : y < primeSeq i := lt_of_le_of_lt (Nat.le_add_left y x) hi
-  refine ⟨residue i x, residue i y,
-    isOpen_residue_tail (le_max_left _ _) hxlt,
-    isOpen_residue_tail (le_max_left _ _) hylt,
-    ?_, ?_, ?_⟩
-  · exact Nat.ModEq.refl _
-  · exact Nat.ModEq.refl _
+  refine ⟨finiteCylinder {i} (fun _ => x), ?_,
+    finiteCylinder {i} (fun _ => y), ?_, ?_⟩
+  · apply finiteCylinder_mem_nhds {i} (fun _ => x) x
+    · intro j hj
+      simpa only [Finset.mem_singleton.mp hj] using le_max_left n (x + y + 1)
+    · intro j hj
+      simpa only [Finset.mem_singleton.mp hj] using hxlt
+    · simpa [finiteCylinder, residue] using (Nat.ModEq.refl x : x ≡ x [MOD primeSeq i])
+  · apply finiteCylinder_mem_nhds {i} (fun _ => y) y
+    · intro j hj
+      simpa only [Finset.mem_singleton.mp hj] using le_max_left n (x + y + 1)
+    · intro j hj
+      simpa only [Finset.mem_singleton.mp hj] using hylt
+    · simpa [finiteCylinder, residue] using (Nat.ModEq.refl y : y ≡ y [MOD primeSeq i])
   · refine Set.disjoint_left.2 ?_
     intro z hzx hzy
-    have hmod : x ≡ y [MOD primeSeq i] := by
-      exact hzx.symm.trans hzy
-    exact hxy (Nat.ModEq.eq_of_lt_of_lt hmod hxlt hylt)
+    have hzx' : z ≡ x [MOD primeSeq i] := by
+      simpa [finiteCylinder, residue] using hzx
+    have hzy' : z ≡ y [MOD primeSeq i] := by
+      simpa [finiteCylinder, residue] using hzy
+    exact hxy (Nat.ModEq.eq_of_lt_of_lt (hzx'.symm.trans hzy') hxlt hylt)
 
 def commonTopology : TopologicalSpace ℕ := ⨆ n, tailTopology n
 
