@@ -621,7 +621,7 @@ theorem restrictPath_surjective {F G : Finset I} (h : F ⊆ G) :
   premise.  This corollary only specializes the general lifting theorem; it
   does not construct that premise for a proposed shadowing extension.
 -/
-theorem two_face_restrictPath_surjective {α β : I} (hαβ : α ≠ β) :
+theorem two_face_restrictPath_surjective [DecidableEq I] {α β : I} (hαβ : α ≠ β) :
     Surjective (S.restrictPath (F := ({β} : Finset I))
       (G := ({α, β} : Finset I)) (by
         intro i hi
