@@ -171,3 +171,71 @@ end Resources
 
 #print axioms Resources.family
 end Reg.D5.S3.Quantum.Dynamics.NativeProtocolGraft
+
+namespace Reg.D5.S3.Quantum.Dynamics.NativeProtocolGraft.PositiveNorm
+
+abbrev signature : Signature where
+  Params := ℝ
+  State _ := Coeff.O
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x => Coeff.realPhysical x) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 1/2) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ (x : Coeff.O) (K : ℝ), 0 < K → 0 < r.readout () K x →
+    |Coeff.realConjugate x| ≤ K → K⁻¹ ≤ r.readout () K x
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h 0 1 (by norm_num) (by norm_num [rejected,realize]) (by simp)
+  norm_num [rejected,realize] at hh
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  cases i
+  refine ⟨1,0,1,?_⟩
+  change Coeff.realPhysical 0 ≠ Coeff.realPhysical 1
+  simp
+
+def family : Registration arena (type_of% (@Coeff.positive_lower)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨Coeff.positive_lower,rejected,rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ actual rejected rejected_law
+  dependence := dependence
+
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@Coeff.positive_lower) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Quantum.Dynamics.NativeProtocolGraft.Coeff.positive_lower.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Dynamics.NativeProtocolGraft.PositiveNorm.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x => Coeff.realPhysical x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+#print axioms registration
+end Reg.D5.S3.Quantum.Dynamics.NativeProtocolGraft.PositiveNorm

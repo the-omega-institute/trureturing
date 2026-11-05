@@ -18,7 +18,7 @@ internal sealed class NativeProtocolEventArithmeticDocument : IScribeDocumentDef
                     Paragraph(Text("The scalars t, beta and zeta of the actual matrices are algebraic integers: rational-angle exponential and cosine integrality give zeta and t, and beta squared equals t. Every number projection and bit flip has integer entries. Finite matrix addition, multiplication and powers therefore preserve entrywise integrality. Induction through the actual tree gives integral branch-matrix entries. Applying the fixed root, multiplying each amplitude by its physical complex conjugate and summing the selected raw events preserve integrality. The real event mass is reflected from its injective complex embedding. No success normalization is performed.")),
                     Paragraph(Text("Set q=(13-5 sqrt(5))/22 and w=(9 sqrt(5)-19)/22. In the existing quadratic golden field with generator phi, these are the images of coordinate pairs (9/11,-5/11) and (-14/11,9/11). Their field norms are respectively 1/11 and -1/11. Integrality would force an integer field norm; both rational values fail that condition. Consequently p differs from both q and w. This argument only needs absolute algebraic integrality of p and does not assert that p lies in the quadratic field.")),
                     Paragraph(Text("These exclusions apply directly to any original-record event formed by the stop-aware graft in NativeProtocolGraft. They do not establish that the actual chi preparation and its faithful-support Petz pullback have ideal masses q and w. Quadratic integer coordinates, the whole-tree nonphysical-conjugate estimate and the arithmetic factor-eleven bounds are supplied by NativeProtocolEventCoordinates and NativeProtocolEventArithmetic. The actual reference-state realization, original-record comparison and total-variation consumers remain separate obligations. Total Born-mass normalization and the equality of the ninth gate power with its inverse are not used or proved here."))),
-                DescribeRole.Theorem), ResourceNode())));
+                DescribeRole.Theorem), ResourceNode(), PositiveNormNode())));
 
     private static DocumentBlock ResourceNode() => Describe.Lean(
         DescribeId.Create("original-event-resource-bounds"),
@@ -31,6 +31,24 @@ internal sealed class NativeProtocolEventArithmeticDocument : IScribeDocumentDef
             Paragraph(Text("For x=A+B tau the integer norm is A squared minus A B minus B squared, and the product of its two real evaluations equals that norm. Its nonvanishing is reused from the existing golden-integer norm theorem through the coordinate correspondence (A-B,B). For u=11q=(4,-5) and u=11w=(-5,9), the norms are 11 and minus 11. Direct expansion proves that the norm of 11x-u is divisible by 11. The existing original_event_arithmetic theorem supplies non-equality with q and w. Thus the nonzero norm has absolute value at least 11. The whole-tree conjugate bound and the triangle inequality give the stated denominators.")),
             Paragraph(Text("The arithmetic inequalities do not identify q or w as the ideal probabilities of the actual chi/Petz experiments. Their empty-prefix and five-call source-history realization, preservation of original records and failure zeros, graft resource identities and total-variation comparison still require the specified original-object consumers. The cut determinant and spectral clauses of V88 theorem 24.1 remain outside this event result."))),
         DescribeRole.Theorem);
+
+    private static DocumentBlock PositiveNormNode() => Describe.Lean(
+        DescribeId.Create("positive-quadratic-integer-norm-bound"),
+        DeclarationHandle.Create("D5/S3/Quantum/Dynamics/NativeProtocolEventArithmetic.positive_lower"),
+        H("A positive quadratic integer is bounded below by its other embedding"),
+        StatementSource.FromAuthor(PositiveNormStatement()),
+        AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/stewarttall2025algebraic")),
+        Blocks(Paragraph(Text("For x in the existing inverse-golden integer ring O and a positive real K, a positive physical evaluation and absolute nonphysical evaluation at most K imply realPhysical(x) at least one divided by K. Their product is the integer quadratic norm. The physical value being positive makes this integer nonzero, so its absolute value is at least one. This arithmetic lemma supplies both the existing raw-event bound and the same-cut determinant bound in NativeProtocolBornNormalization."))),
+        DescribeRole.Lemma);
+
+    private static Formula PositiveNormStatement()
+    {
+        Formula x=F.Id("x"),K=F.Id("K"),p=Call("realPhysical",x);
+        Formula lt(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.LessThan,b);
+        Formula imp(Formula a,Formula b)=>new Formula.Logic(a,FormulaLogicOperator.Implies,b);
+        return Disp(All("x",Call("O"),All("K",Call("Real"),imp(lt(D(0),K),
+            imp(lt(D(0),p),imp(Leq(Call("abs",Call("realConjugate",x)),K),Leq(Call("inv",K),p)))))));
+    }
 
     private static Formula ArithmeticStatement()
     {
