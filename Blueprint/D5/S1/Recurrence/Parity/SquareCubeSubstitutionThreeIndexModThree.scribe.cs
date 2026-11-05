@@ -24,7 +24,9 @@ internal sealed class SquareCubeSubstitutionThreeIndexModThreeDocument : IScribe
         DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
             DescribeId.Create("a472-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("h3894-square-cube-three-index"), ResolutionKind.Proved) : null);
     private static Formula V(string name) => F.Id(name);
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Q(string owner, string name) => Seq(Named(owner), Dot, Named(name));

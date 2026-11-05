@@ -62,6 +62,10 @@ $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{I
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaTripleSquareFrobeniusModThree.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/h3894-triple-square-frobenius-mod-three` (proved) by `D5/S1/Recurrence/Invariants/HannaTripleSquareFrobeniusModThree.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"h3894-triple-square-frobenius-mod-three","declaration_gid":"D5/S1/Recurrence/Invariants/HannaTripleSquareFrobeniusModThree.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2025). *OEIS A389474, A389475 and A389472: composition-series congruences*. URL: <https://oeis.org/A389474>.
@@ -75,6 +79,10 @@ A389475 (4.a), #21672. Reduction modulo two makes the triangular residual coeffi
 $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{IsGF}\left(A\right)) \land (\forall A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{IsGF}\left(A\right)) \implies (\forall n: \mathbb{N}, \exists m: \mathbb{Z}, \operatorname{coeff}\left(n, A^{2} - \left(X^{2} + 2 \cdot \operatorname{PowerSeries}.\operatorname{subst}\left(X^{3}, A\right)\right)\right) = (3: \mathbb{Q}) \cdot (m: \mathbb{Q})))$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaTripleSquareFrobeniusModThree.resultFourB` (`✓ std3`). ∎
+
+*Resolves.* `Problems/h3894-a389475-formula-four-b` (proved) by `D5/S1/Recurrence/Invariants/HannaTripleSquareFrobeniusModThree.resultFourB`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"h3894-a389475-formula-four-b","declaration_gid":"D5/S1/Recurrence/Invariants/HannaTripleSquareFrobeniusModThree.resultFourB","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
