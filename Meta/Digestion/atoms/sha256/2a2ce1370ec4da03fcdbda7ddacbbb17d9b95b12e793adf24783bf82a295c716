@@ -1,0 +1,59 @@
+**Definition 9.1 (Prescribed loss blocks and their junctions).** Consider an infinite nonsingular tail starting at $s$, with $D_s=\infty$. Its block boundaries are the prescribed integers
+
+$$
+n_0=s,\qquad
+n_{k+1}=\min\left\{n>n_k:
+\sum_{j=n_k}^{n-1}-\log|\lambda_j|\geq\log2\right\}.
+\tag{9.1}
+$$
+
+Each defining set is nonempty, since removing a finite number of finite terms leaves an infinite sum. Thus every block is finite, $n_k\to\infty$, and the blocks are disjoint consecutive portions of the tail. Define
+
+$$
+T_k=\Phi_{n_k,n_{k+1}},\qquad \mathfrak d_k=\det T_k,
+\qquad R_k=T_k^*T_k,\qquad r_k=\operatorname{tr}R_k,
+$$
+
+$$
+\sigma_k=\left(\frac{r_k+\sqrt{r_k^2-4\mathfrak d_k^2}}2\right)^{1/2},\qquad
+\zeta_k^2=\frac{\mathfrak d_k^2}{\sigma_k^2},\qquad
+\mu_k=\frac{\mathfrak d_k}{\sigma_k^2}.
+\tag{9.2}
+$$
+
+All these are finite-block data. In particular $\mathfrak d_k=\prod_{j=n_k}^{n_{k+1}-1}\lambda_j\ne0$ and $|\mathfrak d_k|\leq1/2$. The two eigenvalues of $R_k$ are $\sigma_k^2\geq\zeta_k^2>0$. Let $E_k$ be the projection onto the larger eigenspace:
+
+$$
+E_k=\begin{cases}
+(R_k-\zeta_k^2I)/(\sigma_k^2-\zeta_k^2),&\sigma_k^2>\zeta_k^2,\\
+I,&\sigma_k^2=\zeta_k^2.
+\end{cases}
+$$
+
+Choose $\bar f_k$ by projecting the first of the ordered pair $e,Je$ with nonzero projection, and normalizing that projection to unit $Q$-norm. Starting with $f_0=\bar f_0$, specify signs and unit output vectors recursively by
+
+$$
+g_k=\sigma_k^{-1}T_kf_k,\qquad
+f_{k+1}=\chi(\langle\bar f_{k+1},g_k\rangle_Q)\bar f_{k+1},
+\qquad \chi(x)=\begin{cases}1,&x\geq0,\\-1,&x<0.\end{cases}
+$$
+
+Set
+
+$$
+c_k=\langle f_{k+1},g_k\rangle_Q\geq0,\qquad
+s_k=\langle f_{k+1},Jg_k\rangle_Q,\qquad
+\eta_k=s_k^2=1-\langle\bar f_{k+1},g_k\rangle_Q^2.
+\tag{9.3}
+$$
+
+The two prescribed nonnegative series are
+
+$$
+\mathcal B_s=\sum_{k=0}^\infty(1-\sigma_k),\qquad
+\mathcal A_s=\sum_{k=0}^\infty\eta_k.
+\tag{9.4}
+$$
+
+The loss-block criterion is $\mathcal B_s+\mathcal A_s=\infty$. It uses a contraction deficit from each disjoint finite block and the junction between that block's principal output line and the next block's principal input line. No block is the growing prefix from $s$ to $n_k$, except the first block. The boundaries use only $|\lambda_j|$, and neither series asks for the norm limit of growing prefix products or the fate of an initial vector.
+

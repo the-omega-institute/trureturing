@@ -189,4 +189,123 @@ def registration :
   familyRecord := none
   options := #[]
 
+/-! Full-telescope audit of the contractive fixed-window convergence upgrade. -/
+
+structure RegularParameters where
+  k : Type u
+  [scalar : RCLike k]
+  H : Type v
+  [additive : NormedAddCommGroup H]
+  [space : NormedSpace k H]
+  T : H →L[k] H
+  norm_le_one : ‖T‖ ≤ 1
+  p : H
+  fixed : T p = p
+
+abbrev regularSignature : Signature where
+  Params := RegularParameters.{u,v}
+  State p := p.H
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := ℕ → p.H
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def regularActual : Realization regularSignature.{u,v} :=
+  realize regularSignature (fun _ p x n => (p.T ^ n) x) (fun e => nomatch e)
+
+def regularRejected : Realization regularSignature.{u,v} :=
+  realize regularSignature (fun _ p x _ => by letI := p.additive; exact -x)
+    (fun e => nomatch e)
+
+abbrev regularArena : Arena where
+  signature := regularSignature.{u,v}
+  Law R := ∀ {k : Type u} [RCLike k] {H : Type v} [NormedAddCommGroup H]
+    [NormedSpace k H] (T : H →L[k] H) (hT : ‖T‖ ≤ 1) (x p : H)
+    (hp : T p = p)
+    (_hreg : Tendsto (fun n : ℕ => (T ^ (n + 1)) x - (T ^ n) x) atTop (𝓝 0))
+    (_havg : Tendsto (fun m : ℕ => birkhoffAverage k (T : H → H) id m x) atTop (𝓝 p)),
+    Tendsto (R.readout ()
+      (@RegularParameters.mk k inferInstance H inferInstance inferInstance T hT p hp) x)
+      atTop (𝓝 p)
+
+private theorem regular_actual_law : regularArena.{u,v}.Law regularActual :=
+  @tendsto_pow_of_regular.{u,v}
+
+private theorem regular_rejected_law : ¬ regularArena.{u,v}.Law regularRejected := by
+  intro h
+  let T : ULift.{v} ℝ →L[ULift.{u} ℝ] ULift.{v} ℝ := 1
+  have hT : ‖T‖ ≤ 1 := ContinuousLinearMap.norm_id_le
+  have hp : T (ULift.up 1) = ULift.up 1 := rfl
+  have hreg : Tendsto (fun n : ℕ => (T ^ (n + 1)) (ULift.up 1) -
+      (T ^ n) (ULift.up 1)) atTop (𝓝 0) := by
+    simpa [T] using (tendsto_const_nhds : Tendsto (fun _ : ℕ =>
+      (0 : ULift.{v} ℝ)) atTop (𝓝 0))
+  have havg : Tendsto (fun m : ℕ => birkhoffAverage (ULift.{u} ℝ)
+      (T : ULift.{v} ℝ → ULift.{v} ℝ) id m (ULift.up 1)) atTop (𝓝 (ULift.up 1)) :=
+    (show Function.IsFixedPt T (ULift.up 1) from hp).tendsto_birkhoffAverage (ULift.{u} ℝ) id
+  have ht := h T hT (ULift.up 1) (ULift.up 1) hp hreg havg
+  have hz : -(ULift.up 1 : ULift.{v} ℝ) = ULift.up 1 := by
+    simpa [regularRejected, realize] using ht
+  have hreal := congrArg ULift.down hz
+  norm_num at hreal
+
+private theorem regular_dependence :
+    ObservationalDependence regularSignature.{u,v} regularActual := by
+  intro i
+  let p : RegularParameters.{u,v} :=
+    @RegularParameters.mk (ULift.{u} ℝ) inferInstance (ULift.{v} ℝ)
+      inferInstance inferInstance 1 ContinuousLinearMap.norm_id_le 0 (by simp)
+  refine ⟨p, 0, ULift.up 1, ?_⟩
+  intro h
+  have hz := congrArg (fun f : ℕ → ULift.{v} ℝ => (f 0).down) h
+  change (0 : ℝ) = 1 at hz
+  exact zero_ne_one hz
+
+def regularFamilyRegistration : Registration regularArena.{u,v}
+    (type_of% (@tendsto_pow_of_regular.{u,v})) where
+  actual := regularActual
+  bridge := Iff.rfl
+  variation := ⟨regular_actual_law, regularRejected, regular_rejected_law⟩
+  sensitivity := ⟨fun i => ⟨regularRejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, regular_rejected_law⟩,
+    fun e => nomatch e⟩
+  dependence := regular_dependence
+
+def regularRegistration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@tendsto_pow_of_regular.{u,v})
+      (Realization regularSignature.{u,v}) Unit Unit where
+  unitName := `Reg.D5.S3.HilbertOperators.AlternatingProjectionStrong.regularUnit
+  realizationName := `Reg.D5.S3.HilbertOperators.AlternatingProjectionStrong.regularFamilyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨regularArena⟩
+  objectArena := .source ⟨regularArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source regularArena ⟨regularFamilyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize regularSignature (fun _ p x n => (p.T ^ n) x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.HilbertOperators.AlternatingProjectionStrong
+    definition := none
+    coordinates := #[0,1,2,3,4,5,6,8,9]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","body","body","body",
+        "body","body","body","fn","fn","arg"]
+      stateBinder := 7
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.HilbertOperators.AlternatingProjectionStrong
