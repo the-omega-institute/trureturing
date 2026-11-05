@@ -139,4 +139,5 @@ For every natural n at least one, n! times coefficient n of A equals f(0,n-1), v
 - Truth anchor: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.original_exists_unique`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.primitive`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.primitive_zero`
+- Dependency: [D5/S1/Recurrence/Residue/IntegralEGFComposition](../Residue/IntegralEGFComposition.md)
 - Dependency: [D5/S1/Recurrence/Residue/QuarticEGFFixedPoint](../Residue/QuarticEGFFixedPoint.md)

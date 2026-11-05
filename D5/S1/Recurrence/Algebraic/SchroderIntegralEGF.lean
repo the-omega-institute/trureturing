@@ -18,6 +18,7 @@ Direct frozen dependencies for these two declarations: none.
 -/
 
 import D5.S1.Recurrence.Residue.QuarticEGFFixedPoint
+import D5.S1.Recurrence.Residue.IntegralEGFComposition
 import Mathlib.RingTheory.PowerSeries.Schroder
 import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
 
