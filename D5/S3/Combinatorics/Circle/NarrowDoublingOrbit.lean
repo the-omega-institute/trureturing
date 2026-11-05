@@ -993,7 +993,7 @@ theorem narrow_explicit_numerator {X Q : ℕ} (hX : 3 ≤ X) (hodd : Odd X)
         congrArg (fun n : ℕ => (n : ZMod r))
           (Nat.sub_add_cancel (by omega : 1 ≤ s.val))
     unfold gapExponent
-    simp only [he, mul_comm, hunit, sub_self, ZMod.val_zero]
+    rw [he, mul_comm (u : ZMod r) (s.val : ZMod r), hunit, sub_self, ZMod.val_zero]
   have hsum : (∑ i ∈ Finset.range s.val, (2 : ℤ) ^ gapExponent r u i) =
       (∑ i ∈ Finset.range (s.val - 1), (2 : ℤ) ^ gapExponent r u i) + 1 := by
     conv_lhs => rw [← Nat.sub_add_cancel (by omega : 1 ≤ s.val)]
