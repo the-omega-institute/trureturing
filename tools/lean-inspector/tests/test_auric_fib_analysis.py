@@ -117,6 +117,39 @@ class FiniteAnalysisContract(unittest.TestCase):
         self.assertIsNone(report["escape_rate"])
         return report
 
+    def test_law_family_golden_degeneracies_and_unverified_claims(self):
+        def request(masses):
+            return dict(arena='law-family', binding={'accepted_axioms': []}, plan={},
+                        acquisition=dict(kind='infinite', reason='supplied infinity claim'),
+                        law_family=dict(mode_pairing=[]),
+                        point=dict(law=masses), point_unavailable_reason='',
+                        facts=[dict(kind='separated', uses_target_results=True)],
+                        task=['0', '0', '0', '1', '0'])
+        star = self.execute(request(['4/8', '1/8', '1/8', '1/8', '1/8']), direct=True)
+        self.assertEqual(q(star['association_coordinate']['delta']), Fraction(3, 64))
+        self.assertEqual(q(star['residuals']['fiber_width']), Fraction(1, 4))
+        self.assertEqual(q(star['association_coordinate']['product_completion'][3]), Fraction(1, 14))
+        self.assertEqual(q(star['residuals']['R_f']['value']), Fraction(3, 56))
+        self.assertEqual(star['association_coordinate']['family_capture']['status'], 'unknown')
+        self.assertIsNone(star['source_contract']['binding'])
+        self.assertEqual(star['disposition']['readings']['escape_rate']['kind'], 'unavailable')
+        for i in range(5):
+            vertex = self.execute(request(['1' if j == i else '0' for j in range(5)]), direct=True)
+            self.assertEqual(q(vertex['residuals']['fiber_width']), 0)
+            if i == 4:
+                self.assertEqual(q(vertex['pyramid_coordinates']['r']), 0)
+                self.assertEqual(vertex['residuals']['R_f']['status'], 'apex')
+                self.assertEqual(q(vertex['residuals']['R_f']['value']), 0)
+                self.assertIsNone(vertex['association_coordinate']['conditional_endpoint_independent'])
+        a = self.execute(request(['1/8', '2/8', '1/8', '1/8', '3/8']), direct=True)
+        b = self.execute(request(['1/8', '1/8', '2/8', '1/8', '3/8']), direct=True)
+        self.assertEqual(a['association_coordinate']['delta'], b['association_coordinate']['delta'])
+        self.assertEqual(a['residuals']['fiber_width'], b['residuals']['fiber_width'])
+        self.assertEqual(a['pyramid_coordinates']['X'], b['pyramid_coordinates']['Y'])
+        for name in ('seam_readout', 'guard', 'reply', 'R_guard', 'native_continuation'):
+            self.assertEqual(star['disposition']['readings'][name]['kind'], 'not-applicable')
+        self.assertNotIn('R_guard', star['residuals'])
+
     def test_raw_generic_evidence_boundary(self):
         request = {
             "arena": "typed-source", "binding": {},
