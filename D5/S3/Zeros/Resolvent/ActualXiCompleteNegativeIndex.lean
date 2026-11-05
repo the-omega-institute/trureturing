@@ -228,8 +228,8 @@ theorem actual_upper_of_finite_representatives [Finite QuartetRepresentative] :
       linarith
     exact (node_real_positive n him).2.1.le
 
-/-- The existing owner-local `node_large_finite` and `weight_ne_zero` must be
-exposed at ActualXiIntegerCriterion during later integration. No copies here. -/
+/-- An embedded family of distinct off-line quartets supplies the same number
+of negative polynomial directions, using the original owner-local suppliers. -/
 theorem actual_lower_of_rep_embedding {k : ℕ}
     (e : Fin k ↪ QuartetRepresentative) :
     (k : WithTop ℕ) ≤ negativeIndex actualEnergy := by

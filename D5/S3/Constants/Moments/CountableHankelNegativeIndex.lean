@@ -24,13 +24,6 @@ The form uses ordinary complex squares on real polynomials and the entire
 absolutely convergent spectrum. A finite cover must contain every nonreal
 index of nonzero weight, on one of its two indicated sides.
 
-UNCOMPILED SOURCE PREPARATION. The pinned supplier
-d7b61643dc7c4c0dc660d47282738fb825199bd2 already exposes
-`CountableHankelNegativeWitness.square_summable`. Its proof stays at that owner.
-The negative-index definition is the existing `ExactStickyReduction.negativeIndex`.
-API review uses Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679 / Lean 4.35;
-this file has not been elaborated, compiled, or accepted by repository checks.
-
 The index type is arbitrary: summability, rather than an enumeration, controls
 the full spectrum. Neither node/selector injectivity nor involutivity of the
 permutation is needed. The theorem's telescope is preserved from the input.
