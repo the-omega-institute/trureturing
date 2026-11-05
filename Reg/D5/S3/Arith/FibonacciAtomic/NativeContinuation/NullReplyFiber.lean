@@ -27,4 +27,30 @@ def initializedWindow : Application.{0,0,0,0,0,0}
       actions := LeanInformationAudit.AuricFib.NativePrediction.allActions
       evidence := .closed (LeanInformationAudit.AuricFib.NativePrediction.memory_closed _) } }
 
+def initializedWindowMissing : Application.{0,0,0,0,0,0}
+    NativeContinuation.NullReplyFiber.native_execution where
+  evidence := initializedWindow.evidence
+
+theorem wrongOccurrence : True := trivial
+
+def wrongSource : NativeSource wrongOccurrence where
+  reconstruction := by
+    have h : True = (type_of% NativeContinuation.NullReplyFiber.native_execution) :=
+      propext ⟨fun _ => NativeContinuation.NullReplyFiber.native_execution, fun _ => trivial⟩
+    rw [← h]
+    exact .exact
+
+def wrongSourceOptional : Application.{0,0,0,0,0,0} wrongOccurrence where
+  evidence := .typed {
+    source := LeanInformationAudit.Analysis.Source.unobserved wrongOccurrence
+      `Reg.D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber
+    plan := { task := (), initial := [], additions := [] }
+    acquisition := .unavailable "wrong-source optional probe" }
+  prediction := some {
+    source := wrongSource
+    contract := {
+      summary := LeanInformationAudit.AuricFib.NativePrediction.Summary.memory
+      actions := LeanInformationAudit.AuricFib.NativePrediction.allActions
+      evidence := .closed (LeanInformationAudit.AuricFib.NativePrediction.memory_closed _) } }
+
 end Reg.D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber

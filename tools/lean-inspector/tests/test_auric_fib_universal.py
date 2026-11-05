@@ -118,6 +118,37 @@ end AuricFibUniversalProduction
         cleanup_module(MODULE)
         cls.work.cleanup()
 
+    def test_native_prediction_integration_probe(self):
+        owner = 'Reg.D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber'
+        report = self.directory / 'native-prediction-probe.json'
+        with zipfile.ZipFile(STATE / 'modules' / (owner + '.zip')) as bundle:
+            for suffix in ('', '.materials.zip', '.provenance.json'):
+                Path(str(report) + suffix).write_bytes(bundle.read('raw-lean-report.json' + suffix))
+        rows = {row['application'].removeprefix(owner + '.'): row
+                for row in fib_analysis.consume(report)['applications']}
+        actual = {}
+        for name, reason in (
+                ('initializedWindowMissing', 'no source-owned operation contract supplied'),
+                ('wrongSourceOptional',
+                 'operation evidence unavailable: unclassified_form:source.statement_reconstruction')):
+            row = rows[name]
+            self.assertIsNotNone(row['request'])
+            reading = row['reading']
+            self.assertEqual(reading['disposition']['readings']['source_contract']['kind'], 'available')
+            found = reading['continuation_target']['predictive_closure']
+            self.assertEqual((found['kind'], found['reason']), ('unknown', reason))
+            self.assertFalse(reading['disposition']['is_lean_proof'])
+            actual[name] = found
+        source = ROOT / (owner.replace('.', '/') + '.lean')
+        result = json.dumps({
+            'module': owner, 'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest(),
+            'applications': actual}, sort_keys=True)
+        print('FIB_INTEGRATION_PROBE ' + result, flush=True)
+        if summary_path := os.environ.get('GITHUB_STEP_SUMMARY'):
+            with open(summary_path, 'a') as summary:
+                summary.write('FIB integration probe' + chr(10) + chr(10))
+                summary.write('```json' + chr(10) + result + chr(10) + '```' + chr(10))
+
     def test_compiled_clients_boundaries(self):
         current = self.first
         for key in ('finite', 'constant', 'quotient', 'restricted', 'empty', 'singleton', 'delayed', 'decodedNat'):
