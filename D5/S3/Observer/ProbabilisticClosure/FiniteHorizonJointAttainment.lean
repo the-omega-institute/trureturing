@@ -26,7 +26,6 @@ open scoped ENNReal BigOperators
 open AdaptiveMarkerStoppingTails BeneficialMarkerDeflection FiniteAtomLinearRealization
 
 local instance : MeasurableSpace State := ⊤
-local instance : MeasurableSpace (List Bool) := ⊤
 
 /-- The next even-depth shape is selected using only the acquired actions. -/
 def shapePolicy {Seed : Type*} [MeasurableSpace Seed] (d : ℕ → Bool) : Policy Seed where
