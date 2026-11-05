@@ -112,15 +112,106 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolve
 
 For the original complex atomic moments 0,...,q, the actual S/W/Z satisfy 0<=W, every abs(S(t))<=W, W<=delta_q E/4, and abs(Z)<=4 exp(D/2)W. Positivity and shifts use actual finite causal squares; the quantitative upper payment uses the retained compiled moment theorem.
 
+**Theorem 1.10 (correlation_neg).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.correlation_neg`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.correlation_neg` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Resolvent symmetry and translated-pair supplier consumed by the finite atom construction.
+
+**Theorem 1.11 (W_eq_exponential_deficit).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.W_eq_exponential_deficit`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.W_eq_exponential_deficit` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Resolvent symmetry and translated-pair supplier consumed by the finite atom construction.
+
+**Definition 1.12 (shiftedNodes).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.shiftedNodes`
+
+*Formalization.* `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.shiftedNodes` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Resolvent symmetry and translated-pair supplier consumed by the finite atom construction.
+
+**Definition 1.13 (shiftedCoeffs).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.shiftedCoeffs`
+
+*Formalization.* `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.shiftedCoeffs` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Resolvent symmetry and translated-pair supplier consumed by the finite atom construction.
+
+**Theorem 1.14 (shifted_correlation).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.shifted_correlation`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.shifted_correlation` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Resolvent symmetry and translated-pair supplier consumed by the finite atom construction.
+
+**Theorem 1.15 (S_even).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.S_even`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.S_even` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Resolvent symmetry and translated-pair supplier consumed by the finite atom construction.
+
+**Theorem 1.16 (shifted_W).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.shifted_W`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.shifted_W` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Resolvent symmetry and translated-pair supplier consumed by the finite atom construction.
+
 ## References
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.S_abs_le_W`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.S_even`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.S_half_window`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.W_eq_exponential_deficit`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.W_nonneg`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.actual_fullR_correlation`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.actual_fullR_resolvent_identity`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.actual_kernel_moment_balance`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.actual_resolvent_control`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.correlation_continuous`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.correlation_neg`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.original_K_split`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.shiftedCoeffs`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.shiftedNodes`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.shifted_W`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentResolvent.shifted_correlation`
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelMomentMixture](ActualKernelMomentMixture.md)

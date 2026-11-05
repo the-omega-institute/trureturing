@@ -1,0 +1,9 @@
+**Convention 10.1 (Labels, model and parameter range).** Let $I=\{A,B,C\}$ be a set of three distinct party labels, let $N_k\in\mathbb Z_{\ge1}$ for $k\in I$, and put $N=N_A+N_B+N_C\ge3$ and $x_k=N_k/N$. Fix an integer $n\ge2$ and a real $a>1$. Use exactly the fully symmetric pure bosonic Gaussian state and normalized replica integrals of Definition 6.3: $\psi_a(y)=\exp(-y^\top Wy/2)$, $W=(a-e^-)I_N+e^-J_N$, with $e^-$ and $\varepsilon(a)$ of Definition 6.1. The twists are the two coordinate translations and the identity on $\mathbb Z_n^2$; a bipartite cut uses the cyclic twist on $\mathbb Z_n$. All logarithms are natural. Thus $0<\varepsilon(a)<1$ by Lemma 6.2. A sum indexed by $k\in I$ has three summands. Equivalently, for the numeric set $V=\{x_A,x_B,x_C\}$ and $m(v)=|\{k\in I:x_k=v\}|$,
+
+$$
+\sum_{k\in I}f(x_k)=\sum_{v\in V}m(v)f(v),\qquad
+\prod_{k\in I}h(x_k)=\prod_{v\in V}h(v)^{m(v)}.
+$$
+
+The large-squeezing limit below fixes $n$ and the three party sizes; none of them varies with $a$.
+

@@ -16,6 +16,19 @@ internal sealed class PositiveFourierApproximationRefutationDocument : IScribeDo
         H("Refutation of Herrera's function-approximation conjecture"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("abs-sin-nat-mul-le"),
+                DeclarationHandle.Create(Prefix + "abs_sin_nat_mul_le"),
+                H("Sine at a natural multiple"),
+                StatementSource.FromAuthor(Disp(All("n", Nat(), All("u", Real(),
+                    new Formula.Relation(
+                        new Formula.Absolute(Call("sin", Mul(Cast(Id("n"), Real()), Id("u")))),
+                        FormulaRelationOperator.LessThanOrEqual,
+                        Mul(Cast(Id("n"), Real()), new Formula.Absolute(Call("sin", Id("u"))))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The absolute sine of a natural multiple is bounded by that multiple times the absolute sine of the original angle."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("is-admissible"),
                 DeclarationHandle.Create(Prefix + "IsAdmissible"),
                 H("Admissible positive-Fourier approximants"),

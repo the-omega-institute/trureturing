@@ -1,0 +1,16 @@
+**定义 29.1（来源可见的实 Hermitian steering 空间）。** 沿用定义 28.1，在实 Hermitian 空间上定义
+
+$$
+\begin{aligned}
+\mathcal S_\rho(A)&=\operatorname{Tr}_H[(A\otimes I_M)\rho],
+\qquad A\in\operatorname{Herm}(H),\\
+\mathcal W_\rho&=\mathcal S_\rho(\operatorname{Herm}(H))
+\subseteq\operatorname{Herm}(M_0),\\
+\mathcal W_\rho^\perp&=\{D\in\operatorname{Herm}(M_0):
+ \operatorname{Tr}(DZ)=0\ (Z\in\mathcal W_\rho)\}.
+\end{aligned}
+\tag{29.1}
+$$
+
+内积为实 Hilbert–Schmidt 配对。$\mathcal S_\rho(p)=\sigma_p$；这里的 steering 指这一固定来源的算子关系，不附加任何新准备权限。
+

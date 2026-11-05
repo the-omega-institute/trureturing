@@ -1,0 +1,11 @@
+**定义 9.1（带终端的实际右梳）。**对整数 $N\ge0$，置 $\Sigma_N=\{0,1,2\}^N$。对 $\sigma=(\sigma_1,\ldots,\sigma_N)$，严格按下列括号递推：
+
+$$
+H_0(a;z)=z,\qquad
+H_N^\sigma(a;z)
+=a\cdot U^{\sigma_1}H_{N-1}^{(\sigma_2,\ldots,\sigma_N)}(a;z).
+\tag{9.1}
+$$
+
+每条历史含有 $N$ 个左叶 $a$ 和一个终端 $z$；标记施于整个右子树。记 $s(\sigma)=\sum_i\sigma_i$。
+

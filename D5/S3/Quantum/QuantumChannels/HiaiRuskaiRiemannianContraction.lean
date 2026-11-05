@@ -6,7 +6,7 @@
    utility: none
    digest: Exact qubit CQ contraction coefficients for dual WY, geometric and BKM metrics. -/
 
-/-
+/- Escape audit unfinished for Pinching.cauchy_three: https://github.com/the-omega-institute/trureturing/issues/25122
 proof_shape: result: bind-only; all private lemmas are consumed bind-only auxiliaries.
 escape_witness: none
 admission_basis: open-problem-resolution (#13774; Proved)
@@ -281,7 +281,7 @@ private lemma extreme_metric_pauli (s w1 w2 w3 y1 y2 y3 : ℝ) (hs : 0 ≤ s) (h
     apply resolvent_equation_unique s hs _ hp hp.isHermitian; rw [resolvent_equation s hs _ hp hp.isHermitian, Pauli.candidate_equation s w1 w2 w3 y1 y2 y3 hs hw]
   rw [metric_extreme_resolvent s hs _ hp hp.isHermitian _ hA,he]; simp only [hA.eq]; exact Pauli.candidate_quadratic s w1 w2 w3 y1 y2 y3 hs hw
 namespace Pinching
-private theorem cauchy_three (w1 w2 w3 y1 y2 y3 : ℝ) : ((dotProduct (![w1, w2, w3] : Fin 3 → ℝ) ![y1, y2, y3]))^2 ≤ (dotProduct (![w1, w2, w3] : Fin 3 → ℝ) ![w1, w2, w3]) * (dotProduct (![y1, y2, y3] : Fin 3 → ℝ) ![y1, y2, y3]) := by
+theorem cauchy_three (w1 w2 w3 y1 y2 y3 : ℝ) : ((dotProduct (![w1, w2, w3] : Fin 3 → ℝ) ![y1, y2, y3]))^2 ≤ (dotProduct (![w1, w2, w3] : Fin 3 → ℝ) ![w1, w2, w3]) * (dotProduct (![y1, y2, y3] : Fin 3 → ℝ) ![y1, y2, y3]) := by
   simpa only [dotProduct, pow_two] using Finset.sum_mul_sq_le_sq_mul_sq
     (Finset.univ : Finset (Fin 3)) (![w1, w2, w3] : Fin 3 → ℝ) ![y1, y2, y3]
 private theorem bures_pinching_bound (w1 w2 w3 y1 y2 y3 : ℝ) (hw : (dotProduct (![w1, w2, w3] : Fin 3 → ℝ) ![w1, w2, w3]) < 1) : y1^2/(1-w1^2) ≤ (dotProduct (![y1, y2, y3] : Fin 3 → ℝ) ![y1, y2, y3]) + ((dotProduct (![w1, w2, w3] : Fin 3 → ℝ) ![y1, y2, y3]))^2/(1-(dotProduct (![w1, w2, w3] : Fin 3 → ℝ) ![w1, w2, w3])) := by

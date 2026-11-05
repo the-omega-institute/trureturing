@@ -1,0 +1,37 @@
+### 定理 2.3（回接的固定代数与全部固定状态）
+
+<a id="thm-c123-fixed-blocks"></a>
+
+$\mathfrak F_\sigma$ 是含幺 $C^*$-子代数，在 $\sigma$ 的模作用下不变。
+在它的分解 [(9)](#eq-c123-algebra-blocks) 中，$\sigma$ 具有乘积块
+[(10)](#eq-c123-reference-blocks)，并且
+
+<a id="eq-c123-fixed-states"></a>
+
+$$
+\operatorname{Fix}(\mathcal T_\sigma)
+ =\Gamma_\sigma(\mathfrak F_\sigma)
+ =\left\{\bigoplus_\alpha Q_\alpha\otimes\omega_\alpha:
+ Q_\alpha\in\mathcal B(L_\alpha)\right\}.
+\tag{12}
+$$
+
+其中的密度矩阵恰由 $Q_\alpha\ge0$、$\sum_\alpha\operatorname{Tr} Q_\alpha=1$ 给出；忠实性等价于每个 $Q_\alpha>0$。
+
+**证明。**
+记 $\Psi=\mathcal T_\sigma^*$。若 $\Psi(A)=A$，则
+$D=\Psi(A^*A)-A^*A\ge0$，而
+$\operatorname{Tr}\sigma D=0$，因为 $\mathcal T_\sigma(\sigma)=\sigma$。
+$\sigma>0$ 迫使 $D=0$，对 $AA^*$ 也一样。
+由引理~[2.1](#lem-c123-schwarz)，固定元素可与任意乘积穿过 $\Psi$；故固定空间对乘法、伴随封闭，并含单位。
+
+有限维 Ces
+`aro 平均
+$\mathcal E=\lim_{n\to\infty}n^{-1}\sum_{k=0}^{n-1}\Psi^k$
+存在且投影到固定空间：含幺完全正性给 $\|\Psi^k\|\le1$，所以单位圆上的特征值没有非平凡 Jordan 块；除特征值1以外的平均均趋于零。
+$\mathcal E$ 是保持 $\sigma$ 的含幺完全正投影。
+定理~[2.2](#thm-c123-finite-takesaki) 给出模不变性及乘积块。
+最后由 [(8)](#eq-c123-weighted-symmetry) 和 $\Gamma_\sigma$ 可逆，得到固定空间等式；块内
+$\Gamma_\sigma(A_\alpha\otimes I)
+=S_\alpha^{1/2}A_\alpha S_\alpha^{1/2}\otimes\omega_\alpha$，即得全部分类。
+

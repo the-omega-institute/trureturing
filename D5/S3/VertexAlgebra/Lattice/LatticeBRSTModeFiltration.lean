@@ -30,7 +30,7 @@ open LatticeGeneratingFieldLocality
 open D5.S3.HomologicalAlgebra
 open LatticeLightConeCoordinates LatticeLightConeCoordinates.NullFrame
 open LatticeQuartetContraction
-open private actualBasis_apply sector_current sector_add sector_smul ghost_sector from D5.S3.VertexAlgebra.Lattice.LatticeQuartetContraction
+open private sector_current sector_add sector_smul from D5.S3.VertexAlgebra.Lattice.LatticeQuartetContraction
 open D5.S3.Quantum.Fermionic.CountableOccupationFock
 open D5.S3.Quantum.Fermionic.BcGhostFock
 open D5.S3.Quantum.Fermionic.BcGhostCharge

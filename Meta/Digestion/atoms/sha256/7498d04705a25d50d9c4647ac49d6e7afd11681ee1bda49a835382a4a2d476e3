@@ -1,0 +1,31 @@
+### 例 3.2（有旋转商，却没有不变补空间）
+
+<a id="c133geo-jordan"></a>
+
+令
+
+$$
+A=\begin{pmatrix}-\tfrac12&-\tfrac{\sqrt3}2\\
+                  \tfrac{\sqrt3}2&-\tfrac12\end{pmatrix},
+ \qquad
+ V=\mathbb R^2\oplus\mathbb R^2,\qquad
+ U(x,y)=(Ax+y,Ay).
+$$
+
+由于 $I+A+A^2=0$，直接计算得
+
+<a id="c133geo-jordan-residual"></a>
+
+$$
+D(x,y)=((I+2A)y,0),\qquad
+ \operatorname{ker} D=\operatorname{Ran} D=\mathbb R^2\oplus\{0\}.
+\tag{10}
+$$
+
+这里 $I+2A$ 可逆。取
+$R((x,y),(x',y'))=y\cdot y'$，便得到合法读数；第一平面全部不可读，可见商由第二坐标 $y$ 表示，商上的时钟为 $A$。
+
+这个例子的 $\operatorname{ker} D$ 恰是全不可读的第一平面，因此不能用 $\operatorname{ker} D$ 代替 $V/DV$。甚至不存在与第一平面互补的 $U$ 不变空间：若某个补空间写成 $x=Ty$，不变性要求
+$TA-AT=I$，取迹却得到 $0=2$。第二坐标只是商坐标，并非原空间中的不变旋转平面。原过程仍可满足
+$U^3(x,y)=(x+3A^2y,y)$，同时可见商严格三步闭合。
+

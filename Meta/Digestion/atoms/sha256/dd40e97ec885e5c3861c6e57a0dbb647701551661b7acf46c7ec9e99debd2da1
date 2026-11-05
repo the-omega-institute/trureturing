@@ -1,0 +1,48 @@
+**定义 140.1（候选 C118 的对象、指定返回与原记录）。** 对象为一个给定对象集中的有限复矩阵直和
+
+$$
+\mathcal A=\bigoplus_\alpha M_{d_\alpha}(\mathbb C),\qquad
+\tau_{\mathcal A}=\sum_\alpha\operatorname{Tr}_{d_\alpha}.
+\tag{140.1}
+$$
+
+这些载体、复结构和已供空间边承接 C101；也可在 C115 明列的二分量结合闭合等前件下取得相应局部载体。本候选不由下面的闭环读数重建任意正锥的载体。原实际箭头均为正复线性迹不增映射，菜单对已有箭头的有限合法接续、所声明的有限经典标签及其遗忘闭合。使用正归一线性态—效果评价；若由概率拆并起步，则须另给 C115 定义 5.1 的全部效果拆并合同。数学态和效果的存在不等于相应实际准备与读出已供应。
+
+指定返回族 $\mathscr R$ 是签名的一部分，而非“所有碰巧存在数学正逆的箭头”的缩写。其非零成员为原实际箭头 $(S:\mathcal A\to\mathcal B,U:\mathcal B\to\mathcal A,q)$，$q>0$。令
+
+$$
+E_S=S^\dagger(I_{\mathcal B}),\quad P=\operatorname{supp}E_S,
+\quad G=S(I_{\mathcal A}),\quad Q=\operatorname{supp}G.
+\tag{140.2}
+$$
+
+要求 $P,Q$ 各位于一个原简单块内，$U(Y)=PU(QYQ)P$，并在原支撑角上同时满足
+
+$$
+US(X)=qX\quad(X\in P\mathcal AP),\qquad
+SU(Y)=qY\quad(Y\in Q\mathcal BQ).
+\tag{140.3}
+$$
+
+族中同时包含反向资料 $(U,S,q)$。支撑角仅为原代数中的数学角，不另供压缩对象。正性和正确成功效果给 $S(X)=S(PXP)=QS(X)Q$；直接复用本卷定义 120.1 的支撑论证及定理 121.1，得
+
+$$
+S=\operatorname{Ad}_{G^{1/2}}\beta_S,\qquad
+\beta_S:P\mathcal AP\longrightarrow Q\mathcal BQ
+\text{ 为幺 Jordan 保星同构}.
+\tag{140.4}
+$$
+
+两角阶数相同。阶数至少二时，$\beta_S$ 有保乘法或反乘法的唯一符号 $\epsilon_S\in\{+1,-1\}$；反向资料符号相同。一阶返回没有可区分的方向，不进入有符号返回图。图的顶点是阶数至少二的原简单块，标签副本也作为原块计入。
+
+保留定义 120.2 的**同一实际细记录合同 F**：对每条原实际成功箭头 $T$，存在原实际有限联合标签箭头及原实际遗忘
+
+$$
+\widehat T(X)=(S_a(X))_{a\in L},\qquad
+T=d_{\mathcal B}\widehat T=\sum_{a\in L}S_a,
+\quad d_{\mathcal B}((Y_a)_a)=\sum_aY_a,
+\tag{140.5}
+$$
+
+每条非零 $S_a$ 都有 $\mathscr R$ 中的资料。零支不需逆。F 量化全部原实际箭头，包括实际标签箭头、遗忘、补偿以及其有限接续；它保留 $\widehat T$ 的原细记录与原标签分组，不以另一个抽象 Kraus 实现替换它。下面的回路检验只作用于指定返回资料及其所规定的支撑接续；从这些检验到全部原过程的桥梁正是这个全称 F。
+

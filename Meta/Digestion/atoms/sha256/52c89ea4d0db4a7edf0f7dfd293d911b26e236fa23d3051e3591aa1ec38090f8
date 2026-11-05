@@ -1,0 +1,88 @@
+**定理 22.1（原比较的约化算子代数与自动对合相容）。** 仅用 P/G 和定义 21.1 的固定选择，$\mathfrak h$ 是同一指定 $\operatorname{Lie}(G)$ 内的 Lie 子代数，$\theta$ 是它的对合自同构，且
+
+$$
+[\mathfrak p_0,\mathfrak p_0]=\mathfrak k,\qquad
+[\mathfrak k,\mathfrak p_0]\subset\mathfrak p_0,\qquad
+[\mathfrak k,\mathfrak k]\subset\mathfrak k,
+\qquad Z(\mathfrak h)=0,\qquad[\mathfrak h,\mathfrak h]=\mathfrak h.
+\tag{22.1}
+$$
+
+此处两个子空间的括号表示括号值的实张成。任何实线性 $J$ 若满足 (21.2) 的前两式，就自动满足
+
+$$
+[JX,Y]=J[X,Y]=[X,JY],\qquad J\theta=-\theta J,
+\qquad J\mathfrak p_0=\mathfrak k,\quad J\mathfrak k=\mathfrak p_0.
+\tag{22.2}
+$$
+
+这不预设原 D，不使用 AC，也不预设复矩阵分类。
+
+**证明。** P/G 到 Euclidean Jordan 结构及 $L(E)\subset\operatorname{Lie}(G)$，只复用定理 3.1 中先于 V95 应用的 BW 部分。其成熟的稳定子构造在这里还直接给内导子恒等式：若 $T\in G_u=G\cap O(q)$，则 $TL_cT^{-1}$ 仍是原 Lie 代数中的自伴随元，在 $u$ 上取值 $Tc$，故由 $L$ 的唯一性等于 $L_{Tc}$。对 $\delta_{ab}=[L_a,L_b]$，它在原 Lie 代数内、斜伴随且消去 $u$，所以 $\exp(t\delta_{ab})\in G_u$。微分上述共轭式即得
+
+$$
+\delta_{ab}=[L_a,L_b]\in\operatorname{Der}(E,\circ),\qquad
+[\delta_{ab},L_c]=L_{\delta_{ab}c}.
+\tag{22.3}
+$$
+
+后一等式作用于任意原响应就是导子 Leibniz 律，故前一归属也已证明；这是一般 Jordan 内导子性质在当前指定群内的 BW 实现，不另假设内导子来自更大的群。对 $z\in Z$，交换 $L_z$ 与 $L_a,L_b$ 得 $\delta_{ab}z=0$。故 $\mathfrak k$ 消去 $Z$，保持 $E_0$。由 (22.3)，$[\mathfrak k,L(E_0)]\subset L(E_0)$；再用 Jacobi 得
+
+$$
+[\delta,[L_a,L_b]]=[L_{\delta a},L_b]+[L_a,L_{\delta b}]
+\quad(\delta\in\mathfrak k).
+\tag{22.4}
+$$
+
+因此 $[\mathfrak k,\mathfrak k]\subset\mathfrak k$。$[L_z,L_a]=0$ 又使所有 $[L_a,L_b]$ 等于 $[L_{a_0},L_{b_0}]$，给第一条。自伴随与斜伴随子空间交为零，故 (21.1) 的和确为直和。$L(E)$ 已在指定 $\operatorname{Lie}(G)$，取括号和线性张成始终留在其中；没有把 $G$ 扩大成别的锥群。负伴随在算子括号下是自同构，且在 $\mathfrak k$ 上为 $+1$、在 $\mathfrak p_0$ 上为 $-1$。
+
+为核对中心及括号张成性，使用作用于全部原 $E$ 的实算子迹
+
+$$
+\beta(X,Y)=\operatorname{Tr}_{\mathbb R,E}(XY),\qquad
+H(X,Y)=-\beta(X,\theta Y)
+=\operatorname{Tr}_{\mathbb R,E}(XY^{\dagger_q}).
+\tag{22.5}
+$$
+
+$\beta$ 对 Lie 括号不变；在 $\mathfrak p_0$ 上正定，在 $\mathfrak k$ 上负定，二者互相正交，故在 $\mathfrak h$ 上非退化。$H$ 正定。若 $\delta+L_a\in Z(\mathfrak h)$，其中 $a\in E_0$，与每个 $L_b$、$b\in E_0$ 取括号并分开两种伴随型，得 $[L_a,L_b]=0$、$L_{\delta b}=0$。因 $L_xu=x$，后式给 $\delta b=0$。对 $b\in Z$ 的括号亦为零，所以 $a\in Z\cap E_0=0$；而 $\delta$ 在 $E_0$ 和 $Z$ 都为零，故 $\delta=0$。这证明无中心。
+
+对不变非退化型，
+
+$$
+[\mathfrak h,\mathfrak h]^{\perp_\beta}
+=\{X:\beta([X,Y],W)=0\ \text{对所有 }Y,W\}
+=Z(\mathfrak h)=0.
+\tag{22.6}
+$$
+
+有限维性遂给 $[\mathfrak h,\mathfrak h]=\mathfrak h$。另外 $L(Z)$ 与全部 $L(E)$ 交换，Jacobi 使它也与 $\mathfrak k$ 交换，所以
+
+$$
+\mathfrak l:=\operatorname{Lie}\langle L(E)\rangle
+=L(Z)\oplus\mathfrak h,\qquad
+Z(\mathfrak l)=L(Z),\qquad
+[\mathfrak l,\mathfrak l]=\mathfrak h.
+\tag{22.6a}
+$$
+
+因此 $\mathfrak h\cong\mathfrak l/Z(\mathfrak l)$ 的“约化”只发生在比较算子代数；其忠实作用仍在全部原 $E$ 上。以上完全未用 D 或简单 Jordan 分类。这里先只称 $\theta$ 为伴随对合；后面取得矩阵表示后才使用“Cartan 对合”和“复型对称空间”的术语。
+
+现在设 $J$ 满足 (21.2) 前两式。由反对称性，
+
+$$
+[JX,Y]=-[Y,JX]=-J[Y,X]=J[X,Y],
+\tag{22.7}
+$$
+
+所以 $J$ 在质心中。对由括号张成自身的（perfect）Lie 代数，质心交换，且质心元对每个不变双线性型对称；这是 Benkart–Neher §2.1 及 Lemma 2.1(f) 的成熟事实。在当前有限实域上，perfect 条件由 (22.6) 给出，不变型正是 $\beta$，所以其前件已核对。亦可直接在括号 $[U,V]$ 上用两条质心等式与 $\beta$ 的不变性验证这两点，再由括号张成延拓至全部 $\mathfrak h$。
+
+令 $S=\theta J\theta$。因 $\theta$ 为自同构，$S$ 也在质心中，故 $SJ=JS$。$J$ 对 $\beta$ 对称和 (22.5) 给它对正定 $H$ 的伴随恰为 $J^{*_H}=S$。于是 $N=J^{*_H}J$ 正定自伴随，且
+
+$$
+N^2=(J^{*_H})^2J^2=\operatorname{Id}.
+\tag{22.8}
+$$
+
+正定谱只能为 $1$，所以 $N=\operatorname{Id}$，$J^{*_H}=J^{-1}=-J$。因此 $\theta J\theta=-J$；$J$ 交换 $\theta$ 的正负特征空间，给 (22.2)。$\mathfrak h=0$ 时这些结论也成立，唯一映射为零。∎
+
