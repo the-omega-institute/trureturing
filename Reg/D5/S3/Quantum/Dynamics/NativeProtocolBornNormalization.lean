@@ -55,6 +55,9 @@ private theorem dependence : ObservationalDependence signature actual := by
   change eventMass ((.leaf ()) : NativeTree Unit) (historyEvent (fun _ => false)) ≠
     eventMass ((.leaf ()) : NativeTree Unit) (historyEvent (fun _ => true))
   simp [eventMass, historyEvent, mass, operator, omega0]
+  apply ne_of_lt
+  exact_mod_cast (Finset.card_pos.mpr (Finset.univ_nonempty :
+    (Finset.univ : Finset (Path ((.leaf ()) : NativeTree Unit))).Nonempty))
 
 def family : Registration arena (type_of% (@original_complete_born_law)) where
   actual := actual
@@ -74,8 +77,10 @@ def family : Registration arena (type_of% (@original_complete_born_law)) where
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@original_complete_born_law) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Dynamics.NativeProtocolBornNormalization.original_complete_born_law.__information_unit
-  realizationName := `Reg.D5.S3.Quantum.Dynamics.NativeProtocolBornNormalization.family
+  unitName :=
+    `D5.S3.Quantum.Dynamics.NativeProtocolBornNormalization.original_complete_born_law.__information_unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Dynamics.NativeProtocolBornNormalization.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
