@@ -12,6 +12,7 @@ import Mathlib.Dynamics.PeriodicPts.Lemmas
 import Mathlib.GroupTheory.OrderOfElement
 import Mathlib.Data.Finset.Sort
 import Mathlib.Tactic
+import Batteries.Tactic.OpenPrivate
 
 /-! # Narrow doubling orbits at arbitrary odd modulus
 
@@ -45,6 +46,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.NarrowDoublingOrbit
 
 open D5.S1.Words.AssociatedMersenne.CircularWords
+open private cycAdd_index_add from D5.S1.Words.AssociatedMersenne.CircularWords
 
 /-- Standard representatives, including nonunit seeds. -/
 def residue (X Q n : ℕ) : ℕ := (2 ^ n * Q) % X

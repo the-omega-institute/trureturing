@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/Circle/NarrowChristoffelJointRefutation
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/NarrowChristoffelJointRefutation
-   mirror-E: none(waiver:utility-refutation)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [D5/S3/Combinatorics/Circle/NarrowDoublingOrbit,
      D5/S3/Combinatorics/Circle/RunFirstEarTransport]
    utility: kind=bounded-enumeration; basis=refutes=gid:D5/S3/Combinatorics/Circle/NarrowChristoffelJointRefutation.claim; result=D5/S3/Combinatorics/Circle/NarrowChristoffelJointRefutation.result; claim=D5/S3/Combinatorics/Circle/NarrowChristoffelJointRefutation.claim
