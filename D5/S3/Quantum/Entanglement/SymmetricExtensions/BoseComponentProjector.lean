@@ -133,7 +133,10 @@ full Bose support. For the sole edge `{0,1}` on three qubits, this construction
 with component labels `0,1` is exactly `|001⟩⟨001|`. -/
 theorem disconnected_counterexample (G : SimpleGraph I) (a b : I)
     (hab : ¬ G.Reachable a b) (l m : L) (hlm : l ≠ m) :
-    ∃ E : Matrix (I → L) (I → L) ℂ, E.PosSemidef ∧
+    let w : I → L := fun i => if G.Reachable a i then l else m
+    let v : (I → L) → ℂ := fun x => if x = w then 1 else 0
+    let E := Matrix.vecMulVec v (star v)
+    E.PosSemidef ∧
       (∀ c d (hcd : G.Adj c d), pairSymmetricProjector *
         edgeMarginal c d hcd.ne E * pairSymmetricProjector = edgeMarginal c d hcd.ne E) ∧
       P I L * E * P I L ≠ E := by
@@ -142,7 +145,7 @@ theorem disconnected_counterexample (G : SimpleGraph I) (a b : I)
   let v : (I → L) → ℂ := fun x => if x = w then 1 else 0
   let E := Matrix.vecMulVec v (star v)
   have hp : E.PosSemidef := Matrix.posSemidef_vecMulVec_self_star v
-  refine ⟨E,hp,?_,?_⟩
+  refine ⟨hp,?_,?_⟩
   · intro c d hcd
     have hcol : w c = w d := by
       have hr : G.Reachable a c ↔ G.Reachable a d :=

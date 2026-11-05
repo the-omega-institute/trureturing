@@ -40,7 +40,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseComponentPro
 
 *Commentary.*
 
-Two components carrying distinct basis labels give a rank-one PSD joint operator with every required Bose edge marginal and without full Bose support. The sole edge on registers 0 and 1 with labels 0,0,1 specializes to the original three-qubit boundary. The proof uses exact tensor entries and projector identities, not a numerical test.
+The statement fixes the word w by assigning one basis label on the component of a and a distinct label elsewhere, and asserts positivity, all edge support constraints and failure of full support for the actual projector |w><w|. The sole edge on registers 0 and 1 with labels 0,0,1 specializes to the original three-qubit boundary. The proof uses exact tensor entries and projector identities.
 
 ## References
 

@@ -4,7 +4,7 @@
 
 Root partial transpose of actual star witnesses
 
-Finite register and local-label types use the original product basis. This is the root-transpose transport underlying the CLDUI companion application in Haobo Ma and Wenlin Zhang's note. The GNP cone characterization remains a separate prerequisite. Full Bose support is not asserted for a companion witness.
+Finite register and local-label types use the original product basis. This is the root-transpose transport underlying the CLDUI companion application in Haobo Ma and Wenlin Zhang's note. The GNP cone characterization is proved separately in BoseHierarchy. Full Bose support is not asserted for a companion witness.
 
 **Definition 1.1 (AllCutsPPT).**
 
