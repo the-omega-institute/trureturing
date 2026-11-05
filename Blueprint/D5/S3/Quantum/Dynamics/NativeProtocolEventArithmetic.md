@@ -42,8 +42,23 @@ For x=A+B tau the integer norm is A squared minus A B minus B squared, and the p
 
 The arithmetic inequalities do not identify q or w as the ideal probabilities of the actual chi/Petz experiments. Their empty-prefix and five-call source-history realization, preservation of original records and failure zeros, graft resource identities and total-variation comparison still require the specified original-object consumers. The cut determinant and spectral clauses of V88 theorem 24.1 remain outside this event result.
 
+**Lemma 1.3 (A positive quadratic integer is bounded below by its other embedding).**
+
+$$(\forall x: \operatorname{O}\left(\right), (\forall K: \operatorname{Real}\left(\right), 0 < K \Rightarrow \left(0 < \operatorname{realPhysical}\left(x\right) \Rightarrow \left(\operatorname{abs}\left(\operatorname{realConjugate}\left(x\right)\right) \le K \Rightarrow \operatorname{inv}\left(K\right) \le \operatorname{realPhysical}\left(x\right)\right)\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/NativeProtocolEventArithmetic.positive_lower` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Ian Stewart and David Tall (2025). *Algebraic Number Theory and Fermat's Last Theorem*. DOI: [10.1201/9781003462002](https://doi.org/10.1201/9781003462002).
+
+*Commentary.*
+
+For x in the existing inverse-golden integer ring O and a positive real K, a positive physical evaluation and absolute nonphysical evaluation at most K imply realPhysical(x) at least one divided by K. Their product is the integer quadratic norm. The physical value being positive makes this integer nonzero, so its absolute value is at least one. This arithmetic lemma supplies both the existing raw-event bound and the same-cut determinant bound in NativeProtocolBornNormalization.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Dynamics/NativeProtocolEventArithmetic.original_event_arithmetic`
 - Truth anchor: `D5/S3/Quantum/Dynamics/NativeProtocolEventArithmetic.original_event_resource_bounds`
+- Truth anchor: `D5/S3/Quantum/Dynamics/NativeProtocolEventArithmetic.positive_lower`
 - Dependency: [D5/S3/Quantum/Dynamics/NativeProtocolEventCoordinates](NativeProtocolEventCoordinates.md)
