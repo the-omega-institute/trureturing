@@ -4,7 +4,7 @@
    mirror-E: none(waiver:no-escape-mirror-specified)
    anchors: [mathlib/module/Mathlib.Dynamics.PeriodicPts.Defs, mathlib/module/Mathlib.GroupTheory.OrderOfElement]
    utility: none
-   digest: Actual arbitrary-seed narrow doubling orbits have Mersenne reduced modulus and exact diameter. -/
+   digest: Exact unit-shift numerators classify actual anchored narrow doubling orbits. -/
 import D5.S1.Words.AssociatedMersenne.CircularWords
 import Mathlib.Data.Int.ModEq
 import Mathlib.Data.ZMod.Basic
@@ -21,10 +21,16 @@ orbit diameter W satisfy r >= 2, r = orderOf (2 : ZMod (X/g)) and, when
 its single actual temporal cycle, the adjacent-gap recurrence and gcd
 cancellation. Nonunit seeds remain in scope.
 
-The fixed-Q consumers use one consecutive block of the actual period.
-The converse chooses Q existentially. Full physical Circle J remains OPEN:
-no physical realization, nested masks, joint-strip sufficiency or prescribed-Q
-sufficiency is asserted.
+The actual sorted gaps also recover every orbit point and its explicit
+maximum from a unit index shift. The anchored interval holds exactly for
+Q=(X/(2^r-1))*explicitNumerator r s u with 2^r-1 dividing X, r>=2,
+0<s<r, coprime(s,r), and u the inverse of s modulo r. The converse derives
+the actual period r and the gcd scale from the constructed orbit.
+
+The fixed-Q height consumers use one consecutive actual-period block.
+Full physical Circle J remains OPEN: no common physical permutation,
+nested masks, joint-strip sufficiency or physical prescribed-Q realization
+is asserted.
 
 Attribution: elementary finite cyclic order, least-period and gcd arguments.
 Caller-supplied Pro reasoning and independent ordinary checking were fallible
@@ -603,10 +609,10 @@ private theorem narrow_doubling_sorted_cycle {X Q : ℕ}
     (fun v => cycAdd s v.val) hs⟩
 
 /-- Arithmetic of the already derived sorted shift. -/
-private theorem shift_iterate_cast {r : ℕ} (hr : 0 < r) (s i : Fin r) (n : ℕ) :
+private theorem shift_iterate_cast {r : ℕ} (_hr : 0 < r) (s i : Fin r) (n : ℕ) :
     (((fun v : Fin r => cycAdd s v.val)^[n] i).val : ZMod r) =
       (i.val : ZMod r) + (n : ZMod r) * s.val := by
-  letI : NeZero r := ⟨hr.ne'⟩
+  letI : NeZero r := ⟨_hr.ne'⟩
   induction n with
   | zero => simp
   | succ n ih =>
@@ -1616,5 +1622,50 @@ theorem exists_narrow_iff_mersenne_dvd {X : ℕ} (hX : 3 ≤ X) (hodd : Odd X) :
     obtain ⟨Q, hQ, hQX, _, _, _, hnarrow⟩ :=
       exists_narrow_of_mersenne_dvd hX hodd ht hdiv
     exact ⟨Q, hQ, hQX, hnarrow⟩
+
+-- BEGIN TRANSIENT BOUNDARY CHECKS
+example : explicitNumerator 2 1 1 = 2 := by norm_num [explicitNumerator]
+
+example : Anchored 3 2 := by
+  apply (anchored_explicit_classification (X := 3) (Q := 2)
+    (by decide) (by decide) (by decide) (by decide)).1.mpr
+  refine ⟨2, 1, 1, by decide, by decide, by decide, by decide,
+    by decide, by decide, by decide, ?_⟩
+  norm_num [explicitNumerator]
+
+example : Anchored 15 8 ∧ Anchored 15 10 := by
+  constructor
+  · apply (anchored_explicit_classification (X := 15) (Q := 8)
+      (by decide) (by decide) (by decide) (by decide)).1.mpr
+    refine ⟨4, 1, 1, by decide, by decide, by decide, by decide,
+      by decide, by decide, by decide, ?_⟩
+    norm_num [explicitNumerator]
+  · apply (anchored_explicit_classification (X := 15) (Q := 10)
+      (by decide) (by decide) (by decide) (by decide)).1.mpr
+    refine ⟨2, 1, 1, by decide, by decide, by decide, by decide,
+      by decide, by decide, by decide, ?_⟩
+    norm_num [explicitNumerator]
+
+example : period 15 8 = 4 ∧ period 15 10 = 2 := by
+  constructor
+  · exact ((anchored_explicit_classification (X := 15) (Q := 8)
+      (by decide) (by decide) (by decide) (by decide)).2
+      4 1 1 (by decide) (by decide) (by decide) (by decide)
+      (by decide) (by decide) (by decide) (by norm_num [explicitNumerator])).1
+  · exact ((anchored_explicit_classification (X := 15) (Q := 10)
+      (by decide) (by decide) (by decide) (by decide)).2
+      2 1 1 (by decide) (by decide) (by decide) (by decide)
+      (by decide) (by decide) (by decide) (by norm_num [explicitNumerator])).1
+
+example : ¬ Anchored 3 1 := by
+  intro h
+  have hh := (h 1).1
+  norm_num [residue] at hh
+
+example : ¬ Anchored 31 24 := by
+  intro h
+  have hh := (h 2).2
+  norm_num [residue] at hh
+-- END TRANSIENT BOUNDARY CHECKS
 
 end D5.S3.Combinatorics.Circle.NarrowDoublingOrbit
