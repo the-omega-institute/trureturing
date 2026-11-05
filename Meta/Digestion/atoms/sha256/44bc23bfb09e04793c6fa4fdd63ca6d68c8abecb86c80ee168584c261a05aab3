@@ -1,0 +1,10 @@
+**定义 82.1（与有限谱入口的分坐标比较）。** 比较对象固定为 [Draft26633，修订 12d160c4e9d6e66c20c374bd283ab3600685e605，§§80–83](https://github.com/the-omega-institute/trureturing/blob/12d160c4e9d6e66c20c374bd283ab3600685e605/docs/develop/theory/AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md) 的入口定义。它是未合入草稿的重叠比较，不是定理 80.2 的前提或数学认证。本节量词的承重来源仍为[本卷 §§29–75 的固定正文 ba97bbfd0aab3adfa5f6a3d6621495ef96c06597](https://github.com/the-omega-institute/trureturing/blob/ba97bbfd0aab3adfa5f6a3d6621495ef96c06597/docs/develop/theory/AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md)。
+
+| 比较坐标 | 固定有限谱入口与平均入口的准确差别 |
+| --- | --- |
+| 有限辅助选择 | 两者均保留一组 D 无关 primitive 实基。谱入口还为各 $b_i+b_j$ 选择额外谱 frames $\mathcal F_{ij}$、其 primitive 并集，以及各 $E_0(p)$ 的生成表 $\mathcal R_p$；平均入口不再选择这三类辅助数据。 |
+| 数学测试域及等式强度 | 谱入口列 $q(r,D_{b_i}p)=0$ 的标量族与同框 $D_pr=0$ 的向量族；平均入口在 $(e_{ij},b_k)$ 上列完整 E 值 (80.1)。后者一般涉及非幂等平均，不能冒充相同的原子域。本节不把此域等同于旧 $B_{(2,1)}$，也不援用该旧域结论。 |
+| 有限性与全域量词 | 平均入口每个 N 维对象有 $N^2(N+1)/2$ 个具名向量等式；定理 80.2 对任何这样的基成立，故约束类不依赖基的合法选择。对象网与联合规模仍跑遍原全范围；没有全网统一有限证书。 |
+| 独立信息与标定 | 在各自保留背景上，M 恰恢复 Z+SC 或 $\mathsf Q_{67}$+SC；SJ 仍另保留。一个等式族不等于更少独立事实，有限向量等式也不等于一个标量读数。没有给出标量秩、逐项必要性、唯一性或最小性结论。 |
+| 实际供应、误差与几何 | 只减少有限谱入口的辅助选择，不推出设备数、物理成本、误差稳定性、时钟、实际可装性或总几何维数改进。§81 的大几何与原实际供应合同全部保留。 |
+

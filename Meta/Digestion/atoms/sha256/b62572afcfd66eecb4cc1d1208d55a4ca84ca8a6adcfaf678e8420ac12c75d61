@@ -1,0 +1,18 @@
+**定理 1.3（局部到整体的完整等价）。**定义 1.1 与 (R) 下，以下四项等价：
+
+1. $\mathrm{N}_5$；
+2. 第 2 节定义的每个乘法四点缺陷均属于双侧根空间；
+3. 存在复 Hilbert 空间 $H$ 和 $F:M\to H$，满足
+
+$$
+F1=0,\qquad F(a\cdot b)=Fa+Fb,\qquad
+F(Ua)=\omega Fa+t,\quad t=F(U1),\qquad
+c(a,b)=\|Fa-Fb\|^2,
+\quad \omega=-\tfrac12+i\tfrac{\sqrt3}{2};
+\tag{1.2}
+$$
+
+4. $\mathrm{N}_{\rm fin}$。
+
+最小表示 $H=\overline{\operatorname{span}_{\mathbb C}F(M)}$ 唯一到唯一的保标签酉同构。定理不声称 (R) 单独推出 $\mathrm{N}_5$。
+

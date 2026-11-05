@@ -1,0 +1,11 @@
+**定理 89.2（同一完整候选的余切表达）。** 在完整 $B$ 上，余切下降与 $\mathrm Z_\pi+\mathrm O_\pi$ 等价，故也与 $\mathrm Z_{\mathrm{fin}}+\mathrm O_{\mathrm{fin}}$ 等价。满足时 $\mathcal R$ 唯一且光滑。
+
+证明。若两条原子条件成立，定理 83.2 给导子律，故 $D_ap$ 切向。$E_1(p)=\mathbb Rp$，而 $E_0(p)$ 由与 $p$ 正交的原子张成；$\mathrm O_\pi$ 令后者在 $p$ 上作用为零，单位 frame 又给 $D_pp=0$。因此 $D_ap$ 杀掉 (89.1) 的整个核，遂唯一通过 $df_a(p)$ 因子化。微分映射满射，因为 $q$ 在 $T_pM$ 上正定；若 $\xi^{\sharp_q}\in T_pM$ 是余切向量的原 $q$-Riesz 向量，则
+
+$$
+\mathcal R_p(\xi)=D_{\xi^{\sharp_q}}p.
+\tag{89.3}
+$$
+
+$D$ 双线性，$P_{1/2}(p)=4L_p-4L_p^2$ 光滑，故这是一个光滑丛映射。逆向，(89.2) 的值域先给切向性，因此正交原子读数为零，即 $\mathrm Z_\pi$；若 $p\perp r$，则 $df_p(r)=0$，所以 $D_pr=\mathcal R_r(0)=0$，即 $\mathrm O_\pi$。两项独立信息是“输出切向”与“输入只依赖一阶读数”；把它们统一在丛映射中没有减少独立前提。∎
+

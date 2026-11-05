@@ -1,0 +1,30 @@
+**命题 17.4（顺序桥把唯一表示绑定到全部原事件）。**在定理 17.2 及 OB 下，同一 $\rho$ 满足
+
+$$
+p(e)=\operatorname{Tr}(\rho E_e)
+\tag{17.5}
+$$
+
+对全部所声明原事件成立。
+
+**证明。**固定 $e,\delta$。$H=H_{e,\delta}$ 的谱在 $[\delta,1-\delta]$。利用稠密算术酉基及三进有理特征值，取
+
+$$
+C_m=V_m\operatorname{diag}(r_{m,i})V_m^*,\qquad
+\|C_m-H\|<\varepsilon_m,\quad
+\varepsilon_m\in\mathbb Z[1/3]_{>0},\quad\varepsilon_m\downarrow0,
+$$
+
+其中 $V_m\in U_d(A)$，并使 $r_{m,i}\pm\varepsilon_m\in[0,1]\cap\mathbb Z[1/3]$。令 $C_m^\pm=C_m\pm\varepsilon_m I$。两者属于 $\mathscr D_A$：对共同分母 $3^r$，以 $3^r$ 等权抽签选取投影 $\sum_{i:r_{m,i}\pm\varepsilon_m\ge k/3^r}P_{V_me_i}$，$1\le k\le3^r$，即可实际实现。故
+
+$$
+C_m^-\le H\le C_m^+,\qquad
+\operatorname{Tr}(\rho C_m^-)\le p(H)\le\operatorname{Tr}(\rho C_m^+).
+$$
+
+两端极限均为 $\operatorname{Tr}(\rho H)$。代入 (17.4)，因 $1-2\delta>0$，消去共同常数即得 (17.5)。这里只对固定正 $\delta$ 夹逼，不需要让原事件概率作连续极限。
+
+加噪有实质作用。若 $P_v$ 的射线不属于算术射线，$0<C\le P_v$ 必与它同一支撑；算术效果没有这条支撑，故不能无条件从零边界内侧逼近 $P_v$。范数稠密不自动等于效果序的上下稠密。$\square$
+
+若全部原效果已在 $\mathscr D_A$，不需 OB。若另有菜单外原事件，只取得定理 17.2 的数学延伸还不等于它们的原响应已服从该延伸。EC 与 OB 各有明确职责，未被原 (P9) 对配方向量的约束自动证明。
+
