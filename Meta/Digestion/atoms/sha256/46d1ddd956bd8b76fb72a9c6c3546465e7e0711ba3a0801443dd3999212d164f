@@ -1,0 +1,82 @@
+**Theorem 13.2 (Finite-step, all-time and complex-spectral certificates).** For every $m\geq1$, every positive velocity vector of length $m+1$, every fixed $0<\alpha<1$, every $z\in\mathbb C^m$ and every integer $t\geq0$,
+
+$$
+\boxed{\quad Q(T^m z)\leq rQ(z),\qquad
+Q(T^t z)\leq r^{\lfloor t/m\rfloor}Q(z).\quad}
+\tag{13.2}
+$$
+
+Every complex spectral value $\mu$ of the original $T$ satisfies
+
+$$
+\boxed{\quad |\mu|\leq r^{1/(2m)}<1.\quad}
+\tag{13.3}
+$$
+
+For every integer $0\leq p<m$ there is a nonzero complex, and also a nonzero real, input with $Q(T^p z)=Q(z)$; thus no such window gives a strict contraction for all inputs. At $q=0$ all statements remain valid. All initial states are annihilated after finitely many sweeps if and only if
+
+$$
+q=0\quad\hbox{and}\quad \mathcal D(v)=1.
+\tag{13.4}
+$$
+
+In that case $T^m=0$, and $m$ is the least all-state annihilation time. More generally, for any fixed initial state, finite annihilation is equivalent to $T^m z=0$. For $m=1$, the exact identities are $Tz=-qz$, $d(v)=1$, $r=q^2$, including $T=0$ at $\alpha_*$.
+
+*Proof.* Since $T$ is nonexpansive, each functional $\ell T^k$ has dual $Q$-norm at most one. Thus $H_T$ is positive definite by Theorem 12.2, has determinant $\mathcal D(v)$, and has trace at most $m$. Let its positive eigenvalues be $h_1\leq\cdots\leq h_m$. For $m\geq2$, the arithmetic-geometric mean inequality gives
+
+$$
+\prod_{j=2}^m h_j
+\leq\left(\frac{\sum_{j=2}^m h_j}{m-1}\right)^{m-1}
+\leq\left(\frac m{m-1}\right)^{m-1},
+\qquad h_1\geq b_m\mathcal D(v).
+\tag{13.5}
+$$
+
+If $\mathcal D(v)=1$, the product of all $h_j$ is one while their sum is at most $m$. The same inequality applied to all $m$ numbers forces equality and $h_j=1$ for every $j$, so $H_T=I$. For $m=1$ this follows directly from the unit observation. These arguments prove, in all cases,
+
+$$
+\sum_{k=0}^{m-1}|\ell(T^k z)|^2
+=\langle z,H_Tz\rangle_Q\geq d(v)Q(z).
+\tag{13.6}
+$$
+
+Summing the exact loss (12.7) along these $m$ actual iterates gives
+
+$$
+Q(T^m z)=Q(z)-\sigma\sum_{k=0}^{m-1}|\ell(T^k z)|^2.
+\tag{13.7}
+$$
+
+Combining (13.6)–(13.7) proves the first estimate in (13.2). Apply it repeatedly at block boundaries and use nonexpansiveness for the remaining $0,\ldots,m-1$ steps to obtain the second, including $t=0$ and the convention when $r=0$. A complex spectral value in finite dimension has a nonzero complex eigenvector. Substitution in the first estimate yields $|\mu|^{2m}Q(z)\leq rQ(z)$, and $Q(z)>0$ proves (13.3). The constants came from the evaluated velocity product, rather than an unknown spectral radius or a norm of a growing power.
+
+For a shorter window $p<m$, its $p$ observation functionals have a common kernel of dimension at least $m-p>0$. Their real coefficients also give a nonzero vector in the real kernel. The loss summed over those $p$ steps vanishes on that kernel, proving the assertion about every shorter window. This is the usual finite-observability rank argument, here consumed by the literal source map and the determinant (12.3).
+
+Every reflection has determinant $-1$, so (12.7) gives
+
+$$
+\det U=(-1)^m,\qquad \det T=(-1)^m q.
+\tag{13.8}
+$$
+
+If $\mathcal D(v)=1$, the stronger identity $H_T=I$ already proved gives $Q(T^m z)=q^2Q(z)$. Hence $q=0$ implies $T^m=0$. Conversely, if every input is annihilated in finite time, apply this assertion to a basis and take the largest of its finitely many annihilation times. This makes $T$ nilpotent. Its determinant is zero, so $q=0$ by (13.8). A nilpotent map in dimension $m$ satisfies $T^m=0$: its increasing sequence of kernels must stabilize by index $m$, and once two consecutive kernels coincide all later ones coincide. At $q=0$, (13.7) then gives $H_T=I$, so $\mathcal D(v)=1$. A nilpotence time $p<m$ is impossible by the shorter-window assertion. This proves (13.4) and its exact time.
+
+The same kernel-stabilization argument proves the individual-state assertion without assuming that the whole map is nilpotent. Explicitly, if $\ker T^j=\ker T^{j+1}$, then $T^{j+2}z=0$ implies $Tz\in\ker T^{j+1}=\ker T^j$, hence $z\in\ker T^{j+1}$; induction gives equality of every later kernel. If no equality occurs before index $m$, all $m$ inclusions from $\ker I=0$ are strict, so $\ker T^m$ is the entire space and again stable. Thus $\bigcup_{j\geq0}\ker T^j=\ker T^m$. Finally, in dimension one the original first row is $-q$ and $A=1$, proving the exact scalar formulas.
+
+An actual two-coordinate consumer also describes the finite-annihilation branch. For every $a>b>0$, take
+
+$$
+m=2,\qquad (v_1,v_2,v_3)=\left(a,b,\frac{b(a+b)}{a-b}\right),
+\qquad \alpha=\frac b{a+2b}.
+\tag{13.9}
+$$
+
+Then the original transfer is
+
+$$
+T=\begin{pmatrix}0&a/(a+b)\\0&0\end{pmatrix},\qquad
+T\ne0,\quad T^2=0,\quad \mathcal D(v)=1.
+\tag{13.10}
+$$
+
+These velocities and this parameter are strictly in their required domains. The singular first row has zero diagonal and right coefficient $a/(a+b)$. The original even relation has left coefficient $2v_3/(b+v_3)=(a+b)/a$ when solved for its new coordinate. It therefore gives $z'_2=-z_2+[(a+b)/a]z'_1=0$. This proves exactly the displayed matrix and its nilpotence. Alternatively (12.8) gives $c_1^2=1/2$, and (12.11) gives $\mathcal D=(1-c_1^2)4c_1^2=1$. The orthogonal singular mechanism is the one in Theorem 6.2; here its original velocity family consumes the evaluated condition $\mathcal D=1$ in (13.4), with no inverse of the damped map. $\square$
+

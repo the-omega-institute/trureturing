@@ -1,0 +1,13 @@
+**Definition 13.1 (Constants evaluated from the velocities).** In the domain of Definition 12.1, define
+
+$$
+\begin{gathered}
+b_1=1,\qquad b_m=\left(\frac{m-1}{m}\right)^{m-1}\quad(m\geq2),\\
+d(v)=\begin{cases}1,&\mathcal D(v)=1,\\b_m\mathcal D(v),&\mathcal D(v)<1,\end{cases}
+\qquad \eta=\sigma d(v),\qquad r=1-\eta.
+\end{gathered}
+\tag{13.1}
+$$
+
+These are finite expressions in the dimension, original velocities and original damping. In particular $0<d(v)\leq1$, $0<\eta\leq1$ and $0\leq r<1$. Powers $0^0$ in integer-time bounds mean one.
+

@@ -1,0 +1,6 @@
+The dimension is $2-\operatorname{rank}F$. Every nonzero prefix image persists with positive limiting norm.
+
+2. If $D_s=\infty$ and $\mathcal B_s+\mathcal A_s=\infty$, every limiting norm is zero and $S_{\varepsilon,\boldsymbol\alpha}=\mathbb R^2$.
+
+3. If $D_s=\infty$ and $\mathcal B_s+\mathcal A_s<\infty$, let $\ell_s$ be (9.8) and form the prescribed row $f=\ell_sF$. Then
+
