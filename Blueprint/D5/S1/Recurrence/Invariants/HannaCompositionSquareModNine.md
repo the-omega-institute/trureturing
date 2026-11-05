@@ -48,6 +48,10 @@ $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{I
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaCompositionSquareModNine.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/h3894-congruences` (proved) by `D5/S1/Recurrence/Invariants/HannaCompositionSquareModNine.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"h3894-congruences","declaration_gid":"D5/S1/Recurrence/Invariants/HannaCompositionSquareModNine.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2025). *OEIS A389474, A389475 and A389472: composition-series congruences*. URL: <https://oeis.org/A389474>.
@@ -61,6 +65,10 @@ A389474 (3), #21670. Triangular lifting gives an integral solution and coefficie
 $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{IsGF}\left(A\right)) \land (\forall A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{IsGF}\left(A\right)) \implies (\forall n: \mathbb{N}, \forall k: \mathbb{N}, (1 \le n) \implies ((1 \le k) \implies (\exists m: \mathbb{Z}, \operatorname{coeff}\left(n, A^{3 \cdot k} - \operatorname{PowerSeries}.\operatorname{subst}\left(X^{3}, A\right)^{k}\right) = (3: \mathbb{Q}) \cdot (m: \mathbb{Q})))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaCompositionSquareModNine.resultFour` (`✓ std3`). ∎
+
+*Resolves.* `Problems/h3894-congruences` (proved) by `D5/S1/Recurrence/Invariants/HannaCompositionSquareModNine.resultFour`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"h3894-congruences","declaration_gid":"D5/S1/Recurrence/Invariants/HannaCompositionSquareModNine.resultFour","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 

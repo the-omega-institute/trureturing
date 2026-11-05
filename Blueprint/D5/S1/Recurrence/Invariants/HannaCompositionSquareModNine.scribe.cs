@@ -35,7 +35,9 @@ internal sealed class HannaCompositionSquareModNineDocument : IScribeDocumentDef
         DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
             DescribeId.Create("a474-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role,
+            (name == "result" || name == "resultFour") ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("h3894-congruences"), ResolutionKind.Proved) : null);
     private static Formula V(string name) => F.Id(name);
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Q(string owner, string name) => Seq(Named(owner), Dot, Named(name));
