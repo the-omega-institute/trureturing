@@ -452,7 +452,24 @@ def _log_result(action, result):
     if reason is None:
         reason = next((item.get("reason") for item in result.get("items", [])
                        if isinstance(item, dict) and item.get("reason")), None)
-    _log_operation(action, status=status, outcome=status, reason=reason,
+    counts = {}
+    if action == "qualify":
+        items = result.get("items", [])
+        counts = {outcome + "_count": sum(item.get("outcome") == outcome for item in items)
+                  for outcome in ("qualified", "refused", "failed", "deferred")}
+        counts["item_count"] = len(items)
+        if LOG is not None:
+            for item in items:
+                outcome = item.get("outcome")
+                parts = str(item.get("reason") or "").split(":", 3)
+                failure = parts[0] == "qualification_failed"
+                LOG.emit("qualification_item", action=action, operation=action, stage="qualification",
+                         outcome=outcome, reason_code=_reason_code(item.get("reason")),
+                         failure_kind=_reason_code(parts[1]) if failure and len(parts) > 1 else None,
+                         error_type=("Refused" if outcome == "refused" else
+                                     _reason_code(parts[2]) if failure and len(parts) > 2 and outcome == "failed"
+                                     else None))
+    _log_operation(action, status=status, outcome=status, reason=reason, **counts,
                    error_type=("Refused" if status == "refused" else "CommandResult" if status == "failed" else None),
                    stage=result.get("stage") or (failure or {}).get("stage")
                    if isinstance(failure, dict) else result.get("stage"))
@@ -626,9 +643,9 @@ def _main(argv=None):
                 print(json.dumps(dict(event="worktree_qualification_started", path=str(path))), flush=True)
             result = qualify_batch(options, emit if options.stream else None,
                                    emit_started if options.stream else None)
+            _log_result(options.action, result)
             if options.stream:
                 result = dict(event=result["event"], status=result["status"], item_count=len(result["items"]))
-            _log_result(options.action, result)
             print(json.dumps(result), flush=True)
             return 74 if result["status"] == "failed" else 0
         elif options.action == "removal-pending":

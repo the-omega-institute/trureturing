@@ -9,6 +9,7 @@ public sealed class HostCleanupScriptTests
     [Theory]
     [InlineData("release_local_deadlines_and_final_diagnostics")]
     [InlineData("protocol_refusal_records_action_and_bounded_reason")]
+    [InlineData("streamed_qualification_records_refusals_and_consumed_failures")]
     [InlineData("native_bytes_and_stdin")]
     [InlineData("direct_owner_pid_handled_and_unhandled_int_term")]
     [InlineData("group_signal_has_one_native_delivery")]

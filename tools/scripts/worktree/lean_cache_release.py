@@ -182,7 +182,8 @@ def receipt(verb, status, **fields):
              transferred_bytes=transferred_bytes, validated_bytes=validated_bytes)
     if attempt_only:
         LOG_LAST = previous
-    print("LEAN_CACHE_" + verb.upper() + " " + json.dumps({"status": status, **fields}, separators=(",", ":")))
+    prefix = "LEAN_CACHE_" + verb.upper() + ("_WARNING" if attempt_only else "")
+    print(prefix + " " + json.dumps({"status": status, **fields}, separators=(",", ":")))
 
 
 class RollbackFailed(Exception):

@@ -365,6 +365,52 @@ class MaintenanceLogTests(unittest.TestCase):
         self.assertEqual("missing_command", row["reason_code"])
         self.assertEqual("Refused", row["error_type"])
 
+    def test_streamed_qualification_records_refusals_and_consumed_failures(self):
+        tree = self.root / "locked-tree"
+        self.git("worktree", "add", "-b", "locked-lane", tree)
+        self.git("worktree", "lock", "--reason", "intentional", tree)
+        command = [sys.executable, "-B", str(SOURCE / "tools/scripts/worktree/worktree_protocol.py"),
+                   "--source", str(self.main), "qualify", "--path", str(tree), "--stream"]
+        refused = subprocess.run(command, env=self.environment, capture_output=True, timeout=30)
+        self.assertEqual(0, refused.returncode, refused.stderr)
+        output = [json.loads(line) for line in refused.stdout.splitlines()]
+        item = next(row for row in output if row["event"] == "worktree_qualification_item")
+        self.assertEqual(("refused", "locked_recent"), (item["outcome"], item["reason"]))
+        self.assertEqual(dict(event="worktree_qualification", status="succeeded", item_count=1), output[-1])
+        rows = self.rows("worktree-protocol")
+        observed = next(row for row in rows if row["event"] == "qualification_item")
+        self.assertEqual(("refused", "locked_recent", "Refused"),
+                         (observed["outcome"], observed["reason_code"], observed["error_type"]))
+        summary = next(row for row in rows if row["event"] == "operation_finished")
+        self.assertEqual((1, 1, 0, 0, 0), tuple(summary[key] for key in
+            ("item_count", "refused_count", "qualified_count", "failed_count", "deferred_count")))
+        self.assertEqual(0, rows[-1]["exit_code"])
+        # Fail the ordinary initial Git inventory; qualify_batch consumes the failure.
+        binary = self.root / "bin"
+        binary.mkdir()
+        git = binary / "git"
+        git.write_text("#!/bin/sh\necho 'private Git diagnostic' >&2\nexit 1\n")
+        git.chmod(0o755)
+        failed = subprocess.run(command, env=dict(self.environment,
+            PATH=str(binary) + os.pathsep + self.environment["PATH"]), capture_output=True, timeout=30)
+        self.assertEqual(74, failed.returncode, failed.stderr)
+        output = [json.loads(line) for line in failed.stdout.splitlines()]
+        self.assertEqual("failed", output[-1]["status"])
+        rows = self.rows("worktree-protocol")
+        run = rows[-1]["run_id"]
+        rows = [row for row in rows if row["run_id"] == run]
+        observed = next(row for row in rows if row["event"] == "qualification_item")
+        self.assertEqual(("failed", "qualification_failed", "unavailable", "GitFailure"),
+            tuple(observed[key] for key in ("outcome", "reason_code", "failure_kind", "error_type")))
+        summary = next(row for row in rows if row["event"] == "operation_finished")
+        self.assertEqual((1, 0, 0, 1, 0), tuple(summary[key] for key in
+            ("item_count", "refused_count", "qualified_count", "failed_count", "deferred_count")))
+        self.assertEqual(74, rows[-1]["exit_code"])
+        persisted = json.dumps(self.rows("worktree-protocol"))
+        self.assertNotIn("private Git diagnostic", persisted)
+        self.assertNotIn(str(tree), persisted)
+        self.assertTrue(tree.is_dir())
+
     def test_python_owner_children_have_immediate_parent(self):
         import importlib.util
         sys.path.insert(0, str(SOURCE / 'tools/scripts'))
