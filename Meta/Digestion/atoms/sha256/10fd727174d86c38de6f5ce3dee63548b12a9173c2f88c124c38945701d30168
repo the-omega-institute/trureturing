@@ -1,0 +1,31 @@
+**Definition 42.1 (same-source recovery inputs).** Retain Definition
+41.1's one actual LAB root/source/epoch, authentic binding, current
+exclusive rights, lawful traversals, all-event ancestral tapes and
+sufficient finite material for each finite run. The attained entry
+$t_0$ ranges over the entire tree domain $\mathcal D_+$, not one seed,
+one composition fibre or one prescribed shape. After attachment the
+only source-changing operations are completed native $F/G$ macros:
+$F$ is LAB Definition 9.3's sealed old-frontier replacement $\rho$;
+$G$ is its acquired current leftmost-beta split. There are no
+interleaved source-changing legacy edits. Every inner and outer call
+consumes its full serialized reply, acknowledgement and real return.
+A completed inner primitive alone need not be a completed outer macro.
+
+For a logical tree put
+
+$$
+\ell(t)=a(t)+b(t),\qquad n(t)=a(t)+2b(t)-1.
+\tag{42.1}
+$$
+
+Write $\operatorname{Run}(W,t)$ for the logical tree after the
+chronological completed word $W$; the pair-valued Run of §41 is its
+composition projection. The recovery inputs here are precisely an
+authenticated exact entry index $n_0=n(t_0)$ and the lawfully acquired
+final logical syntax $z=\operatorname{Run}(W,t_0)$. Neither the old
+syntax, its composition, its leftmost depth nor the macro length is an
+additional input. Recovery targets $(t_0,W)$ as logical syntax and a
+literal word. Pointer identity, allocated runtime bytes, authority,
+pre-attachment primitive order and elapsed time are different targets.
+The acquisition conditions are made explicit in Proposition 42.6.
+

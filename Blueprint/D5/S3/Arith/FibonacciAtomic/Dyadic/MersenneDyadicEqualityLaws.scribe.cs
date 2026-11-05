@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.Dyadic;
 
 internal sealed class MersenneDyadicEqualityLawsDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Arith/FibonacciAtomic/MersenneDyadicEqualityLaws.";
+    private const string Prefix = "D5/S3/Arith/FibonacciAtomic/Dyadic/MersenneDyadicEqualityLaws.";
     private static Formula V(string name) => F.Id(name);
     private static Formula Real => Seq(Mathbb, Grp(V("R")));
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));

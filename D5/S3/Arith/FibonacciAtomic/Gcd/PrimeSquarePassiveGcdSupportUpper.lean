@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/FibonacciAtomic/PrimeSquarePassiveGcdSupportUpper
+/- GID: D5/S3/Arith/FibonacciAtomic/Gcd/PrimeSquarePassiveGcdSupportUpper
    generality: I
-   mirror-B: D5/B/S3/Arith/FibonacciAtomic/PrimeSquarePassiveGcdSupportUpper
+   mirror-B: D5/B/S3/Arith/FibonacciAtomic/Gcd/PrimeSquarePassiveGcdSupportUpper
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.Order.Interval.Finset.Nat]
    utility: none
@@ -13,7 +13,7 @@ import Mathlib.Order.Interval.Finset.Nat
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Arith.FibonacciAtomic.PrimeSquarePassiveGcdSupportUpper
+namespace D5.S3.Arith.FibonacciAtomic.Gcd.PrimeSquarePassiveGcdSupportUpper
 
 open D5.S3.Arith.FibonacciAtomic.TimeSampling
 open D5.S3.Arith.FibonacciAtomic.GlobalGcdSampling
@@ -165,4 +165,4 @@ theorem result (p : ℕ) (hp : p.Prime) :
 
 #print axioms result
 
-end D5.S3.Arith.FibonacciAtomic.PrimeSquarePassiveGcdSupportUpper
+end D5.S3.Arith.FibonacciAtomic.Gcd.PrimeSquarePassiveGcdSupportUpper
