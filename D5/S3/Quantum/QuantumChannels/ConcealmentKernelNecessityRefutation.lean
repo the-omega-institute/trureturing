@@ -14,7 +14,7 @@
 import D5.S3.Quantum.QuantumChannels.PositiveFilterTransposeRefutation
 import D5.S3.QuantumStates.DensitySpan
 import D5.S3.QuantumChannels.CumulantRenyiDataProcessingRefutation
-import D5.S3.Quantum.Information.PauliMatrix
+import D5.S3.Quantum.Information.Pauli.PauliMatrix
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

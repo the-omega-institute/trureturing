@@ -45,7 +45,7 @@
   finite identities are consumed in its proof and in the extremal certificates.
 -/
 import D5.S3.Geometry.FourVectorSignSumBound
-import D5.S3.Quantum.Measurement.QubitBloch
+import D5.S3.Quantum.Measurement.Bloch.QubitBloch
 import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
 import D5.S3.Quantum.Information.ActualPureQubitGeometry
 set_option autoImplicit false

@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Measurement/QubitBloch
+/- GID: D5/S3/Quantum/Measurement/Bloch/QubitBloch
    generality: G
-   mirror-B: D5/B/S3/Quantum/Measurement/QubitBloch
+   mirror-B: D5/B/S3/Quantum/Measurement/Bloch/QubitBloch
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -9,7 +9,7 @@
 /- B_formula: proof_shape: bind-only; escape_witness: none; consumer: scalarB_det and the
    weighted-ray effect factorization. -/
 
-import D5.S3.Quantum.Information.PauliMatrix
+import D5.S3.Quantum.Information.Pauli.PauliMatrix
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

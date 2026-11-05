@@ -1,5 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Quantum.Measurement.QubitBloch
+import D5.S3.Quantum.Measurement.Bloch.QubitBloch
 import Reg.Support.DependentFamily
 
 open _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction
@@ -9,7 +9,7 @@ set_option maxHeartbeats 1000000
 open scoped BigOperators ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 open scoped Classical
 noncomputable section
-namespace Reg.D5.S3.Quantum.Measurement.QubitBloch
+namespace Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch
 universe u
 abbrev Vec := EuclideanSpace ℝ (Fin 3)
 abbrev Mat := Matrix (Fin 2) (Fin 2) ℂ
@@ -64,8 +64,8 @@ noncomputable def formulaRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_
     (@_root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula)
     (type_of% (realize vectorSignature (fun _ _ a => B a) (fun e => nomatch e))) Unit Unit := {
   unitName := Lean.Name.str (Lean.Name.str `D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula
-    "Reg.D5.S3.Quantum.Measurement.QubitBloch/Reg.D5.S3.Quantum.Measurement.QubitBloch.formulaArena/[anonymous]") "__information_unit",
-  realizationName := `Reg.D5.S3.Quantum.Measurement.QubitBloch.formulaEvidence,
+    "Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch/Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch.formulaArena/[anonymous]") "__information_unit",
+  realizationName := `Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch.formulaEvidence,
   realizationSource := none,
   generated := false,
   arena := .source ⟨formulaArena⟩,
@@ -81,7 +81,7 @@ noncomputable def formulaRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_
   partialSensitivity := none,
   escapeFrom := none,
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Measurement.QubitBloch, definition := none,
+    owner := `D5.S3.Quantum.Measurement.Bloch.QubitBloch, definition := none,
     coordinates := #[], readouts := #[{
       path := #["body", "fn", "arg"],
       stateBinder := 0, functionOperand := false, stateOperand := some #["arg"],
@@ -97,4 +97,4 @@ noncomputable def formulaRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_
 
 #print axioms formulaRegistration
 
-end Reg.D5.S3.Quantum.Measurement.QubitBloch
+end Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch

@@ -6,7 +6,7 @@
    utility: none
    digest: Stochastic unitary transport permutes pure rays and conserves grouped weights. -/
 
-import D5.S3.Quantum.Measurement.QubitBloch
+import D5.S3.Quantum.Measurement.Bloch.QubitBloch
 import D5.S3.Quantum.Measurement.AntidistinguishabilityGram
 import D5.S3.QuantumStates.DensitySpan
 import D5.S3.Quantum.Information.ActualQubitChordObstruction

@@ -6,12 +6,18 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.QuantumStates;
 
 internal sealed class DensitySpanDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation.";
+    private const string Prefix = "D5/S3/QuantumStates/DensitySpan.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Density matrices span the real Hermitian matrix space in every finite dimension.",
         H("Density span"),
         Blocks(
+            Describe.Lean(DescribeId.Create("copquantumness-density"),
+                DeclarationHandle.Create(Prefix + "IsDensity"), H("Density matrices"),
+                StatementSource.FromAuthor(Disp(IsDensityFormula())),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuantumStates/meunson2026cumulant")),
+                Blocks(Paragraph(Text("A density matrix on C^d is a positive semidefinite complex d by d matrix with trace one, in every natural dimension."))),
+                DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("density-span-tomographically-complete"),
                 DeclarationHandle.Create(Prefix + "TomographicallyComplete"), H("Tomographic completeness"),
                 StatementSource.FromAuthor(Disp(TomographicFormula())), AssessedProvenance.FromRepo(),
@@ -38,6 +44,14 @@ internal sealed class DensitySpanDocument : IScribeDocumentDefinition
     private static Formula Trace(Formula a) => Call("tr", a);
     private static Formula D(long n) => FormulaDsl.D(n);
     private static Formula Parenthesized(Formula x) => Seq(Open, x, Close);
+
+    private static Formula IsDensityFormula()
+    {
+        Formula d = V("d"), a = V("A");
+        return All("d", Field("N"), All("A", Mat(d),
+            new Formula.Relation(Call("IsDensity", a), FormulaRelationOperator.Iff,
+                Parenthesized(And(Call("PosSemidef", a), Eq(Trace(a), D(1)))))));
+    }
 
     private static Formula TomographicFormula()
     {

@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Information/PauliMatrix
+/- GID: D5/S3/Quantum/Information/Pauli/PauliMatrix
    generality: G
-   mirror-B: D5/B/S3/Quantum/Information/PauliMatrix
+   mirror-B: D5/B/S3/Quantum/Information/Pauli/PauliMatrix
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
