@@ -4673,7 +4673,7 @@ $$
 \tag{171.1}
 $$
 
-证明。先由定理 168.1 恢复完整 $\mathsf F_{\rm cut}$，再消费定理 164.1 的同一结构链。$\mathsf Q$ 仍逐字取母卷定义 67.2：有限非负 $K(A,a)$ 可依赖原对象与方向，统一于全部原实际准备、整个数学效果区间及任意小原质量。逐项消费者为：
+证明。先由定理 168.1 恢复完整 $\mathsf F_{\rm cut}$，再消费定理 164.2 的同一结构链。$\mathsf Q$ 仍逐字取母卷定义 67.2：有限非负 $K(A,a)$ 可依赖原对象与方向，统一于全部原实际准备、整个数学效果区间及任意小原质量。逐项消费者为：
 
 | 恢复的原关系与保留入口 | 同一原模型上的结论 |
 | --- | --- |
@@ -4694,7 +4694,7 @@ $$
 \tag{171.2}
 $$
 
-其中右端迹按末端对象解释，与定理 164.1 的原历史运输相同。∎
+其中右端迹按末端对象解释，与定理 164.2 的原历史运输相同。∎
 
 成熟中间工具仍是谱定理、联合 Peirce 分解、正交投影、正元零配对、有限维张量张成、旗流形及外代数。Tao–Gowda, *A Representation Theorem for Lyapunov-like Transformations on Euclidean Jordan Algebras*, [作者原文](https://userpages.umbc.edu/~gowda/papers/trGOW12-01.pdf)，Proposition 3 给保单位 Lyapunov-like 映射与导子的成熟桥；它要求完整零接触关系，不能跳过 (167.2)–(167.6) 的恢复。Barnum–Graydon–Wilce, [arXiv:1606.09331v3](https://arxiv.org/html/1606.09331v3)，Definition 4.1 与 Theorem 4.12 使用更强的动力复合及伴随条件，不把它们加入原 X。Plevnik, *Linear preservers of rank k projections*, [arXiv:2512.10645v2](https://arxiv.org/html/2512.10645v2)，§1 的线性固定秩投影保持问题提供相关检索方向；这里的原双线性 $D$ 尚无投影保持映射，未用该文结论代替证明。
 
