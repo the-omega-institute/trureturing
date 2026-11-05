@@ -46,6 +46,12 @@ abbrev Space (N : ℕ) := EuclideanSpace ℂ (Configuration N)
 def U (N : ℕ) : Module.End ℂ (Space N) := (totalPlus N).toEuclideanLin
 /-- The actual, unweighted collective lowering map. -/
 def L (N : ℕ) : Module.End ℂ (Space N) := (totalMinus N).toEuclideanLin
+private lemma U_zero : U 0 = 0 := by
+  simp [U, totalPlus]
+
+private lemma L_zero : L 0 = 0 := by
+  simp [L, totalMinus]
+
 /-- Occupancy uses bit zero as membership, consistently with sigmaPlus. -/
 def occupancy {N : ℕ} (x : Configuration N) : ℕ := ∑ i, if x i = 0 then 1 else 0
 /-- The diagonal number operator on the entire carrier. -/
@@ -401,23 +407,6 @@ private lemma primitive_data {N t : ℕ} (hN : 0 < N) {v : Space N}
     (sl2 N hN).HasPrimitiveVectorWith v ((N : ℂ) - 2 * t) :=
   ⟨hne, primitive_weight hv, hv.2⟩
 
-private lemma primitive_recurrence {N t : ℕ} (hN : 0 < N) {v : Space N}
-    (hv : v ∈ primitive N t) (q : ℕ) :
-    L N ((U N ^ (q + 1)) v) =
-      (((q : ℂ) + 1) * ((N : ℂ) - 2 * t - q)) • ((U N ^ q) v) := by
-  by_cases hne : v = 0
-  · subst v; simp
-  · exact (primitive_data hN hv hne).lie_e_pow_succ_toEnd_f q
-
-private lemma primitive_endpoint {N t : ℕ} (hN : 0 < N) (ht : 2 * t ≤ N)
-    {v : Space N} (hv : v ∈ primitive N t) :
-    (U N ^ (N - 2 * t + 1)) v = 0 := by
-  by_cases hne : v = 0
-  · subst v; simp
-  · have he : (N : ℂ) - 2 * t = ((N - 2 * t : ℕ) : ℂ) := by
-      rw [Nat.cast_sub ht, Nat.cast_mul, Nat.cast_ofNat]
-    exact (primitive_data hN hv hne).pow_toEnd_f_eq_zero_of_eq_nat he
-
 private lemma primitive_degree {N t : ℕ} {v : Space N} (hv : v ∈ primitive N t)
     (hne : v ≠ 0) : 2 * t ≤ N := by
   have h := congrArg (fun A : Module.End ℂ (Space N) => A v) (commutator N)
@@ -435,12 +424,43 @@ private lemma primitive_degree {N t : ℕ} {v : Space N} (hv : v ∈ primitive N
   have : (2 * t : ℝ) ≤ N := by nlinarith [sq_nonneg ‖U N v‖]
   exact_mod_cast this
 
+private lemma primitive_recurrence {N t : ℕ} {v : Space N}
+    (hv : v ∈ primitive N t) (q : ℕ) :
+    L N ((U N ^ (q + 1)) v) =
+      (((q : ℂ) + 1) * ((N : ℂ) - 2 * t - q)) • ((U N ^ q) v) := by
+  by_cases hne : v = 0
+  · subst v; simp
+  · by_cases hN : 0 < N
+    · exact (primitive_data hN hv hne).lie_e_pow_succ_toEnd_f q
+    · have hNz : N = 0 := by omega
+      subst N
+      have ht : t = 0 := by have := primitive_degree hv hne; omega
+      subst t
+      cases q with
+      | zero => simp [U_zero, L_zero]
+      | succ q => simp [U_zero, L_zero]
+
+private lemma primitive_endpoint {N t : ℕ} (ht : 2 * t ≤ N)
+    {v : Space N} (hv : v ∈ primitive N t) :
+    (U N ^ (N - 2 * t + 1)) v = 0 := by
+  by_cases hne : v = 0
+  · subst v; simp
+  · by_cases hN : 0 < N
+    · have he : (N : ℂ) - 2 * t = ((N - 2 * t : ℕ) : ℂ) := by
+        rw [Nat.cast_sub ht, Nat.cast_mul, Nat.cast_ofNat]
+      exact (primitive_data hN hv hne).pow_toEnd_f_eq_zero_of_eq_nat he
+    · have hNz : N = 0 := by omega
+      subst N
+      have ht0 : t = 0 := by omega
+      subst t
+      simp [U_zero]
+
 /-- Finite primitive strings, including every starting vector and every multiplicity. -/
 def finitePrimitiveStrings (S : ℕ) : Set (Space (2 * S)) :=
   {w | ∃ t, t ≤ S ∧ ∃ v, v ∈ primitive (2 * S) t ∧
     ∃ q : ℕ, q ≤ 2 * S - 2 * t ∧ w = (U (2 * S) ^ q) v}
 
-private lemma finite_strings_span (S : ℕ) (hS : 1 ≤ S) :
+private lemma finite_strings_span (S : ℕ) :
     Submodule.span ℂ (finitePrimitiveStrings S) = ⊤ := by
   rw [← primitive_strings_span (2 * S)]
   apply le_antisymm
@@ -454,7 +474,7 @@ private lemma finite_strings_span (S : ℕ) (hS : 1 ≤ S) :
     have ht : t ≤ S := by have := primitive_degree hv hzero; omega
     by_cases hq : q ≤ 2 * S - 2 * t
     · exact Submodule.subset_span ⟨t, ht, v, hv, q, hq, rfl⟩
-    · have hz := primitive_endpoint (by omega : 0 < 2 * S) (by omega : 2 * t ≤ 2 * S) hv
+    · have hz := primitive_endpoint (by omega : 2 * t ≤ 2 * S) hv
       rw [show q = (q - (2 * S - 2 * t + 1)) + (2 * S - 2 * t + 1) by omega,
         pow_add, Module.End.mul_apply, hz, map_zero]
       exact Submodule.zero_mem _
@@ -473,7 +493,7 @@ private lemma string_Z {S t : ℕ} {v : Space (2 * S)} (ht : t ≤ S)
   simp only [Z, LinearMap.sub_apply, LinearMap.smul_apply, Module.End.one_apply, h]
   rw [Nat.cast_add, Nat.cast_sub ht, Nat.cast_mul, Nat.cast_ofNat]
   module
-private lemma primitive_inner_power {N t : ℕ} (hN : 0 < N) (ht : 2 * t ≤ N)
+private lemma primitive_inner_power {N t : ℕ} (ht : 2 * t ≤ N)
     {v : Space N} (hv : v ∈ primitive N t) (q : ℕ) (hq : q ≤ N - 2 * t) :
     inner ℂ ((U N ^ q) v) ((U N ^ q) v) =
       ((q.factorial * (N - 2 * t).descFactorial q : ℕ) : ℂ) * inner ℂ v v := by
@@ -487,7 +507,7 @@ private lemma primitive_inner_power {N t : ℕ} (hN : 0 < N) (ht : 2 * t ≤ N)
           inner_U N ((U N ^ q) v) ((U N ^ (q + 1)) v)
       _ = (((q : ℂ) + 1) * ((N : ℂ) - 2 * t - q)) *
           inner ℂ ((U N ^ q) v) ((U N ^ q) v) := by
-        rw [primitive_recurrence hN hv q, inner_smul_right]
+        rw [primitive_recurrence hv q, inner_smul_right]
       _ = ((q.succ.factorial * (N - 2 * t).descFactorial q.succ : ℕ) : ℂ) *
           inner ℂ v v := by
         rw [ih (by omega), Nat.factorial_succ, Nat.descFactorial_succ]
@@ -507,7 +527,7 @@ private lemma primitive_orthogonal {N t t' : ℕ} {v w : Space N}
     simp [(show ∀ x, occupancy x ≠ t' → w x = 0 from hw.1) x he]
   · simp [(show ∀ x, occupancy x ≠ t → v x = 0 from hv.1) x hx]
 
-private lemma inner_power_unequal {N t t' : ℕ} (hN : 0 < N)
+private lemma inner_power_unequal {N t t' : ℕ}
     {v w : Space N} (hv : v ∈ primitive N t) (hw : w ∈ primitive N t') :
     ∀ q r : ℕ, q ≠ r → inner ℂ ((U N ^ q) v) ((U N ^ r) w) = 0 := by
   intro q
@@ -530,12 +550,12 @@ private lemma inner_power_unequal {N t t' : ℕ} (hN : 0 < N)
         inner_U, (show L N w = 0 from hw.2), inner_zero_right]
     | succ r =>
       rw [pow_succ' (U N) q, Module.End.mul_apply]
-      rw [inner_U, primitive_recurrence hN hw r, inner_smul_right,
+      rw [inner_U, primitive_recurrence hw r, inner_smul_right,
         ih r (by omega), mul_zero]
 
 
 
-private lemma inner_power_orthogonal {N t t' : ℕ} (hN : 0 < N)
+private lemma inner_power_orthogonal {N t t' : ℕ}
     {v w : Space N} (hv : v ∈ primitive N t) (hw : w ∈ primitive N t')
     (hvw : inner ℂ v w = 0) (q r : ℕ) :
     inner ℂ ((U N ^ q) v) ((U N ^ r) w) = 0 := by
@@ -550,13 +570,13 @@ private lemma inner_power_orthogonal {N t t' : ℕ} (hN : 0 < N)
           simpa only [pow_succ', Module.End.mul_apply] using
             inner_U N ((U N ^ q) v) ((U N ^ (q + 1)) w)
         _ = 0 := by
-          rw [primitive_recurrence hN hw q, inner_smul_right, ih, mul_zero]
-  · exact inner_power_unequal hN hv hw q r hqr
+          rw [primitive_recurrence hw q, inner_smul_right, ih, mul_zero]
+  · exact inner_power_unequal hv hw q r hqr
 
 /-- Exact finite primitive-string algebra on every Boolean multiplicity.
 The cardinality formula, a selected orthonormal string basis, and its native-spin
 unitary are separate obligations. -/
-theorem result (S : ℕ) (hS : 1 ≤ S) :
+theorem result (S : ℕ) :
     Submodule.span ℂ (finitePrimitiveStrings S) = ⊤ ∧
     (∀ (t : ℕ) (v : Space (2 * S)), v ∈ primitive (2 * S) t → v ≠ 0 → t ≤ S) ∧
     (∀ (t : ℕ), t ≤ S → ∀ (v : Space (2 * S)), v ∈ primitive (2 * S) t →
@@ -574,18 +594,17 @@ theorem result (S : ℕ) (hS : 1 ≤ S) :
       (t ≠ t' → inner ℂ v w = 0) ∧
       (inner ℂ v w = 0 → ∀ q r : ℕ,
         inner ℂ ((U (2 * S) ^ q) v) ((U (2 * S) ^ r) w) = 0)) := by
-  have hN : 0 < 2 * S := by omega
-  refine ⟨finite_strings_span S hS, ?_, ?_, ?_⟩
+  refine ⟨finite_strings_span S, ?_, ?_, ?_⟩
   · intro t v hv hne
     have := primitive_degree hv hne
     omega
   · intro t ht v hv
-    refine ⟨primitive_endpoint hN (by omega) hv, fun q => ?_⟩
-    exact ⟨primitive_recurrence hN hv q, string_Z ht hv q,
-      fun hq => primitive_inner_power hN (by omega) hv q hq⟩
+    refine ⟨primitive_endpoint (by omega) hv, fun q => ?_⟩
+    exact ⟨primitive_recurrence hv q, string_Z ht hv q,
+      fun hq => primitive_inner_power (by omega) hv q hq⟩
   · intro t t' v w hv hw
     exact ⟨primitive_orthogonal hv hw, fun hzero q r =>
-      inner_power_orthogonal hN hv hw hzero q r⟩
+      inner_power_orthogonal hv hw hzero q r⟩
 
 
 
@@ -735,10 +754,10 @@ private def rawString (S : ℕ) (a : StringIndex S) : Space (2 * S) :=
 def normalizedString (S : ℕ) (a : StringIndex S) : Space (2 * S) :=
   (‖rawString S a‖⁻¹ : ℂ) • rawString S a
 
-private lemma rawString_ne_zero (S : ℕ) (hS : 1 ≤ S) (a : StringIndex S) :
+private lemma rawString_ne_zero (S : ℕ) (a : StringIndex S) :
     rawString S a ≠ 0 := by
   have hv := (primitiveBasis (2 * S) a.1).orthonormal.norm_eq_one a.2.1
-  have hinner := primitive_inner_power (by omega : 0 < 2 * S)
+  have hinner := primitive_inner_power
     (by have := a.1.isLt; omega : 2 * a.1.val ≤ 2 * S)
     (primitiveBasis (2 * S) a.1 a.2.1).property a.2.2.val (by have := a.2.2.isLt; omega)
   have hp : 0 < a.2.2.val.factorial * (2 * S - 2 * a.1.val).descFactorial a.2.2.val :=
@@ -756,9 +775,8 @@ private lemma rawString_ne_zero (S : ℕ) (hS : 1 ≤ S) (a : StringIndex S) :
     ((a.2.2.val.factorial * (2 * S - 2 * a.1.val).descFactorial a.2.2.val : ℕ) : ℂ) ≠ 0)
     hinner.symm
 
-private lemma rawString_orthogonal (S : ℕ) (hS : 1 ≤ S) (a b : StringIndex S)
+private lemma rawString_orthogonal (S : ℕ) (a b : StringIndex S)
     (hab : a ≠ b) : inner ℂ (rawString S a) (rawString S b) = 0 := by
-  have hN : 0 < 2 * S := by omega
   by_cases ht : a.1 = b.1
   · rcases a with ⟨t, i, q⟩
     rcases b with ⟨t', i', q'⟩
@@ -766,31 +784,31 @@ private lemma rawString_orthogonal (S : ℕ) (hS : 1 ≤ S) (a b : StringIndex S
     subst t'
     by_cases hi : i = i'
     · subst i'
-      exact inner_power_unequal hN (primitiveBasis (2 * S) t i).property
+      exact inner_power_unequal (primitiveBasis (2 * S) t i).property
         (primitiveBasis (2 * S) t i).property q.val q'.val (by
           intro he; have : q = q' := Fin.ext he; subst q'; exact hab rfl)
-    · apply inner_power_orthogonal hN (primitiveBasis (2 * S) t i).property
+    · apply inner_power_orthogonal (primitiveBasis (2 * S) t i).property
         (primitiveBasis (2 * S) t i').property
       exact (primitiveBasis (2 * S) t).orthonormal.inner_eq_zero hi
-  · apply inner_power_orthogonal hN (primitiveBasis (2 * S) a.1 a.2.1).property
+  · apply inner_power_orthogonal (primitiveBasis (2 * S) a.1 a.2.1).property
       (primitiveBasis (2 * S) b.1 b.2.1).property
     exact primitive_orthogonal (primitiveBasis (2 * S) a.1 a.2.1).property
       (primitiveBasis (2 * S) b.1 b.2.1).property (by
         intro he; exact ht (Fin.ext he))
 
-private lemma normalizedString_orthonormal (S : ℕ) (hS : 1 ≤ S) :
+private lemma normalizedString_orthonormal (S : ℕ) :
     Orthonormal ℂ (normalizedString S) := by
   constructor
   · intro a
-    have hn : ‖rawString S a‖ ≠ 0 := norm_ne_zero_iff.mpr (rawString_ne_zero S hS a)
+    have hn : ‖rawString S a‖ ≠ 0 := norm_ne_zero_iff.mpr (rawString_ne_zero S a)
     simp [normalizedString, norm_smul, norm_inv, Complex.norm_real, hn]
   · intro a b hab
     simp [normalizedString, inner_smul_left, inner_smul_right,
-      rawString_orthogonal S hS a b hab]
+      rawString_orthogonal S a b hab]
 
-private lemma normalizedString_span (S : ℕ) (hS : 1 ≤ S) :
+private lemma normalizedString_span (S : ℕ) :
     Submodule.span ℂ (Set.range (normalizedString S)) = ⊤ := by
-  rw [← finite_strings_span S hS]
+  rw [← finite_strings_span S]
   apply le_antisymm
   · apply Submodule.span_le.mpr
     rintro _ ⟨a, rfl⟩
@@ -816,7 +834,7 @@ private lemma normalizedString_span (S : ℕ) (hS : 1 ≤ S) :
     apply Submodule.smul_mem
     let a : StringIndex S := ⟨t', i, q'⟩
     have hn : (‖rawString S a‖ : ℂ) ≠ 0 :=
-      Complex.ofReal_ne_zero.mpr (norm_ne_zero_iff.mpr (rawString_ne_zero S hS a))
+      Complex.ofReal_ne_zero.mpr (norm_ne_zero_iff.mpr (rawString_ne_zero S a))
     have ha : (U (2 * S) ^ q) (b i : Space (2 * S)) =
         (‖rawString S a‖ : ℂ) • normalizedString S a := by
       rw [normalizedString, smul_smul, mul_inv_cancel₀ hn, one_smul]
@@ -825,10 +843,10 @@ private lemma normalizedString_span (S : ℕ) (hS : 1 ≤ S) :
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)
 
 
-private lemma rawString_norm_sq (S : ℕ) (hS : 1 ≤ S) (a : StringIndex S) :
+private lemma rawString_norm_sq (S : ℕ) (a : StringIndex S) :
     ‖rawString S a‖ ^ 2 =
       (a.2.2.val.factorial * (2 * S - 2 * a.1.val).descFactorial a.2.2.val : ℕ) := by
-  have he := primitive_inner_power (by omega : 0 < 2 * S)
+  have he := primitive_inner_power
     (by have := a.1.isLt; omega : 2 * a.1.val ≤ 2 * S)
     (primitiveBasis (2 * S) a.1 a.2.1).property a.2.2.val (by have := a.2.2.isLt; omega)
   have hb := (primitiveBasis (2 * S) a.1).orthonormal.norm_eq_one a.2.1
@@ -839,7 +857,7 @@ private lemma rawString_norm_sq (S : ℕ) (hS : 1 ≤ S) (a : StringIndex S) :
   norm_num only [one_pow, Complex.ofReal_one, mul_one] at he
   exact_mod_cast he
 
-private lemma rawString_norm_succ (S : ℕ) (hS : 1 ≤ S) (t : Fin (S + 1))
+private lemma rawString_norm_succ (S : ℕ) (t : Fin (S + 1))
     (i : Fin (Module.finrank ℂ (primitive (2 * S) t)))
     (q : Fin (2 * S - 2 * t.val + 1)) (hq : q.val < 2 * S - 2 * t.val) :
     ‖rawString S ⟨t,i,⟨q.val + 1,by omega⟩⟩‖ =
@@ -848,8 +866,8 @@ private lemma rawString_norm_succ (S : ℕ) (hS : 1 ≤ S) (t : Fin (S + 1))
   have hp : 0 ≤ ((q.val:ℝ) + 1) * ((2 * S - 2 * t.val:ℕ) - q.val : ℝ) := by
     have : (q.val:ℝ) ≤ (2 * S - 2 * t.val:ℕ) := by exact_mod_cast Nat.le_of_lt hq
     positivity
-  have he := rawString_norm_sq S hS ⟨t,i,⟨q.val + 1,by omega⟩⟩
-  have he' := rawString_norm_sq S hS ⟨t,i,q⟩
+  have he := rawString_norm_sq S ⟨t,i,⟨q.val + 1,by omega⟩⟩
+  have he' := rawString_norm_sq S ⟨t,i,q⟩
   dsimp only at he he'
   rw [Nat.factorial_succ, Nat.descFactorial_succ] at he
   push_cast at he
@@ -863,7 +881,7 @@ private lemma rawString_norm_succ (S : ℕ) (hS : 1 ≤ S) (t : Fin (S + 1))
     ring
   exact (sq_eq_sq₀ (norm_nonneg _) (mul_nonneg (Real.sqrt_nonneg _) (norm_nonneg _))).mp hn
 
-private lemma normalizedString_U_succ (S : ℕ) (hS : 1 ≤ S) (t : Fin (S + 1))
+private lemma normalizedString_U_succ (S : ℕ) (t : Fin (S + 1))
     (i : Fin (Module.finrank ℂ (primitive (2 * S) t)))
     (q : Fin (2 * S - 2 * t.val + 1)) (hq : q.val < 2 * S - 2 * t.val) :
     U (2 * S) (normalizedString S ⟨t,i,q⟩) =
@@ -871,11 +889,11 @@ private lemma normalizedString_U_succ (S : ℕ) (hS : 1 ≤ S) (t : Fin (S + 1))
         normalizedString S ⟨t,i,⟨q.val + 1,by omega⟩⟩ := by
   let a : StringIndex S := ⟨t,i,q⟩
   let b : StringIndex S := ⟨t,i,⟨q.val + 1,by omega⟩⟩
-  have hn := rawString_norm_succ S hS t i q hq
+  have hn := rawString_norm_succ S t i q hq
   have ha : (‖rawString S a‖ : ℂ) ≠ 0 :=
-    Complex.ofReal_ne_zero.mpr (norm_ne_zero_iff.mpr (rawString_ne_zero S hS a))
+    Complex.ofReal_ne_zero.mpr (norm_ne_zero_iff.mpr (rawString_ne_zero S a))
   have hb : (‖rawString S b‖ : ℂ) ≠ 0 :=
-    Complex.ofReal_ne_zero.mpr (norm_ne_zero_iff.mpr (rawString_ne_zero S hS b))
+    Complex.ofReal_ne_zero.mpr (norm_ne_zero_iff.mpr (rawString_ne_zero S b))
   have hu : U (2 * S) (rawString S a) = rawString S b := by
     simp [rawString, a, b, pow_succ', Module.End.mul_apply]
   change U (2 * S) (normalizedString S a) = _ • normalizedString S b
@@ -884,23 +902,23 @@ private lemma normalizedString_U_succ (S : ℕ) (hS : 1 ≤ S) (t : Fin (S + 1))
   rw [← Complex.ofReal_inv, ← Complex.ofReal_inv, ← Complex.ofReal_mul]
   apply congrArg Complex.ofReal
   change ‖rawString S a‖⁻¹ = _ * ‖rawString S b‖⁻¹
-  have ha' : ‖rawString S a‖ ≠ 0 := norm_ne_zero_iff.mpr (rawString_ne_zero S hS a)
-  have hb' : ‖rawString S b‖ ≠ 0 := norm_ne_zero_iff.mpr (rawString_ne_zero S hS b)
+  have ha' : ‖rawString S a‖ ≠ 0 := norm_ne_zero_iff.mpr (rawString_ne_zero S a)
+  have hb' : ‖rawString S b‖ ≠ 0 := norm_ne_zero_iff.mpr (rawString_ne_zero S b)
   dsimp [a,b] at * 
   field_simp
   simpa only [mul_comm] using hn
 
-private lemma normalizedString_U_top (S : ℕ) (hS : 1 ≤ S) (t : Fin (S + 1))
+private lemma normalizedString_U_top (S : ℕ) (t : Fin (S + 1))
     (i : Fin (Module.finrank ℂ (primitive (2 * S) t))) :
     U (2 * S) (normalizedString S ⟨t,i,⟨2 * S - 2 * t.val,by omega⟩⟩) = 0 := by
   rw [normalizedString, map_smul]
-  have hz := primitive_endpoint (by omega : 0 < 2 * S)
+  have hz := primitive_endpoint
     (by have := t.isLt; omega : 2 * t.val ≤ 2 * S) (primitiveBasis (2 * S) t i).property
   have he : U (2 * S) (rawString S ⟨t,i,⟨2 * S - 2 * t.val,by omega⟩⟩) = 0 := by
     simpa [rawString, pow_succ', Module.End.mul_apply] using hz
   rw [he, smul_zero]
 
-private lemma normalizedString_Z (S : ℕ) (hS : 1 ≤ S) (a : StringIndex S) :
+private lemma normalizedString_Z (S : ℕ) (a : StringIndex S) :
     Z (2 * S) (normalizedString S a) =
       (-((S - a.1.val:ℕ):ℂ) + a.2.2.val) • normalizedString S a := by
   rw [normalizedString, map_smul, rawString,
@@ -908,22 +926,22 @@ private lemma normalizedString_Z (S : ℕ) (hS : 1 ≤ S) (a : StringIndex S) :
   rw [smul_comm]
 
 /-- The complete orthonormal basis constructed from every primitive string. -/
-def stringBasis (S : ℕ) (hS : 1 ≤ S) :
+def stringBasis (S : ℕ) :
     OrthonormalBasis (StringIndex S) ℂ (Space (2 * S)) :=
-  OrthonormalBasis.mk (normalizedString_orthonormal S hS)
-    (by rw [normalizedString_span S hS])
+  OrthonormalBasis.mk (normalizedString_orthonormal S)
+    (by rw [normalizedString_span S])
 
-/-- The coordinate unitary is obtained from the proved full - span construction. -/
-def stringUnitary (S : ℕ) (hS : 1 ≤ S) :
+/-- The coordinate unitary is obtained from the proved full-span construction. -/
+def stringUnitary (S : ℕ) :
     Space (2 * S) ≃ₗᵢ[ℂ] EuclideanSpace ℂ (StringIndex S) :=
-  (stringBasis S hS).repr
+  (stringBasis S).repr
 
 
 /-- Every primitive copy, with its rank retained in the label. -/
 abbrev CopyIndex (S : ℕ) :=
   (t : Fin (S + 1)) × Fin (Module.finrank ℂ (primitive (2 * S) t))
 
-/-- Coordinates of the direct sum of all native spin - (S - t) spaces. -/
+/-- Coordinates of the direct sum of all native spin-(S-t) spaces. -/
 abbrev NativeIndex (S : ℕ) := (a : CopyIndex S) × Fin (2 * S - 2 * a.1.val + 1)
 
 private def nativeIndexEquiv (S : ℕ) : StringIndex S ≃ NativeIndex S where
@@ -932,20 +950,20 @@ private def nativeIndexEquiv (S : ℕ) : StringIndex S ≃ NativeIndex S where
   left_inv a := by rcases a with ⟨t,i,q⟩; simp
   right_inv a := by rcases a with ⟨⟨t,i⟩,r⟩; simp
 
-/-- Complete native - coordinate basis; native coordinate r is 2j - k. -/
-def nativeBasis (S : ℕ) (hS : 1 ≤ S) :
+/-- Complete native-coordinate basis; native coordinate r is 2j-k. -/
+def nativeBasis (S : ℕ) :
     OrthonormalBasis (NativeIndex S) ℂ (Space (2 * S)) :=
-  OrthonormalBasis.ofRepr ((stringUnitary S hS).trans
+  OrthonormalBasis.ofRepr ((stringUnitary S).trans
     (LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ (nativeIndexEquiv S)))
 
 /-- Constructed complex unitary onto every native spin block and primitive copy. -/
-def nativeUnitary (S : ℕ) (hS : 1 ≤ S) :
+def nativeUnitary (S : ℕ) :
     Space (2 * S) ≃ₗᵢ[ℂ] EuclideanSpace ℂ (NativeIndex S) :=
-  (nativeBasis S hS).repr
+  (nativeBasis S).repr
 
-private lemma nativeBasis_apply (S : ℕ) (hS : 1 ≤ S) (a : NativeIndex S) :
-    nativeBasis S hS a = normalizedString S ⟨a.1.1,a.1.2,a.2.rev⟩ := by
-  change ((stringBasis S hS).reindex (nativeIndexEquiv S)) a = _
+private lemma nativeBasis_apply (S : ℕ) (a : NativeIndex S) :
+    nativeBasis S a = normalizedString S ⟨a.1.1,a.1.2,a.2.rev⟩ := by
+  change ((stringBasis S).reindex (nativeIndexEquiv S)) a = _
   simp [OrthonormalBasis.reindex_apply, nativeIndexEquiv,
     stringBasis, OrthonormalBasis.coe_mk]
 
@@ -957,7 +975,7 @@ def nativeMatrix (S : ℕ) (A : (n : ℕ) → Matrix (Fin (n + 1)) (Fin (n + 1))
     Matrix (NativeIndex S) (NativeIndex S) ℂ :=
   Matrix.blockDiagonal' fun a : CopyIndex S => A (2 * S - 2 * a.1.val)
 
-/-- Native raising, with no top - spin or uniform - occupancy restriction. -/
+/-- Native raising, with no top-spin or uniform-occupancy restriction. -/
 def nativeU (S : ℕ) : Module.End ℂ (EuclideanSpace ℂ (NativeIndex S)) :=
   (nativeMatrix S Jplus).toEuclideanLin
 /-- Native lowering is the conjugate transpose on every spin block. -/
@@ -967,16 +985,16 @@ def nativeL (S : ℕ) : Module.End ℂ (EuclideanSpace ℂ (NativeIndex S)) :=
 def nativeZ (S : ℕ) : Module.End ℂ (EuclideanSpace ℂ (NativeIndex S)) :=
   (nativeMatrix S Jz).toEuclideanLin
 
-private lemma nativeBasis_U (S : ℕ) (hS : 1 ≤ S) (b : CopyIndex S)
+private lemma nativeBasis_U (S : ℕ) (b : CopyIndex S)
     (r : Fin (2 * S - 2 * b.1.val + 1)) :
-    U (2 * S) (nativeBasis S hS ⟨b,r⟩) =
+    U (2 * S) (nativeBasis S ⟨b,r⟩) =
       if h : 0 < r.val then
         (Real.sqrt ((r.val:ℝ) * ((2 * S - 2 * b.1.val:ℕ) + 1 - r.val : ℝ)) : ℂ) •
-          nativeBasis S hS ⟨b,⟨r.val - 1,by omega⟩⟩ else 0 := by
+          nativeBasis S ⟨b,⟨r.val - 1,by omega⟩⟩ else 0 := by
   by_cases hr : 0 < r.val
   · rw [dite_eq_left hr, nativeBasis_apply, nativeBasis_apply]
     have hq : r.rev.val < 2 * S - 2 * b.1.val := by rw [Fin.val_rev]; omega
-    rw [normalizedString_U_succ S hS b.1 b.2 r.rev hq]
+    rw [normalizedString_U_succ S b.1 b.2 r.rev hq]
     have he : (⟨r.rev.val + 1,by omega⟩ : Fin (2 * S - 2 * b.1.val + 1)) =
         (⟨r.val - 1,by omega⟩ : Fin (2 * S - 2 * b.1.val + 1)).rev := by
       apply Fin.ext; simp only [Fin.val_rev]; omega
@@ -991,13 +1009,13 @@ private lemma nativeBasis_U (S : ℕ) (hS : 1 ≤ S) (b : CopyIndex S)
     have he : r.rev = (⟨2 * S - 2 * b.1.val,by omega⟩ : Fin (2 * S - 2 * b.1.val + 1)) := by
       apply Fin.ext; simp only [Fin.val_rev]; omega
     rw [he]
-    exact normalizedString_U_top S hS b.1 b.2
+    exact normalizedString_U_top S b.1 b.2
 
-private lemma nativeBasis_Z (S : ℕ) (hS : 1 ≤ S) (b : CopyIndex S)
+private lemma nativeBasis_Z (S : ℕ) (b : CopyIndex S)
     (r : Fin (2 * S - 2 * b.1.val + 1)) :
-    Z (2 * S) (nativeBasis S hS ⟨b,r⟩) =
-      ((((2 * S - 2 * b.1.val:ℕ):ℝ)/2 - r.val : ℝ):ℂ) • nativeBasis S hS ⟨b,r⟩ := by
-  rw [nativeBasis_apply, normalizedString_Z S hS]
+    Z (2 * S) (nativeBasis S ⟨b,r⟩) =
+      ((((2 * S - 2 * b.1.val:ℕ):ℝ)/2 - r.val : ℝ):ℂ) • nativeBasis S ⟨b,r⟩ := by
+  rw [nativeBasis_apply, normalizedString_Z S]
   congr 1
   have ht : b.1.val ≤ S := by have := b.1.isLt; omega
   have hd : 2 * b.1.val ≤ 2 * S := by omega
@@ -1008,19 +1026,19 @@ private lemma nativeBasis_Z (S : ℕ) (hS : 1 ≤ S) (b : CopyIndex S)
   push_cast
   ring
 
-private lemma nativeMatrix_U (S : ℕ) (hS : 1 ≤ S) :
-    LinearMap.toMatrix (nativeBasis S hS).toBasis (nativeBasis S hS).toBasis (U (2 * S)) =
+private lemma nativeMatrix_U (S : ℕ) :
+    LinearMap.toMatrix (nativeBasis S).toBasis (nativeBasis S).toBasis (U (2 * S)) =
       nativeMatrix S Jplus := by
   classical
   ext ⟨c,k⟩ ⟨b,r⟩
   rw [LinearMap.toMatrix_apply, OrthonormalBasis.coe_toBasis_repr_apply,
     OrthonormalBasis.repr_apply_apply]
-  change inner ℂ (nativeBasis S hS ⟨c,k⟩) (U (2 * S) (nativeBasis S hS ⟨b,r⟩)) =
+  change inner ℂ (nativeBasis S ⟨c,k⟩) (U (2 * S) (nativeBasis S ⟨b,r⟩)) =
     nativeMatrix S Jplus ⟨c,k⟩ ⟨b,r⟩
   rw [nativeBasis_U]
   by_cases hr : 0 < r.val
   · rw [dite_eq_left hr, inner_smul_right,
-      orthonormal_iff_ite.mp (nativeBasis S hS).orthonormal]
+      orthonormal_iff_ite.mp (nativeBasis S).orthonormal]
     by_cases hcb : c = b
     · subst c
       rw [nativeMatrix, Matrix.blockDiagonal'_apply_eq, raising_entry]
@@ -1049,23 +1067,23 @@ private lemma nativeMatrix_U (S : ℕ) (hS : 1 ≤ S) :
       rw [nativeMatrix, Matrix.blockDiagonal'_apply_eq, raising_entry, if_neg (by omega)]
     · rw [nativeMatrix, Matrix.blockDiagonal'_apply_ne _ _ _ hcb]
 
-private lemma nativeMatrix_L (S : ℕ) (hS : 1 ≤ S) :
-    LinearMap.toMatrix (nativeBasis S hS).toBasis (nativeBasis S hS).toBasis (L (2 * S)) =
+private lemma nativeMatrix_L (S : ℕ) :
+    LinearMap.toMatrix (nativeBasis S).toBasis (nativeBasis S).toBasis (L (2 * S)) =
       nativeMatrix S (fun n => (Jplus n)ᴴ) := by
   rw [← adjoint_U, LinearMap.toMatrix_adjoint, nativeMatrix_U]
   exact Matrix.blockDiagonal'_conjTranspose _
 
-private lemma nativeMatrix_Z (S : ℕ) (hS : 1 ≤ S) :
-    LinearMap.toMatrix (nativeBasis S hS).toBasis (nativeBasis S hS).toBasis (Z (2 * S)) =
+private lemma nativeMatrix_Z (S : ℕ) :
+    LinearMap.toMatrix (nativeBasis S).toBasis (nativeBasis S).toBasis (Z (2 * S)) =
       nativeMatrix S Jz := by
   classical
   ext ⟨c,k⟩ ⟨b,r⟩
   rw [LinearMap.toMatrix_apply, OrthonormalBasis.coe_toBasis_repr_apply,
     OrthonormalBasis.repr_apply_apply]
-  change inner ℂ (nativeBasis S hS ⟨c,k⟩) (Z (2 * S) (nativeBasis S hS ⟨b,r⟩)) =
+  change inner ℂ (nativeBasis S ⟨c,k⟩) (Z (2 * S) (nativeBasis S ⟨b,r⟩)) =
     nativeMatrix S Jz ⟨c,k⟩ ⟨b,r⟩
   rw [nativeBasis_Z, inner_smul_right,
-    orthonormal_iff_ite.mp (nativeBasis S hS).orthonormal]
+    orthonormal_iff_ite.mp (nativeBasis S).orthonormal]
   by_cases hcb : c=b
   · subst c
     rw [nativeMatrix, Matrix.blockDiagonal'_apply_eq, Jz]
@@ -1077,40 +1095,40 @@ private lemma nativeMatrix_Z (S : ℕ) (hS : 1 ≤ S) :
       intro he; exact hcb (congrArg Sigma.fst he)
     simp [he]
 
-private lemma native_intertwiner (S : ℕ) (hS : 1 ≤ S)
+private lemma native_intertwiner (S : ℕ)
     (A : Module.End ℂ (Space (2 * S)))
     (M : Matrix (NativeIndex S) (NativeIndex S) ℂ)
-    (hM : LinearMap.toMatrix (nativeBasis S hS).toBasis (nativeBasis S hS).toBasis A = M)
+    (hM : LinearMap.toMatrix (nativeBasis S).toBasis (nativeBasis S).toBasis A = M)
     (v : Space (2 * S)) :
-    nativeUnitary S hS (A v) = M.toEuclideanLin (nativeUnitary S hS v) := by
-  have he := A.toMatrix_mulVec_repr (nativeBasis S hS).toBasis
-    (nativeBasis S hS).toBasis v
+    nativeUnitary S (A v) = M.toEuclideanLin (nativeUnitary S v) := by
+  have he := A.toMatrix_mulVec_repr (nativeBasis S).toBasis
+    (nativeBasis S).toBasis v
   rw [hM] at he
-  have hrepr : ((nativeBasis S hS).toBasis.repr v : NativeIndex S → ℂ) =
-      ((nativeBasis S hS).repr v).ofLp := by
+  have hrepr : ((nativeBasis S).toBasis.repr v : NativeIndex S → ℂ) =
+      ((nativeBasis S).repr v).ofLp := by
     funext i
     exact OrthonormalBasis.coe_toBasis_repr_apply _ _ _
   rw [hrepr] at he
   ext a
-  change ((nativeBasis S hS).repr (A v)) a =
-    (M *ᵥ ((nativeBasis S hS).repr v).ofLp) a
+  change ((nativeBasis S).repr (A v)) a =
+    (M *ᵥ ((nativeBasis S).repr v).ofLp) a
   simpa only [OrthonormalBasis.coe_toBasis_repr_apply] using (congrFun he a).symm
 
 /-- The full Boolean decomposition, with derived multiplicities and actual native intertwiners. -/
-theorem native_decomposition (S : ℕ) (hS : 1 ≤ S) :
+theorem native_decomposition (S : ℕ) :
     (∀ t : Fin (S + 1), Module.finrank ℂ (primitive (2 * S) t) =
       (2 * S).choose t - previousChoose (2 * S) t) ∧
-    (∀ a : NativeIndex S, nativeBasis S hS a =
+    (∀ a : NativeIndex S, nativeBasis S a =
       normalizedString S ⟨a.1.1,a.1.2,a.2.rev⟩) ∧
     (∀ v : Space (2 * S),
-      nativeUnitary S hS (U (2 * S) v) = nativeU S (nativeUnitary S hS v) ∧
-      nativeUnitary S hS (L (2 * S) v) = nativeL S (nativeUnitary S hS v) ∧
-      nativeUnitary S hS (Z (2 * S) v) = nativeZ S (nativeUnitary S hS v)) := by
+      nativeUnitary S (U (2 * S) v) = nativeU S (nativeUnitary S v) ∧
+      nativeUnitary S (L (2 * S) v) = nativeL S (nativeUnitary S v) ∧
+      nativeUnitary S (Z (2 * S) v) = nativeZ S (nativeUnitary S v)) := by
   refine ⟨fun t => primitive_multiplicity S t (by have := t.isLt; omega),
-    nativeBasis_apply S hS, fun v => ?_⟩
-  exact ⟨native_intertwiner S hS _ _ (nativeMatrix_U S hS) v,
-    native_intertwiner S hS _ _ (nativeMatrix_L S hS) v,
-    native_intertwiner S hS _ _ (nativeMatrix_Z S hS) v⟩
+    nativeBasis_apply S, fun v => ?_⟩
+  exact ⟨native_intertwiner S _ _ (nativeMatrix_U S) v,
+    native_intertwiner S _ _ (nativeMatrix_L S) v,
+    native_intertwiner S _ _ (nativeMatrix_Z S) v⟩
 
 #print axioms primitive_multiplicity
 #print axioms native_decomposition

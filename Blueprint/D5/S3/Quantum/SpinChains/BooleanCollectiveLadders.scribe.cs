@@ -34,7 +34,7 @@ internal sealed class BooleanCollectiveLaddersDocument : IScribeDocumentDefiniti
             Node("nativeL", "Native lowering on all blocks", NativeOperator("L"), DescribeRole.Definition),
             Node("nativeZ", "Native weights on all blocks", NativeOperator("Z"), DescribeRole.Definition),
             Node("native_decomposition", "Multiplicity, complete basis and native intertwiners", FullResult(), DescribeRole.Theorem),
-            Paragraph(Text("The raising and lowering maps are Matrix.toEuclideanLin of the existing PronkoFredkinAntiAdjointExpansion.totalPlus and totalMinus, using the existing sigmaPlus, sigmaMinus and site operators. Their tensor multiplication is reused from StabilizerPairLocalUnitaryInequivalence.tensor_mul. The proof derives the concrete commutator and complex adjoint relation. At each rank, orthogonal decomposition into the image of the preceding rank and its complement constructs primitive generators; induction proves full span. Thus neither a complete basis nor a homogeneous complement is an assumption. The pinned mathlib sl₂ primitive-vector theorems supply the recurrence and terminal zero on the whole nonzero carrier, including primitive strings of spin zero.")),
+            Paragraph(Text("The raising and lowering maps are Matrix.toEuclideanLin of the existing PronkoFredkinAntiAdjointExpansion.totalPlus and totalMinus, using the existing sigmaPlus, sigmaMinus and site operators. Their tensor multiplication is reused from StabilizerPairLocalUnitaryInequivalence.tensor_mul. The proof derives the concrete commutator and complex adjoint relation. At each rank, orthogonal decomposition into the image of the preceding rank and its complement constructs primitive generators; induction proves full span. Thus neither a complete basis nor a homogeneous complement is an assumption. The pinned mathlib sl₂ primitive-vector theorems supply the recurrence and terminal zero for positive site counts; the empty-site carrier is handled directly by the zero collective maps. All natural S, including S=0, and primitive strings of spin zero are included.")),
             Paragraph(Text("In the formulas, powers act by composition, ⟪v,w⟫ is complex Hermitian inner product, and scalars act on the left. Subtraction in the natural quantities d = 2S−2t and S−t is truncated; the lowering coefficient and weight are interpreted in ℂ after casting their natural operands. The notation scalar·vector denotes complex scalar multiplication. descFactorial(d,q) is the natural descending product ∏_{a=0}^{q−1}(d−a), equal to d!/(d−q)! when q≤d. The zero-power and zero-deficit cases are included. The result permits any primitive vector, without a reality restriction or a restriction to the permutation-invariant sector.")),
             Paragraph(Text("For each rank t≤S, the dimension is derived as choose(2S,t)−previousChoose(2S,t), where previousChoose(N,0)=0 and previousChoose(N,t+1)=choose(N,t). Fixed-occupancy configurations are identified with t-element subsets, and the actual rank space is identified with the complex function space on these subsets. The commutator and adjoint identity prove injectivity of U below the middle rank. Orthogonal splitting of rank t+1 into U(rank t) and its primitive subspace then gives the dimension formula; no rank multiplicity is assumed.")),
             Paragraph(Text("Write d=2S−2t=2(S−t), and let b(t,a) be the selected orthonormal primitive basis. StringIndex(S) consists of (t,(a,k)) with t in Fin(S+1), a in Fin(dim P(2S,t)), and k in Fin(d+1). The normalized vector is U^k b(t,a) divided by its positive real norm, as a complex scalar. Its squared unnormalized norm is k!·descFactorial(d,k), so every position in every selected string is nonzero. Orthogonality and the primitive spanning theorem prove that these normalized vectors form a complete orthonormal basis, rather than assuming a complete family or a unitary.")),
@@ -174,15 +174,15 @@ internal sealed class BooleanCollectiveLaddersDocument : IScribeDocumentDefiniti
     private static Formula BasisValue(bool native)
     {
         var s=F.Id("S");var a=F.Id("a");
-        return All("S",N(),Imp(Le(D(1),s),All("a",Call(native?"NativeIndex":"StringIndex",s),
+        return All("S",N(),All("a",Call(native?"NativeIndex":"StringIndex",s),
             Eq(At(Call(native?"nativeBasis":"stringBasis",s),a),
-                Call("normalizedString",s,native?NativeStringLabel(a):a)))));
+                Call("normalizedString",s,native?NativeStringLabel(a):a))));
     }
     private static Formula Coordinates(bool native)
     {
         var s=F.Id("S");
-        return All("S",N(),Imp(Le(D(1),s),Eq(Call(native?"nativeUnitary":"stringUnitary",s),
-            Call("repr",Call(native?"nativeBasis":"stringBasis",s)))));
+        return All("S",N(),Eq(Call(native?"nativeUnitary":"stringUnitary",s),
+            Call("repr",Call(native?"nativeBasis":"stringBasis",s))));
     }
     private static Formula NativeBlocks()
     {
@@ -206,7 +206,7 @@ internal sealed class BooleanCollectiveLaddersDocument : IScribeDocumentDefiniti
         Formula Inter(string op) => Eq(At(Call("nativeUnitary",s),At(Call(op,n),v)),
             At(Call("native"+op,s),At(Call("nativeUnitary",s),v)));
         var inter=All("v",V(n),And(Inter("U"),And(Inter("L"),Inter("Z"))));
-        return All("S",N(),Imp(Le(D(1),s),And(dim,And(basis,inter))));
+        return All("S",N(),And(dim,And(basis,inter)));
     }
 
     private static Formula Result()
@@ -227,6 +227,6 @@ internal sealed class BooleanCollectiveLaddersDocument : IScribeDocumentDefiniti
         var rankOrth=Imp(Ne(t,tp),Eq(Inner(v,w),D(0)));
         var orth=All("t",N(),All("tprime",N(),All("v",V(n),All("w",V(n),
             Imp(Mem(v,P(n,t)),Imp(Mem(w,P(n,tp)),And(rankOrth,stringOrth)))))));
-        return All("S",N(),Imp(Le(D(1),s),And(span,And(cutoff,And(algebra,orth)))));
+        return All("S",N(),And(span,And(cutoff,And(algebra,orth))));
     }
 }
