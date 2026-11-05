@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.TraceAvoidingArrays;
 internal sealed class HardinA240513LadderDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA240513Ladder.";
-    private const string Note = "D5/L/Combinatorics/hardinbarker2014a240513";
+    private const string Note = "D5/L/RecurrenceComposition/hardinbarker2014a240513";
     private const string NameQuote = "Number of n X 2 0..1 arrays with no element equal to exactly two horizontal and vertical neighbors, with new values 0..1 introduced in row major order.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -45,17 +45,20 @@ internal sealed class HardinA240513LadderDocument : IScribeDocumentDefinition
     {
         var pr = Coordinate(p, 1); var pc = Coordinate(p, 2);
         var qr = Coordinate(q, 1); var qc = Coordinate(q, 2);
-        return OrOf(AndOf(Eq(pr, qr), OrOf(Eq(pc, Add(qc, D(1))), Eq(qc, Add(pc, D(1)))))),
-            AndOf(Eq(pc, qc), OrOf(Eq(pr, Add(qr, D(1))), Eq(qr, Add(pr, D(1)))))));
+        var columnStep = OrOf(Eq(pc, Add(qc, D(1))), Eq(qc, Add(pc, D(1))));
+        var rowStep = OrOf(Eq(pr, Add(qr, D(1))), Eq(qr, Add(pr, D(1))));
+        return OrOf(AndOf(Eq(pr, qr), columnStep), AndOf(Eq(pc, qc), rowStep));
     }
 
     private static Formula ResultFormula()
     {
         var n = V("n"); var x = Q("PowerSeries", "X");
         Formula A(Formula k) => Cast(Call("a", k), V("Int"));
-        var recurrence = All("n", V("Nat"), Imp(Seq(D(6), Sp, Leq, Sp, n),
-            Eq(A(n), Add(Sub(Sub(Add(Mul(D(2), A(Sub(n, D(1)))), A(Sub(n, D(2)))),
-                A(Sub(n, D(3)))), Mul(D(2), A(Sub(n, D(4))))), A(Sub(n, D(5)))))));
+        var rhs = Add(Mul(D(2), A(Sub(n, D(1)))), A(Sub(n, D(2))));
+        rhs = Sub(rhs, A(Sub(n, D(3))));
+        rhs = Sub(rhs, Mul(D(2), A(Sub(n, D(4)))));
+        rhs = Add(rhs, A(Sub(n, D(5))));
+        var recurrence = All("n", V("Nat"), Imp(Seq(D(6), Sp, Leq, Sp, n), Eq(A(n), rhs)));
         var quartic = Add(Sub(Sub(Sub(D(1), x), Mul(D(2), Pow(x, D(2)))), Pow(x, D(3))),
             Pow(x, D(4)));
         var series = App(Q("PowerSeries", "mk"),
