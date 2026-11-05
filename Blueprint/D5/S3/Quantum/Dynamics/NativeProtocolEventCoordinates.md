@@ -16,6 +16,8 @@ $$(\forall L: \operatorname{Type}\left(\right), (\forall T: \operatorname{Tree}\
 
 *Commentary.*
 
+Generality I: these coordinates use the fixed sixteen-bit golden protocol, the inverse-golden relation and its particular cyclotomic extension. The whole-tree estimates are for this instance; no uniform result over arbitrary quadratic fields or gate menus is asserted.
+
 For every terminal-label type L, original native tree T and Boolean terminal event e, coordinates(T,e) is an explicitly computed integer pair A,B in the inverse-golden basis. The physical evaluation is A+B t, with t=phi inverse; its other real evaluation is A-B phi. The displayed theorem identifies the first value with the actually computed raw eventMass, identifies the second value with a signed sum over the same terminal paths and basis words, and bounds its absolute value using L(T)=Tree.maxCalls(T) and kappa=1+2 phi cubed.
 
 The coefficient ring O consists of integer pairs with generator tau satisfying tau squared equals one minus tau. S consists of two O coordinates with generator eta satisfying eta squared equals minus one minus tau eta. These are Mathlib quadratic algebras; their multiplication and both evaluation homomorphisms are proved from the displayed equations. At each full basis word z the coefficient vector h represents the actual amplitude as beta to exponent(z) times physical(h(z)). The exponent is zero or one according to the Hamming parity relative to the actual root at shifted positions 0,4,8. A center-bit flip changes that parity.

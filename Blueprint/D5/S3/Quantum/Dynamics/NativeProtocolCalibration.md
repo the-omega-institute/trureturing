@@ -16,6 +16,8 @@ $$(((((((((((\operatorname{Reduced}\left(\operatorname{mulVec}\left(\operatornam
 
 *Commentary.*
 
+Generality I: the calibration is the actual three-call calculation on the fixed original sixteen-bit golden protocol. Its arithmetic dependency closure contains instance results; this statement supplies no calibration theorem for arbitrary quadratic fields or gate menus.
+
 Use the same full sixteen-bit carrier, root, fourteen addresses, selectors and stop-aware continuations defined in NativeProtocolGraft. The source tree is exactly the chronological three forward calls K3,K2,K1, ending at an active cut. The bijection cut splits shifted bit 2, the original b1, from all fifteen remaining bits. Reduced(v) is the existing partialTraceRight of the rank-one full-carrier matrix, reindexed only by this bijection. This mathematical reduction adds no physical deletion, state preparation or protection of the complement.
 
 The actual gate action on a computational vector has its original diagonal coefficient and one possible center-flip coefficient. Applying it three times to the original root gives a squared times b at 000, a times b squared at 100, zeta times a times c at 001, zeta times b times c at 101, and zeta times b squared at 010, with all other native bits unchanged. Here a=-t, b=-beta times zeta to the fourth, c=-t times zeta cubed. The partial trace contracts equal complement words. It gives chi exactly, with entries t,gamma,conjugate gamma,t squared, where gamma=t squared times beta times conjugate of zeta to the fourth. These weights are computed from that same pure native vector.

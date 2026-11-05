@@ -16,6 +16,8 @@ $$(\forall T: \operatorname{Tree}\left(\operatorname{Cut}\left(\right)\right), (
 
 *Commentary.*
 
+Generality I: this artifact uses the fixed original sixteen-bit golden protocol and its instance-specific arithmetic dependency closure. Quantification over native trees and continuations does not assert a theorem for arbitrary carriers or quadratic fields.
+
 The carrier Basis is the set of all functions from Fin 16 to Bool, with shifted sites 0 through 15 representing the original sites -1 through 14. All operators are full matrices on these 65536 basis words. The root Omega is the computational word with ones at shifted positions 0, 4 and 8. No factorization of the 2584-dimensional legal subspace is used.
 
 The menu is that of V88 definitions 23.1, 23.2 and 28.1. It uses the actual fourteen golden matrices K at addresses 0 through 13: Q is t times the zero-number projection plus t squared times the number projection plus beta cubed times bit flip; P is the product of neighboring number projections plus the product of their complements times Q; K is zeta times identity plus zeta times (zeta minus one) times P. Here phi=(1+sqrt(5))/2, t=phi inverse, beta=sqrt(t), and zeta=exp(3 pi i/5). An inverse call is interpreted as nine forward calls and costs nine. A forward call costs one.

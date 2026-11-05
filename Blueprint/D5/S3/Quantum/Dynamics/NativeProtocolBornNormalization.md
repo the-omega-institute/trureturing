@@ -16,6 +16,8 @@ $$(\forall L: \operatorname{Type}\left(\right), (\forall T: \operatorname{Tree}\
 
 *Commentary.*
 
+Generality I: normalization and the same-cut resource bounds concern the fixed original sixteen-bit golden protocol and its instance-specific arithmetic dependency closure. Quantification over all native trees, events and position cuts does not extend these statements to arbitrary carriers or quadratic fields.
+
 The objects are the original NativeProtocolGraft.Tree, Basis, omega0, gate, callMatrix, projector, Path and mass. Basis consists of all sixteen-bit words at the shifted original positions. The unique fixed root has ones at positions 0, 4 and 8. The proof uses the full matrices at every address in Fin 14, rather than a two-dimensional model supplied as an additional premise.
 
 On each active center-bit pair the actual gate coefficients are a,b,c from the existing calibration calculation. Their existing squared norms, the golden quadratic identity and the actual phase norm give orthogonal unit rows. The remaining control blocks are zero or identity before the phase gate. Reindexing the full carrier by the center-bit involution proves exact energy conservation. Forward calls use this identity and inverse syntax uses nine iterations of the same actual matrix. The original resource counter still charges nine calls; no semantic equality with a separately defined matrix inverse is asserted.

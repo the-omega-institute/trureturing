@@ -16,6 +16,8 @@ $$(\forall L: \operatorname{Type}\left(\right), (\forall T: \operatorname{Tree}\
 
 *Commentary.*
 
+Generality I: the resource bounds use the fixed golden protocol and its instance-specific integer-ring arithmetic. Generalizing the carrier, golden parameter or arithmetic field requires new hypotheses and proofs; it is not a consequence of the quantification over native trees and events.
+
 For every type L of terminal labels, every finite full-menu native tree T and every Boolean event e on its complete terminal path and terminal sixteen-bit word, the raw mass p=eventMass(T,e) is an algebraic integer over the ordinary integers. All fourteen actual gate addresses, deterministic feedback, complete diagonal zero-one measurements, zero outcomes, stops and expanded inverse calls are included. The input is the same fixed computational root Omega; no arbitrary input vector or external probability weights occur.
 
 The scalars t, beta and zeta of the actual matrices are algebraic integers: rational-angle exponential and cosine integrality give zeta and t, and beta squared equals t. Every number projection and bit flip has integer entries. Finite matrix addition, multiplication and powers therefore preserve entrywise integrality. Induction through the actual tree gives integral branch-matrix entries. Applying the fixed root, multiplying each amplitude by its physical complex conjugate and summing the selected raw events preserve integrality. The real event mass is reflected from its injective complex embedding. No success normalization is performed.
