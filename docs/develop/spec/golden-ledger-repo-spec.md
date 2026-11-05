@@ -1195,7 +1195,7 @@ source hash 绑定 writer 观察到的源版本，不断言该版本是 atom 最
 | 数学门 / 本地 CI 准入流程 | `make test` / `make gate` |
 | 建 PR | `make pr HEAD=<分支> MESSAGE=<消息文件>`（首行为标题；默认自动合并并等 required CI；`AUTO_MERGE=0` 关闭自动合并；`DRAFT=1` 创建草稿后直接返回；`pr-open` 同义） |
 | 等指定 PR 提交的 CI | `make pr-watch PR=<编号> HEAD_SHA=<40位commit-SHA>` |
-| 预览可回收 worktree | `make -C tools clean-lanes`（加 `FORCE=1` 执行；已登记 linked worktree 的 HEAD committer 时间满 6 小时即选中，包含恰好 6 小时；不依赖分配时间、合并状态、普通改动或落后提交数；未知保留，删除前原生 checkpoint 并保留分支，身份、嵌套、未完成操作及 intentional lock 的 24 小时保护不变） |
+| 预览可回收 worktree | `make -C tools clean-lanes`（加 `FORCE=1` 执行；已登记 linked worktree 的 HEAD committer 时间满 6 小时即选中，包含恰好 6 小时；不依赖分配时间、合并状态、普通改动或落后提交数；未知保留，删除前原生 checkpoint 并保留分支，身份、嵌套与未完成操作保护适用，intentional lock 须满 24 小时） |
 | 交付后无兼容后续工作时归还 worktree 并保留缓存 | `make worktree-return PR=<编号> WRITERS_JOINED=1`（先核验 MERGED、首个 dev push 并 join 本任务写入者；第 6.1 条） |
 | 显式删除指定 worktree | `make worktree-remove NAMES="<目录名>"`（第 6.1 条） |
 | 磁盘可用空间低于 5% 时回收 | `make -C tools clean-all FORCE=1`（AI 可直接执行，第 6.1 条） |
