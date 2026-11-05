@@ -1,0 +1,40 @@
+**命题 100.3（全原子配平仍须完整联合背景）。** 裸有限 EJA 上，即使所有数学原子、全部实输入都满足配平，且所有 $D_a$ 为导子、全 SC 与所有单生成元平方恒等式成立，也不能代替完整原背景的全内协变、Jacobi 及交换子曲率。
+
+证明。使用成熟八元数范数叉积作为当前配平的边界模型。令 $E=\mathbb R\oplus\operatorname{Im}\mathbb O$，
+
+$$
+\begin{aligned}
+(\alpha,x)\circ(\beta,y)&=(\alpha\beta+x\cdot y,\alpha y+\beta x),\\
+u&=(1,0),\qquad
+q_w((\alpha,x),(\beta,y))=2w(\alpha\beta+x\cdot y),\quad w>0,\\
+D_{(\alpha,x)}(\beta,y)&=(0,x\times y).
+\end{aligned}
+\tag{100.6}
+$$
+
+叉积三形式交替，故每个 $x\times(\cdot)$ 斜对称，直接代入 Jordan 乘法即得导子律；SC 与两个单位恒等式也成立。原始幂等元为 $p_v=(1,v)/2$、$|v|=1$。写 $x_\perp=x-(v\cdot x)v$，则 $P_{p_v}(\alpha,x)=(0,x_\perp)$、$V_{p_v}(\alpha,x)=w|x_\perp|^2$。标准范数叉积满足 $|v\times x|^2=|x_\perp|^2$，故
+
+$$
+\begin{aligned}
+2q_w(D_ap_v,b)&=-2w(v\times x)\cdot y,\\
+V_{p_v}(b+2D_{p_v}a)&=w|y_\perp+v\times x|^2.
+\end{aligned}
+$$
+
+交叉项相消，给所有原子上的配平，当然覆盖任何合法有限谱表。同时 $x\times(x\times z)=-|x|^2z+(x\cdot z)x$，所以 $D_a^2=L_a^2-L_{a^2}$ 对所有 $a$ 成立。
+
+固定 Cayley–Dickson 约定 $(a+b\ell)(c+d\ell)=(ac-\bar d b)+(da+b\bar c)\ell$，取 $e_1=i,e_2=j,e_3=k,e_4=\ell,e_5=i\ell,e_6=j\ell,e_7=k\ell$，并把它们视为 $E$ 的纯向量。所需乘积给
+
+$$
+\begin{aligned}
+D_{e_1}D_{e_2}e_4+D_{e_2}D_{e_4}e_1+D_{e_4}D_{e_1}e_2&=-3e_7\ne0,\\
+[D_{e_1},D_{e_2}]e_4&=-2e_7,\qquad
+[L_{e_1},L_{e_2}]e_4=0.
+\end{aligned}
+\tag{100.7}
+$$
+
+故 Jacobi 和任何共同 $\kappa$ 的完整交换子曲率均失败。同一个 $K=D_{e_1}$ 的关系协变缺陷为 $K(D_{e_2}e_4)-D_{Ke_2}e_4-D_{e_2}(Ke_4)=-3e_7$，所以全内协变也失败。这是简单秩二、实维八的 spin 因子，不是实维四的复型秩二 $H_2(\mathbb C)$。其原子流形是 $S^6$，$J_vX=v\times X$ 在每个切空间上正交且平方为 $-I$；这些逐点数据仍不能替代复量子代数的整体关系。
+
+八元数及叉积的成熟来源为 Baez, *The Octonions*, [arXiv:math/0105155, §§2.2、4.1](https://arxiv.org/abs/math/0105155)，后者明确给出范数恒等式及七维叉积的非 Lie 性。本例新增的是其满足当前全部配平而未取得全原过程背景的具体对应；没有供应实际 $AP^{\otimes k}$、X/Xs、准备与全事件合同，不能冒作完整 $B_*$ 反模型。∎
+

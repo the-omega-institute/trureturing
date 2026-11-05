@@ -1,0 +1,11 @@
+**命题 93.2（先投影第二槽会丢失原运动）。** 若把 (91.1) 改成 $\widetilde K_p(a,b)=q(P_pa,P_pb)+2i\,q(D_ap,P_pb)$，即使所有数学原子的该核都正半定且原指针满足横向边界，也不能仅从这些局部数据推出 SC 或原输出切向。
+
+证明。只在局部 $E=H_2(\mathbb C)$ 取 $q(a,b)=\operatorname{Tr}(ab)$、$u=I$、$d=e_{11}$、$h=\begin{psmallmatrix}0&1\\1&0\end{psmallmatrix}$、$\ell(a)=\operatorname{Tr}(ha)$，定义
+
+$$
+D_ab=\tfrac i2[a,b]+\ell(a)\ell(b)u.
+\tag{93.2}
+$$
+
+有 $\ell(u)=\ell(d)=0$，所以 $D_au=0$ 且整个 $D_d$ 仍为标准作用。对任何 primitive $p$，$W_p$ 的元素迹为零，故新增的原输出在投影后的第二槽不可见；所有 $\widetilde K_p$ 与标准量子作用的核完全相同，均正半定，$d$ 的横向边界也保留。然而 $D_hh=4u\ne0$，且当 $\ell(p)\ne0$ 时新增输出沿 $u$，不属于 $W_p$。这是同一局部 EJA、原单位和指针上的失败模型，未声称它满足完整 $B$ 或 $\mathsf B_{\rm cl}$ 的实际联合、器件及返回合同。它定位的缺口正是被第二槽投影藏掉的法向分量。∎
+

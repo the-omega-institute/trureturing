@@ -1,0 +1,20 @@
+**定理 104.1（同一原量子候选的无分母表述）。** 分别在各自完整原背景上，
+
+$$
+\begin{aligned}
+\mathsf C_{\rm co}(B)&\Longleftrightarrow B+\mathrm Z+\mathrm{SC}+\mathrm{SJ},\\
+\mathsf C_{\rm co}(\mathsf B_{\rm cl})&\Longleftrightarrow
+\mathsf B_{\rm cl}+\mathsf Q+\mathrm{SC}+\mathrm{SJ}.
+\end{aligned}
+\tag{104.1}
+$$
+
+证明。定理 103.2 先给全导子与 SC，再由原定理 83.2 或推论 68.2 接回 Z 或 $\mathsf Q$。此时才消费各自完整原联合背景的定理 63.3 或 71.1，得到共同 $\kappa\ge0$。原指针上存在被测补点 $c=u-r$ 且 $E_{1/2}(c)\ne0$：否则所有选定 frame 原子 $r$ 都中央，而它们张成包含任意原基的整个 $E_P$，与原 AC 已有非中央 $d$ 矛盾。在该点取 $0\ne a\in E_{1/2}(c)$。单位与 SC 已恢复，所以 $D_c=-D_r$；(103.2) 的 $b=0$ 及已证共同尺度给
+
+$$
+W_c(a)=W_c(2D_ca)=\kappa W_c(a),\qquad W_c(a)>0.
+\tag{104.2}
+$$
+
+因此 $\kappa=1$，沿原定理 64.2 或 71.3 给 SJ。反向在原完整单位尺度量子结构上，primitive $r$ 的全部实输入配平已由定理 100.1 给出。对 $c=u-r$，$W_c=V_r$、$D_ac=-D_ar$、$D_ca=-D_ra$，所以补点配平恰为原子配平在 $(-a,b)$ 的取值。秩一上原导子为零，单位测试成立；零对象同样成立。全程没有更换原 $D$、其时钟或输出标定。∎
+

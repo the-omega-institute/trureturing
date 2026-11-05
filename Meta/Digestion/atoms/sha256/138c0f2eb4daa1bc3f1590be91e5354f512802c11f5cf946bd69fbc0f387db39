@@ -1,0 +1,29 @@
+**定理 22.3（任意标记与任意迭代的统一单位控制）。**对全部 $y,x$ 及 $j,n\ge0$，有
+
+$$
+\begin{aligned}
+q(y)&\le9c(y,p_j)+12\Omega,&
+r(y)&\le9c(p_j,y)+12\Omega,\\
+q(U^nx)&\le9q(x)+12\Omega,&
+r(U^nx)&\le9r(x)+12\Omega.
+\end{aligned}
+\tag{22.3}
+$$
+
+**证明。**选 $e\in\{0,1,2\}$ 使 $j+e$ 为三的倍数。引理 22.2 与同步等距给
+
+$$
+q(U^ey)\le3c(U^ey,p_{j+e})+3\Omega
+=3c(y,p_j)+3\Omega.
+$$
+
+另一方面，$q(y)=c(U^ey,p_e)\le3q(U^ey)+3r(p_e)\le3q(U^ey)+3\Omega$，合并给第一式。转置核仍满足全部原关系，得到第二式。对任意 $n$，取 $L\ge n$ 且 $3\mid L$，则
+
+$$
+q(U^nx)\le3c(U^nx,p_L)+3\Omega
+=3c(x,p_{L-n})+3\Omega
+\le9q(x)+12\Omega.
+$$
+
+转置给反向结论。常数不含 $n$，也不需要未知的 $c(x,Ux)$ 或 $c(x,U^2x)$。
+
