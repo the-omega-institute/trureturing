@@ -100,6 +100,10 @@ $$\neg (\forall (M : \operatorname{IntegerMatrix}\left(6\right)), ((\operatornam
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/FinchBalancedZerofreeRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/finch-unimodular-zerofree-six` (refuted) by `D5/S3/QuadraticForms/FinchBalancedZerofreeRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"finch-unimodular-zerofree-six","declaration_gid":"D5/S3/QuadraticForms/FinchBalancedZerofreeRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Steven Finch (2026). *Small Matrices with Small Inverses: Unimodular Zerofree Cases*. DOI: [10.48550/arXiv.2605.03691](https://doi.org/10.48550/arXiv.2605.03691). URL: <https://arxiv.org/abs/2605.03691v4>.
