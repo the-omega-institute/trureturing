@@ -1,0 +1,2 @@
+**例 8.5（不能外推到任意 magma）。**在 $\mathbb Z[\zeta]$ 上保持普通 $Q(z)=|z|^2,U z=\zeta z$，把普通加法改为有单位的交换运算 $\star$，仅将无序对 $\{1,\zeta\}$ 的结果改为 $0$。所有 $a\star a=2a$；而 $1,\zeta$ 均不属于 $2\mathbb Z[\zeta]$。所以按 $x\star(y\star y)$、$x\star(Uy\star Uy)$、$(Ux\star Ux)\star y$ 读取的三个端口完全不变，(T7) 仍成立。若表示保持全部原乘法，则 $F1+F\zeta=0$，又 $F\zeta=\zeta F1$，迫使 $F1=0$，与 $Q1=1$ 矛盾。此例不属于交换幺半群定理的域；它精确阻止撤掉该域条件。一般去锚 fullR 到 DT 的问题仍未解决。
+

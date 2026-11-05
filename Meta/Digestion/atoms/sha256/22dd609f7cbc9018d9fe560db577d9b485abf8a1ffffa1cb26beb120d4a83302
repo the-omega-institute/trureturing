@@ -1,0 +1,25 @@
+**命题 18.1（稠密算术投影域仍容许零一响应）。**在三维算术投影测试域上，存在从效果矩阵本身定义的零一响应，满足全部算术正交基归一化及投影粗粒化，却不是任何密度矩阵的 Born 响应。给它添加实际三进抽签及其历史仿射性，仍不足以保证 EC。
+
+**证明。**因 $x^2+x+1$ 在 $\mathbb F_2$ 上不可约，且 $3$ 模二可逆，存在
+
+$$
+A\longrightarrow\mathbb F_4,\qquad
+\overline\zeta^2+\overline\zeta+1=0,
+\qquad \overline{z^*}=\bar z^2.
+\tag{18.1}
+$$
+
+单位向量的模二像满足 $\sum_i\bar v_i^3=1$；每个非零项等于一，所以非零坐标数为一或三。单位射线共十二条：三条坐标线及九条 $(1,a,b)$，$a,b\in\mathbb F_4^*$。对后者，一个不同单位满支撑射线与它正交当且仅当
+
+$$
+1+u+v=0,\qquad u,v\in\mathbb F_4^*.
+$$
+
+两种解为 $(u,v)=(\bar\zeta,\bar\zeta^2)$ 及其交换，故其两条正交单位线恰为 $(1,a\bar\zeta,b\bar\zeta^2)$、$(1,a\bar\zeta^2,b\bar\zeta)$。坐标线不与满支撑线正交。于是全部正交基恰分成四个不交三元组：坐标组三条，以及按 $c=ab\in\mathbb F_4^*$ 分类的三个满支撑组。
+
+选中坐标线 $e_0$，并在每个满支撑组选 $(1,1,c)$。对 $A$ 中秩一投影 $P_v$，当其模二投影像为选中线时赋值一，否则零。因为 $\bar v^*\bar v=1$，模二投影的像决定该线；所以这个赋值尊重同一个复投影矩阵的不同向量表示。每个算术正交基恰有一个一。秩二投影的值定义为一减去其秩一补投影的值，故全部投影粗粒化相容。
+
+$P_{e_0}$ 与 $P_{t(1,1,1)}$ 都被赋值一，但其复重叠平方为 $1/3$。正迹一矩阵若在 $P_{e_0}$ 上给一，就只能等于 $P_{e_0}$，不能在第二个投影上也给一。因此不是 Born 响应。
+
+这不违反全部复投影上的 Gleason 定理。算术单位向量域虽稠密，却未包含所有复投影，亦未预给概率连续性。Meyer，*Finite Precision Measurement Nullifies the Kochen-Specker Theorem*，[原文](https://arxiv.org/pdf/quant-ph/9905080)，Lemma 1 使用实有理单位球的 Godsil–Zaks 染色；Ben-Zvi–Ma–Reyes，*A Kochen-Specker theorem for integer matrices and noncommutative spectrum functors*，[原文](https://arxiv.org/html/1509.03618v3)，Theorem 3.4、Corollary 3.5 使用有限域约化。Piterman–Welker，*Homotopy properties of the complex of frames of a unitary space*，[原文](https://arxiv.org/pdf/2208.12626)，Lemma 2.16 已给出三维 $\mathbb F_4$ Hermitian 空间的四个不交正交三框；本文明确写出其坐标及算术拉回。这些都是成熟来源。未归一 Eisenstein 射线若归一化需要 $1/\sqrt2\notin A$，也不属于本命题的单位向量域。$\square$
+
