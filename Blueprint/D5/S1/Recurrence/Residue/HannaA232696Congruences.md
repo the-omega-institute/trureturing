@@ -44,7 +44,7 @@ $$\forall A \in \operatorname{PowerSeries}\left(\mathbb{Q}\right),\; \operatorna
 
 *Commentary.*
 
-An integral triangular recurrence transfers the residues of an approximate solution to every exact solution. Multiplication by the third or ninth power of the approximate derivative makes the residual polynomial. Its exponential coefficients are divisible by two or four, respectively. Cancellation of the integral series with constant coefficient one gives the two divisibility tails. HannaA232696Congruences.result settles the two nominated conjectures preregistered in issue #21487 (https://github.com/the-omega-institute/trureturing/issues/21487), recorded in Problems/hefg-a232696.md.
+An integral triangular recurrence transfers the residues of an approximate solution to every exact solution. Multiplication by the third or ninth power of the approximate derivative makes the residual polynomial. Its exponential coefficients are divisible by two or four, respectively. Cancellation of the integral series with constant coefficient one gives the two divisibility tails.
 
 ## References
 
