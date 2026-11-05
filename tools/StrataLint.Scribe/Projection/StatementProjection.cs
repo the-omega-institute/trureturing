@@ -182,6 +182,68 @@ internal static class StatementV1Decoder
     }
 }
 
+internal sealed record SemanticProjectionSignature(string Notation, int DropPrefix,
+    int MinimumArguments, int MaximumArguments, ImmutableArray<int> FunctionArguments,
+    bool Proposition, ImmutableArray<int> ArgumentIndices = default);
+
+internal static class SemanticProjectionSignatures
+{
+    // Measures, summation filters, sets, functions and evaluation points remain
+    // ordered semantic operands after removing the registered elaboration prefix.
+    internal static readonly ImmutableDictionary<string, SemanticProjectionSignature> Entries =
+        new Dictionary<string, SemanticProjectionSignature>(StringComparer.Ordinal)
+        {
+            ["Continuous"] = new("Continuous", 4, 5, 5, [0], true),
+            ["ContinuousAt"] = new("ContinuousAt", 4, 6, 6, [0], true),
+            ["ContinuousOn"] = new("ContinuousOn", 4, 6, 6, [0], true),
+            ["Summable"] = new("Summable", 4, 6, 6, [0], true),
+            ["HasSum"] = new("HasSum", 4, 7, 7, [0], true),
+            ["tsum"] = new("tsum", 4, 6, 6, [0], false),
+            ["Finset.sum"] = new("sum", 3, 5, 5, [1], false),
+            ["logDeriv"] = new("logDeriv", 5, 7, 7, [0], false),
+            ["SummationFilter.unconditional"] = new("unconditional", 0, 1, 1, [], false),
+            ["MeasureTheory.Integrable"] = new("Integrable", 5, 7, 7, [0], true),
+            ["MeasureTheory.IntegrableOn"] = new("IntegrableOn", 5, 8, 8, [0], true),
+            ["MeasureTheory.AEStronglyMeasurable"] = new("AEStronglyMeasurable", 5, 7, 7, [0], true),
+            ["MeasureTheory.integral"] = new("integral", 5, 7, 7, [1], false),
+            ["MeasureTheory.Measure.restrict"] = new("restrict", 2, 4, 4, [], false),
+            ["MeasureTheory.MeasureSpace.volume"] = new("volume", 0, 2, 2, [], false),
+            ["FourierTransform.fourier"] = new("fourier", 3, 4, 5, [0], false),
+            ["Set.Ioi"] = new("Ioi", 2, 3, 3, [], false),
+            ["Set.Ici"] = new("Ici", 2, 3, 3, [], false),
+            ["Finset.Ioc"] = new("Ioc", 3, 5, 5, [], false),
+            ["HPow.hPow"] = new("power", 4, 6, 6, [], false),
+            ["Max.max"] = new("max", 2, 4, 4, [], false),
+            ["Complex.im"] = new("im", 0, 1, 1, [], false),
+            ["Complex.digamma"] = new("digamma", 0, 1, 1, [], false),
+            ["deriv"] = new("deriv", 6, 8, 8, [0], false),
+            ["riemannZeta"] = new("riemannZeta", 0, 1, 1, [], false),
+            ["LSeries.term"] = new("LSeriesTerm", 0, 3, 3, [0], false),
+            ["ArithmeticFunction.vonMangoldt"] = new("vonMangoldt", 0, 1, 1, [], false),
+            ["Real.measureSpace"] = new("RealMeasureSpace", 0, 0, 0, [], false),
+            ["Equiv.Perm"] = new("Perm", 0, 1, 1, [], false),
+            ["Subtype"] = new("Subtype", 0, 2, 2, [1], false),
+            ["Set"] = new("Set", 0, 1, 1, [], false),
+            ["Membership.mem"] = new("membership", 3, 5, 5, [], true),
+            ["starRingEnd"] = new("starRingEnd", 0, 3, 3, [], false, [0]),
+            ["D5.S3.Fourier.FinitePoisson.annihilator"] = new("annihilator", 0, 3, 3, [], false, [0, 2]),
+            ["D5.S3.Weil.ZeroSum.ZeroData.multiplicity"] = new("ZeroDataMultiplicity", 0, 2, 2, [], false),
+            ["D5.S3.Weil.ZeroSum.ZeroData.zero"] = new("ZeroDataZero", 0, 2, 2, [], false),
+            ["D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds.actualData"] = new("actualData", 0, 0, 0, [], false),
+            ["D5.S3.Arith.Robin.CompleteMertensPeak.U"] = new("U", 0, 1, 1, [], false),
+            ["D5.S3.Weil.Mertens.IntegratedExplicit.actualCoeff"] = new("actualCoeff", 0, 1, 1, [], false),
+            ["D5.S3.Weil.Mertens.IntegratedExplicit.actualH"] = new("actualH", 0, 1, 1, [], false),
+            ["D5.S3.Weil.Mertens.IntegratedExplicit.mangoldtRamp"] = new("mangoldtRamp", 0, 1, 2, [], false),
+            ["D5.S3.Weil.Mertens.IntegratedExplicit.mangoldtPart"] = new("mangoldtPart", 0, 1, 1, [], false),
+            ["D5.S3.Weil.Mertens.IntegratedExplicit.transformLine"] = new("transformLine", 0, 1, 1, [], false),
+            ["D5.S3.Weil.Mertens.IntegratedExplicit.trivialCoeff"] = new("trivialCoeff", 0, 1, 1, [], false),
+            ["D5.S3.Weil.Mertens.IntegratedExplicit.trivialT"] = new("trivialT", 0, 1, 1, [], false),
+            ["D5.S3.Weil.Mertens.IntegratedExplicit.explicitDiscrepancy"] = new("explicitDiscrepancy", 0, 1, 1, [], false),
+            ["D5.S3.Weil.Mertens.IntegratedExplicit.explicitFourierResidual"] = new("explicitFourierResidual", 0, 1, 1, [], false),
+            ["D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds.actualZero"] = new("actualZero", 0, 1, 1, [], false),
+        }.ToImmutableDictionary(StringComparer.Ordinal);
+}
+
 internal static class ProjectionNotation
 {
     internal static readonly ImmutableDictionary<string, string> Entries = new Dictionary<string, string>(StringComparer.Ordinal)
@@ -213,14 +275,18 @@ internal static class ProjectionNotation
         ["IsClosed"] = "IsClosed", ["IsCompact"] = "IsCompact", ["IsSeqCompact"] = "IsSeqCompact",
         ["setOf"] = "setOf", ["Set.ofPred"] = "setOf", ["AddSubgroup"] = "AddSubgroup",
         ["ZMod"] = "ZMod",
+        ["D5.S1.Dynamics.UniversalSolenoid"] = "UniversalSolenoid",
         ["D5.S1.Dynamics.UniversalSolenoid.projection"] = "projection",
         ["Finset.sum"] = "sum", ["Finset.univ"] = "univ", ["Set.univ"] = "univ",
-        ["Subtype"] = "Subtype", ["Subtype.val"] = "val",
+        ["Subtype.val"] = "val",
         ["Fintype.card"] = "card",
+        ["Real.log"] = "log", ["Real.eulerMascheroniConstant"] = "eulerMascheroniConstant",
+        ["D5.S3.Zeros.CompletedZeta.xiReading"] = "xiReading",
+        ["D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds.firstLiMass"] = "firstLiMass",
     }.ToImmutableDictionary(StringComparer.Ordinal);
 }
 
-internal sealed record DenoiseRule(int DropPrefix, int? KeepLast = null, ImmutableArray<int> Keep = default);
+internal sealed record DenoiseRule(int DropPrefix, int? KeepLast = null, ImmutableArray<int> Keep = default, int? ArgumentCount = null);
 
 internal static class ProjectionDenoiser
 {
@@ -232,13 +298,19 @@ internal static class ProjectionDenoiser
         ["OfNat.ofNat"] = new(0, null, [1]), ["Neg.neg"] = new(0, 1),
         ["DFunLike.coe"] = new(0, 2), ["HMul.hMul"] = new(0, 2), ["HDiv.hDiv"] = new(0, 2),
         ["Complex.re"] = new(0, 1),
+        ["LE.le"] = new(0, 2, ArgumentCount: 4),
+        ["LT.lt"] = new(0, 2, ArgumentCount: 4),
+        ["HAdd.hAdd"] = new(0, 2, ArgumentCount: 6),
+        ["HSub.hSub"] = new(0, 2, ArgumentCount: 6),
+        ["Real.log"] = new(0, ArgumentCount: 1),
+        ["D5.S3.Zeros.CompletedZeta.xiReading"] = new(0, ArgumentCount: 1),
         ["IsClosed"] = new(0, 1), ["IsCompact"] = new(0, 1), ["IsSeqCompact"] = new(0, 1),
         ["setOf"] = new(0, 1), ["Set.ofPred"] = new(0, 1),
         ["AddSubgroup"] = new(0, null, [0]),
         ["ZMod"] = new(0),
         ["Finset.sum"] = new(0, 2),
         ["Finset.univ"] = new(0, 0),
-        ["Set.univ"] = new(0, 0), ["Subtype"] = new(0, 2), ["Subtype.val"] = new(0, 1),
+        ["Set.univ"] = new(0, 0), ["Subtype.val"] = new(0, 1),
         ["Fintype.card"] = new(0, null, [0]),
         ["D5.S3.Weil.LabeledZeta.LedgerLength"] = new(0, 0),
         ["D5.S3.Weil.ReflectionLedger.scalingLedger"] = new(0, 3),
@@ -260,8 +332,25 @@ internal static class ProjectionDenoiser
     internal static bool TryClean(string name, ImmutableArray<LeanExpr> arguments,
         out ImmutableArray<LeanExpr> cleaned)
     {
+        if (SemanticProjectionSignatures.Entries.TryGetValue(name, out var signature))
+        {
+            if (arguments.Length < signature.MinimumArguments || arguments.Length > signature.MaximumArguments)
+            {
+                cleaned = default;
+                return false;
+            }
+            cleaned = signature.ArgumentIndices.IsDefault
+                ? arguments[signature.DropPrefix..]
+                : signature.ArgumentIndices.Select(index => arguments[index]).ToImmutableArray();
+            return true;
+        }
         var leaf = name.Split('.').Last();
         if (!Rules.TryGetValue(name, out var rule) && !Rules.TryGetValue(leaf, out rule))
+        {
+            cleaned = default;
+            return false;
+        }
+        if (rule.ArgumentCount is int argumentCount && arguments.Length != argumentCount)
         {
             cleaned = default;
             return false;
@@ -296,7 +385,7 @@ internal static class PropPiToImplicationRule
             "Eq", "Ne", "Not", "And", "Or", "Iff", "Exists");
 
     internal static bool Matches(LeanExpr.Pi pi) =>
-        pi.BinderInfo == "bd"
+        pi.BinderInfo is "bd" or "bi" or "bs"
         && IsProposition(pi.Domain)
         && !ContainsBoundVariable(pi.Body, depth: 0);
 
@@ -313,10 +402,13 @@ internal static class PropPiToImplicationRule
         while (head is LeanExpr.App app)
             head = app.Function;
         return head is LeanExpr.Constant constant
-            && PropositionConstructors.Contains(constant.Name.Split('.').Last());
+            && (PropositionConstructors.Contains(constant.Name.Split('.').Last())
+                || constant.Name is "LE.le" or "LT.lt"
+                || SemanticProjectionSignatures.Entries.TryGetValue(constant.Name, out var signature)
+                    && signature.Proposition);
     }
 
-    private static bool ContainsBoundVariable(LeanExpr expression, uint depth) => expression switch
+    internal static bool ContainsBoundVariable(LeanExpr expression, uint depth) => expression switch
     {
         LeanExpr.Bound bound => bound.Index == depth,
         LeanExpr.App app => ContainsBoundVariable(app.Function, depth)
@@ -340,9 +432,13 @@ internal static class StatementProjector
 
     private static ProjectionOutcome Project(LeanExpr expression, ImmutableArray<Formula> variables)
     {
+        // Zeta reduction substitutes kernel terms before assigning display binders.
+        if (expression is LeanExpr.Let let)
+            return Project(Instantiate(let.Body, let.Value), variables);
         if (expression is LeanExpr.Pi pi)
         {
-            if (pi.BinderInfo is "bi" or "bs" or "bc") return Project(pi.Body, variables.Insert(0, new Formula.Placeholder()));
+            if (pi.BinderInfo == "bc" || pi.BinderInfo is "bi" or "bs" && pi.Domain is LeanExpr.Sort)
+                return Project(pi.Body, variables.Insert(0, new Formula.Placeholder()));
             if (PropPiToImplicationRule.Matches(pi))
             {
                 var premise = Project(pi.Domain, variables);
@@ -354,7 +450,7 @@ internal static class StatementProjector
                     FormulaLogicOperator.Implies,
                     ((ProjectionOutcome.Projected)conclusion).Formula));
             }
-            var domain = Project(pi.Domain, variables);
+            var domain = ProjectDomain(pi.Domain, variables);
             var identifier = FormulaIdentifier.Create("x" + variables.Length);
             var symbol = new Formula.Symbol(identifier);
             var body = Project(pi.Body, variables.Insert(0, symbol));
@@ -374,8 +470,7 @@ internal static class StatementProjector
         if (expression is LeanExpr.Constant constant)
         {
             var leaf = constant.Name.Split('.').Last();
-            if (!ProjectionNotation.Entries.TryGetValue(constant.Name, out var notation)
-                && !ProjectionNotation.Entries.TryGetValue(leaf, out notation))
+            if (!TryNotation(constant.Name, out var notation))
                 return new ProjectionOutcome.Unprojectable("constant:" + constant.Name);
             var canonical = new string(notation.Where(char.IsLetterOrDigit).ToArray());
             return new ProjectionOutcome.Projected(new Formula.NamedConstant(FormulaIdentifier.Create(canonical)));
@@ -383,15 +478,8 @@ internal static class StatementProjector
         if (expression is LeanExpr.Literal { Value: uint number })
             return new ProjectionOutcome.Projected(new Formula.Number(number));
         if (expression is LeanExpr.Metadata metadata) return Project(metadata.Body, variables);
-        if (expression is LeanExpr.Lambda lambda)
-        {
-            var identifier = FormulaIdentifier.Create("x" + variables.Length);
-            var body = Project(lambda.Body, variables.Insert(0, new Formula.Symbol(identifier)));
-            return body is ProjectionOutcome.Projected projected
-                ? new ProjectionOutcome.Projected(new Formula.Bind(FormulaQuantifier.ForAll, identifier,
-                    new Formula.NamedConstant(FormulaIdentifier.Create("Type")), projected.Formula))
-                : body;
-        }
+        if (expression is LeanExpr.Lambda)
+            return ProjectFunction(expression, variables);
         if (expression is LeanExpr.Projection projection)
         {
             var body = Project(projection.Body, variables);
@@ -416,11 +504,26 @@ internal static class StatementProjector
             }
             if (!ProjectionDenoiser.TryClean(headConstant.Name, arguments, out var semanticArguments))
                 return new ProjectionOutcome.Unprojectable("unregistered-elaboration-shape:" + headConstant.Name);
-            var projected = semanticArguments.Select(argument => Project(argument, variables)).ToArray();
+            SemanticProjectionSignatures.Entries.TryGetValue(headConstant.Name, out var signature);
+            var projected = semanticArguments.Select((argument, index) =>
+                signature is not null && signature.FunctionArguments.Contains(index)
+                    ? ProjectFunction(argument, variables)
+                    : Project(argument, variables)).ToArray();
             var argumentFailure = projected.OfType<ProjectionOutcome.Unprojectable>().FirstOrDefault();
             if (argumentFailure is not null) return argumentFailure;
             var values = projected.Cast<ProjectionOutcome.Projected>().Select(item => item.Formula).ToArray();
             var leaf = headConstant.Name.Split('.').Last();
+            if (headConstant.Name is "LE.le" or "LT.lt")
+                return new ProjectionOutcome.Projected(new Formula.Relation(values[0],
+                    headConstant.Name == "LE.le" ? FormulaRelationOperator.LessThanOrEqual : FormulaRelationOperator.LessThan,
+                    values[1]));
+            if (headConstant.Name == "HPow.hPow")
+                return new ProjectionOutcome.Projected(new Formula.Power(values[0], values[1]));
+            if (headConstant.Name == "HDiv.hDiv")
+                return new ProjectionOutcome.Projected(new Formula.Fraction(values[0], values[1]));
+            if (headConstant.Name is "HAdd.hAdd" or "HSub.hSub")
+                return new ProjectionOutcome.Projected(new Formula.Binary(values[0],
+                    headConstant.Name == "HAdd.hAdd" ? FormulaBinaryOperator.Add : FormulaBinaryOperator.Subtract, values[1]));
             if (leaf == "Eq" && values.Length >= 2) return new ProjectionOutcome.Projected(new Formula.Relation(values[^2], FormulaRelationOperator.Equal, values[^1]));
             if (leaf == "Ne" && values.Length >= 2) return new ProjectionOutcome.Projected(new Formula.Relation(values[^2], FormulaRelationOperator.NotEqual, values[^1]));
             if (leaf is "And" or "Or" or "Iff" && values.Length >= 2) return new ProjectionOutcome.Projected(new Formula.Logic(values[^2], leaf switch { "And" => FormulaLogicOperator.And, "Or" => FormulaLogicOperator.Or, _ => FormulaLogicOperator.Iff }, values[^1]));
@@ -432,7 +535,8 @@ internal static class StatementProjector
                 return new ProjectionOutcome.Projected(new Formula.Apply(values[0], [values[1]]));
             if (headConstant.Name == "HMul.hMul" && values.Length == 2)
                 return new ProjectionOutcome.Projected(new Formula.Binary(values[0], FormulaBinaryOperator.Multiply, values[1]));
-            if (leaf == "mem" && values.Length == 2) return new ProjectionOutcome.Projected(new Formula.Relation(values[0], FormulaRelationOperator.MemberOf, values[1]));
+            if (headConstant.Name == "Membership.mem" && values.Length == 2)
+                return new ProjectionOutcome.Projected(new Formula.Relation(values[1], FormulaRelationOperator.MemberOf, values[0]));
             if (leaf == "Exists" && semanticArguments.Length == 2 && semanticArguments[1] is LeanExpr.Lambda predicate)
             {
                 var identifier = FormulaIdentifier.Create("x" + variables.Length);
@@ -441,8 +545,7 @@ internal static class StatementProjector
                 if (domain is ProjectionOutcome.Projected d && body is ProjectionOutcome.Projected b)
                     return new ProjectionOutcome.Projected(new Formula.Bind(FormulaQuantifier.Exists, identifier, d.Formula, b.Formula));
             }
-            if (!ProjectionNotation.Entries.TryGetValue(headConstant.Name, out var notation)
-                && !ProjectionNotation.Entries.TryGetValue(leaf, out notation))
+            if (!TryNotation(headConstant.Name, out var notation))
                 return new ProjectionOutcome.Unprojectable("constant:" + headConstant.Name);
             var canonical = new string(notation.Where(char.IsLetterOrDigit).ToArray());
             var functionFormula = new Formula.NamedConstant(FormulaIdentifier.Create(canonical));
@@ -453,6 +556,89 @@ internal static class StatementProjector
         return new ProjectionOutcome.Unprojectable(
             "unregistered-elaboration-shape:" + expression.GetType().Name);
     }
+
+    private static bool TryNotation(string name, out string notation)
+    {
+        if (SemanticProjectionSignatures.Entries.TryGetValue(name, out var signature))
+        {
+            notation = signature.Notation;
+            return true;
+        }
+        return ProjectionNotation.Entries.TryGetValue(name, out notation!)
+            || ProjectionNotation.Entries.TryGetValue(name.Split('.').Last(), out notation!);
+    }
+
+    private static ProjectionOutcome ProjectDomain(LeanExpr expression, ImmutableArray<Formula> variables)
+    {
+        if (expression is LeanExpr.Metadata metadata) return ProjectDomain(metadata.Body, variables);
+        if (expression is LeanExpr.Pi pi && !PropPiToImplicationRule.ContainsBoundVariable(pi.Body, 0))
+        {
+            var domain = ProjectDomain(pi.Domain, variables);
+            var codomain = ProjectDomain(pi.Body, variables.Insert(0, new Formula.Placeholder()));
+            if (domain is ProjectionOutcome.Unprojectable failure) return failure;
+            if (codomain is ProjectionOutcome.Unprojectable other) return other;
+            return new ProjectionOutcome.Projected(new Formula.TypeArrow(
+                ((ProjectionOutcome.Projected)domain).Formula, ((ProjectionOutcome.Projected)codomain).Formula));
+        }
+        return Project(expression, variables);
+    }
+
+    private static ProjectionOutcome ProjectFunction(LeanExpr expression, ImmutableArray<Formula> variables)
+    {
+        if (expression is LeanExpr.Metadata metadata) return ProjectFunction(metadata.Body, variables);
+        if (expression is LeanExpr.Let let) return ProjectFunction(Instantiate(let.Body, let.Value), variables);
+        if (expression is not LeanExpr.Lambda lambda) return Project(expression, variables);
+        var identifier = FormulaIdentifier.Create("x" + variables.Length);
+        var domain = ProjectDomain(lambda.Domain, variables);
+        var body = ProjectFunction(lambda.Body, variables.Insert(0, new Formula.Symbol(identifier)));
+        if (domain is ProjectionOutcome.Unprojectable failure) return failure;
+        if (body is ProjectionOutcome.Unprojectable other) return other;
+        return new ProjectionOutcome.Projected(new Formula.LatexSequence([
+            new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis),
+            new Formula.LatexMacro(FormulaLatexMacro.LambdaLower), new Formula.LatexSpace(),
+            new Formula.Symbol(identifier), new Formula.LatexSymbol(FormulaLatexSymbol.Colon),
+            ((ProjectionOutcome.Projected)domain).Formula,
+            new Formula.LatexSymbol(FormulaLatexSymbol.Period), new Formula.LatexSpace(),
+            ((ProjectionOutcome.Projected)body).Formula,
+            new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis)]));
+    }
+
+    // De Bruijn substitution removes the let slot and lifts free indices in its
+    // value under each intervening binder, including dependent domains and lets.
+    private static LeanExpr Instantiate(LeanExpr expression, LeanExpr value, uint depth = 0) => expression switch
+    {
+        LeanExpr.Bound bound when bound.Index == depth => Lift(value, depth),
+        LeanExpr.Bound bound when bound.Index > depth => new LeanExpr.Bound(bound.Index - 1),
+        LeanExpr.App app => new LeanExpr.App(Instantiate(app.Function, value, depth), Instantiate(app.Argument, value, depth)),
+        LeanExpr.Lambda lambda => new LeanExpr.Lambda(lambda.BinderInfo,
+            Instantiate(lambda.Domain, value, depth), Instantiate(lambda.Body, value, checked(depth + 1))),
+        LeanExpr.Pi pi => new LeanExpr.Pi(pi.BinderInfo,
+            Instantiate(pi.Domain, value, depth), Instantiate(pi.Body, value, checked(depth + 1))),
+        LeanExpr.Let let => new LeanExpr.Let(let.Nondependent,
+            Instantiate(let.Type, value, depth), Instantiate(let.Value, value, depth),
+            Instantiate(let.Body, value, checked(depth + 1))),
+        LeanExpr.Metadata metadata => new LeanExpr.Metadata(Instantiate(metadata.Body, value, depth)),
+        LeanExpr.Projection projection => new LeanExpr.Projection(projection.Name, projection.Index,
+            Instantiate(projection.Body, value, depth)),
+        _ => expression
+    };
+
+    private static LeanExpr Lift(LeanExpr expression, uint amount, uint cutoff = 0) => expression switch
+    {
+        LeanExpr.Bound bound when bound.Index >= cutoff => new LeanExpr.Bound(checked(bound.Index + amount)),
+        LeanExpr.App app => new LeanExpr.App(Lift(app.Function, amount, cutoff), Lift(app.Argument, amount, cutoff)),
+        LeanExpr.Lambda lambda => new LeanExpr.Lambda(lambda.BinderInfo,
+            Lift(lambda.Domain, amount, cutoff), Lift(lambda.Body, amount, checked(cutoff + 1))),
+        LeanExpr.Pi pi => new LeanExpr.Pi(pi.BinderInfo,
+            Lift(pi.Domain, amount, cutoff), Lift(pi.Body, amount, checked(cutoff + 1))),
+        LeanExpr.Let let => new LeanExpr.Let(let.Nondependent,
+            Lift(let.Type, amount, cutoff), Lift(let.Value, amount, cutoff),
+            Lift(let.Body, amount, checked(cutoff + 1))),
+        LeanExpr.Metadata metadata => new LeanExpr.Metadata(Lift(metadata.Body, amount, cutoff)),
+        LeanExpr.Projection projection => new LeanExpr.Projection(projection.Name, projection.Index,
+            Lift(projection.Body, amount, cutoff)),
+        _ => expression
+    };
 
     private static (LeanExpr Head, ImmutableArray<LeanExpr> Arguments) Flatten(LeanExpr expression)
     {
