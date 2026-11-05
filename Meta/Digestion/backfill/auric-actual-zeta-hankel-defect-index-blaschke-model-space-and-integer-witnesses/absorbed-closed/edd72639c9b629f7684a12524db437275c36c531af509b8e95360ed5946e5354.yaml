@@ -5,5 +5,7 @@ cas_ref: sha256:edd72639c9b629f7684a12524db437275c36c531af509b8e95360ed5946e5354
 coverage_gids:
   - gid: D5/S3/Zeros/Resolvent/ActualXiCompleteNegativeIndex.actual_complete_negative_index
     target_statement_id: sha256:36b7f6865a9dd46c56190af819ef2897d84d787d9fada9bed12a0e21a33aec70
+  - gid: D5/S3/Zeros/Resolvent/ActualXiCompleteNegativeIndex.actual_negativeIndex_eq_matrix_sup
+    target_statement_id: sha256:8ed43dd45760c020ce8b15aec94135d7fd094705145092c6ca9648d86092fb9c
 receipts:
   unresolved_subitems: []

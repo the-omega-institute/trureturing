@@ -5,5 +5,9 @@ cas_ref: sha256:ed1dcd298843822ba7fdc1dd476fc5575078dddde94e68853a64f92d32ef7a39
 coverage_gids:
   - gid: D5/S3/Constants/Moments/CountableHankelNegativeIndex.negativeIndex_le
     target_statement_id: sha256:ab0d0b08e81c244acdcd78bbabf7bb550396eccb3365186c696190f18c743c32
+  - gid: D5/S3/Zeros/Resolvent/ActualXiCompleteNegativeIndex.actual_lower_of_rep_embedding
+    target_statement_id: sha256:a1323692e90ca56e5a7bfa997489e1e4ef11de4aa2a2b0fc21ed7e84b399668c
+  - gid: D5/S3/Zeros/Resolvent/ActualXiCompleteNegativeIndex.actual_upper_of_finite_representatives
+    target_statement_id: sha256:d4dd2d95f95769b67462c9e1efdc2b879049261d6ff80adf51886f12d6dc4de6
 receipts:
   unresolved_subitems: []
