@@ -90,5 +90,3 @@ def extract_members(archive, destination, members, deadline):
         archive.chown(member, target, numeric_owner=False)
         archive.utime(member, target)
         archive.chmod(member, target)
-
-
