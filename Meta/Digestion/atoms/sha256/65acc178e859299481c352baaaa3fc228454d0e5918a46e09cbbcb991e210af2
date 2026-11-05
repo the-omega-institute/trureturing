@@ -1,0 +1,4 @@
+**Theorem 140.1 (negative stochastic determinant implies an exact original rank-two bound).** If an admissible invariant stochastic tuple $u$ has $\det A(u)<0$, then there is $E\in\mathscr E_\theta$ with $\det A_E=0$, and hence an original $D\in\mathscr D_{12}(\theta)$ with $\operatorname{rank}A^D\le2$.
+
+*Proof.* By Theorem 139.1 some actual feasible invariant partition has negative determinant. Theorem 139.2 supplies an actual positive determinant partition and an exact-marginal deterministic path between them. Continuity gives an actual zero determinant on the path. The fixed-$C$ sign and congruence of Theorems 138.1–138.2 then give the original partition with the claimed rank bound. All parts use a single partition at all three original epochs. $\square$
+

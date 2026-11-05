@@ -1,0 +1,68 @@
+**定理 28.2（实际三维 $D$ 菜单的唯一 Born 表示）。**在定义 28.1 下，存在唯一 $\Theta=\Theta_J\succeq0$、$\operatorname{Tr}\Theta=v$，使
+
+$$
+\mu(JPJ^*)=\operatorname{Tr}(\Theta P)\qquad(P\in\mathcal C_3(D)).
+\tag{28.3}
+$$
+
+原独立三进抽签仍按各自实际配方取仿射质量，亦由同一迹公式表示。结论不要求原响应连续、三维 EC 或该角承受全部质量。
+
+**证明。**先设 $v>0$。对每张 $h$ 图表，把其实际事件质量除以 $v$，只作为数学限制。完整局部测试的和为一：附同一组原补列后，用原完整测试的可加性消去补列质量即可。对任意 $a\in G_A$，将 $Jha$ 与这些补列拼成 $g\in U_{27}(D)$；定理 27.5 给此同切口下全部六相 $gQ_sg^*$ 的 QC 等式。原三进抽签仿射性遂给这张图表上定义 17.5 的全部门字前件。此处没有制备或筛选一个新条件态。
+
+定理 17.6 因此给每个 $h$ 唯一的局部矩阵 $\rho_h\succeq0$、$\operatorname{Tr}\rho_h=v$（将其归一矩阵乘回 $v$）。明确区分局部 $h$ 坐标与固定 $J$ 坐标：
+
+$$
+\begin{gathered}
+\Theta_h=h\rho_hh^*,\qquad
+\mu(JhP_uh^*J^*)=u^*\rho_hu=(hu)^*\Theta_h(hu),\\
+u\in A^3,\quad u^*u=1,\quad P_u=uu^*.
+\end{gathered}
+\tag{28.4}
+$$
+
+下证全部 $\Theta_h$ 相同；不声称各个 $\rho_h$ 相同。
+
+在证明中使用有限指数引理。令
+
+$$
+H=\ker\bigl(G_A\longrightarrow\mathrm{GL}_3(A/4A)\bigr),\qquad
+K=\overline H,\quad L=\overline{G_A}.
+\tag{28.5}
+$$
+
+因 $3$ 模四可逆，$A/4A\cong O/4O$；后者是十六元环。因此 $H\triangleleft G_A$ 且指数有限。取有限个陪集代表 $g_i$，有限并取闭包给 $L=\bigcup_i g_iK$。共轭连续且 $G_A$ 正规化 $H$，故也正规化 $K$；再令 $g\in G_A$ 趋于任意 $l\in L$，闭性给 $lKl^{-1}\subseteq K$，对 $l^{-1}$ 同用此式得等号。因此 $K\triangleleft L$。不同 $K$ 陪集均闭且数目有限，每个陪集的补是有限闭并，故各陪集开，$L/K$ 是有限离散群。
+
+命题 16.2 给 $SU(3)\subseteq L$。连续商映射把连通群 $SU(3)$ 送入有限离散群，只能给含单位的单点，故 $SU(3)\subseteq K$。这里的连通性可由酉对角化直接看出：把特征相角调整为总和零，逐个乘以 $t\in[0,1]$ 便给 $SU(3)$ 内到单位的路径。这完成有限指数引理，不使用响应的任何拓扑性质。
+
+取定义 22.1 的门在坐标 $0,1$ 上作用，第三坐标不动：
+
+$$
+R=R_2\oplus1=\frac12
+\begin{pmatrix}1&-\bar\eta&0\\ \eta&1&0\\0&0&2\end{pmatrix},\qquad
+R^*R=I_3,\quad Re_2=e_2.
+\tag{28.6}
+$$
+
+对 $k=I_3+4X\in H$，$X\in M_3(A)$，令 $T=2R\in M_3(O)$，则
+
+$$
+q_k=R^*kR=I_3+4R^*XR=I_3+T^*XT\in G_A,\qquad
+x_k=hk e_2=hR q_ke_2.
+\tag{28.7}
+$$
+
+第一式的入环性及酉性分别保证 $q_k\in M_3(A)$ 及 $q_k\in U_3(A)$。第二式利用 $Re_2=e_2$，显示 $Jx_k$ 在 $hG_A$ 和 $hRG_A$ 两张实际图表中是同一单位射线，补列均已供应。
+
+$SU(3)$ 在复单位球面上传递：若 $Ve_2=x$、$V\in U(3)$，则 $V\operatorname{diag}((\det V)^{-1},1,1)\in SU(3)$ 仍将 $e_2$ 送到 $x$。由 $SU(3)\subseteq\overline H$，$\{ke_2:k\in H\}$ 因此在整个单位球面稠密，$\{x_k\}$ 也稠密。原单值性及 (28.4) 给
+
+$$
+x_k^*(\Theta_h-\Theta_{hR})x_k=0\qquad(k\in H).
+\tag{28.8}
+$$
+
+这里只让已得到的有限维二次型连续延伸：$x\mapsto x^*(\Theta_h-\Theta_{hR})x$ 是连续多项式，在稠密单位集为零，故在整个单位球面为零。若 Hermitian 矩阵 $M$ 的该型为零，用 $e_i$、$(e_i+e_j)/\sqrt2$、$(e_i+i e_j)/\sqrt2$ 分别得对角、非对角实部及虚部全零，故 $M=0$。这些向量只检测数学矩阵，不被加入原菜单。于是 $\Theta_h=\Theta_{hR}$。
+
+右乘 $a\in G_A$ 仅重新参数化同一图表；两张固定坐标矩阵在该图表的稠密射线上相同，故 $\Theta_{ha}=\Theta_h$。把上述相邻等式用于 $hR^{-1}$ 又得 $\Theta_{hR^{-1}}=\Theta_h$。置换在 $G_A$ 内，故所有坐标对上的 $R_2$ 共轭也可传播。推论 24.7 的三维逐列消元给精确生成 $U_3(D)=\langle G_A,R\rangle$；沿任意有限生成字，遂有 $\Theta_h=\Theta_I$。任何 (28.2) 的粗投影都在它自己的实际完整局部框架内分解为列投影，故原粗粒化可加性给 (28.3)，抽签仿射性再给其原配方公式。唯一性已由 $G_A$ 图表的稠密单位读口保证。
+
+若 $v=0$，每个局部实际框架的非负各项之和为零，故所有这些原子事件、粗事件及原抽签质量均零，直接取 $\Theta=0$。任意 PSD 矩阵迹零也只能为零，全程不除以 $v$。$\square$
+

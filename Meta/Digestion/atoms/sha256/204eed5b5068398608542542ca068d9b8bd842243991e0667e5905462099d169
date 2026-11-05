@@ -1,0 +1,30 @@
+#### 25.17.2 再删全部正交切口自身读回的局部障碍
+
+更强的候选 $\mathsf F_{-\rm self}$ 删除所有正交层的 $r=e$，但保留正交输入自身、第三原子读回、二原子内部自读回和全部半重叠层。单看裸局部关系，这一删法确实留下一个可见盲项：在
+
+$$
+E=H_n(\mathbb C)\oplus\mathbb R
+$$
+
+上可以加入跨块径向漂移，使全部保留的局部关系成立，却在被删除的跨块自身读回上要求
+
+$$
+0=2\mu w.
+$$
+
+因此不能把“升高总秩”本身当成局部充分条件。
+
+完整背景给出不同结论。C128 定理 189.1 使用原合同已经许可的两级实际参考与同一联合 $J$，并用三个数学边缘（同一 $J$ 上一份 $A$ 边缘与两份 $P$ 边缘）的共同支持把原对象分离到足够高秩的简单分量；这些数学边缘不是新的实际准备。高秩分量上的半层关系把跨块余量压成单位方向的标量，原单向交叉零再逐分量消去该标量。因而 C128 定理 190.1 在完整 $B$ 与 $\mathsf B_{\rm cl}$ 中恢复
+
+$$
+\boxed{
+\begin{aligned}
+\mathsf C_{-\rm self}(B)&\Longleftrightarrow\mathsf C_{\rm cs}(B)
+\Longleftrightarrow B+\mathrm Z+\mathrm{SC}+\mathrm{SJ},\\
+\mathsf C_{-\rm self}(\mathsf B_{\rm cl})&\Longleftrightarrow\mathsf C_{\rm cs}(\mathsf B_{\rm cl})
+\Longleftrightarrow \mathsf B_{\rm cl}+\mathsf Q+\mathrm{SC}+\mathrm{SJ}.
+\end{aligned}}
+$$
+
+这是一项“共同实现补回”：局部测试域仍有盲项，但同一个实际联合、参考嵌入和交叉零关系把盲项排除。它不能改写成任意有限 EJA 的裸定理，也不能把共同参考提升说成新的 $M_2$、独立仪器或物理时钟。
+
