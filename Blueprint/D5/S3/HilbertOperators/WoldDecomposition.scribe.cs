@@ -16,14 +16,14 @@ internal sealed class WoldDecompositionDocument : IScribeDocumentDefinition
             Entry("finite-wandering-decomposition", "exists_wold_decomposition", Context(true,
                 All("x", V("H"), All("n", V("Nat"), Some("w", Arrow(V("Nat"), V("H")), Some("y", V("H"),
                     And(All("j", V("Nat"), Member(Call("w", V("j")), Call("W", V("V")))),
-                        And(All("j", V("Nat"), Imp(Le(V("n"), V("j")), Eqn(Call("w", V("j")), D(0)))), Reconstruction()))))))),
-                "For every x and every natural n, including zero, a single family w and remainder y realize all clauses together. Every w j lies in W(V), w j vanishes for j >= n, and x is the sum over j in Finset.range n of (V^j)(w j), plus (V^n)y. SumRange(n,f) denotes that finite sum; PowerApply(V,j,z) denotes (V^j)z; PowerWanderingFamily(V,w) denotes j mapped to (V^j)(w j). Completeness gives the orthogonal range splitting. The source induction splits the old remainder and updates its coefficient family at n. No separability, finite dimension or ambient surjectivity is required."),
+                        And(All("j", V("Nat"), Imp(Le(V("n"), V("j")), Eqn(Call("w", V("j")), D(0)))), And(Reconstruction(), NormIdentity())))))))),
+                "For every x and every natural n, including zero, a single family w and remainder y realize all clauses together. Every w j lies in W(V), w j vanishes for j >= n, and x is the sum over j in Finset.range n of (V^j)(w j), plus (V^n)y. The exact conjunction is coefficient membership AND (tail support AND (reconstruction AND squared norm identity)), inside the same existential w,y. For these SAME witnesses, norm(x)^2 is the sum of norm(w j)^2 over j < n plus norm(y)^2. SumRange(n,f) denotes that finite sum; PowerApply(V,j,z) denotes (V^j)z; PowerWanderingFamily(V,w) denotes j mapped to (V^j)(w j). Completeness gives the orthogonal range splitting. The source induction splits the old remainder and updates its coefficient family at n, then wold_norm_sq supplies the norm equation for that family and remainder. No separability, finite dimension or ambient surjectivity is required."),
             Entry("finite-pythagorean-identity", "wold_norm_sq", Context(false,
                 All("n", V("Nat"), All("w", Arrow(V("Nat"), V("H")),
                     All("hw", All("j", V("Nat"), Member(Call("w", V("j")), Call("W", V("V")))),
                         All("y", V("H"), All("x", V("H"), Imp(Reconstruction(),
                             Eqn(SqNorm(V("x")), Add(Call("SumRange", V("n"), Call("NormSquareFamily", V("w"))), SqNorm(V("y"))))))))))),
-                "For any n, family w with every coefficient in W(V), y and x satisfying exactly the reconstruction equation, norm(x)^2 equals the sum over j in Finset.range n of norm(w j)^2 plus norm(y)^2. NormSquareFamily(w) is j mapped to norm(w j)^2. This theorem needs neither completeness nor the support condition. It applies to the SAME w and y supplied by exists_wold_decomposition. The source norm induction groups the terminal wandering coefficient with V y and uses orthogonality and isometry."),
+                "For any n, family w with every coefficient in W(V), y and x satisfying exactly the reconstruction equation, norm(x)^2 equals the sum over j in Finset.range n of norm(w j)^2 plus norm(y)^2. NormSquareFamily(w) is j mapped to norm(w j)^2. This theorem needs neither completeness nor the support condition. The proof of exists_wold_decomposition applies it to the SAME w and y constructed there. The source norm induction groups the terminal wandering coefficient with V y and uses orthogonality and isometry."),
             Entry("residual-subspace", "residualSub", Context(false, Eqn(Call("R", V("V")), Call("InfPowerRanges", V("V")))),
                 "R(V) is residualSub V, the infimum over all natural m of the linear range of V^m. Membership means membership in every actual power range. No closure or completeness assumption is added.", DescribeRole.Definition),
             Entry("actual-residual-equivalence", "woldResidualEquiv", Context(false,
@@ -53,6 +53,7 @@ internal sealed class WoldDecompositionDocument : IScribeDocumentDefinition
     private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Rightarrow, Sp, Par(b));
     private static Formula Add(Formula a, Formula b) => Seq(Par(a), Plus, Par(b));
     private static Formula SqNorm(Formula a) => Call("NormSquare", a);
+    private static Formula NormIdentity() => Eqn(SqNorm(V("x")), Add(Call("SumRange", V("n"), Call("NormSquareFamily", V("w"))), SqNorm(V("y"))));
     private static Formula Reconstruction() => Eqn(V("x"), Add(Call("SumRange", V("n"), Call("PowerWanderingFamily", V("V"), V("w"))), Call("PowerApply", V("V"), V("n"), V("y"))));
     private static Formula Context(bool complete, Formula b)
     {

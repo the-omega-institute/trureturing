@@ -23,7 +23,9 @@ Modifications: native header and namespace; remove module/public wrappers,
 unused imports, unused power-orthogonality, uniqueness and residual-orthogonality
 branches, and the unconsumed coercion companion. Consumed support is private
 and range instances are local. Retained mathematical statements and proof
-bodies follow the source. This reuses known mathematics and its formal proof;
+bodies follow the source, with the finite conclusion also recording the norm
+identity for its constructed witnesses via the retained norm helper.
+This reuses known mathematics and its formal proof;
 no original mathematical or proof credit is claimed.
 Retire the transplant and directly reuse equivalent Mathlib declarations when
 this repository actually adopts a pinned Mathlib revision supplying the same
@@ -65,6 +67,42 @@ variable {𝕜 : Type*} [RCLike 𝕜] {H : Type*} [NormedAddCommGroup H]
 its range. Vectors here are orthogonal to every vector in the range of `V`. -/
 noncomputable def wanderingSub (V : H →ₗᵢ[𝕜] H) : Submodule 𝕜 H :=
   (LinearMap.range (V : H →ₗ[𝕜] H))ᗮ
+
+/- proof_shape: bind-only; admission_basis: consumed-helper; escape-witness: none.
+Consumers: exists_wold_decomposition. The pinned OrthogonalFamily.norm_sum
+also supplies this identity by instantiation and normalization. -/
+/-- Pythagoras for a Wold decomposition: the squared norm of a vector is the sum
+of the squared norms of its wandering coefficients plus the squared norm of
+the remainder. -/
+theorem wold_norm_sq (V : H →ₗᵢ[𝕜] H) (n : ℕ) (w : ℕ → H)
+    (hw : ∀ k, w k ∈ wanderingSub V) (y : H) (x : H)
+    (hx : x = (∑ k ∈ Finset.range n, (V ^ k) (w k)) + (V ^ n) y) :
+    ‖x‖ ^ 2 = (∑ k ∈ Finset.range n, ‖w k‖ ^ 2) + ‖y‖ ^ 2 := by
+  induction n generalizing w y x with
+  | zero =>
+    rw [hx]
+    simp
+  | succ n ih =>
+    have hgroup : x = (∑ k ∈ Finset.range n, (V ^ k) (w k)) +
+        (V ^ n) (w n + V y) := by
+      rw [hx, Finset.sum_range_succ, map_add, pow_succ, LinearIsometry.coe_mul,
+        Function.comp_apply, add_assoc]
+    have hstep := ih w hw (w n + V y) x hgroup
+    have hpyth : ‖w n + V y‖ ^ 2 = ‖w n‖ ^ 2 + ‖y‖ ^ 2 := by
+      have hmem : V y ∈ LinearMap.range (V : H →ₗ[𝕜] H) := ⟨y, rfl⟩
+      have h0 := (Submodule.mem_orthogonal _ _).mp (hw n) _ hmem
+      have hs : ⟪w n, V y⟫_𝕜 = (starRingEnd 𝕜) ⟪V y, w n⟫_𝕜 :=
+        (inner_conj_symm _ _).symm
+      have hinner : ⟪w n, V y⟫_𝕜 = 0 := by
+        rw [hs, h0]
+        exact map_zero _
+      calc ‖w n + V y‖ ^ 2 = ‖w n‖ ^ 2 + ‖V y‖ ^ 2 := by
+            simpa only [pow_two] using
+              norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero _ _ hinner
+        _ = ‖w n‖ ^ 2 + ‖y‖ ^ 2 := by rw [LinearIsometry.norm_map]
+    rw [hstep, hpyth, Finset.sum_range_succ]
+    ring
+
 
 end Basic
 
@@ -108,86 +146,58 @@ private theorem exists_wandering_add_range (V : H →ₗᵢ[𝕜] H) (x : H) :
 /- proof_shape: content; admission_basis: escape-witness (source transplant).
 Escape-witness: the induction extends a single common coefficient family at
 level n while proving its support and reconstruction at level n+1.
-Consumers: public finite decomposition endpoint. -/
+The norm conjunct applies the consumed wold_norm_sq helper to those same
+witnesses; it supplies no additional content credit.
+Direct old frozen D5 dependencies: none (Mathlib-only imports). -/
 /-- Finite Wold decomposition: every vector is a finite sum of pushed-forward
 wandering vectors plus a remainder in the range of `V ^ n`. The wandering
-coefficients vanish at and beyond `n`. -/
+coefficients vanish at and beyond `n`, and these same coefficients and
+remainder satisfy the exact squared norm identity. -/
 theorem exists_wold_decomposition (V : H →ₗᵢ[𝕜] H) (x : H) (n : ℕ) :
     ∃ w : ℕ → H, ∃ y : H, (∀ k, w k ∈ wanderingSub V) ∧ (∀ k ≥ n, w k = 0) ∧
+      x = (∑ k ∈ Finset.range n, (V ^ k) (w k)) + (V ^ n) y ∧
+      ‖x‖ ^ 2 = (∑ k ∈ Finset.range n, ‖w k‖ ^ 2) + ‖y‖ ^ 2 := by
+  have finite : ∃ w : ℕ → H, ∃ y : H,
+      (∀ k, w k ∈ wanderingSub V) ∧ (∀ k ≥ n, w k = 0) ∧
       x = (∑ k ∈ Finset.range n, (V ^ k) (w k)) + (V ^ n) y := by
-  induction n generalizing x with
-  | zero =>
-    refine ⟨fun _ => 0, x, fun _ => by simp [wanderingSub], fun k _ => rfl, by simp⟩
-  | succ n ih =>
-    obtain ⟨w, y, hwW, hwsupp, hy⟩ := ih x
-    obtain ⟨wn, hwn, y', hy'⟩ := exists_wandering_add_range V y
-    have hsum : (∑ k ∈ Finset.range n,
-        (V ^ k) (Function.update w n wn k)) =
-        ∑ k ∈ Finset.range n, (V ^ k) (w k) := by
-      apply Finset.sum_congr rfl
-      intro k hk
-      have hkn : k ≠ n := by
-        have : k < n := Finset.mem_range.mp hk
-        omega
-      rw [Function.update_of_ne hkn wn w]
-    refine ⟨Function.update w n wn, y', ?_, ?_, ?_⟩
-    · intro k
-      by_cases hk : k = n
-      · subst hk
-        rw [Function.update_self]
-        exact hwn
-      · rw [Function.update_of_ne hk wn w]
-        exact hwW k
-    · intro k hk
-      rw [Function.update_of_ne (by omega : k ≠ n) wn w]
-      exact hwsupp k (by omega)
-    · calc x = (∑ k ∈ Finset.range n, (V ^ k) (w k)) + (V ^ n) y := hy
-        _ = (∑ k ∈ Finset.range n, (V ^ k) (w k)) +
-              ((V ^ n) wn + (V ^ (n + 1)) y') := by
-            rw [hy', map_add, pow_succ, LinearIsometry.coe_mul,
-              Function.comp_apply]
-        _ = ((∑ k ∈ Finset.range n, (V ^ k) (w k)) + (V ^ n) wn) +
-              (V ^ (n + 1)) y' := by rw [add_assoc]
-        _ = (∑ k ∈ Finset.range (n + 1), (V ^ k) (Function.update w n wn k)) +
-              (V ^ (n + 1)) y' := by
-            rw [Finset.sum_range_succ, Function.update_self, hsum]
-
-/- proof_shape: content; admission_basis: escape-witness (source transplant).
-Escape-witness: the finite induction groups the terminal wandering vector
-with the actual isometric remainder and proves the resulting squared norm.
-Consumers: public norm identity endpoint. -/
-omit [CompleteSpace H] in
-/-- Pythagoras for a Wold decomposition: the squared norm of a vector is the sum
-of the squared norms of its wandering coefficients plus the squared norm of
-the remainder. -/
-theorem wold_norm_sq (V : H →ₗᵢ[𝕜] H) (n : ℕ) (w : ℕ → H)
-    (hw : ∀ k, w k ∈ wanderingSub V) (y : H) (x : H)
-    (hx : x = (∑ k ∈ Finset.range n, (V ^ k) (w k)) + (V ^ n) y) :
-    ‖x‖ ^ 2 = (∑ k ∈ Finset.range n, ‖w k‖ ^ 2) + ‖y‖ ^ 2 := by
-  induction n generalizing w y x with
-  | zero =>
-    rw [hx]
-    simp
-  | succ n ih =>
-    have hgroup : x = (∑ k ∈ Finset.range n, (V ^ k) (w k)) +
-        (V ^ n) (w n + V y) := by
-      rw [hx, Finset.sum_range_succ, map_add, pow_succ, LinearIsometry.coe_mul,
-        Function.comp_apply, add_assoc]
-    have hstep := ih w hw (w n + V y) x hgroup
-    have hpyth : ‖w n + V y‖ ^ 2 = ‖w n‖ ^ 2 + ‖y‖ ^ 2 := by
-      have hmem : V y ∈ LinearMap.range (V : H →ₗ[𝕜] H) := ⟨y, rfl⟩
-      have h0 := (Submodule.mem_orthogonal _ _).mp (hw n) _ hmem
-      have hs : ⟪w n, V y⟫_𝕜 = (starRingEnd 𝕜) ⟪V y, w n⟫_𝕜 :=
-        (inner_conj_symm _ _).symm
-      have hinner : ⟪w n, V y⟫_𝕜 = 0 := by
-        rw [hs, h0]
-        exact map_zero _
-      calc ‖w n + V y‖ ^ 2 = ‖w n‖ ^ 2 + ‖V y‖ ^ 2 := by
-            simpa only [pow_two] using
-              norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero _ _ hinner
-        _ = ‖w n‖ ^ 2 + ‖y‖ ^ 2 := by rw [LinearIsometry.norm_map]
-    rw [hstep, hpyth, Finset.sum_range_succ]
-    ring
+    induction n generalizing x with
+    | zero =>
+      refine ⟨fun _ => 0, x, fun _ => by simp [wanderingSub], fun k _ => rfl, by simp⟩
+    | succ n ih =>
+      obtain ⟨w, y, hwW, hwsupp, hy⟩ := ih x
+      obtain ⟨wn, hwn, y', hy'⟩ := exists_wandering_add_range V y
+      have hsum : (∑ k ∈ Finset.range n,
+          (V ^ k) (Function.update w n wn k)) =
+          ∑ k ∈ Finset.range n, (V ^ k) (w k) := by
+        apply Finset.sum_congr rfl
+        intro k hk
+        have hkn : k ≠ n := by
+          have : k < n := Finset.mem_range.mp hk
+          omega
+        rw [Function.update_of_ne hkn wn w]
+      refine ⟨Function.update w n wn, y', ?_, ?_, ?_⟩
+      · intro k
+        by_cases hk : k = n
+        · subst hk
+          rw [Function.update_self]
+          exact hwn
+        · rw [Function.update_of_ne hk wn w]
+          exact hwW k
+      · intro k hk
+        rw [Function.update_of_ne (by omega : k ≠ n) wn w]
+        exact hwsupp k (by omega)
+      · calc x = (∑ k ∈ Finset.range n, (V ^ k) (w k)) + (V ^ n) y := hy
+          _ = (∑ k ∈ Finset.range n, (V ^ k) (w k)) +
+                ((V ^ n) wn + (V ^ (n + 1)) y') := by
+              rw [hy', map_add, pow_succ, LinearIsometry.coe_mul,
+                Function.comp_apply]
+          _ = ((∑ k ∈ Finset.range n, (V ^ k) (w k)) + (V ^ n) wn) +
+                (V ^ (n + 1)) y' := by rw [add_assoc]
+          _ = (∑ k ∈ Finset.range (n + 1), (V ^ k) (Function.update w n wn k)) +
+                (V ^ (n + 1)) y' := by
+              rw [Finset.sum_range_succ, Function.update_self, hsum]
+  obtain ⟨w, y, hw, hsupp, hx⟩ := finite
+  exact ⟨w, y, hw, hsupp, hx, wold_norm_sq V n w hw y x hx⟩
 
 omit [CompleteSpace H] in
 /-- The **residual subspace** of an isometry: vectors in the range of every
@@ -217,10 +227,9 @@ private theorem mapsTo_residual (V : H →ₗᵢ[𝕜] H) :
     show (V ^ (n + 1) : H →ₗᵢ[𝕜] H) z = V x
     rw [pow_succ', LinearIsometry.coe_mul, Function.comp_apply, hz']
 
-/- proof_shape: content; admission_basis: escape-witness (source transplant).
-Escape-witness: cancellation by V places a preimage in every power range
-simultaneously, establishing surjectivity of the actual restriction.
-Consumers: woldResidualEquiv. -/
+/- proof_shape: bind-only; admission_basis: consumed-helper; escape-witness: none.
+Consumers: woldResidualEquiv. The pinned map_iInf / surjOn_iInter results
+supply the same common-preimage mechanism. -/
 omit [CompleteSpace H] in
 /-- The restriction of an isometry to its residual subspace is bijective. -/
 private theorem restrict_residual_bijective (V : H →ₗᵢ[𝕜] H) :
