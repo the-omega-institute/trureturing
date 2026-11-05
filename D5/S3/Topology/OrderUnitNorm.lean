@@ -227,8 +227,6 @@ def bridge [FiniteDimensional ℝ E] : E ≃L[ℝ] A.Space :=
 def operator [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E) : A.Space →L[ℝ] A.Space :=
   LinearMap.toContinuousLinearMap (A.wrap.toLinearMap ∘ₗ H ∘ₗ A.wrap.symm.toLinearMap)
 
-
-
 private lemma positive_bound (β : E →ₗ[ℝ] ℝ)
     (hβ : ∀ v ∈ A.cone, 0 ≤ β v) (v : E) :
     |β v| ≤ β A.unit * A.orderNorm v := by
@@ -248,7 +246,6 @@ private lemma positive_zero_mass (β : E →ₗ[ℝ] ℝ)
 /-- The original positive or signed functional transported to the order-norm copy. -/
 def functional [FiniteDimensional ℝ E] (β : E →ₗ[ℝ] ℝ) : A.Space →L[ℝ] ℝ :=
   LinearMap.toContinuousLinearMap (β ∘ₗ A.wrap.symm.toLinearMap)
-
 
 private lemma positive_unital_contraction (T : E →ₗ[ℝ] E)
     (hT : ∀ v ∈ A.cone, T v ∈ A.cone) (hunit : T A.unit = A.unit) (v : E) :
@@ -273,8 +270,6 @@ private lemma positive_inverse_isometry (T : E ≃ₗ[ℝ] E)
 /-- The exact nonnegative global-bound set in the original order norm. -/
 def operatorBounds (H : E →ₗ[ℝ] E) : Set ℝ :=
   {c | 0 ≤ c ∧ ∀ v : E, A.orderNorm (H v) ≤ c * A.orderNorm v}
-
-
 
 private lemma square_bound [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E) (v : E) :
     A.orderNorm (H (H v)) ≤ ‖A.operator H * A.operator H‖ * A.orderNorm v := by
@@ -307,7 +302,6 @@ private lemma flow_inverse [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E) (t : 
   have hv := congrArg (fun L : E →L[ℝ] E => L v) h
   simpa only [originalFlow, neg_smul, mul_apply_eq_comp,
     one_apply_eq_self] using hv
-
 
 private lemma flow_isometry [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E)
     (hflow : ∀ t : ℝ,
@@ -441,7 +435,6 @@ private lemma reverse_certificate [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E
   rw [hf0, hd0] at hs
   rw [sq_abs]
   nlinarith
-
 
 /-- The full original positive dual in its usual finite-dimensional topology. -/
 def positiveDual : Set (E →L[ℝ] ℝ) := {β | ∀ v ∈ A.cone, 0 ≤ β v}
@@ -735,7 +728,6 @@ theorem quantitative_generator_iff [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] 
     · simpa only [min_eq_left h] using h1
     · simpa only [min_eq_right h] using h2
 
-
 end Data
 
 /-- The algebraic Archimedean order-unit assumptions on the original cone.
@@ -812,7 +804,6 @@ def toData [FiniteDimensional ℝ E] : Data E where
   salient := B.salient
   closed := by exact closed B
   interior_unit := by exact interior_unit B
-
 
 /-- The complete quantitative criterion for the original algebraic Archimedean
 order-unit cone, with closedness and the interior-unit property derived in any
