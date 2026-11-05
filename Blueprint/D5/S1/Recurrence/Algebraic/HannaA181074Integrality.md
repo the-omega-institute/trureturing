@@ -46,6 +46,10 @@ $$\forall m: \mathbb{N}, \exists z: \mathbb{Z}, \operatorname{PowerSeries.coeff}
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/HannaA181074Integrality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanna181074` (proved) by `D5/S1/Recurrence/Algebraic/HannaA181074Integrality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna181074","declaration_gid":"D5/S1/Recurrence/Algebraic/HannaA181074Integrality.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.

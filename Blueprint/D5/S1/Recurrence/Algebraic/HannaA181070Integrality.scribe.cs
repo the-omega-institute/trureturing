@@ -39,13 +39,14 @@ internal sealed class HannaA181070IntegralityDocument : IScribeDocumentDefinitio
             Node("literalBounded", "Collecting a bounded inner sum", All("F", ArrayType(), Imp(All("n", N(), All("k", N(), Imp(Lt(V("n"), V("k")), Eqn(ApplyF(V("n"), V("k")), D(0))))), All("m", N(), Eqn(DiagonalSum(true, Cast(ApplyF(V("n"), V("k")), Q())), Coeff(V("m"), Call("L", V("F"))))))),
                 "If the array vanishes above k=n, restricting the inner sum to k at most n leaves every coefficient unchanged.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("result", "Integrality in every degree", ClaimBody(),
-                "Every coefficient of the displayed formal exponential is an integer. The prime-scaling congruence and diagonal identity reduce the assertion to the Dold exponential integrality criterion.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                "Every coefficient of the displayed formal exponential is an integer. The prime-scaling congruence and diagonal identity reduce the assertion to the Dold exponential integrality criterion.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hanna181070"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("hannaa181070-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) =>

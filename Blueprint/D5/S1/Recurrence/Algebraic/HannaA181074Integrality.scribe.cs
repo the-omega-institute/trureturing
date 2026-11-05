@@ -19,13 +19,14 @@ internal sealed class HannaA181074IntegralityDocument : IScribeDocumentDefinitio
             Node("claim", "Integer coefficients", Iffn(Call("claim"), ClaimBody()),
                 "OEIS A181074, first COMMENTS line (web entry, no page number): \"Conjecture: this sequence consists entirely of integers.\" The degree m ranges over all natural numbers, including zero; the integer z may depend on m.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Integrality in every degree", ClaimBody(),
-                "Every coefficient of the displayed formal exponential is an integer. The prime-scaling congruence and diagonal identity reduce the assertion to the Dold exponential integrality criterion.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                "Every coefficient of the displayed formal exponential is an integer. The prime-scaling congruence and diagonal identity reduce the assertion to the Dold exponential integrality criterion.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hanna181074"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("hannaa181074-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) =>
