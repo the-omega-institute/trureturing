@@ -1,5 +1,5 @@
 /- GID: D5/S3/ConceptDynamics/Experiment/KBonacciNonnegativeReader
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/ConceptDynamics/Experiment/KBonacciNonnegativeReader
    mirror-E: none(waiver:exact-symbolic-obstruction)
    anchors: []
