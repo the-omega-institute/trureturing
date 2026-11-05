@@ -116,7 +116,7 @@ Apply Mathlib's LinearIsometryEquiv.reflections_generate_dim to each actual B-is
 
 If every element of G has determinant one, the component equality gives G=SO(W,B). Otherwise choose an actual reversing element r of G. Every other reversing B-isometry u has u times inverse(r) in SO(W,B); multiplication by r therefore puts u in G. This proves G=O(W,B). The proof derives the full alternatives instead of assuming connectedness, exponential surjectivity, or a separate classification theorem.
 
-This gives the global group conclusion of OMEGAQ-008 Theorem 5.1 on its original W, G and curve velocities. Operational preparations, probabilities, original effects, control menus and callable processes require their own construction from the original probability rows. The reverse entire-relation theorem in this document supplies the algebraic reverse Q8 direction.
+This gives the global group conclusion of OMEGAQ-008 Theorem 5.1 on its original W, G and curve velocities. OriginalProbabilityCompactAction.probability_frontend separately constructs the normalized mass, compact continuations, fixed center and faithful cyclic mass-zero action from complete original probability rows. Original event effects, the Pauli/Born representation, control menus and callable processes retain their own interfaces. The reverse entire-relation theorem in this document supplies the algebraic reverse Q8 direction.
 
 **Theorem 1.8 (The original action fills the orthogonal Lie algebra).**
 

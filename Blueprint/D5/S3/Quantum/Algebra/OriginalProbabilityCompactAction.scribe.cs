@@ -92,12 +92,12 @@ internal sealed class OriginalProbabilityCompactActionDocument : IScribeDocument
             bounds,Sp,Rightarrow,Sp,
             Forall,Sp,prefix,Colon,g,Sp,To,Sp,i,Sp,To,Sp,i,Comma,Esc,
             Open,Forall,Sp,a,Comma,h,Colon,g,Comma,Esc,Forall,Sp,j,Colon,i,Comma,Esc,
-            Call("read",Call("row",Seq(a,Cdot,h)),j),Eq,
+            Call("read",Call("row",Seq(a,Sp,Cdot,Sp,h)),j),Eq,
             Call("read",Call("row",a),Call("prefix",h,j)),Close,Sp,Rightarrow,Sp,
             massBinder,
             Exists,Sp,rho,Colon,Call("MonoidHom",Call("Opposite",g),Call("UnitsContinuousEnd",F.Id("R"),v)),Comma,Esc,
             Open,Forall,Sp,a,Comma,h,Colon,g,Comma,Esc,
-            Call("value",Call("rho",Call("op",h)),Call("row",a)),Eq,Call("row",Seq(a,Cdot,h)),Close,
+            Call("value",Call("rho",Call("op",h)),Call("row",a)),Eq,Call("row",Seq(a,Sp,Cdot,Sp,h)),Close,
             Sp,Land,Sp,Call("IsCompact",closure),includeCenter ? center : Seq()));
     }
 }
