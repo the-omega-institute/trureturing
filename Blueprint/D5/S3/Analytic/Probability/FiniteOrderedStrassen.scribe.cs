@@ -8,7 +8,7 @@ internal sealed class FiniteOrderedStrassenDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Analytic/Probability/FiniteOrderedStrassen.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Analytic/atlas2026strassencoupling");
+        LibraryNoteRef.Create("D5/L/Geometry/atlas2026strassencoupling");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite-poset upper-set inequalities characterize ordered nonnegative couplings of equal-mass functions.",
