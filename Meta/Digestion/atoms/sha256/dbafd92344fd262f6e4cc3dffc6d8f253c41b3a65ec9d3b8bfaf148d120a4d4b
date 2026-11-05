@@ -1,0 +1,21 @@
+**命题 243.1（双锚限制的失效见证及有限三维提升）。** 在 $H_n(\mathbb H)$、$n\ge4$ 中，若将第二锚改为只保留一条虚弦的
+
+$$
+B'=\sum_{j=2}^nX_{1j}(1)+X_{23}(\mathbf i),
+\tag{243.1}
+$$
+
+则非零 Jordan 导子 $S(z)=[\mathbf i I,z]$ 同时满足 $S(A_n)=S(B')=0$。置 $p=e_2+e_4$、$z_1=X_{24}(\mathbf i)$、$z_2=X_{24}(\mathbf j)$、$z_3=X_{24}(\mathbf k)$，则
+
+$$
+\begin{gathered}
+p\circ z_r=z_r,\qquad z_r^2=p,\qquad z_r\circ z_s=0\quad(r\ne s),\\
+S(z_1)=0,\qquad S(z_2)=2z_3,\qquad S(z_3)=-2z_2.
+\end{gathered}
+\tag{243.2}
+$$
+
+证明。$\mathbf i I$ 为斜 Hermitian 矩阵，交换子限制是 Jordan 导子；它对实星边及 $\mathbf i$ 弦都为零，却由 $[\mathbf i,\mathbf j]=2\mathbf k$、$[\mathbf i,\mathbf k]=-2\mathbf j$ 给 (243.2)，因此非零。所列乘法由相同两指标的 Hermitian 边直接相乘得到。故 $\mathbb Rp\oplus\operatorname{span}_{\mathbb R}\{z_1,z_2,z_3\}$ 是有限自旋子代数，三维无迹截面上仍有绕 $z_1$ 轴的转动。第二条 $\mathbf j$ 弦正是在相容式中排除这个剩余方向。
+
+这是导子限制映射的失效见证，不是满足完整原背景和全部保留三层的原 $D$ 反模型；没有证明该非零 $S$ 能实现为那种 $D$ 的标量缺陷。这里的转动参数也不是实际时间，有限自旋子代数不供应实际 $M_2$。∎
+
