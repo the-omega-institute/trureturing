@@ -50,7 +50,8 @@ def family : Registration arena (type_of% (@original_event_coordinates_and_bound
     · intro e; exact nomatch e
   dependence := Arithmetic.dependence
 
-def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+def registration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@original_event_coordinates_and_bound) (Realization signature) Unit Unit where
   unitName := `D5.S3.Quantum.Dynamics.NativeProtocolGraft.original_event_coordinates_and_bound.__information_unit
   realizationName := `Reg.D5.S3.Quantum.Dynamics.NativeProtocolGraft.Coordinates.family

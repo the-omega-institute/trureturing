@@ -46,7 +46,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   exact (h Unit (.leaf ()) (fun _ _ => false)).2.1 rfl
 
-private theorem dependence : ObservationalDependence signature actual := by
+theorem dependence : ObservationalDependence signature actual := by
   intro i
   cases i
   refine ⟨Unit,⟨.leaf (),fun _ _ => false⟩,⟨.leaf (),fun _ _ => true⟩,?_⟩
