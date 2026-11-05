@@ -66,7 +66,7 @@ def unavailableReport (status reason arenaKind : String) : Json := Json.mkObj [
 def analyze (request : Json) : Except String Json := do
   if (request.getObjValAs? String "arena").toOption == some "typed-source" then
     return ← Generic.analyze request
-  requireKeys request ["source_contract", "law", "archive", "initial_readouts", "layers", "arena", "binding", "law_acquisition"]
+  requireKeys request ["source_contract", "law", "archive", "initial_readouts", "layers", "arena", "binding", "law_acquisition", "compiled_prediction"]
   if let some arena := (request.getObjVal? "arena").toOption then
     let arena ← arena.getStr?
     if arena = "unbounded" then

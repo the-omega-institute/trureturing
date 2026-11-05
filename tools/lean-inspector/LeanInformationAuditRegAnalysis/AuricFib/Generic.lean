@@ -93,7 +93,7 @@ private def validateMatrices (n : Nat) (tables : Array (Array (Array Bool))) : E
 /-- JSON decoding validates table arithmetic only. Compiler/source descriptions
 are attached by the existing compiler artifact producer after acquisition. -/
 def analyze (request : Json) : Except String Json := do
-  requireKeys request ["arena", "binding", "plan", "acquisition", "finite"]
+  requireKeys request ["arena", "binding", "plan", "acquisition", "finite", "compiled_prediction"]
   let binding ← request.getObjVal? "binding"
   let plan ← request.getObjVal? "plan"
   let roles ← plan.getObjValAs? (Array Json) "roles"
