@@ -217,6 +217,39 @@ no NOTICE path. The received source bytes have SHA-256:
 - MengerCore.lean: 2222b03a08e2c238d415133b30ea337086d1e4c6c87b4eca29010885ded80700.
 - LICENSE: c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4.
 
+## Vertex-deletion connectivity and terminal-clean fans
+
+The same immutable source supplies `exists_fan` in
+`MengerHamilton/ChvatalErdosAux.lean`, whose received source bytes have SHA-256
+275f7eac4a156883ad28b3d606fa73af18ab532c45a0d3ee7b892494f458c440.
+`D5/S3/Combinatorics/Graph/Walks/ConnectivityFan` adapts its separator argument
+to an arbitrary finite terminal set B. Deleting fewer than k vertices leaves
+a connected graph; for every x outside B there are min(k, |B|) paths from x to
+distinct terminals, meeting B only at their ends and sharing only x.
+The receiver's original `MengerCertificates.Fam` and `fam_of_le` supply the
+terminal-clean disjoint certificates directly. No cyclic-array representation
+or second Menger proof is introduced. The source and receiver pins, author,
+Apache license and retirement condition stated above also apply to this slice.
+The cycle-existence argument from `exists_cycArr_of_conn` is expressed using
+ordinary native walks, the tree edge count and the degree sum identity.
+`exists_maximal_cycle_fans` uses the existing Brooks cycle-support cardinality
+theorem to choose an ordinary cycle of maximum length and constructs the
+terminal-clean fans for that same cycle.
+
+The accompanying `CycleDetour` construction uses the cycle-extension argument
+of `MengerHamilton/LongerCycle.lean`, source SHA-256
+4ef266555bdeaaed3cf380d1745519d14a74cc98160bc2e154f91cb95a0805f9.
+The receiver uses its existing ordered path cutter and path-ring splicer,
+with an exact inventory on the induced union of the actual supports.
+The `ChvatalErdos` statement follows `chvatal_erdos_aux` rather than the
+source's `IsKConnected` wrapper: k is arbitrary, with no added bound k < |V|.
+The native successor relation is read from rotated cycle darts.
+
+The mathematical source is V. Chvatal and P. Erdos, *A note on Hamiltonian
+circuits*, Discrete Mathematics 2 (1972), 111–113,
+DOI 10.1016/0012-365x(72)90079-9, Theorem 1. The original paper attributes
+the fan theorem to G. A. Dirac, *Généralisations du théorème de Menger*.
+
 Retire the port when this repository's own pinned Mathlib contains an equivalent
 entire finite set-form certificate and arbitrary-walk duality, after migrating
 consumers lawfully to direct applications. An upstream acceptance event alone is
