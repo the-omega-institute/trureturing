@@ -33,7 +33,7 @@ attribute [instance] Parameters.ring Parameters.groupU Parameters.moduleU
 
 private def liftedRingHom : ULift.{u} ℤ →+* ℤ := ULift.ringEquiv.toRingHom
 
--- The accepted HPL Reg sample, at the original arbitrary universe levels.
+-- The accepted HPL Reg sample.{u,v,w}, at the original arbitrary universe levels.
 private def sample : Parameters.{u,v,w} := by
   let R := ULift.{u} ℤ
   let U := ULift.{v} ℤ
@@ -65,7 +65,7 @@ private def sample : Parameters.{u,v,w} := by
   exact ⟨R,U,V,inferInstance,inferInstance,inferInstance,inferInstance,inferInstance,c⟩
 
 private theorem sample_nilpotent :
-    (sample.{u,v,w}.input.h * sample.input.delta)^1 = 0 := by
+    (sample.{u,v,w}.input.h * sample.{u,v,w}.input.delta)^1 = 0 := by
   ext x
   rfl
 
@@ -79,20 +79,22 @@ structure LocalParameters where
   nilpotent : ∀ x : base.V, ∃ n : ℕ, ((base.input.h * base.input.delta)^n) x = 0
 
 private theorem sample_locally_nilpotent :
-    ∀ x : sample.{u,v,w}.V, ∃ n : ℕ, ((sample.input.h * sample.input.delta)^n) x = 0 := by
+    ∀ x : sample.{u,v,w}.V, ∃ n : ℕ, ((sample.{u,v,w}.input.h * sample.{u,v,w}.input.delta)^n) x = 0 := by
   intro x
-  exact ⟨1, DFunLike.congr_fun sample_nilpotent x⟩
+  exact ⟨1, DFunLike.congr_fun sample_nilpotent.{u,v,w} x⟩
 
-private def localSample : LocalParameters.{u,v,w} := ⟨sample, sample_locally_nilpotent⟩
+private def localSample : LocalParameters.{u,v,w} := ⟨sample.{u,v,w}, sample_locally_nilpotent.{u,v,w}⟩
 
 private theorem sample_transferred :
-    transferred sample.{u,v,w}.input sample_locally_nilpotent = 0 := by
+    transferred sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w} = 0 := by
   ext x
   rfl
 
 private theorem sample_P (x : sample.{u,v,w}.V) :
-    (P sample.input sample_locally_nilpotent x).down = x.down := by
-  simp [P, J, sample]
+    (P sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w} x).down = x.down := by
+  change ((1 - 0 * K sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w} * 0) x).down = x.down
+  simp only [zero_mul, sub_zero]
+  rfl
 
 -- A mathematical separation in the literal quotient, not a finite truth table.
 private theorem quotient_injective_of_zero
@@ -141,21 +143,22 @@ theorem actual_law : arena.Law actual.{u,v,w} := by
 
 theorem rejected_law : ¬ arena.Law rejected.{u,v,w} := by
   intro law
-  have h := law sample.input sample_locally_nilpotent
-    (show sample.V from ⟨1⟩) (by rw [sample_D]; rfl)
-  change sample.input.D (H sample.input sample_locally_nilpotent (show sample.V from ⟨1⟩)) =
-    (show sample.V from ⟨1⟩) - I sample.input sample_locally_nilpotent (0 : sample.U) at h
-  have hz : (0 : sample.V) = ⟨1⟩ := by simpa [sample_D] using h
-  exact zero_ne_one (congrArg ULift.down hz)
+  have h := law sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}
+    (show sample.{u,v,w}.V from ⟨1⟩) (by rw [sample_D.{u,v,w}]; rfl)
+  change sample.{u,v,w}.input.D (H sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w} (show sample.{u,v,w}.V from ⟨1⟩)) =
+    (show sample.{u,v,w}.V from ⟨1⟩) - I sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w} (0 : sample.{u,v,w}.U) at h
+  rw [map_zero, sub_zero] at h
+  change (0 : sample.{u,v,w}.V) = ⟨1⟩ at h
+  exact zero_ne_one (congrArg ULift.down h)
 
 theorem dependence : ObservationalDependence signature.{u,v,w} actual := by
   intro role
-  refine ⟨localSample, 0, (show sample.V from ⟨1⟩), ?_⟩
-  change P sample.input sample_locally_nilpotent 0 ≠
-    P sample.input sample_locally_nilpotent (show sample.V from ⟨1⟩)
+  refine ⟨localSample.{u,v,w}, 0, (show sample.{u,v,w}.V from ⟨1⟩), ?_⟩
+  change P sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w} 0 ≠
+    P sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w} (show sample.{u,v,w}.V from ⟨1⟩)
   intro h
   have hd := congrArg ULift.down h
-  simp only [sample_P] at hd
+  simp only [sample_P.{u,v,w}] at hd
   exact zero_ne_one hd
 
 def source_registration : Registration arena.{u,v,w} (arena.Law actual) where
@@ -194,7 +197,8 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.HomologicalAlgebra.LocallyNilpotentPerturbationCohomology
     definition := none
     coordinates := #[0,1,2,3,4,5,6,7,8,9]
-    readouts := #[{ path := #["body","body","body","body","body","body","body","body","body","body","body","body","arg","arg","arg"]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","body","body","body","body","body","body","arg","arg","arg"]
       stateBinder := 10
       functionOperand := false
       stateOperand := none
@@ -236,17 +240,17 @@ theorem actual_law : arena.Law actual.{u,v,w} := by
 
 theorem rejected_law : ¬ arena.Law rejected.{u,v,w} := by
   intro law
-  have h := law sample.input sample_locally_nilpotent 0 (map_zero _)
+  have h := law sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w} 0 (map_zero _)
   exact h.mpr ⟨0, by simp⟩
 
 theorem dependence : ObservationalDependence signature.{u,v,w} actual := by
   intro role
-  refine ⟨localSample, 0, (show sample.V from ⟨1⟩), ?_⟩
-  change (∃ y : sample.V, sample.input.D y = 0) ≠
-    (∃ y : sample.V, sample.input.D y = (show sample.V from ⟨1⟩))
+  refine ⟨localSample.{u,v,w}, 0, (show sample.{u,v,w}.V from ⟨1⟩), ?_⟩
+  change (∃ y : sample.{u,v,w}.V, sample.{u,v,w}.input.D y = 0) ≠
+    (∃ y : sample.{u,v,w}.V, sample.{u,v,w}.input.D y = (show sample.{u,v,w}.V from ⟨1⟩))
   intro h
   obtain ⟨y, hy⟩ := h.mp ⟨0, map_zero _⟩
-  have hz : (0 : sample.V) = ⟨1⟩ := by simpa [sample_D] using hy
+  have hz : (0 : sample.{u,v,w}.V) = ⟨1⟩ := by simpa [sample_D.{u,v,w}, map_zero, sub_zero] using hy
   exact zero_ne_one (congrArg ULift.down hz)
 
 def source_registration : Registration arena.{u,v,w} (arena.Law actual) where
@@ -285,7 +289,8 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.HomologicalAlgebra.LocallyNilpotentPerturbationCohomology
     definition := none
     coordinates := #[0,1,2,3,4,5,6,7,8,9]
-    readouts := #[{ path := #["body","body","body","body","body","body","body","body","body","body","body","body","fn","arg"]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","body","body","body","body","body","body","fn","arg"]
       stateBinder := 10
       functionOperand := false
       stateOperand := none
@@ -333,32 +338,32 @@ theorem actual_law : arena.Law actual.{u,v,w} := by
   intro R U V _ _ _ _ _ c nilpotent x
   exact cohomologyProjection_mk c nilpotent x
 
-private def zeroCycle : signature.{u,v,w}.State localSample := ⟨0, map_zero _⟩
-private def oneCycle : signature.{u,v,w}.State localSample :=
-  ⟨(show sample.V from ⟨1⟩), by
-    change (sample.input.D) _ = 0
-    rw [sample_D]
+private def zeroCycle : signature.{u,v,w}.State localSample.{u,v,w} := ⟨0, map_zero _⟩
+private def oneCycle : signature.{u,v,w}.State localSample.{u,v,w} :=
+  ⟨(show sample.{u,v,w}.V from ⟨1⟩), by
+    change (sample.{u,v,w}.input.D) _ = 0
+    rw [sample_D.{u,v,w}]
     rfl⟩
 
 private theorem quotient_distinct :
-    actual.{u,v,w}.readout () localSample zeroCycle ≠
-      actual.readout () localSample oneCycle := by
+    actual.{u,v,w}.readout () localSample.{u,v,w} zeroCycle ≠
+      actual.readout () localSample.{u,v,w} oneCycle := by
   intro h
-  have he := quotient_injective_of_zero (sample.input.D) (sample.input.perturbed_sq) sample_D h
-  exact zero_ne_one (congrArg (fun x : LinearMap.ker (sample.input.D) =>
-    (x : sample.V).down) he)
+  have he := quotient_injective_of_zero (sample.{u,v,w}.input.D) (sample.{u,v,w}.input.perturbed_sq) sample_D.{u,v,w} h
+  exact zero_ne_one (congrArg (fun x : LinearMap.ker (sample.{u,v,w}.input.D) =>
+    (x : sample.{u,v,w}.V).down) he)
 
 theorem dependence : ObservationalDependence signature.{u,v,w} actual := by
   intro role
-  exact ⟨localSample, zeroCycle, oneCycle, quotient_distinct⟩
+  exact ⟨localSample.{u,v,w}, zeroCycle, oneCycle, quotient_distinct⟩
 
 theorem rejected_law : ¬ arena.Law rejected.{u,v,w} := by
   intro law
-  have hb := law sample.input sample_locally_nilpotent oneCycle
-  have ha := cohomologyProjection_mk sample.input sample_locally_nilpotent oneCycle
-  have he : (cohomologyEquiv sample.input sample_locally_nilpotent) (Submodule.Quotient.mk oneCycle) =
-      (cohomologyEquiv sample.input sample_locally_nilpotent) (0 : Cohomology (sample.input.D) (sample.input.perturbed_sq)) := ha.trans hb.symm
-  have bad := (cohomologyEquiv sample.input sample_locally_nilpotent).injective he
+  have hb := law sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w} oneCycle
+  have ha := cohomologyProjection_mk sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w} oneCycle
+  have he : (cohomologyEquiv sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}) (Submodule.Quotient.mk oneCycle) =
+      (cohomologyEquiv sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}) (0 : Cohomology (sample.{u,v,w}.input.D) (sample.{u,v,w}.input.perturbed_sq)) := ha.trans hb.symm
+  have bad := (cohomologyEquiv sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}).injective he
   exact quotient_distinct bad.symm
 
 def source_registration : Registration arena.{u,v,w} (arena.Law actual) where
@@ -397,7 +402,8 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.HomologicalAlgebra.LocallyNilpotentPerturbationCohomology
     definition := none
     coordinates := #[0,1,2,3,4,5,6,7,8,9]
-    readouts := #[{ path := #["body","body","body","body","body","body","body","body","body","body","body","fn","arg","arg","fn"]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","body","body","body","body","body","fn","arg","arg","fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -444,32 +450,32 @@ theorem actual_law : arena.Law actual.{u,v,w} := by
   intro R U V _ _ _ _ _ c nilpotent u
   exact cohomologyInclusion_mk c nilpotent u
 
-private def zeroCycle : signature.{u,v,w}.State localSample := ⟨0, map_zero _⟩
-private def oneCycle : signature.{u,v,w}.State localSample :=
-  ⟨(show sample.U from ⟨1⟩), by
-    change (transferred sample.input sample_locally_nilpotent) _ = 0
-    rw [sample_transferred]
+private def zeroCycle : signature.{u,v,w}.State localSample.{u,v,w} := ⟨0, map_zero _⟩
+private def oneCycle : signature.{u,v,w}.State localSample.{u,v,w} :=
+  ⟨(show sample.{u,v,w}.U from ⟨1⟩), by
+    change (transferred sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}) _ = 0
+    rw [sample_transferred.{u,v,w}]
     rfl⟩
 
 private theorem quotient_distinct :
-    actual.{u,v,w}.readout () localSample zeroCycle ≠
-      actual.readout () localSample oneCycle := by
+    actual.{u,v,w}.readout () localSample.{u,v,w} zeroCycle ≠
+      actual.readout () localSample.{u,v,w} oneCycle := by
   intro h
-  have he := quotient_injective_of_zero (transferred sample.input sample_locally_nilpotent) ((locally_nilpotent_perturbation sample.input sample_locally_nilpotent).1) sample_transferred h
-  exact zero_ne_one (congrArg (fun x : LinearMap.ker (transferred sample.input sample_locally_nilpotent) =>
-    (x : sample.U).down) he)
+  have he := quotient_injective_of_zero (transferred sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}) ((locally_nilpotent_perturbation sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}).1) sample_transferred.{u,v,w} h
+  exact zero_ne_one (congrArg (fun x : LinearMap.ker (transferred sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}) =>
+    (x : sample.{u,v,w}.U).down) he)
 
 theorem dependence : ObservationalDependence signature.{u,v,w} actual := by
   intro role
-  exact ⟨localSample, zeroCycle, oneCycle, quotient_distinct⟩
+  exact ⟨localSample.{u,v,w}, zeroCycle, oneCycle, quotient_distinct⟩
 
 theorem rejected_law : ¬ arena.Law rejected.{u,v,w} := by
   intro law
-  have hb := law sample.input sample_locally_nilpotent oneCycle
-  have ha := cohomologyInclusion_mk sample.input sample_locally_nilpotent oneCycle
-  have he : (cohomologyEquiv sample.input sample_locally_nilpotent).symm (Submodule.Quotient.mk oneCycle) =
-      (cohomologyEquiv sample.input sample_locally_nilpotent).symm (0 : Cohomology (transferred sample.input sample_locally_nilpotent) ((locally_nilpotent_perturbation sample.input sample_locally_nilpotent).1)) := ha.trans hb.symm
-  have bad := (cohomologyEquiv sample.input sample_locally_nilpotent).symm.injective he
+  have hb := law sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w} oneCycle
+  have ha := cohomologyInclusion_mk sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w} oneCycle
+  have he : (cohomologyEquiv sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}).symm (Submodule.Quotient.mk oneCycle) =
+      (cohomologyEquiv sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}).symm (0 : Cohomology (transferred sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}) ((locally_nilpotent_perturbation sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}).1)) := ha.trans hb.symm
+  have bad := (cohomologyEquiv sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}).symm.injective he
   exact quotient_distinct bad.symm
 
 def source_registration : Registration arena.{u,v,w} (arena.Law actual) where
@@ -508,7 +514,8 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.HomologicalAlgebra.LocallyNilpotentPerturbationCohomology
     definition := none
     coordinates := #[0,1,2,3,4,5,6,7,8,9]
-    readouts := #[{ path := #["body","body","body","body","body","body","body","body","body","body","body","fn","arg","arg","fn"]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","body","body","body","body","body","fn","arg","arg","fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -556,32 +563,32 @@ theorem actual_law : arena.Law actual.{u,v,w} := by
   intro R U V _ _ _ _ _ c nilpotent x hx
   exact cohomologyEquiv_mk c nilpotent x hx
 
-private def zeroCycle : signature.{u,v,w}.State localSample := ⟨0, map_zero _⟩
-private def oneCycle : signature.{u,v,w}.State localSample :=
-  ⟨(show sample.V from ⟨1⟩), by
-    change (sample.input.D) _ = 0
-    rw [sample_D]
+private def zeroCycle : signature.{u,v,w}.State localSample.{u,v,w} := ⟨0, map_zero _⟩
+private def oneCycle : signature.{u,v,w}.State localSample.{u,v,w} :=
+  ⟨(show sample.{u,v,w}.V from ⟨1⟩), by
+    change (sample.{u,v,w}.input.D) _ = 0
+    rw [sample_D.{u,v,w}]
     rfl⟩
 
 private theorem quotient_distinct :
-    actual.{u,v,w}.readout () localSample zeroCycle ≠
-      actual.readout () localSample oneCycle := by
+    actual.{u,v,w}.readout () localSample.{u,v,w} zeroCycle ≠
+      actual.readout () localSample.{u,v,w} oneCycle := by
   intro h
-  have he := quotient_injective_of_zero (sample.input.D) (sample.input.perturbed_sq) sample_D h
-  exact zero_ne_one (congrArg (fun x : LinearMap.ker (sample.input.D) =>
-    (x : sample.V).down) he)
+  have he := quotient_injective_of_zero (sample.{u,v,w}.input.D) (sample.{u,v,w}.input.perturbed_sq) sample_D.{u,v,w} h
+  exact zero_ne_one (congrArg (fun x : LinearMap.ker (sample.{u,v,w}.input.D) =>
+    (x : sample.{u,v,w}.V).down) he)
 
 theorem dependence : ObservationalDependence signature.{u,v,w} actual := by
   intro role
-  exact ⟨localSample, zeroCycle, oneCycle, quotient_distinct⟩
+  exact ⟨localSample.{u,v,w}, zeroCycle, oneCycle, quotient_distinct⟩
 
 theorem rejected_law : ¬ arena.Law rejected.{u,v,w} := by
   intro law
-  have hb := law sample.input sample_locally_nilpotent (show sample.V from ⟨1⟩) oneCycle.property
-  have ha := cohomologyEquiv_mk sample.input sample_locally_nilpotent (show sample.V from ⟨1⟩) oneCycle.property
-  have he : (cohomologyEquiv sample.input sample_locally_nilpotent) (Submodule.Quotient.mk oneCycle) =
-      (cohomologyEquiv sample.input sample_locally_nilpotent) (0 : Cohomology (sample.input.D) (sample.input.perturbed_sq)) := ha.trans hb.symm
-  have bad := (cohomologyEquiv sample.input sample_locally_nilpotent).injective he
+  have hb := law sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w} (show sample.{u,v,w}.V from ⟨1⟩) oneCycle.property
+  have ha := cohomologyEquiv_mk sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w} (show sample.{u,v,w}.V from ⟨1⟩) oneCycle.property
+  have he : (cohomologyEquiv sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}) (Submodule.Quotient.mk oneCycle) =
+      (cohomologyEquiv sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}) (0 : Cohomology (sample.{u,v,w}.input.D) (sample.{u,v,w}.input.perturbed_sq)) := ha.trans hb.symm
+  have bad := (cohomologyEquiv sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}).injective he
   exact quotient_distinct bad.symm
 
 def source_registration : Registration arena.{u,v,w} (arena.Law actual) where
@@ -620,7 +627,8 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.HomologicalAlgebra.LocallyNilpotentPerturbationCohomology
     definition := none
     coordinates := #[0,1,2,3,4,5,6,7,8,9]
-    readouts := #[{ path := #["body","body","body","body","body","body","body","body","body","body","body","body","fn","arg","arg","fn"]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","body","body","body","body","body","body","fn","arg","arg","fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -668,32 +676,32 @@ theorem actual_law : arena.Law actual.{u,v,w} := by
   intro R U V _ _ _ _ _ c nilpotent u hu
   exact cohomologyEquiv_symm_mk c nilpotent u hu
 
-private def zeroCycle : signature.{u,v,w}.State localSample := ⟨0, map_zero _⟩
-private def oneCycle : signature.{u,v,w}.State localSample :=
-  ⟨(show sample.U from ⟨1⟩), by
-    change (transferred sample.input sample_locally_nilpotent) _ = 0
-    rw [sample_transferred]
+private def zeroCycle : signature.{u,v,w}.State localSample.{u,v,w} := ⟨0, map_zero _⟩
+private def oneCycle : signature.{u,v,w}.State localSample.{u,v,w} :=
+  ⟨(show sample.{u,v,w}.U from ⟨1⟩), by
+    change (transferred sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}) _ = 0
+    rw [sample_transferred.{u,v,w}]
     rfl⟩
 
 private theorem quotient_distinct :
-    actual.{u,v,w}.readout () localSample zeroCycle ≠
-      actual.readout () localSample oneCycle := by
+    actual.{u,v,w}.readout () localSample.{u,v,w} zeroCycle ≠
+      actual.readout () localSample.{u,v,w} oneCycle := by
   intro h
-  have he := quotient_injective_of_zero (transferred sample.input sample_locally_nilpotent) ((locally_nilpotent_perturbation sample.input sample_locally_nilpotent).1) sample_transferred h
-  exact zero_ne_one (congrArg (fun x : LinearMap.ker (transferred sample.input sample_locally_nilpotent) =>
-    (x : sample.U).down) he)
+  have he := quotient_injective_of_zero (transferred sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}) ((locally_nilpotent_perturbation sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}).1) sample_transferred.{u,v,w} h
+  exact zero_ne_one (congrArg (fun x : LinearMap.ker (transferred sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}) =>
+    (x : sample.{u,v,w}.U).down) he)
 
 theorem dependence : ObservationalDependence signature.{u,v,w} actual := by
   intro role
-  exact ⟨localSample, zeroCycle, oneCycle, quotient_distinct⟩
+  exact ⟨localSample.{u,v,w}, zeroCycle, oneCycle, quotient_distinct⟩
 
 theorem rejected_law : ¬ arena.Law rejected.{u,v,w} := by
   intro law
-  have hb := law sample.input sample_locally_nilpotent (show sample.U from ⟨1⟩) oneCycle.property
-  have ha := cohomologyEquiv_symm_mk sample.input sample_locally_nilpotent (show sample.U from ⟨1⟩) oneCycle.property
-  have he : (cohomologyEquiv sample.input sample_locally_nilpotent).symm (Submodule.Quotient.mk oneCycle) =
-      (cohomologyEquiv sample.input sample_locally_nilpotent).symm (0 : Cohomology (transferred sample.input sample_locally_nilpotent) ((locally_nilpotent_perturbation sample.input sample_locally_nilpotent).1)) := ha.trans hb.symm
-  have bad := (cohomologyEquiv sample.input sample_locally_nilpotent).symm.injective he
+  have hb := law sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w} (show sample.{u,v,w}.U from ⟨1⟩) oneCycle.property
+  have ha := cohomologyEquiv_symm_mk sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w} (show sample.{u,v,w}.U from ⟨1⟩) oneCycle.property
+  have he : (cohomologyEquiv sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}).symm (Submodule.Quotient.mk oneCycle) =
+      (cohomologyEquiv sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}).symm (0 : Cohomology (transferred sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}) ((locally_nilpotent_perturbation sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}).1)) := ha.trans hb.symm
+  have bad := (cohomologyEquiv sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}).symm.injective he
   exact quotient_distinct bad.symm
 
 def source_registration : Registration arena.{u,v,w} (arena.Law actual) where
@@ -732,7 +740,8 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.HomologicalAlgebra.LocallyNilpotentPerturbationCohomology
     definition := none
     coordinates := #[0,1,2,3,4,5,6,7,8,9]
-    readouts := #[{ path := #["body","body","body","body","body","body","body","body","body","body","body","body","fn","arg","arg","fn"]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","body","body","body","body","body","body","fn","arg","arg","fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

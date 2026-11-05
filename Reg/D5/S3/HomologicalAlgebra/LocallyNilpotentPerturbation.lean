@@ -34,7 +34,7 @@ attribute [instance] Parameters.ring Parameters.groupU Parameters.moduleU
 
 private def liftedRingHom : ULift.{u} ℤ →+* ℤ := ULift.ringEquiv.toRingHom
 
--- The accepted HPL Reg sample, at the original arbitrary universe levels.
+-- The accepted HPL Reg sample.{u,v,w}, at the original arbitrary universe levels.
 private def sample : Parameters.{u,v,w} := by
   let R := ULift.{u} ℤ
   let U := ULift.{w} ℤ
@@ -66,7 +66,7 @@ private def sample : Parameters.{u,v,w} := by
   exact ⟨R,V,inferInstance,inferInstance,inferInstance,U,inferInstance,inferInstance,c⟩
 
 private theorem sample_nilpotent :
-    (sample.{u,v,w}.input.h * sample.input.delta)^1 = 0 := by
+    (sample.{u,v,w}.input.h * sample.{u,v,w}.input.delta)^1 = 0 := by
   ext x
   rfl
 
@@ -117,18 +117,18 @@ theorem actual_law : arena.Law actual.{u,v} := by
 
 theorem rejected_law : ¬ arena.Law rejected.{u,v} := by
   intro law
-  exact law (R := unitSample.R) (V := unitSample.V) 0
+  exact law (R := unitSample.{u,v}.R) (V := unitSample.{u,v}.V) 0
     (fun x => ⟨1, by simp⟩)
 
 theorem dependence : ObservationalDependence signature.{u,v} actual := by
   intro role
-  refine ⟨unitSample, 0, -1, ?_⟩
-  change IsUnit (1 + (0 : Module.End unitSample.R unitSample.V)) ≠ IsUnit (1 + (-1 : Module.End unitSample.R unitSample.V))
+  refine ⟨unitSample.{u,v}, 0, -1, ?_⟩
+  change IsUnit (1 + (0 : Module.End unitSample.{u,v}.R unitSample.{u,v}.V)) ≠ IsUnit (1 + (-1 : Module.End unitSample.{u,v}.R unitSample.{u,v}.V))
   intro h
-  have bad := h.mp (by simp : IsUnit (1 + (0 : Module.End unitSample.R unitSample.V)))
+  have bad := h.mp (by simp : IsUnit (1 + (0 : Module.End unitSample.{u,v}.R unitSample.{u,v}.V)))
   have inj := ((Module.End.isUnit_iff _).mp bad).1
-  have hz : (show unitSample.V from ⟨0⟩) = (show unitSample.V from ⟨1⟩) :=
-    inj (by simp)
+  have hz : (show unitSample.{u,v}.V from ⟨0⟩) = (show unitSample.{u,v}.V from ⟨1⟩) :=
+    inj (by rw [add_neg_cancel]; rfl)
   exact zero_ne_one (congrArg ULift.down hz)
 
 def source_registration : Registration arena.{u,v} (arena.Law actual) where
@@ -168,7 +168,8 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.HomologicalAlgebra.LocallyNilpotentPerturbation
     definition := none
     coordinates := #[0,1,2,3,4]
-    readouts := #[{ path := #["body","body","body","body","body","body","body"]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","body"]
       stateBinder := 5
       functionOperand := false
       stateOperand := none
@@ -184,17 +185,17 @@ structure LocalParameters where
   nilpotent : ∀ x : base.V, ∃ n : ℕ, ((base.input.h * base.input.delta)^n) x = 0
 
 private theorem sample_locally_nilpotent :
-    ∀ x : sample.{u,v,w}.V, ∃ n : ℕ, ((sample.input.h * sample.input.delta)^n) x = 0 := by
+    ∀ x : sample.{u,v,w}.V, ∃ n : ℕ, ((sample.{u,v,w}.input.h * sample.{u,v,w}.input.delta)^n) x = 0 := by
   intro x
-  exact ⟨1, DFunLike.congr_fun sample_nilpotent x⟩
+  exact ⟨1, DFunLike.congr_fun sample_nilpotent.{u,v,w} x⟩
 
-private def localSample : LocalParameters.{u,v,w} := ⟨sample, sample_locally_nilpotent⟩
+private def localSample : LocalParameters.{u,v,w} := ⟨sample.{u,v,w}, sample_locally_nilpotent.{u,v,w}⟩
 
 private theorem sample_K (x : sample.{u,v,w}.V) :
-    K sample.input sample_locally_nilpotent x = x := by
+    K sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w} x = x := by
   simpa [inversePolynomial] using
-    K_apply_eq_inversePolynomial sample.input sample_locally_nilpotent x 1
-      (DFunLike.congr_fun sample_nilpotent x)
+    K_apply_eq_inversePolynomial sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w} x 1
+      (DFunLike.congr_fun sample_nilpotent.{u,v,w} x)
 
 namespace InversePolynomial
 
@@ -230,19 +231,20 @@ theorem actual_law : arena.Law actual.{u,v,w} := by
 
 theorem rejected_law : ¬ arena.Law rejected.{u,v,w} := by
   intro law
-  have h := law sample.input sample_locally_nilpotent
-    (show sample.V from ⟨1⟩) 1
-    (DFunLike.congr_fun sample_nilpotent (show sample.V from ⟨1⟩))
-  change (0 : sample.V) = inversePolynomial (sample.input.h * sample.input.delta) 1 ⟨1⟩ at h
-  have hz : (0 : sample.V) = ⟨1⟩ := by simpa [inversePolynomial] using h
-  exact zero_ne_one (congrArg ULift.down hz)
+  have h := law sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w}
+    (show sample.{u,v,w}.V from ⟨1⟩) 1
+    (DFunLike.congr_fun sample_nilpotent.{u,v,w} (show sample.{u,v,w}.V from ⟨1⟩))
+  change (0 : sample.{u,v,w}.V) = inversePolynomial (sample.{u,v,w}.input.h * sample.{u,v,w}.input.delta) 1 ⟨1⟩ at h
+  rw [inversePolynomial, Finset.sum_range_one, pow_zero] at h
+  change (0 : sample.{u,v,w}.V) = ⟨1⟩ at h
+  exact zero_ne_one (congrArg ULift.down h)
 
 theorem dependence : ObservationalDependence signature.{u,v,w} actual := by
   intro role
-  refine ⟨localSample, 0, (show sample.V from ⟨1⟩), ?_⟩
-  change K sample.input sample_locally_nilpotent 0 ≠
-    K sample.input sample_locally_nilpotent (show sample.V from ⟨1⟩)
-  rw [sample_K, sample_K]
+  refine ⟨localSample.{u,v,w}, 0, (show sample.{u,v,w}.V from ⟨1⟩), ?_⟩
+  change K sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w} 0 ≠
+    K sample.{u,v,w}.input sample_locally_nilpotent.{u,v,w} (show sample.{u,v,w}.V from ⟨1⟩)
+  rw [sample_K.{u,v,w}, sample_K.{u,v,w}]
   intro h
   exact zero_ne_one (congrArg ULift.down h)
 
@@ -283,7 +285,8 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.HomologicalAlgebra.LocallyNilpotentPerturbation
     definition := none
     coordinates := #[0,1,2,3,4,5,6,7,8,9]
-    readouts := #[{ path := #["body","body","body","body","body","body","body",
+    readouts := #[{
+      path := #["body","body","body","body","body","body","body",
       "body","body","body","body","body","body","fn","arg"]
       stateBinder := 10
       functionOperand := false
