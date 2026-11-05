@@ -60,7 +60,7 @@ Any upper bound B for normalized sigma on positive ordered residuals propagates 
 
 $$normalizedSigma5040GtTwoIff$$
 
-*Proof.* Machine-checked in Lean as `D5.S3.Arith.Robin.Valuation5040.PrimeValuation5040Sigma.normalized_sigma_5040_gt_two_iff` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/Valuation5040/PrimeValuation5040Sigma.normalized_sigma_5040_gt_two_iff` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -70,10 +70,10 @@ On the coprime residual fibre, exceeding the strict abundancy threshold 2 is equ
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/Valuation5040/PrimeValuation5040Sigma.normalized_sigma_5040_gt_two_iff`
 - Truth anchor: `D5/S3/Arith/Robin/Valuation5040/PrimeValuation5040Sigma.normalized_sigma_5040_mul_of_coprime`
 - Truth anchor: `D5/S3/Arith/Robin/Valuation5040/PrimeValuation5040Sigma.normalized_sigma_of_jointFiber5040`
 - Truth anchor: `D5/S3/Arith/Robin/Valuation5040/PrimeValuation5040Sigma.normalized_sigma_of_jointFiber5040_le_of_ordered_bound`
-- Truth anchor: `D5/S3/Arith/Robin/Valuation5040/PrimeValuation5040Sigma.normalized_sigma_5040_gt_two_iff`
 - Truth anchor: `D5/S3/Arith/Robin/Valuation5040/PrimeValuation5040Sigma.sigma_5040_mul_of_coprime`
 - Dependency: [D5/S3/Arith/ExponentExchange/CoprimeNormalForm](../../ExponentExchange/CoprimeNormalForm.md)
 - Dependency: [D5/S3/Arith/ExponentExchange/IntegerSwap](../../ExponentExchange/IntegerSwap.md)
