@@ -6,7 +6,7 @@
    utility: none
    digest: Complete original protocol trees conserve Born mass at every position cut. -/
 
-import D5.S3.Quantum.Dynamics.NativeProtocolGraft
+import D5.S3.Quantum.Dynamics.NativeProtocolCalibration
 
 /-! Physical normalization of the complete original native protocol tree. -/
 
