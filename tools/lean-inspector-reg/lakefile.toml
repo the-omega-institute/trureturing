@@ -38,6 +38,12 @@ srcDir = "../lean-inspector"
 roots = ["LeanInformationAuditRegAnalysis"]
 globs = ["LeanInformationAuditRegAnalysis.+"]
 
+[[lean_lib]]
+name = "LeanInformationAuditLookupDisk"
+srcDir = "../lean-inspector"
+roots = ["LeanInformationAuditRegAnalysis.SearchReduction.DiskLookup", "LeanInformationAuditRegAnalysis.SearchReduction.LookupPruning", "LeanInformationAuditRegAnalysis.SearchReduction.Lookup", "LeanInformationAuditRegAnalysis.SearchReduction.CacheDependencies"]
+precompileModules = true
+
 [[lean_exe]]
 name = "compiledJudgeTests"
 srcDir = "../lean-inspector"
@@ -52,3 +58,14 @@ root = "LeanInformationAuditFibTests.AuricFib.SourceContracts"
 name = "auricFibAnalysis"
 srcDir = "../lean-inspector"
 root = "LeanInformationAuditRegAnalysis.AuricFib.Main"
+
+[[lean_exe]]
+name = "searchReductionIndex"
+srcDir = "../lean-inspector"
+root = "LeanInformationAuditRegAnalysis.SearchReduction.DiskLookupMain"
+supportInterpreter = true
+
+[[lean_exe]]
+name = "searchReductionFixtureRoots"
+srcDir = "../lean-inspector"
+root = "LeanInformationAuditRegTests.SearchReduction.IndexFixtureRoots"
