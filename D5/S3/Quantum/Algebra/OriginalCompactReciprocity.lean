@@ -674,11 +674,11 @@ private theorem determinant_one_on_component (B : InnerProductSpace.Core ℝ W)
   have hone : d (1 : G) = 1 := by
     change LinearMap.det (1 : W →ₗ[ℝ] W) = 1
     exact map_one _
-  have hsq' : Set.EqOn (d ^ 2) ((fun _ : G => (1 : ℝ)) ^ 2)
-      (connectedComponent (1 : G)) := by simpa using hsq
-  have heq := isPreconnected_connectedComponent.eq_of_sq_eq hd.continuousOn
-    continuousOn_const hsq' (fun _ => one_ne_zero) mem_connectedComponent hone
-  exact fun g hg => heq hg
+  rcases isPreconnected_connectedComponent.eq_one_or_eq_neg_one_of_sq_eq
+      hd.continuousOn hsq with heq | heq
+  · exact fun g hg => heq hg
+  · have hh : (1 : ℝ) = -1 := hone.symm.trans (heq mem_connectedComponent)
+    norm_num at hh
 
 /-- Every skew generator for the derived metric exponentiates inside the actual
 identity component of the original group, on the same full W. -/

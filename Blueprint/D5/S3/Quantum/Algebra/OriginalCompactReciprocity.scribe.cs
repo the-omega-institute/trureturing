@@ -8,7 +8,7 @@ internal sealed class OriginalCompactReciprocityDocument : IScribeDocumentDefini
 {
     private const string Prefix = "D5/S3/Quantum/Algebra/OriginalCompactReciprocity.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The entire original first-order relation forces dimension three on the same compact matrix action.",
+        "Actual curve-exponential membership and the entire first-order relation on the same compact matrix action.",
         H("Original Compact-Action Reciprocity"),
         Blocks(
             Describe.Lean(DescribeId.Create("actual-curve-lie-algebra"),
@@ -69,9 +69,10 @@ internal sealed class OriginalCompactReciprocityDocument : IScribeDocumentDefini
     private static Formula ExponentialFormula()
     {
         Formula w = F.Id("W"), g = F.Id("G"), k = F.Id("K"), t = F.Id("t"), u = F.Id("u");
-        return Disp(Seq(Forall, Sp, w, Comma, g, Comma, k, Comma, Esc,
+        return Disp(Seq(Forall, Sp, w, Comma, g, Comma, Esc,
             Call("FiniteDimensionalRealInnerProductSpace",w), Sp, Land, Sp,
             Call("SubgroupOfUnitsEnd",g,w), Sp, Land, Sp, Call("IsCompact",g), Sp, Rightarrow, Sp,
+            Forall, Sp, k, Colon, Call("ContinuousEnd",F.Id("R"),w), Comma, Esc,
             Open, Call("Member",k,Call("velocitySpace",g)), Close, Sp, Iff, Sp,
             Open, Forall, Sp, t, Colon, F.Id("R"), Comma, Esc,
             Exists, Sp, u, Colon, Call("UnitsContinuousEnd",F.Id("R"),w), Comma, Esc,
@@ -79,15 +80,31 @@ internal sealed class OriginalCompactReciprocityDocument : IScribeDocumentDefini
             Call("value",u), Eq, Call("exp",Seq(t,Cdot,k)), Close));
     }
 
-    private static Formula CurveFormula() => Disp(Seq(
-        Call("Lie",F.Id("G")), Eq, OpenBrace, F.Id("K"), Colon, Esc,
-        Exists, Sp, F.Id("c"), Colon, F.Id("R"), Sp, To, Sp, F.Id("G"), Comma, Esc,
-        Call("c",D(0)), Eq, D(1), Sp, Land, Sp,
-        Call("HasDerivAt",Call("originalOperatorCurve",F.Id("c")),F.Id("K"),D(0)), CloseBrace));
+    private static Formula CurveFormula()
+    {
+        Formula w = F.Id("W"), g = F.Id("G"), k = F.Id("K"), c = F.Id("c");
+        return Disp(Seq(Forall, Sp, w, Comma, g, Comma, Esc,
+            Call("FiniteDimensionalRealInnerProductSpace",w), Sp, Land, Sp,
+            Call("SubgroupOfUnitsEnd",g,w), Sp, Rightarrow, Sp,
+            Forall, Sp, k, Colon, Call("ContinuousEnd",F.Id("R"),w), Comma, Esc,
+            Call("Member",k,Call("Carrier",Call("curveLieAlgebra",g))), Sp, Iff, Sp,
+            Exists, Sp, c, Colon, F.Id("R"), Sp, To, Sp, g, Comma, Esc,
+            Call("c",D(0)), Eq, D(1), Sp, Land, Sp,
+            Call("HasDerivAt",Call("originalOperatorCurve",c),k,D(0))));
+    }
 
-    private static Formula RelationFormula() => Disp(Seq(
-        Call("T",F.Id("A"),F.Id("x")), Eq,
-        Call("Image",F.Id("quotientPair"),Call("Ker",F.Id("evaluationPlusAction")))));
+    private static Formula RelationFormula()
+    {
+        Formula w = F.Id("W"), g = F.Id("G"), a = F.Id("A"), x = F.Id("x");
+        return Disp(Seq(Forall, Sp, w, Comma, g, Comma, Esc,
+            Call("FiniteDimensionalRealInnerProductSpace",w), Sp, Land, Sp,
+            Call("SubgroupOfUnitsEnd",g,w), Sp, Rightarrow, Sp,
+            Forall, Sp, a, Colon, Call("Lie",g), Comma, Esc,
+            Forall, Sp, x, Colon, w, Comma, Esc,
+            Call("fullRelation",g,a,x), Eq,
+            Call("Image",Call("quotientPair",g,a,x),
+                Call("Ker",Call("evaluationPlusAction",g,a,x)))));
+    }
 
     private static Formula RigidityFormula(bool includeExponentials = false)
     {
