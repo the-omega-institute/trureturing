@@ -10,7 +10,10 @@ import Mathlib.Data.ZMod.Basic
 import Mathlib.Order.Bounds.Defs
 import Mathlib.Tactic.IntervalCases
 import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Omega
+import Lean.Elab.Tactic.Omega
+
+/-! A small-case refutation of Finch, arXiv:2610.34300v1, Conjecture 23.
+The source definitions and the positive-index conventions are those of #23615. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -67,7 +70,7 @@ private def cycle (n : ℕ) : ZMod 3 :=
   | _ => 1
 
 private theorem cycle_period (n : ℕ) : cycle (n + 4) = cycle n := by
-  simp [cycle, Nat.add_mod]
+  simp [cycle]
 
 private theorem cycle_source : IsSourceSequence 2 cycle := by
   refine ⟨?_, by decide, ?_⟩
@@ -80,16 +83,16 @@ private theorem cycle_source : IsSourceSequence 2 cycle := by
     interval_cases h : n % 4
     · have h₁ : (n - 1) % 4 = 3 := by omega
       have h₂ : (n - 2) % 4 = 2 := by omega
-      norm_num [cycle, h, h₁, h₂]
+      norm_num [cycle, h, h₁, h₂] <;> decide
     · have h₁ : (n - 1) % 4 = 0 := by omega
       have h₂ : (n - 2) % 4 = 3 := by omega
-      norm_num [cycle, h, h₁, h₂]
+      norm_num [cycle, h, h₁, h₂] <;> decide
     · have h₁ : (n - 1) % 4 = 1 := by omega
       have h₂ : (n - 2) % 4 = 0 := by omega
-      norm_num [cycle, h, h₁, h₂]
+      norm_num [cycle, h, h₁, h₂] <;> decide
     · have h₁ : (n - 1) % 4 = 2 := by omega
       have h₂ : (n - 2) % 4 = 1 := by omega
-      norm_num [cycle, h, h₁, h₂]
+      norm_num [cycle, h, h₁, h₂] <;> decide
 
 private theorem cycle_least_period : HasLeastEventualPeriod cycle 4 := by
   refine ⟨⟨by decide, 0, fun n _ => cycle_period n⟩, ?_⟩
@@ -100,6 +103,7 @@ private theorem cycle_least_period : HasLeastEventualPeriod cycle 4 := by
   have hn : μ < 4 * (μ + 1) + 1 := by omega
   have heq := hp (4 * (μ + 1) + 1) hn
   interval_cases q <;> norm_num [cycle, Nat.add_mod, Nat.mul_mod] at heq
+  exact (by decide : (2 : ZMod 3) ≠ 0) heq
 
 private theorem cycle_preperiod : IsPreperiod cycle 0 := by
   exact ⟨fun n _ => cycle_period n, fun _ _ => Nat.zero_le _⟩
@@ -122,6 +126,7 @@ private theorem cycle_capture : IsCapturePoint 2 cycle 9 := by
       by_contra h
       have hrlt : r < 5 := by omega
       interval_cases r <;> norm_num [cycle] at hz
+      exact (by decide : (2 : ZMod 3) ≠ 0) hz
     norm_num [gaps]
     omega
 
