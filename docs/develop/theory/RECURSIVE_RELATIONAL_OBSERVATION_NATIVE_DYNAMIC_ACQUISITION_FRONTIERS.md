@@ -1815,7 +1815,7 @@ $$
 
 §16 复用 `SourceTransportCentralizer.source_transport_centralizer` 第一合取、ARH4.4、SFS2.3 的实际有限／完成分类及 Atomic Accumulation Basis、Atomic Boundary Trichotomy 的原子趋近。§17 的生产与 cut 取自 ARH1.3、ARH2.1；操作与逐事件真值取自 `NativeSerialMachine`，前缀局部性取自 `NativeDepthPatterns`，完整生产取自 `NativeFullSourceProducer`，消费者取自 PG44.8。来源代码与 Scribe 的阅读不等于本节新编译。闭图、离散有限标签与连续延拓所用拓扑方法是既有数学工具；本节不给它们或原子分类附加原创性。
 
-具体新增的是：用原 $Q$ 给出原无限字面完成的八种全部达到的 q 图纤维与含全部有限来源的最大连续恢复域；在实际两比较成功域上给出只有三相位的相对联合图、局部标签方程多出的零；并在完整访问切面条件下证明该实际成功域的统一新 Read 障碍，接上 epoch 正确的付费当前 q 消费者。这些是 repo-derived 的普通数学推导，不作全球文献优先或新增 Lean 认证主张。正文由单一作者按指定固定来源推导；没有引入新的 canonical synthesizer、一般 normalizer 或运行时端口。
+具体新增的是：用原 $Q$ 给出原无限字面完成的八种全部达到的 q 图纤维与含全部有限来源的最大连续恢复域；在实际两比较成功域上给出只有三相位的相对联合图、局部标签方程多出的零；并在完整访问切面条件下证明该实际成功域的统一新 Read 障碍，接上 epoch 正确的付费当前 q 消费者。这些是 repo-derived 的普通数学推导，不作全球文献优先或新增 Lean 认证主张。本节没有引入新的 canonical synthesizer、一般 normalizer 或运行时端口。
 
 **边界 18.2（与空间、时间、边界和记忆的关系）。** 字面来源保留有序分支关系；时间保留真实 $\rho$ 历史与认证 epoch；边界分别是全有限来源图的 $\mathfrak F$ 和成功域 $D$ 的相对图；记忆分别是服务可访问的保留输入与全局仍保存并付费的 chronological archive。它们在上述明确域内的对应由 (14.1)–(14.6)、(16.3)–(16.4)、(17.1) 和真实执行给出。全有限字面完成在 $\Omega$ 合并的 q 区别，可以在图闭包中作为关系保留；两项实际比较再将其相对可能标签限制为三相位。没有把这种关系边界宣布为一个自动可读的观测器。
 
