@@ -37,6 +37,9 @@ internal static partial class IngestCommand
                 .Distinct(StringComparer.Ordinal).ToArray();
             var wholeSourceRecords = DigestionQuerySelection.ReadAtoms(repository, wholeSourceIds);
             (currentRaw, current, document) = DigestionQuerySelection.Load(DigestionQuerySelection.Merge(currentRaw, wholeSourceRecords.Raw));
+            var physicalCurrentRaw = currentRaw;
+            var workingRaw = currentRaw;
+            var recoveryPaths = ImmutableHashSet<string>.Empty;
             var cache = new Dictionary<(string Id, string Hash), AtomizedTheoryDocument>();
             var kindCache = new Dictionary<(string Id, string Hash), (AtomizedTheoryDocument Document, Dictionary<string, string> Kinds)>();
             Func<string, TheoryAtomizer> atomizers = id => (bytes) =>
@@ -73,6 +76,14 @@ internal static partial class IngestCommand
             {
                 var loaded = DigestionQuerySelection.Load(DigestionQuerySelection.Merge(currentRaw, existing.Raw));
                 (currentRaw, current, document) = loaded;
+                physicalCurrentRaw = currentRaw;
+                workingRaw = currentRaw;
+                recoveryPaths = RecoverableDuplicatePaths(currentRaw, document, sourceIds);
+                if (!recoveryPaths.IsEmpty)
+                {
+                    workingRaw = RemoveRecoveredPaths(workingRaw, recoveryPaths);
+                    (workingRaw, current, document) = DigestionQuerySelection.Load(workingRaw);
+                }
                 plan = ReportFreeDigestionIngestor.Plan(document, current, sourceIds, registrationPaths, atomizers, kindAtomizers, populated);
             }
             if (dependencies.BeforeValidation is not null)
@@ -84,12 +95,13 @@ internal static partial class IngestCommand
 
             var finalRaw = AddCasObjects(
                 AppendLedger(
-                    currentRaw,
+                    workingRaw,
                     document,
                     plan),
                 plan.CasObjects);
-            RequireAppendOnlyWriteSet(currentRaw, document, plan.Document,
-                LedgerUpdates(currentRaw, finalRaw, document, plan.Document), plan.CasObjects, plan.AddedAtomIds, sourceIds);
+            var ledgerUpdates = LedgerUpdates(physicalCurrentRaw, finalRaw, document, plan.Document);
+            RequireAppendOnlyWriteSet(physicalCurrentRaw, document, plan.Document,
+                ledgerUpdates, plan.CasObjects, plan.AddedAtomIds, sourceIds, recoveryPaths);
             RequireNewCasIntegrity(document, plan.Document, plan.CasObjects, plan.AddedAtomIds);
             var contextUnavailable = new List<string>();
             var contextIndexes = ImmutableArray.CreateBuilder<DigestionContextPointerIndex>();
@@ -110,11 +122,16 @@ internal static partial class IngestCommand
                     continue;
                 }
                 var built = DigestionContextIndexBuilder.Build(contextInput.Snapshot, contextInput.Document, sourceId);
-                currentRaw = DigestionQuerySelection.Merge(currentRaw, RawRepositorySnapshot.Create(contextInput.Raw.Entries
-                    .Where(entry => IsContextIndexPath(entry.Path))));
+                var contextRaw = RawRepositorySnapshot.Create(contextInput.Raw.Entries
+                    .Where(entry => IsContextIndexPath(entry.Path)));
+                currentRaw = DigestionQuerySelection.Merge(currentRaw, contextRaw);
+                workingRaw = DigestionQuerySelection.Merge(workingRaw, contextRaw);
+                physicalCurrentRaw = DigestionQuerySelection.Merge(physicalCurrentRaw, contextRaw);
                 var saved = repository.ReadCurrent(built.Index.Entries.Select(entry => DigestionQuerySelection.Literal(
                     DigestionContextPointerIndex.RelativePath(sourceId, entry.AtomId))).ToArray());
                 currentRaw = DigestionQuerySelection.Merge(currentRaw, saved);
+                workingRaw = DigestionQuerySelection.Merge(workingRaw, saved);
+                physicalCurrentRaw = DigestionQuerySelection.Merge(physicalCurrentRaw, saved);
                 finalRaw = DigestionQuerySelection.Merge(finalRaw, saved);
                 var index = built.Index;
                 contextIndexes.Add(index);
@@ -138,7 +155,8 @@ internal static partial class IngestCommand
                 finalRaw,
                 plan,
                 sourceIds,
-                dependencies);
+                dependencies,
+                recoveryPaths);
             return result with { Output = result.Output + string.Concat(contextUnavailable) };
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
@@ -162,7 +180,8 @@ internal static partial class IngestCommand
         RawRepositorySnapshot finalRaw,
         ReportFreeDigestionIngestPlan plan,
         ImmutableHashSet<string>? sourceIds,
-        ReportFreeIngestDependencies dependencies)
+        ReportFreeIngestDependencies dependencies,
+        ImmutableHashSet<string> recoveryPaths)
     {
         var ledgerUpdates = LedgerUpdates(currentRaw, finalRaw, currentDocument, plan.Document);
         RequireAppendOnlyWriteSet(
@@ -172,7 +191,8 @@ internal static partial class IngestCommand
             ledgerUpdates,
             plan.CasObjects,
             plan.AddedAtomIds,
-            sourceIds);
+            sourceIds,
+            recoveryPaths);
         RequireNewCasIntegrity(currentDocument, plan.Document, plan.CasObjects, plan.AddedAtomIds);
         var openGenres = plan.Document.RequireDigestionSources()
             .Where(source => sourceIds is null || sourceIds.Contains(source.SourceId))
@@ -192,7 +212,7 @@ internal static partial class IngestCommand
         try
         {
             ApplyLedgerUpdatesAtomically(repositoryRoot, currentRaw, ledgerUpdates, dependencies.CommitLedgerFile,
-                () => RequireReportFreeInputs(repositoryRoot, currentRaw, ledgerUpdates));
+                () => RequireReportFreeInputs(repositoryRoot, currentRaw, ledgerUpdates, recoveryPaths));
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
