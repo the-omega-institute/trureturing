@@ -15,7 +15,6 @@ internal sealed class RawAnchoredRadicalDescentDocument : IScribeDocumentDefinit
     private static Formula X => F.Id("x");
     private static Formula Y => F.Id("y");
     private static Formula Z => F.Id("z");
-    private static Formula K => F.Id("k");
     private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula Eqn(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
     private static Formula Plus2(Formula a, Formula b) => Seq(a, Sp, Plus, Sp, b);
