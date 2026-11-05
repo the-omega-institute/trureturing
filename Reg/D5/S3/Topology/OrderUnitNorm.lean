@@ -15,9 +15,9 @@ positive-dual cross-positivity hypothesis and entire exponential orbit. Identity
 readout and the source-law equivalence bind cone membership at all nonnegative
 times, without assuming preservation or unit fixation.
 
-The interface source scope retains the complete original theorem, including
-its original operator and all real times. Source applications and a source
-bridge are partial evidence. Whole-family variation, sensitivity,
+The quantitative and algebraic Archimedean source scopes retain the original
+operator and all real times. Source applications and source bridges are
+partial evidence. Whole-family variation, sensitivity,
 observational dependence, and raw source-coordinate reconstruction and
 occurrence ties are required for a four-slot registration.
 -/
@@ -33,9 +33,6 @@ open _root_.D5.S3.Topology.OrderUnitNorm
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 abbrev coreSourceScope.{u} := type_of% (@Data.norm_core.{u})
-
-abbrev interfaceSourceScope.{u} :=
-  type_of% (@Data.original_order_unit_norm_interface.{u})
 
 structure Inputs.{u} where
   E : Type u
@@ -84,12 +81,8 @@ theorem core_source_bridge.{u} : coreSourceScope.{u} ↔ arena.{u}.Law actual.{u
 theorem core_actual_positive.{u} : arena.{u}.Law actual.{u} :=
   core_source_bridge.mp (@Data.norm_core.{u})
 
-theorem interface_source_application.{u} : interfaceSourceScope.{u} :=
-  @Data.original_order_unit_norm_interface.{u}
-
 #print axioms core_source_bridge
 #print axioms core_actual_positive
-#print axioms interface_source_application
 
 abbrev generatorSourceScope.{u} := type_of% (@Data.cross_positive_flow.{u})
 abbrev quantitativeSourceScope.{u} := type_of% (@Data.quantitative_generator_iff.{u})

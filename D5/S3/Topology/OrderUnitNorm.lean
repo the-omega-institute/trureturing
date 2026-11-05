@@ -227,11 +227,7 @@ def bridge [FiniteDimensional ℝ E] : E ≃L[ℝ] A.Space :=
 def operator [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E) : A.Space →L[ℝ] A.Space :=
   LinearMap.toContinuousLinearMap (A.wrap.toLinearMap ∘ₗ H ∘ₗ A.wrap.symm.toLinearMap)
 
-private lemma norm_wrap (v : E) : ‖A.wrap v‖ = A.orderNorm v := rfl
 
-private lemma unit_ball (v : E) : ‖A.wrap v‖ ≤ 1 ↔ v ∈ A.interval := by
-  rw [A.norm_wrap, A.norm_le_iff]
-  simp [radii, interval]
 
 private lemma positive_bound (β : E →ₗ[ℝ] ℝ)
     (hβ : ∀ v ∈ A.cone, 0 ≤ β v) (v : E) :
@@ -253,22 +249,6 @@ private lemma positive_zero_mass (β : E →ₗ[ℝ] ℝ)
 def functional [FiniteDimensional ℝ E] (β : E →ₗ[ℝ] ℝ) : A.Space →L[ℝ] ℝ :=
   LinearMap.toContinuousLinearMap (β ∘ₗ A.wrap.symm.toLinearMap)
 
-private lemma positive_norm [FiniteDimensional ℝ E] (β : E →ₗ[ℝ] ℝ)
-    (hβ : ∀ v ∈ A.cone, 0 ≤ β v) : ‖A.functional β‖ = β A.unit := by
-  have hm : 0 ≤ β A.unit := hβ _ A.unit_mem
-  apply le_antisymm
-  · apply ContinuousLinearMap.opNorm_le_bound _ hm
-    intro v
-    change |β (A.wrap.symm v)| ≤ β A.unit * A.orderNorm (A.wrap.symm v)
-    exact A.positive_bound β hβ _
-  · have hu : ‖A.wrap A.unit‖ ≤ 1 := by
-      apply (A.unit_ball A.unit).mpr
-      constructor
-      · simpa using A.zero_mem
-      · exact A.cone.add_mem A.unit_mem A.unit_mem
-    have hb := (A.functional β).le_opNorm_of_le hu
-    change ‖β A.unit‖ ≤ ‖A.functional β‖ * 1 at hb
-    simpa only [mul_one, Real.norm_eq_abs, abs_of_nonneg hm] using hb
 
 private lemma positive_unital_contraction (T : E →ₗ[ℝ] E)
     (hT : ∀ v ∈ A.cone, T v ∈ A.cone) (hunit : T A.unit = A.unit) (v : E) :
@@ -294,15 +274,7 @@ private lemma positive_inverse_isometry (T : E ≃ₗ[ℝ] E)
 def operatorBounds (H : E →ₗ[ℝ] E) : Set ℝ :=
   {c | 0 ≤ c ∧ ∀ v : E, A.orderNorm (H v) ≤ c * A.orderNorm v}
 
-private lemma operator_norm [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E) :
-    ‖A.operator H‖ = sInf (A.operatorBounds H) := by
-  rw [ContinuousLinearMap.norm_def]
-  rfl
 
-private lemma operator_square [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E) :
-    A.operator H * A.operator H = A.operator (H * H) := by
-  ext v
-  rfl
 
 private lemma square_bound [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E) (v : E) :
     A.orderNorm (H (H v)) ≤ ‖A.operator H * A.operator H‖ * A.orderNorm v := by
@@ -336,22 +308,6 @@ private lemma flow_inverse [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E) (t : 
   simpa only [originalFlow, neg_smul, mul_apply_eq_comp,
     one_apply_eq_self] using hv
 
-private lemma flow_transport [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E) (t : ℝ) (v : E) :
-    NormedSpace.exp (t • A.operator H) (A.wrap v) =
-      A.wrap (originalFlow H t v) := by
-  let : CompleteSpace E := FiniteDimensional.complete ℝ E
-  let : NormedAlgebra ℚ (E →L[ℝ] E) := .restrictScalars ℚ ℝ _
-  let : NormedAlgebra ℚ (A.Space →L[ℝ] A.Space) := .restrictScalars ℚ ℝ _
-  let J := A.bridge.conjContinuousAlgEquiv
-  have hmap : J (t • LinearMap.toContinuousLinearMap H) = t • A.operator H := by
-    ext w
-    rfl
-  have h := NormedSpace.map_exp J J.continuous (t • LinearMap.toContinuousLinearMap H)
-  rw [hmap] at h
-  have hv := congrArg (fun L : A.Space →L[ℝ] A.Space => L (A.wrap v)) h
-  change A.bridge (originalFlow H t (A.bridge.symm (A.wrap v))) =
-    NormedSpace.exp (t • A.operator H) (A.wrap v) at hv
-  exact hv.symm
 
 private lemma flow_isometry [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E)
     (hflow : ∀ t : ℝ,
@@ -779,66 +735,6 @@ theorem quantitative_generator_iff [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] 
     · simpa only [min_eq_left h] using h1
     · simpa only [min_eq_right h] using h2
 
-/-- The constructed original norm, its dual mass bound, and the exact original
-operator and exponential interfaces. This is a dependency of the quantitative
-generator criterion, not that criterion itself. -/
-theorem original_order_unit_norm_interface [FiniteDimensional ℝ E] :
-    (∀ v : E, A.orderNorm v = gauge A.interval v ∧
-      A.orderNorm v ∈ A.radii v ∧ ‖A.wrap v‖ = A.orderNorm v ∧
-      (‖A.wrap v‖ ≤ 1 ↔ v ∈ A.interval)) ∧
-    CompleteSpace A.Space ∧ Continuous A.wrap ∧ Continuous A.wrap.symm ∧
-    (∀ β : E →ₗ[ℝ] ℝ, (∀ v ∈ A.cone, 0 ≤ β v) →
-      (∀ v, |β v| ≤ β A.unit * A.orderNorm v) ∧
-      (β A.unit = 0 → β = 0) ∧ ‖A.functional β‖ = β A.unit) ∧
-    (∀ H : E →ₗ[ℝ] E,
-      (∀ v, A.operator H (A.wrap v) = A.wrap (H v) ∧
-        (A.operator H * A.operator H) (A.wrap v) = A.wrap (H (H v))) ∧
-      ‖A.operator H * A.operator H‖ = sInf (A.operatorBounds (H * H)) ∧
-      IsLeast (A.operatorBounds (H * H)) ‖A.operator H * A.operator H‖ ∧
-      (∀ t v, NormedSpace.exp (t • A.operator H) (A.wrap v) =
-        A.wrap (originalFlow H t v)) ∧
-      (H A.unit = 0 → ∀ t, originalFlow H t A.unit = A.unit) ∧
-      ((∀ t : ℝ,
-        (∀ v ∈ A.cone, originalFlow H t v ∈ A.cone) ∧
-          originalFlow H t A.unit = A.unit) →
-        (∀ t v, A.orderNorm (originalFlow H t v) = A.orderNorm v) ∧
-        (H A.unit = 0 → ∀ β : E →ₗ[ℝ] ℝ,
-          (∀ v ∈ A.cone, 0 ≤ β v) → ∀ x : E,
-          x ∈ A.cone → A.unit - x ∈ A.cone → ∀ t : ℝ,
-          |β (originalFlow H t (H (H x)))| ≤
-            β A.unit * ‖A.operator H * A.operator H‖ / 2) ∧
-        (H A.unit = 0 → ∀ β : E →ₗ[ℝ] ℝ,
-          (∀ v ∈ A.cone, 0 ≤ β v) → ∀ x : E,
-          x ∈ A.cone → A.unit - x ∈ A.cone →
-          |β (H x)| ^ 2 ≤ ‖A.operator H * A.operator H‖ * β x * β A.unit))) ∧
-    (∀ H : E →ₗ[ℝ] E, ∀ P : Set (E →L[ℝ] ℝ), ∀ K : ℝ,
-      0 ≤ K → P ⊆ A.positiveDual →
-      closure (PointedCone.hull ℝ P : Set (E →L[ℝ] ℝ)) = A.positiveDual →
-      (∀ α ∈ P, A.Certificate H K α) →
-      (∀ β ∈ A.positiveDual, A.Certificate H K β) ∧
-      (∀ β ∈ A.positiveDual, ∀ r : ℝ, 0 < r → ∀ y : E,
-        y ∈ A.cone → r • A.unit - y ∈ A.cone →
-        |β (H y)| ^ 2 ≤ K * r * β y * β A.unit) ∧
-      (∀ β ∈ A.positiveDual, ∀ y : E, y ∈ A.cone → β y = 0 → β (H y) = 0)) ∧
-    (∀ T : E ≃ₗ[ℝ] E, (∀ v ∈ A.cone, T v ∈ A.cone) →
-      (∀ v ∈ A.cone, T.symm v ∈ A.cone) → T A.unit = A.unit →
-      ∀ v, A.orderNorm (T v) = A.orderNorm v) := by
-  refine ⟨?_, inferInstance, A.bridge.continuous, A.bridge.symm.continuous, ?_, ?_, ?_, ?_⟩
-  · intro v
-    exact ⟨A.norm_eq_gauge v, A.norm_attained v, A.norm_wrap v, A.unit_ball v⟩
-  · intro β hβ
-    exact ⟨A.positive_bound β hβ, A.positive_zero_mass β hβ, A.positive_norm β hβ⟩
-  · intro H
-    refine ⟨fun v => ⟨rfl, rfl⟩, ?_, ?_, A.flow_transport H, A.flow_unit H, ?_⟩
-    · rw [A.operator_square, A.operator_norm]
-    · rw [A.operator_square]
-      exact (A.operator (H * H)).isLeast_opNorm
-    · intro hflow
-      exact ⟨A.flow_isometry H hflow,
-        fun hu β hβ x hx hux t => A.centered_orbit_bound H hu hflow β hβ x hx hux t,
-        fun hu β hβ x hx hux => A.reverse_certificate H hu (fun t => (hflow t).1) β hβ x hx hux⟩
-  · exact A.source_certificate
-  · exact A.positive_inverse_isometry
 
 end Data
 
