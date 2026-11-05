@@ -43,4 +43,3 @@ unsafe def main : IO UInt32 := do
   unless !roots.isEmpty do IO.eprintln "fixture has no protected D5 ancestors"; return 2
   IO.println (String.intercalate " " ((roots.qsort Name.quickLt).toList.map Name.toString))
   return 0
-
