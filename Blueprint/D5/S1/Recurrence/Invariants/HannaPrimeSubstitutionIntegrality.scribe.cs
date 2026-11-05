@@ -22,6 +22,15 @@ internal sealed class HannaPrimeSubstitutionIntegralityDocument : IScribeDocumen
                     All("f", Series(V("R")), Eqn(Call("constantCoeff", App(Qualified("General", "inner"), V("p"), V("c"), V("f"))), D(0)))))))),
                 "For a positive exponent the substitution argument has zero constant coefficient, so formal substitution is defined.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("General.agree_power_order", "Orders of differences of powers", AgreePowerFormula(),
+                "If two series with zero constant coefficients agree below n, their pth powers agree below n+p-1 for every positive p.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("General.power_top", "The first possible power-coefficient difference", PowerTopFormula(),
+                "For normalized linear coefficients, the first possible difference of pth powers is p times the first possible coefficient difference of the series.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("General.normal_of_agree", "Normalization from the first two coefficients", NormalFormula(),
+                "Agreement with X below degree two gives constant coefficient zero and linear coefficient one.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("General.Lifting.exists_lifted", "Triangular coefficient lifting", LiftingFormula(),
                 "Suppose equal initial coefficients make residuals agree to a shifted order, their first possible difference is a times the new coefficient difference, and q cancels each residual coefficient after multiplication by a. A base residual vanishing through the initial shifted order then lifts to a series with residual zero. At each stage one coefficient is corrected; stabilization defines the limiting coefficient function.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
@@ -39,9 +48,7 @@ internal sealed class HannaPrimeSubstitutionIntegralityDocument : IScribeDocumen
         DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
             DescribeId.Create("hanna2016a271931-" + name.Replace('_', '-').Replace('.', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name.Split('.')[^1]), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role,
-            name == "result" ? new OpenProblemResolutionClaim(
-                ProblemSlugRef.Create("oeis-a271931-hanna-prime-substitution-integrality"), ResolutionKind.Proved) : null);
+            provenance, Blocks(Paragraph(Text(prose))), role);
 
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Z() => Seq(Mathbb, Grp(F.Id("Z")));
@@ -115,4 +122,22 @@ internal sealed class HannaPrimeSubstitutionIntegralityDocument : IScribeDocumen
         Imp(Agreement(V("n0"), V("f"), V("base")), All("n", N(), Eqn(
             Mul(V("a"), App(V("q"), Call("coeff", V("n"), App(V("F"), V("f"))))),
             Seq(Minus, Call("coeff", V("n"), App(V("F"), V("f"))))))));
+
+    private static Formula AgreePowerFormula() => Disp(Ring(All("n", N(), All("p", N(),
+        Imp(Rel(D(0), Lt, V("p")), All("f", Series(V("R")), All("g", Series(V("R")),
+            Imp(Eqn(Call("constantCoeff", V("f")), D(0)), Imp(Eqn(Call("constantCoeff", V("g")), D(0)),
+                Imp(Agreement(V("n"), V("f"), V("g")),
+                    Agreement(Sub(Add(V("n"), V("p")), D(1)), Pow(V("f"), V("p")), Pow(V("g"), V("p")))))))))))));
+    private static Formula PowerTopFormula() => Disp(Ring(All("n", N(), All("p", N(),
+        Imp(Rel(D(0), Lt, V("p")), All("f", Series(V("R")), All("g", Series(V("R")),
+            Imp(Eqn(Call("constantCoeff", V("f")), D(0)), Imp(Eqn(Call("constantCoeff", V("g")), D(0)),
+                Imp(Eqn(Call("coeff", D(1), V("f")), D(1)), Imp(Eqn(Call("coeff", D(1), V("g")), D(1)),
+                    Imp(Agreement(V("n"), V("f"), V("g")), Eqn(
+                        Sub(Call("coeff", Sub(Add(V("n"), V("p")), D(1)), Pow(V("f"), V("p"))),
+                            Call("coeff", Sub(Add(V("n"), V("p")), D(1)), Pow(V("g"), V("p")))),
+                        Mul(Cast(V("p"), V("R")), Parenthesized(Sub(Call("coeff", V("n"), V("f")),
+                            Call("coeff", V("n"), V("g"))))))))))))))))));
+    private static Formula NormalFormula() => Disp(Ring(All("f", Series(V("R")),
+        Imp(Agreement(D(2), V("f"), V("X")), And(Eqn(Call("constantCoeff", V("f")), D(0)),
+            Eqn(Call("coeff", D(1), V("f")), D(1)))))));
 }
