@@ -458,6 +458,7 @@ private theorem diagonal_cast_banks (c delta ell k : ℕ) (hc : 3 ≤ c)
   let h := diagonalH c delta
   let t := (2 : ℕ)^ell
   let q := h*t
+  have hzi : (2 : ℤ)^c = 8*(k : ℤ) := by exact_mod_cast hz
   have hz8 : 8 ≤ z := (diagonal_dyadic c delta hc).1
   have hk : 1 ≤ k := by dsimp only [z] at hz8; omega
   have hhalf : z/2=4*k := by dsimp only [z]; omega
@@ -503,7 +504,7 @@ private theorem diagonal_cast_banks (c delta ell k : ℕ) (hc : 3 ≤ c)
   funext i j
   fin_cases i <;> fin_cases j <;>
     simp [diagonalBanks, hu', hw', hv', hx', hp1, Nat.cast_add, Nat.cast_mul] <;>
-    (try simp only [hz, Nat.cast_mul, Nat.cast_ofNat]) <;> ring
+    (try simp only [hzi, hz, Nat.cast_mul, Nat.cast_ofNat]) <;> ring
 
 /--   Every c>=3, delta and ell, for the actual diagonal banks.
     The four boundary charts remain literal.  In the unbounded tail S is
