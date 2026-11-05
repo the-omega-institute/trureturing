@@ -42,6 +42,7 @@ structure HilbertModel (U : V → V) (q : V → ℝ) where
 
 attribute [instance] HilbertModel.normed HilbertModel.innerProduct HilbertModel.complete
 
+-- proof_shape: bind-only; live consumer: original_visible_quotient.
 private theorem marker_descent (B : V →ₗ[ℝ] V →ₗ[ℝ] ℝ) (U : V → V)
     (ht : ∀ x y, B x y + B x (U y) + B (U x) y = 0) :
     ∃ T : (V ⧸ B.ker) →ₗ[ℝ] (V ⧸ B.ker),
@@ -97,6 +98,7 @@ private theorem marker_descent (B : V →ₗ[ℝ] V →ₗ[ℝ] ℝ) (U : V → 
     rw [← map_smul, hf, hf]
     exact hs t x
 
+-- proof_shape: bind-only; live consumer: original_models.
 private theorem additive_label_real {W : Type*} [AddCommGroup W] [Module ℝ W]
     {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
     (g : W →ₗ[ℝ] W →ₗ[ℝ] ℝ) (f : W →+ H)
@@ -117,6 +119,8 @@ private theorem additive_label_real {W : Type*} [AddCommGroup W] [Module ℝ W]
 /-- The original readout derives its actual radical quotient and a real-linear,
 isometric three-phase marker there. Every original real-linear Hilbert model
 factors through this same radical. -/
+-- proof_shape: content; live consumer: original_models.
+-- admission_basis: escape-witness; live raw lower-bound/Archimedean scalar construction.
 theorem original_visible_quotient (U : V → V) (q : V → ℝ)
     (hq : ∀ x, 0 ≤ q x) (h : Balance U q) :
     ∃ B : V →ₗ[ℝ] V →ₗ[ℝ] ℝ,
@@ -172,6 +176,7 @@ theorem original_visible_quotient (U : V → V) (q : V → ℝ)
       exact norm_eq_zero.mp (sq_eq_zero_iff.mp hnorm)
     exact ⟨N.liftQ R.label hker, fun _ => rfl⟩
 
+-- proof_shape: bind-only; live consumer: original_models.
 private theorem quotient_balance {W : Type*} [AddCommGroup W] [Module ℝ W]
     (g : W →ₗ[ℝ] W →ₗ[ℝ] ℝ) (T : W →ₗ[ℝ] W)
     (hs : ∀ x y, g x y = g y x)
@@ -186,6 +191,7 @@ private theorem quotient_balance {W : Type*} [AddCommGroup W] [Module ℝ W]
   rw [hs y x, hs (T y) x, hs (T (T y)) x]
   linarith
 
+-- proof_shape: bind-only; live consumer: original_models.
 private def quotient_model (U : V → V) (q : V → ℝ)
     (B : V →ₗ[ℝ] V →ₗ[ℝ] ℝ)
     (g : (V ⧸ B.ker) →ₗ[ℝ] (V ⧸ B.ker) →ₗ[ℝ] ℝ)
@@ -223,6 +229,8 @@ private def quotient_model (U : V → V) (q : V → ℝ)
             rw [hrange]
             exact M.minimal }
 
+-- proof_shape: content; live consumer: original_hilbert_characterization.
+-- admission_basis: escape-witness; live raw lower-bound/Archimedean scalar construction.
 private theorem original_models (U : V → V) (q : V → ℝ)
     (hq : ∀ x, 0 ≤ q x) (h : Balance U q) :
     Nonempty (HilbertModel.{u, u} U q) ∧
@@ -305,6 +313,7 @@ private theorem original_models (U : V → V) (q : V → ℝ)
       rw [hd x]
       exact le_add_of_nonneg_right (by rw [← hg x x]; exact hp _)
 
+-- proof_shape: bind-only; live consumer: linear_balance.
 private theorem norm_original_balance {H : Type*} [NormedAddCommGroup H]
     [InnerProductSpace ℂ H] (x y : H) (t : ℝ) :
     ‖x + t • y‖ ^ 2 + ‖x + t • (omega • y)‖ ^ 2 +
@@ -335,6 +344,7 @@ private theorem norm_original_balance {H : Type*} [NormedAddCommGroup H]
   exact hh
 
 /-- Original-domain converse for every complete minimal real-linear model. -/
+-- proof_shape: bind-only; live consumer: original_hilbert_characterization.
 private theorem linear_balance (U : V → V) (q : V → ℝ)
     {H : Type v} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
     (F : V →ₗ[ℝ] H) (hFnorm : ∀ x, q x = q 0 + ‖F x‖ ^ 2)
@@ -349,6 +359,7 @@ private theorem linear_balance (U : V → V) (q : V → ℝ)
   simp only [hn, map_add, map_smul, hFphase]
   exact norm_original_balance (F x) (F y) t
 
+-- proof_shape: bind-only; live consumer: original_hilbert_characterization.
 private theorem model_balance (U : V → V) (q : V → ℝ)
     (R : HilbertModel.{u, v} U q) : Balance U q :=
   linear_balance U q R.label R.normSq R.phase
@@ -357,6 +368,8 @@ private theorem model_balance (U : V → V) (q : V → ℝ)
 complex Hilbert model with original real-linear labels. All minimal original
 models are uniquely related by a complex-linear label-preserving unitary, and
 the retained baseline is the global minimum. -/
+-- proof_shape: content; live consumer: original C140 Theorem 3.2.
+-- admission_basis: escape-witness; live raw lower-bound/Archimedean scalar construction.
 theorem original_hilbert_characterization (U : V → V) (q : V → ℝ)
     (hq : ∀ x, 0 ≤ q x) :
     (Balance U q ↔ Nonempty (HilbertModel.{u, u} U q)) ∧

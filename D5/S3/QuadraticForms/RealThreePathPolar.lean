@@ -34,6 +34,7 @@ variable {V : Type*} [AddCommGroup V] [Module ℝ V]
 private def evenPart (Q : V → ℝ) (x : V) := (Q x + Q (-x)) / 2
 private def oddPart (Q : V → ℝ) (x : V) := (Q x - Q (-x)) / 2
 
+-- proof_shape: bind-only; live consumer: raw_even_data.
 private theorem swap (U : V → V) (q : V → ℝ) (h : Balance U q) :
     let Q := fun x => q x - q 0
     ∀ (x y : V) (t : ℝ), Q (x + t • y) - Q (t • x + y) =
@@ -46,6 +47,7 @@ private theorem swap (U : V → V) (q : V → ℝ) (h : Balance U q) :
   change Q (t • x + y) + Q (t • U x + y) + Q (x + t • U y) = _ at h₂
   linarith
 
+-- proof_shape: bind-only; live consumer: raw_even_data.
 private theorem even_swap (Q : V → ℝ)
     (hs : ∀ (x y : V) (t : ℝ), Q (x + t • y) - Q (t • x + y) =
       Q x - Q y - Q (t • x) + Q (t • y)) :
@@ -59,6 +61,7 @@ private theorem even_swap (Q : V → ℝ)
   dsimp [evenPart]
   linarith
 
+-- proof_shape: bind-only; live consumer: raw_even_data.
 private theorem odd_add (Q : V → ℝ)
     (hs : ∀ (x y : V) (t : ℝ), Q (x + t • y) - Q (t • x + y) =
       Q x - Q y - Q (t • x) + Q (t • y)) :
@@ -69,6 +72,7 @@ private theorem odd_add (Q : V → ℝ)
   dsimp [oddPart]
   linarith
 
+-- proof_shape: bind-only; live consumer: even_quadratic.
 private theorem even_doubling (E : V → ℝ) (hzero : E 0 = 0)
     (he : ∀ x, E (-x) = E x)
     (hs : ∀ (x y : V) (t : ℝ), E (x + t • y) - E (t • x + y) =
@@ -96,6 +100,7 @@ private theorem even_doubling (E : V → ℝ) (hzero : E 0 = 0)
   norm_num at h
   linarith
 
+-- proof_shape: bind-only; live consumer: even_quadratic.
 private theorem even_parallelogram (E : V → ℝ)
     (hd : ∀ x, E ((2 : ℝ) • x) = 4 * E x)
     (hs : ∀ (x y : V) (t : ℝ), E (x + t • y) - E (t • x + y) =
@@ -130,6 +135,7 @@ private theorem even_parallelogram (E : V → ℝ)
   linarith
 
 
+-- proof_shape: bind-only; live consumer: raw_even_data.
 private theorem even_quadratic (Q : V → ℝ) (hz : Q 0 = 0)
     (hs : ∀ (x y : V) (t : ℝ), Q (x + t • y) - Q (t • x + y) =
       Q x - Q y - Q (t • x) + Q (t • y)) :
@@ -144,6 +150,8 @@ private theorem even_quadratic (Q : V → ℝ) (hz : Q 0 = 0)
   exact ⟨E, fun _ => rfl⟩
 
 omit [Module ℝ V] in
+-- proof_shape: content; live consumer: raw_even_data.
+-- admission_basis: escape-witness; live raw lower-bound/Archimedean scalar construction.
 private theorem quadratic_nonneg (E : QuadraticMap ℤ V ℝ) (c : ℝ)
     (hb : ∀ x, -c ≤ E x) : ∀ x, 0 ≤ E x := by
   intro x
@@ -160,6 +168,8 @@ private theorem quadratic_nonneg (E : QuadraticMap ℤ V ℝ) (c : ℝ)
   simp only [zsmul_eq_mul, Int.cast_mul, Int.cast_natCast] at h
   nlinarith
 
+-- proof_shape: content; live consumer: raw_even_data.
+-- admission_basis: escape-witness; live raw lower-bound/Archimedean scalar construction.
 private theorem bounded_integer_linear_zero (a c : ℝ)
     (h : ∀ n : ℤ, -c ≤ (n : ℝ) * a) : a = 0 := by
   by_contra ha
@@ -173,6 +183,8 @@ private theorem bounded_integer_linear_zero (a c : ℝ)
     rw [div_mul_cancel₀ _ ha] at hm
     linarith [h n]
 
+-- proof_shape: content; live consumer: real_polar.
+-- admission_basis: escape-witness; live raw lower-bound/Archimedean scalar construction.
 private theorem positive_additive_scalar (f : ℝ →+ ℝ)
     (hp : ∀ t, 0 ≤ t → 0 ≤ f t) : ∀ t, f t = t * f 1 := by
   have hm : Monotone f := (monotone_iff_map_nonneg f).mpr hp
@@ -201,6 +213,8 @@ private theorem positive_additive_scalar (f : ℝ →+ ℝ)
       (show t - (r : ℝ) < ε / (f 1 + 1) by linarith)
     nlinarith
 
+-- proof_shape: content; live consumer: raw_even_data.
+-- admission_basis: escape-witness; live raw lower-bound/Archimedean scalar construction.
 private theorem real_polar (E : QuadraticMap ℤ V ℝ)
     (hp : ∀ x, 0 ≤ E x)
     (hs : ∀ (x y : V) (t : ℝ), E (x + t • y) - E (t • x + y) =
@@ -249,6 +263,7 @@ private theorem real_polar (E : QuadraticMap ℤ V ℝ)
   exact ⟨B, hb, hsym, hdiag⟩
 
 
+-- proof_shape: bind-only; live consumer: raw_real_polar.
 private theorem polar_null (B : V →ₗ[ℝ] V →ₗ[ℝ] ℝ)
     (hs : ∀ x y, B x y = B y x) (hp : ∀ x, 0 ≤ B x x)
     (x : V) (hx : B x x = 0) : ∀ y, B x y = 0 := by
@@ -263,6 +278,8 @@ private theorem polar_null (B : V →ₗ[ℝ] V →ₗ[ℝ] ℝ)
     smul_eq_mul, hx, hs y x] at h
   nlinarith
 
+-- proof_shape: content; live consumer: raw_real_polar.
+-- admission_basis: escape-witness; live raw lower-bound/Archimedean scalar construction.
 private theorem raw_even_data (U : V → V) (q : V → ℝ)
     (hq : ∀ x, 0 ≤ q x) (h : Balance U q) :
     ∃ (E : QuadraticMap ℤ V ℝ) (A : V →+ ℝ) (B : V →ₗ[ℝ] V →ₗ[ℝ] ℝ),
@@ -298,6 +315,8 @@ private theorem raw_even_data (U : V → V) (q : V → ℝ)
 
 /-- The original finite nonnegative readout has a positive real bilinear polar;
 the arbitrary marker preserves its diagonal and satisfies the three-direction relation. -/
+-- proof_shape: content; live consumer: original_visible_quotient.
+-- admission_basis: escape-witness; live raw lower-bound/Archimedean scalar construction.
 theorem raw_real_polar (U : V → V) (q : V → ℝ)
     (hq : ∀ x, 0 ≤ q x) (h : Balance U q) :
     ∃ B : V →ₗ[ℝ] V →ₗ[ℝ] ℝ,
