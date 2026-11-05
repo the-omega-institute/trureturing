@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Measurement;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Measurement.Weak;
 
 internal sealed class SequentialWeakPointerRefutationDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Quantum/Measurement/SequentialWeakPointerRefutation.";
+    private const string Prefix = "D5/S3/Quantum/Measurement/Weak/SequentialWeakPointerRefutation.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/QuantumBounds/abbott2019anomalous");
 

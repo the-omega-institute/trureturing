@@ -1,9 +1,9 @@
-/- GID: D5/S3/Quantum/Measurement/SequentialWeakPointerRefutation
+/- GID: D5/S3/Quantum/Measurement/Weak/SequentialWeakPointerRefutation
    generality: I
-   mirror-B: D5/B/S3/Quantum/Measurement/SequentialWeakPointerRefutation
+   mirror-B: D5/B/S3/Quantum/Measurement/Weak/SequentialWeakPointerRefutation
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Measurement/SequentialWeakPointerRefutation.claim; result=D5/S3/Quantum/Measurement/SequentialWeakPointerRefutation.result; claim=D5/S3/Quantum/Measurement/SequentialWeakPointerRefutation.claim
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Measurement/Weak/SequentialWeakPointerRefutation.claim; result=D5/S3/Quantum/Measurement/Weak/SequentialWeakPointerRefutation.result; claim=D5/S3/Quantum/Measurement/Weak/SequentialWeakPointerRefutation.claim
    digest: Three projections on C^3 and the state e_3 give pointer mean -1/6 < -1/8 (1805.09364). -/
 
 /-
@@ -23,7 +23,7 @@ import Mathlib.Tactic.NormNum
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Quantum.Measurement.SequentialWeakPointerRefutation
+namespace D5.S3.Quantum.Measurement.Weak.SequentialWeakPointerRefutation
 
 /-!
 A. A. Abbott, R. Silva, J. Wechs, N. Brunner and C. Branciard, *Anomalous weak values without
@@ -81,4 +81,4 @@ theorem result : ¬ claim := by
   rw [hval] at hle
   norm_num at hle
 
-end D5.S3.Quantum.Measurement.SequentialWeakPointerRefutation
+end D5.S3.Quantum.Measurement.Weak.SequentialWeakPointerRefutation
