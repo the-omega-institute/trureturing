@@ -24,19 +24,17 @@ block. The added source derives the single gap cycle from the actual temporal
 orbit and derives its recurrence from directed endpoint congruences.
 Neither denominator conclusion is replaced by a premise.
 -/
-module
-public import D5.S1.Words.AssociatedMersenne.CircularWords
-public import Mathlib.Data.Int.ModEq
-public import Mathlib.Data.ZMod.Basic
-public import Mathlib.Dynamics.PeriodicPts.Lemmas
-public import Mathlib.GroupTheory.OrderOfElement
-public import Mathlib.Data.Finset.Sort
-public import Mathlib.Tactic
+import D5.S1.Words.AssociatedMersenne.CircularWords
+import Mathlib.Data.Int.ModEq
+import Mathlib.Data.ZMod.Basic
+import Mathlib.Dynamics.PeriodicPts.Lemmas
+import Mathlib.GroupTheory.OrderOfElement
+import Mathlib.Data.Finset.Sort
+import Mathlib.Tactic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-@[expose] public section
 
 namespace D5.S3.Combinatorics.Circle.NarrowDoublingOrbit
 
