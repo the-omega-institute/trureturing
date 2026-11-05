@@ -1,0 +1,21 @@
+**定义 14.1（四通道闭包与单位参照）。** 两个局部场 $J_A,J_B$ 满足定义 8.1，记其比较和变化为 $S_A,B_A$ 与 $S_B,B_B$。在 $J_A\otimes_{\mathbb R}J_B$ 上给两个实际双线性运算 $M,T$，均属于
+
+$$
+\mathcal C_{AB}=\operatorname{span}_{\mathbb R}
+\{S_A\otimes S_B,S_A\otimes B_B,B_A\otimes S_B,B_A\otimes B_B\}.
+\tag{14.1}
+$$
+
+要求两个局部单位嵌入保存原来的两种关系：
+
+$$
+\begin{aligned}
+M(a\otimes1,c\otimes1)&=S_A(a,c)\otimes1,&
+T(a\otimes1,c\otimes1)&=B_A(a,c)\otimes1,\\
+M(1\otimes b,1\otimes d)&=1\otimes S_B(b,d),&
+T(1\otimes b,1\otimes d)&=1\otimes B_B(b,d).
+\end{aligned}\tag{14.2}
+$$
+
+四通道闭包是模型的明确范围：连接只使用两种已有二元运算的张量通道，不允许其他局部二元运算参与。它不等同于“所有对象均在 $\Omega$ 内”，也没有从任意联合双线性映射的空间推出。尚不预设 $M$ 交换、$T$ 交替、联合导子律、复数、外部共同参数或 $D_1=0$。联合内积取 $g_A\otimes g_B$。
+

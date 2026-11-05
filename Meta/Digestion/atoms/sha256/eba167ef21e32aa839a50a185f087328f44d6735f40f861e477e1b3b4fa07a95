@@ -1,0 +1,36 @@
+### 19.2 酉历史、生成元与不确定性怎样在同一个整体内出现
+
+在同一有限维输入输出上，完整单分支满足 $U^\dagger U=I$；
+有限维同维使它也满足 $UU^\dagger=I$。
+若实际历史 $U(t)$ 为 $C^1$，定义
+
+$$
+H(t)=i\hbar\dot U(t)U(t)^\dagger.
+$$
+
+对 $U(t)U(t)^\dagger=I$ 求导给
+$\dot U U^\dagger+U\dot U^\dagger=0$，所以 $H(t)=H(t)^\dagger$。
+对 $\psi(t)=U(t)\psi(0)$，直接得到
+
+$$
+i\hbar\dot\psi(t)=H(t)\psi(t).
+$$
+
+若进一步 $U(t+s)=U(t)U(s)$，同维有限情形给固定生成元
+$U(t)=\exp(-itH/\hbar)$。
+这是在已有实际时间参数下的表示定理；没有从静态相容性算出 $\hbar$ 的物理标尺。
+
+对同一个共同态 $\omega$ 和自伴 $A,B$，记
+$\Delta A=A-\omega(A)I$、$\Delta B=B-\omega(B)I$。
+GNS 正核的 Cauchy–Schwarz 给
+
+$$
+\operatorname{Var}_\omega(A)\operatorname{Var}_\omega(B)
+ \ge|\omega(\Delta A\Delta B)|^2
+ \ge\frac14|\omega([A,B])|^2.
+$$
+
+因此不确定性界来自同一个正关系核及其非对易方向。
+某个具体态上交换子的期望可能为零，乘积下界也可能为零；
+不能仅凭“关系总有关系”就声称每个量都有普遍严格正的最小误差。
+

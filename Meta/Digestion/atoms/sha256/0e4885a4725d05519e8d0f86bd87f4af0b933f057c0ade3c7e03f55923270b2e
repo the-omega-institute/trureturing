@@ -1,0 +1,41 @@
+**Theorem 25.1 (constant history fibres exactly at equal masses).** For
+admissible $U$, the numbers $F_{PS}(t)$ are constant over
+$t\in\mathcal O(U)$ if and only if the two child subtrees at every binary
+vertex of $K(U)$ have equal numbers of vertices. Equivalently, every
+branch of $U$ with distinct non-alpha child classes $X,Y$ satisfies
+$n(X)=n(Y)$. At any legal pair of orientations, with their internal
+ordered terms $l,r$ fixed and neither equal to alpha,
+
+$$
+\frac{F_{PS}(\langle l,r\rangle)}{F_{PS}(\langle r,l\rangle)}
+ =\frac{n([l])}{n([r])}.
+\tag{IV.66}
+$$
+
+**Proof.** Write $x=n([l])\ge1$, $y=n([r])\ge0$. A non-alpha subtree
+born beta differs from the same target born alpha by deletion of its
+forced first root promotion, so the two history counts agree. AA19.1–19.2
+therefore give
+
+$$
+F_{PS}(\langle l,r\rangle)
+ =\binom{x+y-1}{x-1}F_{PS}(l)F_{PS}(r).
+\tag{IV.67}
+$$
+
+For two non-alpha children, interchanging $x,y$ gives (IV.66). For an
+alpha child the orientation is forced and the factor in (IV.67) is one.
+If the equal-mass condition holds everywhere, induction makes the child
+history counts constant on their endpoint fibres, and equal masses make
+the two permitted orders have equal factors. This proves sufficiency,
+including equal child classes and all unary vertices.
+
+For necessity, take a vertex with unequal positive child masses. Its
+child classes are distinct, so both local orders are reachable. Fix all
+internal representatives and the rest of one ordered endpoint and swap
+only those children. Ancestor factors in (IV.67) depend on unchanged
+subtree masses, hence cancel, as do all fixed internal factors. The full
+history counts have the unequal ratio $x/y$. They cannot be constant.
+Isomorphic children have equal masses automatically, giving the stated
+equivalence of conditions. $\square$
+

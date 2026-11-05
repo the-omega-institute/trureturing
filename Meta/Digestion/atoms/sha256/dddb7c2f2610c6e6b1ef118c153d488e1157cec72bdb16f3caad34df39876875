@@ -1,0 +1,34 @@
+**Assumption 20.1 (one owned LAB installation).** Fix a source-independent
+finite driver and its actual initialized input/output connections. Its
+allocator constructs the known $\alpha$ root and returns a reference bound
+to that very object, with current exclusive source read/write authority.
+It also supplies owned auxiliary records and finite work storage. Each
+fresh object returns its real reference and the rights needed to initialize
+and later read or extend it. Source and record rights remain current during
+the stated finite operations; no other writer, revocation, crash or interrupt
+is admitted. Every claimed completed operation has sufficient finite fresh
+material and workspace. Reference equality, null tests, individual field
+reads/writes, allocation, bit input/output and local acknowledgement are
+explicit ideal primitives with their own charges. References are actual
+bindings, not arbitrary numeral-to-object casts; their bit costs are not
+unit-size assumptions.
+
+Allocation has no observable quota or exhaustion branch in this ideal
+service. The assertions quantify finite executions with the required
+finite material supplied, not executions of an unspecified fixed-capacity
+device. If current capacity, allocation failure or a material-supply action
+is made observable, that resource state and its legal continuations must
+also enter the task; the content kernels of §21 alone are not asserted for
+that enlarged model.
+
+The source representation has parent, left and right fields. In addition,
+each source vertex has a distinct auxiliary header-reference field,
+initially null; it is excluded from the source-edge projection $S_0$.
+At a logical split position that field binds an actual tape header with
+head and tail references. A tape cell has a side bit and a next reference.
+The owner retains every source vertex, header and tape cell. Headers and
+links do not stand for unconstructed words. A work arena supports charged
+finite buffers and their clearing/reuse. The driver, root slot, authority,
+input and output connections are installed before an arbitrary schedule is
+supplied, with no source-dependent code or response table.
+

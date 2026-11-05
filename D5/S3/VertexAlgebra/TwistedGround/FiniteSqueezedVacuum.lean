@@ -338,10 +338,10 @@ private theorem insertion_hasDerivAt (A B : Matrix I I ℂ)
     hbase
     (by simpa using ht)
 
-private def created (α : I →₀ ℕ) (f : (I →₀ ℕ) → ℂ) (d : I →₀ ℕ) : ℂ :=
+def created (α : I →₀ ℕ) (f : (I →₀ ℕ) → ℂ) (d : I →₀ ℕ) : ℂ :=
   if α ≤ d then f (d - α) else 0
 
-private theorem created_add (α β : I →₀ ℕ) (f : (I →₀ ℕ) → ℂ) :
+theorem created_add (α β : I →₀ ℕ) (f : (I →₀ ℕ) → ℂ) :
     created α (created β f) = created (α + β) f := by
   funext d
   by_cases ha : α ≤ d
@@ -354,15 +354,15 @@ private theorem created_add (α β : I →₀ ℕ) (f : (I →₀ ℕ) → ℂ) 
   · have hab : ¬α + β ≤ d := fun h => ha (le_trans le_self_add h)
     simp [created, ha, hab]
 
-private theorem created_zero (f : (I →₀ ℕ) → ℂ) : created 0 f = f := by
+theorem created_zero (f : (I →₀ ℕ) → ℂ) : created 0 f = f := by
   funext d
   simp [created]
 
-private theorem created_single (i : I) (f : (I →₀ ℕ) → ℂ) (d : I →₀ ℕ) :
+theorem created_single (i : I) (f : (I →₀ ℕ) → ℂ) (d : I →₀ ℕ) :
     created (Finsupp.single i 1) f d = if d i = 0 then 0 else f (d - Finsupp.single i 1) := by
   by_cases hi : d i = 0 <;> simp [created, Finsupp.single_le_iff, Nat.one_le_iff_ne_zero, hi]
 
-private theorem created_square_summable (A : Matrix I I ℂ)
+theorem created_square_summable (A : Matrix I I ℂ)
     (hsym : ∀ i j, A i j = A j i)
     (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A‖ < 1) (α : I →₀ ℕ) :
     Summable (fun d : I →₀ ℕ => (weight d : ℝ) *
@@ -379,7 +379,7 @@ private theorem created_square_summable (A : Matrix I I ℂ)
       exact hd ⟨d - α, tsub_add_cancel_of_le hle⟩
     simp [created, hnot]
 
-private theorem created_pair_summable (A B : Matrix I I ℂ)
+theorem created_pair_summable (A B : Matrix I I ℂ)
     (hAsym : ∀ i j, A i j = A j i) (hBsym : ∀ i j, B i j = B j i)
     (hA : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A‖ < 1)
     (hB : ‖Matrix.toEuclideanCLM (𝕜 := ℂ) B‖ < 1) (α β : I →₀ ℕ) :
@@ -396,18 +396,18 @@ private theorem created_pair_summable (A B : Matrix I I ℂ)
   have hw : 0 ≤ (weight d : ℝ) := Nat.cast_nonneg _
   nlinarith [mul_nonneg hw hs]
 
-private def pairing (f g : (I →₀ ℕ) → ℂ) : ℂ :=
+def pairing (f g : (I →₀ ℕ) → ℂ) : ℂ :=
   ∑' d : I →₀ ℕ, (weight d : ℂ) * f d * g d
 
-private def annihilate (i : I) (f : (I →₀ ℕ) → ℂ) (d : I →₀ ℕ) : ℂ :=
+def annihilate (i : I) (f : (I →₀ ℕ) → ℂ) (d : I →₀ ℕ) : ℂ :=
   (d i + 1 : ℂ) * f (d + Finsupp.single i 1)
 
-private theorem pairing_comm (f g : (I →₀ ℕ) → ℂ) : pairing f g = pairing g f := by
+theorem pairing_comm (f g : (I →₀ ℕ) → ℂ) : pairing f g = pairing g f := by
   apply tsum_congr
   intro d
   ring
 
-private theorem pairing_creation_annihilation (i : I) (f g : (I →₀ ℕ) → ℂ) :
+theorem pairing_creation_annihilation (i : I) (f g : (I →₀ ℕ) → ℂ) :
     pairing (created (Finsupp.single i 1) f) g = pairing f (annihilate i g) := by
   unfold pairing
   rw [← tsum_shift i (fun d => (weight d : ℂ) *
@@ -422,7 +422,7 @@ private theorem pairing_creation_annihilation (i : I) (f g : (I →₀ ℕ) → 
     Nat.cast_mul, Nat.cast_add, Nat.cast_one, annihilate]
   ring
 
-private theorem gaussian_annihilate (A : Matrix I I ℂ)
+theorem gaussian_annihilate (A : Matrix I I ℂ)
     (hsym : ∀ i j, A i j = A j i) (i : I) :
     annihilate i (gaussianCoefficient A) = fun d =>
       ∑ j, A i j * created (Finsupp.single j 1) (gaussianCoefficient A) d := by
@@ -464,7 +464,7 @@ private theorem pairing_created (A B : Matrix I I ℂ) (α : I →₀ ℕ) :
       exact hd (by simp [created, hnot]))
   simpa only [created, le_add_self, ite_true, add_tsub_cancel_right] using he
 
-private theorem pairing_const_right (c : ℂ) (f g : (I →₀ ℕ) → ℂ) :
+theorem pairing_const_right (c : ℂ) (f g : (I →₀ ℕ) → ℂ) :
     pairing f (fun d => c * g d) = c * pairing f g := by
   unfold pairing
   rw [← tsum_mul_left]
@@ -472,7 +472,7 @@ private theorem pairing_const_right (c : ℂ) (f g : (I →₀ ℕ) → ℂ) :
   intro d
   ring
 
-private theorem pairing_sum_right (f : (I →₀ ℕ) → ℂ) (g : I → (I →₀ ℕ) → ℂ)
+theorem pairing_sum_right (f : (I →₀ ℕ) → ℂ) (g : I → (I →₀ ℕ) → ℂ)
     (hs : ∀ i, Summable (fun d : I →₀ ℕ => (weight d : ℂ) * f d * g i d)) :
     pairing f (fun d => ∑ i, g i d) = ∑ i, pairing f (g i) := by
   unfold pairing
@@ -494,12 +494,12 @@ private theorem pairing_gaussian_annihilate (A B : Matrix I I ℂ)
     funext d
     ring
 
-private theorem created_sum (α : I →₀ ℕ) (f : I → (I →₀ ℕ) → ℂ) :
+theorem created_sum (α : I →₀ ℕ) (f : I → (I →₀ ℕ) → ℂ) :
     created α (fun d => ∑ j, f j d) = fun d => ∑ j, created α (f j) d := by
   funext d
   by_cases h : α ≤ d <;> simp [created, h]
 
-private theorem created_const (α : I →₀ ℕ) (c : ℂ) (f : (I →₀ ℕ) → ℂ) :
+theorem created_const (α : I →₀ ℕ) (c : ℂ) (f : (I →₀ ℕ) → ℂ) :
     created α (fun d => c * f d) = fun d => c * created α f d := by
   funext d
   by_cases h : α ≤ d <;> simp [created, h]

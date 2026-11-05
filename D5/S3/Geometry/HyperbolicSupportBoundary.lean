@@ -30,7 +30,7 @@ def supportRegion {ι : Type*} (e : UpperHalfPlane → HyperbolicThreeSpace)
     (A : ι → Fin 4 → ℝ) : Set UpperHalfPlane :=
   {z | ∀ i, lorentz (A i) (lift (e z)) ≤ 0}
 
-private theorem lift_continuous : Continuous lift := by
+theorem lift_continuous : Continuous lift := by
   have hc : Continuous (fun p : HyperbolicThreeSpace => p.coordinates) :=
     (D5.S3.Geometry.HyperbolicTopology.coordinatesHomeomorph (E := ℂ)).continuous
   have hh : Continuous (fun p : HyperbolicThreeSpace => height p.coordinates) :=

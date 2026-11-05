@@ -1,0 +1,48 @@
+**定理 11.1（由原面设备组成的系数一效果滤波）。** A–E 下，对每个原非零对象及每个数学效果 $0\le E\le I_o$，同一个 $\Omega$ 内有一个由原设备组成的合法有限成功词 $W_E$，其原始成功映射精确为
+
+$$
+\mathcal W_E(X)=\sqrt E\,X\sqrt E,\qquad
+p_{\rm raw}(W_E\mid X)=\tau_o(EX).
+\tag{11.1}
+$$
+
+这是对所有效果、所有输入块与每次原合法使用成立的实际词供应，不是先给定矩阵载体后的一个局部兼容声明。词有自己的原实现身份；不会把已命名的另一台同效果设备改成它。
+
+证明。使用 E 的确定性参考准备 $b_0$，在定理 10.2 的 $M_2(\mathbb C)$ 表示中把它记为 $|0\rangle\langle0|$。在已由定理 10.4 识别的原对象 $oR$ 中，令
+
+$$
+ a=\sqrt E,\qquad b=\sqrt{a(I-a)},\qquad
+ p=\begin{pmatrix}a&b\\ b&I-a\end{pmatrix},\qquad
+ q=I_o\otimes|0\rangle\langle0|.
+\tag{11.2}
+$$
+
+$a,b$ 是同一个 $a$ 的连续函数，故相互交换。块乘法给
+
+$$
+ p^*=p,\quad
+ p^2=\begin{pmatrix}a^2+a(I-a)&ab+b(I-a)\\
+ba+(I-a)b&a(I-a)+(I-a)^2\end{pmatrix}=p.
+$$
+
+这里是在重构后定位两个原面的参数；实际调用的是 B 已给的原面事件，未另加一台矩阵设备。由命题 10.3，它们分别为 $Y\mapsto pYp$ 与 $Y\mapsto qYq$。调用 E 明确允许的原词
+
+$$
+ W_E=(\text{接入 }b_0)\ ;\ \mathsf p_{F_p}\ ;\
+ \mathsf p_{F_q}\ ;\ (\text{丢弃 }R),
+\tag{11.3}
+$$
+
+两次取原成功分支。由于
+
+$$
+ p(X\otimes|0\rangle\langle0|)p
+ =\begin{pmatrix}aXa&aXb\\bXa&bXb\end{pmatrix},\qquad
+ q\,p(X\otimes|0\rangle\langle0|)p\,q
+ =aXa\otimes|0\rangle\langle0|,
+$$
+
+原确定性丢弃给 (11.1)。整个构造逐原中心块成立；$p$ 可以跨多个不等大小块，而 B 没有要求它是极过程。式 (11.2) 是标准投影膨胀的一个块构造，投影膨胀本身不作新内容；这里的承重对应是两块投影恰有 B 的原面设备，并由 E 供应同一原合法词、系数一准备及丢弃。
+
+若只给成功率为 $\eta$ 的原参考准备，第一步为 $X\mapsto\eta X\otimes|0\rangle\langle0|$，同词的成功映射就是 $\eta\sqrt E X\sqrt E$。事后条件归一化不能消掉原始成功率中的 $\eta$。∎
+

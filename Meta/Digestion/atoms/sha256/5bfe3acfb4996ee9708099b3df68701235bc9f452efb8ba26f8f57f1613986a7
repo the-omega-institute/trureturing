@@ -1,0 +1,30 @@
+### 定理 18.1（可见自治只给一侧相容）
+
+<a id="thm-c94-autonomy-versus-commutation"></a>
+
+有
+
+$$
+F(\mathcal A)\subseteq\mathcal A
+ \quad\Longleftrightarrow\quad
+ R\Phi=R\Phi R.
+$$
+
+在这个条件下，$R\Phi=\Phi R$ 当且仅当 $\Phi$ 保持 $R$ 的像空间，
+等价地，当且仅当
+
+$$
+\Phi R=R\Phi R.
+$$
+
+**证明。**
+因为 $E$ 的像是 $\mathcal A$、且在其上恒等，
+$F(\mathcal A)\subseteq\mathcal A$ 等价于 $FE=EFE$。
+取迹对偶即得 $R\Phi=R\Phi R$。
+另一方面，$\Phi$ 保持 $\operatorname{ran} R$ 当且仅当
+$R\Phi R=\Phi R$，因为 $R$ 是该像上的恒等投影。
+两项结合即给交换；若已经交换，两项也同时成立。
+
+特别地，额外要求 $\Phi\tau=\tau$ 仍不自动给出第二项。
+一份稳定参照并不代表所有规范态都被该过程送成规范态。
+

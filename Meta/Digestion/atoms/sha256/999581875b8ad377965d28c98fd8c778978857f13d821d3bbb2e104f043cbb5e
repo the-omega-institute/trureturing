@@ -1,0 +1,20 @@
+这不是所有 fine states 的相干禁令。例如 diagonal extraction $M_2\to\mathbb C\oplus\mathbb C$ 的任何全域正右逆在 $(1/2,1/2)$ 输出 $I/2$，因为两个极端输入的正 lifts 只能支撑于各自坐标；但该特定 coarse state 也有 coherent lift $|+\rangle\langle+|$。准备 map $(a,b)\mapsto(a+b)|+\rangle\langle+|$ 是 CPTP，却只在此特定输入正确，并非全域右逆。
+
+允许的旧块内部 multiplicity coherence 是另一回事。按
+
+$$
+\mathcal H_{L+1,t}\cong\bigoplus_s
+(\mathcal H_{L,s}\otimes\mathbb C^{B_{s,t}}),
+$$
+
+为每源选 $\zeta_{s,t}\ge0$、$\sum_t\operatorname{Tr}\zeta_{s,t}=1$，则
+
+$$
+(R_L^\zeta\rho)_t=\bigoplus_s\rho_s\otimes\zeta_{s,t}
+\tag{36.8}
+$$
+
+仍是 CPTP section：tensoring 固定 positive matrices 完全正，总 trace 因归一化不变，$E_L$ 对 multiplicity 作 partial trace 得 $\rho_s$。非对角 $\zeta_{s,t}$ 保留同一旧源、同一细终态的 copy coherence，符合 (36.7)；相同 diagonal weights 不规定这些 coherent entries。
+
+若所有实际细分支满足 (36.5)，推论 35.2 直接给完整 records、任意有限 reference 和正概率 conditional boundary。section 权重、量子 preparation、fine Kraus 的实际可用性及成本仍是另行合同。这是有限层 legal coherent recursion 的正面实现，不声称无限 AF 的每个元素或 §29 的每个 geometric operation 都物理可用。
+

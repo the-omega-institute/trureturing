@@ -1,0 +1,46 @@
+**Theorem 3.1 (original-addend sweep and modular return).** Put $d=d_n$ and $L=H/d$. There is a public finite word $W_d$ of original additions only whose actual integer increment is $S$ and whose length $\ell$ satisfies
+
+$$
+S\equiv d\pmod H,\qquad 1\le\ell\le L-1\quad(L>1).
+\tag{AQBR.10}
+$$
+
+For $L=1$ use the empty word, $S=\ell=0$. On any admitted entry, the following single-source procedure acquires every coordinate in $\pi(C_0)$ and returns modulo $H$:
+
+1. At each $t=0,\ldots,L-1$, call current ReadF once at the actual source $C_0+tS$ and retain its answer $a_t$.
+2. After each of these calls, including the last, execute $W_d$ once on that source.
+3. For every $p\in G$ with $e<h$, choose any acquired index $t_p$ for which $v_p(H/a_{t_p})=h$, and set $x_p=(-t_p d)\bmod p^h$. For $p\in G$ with $e=h$, set $x_p=0$.
+
+All required indices exist, $x_p=C_0\bmod p^h$, and the endpoint is the actual integer
+
+$$
+C_*=C_0+LS\equiv C_0\pmod H.
+\tag{AQBR.11}
+$$
+
+The procedure uses exactly $L$ paid reads, $L\ell$ original additions, and no source multiplications. When (AQBR.8) holds, these counts give upper bounds for attaining acquisition-and-return, not minima for reads or work; redundant reads and additions can be omitted in contracts where the initial data already determine the target.
+
+**Proof (the finite original word).** Each $c_i$ is divisible by $d$. On the $L$-element cyclic group use the public directed edges
+
+$$
+z\longmapsto z+c_i/d\pmod L.
+$$
+
+Their nonnegative-word reachability from zero is the whole group. Indeed, in a finite group the inverse of any generator is a nonnegative number of repetitions of that generator. The generated subgroup is the whole group because $\gcd(L,c_1/d,\ldots,c_s/d)=1$. This is the finite positive translation argument of FARG100.2, applied to the actual normalized list. Breadth-first search from zero, stopping at residue one, supplies a path without repeated vertices, hence at most $L-1$ edges. Each edge is one indexed original addition. Its unnormalized sum is $S\equiv d\pmod H$, proving (AQBR.10). This search uses only public integers; it is not a query to $C_0$. For $L=1$ no search or edge is required, including when the library is empty.
+
+**Proof (the actual read positions).** Addition of the same word $W_d$ increments the integer by exactly $S$. Induction in $t$ gives the claimed actual positions $C_0+tS$, not independently reset counterfactual positions. For $L>1$ the last extra execution is necessary for residue return: a procedure stopping at the last read has only made $L-1$ executions, and $d$ has additive order $L$ modulo $H$. Because $LS\equiv Ld=H\equiv0\pmod H$, the final execution closes the residue return. For $L=1$ both the word and the increment are empty.
+
+**Proof (the acquired coordinates).** Fix $p\in G$ with $e<h$. Then $p^e\mid C_0$, $p^e\mid S$, and
+
+$$
+S/p^e\equiv d/p^e\pmod{p^{h-e}},
+$$
+
+which is a unit modulo $p^{h-e}$. Thus exactly one residue class $t\bmod p^{h-e}$ satisfies $C_0+tS\equiv0\pmod{p^h}$. The interval $0\le t<L$ contains this class, since $p^{h-e}\mid L$. Its actual ReadF answer has full depth $h$ on this axis, so such a $t_p$ is genuinely acquired. Every such index gives
+
+$$
+C_0\equiv-t_p S\equiv-t_p d\pmod{p^h}.
+$$
+
+For $e=h$ the hypothesis $r_p\ge e$ already says $C_0\equiv0\pmod{p^h}$; there is no modular inverse or additional coordinate to acquire. All coordinates come from the same read tape. CRT on the selected axes gives the actual $\pi(C_0)$, not a combination of independent optimizing sources. On $B$ every read has its fixed depth $r_p$, consistent with the obstruction in Theorem 2.1. $\square$
+

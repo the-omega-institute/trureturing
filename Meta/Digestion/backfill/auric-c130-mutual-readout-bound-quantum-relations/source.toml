@@ -1,0 +1,5 @@
+source_id = "auric-c130-mutual-readout-bound-quantum-relations"
+path = "docs/develop/theory/AURIC_C130_MUTUAL_READOUT_BOUND_QUANTUM_RELATIONS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

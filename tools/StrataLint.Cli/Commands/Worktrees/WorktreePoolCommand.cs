@@ -20,16 +20,16 @@ internal static class WorktreePoolCommand
             : null;
 
     internal static CommandResult? TryClaim(WorktreeOptions options, IWorktreeProcessRunner runner,
-        out string? fallbackReason)
+        out string? fallbackReason, out JsonElement[] candidateRefusals)
     {
         fallbackReason = null;
+        candidateRefusals = [];
         if (!options.PreferIdle)
         {
             if (!Directory.Exists(options.Path)) return null;
             var attached = runner.Run("git", ["branch", "--show-current"], options.Path,
                 BoundedProcessRunner.HangDetectionBudget);
-            if (attached.ExitCode != 0 || !IsIdleBranch(Encoding.UTF8.GetString(attached.StandardOutput).Trim()))
-                return null;
+            if (attached.ExitCode != 0) return null;
             if (Encoding.UTF8.GetString(attached.StandardOutput).Trim() == options.Branch) return null;
         }
         GitWorktreeInventory.FetchRemoteBase(options.Source, options.Base, runner);
@@ -41,6 +41,8 @@ internal static class WorktreePoolCommand
         using var receipt = JsonDocument.Parse(result.Output);
         if (receipt.RootElement.GetProperty("status").GetString() != "no_idle") return result;
         if (receipt.RootElement.TryGetProperty("reason", out var reason)) fallbackReason = reason.GetString();
+        if (receipt.RootElement.TryGetProperty("candidate_refusals", out var refusals))
+            candidateRefusals = refusals.EnumerateArray().Select(row => row.Clone()).ToArray();
         return null;
     }
 }

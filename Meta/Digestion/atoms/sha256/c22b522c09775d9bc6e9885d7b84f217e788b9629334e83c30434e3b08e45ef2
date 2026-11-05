@@ -1,0 +1,53 @@
+**定义 23.1（十六位菜单上的资源与切口）。** 本节至 §27 只使用 [Setting-Source 定义 8.1–8.3、式 (8.5)、(8.7a)](AURIC_SINGLE_PURE_WHOLE_SETTING_SOURCE_RELATIONS_V78_CONTINUATION.md) 的原生载体、根和记录语义。位置是 $-1,0,\ldots,14$，
+
+$$
+\mathcal H_{\mathcal N}=(\mathbb C^2)^{\otimes16},\qquad
+\mathcal L=\operatorname{span}\{|b\rangle:b_jb_{j+1}=0\},\qquad
+\dim\mathcal L=2584.
+$$
+
+唯一根为
+
+$$
+\Omega_0=|1,0,0,0,1,0,0,0,1,0\rangle_{-1,\ldots,8}
+                 \otimes|000\rangle_{9,10,11}
+                 \otimes|000\rangle_{12,13,14}.
+\tag{23.1}
+$$
+
+记 $\varphi=(1+\sqrt5)/2$、$\zeta=e^{3\pi i/5}$、$\beta=\varphi^{-1/2}$、$t=\beta^2=\varphi^{-1}$。实际门始终是 [V15 §3](AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md) 的完整矩阵
+
+$$
+\begin{aligned}
+Q_j&=t(I-n_j)+t^2n_j+\beta^3X_j,\\
+\mathcal P_j&=n_{j-1}n_{j+1}+(I-n_{j-1})(I-n_{j+1})Q_j,\\
+K_j&=\zeta[I+(\zeta-1)\mathcal P_j],\qquad 0\le j\le13.
+\end{aligned}
+\tag{23.2}
+$$
+
+源空间仍是 Setting-Source 式 (8.3) 的 $\mathcal S$：$b_{-1}b_0=10$、$b_6b_7b_8=010$、$(b_1,\ldots,b_5)$ 无相邻 $11$，维数为十三；其原编码 $J|q_Aq_B\rangle=|1,0,q_A,0,1,0,q_B,0,1,0\rangle$ 仅指定四维逻辑子空间。实际运行不重选式 (23.1) 的根。
+
+源准备的地址字只取 $0,\ldots,6$；完整原生菜单另允许 $0,\ldots,13$ 上的门、计算基正交投影及按已得结果选择地址的有限确定表。门保持 $\mathcal L$，但矩阵和以下张量切口都在完整 $\mathcal H_{\mathcal N}$ 上解释。没有任意旋转、自由输入态、自由测量基、外来随机权重、复位或额外相干受控门。
+
+一个具体协议给定有限根树 $\mathcal T$。门节点是一个实际正向 $K_j$；测量节点 $v$ 是计算基对角零一投影的完整分解 $\{\Pi_{v,o}:o\in O_v\}$，包括所有结果，且 $\sum_o\Pi_{v,o}=I$；后续节点可依赖已得报告。失败、拒绝、提前停止和正常停止都有明确终叶，零质量标签也不删除。未调用门的调度槽为恒等。若字表写了逆调用，先按 $K_j^{-1}=K_j^9$ 展开：正向调用成本为一，逆调用成本为九。对展开后的整棵树声明实际资源
+
+$$
+L=\max_{h\ \mathrm{terminal}}\#\{h\text{ 上的正向 }K\text{ 调用}\},\qquad
+m=\max_h\#\{h\text{ 上的测量节点}\},\qquad
+b=\max\bigl(\{1\}\cup\{|O_v|:v\text{ 为测量节点}\}\bigr).
+\tag{23.3}
+$$
+
+另声明全部有限节点及停止标签、反馈地址表、控制器与实际档案的有限状态集 $\mathcal C$。$L$ 计完整协议全部分支，不能只计成功分支；截在一个已声明切口的前缀也可以独立作为这样的有限树。$m,b,|\mathcal C|$ 是适用域的一部分；以下界不另乘叶数，并不把这些资源当作不存在。档案只记录菜单定义的调用、报告和停止，不添加隐藏的计算基微轨迹。
+
+固定一个实际共同切口 $t_*$，每条完整历史恰穿过它一次；必要时用恒等槽对齐提前停止叶，所得前缀叶仍为完整分解。$\mathcal H_R=H_I$ 由预先指定的原生位置子集 $I$ 构成，$\mathcal H_Z=H_{I^c}$，设
+
+$$
+q=|I|,\qquad d=2^q,\qquad e=2^{16-q},\qquad
+\mathcal H_{\mathcal N}\cong\mathcal H_R\otimes\mathcal H_Z.
+\tag{23.4}
+$$
+
+因此 $de=65536$；控制器及报告的其他实际记录仍保留在各自已声明因子或经典记录代数中。$\mathcal L$ 在此只是一个受约束子空间，不被假定为 $\mathcal H_R\otimes\mathcal H_Z$ 内的张量子空间。若把额外控制寄存器纳入待校准因子，须另给其维数及矩阵来源，不能直接沿用这里的 $d,e$。
+

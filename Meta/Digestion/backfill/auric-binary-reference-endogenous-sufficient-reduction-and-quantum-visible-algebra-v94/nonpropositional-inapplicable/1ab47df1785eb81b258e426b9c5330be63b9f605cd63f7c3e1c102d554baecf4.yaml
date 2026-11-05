@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1ab47df1785eb81b258e426b9c5330be63b9f605cd63f7c3e1c102d554baecf4
+  normalized_sha256: sha256:1ab47df1785eb81b258e426b9c5330be63b9f605cd63f7c3e1c102d554baecf4
+cas_ref: sha256:1ab47df1785eb81b258e426b9c5330be63b9f605cd63f7c3e1c102d554baecf4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Interpretive plain-language explanation of Proposition 13.1 and its Bloch failure figure, rather than an independent theorem. The actual mathematical and numerical claims belong to atom 73d5e563d99509ca03d531c39426fba2bee7921aeddd0e1465940826387f60b2 and caption 3994877052886ac765c33de18446b01b46dc2fc3b511096da7b5e4dc9afbad08; their separate coverage uses the frozen real_part_readout_obstruction with Fin 2 and the source Pauli normalization. This receipt does not cover those propositions or assert positivity of the displayed failure report.
+    previous_atom_id: 3994877052886ac765c33de18446b01b46dc2fc3b511096da7b5e4dc9afbad08
+    next_atom_id: 22dc1f5f50fcdd117911cbd820870ef06a7102976eba68194ea61a8852794acb

@@ -112,7 +112,7 @@ private lemma potential_abs_dist {V : Type} (G : SimpleGraph V) (f : V → ℤ)
   simp only [Walk.length_reverse, hp] at h1 h2
   exact abs_le.mpr ⟨by omega,by omega⟩
 
-private lemma potential_dist {V : Type} (G : SimpleGraph V) (f : V → ℕ)
+lemma potential_dist {V : Type} (G : SimpleGraph V) (f : V → ℕ)
     (hf : ∀ u v, G.Adj u v → f u ≤ f v + 1)
     {u v : V} (hr : G.Reachable u v) : f u ≤ f v + G.dist u v := by
   have h := potential_abs_dist G (fun v => (f v : ℤ)) (by

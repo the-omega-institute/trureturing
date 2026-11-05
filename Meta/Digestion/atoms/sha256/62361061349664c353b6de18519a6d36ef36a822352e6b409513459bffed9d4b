@@ -1,0 +1,27 @@
+### 定义 16.1（相容分辨率场）
+
+在光滑参数域 $\mathcal B$ 上，给定光滑族
+
+$$
+ z\longmapsto(\rho_z,\mathcal A_z),\qquad \rho_z>0,
+$$
+
+每一对满足 $C_{88}$，且可见子空间具有固定维数、局部固定代数块型。另外给定实际内部比较的延续规则，以比较不同 $z$ 上的关系。每点相容与跨点怎样延续是两个接口；前者由 $C_{88}$ 分类，后者沿用 v87 的内部参照连接。
+
+令 $\mathcal K=M_d$ 带普通 Hilbert–Schmidt 内积，定义
+
+$$
+J_z(x)=x\sqrt{\rho_z},\qquad
+\mathcal V_z=J_z(\mathcal A_z),\qquad
+\Pi_z=J_zE_zJ_z^{-1}.
+$$
+
+因为
+
+$$
+\operatorname{tr}[(x\sqrt{\rho_z})^\dagger y\sqrt{\rho_z}]
+=\operatorname{tr}(\rho_zx^\dagger y),
+$$
+
+$J_z$ 把该点 GNS 比较等距地放入共同 $\mathcal K$，$\Pi_z$ 正是到 $\mathcal V_z$ 的正交投影。固定秩与光滑性保证 $\mathcal V_z$ 构成可见关系向量丛；若秩或块型跳变，须分段讨论。
+

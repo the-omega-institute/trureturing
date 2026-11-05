@@ -1,0 +1,10 @@
+### 定义 13.1（共同锚下的相容分辨率塔）
+
+固定一个忠实 $\rho$，取共享单位元的嵌套代数
+
+$$
+\mathcal A_m\subseteq\mathcal A_{m+1}\subseteq\cdots\subseteq\mathcal A_n,
+$$
+
+每一对 $(\rho,\mathcal A_j)$ 均满足 $C_{88}$。记对应映射为 $E_j$。层指标指可保留的比较集合，不自动是物理时间、能量或微分次数。
+

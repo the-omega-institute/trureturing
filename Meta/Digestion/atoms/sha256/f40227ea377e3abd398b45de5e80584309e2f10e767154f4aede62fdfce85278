@@ -1,0 +1,28 @@
+**Definition 38.1 (source-indexed normalization).** Fix an enumeration
+of $Q$ and write
+
+$$
+\begin{aligned}
+\rho_t(q)&=\min\{r\in Q:r\equiv_t q\},\\
+\overline K_C(w)&=(t,\nu_C(w),\rho_t(q_C(w))),\\
+\overline{\mathcal R}_C(w)
+ &=\bigl(t,(\mu_P,\mu_S),(V^C_v)_{v\in I(t)},\rho_t(q_C(w))\bigr).
+\end{aligned}
+\tag{AA.118}
+$$
+
+The minimum uses the supplied enumeration. It exists since $q$ itself
+belongs to its class, and is computable by (AA.115). The normalized
+label is a name for a source-relative class; it need not be a control
+attained from $q_0$ at that same endpoint. Its role is to replace one
+continuation input, not to fabricate a different actual past.
+
+The marked source data in (AA.118) keep exactly their independent meanings
+from §33: source support or terminal antichain with the unary beta marker,
+actual local membership, and actual selected order projected at branches.
+The time expression keeps the causal order and literal selected chain.
+In each of the four views replace only the raw selection-state annotation
+by $\rho_t(q)$. No full-source or selected-identity field is replaced by
+a threshold, and no raw control state is promised recoverable from its
+class name.
+

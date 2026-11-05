@@ -166,7 +166,7 @@ theorem zeta_hyperlink (S : Finset α → ℝ) (A : Finset α) :
     exact ⟨fun h => ⟨⟨h.1, h.2⟩, h.2.trans h.1⟩, fun h => ⟨h.1.1, h.1.2⟩⟩
 
 omit [DecidableEq α] in
-private theorem hyperlink_zeta (v : Finset α → ℝ) (I : Finset α) :
+theorem hyperlink_zeta (v : Finset α → ℝ) (I : Finset α) :
     hyperlink (fun A => ∑ K ∈ A.powerset, v K) I = v I := by
   classical
   simp only [hyperlink, Finset.mul_sum]

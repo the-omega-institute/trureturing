@@ -65,11 +65,60 @@ internal sealed class FiniteFlatSectorOptimumDocument : IScribeDocumentDefinitio
                     + "to exact target outputs on all basis sectors. Consequently the "
                     + "same value is the infimum of the latter set.")),
                 Paragraph(Text(
+                    "For target ranks (3,3,3) and source ranks (3,12,48), the residual "
+                    + "ranks are (1,4,16). Both exponential-kernel edges are 1/2. "
+                    + "The normalizer is 5/3, the equilibrium probabilities are "
+                    + "(2/5,1/5,2/5), the minimum kernel energy is 3/5, and the "
+                    + "optimal unhalved diamond error is 4/5.")),
+                Paragraph(Text(
                     "If there is only one distinct residual rank, the gap sum is empty "
                     + "and the error is zero. In particular, this includes a single "
                     + "logical sector and any number of sectors with a common residual "
                     + "rank. The construction uses local quantum channels and a discarded "
                     + "environment, with no communication, postselection or additional "
-                    + "shared entanglement."))),
+                    + "shared entanglement.")),
+                Paragraph(Text(
+                    "For a conditional momentum application, let b>0, Q=b+1/b and "
+                    + "c=1+6Q^2. Define S(P)=4 sinh(2 pi b P) sinh(2 pi P/b), as in "
+                    + "equation (1.3) of Lin's Virasoro modular-data preprint. Retain "
+                    + "the actual positive integer ranks r(s)=d(s)m(s) and the common "
+                    + "finite flat realization above. For arbitrary positive momenta, "
+                    + "assume a common real constant C0 and eta>=0 satisfy "
+                    + "abs(log(m(s))-log(S(P(s)))-C0)<=eta in every sector. "
+                    + "Neither this match nor a CFT realization follows from the density formula.")),
+                Paragraph(Text(
+                    "For 0<x<=y, sinh(y)=sinh(x)cosh(y-x)+cosh(x)sinh(y-x), "
+                    + "cosh(x)>=sinh(x), and sinh(y-x)>=0 imply "
+                    + "sinh(y)>=exp(y-x)sinh(x). Positivity permits logarithms. "
+                    + "Applying the estimate to both factors gives "
+                    + "log S(Pmax)-log S(Pmin)>=2 pi Q(Pmax-Pmin). "
+                    + "The two matching errors contribute at most 2 eta, so the "
+                    + "logarithmic residual-rank span R is at least "
+                    + "max(0,2 pi Q DeltaP-2 eta), where DeltaP=Pmax-Pmin.")),
+                Paragraph(Text(
+                    "The ordered exponential-kernel result bounds the actual optimum "
+                    + "delta above from below by 1-exp(-R/2). Consequently "
+                    + "delta>=1-exp(-max(0,pi Q DeltaP-eta)). This is the optimum over "
+                    + "all independent local product channels on the original compact "
+                    + "source and target spaces. Competitors may output wrong sectors, "
+                    + "mixed states or other flags on basis inputs. Requiring exact "
+                    + "basis outputs gives the same optimum; it is unnecessary for "
+                    + "this lower bound. A singleton family, duplicate momenta, "
+                    + "duplicate ranks and eta=0 are all included.")),
+                Paragraph(Text(
+                    "For any real epsilon with delta<=epsilon<1, positivity of "
+                    + "1-epsilon and monotonicity of logarithm give "
+                    + "DeltaP<=(eta-log(1-epsilon))/(pi Q). Here pi Q>0 is derived "
+                    + "from b>0. The exact central-charge relation is "
+                    + "sqrt(c-1)=sqrt(6)Q. Thus the same upper bound is "
+                    + "sqrt(6)(eta-log(1-epsilon))/(pi sqrt(c-1)), which explains "
+                    + "the inverse-square-root large-c scale at fixed budgets.")),
+                Paragraph(Text(
+                    "Continuous Virasoro density is not an integer Hilbert-space "
+                    + "dimension. The conclusion is conditional on the common finite "
+                    + "realization, flat positive integer rank ratios, logarithmic "
+                    + "matching and independent local operations. It establishes no "
+                    + "conformal-block dominance, quasi-probability positivity, "
+                    + "continuous gravity dictionary or original gravitational RT theorem."))),
             DescribeRole.Theorem))));
 }

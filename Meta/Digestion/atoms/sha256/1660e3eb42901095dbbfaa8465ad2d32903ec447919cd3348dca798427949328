@@ -1,0 +1,26 @@
+### 递归分解也可以完全写出
+
+将 $J$ 的零点按阶数列为 $p_1,p_2,\ldots$，定义
+
+$$
+b_p(w)=\frac{w-p}{1-\bar p w},
+\qquad
+J_N=\prod_{j=1}^{N}b_{p_j},
+$$
+
+以及
+
+$$
+e_j(w)=
+J_{j-1}(w)
+\frac{\sqrt{1-|p_j|^2}}{1-\bar p_jw}.
+
+$$
+
+<a id="eq-3-7"></a>
+
+(3.7)
+
+<!-- editorial-note: n14 begin -->
+<a id="n14"></a>
+

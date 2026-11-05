@@ -1,0 +1,20 @@
+**定义 8.3（完整有限探针族）。** 对每个局部场 $J$ 取完整正交单位基 $e_1,\ldots,e_n$，并令
+
+$$
+\mathcal P_J=\{e_i:1\le i\le n\}
+\cup\{(e_i+e_j)/\sqrt2:1\le i<j\le n\}.
+$$
+
+在另一场取一个固定的有序参照对 $(b,d)$，使 $v=D_bd\ne0$。取以下带标签的三元探针族：
+
+$$
+\begin{aligned}
+\Pi_J^{\rm self}
+&=\{(p\otimes d,p\otimes b,p\otimes1):p\in\mathcal P_J\},\\
+\Pi_J^{\rm mix}
+&=\{(e_i\otimes b,e_k\otimes d,e_j\otimes1):i<j,\ 1\le k\le n\}.
+\end{aligned}\tag{8.2}
+$$
+
+自身探针交换了参照的两个槽，因此只需 $D_bd\ne0$，无需预先要求 $D_db\ne0$。对第二场按交换因子的顺序定义同样的族。两边残差所在空间的有限正交直和记为 $\mathcal H_\Pi$，其内积由各局部乘积内积给出。探针保留标签，数量按出现次数计算。
+

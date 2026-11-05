@@ -1,0 +1,37 @@
+**定理 89.1（未按成功率归一的误差没有统一更新模量）。** 仅有 S、H 时，即使全部投影分支和 $T_1$ 标准，也存在完整满足族 $M_s$，$s>0$，使
+
+$$
+\sup_{E\ne0,F}
+\frac{\|T_{E^\vee,F}T_{E,F}|_{\mathcal C_E}-q_E\operatorname{id}_{\mathcal C_E}\|_\diamond}{\|E\|}
+\le\frac{4s}{\mathrm e},\qquad D(M_s)=2.
+\tag{89.1}
+$$
+
+三维简单对象已经能在前项一致趋零时保留趋一的输出误差；达到上确界二的结论允许维数增长。
+
+证明。在每个非零效果的支撑内置 $\kappa(E)=\|E\|/q_E$，令
+
+$$
+\mathcal D_E(X)=\bigoplus_\alpha\sum_{\lambda>0}
+\frac{\operatorname{Tr}(P_{\alpha,\lambda}X_\alpha)}{\operatorname{rank}P_{\alpha,\lambda}}P_{\alpha,\lambda},
+\qquad
+T_E^{(s)}=\mathcal L_E\bigl[\kappa(E)^{-s}\operatorname{id}
+ +(1-\kappa(E)^{-s})\mathcal D_E\bigr].
+\tag{89.2}
+$$
+
+支撑外压缩，零效果取零。$\mathcal D_E$ 是支撑角上的保迹、自伴完全正投影，与 $\mathcal L_E$ 对易；逐个原中心块、逐个不同正谱空间平均，不另供实际操作。平方根、正平方和倒数补偿保留这些谱空间；$\kappa(\sqrt E)=\sqrt{\kappa(E)}$、$\kappa(E^\vee)=\kappa(E)$。所以各实际分支有正确成功效果，S、H 精确成立，且
+
+$$
+q_E^{-1}T_{E^\vee}^{(s)}T_E^{(s)}
+=\kappa^{-2s}\operatorname{id}+(1-\kappa^{-2s})\mathcal D_E.
+\tag{89.3}
+$$
+
+两个通道的 diamond 距离至多二，故 (89.1) 左端单项至多
+$2\kappa^{-1}(1-\kappa^{-2s})\le4s\log(\kappa)/\kappa\le4s/\mathrm e$。
+
+在 $M_3$ 中取 $E=\operatorname{diag}(1,1,q)$，$0<q<1$。任一前二维空间中的纯输入，被 $\mathcal D_E$ 变成 $I_2/2$；实际更新与标准更新的迹范数差为 $1-q^s$。例如沿 $s\downarrow0$ 取 $q=\exp(-1/s^2)$，这个差趋一，同时未归一返回误差仍服从 (89.1)。这是同一三维对象中两个明亮方向的关系，被第三个暗方向决定的全局返回成功率遮蔽，未改变成功效果或成功计数。
+
+在 $M_m\oplus\mathbb C$ 中取 $E=(I_m,q)$，纯输入位于首块，差为 $2(1-q^s)(1-1/m)$。固定 $s>0$ 后依次令 $q\downarrow0$、$m\to\infty$，得到 $D\ge2$；普遍上界二给等号。$\kappa=1$ 时 (89.2) 为标准分支，所以全部标量投影和单位效果均标准。仍取全有限 CP 菜单与互补标签补全，得到完整模型。这个构造不反驳按 $q_E$ 归一的 (86.1)，也不满足 U。∎
+

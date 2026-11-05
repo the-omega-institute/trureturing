@@ -1,0 +1,71 @@
+#### 定理 5.1（共同内容刚性）
+
+满足式[(3.1)](#eq-mass)、[(3.2)](#eq-J)及[(3.3)](#eq-shared)的实际映射 $F$，
+唯一地等于一个复线性等距 $V$：
+
+<a id="eq-isometry"></a>
+
+$$
+\boxed{F(x)=Vx\quad(x\in H),\qquad V^*V=I.}\tag{5.1}
+$$
+
+不另假定连续性、可加性、齐次性或输出满射。
+
+**证明。**
+
+**第一步：反向加入夹成等号。**
+先对 $(x,y,c)$ 应用共享条件，再对 $(x+c,y+c,-c)$ 应用，
+得到
+
+<a id="eq-translation"></a>
+
+$$
+D_F(x+c,y+c)=D_F(x,y).\tag{5.2}
+$$
+
+**第二步：消去共同内容。**
+取 $c=-y$，用 $F(0)=0$ 和完整强度：
+
+<a id="eq-distance"></a>
+
+$$
+D_F(x,y)=D_F(x-y,0)=\left\lVert x-y\right\rVert ^2.\tag{5.3}
+$$
+
+**第三步：实极化。**
+记 $g(u,v)=\operatorname{Re} \langle u,v\rangle$。由范数及距离保持，
+
+$$
+2g(Fx,Fy)
+=\left\lVert Fx\right\rVert ^2+\left\lVert Fy\right\rVert ^2-\left\lVert Fx-Fy\right\rVert ^2
+=2g(x,y).
+$$
+
+**第四步：真实坐标没有剩余量。**
+$\{a_j,ia_j:1\le j\le d\}$ 为实正交单位基。
+上式使它们的输出成为实正交单位框。
+若 $x=\sum_j(s_ja_j+t_jia_j)$，$s_j,t_j\in\mathbb R$，
+则 $F(x)$ 在该输出框上的正交投影是
+
+$$
+V_{\mathbb R }x=\sum_j\bigl(s_jF(a_j)+t_jF(ia_j)\bigr).
+$$
+
+该投影的范数平方为 $\sum_j(s_j^2+t_j^2)=\left\lVert x\right\rVert ^2=\left\lVert F(x)\right\rVert ^2$，
+所以没有正交余量，$F(x)=V_{\mathbb R }x$。
+实际映射已经实线性。
+
+**第五步：有限共同方向给复线性。**
+式[(3.2)](#eq-J)使
+
+$$
+F(x)=\sum_j(s_j+it_j)F(a_j).
+$$
+
+因此 $F$ 复线性，再由范数保持得 $`V^*V=I`$。
+输入基张成性给唯一性。
+
+□
+
+<a id="statement-5-2"></a>
+
