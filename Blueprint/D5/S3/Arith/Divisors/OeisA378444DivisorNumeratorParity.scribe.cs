@@ -39,7 +39,10 @@ internal sealed class OeisA378444DivisorNumeratorParityDocument : IScribeDocumen
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "Write a divisor as 2^a times a product of odd prime powers. An odd common denominator shows that its reduced numerator is even exactly when a is even and a/2 plus the sum of the odd-prime exponents is even. Halving the even exponent at 2 identifies these divisors with exponent vectors in a finite rectangular box. The alternating sign sum of that box is a product of zeros and ones, so the number of even exponent sums is the ceiling of half its size. This includes 1, odd integers, powers of two and arbitrary mixed prime powers. The proof uses the inverse Moebius transform definition of A174273."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("karttunen-a378444"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
