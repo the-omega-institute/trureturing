@@ -43,15 +43,17 @@ def arena : DependentFamily.Arena where
 theorem source_bridge : sourceScope ↔ arena.Law actual := by
   constructor
   · intro h U V hU hV hUn hVn
+    change (U ∩ V).Nonempty
     simpa only [Set.univ_inter] using
       h.2 U V hU hV (by simpa only [Set.univ_inter] using hUn)
         (by simpa only [Set.univ_inter] using hVn)
   · intro h
     refine ⟨Set.univ_nonempty, ?_⟩
     intro U V hU hV hUn hVn
-    simpa only [Set.univ_inter] using
-      h U V hU hV (by simpa only [Set.univ_inter] using hUn)
-        (by simpa only [Set.univ_inter] using hVn)
+    have hv := h U V hU hV (by simpa only [Set.univ_inter] using hUn)
+      (by simpa only [Set.univ_inter] using hVn)
+    change (U ∩ V).Nonempty at hv
+    simpa only [Set.univ_inter] using hv
 
 theorem actual_positive : arena.Law actual :=
   source_bridge.mp commonTopology_univ_irreducible
@@ -73,7 +75,7 @@ def familyRegistration : DependentFamily.Registration arena sourceScope where
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro j hji
-      exact False.elim (hji (Subsingleton.elim j i))
+      exact False.elim (hji (@Subsingleton.elim Unit _ j i))
     · intro e
       exact Empty.elim e
   dependence := by

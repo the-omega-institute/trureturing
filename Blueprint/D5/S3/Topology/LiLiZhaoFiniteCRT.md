@@ -4,11 +4,11 @@
 
 Finite prime-residue cylinders supply the compatibility bridge for the Li--Li--Zhao prime-tail topology construction.
 
-The underlying space is the set N of natural numbers including zero. The function primeSeq(i), abbreviated p(i), is the increasing enumeration Nat.nth Nat.Prime i, starting with p(0)=2. For natural i and a, residue(i,a) is the set of x with x congruent to a modulo p(i). For a finite set s of natural indices and an arbitrary assignment a:N to N, finiteCylinder(s,a) is the intersection of residue(i,a(i)) over i in s; the empty intersection is the whole space. No bound on the residues is needed for CRT.
+The underlying space is the set N of natural numbers including zero. The function primeSeq(i), abbreviated p(i), is the increasing enumeration Nat.nth Nat.Prime i, starting with p(0)=2. For natural i and a, residue(i,a) is the set of x with x congruent to a modulo p(i). For a finite set s of natural indices and an arbitrary assignment a:N to N, finiteCylinder(s,a) is the intersection of residue(i,a(i)) over i in s; the empty intersection is the whole space. No bound on the residues is needed for CRT. Nonempty(S) means that some natural number belongs to S; inter denotes set intersection and mod denotes the natural remainder. TOneSpace and TTwoSpace mean T1 and Hausdorff, with the displayed topology.
 
 **Theorem 1.1 (Finite Chinese-remainder compatibility).**
 
-$$\forall s:\operatorname{Finset}(\mathbb{N}), \forall a:\mathbb{N}\to \mathbb{N}, \exists x:\mathbb{N}, \forall i:\mathbb{N}, ((i\in s)\implies (\operatorname{mod}(x,\operatorname{primeSeq}(i))= \operatorname{mod}(\operatorname{a}(i),\operatorname{primeSeq}(i))))$$
+$$(\forall s:\operatorname{Finset}(\mathbb{N}), (\forall a:\mathbb{N}\to \mathbb{N}, (\exists x:\mathbb{N}, (\forall i:\mathbb{N}, ((i\in s)\implies (\operatorname{mod}(x,\operatorname{primeSeq}(i))= \operatorname{mod}(\operatorname{a}(i),\operatorname{primeSeq}(i))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Topology/LiLiZhaoFiniteCRT.finite_crt` (`✓ std3`). ∎
 
@@ -20,7 +20,7 @@ Every finite assignment of residue classes at distinct prime indices has a natur
 
 **Theorem 1.2 (Every finite cylinder is nonempty).**
 
-$$\forall s:\operatorname{Finset}(\mathbb{N}), \forall a:\mathbb{N}\to \mathbb{N}, \operatorname{Nonempty}(\operatorname{finiteCylinder}(s,a))$$
+$$(\forall s:\operatorname{Finset}(\mathbb{N}), (\forall a:\mathbb{N}\to \mathbb{N}, \operatorname{Nonempty}(\operatorname{finiteCylinder}(s,a))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Topology/LiLiZhaoFiniteCRT.finiteCylinder_nonempty` (`✓ std3`). ∎
 
@@ -32,7 +32,7 @@ The finite CRT solution lies in the intersection of all selected prime residue c
 
 **Theorem 1.3 (Disjoint supports still have a common point).**
 
-$$\forall s:\operatorname{Finset}(\mathbb{N}), \forall t:\operatorname{Finset}(\mathbb{N}), (\operatorname{Disjoint}(s,t)\implies \forall a:\mathbb{N}\to \mathbb{N}, \forall b:\mathbb{N}\to \mathbb{N}, \operatorname{Nonempty}(\operatorname{inter}(\operatorname{finiteCylinder}(s,a),\operatorname{finiteCylinder}(t,b))))$$
+$$(\forall s:\operatorname{Finset}(\mathbb{N}), (\forall t:\operatorname{Finset}(\mathbb{N}), (\operatorname{Disjoint}(s,t)\implies (\forall a:\mathbb{N}\to \mathbb{N}, (\forall b:\mathbb{N}\to \mathbb{N}, \operatorname{Nonempty}(\operatorname{inter}(\operatorname{finiteCylinder}(s,a),\operatorname{finiteCylinder}(t,b))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Topology/LiLiZhaoFiniteCRT.disjoint_cylinders_nonempty` (`✓ std3`). ∎
 
@@ -44,7 +44,7 @@ Given disjoint finite supports and arbitrary assignments a and b, merge the assi
 
 **Definition 1.4 (Prime-tail subbases).**
 
-$$\forall n:\mathbb{N}, \forall U:\operatorname{Set}(\mathbb{N}), ((U\in \operatorname{tailSubbasis}(n))\iff \exists i:\mathbb{N}, ((n\le i)\land \exists a:\mathbb{N}, ((a< \operatorname{primeSeq}(i))\land (U= \operatorname{residue}(i,a)))))$$
+$$(\forall n:\mathbb{N}, (\forall U:\operatorname{Set}(\mathbb{N}), ((U\in \operatorname{tailSubbasis}(n))\iff (\exists i:\mathbb{N}, ((n\le i)\land (\exists a:\mathbb{N}, ((a< \operatorname{primeSeq}(i))\land (U= \operatorname{residue}(i,a)))))))))$$
 
 *Formalization.* `D5/S3/Topology/LiLiZhaoFiniteCRT.tailSubbasis` (`✓ std3`).
 
@@ -56,7 +56,7 @@ At level n the subbasis contains every residue class modulo p(i) with i at least
 
 **Theorem 1.5 (Every prime-tail topology is Hausdorff).**
 
-$$\forall n:\mathbb{N}, \operatorname{TTwoSpace}(\mathbb{N},\operatorname{tailTopology}(n))$$
+$$(\forall n:\mathbb{N}, \operatorname{TTwoSpace}(\mathbb{N},\operatorname{tailTopology}(n)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Topology/LiLiZhaoFiniteCRT.tailTopology_t2` (`✓ std3`). ∎
 
@@ -68,7 +68,7 @@ For distinct x and y, choose i=max(n,x+y+1). The bound i+2 at most p(i) makes x 
 
 **Theorem 1.6 (Finite cylinders form local basic neighborhoods).**
 
-$$\forall n:\mathbb{N}, \forall U:\operatorname{Set}(\mathbb{N}), (\operatorname{IsOpen}(\operatorname{tailTopology}(n),U)\implies \forall x:\mathbb{N}, ((x\in U)\implies \exists s:\operatorname{Finset}(\mathbb{N}), \exists a:\mathbb{N}\to \mathbb{N}, (\forall i:\mathbb{N}, ((i\in s)\implies (n\le i))\land (\forall i:\mathbb{N}, ((i\in s)\implies (\operatorname{a}(i)< \operatorname{primeSeq}(i)))\land ((x\in \operatorname{finiteCylinder}(s,a))\land (\operatorname{finiteCylinder}(s,a)\subseteq U))))))$$
+$$(\forall n:\mathbb{N}, (\forall U:\operatorname{Set}(\mathbb{N}), (\operatorname{IsOpen}(\operatorname{tailTopology}(n),U)\implies (\forall x:\mathbb{N}, ((x\in U)\implies (\exists s:\operatorname{Finset}(\mathbb{N}), (\exists a:\mathbb{N}\to \mathbb{N}, ((\forall i:\mathbb{N}, ((i\in s)\implies (n\le i)))\land ((\forall i:\mathbb{N}, ((i\in s)\implies (\operatorname{a}(i)< \operatorname{primeSeq}(i))))\land ((x\in \operatorname{finiteCylinder}(s,a))\land (\operatorname{finiteCylinder}(s,a)\subseteq U)))))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Topology/LiLiZhaoFiniteCRT.finiteCylinder_basis_of_isOpen` (`✓ std3`). ∎
 
