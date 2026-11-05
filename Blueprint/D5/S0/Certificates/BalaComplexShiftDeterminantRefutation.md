@@ -34,6 +34,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/BalaComplexShiftDeterminantRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a086205-bala-complex-shift-determinant-refutation` (refuted) by `D5/S0/Certificates/BalaComplexShiftDeterminantRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a086205-bala-complex-shift-determinant-refutation","declaration_gid":"D5/S0/Certificates/BalaComplexShiftDeterminantRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Bala; OEIS Foundation (2023). *OEIS A086205: arbitrary complex shift of a binomial determinant*. URL: <https://oeis.org/A086205>.
