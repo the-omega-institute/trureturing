@@ -11,6 +11,8 @@ import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
 import Mathlib.Algebra.Lie.Sl2
 import Mathlib.Analysis.InnerProductSpace.Adjoint
 import Mathlib.Analysis.Matrix.Hermitian
+import Mathlib.Data.Fintype.Powerset
+import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.Data.Finset.Powerset
 
 /-! Primitive-string construction for the complete complex Boolean carrier. -/
@@ -574,6 +576,251 @@ theorem result (S : ℕ) (hS : 1 ≤ S) :
     exact ⟨primitive_orthogonal hv hw, fun hzero q r =>
       inner_power_orthogonal hN hv hw hzero q r⟩
 
+
+
+private def occupiedSet {N : ℕ} (x : Configuration N) : Finset (Fin N) :=
+  Finset.univ.filter fun i => x i = 0
+
+private lemma occupiedSet_card {N : ℕ} (x : Configuration N) :
+    (occupiedSet x).card = occupancy x := by
+  simp [occupiedSet, occupancy, Finset.card_filter]
+
+private def configurationEquiv (N : ℕ) : Configuration N ≃ Finset (Fin N) where
+  toFun := occupiedSet
+  invFun s i := if i ∈ s then 0 else 1
+  left_inv x := by
+    funext i
+    simp only [occupiedSet, Finset.mem_filter, Finset.mem_univ, true_and]
+    generalize x i = b
+    fin_cases b <;> simp
+  right_inv s := by
+    ext i
+    simp [occupiedSet]
+
+private def rankConfigurationEquiv (N t : ℕ) :
+    {x : Configuration N // occupancy x = t} ≃ {s : Finset (Fin N) // s.card = t} where
+  toFun x := ⟨configurationEquiv N x, by simpa [configurationEquiv, occupiedSet_card] using x.property⟩
+  invFun s := ⟨(configurationEquiv N).symm s, by
+    rw [← occupiedSet_card]
+    change ((configurationEquiv N) ((configurationEquiv N).symm s)).card = t
+    simpa using s.property⟩
+  left_inv x := by apply Subtype.ext; exact (configurationEquiv N).left_inv x
+  right_inv s := by apply Subtype.ext; exact (configurationEquiv N).right_inv s
+
+private def rankEquiv (N t : ℕ) :
+    rankSpace N t ≃ₗ[ℂ] ({x : Configuration N // occupancy x = t} → ℂ) where
+  toFun v x := v.val x.val
+  invFun w := ⟨WithLp.toLp 2 (fun x => if h : occupancy x = t then w ⟨x,h⟩ else 0), by
+    intro x hx
+    simp [hx]⟩
+  left_inv v := by
+    apply Subtype.ext
+    ext x
+    by_cases hx : occupancy x = t
+    · simp [hx]
+    · simp [hx, v.property x hx]
+  right_inv w := by funext x; simp [x.property]
+  map_add' v w := by rfl
+  map_smul' c v := by rfl
+
+private lemma rank_finrank (N t : ℕ) :
+    Module.finrank ℂ (rankSpace N t) = N.choose t := by
+  rw [(rankEquiv N t).finrank_eq, Module.finrank_fintype_fun_eq_card,
+    Fintype.card_congr (rankConfigurationEquiv N t), Fintype.card_finset_len,
+    Fintype.card_fin]
+
+private lemma U_injective_rank {N t : ℕ} (ht : 2 * t < N) {v : Space N}
+    (hv : v ∈ rankSpace N t) (hz : U N v = 0) : v = 0 := by
+  have hc := congrArg (fun A : Module.End ℂ (Space N) => A v) (commutator N)
+  simp only [LinearMap.sub_apply, Module.End.mul_apply, hz, map_zero, zero_sub,
+    LinearMap.smul_apply, Module.End.one_apply, (mem_rank_iff N t v).mp hv] at hc
+  have he := congrArg (fun w : Space N => inner ℂ w v) hc
+  simp only [inner_neg_left, inner_U, inner_sub_left, inner_smul_left,
+    inner_self_eq_norm_sq_to_K] at he
+  have hr : -(‖L N v‖ ^ 2) = ((N : ℝ) - 2 * t) * ‖v‖ ^ 2 := by
+    apply Complex.ofReal_injective
+    push_cast
+    simpa using he
+  have hp : 0 < (N : ℝ) - 2 * t := by exact_mod_cast (Nat.sub_pos_of_lt ht)
+  have hn : ‖v‖ = 0 := by nlinarith [sq_nonneg ‖L N v‖, norm_nonneg v]
+  exact norm_eq_zero.mp hn
+
+private lemma rank_split (N t : ℕ) :
+    (rankSpace N t).map (U N) ⊔ primitive N (t + 1) = rankSpace N (t + 1) := by
+  apply le_antisymm
+  · apply sup_le
+    · rintro _ ⟨v,hv,rfl⟩; exact U_rank hv
+    · exact inf_le_left
+  · intro v hv
+    let K := (rankSpace N t).map (U N)
+    obtain ⟨a,ha,b,hb,hab⟩ := K.exists_add_mem_mem_orthogonal v
+    obtain ⟨w,hw,rfl⟩ := ha
+    have hbRank : b ∈ rankSpace N (t+1) := by
+      simpa [hab] using (rankSpace N (t+1)).sub_mem hv (U_rank hw)
+    have hz := (Submodule.mem_orthogonal K b).mp hb (U N (L N b))
+      ⟨L N b, L_rank_succ hbRank, rfl⟩
+    rw [inner_U] at hz
+    rw [hab]
+    exact Submodule.add_mem_sup ⟨w,hw,rfl⟩ ⟨hbRank, inner_self_eq_zero.mp hz⟩
+
+private lemma rank_split_disjoint (N t : ℕ) :
+    Disjoint ((rankSpace N t).map (U N)) (primitive N (t+1)) := by
+  rw [Submodule.disjoint_def]
+  rintro v ⟨w,hw,rfl⟩ hv
+  have he := inner_U N w (U N w)
+  rw [show L N (U N w) = 0 from hv.2, inner_zero_right] at he
+  exact inner_self_eq_zero.mp he
+
+/-- The previous binomial coefficient is zero, rather than choose(N,0), at rank zero. -/
+def previousChoose (N : ℕ) : ℕ → ℕ
+  | 0 => 0
+  | t+1 => N.choose t
+
+private lemma primitive_zero_eq (N : ℕ) : primitive N 0 = rankSpace N 0 := by
+  apply le_antisymm inf_le_left
+  intro v hv
+  exact ⟨hv, L_rank_zero hv⟩
+
+/-- The multiplicity is derived from the actual rank split and injectivity. -/
+theorem primitive_multiplicity (S t : ℕ) (ht : t ≤ S) :
+    Module.finrank ℂ (primitive (2 * S) t) =
+      (2 * S).choose t - previousChoose (2 * S) t := by
+  cases t with
+  | zero => simp [primitive_zero_eq, rank_finrank, previousChoose]
+  | succ t =>
+    let f : rankSpace (2*S) t →ₗ[ℂ] Space (2*S) := (U (2*S)).comp (rankSpace (2*S) t).subtype
+    have hinj : Function.Injective f := by
+      rw [injective_iff_map_eq_zero]
+      intro v hv
+      apply Subtype.ext
+      exact U_injective_rank (by omega) v.property hv
+    have hrange : LinearMap.range f = (rankSpace (2*S) t).map (U (2*S)) := by
+      ext v
+      simp [f, LinearMap.mem_range, Submodule.mem_map]
+    have hdim := Submodule.finrank_sup_add_finrank_inf_eq
+      ((rankSpace (2*S) t).map (U (2*S))) (primitive (2*S) (t+1))
+    rw [rank_split, (rank_split_disjoint (2*S) t).eq_bot, Module.finrank_bot, add_zero,
+      ← hrange, LinearMap.finrank_range_of_inj hinj, rank_finrank, rank_finrank] at hdim
+    simp only [previousChoose]
+    omega
+
+/-- A basis of each actual primitive subspace; no multiplicity is assumed. -/
+def primitiveBasis (N t : ℕ) := stdOrthonormalBasis ℂ (primitive N t)
+
+/-- One label for every primitive copy and every position in its full string. -/
+abbrev StringIndex (S : ℕ) :=
+  (t : Fin (S + 1)) × (Fin (Module.finrank ℂ (primitive (2 * S) t)) ×
+    Fin (2 * S - 2 * t + 1))
+
+private def rawString (S : ℕ) (a : StringIndex S) : Space (2 * S) :=
+  (U (2 * S) ^ a.2.2.val) (primitiveBasis (2 * S) a.1 a.2.1)
+
+/-- Normalize each raising string in the actual complex Hilbert space. -/
+def normalizedString (S : ℕ) (a : StringIndex S) : Space (2 * S) :=
+  (‖rawString S a‖⁻¹ : ℂ) • rawString S a
+
+private lemma rawString_ne_zero (S : ℕ) (hS : 1 ≤ S) (a : StringIndex S) :
+    rawString S a ≠ 0 := by
+  have hv := (primitiveBasis (2 * S) a.1).orthonormal.norm_eq_one a.2.1
+  have hinner := primitive_inner_power (by omega : 0 < 2 * S)
+    (by have := a.1.isLt; omega : 2 * a.1.val ≤ 2 * S)
+    (primitiveBasis (2 * S) a.1 a.2.1).property a.2.2.val (by have := a.2.2.isLt; omega)
+  have hp : 0 < a.2.2.val.factorial * (2 * S - 2 * a.1.val).descFactorial a.2.2.val :=
+    Nat.mul_pos (Nat.factorial_pos _) (Nat.descFactorial_pos.mpr (by have := a.2.2.isLt; omega))
+  intro hz
+  change inner ℂ (rawString S a) (rawString S a) = _ at hinner
+  rw [hz, inner_zero_left] at hinner
+  have hnorm : inner ℂ ((primitiveBasis (2 * S) a.1 a.2.1 : primitive (2 * S) a.1) : Space (2 * S))
+      (primitiveBasis (2 * S) a.1 a.2.1 : Space (2 * S)) = 1 := by
+    rw [inner_self_eq_norm_sq_to_K]
+    change (↑(‖primitiveBasis (2 * S) a.1 a.2.1‖ ^ 2) : ℂ) = 1
+    rw [hv]; norm_num
+  rw [hnorm, mul_one] at hinner
+  exact (Nat.cast_ne_zero.mpr (Nat.ne_of_gt hp) :
+    ((a.2.2.val.factorial * (2 * S - 2 * a.1.val).descFactorial a.2.2.val : ℕ) : ℂ) ≠ 0)
+    hinner.symm
+
+private lemma rawString_orthogonal (S : ℕ) (hS : 1 ≤ S) (a b : StringIndex S)
+    (hab : a ≠ b) : inner ℂ (rawString S a) (rawString S b) = 0 := by
+  have hN : 0 < 2 * S := by omega
+  by_cases ht : a.1 = b.1
+  · rcases a with ⟨t, i, q⟩
+    rcases b with ⟨t', i', q'⟩
+    dsimp at ht
+    subst t'
+    by_cases hi : i = i'
+    · subst i'
+      exact inner_power_unequal hN (primitiveBasis (2 * S) t i).property
+        (primitiveBasis (2 * S) t i).property q.val q'.val (by
+          intro he; have : q = q' := Fin.ext he; subst q'; exact hab rfl)
+    · apply inner_power_orthogonal hN (primitiveBasis (2 * S) t i).property
+        (primitiveBasis (2 * S) t i').property
+      exact (primitiveBasis (2 * S) t).orthonormal.inner_eq_zero hi
+  · apply inner_power_orthogonal hN (primitiveBasis (2 * S) a.1 a.2.1).property
+      (primitiveBasis (2 * S) b.1 b.2.1).property
+    exact primitive_orthogonal (primitiveBasis (2 * S) a.1 a.2.1).property
+      (primitiveBasis (2 * S) b.1 b.2.1).property (by
+        intro he; exact ht (Fin.ext he))
+
+private lemma normalizedString_orthonormal (S : ℕ) (hS : 1 ≤ S) :
+    Orthonormal ℂ (normalizedString S) := by
+  constructor
+  · intro a
+    have hn : ‖rawString S a‖ ≠ 0 := norm_ne_zero_iff.mpr (rawString_ne_zero S hS a)
+    simp [normalizedString, norm_smul, norm_inv, Complex.norm_real, Real.norm_eq_abs,
+      abs_of_nonneg (norm_nonneg _), hn]
+  · intro a b hab
+    simp [normalizedString, inner_smul_left, inner_smul_right,
+      rawString_orthogonal S hS a b hab]
+
+private lemma normalizedString_span (S : ℕ) (hS : 1 ≤ S) :
+    Submodule.span ℂ (Set.range (normalizedString S)) = ⊤ := by
+  rw [← finite_strings_span S hS]
+  apply le_antisymm
+  · apply Submodule.span_le.mpr
+    rintro _ ⟨a, rfl⟩
+    apply Submodule.smul_mem
+    apply Submodule.subset_span
+    exact ⟨a.1.val, by have := a.1.isLt; omega,
+      primitiveBasis (2 * S) a.1 a.2.1,
+      (primitiveBasis (2 * S) a.1 a.2.1).property, a.2.2.val,
+      by have := a.2.2.isLt; omega, rfl⟩
+  · apply Submodule.span_le.mpr
+    rintro _ ⟨t, ht, v, hv, q, hq, rfl⟩
+    let t' : Fin (S + 1) := ⟨t, by omega⟩
+    let q' : Fin (2 * S - 2 * t + 1) := ⟨q, by omega⟩
+    let b := (primitiveBasis (2 * S) t).toBasis
+    have he : v = ∑ i, b.repr ⟨v, hv⟩ i • (b i : Space (2 * S)) := by
+      exact (congrArg (fun w : primitive (2 * S) t => (w : Space (2 * S)))
+        (b.sum_repr ⟨v, hv⟩)).symm
+    rw [he, map_sum]
+    apply Submodule.sum_mem
+    intro i _
+    rw [map_smul]
+    apply Submodule.smul_mem
+    let a : StringIndex S := ⟨t', i, q'⟩
+    have hn : (‖rawString S a‖ : ℂ) ≠ 0 :=
+      Complex.ofReal_ne_zero.mpr (norm_ne_zero_iff.mpr (rawString_ne_zero S hS a))
+    have ha : (U (2 * S) ^ q) (b i : Space (2 * S)) =
+        (‖rawString S a‖ : ℂ) • normalizedString S a := by
+      dsimp [normalizedString]
+      rw [smul_smul, Complex.ofReal_inv, mul_inv_cancel₀ hn, one_smul]
+      rfl
+    rw [ha]
+    exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)
+
+/-- The complete orthonormal basis constructed from every primitive string. -/
+def stringBasis (S : ℕ) (hS : 1 ≤ S) :
+    OrthonormalBasis (StringIndex S) ℂ (Space (2 * S)) :=
+  OrthonormalBasis.mk (normalizedString_orthonormal S hS)
+    (by rw [normalizedString_span S hS])
+
+/-- The coordinate unitary is obtained from the proved full-span construction. -/
+def stringUnitary (S : ℕ) (hS : 1 ≤ S) :
+    Space (2 * S) ≃ₗᵢ[ℂ] EuclideanSpace ℂ (StringIndex S) :=
+  (stringBasis S hS).repr
+
 #print axioms result
+#print axioms stringUnitary
 
 end D5.S3.Quantum.SpinChains.BooleanCollectiveLadders
