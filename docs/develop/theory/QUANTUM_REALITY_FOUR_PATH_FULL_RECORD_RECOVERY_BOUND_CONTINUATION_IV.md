@@ -2413,3 +2413,242 @@ whole-POVM acquisition, and a complete reconstruction of AURIC are not
 consequences of these fixed-domain mathematical results.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 54. An attained obstruction to the enlarged H comparison
+
+**Theorem 54.1 (two strict original-level comparisons at thirteen-fourths).**
+There are original pure pairs $W_-=(E^{(-)},U^{(-)})$ and
+$W_+=(E^{(+)},U^{(+)})$ in
+$\operatorname{Dens}_2\times U(4)$ such that
+
+$$
+\begin{gathered}
+\rho(W_-)=\rho_-(W_-)=\frac{13}{4}<\rho_+(W_-),\qquad
+\rho(W_+)=\rho_+(W_+)=\frac{13}{4}<\rho_-(W_+),\\
+g(W_+)<\frac{5081}{10000}<\frac{13}{25}
+       <g(W_-)<\frac9{16}<\frac{5473}{9600}=H(13/4).
+\end{gathered}
+\tag{54.1}
+$$
+
+Consequently the first inequality of (52.5) cannot hold on the whole
+extension $61/25<\xi\le13/4$. The exhibited negative-active pair is
+strictly worse than an actual positive-active pair at its true original
+level, so it is not a global minimizing counterexample to positive-sign
+selection.
+
+*Proof.* Use precisely the fixed rows of Continuation II, Definition
+46.1. The populations below are always away from the indicated sign:
+
+$$
+\begin{array}{c|c|c|c|c|c}
+\sigma&q&p&x&X&Y\\ \hline
+-&1/5&4/5&23/80&1/4&17/20\\
++&3/5&2/5&39/80&7/25&97/100.
+\end{array}
+\tag{54.2}
+$$
+
+In both rows $4(1-x)+2q=13/4$. The negative row satisfies
+$\sqrt X+\sqrt Y>1/2+9/10>103/80=1+x$.
+For the positive row,
+$\sqrt X>13/25$, $\sqrt Y>49/50$, and
+$13/25+49/50=3/2>119/80=1+x$.
+Both rows therefore belong to the actual closed triangle, strictly
+inside its curved boundary; $0<X,Y<1$.
+
+Here is an explicit original realization, including the fixed labels.
+In each row let $r=\sqrt X$, $z=\sqrt Y$, let $Z$ be (46.11), and
+choose $\alpha=\arccos Z\in(0,\pi)$. In its fixed pair order set
+
+$$
+(v_j)_{j\in J}=e^{i\alpha}
+       (r+i\sqrt{1-X},r-i\sqrt{1-X}),\qquad
+(v_j)_{j\in K}=(z+i\sqrt{1-Y},z-i\sqrt{1-Y}),\qquad
+U^{(\sigma)}=\operatorname{diag}(v)U_\sigma.
+\tag{54.3}
+$$
+
+Thus $(J,K)=((3,4),(1,2))$ in the negative row and
+$((1,2),(3,4))$ in the positive row. No physical labels are permuted.
+The orientation in (54.3) has positive sign product and
+$\sin\alpha>0$, so Lemma 46.2 gives both $|M|=2R$ and $|N|=2C$
+for this same whole feedback.
+
+Evaluate the original $P,Q$ of (23.2) on
+$w=\operatorname{diag}(U^{(\sigma)}U_+^\dagger)$.
+Set $a_-=1/5$, $a_+=2/5$, and choose
+
+$$
+\eta=\frac{P\overline Q}{|P||Q|},\qquad
+\beta=\begin{pmatrix}\sqrt{a_\sigma}\\
+                    \eta\sqrt{1-a_\sigma}\end{pmatrix},\qquad
+E^{(\sigma)}=(T\beta\beta^\dagger T^\dagger)^{\mathsf T}.
+\tag{54.4}
+$$
+
+The strict recovery bounds below verify $P,Q\ne0$, so this formula
+is defined. Each effect is positive, pure and trace one, with the
+ordinary transpose shown explicitly. Formula (23.13) aligns the two
+original recovery summands. Hence the exact attained defects are
+
+$$
+G_-=\frac45e^2+\frac15d^2-\frac45(2R_-+C_-)^2,\qquad
+G_+=\frac25d^2+\frac35e^2
+       -4\left(\sqrt{2/5}R_++\sqrt{3/5}C_+\right)^2.
+\tag{54.5}
+$$
+
+The active trace is $2(1+x)$ by (46.16). The pure distances are
+therefore $13/4$. The original two-sign budget (42.17)--(42.20)
+makes the indicated sign uniquely active in both rows. Multiplying
+all four entries of either $v$ by one common scalar preserves these
+claims and the effect; there is no independent scalar on a pair.
+
+All estimates needed for (54.1) have rational square certificates.
+First, direct squaring with
+$h^2=1/2$, $s^2=(1-h)/2$, $c^2=(1+h)/2$ gives
+
+$$
+\frac{707}{1000}<h<\frac{708}{1000},\qquad
+\frac{382}{1000}<s<\frac{383}{1000},\qquad
+\frac{4619}{5000}<c<\frac{924}{1000}.
+\tag{54.6}
+$$
+
+For the negative row put $T_-=L^2-X-Y=3569/6400$. Its coherence
+factor and squared half-recoveries are exactly
+
+$$
+\begin{aligned}
+F_-^2&=\frac{198704151}{2785280000},
+&\frac{267}{1000}<F_-<\frac{167}{625},\\
+R_-^2&=\frac{s^2}{4}+\frac{17}{40}+shT_-,
+&C_-^2&=\frac{3c^2}{4}+\frac3{40}+2chF_-.
+\end{aligned}
+\tag{54.7}
+$$
+
+The two bounds on $F_-$ follow by comparing the displayed fraction
+with the squares of its positive endpoints. In particular
+$557/1000<T_-<558/1000$. Substitution of (54.6)--(54.7), keeping
+all factors positive, proves
+
+$$
+\frac{781}{1000}<R_-<\frac{783}{1000},\qquad
+\frac{1031}{1000}<C_-<\frac{129}{125},\qquad
+\frac{148}{25}<\frac45e^2+\frac15d^2<\frac{297}{50}.
+\tag{54.8}
+$$
+
+For explicit verification, lower and upper bounds for $R_-^2$ are
+obtained from
+
+$$
+\frac{(382/1000)^2}{4}+\frac{17}{40}
+       +\frac{382\cdot707\cdot557}{10^9}
+       >\left(\frac{781}{1000}\right)^2,
+\qquad
+\frac{(383/1000)^2}{4}+\frac{17}{40}
+       +\frac{383\cdot708\cdot558}{10^9}
+       <\left(\frac{783}{1000}\right)^2.
+$$
+
+For $C_-^2$, substitute respectively
+$(c,h,F_-)=(4619/5000,707/1000,267/1000)$ and
+$(924/1000,708/1000,167/625)$ in (54.7); the results lie strictly
+above $(1031/1000)^2$ and below $(129/125)^2$.
+The energy identity used here is
+$4-6h/5+32hs/5+8hc/5$; the same endpoints prove its two bounds
+in (54.8). Thus
+
+$$
+\frac{13}{25}
+ <\frac{148}{25}-\frac45\left(\frac{1299}{500}\right)^2
+ <G_-
+ <\frac{297}{50}-\frac45\left(\frac{2593}{1000}\right)^2
+ <\frac9{16}.
+\tag{54.9}
+$$
+
+For the positive row, $T_+=L^2-X-Y=6161/6400$, and
+
+$$
+\begin{aligned}
+F_+^2&=\frac{353215242}{111247360000}
+                >\left(\frac7{125}\right)^2,\\
+R_+^2&=\frac7{50}+\frac{97c^2}{100}+hcT_+
+                >\left(\frac{1263}{1000}\right)^2,\\
+C_+^2&=\frac9{25}+\frac{3s^2}{100}+2hsF_+
+                >\left(\frac{157}{250}\right)^2.
+\end{aligned}
+\tag{54.10}
+$$
+
+For the last two inequalities, use (54.6), $T_+>962/1000$ and
+$F_+>7/125$. All terms are positive. Also
+
+$$
+\frac25d^2+\frac35e^2
+ =4-\frac25h+\frac{16}{5}hc+\frac{24}{5}hs
+ <\frac{7113}{1000}.
+\tag{54.11}
+$$
+
+Squaring proves $\sqrt{2/5}>1581/2500$ and
+$\sqrt{3/5}>1549/2000$. Therefore
+
+$$
+\sqrt{2/5}R_++\sqrt{3/5}C_+
+ >\frac{1581}{2500}\frac{1263}{1000}
+       +\frac{1549}{2000}\frac{157}{250}
+ >\frac{257}{200}.
+$$
+
+Equations (54.5), (54.10)--(54.11) give
+$G_+<7113/1000-4(257/200)^2=5081/10000<13/25$.
+Finally $9/16=5400/9600<5473/9600=H(13/4)$.
+This proves every strict inequality in (54.1). Since the two pairs
+have the same true level, subtracting $\kappa\,13/4$ also gives
+$f(W_+)<f(W_-)$. $\square$
+
+**Definition 54.2 (sources, live use and the remaining comparison).**
+The original recovery identities, alignment phase, normalized effect
+and ordinary transpose are source (23.2), (23.9)--(23.13).
+The two fixed sign rows and simultaneous reconstruction are
+Continuation II, Definition 46.1 and Lemma 46.2; the true-distance
+certificate is (42.17)--(42.20). The new result is the strict rational
+separation (54.1) for these attained original pairs. It supplies an
+original positive competitor below $5081/10000$ at the upper endpoint
+and rules out the uniform $g>H$ route there. It makes no
+literature-priority or global-minimum claim for either displayed pair.
+
+For the remaining full-domain problem put, using the two rows of
+(46.11),
+
+$$
+A_\sigma(\xi)=\min_{\substack{0\le q\le1\\(X,Y)\in\mathcal T_x}}
+ \left(K_\sigma^2(1-q)+K_{-\sigma}^2q
+                 -4\Gamma_\sigma(x,q;X,Y)^2\right),\qquad
+x=1-\xi/4+q/2.
+\tag{54.12}
+$$
+
+For $61/25<\xi\le13/4$, every such $q$ has $0<x<1$ and
+$x\ge3/16$, so the full compact domain and both population endpoints
+are included. By Continuation III, Theorem 48.5, and Lemma 46.2,
+positive-sign selection for every original global minimizer is
+exactly the still unresolved strict inequality
+$A_-(\xi)>A_+(\xi)$ on this interval. No determinant-sign condition
+is imposed. At the upper endpoint (54.1) proves
+$A_+(13/4)<5081/10000$ and $A_-(13/4)<9/16$; neither upper bound
+orders the two minima. A full proof needs a lower bound for the
+entire negative triangle against an attained positive value, or a
+direct strict ordering of these two attained minima. A refutation
+needs a negative-active global minimizer against the entire original
+same-level domain. The pair $W_-$ supplies neither. The completed
+prefix and the immediate-right classification retain their stated
+ranges.
+
+## 追加锚（本行以下为增补区）
