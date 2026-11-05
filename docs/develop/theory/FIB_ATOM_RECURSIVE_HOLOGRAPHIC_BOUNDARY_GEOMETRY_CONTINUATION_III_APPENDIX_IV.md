@@ -160,3 +160,128 @@ Thus the escape can simultaneously satisfy any fixed finite linear observation l
 The result is a finite-dimensional boundary only. It does not supply an infinite family of constraints, a nonlinear residual-zero tuple, pointwise simplex legality, an exact H43 partition, a terminal compensator, an SRS-20 construction, an $F_{64}$ witness, a physical realization or a Lean/kernel theorem. It also does not assert that an arbitrary nonlinear or discontinuous infinite-dimensional readout fails to control the energy. The source-specific statements (162.1)–(162.5) use only the original finite-codimension map, nonatomicity, rank-nullity, the $L^2$ contraction of $T_{d/2}$ and the strict positivity in Proposition 134.2.
 
 ## 追加锚（本行以下为增补区）
+
+## 163. Finite-horizon successor closure remains non-coercive
+
+The R5-007 distinction between a current readout, a well-defined successor and a static state can be stated directly on the calibrated function space. The next result adds a finite successor horizon to the observation map of §162; it does not choose a physical successor operation.
+
+**Definition 163.1 (finite-horizon successor readout).** Let
+
+$$
+\mathcal X=L^\infty(G,m;\mathbb R),
+$$
+
+let $\mathscr R:\mathcal X\to\mathbb R^r$ be a finite-dimensional real-linear readout, and let
+
+$$
+T:\mathcal X\to\mathcal X
+$$
+
+be a specified real-linear successor operation. Write $T^0=\operatorname{id}$ and, for an integer horizon $H\ge0$, define
+
+$$
+\mathscr R^{[H]}(v)
+ =\bigl(\mathscr R(v),\mathscr R(Tv),\ldots,\mathscr R(T^Hv)\bigr)
+ \in(\mathbb R^r)^{H+1}.
+\tag{163.1}
+$$
+
+The corresponding finite-horizon calibrated kernel is
+
+$$
+W_{\mathscr R,T}^{(H)}
+ =V\cap\ker\mathscr R^{[H]}
+ =V\cap\bigcap_{j=0}^{H}\ker(\mathscr R\circ T^j).
+\tag{163.2}
+$$
+
+No continuity, positivity or physical realizability of $T$ is assumed; only its stated linear action on the same $L^\infty$ classes is used.
+
+**Proposition 163.2 (successor coordinates through any finite horizon still admit energy collapse).** Let $B_n\subset G$ be Borel sets with $m(B_n)>0$ and
+
+$$
+\int_{B_n}g^2\,dm\longrightarrow0.
+\tag{163.3}
+$$
+
+For every finite $H$ there are bounded real Borel functions $v_n$ such that
+
+$$
+ v_n\in W_{\mathscr R,T}^{(H)},
+ \qquad \|v_n\|_\infty=1,
+ \qquad \operatorname{supp}(v_n)\subset B_n,
+ \qquad
+ 0<q(v_n)\le c\int_{B_n}g^2\,dm\longrightarrow0.
+\tag{163.4}
+$$
+
+*Proof.* The target of the combined linear map
+
+$$
+\Phi_H
+ =\bigl(\Lambda_{134},\mathscr R,\mathscr R\circ T,\ldots,\mathscr R\circ T^H\bigr)
+$$
+
+has dimension $64+r(H+1)$. Put
+
+$$
+N=64+r(H+1)+1.
+$$
+
+By nonatomicity, each positive-measure $B_n$ contains $N$ pairwise disjoint Borel subsets $A_{n,1},\ldots,A_{n,N}$ of positive measure. Their indicators span an $N$-dimensional space $F_n$. Rank-nullity gives a nonzero $v_n\in\ker(\Phi_H|_{F_n})$. Scale its coefficients so that their maximum absolute value is one. Disjointness gives $\|v_n\|_\infty=1$, and $v_n$ is supported in $B_n$. The kernel equations put it in $V$ and annihilate every $\mathscr R\circ T^j$ for $0\le j\le H$. Proposition 134.2 gives $q(v_n)>0$, while the $L^2$ contraction of $T_{d/2}$ and $|v_n|\le1$ give
+
+$$
+0<q(v_n)
+ =c\|T_{d/2}(gv_n)\|_2^2
+ \le c\|gv_n\|_2^2
+ \le c\int_{B_n}g^2\,dm.
+$$
+
+This proves (163.4). $\square$
+
+**Corollary 163.3 (finite-horizon successor data have zero coercivity infimum).** For every finite-dimensional $\mathscr R$ and every finite $H$,
+
+$$
+\inf\left\{q(v):v\in W_{\mathscr R,T}^{(H)},\ \|v\|_\infty=1\right\}=0.
+\tag{163.5}
+$$
+
+Thus adjoining the current readout and any prescribed finite list of its successor readouts cannot create a positive lower bound for the weighted heat energy on the full calibrated kernel. If $m(B_n)\to0$, the sequence in Proposition 163.2 is also weak-star null in $L^\infty(m)$ by the argument of (162.5). This is a finite-horizon statement; it does not control an infinite or nonlinear readout.
+
+**Proposition 163.4 (the successor-factorization fibre test).** Let $X\subseteq\mathcal X$ be a linear source domain with $T(X)\subseteq X$, and let $S=\mathscr R(X)$. There exists a map
+
+$$
+\overline T:S\to S,
+\qquad
+\mathscr R\circ T=\overline T\circ\mathscr R\quad\text{on }X,
+\tag{163.6}
+$$
+
+if and only if
+
+$$
+\mathscr R(x)=\mathscr R(x')
+\ \Longrightarrow\
+\mathscr R(Tx)=\mathscr R(Tx')
+\qquad(x,x'\in X).
+\tag{163.7}
+$$
+
+*Proof.* The implication is immediate from (163.6). Conversely, define $\overline T(\mathscr R(x))=\mathscr R(Tx)$. Condition (163.7) makes this definition independent of the chosen representative, and $T(X)\subseteq X$ puts its value in $S$. $\square$
+
+When $X=V$ and $T(V)\subseteq V$, (163.7) is exactly the calibrated-kernel version of the R5-007 successor-closure criterion. If it fails, $x,x'$ are a same-current, different-successor witness. More concretely, it is enough to find
+
+$$
+ v\in V\cap\ker\mathscr R
+ \quad\text{with}\quad
+ \mathscr R(Tv)\ne0;
+\tag{163.8}
+$$
+
+then $0$ and $v$ have identical current readout and different next readout. If $T$ does not preserve $V$, the same witness still certifies failure of factorization on the calibrated domain, with the successor readout regarded as taking values in $\mathbb R^r$ rather than in $\mathscr R(V)$.
+
+**Corollary 163.5 (closure is not staticity).** Even when (163.7) holds and $\overline T$ is well-defined, it only says that the specified successor readout descends to the current summary. It does not say $\overline T$ is the identity, that $T$ fixes any state, or that a derivative vanishes. Conversely, failure of (163.7) is an information-fibre failure, not a proof that no larger summary or memory variable can close the successor. Proposition 163.2 shows that, for every fixed finite horizon, adding the missing successor coordinates still leaves normalized directions with arbitrarily small positive $q$.
+
+The source-specific statements (163.1)–(163.8) use only finite-dimensionality of the appended readout, real linearity of the specified successor, nonatomicity, rank-nullity, the $L^2$ contraction of $T_{d/2}$ and Proposition 134.2. They do not construct a nonlinear residual-zero tuple, a legal simplex family, an exact H43 partition, a terminal compensator, an SRS-20 or $F_{64}$ witness, a physical successor operation or a Lean/kernel theorem.
+
+## 追加锚（本行以下为增补区）
