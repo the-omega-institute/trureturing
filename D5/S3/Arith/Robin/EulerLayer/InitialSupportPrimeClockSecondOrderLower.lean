@@ -119,7 +119,7 @@ private theorem scalar_identity {L : ℝ} (hL : 0 < L) (hY : 0 < L - c) :
     exact (div_pos hY hL).ne'
   unfold r H G R Q
   field_simp [hL.ne', hY.ne', h3, h4, h3a, h4a, hq]
-  <;> ring
+  ring
 
 /-- This limit is on a scalar real L only, before any integer m is introduced. -/
 private theorem scalar_limits :
@@ -134,7 +134,8 @@ private theorem scalar_limits :
     have hY3 : Tendsto (fun L : ℝ => (L - c)^3) atTop atTop :=
       (tendsto_pow_atTop (by norm_num : (3 : ℕ) ≠ 0)).comp hY
     have h3 := hY3.const_div_atTop (3200 : ℝ)
-    simpa [H] using
+    unfold H
+    simpa only [sub_zero] using
       ((tendsto_const_nhds : Tendsto (fun _ : ℝ => A) atTop (𝓝 A)).sub h1).sub h3
   have hG : ContinuousAt G 0 := by
     unfold G R Q
@@ -195,7 +196,6 @@ private theorem D_near_upper {p : ℝ} (hp : 1 < p) (hL : 0 < Real.log p) :
       change (Real.sqrt p * a) * (L + 1 / L^3) =
         (Real.sqrt p * L) * (a * (1 + 1 / L^4))
       field_simp [hL0.ne']
-      <;> ring
 
 /-- Dropping only the positive third-order term gives the scalar envelope H. -/
 private theorem lowerX_envelope {p X : ℝ} (hp : 0 < p)
@@ -330,7 +330,6 @@ private theorem far_clock_transfer {ε : ℝ} (hε : 0 < ε) :
     have hd : 0 < 1 / L^3 := by positivity
     have heq : 1 / (2 * L^3) = (1 / L^3) / 2 := by
       field_simp [hL.ne']
-      <;> ring
     dsimp [a, b]
     rw [heq]
     linarith
@@ -352,7 +351,7 @@ private theorem far_clock_transfer {ε : ℝ} (hε : 0 < ε) :
         (a - b) / (a * Real.log (p * a)) := by
       unfold D5.S3.Arith.Robin.ActualRobinClockCovariance.g
       field_simp [hp.ne', ha.ne', (Real.log_pos hpa).ne']
-      <;> ring
+      ring
     linarith
   have hC : (a - b) / (a * Real.log (p * a)) < C := by
     dsimp [C]
@@ -376,7 +375,7 @@ private theorem far_clock_transfer {ε : ℝ} (hε : 0 < ε) :
   have hdiff : a - b = 1 / (2 * L^3) := by
     dsimp [a, b]
     field_simp [hL.ne']
-    <;> ring
+    ring
   have hcoarse : 1 / (8 * L^4) ≤ (a - b) / (a * Real.log (p * a)) := by
     rw [hdiff]
     calc
@@ -389,7 +388,6 @@ private theorem far_clock_transfer {ε : ℝ} (hε : 0 < ε) :
       unfold D
       change Real.sqrt p * L * (1 / (8 * L^4)) = Real.sqrt p / (8 * L^3)
       field_simp [hL.ne']
-      <;> ring
     rwa [heq] at hh
   have hlarge : A < D p * C := (hT p hTP).trans hDC
   have hpositive : 0 < L * (D p * C - A) := mul_pos hL (sub_pos.mpr hlarge)
