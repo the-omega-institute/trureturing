@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Quantum.Algebra.OriginalCompactReciprocity
 
@@ -103,6 +104,32 @@ def family : Registration arena.{0} (type_of% (@mem_velocitySpace_iff_exp.{0})) 
     have hone := bot_velocity 1 |>.mp (he ▸ hz)
     have hh := congrArg (fun f : ℝ →L[ℝ] ℝ => f 1) hone
     norm_num at hh
+
+/-- Typed source-family evidence; the source occurrence selection remains unbound. -/
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@mem_velocitySpace_iff_exp.{0}) (Realization signature.{0}) Unit Unit where
+  unitName := `D5.S3.Quantum.Algebra.OriginalCompactReciprocity.curveExponentialUnit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Algebra.OriginalCompactReciprocity.CurveExponential.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{0}⟩
+  objectArena := .source ⟨arena.{0}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{0} ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{0}
+    (fun _ p K => K ∈ velocitySpace p.G) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
 
 end Reg.D5.S3.Quantum.Algebra.OriginalCompactReciprocity.CurveExponential
 

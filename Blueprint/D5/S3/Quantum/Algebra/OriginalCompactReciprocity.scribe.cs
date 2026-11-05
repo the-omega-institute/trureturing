@@ -77,7 +77,7 @@ internal sealed class OriginalCompactReciprocityDocument : IScribeDocumentDefini
             Open, Forall, Sp, t, Colon, F.Id("R"), Comma, Esc,
             Exists, Sp, u, Colon, Call("UnitsContinuousEnd",F.Id("R"),w), Comma, Esc,
             Call("Member",u,g), Sp, Land, Sp,
-            Call("value",u), Eq, Call("exp",Seq(t,Cdot,k)), Close));
+            Call("value",u), Eq, Call("exp",Seq(t,Cdot,Sp,k)), Close));
     }
 
     private static Formula CurveFormula()
@@ -132,7 +132,7 @@ internal sealed class OriginalCompactReciprocityDocument : IScribeDocumentDefini
                 Sp, Rightarrow, Sp, Forall, Sp, F.Id("t"), Colon, F.Id("R"), Comma, Esc,
                 Exists, Sp, F.Id("h"), Colon, g, Comma, Esc,
                 Call("Member",F.Id("h"),Call("connectedComponent",D(1),g)), Sp, Land, Sp,
-                Call("originalValue",F.Id("h")), Eq, Call("exp",Seq(F.Id("t"),Cdot,F.Id("K"))))
+                Call("originalValue",F.Id("h")), Eq, Call("exp",Seq(F.Id("t"),Cdot,Sp,F.Id("K"))))
                 : Seq()));
     }
 
