@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Dynamics/NativeProtocolBornNormalization
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Dynamics/NativeProtocolBornNormalization
    mirror-E: none(waiver:content-registration-pending)
    anchors: []

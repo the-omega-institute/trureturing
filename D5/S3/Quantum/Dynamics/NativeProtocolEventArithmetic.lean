@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Dynamics/NativeProtocolEventArithmetic
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Dynamics/NativeProtocolEventArithmetic
    mirror-E: none(waiver:content-registration-pending)
    anchors: []
