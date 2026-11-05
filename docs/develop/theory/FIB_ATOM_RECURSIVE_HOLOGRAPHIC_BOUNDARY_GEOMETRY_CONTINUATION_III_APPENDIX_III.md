@@ -4493,3 +4493,147 @@ The two propositions isolate the unpaid bridge without changing the original pro
 The fixed-start summable continuation of Corollary 155.4 remains an independent sufficient route. It is not implied by (156.6), and it is not needed if the finite actual completion succeeds. Conversely, failure of the finite rank certificate leaves the fixed-start route open. The scalar four-score contrast and finite-horizon tests described in the proportional-containment advisory provide a diagnostic for candidate families, but they do not supply the source-specific rank or the actual finite partition required here.
 
 ## 追加锚（本行以下为增补区）
+## 157. Two zero contrast channels and the quadratic rank boundary
+
+**Definition 157.1 (the original affine readout and its zero channels).** Retain the complete original supplier telescope of Definition 155.1, the same trilinear form $\mathcal C$, the same readout $f$ and the exact $\mathcal H_{43}$ calibration of Sections 154 and 156. The calibration notation also applies to bounded Borel pointwise simplex tuples $u=(u_y)_{y\in\mathcal L}$ on the original $G$, with the same tuple in all three slots. Put
+
+$$
+\begin{gathered}
+V=\mathbb R^{\mathcal L},\qquad
+s(v)=\sum_{y\in\mathcal L}v_y,\qquad H=\ker s,\\
+a=(3/8,3/8,0,1/4),\qquad
+q=(-c/2,-c/2,c,0),\qquad f(x)=a+b(x)q,\\
+\Lambda(v)=\bigl(v_0-v_1,\ v_B-\tfrac14s(v)\bigr),
+\qquad \pi=\Lambda|_H.
+\end{gathered}
+\tag{157.1}
+$$
+
+The two components of $\Lambda(f)$ vanish pointwise, including for the originally prescribed representative $b$. For a simplex tuple $u$, their actual values are
+
+$$
+\eta_1(u)=u_0-u_1,\qquad \eta_2(u)=u_B-\tfrac14.
+\tag{157.2}
+$$
+
+These are linear combinations of the same four readout channels, not new observations, independent noises or a changed terminal. The restriction $\pi:H\to\mathbb R^2$ is onto and has kernel $\mathbb Rq$. Indeed $\pi(v)=0$ on $H$ means $v_0=v_1$, $v_B=0$ and $v_3=-2v_0$, while $c>0$.
+
+**Proposition 157.2 (the thirteen-dimensional quadratic limit).** Fix any original $\theta$. Let $B$ be a positive-radius closed ball in a finite-dimensional parameter space. For $0<t<t_0$ and $z\in B$, suppose that $u^{(t,z)}$ is a bounded Borel pointwise simplex tuple satisfying
+
+$$
+\mathcal H_{43}(u^{(t,z)})=\mathcal H_{43}(f).
+\tag{157.3}
+$$
+
+Assume that there is a finite constant $K$ such that
+
+$$
+\sup_{z\in B}\max_{y\in\mathcal L}
+\|u_y^{(t,z)}-f_y\|_{L^\infty(m)}\le Kt,
+\tag{157.4}
+$$
+
+and that the full finite-dimensional residual has a uniform quadratic limit
+
+$$
+\sup_{z\in B}
+\|t^{-2}\Delta(u^{(t,z)})-Q(z)\|\longrightarrow0.
+\tag{157.5}
+$$
+
+Then every $Q(z)$ belongs to the fixed linear space
+
+$$
+\begin{aligned}
+\mathcal W
+ &=q\otimes H\otimes H+H\otimes q\otimes H
+                         +H\otimes H\otimes q,\\
+\mathcal W_{13}
+ &=\{R\in\mathcal W:R_\sigma=0
+                         \text{ for all }\sigma\in\mathcal T_6\},\\
+\dim\mathcal W&=19,\qquad \dim\mathcal W_{13}=13.
+\end{aligned}
+\tag{157.6}
+$$
+
+The dimension is that of a containing linear space. The proposition does not assert that all thirteen directions are realized by legal source-specific tuples.
+
+*Proof.* The exact marginal and ordered-pair coordinates in (157.3), completed with the simplex identities in the slots, give all pair equalities, including those involving $B$. For example the two marginal densities of $Q_{12}$ are $g,Pg$, those of $Q_{13}$ are $g,P^2g$, and those of $Q_{23}$ are $Pg,P^2g$. Therefore every one-index contraction of $\Delta(u^{(t,z)})$ vanishes. The same calculation as Proposition 150.3, which uses only the simplex sums and multilinearity, gives
+
+$$
+\Delta(u^{(t,z)})\in H^{\otimes3}.
+\tag{157.7}
+$$
+
+Write $\delta=u-f$. Because $\Lambda f=0$ pointwise, the exact three-channel projection is
+
+$$
+\begin{aligned}
+\bigl(\Lambda^{\otimes3}\Delta(u)\bigr)_{\alpha\beta\gamma}
+ &=\mathcal C\bigl((\Lambda\delta)_\alpha,
+                   (\Lambda\delta)_\beta,
+                   (\Lambda\delta)_\gamma\bigr),\\
+&\hspace{30mm}\alpha,\beta,\gamma\in\{1,2\}.
+\end{aligned}
+\tag{157.8}
+$$
+
+The original Markov contraction and $\int g\,dm=1$ give
+
+$$
+|\mathcal C(v_1,v_2,v_3)|
+ \le\|v_1\|_\infty\|v_2\|_\infty\|v_3\|_\infty.
+\tag{157.9}
+$$
+
+On $H$, $(\Lambda\delta)_1=\delta_0-\delta_1$ and $(\Lambda\delta)_2=\delta_B$. Thus (157.4) implies the uniform bound
+
+$$
+\sup_{z\in B}\|\Lambda^{\otimes3}
+                 \Delta(u^{(t,z)})\|_{\max}
+ \le8K^3t^3.
+\tag{157.10}
+$$
+
+Equations (157.5), (157.7) and (157.10) show that
+$Q(z)\in\ker(\pi^{\otimes3})$. Choose any linear complement $U$ of $\mathbb Rq$ in $H$. The tensor decomposition of
+$H=\mathbb Rq\oplus U$ shows that this kernel is exactly the sum of the seven tensor summands having at least one $q$ slot. The only surviving quotient summand is $U^{\otimes3}$, of dimension eight. Hence the kernel is $\mathcal W$ and has dimension $27-8=19$.
+
+Every tensor in $\mathcal W$ has zero BBB coordinate because $q_B=0$. The six coordinate restrictions indexed by $\mathcal T_6$ are independent on $\mathcal W$. To see this, put $h_i=e_i-e_B$ for $i\in I$. If a functional
+$\ell=\sum_{\{i,j,k\}=I}\lambda_{ijk}[ijk]$ vanishes on $\mathcal W$, evaluate it on $q\otimes h_j\otimes h_k$ for each ordered pair of distinct $j,k\in I$. With $i$ the remaining label, exactly one summand survives:
+
+$$
+0=\ell(q\otimes h_j\otimes h_k)=q_i\lambda_{ijk}.
+\tag{157.11}
+$$
+
+All three $q_i$ are nonzero, so all six coefficients vanish. This proves that the restrictions have rank six and that their joint kernel in $\mathcal W$ has dimension $19-6=13$. The exact six distinct-label equations in (157.3) put every limit $Q(z)$ in that kernel. $\square$
+
+**Corollary 157.3 (the additional scaling obligation for SRS-20).** Retain Route condition 156.3 and require in addition the uniform proximity bound (157.4) throughout its twenty-dimensional ball. Then its proposed affine leading map cannot have $\det S_\theta\ne0$. More precisely,
+
+$$
+\operatorname{rank}S_\theta\le13.
+\tag{157.12}
+$$
+
+The same conclusion holds if (157.4) is replaced by
+
+$$
+\sup_{z\in B_{20}}\max_y
+\|u_y^{(t,z)}-f_y\|_\infty=o(t^{2/3}).
+\tag{157.13}
+$$
+
+*Proof.* On the exact $\mathcal H_{43}$ fiber, the full residual is determined linearly by the twenty selected repeated-label coordinates: Proposition 156.2 recovers the omitted row, and Proposition 150.3 recovers the coordinates containing $B$. Thus the uniform limit in (156.6) supplies the full limit (157.5). The space satisfying all pair constraints, the six distinct-label zeros and BBB has dimension $27-6-1=20$. Deleting one repeated-label row identifies it with $\mathbb R^{20}$. Proposition 157.2 puts the leading residuals inside the image of $\mathcal W_{13}$ under this identification. Since $B_{20}$ has positive radius, differences of the affine values $r_{\theta,\ast}+S_\theta z$ show that the range of $S_\theta$ lies in that thirteen-dimensional image. This proves (157.12). Under (157.13), the right side of (157.10) is replaced by $8o(t^{2/3})^3=o(t^2)$, giving the same limit argument. $\square$
+
+The new condition is not present in (156.6): its center is fixed to $f^0+tX$, but its off-center tuples are not required to remain uniformly $O(t)$ close to $f$. Since $f=f^0$ almost everywhere, the essential-supremum estimates above respect the original permitted representative and do not add a pointwise identification on the null exceptional set. Corollary 157.3 excludes a regular small-amplitude scaling class; it neither refutes Route condition 156.3 without that additional condition nor refutes $F_{64}(\theta)$.
+
+The seven unpaid leading directions have an explicit observable description. The eight tensors in (157.8) use the channels $u_0-u_1$ and $u_B-1/4$. On a zero-pair residual their all-second-channel coordinate is BBB, already fixed by $\mathcal H_{43}$. The other seven impose seven additional independent constraints on the twenty-dimensional calibrated quadratic limit. Their independence is the dimension calculation in (157.6), not a claim that seven source-specific cubic corrections exist.
+
+For an all-odd deviation under the original half-turn, the three factors in each right side of (157.8) are odd. The original invariant $g$ and commuting $P$ make that integral zero exactly. Such an exactly calibrated odd family has residual in $\mathcal W_{13}$ at every amplitude, not merely at quadratic order. Even corrections or a different scaling therefore require an actual nonzero three-channel contribution if they are to leave this subspace. For a general family, the identity (157.8) and bound (157.9) show that a nonzero projected $t^2$ limit at some fixed parameter cannot arise from deviations of size $o(t^{2/3})$. Meeting this necessary scale does not supply legality, rank, a zero or a degree estimate.
+
+Consequently one cannot replace the remaining twenty equations by thirteen equations and discard the higher-order terms. A prospective finite completion must still solve the seven contrast equations at their actual order together with the thirteen quadratic directions, the original forty-three calibrations and the whole-$G$ partition realization. The source-specific rank, mixed-scale legality, nonlinear boundary control and finite actual partition remain unresolved. The fixed-start summable route of Corollary 155.4 remains separate and unchanged.
+
+The tensor quotient, multilinearity and finite-dimensional rank count used here are standard linear-algebra tools. The source-specific thirteen-dimensional boundary is repo-derived from the retained FIB suppliers and the definitions above; no historical novelty is claimed for the standard tools. Their role is to identify the two zero channels of the original prescribed $f$ and the resulting source-specific obstruction to the uniform quadratic SRS scaling. They do not provide a new general purification theorem, a full-law witness, physical realization or Lean/kernel certification.
+
+## 追加锚（本行以下为增补区）
