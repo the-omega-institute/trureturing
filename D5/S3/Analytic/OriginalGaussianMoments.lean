@@ -1,10 +1,20 @@
+/- GID: D5/S3/Analytic/OriginalGaussianMoments
+   generality: I
+   mirror-B: D5/B/S3/Analytic/OriginalGaussianMoments
+   mirror-E: none(waiver:analytic-proof-without-numeric-projection)
+   anchors: []
+   utility: none
+   digest: Quantitative complete Gaussian localization for the original positive-U theorem. -/
 /- SOURCE ONLY. Density transport and even-moment bodies use the pinned
    countable Gaussian fourth-moment supplier, which attributes the scalar
-   even-moment proof to RemyDegenne/brownian-motion (Apache 2.0).
+   even-moment proof to RemyDegenne/brownian-motion (Apache 2.0),
+   BrownianMotion/Gaussian/Moment.lean, centralMoment_two_mul_gaussianReal,
+   commit 0d5b6eb928e616d3b1f774ad7d233c167d9f42c9.
    New estimates use Lebesgue integrability before integral comparison. -/
 import D5.S3.Arith.Robin.CompleteActualSignedGaussianExchange
 import D5.S3.Fourier.Asymptotics.GaussianComplexMoments
 import D5.S3.Fourier.Asymptotics.CountableGaussianQuadraticFourthMoment
+import Mathlib.MeasureTheory.Group.Integral
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -28,23 +38,6 @@ private theorem variance_ne_zero (m : ℝ) (hm : 0 < m) : variance m hm ≠ 0 :=
   have hcoe : (variance m hm : ℝ) = 0 := by rw [h]; rfl
   have hm2 : 0 < 2 * m := by positivity
   exact hm2.ne' (by simpa only [variance_coe] using hcoe)
-
-theorem pdf_power_integrable
-    (μ : ℝ) (v : ℝ≥0) (hv : v ≠ 0) (n : ℕ) :
-    Integrable (fun y : ℝ => ProbabilityTheory.gaussianPDFReal μ v y * (y - μ) ^ n) := by
-  have hLp : MemLp (fun y : ℝ => y - μ) n (ProbabilityTheory.gaussianReal μ v) := by
-    simpa only [Pi.sub_def, id_eq, ENNReal.coe_natCast] using
-      (ProbabilityTheory.memLp_id_gaussianReal (μ := μ) (v := v) (n : ℝ≥0)).sub
-        (memLp_const μ)
-  have hpow : Integrable (fun y : ℝ => (y - μ) ^ n)
-      (ProbabilityTheory.gaussianReal μ v) := by
-    apply hLp.integrable_norm_pow'.mono' (hLp.aestronglyMeasurable.pow n)
-    exact ae_of_all _ fun y => (norm_pow (y - μ) n).le
-  rw [ProbabilityTheory.gaussianReal_of_var_ne_zero _ hv] at hpow
-  have htransport := (integrable_withDensity_iff_integrable_smul'
-    (ProbabilityTheory.measurable_gaussianPDF μ v)
-    (ae_of_all volume fun _ => ProbabilityTheory.gaussianPDF_lt_top)).mp hpow
-  simpa only [ProbabilityTheory.toReal_gaussianPDF, smul_eq_mul] using htransport
 
 /-- The project supplier already contains the scalar even-moment proof and
 its RemyDegenne/brownian-motion attribution.  Only n=1 and n=2 are used here. -/
@@ -100,8 +93,16 @@ theorem g_eq_pdf (m M : ℝ) (hm : 0 < m) (y : ℝ) :
 
 theorem g_power_integrable (m M : ℝ) (hm : 0 < m) (n : ℕ) :
     Integrable (fun y : ℝ => (y - M) ^ n * g m M y) := by
-  have hi := pdf_power_integrable M (variance m hm) (variance_ne_zero m hm) n
-  simpa only [← g_eq_pdf m M hm, mul_comm] using hi
+  have hc := D5.S3.Fourier.Asymptotics.GaussianComplexMoments.density_monomial_integrable
+    0 (2 * m) (by positivity) n 0
+  have hr : Integrable (fun y : ℝ => y ^ n *
+      D5.S3.Fourier.Asymptotics.GaussianComplexMoments.gaussianDensity 0 (2 * m) y) := by
+    simpa only [D5.S3.Fourier.Asymptotics.GaussianComplexMoments.densityMonomial,
+      zero_mul, Complex.exp_zero, mul_one, ← Complex.ofReal_pow,
+      ← Complex.ofReal_mul, Complex.ofReal_re] using hc.re
+  simpa only [D5.S3.Fourier.Asymptotics.GaussianComplexMoments.gaussianDensity,
+    g, sub_zero, show 2 * (2 * m) = 4 * m by ring,
+    show 2 * Real.pi * (2 * m) = 4 * Real.pi * m by ring] using hr.comp_sub_right M
 
 theorem g_integrable (m M : ℝ) (hm : 0 < m) : Integrable (g m M) := by
   simpa only [pow_zero, one_mul] using g_power_integrable m M hm 0
@@ -202,20 +203,19 @@ theorem gaussian_split (m M y : ℝ) (hm : 0 < m) :
   field_simp [(Real.sqrt_pos.mpr (by norm_num : (0 : ℝ) < 2)).ne',
     (Real.sqrt_pos.mpr (by positivity : 0 < 4 * Real.pi * m)).ne'] <;> ring
 
-theorem sqrt_two_le : Real.sqrt 2 ≤ (3 : ℝ) / 2 := by
-  nlinarith [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2), Real.sqrt_nonneg 2]
-
 /-- A pointwise exterior estimate for the exact normalized density. -/
 theorem gaussian_split_le (m M y c : ℝ) (hm : 0 < m)
     (hd : 8 * c * m ^ 2 ≤ (y - M) ^ 2) :
     g m M y ≤ (3 / 2 : ℝ) * Real.exp (-c * m) * g (2 * m) M y := by
+  have hsqrt : Real.sqrt 2 ≤ (3 : ℝ) / 2 := by
+    nlinarith [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2), Real.sqrt_nonneg 2]
   rw [gaussian_split m M y hm]
   have he : Real.exp (-(y - M) ^ 2 / (8 * m)) ≤ Real.exp (-c * m) := by
     apply Real.exp_le_exp.mpr
     apply (div_le_iff₀ (by positivity : (0 : ℝ) < 8 * m)).2
     nlinarith
   exact mul_le_mul_of_nonneg_right
-    (mul_le_mul sqrt_two_le he (Real.exp_nonneg _) (by norm_num)) (g_nonneg _ _ _)
+    (mul_le_mul hsqrt he (Real.exp_nonneg _) (by norm_num)) (g_nonneg _ _ _)
 
 /-- Set-integral comparison retains the exact domain and pays positive
 integrability, rather than relying on totalized Bochner integrals. -/

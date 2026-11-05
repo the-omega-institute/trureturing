@@ -1,3 +1,10 @@
+/- GID: D5/S3/Weil/ZeroData/ActualGaussianDirectTail
+   generality: I
+   mirror-B: D5/B/S3/Weil/ZeroData/ActualGaussianDirectTail
+   mirror-E: none(waiver:analytic-proof-without-numeric-projection)
+   anchors: []
+   utility: none
+   digest: Quantitative complete Gaussian localization for the original positive-U theorem. -/
 /- Complete omitted-distance tail, using direct reciprocal-square mass.
    No shells, no extra height, and no compilation claim. -/
 import D5.S3.Weil.ZeroData.ActualGaussianLocalWindow
@@ -50,7 +57,6 @@ theorem shifted_tail_majorant (t γ m : ℝ) (ht : t ≠ 0)
     have h1 := mul_le_mul_of_nonneg_left hr (sq_nonneg (γ + 6))
     have h2 := mul_le_mul_of_nonneg_right (htsq.trans h1)
       (Real.exp_nonneg (-m * (d ^ 2 - 36)))
-    have hc := exp_cancel (m * (d ^ 2 - 36))
     have hprod : (γ + 6) ^ 2 * Real.exp (m * (d ^ 2 - 36)) *
         Real.exp (-m * (d ^ 2 - 36)) = (γ + 6) ^ 2 := by
       have hcancel : Real.exp (m * (d ^ 2 - 36)) *
@@ -156,14 +162,6 @@ theorem omitted_tail_le_two (m γ : ℝ) (hm : 1 ≤ m) (hγ : 10 < γ) :
       have h := mul_le_mul_of_nonneg_left mass_lt_two.le
         (by positivity : 0 ≤ (γ + 10) ^ 2 * Real.exp (-19 * m))
       nlinarith
-
-/-- Literal original F3 constant, on the strict omitted family. -/
-theorem omitted_tail_original (m γ : ℝ) (hm : 1 ≤ m) (hγ : 10 < γ) :
-    ‖∑' k : ℕ, if 6 < |(actualZero k).im - γ|
-      then summand m γ (actualZero k) else 0‖ ≤
-        4 * (γ + 10) ^ 2 * Real.exp (-19 * m) := by
-  exact (omitted_tail_le_two m γ hm hγ).trans (by
-    nlinarith [mul_nonneg (sq_nonneg (γ + 10)) (Real.exp_nonneg (-19 * m))])
 
 /-- Absolute convergence precedes the exact closed-local/strict-complement
 split. In particular every distance-six occurrence stays in the finite sum. -/
@@ -312,7 +310,6 @@ theorem full_E_original_time (ρ : ℂ) (hρ : IsNontrivialZero ρ)
     have h4 : 4 * D ^ 2 ≤ Real.exp (19 * m) := by
       linarith [Real.add_one_le_exp (19 * m)]
     have hmul := mul_le_mul_of_nonneg_right h4 (Real.exp_nonneg (-19 * m))
-    have hc := exp_cancel (19 * m)
     have hprod : 4 * D ^ 2 * Real.exp (-19 * m) ≤ 1 := by
       calc
         _ ≤ Real.exp (19 * m) * Real.exp (-19 * m) := hmul

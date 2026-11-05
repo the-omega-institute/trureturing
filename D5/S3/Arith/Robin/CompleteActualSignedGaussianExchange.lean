@@ -6,12 +6,12 @@
    utility: none
    digest: Positive signed Gaussian W/K/v transforms and absolutely justified exchanges over every actual zeta-zero occurrence. -/
 
-/- Source-only preparation against dev 65da818fcf9a0a4a9b3558bd2a6d3ead6760da57.
+/- Source-only reconciliation of PR20756 against the byte-bound current suppliers.
    No compilation, axiom report or RH acceptance is claimed. The only scalar
    Gaussian owner is Fourier.Asymptotics.GaussianComplexMoments; no retired
    LowH, weighted, periodic or cubic branch is imported. -/
 
-import D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
+import D5.S3.Weil.Mertens.IntegratedExplicit.ActualZeroLaplace
 import D5.S3.Fourier.Asymptotics.GaussianComplexMoments
 import Mathlib.Logic.Equiv.Defs
 import Mathlib.Topology.Algebra.InfiniteSum.Real
@@ -38,210 +38,6 @@ open MeasureTheory
 open scoped BigOperators ComplexConjugate
 
 namespace D5.S3.Arith.Robin.CompleteActualSignedGaussianExchange
-
-private theorem actual_occurrence_mass_symmetry_growth_exchange :
-    let a : ℕ → ℂ := fun k => 1 / (actualZero k * (1 - actualZero k))
-    HasSum a (firstLiMass : ℂ) ∧
-      ∃ c : Equiv.Perm ℕ,
-        (∀ k : ℕ, actualZero (c k) = conj (actualZero k)) ∧
-        (∀ y : ℝ,
-          Summable (fun k : ℕ => a k * Complex.exp ((y : ℂ) * actualZero k)) ∧
-          (∑' k : ℕ, a k * Complex.exp ((y : ℂ) * actualZero k)).im = 0 ∧
-          ‖∑' k : ℕ, a k * Complex.exp ((y : ℂ) * actualZero k)‖ ≤
-            ((101 / 100 : ℝ) * firstLiMass) * Real.exp (max y 0)) ∧
-        (∀ w : ℝ → ℂ, AEStronglyMeasurable w volume →
-          Integrable (fun y : ℝ => Real.exp (max y 0) * ‖w y‖) →
-          HasSum
-            (fun k : ℕ => a k * ∫ y : ℝ,
-              Complex.exp ((y : ℂ) * actualZero k) * w y)
-            (∫ y : ℝ,
-              (∑' k : ℕ, a k * Complex.exp ((y : ℂ) * actualZero k)) * w y)) := by
-  classical
-  dsimp only
-  let a : ℕ → ℂ := fun k => 1 / (actualZero k * (1 - actualZero k))
-  have hx1 : xiReading 1 ≠ 0 := by
-    rw [xi_reading_endpoint_values.2]
-    norm_num
-  have hres := xi_reading_normalized_resolvent_hasSum actualData 1 hx1
-  have href : logDeriv xiReading 0 = -logDeriv xiReading 1 := by
-    simpa only [sub_self] using xi_logDeriv_reflection (1 : ℂ)
-  have hend : logDeriv xiReading 1 =
-      ((1 + Real.eulerMascheroniConstant / 2 -
-        Real.log (2 * Real.sqrt Real.pi) : ℝ) : ℂ) := by
-    change deriv xiReading 1 / xiReading 1 = _
-    exact first_li_coefficient_normalization.1
-  have hweighted : HasSum
-      (fun n : ℕ => (actualData.multiplicity n : ℂ) *
-        (1 / (actualData.zero n * (1 - actualData.zero n))))
-      (firstLiMass : ℂ) := by
-    convert hres using 1
-    · funext n
-      have hs := (actualData.zero_isNontrivial n).2
-      have h0 : actualData.zero n ≠ 0 := by
-        intro he
-        have := hs.1
-        simpa only [he, Complex.zero_re, lt_self_iff_false] using this
-      have h1 : actualData.zero n ≠ 1 := by
-        intro he
-        have := hs.2
-        simpa only [he, Complex.one_re, lt_self_iff_false] using this
-      field_simp [h0, sub_ne_zero.mpr h1.symm]
-      <;> ring
-    · rw [href, hend]
-      unfold firstLiMass
-      push_cast
-      ring
-  have hnorm : Summable (fun n : ℕ => (actualData.multiplicity n : ℝ) *
-      ‖1 / (actualData.zero n * (1 - actualData.zero n))‖) := by
-    simpa [norm_mul] using hweighted.summable.norm
-  have hSigmaNorm : Summable (fun p : ActualZeroOccurrence =>
-      ‖1 / (actualData.zero p.1 * (1 - actualData.zero p.1))‖) := by
-    apply (summable_sigma_of_nonneg (fun _ => norm_nonneg _)).2
-    constructor
-    · intro n
-      exact Summable.of_finite
-    · simpa only [tsum_fintype, Finset.sum_const, Finset.card_univ,
-        Fintype.card_fin, nsmul_eq_mul] using hnorm
-  have hSigma : Summable (fun p : ActualZeroOccurrence =>
-      1 / (actualData.zero p.1 * (1 - actualData.zero p.1))) :=
-    hSigmaNorm.of_norm
-  have hSigmaMass : HasSum (fun p : ActualZeroOccurrence =>
-      1 / (actualData.zero p.1 * (1 - actualData.zero p.1))) (firstLiMass : ℂ) := by
-    convert hSigma.hasSum using 1
-    rw [hSigma.tsum_sigma]
-    simpa only [tsum_fintype, Finset.sum_const, Finset.card_univ,
-      Fintype.card_fin, nsmul_eq_mul] using hweighted.tsum_eq.symm
-  have hmass : HasSum a (firstLiMass : ℂ) := by
-    simpa only [Function.comp_def, a, actualZero] using
-      (actualOccurrenceEquiv.hasSum_iff).2 hSigmaMass
-  have hRSigma : Summable (fun p : ActualZeroOccurrence =>
-      ((actualData.zero p.1).im)⁻¹ ^ 2) := by
-    apply (summable_sigma_of_nonneg (fun _ => sq_nonneg _)).2
-    constructor
-    · intro n
-      exact Summable.of_finite
-    · simpa only [tsum_fintype, Finset.sum_const, Finset.card_univ,
-        Fintype.card_fin, nsmul_eq_mul] using actual_weighted_inverse_square_summable
-  have hR : Summable (fun k : ℕ => ((actualZero k).im)⁻¹ ^ 2) := by
-    simpa only [Function.comp_def, actualZero] using
-      (actualOccurrenceEquiv.summable_iff).2 hRSigma
-  have hcoeff (k : ℕ) : ‖a k‖ ≤ ((actualZero k).im)⁻¹ ^ 2 := by
-    have hheight := actual_height_gt_ten (actualZero k)
-      (actualData.zero_isNontrivial (actualOccurrenceEquiv k).1)
-    have ht : 0 < |(actualZero k).im| := by linarith
-    have ht2 : 0 < (actualZero k).im ^ 2 := by
-      have he := sq_pos_of_pos ht
-      simpa only [sq_abs] using he
-    have hp : |(actualZero k).im| ≤ ‖actualZero k‖ :=
-      Complex.abs_im_le_norm _
-    have hm : |(actualZero k).im| ≤ ‖1 - actualZero k‖ := by
-      simpa only [Complex.sub_im, Complex.one_im, zero_sub, abs_neg] using
-        Complex.abs_im_le_norm (1 - actualZero k)
-    have hprod : (actualZero k).im ^ 2 ≤ ‖actualZero k‖ * ‖1 - actualZero k‖ := by
-      calc
-        _ = |(actualZero k).im| * |(actualZero k).im| := by
-          rw [← sq_abs]
-          ring
-        _ ≤ _ := mul_le_mul hp hm (abs_nonneg _) (norm_nonneg _)
-    calc
-      ‖a k‖ = 1 / (‖actualZero k‖ * ‖1 - actualZero k‖) := by
-        simp only [a, norm_div, norm_one, norm_mul]
-      _ ≤ 1 / ((actualZero k).im ^ 2) := one_div_le_one_div_of_le ht2 hprod
-      _ = ((actualZero k).im)⁻¹ ^ 2 := by simp only [one_div, inv_pow]
-  let σ : Equiv.Perm ActualZeroOccurrence :=
-    Equiv.sigmaCongr actualData.conjugation
-      (fun n => finCongr (actualData.multiplicity_conjugation n).symm)
-  let c : Equiv.Perm ℕ :=
-    actualOccurrenceEquiv.trans (σ.trans actualOccurrenceEquiv.symm)
-  have hc (k : ℕ) : actualZero (c k) = conj (actualZero k) := by
-    simp only [actualZero, c, Equiv.trans_apply, Equiv.apply_symm_apply]
-    change actualData.zero (actualData.conjugation (actualOccurrenceEquiv k).1) = _
-    exact actualData.zero_conjugation _
-  let f : ℝ → ℕ → ℂ := fun y k => a k * Complex.exp ((y : ℂ) * actualZero k)
-  have hdom (y : ℝ) (k : ℕ) : ‖f y k‖ ≤ ‖a k‖ * Real.exp (max y 0) := by
-    have hs := (actualData.zero_isNontrivial (actualOccurrenceEquiv k).1).2
-    have hs0 : 0 ≤ (actualZero k).re := hs.1.le
-    have hs1 : (actualZero k).re ≤ 1 := hs.2.le
-    have he : y * (actualZero k).re ≤ max y 0 := by
-      rcases le_or_gt 0 y with hy | hy
-      · rw [max_eq_left hy]
-        nlinarith
-      · have hm : y * (actualZero k).re ≤ 0 :=
-          mul_nonpos_of_nonpos_of_nonneg hy.le hs0
-        simpa only [max_eq_right hy.le] using hm
-    dsimp only [f]
-    rw [norm_mul, Complex.norm_exp]
-    simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
-      zero_mul, sub_zero]
-    exact mul_le_mul_of_nonneg_left (Real.exp_le_exp.mpr he) (norm_nonneg _)
-  have hsum (y : ℝ) : Summable (f y) :=
-    Summable.of_norm_bounded (hmass.summable.norm.mul_right (Real.exp (max y 0)))
-      (hdom y)
-  have hconj (y : ℝ) (k : ℕ) : conj (f y k) = f y (c k) := by
-    dsimp only [f, a]
-    simp only [map_mul, map_div₀, map_one, map_sub, ← Complex.exp_conj,
-      Complex.conj_ofReal, hc]
-  have hreal (y : ℝ) : (∑' k : ℕ, f y k).im = 0 := by
-    have he : conj (∑' k : ℕ, f y k) = ∑' k : ℕ, f y k := by
-      rw [Complex.conj_tsum]
-      simp_rw [hconj]
-      exact c.tsum_eq (f y)
-    have him := congrArg Complex.im he
-    simp only [Complex.conj_im] at him
-    linarith
-  have hbound (y : ℝ) : ‖∑' k : ℕ, f y k‖ ≤
-      ((101 / 100 : ℝ) * firstLiMass) * Real.exp (max y 0) := by
-    have hmajor : HasSum
-        (fun k : ℕ => (((actualZero k).im)⁻¹ ^ 2) * Real.exp (max y 0))
-        ((∑' k : ℕ, ((actualZero k).im)⁻¹ ^ 2) * Real.exp (max y 0)) :=
-      hR.hasSum.mul_right _
-    calc
-      _ ≤ (∑' k : ℕ, ((actualZero k).im)⁻¹ ^ 2) * Real.exp (max y 0) := by
-        apply tsum_of_norm_bounded hmajor
-        intro k
-        exact (hdom y k).trans
-          (mul_le_mul_of_nonneg_right (hcoeff k) (Real.exp_nonneg _))
-      _ ≤ _ := mul_le_mul_of_nonneg_right actual_inverse_square_mass_le_height
-        (Real.exp_nonneg _)
-  have hexchange (w : ℝ → ℂ) (hw : AEStronglyMeasurable w volume)
-      (hwi : Integrable (fun y : ℝ => Real.exp (max y 0) * ‖w y‖)) :
-      HasSum
-        (fun k : ℕ => a k * ∫ y : ℝ,
-          Complex.exp ((y : ℂ) * actualZero k) * w y)
-        (∫ y : ℝ, (∑' k : ℕ, f y k) * w y) := by
-    let F : ℕ → ℝ → ℂ := fun k y => f y k * w y
-    let b : ℕ → ℝ → ℝ := fun k y =>
-      ‖a k‖ * (Real.exp (max y 0) * ‖w y‖)
-    have hF : ∀ k : ℕ, AEStronglyMeasurable (F k) volume := by
-      intro k
-      have hcontinuous : Continuous (fun y : ℝ => f y k) := by
-        dsimp only [f]
-        fun_prop
-      exact hcontinuous.aestronglyMeasurable.mul hw
-    have hFb : ∀ k : ℕ, ∀ᵐ y : ℝ, ‖F k y‖ ≤ b k y := by
-      intro k
-      exact ae_of_all volume fun y => by
-        calc
-          _ = ‖f y k‖ * ‖w y‖ := norm_mul _ _
-          _ ≤ (‖a k‖ * Real.exp (max y 0)) * ‖w y‖ :=
-            mul_le_mul_of_nonneg_right (hdom y k) (norm_nonneg _)
-          _ = _ := by dsimp only [b]; ring
-    have hbsum : ∀ᵐ y : ℝ, Summable (fun k : ℕ => b k y) :=
-      ae_of_all volume fun y =>
-        hmass.summable.norm.mul_right (Real.exp (max y 0) * ‖w y‖)
-    have hbint : Integrable (fun y : ℝ => ∑' k : ℕ, b k y) := by
-      simpa only [b, tsum_mul_right] using
-        hwi.const_mul (∑' k : ℕ, ‖a k‖)
-    have hlim : ∀ᵐ y : ℝ,
-        HasSum (fun k : ℕ => F k y) ((∑' k : ℕ, f y k) * w y) := by
-      exact ae_of_all volume fun y => (hsum y).hasSum.mul_right (w y)
-    have hd := hasSum_integral_of_dominated_convergence b hF hFb hbsum hbint hlim
-    convert hd using 1
-    funext k
-    dsimp only [F, f]
-    simp only [mul_assoc, integral_const_mul]
-  exact ⟨hmass, c, hc, (fun y => ⟨hsum y, hreal y, hbound y⟩), hexchange⟩
-
 
 /-! The single actual H below is shared by every W/K/v formula. The
 occurrence equivalence, conjugation permutation, strip, mass and height
@@ -512,24 +308,6 @@ theorem gaussianW_weighted_integrable (m γ : ℝ) (hm : 0 < m) :
     Integrable (fun y : ℝ => Real.exp (max y 0) * ‖gaussianW m γ y‖) := by
   simpa only [gaussianW_eq_quadratic] using weighted_quadratic_integrable m γ hm
 
-/-- Genuine weighted integrability of K; no m≥1 hypothesis is used here. -/
-theorem gaussianK_weighted_integrable (m γ : ℝ) (hm : 0 < m) :
-    Integrable (fun y : ℝ => Real.exp (max y 0) * ‖(gaussianK m γ y : ℂ)‖) := by
-  have hw := gaussianW_weighted_integrable m γ hm
-  have hmeas : AEStronglyMeasurable
-      (fun y : ℝ => Real.exp (max y 0) * ‖(gaussianK m γ y : ℂ)‖) volume := by
-    have hc : Continuous (fun y : ℝ => Real.exp (max y 0) *
-        ‖(gaussianK m γ y : ℂ)‖) := by
-      dsimp [gaussianK, gaussianW, gaussianP, gaussianU, gaussianDensity]
-      fun_prop
-    exact hc.aestronglyMeasurable
-  refine hw.mono' hmeas (ae_of_all volume fun y => ?_)
-  rw [Real.norm_eq_abs,
-    abs_of_nonneg (mul_nonneg (Real.exp_nonneg _) (norm_nonneg _))]
-  apply mul_le_mul_of_nonneg_left _ (Real.exp_nonneg _)
-  simpa only [gaussianK, Complex.norm_real, Real.norm_eq_abs] using
-    Complex.abs_re_le_norm (gaussianW m γ y)
-
 /-- Genuine weighted integrability of the exact real envelope v. -/
 theorem gaussianV_weighted_integrable (m γ : ℝ) (hm : 0 < m) :
     Integrable (fun y : ℝ => Real.exp (max y 0) * ‖(gaussianV m γ y : ℂ)‖) := by
@@ -546,34 +324,6 @@ private theorem gaussianV_tilt_eq (m γ : ℝ) (ρ : ℂ) (y : ℝ) :
     Complex.exp (ρ * (y : ℂ)) * (gaussianV m γ y : ℂ) =
       envelopeAt m γ ρ y := by
   rw [gaussianV_eq_envelope, envelopeAt_shift, add_zero]
-
-/-- Integrability is proved for every complex transform parameter, before evaluation. -/
-theorem gaussianW_tilt_integrable (m γ : ℝ) (hm : 0 < m) (ρ : ℂ) :
-    Integrable (fun y : ℝ => Complex.exp (ρ * (y : ℂ)) * gaussianW m γ y) := by
-  simpa only [gaussianW_tilt_eq] using
-    quadraticAt_integrable m γ hm (ρ - Complex.I * γ)
-
-theorem gaussianV_tilt_integrable (m γ : ℝ) (hm : 0 < m) (ρ : ℂ) :
-    Integrable (fun y : ℝ => Complex.exp (ρ * (y : ℂ)) *
-      (gaussianV m γ y : ℂ)) := by
-  simpa only [gaussianV_tilt_eq] using envelopeAt_integrable m γ hm ρ
-
-theorem gaussianK_tilt_integrable (m γ : ℝ) (hm : 0 < m) (ρ : ℂ) :
-    Integrable (fun y : ℝ => Complex.exp (ρ * (y : ℂ)) *
-      (gaussianK m γ y : ℂ)) := by
-  have hmeas : AEStronglyMeasurable (fun y : ℝ =>
-      Complex.exp (ρ * (y : ℂ)) * (gaussianK m γ y : ℂ)) volume := by
-    have hc : Continuous (fun y : ℝ =>
-        Complex.exp (ρ * (y : ℂ)) * (gaussianK m γ y : ℂ)) := by
-      dsimp [gaussianK, gaussianW, gaussianP, gaussianU, gaussianDensity]
-      fun_prop
-    exact hc.aestronglyMeasurable
-  refine (gaussianW_tilt_integrable m γ hm ρ).mono hmeas
-    (ae_of_all volume fun y => ?_)
-  rw [norm_mul, norm_mul]
-  apply mul_le_mul_of_nonneg_left _ (norm_nonneg _)
-  simpa only [gaussianK, Complex.norm_real, Real.norm_eq_abs] using
-    Complex.abs_re_le_norm (gaussianW m γ y)
 
 /-- Exact signed complex W transform; its minus sign belongs here. -/
 theorem gaussianW_transform (m γ : ℝ) (hm : 0 < m) (ρ : ℂ) :
@@ -678,7 +428,7 @@ private theorem H_mul_weight_integrable (w : ℝ → ℂ)
   have hmeas : AEStronglyMeasurable (fun y : ℝ => H y * w y) volume :=
     H_measurable.aestronglyMeasurable.mul hw
   refine hbase.mono' hmeas (ae_of_all volume fun y => ?_)
-  obtain ⟨_, _, _, hp, _⟩ := actual_occurrence_mass_symmetry_growth_exchange
+  obtain ⟨_, _, _, hp, _⟩ := D5.S3.Weil.Mertens.IntegratedExplicit.actual_complete_H_package
   have hbound : ‖H y‖ ≤
       ((101 / 100 : ℝ) * firstLiMass) * Real.exp (max y 0) := by
     simpa only [H] using (hp y).2.2
@@ -705,16 +455,8 @@ theorem H_weighted_V_product_integrable (m γ : ℝ) (hm : 0 < m) :
   exact H_mul_weight_integrable _ hc.aestronglyMeasurable
     (gaussianV_weighted_integrable m γ hm)
 
-theorem H_weighted_K_complex_product_integrable (m γ : ℝ) (hm : 0 < m) :
-    Integrable (fun y : ℝ => H y * (gaussianK m γ y : ℂ)) := by
-  have hc : Continuous (fun y : ℝ => (gaussianK m γ y : ℂ)) := by
-    unfold gaussianK gaussianW gaussianP gaussianU gaussianDensity
-    fun_prop
-  exact H_mul_weight_integrable _ hc.aestronglyMeasurable
-    (gaussianK_weighted_integrable m γ hm)
-
 private theorem H_im_zero (y : ℝ) : (H y).im = 0 := by
-  obtain ⟨_, _, _, hp, _⟩ := actual_occurrence_mass_symmetry_growth_exchange
+  obtain ⟨_, _, _, hp, _⟩ := D5.S3.Weil.Mertens.IntegratedExplicit.actual_complete_H_package
   exact (hp y).2.1
 
 private theorem real_product_eq_re (m γ y : ℝ) :
@@ -747,12 +489,18 @@ theorem actual_signed_W_exchange (m γ : ℝ) (hm : 0 < m) :
         Complex.exp ((m : ℂ) * (actualZero k - Complex.I * γ) ^ 2 +
           (16 * (m : ℂ)) * (actualZero k - Complex.I * γ)))
       (∫ y : ℝ, H y * gaussianW m γ y) := by
-  obtain ⟨_, _, _, _, hex⟩ := actual_occurrence_mass_symmetry_growth_exchange
   have hcW : Continuous (gaussianW m γ) := by
     unfold gaussianW gaussianP gaussianU gaussianDensity
     fun_prop
-  have he := hex (gaussianW m γ) hcW.aestronglyMeasurable
-    (gaussianW_weighted_integrable m γ hm)
+  obtain ⟨_, _, _, _, hex⟩ :=
+    D5.S3.Weil.Mertens.IntegratedExplicit.actual_complete_H_package
+  have he : HasSum (fun k : ℕ =>
+      (1 / (actualZero k * (1 - actualZero k))) *
+        ∫ y : ℝ, Complex.exp ((y : ℂ) * actualZero k) * gaussianW m γ y)
+      (∫ y : ℝ, H y * gaussianW m γ y) := by
+    simpa only [H] using
+      hex (gaussianW m γ) hcW.aestronglyMeasurable
+        (gaussianW_weighted_integrable m γ hm)
   have hcongr : ∀ k : ℕ,
       (1 / (actualZero k * (1 - actualZero k))) *
           (∫ y : ℝ, Complex.exp ((y : ℂ) * actualZero k) * gaussianW m γ y) =
@@ -790,12 +538,18 @@ theorem actual_signed_V_exchange (m γ : ℝ) (hm : 0 < m) :
             Complex.exp ((m : ℂ) * actualZero k ^ 2 +
               (16 * (m : ℂ)) * actualZero k)))
       (∫ y : ℝ, H y * (gaussianV m γ y : ℂ)) := by
-  obtain ⟨_, _, _, _, hex⟩ := actual_occurrence_mass_symmetry_growth_exchange
   have hcV : Continuous (fun y : ℝ => (gaussianV m γ y : ℂ)) := by
     dsimp [gaussianV, gaussianU, gaussianDensity]
     fun_prop
-  have he := hex (fun y : ℝ => (gaussianV m γ y : ℂ))
-    hcV.aestronglyMeasurable (gaussianV_weighted_integrable m γ hm)
+  obtain ⟨_, _, _, _, hex⟩ :=
+    D5.S3.Weil.Mertens.IntegratedExplicit.actual_complete_H_package
+  have he : HasSum (fun k : ℕ =>
+      (1 / (actualZero k * (1 - actualZero k))) *
+        ∫ y : ℝ, Complex.exp ((y : ℂ) * actualZero k) * (gaussianV m γ y : ℂ))
+      (∫ y : ℝ, H y * (gaussianV m γ y : ℂ)) := by
+    simpa only [H] using
+      hex (fun y : ℝ => (gaussianV m γ y : ℂ)) hcV.aestronglyMeasurable
+        (gaussianV_weighted_integrable m γ hm)
   have hcongr : ∀ k : ℕ,
       (1 / (actualZero k * (1 - actualZero k))) *
           (∫ y : ℝ, Complex.exp ((y : ℂ) * actualZero k) *
@@ -834,118 +588,7 @@ theorem actual_signed_K_exchange (m γ : ℝ) (hm : 0 < m) :
           (16 * (m : ℂ)) * (actualZero k - Complex.I * γ))).re := by
       rw [hsum.tsum_eq]
 
-/-- The entire envelope response, with its factor two outside the real part.
-The reciprocal coefficient remains complex and every occurrence is retained. -/
-theorem actual_signed_V_real_exchange (m γ : ℝ) (hm : 0 < m) :
-    (∫ y : ℝ, (H y).re * gaussianV m γ y) =
-      2 * (∑' k : ℕ,
-        (1 / (actualZero k * (1 - actualZero k))) *
-          (actualZero k ^ 2 + (γ : ℂ) ^ 2 + 1 + 1 / (2 * (m : ℂ))) *
-          Complex.exp ((m : ℂ) * actualZero k ^ 2 +
-            (16 * (m : ℂ)) * actualZero k)).re := by
-  have hsum := actual_signed_V_exchange m γ hm
-  have hI := H_weighted_V_product_integrable m γ hm
-  calc
-    (∫ y : ℝ, (H y).re * gaussianV m γ y) =
-        ∫ y : ℝ, (H y * (gaussianV m γ y : ℂ)).re := by
-      apply integral_congr_ae
-      exact ae_of_all volume fun y => by
-        simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
-          mul_zero, sub_zero]
-    _ = (∫ y : ℝ, H y * (gaussianV m γ y : ℂ)).re := integral_re hI
-    _ = (∑' k : ℕ,
-        (1 / (actualZero k * (1 - actualZero k))) *
-          (2 * (actualZero k ^ 2 + (γ : ℂ) ^ 2 + 1 + 1 / (2 * (m : ℂ))) *
-            Complex.exp ((m : ℂ) * actualZero k ^ 2 +
-              (16 * (m : ℂ)) * actualZero k))).re := by rw [hsum.tsum_eq]
-    _ = (2 * ∑' k : ℕ,
-        (1 / (actualZero k * (1 - actualZero k))) *
-          (actualZero k ^ 2 + (γ : ℂ) ^ 2 + 1 + 1 / (2 * (m : ℂ))) *
-          Complex.exp ((m : ℂ) * actualZero k ^ 2 +
-            (16 * (m : ℂ)) * actualZero k)).re := by
-      congr 1
-      rw [← tsum_mul_left]
-      apply tsum_congr
-      intro k
-      ring
-    _ = _ := by simp
 
-/-- An absolute exchange for the actual occurrence family. Each summand is
-integrable, the sum of its absolute values is integrable, and the integrals
-of those absolute values have the indicated finite sum. W, K and v satisfy
-these hypotheses by the proved weighted integrability theorems above. -/
-theorem actual_absolute_exchange (w : ℝ → ℂ) (hw : Continuous w)
-    (hwi : Integrable (fun y : ℝ => Real.exp (max y 0) * ‖w y‖)) :
-    let F : ℕ → ℝ → ℂ := fun k y =>
-      (1 / (actualZero k * (1 - actualZero k))) *
-        Complex.exp ((y : ℂ) * actualZero k) * w y
-    (∀ k : ℕ, Integrable (F k)) ∧
-      Integrable (fun y : ℝ => ∑' k : ℕ, ‖F k y‖) ∧
-      HasSum (fun k : ℕ => ∫ y : ℝ, ‖F k y‖)
-        (∫ y : ℝ, ∑' k : ℕ, ‖F k y‖) := by
-  classical
-  dsimp only
-  let a : ℕ → ℂ := fun k => 1 / (actualZero k * (1 - actualZero k))
-  let F : ℕ → ℝ → ℂ := fun k y =>
-    a k * Complex.exp ((y : ℂ) * actualZero k) * w y
-  let B : ℝ → ℝ := fun y => Real.exp (max y 0) * ‖w y‖
-  obtain ⟨hmass, _, _, _, _⟩ := actual_occurrence_mass_symmetry_growth_exchange
-  have ha : Summable (fun k : ℕ => ‖a k‖) := hmass.summable.norm
-  have hFcont (k : ℕ) : Continuous (F k) := by
-    dsimp only [F]
-    exact (continuous_const.mul
-      (Complex.continuous_exp.comp (Complex.continuous_ofReal.mul continuous_const))).mul hw
-  have hdom (y : ℝ) (k : ℕ) : ‖F k y‖ ≤ ‖a k‖ * B y := by
-    have hs := (actualData.zero_isNontrivial (actualOccurrenceEquiv k).1).2
-    have hs0 : 0 ≤ (actualZero k).re := hs.1.le
-    have hs1 : (actualZero k).re ≤ 1 := hs.2.le
-    have he : y * (actualZero k).re ≤ max y 0 := by
-      rcases le_or_gt 0 y with hy | hy
-      · rw [max_eq_left hy]
-        nlinarith
-      · have ht : y * (actualZero k).re ≤ 0 :=
-          mul_nonpos_of_nonpos_of_nonneg hy.le hs0
-        simpa only [max_eq_right hy.le] using ht
-    dsimp only [F, B]
-    rw [norm_mul, norm_mul, Complex.norm_exp]
-    simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
-      zero_mul, sub_zero]
-    calc
-      ‖a k‖ * Real.exp (y * (actualZero k).re) * ‖w y‖ ≤
-          ‖a k‖ * Real.exp (max y 0) * ‖w y‖ :=
-        mul_le_mul_of_nonneg_right
-          (mul_le_mul_of_nonneg_left (Real.exp_le_exp.mpr he) (norm_nonneg _))
-          (norm_nonneg _)
-      _ = _ := by ring
-  have hFi (k : ℕ) : Integrable (F k) :=
-    (hwi.const_mul ‖a k‖).mono' (hFcont k).aestronglyMeasurable
-      (ae_of_all volume fun y => hdom y k)
-  have hns (y : ℝ) : Summable (fun k : ℕ => ‖F k y‖) :=
-    Summable.of_nonneg_of_le (fun _ => norm_nonneg _) (hdom y) (ha.mul_right (B y))
-  have hsummeas : AEStronglyMeasurable (fun y : ℝ => ∑' k : ℕ, ‖F k y‖) volume :=
-    (Measurable.tsum (fun k => (hFcont k).norm.measurable)).aestronglyMeasurable
-  have hsumdom (y : ℝ) : (∑' k : ℕ, ‖F k y‖) ≤ (∑' k : ℕ, ‖a k‖) * B y := by
-    calc
-      _ ≤ ∑' k : ℕ, ‖a k‖ * B y :=
-        (hns y).tsum_le_tsum (hdom y) (ha.mul_right (B y))
-      _ = _ := tsum_mul_right
-  have hsumI : Integrable (fun y : ℝ => ∑' k : ℕ, ‖F k y‖) := by
-    refine (hwi.const_mul (∑' k : ℕ, ‖a k‖)).mono' hsummeas
-      (ae_of_all volume fun y => ?_)
-    rw [Real.norm_eq_abs, abs_of_nonneg (tsum_nonneg (fun _ => norm_nonneg _))]
-    exact hsumdom y
-  have hbsum : ∀ᵐ y : ℝ, Summable (fun k : ℕ => ‖a k‖ * B y) :=
-    ae_of_all volume fun y => ha.mul_right (B y)
-  have hbI : Integrable (fun y : ℝ => ∑' k : ℕ, ‖a k‖ * B y) := by
-    simpa only [tsum_mul_right, B] using hwi.const_mul (∑' k : ℕ, ‖a k‖)
-  have habs : HasSum (fun k : ℕ => ∫ y : ℝ, ‖F k y‖)
-      (∫ y : ℝ, ∑' k : ℕ, ‖F k y‖) := by
-    apply hasSum_integral_of_dominated_convergence (fun k y => ‖a k‖ * B y)
-      (fun k => (hFcont k).norm.aestronglyMeasurable) ?_ hbsum hbI
-      (ae_of_all volume fun y => (hns y).hasSum)
-    intro k
-    exact ae_of_all volume fun y => by simpa only [norm_norm] using hdom y k
-  exact ⟨hFi, hsumI, habs⟩
 
 
 end D5.S3.Arith.Robin.CompleteActualSignedGaussianExchange

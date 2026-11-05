@@ -1,3 +1,10 @@
+/- GID: D5/S3/Arith/Robin/ActualGaussianEnvelopeMassBudget
+   generality: I
+   mirror-B: D5/B/S3/Arith/Robin/ActualGaussianEnvelopeMassBudget
+   mirror-E: none(waiver:analytic-proof-without-numeric-projection)
+   anchors: []
+   utility: none
+   digest: Quantitative complete Gaussian localization for the original positive-U theorem. -/
 /- SOURCE ONLY. Complete spectral response and direct inverse-square bound.
    The norm of the signed integral is bounded; no pointwise smallness of
    the absolute-value integrand is asserted. -/

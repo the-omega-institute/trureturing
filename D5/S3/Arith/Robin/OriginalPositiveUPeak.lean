@@ -1,8 +1,15 @@
+/- GID: D5/S3/Arith/Robin/OriginalPositiveUPeak
+   generality: I
+   mirror-B: D5/B/S3/Arith/Robin/OriginalPositiveUPeak
+   mirror-E: none(waiver:analytic-proof-without-numeric-projection)
+   anchors: []
+   utility: none
+   digest: Quantitative complete Gaussian localization for the original positive-U theorem. -/
 /- COMPLETE SOURCE OVERLAY ONLY — UNCOMPILED.
    Original section479, original 100/500-scale interval, complete inclusive U.
-   The current natural Gaussian4590 owner and reviewed F3/F5 repairs are
-   integrated. The pinned four whole-formula modules remain source-only API
-   dependencies. No compilation, kernel acceptance, registration or RH claim. -/
+   Current shared Gaussian and integrated-formula suppliers are reused.
+   No compilation, kernel acceptance, registration or RH claim. -/
+import D5.S3.Analytic.GaussianSignedLocalization
 import D5.S3.Weil.Mertens.IntegratedExplicit.WholeFormula
 import D5.S3.Weil.ZeroData.ActualGaussianDirectTail
 import D5.S3.Arith.Robin.OriginalGaussianIntegralBudgets
@@ -45,69 +52,6 @@ private theorem actual_H_re_le_U {y : ℝ} (hy : 0 < y) :
     exact Real.exp_one_lt_three.trans (by linarith [Real.pi_gt_three])
   linarith
 
-/-- Signed localization BEFORE replacing the signed debit by its norm.
-All four integrals below are integrals of genuinely integrable functions.
-The term subtracted is integral(f*v), not integral(|f|*v). The proof reuses
-the sealed GaussianSignedLocalization pointwise/indicator argument, stopping
-before its last absolute-value relaxation. This stronger helper is consumed. -/
-private theorem signed_localization_debit
-    (f k v B : ℝ → ℝ) (J : Set ℝ) (hJ : MeasurableSet J)
-    (hk : ∀ y, |k y| ≤ v y)
-    (hB : ∀ y ∈ J, 0 ≤ B y) (hfB : ∀ y ∈ J, f y ≤ B y)
-    (hfk : Integrable (fun y => f y * k y))
-    (hfv : Integrable (fun y => f y * v y))
-    (hBv : Integrable (fun y => B y * v y))
-    (hav : Integrable (fun y => |f y| * v y)) :
-    (∫ y : ℝ, f y * k y) ≤
-      2 * (∫ y in J, B y * v y) +
-        2 * (∫ y in Jᶜ, |f y| * v y) - ∫ y : ℝ, f y * v y := by
-  have hcentral : Integrable (J.indicator (fun y => 2 * (B y * v y))) :=
-    (hBv.const_mul 2).indicator hJ
-  have hexterior : Integrable (Jᶜ.indicator (fun y => 2 * (|f y| * v y))) :=
-    (hav.const_mul 2).indicator hJ.compl
-  have hpoint (y : ℝ) : f y * k y ≤
-      J.indicator (fun x => 2 * (B x * v x)) y +
-        Jᶜ.indicator (fun x => 2 * (|f x| * v x)) y - f y * v y := by
-    obtain ⟨hkm, hkp⟩ := abs_le.mp (hk y)
-    have hplus : 0 ≤ k y + v y := by linarith
-    by_cases hy : y ∈ J
-    · rw [Set.indicator_of_mem hy,
-        Set.indicator_of_notMem (show y ∉ Jᶜ from fun h => h hy), add_zero]
-      have hmul := mul_le_mul_of_nonneg_right (hfB y hy) hplus
-      have hbudget := mul_le_mul_of_nonneg_left hkp (hB y hy)
-      nlinarith
-    · rw [Set.indicator_of_notMem hy,
-        Set.indicator_of_mem (show y ∈ Jᶜ from hy), zero_add]
-      have hmul := mul_le_mul_of_nonneg_right (le_abs_self (f y)) hplus
-      have hbudget := mul_le_mul_of_nonneg_left hkp (abs_nonneg (f y))
-      nlinarith
-  have hle := integral_mono hfk ((hcentral.add hexterior).sub hfv) hpoint
-  have hle' : (∫ x : ℝ, f x * k x) ≤
-      ∫ x : ℝ,
-        (J.indicator (fun y => 2 * (B y * v y)) x +
-            Jᶜ.indicator (fun y => 2 * (|f y| * v y)) x) - f x * v x := by
-    simpa only [Pi.add_apply, Pi.sub_apply] using hle
-  have hsub :
-      (∫ x : ℝ,
-          J.indicator (fun y => 2 * (B y * v y)) x +
-            Jᶜ.indicator (fun y => 2 * (|f y| * v y)) x - f x * v x) =
-        (∫ x : ℝ,
-          J.indicator (fun y => 2 * (B y * v y)) x +
-            Jᶜ.indicator (fun y => 2 * (|f y| * v y)) x) -
-          ∫ x : ℝ, f x * v x := by
-    simpa only [Pi.add_apply, Pi.sub_apply] using
-      (integral_sub (hcentral.add hexterior) hfv)
-  calc
-    (∫ x : ℝ, f x * k x) ≤
-        ∫ x : ℝ,
-          (J.indicator (fun y => 2 * (B y * v y)) x +
-              Jᶜ.indicator (fun y => 2 * (|f y| * v y)) x) - f x * v x := hle'
-    _ = (2 * (∫ y in J, B y * v y) +
-          2 * (∫ y in Jᶜ, |f y| * v y)) - ∫ y : ℝ, f y * v y := by
-      rw [hsub, integral_add hcentral hexterior,
-        integral_indicator hJ, integral_indicator hJ.compl,
-        integral_const_mul, integral_const_mul]
-
 /-- All four original F5 constants are consumed, on their exact domains.
 The interval bound is an internal consequence of the no-peak contradiction,
 not an additional hypothesis of the final actual-zero theorem. -/
@@ -127,9 +71,9 @@ private theorem full_E_upper_of_central_bound
     have hy0 : 0 ≤ y := by linarith [hy.1]
     dsimp only [b]
     positivity
-  have hdebit := signed_localization_debit (fun y => (H y).re)
+  have hdebit := D5.S3.Analytic.GaussianSignedLocalization.signed_localization_debit (fun y => (H y).re)
     (gaussianK m γ) (gaussianV m γ) b (Icc (4 * m) (28 * m))
-    measurableSet_Icc hdom hbJ hH hHK hHv hbv hav
+    measurableSet_Icc hdom hbJ hH hHK hHv hbv.integrableOn hav.integrableOn
   have hE : (∫ y : ℝ, (H y).re * gaussianK m γ y) = (E m γ).re := by
     rw [actual_signed_K_exchange m γ hmpos]
     unfold E summand

@@ -1,3 +1,10 @@
+/- GID: D5/S3/Weil/ZeroData/ActualGaussianZeroSum
+   generality: I
+   mirror-B: D5/B/S3/Weil/ZeroData/ActualGaussianZeroSum
+   mirror-E: none(waiver:analytic-proof-without-numeric-projection)
+   anchors: []
+   utility: none
+   digest: Quantitative complete Gaussian localization for the original positive-U theorem. -/
 /- SOURCE CANDIDATE ONLY. Absolute convergence of the COMPLETE E_gamma,
    with no reciprocal weights in E itself. The majorant uses the previously
    proved actual inverse-square mass. Sharp tail constants and the original

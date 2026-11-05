@@ -1,3 +1,10 @@
+/- GID: D5/S3/Arith/Robin/MangoldtPeakExponentialBudget
+   generality: I
+   mirror-B: D5/B/S3/Arith/Robin/MangoldtPeakExponentialBudget
+   mirror-E: none(waiver:analytic-proof-without-numeric-projection)
+   anchors: []
+   utility: none
+   digest: Quantitative complete Gaussian localization for the original positive-U theorem. -/
 /- SOURCE CANDIDATE ONLY. This elementary bound is consumed by the original
    500-scale proof plan. It neither replaces the peak nor shrinks its scope. -/
 import Mathlib.Analysis.SpecialFunctions.Exp

@@ -1,3 +1,10 @@
+/- GID: D5/S3/Arith/Robin/OriginalGaussianIntegralBudgets
+   generality: I
+   mirror-B: D5/B/S3/Arith/Robin/OriginalGaussianIntegralBudgets
+   mirror-E: none(waiver:analytic-proof-without-numeric-projection)
+   anchors: []
+   utility: none
+   digest: Quantitative complete Gaussian localization for the original positive-U theorem. -/
 /- SOURCE IMPLEMENTATION ONLY. Original F5: whole Hv, positive central
    response, complete nonnegative exterior, and the entire negative axis.
    No integral is used without a preceding integrability proof. -/

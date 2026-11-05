@@ -1,3 +1,10 @@
+/- GID: D5/S3/Weil/ZeroData/ActualGaussianLocalWindow
+   generality: I
+   mirror-B: D5/B/S3/Weil/ZeroData/ActualGaussianLocalWindow
+   mirror-E: none(waiver:analytic-proof-without-numeric-projection)
+   anchors: []
+   utility: none
+   digest: Quantitative complete Gaussian localization for the original positive-U theorem. -/
 /- SOURCE CANDIDATE ONLY. A COMPLETE finite local occurrence set, obtained
    from actual ZeroData and its native mass theorem. No local finiteness,
    height, multiplicity, or cardinality supplier is an input. -/
