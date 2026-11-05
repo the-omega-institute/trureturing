@@ -6,9 +6,9 @@
    utility: none
    digest: Stochastic unitary transport permutes pure rays and conserves grouped weights. -/
 
-import D5.S3.Quantum.Measurement.FourQubitParentConstruction
+import D5.S3.Quantum.Measurement.QubitBloch
 import D5.S3.Quantum.Measurement.AntidistinguishabilityGram
-import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
+import D5.S3.QuantumStates.DensitySpan
 import D5.S3.Quantum.Information.ActualQubitChordObstruction
 import Mathlib.LinearAlgebra.Matrix.Stochastic
 
@@ -229,7 +229,7 @@ private theorem ray_facts (k : Fin 4) :
     have h3n : Real.sqrt 3 ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr (by norm_num))
     have h11n : Real.sqrt 11 ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr (by norm_num))
     have hs : ‖direction k‖ ^ 2 = 1 := by
-      rw [norm_sq_coords]
+      rw [EuclideanSpace.real_norm_sq_eq, Fin.sum_univ_three]
       fin_cases k <;> simp [direction] <;> field_simp <;> nlinarith
     nlinarith [norm_nonneg (direction k)]
   refine ⟨?_, D5.S3.Quantum.Information.ActualQubitChordObstruction.pure _ hn,

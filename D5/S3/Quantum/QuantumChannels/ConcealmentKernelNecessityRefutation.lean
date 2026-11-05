@@ -10,8 +10,9 @@
    consumers: result, D5.S3.Quantum.Measurements.BroadcastingChannelExtremaRefutation.result. -/
 
 import D5.S3.Quantum.QuantumChannels.PositiveFilterTransposeRefutation
+import D5.S3.QuantumStates.DensitySpan
 import D5.S3.QuantumChannels.CumulantRenyiDataProcessingRefutation
-import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
+import D5.S3.Quantum.Information.PauliMatrix
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -21,7 +22,6 @@ noncomputable section
 open scoped BigOperators ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 open Matrix
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
-open D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation (IsDensity)
 open D5.S3.Quantum.Measurement.BasisMeasurementProjection (HermitianSpace)
 open D5.S3.Quantum.FiniteDimensional (qubitX qubitZ)
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence (Pauli pauliMatrix)
@@ -52,10 +52,6 @@ def Concealed {din dout : ℕ} {Ω Λ : Type} [Fintype Ω] [Fintype Λ]
       Compatible F G ∧
         (∀ ρ ∈ T, ∀ a, trace (F a * E ρ) = trace (M a * E ρ)) ∧
         (∀ ρ ∈ T, ∀ b, trace (G b * E ρ) = trace (N b * E ρ))
-
-/-- A set of density matrices whose real span is the full Hermitian operator space. -/
-def TomographicallyComplete {d : ℕ} (T : Set (Matrix (Fin d) (Fin d) ℂ)) : Prop :=
-  (∀ ρ ∈ T, IsDensity ρ) ∧ Submodule.span ℝ T = HermitianSpace d
 
 /-- The kernel of the Heisenberg adjoint, restricted to Hermitian operators. -/
 def AdjointKernel {din dout : ℕ} (E : MatrixMap (Fin din) (Fin dout) ℂ) :
@@ -89,42 +85,6 @@ theorem dual_kraus {din dout : ℕ} {κ : Type} [Fintype κ]
   apply Finset.sum_congr rfl
   intro j _
   simpa only [Matrix.mul_assoc] using Matrix.trace_mul_comm (K j) (X * ((K j)ᴴ * A))
-
-/-- All density matrices span the Hermitian operator space over the reals. -/
-theorem all_density_tomographically_complete (d : ℕ) :
-    TomographicallyComplete {ρ : Matrix (Fin d) (Fin d) ℂ | IsDensity ρ} := by
-  refine ⟨fun _ h => h, le_antisymm ?_ ?_⟩
-  · apply Submodule.span_le.mpr
-    intro A hA
-    exact hA.1.isHermitian
-  · let S := Submodule.span ℝ {ρ : Matrix (Fin d) (Fin d) ℂ | IsDensity ρ}
-    have positive_mem (A : Matrix (Fin d) (Fin d) ℂ) (hA : A.PosSemidef) : A ∈ S := by
-      by_cases hz : trace A = 0
-      · rw [hA.trace_eq_zero_iff.mp hz]
-        exact S.zero_mem
-      · let r := (trace A).re
-        have hrreal : (r : ℂ) = trace A := by
-          apply Complex.ext
-          · rfl
-          · exact (Complex.nonneg_iff.mp hA.trace_nonneg).2
-        have hrne : r ≠ 0 := by
-          intro hr
-          apply hz
-          rw [← hrreal, hr, Complex.ofReal_zero]
-        have hr : 0 < r := lt_of_le_of_ne (Complex.nonneg_iff.mp hA.trace_nonneg).1
-          (Ne.symm hrne)
-        have hρ : IsDensity (r⁻¹ • A) := by
-          refine ⟨hA.smul (inv_nonneg.mpr hr.le), ?_⟩
-          rw [Matrix.trace_smul, ← hrreal, Complex.real_smul]
-          simp [hrne]
-        have hmem := S.smul_mem r (Submodule.subset_span hρ)
-        simpa only [smul_smul, mul_inv_cancel₀ hrne, one_smul] using hmem
-    intro A hA
-    change IsSelfAdjoint A at hA
-    rw [← CFC.posPart_sub_negPart A hA]
-    exact S.sub_mem
-      (positive_mem _ (Matrix.nonneg_iff_posSemidef.mp (CFC.posPart_nonneg A)))
-      (positive_mem _ (Matrix.nonneg_iff_posSemidef.mp (CFC.negPart_nonneg A)))
 
 /-- Nonnegative normalized real diagonal entries define a POVM. -/
 theorem diagonal_povm {d : ℕ} {Ω : Type} [Fintype Ω]

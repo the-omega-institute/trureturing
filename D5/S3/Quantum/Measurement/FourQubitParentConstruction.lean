@@ -46,6 +46,7 @@
   finite identities are consumed in its proof and in the extremal certificates.
 -/
 import D5.S3.Geometry.FourVectorSignSumBound
+import D5.S3.Quantum.Measurement.QubitBloch
 import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
 import D5.S3.Quantum.Information.ActualPureQubitGeometry
 set_option autoImplicit false
@@ -56,7 +57,6 @@ open Matrix
 open D5.S3.Combinatorics.IsingUniquenessSets (sgn)
 open scoped BigOperators ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 open D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation (IsPOVM)
-open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence (pauliMatrix)
 open D5.S3.Quantum.FiniteDimensional
 open D5.S3.Quantum.Information.ActualPureQubitCostInfimum (bloch)
 open D5.S3.Geometry.FourVectorSignSumBound
@@ -67,15 +67,6 @@ def Compatible4 (E : (Fin 4 → Bool → Matrix (Fin 2) (Fin 2) ℂ)) : Prop :=
 def noisy (s : ℝ) (E : (Fin 4 → Bool → Matrix (Fin 2) (Fin 2) ℂ)) : (Fin 4 → Bool → Matrix (Fin 2) (Fin 2) ℂ) :=
   fun i b => s • E i b + (1 - s) • ((1 / 2 : ℂ) • (1 : (Matrix (Fin 2) (Fin 2) ℂ)))
 def endpoint : ℝ := 2 / Real.sqrt 13
-def B (a : (EuclideanSpace ℝ (Fin 3))) : (Matrix (Fin 2) (Fin 2) ℂ) :=
-  (a 0 : ℂ) • pauliMatrix .X + (a 1 : ℂ) • pauliMatrix .Y +
-    (a 2 : ℂ) • pauliMatrix .Z
-theorem B_formula (a : (EuclideanSpace ℝ (Fin 3))) :
-    B a = !![(a 2 : ℂ), (a 0 : ℂ) - Complex.I * (a 1 : ℂ);
-      (a 0 : ℂ) + Complex.I * (a 1 : ℂ), -(a 2 : ℂ)] := by
-  ext i j
-  fin_cases i <;> fin_cases j <;>
-    simp [B, pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two] <;> ring
 @[simp] theorem B_zero : B (0 : (EuclideanSpace ℝ (Fin 3))) = 0 := by
   simp [B]
 @[simp] private theorem B_add (a b : (EuclideanSpace ℝ (Fin 3))) : B (a + b) = B a + B b := by
@@ -103,7 +94,6 @@ theorem trace_B_mul (a b : (EuclideanSpace ℝ (Fin 3))) : Matrix.trace (B a * B
   apply Complex.ext <;>
     simp [B_formula, Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two,
       PiLp.inner_apply, Fin.sum_univ_three, Complex.mul_re, Complex.mul_im] <;> ring
-def scalarB (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) : (Matrix (Fin 2) (Fin 2) ℂ) := (t : ℂ) • (1 : (Matrix (Fin 2) (Fin 2) ℂ)) + B a
 theorem scalarB_hermitian (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) : (scalarB t a).IsHermitian := by
   apply Matrix.IsHermitian.ext
   intro i j
