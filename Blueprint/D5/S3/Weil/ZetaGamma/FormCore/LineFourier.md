@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.angularFourier`
 
 *Commentary.*
 
-The angular Fourier transform is the raw Fourier transform evaluated at z/(2*pi). The existing private integral calculation identifies the kernel exp(-i*z*x), fixing the sign and angular normalization for arbitrary complex inputs.
+The angular Fourier transform is the raw Fourier transform evaluated at z/(2*pi). The integral equality angularFourier_eq_integral identifies the kernel exp(-i*z*x), fixing the sign and angular normalization for arbitrary complex inputs. The finite-cell coercivity proof consumes this original equality together with angular_extended_plancherel to identify the mass of the actual rho density.
 
 **Theorem 1.4 (angular extended plancherel).**
 

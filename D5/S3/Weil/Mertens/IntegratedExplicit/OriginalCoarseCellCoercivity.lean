@@ -278,4 +278,3 @@ theorem original_coarse_cell_coercivity (D β : ℝ) (hD : 0 < D) (hβ : 0 < β)
 #print axioms original_coarse_cell_coercivity
 
 end D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate
-
