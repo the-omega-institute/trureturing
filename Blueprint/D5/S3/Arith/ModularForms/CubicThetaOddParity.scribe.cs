@@ -28,7 +28,7 @@ internal sealed class CubicThetaOddParityDocument : IScribeDocumentDefinition
         string prose, DescribeRole role, AssessedProvenance provenance) =>
         Describe.Lean(DescribeId.Create("cubic-theta-odd-parity-" + id),
             DeclarationHandle.Create(Prefix + declaration), H(declaration),
-            StatementSource.FromAuthor(new Formula.Layout(FormulaLayoutMode.Display, formula)),
+            StatementSource.FromAuthor(FormulaDsl.Disp(formula)),
             provenance, Blocks(Paragraph(Text(prose))), role);
 
     private static Formula Constant(string name) =>
