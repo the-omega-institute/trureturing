@@ -124,6 +124,33 @@ internal sealed class RawAnchoredRadicalDescentDocument : IScribeDocumentDefinit
         "Raw balance yields the actual Fourier defect quotient and additive marker descent.",
         H("Raw Anchored Fourier Defect Descent"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("raw-three-phase-balance"),
+                DeclarationHandle.Create(Gid + "RawBalance"),
+                H("The original raw balance hypotheses"),
+                StatementSource.FromAuthor(Disp(Frame(Eqn(Call("RawBalance", F.Id("U"), F.Id("c")),
+                    Conjunction(Eqn(Mark(D(1)), D(1)),
+                        AllM(A, AllM(B, Seq(D(0), Sp, Le, Sp, Read(A, B)))),
+                        AllM(A, Eqn(Read(A, A), D(0))),
+                        AllM(A, AllM(B, AllM(U, AllM(V, RawBalanceFormula()))))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("M has only a binary operation and a two-sided unit. U is an arbitrary self-map fixing the unit, and c is finite and real-valued. No associativity, commutativity, cancellation, inverse, marker homomorphism, surjectivity, periodicity, symmetry or positive-semidefinite form is assumed."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("raw-marker-readouts"),
+                DeclarationHandle.Create(Gid + "raw_marker_readouts"),
+                H("The comparison has derived marker invariance"),
+                StatementSource.FromAuthor(Disp(Original(Conjunction(
+                    AllM(U, AllM(V, Eqn(Read(Mark(U), Mark(V)), Read(U, V)))),
+                    AllM(A, AllM(B, AllM(U, AllM(V,
+                        Eqn(Read(Product(A, Mark(Mark(Mark(U)))), Product(B, Mark(Mark(Mark(V))))),
+                            Read(Product(A, U), Product(B, V))))))),
+                    AllM(U, AllM(Z, Both(
+                        Eqn(Read(Mark(Mark(Mark(U))), Z), Read(U, Z)),
+                        Eqn(Read(Z, Mark(Mark(Mark(U)))), Read(Z, U)))))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For s(n)=c(U^n u,U^n v), the raw law at the two units gives s(n+1)+s(n+2)=2s(n). Apply ThreeWayBalance.nonneg_recurrence_constant directly, exchanging the summands. Subtracting consecutive original balance identities gives contextual invariance. Specializing either contextual input to the unit gives every row and column equality. These equalities supply the ordered anchored-kernel descent below. Only the readings have period three; the original marker need not have period three."))),
+                DescribeRole.Theorem),
             Paragraph(Text("Let E be the full finite-support real space on M, e(a)=delta(a)-delta(1), and E0 the real span of the e(a). Put q(a)=c(a,1), r(a)=c(1,a), and kernel(a,b)=(q(a)+r(b)-c(a,b))/2. B0 is its bilinear extension to E. Rad is the intersection of the left and right radicals, V=E/Rad, pi is the quotient map, beta(a)=pi(e(a)), and B is the induced ordered bilinear form. S is the free linear extension of U. R is its induced operator on V.")),
             Paragraph(Text("Put T(a,u)=beta(a*u)-beta(a)-beta(u), W=span(range T), gamma(a)=beta(a) mod W, and let rho be the operator induced by R on V/W. All spans and quotients are real. Function images of subspaces are written pi(E0) and R(W). Superscripts on U and rho denote iteration, including the zeroth iterate.")),
             Describe.Lean(
@@ -195,7 +222,7 @@ internal sealed class RawAnchoredRadicalDescentDocument : IScribeDocumentDefinit
                         All(X, Visible, All(Y, Visible,
                             Eqn(Comparison(X, Y), Call("Q", Minus2(X, Y)))))))))),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Apply the existing three_way_quadratic_structure with the actual visibleGroup, visibleMarker and visibleEnergy. Its returned Q agrees pointwise with this same energy. Translation invariance then identifies the original descended comparison with Q(x-y). This application is a consumed binding and supplies no new mathematical-content witness."))),
+                Blocks(Paragraph(Text("Apply the existing three_way_quadratic_structure with the actual visibleGroup, visibleMarker and visibleEnergy. Its returned Q agrees pointwise with this same energy. Translation invariance then identifies the original descended comparison with Q(x-y). The resulting quadratic map also occurs in the complete characterization below."))),
                 DescribeRole.Theorem),
             Paragraph(Text("RawHilbertRepresentation(U,c) consists of a carrier H with its normed additive commutative group, complex inner-product space and completeness instances, together with an original-label map F:M->H. Its fields are F(1)=0, F(a*b)=F(a)+F(b), F(Ua)=omega F(a), c(a,b)=norm(F(a)-F(b))^2 and topologicalClosure(span_C(range F))=top. Here omega is the existing explicit complex number (-1/2,sqrt(3)/2), and the Lean inner product is conjugate-linear in its first variable. The represented distances and unitary uniqueness are independent of that convention.")),
             Describe.Lean(
@@ -208,7 +235,13 @@ internal sealed class RawAnchoredRadicalDescentDocument : IScribeDocumentDefinit
                 DescribeRole.Theorem),
             Paragraph(Text("Eisenstein is the actual subalgebra Algebra.adjoin_Z({omega}) inside the complex numbers. visibleImage(U,c,h,R) has carrier range(R.label) and inherits complex scalar multiplication restricted to Eisenstein. Algebra.adjoin_induction proves that this actual image is closed: integers use additive scalar multiplication, omega uses the actual marker phase, and sum/product closure uses the same range. omegaScalar is omega as an element of that generated subring. zeroComparisonSetoid(U,c,h) has literal relation c(a,b)=0; VisibleQuotient is its Quotient. The quotient group is transported through the proved bijection to visibleGroup, and the Eisenstein module is transported through the actual image equivalence. No new scalar ring, recipe, completion point or physical operation is supplied.")),
             Paragraph(Text("If the chosen Hilbert labels of a and b agree, the distance formula gives equality of every original row and every original column. This gives equality of q and r and annihilates both ordered B pairings of beta(a)-beta(b) against every beta label. The proved joint nondegeneracy forces beta(a)=beta(b), hence gamma(a)=gamma(b). Thus the actual energy is definite, and c(a,b)=0 is exactly equality of gamma. The original product and marker formulas give the congruence and all visible algebra identities. The linear image equivalence identifies the actual quotient with the label image. A nonzero Eisenstein scalar stays nonzero in the complex numbers, so its action on the Hilbert carrier has zero kernel; the same holds on the image and on the transported quotient. The zero model is included. No isotropic-to-radical shortcut or assertion W=0 is used.")),
-            Paragraph(Text("These are mathematical consequences of the full original balance under U(1)=1, with every finite history depth allowed. The original operation may remain nonassociative and noncommutative and U cubed need not be the identity on original recipes. The group and module laws identify only their zero-comparison classes. Completion and scalar extension supply no extra actual recipes or physical controls. The whole source atom awaits independent cumulative admission and canonical deposit/coverage.")))));
+            Paragraph(Text("These are mathematical consequences of the full original balance under U(1)=1, with every finite history depth allowed. The original operation may remain nonassociative and noncommutative and U cubed need not be the identity on original recipes. The group and module laws identify only their zero-comparison classes. Completion and scalar extension supply no extra actual recipes or physical controls.")))));
+
+    private static Formula RawBalanceFormula() => Eqn(
+        Sum3(Read(Product(A, U), Product(B, V)),
+            Read(Product(A, Mark(U)), Product(B, Mark(V))),
+            Read(Product(A, Mark(Mark(U))), Product(B, Mark(Mark(V))))),
+        Plus2(Three(Read(A, B)), Three(Read(U, V))));
 
     private static Formula Frame(Formula body) => Seq(
         Forall, Sp, M, Colon, Sp, F.Id("Type"), Comma, Sp,

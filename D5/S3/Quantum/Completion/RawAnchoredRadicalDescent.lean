@@ -9,7 +9,8 @@
 import Mathlib.LinearAlgebra.Finsupp.LinearCombination
 import Mathlib.LinearAlgebra.Quotient.Bilinear
 import Mathlib.Tactic
-import D5.S3.Quantum.Completion.RawThreePhaseDescent
+import D5.S3.QuadraticForms.ThreeWayBalance
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import D5.S3.Quantum.Completion.ThreePhaseHistoryRigidity
 import D5.S3.QuadraticForms.ThreeWayPositiveKernel
 import Mathlib.RingTheory.Adjoin.Basic
@@ -25,9 +26,50 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Quantum.Completion.RawAnchoredRadicalDescent
 
-open D5.S3.Quantum.Completion.RawThreePhaseDescent
-
 universe u v w
+
+/-- The original finite real comparison and its full two-ended balance law. -/
+structure RawBalance {M : Type*} [MulOneClass M] (U : M → M) (c : M → M → ℝ) : Prop where
+  marker_one : U 1 = 1
+  nonneg : ∀ a b, 0 ≤ c a b
+  diagonal : ∀ a, c a a = 0
+  balance : ∀ a b u v,
+    c (a * u) (b * v) + c (a * U u) (b * U v) +
+      c (a * U (U u)) (b * U (U v)) = 3 * c a b + 3 * c u v
+
+private lemma marker_invariant {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (u v : M) :
+    c (U u) (U v) = c u v := by
+  let s : ℕ → ℝ := fun n => c (U^[n] u) (U^[n] v)
+  have hr (n : ℕ) : s (n + 1) + s (n + 2) = 2 * s n := by
+    have hh := h.balance 1 1 (U^[n] u) (U^[n] v)
+    simp only [one_mul, h.diagonal, mul_zero, zero_add] at hh
+    change c (U^[n + 1] u) (U^[n + 1] v) +
+      c (U^[n + 2] u) (U^[n + 2] v) = 2 * c (U^[n] u) (U^[n] v)
+    simp only [Function.iterate_succ_apply']
+    linarith
+  exact D5.S3.QuadraticForms.ThreeWayBalance.nonneg_recurrence_constant s
+    (fun n => h.nonneg _ _) (fun n => by simpa only [add_comm] using hr n)
+
+/-- Both contextual readings and complete rows/columns have marker period three.
+The underlying marker itself need not be periodic, surjective or multiplicative. -/
+theorem raw_marker_readouts {M : Type*} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) :
+    (∀ u v, c (U u) (U v) = c u v) ∧
+    (∀ a b u v, c (a * U (U (U u))) (b * U (U (U v))) = c (a * u) (b * v)) ∧
+    (∀ u z, c (U (U (U u))) z = c u z ∧ c z (U (U (U u))) = c z u) := by
+  have hm := marker_invariant U c h
+  have hc (a b u v : M) :
+      c (a * U (U (U u))) (b * U (U (U v))) = c (a * u) (b * v) := by
+    have h₀ := h.balance a b u v
+    have h₁ := h.balance a b (U u) (U v)
+    rw [hm] at h₁
+    linarith
+  refine ⟨hm, hc, ?_⟩
+  intro u z
+  constructor
+  · simpa [h.marker_one] using hc 1 z u 1
+  · simpa [h.marker_one] using hc z 1 1 u
 
 open D5.S3.QuadraticForms.ThreeWayPositiveKernel
 
