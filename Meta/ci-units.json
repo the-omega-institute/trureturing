@@ -462,6 +462,7 @@
     "tools/scripts/workflow/test_ci_required.py",
     "[tests-cli]",
     "tools/scripts/maintenance_log.py",
+    "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/idle_pool_cases.py",
     "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py",
     "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tail.py",
     "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_anchor_cases.py",

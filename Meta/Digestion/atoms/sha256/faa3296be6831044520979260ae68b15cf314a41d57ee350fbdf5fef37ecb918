@@ -1,0 +1,38 @@
+**定理 83.2（原子入口与完整原候选等价）。** 在同一 $B$ 上，$\mathrm Z_\pi$ 与原 Z 等价；在原 Z 成立时，$\mathrm O_\pi$ 与全域 SC 等价。因此 $\mathrm{C128}^{\perp}$、$\mathrm{C128}^{J}$、C128、C127、C126、C124 在全部原数据上等价，并恢复原完整曲率
+
+$$
+[D^A_a,D^A_b]=-[L_a,L_b]
+\qquad(a,b\in E_A,\ \text{每个原 }A).
+\tag{83.2}
+$$
+
+证明。首先仅用 $B$，按 (36.2) 对每个原 $A$ 的身份事件取实际 $AP^{\otimes k}$，利用含幺嵌入保持原 $D$ 和交叉零，得到 $D^A_au_A=0$；此步没有使用 Z、SC 或 SJ。
+
+固定原 $A$。任意幂等元 $p,r$ 的 Peirce 分解与原 Frobenius 性给
+
+$$
+q_A(p,r)=q_A(p,r^2)=q_A(L_pr,r)\ge0,
+\qquad q_A(p,r)=0\ \Longleftrightarrow\ p\circ r=0,
+\tag{83.3}
+$$
+
+因为 $L_p$ 对 $q_A$ 自伴随且特征值为 $0,1/2,1$。原始幂等元实线性张成 $E_A$，故 $\mathrm Z_\pi$ 先由第一槽线性推广到任意 $a$。对任意 $x,y\ge0$，去掉零谱项，写正谱分解 $x=\sum_i\lambda_ip_i$、$y=\sum_j\mu_jr_j$，其中全部系数正、$p_i,r_j$ 原始。若 $q_A(x,y)=0$，则 (83.3) 使每个非负加项 $\lambda_i\mu_jq_A(p_i,r_j)$ 都为零，因而全部 $p_i\circ r_j=0$。于是
+
+$$
+q_A(y,D^A_ax)=\sum_{i,j}\lambda_i\mu_jq_A(r_j,D^A_ap_i)=0.
+\tag{83.4}
+$$
+
+原正锥对 $q_A$ 自对偶，任意正泛函的 Riesz 向量都为正；(83.4) 遂给原 Z。反向用 (36.3)–(36.4)：原实际准备的有限正锥包恰为完整正对偶，故 Z 对所有数学正泛函成立；取 $x=p$、泛函 $q_A(r,\cdot)$ 即得 $\mathrm Z_\pi$。这些有限正锥组合不被当作系数一的实际准备。
+
+以上原子零接触步骤是成熟中间工具的原准备接口应用。Tao–Gowda, *A Representation Theorem for Lyapunov-like Transformations on Euclidean Jordan Algebras*, [作者原文](https://userpages.umbc.edu/~gowda/papers/trGOW12-01.pdf), Proposition 1 已将全部 Jordan frame 的非对角原子零配对与全零接触列为等价；该条重述 Gowda–Tao–Ravindran, LAA 436 (2012), Theorem 4。前文的任意正 Frobenius 型与规范迹型对应在该原文 §2 说明。这里没有将这个已知判据另立为新增数学结论。
+
+接着恢复 SC。$\mathrm O_\pi$ 到 SC 的方向甚至不需要导子律。将任意原始 $p=p_1$ 补成整个 $E_A$ 的 Jordan frame，$u_A=\sum_i p_i$；由 $D_pu_A=0$ 和全部非对角 $F_A(p_i,p_j)=0$，得 $F_A(p,p)=0$。对任意实谱分解 $a=\sum_i t_ip_i$，
+
+$$
+F_A(a,a)=\sum_{i,j}t_it_jF_A(p_i,p_j)=0.
+\tag{83.5}
+$$
+
+一维经典块和跨块原子均包含在此论证中。反向在原 Z 下，定理 36.1 给全部 $D_a$ 的导子律；SC 极化给 $F_A(p,r)=-F_A(r,p)$。若 $p\circ r=0$，令 $v=F_A(p,r)$。由 $D_pp=0$，微分 $p\circ r=0$ 给 $p\circ v=0$；对 $p^2=p$ 应用 $D_r$，交替性给 $v=2p\circ v$，故 $v=0$。因此 $\mathrm O_\pi$ 成立。最后调用定理 64.2 的同一原 SJ 等价与结构链，得到 (83.2) 及全部完整候选等价。没有重选或重标度原 $D$。∎
+
