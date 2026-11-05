@@ -108,10 +108,12 @@ class MaintenanceLogTests(unittest.TestCase):
         marker = self.root / "group-count"
         child = ("import signal,time; from pathlib import Path; count=[0]; "
                  f"signal.signal(signal.SIGTERM, lambda *_: (count.__setitem__(0,count[0]+1), "
-                 f"Path({str(marker)!r}).write_text(str(count[0])), exit(0))); time.sleep(60)")
+                 f"Path({str(marker)!r}).write_text(str(count[0])), exit(0))); "
+                 "print('ready',flush=True); time.sleep(60)")
         parent = ("import os,signal,subprocess,sys,time; "
-                  f"child=subprocess.Popen([sys.executable,'-c',{child!r}]); "
+                  f"child=subprocess.Popen([sys.executable,'-c',{child!r}], stdout=subprocess.PIPE, text=True); "
                   "signal.signal(signal.SIGTERM, lambda *_: (child.wait(), exit(0))); "
+                  "assert child.stdout.readline().strip() == 'ready'; "
                   "print(child.pid,flush=True); time.sleep(60)")
         for logged in (False, True):
             marker.unlink(missing_ok=True)
@@ -119,8 +121,7 @@ class MaintenanceLogTests(unittest.TestCase):
             with subprocess.Popen([sys.executable, "-c", command], cwd=self.main,
                                   env=self.environment, start_new_session=True,
                                   stdout=subprocess.PIPE, text=True) as job:
-                job.stdout.readline()
-                time.sleep(0.2)
+                self.assertGreater(int(job.stdout.readline()), 0)
                 os.killpg(job.pid, signal.SIGTERM)
                 self.assertEqual(0, job.wait(timeout=5))
             self.assertEqual("1", marker.read_text())
