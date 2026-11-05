@@ -1,0 +1,26 @@
+**引理 23.1（同步右梳的真实单位预算）。**对 $\sigma\in\Sigma_N=\{0,1,2\}^N$，定义实际右梳
+
+$$
+H_0(a;z)=z,\qquad
+H_N^\sigma(a;z)=a\cdot U^{\sigma_1}
+H_{N-1}^{(\sigma_2,\ldots,\sigma_N)}(a;z).
+\tag{23.1}
+$$
+
+写 $s_\sigma=\sum_i\sigma_i$，以 $\mathbb E_\sigma$ 表示同步均匀有限平均，则
+
+$$
+\begin{aligned}
+\mathbb E_\sigma c(H_N^\sigma(a;z),H_N^\sigma(b;w))
+&=Nc(a,b)+c(z,w),\\
+H_N^\sigma(1;1)&=p_{s_\sigma},\\
+\mathbb E_\sigma q(H_N^\sigma(a;z))
+&\le9Nq(a)+9q(z)+12\Omega.
+\end{aligned}
+\tag{23.2}
+$$
+
+反向预算将 $q$ 换为 $r$。
+
+**证明。**对最外层标记先取平均，(R) 把费用变成 $c(a,b)$ 加内层费用；对深度归纳，得到第一式。单位历史的实际等式由 $1\cdot U^ku=U^ku$ 逐层得到，不使用结合律。将定理 22.3 的第一式用于 $y=H_N^\sigma(a;z)$、$j=s_\sigma$，再用第一式与单位历史等式，得最后一式。全部来源使用同一 $\sigma$，没有把分别最优的历史混在一起。
+
