@@ -70,6 +70,15 @@ exit "${FAKE_BUILD_EXIT:-0}"
     def transport_environment(self, run="123", **extra):
         head = subprocess.check_output(["git", "-C", str(self.root), "rev-parse", "HEAD"], text=True).strip()
         dev = {"name": "dev", "protected": True, "commit": {"sha": head}}
+        observed = {}
+        if "FAKE_CLOCK_STEP" in extra:
+            # Observe native prerequisites after all fixture setup/commits. The
+            # virtual clock probes transport/I/O, independently of Git startup.
+            observed = dict(FAKE_NATIVE_HEAD=head + "\n",
+                FAKE_NATIVE_STATUS=subprocess.check_output(
+                    ["git", "-C", str(self.root), "status", "--porcelain"], text=True),
+                FAKE_NATIVE_TRACKED_STATUS=subprocess.check_output(
+                    ["git", "-C", str(self.root), "status", "--porcelain", "--untracked-files=no"], text=True))
         return {**os.environ, "PATH": str(self.bin) + os.pathsep + os.environ["PATH"],
             "HOME": str(self.root), "FAKE_BUILD_LOG": str(self.root / "build-runs"),
             "FAKE_REMOTE": str(self.remote), "GITHUB_SHA": head, "GITHUB_RUN_ID": run,
@@ -77,7 +86,7 @@ exit "${FAKE_BUILD_EXIT:-0}"
             "FAKE_DEV_COMPARE": json.dumps({"status": "identical", "merge_base_commit": {"sha": head}}),
             "FAKE_REPORT_FACTORY": str(ROOT / "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_support.py"),
             "GITHUB_RUN_ATTEMPT": "1", "GITHUB_EVENT_NAME": "schedule", "GITHUB_REF": "refs/heads/dev",
-            "STRATALINT_CHECK_SUCCEEDED": "true", "STRATALINT_ACTIONS_CACHE_SEEDED": "", **extra}
+            "STRATALINT_CHECK_SUCCEEDED": "true", "STRATALINT_ACTIONS_CACHE_SEEDED": "", **observed, **extra}
 
     def transport(self, verb, run="123", arguments=(), **extra):
         return subprocess.run(["bash", str(self.publisher), verb, "--repository", str(self.root), *arguments],
@@ -319,6 +328,13 @@ clock = 0
 time.monotonic = lambda: clock
 def run(args, *rest, **kwargs):
     global clock
+    root = str(pathlib.Path(os.environ["FAKE_REMOTE"]).parent)
+    if args[:3] == ["git", "-C", root]:
+        field = {("rev-parse", "--verify", "HEAD"): "FAKE_NATIVE_HEAD",
+                 ("status", "--porcelain"): "FAKE_NATIVE_STATUS",
+                 ("status", "--porcelain", "--untracked-files=no"): "FAKE_NATIVE_TRACKED_STATUS"}.get(tuple(args[3:]))
+        if field:
+            return subprocess.CompletedProcess(args, 0, os.environ[field], "")
     if args[0] != "gh": return original(args, *rest, **kwargs)
     with (pathlib.Path(os.environ["FAKE_REMOTE"]).parent / "gh-budgets").open("a") as log:
         log.write(json.dumps({"args": args[1:], "timeout": kwargs.get("timeout")}) + "\\n")
@@ -602,25 +618,10 @@ pathlib.Path.open = open_path
         owner = self.publisher.with_name("lean_cache_release.py")
         owner.write_text(owner.read_text().replace("CHUNK_BYTES = 1610612736", "CHUNK_BYTES = 2097152"))
         self.commit_fixture()
-        # Check the immutable source with real Git before entering the virtual
-        # local-I/O clock; subprocess startup is outside this probe's subject.
-        head = subprocess.check_output(["git", "-C", str(self.root), "rev-parse", "--verify", "HEAD"], text=True)
-        dirty = subprocess.check_output(["git", "-C", str(self.root), "status", "--porcelain"], text=True)
-        self.assertEqual(self.producer_commit, head.strip())
-        self.assertEqual("", dirty)
         environment = self.deadline_probe(1)
         with (self.bin / "sitecustomize.py").open("a") as fixture:
             fixture.write('''
 import tarfile
-preparation_run = subprocess.run
-def run_preparation(args, *rest, **kwargs):
-    root = str(pathlib.Path(os.environ["FAKE_REMOTE"]).parent)
-    if args == ["git", "-C", root, "rev-parse", "--verify", "HEAD"]:
-        return subprocess.CompletedProcess(args, 0, os.environ["FAKE_PREPARATION_HEAD"], "")
-    if args == ["git", "-C", root, "status", "--porcelain"]:
-        return subprocess.CompletedProcess(args, 0, os.environ["FAKE_PREPARATION_DIRTY"], "")
-    return preparation_run(args, *rest, **kwargs)
-subprocess.run = run_preparation
 phase = os.environ["FAKE_PREPARATION_PHASE"]
 archive_opens = 0
 original_open, original_copy = pathlib.Path.open, tarfile.copyfileobj
@@ -653,8 +654,7 @@ def copy(source, target, *args, **kwargs):
 pathlib.Path.open, tarfile.copyfileobj = open_path, copy
 ''')
         (self.root / "preparation-reads").unlink(missing_ok=True)
-        return {**environment, "FAKE_PREPARATION_PHASE": phase,
-                "FAKE_PREPARATION_HEAD": head, "FAKE_PREPARATION_DIRTY": dirty}
+        return {**environment, "FAKE_PREPARATION_PHASE": phase}
 
     def assert_preparation_stopped(self, result, status):
         self.assertEqual(status, result.returncode, result.stdout + result.stderr)
