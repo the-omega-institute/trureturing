@@ -2036,3 +2036,82 @@ $$
 它把“自校准了什么”推进到一个更明确的层次：我们不仅检查表示是否保留当前目标，还检查当前摘要是否在声明操作下能定义后继；若不能，能指出具体遗漏的关联以及它进入后继的方向。补全后的摘要可以已经闭合，而状态仍然运动。
 
 本节仍是条件性理论综合。有限维生成元、联合结构、实际读口、物理取得、全部目标覆盖、噪声和有限样本认证没有由此自动供应；R5-007 全文也未把本节转成新的 Lean/kernel 声明。它补的是后继闭合和隐藏关联的反例边界，不把“闭合”冒充“静止”，也不把纸面联合模型冒充现实装置。
+
+## 追加锚（本行以下为增补区）
+
+## 25.29 有限 transcript-fibre 的主动取得校准
+
+当前 [RRO sparse acquisition](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_NATIVE_ENTRY_ACQUISITION.md) 的 §§1–6 把“返回切口上的未来充分性”推进成一条实际的、源盲的有限取得流程。它的前件是 Definition 1.1：平稳的 authentic root/source/epoch、精确的整数 $n_0>1$、已完成 checkpoint、可调用且尚未 Stop 的 controller、完整的 literal four-reply interface、有限 backing，以及不随取得过程改变的绑定。输入不包含未知 entry $t$、宏词 $W$、展开后的当前源、额外历史计数、当前深度、$m$、旧语法或其他 source-dependent advice。
+
+**定理 25.29.1（先取得不确定度窗口，再列出完整候选纤维）。** 在上述承诺域中，深度阶段和 born-tail 阶段实际取得当前深度 $H$，并取得至多 $n_0+2$ 个可能的 $K=|W|_F$，记该集合为 $J$。对每个 $K\in J$，已知 lag 的 literal decoder 在每个虚拟节点（即每次 decoded-reply probe）至多两个支持查询，并以 $2n_0$ 个虚拟节点为上限解析 entry-right 候选；生成阶段总计至多
+
+$$
+4n_0(n_0+2)
+$$
+
+次附加原始调用。得到的候选表不是一个任意压缩列表，而是恰好
+
+$$
+\left\{(u,V):u\in\mathcal D_+,\ n(u)=n_0,
+ r_{\operatorname{Run}(V,u)}(p)=c
+ \text{ 对取得 transcript 中每一实际行 }(p,c)\right\}.
+$$
+
+因此它同时保留真实 $(t,W)$，并精确记录当前有限 transcript 尚未排除的全部 promised pairs。这个等式是候选生成的新内容；Rooted 的完整历史单射性和 known-lag decoder 是前件，不被重新命名为本定理。
+
+**定理 25.29.2（同源主动分离使有限候选收敛）。** 把每个候选写成有限 ground acyclic term DAG，并为不同的候选构造一个 literal separating address。将该地址提交给同一个 live source，按真实四值回复删去不相容候选。每次仍有两个候选时至少删去所选二者之一，故至多再需
+
+$$
+n_0+1
+$$
+
+次同源查询，最终得到唯一的 $(t,W)$ 以及当前源的精确 compact description
+
+$$
+\mathsf C=(t,W),
+\qquad
+\operatorname{value}(\mathsf C)=\operatorname{Run}(W,t).
+$$
+
+这里“主动”是指新地址确实由旧候选纤维构造并在同一来源上取得；分离完成后交付必须是 pre-Stop transfer，不得在取得与交接之间执行 absorbing Stop。它不是把不同反事实分支的响应拼成一条历史，也不是用候选的数值相等替代物理来源认证。
+
+**定理 25.29.3（同时资源账与不可压缩边界）。** 令
+
+$$
+N=H+n_0+2,
+\qquad A=\lceil\log_2(N+1)\rceil.
+$$
+
+按 RRO Definition 1.2，令 $Q$ 为全部实际 literal 调用数（含重复与 absent），$D$ 为提交地址的最大长度，$L$ 为所有提交地址字母数之和。该流程满足
+
+$$
+\begin{aligned}
+Q&\le 2H+4n_0(n_0+2)+n_0(A+5)+8,\\
+D&\le H+3n_0+4,\\
+L&\le QD,
+\end{aligned}
+$$
+
+并输出大小为 $O(n_0+|W|)$ 的 compact packet；若固定 live-interface metadata 大小为 $b$，新增 controller work/backing 可用 $O((b+1)N^{10})$ 的保守上界表示。binding、service、transport、journal 与 installation 的物理账另按实际供应的价格计入，不能由该数值参数界替代。对固定多叶 entry、无 history-dependent advice 的确定性流程，长度为 $m$ 的全部 $F/G$ 历史给出至少 $\lceil m/2\rceil$ 的最坏原始查询深度；因此固定 $n_0$ 时，该取得流程的查询阶为 $\Theta(m)$，而完整展开的 $F^m$ 源仍可有指数大小。
+
+这条结果把自校准从“摘要在完成后足够”推进为五步可核查接口：
+
+$$
+\boxed{
+\text{取得 }H,J
+\to
+\text{生成完整 transcript fibre}
+\to
+\text{付费同源分离}
+\to
+\text{交付 compact packet}
+\to
+\text{在真实返回边界继续运行}.
+}
+$$
+
+它仍然是 source-specific、promise-conditional 的取得校准。该算法不识别 off-promise 来源，不检测 authenticity、occurrence identity 或 native provenance，不恢复 Busy/阶段/控制器私有历史，不执行物理逆操作，也不把 numeric-parameter polynomial bound 说成 bit-length 或整个 installation 的物理时间界。Theorem 6.1 的 handoff 还要求保存同一来源绑定、continuation、当前权限、既有 executor 和有限 backing；在 Busy 期间，packet 只表示最后一个 completed checkpoint。
+
+因此，本节的新增不是把已有行为商换一个名字，而是把“当前 transcript 尚有多少候选”变成有限可枚举对象，并用实际同源查询把它压到单例。它与 25.26 的返回任务摘要、25.28 的后继闭合互补：前者说明何时摘要足够回答未来任务，后者说明摘要何时能定义后继，本节说明在给定取得合同下怎样实际获得并消除剩余纤维。全部结论仍为普通理论综合；本节没有新增 Lean/kernel 声明，也不把 sparse acquisition 的条件性来源协议提升为项目范围的自我认证。
+
+## 追加锚（本行以下为增补区）
