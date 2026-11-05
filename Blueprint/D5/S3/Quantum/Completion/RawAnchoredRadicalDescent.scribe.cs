@@ -147,7 +147,7 @@ internal sealed class RawAnchoredRadicalDescentDocument : IScribeDocumentDefinit
                             Read(Product(A, U), Product(B, V))))))),
                     AllM(U, AllM(Z, Both(
                         Eqn(Read(Mark(Mark(Mark(U))), Z), Read(U, Z)),
-                        Eqn(Read(Z, Mark(Mark(Mark(U)))), Read(Z, U)))))))))),
+                        Eqn(Read(Z, Mark(Mark(Mark(U)))), Read(Z, U))))))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For s(n)=c(U^n u,U^n v), the raw law at the two units gives s(n+1)+s(n+2)=2s(n). Apply ThreeWayBalance.nonneg_recurrence_constant directly, exchanging the summands. Subtracting consecutive original balance identities gives contextual invariance. Specializing either contextual input to the unit gives every row and column equality. These equalities supply the ordered anchored-kernel descent below. Only the readings have period three; the original marker need not have period three."))),
                 DescribeRole.Theorem),
