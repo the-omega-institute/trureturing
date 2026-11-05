@@ -1,7 +1,8 @@
 import LeanInformationAudit.Contract.FibSource
 
 namespace LeanInformationAudit.FibPrediction
-open Lean CompiledSourceScope FibSource
+open Lean FibSource
+open CompiledSourceScope (debit projectType)
 
 private def unknown (reason : String) : Json := Json.mkObj [
   ("kind", toJson "unknown"), ("reason", toJson reason)]

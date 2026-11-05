@@ -78,4 +78,50 @@ def wrongTarget : Application.{0,0,0,0,0,0} unrelated where
 def parameterized (_n : Nat) : Application.{0,0,0,0,0,0} NativeContinuation.NullReplyFiber.native_execution where
   evidence := .native { reconstruction := .exact } bridge (.absent "parameterized contract") [] [.seam, .guard, .reply, .atom]
 
+
+open LeanInformationAudit.AuricFib (NativePrediction)
+
+/-- The same original source supplies both a positive invariant and concrete
+counterexamples for weaker observations. The one-window source law stays absent. -/
+def predictionClosed : Application.{0,0,0,0,0,0} NativeContinuation.NullReplyFiber.native_execution where
+  evidence := absent.evidence
+  prediction := some { source := { reconstruction := .exact }, contract := {
+    summary := .memory, actions := NativePrediction.allActions,
+    evidence := .closed (NativePrediction.memory_closed _) } }
+
+def predictionQuantity : Application.{0,0,0,0,0,0} NativeContinuation.NullReplyFiber.native_execution where
+  evidence := absent.evidence
+  prediction := some { source := { reconstruction := .exact }, contract := {
+    summary := .seamReply, actions := NativePrediction.allActions,
+    evidence := .separated NativePrediction.quantitySeparation } }
+
+def predictionRejection : Application.{0,0,0,0,0,0} NativeContinuation.NullReplyFiber.native_execution where
+  evidence := absent.evidence
+  prediction := some { source := { reconstruction := .exact }, contract := {
+    summary := .reply, actions := NativePrediction.allActions,
+    evidence := .separated NativePrediction.rejectionSeparation } }
+
+def predictionUnknown : Application.{0,0,0,0,0,0} NativeContinuation.NullReplyFiber.native_execution where
+  evidence := absent.evidence
+  prediction := some { source := { reconstruction := .exact }, contract := {
+    summary := .seamReply, actions := NativePrediction.allActions,
+    evidence := .unknown "no operation evidence supplied" } }
+
+/-- Closure over an empty input type covers only the empty continuation. -/
+def predictionEmpty : Application.{0,0,0,0,0,0} NativeContinuation.NullReplyFiber.native_execution where
+  evidence := absent.evidence
+  prediction := some { source := { reconstruction := .exact }, contract := {
+    summary := .reply, actions := [],
+    evidence := .closed (by intro action; exact False.elim (by simpa using action.property)) } }
+
+/-- Prediction evidence cannot turn a non-native occurrence into this source. -/
+def predictionWrongSource : Application.{0,0,0,0,0,0} unrelated where
+  evidence := .typed { source := LeanInformationAudit.Analysis.Source.unobserved unrelated
+    `LeanInformationAuditFibTests.AuricFib.CompiledFixture
+    plan := { task := (), initial := [], additions := [] }
+    acquisition := .unavailable "no finite presentation requested" }
+  prediction := some { source := wrongSource, contract := {
+    summary := .memory, actions := NativePrediction.allActions,
+    evidence := .closed (NativePrediction.memory_closed _) } }
+
 end LeanInformationAuditFibTests.AuricFib.CompiledFixture
