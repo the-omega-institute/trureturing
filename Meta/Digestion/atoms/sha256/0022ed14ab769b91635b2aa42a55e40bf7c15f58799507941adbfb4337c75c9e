@@ -1,0 +1,17 @@
+**定义 71.2（闭背景中的分别命名候选）。** 令 $\mathsf C_{\rm cl}^{S}$、$\mathsf C_{\rm cl}^{S2}$、$\mathsf C_{\rm cl}^{SJ}$ 分别为 $\mathsf B_{\rm cl}+\mathsf Q+\mathrm{SC}$ 加上以下相应的逐字原标定：
+
+$$
+\begin{aligned}
+\mathrm S:\quad&-\operatorname{Tr}_{\mathbb R,E_P}(D_{d_0}^2)
+ =\operatorname{Tr}_{\mathbb R,E_P}(L_{d_0}^2),
+ &&d_0=d-z_P(d);\\
+\mathrm{S2}:\quad&\exists x\ne0,\quad d\circ x=x/2,\quad
+ 4q_P(D_dx,D_dx)=q_P(x,x);\\
+\mathrm{SJ}:\quad&D_d^2=L_d^2-L_d
+ &&\text{于整个原 }E_P.
+\end{aligned}
+\tag{71.3}
+$$
+
+另令 $\mathsf C_{\rm cl}^{D}$ 为 $\mathsf B_{\rm cl}$ 加上同一原 $D$ 的完整导子律与单位曲率抵消 (1.4)。这些是新名字，不是 C128 或其旧变体的改名。
+
