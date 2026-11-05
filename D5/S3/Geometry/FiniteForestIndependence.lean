@@ -42,14 +42,6 @@ variable {V : Type u} [Fintype V] [DecidableEq V]
 def residualSet (G : SimpleGraph V) (v : V) : Set V :=
   {x | ¬ G.Adj v x ∧ x ≠ v}
 
-/-- The residual vertices are exactly the open neighbors of `v` in the complement graph,
-which is the complement of the closed neighborhood of `v` in `G`. -/
-theorem residualSet_eq_compl_neighborSet (G : SimpleGraph V) (v : V) :
-    residualSet G v = Gᶜ.neighborSet v := by
-  ext x
-  simp [residualSet, SimpleGraph.mem_neighborSet, SimpleGraph.compl_adj,
-    and_comm, eq_comm]
-
 /-- All neighbors of v except the chosen leaf u. -/
 def deleted (G : SimpleGraph V) (u v : V) : Finset V := by
   classical
