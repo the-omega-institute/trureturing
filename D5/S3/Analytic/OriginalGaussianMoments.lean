@@ -97,9 +97,7 @@ theorem g_power_integrable (m M : ℝ) (hm : 0 < m) (n : ℕ) :
     0 (2 * m) (by positivity) n 0
   have hr : Integrable (fun y : ℝ => y ^ n *
       D5.S3.Fourier.Asymptotics.GaussianComplexMoments.gaussianDensity 0 (2 * m) y) := by
-    simpa only [D5.S3.Fourier.Asymptotics.GaussianComplexMoments.densityMonomial,
-      zero_mul, Complex.exp_zero, mul_one, ← Complex.ofReal_pow,
-      ← Complex.ofReal_mul, Complex.ofReal_re] using hc.re
+    simpa [D5.S3.Fourier.Asymptotics.GaussianComplexMoments.densityMonomial] using hc.re
   simpa only [D5.S3.Fourier.Asymptotics.GaussianComplexMoments.gaussianDensity,
     g, sub_zero, show 2 * (2 * m) = 4 * m by ring,
     show 2 * Real.pi * (2 * m) = 4 * Real.pi * m by ring] using hr.comp_sub_right M
