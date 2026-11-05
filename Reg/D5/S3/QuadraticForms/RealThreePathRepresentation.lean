@@ -80,8 +80,8 @@ def evidence : Registration arena.{u, v}
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨⟨ULift.{u} ℝ, ULift.down⟩, ⟨0⟩, ⟨1⟩, ?_⟩
-    change (0 : ℝ) ≠ 1
+    refine ⟨⟨ULift.{u} ℂ, fun x => ‖x.down‖ ^ 2⟩, ⟨0⟩, ⟨1⟩, ?_⟩
+    change ‖(0 : ℂ)‖ ^ 2 ≠ ‖(1 : ℂ)‖ ^ 2
     norm_num
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
@@ -106,7 +106,12 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     owner := `D5.S3.QuadraticForms.RealThreePathRepresentation
     definition := none
     coordinates := #[0, 4]
-    readouts := #[{ path := #["body","body","body","body","body","body","domain","arg"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body","body","body","body","body","body","domain","arg" ]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -182,8 +187,8 @@ def evidence : Registration arena.{u, v, w}
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨⟨ULift.{u} ℝ, ULift.down⟩, ⟨0⟩, ⟨1⟩, ?_⟩
-    change (0 : ℝ) ≠ 1
+    refine ⟨⟨ULift.{u} ℂ, fun x => ‖x.down‖ ^ 2⟩, ⟨0⟩, ⟨1⟩, ?_⟩
+    change ‖(0 : ℂ)‖ ^ 2 ≠ ‖(1 : ℂ)‖ ^ 2
     norm_num
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
@@ -208,7 +213,12 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     owner := `D5.S3.QuadraticForms.RealThreePathRepresentation
     definition := none
     coordinates := #[0, 4]
-    readouts := #[{ path := #["body","body","body","body","body","body","fn","arg","arg","arg","arg"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body","body","body","body","body","body","fn","arg","arg","arg","arg" ]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
