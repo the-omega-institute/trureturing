@@ -4,7 +4,7 @@
 
 For every total integer N >= 3, the actual order-three Gaussian genuine multi-entropy is minimized precisely by the balanced positive integer triples and maximized precisely by permutations of (N-2,1,1), with all ties retained. The two extremal classes coincide at N=3 and N=4.
 
-Scientific source: Haobo Ma then Wenlin Zhang, An exact balancing law for order-three Gaussian multi-entropy, 4 November 2026, CC BY 4.0. Camargo and Nishida supply the physical family; Marshall, Olkin and Arnold supply the classical majorization criterion. The proof reuses the actual integral/Fourier bridge and the strict scalar comparison, retaining their canonical and transplant credits. Higher replicas, physical replica-one continuation, other branches and the separate Page/large-N issue 22644 remain outside this result.
+Scientific source: Haobo Ma then Wenlin Zhang, An exact balancing law for order-three Gaussian multi-entropy, 4 November 2026, CC BY 4.0. Camargo and Nishida supply the physical family; Marshall, Olkin and Arnold supply the classical majorization criterion. The proof reuses the actual integral/Fourier bridge and the strict scalar comparison, retaining their canonical and transplant credits. Higher replicas, physical replica-one continuation, other branches and separate fixed-a Page/large-N asymptotics remain outside this result.
 
 **Definition 1.1 (The balanced representative).**
 

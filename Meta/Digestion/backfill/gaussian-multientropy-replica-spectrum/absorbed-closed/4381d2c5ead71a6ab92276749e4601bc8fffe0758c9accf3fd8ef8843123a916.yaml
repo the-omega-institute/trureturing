@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:4381d2c5ead71a6ab92276749e4601bc8fffe0758c9accf3fd8ef8843123a916
   normalized_sha256: sha256:4381d2c5ead71a6ab92276749e4601bc8fffe0758c9accf3fd8ef8843123a916
 cas_ref: sha256:4381d2c5ead71a6ab92276749e4601bc8fffe0758c9accf3fd8ef8843123a916
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeMajorization.schur_comparison
+    target_statement_id: sha256:7ddf9490d05ee65354006a8cd12ebafd0e7dd6e3168c9a5e7f78de400c8f9197
 receipts:
   unresolved_subitems: []
