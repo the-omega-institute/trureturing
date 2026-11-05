@@ -6,8 +6,6 @@
    utility: none
    digest: Literal binary ladder counts, their signed recurrence and generating series. -/
 
-import Mathlib.Data.Fin.Tuple.Basic
-import Mathlib.Data.Fintype.BigOperators
 import Mathlib.RingTheory.PowerSeries.Basic
 import Mathlib.Tactic
 
