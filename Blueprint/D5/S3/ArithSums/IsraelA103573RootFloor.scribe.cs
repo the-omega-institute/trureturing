@@ -24,12 +24,15 @@ internal sealed class IsraelA103573RootFloorDocument : IScribeDocumentDefinition
             Node("claim", "The full ceiling assertion", Iff(F.Id("claim"), ClaimBody()),
                 "The assertion includes existence of the source sequence and applies to every sequence satisfying its leastness definition, at every index including zero.", DescribeRole.Definition),
             Node("result", "Two consecutive ceiling values", ClaimBody(),
-                "For n>0 the polynomial q(t)=t^3-t^2 increases strictly on t>=1 and supplies a threshold r with sqrt(r)-r^(1/3)=n. Put y=n^(1/3) and P_n(X)=X*(X+3*n^2)^2-((3*n+1)*X+n^3)^2. Exact polynomial expansion gives P_n(T(n))<0<P_n(T(n)+1), since the residual factors have positive coefficients. The discarded factor in the square comparison is positive, so these signs imply T(n)<r<T(n)+1. The least admissible integer is ceil(r): its root difference lies in [n,n+1), and all smaller nonnegative integers have root difference below n. Ceiling monotonicity leaves the two stated integer possibilities. At n=0 the least candidate and the approximation are both zero.", DescribeRole.Theorem))));
+                "For n>0 the polynomial q(t)=t^3-t^2 increases strictly on t>=1 and supplies a threshold r with sqrt(r)-r^(1/3)=n. Put y=n^(1/3) and P_n(X)=X*(X+3*n^2)^2-((3*n+1)*X+n^3)^2. Exact polynomial expansion gives P_n(T(n))<0<P_n(T(n)+1), since the residual factors have positive coefficients. The discarded factor in the square comparison is positive, so these signs imply T(n)<r<T(n)+1. The least admissible integer is ceil(r): its root difference lies in [n,n+1), and all smaller nonnegative integers have root difference below n. Ceiling monotonicity leaves the two stated integer possibilities. At n=0 the least candidate and the approximation are both zero.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("israel-a103573-root-floor"), ResolutionKind.Proved, [])))));
 
-    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role) =>
+    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role,
+        OpenProblemResolutionClaim? resolutionClaim = null) =>
         Describe.Lean(DescribeId.Create("israel-a103573-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
+            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role, resolutionClaim);
 
     private static Formula TBody()
     {
