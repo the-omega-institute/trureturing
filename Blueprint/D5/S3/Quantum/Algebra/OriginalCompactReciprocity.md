@@ -44,7 +44,7 @@ For the same arbitrary finite-dimensional real inner product space W, the same s
 
 In the complete ambient endomorphism algebra, Mathlib's strict derivative of exp at zero is the identity. Apply its inverse function theorem to obtain a local inverse ell with ell(1)=0, derivative identity at one, and exp(ell(y))=y near one. Composing only the given actual curve with ell gives derivative K at zero. The native HasFDerivAt.lim rescaling theorem gives n times ell(c(t/n)) tending to t K. Continuity of exp and exp_nsmul turn this into the exact limit c(t/n)^n tending to exp(t K). The value image of the original compact unit subgroup is compact and closed in the ambient algebra; every sampled power is an actual group element. Closedness therefore supplies an actual unit of G at the limit.
 
-For the reverse implication choose the supplied actual units at each time. Unit and subgroup extensionality give the identity at zero; their ambient values are exactly the exponential curve, whose derivative there is K. The proof does not use an unproved Banach-algebra logarithm API or a Lie-group structure on the closed subgroup. This equivalence is used by the original identity-component consumer below; it is not a claim of new analytic machinery or of completion of Theorem 5.1.
+For the reverse implication choose the supplied actual units at each time. Unit and subgroup extensionality give the identity at zero; their ambient values are exactly the exponential curve, whose derivative there is K. The proof does not use an unproved Banach-algebra logarithm API or a Lie-group structure on the closed subgroup. This equivalence is used by the original identity-component consumer below; the operational probability frontend requires a separate construction.
 
 **Theorem 1.4 (Both original dimensions are three).**
 
@@ -62,7 +62,7 @@ Injectivity of the two original projections forces ker(A) to be the real line th
 
 On the actual tangent Lie algebra the proof constructs kappa(K,L)=-one-half times the real trace on W of KL. An orthonormal basis for the derived positive form expresses minus trace(K squared) as a sum of squared norms of K applied to basis vectors, strictly positive for every nonzero faithful operator. Cyclic trace proves symmetry and adjoint invariance. The proof actually applies RankOneInvariantMetric.finrank_eq_one_or_three with this constructed metric and the derived centralizer line. Equality of the original dimensions and Ax=0 exclude dimension one: in that case x spans all of W, making A the zero actual operator. Both dimensions are therefore three.
 
-This is a source-faithful dependency of OMEGAQ-008 Theorem 5.1, Sections 2 through 5, on its actual original matrix action. The curve-exponential equivalence in this document supplies the comparison with the all-real matrix exponential-membership convention. The reverse full-relation implication is constructed below from the full skew range. A separately supplied manifold GroupLieAlgebra identification, equality of the identity component with SO, the SO/O group alternatives, and the probability frontend require their respective further constructions.
+This is a source-faithful dependency of OMEGAQ-008 Theorem 5.1, Sections 2 through 5, on its actual original matrix action. The curve-exponential equivalence in this document supplies the comparison with the all-real matrix exponential-membership convention. The reverse full-relation implication is constructed below from the full skew range. A separately supplied manifold GroupLieAlgebra identification and the probability frontend require their respective further constructions. The original group theorem below proves the identity-component equality and the SO/O alternatives directly from the actual curve velocities.
 
 **Theorem 1.5 (Original skew exponentials lie in the original component).**
 
@@ -78,7 +78,7 @@ Under the original compactness and full-relation witness assumptions, the same d
 
 The actual curve-exponential equivalence first puts each exponential unit in G. The unit is packaged from Mathlib's isUnit_exp. Its value is exp(t K) and its inverse value is exp(-t K); continuity of both coordinates proves continuity in the actual units topology. The resulting G-valued curve passes through one. Its connected image lies in the connected component of one. The original full-skew range equality supplies membership of each requested K in the actual velocity subspace.
 
-The determinant restriction uses an orthonormal basis for B to identify each original group element with an actual orthogonal matrix, hence its determinant has square one. The determinant is continuous in the original operator topology. On the connected component of one the sign is constant, and the identity fixes it to one. Thus this actual component is contained in SO(W,B), while it contains all skew exponentials. Identifying all of SO(W,B) with those exponentials or their products, the opposite component inclusion, and G=SO or O remain separate mathematical obligations. The theorem does not assume those conclusions and does not substitute the ambient orthogonal group for the original G.
+The determinant restriction uses an orthonormal basis for B to identify each original group element with an actual orthogonal matrix, hence its determinant has square one. The determinant is continuous in the original operator topology. On the connected component of one the sign is constant, and the identity fixes it to one. Thus this actual component is contained in SO(W,B), while it contains all skew exponentials. The original group theorem below supplies all of SO(W,B) by products of actual skew exponentials and proves the opposite component inclusion and G=SO or O. This exponential theorem does not assume those conclusions and does not substitute the ambient orthogonal group for the original G.
 
 **Theorem 1.6 (The full reverse Q8 implication).**
 
@@ -96,7 +96,29 @@ A B-orthonormal frame constructs the actual plane rotation T with T(b0)=b1, T(b1
 
 Both projection proofs use every pair in the image of the full kernel Kx+Ay=0. For each projection, its zero fiber is trivial by the opposite kernel line. For either requested quotient class, the common image supplies a solution on the other side. These are separate injectivity and surjectivity arguments for the actual two canonical projections. No graph branch is chosen and no smaller representation or source orbit replaces W. This implication does not identify the full original group with SO or O and does not establish the operational probability frontend.
 
-**Theorem 1.7 (The original action fills the orthogonal Lie algebra).**
+**Theorem 1.7 (The original component and both full-group alternatives).**
+
+$$\forall W,G,\ \operatorname{FiniteDimensionalRealInnerProductSpace}\left(W\right) \land \operatorname{SubgroupOfUnitsEnd}\left(G, W\right) \land \operatorname{IsCompact}\left(G\right) \Rightarrow \forall A:\operatorname{Lie}\left(G\right),\ \forall x:W,\ A\neq0 \land x\neq0 \land \operatorname{A}\left(x\right)=0 \land \operatorname{FullReciprocity}\left(G, A, x\right) \Rightarrow \exists B:\operatorname{InnerProductSpaceCore}\left(R, W\right),\ (\forall h:G,\ \forall u,v:W,\ \operatorname{B}\left(\operatorname{h}\left(u\right), \operatorname{h}\left(v\right)\right)=\operatorname{B}\left(u, v\right)) \land \operatorname{finrank}\left(R, W\right)=3 \land \operatorname{finrank}\left(R, \operatorname{Lie}\left(G\right)\right)=3 \land \operatorname{range}\left(\operatorname{originalAction}\left(G\right)\right)=\operatorname{skewEndomorphisms}\left(B\right) \land \operatorname{Image}\left(\operatorname{subtype}\left(G\right), \operatorname{connectedComponent}\left(1, G\right)\right)=\operatorname{SO}\left(W, B\right) \land ((G=\operatorname{SO}\left(W, B\right)) \lor (G=\operatorname{O}\left(W, B\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/OriginalCompactReciprocity.original_group_rigidity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite-dimensional real inner product space W and actual compact subgroup G of the units of its continuous endomorphism algebra, take nonzero A in the actual curve Lie algebra and nonzero x in W with Ax=0 and FullReciprocity G A x. The theorem constructs the same positive invariant form B, both original dimensions three, and the full original skew range. The image of the intrinsic connected component of one in G under the actual subgroup inclusion is exactly the units preserving B with determinant one. The full original subgroup is either that entire special orthogonal group or the entire orthogonal group. All equalities are in the original ambient unit group, with its original operator norm and topology.
+
+In the formula, O(W,B) denotes precisely the set of original units u satisfying B(u v,u w)=B(v,w) for all v,w in W, and SO(W,B) is its determinant-one subset. The notation does not replace the original action. The component is formed inside G before taking its inclusion image. The initially chosen norm need not be the norm induced by B. Linear maps built using a B-orthonormal frame are converted to continuous maps in the original norm by finite dimensionality.
+
+The bridge is explicit. In any B-orthonormal three-frame, the unital real algebra R times C acts by a real scalar on the first axis and complex multiplication on the other two axes. Its generator (0,i) is an actual B-skew endomorphism. Continuity of the algebra homomorphism and Mathlib's map_exp transport exp(pi times (0,i))=(1,-1) to the actual operator algebra. Thus the line reflection fixing the first axis and negating its orthogonal plane is a skew exponential and belongs to the actual original component. For any nonzero axis, extend its normalized vector to an orthonormal frame. No continuous global choice of frames is required.
+
+Apply Mathlib's LinearIsometryEquiv.reflections_generate_dim to each actual B-isometry. In its reflection word, a zero normal gives the identity and is handled separately. Each nonzero hyperplane reflection is minus its axis halfturn and has determinant minus one. Induction on the whole word constructs a product of halfturns whose underlying linear map, multiplied by the determinant of the word, is the original word. Determinant one removes that factor, placing every original B-isometry with determinant one in the image of the actual component. The earlier determinant restriction supplies the opposite inclusion. Individual hyperplane reflections and minus identity are never assumed to lie in G.
+
+If every element of G has determinant one, the component equality gives G=SO(W,B). Otherwise choose an actual reversing element r of G. Every other reversing B-isometry u has u times inverse(r) in SO(W,B); multiplication by r therefore puts u in G. This proves G=O(W,B). The proof derives the full alternatives instead of assuming connectedness, exponential surjectivity, or a separate classification theorem.
+
+This gives the global group conclusion of OMEGAQ-008 Theorem 5.1 on its original W, G and curve velocities. Operational preparations, probabilities, original effects, control menus and callable processes require their own construction from the original probability rows. The reverse entire-relation theorem in this document supplies the algebraic reverse Q8 direction.
+
+**Theorem 1.8 (The original action fills the orthogonal Lie algebra).**
 
 $$\forall W,G,\ \operatorname{FiniteDimensionalRealInnerProductSpace}\left(W\right) \land \operatorname{SubgroupOfUnitsEnd}\left(G, W\right) \land \operatorname{IsCompact}\left(G\right) \Rightarrow \forall A:\operatorname{Lie}\left(G\right),\ \forall x:W,\ A\neq0 \land x\neq0 \land \operatorname{A}\left(x\right)=0 \land \operatorname{FullReciprocity}\left(G, A, x\right) \Rightarrow \exists B:\operatorname{InnerProductSpaceCore}\left(R, W\right),\ (\forall h:G,\ \forall u,v:W,\ \operatorname{B}\left(\operatorname{h}\left(u\right), \operatorname{h}\left(v\right)\right)=\operatorname{B}\left(u, v\right)) \land \operatorname{finrank}\left(R, W\right)=3 \land \operatorname{finrank}\left(R, \operatorname{Lie}\left(G\right)\right)=3 \land \operatorname{range}\left(\operatorname{originalAction}\left(G\right)\right)=\operatorname{skewEndomorphisms}\left(B\right)$$
 
@@ -118,6 +140,7 @@ The dimension theorem supplies the three-dimensional faithful range. For a posit
 - Truth anchor: `D5/S3/Quantum/Algebra/OriginalCompactReciprocity.fullRelation`
 - Truth anchor: `D5/S3/Quantum/Algebra/OriginalCompactReciprocity.mem_velocitySpace_iff_exp`
 - Truth anchor: `D5/S3/Quantum/Algebra/OriginalCompactReciprocity.original_exponential_rigidity`
+- Truth anchor: `D5/S3/Quantum/Algebra/OriginalCompactReciprocity.original_group_rigidity`
 - Truth anchor: `D5/S3/Quantum/Algebra/OriginalCompactReciprocity.original_rigidity`
 - Dependency: [D5/S3/Quantum/Algebra/OriginalCompactActionMetric](OriginalCompactActionMetric.md)
 - Dependency: [D5/S3/Quantum/Algebra/RankOneInvariantMetric](RankOneInvariantMetric.md)
