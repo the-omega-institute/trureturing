@@ -66,6 +66,10 @@ $$\left(\exists a \in (\mathrm{Nat} \to \mathrm{Nat}),\; \operatorname{IsSourceS
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/IsraelA103573RootFloor.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/israel-a103573-root-floor` (proved) by `D5/S3/ArithSums/IsraelA103573RootFloor.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"israel-a103573-root-floor","declaration_gid":"D5/S3/ArithSums/IsraelA103573RootFloor.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ray G. Opao; Robert Israel (2026). *OEIS A103573, least integer root-difference thresholds*. URL: <https://oeis.org/A103573/internal>.
