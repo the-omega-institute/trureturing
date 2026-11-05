@@ -10,6 +10,13 @@ internal sealed class ThreeWayBalanceDocument : IScribeDocumentDefinition
         "Nonnegative three-way balance on an arbitrary abelian group forces an integer quadratic map and makes every orbit sum invisible in every background.",
         H("Three-way balance on the original group"),
         Blocks(Describe.Lean(
+            DescribeId.Create("nonneg-recurrence-constant"),
+            DeclarationHandle.Create("D5/S3/QuadraticForms/ThreeWayBalance.nonneg_recurrence_constant"),
+            H("A nonnegative forward recurrence is constant at its first step"),
+            StatementSource.FromAuthor(Disp(Recurrence())),
+            AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("This is the original recurrence lemma, exposed for actual original-domain marker-invariance consumers. Its hypotheses range over every natural index; no finite depth cap is substituted."))),
+            DescribeRole.Theorem), Describe.Lean(
             DescribeId.Create("three-way-quadratic-structure"),
             DeclarationHandle.Create("D5/S3/QuadraticForms/ThreeWayBalance.three_way_quadratic_structure"),
             H("Visible quadratic structure without scalar assumptions"),
@@ -24,6 +31,16 @@ internal sealed class ThreeWayBalanceDocument : IScribeDocumentDefinition
                 Paragraph(Text("The resulting parallelogram law is passed directly to TauCeti.QuadraticMap.ofParallelogram with the actual A, real codomain and integer scalar ring. Injective doubling is needed only in the real codomain. The returned quadratic map has underlying function q, so existing polarization and integer quadratic scaling apply without adding real operations to A.")),
                 Paragraph(Text("This is the structural part of the original integer-interface representation problem. Positive Gram extension, identification of the null group with the radical, rational localization, real completion, the complex phase, minimality and label-preserving unitary uniqueness require further constructions. No completed Hilbert representation, physical realization, process supply or composite compatibility is asserted here."))),
             DescribeRole.Theorem))));
+
+    private static Formula Recurrence()
+    {
+        var a=V("a"); var n=V("n"); var nat=Seq(Mathbb,Grp(V("N")));
+        Formula At(Formula x) => Seq(a,Open,x,Close);
+        return All("a",Paren(Seq(nat,Sp,To,Sp,Real)),
+            Seq(Paren(All("n",nat,Seq(D(0),Sp,Le,Sp,At(n)))),Sp,Rightarrow,Sp,
+                Paren(All("n",nat,Equal(Add(At(Add(n,D(2))),At(Add(n,D(1)))),Multiply(D(2),At(n))))),
+                Sp,Rightarrow,Sp,Equal(At(D(1)),At(D(0)))));
+    }
 
     private static Formula Statement()
     {
