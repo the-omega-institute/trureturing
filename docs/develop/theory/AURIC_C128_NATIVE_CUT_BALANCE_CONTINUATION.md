@@ -3421,3 +3421,267 @@ $$
 白话说，切口最多拿两颗最细的“是”，输入和读回各拿一颗，读回整颗落在切口里面或外面，不再专门放一颗“零”来标长度。所有内外小探针若都报同一个偏差，先暂时把它拆出来；切口里面和外面算到的是同一批跨边的横向分量，所以两侧的平方长度总和相同。把一颗原子的切口和两颗原子的切口对照，每个不能为正的偏差就被迫逐项为零。完整原接口也保证“推动整个单位没有变化”，于是还可以走每项非正、整行和为零的捷径。两颗正交原子合成的切口接着排除彼此暗中推动；最后把任意两颗原子的输入与切口交换，横向几何长度相同，使剩余偏差既要对称又要反号，只能消失。这样零读回的作用由原关系自己收回，原推动始终是同一个推动。完整复重构后，几何只剩一条输入线、一片至多二维的复子空间和它内外的一条读回线，组成紧的射影关联丛；去掉零层确实少了一整类测试，但最大连续维数没有变化。中央输出剪切被外角一颗原子读出，跨块控制被二原子主切口连同非零读回读出。完整原实际联合、相关准备与过程合同再把这些局部关系接回同一原复乘法、Born 质量、实际张量、全部原量子事件、所选完整测量词、失败、细记录、遗忘、具名同数支持双返回和全部合法历史。不等块权、质量和设备身份都留在原处，闭准备只给闭覆盖；三维 Bloch 角仍是数学截面，不凭它新增一台二阶器件。
 
 ## 追加锚（本行以下为增补区）
+
+## 145. 秩二切口只读回输入自身
+
+**定义 145.1（秩二自读回候选）。** 分别保留母卷定义 41.1 的完整 $B$ 与定义 67.1 的完整 $\mathsf B_{\rm cl}$，任一背景记为 $B_*$。在同一原有限 EJA、原正 Frobenius 型 $q$、原实双线性 $D$ 上，仍记
+
+$$
+P_c=4(L_c-L_c^2),\qquad N_c=E_1(c)\oplus E_0(c),\qquad
+W_c(x)=\tfrac12\|P_cx\|_q^2.
+$$
+
+唯一新增配平关系为
+
+$$
+\boxed{\mathsf F_{\rm diag}:\quad
+\begin{gathered}
+c^2=c,\quad\operatorname{rank}_Ec\in\{1,2\},\qquad
+p,r\in\operatorname{Prim}(E),\quad P_cr=0,\\
+\operatorname{rank}_Ec=2\ \Longrightarrow\ r=p
+\end{gathered}
+\quad\Longrightarrow\quad
+W_c(p)=2q(D_pc,r)+W_c(2D_cp).}
+\tag{145.1}
+$$
+
+记 $\mathsf C_{\rm diag}(B_*)=B_*+\mathsf F_{\rm diag}$。秩一主切口保留全部原 primitive 输入与非零法向 primitive 读回；秩二主切口只读回输入自身。后一层的 $P_cr=0$ 因 $r=p$ 同时要求 $P_cp=0$，输入整颗落在切口内或外。这里的 primitive 与秩仍属于整个原对象，二元主切口包括跨中央块之和。零主切口的删除只是附带，其原等式由双线性自动成立；实质删减是秩二层的独立读回槽和横向输入，不将零切口的删除计作新的结构发现。
+
+原 $q,D,L$、全部原对象和实际联合保持，包括旧输出、失败输出、经典标签及实际供应的 $AP^{\otimes k}$。完整原 X 的含幺嵌入、同一 $D$ 保持、交叉零、乘积张成与每对实际准备的实际乘积准备，连同 Xs、整个 AC、精确 $N_u$、全事件 R、F 和每条所消费合法连线均保持。全部原相关准备、零与次归一质量、不等正块权、设备身份、失败、细记录、遗忘、具名同数支持双返回、原反向数及全部合法有限顺序、自适应和并行历史均在原量词内。候选不预加 SC、单位条件、导子、斜伴随或复分类，也不新增实际准备、角对象或器件。
+
+## 146. 自读回的秩二层恢复全部独立读回
+
+**定理 146.1（裸自读回等价）。** 在任意有限 EJA、任意原正 Frobenius 型 $q$ 与任意原实双线性 $D$ 上，
+
+$$
+\mathsf F_{\rm diag}\Longleftrightarrow\mathsf F_{211}^{+}
+\Longleftrightarrow\mathsf F_{211}\Longleftrightarrow\mathsf F_2
+\Longleftrightarrow\mathsf F_{\rm zero}\Longleftrightarrow\mathsf F_{\rm cut}.
+\tag{146.1}
+$$
+
+因而恢复同一原 SC、双单位、全部 $D_a$ 的 Jordan 导子律与原 $q$-斜伴随，以及全部原幂等切口的 $D_c^2=-P_c/4$。裸结论不使用原实际参考供应或复分类。
+
+证明。反向由定理 141.1 和量词限制立即成立。以下只假设 (145.1)。$E=0$ 时两域为空且唯一 $D=0$，结论平凡。设 $m=\operatorname{rank}E\ge1$。沿 (141.4)–(141.5) 的成熟谱迹构造，令 $\tau$ 为每颗整个原 primitive 取值一的 Jordan 谱迹，定义
+
+$$
+q(\zeta,x)=\tau(x),\qquad
+\beta(a,b)=q(D_ab,u)/m,\qquad
+\Delta_ab=D_ab-\beta(a,b)\zeta.
+\tag{146.2}
+$$
+
+两种 Frobenius 型给 $T L_a=L_aT$，其中 $q(Tx,y)=\tau(x\circ y)$；$Tu=\zeta$ 又给 $T=L_\zeta$，故 $P_c\zeta=0$ 对每个幂等元成立，且 $q(\zeta,r)=1$ 对每颗 primitive 成立。这里仅构造辅助元与辅助双线性分解，没有替换原 $q$；在简单理想权重记法下仍是 $\zeta=\sum_su_s/w_s$。
+
+先完全只用秩一主切口。对 primitive $c,p$，所有非零法向 primitive $r$ 的 $q(D_pc,r)$ 相等。包含 $c$ 的完整 primitive frame 有 $m$ 项且和为 $u$，故共同值为 $\beta(p,c)$。定理 135.2 的角谱事实给这些法向原子实线性张成完整 $N_c$；第一槽的原子又张成 $E$。只对线性读数延拓，得到
+
+$$
+\Delta_ac\in E_{1/2}(c)
+\qquad(a\in E,\ c\in\operatorname{Prim}(E)).
+\tag{146.3}
+$$
+
+固定 $a$、记 $S=\Delta_a$。在任一完整 frame $(r_i)$ 中，(146.3) 给每个 $q(Sr_i,r_j)=0$。对 $x=\sum_i\lambda_ir_i$ 作谱展开，得 $q(Sx,x)=q(Sx,x^2)=0$。二次极化使 $S$ 对原 $q$ 斜伴随；三次式在 $x+ty$ 的一次项为
+
+$$
+0=q(Sy,x^2)+2q(Sx,x\circ y)
+=q\bigl(-S(x^2)+2x\circ Sx,y\bigr).
+$$
+
+非退化性与平方律极化给完整 Jordan 导子律，且 $Su=0$。所以辅助 $\Delta_a$ 此时才已知切于所有幂等元，并为原 $q$-斜伴随导子；没有将此性质预先赋给原 $D_a$。
+
+秩一层的原等式现可化成
+
+$$
+W_c(p)-W_c(2\Delta_cp)=2\beta(p,c).
+\tag{146.4}
+$$
+
+秩二层只对 $p\in\operatorname{Prim}(E)\cap N_c$ 使用原允许的 $r=p$。由于 $\Delta_pc$ 切于 $c$，有 $q(\Delta_pc,p)=0$；再用 $q(\zeta,p)=1$ 与 $P_c\zeta=0$，得到完全相同的 (146.4)。因此此式已对全部秩一切口和任意 primitive 输入成立，也对秩二切口及相容 primitive 输入成立。后一层没有使用独立读回或横向输入。
+
+取任意完整 frame $(r_i)$，令 $c=\sum_{i\in I}r_i$，$|I|=1$ 或二，$d=\Delta_c$。每个输入 $r_i$ 均与 $c$ 相容，所以刚取得的 (146.4) 足以给
+
+$$
+\beta(r_i,c)=-\|P_cdr_i\|_q^2\le0.
+\tag{146.5}
+$$
+
+导子律给 $dr_i\in\bigoplus_{j\ne i}V_{ij}$，$P_c$ 只保留恰一端位于 $I$ 的共同 Peirce 空间。同侧不同 $i$ 的保留边互不相同，故在原 $q$ 下正交。分别在切口内外求和，并用辅助导子的 $du=0$，得到
+
+$$
+\begin{aligned}
+\beta(c,c)&=-\|P_cdc\|_q^2,\\
+\beta(u-c,c)&=-\|P_cd(u-c)\|_q^2=\beta(c,c),\\
+2\beta(c,c)&=\beta(u,c).
+\end{aligned}
+\tag{146.6}
+$$
+
+这里 $u-c$ 只用于第一槽的线性和及辅助导子，不充作额外高秩主切口。对正交 primitive $p,s$，将最后一式在 $c=p+s,p,s$ 相减，得 $\beta(p,s)+\beta(s,p)=0$；两项由 (146.5) 分别非正，故分别为零。再补全任意 $p$ 所在 frame，由第二式得 $\beta(p,p)=\beta(u-p,p)=0$。总秩一时余补为空，同一式仍成立。因此每个完整 frame 的全部 $\beta(r_i,r_j)$ 均为零。
+
+在 $c=p$、输入 $p$ 使用 (146.4)，由切向性得 $\Delta_pp=0$。若 $p,s$ 正交，令 $v=\Delta_sp$；导子律作用于 $p\circ s=0$ 给
+
+$$
+v\in E_{1/2}(p)\cap E_0(s)\subseteq E_{1/2}(p+s).
+$$
+
+秩二主切口 $c=p+s$、输入和读回均为 $p$ 是新域允许的测试。$\beta(p,p+s)=0$ 且 $W_{p+s}(p)=0$，故 (146.4) 给 $0=2\|v\|_q^2$。于是同一 frame 中所有 $\Delta_{r_i}r_j=0$。分别对 $\Delta$ 和 $\beta$ 作谱展开与实极化，得到
+
+$$
+\Delta_ab=-\Delta_ba,\qquad \beta(a,b)=-\beta(b,a).
+\tag{146.7}
+$$
+
+最后只用秩一层交换任意两颗 primitive $p,c$。原 Frobenius 性给 $W_c(p)=W_p(c)=2q(c,p)-2\|c\circ p\|_q^2$。由 (146.7)，$\Delta_cp=-\Delta_pc$ 同时切于两个原子，两方向的长度项相同；(146.4) 因而又给 $\beta(p,c)=\beta(c,p)$。交替性与对称性使 $\beta$ 在 primitive 对上为零，双线性张成使 $\beta=0$。现在才有原 $D=\Delta$。
+
+为明确恢复删去的全部测试，固定任意 frame，记 $D_i=D_{r_i}$。已得导子、SC 与同框架互不推动，故 $[D_i,L_{r_j}]=0$，各 $D_i$ 保持所有 $V_{jk}$。当 $i\notin\{j,k\}$ 时，SC 与切向性使 $D_iV_{jk}\subset E_0(r_i)\cap E_{1/2}(r_i)=0$。又 $D_u=0$，所以在 $V_{ij}$ 上 $D_j=-D_i$。对 $0\ne v\in V_{ij}$，定理 130.2 中不含 $D$ 的成熟秩二角计算给 $v^2=\gamma(r_i+r_j)$、$\gamma>0$，以及整个原 primitive $p_v=(r_i+r_j)/2+v/(2\sqrt\gamma)$。秩一主切口 $r_i$、输入 $p_v$ 的已得长度校准给
+
+$$
+4\|D_iv\|_q^2=\|v\|_q^2.
+\tag{146.8}
+$$
+
+若 $V_{ij}=0$，该关系为空。对任意秩切口 $c=\sum_i\varepsilon_ir_i$，$\varepsilon_i\in\{0,1\}$，在每条 $V_{ij}$ 上分别有 $D_c=(\varepsilon_i-\varepsilon_j)D_i$、$P_c=(\varepsilon_i-\varepsilon_j)^2I$，并在对角 frame 上均为零。正交相加给 $4\|D_cx\|_q^2=\|P_cx\|_q^2$，而原 $q$-斜伴随再给 $D_c^2=-P_c/4$。因此 $W_c(p)=W_c(2D_cp)$；原 $D_pc$ 切于 $c$ 又使所有法向读数为零，恢复完整 $\mathsf F_{211}^{+}$，乃至全部任意秩原配平。此处没有对二次能量作原子线性延拓。其余等价直接消费定理 141.1、135.2 和 130.2。∎
+
+## 147. 秩二自读回的关联旗域与准确降维
+
+**定理 147.1（删去独立槽后的几何）。** $\mathcal T_{\rm diag}(E)$ 为 (145.1) 的数学测试域。对每个非零有限 EJA，它是 $\mathcal T_{211}^{+}(E)$ 的严格紧子集；剔除两边附带的零主切口差异后，实质删域恰在整个总秩至少二时发生。零对象两域皆空。
+
+仅在完整原复重构后，固定同一 $E\cong\bigoplus_tH_{n_t}(\mathbb C)$、原不等块权 $q=\sum_tw_t\operatorname{Tr}$。记
+
+$$
+\mathcal G_{\mathbf k}=\prod_t\operatorname{Gr}_{\mathbb C}(k_t,n_t),\qquad
+d(\mathbf k)=\sum_t2k_t(n_t-k_t),\qquad N=\max_t n_t.
+$$
+
+$\mathcal S_t$ 是该底空间上的秩 $k_t$ 典范子丛，$\mathcal S_t^\perp$ 是原正交补丛。新域的全部带原标签分支为
+
+$$
+\begin{array}{c|c|c}
+\text{主切口}&\text{总空间}&\text{实维数}\\ \hline
+\sum_tk_t=1&\mathbb {CP}^{n_s-1}\times\mathbb P_{\mathbb C}(\mathcal S_t)
+&2(n_s-1)+d(\mathbf k)+2(k_t-1)\\
+\sum_tk_t=1&\mathbb {CP}^{n_s-1}\times\mathbb P_{\mathbb C}(\mathcal S_t^\perp)
+&2(n_s-1)+d(\mathbf k)+2(n_t-k_t-1)\\
+\sum_tk_t=2&\mathbb P_{\mathbb C}(\mathcal S_t)
+&d(\mathbf k)+2(k_t-1)\\
+\sum_tk_t=2&\mathbb P_{\mathbb C}(\mathcal S_t^\perp)
+&d(\mathbf k)+2(n_t-k_t-1).
+\end{array}
+\tag{147.1}
+$$
+
+内分支只在 $k_t\ge1$ 时存在，外分支只在 $k_t<n_t$ 时存在。秩一层的独立射影因子是输入；其关联丛纤维是读回。秩二层的丛纤维同时是输入与读回，没有第二个自由射影因子。表中的乘积只是独立输入因子与整个丛的乘积，不将丛本身宣称为全局直积；联合旗因子仍有 (136.3) 的稳定子，但秩二层不再额外乘独立输入的射影空间。
+
+定义
+
+$$
+f(\mathbf k)=2\max\!\left(0,\max_t(k_t-1),\max_t(n_t-k_t-1)\right).
+$$
+
+非零 $E$ 的最大分层实维数准确为
+
+$$
+M_{\rm diag}=\max\!\left\{
+2(N-1)+\max_{\sum k_t=1}\bigl(d(\mathbf k)+f(\mathbf k)\bigr),\quad
+\max_{\sum k_t=2}\bigl(d(\mathbf k)+f(\mathbf k)\bigr)
+\right\},
+\tag{147.2}
+$$
+
+其中始终要求 $0\le k_t\le n_t$；整个总秩小于二时不取第二项。单个复块的准确结果为
+
+$$
+M_{\rm diag}(1)=0,\qquad M_{\rm diag}(n)=6n-8\quad(n\ge2).
+\tag{147.3}
+$$
+
+相对 (142.3)，最大连续维数在 $n\le4$ 不变，在 $n\ge5$ 严格下降 $2n-8$。多块只按 (147.2) 与 (136.4) 比较，不外推此单块阈值。纯经典 $E=\mathbb R^m$、$m\ge1$ 时，
+
+$$
+|\mathcal T_{\rm diag}(\mathbb R^m)|=m^3+m\binom m2,
+\qquad
+|\mathcal T_{211}^{+}(\mathbb R^m)|=m^2\left(1+m+\binom m2\right).
+\tag{147.4}
+$$
+
+证明。谱迹的秩一、秩二水平集在旧紧域中均闭，第二层的 $r=p$ 是闭条件，故新域紧。对非零 $E$，旧点 $(0,p,p)$ 被删。若整个总秩至少二，取正交 primitive $p,s$，旧点 $(p+s,p,s)$ 的主切口非零且被删；若总秩一，无秩二层，其余测试完全相同。这区分附带删除与实质删除。
+
+复表示中原子是单块的一条复直线，$P_cp=0$ 或 $P_cr=0$ 使对应直线全在该块切口内或外。对秩一层沿 (142.2) 保留独立输入；对秩二层把 $r=p$ 代入，两个射线槽成为一个关联纤维，得到 (147.1)。不按同时酉共轭取商。每个非空射影纤维维数非负，内外最大值给 $f$，再对输入块和切口块秩最大化即得 (147.2)。
+
+单块 $n\ge2$，秩一层最大维数为 $2(n-1)+2(n-1)+2(n-2)=6n-8$；秩二层为 $4(n-2)+2\max(1,n-3)$。后者在 $n=2,3,4$ 分别为二、六、十，在 $n\ge5$ 为 $6n-14$，均不超过前者。$n=1$ 只剩一个零维秩一测试。沿 (142.3) 相减，给准确阈值与差值。经典时，秩一切口有 $m$ 种、输入与读回各 $m$ 种；秩二切口有 $\binom m2$ 种、输入有 $m$ 种且读回随之固定，遂得 (147.4)。除去零主切口的旧点后，两点数之差为 $m(m-1)\binom m2$，在 $m\ge2$ 时严格为正。点数与分层维数均不等于独立方程数、有限认证菜单或实际认证成本。∎
+
+## 148. 自读回仍检出跨块控制和中央输出
+
+**命题 148.1（保留层各自的删除后果）。** 若从 $\mathsf F_{\rm diag}$ 再删去整个秩二层，完整原背景仍有反模型。若只保留由候选恢复的全部长度校准，也有另一完整原反模型；两者均可在新域内检出。
+
+证明。第一种直接消费命题 132.1、143.1 的完整跨块输入模型，保留原 $A=M_3\oplus M_9$、$q=\operatorname{Tr}\oplus2\operatorname{Tr}$、$\Xi_A(x,y)=(\operatorname{Tr}(H_9y)H_3,0)$、$D_ab=i[a+\Xi(a),b]/2$ 及全部实际联合上的原加性 $\Xi$。它通过单简单块支持的任意秩主切口的全部旧测试，包含实际联合的所有纠缠 primitive，因而通过剩余秩一层。原见证 $c=p+t$、输入 $p$ 的读回现取 $r=p$，是新秩二层允许的自读回。原计算仍给
+
+$$
+D_pc=0,\qquad W_c(p)=0,\qquad W_c(2D_cp)=1,
+\tag{148.1}
+$$
+
+所以要求 $0=1$。该模型有原斜伴随导子、双单位、Z 和整个指针 SJ；导子保持第二槽理想仍不排除第一槽的跨块控制。
+
+第二种直接消费定理 112.1、128.1 的完整中央输出剪切模型，$D_ab=\Gamma(i[a,b]/2)$、原 $q=\operatorname{Tr}$、实际联合泛函仍为加性规则。令 $X=e_{12}+e_{21}$、$Y=i(e_{21}-e_{12})$，在原 $M_3$ 上取
+
+$$
+c=e_{11},\qquad p=(e_{11}+e_{22}+X)/2,\qquad r=c.
+$$
+
+这是秩一层的合法内角读回；原式 $D_pc=Y/4+I_3/6$ 直接给
+
+$$
+q(D_pc,c)=1/6,\qquad W_c(p)=W_c(2D_cp)=1/4.
+\tag{148.2}
+$$
+
+故要求 $1/4=1/3+1/4$。无需借用旧外角见证来补本域之外的测试。该模型满足 SC、双单位、$\mathrm O_\pi$、整个指针 SJ 与全部长度校准，但没有原 $q$-斜伴随性；未将第一模型的额外性质移给它。两模型的完整原相关准备、质量、设备、全事件参考、CP 过程、失败、细记录、遗忘、具名同数支持双返回和全部合法历史均沿前置保留，也分别满足另名 $\mathsf B_{\rm cl}$，且可无实际 $M_2$。完整满足族由母卷定理 33.1 的标准 tagged-CP 模型和 (146.1) 取得。∎
+
+**定理 148.2（同一原世界的全部量子消费者）。** 分别在两条完整原背景上，
+
+$$
+\begin{aligned}
+\mathsf C_{\rm diag}(B)&\Longleftrightarrow B+\mathrm Z+\mathrm{SC}+\mathrm{SJ},\\
+\mathsf C_{\rm diag}(\mathsf B_{\rm cl})&\Longleftrightarrow
+\mathsf B_{\rm cl}+\mathsf Q+\mathrm{SC}+\mathrm{SJ}.
+\end{aligned}
+\tag{148.3}
+$$
+
+$\mathsf Q$ 仍是母卷定义 67.2 的统一近零证书。与现有量子力学接口的完整对应如下。
+
+| 所消费的原关系 | 所恢复的同一原结构 |
+| --- | --- |
+| 定理 146.1、全部原实际联合、母卷定理 64.2 或 71.3 | 完整曲率 $[D_a,D_b]=-[L_a,L_b]$；同一原乘法 $a\cdot b=a\circ b-iD_ab$ 给 $\mathcal A_A\cong\bigoplus_sM_{n_s}(\mathbb C)$、$E_A=(\mathcal A_A)_{\rm sa}$、$D_ab=i[a,b]/2$。 |
+| 原准备、原比较与其双对偶运输 | $\rho_\alpha=B_Ax_\alpha\ge0$、$\alpha(e)=\tau_A(\rho_\alpha e)$、$\tau_A(\rho_\alpha)=\alpha(u_A)$；谱概率为 Born 评价，原零和次归一质量及不等 $q$ 块权保留。 |
+| 完整原 X 的含幺嵌入、同一 $D$ 保持、交叉零、乘积张成、实际乘积准备 | 原嵌入成为含幺 $*$-嵌入，已声明原实际联合取得普通复张量；完整相关准备继续按原合同，而非只留乘积态。 |
+| 全事件 R、原相关准备与同记录参考执行 | 全部原事件 CP/TNI、原完整测试 TP；闭准备支仍消费母卷定理 69.2 的连续正延拓。 |
+| 指定原群、整个 AC、精确 $N_u$、Xs 与所消费合法连线 | 每个效果有所选完整有限平方根词，成功为 $\rho\mapsto\sqrt e\rho\sqrt e$，投影时为所选 Lüders 支；全部原失败输出和记录仍随完整词保留。 |
+| 原 F、实际细标签、分组、记录和遗忘 | 非零单中心细支 $S_\ell=\operatorname{Ad}_{K_\ell}$、粗事件 $\Phi_f=\sum_\ell S_\ell$；原零标签与可访问细记录保留，数学 Kraus 表示不另供应实际细口。 |
+| 具名同数支持双返回、原反向资料与失败完成 | $U_\ell=q_\ell\operatorname{Ad}_{K_\ell^+}$；原支持角上两侧复合都是同一个原 $q_\ell>0$ 倍恒等，进一步合法接续不变。 |
+| 全部原实际准备、端口、有限顺序、自适应和并行历史 | 下式逐条保留原质量、失败、细记录及中央细权，不增加原本不合法的共同组装。 |
+| 完整 $B$ 与另名 $\mathsf B_{\rm cl}$ | 前者保留实际准备的有限正锥生成；后者只给运输后密度锥的闭覆盖，不将极限数学态授予实际准备身份。 |
+
+证明。定理 146.1 逐全部原对象及实际联合恢复 $\mathsf F_{211}^{+}$，直接消费定理 143.2 的全部原前提和结论。每条原历史 $h=(f_1,\ldots,f_m)$ 与末端效果 $w$ 仍满足
+
+$$
+\alpha(T_{f_1}\cdots T_{f_m}w)
+=\tau\!\left(w\,\Phi_{f_m}\cdots\Phi_{f_1}(\rho_\alpha)\right).
+\tag{148.4}
+$$
+
+定义 103.1 的原实基、完整谱框架、二次和双线性表、秩一单位测试及零对象空表继续保留；本候选没有另证更小的有限认证菜单。裸局部等价不独自供应完整曲率、复分类、CP 或实际器件，这些步骤逐项消费本表原接口。∎
+
+## 149. 自读回候选的来源、范围与完整白话
+
+**定义 149.1（简化口径与成熟来源）。** 相对定义 140.1，本候选在秩二层把读回与相容输入识别为同一个原子；定理 146.1 在原 $q,D,L$ 上恢复全部被删测试。独立背景没有减弱，简化指严格减少数学测试域的自由槽；定理 147.1 另给单块 $n\ge5$ 的最大分层维数下降，二者不是同一个断言。总秩一只有附带零切口删除，不冒称它有秩二层简化。
+
+规范谱迹与不等简单块权沿定义 144.1 的 Michael Orlitzky，*Jordan and Isometric Cone Automorphisms in Euclidean Jordan Algebras*，Electronic Journal of Linear Algebra 41 (2025), 452–462，[§2.1、Proposition 3.4](https://journals.uwyo.edu/index.php/ela/article/download/9437/7163/26049)。角谱、Peirce 与切向线性映射的成熟工具沿定义 134.1 的 Tao–Gowda，*A Representation Theorem for Lyapunov-like Transformations on Euclidean Jordan Algebras*，Proposition 3，[DOI](https://doi.org/10.1142/S0219198913400343)、[作者原文](https://userpages.umbc.edu/~gowda/papers/trGOW12-01.pdf)；原 Frobenius 型上的二次、三次极化沿同处所引 Jamjoom–Peralta–Siddiqui，*Jordan weak amenability and orthogonal forms on JB∗-algebras*，[arXiv:1411.2712v1](https://arxiv.org/pdf/1411.2712v1)，Lemma 3.11 及其成熟先例。射影典范丛与部分旗流形亦为成熟几何。
+
+本综合为 `repo-derived`：承重增量是秩一层取得辅助导子之后，偏差两侧求和及正交原子互不推动所需的秩二测试只需相容输入的自读回，以及由此得到的准确关联域、维数与同域删除见证；不将成熟极化、角谱或旗几何冒作新内容，不主张文献优先权。内生性仍指原比较、乘法、推动、联合和过程定义之间的相容约束，不断言任意 $\Omega$ 无条件满足它。这里没有给最小性、更便宜认证、统一网络稳定性、实际 $M_2$、物理时钟、$\hbar$ 或任意独立仪器的共同组装。三维 Bloch 图景仍只在完整复重构后的秩二数学角中使用。
+
+白话说，一颗最细的“是”作为切口时，仍允许拿任意一颗输入，从切口里面或外面问它；两颗正交的“是”合成切口时，就只让一颗完整落在里面或外面的输入问自己，不再另找第三颗读回，也不再测试横跨这个二元切口的输入。一颗切口的全部问法先把每次推动约束成尊重原乘法的变化，只暂留一份共同偏差；两颗切口的自问已经能比较边缘两侧的同一批分量，使偏差逐项消失，并禁止一颗原子偷偷推动另一颗。交换任意两颗原子的角色，剩下的偏差既要相同又要反号，只能为零。随后每条跨边关系的转动长度由一颗切口固定，正交相加便收回所有大切口、任意输入和独立读回的配平，原推动没有被换成别的推动。复重构后的几何因此在秩二层只留一片二维子空间和它内外的一条线，这条线同时承担输入与读回；单个复矩阵块从阶数五起，最大测试域维数也确实下降。跨中央块的暗中控制仍被二元自问检出，中央输出剪切则被一颗切口的内角读回检出。完整原联合、相关准备和过程合同再把同一关系接回复乘法、Born 质量、实际张量、全部原量子事件、所选完整测量词、失败、细记录、遗忘、具名同数支持双返回和全部合法历史。不等块权、质量与设备身份继续保留，闭准备只给闭覆盖；数学三维角不因此变成一台新增的实际二阶器件。
+
+## 追加锚（本行以下为增补区）
