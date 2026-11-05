@@ -1,0 +1,12 @@
+**本轮唯一核心候选。** 给原实线性比较载体 $V$、同一有限非负读数 $q:V\to[0,\infty)$ 和任意原操作 $U:V\to V$。 保留基线 $q_0=q(0)$，定义 $Q=q-q_0$。对全部原 $x,y\in V$、$t\in\mathbb R$，要求
+
+$$
+\boxed{\begin{aligned}
+&Q(x+ty)+Q(x+tUy)+Q(tUx+y)\\
+&\hspace{1.5em}=2Q(x)+Q(y)+Q(tx)+2Q(ty).
+\end{aligned}}
+\tag{C140}
+$$
+
+右边的 $Q(tx),Q(ty)$ 也是同一原读数；没有先把它们写成 $t^2Q(x),t^2Q(y)$。
+

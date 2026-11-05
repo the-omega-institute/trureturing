@@ -1,0 +1,51 @@
+**定理 197.1（同一原数据的全部配平恢复）。** 对两个分别具名的完整原背景，
+
+$$
+B_*+\mathsf F_{>P}
+\ \Longleftrightarrow\
+B_*+\mathsf F_{-\rm self}
+\ \Longleftrightarrow\
+B_*+\mathsf F_{\rm ext}
+\ \Longleftrightarrow\
+B_*+\mathsf F_{\rm cut}.
+\tag{197.1}
+$$
+
+证明。先取 $\operatorname{rank}E>p_*$ 的任一原对象。它的总秩至少三；定理 181.1 仍给正交 primitive 的 $D_ep=k_{ep}p$。定理 196.1 已给交替性，于是 $k_{ep}p=-k_{pe}e$，两个系数均为零。全部遗漏的正交切口自身读回成为 $0=0$，恢复该对象的 $\mathsf F_{\rm ext}$。直接消费定理 175.1、167.1 和 156.1，取得同一 $D$ 的交替性、逐第一槽 Jordan 导子律，以及每个幂等元 $f$ 的
+
+$$
+(D_f^E)^2=-P_f^E/4 .
+\tag{197.2}
+$$
+
+现在取任意原 $A$，包括全部总秩不超过 $p_*$ 的对象。定理 195.1 给原单射 $\eta:A\to A^\sharp$，其中 $\operatorname{rank}E_{A^\sharp}>p_*$。导子律与交替性沿原 Jordan/$D$ 单射拉回。对任意原幂等元 $c$ 及任意 $x\in E_A$，
+
+$$
+\begin{aligned}
+\eta((D_c^A)^2x)
+&=(D_{\eta(c)}^{A^\sharp})^2\eta(x)\\
+&=-P_{\eta(c)}^{A^\sharp}\eta(x)/4\\
+&=-\eta(P_c^Ax)/4.
+\end{aligned}
+\tag{197.3}
+$$
+
+(197.2) 覆盖全部幂等元，因此 $\eta(c)$ 的秩不影响这一步。单射性给 $(D_c^A)^2=-P_c^A/4$。有限 EJA 的 Jordan 导子是内导子；它们是 $[L_a,L_b]$ 的有限和，而各 $L_a$ 对同一原正 Frobenius 型 $q_A$ 自伴随，故拉回的每个原 $D_a^A$ 对原 $q_A$ 斜伴随。
+
+为明确原配平的返回，固定 $c$，暂略对象上标。由 $D_c^2=-P_c/4$，$D_c$ 与 $P_c$ 交换；若 $z\in\ker P_c$，则
+$\|D_cz\|_q^2=-q(z,D_c^2z)=0$。
+所以 $P_cD_c=D_cP_c=D_c$。对原测试中的任意 primitive $p$ 及 $r\in\ker P_c$，
+
+$$
+\begin{aligned}
+W_c(2D_cp)
+&=2\|D_cp\|_q^2
+=-2q(p,D_c^2p)\\
+&=\tfrac12q(p,P_cp)=W_c(p),\\
+q(D_pc,r)&=-q(D_cp,r)=0.
+\end{aligned}
+\tag{197.4}
+$$
+
+这恢复 $A$ 的全部 $\mathsf F_{\rm cut}$，始终使用原 $q_A$，包括原不等块权。$A$ 任意，全部原对象及实际联合均已恢复。其余方向只是把同一原关系限制到所列测试域。∎
+
