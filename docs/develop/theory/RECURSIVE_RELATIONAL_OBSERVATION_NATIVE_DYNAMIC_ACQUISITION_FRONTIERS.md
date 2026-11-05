@@ -1539,3 +1539,288 @@ $q[V(H)]$ 只是初始 q 的可能集合；即使连同 $E$ 可以计算当前 q
 定义 12.9 的原 B-program／exact UJB 对应、原端口完整后继、共同 whole-resource backing、空间／时间／边界／记忆的合法双向恢复仍须各自的同源映射与执行证明。这里的三地址分离与统一读取准则不结算 C133 的 $R\Rightarrow DT$ 正性、FIB full64 或整体恢复，也不将这些原域替换为树 q 域。数学取得、物理实现和取得总成本分别承担各自条件。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 14. 原字面完成上的精确 q 接近纤维
+
+本节连接 §13 的有限模式求值与既有的原生字面完成。它研究有限真实来源的 q 图在完成中的闭包；图上的接近标签不是无限来源已经取得的单值方向，也不是给原函数系统另选一份解。
+
+**约定 14.0（原完成、有限表与来源对应）。** 沿用 [Symbolic Feedback Synthesis，以下简称 SFS，定义 1.4](RECURSIVE_RELATIONAL_OBSERVATION_SYMBOLIC_FEEDBACK_SYNTHESIS.md) 的 $\widehat{\mathcal T}$：全部有限或无限有序满二叉树，叶为 $\alpha,\beta$，保留 branch、absent 与原根地址；$\mathcal T$ 是其中原有限来源。拓扑是完整四值回复的前缀拓扑，$S=\{0,\pm a,\pm b,\pm k\}$ 取离散拓扑。$\Omega$ 是唯一无叶树，$\langle\Omega,\Omega\rangle=\rho\Omega=\Omega$。这里不重新构造完成。
+
+对 $X\in\widehat{\mathcal T}$，令 $\pi_d(X)$ 为保留严格小于 $d$ 的构造符、在达到的深度 $d$ 留独立孔的既有 cutoff；$d=0$ 时只有一个孔。$Q$ 始终指定义 13.2 的同一个七值有限表，不定义新求值器。已有 `NativeCompletionPrefixLifting.prefix_cylinder` 在 $d=h+1$ 给出
+
+$$
+\operatorname{Fill}(\pi_d(X))
+ =\{t\in\mathcal T:\forall |p|<d,\ r_t(p)=r_X(p)\},
+\qquad
+Q(\pi_d(X))=q[\operatorname{Fill}(\pi_d(X))].
+\tag{14.1}
+$$
+
+第二式复用 (13.3)。早叶与 absent 后裔没有丢弃。$\rho$ 在完成中的解释仍是原叶替换及有序配对律；它的字面连续性、有限性反射与无限分支持续性复用 SFS 引理 2.1 及 Functional Joint Contact §3。这里的 cutoff 与有限 filling 是数学描述，不是未知源可免费调用的端口。
+
+**定理 14.1（有限图闭包的精确纤维）。** 定义
+
+$$
+G=\{(t,q(t)):t\in\mathcal T\},\qquad
+\mathfrak F(X)=\{z\in S:(X,z)\in\overline G\}.
+$$
+
+则对每个完成树 $X$，
+
+$$
+\boxed{\quad\mathfrak F(X)=\bigcap_{d\ge0}Q(\pi_d(X)).\quad}
+\tag{14.2}
+$$
+
+每个纤维非空，而且存在一个依赖 $X$ 的有限 $d_0$，使对所有 $d\ge d_0$，$Q(\pi_d(X))=\mathfrak F(X)$。若 $X=t$ 有限，则 $\mathfrak F(t)=\{q(t)\}$。对任意 $z\in\mathfrak F(X)$ 和任意 $d$，都有同一个有限来源 $t_d$，同时匹配 $X$ 的全部深度小于 $d$ 的回复且 $q(t_d)=z$；从而 $t_d\to X$。
+
+**证明。** 前缀柱与离散单点 $\{z\}$ 的乘积构成 $(X,z)$ 的邻域基。(14.1) 表明每个这样的邻域与 $G$ 相交，恰当且仅当 $z$ 属于每个所列有限表，给出 (14.2) 及实际有限见证。每个 cutoff 都有有限 filling；加深 cutoff 只缩小其有限来源集合，所以这些非空表递减。它们均为有限集合 $S$ 的子集。对每个不在交集中的标签，选一个已排除它的深度；对有限多个这样的深度取最大值，便得到 $d_0$，交集也非空。这是存在性的稳定深度，不是从任意无限描述中取得 $d_0$ 的算法。有限 $t$ 在越过全部叶深度后不再有孔，(14.1) 的有限来源柱只有 $t$，于是纤维等于其原 q。证毕。
+
+**定理 14.2（独立配对与原替换的双向对应）。** 对任意 $X,Y\in\widehat{\mathcal T}$，在两个子来源的有限填充可以独立选择的域上，有
+
+$$
+\begin{aligned}
+\mathfrak F(\langle X,Y\rangle)
+ &=\{x\times y:x\in\mathfrak F(X),\ y\in\mathfrak F(Y)\},\\
+\mathfrak F(\rho X)&=R\mathfrak F(X),\qquad Ra=b,\ Rb=k,\ Rk=a.
+\end{aligned}
+\tag{14.3}
+$$
+
+第二式的两向结论均成立，不能只用连续性的一向包含代替等号。
+
+**证明。** 第一式的正向构造，分别对 $x,y$ 使用定理 14.1 的有限见证 $s_d,t_d$，将它们实际配对，就得到趋近 $\langle X,Y\rangle$ 且 q 恒为 $x\times y$ 的有限树。反向，若有限配对趋近该树并且根值为 $z$，拆开左右有限子树；七值子树标签对只有有限多种，可取一个子列使二者恒为 $x,y$。左右子列仍分别趋近 $X,Y$，所以 $x\in\mathfrak F(X),y\in\mathfrak F(Y)$ 且 $z=x\times y$。这没有为同一个孔名重复选不同值。
+
+由有限来源上的 $q(\rho t)=Rq(t)$ 和字面连续性，定理 14.1 的见证经实际 $\rho$ 映射给出 $R\mathfrak F(X)\subseteq\mathfrak F(\rho X)$。为证反向，固定任意 $d$，把 $\pi_d(X)$ 的显式叶按 $\rho$ 替换、显式 pair 保留、各孔仍留在原地址，得到有限孔上下文 $C_d$。它未必是一个等深 cutoff，但它是 $\rho X$ 的一个有限构造符邻域；其孔以下任意有限填充皆在该邻域，且所有匹配这些显式构造符的有限树皆是这种填充。这个对应只用有序自由树的构造消去律。
+
+设 $z\in\mathfrak F(\rho X)$。取该邻域内 q 为 $z$ 的有限树 $v=C_d[(v_i)_i]$。对每个孔，有限集合 $S$ 上的 $R$ 是双射，且 $S$ 的每个值有定义 13.2 所用的有限代表；因此可以选有限 $s_i$ 满足 $Rq(s_i)=q(v_i)$。令 $t=\pi_d(X)[(s_i)_i]$。实际 $\rho t=C_d[(\rho s_i)_i]$ 在每个孔处的 q 与 $v$ 相同，沿显式 pair 求值就给 $Rq(t)=q(\rho t)=q(v)=z$。故 $R^{-1}z\in Q(\pi_d(X))$。这对全部 $d$ 成立，(14.2) 给出 $z\in R\mathfrak F(X)$。这里并未断言 $v$ 自身是 $\rho$ 的实际像，也没有实施逆源更新。证毕。
+
+**定理 14.3（无限来源的八种且全部达到的纤维）。** 无限 $X$ 的纤维恰有如下八种可能，每种都有一个具体完成树达到：
+
+$$
+\mathfrak F(X)=\{0\}\ \cup\!
+ \bigcup_{u\in A}\{u,-u\},\qquad A\subseteq\{a,b,k\}.
+\tag{14.4}
+$$
+
+**证明。** 无限满树的每个有限深度 cutoff 都有孔；若某深度没有达到的孔，则其上只有有限多个节点且全部支已经结束，原树即有限。由引理 13.4，$0$ 属于每个 $Q(\pi_d(X))$。若一个有限填充给根非零值 $z$，固定其中一个孔；该孔值非零，否则根也为零。把这个孔值 $x$ 换成具有有限代表的 $-x$，其余孔值不变。孔只出现一次，叉积沿它到根的路径是线性的，故根值变为 $-z$。因此每个表都关于取负对称，交集也如此。$S$ 除零之外只有三对正负轴，故只可能是 (14.4)。
+
+下面给出全部达到性，而不只给必要条件。固定三棵原有限常量 $c_a=\alpha,c_b=\beta,c_k=K=\langle\beta,\alpha\rangle$，使 $q(c_u)=u$，并记 $L_u(X)=\langle c_u,X\rangle$；这只是列出完成树的数学记号，不是取得阶段增加 graft 权限。$\Omega$ 的 cutoff 是满分支模式，七值表有 $\{x\times y:x,y\in S\}=S$，逐层求值给 $\mathfrak F(\Omega)=S$。由 (14.3)，
+
+$$
+\begin{array}{c|c|c}
+A&\text{达到它的无限树}&\mathfrak F\text{ 的值}\\ \hline
+\{a,b,k\}&\Omega&S\\
+\{a,b,k\}\setminus\{u\}&L_u(\Omega)&\{0\}\cup\{\pm v:v\ne u\}\\
+\{v\}&L_u(L_v(\Omega)),\quad u\ne v&\{0,\pm v\}\\
+\varnothing&L_b(L_a(L_b(\Omega)))&\{0\}.
+\end{array}
+\tag{14.5}
+$$
+
+第二行用 $u\times S$ 恰为另外两轴及零。第三行用正交单位轴恒等式 $u\times(v\times x)=v(u\cdot x)$，其在 $S$ 上的像恰为 $\{0,\pm v\}$。末行由 $b\times(a\times(b\times x))=0$。每棵树保有 $\Omega$ 的无限分支，都是无限树，四行分别给一、三、三、一种纤维，穷尽八种。证毕。
+
+**命题 14.4（重复残余的共同值约束）。** (14.3) 的独立配对律不能用于受同源等式约束的两次出现。具体地，固定 $X$，同一个有限来源 $t$ 的联合图在 $X$ 上的两种纤维分别为
+
+$$
+\begin{aligned}
+\lim_{t\to X}(q(t),q(t))&=\{(z,z):z\in\mathfrak F(X)\},\\
+\lim_{t\to X}(q(t),q(\rho t))&=\{(z,Rz):z\in\mathfrak F(X)\}.
+\end{aligned}
+\tag{14.6}
+$$
+
+此处 $\lim$ 表示相应有限联合图的闭包纤维，不表示单值极限。特别是受共同 $t$ 约束的 $\langle t,t\rangle$ 在 $t\to\Omega$ 时只有根标签零；其字面极限却为 $\langle\Omega,\Omega\rangle=\Omega$，而不受这项共同来源限制的 $\mathfrak F(\Omega)$ 是 $S$。
+
+**证明。** 联合有限图上的等式 $y=x$ 或 $y=Rx$ 在离散标签空间中保留到闭包，给出两项包含。对任何 $z\in\mathfrak F(X)$ 取定理 14.1 的同一组有限见证，便同时给出反向包含。$q(t)\times q(t)=0$，而 (14.5) 已给出不受限制的结果。对更一般的重复残余、等式或联动来源，必须在同一个有限来源赋值元组上先取联合图，再投影；只列各边缘纤维没有给出该联合图。证毕。
+
+这也限定了与 `OriginalFunctionalNormalization`、`OriginalNativeConstruction`、`OriginalFiniteResolution`、`OriginalCanonicalClassification` 的关系：它们供应原函数系统的字面规范化、按共同自由赋值的解、有限分类和准确前缀。把其中某个完成坐标 $X$ 代入 (14.2) 得到的是全体有限树逼近该坐标的 q 标签。若要求逼近者还满足原系统，则须保留原系统的全部共同约束并限制有限图；逐坐标的 $\mathfrak F$ 或它们的乘积不提供这样的有限解，也不另行认证原规范化解的方向。
+
+## 15. 代数延拓存在与最大连续恢复域
+
+**定理 15.1（一个全域代数延拓）。** 在本节局部记号下定义
+
+$$
+q_0(X)=\begin{cases}q(X),&X\in\mathcal T,\\0,&X\in\widehat{\mathcal T}\setminus\mathcal T.\end{cases}
+\tag{15.1}
+$$
+
+它在全部 $\widehat{\mathcal T}$ 上保持原叶值、原配对与原替换：
+
+$$
+q_0(\langle X,Y\rangle)=q_0(X)\times q_0(Y),\qquad
+q_0(\rho X)=Rq_0(X).
+\tag{15.2}
+$$
+
+**证明。** 两子树都有限时沿用原有限 q。至少一个子树无限时，配对无限，等式两端都是零。SFS 引理 2.1 保证 $\rho$ 保持有限树并将无限树映为无限树；有限情形用 (PG.4402)，无限情形两边仍为零。叶值由定义给出。证毕。
+
+$q_0$ 是一个可能的代数延拓，不是从有限接近标签中被强制选择的无限源观测，也没有全局连续性。特别是“无限完成上没有任何 q 延拓”这个不加连续条件的说法为假。
+
+**定理 15.2（含全部有限来源的最大连续延拓子空间）。** 令
+
+$$
+\mathcal C=\mathcal T\ \cup\
+ \{X\in\widehat{\mathcal T}\setminus\mathcal T:\mathfrak F(X)=\{0\}\}.
+\tag{15.3}
+$$
+
+$q_0|_{\mathcal C}$ 是有限 q 的连续延拓。若任意子空间 $A\subseteq\widehat{\mathcal T}$ 包含全部 $\mathcal T$，且 $g:A\to S$ 连续、在有限树上等于 q，则必有 $A\subseteq\mathcal C$ 且 $g=q_0|_A$。因此 $\mathcal C$ 是按包含关系最大的这类子空间，而不只是一个极大候选。全域的 $q_0$ 恰在 $\mathcal C$ 中的点连续；全完成上不存在任何连续的有限 q 延拓。
+
+**证明。** 对无限 $X$，若 $\mathfrak F(X)=\{0\}$，定理 14.1 给某个 $d$ 使 $Q(\pi_d(X))=\{0\}$。该柱中的每棵有限树的 q 都为零，每棵无限树的 $q_0$ 也为零，所以 $q_0$ 在 $X$ 连续。每个有限树本来就是孤立点。故 $q_0|_{\mathcal C}$ 连续。
+
+反之，设无限 $X\in A$ 且 $g$ 在该点连续。对每个 $z\in\mathfrak F(X)$，定理 14.1 给有限 $t_d\to X$ 且 $g(t_d)=q(t_d)=z$。由于 $S$ 离散，连续性迫使 $g(X)=z$。所以纤维必须是单点；定理 14.3 又保证零在其中，故只能是 $\{0\}$，且 $g(X)=0$。这证明最大性与唯一性。若无限 $X\notin\mathcal C$，选其纤维中的非零 $z$，同一有限见证列使 $q_0(t_d)=z\ne0=q_0(X)$，故全域 $q_0$ 在该点不连续。最后 $\mathfrak F(\Omega)=S$ 含多个标签，排除任何全域连续延拓。证毕。
+
+由 (14.3)，$\mathcal C$ 还对原配对与 $\rho$ 封闭：至少一个无限输入的纤维为 $\{0\}$ 时，配对纤维也为 $\{0\}$；无限输入的 $\rho$ 纤维保持 $\{0\}$。这是上述具体域的后果，不要求新的一般闭包理论。连续性只针对字面前缀与离散 q；它不声称从一个未知无限源有限取得其全部描述或判定其是否属于 $\mathcal C$。
+
+## 16. 两条已取得比较的相对图与三种原子相位
+
+**定义 16.1（固定成功输入与共同来源）。** 固定 [Acquired Relation History，以下简称 ARH，定义 1.1–1.2](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md) 的原根切口 $P=\{\varepsilon\}$，旧 row 是一个达到的孔及其单类分区，$H_0=\varnothing$，并固定实际比较结果
+
+$$
+H_{\rm rel}=
+\bigl((2,L,1,\varepsilon,=),\ (2,R,0,\varepsilon,=)\bigr),\qquad N=2.
+\tag{16.1}
+$$
+
+比较的每个端点均须达到，比较对象是完整有序子树。每个结果都由同一个实际 $u$ 的相应 epoch 版本取得。其成功来源集合记作 $D$。ARH 命题 2.1 供应一个对全部有限原来源都有限的付费生产者，取得两种比较的实际符号并达到认证 epoch 2；(16.1) 只是其中实际成功输出，不是免费给来源附加的成员口。
+
+**约定 16.2（既有准确分类）。** 两项相等恰好合成
+
+$$
+\rho^2u=\langle\rho u,u\rangle.
+$$
+
+因此直接复用 `SourceTransportCentralizer.source_transport_centralizer` 的第一合取、ARH (ARH.4.4) 及 SFS 定理 2.3，得到
+
+$$
+D=\{T_n=\rho^n\alpha:n\ge0\}.
+\tag{16.2}
+$$
+
+在 completed 同源方程上，SFS 定理 2.3 给全部树解为 $D\cup\{\Omega\}$。这些分类以及原子趋近 $T_n\to\Omega$ 均是供应结果，参见 Atomic Accumulation Basis、Atomic Boundary Trichotomy 的原子族与 SFS (SFS.6)，不计作这里新增的分类或完成定理。有限源上的方向运输给 $q(T_n)=R^na$，即 $a,b,k$ 三周期。重复出现的 $u$ 始终共享其完整值。
+
+**定理 16.3（成功有限源图的精确相对闭包）。** 在 $\widehat{\mathcal T}\times S$ 内，有
+
+$$
+\overline{\{(u,q(u)):u\in D\}}
+ =\{(T_n,R^na):n\ge0\}
+   \ \cup\ \{(\Omega,a),(\Omega,b),(\Omega,k)\}.
+\tag{16.3}
+$$
+
+若同时保留初始与认证入口当前方向，则其联合相对图恰为
+
+$$
+\begin{aligned}
+&\{(T_n,R^na,R^{n+2}a):n\ge0\}\\
+&\quad\cup\{(\Omega,a,k),(\Omega,b,a),(\Omega,k,b)\}.
+\end{aligned}
+\tag{16.4}
+$$
+
+完成的同源局部标签方程在 $S$ 中却恰有四个解：
+
+$$
+R^2z=(Rz)\times z
+\quad\Longleftrightarrow\quad z\in\{0,a,b,k\}.
+\tag{16.5}
+$$
+
+其中零不是成功有限来源 $D$ 的相对接近标签；这个排除只相对于 $D$ 成立。
+
+**证明。** 已有 $T_n\to\Omega$ 且 $T_n$ 两两不同。任一收敛的原子来源列，若指标有有界子列，则进一步有一个常值子列，其极限是相应有限 $T_n$；否则指标趋于无穷，其极限为 $\Omega$。有限树孤立，故 $\overline D=D\cup\{\Omega\}$，没有其它基点。所有有限 q 标签只在 $a,b,k$ 中；分别取 $n=3j+r$ 就在 $\Omega$ 达到每个标签，给 (16.3)。联合有限图恒有 $y=R^2x$，该关系在离散标签中保留，且同一三组来源见证反向，得到 (16.4)。
+
+对 (16.5)，$a,b,k$ 分别满足 $b\times a=k$、$k\times b=a$、$a\times k=b$。若 $z=-v$，$v\in\{a,b,k\}$，右端为 $(Rv)\times v=R^2v$，左端为 $-R^2v$，二者不等；零则两边为零。这穷尽 $S$。因此该局部方程多容许零，不能单凭它认证一个成功有限源逼近。证毕。
+
+**命题 16.4（零在原全域中的实际有限逼近）。** 原有限零树 $Z_n=\langle T_n,T_n\rangle$ 满足 $Z_n\to\Omega$、$q(Z_n)=0$ 且 $Z_n\notin D$。所以 (16.3) 不排除全部有限来源中的零逼近，也不否定 (15.1)。
+
+**证明。** 配对字面连续，且 $\langle\Omega,\Omega\rangle=\Omega$；自叉积为零。由 (16.2) 与原子非零方向，$Z_n$ 不在 $D$。故全域图闭包在 $\Omega$ 的纤维仍是定理 14.3 的 $S$。完成方程允许 $(\Omega,0)$，并不使这些 $Z_n$ 成为两项实际比较都成功的有限来源。证毕。
+
+## 17. 完整访问切面后的取得与 epoch 正确消费者
+
+**假设 17.1（完整访问入口及全局档案）。** 对定义 16.1 的同一个付费生产者实施 ARH 假设 1.3 的 complete accessible-state cut。服务尚未执行 absorbing stop，当前唯一实际寄存器为 $\rho^2u$，认证 epoch 为 2；共同 ready 控制与公共输入只由固定的 row、(16.1)、认证及共同参数决定，并可恢复它们。该完整可访问状态的原来源纤维要求恰为 $D$，包括反向对应。
+
+这项前提计入每个仍可访问的 cache、完整或部分树描述、计数、长度、地址、程序位置、时序、输出、档案、权限和 handle；不能只删一个变量名而保留其可恢复副本。整个实际全局 chronological archive 及其收费 backing 继续保留。服务切面只准读取上述共同保留输入；先前完整取得 trace 与完整遍历描述若保存在全局档案中，须在该服务入口不可读、不可由仍有的权限或 handle 恢复。新事件仍按实际顺序追加，追加设施也不能向服务泄漏旧长度、偏移、时间或其它源信息。访问隔离及其实现、认证和新的 ready 交接均有自己的费用与条件；这不是物理抹除或已经实现这种隔离的主张。
+
+若完整原始遍历描述、足以恢复它的原始 trace 或其它能决定来源的材料仍可访问，有限本地计算已能恢复原树并求 q，零次额外 Read 即充分。此时实际完整纤维须按这些材料细分，不是共同的 $D$；下述统一界反证的入口前提不成立。已经支付的遍历、各端点完整比较、更新、准备、记录、访问切面和认证费用，在两种入口下均不退还。
+
+**定义 17.2（两个固定目标与原菜单）。** 服务可以分别或一并交付
+
+$$
+x=q(u),\qquad y=q(\rho^2u)=R^2x.
+\tag{17.1}
+$$
+
+$y$ 指服务入口当前方向，不是任意终止时刻的方向。取得服务的菜单严格为定义 11.1 的 localStep、实际当前 raw Read、同寄存器 forward applyRho 与最终 stop；允许在控制中累计真实更新数、保留已取得回复。初始共同输入不含相位、指标、大小或免费 q；transition 不另读物理寄存器、外部 archive 或源相关时序。每个实际新 Read 的地址、epoch、回复和每次更新、localStep 均按原生合同保留。若服务执行 $j$ 次新替换，当前来源证书是 $\rho^{2+j}u$；知道 $x$ 后才能本地计算其方向 $R^{2+j}x$，不能把它偷换成 (17.1) 的 $y$。
+
+**定理 17.3（相等约束成功域上无统一额外 raw-Read 界）。** 在假设 17.1 的完整共同入口下，不存在一个对全部 $u\in D$ 都有限终止、正确交付 $x$ 的确定有效服务，并具有共同有限额外 raw-Read 上界 $B$。同样不存在这样的 $y$ 服务或 $(x,y)$ 服务。量化包含任意自适应的有限 localStep 段、实际地址和 forward applyRho；不预设统一时间、地址长度或更新界。
+
+**证明。** 假设有一个正确且新 Read 数至多 $B$ 的服务。只保留在某个 $u\in D$ 上确实达到的回复词；每个长度不超过 $B$，字母表只有四种。给定共同初始控制和一个达到的回复词，到下一次 Read 或 stop 之前的确定 localStep／更新段，由该词及控制完全决定。某个实际 $D$ 来源达到它，source-total 有限终止就保证这段有限；原生 `reached_prefix_replay` 和 `replay_deterministic` 正是这项有实际见证的源无关重放接口。没有把未达到的假想回复词假定为会终止。
+
+达到的回复词只有有限多个，故实际可能请求的下一地址也只有有限多个；取其长度最大值 $h$，没有 Read 时取 $h=0$。这里从假设的 $B$ 和逐源终止推出这个存在性的 $h$，没有额外假设地址或 CPU 有界。所有这些地址的原深度球只需长度不超过 $h$ 的回复。选 $n\ge2h+2$，使 $T_n,T_{n+1}$ 在该整个原前缀中均与 $\Omega$ 相同。两者均在成功域 $D$。
+
+从共同 ready 控制沿其中一条实际运行归纳。localStep 与下一更新的选择相同；每次 Read 地址相同、实际 epoch 也相同。`NativeDepthPatterns.original_prefix_locality` 对任意该实际总 epoch $2+j$，将两来源的原深度球相等传到当前所请求地址的回复相等，包括 born 与 absent 情形。于是回复词和后继控制一直相同，终止输出也相同。但 $q(T_n)=R^na$ 与 $q(T_{n+1})=R^{n+1}a$ 不同；对它们同施 $R^2$ 后仍不同。因此固定原目标 $x$、入口目标 $y$ 均不可能正确，矛盾。证毕。
+
+这里没有调用定理 13.7 的独立孔圆柱充要条件。$D$ 由同源完整相等选出，不能在其中自由翻转一个叶、独立填一个孔；上述反证用的是两个实际成功原子来源及原前缀局部性。三值任务的有限输出域没有给出有限统一 raw-Read 界，更没有给出全资源界。
+
+**命题 17.4（逐源付费取得及 active 交付）。** 在同一个入口上，有一个共同确定的静止服务，对每个 $u\in D$ 有限取得 $(x,y)$，保持当前寄存器 $V=\rho^2u$ 与认证 epoch 2，并在 stop 之前进入后续消费者。其额外原始读取恰是当前有限 $V$ 的完整生产 trace；将 §11.8 的生产与有限求值机制从该当前入口运行，得到
+
+$$
+R_{\rm new}=|J_{\rm new}|=2L(V)-1,\qquad
+W_{\rm new}=2E(V)-2L(V)+2.
+\tag{17.2}
+$$
+
+这里 $E(V)$ 是定义 11.1 的叶深度和；$J_{\rm new}$ 只统计本段实际地址。求值和交付的 localStep 数、控制栈、描述存储和输出另付。该方案不宣称是本任务的最优取得器。
+
+**证明。** `NativeFullSourceProducer` 的生产转移只依控制与真实回复，无更新且不检查绝对 epoch；其读取真值和遍历证明在任意固定 epoch 原样成立。具体地，对当前有限语法 $V$ 作同一个父先于孩子的遍历，每个实际节点各读一次，所有 Read 的真实标签为 epoch 2，其间的生产 localSteps 一项不少。可直接对该有限遍历归纳核对 epoch 均为 2、寄存器均为 $V$；不把模块陈述中从零开始的记号冒称为物理 epoch 重置。
+
+在原 producer 将选择 stop 的 `deliver V []` 控制处，预先改接为有限后序 q 求值。所得控制数据描述的是由真实回复取得的当前树 $V$；求出 $y=q(V)$，再以有限表计算 $x=R^{-2}y=Ry$。后一步只是已取得标签上的计算，不是对实际来源施逆替换。最后一个 Read 后的原生产 localSteps、求值和交付 localSteps 全部保留，进入 active 消费控制后才允许消费者决定最终 stop。满树节点数与地址 tariff 沿用定理 11.8 的计数，给 (17.2)。有限 $V$ 保证逐源终止；$V=T_{n+2}$ 的大小无公共上界，该构造与定理 17.3 相容。证毕。
+
+**定理 17.5（认证 epoch 2 上 PG44.8 的具体接入）。** 额外供应 [Process Geometry 定义 44.1、定理 44.8](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) 的当前寄存器 feedback、已知常量真实准备及左 graft 权限。命题 17.4 可在同一物理 $V$ 上实现其付费入口 q 取得，并执行下列固定表所指定的消费者：
+
+$$
+f(a)=b,\qquad f(b)=a,\qquad
+f(z)=z\quad(z\in S\setminus\{a,b\}).
+\tag{17.3}
+$$
+
+交付的消费者入口值是 $y=q(V)=R^2x$。最终实际来源方向为 $f(y)$；在成功原子域上，其具体分支为
+
+$$
+\begin{array}{c|c|c|c}
+n\bmod3&x&y&\text{消费者的实际动作与最终方向}\\ \hline
+0&a&k&\text{零更新，停止，方向 }k\\
+1&b&a&\text{准备 }\langle\alpha,\beta\rangle\text{ 并左接，方向 }b\\
+2&k&b&\text{准备 }K=\langle\beta,\alpha\rangle\text{ 并左接，方向 }a.
+\end{array}
+\tag{17.4}
+$$
+
+每条 graft 分支消费一份真实新准备的两叶常量和一个连接根；没有把求得的标签当成这份常量，亦没有把这些权限加入此前的取得菜单。
+
+**证明。** (17.3) 满足 $f(0)=0$，是 PG44.8 的合法完整七值表。若当前 $y=a$，准备的常量方向是 $a\times b=-k$，故左接后为 $(-k)\times a=b$；若 $y=b$，准备常量方向为 $k$，故 $k\times b=a$。其余当前值不更新而停止。这给同一全表的一个至多一次 graft 的实际实现，特别适用于 (17.4)。所用常量都是来源无关已知语法，在看到实际 $y$ 后按相应分支有限准备，构造与消费均收费。
+
+入口处绝对替换 epoch 仍为 2、原根与未知寄存器未替换，生产前缀是命题 17.4 的完整真实 trace。消费者不执行新 $\rho$；若 graft，则后继实际寄存器是 $\langle c,V\rangle$，必须以这个真实上下文和动作记录描述，不能继续冒称它是某个仅由原替换计数给出的 $\rho^e u$。全局记录保留全部付费取得、认证、访问安排、新生产、求值、准备及实际消费者动作；准备、graft 和其记录按 PG 合同承担，不伪装为取得语言内一个免费数值或相等事件。改接发生在 absorbing stop 前，故没有从已停机状态制造后继。证毕。
+
+若指定最终方向应为原初标签的某个 $f_*(x)$，$f_*(0)=0$，则交给 PG44.8 的表应改为 $g(y)=f_*(R^{-2}y)=f_*(Ry)$，并实际使用 $y$ 分支。这样 $g(0)=0$ 且 $g(y)=f_*(x)$；这是本地表变换，仍需对应表的真实常量准备和更新费用。直接把原初 $x$ 当成当前 $y$ 套用 (17.3) 一般错误，例如 $u=\alpha$ 时 $x=a$ 而实际入口 $y=k$。§11.9 和推论 13.10 的 stationary epoch 0 交接不直接充当本入口证明。
+
+**约定 17.6（资源逐项保留）。** 在同一实际 $u$ 上，总协议费用由已付生产和比较、认证及访问切面、新取得、消费者准备／更新、完整记录和 backing 等相应坐标组合；对于按事件相加的费用取各段实际和，峰值存储则按真实 lifetimes 计算，不能把各段峰值相加冒充精确峰值。全局完整档案的字节和不可访问 backing 不因服务看不到而消失。定理 17.3 只否定 post-cut 额外 raw-Read 的统一界；命题 17.4 只给逐源有限方案；定理 17.5 的一次 graft 界只属于该具体消费者。三者都不主张切面产生净资源收益、统一总时间、统一地址长度、有限完整内存或物理取得实现。
+
+## 18. 原恢复目标的对应与未决桥梁
+
+**来源与文献范围 18.1。** §13 的 $Q$ 表和有限来源支持、`NativeCompletionPrefixLifting.prefix_cylinder` 的准确四值柱、SFS 与 Functional Joint Contact 的字面完成和原操作连续性，是 §§14–15 的供应。`OriginalFunctionalNormalization.root_link_normalization`、`OriginalNativeConstruction.native_solution/native_unique`、`OriginalFiniteResolution.original_finite_resolution` 和 `OriginalCanonicalClassification.original_canonical_synthesis` 及对应 Blueprint Scribe 只按各自原合同复用，供应原变量重建、共同赋值、有限分类和可执行前缀，不供应一个新的无限 q 观测。
+
+§16 复用 `SourceTransportCentralizer.source_transport_centralizer` 第一合取、ARH4.4、SFS2.3 的实际有限／完成分类及 Atomic Accumulation Basis、Atomic Boundary Trichotomy 的原子趋近。§17 的生产与 cut 取自 ARH1.3、ARH2.1；操作与逐事件真值取自 `NativeSerialMachine`，前缀局部性取自 `NativeDepthPatterns`，完整生产取自 `NativeFullSourceProducer`，消费者取自 PG44.8。来源代码与 Scribe 的阅读不等于本节新编译。闭图、离散有限标签与连续延拓所用拓扑方法是既有数学工具；本节不给它们或原子分类附加原创性。
+
+具体新增的是：用原 $Q$ 给出原无限字面完成的八种全部达到的 q 图纤维与含全部有限来源的最大连续恢复域；在实际两比较成功域上给出只有三相位的相对联合图、局部标签方程多出的零；并在完整访问切面条件下证明该实际成功域的统一新 Read 障碍，接上 epoch 正确的付费当前 q 消费者。这些是 repo-derived 的普通数学推导，不作全球文献优先或新增 Lean 认证主张。正文由单一作者按指定固定来源推导；没有引入新的 canonical synthesizer、一般 normalizer 或运行时端口。
+
+**边界 18.2（与空间、时间、边界和记忆的关系）。** 字面来源保留有序分支关系；时间保留真实 $\rho$ 历史与认证 epoch；边界分别是全有限来源图的 $\mathfrak F$ 和成功域 $D$ 的相对图；记忆分别是服务可访问的保留输入与全局仍保存并付费的 chronological archive。它们在上述明确域内的对应由 (14.1)–(14.6)、(16.3)–(16.4)、(17.1) 和真实执行给出。全有限字面完成在 $\Omega$ 合并的 q 区别，可以在图闭包中作为关系保留；两项实际比较再将其相对可能标签限制为三相位。没有把这种关系边界宣布为一个自动可读的观测器。
+
+仅保留任务标签 $x,y$ 或相位，不足以恢复 $n$、完整有限 $u$、当前 literal 后继、全部历史或全资源。即使记下相位与认证 epoch，仍有无穷多个 $T_{3j+r}$ 符合，故该任务标签不是原树身份。命题 17.4 的具体上构造另外付费取得并在控制中保有完整当前树 $V$；连同认证 epoch，可按实际像上的原单射对应本地解码原树，但这依赖额外遍历资料，不能归给 q 标签自身。若这样的完整原始遍历资料在服务入口就可访问，源恢复及本地 q 计算可用，却不满足共同 $D$ 切面；这是访问前提改变后的另一个任务入口，不能用来宣称上述下界或切面收益。
+
+定义 12.9 的原 B-program／exact UJB 对应、原端口完整续行、共同 whole-resource backing，以及空间／时间／边界／记忆的完整合法双向恢复仍未解决。C133 的实际交叉动作与其它固定来源平方／Gram 或 rank-two 结果，均未在这里识别为 native $\alpha,\beta$ 或 q；也未以一个假设性 EqEnd 口替代真实比较。原长期恢复目标继续保留这些缺口，本节交付只处理以上具体接口。
+
+## 追加锚（本行以下为增补区）
