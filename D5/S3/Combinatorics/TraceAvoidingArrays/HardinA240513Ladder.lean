@@ -14,7 +14,7 @@ import Mathlib.Tactic
 /-!
 R. H. Hardin's OEIS A240513 counts binary arrays on an open two-column board,
 with the first entry zero and no cell having exactly two equal neighbours.
-The recurrence and generating function are the empirical formulas attributed
+The recurrence is empirical in the entry; the generating function is attributed
 to Colin Barker. All arithmetic in those formulas is over the integers.
 -/
 
