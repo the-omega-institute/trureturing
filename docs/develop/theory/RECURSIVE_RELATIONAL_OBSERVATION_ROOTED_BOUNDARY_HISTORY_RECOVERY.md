@@ -4831,7 +4831,9 @@ $H$ and is parsed directly; every nonempty candidate is treated as above.
 The peeler stops after $n_0+1$ seed
 leaves. It enumerates the at most $H+1$ possible boundary positions
 between the initial and born blocks, retains those with an entry having
-$n=n_0$, and replays (44.1) against the read rows. The unique surviving
+$n=n_0$. For a nonempty born block it tries the two possibilities
+$K=k_1$ and $K=k_1+1$, corresponding to the first letter $G$ or $F$,
+and replays (44.1) against the read rows. The unique surviving
 candidate is passed to Theorem 42.4's inverse.
 
 The pure-word test is the decidable grammar
@@ -4873,6 +4875,9 @@ After a level is known, $\delta$ removes one uniform $\rho$ layer without
 opening its descendants. Opening a seed exposes at most $n_0+1$ leaves and
 at most $2n_0+1$ internal nodes; each exposed node uses its two child
 replies. The two passes over the exposed nodes give the quadratic term.
+The peeler does not materialize intermediate layers: with level $q$ known,
+it submits the forced offset address for each eventual seed node and checks
+the forced $\rho$ tags, so $q$ changes address length but not call count.
 All addresses consist of a spine prefix, one right step, and at most
 $n_0+1$ seed steps, proving the length bound.
 
