@@ -1046,6 +1046,212 @@ theorem narrow_explicit_numerator {X Q : ℕ} (hX : 3 ≤ X) (hodd : Odd X)
   · rw [← hmax, hw]
     exact ⟨(orbit X Q).max'_mem hne, fun b hb => Finset.le_max' _ b hb⟩
 
+/-- Construction from the explicit arithmetic gaps, with no orbit assumptions. -/
+private theorem explicit_point_geometry {r s u : ℕ} (hr : 2 ≤ r)
+    (hs : 0 < s) (hsr : s < r) (hu : (s : ZMod r) * u = 1) :
+    (∀ j < r, 0 < explicitPoint r s u j ∧ explicitPoint r s u j < 2 ^ r - 1) ∧
+    StrictMono (fun j : Fin r => explicitPoint r s u j.val) ∧
+    explicitPoint r s u (r - 1) = explicitNumerator r s u ∧
+    (∀ i : Fin r, explicitPoint r s u (cycAdd ⟨s, hsr⟩ i.val).val =
+      (2 * explicitPoint r s u i.val) % (2 ^ r - 1)) ∧
+    explicitPoint r s u (r - 1) = explicitPoint r s u 0 + (2 ^ (r - 1) - 1) ∧
+    explicitPoint r s u s = explicitPoint r s u (s - 1) + 1 := by
+  classical
+  letI : NeZero r := ⟨by omega⟩
+  let M := 2 ^ r - 1
+  let h := 2 ^ (r - 1)
+  let delta : ℕ → ℕ := fun i => 2 ^ gapExponent r u i
+  let P : ℕ → ℕ := fun n => ∑ i ∈ Finset.range n, delta i
+  let a : Fin r → ℕ := fun i => P s + P i.val
+  let z : Fin r := ⟨0, by omega⟩
+  let w : Fin r := ⟨r - 1, by omega⟩
+  let shift : Fin r → Fin r := fun i => cycAdd ⟨s, hsr⟩ i.val
+  have hexp (i : ℕ) : (gapExponent r u i : ZMod r) =
+      (u : ZMod r) * ((i : ZMod r) + 1) - 1 := ZMod.natCast_zmod_val _
+  have hlt (i : ℕ) : gapExponent r u i < r := ZMod.val_lt _
+  have hinverse (i : Fin r) :
+      (s : ZMod r) * ((gapExponent r u i.val : ZMod r) + 1) - 1 = i.val := by
+    rw [hexp]
+    calc
+      (s : ZMod r) * ((u : ZMod r) * ((i.val : ZMod r) + 1) - 1 + 1) - 1 =
+          ((s : ZMod r) * u) * ((i.val : ZMod r) + 1) - 1 := by ring
+      _ = (i.val : ZMod r) := by rw [hu]; ring
+  let E : Fin r → Fin r := fun i => ⟨gapExponent r u i.val, hlt i.val⟩
+  have hEinj : Function.Injective E := by
+    intro i j he
+    have hc := congrArg (fun k : Fin r =>
+      (s : ZMod r) * ((k.val : ZMod r) + 1) - 1) he
+    change (s : ZMod r) * ((gapExponent r u i.val : ZMod r) + 1) - 1 =
+      (s : ZMod r) * ((gapExponent r u j.val : ZMod r) + 1) - 1 at hc
+    rw [hinverse, hinverse] at hc
+    apply Fin.ext
+    exact ((ZMod.natCast_eq_natCast_iff _ _ _).mp hc).eq_of_lt_of_lt i.isLt j.isLt
+  let e := Equiv.ofBijective E ⟨hEinj, Finite.surjective_of_injective hEinj⟩
+  have hsum : P r = ∑ i ∈ Finset.range r, 2 ^ i := by
+    have he := Equiv.sum_comp e (fun j : Fin r => (2 : ℕ) ^ j.val)
+    simpa only [Fin.sum_univ_eq_sum_range, e, Equiv.ofBijective_apply, E, P, delta] using he
+  have htotal : P r = M := by
+    have he : (∑ i ∈ Finset.range r, (2 : ℕ) ^ i) + 1 = 2 ^ r := by
+      simpa using geom_sum_mul_add (1 : ℕ) r
+    dsimp [M]
+    omega
+  have hpow : 2 ^ r = 2 * h := by
+    dsimp [h]
+    calc
+      (2 : ℕ) ^ r = 2 ^ (r - 1 + 1) := by congr 1; omega
+      _ = _ := by rw [pow_succ]; ring
+  have hhp : 0 < h := pow_pos (by omega) _
+  have hMp : 0 < M := by dsimp [M]; omega
+  letI : NeZero M := ⟨hMp.ne'⟩
+  have hwcast : ((r - 1 : ℕ) : ZMod r) = -1 := by
+    rw [Nat.cast_sub (by omega : 1 ≤ r), ZMod.natCast_self, Nat.cast_one]
+    ring
+  have helast : gapExponent r u (r - 1) = r - 1 := by
+    have hc : (gapExponent r u (r - 1) : ZMod r) = ((r - 1 : ℕ) : ZMod r) := by
+      rw [hexp, hwcast]
+      ring
+    exact ((ZMod.natCast_eq_natCast_iff _ _ _).mp hc).eq_of_lt_of_lt
+      (hlt _) (by omega)
+  have hdeltaLast : delta (r - 1) = h := by dsimp [delta, h]; rw [helast]
+  have hse : gapExponent r u (s - 1) = 0 := by
+    have he : (((s - 1 : ℕ) : ZMod r) + 1) = (s : ZMod r) := by
+      simpa only [Nat.cast_add, Nat.cast_one] using
+        congrArg (fun n : ℕ => (n : ZMod r)) (Nat.sub_add_cancel (by omega : 1 ≤ s))
+    unfold gapExponent
+    rw [he, mul_comm (u : ZMod r) (s : ZMod r), hu, sub_self, ZMod.val_zero]
+  have hdeltaUnit : delta (s - 1) = 1 := by simp [delta, hse]
+  have hPsucc (n : ℕ) : P (n + 1) = P n + delta n := Finset.sum_range_succ _ _
+  have hPstrict : StrictMono P := by
+    apply strictMono_nat_of_lt_succ
+    intro n
+    rw [hPsucc]
+    have hd : 0 < delta n := pow_pos (by omega) _
+    omega
+  have hPzero : P 0 = 0 := by simp [P]
+  have hPpositive : 0 < P s := by have := hPstrict hs; omega
+  have hlastPrefix : P (r - 1) = h - 1 := by
+    have he := hPsucc (r - 1)
+    rw [Nat.sub_add_cancel (by omega : 1 ≤ r), htotal, hdeltaLast] at he
+    dsimp [M] at he
+    omega
+  have hbaseBound : P s ≤ h - 1 := by
+    rw [← hlastPrefix]
+    exact hPstrict.monotone (by omega)
+  have hbounds (i : Fin r) : 0 < a i ∧ a i < M := by
+    have hp : P i.val ≤ P (r - 1) := hPstrict.monotone (by have := i.isLt; omega)
+    dsimp [a]
+    rw [hlastPrefix] at hp
+    dsimp [M]
+    omega
+  have haStrict : StrictMono a := by
+    intro i j hij
+    exact Nat.add_lt_add_left (hPstrict hij) _
+  have hmax : a w = explicitNumerator r s u := by
+    have he := hPsucc (s - 1)
+    rw [Nat.sub_add_cancel (by omega : 1 ≤ s), hdeltaUnit] at he
+    change P s + P (r - 1) = h + P (s - 1)
+    rw [hlastPrefix]
+    omega
+  have h2r : (2 : ZMod M) ^ r = 1 := by
+    have he : 2 ^ r = M + 1 := by dsimp [M]; omega
+    have hc := congrArg (fun n : ℕ => (n : ZMod M)) he
+    simpa only [Nat.cast_pow, Nat.cast_ofNat, Nat.cast_add,
+      ZMod.natCast_self, Nat.cast_one, zero_add] using hc
+  have hshiftExp (i : Fin r) : gapExponent r u (shift i).val =
+      (gapExponent r u i.val + 1) % r := by
+    have hi : ((shift i).val : ZMod r) = (s : ZMod r) + i.val := by
+      change (((s + i.val) % r : ℕ) : ZMod r) = _
+      rw [ZMod.natCast_mod, Nat.cast_add]
+    have hc : (gapExponent r u (shift i).val : ZMod r) =
+        ((gapExponent r u i.val + 1 : ℕ) : ZMod r) := by
+      rw [hexp, hi, Nat.cast_add, Nat.cast_one, hexp]
+      have hus : (u : ZMod r) * s = 1 := by rw [mul_comm, hu]
+      calc
+        (u : ZMod r) * ((s : ZMod r) + i.val + 1) - 1 =
+            (u : ZMod r) * s + (u : ZMod r) * ((i.val : ZMod r) + 1) - 1 := by ring
+        _ = _ := by rw [hus]; ring
+    have hv := congrArg ZMod.val hc
+    simpa only [ZMod.val_natCast, Nat.mod_eq_of_lt (hlt _)] using hv
+  have hdeltaShift (i : Fin r) : (delta (shift i).val : ZMod M) =
+      2 * (delta i.val : ZMod M) := by
+    dsimp [delta]
+    push_cast
+    rw [hshiftExp]
+    by_cases he : gapExponent r u i.val + 1 < r
+    · rw [Nat.mod_eq_of_lt he, pow_succ]; ring
+    · have heq : gapExponent r u i.val + 1 = r := by have := hlt i.val; omega
+      rw [heq, Nat.mod_self, pow_zero]
+      calc
+        (1 : ZMod M) = 2 ^ r := h2r.symm
+        _ = 2 ^ (gapExponent r u i.val + 1) := by rw [heq]
+        _ = _ := by rw [pow_succ]; ring
+  have hgap (i : Fin r) : (a (cycAdd i 1) : ZMod M) - a i = delta i.val := by
+    by_cases hi : i.val + 1 < r
+    · have hn : (cycAdd i 1).val = i.val + 1 := Nat.mod_eq_of_lt hi
+      dsimp [a]
+      rw [hn, hPsucc]
+      push_cast
+      ring
+    · have hiw : i = w := by apply Fin.ext; dsimp [w]; have := i.isLt; omega
+      subst i
+      have hn : cycAdd w 1 = z := by
+        apply Fin.ext
+        change (r - 1 + 1) % r = 0
+        rw [Nat.sub_add_cancel (by omega : 1 ≤ r), Nat.mod_self]
+      rw [hn]
+      have he : P (r - 1) + delta (r - 1) = M := by
+        rw [← hPsucc, Nat.sub_add_cancel (by omega : 1 ≤ r), htotal]
+      have hc := congrArg (fun n : ℕ => (n : ZMod M)) he
+      rw [Nat.cast_add, ZMod.natCast_self] at hc
+      change ((P s + P 0 : ℕ) : ZMod M) - (P s + P (r - 1)) = delta (r - 1)
+      rw [hPzero]
+      push_cast
+      linear_combination -hc
+  let b : Fin r → ZMod M := fun i => 2 * (a i : ZMod M) - a (shift i)
+  have hbnext (i : Fin r) : b (cycAdd i 1) = b i := by
+    have hc : shift (cycAdd i 1) = cycAdd (shift i) 1 :=
+      shift_commutes_successor ⟨s, hsr⟩ i
+    have h1 := hgap i
+    have h2 := hgap (shift i)
+    rw [← hc] at h2
+    dsimp [b]
+    linear_combination 2 * h1 - h2 - hdeltaShift i
+  have hbzero : b z = 0 := by
+    have hp : shift z = ⟨s, hsr⟩ := cycAdd_zero _
+    dsimp [b]
+    rw [hp]
+    change 2 * ((P s + P 0 : ℕ) : ZMod M) - (P s + P s) = 0
+    rw [hPzero]
+    push_cast
+    ring
+  have hb (n : ℕ) (hn : n < r) : b ⟨n, hn⟩ = 0 := by
+    induction n with
+    | zero => exact hbzero
+    | succ n ih =>
+      have hn' : n < r := by omega
+      have hc : cycAdd (⟨n, hn'⟩ : Fin r) 1 = ⟨n + 1, hn⟩ := by
+        apply Fin.ext
+        exact Nat.mod_eq_of_lt hn
+      rw [← hc, hbnext]
+      exact ih hn'
+  have hstep (i : Fin r) : a (shift i) = (2 * a i) % M := by
+    have he : (a (shift i) : ZMod M) = ((2 * a i : ℕ) : ZMod M) := by
+      have hh := hb i.val i.isLt
+      dsimp [b] at hh
+      push_cast
+      linear_combination -hh
+    have hm := (ZMod.natCast_eq_natCast_iff _ _ _).mp he
+    simpa only [Nat.ModEq, Nat.mod_eq_of_lt (hbounds (shift i)).2] using hm
+  refine ⟨?_, haStrict, hmax, hstep, ?_, ?_⟩
+  · intro j hj
+    exact hbounds ⟨j, hj⟩
+  · change P s + P (r - 1) = P s + P 0 + (h - 1)
+    rw [hPzero, hlastPrefix, Nat.add_zero]
+  · change P s + P s = P s + P (s - 1) + 1
+    have he := hPsucc (s - 1)
+    rw [Nat.sub_add_cancel (by omega : 1 ≤ s), hdeltaUnit] at he
+    omega
+
 /-- Finite-horizon reduction: one consecutive block of
 the actual period forces the entire fixed-Q orbit to be narrow and doubling
 to be a transitive cyclic shift of its sorted points, with no early return.
