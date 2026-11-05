@@ -36,9 +36,10 @@ internal sealed class StinespringDocument : IScribeDocumentDefinition
     private static Formula Inst(string n, Formula b, params Formula[] xs) => Seq(OpenBracket, Call(n, xs), CloseBracket, Sp, b);
     private static Formula Statement()
     {
+        Formula compression = Call("Apply", Call("Adjoint", V("V")),
+            Call("Apply", Call("pi", V("a")), Call("V", V("x"))));
         Formula result = All("a", V("A"), All("x", V("H"), Seq(
-            Call("Apply", Call("phi", V("a")), V("x")), Sp, Eq, Sp,
-            Call("Apply", Call("Adjoint", V("V")), Call("Apply", Call("pi", V("a")), Call("V", V("x"))))));
+            Call("Apply", Call("phi", V("a")), V("x")), Sp, Eq, Sp, compression)));
         result = Some("V", Call("CLM", V("C"), V("H"), V("K")), result);
         result = Some("pi", Call("StarAlgHom", V("C"), V("A"), Call("B", V("K"))), result);
         result = Some("completeK", Call("CompleteSpace", V("K")), result);
