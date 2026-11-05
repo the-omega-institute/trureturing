@@ -3043,10 +3043,12 @@ $$
 whenever $T,W>0$, with the degenerate boundary values interpreted by
 continuity.  The two definitions of $T$ agree at $u=1$.
 
-*Proof.* The triangle condition gives
-$u+2\sqrt{XY}\ge L^2$, hence
-$t^2\le D$; the box constraints give $t^2\le B$.  Directly from the
-definition of $Z$ and $F$,
+*Proof.* The box constraints give $t^2\le B$.  If $u\le L^2$, the
+triangle condition gives $2\sqrt{XY}\ge L^2-u$ and hence
+$t^2\le D$.  If $u\ge L^2$, then $L^2\le2$ and
+$D-B$ is increasing on $[L^2,2]$, with
+$D-B=4(L^2-1)>0$ at $u=L^2$; therefore $t^2\le B\le D$ in this
+case as well.  Directly from the definition of $Z$ and $F$,
 
 $$
 4F^2=f(t^2):=\frac{(B-t^2)(D-t^2)}{u^2-t^2}.
