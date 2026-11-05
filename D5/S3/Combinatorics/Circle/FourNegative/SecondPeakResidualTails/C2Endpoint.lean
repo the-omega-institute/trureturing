@@ -26,7 +26,7 @@ private theorem c2_domain (b d : ℕ) (hd : 4 ≤ d) (hbd : d < b) :
 private theorem c2_inventory_actual (b d : ℕ) (hd : 4 ≤ d) (hbd : d < b) :
     ∀ r : Fin 4, MaskInventory (chainLength 3 b 2 d r - 1)
       (fun row => c2Banks (d-3) (b-d-1) row r) := by
-  simpa only [residualBanks, if_pos rfl] using
+  simpa [residualBanks] using
     residual_inventory 3 b 2 d (c2_domain b d hd hbd)
 
 private noncomputable def c2Word (b d : ℕ) : List ℕ :=
@@ -35,7 +35,7 @@ private noncomputable def c2Word (b d : ℕ) : List ℕ :=
 private theorem c2_word_perm (b d : ℕ) (hd : 4 ≤ d) (hbd : d < b) :
     (c2Word b d).Perm (List.range (size 3 b 2 d)) := by
   apply Multiset.coe_eq_coe.mp
-  simpa only [c2Word, residualBanks, residualOrder, if_pos rfl] using
+  simpa [c2Word, residualBanks, residualOrder] using
     original_physical_partition 3 b 2 d (c2_domain b d hd hbd)
 
 /-- Only parameter substitution: no centered-orbit assertion is inferred
@@ -111,12 +111,12 @@ private theorem c2_bank_masses (b d : ℕ) (hd : 4 ≤ d) (hbd : d < b)
   · change (∑ r : Fin 4, base 3 b 2 d r * weightedMask b 2 d
       (physicalBank 3 b 2 d (c2Banks (d-3) (b-d-1)) row) r) = _
     rw [← hm.1, hp.1, par.2.1]
-    simp only [c2OldMass, scalarMass, Fin.sum_univ_succ, Fin.sum_univ_zero]
+    simp [c2OldMass, scalarMass, Fin.sum_univ_succ, Fin.sum_univ_zero]
     ring
   · change (∑ r : Fin 4, newBase 3 b 2 d r * weightedMask b 2 d
       (physicalBank 3 b 2 d (c2Banks (d-3) (b-d-1)) row) r) = _
     rw [← hm.2, hp.2, par.2.2.1]
-    simp only [c2NewMass, scalarMass, Fin.sum_univ_succ, Fin.sum_univ_zero]
+    simp [c2NewMass, scalarMass, Fin.sum_univ_succ, Fin.sum_univ_zero]
     ring
 
 private noncomputable def c2OldSeam (b d : ℕ) : Fin 5 → ℤ :=
@@ -149,9 +149,8 @@ private theorem c2_boundary_transport (b d : ℕ) (hd : 4 ≤ d) (hbd : d < b)
   have hn2 := hn 2
   have hn3 := hn 3
   fin_cases i <;> constructor <;>
-    simp only [c2OldSeam, c2NewSeam, c2OldBoundary2, c2NewBoundary2,
-      oldBoundary2, newBoundary2, boundary2, Matrix.cons_val_zero,
-      Matrix.cons_val_succ, masses, terminal, par.2.1, c2OldMass, c2NewMass] <;>
+    simp [c2OldSeam, c2NewSeam, c2OldBoundary2, c2NewBoundary2,
+      oldBoundary2, newBoundary2, boundary2, masses, terminal, par.2.1, c2OldMass, c2NewMass] <;>
     nlinarith only [ho0,ho1,ho2,ho3,hn0,hn1,hn2,hn3]
 
 /-- The full c2 cone supplies ACTUAL physical lower-old/upper-new sides
@@ -188,7 +187,7 @@ theorem c2_physical_gates (b d : ℕ) (hd : 4 ≤ d) (hbd : d < b) :
     rw [← (c2_boundary_transport b d hd hbd row.castSucc).2,
       ← (c2_bank_masses b d hd hbd row).2,
       ← (c2_parameters b d hd hbd).1] at h
-    simpa only [residualBanks,if_pos rfl,(masses row).2] using
+    simpa [residualBanks,(masses row).2] using
       (show c2NewSeam b d row.castSucc+
         newMass 3 b 2 d (physicalBank 3 b 2 d (c2Banks (d-3) (b-d-1)) row) ≤
         sourceMod 3 b 2 d by omega)
@@ -209,7 +208,7 @@ theorem c2_physical_gates (b d : ℕ) (hd : 4 ≤ d) (hbd : d < b) :
     physicalEarWord 3 b 2 d = size 3 b 2 d ::
       physicalWord 3 b 2 d (residualBanks 3 b 2 d) (residualOrder 2 d) ∧ _
   refine ⟨rfl,?_,?_,?_,?_,?_,?_,?_,?_,?_,fresh,?_⟩
-  · simpa only [c2Word,residualBanks,residualOrder,if_pos rfl] using ear
+  · simpa [c2Word,residualBanks,residualOrder] using ear
   · rw [hH]
     rfl
   · rw [hG]
@@ -224,8 +223,8 @@ theorem c2_physical_gates (b d : ℕ) (hd : 4 ≤ d) (hbd : d < b) :
   · intro row
     rw [hG]
     exact upper row
-  · simpa only [c2Word,residualBanks,residualOrder,if_pos rfl] using oldzero
-  · simpa only [c2Word,residualBanks,residualOrder,if_pos rfl] using matched
+  · simpa [c2Word,residualBanks,residualOrder] using oldzero
+  · simpa [c2Word,residualBanks,residualOrder] using matched
   · rw [ear,List.map_cons,List.sum_cons,fresh,matched]
     ring
 
