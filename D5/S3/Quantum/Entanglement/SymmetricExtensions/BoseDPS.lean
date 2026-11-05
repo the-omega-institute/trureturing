@@ -9,6 +9,8 @@
 import D5.S3.Quantum.Entanglement.SymmetricExtensions.BoseRootTranspose
 import D5.S3.Quantum.Measurement.IncoherentCone
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Inner
+import Mathlib.Logic.Equiv.Fintype
+import Mathlib.Order.Interval.Finset.Fin
 
 /-! Britz--Laurent (2026), equations (25)--(31), use Bose leaf support,
 an unnormalized root--leaf partial trace, and leaf partial transposes.
@@ -33,7 +35,7 @@ set_option backward.isDefEq.respectTransparency false
 variable {I L : Type*} [Fintype I] [DecidableEq I] [Fintype L] [DecidableEq L]
 
 open private leaf_conjugation_invariance allCuts_of_leafCuts allCuts_iff
-  partialTranspose_empty from
+  partialTranspose_empty partialTranspose_complement from
   D5.S3.Quantum.Entanglement.SymmetricExtensions.BoseRootTranspose
 open private edge_covariance_of_conjugation pair_support_of_column_swap all_edges_equal from
   D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension
@@ -88,6 +90,104 @@ private lemma ordinary_of_star (root leaf : I) (hne : root ≠ leaf)
     (h : StarExtension root ρ E) : OrdinaryWitness root leaf hne ρ E :=
   ⟨h.2.1,h.2.2.1 leaf hne,fun S _ => (allCuts_iff E).mpr ⟨h.1,h.2.2.2⟩ S⟩
 
+private lemma leaf_permutation (root : I) (S T : Finset I)
+    (hS : root ∉ S) (hT : root ∉ T) (hcard : S.card = T.card) :
+    ∃ σ : Equiv.Perm I, σ root = root ∧ ∀ i, i ∈ S ↔ σ i ∈ T := by
+  classical
+  have inj (A : Finset I) (hr : root ∉ A) :
+      Function.Injective (fun x : Option A => x.elim root Subtype.val) := by
+    intro a b hab
+    cases a with
+    | none =>
+      cases b with
+      | none => rfl
+      | some b =>
+        change root = b.val at hab
+        exact False.elim (hr (hab.symm ▸ b.property))
+    | some a =>
+      cases b with
+      | none =>
+        change a.val = root at hab
+        exact False.elim (hr (hab ▸ a.property))
+      | some b => exact congrArg some (Subtype.ext hab)
+  let e : S ≃ T := S.equivOfCardEq hcard
+  let f : Option S → I := fun x => x.elim root Subtype.val
+  let g : Option S → I := fun x => x.elim root (fun a => (e a).val)
+  have hg : Function.Injective g := by
+    have he : g = (fun x : Option T => x.elim root Subtype.val) ∘ Option.map e := by
+      funext x
+      cases x <;> rfl
+    rw [he]
+    exact (inj T hT).comp (Option.map_injective e.injective)
+  obtain ⟨σ,hσ⟩ := Equiv.Perm.exists_extending_pair f g (inj S hS) hg
+  refine ⟨σ,hσ none,?_⟩
+  intro i
+  constructor
+  · intro hi
+    have heq : σ i = (e ⟨i,hi⟩).val := hσ (some ⟨i,hi⟩)
+    exact heq ▸ (e ⟨i,hi⟩).property
+  · intro hi
+    let a : S := e.symm ⟨σ i,hi⟩
+    have heq : σ a.val = σ i := by
+      simpa only [f,g,a,Option.elim_some,e.apply_symm_apply] using hσ (some a)
+    exact σ.injective heq ▸ a.property
+
+private lemma permutation_cut_pos
+    (E : Matrix (I → L) (I → L) ℂ) (S T : Finset I) (σ : Equiv.Perm I)
+    (hm : ∀ i, i ∈ S ↔ σ i ∈ T)
+    (hinv : ∀ x y, E (x ∘ σ) (y ∘ σ) = E x y)
+    (hp : (partialTransposeOn S E).PosSemidef) :
+    (partialTransposeOn T E).PosSemidef := by
+  have hword (x y : I → L) : S.piecewise (y ∘ σ) (x ∘ σ) =
+      (T.piecewise y x) ∘ σ := by
+    funext i
+    simp only [Function.comp_apply, Finset.piecewise, ← hm i]
+  have he : (partialTransposeOn S E).submatrix (fun x => x ∘ σ) (fun x => x ∘ σ) =
+      partialTransposeOn T E := by
+    ext x y
+    change E (S.piecewise (y ∘ σ) (x ∘ σ))
+      (S.piecewise (x ∘ σ) (y ∘ σ)) = E (T.piecewise y x) (T.piecewise x y)
+    rw [hword, hword]
+    exact hinv _ _
+  rw [← he]
+  exact hp.submatrix _
+
+/-- For a Bose leaf witness, positivity of a leaf partial transpose depends only
+on the number of transposed leaves. This is the exact permutation reduction
+used in the ordinary DPS definition, including the empty and full leaf cuts. -/
+theorem leaf_cut_pos_of_card (root : I)
+    (E : Matrix (I → L) (I → L) ℂ) (hE : E.PosSemidef)
+    (hs : leafProjector root * E * leafProjector root = E)
+    (S T : Finset I) (hS : root ∉ S) (hT : root ∉ T)
+    (hcard : S.card = T.card) (hp : (partialTransposeOn S E).PosSemidef) :
+    (partialTransposeOn T E).PosSemidef := by
+  obtain ⟨σ,hr,hm⟩ := leaf_permutation root S T hS hT hcard
+  exact permutation_cut_pos E S T σ hm
+    (leaf_conjugation_invariance root E hE.isHermitian hs σ hr) hp
+
+/-- The ordinary DPS constraints are exactly the paper's prefix-cut
+constraints on registers `0,1,...,t`, with root `0`. The index `k` includes
+every integer from zero through `t`; the actual marginal is unchanged. -/
+theorem ordinary_iff_prefix {t : ℕ} (leaf : Fin (t + 1)) (hne : 0 ≠ leaf)
+    (ρ : Matrix (L × L) (L × L) ℂ)
+    (E : Matrix (Fin (t + 1) → L) (Fin (t + 1) → L) ℂ) :
+    OrdinaryWitness 0 leaf hne ρ E ↔
+      leafProjector 0 * E * leafProjector 0 = E ∧
+        edgeMarginal 0 leaf hne E = ρ ∧
+          ∀ k : Fin (t + 1), (partialTransposeOn (Finset.Ioc 0 k) E).PosSemidef := by
+  constructor
+  · rintro ⟨hs,hm,hp⟩
+    exact ⟨hs,hm,fun k => hp _ (by simp)⟩
+  · rintro ⟨hs,hm,hp⟩
+    have hE : E.PosSemidef := by
+      simpa only [Finset.Ioc_self,partialTranspose_empty] using hp 0
+    refine ⟨hs,hm,?_⟩
+    intro S hr
+    let k : Fin (t + 1) := ⟨S.card,by
+      simpa only [Fintype.card_fin] using Finset.card_lt_univ_of_notMem hr⟩
+    exact leaf_cut_pos_of_card 0 E hE hs (Finset.Ioc 0 k) S (by simp) hr
+      (by simp only [Fin.card_Ioc,Fin.val_zero,Nat.sub_zero]; rfl) (hp k)
+
 private lemma columns_of_support (E : Matrix (I → L) (I → L) ℂ)
     (hs : P I L * E * P I L = E) :
     ∀ y, IsSymmetricVector (fun x => E x y) := by
@@ -102,6 +202,56 @@ private lemma columns_of_support (E : Matrix (I → L) (I → L) ℂ)
     funext x
     exact congrArg (fun M => M x y) hl
   rwa [he] at hh
+
+/-- On a full Bose witness, cut positivity depends only on cut cardinality,
+including permutations which move the root. -/
+theorem bose_cut_pos_of_card
+    (E : Matrix (I → L) (I → L) ℂ) (hE : E.PosSemidef)
+    (hs : P I L * E * P I L = E) (S T : Finset I)
+    (hcard : S.card = T.card) (hp : (partialTransposeOn S E).PosSemidef) :
+    (partialTransposeOn T E).PosSemidef := by
+  obtain ⟨σ,hσ⟩ := Equiv.Perm.exists_map_finset_eq S T hcard
+  have hm (i : I) : i ∈ S ↔ σ i ∈ T := by
+    rw [← hσ]
+    simp
+  have hcol := columns_of_support E hs
+  apply permutation_cut_pos E S T σ hm ?_ hp
+  intro x y
+  calc
+    E (x ∘ σ) (y ∘ σ) = E x (y ∘ σ) := hcol _ σ x
+    _ = star (E (y ∘ σ) x) := (hE.isHermitian.apply x _).symm
+    _ = star (E y x) := congrArg star (hcol x σ y)
+    _ = E x y := hE.isHermitian.apply x y
+
+/-- The full Bose convention uses exactly the first k leaves for
+`0 ≤ k ≤ floor((t+1)/2)`. All other cuts follow by permutation and full
+transposition of the complementary cut. -/
+theorem allCuts_iff_half_prefix {t : ℕ}
+    (E : Matrix (Fin (t + 1) → L) (Fin (t + 1) → L) ℂ)
+    (hs : P (Fin (t + 1)) L * E * P (Fin (t + 1)) L = E) :
+    AllCutsPPT E ↔ ∀ k : Fin (t + 1), k.val ≤ (t + 1) / 2 →
+      (partialTransposeOn (Finset.Ioc 0 k) E).PosSemidef := by
+  constructor
+  · intro hp k hk
+    exact hp _
+  · intro hp
+    have hE : E.PosSemidef := by
+      simpa only [Finset.Ioc_self,partialTranspose_empty] using hp 0 (Nat.zero_le _)
+    have small (T : Finset (Fin (t + 1))) (hT : T.card ≤ (t + 1) / 2) :
+        (partialTransposeOn T E).PosSemidef := by
+      let k : Fin (t + 1) := ⟨T.card,by omega⟩
+      exact bose_cut_pos_of_card E hE hs (Finset.Ioc 0 k) T
+        (by simp only [Fin.card_Ioc,Fin.val_zero,Nat.sub_zero]; rfl) (hp k hT)
+    intro S
+    by_cases hS : S.card ≤ (t + 1) / 2
+    · exact small S hS
+    · have hT : Sᶜ.card ≤ (t + 1) / 2 := by
+        rw [Finset.card_compl,Fintype.card_fin]
+        have hb := Finset.card_le_univ S
+        rw [Fintype.card_fin] at hb
+        omega
+      have hh := (small Sᶜ hT).transpose
+      simpa only [partialTranspose_complement,Matrix.transpose_transpose] using hh
 
 private lemma marginal_bose (root leaf : I) (hne : root ≠ leaf)
     (E : Matrix (I → L) (I → L) ℂ) (hp : E.PosSemidef)
@@ -156,17 +306,7 @@ private lemma trace_edgeMarginal (root leaf : I) (hne : root ≠ leaf)
   exact (edgeSplit root leaf hne).symm.sum_comp (fun x => E x x)
 
 private lemma psd_closed_finite {A : Type*} [Fintype A] :
-    IsClosed {E : Matrix A A ℂ | E.PosSemidef} := by
-  let e := Fintype.equivFin A
-  have he (E : Matrix A A ℂ) : E.PosSemidef ↔
-      (E.submatrix e.symm e.symm).PosSemidef := by
-    constructor
-    · exact fun h => h.submatrix _
-    · intro h
-      simpa only [Matrix.submatrix_submatrix, Equiv.symm_comp_self,
-        Matrix.submatrix_id_id] using h.submatrix e
-  simp_rw [he]
-  exact D5.S3.Quantum.Measurement.IncoherentCone.psd_closed.preimage (by fun_prop)
+    IsClosed {E : Matrix A A ℂ | E.PosSemidef} := Matrix.posSemidef_is_closed
 
 private lemma psd_bound_finite {A : Type*} [Fintype A]
     (E : Matrix A A ℂ) (hp : E.PosSemidef) (R : ℝ) (hR : 0 < R)
@@ -175,7 +315,8 @@ private lemma psd_bound_finite {A : Type*} [Fintype A]
   have htr : Matrix.trace (E.submatrix e.symm e.symm) = Matrix.trace E :=
     e.symm.sum_comp (fun x => E x x)
   have h := D5.S3.Quantum.Measurement.IncoherentCone.psd_entry_bound_of_trace
-    (hp.submatrix e.symm) R hR (by simpa only [RHLinalg.rtrace,htr] using ht) (e i) (e j)
+    (hp.submatrix e.symm) R hR
+    (by simpa only [RHLinalg.rtrace,htr,RCLike.re_eq_complex_re] using ht) (e i) (e j)
   simpa only [Matrix.submatrix_apply, Equiv.symm_apply_apply] using h
 
 /-- The ordinary DPS cone is closed: bounded input traces bound every actual
@@ -186,6 +327,8 @@ theorem ordinary_closed (root leaf : I) (hne : root ≠ leaf) :
     inferInstanceAs (NormedAddCommGroup ((I → L) → (I → L) → ℂ))
   letI : NormedSpace ℝ (Matrix (I → L) (I → L) ℂ) :=
     inferInstanceAs (NormedSpace ℝ ((I → L) → (I → L) → ℂ))
+  letI : FirstCountableTopology (Matrix (L × L) (L × L) ℂ) :=
+    inferInstanceAs (FirstCountableTopology ((L × L) → (L × L) → ℂ))
   rw [← isSeqClosed_iff_isClosed]
   intro u ρ hu hlim
   choose E hE using hu
@@ -219,6 +362,8 @@ theorem ordinary_closed (root leaf : I) (hne : root ≠ leaf) :
     have he : (fun k => edgeMarginal root leaf hne (E (φ k))) = u ∘ φ := by
       funext k
       exact (hE (φ k)).2.1
+    change Tendsto (fun k => edgeMarginal root leaf hne (E (φ k))) atTop
+      (𝓝 (edgeMarginal root leaf hne E₀)) at hh
     rw [he] at hh
     exact tendsto_nhds_unique hh (hlim.comp hφ.tendsto_atTop)
   refine ⟨E₀,hs,hm,?_⟩

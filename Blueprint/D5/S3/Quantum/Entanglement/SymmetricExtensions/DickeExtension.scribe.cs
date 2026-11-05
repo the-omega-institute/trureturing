@@ -229,7 +229,7 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, bool literature, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
-            DescribeId.Create("dicke-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
+            DescribeId.Create("dicke-" + name.ToLowerInvariant().Replace('_', '-')), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role, resolution);

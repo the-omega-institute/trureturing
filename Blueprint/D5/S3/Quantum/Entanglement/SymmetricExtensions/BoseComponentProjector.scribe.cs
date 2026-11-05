@@ -44,5 +44,11 @@ internal sealed class BoseComponentProjectorDocument : IScribeDocumentDefinition
                     + "reindexes the finite average. The cardinality factor is the product of the "
                     + "component permutation cardinalities. The theorem assumes neither connectedness "
                     + "nor a nonempty vertex set."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("bosecomponentprojector-disconnected-counterexample"),
+                DeclarationHandle.Create(Prefix + "disconnected_counterexample"),
+                H("Disconnected components admit a rank-one boundary"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Two components carrying distinct basis labels give a rank-one PSD joint operator with every required Bose edge marginal and without full Bose support. The sole edge on registers 0 and 1 with labels 0,0,1 specializes to the original three-qubit boundary. The proof uses exact tensor entries and projector identities, not a numerical test."))),
                 DescribeRole.Theorem))));
 }

@@ -96,6 +96,20 @@ theorem tensor_diagonal_unitary (u : L → ℂ) (hu : ∀ a, ‖u a‖ = 1) :
     Matrix.diagonal_mul_diagonal, Pi.mul_def, Pi.star_apply, phase_unit u hu,
     Matrix.diagonal_one]
 
+/-- The conjugating matrix at every cut is also an actual unitary: the
+transposed sites use the conjugate local phases, including empty/full cuts. -/
+theorem cut_diagonal_unitary (S : Finset I) (u : L → ℂ)
+    (hu : ∀ a, ‖u a‖ = 1) :
+    diagonal (cutPhase S u) ∈ Matrix.unitaryGroup (I → L) ℂ := by
+  have hn (x : I → L) : ‖cutPhase S u x‖ = 1 := by
+    simp [cutPhase,norm_prod,apply_ite,hu]
+  have hp (x : I → L) : cutPhase S u x * star (cutPhase S u x) = 1 := by
+    simpa only [Complex.star_def,hn,one_pow,Complex.ofReal_one] using
+      Complex.mul_conj' (cutPhase S u x)
+  apply Matrix.mem_unitaryGroup_iff.mpr
+  simp only [Matrix.star_eq_conjTranspose,Matrix.diagonal_conjTranspose,
+    Matrix.diagonal_mul_diagonal,Pi.mul_def,Pi.star_apply,hp,Matrix.diagonal_one]
+
 private lemma split_phase_product (u : L → ℂ) (hu : ∀ a, ‖u a‖ = 1)
     (a b : I) (hab : a ≠ b) (v w : L × L)
     (c : {i : I // i ≠ a ∧ i ≠ b} → L) :

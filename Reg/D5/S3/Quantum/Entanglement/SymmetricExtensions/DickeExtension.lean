@@ -254,7 +254,7 @@ def source_registration : Registration arena.{u,v}
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@_root_.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.same_matrix_core.{u,v})
-      (Realization signature) Unit Unit := {
+      (Realization signature.{u,v}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.BoseCore.unit
   realizationName := `Reg.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.BoseCore.source_registration
   realizationSource := none
@@ -266,7 +266,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p E => StarExtensionCore p.root p.rho E)
+  readout := some (realize signature.{u,v} (fun _ p E => StarExtensionCore p.root p.rho E)
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -398,7 +398,7 @@ def source_registration : Registration arena.{u,v}
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@_root_.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.same_matrix.{u,v})
-      (Realization signature) Unit Unit := {
+      (Realization signature.{u,v}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.BosePPT.unit
   realizationName := `Reg.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.BosePPT.source_registration
   realizationSource := none
@@ -410,7 +410,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p E => StarExtension p.root p.rho E)
+  readout := some (realize signature.{u,v} (fun _ p E => StarExtension p.root p.rho E)
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -530,7 +530,7 @@ def source_registration : Registration arena.{u,v}
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@_root_.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.support_of_bose_root_marginals.{u,v})
-      (Realization signature) Unit Unit := {
+      (Realization signature.{u,v}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.BoseSupport.unit
   realizationName := `Reg.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension.BoseSupport.source_registration
   realizationSource := none
@@ -542,7 +542,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p E => P p.I p.L * E * P p.I p.L)
+  readout := some (realize signature.{u,v} (fun _ p E => P p.I p.L * E * P p.I p.L)
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -567,4 +567,5 @@ def registration :
 end BoseSupport
 
 end
+
 end Reg.D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension

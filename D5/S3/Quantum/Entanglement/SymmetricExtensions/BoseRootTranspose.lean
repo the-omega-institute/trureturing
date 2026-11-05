@@ -12,7 +12,7 @@ import D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension
 is asserted only for the inverse-transposed Bose witness, never for its
 CLDUI companion. The empty and full cuts are retained explicitly. -/
 
-open scoped BigOperators ComplexOrder
+open scoped BigOperators ComplexOrder Pointwise symmDiff
 open Matrix
 open D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension
 open D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricAbsolutePPTPureBound
@@ -25,7 +25,7 @@ set_option backward.isDefEq.respectTransparency false
 
 variable {I L : Type*} [Fintype I] [DecidableEq I] [Fintype L] [DecidableEq L]
 
-open private Q Q_mulVec Local.R Local.mem_H_iff Average.avg_left from
+open private Q_mulVec Local.R Local.mem_H_iff Average.avg_left from
   D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricAbsolutePPTPermutationFloor
 
 private lemma leaf_conjugation_invariance (root : I)
@@ -100,12 +100,13 @@ theorem partialTranspose_composition (S T : Finset I)
   ext x y
   unfold partialTransposeOn
   congr 1 <;> funext i <;> by_cases hS : i ∈ S <;> by_cases hT : i ∈ T <;>
-    simp [Finset.piecewise, hS, hT]
+    simp [Finset.piecewise, Finset.mem_symmDiff, hS, hT]
 
 private lemma partialTranspose_involution (S : Finset I)
     (E : Matrix (I → L) (I → L) ℂ) :
     partialTransposeOn S (partialTransposeOn S E) = E := by
-  rw [partialTranspose_composition, symmDiff_self, partialTranspose_empty]
+  rw [partialTranspose_composition, symmDiff_self]
+  exact partialTranspose_empty E
 
 private lemma allCuts_transpose (T : Finset I)
     (E : Matrix (I → L) (I → L) ℂ) (hE : AllCutsPPT E) :
