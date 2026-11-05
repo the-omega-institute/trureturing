@@ -28,7 +28,18 @@ internal sealed class BooleanCollectiveLaddersDocument : IScribeDocumentDefiniti
     private static DocumentBlock Node(string name, string title, Formula formula, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("boolean-collective-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            AssessedProvenance.FromRepo(), Blocks(), role);
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(name switch {
+                "occupancy" => "Every zero bit contributes one occupied coordinate.",
+                "U" => "This is the existing unweighted totalPlus matrix acting on Euclidean coordinates.",
+                "L" => "This is the existing unweighted totalMinus matrix, the Hermitian adjoint of U.",
+                "number" => "The number operator multiplies each configuration coefficient by its occupancy.",
+                "Z" => "The identity shift centers occupancy at half of N, using complex scalar division.",
+                "rankSpace" => "Homogeneous vectors have support only at the stated occupancy.",
+                "primitive" => "A primitive vector is homogeneous and is annihilated by the actual lowering map.",
+                "finitePrimitiveStrings" => "All primitive vacua are included, including the spin-zero sector t=S; q=0 is retained.",
+                "result" => "The finite span, cutoff, endpoint, lowering coefficient, weight, norm and orthogonality clauses all hold jointly on the same full complex carrier.",
+                _ => throw new InvalidOperationException("Unknown declaration.")
+            }))), role);
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula C() => Seq(Mathbb, Grp(F.Id("C")));
     private static Formula V(Formula n) => Call("V", n);
