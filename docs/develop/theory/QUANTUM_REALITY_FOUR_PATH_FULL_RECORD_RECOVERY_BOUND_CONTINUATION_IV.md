@@ -2651,4 +2651,983 @@ same-level domain. The pair $W_-$ supplies neither. The completed
 prefix and the immediate-right classification retain their stated
 ranges.
 
+## 55. 十三四分之一端点的完整负三角阈值障碍
+
+**定理 55.1（$5081/10000$ 全域下界候选为假）。** 在 $\xi=13/4$
+处，令
+
+$$
+q=\frac14,\qquad p=\frac34,\qquad x=\frac5{16},\qquad L=\frac{21}{16},
+\qquad X=\frac14,\qquad Y=\frac{81}{100}.
+$$
+
+则 $(X,Y)\in\mathcal T_x$，并且负行的下界表达式
+
+$$
+B=e^2p+d^2q-4\bigl(\sqrt p\,R+\sqrt q\,C\bigr)^2
+$$
+
+满足
+
+$$
+\boxed{B<\frac{30121581559}{62500000000}<\frac{5081}{10000}.}
+$$
+
+因此研究单元 #26977 所登记的“完整原始负三角片严格高于 $5081/10000$”
+命题被反驳。这个点位于完整共同三角形的内部，且不使用行列式符号限制。
+该反例只否定这一充分下界路线；它不是负号全局极小点的证明，也不结算
+$A_-(13/4)>A_+(13/4)$。
+
+**证明。** 先有
+
+$$
+\sqrt X+\sqrt Y=\frac12+\frac9{10}=\frac75>\frac{21}{16}=L,
+$$
+
+所以该点可用。置 $T=L^2-X-Y$，则
+
+$$
+T=\frac{4241}{6400},
+\qquad
+Z=\frac{T}{2\sqrt{XY}}=\frac{4241}{5760},
+\qquad
+F^2=\frac{3}{4}\frac{19}{100}(1-Z^2)
+ =\frac{288638861}{4423680000}>\left(\frac{255}{1000}\right)^2.
+$$
+
+从 $h=1/\sqrt2$、$s^2=(1-h)/2$、$c^2=(1+h)/2$ 直接平方得到
+
+$$
+\frac{70710}{100000}<h<\frac{70711}{100000},
+\qquad
+\frac{3826}{10000}<s<\frac{3827}{10000},
+\qquad
+\frac{9238}{10000}<c<\frac{9239}{10000}.
+$$
+
+负行的两个半恢复量满足
+
+$$
+\begin{aligned}
+R^2&=\frac{s^2}{4}+\frac{81}{100}h^2+\frac{4241}{6400}sh
+>\frac{31034152931}{50000000000}>\left(\frac{787}{1000}\right)^2,\\
+C^2&=\frac34c^2+\frac{19}{100}h^2+2chF
+>\frac{10681946877}{10000000000}>\left(\frac{1033}{1000}\right)^2.
+\end{aligned}
+$$
+
+又因 $\sqrt3>433/250$，有
+
+$$
+\sqrt p\,R+\sqrt q\,C
+>\frac{433}{500}\frac{787}{1000}+\frac{1033}{2000}
+=\frac{599021}{500000}.
+$$
+
+另一方面，
+
+$$
+e^2p+d^2q=4-h+6hs+2hc
+<\frac{19447387}{3125000}.
+$$
+
+合并即得
+
+$$
+B<\frac{19447387}{3125000}
+ -4\left(\frac{599021}{500000}\right)^2
+=\frac{30121581559}{62500000000}
+<\frac{5081}{10000}.
+$$
+
+所有根号均取非负值，且三角形可实现性来自 Continuation II 引理 46.2。
+$\square$
+
+**说明 55.2（结算边界）。** 定理 55.1 只说明由 $B$ 作为全域负行下界、
+再与 $5081/10000$ 比较的路线不能继续。实际目标仍是比较完整域上的
+$A_-(13/4)$ 与 $A_+(13/4)$；要反驳该目标，仍须证明一个负号对在同一真实
+层上击败全部正号与负号候选。定理 54.1 的 $W_-$ 与本节点都没有承担这一
+全局极小性义务。
+
+## 追加锚（本行以下为增补区）
+
+## 55. An interior obstruction to the fixed upper-endpoint threshold
+
+**Theorem 55.1 (an attained negative value below the fixed comparator).**
+There is an original pure effect and one whole feedback, with the
+negative sign uniquely active at the true distance $13/4$, such that
+
+$$
+g(E,U)<\frac{63272556}{125000000}
+       <\frac{5081}{10000}.
+\tag{55.1}
+$$
+
+In the negative row of Definition 46.1 take
+
+$$
+q=\frac15,\quad p=\frac45,\quad x=\frac{23}{80},\quad
+L=\frac{103}{80},\quad X=\frac15,\quad Y=\frac{17}{20},\quad
+ t_0=L^2-X-Y=\frac{3889}{6400}.
+\tag{55.2}
+$$
+
+*Proof.* All coordinates and populations are strictly between zero
+and one. The exact differences
+$X-(2/5)^2=Y-(9/10)^2=1/25$ imply
+$\sqrt X+\sqrt Y>13/10=L+1/80$.
+Also $|\sqrt X-\sqrt Y|<1<L$. Consequently $-1<Z<1$
+in (46.11), and $t_0>0$ further gives $0<Z<1$.
+This is a strict interior point of the actual triangle, with all
+radicals on their stipulated nonnegative branches.
+
+Here are rational certificates for the required constants:
+
+$$
+\begin{aligned}
+h^2-(7071/10000)^2&=\frac{959}{100000000}>0,\\
+(70711/100000)^2-h^2&=\frac{45521}{10000000000}>0,\\
+s^2-(3826/10000)^2&>\frac{6224}{100000000}>0,\\
+(3827/10000)^2-s^2&>\frac{929}{100000000}>0,\\
+c^2-(4619/5000)^2&>\frac{14356}{100000000}>0,\\
+(9239/10000)^2-c^2&>\frac{3621}{100000000}>0.
+\end{aligned}
+\tag{55.3}
+$$
+
+The last four follow from $s^2=(1-h)/2$ and $c^2=(1+h)/2$,
+using the first two. Every compared quantity is positive, so
+
+$$
+\frac{7071}{10000}<h<\frac{70711}{100000}<\frac{7072}{10000},\quad
+\frac{3826}{10000}<s<\frac{3827}{10000},\quad
+\frac{4619}{5000}<c<\frac{9239}{10000}.
+\tag{55.4}
+$$
+
+Since $(1-X)(1-Y)=3/25$ and $4XY=17/25$, (46.11) gives
+
+$$
+F^2=\frac3{25}-\frac3{17}\left(\frac{3889}{6400}\right)^2,
+\qquad
+F^2-\left(\frac{117}{500}\right)^2
+ =\frac{1443477}{17408000000}>0.
+\tag{55.5}
+$$
+
+Thus $F>117/500$. The negative row has
+$R^2=s^2/5+17/40+sh t_0$ and
+$C^2=4c^2/5+3/40+2chF$. In particular
+$t_0-6076/10000=9/160000>0$. Positive substitutions give
+
+$$
+\begin{aligned}
+&\frac{(3826/10000)^2}{5}+\frac{17}{40}
+ +\frac{3826}{10000}\frac{7071}{10000}\frac{6076}{10000}
+ -\left(\frac{983}{1250}\right)^2
+ =\frac{229545096}{1000000000000}>0,\\
+&\frac45\left(\frac{4619}{5000}\right)^2+\frac3{40}
+ +2\frac{4619}{5000}\frac{7071}{10000}\frac{117}{500}
+ -\left(\frac{1031}{1000}\right)^2
+ =\frac{11765866}{25000000000}>0.
+\end{aligned}
+\tag{55.6}
+$$
+
+Hence $R>983/1250$ and $C>1031/1000$.
+Writing $\mathcal E=4e^2/5+d^2/5$, expand the source constants as
+
+$$
+\mathcal E=4-\frac65h+\frac{32}{5}hs+\frac85hc
+ <4-\frac65\frac{7071}{10000}
+ +\frac{32}{5}\frac{7072}{10000}\frac{3827}{10000}
+ +\frac85\frac{7072}{10000}\frac{9239}{10000}
+ =\frac{2964511072}{500000000}<\frac{593}{100}.
+\tag{55.7}
+$$
+
+The last gap is $488928/500000000>0$. The lower $h$ bound is
+used only in the negative term; the positive products use upper
+bounds. Also $\Gamma=(2R+C)/\sqrt5$ and
+$2R+C>13019/5000>0$. The simultaneously attained defect is therefore
+
+$$
+\mathcal E-4\Gamma^2
+ <\frac{593}{100}-\frac45\left(\frac{13019}{5000}\right)^2
+ =\frac{63272556}{125000000},\qquad
+\frac{5081}{10000}-\frac{63272556}{125000000}
+ =\frac{239944}{125000000}>0.
+\tag{55.8}
+$$
+
+Lower recovery bounds yield this upper defect bound. The original
+attainment and true distance are verified next. $\square$
+
+**Proposition 55.2 (fixed labels, one feedback and ordinary transpose).**
+The value in (55.8) is attained in the original negative row.
+Let $r=\sqrt X$, $z=\sqrt Y$, $a=\sqrt{1-X}$,
+$b=\sqrt{1-Y}$ and $\alpha=\arccos Z\in(0,\pi)$. Set
+
+$$
+(v_3,v_4)=e^{i\alpha}(r+ia,r-ia),\qquad
+(v_1,v_2)=(z+ib,z-ib),\qquad U=\operatorname{diag}(v)U_-.
+\tag{55.9}
+$$
+
+*Proof.* Each entry has modulus one. These are the unchanged pairs
+$J=(3,4)$ and $K=(1,2)$. Relative to $U_+$, the original diagonal
+is $w=(v_1,-v_2,-iv_3,iv_4)$. Source (23.2) gives
+
+$$
+Q=2sr e^{i\alpha}+2hz,\qquad
+P=2ca e^{i\alpha}+2ihb,\qquad |Q|=2R,\quad |P|=2C.
+\tag{55.10}
+$$
+
+Indeed the crossed term in $|P|^2/4$ is
+$2chab\sin\alpha=2chF$. Thus both recoveries occur for this
+same feedback, as in Lemma 46.2. They are nonzero by (55.6).
+With the source certificate-basis matrix $T$, define
+
+$$
+\eta=\frac{P\overline Q}{|P||Q|},\qquad
+\beta=\begin{pmatrix}\sqrt q\\\eta\sqrt p\end{pmatrix},\qquad
+E=(T\beta\beta^\dagger T^\dagger)^{\mathsf T}.
+\tag{55.11}
+$$
+
+The transpose is ordinary. This effect is positive, pure and trace
+one, and its first certificate-basis population is $q=1/5$.
+The equality $\eta Q=P|Q|/|P|$ aligns the source recovery summands,
+so (23.12)--(23.13) give $g(E,U)=\mathcal E-4\Gamma^2$.
+Multiplying $\beta$ by $\overline\eta$ gives the negative-row form
+of Definition 46.1 without changing $E$.
+
+The active trace modulus is $|2r e^{i\alpha}+2z|=2L$.
+Equations (23.9)--(23.11) therefore give
+$\rho_-=8-4L+2q=4(1-23/80)+2/5=13/4$, with zero impurity.
+The original budget (42.17)--(42.20), with $\zeta>15/4$, gives
+$\rho_++\rho_->15/2$, hence $\rho_+>17/4>13/4$.
+Thus the true distance is exactly $13/4$, uniquely negative-active.
+One common scalar may multiply all four entries of $v$; no
+independent pair scalar or label permutation is used. $\square$
+
+**Corollary 55.3 (a relatively open same-level obstruction).**
+There is a neighborhood of $(q,X,Y)=(1/5,1/5,17/20)$, with
+$x=3/16+q/2$, whose reconstructed original pairs are all uniquely
+negative-active at true distance $13/4$ and have $g<5081/10000$.
+
+*Proof.* The strict population, coordinate, curved-triangle and
+$|Z|<1$ inequalities persist near (55.2). There $R,C>0$ and the
+radical defect is continuous. Put $\delta=239944/125000000$.
+By (55.8) its central value is below $5081/10000-\delta$.
+Restrict the neighborhood so its variation is less than $\delta/2$;
+then every value is below $5081/10000-\delta/2$.
+The reconstruction (55.9)--(55.11) is continuous there, and
+$4(1-x)+2q=13/4$ throughout. The same two-sign budget preserves
+unique negative activity. This gives a relatively open family of attained triangle parameters
+on that same level; even fixing $q=1/5$ leaves an open
+two-dimensional family of triangle coordinates. $\square$
+
+**Definition 55.4 (sources and remaining comparison).**
+This is a repository-derived precise obstruction to the universal
+negative threshold $g>5081/10000$ at $\xi=13/4$. The elementary
+rational inequalities and continuity argument above accompany the
+existing original reconstruction: source (23.2), (23.9)--(23.13),
+Continuation II Definition 46.1, Lemma 46.2 and (42.17)--(42.20).
+No literature-priority claim is made. Theorem 54.1 remains an
+attained positive upper comparator. Now both minima of Definition
+54.2 lie below $5081/10000$; their strict ordering
+$A_-(13/4)>A_+(13/4)$ remains unresolved. Neither this feasible
+negative pair nor its open family identifies a global minimizer.
+The original interval sign-selection problem retains its full-domain
+criterion in Definition 54.2; Theorem 52.2 is not extended beyond
+$61/25$, and no determinant or population restriction is introduced.
+
+## 追加锚（本行以下为增补区）
+
+## 56. A full-triangle fibre majorant and a sharper positive comparator
+
+Theorem 56.1 (an attained positive upper bound at thirteen-fourths).
+At the same original level as Definition 54.2,
+
+$$
+\boxed{A_+(13/4)<\frac{11497119}{25000000}<\frac{23}{50}.}
+\tag{56.1}
+$$
+
+*Proof.* In the positive row take
+
+$$
+q=\frac35,\quad p=\frac25,\quad x=\frac{39}{80},\quad
+L=\frac{119}{80},\quad X=\frac{31}{100},\quad Y=\frac{93}{100}.
+\tag{56.2}
+$$
+
+The point is strictly inside the attained triangle because
+$\sqrt X>11/20$, $\sqrt Y>24/25$, and
+$11/20+24/25=151/100>119/80$.  In particular all displayed
+radicals are on their positive branches.  With $T=L^2-X-Y=249/256$,
+the simultaneous formulas of Continuation II, Definition 46.1 give
+
+$$
+F^2=\frac{1365995967}{157450240000}>\left(\frac{931}{10000}\right)^2,
+$$
+
+and, for the positive row,
+
+$$
+R^2=\frac{31}{200}+\frac{93c^2}{100}+\frac{249hc}{256},\qquad
+C^2=\frac{69}{200}+\frac{7s^2}{100}+2hsF.
+\tag{56.3}
+$$
+
+The positive rational enclosures for $h,s,c$ obtained by squaring their
+defining identities give
+
+$$
+R>\frac{6293}{5000},\qquad C>\frac{398}{625},qquad
+\frac25d^2+\frac35e^2<\frac{7107}{1000}.
+\tag{56.4}
+$$
+
+Also $\sqrt{2/5}>1581/2500$ and $\sqrt{3/5}>1549/2000$, hence
+
+$$
+\Gamma>\frac{16114253}{12500000}>\frac{12891}{10000}.
+$$
+
+Substitution in the simultaneously attained defect yields
+
+$$
+G_+<\frac{7107}{1000}-4\left(\frac{12891}{10000}\right)^2
+ =\frac{11497119}{25000000}<\frac{23}{50}.
+$$
+
+Lemma 46.2 and the ordinary-transpose alignment reconstruct one whole
+feedback and one effect with the fixed labels, so this is an upper bound
+for the full positive minimum.  It is not a global-minimum certificate.
+\hfill$\square$
+
+**Theorem 56.2 (exact coupled fibre ellipse).**
+Fix either row of Definition 46.1, fix $q$ and $x$ with $0<x<1$, and
+write $L=1+x$.  For a point of the closed attained triangle, interchange
+$X,Y$ when necessary so that $X\le Y$; this interchange preserves the
+triangle and $F$, and weakly increases both $R$ and $C$ because
+$b^2-a^2=\ell^2-m^2=h/2>0$.  Put
+
+$$
+u=X+Y,\qquad t=Y-X,\qquad
+B=(2-u)^2,\qquad D=L^2(2u-L^2),\qquad M=\min\{B,D\},
+$$
+
+and
+
+$$
+W=\frac{BD}{u^2},\qquad
+\kappa=1+\frac{4(1-u)(u-L^2)^2}{u^4}\quad(u\le1),
+$$
+
+$$
+T=\begin{cases}W/\kappa,&u\le1,\\M,&u\ge1.
+\end{cases}
+$$
+
+Then $u^2-t^2=4XY>0$, $0\le t^2\le M$, and
+
+$$
+\boxed{\frac{t^2}{T}+\frac{4F^2}{W}\le1}
+\tag{56.5}
+$$
+
+whenever $T,W>0$, with the degenerate boundary values interpreted by
+continuity.  The two definitions of $T$ agree at $u=1$.
+
+*Proof.* The box constraints give $t^2\le B$.  If $u\le L^2$, the
+triangle condition gives $2\sqrt{XY}\ge L^2-u$ and hence
+$t^2\le D$.  If $u\ge L^2$, then $L^2\le2$ and
+$D-B$ is increasing on $[L^2,2]$, with
+$D-B=4(L^2-1)>0$ at $u=L^2$; therefore $t^2\le B\le D$ in this
+case as well.  Directly from the definition of $Z$ and $F$,
+
+$$
+4F^2=f(t^2):=\frac{(B-t^2)(D-t^2)}{u^2-t^2}.
+\tag{56.6}
+$$
+
+For $r=t^2$, direct differentiation gives
+
+$$
+f(r)=B+D-u^2-r+
+ \frac{4(u-1)(u-L^2)^2}{u^2-r},\qquad
+f''(r)=\frac{8(u-1)(u-L^2)^2}{(u^2-r)^3}.
+\tag{56.7}
+$$
+
+If $u\le1$, concavity places $f$ below its tangent at zero:
+$f(r)\le f(0)-\kappa r=W-\kappa r$.  If $u\ge1$, convexity and
+$f(M)=0$ place $f$ below the chord from $(0,W)$ to $(M,0)$:
+$f(r)\le W(1-r/M)$.  These are exactly (56.5).  The endpoint cases
+follow by continuity.  \hfill$\square$
+
+**Corollary 56.3 (a full-domain quadratic support bound).**
+For either row, let $\delta_0=b^2-a^2=\ell^2-m^2=h/2$.  For all
+$\alpha,\beta\ge0$ and every point of the same closed triangle,
+
+$$
+\begin{aligned}
+\alpha R^2+\beta C^2\n&\le \mathcal H_\sigma(\alpha,\beta;u)\\
+&:=\alpha\left(abL^2+\frac{(b-a)^2u}{2}\right)
+ +\beta(\ell^2+m^2)\left(1-\frac u2\right)\\
+&\quad+\sqrt{\frac{\delta_0^2(\alpha+\beta)^2T}{4}
+             +\beta^2\ell^2m^2W}.
+\end{aligned}
+\tag{56.8}
+$$
+
+Consequently, for $p=1-q$, $E_\sigma=K_\sigma^2p+K_{-\sigma}^2q$,
+and every $z>0$, with
+
+$$
+\alpha=p+\sqrt{pq}\,z,\qquad
+\beta=q+\frac{\sqrt{pq}}{z},
+$$
+
+one has the exact full-domain lower envelope
+
+$$
+G_\sigma\ge E_\sigma-4\mathcal H_\sigma(\alpha,\beta;u),
+\qquad
+G_\sigma\ge E_\sigma-4\inf_{z>0}\mathcal H_\sigma(\alpha,\beta;u),
+\tag{56.9}
+$$
+
+with the endpoint populations obtained by the corresponding limit.
+
+*Proof.* In the ordered coordinates,
+
+$$
+R^2=abL^2+\frac{(b-a)^2u}{2}+\frac{\delta_0t}{2},
+$$
+
+$$
+C^2=(\ell^2+m^2)\left(1-\frac u2\right)
+      +\frac{\delta_0t}{2}+2\ell mF.
+$$
+
+Thus the part depending on $(t,2F)$ is
+$\delta_0(\alpha+\beta)t/2+\beta\ell m(2F)$.
+The ellipse (56.5) and Cauchy--Schwarz bound its maximum by the square
+root in (56.8), proving the first inequality.  Finally,
+
+$$
+\Gamma^2=pR^2+qC^2+2\sqrt{pq}\,RC
+\le \alpha R^2+\beta C^2,
+$$
+
+because $zR^2+C^2/z\ge2RC$.  Since
+$G_\sigma=E_\sigma-4\Gamma^2$, (56.9) follows. \hfill$\square$
+
+The support bound is exact for the auxiliary $(t,2F)$ fibre, but its
+relaxation need not be attained by the minimizer of $G_\sigma$.  The
+remaining problem is therefore reduced to the explicit $(q,u,z)$ lower
+envelope in (56.9).  No uniform comparison with $23/50$ has yet been
+proved, and no global negative minimizer has been certified.  Thus
+
+$$
+A_-(13/4)>A_+(13/4)
+$$
+
+remains open; (56.1) and (56.9) are strict progress toward the two
+quantified alternatives without changing their domains or their source
+contracts.
+
+## 追加锚（本行以下为增补区）
+
+## 57. A canonical lower bound and strict interior localization of both endpoint minima
+
+**Definition 57.1 (the complete endpoint domains and source conventions).**
+Fix $\xi=13/4$ and use the constants $h,c,s,d,e$ of (49.2).
+For every $q\in[0,1]$ put
+
+$$
+p=1-q,\qquad x=\frac3{16}+\frac q2,\qquad
+ y=\sqrt{1-x^2},\qquad L=1+x,\qquad
+\mathcal T_x=\{(X,Y)\in[0,1]^2:\sqrt X+\sqrt Y\ge L\}.
+\tag{57.1}
+$$
+
+The pair coordinates retain their fixed order from Continuation II,
+Definition 46.1. In the positive row $(J,K)=((1,2),(3,4))$;
+in the negative row $(J,K)=((3,4),(1,2))$. Write the row constants as
+
+$$
+\begin{array}{c|cccccc}
+\sigma&a&b&\ell&m&K_\sigma&K_{-\sigma}\\ \hline
++&h&c&h&s&d&e\\
+-&s&h&c&h&e&d
+\end{array}
+\tag{57.2}
+$$
+
+Here these letters have the local row meanings of (46.11).
+On the whole attained triangle define, exactly as there,
+
+$$
+\begin{aligned}
+Z&=\frac{L^2-X-Y}{2\sqrt{XY}},&
+F&=\sqrt{(1-X)(1-Y)(1-Z^2)},\\
+R_\sigma&=\sqrt{a^2X+b^2Y+ab(L^2-X-Y)},&
+C_\sigma&=\sqrt{\ell^2(1-X)+m^2(1-Y)+2\ell mF},\\
+\Gamma_\sigma&=\sqrt p\,R_\sigma+\sqrt q\,C_\sigma,&
+G_\sigma(q,X,Y)&=K_\sigma^2p+K_{-\sigma}^2q-4\Gamma_\sigma^2.
+\end{aligned}
+\tag{57.3}
+$$
+
+All roots are nonnegative. Continuation II, Lemma 46.2 gives
+$X,Y\ge x^2\ge9/256$ and $|Z|\le1$, including every boundary.
+The other trace-triangle inequality is automatic since
+$|\sqrt X-\sqrt Y|\le1<L$. The minima below are precisely those
+of Definition 54.2, with no determinant or population restriction:
+
+$$
+A_\sigma=A_\sigma(13/4)
+ =\min_{\substack{q\in[0,1]\\(X,Y)\in\mathcal T_x}}
+       G_\sigma(q,X,Y).
+\tag{57.4}
+$$
+
+Write $D_\sigma(x,q)=\mathfrak D_\sigma(x,q)$ for the determinant
+in Continuation II, (46.13), without changing its normalization.
+In the negative canonical pair $(X,Y)=(x^2,1)$ put
+
+$$
+R_0=sx+h,\qquad C_0=cy,\qquad
+\gamma_0(q)=\sqrt{1-q}\,R_0+\sqrt q\,C_0,\qquad
+G_{\mathrm{can},-}(q)=e^2(1-q)+d^2q-4\gamma_0(q)^2.
+\tag{57.5}
+$$
+
+The citations to (55.3)--(55.4) and Theorem 55.1 below refer to
+Section 55 titled “An interior obstruction to the fixed upper-endpoint
+threshold”, whose attained point is $q=X=1/5$, $Y=17/20$.
+They do not refer to the other Section 55.
+
+**Theorem 57.2 (an all-population negative canonical certificate).**
+For every $q\in[0,1]$,
+
+$$
+G_{\mathrm{can},-}(q)>\frac{13}{25}.
+\tag{57.6}
+$$
+
+Consequently, for every $q\in[0,1]$ with $D_-(x,q)\ge0$ and
+every point $(X,Y)\in\mathcal T_x$,
+
+$$
+G_-(q,X,Y)>\frac{13}{25}.
+\tag{57.7}
+$$
+
+The latter assertion includes all triangle boundaries. It makes no
+lower-bound assertion on a slice with $D_-(x,q)<0$.
+
+*Proof.* The positive constant enclosures (55.4) give
+
+$$
+\frac{7071}{10000}<h<\frac{7072}{10000},\qquad
+\frac{3826}{10000}<s<\frac{3827}{10000},\qquad
+\frac{4619}{5000}<c<\frac{231}{250}.
+\tag{57.8}
+$$
+
+In particular
+
+$$
+(h+s)^2>\frac{1187}{1000},\qquad
+(h+c)^2>\frac{5319}{2000}.
+\tag{57.9}
+$$
+
+Indeed the positive lower sums $10897/10000$ and $16309/10000$
+have squares exceeding these respective targets by
+$44609/100000000$ and $33481/100000000$.
+
+First take $0\le q\le1/3$. Then $3/16\le x\le17/48$, so
+
+$$
+R_0<\frac{7072}{10000}+\frac{17}{48}\frac{3827}{10000}
+ =\frac{404515}{480000}<\frac{843}{1000}.
+\tag{57.10}
+$$
+
+Also $y\le\sqrt{247/256}<393/400$: the difference between the
+square of $393/400$ and $247/256$ is $37/80000>0$.
+Thus
+
+$$
+C_0<\frac{231}{250}\frac{393}{400}
+ =\frac{90783}{100000}<\frac{227}{250}.
+\tag{57.11}
+$$
+
+Put $u=843/1000$, $v=227/250$, $t=13/100$ and form the real
+symmetric matrix
+
+$$
+N=\operatorname{diag}((h+s)^2-t,(h+c)^2-t)
+       -\begin{pmatrix}u\\v\end{pmatrix}
+        \begin{pmatrix}u&v\end{pmatrix}.
+\tag{57.12}
+$$
+
+Its entries satisfy
+
+$$
+\begin{aligned}
+N_{11}&>\frac{1187}{1000}-\frac{13}{100}
+                         -\left(\frac{843}{1000}\right)^2
+                 >\frac{173}{500},\\
+N_{22}&>\frac{5319}{2000}-\frac{13}{100}
+                         -\left(\frac{227}{250}\right)^2
+                 >\frac{341}{200},\\
+|N_{12}|&=uv=\frac{765444}{1000000}<\frac{383}{500},\\
+\det N&>\frac{173}{500}\frac{341}{200}
+                      -\left(\frac{383}{500}\right)^2
+           =\frac{1587}{500000}>0.
+\end{aligned}
+\tag{57.13}
+$$
+
+The positive first leading minor and determinant make $N$ positive
+definite. For $z=(\sqrt{1-q},\sqrt q)^{\mathsf T}$, $z^{\mathsf T}z=1$.
+All terms in (57.10)--(57.11) are nonnegative, so
+$\gamma_0\le u\sqrt{1-q}+v\sqrt q$. Since
+$e=2(h+s)$ and $d=2(h+c)$, it follows that
+
+$$
+\frac{G_{\mathrm{can},-}(q)}4-t
+ \ge z^{\mathsf T}Nz>0.
+\tag{57.14}
+$$
+
+This proves (57.6) on the closed first block, including $q=0,1/3$.
+
+For the remaining block, retain $x=3/16+q/2$ and define on $[0,1]$
+
+$$
+f(q)=(1-q)(sx+h)^2,\qquad
+j(q)=qc^2(1-x^2).
+\tag{57.15}
+$$
+
+These functions are continuous and nonnegative, and on $(0,1)$
+
+$$
+f''(q)=\frac{(1-q)s^2}{2}-2s(sx+h)<0,\qquad
+j''(q)=-c^2\left(\frac38+\frac{3q}{2}\right)<0.
+\tag{57.16}
+$$
+
+For the first inequality use $sx+h\ge h$ and $s<4h$.
+Thus both are strictly concave on the closed interval.
+Their geometric mean is concave, including at zeros. To see the
+required direction explicitly, let $0\le\lambda\le1$, let
+$q_\lambda=\lambda q_1+(1-\lambda)q_2$, and write
+$f_i=f(q_i)$, $j_i=j(q_i)$. Concavity and monotonicity of the
+nonnegative square root, followed by Cauchy--Schwarz, give
+
+$$
+\begin{aligned}
+\sqrt{f(q_\lambda)j(q_\lambda)}
+&\ge\sqrt{(\lambda f_1+(1-\lambda)f_2)
+          (\lambda j_1+(1-\lambda)j_2)}\\
+&\ge\lambda\sqrt{f_1j_1}+(1-\lambda)\sqrt{f_2j_2}.
+\end{aligned}
+\tag{57.17}
+$$
+
+The second inequality is Cauchy--Schwarz for the two vectors
+$(\sqrt{\lambda f_1},\sqrt{(1-\lambda)f_2})$ and
+$(\sqrt{\lambda j_1},\sqrt{(1-\lambda)j_2})$.
+No division by an endpoint value occurs. Hence
+$\gamma_0^2=f+j+2\sqrt{fj}$ is strictly concave, and
+$G_{\mathrm{can},-}$ is strictly convex.
+
+It remains to determine the derivative direction at $q=1/3$.
+Here $x=17/48$, $4/5<R_0<17/20$ and $0<C_0<37/40$.
+For the lower $R_0$ bound use $h>7/10$, $s>3/8$;
+the upper bounds follow from (57.10)--(57.11).
+Positive squaring gives
+$\sqrt{2/3}<5/6$ and $4/7<\sqrt{1/3}<7/12$. Therefore
+
+$$
+0<\gamma_0(1/3)
+ <\frac56\frac{17}{20}+\frac7{12}\frac{37}{40}
+ =\frac{599}{480}<\frac54.
+\tag{57.18}
+$$
+
+For $0<q<1$, differentiation of (57.5), with $x'=1/2$ and
+$y'=-x/(2y)$, gives
+
+$$
+\gamma_0'=-\frac{R_0}{2\sqrt{1-q}}
+ +\frac{s\sqrt{1-q}}2+\frac{C_0}{2\sqrt q}
+ -\frac{cx\sqrt q}{2y}.
+\tag{57.19}
+$$
+
+At $q=1/3$ its last term is negative. The preceding bounds and
+$s<2/5$ show
+
+$$
+\gamma_0'(1/3)<-\frac{12}{25}+\frac16+\frac{259}{320}
+ =\frac{2381}{4800}<\frac12.
+\tag{57.20}
+$$
+
+If this derivative is negative, $8\gamma_0\gamma_0'<0<5$;
+if it is nonnegative, (57.18)--(57.20) give
+$8\gamma_0\gamma_0'<8(5/4)(1/2)=5$.
+The identity $d^2-e^2=4h+8s>29/5$ therefore yields
+
+$$
+G_{\mathrm{can},-}'(1/3)
+ =d^2-e^2-8\gamma_0(1/3)\gamma_0'(1/3)>\frac45.
+\tag{57.21}
+$$
+
+Convexity makes the derivative nondecreasing on $(0,1)$.
+It follows that $G_{\mathrm{can},-}$ increases on $[1/3,1)$;
+continuity includes $q=1$. All its values on that block are at least
+its already certified value at $1/3$. This proves (57.6) for all
+$q\in[0,1]$.
+
+Finally Continuation II, Theorem 46.4 gives
+$G_-(q,X,Y)\ge G_{\mathrm{can},-}(q)$ on every complete slice
+with $D_-(x,q)\ge0$, including population endpoints and triangle
+boundaries. Combining this supplier with (57.6) proves (57.7).
+No implication for a negative-determinant slice is used. $\square$
+
+**Theorem 57.3 (attainment and strict interior localization in both rows).**
+Each minimum $A_\sigma$ in (57.4) is attained. Every attaining tuple
+$(q,X,Y)$, for either $\sigma\in\{+,-\}$, satisfies
+
+$$
+0<q<1,\qquad D_\sigma(x,q)<0,\qquad
+x^2<X<Y<1,\qquad
+\sqrt X+\sqrt Y>1+x,\qquad X+Y<(1+x)^2.
+\tag{57.22}
+$$
+
+At each such population $q$, its ordered pair $(X,Y)$ is the unique
+maximizer of $\Gamma_\sigma$ on the entire $\mathcal T_x$.
+These are exclusions proved from the complete domain, rather than
+restrictions imposed before minimization. Uniqueness of the minimizing
+population $q$ is not asserted.
+
+*Proof.* The complete feasible set
+
+$$
+\mathcal D=\{(q,X,Y)\in[0,1]^3:
+ \sqrt X+\sqrt Y\ge1+3/16+q/2\}
+\tag{57.23}
+$$
+
+is closed and nonempty: $(X,Y)=(1,1)$ is feasible for every $q$.
+It is compact. The lower bounds on $X,Y$ and $|Z|\le1$ in
+Definition 57.1 ensure that (57.3) has no vanishing denominator,
+that all its radicals are defined, and that $G_\sigma$ is continuous
+on $\mathcal D$. This includes both population endpoints and all
+triangle boundaries. The extreme-value theorem gives attainment.
+
+Theorem 55.1 in “An interior obstruction to the fixed upper-endpoint
+threshold”, at $q=X=1/5$, $Y=17/20$, gives
+
+$$
+A_-<\frac{63272556}{125000000}<\frac{13}{25}.
+\tag{57.24}
+$$
+
+Theorem 57.2 therefore excludes every slice with $D_-(x,q)\ge0$
+from attaining $A_-$.
+
+For the positive row, Continuation II, Theorem 46.6 supplies
+$G_+(q,X,Y)\ge V(13/4)$ throughout every slice with
+$D_+(x,q)\ge0$. Theorem 49.1 puts $13/4$ strictly above the
+unique selected determinant zero, so the selected positive geometric
+population has negative determinant. Continuation II, Theorem 46.4
+then supplies an attained strict triangle competitor to that selected
+canonical pair at the same population and level. Consequently
+
+$$
+A_+<V(13/4).
+\tag{57.25}
+$$
+
+Thus no slice with $D_+(x,q)\ge0$ attains $A_+$ either.
+This comparison with the selected geometric value does not compare
+$A_-$ and $A_+$.
+
+At $q=0$ write $k=b-a>0$ in either fixed row and $R_0=ax+b$.
+The endpoint values of (46.13) are
+
+$$
+\mu=\frac{ak}{2R_0}>0,\qquad \nu=\frac k2>0,\qquad
+D_\sigma(x,0)=\frac{4\mu\nu x^2}{1+x}>0.
+\tag{57.26}
+$$
+
+The determinant exclusions just proved therefore exclude $q=0$
+in both rows without differentiating an endpoint radical.
+
+At $q=1$, $x=11/16$ and $L=27/16$. On the entire triangle,
+Cauchy--Schwarz and (57.1) give
+
+$$
+X+Y\ge\frac{L^2}{2}=\frac{729}{512},\qquad
+2-X-Y\le\frac{295}{512}.
+\tag{57.27}
+$$
+
+Since $F\le\sqrt{(1-X)(1-Y)}$, (57.3) and Cauchy--Schwarz give
+
+$$
+C_\sigma\le\ell\sqrt{1-X}+m\sqrt{1-Y},\qquad
+C_\sigma^2\le(\ell^2+m^2)(2-X-Y)
+ \le(\ell^2+m^2)\frac{295}{512}.
+\tag{57.28}
+$$
+
+In the positive row $\ell^2+m^2=h^2+s^2<1$ and $e^2>4$.
+In the negative row $\ell^2+m^2=c^2+h^2<3/2$ and $d^2>10$.
+The two strict energy bounds follow from the positive enclosures
+(57.8). Hence at every point of the corresponding endpoint triangle
+
+$$
+\begin{aligned}
+G_+(1,X,Y)&=e^2-4C_+^2
+ >4-4\frac{295}{512}=\frac{217}{128}>\frac{13}{25},\\
+G_-(1,X,Y)&=d^2-4C_-^2
+ >10-4\frac32\frac{295}{512}
+ =\frac{1675}{256}>\frac{13}{25}.
+\end{aligned}
+\tag{57.29}
+$$
+
+Theorem 54.1 gives $A_+<5081/10000<13/25$, and (57.24)
+gives $A_-<13/25$. Thus $q=1$ attains neither minimum.
+
+Finally fix any attaining tuple. Its $(X,Y)$ must maximize the
+nonnegative $\Gamma_\sigma$ on its full fixed-$q$ triangle:
+a strictly larger value would strictly lower $G_\sigma$, and
+Continuation II, Lemma 46.2 realizes that competitor at the same
+original level. We have already established $0<q<1$ and
+$D_\sigma(x,q)<0$. These are precisely the applicable population
+and determinant hypotheses of Continuation III, Definition 53.1,
+Lemma 53.2 and Theorem 53.4. Those suppliers give the unique
+maximizing ordered lengths and all the strict inequalities in
+(57.22). No sign assumption on $\nu$ is added. $\square$
+
+**Proposition 57.4 (the surviving scalar comparison in the original domain).**
+For either sign put
+
+$$
+\begin{aligned}
+Q_\sigma&=\{q\in(0,1):
+ D_\sigma(3/16+q/2,q)<0\},\\
+(X_\sigma^\star(q),Y_\sigma^\star(q))
+ &\in\operatorname*{arg\,max}_{(X,Y)\in\mathcal T_x}
+                  \Gamma_\sigma(x,q;X,Y),\\
+B_\sigma(q)&=K_\sigma^2(1-q)+K_{-\sigma}^2q
+ -4\Gamma_\sigma(x,q;X_\sigma^\star(q),Y_\sigma^\star(q))^2.
+\end{aligned}
+\tag{57.30}
+$$
+
+The starred pair is unique by Continuation III, Theorem 53.4.
+Both $Q_\sigma$ are nonempty, and
+
+$$
+A_\sigma=\min_{q\in Q_\sigma}B_\sigma(q),
+\quad\text{with the minimum attained.}
+\tag{57.31}
+$$
+
+*Proof.* An original complete-domain minimum exists by Theorem 57.3.
+Every tuple attaining it has population in $Q_\sigma$ and uses the
+unique fixed-population maximizing pair. Thus $Q_\sigma$ is nonempty
+and that tuple supplies equality in (57.31). Conversely every
+$B_\sigma(q)$ is the value of a feasible tuple of the complete domain,
+so it cannot be smaller than $A_\sigma$. This proves attainment in
+(57.31) without assuming that the open set $Q_\sigma$ is compact.
+
+The original-realization bridge is Continuation II, Lemma 46.2 in
+its unchanged fixed pair order. It reconstructs both recoveries from
+one whole feedback, including boundary points, and aligns them with
+the effect coherence phase using the ordinary transpose in (46.5).
+The effect is normalized, positive and pure. Only one common scalar
+on all four feedback entries is quotiented. No pairwise independent
+realization, independent pair scalar, or permutation of physical
+labels occurs. Source (23.9)--(23.13) and (46.8) give
+
+$$
+\rho_\sigma=4(1-x)+2q=\frac{13}{4}.
+\tag{57.32}
+$$
+
+The original two-sign budget (42.17)--(42.20) makes the other sign's
+distance strictly larger at this level. Thus (57.32) is the true
+joint original distance. Continuation III, Proposition 53.5 states
+the same bridge, and its Theorem 48.5 together with Definition 54.2
+identifies the original sign-selection question with the following
+remaining scalar comparison. $\square$
+
+**Open question 57.5 (the exact unresolved endpoint comparison).**
+With precisely the full-triangle optimizers in (57.30), is
+
+$$
+\min_{q_-\in Q_-}B_-(q_-)
+ \;>\;
+\min_{q_+\in Q_+}B_+(q_+)?
+\tag{57.33}
+$$
+
+This is $A_-(13/4)>A_+(13/4)$, not a new fixed-threshold question.
+The two populations are independently quantified; equal populations
+are not required. A strict ordering, equality, or reverse ordering
+has not been proved here. The canonical estimate (57.6) controls the
+slices excluded by (57.7), while every negative minimizer lies in the
+remaining negative-determinant regime. It therefore supplies no global
+negative lower comparator. Two attained upper values, one fixed
+population, or failure of an earlier sufficient threshold cannot
+settle (57.33). No uniqueness of a minimizing population follows
+from uniqueness of the lengths at each fixed population.
+
+**Definition 57.6 (sources and scope of the deduction).**
+The new paper deductions are the complete rational certificate
+(57.6), its nonnegative-determinant full-slice consequence (57.7),
+and the endpoint and determinant exclusions leading to (57.22)
+and (57.31). Their suppliers are Continuation II, Definition 46.1,
+Lemma 46.2, (46.11), (46.13), Theorems 46.4 and 46.6;
+Continuation III, Definition 53.1, Lemma 53.2, Theorem 53.4,
+Proposition 53.5 and Theorem 48.5; and this volume's Theorems 49.1,
+54.1 and the English Theorem 55.1 at $q=X=1/5$, $Y=17/20$,
+with its constant enclosures (55.3)--(55.4). Original recovery,
+transpose and true-distance conventions are (23.2), (23.9)--(23.13)
+and (42.17)--(42.20), reused through those source correspondences.
+
+The geometric-mean concavity used in (57.17) is proved explicitly
+above. Its standard convex-composition context is
+[Boyd and Vandenberghe, *Convex Optimization*, Section 3.2.4,
+Example 3.14](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf),
+also cited in Section 51.5. No new external exact supplier or
+literature-priority claim is made. These are ordinary paper results;
+no Lean or kernel verification is asserted. They do not decide
+(57.33), the full interval sign-selection problem, physical realization
+or acquisition, or the larger reconstruction problem. The original
+complete domains and previously stated ranges remain in force.
+
 ## 追加锚（本行以下为增补区）
