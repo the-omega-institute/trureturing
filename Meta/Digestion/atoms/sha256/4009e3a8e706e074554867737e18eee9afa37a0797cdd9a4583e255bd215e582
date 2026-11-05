@@ -1,0 +1,18 @@
+**Definition 114.1 (the original critical family and its relative response).** Retain the original group, product, raw Lebesgue Haar measure, unit-source degree-$-3$ field $\Gamma$, horizontal generator $L$, free clock and central spectral units of [§§82--87](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md#82-rank-three-transport-carrier-point-source-stability-and-target-fibre-defect). Fix the same $a,\eta>0$. On $\mathcal H=L^2(G,d\mu;\mathbb C)$, let $H_\sigma$ be the nonnegative operator of [(111.2)](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX.md#111-actual-source-tightness-and-convergence-to-the-original-maximal-zero-line), at the actual critical coupling $g_\sigma$ on the entire complex $\mathcal E_\sigma$, for every $\sigma>2$. Let $H_{\rm end}$ be exactly the actual selector (112.5). Use the free operators and resolvents of (113.1), and put
+
+$$
+\begin{gathered}
+A_\sigma=aL+\eta|D_w|^\sigma,\qquad
+Q_{\sigma,r}=(A_\sigma+r)^{-1},\qquad
+R_{\sigma,r}=(H_\sigma+r)^{-1},\qquad r>0,\\
+R_{{\rm end},r}=(H_{\rm end}+r)^{-1},\qquad
+P_\sigma=\mathbf1_{\{0\}}(H_\sigma),\qquad
+P=\mathbf1_{\{0\}}(H_{\rm end})=|w\rangle\langle w|,\\
+C_{\sigma,r}=r(R_{\sigma,r}-Q_{\sigma,r}),\qquad
+C_{{\rm end},r}=r(R_{{\rm end},r}-Q_{2,r}).
+\end{gathered}
+\tag{114.1}
+$$
+
+Here $w$ is the original unit vector of Theorem 110.2; $\ker S^*=\mathbb Cw$ and $P_\sigma\to P$ in norm are the supplies (112.1) and (111.29). All operator norms below are on the whole original complex $\mathcal H$. A joint limit in $\sigma\downarrow2$ and $r\downarrow0$ permits arbitrary independent sequences of these two parameters.
+

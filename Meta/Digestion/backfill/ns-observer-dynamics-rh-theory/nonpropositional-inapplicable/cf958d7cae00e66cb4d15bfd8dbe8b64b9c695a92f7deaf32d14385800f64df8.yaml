@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cf958d7cae00e66cb4d15bfd8dbe8b64b9c695a92f7deaf32d14385800f64df8
+  normalized_sha256: sha256:cf958d7cae00e66cb4d15bfd8dbe8b64b9c695a92f7deaf32d14385800f64df8
+cas_ref: sha256:cf958d7cae00e66cb4d15bfd8dbe8b64b9c695a92f7deaf32d14385800f64df8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 规定同一可见输入下y、z所满足的方程作为后续误差比较的前提。
+    previous_atom_id: c2f0b3a1bfde232972d78b5c0a763558c334dd5ce576e6c34ec3fc82933ade92
+    next_atom_id: 00580e489c43936832324ca128cf575f7be22e620b79fb3ac0590f76791f1e3a

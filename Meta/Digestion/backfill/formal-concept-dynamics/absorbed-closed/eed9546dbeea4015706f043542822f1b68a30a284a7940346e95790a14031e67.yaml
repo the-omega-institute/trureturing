@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:eed9546dbeea4015706f043542822f1b68a30a284a7940346e95790a14031e67
+  normalized_sha256: sha256:eed9546dbeea4015706f043542822f1b68a30a284a7940346e95790a14031e67
+cas_ref: sha256:eed9546dbeea4015706f043542822f1b68a30a284a7940346e95790a14031e67
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Transport/DefinitionalConservativity.definitional_conservativity
+    target_statement_id: sha256:1c376a51829e0c0aa8a81317806d7eb5010e961db630295ccdc095607a410581
+receipts:
+  unresolved_subitems: []

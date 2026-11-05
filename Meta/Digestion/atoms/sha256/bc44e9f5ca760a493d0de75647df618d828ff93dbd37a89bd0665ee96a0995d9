@@ -1,0 +1,15 @@
+#### 定义 3.1（指定 Lüders 仪器）
+
+对于正交投影 $P$，二值读出的分支映射为
+
+$$
+\rho\longmapsto P\rho P,\qquad
+\rho\longmapsto(I-P)\rho(I-P).
+$$
+
+分支迹是概率，非零分支除以其迹得到条件态。讨论次序时保留操作及结果标签，不能只比较丢掉记录后的平均通道。
+
+<a id="statement-3-2"></a>
+
+<a id="thm-order"></a>
+

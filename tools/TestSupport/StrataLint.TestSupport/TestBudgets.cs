@@ -21,5 +21,6 @@ public static class TestBudgets
     public static readonly TimeSpan WorkflowProcessHangGuard = TimeSpan.FromSeconds(60); // infrastructure-hang-guard: never bears a test verdict
     public static readonly TimeSpan LeanProcessHangGuard = TimeSpan.FromSeconds(120); // infrastructure-hang-guard: never bears a test verdict
     public static readonly TimeSpan LongWorkflowProcessHangGuard = TimeSpan.FromMinutes(3); // infrastructure-hang-guard: never bears a test verdict
+    public static readonly TimeSpan ProtocolProbeHangGuard = TimeSpan.FromSeconds(90); // infrastructure-hang-guard: never bears a test verdict
     public static readonly TimeSpan ReportSupervisorHangGuard = TimeSpan.FromMinutes(5); // infrastructure-hang-guard: never bears a test verdict
 }

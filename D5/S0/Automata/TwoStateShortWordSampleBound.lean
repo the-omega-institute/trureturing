@@ -15,7 +15,7 @@ namespace D5.S0.Automata.TwoStateShortWordSampleBound
 open D5.S0.Automata.DFAOStateLowerBound
 open D5.S0.Automata.FiniteSampleRestriction
 
-private def normalized {A : Type} (e : Bool) (x y : A → Bool) : DFAO A Bool Bool :=
+def normalized {A : Type} (e : Bool) (x y : A → Bool) : DFAO A Bool Bool :=
   { start := e
     step := fun q a => if q = e then x a else y a
     output := id
@@ -69,7 +69,7 @@ private theorem normalize_injective {A S : Type}
   intro w
   exact run w M.start
 
-private theorem normalize_two_states {A S : Type} [Fintype S]
+theorem normalize_two_states {A S : Type} [Fintype S]
     (M : DFAO A Bool S) (hc : Fintype.card S ≤ 2) :
     ∃ e : Bool, ∃ x y : A → Bool,
       ∀ w, (normalized e x y).evalOutput w = M.evalOutput w := by
@@ -742,7 +742,7 @@ private theorem rules_semantics {A : Type} (e : Bool) (w : List A) (t : Bool)
           simp [rules,eval_pair,Holds,hx,hb,hy] <;> exact ⟨a,by simp_all⟩
       | cons c tail => simp at hlen
 
-private theorem branch_core (k : ℕ) (D : Finset (List (Fin k))) (target : {w // w ∈ D} → Bool)
+theorem branch_core (k : ℕ) (D : Finset (List (Fin k))) (target : {w // w ∈ D} → Bool)
     (hlen : ∀ w ∈ D, (w : List (Fin k)).length ≤ 2) (e : Bool)
     (absent : ¬ ∃ x y : Fin k → Bool, CorrectOnFamily (normalized e x y) Subtype.val target) :
     ∃ E : Finset {w // w ∈ D}, E.card ≤ 8 * k + 1 ∧

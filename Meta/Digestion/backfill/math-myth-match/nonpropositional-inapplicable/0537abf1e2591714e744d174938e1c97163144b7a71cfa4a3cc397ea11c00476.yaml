@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0537abf1e2591714e744d174938e1c97163144b7a71cfa4a3cc397ea11c00476
+  normalized_sha256: sha256:0537abf1e2591714e744d174938e1c97163144b7a71cfa4a3cc397ea11c00476
+cas_ref: sha256:0537abf1e2591714e744d174938e1c97163144b7a71cfa4a3cc397ea11c00476
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 规定形式、文本、历史和经验资料各自支持的范围，属于证据使用准则。
+    previous_atom_id: 7879d97c47a2d6fed0bc29d014f6fbc1315cd379bf7ef6d391bd71b9176c7320
+    next_atom_id: 020379b5f533f145ec772c161b1d654b24851578a3d63b9cac4188defed5873e

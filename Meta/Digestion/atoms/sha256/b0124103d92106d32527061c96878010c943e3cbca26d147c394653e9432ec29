@@ -1,0 +1,39 @@
+**Theorem 2.3 (Reset-variance lower bound).** For any band-compatible $p$ on $B_n$, define
+
+$$
+V_2(p;n)=\sum_{i=3}^{n-2}p(E_i)\operatorname{Var}_p\bigl(p_i(W_{-i})\mid E_i\bigr),
+\qquad V_2(p;n)=0\quad(n<5).
+\tag{2.3}
+$$
+
+Then
+
+$$
+\mathscr R_{2,n}(p)\ge V_2(p;n).
+\tag{2.4}
+$$
+
+In particular, with the actual full-complement optimizer posterior
+
+$$
+a_{n,i}=\pi_n(W_i=1\mid W_{[1,n]\setminus\{i\}}),\qquad
+V_2(n)=\sum_{i=3}^{n-2}\pi_n(E_i)\operatorname{Var}_{\pi_n}(a_{n,i}\mid E_i),
+$$
+
+one has $\mathcal R_{2,n}\ge V_2(n)$.
+
+Proof. A member $r$ of $\mathscr F_{2,n}^{0,0}$ is positive, and its ordinary ranks are at most its nonnegative ranks, hence at most two. Lemma 2.2 applies. Retain from (1.6) only site $i$ and the event $E_i$. The least-squares identity for a constant gives
+
+$$
+\begin{aligned}
+\mathbb E_p\mathbf1_{E_i}(p_i-r_i)^2
+&=p(E_i)\left[
+\operatorname{Var}_p(p_i\mid E_i)
++\bigl(\mathbb E_p[p_i\mid E_i]-c_i(r)\bigr)^2\right]\\
+&\ge p(E_i)\operatorname{Var}_p(p_i\mid E_i).
+\end{aligned}
+\tag{2.5}
+$$
+
+Each retained term belongs to a different site, so overlap between the events $E_i$ creates no double counting. Sum and minimize over the single global $r$. An empty family satisfies the inequality in the extended order. For $n<5$ it is nonnegativity. Positivity makes $p(E_i)>0$ whenever that event is used. The final specialization uses only $p=\pi_n$ in every conditional, variance and weight. $\square$
+

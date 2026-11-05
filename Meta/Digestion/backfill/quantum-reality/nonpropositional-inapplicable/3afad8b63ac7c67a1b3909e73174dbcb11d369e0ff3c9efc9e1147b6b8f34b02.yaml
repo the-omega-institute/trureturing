@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3afad8b63ac7c67a1b3909e73174dbcb11d369e0ff3c9efc9e1147b6b8f34b02
+  normalized_sha256: sha256:3afad8b63ac7c67a1b3909e73174dbcb11d369e0ff3c9efc9e1147b6b8f34b02
+cas_ref: sha256:3afad8b63ac7c67a1b3909e73174dbcb11d369e0ff3c9efc9e1147b6b8f34b02
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列出空间局域性、裸 Hamiltonian 兼容性、制备与保存尚待补足的物理实现义务，不提出这些义务已经成立。
+    previous_atom_id: 8cfbeab7e9db039e8d7a8926097610c580fb09fe4fc5b40f1ea9e44185305f3d
+    next_atom_id: b57ba3b73201aab9ac2f711a7cfdfe94c5f4b1ba48f43e157798f6b04f3f3655

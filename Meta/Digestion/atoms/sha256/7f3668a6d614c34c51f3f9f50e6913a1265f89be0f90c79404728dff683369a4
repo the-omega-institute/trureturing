@@ -1,0 +1,65 @@
+**Proposition 274.2 (a depth-two energy witness).**
+For the original biased free-root form,
+
+$$
+\mathcal E(B,A)=\frac18.
+\tag{274.2}
+$$
+
+*Proof.*  Write $q_u=2^{-|u|}$ for the equal-split flow of Theorem 99.1.
+The least-energy extension of $A$ has root values
+
+$$
+u_A(\varnothing)=\frac12,\qquad u_A(L)=\frac34,\qquad u_A(R)=\frac14,
+\tag{274.3}
+$$
+
+and increments
+
+$$
+z^A_L=\frac14,\quad z^A_R=-\frac14,\quad
+z^A_{Lu}=\frac14q_u,\quad z^A_{Ru}=-\frac14q_u
+\quad(u\ne\varnothing).
+\tag{274.4}
+$$
+
+For $B$, the corresponding junction values are
+
+$$
+u_B(\varnothing)=\frac14,\quad
+u_B(L)=\frac38,\quad u_B(R)=\frac18,
+\tag{274.5}
+$$
+
+$$
+u_B(LL)=\frac{11}{16},\quad u_B(LR)=\frac{3}{16},\quad
+u_B(RL)=u_B(RR)=\frac1{16},
+\tag{274.6}
+$$
+
+and the strict-descendant increments are
+
+$$
+\begin{gathered}
+z^B_L=\frac18,\quad z^B_R=-\frac18,\quad
+z^B_{LL}=\frac5{16},\quad z^B_{LR}=-\frac3{16},\quad
+z^B_{RL}=z^B_{RR}=-\frac1{16},\\
+z^B_{LLu}=\frac5{16}q_u,\quad z^B_{LRu}=-\frac3{16}q_u,\quad
+z^B_{RLu}=z^B_{RRu}=-\frac1{16}q_u
+\quad(u\ne\varnothing).
+\end{gathered}
+\tag{274.7}
+$$
+
+Each displayed flow has the declared cylinder trace, and completing squares
+at the root, the two first junctions, and each constant-trace descendant
+subtree shows that it is the unique least-energy extension from (111.2).
+Equivalently, the descendant pieces are the equal-split minimizers from
+Theorem 99.1 and the finite junction values solve their three-edge Euler
+equations.  The inner product of (274.4) and (274.7) is computed by
+splitting at the root.  The root edges contribute $1/16$.  Below $L$,
+$\langle q,z^B|_L\rangle$ is the fair-flow mean of the increment trace,
+$1/2-u_B(L)=1/8$, so the contribution is $1/32$; below $R$ it is
+$0-u_B(R)=-1/8$, and the contribution is again $1/32$.  Hence
+$\mathcal E(B,A)=1/16+1/32+1/32=1/8$. $\square$
+

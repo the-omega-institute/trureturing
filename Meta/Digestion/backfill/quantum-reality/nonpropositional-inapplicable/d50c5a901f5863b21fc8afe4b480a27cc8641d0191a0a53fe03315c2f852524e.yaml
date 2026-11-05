@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d50c5a901f5863b21fc8afe4b480a27cc8641d0191a0a53fe03315c2f852524e
+  normalized_sha256: sha256:d50c5a901f5863b21fc8afe4b480a27cc8641d0191a0a53fe03315c2f852524e
+cas_ref: sha256:d50c5a901f5863b21fc8afe4b480a27cc8641d0191a0a53fe03315c2f852524e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 说明程序依赖制备及装置选择，并声明未导出唯一行动计划；属于模型前提与解释范围说明。
+    previous_atom_id: 919cb95e64a29fd6d50bc7a9ee9ba0d35d23cfcae95eb918d6e304523c79a936
+    next_atom_id: 8cfbeab7e9db039e8d7a8926097610c580fb09fe4fc5b40f1ea9e44185305f3d

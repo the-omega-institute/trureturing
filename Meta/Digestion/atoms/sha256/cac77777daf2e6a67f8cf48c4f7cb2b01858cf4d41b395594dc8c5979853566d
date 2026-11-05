@@ -1,0 +1,8 @@
+The correct combined interpretation is:
+
+- the network contributes three independent edge slots and two-edge local access;
+- the FIB quotient contributes a three-coordinate observable carrier;
+- the hidden \(\kappa\)-fiber records information lost by that quotient;
+- a full triangle-local model is a lift of the observed carrier that must preserve the product law on the three edges and every unconnected-source invariance;
+- an inflation proof is a finite lifted obstruction to such a global lift.
+

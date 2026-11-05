@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:fabdc379f426785e18820e97526a2c591628b914f6c850f82038ac9c0e15edc5
+  normalized_sha256: sha256:fabdc379f426785e18820e97526a2c591628b914f6c850f82038ac9c0e15edc5
+cas_ref: sha256:fabdc379f426785e18820e97526a2c591628b914f6c850f82038ac9c0e15edc5
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Evidence/ConflictingEvidenceAggregation.bothSupported
+    target_statement_id: sha256:2f88383912a9be34be7f8bc31c6dc8b14d1506c7f2fb94be942650695040d8bc
+receipts:
+  unresolved_subitems: []

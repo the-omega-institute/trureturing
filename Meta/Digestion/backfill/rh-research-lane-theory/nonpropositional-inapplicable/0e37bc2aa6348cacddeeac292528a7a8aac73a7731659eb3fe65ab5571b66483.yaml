@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0e37bc2aa6348cacddeeac292528a7a8aac73a7731659eb3fe65ab5571b66483
+  normalized_sha256: sha256:0e37bc2aa6348cacddeeac292528a7a8aac73a7731659eb3fe65ab5571b66483
+cas_ref: sha256:0e37bc2aa6348cacddeeac292528a7a8aac73a7731659eb3fe65ab5571b66483
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 五个脚本的源码范围、有限诊断和继承输入的复验边界，没有重述 SC 数值界。
+    previous_atom_id: 51654b8e85c94fef6a0bc994152098ccf3cc17c26fa9c455e7c09b73e409d25b
+    next_atom_id: 4234f1b19b2f1696d90ed273d3376d335aa95d6b75cacc3ab45b5c0809f808d1

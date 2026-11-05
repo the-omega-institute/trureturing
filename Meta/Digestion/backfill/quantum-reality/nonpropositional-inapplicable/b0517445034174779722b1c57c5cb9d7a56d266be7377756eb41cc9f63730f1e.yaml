@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b0517445034174779722b1c57c5cb9d7a56d266be7377756eb41cc9f63730f1e
+  normalized_sha256: sha256:b0517445034174779722b1c57c5cb9d7a56d266be7377756eb41cc9f63730f1e
+cas_ref: sha256:b0517445034174779722b1c57c5cb9d7a56d266be7377756eb41cc9f63730f1e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 显式选择局部平衡与松弛 PDE 为新增模型，原文明确不主张由单次碰撞推出；等式在这里是定义的模型方程。
+    previous_atom_id: c8221291570b4ecbb4385cdce37becc24c814d495fd0ad0e92cf59aa60dc2e6d
+    next_atom_id: 2d4dc2d8d3419e031d06fee8f3d286d1050d6d5af940424936bbfe9a4f986014

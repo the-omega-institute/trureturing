@@ -1,0 +1,62 @@
+/- GID: D5/S3/Arith/Robin/HannaSigmaProductExpModThreeCube
+   generality: I
+   mirror-B: D5/B/S3/Arith/Robin/HannaSigmaProductExpModThreeCube
+   mirror-E: none(waiver:external-open-problem-resolution)
+   anchors: []
+   utility: none
+   digest: The cubed sigma-product exponential has the Frobenius residue pattern. -/
+
+/-
+proof_shape: content (result), by inlining same-delivery helpers.
+escape_witness: result uses
+D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality.IsRIntegralPS.dieudonneDwork_mpr.
+admission_basis: open-problem-resolution (#18864; Proved).
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19891;
+newly public owner D5.S3.Arith.Robin.PrimeFiberPropagation.sigma_prime_pow_succ.
+Direct frozen dependencies after inlining same-delivery helpers:
+HannaLogarithmicPowerClosure.IntegralSeries;
+CubicFifteenSubstitutionParity.prime_power_subst;
+LinearExponentDyadicSupport.pow_change;
+ParametricExponentialSquareCongruence.linear_ode_unique;
+PrimeFiberPropagation.sigma_prime_pow_succ.
+The claim is the conjunction stated in issue #18864 under rational coefficient
+and integer congruence notation; the namespace follows this module.
+utility: none; no finite certificate is used.
+
+Declaration classification (names relative to this module):
+declaration | proof_shape | escape_witness | direct consumers
+claim | bind-only | none | none
+result | content | D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality.IsRIntegralPS.dieudonneDwork_mpr | none
+-/
+
+import D5.S3.Arith.Robin.HannaSigmaProductExpModThree
+namespace D5.S3.Arith.Robin.HannaSigmaProductExpModThreeCube
+
+open PowerSeries D5.S3.Arith.Robin.HannaSigmaProductExpModThree
+
+/-- OEIS A382125 (P. D. Hanna), conjectures: "a(3*n) == A382124(n) (mod 3) for n >= 0; a(3*n+1) == 0
+(mod 3) and a(3*n+2) == 0 (mod 3) for n >= 0". The terms are integers. -/
+def claim : Prop :=
+  (∀ n : ℕ, ∃ u v : ℤ, coeff (3 * n) B = u ∧ coeff n A = v ∧ u ≡ v [ZMOD 3]) ∧
+    ∀ n : ℕ, ∃ u v : ℤ, coeff (3 * n + 1) B = u ∧ coeff (3 * n + 2) B = v ∧
+      u ≡ 0 [ZMOD 3] ∧ v ≡ 0 [ZMOD 3]
+
+end D5.S3.Arith.Robin.HannaSigmaProductExpModThreeCube
+
+namespace D5.S3.Arith.Robin.HannaSigmaProductExpModThreeCube
+open PowerSeries D5.S3.Arith.Robin.HannaSigmaProductExpModThree
+
+theorem result : claim := by
+  constructor
+  · intro n
+    obtain ⟨u,v,hu,hv,hc⟩ := D5.S3.Arith.Robin.HannaSigmaProductExpModThree.result n
+    exact ⟨v,u,hv,hu,hc.symm⟩
+  · intro n
+    refine ⟨coeff (3*n+1) (integerSeries ^ 3), coeff (3*n+2) (integerSeries ^ 3),
+      ?_, ?_, (cube_residues n).2.1, (cube_residues n).2.2⟩
+    · rw [← integerCube_map, coeff_map]
+      rfl
+    · rw [← integerCube_map, coeff_map]
+      rfl
+
+end D5.S3.Arith.Robin.HannaSigmaProductExpModThreeCube

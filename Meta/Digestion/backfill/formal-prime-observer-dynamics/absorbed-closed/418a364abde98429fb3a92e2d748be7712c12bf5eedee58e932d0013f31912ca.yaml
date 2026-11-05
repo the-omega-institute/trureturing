@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:418a364abde98429fb3a92e2d748be7712c12bf5eedee58e932d0013f31912ca
+  normalized_sha256: sha256:418a364abde98429fb3a92e2d748be7712c12bf5eedee58e932d0013f31912ca
+cas_ref: sha256:418a364abde98429fb3a92e2d748be7712c12bf5eedee58e932d0013f31912ca
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/PredictionFactors/CausalStateFactorization.causal_state_factorization
+    target_statement_id: sha256:a53b69057ed5e20a064e6c89da7e23bd6e7b2a670b25e89ad4fb614bd8be69d7
+receipts:
+  unresolved_subitems: []

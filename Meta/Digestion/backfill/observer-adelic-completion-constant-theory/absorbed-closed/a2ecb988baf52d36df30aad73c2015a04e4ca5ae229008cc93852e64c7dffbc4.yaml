@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a2ecb988baf52d36df30aad73c2015a04e4ca5ae229008cc93852e64c7dffbc4
+  normalized_sha256: sha256:a2ecb988baf52d36df30aad73c2015a04e4ca5ae229008cc93852e64c7dffbc4
+cas_ref: sha256:a2ecb988baf52d36df30aad73c2015a04e4ca5ae229008cc93852e64c7dffbc4
+coverage_gids:
+  - gid: D5/S3/Observer/AgencyHolonomy/SecondMagnusKernelNormSquare.second_magnus_swap_kernel_half_turn_norm_sq
+    target_statement_id: sha256:6fa1be396035aac1e5f3ace9ae8b988271f6570514b4a969024787debfcf0712
+receipts:
+  unresolved_subitems: []

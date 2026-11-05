@@ -1,0 +1,59 @@
+**Definition 26.1 (actual acquisition and execution resources).** All
+preparation, sensing, timing, arithmetic, storage, command, retention and
+failure charges are those of the original source contract. In particular
+$g_D$ assigns zero length to hidden differences but assigns them no zero
+service cost. Let $C_{\rm prep}$ include the complete preparation,
+$C_{{\rm read},j}$ its three actual sensor charges,
+$C_{{\rm clock},j}$ the certificates for $\tau_0,\tau_1,\Lambda$,
+$C_{\rm command}$ the pulse/effort certificate and
+$C_{\rm arithmetic}$ the finite interval computation, including its
+actual workspace/output/backing charges. If the original deterministic
+source-service rate is $c_{\rm src}(u,Z)$, the actual acquisition bill is
+
+$$
+C_{\rm acq}=C_{\rm prep}+\sum_{j=0}^2C_{{\rm read},j}
+ +\sum_{j=0}^2C_{{\rm clock},j}+C_{\rm command}+C_{\rm arithmetic}
+ +\int_{\rm after\ preparation}^{\rm execution\ start}
+ c_{\rm src}(u_s,Z_s)\,ds.
+\tag{26.1}
+$$
+
+Separate terms mean separate original charges; if the contract bundles
+one into another it is counted once. The actual elapsed acquisition
+clock is
+
+$$
+T_{\rm acq}=T_{\rm prep}+\ell_0+\tau_0+\tau_1+\Lambda.
+\tag{26.2}
+$$
+
+The later read and timing durations are already inside the $\tau_j$ or
+$\Lambda$, as required by Assumption 24.1. Computational latency is a
+real hold of the source, not deleted time. The two calibration intervals
+consume at most $2(1+\delta_t)$ clock units and pulse effort at most
+$U_*(1+\delta_t)$. At every actual execution, the original source-service
+integral to $T\wedge\tau$, plus its original command, retention and
+failure terms, is still charged. For stochastic execution write its
+original rate as $c_Q(Z)$; Brownian controls are not replaced by a
+finite-variation command bill.
+
+The finite alphabet of the nine scalar endpoint reports can be priced
+explicitly. From (24.8) a valid endpoint-report range through $s_2$ is
+
+$$
+R=R_0+C_0\ell_{\max}+2C_0(1+\delta_t)
+ +2A_0+1+\delta_t+\delta_u.
+\tag{26.3}
+$$
+
+A quantizer of mesh $2\epsilon$ on $[-R,R]$, including covering end
+levels, needs at most $\lceil R/\epsilon\rceil+2$ levels, hence at most
+$9\lceil\log_2(\lceil R/\epsilon\rceil+2)\rceil$ endpoint-output bits.
+The clock, effort, preparation and arithmetic certificates have their
+own additionally declared finite widths and prices. This count supplies
+neither a physical sensor nor a rate for obtaining a covariance matrix.
+The deterministic interval/noise distinction and pricing of independent
+repeats, when separately permitted, are already supplied by
+[Obtainable predictive bundles, §§2 and 6](AURIC_FIB_OBTAINABLE_PREDICTIVE_BUNDLE_THEORY.md);
+no new concentration or repeat-price assertion is needed here.
+

@@ -1,0 +1,44 @@
+**Construction 84.1 (entry report before restoration).** Fix the earned
+context of Definition 83.1. At $g=1$ make no edit; otherwise perform the
+selected one-birth repair before any Tick. Let $E:\mathbb Q^N\to
+\mathbb Q^M$ be the actual old-cell inclusion, $B$ the new adjacency,
+and $C'$ the readable terminal restriction after updating both inherited
+omissions. Thus $M=N,N+1$ or $N+2$ according to the chosen case.
+The new divisor is one. The finite stack
+
+$$
+O'=\begin{bmatrix}C'\\C'B\\\vdots\\C'B^{M-1}\end{bmatrix}
+\tag{84.1}
+$$
+
+is injective by Theorem 79.2. Select, by fixed exact pivots in epoch/terminal
+order, $N$ independent rows of $O'E$. Call their square matrix $R_e$
+and their largest epoch $H_e\le M-1$. All these selections depend only
+on earned geometry.
+
+Actually Hold at $Ex$, Read the selected epoch-zero sites, then execute
+$H_e$ rounds of Tick; Hold, with exactly the selected Reads at each
+epoch. With row labels $(k_i,s_i)$, the actual responses satisfy
+
+$$
+y_i=e_{s_i}^{\mathsf T}B^{k_i}Ex,\qquad
+x=R_e^{-1}y,\qquad d=B^{H_e}Ex.
+\tag{84.2}
+$$
+
+Report $x$ and install the full predictor at the actual current $d$.
+This run has $N$ Reads, $H_e$ Ticks and $H_e+1$ Holds, no Adds.
+It does not restore $x$. In particular the present $d$ need not determine
+the original report if $B^{H_e}E$ has a kernel.
+
+**Proof and scalar necessity.** The selected matrix is invertible because
+$O'E$ has rank $N$. Actual zero extension and the executed powers of
+$B$ give (84.2), proving the stated acquisition and endpoint. For any
+exact arbitrary-entry reporter, freeze one terminating transcript with
+fewer than $N$ scalar Reads. Its responses are affine rational rows of
+$x$, even if it uses adaptive original growth and rational Adds. Their
+common kernel contains nonzero rational $\eta$. The paired entry
+$x+\eta$ follows that same complete transcript and receives the same
+report, a contradiction. This $N$-Read lower bound is for original-entry
+reporting; it does not assert a lower bound for the other task. $\square$
+

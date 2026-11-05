@@ -1,0 +1,30 @@
+**定理 29.2（共享解码器的局部一致指数界）。** 固定 $t\in(0,1)$，取 $p=t$、$q=t+\delta$、$0<|\delta|<d=\min(t,1-t)/2$。沿用（20.1）的
+
+$$
+\alpha=\frac t2,\qquad
+\vartheta=-\frac12\log(1-\alpha),\qquad
+M=\frac{e^{2\vartheta}}{1-(1-\alpha)e^{\vartheta}},\qquad
+\beta=\min\left\{\frac18,\frac{\vartheta}{8\log M}\right\},
+$$
+
+并定义
+
+$$
+a_t=\min\left\{\frac{\vartheta}{4d^2},\beta\right\},\qquad
+B_t=2e^{2\vartheta}+2+2e^{d^2}+e^{a_t d^2/\beta}.
+\tag{29.4}
+$$
+
+则对每个整数 $r\ge1$，
+
+$$
+\boxed{\quad
+E_r(P_{t,t+\delta})
+\le P_{t,t+\delta}\bigl(\widehat f_r(Y_r)\ne X_0\bigr)
+\le B_t e^{-a_t r\delta^2}.
+\quad}
+\tag{29.5}
+$$
+
+由于 $(1-\alpha)e^{\vartheta}=\sqrt{1-\alpha}<1$，有 $\vartheta>0$、$1<M<\infty$，故这些常数有限且严格为正。它们只依赖固定的 $t$，对上述全部非零 $\delta$ 及全部整数 $r\ge1$ 使用同一组数；这些数仅进入证明，解码器不计算它们。证明见第 30–32 节。
+

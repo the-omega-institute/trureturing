@@ -1,4 +1,4 @@
 {
   "package_directory": "tools/lean-inspector",
-  "target": "reportInspector"
+  "targets": ["reportInspector", "inputDiscovery"]
 }

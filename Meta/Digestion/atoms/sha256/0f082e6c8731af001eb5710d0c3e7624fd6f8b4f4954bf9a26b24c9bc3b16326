@@ -1,0 +1,56 @@
+**Lemma 3.4 (explicit wash bound).** For every complex traceless $X\in M_3$,
+
+$$
+\|\Theta X\|_2^2\le\tfrac5{12}\|X\|_2^2,
+\qquad
+\|\Theta^nX\|_2\le(2/3)^n\|X\|_2.
+\tag{3.5}
+$$
+
+Consequently, for every density matrix $\sigma$ and integer $n\ge0$,
+
+$$
+\|\Theta^n\sigma-I/3\|_2\le\sqrt{2/3}(2/3)^n.
+\tag{3.6}
+$$
+
+**Proof.** All inner products here are complex Hilbert–Schmidt inner products. Set $\mathcal Q=(\operatorname{id}+\operatorname{Ad}_{UWU})/2$. Since $U^2=I$, $A:=\Lambda^2=\mathcal Q\mathcal P$. Both $\mathcal P,\mathcal Q$ are orthogonal projections. The transpositions $W$ and $UWU$ generate the six permutation matrices. Their conjugation average $\mathcal G$ is the orthogonal projection onto
+
+$$
+\mathscr F=\operatorname{span}_{\mathbb C}\{I,P_\xi\}.
+$$
+
+Indeed a matrix commuting with every permutation has one common diagonal entry and one common off-diagonal entry. Expanding the three factors gives
+
+$$
+A^*A=\mathcal P\mathcal Q\mathcal P
+       =\tfrac14(\mathcal P+3\mathcal G).
+\tag{3.7}
+$$
+
+For completeness, writing $S=\operatorname{Ad}_W$, $T=\operatorname{Ad}_{UWU}$, the numerator of the left side is $2I+2S+T+ST+TS+STS$. The six group terms are $I,S,T,ST,TS,STS$, giving exactly the right side. Thus $A$ fixes $\mathscr F$, preserves $\mathscr F^\perp$ and has norm at most $1/2$ there. This supplies a numerical bound in the fixed installation; the general strict-contraction criterion itself is CPW VI Theorem 103.2.
+
+On the traceless subspace put $u=(P_\xi-I/3)/\sqrt{2/3}$ and $K=\operatorname{Ad}_N$. The only component in $\mathscr F$ is a multiple of $u$. Since $\langle\xi,N\xi\rangle=1/3$,
+
+$$
+\langle u,Ku\rangle
+ =\frac{|\langle\xi,N\xi\rangle|^2-1/3}{2/3}=-1/3.
+\tag{3.8}
+$$
+
+Write $X=\alpha u+y$ with $y\perp\mathscr F$, and $z=Ay$, so $z\perp u$ and $\|z\|_2\le\|y\|_2/2$. Unitarity of $K$ gives $|\langle u,Kz\rangle|^2\le(8/9)\|z\|_2^2$. Applying the final $A$ to the $u$ component and its perpendicular complement, then using $|b+c|^2\le2|b|^2+2|c|^2$, yields
+
+$$
+\begin{aligned}
+\|AKA X\|_2^2
+ &\le\tfrac14(|\alpha|^2+\|z\|_2^2)
+     +\tfrac34|-\alpha/3+\langle u,Kz\rangle|^2\\
+ &\le\tfrac5{12}|\alpha|^2+\tfrac{19}{12}\|z\|_2^2
+ \le\tfrac5{12}|\alpha|^2+\tfrac{19}{48}\|y\|_2^2
+ \le\tfrac5{12}\|X\|_2^2.
+\end{aligned}
+\tag{3.9}
+$$
+
+Here $\Theta=AKA$, and $\sqrt{5/12}<2/3$. It is unital and trace preserving. Apply the bound repeatedly to $\sigma-I/3$, whose squared Hilbert–Schmidt norm is $\operatorname{tr}(\sigma^2)-1/3\le2/3$, proving (3.5)–(3.6). $\square$
+

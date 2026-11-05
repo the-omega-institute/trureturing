@@ -1,0 +1,79 @@
+**Proposition 33.2 (one attained account and its distinct alternatives).**
+For that preparation, passive assay and the selected use of Corollary
+32.3, the attained source-operation vector is
+
+$$
+\begin{aligned}
+P&=c_n,& S&=b_n-1,& \text{fresh cells}&=N_n-1,\\
+\mathrm{Tick}&=I+H,&
+\mathrm{Add}&=b_n(I+1)+1,&
+\mathrm{Read}_h&=b_n(H+1)+1,\\
+\mathrm{Hold}&=H+3,&\mathrm{Reset}&=0.
+\end{aligned}
+\tag{33.3}
+$$
+
+The known-zero seed allocation, all local work, traffic, isolation,
+records and actual bit widths are additional resources of this same
+run. A separately executed present Boundary probe adds its own
+$b_n(H+1)$ Reads, $H$ Ticks and $H+1$ Holds and changes the endpoint.
+A new control-plus-assay round pays that control and a new full assay.
+No coordinate in (33.3) is taken from an alternative shorter protocol.
+
+Proof. The construction counts are those of Construction 33.1 and
+NLBAII's original legal realization. Its handoff uses one Hold.
+Construction 32.1 adds $H+1$ Holds, and selected use one, yielding
+$H+3$. Adding the proved preparation, assay and use counts gives all
+remaining coordinates in (33.3). Its pre-use endpoint is $A_n^Hx$,
+and its post-use endpoint is precisely the translation proved in
+Corollary 32.3. Executing a present probe applies $H$ further Ticks,
+so its field successor cannot be substituted for that post-use field
+or treated as another free view at the old cut. $\square$
+
+There is an elementary active alternative with a different whole
+vector. On any known observable native graph with assured $D$, one
+held coarse Read brackets a terminal value in a half-open interval of
+width $h$. At each of $r$ bisections, actually Add the negative rational
+midpoint, Read$_h$, and Add the midpoint back. A negative floor means
+the old value was strictly below the midpoint; a nonnegative floor
+means it was at or above it. Restoration returns the actual old field
+before any next probe or Tick. Choose $r\ge0$ with $h/2^r<1/D$.
+The final half-open bracket contains at most one lattice value, and
+contains the actual one. Applying these exact scalar extractions to
+all terminals through epoch $I$ recovers the credited observable
+window and reaches the actual field $A^Ix$. Its acquisition vector is
+
+$$
+\begin{aligned}
+\mathrm{Read}_h&=b(I+1)(1+r),&
+\mathrm{Add}&=2br(I+1),\\
+\mathrm{Tick}&=I,&\mathrm{Hold}&=I+1.
+\end{aligned}
+\tag{33.4}
+$$
+
+Held local work introduces no additional Tick. Intermediate midpoint
+translations may leave the lattice, but are exactly reversed before
+continuation. This standard threshold/bisection construction needs no
+exclusion of $0,1,-1$; it is a sufficient active comparator, not a
+second passive theorem or a claimed new general extraction principle.
+Its added actuation and different horizon/endpoint do not produce a
+componentwise improvement of (33.3). Its preparation and eventual use
+must be added on its own run.
+
+Likewise ordinary finite-horizon approximation remains available:
+from the centers in (30.9), $\widehat s=A^I Kr$ approximates the
+actual advanced $s=A^Ix$, with
+
+$$
+\|CA^k(\widehat s-s)\|_\infty
+ \le \|CA^{I+k}\|_{\infty\to\infty}\,\kappa h/2.
+\tag{33.5}
+$$
+
+This is the supplied linear inverse estimate and ordinary error
+propagation, not an all-future bound. The contraction condition in
+QuantizedWordApproximation cannot be dropped to replace the growing
+factor in (33.5). Neither (33.4) nor (33.5) contradicts dense stopping
+failure or Theorem 29.2.
+

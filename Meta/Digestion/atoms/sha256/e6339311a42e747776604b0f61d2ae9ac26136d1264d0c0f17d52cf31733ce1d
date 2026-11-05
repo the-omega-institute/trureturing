@@ -1,0 +1,21 @@
+**Corollary 41.1 (Separation from the inherited two-world component).**
+The base $(p_{\rm J},v_{\rm J})$ of Proposition 40.1 lies outside
+$\Omega_*$ of Theorem 28.1. The same holds for every member of the
+local family of Corollary 40.2.
+
+**Proof.** Proposition 40.1 and Corollary 40.2 give at least four distinct
+complete worlds in each respective entire child. Every entire child over
+$\Omega_*$ has exactly two worlds by Theorem 28.1. Membership would
+contradict these cardinalities. $\square$
+
+This argument proves neither an exact count for the new child nor
+regularity of its base, a four-sheet covering component, or any collision
+involving worlds outside the four listed ones. In particular four
+pairwise different listed $m$ values exclude M collisions only among those
+four worlds. They do not exclude an outside world sharing one of those
+values or two outside worlds sharing another value. There is no asserted
+connection between the fold chart and $\Omega_*$. The unrestricted
+all-base question of Definition 1.2 remains unresolved: a J pair and an M
+pair must occur at one common base with $p\ne24$, with the original
+allowed overlaps and without requiring equal common terminal values.
+

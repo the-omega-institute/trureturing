@@ -1,0 +1,53 @@
+### 定义 76.1（规范化多项式增益合同）
+
+固定整数 $k,d\ge0$。按系数把 $\Pi_d$ 识别为 $\mathbb R^{d+1}$，并令
+
+$$
+G_\gamma(t)=1+\sum_{\ell=1}^{k}\gamma_\ell t^\ell,
+\qquad \gamma\in\mathbb R^k,
+$$
+
+其中 $k=0$ 时求和为空。正秩一来源仍参数化为
+
+$$
+S(p,q,r)=
+\begin{pmatrix}
+ p&q\\ r&qr/p
+\end{pmatrix},
+\qquad p,q,r>0.
+$$
+
+世界参数为
+
+$$
+\Theta_{k,d}=(0,\infty)^3\times\mathbb R^k\times\Pi_d,
+$$
+
+其维数为
+
+$$
+ n_{k,d}=3+k+(d+1)=k+d+4.                 \tag{76.1}
+$$
+
+在同一定义 75.1 的连续读数、已知 $M/J$ 原子、单条不可重置轨迹和标量历史反馈
+合同中，初始 $z_0$ 强制取得并计入预算，读数为
+
+$$
+ z_i=G_\gamma(i)\operatorname{tr}(A_iS(p,q,r))+D(i).       \tag{76.2}
+$$
+
+目标取为
+
+$$
+\mathcal T_{k,d}(\theta)=
+\left(
+ \frac{S(p,q,r)}{\operatorname{tr}S(p,q,r)},
+ \operatorname{tr}S(p,q,r)G_\gamma,
+ D
+\right).                                                   \tag{76.3}
+$$
+
+这是一般共同增益合同中增益截距为正的子域。若原增益为
+$\alpha+\beta_1t+\cdots+\beta_kt^k$ 且 $\alpha>0$，取
+$S=\alpha R$、$\gamma_\ell=\beta_\ell/\alpha$ 即落入 (76.2)。
+

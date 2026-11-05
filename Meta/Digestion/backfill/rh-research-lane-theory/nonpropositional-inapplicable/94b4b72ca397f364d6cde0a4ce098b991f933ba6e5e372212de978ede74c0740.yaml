@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:94b4b72ca397f364d6cde0a4ce098b991f933ba6e5e372212de978ede74c0740
+  normalized_sha256: sha256:94b4b72ca397f364d6cde0a4ce098b991f933ba6e5e372212de978ede74c0740
+cas_ref: sha256:94b4b72ca397f364d6cde0a4ce098b991f933ba6e5e372212de978ede74c0740
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: L12 的作者托管文献与 Speiser 定理定位，不是 derivative-zeta 无零点的断言。'
+    previous_atom_id: 93d20ac54188f8ef3d507f45961c644bd65788423058e3840bc9d4686c6f4ac1
+    next_atom_id: 9e531941791a4e871c8d9b8e3162278a402993476ebc8a7b5916596f82226f02

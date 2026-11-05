@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:341ea32e7af25102bc200c1320267a1c92b2e5aa8345c0cc24d051113b351da1
+  normalized_sha256: sha256:341ea32e7af25102bc200c1320267a1c92b2e5aa8345c0cc24d051113b351da1
+cas_ref: sha256:341ea32e7af25102bc200c1320267a1c92b2e5aa8345c0cc24d051113b351da1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 校定《坛经》所引段落的当下性、迷悟条件和适用版本，属于文本释义。
+    previous_atom_id: 4e6f5ff6fadf154ccb0581284e920279ec2149df1ad64787cd38ae2f15fcc311
+    next_atom_id: cbcc616957170d2b3c44a5010b6a9d8b3e9e09884c99284516f489ec81943c21

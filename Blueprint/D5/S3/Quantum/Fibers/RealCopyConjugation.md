@@ -28,7 +28,19 @@ Lean statement: `D5/S3/Quantum/Fibers/RealCopyConjugation.RealEffect`
 
 An effect is a positive semidefinite complex matrix whose complement in the identity is positive semidefinite and whose entries have zero imaginary part. Positivity supplies Hermitian symmetry, so these are exactly the real symmetric operators between zero and the identity in the specified basis.
 
-**Definition 1.3 (Physical trace probabilities).**
+**Definition 1.3 (A projection onto two basis vectors).**
+
+Lean statement: `D5/S3/Quantum/Fibers/RealCopyConjugation.pairEffect`
+
+*Formalization.* `D5/S3/Quantum/Fibers/RealCopyConjugation.pairEffect` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For distinct basis indices, take one half of the outer product of their sum with its conjugate. This is a real effect: the matrix and its complement are positive semidefinite, and its entries are real.
+
+**Definition 1.4 (Physical trace probabilities).**
 
 Lean statement: `D5/S3/Quantum/Fibers/RealCopyConjugation.probability`
 
@@ -40,7 +52,7 @@ Lean statement: `D5/S3/Quantum/Fibers/RealCopyConjugation.probability`
 
 The probability is the real part of the trace of the effect times the state, with its membership in the closed unit interval proved from positivity and trace normalization. Positivity of this trace also gives its zero imaginary part.
 
-**Definition 1.4 (Equality on every real effect).**
+**Definition 1.5 (Equality on every real effect).**
 
 Lean statement: `D5/S3/Quantum/Fibers/RealCopyConjugation.SameRealStatistics`
 
@@ -52,7 +64,7 @@ Lean statement: `D5/S3/Quantum/Fibers/RealCopyConjugation.SameRealStatistics`
 
 Statistical equality quantifies over every effect in the real effect interval. The coordinate projectors and the normalized projectors on sums of two basis vectors are valid effects. Their probabilities recover all entries of the real symmetric part; they are separate measurement settings.
 
-**Definition 1.5 (The physical conjugate state).**
+**Definition 1.6 (The physical conjugate state).**
 
 Lean statement: `D5/S3/Quantum/Fibers/RealCopyConjugation.conjugate`
 
@@ -64,7 +76,7 @@ Lean statement: `D5/S3/Quantum/Fibers/RealCopyConjugation.conjugate`
 
 On Hermitian input, transpose is entrywise complex conjugation. Transpose preserves positivity, trace, and rank, including on every singular stratum.
 
-**Definition 1.6 (Joint product-basis labels).**
+**Definition 1.7 (Joint product-basis labels).**
 
 Lean statement: `D5/S3/Quantum/Fibers/RealCopyConjugation.CopyIndex`
 
@@ -76,7 +88,7 @@ Lean statement: `D5/S3/Quantum/Fibers/RealCopyConjugation.CopyIndex`
 
 Zero copies use a singleton basis, one copy uses the original basis, and successive copies use Cartesian products. This construction allows an arbitrary finite basis type, including an empty carrier.
 
-**Definition 1.7 (Independent identically prepared tensor copies).**
+**Definition 1.8 (Independent identically prepared tensor copies).**
 
 Lean statement: `D5/S3/Quantum/Fibers/RealCopyConjugation.copies`
 
@@ -88,7 +100,7 @@ Lean statement: `D5/S3/Quantum/Fibers/RealCopyConjugation.copies`
 
 Each positive copy count is constructed recursively with the native productState Kronecker product, preserving positivity and trace one. The zero-copy matrix is the identity on the singleton carrier. Empty input carriers have no trace-one density states.
 
-**Theorem 1.8 (Complete classification and fixed and rank strata).**
+**Theorem 1.9 (Complete classification and fixed and rank strata).**
 
 $$\forall n\in\operatorname{Type}(),[\operatorname{Fintype}(n)] [\operatorname{DecidableEq}(n)],\\\forall \rho,\sigma\in\operatorname{DensityState}(n),\\(\operatorname{SameRealStatistics}(\operatorname{copies}(\rho,2),\operatorname{copies}(\sigma,2)) \iff (\sigma=\rho \lor \sigma=\operatorname{conjugate}(\rho))) \land\\((\forall k\geq1,\operatorname{SameRealStatistics}(\operatorname{copies}(\rho,k),\operatorname{copies}(\sigma,k))) \iff (\sigma=\rho \lor \sigma=\operatorname{conjugate}(\rho))) \land\\(\forall k\geq2,(\operatorname{SameRealStatistics}(\operatorname{copies}(\rho,k),\operatorname{copies}(\sigma,k)) \iff (\sigma=\rho \lor \sigma=\operatorname{conjugate}(\rho)))) \land\\(\operatorname{conjugate}(\rho)=\rho \iff \operatorname{Im}(\operatorname{stateMatrix}(\rho))=0) \land\\(\forall k\geq2,\operatorname{SameRealStatistics}(\operatorname{copies}(\rho,k),\operatorname{copies}(\sigma,k)) \implies \operatorname{rank}(\operatorname{stateMatrix}(\sigma))=\operatorname{rank}(\operatorname{stateMatrix}(\rho)))$$
 
@@ -100,7 +112,7 @@ $$\forall n\in\operatorname{Type}(),[\operatorname{Fintype}(n)] [\operatorname{D
 
 The theorem states the two-copy equivalence, the equivalence for all positive copy counts, and the equivalence for every fixed count at least two. The two possible states are the original state and its conjugate. They coincide exactly when every imaginary entry is zero. Otherwise the fiber has exactly two distinct states. Every state in the fiber has the same matrix rank. These statements include mixed and singular states and do not assume a geometric chart.
 
-**Definition 1.9 (Actual normalized one-copy coordinate).**
+**Definition 1.10 (Actual normalized one-copy coordinate).**
 
 Lean statement: `D5/S3/Quantum/Fibers/RealCopyConjugation.fiveModeRealCoordinate`
 
@@ -112,7 +124,7 @@ Lean statement: `D5/S3/Quantum/Fibers/RealCopyConjugation.fiveModeRealCoordinate
 
 For a Fin 5 density state this is its entrywise real Hermitian matrix in the specified basis. Equality of every real effect probability is proved equivalent to equality of these coordinates.
 
-**Definition 1.10 (Actual physical statistical image).**
+**Definition 1.11 (Actual physical statistical image).**
 
 Lean statement: `D5/S3/Quantum/Fibers/RealCopyConjugation.fiveModePhysicalImage`
 
@@ -124,7 +136,7 @@ Lean statement: `D5/S3/Quantum/Fibers/RealCopyConjugation.fiveModePhysicalImage`
 
 The image ranges over native positive trace-one density matrices, including mixed, rank-deficient, and real states. It is not an assumed chart.
 
-**Theorem 1.11 (Normalized visible dimension fourteen).**
+**Theorem 1.12 (Normalized visible dimension fourteen).**
 
 $$\operatorname{finrank}(\operatorname{Real}(),\operatorname{direction}(\operatorname{affineSpan}(\operatorname{Real}(),\operatorname{fiveModePhysicalImage}())))=14 \land\\(\forall \rho,\sigma\in\operatorname{FiveModeState}(),\operatorname{SameRealStatistics}(\rho,\sigma) \iff \operatorname{fiveModeRealCoordinate}(\rho)=\operatorname{fiveModeRealCoordinate}(\sigma))$$
 
@@ -136,7 +148,7 @@ $$\operatorname{finrank}(\operatorname{Real}(),\operatorname{direction}(\operato
 
 The affine direction of the actual normalized one-copy image has finrank 14. The proof uses the trace-one symmetric carrier and actual positive/negative density perturbations, so the number is intrinsic to this image and not a finite-state count. The same theorem identifies equality on the entire real effect interval with equality of these actual coordinates.
 
-**Definition 1.12 (Literal conjugation orbit relation).**
+**Definition 1.13 (Literal conjugation orbit relation).**
 
 Lean statement: `D5/S3/Quantum/Fibers/RealCopyConjugation.fiveModeOrbitRel`
 
@@ -148,7 +160,7 @@ Lean statement: `D5/S3/Quantum/Fibers/RealCopyConjugation.fiveModeOrbitRel`
 
 The quotient identifies exactly a state with itself or with its entrywise complex conjugate. This is a nonlinear finite orbit identification on actual density states, not a linear kernel quotient.
 
-**Definition 1.13 (Actual orbit quotient carrier).**
+**Definition 1.14 (Actual orbit quotient carrier).**
 
 Lean statement: `D5/S3/Quantum/Fibers/RealCopyConjugation.fiveModeOrbitQuotient`
 
@@ -176,6 +188,7 @@ The statement requires independent preparation and the full real joint effect in
 - Truth anchor: `D5/S3/Quantum/Fibers/RealCopyConjugation.fiveModePhysicalImage`
 - Truth anchor: `D5/S3/Quantum/Fibers/RealCopyConjugation.fiveModeRealCoordinate`
 - Truth anchor: `D5/S3/Quantum/Fibers/RealCopyConjugation.five_mode_physical_image_dimension`
+- Truth anchor: `D5/S3/Quantum/Fibers/RealCopyConjugation.pairEffect`
 - Truth anchor: `D5/S3/Quantum/Fibers/RealCopyConjugation.probability`
 - Truth anchor: `D5/S3/Quantum/Fibers/RealCopyConjugation.real_copy_classification`
 - Truth anchor: `D5/S3/Quantum/Fibers/RealCopyConjugation.stateMatrix`

@@ -1,0 +1,47 @@
+**Definition 5.1 (source-specific reuse and literature).** This is a
+`repo-derived` finite-cover application of [N, §§8–9]'s
+source-occupation/disintegration and selfadjoint reduction argument.
+The new inference is that just height and one wrapped phase in
+(3.13), available even on the bare native display, force horizontal
+constancy of a central log-ratio; the bracket then suffices for the
+bilateral contradiction without recovering its $z$ derivative.
+The proof needs no local injectivity of the observation and handles
+the continuous fibers and both global outside rules directly.
+The endpoint, local generator, source resolvent and native command
+and output formulae are reused suppliers, not new endpoint or
+control theorems. The supplier snapshot in [N, Definition 7.1] is
+`69eee5580efb61cf70564cc46a0fa24fc18351dd`; [E, §112] and
+[S, §§115–116] retain those exact statements.
+
+The standard intertwining convention is `literature-attested`:
+Pal–Shkolnikov, [*Intertwining diffusions and wave equations*,
+arXiv:1306.0857v2, §1, Definitions 1–2](https://arxiv.org/html/1306.0857v2),
+uses $Q_t\Lambda=\Lambda P_t$ on bounded measurable tests and a
+compatible initial conditional law. Here $P_t=T_t$, the upper
+state is a cover point, and its initial conditional law is
+$\delta_e$. Their subsequent smooth-density diffusion-coupling
+hypotheses are not assumed for the possibly singular fiber kernel
+in (3.1). Disintegration, Jensen contraction, Hilbert adjoints,
+Lie brackets, finite covering groups and Tonelli are mature tools;
+their use is explicit in the proof, not a worldwide priority claim.
+
+The repository's
+[`DynamicsDescent.dynamics_descends_iff`](../../../D5/S0/Rewriting/Quotients/DynamicsDescent.lean)
+and its owning Scribe concern deterministic self-map descent.
+[`StrongLumpabilityDescent.strong_lumpability_descent_tfae`](../../../D5/S3/Observer/ProbabilisticClosure/StrongLumpabilityDescent.lean)
+and
+[`StochasticDescentEquivalence.stochastic_descent_equivalence`](../../../D5/S3/Estimation/DecisionRisk/StochasticDescentEquivalence.lean),
+with their owning Scribes, concern pushed-forward one-step PMF
+laws. They do not supply this source-anchored continuous-state
+reverse link or its obstruction. At the pinned mathlib revision
+`56a005855ea17e0b0958f73ec801ae140b0a1679`,
+[`Kernel.Invariant` and `Kernel.IsReversible.invariant`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Probability/Kernel/Invariance.lean)
+and
+[`eq_condKernel_of_measure_eq_compProd`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Probability/Kernel/Disintegration/Unique.lean)
+supply the general meanings of invariance and almost-everywhere
+uniqueness for a finite measure on a standard Borel product.
+Equation (3.5) verifies the needed joint-law property here rather
+than treating a declaration name as a proof of this application.
+This volume is ordinary mathematical source, without new Lean
+verification or an exhaustive literature/novelty claim.
+

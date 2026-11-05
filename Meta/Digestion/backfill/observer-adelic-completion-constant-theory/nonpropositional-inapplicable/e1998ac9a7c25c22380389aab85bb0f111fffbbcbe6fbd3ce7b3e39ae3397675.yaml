@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e1998ac9a7c25c22380389aab85bb0f111fffbbcbe6fbd3ce7b3e39ae3397675
+  normalized_sha256: sha256:e1998ac9a7c25c22380389aab85bb0f111fffbbcbe6fbd3ce7b3e39ae3397675
+cas_ref: sha256:e1998ac9a7c25c22380389aab85bb0f111fffbbcbe6fbd3ce7b3e39ae3397675
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 额外条件清单中的 observer desubstitution 名称，没有操作恒等式。'
+    previous_atom_id: 95b25fb60c3551f30d72a3d990af6552da124992b805efdf1568ea9f565bb39e
+    next_atom_id: 4dd1fdb097b7a6f34a3e74fa45da1a146f4e76f539955723822bfbdccc081853

@@ -1,0 +1,13 @@
+**Proposition 32.3 (nonunit links and indefinite signed weights really occur).** The arithmetic entrance is nonempty for every prime $p$ and every finite $N$, even if every adjacent link is a nonunit. It also contains genuinely indefinite $C$, so a positive-weight argument cannot be its general proof.
+
+Proof. Let $A_N$ be the adjacency matrix of the $N$-cell path, including $A_1=0$. Choose an integer $d>4p$ coprime to $p$, and set $T=p(2I+A_N)/d$. For $N>1$ the quadratic form of $2I+A_N$ is
+
+$$
+x_0^2+x_{N-1}^2+\sum_{i=0}^{N-2}(x_i+x_{i+1})^2.
+\tag{UFS.81}
+$$
+
+It is strictly positive for nonzero $x$ and at most $4\|x\|_2^2$. The $N=1$ form is $2x_0^2$. Thus $0<T<I$, all coefficients lie in $R_p$, and every adjacent link $p/d$ is a nonunit. Any finite allowed producer, including the empty word, is admitted.
+
+For indefiniteness choose $p=3$, $T=\left(\begin{smallmatrix}3/8&1/8\\1/8&3/8\end{smallmatrix}\right)$ and the actual producer Add$(-1)$; Tick. Then $h(X)=-X$ and $C=I-3T$ has eigenvalues $1/4,-1/2$. Both spectral components are seen at the root, so the first response has signed spectral weights of opposite signs. Nevertheless every native coordinate principal block has determinant nonzero by (UFS.64), and Theorem 28.1 applies. $\square$
+

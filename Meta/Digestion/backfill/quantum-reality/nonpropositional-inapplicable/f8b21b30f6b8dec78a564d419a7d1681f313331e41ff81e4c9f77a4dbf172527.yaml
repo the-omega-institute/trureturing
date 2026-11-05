@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f8b21b30f6b8dec78a564d419a7d1681f313331e41ff81e4c9f77a4dbf172527
+  normalized_sha256: sha256:f8b21b30f6b8dec78a564d419a7d1681f313331e41ff81e4c9f77a4dbf172527
+cas_ref: sha256:f8b21b30f6b8dec78a564d419a7d1681f313331e41ff81e4c9f77a4dbf172527
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 统一命题的标题和适用模型条件引导句；该片没有任何编号子结论或数学断言，后续子项不因此结算。
+    previous_atom_id: d3a2a36b43f213690e4e7466b9fac88cbd733b579756f09b1770ed7a057ca8eb
+    next_atom_id: 4b380df6ec2914065fe6485ce4aad08c7215f48c268d2d54b2f3f9480dc7c22b

@@ -1,0 +1,8 @@
+## 6. Unresolved global values
+
+**Open problem 6.1 (Ratios outside the matching set).** For $\kappa\in(0,\infty)\setminus\{2,4,6,\ldots\}$, determine whether $D_n$ converges along every sequence (1.2), whether its limit is independent of that sequence, and, if so, its value. Theorems 4.2 and 4.4 establish only the bounds (4.2) and the exact values at positive even ratios. In particular, the integer core phases of Proposition 4.3 are upper bound phases; equality of $U(\kappa)$ with a global limit at other ratios is not established.
+
+The admissible class still permits partially occupied dense cores, several tail labels in one event, mixed core cardinalities and general joint supports. A lower bound matching (4.1), or an actual law improving it, must account for their marginals and event probabilities within the same law. The minimum of the selected family $\mathcal S(a,h)$ supplies no such lower bound for $M(a,h)$.
+
+No classification or attainment of the finite infimum, stability assertion, realization by connected finite graphs at prescribed budgets, or uniform sharp asymptotic for $h=o(\sqrt a)$ follows from the results here. The parameter regime (1.2) has fixed positive limiting ratio; the constants and errors for fixed $j,v$ in Section 3 are used only in that regime. The cited repository comparisons supply the baseline and shared marginal relation, while the original graph-index literature supplies no input theorem for the array extremum proved here. No assertion of literature priority is made.
+

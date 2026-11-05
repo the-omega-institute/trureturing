@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d01cfd75d89131a3efcc9533b7e5f64ab2352f1f5e437c9951c1555e478a1c59
+  normalized_sha256: sha256:d01cfd75d89131a3efcc9533b7e5f64ab2352f1f5e437c9951c1555e478a1c59
+cas_ref: sha256:d01cfd75d89131a3efcc9533b7e5f64ab2352f1f5e437c9951c1555e478a1c59
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: Metric residual描述零kernel但分离量趋零的情形，只命名一种缺陷类型，不断言给定系统实现该情形。'
+    previous_atom_id: 2be96d6563c5bf9071fcced49189f7df4cce09cabfeb597d3f3ad6baa90e6984
+    next_atom_id: d97c459140990feb364fb092c3a64386b0e9b0aa56da1c498a245f34478fbe4d

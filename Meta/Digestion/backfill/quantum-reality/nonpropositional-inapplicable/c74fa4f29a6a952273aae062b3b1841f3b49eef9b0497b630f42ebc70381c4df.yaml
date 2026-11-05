@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c74fa4f29a6a952273aae062b3b1841f3b49eef9b0497b630f42ebc70381c4df
+  normalized_sha256: sha256:c74fa4f29a6a952273aae062b3b1841f3b49eef9b0497b630f42ebc70381c4df
+cas_ref: sha256:c74fa4f29a6a952273aae062b3b1841f3b49eef9b0497b630f42ebc70381c4df
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅说明未运行 Lean、浮点容差与证据等级，不主张任何待证明的数学等式。
+    previous_atom_id: 37aaa45e8f9c55b8103287f6c75f025a55d91e5a100803dec756325e1835eb00
+    next_atom_id: 7410454563161ef8b1fe5decc988ceaf82a17ba036f8ee35c63cecbceb79cf8a

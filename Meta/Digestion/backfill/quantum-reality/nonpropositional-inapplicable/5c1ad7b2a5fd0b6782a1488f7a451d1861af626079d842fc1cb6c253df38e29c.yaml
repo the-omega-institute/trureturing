@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5c1ad7b2a5fd0b6782a1488f7a451d1861af626079d842fc1cb6c253df38e29c
+  normalized_sha256: sha256:5c1ad7b2a5fd0b6782a1488f7a451d1861af626079d842fc1cb6c253df38e29c
+cas_ref: sha256:5c1ad7b2a5fd0b6782a1488f7a451d1861af626079d842fc1cb6c253df38e29c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 明确选定弱场低速 Hamiltonian 及参数量纲，是模型假设和范围说明；没有从这些假设推出性质。'
+    previous_atom_id: 6c14c7f2dba046fe4ef2b99de05050e160d71b7f54aa3cedf29cee48818cfc67
+    next_atom_id: d90795b50223f6ee7065cb6e60223048ac02ff2f97b2808bc41db5525dbe662d

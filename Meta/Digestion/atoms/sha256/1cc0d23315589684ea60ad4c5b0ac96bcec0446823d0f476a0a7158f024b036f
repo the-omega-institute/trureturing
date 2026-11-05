@@ -1,0 +1,43 @@
+**Proposition 79.1 (the degree-four boundary).** If the degree restriction
+is dropped, a branching unit tree can have a rational symmetric endpoint
+competitor. For the star with four leaves and port at its center, put
+$u=\frac12\sum_{\ell\text{ leaf}}e_\ell$. Then $e_o,u$ are orthonormal,
+$Ae_o=2u$, $Au=2e_o$, and the restriction of $T$ to their invariant span is
+
+$$
+\begin{pmatrix}a&2c\\2c&a\end{pmatrix}.
+\tag{79.1}
+$$
+
+It has all the same port moments, although the tree has five vertices.
+
+**Proof.** The four disjoint leaf coordinates give $\|u\|^2=1$ and
+$\langle e_o,u\rangle=0$. The two adjacency identities follow by summing
+the four center-leaf incidences. They prove invariance and (79.1), so
+all powers applied to $e_o$ have the asserted same scalar. $\square$
+
+The distinction from real tridiagonalization is essential. Classical
+normalized Lanczos, in the exact convention attached to
+[Static Seams, Theorem 29.8](AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md),
+represents the cyclic subspace of a finite real symmetric $T$ by a real
+positive-link Jacobi matrix, stopping at its first zero residual. Its
+link at the departure in Lemma 78.1 is $c\sqrt b$. Theorem 78.3 excludes
+rational symmetric links there; it does not exclude that real matrix.
+A rational monic orthogonal basis can instead have opposite entries
+$1$ and a rational squared-norm ratio. The precise distinction is already
+present in [Coefficient-Driven Jacobi Characteristic Polynomial](../../../Blueprint/D5/S3/Constants/Moments/CoefficientDrivenJacobiCharacteristicPolynomial.md),
+including its monicity, positive-norm and tridiagonal helpers and
+[owning Scribe](../../../Blueprint/D5/S3/Constants/Moments/CoefficientDrivenJacobiCharacteristicPolynomial.scribe.cs).
+Its matrix is not asserted symmetric in that monic basis.
+
+For example, at the center of the three-leaf unit star the basis
+$e_o,\sum_\ell e_\ell$ gives the rational nonsymmetric matrix
+$\left(\begin{smallmatrix}a&3c\\c&a\end{smallmatrix}\right)$ on the cyclic
+span. The adjacency sends the first vector to the second and the second
+to three times the first, proving the assertion and its same port
+moments. Orthogonal unit normalization replaces its links by
+$c\sqrt3$. This supplied normalization principle is an illustration of
+why a rational nonsymmetric response is outside Definition 77.1.
+Neither cyclic representation identifies the invisible orthogonal
+complement, all native coordinates or a constructor interface.
+

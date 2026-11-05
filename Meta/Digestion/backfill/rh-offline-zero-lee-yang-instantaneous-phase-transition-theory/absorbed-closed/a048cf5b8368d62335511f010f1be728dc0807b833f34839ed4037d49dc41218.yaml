@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a048cf5b8368d62335511f010f1be728dc0807b833f34839ed4037d49dc41218
+  normalized_sha256: sha256:a048cf5b8368d62335511f010f1be728dc0807b833f34839ed4037d49dc41218
+cas_ref: sha256:a048cf5b8368d62335511f010f1be728dc0807b833f34839ed4037d49dc41218
+coverage_gids:
+  - gid: D5/S3/Zeros/CompletedZeta.zero_quartet_scaling_spec
+    target_statement_id: sha256:54194a5ed453f9739fa911583246728277b4fa9d97b031a0c37dbfb7e7d82e0d
+receipts:
+  unresolved_subitems: []

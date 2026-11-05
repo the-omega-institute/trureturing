@@ -1,0 +1,26 @@
+**推论 31.2（按真实锚权重平均）。** 对（30.1）的两个全列表统计及每个确定整数 $m\ge1$，令
+
+$$
+\mathcal B_\pm(m)=\{\exists n\ge m:\sigma_\pm S_n^\pm\le0\}.
+$$
+
+则
+
+$$
+J(\mathcal B_+(m))\le e^{-m\delta^2},\qquad
+J(\mathcal B_-(m))\le e^{-m\delta^2},\qquad
+J(\mathcal B_+(m)\cup\mathcal B_-(m))\le2e^{-m\delta^2}.
+\tag{31.7}
+$$
+
+**证明。** 条件于一个右锚 $R=h,C_R=b$ 时，引理 30.1 使引理 31.1 的参数对应为 $(b,c)=(b,\overline b)$，$\Delta=|\delta|$，$\sigma=\sigma_+$ 在该条件下固定。因此
+
+$$
+J(\mathcal B_+(m))
+=\sum_{h\ge1}\sum_{b\in\{p,q\}}
+ w_+(h,b)J(\mathcal B_+(m)\mid R=h,C_R=b)
+\le e^{-m\delta^2}.
+$$
+
+最后一步使用（30.4）的权重总和一。左锚下改为参数对 $(\overline b,b)$ 和权重 $w_-$，得到第二式；并集界给出第三式。两侧各自条件化后再平均，没有两侧联合独立性要求，也没有锚位置数因子。$\square$
+

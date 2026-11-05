@@ -1,0 +1,57 @@
+**Definition 20.2 (Rational response coefficients).** All the following
+algebra is over $\mathbb Q(t)$. In
+
+$$
+\mathcal Q_t=\mathbb Q(t)[z]/(z^2-T_tz+q_t)
+\tag{20.3}
+$$
+
+represent a residue by the ordered pair $(A,B)$ for $A+Bz$. Addition
+is componentwise and multiplication and inversion mean
+
+$$
+\begin{aligned}
+(A,B)(C,E)&=(AC-q_tBE,\ AE+BC+T_tBE),\\
+(A,B)^{-1}&=
+\frac{(A+T_tB,-B)}{A^2+T_tAB+q_tB^2},
+\end{aligned}
+\tag{20.4}
+$$
+
+whenever the displayed rational-function denominator is nonzero.
+Embed a scalar as $(A,0)$. Put
+
+$$
+\begin{gathered}
+\jmath_t=n_t-z,\qquad
+\lambda_t=1+6/T_t+1/U_t-4/\jmath_t-4/n_t,\\
+\eta_t=-\frac{24}{5}(b_t-1/8)(6/T_t-2/U_t),\\
+\mathcal P_t=24+(U_t+n_t)(96-108/T_t)\\
+\hspace{13mm}
++\frac{\eta_t}{\lambda_t}
+ \{1+(U_t+n_t)(4-15/\jmath_t+20/T_t-10/n_t)\}.
+\end{gathered}
+\tag{20.5}
+$$
+
+Define $a(t),h(t)$ to be the two coordinates of $\mathcal P_t$ after
+(20.4), so that $\mathcal P_t=a+hz$. These rules determine the
+coefficients without choosing a numerical root. The inverses exist
+in $\mathcal Q_t$: at $t=1/2$ the norms of $\jmath_t$ and
+$\lambda_t$ are respectively $-1/4$ and $292969/3600$, both nonzero.
+All scalar denominators in (20.5) are nonzero rational functions.
+
+Set
+
+$$
+\begin{gathered}
+k(t)=\frac{18(t+2)}{5(t+1)},\qquad
+c(t)=-\frac{3(t+2)(135t^2+55t-80)}{5t(t+1)},\\
+w_0(t)=(k(t)-11/2)a(t)+c(t),\qquad
+w_1(t)=(k(t)-11/2)h(t),\\
+p_t=a(t)+h(t)r_t,\qquad w_t=w_0(t)+w_1(t)r_t,
+\qquad v_t=11p_t/2+w_t.
+\end{gathered}
+\tag{20.6}
+$$
+

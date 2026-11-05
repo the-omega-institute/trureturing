@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7625d0de9a04d5622a49c4746d392dda7b4d8172a9aef0f1fc8cf3be5fbb6167
+  normalized_sha256: sha256:7625d0de9a04d5622a49c4746d392dda7b4d8172a9aef0f1fc8cf3be5fbb6167
+cas_ref: sha256:7625d0de9a04d5622a49c4746d392dda7b4d8172a9aef0f1fc8cf3be5fbb6167
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/ResidualCoverage/GreedyResidualAllocation.greedy_one_step_optimal
+    target_statement_id: sha256:30befb198efe2a50b3cbd19000af8d262c8dc830c83e5b3ef5b54635986ed132
+receipts:
+  unresolved_subitems: []

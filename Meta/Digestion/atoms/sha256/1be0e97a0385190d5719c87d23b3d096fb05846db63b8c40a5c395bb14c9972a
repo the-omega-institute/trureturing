@@ -1,0 +1,7 @@
+The following are equivalent.
+
+1. This inequality holds for every $t\ge2$.
+2. This inequality holds for $t=3$.
+3. $b^2\le3a^2+6a$.
+4. $f(0)\le f'(0)^2-3f'(0)$.
+

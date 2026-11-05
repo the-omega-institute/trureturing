@@ -1,0 +1,32 @@
+**命题 5.1（The extra unit in the cited additive lemma is false）。**
+[AZ, Lemma 3.14] states that nonempty finite $P,Q$ in a group with
+$P,Q,P+Q\subseteq X\subseteq G\setminus\{0\}$ imply
+$|X|\ge |P|+|Q|+1$. This implication is false.
+
+Proof. Take $G=\mathbb Z$,
+
+$$
+P=Q=\{1,2,3\},\qquad X=\{1,2,3,4,5,6\}.
+$$
+
+Then $P+Q=\{2,3,4,5,6\}$, so all hypotheses hold, but the
+asserted conclusion is $6\ge7$.
+More generally $P=[1,p]_{\mathbb Z}$ and $Q=[1,q]_{\mathbb Z}$
+with $X=[1,p+q]_{\mathbb Z}$ give equality $|X|=|P|+|Q|$.
+
+The precise bookkeeping defect is visible in the proof of that lemma.
+For $P_0=P\cup\{0\}$ and $Q_0=Q\cup\{0\}$ one has
+
+$$
+P_0+Q_0=\{0\}\cup P\cup Q\cup(P+Q),
+$$
+
+with a disjoint added $\{0\}$. The proof's identity omits this
+singleton. A bound $|P_0+Q_0|\ge |P_0|+|Q_0|-1$
+therefore gives $|X|\ge |P|+|Q|$, not the extra unit.
+[AK, Lemma 2.8] repeats the same statement and omitted-singleton
+identity. The same counterexample applies at its stated hypotheses.
+Neither claim is an ingredient of the derivation of (U) in Theorem 2.1.
+This counterexample concerns those exact lemmas; it is not a claim
+that every theorem citing either paper is false.
+

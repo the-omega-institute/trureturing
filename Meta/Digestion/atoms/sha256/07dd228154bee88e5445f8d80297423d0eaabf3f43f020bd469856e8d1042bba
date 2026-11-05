@@ -1,0 +1,57 @@
+**Theorem 50.2 (exact live material of this layout).** After any finite
+completed request sequence, the selected persistent material of Definition
+50.1 has exactly
+
+$$
+\begin{array}{c|c}
+\text{material}&\text{number}\\ \hline
+\text{physical source vertices}&V=1+P+2S\\
+\text{source-edge reference fields}&3V\\
+\text{source auxiliary reference slots}&V\\
+\text{local record headers}&H(t)\\
+\text{header reference fields}&2H(t)\\
+\text{rank cells and their bit payload}&B(t)\text{ cells and }B(t)\text{ bits}\\
+\text{rank-cell next fields}&B(t)
+\end{array}
+\tag{AAII.7}
+$$
+
+In particular there is no persistent record header, payload, length or
+count for a radix-one coordinate. All live record cells and headers
+allocated earlier are included in (AAII.7). There is no uncounted obsolete
+rank version. In the same located-field convention the original literal
+layout has $S$ headers and $D$ tape cells, by AA Proposition 22.1, with
+the same source contribution. Here
+
+$$
+\log_2 F_{PS}(t)\ \le B(t)
+<\log_2 F_{PS}(t)+H(t)\quad\text{if }H(t)>0;
+\qquad B(t)=0\text{ if }H(t)=0.
+\tag{AAII.8}
+$$
+
+These are attained live persistent-material and conditional payload
+statements for this layout, not whole-resource or global-bit optima.
+
+Proof. The source uses exactly the original templates, so its vertex
+count and three initialized source fields per vertex are AA Proposition
+22.1's counts. Definition 47.2 initializes one auxiliary slot at every
+physical vertex. The invariant of Theorem 49.1 has exactly one bound
+two-reference header at every currently nontrivial coordinate and none
+else. Its bit list has exactly that coordinate's current $b_v$ cells,
+each with one next reference. This proves the present counts.
+
+Theorem 47.3 makes both active membership and widths nondecreasing.
+A transaction allocates exactly the missing headers and positive width
+increments, reuses all old cells and retains no superseded header or
+cell. Thus the present counts also include all earlier record allocations
+in this layout. Source markers that later become logical roots keep their
+existing source fields and slot; no duplicate source object is inserted
+for that role change. Reserved but not yet attached objects exist only
+in busy phases and are charged there.
+
+For $R_v>1$, $\log_2R_v\le b_v<\log_2R_v+1$; for $R_v=1$ both are zero.
+Summing and using AA (AA.74) proves (AAII.8). The lower inequality is
+the already supplied full-history conditional alphabet bound, not a
+new total-material converse. $\square$
+

@@ -17,6 +17,7 @@ Information-escape registration is paused under CLAUDE.md §3.9.
 
 import Mathlib.Algebra.RingQuot
 import Mathlib.LinearAlgebra.Trace
+import D5.S0.Certificates.Combinatorics.LiangSaganPinnacle.Result
 
 
 namespace D5.S0.Certificates.Combinatorics.OkadaDiscriminantRefutation
@@ -51,14 +52,11 @@ def generator (X : Fin (N-1) → 𝕂) (Y : Fin (N-2) → 𝕂) (i : Fin (N-1)) 
     Presented N 𝕂 X Y :=
   RingQuot.mkAlgHom 𝕂 (Relations N 𝕂 X Y) (FreeAlgebra.ι 𝕂 i)
 
-def code (σ : Equiv.Perm (Fin N)) (i : Fin N) : ℕ :=
-  ((Finset.univ.filter fun k => k < i ∧ σ.symm i < σ.symm k)).card
-
 -- The list i-1,i-2,...,i-c_i in paper indices is i-1,i-2,...,i-c_i
 -- in zero-based generator indices when i itself is zero based.
 def lexmin (σ : Equiv.Perm (Fin N)) : List (Fin (N-1)) :=
   (List.finRange N).flatMap fun i =>
-    ((List.finRange i.val).reverse.filter fun j => i.val - code N σ i ≤ j.val).map
+    ((List.finRange i.val).reverse.filter fun j => i.val - LiangSaganPinnacle.Result.iota σ i ≤ j.val).map
       fun j => ⟨j.val,by omega⟩
 
 def lexElement (X : Fin (N-1) → 𝕂) (Y : Fin (N-2) → 𝕂)

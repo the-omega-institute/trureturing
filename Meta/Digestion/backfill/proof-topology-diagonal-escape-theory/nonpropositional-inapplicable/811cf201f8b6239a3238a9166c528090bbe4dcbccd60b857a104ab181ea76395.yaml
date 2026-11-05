@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:811cf201f8b6239a3238a9166c528090bbe4dcbccd60b857a104ab181ea76395
+  normalized_sha256: sha256:811cf201f8b6239a3238a9166c528090bbe4dcbccd60b857a104ab181ea76395
+cas_ref: sha256:811cf201f8b6239a3238a9166c528090bbe4dcbccd60b857a104ab181ea76395
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只有 PC.8 章节标题，没有正规形计数公式或断言。
+    previous_atom_id: 4388d9148a61af8bcd4ce77e6de24564da31fb1e9cddcc53a938bb116600d959
+    next_atom_id: b277b6e27d684fb2ddd0e16ced34efbf5ee17553b070239004e021bf5c4fac94

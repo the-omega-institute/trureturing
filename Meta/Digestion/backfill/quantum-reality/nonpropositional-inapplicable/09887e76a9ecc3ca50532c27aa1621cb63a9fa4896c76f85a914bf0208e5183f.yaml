@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:09887e76a9ecc3ca50532c27aa1621cb63a9fa4896c76f85a914bf0208e5183f
+  normalized_sha256: sha256:09887e76a9ecc3ca50532c27aa1621cb63a9fa4896c76f85a914bf0208e5183f
+cas_ref: sha256:09887e76a9ecc3ca50532c27aa1621cb63a9fa4896c76f85a914bf0208e5183f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该行只列事件偏序、区间大小和链深度等应保留的数据种类，没有给出计数或高度等式。
+    previous_atom_id: de0fe248698d80c9574adcc7f7f71d47c22a7248eedcd7a86c1c780d504ab342
+    next_atom_id: 1c8e14c0ec5bd8b99eb846eb8b65148694ce67898aa22e2d48f4b10af86e1028

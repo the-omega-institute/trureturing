@@ -31,7 +31,7 @@ private def Local (A : ReturnAtlas H X) : Prop :=
   ∃ s : Fin A.period, ∃ m : ℤ, ∃ b : H, Commute b A.holonomy ∧
     (2:ℤ)*(s.val:ℤ) = 1 + (A.period:ℤ)*m ∧ b^2*A.holonomy^m = 1
 
-private theorem forward (f : X → Y)
+theorem forward (f : X → Y)
     (hf : ∀ a x, f (A.deck a x) = B.deck a (f x))
     (ht : ∀ x, f (A.time x) = B.time (f x))
     {s : ℤ} {b : H} (hzero : f (A.point 0 1) = B.point s b) :
@@ -48,7 +48,7 @@ private theorem forward (f : X → Y)
       B.time_point]
     congr 1; omega
 
-private theorem seam_obstruction (f : X → Y)
+theorem seam_obstruction (f : X → Y)
     (hf : ∀ a x, f (A.deck a x) = B.deck a (f x))
     (ht : ∀ x, f (A.time x) = B.time (f x)) :
     ∃ m : ℤ, ∃ b : H, (A.period:ℤ) = (B.period:ℤ)*m ∧
@@ -66,11 +66,11 @@ private theorem seam_obstruction (f : X → Y)
   obtain ⟨m,hm,hb⟩ := (B.relation _ _ _ _).1 h
   exact ⟨m,b,by omega,hb⟩
 
-private def transport (b : H) : X → Y := fun x =>
+def transport (b : H) : X → Y := fun x =>
   let q := A.coordinates.symm x
   B.point q.1.val (q.2*b)
 
-private theorem transport_point (hd : A.period = B.period) (b : H)
+theorem transport_point (hd : A.period = B.period) (b : H)
     (hb : b * B.holonomy = A.holonomy * b) (t : ℤ) (z : H) :
     transport A B b (A.point t z) = B.point t (z*b) := by
   let q := A.coordinates.symm (A.point t z)
@@ -86,7 +86,7 @@ private theorem transport_point (hd : A.period = B.period) (b : H)
     _ = z*(A.holonomy^m*b) := congrArg (z*·) hc
     _ = q.2*b := by rw [← mul_assoc,hz]
 
-private theorem transport_deck (hd : A.period = B.period) (b : H)
+theorem transport_deck (hd : A.period = B.period) (b : H)
     (hb : b * B.holonomy = A.holonomy * b) (a : H) (x : X) :
     transport A B b (A.deck a x) = B.deck a (transport A B b x) := by
   obtain ⟨t,z,rfl⟩ := A.covers x
@@ -314,7 +314,7 @@ def unionShift : OrbitUnion C p₀ p₁ → OrbitUnion C p₀ p₁ := fun x =>
 def unionDeck (a : H) : OrbitUnion C p₀ p₁ → OrbitUnion C p₀ p₁ := fun x =>
   ⟨groupHistory C a x.val,x.property⟩
 
-private theorem signed_phase (p : Path C) (d : ℕ) (hd : 0 < d)
+theorem signed_phase (p : Path C) (d : ℕ) (hd : 0 < d)
     (hmin : Function.minimalPeriod (CountedGroupOverlap.shift C) p = d)
     (x : History (expandedGraph C)) :
     (∃ t : ℤ, forgetHistory x = translate (baseGraph C) t p) ↔
@@ -332,7 +332,7 @@ variable {d₀ d₁ : ℕ} (hd₀ : 0 < d₀) (hd₁ : 0 < d₁)
   (hdis : ∀ t : ℤ, translate (baseGraph C) t p₀ ≠ p₁)
 
 include hdis in
-private theorem disjoint_lifts (x : History (expandedGraph C))
+theorem disjoint_lifts (x : History (expandedGraph C))
     (h₀ : ∃ q : Fin d₀, forgetHistory x = (CountedGroupOverlap.shift C)^[q.val] p₀)
     (h₁ : ∃ q : Fin d₁, forgetHistory x = (CountedGroupOverlap.shift C)^[q.val] p₁) : False := by
   obtain ⟨q,hq⟩ := h₀

@@ -10,7 +10,10 @@ internal sealed class WorktreeInitializationScope : IDisposable
 {
     private readonly List<FileStream> handles = [];
 
-    internal static WorktreeInitializationScope Acquire(string source, string path, string branch)
+    internal static WorktreeInitializationScope AcquireTree(string source, string path) =>
+        Acquire(source, path, null);
+
+    internal static WorktreeInitializationScope Acquire(string source, string path, string? branch)
     {
         var physical = LeanCacheGuard.PhysicalPath(path);
         var ancestors = new List<string>();
@@ -18,8 +21,9 @@ internal sealed class WorktreeInitializationScope : IDisposable
             ancestors.Add(parent.FullName);
         ancestors.Reverse();
         var keys = ancestors.Select(parent => (Key: "tree:" + parent, Exclusive: false))
-            .Concat(new[] { (Key: "tree:" + physical, Exclusive: true),
-                (Key: "ref:refs/heads/" + branch, Exclusive: true) });
+            .Append((Key: "tree:" + physical, Exclusive: true));
+        if (branch is not null)
+            keys = keys.Append((Key: "ref:refs/heads/" + branch, Exclusive: true));
         return AcquireKeys(source, keys);
     }
 

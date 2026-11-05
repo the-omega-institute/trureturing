@@ -41,6 +41,23 @@ internal sealed class RegularSignedLiftDocument : IScribeDocumentDefinition
                 + "The input is an actual finite SignedMeasure mu on L whose totalVariation is explicitly regular. "
                 + "For every continuous surjection p there is an actual SignedMeasure nu on K with regular totalVariation, exact signed pushforward map(nu,p)=mu, and equal totalVariation mass.")),
             Describe.Lean(
+                DescribeId.Create("positive-of-unit-norm-bound"),
+                DeclarationHandle.Create(Owner + "positive_of_norm_le_one"),
+                H("Order-unit positivity"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    All("K", Call("Type", V("u"))), Call("Compact", V("K")), Sp, Rightarrow,
+                    All("Lambda", Call("StrongDual", Call("Real"), Call("ContinuousMap", V("K"), Call("Real")))),
+                    Call("norm", V("Lambda")), Sp, Le, Sp, Call("Lambda", Num(1)), Sp, Rightarrow,
+                    All("f", Call("ContinuousMap", V("K"), Call("Real"))),
+                    Num(0), Sp, Le, Sp, V("f"), Sp, Rightarrow, Num(0), Sp, Le, Sp, Call("Lambda", V("f"))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "A real continuous linear functional Lambda is positive when its norm is at most its value at the unit. "
+                    + "For nonnegative f, set M=norm(f) and u=M*1-f. Then norm(u) is at most M, "
+                    + "and Lambda(u)=M*Lambda(1)-Lambda(f) forces Lambda(f) to be nonnegative. "
+                    + "No nonempty or Hausdorff premise is needed. restrictionPositive restricts a positive functional to compactly supported continuous functions."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("exists-regular-measure-lift"),
                 DeclarationHandle.Create(Owner + "exists_regular_measure_lift"),
                 H("Positive regular lift by real Hahn–Banach and RMK"),
@@ -104,5 +121,13 @@ internal sealed class RegularSignedLiftDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "The theorem is a construction supplier for the existing NormPreservingLifts.arbitrary_lifts_tendsto consumer. "
                         + "It does not construct the CH recursion, supported clopen rows, fibre hypotheses, or any global solution of Kania–Kąkol Problem 8.2."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("regular-add"),
+                DeclarationHandle.Create(Owner + "regular_add"),
+                H("Regularity of a sum of regular positive measures"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("On a compact Hausdorff Borel carrier, the sum of two regular measures is regular. The existing proof obtains outer approximation of each summand, intersects the two open supersets, and combines their mass bounds; native inner regularity supplies the other obligation. This exposes the original consumed helper, preserving its statement and implementation. Its signed-lift consumer and the norm-compact-family variation proof both use it; exposing it is no new mathematical result."))),
                 DescribeRole.Theorem))));
 }

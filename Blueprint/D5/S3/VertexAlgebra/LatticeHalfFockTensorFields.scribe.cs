@@ -19,7 +19,15 @@ internal sealed class LatticeHalfFockTensorFieldsDocument : IScribeDocumentDefin
             Paragraph(Text("The same actual transport gives the monomial tensor energy, L_0(1 tensor t)=rank/16 (1 tensor t), all positive L_m(1 tensor t)=0, and all negative ground finite creation formulas from the first host. In particular L_-1(1 tensor t)=(1/2 sum_i,l H_i,l X(i,0)X(l,0)) tensor t. It generally is nonzero: rank-one G=2,H=1/2 gives (1/4)X(0,0)^2. This ground state differs from a VOA vacuum.")),
             Paragraph(Text("HalfField is HVertexOperator on integer exponents in t=sqrt(z). The supported actual currentField and tensorCurrentField have coefficient -2j-3 equal to the physical current with index j. The supported actual stressField and tensorStressField have coefficient -2m-4 equal to the shifted L_m. There is no Y_theta(omega) identity or assumed all-state twisted Y.")),
             Paragraph(Text("At rank zero, the current colour is empty and the modes, shift and stress fields vanish.")),
-            Describe.Lean(
+            Describe.Lean(DescribeId.Create("actual-tensor-pair-consumed-l1"), DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockTensorFields.tensorPair_eq"),
+ H("The original tensor normal pair"), StatementSource.WithoutFormula(),
+ AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
+ Blocks(Paragraph(Text("Visibility-only exposure of the original two normal-order branches, with the proof body unchanged. ActualMobiusCovariance charged_pair_l1 consumes the equality for j and -j, retaining the j=0 boundary."))), DescribeRole.Theorem),
+Describe.Lean(DescribeId.Create("actual-tensor-pair-finite-consumed-l1"), DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockTensorFields.tensorPair_finite"),
+ H("Pointwise finite support of the original tensor pair"), StatementSource.WithoutFormula(),
+ AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/bakalovkac2004lattice")),
+ Blocks(Paragraph(Text("Visibility-only exposure, statement and proof body unchanged. The charged normal-sum calculation applies the finite-support theorem only at an actual input x or chargedCoefficient(e)(x), never as finite support of endomorphism-valued modes."))), DescribeRole.Theorem),
+Describe.Lean(
                 DescribeId.Create("latticehalffocktensorfields-tensorpair-support-of-bound"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeHalfFockTensorFields.tensorPair_support_of_bound"),
                 H("Finite support on an arbitrary actual tensor vector"),

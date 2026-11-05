@@ -1,0 +1,40 @@
+### 定义 80.1（给定增益下限的三次实际采集）
+
+固定 $K=[a,b]$、$a\le b$、$m>0$、$\varepsilon\ge0$ 及整数 $h\ge1$。
+在实际主索引 $I_h=\{0,h,2h\}$ 上取得全部三项被动侧报告
+
+$$
+P_h(t,A,B)=\bigl(A(i+t)^2+B\bigr)_{i\in I_h},\qquad
+ y=P_h(\tau,\alpha,\beta)+\eta,
+\tag{80.1}
+$$
+
+其中 $\tau\in K$、$\alpha\ge m$、$\beta\in\mathbb R$，且每个世界均允许
+完整原始误差立方体 $\eta\in[-\varepsilon,\varepsilon]^3$。$\alpha,\beta$
+在一次运行中固定，不同候选世界可取不同值，且不与主参数耦合。
+$m$ 是外部给定的部分校准，既不表示 $\alpha$ 已知，也不由这三项报告事先保证。
+本节先只用三项侧报告，定义
+
+$$
+\mathfrak R_h(\delta)=
+ \sup_{\tau\in K,\ \alpha\ge m,\ \beta\in\mathbb R,
+                 \ \eta\in[-\varepsilon,\varepsilon]^3}
+ |\delta(P_h(\tau,\alpha,\beta)+\eta)-\tau|,
+\qquad \mathfrak R_h^*=\inf_{\delta:\mathbb R^3\to\mathbb R}\mathfrak R_h(\delta).
+\tag{80.2}
+$$
+
+决策为任意确定性实值函数；不额外要求可测性或可计算性。令
+
+$$
+L=b-a,\qquad E_h=\max(|a+h|,|b+h|),\qquad
+k_h(r)=\begin{cases}
+\displaystyle\frac{h^2}{r+h/2},&0\le r\le h/2,\\[3pt]
+\displaystyle\frac{h^2}{2r},&r\ge h/2.
+\end{cases}
+\tag{80.3}
+$$
+
+两式在 $r=h/2$ 相等。$E_h$ 是平移先验 $K+h$ 到零的最远距离，
+不是只保留先验长度的无符号量。
+

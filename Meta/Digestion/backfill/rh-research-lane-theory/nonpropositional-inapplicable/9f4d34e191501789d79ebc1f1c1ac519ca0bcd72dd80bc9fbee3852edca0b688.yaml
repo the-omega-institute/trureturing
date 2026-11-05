@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9f4d34e191501789d79ebc1f1c1ac519ca0bcd72dd80bc9fbee3852edca0b688
+  normalized_sha256: sha256:9f4d34e191501789d79ebc1f1c1ac519ca0bcd72dd80bc9fbee3852edca0b688
+cas_ref: sha256:9f4d34e191501789d79ebc1f1c1ac519ca0bcd72dd80bc9fbee3852edca0b688
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条受“本轮不主张”清单支配，只限定共振分母统一控制未被本轮声称完成，不对该数学内容作断言。
+    previous_atom_id: 14c9e0c8eff946f1c971e759374546f781412b015595d8869c10616294691782
+    next_atom_id: 7916ca038cb795846618d85ceab687d1eac2958fc13fe3e71ff17bb4da2c2c5e

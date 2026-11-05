@@ -54,7 +54,21 @@ $$claim = \left(\forall rho \in \operatorname{Matrix}\left((\operatorname{Fin}\l
 
 Song–Chen–Djokovic, arXiv v3 p. 3: Further, by calculation one can see that every state in the span of the three states has entanglement more than 1.52 ebits. Hence, the entanglement of formation (EOF) of every mixed state whose range is contained in the span is also more than 1.52 ebits [19]. We don't know whether this EOF is exactly equal to that of the pure state |Ψ₁⟩. The matrix rho ranges over all density operators on Fin 3 × Fin 9; positivity, trace one and range inclusion express the source's mixed-state domain. Its comparison state is rankOneDensity(Psi 0).
 
-**Theorem 1.5 (The equality fails).**
+**Theorem 1.5 (Positive-weight components of a pure state differ only by phase).**
+
+$$\forall p \in \mathbb{N},\; \forall q \in \mathbb{N},\; \forall v \in ((\operatorname{Fin}\left(p\right))\times (\operatorname{Fin}\left(q\right)))\to \mathbb{C},\; (\sum_{x:(\operatorname{Fin}\left(p\right))\times (\operatorname{Fin}\left(q\right))} \Vert v\left(x\right) \Vert^2 = 1) \Rightarrow (\forall e \in \operatorname{Ensemble}\left(\operatorname{rankOneDensity}\left(v\right)\right),\; \forall i \in \operatorname{Fin}\left(e.\operatorname{N}\right),\; (0 < e.\operatorname{weight}\left(i\right)) \Rightarrow (\exists z \in \mathbb{C},\; (\Vert z \Vert = 1) \land (e.\operatorname{psi}\left(i\right) = z\cdot v)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GraphDensity/UniqueBasisFormationRefutation.positive_phase` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Zhiwei Song, Lin Chen and Dragomir Z. Djokovic (2024). *The existence of distinguishable bases in three-dimensional subspaces of qutrit-qudit systems under one-way local operations and classical communication*. DOI: [10.1109/TIT.2024.3435412](https://doi.org/10.1109/TIT.2024.3435412). URL: <https://arxiv.org/abs/2307.01980v3>.
+
+*Commentary.*
+
+For arbitrary natural dimensions p and q, let v be a unit vector and e a finite ensemble whose average is rankOneDensity v. Every component e.psi i with strictly positive weight is z times v for a complex scalar z of norm one. The ensemble's kernel constraints force all two-coordinate minors of v and e.psi i to vanish, so the vectors are proportional; their unit norms fix the modulus of the scalar.
+
+**Theorem 1.6 (The equality fails).**
 
 $$\neg claim$$
 
@@ -79,6 +93,7 @@ This supplies a strict upper bound for the density's formation, not its exact in
 - Truth anchor: `D5/S3/Quantum/Entanglement/GraphDensity/UniqueBasisFormationRefutation.G`
 - Truth anchor: `D5/S3/Quantum/Entanglement/GraphDensity/UniqueBasisFormationRefutation.Psi`
 - Truth anchor: `D5/S3/Quantum/Entanglement/GraphDensity/UniqueBasisFormationRefutation.claim`
+- Truth anchor: `D5/S3/Quantum/Entanglement/GraphDensity/UniqueBasisFormationRefutation.positive_phase`
 - Truth anchor: `D5/S3/Quantum/Entanglement/GraphDensity/UniqueBasisFormationRefutation.result`
 - Truth anchor: `D5/S3/Quantum/Entanglement/GraphDensity/UniqueBasisFormationRefutation.spanPsi`
 - Dependency: [D5/S3/Combinatorics/Graph/DomiRankEntropyRefutation](../../../Combinatorics/Graph/DomiRankEntropyRefutation.md)

@@ -1,0 +1,21 @@
+**Theorem 40.2 (complete finite common adaptive use).** For every promised source and every finite common adaptive continuation using the installed Read/Tick/Hold operations and, when authorized, rational Add inputs, the record of Definition 40.1 predicts all declared outputs exactly and remains synchronized with the corresponding actual native successor. At every completed cut
+
+$$
+\widehat x=x_{\mathrm{actual}},\qquad w=\mathcal O_Nx_{\mathrm{actual}}.
+$$
+
+The conclusion includes policies choosing their next command, rational input or stopping decision from earlier outputs, and includes a common random tape if the policy uses randomness. It supplies no additional call right and makes no claim that controlled state determines the prior control journal.
+
+**Proof.** The invariant is true at installation because acquisition used exactly $2N$ passive source Ticks and the source was held while the record was computed. Read and Hold preserve it. For Add,
+
+$$
+(\mathcal O_N(x+u e_0))_j
+=(\mathcal O_Nx)_j+u e_0^{\mathsf T}T^j e_0=w_j+u\mu_j.
+$$
+
+For Tick, $q(T)=0$ gives exactly the predictive shift of Proposition 39.4 for every $x\in\mathbb Q^N$, including controlled states. The retained native update is the identical multiplication by the recovered actual $T$. Therefore each operation gives both the declared output and the full native successor under the same rooted-cell correspondence, not merely an equal scalar trajectory.
+
+Induct on the finite continuation. Equal prior outputs make the adaptive policy choose the same next command and input on source and predictor; the one-operation identities maintain the invariant. The same induction includes fixed acknowledgements, optional post-Add roots and common-tape choices. Serial commits exclude an unaccounted in-flight source step. This instantiates the already supplied finite-word transport principle with the actual acquisition cut and this native state invariant; it is not another generic word-transport theorem. $\square$
+
+The predictor remains valid after controls. The passive phase recovery of §39 then has a different domain and cannot be invoked merely because the law is still known. Exclusive serialization, legal commands and successful calls are part of the installed service, not properties inferred by solving the Hankel equations.
+

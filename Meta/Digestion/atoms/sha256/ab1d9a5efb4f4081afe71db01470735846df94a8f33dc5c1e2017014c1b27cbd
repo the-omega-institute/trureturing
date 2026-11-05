@@ -1,0 +1,57 @@
+**Theorem 2.1 (Sink-incidence lower bound).** Suppose $n\ge2$ and
+
+$$
+E(G)\le\eta<\sqrt2-1.
+$$
+
+Then the degree orientation exists, $1\le s<n$, $T_R>0$, and
+
+$$
+Q(G)\ge Q_R\ge\frac{s^2}{T_R}\ge\frac{s^2}{n-s},
+$$
+
+$$
+E(G)\ge\frac{Q_R}{2+\eta}\ge\frac{s^2}{(2+\eta)T_R}
+\ge\frac{s^2}{(2+\eta)(n-s)}.
+$$
+
+Every individual sink satisfies
+
+$$
+D_i\ge\frac1{(2+\eta)E(G)}.
+$$
+
+These bounds require no assumption on the cyclomatic number or on the number of edges beyond those of Definition 1.1.
+
+**Proof.** For the cost $e=g(r)$ of any edge, $0<e\le\eta$ and
+
+$$
+r^2=e(2+e),\qquad r^2\le\eta(2+\eta)<1,\qquad
+e\ge\frac{r^2}{2+\eta}.
+$$
+
+Thus adjacent degrees differ. A maximum-degree vertex is a sink. Two sinks cannot be adjacent, since their connecting edge would give one an outgoing edge. Connectedness and $n\ge2$ give a positive degree at every vertex, at least one nonsink, and at least one sink incidence. Hence $1\le s<n$ and $T_R>0$. Since sinks are independent, their incidences represent distinct actual edges and $Q(G)\ge Q_R$.
+
+On this same incidence set, counting all $D_i$ neighbors of each sink gives
+
+$$
+\sum_{(i,v)\in\mathcal I_R}\frac1{D_i}=s.
+$$
+
+Cauchy–Schwarz, with factors $d_v/D_i$ and $1/d_v$, yields
+
+$$
+s^2\le
+\left(\sum_{(i,v)\in\mathcal I_R}\frac{d_v^2}{D_i^2}\right)
+\left(\sum_{(i,v)\in\mathcal I_R}\frac1{d_v^2}\right)
+=Q_RT_R.
+$$
+
+Moreover, $h(v)\le d_v$ and $d_v\ge1$, whence
+
+$$
+T_R\le\sum_{v\notin R}\frac1{d_v}\le n-s.
+$$
+
+Summing the edge-cost lower bound on $\mathcal I_R$ proves the assertions about $Q$ and $E$. At one sink $i$, its $D_i$ incident edges each have $r^2=d_v^2/D_i^2\ge1/D_i^2$. Therefore $E(G)\ge1/((2+\eta)D_i)$, proving the last assertion. All factors, incidence counts and degrees used in these inequalities come from $G$. ∎
+

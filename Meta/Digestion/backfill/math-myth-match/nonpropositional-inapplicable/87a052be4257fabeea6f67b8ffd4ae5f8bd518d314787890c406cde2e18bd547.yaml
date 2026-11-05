@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:87a052be4257fabeea6f67b8ffd4ae5f8bd518d314787890c406cde2e18bd547
+  normalized_sha256: sha256:87a052be4257fabeea6f67b8ffd4ae5f8bd518d314787890c406cde2e18bd547
+cas_ref: sha256:87a052be4257fabeea6f67b8ffd4ae5f8bd518d314787890c406cde2e18bd547
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 说明控制纤维定理不能独自裁定道德原则，是规范层的应用边界。
+    previous_atom_id: 2e54add9193a2339de00d8c6a7cd0350cb24c351bf161e4bf857042d365d2499
+    next_atom_id: 6a634785d8b287a177f74d1786f4a89e1f828b5a3419566f45f1ecee002fd0a3

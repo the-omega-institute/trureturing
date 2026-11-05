@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d9ba3c521cc9a38ff70b1a861e4b9c0f5d2ad0d378ecdda64fabc92abdd80555
+  normalized_sha256: sha256:d9ba3c521cc9a38ff70b1a861e4b9c0f5d2ad0d378ecdda64fabc92abdd80555
+cas_ref: sha256:d9ba3c521cc9a38ff70b1a861e4b9c0f5d2ad0d378ecdda64fabc92abdd80555
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Raw/Lawful 设计说明与可选 FLOW 保持义务，未断言具体过程保持准入。
+    previous_atom_id: dd180bf3174c6434e2eae94a7958bb1c79d3e09436de0f78b92320ea8392f40a
+    next_atom_id: 0a95b73da984e273a0a4cb84eb46ec2845911549b695b256b7d2fc2649a9610d

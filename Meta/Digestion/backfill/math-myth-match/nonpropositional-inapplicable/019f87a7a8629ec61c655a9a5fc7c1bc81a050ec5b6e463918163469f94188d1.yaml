@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:019f87a7a8629ec61c655a9a5fc7c1bc81a050ec5b6e463918163469f94188d1
+  normalized_sha256: sha256:019f87a7a8629ec61c655a9a5fc7c1bc81a050ec5b6e463918163469f94188d1
+cas_ref: sha256:019f87a7a8629ec61c655a9a5fc7c1bc81a050ec5b6e463918163469f94188d1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 表格仅对第29—31节文本作解释比较并列出尚缺忠实关系，不是全传统统一或数学实现的断言。
+    previous_atom_id: 2e91134d49d96e8bbd68c130c884e492e684a6dffe5f4c1ba2d784aaf1783247
+    next_atom_id: b86fee8f02f462c54ad97bc94f5125d5e8611654c03831a6e5689d4681983c2c

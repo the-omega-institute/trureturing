@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0641bce16c786d5acf886b2b1157cd9ed02d9d90463d1cb4ab17e4e3672e23e4
+  normalized_sha256: sha256:0641bce16c786d5acf886b2b1157cd9ed02d9d90463d1cb4ab17e4e3672e23e4
+cas_ref: sha256:0641bce16c786d5acf886b2b1157cd9ed02d9d90463d1cb4ab17e4e3672e23e4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列举完整响应应指定的观察向量这一数据种类，不断言向量已构造。
+    previous_atom_id: c7036328fdbbe8f4dfb4b985ec04e2cbe7dbd9f94136b3299d7263d579301826
+    next_atom_id: 25f28d2431777cd128c21ae328ae9c4cc604e146096b066df69967568a9b1f5a

@@ -1,0 +1,18 @@
+**Lemma 3.2 (cumulative realization and counts).** Definition 3.1 is a legal single forward history with exactly
+
+$$
+L=\max(k,d)+2k+4
+$$
+
+reads and exactly $4k+5$ atomic operations. Its prefix uses $2(k+1)$ atoms, and its terminal continuation uses $2k+3$ atoms.
+
+Proof. Direct multiplication gives $JM=U$. Induction on $\ell$ by left multiplication by $U$ gives $U^\ell=(\begin{smallmatrix}1&\ell\\0&1\end{smallmatrix})$, starting with $U^0=I$. After the last calibration read the matrix is $U^{k+1}$. One $M$ then gives
+
+$$
+MU^{k+1}=\begin{pmatrix}0&1\\1&k+2\end{pmatrix}.
+$$
+
+Multiplying this on the left by $U^j$ gives the claimed terminal matrix, and the next terminal matrix is obtained by one further $U$. Each such $U$ is the chronological pair $(M,J)$. Thus the displayed atom list realizes exactly every stated cumulative matrix and no additional reads. Lemma 1.2 supplies the same positive column history and fixed instrument at all intermediate states.
+
+The three blocks have respectively $B$, $k+1$, and $k+2$ reads. Their sum is $B+2k+3$, and the last index is $T+k+1=L-1$. Initial repeats cost no atoms. The calibration costs $2(k+1)$ atoms; the terminal block costs $1+2(k+1)=2k+3$. Their sum is $4k+5$. These counts use the recorded-reading clock throughout, including the empty repeats. ∎
+

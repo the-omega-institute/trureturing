@@ -110,13 +110,18 @@ $3$-cube and $K_{3,3}$ show no violation for $k\le4$.
 
 The canonical source is
 `D5/S3/StatisticalMechanics/DimerVirialFourthDifferenceRefutation.lean`. Its
-public declarations are `matchingCount`, `matchingNumber`, `Biconnected`,
-`claim` and `result`. The frozen module state has statement identity
-`sha256:9d7f126c4e5b93f7ab2e18f2789aa058682403b2786bfffe175c7217f5c5e2e3`. The result declaration has statement identity `sha256:ebe660409a6567de1886e4c9be2d425afb1ea34b1c8426e39c337b34963c3083`.
-The Freeze event is `sha256:220f0b866b30a07f0c16a10eecaaf09a89d85d6e7f7f9b4bd0535895dab33767`; its project-level frozen prerequisite is
-the Freeze event of `D5/S3/Zeros/Convolution/MatchingFiber`. The proof uses
-only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no
-`sorry`, `native_decide`, or new axiom.
+public declarations include the matching-count and matching-number definitions,
+`Biconnected`, `claim`, `result`, and the counting interfaces `EdgeDisjoint`,
+`matchingsIn`, `cnt` and `matchingsIn_eq_empty`. The canonical state record is
+`Golden/Frozen/state/D5/S3/StatisticalMechanics/DimerVirialFourthDifferenceRefutation.lean.json`;
+declaration identities come from the Lean report. The axiom closure of every
+public declaration is contained in {`propext`, `Classical.choice`, `Quot.sound`}.
+
+The four-slot audit of the public `matchingsIn_eq_empty` is unfinished in
+[#20094](https://github.com/the-omega-institute/trureturing/issues/20094): a faithful
+source reconstruction, exact bridge, variation, sensitivity and actual observational
+dependence have not been established. The designated refutation `result`
+(`basis=refutes`) is exempt from four-slot registration.
 
 ## Triage
 
@@ -125,6 +130,16 @@ Tier 1 published question; resolution `Refuted` by
 `proof_shape: content`; `admission_basis: open-problem-resolution` (issue
 #12197). Utility kind `certified-instance`, basis `refutes` the module's
 `claim`.
+
+### Public counting interfaces
+
+| Declaration | proof_shape | Consumer |
+| --- | --- | --- |
+| `EdgeDisjoint` | bind-only | `matchingsIn`; `FactorCriticalMatching.MatchingCountBridge.matchingCount_eq_cnt` |
+| `matchingsIn` | bind-only | `cnt`; `FactorCriticalMatching.MatchingCountBridge.matchingCount_eq_cnt` |
+| `cnt` | bind-only | `FactorCriticalMatching.MatchingCountBridge.matchingCount_eq_cnt` |
+| `matchingsIn_eq_empty` | bind-only | `FactorCriticalMatching.MatchingCountBridge.matchingCount_eq_zero_of_card_lt` |
+| `result` | content | Settles #12197; escape witness is its counterexample computation. |
 
 ### What the settlement shows
 

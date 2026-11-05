@@ -1,0 +1,73 @@
+**Theorem 4.2 (strict advantage over the entire deterministic adaptive class).**
+On the domain
+
+$$
+c>0,\qquad \frac c3<E\le\frac{1+2c}{4},
+\tag{4.16}
+$$
+
+put
+
+$$
+\delta(c,E)=\frac{c(3E-c)}{4(3+2c)(3+c)}>0.
+\tag{4.17}
+$$
+
+Then
+
+$$
+\begin{gathered}
+R_{\mathrm{ad},3}=P/2,\qquad
+\frac G2\le R_{\mathrm{private}}
+       \le\mathcal R(\Gamma_{1/2})=\frac{P+G}{4}
+       =R_{\mathrm{ad},3}-\delta(c,E)<R_{\mathrm{ad},3},\\
+\delta(c,E)\le R_{\mathrm{ad},3}-R_{\mathrm{private}}
+                                      \le2\delta(c,E).
+\end{gathered}
+\tag{4.18}
+$$
+
+The certified interval for the unrestricted private minimax value
+has positive width $\delta(c,E)$:
+
+$$
+0\le R_{\mathrm{private}}-G/2\le\delta(c,E).
+\tag{4.19}
+$$
+
+In particular (4.19) does not assert that its left inequality is
+strict, or that the family's attained value is the unrestricted value.
+
+**Proof.** The exact deterministic value on (4.16) is
+[Uniform Report Designs, Theorem 31.4](FIB_UNCALIBRATED_QUADRATIC_CLOCK_UNIFORM_REPORT_DESIGNS.md).
+It quantifies over all total deterministic history functions,
+including those choosing their indices adaptively from arbitrary
+exact-real prefixes. The interval (4.16) is contained in (4.1),
+because $(1+2c)/4<(1+c)/2$. Theorems 3.3 and 4.1 therefore
+give the two private bounds in (4.18). By (4.4),
+
+$$
+\frac{P-G}{4}=\delta(c,E),\qquad
+\frac P2-\frac G2=2\delta(c,E),
+\tag{4.20}
+$$
+
+which proves every assertion.
+
+The lower endpoint $E=c/3$, excluded only for strictness, has
+$P=G=E$ and $R_{\mathrm{private}}=E/2$ by (3.4).
+At the included upper endpoint $E=(1+2c)/4$,
+
+$$
+P=c/2,\qquad
+G=\frac{c(5+2c)}{4(3+c)},\qquad
+\delta=\frac{c}{16(3+c)}>0.
+\tag{4.21}
+$$
+
+The complete worlds (4.5), (4.7), (4.9), (4.13) are still legal
+at both endpoints: their origins lie in the closed prior, gains
+are finite and at least $m$, and every original error is either
+$0$ or $\pm\varepsilon$. No limiting or post-coin world is
+needed. $\square$
+

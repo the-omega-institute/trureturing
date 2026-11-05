@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d80e240221cd8d23ca4efa61b50ff259fa9565b16d9299f206ab3a82aca5818b
+  normalized_sha256: sha256:d80e240221cd8d23ca4efa61b50ff259fa9565b16d9299f206ab3a82aca5818b
+cas_ref: sha256:d80e240221cd8d23ca4efa61b50ff259fa9565b16d9299f206ab3a82aca5818b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 建议对 gauge 表示取商或选规范并避免混淆经验不确定性，没有声称某个规范已经构造。'
+    previous_atom_id: 639aa231eb66b770e1ea5f499e28cab8a9b74b5696a5da667e303496521e6f95
+    next_atom_id: 5a078223802d5a7254d258908c8dfc309628a9a2906a76cd08840f4aa8c88e50

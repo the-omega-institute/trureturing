@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:700a5ddec299128b1c94a8a9f62ba7e937bbcb74e295b1dea25b7787bf34acd6
+  normalized_sha256: sha256:700a5ddec299128b1c94a8a9f62ba7e937bbcb74e295b1dea25b7787bf34acd6
+cas_ref: sha256:700a5ddec299128b1c94a8a9f62ba7e937bbcb74e295b1dea25b7787bf34acd6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 正／负作为二元概念的词汇示例；没有数值或有序结构断言。
+    previous_atom_id: d47babb2915b7fa81f66c1b1bbc68d0de5ec1b8ab60f3788e5eb37731a66158b
+    next_atom_id: 976ee3741671376067a911d693749b5f1294ce478469c31d37853f854ce78479

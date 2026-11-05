@@ -1,0 +1,59 @@
+**Corollary 6.5 (improved unrestricted bound and surviving interval).**
+On the unchanged source and the entire arbitrary-seed class of
+Definition 1.2, for (6.1),
+
+$$
+\boxed{
+\frac G2\le R_{\mathrm{private}}
+ \le\min\{R_{\mathrm{ad},3},U_{\mathrm{new}}\}.
+}
+\tag{6.22}
+$$
+
+The strict improvement over the old fair-strategy risk and the
+remaining width of the interval $[G/2,U_{\mathrm{new}}]$ are
+
+$$
+\frac{P+G}{4}-U_{\mathrm{new}}
+ =\frac{c(P-G)}{4(c+6)}>0,\qquad
+U_{\mathrm{new}}-\frac G2
+ =\frac{3(P-G)}{2(c+6)}>0.
+\tag{6.23}
+$$
+
+On the known deterministic-separation band
+$c/3<E\le(1+2c)/4$, with $\delta(c,E)$ from (4.17),
+
+$$
+\begin{gathered}
+0\le R_{\mathrm{private}}-G/2
+ \le\frac{6}{c+6}\,\delta(c,E),\\
+\frac{2(c+3)}{c+6}\,\delta(c,E)
+ \le R_{\mathrm{ad},3}-R_{\mathrm{private}}
+ \le2\delta(c,E).
+\end{gathered}
+\tag{6.24}
+$$
+
+At $E=c/3$, $R_{\mathrm{private}}=E/2$. Equation (6.16)
+is exact for the particular strategy $\widehat\Gamma$;
+(6.22)--(6.24) leave the unrestricted value unresolved on (6.1),
+including whether it equals $G/2$. They do not reduce its infimum
+to finite seed spaces. The broader intermediate question (5.3)
+retains its original source and strategy quantifiers.
+
+**Proof.** The all-seed lower bound of Theorem 3.3 uses the same
+two complete full-grid worlds before every seed; $H=G$ on (6.1).
+Theorem 6.4 supplies the new lawful upper bound, and one-point seed
+spaces supply the deterministic upper bound. Subtraction gives
+(6.23). On the narrower band, the already known deterministic value
+is $P/2$ by Uniform Report Designs, Theorem 31.4, and
+$\delta=(P-G)/4$ by (4.20). Thus the new certified width is
+$6/(c+6)$ times the old width, and the distance from $P/2$ to
+$U_{\mathrm{new}}$ is $(1+\kappa)\delta
+=2(c+3)\delta/(c+6)$, proving (6.24). The endpoint follows
+from Theorems 3.3 and 4.1. No lower-bound argument here averages
+a seed-dependent selection of different complete worlds, or invokes
+the linear-target/product-measurability comparisons of
+Krieg--Novak--Ullrich, Sections 1--2, cited in Section 1. $\square$
+

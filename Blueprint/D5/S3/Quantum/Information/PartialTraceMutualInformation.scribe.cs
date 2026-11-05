@@ -50,6 +50,11 @@ internal sealed class PartialTraceMutualInformationDocument : IScribeDocumentDef
                     + "von Neumann entropy in nats, including singular states with "
                     + "the zero-eigenvalue contribution set to zero."))),
                 DescribeRole.Definition),
+            Result("charpoly-conj-unitary", "charpoly_conj_unitary",
+                "Unitary conjugation preserves the characteristic polynomial",
+                "For every finite matrix index type, conjugation by a matrix whose adjoint "
+                    + "times the matrix is the identity leaves the characteristic polynomial unchanged.",
+                CharpolyConjugacyFormula()),
             Describe.Lean(
                 DescribeId.Create("mutual-information"),
                 DeclarationHandle.Create(Module + "quantumMutualInformation"),
@@ -134,6 +139,34 @@ internal sealed class PartialTraceMutualInformationDocument : IScribeDocumentDef
             FormulaIdentifier.Create("n"), Seq(Operatorname, Grp(F.Id("Type"))),
             Seq(OpenBracket, Call("Fintype", n), CloseBracket, Sp,
                 OpenBracket, Call("DecidableEq", n), CloseBracket, Sp, bindRho)));
+    }
+
+    private static Formula CharpolyConjugacyFormula()
+    {
+        Formula i = F.Id("i"), rho = F.Id("rho"), unitary = F.Id("U");
+        Formula matrix = Call("Matrix", i, i, Seq(Mathbb, Grp(F.Id("C"))));
+        Formula star = Call("star", unitary);
+        Formula conjugate = new Formula.Binary(
+            new Formula.Binary(unitary, FormulaBinaryOperator.Multiply, rho),
+            FormulaBinaryOperator.Multiply, star);
+        Formula hypothesis = new Formula.Relation(
+            new Formula.Binary(star, FormulaBinaryOperator.Multiply, unitary),
+            FormulaRelationOperator.Equal, Num(1));
+        Formula conclusion = new Formula.Relation(
+            new Formula.Apply(Seq(Operatorname, Grp(F.Id("Matrix"), Dot, F.Id("charpoly"))),
+                [conjugate]), FormulaRelationOperator.Equal,
+            new Formula.Apply(Seq(Operatorname, Grp(F.Id("Matrix"), Dot, F.Id("charpoly"))),
+                [rho]));
+        Formula body = new Formula.Bind(FormulaQuantifier.ForAll,
+            FormulaIdentifier.Create("rho"), matrix,
+            new Formula.Bind(FormulaQuantifier.ForAll,
+                FormulaIdentifier.Create("U"), matrix,
+                new Formula.Logic(Seq(Open, hypothesis, Close), FormulaLogicOperator.Implies,
+                    Seq(Open, conclusion, Close))));
+        return Disp(new Formula.Bind(FormulaQuantifier.ForAll,
+            FormulaIdentifier.Create("i"), Seq(Operatorname, Grp(F.Id("Type"))),
+            Seq(OpenBracket, Call("Fintype", i), CloseBracket, Sp,
+                OpenBracket, Call("DecidableEq", i), CloseBracket, Sp, body)));
     }
 
     private static Formula ProductEntropyFormula() => Disp(Seq(

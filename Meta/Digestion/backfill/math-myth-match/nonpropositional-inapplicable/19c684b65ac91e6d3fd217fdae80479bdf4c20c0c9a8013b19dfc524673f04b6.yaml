@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:19c684b65ac91e6d3fd217fdae80479bdf4c20c0c9a8013b19dfc524673f04b6
+  normalized_sha256: sha256:19c684b65ac91e6d3fd217fdae80479bdf4c20c0c9a8013b19dfc524673f04b6
+cas_ref: sha256:19c684b65ac91e6d3fd217fdae80479bdf4c20c0c9a8013b19dfc524673f04b6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 康德后代探究权与政治秩序的规范论述，明确不以数学单调性代替。
+    previous_atom_id: 1dc451e4a2192a246d61bb94a2c1ca17e437c6e6124272e7e2256beae6af514d
+    next_atom_id: ea6ef9113ea30698edc049aa630b5eab8f99fd3c0b895a06aa1cda4ab1f32920

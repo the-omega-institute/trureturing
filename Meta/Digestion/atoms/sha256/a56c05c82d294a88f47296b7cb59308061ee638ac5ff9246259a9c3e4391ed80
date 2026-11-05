@@ -1,0 +1,7 @@
+The lifted feasible event vectors form a convex relaxation. The original triangle-local set remains non-convex because the source product structure is still imposed before the response contraction. This explains the apparently paradoxical division of labor:
+
+- the original local set is non-convex;
+- an inflation relaxation is a convex polytope or cone;
+- an infeasibility certificate is a linear separating cochain for the lifted relaxation;
+- a certificate must separate the required target from every lifted deterministic image, not merely be positive on those images.
+

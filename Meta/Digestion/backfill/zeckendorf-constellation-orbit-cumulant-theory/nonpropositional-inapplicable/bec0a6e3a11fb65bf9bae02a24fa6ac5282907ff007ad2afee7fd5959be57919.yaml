@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bec0a6e3a11fb65bf9bae02a24fa6ac5282907ff007ad2afee7fd5959be57919
+  normalized_sha256: sha256:bec0a6e3a11fb65bf9bae02a24fa6ac5282907ff007ad2afee7fd5959be57919
+cas_ref: sha256:bec0a6e3a11fb65bf9bae02a24fa6ac5282907ff007ad2afee7fd5959be57919
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Assigns zero as the proposed neutral label for an unselected invariant completion; this fragment does not construct that completion.
+    previous_atom_id: 61c4983d2ebc6c75c7e08a71ab69f6095aa65b126eb0fec3e896809590aa1376
+    next_atom_id: 1ec84fe70dee84c5d8acfa92a9216369072a3689a9cd6904df674ca75654e73d

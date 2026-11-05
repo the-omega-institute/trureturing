@@ -1,0 +1,40 @@
+**Proposition 3.6 (blocks and finite certainty).** For fixed $i$, internal
+partition patterns of disjoint consecutive four-draw blocks are iid
+with law $H_4$, conditionally on every actual past before those blocks.
+Each block costs four further samples. Equality-history increments
+need not be iid. No deterministic finite total sample cap permits
+zero-error identification of $i$; known support size $M$, persistent
+permissions and unbounded paid sampling with retention do permit
+almost-surely finite zero-error identification.
+
+Proof. Repeated conditioning in (UJB.7501) gives the product uniform
+law for any finite future edge sequence given its actual past. Applying
+the internal-partition map separately to disjoint blocks gives the
+claimed conditional product law. This is conditional on the fixed
+source; mixing over an unknown $i$ need not preserve independence.
+For a simple failure of iid equality increments, the event that a new
+square has appeared is certain at draw one and has probability $71/72$
+at draw two. Comparisons against old blocks also depend on retained
+history. Proposition 3.5 gives a further predictive obstruction.
+
+For any deterministic cap $N\ge1$, the full transcript in which all
+$N$ edges repeat one edge is common to both sources and has probability
+$M^{1-N}>0$ under each. On it a common bounded protocol has the same
+coin and output law under both sources, so cannot identify both
+correctly with probability one. The empty transcript handles $N=0$.
+
+Conversely let $\tau$ be the first paid draw at which $M$ distinct
+endpoint pairs have been recorded. Equality of two pairs is recognized by two typed
+equality comparisons; no names or multiplication are required. A union
+bound over the $M$ edges gives
+
+$$
+\Pr_i(\tau>n)\le M(1-1/M)^n\longrightarrow0.
+$$
+
+Thus $\tau$ is finite almost surely, with no deterministic finite upper
+bound. Since the support size is known, at $\tau$ the retained typed
+graph is exactly $G_i$; every endpoint occurs because its degree is
+positive. Counting its $\sum c(t,t')^2$ identifies $i$ by (UJB.7506).
+This procedure has zero error on every terminating run. $\square$
+

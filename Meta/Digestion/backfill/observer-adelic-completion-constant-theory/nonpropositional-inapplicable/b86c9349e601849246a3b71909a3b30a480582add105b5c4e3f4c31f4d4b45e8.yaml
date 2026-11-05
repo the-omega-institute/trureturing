@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b86c9349e601849246a3b71909a3b30a480582add105b5c4e3f4c31f4d4b45e8
+  normalized_sha256: sha256:b86c9349e601849246a3b71909a3b30a480582add105b5c4e3f4c31f4d4b45e8
+cas_ref: sha256:b86c9349e601849246a3b71909a3b30a480582add105b5c4e3f4c31f4d4b45e8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 给定义工作的类型标签，不声称不变忠实状态存在。'
+    previous_atom_id: 15071487b44fb435e2c9e08531301421cbc2effa6f3c54706970d730dec465b4
+    next_atom_id: ea496b8800569c5d38537a8444627b320b7c3119e469fe5c11978f828ed04dae

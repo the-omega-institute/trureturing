@@ -1,0 +1,48 @@
+**Theorem 30.2 (balanced promotion forces cumulative actual edits).**
+For every admissible deterministic recorder $R$, every integer $d\ge0$,
+$m=2^d$, and every legal prefix $h_0$ ending at $Q_d(0)$, some legal
+continuation $v$ of exactly $m$ actual promotions ends at $Q_d(m)$ and
+satisfies
+
+$$
+T_R(h_0v)-T_R(h_0)\ge \Lambda_d,
+\qquad \Lambda_d=\frac{dm}{2}-m+1.
+\tag{IV.84}
+$$
+
+Here $\Lambda_0=\Lambda_1=0$; strict growth is an asymptotic conclusion, not a claim
+at those two depths. For every $R$ and every integer $N\ge63$, there is
+a legal history of **exactly** $N$ events with
+
+$$
+T_R(h)\ge\frac{N+1}{32}\log_2\frac{N+1}{8}.
+\tag{IV.85}
+$$
+
+Thus $T_R^{\max}(N)=\Omega(N\log N)$ uniformly over recorders, even
+though a paid POP can shorten the retained word.
+
+**Proof.** The graph of finite binary words, with an edge from $x$ to
+$x0$ and $x1$, is a tree of maximum degree three. Its graph distance is
+
+$$
+\delta(x,y)=|x|+|y|-2|\operatorname{lcp}(x,y)|.
+\tag{IV.86}
+$$
+
+Indeed every route must first delete to the longest common prefix and
+then reach the other word; that route attains the displayed length.
+Consequently every actual editing sequence costs at least $\delta$.
+For integer $r\ge0$ a distance ball about any word contains at most
+
+$$
+1+\sum_{i=1}^r3\cdot2^{i-1}=3\cdot2^r-2
+\tag{IV.87}
+$$
+
+words: at most three first edges and at most two forward edges at each
+subsequent shell. This is the usual finite-degree metric counting
+argument; no prefix-free coding premise is involved.
+
+Suppose a selected prefix $h_k$ has quotient $U_{d,k}$, with $k<m$,
+and write $\ell_k=d-\operatorname{pop}(k)$. Theorem 28.2 applies to

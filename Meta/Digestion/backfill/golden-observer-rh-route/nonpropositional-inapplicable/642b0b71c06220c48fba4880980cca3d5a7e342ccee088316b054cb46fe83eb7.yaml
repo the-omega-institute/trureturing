@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:642b0b71c06220c48fba4880980cca3d5a7e342ccee088316b054cb46fe83eb7
+  normalized_sha256: sha256:642b0b71c06220c48fba4880980cca3d5a7e342ccee088316b054cb46fe83eb7
+cas_ref: sha256:642b0b71c06220c48fba4880980cca3d5a7e342ccee088316b054cb46fe83eb7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 新增 O-5′、交代逻辑关系、保留旧心脏和禁同名弱化，均为未来改动规则。
+    previous_atom_id: 8cff378532f4a4f360e03aee89fb728bdeb385a949ab3e98dc7033be3b19c0f4
+    next_atom_id: e1130fd7d821bb66785db7737033378f1c0a9a0bc982f6b4bb5558adedbd16ec
+  chain_atoms:
+    - 4b955007926a20a2386e7701afd17d03f33a9dbe1fcdb98486b2da2616d2a73d
+    - efee76e8b5fc592a1921ac4dac975fe79d3d04b9faed0f48708523750c9d11f3
+    - fdf562c72b57d323e080a6a92742783c9d9f48671a39e1d64ba3aba68310858b
+    - e80f162580b1320296b4e9c92de853e4ecb47de1f26214b62a3b924d71fc14c7

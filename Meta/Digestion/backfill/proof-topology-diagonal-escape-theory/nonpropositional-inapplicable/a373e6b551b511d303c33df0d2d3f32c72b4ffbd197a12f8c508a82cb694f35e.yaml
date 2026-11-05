@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a373e6b551b511d303c33df0d2d3f32c72b4ffbd197a12f8c508a82cb694f35e
+  normalized_sha256: sha256:a373e6b551b511d303c33df0d2d3f32c72b4ffbd197a12f8c508a82cb694f35e
+cas_ref: sha256:a373e6b551b511d303c33df0d2d3f32c72b4ffbd197a12f8c508a82cb694f35e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: PC.3 定理的前件片段，仅列出容许区间参数的不等式；结论位于相邻 atom。本片不独立声称任意参数满足这些不等式或已获实现。
+    previous_atom_id: c0bde622259ca51bfaa826e84c851e4a97a34a6ef6e87f81b437b40076196797
+    next_atom_id: 2d4ddc353db7be333fccc78c55acbdcc6f96021e69d27de0a90d59325de2c361

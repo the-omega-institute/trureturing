@@ -1,0 +1,62 @@
+### 2.3 Positive finite generating-polynomial estimates
+
+For $t\in[t_-,1/4]$, set $z=1-t$. The assumed relative approximation
+implies
+
+$$
+a\sum_{j=1}^L\sqrt j\,z^{j-1}
+\le S(1-t)\le
+b\sum_{j=1}^L\sqrt j\,z^{j-1}.
+\tag{2.10}
+$$
+
+For the upper bound, finite Cauchy–Schwarz and the finite geometric
+identities give
+
+$$
+\sum_{j=1}^L\sqrt j\,z^{j-1}
+\le
+\left(\sum_{j=1}^Ljz^{j-1}\right)^{1/2}
+\left(\sum_{j=1}^Lz^{j-1}\right)^{1/2},
+$$
+
+$$
+\sum_{j=1}^Lz^{j-1}=\frac{1-z^L}{t}\le t^{-1},\qquad
+\sum_{j=1}^Ljz^{j-1}
+=\frac{1-z^L(1+Lt)}{t^2}\le t^{-2}.
+\tag{2.11}
+$$
+
+These are identities for finite sums of specified weights, not for
+extended values of the prefix.
+
+For the lower bound, put $q=\lfloor1/(2t)\rfloor$. Since
+$1/(2t)\ge2$,
+
+$$
+q\ge\frac1{4t},\qquad
+q\le\frac{\sqrt m}{2}\le L.
+$$
+
+For $1\le j\le q$, Bernoulli's integer inequality gives
+$(1-t)^{j-1}\ge1-(j-1)t\ge1/2$. Also
+$\sqrt j\ge j/\sqrt q$, whence
+
+$$
+\sum_{j=1}^q\sqrt j
+\ge\frac{q(q+1)}{2\sqrt q}\ge\frac{q^{3/2}}2.
+$$
+
+Thus $S(1-t)\ge aq^{3/2}/4\ge at^{-3/2}/32$. Combining the two
+bounds yields
+
+$$
+\frac a{32}t^{-3/2}\le S(1-t)\le bt^{-3/2}
+\quad(t_-\le t\le1/4).
+\tag{2.12}
+$$
+
+In particular $S$ is strictly positive on this interval. This positivity
+follows from the hypothetical error bound $\rho<1$; it is not an extra
+condition on the finite relaxation or on a native realization.
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:aeb6478037ffe78ad0aaeded110e7b63f28f063d45ea30814e98e120330888fb
+  normalized_sha256: sha256:aeb6478037ffe78ad0aaeded110e7b63f28f063d45ea30814e98e120330888fb
+cas_ref: sha256:aeb6478037ffe78ad0aaeded110e7b63f28f063d45ea30814e98e120330888fb
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/RefinementDescent/PredictiveSufficiencyDescent.predictive_sufficiency_descent_well_defined_unique
+    target_statement_id: sha256:22f6be453a5aad9ef470691815563c25497c115b9879b5bc106d5ba5fa24e41c
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2fe40f7c576333be64613ead5ee09fe059cde693b33e8ccec9a67866a73a9234
+  normalized_sha256: sha256:2fe40f7c576333be64613ead5ee09fe059cde693b33e8ccec9a67866a73a9234
+cas_ref: sha256:2fe40f7c576333be64613ead5ee09fe059cde693b33e8ccec9a67866a73a9234
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 区分因果、依赖、生成、价值和人格等源角色，属于关系类型的语义约定。
+    previous_atom_id: 2f4f11edcba135a2b9270715c91a9289f8f77433fba20bd1b2b2f38a9c1f341d
+    next_atom_id: 7f11d8447a4c8634945bc489d293ed985641629d571123eb0733a59314da27a5

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f6c0062806eaace62dad8289a676ce95ef6db14dc162f0a0736314b82ddcbfe3
+  normalized_sha256: sha256:f6c0062806eaace62dad8289a676ce95ef6db14dc162f0a0736314b82ddcbfe3
+cas_ref: sha256:f6c0062806eaace62dad8289a676ce95ef6db14dc162f0a0736314b82ddcbfe3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 研究目标：规定联合误差与费用的预算及逐请求时刻要求；所列不等式是待满足的成功条件，不是断言已成立。
+    previous_atom_id: e2bbe6805da86a9ff35494a6bda827678c76ea503710d9af952f45ad23e03b61
+    next_atom_id: 2a0696378747e2182c4159abfbbaabc2603b18c341a2d493994a2b741b1287f3

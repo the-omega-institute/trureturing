@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cb5b7f3c55a7fbca2cb297f64dc93c0839038ed7dee2aba06d89c12538dd2a86
+  normalized_sha256: sha256:cb5b7f3c55a7fbca2cb297f64dc93c0839038ed7dee2aba06d89c12538dd2a86
+cas_ref: sha256:cb5b7f3c55a7fbca2cb297f64dc93c0839038ed7dee2aba06d89c12538dd2a86
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Specifies the type of a measurement map and examples of coordinates it may read; no injectivity or nullity claim.'
+    previous_atom_id: f27779330bacf38453eced31a9a44b818d92d53ef71c340b17432ab8170f7b83
+    next_atom_id: af0d8db7cfc56edb58d391e04b9d28a5daec94f61c0aed279cdd368e4c2f2f91

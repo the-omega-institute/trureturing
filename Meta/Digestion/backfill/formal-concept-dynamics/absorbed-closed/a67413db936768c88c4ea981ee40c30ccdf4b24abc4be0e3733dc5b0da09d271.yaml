@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a67413db936768c88c4ea981ee40c30ccdf4b24abc4be0e3733dc5b0da09d271
+  normalized_sha256: sha256:a67413db936768c88c4ea981ee40c30ccdf4b24abc4be0e3733dc5b0da09d271
+cas_ref: sha256:a67413db936768c88c4ea981ee40c30ccdf4b24abc4be0e3733dc5b0da09d271
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/ConceptJoinUniversal.Refines
+    target_statement_id: sha256:79656280c7645b13355f23334447dc18e36339e75afb9f7fdccf060441c9e91f
+  - gid: D5/S3/ConceptDynamics/Interventions/CommonCoreForgettingObstruction.commonCoreRelation
+    target_statement_id: sha256:89249944b89e3447c9dcc6acd50b05d3571f600163a0c0ab535ab8738497a775
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ef5efd81719698216fecc4d4423ece3ab70d5099beee18d233acf0245e52b0e3
+  normalized_sha256: sha256:ef5efd81719698216fecc4d4423ece3ab70d5099beee18d233acf0245e52b0e3
+cas_ref: sha256:ef5efd81719698216fecc4d4423ece3ab70d5099beee18d233acf0245e52b0e3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只有原始数位、黄金求值与整数显示节标题。
+    previous_atom_id: e9e4efe3b1a3211ce1bc732c6ddca6aadc3e768ec77e27e5c95a213da5d06389
+    next_atom_id: 60fd40a5e51e72edb07fd6764daa905a6fedd339070dc41bf27f7513ab3dfb0a

@@ -1,0 +1,5 @@
+source_id = "token-graph-local-odd-cycle-confinement"
+path = "docs/develop/theory/TOKEN_GRAPH_LOCAL_ODD_CYCLE_CONFINEMENT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

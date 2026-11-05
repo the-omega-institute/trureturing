@@ -1,0 +1,35 @@
+**Proposition 13.3 (source arithmetic at the actual sizes).** Let $N_i$
+be the material size after the first $i$ growths, so $N_0=1$ and
+$N_n=N$. A direct two-buffer Tick on a current $M$-vertex tree uses
+$3M-2$ rational products and $2M-2$ rational sums. Therefore A's
+attained source Tick work is
+
+$$
+\begin{aligned}
+\mathsf{Prod}_A&=\sum_{i=0}^nq_i(3N_i-2)+I(3N-2),\\
+\mathsf{Sum}_A&=\sum_{i=0}^nq_i(2N_i-2)+I(2N-2),
+\end{aligned}
+\tag{13.3}
+$$
+
+with the sole gap $q_0$ when $n=0$. C's attained source Tick work is
+
+$$
+\begin{aligned}
+\mathsf{Prod}_C&=\sum_{i=1}^n(3N_i-2)+n(3N-2),\\
+\mathsf{Sum}_C&=\sum_{i=1}^n(2N_i-2)+n(2N-2).
+\end{aligned}
+\tag{13.4}
+$$
+
+Seed Add, the actual initial Reset write, fresh-cell zero initialization,
+growth/roster/reference work and all predictor arithmetic are additional.
+
+**Proof.** A tree has $M-1$ undirected edges. Its diagonal and directed
+edge products number $M+2(M-1)=3M-2$; summing each row from its first
+term uses $2(M-1)$ additions. A performs $q_i$ Ticks on tree $i$ and
+then $I$ on the final tree. C performs its $i$th inner Tick on the new
+tree $i$ and $n$ assay Ticks on the final tree. This proves the formulas
+on those same runs, without replacing actual stage sizes by another
+run's smaller sizes. $\square$
+

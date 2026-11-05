@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4b52158ff3dae8c3323c016e91d8811376178529cb2a82da75d38b1d8eec4efc
+  normalized_sha256: sha256:4b52158ff3dae8c3323c016e91d8811376178529cb2a82da75d38b1d8eec4efc
+cas_ref: sha256:4b52158ff3dae8c3323c016e91d8811376178529cb2a82da75d38b1d8eec4efc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “Toeplitz 最小特征值”只是候选观察图表的名词条目，未断言其符号或存在负证书。
+    previous_atom_id: bae9be75ee5015c7c472a7634c6d3c3cee4a5e0c2ff066d072e9c5e9a22b2005
+    next_atom_id: 1b89ea440afd5b4ce4b3bcfaffd032ad7f3d922444fa9f714ef3f992b00955ef

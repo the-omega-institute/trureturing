@@ -18,7 +18,7 @@ variable {α : Type u} [DecidableEq α]
 def gapCircle (B : List α) (x : α) (j : Fin B.length) : Cycle α :=
   (x :: B.rotate j.val : List α)
 
-private theorem anchored_coe_injective {x : α} {L K : List α}
+theorem anchored_coe_injective {x : α} {L K : List α}
     (hL : (x :: L).Nodup) (h : (x :: L : List α) = (x :: K : Cycle α)) : L = K := by
   obtain ⟨n, hn⟩ := Cycle.coe_eq_coe.mp h
   let j := n % (x :: L).length

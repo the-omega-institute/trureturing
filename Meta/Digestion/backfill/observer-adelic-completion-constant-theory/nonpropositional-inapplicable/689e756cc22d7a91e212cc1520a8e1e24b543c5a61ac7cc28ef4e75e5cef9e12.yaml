@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:689e756cc22d7a91e212cc1520a8e1e24b543c5a61ac7cc28ef4e75e5cef9e12
+  normalized_sha256: sha256:689e756cc22d7a91e212cc1520a8e1e24b543c5a61ac7cc28ef4e75e5cef9e12
+cas_ref: sha256:689e756cc22d7a91e212cc1520a8e1e24b543c5a61ac7cc28ef4e75e5cef9e12
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 受“下一步建立关于 N 的”支配的 pole channel 递推待办项，没有递推等式或存在性断言。'
+    previous_atom_id: 8a34cfa1447a873cac43e8c831c3a527d507dcae7bb2d8135671de32e1353159
+    next_atom_id: f9e25b7593d3261e232b9e9dbf6324e98c42d2c68d7af2b77bbc2fc5247d84ea

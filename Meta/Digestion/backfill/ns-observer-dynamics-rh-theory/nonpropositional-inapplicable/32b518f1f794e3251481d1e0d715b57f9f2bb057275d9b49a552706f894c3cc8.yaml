@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:32b518f1f794e3251481d1e0d715b57f9f2bb057275d9b49a552706f894c3cc8
+  normalized_sha256: sha256:32b518f1f794e3251481d1e0d715b57f9f2bb057275d9b49a552706f894c3cc8
+cas_ref: sha256:32b518f1f794e3251481d1e0d715b57f9f2bb057275d9b49a552706f894c3cc8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 对delta>0定义正则化范数z_delta；未附加可微性或比较不等式。
+    previous_atom_id: 63727538599489993b5dd1aebca53b50d426333ac66b2dec76018ce760546c60
+    next_atom_id: 7b33984974578c345f14551ea674e3a54749d8df6004e4620bb38c5210fbfb68

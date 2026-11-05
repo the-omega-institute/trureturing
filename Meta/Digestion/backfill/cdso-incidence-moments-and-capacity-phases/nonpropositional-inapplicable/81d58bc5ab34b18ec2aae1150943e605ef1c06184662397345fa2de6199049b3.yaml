@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:81d58bc5ab34b18ec2aae1150943e605ef1c06184662397345fa2de6199049b3
+  normalized_sha256: sha256:81d58bc5ab34b18ec2aae1150943e605ef1c06184662397345fa2de6199049b3
+cas_ref: sha256:81d58bc5ab34b18ec2aae1150943e605ef1c06184662397345fa2de6199049b3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Upstream-only closure from pinned Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679; no usable frozen project GID, no retained project declaration, and no new or first-frozen D5. Strongest exact suppliers: Finset.sq_sum_div_le_sum_sq_div on the same nonempty type T with f=1 and g_i=y_i; Finset.sum_mul_sq_le_sq_mul_sq, Finset.sum_comm and Finset.sum_le_sum on the same incidence array; Finset.sum_lt_sum_of_subset and div_lt_div_of_pos_left for a type omitting a positive marginal. Their finite-set cardinality specializations and ordered-field finite-sum/rational/polynomial normalization supply the complete original statement. The correspondence keeps one actual three-point (K,U) law at K=1,a,a+1 with the displayed probabilities and U values, every integer a>=16 via its natural-number correspondence, all means and self-consistent truncated means, both pointwise lower constraints, exact objective and degree-eight strict gap, the benchmark endpoint and every literal a=16 value. The native array ranges over all nonempty subsets of [a+2], allows zero type masses and arbitrarily small strictly positive marginals, and keeps its single joint pushforward: equality of all joint test expectations is equivalent to literal pair-mass equality. The same-array incidence identities and Cauchy-Schwarz bounds give the within-type obstruction when a positive marginal is omitted, ruling out realization of that complete joint law. Normalizing the displayed positive-factor polynomial certificate gives strict positivity for the whole unbounded a>=16 domain. This reuses the complete upstream-only inference without a project GID or a binding wrapper.'
+    previous_atom_id: 1cacf29950bd99dd1bcaf3f3d88128e951db198caea22edc6c47fc234e26b73d
+    next_atom_id: 054fdc15ec02d181ffdfdb793a253d16ef238b1187fc559b1131833ea7607f88

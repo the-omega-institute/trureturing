@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:14e191e71e04034f30f15b05ecf20879aaa252c336a32d249e68edf5a11574ec
+  normalized_sha256: sha256:14e191e71e04034f30f15b05ecf20879aaa252c336a32d249e68edf5a11574ec
+cas_ref: sha256:14e191e71e04034f30f15b05ecf20879aaa252c336a32d249e68edf5a11574ec
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Specifies the low-to-high digit display convention and table column headers, without any table row or numerical claim.
+    previous_atom_id: fd54385ae18274b03c77d64eea5c10f6f3d5d117a64a29f7fa580c7a9a0d5273
+    next_atom_id: babf3a0f8be649fbacee71bd71620d16d1c148c1d897bc8df35eb8ed9701d76a

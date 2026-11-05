@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f2f74b8e383e1da0458ec3a08abfe4b3b427b4bbe9313c71facf677a3a39b561
+  normalized_sha256: sha256:f2f74b8e383e1da0458ec3a08abfe4b3b427b4bbe9313c71facf677a3a39b561
+cas_ref: sha256:f2f74b8e383e1da0458ec3a08abfe4b3b427b4bbe9313c71facf677a3a39b561
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 受“还需要”统领的 local kernel error envelope 证据要求；没有给出或宣称任何误差界。
+    previous_atom_id: 829e8e6fc7c9b8fffb689d7308efc2184fda4cfd8d9a947ac9247282bd3bbeac
+    next_atom_id: a38eecba476d3e3f95aac7c8de4fe17e09eefe242974959f2e461d0758a616fd

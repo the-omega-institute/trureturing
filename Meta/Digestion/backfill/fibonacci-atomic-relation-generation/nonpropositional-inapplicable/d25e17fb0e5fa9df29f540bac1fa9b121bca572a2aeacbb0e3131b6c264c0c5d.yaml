@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d25e17fb0e5fa9df29f540bac1fa9b121bca572a2aeacbb0e3131b6c264c0c5d
+  normalized_sha256: sha256:d25e17fb0e5fa9df29f540bac1fa9b121bca572a2aeacbb0e3131b6c264c0c5d
+cas_ref: sha256:d25e17fb0e5fa9df29f540bac1fa9b121bca572a2aeacbb0e3131b6c264c0c5d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅设置 q、G 并定义转置核 Z_B，没有断言相位求和公式。
+    previous_atom_id: 739ee824ed4d702574785b24eb6c4529fa83cd81e796dd817d02e6538a4a0680
+    next_atom_id: 4e076e07eee1b4f7bcb5e21c78824076f851e5c8c3da590b83a6a5df65c759f4

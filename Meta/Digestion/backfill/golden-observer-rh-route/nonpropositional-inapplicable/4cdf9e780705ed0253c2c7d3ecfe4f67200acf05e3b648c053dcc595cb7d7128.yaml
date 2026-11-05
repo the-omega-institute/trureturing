@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4cdf9e780705ed0253c2c7d3ecfe4f67200acf05e3b648c053dcc595cb7d7128
+  normalized_sha256: sha256:4cdf9e780705ed0253c2c7d3ecfe4f67200acf05e3b648c053dcc595cb7d7128
+cas_ref: sha256:4cdf9e780705ed0253c2c7d3ecfe4f67200acf05e3b648c053dcc595cb7d7128
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: M3-e 一轮预算及 M3-f 不占本节预算的安排。
+    previous_atom_id: c7c17aa8d0f4169f6bee9a15c0c20155f7ccc272f56ed2af94f3d61e5fa0440f
+    next_atom_id: null

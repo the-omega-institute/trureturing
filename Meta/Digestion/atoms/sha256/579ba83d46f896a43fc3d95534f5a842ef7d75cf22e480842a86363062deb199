@@ -1,0 +1,67 @@
+**Definition 92.1 (The finite phase-circle contract).** Fix a finite integer
+$n\ge2$ and $0<q\le10^{-3}$. In the ordered actual basis
+$(|0\rangle,|1\rangle,|2\rangle)=(\xi,e,f)$, put
+
+$$
+s=s_n=(-1/2)^{n-1},\qquad t=|s|=2^{1-n},\qquad
+c=\sqrt{q(1-q)},
+$$
+
+and let
+
+$$
+|v_\varphi\rangle=\sqrt{1-q}\,|0\rangle
+       +e^{i\varphi}\sqrt q\,|1\rangle,\qquad
+E_\varphi=|v_\varphi\rangle\langle v_\varphi|.
+\tag{92.1}
+$$
+
+The actual fair chronological channel is
+$F^n=\operatorname{Ad}_{U_0}\circ\Phi_s$, with
+
+$$
+\Phi_s(X)=
+\begin{pmatrix}
+ x_{00}&s x_{01}&0\\
+ s x_{10}&\frac{1+s}{2}x_{11}+\frac{1-s}{2}x_{22}&0\\
+ 0&0&\frac{1-s}{2}x_{11}+\frac{1+s}{2}x_{22}
+\end{pmatrix}.
+\tag{92.2}
+$$
+
+A terminal decoder is one input-independent whole complex qutrit CPTP map
+$D$. By the actual-channel correspondence, write
+$D=\mathcal R\circ\operatorname{Ad}_{U_0^\dagger}$ and optimize over whole
+complex CPTP maps $\mathcal R:M_3(\mathbb C)\to M_3(\mathbb C)$. The loss is
+
+$$
+e_{\mathcal R}(\varphi)=
+ \left\|\Phi_s^\dagger\mathcal R^\dagger(E_\varphi)-E_\varphi
+ \right\|_{\rm op}.
+\tag{92.3}
+$$
+
+By the effect interface, (92.3) is the supremum of the absolute Born-
+probability error over every complex qutrit density input. There is no
+reference, history, summary, smaller input code, postselection or
+intermediate correction. Define
+
+$$
+\begin{aligned}
+\eta_{(q,n)}&=\min_{\mathcal R\ {\rm CPTP}}e_{\mathcal R}(0),\\
+\varepsilon_{\circ}(q,n)&=\min_{\mathcal R\ {\rm CPTP}}
+             \sup_{\varphi\in\mathbb R/(2\pi\mathbb Z)}e_{\mathcal R}(\varphi),\\
+\Delta_1(q,n)&=\varepsilon_{\circ}(q,n)-\eta_{(q,n)}.
+\end{aligned}
+\tag{92.4}
+$$
+
+The notation $\varepsilon_{\circ}$ is specific to this whole phase circle.
+It is not the two-task $c_2(q)$ of §85 and is not the half-diamond
+whole-channel quantity of the actual recovery source.
+
+Let $U_\theta=P_0+e^{i\theta}P_1+P_2$ and write
+$\mathcal G_\theta=\operatorname{Ad}_{U_\theta}$. The channel is covariant:
+$\Phi_s\mathcal G_\theta=\mathcal G_\theta\Phi_s$, and
+$E_\varphi=\mathcal G_\varphi(E_0)$.
+

@@ -1,0 +1,94 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FactorialRatio;
+
+internal sealed class OeisA347854BalaHalfIndexIntegralDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Arith/FactorialRatio/OeisA347854BalaHalfIndexIntegral.";
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Factorization/bala2021fractionalfactorial");
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Bala A347854 integrality.", H("Bala A347854: integrality at every natural index"), Blocks(
+            Node("ffact", All("x", Seq(Mathbb, Grp(F.Id("R"))), Eq(Call("ffact" ,V("x")), App(Q("Real", "Gamma"), Add(D(1), V("x"))))),
+                "OEIS A347854, COMMENTS (unpaginated): \"Fractional factorials are defined using the Gamma function; for example, (n/2)! := Gamma(1 + n/2).\" The function ffact uses a real argument.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("a", All("n", Seq(Mathbb, Grp(F.Id("N"))), Eq(Call("a" ,V("n")), Mul(Div(Cast(App(Q("Nat", "factorial"), Mul(D(6), V("n"))), Seq(Mathbb, Grp(F.Id("R")))), Mul(Cast(App(Q("Nat", "factorial"), Mul(D(3), V("n"))), Seq(Mathbb, Grp(F.Id("R")))), Cast(App(Q("Nat", "factorial"), Mul(D(2), V("n"))), Seq(Mathbb, Grp(F.Id("R")))))), Div(Call("ffact", Div(Cast(V("n"), Seq(Mathbb, Grp(F.Id("R")))), D(2))), Call("ffact", Div(Mul(D(3), Cast(V("n"), Seq(Mathbb, Grp(F.Id("R"))))), D(2))))))),
+                "OEIS A347854, NAME (unpaginated): \"a(n) = (6*n)!/((3*n)!*(2*n)!) * (n/2)!/(3*n/2)!.\" Natural factorials are cast to the reals; fractional factorials use ffact.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("claim", Eq(Call("claim"), Parenthesized(ClaimBody())),
+                "OEIS A347854, COMMENTS (unpaginated): \"The sequence is conjectured to be integral.\" Integrality means that for every natural index, including zero, the value is the cast of an integer.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("mul_div_reduce", All("c", Seq(Mathbb, Grp(F.Id("N"))), All("n", Seq(Mathbb, Grp(F.Id("N"))), All("q", Seq(Mathbb, Grp(F.Id("N"))), Impl(Lt(D(0), V("q")), Eq(App(Q("Nat", "div"), Mul(V("c"), V("n")), V("q")), Add(Mul(V("c"), App(Q("Nat", "div"), V("n"), V("q"))), App(Q("Nat", "div"), Mul(V("c"), App(Q("Nat", "mod"), V("n"), V("q"))), V("q")))))))),
+                "Natural floor division separates a multiple of the quotient from the contribution of the remainder. Nat.div and Nat.mod denote natural division and remainder.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("grid_floor", All("L", Seq(Mathbb, Grp(F.Id("N"))), All("c", Seq(Mathbb, Grp(F.Id("N"))), All("d", Seq(Mathbb, Grp(F.Id("N"))), All("r", Seq(Mathbb, Grp(F.Id("N"))), All("q", Seq(Mathbb, Grp(F.Id("N"))), Impl(Lt(D(0), V("q")), Impl(Lt(D(0), V("d")), Impl(Eq(V("L"), Mul(V("c"), V("d"))), Eq(App(Q("Nat", "div"), Mul(V("c"), V("r")), V("q")), App(Q("Nat", "div"), App(Q("Nat", "div"), Mul(V("L"), V("r")), V("q")), V("d"))))))))))),
+                "When L equals c times the positive integer d, division of the L-scaled numerator and then by d gives the c-scaled quotient. Nat.div denotes natural floor division.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("factorial_prod_dvd_of_floor", All("A", Call("List" ,Seq(Mathbb, Grp(F.Id("N")))), All("B", Call("List" ,Seq(Mathbb, Grp(F.Id("N")))), Impl(All("q", Seq(Mathbb, Grp(F.Id("N"))), Impl(Lt(D(0), V("q")), Le(App(Q("List", "sum"), App(Q("List", "map"), Lambda("n", Seq(Mathbb, Grp(F.Id("N"))), App(Q("Nat", "div"), V("n"), V("q"))), V("B"))), App(Q("List", "sum"), App(Q("List", "map"), Lambda("n", Seq(Mathbb, Grp(F.Id("N"))), App(Q("Nat", "div"), V("n"), V("q"))), V("A")))))), Dvd(App(Q("List", "prod"), App(Q("List", "map"), Q("Nat", "factorial"), V("B"))), App(Q("List", "prod"), App(Q("List", "map"), Q("Nat", "factorial"), V("A"))))))),
+                "If every positive-modulus floor sum of B is at most the corresponding sum of A, the product of the factorials in B divides that in A. Nat.div denotes natural floor division. Legendre valuations turn the floor inequalities into divisibility.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("quotient_cast_integral", All("A", Seq(Mathbb, Grp(F.Id("N"))), All("B", Seq(Mathbb, Grp(F.Id("N"))), Impl(Dvd(V("B"), V("A")), Impl(Seq(V("B"), Sp, Neq, Sp, D(0)), Ex("z", new Formula.Integers(), Eq(Cast(V("z"), Seq(Mathbb, Grp(F.Id("R")))), Div(Cast(V("A"), Seq(Mathbb, Grp(F.Id("R")))), Cast(V("B"), Seq(Mathbb, Grp(F.Id("R"))))))))))),
+                "A quotient of natural numbers with a nonzero denominator that divides the numerator is the real cast of an integer.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("h856", All("n", Seq(Mathbb, Grp(F.Id("N"))), All("q", Seq(Mathbb, Grp(F.Id("N"))), Eq(Call("h856" ,V("n"), V("q")), Sub(Add(Cast(App(Q("Nat", "div"), Mul(D(1,2), V("n")), V("q")), new Formula.Integers()), Cast(App(Q("Nat", "div"), Mul(D(1), V("n")), V("q")), new Formula.Integers())), Add(Add(Cast(App(Q("Nat", "div"), Mul(D(8), V("n")), V("q")), new Formula.Integers()), Cast(App(Q("Nat", "div"), Mul(D(2), V("n")), V("q")), new Formula.Integers())), Cast(App(Q("Nat", "div"), Mul(D(3), V("n")), V("q")), new Formula.Integers())))))),
+                "The integer-valued floor defect for this factorial ratio. Nat.div denotes natural floor division before the cast to the integers. The associated Landau function occurs in Bober, Table 2.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("h856_nonneg", All("n", Seq(Mathbb, Grp(F.Id("N"))), All("q", Seq(Mathbb, Grp(F.Id("N"))), Impl(Lt(D(0), V("q")), Le(D(0), Call("h856" ,V("n"), V("q")))))),
+                "This floor defect is nonnegative at every natural numerator and positive modulus. Reduction modulo the modulus and subdivision at the floor breakpoints gives the inequality.", DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source)),
+            Node("h857", All("n", Seq(Mathbb, Grp(F.Id("N"))), All("q", Seq(Mathbb, Grp(F.Id("N"))), Eq(Call("h857" ,V("n"), V("q")), Sub(Add(Cast(App(Q("Nat", "div"), Mul(D(1,2), V("n")), V("q")), new Formula.Integers()), Cast(App(Q("Nat", "div"), Mul(D(3), V("n")), V("q")), new Formula.Integers())), Add(Add(Cast(App(Q("Nat", "div"), Mul(D(6), V("n")), V("q")), new Formula.Integers()), Cast(App(Q("Nat", "div"), Mul(D(4), V("n")), V("q")), new Formula.Integers())), Cast(App(Q("Nat", "div"), Mul(D(5), V("n")), V("q")), new Formula.Integers())))))),
+                "The integer-valued floor defect for this factorial ratio. Nat.div denotes natural floor division before the cast to the integers. The associated Landau function occurs in Bober, Table 2.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("h857_nonneg", All("n", Seq(Mathbb, Grp(F.Id("N"))), All("q", Seq(Mathbb, Grp(F.Id("N"))), Impl(Lt(D(0), V("q")), Le(D(0), Call("h857" ,V("n"), V("q")))))),
+                "This floor defect is nonnegative at every natural numerator and positive modulus. Reduction modulo the modulus and subdivision at the floor breakpoints gives the inequality.", DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source)),
+            Node("h858", All("n", Seq(Mathbb, Grp(F.Id("N"))), All("q", Seq(Mathbb, Grp(F.Id("N"))), Eq(Call("h858" ,V("n"), V("q")), Sub(Add(Cast(App(Q("Nat", "div"), Mul(D(1,8), V("n")), V("q")), new Formula.Integers()), Cast(App(Q("Nat", "div"), Mul(D(1), V("n")), V("q")), new Formula.Integers())), Add(Add(Cast(App(Q("Nat", "div"), Mul(D(6), V("n")), V("q")), new Formula.Integers()), Cast(App(Q("Nat", "div"), Mul(D(4), V("n")), V("q")), new Formula.Integers())), Cast(App(Q("Nat", "div"), Mul(D(9), V("n")), V("q")), new Formula.Integers())))))),
+                "The integer-valued floor defect for this factorial ratio. Nat.div denotes natural floor division before the cast to the integers. The associated Landau function occurs in Bober, Table 2.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("h858_nonneg", All("n", Seq(Mathbb, Grp(F.Id("N"))), All("q", Seq(Mathbb, Grp(F.Id("N"))), Impl(Lt(D(0), V("q")), Le(D(0), Call("h858" ,V("n"), V("q")))))),
+                "This floor defect is nonnegative at every natural numerator and positive modulus. Reduction modulo the modulus and subdivision at the floor breakpoints gives the inequality.", DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source)),
+            Node("k856", All("n", Seq(Mathbb, Grp(F.Id("N"))), All("q", Seq(Mathbb, Grp(F.Id("N"))), Eq(Call("k856" ,V("n"), V("q")), Sub(Add(Cast(App(Q("Nat", "div"), Mul(D(1,2), V("n")), V("q")), new Formula.Integers()), Cast(App(Q("Nat", "div"), Mul(D(3), V("n")), V("q")), new Formula.Integers())), Add(Add(Cast(App(Q("Nat", "div"), Mul(D(8), V("n")), V("q")), new Formula.Integers()), Cast(App(Q("Nat", "div"), Mul(D(6), V("n")), V("q")), new Formula.Integers())), Cast(App(Q("Nat", "div"), Mul(D(1), V("n")), V("q")), new Formula.Integers())))))),
+                "The integer-valued floor defect for this factorial ratio. Nat.div denotes natural floor division before the cast to the integers. The associated Landau function occurs in Bober, Table 2.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("k856_nonneg", All("n", Seq(Mathbb, Grp(F.Id("N"))), All("q", Seq(Mathbb, Grp(F.Id("N"))), Impl(Lt(D(0), V("q")), Le(D(0), Call("k856" ,V("n"), V("q")))))),
+                "This floor defect is nonnegative at every natural numerator and positive modulus. Reduction modulo the modulus and subdivision at the floor breakpoints gives the inequality.", DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source)),
+            Node("k857", All("n", Seq(Mathbb, Grp(F.Id("N"))), All("q", Seq(Mathbb, Grp(F.Id("N"))), Eq(Call("k857" ,V("n"), V("q")), Sub(Add(Cast(App(Q("Nat", "div"), Mul(D(1,2), V("n")), V("q")), new Formula.Integers()), Cast(App(Q("Nat", "div"), Mul(D(5), V("n")), V("q")), new Formula.Integers())), Add(Add(Cast(App(Q("Nat", "div"), Mul(D(4), V("n")), V("q")), new Formula.Integers()), Cast(App(Q("Nat", "div"), Mul(D(1,0), V("n")), V("q")), new Formula.Integers())), Cast(App(Q("Nat", "div"), Mul(D(3), V("n")), V("q")), new Formula.Integers())))))),
+                "The integer-valued floor defect for this factorial ratio. Nat.div denotes natural floor division before the cast to the integers. The associated Landau function occurs in Bober, Table 2.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("k857_nonneg", All("n", Seq(Mathbb, Grp(F.Id("N"))), All("q", Seq(Mathbb, Grp(F.Id("N"))), Impl(Lt(D(0), V("q")), Le(D(0), Call("k857" ,V("n"), V("q")))))),
+                "This floor defect is nonnegative at every natural numerator and positive modulus. Reduction modulo the modulus and subdivision at the floor breakpoints gives the inequality.", DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source)),
+            Node("k858", All("n", Seq(Mathbb, Grp(F.Id("N"))), All("q", Seq(Mathbb, Grp(F.Id("N"))), Eq(Call("k858" ,V("n"), V("q")), Sub(Add(Cast(App(Q("Nat", "div"), Mul(D(2), V("n")), V("q")), new Formula.Integers()), Cast(App(Q("Nat", "div"), Mul(D(9), V("n")), V("q")), new Formula.Integers())), Add(Add(Cast(App(Q("Nat", "div"), Mul(D(6), V("n")), V("q")), new Formula.Integers()), Cast(App(Q("Nat", "div"), Mul(D(4), V("n")), V("q")), new Formula.Integers())), Cast(App(Q("Nat", "div"), Mul(D(1), V("n")), V("q")), new Formula.Integers())))))),
+                "The integer-valued floor defect for this factorial ratio. Nat.div denotes natural floor division before the cast to the integers. The associated Landau function occurs in Bober, Table 2.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("k858_nonneg", All("n", Seq(Mathbb, Grp(F.Id("N"))), All("q", Seq(Mathbb, Grp(F.Id("N"))), Impl(Lt(D(0), V("q")), Le(D(0), Call("k858" ,V("n"), V("q")))))),
+                "This floor defect is nonnegative at every natural numerator and positive modulus. Reduction modulo the modulus and subdivision at the floor breakpoints gives the inequality.", DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source)),
+            Node("gamma_nat", All("n", Seq(Mathbb, Grp(F.Id("N"))), Eq(App(Q("Real", "Gamma"), Add(D(1), Cast(V("n"), Seq(Mathbb, Grp(F.Id("R")))))), Cast(App(Q("Nat", "factorial"), V("n")), Seq(Mathbb, Grp(F.Id("R")))))),
+                "The Gamma value at one plus a natural number equals its factorial.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("gamma_ratio_half", All("r", Seq(Mathbb, Grp(F.Id("N"))), All("s", Seq(Mathbb, Grp(F.Id("N"))), Impl(Eq(App(Q("Nat", "mod"), V("r"), D(2)), D(1)), Impl(Eq(App(Q("Nat", "mod"), V("s"), D(2)), D(1)), Impl(Le(V("r"), V("s")), Eq(Div(App(Q("Real", "Gamma"), Add(D(1), Div(Cast(V("r"), Seq(Mathbb, Grp(F.Id("R")))), D(2)))), App(Q("Real", "Gamma"), Add(D(1), Div(Cast(V("s"), Seq(Mathbb, Grp(F.Id("R")))), D(2))))), Mul(Pow(Cast(D(2), Seq(Mathbb, Grp(F.Id("R")))), Sub(V("s"), V("r"))), Div(Mul(Cast(App(Q("Nat", "factorial"), V("r")), Seq(Mathbb, Grp(F.Id("R")))), Cast(App(Q("Nat", "factorial"), App(Q("Nat", "div"), V("s"), D(2))), Seq(Mathbb, Grp(F.Id("R"))))), Mul(Cast(App(Q("Nat", "factorial"), V("s")), Seq(Mathbb, Grp(F.Id("R")))), Cast(App(Q("Nat", "factorial"), App(Q("Nat", "div"), V("r"), D(2))), Seq(Mathbb, Grp(F.Id("R"))))))))))))),
+                "For odd natural r ≤ s, the quotient of the two half-integer Gamma values is a factorial ratio times 2 raised to s−r. Nat.div denotes natural floor division in the factorial arguments.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("gamma_third_ratio", All("n", Seq(Mathbb, Grp(F.Id("N"))), Eq(Div(App(Q("Real", "Gamma"), Add(D(1), Div(Cast(V("n"), Seq(Mathbb, Grp(F.Id("R")))), D(3)))), App(Q("Real", "Gamma"), Add(D(1), Div(Mul(D(4), Cast(V("n"), Seq(Mathbb, Grp(F.Id("R"))))), D(3))))), Div(Pow(Cast(D(3), Seq(Mathbb, Grp(F.Id("R")))), V("n")), RangeProd(V("n"), Add(Cast(V("n"), Seq(Mathbb, Grp(F.Id("R")))), Mul(D(3), Add(Cast(V("k"), Seq(Mathbb, Grp(F.Id("R")))), D(1)))))))),
+                "Applying the Gamma recurrence n times expresses the third-index quotient as 3 to the power n divided by a product of n positive linear factors.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("even_dvd", All("m", Seq(Mathbb, Grp(F.Id("N"))), Dvd(Mul(App(Q("Nat", "factorial"), Mul(D(6), V("m"))), Mul(App(Q("Nat", "factorial"), Mul(D(4), V("m"))), App(Q("Nat", "factorial"), Mul(D(3), V("m"))))), Mul(App(Q("Nat", "factorial"), Mul(D(1,2), V("m"))), App(Q("Nat", "factorial"), Mul(D(1), V("m")))))),
+                "The denominator of the even-index factorial expression divides its numerator. This supplies both the half-index sequence and the third-index sequence at multiples of three.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("result", ClaimBody(),
+                "Every natural index has an integer value. Reduction to factorial quotients and comparison of prime valuations give an integer cast.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source), new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a347854-bala-half-index-integrality"), ResolutionKind.Proved)))));
+
+    private static DocumentBlock Node(string name, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
+        Describe.Lean(DescribeId.Create("bala-" + name.Replace('_', '-')), DeclarationHandle.Create(Prefix + name), H(name),
+            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
+
+    private static Formula V(string name) => F.Id(name);
+    private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
+    private static Formula Q(string owner, string name) => Seq(Named(owner), Dot, Named(name));
+    private static Formula App(Formula f, params Formula[] args) => args.Length == 0 ? f : new Formula.Apply(f, [.. args]);
+    private static Formula Call(string name, params Formula[] args) => App(Named(name), args);
+    private static Formula Parenthesized(Formula body) => Seq(Open, body, Close);
+    private static Formula Cast(Formula body, Formula type) => Parenthesized(Seq(body, Colon, Sp, type));
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Ex(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
+    private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula Dvd(Formula a, Formula b) => Seq(a, Sp, Mid, Sp, b);
+    private static Formula Impl(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Implies, Sp, Parenthesized(b));
+    private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+    private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
+    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
+    private static Formula Div(Formula a, Formula b) => new Formula.Fraction(a, b);
+    private static Formula Pow(Formula a, Formula b) => new Formula.Power(a, b);
+    private static Formula Lambda(string variable, Formula type, Formula body) =>
+        Seq(Named("fun"), Sp, Parenthesized(Seq(V(variable), Colon, Sp, type)), Sp, Mapsto, Sp, body);
+    private static Formula RangeProd(Formula size, Formula body) =>
+        Seq(new Formula.Subscript(Prod, Seq(V("k"), Sp, InMacro, Sp, App(Q("Finset", "range"), size))), Sp, Parenthesized(body));
+
+    private static Formula ClaimBody() => All("n", Seq(Mathbb, Grp(F.Id("N"))), Ex("z", new Formula.Integers(), Eq(Cast(V("z"), Seq(Mathbb, Grp(F.Id("R")))), Call("a" ,V("n")))));
+}

@@ -1,0 +1,12 @@
+**引理 42.1（只在 alpha 轨道上的二次替换恒等式）。** 对
+$u_n=\rho^n\alpha$ 有
+
+$$
+\rho^2u_n=\langle\rho u_n,u_n\rangle .
+\tag{42.2}
+$$
+
+**证明。** $n=0$ 时这是定义。若式 (42.2) 对 $u_n$ 成立，对两边再施加 $\rho$，
+并使用 $\rho\langle x,y\rangle=\langle\rho x,\rho y\rangle$，便得到对 $u_{n+1}$ 的式子。
+这里没有把 (42.2) 当作任意 $u\in T$ 的恒等式；它只在已分类的 $\alpha$ 轨道上使用。∎
+

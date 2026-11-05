@@ -1,0 +1,45 @@
+**Definition 22.3 (complete charging domain and indispensable distinctions).**
+For the displayed driver, a complete address request receives
+$3+(2|p|+1)$ bits, and a complete index request receives $3+(k+1)$ bits.
+Sum these lengths over the actual requests, including refused operations.
+Add the actual reply bits emitted, source navigations, null/type/reference
+tests, header and tape reads, backed-counter operations, source allocations,
+header/cell allocations, output construction/reads, local acknowledgements,
+root returns and scratch clearing/reuse. An event at depth $d$ makes exactly
+$d$ ancestor-maintenance iterations; recall and Next additionally pay their
+actual finite scans and current-source descent. No binomial arithmetic is
+used by this literal-tape runtime.
+
+Simultaneous material includes the installed program and endpoint state,
+root/source and header bindings, current grants, $V$ source vertices with
+their auxiliary slots, $S$ headers, $D$ tape cells, acquired request bits,
+pending latches, unary marks/counters, traversal/reference registers,
+reserved but unattached material, unfinished appends, answer backing and
+printing cursor. Work-space reuse has its stated charged clear/reuse
+operations. Reference widths and allocation/grant work depend on the
+chosen implementation and are not suppressed by the located-field count.
+The same categories apply to a journal consumer, replacing its record
+layout and scans. These accounts concern one actual run, not sums of
+separately optimal producers and consumers.
+
+For $Q_c$ no serial supplement is needed. For $Q_g$, the precise conditional
+order requirement at fixed $t$ is (AA.74), and with an already supplied
+$\sigma$ it is (AA.69). Any additional accessible side information $Z$
+changes the latter conditioning to the actually admitted words with fixed
+$(t,\sigma,Z)$; neither old count is automatically a lower bound for that
+smaller fibre. Giving an observable allocation order, meter, request archive
+or hidden selector can therefore change the theorem's premises. The
+specified driver exposes none of these as free recall inputs.
+
+The known $\alpha$ seed can produce $\beta$, so two independently supplied
+unknown leaves are unnecessary for this model. The two lifecycle stages
+nevertheless have different current tags, promotion membership and lawful
+operations. Suppressing the unary marker identifies the initial $\alpha$
+with the promoted $\beta$ in bare support, while Tag and HasPromotion
+separate them. Fusing $P$ and $S$ would remove that admitted intermediate
+state and change $Q_g$. One opcode name with a tag guard can implement
+both templates; this is no proof of universal generator minimality.
+Likewise (AA.74) makes the order distinction necessary for the declared
+recall task, not this particular tape layout or its caches. Finite driver
+code does not bound eventual source, record or work storage.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b246ae68421a68f70b853dcb1da4193d6ad19dbf0bf9afb8aa44ac5bb9398716
+  normalized_sha256: sha256:b246ae68421a68f70b853dcb1da4193d6ad19dbf0bf9afb8aa44ac5bb9398716
+cas_ref: sha256:b246ae68421a68f70b853dcb1da4193d6ad19dbf0bf9afb8aa44ac5bb9398716
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义有限链、无限链和允许的沿链观察协议，未在此条断言终点可判定或两种链的观察相同。
+    previous_atom_id: 14dbcb88584ac62e56c8a9a57d1c4b50479dbabd78852e384aa8d61717b6ddb1
+    next_atom_id: 5ff41926824d86f047476be17c6ae59e18f38c62564946de8a1ae6db06912efb

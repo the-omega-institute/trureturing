@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c6280f73149a1d417af53de101a2b97df6d02bb93dfe01c2b43f86bffebbcb9d
+  normalized_sha256: sha256:c6280f73149a1d417af53de101a2b97df6d02bb93dfe01c2b43f86bffebbcb9d
+cas_ref: sha256:c6280f73149a1d417af53de101a2b97df6d02bb93dfe01c2b43f86bffebbcb9d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Science 元组仅列研究方法的六个活动名称，没有类型化运算或递推性质。
+    previous_atom_id: 2f5a47f3af8c07e34c51e0f06dcdebd443bf57d2745540de4f099a555be247e2
+    next_atom_id: b85f181fdbb660c9647377ecb8d7d7db648e9f44fb6c3c72500308ca2523b94c

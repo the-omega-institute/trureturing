@@ -1,0 +1,25 @@
+**定义 17.1（两条实际延续的响应函数）。** Let $\mathcal B_i\subset\mathbb R^3$ be the projection of $X$ in (14.1) onto its $i$th triple $(\alpha_i,\beta_i,d_i)$, for $i=1,2,3$. Thus each coordinate interval has radius exactly $10^{-8}$ about the corresponding rational coordinate of $x_0$, without imposing $F=0$. For $\theta=(\alpha,\beta,d)\in\mathcal B_i$, use exactly the source, traces, samples and single interpolating gain of (13.1)–(13.2), and write $W(\theta)=(P(\alpha,\beta),f,d)$. Define
+
+$$
+\begin{aligned}
+\sigma(\theta)&=d+q_3(a+j),\\
+\zeta(\theta)&=d+f_4(2\ell-1),\\
+\mu(\theta)&=d+f_4(j+2\ell).
+\end{aligned}                                                     \tag{17.1}
+$$
+
+Here $a=1/(1+\alpha\beta)$ is the scalar from (13.1), distinct from the conic coordinate $R_{11}$ of (16.2). For any real pair $(\sigma,z)$ set
+
+$$
+\begin{gathered}
+\widehat A=\frac{\sigma}{24}-1,\qquad
+\widehat B=\frac z{12}-\frac85,\qquad
+\widehat C=1-\widehat B,\qquad
+\widehat D=\frac85-\widehat A-\widehat B,\\
+\widehat R(\sigma,z)=
+\begin{pmatrix}\widehat A&\widehat B\\\widehat C&\widehat D\end{pmatrix},
+\qquad
+\Delta(\sigma,z)=\widehat A\widehat D-\widehat B\widehat C.
+\end{gathered}                                                     \tag{17.2}
+$$
+

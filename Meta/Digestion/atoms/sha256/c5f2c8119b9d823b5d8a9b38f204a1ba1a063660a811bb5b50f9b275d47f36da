@@ -1,0 +1,46 @@
+**Definition 7.1 (complete framing and enabledness).** Use AAII Definitions
+84.2 and 90.2's finite field/growth codecs, with the changed C Read frame
+specified in §8. Field and growth have disjoint fixed dispatch. For
+growth the address payload is $1^{|p|}0p$, preceded by its native tag;
+the request has $2|p|+4$ bits. A Growth payload has $2|p|+5$ bits.
+Absent, branch and wrong-type refusals are distinct five-bit replies.
+An otherwise valid complete Add or Read frame with an out-of-roster
+integer ordinal returns RangeRefusal and leaves the state unchanged.
+Invalid complete frames, unused complete
+tags, noncanonical rational/integer payloads and invalid C precision
+return BadFrame with no source change. Negative zero is noncanonical.
+Canonical syntax, payload validity and C precision validity are checked
+before ordinal range. Growth navigation first tests existence of the
+logical address: failure gives absent refusal; at an existing branch it
+gives branch refusal; at a logical leaf the wrong requested type gives
+wrong-type refusal, and the correct type enables the edit. Traversal
+through a unary marker is not logical existence.
+
+A proper incomplete frame retains its actual acquired prefix, parser
+tag/subphase and outstanding length information; it waits for more input
+and has no semantic reply. Missing authority, unavailable required backing
+or an attempted call in a disabled phase does not create a fabricated
+refusal. The completion statements quantify the enabled sufficiently
+backed calls. A busy serialized call admits no interleaving. Logical
+navigation tests arity and cannot enter a unary marker as a growth target.
+
+Every received bit occupies a pending latch, is written into actual
+request backing before the latch is released, and is parsed from that
+backing. Navigation retains root, actual cursor and remaining address;
+arithmetic retains its actual operands. Reservation precedes an edit.
+While busy the controller retains its input, target, working field,
+reply and pending subphase. It constructs and seals a finite complete
+reply, emits all its bits and End, consumes the supplied local
+acknowledgement, and performs Return and cleanup to the same root/dispatch
+binding. The matching local code, roster and predictor successor are
+committed before Ready and any next complete call. A predicted value
+never substitutes for this actual exchange.
+
+In C a successful growth is the existing $+$ adapter: actually acquire
+the outward request, send/consume the raw growth transaction, execute
+and consume one Tick on the new tree, and only then emit the outward
+Growth. It pays the inner and outward lifecycles. On a refusal or
+BadFrame it executes no Tick and forwards that complete response.
+The adapter's busy lock also blocks field calls. There is no hidden
+field Tick on A's raw growth.
+

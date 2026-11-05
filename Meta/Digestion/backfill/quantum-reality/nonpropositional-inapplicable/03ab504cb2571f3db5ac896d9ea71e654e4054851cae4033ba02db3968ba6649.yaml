@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:03ab504cb2571f3db5ac896d9ea71e654e4054851cae4033ba02db3968ba6649
+  normalized_sha256: sha256:03ab504cb2571f3db5ac896d9ea71e654e4054851cae4033ba02db3968ba6649
+cas_ref: sha256:03ab504cb2571f3db5ac896d9ea71e654e4054851cae4033ba02db3968ba6649
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 区分理论态、统计律、探测交互和实际记录的建模及证据要求；关于 Lean 未闭合和经典来源的是状态与文献说明，未给出独立数学断言。
+    previous_atom_id: f0f758c65a34eb42c8c2cf2c40d094360b7589dd14d37e7a91239c347c929a82
+    next_atom_id: d3a2a36b43f213690e4e7466b9fac88cbd733b579756f09b1770ed7a057ca8eb

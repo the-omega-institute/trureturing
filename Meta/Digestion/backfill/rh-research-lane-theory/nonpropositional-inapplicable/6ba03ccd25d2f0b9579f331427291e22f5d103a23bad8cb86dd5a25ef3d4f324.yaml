@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6ba03ccd25d2f0b9579f331427291e22f5d103a23bad8cb86dd5a25ef3d4f324
+  normalized_sha256: sha256:6ba03ccd25d2f0b9579f331427291e22f5d103a23bad8cb86dd5a25ef3d4f324
+cas_ref: sha256:6ba03ccd25d2f0b9579f331427291e22f5d103a23bad8cb86dd5a25ef3d4f324
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “下一真源”仅提出 FiniteStableHolonomyEnergyBound 的后续定义工作，尚未在本片陈述公式或证明断言。
+    previous_atom_id: 5cfb9536a597934cdffe782450fcaa5e651646529bed75991da10d0a0c43b555
+    next_atom_id: ca7a4a0c284e19b949ac6f0e17e367ece3c68dd9237f2b760fac1691694d69e4

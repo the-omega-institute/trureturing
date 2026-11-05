@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8fef6574001dbfb01bbe3dce84f1188c4bac66fd7d8250cfeb88994a12baf25b
+  normalized_sha256: sha256:8fef6574001dbfb01bbe3dce84f1188c4bac66fd7d8250cfeb88994a12baf25b
+cas_ref: sha256:8fef6574001dbfb01bbe3dce84f1188c4bac66fd7d8250cfeb88994a12baf25b
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource/ObjectiveCore.reciprocal_divisor_sum
+    target_statement_id: sha256:e9f35033eb6347e8010166955c6bbad2307d92521e0b405c34255c2203d46652
+receipts:
+  unresolved_subitems: []

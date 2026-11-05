@@ -1,0 +1,58 @@
+**推论 2.2（原始返回 law 的非精确数据延拓）。** 在[式（2.2）](#eq-2-2)的固定源合同下，任意上述拟合满足
+
+<a id="eq-2-4"></a>
+
+$$
+ d_{\mathcal N}(\widehat\vartheta,\vartheta_*)
+ \le \frac{2(2\varepsilon+\eta)}{c_{\mathfrak s}},
+ \qquad
+ \Delta_{\rm all}(\widehat\vartheta,\vartheta_*)
+ \le\frac{C_{\mathfrak s}}{c_{\mathfrak s}}(2\varepsilon+\eta).
+\tag{2.4}
+$$
+
+若真实 $|\gamma_*|\ge\rho>0$，源码全域加权界还给出
+
+<a id="eq-2-5"></a>
+
+$$
+\|\widehat h-h_*\|
+\le\frac{2\varepsilon+\eta}{c_{\mathfrak s}\rho}.
+\tag{2.5}
+$$
+
+**证明。** $\Theta$ 是有限维闭有界集，故紧；原始概率是参数的连续函数。应用定理 2.1 时取 $\alpha=c_{\mathfrak s}/2$ 得第一界。为取得第二界的较好常数，直接使用源码 VI（118.12）的
+
+$$
+c_{\mathfrak s}\mathcal D\le\Delta_f\le\Delta_{\rm all}\le C_{\mathfrak s}\mathcal D,
+$$
+
+其中
+
+$$
+\begin{aligned}
+\mathcal D={}&|\gamma-\gamma'|+\|hh^\dagger-h'h'^\dagger\|_{\mathrm{HS}}\\
+&+\|\mathrm i(ht^\dagger-th^\dagger-h't^\dagger+th'^{\dagger})\|_{\mathrm{HS}}\\
+&+\max\{|\gamma|,|\gamma'|\}\,\|h-h'\|.
+\end{aligned}
+$$
+
+最后使用源码 VI（119.2）
+
+$$
+|\gamma-\gamma'|+\max\{|\gamma|,|\gamma'|\}\|h-h'\|
+\le c_{\mathfrak s}^{-1}\Delta_f,
+$$
+
+以及 $\max\{|\widehat\gamma|,|\gamma_*|\}\ge\rho$，得到（2.5）。这给出存在型有噪解码规则，不等于已经取得数据、解决全局优化或给出有效终止时间。
+
+定义可行性残差
+
+$$
+r(y)=\operatorname{dist}_{\infty}(y,P(\Theta)).
+$$
+
+若 $r(y)>\varepsilon$，则该模型族中没有参数能在声明误差内解释 $y$；若 $r(y)\le\varepsilon$，只能说明未被这一检查排除，不能证明真实世界必在 $\Theta$ 中。若 $d,\theta,N$ 也视为未知，必须扩大参数域并重新证明统一稳定性。
+
+<a id="sec-2-3"></a>
+

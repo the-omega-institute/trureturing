@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2911b83fa87a1b102927b71271f932657a22196f279afd0e436d0701576c11c8
+  normalized_sha256: sha256:2911b83fa87a1b102927b71271f932657a22196f279afd0e436d0701576c11c8
+cas_ref: sha256:2911b83fa87a1b102927b71271f932657a22196f279afd0e436d0701576c11c8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：说明AN4.170四条修习路径的说者、适用人群及译文范围；属于经文释读。
+    previous_atom_id: 37293898fe0e5964caaceb4ad56288dc719fa799368e9b92b66fd9b0f7cb0931
+    next_atom_id: 0d99cfafdb668537b04f661c7394ed1f6cf574f7f672cd8253dd626eefb26ded

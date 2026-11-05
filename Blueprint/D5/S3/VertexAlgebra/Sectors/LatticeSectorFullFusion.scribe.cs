@@ -65,7 +65,12 @@ internal sealed class LatticeSectorFullFusionDocument : IScribeDocumentDefinitio
             Describe.Lean(DescribeId.Create("latticesectorfullfusion-fullpost-apply"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Sectors/LatticeSectorFullFusion.fullPost_apply"),
                 H("fullPost_apply"), StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("fullPost_apply is the actual mixed-sector construction or law stated by its compiled telescope."))), DescribeRole.Theorem),
+                Blocks(
+                    Paragraph(Text("At every source state u, target-source state v and integer coefficient n, fullPost D H hHG hGH α β g acts by the actual target module map g.val on I.val u n v.")),
+                    Paragraph(Text("Identity coherence (fullPost_identity): for every D : LatticeData, H : Matrix (Fin D.rank) (Fin D.rank) ℂ, hHG : H * gramComplex D = 1, hGH : gramComplex D * H = 1, α β : Charge D, M : FiniteSectorObject D and I : FullIO D α β M, one has fullPost D H hHG hGH α β (identity D M) I = I.")),
+                    Paragraph(Text("Composition coherence (fullPost_comp): for the same D, H, hHG, hGH and α β, every M N P : FiniteSectorObject D, g : Hom D M N, h : Hom D N P and I : FullIO D α β M satisfy fullPost D H hHG hGH α β (compose D h g) I = fullPost D H hHG hGH α β h (fullPost D H hHG hGH α β g I).")),
+                    Paragraph(Text("These are repo-derived consequences of fullPost_apply. Subtype extensionality, linear-map extensionality and function extensionality in n reduce the equations to coefficients. The pointwise formula reduces the identity law to I.val u n v = I.val u n v and the composition law to h.val (g.val (I.val u n v)) = h.val (g.val (I.val u n v)), by the definitions of identity and compose.")),
+                    Paragraph(Text("The objects and Hom operations are those of the actual finite-sector neutral Heisenberg category, and FullIO is the complete mixed-target IO subspace. No finite global charge set is fixed; repeated charges, arbitrary finite multiplicities and rank zero remain in scope. The two inverse-Gram hypotheses are retained for both laws."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("latticesectorfullfusion-fulluniversal-natural"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Sectors/LatticeSectorFullFusion.fullUniversal_natural"),
                 H("fullUniversal_natural"), StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),

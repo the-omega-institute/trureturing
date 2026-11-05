@@ -27,5 +27,10 @@ For every finite linearly ordered type A with 2<=Fintype.card A, every k:N with 
 ## References
 
 - Truth anchor: `D5/S1/Words/Complexity/ExactDecks/Asymptotics/PositivePairExactDeckAsymptotics.actual_exactKDeckImage_weightedLyndon_isTheta`
+- Dependency: [D5/S1/Words/Complexity/ExactDecks/Growth/ExactDeckCore](../Growth/ExactDeckCore.md)
 - Dependency: [D5/S1/Words/Complexity/ExactDecks/Growth/ExactDeckLowerBound](../Growth/ExactDeckLowerBound.md)
+- Dependency: [D5/S1/Words/Complexity/ExactDecks/Growth/PositiveWordBall](../Growth/PositiveWordBall.md)
 - Dependency: [D5/S1/Words/Complexity/ExactDecks/UpperBound/FullLyndonRecovery](../UpperBound/FullLyndonRecovery.md)
+- Dependency: [D5/S1/Words/Complexity/LyndonBrackets/LyndonOrder](../../LyndonBrackets/LyndonOrder.md)
+- Dependency: [D5/S1/Words/Complexity/PositivePairs/Digits/ActualLyndonDirections](../../PositivePairs/Digits/ActualLyndonDirections.md)
+- Dependency: [D5/S1/Words/Complexity/VivionBinomialConverseFails](../../VivionBinomialConverseFails.md)

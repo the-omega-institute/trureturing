@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c48bb9311d72393ed89e7a734c1dae67826352c2a53b8377388bae0f702d3ec5
+  normalized_sha256: sha256:c48bb9311d72393ed89e7a734c1dae67826352c2a53b8377388bae0f702d3ec5
+cas_ref: sha256:c48bb9311d72393ed89e7a734c1dae67826352c2a53b8377388bae0f702d3ec5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Atom text is a continuation/list fragment (## 2100.1 但 Kakeya 方法单独更可能先得到密度结论 Kakeya 定理控制的是： * 体积；); it contains no standalone mathematical assertion to formalize.
+    previous_atom_id: c822170df09950e625ab67e8c481bd53e0ad8c335224640952089cfece8db37f
+    next_atom_id: e910639e0c1dac4befa08ee0d1c83081bd40ae1a8aeac70fe75dc5f72ac11c05

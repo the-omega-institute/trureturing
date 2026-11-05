@@ -1,0 +1,69 @@
+**定理 44.4（移动来源对、任意重相位与零闭路边界）。** 不存在趋零的一致模，能够对
+所有 $K\in\mathcal C_\varepsilon$ 控制下列任一量：
+
+$$
+\sup_{s,u\in T}\operatorname{dist}(|K(s,u)|,\{0,1\}),\qquad
+\sup_{s,u\in T}\operatorname{dist}(|K(s,u)|^2,\{0,1\}).
+\tag{44.11}
+$$
+
+具体取 §43 的实际树 $C=\langle\alpha,\alpha\rangle$、$w_0=\beta$、
+$w_{k+1}=\langle w_k,C\rangle$，则
+
+$$
+\begin{aligned}
+S(w_k)&=\{0^j1:0\le j<k\},\\
+x_n:=L_n(\alpha,w_{5n})&=a_n/e,\\
+\frac14<x_n<\frac12,\qquad
+\operatorname{dist}(x_n,\{0,1\})&=x_n>\frac14,\\
+\operatorname{dist}(x_n^2,\{0,1\})&=x_n^2>\frac1{16}.
+\end{aligned}
+\tag{44.12}
+$$
+
+任意实数 $\theta$ 还满足
+
+$$
+\min\{|e^{i\theta}x_n|,|e^{i\theta}x_n-1|\}=x_n>\frac14.
+\tag{44.13}
+$$
+
+每个固定来源对有 $L_n(s,u)\to1$，每个固定有限来源集合上收敛一致；极限核不忠实。
+每个有限 $n$ 的核不满足精确乘法。所有 $L_n$ 的有限闭合 Bargmann 积均为正实数，
+闭路相位恒为零，即使作任意顶点重相位也如此。
+
+**证明。** $S(C)=\{\epsilon\}$。$w_0$ 是叶，$k\ge1$ 时 $w_k$ 的右子树为 $C$，
+而 $C$ 的右子树为 $\alpha\ne C$，故全部 $w_k\ne C$。
+递推根地址从不进入 $S$，因此
+$S(w_{k+1})=0S(w_k)\sqcup\{1\}$，归纳得到 (44.12) 第一式。
+$S(\alpha)=\varnothing$ 且 $\alpha\ne w_{5n}$，故核值为 $a_ne^{-h_n5n}=a_n/e$。
+由 $4/5\le a_n<1$ 和 $2<e<3$，
+
+$$
+x_n\ge\frac4{5e}>\frac4{15}>\frac14,\qquad
+x_n<\frac1e<\frac12,\qquad
+\frac1{16}<\frac{16}{225}<\frac{16}{25e^2}\le x_n^2<\frac14.
+$$
+
+两个最近端点都是零，给 (44.12)。若 (44.11) 中任何一致模存在，代入
+$\varepsilon=1/n$ 和定理 44.3 的同一全域核，就迫使其在 $1/n$ 处分别大于
+$1/4$ 或 $1/16$，与趋零矛盾。见证来源随 $n$ 增长，这不是固定有限切片结论。
+任何 $\{0,1\}$ 值精确核的一致逼近都会蕴含相应端点距离界，因而也受到此反例限制。
+
+反三角不等式给 $|e^{i\theta}x_n-1|\ge1-x_n>x_n$，证明 (44.13)。
+任意来源依赖的顶点重相位在该见证对上只改变 $\theta$，所以连允许所有这种选择也不能
+消去这一复值端点距离。此处的缺陷事件始终是原始 $L_n\in\mathcal C_{1/n}$；
+没有假定任意重相位仍保持运输或同一缺陷界。
+
+固定 $s,u$ 时 $d(s,u)$ 有限，$e^{-d(s,u)/(5n)}\to1$，且 $a_n\to1,r_n\to0$。
+固定有限集合上取有限个距离的最大值即可得一致收敛。全 $1$ 极限合并全部 Gram 代表，
+故不忠实。另一方面，在实际四元组 $(\alpha,\beta,\beta,\alpha)$ 上，
+$A=B=E=1,d_0=e_0=0$，(44.10) 给 $D_{L_n}=r_na_n>0$；
+因此 §42 的精确刚性原封适用，不被近似反例推翻。
+
+每个核项严格为正，故任意有限环 $t_0,t_1,\ldots,t_m=t_0$ 的
+$\prod_{j=0}^{m-1}L_n(t_j,t_{j+1})$ 为正实数。在
+$\eta(t)\mapsto e^{i\chi_t}\eta(t)$ 下，边因子乘
+$e^{i(\chi_{t_{j+1}}-\chi_{t_j})}$，闭环中相消。因此本族的模长不稳定性不提供
+非零规范不变闭路相位；这与 §43 原秩一相位族的可移除相位也须区分。∎
+

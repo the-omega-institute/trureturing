@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3ca5d7c2560618c1b798d8439009353f1c14fe53d2e04fdde1565a28200d4bac
+  normalized_sha256: sha256:3ca5d7c2560618c1b798d8439009353f1c14fe53d2e04fdde1565a28200d4bac
+cas_ref: sha256:3ca5d7c2560618c1b798d8439009353f1c14fe53d2e04fdde1565a28200d4bac
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Interpretive boundary concerning the role of the golden ratio; no mathematical theorem selecting or excluding it.'
+    previous_atom_id: 1105ad9739ec2a70db30a2145fd4071e7f19109ceb56d9f8dae9fce89508b60c
+    next_atom_id: db90cd898a061e419caa2b27beca8a8738adf9616bada69a5aed66a3b2154d04

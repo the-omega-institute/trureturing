@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f90ed3e6f4e616a20ea71a3a2310bee5a15528a2357807826497da7b010252c9
+  normalized_sha256: sha256:f90ed3e6f4e616a20ea71a3a2310bee5a15528a2357807826497da7b010252c9
+cas_ref: sha256:f90ed3e6f4e616a20ea71a3a2310bee5a15528a2357807826497da7b010252c9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：固定有限 prime cluster 及正权，逐一引入 omega、反射行向量、矩阵 A 和 G 的定义；没有宣称秩、特征值、行列式或概率性质。
+    previous_atom_id: f356398ab4d5245951f0ed37e5105e348bc7180b54ed2e03548a50bfefab314f
+    next_atom_id: d0fce797ba5dc8e3dd54c3a963463cffa1e36c6fa8aa61288f42fda5ecd5ad3e

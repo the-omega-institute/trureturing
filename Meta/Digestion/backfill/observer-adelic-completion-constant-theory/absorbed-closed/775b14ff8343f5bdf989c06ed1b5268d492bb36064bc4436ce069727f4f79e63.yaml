@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:775b14ff8343f5bdf989c06ed1b5268d492bb36064bc4436ce069727f4f79e63
+  normalized_sha256: sha256:775b14ff8343f5bdf989c06ed1b5268d492bb36064bc4436ce069727f4f79e63
+cas_ref: sha256:775b14ff8343f5bdf989c06ed1b5268d492bb36064bc4436ce069727f4f79e63
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaLinear/OfflineZeroGeometricMonodromy.offline_zero_monodromy_eq_golden_rpow
+    target_statement_id: sha256:41c8f9bdb87b3f96e66e9b6db2249a6f9eb28b828f1c17b2dd47451a5ce721a9
+receipts:
+  unresolved_subitems: []

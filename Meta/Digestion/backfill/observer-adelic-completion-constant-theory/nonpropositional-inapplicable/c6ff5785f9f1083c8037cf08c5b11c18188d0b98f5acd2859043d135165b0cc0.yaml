@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c6ff5785f9f1083c8037cf08c5b11c18188d0b98f5acd2859043d135165b0cc0
+  normalized_sha256: sha256:c6ff5785f9f1083c8037cf08c5b11c18188d0b98f5acd2859043d135165b0cc0
+cas_ref: sha256:c6ff5785f9f1083c8037cf08c5b11c18188d0b98f5acd2859043d135165b0cc0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 自然延拓作为可命名概念的例子；没有延拓存在性或普适性质断言。
+    previous_atom_id: 4bf537ec4903e6b6c7d858c0045e236488b470595b567bbc32065291c3e8ae32
+    next_atom_id: b46113f7b90f86b22df0f39908e7b235338ac3f07087a295fc2f4f28233acf6d

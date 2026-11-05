@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dcecd0524c3a99d2ab55e6f5b1c9135829c66a4630716b9a4d1a85b207e0de01
+  normalized_sha256: sha256:dcecd0524c3a99d2ab55e6f5b1c9135829c66a4630716b9a4d1a85b207e0de01
+cas_ref: sha256:dcecd0524c3a99d2ab55e6f5b1c9135829c66a4630716b9a4d1a85b207e0de01
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Research question asking the distance between null branches, without giving a value.
+    previous_atom_id: 180527553c56084f65ab6792e1f575571f26b684e2e58474bf1d3992d234a871
+    next_atom_id: b06c39963c8e2b1e9302143b2ce052041c46332d2d116cd37002037462bed434

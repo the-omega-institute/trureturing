@@ -5,7 +5,7 @@ year: 2025
 title: Optimal boundary regularity and a Hopf-type lemma for Dirichlet problems involving the logarithmic Laplacian
 doi: 10.3934/dcds.2024084
 url: https://arxiv.org/abs/2401.18033v2
-claim: The published boundary theorem requires an exterior-zero equation with bounded solution and forcing. Actual cap-four features can have uniformly bounded logarithmic Fourier moments of every fixed order while their profile values at zero diverge. Smooth actual sources also give opposite unbounded full-prime dilation difference quotients with controlled origin data. A fixed actual source also has a signed critical metric defect quadratic in log log log N, while its regularized original moment and actual Gamma form, including a fixed spatial weight, remain uniformly bounded. The separate excess-quotient selection and exactly matched global-null branch give conditional Sobolev regularity and an actual physical-dilation derivative. None of these paper-level applications proves an RH or Robin bound.
+claim: The published boundary theorem requires an exterior-zero equation with bounded solution and forcing. Actual cap-four features can have uniformly bounded logarithmic Fourier moments of every fixed order while their profile values at zero diverge. Smooth actual sources also give opposite unbounded full-prime dilation difference quotients with controlled origin data. A fixed actual source also has a signed critical metric defect quadratic in log log log N, while its regularized original moment and actual Gamma form, including a fixed spatial weight, remain uniformly bounded. The separate excess-quotient selection and exactly matched global-null branch give conditional Sobolev regularity and an actual physical-dilation derivative. Disjoint nonnegative physical sources can have positive complete coupling, and the selected null has a strictly positive modulus cost; the original-source pointwise cone therefore supplies no modulus-decreasing comparison. None of these paper-level applications proves an RH or Robin bound.
 strata_touched: []
 license: bibliographic-reference-only
 triage: anchor
@@ -1589,3 +1589,256 @@ control W359/W362's COMPLETE arithmetic form on this one constrained
 source, or separately pay the change of constraints. No such estimate,
 exclusion of the matched negative branch, RH or strict all-integer Robin
 conclusion is obtained here.
+
+
+## Taking an absolute value does not preserve the original-source energy
+
+The selected real global null in MR11 obeys LR3 and has both signs
+arbitrarily far in its physical tail. One could try to exclude it by
+replacing the source by its absolute value without increasing energy.
+That comparison is false in the ORIGINAL source coordinates, even on
+smooth compact features. The obstruction below uses W317's COMPLETE
+debit bound and the actual theta map; it does not insert an arbitrary
+arithmetic profile.
+
+This is a `repo-derived` application of the owned source interfaces,
+classical digamma asymptotics and Fourier scaling. It is paper
+mathematics, without Lean/kernel certification or a literature-priority
+claim. The [existing compressed-remainder cone obstruction](kushelzabreiko2008ideal.md#the-inherited-cone-is-lost-after-critical-projection)
+concerns a different measure and compression; it is not substituted for
+the original-source calculation here.
+
+### Two disjoint positive sources have a positive complete coupling
+
+Write $H(F)=\int_\pi^\infty|F|^2dx$ and
+$M_6(F)=M(F)=\int_\pi^\infty(x/\pi)^6|F|^2dx$,
+with the original source norms.
+
+Choose a real nonnegative $\eta\in C_c^\infty(-1,1)$ with
+$\|\eta\|_2=1$, put $t_0=\log2$, and for
+$0<\varepsilon<\log(9/8)$ define
+
+$$
+\begin{aligned}
+ u_\varepsilon(t)&=\varepsilon^{-1/2}
+             \eta((t-t_0)/\varepsilon),\\
+ F_{1,\varepsilon}(x)&=x^{-9/4}
+             u_\varepsilon(\log(x/\pi)),\\
+ F_{2,\varepsilon}(x)&=\frac1{16}F_{1,\varepsilon}(x/4).
+\end{aligned}                                                   \tag{SC1}
+$$
+
+In $F_1(x/4)$, extend $F_1$ by zero below $\pi$.
+Both are nonnegative actual smooth compact sources in $\mathcal V$.
+Their supports, near $2\pi$ and $8\pi$, are disjoint.
+Pointwise positivity here concerns the physical feature $F(x)$,
+not the coefficients of a finite Gaussian source measure. The first is
+below $4\pi$, and the second is below $9\pi$. Consequently the
+COMPLETE theta sums have exactly the following surviving terms:
+
+$$
+\mathscr TF_1=F_1,\qquad
+\mathscr TF_2=F_1+\frac1{16}F_1(\cdot/4).
+$$
+
+Writing $L=\log4$ and retaining the actual zero-extended Gamma
+coordinate from W317 gives
+
+$$
+ u_{F_1}=u_\varepsilon,\qquad
+ u_{F_2}=u_\varepsilon+\sqrt2\,u_\varepsilon(\cdot-L).
+                                                               \tag{SC2}
+$$
+
+The original metrics satisfy the exact changes of variables
+
+$$
+ M_6(F_2)=64M_6(F_1),\qquad
+ H(F_2)=\frac1{64}H(F_1),\qquad
+ \sup_\varepsilon\{M_6(F_1)+M_6(F_2)}<\infty.          \tag{SC3}
+$$
+
+These are bounds for the physical sources, despite the narrowing of
+their profiles. In particular W317 pays their ENTIRE mixed debit:
+$|\mathfrak J(F_1,F_2)|\le C\mathcal N(F_1)\mathcal N(F_2)=O(1)$.
+All prime powers, folded channels, cutoff terms and fixed Gamma shift
+remain included.
+
+With the unitary Fourier convention, the owned multiplier is
+$p(\xi)=\alpha\log\langle\xi\rangle+r(\xi)$,
+$\alpha=2/\sqrt\pi$, $\|r\|_\infty<\infty$.
+Fourier scaling gives
+
+$$
+ \mathcal P(F_1)=\alpha\log(1/\varepsilon)+O(1),\qquad
+ \mathscr P(u_\varepsilon,u_\varepsilon(\cdot-L))=O(1).
+                                                               \tag{SC4}
+$$
+
+Here $\mathscr P(u,v)=\int p(\xi)\widehat u(\xi)
+\overline{\widehat v(\xi)}d\xi$ is the same multiplier pairing
+on the displayed Gamma profiles. After
+$\zeta=\varepsilon\xi$, its possible leading term is
+$\alpha\log(1/\varepsilon)$ times the EXACT autocorrelation
+$\langle u_\varepsilon,u_\varepsilon(\cdot-L)\rangle=0$.
+The remaining integral is uniformly bounded by
+
+$$
+ C+\alpha\int_{\mathbb R}
+   \left|\log\sqrt{\varepsilon^2+\zeta^2}\right|
+                     |\widehat\eta(\zeta)|^2d\zeta\le C_\eta.
+$$
+
+The logarithmic singularity is integrable at zero, and
+$\widehat\eta$ is rapidly decreasing. The same bound proves the first
+part of SC4. Thus SC2 and the complete debit bound yield
+
+$$
+ \boxed{\mathfrak E(F_1,F_2)
+       =\alpha\log(1/\varepsilon)+O(1)>0}
+ \quad\text{for sufficiently small }\varepsilon.        \tag{SC5}
+$$
+
+Put $f_\varepsilon=F_1-F_2$. Disjointness gives
+$|f_\varepsilon|=F_1+F_2$ and preserves both original metrics. Hence
+
+$$
+ \boxed{\mathfrak E(|f_\varepsilon|)
+               -\mathfrak E(f_\varepsilon)
+        =4\alpha\log(1/\varepsilon)+O(1)>0.}            \tag{SC6}
+$$
+
+The same difference holds for EVERY form
+$\mathfrak E+\lambda M_6-\mu H$, with any fixed real multipliers.
+The original pointwise nonnegative cone therefore does not supply a
+modulus-decreasing comparison. Neither source is asserted to be a
+selected global null, and SC5 is a coupling sign, not a negative-energy
+certificate or an RH counterexample.
+
+
+### The selected source pays a strictly positive modulus cost
+
+There is a quantitative comparison on the hypothetical selected branch,
+but its direction is opposite to modulus contraction. Keep the SAME
+nonzero real MR11 source $F$, its multiplier $\lambda>0$, and JC2's
+actual $A=7F/2+xF'$. Then $|F|\in\mathcal V$. Indeed
+$h(t)=\sqrt\pi e^{7t/2}F(\pi e^t)$ belongs to $H^1(0,\infty)$
+by JC, and the Sobolev absolute-value rule gives $|h|\in H^1$.
+The actual theta coordinate, rather than a substituted profile, is
+
+$$
+ u_{|F|}(t)=\pi^{7/4}e^{-5t/4}
+       \sum_{n\ge1}n^{-3}|h|(t+2\log n),\qquad t\ge0.
+                                                               \tag{SC7}
+$$
+
+The half-line $H^1$ norm of every right translation is at most that
+of $|h|$, and $\sum n^{-3}<\infty$. Thus SC7 belongs to half-line
+$H^1$. Its zero extension has finite logarithmic form even when
+its trace is nonzero: subtract $u(0)e^{-t}$, zero-extend the
+zero-trace remainder in $H^1(\mathbb R)$, and use the integrable
+logarithmic Fourier energy of $e^{-t}\mathbf1_{t\ge0}$.
+Consequently
+$\mathcal P(|F|)\le C[M_6(F)+M_6(A)]<\infty$.
+No zero trace or multiplier-uniform regularity is assumed.
+
+Take the actual positive Gaussian radical $z(x)=e^{-x}$.
+LR2 at $a=0$ gives $\mathfrak E(z,G)=0$ for every $G\in\mathcal V$.
+With $D(G,H)=\int_\pi^\infty[(x/\pi)^6-1]G\overline H\,dx$,
+positive-semidefinite Cauchy--Schwarz for the SAME $Q_\lambda$ yields
+
+$$
+ \boxed{\begin{aligned}
+ \mathfrak E(|F|)-\mathfrak E(F)
+ &=Q_\lambda(|F|)\\
+ &\ge\lambda\,
+       \frac{|D(|F|,z)|^2}{D(z,z)}>0.
+ \end{aligned}}                                               \tag{SC8}
+$$
+
+Here $Q_\lambda(F)=0$ and $D(|F|)=D(F)$ give the equality.
+The numerator is strictly positive because $w>0$, $z>0$ and
+$F\ne0$ on a set of positive measure. It is not bounded uniformly
+away from zero as the source or multiplier varies.
+
+In particular the actual positive and negative parts
+$F_\pm=(|F|\pm F)/2$ belong to $\mathcal V$. Their disjointness
+and polarization give the strictly POSITIVE coupling requirement
+
+$$
+ \mathfrak E(F_+,F_-)
+   =\frac14Q_\lambda(|F|)
+   \ge\frac\lambda4\frac{|D(|F|,z)|^2}{D(z,z)}>0.       \tag{SC9}
+$$
+
+SC5 shows why a general nonpositive-coupling assertion cannot exclude
+this selected requirement. The calculation narrows the sign route:
+any useful new comparison must control this allowed positive coupling
+on the selected source, or justify a different transported order.
+Pointwise positivity of a localized Weil ground vector would not by
+itself provide either bridge through the actual theta/Volterra map
+and the original excess metric. No such comparison, exclusion of the
+negative branch, RH or strict Robin for every integer above 5040 is
+proved here.
+
+### Moving to a tail or transporting the cone needs additional control
+
+The ordinary-source counterexample can be placed beyond ANY fixed
+$R$. Choose $a>\max(R,\pi)$ with $a\notin(\pi/4)\mathbb N_{>0}^2$,
+replace $t_0$ in SC1 by $\log(a/\pi)$, and take $\varepsilon$
+sufficiently small that both physical supports lie beyond $R$ and
+all finite cutoff margins remain positive. The actual theta cutoffs are fixed at
+$N=\lfloor\sqrt{a/\pi}\rfloor$ and
+$N_2=\lfloor2\sqrt{a/\pi}\rfloor$. In the Gamma coordinate,
+
+$$
+\begin{aligned}
+ u_{F_1}(t)&=\sum_{k=1}^{N}k^{-1/2}
+                         u_\varepsilon(t+2\log k),\\
+ u_{F_2}(t)&=u_{F_1}(t)+\sqrt2
+       \sum_{\substack{n\le N_2\\ n\ {\rm odd}}}
+        n^{-1/2}u_\varepsilon(t+2\log n-\log4).
+\end{aligned}                                                   \tag{SC10}
+$$
+
+All these finitely many packet centers are positive. The exclusion
+on $a$ keeps them off the cutoff. An inherited center and an odd
+center could coincide only if $n=2k$, which is impossible.
+For small enough $\varepsilon$ every distinct center has disjoint
+packet support. Apply the SAME SC4 calculation to each pair and
+W317 on their fixed compact physical supports. It gives
+
+$$
+ \mathfrak E(F_1,F_2)
+ =\alpha\left(\sum_{k=1}^{N}\frac1k\right)
+                 \log(1/\varepsilon)+O_a(1)>0.          \tag{SC11}
+$$
+
+Both physical sources lie beyond $R$. Thus even a universal modulus
+comparison restricted to some fixed tail is false. Constants need
+not be uniform as $a\to\infty$. This does not exclude a comparison
+using additional properties of the selected source.
+
+There is also a direct obstruction to treating the original excess
+penalty as a harmless positive potential after theta transport.
+W324 supplies the bounded inverse of $\mathscr T$ on $H_6$.
+Define its transported cone
+$\mathcal K=\{G\in H_6:\mathscr TG\ge0\}$, and put
+$B=F_2-F_1$ using SC1. Then $\mathscr TB=F_2\ge0$.
+For $v(x)=(x/\pi)^6-1$ and $t,\lambda>0$, however,
+
+$$
+ \mathscr T(e^{-t\lambda v}B)(x)
+  =[e^{-t\lambda v(4x)}-e^{-t\lambda v(x)}]F_1(x)<0
+ \quad\text{where }F_1(x)>0.                            \tag{SC12}
+$$
+
+This keeps the complete finite theta sum and uses only
+$v(4x)>v(x)$. This is the multiplication semigroup in the original
+$H=L^2(dx)$, restricted to its invariant $H_6$; it is not defined
+using a newly chosen theta-coordinate metric. It therefore fails
+to preserve $\mathcal K$. It does NOT
+establish that the semigroup of the complete $Q_\lambda$ fails
+there: compensation by its remaining operator has not been ruled
+out. Neither this transported order nor tail restriction supplies
+the missing selected-source comparison by itself.

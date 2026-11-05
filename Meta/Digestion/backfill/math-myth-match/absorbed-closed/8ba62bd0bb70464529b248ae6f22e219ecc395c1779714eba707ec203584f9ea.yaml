@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8ba62bd0bb70464529b248ae6f22e219ecc395c1779714eba707ec203584f9ea
+  normalized_sha256: sha256:8ba62bd0bb70464529b248ae6f22e219ecc395c1779714eba707ec203584f9ea
+cas_ref: sha256:8ba62bd0bb70464529b248ae6f22e219ecc395c1779714eba707ec203584f9ea
+coverage_gids:
+  - gid: D5/S3/Estimation/DecisionRisk/FiniteBayesRiskDominanceCriterion.finite_bayes_risk_dominance_iff_postprocessing
+    target_statement_id: sha256:cfb660d585b50049e8297873905ee0cc24541ae911ec6db5e5d4d03a0950a861
+  - gid: D5/S3/Estimation/DecisionRisk/GarblingIncreasesBayesRisk.bayesRisk_le_of_blackwellDominates
+    target_statement_id: sha256:87a923252f1d9d5745e9ab248578acda3b1b4aab7ea72aa054ef905c8887597b
+receipts:
+  unresolved_subitems: []

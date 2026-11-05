@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4a823cac5d9eabfab703c6af2eb384c555153cdd4fc52f24df5e4d9932b9dd83
+  normalized_sha256: sha256:4a823cac5d9eabfab703c6af2eb384c555153cdd4fc52f24df5e4d9932b9dd83
+cas_ref: sha256:4a823cac5d9eabfab703c6af2eb384c555153cdd4fc52f24df5e4d9932b9dd83
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这是建议形式化模块目录与可开展证明工作的安排；不把建议的模块名或可证明性预期当成完成的数学断言。
+    previous_atom_id: 48cecfef0c44619329ec78dc3bf4f8477bcd49b2b019a2f077ff8b82ef93ac4d
+    next_atom_id: be46c384f25c5a44c5076c75b2448739f6689493f55836c40a6b99610daaadaf

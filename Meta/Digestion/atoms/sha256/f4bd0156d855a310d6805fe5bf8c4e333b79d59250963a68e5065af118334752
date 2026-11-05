@@ -1,0 +1,4 @@
+Integrating from the lower boundary and using (132.9) controls the supremum of $\int\eta^2 z_N(u)^2\,d\nu$ and the space-time gradient energy of $\eta z_N(u)$ by $C(\lambda,\Lambda)p^2$ times the corresponding cutoff-weighted integral of $|u|^p$. Letting $N\uparrow\infty$, monotone convergence and weak lower semicontinuity give this bound for $\eta|u|^{p/2}$ whenever the outer $L^p$ integral is finite. This argument applies equally to signed $u$ and imposes no vanishing condition at the source.
+
+3. Perform the weighted-time iteration with fixed spatial radius. Fix $\tau>0$, set $d=\min(\tau/4,1)$, and let $s\ge\tau$ be any center time. Define
+

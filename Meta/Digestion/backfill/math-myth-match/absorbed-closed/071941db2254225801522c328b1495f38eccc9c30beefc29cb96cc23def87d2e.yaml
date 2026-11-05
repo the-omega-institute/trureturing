@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:071941db2254225801522c328b1495f38eccc9c30beefc29cb96cc23def87d2e
+  normalized_sha256: sha256:071941db2254225801522c328b1495f38eccc9c30beefc29cb96cc23def87d2e
+cas_ref: sha256:071941db2254225801522c328b1495f38eccc9c30beefc29cb96cc23def87d2e
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Evidence/PositiveSupportNonexplosion.positive_support_nonexplosion
+    target_statement_id: sha256:5194b77db80090747bcfd216a2c2ee64c00b657bddb8d11d2c18edc71f21cd21
+receipts:
+  unresolved_subitems: []

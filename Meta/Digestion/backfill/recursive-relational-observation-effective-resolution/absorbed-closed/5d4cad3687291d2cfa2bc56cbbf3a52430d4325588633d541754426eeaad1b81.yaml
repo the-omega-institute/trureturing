@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:5d4cad3687291d2cfa2bc56cbbf3a52430d4325588633d541754426eeaad1b81
+  normalized_sha256: sha256:5d4cad3687291d2cfa2bc56cbbf3a52430d4325588633d541754426eeaad1b81
+cas_ref: sha256:5d4cad3687291d2cfa2bc56cbbf3a52430d4325588633d541754426eeaad1b81
+coverage_gids:
+  - gid: D5/S0/Automata/BinaryZeckendorfBlockSkeletonCore.LegalWord
+    target_statement_id: sha256:70a242806bda84f765ed4abd823679c7d87a013396977bd8f934540ad5ec53bb
+  - gid: D5/S0/Automata/BinaryZeckendorfBlockSkeletonCore.compressLegalWord_expand
+    target_statement_id: sha256:a89d9b0abd62b05b5d888bbfa08139c902c1f722552be7d0408f509550ebd748
+  - gid: D5/S0/Automata/BinaryZeckendorfBlockSkeletonCore.decode_expand
+    target_statement_id: sha256:a9b5b18aa5e094d2c5f0c0fd7ed9f39359c56947d1b5a7c761bfcc00e727a753
+  - gid: D5/S0/Automata/BinaryZeckendorfBlockSkeletonCore.expand
+    target_statement_id: sha256:729a98c19c353494433909a9c903f304b0aba3dc66b321676d0f96482b9cdd58
+  - gid: D5/S0/Automata/BinaryZeckendorfBlockSkeletonCore.expandCode_injective
+    target_statement_id: sha256:2484757daf66628bf2335c1d529a03e1967d43ccb23210727c2d51b4a3555a8d
+  - gid: D5/S0/Automata/BinaryZeckendorfBlockSkeletonCore.expand_compressLegalWord
+    target_statement_id: sha256:c0aa73fba16b06058ce7e5e4031d1f5bfcdaf53271d5a7e0d2fd8bd8af4112f5
+receipts:
+  unresolved_subitems: []

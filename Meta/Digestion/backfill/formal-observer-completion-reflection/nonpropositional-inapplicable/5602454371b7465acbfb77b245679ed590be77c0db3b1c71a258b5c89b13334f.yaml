@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5602454371b7465acbfb77b245679ed590be77c0db3b1c71a258b5c89b13334f
+  normalized_sha256: sha256:5602454371b7465acbfb77b245679ed590be77c0db3b1c71a258b5c89b13334f
+cas_ref: sha256:5602454371b7465acbfb77b245679ed590be77c0db3b1c71a258b5c89b13334f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅规定“支持相容赋值”的谓词：逐上下文限制属于支持；不声称这种赋值存在或某个具体赋值满足它。
+    previous_atom_id: b84b438426c26fa75de3f2dd7704e707672ad39312489c3494b281eeff4cf769
+    next_atom_id: 6c03caec069481d3ab9f9e76290f34272b6d11080a906da0aa2c1bfa3963f64b

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:13053386b1c0ab512f7959a08fab31183348421d29e3e95ace1c2feea44ee468
+  normalized_sha256: sha256:13053386b1c0ab512f7959a08fab31183348421d29e3e95ace1c2feea44ee468
+cas_ref: sha256:13053386b1c0ab512f7959a08fab31183348421d29e3e95ace1c2feea44ee468
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 比较巴哈伊与斯宾诺莎选定片段的共同问题和不可省略的语义差异，不给出新的集合论等价命题。
+    previous_atom_id: b98955bedd5c3c19591a78c6e5ac8effcd250c0855b5e7fbae88f444902f8830
+    next_atom_id: fa66857b6ffd91011b406bb9df7e87322b81a1be5cf94fd9d5fc8a1983e7fe35

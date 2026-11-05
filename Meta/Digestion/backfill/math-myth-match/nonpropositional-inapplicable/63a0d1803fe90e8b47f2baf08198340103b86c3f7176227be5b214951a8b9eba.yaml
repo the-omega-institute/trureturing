@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:63a0d1803fe90e8b47f2baf08198340103b86c3f7176227be5b214951a8b9eba
+  normalized_sha256: sha256:63a0d1803fe90e8b47f2baf08198340103b86c3f7176227be5b214951a8b9eba
+cas_ref: sha256:63a0d1803fe90e8b47f2baf08198340103b86c3f7176227be5b214951a8b9eba
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: SN22.89理论判断、习性与修行层次；属于引文解释、建模约定或研究建议，没有另立待证数学断言，本收据不验证其文献或经验真值。
+    previous_atom_id: 87f9dba4a1a8242be3337b0219118b98438afec119da81293ccead5ed599636f
+    next_atom_id: 0eff002a8613acc26a6a0b365c094626f9fb17a370beca8536c10a79263fea71

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0c03e9de0d554f803228f3d1f196d2c4a18fece56cee079648cf545c991a5c69
+  normalized_sha256: sha256:0c03e9de0d554f803228f3d1f196d2c4a18fece56cee079648cf545c991a5c69
+cas_ref: sha256:0c03e9de0d554f803228f3d1f196d2c4a18fece56cee079648cf545c991a5c69
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional research-direction conclusion: lists missing Euler/divisor and transport interfaces and recommends the next research task; no quantified mathematical claim is asserted.'
+    previous_atom_id: adae58f91db2a170121c4f51cfe28b36ce06760f96a7a4a205830117403f5421
+    next_atom_id: 2b8a7cbef60d7585d06c18f537bbca63f9df38109b94b13a008cc3e955995a24

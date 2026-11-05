@@ -1,0 +1,38 @@
+**定义 101.1（码、原记录载体与固定比较方向）。** 保留 V 定义 54.1、91.1、本卷定义 80.1、91.1 的全部对象和参数：$H=\mathbb C^5$，$B:\mathbb C^3\to H$，$Q=\mathbb C^3$，$0<d<1$，$\sin(2\theta)\ne0$，唯一制备 $\rho_0=\psi\psi^\dagger$，$\psi=\sqrt d\,Uq+\mathrm i\sqrt{1-d}\,Uf$，原终端 $E_1=E=qq^\dagger$、$E_0=I_3-E$，以及同一个可重复的 $N\in U(3)$，$[N,P_\xi]\ne0$。仍有 $W=I_3-2ff^\dagger$、$V_0=Ue^{\mathrm i\theta W}$、$V_1=V_0W$、$A_j=\operatorname{Ad}_{V_j}/2$、$A_N=\operatorname{Ad}_N$。
+
+原交互的出射记录空间记作 $R_{\rm env}=\mathbb C^2$。依[环境记录定义 2.1、定理 2.2](AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md#2-two-measured-instruments-of-the-identical-full-five-dimensional-channel)，就绪态为 $f_0$，同一个五维等距交互 $\mathcal V$ 满足
+
+$$
+\begin{aligned}
+\mathcal V e_0&=u_H\otimes f_0,&\quad
+\mathcal V e_1&=u_H\otimes f_1,&\quad
+\mathcal V e_2&=v_H\otimes(f_0+f_1)/\sqrt2,\\
+\mathcal V e_3&=z_H\otimes f_1,&
+\mathcal V e_4&=z_H\otimes f_0.
+\end{aligned}
+\tag{101.1}
+$$
+
+原来的实际标签基为
+
+$$
+\begin{gathered}
+g_0=\cos\theta f_0-\mathrm i\sin\theta f_1,\qquad
+g_1=-\mathrm i\sin\theta f_0+\cos\theta f_1,\\
+S_\theta x=\frac{V_0x\otimes g_0+V_1x\otimes g_1}{\sqrt2},\qquad
+\mathcal VB=(B\otimes I_{R_{\rm env}})S_\theta,\\
+g_\pm=(g_0\pm g_1)/\sqrt2,\qquad F_\pm=g_\pm g_\pm^\dagger.
+\end{gathered}
+\tag{101.2}
+$$
+
+这些等式只给已有交互的数学对应，不给访问环境的权利。特别地，
+
+$$
+g_+=e^{-\mathrm i\theta}(f_0+f_1)/\sqrt2,\qquad
+g_-=e^{\mathrm i\theta}(f_0-f_1)/\sqrt2.
+\tag{101.3}
+$$
+
+所以 $(F_+,F_-)$ 是这一个原交互的固定 Hadamard 记录设置，不依赖调节 $\theta$，也不是另制备一个路径控制系统。
+

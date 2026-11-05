@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:60cddf5077f72187e9222ebabd85b3689baf172e34d8a3e704d50a4bedb2388c
+  normalized_sha256: sha256:60cddf5077f72187e9222ebabd85b3689baf172e34d8a3e704d50a4bedb2388c
+cas_ref: sha256:60cddf5077f72187e9222ebabd85b3689baf172e34d8a3e704d50a4bedb2388c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：研究方法要求检验完整钟过程沿共同经典几何下降，没有给出已成立的下降等式或量化数学结论。
+    previous_atom_id: 83cd267776442b2a895ab6de50b8139f2b49e62aaf8b47ec5e1d6cc7127ebb41
+    next_atom_id: 99cc8cced31e34155a54486079e2492947b6eb9ff15c29b6c07fcea0f6c206a4

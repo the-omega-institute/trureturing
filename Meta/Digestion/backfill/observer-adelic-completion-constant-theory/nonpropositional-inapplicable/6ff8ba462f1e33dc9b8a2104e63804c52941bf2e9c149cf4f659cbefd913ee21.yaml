@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6ff8ba462f1e33dc9b8a2104e63804c52941bf2e9c149cf4f659cbefd913ee21
+  normalized_sha256: sha256:6ff8ba462f1e33dc9b8a2104e63804c52941bf2e9c149cf4f659cbefd913ee21
+cas_ref: sha256:6ff8ba462f1e33dc9b8a2104e63804c52941bf2e9c149cf4f659cbefd913ee21
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Qualitative audit classification of the local branch operator as a proposed definition; no defining equation or operator property.
+    previous_atom_id: eb7533a33fed9105250192c1ff215ac2dc14794359a4b0d703122ded50c2c21a
+    next_atom_id: a176220bd242e568f8b607762813d3242b8658bcc78a61c04f6127b8ca7f87ee

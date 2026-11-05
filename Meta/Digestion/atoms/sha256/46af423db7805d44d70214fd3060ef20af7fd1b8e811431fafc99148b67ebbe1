@@ -1,0 +1,38 @@
+**Theorem 5.1 (necessary and sufficient parameters).** Up to the conjugation (4.2), every prefix in $\mathscr G$ whose kernel has four nonzero entries has the following form, and every choice passing the stated filters gives such a prefix.
+
+Choose integers and a sign satisfying
+$$
+x>d\ge1,\qquad \gcd(x,d)=1,\qquad m,n\ge1,\qquad
+\sigma\in\{+1,-1\},\qquad a=x-md\ge1.
+\tag{5.1}
+$$
+Define
+$$
+Q=1+nd,\qquad h=n(x+d)+\sigma,\qquad
+c=x+hd,\qquad b=mc-d,
+\tag{5.2}
+$$
+and require $\gcd(a,b)=1$. These formulas give $b,c,h>0$ and $Q\ge2$. Put
+$$
+f=\binom a{-b},\qquad \ell=(c,-d),\qquad
+r_0=\binom d c,\qquad t=ac+bd=cx-d^2>0.
+$$
+Choose a nonnegative integral unimodular $A_1$ satisfying
+$$
+A_1f=\binom x d.
+\tag{5.3}
+$$
+Then the next two multiplier matrices are exactly
+$$
+K=\begin{pmatrix}1&1\\Q&Q+\sigma\end{pmatrix},\qquad
+H=\begin{pmatrix}0&1\\1&h\end{pmatrix},\qquad
+A_2=KA_1,\qquad A_3=HA_2.
+\tag{5.4}
+$$
+The remaining filter is
+$$
+\operatorname{rank}\mathsf B_{\rm pre}=3.
+\tag{5.5}
+$$
+The first-endpoint condition (5.3), its nonnegative-integral requirement, and (5.5) are part of the necessary-and-sufficient statement. They are not automatic consequences of (5.1)–(5.2).
+

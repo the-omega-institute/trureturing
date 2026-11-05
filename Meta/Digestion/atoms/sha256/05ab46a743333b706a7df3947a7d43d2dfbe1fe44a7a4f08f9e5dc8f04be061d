@@ -1,0 +1,19 @@
+**命题 7.7（效果概率不唯一决定测量更新）。**
+一组效果 $E_o$ 不唯一决定产生它们的仪器。
+即使要求投影结果可重复，退化投影上的后态仍可能不同。
+若另规定每个分支只有一个正 Kraus 算子，
+则该分支唯一为 $\rho\mapsto\sqrt{E_o}\rho\sqrt{E_o}$。
+
+证明。
+设 $P$ 秩至少二，$U$ 是保持 $\operatorname{ran}P$ 的非平凡酉。
+$K=P$ 与 $K'=UP$ 都满足 $K^\dagger K=K'^\dagger K'=P$；
+输出均支撑在 $\operatorname{ran}P$，所以再次测 $P$ 确定成功，
+但后态通常不同。
+若 $K\ge0$ 且 $K^\dagger K=E$，正平方根唯一性给 $K=\sqrt E$。
+证毕。
+
+Born 规则回答结果权重，仪器回答结果取得后如何继续。
+这两项在递归观察理论中都要指定。
+
+<a id="thm:schrodinger"></a>
+

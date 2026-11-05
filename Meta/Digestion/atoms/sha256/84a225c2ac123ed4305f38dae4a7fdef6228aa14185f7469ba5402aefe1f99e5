@@ -1,0 +1,4 @@
+For an original reconstruction $A(\mathbf p,\mathbf X)$, choose a fixed
+common shift $t$ as in (NIS.13). Its transformed expression is precisely
+$\rho^t A$ and lies in $L_t$ because each $X_i$ is an actual preimage.
+The same finite classification and inversion apply. 

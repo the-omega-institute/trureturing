@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:c4f33f2391a507eb8720057c73c394601b9e59f14b23ff7839ba30e183523974
+  normalized_sha256: sha256:c4f33f2391a507eb8720057c73c394601b9e59f14b23ff7839ba30e183523974
+cas_ref: sha256:c4f33f2391a507eb8720057c73c394601b9e59f14b23ff7839ba30e183523974
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Aggregation/AgendaPower.pairwiseWinner
+    target_statement_id: sha256:b7d190c328aa0b0491c2ce28d88445735495cd8df6ecdcd5fa221ffcc7f950c8
+  - gid: D5/S3/ConceptDynamics/Aggregation/AgendaPower.sequentialWinner
+    target_statement_id: sha256:153b0c27b54eb569fc7ab1c9a45c24ccf141a1e9c696cc4358d1113fb01af4b0
+  - gid: D5/S3/ConceptDynamics/Aggregation/MajorityCycleNotScalarOrder.majorityPrefers
+    target_statement_id: sha256:9af2cdd4174b997145f98126c715501459607cfe04de85642606653b8b7ad097
+  - gid: D5/S3/ConceptDynamics/Aggregation/MajorityCycleNotScalarOrder.preferenceRank
+    target_statement_id: sha256:7c8407e3c05fb230df8096ce23c6317c72b183a4bd9030908c556a6b869d3e17
+  - gid: D5/S3/ConceptDynamics/Aggregation/MajorityCycleNotScalarOrder.prefers
+    target_statement_id: sha256:86cc1d028bd917c29d7813d27db89b23efb0d3e1d460f83a0d79d30364e76591
+receipts:
+  unresolved_subitems: []

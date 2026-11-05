@@ -1,0 +1,31 @@
+## 16. The unchanged all-slope completion and the construction's boundary
+
+The universal actual-multiplicity obligation throughout $\mathscr G$ remains
+$$
+\begin{gathered}
+\text{for every legal prefix in }\mathscr G\text{ and every legal final word }W,
+\quad A_4=WA_3,\\
+\text{there exist }S_0,S_1\in\mathcal A,\quad k_0,k_1\in\mathbb R,\\
+(S_0,k_0)\ne(S_1,k_1),\qquad
+\mathsf T_{k_0}S_0=\mathsf T_{k_1}S_1.
+\end{gathered}
+\tag{16.1}
+$$
+It asks for some colliding datum for each complete history, with one entire constant drift per run supplied by Proposition 7.1. Existing sufficient collision results apply where their literal hypotheses hold. The remaining unproved cases of (16.1) include all still-uncovered admitted interior tuples and first endpoints, both conjugate branches, and zero-component kernel geometries with arbitrary final words. The quantifier includes identity matrices, nonempty words with identity matrix, and empty words.
+
+In particular (16.1) retains the possibility $k_0=k_1$ with $S_0\ne S_1$. In the interior nonidentity-final case, Theorem 6.1 makes $\mathsf B=\mathsf T_0$ invertible. This gives uniqueness at the common slope zero only. It does not prove invertibility of $\mathsf T_k$ at every other real slope, or uniqueness of positive rank-one sources at every singular member. At any common slope, a nonsingular $\mathsf T_k$ gives linear uniqueness; a singular $\mathsf T_k$ requires its own actual-source intersection analysis. Proposition 7.2 gives rank at least three at all slopes and invertibility at $-1/4$, not invertibility at all slopes. Therefore the residual cannot be narrowed to $k_0\ne k_1$ by invertibility of $\mathsf B$. The distinct-slope hypothesis of the correction theorem has no such global implication.
+
+The new convexification is exact for the zero-slope prefix quotient: every positive full representative has one unique actual representative. For $t_4\ne t$, Proposition 12.2 keeps the final zero-slope condition, and Theorem 13.1 shows that correction of a positive auxiliary distinct-slope equality preserves the full collision only when both matrices already have rank one. For $t_4=t$, the exact test is instead $\eta_0k_0=\eta_1k_1$; it is a test on an already given equality, not an existence proof. Thus neither branch supplies an actual pair for every remaining history. This limits the stated retraction construction and does not prohibit collisions obtained by other means, including equal nonzero slopes.
+
+In the companion's exhaustive fibre description, a proof of the remaining multiplicity statement must force some datum with two positive regular candidates, a positive regular and a positive singular candidate, two distinct positive singular candidates, or a positive arc. The finite bound of fourteen, the finite-or-arc alternative, convex prefix feasibility, local rank information and fixed-slope-zero uniqueness do not force one of those events. The already proved isolated collision ending at $(\begin{smallmatrix}2&3\\7&10\end{smallmatrix})$ remains credited as excluded; it proves no assertion about arbitrary other final words after that prefix.
+
+The alternative completion remains one legal predetermined five-read history with global uniqueness for every actual target, a whole-target inverse and a necessary-and-sufficient actual-source image criterion for every real slope, including erased and negative gains. The zero-slope inverse (12.4) does not provide that alternative. Prefixes outside $\mathscr G$ remain in the unrestricted original programme. With $d$ now the declared drift degree, the credited bounds remain exactly
+$$
+C_{\mathrm{fix}}(d)=d+5\quad(d\ge1),\qquad
+5\le C_{\mathrm{fix}}(0)\le6.
+\tag{16.2}
+$$
+No universal actual-multiplicity theorem, globally recovering five-read history, or sharper read bound is established by Sections 10–16.
+
+All results use strictly positive actual rank-one common sources, one fixed positive row per run, positive columns through every unread atom, predetermined forward cumulative $M/J$ words, the original reading clock and one entire constant drift per run. Strict cone boundaries are excluded. These are ordinary exact symbolic textual mathematics, with no adaptive-path lower bound, unrestricted atom optimum, empirical or general-neural-network claim, Lean/kernel certification, resource, bit, time, stability or physical acquisition-cost conclusion, external priority or absent-literature assertion.
+

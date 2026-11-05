@@ -1,0 +1,13 @@
+**命题 74.2（chronology 的确定域与排除域）。** 在 native §11 的 captured key 上令
+
+$$
+p=n-\kappa,\qquad q=m_C-1,
+\qquad L(K)=\binom{p+q}{p}.
+$$
+
+完整 endpoint 纤维有恰好 $L(K)$ 条实际 P/C 全序。Armed 纤维为单点；captured 纤维恰在 $p=0$ 或 $q=0$ 时为单点。在这些单点纤维上，normal evaluation 恢复实际 chronology。若 $p,q>0$，任何只依赖当前 endpoint 的函数都不能恢复实际执行全序。即使同时给出当前 $S_{\rm now},B_{\rm now},M_C$，或者从同一 endpoint 继续执行相同的未来选择且不加入先前保留的记录，结论仍然如此。
+
+**证明。** native Theorem 11.16 已确定纤维：固定 startup、Capture 前 P 链及 Capture 后两条 owner 链，只剩这两条链的 shuffle。其枚举、实际合法性、相同完整 endpoint 和单点条件均由该定理供应。$L(K)>1$ 时两条不同全序具有相同函数输入，却要求不同答案，故不存在所述逆。相同 endpoint 上相同未来选择给出相同后续，是同一状态转移语义的直接归纳。∎
+
+native Theorem 11.15 给出的 $T_{\rm cut}$ 保留两条 owner 链及实际 Capture bracket，它与 $K,X^+,S_{\rm now}$ 的 actual-image recovery routes 相容；选取其任意线性扩展只得到一个相容历史。按 native Corollary 11.17，若增加 supplement $Z$ 后要求精确全序，则 $Z$ 必须在同一 endpoint 纤维上区分全部 $L(K)$ 个历史，故固定二进制宽度满足 $2^b\ge L(K)$。这是历史补充记录的必要标签数，不构造在线 logger，也不给出物理 port 或总代价下界。过去累计结构 tariff 是否下降到 endpoint 还需 native (AIF.40) 的逐交换费用等式；当前 successor 的未来费用相同不替代该条件。
+

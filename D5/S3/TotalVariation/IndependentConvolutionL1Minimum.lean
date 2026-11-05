@@ -35,6 +35,11 @@ private def theta (m : ℕ) : ℝ := Real.pi / m
 private def ray (r θ : ℝ) : ℂ :=
   (r : ℂ) * ((Real.cos θ : ℂ) + (Real.sin θ : ℂ) * Complex.I)
 
+/-- A nondegenerate sine makes the real Poisson denominator strictly positive. -/
+theorem poisson_denominator_pos_of_sin_pos {r θ : ℝ} (hs : 0 < Real.sin θ) :
+    0 < 1 - 2 * r * Real.cos θ + r ^ 2 := by
+  nlinarith [sq_nonneg (r - Real.cos θ), sq_pos_of_pos hs, Real.sin_sq_add_cos_sq θ]
+
 /-- Metya–Mukherjee, Conjecture 4.7: the exact minimum over every pair of real
 closed real simplex factors, including boundary points and ordinary natural index convolution. -/
 theorem result (n : ℕ) (hn : 3 ≤ n) :
@@ -325,10 +330,6 @@ theorem result (n : ℕ) (hn : 3 ≤ n) :
       field_simp
       linear_combination (-r ^ 2 * Real.sin ((k : ℝ) * θ)) * (Real.sin_sq_add_cos_sq θ)
 
-    have denominator_positive {r θ : ℝ} (hs : 0 < Real.sin θ) :
-        0 < 1 - 2 * r * Real.cos θ + r ^ 2 := by
-      nlinarith [sq_nonneg (r - Real.cos θ), sq_pos_of_pos hs, Real.sin_sq_add_cos_sq θ]
-
     have weight_at_d {d : ℕ} (hd : 2 ≤ d) (r : ℝ) : weight r (theta d) d = - r ^ d := by
       simp [weight, d_theta hd]
 
@@ -369,7 +370,7 @@ theorem result (n : ℕ) (hn : 3 ≤ n) :
     have weight_first_step {d k : ℕ} (hd : 2 ≤ d) {r : ℝ} (hr : 0 < r) (hk : k ≤ d) :
         weight r (theta d) (k + 1) ≤ weight r (theta d) k := by
       have hs := Real.sin_pos_of_pos_of_lt_pi (theta_positive hd) (theta_lt_pi hd)
-      have hD := denominator_positive (r := r) hs
+      have hD := poisson_denominator_pos_of_sin_pos (r := r) hs
       have hdiff : weight r (theta d) (k + 1) - weight r (theta d) k ≤ 0 := by
         rw [weight_difference hr.ne' hs.ne']
         apply div_nonpos_of_nonpos_of_nonneg
@@ -383,7 +384,7 @@ theorem result (n : ℕ) (hn : 3 ≤ n) :
         (hk : d ≤ k) (hk' : k ≤ 2 * d) :
         weight r (theta d) k ≤ weight r (theta d) (k + 1) := by
       have hs := Real.sin_pos_of_pos_of_lt_pi (theta_positive hd) (theta_lt_pi hd)
-      have hD := denominator_positive (r := r) hs
+      have hD := poisson_denominator_pos_of_sin_pos (r := r) hs
       have hdiff : 0 ≤ weight r (theta d) (k + 1) - weight r (theta d) k := by
         rw [weight_difference hr.ne' hs.ne']
         apply div_nonneg
@@ -498,7 +499,7 @@ theorem result (n : ℕ) (hn : 3 ≤ n) :
     have weight_sum_ge_one {d : ℕ} (hd : 2 ≤ d) {r : ℝ} (hr : 0 < r) (hr' : r ≤ 1) :
         1 ≤ ∑ k ∈ Finset.range (2 * d + 1), weight r (theta d) k := by
       have hs := Real.sin_pos_of_pos_of_lt_pi (theta_positive hd) (theta_lt_pi hd)
-      have hD := denominator_positive (r := r) hs
+      have hD := poisson_denominator_pos_of_sin_pos (r := r) hs
       have h := weight_sum_identity hd hr
       have hp2 : r ^ 2 ≤ 1 := pow_le_one₀ hr.le hr'
       have hp2d : r ^ (2 * d) ≤ 1 := pow_le_one₀ hr.le hr'

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e595a21259d8141ecd4aceddd2ac98e7cb0b01f6651e3227a8cf223dfce2b723
+  normalized_sha256: sha256:e595a21259d8141ecd4aceddd2ac98e7cb0b01f6651e3227a8cf223dfce2b723
+cas_ref: sha256:e595a21259d8141ecd4aceddd2ac98e7cb0b01f6651e3227a8cf223dfce2b723
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅定义曾经达到、始终保留、反复达到、此后一直达到四种时间要求及解释范围。
+    previous_atom_id: dd61cd9f7ae309b71d853719e35e5430e3fbf0d1e029ac13743adfe679613f98
+    next_atom_id: 0838afebe2bf6a299976e152f2a9c993b7dbb3ba93f52627b4370fd866009492

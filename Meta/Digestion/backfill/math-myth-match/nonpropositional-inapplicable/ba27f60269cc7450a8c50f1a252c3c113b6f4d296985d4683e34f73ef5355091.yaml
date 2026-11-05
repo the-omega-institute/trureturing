@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ba27f60269cc7450a8c50f1a252c3c113b6f4d296985d4683e34f73ef5355091
+  normalized_sha256: sha256:ba27f60269cc7450a8c50f1a252c3c113b6f4d296985d4683e34f73ef5355091
+cas_ref: sha256:ba27f60269cc7450a8c50f1a252c3c113b6f4d296985d4683e34f73ef5355091
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 366节五个项目模块和线性代数应用的来源与未核验状态说明。
+    previous_atom_id: 1a59f724e42044fc01cd16ecb4b176998e77390f64441797a2400354edbf96e7
+    next_atom_id: 8c56da6d2e099281c491f7ed1e3c9d5d449d6a2ee65f7207ade69bf1c02a3f7b

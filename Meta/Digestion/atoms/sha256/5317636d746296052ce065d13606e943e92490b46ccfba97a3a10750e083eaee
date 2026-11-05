@@ -1,0 +1,48 @@
+**Definition 127.1 (the original equal-gap pencil and its two domains).** Fix the original finite positive parameters $a,\eta,t,d>0$ and set $\Delta _1=\Delta _2=d$. Retain all the source, endpoint, native-parameter and readout hypotheses of §§115–126. In particular, $G=H^1\times\mathbb R$ has the original product and raw Haar measure $\mu$, $\Gamma$ is the same unit-source field, $H=H_{\rm end}$ has the actual selector $A(u)=\rho C(u)$, and $h$ is its coefficient-positive normalized zero vector. The measure, full form and original clock are
+
+$$
+\begin{gathered}
+m=h^2\mu,\qquad U_hv=hv,\qquad K=U_h^{-1}HU_h,\qquad T_s=e^{-sK},\\
+D(H^{1/2})=\mathcal Q_c\dotplus\mathbb Ch,\qquad
+q_H[y+ch]=\overline q_c[y],\\
+\mathscr E[u,v]=\int_{G\setminus\{e\}}
+\left(a\sum_{j=1}^3\overline{X_ju}X_jv+
+\eta\overline{\partial_wu}\partial_wv\right)dm.
+\end{gathered}
+\tag{127.1}
+$$
+
+The conservative diffusion still starts at $e$ at time zero. Write
+
+$$
+P=T_d,\qquad A_d=T_{d/2},\qquad g=g_t,\qquad
+\varphi=\alpha g_t+\beta g_{t+d},\qquad
+(\alpha,\beta,\gamma)\in\mathbb R^3.
+$$
+
+Here $g_s\in L^2(m)$, $g_s>0$ almost everywhere, $\int g_s\,dm=1$, and $g_{t+d}=Pg_t$, as in (117.2)–(117.3). For bounded real Borel classes put
+
+$$
+q_{\alpha,\beta,\gamma}(v)
+=\int\varphi vPv\,dm+\gamma\int gvP^2v\,dm.
+\tag{127.2}
+$$
+
+This is exactly the pencil with coefficients $\alpha,\gamma,\beta$ of the first, second and third marginal sums in (125.6). No change of source law, clock or extension is made in forming it. For a Borel $E$ with $m(E)>0$, distinguish the unrestricted space
+
+$$
+\mathcal V_E=\{v\in L^\infty(m;\mathbb R):v=0\text{ a.e. on }G\setminus E\}
+$$
+
+from the exact first-order constrained space
+
+$$
+\mathcal V_E^{\rm lin}=\ker\Lambda_E,\qquad
+\Lambda_E:\mathcal V_E\longrightarrow\mathbb R^{L^3},\qquad
+\Lambda_E(v)=(\ell_{yzw}(v))_{y,z,w\in L},\qquad
+r_E=\operatorname{rank}\Lambda_E.
+\tag{127.3}
+$$
+
+For (127.3), fix the pointwise Borel simplex tuple $f$, the distinct labels $i,j$, and the signs $\sigma$ of Definition 125.1; $\ell$ is exactly (125.2), with the common-readout trilinear form $\mathcal C$ of (123.1). When $E$ is an emission overlap, it is the same $E=\{f_i\ge\kappa,f_j\ge\kappa\}$, $\kappa>0$. The definition of $\mathcal V_E$ itself imposes no first-order equations. The negative index $n_-(q|_V)$ is the supremum of the dimensions of finite-dimensional real subspaces on which the symmetric polar form of $q$ is strictly negative definite; its values lie in $\mathbb N\cup\{\infty\}$.
+

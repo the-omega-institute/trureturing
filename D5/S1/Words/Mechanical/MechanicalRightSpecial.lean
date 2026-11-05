@@ -51,7 +51,7 @@ Negative findings:
 
 namespace D5.S1.Words.Mechanical.MechanicalRightSpecial
 
-private theorem lowerMechanicalFactor_succ (alpha rho : Real) (n i : Nat) :
+theorem lowerMechanicalFactor_succ (alpha rho : Real) (n i : Nat) :
     lowerMechanicalFactor alpha rho (n + 1) i =
       lowerMechanicalFactor alpha rho n i ++
         [lowerMechanicalWord alpha rho (i + n)] := by

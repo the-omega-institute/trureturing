@@ -1,0 +1,39 @@
+**Theorem 94.2 (the exact serial fiber and finite saturation).**
+For every source, order and period in Definition 94.1,
+
+$$
+\ker_{\mathbb R}S_L
+=\bigoplus_\mu\bigl(F_\mu\cap\ker H\bigr).
+\tag{94.4}
+$$
+
+This is also the kernel of the entire infinite serial record. Thus $N$
+performed cycles already have the same kernel as any larger number.
+The rational kernel is the intersection of (94.4) with $\mathbb Q^N$;
+ranks over $\mathbb Q$ and $\mathbb R$ agree. These spectral spaces are
+proof coordinates, not supplied runtime measurements or an eigenvalue
+oracle.
+
+**Proof.** Use the spectral theorem for the real symmetric $A$, and write
+$x=\sum_\mu x_\mu$ with $x_\mu\in F_\mu$. Then
+$H_r(A^L)^n x=\sum_\mu\mu^n H_rx_\mu$.
+If $S_Lx=0$, for each fixed $r$ these are $N$ homogeneous equations.
+There are $d\le N$ distinct $\mu$. Their first $d$ rows are a
+Vandermonde matrix with determinant
+$\prod_{i<j}(\mu_j-\mu_i)\ne0$.
+Hence every $H_rx_\mu=0$. This proves containment in (94.4).
+Conversely these coefficient vanishings annihilate every cycle,
+including cycles beyond the first $N$. If $\mu=0$, its exponent-zero
+value is one and every positive power is zero, so the same argument
+includes that column. A rational matrix has the same rank over both
+fields because rank is its largest order of a nonzero minor. $\square$
+
+This is the standard finite sampled-observability calculation for update
+$A^L$ and readout $H$. The general finite-kernel supplier is
+`FiniteTimeTomographySaturation.all_future_kernel_eq_finrank_kernel`,
+with carrier $\mathbb Q^N$, update $A^L$, readout $H$ and dimension $N$.
+`FiniteObservabilityEquivalence.finite_observability_equivalence` supplies
+the corresponding real kernel/rank/Gram equivalence. Neither supplier
+asserts that the serial clock in (94.1) is observable. The native
+consequences below supply that missing schedule condition.
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:33c4ae750aaeaaeb0790600a3471b5623aea6a831079683e76230619e09a8a25
+  normalized_sha256: sha256:33c4ae750aaeaaeb0790600a3471b5623aea6a831079683e76230619e09a8a25
+cas_ref: sha256:33c4ae750aaeaaeb0790600a3471b5623aea6a831079683e76230619e09a8a25
+coverage_gids:
+  - gid: D5/S3/Weil/BurnolGram/WeilFullGramInertia.reducedMirrorForm_tendsto_fullMixedWeilForm
+    target_statement_id: sha256:deb4af4ffd6becff4487934bdd3365a32c63884ed234a5e5a8b1102893c4dc1c
+receipts:
+  unresolved_subitems: []

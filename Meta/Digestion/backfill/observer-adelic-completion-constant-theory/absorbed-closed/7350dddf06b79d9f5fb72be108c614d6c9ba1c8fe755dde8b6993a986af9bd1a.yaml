@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7350dddf06b79d9f5fb72be108c614d6c9ba1c8fe755dde8b6993a986af9bd1a
+  normalized_sha256: sha256:7350dddf06b79d9f5fb72be108c614d6c9ba1c8fe755dde8b6993a986af9bd1a
+cas_ref: sha256:7350dddf06b79d9f5fb72be108c614d6c9ba1c8fe755dde8b6993a986af9bd1a
+coverage_gids:
+  - gid: D5/S0/Tower/GoldenFixedPoint.golden_ratio_reciprocal_fixed_point
+    target_statement_id: sha256:1ad9de6bdaced54d0fb5e5d5d4938a46e1fcabc33cca5b7f335f1d21c2e4a914
+  - gid: D5/S3/Weil/CayleyLaguerre/CayleyMomentTransport.budget_transport_error
+    target_statement_id: sha256:289122d724273b0765c08e4012c99fd93e14df5949794a5acd9da188070bbd12
+receipts:
+  unresolved_subitems: []

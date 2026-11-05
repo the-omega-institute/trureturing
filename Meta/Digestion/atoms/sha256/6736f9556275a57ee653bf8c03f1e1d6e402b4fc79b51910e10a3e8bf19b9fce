@@ -1,0 +1,65 @@
+## 105. 定理 102.1 的完整运输锥及两侧约束
+
+证明（整个锥的夹逼）。令
+
+$$
+C=S(K)\subset Q,\qquad
+C^{*}=\{Y\in Q:\operatorname{Tr}(YX)\ge0\ \text{对所有 }X\in C\}.
+\tag{105.1}
+$$
+
+实线性双射在有限维中是同胚，故 $C$ 是闭、尖、生成的凸锥。
+$\operatorname{Tr}$ 在其非零元素上严格为正，迹一基紧致，
+$\rho_0\in C$，且 $0\le\operatorname{Tr}(EX)\le\operatorname{Tr}X$ 对所有 $X\in C$。
+特别地 $E\in C^{*}$，并由 (103.7) 得
+
+$$
+A_a(C)\subseteq C\quad(a=0,1,N),\qquad
+A_w(C)\subseteq C\quad(w\in\mathcal W).
+\tag{105.2}
+$$
+
+定义本源的状态内锥与效果外约束
+
+$$
+\begin{aligned}
+L_{\rm in}&=\overline{\operatorname{cone}\{A_w\rho_0:w\in\mathcal W\}},\\
+O_{\rm out}&=\{X\in Q:\operatorname{Tr}(EA_wX)\ge0
+                       \ \text{对所有 }w\in\mathcal W\}.
+\end{aligned}
+\tag{105.3}
+$$
+
+$\operatorname{cone}$ 表示有限非负线性组合，横线表示通常有限维拓扑闭包。
+由 $\rho_0\in C$、(105.2) 及 $C$ 闭，得到 $L_{\rm in}\subseteq C$。
+对 $X\in C$，每个 $A_wX\in C$，再用 $E\in C^{*}$，得到 $C\subseteq O_{\rm out}$。
+所以这些是完整 $Q$ 上的约束
+
+$$
+L_{\rm in}\subseteq C\subseteq O_{\rm out}.
+\tag{105.4}
+$$
+
+它们既非仅在原生八维超平面，也非仅在某个归一化轨道上。
+
+更明确地，定义效果的闭有限词轨道锥
+
+$$
+Z_w=\alpha_wU_w^\dagger EU_w,\qquad
+D=\overline{\operatorname{cone}\{Z_w:w\in\mathcal W\}}.
+\tag{105.5}
+$$
+
+$\operatorname{Tr}(Z_wX)=\operatorname{Tr}(EA_wX)$，
+故每个 $Z_w\in C^{*}$。对偶锥闭，因此正确方向是
+
+$$
+D\subseteq C^{*},\qquad C=C^{**}\subseteq D^{*},\qquad
+O_{\rm out}=D^{*}.
+\tag{105.6}
+$$
+
+对偶反转包含关系；不能将第一式倒置。
+外锥的等式成立，因为非负配对在有限和及闭包下保持。
+$D$ 明确包含闭包，不是原可数词的未经闭包的锥包。
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9214e21becc0c13aa54647bb020c963810428d630a44f4e261ea2ba0334895de
+  normalized_sha256: sha256:9214e21becc0c13aa54647bb020c963810428d630a44f4e261ea2ba0334895de
+cas_ref: sha256:9214e21becc0c13aa54647bb020c963810428d630a44f4e261ea2ba0334895de
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeLaws/ScientificGainGeneralizationReversal.scientific_gain_generalization_sign_reversal
+    target_statement_id: sha256:07dc3b9984fe6e9c8eb2d0e232364c8b844b69b0c049b0a678202519b85edb1c
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3d0cad27d79d5daf874e4796b32110d7b63acdf1413feb5936874ac5814563d1
+  normalized_sha256: sha256:3d0cad27d79d5daf874e4796b32110d7b63acdf1413feb5936874ac5814563d1
+cas_ref: sha256:3d0cad27d79d5daf874e4796b32110d7b63acdf1413feb5936874ac5814563d1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 准入边界章节标题及定义引言。
+    previous_atom_id: 63117c613093bda4503ab428b907f42097509ad1a6fef377a7d3659b28183fd2
+    next_atom_id: aee8a96b98e0d98c2d71f8f8f2410904a16e9c39dea2ddcfa643bf4ff2b70f93

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6bd337136502d935c80e90385b2299fe4e16da6c460cb99eee89bd7f5e2a6818
+  normalized_sha256: sha256:6bd337136502d935c80e90385b2299fe4e16da6c460cb99eee89bd7f5e2a6818
+cas_ref: sha256:6bd337136502d935c80e90385b2299fe4e16da6c460cb99eee89bd7f5e2a6818
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：把每个响应函数都有表示协议这一条件定义为响应完备，未宣称具体评价满足该条件。
+    previous_atom_id: 2019c7f3c159baed3a6292d15c2be574245fd2e4cf44546d8b87c5ddee799acd
+    next_atom_id: ff76e0e92c6ceebcb30d611fe7105c1a90a70815298e96a13c88fe7742626fcb

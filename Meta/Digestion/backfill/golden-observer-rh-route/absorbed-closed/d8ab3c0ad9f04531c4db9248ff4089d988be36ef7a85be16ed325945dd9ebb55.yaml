@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:d8ab3c0ad9f04531c4db9248ff4089d988be36ef7a85be16ed325945dd9ebb55
+  normalized_sha256: sha256:d8ab3c0ad9f04531c4db9248ff4089d988be36ef7a85be16ed325945dd9ebb55
+cas_ref: sha256:d8ab3c0ad9f04531c4db9248ff4089d988be36ef7a85be16ed325945dd9ebb55
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaCore/Statement.RH_implies_on_line
+    target_statement_id: sha256:f45a822e24f1537f2dfb6afc5dd09a133ab4e90939dbfa91f75bf0ac43bc30e2
+receipts:
+  unresolved_subitems: []

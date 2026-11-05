@@ -1,0 +1,24 @@
+#### 命题 10.2（规范归一与荷协变）
+
+该见证满足 $\sum_kA_kA_k^\dagger=I_3$，也满足 $\sum_kA_k^\dagger A_k=I_3$。令
+
+$$
+V(\theta)=\operatorname{diag} (1,\exp(i\theta),\exp(2i\theta)),
+\qquad (\lambda_0,\lambda_1,\lambda_2,\lambda_3)=(-1,1,-2,2),
+$$
+
+则 $V(\theta)A_kV(\theta)^{-1}=\exp(i\theta\lambda_k)A_k$。
+
+**证明。**
+
+两种归一和的每个对角元均为 $c^2+e^2=1$，非对角元为零。共轭矩阵单位满足
+$V E_{ij}V^{-1}=\exp(i(i-j)\theta)E_{ij}$，逐项给四个荷。
+
+∎
+
+归一方向在原问题中规定的是第一式，第二式是此具体见证的额外性质。这些 $A_k$ 不是四个酉门；若作 Kraus 操作还需声明相应的记录接口，不能仅凭矩阵乘积就与黄金门一一等同。
+
+<a id="statement-10-3"></a>
+
+<a id="thm-mpsinject"></a>
+

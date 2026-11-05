@@ -1,0 +1,82 @@
+**Theorem 12.2 (reset at an observed preparation stopping time).**
+Let $S$ be any observed stopping time, possibly infinite, and put
+
+$$
+A_S=\{S<\infty,\ S<\theta_I,\ O_S^I=v_0\}.
+\tag{12.3}
+$$
+
+For every bounded Borel functional $F_0$ of a continuous held output
+path on $[0,\infty)$, with the topology of uniform convergence on
+compact time intervals,
+
+$$
+\mathbb E_p\left[
+ \mathbf1_{A_S} F_0\bigl((O_{S+t}^I)_{t\ge0}\bigr)
+                         \mid\mathcal F_S^O\right]
+ =\mathbf1_{A_S}\,
+       \mathbb E_e F_0\bigl((O_t^I)_{t\ge0}\bigr).
+\tag{12.4}
+$$
+
+The product on the left is set to zero off $A_S$, so no value at
+$S=\infty$ is needed. In particular the delayed observed hitting times
+
+$$
+S_s=\inf\{t\ge s:O_t^I=v_0\},\qquad s\ge0,
+\tag{12.5}
+$$
+
+are stopping times and obey (12.4) on $\{S_s<\theta_I\}$.
+For the source start, almost surely,
+
+$$
+\begin{gathered}
+\theta_I>0,\qquad
+\inf\{t>0:O_t^I=v_0\}=0,\\
+\int_0^T\mathbf1_{\{v_0\}}(O_t^I)\,dt=0
+                         \quad\hbox{for every finite }T\ge0.
+\end{gathered}
+\tag{12.6}
+$$
+
+The same zero-residence assertion holds from every
+$p\in D_I\setminus N$. Thus observed returns near zero are genuine
+source contacts, without a positive interval of holding there.
+
+**Proof.** The exit reconstruction (12.1) and continuity show that
+$A_S\in\mathcal F_S^O$. Containment of the observed usual filtration
+in the full usual filtration makes $S$ a full-process stopping time.
+On $A_S$, (11.5) gives $\mathbf Z_S=e$. Apply the strong Markov
+property of the supplied diffusion at $S$, on $\{S<\infty\}$,
+localizing to $\{S\le n\}$ if necessary. Conditional on its entire
+full-process past, the future path on $A_S$ has law $\mathbb P_e$.
+Since $S<\theta_I$, the residual observation exit is the first exit
+of this future path from the very same $D_I$, and the future readout
+uses the same preparation rotations and map $\Phi$. Apply this
+measurable stopped-and-held readout to the future path and condition
+once more on $\mathcal F_S^O$. This proves (12.4), first for cylinder
+functions and then for bounded Borel path functionals by the monotone
+class theorem. This argument also establishes the measurability of
+the stopped-path functional used there.
+
+The first hitting time after a deterministic $s$ of a closed set by
+a continuous adapted process is a stopping time in its usual
+filtration. Apply this to $\{v_0\}$. Equality of the observed and
+actual contact sets in (11.5) identifies every such contact before
+exit. For a source start, continuity at the interior point $e$ gives
+$\theta_I>0$. The supplied self-regularity
+$\mathbb P_e\{\inf\{t>0:\mathbf Z_t=e\}=0\}=1$
+then gives arbitrarily small positive observed contacts before exit.
+Finally use (11.5) and the all-time zero-residence assertion
+[S, (116.15)]. Holding after exit contributes no preparation-output
+residence because its height differs from $k_0$. $\square$
+
+The strong Markov and source-regularity inputs here are those of the
+full symmetric diffusion in [S, Theorem 116.3]. The finely closed-set
+regularity convention used there is the one in
+[Chen--Fukushima--Ying, §4 before (4.1)](https://arxiv.org/pdf/math/0606784v1).
+Equation (12.4) is an observational conditional-law identity. It does
+not add a native reset command, erase retained native history or
+assert the same detector under arbitrary interventions.
+

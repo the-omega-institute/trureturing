@@ -1,0 +1,47 @@
+**Lemma 14.2 (uniform present suffixes and the two stationary probes).**
+For every integer $a\ge0$, every rank $j\ge2a$ and every word $q$ with
+$|q|\le a$, $P_{T_j}(q)=1$. Consequently at the prefix in Lemma 14.1,
+all suffixes of length at most $k+\lfloor e_H/2\rfloor$ are present
+in both possible replacements for each fixed $k$ and original leaf.
+Any query that branches among compatible members of the entire bin has
+length at least $\delta+K+1$.
+
+At the stationary entrance, for every original leaf $p_i$ and every
+integer $s\ge0$,
+
+$$
+ \begin{aligned}
+ P_{\rho^{2k}u_x}(p_iR^s)&=1\quad\Longleftrightarrow\quad s\le k,\\
+ P_{\rho^{2k}u_x}(p_iR^{k-1}LL)&=x_i.
+ \end{aligned}
+ \tag{GPO.45}
+$$
+
+Proof. Use the existing recurrence
+$T_0=\alpha,T_1=\beta,T_{j+2}=\langle T_{j+1},T_j\rangle$.
+The general present-suffix fact is the `short` argument inside
+ActualFibonacciSupportChain, recalled explicitly here for its shared-prefix
+application. The empty word is present at every rank. If $q=Lq'$ or
+$Rq'$ has positive length and $j\ge2|q|$, then $j\ge2$ and the
+respective child has rank $j-1$ or $j-2$, each at least $2|q'|$.
+Induction on the word length proves the fact. For the two replacements
+the smaller rank is $2k+e_H\ge2(k+\lfloor e_H/2\rfloor)$.
+
+A branching query must enter a cone, by Lemma 14.1. If its suffix had
+length at most $K+\lfloor e_H/2\rfloor$, the same present-suffix
+fact would make its answer one for every compatible $k\ge K$ and
+both labels. Thus its suffix is longer, giving in particular length
+at least $d_i+K+1\ge\delta+K+1$. This statement is about presence;
+the full replies at these addresses can differ and remain hidden.
+
+For (GPO.45), the right-spine height of $T_j$ is $\lfloor j/2\rfloor$:
+a right edge is available at rank at least two and reduces rank by two,
+ending at rank zero or one. Both ranks $2k,2k+1$ therefore have right
+height $k$. Following $k-1$ right edges in those two trees reaches
+$T_2$ or $T_3$. In $T_2=\langle\beta,\alpha\rangle$ the suffix
+$LL$ is absent; in $T_3=\langle T_2,\beta\rangle$ it is present.
+Preserved original cones prove (GPO.45), including $k=1$ with no right
+edges before $LL$. This is exactly the leaf specialization of ABT12.3's
+existing even node table; it does not supply a free label observation.
+$\square$
+

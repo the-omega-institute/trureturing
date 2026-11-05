@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:55e373d78c5fabe41f1212e960b4ba555d931844b5ec6ff259d9325e192d0f71
+  normalized_sha256: sha256:55e373d78c5fabe41f1212e960b4ba555d931844b5ec6ff259d9325e192d0f71
+cas_ref: sha256:55e373d78c5fabe41f1212e960b4ba555d931844b5ec6ff259d9325e192d0f71
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：859.1提出道、空、佛性、神与巴哈伊的跨传统比较方向，保留各自教义语境；属于哲学解释提案而非数学断言。
+    previous_atom_id: 6d183e1acecff769a79cd51aea13239796398ce1240840aa2a27406f51f24cbf
+    next_atom_id: 97b9a6bc1f842b517d0541ee89ec91656ed617775d18d02c199c5e0b054dcc37

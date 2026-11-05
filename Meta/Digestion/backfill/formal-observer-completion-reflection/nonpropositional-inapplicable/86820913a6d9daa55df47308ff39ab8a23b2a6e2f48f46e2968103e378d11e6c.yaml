@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:86820913a6d9daa55df47308ff39ab8a23b2a6e2f48f46e2968103e378d11e6c
+  normalized_sha256: sha256:86820913a6d9daa55df47308ff39ab8a23b2a6e2f48f46e2968103e378d11e6c
+cas_ref: sha256:86820913a6d9daa55df47308ff39ab8a23b2a6e2f48f46e2968103e378d11e6c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: S_task 后的kernel包含定义目标充分字段，不声称任何目标被恢复。'
+    previous_atom_id: 0c0aa348f8bd478e3b9d7b9e5606787d0c7a2bcdcc0438f07fc8737014e29e66
+    next_atom_id: 2037189b4cf24517ed0754016b8ad0cae316c7e9f7dfdf6f79b72e21e1e401ba

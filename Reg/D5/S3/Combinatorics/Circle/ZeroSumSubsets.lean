@@ -248,6 +248,19 @@ def carry_audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   familyRecord := none
   options := #[] }
 
+/- The neutral path theorem is genuinely source-generic: its source vector is a
+   free argument, and the Boolean potential and modulus are free arguments as
+   well.  This exact source witness records the theorem for the audit surface.
+   A four-slot variation cannot be supplied for a theorem that is true for
+   every readout satisfying its hypotheses, so the remaining audit is left
+   explicitly open under issue #22063 rather than manufacturing a rejected
+   realization. -/
+abbrev neutral_carry_path_source :=
+  type_of% (@_root_.D5.S3.Combinatorics.Circle.ZeroSumSubsets.neutral_carry_path)
+
+theorem neutral_carry_path_source_actual : neutral_carry_path_source :=
+  @_root_.D5.S3.Combinatorics.Circle.ZeroSumSubsets.neutral_carry_path
+
 #print axioms carry_registration
 #print axioms carry_audit
 

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b43d7cf960ef46c50832cf29b1d9cd57a19f045a0e795e80983370436da18e3b
+  normalized_sha256: sha256:b43d7cf960ef46c50832cf29b1d9cd57a19f045a0e795e80983370436da18e3b
+cas_ref: sha256:b43d7cf960ef46c50832cf29b1d9cd57a19f045a0e795e80983370436da18e3b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 规定跨尺度和 prime-side 双盲审计标准及分类用语；不声称通过该标准。
+    previous_atom_id: 33bc56d3f00bb9e34a27f1be0d04801f9d87bc4c8880a9069dabeead4ad52b62
+    next_atom_id: 10293c49c015aedfa538ca6752ff0f7e3a2d380ad73f5a9b08132fa3d22ff2f4

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7238e4297f7bf2a308e1bfa5ec606c67f3edfc41ecb282da2f61e769b6826a90
+  normalized_sha256: sha256:7238e4297f7bf2a308e1bfa5ec606c67f3edfc41ecb282da2f61e769b6826a90
+cas_ref: sha256:7238e4297f7bf2a308e1bfa5ec606c67f3edfc41ecb282da2f61e769b6826a90
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 休谟记忆、因果与人格归属的文本解释；属于引文解释、建模约定或研究建议，没有另立待证数学断言，本收据不验证其文献或经验真值。
+    previous_atom_id: 6a583f6a4c79241ff95fc9fade508ae55402d28d960217678b685f833028b39b
+    next_atom_id: 2d0a97999893857c7017209ad9d5e3cde377c02c10c77e3537e849fa7eff3949

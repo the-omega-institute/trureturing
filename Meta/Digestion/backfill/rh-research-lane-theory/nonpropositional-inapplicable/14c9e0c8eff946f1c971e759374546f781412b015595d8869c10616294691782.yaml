@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:14c9e0c8eff946f1c971e759374546f781412b015595d8869c10616294691782
+  normalized_sha256: sha256:14c9e0c8eff946f1c971e759374546f781412b015595d8869c10616294691782
+cas_ref: sha256:14c9e0c8eff946f1c971e759374546f781412b015595d8869c10616294691782
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条受“本轮不主张”清单支配，只限定无限素数能量未被本轮声称完成，不对该数学内容作断言。
+    previous_atom_id: 7ad34c2dcf3ed53073e6c2fbaab912d1016e1f167cdfb60927e8165e8ad43a33
+    next_atom_id: 9f4d34e191501789d79ebc1f1c1ac519ca0bcd72dd80bc9fbee3852edca0b688

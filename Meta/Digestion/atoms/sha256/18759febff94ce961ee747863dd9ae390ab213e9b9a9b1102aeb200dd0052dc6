@@ -1,0 +1,32 @@
+**命题 9.3（隐藏相位的明确后继读出）。**
+在全五模上令
+
+$$
+\psi_\theta=\frac{|0\rangle+|1\rangle+|2\rangle+|3\rangle+
+ e^{-\mathrm{i}\theta}|13\rangle}{\sqrt5}.
+$$
+
+所有人口恒为 $1/5$，三均值为 $(2/5,2/5,1/5)$。
+若下一步允许固定相位参考的 $R_1(\alpha)$，则
+
+$$
+\langle N_x\rangle_{\rm after}
+=\frac25+\frac{\sin(2\alpha)\sin\theta}{5},\qquad
+\langle N_y\rangle_{\rm after}=\frac25,\quad
+\langle N_z\rangle_{\rm after}=\frac15.
+$$
+
+证明。
+$R_1$ 在 $01$ 与 $3,13$ 两块均为
+$\cos\alpha\,I-\mathrm{i}\sin\alpha\,X$。
+第一块的模式一概率仍为 $1/5$；
+第二块的模式 $13$ 振幅为
+$(e^{-\mathrm{i}\theta}\cos\alpha-\mathrm{i}\sin\alpha)/\sqrt5$，
+模平方为 $(1+\sin(2\alpha)\sin\theta)/5$。
+两块总质量及模式二概率保持，得到其余公式。
+证毕。
+
+这个测试只读取相位的一个正弦分量，不是完整相位重建。
+固定参考脉冲已经使相应相位差具有操作意义；
+不能同时把它作为绝对不可观察的规范自由度删去。
+

@@ -1,0 +1,36 @@
+**定理 35.3 的局部界证明。** 设 $p=t$、$q=t+\delta$、$0<|\delta|<\min(t,1-t)/2$，并写 $\Delta=|\delta|$。则 $p,q\ge t/2$。令
+
+$$
+Q_t=2+4/t,\qquad u=1/p,\quad w=1/q.
+$$
+
+有 $u,w\le2/t$，从而
+
+$$
+Z=2+u+w\le Q_t,
+\qquad
+\overline h=1+\frac{u^2+w^2}{2+u+w}
+\le1+\frac2t,
+\qquad 2\overline h\le Q_t.
+\tag{40.1}
+$$
+
+中间不等式使用 $u^2+w^2\le(2/t)(u+w)$。因 $0<\Delta<1$ 且 $\mathcal A\ge1$，一般界（39.10）给出
+
+$$
+\mathbb E\tau_\epsilon
+\le Q_t+144Q_t\Delta^{-2}\mathcal A
+\le145Q_t\Delta^{-2}\mathcal A.
+\tag{40.2}
+$$
+
+再置 $\ell=\log(1/\epsilon)\ge\log4$。有 $\log8\le2\ell$，故 $\log(8/\epsilon)\le3\ell$。同时 $\log\log(e+1/\Delta)>0$，所以
+
+$$
+\mathcal A
+\le3\left[\ell+\log\log(e+1/\Delta)\right].
+\tag{40.3}
+$$
+
+将它代入（40.2）即得（35.11）的 $435Q_t$。常数 $144$ 来自两侧各 $72$ 的配对数界，$145$ 吸收真实锚距离，$435$ 再来自（40.3）的因子三。每个固定内点 $t$ 的常数都有限且严格为正；所有估计覆盖所列全部正 $\epsilon$、两种非零 $\delta$ 符号和早期检查点。没有略去地板、天花板或小半径情形。至此定理 35.3 的非对角线部分全部得证。$\square$
+

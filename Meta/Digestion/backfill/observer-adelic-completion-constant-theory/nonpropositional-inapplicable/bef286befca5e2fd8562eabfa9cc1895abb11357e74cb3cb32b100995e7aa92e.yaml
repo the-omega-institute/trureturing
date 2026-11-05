@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bef286befca5e2fd8562eabfa9cc1895abb11357e74cb3cb32b100995e7aa92e
+  normalized_sha256: sha256:bef286befca5e2fd8562eabfa9cc1895abb11357e74cb3cb32b100995e7aa92e
+cas_ref: sha256:bef286befca5e2fd8562eabfa9cc1895abb11357e74cb3cb32b100995e7aa92e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Question asking which contact function is produced; no property is asserted.'
+    previous_atom_id: b3d7d2726995ce5369bc3a32f68f4bdbc4e9ba77798b851761130db5a4451112
+    next_atom_id: 0a1ee56186054b5998d5052bbe6f56819901784d7f19c9adc7c5ddff2c8126d9

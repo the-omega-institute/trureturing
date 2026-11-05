@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:150ccc35da7fee2fcc577723d78ad0182977c10c81a10e095d17d60fad01a2d6
+  normalized_sha256: sha256:150ccc35da7fee2fcc577723d78ad0182977c10c81a10e095d17d60fad01a2d6
+cas_ref: sha256:150ccc35da7fee2fcc577723d78ad0182977c10c81a10e095d17d60fad01a2d6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列举拟加入的原始性要求，不断言指定对象原始。
+    previous_atom_id: 82a0c1c8e7b38c176cf760adbcc427c541c2d65d7d31a9f1ee55d750aa6b6d4b
+    next_atom_id: 8a5150c1d224edcc179d5272269a90b1e00c92dd396dd225642c3f29b2f66ffb

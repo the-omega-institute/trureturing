@@ -1,0 +1,19 @@
+**Construction 12.2 (an acquired selector actually executed in C).**
+Recover $w$ by §11. Take its last growth address, or the root for the
+empty word, and descend left in the earned present logical code until
+a leaf, just as in Construction 6.3. Its type chooses an enabled $P$
+or $S$. Submit that real addressed clocked call using the current
+binding/rights, consume the inner Growth, new-tree Tick acknowledgement
+and full outward Growth/Return. Its actual successor is
+
+$$
+(t',T_{t'}\iota_gx_{\rm now})
+=(t',T_{t'}\iota_gT_t^nx_w).
+\tag{12.1}
+$$
+
+The complete current predictor in Theorem 7.2 follows this actual source
+and predicts every later set-valued Read. The selector is a finite
+calculation on acquired content and actual code; it is not an uninstalled
+choice oracle or a historical Next port.
+

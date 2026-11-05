@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:07f4e1151f972fd4d3060cba23deadfce8cceab234c6e148c28dfb2cc9fd1ee3
+  normalized_sha256: sha256:07f4e1151f972fd4d3060cba23deadfce8cceab234c6e148c28dfb2cc9fd1ee3
+cas_ref: sha256:07f4e1151f972fd4d3060cba23deadfce8cceab234c6e148c28dfb2cc9fd1ee3
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Attribution/NoNaturalFiniteChoice.no_natural_finite_choice
+    target_statement_id: sha256:1eba33ffa8ef6fdce9b49ba2bb46c1d4f671e58d173ec15b26f5333606afa9a5
+receipts:
+  unresolved_subitems: []

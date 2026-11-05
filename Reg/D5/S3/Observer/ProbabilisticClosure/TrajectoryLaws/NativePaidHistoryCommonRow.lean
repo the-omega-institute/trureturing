@@ -160,7 +160,7 @@ private theorem posterior_rejected_law : ¬ posteriorArena.Law posteriorRejected
   have he := hb 0 0 (by omega) (by omega)
   norm_num [posteriorRejected, realize] at he
 
-private theorem posterior_pure_readout (l k : Depth) (s : ActivePhase) (H : PhaseHistory s) :
+theorem posterior_pure_readout (l k : Depth) (s : ActivePhase) (H : PhaseHistory s) :
     posteriorActual.readout () (PMF.pure l) (k,⟨s,H⟩) = if k = l then 1 else 0 := by
   have hL := likelihood_pos H.val.1 l
   have hLf : likelihood H.val.1 l ≠ ∞ := by

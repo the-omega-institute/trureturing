@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3f349ffdb611f6b57eef837f23a47845adfd59616cbacda05470fb92d36e5583
+  normalized_sha256: sha256:3f349ffdb611f6b57eef837f23a47845adfd59616cbacda05470fb92d36e5583
+cas_ref: sha256:3f349ffdb611f6b57eef837f23a47845adfd59616cbacda05470fb92d36e5583
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 说明较弱肢体的尊荣、照顾与解释范围，不以功能分数推导伦理排序。
+    previous_atom_id: ae13e1216e0d270ae358dc3dd0b58666d8ce2c5bada992962c067e8087d3056d
+    next_atom_id: c773852e1bc2964474a23a81c5409f75476fd6d359341a8441bf4b9379f67541

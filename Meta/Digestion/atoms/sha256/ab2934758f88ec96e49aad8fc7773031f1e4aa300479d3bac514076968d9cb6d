@@ -1,0 +1,16 @@
+### Proposition 6.1: local post-processing monotonicity
+
+If \(P\in\mathcal L_\triangle\), then \(P'\in\mathcal L_\triangle\) for every product output channel (6.3).
+
+**Proof.** Replace Alice's response by
+
+\[
+A'(a'\mid\beta,\gamma)
+=
+\sum_a\Lambda_A(a'\mid a)A(a\mid\beta,\gamma),
+\]
+
+and similarly for \(B,C\). The source product measure is unchanged and the three new kernels still use only their incident edges. ∎
+
+Therefore, if a noisy distribution \(P'\) obtained by local output post-processing is proved nonlocal, the parent P is also nonlocal. This gives a monotone detector-noise threshold. No analogous monotonicity follows for global white noise or independent source Werner noise merely from non-convexity.
+

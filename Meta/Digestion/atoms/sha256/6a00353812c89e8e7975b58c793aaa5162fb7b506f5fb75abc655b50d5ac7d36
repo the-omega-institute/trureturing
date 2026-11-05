@@ -1,0 +1,23 @@
+### 定义 10.1（与时域无关的尾部界）
+
+沿用定义 1.1，先设 $c=2\varepsilon/m>0$。置
+
+$$
+\rho=-b+\sqrt{b^2+2c},\qquad
+q=\max\{1,\lceil-2a\rceil,\lfloor\rho\rfloor+1\},\qquad V=2q,
+\tag{10.1}
+$$
+
+并对整数 $v\ge V$ 记
+
+$$
+H_v=\lfloor v^2/4\rfloor,\qquad
+D_v=\frac{c(v+2b)}{H_v+2c},\qquad
+\mathcal B_v=\{\lfloor v/2\rfloor,\lceil v/2\rceil\}.
+\tag{10.2}
+$$
+
+集合中的重复元素只计一次。$q$ 是有限正整数，满足
+$q\ge-2a$、$q>\rho>0$，因而 $q(q+2b)>2c$。
+这里没有对时域 $T$ 设上界，也没有假定先验非负。
+

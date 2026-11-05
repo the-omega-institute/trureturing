@@ -1,0 +1,102 @@
+**定理 11.3（相位分数矩形的定量缺口）。** 对定义 11.1 的一律，固定相位 $s$、互异的 $g_1,g_2\ge2$ 及互异的 $h_1,h_2\ge2$。定义
+
+$$
+\begin{aligned}
+D={}&B_s(g_1,h_1)+B_s(g_2,h_2)
+       -B_s(g_1,h_2)-B_s(g_2,h_1),\\
+F_{ij}={}&\nu_{s-g_i}f_{s-g_i}(g_i)f_s(h_j),\qquad
+H=\max_{i,j}F_{ij}^{-1}.
+\end{aligned}
+\tag{11.9}
+$$
+
+则对同一原可见律，
+
+$$
+c_\star-d(P)\ge\frac{D^2}{25\mu^2H^2}.
+\tag{11.10}
+$$
+
+此结论不假定（11.5）、有限矩阵表示或擦除根和。特别地，任何非零 $D$ 都排除该成员取得。
+
+证明。在可数间隔边状态 $e=(a,n)$ 上，实际 Palm 链的平稳行及转移为
+
+$$
+\pi(a,n)=\nu_a f_a(n),\qquad
+K^0((a,n),(b,v))=\mathbf1_{\{b=a+n\}}f_b(v).
+\tag{11.11}
+$$
+
+式（11.1）的完整历史范围识别了这个链的全部双侧有限维律。令 $\mathcal F_0(e,e')=\pi(e)K^0(e,e')$。取入边 $e_i=(s-g_i,g_i)$、出边 $o_j=(s,h_j)$，在四个有序对 $(e_i,o_j)$ 上置
+
+$$
+\Delta(e_1,o_1)=\Delta(e_2,o_2)=1,\qquad
+\Delta(e_1,o_2)=\Delta(e_2,o_1)=-1,
+\tag{11.12}
+$$
+
+其余为零。每行及每列的和均为零，即使某个入边状态与某个出边状态相同也成立；四个有序对仍互异。于是当 $|t|\le1/(2H)$ 时
+
+$$
+\mathcal F_t=\mathcal F_0+t\Delta,\qquad
+K^t(e,e')=\mathcal F_t(e,e')/\pi(e)
+\tag{11.13}
+$$
+
+给出一个平稳双侧边链 $Q_t$，兼容转移全正，行列边缘均为同一 $\pi$。它保留完整一间隔分布、$\nu$、$\mu$ 及端点相位兼容性。按屋顶 $n$、偏移 $0,\ldots,n-1$ 以 $Q_t/\mu$ 悬挂，偏移零输出一，其余输出零，偏移 $j$ 的相位为 $a+j$，得到一份实际联合平稳律 $J_t$ 及可见 $P_t\in\mathcal S$。归一化为 $\mathbb E_\pi n/\mu=1$；位移的屋顶边界项由边链平稳性相消。式（11.7）在 $t=0$ 识别 $J_0=J$，其余 $P_t$ 是原完整合法域中的竞争律；无需仍在定义 11.1 的较小类中。
+
+在 $J_t$ 上，将可见外部扩大为 $\mathcal A=\sigma(S_0,X_i:i\ne0)$。若自由外部的最近锚为 $-l,r$，其外侧下一对锚为 $-l-u,r+v$，令
+
+$$
+\begin{gathered}
+a=S_0-l,\quad e_u=(a-u,u),\quad e_l=(a,l),\quad
+ e_r=(a+l,r),\quad e_n=(a,l+r),\quad e_v=(a+l+r,v),\\
+\widehat R_t=
+\frac{K^t(e_u,e_l)K^t(e_l,e_r)K^t(e_r,e_v)}
+     {K^t(e_u,e_n)K^t(e_n,e_v)},\qquad
+\widehat q_t=\frac{\widehat R_t}{1+\widehat R_t}.
+\end{gathered}
+\tag{11.14}
+$$
+
+强制纤维取 $\widehat q_t=0$。从确定外侧锚开始，初始 Palm 因子 $\pi(e_u)/\mu$ 相同；两种中心完成的中段因子恰为分子三个转移与分母两个转移，更外侧因子相同。对有限外侧柱验证，继以测度唯一性，得 $\widehat q_t=\mathbb E_{J_t}[X_0\mid\mathcal A]$。这是完整扩大外部的条件化，不依赖扰动后能否由可见位恢复相位。
+
+在双侧有锚的所有扩大配置上以（11.14）定义共同 Borel 函数，在其余处取零。$t=0$ 时它化为（11.3）的原核公式。每个改变的转移满足
+
+$$
+\left|\log\frac{K^t(e,e')}{K^0(e,e')}\right|
+\le2H|t|,
+\qquad
+|\widehat q_t-\widehat q_0|\le\frac52H|t|.
+\tag{11.15}
+$$
+
+第一式用 $|\log(1+z)|\le2|z|$，未改变的转移之比为一；第二式使用五个因子及 logistic 导数上界 $1/4$。这里未将一个只在 $P$ 下定义的条件期望等价类移到可能奇异的 $P_t$ 上。
+
+现在支付原时钟的全部损失。对边 $e=(a,n)$，原核函数 $\widehat q_0$ 在该间隔内全部零位的损失和为 $V_a(n)$；在连续边 $e=(a,n),e'=(a+n,v)$ 的公共占据端点，其损失为 $B_{a+n}(n,v)$。将每个占据点计作出边的起点，或平移为前一边的终点，各计一次，故
+
+$$
+\begin{aligned}
+\mathbb E_{J_t}(X_0-\widehat q_0)^2
+&=\frac1\mu\left[\sum_{(a,n)}\pi(a,n)V_a(n)
+ +\sum_{e=(a,n),\,e'=(a+n,v)}
+     \mathcal F_t(e,e')B_{a+n}(n,v)\right]\\
+&=d(P)+tD/\mu.
+\end{aligned}
+\tag{11.16}
+$$
+
+每个间隔内的零和每个端点一均已计入；$V_a(n)\le n$ 保证无限奖励和可积。没有省去边界一或远处损失。条件平方投影在同一 $J_t$ 中给
+
+$$
+\begin{aligned}
+d(P_t)&\ge\mathbb E_{J_t}(X_0-\widehat q_t)^2\\
+&=\mathbb E_{J_t}(X_0-\widehat q_0)^2
+ -\mathbb E_{J_t}(\widehat q_t-\widehat q_0)^2\\
+&\ge d(P)+tD/\mu-\frac{25}4H^2t^2.
+\end{aligned}
+\tag{11.17}
+$$
+
+首个不等式因为可见外部的信息包含于 $\mathcal A$，风险随信息增加而不增。$|D|\le2$、$\mu\ge2$、$H\ge1$，所以 $t=2D/(25\mu H^2)$ 位于可行区间。将此值代入并用原普适上界 $d(P_t)\le c_\star$，即得（11.10）。这一证明未使用有限位修改或任意原后验版本在修改点的值。$\square$
+

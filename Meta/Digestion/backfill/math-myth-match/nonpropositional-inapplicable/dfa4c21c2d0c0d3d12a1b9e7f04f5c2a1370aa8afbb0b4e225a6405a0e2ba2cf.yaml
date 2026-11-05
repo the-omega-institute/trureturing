@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dfa4c21c2d0c0d3d12a1b9e7f04f5c2a1370aa8afbb0b4e225a6405a0e2ba2cf
+  normalized_sha256: sha256:dfa4c21c2d0c0d3d12a1b9e7f04f5c2a1370aa8afbb0b4e225a6405a0e2ba2cf
+cas_ref: sha256:dfa4c21c2d0c0d3d12a1b9e7f04f5c2a1370aa8afbb0b4e225a6405a0e2ba2cf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 限定否定性言说在 MMM 中的哲学用法，并列明道德经及巴哈伊比较的解释边界。
+    previous_atom_id: b144674ce567008ab30c395bfd45b331fbb6a82bbeef9bbd9465027ab333a27c
+    next_atom_id: c470983adb072ed5f4a11cd82455a488d47301355c62032ca5ecc708639b31af

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:99e17944593f5b5ee6b606f50ebc6af64100e18b8d8a10b2b8b213236b910931
+  normalized_sha256: sha256:99e17944593f5b5ee6b606f50ebc6af64100e18b8d8a10b2b8b213236b910931
+cas_ref: sha256:99e17944593f5b5ee6b606f50ebc6af64100e18b8d8a10b2b8b213236b910931
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该段只列外部核验脚本、结果文件和未纳入仓库的 Lean 候选源码；结算不认证这些外部文件或其数学结果。
+    previous_atom_id: daf1c2160d50c28c1f139e78f614bb099262c324f47d01df11c51c91dd742a34
+    next_atom_id: 247619ad9de510091a36674b8ebcafb7c4c3176ff2a98edf6d934ab46264c3ce

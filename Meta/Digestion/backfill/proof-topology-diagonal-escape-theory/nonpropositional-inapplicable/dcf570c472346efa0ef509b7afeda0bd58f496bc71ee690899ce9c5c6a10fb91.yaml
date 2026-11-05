@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dcf570c472346efa0ef509b7afeda0bd58f496bc71ee690899ce9c5c6a10fb91
+  normalized_sha256: sha256:dcf570c472346efa0ef509b7afeda0bd58f496bc71ee690899ce9c5c6a10fb91
+cas_ref: sha256:dcf570c472346efa0ef509b7afeda0bd58f496bc71ee690899ce9c5c6a10fb91
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯章节标题“SM.4 完整可见响应的因果恢复”，不包含定义、量词或数学断言。
+    previous_atom_id: d4671e25296d46b4fee149f7a91c9d7ce507b2d3bfb3ede5b8c084cc071b7d04
+    next_atom_id: 46fcd4c0e33ee9ab10a7eeee23f74234e03fb06ee2abbd02065e8e0e889a5728

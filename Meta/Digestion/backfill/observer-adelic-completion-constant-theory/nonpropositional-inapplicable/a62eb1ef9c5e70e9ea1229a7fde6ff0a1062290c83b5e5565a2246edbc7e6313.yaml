@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a62eb1ef9c5e70e9ea1229a7fde6ff0a1062290c83b5e5565a2246edbc7e6313
+  normalized_sha256: sha256:a62eb1ef9c5e70e9ea1229a7fde6ff0a1062290c83b5e5565a2246edbc7e6313
+cas_ref: sha256:a62eb1ef9c5e70e9ea1229a7fde6ff0a1062290c83b5e5565a2246edbc7e6313
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅解释字段 P 的名称，没有给出正锥的代数断言。
+    previous_atom_id: 8fb33f7aaa541da8c7a156f6512259e0ce76be284ac258c51b1025220195e746
+    next_atom_id: b72f429aac3e4ae17edfd7bfde50004b1e408df01b78f1d5b4f0636271c16379

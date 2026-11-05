@@ -1,0 +1,17 @@
+**Corollary 87.4 (a uniform leave-one recipe).** For $k=0$ take
+$Z=\varnothing$. For $k\ge1$ one may leave any one masked label
+unreplaced and replace the other $k-1$. Thus
+
+$$
+q=\max(k-1,0),\qquad M\le N+5\max(k-1,0).
+\tag{87.5}
+$$
+
+Indeed all but one leaves of a finite tree zero-force it, by the
+stalled-forest proof in NLBA Theorem 28.1. Here those initial leaves
+are exactly $S_0\cup Z$. With $k\ge1$ this recipe gives
+$s=b+k-2$ and $F=N-b+3k-2+a_Z$. Leaving an alpha unedited when
+one is present saves one promotion within this recipe. No global
+birth, cell or sensor minimum follows. The sharper zero-, one- and
+two-mask suppliers in §§79–84 retain their own conclusions.
+

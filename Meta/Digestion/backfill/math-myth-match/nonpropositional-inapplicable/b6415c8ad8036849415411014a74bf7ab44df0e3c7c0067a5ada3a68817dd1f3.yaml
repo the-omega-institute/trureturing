@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:b6415c8ad8036849415411014a74bf7ab44df0e3c7c0067a5ada3a68817dd1f3
+  normalized_sha256: sha256:b6415c8ad8036849415411014a74bf7ab44df0e3c7c0067a5ada3a68817dd1f3
+cas_ref: sha256:b6415c8ad8036849415411014a74bf7ab44df0e3c7c0067a5ada3a68817dd1f3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题及阅读导航；两个已有非命题链子项均已终结，父项不含数学断言。
+    previous_atom_id: 47c54f9bbb40fe9c92f9441d8d1658f6e584bfe1ebe03ab9f336cb930be1b257
+    next_atom_id: 0725db0f831a95f25f74ca0c7fe17134320cc17d2295cbca989249fbfdfe1a9f
+  chain_atoms:
+    - 7f43c45358a10a38496fa16ac2052a53ac5c16c3e134663e5ad6e3a2ed5c4482
+    - de5f36479a4f2854b80eec7b8eb0922379de62210494f399d82dd882e45a0ea4

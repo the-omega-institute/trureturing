@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2785c44ac87c0fad8aa64d2fc62b8fb77e90c3f489774904963e4bf059307d47
+  normalized_sha256: sha256:2785c44ac87c0fad8aa64d2fc62b8fb77e90c3f489774904963e4bf059307d47
+cas_ref: sha256:2785c44ac87c0fad8aa64d2fc62b8fb77e90c3f489774904963e4bf059307d47
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅解释《逻辑哲学论》中名称、命题组织与宗教语境的比较；没有独立数学断言。
+    previous_atom_id: 12ade21910e0e5a7152d926eec5cf56398528b761204abe114aec68f18115141
+    next_atom_id: 949f9b2eb7187a35d1fad7ac7931f9a593a673b95f1e7b2fdf8f19e282232d99

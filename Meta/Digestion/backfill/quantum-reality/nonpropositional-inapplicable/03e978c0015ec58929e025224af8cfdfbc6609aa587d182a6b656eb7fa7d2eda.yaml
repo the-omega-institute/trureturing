@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:03e978c0015ec58929e025224af8cfdfbc6609aa587d182a6b656eb7fa7d2eda
+  normalized_sha256: sha256:03e978c0015ec58929e025224af8cfdfbc6609aa587d182a6b656eb7fa7d2eda
+cas_ref: sha256:03e978c0015ec58929e025224af8cfdfbc6609aa587d182a6b656eb7fa7d2eda
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该段区分状态标签与物理事件的建模含义；所写不等号是概念区分，未定义可核验的数学相等关系。
+    previous_atom_id: e41f9642d63b63b12dbd17d02e28f11e63e252c5303730f8de6aa232e820ae7d
+    next_atom_id: 902c67e075004d3ace32a4d81c599c2d9e21c1248bb1c2aea29dfd7546fa961f

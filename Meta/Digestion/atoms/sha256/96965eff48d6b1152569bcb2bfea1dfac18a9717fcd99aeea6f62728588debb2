@@ -1,0 +1,37 @@
+**引理 B-37.4（同一原族的联合约束）。** 对 $\{i,j,k\}=\{1,2,3\}$，在 $i<j$ 的约定下定义两个互补路径对
+
+$$
+P_{k,x}=M_i\cup\{x\},\qquad
+\bar P_{k,x}=M_j\cup(M_k\setminus\{x\})\quad(x\in M_k),
+$$
+
+并令
+
+$$
+t_k=\sum_{x\in M_k}\bigl(|\mathcal F\cap\Gamma(P_{k,x})|
+ +|\mathcal F\cap\Gamma(\bar P_{k,x})|\bigr),\qquad
+s=w_2+2w_3+w_4=c_2-2c_3+c_4.
+\tag{37.13}
+$$
+
+则所有计数属于同一个 $\mathcal F$，且
+
+$$
+\begin{gathered}
+|\mathcal F|=u+\sum_i a_i+\sum_i b_i+\sum_i t_i,\qquad
+0\le u\le u_0,\quad 0\le b_i\le w_4,\quad 0\le t_i\le2w_3,\\
+\frac{a_i}{w_2}+\frac{b_i}{w_4}\le1,\qquad
+z_{ij}:=a_i+a_j+b_i+b_j+t_k\le s.
+\end{gathered}
+\tag{37.14}
+$$
+
+第一条归一化不等式的等号恰为
+$(a_i,b_i)=(w_2,0)$ 或 $(0,w_4)$。若 $a_i,a_j>0$，则 $z_{ij}\le s-1$。
+
+证明。由四见证，定理B-32.4给 $\mathcal F\subseteq\mathcal H$。第33节的完整分类将其分为 $\mathcal U$、三个匹配迹纤维、三个 $Q_i$ 迹纤维及十二个路径迹纤维，后者恰按(37.13)分成三组。不同迹纤维互不相交，得到计数恒等式及 $u,b_i$ 的界。每个互补路径对用定理B-37.2的 $(3,3)$ 情形，总数至多 $w_3$；每组有两对，所以 $t_i\le2w_3$。
+
+对 $P=M_i,Q=Q_i$ 使用 $(2,4)$ 情形；它的两侧准确是 $\Gamma(M_i),\Gamma(Q_i)$，分母分别是式(33.10)中的 $w_2,w_4$。等号的空／满侧条件及正权重给归一化式与所列两个等号值。
+
+对 $P=M_i,Q=M_j$ 使用 $(2,2)$ 情形。强制 $M_i$、禁止 $M_j$ 的全部完成，其 $D$ 迹准确为 $M_i$、两条 $M_i+x$（$x\in M_k$）及 $Q_j$；反侧准确为 $M_j$、两条 $M_j+x$ 及 $Q_i$。因此两侧在原 $\mathcal F$ 中的总数之和正是 $z_{ij}$。各侧分母由(37.3)为 $c_2-2c_3+c_4=s$，得到最后一界；当 $a_i,a_j>0$，两侧非空，严格性与整数性给 $z_{ij}\le s-1$。这里的共同耳集合是 $E_{M_i\cup M_j}$；兼容该并集的第三匹配耳及所有兼容的 $D$ 外耳仍可使用。它不是第34节 $q=1$ 的字面实例，而是定理B-37.2已分别核对条件的实例。∎
+

@@ -1,0 +1,16 @@
+**Proposition 57.2 (same-run source operations and complete traffic).** One realization is the original acquisition, the $L$ original pulse actions, and Theorem 56.1's diagnostic acquisition and held decoding. With Add returning its original fixed acknowledgement, its exact source counts before a later continuation are
+
+| Source operation or emitted item | Count |
+| --- | --- |
+| Tick | $3N+L-1$ |
+| Add | $L$ |
+| Read | $L+2$ |
+| Hold | $N+2$ |
+| Scalar root replies | $3N+1+2L$ |
+| Add acknowledgements | $L$ |
+| Hold acknowledgements | $N+2$ |
+
+The Hold count selects the $N+1$ acquisition Holds of Proposition 41.2 and the final diagnostic Hold; extra Holds are added when used. If Add also emits the optional post-Add root, add $L$ scalar outputs and their serialization. Every pulse input, command frame, acknowledgement, Read and returning-Tick scalar is part of the traffic.
+
+Proof. These are Proposition 49.2's counts on the identical physical operation sequence, with the explicit selected Holds added. The decoder's additional length strata are local computations during the final Hold, so they add no source operation. A direct two-buffer source Tick performs $3N-2$ scalar multiplications and $2N-2$ additions. Thus these source totals multiply by $3N+L-1$, and the $L$ Adds contribute $L$ actual root additions. Read serialization and Hold/control work have their own actual costs. Fixed acknowledgements are not silently counted as rational scalars. $\square$
+

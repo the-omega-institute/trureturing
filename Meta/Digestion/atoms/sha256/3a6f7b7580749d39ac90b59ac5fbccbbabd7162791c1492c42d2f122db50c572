@@ -1,0 +1,108 @@
+**Theorem 44.2 (Every last shift and multiplicity in the edge presentation).**
+For $k\ge2$, $b\ge1$ one has
+
+$$
+\begin{aligned}
+D^e_{k,b}&=F_{2k+1}^{b}+2F_{2k}^{b},\\
+d^e_{k,b}:=\dim R^e_{k,b}&=3+b(2k-1),\\
+c^e_{k,b}:=\operatorname{pd}_{S^e_{k,b}}R^e_{k,b}
+ &=D^e_{k,b}-d^e_{k,b}.
+\end{aligned}
+\tag{44.2}
+$$
+
+The entire final module of a minimal ordinarily graded free
+resolution is
+
+$$
+\mathcal F_{c^e_{k,b}}
+=\bigoplus_{j=1}^{k-1}
+ S^e_{k,b}\bigl(-(D^e_{k,b}-2j-1)\bigr)^{\mu^e_{k,b,j}}.
+\tag{44.3}
+$$
+
+In the full exponent grading it is
+
+$$
+\mathcal F_{c^e_{k,b}}
+=\bigoplus_{j=1}^{k-1}\ \bigoplus_{p\in\mathcal G^e_{k,b,j}}
+ S^e_{k,b}\bigl(-(\Sigma^e_{k,b}-p)\bigr).
+\tag{44.4}
+$$
+
+Proof. A path on $r$ vertices has $F_{r+2}$ independent sets.
+For $r=0,1$ its counts are one and two; splitting according
+to the first vertex's absence or presence gives the Fibonacci
+recurrence for $r\ge2$. Classify a global mode by the shared
+edge pattern. For $00$, each branch leaves the path on its
+$2k-1$ private vertices, with $F_{2k+1}$ choices. For $10$,
+the neighbor of $a$ among the private vertices is forced absent,
+leaving a path on $2k-2$ vertices with $F_{2k}$ choices.
+For $01$ the other private endpoint is forced absent, giving
+the same count. The two occupied-endpoint cases are distinct,
+and $11$ is forbidden. Independent private choices therefore
+give exactly $F_{2k+1}^b+2F_{2k}^b$ modes. The empty global
+set occurs in the $00$ case and still contributes a degree-one
+variable. The dimension is the full lattice rank proved in
+Theorem 41.2.
+
+The polynomial ring has dimension and depth $D^e_{k,b}$ at
+its homogeneous maximal ideal $\mathfrak n=(z_I)_I$.
+The nonzero finite quotient $R^e_{k,b}$ is Cohen–Macaulay
+of depth $d^e_{k,b}$. Hilbert syzygy gives finite projective
+dimension over this polynomial ring. After localization at
+$\mathfrak n$, the Auslander–Buchsbaum formula applies:
+for a nonzero finite module of finite projective dimension
+over a Noetherian local ring, ring depth equals projective
+dimension plus module depth. This is Stacks, Proposition
+10.111.1, tag 090U [AB44]. A minimal graded resolution
+localizes to a minimal local resolution, so this formula
+gives $c^e_{k,b}$ in (44.2).
+
+Minimal free resolutions may be chosen in the full exponent
+grading: homogeneous generator selection applies because
+the grading has a positive ordinary coarsening and finite
+degree pieces. Every differential has entries in
+$\mathfrak n$. The polynomial canonical module is
+$\omega_{S^e_{k,b}}=S^e_{k,b}(-\Sigma^e_{k,b})$, since
+the top exterior product of its variable differentials has
+degree the sum of all variable degrees. Barile–Bruns,
+Theorem 4.5(a) [BB41], applies to this regular graded-local
+ring and its Cohen–Macaulay residue ring $R^e_{k,b}$.
+With $c=c^e_{k,b}$ and $\Sigma=\Sigma^e_{k,b}$, it gives
+
+$$
+\operatorname{Ext}^{c}_{S^e_{k,b}}
+(R^e_{k,b},S^e_{k,b}(-\Sigma))\simeq\omega_{R^e_{k,b}},
+\qquad
+\operatorname{Ext}^{i}_{S^e_{k,b}}
+(R^e_{k,b},S^e_{k,b}(-\Sigma))=0\quad(i\ne c).
+\tag{44.5}
+$$
+
+The canonical grading here is the same full-lattice interior
+grading supplied by their Theorem 5.1 in Theorem 41.2.
+This is the classical canonical-Ext interface used in
+§33 and Theorem 38.2 [Supplier41], now applied to the
+different global mode set (44.1).
+
+Dualize a minimal resolution into $S^e_{k,b}(-\Sigma)$.
+Equation (44.5) makes the reversed dual a resolution of
+the canonical module. Its initial module is
+$\operatorname{Hom}(\mathcal F_c,S^e_{k,b}(-\Sigma))$.
+The incoming dual differential still has all entries in
+$\mathfrak n$. Reducing the cokernel modulo $\mathfrak n$
+therefore makes this map zero and retains exactly one basis
+vector per dual summand. If a summand of $\mathcal F_c$ is
+$S^e_{k,b}(-\Theta)$, its dual generator has degree
+$\Sigma-\Theta$. By Theorem 42.2 the full canonical minimal
+generator degrees are exactly the exponents $p$ in the
+sets $\mathcal G^e_{k,b,j}$, each once. Solving
+$\Sigma-\Theta=p$ gives every summand of (44.4), with
+no cancellations or missing summands. Ordinary degree
+coarsening subtracts $2j+1$ from $D^e_{k,b}$ and counts
+those exponents by $\mu^e_{k,b,j}$, proving (44.3).
+This determines the final module from the actual canonical
+module, not from an alternating Hilbert numerator alone.
+$\square$
+

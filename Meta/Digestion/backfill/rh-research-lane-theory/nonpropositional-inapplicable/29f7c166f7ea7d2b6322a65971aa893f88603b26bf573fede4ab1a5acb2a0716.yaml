@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:29f7c166f7ea7d2b6322a65971aa893f88603b26bf573fede4ab1a5acb2a0716
+  normalized_sha256: sha256:29f7c166f7ea7d2b6322a65971aa893f88603b26bf573fede4ab1a5acb2a0716
+cas_ref: sha256:29f7c166f7ea7d2b6322a65971aa893f88603b26bf573fede4ab1a5acb2a0716
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 程序复验、有限诊断计数、源码哈希与验证边界，不以执行记录证明数学结论。
+    previous_atom_id: 0202f5389b473d0cb524c7150bd20034ca6399b00a484c352150e5363817fc16
+    next_atom_id: 94691bf49f6457850e7783f661ff137b103c61e238ad21213290c8a3d6666b6d

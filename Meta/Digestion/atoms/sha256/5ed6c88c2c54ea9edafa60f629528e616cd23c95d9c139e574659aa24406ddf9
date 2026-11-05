@@ -1,0 +1,19 @@
+#### 命题 5.4（实际门误差的累计界）
+
+若原生字 $U_w=G_L\cdots G_1$ 的实际酉实现为 $\widetilde U_w=\widetilde G_L\cdots\widetilde G_1$，且每次 $\left\lVert \widetilde G_j-G_j\right\rVert_{\rm op}\le\delta_j$，则
+
+$$
+\left\lVert \widetilde U_w-U\right\rVert_{\rm op}
+\le\left\lVert U_w-U\right\rVert_{\rm op}+\sum_{j=1}^L\delta_j.
+$$
+
+**证明。**
+
+逐项替换乘积因子并作望远镜相减，每项两侧的酉乘积不改变算子范数，得到实际字与理想字之差至多为 $\sum_j\delta_j$。再用三角不等式。
+
+∎
+
+这是最坏情况上界，不断增加字长本身不能使它趋零。若门本身也在预测中，递归精度必须与实际校准、误差相关结构或另外声明的纠错资源一起分析；理想矩阵的编译定理没有自动处理这些变量。
+
+<a id="sec-6"></a>
+

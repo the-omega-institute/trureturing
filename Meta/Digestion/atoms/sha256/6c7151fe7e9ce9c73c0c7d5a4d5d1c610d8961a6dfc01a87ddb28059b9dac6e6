@@ -1,0 +1,16 @@
+**假设 144.2（三个实际统计关系）。** 在 $\mathcal U$ 中，分别要求
+
+$$
+\begin{aligned}
+\mathrm C:\quad &m_0(aj)=m_0(a)
+&& (a\in\mathsf W_{11},\ 0\le j\le8),\\
+\mathrm E:\quad &P_{\mathsf T(aj)}(A)=P_{\mathsf T(a)}(A)
+&& (a\in\mathsf W_{11},\ 2\le j\le10),\\
+\mathrm D:\quad &P_{\mathsf R(a,\epsilon)}(A)=P_{\mathsf T(a)}(A)
+&& (a\in\mathsf W_{11}).
+\end{aligned}
+\tag{144.3}
+$$
+
+C、D 正是 140.1–140.2 的实际边缘关系，其含义不借入 $\mathcal B$ 的终端律。E 只比较同一旧事件在两个实际调用历史上的概率，不是记录条件化的隔离关系。三式均不量化任意数学酉或任意制备。
+

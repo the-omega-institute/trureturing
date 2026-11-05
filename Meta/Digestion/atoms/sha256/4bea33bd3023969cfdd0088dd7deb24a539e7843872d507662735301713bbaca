@@ -1,0 +1,40 @@
+**Definition 1.1 (The moving-mean problem).** Let $a\ge7$ be an integer and set
+
+$$
+r=a+1,\qquad s=a+2,\qquad
+0\le\delta\le1,\qquad \theta=1-\delta,\qquad q=r-\delta=a+\theta.
+$$
+
+A law $x$ assigns masses $x_T\ge0$ of total one to the nonempty subsets of $[s]$. Write
+
+$$
+K=|T|,\qquad I_i=\mathbf1_{\{i\in T\}},\qquad
+y_i=\mathbb E I_i>0,\qquad \mathbb E K=q.
+$$
+
+All moments, marginals and conditional laws refer to this one $x$. There is no restriction on the positive-mass cardinalities or on connectedness of the incidence support. In particular zero type masses and arbitrarily small positive marginals are allowed. Define
+
+$$
+\begin{aligned}
+H(x)&=\mathbb E\left[K^2\sum_{i\in T}y_i^{-2}\right],\\
+Z&=\delta a^3+\theta r^3,\\
+B&=\frac{a^2r^2}{q}+\frac{(2a+1)\theta r^3}{q^2}
+ =\frac{r^2Z}{q^2},\\
+d(x)&=H(x)-B,\qquad D_a(\delta)=\inf_x d(x).
+\end{aligned}\tag{1.1}
+$$
+
+These use the common-array model and the normalization $H=2J_s$, $B=2F_r(q)$ of [*CDSO incidence moments and capacity phases*, Definitions 1.1–1.2](CDSO_INCIDENCE_MOMENTS_AND_CAPACITY_PHASES.md). In particular $Z$ is a reference adjacent-cardinality third moment, not the third moment of an arbitrary admissible law. The graph normalization underlying $J_s$ is the CDSO normalization in A. M. Albalahi, S. Das, A. Ali, J. Barman and A. E. Hamza, *On the hyperbolic Sombor index and its counterpart*, Discrete Math. Lett. 16 (2025), 108–115, §1, p.109, DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176).
+
+For $0<t<q$ put
+
+$$
+\begin{aligned}
+h_\theta(t)&=\frac1t+\frac{a^2r^2}{q-t}
+ +\frac{(2a+1)[\theta+(a-1)t]r^3}{(q-t)^2},\\
+g_\theta(t)&=h_\theta(t)-\frac1t,\\
+\Xi_\theta(t)&=\frac3t-\frac{a(2a+1)tr^3}{(q-t)^2},\\
+\Lambda_\theta(t)&=\frac{a(2a+1)tr^3}{(q-t)^2}.
+\end{aligned}\tag{1.2}
+$$
+

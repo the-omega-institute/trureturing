@@ -1,0 +1,125 @@
+**Theorem 33.2 (attained prefix acquisition and mature readiness).**
+For $m>0$, the program in Definition 33.1 is an actual finite
+acquisition on its one source. It ends ready for all three tasks at
+
+$$
+ N(m)=\min\{n\ge3:F_n-1\ge m\},
+ \tag{GPO.81}
+$$
+
+with jointly attained read and update coordinates
+
+$$
+\begin{aligned}
+ Q&=m,& U&=N(m),\\
+ W&=\sum_{j=1}^m(|p_j|+2),&
+ M_{\rm addr}&=\max_{1\le j\le m}(|p_j|+2),\\
+ W&\le m(N(m)-1),&M_{\rm addr}&\le N(m)-1.
+\end{aligned}
+ \tag{GPO.82}
+$$
+
+No full-support scan or source-law output is an uncounted prerequisite.
+Among preparations seeking class-uniform zero-error mature readiness,
+$N(m)$ is the sharp worst update deadline for the appropriate class.
+The read count and literal coordinates in (GPO.82) are attained upper
+bounds for this construction; no unknown-coefficient minimum-Read or
+total-resource optimum is asserted.
+
+Proof. A birth at parent $p_j$ in update $t_j$ is a terminal cherry
+at that cut. After one further update, (GPO.69) gives exactly
+
+$$
+ \operatorname{Read}_{t_j+1}(p_j aa)=z_j.
+ \tag{GPO.83}
+$$
+
+The next update's fresh orientations affect neither this reply nor the
+old parent address. All queries of its batch are stationary at that
+same cut. This is the actual one-update read of Theorem 25.1,
+applied to known birth parents rather than to a prior full shape scan.
+
+The required parents are internally available. For the first batch,
+the only birth of update two is at the known root. Inductively, before
+processing the batch at cut $s$, every earlier mature batch has been
+fully acquired unless this is the final batch. Those earlier bits
+extend through $B_{s-2}$ and reconstruct the labelled physical
+$X_{s-2}$. Its beta-leaf addresses are precisely the parents of
+births in update $s-1$, and their physical lexicographic order is the
+actual order. Finite local traversal of this earned tree therefore
+constructs each literal $p_j aa$ before requesting it. No unknown
+subtree, hidden label or oracle enters a control operand. During the
+final partial batch the whole parent list was already determined by
+these earlier bits.
+
+Each update releases exactly the preceding batch for (GPO.83).
+Through cut $n$ the total available prefix is $v_n$. Consequently
+the first cut reaching $m$ is exactly (GPO.81), and the procedure
+makes exactly the first $m$ queries of (GPO.83). Synthesis from these
+bits determines the entire behavior by the corresponding lemma.
+Generate the remaining bits through $B_N$, including unread bits in
+the final mature batch and the newest batch, and reconstruct the actual
+$X_N$. These generated values are justified predictions from the
+authentic law and actual acquired prefix, not additional paid replies.
+This establishes readiness and finite termination on each promised input.
+
+There are exactly $N$ actual updates from alpha and $m$ reads.
+A birth parent in update $t$ has depth at most $t-2$:
+starting with the first root birth at $t=2$, no update increases
+a descendant depth by more than one. Hence each query of that birth
+has length at most $t$. Every read birth satisfies $t+1\le N$,
+proving the last two bounds in (GPO.82) and all exact sums there.
+All traversal, literal writing, candidate tests and reconstruction remain
+charged local work.
+
+For sharpness against adaptive stopping, a single difficult source
+must remain unready at every earlier possible mature cut. In
+$\mathscr R_d$, $d\ge1$, choose the periodic stream whose ones
+are exactly at indices $d-1,2d-1,3d-1,\ldots$. Every prefix of
+length $v<2d$ has a compatible alternative differing at its next bit.
+For $v<d-1$ use an impulse at $v$; at $v=d-1$ use zero.
+For $d\le v\le2d-2$, put $k=v-d$ and use initial seed with
+its sole one at $d-1$ and the order-$d$ recurrence whose sole
+nonzero coefficient is $c_{d-1-k}=1$. Its outputs at indices
+$d,\ldots,d+k-1$ are zero, because their selected seed positions
+are below $d-1$, while its output at $d+k=v$ is one.
+The periodic source is zero there. At $v=2d-1$ instead use the
+single impulse at $d-1$. Thus the actual difficult source's own
+prefix is ambiguous at every subthreshold length, including $d=1$.
+
+In $\mathscr M_K$, choose the $K$-cycle with its unique one at
+phase $K-1$. For $v<K-1$ compare with $0^v1^\infty$;
+at $v=K-1$ compare with zero. For $K\le v\le2K-2$, put
+$l=v-(K-1)$. Use $K-l$ transient zero states followed by an
+$l$-cycle whose one is its last phase. Its first one is at $K-1$
+and its second at $K-1+l=v$, whereas the difficult $K$-cycle's
+second one is at $2K-1$. It therefore matches the whole prefix and
+differs at its next bit, using exactly $K$ states. For $K=1$ the
+constant-one difficult source and constant zero handle the sole
+shorter length $v=0$.
+
+For the public-row benchmark of length $r>0$, every seed prefix of
+length $v<r$ admits an alternative next seed bit under that same
+row. Thus any chosen actual seed is unready at all such lengths.
+On each of these difficult-source runs, an adaptive program stopping
+at any mature cut below $N(m)$ has $v_n<m$ and an alternative
+with the identical full accessible trace by Corollary 31.3, but a
+different newest bit and $\mathcal Q_1$ answer. It cannot stop
+there correctly for all sources. The same argument handles zero-error
+randomization: countably many finite cuts/visible words partition a
+positive finite stopping event, and an alternative preserves its
+record law while changing the required answer. Hence no smaller
+worst update deadline works. This proves sharpness for all three
+tasks without mistaking a separate fixed-cut witness for an adaptive
+stopping lower bound. The other coordinates have not been minimized.
+$\square$
+
+For $m=0$ the stream is already fixed in the zero-order recurrence
+or zero-length public-row class. Zero reads suffice; the first mature
+cut $n=2$ is ready after its two actual updates. Formula (GPO.81)
+would give $N(0)=3$ only because it explicitly restricts $n\ge3$;
+it is not the optimum in this degenerate case. There is no zero-state
+Moore class. If readiness at the nonmature seed itself is allowed, its
+known zero law already supplies prediction there without an update;
+that is outside the mature-cut deadline comparison.
+

@@ -1,0 +1,11 @@
+**Proposition 90.1 (canonical actual calls, including the empty word).** Let an encoding have $n$ successes and $f$ raw refused probes, and then execute exactly its designated assay, with no other optional calls. The attained call counts are
+
+| Coordinate through the completed assay | $+$, $d_+=I$ | $-$, $d_-=N-1$ |
+| --- | --- | --- |
+| Reset | $1$ | $0$ |
+| Add | $1$ | $1$ |
+| scalar Read | $1+b(I+1)$ | $bN$ |
+| Tick | $n+I$ | $n+N-1$ |
+| Hold | $I+2$ | $N$ |
+| growth attempts | $n+f$ outward and $n+f$ inner raw attempts | $n+f$ raw attempts |
+| field acknowledgement payloads | $n+2I+4$ | $n+2N$ |

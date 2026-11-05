@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:fd552841fbc6572030bb8996af2b49bec97f736cbcb96a0f579a71ab82821fa8
+  normalized_sha256: sha256:fd552841fbc6572030bb8996af2b49bec97f736cbcb96a0f579a71ab82821fa8
+cas_ref: sha256:fd552841fbc6572030bb8996af2b49bec97f736cbcb96a0f579a71ab82821fa8
+coverage_gids:
+  - gid: D5/S3/Weil/Probability/CanonicalLiCurvatureZeroFree.not_rh_forces_canonical_curvature_failure
+    target_statement_id: sha256:cb6294f6c84c5efe1a96cfee512f71c7b047255ad27249c5287d4d02bfc6dbbe
+  - gid: D5/S3/Weil/Probability/CanonicalLiGrowthZeroFree.canonical_li_probability_envelope_implies_rh
+    target_statement_id: sha256:1c3bb4571764e42346eef5d0cb6e5ae48c40348f1c7ad697b00dd52ba98c5002
+  - gid: D5/S3/Weil/Probability/CanonicalLiGrowthZeroFree.not_rh_forces_quadratic_escape
+    target_statement_id: sha256:d15d9f5bfbfe9ae46f02505d373aea5cdd321f5586efb96386f914cca1a64280
+  - gid: D5/S3/Weil/Probability/LiCurvatureSchoenbergSemigroup.normalized_curvature_quadratic_bound
+    target_statement_id: sha256:09562302681f6da3a4e31b9a96dd63a71ddd7909d8c7719c8bb2e87c852c6ed5
+receipts:
+  unresolved_subitems: []

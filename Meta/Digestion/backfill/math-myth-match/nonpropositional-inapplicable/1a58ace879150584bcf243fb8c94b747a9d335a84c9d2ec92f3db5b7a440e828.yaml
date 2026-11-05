@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1a58ace879150584bcf243fb8c94b747a9d335a84c9d2ec92f3db5b7a440e828
+  normalized_sha256: sha256:1a58ace879150584bcf243fb8c94b747a9d335a84c9d2ec92f3db5b7a440e828
+cas_ref: sha256:1a58ace879150584bcf243fb8c94b747a9d335a84c9d2ec92f3db5b7a440e828
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅为第841节的章节标题，不含独立数学断言或可结算子句。
+    previous_atom_id: 93e06191bb9caf2439c2924736796e2519aff2ad363a2466cdda0b71975fe82a
+    next_atom_id: cc89504b573ada3a39402ed5025ec15b7d168111cd95a0d0a7c1c9ca2cd5b6ac

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3a5c5e1c0de91d0a471599675fc808e7c56e474cd6f1e860b197970c1c776dc0
+  normalized_sha256: sha256:3a5c5e1c0de91d0a471599675fc808e7c56e474cd6f1e860b197970c1c776dc0
+cas_ref: sha256:3a5c5e1c0de91d0a471599675fc808e7c56e474cd6f1e860b197970c1c776dc0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: PA.3 的假设片段：规定 N、d 的素数幂表示及指数范围，作为后续命题的前提；没有断言任意整数都存在这样的表示，也没有给出待证结论。
+    previous_atom_id: 336790d28dfff032c16028c9fb4962b8061de638f290c4b9ffe1bc741efeacf4
+    next_atom_id: 0780b924e6fffe820063dea697a31320c5a58d82cb8ad97bce0c070458778680

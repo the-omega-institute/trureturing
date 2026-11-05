@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8a2cda1e658953e382dd19d8b45843b4dcfba68bf539f96ff720fed4c2a04437
+  normalized_sha256: sha256:8a2cda1e658953e382dd19d8b45843b4dcfba68bf539f96ff720fed4c2a04437
+cas_ref: sha256:8a2cda1e658953e382dd19d8b45843b4dcfba68bf539f96ff720fed4c2a04437
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列举 matrix unit 的符号作为干预选项，未断言其关系或存在。
+    previous_atom_id: ccf5e5517c196e3e931238c0dca97e17f97f4962651feaf59f63952365608bcd
+    next_atom_id: 5e1ff03dab373fe6763a4a2af471610baf4af50a31f9ac21d956f0a1b67e5439

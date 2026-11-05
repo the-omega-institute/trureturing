@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:14b5ee52bce2907075c4bc08556416ad4bf9ce006e4934b5efc305964590275f
+  normalized_sha256: sha256:14b5ee52bce2907075c4bc08556416ad4bf9ce006e4934b5efc305964590275f
+cas_ref: sha256:14b5ee52bce2907075c4bc08556416ad4bf9ce006e4934b5efc305964590275f
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaAnalytic/RectangleLogDeriv.finite_zeros_rectangle
+    target_statement_id: sha256:fec2deca52522f72425dad22f0abbd441b93db6657fd92c5d88b4127008f37a2
+  - gid: D5/S3/Weil/ZetaAnalytic/RectangleLogDeriv.residueTheorem_finset
+    target_statement_id: sha256:c4fdb17ca03a076237bfee63ab9e35404eec9872bf002987b1641b32191b8a5b
+  - gid: D5/S3/Weil/ZetaAnalytic/RoucheZeroCount.rectangle_zero_count_eq_of_norm_sub_lt
+    target_statement_id: sha256:4836e4fa1bba1475544554361b2e0ab59d5b21d6166da8c8efca95bf4a5ee442
+receipts:
+  unresolved_subitems: []

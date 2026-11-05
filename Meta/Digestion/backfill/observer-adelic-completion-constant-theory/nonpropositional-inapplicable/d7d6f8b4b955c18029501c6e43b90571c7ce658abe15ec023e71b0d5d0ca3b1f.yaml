@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d7d6f8b4b955c18029501c6e43b90571c7ce658abe15ec023e71b0d5d0ca3b1f
+  normalized_sha256: sha256:d7d6f8b4b955c18029501c6e43b90571c7ce658abe15ec023e71b0d5d0ca3b1f
+cas_ref: sha256:d7d6f8b4b955c18029501c6e43b90571c7ce658abe15ec023e71b0d5d0ca3b1f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The atom is only the bullet fragment “历史；”. It labels a history axis in a preceding conceptual list and asserts no mathematical proposition.
+    previous_atom_id: f9c1e8d0e8996fe588ceecc9df07a6f4465c1d00f66c29659cfa27aca251c894
+    next_atom_id: ec1559a54302f997feb6cc8d10064a83336c0509f826fb136723e5a930998797

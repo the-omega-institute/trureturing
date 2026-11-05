@@ -1,0 +1,63 @@
+**Theorem 103.2 (finite-precision acquisition and matching read order).**
+Under Assumption 103.1, every $F\in\mathcal B_E$ has a finite symbolic
+approximation with error at most $\varepsilon$, uniformly over all allowed
+replies. If $E=0$ or $\varepsilon^2\ge\varphi E$, return $0$ with no reads.
+Otherwise enumerate $A_t$ in lexicographic order with $L<R$, request each
+mean once, and from the received integers form
+
+$$
+Y=\sum_{p\in A_t}qn_p\mathbf1_{[p]},\qquad
+\widehat F=\Pi Y
+ =\sum_{p\in A_t}\left(qn_p-\sum_{u\in A_t}m(u)qn_u\right)\mathbf1_{[p]} .
+\tag{103.3}
+$$
+
+This uses exactly $k_t$ scalar reads, and, writing $r=E/\varepsilon^2$,
+
+$$
+k_t<Br,\qquad
+\|F-\widehat F\|_2^2\le\varphi t E+q^2\le\frac34\varepsilon^2 .
+\tag{103.4}
+$$
+
+Every deterministic adaptive protocol with only this service as source
+access, succeeding for all its replies with at most $d$ reads, must satisfy
+$d+1\ge br$.
+Consequently, in the fine regime $r\ge2/b$, the least worst-case scalar
+read count for this service lies between $br/2$ and $Br$.
+This order statement concerns scalar reads, not communication bits.
+
+*Proof.* By (101.2), $\|F\|_2^2\le\varphi E$, proving both zero-read
+branches. In the remaining branch, Cauchy–Schwarz and $m(p)>bt$ give
+$|\mu_p(F)|\le\sqrt{\varphi E/m(p)}<R$. Nearest-integer rounding of
+$\mu_p(F)/q$, with a fixed rule at ties, has error at most $q/2$
+after multiplication by $q$ and lies in $[-K,K]$. Thus every
+$\Gamma_p(F)$ is nonempty and has a fixed finite alphabet.
+The projection $Q_tF$ is centered. Since $\Pi$ is a contraction and
+the cylinder masses sum to one, every allowed tuple satisfies
+
+$$
+\|\widehat F-Q_tF\|_2^2
+ \le\|Y-Q_tF\|_2^2
+ =\sum_{p\in A_t}m(p)|qn_p-\mu_p(F)|^2\le q^2 .
+\tag{103.5}
+$$
+
+The residual $F-Q_tF$ is orthogonal to the entire cylinder space,
+which contains $\widehat F-Q_tF$. Pythagoras and (101.3) prove
+(103.4); the read bound is $k_t<1/(bt)=Br$. The cylinder step
+function $\widehat F$ belongs to $\mathcal D\cap\mathscr G_0$ by
+the finite-increment extensions of Biased Boundary (2.10) and the free root.
+
+For the lower read bound, fix the admissible nearest-rounding response rule just used.
+A hypothetical robust $d$-read protocol can be simulated by $d$ ideal
+continuous linear mean queries, rounding their outcomes by this public rule
+and applying the same updates and final reconstruction. Each mean is
+continuous on $L^2$, with norm at most $m(p)^{-1/2}$. Proposition 102.1
+therefore forces $\varepsilon\ge\sqrt{bE/(d+1)}$.
+Worst-case response quantification is essential: the proof uses an allowed
+mean-only rounding rule, not favorable error choices encoding extra source
+information. For $r\ge2/b$, $br-1\ge br/2$; combine this with the constructed
+protocol. No probabilistic error, noise independence or repeated-source
+averaging is assumed. $\square$
+

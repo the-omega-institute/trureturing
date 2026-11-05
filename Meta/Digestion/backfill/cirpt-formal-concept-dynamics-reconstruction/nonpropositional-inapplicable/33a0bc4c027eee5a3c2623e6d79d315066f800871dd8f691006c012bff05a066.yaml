@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:33a0bc4c027eee5a3c2623e6d79d315066f800871dd8f691006c012bff05a066
+  normalized_sha256: sha256:33a0bc4c027eee5a3c2623e6d79d315066f800871dd8f691006c012bff05a066
+cas_ref: sha256:33a0bc4c027eee5a3c2623e6d79d315066f800871dd8f691006c012bff05a066
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: blindResidual 名称之后列出允许的研究工作，属于实施规范而非盲核定理。
+    previous_atom_id: 3cc3d31fa691d93fd0b77691a2624f798e74e07ec0af35453c72de4d5203a0ff
+    next_atom_id: 9cc47eb15b594c55b6de8a6a6c14f980702d037fbdee18e19b80ec1810a8206b

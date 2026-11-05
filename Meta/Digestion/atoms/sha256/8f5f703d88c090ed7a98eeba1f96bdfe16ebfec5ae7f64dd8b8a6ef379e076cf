@@ -1,0 +1,23 @@
+**定理 104.3（原终端不足以消费全称时序 Born 二择一）。** 令 $\mathcal E=\Lambda$、$\rho=\rho_0$。在数学上若量化全部输入、输出投影，要求一个共同矩阵 $K$ 满足
+
+$$
+\operatorname{Tr}[K(P\otimes Q')]
+=\operatorname{Tr}[Q'\mathcal E(P\rho P)]
+\quad\text{对所有投影 }P,Q',
+\tag{104.3}
+$$
+
+则原这一对 $(\rho_0,\Lambda)$ 不存在这样的 $K$。然而原菜单记录、记录锚和 (101.10) 均不供应 (104.3) 所量化的全称顺序仪器，故此非存在结论不是这些记录上的新增实验结论，也不是从原记录推出 Born 原则。
+
+证明。[时序 Born 二择一供应](../../../D5/S3/Quantum/Measurements/SpatiotemporalBornRuleDichotomy.lean) 的准确条件为：对有限正维的密度 $\rho$ 和 CPTP $\mathcal E$，(104.3) 中任意矩阵 $K$ 的存在等价于 $\rho=I_D/D$ 或 $\mathcal E(X)=\operatorname{Tr}(X)\sigma$ 为固定态替换通道。该命题不要求 $K$ 是正密度。原 $\rho_0$ 纯而维数三，非最大混合；$\Lambda(P_\xi)=P_\xi$ 且 $\Lambda(I_3)=I_3$，不可能同时满足替换公式。因此二择一给非存在。Fullwood–Ma–Wu，[2507.16919v2，二时投影测量的 Lüders–von Neumann 问题](https://arxiv.org/abs/2507.16919v2) 是该供应的文献起点；文献给充分情形及任意维必要性问题，这里的必要性直接复用现有二择一供应，不归给文献一个未在其中证明的全维结论。
+
+操作对应不能省略：右边要求首次投影之后仍有 $P\rho P$ 作为系统后继，继而执行同一个 $\mathcal E$，最后再测 $Q'$。原终端只固定效果概率。例如对 $E_1,E_0$，两套完整 CP 仪器
+
+$$
+\mathcal J_b^{\rm L}(X)=E_bXE_b,\qquad
+\mathcal J_b^{\rm R}(X)=\operatorname{Tr}(E_bX)\,I_3/3
+\tag{104.4}
+$$
+
+有相同两个效果，在任何原终端记录及未触动参考边缘上不可区分，却有不同系统后继；在数学输入 $E$ 的是分支后再读 $E$，两者概率分别为一、$1/3$。这些替代是未规定后继的数学完成，不是新增制备或原门权限。新增 (101.10) 的后继则明确为 $V_0P_\pm X P_\pm V_0^\dagger$，既不是任意 $P$ 的 Lüders 仪器，也没有把 $V_0^\dagger$ 安装为控制。故用停止取得的二元效果或一个固定记录读口都不能完成全称时序供应的操作映射。最后，$\rho_n\to I_3/3$ 不能代替二择一中的精确标量态等式；(103.4) 没有主张一般有限 $n$ 的这一等式。∎
+

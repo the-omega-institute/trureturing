@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:eaf7041387958330f514219514437589fe666ac9feefba334ab24147bb49eea2
+  normalized_sha256: sha256:eaf7041387958330f514219514437589fe666ac9feefba334ab24147bb49eea2
+cas_ref: sha256:eaf7041387958330f514219514437589fe666ac9feefba334ab24147bb49eea2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 会通研究的方向与概率模型适用范围说明，没有新增全称数学断言。
+    previous_atom_id: 3cf532790de172947485193202d7a6d473a5c8fa33f132600246d81cbded0f89
+    next_atom_id: 2e19e4d542e33ad10b79d380e9fd35b1440d4991170910d6aab39900ad2061be

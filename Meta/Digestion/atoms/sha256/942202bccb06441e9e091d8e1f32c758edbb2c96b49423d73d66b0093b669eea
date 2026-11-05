@@ -1,0 +1,33 @@
+#### 命题 7.3：保留手性标记的酉实现
+
+在新增空间  $\widetilde H=H_ +\oplus H_ -\simeq H\otimes\mathbb C^2$  上，定义
+
+<a id="eq-eq:double"></a>
+
+```math
+\widetilde K_j=K_j\oplus\overline{K_j},\qquad
+ J_\chi(\psi_+,\psi_-)=(\psi_-,\psi_+).\tag{23}
+```
+
+则  $J_ \chi$  为复线性酉对合，且
+ $J_ \chi\widetilde K_ jJ_ \chi=\widetilde K_ j^{-1}$ 。
+记  $\rho(\sigma_ {j+1})=K_ j$ 、 $\widetilde\rho=\rho\oplus\overline\rho$ 。
+对任意编织字  $b$ ，若  $\kappa$  逐生成元送  $\sigma_ i$  到  $\sigma_ i^{-1}$ ，则
+ $J_ \chi\widetilde\rho(b)J_ \chi=\widetilde\rho(\kappa(b))$ 。
+
+
+**证明。**
+
+块交换显然酉且自逆，交换两块后为
+ $\overline{K_ j}\oplus K_ j=K_ j^{-1}\oplus K_ j$ 。
+逐因子相乘保持顺序，所以给镜像自同构的表示，而不一般给整个字的逆。
+
+**证毕。**
+
+
+这里增加的是二十六维载体和一个手性标记，未声称当前十三维无辅助位模型已经供应它。
+ $J_ \chi$  保持各分量的未知复系数，只改变它所在的扇区；它仍不是对固定扇区内未知态作普遍共轭。
+
+
+<a id="sec:gram"></a>
+

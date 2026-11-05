@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:361abaacc37084773f9923b1a1c52b8c539540aa9e36f794df5b46160f2f94be
+  normalized_sha256: sha256:361abaacc37084773f9923b1a1c52b8c539540aa9e36f794df5b46160f2f94be
+cas_ref: sha256:361abaacc37084773f9923b1a1c52b8c539540aa9e36f794df5b46160f2f94be
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本项是下一批未交付节点的依赖图和优先级，未把图中的箭头声明成已证明的数学蕴含。
+    previous_atom_id: fef3a2e9934150457d89bc18c580e72e9f8581fa66e64ac56ddc84f4129c8620
+    next_atom_id: null

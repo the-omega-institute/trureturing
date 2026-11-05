@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8804be4f73ba68738e5ae995da16f4cca1c8655b8ad766bdcb2b6808eb9718e9
+  normalized_sha256: sha256:8804be4f73ba68738e5ae995da16f4cca1c8655b8ad766bdcb2b6808eb9718e9
+cas_ref: sha256:8804be4f73ba68738e5ae995da16f4cca1c8655b8ad766bdcb2b6808eb9718e9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条设定 V 与非空整数区间，定义 T,X,H_X、约数倒数和 Z 及有限联合和 S_k；没有给出误差界、收敛或等价性质。
+    previous_atom_id: d1f17b1a2fd7117f84734908e38902a5471a85d691423cc4619304b92b9252ed
+    next_atom_id: 4ced731076e2486eba6c0732069c7fa6d88f10d3ea95a1cc8e64cab309c7f8ae

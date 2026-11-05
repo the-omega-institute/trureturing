@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:be136189edcd51996b075c6109cc954c8843634ecefa1b4804e0057659354739
+  normalized_sha256: sha256:be136189edcd51996b075c6109cc954c8843634ecefa1b4804e0057659354739
+cas_ref: sha256:be136189edcd51996b075c6109cc954c8843634ecefa1b4804e0057659354739
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurement/ConditioningTraceDistanceConstant.conditioning_trace_distance_constant
+    target_statement_id: sha256:78eb5f13f4a4dbe4871715cad5bde890c4161c5708195389388382e758bc4d5e
+  - gid: D5/S3/Quantum/Measurement/ExactConditionalPreparationCost.exact_conditional_preparation_cost
+    target_statement_id: sha256:9543f852721336b1f4f1972a120de91d6bafd9daa1d04c3f3890f92281c35d82
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:53c781b5e39ba59cc2132a47bf3d30e5517cfd24d4cf683195aa03d2c3089c1a
+  normalized_sha256: sha256:53c781b5e39ba59cc2132a47bf3d30e5517cfd24d4cf683195aa03d2c3089c1a
+cas_ref: sha256:53c781b5e39ba59cc2132a47bf3d30e5517cfd24d4cf683195aa03d2c3089c1a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “即使”列表中仅列证书所需容许的高度情形。
+    previous_atom_id: c14edd1780a5f87549d985a1fc7a94e1bf4fdb7feb6df0f9ce58efb521e2c6c9
+    next_atom_id: a76e946186b689d454e917d395bb890917b4e78c14f3cc2ff811ae0449b368ce

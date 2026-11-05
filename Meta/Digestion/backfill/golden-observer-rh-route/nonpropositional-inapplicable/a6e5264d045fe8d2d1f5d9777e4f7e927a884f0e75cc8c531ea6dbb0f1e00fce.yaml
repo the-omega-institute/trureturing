@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a6e5264d045fe8d2d1f5d9777e4f7e927a884f0e75cc8c531ea6dbb0f1e00fce
+  normalized_sha256: sha256:a6e5264d045fe8d2d1f5d9777e4f7e927a884f0e75cc8c531ea6dbb0f1e00fce
+cas_ref: sha256:a6e5264d045fe8d2d1f5d9777e4f7e927a884f0e75cc8c531ea6dbb0f1e00fce
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 明确不主张矩层级完备或零点存在的范围声明；不提出这些命题的否定。
+    previous_atom_id: bf9e43afff4449c2bf836ccf95eee4b52545388f351841f8e907de7096440a20
+    next_atom_id: 030f447f086d96d48b18d20004671c4e512042dbb9cc68f2ef305de585ec0636

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9e6910899a9e9d1a237f02889ccbc2028a09662af3395199c25d93ba685683e2
+  normalized_sha256: sha256:9e6910899a9e9d1a237f02889ccbc2028a09662af3395199c25d93ba685683e2
+cas_ref: sha256:9e6910899a9e9d1a237f02889ccbc2028a09662af3395199c25d93ba685683e2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 现实观察者定义的标题及每层准入谓词设置，项类型公式在下一 atom。
+    previous_atom_id: 86252cb1e735d16b2752beaf88ccca9fb814d958656954f79b49eb1a3103f91f
+    next_atom_id: 1ccca48873469e4fd88cda04c6da0eb5b8b9a1a38052c8b5b9c01d4caf38087b

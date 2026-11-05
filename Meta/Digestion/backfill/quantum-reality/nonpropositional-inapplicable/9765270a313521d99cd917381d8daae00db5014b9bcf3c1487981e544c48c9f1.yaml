@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9765270a313521d99cd917381d8daae00db5014b9bcf3c1487981e544c48c9f1
+  normalized_sha256: sha256:9765270a313521d99cd917381d8daae00db5014b9bcf3c1487981e544c48c9f1
+cas_ref: sha256:9765270a313521d99cd917381d8daae00db5014b9bcf3c1487981e544c48c9f1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 仅约定传播速度与信息率的量纲和实验问法，未给出一个传播或容量不等式。'
+    previous_atom_id: cb66819eef44efc9408964459774a0813caf1e55722a240baf47e155c939a4db
+    next_atom_id: 2bb21d16e40db95594858a6548b43364a3439bea7f38ea6f0699158efa82f9d5

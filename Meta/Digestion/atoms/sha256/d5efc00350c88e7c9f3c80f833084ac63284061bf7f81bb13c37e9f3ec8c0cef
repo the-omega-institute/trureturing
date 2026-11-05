@@ -1,0 +1,71 @@
+**Lemma 24.2 (normalization and reached-state versions).** The laws
+(24.1)--(24.2) have Borel probability versions on their indicated
+spaces. There is one Borel $m$-null set $B\subset M$, containing the
+properly exceptional set away from $e$, such that for $p\notin B$
+(24.2) is the actual joint law of
+
+$$
+ (\tau_e\wedge\delta,\mathrm C,e)\quad\hbox{if }\tau_e\le\delta,
+ \qquad (\delta,\mathrm D,Z_\delta)\quad\hbox{if }\tau_e>\delta
+\tag{24.3}
+$$
+
+under the original legitimate $\mathbb P_p$. On $B$ any Borel
+probability extension may be used. Every non-source state reached
+by the recursion below avoids $B$ almost surely. The set $B$ is
+not asserted polar beyond the properly exceptional subset.
+
+**Proof.** Theorem 15.2 gives $0<c_\epsilon<\infty$,
+$\int q_\epsilon dm=c_\epsilon$ and
+$\int_0^\infty v\mathfrak d(v)dv=1$.
+Thus the displayed Levy measure is admissible, has no killing or
+drift, and has exponent $\chi_\epsilon$. Integrating its probability
+laws against the exponential probability density proves both
+normalization of $\mathsf U_\epsilon$ and its Laplace formula.
+Consequently $\mathsf W_\epsilon$ is a Borel probability law.
+Subordinator laws and the entrance density here are the scalar and
+one-evaluation suppliers of §§15, 20, without a new normalization claim.
+
+Choose the original Borel Hunt kernel $P_t^0$ outside its properly
+exceptional set, and the nonnegative jointly measurable $q_s$ of
+Theorem 15.2. The integrated identity
+$-\partial_sP_s^01=q_s$ used in Lemma 20.2 implies, off an
+$m$-null Borel set,
+
+$$
+ P_a^01(p)-P_b^01(p)=\int_a^bq_s(p)ds
+                         \quad(0<a<b<\infty).
+\tag{24.4}
+$$
+
+To obtain a common set, first impose this identity at all positive
+rational endpoints. Let $a\downarrow0$, $b\uparrow\infty$ through
+rationals. Continuity at time zero from a legitimate $p\ne e$,
+source recurrence [S, (116.10)] and monotone convergence give
+$\int_0^\infty q_s(p)ds=1$. Right-continuity of killed survival
+then extends (24.4) to every endpoint. In particular its lifetime
+law is absolutely continuous, with density $q_s(p)$, and
+
+$$
+ \int_0^\delta q_s(p)ds+P_\delta^01(p)=1.
+\tag{24.5}
+$$
+
+Enlarge the null set to $B$ as stated. Equations (24.3)--(24.5)
+prove the probability and original-law assertions; ties at
+$\tau_e=\delta$ have probability zero. Defining the kernel to be
+$\delta_{(\delta,\mathrm C,e)}$ on $B$ gives a Borel extension.
+No ordinary value at the source enters this argument.
+
+An entrance release has distribution $q_\epsilon m/c_\epsilon$,
+which is absolutely continuous with respect to $m$. If $\xi\ll m$
+is any finite input measure, symmetry implies
+$\xi P_\delta^0\ll m$: for $m(A)=0$, $P_\delta^01_A=0$
+$m$-a.e. Thus every survived state release remains absolutely
+continuous, also after weighting by a past event. Source contacts
+are exactly $e$, which is legitimate and outside the properly
+exceptional set. Induction over the countably many releases proves
+avoidance of $B$ at every non-source input. This justifies the
+state-indexed versions actually consumed, without an assertion about
+arbitrary exceptional starting states. $\square$
+

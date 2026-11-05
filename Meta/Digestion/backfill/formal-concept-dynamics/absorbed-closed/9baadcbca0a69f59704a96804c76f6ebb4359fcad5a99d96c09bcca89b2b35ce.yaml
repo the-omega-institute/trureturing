@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9baadcbca0a69f59704a96804c76f6ebb4359fcad5a99d96c09bcca89b2b35ce
+  normalized_sha256: sha256:9baadcbca0a69f59704a96804c76f6ebb4359fcad5a99d96c09bcca89b2b35ce
+cas_ref: sha256:9baadcbca0a69f59704a96804c76f6ebb4359fcad5a99d96c09bcca89b2b35ce
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Identity/MemoryInheritanceNotIdentity.branching_memory_is_not_equality
+    target_statement_id: sha256:4aaa7909f3bd8d78ac9cbe8973c966811e2f8038df4759dbba2bce7518adf053
+receipts:
+  unresolved_subitems: []

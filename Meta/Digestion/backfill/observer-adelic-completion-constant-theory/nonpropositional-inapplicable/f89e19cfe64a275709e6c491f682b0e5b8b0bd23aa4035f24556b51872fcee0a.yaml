@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f89e19cfe64a275709e6c491f682b0e5b8b0bd23aa4035f24556b51872fcee0a
+  normalized_sha256: sha256:f89e19cfe64a275709e6c491f682b0e5b8b0bd23aa4035f24556b51872fcee0a
+cas_ref: sha256:f89e19cfe64a275709e6c491f682b0e5b8b0bd23aa4035f24556b51872fcee0a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 跨命名自然迹的候选清单项“zero multiplicity”，不声称任何具体表示之间已证相等。
+    previous_atom_id: c3db0c665912abad1cb140b9cdb0a0be9eb89cbe87409c77585e5b1287f7f726
+    next_atom_id: 4a27cbbc983781b25c7289e8fb2985f73bed02d6c41a030412d89749f5919ad8

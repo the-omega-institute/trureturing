@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9d32c8bcdd4baa700473a306c3d918b484659133b42e74ad2802abb73878cd9c
+  normalized_sha256: sha256:9d32c8bcdd4baa700473a306c3d918b484659133b42e74ad2802abb73878cd9c
+cas_ref: sha256:9d32c8bcdd4baa700473a306c3d918b484659133b42e74ad2802abb73878cd9c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段以解析函数紧集一致收敛作待检查问题，并用序数图景解释统一正则性检查的层次；未断言具体函数族收敛。
+    previous_atom_id: 672a72d630fa7ecce4cfc76348db4f0b78856885e21183161fcb7aa814bd86ed
+    next_atom_id: 4146c0a37b466ff704fefe8ef0b56d8490cd0572a0a4e5e71f9d761d1bed36a2

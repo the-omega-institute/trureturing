@@ -1,0 +1,79 @@
+**Theorem 6.2 (Two finer competition limits).** For every fixed real $\nu$, if
+
+$$
+\delta_a=\frac1{2a}+\frac\nu{a^2},
+$$
+
+then, for all sufficiently large $a$ these are admissible parameters and
+
+$$
+\frac{D_a(\delta_a)-2a^2}{a}\longrightarrow\min\{5,1-4\nu\}.
+\tag{6.7}
+$$
+
+For every fixed real $\omega$, if
+
+$$
+\delta_a=\frac1{2a}-\frac1{a^2}+\frac\omega{a^3},
+$$
+
+then
+
+$$
+D_a(\delta_a)-2a^2-5a\longrightarrow\min\{2,7-4\omega\}.
+\tag{6.8}
+$$
+
+In fact the difference between the left side of (6.8) and its stated limit is $O_\omega(1/a)$. The competing coefficients agree at $\nu=-1$ in (6.7), and at $\omega=5/4$ in (6.8). These are asymptotic competition values, not claims about an exact finite-parameter transition.
+
+**Proof.** Write $d_{\rm dense}=H_{\rm dense}-B$ and $d_{\rm rare}=H_{\rm rare}-B$. Uniformly for $\lambda$ in a fixed positive compact interval, their exact rational expressions give
+
+$$
+\begin{aligned}
+d_{\rm dense}
+ &=2a^2+5a+3-2\lambda+\frac{3\lambda}{a}+O(a^{-2}),\\
+d_{\rm rare}
+ &=\frac{a^2}{\lambda}+2\lambda a+2\lambda
+   +\frac{4\lambda^2+2\lambda}{a}+O(a^{-2}).
+\end{aligned}\tag{6.9}
+$$
+
+Here $\delta=\lambda/a$. To obtain controlled errors directly, put $z=1/a$ in the formulas
+
+$$
+\begin{aligned}
+d_{\rm dense}&=\frac{(2r+1)[\delta a^3+(1-\delta)r^3]}{(r-\delta)^2},\\
+d_{\rm rare}&=\frac a\delta+\frac{r^3}{1-\delta/a}
+ -\frac{r^2[\delta a^3+(1-\delta)r^3]}{(r-\delta)^2}.
+\end{aligned}
+$$
+
+After substitution $\delta=\lambda z$, multiply each expression by $z^2$. The resulting functions are analytic in $z$ near zero with denominators uniformly bounded away from zero for $\lambda$ in the fixed compact interval (and $\lambda$ itself bounded away from zero). Expanding the factors $(1+z-\lambda z^2)^{-2}$ and $(1-\lambda z^2)^{-1}$ with their uniformly bounded Taylor remainders yields (6.9), including the displayed $1/a$ coefficients.
+
+For $\lambda=1/2+\nu/a$, expansion of $1/\lambda$ in (6.9) gives
+
+$$
+\begin{aligned}
+d_{\rm dense}&=2a^2+5a+2+O_\nu(a^{-1}),\\
+d_{\rm rare}&=2a^2+(1-4\nu)a+(1+2\nu+8\nu^2)
+ +O_\nu(a^{-1}).
+\end{aligned}\tag{6.10}
+$$
+
+The global squeeze (6.2), after subtracting $B$, places $D_a$ within $O(1/a)$ below the minimum of these two values and at or below that minimum. Subtracting $2a^2$ and dividing by $a$ proves (6.7).
+
+For $\lambda=1/2-1/a+\omega/a^2$, the same rational expansions instead give
+
+$$
+\begin{aligned}
+d_{\rm dense}&=2a^2+5a+2+O_\omega(a^{-1}),\\
+d_{\rm rare}&=2a^2+5a+7-4\omega+O_\omega(a^{-1}).
+\end{aligned}\tag{6.11}
+$$
+
+For instance
+$\lambda^{-1}=2+4/a+(8-4\omega)/a^2+O_\omega(a^{-3})$,
+while $2\lambda a=a-2+2\omega/a$ and $2\lambda=1-2/a+O_\omega(a^{-2})$; their constant contributions in (6.9) sum to $7-4\omega$. Applying (6.2) again proves (6.8) and its error estimate. ∎
+
+The parent volume's Theorems 10.1 and 12.5–12.6 supply, respectively, the integer-endpoint upper family and its eventual exact classification and expansion. The moving-mean remainder, the uniform envelope (3.9), the interior extension, and the crossover and competition conclusions here are repo-derived deductions from the common law specified in Definition 1.1. Jensen and Cauchy–Schwarz are classical intermediate inequalities. These statements concern laws on nonempty subsets; they do not assert exact realization or optimality at a prescribed finite graph budget. Their full-text overlap with K. Zhao and X. Zhao, DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26), is not determined here, and no literature-priority claim is made. Exact global minimizers in the boundary window, the least interior threshold $A(\delta_0)$, and an exact finite-$a$ transition remain unspecified.
+

@@ -57,7 +57,7 @@ def orbitOddEnergy (multiplicity : ℕ) (first second : ℂ) : ℝ :=
   4 * (multiplicity : ℝ) *
     Complex.normSq (oddSpectralChannel first second)
 
-private theorem channel_energy_difference (first second : ℂ) :
+theorem channel_energy_difference (first second : ℂ) :
     Complex.normSq (evenSpectralChannel first second) -
         Complex.normSq (oddSpectralChannel first second) =
       (first * conj second).re := by

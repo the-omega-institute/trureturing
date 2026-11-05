@@ -1,0 +1,18 @@
+**Assumption 17.2 (one actual field, complete calls and their backing).** Every actual material vertex has a rational field cell. The old preparation initialized each cell to zero and used no field input, so the field at attachment is zero. Its known law is symmetric unit adjacency with zero diagonal. At a current logical term $u$, write $A_u$ for that adjacency matrix, with the actual vertices indexed by their material addresses for mathematical description only. The raw menu is
+
+| Request | Actual effect at a settled cut | Complete reply |
+| --- | --- | --- |
+| Reset | Set every current field cell to zero; retain the tree and roster | fixed acknowledgement |
+| Add$(j,q)$, $1\le j\le n$, $q\in\mathbb Q$ | Add $q$ at the terminal currently bound to raw label $j$ | fixed acknowledgement |
+| Tick | Replace $x$ by $A_u x$ | fixed acknowledgement |
+| Read$(j)$, $1\le j\le n$ | Retain the tree and field | the literal rational at that terminal |
+| Hold | Retain the tree and field; prevent unrequested evolution | fixed acknowledgement |
+| $P_p$ | Execute the original guarded promotion at logical address $p$ | original Growth$(P,p)$ or original tagged refusal |
+| $S_p$ | Execute the original guarded split at logical address $p$ | original Growth$(S,p)$ or original tagged refusal |
+
+Here $n$ is the current raw roster length. Absent address, branch target and wrong leaf type have distinct refusal reasons; every such refusal leaves tree, field and roster unchanged. Add or Read with an integer outside $1,\ldots,n$ returns RangeRefusal and changes nothing. Complete malformed frames return BadFrame without change. A proper incomplete frame waits with its actual pending input and has no completed reply. Missing current rights disable a call; they are not a refusal reason. There are no Tag, internal Read, internal actuator, FetchGrowth, Next, old-journal, unknown-size or response-law ports.
+
+Use AA Definition 20.2's three-bit tags and address payload $A(p)=1^{|p|}0p$ for the addressed calls, with the stated distinct refusal reasons and Growth payloads. Field calls occupy a disjoint tagged channel. For a definite finite encoding, let $\operatorname{bin}(m)$ be the shortest binary word for $m\ge0$, including $\operatorname{bin}(0)=0$, and encode a nonnegative integer by $1^{|\operatorname{bin}(m)|}0\operatorname{bin}(m)$. A signed integer has an additional sign bit, with negative zero invalid; a reduced rational uses a signed numerator and a positive denominator in these encodings. Fixed operation tags specify the payload types. Invalid complete packets return BadFrame. Thus an acquisition label has $O(\log(n+1))$ bits and zero/one operands have constant length. The channel, parser and encoding are fixed independently of $t$ and $\lambda_0$. Every complete reply, its framing, finite transmission, acknowledgement and return is supplied and charged. There is no timing, work, capacity or allocation metadata in replies.
+
+Calls and completed observer updates are serialized on this one actual source. A requested Tick is the only field evolution. Hold admits finite local work without any additional Tick. No other writer, revocation, crash or unfinished interleaved edit is admitted. Authentic reference and source binding, exact full-field Reset, exact rational arithmetic and serialization, complete roster binding, original current growth authority, finite work backing and sufficient finite fresh material are installed premises. Every newly bound terminal has the actual grants needed by this same service. Allocation exhaustion is not an exposed branch of these finite executions. Enlarging the task by an observable capacity or supply state requires retaining that state as well.
+

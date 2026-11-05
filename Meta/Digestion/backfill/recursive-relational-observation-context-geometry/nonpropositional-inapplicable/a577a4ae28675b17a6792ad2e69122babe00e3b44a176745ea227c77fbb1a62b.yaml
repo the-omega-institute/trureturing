@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a577a4ae28675b17a6792ad2e69122babe00e3b44a176745ea227c77fbb1a62b
+  normalized_sha256: sha256:a577a4ae28675b17a6792ad2e69122babe00e3b44a176745ea227c77fbb1a62b
+cas_ref: sha256:a577a4ae28675b17a6792ad2e69122babe00e3b44a176745ea227c77fbb1a62b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Upstream-only proposition: on one common probability space, instantiate MeasureTheory.lintegral_mono_ae, MeasureTheory.lintegral_finsetSum and MeasureTheory.lintegral_const_mul with the measurable ENNReal coordinate discrepancies and finite nonnegative gains. For the simultaneous certificates, instantiate MeasureTheory.measureReal_iUnion_fintype_le and MeasureTheory.probReal_compl_eq_one_sub with the complements of the finite measurable certificate events, then use Finset.sum_le_sum and linear arithmetic. No independence hypothesis. Exact applications accepted by make lean LEAN_TARGETS=D5.S3.Observer.MetricGeometry.YD132ReuseProbe. Mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679. Searched scope: D5/**/*.lean including private declarations; shape searches for arbitrary nonnegative expectation bounds, finite measurable unions, varying nonnegative recurrence gains, and the exact upstream names. MultipleTestingFalsePositive assumes a common exact event rate; GreedyResidues.weighted_union_bound assumes finite sample space; MeasurableDeficiencyTriangle is total-variation-specific; FourExitCoarseLowerBounds fixes natural-valued algorithm costs; SparseGeneratorFamily fixes cyclic sample measures; PrescribedRatioFloorSmoothing.doubling_iterate fixes a constant gain and zero forcing. None supplies the general subgoals used here.'
+    previous_atom_id: 54376b7512e09f4b63fab02a00a4170e9e6e02dad5f2b801fa0c2cf6a9712124
+    next_atom_id: f3a3549f35bcd876d5d95817fdb7410ebf9cb148d570b9eb2894b81b58551689

@@ -1,0 +1,24 @@
+**Proposition 7.2 (scope of the attained minimum).** Theorem 2.1's optimum
+is the per-source worst-case **data payload** for the complete-word
+contract, simultaneously attainable under literal data-prefix preservation.
+It is not a pointwise shortest-codeword assertion or a total, physical,
+peak-material, work, runtime, energy or Pareto optimum. Its conditional
+driver neither acquires an unknown erased-history prefix nor extends
+its inverse to all busy cuts, interrupted writes or an actual infinite
+execution on a fixed finite device.
+
+Proof. The lower bound counts only complete word values at one fixed
+source. It contains no lower bounds for the additional coordinates of
+Definition 7.1, and different histories can have different lengths at
+that source. Prefix coherence is proved for finite extensions, while
+Theorem 5.3 quantifies finite schedules with their sufficient actual
+resources. Neither statement supplies a fixed capacity for all grades.
+The source/word invariant is initialized at the actual known alpha and
+maintained before returned cuts; it asserts neither recovery after
+unsupplied erasure nor equality at unfinished maintenance cuts. The
+current-source live-context premises remain necessary to call the
+original service. Existing reset/tape experiments, terminal obligations,
+original-$Q$ and unchanged-initialization results keep their own domains.
+A cross-model physical common realization or universal minimal relation
+generator is not a consequence of this finite LAB result. $\square$
+

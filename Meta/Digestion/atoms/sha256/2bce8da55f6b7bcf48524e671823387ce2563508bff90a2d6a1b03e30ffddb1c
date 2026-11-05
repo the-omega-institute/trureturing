@@ -1,0 +1,124 @@
+**Proposition 11.2 (Curves, positivity separation and scoped comparison).** Write $z_\pm(r)=(\pm r/m,r^2)$. For every $0<r<1$, both points belong to $\widehat{\mathcal S}_d$. Moreover:
+
+- $z_+(r)$ is not $2$-positive for $0<r<1/m$;
+- $z_-(r)$ is not $2$-positive for $(d-2)/d<r<1$;
+- for $0<r\le1$, $z_+(r)\in\mathcal H_d$ if and only if $r\ge1/d$;
+- the entire interval $(d-2)/d<r<1$ of the negative curve is already contained in $\operatorname{conv}(\widehat{\mathcal T}_d\cup\mathcal D_d)$.
+
+Thus the stated negative continuum and the positive continuum for $r\ge1/d$ are supplied by the cited constructions and their convex combinations. They are not additional independent content beyond those suppliers. The strict comparison at $0<r<1/d$ is only with the explicitly defined class $\mathcal H_d$.
+
+**Proof.** Membership of both curves follows from Theorem 9.1, since $m^2\lambda^2=r^2=p$. For clarity, the classical suppliers in Definition 11.1 can be justified without the invalid intervals discussed in §12. Let $\Psi$ be a unital, trace-preserving positive map which contracts the Hilbert–Schmidt norm, and put
+
+$$
+R_{a,\Psi}(X)=\frac{\operatorname{tr}(X)I_d-a\Psi(X)}{d-a},
+\qquad 0\le a\le\frac d{d+1}.
+$$
+
+This is the $k=1$ sufficient construction of Mukhamedov and Chruściński, arXiv:2603.11204v1, Theorem 3.2, Eqs. (2.8), (3.2)–(3.3), where their $\Delta$ is $\operatorname{tr}(X)I_d/d$. For $k=1$ their condition (2.8) is precisely Hilbert–Schmidt contraction. An elementary proof in this range is as follows. For a traceless complex $X$, define
+
+$$
+Z=a(d-a)\Psi(X^\ast X)+a^2\Psi(X)^\ast\Psi(X)\ge0.
+$$
+
+Trace preservation and contraction give $\operatorname{tr}Z\le ad\|X\|_F^2$. Since every positive matrix satisfies $Z\le\operatorname{tr}(Z)I_d$, one obtains
+
+$$
+\begin{aligned}
+(d-a)^2\bigl(R_{a,\Psi}(X^\ast X)-R_{a,\Psi}(X)^\ast R_{a,\Psi}(X)\bigr)
+&=(d-a)\|X\|_F^2I_d-Z\\
+&\ge\bigl(d-(d+1)a\bigr)\|X\|_F^2I_d\ge0.
+\end{aligned}
+$$
+
+Unitality and Hermiticity preservation give scalar-shift invariance of the defect, so the same conclusion holds for every complex input. This proves the stated supplier range including both endpoints.
+
+Taking $\Psi=\operatorname{id}$ supplies the depolarizing interval $-1/d\le t\le0$, with $t=-a/(d-a)$. The interval $0\le t\le1$ is completely positive. Conversely Theorem 4.1(ii) on the depolarizing line gives
+
+$$
+dt^2\le1+mt\quad\Longleftrightarrow\quad (t-1)(dt+1)\le0,
+$$
+
+so $-1/d\le t\le1$ is exact. This agrees with the Tomiyama identity-map case cited in arXiv:2603.11204v1, Remark 3.3; no larger printed interval is used.
+
+For $G_d$, take the completely positive, unital and trace-preserving Schur map
+
+$$
+\Psi(X)=-\frac1mX+\frac d m\operatorname{diag}(X).
+$$
+
+Its complete positivity is the $q=0$ endpoint of Proposition 4.2. Choi's Schwarz inequality and trace preservation give its Hilbert–Schmidt contraction. At $a=d/(d+1)$ the preceding reduction is exactly
+
+$$
+R_{a,\Psi}(X)=\frac1{dm}X-\frac1m\operatorname{diag}(X)
++\frac{d+1}{d^2}\operatorname{tr}(X)I_d,
+$$
+
+whose parameters are $G_d$. Thus the CP triangle, the depolarizing interval and this generalized reduction are valid Schwarz suppliers. Convexity is Remark 4.4.
+
+The non-$2$-positive assertions can be read from the existing quadrilateral. Their underlying witnesses also identify the exact strict intervals. Its standard quadratic form is
+
+$$
+Q(A)=q\|A\|_F^2+(1-dq-\lambda)\sum_i|A_{ii}|^2
++\lambda|\operatorname{tr}A|^2;
+$$
+
+$2$-positivity requires $Q(A)\ge0$ for every matrix of rank at most two, as in the cited quadrilateral proof. The rank-two matrix $E_{11}-E_{22}$ gives $Q=2(p-\lambda)$. At $z_+(r)$ this is $2r(r-1/m)<0$ exactly on the stated positive interval. For the negative curve let $A$ be the rank-two orthogonal projection onto two columns of the normalized discrete Fourier matrix. Then $\operatorname{tr}A=\|A\|_F^2=2$ and every diagonal entry is $2/d$. Thus
+
+$$
+Q(A)=\frac2{dm}\bigl(d-2+dp+2m^2\lambda\bigr).
+$$
+
+At $z_-(r)$ the expression in parentheses is
+
+$$
+dr^2-2mr+d-2=d(r-1)\left(r-\frac{d-2}{d}\right)<0
+$$
+
+for $(d-2)/d<r<1$. These are witnesses for failure of $2$-positivity, not witnesses against the Schwarz conclusion. No non-$2$-positive assertion at the endpoints of either stated open interval is inferred.
+
+To compare the positive curve with $\mathcal H_d$, every generating point of $\mathcal H_d$ has $p\ge0$ and satisfies
+
+$$
+\lambda\le\frac d m p.
+$$
+
+For the CP triangle this follows from $\lambda\le p$; on the depolarizing interval it is equivalent to $mt\le1+mt$; and it is an equality at $G_d$. The inequality survives convex combinations. At $z_+(r)$ it requires $r\ge1/d$, so $0<r<1/d$ lies outside this particular supplier hull.
+
+Conversely, for $1/d\le r\le1$, put
+
+$$
+\theta=\frac{d^2(1-r^2)}{d^2-1},\qquad
+c=\frac{r+d}{m(dr+1)}.
+$$
+
+Here $0\le\theta\le1$ and $0<c\le1$: indeed
+
+$$
+m(dr+1)-(r+d)=(d^2-d-1)r-1\ge\frac{d^2-d-1}{d}-1\ge0
+$$
+
+for $d\ge3$. Therefore $(c,1)$ is a completely positive $q=0$ parameter. Direct substitution gives the exact convex decomposition
+
+$$
+z_+(r)=\theta G_d+(1-\theta)(c,1).
+$$
+
+It is valid also at $r=1/d$, when $\theta=1$. This proves the asserted threshold for the declared hull.
+
+Finally let $N_d=(-1/d,1/d^2)\in\mathcal D_d$, $C_d=(0,0)\in\widehat{\mathcal T}_d$, and $B_d=(-1/m,1)\in\widehat{\mathcal T}_d$. For $0\le r\le1$, the polygon $\operatorname{conv}\{C_d,N_d,B_d\}$ contains the point $(-r/m,L(r))$, where
+
+$$
+L(r)=\begin{cases}
+r/(dm),&0\le r\le m/d,\\
+\bigl((d^2-1)r-(d^2-d-1)\bigr)/d,&m/d\le r\le1.
+\end{cases}
+$$
+
+The first point lies on $C_dN_d$, with weight $dr/m$ at $N_d$; the second lies on $N_dB_d$, obtained by linear interpolation at the specified first coordinate. The point $(-r/m,1)$ is in the CP triangle for every $r\in[0,1]$. If $r>(d-2)/d$ and $r\le m/d$, then $r\ge1/(dm)$ and hence $r^2\ge L(r)$. If $r\ge m/d$, then
+
+$$
+r^2-L(r)=(1-r)\left(\frac{d^2-d-1}{d}-r\right)\ge0,
+$$
+
+since $(d^2-d-1)/d>1$. In both cases $L(r)\le r^2\le1$, so interpolation between these two points at the same first coordinate puts $z_-(r)$ in $\operatorname{conv}(\widehat{\mathcal T}_d\cup\mathcal D_d)$. This accounts for the whole stated negative continuum using the existing suppliers. ∎
+

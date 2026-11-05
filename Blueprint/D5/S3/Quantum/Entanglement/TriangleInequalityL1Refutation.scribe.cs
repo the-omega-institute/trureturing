@@ -8,7 +8,7 @@ internal sealed class TriangleInequalityL1RefutationDocument : IScribeDocumentDe
 {
     private const string Prefix = "D5/S3/Quantum/Entanglement/TriangleInequalityL1Refutation.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Quantum/baumer2024trianglelocal");
+        LibraryNoteRef.Create("D5/L/QuantumContext/baumer2024trianglelocal");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The inequality s_111(p) - 0.475 Delta_1(p) <= 0.289, which E. Bäumer, V. Gitton, T. Kriváchy, N. Gisin and R. Renner (arXiv:2405.08939, eq. ineq_l1) state should hold for every distribution that is local in the triangle network, fails: a local model with four outcomes per party has Delta_1 = 0 and s_111 = 11/36.",

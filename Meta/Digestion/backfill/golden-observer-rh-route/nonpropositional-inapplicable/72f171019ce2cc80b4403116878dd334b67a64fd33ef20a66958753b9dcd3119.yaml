@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:72f171019ce2cc80b4403116878dd334b67a64fd33ef20a66958753b9dcd3119
+  normalized_sha256: sha256:72f171019ce2cc80b4403116878dd334b67a64fd33ef20a66958753b9dcd3119
+cas_ref: sha256:72f171019ce2cc80b4403116878dd334b67a64fd33ef20a66958753b9dcd3119
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Historical absence-of-proof report. The present tree has UnconditionalCanonicalZeroData.nonempty_zeroData; this receipt does not claim that the old report is current.
+    previous_atom_id: 5d43b1990954c12b7012252764df10934c5110181b9346d99c64c8a6ef409cc6
+    next_atom_id: 08369dba1cb02bb614a8f1a79d3e85caac74f0008ec42eee2f9f93af8b73b4ba

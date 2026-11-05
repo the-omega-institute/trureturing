@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:33e4a4c221f12d8616431c377a64a68b56d2a4ed2ac91969f53b4aa19ab261ca
+  normalized_sha256: sha256:33e4a4c221f12d8616431c377a64a68b56d2a4ed2ac91969f53b4aa19ab261ca
+cas_ref: sha256:33e4a4c221f12d8616431c377a64a68b56d2a4ed2ac91969f53b4aa19ab261ca
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 限定悔改、宽恕、修复与和解的比较范围并列出原典，不给出可判真的数学结论。
+    previous_atom_id: cb6d4e3339a2f9fda385e93e0970005727ab5af5c2bf8ce68819c07604d4a718
+    next_atom_id: 650eaa1b5095709611b5a9c8408f36ff4d6d0474db8dac5107f9a97da939cac6

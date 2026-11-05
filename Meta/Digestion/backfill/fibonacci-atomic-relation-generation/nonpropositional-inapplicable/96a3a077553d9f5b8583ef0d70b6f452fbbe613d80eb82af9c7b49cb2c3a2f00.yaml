@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:96a3a077553d9f5b8583ef0d70b6f452fbbe613d80eb82af9c7b49cb2c3a2f00
+  normalized_sha256: sha256:96a3a077553d9f5b8583ef0d70b6f452fbbe613d80eb82af9c7b49cb2c3a2f00
+cas_ref: sha256:96a3a077553d9f5b8583ef0d70b6f452fbbe613d80eb82af9c7b49cb2c3a2f00
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列出把代数坐标解释为物理事件所需的独立模型义务，并声明本文没有推出相应物理规律。
+    previous_atom_id: f5b6513225b767ded62077a60024805c8252386692f264e2504386b30854754a
+    next_atom_id: 86ade94a9ff819fbe4c83575abcc1eaf6595d0d67709ba6d070aa5874e4ee6b8

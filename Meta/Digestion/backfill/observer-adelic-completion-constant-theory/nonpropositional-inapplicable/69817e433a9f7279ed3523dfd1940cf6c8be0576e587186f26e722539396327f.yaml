@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:69817e433a9f7279ed3523dfd1940cf6c8be0576e587186f26e722539396327f
+  normalized_sha256: sha256:69817e433a9f7279ed3523dfd1940cf6c8be0576e587186f26e722539396327f
+cas_ref: sha256:69817e433a9f7279ed3523dfd1940cf6c8be0576e587186f26e722539396327f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅列举“prime–Archimedean multiplier”这一研究工具名称，没有 multiplier 恒等式或估计。
+    previous_atom_id: e1f634582b4305724a1d73bce895601927a01882ae340524343c6104582be56a
+    next_atom_id: 0a122947c01e25af01a43fce2363e90e486ed71f9cdd3401e2e56054d653b67c

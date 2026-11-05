@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3e7d120fff45f471de47893b8d8c69d1a47a395471b2accfc979f4181b0ce351
+  normalized_sha256: sha256:3e7d120fff45f471de47893b8d8c69d1a47a395471b2accfc979f4181b0ce351
+cas_ref: sha256:3e7d120fff45f471de47893b8d8c69d1a47a395471b2accfc979f4181b0ce351
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 对观察者作为携带能量、反冲和相干路径的物理系统作建模解释与研究要求，附文献目录，无独立数学命题。'
+    previous_atom_id: 8d6790fcff255f7ba8cace2ac4e2e30b9343cada74bf46491953faee6932f259
+    next_atom_id: bdfb2e39b61cc7cd14d114a5d54462de794007940ca971e10d032e931fe436ce

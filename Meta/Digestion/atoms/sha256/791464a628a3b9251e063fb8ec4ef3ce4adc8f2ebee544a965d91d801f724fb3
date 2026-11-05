@@ -1,0 +1,40 @@
+**Proposition 13.4 (actual source widths and C precision traffic).** After
+$R$ Ticks on either restricted run, all source coordinates have a common
+denominator $8^R$ and nonnegative integer numerators at most $7^R$.
+Every positive coordinate is at least $8^{-R}$. Consequently source
+scalar/reduced-rational widths are $O(R+1)$, not constant. In A through
+the first assay $R\le Q+I$; in C $R\le2n$.
+
+For C's assay, the sum of requested precisions, excluding its seed, is
+
+$$
+\sum_{r=0}^n\sum_{j=1}^bp_r
+=b(n+1)\left(\frac92n+1\right).
+\tag{13.5}
+$$
+
+The seed adds precision one. Each scheduled integer reply has at most
+$2p_r+7$ payload bits in Definition 13.2's codec, including its three-bit
+tag. Thus the attained assay's integer-reply traffic is
+$O(b(n+1)^2)$, while its precision-code request contribution is
+$O(b(n+1)\log(n+2))$; ordinal, address, fixed-tag and lifecycle traffic
+remains additional as specified above.
+
+**Proof.** Initially the numerator is one and $R=0$. Zero extension adds
+zero numerators, and a Tick multiplies the numerator vector by
+$4\operatorname{Id}+A_t$ and the common denominator by eight. Its
+nonnegative row sums are at most seven, proving the numerator bound by
+induction. A positive integer numerator is at least one. Reduction cannot
+increase these bit widths. This is the same arithmetic supplier as AAII
+Proposition 90.3 with the actual Tick counts of the present runs.
+
+Sum (10.1) over $r=0,\ldots,n$ to obtain (13.5). On these runs every
+field is in $[0,1]$, so a scheduled report lies between $0$ and
+$2^{p_r}+1$. Since $p_r\ge1$, its binary magnitude length is at most
+$p_r+1$. The signed code plus reply tag has length at most
+$2(p_r+1)+2+3=2p_r+7$. Summing gives the reply bound. Also
+$p_r\le6n+1$, giving the precision-code bound. No bound here applies
+to the magnitude or denominator of arbitrary later rational Adds or
+to their resulting reports; their actual widths are paid in §7's
+broader service. $\square$
+

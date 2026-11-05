@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:73be33bf4c6c1e923a6be01c832cd22dba8a389e658e8c3c627d27498d3e1024
+  normalized_sha256: sha256:73be33bf4c6c1e923a6be01c832cd22dba8a389e658e8c3c627d27498d3e1024
+cas_ref: sha256:73be33bf4c6c1e923a6be01c832cd22dba8a389e658e8c3c627d27498d3e1024
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 禁止隐藏添加 Fintype/Nonempty/测度/拓扑前件是忠实性规范。
+    previous_atom_id: b0b8b44a8b855bfbeeefa438a1cefccd8deabb3b9dff125b01634c3e76d274cc
+    next_atom_id: 8cff378532f4a4f360e03aee89fb728bdeb385a949ab3e98dc7033be3b19c0f4

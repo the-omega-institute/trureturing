@@ -101,11 +101,11 @@ def claim : Prop :=
       ∀ w', Feasible G w' → lambda2 G w' ≤ lambda2 G w
 
 
-private def K23 : SimpleGraph (Fin 5) :=
+def K23 : SimpleGraph (Fin 5) :=
   (completeBipartiteGraph (Fin 2) (Fin 3)).comap
     (finSumFinEquiv (m := 2) (n := 3)).symm
 
-private instance K23_dec : DecidableRel K23.Adj := by
+instance K23_dec : DecidableRel K23.Adj := by
   unfold K23 SimpleGraph.comap completeBipartiteGraph; infer_instance
 
 private def weights (a b : Real) : Sym2 (Fin 5) → Real :=
@@ -231,7 +231,7 @@ private lemma norm_pos {n : Nat} (x : Fin n → Real) (hx : x ≠ 0) :
     0 < dotProduct x x := by
   simpa only [star_trivial] using (dotProduct_star_self_pos_iff (v := x)).mpr hx
 
-private lemma lambda2_eq_of_rayleigh {n : Nat} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
+lemma lambda2_eq_of_rayleigh {n : Nat} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
     (w : Sym2 (Fin n) → Real) (r : Real)
     (hlower : ∀ x : Fin n → Real, ∑ i, x i = 0 →
       r * dotProduct x x ≤ dotProduct x (wLap G w *ᵥ x))
@@ -326,7 +326,7 @@ private lemma lap_congr {n : Nat} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
     · rw [if_pos h, if_pos h, hw _ (by simpa only [SimpleGraph.mem_edgeSet] using h)]
     · rw [if_neg h, if_neg h]
 
-private lemma invariants_congr {n : Nat} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
+lemma invariants_congr {n : Nat} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
     (w w' : Sym2 (Fin n) → Real) (hw : ∀ e ∈ G.edgeSet, w e = w' e) :
     lambda2 G w = lambda2 G w' ∧ totalRes G w = totalRes G w' := by
   have hL := lap_congr G w w' hw
@@ -433,7 +433,7 @@ private lemma candidate_lambda2 : lambda2 K23 candidate = 48/23 := by
   norm_num [candidate] at h ⊢
   exact h
 
-private lemma K23_connected : K23.Connected := by
+lemma K23_connected : K23.Connected := by
   apply (SimpleGraph.connected_iff_exists_forall_reachable K23).mpr
   refine ⟨2,?_⟩
   intro i

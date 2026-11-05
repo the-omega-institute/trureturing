@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f1f3582d986f78d57bf428ea0701d6831f8e1e09f22959915fed60c427d162a6
+  normalized_sha256: sha256:f1f3582d986f78d57bf428ea0701d6831f8e1e09f22959915fed60c427d162a6
+cas_ref: sha256:f1f3582d986f78d57bf428ea0701d6831f8e1e09f22959915fed60c427d162a6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 记录 prime-side 到方差零的桥仍开放；不是已证 RH 桥。'
+    previous_atom_id: e9bb15cb07a3967d51c4b91e7286bc155bd433f0c222bf2a3f51fe0db9df8467
+    next_atom_id: 4c14c721f6aeb0b3a53f4767c8579e7b68cd06ff719ee721687d7b035d5933a8

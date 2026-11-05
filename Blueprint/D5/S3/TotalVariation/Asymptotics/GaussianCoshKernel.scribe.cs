@@ -44,6 +44,18 @@ internal sealed class GaussianCoshKernelDocument : IScribeDocumentDefinition
                     + "any sign or smallness restriction on either real parameter."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("quadratic-cosh-lower"),
+                DeclarationHandle.Create(Prefix + "cosh_quadratic_lower"),
+                H("The quadratic lower bound for cosh"),
+                StatementSource.FromAuthor(Disp(All("x", R,
+                    new Formula.Relation(
+                        Add(D(1), Fr(Pow(I("x"), D(2)), D(2))),
+                        FormulaRelationOperator.LessThanOrEqual,
+                        Call("cosh", I("x")))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The length-two even factorial sum gives the exact quadratic lower bound."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("compact-uniform-remainder"),
                 DeclarationHandle.Create(Prefix + "gaussian_cosh_uniform_remainder"),
                 H("The exact coefficient and a uniform fifth-half-power remainder"),
@@ -87,6 +99,7 @@ internal sealed class GaussianCoshKernelDocument : IScribeDocumentDefinition
     private static Formula Clip(Formula q, Formula d, Formula u) =>
         Seq(Max, Grp(OpenBrace,
             Call("exp", d), Minus, Call("cosh", Seq(q, Cdot, Sp, u)), Comma, D(0), CloseBrace));
+    private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula UniformFormula()
     {
         Formula lo = I("lo"), hi = I("hi"), q = I("q"), d = I("d"), c = I("C");

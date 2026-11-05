@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:135be95dbb7f0c5d511ccd8b7224497a803151f28c5b3b5af0a17a83b1a32955
+  normalized_sha256: sha256:135be95dbb7f0c5d511ccd8b7224497a803151f28c5b3b5af0a17a83b1a32955
+cas_ref: sha256:135be95dbb7f0c5d511ccd8b7224497a803151f28c5b3b5af0a17a83b1a32955
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：第36节提问与吞噬时间的研究直觉，尚未陈述量化的时间伸缩命题；具体断言由后续定理承担。
+    previous_atom_id: 4fa8b2ce10af55700c8b13c6e1865e80beaddd8b963abc453ad3560fa116e30b
+    next_atom_id: 1cbb3b1991da77586a7345e6329a34e438f4f02dab45fe4e7d9812e94e057f6f

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0b06b387855aea099b1a83515539ad0cb00e2119423e103924abc33e88455cc1
+  normalized_sha256: sha256:0b06b387855aea099b1a83515539ad0cb00e2119423e103924abc33e88455cc1
+cas_ref: sha256:0b06b387855aea099b1a83515539ad0cb00e2119423e103924abc33e88455cc1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 商的哲学解释所用的内部/外部术语，未定义或断言拓扑性质。
+    previous_atom_id: fc5b7fa2b84c7b7eca78553d8093bc8a73d78d6451938e86ee7d6e5e7f1d4799
+    next_atom_id: 40381195dce9d0468bde9c4ca8000ff349fb44043675fbf246462a252cdfee0b

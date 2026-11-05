@@ -1,0 +1,25 @@
+**假设 54.2（一个固定角度的完整原生记录）。** 固定任意已知实数 $\theta$，实际分支为
+
+$$
+A_0=\cos\theta K_0+\mathrm i\sin\theta K_1,
+\qquad A_1=\mathrm i\sin\theta K_0+\cos\theta K_1.
+\tag{54.7}
+$$
+
+允许按第二卷假设 39.2 的合同重复这同一个仪器，保留所有标签，在预先给定的有限终点测 $(P,I_5-P)$。不在随机分支之间加入控制。记
+
+$$
+\begin{gathered}
+V_0=U\exp(\mathrm i\theta W),\quad V_1=V_0W,\quad
+h=(j_1,\ldots,j_n),\quad V_h=V_{j_n}\cdots V_{j_1},\\
+M_h=V_h^\dagger EV_h,\qquad V_\varnothing=I_3,\\
+p_\rho(h,1)=2^{-n}\operatorname{Tr}(\rho M_h),\qquad
+p_\rho(h,0)=2^{-n}[1-\operatorname{Tr}(\rho M_h)].
+\end{gathered}
+\tag{54.8}
+$$
+
+最左标签最早作用。这些是原始联合概率，包括空词和两种终端结果；其和为 $2^{-n}$。第二卷定理 39.3 供应实际桥 $A_hB=2^{-n/2}BV_h$。所以 (54.8) 是在 $B\rho B^\dagger$ 上执行原仪器的记录，也是在原输入 $ff^\dagger$ 上先经过 $S_\rho$ 的记录。精确概率是比较的数学前提，不表示有限样本已经给出这些实数。
+
+复 Hilbert 空间、Born 配对、CPTP 组合和所述环境就绪、测量及丢弃合同均处于前提侧。比较全部 $\rho$ 的实现，不授予实际制备整个 $\mathcal K_d$、新效果、独立副本、相位参考、环境访问、选支、逆或可调角度的权限。
+

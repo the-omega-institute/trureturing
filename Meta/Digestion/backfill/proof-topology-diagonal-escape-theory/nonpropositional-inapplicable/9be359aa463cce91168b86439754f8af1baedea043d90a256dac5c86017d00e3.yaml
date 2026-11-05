@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9be359aa463cce91168b86439754f8af1baedea043d90a256dac5c86017d00e3
+  normalized_sha256: sha256:9be359aa463cce91168b86439754f8af1baedea043d90a256dac5c86017d00e3
+cas_ref: sha256:9be359aa463cce91168b86439754f8af1baedea043d90a256dac5c86017d00e3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只有整个过去与覆盖阈值节标题。
+    previous_atom_id: 67103b1910a544a18abe498ff159b9818e41b79dcbff11d11fee1853d34e5f0f
+    next_atom_id: 3c475cbf07bf56cd76b39303f69d4c25cb4a0307de6289bc615e63b1cab42d54

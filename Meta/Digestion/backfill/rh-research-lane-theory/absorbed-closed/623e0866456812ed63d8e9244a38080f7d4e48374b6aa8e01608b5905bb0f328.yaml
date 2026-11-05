@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:623e0866456812ed63d8e9244a38080f7d4e48374b6aa8e01608b5905bb0f328
+  normalized_sha256: sha256:623e0866456812ed63d8e9244a38080f7d4e48374b6aa8e01608b5905bb0f328
+cas_ref: sha256:623e0866456812ed63d8e9244a38080f7d4e48374b6aa8e01608b5905bb0f328
+coverage_gids:
+  - gid: D5/S3/Weil/Probability/CanonicalLiGrowthZeroFree.canonical_xi_disk_local_equation
+    target_statement_id: sha256:14ad46179806f713665c316cb8bb32aa8ad65bbf7aebe3691f98155cda254e09
+  - gid: D5/S3/Zeros/Endpoints/CanonicalLiLocalExpansion.canonical_li_local_expansion
+    target_statement_id: sha256:26a2ec64e3cbb9437ecfac5d20f2e0575f606719b2a107bfa562c987d435efc3
+  - gid: D5/S3/Zeros/Endpoints/CanonicalLiLocalExpansion.canonical_li_zero
+    target_statement_id: sha256:b1c73c432b885d2b8a53e3da372efe73ff143371e87eda2f0336edd418edd027
+  - gid: D5/S3/Zeros/Endpoints/XiEndpointValues.xi_reading_endpoint_values
+    target_statement_id: sha256:666cd0e1cf4e43d59395de2fc4abfe86b62f4a7c450d9b3657110465b7863e2c
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,37 @@
+**Proposition 78.4 (full-clock and early-stop costs belong to their own runs).** Let $\mathcal B$ be the original beta leaves' preorder positions among $1,\ldots,L$. Use the exact marking-scan count of §§12,47,63,
+
+$$
+R_{\rm mark}=L^2+\sum_{p\in\mathcal B}(L-p).
+\tag{78.3}
+$$
+
+From arbitrary attachment through restored handoff, excluding optional provider preparation and later use, Theorem 77.2 has
+
+$$
+\begin{aligned}
+P\text{ attempts}&=2L-1,&S&=c,&\operatorname{Reset}&=0,\\
+\operatorname{Read}&=L+R_{\rm mark}+q,\\
+\operatorname{Add}&=2L+c+b(I+1),\\
+\operatorname{Tick}&=\ell+I+1,\\
+\operatorname{Hold}&=L+\ell+I+4.
+\end{aligned}
+\tag{78.4}
+$$
+
+There are $3L+c+b(I+1)+2\ell+2I+5$ Add/Tick/Hold ACKs, besides all structural/refusal/scalar replies. Marking has $L$ successful growths, $a+2c=b$ fresh cells and new binding assignments, and $4a+8c$ structural-reference assignments in the source's three-reference convention. All $N$ final cells coexist with the source's update backing.
+
+**Proof.** The marking prefix is unchanged from §§34–36. Its $L$ original Reads, $R_{\rm mark}$ scans and saved $z$ remain. The full old $b(I+1)$-Read observation is replaced by $q$ Reads and $\ell$ Tick/Hold pairs; the restored-control phase retains $b(I+1)$ Adds and $I+1$ Tick/Hold pairs. Substitution in §63.2 gives (78.4). Adding Add, Tick and Hold gives the ACK count. Each original alpha promotion adds one cell and four structural assignments; each original beta split adds two cells and eight assignments. This gives the material counts. $\square$
+
+For $\ell=I$, fix the same forcing right inverse $C$, control implementation and codec in the old and sparse runs. The actual non-Read source trajectory, observation endpoint and restoration operands are then exactly the old full-window ones: deleted Reads are identities. The omitted complete scalar transactions number
+
+$$
+b(I+1)-q=bI+1.
+\tag{78.5}
+$$
+
+At a fixed codec the source-channel traffic decreases by the exact sum of these omitted request/reply/frame/acknowledgement/Return transactions. This compares that channel and those contracts. New row selection/elimination and exports still cost resources; the old literal window is no longer the returned Time.
+
+For $\ell=H$, there are additionally $I-H$ fewer Ticks and Holds. But $d_H$ and $g^{(H)}$ replace $d_I$ and $g^{(I)}$. Their rational widths and actual payloads can differ. Formula (78.4) proves the call savings, without any total traffic, local-work or simultaneous-storage ordering. Both endpoint variants are retained; neither is a total-resource winner.
+
+A concrete arbitrary-attachment provider, when part of the chosen run, is the already supplied §§53.2,62.3 construction: build $t$ from known-zero alpha with $c$ promotions and $L-1$ splits; receive an owned target $x$; use its old horizon $|V_0|-L=q$ to prepare $x$ by $L(q+1)$ terminal Adds and $q$ Ticks; Hold for handoff. Then clear or isolate every dependent provider/control/input/predictor copy from this receiver. Including that preparation adds precisely those constructor calls, Adds, Ticks and one Hold to (78.4), as well as ingress, initialization, grants, clearing and material backing. If a chosen attachment uses a different raw bijection, its installer must actually furnish that authentic binding and grants; these remain paid installation inputs, not outputs of target preparation. This is a reused paid witness of the arbitrary-field entrance, not a new unknown-source acquisition or a free target oracle.
+

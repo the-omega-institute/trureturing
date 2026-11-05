@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f9f74fa4b0c343230b0d8ca458ee7cd9986690d5baf4aadd64459c0f7b64fea3
+  normalized_sha256: sha256:f9f74fa4b0c343230b0d8ca458ee7cd9986690d5baf4aadd64459c0f7b64fea3
+cas_ref: sha256:f9f74fa4b0c343230b0d8ca458ee7cd9986690d5baf4aadd64459c0f7b64fea3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：比较亚里士多德与能力方法的评价对象，保留机会与活动的完成条件差别。
+    previous_atom_id: fecfeda7ca43c2d330bef9ba06f3af4c1ef002e528a81d6844498cb68799a1b1
+    next_atom_id: 56c3f315022309062dbbdbd09bd99c951bdd61739ac879299af97168a9270676

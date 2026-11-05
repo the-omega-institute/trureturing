@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:718718ee0fb81402de4b0c86f3dd16ae9a263b1c4a330fda652acb6cdf567415
+  normalized_sha256: sha256:718718ee0fb81402de4b0c86f3dd16ae9a263b1c4a330fda652acb6cdf567415
+cas_ref: sha256:718718ee0fb81402de4b0c86f3dd16ae9a263b1c4a330fda652acb6cdf567415
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 记忆损失照护的条件性共同研究任务；属于引文解释、建模约定或研究建议，没有另立待证数学断言，本收据不验证其文献或经验真值。
+    previous_atom_id: ad4bb3759e1eab7d10180fb0f044fda0b35cfcec6d8f53f99281a6d66b5156d5
+    next_atom_id: efce4eafcd31bfb1b511ba90c392f1889c62358e4fb39b6ac7277b6b3d3390db

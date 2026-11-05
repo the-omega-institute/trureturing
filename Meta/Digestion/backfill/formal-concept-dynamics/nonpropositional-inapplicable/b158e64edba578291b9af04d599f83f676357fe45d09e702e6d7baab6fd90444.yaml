@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b158e64edba578291b9af04d599f83f676357fe45d09e702e6d7baab6fd90444
+  normalized_sha256: sha256:b158e64edba578291b9af04d599f83f676357fe45d09e702e6d7baab6fd90444
+cas_ref: sha256:b158e64edba578291b9af04d599f83f676357fe45d09e702e6d7baab6fd90444
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 关于共同 quotient 的疑问句及不预选立场的研究方法说明。
+    previous_atom_id: 09f5a170f2fb8abb35dbd9f6d3b3cfd29749ad7fb616db4798bbd22e0fd7579c
+    next_atom_id: 8f212754d8b68c86161891ada8088f645b5215205f560b463d1d2c5f450fdf35

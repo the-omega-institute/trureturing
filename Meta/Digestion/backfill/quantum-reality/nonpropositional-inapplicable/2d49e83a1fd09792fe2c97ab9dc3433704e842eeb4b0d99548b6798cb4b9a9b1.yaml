@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2d49e83a1fd09792fe2c97ab9dc3433704e842eeb4b0d99548b6798cb4b9a9b1
+  normalized_sha256: sha256:2d49e83a1fd09792fe2c97ab9dc3433704e842eeb4b0d99548b6798cb4b9a9b1
+cas_ref: sha256:2d49e83a1fd09792fe2c97ab9dc3433704e842eeb4b0d99548b6798cb4b9a9b1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段说明既有有限实验与 Lean、全称证明及物理主张之间的证据边界，不给出新的算术断言。
+    previous_atom_id: 37b5af6baf90c41897a1f63852500a551955a56346698bcdb1d1502254409271
+    next_atom_id: e6a02a931ab16b347df975a6c64f1035585578b92ea3190092168d5404ce1313

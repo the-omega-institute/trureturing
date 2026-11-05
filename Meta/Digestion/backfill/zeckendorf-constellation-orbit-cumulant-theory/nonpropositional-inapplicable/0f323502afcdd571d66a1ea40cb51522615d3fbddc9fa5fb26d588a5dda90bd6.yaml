@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0f323502afcdd571d66a1ea40cb51522615d3fbddc9fa5fb26d588a5dda90bd6
+  normalized_sha256: sha256:0f323502afcdd571d66a1ea40cb51522615d3fbddc9fa5fb26d588a5dda90bd6
+cas_ref: sha256:0f323502afcdd571d66a1ea40cb51522615d3fbddc9fa5fb26d588a5dda90bd6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：孤立的假设列表项“一次交换”，没有量化命题、等式或存在性结论。
+    previous_atom_id: 46f11806dd640f7e1fc8de3b537c74bc1f62bdc17644bee10d03cfc54f635297
+    next_atom_id: 542bad46d6cb7844f7fe73624c8d84a7594690fbbce675b415d57ee80726ceb3

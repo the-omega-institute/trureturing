@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:17dc0022fa7b03a6f0052f786e28c9d49eabd3bae8f734abc133cfd99c6a918c
+  normalized_sha256: sha256:17dc0022fa7b03a6f0052f786e28c9d49eabd3bae8f734abc133cfd99c6a918c
+cas_ref: sha256:17dc0022fa7b03a6f0052f786e28c9d49eabd3bae8f734abc133cfd99c6a918c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: B13.1 第一清单项仅引入尺度 L 的 prime relation Galerkin 空间符号，属于后续条件定理的设定。
+    previous_atom_id: 41d0fb69f21de5cf3294a41b820d8c50f1ab356cb00b65e1e1e71094cfc270a3
+    next_atom_id: fa8799169027b5a73912d0f9a4670cb936a669e7dbaa8de4c57eba83f455c4c0

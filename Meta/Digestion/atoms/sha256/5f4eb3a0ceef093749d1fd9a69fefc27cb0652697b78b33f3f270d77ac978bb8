@@ -1,0 +1,39 @@
+**命题 5.5（读口扰动与稀有条件放大）。**
+
+<a id="prop-continuity"></a>
+
+对任意态、内部酉 $U,V$ 及有界 $E$，
+
+$$
+|\omega(U^*EU)-\omega(V^*EV)|
+\le2\|E\|\,\|U-V\|.
+$$
+
+若 $K,L$ 为收缩，$\omega(K^*K),\omega(L^*L)\ge\varepsilon>0$，
+则对 $\|A\|\le1$，
+
+$$
+|\omega_K(A)-\omega_L(A)|
+\le4\|K-L\|/\varepsilon.
+$$
+
+**证明。**
+
+第一式展开为 $(U^*-V^*)EU+V^*E(U-V)$ 后取范数。
+第二式的两个分子之差及两个分母之差都至多为 $2\|K-L\|$；
+又 $|\omega(L^*AL)|\le\omega(L^*L)$。
+通分并用分母下界即得。
+
+□
+
+这两个界不依赖维数。
+小分母确能造成条件放大：固定 $\Omega=\lvert 0 \rangle$，
+取 $K_\eta=\eta\lvert 0 \rangle\langle 0 \rvert,L_\eta=\eta\lvert 1 \rangle\langle 0 \rvert$。
+$\|K_\eta-L_\eta\|=\sqrt2\eta\to0$，
+两事件质量都是 $\eta^2$，条件态却始终正交。
+无界读数则另需定义域和矩条件：
+在 $\ell^2(\mathbb N_0)$ 上取 $Q\lvert n \rangle=n^3\lvert n \rangle$、
+$\psi_n=\sqrt{1-n^{-2}}\lvert 0 \rangle+n^{-1}\lvert n \rangle$，
+虽 $\psi_n\to\lvert 0 \rangle$，其 $Q$ 期望为 $n$。
+无限维不是任意概率跳跃的理由，效应有界与否、条件质量必须分开。
+

@@ -1,0 +1,4 @@
+**定义 77.4（定量残余的精确范围）。** Environment Theorem 27.7 的 scalar feasibility criterion (27.24) 已完全判定 $0<r<1$ 时何时达到 floor $k$；Proposition 27.9 的 (27.27)–(27.28) 给出其余误差的有限维 coupled feasibility。尚缺的是 $n\ge2$ 时 $r=0,pq>0$，以及 interior $p,q,r>0$ 且不在 floor region 内的 analytic/piecewise 或足够显式 fixed-degree algebraic optimum、attaining effect 和 matching lower certificate。rank-two tasks 由 supplier Proposition 27.8 的 $\eta_n(I_3-E)=\eta_n(E)$ 归约。
+
+这些 numerical values 不转移到任意 full-support correlated laws；§76 的 exact support criterion 则有那一较宽适用域。有限任务族的 approximate common objective 必须直接最小化同一 $\mathcal D$ 下的最大任务误差。分别最优化每个 $E_j$ 的值不能拼成一个共同 decoder；§76 的 exact common construction 不给出这种 approximate conclusion。
+

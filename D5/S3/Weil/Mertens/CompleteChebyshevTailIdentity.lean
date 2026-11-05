@@ -1,15 +1,14 @@
 /- GID: D5/S3/Weil/Mertens/CompleteChebyshevTailIdentity
    generality: G
-   mirror-B: none(waiver:source-only-candidate-not-installed)
-   mirror-E: none(waiver:source-only-candidate-not-installed)
+   mirror-B: D5/B/S3/Weil/Mertens/CompleteChebyshevTailIdentity
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Normalize the actual complete Chebyshev tail from absolute integrability. -/
 
 /-
-Source-only candidate against project 722749b2de43481036f16e80200867f7f862f40e
-and Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679.
-No compilation, kernel acceptance, registration or freezing is asserted.
+The actual complete Chebyshev tail identity assumes only absolute integrability
+of its error kernel and includes every real endpoint t >= 2.
 
 Reuse: Mathlib's SumCoeff owns the L-series/integral interchange; Dirichlet
 owns the actual Mangoldt logarithmic derivative; Harmonic.ZetaAsymp owns
@@ -20,8 +19,8 @@ summation theorem. The existing Mertens Gamma owner remains unchanged in
 the frozen downstream consumer; its Euler identification is not reproved.
 
 All private helpers are consumed by complete_chebyshev_tail_identity.
-The proposed escape witness is normalized_error_integral, with its actual
-damped-kernel dominated-convergence proof. Admission remains a candidate.
+The normalization step is normalized_error_integral, with its actual
+damped-kernel dominated-convergence proof.
 -/
 
 import Mathlib.NumberTheory.Chebyshev

@@ -1,0 +1,47 @@
+**Theorem 38.1 (exact two-coordinate cap region).** For the full
+$\mathscr R_d$ and all the premises and readiness requirements of
+Definition 37.1, let $\mathcal F_d$ consist of integer pairs
+$(q,u)\in\mathbb N_0^2$ for which one uniform preparation has
+$Q\le q$ and $U\le u$ on every source. Use the corresponding
+almost-sure requirements if independently randomized. For either the
+complete-future task or the joint task, exactly
+
+$$
+ \mathcal F_d=
+ \begin{cases}
+ \{(q,u):q\ge2d,\ u\ge N(2d)\},&d>0,\\
+ \{(q,u):q\ge0,\ u\ge2\},&d=0,
+ \end{cases}
+ \qquad
+ N(m)=\min\{n\ge3:F_n-1\ge m\}\quad(m>0).
+ \tag{GPO.91}
+$$
+
+The lower corner in each case is attained on one actual source run
+by one uniform preparation, simultaneously in both coordinates.
+This is a region of worst-case **caps for $Q,U$ only**.
+
+Proof. For $d>0$, Theorem 37.2 forces $q\ge2d$ regardless of
+the permitted update cap. The sharp adaptive-stopping lower bound of
+Theorem 33.2 forces $u\ge N(2d)$ regardless of the permitted
+Read cap and local work. That proof uses one periodic difficult source
+which remains ambiguous at every earlier mature cut, not merely
+different witnesses chosen separately for fixed cuts. Its indistinguishable
+alternative changes a newest bit and a finite future reply. It therefore
+applies to both tasks here and to independent zero-error randomization.
+
+Conversely, Definition 33.1 with $m=2d$ and Theorem 33.2 have
+$Q=2d$ and $U=N(2d)$ on the same run, with actual acquisition
+and completed installation. This one preparation meets every pair of
+larger caps. There is no need to combine two separately attaining
+preparations. For $d=0$, maturity itself requires the actual counter
+$U\ge2$, and the zero-Read preparation in Theorem 37.2 attains
+$(0,2)$. This proves the two regions.
+
+For a competitor, the stream witnessing its worst Read count need
+not be the stream witnessing its worst update count. The independent
+necessary caps and their common attainment suffice for (GPO.91).
+Nothing in the proof identifies a shared hardest input for every
+competitor, or compares its local work or total material prices.
+$\square$
+

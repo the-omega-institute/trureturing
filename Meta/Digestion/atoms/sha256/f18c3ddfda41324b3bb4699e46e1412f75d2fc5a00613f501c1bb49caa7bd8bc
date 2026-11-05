@@ -1,0 +1,52 @@
+**Correction 16.1 (the scope of (9.2)).** Both assertions $\mathsf Q_{\rm full}$ and $\mathsf Q_{\rm band}$ in (9.2) follow from [Strip, Theorems 3.1, 5.1 and 6.5][Strip] and [Entropy, Theorem 3.1][Entropy]. Their descriptions as open in Open problem 9.2, Open Question 12.4, Convention 14.2 and Consequence 15.3 are superseded by this application. The definitions and universal quantifiers in (9.2) are unchanged; this is reuse of the existing suppliers, not an additional universal rate theorem.
+
+**Parameter correspondence and deduction.** Fix $N\ge1$ and $\theta\in\Theta_N$. In [Strip] take $B_x=M_x$, $d=N$, $\pi=\lambda$ and $L=2N$, on exactly the stationary edge law $J_\theta$ of (2.2) and its visible marginal $P=P_\theta$. The center still labels $H_0\longrightarrow H_1$, and every integer radius counts original emitted edges. With natural-log entropies, put
+
+$$
+\begin{aligned}
+a_k&=H_P(X_0\mid X_{-k:-1})-H_P(X_0\mid X_{-\infty:-1}),
+& R_j&=\sum_{k\ge j}a_k,\\
+\mathcal F_j&=\sigma(X_{0:j-1}),
+&\mathcal F_\infty&=\sigma(X_i:i\ge0),\\
+\ell_j&=H_{J_\theta}(H_0\mid\mathcal F_j)
+       -H_{J_\theta}(H_0\mid\mathcal F_\infty)
+&& (k,j\ge0).
+\end{aligned}
+\tag{16.1}
+$$
+
+The fields in [Strip, Definition 6.4] and [Entropy, (1.1)] are exactly $\mathcal E_0,\mathcal L_j,\mathcal R_j$ of Definition 2.2, including the empty finite side at $j=0$ and the entire opposite half-line in each direction. Every quantity uses the full stationary law, including its component mixture; no component conditioning or reweighting is made.
+
+If the collection of incompatible nonempty support pairs in [Strip, Definition 2.3] is nonempty, use its $\kappa=1-\zeta^2/2\in[1/2,1)$ and the constant
+
+$$
+K_\lambda=\frac{\pi_{\mathrm{circ}}}{2}
+          \sum_{i=1}^N\sqrt{\lambda_i(1-\lambda_i)},
+$$
+
+where $\pi_{\mathrm{circ}}$ denotes the circle constant. The maximal-stripping bound of [Strip, Theorem 3.1] supplies the expected terminal-information estimate in its Theorem 5.1; its same-law Theorem 6.5 and [Entropy, Theorem 3.1] then give, for every $j\ge0$,
+
+$$
+R_j\le\ell_j\le K_\lambda\kappa^{\lfloor j/L\rfloor},
+\qquad
+e_L^P(j),e_R^P(j)\le\frac12R_j
+\le\frac{K_\lambda}{2}\kappa^{\lfloor j/L\rfloor}.
+\tag{16.2}
+$$
+
+These are deterministic bounds on expectations on the specified infinite fields. Each value of $\lfloor j/L\rfloor$ occurs for exactly $L$ nonnegative integer radii, so for every integer $r\ge0$,
+
+$$
+\begin{aligned}
+A_P(r)
+&\le\sqrt{2K_\lambda}\sum_{j\ge r}\kappa^{\lfloor j/L\rfloor/2}\\
+&\le\frac{L\sqrt{2K_\lambda}}{1-\sqrt\kappa}
+       \kappa^{\lfloor r/L\rfloor/2}<\infty.
+\end{aligned}
+\tag{16.3}
+$$
+
+If that support-pair collection is empty, [Strip, Lemma 2.4 and Theorems 5.1 and 6.5] give identical future laws from every initial state and $\ell_j=R_j=0$. The same [Entropy] comparison gives $e_L^P(j)=e_R^P(j)=0$ and $A_P(r)=0$. No minimum over an empty collection is taken. Zero stationary coordinates contribute zero to $K_\lambda$ and require no positive-posterior assumption.
+
+Thus (16.3), with the separate zero case, proves the conclusions in (9.2), including radius zero. The band $\mathsf B(P)$ of (2.5) is unnecessary for this application. The domain remains the entire (2.1), with only scalar legality $\lambda M_1^2\mathbf1=0$, real nonnegative entries, structural zeros, zero stationary masses, reducibility, periodicity and redundant presentations. No positivity, observability, identifiability, ergodicity or aperiodicity is added. $\square$
+

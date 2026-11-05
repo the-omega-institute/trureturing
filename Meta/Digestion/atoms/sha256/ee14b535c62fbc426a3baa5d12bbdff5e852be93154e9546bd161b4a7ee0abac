@@ -1,0 +1,15 @@
+# 10 当前态和切向的三维提升
+
+设完整演化为
+
+```math
+\dot\psi=-\frac{i}{\hbar}H\psi,\qquad H=H^*,\quad \|\psi\|=1.
+```
+
+记 h=⟨ψ,Hψ⟩。去掉沿原射线的相位分量，得到水平切向
+
+```math
+\boxed{\xi=-\frac{i}{\hbar}(H-hI)\psi,\qquad
+\langle\psi,\xi\rangle=0.}
+```
+

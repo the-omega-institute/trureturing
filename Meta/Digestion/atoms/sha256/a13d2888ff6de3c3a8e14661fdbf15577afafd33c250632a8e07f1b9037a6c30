@@ -1,0 +1,8 @@
+**Definition 2.2 (Qubit SIC, overlap matrix, the matrix $A$).** A qubit SIC is a family $\lbrace\rho_a\rbrace_{a=1}^4$ of rank-one projectors on $\mathbb C^2$ with $\operatorname{Tr}(\rho_a\rho_b)=\frac13$ for $a\ne b$. Its overlap matrix is $B=\big(\operatorname{Tr}(\rho_a\rho_b)\big)_{a,b}=\frac23I_4+\frac13J_4$, where $J_4$ is the all-ones $4\times4$ matrix. Put
+
+$$
+A=\frac14J_4-\frac12I_4 .
+$$
+
+Since $J_4^2=4J_4$, one has $B(I_4-A)=\big(\frac23I_4+\frac13J_4\big)\big(\frac32I_4-\frac14J_4\big)=I_4-\frac16J_4+\frac12J_4-\frac13J_4=I_4$, so $B^{-1}=I_4-A$; entrywise $A_{ab}=\frac14(1-2\delta_{ab})$. Stance: literature-attested for the notion of qubit SIC and its overlap matrix (cited facts (a), (b)); repo-derived for the explicit matrix $A$ (computed in this volume).
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ded5cef6f63602182ea91c229af8d9439d6c935b479c267055f91c21b2be8f2e
+  normalized_sha256: sha256:ded5cef6f63602182ea91c229af8d9439d6c935b479c267055f91c21b2be8f2e
+cas_ref: sha256:ded5cef6f63602182ea91c229af8d9439d6c935b479c267055f91c21b2be8f2e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 卷首标题、作者及输入来源说明和 Lean 真源边界；没有关于所研究数学对象的命题，不承担任何定义或定理的证明。
+    previous_atom_id: null
+    next_atom_id: 86893304dc07d9b100bbdbbd5dc6064c78e199e3c077d262e5e4c24a9d083f11

@@ -1,0 +1,8 @@
+**[LW]** [LorentzWeightedHolderControl](../../../D5/S3/Analytic/SeriesInequalities/LorentzWeightedHolderControl.lean),
+including its weighted derivative kernels, Lorentz jet estimates,
+Taylor-remainder bounds, derivative control, Hölder seminorm control,
+and weighted stability. These approximation conclusions, including
+the proof-local estimates, are credited intermediate theory. The proof
+of Theorem 2.1 uses the ordinary positive Bernstein operator and the
+explicit first-difference bound (2.19).
+

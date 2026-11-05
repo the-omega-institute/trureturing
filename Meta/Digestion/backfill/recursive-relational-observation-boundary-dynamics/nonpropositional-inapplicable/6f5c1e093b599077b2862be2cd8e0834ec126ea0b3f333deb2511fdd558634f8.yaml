@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6f5c1e093b599077b2862be2cd8e0834ec126ea0b3f333deb2511fdd558634f8
+  normalized_sha256: sha256:6f5c1e093b599077b2862be2cd8e0834ec126ea0b3f333deb2511fdd558634f8
+cas_ref: sha256:6f5c1e093b599077b2862be2cd8e0834ec126ea0b3f333deb2511fdd558634f8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只定义连接表达这一术语的记录对象，没有附带核等式、存在性或计数断言。
+    previous_atom_id: 34621a3ffaedf428b2278627feed777e5eb2ad096b15b8875aa0355aceae1e89
+    next_atom_id: 9a98e1b0cb4054fdd594ac9005222e9d99707f76ff74c8fe1865d43d982a6955

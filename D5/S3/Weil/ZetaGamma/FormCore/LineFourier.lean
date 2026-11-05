@@ -77,7 +77,7 @@ private theorem raw_fourier_test {f : ℝ → ℂ} (hf : Integrable f)
       (μ := (volume : Measure ℝ)) (ν := (volume : Measure ℝ))
       Real.continuous_fourierChar continuous_inner hf (ψ.integrable (μ := volume))
 
-private theorem raw_fourier_ae_eq_L2 {f : ℝ → ℂ}
+theorem raw_fourier_ae_eq_L2 {f : ℝ → ℂ}
     (hf₁ : Integrable f) (hf₂ : MemLp f 2) :
     (𝓕 f : ℝ → ℂ) =ᵐ[volume]
       (𝓕 (hf₂.toLp f) : Lp ℂ 2 volume) := by

@@ -98,11 +98,11 @@ def Rigid (f : ℝ → ℝ) : Prop :=
     (Linearizable f A B ↔
       (A * B = B * A ∧ (spectrum ℝ (gmInv A B)).ncard ≤ 2))
 
-private lemma half_eq_sqrt {n : ℕ} {A : Matrix (Fin n) (Fin n) ℂ}
+lemma half_eq_sqrt {n : ℕ} {A : Matrix (Fin n) (Fin n) ℂ}
     (hA : A.PosDef) : cfc (fun x : ℝ => x ^ (1 / 2 : ℝ)) A = CFC.sqrt A := by
   rw [CFC.sqrt_eq_rpow, CFC.rpow_eq_cfc_real hA.posSemidef.nonneg]
 
-private lemma half_inverse {n : ℕ} {A : Matrix (Fin n) (Fin n) ℂ}
+lemma half_inverse {n : ℕ} {A : Matrix (Fin n) (Fin n) ℂ}
     (hA : A.PosDef) :
     cfc (fun x : ℝ => x ^ (1 / 2 : ℝ)) A *
       cfc (fun x : ℝ => x ^ (-(1 / 2 : ℝ))) A = 1 ∧
@@ -205,7 +205,7 @@ private lemma spectral_entries {n : ℕ} {A Y : Matrix (Fin n) (Fin n) ℂ}
   push_cast
   linear_combination hij
 
-private lemma affine_three (g : ℝ → ℝ)
+lemma affine_three (g : ℝ → ℝ)
     (hg : StrictConvexOn ℝ (Set.Ioi 0) g ∨ StrictConcaveOn ℝ (Set.Ioi 0) g)
     (a b x y z : ℝ) (hx : 0 < x) (hy : 0 < y) (hz : 0 < z)
     (hxy : x ≠ y) (hxz : x ≠ z) (hyz : y ≠ z)

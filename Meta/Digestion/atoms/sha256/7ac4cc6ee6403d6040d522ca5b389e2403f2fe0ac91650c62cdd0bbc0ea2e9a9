@@ -1,0 +1,95 @@
+**Proposition 7.2 (the supplied chronology gives this actual slab map).**
+The map (7.3) preserves every original command and its entire prefix
+guard wherever the command is lawful. It preserves all ten original
+signed doubled coherence outputs there. Central translation by $d_n$
+is an actual kernel of these native partial-action formulas. These
+assertions identify neither $\mathcal B_\ell$ with the native ray
+manifold nor the full endpoint dynamics with native command dynamics.
+
+Proof. For a relative command $\gamma=(a_c,b_c)$ put
+$A=a_c(T)$, $B=b_c(T)$ and $J=\int a_c\,db_c$. Regard its chronological
+triple as $c_\gamma=(A,B,0,J)\in G$. Right multiplication gives
+
+$$
+p c_\gamma=(x+A,y+B,z,w+J+xB).
+\tag{7.4}
+$$
+
+Substitution into (7.3), at native height $k=k_0+x$, gives exactly
+
+$$
+\Psi(p c_\gamma)
+ =\bigl(k+A,[\alpha+B/2],
+               [\beta+(1/2-k/r)B-J/r]\bigr).
+\tag{7.5}
+$$
+
+This is [N, Theorem 9.3], equivalently (1.6), with the same sign and
+the same real area $J$. For every prefix replace $(A,B,J)$ by
+$(a_c(t),b_c(t),\int_0^t a_c\,db_c)$. The whole lifted path remains
+in $\mathcal S$ exactly when
+
+$$
+k+\min_{[0,T]}a_c>0,\qquad
+k+\max_{[0,T]}a_c<H_{\rm n}.
+\tag{7.6}
+$$
+
+For two commands, the chronological product is
+$(A+A',B+B',0,J+J'+AB')$, just as in [N, (9.12)]. Its allowed
+domain is the first guard intersected with the inverse image of the
+second guard under the first action. Thus (7.5) respects concatenation
+with actual refusal domains, rather than just endpoint membership.
+Differentiating (7.3) gives
+
+$$
+D\Psi X_1=P,\qquad D\Psi X_2=Q,\qquad
+D\Psi X_3=0,\qquad D\Psi\partial_w=-r^{-1}\partial_\beta.
+\tag{7.7}
+$$
+
+In particular $z$ is an extra endpoint coordinate, not a third original
+control supplied by this map.
+
+For completeness, the exact output formula can be written without
+changing the fixed rotations. In edge order
+$((0,1),(0,2),(0,3),(1,13),(3,13))$, let
+$\delta_e=\theta_i^{\rm ref}-\theta_j^{\rm ref}$ denote those rotations.
+With $u(t)=(\cos t,\sin t)$, the five pairs are
+
+$$
+\begin{aligned}
+Y_{01}&=2\sqrt{k(H_{\rm n}-k)}\,u(\delta_{01}+\alpha),\\
+Y_{02}&=2\sqrt{Zk}\,u(\delta_{02}+\beta),\\
+Y_{03}&=2\sqrt{k(H_{\rm n}-k)}\,u(\delta_{03}+\alpha),\\
+Y_{1,13}&=2\sqrt{k(H_{\rm n}-k)}\,u(\delta_{1,13}-\alpha),\\
+Y_{3,13}&=2\sqrt{k(H_{\rm n}-k)}\,u(\delta_{3,13}-\alpha).
+\end{aligned}
+\tag{7.8}
+$$
+
+The probabilities are still $(k,H_{\rm n}-k,Z,H_{\rm n}-k,k)$.
+These are the signed outputs of [N, §8.3] and [Native continuation,
+Definition 2.1 and Lemma 2.2](FIB_NATIVE_CONTINUATION_AFFINE_OBSTRUCTION_AND_APPROXIMATION.md#2-the-original-outputs-and-the-reused-static-result).
+Fixed coordinate offsets $(\alpha_0,\beta_0)$ are included in (7.3);
+they impose no equality of preparation phases. Equations (7.5) and
+(7.8) prove preservation of the complete menu, with no whitening.
+
+Replacing $w$ by $w+n\ell$ changes $\beta$ by $-2\pi n$ and leaves
+everything in (7.5)--(7.8) unchanged. This period is native: at any
+interior starting height choose a nonzero height displacement $d$
+whose segment stays interior, and execute the four legs
+$(0,0)\to(d,0)\to(d,t)\to(0,t)\to(0,0)$ in command coordinates.
+Their $A=B=0$ and $J=dt$; choosing $t=n\ell/d$ realizes this central
+increment by a finite original history. The choice of $d$ can also
+serve a compact interior promise of starting heights. It does not
+make that one history lawful at every height in the full open source.
+Equality of central endpoint formulas does not erase excursion guards.
+
+The distinct points $\pi_\ell(x,y,z,w)$ and
+$\pi_\ell(x,y,z',w)$ already have the same image under $\Psi$ when
+$z\ne z'$. Additional identifications involving the $y$ period also
+remain. Finally $\Psi$ has no native positive-height meaning outside
+$\mathcal S$. Thus $\mathcal B_\ell$ is only the stated intermediate
+test carrier. $\square$
+

@@ -1,0 +1,5 @@
+source_id = "fib-positive-jj-sign-transitions-and-reciprocal-extrapolation"
+path = "docs/develop/theory/FIB_POSITIVE_JJ_SIGN_TRANSITIONS_AND_RECIPROCAL_EXTRAPOLATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -34,11 +34,24 @@ internal sealed class HiaiRuskaiRiemannianContractionDocument : IScribeDocumentD
             Definition("admissible", "The non-unital channel parameters", AdmissibleDefinition(),
                 "Section 6, p. 19: \"Below we assume that α ≥ 0 and α² + τ² ≤ 1.\" The nonsingular non-unital range is 0 < |tau| < 1. There is no strict positivity condition on alpha."),
             Definition("claim", "Hiai-Ruskai Conjecture 6.3", Disp(Iff(Id("claim"), ClaimBody())), ConjectureQuote),
+            Describe.Lean(DescribeId.Create("hiai-ruskai-bloch-hermitian"),
+                DeclarationHandle.Create(Prefix + "rho_hermitian"),
+                H("Real Bloch coordinates give a Hermitian matrix"),
+                StatementSource.FromAuthor(BlochHermitian()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The trace-one Bloch matrix is Hermitian for every triple of real coordinates."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("hiai-ruskai-density-coordinates"),
                 DeclarationHandle.Create(Prefix + "density_coordinates"),
                 H("Coordinates of a trace-one Hermitian qubit matrix"),
                 StatementSource.FromAuthor(DensityCoordinates()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For any Hermitian complex two-by-two matrix A with trace one, its Bloch coordinates are twice the real part of A(0,1), minus twice the imaginary part of A(0,1), and twice the real part of A(0,0) minus one. This formula identifies arbitrary density inputs with the coordinates used in matrix_contraction_from_pauli and in the affine reconstruction of an isolated qubit ensemble."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("hiai-ruskai-cauchy-three"),
+                DeclarationHandle.Create(Prefix + "cauchy_three"),
+                H("The three-coordinate scalar-product bound"),
+                StatementSource.FromAuthor(CauchyThreeFormula()),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuadraticForms/mathlib2026finitecauchyschwarz")),
+                Blocks(Paragraph(Text("For every pair of real three-coordinate vectors, the squared scalar product is at most the product of the two squared lengths."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("hiai-ruskai-result"), DeclarationHandle.Create(Prefix + "result"),
                 H("All three bounds are exact"), StatementSource.FromAuthor(Disp(ClaimBody())),
@@ -90,6 +103,27 @@ internal sealed class HiaiRuskaiRiemannianContractionDocument : IScribeDocumentD
     private static Formula Square(Formula x) => new Formula.Power(Parenthesized(x), D(2));
     private static Formula ToComplex(Formula x) => Parenthesized(Seq(x, Sp, Colon, Sp, Complexes()));
     private static Formula Hermitian(Formula x) => Call("Matrix.IsHermitian", x);
+    private static Formula CauchyThreeFormula()
+    {
+        Formula Vector(string prefix) => Parenthesized(Seq(
+            Bang, OpenBracket, Id(prefix + "1"), Comma, Sp, Id(prefix + "2"), Comma, Sp, Id(prefix + "3"), CloseBracket,
+            Colon, Sp, new Formula.TypeArrow(Call("Fin", D(3)), Reals())));
+        var w = Vector("w"); var y = Vector("y");
+        Formula Product(Formula a, Formula b) => Call("dotProduct", a, b);
+        Formula formula = Le(Square(Product(w, y)), Mul(Product(w, w), Product(y, y)));
+        foreach (var name in new[] { "y3", "y2", "y1", "w3", "w2", "w1" })
+            formula = All(name, Reals(), formula);
+        return Disp(formula);
+    }
+
+    private static Formula BlochHermitian()
+    {
+        var coordinates = Seq(Bang, OpenBracket, Id("w1"), Comma, Sp,
+            Id("w2"), Comma, Sp, Id("w3"), CloseBracket);
+        var matrix = Call("D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix",
+            D(1), Call("WithLp.toLp", D(2), coordinates));
+        return Disp(All("w1", Reals(), All("w2", Reals(), All("w3", Reals(), Hermitian(matrix)))));
+    }
     private static Formula DensityCoordinates()
     {
         var a = Id("A");

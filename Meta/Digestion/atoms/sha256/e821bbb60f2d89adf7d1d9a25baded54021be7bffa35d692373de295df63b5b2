@@ -1,0 +1,24 @@
+**定义 93.1（九个原事件与共同读出）。** 依 V 定理 92.1–92.2 选任一原前缀基：$u_1=\varnothing$，$u_1,\ldots,u_8$ 是长至多七的原生词，第九个词 $u_9=u_jN$ 为同一个已安装 $N$ 给出的逃逸列。沿用 V (93.11) 及本卷 (84.2)，置
+
+$$
+r_i=A_{u_i}\rho_0,\quad
+R:\mathbb R^9\longrightarrow Q=\operatorname{Herm}_3,\quad
+R\mathbf e_i=r_i,\qquad
+\operatorname{Tr}r_i=2^{-k(u_i)}.
+\tag{93.1}
+$$
+
+$R$ 是实线性双射。对一个共同后缀时序 $s$ 和同一组后缀接受系数 $a(w,b)$，定义九个带权响应
+
+$$
+\begin{aligned}
+\mathbf b(F)_i&=\operatorname{Tr}(Fr_i),\qquad F=F_{s,a},\\
+\mathbf b(F_{s,a})_i
+ &=\sum_{w\in\mathcal W_s}\sum_{b=0}^1a(w,b)\,p(u_iw,b),\\
+\sum_{w,b}p(u_iw,b)&=2^{-k(u_i)}.
+\end{aligned}
+\tag{93.2}
+$$
+
+每个 $i$ 的实际上下文是执行 $u_i$ 所在的完整外定前缀时序，再对它的全部历史执行同一个 $s$；$u_i$ 只是最终档案中的前缀事件。共同后缀的操作和 $a(w,b)$ 不依赖 $i$、此前标签或前缀是否命中。其他前缀历史仍在完整分布中；若只计算 (93.2) 的事件，它们的接受系数为零。这里没有制备 $r_i/\operatorname{Tr}r_i$，也没有跨上下文制备彩票。
+

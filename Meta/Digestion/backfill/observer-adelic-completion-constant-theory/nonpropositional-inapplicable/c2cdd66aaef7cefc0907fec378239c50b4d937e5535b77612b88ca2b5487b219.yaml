@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c2cdd66aaef7cefc0907fec378239c50b4d937e5535b77612b88ca2b5487b219
+  normalized_sha256: sha256:c2cdd66aaef7cefc0907fec378239c50b4d937e5535b77612b88ca2b5487b219
+cas_ref: sha256:c2cdd66aaef7cefc0907fec378239c50b4d937e5535b77612b88ca2b5487b219
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列举多点 kernel 这一研究工具，没有正性或实现断言。
+    previous_atom_id: 7cc3fef8b89f825ce639be20f71a0a712c82caaace790e13101925f3af22d905
+    next_atom_id: d4447dd60361c9eba170dfae65bf029eb7701c8af657098215a11fc978d2a5c4

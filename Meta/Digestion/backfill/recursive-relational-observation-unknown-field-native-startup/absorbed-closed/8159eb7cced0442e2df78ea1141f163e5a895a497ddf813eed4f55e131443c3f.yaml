@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8159eb7cced0442e2df78ea1141f163e5a895a497ddf813eed4f55e131443c3f
+  normalized_sha256: sha256:8159eb7cced0442e2df78ea1141f163e5a895a497ddf813eed4f55e131443c3f
+cas_ref: sha256:8159eb7cced0442e2df78ea1141f163e5a895a497ddf813eed4f55e131443c3f
+coverage_gids:
+  - gid: D5/S3/Observer/Linear/SmallSignedEntryTranscriptCompensation.no_deterministic_exact_acquisition
+    target_statement_id: sha256:42d84e0ba119c33ee8d4be83bfabe18e8a86ef840eb851165a01adf46ae57760
+receipts:
+  unresolved_subitems: []

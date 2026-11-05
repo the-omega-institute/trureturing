@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:22a015e8e796374b4bad995bf0948f1c134d7e89d2f57ac52a587e7d71153fdb
+  normalized_sha256: sha256:22a015e8e796374b4bad995bf0948f1c134d7e89d2f57ac52a587e7d71153fdb
+cas_ref: sha256:22a015e8e796374b4bad995bf0948f1c134d7e89d2f57ac52a587e7d71153fdb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 径向二维近似的研究范围和霍金推导的解释性文献说明，不含传播恒等式、谱公式或内外可通信性定理。
+    previous_atom_id: cff2375956246a09995a60752460e2c649f5481455cbf5fcc3b82243b98be1e9
+    next_atom_id: 60c50237a3f05471da81be68f1fa25b7081208ae532fa08b9bddc60770e310d8

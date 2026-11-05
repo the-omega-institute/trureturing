@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6f19c0a4e84c6a5edc8f51bbfbcb6e0a9c5e3d9ad640ee617927eec00dfb116f
+  normalized_sha256: sha256:6f19c0a4e84c6a5edc8f51bbfbcb6e0a9c5e3d9ad640ee617927eec00dfb116f
+cas_ref: sha256:6f19c0a4e84c6a5edc8f51bbfbcb6e0a9c5e3d9ad640ee617927eec00dfb116f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这是要求说明观察者锚定内容的审计问题，没有声称锚点或相容 section 存在。
+    previous_atom_id: 3414aea4a8c639d7ab457995e0f237c4e13a2db6740788fd11e4a1557a799f95
+    next_atom_id: 64a63e02b4794a56570325ce1a1c3d96a68de09e61055440fafe99431bfbd95c

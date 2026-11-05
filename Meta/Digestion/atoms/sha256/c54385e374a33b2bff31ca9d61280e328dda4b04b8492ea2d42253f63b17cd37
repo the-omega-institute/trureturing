@@ -1,0 +1,37 @@
+**定理 78.2（仅在固定有理源数据下的误差反演）。** 沿用定理 78.1 的全部源数据与制备域假设：固定满足 (76.1) 的 $u,v,a,b,C$，并令 $\mathcal D\subseteq\mathcal K_d$ 包含 (73.1) 的两个实际制备 $\rho_+,\rho_-$。令 $k\to\infty$，则 (78.1) 满足
+
+$$
+\log\log(1/\varepsilon_k)=\Theta(k^2\log k).
+\tag{78.8}
+$$
+
+因此存在仅依赖这些固定数据的 $c_0>0$，使充分小的 $\varepsilon>0$ 对应
+
+$$
+K(\varepsilon)=\left\lfloor c_0
+\sqrt{\frac{\log\log(1/\varepsilon)}
+ {\log\log\log(1/\varepsilon)}}\right\rfloor\ge1,
+\tag{78.9}
+$$
+
+且在 $H\ge K(\varepsilon)+3$ 时，
+$k_{\mathcal D}(H,\varepsilon)\ge K(\varepsilon)+1$。特别地，完整复集合 $\mathcal D=\mathcal K_d$ 满足这一制备域条件。
+
+证明。写 $B_k=16\widetilde L D^\nu$ 和 $E_k=\nu2^{\nu-1}D^\nu$，则
+
+$$
+\log(1/\varepsilon_k)
+=E_k\log B_k+\log Q+\tfrac12\log(6(N+1)).
+\tag{78.10}
+$$
+
+固定数据给 $\log Q=O(k)$、$\log L=\Theta(k\log k)$，且充分大时 $\widetilde L=L$。又 $\nu=\Theta(k^2)$、$D=\Theta(k)$，所以 $\log B_k=\Theta(k^2\log k)$，而
+
+$$
+\log E_k=\log\nu+(\nu-1)\log2+\nu\log D
+=\Theta(k^2\log k).
+\tag{78.11}
+$$
+
+在 (78.10) 再取对数即得 (78.8)。用其上界选取充分小的常数 $c_0$，使 $k=K(\varepsilon)$ 时 $\varepsilon<\varepsilon_k$，再用定理 78.1。这一反演在上述包含双世界的制备域上让误差趋零，并要求相应终点足够长；它不是固定正误差下关于 $H$ 的发散定理，也不给一般实角度的统一有效常数。上述双重指数阈值只承担明确的存在与排除量，不承担实用精度或采样成本保证。∎
+

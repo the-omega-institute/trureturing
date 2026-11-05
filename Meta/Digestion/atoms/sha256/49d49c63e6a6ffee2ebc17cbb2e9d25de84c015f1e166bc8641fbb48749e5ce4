@@ -1,0 +1,29 @@
+## 10. Comparison with supplied necessary growth
+
+**Supplied comparison 10.1 (Same-contract lower bound).** The lower companion's Theorems 9.1 and 10.1 apply to the same exact $H_c$, stationary history, known-common-$q$ source-blind design and complete configuration count. With $b=1-2\alpha>0$, its simultaneous bound includes
+
+$$
+\mathbb E_{i,e^{-s}}^{\mathcal A}T
+\ge\frac{9!b^{11}}{8B^2\bigl(b+2\delta(M-2)\bigr)^{10}}s^{-11}
+\quad\bigl(\mathcal A\in\mathfrak A_M(e^{-s},\alpha),\ i=0,1\bigr)
+\tag{10.1}
+$$
+
+on a neighborhood independent of every finite $M\ge2$. This is a supplied lower theorem, not a lower-bound discovery of this volume. It includes both risks, both almost-sure stops and both finite means. In particular, if a compliant finite-budget family has, for one fixed target $i_\star$ and one fixed finite $C_T>0$,
+
+$$
+\mathbb E_{i_\star,e^{-s}}^{\mathcal A_s}T\le C_Ts^{-3}
+\quad\text{eventually as }s\downarrow0,
+\tag{10.2}
+$$
+
+then the supplied necessary growth conclusion is
+
+$$
+M(s)\ge2+\frac{A_Ts^{-4/5}-b}{2\delta},\qquad
+A_T=\left(\frac{9!b^{11}}{8B^2C_T}\right)^{1/10}>0.
+\tag{10.3}
+$$
+
+The eventual cubic constant must be independent of $s$, and the opponent must retain all its compliance obligations. This is stronger than mere pointwise finite means. Equations (10.1)–(10.3) are credited results of the supplied lower companion; no nested source or independent recalculation of its forest proof is needed by the upper construction.
+

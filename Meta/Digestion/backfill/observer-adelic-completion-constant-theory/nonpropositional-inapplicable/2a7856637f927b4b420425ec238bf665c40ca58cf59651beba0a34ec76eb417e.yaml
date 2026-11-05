@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2a7856637f927b4b420425ec238bf665c40ca58cf59651beba0a34ec76eb417e
+  normalized_sha256: sha256:2a7856637f927b4b420425ec238bf665c40ca58cf59651beba0a34ec76eb417e
+cas_ref: sha256:2a7856637f927b4b420425ec238bf665c40ca58cf59651beba0a34ec76eb417e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列举非最小消去这一分析方向，未陈述可判真的数学结论。
+    previous_atom_id: 2b46dc42762db92db65f0fe5a961d010573d722c7b3815e657526c5d343e0eb2
+    next_atom_id: cddcbf325305dbb6853fc2e26f89127ef1f92eb972795696a8c138f91e18ea95

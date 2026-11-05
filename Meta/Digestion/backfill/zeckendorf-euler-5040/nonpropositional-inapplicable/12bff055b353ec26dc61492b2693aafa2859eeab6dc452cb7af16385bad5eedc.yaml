@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:12bff055b353ec26dc61492b2693aafa2859eeab6dc452cb7af16385bad5eedc
+  normalized_sha256: sha256:12bff055b353ec26dc61492b2693aafa2859eeab6dc452cb7af16385bad5eedc
+cas_ref: sha256:12bff055b353ec26dc61492b2693aafa2859eeab6dc452cb7af16385bad5eedc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这是要求构造 Hilbert 空间及酉响应的研究目标，没有断言此构造已存在或已完成。
+    previous_atom_id: 949c111ce53f8c03b579faaa42e6a5dda30548d7c6cfc9cca60c93c37b1ef95e
+    next_atom_id: 4cf79a00e40872ea506af4e99977a22e3a91cbcbbfc8cafcd0a04143f11feecb

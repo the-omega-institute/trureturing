@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:543199372d0dc30730727588b509b7979d936bc65fa2f901ef54c48ba0cbd3cf
+  normalized_sha256: sha256:543199372d0dc30730727588b509b7979d936bc65fa2f901ef54c48ba0cbd3cf
+cas_ref: sha256:543199372d0dc30730727588b509b7979d936bc65fa2f901ef54c48ba0cbd3cf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definition 213 specifies the zero-extension formula and the 5040 local window set. Injectivity, compatibility and cardinality are separate assertions in Theorem 214.
+    previous_atom_id: f41fb07d82a0f6cade73640268409ff8be49af7fc726e888b4cd401147e01d7b
+    next_atom_id: f59c31d1319c4b59c57dd7ba6db1a09253e812865b9570ca0e1eda8bab852f74

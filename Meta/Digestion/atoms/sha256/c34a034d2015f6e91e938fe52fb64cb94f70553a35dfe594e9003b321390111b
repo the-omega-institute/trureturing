@@ -1,0 +1,11 @@
+**Definition 6.1 (the new passive segment).** While the final preparation Hold remains in force at $o$, Read the actual root $1$. Execute $k\ge2N$ further Ticks, with no Add in this segment, receiving the actual roots $m_1,\ldots,m_k$. Relative to the actual origin $o$, the current field is $x=T^ke_0$. The following independently specified data are exactly P Definition 39.1's data at this new origin.
+
+| View | Exposed data and meaning |
+| --- | --- |
+| Space | actual rooted weighted path $T$ and current cell field $x$ |
+| Time | paid ordered root list $(m_0,\ldots,m_k)$ in this real passive segment |
+| Boundary | rational endpoint transfer $F_T(z)=e_0^{\mathsf T}(zI-T)^{-1}e_0$ and present root $m_k$ |
+| Memory | least impulse recurrence $q$, its initial $N$ moments $\mu$, and present predictive vector $a=(e_0^{\mathsf T}T^jx)_{j<N}$ |
+
+No view is defined as an unrestricted copy of a full command journal. Space carries native adjacency and a current field; Boundary carries a port law and one current value; Memory is a finite sufficient predictive state; Time carries a specified paid scalar segment. Numerical view data do not by themselves include the source reference or its call rights. The installation and actual origin are common contextual premises for all four views.
+

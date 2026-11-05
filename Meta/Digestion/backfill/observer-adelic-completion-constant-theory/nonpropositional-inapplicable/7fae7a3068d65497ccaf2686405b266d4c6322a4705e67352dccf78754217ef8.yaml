@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7fae7a3068d65497ccaf2686405b266d4c6322a4705e67352dccf78754217ef8
+  normalized_sha256: sha256:7fae7a3068d65497ccaf2686405b266d4c6322a4705e67352dccf78754217ef8
+cas_ref: sha256:7fae7a3068d65497ccaf2686405b266d4c6322a4705e67352dccf78754217ef8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: A rejected conceptual name in a list, without existence or uniqueness of a history.
+    previous_atom_id: d5ff3deee0ffbebfb7e79cef893a500a322c4e362d4d01c536f52aff86a43eae
+    next_atom_id: e94762807faed91a6c15df6ef19408181d18943172ff9d61f95236e931303c68

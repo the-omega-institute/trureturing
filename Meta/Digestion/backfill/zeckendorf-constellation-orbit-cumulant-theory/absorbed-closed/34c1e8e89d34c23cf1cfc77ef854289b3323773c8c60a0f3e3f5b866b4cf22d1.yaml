@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:34c1e8e89d34c23cf1cfc77ef854289b3323773c8c60a0f3e3f5b866b4cf22d1
+  normalized_sha256: sha256:34c1e8e89d34c23cf1cfc77ef854289b3323773c8c60a0f3e3f5b866b4cf22d1
+cas_ref: sha256:34c1e8e89d34c23cf1cfc77ef854289b3323773c8c60a0f3e3f5b866b4cf22d1
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Attribution/FixedSymmetrySelectorObstruction.no_equivariant_selector_of_common_fixed_symmetry
+    target_statement_id: sha256:2510daf81df3e9f8c5cfe952e6825bf4beedb9e738be7f73af320b047f360a27
+receipts:
+  unresolved_subitems: []

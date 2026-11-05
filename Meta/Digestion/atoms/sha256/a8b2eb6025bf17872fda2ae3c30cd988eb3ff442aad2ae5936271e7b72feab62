@@ -1,0 +1,91 @@
+**定理 93.2（有限表强制的完整相似接口）。** 在假设 91.2 下，只要求四张有限表逐项相等：
+
+$$
+\widetilde H=H,\qquad
+\widetilde H^a=H^a\quad(a=0,1,N).
+\tag{93.6}
+$$
+
+则存在唯一可逆实线性 $T:\operatorname{Herm}_3\to\operatorname{Herm}_3$，满足
+
+$$
+\begin{gathered}
+\operatorname{Tr}(TX)=\operatorname{Tr}X,\qquad
+T\rho_0=\sigma_0,\qquad T^*F=E,\\
+B_jT=TA_j=\tfrac12T\operatorname{Ad}_{V_j}\quad(j=0,1),\qquad
+B_NT=T\operatorname{Ad}_N.
+\end{gathered}
+\tag{93.7}
+$$
+
+所有恒等式作用于全部 $\operatorname{Herm}_3$，并通过唯一复线性延伸作用于全部 $M_3(\mathbb C)$。$T^{-1}$ 也保迹。此阶段不预设或断言 $T$ 正、CP 或保单位。
+
+证明。先按第二卷定理 40.1 使用确切的效果基，其假设映射为同一 $U,W,E$、同一 $\theta$、同一最早标签在左的 $V_h$ 和 (93.1) 的词序。对于实坐标
+
+$$
+x(X)=(X_{00},X_{11},X_{22},
+ \Re X_{01},\Re X_{02},\Re X_{12},
+ \Im X_{01},\Im X_{02},\Im X_{12})^{\mathsf T},
+\tag{93.8}
+$$
+
+以 $x(e_0),\ldots,x(e_8)$ 为列的矩阵 $\mathcal E$ 满足
+
+$$
+\det\mathcal E=\frac{6561}{2^{36}}\sin^7(2\theta)\ne0.
+\tag{93.9}
+$$
+
+供应 (40.4) 的权重没有删掉；八个词长之和为十五，故相对于不加权效果的 (40.12)，行列式恰多 $2^{-15}$。迹配对不是 (93.8) 的普通点积，而是
+
+$$
+\operatorname{Tr}(XY)=x(X)^{\mathsf T}J_{\rm tr}x(Y),\qquad
+J_{\rm tr}=\operatorname{diag}(1,1,1,2,2,2,2,2,2).
+\tag{93.10}
+$$
+
+因此实际行泛函矩阵为 $\mathcal E^{\mathsf T}J_{\rm tr}$，其行列式为
+$64\det\mathcal E\ne0$。坐标行列式与真实迹配对的度量因子在此分别保留。
+
+用无坐标形式定义四个线性映射
+
+$$
+\begin{aligned}
+R:\mathbb R^9\to\operatorname{Herm}_3,\quad&R\delta_i=r_i,\\
+L:\operatorname{Herm}_3\to\mathbb R^9,\quad&(LX)_m=\operatorname{Tr}(e_mX),\\
+S:\mathbb R^9\to\operatorname{Herm}_3,\quad&S\delta_i=s_i:=B_{u_i}\sigma_0,\\
+M:\operatorname{Herm}_3\to\mathbb R^9,\quad&
+(MX)_0=\operatorname{Tr}X,\quad
+(MX)_m=\operatorname{Tr}(F B_{h_m}(X))\ (m\ge1).
+\end{aligned}
+\tag{93.11}
+$$
+
+定理 92.2 使 $R$ 可逆，(93.9)–(93.10) 使 $L$ 可逆。由 (93.6) 和完整时间顺序，
+
+$$
+LR=H=MS.
+\tag{93.12}
+$$
+
+故 $\operatorname{rank}H=9$。竞争 Hermitian 空间也恰为九维，因此 $M,S$ 均可逆；竞争的可达性与可观察性由此推出，不能作为额外承诺输入。取
+
+$$
+T=SR^{-1},\qquad MT=L.
+\tag{93.13}
+$$
+
+插入块的等式给
+
+$$
+MB_aS=H^a=LA_aR,\qquad a=0,1,N.
+\tag{93.14}
+$$
+
+将 $S=TR$、$L=MT$ 代入并消去可逆的 $M,R$，得到三个完整空间的交织恒等式。$MT=L$ 的迹行给 $\operatorname{Tr}(TX)=\operatorname{Tr}X$；$h_1=\varnothing$ 的行给 $T^*F=E$；$u_1=\varnothing$ 的列给 $T\rho_0=\sigma_0$。$R$ 是基，故满足这些列匹配的 $T$ 唯一。
+
+每个复矩阵唯一写成 $X+\mathrm iY$、$X,Y$ Hermitian。定义
+$T(X+\mathrm iY)=TX+\mathrm iTY$，得到可逆复线性、保持伴随的延伸；全部恒等式随之延伸。由 $T$ 可逆且保迹，令 $Y=TX$ 便得 $\operatorname{Tr}(T^{-1}Y)=\operatorname{Tr}Y$。
+
+(93.12)–(93.14) 使用成熟的有限 Hankel／最小线性实现相似方法；可达／零观察商及最小实现相似的文献背景见 Monras–Winter，[*Quantum learning of classical stochastic processes: The Completely-Positive Realization Problem*](https://arxiv.org/html/1412.3634v1)，§4、定理 9。该文的平稳过程合同不是本题的单制备、外定时序和双终端合同；这里有限四表的推导由 (93.11)–(93.14) 直接承担，没有从该一般背景借入平稳性、全词已知或额外控制。九个列是一个制备的次归一化历史事件，也没有成为九个独立可制备状态。∎
+

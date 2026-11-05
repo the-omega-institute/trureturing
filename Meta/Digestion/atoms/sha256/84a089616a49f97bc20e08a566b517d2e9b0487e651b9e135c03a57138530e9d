@@ -1,0 +1,9 @@
+**Definition 28.2 (task classes and the joint divisor set).** Write $\operatorname{Stat}(S)$ and $\operatorname{Fwd}(S)$ for the classes of these same public pairs $(P_\pi,\tau_\pi)$ acquired by one ordinary effective deterministic program that is correct and terminates on every promised original, respectively with no source actions and with actual forward actions allowed. Outputs remain $\tau_\pi(x)$ at the original cut. Programs and any auxiliary computations have finite source-independent descriptions. No effective presentation of all correct controllers or all homogeneous priors is assumed. Put
+
+$$
+\operatorname{Div}(S)=\{b\in\mathbb Z_{>0}:\exists D\in S,\ b\mid D\}.
+\tag{28.1}
+$$
+
+The divisor $1$ belongs to this set exactly when $S$ is nonempty. A legal read uses a name in $S$. Requiring an enumeration witness before using that name gives the same task class: before any legal request for $D$, run stages until $D$ appears. That extra search finishes and leaves the source unchanged. Such searches are part of the cost. The all-integer menu $\mathbb N_{>0}$ has its usual effective enumeration and the conditional services of Assumption 24.1. Comparisons of classes below vary the access menu while keeping the public presentation, actual source law, original target and endpoint convention fixed.
+

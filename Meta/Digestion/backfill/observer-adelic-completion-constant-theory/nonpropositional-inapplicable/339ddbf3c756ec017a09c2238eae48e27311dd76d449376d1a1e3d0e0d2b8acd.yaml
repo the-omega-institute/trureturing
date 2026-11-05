@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:339ddbf3c756ec017a09c2238eae48e27311dd76d449376d1a1e3d0e0d2b8acd
+  normalized_sha256: sha256:339ddbf3c756ec017a09c2238eae48e27311dd76d449376d1a1e3d0e0d2b8acd
+cas_ref: sha256:339ddbf3c756ec017a09c2238eae48e27311dd76d449376d1a1e3d0e0d2b8acd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅报告 canonical xi-distribution 编译链尚未闭合及审计隔离状态，不宣称 RH 或其否定已证。
+    previous_atom_id: 310ae3f4992b0c3228bc9c632459ed97aacb3eb955dcc507d03d68bb467ebacd
+    next_atom_id: 75ec16cf6df0ce7cfe1e2ebe30b9ee8d95db5367c3fce937f4fe35752bb6cd17

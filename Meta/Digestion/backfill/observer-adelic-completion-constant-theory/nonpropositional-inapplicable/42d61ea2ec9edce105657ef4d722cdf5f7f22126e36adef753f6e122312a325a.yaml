@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:42d61ea2ec9edce105657ef4d722cdf5f7f22126e36adef753f6e122312a325a
+  normalized_sha256: sha256:42d61ea2ec9edce105657ef4d722cdf5f7f22126e36adef753f6e122312a325a
+cas_ref: sha256:42d61ea2ec9edce105657ef4d722cdf5f7f22126e36adef753f6e122312a325a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅引入记号 R_J=ker(r_J) 并列出拟定义 F_shift 的更新操作；不含固定点或 RH 等价断言。
+    previous_atom_id: d9dbddadd0022fe836585fd1f14108cee5688d5cac467d43077d07503169b2fe
+    next_atom_id: 82f4a21d0b66189ce192b6ab0c80c845d5c63a9c7fc75bdda74f4501fbc1d722

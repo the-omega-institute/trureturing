@@ -1,0 +1,34 @@
+## 7. 有限直和与中心泄漏
+
+<a id="sec-directsum"></a>
+
+项目原对象为 $\mathcal A=\bigoplus_\alpha M_{d_\alpha}(\mathbb C)$。不能把不同中心扇区当成已允许相干叠加的一个纯态球；校准应逐个简单输入块进行。
+
+令 $J:H_\alpha\to H_{\rm out}$ 为同一扇区的嵌入，分支在该输入块的矩形 Kraus 算子为 $K_\mu$，满足 $\sum K_\mu^*K_\mu=E_\alpha$。置 $B_\mu=J^*K_\mu$。同扇区平均读回为
+
+$$
+R_\alpha=\frac{\sum_\mu\|B_\mu\|_\mathrm{HS}^2+
+\sum_\mu|\operatorname{Tr} B_\mu|^2}{d_\alpha(d_\alpha+1)}.
+$$
+
+与该块效果的比较值之差分解为
+
+<a id="eq-leak"></a>
+
+$$
+\begin{aligned}
+d_\alpha(d_\alpha+1)\delta_\alpha
+={}&\underbrace{\operatorname{Tr} E_\alpha-\sum_\mu\|B_\mu\|_\mathrm{HS}^2}_{\ell_\alpha\ge0}
+\\[-2mm]&+\underbrace{(\operatorname{Tr}\sqrt{E_\alpha})^2-
+\sum_\mu|\operatorname{Tr} B_\mu|^2}_{h_\alpha\ge0}.
+\end{aligned}
+\tag{15}
+$$
+
+第一项是输出泄漏，第二项由前述迹 Cauchy–Schwarz 或对角向量证明非负。零缺陷使两项都为零：全部输出留在原扇区，且 $K_\mu=c_\mu J\sqrt{E_\alpha}$。因此逐块 C113 迫出全代数上的平方根更新，而没有预先假设中心不动。
+
+误差证明中将 $V_\mu-c_\mu P$ 换成 $V_\mu-c_\mu JP$，并用
+$s^2-z\le d_\alpha(d_\alpha+1)\delta_\alpha$，得到同样的块内界。直和输入没有跨中心相干，整映射的 diamond 距离为各输入块距离的最大值。
+
+<a id="section-8"></a>
+

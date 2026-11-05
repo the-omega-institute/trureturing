@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6dd78882838f8a0dd4bb71a8cea5f91851091c420aadd717f93484fd841cd8ef
+  normalized_sha256: sha256:6dd78882838f8a0dd4bb71a8cea5f91851091c420aadd717f93484fd841cd8ef
+cas_ref: sha256:6dd78882838f8a0dd4bb71a8cea5f91851091c420aadd717f93484fd841cd8ef
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 说明有限网络部分的来源、不主张数学原创及未验证的现实或无限外推。
+    previous_atom_id: 9e8a57e383702be96d14a6c37cf9908ab28b15eb5fc675ee27294fd083719105
+    next_atom_id: 0c595bd662b9e630d11ca029744a4a086897b453c701ff24a9c83d85b1eb1466

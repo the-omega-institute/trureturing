@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:490cbc36a62723f6400456def61ebd0b2561963a790edcc83d87472448f4830d
+  normalized_sha256: sha256:490cbc36a62723f6400456def61ebd0b2561963a790edcc83d87472448f4830d
+cas_ref: sha256:490cbc36a62723f6400456def61ebd0b2561963a790edcc83d87472448f4830d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这是从指定负 jet 构造固定支撑 Weil witness 的待办研究桥说明，不声称该构造已经存在。
+    previous_atom_id: be46c384f25c5a44c5076c75b2448739f6689493f55836c40a6b99610daaadaf
+    next_atom_id: e52d4931bbeddb759c4b84013c7d37e85bbf2f2d5d8c25639c2bf5e15fb6ec22

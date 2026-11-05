@@ -1,0 +1,30 @@
+#### 定理 3.2：刚体作用的配置酉提升
+
+若几何作用  $g$  双射地作用于  $\mathcal C$ ，则
+
+<a id="eq-eq:configurationlift"></a>
+
+```math
+U_g\lvert T\rangle=\lvert gT\rangle\tag{4}
+```
+
+唯一延拓成酉算子，并满足  $U_ gU_ h=U_ {gh}$ 。
+特别地， $U_ m^2=I$ 、 $U_ m^\dagger=U_ m$ 。
+
+
+**证明。**
+
+正交基的置换保持所有有限线性组合的内积，因而连续延拓到完备化。
+逆映射是  $U_ {g^{-1}}$ ；乘法关系在每个基矢上成立。
+
+**证毕。**
+
+
+该门的作用是  $\sum_ T c_ T\lvert T\rangle\mapsto\sum_ Tc_ T\lvert mT\rangle$ 。
+反酉  $U_ mC$  则给  $\sum_ T\overline{c_ T}\lvert mT\rangle$ 。
+它们在各个配置基矢上相同，在一般相干叠加上不同。
+所以即使知道全部经典配置怎样镜像，也还没有确定相干振幅怎样变换。
+
+
+<a id="stmt-3-3"></a>
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b99afd7a030c74fb0b07973d87add32317a08aac9b805c515a74b4507321b942
+  normalized_sha256: sha256:b99afd7a030c74fb0b07973d87add32317a08aac9b805c515a74b4507321b942
+cas_ref: sha256:b99afd7a030c74fb0b07973d87add32317a08aac9b805c515a74b4507321b942
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: Only sets up future states X, verification V, obligation O and a contract signature c. The heading names the factorization interpretation; the actual equality and equivalence are in the following assigned atom.'
+    previous_atom_id: d5d6b1d0b35062828dbeb210c463d69d900238f17046db8a4a83b21582886aec
+    next_atom_id: 7805bec6ae86f550bac5e7a4ba9164290e20ec9b2b9441fd6c6a5310c2097330

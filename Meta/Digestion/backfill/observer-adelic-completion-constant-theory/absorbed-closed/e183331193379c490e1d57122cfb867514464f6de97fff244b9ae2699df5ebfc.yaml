@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e183331193379c490e1d57122cfb867514464f6de97fff244b9ae2699df5ebfc
+  normalized_sha256: sha256:e183331193379c490e1d57122cfb867514464f6de97fff244b9ae2699df5ebfc
+cas_ref: sha256:e183331193379c490e1d57122cfb867514464f6de97fff244b9ae2699df5ebfc
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.stateThread_bijective_iff_complete_and_separates
+    target_statement_id: sha256:0d91e3985a546087c4546dca2294ef335dd71c20c631faf7a03219fc58d6456e
+  - gid: D5/S3/ObserverMemory/InverseLimits/CompletionIsomorphismCriterion.completion_map_equiv_iff
+    target_statement_id: sha256:091956630b34334b5a72852cbd27b7e45156f8977c7a790b2454fa7ae288e75f
+receipts:
+  unresolved_subitems: []

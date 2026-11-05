@@ -1,0 +1,43 @@
+**Definition 1.2 (Original paid arbitrary-address protocol).** Take any
+probability space $(\mathsf U,\mathcal U,\nu)$ independent of the whole
+$J_p$ source, keeping $\nu$ unchanged. Fixed public data can be included
+as constants; all random public data and all internal randomness belong
+to this same auxiliary variable $u$. The acquired record is a finite
+ordered list
+
+$$
+r=((t_1,x_1),\ldots,(t_n,x_n))
+\in(\mathbb Z\times\{0,1\})^n,
+\qquad n\in\mathbb N_0.
+\tag{1.4}
+$$
+
+Based only on those public data, $u$ and $r$, a measurable next-event
+rule either requests an integer address, returns a state in $\mathcal A$,
+or continues internally forever without another read or return. Finite
+events may follow internal waiting. Whether such an event occurs, its
+kind, address or output, and its finite waiting time are measurable
+functions of exactly those available data. In particular waiting
+conveys no additional source information.
+
+A requested address $t$ returns exactly the actual $X_t$ in (1.1).
+Every actual call costs one read. Repeated addresses, separator zeros,
+negative addresses, disconnected sets and arbitrarily distant addresses
+are all charged. An ignored reply still costs its call. Addresses may
+depend on all previously acquired replies.
+
+Let $\tau$ be the return time, setting $\tau=\infty$ on every nonreturn,
+and let $N\in\mathbb N_0\cup\{\infty\}$ count all actual calls. Internal
+nonreturn after any finite number of calls, including zero, is allowed;
+so are infinite-read paths. A return has finite $N$, and its output and
+return time depend measurably only on the available data and its
+terminal acquired record. A return before reading and a wrong-phase
+output are permitted. Null records and versions completed by null sets
+are included through the usual measurable completion.
+
+No hidden-state, half-line or tail read, source-dependent auxiliary
+variable or timing, reset, law switch, moving endpoint, or replacement of
+an erased coordinate is available. This is the full contract of
+Original, Definition 9.1, also restated in Risk, Definition 1.2. Put
+$\mathbb P_p=J_p\otimes\nu$.
+

@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:326c2fd331ae5eb620d30ba67932d94f1605e1498511eb774492d4d66141583c
+  normalized_sha256: sha256:326c2fd331ae5eb620d30ba67932d94f1605e1498511eb774492d4d66141583c
+cas_ref: sha256:326c2fd331ae5eb620d30ba67932d94f1605e1498511eb774492d4d66141583c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这里只给候选 GID、Append 001 标题和理论卷增补说明；两个既有子项也是来源元数据。
+    previous_atom_id: f4e60b70b5a46f75867a3afb1086ce12300784020e7c5949182e49e97f89e8f0
+    next_atom_id: cb6a92f43d516f284f123cfa259079f3d92c1295f58e5805a8aafddca81a17b1
+  chain_atoms:
+    - 111ad8e553ae43646b792c83ad7cc970bfae738d4effcea8c52927114f2911ab
+    - d13c4a2689d6af0d3266a1f61c5f73ec3d34293710c8c2e9e9c3ebaea10944a9

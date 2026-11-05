@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:b5145351ab1c75f111cd04ec80238c4205f32d3b8b8cd38944fb1703c6a6f132
+  normalized_sha256: sha256:b5145351ab1c75f111cd04ec80238c4205f32d3b8b8cd38944fb1703c6a6f132
+cas_ref: sha256:b5145351ab1c75f111cd04ec80238c4205f32d3b8b8cd38944fb1703c6a6f132
+coverage_gids:
+  - gid: D5/S3/Observer/MetricGeometry/AutonomousPredictionEntropy.autonomousStateCount
+    target_statement_id: sha256:59c8412073361bb05d1ef1dd44125310cce2303d003d051020b7c2e547198b8c
+  - gid: D5/S3/Observer/MetricGeometry/AutonomousPredictionEntropy.autonomous_prediction_entropy
+    target_statement_id: sha256:e6bda2faf8a161c3f8cf5d4aba20458f22817a65db512cf42086694c27d0f636
+  - gid: D5/S3/Observer/MetricGeometry/AutonomousPredictionEntropy.observationEntropy
+    target_statement_id: sha256:dbc4a6d814d24d33c8f3f790e98cf550d2a1a953108d9ce650d5e171bc919b9d
+  - gid: D5/S3/Observer/MetricGeometry/AutonomousPredictionEntropy.responseCoverCount
+    target_statement_id: sha256:3bdeefd43f6c5eec9e0d0ccc067b6b52e9e312b59d2c8552803c23fedfc49273
+receipts:
+  unresolved_subitems: []

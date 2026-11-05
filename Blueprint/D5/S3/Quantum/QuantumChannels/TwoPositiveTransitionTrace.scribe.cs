@@ -14,6 +14,9 @@ internal sealed class TwoPositiveTransitionTraceDocument : IScribeDocumentDefini
         "TwoPositiveTransitionTrace for the spectral bound of conditionally two-positive maps.",
         H("TwoPositiveTransitionTrace"),
         Blocks(
+            Node("trace-standard", "Trace in the matrix-unit basis", "trace_standard",
+                TraceStandardFormula(),
+                "The trace of a complex-linear map on finite square matrices is the sum of its diagonal coefficients in the matrix-unit basis.", DescribeRole.Lemma, Repo()),
             Node("trace-rank-one", "Trace against a rank-one matrix", "trace_rank_one",
                 TraceRankOneFormula(),
                 "For any finite complex matrix X and vector v, the trace of X times the rank-one matrix of v equals the scalar product of star v with X applied to v.", DescribeRole.Lemma, Repo()),
@@ -107,6 +110,26 @@ internal sealed class TwoPositiveTransitionTraceDocument : IScribeDocumentDefini
             Node("supertrace-continuous", "superTrace continuous", "superTrace_continuous",
                 Disp(Seq(Forall, Sp, Parenthesized(Seq(Named("d"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Comma, Sp, Named("Continuous"), Sp, Parenthesized(Seq(LambdaLower, Sp, Named("L"), Sp, Colon, Sp, Parenthesized(Seq(Named("Matrix"), Sp, Parenthesized(Seq(Named("Fin"), Sp, Named("d"))), Sp, Parenthesized(Seq(Named("Fin"), Sp, Named("d"))), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp, new Formula.Subscript(To, Seq(F.Id("L"), OpenBracket, Seq(Mathbb, Grp(F.Id("C"))), CloseBracket)), Sp, Named("Matrix"), Sp, Parenthesized(Seq(Named("Fin"), Sp, Named("d"))), Sp, Parenthesized(Seq(Named("Fin"), Sp, Named("d"))), Sp, Seq(Mathbb, Grp(F.Id("C"))))), Sp, Mapsto, Sp, Parenthesized(Seq(Named("LinearMap"), Sp, Dot, Sp, Named("trace"), Sp, Seq(Mathbb, Grp(F.Id("C"))), Sp, Parenthesized(Seq(Named("Matrix"), Sp, Parenthesized(Seq(Named("Fin"), Sp, Named("d"))), Sp, Parenthesized(Seq(Named("Fin"), Sp, Named("d"))), Sp, Seq(Mathbb, Grp(F.Id("C"))))), Sp, Named("L"), Sp, Dot, Sp, Named("toLinearMap"))))))),
                 "The displayed statement gives the hypotheses and conclusion for superTrace_continuous. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.", DescribeRole.Theorem, Repo()))));
+
+    private static Formula TraceStandardFormula()
+    {
+        Formula d = Named("d"), phi = Phi, i = Named("i"), j = Named("j");
+        Formula complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula fin = new Formula.Apply(Named("Fin"), [d]);
+        Formula matrix = new Formula.Apply(Named("Matrix"), [fin, fin, complex]);
+        Formula endomorphism = Seq(matrix,
+            new Formula.Subscript(To, Seq(F.Id("l"), OpenBracket, complex, CloseBracket)), matrix);
+        Formula trace = new Formula.Apply(Seq(Named("LinearMap"), Dot, Named("trace")),
+            [complex, matrix, phi]);
+        Formula unit = new Formula.Apply(Seq(Named("Matrix"), Dot, Named("single")), [i, j, D(1)]);
+        Formula coefficient = new Formula.Apply(phi, [unit, i, j]);
+        Formula sum = Seq(Sum, Sp, i, Sp, Colon, Sp, fin, Sp, Comma, Sp,
+            Sum, Sp, j, Sp, Colon, Sp, fin, Sp, Comma, Sp, coefficient);
+        return Disp(Seq(Forall, Sp,
+            Parenthesized(Seq(d, Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Comma, Sp,
+            Forall, Sp, Parenthesized(Seq(phi, Sp, Colon, Sp, endomorphism)), Sp, Comma, Sp,
+            trace, Sp, Eq, Sp, sum));
+    }
 
     private static Formula TraceRankOneFormula()
     {

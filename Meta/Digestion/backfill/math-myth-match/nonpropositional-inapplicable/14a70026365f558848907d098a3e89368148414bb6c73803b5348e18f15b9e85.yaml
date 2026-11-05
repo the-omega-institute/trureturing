@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:14a70026365f558848907d098a3e89368148414bb6c73803b5348e18f15b9e85
+  normalized_sha256: sha256:14a70026365f558848907d098a3e89368148414bb6c73803b5348e18f15b9e85
+cas_ref: sha256:14a70026365f558848907d098a3e89368148414bb6c73803b5348e18f15b9e85
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 薄伽梵歌指定译注的灵魂持续性主张；属于引文解释、建模约定或研究建议，没有另立待证数学断言，本收据不验证其文献或经验真值。
+    previous_atom_id: 0eff002a8613acc26a6a0b365c094626f9fb17a370beca8536c10a79263fea71
+    next_atom_id: 4359c0862428c513807a5935aaba02b4345a388c85755b103985e846cb100bbd

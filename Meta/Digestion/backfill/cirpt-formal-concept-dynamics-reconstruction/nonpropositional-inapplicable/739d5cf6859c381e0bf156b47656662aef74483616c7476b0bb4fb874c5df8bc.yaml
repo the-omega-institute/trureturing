@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:739d5cf6859c381e0bf156b47656662aef74483616c7476b0bb4fb874c5df8bc
+  normalized_sha256: sha256:739d5cf6859c381e0bf156b47656662aef74483616c7476b0bb4fb874c5df8bc
+cas_ref: sha256:739d5cf6859c381e0bf156b47656662aef74483616c7476b0bb4fb874c5df8bc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该 atom 仅为 IR.5 章节标题；立方体骨架是本节主题名称，具体计数及未来等价断言均在其他 atom。
+    previous_atom_id: 136d96a07cd0199e53a10c517f753f9ea9df4de2b450ac7e7fb9c8d370c4ba04
+    next_atom_id: af542def861900f0817900d010b4c151e508254fe30f0d1aa4723c971cf150db

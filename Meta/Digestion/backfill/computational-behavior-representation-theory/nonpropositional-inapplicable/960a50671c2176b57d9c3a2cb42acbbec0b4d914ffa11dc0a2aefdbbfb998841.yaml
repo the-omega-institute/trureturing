@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:960a50671c2176b57d9c3a2cb42acbbec0b4d914ffa11dc0a2aefdbbfb998841
+  normalized_sha256: sha256:960a50671c2176b57d9c3a2cb42acbbec0b4d914ffa11dc0a2aefdbbfb998841
+cas_ref: sha256:960a50671c2176b57d9c3a2cb42acbbec0b4d914ffa11dc0a2aefdbbfb998841
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Volume title and meta instructions about ingestion and proof authority; no mathematical assertion.
+    previous_atom_id: null
+    next_atom_id: c93f6184cc2b747fe56981a5c657e983eef20f576e194044d9d3e2d9b3ecac1b

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a855c0c0109f589ab5dc7ec18130bdae6b7a3f24d6d0a7b7ce3a892a813b9522
+  normalized_sha256: sha256:a855c0c0109f589ab5dc7ec18130bdae6b7a3f24d6d0a7b7ce3a892a813b9522
+cas_ref: sha256:a855c0c0109f589ab5dc7ec18130bdae6b7a3f24d6d0a7b7ce3a892a813b9522
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: An image-membership question marked with a question mark; no surjectivity or concrete membership is asserted.
+    previous_atom_id: e7f1860178191b15ef9f607ad922cb9dff02f335a7bace9642a5146d8845cea2
+    next_atom_id: 4328b4da652fb642d043b39439907c3e6f32fb0ea6790caab759e7b2ba0440ad

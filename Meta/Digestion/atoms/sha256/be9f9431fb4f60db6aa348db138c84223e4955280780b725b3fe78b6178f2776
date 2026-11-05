@@ -1,0 +1,28 @@
+**Step 4 (the bounded high-energy compressed commutator).**
+For $\Pi_M=\mathbf1_{[\Lambda,M]}(K_\ell)$, consider the bounded entire
+operator-valued functions
+$$
+ A_M(z)=\Pi_M e^{zK_\ell}M_b e^{-zK_\ell}\Pi_M.
+$$
+Equation (128.8) bounds their norms by $\|B_E\|$ on
+$\operatorname{Re}z=s$, uniformly in $M$ and the imaginary part.
+The same bound on $\operatorname{Re}z=-s$ follows by adjoints, since
+$b_E$ is self-adjoint. For each fixed $M$ these entire functions
+are bounded throughout the closed strip. The three-lines theorem,
+applied to scalar matrix elements, bounds them in the strip by the same
+constant. Cauchy's estimate on the circle of radius $s/2$ yields
+$$
+ \|A_M'(0)\|\le 2\|B_E\|/s=:D_0,
+ \tag{128.9}
+$$
+uniformly in $M$. For $u\in E D(K_\ell)$, pass to its spectral
+truncations in the graph norm. Since $b$ is bounded, (128.9) gives
+$$
+ \left|\langle K_\ell u,bu\rangle_m
+       -\langle bu,K_\ell u\rangle_m\right|
+ \le D_0\|u\|_2^2.
+ \tag{128.10}
+$$
+This passage uses a commutator form; it does not assert that global
+multiplication by $b$ preserves $D(K_\ell)$.
+

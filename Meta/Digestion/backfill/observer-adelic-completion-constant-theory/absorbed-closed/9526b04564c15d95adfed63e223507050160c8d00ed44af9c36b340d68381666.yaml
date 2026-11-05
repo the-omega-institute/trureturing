@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9526b04564c15d95adfed63e223507050160c8d00ed44af9c36b340d68381666
+  normalized_sha256: sha256:9526b04564c15d95adfed63e223507050160c8d00ed44af9c36b340d68381666
+cas_ref: sha256:9526b04564c15d95adfed63e223507050160c8d00ed44af9c36b340d68381666
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaBridge/PositivityChartCollapse.positivity_chart_collapse
+    target_statement_id: sha256:f2c17bd683e14387606aad558e677c979466861305ef626d1959070247532419
+receipts:
+  unresolved_subitems: []

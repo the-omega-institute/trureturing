@@ -15,6 +15,15 @@ strata_touched:
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionContinuation
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionSlit
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionZeroFreeCollar
+  - D5/S3/AnalyticClosure/Polylogarithm/FiniteSlitBankMoments
+  - D5/S3/AnalyticClosure/Polylogarithm/FiniteSlitCompositionMoments
+  - D5/S3/AnalyticClosure/Polylogarithm/FiniteSlitCircleDefect
+  - D5/S3/AnalyticClosure/Polylogarithm/FiniteSlitCoefficientIdentity
+  - D5/S3/AnalyticClosure/Polylogarithm/FiniteSlitOrdinaryCoefficients
+  - D5/S3/AnalyticClosure/Polylogarithm/FiniteSlitOrdinaryEndpoint
+  - D5/S3/AnalyticClosure/Polylogarithm/FiniteSlitOrdinarySmoothing
+  - D5/S3/AnalyticClosure/Polylogarithm/FiniteSlitRadialMargin
+  - D5/S3/AnalyticClosure/Polylogarithm/FiniteSlitAdmissibleSmoothing
 license: citation-only
 triage: anchor
 ---
@@ -146,13 +155,53 @@ in $\Omega$ contains the closed unit disk; compact thickening then supplies
 $R_0=1+\delta$. This is a source-specific, composition-dependent collar, not
 global slit-domain nonvanishing and not a composition-uniform radius.
 
-These are intermediate disk, boundary, slit, local Banks and zero-free collar
-results, not a resolution of Conjecture 1.3. No general power-log asymptotic is
-asserted. The full Taylor/formal-inverse coefficient correspondence,
-finite-contour sign transfer and all-$j$/$\ell$ assembly remain open. The
-collar therefore supplies no coefficient-sign theorem. Solved-problem credit
-is zero, and this auxiliary carries no `OpenProblemResolutionClaim`, novelty
-claim or worldwide-priority claim. The preregistered target is
+The disk, boundary, slit, local Banks and zero-free collar results support
+the complete coefficient theorem
+`FiniteSlitAdmissibleSmoothing.full_result`. It proves eventual strict
+negativity for $j=0$ for every positive composition and $\ell\ge1$,
+eventual strict positivity for every further fixed $j\ge1$, and the strict
+$\zeta(k)^{-\ell}\binom{n+j-1}{n}$ lower bound when the head exceeds one.
+The full result's owning Scribe binds `OpenProblemResolutionClaim(Proved)`
+to Conjecture 1.3 through
+`Problems/xu-zhao-trivariate-cauchy-coefficient-signs.md`. The admissible-only
+`result` and the $j=0$ theorem are supporting conclusions.
+
+`FiniteSlitBankMoments` proves that fixed compact interior positive bank
+mass dominates the faster outer geometric scale.
+`FiniteSlitCompositionMoments` combines the actual near-bank and far-circle
+bounds. `FiniteSlitCircleDefect` constructs the continuous upper extension
+and proves its rectangle identity. Conjugate semicircle pairing and radial
+substitution in `FiniteSlitCoefficientIdentity` then identify the signed
+bank contribution with the actual Taylor coefficient.
+`FiniteSlitOrdinaryCoefficients.result` identifies that Taylor series with
+the ordinary formal inverse of the original source power. Its coefficient
+is the reciprocal's iterated derivative divided by $n!$; no additional
+factorial enters the original ordinary coefficient convention.
+
+`FiniteSlitOrdinaryEndpoint.result` bounds finite windows with radial
+weights before passing to radius one, obtaining absolute summability of
+the negative tail and the exact signed-prefix total.
+`FiniteSlitOrdinarySmoothing.result` uses the summable/nonsummable Abel
+dichotomy to turn a positive radial margin into every fixed smoothing
+order, preserving the full signed finite prefix. For admissible heads,
+`FiniteSlitRadialMargin.result` obtains that margin from the actual positive
+source coefficients and the convergent strict multiple-zeta total.
+
+For leading head one, `FiniteSlitAdmissibleSmoothing.full_result` uses the
+original proved remainder alternatives and logarithmic norm controls.
+On the positive real slit ray, source agreement identifies the continued
+value with $r^d x$ for the positive normalized source value $x$. The
+factor $r^{d\ell}$ is retained in the reciprocal estimate; logarithmic
+decay gives $x^\ell(1-r)\le1$ eventually. Thus the reciprocal has radial
+margin at least one, and its actual endpoint is zero. This supplies the
+remaining branch without any additional growth or margin assumption.
+
+The complete theorem retains empty tails, arbitrary positive heads and
+powers, and each separately fixed positive smoothing order. Thresholds may
+depend on these parameters. No general power-log expansion, effective or
+uniform threshold, coefficient asymptotic equivalent, literature novelty
+or worldwide priority is asserted. The external question is the one
+preregistered at
 https://github.com/the-omega-institute/trureturing/issues/9372.
 
 ## Reuse and literature boundary
@@ -171,7 +220,8 @@ No general primitive theorem is separately delivered.
 The bounded supplied search found no exact all-composition Lean supplier.
 The source's stated known cases and the supplied preregistration do not
 establish worldwide unresolved status or priority. Exhaustive later
-literature coverage is ASSUMED-UNVERIFIED; no originality claim is made.
+literature coverage is ASSUMED-UNVERIFIED; the inaccessible 2014 and 2023
+publisher bodies have not been cleared. No originality claim is made.
 
 For W03, pinned Mathlib at `db584cd6d46c92f209a44c0f1c829460d327499d`
 supplies `harmonic_le_one_add_log`, `isLittleO_log_rpow_rpow_atTop`,

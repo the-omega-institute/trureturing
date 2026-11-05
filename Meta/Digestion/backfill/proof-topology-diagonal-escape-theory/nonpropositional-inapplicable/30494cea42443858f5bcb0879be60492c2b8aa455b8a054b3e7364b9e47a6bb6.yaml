@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:30494cea42443858f5bcb0879be60492c2b8aa455b8a054b3e7364b9e47a6bb6
+  normalized_sha256: sha256:30494cea42443858f5bcb0879be60492c2b8aa455b8a054b3e7364b9e47a6bb6
+cas_ref: sha256:30494cea42443858f5bcb0879be60492c2b8aa455b8a054b3e7364b9e47a6bb6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只有 AT.10 章节标题，没有热浴算子的数学性质。
+    previous_atom_id: 133f31ba7404d6eb4be78d47d8d940335b6cb3699d8253cbbcdb0b637b09f0ac
+    next_atom_id: 19c578a48eb4760f12ef0fe3b5cffaccd58d5d772eb8645431fd8a39c0b863da

@@ -1,0 +1,33 @@
+## 1. 最新项目快照与真正的研究问题
+
+本轮固定公开 `dev` 快照
+`a5a8bcdf56019e58c398f6f6d27a3620b896d001`。
+提交时间为 2026-10-30 03:17:38（Asia/Singapore），标题为“theory: separate C12 from invariant fixed-resistance weights”（#23827）。相对 v18 的 `23a4ae6…`，理论目录有七条变化：五新增、两修改；当前目录共 1015 个文件。审计中分支继续推进，本稿以以上最后核对的不可变快照为准，不把移动分支视为固定证据。
+
+本题最直接的项目来源大多是*本轮深入阅读的已有结果*，而非这次提交新增的 RH 突破：
+
+1. [《FIB-ATOM 与 Robin 的约数尺度几何》](https://github.com/the-omega-institute/trureturing/blob/a5a8bcdf56019e58c398f6f6d27a3620b896d001/docs/develop/theory/AURIC_FIB_ROBIN_DIVISOR_SCALE_GEOMETRY.md)，尤其 §§1–6、9、12，已把四块关联、素数指数、独立相位的平方平均和 Robin 判据接在一起。
+
+2. [《算术三角与 RH 管线续篇 II》](https://github.com/the-omega-institute/trureturing/blob/a5a8bcdf56019e58c398f6f6d27a3620b896d001/docs/develop/theory/AURIC_FIB_ATOM_TYPED_BRIDGES_AND_ARITHMETIC_TRIANGLE_RH_PIPELINE_CONTINUATION_II.md) §63，已提出条件性的五态概率场、Cayley 圆与 RH 接口；它明确保留自然算术来源与全局谱识别的缺口。
+
+3. [《RH 离线零点与横向谱相变》](https://github.com/the-omega-institute/trureturing/blob/a5a8bcdf56019e58c398f6f6d27a3620b896d001/docs/develop/theory/RH_OFFLINE_ZERO_LEE_YANG_INSTANTANEOUS_PHASE_TRANSITION_THEORY.md)增订一 A3–A4、增订二 B6–B7，已区分局部 Euler 圆与 completed 临界圆，并给出有限 hard-core 多项式的正行列式表示。
+
+最新相关增量是 [《量子原则与相干重构续篇》](https://github.com/the-omega-institute/trureturing/blob/a5a8bcdf56019e58c398f6f6d27a3620b896d001/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md) §68：保留复线性振幅、指定黄金门、完整终端字读出和局部操作接口，在共同有限 $p>0$ 的归一幂律 $|\alpha|^p/\sum|\alpha|^p$ 这一规定族内，一个至多三次原生门调用的检验使所构造两种 Bob 设置的 Alice 边缘相同，当且仅当 $p=2$。这是有明确前提的无信号检验；它没有证明任意概率规则的唯一性，也没有补齐 RH 的全局算术桥。新增的预测状态文件是已有作者稿的保存，编辑明确说明未新增 Lean 认证或全 SAT 算法；终端事件稿另给出了记录与统计实验的新推导。两者均保留预测表达与实际取得的区别。
+
+本轮验证了 35 个选定当前文档和两个旧版本的 Git blob，Git 与 GitHub API 对完整目录树及差异一致。正文使用的来源已按相关章节阅读；不声称审计了全部 1015 个文档的证明。源文保存、转录与本轮阅读均不构成独立认证。
+
+**问题的精确化。**
+
+用户的联系应发展为：
+
+$$
+\text{加乘结构} \longrightarrow\
+\text{素数或闭路的生成函数} \longrightarrow\
+\text{谱与解析延拓} \longrightarrow\
+\text{全部零点的定位}.
+$$
+
+前三个箭头各需定义与定理，最后一个箭头正是 RH 难度所在。下一节从 AURIC 本身已有的隐藏纤维开始。
+
+<a id="section-2"></a>
+

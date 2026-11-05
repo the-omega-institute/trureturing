@@ -1,0 +1,28 @@
+**Definition 1.3 (complete marked-law metric).** On the common measurable
+record space
+
+$$
+\Omega_T=\{\mathsf s\}\ \sqcup\ ((0,T]\times\{0,1,2,3,4\}),
+\tag{IS.5}
+$$
+
+let $\mu_\gamma$ be the joint probability law from any fixed member of
+(IS.4). The success symbol means no failure through $T$. Set
+
+$$
+\begin{aligned}
+F_i(t)&=\mu_\gamma((0,t]\times\{i\}),\\
+d_{\mathrm{mark}}(\gamma,\widetilde\gamma)
+ &=\sup_{E\subseteq\Omega_T\ \mathrm{measurable}}
+          |\mu_\gamma(E)-\mu_{\widetilde\gamma}(E)|.
+\end{aligned}
+\tag{IS.6}
+$$
+
+This is total variation in the probability convention, equal to half the
+$L^1$ distance of densities with respect to any common dominating measure.
+It retains all modes, their joint time labels and terminal success. It is a
+metric on these probability laws, a pseudometric on controls, and does not
+include the live quantum state. It is neither a distance between normalized
+conditional failure laws nor a distance between unmarked time marginals.
+

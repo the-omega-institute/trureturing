@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:51ddb465cc56d58c7c9914d190caf695d75a375eb9a765d5884f2cb652f7d518
+  normalized_sha256: sha256:51ddb465cc56d58c7c9914d190caf695d75a375eb9a765d5884f2cb652f7d518
+cas_ref: sha256:51ddb465cc56d58c7c9914d190caf695d75a375eb9a765d5884f2cb652f7d518
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional ingredient label: dyadic intensity names a trial parameter convention without asserting a value, identity, or estimate.'
+    previous_atom_id: 8cd4d4c3e78e89e4a7748d234f980131db0bf85be2e6f257750f1b16d868802a
+    next_atom_id: 898399905a89bb2ebc26dc4d5bca47f1a5827035b41446f582584bff43b7d85f

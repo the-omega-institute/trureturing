@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:61d98130049dc28161dccf386822ce37dac204cc23851808aa696cd2c19e7a6b
+  normalized_sha256: sha256:61d98130049dc28161dccf386822ce37dac204cc23851808aa696cd2c19e7a6b
+cas_ref: sha256:61d98130049dc28161dccf386822ce37dac204cc23851808aa696cd2c19e7a6b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 研究分工表中的待办任务：建立内外反射。'
+    previous_atom_id: 53ab86a14565a335b9f6cd2b805a01bf99e37d8aa0c8c05ab4fea690d3ca06bc
+    next_atom_id: 6599033f7cf8dc782682fe58fc69ed0b621e6bbe8c959049c5ecffe5a5cef9ab

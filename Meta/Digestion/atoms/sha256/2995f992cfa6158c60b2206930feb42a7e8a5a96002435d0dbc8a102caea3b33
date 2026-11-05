@@ -1,0 +1,64 @@
+**Theorem 13.4 (three distinct original classes with no one-path acquisition at scale sixteen).** At $M=16$ take the three original sources
+
+$$
+(x_1,x_2,x_3)=(1/4,2/7,3/10),\qquad
+(w_1,w_2,w_3)=(LLL,RLLL,RRLLL).
+\tag{13.4}
+$$
+
+Their original predictive classes are pairwise distinct. Nevertheless no deterministic policy under Assumption 11.1 can recover their original predictive class, or their original word, for every member of this three-source prior. This obstruction allows arbitrarily many reads, arbitrary finite computation and an unbounded number of forward actions. The physical maps remain injective.
+
+Proof. Direct chronological execution from $1$ gives (13.4). The exact candidate responses for two possible test words are
+
+$$
+\begin{array}{c|ccc|ccc}
+ u&f_u(x_1)&f_u(x_2)&f_u(x_3)&q_{16}(f_u(x_1))&q_{16}(f_u(x_2))&q_{16}(f_u(x_3))\\ \hline
+ \varepsilon&1/4&2/7&3/10&4&4&4\\
+ LL&1/6&2/11&3/16&2&2&3\\
+ RL&5/9&9/16&13/23&8&9&9
+\end{array}
+\tag{13.5}
+$$
+
+The $RL$ test separates the first original from the second; the $LL$ test separates the third from each of the first two. Hence all three original classes are different. These are two counterfactual tests starting at the same original cut. Their combined rows are not a transcript obtainable by performing both tests successively.
+
+For an exact all-continuation analysis of the first action, (11.5) gives the following complete nongrid core. Each row lists the allowed reduced numerators for its denominator:
+
+| $b$ | $a$ with $a/b\in\mathcal K_{16}$ |
+| --- | --- |
+| $3$ | $1,2,4,5,7,10,13$ |
+| $5$ | $1,2,3,6,11$ |
+| $6$ | $1,5$ |
+| $7$ | $1,2,3,9$ |
+| $9$ | $1,7$ |
+| $10$ | $1,3$ |
+| $11$ | $1,5$ |
+| $12$ | $1$ |
+| $13$ | $1,3$ |
+| $14$ | $1$ |
+| $15$ | $1$ |
+
+This finite enumeration follows directly by taking $1\le b\le15$ with $b\nmid16$, then $1\le j\le\lfloor15/b\rfloor$, and the positive divisors $a$ of $16-bj$ with $\gcd(a,b)=1$; $h=(16-bj)/a$. These ranges are exhaustive because $ah\ge1$ and $a+b\le16$, and every listed divisor supplies positive $h,j$. Thus the table proves both inclusion directions without a bound on future test length.
+
+If the first action is $L$, the first two states become $1/5$ and $2/9$. The table and the sixteenth grid show they belong to the one cell
+
+$$
+1/5\le 2/9<3/13,\qquad
+[1/5,3/13)\cap\mathbb Q.
+\tag{13.6}
+$$
+
+Indeed the neighboring grid points are $3/16<1/5<2/9<4/16$, and the table has no intervening nongrid cut before $3/13$. Hence $L(x_1)\equiv_{16}L(x_2)$. If the first action is $R$, the last two states become $9/7$ and $13/10$, both in the cell
+
+$$
+9/7\le13/10<21/16,\qquad
+[9/7,21/16)\cap\mathbb Q.
+\tag{13.7}
+$$
+
+The neighboring grid points are $20/16<9/7<13/10<21/16$, and the next nongrid cut above $9/7$ is $4/3>21/16$. Thus $R(x_2)\equiv_{16}R(x_3)$. The cell criterion proves equality under every finite continuation in both cases, not only agreement for a finite sample of test words.
+
+Before the first action, every read returns $4$. If the controller stops there, one common output cannot identify all three originals. If it never acts or stops, it fails finite acquisition. Otherwise its first action is common to all three executions. The choice $L$ makes the first pair forever indistinguishable; the choice $R$ does so for the last pair. Their previous transcripts were identical, and congruence supplies identical future reports under identical choices. Induction therefore gives the same full acquired transcript and stopping decision for that pair. Its two different original class labels, and its two different original words, cannot both be correct outputs. This proves the impossibility for every such policy.
+
+Finally $R(y)-R(x)=y-x>0$ and $L(y)-L(x)=(y-x)/((1+x)(1+y))>0$ whenever $0<x<y$. Both source maps and all their compositions remain injective. What merges in (13.6)–(13.7) is the predictive quotient, not the physical rational states. $\square$
+

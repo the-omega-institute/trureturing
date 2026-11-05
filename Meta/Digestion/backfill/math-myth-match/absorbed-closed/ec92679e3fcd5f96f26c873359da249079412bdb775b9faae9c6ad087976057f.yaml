@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ec92679e3fcd5f96f26c873359da249079412bdb775b9faae9c6ad087976057f
+  normalized_sha256: sha256:ec92679e3fcd5f96f26c873359da249079412bdb775b9faae9c6ad087976057f
+cas_ref: sha256:ec92679e3fcd5f96f26c873359da249079412bdb775b9faae9c6ad087976057f
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/MoralLuck/MaximalControlCompatibleEvaluation.maximal_control_compatible_evaluation
+    target_statement_id: sha256:1bb77cc2c2de8ea0d97a7db4aad03a07e3001a3e16d7908ba2ba5667e8bf77e6
+receipts:
+  unresolved_subitems: []

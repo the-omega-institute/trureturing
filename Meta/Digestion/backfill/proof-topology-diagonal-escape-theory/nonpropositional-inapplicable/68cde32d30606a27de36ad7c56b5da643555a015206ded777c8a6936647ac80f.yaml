@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:68cde32d30606a27de36ad7c56b5da643555a015206ded777c8a6936647ac80f
+  normalized_sha256: sha256:68cde32d30606a27de36ad7c56b5da643555a015206ded777c8a6936647ac80f
+cas_ref: sha256:68cde32d30606a27de36ad7c56b5da643555a015206ded777c8a6936647ac80f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只有 AT.2 章节标题，没有稳定递推尾和界。
+    previous_atom_id: 54e9d2e8b4103a15c00edd814412a149151fb1bed05d3183cbf0ff92ec5ad449
+    next_atom_id: 0f9ef67462d62e2f00e308d89b71851791802bafdc4fa0959ce0fd38f12678e6

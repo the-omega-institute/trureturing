@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bae51db3ec70ade7dec6dcce8e44fb75e10758df989900e4dacca8be249aba54
+  normalized_sha256: sha256:bae51db3ec70ade7dec6dcce8e44fb75e10758df989900e4dacca8be249aba54
+cas_ref: sha256:bae51db3ec70ade7dec6dcce8e44fb75e10758df989900e4dacca8be249aba54
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只解释“身份稳定”术语的模型含义、引用已有模块并限定自组织解释范围，不另断言编码区的构造或守恒等式。
+    previous_atom_id: f73c22e5d0b289bacfa6a455a5835ca50fdd00ea8050d0584b065a4773afa2d7
+    next_atom_id: a48578e8a70d0127cd7f3bb553021c77bd6b4458c9a7b161546bcfec17756b77

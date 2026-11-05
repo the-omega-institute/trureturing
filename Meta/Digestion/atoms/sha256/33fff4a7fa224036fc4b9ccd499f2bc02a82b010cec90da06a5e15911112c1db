@@ -1,0 +1,31 @@
+**定理 54.2（完整原始律、相对方向间隙及其退化）。** 对尺度 $l\in\{n,m\}$，令
+$k_l=5l$，并记实际三源的
+
+$$
+\begin{aligned}
+x_l&=|\langle v_{W_{1,k_l}},v_{W_{0,k_l}}\rangle|^2
+     =a_l^2b_l^{k_l},\\
+y_l&=|\langle v_{W_{2,k_l}},v_{W_{1,k_l}}\rangle|^2
+     =a_l^2b_l^{2k_l}(b_l^2+h_l^2)^{k_l},\\
+z_l&=|\langle v_{W_{2,k_l}},v_{W_{0,k_l}}\rangle|^2
+     =a_l^2b_l^{3k_l},\\
+B_l&=\mathcal B_l=a_l^3[b_l^3(b_l+ih_l)]^{k_l}.
+\end{aligned}
+\tag{54.2}
+$$
+
+向量均取各自尺度，内积第一项共轭线性。令
+$x=x_n,y=y_n,z=z_n$、$x'=x_m,y'=y_m,z'=z_m$、$X=xx'$，
+$B=B_n$，同向模型取 $D=B_m$，反向模型取 $D=\overline{B_m}$。
+则八记录完整律为下表，各行末尾都有 Stop：
+
+| $(\sigma,\tau,\upsilon)$ | 未归一原始概率 |
+| --- | --- |
+| $(+,+,+)$ | $Xyy'$ |
+| $(+,+,-)$ | $Xy(1-y')$ |
+| $(+,-,+)$ | $X(1-y)y'$ |
+| $(+,-,-)$ | $X(1-y)(1-y')$ |
+| $(-,+,+)$ | $zz'+Xyy'-2\operatorname{Re}(BD)$ |
+| $(-,+,-)$ | $z(1-z')+Xy(1-y')-2\operatorname{Re}[B(x'-D)]$ |
+| $(-,-,+)$ | $(1-z)z'+X(1-y)y'-2\operatorname{Re}[(x-B)D]$ |
+| $(-,-,-)$ | $(1-z)(1-z')+X(1-y)(1-y')-2\operatorname{Re}[(x-B)(x'-D)]$ |

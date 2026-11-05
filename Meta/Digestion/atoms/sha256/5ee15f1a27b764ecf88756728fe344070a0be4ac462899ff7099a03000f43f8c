@@ -1,0 +1,36 @@
+#### 定理 5.2（等距编码与三元非锐测量）
+
+有
+
+$$
+
+V^\dagger V=I_2,
+ \sum_j|a_j|^2=|\alpha|^2+|\beta|^2,
+ \boxed{a_0+\omega^2a_1+\omega a_2=0.}
+
+$$
+
+该映射由三阶 Fourier 酉门作用于 $(\alpha,\beta,0)$ 得到。拉回三个正交输出基投影后，输入 qubit 上的效果为
+
+$$
+
+E_j=\frac13(I+n_j\cdot\sigma),
+ n_j=(\cos(2\pi j/3),\sin(2\pi j/3),0).
+
+$$
+
+每个效果本征值为 $0,2/3$，三者之和为 $I_2$。
+
+
+**证明。**
+
+$1+\omega+\omega^2=0$。$V$ 的两列
+$(1,1,1)^T/\sqrt3$ 与 $(1,\omega^2,\omega)^T/\sqrt3$ 正交归一；补上 $(1,\omega,\omega^2)^T/\sqrt3$ 就是三阶 Fourier 酉矩阵。乘 $\omega^{-j}$ 后求和得隐藏线性关系。逐行外积给
+$E_j=\frac13(\begin{smallmatrix}1&\omega^{-j}\\\omega^j&1\end{smallmatrix})$，即显示 Pauli 式。
+
+**证明完。** ∎
+
+这是标准 trine POVM 的显式扩展实现。[Caves 等](#ref-caves) [Zhao 等](#ref-zhao) 三个*输出模式*在扩展空间正交；三个输入效果不正交，也不是 qubit 中三个正交基态。$F_3\oplus I_2$ 提供了数学上明确的五模式酉接口，其在原生黄金门菜单上的编译本稿未取得。
+
+
+<a id="thm:trinedisk"></a>

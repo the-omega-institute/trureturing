@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:46da0142ae8d73b878ebe9a5953b35fbb46e0b185cd61d47f2a6145c42839fd5
+  normalized_sha256: sha256:46da0142ae8d73b878ebe9a5953b35fbb46e0b185cd61d47f2a6145c42839fd5
+cas_ref: sha256:46da0142ae8d73b878ebe9a5953b35fbb46e0b185cd61d47f2a6145c42839fd5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section context introducing the notation S_n = choose(M_n,2) and normalized ancestral area Ahat(t) = A(t)/S_n. This is the source normalization definition and heading, not an additional theorem or an operational precision specification. The complete corollary is the adjacent already-covered mathematical child; no new mathematical or apparatus guarantee is asserted here.
+    previous_atom_id: f2d78201e1c2dd4fb0fee67b842fe462b6438628276539d6f051e6a03faea6a1
+    next_atom_id: 329c4de874964e207ffd11e335f2b315616b32a18ac98bf59864013ebaa03f8e

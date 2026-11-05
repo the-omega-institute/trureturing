@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d08157734d03b04a1806afffd02f8ff523d4b4a0434e2cfac1eef5c8c9585986
+  normalized_sha256: sha256:d08157734d03b04a1806afffd02f8ff523d4b4a0434e2cfac1eef5c8c9585986
+cas_ref: sha256:d08157734d03b04a1806afffd02f8ff523d4b4a0434e2cfac1eef5c8c9585986
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只解释 V.3.11—14 的名称、述谓边界及积极临在语言，没有数学对象上的不可定义性定理。
+    previous_atom_id: 6a7b611eb35d5e3ca9b75e8bf3c8c0d299f706f839493a5a64a485a4e25fd52d
+    next_atom_id: 2595b17e12b5b3d4951129904c37dd5bba5118b426218f3449601ce2a8068d74

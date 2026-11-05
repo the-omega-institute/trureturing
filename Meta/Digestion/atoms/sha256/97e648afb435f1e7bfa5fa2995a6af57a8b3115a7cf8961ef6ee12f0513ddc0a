@@ -1,0 +1,93 @@
+### 命题 23.1（同一旋转与初态不决定跨请求共同修复）
+
+在定义 17.1–17.2 允许的终端关系图这一模型类中，即使固定 §18 的实际正字 $4,5$、指定 $n_\epsilon=e_z$ 和同一个完整请求图，也不存在仅依赖 $\varepsilon\to0$ 的普适模量，使 (21.1) 必推出 $d_{\mathcal D}(F)\to0$。下面的图有原样保留的联合记录和边缘请求，且每个请求标签有限，但标签数无统一上界。
+
+这是一个模型类反例，不是固定原生来源的反例：它的读口、记录关联及细标签尚未与 §18.2 的实际 $1024$ 标签和全部原未来对应。尤其不能为将它装到原源而添加或删去任何原请求。
+
+**证明。** 固定两个正交单位向量 $e_1,e_2\in W$。构造一个固定可数图：对每个整数 $M\ge1$，有终端联合请求 $J_M$，完整标签为 $(\sigma,\tau,j)$，其中 $\sigma,\tau\in\{\pm1\}$、$1\le j\le M$；另有原来就可调用的两个边缘记录请求 $X_M,Z_M$，分别返回 $\sigma,\tau$。每个请求及其全部实际控制前接 $bq$ 都在域内。记录边为
+
+$$
+F_{X_M,\sigma}=\sum_{\tau,j}F_{J_M,\sigma,\tau,j},
+\qquad
+F_{Z_M,\tau}=\sum_{\sigma,j}F_{J_M,\sigma,\tau,j}.
+\tag{23.1}
+$$
+
+请求之间不添加其他共同抽样。程序身份是条件索引；没有额外可读的调用档案。这个选择描述本反例的接口，不能替代原源的档案接口。
+
+对每个 $N\ge7$ 在这同一固定图上定义一套响应。第 $N$ 块取
+
+$$
+\begin{aligned}
+Q_{\sigma\tau}(n)&=\frac{(1+\sigma\langle e_1,n\rangle)
+(1+\tau\langle e_2,n\rangle)}4,\\
+F^{(N)}_{J_N,\sigma,\tau,j}(n)&=Q_{\sigma\tau}(n)/N,\\
+F^{(N)}_{X_N,\sigma}(n)&=(1+\sigma\langle e_1,n\rangle)/2,\\
+F^{(N)}_{Z_N,\tau}(n)&=(1+\tau\langle e_2,n\rangle)/2.
+\end{aligned}
+\tag{23.2}
+$$
+
+其余 $M\ne N$ 块取联合标签常数 $1/(4M)$、两个边缘标签常数 $1/2$。对全部 $bq$ 定义 $F^{(N)}_{bq,w}(n)=F^{(N)}_{q,w}(A_bn)$。这些概率连续、非负、归一且准确保持 (23.1) 和控制串接。一个点初态、确定性旋转控制与所列终端概率核就实现此普通概率模型；无需 reset、复制、自由准备或测后闭合。
+
+$Q$ 的常数和一次项被 $R$ 消去；剩余二次项为 $\sigma\tau\langle e_1,n\rangle\langle e_2,n\rangle/4$。正交性给两个坐标乘积的绝对值至多 $1/2$，而 $R$ 的绝对系数和为 $s$，故整个图满足
+
+$$
+\sup_{q,w}r_\infty(F^{(N)}_{q,w})\le\frac{s}{8N}
+=:\varepsilon_N\longrightarrow0.
+\tag{23.3}
+$$
+
+以下下界针对所有共同合法仿射族，不局限于某个修复公式。任取 $G\in\mathcal K_{\mathcal D}$，将第 $N$ 块细标签数学求和为
+
+$$
+H_{\sigma\tau}(n)=\sum_jG_{J_N,\sigma,\tau,j}(n)
+=a_{\sigma\tau}+\langle b_{\sigma\tau},n\rangle.
+$$
+
+则 $a_{\sigma\tau}\ge\|b_{\sigma\tau}\|$、$\sum a_{\sigma\tau}=1$、$\sum b_{\sigma\tau}=0$。令边缘正标签的一次系数为
+
+$$
+b_X=b_{++}+b_{+-}=\frac12\sum_{\sigma,\tau}\sigma b_{\sigma\tau},
+\qquad
+b_Z=b_{++}+b_{-+}=\frac12\sum_{\sigma,\tau}\tau b_{\sigma\tau}.
+$$
+
+于是共同正性强制
+
+$$
+\begin{aligned}
+\langle e_1,b_X\rangle+\langle e_2,b_Z\rangle
+&=\frac12\sum_{\sigma,\tau}
+\langle\sigma e_1+\tau e_2,b_{\sigma\tau}\rangle\\
+&\le\frac{\sqrt2}2\sum_{\sigma,\tau}a_{\sigma\tau}
+=\frac1{\sqrt2}.
+\end{aligned}
+\tag{23.4}
+$$
+
+若全图逐标签一致误差为 $e$，(22.5) 应用于两个原边缘正标签给 $\|b_X-e_1/2\|\le e$、$\|b_Z-e_2/2\|\le e$，即 (23.4) 左边至少 $1-2e$。因此
+
+$$
+d_{\mathcal D}(F^{(N)})\ge c_*:=\frac{1-1/\sqrt2}{2}>0.
+\tag{23.5}
+$$
+
+该下界可达到。将第 $N$ 块修成
+
+$$
+G_{J_N,\sigma,\tau,j}(n)
+=\frac{1+\langle\sigma e_1+\tau e_2,n\rangle/\sqrt2}{4N},
+\quad
+G_{X_N,\sigma}(n)=\frac{1+\sigma\langle e_1,n\rangle/\sqrt2}{2},
+\quad
+G_{Z_N,\tau}(n)=\frac{1+\tau\langle e_2,n\rangle/\sqrt2}{2}.
+\tag{23.6}
+$$
+
+其余块仍常数，全部控制前接按同一旋转延拓。细标签概率和修复值均在 $[0,1/N]$，故其误差至多 $1/N\le1/7<c_*$；两个边缘的最大误差恰为 $c_*$。所以 $d_{\mathcal D}(F^{(N)})=c_*$，与 (23.3) 并立，证明结论。
+
+这里没有隐藏一个原来存在的粗请求。四个事件 $\{(\sigma,\tau,j):1\le j\le N\}$ 的质量一直是 $Q_{\sigma\tau}$，并用于上面的所有共同修复下界；但这个辅助图未提供将四者各自作为原子标签的另一请求。若额外提供该请求，(21.1) 也须检验 $Q_{\sigma\tau}$。其二次分量的 $L^2$ 范数为 $1/(4\sqrt{15})$，因为正交坐标满足 $\int n_1^2n_2^2d\sigma=1/15$。由 (21.9)、(21.15)，它的残差至少 $\sqrt\gamma/(4\sqrt{15})$，不随 $N$ 消失。因此不能在保持小残差时暗中加入该粗请求。
+
+本反例增加的每个 $J_M,X_M,Z_M$ 都是此辅助模型的原始接口，不能借模型类一词将它们认作 AURIC 已有接口。即使某个 $4M=1024$，基数相同也没有证明细标签身份、旧记录边和全部其他未来的来源对应。∎
+

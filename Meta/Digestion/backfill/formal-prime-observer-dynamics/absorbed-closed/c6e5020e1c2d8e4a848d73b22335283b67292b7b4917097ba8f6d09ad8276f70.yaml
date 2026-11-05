@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c6e5020e1c2d8e4a848d73b22335283b67292b7b4917097ba8f6d09ad8276f70
+  normalized_sha256: sha256:c6e5020e1c2d8e4a848d73b22335283b67292b7b4917097ba8f6d09ad8276f70
+cas_ref: sha256:c6e5020e1c2d8e4a848d73b22335283b67292b7b4917097ba8f6d09ad8276f70
+coverage_gids:
+  - gid: D5/S3/Observer/MeasureSeparation/EpsilonStoppingPairEvidenceCompletion.finite_pairwise_singular_common_zero_error_classifier
+    target_statement_id: sha256:49f5355aafe844ada6072792fb53d987714dd7e6c95b4dbf00a990f239219e4d
+  - gid: D5/S3/Observer/MeasureSeparation/SingularProbabilityPerfectSeparator.mutually_singular_probability_laws_have_perfect_separator
+    target_statement_id: sha256:e1dac700d3dc0b26e48970e0f237ff02a7e5daf144989057fbca54aafe8f41e6
+receipts:
+  unresolved_subitems: []

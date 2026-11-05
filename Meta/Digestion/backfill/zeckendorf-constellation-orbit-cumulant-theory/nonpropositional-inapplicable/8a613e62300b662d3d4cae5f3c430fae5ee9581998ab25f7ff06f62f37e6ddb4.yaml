@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8a613e62300b662d3d4cae5f3c430fae5ee9581998ab25f7ff06f62f37e6ddb4
+  normalized_sha256: sha256:8a613e62300b662d3d4cae5f3c430fae5ee9581998ab25f7ff06f62f37e6ddb4
+cas_ref: sha256:8a613e62300b662d3d4cae5f3c430fae5ee9581998ab25f7ff06f62f37e6ddb4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本句在可能障碍类型列表中描述存在解码器但不可计算的情况，没有给出某个解码器或不可计算性断言。
+    previous_atom_id: 6d52623609548782357078b5a02161321d3c14cdf78e2fbd49a9a40c74947bcb
+    next_atom_id: c890e3f01bbfd12f1525cef2e63241934f01f3c9f7e04047d2d1659fa113feb5

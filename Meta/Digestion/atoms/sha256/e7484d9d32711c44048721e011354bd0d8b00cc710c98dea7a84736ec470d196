@@ -1,0 +1,25 @@
+**Definition 1.3 (causal and entire-history experiments).** Let
+$v_t=(x_t,y_t,w_t)$ be the unwrapped visible projection. It is not the
+four-state step approximation denoted $V$ in [F, §25]. Let $U$ be any
+standard Borel random variable independent of the entire source path.
+A visible stopping rule is an almost surely finite nonnegative Borel
+nonanticipating rule $R=R(U,v)$: the decision through $t$ depends only on
+$U$ and $v|_{[0,t]}$. Write
+
+$$
+\mathcal H_R=\overline{\sigma\bigl(U,R,
+                   (v_{s\wedge R})_{s\ge0}\bigr)},\qquad
+\mathcal A_I=\overline{\sigma\bigl(U,(O_s^I)_{s\ge0}\bigr)}.
+\tag{1.6}
+$$
+
+Completion is under the actual joint law. Conditional distributions
+are taken on the underlying standard Borel record and then completed;
+all equalities of their versions are almost sure. Arbitrary independent
+randomization can be included in $U$. Original elapsed time is available
+in these timed records. The source remains autonomous. Passive sampling,
+selection, retention and processing are permitted; source-correlated
+advice, a hidden-coordinate port and source-changing interventions are
+not included. The entire future held path in $\mathcal A_I$ is a stronger
+comparison experiment, not a causal service offered to execution.
+

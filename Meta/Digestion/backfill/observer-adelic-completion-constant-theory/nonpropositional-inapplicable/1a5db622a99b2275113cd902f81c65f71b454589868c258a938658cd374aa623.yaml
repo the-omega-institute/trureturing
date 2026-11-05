@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1a5db622a99b2275113cd902f81c65f71b454589868c258a938658cd374aa623
+  normalized_sha256: sha256:1a5db622a99b2275113cd902f81c65f71b454589868c258a938658cd374aa623
+cas_ref: sha256:1a5db622a99b2275113cd902f81c65f71b454589868c258a938658cd374aa623
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The noun dyadic wave packets in a proposed toolbox, without an assertion.
+    previous_atom_id: 80a1c6da47dbfeeb8e5e30adbf1dafae12e9da3851f183946f77a2c6a304e9f4
+    next_atom_id: fd55e0a0f7f3d70f2740dfa1ce278ea3d1bbc608e0ea97667c89fca491252a82

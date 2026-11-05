@@ -1,0 +1,73 @@
+**Theorem 5.1 (Positive stationary variance and global versus local separation).** Take Definition 3.1 with $N=2$, so the fixed representation has six hidden states and three positive component weights. Define
+
+$$
+Q_\ell=\frac{z_\ell}{1+z_\ell},\qquad
+e_\ell=\frac{a_\ell^2((1-a_\ell)^2+a_\ell)}{1+a_\ell},\qquad
+S=\sum_{\ell=1}^3w_\ell e_\ell,
+$$
+
+$$
+v=S\operatorname{Var}_J(Q_L\mid X_{-2}=X_2=1)
+=\frac1S\sum_{\ell<k}w_\ell e_\ell w_ke_k(Q_\ell-Q_k)^2>0.
+\tag{5.1}
+$$
+
+The variance in (5.1) is under the joint law (1.4) of this mixture. For every $n\ge5$ with $(n-1)\Delta\ge8$,
+
+$$
+\mathscr R_{2,n}(\mu_n)\ge
+(n-4)\left[v-2\exp(-(n-1)\Delta^2/64)\right].
+\tag{5.2}
+$$
+
+In particular,
+
+$$
+\liminf_{n\to\infty}\frac{\mathscr R_{2,n}(\mu_n)}n\ge v>0,
+\qquad
+\lim_{n\to\infty}\sum_j
+\mathbb E_{\mu_n}\delta_{2,m}^{a_j,b_j}(p_j^\eta)=0
+\tag{5.3}
+$$
+
+for every fixed $m$ and every sequence of disjoint length-$m$ block families. Both limits concern the same $P$, with $\mu_n=P_{[1,n]}$; neither concerns $\pi_n$.
+
+Proof. Under component $\ell$, the event $E_i=\{X_{i-2}=X_{i+2}=1\}$ consists of the two five-bit words $10001$ and $10101$. Their probabilities are respectively
+
+$$
+\frac{a_\ell^2(1-a_\ell)^2}{1+a_\ell},
+\qquad
+\frac{a_\ell^3}{1+a_\ell}.
+\tag{5.4}
+$$
+
+Their sum is $e_\ell>0$. Conditional on $E_i$ the label weights under $J$ are $w_\ell e_\ell/S$. The pairwise formula for weighted variance gives (5.1); every weight is positive and the $Q_\ell$ are distinct. Stationarity makes $S$ and $v$ independent of $i$.
+
+Let $\mathcal G_{n,i}=\sigma(W_j:1\le j\le n,\ j\ne i)$ and $p_{n,i}=\mathbb E_J[X_i\mid\mathcal G_{n,i}]$, which is exactly the $\mu_n$ full-complement posterior. For $3\le i\le n-2$, $E_i\in\mathcal G_{n,i}$. The two neighbors of $i$ are zero on $E_i$. Given $L=\ell$ and this entire complement, the Markov transition ratio at $i$ is $z_\ell$, so its posterior is $Q_\ell$. Consequently,
+
+$$
+p_{n,i}=\mathbb E_J[Q_L\mid\mathcal G_{n,i}]\quad\text{on }E_i.
+\tag{5.5}
+$$
+
+Conditional variance decomposition within the same joint probability space now gives
+
+$$
+\mu_n(E_i)\operatorname{Var}_{\mu_n}(p_{n,i}\mid E_i)
+=v-\mathbb E_J\!\left[\mathbf1_{E_i}
+\operatorname{Var}_J(Q_L\mid\mathcal G_{n,i})\right].
+\tag{5.6}
+$$
+
+Indeed, expand $Q_L$ around its conditional mean given $\mathcal G_{n,i}$; the cross term vanishes even after multiplying by $\mathbf1_{E_i}$, since this event belongs to that field. This proves (5.6) without mixing variances from different laws.
+
+At a given complement choose a most probable label $k$. Since every $Q_\ell\in[0,1]$, comparison with the constant $Q_k$ gives
+
+$$
+\operatorname{Var}_J(Q_L\mid\mathcal G_{n,i})
+\le1-\max_\ell J(L=\ell\mid\mathcal G_{n,i}).
+\tag{5.7}
+$$
+
+The complement of the one missing site contains a segment of length at least $(n-1)/2$. The same classifier and Bayes comparison as in Theorem 4.4 bound the expectation of (5.7) by $2\exp(-(n-1)\Delta^2/64)$. Dropping $\mathbf1_{E_i}$ only enlarges this nonnegative bound. Apply Theorem 2.3 to the band-compatible law $p=\mu_n$, sum over its $n-4$ indicated sites, and obtain (5.2). Division by $n$ gives the first limit in (5.3); Theorem 4.4 gives the second. $\square$
+

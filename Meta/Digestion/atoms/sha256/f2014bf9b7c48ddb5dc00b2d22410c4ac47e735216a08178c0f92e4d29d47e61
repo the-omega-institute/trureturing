@@ -1,0 +1,15 @@
+**Lemma 75.3 (static interpretation used by this layout).** For fixed
+$t$, successive Euclidean divisions by $R_1,\ldots,R_m$ recover the
+unique digits of (AAII.35) from any $0\le Z<F$. At the end the quotient
+is zero. Consequently the valid global contents at $t$ have exactly
+$F(t)$ values and recover its complete $w$.
+
+Proof. If $Z=r_1+R_1q$, with $0\le r_1<R_1$, Euclidean division gives
+that digit and quotient. Apply the same identity to the remaining
+product. A radix one gives remainder zero and leaves the quotient
+unchanged. After the last factor the bound $Z<F$ forces quotient zero.
+Conversely the displayed sum gives a value in $[0,F)$ for every tuple.
+Apply the supplied colex inverse and AA Theorem 19.2 to that tuple.
+This is the mixed-radix interpretation, not yet a claim that an edited
+source has a correctly maintained record. $\square$
+

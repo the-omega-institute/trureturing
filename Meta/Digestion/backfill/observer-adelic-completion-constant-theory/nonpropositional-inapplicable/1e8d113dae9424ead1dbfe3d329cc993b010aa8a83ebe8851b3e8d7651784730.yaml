@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1e8d113dae9424ead1dbfe3d329cc993b010aa8a83ebe8851b3e8d7651784730
+  normalized_sha256: sha256:1e8d113dae9424ead1dbfe3d329cc993b010aa8a83ebe8851b3e8d7651784730
+cas_ref: sha256:1e8d113dae9424ead1dbfe3d329cc993b010aa8a83ebe8851b3e8d7651784730
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 审计表将 fixed-omega colligation 路线列为证明目标，没有断言目标已成立。'
+    previous_atom_id: 864b015f37d711f7609e9af5b33cb30af9eb9c99f847fb461388b64849978bcb
+    next_atom_id: c0c81923a6da0df0980d498e9593d6da22a2b09ca3aee55a8e4aef80359b7d28

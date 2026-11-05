@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4b79585b45d156c8d3d2e78149a84041843ea76dfaf1ae123090338dbec8e84e
+  normalized_sha256: sha256:4b79585b45d156c8d3d2e78149a84041843ea76dfaf1ae123090338dbec8e84e
+cas_ref: sha256:4b79585b45d156c8d3d2e78149a84041843ea76dfaf1ae123090338dbec8e84e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 作者署名，不陈述对象之间的数学关系。
+    previous_atom_id: b44a187234eba89a1b0d82f01eb3b0876713dd9eedbae0945ecc68248e467329
+    next_atom_id: 3a97fd75a1bb16429871bc60d19f906dacfe2690dad8360f41f051b97b69737f

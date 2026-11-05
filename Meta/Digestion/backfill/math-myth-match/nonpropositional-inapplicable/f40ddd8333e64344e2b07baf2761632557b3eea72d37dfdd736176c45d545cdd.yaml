@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f40ddd8333e64344e2b07baf2761632557b3eea72d37dfdd736176c45d545cdd
+  normalized_sha256: sha256:f40ddd8333e64344e2b07baf2761632557b3eea72d37dfdd736176c45d545cdd
+cas_ref: sha256:f40ddd8333e64344e2b07baf2761632557b3eea72d37dfdd736176c45d545cdd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 皮尔士方法自省及比较边界；属于引文解释、建模约定或研究建议，没有另立待证数学断言，本收据不验证其文献或经验真值。
+    previous_atom_id: cdd3e618304d16b5eeddaf24ca313fce977dcf76b0683df231a3873f082ca9dc
+    next_atom_id: 735f8313ce1a8879cd95fa53300e650d3e46bac5c745b1004ee1e316bbb5886f

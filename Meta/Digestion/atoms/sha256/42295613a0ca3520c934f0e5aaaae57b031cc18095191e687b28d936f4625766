@@ -1,0 +1,28 @@
+**Definition 2.4 (uniform loss and worst-run attempted-pair budgets).** Let $\mathcal E_m$ be precisely the parent Definition 18.1 class described in Definition 2.1. A common controller may adapt its finite-outcome real POVM to its entire classical history and source-independent random seed. Every run has finite history and at most $m$ attempted pairs, including failed attempts. Any number of single-copy insertions is allowed provided every history is finite. All settings, source-call positions, prefixes, outcomes, failures, stop decisions and randomized decoding are part of that history. There is no surviving source-dependent quantum memory, source-dependent starting resource or free postselection. The same policy is used under the sources compared.
+
+For a nonnegative loss $\ell$ and source set $\mathcal S$, define the confidence minimax risk and its budget threshold by
+
+$$
+\begin{aligned}
+ R_m^{\ell}(\mathcal S,h)
+ &=\inf_{(\pi,\widehat\rho)\in\mathcal E_m}
+       \sup_{\rho\in\mathcal S}
+       \Pr_\rho^\pi\{\ell(\rho,\widehat\rho)>h\},\\
+ m^{\ell}(\mathcal S,h,\delta)
+ &=\min\{m\in\mathbb N_0:\ \exists(\pi,\widehat\rho)\in\mathcal E_m,
+       \ \sup_{\rho\in\mathcal S}\Pr_\rho^\pi\{\ell(\rho,\widehat\rho)>h\}\le\delta\}.
+\end{aligned}
+\tag{2.12}
+$$
+
+The second definition requires an actual estimator attaining the confidence requirement, irrespective of whether the infimum defining $R_m^\ell$ is attained. Outputs are lawful density-orbit descriptions; the upper bounds below use the finite rational description of Definition 15.2. With $\mathcal D=\mathcal D(\mathbb C^5)$ put
+
+$$
+ \mathcal S_r=\{S+iA\in\mathcal D:\|a(A)\|_2\ge r\},\qquad
+ m_*(r,h,\delta)=m^{\mathfrak d}(\mathcal S_r,h,\delta),\qquad
+ m_{\mathrm{pred}}(h,\delta)=m^{d_{\mathrm{cons}}}(\mathcal D,h,\delta).
+\tag{2.13}
+$$
+
+These optimize only the worst-run pair coordinate under ideal calibration and stationary independent preparation. They do not bound total preparations, record storage or processing for arbitrary competing procedures; those resources are explicitly retained for the exhibited upper procedure in (2.10)–(2.11). Mathematical availability of real POVMs is part of this statistical class, not an implementation theorem.
+

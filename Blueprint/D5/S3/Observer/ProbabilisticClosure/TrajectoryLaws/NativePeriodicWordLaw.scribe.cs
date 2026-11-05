@@ -87,6 +87,13 @@ internal sealed class NativePeriodicWordLawDocument : IScribeDocumentDefinition
                     All(Equal(Call("realMass", Call("explicitStoppedWordLaw", F.Id("beta"), F.Id("r")),
                         Call("singletonWord", D(1))), Seq(D(1), Minus, F.Id("r"))), ("r", "unitInterval")),
                     "For every r in the closed unit interval, the complete pure suspended law assigns mass 1-r to the singleton word [beta]. The endpoints r=0 and r=1 are included."),
+                Node("geometric-rate-bound", "geometric_rate_bound", "Uniform geometric domination orders the rates",
+                    All(Imp(And(Seq(D(0), Lt, F.Id("y")), And(Seq(D(0), Lt, F.Id("A")),
+                        All(Seq(Multiply(F.Id("A"), Pow(F.Id("x"), F.Id("n"))), Le, Sp,
+                            Multiply(F.Id("B"), Pow(F.Id("y"), F.Id("n")))), ("n", "Nat")))),
+                        Seq(F.Id("x"), Le, Sp, F.Id("y"))),
+                        ("x", "Real"), ("y", "Real"), ("A", "Real"), ("B", "Real")),
+                    "For arbitrary real rates x,y and coefficients A,B, a strictly positive comparison rate y and coefficient A make uniform domination A*x^n<=B*y^n force x<=y. There are no installed-source parameter assumptions. The periodic source rate bounds and generated-exit comparisons use this same estimate."),
                 Paragraph(Text("These statements concern the periodic source-specific reversible common generator and its full native laws. They give neither an event-midpoint identity nor a total-variation attainment conclusion. The prior and update kernels remain those in the parameterized construction.")))));
     }
 

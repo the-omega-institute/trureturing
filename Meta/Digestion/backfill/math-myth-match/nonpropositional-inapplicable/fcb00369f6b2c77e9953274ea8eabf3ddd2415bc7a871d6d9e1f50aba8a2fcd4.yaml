@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fcb00369f6b2c77e9953274ea8eabf3ddd2415bc7a871d6d9e1f50aba8a2fcd4
+  normalized_sha256: sha256:fcb00369f6b2c77e9953274ea8eabf3ddd2415bc7a871d6d9e1f50aba8a2fcd4
+cas_ref: sha256:fcb00369f6b2c77e9953274ea8eabf3ddd2415bc7a871d6d9e1f50aba8a2fcd4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅解释柏格森论微积分、生成、符号与普遍数学的历史文本立场。
+    previous_atom_id: ce52e13fc1c8dd74d1a6b1516ca32a0615c53e9ba51da46f034bd91f43bb9f88
+    next_atom_id: a2e9de21e80bd82ceb5c031c4a86da2aaa5788a81cde01a5efb537eefe0efec3

@@ -1,0 +1,42 @@
+**Lemma 5.1 (P3).** For any $s\ge b$ with $s\equiv b\pmod2$, there are $H_s>0$ and $0<c_s<1$ such that, for every integer $n\ge0$,
+
+$$
+\frac1{u_{s+n}}=
+\frac{\epsilon}{H_s}\sum_{\ell=0}^{\infty}c_s^\ell\lambda_\ell^n,
+\qquad
+\lambda_\ell=(-1)^\ell\phi^{-(2\ell+1)}\in(-1,1).
+\tag{5.1}
+$$
+
+For $f_n=1/u_{s+n}$ and $\Delta f_n=f_{n+1}-f_n$, every integer $j\ge0$ satisfies
+
+$$
+\epsilon(-1)^j\Delta^jf_0>0.
+\tag{5.2}
+$$
+
+**Proof.** By Lemma 4.1, $\operatorname{sgn}A=\epsilon$ and $(-1)^s=-\epsilon$. Define
+
+$$
+H_s=|A|\phi^s,\qquad c_s=\frac{B\phi^{-s}}{H_s}.
+$$
+
+Both are positive. Equation (4.1) at $s$ gives $u_s=\epsilon H_s(1-c_s)$. Its sign is $\epsilon$, so $c_s<1$. More generally,
+
+$$
+u_{s+n}=\epsilon H_s\phi^n
+\left(1-c_s(-\phi^{-2})^n\right).
+\tag{5.3}
+$$
+
+The geometric series for its reciprocal converges absolutely, since $c_s|\phi^{-2}|^n<1$, and gives (5.1).
+
+A forward difference of order $j$ replaces $\lambda_\ell^n$ at $n=0$ by $(\lambda_\ell-1)^j$. Interchange with the series is justified by the bound $|\lambda_\ell-1|^j\le2^j$ and the convergent sum $\sum c_s^\ell$. Every $\lambda_\ell<1$, so
+
+$$
+\epsilon(-1)^j\Delta^jf_0
+=\frac1{H_s}\sum_{\ell=0}^{\infty}c_s^\ell(1-\lambda_\ell)^j>0.
+$$
+
+This includes $j=0$. The argument is an exact series identity and a finite difference of that identity, with no approximation. Its sequence index is an auxiliary exponent offset; it will be applied only on explicitly identified consecutive original-clock blocks. $\square$
+

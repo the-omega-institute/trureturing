@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:226990f64353a907f95743bbed94afbd1ba29083160d40e4d459ee652ad8b03e
+  normalized_sha256: sha256:226990f64353a907f95743bbed94afbd1ba29083160d40e4d459ee652ad8b03e
+cas_ref: sha256:226990f64353a907f95743bbed94afbd1ba29083160d40e4d459ee652ad8b03e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：列举精确核、度量与有限样本推断的精度类别。
+    previous_atom_id: cd9edae9ceae1428cdc8b6c9963290a8d1c74d6b33db046a5c921b15f242b75f
+    next_atom_id: 0cee3e6576145ab4525ceccef16ca5a2068961d8c7db85b54f6d181da38cc801

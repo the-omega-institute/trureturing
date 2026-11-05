@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4ce10dd6c07913aefe06b4feee3ab0c923c3bd5feac83feeb31f3435285617a1
+  normalized_sha256: sha256:4ce10dd6c07913aefe06b4feee3ab0c923c3bd5feac83feeb31f3435285617a1
+cas_ref: sha256:4ce10dd6c07913aefe06b4feee3ab0c923c3bd5feac83feeb31f3435285617a1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该段是原文核验状态与证据种类的历史说明，不是新的数学命题，也不认证本次编译状态。
+    previous_atom_id: 20a794e46d80c477c273aceec6074a181315b662df741d50b1dca1513510fc8b
+    next_atom_id: 3d78c5a01b7791c4427f434cc1c96bbbe377fda4aea01deabcfa8d33ee44499f

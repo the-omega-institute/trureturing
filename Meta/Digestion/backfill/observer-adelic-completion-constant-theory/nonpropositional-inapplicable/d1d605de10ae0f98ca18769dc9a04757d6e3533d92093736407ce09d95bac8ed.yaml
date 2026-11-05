@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d1d605de10ae0f98ca18769dc9a04757d6e3533d92093736407ce09d95bac8ed
+  normalized_sha256: sha256:d1d605de10ae0f98ca18769dc9a04757d6e3533d92093736407ce09d95bac8ed
+cas_ref: sha256:d1d605de10ae0f98ca18769dc9a04757d6e3533d92093736407ce09d95bac8ed
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Specifies the desired output as the Riemann zero-counting measure; no achieved recovery equality.
+    previous_atom_id: 2bab54c20a47e4fb09be68fd67b05149dcc73237b0ff1c3f12650c9b4b66b194
+    next_atom_id: cf686a76f763d4fd40db046d347641ae619c16f66f215522cae37aa2f5e886e1

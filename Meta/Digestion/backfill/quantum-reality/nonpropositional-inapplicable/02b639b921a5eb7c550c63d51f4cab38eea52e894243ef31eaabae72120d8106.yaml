@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:02b639b921a5eb7c550c63d51f4cab38eea52e894243ef31eaabae72120d8106
+  normalized_sha256: sha256:02b639b921a5eb7c550c63d51f4cab38eea52e894243ef31eaabae72120d8106
+cas_ref: sha256:02b639b921a5eb7c550c63d51f4cab38eea52e894243ef31eaabae72120d8106
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: CUT 行只是本模型各类观察接口的对象清单，不单独宣告恢复或不可见性定理。
+    previous_atom_id: bd0805a75148696331e5be3e0f35fd367426a88b26b7223ac31a4e301cfc048b
+    next_atom_id: a0bd5c4303e5f07fd0347b7864f83a03e5121e809c680452add01a4c5e2ad377

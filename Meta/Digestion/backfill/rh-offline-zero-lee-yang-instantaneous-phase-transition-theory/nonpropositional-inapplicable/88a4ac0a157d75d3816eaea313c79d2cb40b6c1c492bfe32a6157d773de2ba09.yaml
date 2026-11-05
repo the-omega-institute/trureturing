@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:88a4ac0a157d75d3816eaea313c79d2cb40b6c1c492bfe32a6157d773de2ba09
+  normalized_sha256: sha256:88a4ac0a157d75d3816eaea313c79d2cb40b6c1c492bfe32a6157d773de2ba09
+cas_ref: sha256:88a4ac0a157d75d3816eaea313c79d2cb40b6c1c492bfe32a6157d773de2ba09
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: '仅由钉版上游闭合的命题（不是非命题）：对任意 N : Nat 与四个非零复数 aPlus、aMinus、lambdaPlus、lambdaMinus，由 eq_neg_of_add_eq_zero_left 将零振幅改写成相反数相等，norm_mul、norm_pow、norm_neg 得到模的乘积相等；Real.log_mul、Real.log_pow、Real.log_div 和实数环正规化得到原式的对数比恒等式。此证明不要求 N>0，已用 make lean 的临时 example 接受完整两个结论。 Mathlib pin 56a005855ea17e0b0958f73ec801ae140b0a1679（lake-manifest.json）。仓内先检索 D5/**/*.lean 全部公开与 private 声明，按 two-channel/zero-balance/log(norm)/lambda、null direction/eigenvector slope/quadratic-form 数学形状检索并查近邻；检查 Observer/HyperbolicTransport、AgencyHolonomy、FibonacciEigen、Weil/ZetaLinear/CriticalDampingPartition 及 generic RationalIntervalExpression.checked_expression_encloses、FiveModePredictiveLawGeometry.Core.cutoff_first_nonstrict。未得到在保留任意复参数和全部子句的推导中实际供应子目标的冻结 GID。前者限实有界表达式区间证书，后者限几何 minority 截止，均不供应本 atom 的关系。'
+    previous_atom_id: c9526268701f7f4412424ec31ecaf45dbce819da217a1f72e871ddd09c46172b
+    next_atom_id: 8a0cc81132c26373b371f94c406ef57d0d78743454f4047f627570838bf4d774

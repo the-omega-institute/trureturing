@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2f0f5a6be21311fd4db67746dcfcc65c21ed24d4ce6595d8e7d83344742b82df
+  normalized_sha256: sha256:2f0f5a6be21311fd4db67746dcfcc65c21ed24d4ce6595d8e7d83344742b82df
+cas_ref: sha256:2f0f5a6be21311fd4db67746dcfcc65c21ed24d4ce6595d8e7d83344742b82df
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 讨论撒种譬喻中的接收条件和历史变化，不声称现实状态动力学已被验证。
+    previous_atom_id: 9edfc1ade301430339295794abe4ac24927080a65eda9dcaf92db7c2cac86730
+    next_atom_id: 85b8438e5234bb10a79493ea8c4d3f7b1d1d3f337fff6cfedc92d3f1e0fe4cdb

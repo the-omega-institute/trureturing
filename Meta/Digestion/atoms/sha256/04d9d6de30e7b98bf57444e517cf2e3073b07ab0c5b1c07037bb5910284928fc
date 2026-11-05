@@ -1,0 +1,17 @@
+**Lemma 10.2 (polynomial complete candidate encoding).** For $N\ge1$, every successful arbitrary-literal preparer has a successful normalized description of polynomial length in $s_0$, with the same budgets and serving table. Put
+
+$$
+\begin{aligned}
+w_N&=\lceil\log_2(N+1)\rceil,\qquad
+w_D=\lceil\log_2(D_0+1)\rceil,\\
+B&=2w_N+N(2+D_0+w_D+4w_N).
+\end{aligned}
+\tag{POC.25}
+$$
+
+A complete candidate fits $B$ bits.
+
+Proof. Encode the installed count $n$ and start in the first two fields. Provide $N$ slots with a Read/Halt tag, Halt-bit field, literal-length field, $D_0$ padded letter slots and four successor fields. Require $1\le n\le N$, valid indices among the installed $n$ states, literal lengths at most $D_0$, canonical unused fields at Halts and zero padding outside the installed array and after each literal. Padding is syntax, not an installed state, port or extra field available to runtime. The first $n$ records contain every installed state, including unused or duplicate ones. Every bounded explicit candidate has this encoding after relabeling. Lemma 9.1 places a successful arbitrary-address preparer in it without changing any required budget or original bit label.
+
+Since $N$ is unary, $N,q_T,b\le s_0$, and $D_0\le3+13s_0$. Thus $B$ is polynomial in $s_0$. Numeric values of $P,L$ never enter this bound. Reject $N=0$ directly. The combined candidate/serving explicit size, and hence all bounds from §5, are uniformly polynomial in $s_0$. $\square$
+

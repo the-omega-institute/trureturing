@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b26091d7df4bee59d9f8b73a1c2df04d3cdc2c12bb8410d9ffe2c1b87818cdd4
+  normalized_sha256: sha256:b26091d7df4bee59d9f8b73a1c2df04d3cdc2c12bb8410d9ffe2c1b87818cdd4
+cas_ref: sha256:b26091d7df4bee59d9f8b73a1c2df04d3cdc2c12bb8410d9ffe2c1b87818cdd4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 扩展不同表达关系图的研究方向，明确尚未完成。
+    previous_atom_id: 9e49d14db5bdf8f8fef2a4ab2336348dd9b9105135c9b35924f47bd52d93ee86
+    next_atom_id: fc585f4d78cfd7ab713e7ab8a968c322e38e893df4d517e36f72dc3195dc9631

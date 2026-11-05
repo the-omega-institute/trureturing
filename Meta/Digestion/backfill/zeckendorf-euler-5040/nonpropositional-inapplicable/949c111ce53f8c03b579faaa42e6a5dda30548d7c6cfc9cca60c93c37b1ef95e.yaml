@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:949c111ce53f8c03b579faaa42e6a5dda30548d7c6cfc9cca60c93c37b1ef95e
+  normalized_sha256: sha256:949c111ce53f8c03b579faaa42e6a5dda30548d7c6cfc9cca60c93c37b1ef95e
+cas_ref: sha256:949c111ce53f8c03b579faaa42e6a5dda30548d7c6cfc9cca60c93c37b1ef95e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这是要求直接控制式（31）抵消的研究路线，没有断言已经取得该估计。
+    previous_atom_id: 9cb020dbe1fe3f3ed41f53cb221279ce6a37e2810de387f01d0c3b4972ec39df
+    next_atom_id: 12bff055b353ec26dc61492b2693aafa2859eeab6dc452cb7af16385bad5eedc

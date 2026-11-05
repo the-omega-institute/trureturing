@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:376b2b53d33f0e5e1e6969d0bbf7be58b2157ba05dcc5e8fabf3e7989604149f
+  normalized_sha256: sha256:376b2b53d33f0e5e1e6969d0bbf7be58b2157ba05dcc5e8fabf3e7989604149f
+cas_ref: sha256:376b2b53d33f0e5e1e6969d0bbf7be58b2157ba05dcc5e8fabf3e7989604149f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：把异频正权边的存在指定为前件 A7，没有构造该图。
+    previous_atom_id: d14a29e97719a2f3e4ff653b537e78718238b6357c9e0b0ae5d1e766e1d21fab
+    next_atom_id: 6fe7187ebb7c633f19b57782b5e9079c25711d12de01e84d7634dc375ab1b80d

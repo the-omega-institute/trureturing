@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ae415630c8c909190278e3556d3af5df545b107f216ca2fa3830ec660ed605fb
+  normalized_sha256: sha256:ae415630c8c909190278e3556d3af5df545b107f216ca2fa3830ec660ed605fb
+cas_ref: sha256:ae415630c8c909190278e3556d3af5df545b107f216ca2fa3830ec660ed605fb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: SEP、康德、中部和薄伽梵歌所用版本与未校勘范围的书目说明。
+    previous_atom_id: e2087e16a481551e6dfc8367c156d730124cd10da4d20449d340817d7180ae7e
+    next_atom_id: 80ff8275dee9bf7ed4eabee4b90a37f2c34b11b9f310f9496622c8f65a21953f

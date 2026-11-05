@@ -1,0 +1,9 @@
+**Lemma 3.1 (One active edge).** Conditional on a specified phase, an
+active edge has zero-reply probability $c$ and one-reply probability
+$2\eta$. Its two joint target-spin masses are as follows, with the
+majority-spin mass listed first when it differs from the other mass.
+
+| Position of the target vertex | Reply zero | Reply one |
+| --- | --- | --- |
+| In the edge | $a^2,\ b^2$ | $\eta,\ \eta$ |
+| Outside the edge | $ac,\ bc$ | $2a\eta,\ 2b\eta$ |

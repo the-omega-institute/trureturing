@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c1d22cd50ee2dd349ab8afdfd5024bc36346e4ec4e3ff87c85501c4659f7f9de
+  normalized_sha256: sha256:c1d22cd50ee2dd349ab8afdfd5024bc36346e4ec4e3ff87c85501c4659f7f9de
+cas_ref: sha256:c1d22cd50ee2dd349ab8afdfd5024bc36346e4ec4e3ff87c85501c4659f7f9de
+coverage_gids:
+  - gid: D5/S3/Weil/Convention.classical_zeta_eq_mathlib
+    target_statement_id: sha256:9670ba80be74de3fb6d02ba6d32dff1027ca671d0ec16121500665864dbbf262
+receipts:
+  unresolved_subitems: []

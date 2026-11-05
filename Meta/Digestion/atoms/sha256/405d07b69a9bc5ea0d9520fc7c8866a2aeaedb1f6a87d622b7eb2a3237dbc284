@@ -1,0 +1,131 @@
+**Theorem 8.1 (arbitrarily small native-form representatives of a fixed
+smooth command trace).** For every fixed model of Definition 7.1, every
+integer $n\ge1$, every $f\in C_c^\infty(\Omega;\mathbb C)$ and every
+$\varepsilon>0$, there exists $\chi\in C_c^\infty(\Omega;\mathbb R)$,
+$0\le\chi\le1$, such that $u=f\chi$ satisfies
+
+$$
+\operatorname{supp}u\subseteq\operatorname{supp}f,\qquad
+|u|\le|f|,\qquad \|u\|_{\mathcal F}\le\varepsilon,\qquad
+u(\bar q_{n,\omega}(t))=f(\bar q_{n,\omega}(t))
+\quad(\omega\in\Xi_n,\ 0\le t<\zeta_{n,\omega}).
+\tag{NT.9}
+$$
+
+The cutoff $\chi$ can be supported in any
+prescribed open neighbourhood of $\operatorname{supp}f$ inside $\Omega$.
+In particular $\mathscr R_n$ is not closable from the Hilbert space
+$\mathcal F_A$ into the actual run-time $L^2$ space, for every $n\ge1$.
+The same holds for the equivalent core restriction into $L^2(\nu_n)$.
+The scalar core map $f\mapsto\nu_n(|f|^2)$ has no continuous extension
+in the original form norm.
+
+Proof. For a fixed sign word, all alive nodes are determined recursively
+by (NT.4). Each nonzero chord is a smooth immersed arc: its lifted height
+and $\alpha$ derivatives are respectively $v_i^1/\delta_n$ and
+$v_i^2/(2\delta_n)$, which cannot both vanish. A zero increment gives a
+stationary point. Phase reduction preserves local smoothness, even through
+windings. An immersed compact arc has a finite cover by embedded arc
+charts; no global injectivity is needed. A cut chord is a subarc of the
+same curve. The terminal height leg is another regular arc, since on
+survival its starting height is strictly below $u$. Corners are covered
+one adjoining arc at a time.
+
+Let
+
+$$
+C_n=\bigcup_{\omega\in\Xi_n}
+ \bar q_{n,\omega}([0,\zeta_{n,\omega}])
+ \subseteq\overline\Omega,\qquad K=C_n\cap\operatorname{supp}f.
+\tag{NT.10}
+$$
+
+If $K$ is empty, take $\chi=0$. Otherwise $C_n$ is a finite union
+of compact curve images and points, with at most
+$4^{m_n}$ paths, each of at most $m_n+1$ executed pieces. Hence $K$ is
+compact and contained in the interior. Its preimages in the finitely many
+parameter intervals are compact. Cover those preimages by finitely many
+intervals on which each nonstationary curve is embedded, extending a piece
+locally past an interior endpoint if necessary. This gives finitely many
+interior arc charts covering $K$, together with finitely many point
+charts. All charts can lie in the prescribed open neighbourhood. Self
+intersections and joins cause no additional requirement.
+
+The needed small-cutoff calculation is the classical logarithmic
+codimension-two capacity mechanism. In a straightened arc chart use
+coordinates $(s,y)\in\mathbb R\times\mathbb R^2$, with arc $y=0$.
+Choose a smooth longitudinal cutoff $a(s)$ with $0\le a\le1$, equal
+to one near the compact subarc and supported inside the chart. For $0<e<1/2$ put $L=\log(1/e)$
+and choose a fixed smooth $\psi:\mathbb R\to[0,1]$ equal to one on
+$(-\infty,0]$ and zero on $[1,\infty)$. Define
+
+$$
+ h_e(y)=\psi\left(\frac{\log(|y|/e^2)}{L}\right)\ (y\ne0),
+ \qquad h_e(0)=1.
+\tag{NT.11}
+$$
+
+It is smooth, constant near zero, supported in $|y|\le e$, and
+$|\nabla h_e(y)|\le C/(|y|L)$ on $e^2<|y|<e$. In these two normal
+directions polar integration gives
+
+$$
+\int |h_e|^2dy\le Ce^2,\qquad
+\int|\nabla h_e|^2dy
+ \le\frac{C}{L^2}\int_{e^2}^{e}\frac{dr}{r}
+ =\frac{C}{L}.
+\tag{NT.12}
+$$
+
+The longitudinal derivative of $a(s)h_e(y)$ costs $O(e^2)$.
+Chart Jacobians and inverse derivatives are bounded on the chosen compact
+supports. Thus the local ordinary $H^1$ norm squared is at most
+$C(e^2+L^{-1})$. For a stationary point, an ordinary ball cutoff of
+radius $e$, equal to one on the half-radius ball, has squared $L^2$ cost
+$O(e^3)$ and squared gradient cost $O(e)$. This includes a positive-time
+hold at $o$. These cutoffs are used only to estimate the given native form;
+no Euclidean operator replaces it.
+
+Extend the finitely many chart cutoffs $\chi_i$ by zero and combine them
+as $\chi=1-\prod_{i=1}^N(1-\chi_i)$. Then $\chi=1$ near $K$,
+$0\le\chi\le1$, and $\chi$ is smooth with compact support in the chosen
+neighbourhood. The inequalities $\chi\le\sum_i\chi_i$ and
+$|\nabla\chi|^2\le N\sum_i|\nabla\chi_i|^2$ in local coordinates
+show that its ordinary local $H^1$ costs tend to zero. The number $N$
+and constants may depend on this fixed $n$ and $f$.
+
+For completeness, boundedness of $A,\rho$ and the coordinate coefficients
+of $P,Q$ on this compact chart collection gives
+
+$$
+\|f\chi\|_{\mathcal F}^2
+ \le C_{n,f}\sum_i
+   \int\bigl(|\chi_i|^2+|\nabla\chi_i|^2\bigr)\,dq
+ \longrightarrow0.
+\tag{NT.13}
+$$
+
+Indeed $X_j(f\chi)=\chi X_jf+fX_j\chi$; both $f$ and its first
+horizontal derivatives are bounded. The coordinate gradient bounds each
+$X_j\chi$, which proves (NT.13) by the product rule and finite sums.
+This is an upper estimate for exactly (NT.1); its closure domain and
+homogeneous volume exponent have not been changed. Choose the finitely
+many radii sufficiently small to make the norm at most $\varepsilon$.
+On a visited point where $f\ne0$, that point lies in $K$ and $\chi=1$.
+Where $f=0$, equality in (NT.9) holds automatically. This proves every
+pointwise assertion, including all returns and the complete terminal leg.
+
+To prove nonclosability, take real $0\le\varphi\le1$ in
+$C_c^\infty(\Omega)$, equal to one near $o$. Every path has positive
+lifetime and starts continuously at $o$. Consequently
+$c_n=\nu_n(\varphi^2)>0$, with no fine-mesh qualification, and $c_n<\infty$
+by $\zeta_n\le T_n$. At this fixed $n$ use (NT.9) with
+$f=\varphi$ and $\varepsilon=1/j$ to obtain $u_j\to0$ in $\mathcal F_A$
+while $\mathscr R_nu_j=\mathscr R_n\varphi$ for all $j$. These images
+converge to a nonzero vector of squared norm $c_n$. A closable linear
+operator cannot have graph closure containing $(0,v)$ with $v\ne0$.
+The isometric $L^2(\nu_n)$ formulation gives the same contradiction.
+Continuity of an extension of $f\mapsto\nu_n(|f|^2)$ at zero would
+require $\nu_n(|u_j|^2)\to0$, whereas it equals the fixed $c_n>0$.
+$\square$
+

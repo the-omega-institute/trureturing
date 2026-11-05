@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b7984398b4448bcf7f92c446eb43926067b4b97a93eeebc41061b4d94155a31d
+  normalized_sha256: sha256:b7984398b4448bcf7f92c446eb43926067b4b97a93eeebc41061b4d94155a31d
+cas_ref: sha256:b7984398b4448bcf7f92c446eb43926067b4b97a93eeebc41061b4d94155a31d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条定义完整行为树、合法残余和实际系统的行为记录，并限定其语义解释，不断言可执行所有分支。
+    previous_atom_id: dee4ccfbec6e9196224615c98bb57c0e491e696f9961524cf381485728de0185
+    next_atom_id: 2e9083592de022c37234540656b9fcdb42999fd4a1798daf7236b78fce7ce301

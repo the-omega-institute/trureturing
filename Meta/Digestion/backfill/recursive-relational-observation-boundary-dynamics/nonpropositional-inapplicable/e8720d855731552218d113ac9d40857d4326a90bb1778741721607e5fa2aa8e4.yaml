@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e8720d855731552218d113ac9d40857d4326a90bb1778741721607e5fa2aa8e4
+  normalized_sha256: sha256:e8720d855731552218d113ac9d40857d4326a90bb1778741721607e5fa2aa8e4
+cas_ref: sha256:e8720d855731552218d113ac9d40857d4326a90bb1778741721607e5fa2aa8e4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section 40.6 methodological checklist and applicability limits for local-to-global modelling; it asserts no realization for a particular model.
+    previous_atom_id: 52853649feff0803fe6ff9a1e454923413ca8f12b23651d0019d978aa7fb8e80
+    next_atom_id: bf2236d424c49ba310596e3f36a2b8dd96fb1b1ee9481c7d92228e0c9888c5d9

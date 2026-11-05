@@ -1,0 +1,49 @@
+**Definition 19.1 (the two optimization domains).** Keep Definition
+13.1 and Assumption 13.2 without changing either the authentic output
+$(u_x,k)$ or the competitor class. In particular, the public inputs are
+the authentic scaffold $S$, persistent global correspondence $\pi$ and
+bin $[K,2K-1]$; the only acquired source information consists of paid
+presence bits on the one actual register. Competitors may make arbitrary
+finite adaptive forward updates. Let $\mathscr A(S,K)$ be this class,
+and put $b=2K-1$. Define
+
+$$
+\begin{aligned}
+ W_*(S,K)&=\min_{A\in\mathscr A(S,K)}\max_{x,k}W_A(x,k),\\
+ W_{\rm call}(S,2^r)&=
+ \min_{\substack{A\in\mathscr A(S,2^r)\\\max_{x,k}Q_A(x,k)\le n+r}}
+                         \max_{x,k}W_A(x,k).
+\end{aligned}
+\tag{GPO.55}
+$$
+
+Every maximum is over the full family (GPO.43). These are two different
+optimization problems. Whole literal root words, absences and repetitions
+have exactly the charges of Definition 1.3; prefixes are not shared for
+free. The attaining protocols below establish the displayed minima, not
+just infima. Neither objective includes the separate prices of local
+work, source material, installation, retention or later use.
+
+The guarded navigation supplier in
+[FiniteSourceMass](../../../D5/S3/Arith/FibonacciAtomic/Geometry/FiniteSourceMass.lean),
+`finite_source_masses`, including its proof-local `threshold_last`, gives
+the following convenient form. For a nonempty semantic suffix $q$, write
+$c(L)=1,c(R)=2$ and
+
+$$
+ \vartheta(q)=2+\sum_{\text{letters of }q\text{ except its last}}c(d).
+ \qquad P_{T_j}(q)=1\ \Longleftrightarrow\ j\ge\vartheta(q),
+ \qquad \vartheta(q)\le2|q|.
+ \tag{GPO.56}
+$$
+
+Indeed its guarded threshold is the maximum of total path cost and
+last-parent path cost plus two. The last edge costs at most two, so the
+second term is that maximum. Equivalently, all proper-prefix residual
+ranks must be at least two; their largest consumed cost occurs at the
+last proper prefix. This also covers singleton suffixes and ranks zero
+and one. The empty suffix is always present. This is reuse of actual
+guarded navigation, not installation of a threshold oracle. By Lemma
+14.1, each nonconstant reached Read is therefore, in one original cone,
+the actual test $2k+e_H+x_i\ge\vartheta(q)$.
+

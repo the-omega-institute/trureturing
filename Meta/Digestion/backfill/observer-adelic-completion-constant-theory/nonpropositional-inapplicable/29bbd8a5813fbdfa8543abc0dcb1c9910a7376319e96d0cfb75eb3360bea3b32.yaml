@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:29bbd8a5813fbdfa8543abc0dcb1c9910a7376319e96d0cfb75eb3360bea3b32
+  normalized_sha256: sha256:29bbd8a5813fbdfa8543abc0dcb1c9910a7376319e96d0cfb75eb3360bea3b32
+cas_ref: sha256:29bbd8a5813fbdfa8543abc0dcb1c9910a7376319e96d0cfb75eb3360bea3b32
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 替代建模前提列表项：非 primitive 动力。'
+    previous_atom_id: 8bbaab6ad2220877bd34f2036074ebbdd2b469eb041820ff6a04de2da5c96d17
+    next_atom_id: e2b8f88fc7ca148bb5cf6b9389c28cdcd5d608135c486505ef9872b5ee384eee

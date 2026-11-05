@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6ae8ec4b2fc01c390432ba8d25c5f2fb7156d1947f99ecc2eaaf6f96fe5074ef
+  normalized_sha256: sha256:6ae8ec4b2fc01c390432ba8d25c5f2fb7156d1947f99ecc2eaaf6f96fe5074ef
+cas_ref: sha256:6ae8ec4b2fc01c390432ba8d25c5f2fb7156d1947f99ecc2eaaf6f96fe5074ef
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 受“目标是”统领的“解释地态零点收敛”研究任务项；未断言零点收敛。
+    previous_atom_id: 90372af68e9691ecceff40ee5a089ad4f0726cccb6c14d7c8df4db837d7c75be
+    next_atom_id: 94f1e9436ab86313502466752b3023287b09a647945fadaeb5c7eea9fdbd6c95

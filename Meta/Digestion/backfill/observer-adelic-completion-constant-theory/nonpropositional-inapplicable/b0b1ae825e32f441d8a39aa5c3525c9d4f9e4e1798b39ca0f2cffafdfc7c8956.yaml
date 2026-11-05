@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b0b1ae825e32f441d8a39aa5c3525c9d4f9e4e1798b39ca0f2cffafdfc7c8956
+  normalized_sha256: sha256:b0b1ae825e32f441d8a39aa5c3525c9d4f9e4e1798b39ca0f2cffafdfc7c8956
+cas_ref: sha256:b0b1ae825e32f441d8a39aa5c3525c9d4f9e4e1798b39ca0f2cffafdfc7c8956
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这是同一接口列表中的 renormalized multiplier 项目名，没有列出乘子恒等式或正性断言。
+    previous_atom_id: de3ded2b723b240534c3dcb509e14ca3d35842dc5c76b69866750ab3520de10c
+    next_atom_id: 3367cb0113634dab372fd8d803f6280e53aea461554bd0cc92ef2d918fb413cb

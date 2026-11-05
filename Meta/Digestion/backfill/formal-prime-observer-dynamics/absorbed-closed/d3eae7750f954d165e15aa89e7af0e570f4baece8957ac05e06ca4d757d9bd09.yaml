@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:d3eae7750f954d165e15aa89e7af0e570f4baece8957ac05e06ca4d757d9bd09
+  normalized_sha256: sha256:d3eae7750f954d165e15aa89e7af0e570f4baece8957ac05e06ca4d757d9bd09
+cas_ref: sha256:d3eae7750f954d165e15aa89e7af0e570f4baece8957ac05e06ca4d757d9bd09
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/ExperimentDesign/TargetSufficiencyPairCover.target_sufficiency_iff_pair_cover
+    target_statement_id: sha256:c5225492ea82898de9a49d3b119ae9651c837729f8ce4786bbb663913a1b35d1
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3545ca20cee98af9b58e94b08c4226268671f80b8a97c6a62afd8b9cdbfa6715
+  normalized_sha256: sha256:3545ca20cee98af9b58e94b08c4226268671f80b8a97c6a62afd8b9cdbfa6715
+cas_ref: sha256:3545ca20cee98af9b58e94b08c4226268671f80b8a97c6a62afd8b9cdbfa6715
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 本截断atom只设有限组C_i并开始列举时间completion，没有闭包律或固定点结论。'
+    previous_atom_id: 2d4d63b4af986ef11a370c1db5c5d37d8d0d153aa7ba8e1b508b44f277f18317
+    next_atom_id: 1057e2264b8b0431e23e38ca4d4d8e394ac3d7adb6774c5c02dc9631287944a5

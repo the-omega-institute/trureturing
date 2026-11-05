@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8f148f8b5045ed23596d98cfa3fa19c83a34a9c1612e823edfff4d908bd52788
+  normalized_sha256: sha256:8f148f8b5045ed23596d98cfa3fa19c83a34a9c1612e823edfff4d908bd52788
+cas_ref: sha256:8f148f8b5045ed23596d98cfa3fa19c83a34a9c1612e823edfff4d908bd52788
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: A stipulated case-premise list item saying the compared options differ between two paths, not a theorem constructing such agendas.'
+    previous_atom_id: 1b46d453cd3024e70a4cae59c700137b96b7b80b6c8a71b7039e9cea5f274e4d
+    next_atom_id: 76e55c3d1c20470537fb8eabd3806192fc9c2c1c8483f662ce127eb73c55b899

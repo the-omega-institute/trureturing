@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9819627c95f521099fd301827895fbbfcbc60075e898e01b93fa564df32bae76
+  normalized_sha256: sha256:9819627c95f521099fd301827895fbbfcbc60075e898e01b93fa564df32bae76
+cas_ref: sha256:9819627c95f521099fd301827895fbbfcbc60075e898e01b93fa564df32bae76
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：只指定先验 pi 这一 Blackwell 输入。
+    previous_atom_id: 121d801985dbb94725ce4270c7f71e13f8af7f2e74e619ac00322b5190d7449b
+    next_atom_id: f014054ed34315c2028ad7b3fc3db7d11b3b4c03c589295dfc7bf2494e6f4577

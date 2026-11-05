@@ -1,0 +1,11 @@
+**Lemma 38.2 (the actual control observations).** After $t$ Ticks from authentic preparation and finitely many Add pulses $u_l$ applied at tick epochs $s_l\le t$, the actual state and root are
+
+$$
+x=T^t e_0+\sum_lu_lT^{t-s_l}e_0,
+\qquad e_0^{\mathsf T}x=m_t+\sum_lu_lm_{t-s_l}.
+$$
+
+The same formula applies at every intermediate completed cut, with the pulses already applied there. Thus root observations made using at most $t$ Ticks depend only on moments through index $t$, even when Read, Hold and Add are adaptive.
+
+**Proof.** Initially the formula has $t=0$ and no pulses. Tick multiplies every term by $T$ and increments $t$; Add appends the term with exponent zero; Read and Hold leave the state unchanged. Induction on the actual operations proves both identities. $\square$
+

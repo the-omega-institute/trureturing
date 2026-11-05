@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c311e95d7478e0722dcf7cdce3060546f9f34c06b2dc9bfa2f74fb302a189f02
+  normalized_sha256: sha256:c311e95d7478e0722dcf7cdce3060546f9f34c06b2dc9bfa2f74fb302a189f02
+cas_ref: sha256:c311e95d7478e0722dcf7cdce3060546f9f34c06b2dc9bfa2f74fb302a189f02
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 为后文选定 Fisher 线元作为度量定义并说明术语用途；具体分解与曲率计算在后续定理中，不由此收据认证。
+    previous_atom_id: 58cc99675408b7eabcbb3cdef25e21e1f23f36cf70af3f0d8e0e427a17d65d95
+    next_atom_id: e6a52b966e3700215d96316cdf0d1579a8fce2d3318db7c3588168f451a9721a

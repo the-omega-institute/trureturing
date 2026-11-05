@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e8aea436ae355b09ee4d1b178b3b5e8bdfa09bd306eb7a0a29c2439ea137fd05
+  normalized_sha256: sha256:e8aea436ae355b09ee4d1b178b3b5e8bdfa09bd306eb7a0a29c2439ea137fd05
+cas_ref: sha256:e8aea436ae355b09ee4d1b178b3b5e8bdfa09bd306eb7a0a29c2439ea137fd05
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 杜威反射弧论文的烛火例子与活动协调解释，明确未用矩阵认证心理学。
+    previous_atom_id: 7fdd900aa127c73f95e3bfdf9c60d4f6894236b21cfd3966364d9d0f704326e0
+    next_atom_id: ee2e5f4494b073df7f5d77b62a845da4dea84ba2f1afc4de0b058a6e952751c1

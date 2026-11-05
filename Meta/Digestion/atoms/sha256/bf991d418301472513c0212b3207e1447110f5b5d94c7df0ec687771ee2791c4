@@ -1,0 +1,60 @@
+## 4. 线程上的条件核延拓
+
+在可数索引 $n\in\mathbb N$、有限离散阶段和标准柱集 sigma-代数下，若所有
+$\overline J_{a,n}$ 满足 (JKT.3)，则对每个线程
+
+$$
+x=(x_0,x_1,\ldots)\in L
+$$
+
+可以按有限柱集定义一个条件 projective-kernel law $\widehat J_a(\cdot\mid x)$。
+对 $x\in L_\tau=\varprojlim Q_{n,\tau}$，其输出空间为
+$E_a\times(L_\upsilon\sqcup F_a)\times R_a$，其中
+$L_\upsilon=\varprojlim Q_{n,\upsilon}$；固定终端不变成来源线程。
+其有限坐标边缘由
+$\overline J_{a,n}(\cdot\mid x_{n+1})$ 给出，一致性由 (JKT.3) 保证；在这些
+有限性和可数性条件之外，不把延拓称为一般的无界测度定理。
+
+这里还要求每个有限坐标核对输入坐标是可测的；在本节的有限离散阶段和离散
+sigma-代数中这是自动满足的。于是由柱集定义的 $\widehat J_a$ 对线程参数
+$x\in L_\tau$ 是可测的，并且其有限坐标边缘唯一决定该条件 law。若改用一般
+标准 Borel 或不可数输出空间，必须另行给出可测核与测度延拓条件，不能把本段
+有限离散论证直接外推。
+
+令 $B_\tau=\eta[Z_\tau]$，并把成功后继和固定终端的取像分开定义为
+
+$$
+\eta_a^\sharp:Z_\upsilon\sqcup F_a\longrightarrow L_\upsilon\sqcup F_a,
+\qquad
+\eta_a^\sharp(z')=\eta(z'),\quad \eta_a^\sharp(f)=f.
+$$
+
+在第2节总核合同（含合法行、拒绝行和归一化）、第3节全部阶段假设与
+(JKT.3) 一致性，以及本节的可数索引、有限离散阶段和标准柱集 sigma-代数
+假设全部成立的前提下，对每个带类型动作 $a:\tau\to\upsilon$，若原始总核
+$J_a^{\mathrm{tot}}$ 满足 (JKT.1) 且阶段行按上述输出纤维下降，则对每个
+$z\in Z_\tau$ 有
+
+$$
+\widehat J_a(\cdot\mid\eta(z))
+=
+ (\operatorname{id}_{E_a}\times\eta_a^\sharp\times\operatorname{id}_{R_a})_*
+ J_a^{\mathrm{tot}}(\cdot\mid z),
+\tag{JKT.4}
+$$
+
+等式保留失败、终止的事件和记录；$\eta$ 本身从不作用于 $F_a$。式 (JKT.4)
+只约束实际输入，不把任意完成点当成原来源。
+
+应分开记账三件事：
+
+1. **完成律**：$\widehat J_a$ 是定义在 $L$ 上的数学条件核，可能给虚拟线程
+   正式赋予延拓行为；
+2. **实际像集中**：对 $x\in B_\tau$，由 (JKT.4) 得
+   $\widehat J_a(E_a\times(B_\upsilon\sqcup F_a)\times R_a\mid x)=1$。
+   若只给出延拓而未验证 (JKT.4)，则须另验这一集中条件；它保留终端质量，
+   不推出 $B=L$；
+3. **观察者取得**：还要有有限、合法、可执行的 acquisition protocol，把某个
+   $x\in B$ 的所需坐标写入观察者记录。数学上的核、商映射或解码器不等于已
+   取得该值，也不授予完整 law 表。
+

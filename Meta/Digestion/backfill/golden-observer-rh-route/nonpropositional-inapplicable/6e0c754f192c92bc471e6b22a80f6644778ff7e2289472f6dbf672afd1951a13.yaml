@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6e0c754f192c92bc471e6b22a80f6644778ff7e2289472f6dbf672afd1951a13
+  normalized_sha256: sha256:6e0c754f192c92bc471e6b22a80f6644778ff7e2289472f6dbf672afd1951a13
+cas_ref: sha256:6e0c754f192c92bc471e6b22a80f6644778ff7e2289472f6dbf672afd1951a13
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Historical bridge-implementation status and attribution policy.
+    previous_atom_id: 13a3b8bb002dcb000c483c69c0acee43c25b58fb1ce51a8be7d0c0226900f654
+    next_atom_id: ea2745bdae927db5585f87eea6b0d4cda943e4d84e75dd3f4f683774d00b35c5

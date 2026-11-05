@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:32874329ed7856e023616ab11ba04866348b8d3d1570b302d9bf249107cd9fd3
+  normalized_sha256: sha256:32874329ed7856e023616ab11ba04866348b8d3d1570b302d9bf249107cd9fd3
+cas_ref: sha256:32874329ed7856e023616ab11ba04866348b8d3d1570b302d9bf249107cd9fd3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 要求解释者接受相同证据和反例标准，属于方法规范，不提出额外模型等式或存在性。
+    previous_atom_id: a7e90e10e8aded3ff31cddf76b2ecfedabd4fd98904cc6b292c7edd379da1a58
+    next_atom_id: 70e60aa66ab3e953570ea9e1fb6b3a903d4faae45a9573db561152a249b4db2d

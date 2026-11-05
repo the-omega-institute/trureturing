@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:67b29769034162d22d296c3e3147ca6dd7c8074102f4df679a297451d30fbfd5
+  normalized_sha256: sha256:67b29769034162d22d296c3e3147ca6dd7c8074102f4df679a297451d30fbfd5
+cas_ref: sha256:67b29769034162d22d296c3e3147ca6dd7c8074102f4df679a297451d30fbfd5
+coverage_gids:
+  - gid: D5/S3/Analytic/Isolation/EntireEvenSquareDescent.xi_reading_square_descent
+    target_statement_id: sha256:cfe1ead7e6806b806eae097c78f8afeb9f753ae988ef27311584b7431e3b6077
+receipts:
+  unresolved_subitems: []

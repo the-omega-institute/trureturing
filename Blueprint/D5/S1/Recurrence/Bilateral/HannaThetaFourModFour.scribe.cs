@@ -16,6 +16,9 @@ internal sealed class HannaThetaFourModFourDocument : IScribeDocumentDefinition
         Blocks(
             Paragraph(Text("Paul D. Hanna's OEIS A379764 states: \"G.f. A(x) satisfies Sum_{n=-oo..+oo} (4^n*A(x)^n - 4*A(x))^(n+1) = 2*theta_4(x) = 2*Sum_{n=-oo..+oo} (-x)^(n^2).\" The same entry states: \"Conjecture: for n > 0, a(n) is odd iff n is a square.\" It also states: \"Conjecture: for n > 0, a(n) == (-1)^(n-1) (mod 4) iff n is a square, otherwise a(n) is divisible by 4 if n is nonsquare.\"")),
             Paragraph(Text("PowerSeries and LaurentSeries are formal series over the displayed coefficient rings. The bilateral sum is coefficientwise over the finite interval Icc(-(K:Z), K) with N+1 <= K. The coefficient of theta4 is defined by the same finite symmetric window. Int.ModEq is congruence modulo its first argument; divisibility is in Z.")),
+            Describe.Lean(DescribeId.Create("a379764-symmetric-pair"), DeclarationHandle.Create(Prefix + "symmetric_pair"),
+                H("Pairing a symmetric integer window"), StatementSource.FromAuthor(SymmetricPairFormula()),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("In an additive commutative monoid, a symmetric finite sum is its central term plus the pairs with indices k+1 and -k-1. This decomposition separates the positive and negative summands in the bilateral equations."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("a379764-theta4"), DeclarationHandle.Create(Prefix + "theta4"),
                 H("The coefficientwise theta-four series"), StatementSource.FromAuthor(Theta4Formula()),
                 AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text("The coefficient at N sums the terms indexed by integer n in the symmetric interval from -(N:Z) to N."))), DescribeRole.Definition),
@@ -74,6 +77,18 @@ internal sealed class HannaThetaFourModFourDocument : IScribeDocumentDefinition
         var n = F.Id("n"); var N = F.Id("N");
         var body = SumOver("n", Integers(), Window(N), IfThenElse(Eqn(Pow(n, D(2)), Cast(N, Integers())), Pow(Negative(D(1)), N), D(0)));
         return Disp(Eqn(Call("theta4"), QCall("PowerSeries", "mk", Lambda("N", Naturals(), body))));
+    }
+
+    private static Formula SymmetricPairFormula()
+    {
+        var t = F.Id("T"); var f = F.Id("f"); var k = F.Id("k"); var n = F.Id("K");
+        Formula At(Formula j) => new Formula.Apply(f, [j]);
+        var lhs = SumOver("j", Integers(), Window(n), At(F.Id("j")));
+        var rhs = Add(At(D(0)), SumOver("k", Naturals(), QCall("Finset", "range", n),
+            Add(At(Add(Cast(k, Integers()), D(1))), At(Sub(Negative(Cast(k, Integers())), D(1))))));
+        return Disp(Seq(Forall, Sp, t, Colon, Sp, Named("Type"), Comma, Sp,
+            OpenBracket, Call("AddCommMonoid", t), CloseBracket, Sp,
+            All("f", Seq(Integers(), Sp, To, Sp, t), All("K", Naturals(), Eqn(lhs, rhs)))));
     }
 
     private static Formula TermFormula()

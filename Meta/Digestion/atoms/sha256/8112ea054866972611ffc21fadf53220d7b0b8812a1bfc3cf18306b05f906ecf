@@ -1,0 +1,15 @@
+## 485. 原前向价格核的无条件双侧振荡下界
+
+沿用 §481 的 $E,H_x,\lambda,w,\rho_x$ 与 (481.1) 的 $\mathcal T$。本节把命题 481.1 的误差输入由 von Koch 界放宽为任意幂界，从而去掉命题 481.2 对 RH 的依赖，并对全实中心的 $\mathcal T$ 给出无条件的单侧振荡常数 $1/2$。推论 481.3 中的常数 $c_Q=(\sqrt2-1)/4$ 由此提高为 $1/2$，且证明不经 S5 来源、GA1/GA2 来源或完整 $Q$ 供应。
+
+记
+$$
+\Theta=\sup\{\Re\rho:\ \zeta(\rho)=0,\ 0<\Re\rho<1\}.
+$$
+经典输入如下：零点上确界的误差估计
+$$
+\forall\varepsilon>0\ \exists C_\varepsilon:\quad |E(t)|\le C_\varepsilon t^{\Theta+\varepsilon}\qquad(t\ge2),
+\tag{485.1}
+$$
+非平凡零点的存在性，$\zeta$ 在实区间 $(0,1)$ 与 $(1,\infty)$ 无零点，以及 [Widder, The Laplace Transform, Ch. II, Thm 5b](../../../Library/Fourier/widder1941laplace.md)：若 $g\ge0$ 在 $[y_0,\infty)$ 上局部可积，其 Laplace 变换的收敛横坐标 $c_g$ 有限，则 $c_g$ 是该变换的奇点。
+

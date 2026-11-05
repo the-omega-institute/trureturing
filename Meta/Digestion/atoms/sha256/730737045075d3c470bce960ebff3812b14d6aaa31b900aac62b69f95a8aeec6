@@ -1,0 +1,59 @@
+**定义 3.1（完整源元组与响应矩阵）。** 沿用 IV 定义 13.1–13.2 的精确接口。设
+
+$$
+\mathcal S=\{(w,e):w\in\{J,M\}^7,\ e\in\{0,1\}\},\qquad
+\mathcal V=\bigcup_{i=1}^7\{J,M\}^i.
+\tag{3.1}
+$$
+
+共有 $256$ 个槽及 $254$ 个非空前缀。固定任意合法源元组 $\mathbf P=(P_q)_{q\in\mathcal S}$；不同槽的来源可重合，包括同叶两槽。对 $v=E_1\cdots E_i$ 令 $A_v=E_i\cdots E_1$，$\mathcal D_v$ 为所有以 $v$ 为前缀的叶槽。按 $J<M$、$0<1$ 的字典序取其首槽 $q_v$ 为参照，并令
+
+$$
+\begin{aligned}
+t_v(P)&=\operatorname{tr}(A_vP),\\
+\ell_v(P)&=(t_v(P)-1,\ i\,t_v(P),\ i^2t_v(P),\ i^3t_v(P)).
+\end{aligned}
+\tag{3.2}
+$$
+
+系数向量 $x=(x_q)_{q\in\mathcal S}\in\mathbb R^{1024}$ 的每块有四个分量，记
+
+$$
+g_q(T)=\sum_{j=0}^3x_{qj}T^j,\qquad\delta_q=-x_{q0}.
+\tag{3.3}
+$$
+
+线性推理允许 $x_q=0$；构造合法世界时必须排除此块。归一化响应为 $g_q(i)t_v(P_q)-g_q(0)=\ell_v(P_q)x_q$。定义整个矩阵
+
+$$
+(B(\mathbf P)x)_{v,q}
+=\ell_v(P_q)x_q-\ell_v(P_{q_v})x_{q_v},\qquad
+v\in\mathcal V,\quad q\in\mathcal D_v\setminus\{q_v\}.
+\tag{3.4}
+$$
+
+各深度行数为
+
+$$
+(254,252,248,240,224,192,128),\qquad
+\sum_{i=1}^7(256-2^i)=1538.
+\tag{3.5}
+$$
+
+所以 $B$ 是固定的 $1538\times1024$ 完整响应矩阵。来源的 $768$ 个环境坐标仍须满足全部 $256$ 个方程 $b_qc_q=a_q(1-a_q)$ 及所有严格不等式 $0<a_q<1$、$b_q,c_q>0$；$768$ 不是无约束合法空间的维数。矩阵条目为这些坐标的整数仿射多项式，因为
+
+$$
+t_v(P_q)=(A_v)_{22}+((A_v)_{11}-(A_v)_{22})a_q
+ +(A_v)_{21}b_q+(A_v)_{12}c_q.
+\tag{3.6}
+$$
+
+以下始终取这一个完整矩阵的同一个核 $U=\ker B(\mathbf P)$。定义完整四分量映射
+
+$$
+G_qx=x_q,\qquad D_wx=x_{(w,0)}-x_{(w,1)}.
+\tag{3.7}
+$$
+
+$G_q$ 不能只取某个指定系数；同源叶的 $D_w$ 也不能换成某个样本差或部分系数差。
+

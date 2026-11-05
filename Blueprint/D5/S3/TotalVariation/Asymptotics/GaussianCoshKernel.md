@@ -32,7 +32,19 @@ $$\forall q \in \mathbb{R},\; \forall d \in \mathbb{R},\; Integrable\left(K\left
 
 The nonnegative clipped integrand is at most exp(d) times the standard normal density. This gives integrability without any sign or smallness restriction on either real parameter.
 
-**Theorem 1.3 (The exact coefficient and a uniform fifth-half-power remainder).**
+**Theorem 1.3 (The quadratic lower bound for cosh).**
+
+$$\forall x \in \mathbb{R},\; 1 + \frac{x^{2}}{2} \le cosh\left(x\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/TotalVariation/Asymptotics/GaussianCoshKernel.cosh_quadratic_lower` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The length-two even factorial sum gives the exact quadratic lower bound.
+
+**Theorem 1.4 (The exact coefficient and a uniform fifth-half-power remainder).**
 
 $$\forall lo \in \mathbb{R},\; \forall hi \in \mathbb{R},\; 0< lo\Rightarrow \exists delta \in \mathbb{R},\; \exists C \in \mathbb{R},\; 0< delta\land 0\le C\land \forall q \in \mathbb{R},\; q\in [lo,hi]\Rightarrow \forall d \in \mathbb{R},\; 0< d\land d\le delta\Rightarrow Integrable\left(K\left(q, d\right)\right)\land \left|J\left(q, d\right)-\frac{4\sqrt{2}\varphi(0)}{3\cdot q}\cdot d^{\frac{3}{2}}\right|\le C\cdot d^{\frac{5}{2}}$$
 
@@ -52,6 +64,7 @@ This is the local-kernel estimate in equation 14.5 of the categorical decision b
 
 ## References
 
+- Truth anchor: `D5/S3/TotalVariation/Asymptotics/GaussianCoshKernel.cosh_quadratic_lower`
 - Truth anchor: `D5/S3/TotalVariation/Asymptotics/GaussianCoshKernel.gaussianCoshIntegral`
 - Truth anchor: `D5/S3/TotalVariation/Asymptotics/GaussianCoshKernel.gaussian_cosh_uniform_remainder`
 - Truth anchor: `D5/S3/TotalVariation/Asymptotics/GaussianCoshKernel.kernel_integrable`

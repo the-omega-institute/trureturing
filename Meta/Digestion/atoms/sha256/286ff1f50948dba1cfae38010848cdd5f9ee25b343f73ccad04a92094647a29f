@@ -1,0 +1,21 @@
+**Definition 17.1 (a sufficient aggregation and normalization task).**
+For the explicit potential (ACR.50), seek a deterministic procedure
+which, from $d,H$ and each already fixed tape prefix, selects a next
+bit whose conditional expectation does not increase, with one fixed
+polynomial in $d+H$ bounding the work and cumulative writes for all
+$TH$ selections together, and with polynomial backing and a priced
+correctness guarantee. The rational precision is already polynomial;
+Theorem 14.2 pays $4^d$ to aggregate the recurrence-addressed constraints.
+A polynomial aggregation, or a different proved uniform constructor,
+would remove that factor from this route. Evaluating these particular
+sums is a sufficient task, not a necessary form of every solution.
+Separately seek a polynomial procedure returning exactly the original
+GPO29 first-passing canonical descriptor, including its seed, rather
+than an arbitrary equivalent row. Neither task is settled here; no
+hardness or exponential lower bound is asserted. The original
+unknown-law/unknown-cut target with both construction and canonical
+normalization charged in polynomial total work remains open.
+
+[RRO-RAG]: https://www2.eecs.berkeley.edu/Pubs/TechRpts/1987/CSD-87-312.pdf
+[RRO-ZUC]: https://www.cs.utexas.edu/~diz/pubs/sampler.pdf
+

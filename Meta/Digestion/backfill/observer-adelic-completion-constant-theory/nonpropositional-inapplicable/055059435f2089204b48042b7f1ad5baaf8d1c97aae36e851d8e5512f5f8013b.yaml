@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:055059435f2089204b48042b7f1ad5baaf8d1c97aae36e851d8e5512f5f8013b
+  normalized_sha256: sha256:055059435f2089204b48042b7f1ad5baaf8d1c97aae36e851d8e5512f5f8013b
+cas_ref: sha256:055059435f2089204b48042b7f1ad5baaf8d1c97aae36e851d8e5512f5f8013b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 猜想构造所列的数据来源名称 Zeckendorf hard-core reduction；没有声称该构造已实现。'
+    previous_atom_id: 0e32a9dcd11da068659601a420634402c5edb09a4486c7b9df9ec4d71375d988
+    next_atom_id: 261db31e0f5bca1156f03b4bddf14ce1039e445cbb72879ddacc1bd4105334db

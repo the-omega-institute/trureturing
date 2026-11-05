@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5a9af76b2132a2f62c0625251f2251ba6125e783fdfec3357f2f2b0b1a9c3440
+  normalized_sha256: sha256:5a9af76b2132a2f62c0625251f2251ba6125e783fdfec3357f2f2b0b1a9c3440
+cas_ref: sha256:5a9af76b2132a2f62c0625251f2251ba6125e783fdfec3357f2f2b0b1a9c3440
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 状态标记 N 的含义与文稿命名约定。
+    previous_atom_id: 878a99cc00d5a02a2899cfe5fa78ed7b0b3cfb05a52fa6e4818b623990be55bd
+    next_atom_id: 0dad1d2c21d586da5efd98188f8b095b41b0d6740a74628cbcd8f148337c584e

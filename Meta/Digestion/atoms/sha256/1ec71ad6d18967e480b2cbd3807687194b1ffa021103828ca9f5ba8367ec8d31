@@ -1,0 +1,29 @@
+**Definition 1.2 (actual acquisition record).** For $\nu\geq2$ fix
+
+$$
+0=t_0<t_1<\cdots<t_{\nu-1}=T;
+\tag{1.3}
+$$
+
+for $\nu=1$ use the single node $t_0=T$. Execute one initialization, one
+start, the $\nu$ timed vector reads and one stop. A read at $T$ precedes the
+stop, or has the same endpoint under the installed nondisturbing convention.
+The acquired numerical payloads are exactly
+
+$$
+y_i=CE(t_i)x_0\quad(0\leq i<\nu).
+\tag{1.4}
+$$
+
+The record retains their actual chronological order, timestamps and complete
+fixed protocol framing, including the completed start/stop phase. Source,
+port, version, chart, reference, owner and return bindings remain genuine.
+This Time record contains state-dependent replies. It is not merely a list
+of clock values. Variable initialization journals, unrelated traffic and
+unlisted wall-duration metadata are outside this numerical view.
+
+Exact timed reads and real-valued payloads are ideal premises of the real
+model. A finite exact representation is specified separately in §6. Local
+computation after stop takes resources and wall time while the specimen is
+held at (1.2); it is not another active flow interval.
+

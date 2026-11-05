@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:61f84e50545115a83e08ef70fcd3c81131b44b5f91e9ca4c7c1cb40d78782bbb
+  normalized_sha256: sha256:61f84e50545115a83e08ef70fcd3c81131b44b5f91e9ca4c7c1cb40d78782bbb
+cas_ref: sha256:61f84e50545115a83e08ef70fcd3c81131b44b5f91e9ca4c7c1cb40d78782bbb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在已假设收敛的参数域内命名 Gibbs 权重、配分函数和对数势；不声称存在该收敛域或证明导数公式。
+    previous_atom_id: 548209c96c1b5b151a35e9e817a2b6be4582c5fb4849204158a10480f6c29792
+    next_atom_id: 2d29dce4962944c28a16aef13090787be6b77955014fc50e994dd7f4d7930034

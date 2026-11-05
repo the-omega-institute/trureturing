@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:13a3b8bb002dcb000c483c69c0acee43c25b58fb1ce51a8be7d0c0226900f654
+  normalized_sha256: sha256:13a3b8bb002dcb000c483c69c0acee43c25b58fb1ce51a8be7d0c0226900f654
+cas_ref: sha256:13a3b8bb002dcb000c483c69c0acee43c25b58fb1ce51a8be7d0c0226900f654
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Source-call observation O6 does not consume O5, not nonimplication.
+    previous_atom_id: 84554212cfc847f01cac90de1d12bc29d19ec8369899d397dfd038c3b557244f
+    next_atom_id: 6e0c754f192c92bc471e6b22a80f6644778ff7e2289472f6dbf672afd1951a13

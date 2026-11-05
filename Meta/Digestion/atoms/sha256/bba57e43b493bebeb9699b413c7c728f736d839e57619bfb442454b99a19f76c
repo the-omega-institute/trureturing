@@ -1,0 +1,73 @@
+**Lemma 27.1 (The displacement of the same algebraic zero).** Let
+$F,c,X$ be exactly Definition 3.1, with $\rho=10^{-38}$ and unique
+zero $x_*$ from Theorem 4.3. Use the grid $\sigma=10^{110}$ and
+arithmetic of Lemma 25.1 to evaluate $[DF(c)]$ at the singleton
+center, carrying derivatives in the order $(b_0,r_1,b_1)$. Let $L_s$
+be its entrywise endpoint-midpoint matrix and put
+$K_s=\operatorname{adj}(L_s)/\det L_s$. Then
+
+$$
+\begin{gathered}
+6827359736/10^6<\det L_s<6827359737/10^6,\\
+\sup_X\|I-K_sDF\|_\infty<5.758\cdot10^{-30},\qquad
+\|K_sF(c)\|_\infty<3.616\cdot10^{-86},\\
+\|x_*-c\|_\infty<3.617\cdot10^{-86},\qquad
+|p_*-p_c|<10^{-65},\quad|v_*-v_c|<10^{-65}.
+\end{gathered}
+\tag{27.1}
+$$
+
+The two worlds are the two branches of Theorem 26.1 at this record,
+and their terminal M readings are exactly equal.
+
+**Proof.** No new seed equations or center are introduced. Each response
+row for $f\in\{p,v,m\}$ in $DF$ is
+
+$$
+(f_b(2/5,b_0),-f_r(r_1,b_1),-f_b(r_1,b_1)).
+$$
+
+Apply Lemma 25.1's arithmetic with three derivative coordinates and
+the displayed circuit order of Definition 2.1. Compute $L_s$ from
+singleton endpoint midpoints, then its exact adjugate quotient. The
+finite determinant comparison is the first line of (27.1). Multiplying
+this exact quotient into the full-grid derivative and center enclosures,
+with matrix dot products in increasing index order, gives the next
+two comparisons. Singleton response evaluation also gives
+
+$$
+|p(2/5,c_1)-p_c|<3.617\cdot10^{-70},\qquad
+|v(2/5,c_1)-v_c|<1.796\cdot10^{-68}.
+\tag{27.2}
+$$
+
+These are finite rational endpoint comparisons under that prescription.
+The center differences from the source centers of (24.1) are less
+than $10^{-38}$, so every endpoint source over $X$ lies in $B_1$ or
+$B_2$, since $2\cdot10^{-38}<t_x$. All denominators are therefore
+separated from zero by Lemma 25.1.
+
+For the already existing zero, put $T_s(x)=x-K_sF(x)$. Integration
+along the segment from $c$ to $x_*$ gives
+
+$$
+\|x_*-c\|_\infty
+\le3.616\cdot10^{-86}
+ +(5.758\cdot10^{-30})\|x_*-c\|_\infty,
+$$
+
+and hence
+
+$$
+\|x_*-c\|_\infty
+<\frac{3.616\cdot10^{-86}}{1-5.758\cdot10^{-30}}
+<3.617\cdot10^{-86}.
+$$
+
+The first-endpoint derivative bounds $|p_b|<726,|v_b|<1674$ on
+the whole intervening segment and (27.2) prove the claimed response
+enclosures. The equalities are the existing $F(x_*)=0$ equalities of
+Sections 4–6. Inverse uniqueness in Theorem 26.1 identifies the two
+worlds with its two branches; no equality follows merely from small
+residuals or overlapping intervals. ∎
+

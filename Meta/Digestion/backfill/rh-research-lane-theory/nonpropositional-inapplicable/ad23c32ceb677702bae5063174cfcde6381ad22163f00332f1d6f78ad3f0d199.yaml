@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ad23c32ceb677702bae5063174cfcde6381ad22163f00332f1d6f78ad3f0d199
+  normalized_sha256: sha256:ad23c32ceb677702bae5063174cfcde6381ad22163f00332f1d6f78ad3f0d199
+cas_ref: sha256:ad23c32ceb677702bae5063174cfcde6381ad22163f00332f1d6f78ad3f0d199
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Q07 明列缺原函数/参数/阶数的论文追溯任务，没有一个完整的积分或 Grommer 不等式。'
+    previous_atom_id: 9bf24c73b3779f22ad9771bb3a49d04717c09114ce364de6360711fb723af373
+    next_atom_id: 4063f1187158c21c3b529a2e52d3bb5d9ee41afd873170552259718fe89b6a0f

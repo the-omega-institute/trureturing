@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d0c24929b71c023faa6609a542d37f2399885259ebb4c527914413a95f36397d
+  normalized_sha256: sha256:d0c24929b71c023faa6609a542d37f2399885259ebb4c527914413a95f36397d
+cas_ref: sha256:d0c24929b71c023faa6609a542d37f2399885259ebb4c527914413a95f36397d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 有效概念定义的标题和引句，等式在下一 atom。
+    previous_atom_id: 916fed70a37e86c6ed8c7cceab1d344fc82f373fe1c4b02e32f91b9a36ab06f1
+    next_atom_id: 76fca893b7e153c4c13b3f58690b7c98a6116bf7013dbad68997d901b863df86

@@ -1,0 +1,76 @@
+**Correspondence 11.1 (the supplied ordinal recorder is an upper bound).**
+Use AAII §§94–98's existing recorder $J_{\rm ord}$ and complete acquired
+service. At event $i$ it appends the actual operand's pre-edit logical-leaf
+rank in $d_i=\lceil\log_2L_i\rceil$ padded bits, writing no bits when
+$L_i=1$. That construction, its acquired rank scan and its non-atomic
+append transaction are unchanged.
+
+Its existing inverse acquires $N(t)=a(t)+2c(t)-1$ from this same current
+source, starts in paid scratch at the known alpha, and replays exactly
+$N(t)$ events from the journal head. At each iteration the recovered
+prefix tree determines $L_i,d_i$; the next $d_i$ bits determine the actual
+rank, enabled kind and full address. AAII Theorem 94.2 proves that these
+iterations recover $h$ and consume exactly $J_{\rm ord}(h)$. Halting is
+by $N(t)$, with no tail read, length comparison, null-next test or
+trailing-bit validator. Any append tail or terminal link in its paid
+maintenance layout is not passed as a decoding observation.
+
+In particular its records are prefix-free separately on every full
+fibre. If two same-source records were prefix-related, the deterministic
+$N(t)$ replay iterations on the shorter one would read the same bits
+and infer the same events on the longer one. The histories, and therefore
+their records, would coincide. Together with its existing literal-prefix
+law this shows that the requested class is nonempty, with one computable
+horizon-independent member. The supplied all-event-count upper is
+
+$$
+M_{J_{\rm ord}}(t)\le B_{N(t)},\qquad
+B_0=0,\qquad B_N=\sum_{j=1}^{N-1}\lceil\log_2j\rceil\ (N\ge1),
+\qquad B_N\le\log_2(N!)+N.
+\tag{IV.23}
+$$
+
+This is AAII Proposition 94.3's existing upper, not an attaining code for
+(IV.17). Its forced left comb has $F=1$ while its ordinal payload grows,
+so it supplies no uniform additive-overhead guarantee relative to $G(t)$.
+
+All actual-source acquisition and completion premises of AA Assumption
+20.1, AAII §§95–96 and Assumption 5.1 remain. The genuine known-alpha root,
+source/record/input/output bindings, current exclusive rights, finite
+backing and supplied finite progress are prerequisites. No erased prefix,
+automatic grant, free constructor port, numeric reference cast or hidden
+history archive is introduced. Missing rights or a wrong phase disable
+a primitive; they are not additional refusal replies.
+
+The reused service has all seven original requests: Tag, addressed $P$
+and $S$, HasPromotion, HasSplit, FetchGrowth and Next. AAII Definition
+96.1 keeps their complete three-bit tags and address/index frames and all
+eight full reply forms: Tag, Boolean, Refusal, Growth, Recall, Next,
+OutOfRange and BadFrame with their entire original payloads. Tag reads
+the current constructor/absence; HasPromotion tests born-alpha and
+non-alpha, HasSplit tests branch, and both are false absent. Absent,
+branch and wrong-type growth retain their distinct unchanged-source
+refusals. The unused tag gives BadFrame. FetchGrowth and Next have
+OutOfRange at $k=0$ or $k>N(t)$, with no growth.
+
+For an in-range FetchGrowth the acquired reply is the literal $k$th
+kind and full logical address. Next retains that old pair and its inner
+continuation, navigates its historical address on the **same current
+live source**, follows actual left logical children through branches,
+then executes the uniquely enabled $P$ or $S$ at the reached current
+leaf. It acquires this new operand's actual pre-edit rank and appends its
+actual new event. Its one complete outer Next reply contains both old
+and new pairs; replay supplies no substitute physical operand and no
+extra external Recall, return or ACK.
+
+Incomplete ingress retains only the acquired input prefix and backed
+parser/pending work; it waits for supplied completion. Reserve, real edit,
+append and pending maintenance remain serialized. Each completed outer
+request builds and seals its full reply before Print, then emits its
+bits and the original reply **End**. The supplied local ACK enables
+Return to the same actual root and clearing of occupied request,
+traversal, replay, index, append, continuation and output work before
+Ready. Excluding a journal-end observation removes none of these reply
+and return events. The original finite-service proof is AAII Theorem
+96.2; no replacement encoder or newly installed service is asserted here.
+

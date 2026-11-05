@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:39986192ed08a2f4771b733e77be4def884d8b36ad9959c98b841fc5fb83108d
+  normalized_sha256: sha256:39986192ed08a2f4771b733e77be4def884d8b36ad9959c98b841fc5fb83108d
+cas_ref: sha256:39986192ed08a2f4771b733e77be4def884d8b36ad9959c98b841fc5fb83108d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 约定拟议命名 groupoid 的态射，没有证明或声称函子性质。'
+    previous_atom_id: 89abe18bba75dff4ab915f5c5702f7f3fa04bef67407abfbe674072541e86eca
+    next_atom_id: 9a8cb26f5f70b89a9c65baa7005d9613e9b5ee40ad1c7e9e6127f36677a906fd

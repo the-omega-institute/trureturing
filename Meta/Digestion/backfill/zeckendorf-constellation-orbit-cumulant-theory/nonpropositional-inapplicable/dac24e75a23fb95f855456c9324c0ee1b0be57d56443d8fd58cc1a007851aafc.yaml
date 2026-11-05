@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dac24e75a23fb95f855456c9324c0ee1b0be57d56443d8fd58cc1a007851aafc
+  normalized_sha256: sha256:dac24e75a23fb95f855456c9324c0ee1b0be57d56443d8fd58cc1a007851aafc
+cas_ref: sha256:dac24e75a23fb95f855456c9324c0ee1b0be57d56443d8fd58cc1a007851aafc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只列举 explicit formula 作为计划采用的工具，没有陈述任何显式公式。
+    previous_atom_id: 4a89653c42a758c73c686b9794305ebe22dcf6dd4dcfe57961539f795d0620c9
+    next_atom_id: 96d03018b45f908731184d89efbe725cb8b6714a5db764429c6eb25c953402b3

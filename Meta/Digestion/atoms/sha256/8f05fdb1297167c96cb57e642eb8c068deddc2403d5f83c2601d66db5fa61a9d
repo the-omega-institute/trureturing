@@ -1,0 +1,23 @@
+#### 定理 4.1（收缩递归的残差变分证书）
+
+设 $T$ 将非空完备度量子空间 $X$ 映到自身，且在所用范数下为 $q<1$ 的收缩。则存在唯一固定点 $x_*$，并且
+
+$$
+E_{\rm res}(x)=\frac{1}{2}\left\lVert x-Tx\right\rVert^2,
+\quad E_{\rm res}(Tx)\le q^2E_{\rm res}(x),
+\quad \left\lVert x-x_*\right\rVert\le \frac{\left\lVert x-Tx\right\rVert}{1-q}.
+$$
+
+因此固定点、零残差及全局最小元相同，迭代还给可核查的精度证书。
+
+**证明。**
+
+相邻迭代差至多为 $q^k\left\lVert x_1-x_0\right\rVert$，几何级数使迭代为 Cauchy 列；完备性给极限，连续性给固定点，收缩性给唯一性。残差不等式是 $\left\lVert Tx-T^2x\right\rVert\le q\left\lVert x-Tx\right\rVert$。由
+$\left\lVert x-x_*\right\rVert\le\left\lVert x-Tx\right\rVert+q\left\lVert x-x_*\right\rVert$ 得最后一式。
+
+∎
+
+无收缩前件时结论会失败。$T(x)=-x$ 的固定点只有零，但非零迭代永远两周期。即使 $T(x)=-x/2$ 收敛，符号读出也会永远交替；“到有限分辨率后必定定格”还要求极限远离量化边界，或采用已声明的容差等价。
+
+<a id="statement-4-2"></a>
+

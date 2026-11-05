@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c98a48ed80eca8358bec48c2ac18263ea5450ebc2e105fde1d9b16eb4aca0fe2
+  normalized_sha256: sha256:c98a48ed80eca8358bec48c2ac18263ea5450ebc2e105fde1d9b16eb4aca0fe2
+cas_ref: sha256:c98a48ed80eca8358bec48c2ac18263ea5450ebc2e105fde1d9b16eb4aca0fe2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 合法性 localizer 的术语列表项“Pick kernel”，本条没有独立数学断言。
+    previous_atom_id: d7fde53d6576328402c56ff3f4aaec83b8e7465ceaf05eb62a31b28c227bac5b
+    next_atom_id: d178589eae0726bb549c1b1d613c4a9ee95a56df2faf2868afb11cd275149d34

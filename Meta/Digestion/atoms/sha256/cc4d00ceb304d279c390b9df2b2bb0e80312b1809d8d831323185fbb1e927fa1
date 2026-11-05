@@ -1,0 +1,19 @@
+**Boundary 4.4 (why separation and the known origin matter).** Without
+separation the first reverse zero support can contain several births.
+More decisively, with no Ticks the two distinct legal words
+
+$$
+P_\varepsilon S_\varepsilon S_LP_R,
+\qquad P_\varepsilon S_\varepsilon P_RS_L
+\tag{4.2}
+$$
+
+end at the same term $\langle\langle\beta,\alpha\rangle,\beta\rangle$
+and the same raw zero-extended field: one at the original root and zero
+elsewhere. Thus Theorem 4.1 does not extend to all zero internal gaps.
+An unknown scalar seed also defeats the initial-gap inverse: seed $1$
+with one alpha Tick and seed $1/2$ with none both give $1/2$.
+Starting from zero, or applying Reset at the common final term, likewise
+identifies the two orders in (4.2). These are actual collisions; they
+do not rule out a different task with extra records or preparation.
+

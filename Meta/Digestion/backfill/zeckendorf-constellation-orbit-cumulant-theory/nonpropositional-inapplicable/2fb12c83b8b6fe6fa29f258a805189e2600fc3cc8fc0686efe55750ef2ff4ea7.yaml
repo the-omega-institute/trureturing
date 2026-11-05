@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2fb12c83b8b6fe6fa29f258a805189e2600fc3cc8fc0686efe55750ef2ff4ea7
+  normalized_sha256: sha256:2fb12c83b8b6fe6fa29f258a805189e2600fc3cc8fc0686efe55750ef2ff4ea7
+cas_ref: sha256:2fb12c83b8b6fe6fa29f258a805189e2600fc3cc8fc0686efe55750ef2ff4ea7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines X_{p,h}(a) to be the nondivisibility indicator; the word then only introduces the next atom and asserts no identity here.
+    previous_atom_id: 773d310a8fa5d30d041e13c2447f7db71c9bb15894c56380be9a4830bfb38653
+    next_atom_id: 8a7e492637c1676332826c2bcbd4953313a17b99628e8891f06ccbd0d7751dcc

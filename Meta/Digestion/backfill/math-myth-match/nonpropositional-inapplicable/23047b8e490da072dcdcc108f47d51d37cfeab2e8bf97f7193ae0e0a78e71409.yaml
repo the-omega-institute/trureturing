@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:23047b8e490da072dcdcc108f47d51d37cfeab2e8bf97f7193ae0e0a78e71409
+  normalized_sha256: sha256:23047b8e490da072dcdcc108f47d51d37cfeab2e8bf97f7193ae0e0a78e71409
+cas_ref: sha256:23047b8e490da072dcdcc108f47d51d37cfeab2e8bf97f7193ae0e0a78e71409
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 区分实在指涉、传统、模型和模型命题的解释层次，没有独立的数学结论。
+    previous_atom_id: 11f7fca913ca16c872966d45af6a06c407b7c5009a84efd8ea54e77cd4f3f2eb
+    next_atom_id: fb902b2c7a3bb7401a92e4e09823a5d34517b534dfeae5ff746a3c3fb910ddbf

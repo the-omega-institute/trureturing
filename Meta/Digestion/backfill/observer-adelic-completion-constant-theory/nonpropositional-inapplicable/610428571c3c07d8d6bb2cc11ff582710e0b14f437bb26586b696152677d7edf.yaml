@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:610428571c3c07d8d6bb2cc11ff582710e0b14f437bb26586b696152677d7edf
+  normalized_sha256: sha256:610428571c3c07d8d6bb2cc11ff582710e0b14f437bb26586b696152677d7edf
+cas_ref: sha256:610428571c3c07d8d6bb2cc11ff582710e0b14f437bb26586b696152677d7edf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Question asking the amount of a floor decrease; no amount is asserted.'
+    previous_atom_id: a672e35fab174c400556c100755388a9ec73c1410d369f6d3c8c2b47e5d70729
+    next_atom_id: b3d7d2726995ce5369bc3a32f68f4bdbc4e9ba77798b851761130db5a4451112

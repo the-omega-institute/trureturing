@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:30a2c9fe9058a6e07a4d6ea03526342c32269d897fc0d4bc855542c2d26fb423
+  normalized_sha256: sha256:30a2c9fe9058a6e07a4d6ea03526342c32269d897fc0d4bc855542c2d26fb423
+cas_ref: sha256:30a2c9fe9058a6e07a4d6ea03526342c32269d897fc0d4bc855542c2d26fb423
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：仅章节标题、研究目标导语或空的审计表表头，没有数学等式、性质或存在性断言。
+    previous_atom_id: 6436ab5e95f7502b4820c1c494c4808b4b98db483320c46951b165df96850e83
+    next_atom_id: bb170b30812616972cbe7c5a605743ddb37fa8285326d32bf6b3f95b8f458336

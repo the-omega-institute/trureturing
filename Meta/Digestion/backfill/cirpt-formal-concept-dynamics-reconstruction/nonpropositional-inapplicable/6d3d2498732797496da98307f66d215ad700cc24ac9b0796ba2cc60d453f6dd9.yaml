@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6d3d2498732797496da98307f66d215ad700cc24ac9b0796ba2cc60d453f6dd9
+  normalized_sha256: sha256:6d3d2498732797496da98307f66d215ad700cc24ac9b0796ba2cc60d453f6dd9
+cas_ref: sha256:6d3d2498732797496da98307f66d215ad700cc24ac9b0796ba2cc60d453f6dd9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 依赖纤维元素 r 的语义释义，未增添纤维分解定理。
+    previous_atom_id: c67b61be3ac1f008f981d75a0db591305b3841dca229dc0b13446732d6cb66e5
+    next_atom_id: 5a7a0ab4a4b3fefd459ca26e570dd3ff8a0413e942bcea6d01b3e5c58543bbe0

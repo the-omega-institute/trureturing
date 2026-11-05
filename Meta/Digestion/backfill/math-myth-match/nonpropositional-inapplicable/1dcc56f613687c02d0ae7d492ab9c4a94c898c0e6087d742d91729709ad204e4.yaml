@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1dcc56f613687c02d0ae7d492ab9c4a94c898c0e6087d742d91729709ad204e4
+  normalized_sha256: sha256:1dcc56f613687c02d0ae7d492ab9c4a94c898c0e6087d742d91729709ad204e4
+cas_ref: sha256:1dcc56f613687c02d0ae7d492ab9c4a94c898c0e6087d742d91729709ad204e4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 限定《单子论》现代改写译本和相应节次，说明镜喻的认识与访问意义。
+    previous_atom_id: b573f322c70358d5f9856c260300b97b34edfc944e5ccfb749eaa756ffcf754e
+    next_atom_id: d480c068466c649d44438a292ea8494dd69003b868a14479ec966b8fa264eed5

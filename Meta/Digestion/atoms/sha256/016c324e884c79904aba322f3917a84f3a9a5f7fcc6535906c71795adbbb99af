@@ -1,0 +1,91 @@
+**Theorem 7.4 (fixed-complete-world upper bound and exact strategy risk).**
+For $m>0$, $c>0$ and $c/3<E\le(1+c)/2$,
+$\Gamma^\alpha$ is lawful under Definition 1.2. Every complete
+world of (1.2), with all its original errors fixed before the seed,
+satisfies
+
+$$
+\mathbb E_{\Gamma^\alpha}|T-\tau|
+ \le
+ \begin{cases}
+ V,&\tau\ne z,\\
+ G/2-\alpha\chi,&\tau=z,
+ \end{cases}
+ \qquad
+ \boxed{\mathcal R(\Gamma^\alpha)=V.}
+\tag{7.13}
+$$
+
+At $E=c/3$ the specified endpoint rule has exact risk $E/2$.
+
+**Proof.** The acquisition functions (6.14) read exactly $013$
+or $023$, each consisting of three actual increasing integer
+indices. Their second continuation is $3$ on every legal
+history, also when the first continuation is $2$.
+Theorem 7.2 gives total finite terminal rules for both these
+pairs. The compact-interval supplier for $C_{12}$ in Definition
+1.3 gives the same property on the unused pair. Thus empty and
+unreachable histories have total finite answers. For each fixed
+complete world, the actual indices and answer are maps on the
+two-point power-set probability space, hence measurable. No world
+measurability or history regularity is required.
+
+Fix one complete $W$. Its gain is any finite $A\ge m$,
+its offset is any $B\in\mathbb R$, and its four original errors
+are any fixed member of the closed cube in (1.2).
+Its true origin belongs to each corresponding compatible set.
+For $x=|\tau-z|>0$, (7.5) bounds the two branch losses, in the
+appropriate order for the sign of $\tau-z$, by
+
+$$
+\frac{P-\alpha\chi}{2}+\alpha h(x),
+ \qquad \frac G2-\alpha h(x).
+\tag{7.14}
+$$
+
+Their fair average is $V$. At $\tau=z$ both budgets are
+$G/2-\alpha\chi$, smaller than $V$ by
+$(1+3\alpha)\chi/4$. This proves the uniform bound using both
+losses in the same complete world. Each execution uses only its
+own acquired history.
+
+For attainment reuse the complete world $W_b$ of (4.5), with its
+gain $m$, finite offset, origin $b$ and all four displayed original
+errors fixed before the seed. The original-coordinate witnesses
+(4.7)--(4.11) give exactly the fibers (6.19). On its $013$ fiber,
+$x=t-z$ runs over $[q,E]$, which is strictly positive.
+On this interval
+$x\mapsto x-\rho^\alpha_{13}(z+x)$ is nondecreasing because
+$h$ is nonincreasing. The map
+$x\mapsto x+\rho^\alpha_{13}(z+x)$ is also nondecreasing:
+for $x_1<x_2$ its increment is at least
+$(1-\alpha)(x_2-x_1)\ge0$ by the Lipschitz bound in (6.8).
+Strict monotonicity is unnecessary, so this includes $\alpha=1$.
+With $h(q)=\chi$ and $h(E)=0$, (7.4) consequently gives
+
+$$
+\begin{aligned}
+L^\alpha_{13}
+ &=b-\frac{P-\alpha\chi}{2},\\
+U^\alpha_{13}
+ &=b-P+\frac{P+\alpha\chi}{2}
+  =b-\frac{P-\alpha\chi}{2}.
+\end{aligned}
+\tag{7.15}
+$$
+
+The $013$ answer therefore has loss $(P-\alpha\chi)/2$.
+On the same world's $023$ fiber, $x\in[r,E]$ and $h(x)=0$,
+so $\rho^\alpha_{23}(z+x)=G/2$ throughout. The fiber is
+$[b-G,b]$, and its budget intersection is the singleton
+$\{b-G/2\}$. This branch's loss is $G/2$. Thus this one
+complete world has expected loss
+$(P-\alpha\chi+G)/4=V$, proving exactness in (7.13).
+
+At the included upper endpoint $E=(1+c)/2$, one has $r=1/2$;
+the near-branch separation used in (7.8) and the finite original
+witnesses (4.7)--(4.11) remain valid. The cases $x=q,r,E$ in
+the taper are closed in (6.8), so no additional endpoint convention
+is needed. At $E=c/3$, the reused endpoint rule has risk $E/2$
+by Theorem 4.1. $\square$
+

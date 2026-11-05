@@ -1,0 +1,13 @@
+**Proposition 3.3 (Evacuating an occupied central edge).** Equation [(3.2)](#eq-evacuate) is realized in actual graphs, not just in
+an abstract ring.
+
+**Proof.** Choose the leg on $e$ nearest $u$ and apply
+[(2.4)](#eq-move). In each resulting summand that leg is on a different
+branch and the number of legs on $e$ drops by one. Repeat finitely many
+times, for every color. This is precisely substitution
+[(3.2)](#eq-evacuate); coincident monomials are combined by CL, with the
+usual binomial and multinomial coefficients. Choices of leg order and
+endpoint yield the same algebra class, and [Proposition 2.4](#prop-local)
+therefore proves their equality in the actual local graph quotient.
+The process never moves through an anchor. $\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d8d45f533547cc52a618794ba757580b2823f01464fe2a2d71c7d4329d22f8d5
+  normalized_sha256: sha256:d8d45f533547cc52a618794ba757580b2823f01464fe2a2d71c7d4329d22f8d5
+cas_ref: sha256:d8d45f533547cc52a618794ba757580b2823f01464fe2a2d71c7d4329d22f8d5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: E0 恰好六个 R-A—R-F public theorem 模块是计划规模要求，不是现状计数。
+    previous_atom_id: f8f852bf2c9ee4d29ff5dd314a4d7ab289fc395f2ec20d79c64b62d504e81ea3
+    next_atom_id: c173874f1336be61f338ea9bdd4596e184b2d67fe0aa2b67d6262427b0122a66

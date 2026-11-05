@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:27b32e54123227500fa3837a0ec8297f83249aa167a2fc05b3947b2f5b2d7766
+  normalized_sha256: sha256:27b32e54123227500fa3837a0ec8297f83249aa167a2fc05b3947b2f5b2d7766
+cas_ref: sha256:27b32e54123227500fa3837a0ec8297f83249aa167a2fc05b3947b2f5b2d7766
+coverage_gids:
+  - gid: D5/S3/Weil/ZeroSum.locallyFinite
+    target_statement_id: sha256:b016d761ffdcc214bc7381eff5bb98d9abba0d3e90def95d3195e8361ebf67bf
+receipts:
+  unresolved_subitems: []

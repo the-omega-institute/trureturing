@@ -15,6 +15,15 @@ internal sealed class CotfasDVGSDocument : IScribeDocumentDefinition
             Paragraph(Text("The indices are the integers from −s to s, with d = 2s + 1. "
                 + "The covariance is a real positive-definite two by two matrix. "
                 + "Matrix positivity uses the complex Hermitian order. Infinite lattice sums are tsums.")),
+            Node("normalization-density", "normalization_isDensity", "Trace normalization preserves positivity",
+                All("iota", N("Type"), Seq(OpenBracket, App(N("Fintype"), X("iota")), CloseBracket, Sp,
+                    All("A", App(N("Matrix"), X("iota"), X("iota"), ComplexType()),
+                        ImpliesThat(PosSemidef(X("A")), ImpliesThat(
+                            Seq(Trace(X("A")), Sp, Neq, Sp, D(0)),
+                            App(Qualified("SLDSpectralEnergy", "IsDensity"),
+                                Scalar(new Formula.Power(Parenthesized(Trace(X("A"))), Negative(D(1))), X("A")))))))),
+                "A positive semidefinite complex matrix with nonzero trace becomes a density matrix when divided by its trace.",
+                AssessedProvenance.FromRepo(), DescribeRole.Theorem),
             Node("wigner", "W", "Continuous Gaussian Wigner function", WFormula(),
                 "Page 2, Eq. (10): Wσ(q, p) = 2/(h√det σ) exp(−(2π/h) (q p) σ⁻¹ (q p)ᵀ). "
                     + "The two coordinates form the vector ![q, p]; dotProduct and Matrix.mulVec express the quadratic form.",

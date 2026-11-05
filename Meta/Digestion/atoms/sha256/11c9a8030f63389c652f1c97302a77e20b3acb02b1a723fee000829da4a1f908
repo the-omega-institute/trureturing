@@ -1,0 +1,54 @@
+**Theorem 77.2 (selected actual samples and physical restoration, at either endpoint).** On (77.1) there is a deterministic geometry-only selection of exactly $q=b-1$ terminal/epoch pairs, with largest epoch $H$ satisfying $1\le H\le I$. For either fixed endpoint convention $\ell=I$ or $\ell=H$ there is an actually executed protocol which uses precisely these $q$ additional scalar Reads, returns the exact reports $(t,x,\lambda_0)$ and $(u,f,\lambda)$, and physically ends at
+
+$$
+f_v=\begin{cases}x_v,&v\in V_0,\\0,&v\in V(u)\setminus V_0.\end{cases}
+\tag{77.2}
+$$
+
+It retains complete current service on the grown same specimen. More generally every specified integer $H\le\ell\le I$ is valid, with its own controls and cost.
+
+**Proof.** Form (75.1) on this earned $u$. Its restriction $K^{\mathsf T}D$ has trivial kernel: if it annihilates $h$, then $Dh=C^{\mathsf T}K^{\mathsf T}Dh=0$, and $D$ is injective. Thus the rows
+
+$$
+r_{k,j}=e_{\ell_j}^{\mathsf T}A^kD,
+\qquad 0\le k\le I,\quad 1\le j\le b,
+\tag{77.3}
+$$
+
+span $\mathbb Q^{1\times q}$. Enumerate them by increasing $k$ and then canonical $j$. Keep a row exactly when it increases row rank, stopping at $q$. This finite exact pivot procedure yields an invertible $q$-by-$q$ matrix $M$. All epoch-zero rows are zero, because $W$ contains no current terminal. Consequently the largest selected epoch satisfies $1\le H\le I$. Compute, for the same selected indices, the known offset vector
+
+$$
+v_i=e_{\ell_{j_i}}^{\mathsf T}A^{k_i}m_0.
+\tag{77.4}
+$$
+
+Actually Tick; Hold through epoch $\ell$, taking only the selected Reads at their own epochs and in their fixed order. Read is nondestructive, so the literal selected vector and actual observation endpoint are
+
+$$
+y=v+Mh,\qquad h=M^{-1}(y-v),\qquad d_\ell=A^\ell m.
+\tag{77.5}
+$$
+
+The earned raw table supplies every actual dispatcher selector. Together with saved $z$, the solved $h$ gives the exact original $x$ and target (77.2). The plant at this moment is $d_\ell$, which must be used in subsequent control.
+
+Compute the signed blocks
+
+$$
+g^{(\ell)}=C\bigl(f-A^{I+1}d_\ell\bigr)
+=(g_0^{(\ell)},\ldots,g_I^{(\ell)}),\qquad g_i^{(\ell)}\in\mathbb Q^b.
+\tag{77.6}
+$$
+
+For $s=0,\ldots,I$ actually execute Tick; Add every terminal entry of $g_{I-s}^{(\ell)}$, including zero entries, in canonical order; Hold. Every whole reply and Return is consumed. Induction over these rounds gives the actual endpoint
+
+$$
+\begin{aligned}
+A^{I+1}d_\ell+\sum_{s=0}^IA^{I-s}Jg_{I-s}^{(\ell)}
+&=A^{I+1}d_\ell+KC\bigl(f-A^{I+1}d_\ell\bigr)\\
+&=f.
+\end{aligned}
+\tag{77.7}
+$$
+
+This directly reuses §58's forward-control supplier with the newly acquired actual endpoint. It uses no inverse Tick, Reset, internal actuator, cloned specimen, repeated unknown preparation or shrinking of geometry. Retain the complete present vector/map, finish original/current reports and requested exports with their output acknowledgements, and synchronize the predictor before settled return. The finite bounds and stipulated backing give termination. $\square$
+

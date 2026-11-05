@@ -12,6 +12,9 @@ internal sealed class PurelyNonUnitalEternalNonMarkovianityDocument : IScribeDoc
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A rotating replacement state gives a completely positive trace-preserving qubit dynamics whose unital part is divisible, while its generator fails conditional complete positivity at every positive time.",
         H("Purely non-unital eternal non-Markovianity"), Blocks(
+            Entry("affine", "affine", "An affine qubit map", AffineFormula(),
+                "For a complex scalar a and a complex qubit matrix B, affine(a,B) sends each matrix X to aX + Matrix.trace(X)B.",
+                AssessedProvenance.FromRepo(Source)),
             Entry("unital-part", "unitalPart", "The translation-free part", UnitalFormula(),
                 "Eqs. (9)–(11), pages 3–4, decompose the Bloch action into M(t)r + τ(t). On arbitrary complex qubit matrices, subtracting half the trace times Phi(t)(1) − 1 removes the translation. Matrix.trace is the complex trace, 1 is the identity matrix, and the dot is complex scalar multiplication.",
                 AssessedProvenance.FromLiterature(Source)),
@@ -27,6 +30,9 @@ internal sealed class PurelyNonUnitalEternalNonMarkovianityDocument : IScribeDoc
             Entry("eternal", "EternallyNonMarkovian", "A negative generator direction at every positive time", EternalFormula(),
                 "At every t > 0 there is a time-local generator L with a negative direction in its conditional Choi form. This is the weak eternal non-Markovianity criterion of a negative canonical rate at every positive time; it imposes no lower bound on the magnitude as t tends to infinity.",
                 AssessedProvenance.FromRepo(Source)),
+            Entry("depolarizing-cptp", "dep_cptp", "Completely positive trace-preserving qubit depolarization", DepCptpFormula(),
+                "For every real eta in [0,1], depolarized LinearMap.id (1 − eta) is completely positive and trace preserving. It sends X to eta X + (1 − eta) Matrix.trace(X) I/2. Its Pauli weights are eta + (1 − eta)/4 and three copies of (1 − eta)/4, which are nonnegative and sum to one.",
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem),
             Entry("conjecture", "claim", "The qubit specialization of the conjecture", ClaimFormula(),
                 "Section IV, page 11: \"These diverse examples examined in the Section suggest that a purely non-unital channel (i.e., one lacking any unital component) is impossible. Although we have only studied the qubit case, we conjecture that it is true for non-unital channels in arbitrary finite dimensions.\" Section V, page 11: \"However, we conjecture that for a non-unital channel with no such unital component (in the above sense) to be ENM, is impossible.\" The universal claim here concerns qubits, starts at the identity map, and requires IsCPTP at every nonnegative time. A qubit counterexample refutes the assertion for arbitrary finite dimensions.",
                 AssessedProvenance.FromLiterature(Source)),
@@ -42,6 +48,16 @@ internal sealed class PurelyNonUnitalEternalNonMarkovianityDocument : IScribeDoc
         OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
+
+    private static Formula AffineFormula()
+    {
+        Formula a = V("a"), b = V("B");
+        Formula identity = Parenthesized(Seq(Qualified("LinearMap", "id"), Colon, Sp, Map()));
+        Formula trace = App(Qualified("Matrix", "traceLinearMap"), Fin(), Complex(), Complex());
+        Formula action = new Formula.Binary(Scalar(a, identity), FormulaBinaryOperator.Add,
+            App(Qualified("LinearMap", "smulRight"), trace, b));
+        return Disp(All("a", Complex(), All("B", Mat(), Equal(Call("affine", a, b), action))));
+    }
 
     private static Formula UnitalFormula()
     {
@@ -96,6 +112,11 @@ internal sealed class PurelyNonUnitalEternalNonMarkovianityDocument : IScribeDoc
         Imp(All("t", Real(), Imp(Le(D(0), V("t")), Call("IsCPTP", App(V("Phi"), V("t"))))),
             Imp(All("X", Mat(), Equal(App(V("Phi"), D(0), V("X")), V("X"))),
                 Imp(Call("PurelyNonUnital", V("Phi")), Seq(Neg, Sp, Call("EternallyNonMarkovian", V("Phi")))))))));
+
+    private static Formula DepCptpFormula() => Disp(All("eta", Real(),
+        Imp(Le(D(0), V("eta")), Imp(Le(V("eta"), D(1)),
+            Call("IsCPTP", Call("depolarized",
+                Parenthesized(Seq(Qualified("LinearMap", "id"), Colon, Sp, Map())), Sub(D(1), V("eta"))))))));
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Real() => Seq(Mathbb, Grp(V("R")));

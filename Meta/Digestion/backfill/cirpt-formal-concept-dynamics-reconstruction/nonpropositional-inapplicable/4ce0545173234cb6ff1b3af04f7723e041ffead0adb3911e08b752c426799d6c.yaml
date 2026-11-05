@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4ce0545173234cb6ff1b3af04f7723e041ffead0adb3911e08b752c426799d6c
+  normalized_sha256: sha256:4ce0545173234cb6ff1b3af04f7723e041ffead0adb3911e08b752c426799d6c
+cas_ref: sha256:4ce0545173234cb6ff1b3af04f7723e041ffead0adb3911e08b752c426799d6c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 语言盲核的语言参数设定，交核公式在下一条。
+    previous_atom_id: e47d87c92ee031171d8cd2ed4cf5028ee3ab0fc5238ffa4848c6735d5cf30e37
+    next_atom_id: e64d0c8bfad7a55440fc099171896ce821a0ffadc4c3b50bb287b33a485d6598

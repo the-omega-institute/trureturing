@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4d7afa996567379593b25b89337e05b5384de9256c4fd41ff8b97ed3cef7b9c7
+  normalized_sha256: sha256:4d7afa996567379593b25b89337e05b5384de9256c4fd41ff8b97ed3cef7b9c7
+cas_ref: sha256:4d7afa996567379593b25b89337e05b5384de9256c4fd41ff8b97ed3cef7b9c7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 以超图连通且跨分区 cumulant 不全消为名称 global structural entanglement 的定义；没有断言条件成立。
+    previous_atom_id: 1fe14c4a075c2c1095f9b803ba3a3a88e3ffdf7b1ab1b7b1f533b60b5175da67
+    next_atom_id: 2dda54ccb71ad608a3f1e7191cb74443d55e15de750eb9e731ed7636530fd07b

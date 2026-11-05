@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fd6c11d4094406e23de60013e758e3ca3de12b74723ad055b991d40f9006fb17
+  normalized_sha256: sha256:fd6c11d4094406e23de60013e758e3ca3de12b74723ad055b991d40f9006fb17
+cas_ref: sha256:fd6c11d4094406e23de60013e758e3ca3de12b74723ad055b991d40f9006fb17
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: Noetherian observer principle的标题与共同根源引言没有给出链条件或停止结论。'
+    previous_atom_id: d6bf65ca8ce65832211f10785f2a82bfe9ed3e20953404a034e5b239cd7d0905
+    next_atom_id: ed8eee3ede8bf3ddb41c78e8b1f826ca8e13891b6ddcdbdf4f8aa75b9a90d0d4

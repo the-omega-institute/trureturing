@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:36f6837961dd0712984a7a75bba5db533fe23cf43060ac66d85fbe1422616921
+  normalized_sha256: sha256:36f6837961dd0712984a7a75bba5db533fe23cf43060ac66d85fbe1422616921
+cas_ref: sha256:36f6837961dd0712984a7a75bba5db533fe23cf43060ac66d85fbe1422616921
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅为 Formal Golden Prime Circle 等英文卷标题。
+    previous_atom_id: ed1f219df590926a3739b253e27037038c673b52e41904f6cef91a16da855995
+    next_atom_id: ae25ca54178b94e9b10c1fa76f4a2c0fd42c4aab1f695e617a8e4854d4356d46

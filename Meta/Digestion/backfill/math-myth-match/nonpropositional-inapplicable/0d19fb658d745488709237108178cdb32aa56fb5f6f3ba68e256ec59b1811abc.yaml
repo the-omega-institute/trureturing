@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0d19fb658d745488709237108178cdb32aa56fb5f6f3ba68e256ec59b1811abc
+  normalized_sha256: sha256:0d19fb658d745488709237108178cdb32aa56fb5f6f3ba68e256ec59b1811abc
+cas_ref: sha256:0d19fb658d745488709237108178cdb32aa56fb5f6f3ba68e256ec59b1811abc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 共同生活与资源竞争的建模动机及日常图景，未指定一个独立数学可行集。
+    previous_atom_id: febbb3d8906a422fa43c393a6a36f33e1200ed74c0c44b51e92c0ae858cbdef4
+    next_atom_id: 3beb2c2671d4889853dcd0c570f8f095a25377bbe3bff2cd50541ebc2d0559e7

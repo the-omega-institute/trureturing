@@ -1,0 +1,28 @@
+**Definition 13.2 (The $h$-tail family).** Let $D\subseteq[s]$ have $|D|=h$ and let $C=[s]\setminus D$, so $|C|=r$. For $0<u\le1/a$, define one actual array by
+$$
+x_{\{j\}}=\frac uh\quad(j\in D),\qquad
+x_C=(a-1)u,\qquad
+x_{C\setminus\{i\}}=\frac{1-au}{r}\quad(i\in C),
+$$
+with all other masses zero. Its tail marginals are $u/h$, its core marginals are
+$$
+\bar y=\frac{a-u}{r},
+$$
+and its mean cardinality is $a$. Define
+$$
+\Phi_{a,h}(u)=\frac{h^2}{u}+\frac{a^2r^2}{a-u}
+ +\frac{(a-1)(2a+1)r^3u}{(a-u)^2}.
+\tag{13.1}
+$$
+Then this one joint array has $H=\Phi_{a,h}(u)$.
+
+**Proof.** The masses sum to
+$$
+ u+(a-1)u+1-au=1,
+$$
+and their cardinality mean is
+$$
+ u+r(a-1)u+a(1-au)=a.
+$$
+For $i\in C$, direct incidence counting gives $y_i=(a-u)/r$, while each $j\in D$ occurs only in its singleton and has marginal $u/h$. The tail contribution to $H$ is $h^2/u$. Summing the core contributions and simplifying gives the last two terms of (13.1). Every displayed marginal is positive, including at $u=1/a$; the missing-one masses may then be zero. ∎
+

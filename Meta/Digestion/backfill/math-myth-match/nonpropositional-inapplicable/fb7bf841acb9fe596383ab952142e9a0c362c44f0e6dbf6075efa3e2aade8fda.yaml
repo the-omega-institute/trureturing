@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fb7bf841acb9fe596383ab952142e9a0c362c44f0e6dbf6075efa3e2aade8fda
+  normalized_sha256: sha256:fb7bf841acb9fe596383ab952142e9a0c362c44f0e6dbf6075efa3e2aade8fda
+cas_ref: sha256:fb7bf841acb9fe596383ab952142e9a0c362c44f0e6dbf6075efa3e2aade8fda
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只提出忠实共同关系、可组合转换和未接纳承诺三类会通研究成果，没有断言某个数学转换已经构造成功。
+    previous_atom_id: cd85584c4f2a389951902f9a92a420dc241519de616130ee20b8957105e9f8b4
+    next_atom_id: 476a9c966ad01e2940f98b8548cd2cfe2be20b490a376035889a4c1535b12ede

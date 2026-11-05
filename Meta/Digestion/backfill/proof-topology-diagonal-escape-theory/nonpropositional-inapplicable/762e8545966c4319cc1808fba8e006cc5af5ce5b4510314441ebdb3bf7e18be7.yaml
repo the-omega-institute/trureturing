@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:762e8545966c4319cc1808fba8e006cc5af5ce5b4510314441ebdb3bf7e18be7
+  normalized_sha256: sha256:762e8545966c4319cc1808fba8e006cc5af5ce5b4510314441ebdb3bf7e18be7
+cas_ref: sha256:762e8545966c4319cc1808fba8e006cc5af5ce5b4510314441ebdb3bf7e18be7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅指定两个实际指数和的参数、容许范围与初始误差假设，没有声称这些假设推出全序列误差界。
+    previous_atom_id: 5876c2630bfce1dd206b5ffac16d35d51d30c9c5e99cf776fbdd2bc00b52028c
+    next_atom_id: edd3b715e05cf364b17b66ac90a2e0964936e1ccc25c8cd6f2394da3e415c880

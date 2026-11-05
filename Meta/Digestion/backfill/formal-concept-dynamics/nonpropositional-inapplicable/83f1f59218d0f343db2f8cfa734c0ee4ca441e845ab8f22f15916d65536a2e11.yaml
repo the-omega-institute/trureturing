@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:83f1f59218d0f343db2f8cfa734c0ee4ca441e845ab8f22f15916d65536a2e11
+  normalized_sha256: sha256:83f1f59218d0f343db2f8cfa734c0ee4ca441e845ab8f22f15916d65536a2e11
+cas_ref: sha256:83f1f59218d0f343db2f8cfa734c0ee4ca441e845ab8f22f15916d65536a2e11
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 潜能与现实表项列出准入保持可达性和当前成立这两个解释角色，没有断言具体状态可达。
+    previous_atom_id: 8240f87717846239513174a22f102459fda446a2a71a99b1fe8f7c12fb3057bf
+    next_atom_id: 40a0960c4d7f9b4d6ec09e1f2f76c1e875d33fe990bb3e20b748bddf4e3f47f0

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bfd27715d9e7a2131f279141cdc8d6570b9ac11feeb4e343adad7df53506bbc0
+  normalized_sha256: sha256:bfd27715d9e7a2131f279141cdc8d6570b9ac11feeb4e343adad7df53506bbc0
+cas_ref: sha256:bfd27715d9e7a2131f279141cdc8d6570b9ac11feeb4e343adad7df53506bbc0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 解释《腓立比书》人的努力与神的工作并置的神学归因。
+    previous_atom_id: c355555e08119b3fd2d6b57c3ec4627154eb4c53e3fa6a37c9ad5e3628d3b882
+    next_atom_id: 8ba6a227abf4d4c06380b8de5a1ce432fd6ec715624a652aab95880610e1a3c2

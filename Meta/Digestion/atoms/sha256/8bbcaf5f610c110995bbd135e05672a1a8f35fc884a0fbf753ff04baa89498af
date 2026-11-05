@@ -1,0 +1,94 @@
+**Definition 35.5 (source correspondence and the remaining realization
+domain).** The conclusion is the finite-word restriction (35.9) consumed
+by the specific ready column (35.14). The transcendental polynomial
+evaluation principle is mature; [Environment Record Memory,
+Theorem 14.1](AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md#14-maximal-binary-growth-from-actual-integral-coordinates)
+already consumes injective evaluation for a different binary-word
+count. Exact-synthesis ring restrictions are also established tools;
+Kliuchnikov--Maslov--Mosca,
+[*Fast and efficient exact synthesis of single qubit unitaries generated
+by Clifford and T gates*, Theorem 1](https://arxiv.org/html/1206.5236v4),
+characterizes its single-qubit $H,T$ ring and supplies no $H,T$ access
+here. The source-specific implication proved above connects the literal
+actuator to this full-return consumer; it asserts no worldwide priority.
+
+The fixed factors are indispensable to the statement. They are retained
+in (35.9) even if they already realize the target. Its converse is not
+asserted: agreement at $t=1$ alone need not make (35.13) identically
+zero. A nonalgebraic fixed gate, initialization or encoder needs another
+argument. Physical permutations outside the distinguished pair change
+the class of Definition 35.3, even when their entries are algebraic and
+(35.9) still applies. A wiring description alone changes no state.
+
+The bank's address capacity and its actual source support are different
+premises. $H\ge4$ supplies at least ten bank coordinates, but at $H=4$
+an authentic source has at most $2H-1=7$ active nodes. If all ten data
+modes are required to denote active source occurrences, their existence
+must additionally be assumed or actually established for that source.
+Definition 35.3 only assumes ten distinct available physical modes; it
+does not acquire an active occurrence selector or a logical input.
+
+The full-map requirement is what permits the mathematical column test.
+It installs neither preparation of $e_2f_0$ nor measurement of $n_p$ in
+the old menu. A simulator required only on the one prepared trajectory
+or only on the effects-only terminal has a weaker contract; Theorem
+35.4 does not turn it into the full-map target. Conversely those weaker
+tasks cannot replace (35.4) when realizing the prescribed full device.
+The original sole preparation, $N$, instruments, retention contexts,
+all ten continuing output dimensions, old classical records and
+untouched references of §§106--109 remain required.
+
+The real-angle matchgate constructions in Brod--Childs,
+[*The computational power of matchgates and the XY interaction on
+arbitrary graphs*, equations (4), (6) and Theorem 1](https://arxiv.org/html/1308.1463v1),
+use their stated arbitrary-matchgate and auxiliary permissions. The
+actuator consumes their fermionic-swap matrix in §62.7, while §62.9
+executes rounded angles. Neither fact supplies an exact $\pi/2$
+dyadic-radian factor. [Coherent Reconstruction continuation,
+§§37--41](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md#37-v9-门合同可逆-nand-与完整确定信道球)
+and [Coherent Relations V10, §§14 and 17.1](AURIC_COHERENT_RELATIONS_AND_RECURSIVE_OBSERVATION_THEORY_V10.md#section-17-1)
+retain their independently addressed exact real-angle controls,
+encodings, routing and separately supplied measurement/bus contracts.
+Their constructive results are not restricted by changing their pulse
+contract to (35.1). VI §§116--117 concern finite comparisons of the
+already specified return laws; they do not synthesize the interaction.
+
+There is no acquisition or continued-use algorithm added by (35.9).
+Whenever an actual actuator word is commissioned, the source's locked
+copy, private Boolean computation, catalog construction, description
+and digit fetch, preparation, reference, holds and every retained
+auxiliary are still paid on that same execution. In the §62 carrier
+the exact coordinates remain
+
+$$
+\begin{aligned}
+E_{\rm run}&=E_C+(K+4)+G_Q+G_P+G_R,\qquad
+\mathrm{Fee}=2E_{\rm run},\\
+\mathrm{Storage}(z)&=
+ (S_0+b_{\rm ctl}(z)+8A(z)+8E_{\rm run}(z),Q(z)),\qquad
+\mathrm{Retention}=\sum_{z\text{ a logical tick}}Q(z),
+\end{aligned}
+\tag{35.15}
+$$
+
+with exactly §62.11's actual classical count $E_C$, quantum slot counts,
+constructed cells $A(z)$, control $b_{\rm ctl}(z)$, foundations $S_0$ and
+simultaneous constructed qubits $Q(z)$. An additional commissioned
+resource has its own construction and retention, not a free allowance
+in (35.15). The comparison $W_0$ is not an executed cheaper substitute
+and earns no resource saving. The retained acquisition/callability
+suppliers of §16.2 preserve their own interfaces.
+
+Theorems 60.4--60.5 and 62.10 still supply their finite-error
+approximation results. Theorem 35.4 gives no uniform positive error
+floor, efficiency claim or physical impossibility, and does not exclude
+other encodings, non-basis work states or larger fixed-gate menus. It
+does not synthesize a common native/path/quantum/continuous apparatus.
+Open problem 16.3 still requires its actual preparation, legal actions,
+selectors, references, rights, complete outputs and successors, retained
+records and simultaneous resources. Every older fixed-$G_{\rm gc}$,
+original-$Q$, parked-consumer, unchanged-initialization, original-terminal
+and final-no-Ready obligation retains its exact scope. No universal
+alpha/beta minimality or completion of the four-expression programme
+follows from this coordinate obstruction.
+

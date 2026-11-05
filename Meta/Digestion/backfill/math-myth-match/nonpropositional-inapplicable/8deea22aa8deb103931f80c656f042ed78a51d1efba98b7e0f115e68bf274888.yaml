@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8deea22aa8deb103931f80c656f042ed78a51d1efba98b7e0f115e68bf274888
+  normalized_sha256: sha256:8deea22aa8deb103931f80c656f042ed78a51d1efba98b7e0f115e68bf274888
+cas_ref: sha256:8deea22aa8deb103931f80c656f042ed78a51d1efba98b7e0f115e68bf274888
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 洛克关于不同对象持续判据的原典分析；属于引文解释、建模约定或研究建议，没有另立待证数学断言，本收据不验证其文献或经验真值。
+    previous_atom_id: cdae06facf737a760eaed1a6030d23c5520d1c60302f71d4a5a97f37a28e6b0e
+    next_atom_id: c6bfeafd1b11fc19bac34039619095ac6db87fb42cf5648d8a7b776e04603fe8

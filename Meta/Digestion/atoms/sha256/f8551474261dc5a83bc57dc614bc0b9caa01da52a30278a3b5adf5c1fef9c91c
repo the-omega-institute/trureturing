@@ -1,0 +1,29 @@
+#### 定理 10.2（递归行列式分解）
+
+有
+
+<a id="eq-dc"></a>
+
+$$
+\begin{aligned}D_{C_P(W)}(u)&=(1-u)^{m(d-q)}D_W(u)^q, \tag{18}\end{aligned}
+$$
+
+<a id="eq-dl"></a>
+
+$$
+\begin{aligned}D_{L_P(W)}(u)&=D_W(u)^{d-q}D_{W^2}(u)^q. \tag{19}\end{aligned}
+$$
+
+因而两者都酉；若 $W^{10}=I$，二者的十次幂也为 $I$。
+
+**证明。**
+
+按 $\ker P\oplus\operatorname{ran}P$ 分解父空间，第一门是
+$(d-q)$ 份 $I_m$ 与 $q$ 份 $W$ 的直和；
+第二门是 $(d-q)$ 份 $W$ 与 $q$ 份 $W^2$ 的直和。
+行列式乘法、酉性及幂关系均逐块成立。
+
+∎
+
+<a id="cor-frozen"></a>
+

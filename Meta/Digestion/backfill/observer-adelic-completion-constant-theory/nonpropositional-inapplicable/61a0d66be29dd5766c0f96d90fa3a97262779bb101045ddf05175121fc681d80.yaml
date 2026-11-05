@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:61a0d66be29dd5766c0f96d90fa3a97262779bb101045ddf05175121fc681d80
+  normalized_sha256: sha256:61a0d66be29dd5766c0f96d90fa3a97262779bb101045ddf05175121fc681d80
+cas_ref: sha256:61a0d66be29dd5766c0f96d90fa3a97262779bb101045ddf05175121fc681d80
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: A research question and a terminology distinction between ontological and proof duality, without a theorem.
+    previous_atom_id: 6a5f65578ab52e36e813d12de1e6e7a3ad7572a6eb8ff9dbe6fab249eb96dca6
+    next_atom_id: 7737b4f01c2d15c15cbb8836e948154bc6c2702d18193a62c464ac530ee62ab4

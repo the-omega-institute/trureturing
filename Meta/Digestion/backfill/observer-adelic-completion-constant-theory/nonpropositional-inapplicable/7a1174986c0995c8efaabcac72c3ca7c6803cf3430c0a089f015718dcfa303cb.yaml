@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7a1174986c0995c8efaabcac72c3ca7c6803cf3430c0a089f015718dcfa303cb
+  normalized_sha256: sha256:7a1174986c0995c8efaabcac72c3ca7c6803cf3430c0a089f015718dcfa303cb
+cas_ref: sha256:7a1174986c0995c8efaabcac72c3ca7c6803cf3430c0a089f015718dcfa303cb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Audit status declaring the observer-Casimir-to-zeta bridge open; no assertion that this bridge holds.
+    previous_atom_id: d8e7a5b74e22bae7630267c802fab4c2f9f659d2c7af2820b008539d3236ba1d
+    next_atom_id: 1e0ecb95c5e67c5734425168f90311f7b66dab7b9c81b8d6a758f2045e3c423c

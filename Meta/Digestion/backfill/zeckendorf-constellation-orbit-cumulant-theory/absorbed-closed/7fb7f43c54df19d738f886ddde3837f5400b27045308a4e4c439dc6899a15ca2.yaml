@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7fb7f43c54df19d738f886ddde3837f5400b27045308a4e4c439dc6899a15ca2
+  normalized_sha256: sha256:7fb7f43c54df19d738f886ddde3837f5400b27045308a4e4c439dc6899a15ca2
+cas_ref: sha256:7fb7f43c54df19d738f886ddde3837f5400b27045308a4e4c439dc6899a15ca2
+coverage_gids:
+  - gid: D5/S3/CompletionDynamics/GoldenMobius/GoldenMobiusMap.golden_mobius_fixed_conjugate
+    target_statement_id: sha256:d24caa39da1b7894dd444bf7a72fee18db7a9f0dedfcd996d235b1c4cd5b6fd2
+  - gid: D5/S3/CompletionDynamics/GoldenMobius/GoldenMobiusMap.golden_mobius_fixed_golden
+    target_statement_id: sha256:ab45f3f90847c67505efb6a3e1e75549dcbfb4a598bdb7e6a7c2f66c1bfdc72e
+receipts:
+  unresolved_subitems: []

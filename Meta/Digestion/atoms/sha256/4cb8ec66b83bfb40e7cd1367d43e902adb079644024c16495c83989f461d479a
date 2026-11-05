@@ -1,0 +1,33 @@
+**Definition 4.2 (Configurations, successors and actions).** The entire persistent configuration set is
+
+$$
+\mathcal S_q=\{w,d_0,d_1\}\cup
+\{(j,h):j\in\mathbb Z,\ -L<j<L,\ h\in\{0,1\}\}.
+\tag{4.2}
+$$
+
+Initialize deterministically at $w$ under both labels. Every configuration other than $d_0,d_1$ commits to a next paid read. Entry into $d_i$ emits $D=i$ and stops immediately, without another read. For an interior $j$, the immutable successor lookups are
+
+$$
+\begin{aligned}
+U(j)&=\begin{cases}d_1,&j=L-1,\\(j+1,1),&j<L-1,\end{cases}\\
+V(j)&=\begin{cases}d_0,&j=-L+1,\\(j-1,1),&j>-L+1.\end{cases}
+\end{aligned}
+\tag{4.3}
+$$
+
+The walk coordinate $j$ records accumulated evidence. The flag $h=1$ means that all survival trials on zeros since the last observed tick have succeeded; $h=0$ means at least one failed. The complete table is:
+
+| Current configuration | Actual bit just read | Destination distribution |
+| --- | --- | --- |
+| $w$ | $0$ | $w$ with probability $1$ |
+| $w$ | $1$ | $(0,1)$ with probability $1$ |
+| $(j,1)$ | $0$ | $(j,1)$ with probability $q$; $(j,0)$ with probability $1-q$ |
+| $(j,0)$ | $0$ | $(j,0)$ with probability $1$ |
+| $(j,1)$ | $1$ | $U(j)$ with probability $1-t$; $(j,1)$ with probability $t$ |
+| $(j,0)$ | $1$ | $V(j)$ with probability $t$; $(j,1)$ with probability $1-t$ |
+| $d_0$ | either bit | $d_0$ with probability $1$ in analytical continuation |
+| $d_1$ | either bit | $d_1$ with probability $1$ in analytical continuation |
+
+Each random row uses a fresh independent coin. The decision rows specify the analytical extension only: the actual machine has already stopped. A failed survival trial changes only the internal flag. It does not stop the read sequence, reset the source, or skip the remaining zeros or closing one. Every nonterminal one transition resets the internal flag to one for the next gap. Holding at the same $j$ is therefore still a completed, paid gap. No distinct mark register is needed, since the pre-one flag selects the evidence update.
+

@@ -1,0 +1,14 @@
+**Definition 21.1 (charged run and representations).** All counts refer to one actual old preparation, this acquisition, its retained records and any subsequent use. Charge integer and rational operations at their actual finite operand widths; charge each located source or dispatcher assignment, allocation and grant, request, complete reply, frame, acknowledgement, return, copied bit and local scan. Actual references have their actual encoded lengths. No arbitrary integer, source-specific selector, raw-to-address decoder or object reference has unit-size backing by convention.
+
+For the entry let $a+c=L$, $N_0=|V(t)|$, and let $w_0$ be the actual old successful word, with $D_0$ the sum of its address depths. The word and $D_0$ are resource-analysis parameters, not observer advice. In the actual left-first order of the entry leaves, number their assays $r=1,\ldots,L$, let $B\subseteq\{1,\ldots,L\}$ be the positions of entry $\beta$ leaves, and let $n_s$ be the actual roster length after $s$ such assays. Put
+
+$$
+n_s=L+|B\cap\{1,\ldots,s\}|,
+\qquad
+R_{\rm mark}=\sum_{s=0}^{L-1}n_s
+=L^2+\sum_{r\in B}(L-r).
+\tag{NLBAII.12}
+$$
+
+These are the sizes and reads on this particular run, not optima taken from separate runs. The maintained current length and empty-stack test supply all loops; none of these a posteriori parameters is a stopping bound.
+

@@ -1,0 +1,31 @@
+**Definition 5.1 (Global weight polynomials in a fixed population).** Fix $p,q$ and $N=p+q$ odd. A four-loop graph with $N$ ordinary leaves has
+$N+6$ trivalent vertices, $2N+6$ vertices in all, and $2N+9$ edges. For
+this fixed size there are finitely many flag pairings, partitions,
+three-cycles, and colorings. Its rational quotient is finite-dimensional.
+It therefore suffices to annihilate every *global* weight functional
+$w$ on the original quotient.
+
+The perfect cohomology-cycle pairing induces a perfect symmetric-power
+pairing, with normalization
+
+$$
+\langle h_1\cdots h_n,z_1\cdots z_n\rangle
+ =\frac1{n!}\sum_{\sigma\in S_n}\prod_i\langle h_i,z_{\sigma(i)}\rangle.
+$$
+
+For dual bases, equal monomials with exponent vector $\alpha$ pair to
+$\alpha!/n!$, all unequal ones to zero. These factors are nonzero;
+for $n=0$ use multiplication in $\mathbb{Q}$. On a core with a four-cycle basis,
+the pullback of $w$ along insertion is thus a polynomial
+
+$$
+F_G(a,b,c,d;r,s,t,u)\in\mathbb{Q}[a,b,c,d,r,s,t,u],
+$$
+
+of degree $p$ in the first tuple and $q$ in the second. Each core
+comparison acts by the same substitution on both tuples. They remain
+independent formal variables even when $p=0$ or $q=0$. Simultaneous
+negation of every variable multiplies $F_G$ by $(-1)^N=-1$.
+These are restrictions of a global $w$; arbitrary unrelated core
+functionals are not being assumed to extend.
+

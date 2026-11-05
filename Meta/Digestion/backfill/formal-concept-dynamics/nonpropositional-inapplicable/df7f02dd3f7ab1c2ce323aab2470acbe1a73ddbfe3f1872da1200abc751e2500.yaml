@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:df7f02dd3f7ab1c2ce323aab2470acbe1a73ddbfe3f1872da1200abc751e2500
+  normalized_sha256: sha256:df7f02dd3f7ab1c2ce323aab2470acbe1a73ddbfe3f1872da1200abc751e2500
+cas_ref: sha256:df7f02dd3f7ab1c2ce323aab2470acbe1a73ddbfe3f1872da1200abc751e2500
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 我会在知道预测后按原计划行动是引用的待审查自描述，不给出行动稳定性结论。
+    previous_atom_id: 37b934058cfba97161782e024aefe843556c06ea05d06ad2ddbe904f8eceeb47
+    next_atom_id: 97f879bdfac09c737116ab69fd9472060fb5fa9d9c3aad87ef740b677251f986

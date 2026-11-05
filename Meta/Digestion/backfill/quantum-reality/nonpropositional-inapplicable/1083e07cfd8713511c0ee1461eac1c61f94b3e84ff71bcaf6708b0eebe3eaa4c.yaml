@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1083e07cfd8713511c0ee1461eac1c61f94b3e84ff71bcaf6708b0eebe3eaa4c
+  normalized_sha256: sha256:1083e07cfd8713511c0ee1461eac1c61f94b3e84ff71bcaf6708b0eebe3eaa4c
+cas_ref: sha256:1083e07cfd8713511c0ee1461eac1c61f94b3e84ff71bcaf6708b0eebe3eaa4c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 65项精确检查及12项数值检查是工作报告的数量；列举主题和来源，不断言主题中的具体公式成立。
+    previous_atom_id: 9f9c12be4791afe7347fd86db5790b52ba12851ae01402e3a44df8fa8bd6ee60
+    next_atom_id: 29f73830b456491c811907480b5afa87ec223d254a2451457808167ddde13d3d

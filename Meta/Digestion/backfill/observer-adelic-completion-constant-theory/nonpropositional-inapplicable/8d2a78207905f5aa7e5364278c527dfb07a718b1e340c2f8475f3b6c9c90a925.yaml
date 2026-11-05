@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8d2a78207905f5aa7e5364278c527dfb07a718b1e340c2f8475f3b6c9c90a925
+  normalized_sha256: sha256:8d2a78207905f5aa7e5364278c527dfb07a718b1e340c2f8475f3b6c9c90a925
+cas_ref: sha256:8d2a78207905f5aa7e5364278c527dfb07a718b1e340c2f8475f3b6c9c90a925
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Names the canonical Nevanlinna kernel as a possible tool, without asserting a kernel property.
+    previous_atom_id: 45ec636cadeff805b202e6f4d05dc728fa2eb7599180ec898a76a15b3697d534
+    next_atom_id: 259e6a230c079193e8ce18d537ced951235691e60659cd5fc13d3e7ea23a3532

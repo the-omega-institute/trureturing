@@ -1,0 +1,25 @@
+**Proposition 7.3 (a final observation does not certify a later cut).**
+Under Definition 7.2, no finite exact observer can guarantee that the
+numerical cut inferred at its final observation is the current cut at
+handoff on every allowed execution. Requiring exclusion through
+writeback and handoff, or actually acquiring the intervening update
+count, removes this particular ambiguity.
+
+Proof. Use the genuine zero-law source and a mature cut $u\ge n_0$
+from Proposition 7.1. Take a terminating recovery execution while it is
+stationary at $u$. Its live replies are all legitimate. In one allowed
+extension to handoff make no source update; in a second, perform one
+legal actual update after the last live observation but before handoff.
+That update consumes its autonomous birth batch in the prescribed
+physical lexicographic order. The two executions have identical retained
+input, observed replies, recovering control and all later local writes.
+Their actual handoff cuts are $u$ and $u+1$, with different $B$ values
+and supports as above. The installed output is the same, so cannot be
+correct for both. The same coupling proves the zero-error version.
+These are admissible source executions for the expressly weakened gap
+service, not counterexamples within Assumption 1.2's stationary interval.
+Exclusion forbids the second extension. An actually supplied exact
+intervening count instead permits advancing the behavioral law and
+numerical fields before a new synchronized handoff, subject to the same
+write/continuation premises. $\square$
+

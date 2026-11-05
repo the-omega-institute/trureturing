@@ -1,0 +1,13 @@
+**定义 38.2（候选 C102：同一实际过程可再接活动伙伴）。** C102 包含 C101 的完整对象合同，并对每个 $\Phi\in\mathscr P$ 要求存在活动 $R\in\Omega$、两条实际边 $X,R\to XR$、$Y,R\to YR$，以及仍在 $\mathscr P$ 中的正联合箭头 $\Psi:\mathcal A_{YR}\to\mathcal A_{XR}$，满足
+
+$$
+\boxed{\begin{aligned}
+\Psi(b\otimes1)&=\Phi(b)\otimes1&&\text{对全部 }b\in\mathcal A_Y,\\
+\Psi(1\otimes r)&=1\otimes r&&\text{对全部 }r\in\mathcal A_R.
+\end{aligned}}\tag{C102}
+$$
+
+作为下一次被延伸箭头时，必须继用这个同一实际 $\Psi$、它的两端及全部对象数据。伙伴可随箭头改变；不预给普遍参考、每对对象的复合、固定参考的全部幂，或 $\Psi=\Phi\otimes\operatorname{id}_R$。
+
+若全部正归一态被供应，第一式等价于：对每个联合输入态，系统输出边际仍是原过程对系统输入边际的作用；第二式等价于：每个联合输入态的参考边际原样保留。它们量化全部联合态，包含相关和纠缠输入。把一份校准态或几项平均读数代替这个全取值合同，会改变条件。
+

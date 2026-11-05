@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2468aef8444a61526537bd4e1e0a0cd35fd6c803a56f26690ce3592d100f472f
+  normalized_sha256: sha256:2468aef8444a61526537bd4e1e0a0cd35fd6c803a56f26690ce3592d100f472f
+cas_ref: sha256:2468aef8444a61526537bd4e1e0a0cd35fd6c803a56f26690ce3592d100f472f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definitional block introducing ordinary zero forcing closure and zero forcing number together with the real symmetric graph matrix class SymGraphMatrices, matrixNullity, maxSymNullity, and minSymRank; asserts no standalone proposition.
+    previous_atom_id: 8ade6e3f17585c82806676abdef795b7f00c469699493c683b7a6d227500d508
+    next_atom_id: b6179eadedece15a4d64bff1de3943fd326b80acf3a73c2832434afed2e1a00c

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bf07174c3fd0babe484b7450108c368b08f88b1285750d35cecf8c1b66aa494b
+  normalized_sha256: sha256:bf07174c3fd0babe484b7450108c368b08f88b1285750d35cecf8c1b66aa494b
+cas_ref: sha256:bf07174c3fd0babe484b7450108c368b08f88b1285750d35cecf8c1b66aa494b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 比较神圣与人际宽恕的主体、权能与语义条件，没有给出数学等价或存在断言。
+    previous_atom_id: 1f7956796ecbd73bb86f8a03a66260ff793c4328a559a5fd64647d81eb06947a
+    next_atom_id: b9d8cc0f42291793bd81f7f94ccb86ec3c7f32877845d61a11a8950e520b5209

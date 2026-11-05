@@ -1,0 +1,13 @@
+For $r>0$, writing $\mathcal S_r$ for the class of compact operators
+whose singular values have summable $r$th powers, one also has
+
+$$
+\Sigma\in\mathcal S_r\ \Longleftrightarrow\ r>1,
+\qquad
+C\in\mathcal S_r\ \Longleftrightarrow\ r>2.
+\tag{3.4}
+$$
+
+Thus the actual centered edge covariance is Hilbert–Schmidt and is
+not trace class, despite its compactness.
+

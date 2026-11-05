@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8327849a72afb9c5677efbe1c073575b0d5e3f25b2076da698731dd98812fc0b
+  normalized_sha256: sha256:8327849a72afb9c5677efbe1c073575b0d5e3f25b2076da698731dd98812fc0b
+cas_ref: sha256:8327849a72afb9c5677efbe1c073575b0d5e3f25b2076da698731dd98812fc0b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Noun-only list item naming observer connections; the parent non-reconstruction theorem remains unsettled.
+    previous_atom_id: 7e91ee441a5fe32224a08bc1fc3ca35574b093eba72321f59ea43ce40d93730e
+    next_atom_id: cefc95610fbe5fd8bf805d9efd941f1abbe59be4b10ff33beeae67405520f953

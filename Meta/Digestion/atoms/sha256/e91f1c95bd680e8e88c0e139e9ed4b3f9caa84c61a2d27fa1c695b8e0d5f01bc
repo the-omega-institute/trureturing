@@ -1,0 +1,75 @@
+**定理 96.1（目标一致有限终点与完整记录误差）。** 对每个定义 95.1 的允许 $\theta,N$ 和每个 $\varepsilon>0$，存在一个预定有限动作串、检查点和终点 $T=T(\theta,N,\varepsilon)$，均不依赖 $d$ 或秩一目标 $P$，使对每个这样的 $P$ 有一个模型／目标依赖的有限停止表 $\pi_P$，满足
+
+$$
+\|F_{\pi_P}-P\|_\infty<\varepsilon.
+\tag{96.1}
+$$
+
+并且，对同一完整叶档案（包括所有失配、超时及终端位），令 $P_1=P$、$P_0=I_3-P$，理想比较律为
+
+$$
+q_{P,\mu}^{\pi_P}(\ell,b)
+ =\alpha_\ell\operatorname{Tr}(P_b\mu).
+\tag{96.2}
+$$
+
+它具有与原实验完全相同的叶边缘 $\alpha_\ell$。用 $\operatorname{TV}(p,q)=\frac12\sum_{\ell,b}|p(\ell,b)-q(\ell,b)|$，有
+
+$$
+\sup_{\mu\succeq0,\ \operatorname{Tr}\mu=1}
+\operatorname{TV}(p_\mu^{\pi_P},q_{P,\mu}^{\pi_P})<\varepsilon.
+\tag{96.3}
+$$
+
+这里的理想律是数学比较对象，不是另装目标终端。
+
+证明。只将 [V 定理 95.1、(100.3)](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_V.md#95-任意一个混合控制把实际原生闭包扩到-pu3) 的正词共轭稠密性作为供应。令
+$\delta=\min\{\varepsilon/3,1/4\}>0$。秩一投影空间 $\mathcal P_1\simeq\mathbb{CP}^2$ 紧，取有限的严格 $\delta/3$ 网 $P^{(1)},\ldots,P^{(M)}$。构造一条仅作数学参照的正向标签词
+
+$$
+\omega=0v_1\cdots v_M,\qquad
+S_0=V_0,\qquad S_j=U_{v_j}S_{j-1},
+\qquad \|S_j^\dagger ES_j-P^{(j)}\|_\infty<\delta/3.
+\tag{96.4}
+$$
+
+给定 $S_{j-1}$，只需由正词轨道逼近 $S_{j-1}P^{(j)}S_{j-1}^\dagger$，便能选择 $v_j$。每个 $v_j$ 可取非空：在任一固定首字母之后追加全部正词仍给稠密轨道。故各检查点严格递增；初始字母 $0$ 保证 $k=k(\omega)\ge1$。这里的 $S_j^\dagger$ 是计算中的共轭，不是执行逆。
+
+将 $\omega$ 的每个 $0,1$ 换成 $\mathsf J$、每个 $N$ 换成 $\mathsf N$，得到一个固定块 $s_*$；检查点是 (96.4) 各前缀的结束处。没有执行 $\omega$ 中指定标签的权限，实际仍运行公平仪器。因为 (96.4) 给一个严格 $\delta$ 网，对任意块入口累计酉 $U$ 和任意目标 $P$，存在一个检查点 $j$ 满足
+
+$$
+\|U^\dagger S_j^\dagger ES_jU-P\|_\infty<\delta.
+\tag{96.5}
+$$
+
+这是将整个网作 $U^\dagger(\cdot)U$ 后仍为网的结果；它同时覆盖所有可能入口，不重置累计酉。
+
+预定重复同一个块 $L$ 次。在每个检查点，由实际已记录词计算 $R_w$；若 $\|R_w-P\|_\infty<\delta$，立即停止并用原终端，否则继续固定串。在最后一个检查点，命中优先；未命中也停止、调用原终端，并记超时 $t_\ell=1$。其余停止叶记 $t_\ell=0$。每个块另记一个失配位：已观测的块内标签是否至少一次不同于 $\omega$ 对应标签；最后一个部分块只检查已发生的标签。各块失配位的向量统记为 $m_\ell$，与完整原标签共同保留；失配不触发改门、复位、删支或重归一。对任意标记值 $(m,t)$，其不条件化总质量恰为 $\sum_{\ell:m_\ell=m,\ t_\ell=t}\alpha_\ell$，带终端位 $b$ 的质量为同一叶集合上 (95.1) 的和；失配和超时是不同标记。
+
+条件于任一尚未停止的块入口历史，取 (96.5) 的 $j$。若该块到此检查点的全部实际标签符合参照词，便已命中，或已在更早检查点命中而停止。该前缀符合的原概率为 $2^{-k_j}\ge p_*=2^{-k}>0$，与输入态、入口历史和目标无关。故对每个存活入口，下一块内命中的条件概率至少 $p_*$。只由条件概率链式法则便得
+
+$$
+\tau:=\sum_{\ell:t_\ell=1}\alpha_\ell
+ \le(1-p_*)^L.
+\tag{96.6}
+$$
+
+选择有限 $L$ 使 $(1-p_*)^L<\delta$；这个选择和 $T=L|s_*|$ 只依赖 $\theta,N,\varepsilon$。块间的实际酉一般不同，也没有对 $N$ 进行随机抽样。上述估计只用实际仪器的公平标签，不要求某个随机游走的 Haar 混合或独立块增量模型。
+
+每个非超时叶有 $\|R_\ell-P\|_\infty<\delta$；超时叶仍是原秩一投影，故距离至多一。由 (95.2)，
+
+$$
+\begin{aligned}
+\|F_{\pi_P}-P\|_\infty
+&\le\sum_\ell\alpha_\ell\|R_\ell-P\|_\infty
+ \le\delta(1-\tau)+\tau<2\delta<\varepsilon,\\
+\operatorname{TV}(p_\mu^{\pi_P},q_{P,\mu}^{\pi_P})
+&=\sum_\ell\alpha_\ell
+  |\operatorname{Tr}[(R_\ell-P)\mu]|
+ \le\delta(1-\tau)+\tau<\varepsilon.
+\end{aligned}
+\tag{96.7}
+$$
+
+最后一步对全部数学密度矩阵一致。每个失配叶、两种终端结果和超时总质量均在 (95.1) 中；超时误差按其原质量计入，没有成功归一化或自由倍率。所有允许角度及混合 $N$ 的稠密性均由原供应承担，包括 $d=2/3$、非例外有理角和 $\langle\xi,N\xi\rangle=0$；这里没有删去这些情形。∎
+

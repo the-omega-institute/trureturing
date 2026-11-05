@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8118cdf98f219059ce7482e3cf7f375bcbc18de209f80ee71bd82f1679758085
+  normalized_sha256: sha256:8118cdf98f219059ce7482e3cf7f375bcbc18de209f80ee71bd82f1679758085
+cas_ref: sha256:8118cdf98f219059ce7482e3cf7f375bcbc18de209f80ee71bd82f1679758085
+coverage_gids:
+  - gid: D5/S3/Quantum/Recovery/FiniteLocalSharedLabelRecovery.actual_shared_label_support_rigidity
+    target_statement_id: sha256:809302f210f14b540257d148d37a53765e8c6a34aa0bd38eec5b01954ce645af
+  - gid: D5/S3/Quantum/Recovery/RetainedLocalProtocol.recursive_coarse_retained
+    target_statement_id: sha256:3707ac07072fd7b95eeeb5eb5384887e302a593e175b78fbe8c5290142ce561c
+receipts:
+  unresolved_subitems: []

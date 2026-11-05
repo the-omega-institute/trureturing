@@ -1,0 +1,28 @@
+**Definition 3.2 (the entire separated history domain).** Write $K$ for an
+actually completed requested Tick. Let $\mathcal H_A$ contain precisely
+
+$$
+h=K^{q_0}g_1K^{q_1}\cdots g_nK^{q_n},
+\qquad n\ge1,
+\tag{3.1}
+$$
+
+where $g_1\cdots g_n$ is any legal successful addressed native word from
+alpha, $q_0,q_n\in\mathbb N$, and $q_i\ge1$ for $1\le i<n$.
+It also contains $h=K^{q_0}$ for $n=0$, with $q_0\in\mathbb N$.
+There is only one gap in that latter case. Put $Q(h)=\sum_{i=0}^nq_i$
+for $n\ge1$, and $Q(h)=q_0$ for $n=0$. No bound on $n,Q$ or the individual
+gaps is supplied to the decoder. They are finite, not necessarily known.
+
+Starting at the actually prepared scalar $1$, execute precisely those raw
+growths and Ticks in their indicated order. Write $F_A(h)=(t(h),x_h)$ for
+the resulting pair. For example, the prefix just before $g_i$ is actually
+on the predecessor tree; $g_i$ zero-extends that very field, and its following
+$q_i$ Ticks use the new tree. This recurrence defines $x_h$ without any
+physical inverse. Reset or Add does not occur in (3.1).
+
+Reads, Holds, refused probes, frame reception and waiting are not letters
+of Time. Inserting them with no Tick leaves $F_A(h)$ unchanged; their
+literal outputs or elapsed durations are not claimed recoverable.
+They still have their actual costs if performed.
+

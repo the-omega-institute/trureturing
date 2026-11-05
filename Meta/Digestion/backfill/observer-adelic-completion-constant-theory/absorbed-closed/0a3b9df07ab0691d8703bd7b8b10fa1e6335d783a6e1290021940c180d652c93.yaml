@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0a3b9df07ab0691d8703bd7b8b10fa1e6335d783a6e1290021940c180d652c93
+  normalized_sha256: sha256:0a3b9df07ab0691d8703bd7b8b10fa1e6335d783a6e1290021940c180d652c93
+cas_ref: sha256:0a3b9df07ab0691d8703bd7b8b10fa1e6335d783a6e1290021940c180d652c93
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaLinear/PoleCapacityRankOne.pole_capacity_rank_one
+    target_statement_id: sha256:1643b953b13cf980eec4c1a43615bad82b215458b721146b11b973d873a57680
+receipts:
+  unresolved_subitems: []

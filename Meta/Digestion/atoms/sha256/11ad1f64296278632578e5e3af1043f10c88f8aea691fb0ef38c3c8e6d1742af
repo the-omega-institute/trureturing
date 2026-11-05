@@ -1,0 +1,43 @@
+**Proposition 58.3 (preparation and finite continued-use account).** On
+the same actual process the old preparation of $t$ used exactly $b$
+successful promotions and $L-1$ successful splits. Its literal source
+initialization and successful edits therefore used
+$3+4b+8(L-1)$ located source-field assignments, before the $4a$
+acquisition assignments. Its actual old addresses, communication,
+allocation, grants and any records really retained remain paid resources,
+even when their serial order is unavailable to the attaching observer.
+
+For any subsequent completed continuation let $r$ be its number of
+well-formed $P/S$ frames, $z$ its number of unsupported frames, $p_+$
+and $s_+$ its successful promotion and split counts, and let $J$ be the
+sum of requested address depths over those $r$ frames and $J_+$ the
+sum over their successes. Its additional literal traffic is
+
+$$
+I_{\rm cont}=2J+4r+3z,\qquad
+O_{\rm cont}=5r+2J_++3z,
+\qquad
+\Delta_{\rm cont}=p_++2s_+.
+\tag{AAII.18}
+$$
+
+At that cut the source has $3L-1+p_++2s_+$ vertices, the current
+logical word has $n+2s_+$ constructors, and the unchanged entry word
+still has $n$. Their total constructor payload is $4n+4s_+$ bits.
+The successful continuation templates use $4p_++8s_+$ further located
+source-field assignments. Add every actual End, acknowledgement,
+Return, partial-input bit already retained, code computation and
+record edit at its actual width.
+
+Proof. AA (AA.78) gives the old successful counts from the actual leaf
+counts; this uses no reconstructed serial order. The old source-field
+formula is AA Proposition 22.1 restricted to its source fields. Each
+later source success has exactly its original one- or two-vertex
+template. Only a split adds two logical nodes. The request and reply
+lengths in Definition 53.3 yield (AAII.18) by direct summation,
+including absent addresses and wrong-type or branch refusals among the
+$r$ frames. Unsupported frames each contribute three input and three
+output bits without growth. The archive is immutable and the current
+word grows by four payload bits per split; the field counts again use
+the same literal templates. $\square$
+

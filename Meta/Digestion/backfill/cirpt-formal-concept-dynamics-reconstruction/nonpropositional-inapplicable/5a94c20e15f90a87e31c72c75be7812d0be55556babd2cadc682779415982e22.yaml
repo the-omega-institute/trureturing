@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5a94c20e15f90a87e31c72c75be7812d0be55556babd2cadc682779415982e22
+  normalized_sha256: sha256:5a94c20e15f90a87e31c72c75be7812d0be55556babd2cadc682779415982e22
+cas_ref: sha256:5a94c20e15f90a87e31c72c75be7812d0be55556babd2cadc682779415982e22
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 道与理论的边界以及必须披露任务条件的要求是解释和方法论，不引入数学对象或公理。
+    previous_atom_id: 03a66f42ad67ac9fc7fd278a7fd67b2ca2861f6a81857e42162584d2acc61b61
+    next_atom_id: 209e1676b5634d1be1315ffe73fbe64ec5b2160b0fe5dff6a73d29f8fae7f07d

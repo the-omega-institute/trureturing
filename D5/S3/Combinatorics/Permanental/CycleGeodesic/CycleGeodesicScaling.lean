@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: The logarithmic permanent rate converges to its closed cotangent form. -/
+/- Escape audit for the two published Riemann lemmas unfinished: https://github.com/the-omega-institute/trureturing/issues/22862 -/
 
 /- Mathematical classification:
    hasDerivAt_quadLogPrimitive: proof_shape: bind-only; escape_witness: none; consumer: integral_quadLog
@@ -42,6 +43,7 @@
    Information-escape registration is paused under CLAUDE.md section 3.9. -/
 
 import D5.S3.Combinatorics.Permanental.CycleGeodesic.CycleGeodesicMidpoint
+import D5.S3.Combinatorics.Permanental.CycleGeodesic.CycleGeodesicProduct
 
 noncomputable section
 open scoped BigOperators Topology
@@ -293,7 +295,7 @@ private lemma leftRiemann_error_le {f : ℝ → ℝ} (hf : ContinuousOn f (Set.I
       Finset.sum_le_sum (fun k hk => herr k (Finset.mem_range.mp hk))
     _ = ε := by simp [hnR.ne']; field_simp
 
-private lemma continuous_leftRiemann_tendsto {f : ℝ → ℝ} (hf : ContinuousOn f (Set.Icc 0 1)) :
+lemma continuous_leftRiemann_tendsto {f : ℝ → ℝ} (hf : ContinuousOn f (Set.Icc 0 1)) :
     Tendsto (fun n : ℕ => (1 / (n : ℝ)) * ∑ k : Fin n, f ((k : ℝ) / n))
       atTop (𝓝 (∫ x in (0 : ℝ)..1, f x)) := by
   rw [Metric.tendsto_atTop]
@@ -331,7 +333,7 @@ private lemma product_normalized {n : ℕ} (hn : n ≠ 0) (z : ℂ) :
   push_cast
   field_simp
 
-private lemma fin_fraction_mem_Icc {n : ℕ} (hn : n ≠ 0) (k : Fin n) :
+lemma fin_fraction_mem_Icc {n : ℕ} (hn : n ≠ 0) (k : Fin n) :
     (k : ℝ) / n ∈ Set.Icc (0 : ℝ) 1 := by
   have hnR : (0 : ℝ) < n := by exact_mod_cast (Nat.pos_of_ne_zero hn)
   constructor
@@ -417,5 +419,4 @@ theorem result3 : claim3 := by
     exact problem3_nonmidpoint_of_components product_formula logRiemann_limit logIntegral_evaluation ht0 ht1 ht
   · exact midpoint_rate_tendsto_of_product product_formula
 
-#print axioms result3
 end CycleGeodesic

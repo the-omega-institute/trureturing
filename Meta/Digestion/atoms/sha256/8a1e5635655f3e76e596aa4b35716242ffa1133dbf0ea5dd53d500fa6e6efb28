@@ -1,0 +1,25 @@
+#### 定理 8.1（范数平方保持两种组合）
+
+在已给 Hilbert 结构中，令 $w(v)= \left\lVert v\right\rVert ^2$，则
+
+$$
+\boxed{w(u\oplus v)=w(u)+w(v),\qquad
+w(u\otimes v)=w(u)w(v).}
+$$
+
+相干叠加则满足
+
+$$
+w(u+v)=w(u)+w(v)+2\operatorname{Re}\langle u,v\rangle.
+$$
+
+<a id="proof-8-1"></a>
+
+**证明。** 
+直和内积逐分量相加；简单张量的内积为两因子的内积之积。展开同一空间中 $u+v$ 的二次型，得到交叉项。
+ ∎
+
+正交记录实现可加分支，张量乘积实现已声明的系统复合。概率电路与量子电路的一个严格联系，就在于这个平方重量映射。
+
+<a id="statement-8-2"></a>
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9439a1e6499b2dd15b02b3273fa28187743cf4f48b213263970702962faa8be7
+  normalized_sha256: sha256:9439a1e6499b2dd15b02b3273fa28187743cf4f48b213263970702962faa8be7
+cas_ref: sha256:9439a1e6499b2dd15b02b3273fa28187743cf4f48b213263970702962faa8be7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该行仅列共享结构下联合酉误差组合的证明任务，没有具体通道不等式。
+    previous_atom_id: 471171469128729bbb391475e82ec6a2cd5e5e156c5a35a8d3f0358b77a5c296
+    next_atom_id: a0a775d35e4b4d47b52612d1526fff4b352fb88723df13ada4c3375aa577b2a2

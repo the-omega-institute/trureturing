@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1c6a9a6b8046c32a86fbe761be40c9627923da4db3f314d361c7f710669dca27
+  normalized_sha256: sha256:1c6a9a6b8046c32a86fbe761be40c9627923da4db3f314d361c7f710669dca27
+cas_ref: sha256:1c6a9a6b8046c32a86fbe761be40c9627923da4db3f314d361c7f710669dca27
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义表述之形及其解释方式，并要求数学研究另给满足关系，没有声称具体模型满足某个公式。
+    previous_atom_id: 4e567ba789661ce675ffd9a5aa482645e0778ea5c0e50e59bb6699c404de4036
+    next_atom_id: bec05124d5a34f9505fc357d2d1912bdceb9372079c501d2fa9d9fdcbeb8e8d9

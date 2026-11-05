@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7f11d8447a4c8634945bc489d293ed985641629d571123eb0733a59314da27a5
+  normalized_sha256: sha256:7f11d8447a4c8634945bc489d293ed985641629d571123eb0733a59314da27a5
+cas_ref: sha256:7f11d8447a4c8634945bc489d293ed985641629d571123eb0733a59314da27a5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 限定道德经三个章次的比较范围及不附加人格意志的解释规则。
+    previous_atom_id: 2fe40f7c576333be64613ead5ee09fe059cde693b33e8ccec9a67866a73a9234
+    next_atom_id: 153d2d07c41ca8d384f29367d24b6c4a0aff4f33f8ef495ba56349132087f9a9

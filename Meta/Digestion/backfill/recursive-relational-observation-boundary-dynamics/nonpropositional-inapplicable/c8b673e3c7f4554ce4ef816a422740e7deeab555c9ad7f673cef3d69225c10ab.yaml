@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c8b673e3c7f4554ce4ef816a422740e7deeab555c9ad7f673cef3d69225c10ab
+  normalized_sha256: sha256:c8b673e3c7f4554ce4ef816a422740e7deeab555c9ad7f673cef3d69225c10ab
+cas_ref: sha256:c8b673e3c7f4554ce4ef816a422740e7deeab555c9ad7f673cef3d69225c10ab
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section 43 navigation introducing infinite continuation and recurring renewal obligations.
+    previous_atom_id: a1fdeb4594ba960c1ddaa62496a3c600360cc7e6e1145a4f6ca0937b159625d3
+    next_atom_id: 5d61050ca984aa1bda0e9db5a87fecaf5bbbd70073086b2b1f27a575371beba3

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f4be924db09c51f21394ed0a422879b437941bb2fbc9e59cca96c9756796a71d
+  normalized_sha256: sha256:f4be924db09c51f21394ed0a422879b437941bb2fbc9e59cca96c9756796a71d
+cas_ref: sha256:f4be924db09c51f21394ed0a422879b437941bb2fbc9e59cca96c9756796a71d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条仅用非负级数为 C_k 指定记号；不声称级数收敛、有限或存在 Euler 乘积，性质由下一命题另述。
+    previous_atom_id: 0a0dd7113587a5ff7dc623dc8a014a20164b5be677f1ca4f7ddafa84e8353b3a
+    next_atom_id: f6ef98e4ec89ab69c4c62c1fffc8436fa2635d7527e6f37a79d37cf4dea1d0ae

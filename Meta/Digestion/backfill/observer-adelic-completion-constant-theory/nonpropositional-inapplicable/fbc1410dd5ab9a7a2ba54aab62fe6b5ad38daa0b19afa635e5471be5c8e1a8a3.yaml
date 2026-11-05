@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fbc1410dd5ab9a7a2ba54aab62fe6b5ad38daa0b19afa635e5471be5c8e1a8a3
+  normalized_sha256: sha256:fbc1410dd5ab9a7a2ba54aab62fe6b5ad38daa0b19afa635e5471be5c8e1a8a3
+cas_ref: sha256:fbc1410dd5ab9a7a2ba54aab62fe6b5ad38daa0b19afa635e5471be5c8e1a8a3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 建议的 Lean 模块路径清单，仅规划形式化顺序，不断言列名定理已证明。
+    previous_atom_id: 25f28d2431777cd128c21ae328ae9c4cc604e146096b066df69967568a9b1f5a
+    next_atom_id: a6f018b0c7a490ffb989691f5ec744fb7da9676b76da600c8605b9a5ee38bbb8

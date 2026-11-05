@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:99117727ce3333804659ec354b71d87d6f2fd7577ecda9f75e35c0c42a0fec09
+  normalized_sha256: sha256:99117727ce3333804659ec354b71d87d6f2fd7577ecda9f75e35c0c42a0fec09
+cas_ref: sha256:99117727ce3333804659ec354b71d87d6f2fd7577ecda9f75e35c0c42a0fec09
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Suggested formalization module roadmap; no assertion that the listed results are already proved.'
+    previous_atom_id: e91c9b5d08c3ff8fca35a354b521e83e4908daf653c3fd4576e1fe91aa2cf7af
+    next_atom_id: 21c0935e807760d03d2787ac352829903251f0e3b80aadcd8fe0876a671dbc54

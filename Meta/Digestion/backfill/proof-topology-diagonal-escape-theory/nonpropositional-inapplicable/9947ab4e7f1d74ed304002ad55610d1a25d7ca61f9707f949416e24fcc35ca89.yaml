@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9947ab4e7f1d74ed304002ad55610d1a25d7ca61f9707f949416e24fcc35ca89
+  normalized_sha256: sha256:9947ab4e7f1d74ed304002ad55610d1a25d7ca61f9707f949416e24fcc35ca89
+cas_ref: sha256:9947ab4e7f1d74ed304002ad55610d1a25d7ca61f9707f949416e24fcc35ca89
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: PB.1 的模型前提：选择有限指标集、互异素数、自然数容量并指定活状态的取值范围；没有声称联合运行、局部到整体或基数结论。
+    previous_atom_id: efc80a25459ff6619f70eda58524a7b85e0ad00a52a8b1bb775dfa9fde8d4b41
+    next_atom_id: befd4f0be0d9ccff7fcbf8706e95fd61b0fbec54d285767167923404bea9c3ba

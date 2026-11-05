@@ -12,10 +12,13 @@ import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.Tactic
 
 /-!
-Source-only preparation, not compiled. Extracted from the sealed Gaussian
-moment proof, with arbitrary mean and variance; no cubic or LowH branch.
-The probability-to-Lebesgue transport and the derivatives of the entire MGF
-are proved here. Pinned Mathlib: 56a005855ea17e0b0958f73ec801ae140b0a1679.
+The Gaussian moment identities use arbitrary real mean and positive variance,
+with no cubic or LowH branch. The probability-to-Lebesgue transport and the
+derivatives of the entire MGF are proved here. Pinned Mathlib:
+56a005855ea17e0b0958f73ec801ae140b0a1679.
+
+Escape registration remains unfinished under issue #23906; no `declared_validated`
+status is asserted for the four public moment theorems.
 -/
 
 noncomputable section
@@ -43,7 +46,7 @@ def gaussianMGF (μ v : ℝ) (z : ℂ) : ℂ :=
 def densityMonomial (μ v : ℝ) (n : ℕ) (z : ℂ) (y : ℝ) : ℂ :=
   (y : ℂ) ^ n * (gaussianDensity μ v y : ℂ) * Complex.exp (z * (y : ℂ))
 
-private def variance (v : ℝ) (hv : 0 < v) : ℝ≥0 := ⟨v, hv.le⟩
+def variance (v : ℝ) (hv : 0 < v) : ℝ≥0 := ⟨v, hv.le⟩
 
 @[simp] private theorem variance_coe (v : ℝ) (hv : 0 < v) :
     (variance v hv : ℝ) = v := rfl
@@ -53,7 +56,7 @@ private theorem variance_ne_zero (v : ℝ) (hv : 0 < v) : variance v hv ≠ 0 :=
   have hcoe : (variance v hv : ℝ) = 0 := by rw [h]; rfl
   exact hv.ne' hcoe
 
-private theorem gaussianDensity_eq_pdf (μ v : ℝ) (hv : 0 < v) (y : ℝ) :
+theorem gaussianDensity_eq_pdf (μ v : ℝ) (hv : 0 < v) (y : ℝ) :
     gaussianDensity μ v y = gaussianPDFReal μ (variance v hv) y := by
   change Real.exp (-(y - μ) ^ 2 / (2 * v)) / Real.sqrt (2 * Real.pi * v) =
     (Real.sqrt (2 * Real.pi * v))⁻¹ * Real.exp (-(y - μ) ^ 2 / (2 * v))

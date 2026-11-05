@@ -1,0 +1,29 @@
+**Definition 3.1 (Persistent finite mixture).** Fix $N\ge2$ and $K=N+1$. Choose
+
+$$
+\frac13\le a_1<\cdots<a_K\le\frac38,\qquad
+w_\ell>0,\qquad\sum_{\ell=1}^Kw_\ell=1.
+\tag{3.1}
+$$
+
+For example, $a_\ell=1/3+(\ell-1)/(24N)$ gives distinct admissible parameters. Let
+
+$$
+A_\ell=\begin{pmatrix}1-a_\ell&a_\ell\\1&0\end{pmatrix},\qquad
+\lambda_\ell=\left(\frac1{1+a_\ell},\frac{a_\ell}{1+a_\ell}\right),\qquad
+D_0=\operatorname{diag}(1,0),\quad D_1=\operatorname{diag}(0,1).
+\tag{3.2}
+$$
+
+The stationary binary Markov law with these parameters is denoted by $R^{a_\ell}$. Its two-state mechanism is the one in [Universal, Proposition 7.1][U]. Define once and for all
+
+$$
+M_x=\bigoplus_{\ell=1}^K D_xA_\ell,\qquad
+\lambda=(w_1\lambda_1,\ldots,w_K\lambda_K),\qquad
+P=\sum_{\ell=1}^Kw_\ell R^{a_\ell},\qquad
+\mu_n=P_{[1,n]}.
+\tag{3.3}
+$$
+
+Write $J$ for the joint law (1.4) of (3.3). Its label $L=\ell$ records the closed block of the hidden state and is constant along the whole trajectory. Label probabilities and expectations below are taken under this $J$. Their visible-coordinate marginals are $P$ and $\mu_n$; in a length-$n$ calculation write $W=X_{[1,n]}$.
+

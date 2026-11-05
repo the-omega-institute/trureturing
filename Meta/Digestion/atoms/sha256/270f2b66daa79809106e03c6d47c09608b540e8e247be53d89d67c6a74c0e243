@@ -1,0 +1,23 @@
+### 引理 5.1（平方缺额就是补向 Gram 核）
+
+令 $D(x)=Q\pi(x)V$。则
+
+$$
+\boxed{\Gamma_\Phi(x,y)=D(x)^\dagger D(y).}
+$$
+
+因此 $\Delta_\Phi(x)\ge0$，任意有限算符块矩阵 $[\Gamma_\Phi(x_i,x_j)]_{ij}$ 都为正，并且
+
+$$
+\|\Gamma_\Phi(x,y)\|_{\rm op}
+\le\sqrt{\|\Delta_\Phi(x)\|_{\rm op}\,\|\Delta_\Phi(y)\|_{\rm op}}.
+$$
+
+**证明。**在 $\Phi(x^\dagger y)$ 与 $\Phi(x)^\dagger\Phi(y)$ 中插入有限表示，得到
+
+$$
+\Gamma_\Phi(x,y)=V^\dagger\pi(x)^\dagger(I-VV^\dagger)\pi(y)V=D(x)^\dagger D(y).
+$$
+
+块矩阵的任意二次型为 $\|\sum_iD(x_i)\xi_i\|^2\ge0$；最后一式由算符范数次乘性及 $\|D(x)\|^2=\|D(x)^\dagger D(x)\|$ 得到。
+

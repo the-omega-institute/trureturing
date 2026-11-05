@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ef0ebd18780c3f00ef6957a344758c07cc07d7627c658bee8c3465df866f0917
+  normalized_sha256: sha256:ef0ebd18780c3f00ef6957a344758c07cc07d7627c658bee8c3465df866f0917
+cas_ref: sha256:ef0ebd18780c3f00ef6957a344758c07cc07d7627c658bee8c3465df866f0917
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 说明保护第三人的规范位置及比较中不能遗漏的对象，不提出总量不等式。
+    previous_atom_id: 2413de7335cee87af9cc738d4e5604d41724988a1d7c2c5cb8a81dccfd7a9d27
+    next_atom_id: f13164c3d339749b5ea5700b18ff82e23346693a51d1092b314e6242589bcbeb

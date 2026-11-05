@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:ad1c56b158fb7d91018fb13dff2f2d0b07a30aa2db9abe2f50c4350f669de3d2
+  normalized_sha256: sha256:ad1c56b158fb7d91018fb13dff2f2d0b07a30aa2db9abe2f50c4350f669de3d2
+cas_ref: sha256:ad1c56b158fb7d91018fb13dff2f2d0b07a30aa2db9abe2f50c4350f669de3d2
+coverage_gids:
+  - gid: D5/S3/Fourier/ConvolutionPowerAmplification.doubleCenteredInverse
+    target_statement_id: sha256:da69f4c38d9250ac85db23f85c758e7a1bf7ee125cdd4fabeae16b9c241bc75e
+  - gid: D5/S3/Weil/TestFunctions.contDiff
+    target_statement_id: sha256:262a93fde4f8280a33d48d424cb326c48d84642c888f16187ea96b7710accc6b
+  - gid: D5/S3/Weil/TestFunctions/EvenTestFunctionFiniteInterpolation.evenPolynomialDifferential
+    target_statement_id: sha256:3e8a584c6ee0ddff507bfb56ac0bf6e50a6f9689e902c0b890a337eac7e8aeea
+receipts:
+  unresolved_subitems: []

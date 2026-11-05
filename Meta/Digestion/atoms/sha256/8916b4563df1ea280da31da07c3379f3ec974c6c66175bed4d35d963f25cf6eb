@@ -1,0 +1,80 @@
+**命题 88.3（一个任意 complex map 的完整非负 slack）。** 对定义 88.1 的任一 $\mathcal D$，始终保留同一个 unital CP compression
+
+$$
+\mathcal T(X)=(U_0^\dagger\mathcal D^\dagger(X)U_0)_{\xi,e},\qquad
+K_\varphi=\mathcal T(E_\varphi),\qquad
+z_\varphi=(U_0^\dagger\mathcal D^\dagger(E_\varphi)U_0)_{ff}.
+$$
+
+有 $0\le K_\varphi\le I_2$、$0\le z_\varphi\le1$。将 actual residual 写成
+
+$$
+\begin{gathered}
+\mathcal R_\varphi=\mathcal N^\dagger\mathcal D^\dagger(E_\varphi)-E_\varphi
+       =H_\varphi\oplus r_\varphi^{(f)},\qquad
+\ell_\varphi=\|\mathcal R_\varphi\|=L_{\mathcal D}(\varphi),\\
+(H_\varphi)_{12}=-\frac{(K_\varphi)_{12}}2-he^{-i\varphi},\qquad
+r_\varphi^{(f)}=\frac{3(K_\varphi)_{22}+z_\varphi}{4}.
+\end{gathered}
+\tag{88.5}
+$$
+
+令
+
+$$
+\begin{aligned}
+a_\varphi&=\operatorname{Tr}(\mathsf P_\varphi(I_2-K_\varphi)),&
+b_\varphi&=\operatorname{Tr}((I_2-\mathsf P_\varphi)K_\varphi),\\
+g_\varphi&=m_+a_\varphi+\mu b_\varphi,&
+s_\varphi&=\ell_\varphi+\operatorname{Tr}(Q_\varphi H_\varphi).
+\end{aligned}
+$$
+
+则有 exact identity
+
+$$
+\ell_\varphi-\eta
+ =m_+a_\varphi+\mu b_\varphi
+  +\frac{s_\varphi+3\vartheta(\ell_\varphi-r_\varphi^{(f)})}{R^2}.
+\tag{88.6}
+$$
+
+右侧每项非负。因此，若 $\ell_\varphi\le\eta+\delta$，$\delta\ge0$，则
+
+$$
+a_\varphi\le\delta/m_+,\qquad
+b_\varphi\le\delta/\mu,\qquad
+s_\varphi\le R^2\delta.
+\tag{88.7}
+$$
+
+**证明。** 复用 [Environment §27][F81ENV27] 在本卷 (85.1) 的 actual adjoint formula，
+
+$$
+\mathcal N^\dagger\mathcal D^\dagger(E_\varphi)=
+\begin{pmatrix}
+(K_\varphi)_{11}&-(K_\varphi)_{12}/2&0\\
+-(K_\varphi)_{21}/2&((K_\varphi)_{22}+3z_\varphi)/4&0\\
+0&0&(3(K_\varphi)_{22}+z_\varphi)/4
+\end{pmatrix}.
+$$
+
+该式包括 $\mathcal D^\dagger(E_\varphi)$ 的任意 complex cross entries，并不要求它本身 block diagonal。它给 (88.5)、$0\le r_\varphi^{(f)}\le\ell_\varphi$ 与 $H_\varphi+\ell_\varphi I_2\ge0$。两个 effects 的 positivity 给 $a_\varphi,b_\varphi\ge0$，而最后一个 PSD 条件给 $s_\varphi\ge0$。
+
+原 certificate 的配对式 (86.5) 消去 $z_\varphi$，恰给
+
+$$
+-\operatorname{Tr}(Y_\varphi\mathcal R_\varphi)
+ =\operatorname{Tr}(Y_\varphi E_\varphi)
+       -\operatorname{Tr}(M_\varphi K_\varphi)
+ =\eta+g_\varphi.
+$$
+
+左侧另一方面等于
+
+$$
+\frac{\ell_\varphi-s_\varphi+3\vartheta r_\varphi^{(f)}}{R^2}.
+$$
+
+用 $R^2=1+3\vartheta$ 重排即得 (88.6)。它保留了 dual inequality 后面的所有非负 slack，(88.7) 随即成立。∎
+

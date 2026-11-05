@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2a50535be4db7720682862ad3b3e9a754a71f9c72aaf25763ecaa92d9550b0f8
+  normalized_sha256: sha256:2a50535be4db7720682862ad3b3e9a754a71f9c72aaf25763ecaa92d9550b0f8
+cas_ref: sha256:2a50535be4db7720682862ad3b3e9a754a71f9c72aaf25763ecaa92d9550b0f8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 动力闭合一行列物质实现、守恒和实验范围的审计项目，没有给出守恒命题。
+    previous_atom_id: 7c72966b90d392c41411faab4c70c3c763e4e59eed898d357582a8af2c07f125
+    next_atom_id: 133a40e3e0042be959a11a8e8116399e125ca837fee8c90340e89bccc462d8f8

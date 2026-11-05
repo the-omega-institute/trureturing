@@ -1,0 +1,12 @@
+**Definition 8.1 (the separate acquired-term problem).** In the FCS acquired-data contract a producer genuinely possesses either the full finite current tree or $R_*$ and all six same-source, same-version class terms. Local structural inspection and whole-term equality on those acquired finite terms are permitted. A lawful code is a specified total finite deterministic acquired-term computation whose complete original bit is actually exported under the isolation and faithful-entry services. Its constants, workspace and computation are producer resources without a bound here. This acquired access is unavailable to a native preparer in §3.
+
+For explicit immutable $T,e_0,e_1$ and binary $L$, put
+
+$$
+\operatorname{Good}_z(u)\iff
+T\text{ at }e_z\text{ returns the entire }F(u)\text{ within }L\text{ calls}.
+\tag{POC.19}
+$$
+
+SOME-LAWFUL-ACQUIRED-CODE asks whether some lawful total code attains both bits and always selects such a good entry. No native-preparer budget or program description is an input to this separate problem.
+

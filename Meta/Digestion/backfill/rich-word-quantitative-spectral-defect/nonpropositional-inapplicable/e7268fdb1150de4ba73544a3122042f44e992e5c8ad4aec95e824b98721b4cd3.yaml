@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e7268fdb1150de4ba73544a3122042f44e992e5c8ad4aec95e824b98721b4cd3
+  normalized_sha256: sha256:e7268fdb1150de4ba73544a3122042f44e992e5c8ad4aec95e824b98721b4cd3
+cas_ref: sha256:e7268fdb1150de4ba73544a3122042f44e992e5c8ad4aec95e824b98721b4cd3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This atom fixes the standing model and notation for Sections 18–22. It specializes Definitions 1.2–1.3 and 8.1 to r=4, restates the defining root equations and interval conditions in (75), and introduces s_i, C_i and J_i in (76). The eta, p and q_j conditions are hypotheses of the literal prefix class, not newly proved conclusions; the final sentences state the scope of those hypotheses. There is no independent return-existence, extension, occurrence-correspondence, exponent or attainment claim in this atom. This nonpropositional receipt classifies that definitional prose only; it proves neither the model's mathematical realization nor Theorem 18.2, and supplies no Lean coverage.
+    previous_atom_id: 332ebf18b0f46b55dd4e65e07c2cce0e7cccb0e8dda90b4ad40d5f9b7364a49f
+    next_atom_id: 16cd419fb39ff774289679d7e839669c1df71c3453a42953b67c414a8aa25eff

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:55c70e0dce59da69143690edbc22673b786d8d6de311943c3b8c62893f5902a9
+  normalized_sha256: sha256:55c70e0dce59da69143690edbc22673b786d8d6de311943c3b8c62893f5902a9
+cas_ref: sha256:55c70e0dce59da69143690edbc22673b786d8d6de311943c3b8c62893f5902a9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条以“或”列出观察映射永久非单射这一候选机制，不对未指定的映射作非单射性断言。
+    previous_atom_id: 01a4fe691391df5d1aab50b9fbe27a0fb76a177eae6bac9831280ae98e50eff5
+    next_atom_id: c5967bab42952263517fb3998855de0cf25ebe30817d4b17a42e23638d5a1298

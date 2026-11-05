@@ -1,0 +1,53 @@
+For every $n\ge1$ the following assertions hold simultaneously.
+
+1. The base $b$ is valid, and $(k_n,q)$ is an original control of duration
+   one. It has a finite piecewise-$C^1$ partition with continuous derivative
+   rates on each closed piece, and both coordinates are absolutely
+   continuous on $I$. Its endpoints satisfy $k_n(0)=k_n(1)=a$.
+   For every natural $j<n$, including all endpoints of the displayed legs,
+
+   $$
+   \begin{aligned}
+   C_n(t)&=\frac c2(t-j/n)
+     &&\left(j/n\le t\le(j+1/2)/n\right),\\
+   C_n(t)&=\frac c2((j+1)/n-t)
+     &&\left((j+1/2)/n\le t\le(j+1)/n\right).
+   \end{aligned}
+   \tag{ST.3}
+   $$
+
+2. For every $t\in I$,
+
+   $$
+   \frac c4\le k_n(t)\le\frac c2,\qquad
+   |k_n(t)-a|\le\frac{c}{4n},\qquad
+   0<m:=\min(c/4,1-2c)\le p_i(k_n(t))
+   \quad(i\in\{0,1,2,3,13\}).
+   \tag{ST.4}
+   $$
+
+   The function $k_n$ is Lipschitz on $I$ with constant $3c/4$, and
+
+   $$
+   \begin{gathered}
+   V_I(q)=0,\qquad V_I(k_n)\le3c/4,\qquad
+   q'(t)=0\quad(t\in\mathbb R),\\
+   L(k_n,q)\le3c/4,\qquad Q(k_n,q)\le9c^2/16.
+   \end{gathered}
+   \tag{ST.5}
+   $$
+
+   Both integrands defining $L(k_n,q)$ and $Q(k_n,q)$ are interval
+   integrable on $[0,1]$. For Lebesgue-almost every real $t$, membership
+   $t\in I$ implies
+
+   $$
+   h_c[k_n](t)=\frac1{2-t},\qquad |k_n'(t)|\le3c/4.
+   \tag{ST.6}
+   $$
+
+3. For every $t\in I$, the hazard is interval integrable from $0$ to $t$
+   and $S_c[k_n](t)=1-t/2$. The waiting pair $(t\mapsto a,q)$ is an
+   original control on the same base and duration, and, for every real $t$,
+   its hazard is zero and its survival is one.
+

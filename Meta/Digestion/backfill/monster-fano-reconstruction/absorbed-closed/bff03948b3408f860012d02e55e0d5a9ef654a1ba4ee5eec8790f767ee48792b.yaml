@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bff03948b3408f860012d02e55e0d5a9ef654a1ba4ee5eec8790f767ee48792b
+  normalized_sha256: sha256:bff03948b3408f860012d02e55e0d5a9ef654a1ba4ee5eec8790f767ee48792b
+cas_ref: sha256:bff03948b3408f860012d02e55e0d5a9ef654a1ba4ee5eec8790f767ee48792b
+coverage_gids:
+  - gid: D5/S3/VertexAlgebra/MonsterFanoReconstruction.block_intersection_le_one
+    target_statement_id: sha256:2ebdfa8f751963baf8d7f977c39ddfb7f63b43bbfb29df7bcfcaeb74445ac78a
+  - gid: D5/S3/VertexAlgebra/MonsterFanoReconstruction.complement_symmDiff_mem
+    target_statement_id: sha256:43228912bfac65c455fb8b3e6ef95602f62f5a780aaef309a4ff6618a0e2eac9
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6461a9b37d20f48b40b120e570299b13b739b03e0b29b023cfa506404d0cd0d9
+  normalized_sha256: sha256:6461a9b37d20f48b40b120e570299b13b739b03e0b29b023cfa506404d0cd0d9
+cas_ref: sha256:6461a9b37d20f48b40b120e570299b13b739b03e0b29b023cfa506404d0cd0d9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义“递归相容”谓词和相容矩阵集合；AM=MA 是集合成员的约定条件，不是对任意矩阵提出的结论。
+    previous_atom_id: b8bd57e779bdc70f59923762406eabacd4a70ba40cdbaa60b0d9536800d5a507
+    next_atom_id: 394ab480ba1a3348191bb67ef575330e2257d3cba2a39fe514aed5970dbff5f7

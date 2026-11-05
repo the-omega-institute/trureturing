@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3876ea740c76203b62d8b00e30c99c32f6ff811c42daab10b28f85b8fe18dc14
+  normalized_sha256: sha256:3876ea740c76203b62d8b00e30c99c32f6ff811c42daab10b28f85b8fe18dc14
+cas_ref: sha256:3876ea740c76203b62d8b00e30c99c32f6ff811c42daab10b28f85b8fe18dc14
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非负秩文献读取范围、来源归属与项目接口职责说明；没有重述需要在此闭合的数学结论。
+    previous_atom_id: be798279d38c602d175ad19c056113a4c531cdc70c7981251f77888ea07a6a97
+    next_atom_id: 71dc123c3ab133d04f7041d9692e70eb2620435dd3ed29fe6f2d68fd0e0284a8

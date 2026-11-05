@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a8d3afbc17b3ec4257ecff5c3103439b2475ccdcf840a06b877543303cb55134
+  normalized_sha256: sha256:a8d3afbc17b3ec4257ecff5c3103439b2475ccdcf840a06b877543303cb55134
+cas_ref: sha256:a8d3afbc17b3ec4257ecff5c3103439b2475ccdcf840a06b877543303cb55134
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此条仅列出 prime-frequency flow 的源码 GID 作为来源目录项，没有陈述该节点的量词、假设或数学结论。
+    previous_atom_id: 3a23c4d744e6974ef15c000fbeb19b3fede428b3dd089a1f3a53a441e69c2875
+    next_atom_id: aff0f6b52756dc4a3fc5ff87cde3b46a92472d3db56d89fc7445600711467829

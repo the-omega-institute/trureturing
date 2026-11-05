@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3ea4bf35c838523cc2f4915918d588d6c58f3045e8656b42a1417680a81e412e
+  normalized_sha256: sha256:3ea4bf35c838523cc2f4915918d588d6c58f3045e8656b42a1417680a81e412e
+cas_ref: sha256:3ea4bf35c838523cc2f4915918d588d6c58f3045e8656b42a1417680a81e412e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 持续 forcing 的候选解释列表项：外部输入。'
+    previous_atom_id: 5818016523e77b2635f8043580ba8a4e9ed9cc81c72135a049586c88732025cb
+    next_atom_id: 72f233ea1b8f3f225c3559bee5522a8f5a13145666d7866bb1930dde270edc21

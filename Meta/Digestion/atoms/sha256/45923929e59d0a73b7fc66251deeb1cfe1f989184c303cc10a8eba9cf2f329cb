@@ -1,0 +1,96 @@
+**Theorem 12.5 (necessary original-panel budget for this consumer).**
+For every integer $k\ge20$, every positive integer $N$, either original
+schedule of Definition 12.1, every $0<\delta<1/2$, and every predictor
+allowed there, suppose that, before any continuation acquisition,
+
+$$
+\Pr_\theta\bigl(|\widehat p-p_{\theta,k}|\le1/5\bigr)
+\ge1-\delta\qquad\text{for each }\theta\in\{0,2/k\}.
+\tag{12.14}
+$$
+
+Then its number $m$ of pair attempts necessarily satisfies
+
+$$
+\boxed{
+m\ge
+\frac{\log(1+4(1-2\delta)^2)}{\log(1+1600/r^2)}
+\ge\frac{r^2}{1600}\log(1+4(1-2\delta)^2).
+}
+\tag{12.15}
+$$
+
+All logarithms are natural. At confidence $3/4$, that is $\delta=1/4$,
+this gives respectively
+
+$$
+\boxed{
+N\ge\frac{r^2\log2}{64000}\quad\text{(directional)},\qquad
+N\ge\frac{r^2\log2}{80000}\quad\text{(depth)}.
+}
+\tag{12.16}
+$$
+
+Integer budgets obey the ceilings of these bounds and, more strongly,
+$N\ge\lceil\log(1+4(1-2\delta)^2)/
+(c\log(1+1600/r^2))\rceil$, where $c=40$ or $50$.
+
+Proof. Test the two source hypotheses by reporting $2/k$ precisely
+when $\widehat p>1/2$. By (12.12), an error of at most $1/5$ places
+$\widehat p\le3/10$ under zero and $\widehat p\ge7/10$ under $2/k$.
+Therefore each testing error is at most $\delta$.
+The standard two-point testing inequality, supplied by
+[LeCam, `le_cam_two_point_sum`](../../../D5/S3/Estimation/LeCam.lean)
+and its [owning Scribe](../../../Blueprint/D5/S3/Estimation/LeCam.scribe.cs),
+requires $\operatorname{TV}(P_0,P_{2/k})\ge1-2\delta$.
+This also covers random predictors: if $a(w)\in[0,1]$ is their
+conditional probability of reporting $2/k$, their error sum is
+$1-\sum_w(P_{2/k}(w)-P_0(w))a(w)\ge1-\operatorname{TV}(P_0,P_{2/k})$.
+This is the same testing supplier applied to a randomized decision,
+with integration if common metadata is continuous.
+
+Combine this requirement with (12.3). Both sides are nonnegative,
+so squaring gives
+$(1+1600/r^2)^m\ge1+4(1-2\delta)^2$.
+The denominator in (12.15) is strictly positive. Taking logarithms
+proves its first inequality, and $\log(1+x)\le x$ for $x\ge0$
+proves its second. Substituting $\delta=1/4$ and (12.2) gives
+(12.16); integrality gives the stated ceilings. $\square$
+
+The acquisition and, if performed once after prediction, continuation
+charges belong to that same run. Adding Definition 12.3 to (10.5)
+gives
+
+$$
+\begin{array}{c|c|c}
+ &\text{directional}&\text{depth}\\ \hline
+\text{source preparations}&95N+r&115N+r\\
+\text{single-copy detector calls}&15N&15N\\
+\text{local filter calls}&40N&60N+U_1\le90N\\
+\text{original joint detector calls}&20N+C_D\le40N&20N+C_T\le50N\\
+\text{additional }r\text{-register detector calls}&1&1\\
+\text{outcome payload bits}&95N+1&155N+1
+\end{array}
+\tag{12.17}
+$$
+
+Here $U_1,C_D,C_T$ retain exactly their actual-run definitions in
+Proposition 10.2. The preparation row follows by adding the $r$ fresh
+requests; the extra call and bit are the one complete binary
+continuation. All acquisition failures remain charged. The continuation
+requires a carrier for $r$ jointly available five-mode inputs, of
+Hilbert-space dimension $5^r$. Its hardware realization, workspace,
+backing, calibration, instruction descriptions, counters, permission,
+record reads/writes and prediction-output encoding add resources beyond
+these rows. The prediction cut itself precedes those $r$ future
+requests; promising them is not acquiring their outcomes in advance.
+No relation between this call count and elementary gates, physical
+duration, energy or a total implementation cost is assumed.
+
+The coefficients in (12.16) express necessary bounds for two different
+fixed schedules. Their ratio does not prove that either schedule is
+more efficient, that a bound is attained, or that the constants are
+optimal. The dependence on $\delta$ in (12.15) is the stated testing
+consequence, not a confidence-optimal characterization. In particular,
+it stays bounded as $\delta$ tends to zero. No upper bound is inferred.
+

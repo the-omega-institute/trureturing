@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:208d4ccb5a31dd2f756555a7e7d25515aa7a3139f5709faf3701e3b683439df3
+  normalized_sha256: sha256:208d4ccb5a31dd2f756555a7e7d25515aa7a3139f5709faf3701e3b683439df3
+cas_ref: sha256:208d4ccb5a31dd2f756555a7e7d25515aa7a3139f5709faf3701e3b683439df3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：把 prime–Gamma 忠实输运列为开放前件 A9，并禁止冒充已证。
+    previous_atom_id: 6fe7187ebb7c633f19b57782b5e9079c25711d12de01e84d7634dc375ab1b80d
+    next_atom_id: f16afb1f3d49055eb604108834f71b1d0de07e4e2ae0bd774617d94f4e7be4fb

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:df9c8c515cdd47346b2bd79837d6a1b620078eb9ae240f33871d185070255e32
+  normalized_sha256: sha256:df9c8c515cdd47346b2bd79837d6a1b620078eb9ae240f33871d185070255e32
+cas_ref: sha256:df9c8c515cdd47346b2bd79837d6a1b620078eb9ae240f33871d185070255e32
+coverage_gids:
+  - gid: D5/S0/Tower/Champions/GoldenSurvivorClassification.golden_nat_even_or_odd
+    target_statement_id: sha256:d6a9a385270e8dd434b649327c07ed6f577107d7341aea91b1b626ad4f7c748c
+  - gid: D5/S3/Zeros/ZetaIdentities.riemann_zeta_euler_product
+    target_statement_id: sha256:8a6cfa904ccee3ca7d79986be035825fefe99cb8ec32e0fabea4f2da7266295d
+receipts:
+  unresolved_subitems: []

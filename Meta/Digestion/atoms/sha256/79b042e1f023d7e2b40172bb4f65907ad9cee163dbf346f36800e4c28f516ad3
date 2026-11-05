@@ -1,0 +1,33 @@
+**Theorem 22.8 (binary $D$ versus countable $\theta$).** Fix $t>0$ and
+$r\in(0,\delta]$. Let $p:\mathbb T\to Y$ be any fixed countable-output
+Borel quantizer of the current wrapped $\theta$ endpoint, chosen before observing the $v$
+prefix. The record consisting of the complete $v$ prefix and
+$p(\theta_t\bmod2\pi)$ does not exactly recover the sign. In contrast, the
+exact circle-valued endpoint $\theta_t\bmod2\pi$ recovers it almost surely.
+
+**Proof.** Conditional on $U$, the two unwrapped candidate increments are
+centered Gaussian integrals with deterministic integrands
+
+$$
+A_\eta(U_a)=\frac{(c_a-\eta r)(H-c_a)}{2HU_a}.
+\tag{22.15}
+$$
+
+Their ratio is $(c_a-r)/(c_a+r)$. Equality in the Cauchy--Schwarz
+criterion for a singular covariance would force this ratio to be constant in
+time, hence $U$ constant. The height has quadratic variation
+$\sigma^2t>0$, so constant paths have probability zero. The conditional
+Gaussian pair $(\theta_t^+,\theta_t^-)$ consequently has a positive density
+on $\mathbb R^2$, and its wrapped pair has a positive density on $\mathbb T^2$.
+
+The countable Borel cells $p^{-1}(y)$ cannot all have Haar measure zero.
+Choose one cell of positive measure. Positive two-torus density gives a
+positive common collision event on which the quantized replies agree.
+Combining it with the positive actual-law overlap of Lemma 22.5 rules out a
+common zero-error sign decoder by the same equivalent-law argument as in
+Theorem 22.6. For the exact circle-valued endpoint, the two candidates are
+equal only when $\Xi_t\in2\pi\mathbb Z$, which has probability zero by
+(22.9). Comparing the exact candidates selects the sign, after which the
+prefix formulas in Theorem 22.9 apply. A partition selected from $v$ would
+be a different paid interface and is outside this fixed-quantizer claim. $\square$
+

@@ -1,0 +1,42 @@
+fingerprints:
+  raw_sha256: sha256:82fd672dc0465c04d942e67b8e5d8708a010c049e9959e2a635c1ac2317b5dbd
+  normalized_sha256: sha256:82fd672dc0465c04d942e67b8e5d8708a010c049e9959e2a635c1ac2317b5dbd
+cas_ref: sha256:82fd672dc0465c04d942e67b8e5d8708a010c049e9959e2a635c1ac2317b5dbd
+coverage_gids:
+  - gid: D5/S3/Observer/LinearMemory/AffineCodebookMemory.B
+    target_statement_id: sha256:84bf41a55072769aa6c4dc48bf25f78b692228906c8822b83c737250821deed0
+  - gid: D5/S3/Observer/LinearMemory/AffineCodebookMemory.D
+    target_statement_id: sha256:4a2db61a864869363df8958e6a57afb5f740198dffd9864ab84d73024209d687
+  - gid: D5/S3/Observer/LinearMemory/AffineCodebookMemory.H
+    target_statement_id: sha256:8c3276007cb7e87170552e525bcd39200713fdf6ffcdd2ffe377a5048c948658
+  - gid: D5/S3/Observer/LinearMemory/AffineCodebookMemory.K
+    target_statement_id: sha256:b42c7f7480364d869756f21eeffb82903c27d361cacd23236db7dcf2c3f3fe91
+  - gid: D5/S3/Observer/LinearMemory/AffineCodebookMemory.PiStar
+    target_statement_id: sha256:339886d11910940a465d39824d49c1849938b951408344b9857f8fa7071b55e6
+  - gid: D5/S3/Observer/LinearMemory/AffineCodebookMemory.actual_autonomous_readout
+    target_statement_id: sha256:beb57e513a651a64344da061268524f7d91ce655d35d132db964f69ece37d87a
+  - gid: D5/S3/Observer/LinearMemory/AffineCodebookMemory.actual_constant_hidden_drift
+    target_statement_id: sha256:2de6d5f6e6eba134d37cd42c93580fcbb6188f42da5827c9fb6688a2d6e4f052
+  - gid: D5/S3/Observer/LinearMemory/AffineCodebookMemory.actual_error_and_recursions
+    target_statement_id: sha256:16cda93fd175d8d6005b7e0933b616a25707ff4ea86feaf43c44e9328d865c40
+  - gid: D5/S3/Observer/LinearMemory/AffineCodebookMemory.actual_inverse_data
+    target_statement_id: sha256:4729219371f6d168ae0d89ef63104f1315403495f5b10a3bbcd68a3ab25ff357
+  - gid: D5/S3/Observer/LinearMemory/AffineCodebookMemory.actual_projection_and_blocks
+    target_statement_id: sha256:c731ac543e463c3421d4c8a4e9fdee3f631e8e29f5a4853859c2aaa3d5af9f3e
+  - gid: D5/S3/Observer/LinearMemory/AffineCodebookMemory.fixed_on_actual_span
+    target_statement_id: sha256:6bf2182bdf1b7e5e8044bb89182ad3dcc35b6d9a52f8b30294203bdab2d7e6d4
+  - gid: D5/S3/Observer/LinearMemory/AffineCodebookMemory.orthogonal_row_norm
+    target_statement_id: sha256:4c4160b2a13793611fe80dc73e1a4a4dc3762380478732b00e717122c23a7f24
+  - gid: D5/S3/Observer/LinearMemory/AffineCodebookMemory.r
+    target_statement_id: sha256:5fa48f02bef54a1bc5345ae09a5c1a768482c86105cc3f4166655d61a46232f4
+  - gid: D5/S3/Observer/LinearMemory/AffineCodebookMemory.s
+    target_statement_id: sha256:d26fcb9c76ec8a8b5ceb7a34b77aa0476f6acaa29815f59267b050eb4573ec85
+  - gid: D5/S3/Observer/LinearMemory/AffineCodebookMemory.u
+    target_statement_id: sha256:d6e68b07759652a223c8b80504b05e6ea69ecc68231644b118f849c04b15f4ad
+  - gid: D5/S3/Observer/LinearMemory/AffineCodebookMemory.v
+    target_statement_id: sha256:790fac925ad12ad6d2846b373277aab8f957cd7c6ec6a2f029025bcae087b3b1
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - d94bfc5944c5dab2815937e48ce1167dbd20569897812db30c57a6e107240bcd
+    - b22f3b68f9e926b30a3bca8dfbd73ae59f224ae2367b6d7699c2e37234ca7485

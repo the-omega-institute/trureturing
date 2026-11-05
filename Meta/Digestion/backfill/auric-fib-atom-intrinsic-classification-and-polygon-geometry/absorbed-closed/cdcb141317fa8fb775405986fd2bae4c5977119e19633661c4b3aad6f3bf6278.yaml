@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:cdcb141317fa8fb775405986fd2bae4c5977119e19633661c4b3aad6f3bf6278
+  normalized_sha256: sha256:cdcb141317fa8fb775405986fd2bae4c5977119e19633661c4b3aad6f3bf6278
+cas_ref: sha256:cdcb141317fa8fb775405986fd2bae4c5977119e19633661c4b3aad6f3bf6278
+coverage_gids:
+  - gid: D5/S3/Geometry/Polygons/PolygonPrescribedEars.prescribed_complete_ears
+    target_statement_id: sha256:92e57757fdafa6774b050bf5e8a965e03b5cd8307dc19fe06f502634c8b23b42
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6188c293d1a3ddaf4c35c1ad50f624eae421d8b0729963393639e3321803ddb2
+  normalized_sha256: sha256:6188c293d1a3ddaf4c35c1ad50f624eae421d8b0729963393639e3321803ddb2
+cas_ref: sha256:6188c293d1a3ddaf4c35c1ad50f624eae421d8b0729963393639e3321803ddb2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条定义U和H_6并解释预选表与解码器的量词次序；所述区别是问题契约与记号范围，不主张这些最小值之间的严格不等式、有限性或可达性。
+    previous_atom_id: 98ac72658eed432a140e186c6d20df442a375e481a564bc28f3c280e47f532cf
+    next_atom_id: dcc5348c710b43d0a09630fac725ccee235b674cff5c3fd788ac5f7d5a9094ee

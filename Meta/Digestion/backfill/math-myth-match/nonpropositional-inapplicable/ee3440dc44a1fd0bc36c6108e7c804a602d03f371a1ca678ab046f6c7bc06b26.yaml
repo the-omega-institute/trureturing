@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ee3440dc44a1fd0bc36c6108e7c804a602d03f371a1ca678ab046f6c7bc06b26
+  normalized_sha256: sha256:ee3440dc44a1fd0bc36c6108e7c804a602d03f371a1ca678ab046f6c7bc06b26
+cas_ref: sha256:ee3440dc44a1fd0bc36c6108e7c804a602d03f371a1ca678ab046f6c7bc06b26
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅解释经验准备与直觉的文本关系，并提出保留原典资料的方法要求。
+    previous_atom_id: a2e9de21e80bd82ceb5c031c4a86da2aaa5788a81cde01a5efb537eefe0efec3
+    next_atom_id: efe26f2d01255a2b69d48579a4cee6e18d148410fbae2789d682014efb5e7ce7

@@ -1,0 +1,9 @@
+**Definition 24.1 (source-refining supplementation).** Retain Definitions 1.1–1.2, 11.1 and 16.1's actual source, one fixed root representative, genuine finite root-reachable complete-response quotient $V$, whole legal root language and final-only supplement contract. Use exactly Definition 22.1's one type, two fixed parameter-free tokens $a,b$, unit duration on every legal edge, $r=1$, $K=[-1,1]$ and $\epsilon=1/4$. In particular the entire support is (22.2), with every error allowed for every word. A source-refining realization is a finite complete carrier $M$, one fixed $m_0$, one total names-only update $U:M\times\{a,b\}\to M$ and a map $\pi:M\to V$ such that
+
+$$
+\pi(\mu(u))=z(u)\qquad(u\in\mathcal P_o).
+\tag{24.1}
+$$
+
+The two-fibre requirement is $|\pi^{-1}(x)|\le2$ for every $x\in V$. The map $\pi$ expresses a mathematical tracking property; it is not an endpoint input to $U$. All persistent values remain part of $M$. Condition (24.1) is required at the empty history and every stopping prefix. No condition on an illegal execution, no particular encoding and no injectivity or permutation condition on an update is imposed.
+

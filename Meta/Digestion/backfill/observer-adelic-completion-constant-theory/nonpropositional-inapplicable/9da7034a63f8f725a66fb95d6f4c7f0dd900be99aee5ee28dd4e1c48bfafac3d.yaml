@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9da7034a63f8f725a66fb95d6f4c7f0dd900be99aee5ee28dd4e1c48bfafac3d
+  normalized_sha256: sha256:9da7034a63f8f725a66fb95d6f4c7f0dd900be99aee5ee28dd4e1c48bfafac3d
+cas_ref: sha256:9da7034a63f8f725a66fb95d6f4c7f0dd900be99aee5ee28dd4e1c48bfafac3d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题。表述纪律：要求区分分布意义与普通函数等式，未断言一个具体等式。
+    previous_atom_id: e3b905edf542e8bbe13d929f3d1b03b3f6400f64e9bb03e7b46f8c77410056b1
+    next_atom_id: 422212bb899da8a63c71b20e08c35bc8dd9f6179d9e0f6ac797a038ed4ce0881

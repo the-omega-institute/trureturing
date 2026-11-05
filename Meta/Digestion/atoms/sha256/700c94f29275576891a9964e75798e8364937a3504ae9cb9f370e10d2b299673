@@ -1,0 +1,27 @@
+**Definition 5.1 (Deterministic two-call rule).** Ignore $u$, without
+changing its law. First request the actual original address $2j$.
+After reply $x$, make the second actual call and then return according
+to this table, where $y$ is the second reply:
+
+| First reply $x$ | Second actual address | Output if $y=0$ | Output if $y=1$ |
+| --- | --- | --- | --- |
+| $0$ | $2(j+2)$ | $h_1(\sigma)$ | $h_0(\sigma)$ |
+| $1$ | $2(j+1)$ | $h_0(1-\sigma)$ | $h_0(\sigma)$ |
+
+There is no search for a phase before the first call and no extra
+observation between these two calls. Choose finite internal delays,
+for example zero. The table specifies an output for every binary
+reply pair, including impossible ones. Thus the rule is measurable,
+returns in finite time on every input, and has
+
+$$
+N=2\quad\text{on every path}.
+\tag{5.1}
+$$
+
+In phase zero its first paid reply is $Y_j$. Its second paid reply
+is $Y_{j+2}$ on the zero branch and $Y_{j+1}$ on the one branch.
+In phase one every address in the table is a separator. These
+statements describe the actual replies under (1.1); they grant no
+free phase observation.
+

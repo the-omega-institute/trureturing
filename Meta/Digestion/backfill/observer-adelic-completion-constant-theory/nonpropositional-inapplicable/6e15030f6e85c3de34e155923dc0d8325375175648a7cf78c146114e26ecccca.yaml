@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6e15030f6e85c3de34e155923dc0d8325375175648a7cf78c146114e26ecccca
+  normalized_sha256: sha256:6e15030f6e85c3de34e155923dc0d8325375175648a7cf78c146114e26ecccca
+cas_ref: sha256:6e15030f6e85c3de34e155923dc0d8325375175648a7cf78c146114e26ecccca
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这是解释性列表中观察者账本深度的标签，没有单独的缩放恒等式或复杂度下界。
+    previous_atom_id: 0c7eec8d2d52d5c78f82b76897c7f2e5f156384f469f1e8099ee4d6b6b815263
+    next_atom_id: 574972648c859c171cd3de08ae6d3b7fb66c3e2c0893a5172cf701916dd28817

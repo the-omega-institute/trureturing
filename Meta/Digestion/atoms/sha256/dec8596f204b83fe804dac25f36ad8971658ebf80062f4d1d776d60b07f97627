@@ -1,0 +1,99 @@
+**引理 55.1（原纤维内的严格双世界及其可见频率）。** 对每个 $0<d<1$，存在严格正的 $\rho_+,\rho_-\in\mathcal K_d$ 及其原域 CPTP 提升，使
+
+$$
+2^n[p_{\rho_+}(0^n,1)-p_{\rho_-}(0^n,1)]
+=2t\,\Im(e^\dagger B_\zeta^ne),\qquad
+B_\zeta=\begin{pmatrix}-1/2&\sqrt3\zeta/2\\\sqrt3/2&\zeta/2\end{pmatrix},
+\quad\zeta=e^{-2\mathrm i\theta},
+\tag{55.1}
+$$
+
+其中 $t>0$，$e$ 在右端表示 $(e,f)$ 子空间的第一个基向量。若 $\theta\notin(\pi/2)\mathbb Z$，右端的有限指数展开含有系数非零的、不是单位根的单位模频率。
+
+证明。第二卷定理 42.4 已供应严格相容点
+
+$$
+\varepsilon=d(1-d)/100,\qquad
+\rho_*=
+\begin{pmatrix}
+d+\varepsilon&-\varepsilon&4\varepsilon/\sqrt6\\
+-\varepsilon&\varepsilon&0\\
+4\varepsilon/\sqrt6&0&\beta-2\varepsilon
+\end{pmatrix}_{(a,h_{\rm out},g)}.
+\tag{55.2}
+$$
+
+它满足 $\rho_*\succ0$、$s=\varepsilon>0$、$B_d(\rho_*)\succ0$。置
+
+$$
+\Delta=\mathrm i(\xi e^\dagger-e\xi^\dagger),\qquad
+t=\frac14\min\{\lambda_{\min}(\rho_*),\lambda_{\min}(B_d(\rho_*))\},
+\qquad\rho_\pm=\rho_*\pm t\Delta.
+\tag{55.3}
+$$
+
+所有约束向量为实，而 $\Delta$ 是纯虚 Hermitian 反对称矩阵。因此迹、$C,E$ 矩和 $aa$ 人口均不变。$\|\Delta\|=1$；$B_d$ 的变化只有非对角项，模至多 $t$，其对角项不变。两个正定条件均保留，故这是两个实际正世界。
+
+原域提升可明确取自第一卷定理 35.4 的构造。对每个世界置
+
+$$
+\begin{gathered}
+L=\ell^\dagger\rho\ell>0,\qquad
+A_{\min}=\rho\ell\ell^\dagger\rho/L,\\
+\alpha=\frac{d-a^\dagger A_{\min}a}{a^\dagger\rho a-a^\dagger A_{\min}a},\qquad
+A=(1-\alpha)A_{\min}+\alpha\rho,\qquad D=\rho-A.
+\end{gathered}
+\tag{55.4}
+$$
+
+严格条件给 $0<\alpha<1$、$A,D\succeq0$、$D\ell=0$、$a^\dagger Aa=d$。原五维算子为
+
+$$
+\begin{gathered}
+D_+=\frac1{\sqrt2}\begin{pmatrix}1&1&0&0&0\\0&0&\sqrt2&0&0\\0&0&0&1&1\end{pmatrix},\qquad
+D_-=\frac1{\sqrt2}\begin{pmatrix}1&-1&0&0&0\\0&0&0&0&0\\0&0&0&-1&1\end{pmatrix},\\
+\omega=D_+^\dagger AD_++D_-^\dagger DD_-,\qquad
+T_\omega(X)=BP_+XP_+B^\dagger+(f^\dagger Xf)\omega.
+\end{gathered}
+\tag{55.5}
+$$
+
+$x\mapsto(D_+x,D_-x)$ 是 $H\to\mathbb C^3\oplus N$ 的酉识别，故 $\omega$ 为密度矩阵。若 $\omega=\sum_r\lambda_rw_rw_r^\dagger$，$T_\omega$ 的 Kraus 算子为 $BP_+$ 和 $\sqrt{\lambda_r}w_rf^\dagger$，其伴随平方和为 $I_3$。原 $P,J_1,J_2$ 的完整响应分别是第一卷 (35.3) 的 $Y_0,Y_1,Y_2$；其中 $ff$ 条目为 $d,e_d,(6+11d)/32$。原递推 $J_{j+2}=(J_j+J_{j+1})/2$ 对 $j\ge1$ 延续到所有深度。因此 (55.5) 属于原纤维，且 $\mathcal GT_\omega=S_\rho$，没有仅在某个输入上拟合矩。
+
+在 $(\xi,e,f)$ 基中，去掉 $V_0$ 的公共标量相位后恰为 $1\oplus B_\zeta$，而 $E=(\xi+e)(\xi+e)^\dagger/2$。直接迹配对给
+
+$$
+\operatorname{Tr}\!\left[\Delta(1\oplus G)^\dagger E(1\oplus G)\right]
+=\Im G_{11}
+\tag{55.6}
+$$
+
+对任意二阶复矩阵 $G$ 成立。令 $G=B_\zeta^n$，得到 (55.1)。补终端结果的差为其负数。
+
+下面确认频率在所有非例外角度都存在。$B_\zeta$ 酉，且
+
+$$
+\det B_\zeta=-\zeta,\qquad\operatorname{Tr}B_\zeta=(\zeta-1)/2.
+\tag{55.7}
+$$
+
+若 $B_\zeta$ 有限阶，则两个本征值是单位根，所以 $\zeta$ 是单位根，$(\zeta-1)/2$ 是代数整数。设 $\zeta$ 的阶 $N>2$。它在 $\mathbb Q(\zeta)$ 中每个共轭 $(\zeta^a-1)/2$ 都非零且模严格小于一，因为原始 $N$ 次单位根既不是 $1$ 也不是 $-1$。它们的积应为非零整数，绝对值却小于一，矛盾。反之 $B_1^2=I_2$、$B_{-1}^3=I_2$。所以
+
+$$
+B_\zeta\text{ 有限阶}\quad\Longleftrightarrow\quad
+\zeta\in\{1,-1\}\quad\Longleftrightarrow\quad\theta\in(\pi/2)\mathbb Z.
+\tag{55.8}
+$$
+
+特别地，这个论证包含 $\theta/\pi$ 为有理数但非例外的情形。
+
+$B_\zeta$ 是非标量正规矩阵，两个本征值 $\lambda_1,\lambda_2$ 不同。$e$ 不是本征向量，因为 $(B_\zeta)_{21}=\sqrt3/2$。其谱权重因而满足
+
+$$
+e^\dagger B_\zeta^ne=w_1\lambda_1^n+w_2\lambda_2^n,
+\qquad w_1,w_2>0,\quad w_1+w_2=1.
+\tag{55.9}
+$$
+
+非例外时至少一个 $\lambda_i$ 不是单位根。它不可能等于自身共轭；若与另一频率的共轭抵消，必须有 $\lambda_1\lambda_2=1$，即 $\zeta=-1$，也被排除。故其在虚部中的系数不为零。∎
+

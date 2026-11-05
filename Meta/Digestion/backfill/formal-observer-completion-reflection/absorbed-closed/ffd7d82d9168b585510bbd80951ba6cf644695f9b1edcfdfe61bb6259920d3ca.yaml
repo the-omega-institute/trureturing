@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ffd7d82d9168b585510bbd80951ba6cf644695f9b1edcfdfe61bb6259920d3ca
+  normalized_sha256: sha256:ffd7d82d9168b585510bbd80951ba6cf644695f9b1edcfdfe61bb6259920d3ca
+cas_ref: sha256:ffd7d82d9168b585510bbd80951ba6cf644695f9b1edcfdfe61bb6259920d3ca
+coverage_gids:
+  - gid: D5/S3/Observer/Hankel/HankelRankMinimality.finiteHankel_eq_observability_comp_controllability
+    target_statement_id: sha256:bfd6b7bab586875467aefbe57725c7fc530c45827fb0bb3108e790809032684e
+receipts:
+  unresolved_subitems: []

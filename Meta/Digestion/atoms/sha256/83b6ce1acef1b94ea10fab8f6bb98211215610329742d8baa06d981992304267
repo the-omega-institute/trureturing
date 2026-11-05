@@ -1,0 +1,30 @@
+**定义 3.1（有限偶端点轨道上的节点上界）。** 复用 III164.1–164.3 的奇位集合及符号：
+
+$$
+\begin{gathered}
+O=\{1,3,5,7,9\},\quad S=\{s:s\subseteq O\},\quad
+J_{\rm ev}=\{0,2,4,6,8,10\},\\
+c_q=\begin{cases}(-1)^{|q|},&q\in S,\\0,&q\notin S.\end{cases}
+\end{gathered}
+\tag{3.1}
+$$
+
+所有偶地址矩阵互相对易：它们只改变不同的偶中心位，控制只依赖不改变的奇位；边界 $n_1,n_9$ 亦如此。每个 $\mathcal P_j$ 为投影且 $\zeta^{10}=1$，故 $K_j^{10}=I$。于是
+
+$$
+\mathcal G_{\rm ev}=
+\left\{\prod_{j\in J_{\rm ev}}K_j^{m_j}:m_j\in\{0,\ldots,9\}\right\}
+\tag{3.2}
+$$
+
+是一个固定有限酉群，包含恒等元。定义同一个全域函数及密度
+
+$$
+h_{\rm end}(z)=\min_{g\in\mathcal G_{\rm ev},\ s\in S}
+\frac{|(gz)_s|^2}{\|z\|^2},\qquad
+\widehat\Pi_q(z)=\frac{|z_q|^2}{\|z\|^2}+\frac12c_qh_{\rm end}(z).
+\tag{3.3}
+$$
+
+这不是随输入、程序或地址改选的密度；有限最小值中的全部矩阵已由原十一端点固定。
+

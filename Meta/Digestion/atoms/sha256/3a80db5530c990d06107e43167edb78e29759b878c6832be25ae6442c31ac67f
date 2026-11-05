@@ -1,0 +1,162 @@
+**Theorem 10.2 (A sufficient ceiling for every normalized escape).** Let
+$(h_j)$ be any sequence in $\mathcal C_{a,b,c}$ such that
+$\max_{e\in E}(h_j)_e\to\infty$. Then
+
+$$
+\limsup_{j\to\infty}R(h_j)\le B_\infty.
+\tag{10.3}
+$$
+
+If any fixed $e\in E_{AB}$ satisfies $(h_j)_e\to\infty$, without
+any boundedness assumption on the other coordinates, the stronger bound is
+
+$$
+\limsup_{j\to\infty}R(h_j)\le n(n-3)+m.
+\tag{10.4}
+$$
+
+These are sufficient escape ceilings; no sharpness is asserted.
+
+*Proof.* Throughout, normalization is the actual condition
+$\lambda_2(L(h_j))=1$, so $L(h_j)\succeq P$ and
+$R(h_j)\le n(n-1)$. Choose a subsequence along which $R(h_j)$ tends
+to its limsup. After further subsequences, each of the finitely many
+edge coordinates has a limit in $[0,\infty]$. At least one limit is
+infinite. This selection preserves the resistance limit. It suffices
+to handle every resulting possibility.
+
+Suppose first that two distinct edges $e,f$ have infinite limits.
+Their incidence vectors $b_e=e_x-e_y$ and $b_f=e_z-e_t$ are linearly
+independent: proportional nonzero incidence vectors of unordered
+simple-graph edges have the same two endpoints. The matrix
+$b_e b_e^{\mathsf T}+b_f b_f^{\mathsf T}$ has two strictly positive
+eigenvalues. Since
+
+$$
+L(h_j)\succeq
+\min\{(h_j)_e,(h_j)_f\}
+       (b_e b_e^{\mathsf T}+b_f b_f^{\mathsf T}),
+$$
+
+the min–max principle makes the largest two eigenvalues of $L(h_j)$
+tend to infinity. Every other positive eigenvalue is at least $1$.
+Consequently
+
+$$
+\limsup_j R(h_j)\le n(n-3)<B_\infty.
+\tag{10.5}
+$$
+
+There is no assumption about the relative divergence rates.
+
+It remains to consider exactly one edge $e=\{u,v\}$ with infinite
+limit. All other coordinates now have finite limits. Put
+
+$$
+ b=e_u-e_v,\qquad t_j=(h_j)_e,\qquad
+ L(h_j)=t_jbb^{\mathsf T}+L_j^0,\qquad L_j^0\longrightarrow L^0.
+$$
+
+Here $L_j^0$ is the actual original Laplacian with only coordinate $e$
+set to zero; its support need not be connected. Let
+
+$$
+ W=\mathbf1^\perp\cap b^\perp,\qquad
+ Q=P-\tfrac12bb^{\mathsf T},\qquad
+ T=(QL^0Q)|_W.
+\tag{10.6}
+$$
+
+The matrix $Q$ is the orthogonal projection onto $W$, whose dimension
+is $n-2$. For $z\in W$, the divergent edge contributes zero energy,
+and $z^{\mathsf T}L_j^0z=z^{\mathsf T}L(h_j)z\ge\|z\|^2$.
+Passing to the limit proves $T\succeq I_W$.
+
+In the orthogonal decomposition
+$\mathbf1^\perp=\mathbb R(b/\sqrt2)\oplus W$, the original Laplacian
+has block matrix
+
+$$
+\begin{pmatrix}2t_j+\alpha_j&v_j^{\mathsf T}\\
+                 v_j&T_j\end{pmatrix},\qquad
+\alpha_j,v_j\text{ bounded},\qquad T_j\to T\succeq I_W.
+$$
+
+Its inverse has Schur complement
+$T_j-v_jv_j^{\mathsf T}/(2t_j+\alpha_j)\to T$.
+The inverse therefore tends to $0\oplus T^{-1}$. In particular the
+original all-pairs identity gives the exact limit
+
+$$
+\lim_j R(h_j)=n\operatorname{tr}_W T^{-1}.
+\tag{10.7}
+$$
+
+This is an inverse limit in the original counting space; no contracted
+graph resistance or replacement vertex measure has been substituted.
+
+Choose an original independent set $I$ containing neither $u$ nor $v$,
+and write $k=|I|\ge2$. Define on the full original space
+
+$$
+H_0=QL^0Q-Q\succeq0.
+$$
+
+It vanishes on $W^\perp$, in particular on $\mathbf1$.
+For $i\in I$, $Qe_i=e_i-\mathbf1/n$. Since $L^0\mathbf1=0$ and
+$I$ is independent, its $I$ block is
+
+$$
+(H_0)_{II}=\operatorname{diag}(d_i^0-1)_{i\in I}
+                 +\frac1n\mathbf1_I\mathbf1_I^{\mathsf T}.
+\tag{10.8}
+$$
+
+Taking the trace on the $k-1$ dimensional difference space supported
+on $I$ gives
+$0\le (k-1)(\sum_{i\in I}d_i^0-k)/k$.
+Thus, for Gram vectors $v_x$ of $H_0$ and
+$A_I=\sum_{i\in I}\|v_i\|^2$, (10.8) implies
+
+$$
+ A_I\ge\frac kn,\qquad
+ \left\|\sum_{i\in I}v_i\right\|^2
+ =A_I+\frac{k(k-1)}n\ge\frac{k^2}n.
+$$
+
+Also $\sum_{x\in V}v_x=0$, because the squared norm of this sum is
+$\mathbf1^{\mathsf T}H_0\mathbf1=0$. Cauchy–Schwarz on the other
+$n-k$ original vectors now yields
+
+$$
+ S_0:=\operatorname{tr}H_0
+ \ge\frac kn+\frac{k^2}{n(n-k)}=\frac{k}{n-k}.
+\tag{10.9}
+$$
+
+Let $q_1,\ldots,q_{n-2}\ge0$ be the eigenvalues of $T-I_W$.
+They sum to $S_0$. Applying the finite-list comparison (3.5) to this
+same list, not to separately optimized spectra, gives
+
+$$
+\begin{aligned}
+\operatorname{tr}_W T^{-1}
+ &=n-2-\sum_{r=1}^{n-2}\frac{q_r}{1+q_r}\\
+ &\le n-2-\frac{S_0}{1+S_0}
+ \le n-2-\frac kn.
+\end{aligned}
+\tag{10.10}
+$$
+
+If $e\in E_{AB}$, take $I=C$ and $k=c$. Equations (10.7)–(10.10)
+give $n(n-2)-c=n(n-3)+m$.
+If $e$ joins $C$ to either other part, take $I$ to be $C$ with that
+endpoint removed. Then $k=c-1\ge2$, and the bound is
+$n(n-2)-(c-1)=B_\infty$. These alternatives cover every original
+edge. They prove (10.3) on the chosen limsup subsequence and hence on
+the original sequence. Under the additional hypothesis of (10.4),
+every such subsequence either has at least two infinite edge limits,
+where (10.5) applies, or has just the stated $AB$ edge with infinite
+limit, where the stronger choice $I=C$ applies. This proves (10.4)
+even if other original coordinates are unbounded. ∎
+

@@ -1,0 +1,49 @@
+**命题 57.2（两个实际场的共同全域分解）。** 令 $d_{\mathrm c}=2$、$d_R=3$。
+有与来源和 $n$ 无关的酉坐标重排
+
+$$
+\mathcal U_X:F_X\longrightarrow
+ \mathbb C^{d_X}\otimes F_X\otimes F_X
+\tag{57.3}
+$$
+
+使得对全部 $s,t\in T$，
+
+$$
+\mathcal U_Xw_{\langle s,t\rangle}^X
+ =\zeta_{\ell(s,t)}^X\otimes w_s^X\otimes w_t^X,
+\qquad
+\zeta_j^{\mathrm c}=z_j,\quad\zeta_j^R=u_j.
+\tag{57.4}
+$$
+
+这里 $\ell$ 恰为 (45.2)，两种模型均有
+
+$$
+\langle e_0,\zeta_j^X\rangle=
+\begin{cases}1,&j=0,\\ \sqrt b,&j=1,2.\end{cases}
+\tag{57.5}
+$$
+
+证明。对复场基向量 $e_B$，把有限地址集唯一写成根占位
+$\epsilon\in B$、左集 $B_0=\{p:0p\in B\}$、右集 $B_1=\{p:1p\in B\}$，定义
+$\mathcal U_{\mathrm c}e_B=e_{\mathbf1_{\epsilon\in B}}\otimes e_{B_0}\otimes e_{B_1}$。
+每个三元组恰有一个有限集逆像，故这是整个标准正交基的双射，延拓为酉映射。
+对实完成场，用有限支撑函数的根值 $\sigma(\epsilon)$ 和
+$\sigma_0(p)=\sigma(0p)$、$\sigma_1(p)=\sigma(1p)$ 作同一基双射。
+复化不改变这个全实矩阵的酉性。
+
+源着色满足根值 $\ell(s,t)$、左场 $\lambda_s$、右场 $\lambda_t$。
+将此分解代入 (45.11)，每个基系数恰分为根的 $z_\ell$ 系数与两个子场系数；
+代入 (46.5) 时恰分为 $u_\ell$ 与两个子场系数，得到 (57.4)。
+根颜色为 $2$ 时，复场的根激发系数是 $i\sqrt h$，实完成场则为
+$\gamma,\varphi$；没有把这两个局部向量认同。两者的真空系数均为 $\sqrt b$，
+故 (57.5) 成立。根颜色为零时根恰为 $e_0$。
+
+重复孩子不改变基双射，只会选择颜色 $1$ 或 $2$；不等孩子选择颜色零。
+空场对应真空基，左右空场亦包含在该双射中。
+不同源标签即使有相同地址场，也只在场部分相同，$L_X$ 中的 $e_t$ 仍不同。
+证明在每棵树上只作有限展开，而 (57.3) 已在整个可分空间定义，所以没有树高上限或
+随支撑大小增长的常数。这是 (45.15)、(46.12) 的实际向量层分解，
+并非由近似核乘法逆推一条通道。∎
+

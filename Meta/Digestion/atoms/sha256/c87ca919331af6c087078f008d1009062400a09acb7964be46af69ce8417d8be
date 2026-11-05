@@ -1,0 +1,37 @@
+#### 定义 6.1（相对相位提升与整门提升）
+
+设 $P$ 为父系统上的正交投影，$W$ 为子系统上的酉算符，定义
+
+<a id="eq-controlled"></a>
+
+$$
+
+\mathcal C_P(W)=(I-P)\otimes I+P\otimes W,
+\tag{4}
+
+$$
+
+<a id="eq-wholelift"></a>
+
+$$
+
+\mathcal L_P(W)=(I-P)\otimes W+P\otimes W^2.
+\tag{5}
+
+$$
+
+取一维子空间及标量 $W=z$，$|z|=1$，有
+
+$$
+
+\mathcal C_P(z)=I+(z-1)P,\qquad
+\mathcal L_P(z)=z[I+(z-1)P].
+
+$$
+
+因此 $\mathcal L_P(\zeta)$ 正好还原黄金门的整体系数形式。
+
+<a id="statement-6-2"></a>
+
+<a id="thm-lifts"></a>
+

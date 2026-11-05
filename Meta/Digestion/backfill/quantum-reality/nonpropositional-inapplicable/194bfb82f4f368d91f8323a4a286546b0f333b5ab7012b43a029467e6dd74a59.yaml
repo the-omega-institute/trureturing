@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:194bfb82f4f368d91f8323a4a286546b0f333b5ab7012b43a029467e6dd74a59
+  normalized_sha256: sha256:194bfb82f4f368d91f8323a4a286546b0f333b5ab7012b43a029467e6dd74a59
+cas_ref: sha256:194bfb82f4f368d91f8323a4a286546b0f333b5ab7012b43a029467e6dd74a59
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 全文只报告符号检查及浮点交叉比较的实施范围、脚本来源和验证限制，不陈述这些数学检查的结果公式。
+    previous_atom_id: 5762c17a60235aeb1e3060dda557b2665fa8e036c21d8b79f609234eee4d232b
+    next_atom_id: 7410454563161ef8b1fe5decc988ceaf82a17ba036f8ee35c63cecbceb79cf8a
+  chain_atoms:
+    - 37aaa45e8f9c55b8103287f6c75f025a55d91e5a100803dec756325e1835eb00
+    - c74fa4f29a6a952273aae062b3b1841f3b49eef9b0497b630f42ebc70381c4df

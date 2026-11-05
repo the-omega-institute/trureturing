@@ -44,7 +44,55 @@ $$(\operatorname{powerTwoSeries} = X + \operatorname{powerTwoSeries}^{2}) \land 
 
 Frobenius and halving a power-of-two exponent give C = X + C squared. Put t = X cubed + X C cubed. Polynomial algebra shows that C cubed satisfies Y + Y squared = t. Substitution into the quadratic identity shows that C(t) satisfies the same equation. Two solutions u and v with zero constant coefficients satisfy (u-v)(1+u+v)=0. The second factor has constant coefficient one, so absence of zero divisors forces u=v. Here C denotes powerTwoSeries.
 
-**Theorem 1.4 (The power-of-two series has zero constant coefficient).**
+**Theorem 1.4 (The power-of-two series has linear coefficient one).**
+
+$$\operatorname{coeff}\left(1, \operatorname{powerTwoSeries}\right) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.power_two_one` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+One is the zeroth power of two, so the linear coefficient is one.
+
+**Theorem 1.5 (Coefficient agreement as divisibility).**
+
+$$\forall R: \operatorname{Type}, [\operatorname{CommRing}\left(R\right)], \forall n: \mathbb{N}, \forall f: \operatorname{PowerSeries}\left(R\right), \forall g: \operatorname{PowerSeries}\left(R\right), (\forall k: \mathbb{N}, (k < n) \implies (\operatorname{coeff}\left(k, f\right) = \operatorname{coeff}\left(k, g\right))) \iff (X^{n} \mid f - g)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.agree_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Two series agree below degree n exactly when their difference is divisible by X to the power n.
+
+**Theorem 1.6 (Powers preserve coefficient agreement).**
+
+$$\forall R: \operatorname{Type}, [\operatorname{CommRing}\left(R\right)], \forall n: \mathbb{N}, \forall f: \operatorname{PowerSeries}\left(R\right), \forall g: \operatorname{PowerSeries}\left(R\right), (\forall k: \mathbb{N}, (k < n) \implies (\operatorname{coeff}\left(k, f\right) = \operatorname{coeff}\left(k, g\right))) \implies (\forall j: \mathbb{N}, \forall k: \mathbb{N}, (k < n) \implies (\operatorname{coeff}\left(k, f^{j}\right) = \operatorname{coeff}\left(k, g^{j}\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.agree_pow` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Divisibility of a difference implies divisibility of the corresponding power difference.
+
+**Theorem 1.7 (Substitution with a prescribed order).**
+
+$$\forall R: \operatorname{Type}, [\operatorname{CommRing}\left(R\right)], \forall n: \mathbb{N}, \forall m: \mathbb{N}, \forall d: \mathbb{N}, \forall f: \operatorname{PowerSeries}\left(R\right), \forall g: \operatorname{PowerSeries}\left(R\right), \forall u: \operatorname{PowerSeries}\left(R\right), \forall v: \operatorname{PowerSeries}\left(R\right), (\operatorname{constantCoeff}\left(u\right) = 0) \implies ((\operatorname{constantCoeff}\left(v\right) = 0) \implies ((X^{d} \mid u) \implies ((X^{d} \mid v) \implies ((m \le d \cdot n) \implies ((\forall k: \mathbb{N}, (k < n) \implies (\operatorname{coeff}\left(k, f\right) = \operatorname{coeff}\left(k, g\right))) \implies ((\forall k: \mathbb{N}, (k < m) \implies (\operatorname{coeff}\left(k, u\right) = \operatorname{coeff}\left(k, v\right))) \implies (\forall k: \mathbb{N}, (k < m) \implies (\operatorname{coeff}\left(k, \operatorname{PowerSeries}.\operatorname{subst}\left(u, f\right)\right) = \operatorname{coeff}\left(k, \operatorname{PowerSeries}.\operatorname{subst}\left(v, g\right)\right)))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.agree_subst_order` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Outer agreement below n and inner divisibility by X to the power d imply agreement of the substitutions below m whenever m is at most d times n and the two inner series agree below m.
+
+**Theorem 1.8 (The power-of-two series has zero constant coefficient).**
 
 $$\operatorname{constantCoeff}\left(\operatorname{powerTwoSeries}\right) = 0$$
 
@@ -56,7 +104,7 @@ $$\operatorname{constantCoeff}\left(\operatorname{powerTwoSeries}\right) = 0$$
 
 Zero is not a power of two, so the constant coefficient of powerTwoSeries vanishes.
 
-**Definition 1.5 (The normalized integer solution).**
+**Definition 1.9 (The normalized integer solution).**
 
 $$\operatorname{generatingSeries} = \operatorname{choose}\left(\exists f: \operatorname{PowerSeries}\left(\mathbb{Z}\right), ((\operatorname{constantCoeff}\left(f\right) = 0) \land ((\operatorname{coeff}\left(1, f\right) = 1) \land (f^{3} = \operatorname{subst}\left(f, X^{3} + 15 \cdot X \cdot f^{3}\right))))\right)$$
 
@@ -68,7 +116,7 @@ $$\operatorname{generatingSeries} = \operatorname{choose}\left(\exists f: \opera
 
 Starting from X, correct coefficient n by the negative of the degree-(n+2) residual coefficient divided by three using integer division. Modulo three, Frobenius identifies the cube with substitution of X cubed, and the factor fifteen vanishes. Every residual coefficient is therefore divisible by three. Corrections preserve earlier coefficients and remove the next error; their stabilized coefficients prove the displayed existence proposition.
 
-**Definition 1.6 (The integer coefficient sequence).**
+**Definition 1.10 (The integer coefficient sequence).**
 
 $$\forall n: \mathbb{N}, \operatorname{a}\left(n\right) = \operatorname{coeff}\left(n, \operatorname{generatingSeries}\right)$$
 
@@ -80,7 +128,7 @@ $$\forall n: \mathbb{N}, \operatorname{a}\left(n\right) = \operatorname{coeff}\l
 
 The value a(n) is coefficient n of the constructed generating series. Its normalization gives a(0)=0 and a(1)=1.
 
-**Theorem 1.7 (The functional equation and normalization).**
+**Theorem 1.11 (The functional equation and normalization).**
 
 $$(\operatorname{constantCoeff}\left(\operatorname{generatingSeries}\right) = 0) \land ((\operatorname{coeff}\left(1, \operatorname{generatingSeries}\right) = 1) \land (\operatorname{generatingSeries}^{3} = \operatorname{subst}\left(\operatorname{generatingSeries}, X^{3} + 15 \cdot X \cdot \operatorname{generatingSeries}^{3}\right)))$$
 
@@ -92,7 +140,7 @@ $$(\operatorname{constantCoeff}\left(\operatorname{generatingSeries}\right) = 0)
 
 The selected witness satisfies both normalization conditions and the exact cubic functional equation of OEIS A392525. The identity holds at every degree by stabilization of the corrected approximations.
 
-**Theorem 1.8 (Uniqueness of the integer solution).**
+**Theorem 1.12 (Uniqueness of the integer solution).**
 
 $$\forall f: \operatorname{PowerSeries}\left(\mathbb{Z}\right), (\operatorname{constantCoeff}\left(f\right) = 0) \implies (\operatorname{coeff}\left(1, f\right) = 1) \implies (f^{3} = \operatorname{subst}\left(f, X^{3} + 15 \cdot X \cdot f^{3}\right)) \implies f = \operatorname{generatingSeries}$$
 
@@ -104,7 +152,7 @@ $$\forall f: \operatorname{PowerSeries}\left(\mathbb{Z}\right), (\operatorname{c
 
 For normalized series agreeing below n, their cubes differ at degree n+2 by three times their degree-n coefficient difference. Their substituted right sides agree through degree n+2, since the inner series is divisible by X cubed and its change is divisible by X to the power n+3. The first-difference formula and strong induction prove uniqueness over the integers.
 
-**Theorem 1.9 (The A392525 parity conjecture).**
+**Theorem 1.13 (The A392525 parity conjecture).**
 
 $$\forall n: \mathbb{N}, (1 \le n) \implies (\operatorname{Odd}\left(\operatorname{a}\left(n\right)\right) \iff (\exists k: \mathbb{N}, n = 2^{k}))$$
 
@@ -123,11 +171,15 @@ Map the proved integer functional equation into ZMod(2), where fifteen equals on
 ## References
 
 - Truth anchor: `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.a`
+- Truth anchor: `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.agree_iff`
+- Truth anchor: `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.agree_pow`
+- Truth anchor: `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.agree_subst_order`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.generatingSeries`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.generating_equation`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.generating_unique`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.hanna_conjecture`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.powerTwoSeries`
+- Truth anchor: `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.power_two_one`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.power_two_zero`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.prime_power_subst`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.thue_series_equation`

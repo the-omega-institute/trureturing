@@ -1,0 +1,9 @@
+#### 定义 8.1（当前响应商与合法递归）
+
+在真实来源集合 $X$ 上给响应映射 $q:X\to Y$，定义
+$x\sim_qx'\iff q(x)=q(x')$。给允许操作 $T_a:D_a\to X$，其中 $D_a\subseteq X$ 是其合法域。
+
+<a id="statement-8-2"></a>
+
+<a id="thm-obsquot"></a>
+

@@ -20,6 +20,14 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.theta_involutive`
 
 Define sigma by polynomial evaluation X_(i,k) to -X_(i,k), fixing each complex constant. Define the complex-linear theta by theta(single(a,p))=single(-a,sigma(p)). This acts on every oscillator index, rather than just on charge. Polynomial induction proves sigma squared is identity; finite-charge linear extension proves theta squared is identity and gives an actual linear equivalence.
 
+Positive-rank application of existing results. For every lattice datum D as above with 0 < D.rank, theta D is not LinearEquiv.refl over the complex numbers on Carrier D, and orderOf(theta D)=2 in the group of complex-linear self-equivalences. These are consequences of the reflection formulas and the prime-order criterion, with the following explicit parameter correspondence.
+
+Set i to the element of Fin(D.rank) with value 0, using the positive-rank hypothesis for its bound. Take charge a=0 and oscillator index x=(i,0), and put v=Finsupp.single(0,MvPolynomial.X(x)) in Carrier D. The pinned MvPolynomial.X_ne_zero and Finsupp.single_eq_zero give v nonzero. Apply LatticeInvolution.theta_single at (D,a,p)=(D,0,X(x)) and LatticeInvolution.sigma_X at (D,x). Since -0=0 and single preserves negation, theta D v=-v. This is an actual state of the same carrier and reflection, rather than an independently supplied action or witness.
+
+If theta D were the identity equivalence, evaluating that equality at v would also give theta D v=v. Thus -v=v, so (2 : C) smul v=v+v=0. Since 2 is nonzero in C, smul_eq_zero forces v=0, contradicting the witness. Hence theta D is nonidentity. For the exact-order conclusion, use the group element g=theta D and the prime p=2 in mathlib's orderOf_eq_prime. Extensionality and LatticeInvolution.theta_involutive give g^2=1; the same oscillator argument gives g!=1. The criterion therefore yields orderOf(g)=2.
+
+The sole extra hypothesis in these two conclusions is positive rank. The symmetric integral Gram matrix with even diagonal remains arbitrary, including degenerate and indefinite forms. The square identity still includes rank zero; neither nonidentity nor exact order two is asserted there. This application of existing results concerns the actual complex-linear reflection and makes no additional physical realization, resource or literature-novelty claim.
+
 **Theorem 1.2 (The actual vacuum is fixed).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.theta_vacuum`

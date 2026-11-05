@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:8b9d707e4fefb2361c9b5544c5c700d99f9e153079ff0a08dbb3fe5218599373
+  normalized_sha256: sha256:8b9d707e4fefb2361c9b5544c5c700d99f9e153079ff0a08dbb3fe5218599373
+cas_ref: sha256:8b9d707e4fefb2361c9b5544c5c700d99f9e153079ff0a08dbb3fe5218599373
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Completion/CompletionInformationCost.completionLaw
+    target_statement_id: sha256:1011c37a2a11ac81514ab1bf6069b60b1fc58021b5d29b0db82d782b753e7029
+  - gid: D5/S3/ConceptDynamics/Completion/CompletionInformationCost.zero_conditional_entropy_not_global_factorization
+    target_statement_id: sha256:1d87ef64a8afed7a20b3d0f5ab294793e03228a62e727ca496dd720485c4fcee
+  - gid: D5/S3/Entropy/ConditionalEntropyEquality.point_mass_on_support_of_conditional_entropy_eq_zero
+    target_statement_id: sha256:2ac8dd986153ce048799fed51a0a1c4d917c996dae7fc472e0a796db247f9e6d
+receipts:
+  unresolved_subitems: []

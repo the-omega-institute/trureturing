@@ -1,0 +1,50 @@
+**Definition 1.2 (complete native command contract).** A relative command
+$\gamma=(a,b)$ starts at $(0,0)$ and is absolutely continuous or piecewise
+$C^1$, as in [N, Definitions 3.1 and 9.1]. Put
+
+$$
+A_\gamma=a(T),\quad B_\gamma=b(T),\quad
+K_\gamma=\int_0^T a\,db,\quad
+m_\gamma=\min a,\quad M_\gamma=\max a.
+$$
+
+It is legal at height $k$ exactly when
+
+$$
+k+m_\gamma>0,\qquad k+M_\gamma<L.
+\tag{1.5}
+$$
+
+The endpoint action, on precisely this domain, is
+
+$$
+\begin{aligned}
+k'&=k+A_\gamma,\\
+\alpha'&=\alpha+B_\gamma/2,\\
+\beta'&=\beta+B_\gamma/2-(kB_\gamma+K_\gamma)/r.
+\end{aligned}
+\tag{1.6}
+$$
+
+Angles in (1.6) are reduced modulo their actual periods. If a command is
+also required to remain in $I=(l,h)\Subset J$, its additional guard is
+$k+m_\gamma>l$ and $k+M_\gamma<h$. Concatenation takes the intersection
+of the first guard and the pulled-back second guard; endpoint membership
+alone is insufficient. Formula (1.6) is the supplied partial action,
+not an everywhere-defined height translation.
+
+Its two direct fields, in these same coordinates, are
+
+$$
+P=\partial_k,\qquad
+Q=\tfrac12\partial_\alpha+c(k)\partial_\beta,
+\qquad c(k)=\tfrac12-k/r,
+\qquad [P,Q]=-r^{-1}\partial_\beta.
+\tag{1.7}
+$$
+
+The control histories just specified have finite variation. Brownian
+sample paths in the added analysis below are not such histories. None of
+the definitions adds a reset, an actuator, a mean selector or an analytic
+amplitude-preparation operation.
+

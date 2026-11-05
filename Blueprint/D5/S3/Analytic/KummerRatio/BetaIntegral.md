@@ -28,7 +28,19 @@ Lean statement: `D5/S3/Analytic/KummerRatio/BetaIntegral.intervalIntegrable_beta
 
 For positive shape parameters, the real beta weight is integrable over the unit interval. This follows by taking the real part of the convergent complex beta integrand.
 
-**Theorem 1.3 (The beta representation of Kummer's function).**
+**Theorem 1.3 (Gamma shifts and rising factorials).**
+
+$$\forall s \in Real,\; 0 < s \Rightarrow \left(\forall n \in Nat,\; \operatorname{Real}.\operatorname{Gamma}\left(s + n\right) = \operatorname{Polynomial}.\operatorname{eval}\left(s, \operatorname{ascPochhammer}\left(Real, n\right)\right) \cdot \operatorname{Real}.\operatorname{Gamma}\left(s\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive real s and natural n, Real.Gamma(s+n) equals the evaluation of ascPochhammer Real n at s times Real.Gamma(s). Division by the positive Real.Gamma(s) supplies the Gamma ratio used by KarpZhangGamma.Kernel.binomialGamma_sum.
+
+**Theorem 1.4 (The beta representation of Kummer's function).**
 
 Lean statement: `D5/S3/Analytic/KummerRatio/BetaIntegral.kummer_eq_betaIntegral`
 
@@ -42,6 +54,7 @@ When zero is less than s and s is less than c, Kummer's function M(s;c;x) is the
 
 ## References
 
+- Truth anchor: `D5/S3/Analytic/KummerRatio/BetaIntegral.gamma_pochhammer`
 - Truth anchor: `D5/S3/Analytic/KummerRatio/BetaIntegral.integral_beta`
 - Truth anchor: `D5/S3/Analytic/KummerRatio/BetaIntegral.intervalIntegrable_beta`
 - Truth anchor: `D5/S3/Analytic/KummerRatio/BetaIntegral.kummer_eq_betaIntegral`

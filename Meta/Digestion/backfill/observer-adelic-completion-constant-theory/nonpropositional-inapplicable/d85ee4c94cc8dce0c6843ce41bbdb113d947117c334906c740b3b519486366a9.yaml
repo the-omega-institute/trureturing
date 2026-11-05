@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d85ee4c94cc8dce0c6843ce41bbdb113d947117c334906c740b3b519486366a9
+  normalized_sha256: sha256:d85ee4c94cc8dce0c6843ce41bbdb113d947117c334906c740b3b519486366a9
+cas_ref: sha256:d85ee4c94cc8dce0c6843ce41bbdb113d947117c334906c740b3b519486366a9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 要求证明整个支撑谱流不穿零的目标；不是宣称该未决目标成立。'
+    previous_atom_id: 1195f0c6a4a00757e6705e4cb84b53ade0404bcde66ab78a086f775b7f32cb4e
+    next_atom_id: c61615bc5ca53155c4eb5268040f885e06b9b45059bc798affcf7141cf1c75cb

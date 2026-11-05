@@ -1,0 +1,12 @@
+**Theorem 56.2 (literal acquisition and advanced endpoint).** Sample2 terminates on every promised input, has exactly two successful scalar Reads, and satisfies simultaneously
+
+$$
+Y_1=e^{\mathsf T}Ax_w,\quad Y_2=e^{\mathsf T}A^2x_w,
+\qquad x_{\rm end}=A^Ix_w=x_{w0^I}.
+\tag{56.1}
+$$
+
+It recovers $w$ by Theorem 55.2 and installs $x_{w0^I}$, not $x_w$, as the present predictor. Its exact primitive counts are $I$ Tick, $I$ Add, $I+1$ Hold and two Read. The pair is historical data at offsets one and two from the start; for $I>2$ it is not a pair of final trailing readings.
+
+**Proof.** Zero Adds, Holds and Reads are field identities. Induction gives actual field $A^sx_w$ at round $s$. This proves both sampled equations and the endpoint. Each Tick followed by the literal zero Add is exactly an encoded zero, which also proves the final equality in (56.1). Greedy inversion and then finite evaluation of (55.1) at $w0^I$ give the predictor. No inverse of $A$ or returning-scalar Tick is used. All loops have earned finite bounds and the word inverse terminates on its stated image. Counting the displayed actual calls gives the claim. $\square$
+

@@ -1,0 +1,36 @@
+#### 定理 4.4（记录中心上的正预测）
+
+<a id="thm:center"></a>
+
+取内部记录相容代数
+
+$$
+\mathcal{C}=\mathcal{D}'\cap M_D(\mathbb{C})=\bigoplus_hP_hM_D(\mathbb{C})P_h.
+$$
+
+其中心为 $\mathcal{D}$。对任意满足上述 $p_h>0$ 的 $\rho$，映射
+
+$$
+\mathcal E_{\rho,\mathcal{D}}(A)
+ =\sum_h\frac{\operatorname{Tr}(\rho P_hAP_h)}{p_h}P_h,\qquad A\in\mathcal{C},
+ \tag{10}
+$$
+
+是完全正、保单位、保持态的条件期望，且是式 (7) 的最优预测。
+若 $0\le A\le I$，每个系数属于 $[0,1]$。
+
+**证明。**
+
+$A\in\mathcal{C}$ 给 $A=\sum_hP_hAP_h$。
+每块上的 $P_h\rho P_h/p_h$ 是态，故式 (10) 完全正、保单位；
+各块求和保持 $\operatorname{Tr}\rho A$。中心双模性与幂等性直接成立。
+$AP_h=P_hA$ 使其与式 (7) 相同。
+
+∎
+
+这给一个完全内生的经典结构：观察者按持久记录组织其可访问关系，
+记录成为这部分代数的中心，每个记录块内仍可保留非交换量子关系。
+此处没有需要从宇宙外部引入的环境，也没有把整个 $\mathcal{C}$ 压成其中心。
+
+<a id="statement-4-5"></a>
+

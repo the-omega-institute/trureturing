@@ -1,0 +1,31 @@
+**定理 7.2（精确单射与处处失稳）。**
+
+<a id="thm-unstable"></a>
+
+$P_+$ 在 $\Gamma_d$ 上单射，但其逆
+$P_+(\Gamma_d)\to\Gamma_d$ 在继承的欧氏拓扑下处处不连续。
+其连续实扩张 $\mathbb R^{2d}\to\mathbb R^d$ 的核维数则为 $d$。
+
+**证明。**
+
+若 $a+\varphi b=0$，每个整数坐标对由无理性知 $a_i=b_i=0$。
+这给整数域单射。令 $F_0=0,F_1=1$ 为 Fibonacci 数，
+
+$$
+v_n=(F_{n+1},-F_n)e_1.
+$$
+
+由递推或 Binet 公式，
+
+$$
+P_+v_n=\sigma^ne_1\to0,\qquad
+P_-v_n=\varphi^ne_1,\qquad
+\left\lVert v_n\right\rVert_\infty\to\infty.
+$$
+
+故逆在 $0$ 不连续；平移序列 $v+v_n$ 给出任意像点处的不连续性。
+连续实扩张的核为 $\{(-\varphi b,b):b\in\mathbb R^d\}$，维数为 $d$。证毕。
+ □
+
+<a id="subsection-7-2"></a>
+

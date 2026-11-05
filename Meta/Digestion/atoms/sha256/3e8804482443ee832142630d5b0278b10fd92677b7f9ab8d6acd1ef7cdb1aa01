@@ -1,0 +1,115 @@
+**Theorem 7.2 (Full positive-ratio limit and uniform error).** In the unrestricted domain of Definition 1.1, for every $0<L\le R<\infty$ there are finite constants $A_{L,R}$ and $C_{L,R}$ such that all integers $a\ge A_{L,R}$ and $h\ge1$ with $L\le h/\sqrt a\le R$ satisfy
+
+$$
+\left|\frac{M(a,h)-B_0(a)}{a^2}
+             -U\!\left(\frac h{\sqrt a}\right)\right|
+\le C_{L,R}a^{-1/2}.
+\tag{7.20}
+$$
+
+In particular, for every sequence (1.2),
+
+$$
+\lim_{n\to\infty}D_n=U(\kappa).
+\tag{7.21}
+$$
+
+For $0<\kappa\le\sqrt2$, the value is $2\sqrt2\,\kappa$. On $\kappa\ge\sqrt2$, the value is $F_1(\kappa)$ on $[\sqrt2,2\sqrt2]$, and is $F_j(\kappa)$ on
+
+$$
+[\,2\sqrt{j(j-1)},\ 2\sqrt{j(j+1)}\,]
+\qquad(j\ge2).
+\tag{7.22}
+$$
+
+At $2\sqrt{j(j+1)}$ the adjacent formulas $F_j,F_{j+1}$ agree, and no other integer branch attains the value. In the interior of each displayed integer interval its integer branch is unique. The linear formula and $F_1$ agree at $\sqrt2$.
+
+Thus (7.21) determines every ratio in Open problem 6.1, and (7.22) identifies the upper-bound phases of Proposition 4.3 as phases of the unrestricted asymptotic value. The earlier bounds and even-ratio limits remain valid; the description of the other fixed positive ratios as unresolved is replaced by (7.21). This assertion concerns values and does not classify finite minimizers or all laws attaining a limiting value.
+
+**Proof.** Introduce, only as an intermediate variational quantity,
+
+$$
+\mathcal V(k)=\inf_{\substack{j\in\mathbb Z_{\ge1}\\0<v\le j}}
+\left(\frac{k^2}{v}+2v+2j-2\right)\qquad(k>0).
+\tag{7.23}
+$$
+
+This infimum is attained in these scalar parameters. Indeed the choice $j=v=1$ has value $k^2+2$, whereas the objective is at least $2j-2$ and at least $k^2/v$. Thus a minimizing sequence has bounded $j$ and has $v$ bounded away from zero, after discarding terms above $k^2+3$; compactness for the finitely many remaining integers proves attainment. Uniformly for $L\le k\le R$, any scalar minimizer has
+
+$$
+j\le(R^2+4)/2,\qquad v\ge L^2/(R^2+2),\qquad v\le j.
+\tag{7.24}
+$$
+
+These scalar assertions make no attainment claim for $M(a,h)$.
+
+Take $C=R^2+10$ in Lemma 7.1 and put $k=h/\sqrt a$. For every law in its sublevel, (7.3) and boundedness of $j$ give
+
+$$
+\frac{H-B_0(a)}{a^2}
+\ge\frac{k^2}{v}+2v+2j-2-O_{L,R}(a^{-1/2}).
+\tag{7.25}
+$$
+
+Here $((h+1-j)^2/a)-k^2=2k(1-j)/\sqrt a+(1-j)^2/a$, and $v$ has the positive lower bound (7.2). If $v>j$, replace $v$ by $j$. By (7.2) the change is $O_{L,R}(a^{-1/2})$: the derivative $-k^2/v^2+2$ is bounded uniformly on the interval between $v$ and $j$, since $j\ge1$ and $v\ge L^2/(8C)$. Hence (7.25) is at least $\mathcal V(k)-O_{L,R}(a^{-1/2})$.
+
+A law outside the sublevel already has
+
+$$
+\frac{H-B_0(a)}{a^2}>C-2-1/a>R^2+2\ge\mathcal V(k).
+$$
+
+The same lower bound therefore holds for every original law, with one uniform constant. Taking its infimum gives
+
+$$
+\frac{M(a,h)-B_0(a)}{a^2}
+\ge\mathcal V(k)-O_{L,R}(a^{-1/2}).
+\tag{7.26}
+$$
+
+In particular there is no assumption that an optimal law exists, nor any replacement of the original laws by independent marginal and moment data.
+
+For the upper bound, use exactly the actual law of Proposition 3.2, choosing $j,v$ to minimize (7.23). By (7.24), for sufficiently large $a$ one has $h\ge j$, uniformly over $L\le k\le R$, so these laws are admissible. To make its error estimate uniform, write $\mu=a+v$ and use its notation $\ell=\lfloor v\rfloor$, $\theta=v-\ell$. The core third moment in (3.4) has the exact expansion
+
+$$
+M_3=\mu^3+3\mu\theta(1-\theta)
+                 +\theta(1-\theta)(1-2\theta)
+=\mu^3+O_{L,R}(a).
+$$
+
+Since $p=v/(a+v-1)$ and $1/(1-p)=1+v/(a-1)$, (7.24) and (3.4) yield
+
+$$
+\frac{(a+j)^2M_3}{(1-p)(a+v)^2}
+=a^3+(2j+2v)a^2+O_{L,R}(a),
+$$
+
+$$
+\frac{(h+1-j)^2}{p}
+=\frac{(h+1-j)^2(a+v-1)}v
+=\frac{k^2}{v}a^2+O_{L,R}(a^{3/2}).
+$$
+
+All constants are uniform also when $v$ crosses an integer, since $0\le\theta<1$. Subtracting $B_0(a)$ and using that $M(a,h)$ is bounded above by each constructed energy proves
+
+$$
+\frac{M(a,h)-B_0(a)}{a^2}
+\le\mathcal V(k)+O_{L,R}(a^{-1/2}).
+\tag{7.27}
+$$
+
+Finally evaluate the scalar quantity in (7.23), without interpreting it as a restriction of the original domain. For fixed $j$, the minimizing $v$ is $\min(j,k/\sqrt2)$. Put $w=k/\sqrt2$. If $w\le1$, all $j\ge1$ permit $v=w$; the smallest $j=1$ gives $4w=2\sqrt2\,k$. If $w>1$, the integers $j\le w$ give the endpoint values $F_j(k)$. For $j>w$ the optimized value is $4w+2j-2$, increasing with $j$. When $w$ is not an integer and $r=\lfloor w\rfloor\ge1$, the smallest of these latter values exceeds $F_r(k)$ by
+
+$$
+4w+2r-F_r(k)=2-\frac{2(w-r)^2}{r}>0.
+$$
+
+When $w$ is an integer, each $j>w$ likewise gives $4w+2j-2>F_w(k)$. Thus no interior choice $v<j$ is globally minimizing when $k>\sqrt2$. Every endpoint choice is available in (7.23), so
+
+$$
+\mathcal V(k)=U(k).
+\tag{7.28}
+$$
+
+Equations (7.26)–(7.28) prove (7.20). The adjacent branch comparison in Proposition 4.3 now applies to the unrestricted value and gives (7.22) and its ties. The function $U$ is continuous: on any compact positive interval only finitely many integer branches can minimize, their values agree at adjacent crossings, and the linear branch agrees with $F_1$ at $\sqrt2$. Every sequence (1.2) eventually lies in such a compact interval, so (7.20) gives (7.21). ∎
+

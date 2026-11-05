@@ -1,0 +1,26 @@
+**Definition 20.1 (one joint source of anchored histories).** Retain the split carrier $\widehat X$ of (16.4), its order and the two total named actions of (17.2). Write $U_L=\widehat L$, $U_R=\widehat R$. For a chronological word $w=a_1\cdots a_n$, put
+
+$$
+U_w=U_{a_n}\circ\cdots\circ U_{a_1},\qquad
+U_{uv}=U_v\circ U_u,\qquad U_\varepsilon=\operatorname{id}.
+\tag{20.1}
+$$
+
+The mathematical comparison source is $\mathcal H=\widehat X\times\{L,R\}^*$, with a specified anchor $a$ and the finite word executed from it. Its expressions are the anchored endpoint $E(a,w)=(a,U_w(a))$, literal chronology $T(a,w)=(a,w)$, the occurrence path $S(a,w)$ of Definition 5.4 with root state $a$, and the indexed prefix table $M_*(a,w)=((j,U_{w|_j}(a)))_{j=0}^{|w|}$. The table retains its row indices and the root row. Adjacent states determine their named edge by Theorem 17.2, even at the $0^+$ loop, so the table and the occurrence path each recover $(a,w)$. All memory records below are specified deterministic functions on this same $\mathcal H$; all inverse maps are on their actual images. Restricting to one declared anchor means $\mathcal H_a=\{a\}\times\{L,R\}^*$.
+
+These are mathematical anchored histories on an ambient carrier. The original actual source remains exactly $\mathcal H_{1^+}$ with endpoint orbit $\mathscr A$ in (17.5). Declaring another anchor does not make it an original rational realization. An exact supplied anchor or endpoint below is an input to a mathematical inverse, with no finite acquisition or computation claim.
+
+Let $P$ be the partial predecessor on $\widehat X$, undefined only at $1^-$. Its incoming name $\lambda(z)$ satisfies $z=U_{\lambda(z)}(Pz)$. In numerical coordinates,
+
+$$
+\begin{aligned}
+P(0^+)&=0^+,&\lambda(0^+)&=L,\\
+P(1^+)&=0^+,&\lambda(1^+)&=R,\\
+P(t)&=t/(1-t),&\lambda(t)&=L\quad(0<t<1),\\
+P(t)&=t-1,&\lambda(t)&=R\quad(t>1).
+\end{aligned}
+\tag{20.2}
+$$
+
+For rational coordinates the last two formulas preserve the displayed $-$ or $+$ side. A **cyclic anchor** admits a nonempty return word $c$ with $U_c(a)=a$; a **free anchor** admits none. A component means a component of the graph after forgetting edge orientation, while a directed cycle retains the named directed edges.
+

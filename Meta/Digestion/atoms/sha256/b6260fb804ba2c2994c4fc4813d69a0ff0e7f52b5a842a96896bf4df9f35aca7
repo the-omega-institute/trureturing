@@ -1,0 +1,78 @@
+## 4. Mathematical citations and comparison of bounds
+
+The objects of Theorem 2.1 are exactly the normalization, first zero,
+exponent, and real argument domain in Baricz–Mehrez,
+[arXiv:1701.08446v1, §3, Conjecture 1, (3.2)](https://arxiv.org/pdf/1701.08446v1).
+Their (2.2)–(2.3) supply the Rayleigh and Mittag–Leffler expansions used
+in (2.6), and their Theorem 6 proves the lower bound at $\nu=-1/2$.
+Their Theorems 1–2 concern individual normalized Bessel functions;
+those statements are distinct from the adjacent-order ratio in (2.1).
+
+Baricz–Wu, *Sharp exponential Redheffer-type inequalities for Bessel
+functions*, [DOI:10.5486/PMD.2009.4291, Theorem 1, (1.3)](https://doi.org/10.5486/PMD.2009.4291),
+prove, for every real $\nu\ge-7/8$ and $|x|<j_{\nu,1}$,
+
+$$
+\frac{F_{\nu+1}(x)}{F_\nu(x)}
+ \ge\left(\frac{J+x^2}{J-x^2}\right)^{J/[8b(b+1)]}.
+\tag{4.1}
+$$
+
+For $0<s=x^2/J<1$, the logarithm of the lower bound in Theorem 2.1
+minus that of (4.1) is
+
+$$
+-p\log(1-s)-\frac p2\log\frac{1+s}{1-s}
+ =-\frac p2\log(1-s^2)>0.
+\tag{4.2}
+$$
+
+Thus on the common parameter range where $J\ge T_b$, the bound
+in (2.1) is stronger; (4.1) retains its separate domain and conclusion
+when that condition is absent. The two bases and exponents are different.
+
+Aktaş–Baricz–Singh, *Geometric and monotonic properties of hyper-Bessel
+functions*, [arXiv:1802.05226v1, §2.6, Theorems 6–7](https://arxiv.org/pdf/1802.05226v1),
+consider parameters $\alpha_i>-1$. Their Theorem 6 states absolute
+monotonicity of auxiliary functions $h_{\boldsymbol\alpha}$ and
+$q_{\boldsymbol\alpha}$ built from a single normalized hyper-Bessel
+function, on $[0,j_{\boldsymbol\alpha,1}^{d+1})$.
+Their Theorem 7 treats the single function on
+$0<x<j_{\boldsymbol\alpha,1}$; at $d=1$, $\alpha_1=\nu$, it gives
+
+$$
+(1-x^2/J)^{J/(4b)}\le F_\nu(x)\le1-x^2/J.
+\tag{4.3}
+$$
+
+These are single-function results, whereas (2.1) compares the consecutive
+orders with exponent $J/[4b(b+1)]$.
+
+Alzahrani–Mondal, *Redheffer-Type Bounds of Special Functions*,
+[DOI:10.3390/math11020379, primary XML](https://mdpi-res.com/d_attachment/mathematics/mathematics-11-00379/article_deploy/mathematics-11-00379.xml?version=1672996709),
+define the product classes $\mathcal F_\nu$ and $\mathcal G_\nu$ in
+(13)–(14) with respective factors $1-x^2/b_n(\nu)^2$ and
+$1+x^2/b_n(\nu)^2$ and convergence assumptions.
+Their Theorem 1(6) bounds a single member of $\mathcal F_\nu$ by powers
+of $1-x^2/b_1(\nu)^2$ on $|x|<b_1(\nu)$.
+The Bessel specialization is Theorem 5, (40), exactly (4.3) for
+$\nu>-1$ and $|x|<j_{\nu,1}$. Their Theorem 1(5) concerns the ratio of
+the plus-product and minus-product functions with the same zero data;
+that ratio is different from $F_{\nu+1}/F_\nu$.
+
+For the inherited obstruction, the
+[complete Series, Expansion, FirstZero, and Result sources](https://github.com/the-omega-institute/trureturing/tree/0acdf52ecf2d680cff8b44345188dbb02034280d/D5/S3/Analytic/BesselRedheffer)
+supply the differential identities, the fourth-order comparison, and the
+following complementary failure mechanism. The proof-local weighted
+Picone identity in `FirstZero.picone_integral`, together with
+`energy_moments`, uses $u(r)=(1-r^2)^3$ and yields the bound
+$J\le(6/5)b(b+6)$ on the stated range $b\ge31$.
+There $(6/5)b(b+6)<T_b$, since
+$b^2-30b-16>0$. The local comparison therefore yields failure at every
+sufficiently small positive argument for every $\nu\ge30$;
+`Expansion.failure_of_energy_bound` and `Result.failure_family` supply
+this inherited family and `Result.result` supplies the universal
+refutation. No first-zero existence or energy estimate outside their
+stated order hypotheses is inferred from those sources. The unrestricted
+classical first-zero input in this proof is the one from DLMF cited above.
+

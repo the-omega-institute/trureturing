@@ -1,0 +1,66 @@
+**定理 89.3（fine 与 coarse slack 的统一跨度界）。** 对定义 88.1 的每个 $0<q\le1/1000$、每个 $\delta>0$ 以及每个成功于 $\varphi,\psi$ 的同一个 arbitrary complex CPTP map，有
+
+$$
+\begin{aligned}
+0<\delta\le q/16&\quad\Longrightarrow\quad r\le96\sqrt\delta,\\
+\delta\ge q/16&\quad\Longrightarrow\quad r\le512\delta/\sqrt q,\\
+r&\le512\max\{\sqrt\delta,\delta/\sqrt q\}.
+\end{aligned}
+\tag{89.3}
+$$
+
+因此不作成功假设时，任意同一个 $\mathcal D$ 也满足
+
+$$
+\max\{L_{\mathcal D}(\varphi),L_{\mathcal D}(\psi)\}-\eta
+ \ge2^{-18}\min\{r^2,\sqrt q\,r\}.
+\tag{89.4}
+$$
+
+**证明。** 若 $0<\delta\le q/16$，由 (88.4)，
+
+$$
+\begin{aligned}
+U&\le\sqrt{2\delta}+6\sqrt q\,\delta
+                      +\frac{\delta}{6\sqrt q}\\
+ &\le\left(\frac{17}{48}+\frac{3}{8000}+\frac1{96}\right)\sqrt q
+ \le\frac38\sqrt q,\\
+V&\le\frac{21}{10}\sqrt{\frac{65}{8}q\delta}
+ \le6\sqrt{q\delta}.
+\end{aligned}
+$$
+
+第一行用了 $1/m_+\le2$、$1/\mu\le1/(18q)$、$w\le3\sqrt q$。第二行用 $\sqrt{1/8}\le17/48$、$6\delta\le3/8000$。最后一个 bound 由 $(21/10)^2(65/8)=28665/800\le36$ 给出。因此 $w-h-U\ge\sqrt q/8$，(89.2) 给 $r\le96\sqrt\delta$。
+
+若 $\delta\ge q/16$，直接用 actual residual (88.5) 的 off-diagonal：
+
+$$
+|(K_\varphi)_{12}+2he^{-i\varphi}|\le2(\eta+\delta).
+$$
+
+在 $\psi$ 处同样成立。两式相减，再用同一个 $\mathcal T$ 的 contraction，得到
+
+$$
+2hr\le|(K_\varphi-K_\psi)_{12}|+4(\eta+\delta)
+ \le hr+4(\eta+\delta).
+$$
+
+$\eta\le4q\le64\delta$、$h\ge3\sqrt q/4$ 给
+
+$$
+r\le\frac{4(\eta+\delta)}h
+ \le\frac{1040}{3}\frac\delta{\sqrt q}
+ \le512\frac\delta{\sqrt q}.
+$$
+
+两个 ranges 覆盖全部 $\delta>0$，故给 (89.3) 的最后一行；这些是 continuum inequalities，没有抽样步骤。
+
+为得 (89.4)，令其左侧为 $\Delta\ge0$，非负性由 individual optimum 供应。若 $\Delta>0$，将 (89.3) 用于 $\delta=\Delta$，得到
+
+$$
+\Delta\ge\min\{r^2/512^2,\sqrt q\,r/512\}
+ \ge2^{-18}\min\{r^2,\sqrt q\,r\}.
+$$
+
+若 $\Delta=0$，(88.7)、(89.1) 给 $U=V=0$，而 $w>h$，(89.2) 强迫 $r=0$，同一结论成立。∎
+

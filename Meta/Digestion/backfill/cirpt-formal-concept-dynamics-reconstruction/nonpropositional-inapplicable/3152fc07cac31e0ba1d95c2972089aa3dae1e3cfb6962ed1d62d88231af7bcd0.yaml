@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3152fc07cac31e0ba1d95c2972089aa3dae1e3cfb6962ed1d62d88231af7bcd0
+  normalized_sha256: sha256:3152fc07cac31e0ba1d95c2972089aa3dae1e3cfb6962ed1d62d88231af7bcd0
+cas_ref: sha256:3152fc07cac31e0ba1d95c2972089aa3dae1e3cfb6962ed1d62d88231af7bcd0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只有权力章节标题和项目哲学字典的定义引言。
+    previous_atom_id: cde3200e4c83b81e425ded6267b045181c0a793482363daf22cb09b5c6759800
+    next_atom_id: e7fa81a26b2c93cfe992d930034989f9825380f4a996a0d3b10c4191ceeb51cd

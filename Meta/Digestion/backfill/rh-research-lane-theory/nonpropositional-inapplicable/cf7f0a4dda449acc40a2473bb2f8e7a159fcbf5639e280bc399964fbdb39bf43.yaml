@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cf7f0a4dda449acc40a2473bb2f8e7a159fcbf5639e280bc399964fbdb39bf43
+  normalized_sha256: sha256:cf7f0a4dda449acc40a2473bb2f8e7a159fcbf5639e280bc399964fbdb39bf43
+cas_ref: sha256:cf7f0a4dda449acc40a2473bb2f8e7a159fcbf5639e280bc399964fbdb39bf43
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 卷首仅说明合编范围、叙事编号及 Lean 真源地位，没有数学断言。
+    previous_atom_id: null
+    next_atom_id: c53d4eb303cc09dd47ed8bb7d350d9507bcf257a2f4ee04fd900ebaa52c7a8a5

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8f6b79790f07bcbea9bbcc8499f5fe69ec32b7b6bd41e708963ee7cff8c69ee8
+  normalized_sha256: sha256:8f6b79790f07bcbea9bbcc8499f5fe69ec32b7b6bd41e708963ee7cff8c69ee8
+cas_ref: sha256:8f6b79790f07bcbea9bbcc8499f5fe69ec32b7b6bd41e708963ee7cff8c69ee8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 后续研究优先级与证明目标清单，没有断言这些目标已成立。'
+    previous_atom_id: 2e958b0c89f351da68f5af6256c6ad039eac554dac661c9f70836c121135e176
+    next_atom_id: 6cf7ba4a8490106e14b8de0f9951bd3fdb161a5abd4c7422586b7564ef088794

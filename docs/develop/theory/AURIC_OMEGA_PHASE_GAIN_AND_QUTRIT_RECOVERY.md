@@ -1140,3 +1140,142 @@ Proof. Take a two-dimensional carrier at every position, $e_{P,j}=|0\rangle$ and
 **Definition 17.4 (record scope and mathematical attribution).** Tensor-product dephasing and quantum Fisher information under decoherence are standard intermediates, as in Zhong et al. cited in Theorem 16.2. The constant-overlap record model is already [the history-record volume, Definition 119.1 and Theorem 119.2](AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md#119-持续追加可区分记录的强度与熵). The present application uses the actual AURIC output projectors and the same record isometry to obtain the joint recovery, erased recovery and fixed-probe length formulas (P.72)--(P.74); it makes no priority claim for the product/logarithm criterion or isometric reversibility. $\Theta_n$ measures one binary distinction. Its divergence neither counts indefinitely many perfectly readable histories nor implies that Shannon information about a fixed binary label is unbounded. Fresh tensor storage, preservation and native synthesis are additional premises. Classical readout of only part of the records need not implement the full-quantum left inverse used above.
 
 ## 追加锚（本行以下为增补区）
+
+## 18. The sharp recovery infimum over the actual complex class
+
+**Definition 18.1 (actual complex channel and common comparison data).** Let $0<\beta\leq1/2$, let $N^{\rm ph}\in\mathcal C_\beta$ be exactly as in Definition 1.3, and set
+
+$$
+a=1-\beta,\qquad u=\sqrt a,\qquad
+T=\frac{1+u}{2},\qquad v=\sqrt T,\qquad d=1-T.
+\tag{P.75}
+$$
+
+The physical inputs remain $\theta_\pm=(|0\rangle\pm|1\rangle)/\sqrt2$, the output frame remains $D=\operatorname{diag}(1,i,i,i,1)$, and $H=\operatorname{span}(\theta_+,\theta_-)=\operatorname{span}(|0\rangle,|1\rangle)$. Fix one complex Stinespring isometry $V:A\to B\otimes E$ for this whole $N^{\rm ph}$, with complement $\Gamma(X)=\operatorname{Tr}_B(VXV^\dagger)$. A finite $E$ of dimension at most $3\cdot5=15$ suffices. Every third column $V|2\rangle$ jointly compatible with this isometry and Definition 1.3 is included.
+
+For a density $\omega$ on $E$, let $S=\operatorname{supp}\omega$ be its exact positive support, $k=\dim S$, and choose its eigenvalues in decreasing order. With a paired orthonormal eigenbasis on $F=\mathbb C^k$ and $S$, put
+
+$$
+|\omega\rangle_{FE}=\sum_{j=1}^k\sqrt{\lambda_j}|j\rangle_F|j\rangle_E,
+\quad V_\omega\psi=\psi\otimes|\omega\rangle,
+\quad U:B\to A\otimes F,\quad U^\dagger U\preceq I_5,
+\quad A_{\omega,U}=V_\omega^\dagger(U\otimes I_E)V.
+\tag{P.76}
+$$
+
+For each such one common complex contraction $U$, write $r_\psi=\operatorname{Re}\langle\psi|A_{\omega,U}|\psi\rangle$. The constant complementary channel is $\mathcal C_\omega(X)=\operatorname{Tr}(X)\omega$. All fidelities, recoveries and norms have exactly Definition 1.4's complex, whole-output and unhalved conventions.
+
+**Theorem 18.2 (all-complex actual-channel recovery bound).** For every $0<\beta\leq1/2$, every $N^{\rm ph}\in\mathcal C_\beta$, and every complex CPTP $R:M_5\to M_3$ on the entire output algebra,
+
+$$
+F(RN^{\rm ph},\operatorname{id}_3)\leq\sqrt{\frac{1+\sqrt{1-\beta}}2},
+\qquad
+\|RN^{\rm ph}-\operatorname{id}_3\|_\diamond
+\geq1-\sqrt{1-\beta}.
+\tag{P.77}
+$$
+
+The diamond supremum includes arbitrary finite complex references. There is no real Kraus or rank-nine premise.
+
+Proof. Put $\rho_\pm=N^{\rm ph}(\theta_\pm)$. Their difference is $D\Delta D^\dagger$ with $\Delta$ exactly (P.4), hence $\|\rho_+-\rho_-\|_1=2(a+\beta)=2$. If $Q_+$ is its positive spectral projection, then $\operatorname{Tr}(Q_+\rho_+)-\operatorname{Tr}(Q_+\rho_-)=1$. Both traces are in $[0,1]$, so they are respectively one and zero. Positivity gives orthogonal output supports, and $\rho_+$ and $\rho_-$ are the positive and negative parts of their difference. Each therefore has nonzero spectrum $(a,\beta)$. This argument uses the original physical pair and fixed $D$.
+
+Let $B_\pm=\operatorname{supp}\rho_\pm$. The actual vectors $V\theta_\pm$ belong to $B_\pm\otimes E$. Since $B_+\perp B_-$, taking the $B$ partial trace gives $\Gamma(|\theta_+\rangle\langle\theta_-|)=0$, and likewise for its adjoint. The Schmidt spectra give $\tau_\pm=\Gamma(\theta_\pm)\preceq aI_E$. Consequently, for every complex unit vector $\psi=p\theta_++q\theta_-\in H$,
+
+$$
+\Gamma(\psi)=|p|^2\tau_++|q|^2\tau_-\preceq aI_E,
+\qquad \operatorname{Tr}\Gamma(\psi)=1.
+\tag{P.78}
+$$
+
+No conjugacy, commutativity or common two-dimensional support of $\tau_\pm$ is required. In particular, (P.78) supplies the actual cap (U.228) in [Volume III, Theorem 153.2](AURIC_OMEGA_FULL_INPUT_RECOVERY_CERTIFICATES_III.md#153-actual-closure-of-the-all-class-recovery-bound), now on the physical plane $H$ for a complex encoder. The following correspondence to (U.227)--(U.240) retains this same $V$ and its unchanged third column.
+
+Fix $\omega$ and $U$ as in (P.76), and let $\Pi_S$ project onto $S$. For $\psi\in H$, define $x_\psi=(U\otimes\Pi_S)V\psi$ and $Q_\psi=\operatorname{Tr}_{A\otimes F}|x_\psi\rangle\langle x_\psi|$. Testing environmental quadratic forms against $U^\dagger U\preceq I_5$, followed by (P.78), gives
+
+$$
+0\preceq Q_\psi\preceq\Pi_S\Gamma(\psi)\Pi_S\preceq aI_S,
+\qquad \operatorname{Tr}Q_\psi\leq1.
+\tag{P.79}
+$$
+
+The target $t_\psi=V_\omega\psi$ is supported on $S$, so this support compression preserves $r_\psi=\operatorname{Re}\langle t_\psi,x_\psi\rangle$. If $k=1$, (P.79) and Cauchy--Schwarz give $r_\psi\leq\sqrt a<v$, since $T-a=(1-u)(2u+1)/2>0$.
+
+For $k\geq2$, complete the range of the same $U$ to a five-dimensional subspace of $A\otimes F$, and let $P$ be its orthogonal projection. Thus $PU=U$; $P$ need not equal $UU^\dagger$. Write $D_{\rm def}=I-P$ and factor its entrywise conjugate in the paired basis as
+
+$$
+E_0=\overline{D_{\rm def}}=ZZ^\dagger,
+\qquad Z^\dagger Z=I_{3k-5},
+\qquad Z=\begin{pmatrix}Z_0\\Z_1\\Z_2\end{pmatrix},
+\qquad Z_i:\mathbb C^{3k-5}\to\mathbb C^k.
+$$
+
+For $\psi=\psi_0|0\rangle+\psi_1|1\rangle$, let $D_\psi=(\langle\psi|\otimes I_F)D_{\rm def}(|\psi\rangle\otimes I_F)$ and $C_\psi=(\psi_0,\psi_1,0)\otimes I_k$. The full paired-basis transpose of (U.233)--(U.234) gives
+
+$$
+\begin{aligned}
+D_\psi^T&=C_\psi E_0C_\psi^\dagger=Z_\psi Z_\psi^\dagger,
+&Z_\psi&=\psi_0Z_0+\psi_1Z_1,\\
+M_\psi&=\operatorname{Tr}_{A\otimes F}|(P\otimes I_E)t_\psi\rangle
+\langle(P\otimes I_E)t_\psi|
+=\omega-\sqrt\omega Z_\psi Z_\psi^\dagger\sqrt\omega.
+\end{aligned}
+\tag{P.80}
+$$
+
+Here the transpose includes the input coefficients: $E_0$ is the conjugated full defect, and $\psi$ remains the same complex input. This is not a reality condition on $V$ or $U$. Since $PU=U$, projection of $t_\psi$ leaves its overlap with $x_\psi$ unchanged. The purification overlap bound with (P.79) yields
+
+$$
+r_\psi\leq f(Q_\psi,M_\psi)\leq H_a(M_\psi),
+\qquad H_a(M)=\max_{0\preceq Q\preceq aI,\ \operatorname{Tr}Q\leq1}f(Q,M).
+\tag{P.81}
+$$
+
+This is exactly [Volume II, (S.58)](AURIC_OMEGA_FULL_INPUT_RECOVERY_CERTIFICATES_II.md), including singular directional marginals. For the third input set $t_2=V_\omega|2\rangle$ and $x_2=(U\otimes\Pi_S)V|2\rangle$. The same $P$ gives $q_2=\operatorname{Tr}(\omega Z_2Z_2^\dagger)$ and $\|(P\otimes I_E)t_2\|^2=1-q_2$. The contraction bound $\|x_2\|\leq1$ therefore implies $r_2\leq\sqrt{1-q_2}$. If all $r_\psi>v$ for complex unit $\psi\in H$ and $r_2>v$, then (P.80)--(P.81) give precisely (S.158): $H_a(M_\psi)>v$ for every complex direction and $q_2<d$, with one center, one $Z$ and one rank-five common projection. [Volume II, Theorem 76.2 and Sections 77--79](AURIC_OMEGA_FULL_INPUT_RECOVERY_CERTIFICATES_II.md#76-the-all-positive-beta-common-projection-statement) exclude these data for every finite $k\geq2$. Together with the separate $k=1$ case this proves $\lambda_{\min}(\operatorname{Herm}A_{\omega,U})\leq v$ for every fixed $\omega,U$. The application uses the projection exclusion itself; it does not remove premises from Volume II Theorem 80.2.
+
+The remaining passage is (U.238)--(U.240) of Volume III Theorem 153.2 with (P.78) as its front-end cap. For completeness, its optimization order is
+
+$$
+\begin{aligned}
+F(\Gamma,\mathcal C_\omega)
+&=\min_{\rho\in\mathsf D(A)}\max_{U^\dagger U\preceq I_5}
+\operatorname{Re}\operatorname{Tr}(\rho A_{\omega,U})\\
+&=\max_{U^\dagger U\preceq I_5}
+\lambda_{\min}(\operatorname{Herm}A_{\omega,U})\leq v,\\
+\max_{R:M_5\to M_3\ {\rm CPTP}}F(RN^{\rm ph},\operatorname{id}_3)
+&=\max_{\omega\in\mathsf D(E)}F(\Gamma,\mathcal C_\omega)\leq v.
+\end{aligned}
+\tag{P.82}
+$$
+
+The first equality is the rectangular root-fidelity purification formula; the second is compact real-affine minimax on the input-density set and the complex contraction ball, with $\omega$ fixed. Only afterward is the center maximized. The last equality is the unrestricted recovery/complement duality and CPTP completion of Bény and Oreshkov, [*Approximate simulation of quantum channels*, arXiv:1103.0649v3, (54)--(56), Corollary 5, (64)--(66)](https://arxiv.org/abs/1103.0649v3); the [primary interface citation](../../../Library/QuantumChannels/beny2011simulation.md) distinguishes this from their Kraus-bounded identity. The complement of the identity is scalar trace, whose postprocessings are exactly the constant channels $\mathcal C_\omega$. Thus the recovery domain in (P.82) is every complex whole-output CPTP map. Neither phasewise choices of $U,P$ nor an exchange of center and input is used.
+
+For each such $R$, compactness supplies a worst-fidelity input density $\rho_R$. Purify it to $|\Psi_R\rangle$ with a complex reference of dimension at most three, and set $\sigma_R=(RN^{\rm ph}\otimes\operatorname{id})(|\Psi_R\rangle\langle\Psi_R|)$. Measuring the projection onto the pure ideal target gives
+
+$$
+\begin{aligned}
+\|RN^{\rm ph}-\operatorname{id}_3\|_\diamond
+&\geq\|\sigma_R-|\Psi_R\rangle\langle\Psi_R|\|_1\\
+&\geq2\bigl(1-\langle\Psi_R|\sigma_R|\Psi_R\rangle\bigr)\\
+&=2\bigl(1-F(RN^{\rm ph},\operatorname{id}_3)^2\bigr)
+\geq2(1-T)=1-\sqrt{1-\beta}.
+\end{aligned}
+\tag{P.83}
+$$
+
+This witness may depend on $R$. It belongs to the supremum over all finite complex references in Definition 1.4, so (P.83) proves the stated unhalved bound for each recovery. $\square$
+
+**Corollary 18.3 (sharp class infima and the earlier gap).** For every $0\leq\beta\leq1/2$,
+
+$$
+\delta^*_{\mathcal C}(\beta)
+=\delta^*_{\mathcal R}(\beta)
+=1-\sqrt{1-\beta}.
+\tag{P.84}
+$$
+
+Proof. For positive $\beta$, Theorem 18.2 bounds every encoder in $\mathcal C_\beta$ from below. The actual real family of Theorem 4.1, (P.11)--(P.16), belongs to $\mathcal R_\beta\subseteq\mathcal C_\beta$ and attains the bound. At $\beta=0$, Theorem 6.1 already gives both infima zero. Thus (P.84) supplies the positive-$\beta$ sharp value left unspecified in Definition 6.2, while the weaker inequalities (P.20) remain valid. Definition 10.3's fixed-fiber restriction also remains valid: its fiber formulas alone do not cover arbitrary third outputs; the additional ingredient here is the actual cap (P.78) followed by the common-projection exclusion. Theorem 5.1 gives encoders with error one and therefore prevents reading (P.84) as the error of every encoder. $\square$
+
+**Definition 18.4 (analytical correspondence and applicability).** The application (P.78)--(P.84) is repo-derived from the existing analytical estimates of Volume II Theorem 76.2 and the actual-channel argument of Volume III Theorem 153.2, using the standard rectangular fidelity and unrestricted duality interfaces cited above. Its extension to $\mathcal C_\beta$ follows from output support separation for the stipulated actual pair, with no real Kraus premise. This attribution concerns the displayed correspondence and makes no claim of literature novelty.
+
+The mathematical domain is precisely the actual channel class of Definition 1.3 with its original $\theta_\pm,D$, all jointly admissible third columns, and arbitrary complex recoveries on the entire $M_5$. The conclusion determines the class infima and supplies the already specified attaining family; a classification of all minimizers is a separate problem. Applying it to an external source requires an identification with this actual channel class. Native finite-word gain still requires Assumption 1.2, and source preparation, native decoder synthesis, local-operation resource models and physical realization require their own mathematical hypotheses. None is supplied by the recovery optimization (P.82).
+
+## 追加锚（本行以下为增补区）

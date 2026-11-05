@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:416c1d49a03ba1a1d3b21c52892f2708f5f97a67010362b1fca49e38f18c76e5
+  normalized_sha256: sha256:416c1d49a03ba1a1d3b21c52892f2708f5f97a67010362b1fca49e38f18c76e5
+cas_ref: sha256:416c1d49a03ba1a1d3b21c52892f2708f5f97a67010362b1fca49e38f18c76e5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题。要求区分层次的表格引言、列头及分隔线，没有大小数据行或数学断言。
+    previous_atom_id: 35c6bae819f68fe0aa06a052f61eebeae82c972938df68e196e1c80998bb576e
+    next_atom_id: ea3a8f9c2ea5d9bd1acfe164fc4f506bc73c4b9bdd96621b12ef0532522347d7

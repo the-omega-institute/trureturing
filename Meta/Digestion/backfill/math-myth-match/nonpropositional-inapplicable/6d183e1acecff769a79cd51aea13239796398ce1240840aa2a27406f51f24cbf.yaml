@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6d183e1acecff769a79cd51aea13239796398ce1240840aa2a27406f51f24cbf
+  normalized_sha256: sha256:6d183e1acecff769a79cd51aea13239796398ce1240840aa2a27406f51f24cbf
+cas_ref: sha256:6d183e1acecff769a79cd51aea13239796398ce1240840aa2a27406f51f24cbf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅说明詹姆斯附言的哲学论证边界和多元假说；没有数学命题。
+    previous_atom_id: bd864850064a3316342cda1d695f651160ba5f7c222009c2ffb038be16a5afd6
+    next_atom_id: 55e373d78c5fabe41f1212e960b4ba555d931844b5ec6ff259d9325e192d0f71

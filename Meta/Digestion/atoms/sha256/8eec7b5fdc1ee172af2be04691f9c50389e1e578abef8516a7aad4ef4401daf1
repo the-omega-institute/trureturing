@@ -1,0 +1,26 @@
+**定义 19.1（代数次序、印刷次序和五个命名模式）。** 代数坐标固定为
+低端、 高端、 中间的 $(x,y,z)$，而任何三位印刷词仍按 $(x,z,y)$
+写出。令
+
+$$
+\begin{array}{c|ccccc}
+\text{名称}&o&a&b&c&d\\ \hline
+(x,y,z)&000&100&001&010&110\\
+\text{印刷 }(x,z,y)&000&100&010&001&101
+\end{array}
+$$
+
+于是
+
+$$
+\Sigma=\{o,a,b,c,d\}
+ =\{(x,y,z)\in\{0,1\}^3:xz=yz=0\},
+\quad E=\{a,b,c\},\quad N=\{a,b,c,d\}=\Sigma\setminus\{o\}.
+$$
+
+$E$ 是三个恰有一个坐标为一的模式；$N$ 满足
+$z=(1-x)(1-y)=\neg(x\lor y)$，即本卷的 NOR 端口关系。已有
+`D5/S3/Combinatorics/ConstraintRelations/BooleanNullBoundary.lean`
+在这一次序上核验了五点关系、非空关系和 NOR 等式；本节的删减分类是其
+上的有限关系适配。
+

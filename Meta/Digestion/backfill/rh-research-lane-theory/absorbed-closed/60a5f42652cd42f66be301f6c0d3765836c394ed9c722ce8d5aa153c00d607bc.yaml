@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:60a5f42652cd42f66be301f6c0d3765836c394ed9c722ce8d5aa153c00d607bc
+  normalized_sha256: sha256:60a5f42652cd42f66be301f6c0d3765836c394ed9c722ce8d5aa153c00d607bc
+cas_ref: sha256:60a5f42652cd42f66be301f6c0d3765836c394ed9c722ce8d5aa153c00d607bc
+coverage_gids:
+  - gid: D5/S3/Weil/WeilObservables/WeilEvaluationExactObservableRange.collapse_expandMultiplicityCopies
+    target_statement_id: sha256:c5027aef60629e2a7666fedb8b77f060d2cdd2e987a561df225ab5dd7b5a7e63
+  - gid: D5/S3/Weil/WeilObservables/WeilEvaluationExactObservableRange.expand_collapseMultiplicityCopies_iff
+    target_statement_id: sha256:05499249caca55e0a1666c39d5a0d1eb592aa8e38462215076501ba6e7d9eb22
+  - gid: D5/S3/Weil/WeilObservables/WeilEvaluationExactObservableRange.finiteWeilCoordinateEvaluation_range_iff
+    target_statement_id: sha256:0735cb67bb3b869c42cd07146fc34bc2edc9757717fe2d4b53664a1c64f1f45b
+  - gid: D5/S3/Weil/WeilObservables/WeilEvaluationExactObservableRange.finiteWeilIndexEvaluation_range_iff
+    target_statement_id: sha256:83eb83351507bc64134464f32f939570521934238e15279c0da7cc4025ed5eb3
+  - gid: D5/S3/Weil/WeilObservables/WeilEvaluationExactObservableRange.finiteWeilReducedEvaluation_surjective
+    target_statement_id: sha256:f704192b7c554fd100f71ce7972909c652e17bdc973af2b55e456808c7ec4674
+receipts:
+  unresolved_subitems: []

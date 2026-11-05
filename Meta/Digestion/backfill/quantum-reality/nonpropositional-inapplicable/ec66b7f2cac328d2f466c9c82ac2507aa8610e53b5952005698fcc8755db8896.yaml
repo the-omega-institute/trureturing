@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ec66b7f2cac328d2f466c9c82ac2507aa8610e53b5952005698fcc8755db8896
+  normalized_sha256: sha256:ec66b7f2cac328d2f466c9c82ac2507aa8610e53b5952005698fcc8755db8896
+cas_ref: sha256:ec66b7f2cac328d2f466c9c82ac2507aa8610e53b5952005698fcc8755db8896
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该句区分因果、格点与振幅三种读数的语义，没有断言具体关系的等式或包含式。
+    previous_atom_id: 4f7b3b38e276742223431de0148147d8d2e60700ea607a92064c365707c86b6e
+    next_atom_id: 78a58926cb9868ae94df168ee29c09a3fb4ab840acb97afbe518a8bea04ab920

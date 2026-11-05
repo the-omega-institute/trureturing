@@ -1,0 +1,22 @@
+**Equation 5.6 (`eq:seven`).**
+
+$$
+\begin{array}{c|l|c}
+\text{resolution}&T&\text{other core}\\\hline
+C1:H&(-a+b,-a,-c,-d)&S\\
+C3:X&(b,a,c,d)&S\\
+C4:H&(b,a,c,d+a-b)&S\\
+P2:H&(-a,b,c-a,d-a)&C\\
+P3:X&(-a,b,c-a,d-2a)&C\\
+P5:H&(a,-b,c+b,d+b)&C\\
+P6:X&(a,-b,c+b,d+2b)&C
+\end{array}
+$$
+
+The H rows have AS sign $-1$ and IHX coefficient $-1$; the X rows
+have both signs $+1$. Thus if the other core's weight polynomial is
+zero, each row is the actual relation
+
+<a id="eq-anti"></a>
+<a id="eq:anti"></a>
+

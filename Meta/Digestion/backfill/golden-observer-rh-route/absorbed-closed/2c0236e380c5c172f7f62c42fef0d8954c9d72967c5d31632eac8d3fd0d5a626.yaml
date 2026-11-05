@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2c0236e380c5c172f7f62c42fef0d8954c9d72967c5d31632eac8d3fd0d5a626
+  normalized_sha256: sha256:2c0236e380c5c172f7f62c42fef0d8954c9d72967c5d31632eac8d3fd0d5a626
+cas_ref: sha256:2c0236e380c5c172f7f62c42fef0d8954c9d72967c5d31632eac8d3fd0d5a626
+coverage_gids:
+  - gid: D5/S3/Zeros/Symmetry/ZetaConjugationCovariance.completed_riemann_zeta_conj
+    target_statement_id: sha256:34c9d004882f9cbbbdb43f8de40ad87d4016c6f7b51942afcba42bda791c7964
+  - gid: D5/S3/Zeros/Symmetry/ZetaConjugationCovariance.completed_riemann_zeta_one_sub_conj
+    target_statement_id: sha256:ef5b4d341a02620f9ae9c60b1da912f937171f98c7aa224ffc25a1320d2b9f91
+receipts:
+  unresolved_subitems: []

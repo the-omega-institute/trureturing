@@ -225,6 +225,41 @@ def dirichletTranslationTwist (N : ℕ) [NeZero N]
   (gaussSum χ⁻¹ (ZMod.stdAddChar (N := N)))⁻¹ •
     ∑ u : ZMod N, (χ⁻¹ u) • restrictedTranslation N k u
 
+/- The conductor-one case is the normalization anchor for the missing coefficient
+   theorem: the unique primitive character and the unique translation both reduce
+   to the identity.  Keeping this pointwise statement separate avoids assuming any
+   nonvanishing or nebentypus law before the general twist proof. -/
+theorem restrictedTranslation_one_zero_apply
+    (k : ℤ) (f : CuspForm 𝒮ℒ k) (z : ℍ) :
+    (restrictedTranslation 1 k (0 : ZMod 1) f) z = f z := by
+  dsimp [restrictedTranslation]
+  change (CuspForm.translate f
+      (GeneralLinearGroup.upperRightHom
+        (((0 : ZMod 1).val : ℝ) / ((1 : ℕ) : ℝ)))) z = f z
+  change ((⇑f ∣[k]
+      GeneralLinearGroup.upperRightHom
+        (((0 : ZMod 1).val : ℝ) / ((1 : ℕ) : ℝ))) z) = f z
+  rw [upperRight_slash_apply]
+  simp
+
+theorem dirichletTranslationTwist_one_apply
+    (k : ℤ) (f : CuspForm 𝒮ℒ k) (z : ℍ) :
+    (dirichletTranslationTwist 1 (1 : DirichletCharacter ℂ 1) k f) z = f z := by
+  have hstd : (ZMod.stdAddChar (N := 1) : AddChar (ZMod 1) ℂ) = 1 := by
+    apply AddChar.ext
+    intro u
+    rw [show u = 0 by exact Subsingleton.elim _ _]
+    simp
+  have htrans (u : ZMod 1) : (restrictedTranslation 1 k u f) z = f z := by
+    rw [show u = 0 by exact Subsingleton.elim _ _]
+    exact restrictedTranslation_one_zero_apply k f z
+  change ((gaussSum ((1 : DirichletCharacter ℂ 1)⁻¹)
+      (ZMod.stdAddChar (N := 1)))⁻¹ : ℂ) *
+      (∑ u : ZMod 1, ((1 : DirichletCharacter ℂ 1)⁻¹ u) *
+        (restrictedTranslation 1 k u f) z) = f z
+  rw [inv_one, hstd, gaussSum_one_one]
+  simp [htrans, MulChar.one_apply (isUnit_of_subsingleton _)]
+
 end
 
 end D5.S3.Arith.ModularForms

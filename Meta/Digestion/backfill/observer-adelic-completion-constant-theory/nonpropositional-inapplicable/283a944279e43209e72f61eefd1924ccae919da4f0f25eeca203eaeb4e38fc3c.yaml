@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:283a944279e43209e72f61eefd1924ccae919da4f0f25eeca203eaeb4e38fc3c
+  normalized_sha256: sha256:283a944279e43209e72f61eefd1924ccae919da4f0f25eeca203eaeb4e38fc3c
+cas_ref: sha256:283a944279e43209e72f61eefd1924ccae919da4f0f25eeca203eaeb4e38fc3c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Dual 路线中的 Feshbach exact elimination 方法名，没有单独的等式断言。'
+    previous_atom_id: d273ae50b98d46a565b54a628013dc673475b653d3cb2126122a91a59a7a43f2
+    next_atom_id: 8ff5188fa055f262eaf6ffcd010edc0656d56a7dfb88a5938954a62029addcf2

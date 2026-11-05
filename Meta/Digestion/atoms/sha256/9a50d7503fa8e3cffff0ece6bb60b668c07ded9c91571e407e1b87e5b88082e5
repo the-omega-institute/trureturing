@@ -1,0 +1,97 @@
+**Theorem 4.1 (Positive approximants with complete original-vertex spectrum).**
+Assume $2\le a\le b$ and $c=a+b$. For every real $\varepsilon>0$ define
+
+$$
+g^{(\varepsilon)}_e=
+\begin{cases}
+\varepsilon,&e\in E_{AB},\\
+1/c,&e\in E_{AC}\sqcup E_{BC}.
+\end{cases}
+\tag{4.1}
+$$
+
+This is a finite strictly positive original-edge assignment with
+$\lambda_2(g^{(\varepsilon)})=1$. Its full $n=2c$ vertex spectrum,
+as a multiset, is
+
+$$
+\begin{array}{c|c}
+\text{eigenvalue}&\text{multiplicity}\\ \hline
+0&1\\
+1&c-1\\
+1+b\varepsilon&a-1\\
+1+a\varepsilon&b-1\\
+1+c\varepsilon&1\\
+2&1
+\end{array}
+\tag{4.2}
+$$
+
+Coincident entries have their displayed multiplicities added. Its
+resistance is
+
+$$
+R_\varepsilon
+=n\left(c-1+\frac{a-1}{1+b\varepsilon}
+              +\frac{b-1}{1+a\varepsilon}
+              +\frac1{1+c\varepsilon}+\frac12\right).
+\tag{4.3}
+$$
+
+Consequently
+
+$$
+M_{a,b,a+b}=U_n,\qquad
+F(g^{(\varepsilon)})=R_\varepsilon\longrightarrow U_n
+\quad(\varepsilon\downarrow0).
+\tag{4.4}
+$$
+
+The supremum is not attained in the positive domain.
+
+*Proof.* All coordinates in (4.1) are finite and positive. Work in
+$\mathbb R^V$ with its original counting inner product. For each part,
+the space $U_I$ in (2.3) is invariant for this particular assignment:
+cross-part coordinate sums vanish. Its eigenvalue is the common
+degree of a vertex in that part. These degrees are
+$1+b\varepsilon$ on $A$, $1+a\varepsilon$ on $B$, and $1$ on $C$.
+Their dimensions are $a-1,b-1,c-1$.
+
+The orthogonal complement of $U_A\oplus U_B\oplus U_C$ consists of
+vectors constant on each part. On the three part-values
+$(\alpha,\beta,\gamma)$, the same $n$ by $n$ Laplacian acts by
+
+$$
+\begin{aligned}
+(Lz)|_A&=\alpha-\gamma+b\varepsilon(\alpha-\beta),\\
+(Lz)|_B&=\beta-\gamma+a\varepsilon(\beta-\alpha),\\
+(Lz)|_C&=\gamma-\frac{a\alpha+b\beta}{c}.
+\end{aligned}
+\tag{4.5}
+$$
+
+Three linearly independent vectors of part-values are
+
+$$
+(1,1,1),\qquad (b,-a,0),\qquad (1,1,-1).
+$$
+
+Equation (4.5), using $a+b=c$, gives their eigenvalues
+$0,1+c\varepsilon,2$, respectively. These computations give all
+$n$ eigenvalues and all the multiplicities in (4.2).
+They are calculations in invariant subspaces of the original matrix,
+not a replacement of the original vertices by three vertices.
+
+Every displayed positive eigenvalue is at least $1$, and $1$ occurs
+$c-1>0$ times. Thus $\lambda_2=1$. Substitution in (1.5) proves
+(4.3). Its limit is
+
+$$
+n\left(c-1+(a-1)+(b-1)+1+\frac12\right)
+=n\left(2c-\frac32\right)=U_n.
+$$
+
+Theorem 3.2 bounds every competing positive assignment strictly below
+$U_n$; (4.1) approaches that bound within the positive domain.
+This proves (4.4) and nonattainment. ∎
+

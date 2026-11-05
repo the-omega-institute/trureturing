@@ -23,6 +23,12 @@ internal sealed class FullwoodParzygnatSubadditivityRefutationDocument : IScribe
             Node("claim", "Fullwood–Parzygnat subadditivity conjecture", ClaimFormula(),
                 "Remark 1 of On Dynamical Measures of Quantum Information conjectures subadditivity on quantum states over time. Both dimensions are positive. The input is positive semidefinite with trace one, and the arbitrary finite Kraus family satisfies the completeness equation. ofKraus(K,K) is FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus, whose action is the sum of K_k X K_k adjoint. Thus the hypothesis gives a completely positive trace-preserving map. The bound uses ChenKatoBrandaoCMIRefutation.entropy: on Hermitian matrices it is PartialTraceMutualInformation.spectralEntropy, the sum of -lambda log |lambda| over the eigenvalues with multiplicity, including zero contributions at zero; its value on other matrices is zero. The bound compares this signed entropy of the two-time matrix with the entropies of the input and output states. Fullwood and Yang, arXiv:2608.28946v1, Section 6, also state the higher-dimensional question as open.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Describe.Lean(DescribeId.Create("fwp-subadditivity-projection-cfc"),
+                DeclarationHandle.Create(Prefix + "projection_cfc"),
+                H("Functional calculus of an affine projection"),
+                StatementSource.FromAuthor(ProjectionCfcFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a Hermitian idempotent Q, the continuous functional calculus of a I + b Q is determined by f(a) on the complementary range and f(a+b) on the range of Q."))),
+                DescribeRole.Theorem),
             Node("result", "A five-level Werner–Holevo counterexample", Disp(new Formula.Not(F.Id("claim"))),
                 "Let rho be the identity divided by five and use the ten Kraus operators (E_ij - E_ji)/2, one for each i < j. Their adjoint products sum to the identity. Their channel action is (trace(X) I - transpose(X))/4 and fixes rho. Use ProductUnitaryChoiSpectrum.omega 5, whose entries are one exactly on equal input and output indices, and let P be its outer product divided by five. ProductUnitaryChoiSpectrum.omega_dot_omega gives squared norm five; complex conjugation fixes this vector. P is a Hermitian idempotent of trace one. The Jamiołkowski matrix is (I - 5P)/4, and the two-time matrix is (I - 5P)/20. Its eigenvalues are -1/5 once and 1/20 twenty-four times. Apply CumulantRenyiDataProcessingRefutation.two_point_cfc to the self-adjoint involution H = 2P - I with a = -3/40 and b = -1/8. This evaluates the signed entropy ChenKatoBrandaoCMIRefutation.entropy through PathSpectralClassical.trace_cfc_eq_sum and gives log 5 + (6/5) log 4. Each marginal entropy is log 5. The excess is (1/5) log(4096/3125), which is strictly positive because 4096 > 3125. This contradicts the universal subadditivity bound.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
@@ -60,6 +66,22 @@ internal sealed class FullwoodParzygnatSubadditivityRefutationDocument : IScribe
         Seq(Sum, Underscore, Grp(x, Colon, type), Sp, Par(body));
     private static Formula Instance(string name, Formula type, Formula body) =>
         Seq(OpenBracket, Call(name, type), CloseBracket, Sp, body);
+
+    private static Formula ProjectionCfcFormula()
+    {
+        Formula n = F.Id("n"), q = F.Id("Q"), f = F.Id("f"), a = F.Id("a"), b = F.Id("b");
+        Formula reals = Seq(Mathbb, Grp(F.Id("R")));
+        Formula one = Par(Seq(D(1), Colon, Square(n)));
+        Formula argument = Add(Call("smul", a, one), Call("smul", b, q));
+        Formula coefficient = new Formula.Binary(Apply(f, Add(a, b)),
+            FormulaBinaryOperator.Subtract, Apply(f, a));
+        Formula value = Add(Call("smul", Apply(f, a), one), Call("smul", coefficient, q));
+        Formula body = All("f", new Formula.TypeArrow(reals, reals),
+            All("a", reals, All("b", reals, EqTo(Call("cfc", f, argument), value))));
+        Formula hypotheses = Imp(Call("IsHermitian", q), Imp(EqTo(Mul(q, q), q), body));
+        return Disp(All("n", Named("Type"), Instance("Fintype", n,
+            Instance("DecidableEq", n, All("Q", Square(n), hypotheses)))));
+    }
 
     private static Formula JamioFormula()
     {

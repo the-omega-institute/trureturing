@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7acc91e419dedefa19cabb69e440c0ac6206a8e636828d5879f72e826358f0aa
+  normalized_sha256: sha256:7acc91e419dedefa19cabb69e440c0ac6206a8e636828d5879f72e826358f0aa
+cas_ref: sha256:7acc91e419dedefa19cabb69e440c0ac6206a8e636828d5879f72e826358f0aa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 要求后续寻找 holonomy energy 与 Weil form 的比较关系，并调整研究路线；没有宣称其中某个比较已经成立。
+    previous_atom_id: 1b356ddef9ecd26e16a548f0b5a3dd7060b9a169bedb6f1d0b0946c63aaab924
+    next_atom_id: 1eb46fb12de172000f0253271331a8f5068db4d33dfc486d806252e6a02a4253

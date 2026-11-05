@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2ebd15a61e1853deb2118dcfd290b1ee5a746ebd412a82c7acec144ed35b8523
+  normalized_sha256: sha256:2ebd15a61e1853deb2118dcfd290b1ee5a746ebd412a82c7acec144ed35b8523
+cas_ref: sha256:2ebd15a61e1853deb2118dcfd290b1ee5a746ebd412a82c7acec144ed35b8523
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 设定混合对流项上界和正裕量gamma，未宣称存在这样的G或正裕量。
+    previous_atom_id: 9bfa0d865c74f602341e52db60ab096c89cfc4606cbe9f84beb27b7402ee6a64
+    next_atom_id: bede2aa9205034573e9bd256052b7061309ab905f0a8638b1f7410e0bfbda535

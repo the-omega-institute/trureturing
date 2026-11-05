@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ad509a96bb4f997ddd525b559e08e803d4e32372e49be1cbb1f9537d0e404b5c
+  normalized_sha256: sha256:ad509a96bb4f997ddd525b559e08e803d4e32372e49be1cbb1f9537d0e404b5c
+cas_ref: sha256:ad509a96bb4f997ddd525b559e08e803d4e32372e49be1cbb1f9537d0e404b5c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该行列顺序比较和媒介闭路的非经典见证任务，没有给出量化的实验分离结论。
+    previous_atom_id: 52d15fbb6877339437d87552a1ff343623be793e266d676cf23425aba9f9cac9
+    next_atom_id: daf1c2160d50c28c1f139e78f614bb099262c324f47d01df11c51c91dd742a34

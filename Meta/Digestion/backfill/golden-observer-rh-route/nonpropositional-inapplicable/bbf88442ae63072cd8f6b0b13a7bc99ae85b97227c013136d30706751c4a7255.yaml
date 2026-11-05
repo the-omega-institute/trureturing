@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bbf88442ae63072cd8f6b0b13a7bc99ae85b97227c013136d30706751c4a7255
+  normalized_sha256: sha256:bbf88442ae63072cd8f6b0b13a7bc99ae85b97227c013136d30706751c4a7255
+cas_ref: sha256:bbf88442ae63072cd8f6b0b13a7bc99ae85b97227c013136d30706751c4a7255
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 状态派生清单将 Lean 构建结果作为输入，是派生器接口要求。
+    previous_atom_id: d7420a0ff4cc869ac45309d0f6b93cd6e159bd008b5e1002b3e47ad1b7402578
+    next_atom_id: 0e310f6e89d46aa7abcf3eda31859c62eb919dc575293ad9354fa08e9edffc30

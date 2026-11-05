@@ -1,0 +1,19 @@
+**Definition 101.1 (retained source and loss).** Let [Biased Boundary][BA101]
+mean the fixed source in Definition 1.1 and Theorem 2.1 there. Adopt its
+named [IV][IV101] Definitions 92.1–92.2, 98.1 and Theorems 98.2, 99.1,
+111.2–111.4 as paper premises. Thus $\Omega=\{L,R\}^{\mathbb N}$,
+$\varphi=(1+\sqrt5)/2$, $a=\varphi^{-1}$, $b=\varphi^{-2}$, and
+$m(p)=M([p])=\varphi^{-\#_L(p)-2\#_R(p)}$, with $m(\varnothing)=1$.
+Keep the original free-root unit-edge extension energy $\mathcal E$,
+its form domain $\mathcal D$, and its operator $H$ on real $L^2(\Omega,M)$.
+Put $\mathscr G_0=\mathbf1^\perp$, $\Pi F=F-\int F\,dM$, and, for finite $E\ge0$,
+
+$$
+\mathcal B_E=\{F\in\mathcal D\cap\mathscr G_0:\mathcal E(F)\le E\},
+\qquad \operatorname{loss}(F,\widehat F)=\|F-\widehat F\|_{L^2(M)} .
+\tag{101.1}
+$$
+
+The same unknown $F$ is the input throughout a run. Centering is part of
+the input promise; an unbounded unknown constant is not included.
+

@@ -1,0 +1,50 @@
+**Definition 47.1 (source, task and notation).** The parent of this volume
+is [Atomic Generation Acquisition](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md),
+abbreviated AA. Retain its Definition 17.1's LAB, Assumption 20.1's owned
+known-alpha initialization and ideal primitive/authority contract,
+Definition 20.2's complete frames and replies, Definition 20.4's actual
+Next consumer, and Definition 21.1's complete seven-request task $Q_g$.
+There is one actually allocated root, with its actual retained binding;
+$P_p$ promotes its current alpha leaf and $S_p$ splits its current beta
+leaf. There is no deletion, reset, unknown initial source, additional
+writer, observable allocation order or independently readable clock.
+The source representation, including material unary beta markers, is
+AA Definition 17.3's $C(t)$. Logical addresses exclude these markers.
+
+This volume changes only the auxiliary representation of the full local
+routing records, from their initialization onward. It does not select a
+subword, add a selector or replace $Q_g$ by the marked task of AA §§30–46.
+For a successful generation word $w$ ending at $t$, use the existing
+$t\in\mathcal D$, $I(t)$, $E(t)$, $W_v(w)$ and $e_b$ of AA §§17–19. Put
+
+$$
+\begin{aligned}
+x_v&=e_\beta(t_{vL}),&y_v&=e_\alpha(t_{vR}),&n_v&=x_v+y_v,\\
+R_v&=\binom{n_v}{x_v},&b_v&=\lceil\log_2 R_v\rceil,\\
+\mathcal A(t)&=\{v\in I(t):x_v>0,\ y_v>0\},&a_*(t)&=|\mathcal A(t)|.
+\end{aligned}
+\tag{AAII.1}
+$$
+
+Here $R_v\ge1$, and $b_v=0$ exactly when $R_v=1$, equivalently
+$x_vy_v=0$. These counts refer to all successful events, promotions and
+splits alike. At a subtree born with type $b$, a traversal counting its
+current alpha and beta logical leaves as $a,c$ obtains
+$e_b=a+2c-1-\mathbf1_{\{b=\beta\}}$ by AA (AA.73). Thus every count in
+(AAII.1) is obtainable from the present bound source, without an endpoint
+supplied in advance or an old event archive. Traversal, counters and
+arithmetic are paid operations, not additional primitive readouts.
+
+For $W\in\{L,R\}^n$ with $x$ occurrences of $L$, write their positions as
+$j_1<\cdots<j_x$, and use the classical constant-weight coordinate
+
+$$
+\operatorname{colex}(W)=\sum_{i=1}^x\binom{j_i-1}{i}.
+\tag{AAII.2}
+$$
+
+The empty sum is zero. Set $r_v=\operatorname{colex}(W_v(w))$.
+The mathematical compressed record is the source-indexed tuple of these
+ranks; a coordinate of radix one is represented by absence, not a stored
+zero. Counts and widths are derived quantities, not persistent banks.
+

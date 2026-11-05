@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f156e2bfd1d917aa03f28793d861003f44378800d608aefce40555df63499f59
+  normalized_sha256: sha256:f156e2bfd1d917aa03f28793d861003f44378800d608aefce40555df63499f59
+cas_ref: sha256:f156e2bfd1d917aa03f28793d861003f44378800d608aefce40555df63499f59
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 比较习惯、克己与意愿调整中的规范解释，不从行为受限推出自由状态。
+    previous_atom_id: 2bbb9e75fc4cad54b2ff7a88e3a0a96347941789755311e3cb30180e229bdc87
+    next_atom_id: 86742e07fcdd19836ed7bd2712a31842905258529ce7721536308b1fa73cb1d7

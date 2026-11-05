@@ -1,0 +1,44 @@
+**定义 127.1（原关系族与范数约定）。** 沿用定义 77.1 的同一全效果、全框架实际分支供应，以及定义 84.1、99.1–99.2 的范数和缺陷约定；不继承定义 84.1 所施加的精确 S、H，也不继承定理 85.1 的正常形。每个已有对象是有限复矩阵直和
+
+$$
+\mathcal A=\bigoplus_\alpha M_{d_\alpha}(\mathbb C),
+\qquad \tau=\sum_\alpha\operatorname{Tr}_\alpha.
+$$
+
+对每个原效果 $0\le E\le I$ 及所选细谱框架 $F$，原实际分支 $T_{E,F}:\mathcal A\to\mathcal A$ 完全正且满足 $T_{E,F}^\dagger(I)=E$。实际互补标签及允许的有限接续沿用原供应。这里的映射伴随相对于 $\tau$，不是另供的实际逆过程。对非零效果置
+
+$$
+P_E=\operatorname{supp}E,\qquad
+q_E=\min(\sigma(E)\setminus\{0\}),\qquad
+E^\vee=q_EE^+,
+\qquad \mathcal C_E=P_E\mathcal AP_E,
+\tag{127.1}
+$$
+
+其中 $E^+$ 是 Moore–Penrose 逆。效果、开根、平方、四次方和倒数效果始终使用原同一框架。$\mathcal C_E$ 只是数学角；下文的压缩、归一映射和参考矩阵均不另供实际操作或准备。
+
+对保自伴复线性映射 $N$，仍取
+
+$$
+\nu(N)=\max_{\rho\ge0,\ \tau\rho=1}\|N(\rho)\|_1,
+\qquad
+\|N\|_\diamond=
+\sup_{k\ge1}\sup_{Z\ne0}
+\frac{\|(N\otimes\operatorname{id}_{M_k})(Z)\|_1}{\|Z\|_1}.
+\tag{127.2}
+$$
+
+前式只使用原代数正输入；后式使用任意数学矩阵参考及任意输入。两式均不除以二。令 $\mathcal L_E(X)=\sqrt E X\sqrt E$，并沿用
+
+$$
+\begin{aligned}
+\bar s(E,F)&=\nu(T_{E,F}-T_{E,F}^\dagger)/\|E\|,\\
+\bar h(E,F)&=\nu(T_{E,F}-T_{\sqrt E,F}^{\,2})/\|E\|,\\
+b(E,F)&=\max_{\rho\in\mathcal C_E,\ \rho\ge0,\ \tau\rho=1}
+\|q_E^{-1}T_{E^\vee,F}T_{E,F}(\rho)-\rho\|_1.
+\end{aligned}
+\tag{127.3}
+$$
+
+返回残差在完整原输出代数中比较，不先压回角。$\bar S,\bar H,B_*$ 是这些量跨全部原对象、非零效果及框架的上确界；$D=\sup_{E\ne0,F}\|T_{E,F}-\mathcal L_E\|_\diamond/\|E\|$。这些全称量词不自动供应全部实际准备、层析、证书或有限认证程序。
+

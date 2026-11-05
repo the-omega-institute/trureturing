@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e00119a80c9ee5a518d72adf0d48180cc74a05b25ec4cda5206f9936f5382ad8
+  normalized_sha256: sha256:e00119a80c9ee5a518d72adf0d48180cc74a05b25ec4cda5206f9936f5382ad8
+cas_ref: sha256:e00119a80c9ee5a518d72adf0d48180cc74a05b25ec4cda5206f9936f5382ad8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 可选干预参数：kernel feature。
+    previous_atom_id: 8c895e8b0daf5c9193a8c3f322b525bb9efe3752f613f6b1ade4d5a2c0d02bd4
+    next_atom_id: 484be8b279071a9c0c624400e07632d1385a639be426624e1d06b68dc535f495

@@ -1,0 +1,37 @@
+### 15.1 同一坐标下的合法域与识别目标
+
+沿用定义 4.1 和第 6 节，在 $H=\mathbb C^5$ 上固定同一指定实正交基
+$e_1,\ldots,e_5$，实空间取标准度量及定向 $e_1\wedge\cdots\wedge e_5$。
+记 $e_{ij}=e_i\wedge e_j$、$e_{1234}=e_1\wedge e_2\wedge e_3\wedge e_4$，
+并仍取 $J_{ij}=E_{ij}-E_{ji}$。矩阵与二形式的对应严格使用
+$a_A=\sum_{i<j}A_{ij}e_{ij}$，Hodge 星使用上述度量和定向。
+
+识别问题的合法输入为实矩阵 $S,A,B$，满足
+
+$$
+S^{\mathsf T}=S,\qquad \operatorname{tr}S=1,\qquad
+A^{\mathsf T}=-A,\qquad B^{\mathsf T}=-B,\qquad
+S+iA\succeq0,\qquad S+iB\succeq0.
+$$
+
+这里两个态共享同一个 $S$，$B$ 表示另一个候选态的虚部，不是第 5 节的已知参考。
+合法域包括重谱和半正定边界，不额外要求单谱或泛型条件。比较始终在固定坐标中进行，
+所取等价关系只有整体符号 $B=\pm A$；它对应两个态相等或互为复共轭，
+不把一般正交换基或酉共轭也商掉。
+
+把定义 6.1 限制到对称秩一张量，记
+
+$$
+\begin{aligned}
+q(A)&=\Psi(A^{\odot2})\\
+&=\left(-\tfrac12\operatorname{tr}(A^2),\,
+-A^2+\frac{\operatorname{tr}(A^2)}5I_5,\,
+*(a_A\wedge a_A)\right).
+\end{aligned}
+$$
+
+因 $q(-A)=q(A)$，它确实定义了整体符号商上的读数。待区分的是它能否识别这个商：
+在上述全部合法输入上，$q(A)=q(B)$ 是否蕴含 $B=\pm A$？
+定理 6.2 的满射与核维数只描述整个对称张量空间上的线性映射；
+单有非零线性核并未给出两个合法秩一张量的差。下面直接给出这样的差。
+

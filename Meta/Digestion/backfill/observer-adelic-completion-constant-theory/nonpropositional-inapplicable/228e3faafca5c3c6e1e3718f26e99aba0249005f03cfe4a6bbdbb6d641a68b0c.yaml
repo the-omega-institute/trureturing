@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:228e3faafca5c3c6e1e3718f26e99aba0249005f03cfe4a6bbdbb6d641a68b0c
+  normalized_sha256: sha256:228e3faafca5c3c6e1e3718f26e99aba0249005f03cfe4a6bbdbb6d641a68b0c
+cas_ref: sha256:228e3faafca5c3c6e1e3718f26e99aba0249005f03cfe4a6bbdbb6d641a68b0c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Heading introducing four proposed prohibitions; their mathematical statements lie in separate atoms.
+    previous_atom_id: 5f5a8709802c43a71ae56f19cb19b41d1ed2f10e5317c06cea3b7e90b8ae718d
+    next_atom_id: 16db0d696c04dfdb4e0796bc2dc10dc1a749a0a94581809d67b0ac05c6192832

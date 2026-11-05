@@ -1,0 +1,14 @@
+**文献范围 22.1。** Draisma–Shaw, *Some noteworthy alternating trilinear forms*,
+[arXiv:1102.4768v1](https://arxiv.org/html/1102.4768v1)，定义 (2)、Theorem 2，只供应实交错三形式的奇异直线及维数排除；(19.6) 明确给出它与本题同一内积下的积非零条件的对应。该定理不要求精确面积恒等式，也不供应 (19.23) 的定量常数。
+
+Darpö, *Vector product algebras*,
+[arXiv:0810.5464v1](https://arxiv.org/html/0810.5464v1)，定义中的相容非退化对称形式、反对称乘法及精确范数恒等式是 Theorem 1 的前提。它供应精确向量积分类，适用于这里 $\alpha=0$ 的相应边界，不能直接用于一般 $\alpha>0$。定理 19.2 的等号结构通过极小三平面、定向符号及 $\rho=0$ 导出，不以该精确分类作为任意积的前提。
+
+Baez, *The Octonions*, [§4.1](https://math.ucr.edu/home/baez/octonions/node14.html)，供应经典虚八元数叉积、半交换子归一化、范数恒等式和交错三形式的背景。式 (19.2)、(19.26)–(19.27) 在同一四元数约定中给出所需全输入恒等式和达到三元组；经典模型及其标量缩放不另作独立的新分类定理。
+
+Bryant, *Some remarks on $G_2$-structures*,
+[arXiv:math/0305124v5](https://arxiv.org/html/math/0305124v5)，§2.6，式 (2.18)，在标准 $G_2$ 形式 $\phi$ 的度量和星算子下定义
+$\mathsf j_\phi(\gamma)(v,w)=*_\phi((\iota_v\phi)\wedge(\iota_w\phi)\wedge\gamma)$，并有 $\mathsf j_\phi(\phi)=6g_\phi$。它是收缩—楔积构造的背景；(19.14)–(19.20) 对任意本题资料使用给定欧氏体积，直接证明非零性和两处符号，不假设该资料的给定内积等于某个诱导 $G_2$ 度量。
+
+这些供应者各有上述限定；任意积的定量估计与等号刚性由定理 19.2 的完整推导承担。原下确界由定理 20.1 的全类下界及定理 20.3 的全域达到者共同给出，定理 21.2 仅在假设 21.1 的全部精确共同实现条件下消费该估计。
+

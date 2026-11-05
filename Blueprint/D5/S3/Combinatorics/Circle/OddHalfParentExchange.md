@@ -1,0 +1,68 @@
+# Odd-half negative-parent exchanges
+
+## Abstract
+
+The actual odd-half child relocates around its negative parent with exact signed remainder bounds and complete physical completion.
+
+Let k>=3, t be natural, rho=finRotate k, N=2^k-1=4Q-1 and C=2Q-1. The centered dyadic source f(i)=s(k,t,i) is on physical labels Fin k and its complete physical source has sum zero. Legal means physical Nodup and every natural take-prefix mass from ORIGINAL zero in [0,C], including zero and overlength takes. LARGE means abs(f)>=Q and SMALL means abs(f)<Q. G counts unused LARGE, H sums 3^abs(f) over used LARGE, U counts unused physical labels, and J=(G,H,U) is ordered lexicographically. Equal source values at different labels remain different resources.
+
+Write W=A,[x],T0,[y],T1,[zpen],T2,[z],E, S=T0,T1,T2,E, F=A,[x],T0,[y] and Rsmall=T1,T2,E. The native data are n=rho(p), x=rho(n), f(p)=P>0, f(n)=-D with D>=Q, N<3P, and the actual beta=rho^(-1)(y), gamma=rho^(-1)(beta), a=rho^(-1)(gamma). W is Legal, p,n,beta are absent from ALL W, every S occurrence is SMALL, Q<=-f(z)<=D, and Q<=-f(zpen)<=L=f(beta). Put Y=-f(y)>P, assume Y odd and L mod 4=2, and retain the actual placement gamma in A. With d=P-D, B=C-P, delta=Y-P, a0=mass(A), h=mass(W) and v=mass(F), the residual is B<h<D, (Y+1)/2-d<=v<d, D<=3d-4, 3delta<=d-2 and D>2d+2delta+7. The zpen bound is the surviving odd-first-negative placement bound, not an assertion that an arbitrary first-negative word satisfies it.
+
+Native expanding geometry gives N=2P+D, r=f(x)=2P-D and Q<=D<P<r<=C. Actual inverse-source parity gives 2L=N-Y, 2q=L for q=f(gamma), q odd, and f(a)=-M with 2M=N-q. Thus a is the actual negative LARGE parent, with no positive quarter-parent. Define e=M-P, theta=M-D=d+e, tau=P-L and kappa=e-tau. The source equations and residual imply D<L<P<Y<M<r, 0<theta<Q, 0<e<d, e>B-d, v>e, v>tau and delta+kappa<B-d. Old legality at x also gives 0<=a0<=B-d. These implications supply the new gates; they are not hypotheses requiring a favorable arrival or endpoint.
+
+**Theorem 1.1 (The child cancels the large prefix displacement).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/OddHalfParentExchange.actualSource_oddHalf_sharp_remainder`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/OddHalfParentExchange.actualSource_oddHalf_sharp_remainder` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The exact inverse-source equations imply q=theta+kappa, so theta-q=-kappa. Eliminating the same source equations gives 8kappa=2D-5d-3delta. The inherited high-D inequality gives 8kappa>-d+delta+14>-d, while D<=3d-4 gives 8kappa<=d-8-3delta<d. Thus abs(8kappa)<d and abs(kappa)<Q, without an additional source or availability premise. Also 0<q<Q and the actual parent value remains f(a)=-M, with 0<D<M.
+
+**Theorem 1.2 (Move the actual child from after its parent).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/OddHalfParentExchange.actualSource_child_after_parent_relocation_full`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/OddHalfParentExchange.actualSource_child_after_parent_relocation_full` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let the actual prefix be A=U,[a],T,[gamma],R, u=mass(U), and g=mass(U,[a],T), all measured from original zero. Require g+theta<=C and a0>=kappa. The first cut is automatic when kappa>=0, since the old gamma arrival is g+q<=C and theta=q-kappa. The second cut is automatic when kappa<=0. Old legality gives M<=u<=C, hence 0<=u-D<=C; also g+theta>=0. The same residual bound gives a0-kappa<B<C, so the other endpoint companions are derived.
+
+Order the ENTIRE T from u-D, an upward displacement theta from its old start u-M, ending at g+theta. Either whole-T compatibility or old LARGE HIGH sides at most C-theta suffices. HIGH means positive arrival or negative departure. Order the ENTIRE R from g+theta, ending at a0-kappa; both ends differ from the old R by -kappa. If kappa<0 require old HIGH sides at most C+kappa; if kappa>0 require old LOW sides at least kappa, where LOW means positive departure or negative arrival. Whole-R compatibility is an alternative. At kappa=0 retain literal old R. For every nonzero shift both sides of each LARGE are derived from old legality, monotonicity within the signed step and the tested extremal side. The same complete-SMALL-batch ordering theorem supplies every intervening batch and join.
+
+Set Astar=U,[n],Tstar,Rstar,[gamma]. The actual gamma is skipped at its old position and appended immediately before T0, ending at a0-kappa+q=a0+theta. Every prefix and join of Astar is legal from original zero. The physical identity (Astar,[a]) permutes (A,[n]) retains gamma exactly once, even when other physical labels have its numerical value.
+
+**Theorem 1.3 (Move the actual child from before its parent).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/OddHalfParentExchange.actualSource_child_before_parent_relocation_full`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/OddHalfParentExchange.actualSource_child_before_parent_relocation_full` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For the other ACTUAL order A=U,[gamma],T,[a],R, put g=mass(U), t0=mass(U,[gamma],T) and b=t0-M, the old arrival at a. Require b>=kappa and a0>=kappa; both follow from old legality when kappa<=0. Order the entire T from g instead of g+q, a downward displacement q. Either whole-T compatibility or old LARGE LOW sides at least q suffices. Since M<=t0<=C and 0<q<Q<M, its endpoint t0-q is automatically legal. Replacing a by fresh n reaches t0-q-D=b-kappa; the lower gate is the stated local cut and the upper gate follows from t0<=C and D,q>0.
+
+Order R with exactly the same sign-selected -kappa rule, and set Astar=U,Tstar,[n],Rstar,[gamma]. Its last two endpoints are a0-kappa and a0+theta, and (Astar,[a]) again permutes (A,[n]). Both constructions reorder the ENTIRE T0 from a0+theta to v+delta+e, then append [beta,y,p,a]. The four heights are v+Y+kappa, v+kappa, v+kappa+P and v-tau, with all bounds derived from the unchanged residual. Thus V=Astar,T0star,[beta,y,p,a], I=[n,beta,p], Ret=[x,zpen,z],Rsmall has the SAME original-W FullExchange: physical Inventory, all natural prefixes, a counted exactly once, G(V)=G(W), U(V)=U(W)+length(Rsmall), complementary source masses, and remainingSmall(V)=remainingSmall(W) disjoint-union set(Rsmall). Its exact energy identity is H(V)+3^r+3^abs(f(zpen))+3^abs(f(z))=H(W)+3^P+3^D+3^L. Since D,L<P<r the three inserted powers sum to less than 3^r, proving strict H and J descent.
+
+For an ACTUAL adjacent pair A=U,[a,gamma],R, T is empty and its cut g+theta=u-D<=C is automatic in either sign. For A=U,[gamma,a],R, T is empty and the old-a-arrival cut remains. Under the applicable cuts, a minimum over ALL Legal physical lists forces whole R incompatible. Kappa=0 is impossible. If kappa<0 an actual LARGE in R has old HIGH side at least C+kappa+1; if kappa>0 an actual LARGE has old LOW side at most kappa-1. Old legality and abs(8kappa)<d put the indicated HIGH or LOW side at nonnegative distance strictly less than d/8 from its respective edge. For nonpositive kappa all local cuts in both adjacent orders are automatic. Positive kappa retains a0>=kappa and, for the reversed pair, the old-a-arrival cut. No assertion makes a nonadjacent actual pair adjacent.
+
+At a genuine minimum over all Legal physical lists, once actual a occurs in A=U,[a],R, the full R must contain an incompatible positive/negative pair. There must also be an actual LARGE strictly after a whose old positive arrival, or old negative departure, is at least C-theta+1. The incompatible pair and the HIGH boundary need not share a witness. Endpoint legality alone does not imply a legal ordering of an arbitrary incompatible integer list: in C=5, Q=3, R=[+5,-5], old start 0 and raised start 1, neither first step fits, although both endpoints do. This example is generic and is not an actual dyadic minimum.
+
+Strict placement of actual a before the separate reserve c uses an additional joint-resource deficit: A=Aminus,[c],K with f(c)=-m, compatible actual K, H0=a0+m, epsilon=H0-B>0, PosK the positive SMALL occurrences of K of value at most H0, and NegS the negative SMALL occurrences of S of magnitude at most min(mass(Aminus),H0). If their total signed resource Omega is at most epsilon-1, then a in K would force every positive K occurrence into PosK and force mass(PosK)>=epsilon+e, a contradiction. A global-minimum application of this stronger placement needs the actual joint-resource theorem giving that deficit; the two exchanges above assume neither a reserve nor a deficit resource.
+
+The child relocation reduces the post-parent displacement from theta to -kappa, but does not derive every required cut or ordering criterion at a minimum. A nonadjacent pair may retain a bad middle interval, a positive-kappa local cut may fail, or the new narrow mixed HIGH/LOW barrier may remain. The actual joint-resource deficit needed for stronger reserve placement is still a separate mathematical dependency. The full odd-half parity branch and original-quantifier Circle C3.1 remain OPEN.
+
+## References
+
+- Truth anchor: `D5/S3/Combinatorics/Circle/OddHalfParentExchange.actualSource_child_after_parent_relocation_full`
+- Truth anchor: `D5/S3/Combinatorics/Circle/OddHalfParentExchange.actualSource_child_before_parent_relocation_full`
+- Truth anchor: `D5/S3/Combinatorics/Circle/OddHalfParentExchange.actualSource_oddHalf_sharp_remainder`
+- Dependency: [D5/S3/Combinatorics/Circle/OddHalfParentCore](OddHalfParentCore.md)

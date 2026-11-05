@@ -1,0 +1,83 @@
+**Theorem 8.1 (Finite-state endpoint upper bound).** For the exact source premises of Section 2 and the supplied separation in Lemma 5.2, there is $s_*>0$ depending only on $H_c$, with $s_*\le1$, such that for every $0<\alpha<1/2$ and every $0<s<s_*$, the table at $q=e^{-s}$ has $\Delta(q)>0$ and satisfies all six obligations (3.1). With $c$ and $\ell$ as above, its full count $M(q)=4L+1$ and both paid means satisfy
+
+$$
+M(q)\le\left(\frac{16\ell}{c}+5\right)s^{-1},
+\tag{8.1}
+$$
+
+$$
+\mathbb E_{i,e^{-s}}T
+\le\left(\frac{176\ell}{c^2}+\frac{44}{c}+7\right)s^{-3}
+\quad(i=0,1).
+\tag{8.2}
+$$
+
+Proof. The source estimates give finite nonnegative constants $C_\Delta,C_\mu,C_\beta$ and positive radii $r_\Delta,r_\mu,r_\beta$, chosen using only $H_c$, such that
+
+$$
+\begin{aligned}
+|\Delta(e^{-s})-cs|&\le C_\Delta s^2&& (0<s<r_\Delta),\\
+\left|\mu_i(e^{-s})-\frac{10}{s}\right|&\le C_\mu&& (0<s<r_\mu,\ i=0,1),\\
+\left|\beta_i(e^{-s})-\frac{11}{2s}\right|&\le C_\beta&& (0<s<r_\beta,\ i=0,1).
+\end{aligned}
+\tag{8.3}
+$$
+
+For the two labels take the maximum of their bounds and minimum of their radii. A precise permissible source-only choice is
+
+$$
+s_*=
+\min\left\{1,r_\Delta,r_\mu,r_\beta,
+\frac{c}{2(1+C_\Delta)},
+\frac1{1+C_\mu},
+\frac1{2(1+C_\beta)}\right\}>0.
+\tag{8.4}
+$$
+
+The additions of one make this choice valid even when a remainder bound is zero. For all $0<s<s_*$, (8.3)–(8.4) imply simultaneously
+
+$$
+\Delta(e^{-s})\ge\frac{cs}{2}>0,\qquad
+\mu_i(e^{-s})\le\frac{11}{s},\qquad
+\beta_i(e^{-s})\le\frac6s
+\quad(i=0,1).
+\tag{8.5}
+$$
+
+For example $sC_\mu\le1$ and $sC_\beta\le1/2$, which give the latter two bounds. This neighborhood does not depend on $\alpha$, the chosen table or the true label.
+
+The ceiling contributes its full additive constant:
+
+$$
+L\le\frac{2\ell}{\Delta}+1
+\le\frac{4\ell}{cs}+1,
+\qquad
+4L+1\le\frac{16\ell}{cs}+5
+\le\left(\frac{16\ell}{c}+5\right)s^{-1}.
+\tag{8.6}
+$$
+
+The last inequality uses $s\le1$. The waiting state, flags and both labels were already included in $4L+1$. Lemma 6.1 gives, separately for each source,
+
+$$
+\mathbb E_iN\le\frac{2L}{\Delta}
+\le\frac{4\ell}{\Delta^2}+\frac2\Delta
+\le\frac{16\ell}{c^2s^2}+\frac4{cs}.
+\tag{8.7}
+$$
+
+Use (7.2), (8.5) and $1+\beta_i\le7/s$ to obtain
+
+$$
+\begin{aligned}
+\mathbb E_iT
+&\le\frac7s+\frac{11}{s}
+\left(\frac{16\ell}{c^2s^2}+\frac4{cs}\right)\\
+&=\frac{176\ell}{c^2}s^{-3}+\frac{44}{c}s^{-2}+7s^{-1}\\
+&\le\left(\frac{176\ell}{c^2}+\frac{44}{c}+7\right)s^{-3}.
+\end{aligned}
+\tag{8.8}
+$$
+
+Again $s\le1$ justifies the final comparison. Theorems 6.2 and 7.1 give the risks and both stopping and finite-mean conditions at every parameter in this neighborhood. All estimates concern the same source-blind table at each selected $q$. $\square$
+

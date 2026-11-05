@@ -1,0 +1,103 @@
+**Theorem 26.3 (finite lawful prospective consumer and exact own exit).**
+Definition 26.2 is a Borel map from the finite timed record to a
+finite original native history. Every issued numerical profile is
+$\mathcal G_{t_j}$-measurable. Its own censored observation exit is
+exactly $\widehat S$, and for all actual prefixes
+
+$$
+ l\le k_0+a_*(t)\le u,
+ \qquad 0<k_0+\min a_*\le k_0+\max a_*<H_{\rm n}.
+\tag{26.2}
+$$
+
+Its complete numerical command has exactly the original domain
+$(-\min a_*,H_{\rm n}-\max a_*)$, including refusal and the original
+pulled-back domain under concatenation. With
+$(A,B,W)(t)=(x,y,w)(Q(t\wedge\widehat S))$, one has
+
+$$
+ \|a_*-A\|_\infty\le3\rho,\qquad
+ \|b_*-B\|_\infty\le4\rho,\qquad
+ \|J_*-W\|_\infty\le4K_I\rho+4\rho^2.
+\tag{26.3}
+$$
+
+All actual legs have finite pathwise velocities and positive durations.
+The probabilities and all ten held outputs are exactly those of
+(7.8), with phases
+
+$$
+ \alpha_*=[\alpha_0+b_*/2],\qquad
+ \beta_*=[\beta_0+c_0b_*-J_*/r],\qquad
+ k_*=k_0+a_*.
+\tag{26.4}
+$$
+
+In particular both positive-$\alpha$ pairs, both negative-$\alpha$
+pairs and the $\beta$ pair retain their ordered signs, factors two,
+fixed preparation rotations and actual $2\pi$ periods.
+
+**Proof.** At $t_j$, $P_{j-1},P_j$ are known, and no instruction
+on $[0,t_j)$ is changed. A boundary intersection of the next known
+linear segment is computed by a comparison and a linear ratio;
+a constant segment is treated separately. Until that intersection
+all anchor heights are interior; the final one, if any, is on the
+observation boundary. Thus every positive portion used in the
+prescription has positive duration and finite endpoints.
+
+Apply the deterministic subdivision and connector argument of
+Theorem 22.2 on this known portion. Equation (22.2) guarantees
+$|X|,|Y|\le\rho$, $|C|\le\rho^2$ and the same bounds at every
+linear prefix of its desired triple, where
+$C=\Delta W-A_s\Delta B$. The supplied [GL, Lemma 17.1] makes
+every connector's height interior except possibly its final height
+at the clipped boundary. Its real relative integral ends at $C$.
+Under translation its global integral at a partial prefix is
+$W_s+A_s y+j$, hence ends at
+$W_s+A_s\Delta B+C=W_t$. This is the original chronological
+cross term, not an assignment to a central control. Induction over
+all subdivisions and grid cells proves endpoint matching and
+(26.3), by the same deterministic estimates as (22.4).
+It also proves that no connector reaches an observation wall
+earlier than its polygon, and its final height leg reaches that
+wall exactly at the polygon's crossing time. This proves the
+own-exit assertion and (26.2). Arriving at $l$ or $u$ remains
+strictly lawful for the original, larger native slab.
+
+For the realized numerical list, original lawfulness at another
+height is still precisely the extrema test (7.6), with the original
+phases unrestricted. Its exact domain is therefore the interval
+stated in the theorem. Applying [N, Theorems 9.2--9.3] to each
+concatenation retains its refusal and pulled-back guard. This
+assertion evaluates the same numerical command on its domain;
+it does not rerun this preparation-dependent policy at other heights.
+A source-contact flag merely supplies a future target value. It
+never resets the actual controls, their phases or their accumulated
+real integral.
+
+There are at most $N$ polygon portions including the initial hold.
+The number of subdivisions of each is finite, since all its
+increments are finite. More explicitly, with $V_A,V_B,V_W$ the
+finite variations of the stopped polygon triple, the native leg
+count is bounded by
+
+$$
+ 6\left(N+\frac{V_A+V_B}{\rho}
+                    +\frac{V_W+K_IV_B}{\rho^2}\right)+1.
+\tag{26.5}
+$$
+
+This is the reused ceiling bound (22.5), now applied cell by cell
+at issuance. Every leg divides a finite increment by a positive
+duration, giving finite pathwise velocity and variation. There
+are finitely many releases and primitive initiations by (24.6).
+The finite comparisons, clipping ratios, ceilings and connector
+formulas are Borel, also on the countable union of the finite-list
+spaces of Definition 17.1. They establish the asserted actual
+pushforward command law and issuance measurability. The command
+through each time is a function of the acquired prefix and clock.
+Finally (7.5) gives exactly (26.4) and the probabilities
+$(k_*,H_{\rm n}-k_*,Z,H_{\rm n}-k_*,k_*)$. Substitution in (7.8)
+proves every signed-pair assertion. Hidden $z$ never enters these
+controls or readouts. $\square$
+

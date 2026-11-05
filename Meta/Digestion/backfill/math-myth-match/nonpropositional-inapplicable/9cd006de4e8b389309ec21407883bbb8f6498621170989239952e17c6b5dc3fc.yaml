@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9cd006de4e8b389309ec21407883bbb8f6498621170989239952e17c6b5dc3fc
+  normalized_sha256: sha256:9cd006de4e8b389309ec21407883bbb8f6498621170989239952e17c6b5dc3fc
+cas_ref: sha256:9cd006de4e8b389309ec21407883bbb8f6498621170989239952e17c6b5dc3fc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Hopkins 译库萨指定章节的来源说明与有限认识的神学解释；没有用概率模型量化无限者。
+    previous_atom_id: 171b2a3d116a79a963c7fefc4e73caea39b8b22b19ce047a976cdf13581878ed
+    next_atom_id: 3d2ad1d51a9be4f62ff8e8d488ff4e2b7129b525c7aeeb208d30f07eaceb6229

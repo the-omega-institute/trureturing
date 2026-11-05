@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:06d2d1a253e78f555bf7d99c32ff0d0269134609fb075fcd66bb2b903293918d
+  normalized_sha256: sha256:06d2d1a253e78f555bf7d99c32ff0d0269134609fb075fcd66bb2b903293918d
+cas_ref: sha256:06d2d1a253e78f555bf7d99c32ff0d0269134609fb075fcd66bb2b903293918d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第2章自治预测状态及所保留结构的研究问题，没有断言存在或保持定理。
+    previous_atom_id: 7e1ebb7699557c73b4ecf4bf4cb7d38cac927e0bda95c9d9518e7cd1f46ec4c5
+    next_atom_id: ecc7faddbce806d02f2881ae9518a6f5e059d08555ec09d6f8c79b4c044d20eb

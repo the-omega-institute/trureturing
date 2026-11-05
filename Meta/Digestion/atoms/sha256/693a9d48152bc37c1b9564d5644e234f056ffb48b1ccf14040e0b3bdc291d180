@@ -1,0 +1,29 @@
+**Proof.** Put $m=d+1$ and suppose such a protocol has uniform read bound $2m+1$. There are only finitely many terminal words at this bound. Set $L=2m$ and restrict attention to all worlds in the nonempty open parameter domain
+
+$$
+\mathcal D_L=\mathcal U_L\times
+(\mathbb R^m\setminus\{0\})\times\mathbb R.
+\tag{20.2}
+$$
+
+This is a subdomain used to disprove correctness on the entire original domain, not an extra promise supplied to the protocol.
+
+The supplied pure-terminal bridge, Lemma 15.1, excludes every pure terminal word at every world. Lemma 19.2 excludes every mixed terminal word with three-dimensional cumulative span at every world of (20.2), with the same $\mathcal U_L$ for all these words. Consider each remaining mixed word $w$. If it has at most $2m$ reads, Theorem 11.1 says it has no nonzero universal identity. If it has $2m+1$ reads, Theorem 4.1 says a nonzero identity would force its cumulative span to be three, a case already excluded from terminal branches on (20.2). Therefore every word still available to the protocol on (20.2) has no nonzero universal identity.
+
+For completeness, apply the countable-covering argument to this particular common open domain. Fix one available word $w$ and one matrix $C$ in its palette that succeeds somewhere on (20.2). In source chart (2.4), the collinearity equations are the wedge polynomials (3.2), after multiplying by the positive denominator $1+xr$. At least one is a nonzero polynomial. Otherwise $CZ_w$ would be collinear with every $\beta$ on the full world domain; Lemma 3.1 and success at the specified world would give a nonzero universal identity, which has just been excluded. A nonzero real polynomial cannot vanish on a nonempty open set, so its zero set is closed and nowhere dense relative to (20.2) in this chart. Every successful world for this pair $(w,C)$ lies in that zero set. Pairs successful nowhere on (20.2) can be discarded.
+
+There are finitely many available words and countably many matrices per word. Correctness and the uniform stopping bound would make their successful sets cover (20.2): every actual world there must terminate on one of these words and select one of these matrices with nonzero output. The Euclidean Baire principle of Section 3 forbids this countable cover by nowhere dense polynomial zero sets. This is the contradiction.
+
+No decision set or selection set was assumed measurable, continuous or otherwise regular. The alternative world in Lemma 19.2 realizes the complete same literal word history, and the covering step is taken on the common open domain (20.2), so the argument applies to arbitrary adaptive protocols. The integer read count converts exclusion through $2m+1=2d+3$ into (20.1). $\square$
+
+The source transformations and common open domain in Section 19 supply the additional bridge beyond the degree-one Theorem 15.2. Theorem 20.1 strengthens the general lower bound in Section 16 and in [*FIB Moving-Trace Recovery and Sharp Calibrated Continuations*, Section 7](FIB_MOVING_TRACE_RECOVERY_AND_SHARP_CALIBRATED_CONTINUATIONS.md#7-prior-results-new-contribution-and-remaining-boundaries). Combining it with the credited complete-target construction of Theorem 16.2 gives the current interval
+
+$$
+2d+4\le N_d^{\mathrm{lin}}\le3d+5\qquad(d\ge1).
+\tag{20.3}
+$$
+
+The matching complete-target upper bound $2d+4$ is not established. The separate optimal calibrated and prescribed-prefix counts retain the hypotheses of Theorem 16.3. Unrestricted nonlinear global complete recovery, including the unrestricted cubic eight-read existence question, is not decided by Theorem 20.1 because its final covering step uses the countable fixed-linear gain-output contract.
+
+The proof uses the supplied critical span theorem (Theorem 4.1), legal-word classification (Lemma 6.1), shorter mixed-word obstruction (Theorem 11.1), pure-terminal bridge (Lemma 15.1), and universal-collinearity and Euclidean covering facts of Section 3. Its positive witnesses reuse the eigenvectors and legal crossing sources of Theorem 16.3, with the conjugated-transpose partners (19.8) and the finite open intersection (19.12). These model-specific partners and their simultaneous actual-history consequence are the added content. Transposition, similarity, openness of strict inequalities and the Euclidean Baire principle are elementary or classical intermediate tools.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:db01e92765f46375f65575862f8ccc778aa602f876096802e69d6a6af9816792
+  normalized_sha256: sha256:db01e92765f46375f65575862f8ccc778aa602f876096802e69d6a6af9816792
+cas_ref: sha256:db01e92765f46375f65575862f8ccc778aa602f876096802e69d6a6af9816792
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Only the heading and setup sigma>1 for the Gibbs measure definition, without asserting that the following weights normalize.
+    previous_atom_id: e4f0eea11ce1b2097365c79771ccb377d5ff189bf97d8d079f3cf90302e665a3
+    next_atom_id: fb21aafe4402d6336fd39c6e9cc00575d6037edffec66164edfc47afa1c1fdd4

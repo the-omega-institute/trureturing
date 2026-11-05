@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3acc9991037852aa079f172d48f4d1fba07e976db635238e00b71fb5573f5974
+  normalized_sha256: sha256:3acc9991037852aa079f172d48f4d1fba07e976db635238e00b71fb5573f5974
+cas_ref: sha256:3acc9991037852aa079f172d48f4d1fba07e976db635238e00b71fb5573f5974
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：仅指定 H:Omega→R 是所选能量读出字段。
+    previous_atom_id: a30094f33644f9da568f5c136c6097df19aafeae842d8edb3e31647df17e5bf2
+    next_atom_id: 0810b0bbb4d93763ba31c71c61489f17f5b5305d794804a82778966881acf5f6

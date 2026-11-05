@@ -1,0 +1,13 @@
+**Convention 9.3 (later width-dependent work).** At a later cut, let $L$ bound the actual rational widths of the current source and predictor coordinates and the next supplied pulse. One source Tick and one predictor Tick use the linear arithmetic counts above, at operand and result widths bounded conservatively by $O(N(L+W+1))$. Indeed each result is a sum of at most $N$ products of a fixed coefficient and a current coordinate; a common denominator formed by multiplying the term denominators and summing numerators gives this bound. Products, additions, reductions and destination writes are all charged at those widths.
+
+Each Add performs a source rational addition and a predictor rational addition. A leaf Read selects and serializes the actual leaf rational; Read$_e$ serializes the actual native value and its predictor calculation uses two rational products and one addition. Hold changes no field but is still an actual control call with acknowledgement. Reset zeroes both $N$-coordinate representations. Native output $Qz$ uses its two-coordinate rotation plus all literal output traffic. Hypothetical continuation calculations require their own scratch copy and traffic; a retained journal grows with its actual length.
+
+There is no lifetime bounded-bit-memory conclusion. For example the predictor leaf-difference coordinate satisfies
+
+$$
+z_{\ell_1}-z_{\ell_2}\longmapsto
+\tfrac12(z_{\ell_1}-z_{\ell_2})
+$$
+
+on every passive Tick. At the earned cut its value is $1/4$, so after $r$ further passive Ticks it is $2^{-(r+2)}$. At least one of those two exact rational coordinate words must have denominator bit length growing linearly in $r$: the denominator of their difference divides the product of their denominators. Arbitrarily wide rational pulse inputs give an additional independent source of width growth. The attained “one scalar” claim concerns a call coordinate, not one bit or a bounded-precision sensor.
+

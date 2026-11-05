@@ -1,0 +1,39 @@
+**Lemma 14.1 (actual register and one-cone replies).** For every
+competitor of Assumption 13.2, fix any reached prefix $H$ of paid presence
+replies, just before its next Read. There are a common finite extra-update
+count $e_H\ge0$ and a common next literal word. For every member compatible
+with that prefix, its actual register at that Read is
+
+$$
+ \rho^{2k+e_H}u_x
+       =S[(T_{2k+e_H+x_i})_{i=1}^n],\qquad T_j=\rho^j\alpha.
+ \tag{GPO.44}
+$$
+
+A semantic word that ends at a proper internal scaffold node has constant
+presence one. Every other word has a unique original-leaf prefix $p_i$;
+its answer depends only on $k,x_i,e_H$ and its suffix after $p_i$.
+It cannot inspect two original cones. This includes a suffix that fails
+inside its replacement and an empty suffix at its root.
+
+Proof. Source-free deterministic control, common initialization and the
+absence of auxiliary source channels imply that equal reply prefixes give
+equal controller states, local steps, update requests and next words.
+This is induction through the actual actions, including real acknowledgements,
+allocations and finite evaluator work. A compatible terminating run witnesses
+that the segment to the next Read is finite. The segment is identical for
+all compatible members; no computation of a termination bound is needed.
+Only its extra-update count $e_H$ is common: the hidden absolute epochs
+$2k+e_H$ need not agree and are not fed into this induction.
+
+Substitution distributes over pairing and preserves every pre-existing
+branch and its two child positions. Structural induction on $S$, followed
+by induction on the number of actual updates, gives (GPO.44), using
+$\rho^m\beta=T_{m+1}$. The finite scaffold's leaf addresses are
+prefix-incomparable. To classify any word, follow it in $S$. Either it
+ends at an internal node or it first reaches exactly one leaf. Full
+binarity leaves no missing scaffold child before that first leaf. In
+the latter case write the word uniquely as $p_iq$ and evaluate $q$ in
+the displayed $T_{2k+e_H+x_i}$. All scaffold branches have persisted,
+so that evaluation is the actual answer on this same register. $\square$
+

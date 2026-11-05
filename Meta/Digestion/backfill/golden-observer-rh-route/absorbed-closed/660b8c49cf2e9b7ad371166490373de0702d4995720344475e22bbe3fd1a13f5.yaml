@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:660b8c49cf2e9b7ad371166490373de0702d4995720344475e22bbe3fd1a13f5
+  normalized_sha256: sha256:660b8c49cf2e9b7ad371166490373de0702d4995720344475e22bbe3fd1a13f5
+cas_ref: sha256:660b8c49cf2e9b7ad371166490373de0702d4995720344475e22bbe3fd1a13f5
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaBridge/AlternatingZetaContinuation.alternating_partialSums_eta_atom_fails_at_one
+    target_statement_id: sha256:133027866be7f84981d0d9927277a4c61326048c7f1c6c1d356f7052fc28e144
+receipts:
+  unresolved_subitems: []

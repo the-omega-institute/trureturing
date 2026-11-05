@@ -1,0 +1,21 @@
+### Definition 60.1 (finite target-state contract)
+
+Let \(Z\) be a finite target set and \(S\) a finite complete device-state set.
+An admissible action \(a\) has a domain \(D_a\subseteq S\), a response map
+
+$$
+r_a:D_a\longrightarrow O,
+$$
+
+and a successor map \(T_a:D_a\longrightarrow S\). A nonempty candidate
+relation is a set \(B\subseteq Z\times S\). An action is jointly legal on \(B\)
+when every \((z,s)\in B\) has \(s\in D_a\). After response \(r\), define
+
+$$
+B_{a,r}=\{(z,T_a(s)):(z,s)\in B,\ r_a(s)=r\}.
+$$
+
+Empty responses are discarded. All fields that affect a later response,
+permission, cost, or stop condition belong to \(S\); their inclusion in the
+mathematical state does not grant the controller access to them.
+

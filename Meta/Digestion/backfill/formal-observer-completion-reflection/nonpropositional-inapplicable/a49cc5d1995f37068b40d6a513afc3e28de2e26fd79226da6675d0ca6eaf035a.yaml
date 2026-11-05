@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a49cc5d1995f37068b40d6a513afc3e28de2e26fd79226da6675d0ca6eaf035a
+  normalized_sha256: sha256:a49cc5d1995f37068b40d6a513afc3e28de2e26fd79226da6675d0ca6eaf035a
+cas_ref: sha256:a49cc5d1995f37068b40d6a513afc3e28de2e26fd79226da6675d0ca6eaf035a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 由钉版 Mathlib 的 Metric.infDist_eq_iInf 与 dist_eq_norm 直接给出任意范数空间中 infDist(e,N)=inf_{n:N} ||e-n||；CtxDist 只是该量的命名，没有额外正距离判据。 Pinned mathlib rev 56a005855ea17e0b0958f73ec801ae140b0a1679. Searched all D5/**/*.lean including private for infDist/iInf/norm; finite_synthesis_gram_distance and finite_layer_projection_gap require linear synthesis/subspace carriers; no arbitrary-set norm-infimum GID found.
+    previous_atom_id: fb39b9bf7a77e635709be6b0a11591f297759164dafbf38a94d599455fbb4c7c
+    next_atom_id: eb826d81e79ad7b08275cfd7acb4fa19af2eab127f18c5184aff862e1753524f

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2a6f38431ab43627a340307448f3da3a53358e2c630b9a451d58282a2224300c
+  normalized_sha256: sha256:2a6f38431ab43627a340307448f3da3a53358e2c630b9a451d58282a2224300c
+cas_ref: sha256:2a6f38431ab43627a340307448f3da3a53358e2c630b9a451d58282a2224300c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 义务拆分、选题依据、目录与派发先后说明；数学义务另由后续独立条目给出。
+    previous_atom_id: 81a79af9aafe0ed884a61b1c4a7dc0640b0d97e89c1de188252da0e916b52eab
+    next_atom_id: 271d653d0fec0ddd44a8f3b39f27dc380519cc0e70fadca2aa6509b84b0aac04

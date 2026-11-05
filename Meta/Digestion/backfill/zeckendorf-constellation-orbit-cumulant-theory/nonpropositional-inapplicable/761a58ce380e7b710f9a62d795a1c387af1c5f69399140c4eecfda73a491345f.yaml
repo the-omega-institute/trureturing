@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:761a58ce380e7b710f9a62d795a1c387af1c5f69399140c4eecfda73a491345f
+  normalized_sha256: sha256:761a58ce380e7b710f9a62d795a1c387af1c5f69399140c4eecfda73a491345f
+cas_ref: sha256:761a58ce380e7b710f9a62d795a1c387af1c5f69399140c4eecfda73a491345f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这是从 singular series 切换到 ζ 素数频率分析的章节引导，没有给出壳层质量公式或结论。
+    previous_atom_id: 02fcbd9f74f9ea3684c4ee1d16a704f900a0afc01c64f06aeeb34979901151cb
+    next_atom_id: f51e40bfd249579025581300acf251a405bf70cda8ac73dbb01d2f44ca928085

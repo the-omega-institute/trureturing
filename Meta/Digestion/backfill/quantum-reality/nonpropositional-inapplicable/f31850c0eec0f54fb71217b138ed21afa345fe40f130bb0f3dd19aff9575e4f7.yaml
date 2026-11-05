@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f31850c0eec0f54fb71217b138ed21afa345fe40f130bb0f3dd19aff9575e4f7
+  normalized_sha256: sha256:f31850c0eec0f54fb71217b138ed21afa345fe40f130bb0f3dd19aff9575e4f7
+cas_ref: sha256:f31850c0eec0f54fb71217b138ed21afa345fe40f130bb0f3dd19aff9575e4f7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 以合法参照变换下可消去和不可消去结构解释物理时空，并列出文献，是概念性建模立场。'
+    previous_atom_id: 692295889a31deeb28da87ac0fbe7b765ac66908d18a0fae40598960ebefed36
+    next_atom_id: 89f870302deed77fa11eaebe985f880195ae1270254f361051ab0000fde04cef

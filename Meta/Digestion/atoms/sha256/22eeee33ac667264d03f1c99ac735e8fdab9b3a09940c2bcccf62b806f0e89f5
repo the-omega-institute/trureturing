@@ -1,0 +1,52 @@
+**定义 4.1（全部独立正电导与边界坐标）。** 固定整数 $n\ge5$，
+顶点标为 $1,\ldots,n$，边标为
+$e_i=\{i,i+1\}$（$1\le i<n$）及 $e_0=\{n,1\}$。
+每条边的电导 $c_i$ 独立遍历 $(0,\infty)$。
+令 $L(c)$ 为普通计数测度 Laplacian，$R(c)$ 为全部无序不同顶点对的
+有效电阻之和，并置
+
+$$
+H=\mathbf1^\perp\subset\mathbb R^n,\qquad
+P=I-\frac1n\mathbf1\mathbf1^{\mathsf T},\qquad
+r_i=\frac1{c_i},\quad s=\sum_{i=0}^{n-1}r_i,\quad p_i=\frac{r_i}{s}.
+$$
+
+这里顶点内积始终是 $\langle x,y\rangle=\sum_{j=1}^n x_jy_j$。
+记
+
+$$
+\begin{aligned}
+\Delta&=\{p\in[0,1]^n:\sum_i p_i=1\},&
+\Delta^\circ&=\{p\in\Delta:p_i>0\ \text{对所有 }i\},\\
+\mathcal V&=\{\varepsilon_0,\ldots,\varepsilon_{n-1}\},&
+a_0&=0,\qquad a_i=P\sum_{j=1}^i\delta_j\quad(1\le i<n),\\
+\bar a(p)&=\sum_i p_i a_i,&
+M(p)&=\sum_i p_i a_i a_i^{\mathsf T}-\bar a(p)\bar a(p)^{\mathsf T}.
+\end{aligned}
+$$
+
+$\delta_j$ 是顶点坐标向量，$\varepsilon_i$ 是边坐标向量；
+$M(p)$ 作为 $H$ 上的算子。对 $p\in\Delta\setminus\mathcal V$，置
+
+$$
+T(p)=\operatorname{tr}_H M(p),\qquad
+\rho(p)=\lambda_{\max}(M(p)|_H),\qquad
+\Phi(p)=\frac{nT(p)}{\rho(p)}.
+\tag{4.1}
+$$
+
+下文将证明该定义中的分母严格为正，并在内点证明
+$\Phi(p)=\lambda_2(L(c))R(c)$。
+令
+
+$$
+B_n=\sup_{c\in(0,\infty)^n}\lambda_2(L(c))R(c).
+\tag{4.2}
+$$
+
+因此 $B_n$ 与定义 3.1 的 $\mathcal M_n$ 是同一个上确界；
+记号 (4.2) 不指定它的精确数值。
+Laplacian 和全点对电阻采用定义 1.1 所引
+[Cruz Ortega–Menéndez-Conde，arXiv:2306.08187v1](https://arxiv.org/html/2306.08187v1)
+§§2–4 的约定，顶点数改为 $n$。
+

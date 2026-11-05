@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b490adae5f2c6c8a05cd619e30aa83ab892a5ed18124a4082677d4072e175b42
+  normalized_sha256: sha256:b490adae5f2c6c8a05cd619e30aa83ab892a5ed18124a4082677d4072e175b42
+cas_ref: sha256:b490adae5f2c6c8a05cd619e30aa83ab892a5ed18124a4082677d4072e175b42
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 本条询问单位、经验参数和无量纲组合的确定方式，没有给出可计算常数等式。'
+    previous_atom_id: d066ee41c1f992ce6d8e0e11660bb82642bbc16b0aab6fe1d77f6eb33a5e8413
+    next_atom_id: 3b3d570c54646f0f9312db90ff58151b94ccfb6154fe47718ceb486366643f48

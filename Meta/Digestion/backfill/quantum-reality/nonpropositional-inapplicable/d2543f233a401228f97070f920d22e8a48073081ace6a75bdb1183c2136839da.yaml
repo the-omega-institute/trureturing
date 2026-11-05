@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d2543f233a401228f97070f920d22e8a48073081ace6a75bdb1183c2136839da
+  normalized_sha256: sha256:d2543f233a401228f97070f920d22e8a48073081ace6a75bdb1183c2136839da
+cas_ref: sha256:d2543f233a401228f97070f920d22e8a48073081ace6a75bdb1183c2136839da
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 本条只有读取修订说明与待补表格标题，不包含表格后续行中的数学断言。'
+    previous_atom_id: af69345e7470b52d19bf4f2db94128ba41694b07c936daf3840819cf9a46afbc
+    next_atom_id: 9db4efb30df562c1fdb012a7d766f3cad6149605c7847e670ec36c96b12ce615

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c04937a9b06f028c97710da184b1d59a9eddffcb6b3c67a1084466329cf3c360
+  normalized_sha256: sha256:c04937a9b06f028c97710da184b1d59a9eddffcb6b3c67a1084466329cf3c360
+cas_ref: sha256:c04937a9b06f028c97710da184b1d59a9eddffcb6b3c67a1084466329cf3c360
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/DiagonalEscape/DiagonalCompletionEscape.diagonal_completion_escape
+    target_statement_id: sha256:137fab7f22d0584b19ba2c6711695fedacfd3e5ed646cb94240a834866f92093
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:72c3db23ef30fc36a70b6e39e5bca7abc0e9a991e06d1dd4fa6aae911f50ffa7
+  normalized_sha256: sha256:72c3db23ef30fc36a70b6e39e5bca7abc0e9a991e06d1dd4fa6aae911f50ffa7
+cas_ref: sha256:72c3db23ef30fc36a70b6e39e5bca7abc0e9a991e06d1dd4fa6aae911f50ffa7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 限定礼与共同规则的比较，不把礼还原为收益或认可全部既有制度。
+    previous_atom_id: cd47df404ae1a0bc5012de1b4f0554e08db307f0e454bbd54b87ca208f8eae76
+    next_atom_id: b305be81db28af4b8a96d8a7dc73ab99f4b1028f1bb27f539d1dca4519245b17

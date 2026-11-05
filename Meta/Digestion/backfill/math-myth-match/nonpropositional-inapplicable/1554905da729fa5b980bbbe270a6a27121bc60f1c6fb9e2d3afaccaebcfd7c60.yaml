@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1554905da729fa5b980bbbe270a6a27121bc60f1c6fb9e2d3afaccaebcfd7c60
+  normalized_sha256: sha256:1554905da729fa5b980bbbe270a6a27121bc60f1c6fb9e2d3afaccaebcfd7c60
+cas_ref: sha256:1554905da729fa5b980bbbe270a6a27121bc60f1c6fb9e2d3afaccaebcfd7c60
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 交代梵经注泥壶及梦醒片段的出处与解释承诺，未给出数学结构上的结论。
+    previous_atom_id: 7c9f4051ff81927eb332923ec16566c767aa84383b56a430d2f655e077032e0b
+    next_atom_id: 863d63117c6fa00413e094e9cbd1b8cd61c717dc26181e2808c5b8cd974e6153

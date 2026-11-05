@@ -1,0 +1,24 @@
+## 21. Unknown signed native gains and the earned residual boundary
+
+This continuation fixes the commissioned interface that is needed for the unknown-gain portfolio. Let $N\geq1$, let $1\leq b\leq N$, and let $B_1,\ldots,B_b$ be distinct ordered authentic ports, with $B_j=e_{\ell_j}$ in the native basis of $\mathbb Q^N$. The actual field is $x\in\mathbb Q^N$. Its unknown fixed law is a symmetric rational matrix $T$ whose off-diagonal support is connected and nonnegative; diagonal entries may have either sign. The joint Krylov promise is
+
+$$
+\operatorname{span}\{T^kB_j:0\leq k<N,\ 1\leq j\leq b\}=\mathbb Q^N.
+$$
+
+The unknown native gain vector is $g\in\mathbb Q^N$, with arbitrary signed heterogeneous entries and zeros allowed. The installed commands are `Reset`, signed rational `Add(j,u)`, `Tick`, native `Q_g`, nondestructive `Read(j)`, and `Hold`, where
+
+$$
+\operatorname{Reset}(x)=0,\qquad
+\operatorname{Add}(j,u)(x)=x+uB_j,\qquad
+\operatorname{Tick}(x)=Tx,
+$$
+
+$$
+Q_g(x)=g*x*x,\qquad
+\operatorname{Read}(j)(x)=B_j^{\mathsf T}x,
+\qquad \operatorname{Hold}(x)=x.
+$$
+
+The product in $Q_g$ is coordinatewise. Every command has the complete ACK, refusal, pending, framing, serialization, and successor contract of the existing cyclic service. The source provider supplies the ordered port registry, source handle, units, zero entrance, `Reset`, native operation, serial rights, and storage backing. The observer starts with common code and no source-dependent table, acquires data on this same specimen, retains the table and synchronized state, and forwards later legal calls. These are hypotheses of the conditional theorem. They do not assert a physical installation result.
+

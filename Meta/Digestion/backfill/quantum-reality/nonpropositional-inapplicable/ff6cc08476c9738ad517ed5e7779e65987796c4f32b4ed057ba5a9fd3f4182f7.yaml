@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ff6cc08476c9738ad517ed5e7779e65987796c4f32b4ed057ba5a9fd3f4182f7
+  normalized_sha256: sha256:ff6cc08476c9738ad517ed5e7779e65987796c4f32b4ed057ba5a9fd3f4182f7
+cas_ref: sha256:ff6cc08476c9738ad517ed5e7779e65987796c4f32b4ed057ba5a9fd3f4182f7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该段提出带预算实验误差约束的成本最小化问题并定义变量，没有断言可行性、最小值存在或数值界。
+    previous_atom_id: 7f6b8ed375afa95e56eb6990da4f7bef15b34f0d6539328188b64cb253a76118
+    next_atom_id: 20dfe01bf12561797e5c39c3b4f51504cd2145a22ba2507728bbb27e80ecb135

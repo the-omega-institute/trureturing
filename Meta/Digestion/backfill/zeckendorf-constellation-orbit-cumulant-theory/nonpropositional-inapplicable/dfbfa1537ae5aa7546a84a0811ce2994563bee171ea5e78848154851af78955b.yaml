@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dfbfa1537ae5aa7546a84a0811ce2994563bee171ea5e78848154851af78955b
+  normalized_sha256: sha256:dfbfa1537ae5aa7546a84a0811ce2994563bee171ea5e78848154851af78955b
+cas_ref: sha256:dfbfa1537ae5aa7546a84a0811ce2994563bee171ea5e78848154851af78955b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本片以“设”引入每层短正合序列作为输入数据，并解释 X_n 的角色；逆极限长正合结论不在本片内。
+    previous_atom_id: 9d2d7edbf852e0ad73de865024397d3306c46ba412728b8715027bbd026d630e
+    next_atom_id: d225aabb903ef9bf5253b9bc1a5ce25432f9e5a00a837220e01cf2d74067769f

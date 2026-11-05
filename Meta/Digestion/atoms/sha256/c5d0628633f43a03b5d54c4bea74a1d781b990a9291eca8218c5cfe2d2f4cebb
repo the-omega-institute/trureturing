@@ -1,0 +1,45 @@
+**Definition 18.1 (the physical sibling observable and its approximate norm).**
+Keep the entire joint entrance of Definition 9.1, earn $h$ by Proposition
+9.2, and set $H=2h+1$ as in Definition 13.1. For the actual chronological
+parent $p_j$ of birth $j\le2d$, use Definition 13.1's paid physical walks
+and define
+
+$$
+ g_{s,n,j}(u)=D_{s,n,p_ja}(u)-D_{s,n,p_jb}(u),
+ \qquad u\in\{0,1\}^H.
+ \tag{ACR.58}
+$$
+
+Zero chooses physical $a$, one chooses physical $b$, and the same tape
+restarts at position one in each child cone. Both cones retain their
+full original-root prefix in every literal submitted to the source.
+The rank in Definition 10.1 is a proof variable, not an observed field.
+Maturity and Theorem 13.2 supply present children, authentic parents
+from previously earned bits, and
+
+$$
+ (2z_j-1)\mathbb E_U g_{s,n,j}
+ =\mu_{n-t_j+1}-\mu_{n-t_j}\ge\frac12,
+ \tag{ACR.59}
+$$
+
+where $U$ is uniform on the physical tape cube. For a real function $f$
+on $\{0,1\}^v$, use normalized Walsh coefficients and put
+
+$$
+ \begin{aligned}
+ \chi_A(x)&=(-1)^{\sum_{i\in A}x_i},&
+ \widehat f(A)&=2^{-v}\sum_x f(x)\chi_A(x),\\
+ \rho(f)&=\sum_{\varnothing\ne A\subseteq[v]}|\widehat f(A)|,&
+ \rho_\epsilon(f)&=\inf_{\|p-f\|_\infty\le\epsilon}\rho(p).
+ \end{aligned}
+ \tag{ACR.60}
+$$
+
+The infimum ranges over all real functions on the cube, without a degree,
+symmetry, coefficient-precision or algorithm restriction. The full
+Fourier $\ell_1$ norm is $|\widehat f(\varnothing)|+\rho(f)$.
+These are the standard normalized character conventions of
+[Naor--Naor, §2][ACR-NN] and [Ada--Fawzi--Kulkarni, §2][ACR-AFK];
+(ACR.60) explicitly separates the constant coefficient.
+

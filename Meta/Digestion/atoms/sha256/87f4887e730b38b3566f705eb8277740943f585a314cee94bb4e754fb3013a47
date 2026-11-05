@@ -1,0 +1,74 @@
+**应用 26.2（有界表示、递归条件泛函与零分支）。** 对定义 26.1 的每个输入，可构造最小循环有界 $*$-表示 $(H_\ell,\pi,\Omega)$，满足
+
+$$
+\|\Omega\|=1,\quad \ell(a)=\langle\Omega,\pi(a)\Omega\rangle,
+\quad\|\pi(g)\|\le M_g,\quad
+\overline{\pi(\mathcal A_0)\Omega}=H_\ell. \tag{26.2}
+$$
+
+同一完整泛函的两个这样的最小表示有唯一保 $\Omega$、交织全部标记操作的酉同构。
+这里内积第一变量共轭线性。标准 GNS 的出处是 Weber–Li–Voigt 的 [ISEM24 讲义，Lemma 5.17、Theorem 5.18](https://www.math.uni-sb.de/ag/speicher/weber/ISem24/ISem24LectureNotes.pdf)；其 $C^*$-代数假设不能直接取代 (26.1) 的代数有界性。
+所需桥梁如下。
+
+由 $\ell((p+zq)^*(p+zq))\ge0$ 对全部 $z\in\mathbb C$ 成立，先取实、虚参数极化，得到 $\ell(q^*p)=\overline{\ell(p^*q)}$，再取二次式的最小值得
+
+$$
+|\ell(p^*q)|^2\le\ell(p^*p)\ell(q^*q).
+$$
+
+所以 $\mathcal N=\{p:\ell(p^*p)=0\}$ 与所有向量半正交，并为线性空间。
+(26.1) 给 $p\in\mathcal N\Rightarrow gp\in\mathcal N$。对字母的有限乘积迭代，再用线性，得 $ap\in\mathcal N$ 对每个 $a\in\mathcal A_0$ 成立；故 $\mathcal N$ 是左理想。
+在商上置 $\langle[p],[q]\rangle=\ell(p^*q)$、$\pi_0(a)[p]=[ap]$，良定义且为正定内积。
+对生成元，$\|\pi_0(g)[p]\|^2\le M_g^2\|[p]\|^2$；对每个有限多项式 $a=\sum_w a_ww$，还有
+
+$$
+\|\pi_0(a)\|\le\sum_w|a_w|\prod_{g\text{ in }w}M_g<\infty.
+$$
+
+故各算子延拓到商的 Hilbert 完备化。关系 $\langle[p],\pi_0(a)[q]\rangle=\langle\pi_0(a^*)[p],[q]\rangle$ 给 $*$-表示；$\Omega=[1]$ 给 (26.2) 及循环性。
+两个表示间在稠密循环子空间定义 $U\pi_1(a)\Omega_1=\pi_2(a)\Omega_2$。
+两边任意有限线性组合的内积都由同一 $\ell(a^*b)$ 给出，故映射良定义且等距；循环性给稠密值域，延拓后满射。
+它保循环向量并交织每个 $\pi(a)$，这些性质在稠密集上也强制唯一性。
+这完成代数输入到有界生成元的桥梁；只有正性而无 (26.1) 时，左乘可无界，不能称有界量子门。
+
+现在对每个已许可前缀 $h$，供应有限结果集 $A_h$ 与有限隐藏 Kraus 下标 $\mu$，取 $m_{h,a,\mu}\in\mathcal A_0$，满足完整关系
+
+$$
+\sum_{a\in A_h,\mu}m_{h,a,\mu}^*m_{h,a,\mu}=1. \tag{26.3}
+$$
+
+成功、失败、停止都须纳入结果；停止可用一个恒等吸收分支，任意有限记录树因而仍完整。
+定义未归一泛函 $L_\varnothing=\ell$，并递推
+
+$$
+L_{ha}(x)=\sum_\mu L_h(m_{h,a,\mu}^*xm_{h,a,\mu}),\quad
+p(h)=L_h(1),\quad\ell_h=L_h/p(h)\quad(p(h)>0). \tag{26.4}
+$$
+
+对每个合法有限前缀，这些泛函均正，满足 $p(h)\ge0$、$p(\varnothing)=1$、$\sum_ap(ha)=p(h)$。
+正概率时 $\ell_h$ 归一且满足与 (26.1) **相同** 的生成元界。
+证明是对深度归纳：$L_h(m^*x^*xm)=L_h((xm)^*(xm))\ge0$；将已有的界用于 $pm$，再对 $\mu$ 求和，即
+
+$$
+L_{ha}(p^*g^*gp)\le M_g^2L_{ha}(p^*p).
+$$
+
+(26.3) 插入 (26.4) 给前缀权重相容。除以正的 $p(h)$ 保持界。
+若 $p(h)=0$，正泛函的 Cauchy–Schwarz 给 $|L_h(x)|^2\le L_h(1)L_h(x^*x)=0$，故 $L_h=0$，所有后继也为零；没有可除的条件态。
+
+展开 (26.4) 时，每个隐藏路径取有向乘积 $m_{h,\boldsymbol\mu}=m_{h_{n-1},a_n,\mu_n}\cdots m_{\varnothing,a_1,\mu_1}$，有
+
+$$
+L_h(x)=\sum_{\boldsymbol\mu}\ell(m_{h,\boldsymbol\mu}^*xm_{h,\boldsymbol\mu}),\qquad
+p(h)=\sum_{\boldsymbol\mu}\|\pi(m_{h,\boldsymbol\mu})\Omega\|^2. \tag{26.5}
+$$
+
+隐藏下标是概率和，不是将 $m$ 的振幅先相加。对当前条件泛函或这些未归一向量分别作和，得到同一记录律；输入无关随机控制也按其实际权重混合。
+在 (26.2) 中 $\sum_{a,\mu}\pi(m_{h,a,\mu})^*\pi(m_{h,a,\mu})=I$，故 $v\mapsto\bigoplus_{a,\mu}\pi(m_{h,a,\mu})v$ 为等距。
+这将本卷定理 6.2、6.4 的分支等距与概率接口具体实例化：共同相干分支已被供应，遗忘 $\mu$ 给相应 CP 分支，遗忘全部结果给保迹更新。
+有限矩阵边界上，这些 Kraus 公式张量任意有限复参考仍正；没有因条件化而删去参考或零概率边界。
+
+最后，循环向量不保证原代数态纯。取 $\mathcal A_0=M_d$、$\ell(A)=\operatorname{Tr}(A)/d$，其表示是 Hilbert–Schmidt 空间 $M_d$ 上的左乘，$\Omega=I/\sqrt d$。
+$\langle\Omega,A\Omega\rangle=\operatorname{Tr}(A)/d$，左乘轨道张成全空间，故循环且最小；$d>1$ 时原态 $I/d$ 仍是多个正交纯态的非平凡混合。
+因此 (26.2) 不能把候选解释不确定性改称原系统纯叠加，(26.5) 也没有从归一正性独自推出实际频率标定。∎
+

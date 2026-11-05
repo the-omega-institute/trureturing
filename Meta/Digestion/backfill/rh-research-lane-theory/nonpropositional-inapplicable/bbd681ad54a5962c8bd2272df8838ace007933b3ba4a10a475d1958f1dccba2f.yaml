@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bbd681ad54a5962c8bd2272df8838ace007933b3ba4a10a475d1958f1dccba2f
+  normalized_sha256: sha256:bbd681ad54a5962c8bd2272df8838ace007933b3ba4a10a475d1958f1dccba2f
+cas_ref: sha256:bbd681ad54a5962c8bd2272df8838ace007933b3ba4a10a475d1958f1dccba2f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: P4 行列举算术误差和 Riesz/Redheffer 的预期端点，是任务安排而非其实际渐近的断言。'
+    previous_atom_id: 5877b43dbb8117ecad2efd22bab641ab1dc550a760bd019c3576af5863176e56
+    next_atom_id: 6017ace101e7c0f301acef11f9f8664c00a9133a9931d19f6ef5f65461d2d8d5

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d0fdf3eb9ea5d5c4f49a7334e362027685318453cb30513721bc5ce833d8f22c
+  normalized_sha256: sha256:d0fdf3eb9ea5d5c4f49a7334e362027685318453cb30513721bc5ce833d8f22c
+cas_ref: sha256:d0fdf3eb9ea5d5c4f49a7334e362027685318453cb30513721bc5ce833d8f22c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: G-f/闭带衰减的预算、覆盖顺序和具名目标不占预算说明。
+    previous_atom_id: a3490d4f0266af5966a78132cac8486ba08039c1e77f1f543c4554dfa181233c
+    next_atom_id: 7e866a73da173759f52419f1293996888c611971882129bfc9bc4a9a405a5b31

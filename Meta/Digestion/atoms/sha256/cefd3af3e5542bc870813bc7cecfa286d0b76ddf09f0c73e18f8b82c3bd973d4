@@ -1,0 +1,19 @@
+**Definition 1.2 (a genuinely core-only normalized cone).** Fix one actual
+physical prefix $v$. Its immutable descriptor and branch time are those
+of ACR Definition 27.1. Put $e=\tau_v-1$. At actual cut $e$, the cone is a
+single beta leaf. Local normalized cut $T$ means actual cut $n=e+T$,
+where $T\ge0$; its rank is $T+1$, rather than $T$. Write $S_T(v)$ for its
+support in relative physical words, keeping the order $a<b$ and forgetting
+all labels. Its exterior preceding forest is ACR (ACR.112)'s forest.
+
+The core-only condition means that **every** subsequent birth in this
+cone consumes its bit from the aligned core at its original global index:
+$z_j=y_{j-1}$ at all these events. A sufficient source condition is that
+its first index exceed $a$, and a source-independent sufficient condition
+under the public order promise is that it exceed $d$. Another sufficient
+condition is the physical-depth frontier of ACR Theorem 27.3. Earlier
+births used to create $v$ need not be core births. Eventual periodicity
+without this cutoff is insufficient. This condition is an authentic
+premise, or a conclusion of a separate proved supplier; a local support
+or a proposed periodic word alone does not certify it.
+

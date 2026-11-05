@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3c73f7f77033c3d3887202530413a74e9d7dedeb230016108c20550522c69433
+  normalized_sha256: sha256:3c73f7f77033c3d3887202530413a74e9d7dedeb230016108c20550522c69433
+cas_ref: sha256:3c73f7f77033c3d3887202530413a74e9d7dedeb230016108c20550522c69433
+coverage_gids:
+  - gid: D5/S3/Analytic/Isolation/GoldenGermThirdOrderStructuralZeros.golden_germ_third_order_structural_zeros
+    target_statement_id: sha256:8ae45ccfcfc79b6a91d1bbb92fd2a78ec54d5c91bd15ec8fc27e42fea9f3c906
+  - gid: D5/S3/Weil/ZetaBridge/AlternatingZetaContinuation.riemannZeta_ne_zero_of_real_mem_Ioo
+    target_statement_id: sha256:3765473a6590caf0c2aea4e41f7b9dff32861645b8e5bdc36614d292084ee423
+receipts:
+  unresolved_subitems: []

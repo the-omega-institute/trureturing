@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:285935524a571889c790708b4a6737001f0bdbf87ecdf3cca74aaf3cc36c7314
+  normalized_sha256: sha256:285935524a571889c790708b4a6737001f0bdbf87ecdf3cca74aaf3cc36c7314
+cas_ref: sha256:285935524a571889c790708b4a6737001f0bdbf87ecdf3cca74aaf3cc36c7314
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Research question and recommendation to use reflection positivity; it does not assert that the required positivity has been proved.
+    previous_atom_id: 1673e9edc3163043571a76fb4c4fde4914653b148d34e694b09c908e4e2a94fc
+    next_atom_id: e6b65072f64309e93f5b2564c0c22b0602ae6b70fff5f9252e0d45e41006ebce

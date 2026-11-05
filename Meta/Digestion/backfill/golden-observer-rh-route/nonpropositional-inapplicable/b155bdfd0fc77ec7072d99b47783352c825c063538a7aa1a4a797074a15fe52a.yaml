@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b155bdfd0fc77ec7072d99b47783352c825c063538a7aa1a4a797074a15fe52a
+  normalized_sha256: sha256:b155bdfd0fc77ec7072d99b47783352c825c063538a7aa1a4a797074a15fe52a
+cas_ref: sha256:b155bdfd0fc77ec7072d99b47783352c825c063538a7aa1a4a797074a15fe52a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Bibliographic entry for Bombieri without a formula or conclusion.
+    previous_atom_id: cf0606456feedccf1086384d307be95a8530d7e2f14b3b7eb3845f7eaaf45c11
+    next_atom_id: d04484e9ea6cc0e8e4539acc5255000d9ca2971a167dca6911559bbacbaf8770

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1e7ef8685ccb763e566aa832bce5bf161761cc8e333cae097d5e48a80721a1d6
+  normalized_sha256: sha256:1e7ef8685ccb763e566aa832bce5bf161761cc8e333cae097d5e48a80721a1d6
+cas_ref: sha256:1e7ef8685ccb763e566aa832bce5bf161761cc8e333cae097d5e48a80721a1d6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅为理论审计标题、列名和分隔线，不含表内数学断言。
+    previous_atom_id: b54745afce5a1262a1d48c38d537c5fc42b41af3099509f33719b121c4c1622d
+    next_atom_id: b772e5517b9a33be6f0d90e44f3006c3eab77dd356125fb39627bd394bd52009

@@ -1,0 +1,31 @@
+**Definition 7.1 (coefficient and terminal budgets).** Use exactly
+the complete worlds and private strategies of Definitions 1.1--1.2.
+For every $m>0$, $c>0$ and
+$c/3<E\le(1+c)/2$, retain $P,G$ from (1.8) and
+$\chi,q,r,h$ from (6.2), and put
+
+$$
+\gamma=\frac c3,\qquad
+\alpha=\min\{1,\gamma\},\qquad
+V=\frac G2+\frac{(1-\alpha)\chi}{4}
+ =\frac{P+G-\alpha\chi}{4}.
+\tag{7.1}
+$$
+
+For $-E\le x\le E$ define candidate-origin budgets
+
+$$
+\rho^\alpha_{13}(z+x)=
+\begin{cases}
+G/2-\alpha h(-x),&-E\le x\le0,\\[2pt]
+(P-\alpha\chi)/2+\alpha h(x),&0<x\le E,
+\end{cases}
+\qquad
+\rho^\alpha_{23}(t)=\rho^\alpha_{13}(-3-t).
+\tag{7.2}
+$$
+
+As in (6.3), the center belongs to the first case for each design.
+Only candidate origins in the compatible set are arguments of these
+budgets; the unknown true origin is not an acquired-history operand.
+

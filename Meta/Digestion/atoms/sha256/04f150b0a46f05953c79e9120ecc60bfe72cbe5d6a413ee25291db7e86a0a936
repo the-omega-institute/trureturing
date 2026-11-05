@@ -1,0 +1,46 @@
+**Definition 11.1 (independent observations and the failed direction).**
+The spatial information is the independently defined form element and
+norm (NT.1). Command time is the ordered, actually executed clock,
+controls, area and state path of (NT.3)–(NT.5), stopped at its first hit.
+Boundary information is its first-hit time and height face, with the
+held boundary point or cemetery convention supplied by G. None of these
+is defined by an inverse of another observation. The boundary is fixed
+throughout Theorems 8.1–10.1; their compactly supported probes introduce
+no extra boundary condition. A retained record would instead require
+actual stored outcomes, bindings and permitted later calls. No such
+memory object is constructed by these mathematical traces or measures.
+
+The precise failed direction is completion of smooth spatial data in the
+original form norm followed by their restriction to these actual finite
+commands. Theorem 8.1 rules out even a closable linear trace agreeing
+with all smooth restrictions; Theorem 10.1 rules out a mesh-uniform
+continuity modulus on the displayed normalized bounded class. On arbitrary
+Borel representatives even spatial almost-everywhere equivalence is too
+coarse: $E_n=C_n\cap\Omega$ has $\mu(E_n)=\nu(E_n)=0$, while
+$\nu_n(E_n)=\nu_n(1)>0$. Indeed a finite smooth curve image has zero
+three-dimensional chart volume, stationary points do too, and $\nu\ll\mu$.
+The countable union $E=\bigcup_{n\ge1}E_n$ is a single Borel null
+carrier for all $\nu_n$. This generic measure singularity is an
+intermediate observation, not an additional separator theorem or an
+acquired detector. The bounded smooth counterfamilies are the stronger
+conclusion.
+
+A specified smooth pointwise function remains evaluable along a specified
+path. Stronger supplied data can control a trace: for example, for
+$f,g\in C_c^\infty(\Omega)$ with their smooth representatives,
+
+$$
+\|\mathscr R_n(f-g)\|^2
+ \le\nu_n(1)\|f-g\|_\infty^2.
+\tag{NT.22}
+$$
+
+This follows by integrating the pointwise bound, and (NT.8) makes its
+constant bounded over $n$ (convergence bounds the tail, and there are only
+finitely many initial meshes). Such uniform spatial control, a separate
+trace certificate, a changed sampling law or a field-evaluation service
+is extra input beyond form distance. The inequality installs none of
+them. No inverse from time or boundary back to a spatial amplitude, route
+agreement for four views, dynamics conjugacy or universal physical
+impossibility is inferred.
+

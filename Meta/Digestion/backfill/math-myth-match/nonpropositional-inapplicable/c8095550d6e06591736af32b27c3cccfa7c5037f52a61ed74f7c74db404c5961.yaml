@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c8095550d6e06591736af32b27c3cccfa7c5037f52a61ed74f7c74db404c5961
+  normalized_sha256: sha256:c8095550d6e06591736af32b27c3cccfa7c5037f52a61ed74f7c74db404c5961
+cas_ref: sha256:c8095550d6e06591736af32b27c3cccfa7c5037f52a61ed74f7c74db404c5961
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Comparison table of two texts on the ethics of belief. The text gives historical interpretation, bibliographic scope or methodological advice, rather than a mathematical assertion.'
+    previous_atom_id: 5b2f3eeb5596be89ce81e3ee95fba41032640a431af5cc1269e605a20d7a928c
+    next_atom_id: cae9a776a17a6c398e667c30c3ce4cf3b7900d0d6e9ef79ee53c8f85a09ea0c3

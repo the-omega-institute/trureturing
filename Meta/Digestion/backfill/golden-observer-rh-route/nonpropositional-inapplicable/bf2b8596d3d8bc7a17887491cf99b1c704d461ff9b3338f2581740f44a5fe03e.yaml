@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bf2b8596d3d8bc7a17887491cf99b1c704d461ff9b3338f2581740f44a5fe03e
+  normalized_sha256: sha256:bf2b8596d3d8bc7a17887491cf99b1c704d461ff9b3338f2581740f44a5fe03e
+cas_ref: sha256:bf2b8596d3d8bc7a17887491cf99b1c704d461ff9b3338f2581740f44a5fe03e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: M4 要求先固定 Fourier 变换号号，是规范选择条目，未给变换恒等式。
+    previous_atom_id: e6f2be8b2d9fb1a795b7ef78d2588c10098b8da0c67f14598e925b04e3502f4d
+    next_atom_id: 36c7c8e23a7b56363c365712ee215dfa5cfc8887c71c6221a660a152425b4650

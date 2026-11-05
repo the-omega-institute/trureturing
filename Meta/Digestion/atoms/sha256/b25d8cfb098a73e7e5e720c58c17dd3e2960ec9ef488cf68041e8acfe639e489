@@ -1,0 +1,26 @@
+**定义 203.1（原高秩块的内部门槛）。** 仍令 $p_*=\operatorname{rank}E_P\ge2$，并只在原对象总秩大于 $p_*$ 时保留测试。定义
+
+$$
+R_*:=\min\{\operatorname{rank}T:\ \operatorname{rank}T\ge3,\
+T\text{ 是某原 }E_A\text{ 的简单块},\
+\operatorname{rank}E_A>p_*\}.
+\tag{203.1}
+$$
+
+定理 202.1 对 $A=P$、$N=\max\{3,p_*\}$ 给出集合中的元素，故 $R_*$ 是原整体中已定义的有限整数。它只依赖原对象及 Jordan 结构，不另输入外部尺度或新对象。
+
+本轮唯一新候选为 $\mathsf C_{\rm hs}(B_*)=B_*+\mathsf F_{\rm hs}$，$B_*$ 分别为完整 $B$ 与另名完整 $\mathsf B_{\rm cl}$。仍要求同一原关系
+
+$$
+\boxed{W_c(p)=2q_A(D_pc,r)+W_c(2D_cp)}
+\tag{203.2}
+$$
+
+只在 $\operatorname{rank}E_A>p_*$ 的对象上、下列带标签域成立：
+
+| 层 | 原切口及输入 | 原读回 |
+| --- | --- | --- |
+| 正交 | primitive $e\perp p$，$c=e$ | $r=p$ 或 primitive $r\perp e,p$ |
+| 二原子内部 | $c^2=c$，$\operatorname{rank}_{E_A}c=2$，primitive $p\le c$ | $r=p$ |
+| 半重叠角外 | primitive $e,p$，$c=e$，$\tau_A(e\circ p)=1/2$ | 全部 primitive $r\perp e,p$ |
+| 半重叠自身 | 同一半重叠对，且 $e$ 所在简单块秩 $>R_*$ | $r=e$ |

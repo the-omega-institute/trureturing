@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c0ea15eb278c7d4dd6578e1b0c068e0a8151631817a544af37634f25dad23875
+  normalized_sha256: sha256:c0ea15eb278c7d4dd6578e1b0c068e0a8151631817a544af37634f25dad23875
+cas_ref: sha256:c0ea15eb278c7d4dd6578e1b0c068e0a8151631817a544af37634f25dad23875
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Checklist noun phrase naming functional-equation reflection; no functional equation is asserted in this fragment.
+    previous_atom_id: 0c57ce21a1b1d6160f0af81cf2fe618800e4c21dc08b4373b5f0c3da4544bc89
+    next_atom_id: 47dede307f472645b84dc641deb48ebc8a115aee507eb62a8cda423e52fea542

@@ -1,0 +1,13 @@
+**Proposition 90.4 (real selected use and off-image boundary).** Fix
+an old terminal $a_0$ and one genuinely designated fresh sensor $f$.
+Decode $q=x_{a_0}$ from the acquired record and actually execute
+Add$(f,q)$; Hold; Read$(f)$. The real successor is
+$L_hx+q e_f$, the entire reply is $(L_hx)_f+q$, and the full
+predictor is updated there. This adds one Add, Hold and Read with
+all operand/selector/return traffic. Such a successor need not lie
+in $L_h\mathbb Q^N$; no continuation of the historical four-way
+inverse on arbitrary controlled fields follows. Proposition 89.3
+already disproves a full-grown-space germ inverse. Complete current
+service remains valid by the synchronized predictor, with the actual
+new field and law, rather than by pretending a fresh assay occurred.
+

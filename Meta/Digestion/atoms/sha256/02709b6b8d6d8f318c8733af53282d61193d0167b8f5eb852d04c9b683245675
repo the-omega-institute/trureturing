@@ -1,0 +1,135 @@
+**Theorem 37.2 (exact worst-case native Read minimum).** Under all
+the premises of Definition 37.1, for each integer $d>0$ the minimum
+uniform paid Read cap is exactly $2d$, both for complete-future
+readiness and for the joint task. In particular every correct such
+preparation has a lawful run requiring at least $2d$ Reads, even
+when it may use more updates, longer finite words and more finite local
+work. The same minimum cap holds with the independent zero-error
+randomization specified there. At $d=0$ the minimum is zero.
+
+Proof. First connect distinct streams to this native task, without
+assuming that a full incidence has already been acquired. Fix public
+inputs and, for the moment, a deterministic preparation. At any reached
+Read or return boundary, its entire accessible state is a function of
+the preceding binary reply word. Indeed its next local operations,
+literal and update choices are source-free functions of that state;
+updates return the same acknowledgement and stationary local operations
+reveal no source data. Induction on the actual finite operations gives
+the assertion. Thus the return cut $n$, output and retained evaluator
+are identical whenever the preceding reply word is identical. Physical
+differences in the unobserved source cannot be used as an extra branch
+of this accessible computation.
+
+Suppose two different streams $s,s'\in\mathscr R_d$ reached the
+same return reply word. They then return at the same $n$. Choose a
+birth $j$ at which their bits differ, and a finite $e\ge n$ with
+$v_e=F_e-1\ge j$. Such an $e$ exists. By Theorem 28.2 their
+actual physical supports at cut $e$ differ, since their first $v_e$
+birth bits differ. Choose one physical word in the symmetric difference
+of those two finite supports. The continuation consisting of $e-n$
+updates followed by a Read of that word has different replies on the
+two sources. This is one finite legal request at their common return
+cut. Their identical retained local evaluator would have to predict
+both values from the same accessible data and same request, which is
+impossible. Every distinct stream must therefore occupy a different
+return leaf. This argument also applies to the joint task, which
+contains the complete-future requirement. It does not require equality
+of the two current full incidences.
+
+The number of leaves required here is a classical supplier. Rainer A.
+Rueppel, [*Linear Complexity and Random Sequences*](https://link.springer.com/content/pdf/10.1007/3-540-39805-8_21.pdf),
+in *Advances in Cryptology — EUROCRYPT '85*, LNCS 219, pp. 167–188
+(1986), p. 174, equations (5)–(6), explicitly counts distinct binary
+**semi-infinite streams** of linear complexity at most $d$. For the
+present class his count is
+
+$$
+ D_d=|\mathscr R_d|
+     =1+\sum_{\ell=1}^{d}2^{2\ell-1}
+     =\frac{2\,4^d+1}{3}.
+ \tag{GPO.88}
+$$
+
+The added one is the zero stream. This imports the semi-infinite count,
+not a count of arbitrary length-$2d$ words, private registers or
+primitive periodic generators. Its parameter correspondence is as
+follows. An order-$r$ recurrence (GPO.75) is realized by the length-$r$
+register with state $(s_i,\ldots,s_{i+r-1})$, output $s_i$, and
+successor obtained by shifting and appending
+$\sum_{j<r}c_js_{i+j}$. Conversely that register gives (GPO.75)
+from index zero for every seed. A zero final feedback tap is legal;
+the all-zero row shifts an arbitrary seed out and hence includes finite
+transients. Taking the least possible register length identifies the
+linear complexity, and allowing any length at most $d$ gives exactly
+$\mathscr R_d$. Nonminimal presentations add no distinct streams.
+
+Equivalently, for $r>0$ put $A_s(x)=\sum_{i\ge0}s_ix^i$.
+Equation (GPO.75) is equivalent to
+
+$$
+ H(x)A_s(x)=P(x),\qquad
+ H(x)=1+\sum_{k=1}^{r}c_{r-k}x^k,
+ \qquad \deg P<r,\quad\deg H\le r.
+ \tag{GPO.89}
+$$
+
+The coefficients at degrees $i+r$ give the recurrence in the reverse
+direction; the coefficients below $r$ accommodate the arbitrary seed.
+Thus a polynomial $A_s$ is retained even when $H=1$: its transient
+numerator is not discarded. For a nonzero reduced $P/H$ with $H(0)=1$,
+the least permitted length is
+$\max\{\deg H,1+\deg P\}$, since every presentation has those
+two degree bounds after reduction and this length itself satisfies
+(GPO.89). The zero stream has length zero. This is the all-index and
+singular convention already used in Lemma 29.2 and its Massey
+§§II–IV and Reeds–Sloane §2 suppliers cited in §36. It verifies
+the domain match for (GPO.88); it does not restrict the count to
+invertible or purely periodic sources, or assert uniqueness of the
+actual private presentation.
+
+Now suppose a correct preparation has uniform Read cap $q$. Its
+return reply words form a prefix-free binary family of lengths at
+most $q$: after a return at a given reply word, source-free control
+cannot instead ask another Read on another run with that same word.
+The standard binary decision-tree capacity is at most $2^q$ leaves.
+For example, extending each leaf word to length $q$ gives disjoint
+nonempty sets of binary words, all lying in the $2^q$ length-$q$
+words. Arbitrarily many deterministic update or local operations
+between branches do not increase that capacity. The preceding native
+distinguishability argument and (GPO.88) force $D_d\le2^q$.
+For $d>0$,
+
+$$
+ 2^{2d-1}<\frac{2\,4^d+1}{3}\le2^{2d},
+ \qquad \lceil\log_2D_d\rceil=2d.
+ \tag{GPO.90}
+$$
+
+Consequently $q\ge2d$. These stream counts and binary-tree capacity
+are classical inputs; the source-specific deduction is that every
+full-future return of this native presence service needs that many
+distinct leaves. Query length, query choice, update timing and stored
+local computation do not supply further reply letters.
+
+For randomization, choose one lawful source realization per distinct
+stream, and fix the common public inputs. There are only $D_d$ such
+representatives. For each representative, correctness, finite return
+and the asserted cap hold on a measure-one set of independent tapes.
+The intersection of these finitely many sets has measure one. Any tape
+in it gives a deterministic preparation correct on all representatives,
+to which the same leaf bound applies. Hence a uniform almost-sure cap
+below $2d$ is impossible. If that cap is absent, the theorem makes no
+expected-cost assertion.
+
+For attainment use the actual source-blind preparation of Definition
+33.1 with $m=2d$. Theorem 33.2 obtains exactly the first $2d$
+birth bits by $2d$ paid binary presence Reads on that source, at cut
+$N(2d)$. Its finite synthesis in Lemma 29.2 determines the whole
+actual stream. Theorems 33.2 and 34.3 then provide the current
+labelled tree, $\mathcal Q_1$, and the installed finite local
+evaluator, with completed writes and retained binding as stipulated.
+Thus both tasks attain $Q=2d$. For $d=0$ the unique stream is
+already known; two actual updates reach a mature cut and local forward
+replacement supplies both tasks with no Read. Nonnegativity of $Q$
+proves the zero minimum. $\square$
+

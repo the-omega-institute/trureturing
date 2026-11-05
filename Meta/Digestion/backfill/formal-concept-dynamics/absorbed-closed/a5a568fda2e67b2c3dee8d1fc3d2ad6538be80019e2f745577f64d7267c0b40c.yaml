@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:a5a568fda2e67b2c3dee8d1fc3d2ad6538be80019e2f745577f64d7267c0b40c
+  normalized_sha256: sha256:a5a568fda2e67b2c3dee8d1fc3d2ad6538be80019e2f745577f64d7267c0b40c
+cas_ref: sha256:a5a568fda2e67b2c3dee8d1fc3d2ad6538be80019e2f745577f64d7267c0b40c
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Identifiability/AnchorFullIdentification.anchor_full_identification_iff
+    target_statement_id: sha256:a5672ec8ce2ec1d5bc489730212126205e4735458ade8ba8913d9f05908e188f
+  - gid: D5/S3/ObserverMemory/PredictionFactors/ReachableBehaviorCore.reachable_behavior_core
+    target_statement_id: sha256:ffe94b9c9944d7b4cff05302f44b3c0404fa85b3fe068b3b66e356546d2e9d82
+  - gid: D5/S3/ObserverMemory/PredictionFactors/ReachableBehaviorMinimality.futureBehavior
+    target_statement_id: sha256:20624aa60e2fbc0666001f9c87655ae4b9808b9751942eb0761b032d7b3ec684
+  - gid: D5/S3/ObserverMemory/PredictionFactors/ReachableBehaviorMinimality.orbitPoint
+    target_statement_id: sha256:8d1c5ad757b04dcb2017ea6f9292aef7a21f2caccfcf05a71e731d1b947c6354
+receipts:
+  unresolved_subitems: []

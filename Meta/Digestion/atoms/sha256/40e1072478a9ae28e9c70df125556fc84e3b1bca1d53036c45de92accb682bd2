@@ -1,0 +1,30 @@
+### 定义 77.1（带原点的多项式世界与有效目标）
+
+固定 $k,d\ge0$。令 $\mathscr W_{k,d}^{\mathrm{clock}}$ 为所有四项严格正、
+秩一、迹为一的矩阵 $R$，所有非零实多项式 $G$（$\deg G\le k$）、实多项式
+$D$（$\deg D\le d$）及 $\tau\in\mathbb R$ 的四元组
+
+$$
+W=(R,G,D,\tau).
+$$
+
+已知累计操作 $A_i$ 下的读数为
+
+$$
+z_i(W)=G(i+\tau)\operatorname{tr}(A_iR)+D(i+\tau).
+\tag{77.1}
+$$
+
+定义有效目标
+
+$$
+q(W)=\bigl(R,\widehat G,\widehat D\bigr),\qquad
+\widehat G(t)=G(t+\tau),\quad
+\widehat D(t)=D(t+\tau).
+\tag{77.2}
+$$
+
+这里 $q$ 忽略原点的绝对坐标，但保留对象、增益和漂移在实验坐标中的完整
+函数。若去掉迹一规范，还须同时保留已有的正尺度商；本节只研究新增的时间
+平移自由度。
+

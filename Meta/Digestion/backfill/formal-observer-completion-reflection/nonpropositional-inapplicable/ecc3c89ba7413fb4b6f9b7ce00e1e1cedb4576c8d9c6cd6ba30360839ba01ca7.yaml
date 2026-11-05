@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ecc3c89ba7413fb4b6f9b7ce00e1e1cedb4576c8d9c6cd6ba30360839ba01ca7
+  normalized_sha256: sha256:ecc3c89ba7413fb4b6f9b7ce00e1e1cedb4576c8d9c6cd6ba30360839ba01ca7
+cas_ref: sha256:ecc3c89ba7413fb4b6f9b7ce00e1e1cedb4576c8d9c6cd6ba30360839ba01ca7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 定理 202 的开头只假设 X 紧致，不断言任意状态空间紧致。'
+    previous_atom_id: d51a0712a9218ba788ec8006d919b3aca9712049e1269f6dda1d10f9f0092d76
+    next_atom_id: 8d8a0ff695b7bbfbb19b461cdb6563974b8b13d39f237208e1b9eaf1377d27da

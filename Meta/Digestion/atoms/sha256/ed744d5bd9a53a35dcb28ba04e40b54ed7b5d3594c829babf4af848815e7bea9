@@ -1,0 +1,25 @@
+**Definition 14.1 (Exact scalar parameters).** Retain the law of Definition 1.1, the notation of Definition 7.1 and the dense infimum $\mathscr D_a(\delta)$ of (11.1). In this section put
+
+$$
+\gamma=(2r-1)\delta,\qquad
+\rho=\frac{\gamma}{r^2},\qquad
+m=\frac{1-r\delta}{s},\qquad e_0=4\rho,
+\tag{14.1}
+$$
+
+and, whenever both denominators are positive, write
+
+$$
+\begin{aligned}
+u(\varepsilon)&=\mu+\varepsilon,
+&v(\varepsilon)&=\mu-\frac{2\varepsilon}{a},\\
+\mathcal H(\varepsilon)
+&=\frac{2r^2}{u(\varepsilon)}
+ +a\left[\frac{r^2}{v(\varepsilon)}
+ -\frac{\gamma}{v(\varepsilon)^2}\right].
+\end{aligned}
+\tag{14.2}
+$$
+
+Thus $\mathcal H$ is precisely the energy (7.4) of the actual family (7.2). No restriction on the cardinalities of an arbitrary law is added to (11.1).
+

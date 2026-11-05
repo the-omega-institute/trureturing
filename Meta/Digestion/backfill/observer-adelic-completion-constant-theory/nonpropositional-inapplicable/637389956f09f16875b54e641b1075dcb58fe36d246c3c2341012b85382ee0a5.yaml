@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:637389956f09f16875b54e641b1075dcb58fe36d246c3c2341012b85382ee0a5
+  normalized_sha256: sha256:637389956f09f16875b54e641b1075dcb58fe36d246c3c2341012b85382ee0a5
+cas_ref: sha256:637389956f09f16875b54e641b1075dcb58fe36d246c3c2341012b85382ee0a5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 规定有限、极限序数阶段和在存在时的 rank 记号；分类是命名规则，不主张稳定序数存在。'
+    previous_atom_id: 44712fd396d37da995f58e242e264d387de885d4a38c47a26a7924d6f3547484
+    next_atom_id: 4da0163bd18938e24d5e20548c8903726328c70d8d3230f77a3640d0fb676bd6

@@ -10,6 +10,17 @@ internal sealed class CHSHWitnessDocument : IScribeDocumentDefinition
         H("A Tight CHSH Witness"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("complex-sqrt-two-nonzero"),
+                DeclarationHandle.Create("D5/S3/QuantumBounds/CHSHWitness.complex_sqrt_two_ne_zero"),
+                H("The square root normalization is nonzero"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Parenthesized(Seq(Sqrt, Grp(D(2)), Sp, Colon, Sp,
+                        Mathbb, Grp(F.Id("C")))), Sp, Neq, Sp, D(0)))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The positive real square root of two remains nonzero in the complex numbers."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("complex-sqrt-two-inverse-product"),
                 DeclarationHandle.Create("D5/S3/QuantumBounds/CHSHWitness.complex_sqrt_two_inv_mul_self"),
                 H("The inverse square root normalization"),

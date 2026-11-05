@@ -1,0 +1,28 @@
+**Theorem 2.2 (two-CDF inverse estimate).** Compare two controls with the
+same $b,a,T$ and input contract. Suppose
+
+$$
+S(T),\widetilde S(T)\geq\sigma>0,\qquad
+\|F_0-\widetilde F_0\|_\infty\leq\varepsilon_0,\qquad
+\|F_2-\widetilde F_2\|_\infty\leq\varepsilon_2.
+$$
+
+Then
+
+$$
+\|k-\widetilde k\|_\infty
+\leq\frac{\varepsilon_0+(c/Z)\varepsilon_2}{\sigma}.
+\tag{IS.11}
+$$
+
+Proof. Terminal floors imply the same floors at all earlier times. By
+(IS.10), $|S-\widetilde S|\leq\varepsilon_2/Z$, and
+
+$$
+S(k-\widetilde k)=\widetilde F_0-F_0
+                         +\widetilde k(\widetilde S-S).
+$$
+
+Use $0<\widetilde k<c$ and divide by $S\geq\sigma$.
+Taking the supremum proves the estimate, including $T=0$. $\square$
+

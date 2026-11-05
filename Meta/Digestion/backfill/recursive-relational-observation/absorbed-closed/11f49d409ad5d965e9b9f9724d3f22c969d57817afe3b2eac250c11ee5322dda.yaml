@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:11f49d409ad5d965e9b9f9724d3f22c969d57817afe3b2eac250c11ee5322dda
+  normalized_sha256: sha256:11f49d409ad5d965e9b9f9724d3f22c969d57817afe3b2eac250c11ee5322dda
+cas_ref: sha256:11f49d409ad5d965e9b9f9724d3f22c969d57817afe3b2eac250c11ee5322dda
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/ProObjects/GeneralHomFormula.proHomSingleStageEquiv
+    target_statement_id: sha256:f5e1ee07485324a88d1f1ac45d8c5304f02be5682c1759f04d347f7a21f9e328
+receipts:
+  unresolved_subitems: []

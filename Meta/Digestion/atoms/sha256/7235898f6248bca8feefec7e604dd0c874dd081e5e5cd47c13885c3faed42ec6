@@ -1,0 +1,154 @@
+**Proposition 8.1 (source occupation forces the reversible conditional law).**
+For the fixed endpoint and source of Definition 7.1, a candidate in
+Definition 7.3 necessarily satisfies
+
+$$
+m=\nu\Lambda,\qquad \nu=(\pi_\ell)_*m.
+\tag{8.1}
+$$
+
+Consequently $\Lambda$ is the conditional law of $m$ on the fibers,
+$\nu$-almost everywhere, although this was not a hypothesis. More
+explicitly choose the Borel section
+$s(b)=(x,y,z,\bar w)$ with $0\le\bar w<\ell$, and put
+$q_n(b)=s(b)d_n$. Relative to raw quotient measure
+$d\bar\mu=dx\,dy\,dz\,d\bar w$, define
+
+$$
+\begin{gathered}
+S(b)=\sum_{n\in\mathbb Z}h(q_n(b))^2,\qquad
+d\nu=S\,d\bar\mu,\\
+p_n(b)=\frac{h(q_n(b))^2}{S(b)}.
+\end{gathered}
+\tag{8.2}
+$$
+
+These are defined on the common full-measure set where $0<S<\infty$
+and $b\ne b_0$. On that set
+$\Lambda_b=\sum_n p_n(b)\delta_{q_n(b)}$.
+For every discount $\lambda>0$, use precisely [S, (115.4), (116.1)]
+with that discount:
+
+$$
+\begin{gathered}
+n_\lambda=h-\lambda(F+\lambda)^{-1}h,\qquad
+b_\lambda=n_\lambda/h,\qquad d_\lambda=\int_G b_\lambda\,dm,\\
+S_\lambda(b)=\sum_n b_\lambda(q_n(b))h(q_n(b))^2.
+\end{gathered}
+\tag{8.3}
+$$
+
+Here $F$ is the supplied Friedrichs operator used in the exact full
+resolvent formula, not a replacement for $H$ or $K$. For each fixed
+$\lambda$, a candidate must also satisfy, for $\nu$-almost every $b$,
+
+$$
+\Lambda_b(\{q_n(b)\})
+ =\frac{b_\lambda(q_n(b))h(q_n(b))^2}{S_\lambda(b)}
+ =p_n(b)\quad(n\in\mathbb Z).
+\tag{8.4}
+$$
+
+In particular the same fixed fiber probabilities must disintegrate every
+discounted original source response. Null sets in (8.4) may depend on
+$\lambda$; no uncountable intersection is asserted.
+
+Proof. The source response [S, (116.14)] gives the probability measure
+
+$$
+\zeta_\lambda(dq)
+ :=\lambda\int_0^\infty e^{-\lambda t}T_t(e,dq)\,dt
+ =\frac{b_\lambda(q)}{d_\lambda}\,m(dq).
+\tag{8.5}
+$$
+
+This is a trace-defined source response, not evaluation of a formula
+containing $h(e)$. The supplied $0\le b_\lambda\le1$ and
+$d_\lambda>0$ give its positivity and normalization. The spectral
+limit already established in [S, (116.12)] says
+
+$$
+\|b_\lambda-1\|_{L^2(m)}
+ =\|\lambda(F+\lambda)^{-1}h\|_{L^2(\mu)}\longrightarrow0,
+\qquad d_\lambda\longrightarrow1
+\quad(\lambda\downarrow0).
+\tag{8.6}
+$$
+
+It uses $\ker F=\{0\}$, not a positive spectral gap. Since $m$ is a
+probability measure, (8.6) implies convergence of (8.5) to $m$ in total
+variation. For the norm $\|\sigma\|_{\rm TV}=\sup_{|f|\le1}|\sigma f|$,
+one explicit bound is
+
+$$
+\|\zeta_\lambda-m\|_{\rm TV}
+ \le\frac{\|b_\lambda-1\|_{L^1(m)}+|1-d_\lambda|}{d_\lambda}
+ \longrightarrow0.
+\tag{8.7}
+$$
+
+Now (7.9)--(7.10), applied at $b_0$, give equality of transition
+measures
+
+$$
+T_t(e,\cdot)=Q_t(b_0,\cdot)\Lambda,\qquad
+Q_t(b_0,\cdot)=(\pi_\ell)_*T_t(e,\cdot).
+\tag{8.8}
+$$
+
+The second identity uses fiber support. It also ensures the time
+measurability needed to integrate this base law, directly from the
+legitimate source transition function. Put
+$\nu_\lambda=(\pi_\ell)_*\zeta_\lambda$. Integrating (8.8) yields
+$\zeta_\lambda=\nu_\lambda\Lambda$. Pushforward and application of a
+probability kernel contract total variation, so
+
+$$
+\|\nu_\lambda-\nu\|_{\rm TV}
+ \le\|\zeta_\lambda-m\|_{\rm TV},\qquad
+\|\nu_\lambda\Lambda-\nu\Lambda\|_{\rm TV}
+ \le\|\nu_\lambda-\nu\|_{\rm TV}.
+\tag{8.9}
+$$
+
+Taking limits proves (8.1). Thus one fixed original source, through its
+entire time-homogeneous response, has forced the conditional law of
+the invariant measure. No density, continuity or reversibility of
+$\Lambda$ was used.
+
+Tonelli applied to the countable cells of raw Haar measure gives
+$\int S\,d\bar\mu=\|h\|_2^2=1$. Smooth positivity of $h$ off $e$
+makes $S>0$ almost everywhere. Therefore $S$ is finite and positive
+almost everywhere and $\nu$ is equivalent to $\bar\mu$. A kernel
+supported on the fiber is a countable sum with Borel weights
+$\lambda_n(b)=\Lambda_b(\{q_n(b)\})$; the graphs of the Borel sections
+$q_n$ are Borel, which verifies measurability of these weights. Apply
+(8.1) to the Borel sets $\{q_n(b):b\in E\}$ for arbitrary Borel $E$.
+Their two measures have densities $h(q_n(b))^2$ and
+$S(b)\lambda_n(b)$ relative to $\bar\mu$. Equality gives (8.2),
+simultaneously for the countably many $n$.
+
+The same argument applied to
+$\zeta_\lambda=\nu_\lambda\Lambda$ gives the first expression in
+(8.4) wherever $S_\lambda>0$. To check that this is a full
+$\nu$-measure set, note that $n_\lambda$ is nonnegative, nonzero,
+smooth on $G\setminus\{e\}$ and solves
+$(S_{\min}^*+\lambda)n_\lambda=0$ there. The first two assertions
+are [S, Theorem 115.2]; smoothness follows by interior elliptic
+regularity from (8.3). The local principal matrix is the supplied
+positive matrix (115.10), and the local potential is smooth and
+bounded. The elliptic Harnack principle on connected
+$G\setminus\{e\}$ therefore makes $n_\lambda$ strictly positive
+there, just as for $h$ in [S, Theorem 115.2]. Consequently
+$b_\lambda>0$ off $e$, and $\zeta_\lambda$ is equivalent to $m$.
+Their pushforwards $\nu_\lambda$ and $\nu$ are equivalent. Also
+$\int S_\lambda\,d\bar\mu=d_\lambda<\infty$. This proves all
+claims in (8.4). It additionally forces
+$b_\lambda(q_n(b))=S_\lambda(b)/S(b)$ for all $n$, almost everywhere.
+
+The fiber above $b_0$ is countable and has $m$-measure zero, so
+$\nu(\{b_0\})=0$. The proof assigns no ordinary value to $h(e)$ and
+does not contradict $\Lambda_{b_0}=\delta_e$ by changing an
+almost-everywhere conditional version at that null base point. Its
+consequence is instead the global identity (8.1). $\square$
+

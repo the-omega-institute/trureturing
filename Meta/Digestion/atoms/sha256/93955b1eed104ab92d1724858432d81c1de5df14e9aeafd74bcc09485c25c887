@@ -1,0 +1,14 @@
+**假设 104.1（档案对齐和晚测装置是另一个前提）。** 取 (103.9) 的档案 Schmidt 子空间 $T_n=\operatorname{span}\{v_{n1},v_{n2},v_{n3}\}$。若要消费一个双 qutrit 供应，另供应系统 $Q$ 与档案 $T_n$ 的共同局部坐标，以及在这两个实际载体上实现所指定两设置、每设置三结果完整 PVM 的晚测装置。坐标可依赖已知模型与 $n$；把一个数学 Schmidt 基算出或写出，均不等于获得此装置。$T_n^\perp$ 上也须给完整结果归属，不能丢弃该空间来后选择。
+
+具体采用[对称 SATWAP 供应](../../../D5/S3/Quantum/Contextuality/SymmetricSatwapMaximalViolation.lean) 的数学对象：对维数 $D\ge2$，双方设置 $x\in\{0,1\}$ 的效果为
+
+$$
+M_{a|0}=|a\rangle\langle a|,\qquad
+M_{a|1}=T_D|a\rangle\langle a|T_D^\dagger,\qquad
+(T_D)_{ij}=\frac{t_i}{D\sin[(i-j-1/2)\pi/D]},\qquad
+t_0=-1,\quad t_i=1\ (i>0).
+\tag{104.1}
+$$
+
+该供应给一个交换对称、约化态为 $I_D/D$ 的纯态 $\Omega_D$，对其指定设置标号和相位约定达到对称 SATWAP 表达式 $2(D-1)$。这里取 $D=3$，与源参数 $d\in(0,1)$ 不混同。假设的具体内容是在 $Q\otimes T_n$ 上提供局部识别 $J_{Q,n},J_{R,n}$，使 $(J_{Q,n}\otimes J_{R,n})\Phi_n=\Omega_3$，并提供 (104.1) 的对应拉回测量；对档案正交补可把全补投影并入一个结果以保持完整 PVM。数学上这些局部识别存在，因为两个纯态都最大纠缠；其操作取得仍为独立前提。
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7adb60db3dce2499390dc658f21c0aaa365e1cf171db6604a85b475472927ed6
+  normalized_sha256: sha256:7adb60db3dce2499390dc658f21c0aaa365e1cf171db6604a85b475472927ed6
+cas_ref: sha256:7adb60db3dce2499390dc658f21c0aaa365e1cf171db6604a85b475472927ed6
+coverage_gids:
+  - gid: D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.orderedPhaseProduct
+    target_statement_id: sha256:a4cf98669940f567246b4afc0498bda7f3fc15af946f78595a1ea8bc42d9b656
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,57 @@
+**Proposition 11.9 (Failure of a global native inverse modulus).**
+At fixed $0<Z<1$, compare the pure states
+$\psi(\kappa,0,0)$ and $\psi(\kappa,0,\pi)$ for $0<\kappa<L$.
+Their doubled-output Euclidean distance is
+
+$$
+8\sqrt{\kappa(L-\kappa)}\longrightarrow0\qquad(\kappa\downarrow0),
+$$
+
+but their trace distance is
+
+$$
+D=\sqrt{1-(4\kappa+2Z-1)^2}
+\longrightarrow2\sqrt{Z(1-Z)}>0.
+\tag{11.9}
+$$
+
+Consequently the native inverse is not uniformly continuous on the whole
+open pure source. The same conclusion holds for any fixed finite stack
+of commands that are each globally lawful on this source.
+
+Proof. Write $s=\sqrt{\kappa(L-\kappa)}$.
+Each of the four bottom coherences changes to its negative, and its
+doubled real pair changes by norm $4s$. The four squared contributions
+sum to $64s^2$; the $02$ coherence agrees. Fixed preparation rotations
+are orthogonal and preserve this norm.
+The pure vectors differ by a sign in modes $1,3$, hence have overlap
+$2\kappa+Z-2(L-\kappa)=4\kappa+2Z-1$.
+
+The classical pure-state trace formula, with
+$D(\rho,\sigma)=\frac12\|\rho-\sigma\|_1$, is
+$D(|\psi\rangle\langle\psi|,|\phi\rangle\langle\phi|)
+=\sqrt{1-|\langle\psi,\phi\rangle|^2}$.
+It is the equality case underlying the fidelity bounds of
+[Fuchs–van de Graaf][FV11]. Directly, the difference of two pure
+projectors is supported on their span, is traceless, and has trace square
+$2(1-|\langle\psi,\phi\rangle|^2)$; its two possibly nonzero eigenvalues
+are the positive and negative square roots in that formula.
+Substitution proves (11.9).
+
+For the command claim, Transport Theorem 9.2 says a relative command
+has full lawful domain exactly when $a\equiv0$.
+Indeed $m\le0\le M$, and including all of $(0,L)$ in (10.10) forces
+$m=M=0$. Such commands may have arbitrary finite phase increment $B$,
+but have $A=K=0$. At the same height the two candidates acquire the same
+increment of $u$ and the same increment of $v$. The four bottom edges
+stay opposite, with unchanged magnitude, and the reference edges agree.
+Every future menu thus has the same norm difference $8s$.
+
+For a fixed collection of $N$ commands, including fixed finite
+concatenations, the Euclidean stack has difference $8\sqrt N\,s\to0$;
+the maximum norm over commands has difference $8s\to0$. The ray distance
+still has the positive limit in (11.9).
+This is a fixed finite assertion, not a summation of an infinite
+unweighted squared norm. An interior-height promise or adaptive sampling
+and feedback defines a different task. $\square$
+

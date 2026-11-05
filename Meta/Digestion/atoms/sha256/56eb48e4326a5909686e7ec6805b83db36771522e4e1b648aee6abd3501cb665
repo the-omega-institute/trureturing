@@ -1,0 +1,6 @@
+## 8. Same-run resource and acquisition boundaries
+
+All temporal comparisons charge the same actual source initialization, fixed original clock and detector installation. A retained deterministic partition has no fresh-emission-noise coordinate, but its Borel description, exact reference, comparisons, timing, reads, controller buffers, source binding, rights, and storage remain. An existential partition is not an acquired finite-bit procedure.
+
+A uniform four-label sampler ($f_i\equiv1/4$) can use two fresh fair bits per read, so an $n$-read run uses $2n$ supplied random bits and $n$ labels, with the clock/menu inputs, source references, payload retention and controller work charged separately. The binary half-space sampler has the same two-bit implementation in its declared realization. For the noisy quadrant at $\varepsilon=1/2$, one selector bit chooses the quadrant branch; on the other $n-R$ branches two more fair bits are consumed, so the run uses $R$ actual quadrant calls and $3n-2R$ fair bits, with expected $2n$ and worst case $3n$. The lead-in is $t_0$, epochs are $t_0+j/k$, and elapsed post-lead-in time is $(n-1)/k$.
+

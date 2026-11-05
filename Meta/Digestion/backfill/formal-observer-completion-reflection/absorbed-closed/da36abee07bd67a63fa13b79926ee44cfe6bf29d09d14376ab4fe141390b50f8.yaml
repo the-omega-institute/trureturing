@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:da36abee07bd67a63fa13b79926ee44cfe6bf29d09d14376ab4fe141390b50f8
+  normalized_sha256: sha256:da36abee07bd67a63fa13b79926ee44cfe6bf29d09d14376ab4fe141390b50f8
+cas_ref: sha256:da36abee07bd67a63fa13b79926ee44cfe6bf29d09d14376ab4fe141390b50f8
+coverage_gids:
+  - gid: D5/S3/Observer/Hankel/ExactGramianSeries.controlGramian_series
+    target_statement_id: sha256:e7ddfda640862a9d152d511b61d7ac19c52d7d87b7cf5e5c4e5faa5813fc14f5
+  - gid: D5/S3/Observer/Hankel/ExactGramianSeries.observationGramian
+    target_statement_id: sha256:b5d95561d550841dbada48a11ff89a5caa94ba048876e37b8ae47a48681cb52d
+receipts:
+  unresolved_subitems: []

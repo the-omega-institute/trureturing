@@ -1,0 +1,30 @@
+**Proposition 89.3 (the ambient extension is false).** Take
+$u=\langle\langle\beta,\beta\rangle,
+\langle\beta,\beta\rangle\rangle$ and perform Definition 89.1's
+beta constructions. There is a nonzero rational $h_*$ such that
+
+$$
+Bh_*=0,\qquad Ch_*=0,\qquad h_*\notin\operatorname{im}E.
+\tag{89.4}
+$$
+
+**Proof.** Give the two old branch children $L,R$ values $1,-1$,
+respectively. Give every other old coordinate value zero. For each
+original beta owner $p\in\{LL,LR,RL,RR\}$, put
+$(h_*)_{pR}=-(h_*)_{\operatorname{parent}(p)}$ at its first fresh
+right leaf. Put zero at every other fresh cell, including all selected
+$pLR$ sensors. The original root's neighbor sum is $1-1=0$.
+At each old beta owner its parent value cancels its fresh $pR$.
+At each old branch, old marker, other fresh chain cell and either kind
+of fresh leaf, every remaining neighbor value is zero. Thus all rows
+of $Bh_*$ vanish, while $h_*$ is nonzero and has nonzero fresh
+coordinates. This proves (89.4). $\square$
+
+In particular $O$ need not observe an arbitrary grown field, and its
+transpose need not control that whole space. Indeed
+$h_*^{\mathsf T}B^jC^{\mathsf T}=0$ for every $j$, so Adds at
+these sensors cannot change its nonzero pairing with $h_*$. Starting
+from zero, such controls cannot reach $h_*$. The actual fresh-zero
+entrance in Theorem 89.2 is therefore essential. Failure on this
+ambient field is not a physical or universal impossibility claim.
+

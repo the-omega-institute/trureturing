@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6480c9621e837f19587f32216f3511acd00fbbb7c2a6e24c1fd3d9e2995580fa
+  normalized_sha256: sha256:6480c9621e837f19587f32216f3511acd00fbbb7c2a6e24c1fd3d9e2995580fa
+cas_ref: sha256:6480c9621e837f19587f32216f3511acd00fbbb7c2a6e24c1fd3d9e2995580fa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第二波交付预算、open 出口和归属目录的说明；没有新的数学关系。
+    previous_atom_id: 59f8b606660a2ac644c376dd285acee4cd9731050c3887ee7308f908100327f2
+    next_atom_id: null

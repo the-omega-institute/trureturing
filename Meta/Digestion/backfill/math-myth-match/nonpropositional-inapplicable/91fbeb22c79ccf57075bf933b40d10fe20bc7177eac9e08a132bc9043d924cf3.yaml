@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:91fbeb22c79ccf57075bf933b40d10fe20bc7177eac9e08a132bc9043d924cf3
+  normalized_sha256: sha256:91fbeb22c79ccf57075bf933b40d10fe20bc7177eac9e08a132bc9043d924cf3
+cas_ref: sha256:91fbeb22c79ccf57075bf933b40d10fe20bc7177eac9e08a132bc9043d924cf3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 提出不将空实体化的解释要求，未声称一个依赖图证明中观全部主张。
+    previous_atom_id: 9d0adf16b952f8ae450621749ea796ab739a7741fb4074cc7f8db81371d33c84
+    next_atom_id: 2ddb16abc7418b433395492b5d929dd25bb4c01521035f2fe55a24d9c9705094

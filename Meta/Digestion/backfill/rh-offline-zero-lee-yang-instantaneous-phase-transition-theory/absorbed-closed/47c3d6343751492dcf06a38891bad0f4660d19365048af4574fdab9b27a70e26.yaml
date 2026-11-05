@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:47c3d6343751492dcf06a38891bad0f4660d19365048af4574fdab9b27a70e26
+  normalized_sha256: sha256:47c3d6343751492dcf06a38891bad0f4660d19365048af4574fdab9b27a70e26
+cas_ref: sha256:47c3d6343751492dcf06a38891bad0f4660d19365048af4574fdab9b27a70e26
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/InformationEscape/StructuralNovelty.lowersEscape_iff_strict_kernel_novelty
+    target_statement_id: sha256:23ba11b1106407c098fa40e7c3f9c47373f23567e1ca6fe870db4aaf29805293
+  - gid: D5/S3/Observer/Hankel/HankelMinimalStateDimension.hankel_rank_lower_bound_and_quotient_attainment
+    target_statement_id: sha256:3bf3edc7cffca5a26dc0503062be36d21686e914f87c447a80102f9ae902af68
+  - gid: D5/S3/Observer/Hankel/HankelRankMinimality.hankel_rank_eq_reachable_dim_sub_inter_unobservable_dim
+    target_statement_id: sha256:23e81ebed4979a12da467ef27ccc49268d069e89fbc33d1a7de2d16780467152
+receipts:
+  unresolved_subitems: []

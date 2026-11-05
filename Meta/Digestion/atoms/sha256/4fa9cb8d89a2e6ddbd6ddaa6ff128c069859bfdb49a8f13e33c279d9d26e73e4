@@ -1,0 +1,42 @@
+#### 定理 5.3（算子闭路展开）
+
+在形式幂级数意义及足够小的 $|u|$ 上，
+
+<a id="eq-tracezeta"></a>
+
+$$
+\begin{aligned}\mathcal Z_T(u)
+&:=\det(I-uT)^{-1}
+=\exp\left(\sum_{n\ge1}\frac{u^n}{n}\operatorname{Tr} T^n\right), \tag{9}\end{aligned}
+$$
+
+<a id="eq-operatoreuler"></a>
+
+$$
+\begin{aligned}\mathcal Z_T(u)
+&=\prod_{[c] {\rm primitive}}
+\det(I_m-w_cu^{\ell(c)}U_c)^{-1}. \tag{10}\end{aligned}
+$$
+
+**证明。**
+
+对矩阵对数的收敛级数取迹，得到
+$-\log\det(I-uT)=\sum_{n\ge1}u^n\operatorname{Tr}(T^n)/n$。
+$\operatorname{Tr}(T^n)$ 展开成全部长度 $n$ 的带起点闭路的内部迹。
+每条闭路唯一为本原闭路 $c$ 的 $k$ 次重复，$n=k\ell(c)$；
+$c^k$ 有 $\ell(c)$ 个不同的循环起点贡献，消去分母中的 $\ell(c)$，留下
+
+$$
+\sum_{k\ge1}\frac{(w_cu^{\ell(c)})^k}{k}\operatorname{Tr}(U_c^k).
+$$
+
+循环移动起点不改变迹。上式正是
+$-\log\det(I_m-w_cu^{\ell(c)}U_c)$。
+有限图每个固定次数只有有限多条路径，形式重排合法；足够小的 $u$ 下绝对收敛给出解析恒等式。
+
+∎
+
+这是有限型动力系统的经典闭轨方法 [8](#ref-bowenlanford) 的块算子版本与直接证明。它赋予“参数里面还是门”一个严格含义，但不会自动证明全局 $T$ 酉：不同入边之间仍须满足 v18 的交叉列相容条件。
+
+<a id="statement-5-4"></a>
+

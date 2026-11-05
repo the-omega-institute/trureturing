@@ -1,0 +1,10 @@
+**Theorem 38.3 (every-source lower horizon).** Let a protocol in the interface of Definition 36.1 be uniformly correct on all promised finite paths when it certifies source length or the full impulse law. For each individual $N$-cell source it cannot issue such an exact certificate at a completed cut with fewer than $2N$ source Ticks. The statement allows arbitrary finite adaptive rational Add pulses, Read and Hold calls and arbitrary local computation. It is a tick lower bound, not a minimum number of Read calls or a total-cost optimum.
+
+**Proof.** Fix that source and the single extension of Lemma 38.1. For every $t<2N$ the two systems have the same moments through index $t$. Lemma 38.2 gives equal literal root outputs for the same command prefix, including a post-Add root output if declared. Fixed acknowledgements are equal as well. Inductively an adaptive protocol has identical observed histories, selects identical next inputs and commands, and makes the same stopping decision on both sources until the $2N$th Tick. Computation duration or physical size cannot distinguish them in the declared interface.
+
+A certificate of the actual length $N$ is wrong on the extension, whose length is $N+1$. A certificate of the old full impulse law is wrong there by the strict difference at index $2N$. Uniform exact correctness therefore excludes early certification on the original source. This argument fixes the original source first; it is not merely a worst-case pair at each order.
+
+For a zero-error randomized protocol, use a common random tape. Histories agree up to this horizon on every tape. A positive-probability early certification event on the first source is consequently a positive-probability error event on the fixed extension. Thus the same lower bound holds almost surely for any uniformly zero-error protocol. $\square$
+
+Theorem 37.2 attains this horizon without Add. Its $2N+1$ scalar-output count is attained, not asserted minimal among all protocols. The extra cell is an indistinguishability witness, not a physical operation the observer must perform or an input right the observer acquires.
+

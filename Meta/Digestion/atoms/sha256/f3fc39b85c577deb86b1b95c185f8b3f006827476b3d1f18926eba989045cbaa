@@ -1,0 +1,60 @@
+### 定义 20.1（全实线循环格号与有限切换树）
+
+置
+$$
+ h=2\delta,\qquad n=\left\lceil\frac{\varepsilon}{\delta}\right\rceil+1
+ \ge2,\qquad \Lambda=\{0,\ldots,n-1\}.
+\tag{20.1}
+$$
+
+对每个整数 $m\in\mathbb Z$，令
+$$
+ J_m=(hm,h(m+1)],\qquad c_m=h(m+\tfrac12).
+\tag{20.2}
+$$
+
+这些格互不交且覆盖整条实线。对任意实报告 $u$，记
+$m(u)=\lceil u/h\rceil-1$，故 $u\in J_{m(u)}$；令
+$\lambda(u)$ 为 $m(u)$ 除以 $n$ 后在 $\Lambda$ 中的唯一余数。
+每份报告恰有一个格号及一个循环标号，包括零、负值和所有格端点，并有
+$$
+ |c_{m(u)}-u|\le\delta.
+\tag{20.3}
+$$
+
+以下为此格划分的初等性质。对任意位置 $a\in\mathbb R$，置
+$$
+ W(a)=[a-\varepsilon,a+\varepsilon],\qquad
+ \mathcal J(a)=\{m:J_m\cap W(a)\ne\varnothing\}.
+\tag{20.4}
+$$
+
+余数映射在 $\mathcal J(a)$ 上单射。事实上，若 $m'>m$ 且
+$m'\equiv m\pmod n$，则 $m'-m\ge n$。任取
+$u'\in J_{m'}$、$u\in J_m$，
+$$
+ u'-u>h(m'-m-1)\ge h(n-1)
+       =2\delta\left\lceil\frac{\varepsilon}{\delta}\right\rceil
+       \ge2\varepsilon.
+\tag{20.5}
+$$
+
+它们不能同属宽度 $2\varepsilon$ 的闭区间 $W(a)$。
+这里的严格大于来自高格的开左端点，故即使最后一个不等式取等号，
+两个闭窗口端点也不产生重号。这证明单射及 $|\mathcal J(a)|\le n$，
+没有限制 $a$ 的位置。
+
+定义一类只以循环标号决定首次 $L_0$ 位置的协议。首次 $L_0$ 前，
+取得纯 $N$ 原始报告 $u_0,\ldots,u_q$ 后，若 $q\le k-2$，
+预定有限树在标号前缀
+$(\lambda(u_0),\ldots,\lambda(u_q))$ 上选择立即 $L_0$，
+或执行一次 $N$ 后进入子树；在 $q=k-1$ 强制执行首次 $L_0$，
+不按 $u_{k-1}$ 填表。树在切换后的子节点剪去。
+
+切换后执行定义 12.1 的规范补全，末端当且仅当引理 13.2 的
+容限 $\varepsilon$ 严格正系统 (13.5) 无解时输出 $2$，否则停止不作断言。
+末端使用全部实际原始报告，始终不把它们换成格心。
+特别地，$q=k-1$ 时只补读 $b_0^{(q)},\ldots,b_{k-2}^{(q)}$；
+$b_{k-1}^{(k-1)}=a_{k-1}$ 共享原旧报告 $u_{k-1}$。
+没有区间外退出规则，因为标号函数在所有实数上均已定义。
+

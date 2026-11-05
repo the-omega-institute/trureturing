@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6fe617f3828ab1fbe0fe51df5f6285b9f87866e149190284c50ffe15c9ce82fe
+  normalized_sha256: sha256:6fe617f3828ab1fbe0fe51df5f6285b9f87866e149190284c50ffe15c9ce82fe
+cas_ref: sha256:6fe617f3828ab1fbe0fe51df5f6285b9f87866e149190284c50ffe15c9ce82fe
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 库萨信仰、救赎、圣礼和礼仪容忍范围的文本说明。
+    previous_atom_id: 29402e313e7a763e0e45b1dd5241c7f918e5c9f8b794ac0f1a16cf453f368626
+    next_atom_id: a54c218af9049cff6c32a2d9c9bdebc9a0c4129ce3a20c5ed7f78b4d0429f02a

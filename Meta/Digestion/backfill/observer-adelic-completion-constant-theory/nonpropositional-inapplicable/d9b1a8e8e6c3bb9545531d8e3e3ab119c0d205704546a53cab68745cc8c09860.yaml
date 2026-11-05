@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d9b1a8e8e6c3bb9545531d8e3e3ab119c0d205704546a53cab68745cc8c09860
+  normalized_sha256: sha256:d9b1a8e8e6c3bb9545531d8e3e3ab119c0d205704546a53cab68745cc8c09860
+cas_ref: sha256:d9b1a8e8e6c3bb9545531d8e3e3ab119c0d205704546a53cab68745cc8c09860
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 标题、说明引语和输入清单中的“素数”项；该片段不含整性、重建或因子化断言。
+    previous_atom_id: 242ceb561278baaa198e2b35b909280e6df7a7db207f5f591ac37e7e98f48cb7
+    next_atom_id: 74356ceaf95f7c10fcb8829e1f2aeb2f3f2c72e9872b2f225aff765b82604430

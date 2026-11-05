@@ -1,0 +1,123 @@
+**定理 73.2（K5 加活跃 $S_4$ 的代码域联合响应刚性）。** 在定义 73.1 的条件下，(73.2) 与 (73.3) 蕴含
+
+$$
+p_i(\xi)=|\xi_i|^2\qquad(i=1,2,3,4)
+\tag{73.4}
+$$
+
+对每个归一 $\xi\in\mathbb C^4$ 成立。结论只涉及代码内四个输出；它不蕴含 $P$ 在其余 $1020$ 个输出或整个可达扇区上是 Born 响应。证明只使用 Bob 的 $I$ 与 $K_5$ 两个终端设置；$K_4$ 仍是制备字母表中的地址，但不需要另加为终端设置。
+
+**证明。** 写 $\xi=(u,v)\in\mathbb C^2\oplus\mathbb C^2$，其中 $u=(\xi_1,\xi_2)$ 是 $b_1=0$ 行，$v=(\xi_3,\xi_4)$ 是 $b_1=1$ 行，并置
+
+$$
+F(\xi)=p_1(\xi)+p_2(\xi),\qquad q_i=|\xi_i|^2 .
+$$
+
+由 (70.3)，任意代码向量 $J\xi$ 都有定义 70.1 的有限字列 $\psi_{W_n}$ 以整体相位收敛到它。连续性、(73.1) 以及 $K_5$ 的酉性把 (73.2) 延伸为
+
+$$
+F(T\xi)=F(\xi),\qquad T=K_Q\oplus K_Q,
+\tag{73.5}
+$$
+
+其中 $K_Q$ 是 (70.4) 的实际原生二维块。这个极限保留完整的 $1024$ 个输出；没有丢弃码外振幅，也没有把剩余概率重新归一。支撑保持只在理想代码向量上使码外概率为零，故此处 $\sum_{i=1}^4p_i=1$。更具体地，令完整事件差为
+
+$$
+D(\psi)=\sum_{w:b_1=0}P_w(K_5\psi)-\sum_{w:b_1=0}P_w(\psi).
+$$
+
+若 $\Delta=D(J\xi)=F(T\xi)-F(\xi)\ne0$，连续性给出 $J\xi$ 的邻域，使 $|D(\psi)-\Delta|<|\Delta|/2$。因此该邻域内 $D(\psi)$ 与 $\Delta$ 同号，且 $|D(\psi)|>|\Delta|/2$。由全局相位不变性和 (70.3)，某个实际有限正向字 $W$ 落入此相位对齐的邻域，给出同号严格差值。这只使用 $P$ 的连续性，不使用未知响应的 Born 误差界。
+
+令 $X=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$，并令
+
+$$
+A=X\oplus I_2,\qquad B=I_2\oplus X .
+$$
+
+由 (73.3) 的换位 $(12)$、$(34)$，分别有 $F(A\xi)=F(\xi)$ 与 $F(B\xi)=F(\xi)$。把块对 $(g,h)$ 与 $g\oplus h$ 识别，取实际矩阵生成的闭群
+
+$$
+\mathcal H=\overline{\langle (K_Q,K_Q),(X,I_2),(I_2,X)\rangle}
+ \ \subseteq U(2)\times U(2).
+$$
+
+这里 $\det X=-1$，所以两个换位确实属于所写的 $U(2)$ 因子。$F$ 对每个生成元不变；在任意单位向量上代入其逆像，便得对逆的不变性；逐次应用及连续性给出对整个 $\mathcal H$ 的不变性。
+
+以下直接在该群内取得独立的行作用。记 $\sigma_x=X$、$\sigma_y=\left(\begin{smallmatrix}0&-i\\i&0\end{smallmatrix}\right)$、$\sigma_z=\operatorname{diag}(1,-1)$。由实际原生块 (70.4) 及 $\zeta^5=-1$、$\zeta^{10}=1$，
+
+$$
+\begin{aligned}
+E:=K_Q^5&=2Q-I_2=n_x\sigma_x+n_z\sigma_z,\\
+n_x&=2x^{3/2},\qquad n_z=2x-1,\qquad x=\varphi^{-1},\\
+n_x^2+n_z^2&=1,\qquad n_xn_z\ne0.
+\end{aligned}
+\tag{73.6}
+$$
+
+因此 $E^2=I_2$，$E$ 为酉反射且 $\det E=-1$。置 $C=EXEX=(EX)^2$。因为 $EX$ 酉且行列式为一，$C\in SU(2)$；并有精确群字
+
+$$
+T^5AT^{-5}A=C\oplus I_2,\qquad
+T^5BT^{-5}B=I_2\oplus C .
+$$
+
+这是同一 $T=K_Q\oplus K_Q$ 的五次幂与 (73.3) 所给代码坐标换位的组合，没有单独把任何一行的 $X$ 换成 $iX$。令
+
+$$
+N_1=\{g\in SU(2):g\oplus I_2\in\mathcal H\}.
+$$
+
+它是闭子群，且含有 $C$。由 $EX=n_xI_2+i n_z\sigma_y$ 和 $x^2+x=1$，
+
+$$
+\begin{aligned}
+C&=(n_x^2-n_z^2)I_2+2i n_xn_z\sigma_y,\\
+\operatorname{tr}C&=4n_x^2-2=16x^3-2=32x-18=16\sqrt5-34.
+\end{aligned}
+$$
+
+该迹的代数共轭为 $-16\sqrt5-34<-2$。v15 引理 4.1 因而给出 $C$ 无限阶；其两个本征值的本征轴由上式及 $n_xn_z\ne0$ 确定，所以
+
+$$
+\overline{\langle C\rangle}
+ =\{\exp(it\sigma_y):t\in\mathbb R\}\subseteq N_1 .
+$$
+
+用 $T\in\mathcal H$ 共轭第一行的这个圆，仍在 $N_1$ 中。设 $\alpha=3\pi/5$；从 $K_Q=\zeta[I+(\zeta-1)Q]$ 直接相乘得到
+
+$$
+K_Q\sigma_yK_Q^*
+ =\cos\alpha\,\sigma_y
+   +\sin\alpha\,(n_z\sigma_x-n_x\sigma_z).
+$$
+
+因为 $\sin\alpha\ne0$ 且 $n_x^2+n_z^2=1$，$i\sigma_y$ 与 $iK_Q\sigma_yK_Q^*$ 在 $\mathfrak{su}(2)$ 中实线性无关。v15 引理 4.2 遂给出 $N_1=SU(2)$：这两个圆的生成元及其非零交换子张成 $\mathfrak{su}(2)$。对第二个精确群字使用相同论证，得到 $N_2=\{g\in SU(2):I_2\oplus g\in\mathcal H\}=SU(2)$；两个块作用相乘，故 $SU(2)\times SU(2)\subseteq\mathcal H$。
+
+因此 $F$ 在两行上分别具有独立的 $SU(2)$ 不变性。具体地，对单位列 $h=(h_0,h_1)^T$，矩阵 $U_h=\left(\begin{smallmatrix}h_0&-\overline h_1\\h_1&\overline h_0\end{smallmatrix}\right)\in SU(2)$ 把 $(1,0)^T$ 送到 $h$；这证明每个固定范数的复二维球面上传递，包括两向量只差相位的情形。零行无需选择方向。于是定义连续函数 $f:[0,1]\to[0,1]$ 为 $f(t)=F(\sqrt t,0,\sqrt{1-t},0)$，支撑保持及归一化给出
+
+$$
+F(\xi)=f(q_1+q_2),\qquad f(0)=0,\quad f(1)=1 .
+\tag{73.7}
+$$
+
+最后用 (73.3) 把同一式传到任意二元子集：对任意不同的 $i,j$，
+
+$$
+p_i(\xi)+p_j(\xi)=f(q_i+q_j).
+\tag{73.8}
+$$
+
+取 $\xi=(\sqrt a,\sqrt b,\sqrt{1-a-b},0)$，其中 $a,b\ge0$ 且 $a+b\le1$。支撑保持给出 $p_4=0$，所以 (73.8) 的子集 $\{1,4\}$、$\{2,4\}$ 和 $\{1,2\}$ 分别给出
+
+$$
+ p_1=f(a),\qquad p_2=f(b),\qquad f(a+b)=f(a)+f(b).
+\tag{73.9}
+$$
+
+非负性使 $f$ 单调；有理等分给出 $f(m/n)=m/n$，连续性再给 $f(t)=t$。于是所有二元和为 $q_i+q_j$，并对互异的 $i,j,k$ 有
+
+$$
+2p_i=(p_i+p_j)+(p_i+p_k)-(p_j+p_k)=2q_i .
+$$
+这就得到 (73.4)，也包括零坐标和单位端点。证毕。
+

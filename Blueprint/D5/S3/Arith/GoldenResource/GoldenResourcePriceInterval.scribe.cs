@@ -13,6 +13,20 @@ internal sealed class GoldenResourcePriceIntervalDocument : IScribeDocumentDefin
             + "the worst adopted layer characterizes existence of a common optimal price.",
         H("Golden Resource Price Interval"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("golden-resource-layer-marginal-positivity"),
+                DeclarationHandle.Create(Prefix + "marginal_pos"),
+                H("Positive prime-layer marginals"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every prime p and natural layer a at least one, goldenLayerMarginal p a is positive. "
+                    + "The original inverse-power and logarithm proof is retained at this owner. "
+                    + "It supplies the two-adic seed in ActualGlobalBracketing.two_adic_seed and "
+                    + "ActualGlobalBracketing.all_integer_bracketing, as well as this owner's "
+                    + "golden_upper_price_attained and golden_upper_price_pos. "
+                    + "This is reuse of existing mathematics through public visibility, not new escape content."))),
+                DescribeRole.Lemma),
             Entry("goldenUpperPrice", "golden-resource-upper-price", "Upper layer price",
                 UpperDefinition(), DescribeRole.Definition,
                 "L(n) is the real supremum of the set of next-layer marginals over all primes, "

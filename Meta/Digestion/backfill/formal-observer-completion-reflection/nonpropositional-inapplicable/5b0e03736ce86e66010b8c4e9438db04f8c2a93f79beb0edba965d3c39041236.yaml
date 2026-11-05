@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5b0e03736ce86e66010b8c4e9438db04f8c2a93f79beb0edba965d3c39041236
+  normalized_sha256: sha256:5b0e03736ce86e66010b8c4e9438db04f8c2a93f79beb0edba965d3c39041236
+cas_ref: sha256:5b0e03736ce86e66010b8c4e9438db04f8c2a93f79beb0edba965d3c39041236
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: “可测”是结构化恢复映射要求列表的一个形容词片段，没有存在性主张。'
+    previous_atom_id: 83e2ec2cdd659c39a53230ab22ff0e2df19a796f5a9ebddea0b84c3c21794937
+    next_atom_id: 004a1082ab34a4fb3ff08a7e743b41dff1a84ed7104c677bba1bed9cfb030634

@@ -1,0 +1,13 @@
+**定义 3.4（有限精度的局部预算）。** 固定已检查关系域 $D\subset V$ 及 $\varepsilon\ge0$，若对每个 $x\in D$ 有 $0\le\delta_3(x)\le\varepsilon^2$，则本桥使用的误差界为
+
+$$
+\|x-P_3x\|\le\varepsilon,
+$$
+
+$$
+0\le d(x,y)^2-\|P_3x-P_3y\|^2\le4\varepsilon^2
+\qquad(x,y\in D).
+$$
+
+证明。正交分解给第一式。差 $x-y=(P_3x-P_3y)+(x_\perp-y_\perp)$ 的两项正交，所以平方距离损失恰为 $\|x_\perp-y_\perp\|^2$。三角不等式使其至多 $(\varepsilon+\varepsilon)^2$。此界可以达到：取 $x=\varepsilon e_4,y=-\varepsilon e_4$。任意正 $\varepsilon$ 都允许第四方向，故误差预算不是精确秩三的证据。
+

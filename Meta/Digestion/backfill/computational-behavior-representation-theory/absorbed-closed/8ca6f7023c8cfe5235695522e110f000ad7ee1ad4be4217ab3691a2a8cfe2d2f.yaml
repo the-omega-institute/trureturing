@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:8ca6f7023c8cfe5235695522e110f000ad7ee1ad4be4217ab3691a2a8cfe2d2f
+  normalized_sha256: sha256:8ca6f7023c8cfe5235695522e110f000ad7ee1ad4be4217ab3691a2a8cfe2d2f
+cas_ref: sha256:8ca6f7023c8cfe5235695522e110f000ad7ee1ad4be4217ab3691a2a8cfe2d2f
+coverage_gids:
+  - gid: D5/S3/Observer/Hankel/WordHankelRealization.MatrixRealization
+    target_statement_id: sha256:f655d845edc223d482bbf42873170d1752af83d5d002004e6d830cf607f27c1f
+  - gid: D5/S3/Observer/Hankel/WordHankelRealization.finite_hankel_realization
+    target_statement_id: sha256:436bd37b348153ec4b2122a0f7739bd8a50ca85db461b65cd63090ef7c7d24a0
+  - gid: D5/S3/Observer/Hankel/WordHankelRealization.residual
+    target_statement_id: sha256:34616c830297442b6d4a90d484038157769bc031c6b8d2c7c893ef4cf4f44449
+  - gid: D5/S3/Observer/Hankel/WordHankelRealization.residualSpace
+    target_statement_id: sha256:dce2015be1aa7a1d0413a065a7c689a2acb4356cff18c9ccd7dbd668c7f9484c
+  - gid: D5/S3/Observer/Hankel/WordHankelRealization.wordProduct
+    target_statement_id: sha256:7a47b76c542f577286f93bb83795f895b666b1f0506d7c9c4a1c0888133a08f4
+receipts:
+  unresolved_subitems: []

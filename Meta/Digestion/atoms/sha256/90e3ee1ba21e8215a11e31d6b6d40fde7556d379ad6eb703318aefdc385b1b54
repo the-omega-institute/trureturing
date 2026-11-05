@@ -1,0 +1,10 @@
+### 14.1 去掉读出保持：所有内容可以被一起抹平
+
+取任意忠实 $\tau=I_2/2$ 和
+$\mathcal S=\operatorname{span}_{\mathbb R}\{I,X,Z\}$，令
+$R(\rho)=\tau\operatorname{Tr}\rho$。
+这是 CPTP 映射，固定 $\tau$，也把所有同读数态送到同一输出。
+但 $X$ 的正负纯态原有读数 $\pm1$ 都被变成零。
+此时 $E$ 的像仅为 $\mathbb C I$，严格小于所声明的可见空间。
+因此同读数融合不能替代已经可见内容的保持。
+

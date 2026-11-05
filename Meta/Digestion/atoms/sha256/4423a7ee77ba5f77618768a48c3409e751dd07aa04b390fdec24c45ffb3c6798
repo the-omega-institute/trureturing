@@ -1,0 +1,32 @@
+## 4. Silence-conditioned future law and finite banks
+
+For a source-mode request write $W_\varepsilon(dv,dc,dq)$ for the primitive future wait, type and point kernel, and for killed mode write $K_\delta(p;dv,dc,dq)$ for the corresponding kernel. If the current age is $a$, define the silence-conditioned kernels
+
+$$
+W_\varepsilon^{>a}(dv,dc,dq)=
+\frac{1_{v>a}W_\varepsilon(dv,dc,dq)}{W_\varepsilon(v>a)},
+$$
+
+$$
+K_\delta^{>a}(p;dv,dc,dq)=
+\frac{1_{v>a}K_\delta(p;dv,dc,dq)}{K_\delta(p;v>a)}.
+$$
+
+The denominators are positive on realized histories.
+
+**(C4) Theorem 4.1 (future-law memory).** For every finite future marked-release experiment under the fixed service, its conditional law after time $T$ factors through $A_T$. In source mode use $W_\varepsilon^{>a}$; in killed mode use $K_\delta^{>a}(p;\cdot)$; subtract $a$ from the next wait and update the tuple after each arrival. Thus the routes
+
+$$
+H_T\longrightarrow A_T\longrightarrow\text{future law}
+\quad\text{and}\quad
+H_T\longrightarrow\text{future law}
+$$
+
+agree. The tuple does not reconstruct the old archive, the realized future, or $Z_T$ at a deterministic cut.
+
+**Proof.** Apply the strong Markov property at the genuine last indexed release $R_n$. The observed silence is exactly the event that the next primitive wait exceeds the current age. Conditional probability therefore restricts and normalizes the primitive kernel as displayed. At an arrival, set the point to the disclosed $P_i$, set the mode to its type, and reset age to zero; between arrivals increase age with the original clock. Iteration gives every finite future marked law. Since the construction uses the actual common source and service kernel, it is a law factorization rather than an installed numerical evaluator. ∎
+
+**(C5) Theorem 4.2 (finite common-path bank).** Suppose $J<\infty$ fixed-scale copies of the service are explicitly installed on the same actual path $Z$. The full joint acquired prefix through any fixed deterministic $T>0$ still has an $m$-absolutely-continuous posterior for $Z_T$.
+
+**Proof.** Merge the finitely many genuine stopping lists and coalesce ties. The merged list is locally finite and has no deterministic arrival by Lemma 2.2. Conditional on the full source past at the $n$th merged release, the remaining positive horizon has a density by Lemma 2.1. Restricting this joint future law to all-channel nonarrival through $T$ preserves domination by the past law times $m$. Measurable disintegration over the actual joint prefix and summation over $n$ gives the result. The argument permits dependent timers and overlapping services; separate marginal samplers on separate paths do not establish it. ∎
+

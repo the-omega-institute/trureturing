@@ -1,0 +1,10 @@
+**Open problem 8.3 (Thresholds and changing budgets).** Determine
+least sufficient source thresholds or least refined periods for
+the exact allocation relation, and uniform estimates when $a,h,N$
+grow together. Determine the extremum when the sink count is
+also allowed to vary. Theorems 6.4--8.2 keep $a,h$ fixed in
+Definition 1.1; their finite allocation sizes, comparison bounds
+and thresholds can depend on these integers. They do not exchange
+that quantifier order, and they make no extremal assertion for
+graphs outside the prescribed bipartite orientation and budgets.
+

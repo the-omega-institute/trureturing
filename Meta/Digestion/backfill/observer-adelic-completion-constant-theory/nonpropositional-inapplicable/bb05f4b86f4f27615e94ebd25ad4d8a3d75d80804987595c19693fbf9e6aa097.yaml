@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bb05f4b86f4f27615e94ebd25ad4d8a3d75d80804987595c19693fbf9e6aa097
+  normalized_sha256: sha256:bb05f4b86f4f27615e94ebd25ad4d8a3d75d80804987595c19693fbf9e6aa097
+cas_ref: sha256:bb05f4b86f4f27615e94ebd25ad4d8a3d75d80804987595c19693fbf9e6aa097
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 规定测量量并明确以问号提出严格单调性的实验问题，没有断言该不等式成立。
+    previous_atom_id: fb908e9fb9bba39e53f977f0cb6eee431ab517b45382b23166d4aa1312565241
+    next_atom_id: 91562075bf476a4bfd136eef3eee4fa75d5aa216f3106390811f01697aecce80

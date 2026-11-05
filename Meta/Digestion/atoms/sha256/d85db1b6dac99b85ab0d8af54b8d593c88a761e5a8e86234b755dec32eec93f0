@@ -1,0 +1,9 @@
+**Definition 8.2 (odd trial pruning).** For a finite actual tree $y$ and
+$j\ge1$, form $F_j^o(y)$ from the root: a reached node $p$ is a branch
+exactly when $P_y(pR^jLL)=1$; only on that answer schedule its two
+children. Otherwise record a terminal dot. Let $a_j^o(y)=\ell(F_j^o(y))$.
+A positive test implies an actual branch at $p$, so every scheduled node
+exists. Recursion descends proper actual subtrees and terminates. This
+is a paid test-defined pruning, with no guessed labels or inverse-image
+promise at an incorrect trial $j$.
+

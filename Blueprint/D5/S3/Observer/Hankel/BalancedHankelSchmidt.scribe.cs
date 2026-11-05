@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.Hankel;
 
@@ -8,6 +10,11 @@ internal sealed class BalancedHankelSchmidtDocument : IScribeDocumentDefinition
         "Balanced actual Gramians yield the complete Schmidt decomposition of the true infinite Hankel operator.",
         H("BalancedHankelSchmidt"),
         Blocks(
+            Describe.Lean(DescribeId.Create("inverse-root-diagonal"),
+                DeclarationHandle.Create("D5/S3/Observer/Hankel/BalancedHankelSchmidt.invRootDiagonal"),
+                H("The inverse square-root diagonal"),
+                StatementSource.FromAuthor(Disp(InverseRootFormula())), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The diagonal consists of the reciprocals of the nonnegative real square roots of the weights."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("normalizedfuture"),
                 DeclarationHandle.Create("D5/S3/Observer/Hankel/BalancedHankelSchmidt.normalizedFuture"), H("normalized Future"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
@@ -61,4 +68,24 @@ internal sealed class BalancedHankelSchmidtDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("End-to-end identification from the original system: constructs actual Gramians and coordinates, proves orthonormal modes, full expansion, kernel characterization and Gramian-product characteristic polynomial. The finite singular multiset is not assumed sorted."))), DescribeRole.Theorem)),
         [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Observer/Hankel/InfiniteHankelGramian")), DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Observer/Hankel/BalancedRealizationTransport")), DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Observer/LinearMemory/HankelGramianSingularValues"))]));
+    private static Formula Call(string name, params Formula[] args)
+    {
+        var symbol = Seq(Operatorname, Grp(Seq(name.Split('.').SelectMany((part, i) => i == 0
+            ? new[] { F.Id(part) } : new[] { Dot, F.Id(part) }).ToArray())));
+        return args.Length == 0 ? symbol : new Formula.Apply(symbol, [.. args]);
+    }
+    private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
+    private static Formula InverseRootFormula()
+    {
+        var v = F.Id("V"); var w = F.Id("w"); var i = F.Id("i");
+        var real = Seq(Mathbb, Grp(F.Id("R")));
+        var body = new Formula.Relation(Call("invRootDiagonal", w), FormulaRelationOperator.Equal,
+            Call("Matrix.diagonal", Seq(Call("fun"), Sp,
+                Parenthesized(Seq(i, Sp, Colon, Sp, v)), Sp, Mapsto, Sp,
+                Call("Inv.inv", Call("Real.sqrt", new Formula.Apply(w, [i]))))));
+        return Seq(Forall, Sp, Parenthesized(Seq(v, Sp, Colon, Sp, F.Id("Type"))), Comma, Sp,
+            OpenBracket, Call("DecidableEq", v), CloseBracket, Sp,
+            Forall, Sp, Parenthesized(Seq(w, Sp, Colon, Sp, v, Sp, To, Sp, real)), Comma, Sp, body);
+    }
+
 }

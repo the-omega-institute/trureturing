@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:878a99cc00d5a02a2899cfe5fa78ed7b0b3cfb05a52fa6e4818b623990be55bd
+  normalized_sha256: sha256:878a99cc00d5a02a2899cfe5fa78ed7b0b3cfb05a52fa6e4818b623990be55bd
+cas_ref: sha256:878a99cc00d5a02a2899cfe5fa78ed7b0b3cfb05a52fa6e4818b623990be55bd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 状态标记 D 的编辑定义，并未提出具体待证命题。
+    previous_atom_id: 30cff45310b72f9d13170d8605027153b8dad6ddc8e5dd99134fc8e8b0d6649f
+    next_atom_id: 5a9af76b2132a2f62c0625251f2251ba6125e783fdfec3357f2f2b0b1a9c3440

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c34c87e6c143cde6ebb94bad6c4e7961028ba2813232f5787f721d67a95f2c02
+  normalized_sha256: sha256:c34c87e6c143cde6ebb94bad6c4e7961028ba2813232f5787f721d67a95f2c02
+cas_ref: sha256:c34c87e6c143cde6ebb94bad6c4e7961028ba2813232f5787f721d67a95f2c02
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 把预算 dual 变量 theta 命名为“影子价格”的术语解释；本条没有导数或 supergradient 定理。
+    previous_atom_id: ba749425e6927ed52f904d93610c33688214a3f9e22a5d8768b3fe9d33db0ae5
+    next_atom_id: e0f1cbb838cb90013f1a97d10bd9945ad0f1aa92aebe894912cccfa8ac1dc3b6

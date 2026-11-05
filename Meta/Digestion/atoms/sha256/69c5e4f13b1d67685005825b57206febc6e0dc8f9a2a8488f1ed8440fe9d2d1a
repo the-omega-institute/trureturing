@@ -1,0 +1,153 @@
+**Theorem 15.2 (positive entrance and all returning-excursion cylinders).**
+There is a unique sigma-finite returning mark measure $\mathbf n$,
+with no mass on duration zero, whose complete killed cylinders are,
+for $0<t_1<\cdots<t_j$ and bounded nonnegative Borel $f_i$ on $M$,
+
+$$
+\begin{aligned}
+ &\mathbf n\left[\mathbf1_{\{\zeta>t_j\}}
+                     \prod_{i=1}^j f_i(\omega(t_i))\right]\\
+ &\quad=\int_M q_{t_1}(p)
+   \left[M_{f_1}P^0_{t_2-t_1}M_{f_2}\cdots
+                    P^0_{t_j-t_{j-1}}M_{f_j}1\right](p)\,m(dp).
+\end{aligned}
+\tag{15.3}
+$$
+
+Here $M_f$ is multiplication by $f$; for $j=1$ the right side
+is $\int q_{t_1}f_1\,dm$, with no transition factor.
+Every $q_t$ is nonnegative, is not zero, and has finite mass
+$\kappa(t)>0$. It is an entrance law in the measure sense:
+
+$$
+\begin{gathered}
+ (q_t m)P_s^0=q_{t+s}m,\qquad
+ \int_0^\infty q_t\,dt=1,\qquad
+ \int_0^\infty e^{-\lambda t}q_t\,dt
+     =1-\lambda R_\lambda^0 1=b_\lambda,\\
+ \mathbf n(\zeta>t)=\kappa(t),\qquad
+ \mathbf n(\zeta\in dt)
+       =\left(\int_{(0,\infty)}s^2e^{-ts}\nu(ds)\right)dt.
+\end{gathered}
+\tag{15.4}
+$$
+
+The integral of $q_t$ without discount is a strong improper $L^2(m)$
+integral. For nonnegative Borel tests the corresponding measure
+identity holds by Tonelli. With
+$d_\lambda=\langle h,h-\lambda(F+\lambda)^{-1}h\rangle$, the exact
+normalizations are
+
+$$
+\begin{gathered}
+ \mathbf n[\zeta]=1,\qquad \mathbf n(\mathcal W)=\infty,\\
+ \mathbf n[1-e^{-\lambda\zeta}]
+    =\lambda\int_0^\infty e^{-\lambda t}\kappa(t)\,dt
+    =\lambda d_\lambda=:\varphi(\lambda),\\
+ \varphi(\lambda)=\operatorname{Cap}_\lambda(\{e\}),\qquad
+ \varphi'(0+)=1.
+\end{gathered}
+\tag{15.5}
+$$
+
+All cylinders are for the same original $F,h,m$ and original duration;
+no duration rescaling or change of source condition occurs.
+
+**Proof.** First, $P_t^0 1=h^{-1}e^{-tF}h$ is the supplied killed
+survival in [S, (116.9)]. It decreases with $t$ and is between zero
+and one. Spectral calculus makes it differentiable in $L^2(m)$
+for every $t>0$, with derivative $-q_t$. Difference quotients and
+closedness of the positive cone show $q_t\ge0$. Moreover,
+
+$$
+ \|q_t\|_{L^2(m)}\le\sup_{s\ge0}s e^{-ts}<\infty,
+ \qquad \int q_t\,dm=\langle h,Fe^{-tF}h\rangle=\kappa(t)>0.
+\tag{15.6}
+$$
+
+The strict last inequality follows from the probability normalization
+and absence of spectral mass at zero. Thus $q_t m$ is a positive
+finite entrance measure, rather than a signed formal inverse Laplace
+transform. Selfadjointness gives
+$P_s^0q_t=q_{t+s}$; integrating against Borel tests proves the first
+identity of (15.4). Strong continuity for $t>0$ supplies a jointly
+measurable density version, for instance by step approximations in
+$t$ and an almost-everywhere convergent subsequence in product
+measure on compact positive-time intervals.
+
+For $0<\epsilon<R$, spectral integration gives
+
+$$
+ \int_\epsilon^R q_t\,dt
+       =J_h^{-1}(e^{-\epsilon F}-e^{-RF})h.
+\tag{15.7}
+$$
+
+As $\epsilon\downarrow0$, $R\uparrow\infty$, the right side tends
+strongly to $1$, since $\ker F=\{0\}$. Positivity proves the
+measure identity as well. Its discounted counterpart has spectral
+multiplier $s/(s+\lambda)$ and is exactly $b_\lambda$.
+
+Here is the primary excursion result used to obtain a continuous
+returning mark measure, as opposed to just formal cylinder numbers.
+Fukushima--Tanaka, *Poisson point processes attached to symmetric
+diffusions*, Ann. IHP Probab. Statist. 41 (2005), 419--459,
+[DOI 10.1016/j.anihpb.2004.10.004, §3.1, Theorem 3.1 and
+(3.4)--(3.12)](https://www.numdam.org/item/AIHPB_2005__41_3_419_0.pdf),
+identifies the recurrent-point excursion entrance law with the unique
+entrance law integrating to $m$. Its uniqueness assertion is Lemma
+2.2(i); its complete cylinder assertion is (3.12). Its hypotheses
+are checked here with their $S=G$, distinguished point $a=e$,
+$S_0=M$, speed measure $m=h^2\mu$, real form
+$(\mathscr E,\mathscr V)$, and absorbed process $P_t^0$ of (15.1).
+The space is locally compact, separable and metrizable; $e$ is
+non-isolated; $m$ is full-support Radon and $m(\{e\})=0$.
+Regularity and strong locality are [S, Theorem 115.3]. Their B.2
+holds with their hitting function $\phi=1$ quasi-everywhere by
+[S, (116.10)]. Their B.3 holds with
+$1\in\mathscr V$, $\mathscr E[1]=0$. The source is legitimate,
+regular, recurrent and instantaneous by [S, Theorems 116.3--116.4].
+The absorbed process is the part on $M$, with the entire domain
+in [S, (116.11)], not the two-zero-coefficient restriction of $K$.
+Their $u_\lambda$ is our $b_\lambda$.
+These are precisely the hypotheses of the recurrent framework in
+§3.1. The one-point compactification example in §3.2 and the
+independent-extension assumptions A.1--A.4 of §4 are not invoked.
+
+Apply that theorem to the supplied full diffusion as an existence
+and normalization witness. Its excursion measure has entrance law
+integrating to $m$. Equation (15.7) and the entrance identity identify
+that law as $q_t m$, by the cited uniqueness. Hence (3.12) gives
+exactly (15.3) on continuous excursions returning to $e$. This proves
+existence with the stated path support; it is more than a scalar
+resolvent calculation. For uniqueness, restrict to
+$\{\zeta>1/k\}$, which has finite measure. Cylinders at rational
+times, with later survival tests and killed evaluations, determine
+both the duration and the continuous path, so determine this finite
+measure. The sets $\{\zeta>1/k\}$ exhaust $\mathcal W$.
+Consequently the explicitly given cylinders determine $\mathbf n$
+uniquely. This use of the full diffusion verifies existence of the
+mark law; it does not supply a sampled full trajectory to the new
+source.
+
+Take $f_1=1$ in (15.3). Then
+$\mathbf n(\zeta>t)=\kappa(t)$. Differentiation for $t>0$ is
+justified by boundedness of $s^2e^{-ts}$ on intervals bounded away
+from zero, giving the lifetime density in (15.4). Tonelli gives
+$\int_0^\infty\kappa(t)dt=\nu((0,\infty))=1$.
+There is no atom at infinite lifetime since $\kappa(t)\to0$ as
+$t\to\infty$.
+
+Finally $h\notin\mathcal Q_c$: otherwise
+$1=J_h^{-1}h\in\mathscr V_0$, contradicting its source trace one
+in [S, (116.3)]. The spectral characterization of the form domain
+of $F$ therefore gives
+$\int s\,\nu(ds)=\infty$. Monotone convergence shows
+$\kappa(t)\uparrow\infty$ as $t\downarrow0$. Thus
+$\mathbf n(\mathcal W)=\infty$. The discounted tail integral is
+$\int s/(s+\lambda)\nu(ds)=d_\lambda$ by [S, (116.17)].
+The capacity equality follows from [S, (116.4)], with its original
+energy normalization. Also $d_\lambda\to1$ as
+$\lambda\downarrow0$, which proves $\varphi'(0+)=1$.
+This proves every normalization in (15.5). $\square$
+

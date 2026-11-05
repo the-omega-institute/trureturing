@@ -1,0 +1,62 @@
+**Lemma 20.1.** If $P_5$ ranges in a bounded interval over the parent,
+then $d$ and all four coefficients of $g$ are uniformly bounded.
+
+**Proof.** Suppose instead that $|\epsilon|\to\infty$ along a
+sequence with bounded $P_5$. Take subsequences of $r\in[0,1]$ and
+$b\in[0,\infty]$.
+
+If $b\to\infty$, then $j,n\ge b$, $\Lambda\to1$ and
+$(24/5)(b-1/8)B_{\rm par}\to24$. Equation $F_{\rm par}=0$ forces
+$\epsilon\to-24$, a contradiction.
+
+If $b\to b_0\in(0,\infty)$, all source coefficients have finite
+limits. Equations (19.1) and (19.3) would force $\Lambda,A_5\to0$.
+The strict-source inequality in Definition 19.1 excludes an interior limiting $r$. At the endpoints their
+limits are
+$$
+\begin{array}{c|cc}
+r&\Lambda&A_5\\\hline
+0&2(b^3-8b-4)/(b(b+1)(2b+1))
+ &(12b^3+2b^2-75b-25)/(b(b+1))\\
+1&2(b^3-4b-2)/(b(b+1)(2b+1))
+ &2(6b^3+3b^2-23b-15)/(b(b+1)).
+\end{array}
+\tag{20.1}
+$$
+The resultants of these numerator pairs, including their displayed
+constant factors, are $-186152$ and $-8896$. Neither pair vanishes
+simultaneously.
+
+If $b\to0$, pass to a limit of $j$ in $[0,\infty]$. For
+$j\to\infty$, $n/j\to1$ and $\Lambda\to8$, forcing
+$\epsilon\to3/10$. For $j\to0$, $\Lambda\to-\infty$ and
+$\epsilon\to0$. For $j\to z\in(0,\infty)$,
+$r(1-r)=b(j-b)$ implies $r\to0$ or $1$. The limiting pairs are
+$$
+\begin{array}{c|cc}
+r&\Lambda&A_5\\\hline
+0&8(z-1)/z&(24z^2-25)/z\\
+1&4(2z^2-1)/(z(z+1))&2(12z^3+24z^2-8z-15)/(z(z+1)).
+\end{array}
+\tag{20.2}
+$$
+Their numerator resultants are $-64,14336$. Again simultaneous
+vanishing is impossible. These cases exhaust a hypothetical divergent
+drift sequence, so the drift is bounded.
+
+For gain coefficients, let $q$ be the quadratic interpolating
+$$
+q(0)=-d,\qquad q(2)=(147/5-d)/T,\qquad q(4)=(18-d)/U.
+$$
+Its coefficients are bounded because $T,U\ge1$. Write
+$g(s)=q(s)+\kappa s(s-2)(s-4)$. The equal odd readings give
+$jg(1)=ng(3)$, hence
+$$
+\kappa=\frac{nq(3)-jq(1)}{3(j+n)},\qquad
+|\kappa|\le\frac13\max(|q(1)|,|q(3)|).
+\tag{20.3}
+$$
+The strictly positive sum $j+n$ permits this estimate even along
+sequences where both odd traces vanish. Every coefficient of $g$ is
+therefore bounded. ∎
+

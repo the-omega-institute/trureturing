@@ -14,6 +14,49 @@ internal sealed class GoldenResource5040PriceIntervalDocument : IScribeDocumentD
         H("Golden Resource 5040 Price Interval"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("golden-resource-5040-target-exponents"),
+                DeclarationHandle.Create(Prefix + "targetExponent5040"),
+                H("The existing 5040 exponent profile"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The original exponent profile is exposed in place for the "
+                    + "boundary computation in ActualRobinInterval. It assigns 4, 2, 1 and 1 "
+                    + "to the primes 2, 3, 5 and 7, and zero elsewhere. Its body is unchanged."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("golden-resource-marginal-rational-lower-comparison"),
+                DeclarationHandle.Create(Prefix + "one_div_nat_lt_golden_layer_marginal"),
+                H("An existing rational lower comparison for a layer price"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a prime p, a positive layer and positive natural k, "
+                    + "the stated strict power comparison gives 1/k < goldenLayerMarginal p a. "
+                    + "The original logarithm proof is reused by the exact boundary computation; "
+                    + "public visibility does not add a new estimate."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
+                DescribeId.Create("golden-resource-marginal-rational-upper-comparison"),
+                DeclarationHandle.Create(Prefix + "golden_layer_marginal_lt_one_div_nat"),
+                H("An existing rational upper comparison for a layer price"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The opposite strict power comparison gives "
+                    + "goldenLayerMarginal p a < 1/k under the original prime, positive-layer "
+                    + "and positive-k hypotheses. The unchanged proof supplies the omitted-layer "
+                    + "comparisons in ActualRobinInterval's boundary computation."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
+                DescribeId.Create("golden-resource-5040-target-factorization"),
+                DeclarationHandle.Create(Prefix + "target_exponent_eq_factorization_5040"),
+                H("The existing target profile is the actual factorization"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The original proof identifies targetExponent5040 p "
+                    + "with the factorization of 5040 at every natural p. It remains at this "
+                    + "owner and is reused directly by the original optimizer boundary proof. "
+                    + "Only its visibility has changed."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
                 DescribeId.Create("golden-prime-local-original-strict-threshold-maximum"),
                 DeclarationHandle.Create(Prefix + "golden_prime_local_objective_unique_maximal_of_strict_threshold"),
                 H("Original generic strict-threshold uniqueness"),

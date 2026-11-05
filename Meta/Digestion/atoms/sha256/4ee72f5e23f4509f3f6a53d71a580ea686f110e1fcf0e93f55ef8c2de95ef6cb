@@ -1,0 +1,81 @@
+## 103. 定理 102.1 的秩九饱和与一个全域运输
+
+证明（有限载体部分）。用 $\delta_i$ 表示 $\mathbb R^9$ 的列标准基，定义
+
+$$
+\begin{aligned}
+R:\mathbb R^9\to Q,&\quad R\delta_i=r_i,\\
+L:Q\to\mathbb R^9,&\quad (LX)_m=\ell_m(X),\\
+P:\mathbb R^9\to V,&\quad P\delta_i=x_i,\\
+M:V\to\mathbb R^9,&\quad (Mx)_m=m_m(x).
+\end{aligned}
+\tag{103.1}
+$$
+
+这里 $P$ 是列映射，不是原终端投影；$S$ 专指即将构造的 $V\to Q$。
+目标的基列和泛函基使 $R,L$ 均为同构。
+(101.4)–(101.6) 的实际因子分解为
+
+$$
+\begin{gathered}
+H=LR=MP,\\
+H^0=LA_0R=MB_0P,\qquad
+H^1=LA_1R=MB_1P,\\
+H^N=LA_NR=MB_NP.
+\end{gathered}
+\tag{103.2}
+$$
+
+四块共同使用同一个 $M$ 和同一个 $P$。
+首先 $H$ 可逆、秩为九，而
+
+$$
+9=\operatorname{rank}(MP)\le\dim_{\mathbb R}V\le9.
+\tag{103.3}
+$$
+
+故 $\dim_{\mathbb R}V=9$。
+$\operatorname{rank}P\ge9$ 与 $\operatorname{rank}M\ge9$，
+两者源域和目标域均九维，所以 $P$ 和 $M$ 分别都是同构。
+这同时证明已到达的九个 $x_i$ 张成全部 $V$，及九个读出分离全部 $V$。
+没有在合同中预置可达性、可观察性或竞争者的任何 Hilbert 结构。
+
+定义唯一候选运输
+
+$$
+S=RP^{-1}:V\longrightarrow Q.
+\tag{103.4}
+$$
+
+由 $MP=LR$ 得
+
+$$
+M=LRP^{-1}=LS.
+\tag{103.5}
+$$
+
+对于每个 $a=0,1,N$，插入块给
+
+$$
+LSB_aP=MB_aP=LA_aR=LA_aSP.
+\tag{103.6}
+$$
+
+消去左边可逆 $L$ 和右边可逆 $P$，即有
+
+$$
+SB_a=A_aS\quad\text{在整个 }V\text{ 上成立}.
+\tag{103.7}
+$$
+
+$M=LS$ 的第零行给 $u=\operatorname{Tr}\circ S$；
+第一是行因 $h_1=\varnothing$ 给 $e(x)=\operatorname{Tr}(ESx)$ 对所有 $x$。
+$p_1=\varnothing$ 给 $x_1=s_0$、$r_1=\rho_0$，所以 $Ss_0=\rho_0$。
+至此 (102.1) 除锥等式外的每个恒等式均由同一个 $S$ 给出。
+此时尚未证明 $S(K)=\mathrm{PSD}_3$，也未假设 $S$ 或其逆正。
+
+§93 的相似方法在已知复三维竞争者上有其原应用；
+这里 (103.3) 把同样的有限因子分解用于任意实 $V$，
+通过维数上限取得完整载体的两个同构。
+它不调用 §94 的完整 CP 逆或 §96 的 Wigner 论证。
+

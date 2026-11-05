@@ -1,0 +1,12 @@
+**Proposition 22.2 (positive weighted moments are not native impulse data).** Even on the positive-history class, normalizing the first response by $y_0$ and applying native moment decoding need not recover the original native law.
+
+Proof. For any admitted $N\ge2$, let the actual producer execute Add$(1)$; Tick from zero. Then $p(z)=z$ and $y_j=m_j+m_{j+1}$. Since $m_1=a_0$ and $m_2=a_0^2+b_0^2$, the first diagonal coefficient obtained from normalized weighted moments is
+
+$$
+\frac{y_1}{y_0}-a_0
+=\frac{m_2-m_1^2}{1+m_1}
+=\frac{b_0^2}{1+a_0}>0.
+$$
+
+It differs from the actual root diagonal. The first response has full order and a valid positive measure, but that measure has reweighted the native root spectrum. The second pulse in Theorem 19.1 removes this unknown weight by (UFS.46) before native decoding. Its schedule is sufficient, without an assertion that two pulses are necessary for every alternative protocol. $\square$
+

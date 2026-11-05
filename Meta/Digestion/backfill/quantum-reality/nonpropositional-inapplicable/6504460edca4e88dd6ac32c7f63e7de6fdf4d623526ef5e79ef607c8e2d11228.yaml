@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6504460edca4e88dd6ac32c7f63e7de6fdf4d623526ef5e79ef607c8e2d11228
+  normalized_sha256: sha256:6504460edca4e88dd6ac32c7f63e7de6fdf4d623526ef5e79ef607c8e2d11228
+cas_ref: sha256:6504460edca4e88dd6ac32c7f63e7de6fdf4d623526ef5e79ef607c8e2d11228
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅报告原作者的33项有限检查、脚本来源与未进行 Lean 检查的范围；本收据不认证检查结果或其所指一般定理。
+    previous_atom_id: ef558bf342536f0b99bbac831f9b3bf2d46b7cfa6d0fdfe900f0bef055df4ac2
+    next_atom_id: a8a84f954990a7c23845502d4edc770e78d17ae2071dc3afe1ed0683e56344b1

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d016051fa0397c2c1af4ab9864c8ae36b48bb82a069aec54e2044e670fa9a450
+  normalized_sha256: sha256:d016051fa0397c2c1af4ab9864c8ae36b48bb82a069aec54e2044e670fa9a450
+cas_ref: sha256:d016051fa0397c2c1af4ab9864c8ae36b48bb82a069aec54e2044e670fa9a450
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅列 OPUC/Verblunsky 待建接口并建议新增模块，是实现计划。
+    previous_atom_id: 69dccc77ed5a96ede22358e35bf2842c3b3a3d18898858ed046c0478be331ad7
+    next_atom_id: c6e758530a51f0de4163ec79b14607cacb43ed8f86d722b286da5679db313084

@@ -1,0 +1,53 @@
+**Theorem 42.3 (All canonical degrees and their edge-conditioned counts).**
+For $1\le j\le k-1$ put
+
+$$
+\begin{aligned}
+T_q(x,y)&=\mathbf1_{x+y\le q},\qquad 0\le x,y\le q,\\
+A_{k,j}&=(T_{2j-2}^{2k})_{j-1,j-1},\\
+\mu^e_{k,b,j}&=A_{k,j}^{b}-(A_{k,j}-1)^b.
+\end{aligned}
+\tag{42.5}
+$$
+
+The canonical module has exactly $\mu^e_{k,b,j}$ minimal
+generators in degree $2j+1$ and no generators in other degrees.
+In particular
+
+$$
+\operatorname{type}R^e_{k,b}
+=\sum_{j=1}^{k-1}\bigl(A_{k,j}^{b}-(A_{k,j}-1)^b\bigr).
+\tag{42.6}
+$$
+
+Proof. Consider a local interior with boundary $(2j+1,j,j)$.
+The edge sums are at most $2j$. Summing all cyclic edge
+bounds gives $\sum_i c_i\le(2k+1)j$, and
+
+$$
+(2k+1)j\le k(2j+1)-1\qquad(j\le k-1).
+\tag{42.7}
+$$
+
+Thus the strict total inequality is automatic. Subtract one
+from each coordinate. The new coordinates are nonnegative,
+adjacent sums are at most $2j-2$, and both endpoints are
+$j-1$. The shared edge already satisfies this bound with
+equality. The other route from $b_0$ to $a$ has exactly $2k$
+edges and $2k-1$ private vertices. Expanding its transfer
+product counts these labelled coordinate vectors once each,
+giving $A_{k,j}$ in (42.5). For $j=1$, $T_0=[1]$, so
+$A_{k,1}=1$ with the usual one-state matrix convention.
+
+At this boundary the $b$ local choices are independent and
+give exactly one global exponent by (41.2), hence $A_{k,j}^b$
+tuples. Exactly one local choice is $\nu_j$. The tuples with
+none of these entries number $(A_{k,j}-1)^b$. Theorem 42.2
+removes precisely them from the basic set, proving the degree
+count. Distinct $j$ have distinct degrees. The minimal number
+of canonical generators of a Cohen–Macaulay ring is its type,
+giving (42.6). At $b=1$ each difference is one, recovering
+the single-cycle type $k-1$. At $k=2$ there is only $j=1$,
+so every $b\ge1$ has type one and the global interior is
+exactly $(3;\mathbf1_V)+\mathcal S^e_{2,b}$. $\square$
+

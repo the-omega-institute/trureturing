@@ -27,9 +27,14 @@ jobs:
         with:
           ref: ${{ inputs.ref || 'dev' }}
           persist-credentials: false
+      - name: Read the pinned .NET SDK version
+        id: dotnet-sdk
+        run: |
+          version="$(jq -er '.sdk.version' global.json)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
       - uses: actions/setup-dotnet@v5
         with:
-          global-json-file: global.json
+          dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
       - name: Publish the exact content digest
         env:
           GH_TOKEN: ${{ github.token }}

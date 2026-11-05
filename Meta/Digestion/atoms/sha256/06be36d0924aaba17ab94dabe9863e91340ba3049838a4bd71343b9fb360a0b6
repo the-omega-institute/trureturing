@@ -1,0 +1,86 @@
+**Theorem 123.1 (Two horizontal rescalings for every anchor).**
+For the fixed source of Definition 122.1 define the explicit positive
+constants
+
+$$
+\begin{gathered}
+\ell_{\mathfrak s}=1/\sqrt5,\qquad U_{\mathfrak s}=1,\\
+k_{\mathfrak s}=\frac1{C(J_\tau+3)},\qquad
+K_{\mathfrak s}=\frac{B_\tau}{c}+k_{\mathfrak s},\\
+E_{\mathfrak s}=\min\{1,c,1/k_{\mathfrak s}\}.
+\end{gathered}
+\tag{123.1}
+$$
+
+Uniformly over every $\|h_0\|\le1$ and every
+$0<\varepsilon\le E_{\mathfrak s}$, the two original moduli satisfy
+
+$$
+\boxed{
+\ell_{\mathfrak s}R(k_{\mathfrak s}\varepsilon;A,\eta)
+ \le\omega^{\rm all}_{\mathfrak s,h_0}(\varepsilon)
+ \le\omega_{\mathfrak s,h_0}(\varepsilon)
+ \le U_{\mathfrak s}R(K_{\mathfrak s}\varepsilon;A,\eta).
+}
+\tag{123.2}
+$$
+
+In particular, the constants and the positive error range do not depend
+on the anchor, its imaginary axial component, its distance from the
+sphere, or the sign of its real axial component.
+
+*Proof.* For every feasible alternative for the finite modulus,
+(122.4) gives $Q\le D_0\le\varepsilon/c$.
+Lemma 122.3 implies $q_{A,\eta}(\|h-h_0\|)\le B_\tau\varepsilon/c$.
+Since $\|h-h_0\|\le2$, the definition of $R$ and its monotonicity
+in its first argument prove the last inequality of (123.2).
+Inclusion of the full-law constraint in the finite constraint proves
+the middle inequality.
+
+For the first inequality put $\delta=k_{\mathfrak s}\varepsilon$
+and $r=R(\delta;A,\eta)$. Here $0<\delta\le1$ and
+$q_{A,\eta}(r)\le\delta$. Choose $h_r$ from Lemma 122.4 and the
+strictly nonzero retention $\gamma_r=\delta$. Its modulus is at most
+one. Since both vectors are in the ball, (122.3) and (122.15) give
+
+$$
+D_0(\gamma_r,h_r;h_0)
+ \le J_\tau\delta+3\delta,
+\qquad
+d_a(\gamma_r,h_r;h_0)
+ \le C(J_\tau+3)\delta=\varepsilon.
+\tag{123.3}
+$$
+
+Its displacement is at least $r/\sqrt5$, as required.
+This also applies when $q_{A,\eta}(r)=0$, including a reflected
+zero-law alternative, because $\gamma_r$ remains strictly positive.
+
+To realise these witnesses by full interactions, use Theorem 106.3
+for each of the two vectors $z=h_0,h_r$. Explicitly, choose a unit
+$a_\perp\in R^\perp\subset H$ and put
+$\kappa_z=Bz+\sqrt{1-\|z\|^2}\,a_\perp$. Then
+$\|\kappa_z\|=1$. A unitary $T_z:H\longrightarrow\mathcal M^\perp$
+with $T_z\kappa_z=\zeta$ gives the completion $\mathsf J_z$ in
+(106.2). That one completion serves emission, the forward return and
+every history in its hypothesis. The anchor uses retention zero and
+the alternative uses $\gamma_r$; the hypotheses may differ in their
+completion as allowed in Definition 114.1. At a sphere vector the
+square-root term is simply zero. Thus (123.3) is a bound for genuine
+full-completion laws with all their original masses, rather than a
+compression that requires an interior completion margin.
+
+The linear comparison (122.4) is reused from §118. Its
+orbit-pairing intermediate is D'Alessandro,
+[*On Quantum State Observability and Measurement*,
+arXiv:quant-ph/0307127v1, §2, Theorem 1](https://arxiv.org/pdf/quant-ph/0307127v1),
+which characterises one-step indistinguishability by trace pairings
+with the conjugation orbit, equivalently the observability space.
+The full-completion premise here is exactly §106. Abbott et al.,
+[*Communication Through Coherent Control of Quantum Channels*,
+arXiv:1810.09826v3, §§4–5, equation (5), and Appendix C](https://arxiv.org/pdf/1810.09826v3),
+describe implementation dependence through controlled-path
+transformation matrices, and the distinct implementation-independent
+full-switch case. Neither interface supplies a different return
+operation for the present witnesses. $\square$
+

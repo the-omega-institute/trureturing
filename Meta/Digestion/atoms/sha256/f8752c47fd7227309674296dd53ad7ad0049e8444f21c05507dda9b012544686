@@ -1,0 +1,4 @@
+For every $\varepsilon>0$, its single-scalar minimax risk over arbitrary ambient estimates is exactly $b_c/2$.
+
+* In $I_S$ it is not injective, as in Theorem 9.1.
+

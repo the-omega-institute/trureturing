@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c1aab7f5d964524b69eb209a9a104c24726991749a1c97d20382a0d5e03899db
+  normalized_sha256: sha256:c1aab7f5d964524b69eb209a9a104c24726991749a1c97d20382a0d5e03899db
+cas_ref: sha256:c1aab7f5d964524b69eb209a9a104c24726991749a1c97d20382a0d5e03899db
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 将凸几何、统计几何与量子几何按研究用途分类，提醒不能任意替代，不给新的量化关系。
+    previous_atom_id: 7b48748f35a1d8d624ad7fd8a4cf79e5ea589eefca7d5f9d4a4e52127f2986e2
+    next_atom_id: af9e48b7ae7e91d56e0768411b66408724cf7271b86d39cabc21227431d417d0

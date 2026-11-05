@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2b55139da76d8e9d6165a4a10e6ea8e00424a4603a8589456aa181ee4661ff0d
+  normalized_sha256: sha256:2b55139da76d8e9d6165a4a10e6ea8e00424a4603a8589456aa181ee4661ff0d
+cas_ref: sha256:2b55139da76d8e9d6165a4a10e6ea8e00424a4603a8589456aa181ee4661ff0d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条引入新符号 Leak，以合法源且像不合法的状态集合为定义；末句仅引出下一条合法性生成定义，不断言泄漏存在或为空。
+    previous_atom_id: 3eba14cb64c1476b8a0b54e788eff0a6e00a0e7542fa1aa00964e8683c70bd18
+    next_atom_id: bc0dec742ca41279a09f49525580bdf07e326c1e8ee5d95f1d80d7c96c94feb4

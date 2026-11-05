@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5bd1ac71f09893a0d0db71c6d947adba237889159a2a2b3c15a784f23444a7a3
+  normalized_sha256: sha256:5bd1ac71f09893a0d0db71c6d947adba237889159a2a2b3c15a784f23444a7a3
+cas_ref: sha256:5bd1ac71f09893a0d0db71c6d947adba237889159a2a2b3c15a784f23444a7a3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 状态准入、坐标准入和联合 CUT 的参数类型声明；拉回等式在下一条。
+    previous_atom_id: 15d9fe59e2accefbb4b8bb24a4190a3dd7dc6ea28615584cce9522367441a0d4
+    next_atom_id: 3fb8f0d7787229123adcb959b235184293edf38ff89a992ae167e16124e7cddb

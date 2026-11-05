@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8378ace47e6417a290c9d12f823155e6538ea6167ad191af2700ce24b99adbf6
+  normalized_sha256: sha256:8378ace47e6417a290c9d12f823155e6538ea6167ad191af2700ce24b99adbf6
+cas_ref: sha256:8378ace47e6417a290c9d12f823155e6538ea6167ad191af2700ce24b99adbf6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只给 W、Hδ± 及沿用量的定义；未断言任何宽度极限、弦估计或 RH 等价。
+    previous_atom_id: 2c20275fbc638ebfe53db01538f79db598bfc137b4deb1a55f9a31c739eec7b2
+    next_atom_id: b5bc37d71903b75a4475c6b3d57d956c1e16b2697022f5a270dcb27c3ea5304f

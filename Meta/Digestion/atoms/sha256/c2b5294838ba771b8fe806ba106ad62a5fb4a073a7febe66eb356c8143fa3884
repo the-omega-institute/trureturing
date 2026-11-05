@@ -1,0 +1,15 @@
+**Definition 6.2 (a retained predictor and its installation).** Immediately after (CL.17), issue one actual Hold and keep the source held while decoding and installing the record. This adds one fixed acknowledgement. Let
+
+$$
+z_*=T_0^2e_{\ell_1}
+=\frac14e_{\ell_1}+\epsilon e_c+
+\epsilon^2\Bigl(\sum_j e_{\ell_j}+e_d\Bigr).
+\tag{CL.20}
+$$
+
+Retain the earned $(C,S)$, the common template $T_0$ and a current vector $z$, initialized as $z_*$. The predictor is a finite description of future responses in template coordinates. It stores no arbitrary command journal. Its native interpretation is $x=Qz$.
+
+Here the family template, zero calibration, unit pulse and prescribed command schedule are supplied. The scalar $y$ is actually acquired. The pair $(C,S)$ is decoded from that scalar, while $z_*$ is computed from the public template and the actual known pulse/Tick sequence. Its native interpretation $Qz_*$ uses the earned parameter; no hidden native field value was initially supplied.
+
+Keep separately the actual same-source handle, leaf and interior read rights, leaf input rights, Reset and Hold control, serial access and storage backing. None is encoded by the two rational parameters. Native law and field outputs can be produced as $QT_0Q^{\mathsf T}$ and $Qz$. A literal native coefficient list or redundant native field copy, if retained, is an additional store.
+

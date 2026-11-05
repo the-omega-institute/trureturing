@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4280aea3edfe99a03e37769886cb370b9a6ea1f2880ce0f5be3954d8b766d10f
+  normalized_sha256: sha256:4280aea3edfe99a03e37769886cb370b9a6ea1f2880ce0f5be3954d8b766d10f
+cas_ref: sha256:4280aea3edfe99a03e37769886cb370b9a6ea1f2880ce0f5be3954d8b766d10f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 平方命名不定义未命名本体的方法论说明，无数学断言。
+    previous_atom_id: e1bbb53d55d31f1272363d64ca1d6a703ba5eeff0dd339e0fbf0ee086b006619
+    next_atom_id: 45fd384a28a3a5eecc610d283182f953e08a3a07b243fa2216cf001e1ac3146e

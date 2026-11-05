@@ -18,6 +18,9 @@ internal sealed class ConstrainedHarmonicOptimizerDocument : IScribeDocumentDefi
             Describe.Lean(DescribeId.Create("objective"), DeclarationHandle.Create(Prefix + "objective"),
                 H("The complete original unordered-edge objective"), StatementSource.FromAuthor(ObjectiveFormula()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Phi_n(p) sums h(p_b,p_c) over exactly the native unordered edgeFinset of legalWordGraph n on EdgeCount.Legal n. Every legal Hamming-one edge is included. This includes the zero word, both open-path endpoints and edges between consecutive blocks in any block notation. The existing deletion-edge bijection reindexes this same sum by the occupied upper word and its true position."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("adjacency"), DeclarationHandle.Create(Prefix + "adj_iff"),
+                H("Native adjacency changes exactly one position"), StatementSource.FromAuthor(AdjacencyFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Two legal words are adjacent exactly when they differ at one position and agree at every other position. This characterization includes length zero."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("epsilon-simplex"), DeclarationHandle.Create(Prefix + "epsilonSimplex"),
                 H("The entire normalized positive simplex"), StatementSource.FromAuthor(SimplexFormula()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("C_epsilon consists of every real vector with p_b>=epsilon at every original legal word and sum_b p_b=1. Insertion inequalities are not constraints defining this set. It is nonempty when epsilon<=1/M, where M is the number of original legal words, including equality and its uniform vector."))), DescribeRole.Definition),
@@ -108,6 +111,16 @@ internal sealed class ConstrainedHarmonicOptimizerDocument : IScribeDocumentDefi
             Call("harmonic", At(p, a), At(p, b)))))), e);
         Formula sum = Seq(new Formula.Subscript(Sum, Mem(e, Call("edgeFinset", Call("legalWordGraph", n)))), Sp, edgeTerm);
         return Disp(All("n", Nat(), All("p", Vector(n), Equal(Call("objective", n, p), sum))));
+    }
+
+    private static Formula AdjacencyFormula()
+    {
+        Formula n = F.Id("n"), a = F.Id("a"), b = F.Id("b"), i = F.Id("i"), j = F.Id("j");
+        Formula differs = Rel(At(Call("val", a), i), FormulaRelationOperator.NotEqual, At(Call("val", b), i));
+        Formula agrees = All("j", Call("Fin", n), Imp(Rel(j, FormulaRelationOperator.NotEqual, i),
+            Equal(At(Call("val", a), j), At(Call("val", b), j))));
+        return Disp(All("n", Nat(), All("a", Legal(n), All("b", Legal(n),
+            Iff(Adj(n, a, b), Ex("i", Call("Fin", n), And(differs, agrees)))))));
     }
 
     private static Formula SimplexFormula()

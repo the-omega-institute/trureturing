@@ -55,6 +55,9 @@ internal sealed class PrimitiveLiftRootCriterionDocument : IScribeDocumentDefini
         Item("coordinates","All phases and all group coordinates",Atlas(
             Call("Equiv",Param,I("X"))),
             "The equivalence sends (q,z) to point(q.val,z), with q in Fin d. Injectivity uses the exact return relation and the strict phase bounds. Surjectivity reduces any integer t by Euclidean division, replacing z with z*g^(t/d). This includes negative times and every group coordinate.",DescribeRole.Definition),
+        Item("time_injective","Time is injective",Atlas(
+            Call("Injective",Call("time",I("A")))),
+            "Equality of the time images of point(t,z) and point(s,w) gives t+1=s+1+d*m and z*g^m=w. Cancelling the added step recovers the original signed equality. Therefore the specified time map is injective on the full chart carrier.",DescribeRole.Theorem),
         Item("Equivariant","The specified left deck action",Atlas(Q(
             Equal(Call("Equivariant",I("A"),I("f")),Q(Equal(
                 App(I("f"),Call("deck",I("A"),I("a"),I("x"))),

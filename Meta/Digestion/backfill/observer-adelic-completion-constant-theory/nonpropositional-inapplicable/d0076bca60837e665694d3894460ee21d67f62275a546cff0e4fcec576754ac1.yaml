@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d0076bca60837e665694d3894460ee21d67f62275a546cff0e4fcec576754ac1
+  normalized_sha256: sha256:d0076bca60837e665694d3894460ee21d67f62275a546cff0e4fcec576754ac1
+cas_ref: sha256:d0076bca60837e665694d3894460ee21d67f62275a546cff0e4fcec576754ac1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 在 C_sel 依赖项列表中只列举 selector margin 的名称，没有给出依赖律或估计。'
+    previous_atom_id: 1692cb6e81e7b68730b797e1a891d0ac97f7a2437bf40745a693bb2cf37e766c
+    next_atom_id: d606c0020a0fbc73c0ee19ce17e5b9a7914840456117e2b2cfdd228796b7361c

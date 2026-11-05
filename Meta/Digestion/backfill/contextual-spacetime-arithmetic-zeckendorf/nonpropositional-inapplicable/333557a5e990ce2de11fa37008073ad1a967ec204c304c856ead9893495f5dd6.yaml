@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:333557a5e990ce2de11fa37008073ad1a967ec204c304c856ead9893495f5dd6
+  normalized_sha256: sha256:333557a5e990ce2de11fa37008073ad1a967ec204c304c856ead9893495f5dd6
+cas_ref: sha256:333557a5e990ce2de11fa37008073ad1a967ec204c304c856ead9893495f5dd6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definition 223 names classes of standard and general slot instructions in the terminal quotient. The basis and minimal generation assertions belong to Theorem 224.
+    previous_atom_id: 1792ddf885c15ac5474e71bfa82f60f02629a42a6e05ee171bb9da0f56ecfc68
+    next_atom_id: 25115cfd484aad3decf76626f25996086f5c4323a9099f575304b54fb89f98d6

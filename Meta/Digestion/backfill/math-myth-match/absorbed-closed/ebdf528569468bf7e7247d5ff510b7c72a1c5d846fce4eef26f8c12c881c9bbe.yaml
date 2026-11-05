@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:ebdf528569468bf7e7247d5ff510b7c72a1c5d846fce4eef26f8c12c881c9bbe
+  normalized_sha256: sha256:ebdf528569468bf7e7247d5ff510b7c72a1c5d846fce4eef26f8c12c881c9bbe
+cas_ref: sha256:ebdf528569468bf7e7247d5ff510b7c72a1c5d846fce4eef26f8c12c881c9bbe
+coverage_gids:
+  - gid: D5/S3/Entropy/Submodularity/MutualInformationChainRule.mutual_information_chain_rule
+    target_statement_id: sha256:d5f18c4773793ce2bfc6ab9bf4e086878a54db7c1a0770f52fc4bfdded8801d3
+  - gid: D5/S3/Entropy/Submodularity/MutualInformationChainRule.mutual_information_le_pair
+    target_statement_id: sha256:0d5fb4c8105fcaddb9633f600a22db05eb3baf3ba3ef1b1126722fe44af4a57c
+  - gid: D5/S3/Entropy/Submodularity/MutualInformationChainRule.mutual_information_pair_eq_iff_conditional_product
+    target_statement_id: sha256:0a574991a83b1fb010cc19930ae64bde4629426c161705c15c5c95d580c2dcb6
+receipts:
+  unresolved_subitems: []

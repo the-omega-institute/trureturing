@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c4a8de92dfdffe658bff3eb5c4a9fcb2c4814f3959304b56981ad503bf72e7b2
+  normalized_sha256: sha256:c4a8de92dfdffe658bff3eb5c4a9fcb2c4814f3959304b56981ad503bf72e7b2
+cas_ref: sha256:c4a8de92dfdffe658bff3eb5c4a9fcb2c4814f3959304b56981ad503bf72e7b2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 要求 Raw 与 Lawful 分离并禁止添加全模型公理的工程纪律；代码块是被禁止的示例。
+    previous_atom_id: 4cddcb1487d37882d95a32cf99ace58586f3f8cd00d9647ee67bf45d35aa9c51
+    next_atom_id: 916fed70a37e86c6ed8c7cceab1d344fc82f373fe1c4b02e32f91b9a36ab06f1

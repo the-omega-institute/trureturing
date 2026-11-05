@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:313dc1100214e0ab21dd2f51b8b00293ceb294e0b7ca04ef4762e55b641cd294
+  normalized_sha256: sha256:313dc1100214e0ab21dd2f51b8b00293ceb294e0b7ca04ef4762e55b641cd294
+cas_ref: sha256:313dc1100214e0ab21dd2f51b8b00293ceb294e0b7ca04ef4762e55b641cd294
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 扩散可靠性一行列空间频率、松弛尺度和初始失配等审计输入。
+    previous_atom_id: 5c74afd02a251020191d82e870e1b4f2457dd0cc6b436de26044dba8cdecef0b
+    next_atom_id: 2be13b56198987d45715721d71e074590a4d5dec4f13bf396ee0ddc312f3ab1f

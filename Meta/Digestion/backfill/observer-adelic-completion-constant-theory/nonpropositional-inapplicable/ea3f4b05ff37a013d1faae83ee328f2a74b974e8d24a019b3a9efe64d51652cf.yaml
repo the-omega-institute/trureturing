@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ea3f4b05ff37a013d1faae83ee328f2a74b974e8d24a019b3a9efe64d51652cf
+  normalized_sha256: sha256:ea3f4b05ff37a013d1faae83ee328f2a74b974e8d24a019b3a9efe64d51652cf
+cas_ref: sha256:ea3f4b05ff37a013d1faae83ee328f2a74b974e8d24a019b3a9efe64d51652cf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 具名待实例化定理的工作状态行，没有声称 RH 判据已经实例化。
+    previous_atom_id: 1bbb305c5abb4e6fee22fbc5a59e6ec4f6706bbf46ac30891f970847fb6e0b73
+    next_atom_id: 8b186dbf36c9ccea7fe217b75e6b2a04092aa8182bc173a35d93f6dcd420d2a8

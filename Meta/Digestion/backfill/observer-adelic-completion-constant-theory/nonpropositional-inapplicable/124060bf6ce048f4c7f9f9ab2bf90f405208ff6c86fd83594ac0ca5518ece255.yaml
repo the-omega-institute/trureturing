@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:124060bf6ce048f4c7f9f9ab2bf90f405208ff6c86fd83594ac0ca5518ece255
+  normalized_sha256: sha256:124060bf6ce048f4c7f9f9ab2bf90f405208ff6c86fd83594ac0ca5518ece255
+cas_ref: sha256:124060bf6ce048f4c7f9f9ab2bf90f405208ff6c86fd83594ac0ca5518ece255
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Names an elementary logarithmic integral as a proof ingredient; no value or convergence assertion.
+    previous_atom_id: e0cd17ea85289bcc16d88ecaaa22c951309e39d80d3a41dfb1e4f5ebd13000d9
+    next_atom_id: 70c50bee75b6dce62a3ab11ea92a7d76dc37598632e3ca0ed3cca6a4604d266f

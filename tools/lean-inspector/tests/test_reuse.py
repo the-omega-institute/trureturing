@@ -187,6 +187,22 @@ class ReuseTests(unittest.TestCase):
                 self.assertFalse(api.seed_format(self.report)['compatible'],
                                  '[FAIL] seed_format_requires_registered_toolchain_input')
 
+    def test_reader_git_bytes_change_provenance_without_invalidating_reuse(self):
+        adapter = 'tools/scripts/worktree/lean-git/git'
+        registered = json.loads((ROOT / 'lean-report-inputs.json').read_text())
+        self.policy['producer_scopes']['lean-report']['include'].extend(
+            entry for entry in registered['producer_scopes']['lean-report']['include']
+            if entry['pattern'] == adapter)
+        self.write(adapter, (ROOT / adapter).read_text())
+        self.write_policy()
+        api = self.receipt()
+        before = publication.production_origin(self.root, self.lake)
+        self.write(adapter, (self.root / adapter).read_text() + '\n# changed reader\n')
+        after = publication.production_origin(self.root, self.lake)
+        self.assertNotEqual(before['producer_sources_sha256'], after['producer_sources_sha256'])
+        self.assertEqual(before['inspector_executable_sha256'], after['inspector_executable_sha256'])
+        self.assertFalse(api.probe(self.root, self.report)['needs_lake'])
+
     def test_complete_seed_format_ignores_current_inputs_and_program_bytes(self):
         api = self.receipt()
         self.write('D5/A.lean', 'def a := 2\n')
@@ -755,11 +771,12 @@ class ReuseTests(unittest.TestCase):
                                  producer_stdout=None):
         # Exercise the actual shell entry and report receipt, replacing only the
         # external cache/build processes. No Lean compilation is needed here.
-        for relative in ('tools/lean-inspector/inspect.sh', 'tools/lean-inspector/reuse.py',
+        for relative in ('tools/lean-inspector/inspect.sh', 'tools/lean-inspector/native.py',
+                         'tools/lean-inspector/reuse.py',
                          'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
                          'tools/lean-inspector/fib_analysis.py',
                          'tools/lean-inspector/build_work.py', 'tools/scripts/lib/resource-observation-lib.sh',
-                         'tools/scripts/worktree/lean_cache_release.py',
+                         'tools/scripts/worktree/lean_cache_release.py', 'tools/scripts/worktree/lean_cache_topology.py',
                          'tools/scripts/worktree/lean_cache.py', 'tools/scripts/worktree/cache_material.py'):
             target = self.root / relative
             target.parent.mkdir(parents=True, exist_ok=True)

@@ -1,0 +1,19 @@
+**Proposition 49.2 (source calls and complete traffic on one run).** One attained route consists of the original acquisition, $L$ pulse actions, the observation window of Theorem 46.2, and the subsequent held local decoding. Before a later continuation, its exact totals are
+
+$$
+\begin{array}{c|c}
+\text{Source operation or output}&\text{Count}\\ \hline
+\mathrm{Tick}&2N+L+(N-1)=3N+L-1\\
+\mathrm{Add}&L\\
+\mathrm{Read}&1+L+1=L+2\\
+\text{Scalar root replies}&(2N+1)+2L+N=3N+1+2L\\
+\text{Add acknowledgements}&L.
+\end{array}
+$$
+
+One can use the $N+1$ acquisition Holds of Proposition 41.2 and one additional Hold after the observation window. Any further Holds, policy calls and copied outputs are charged separately. The pulse symbols are $L$ paid serialized input words even if subsequently discarded.
+
+Proof. Acquisition has one Read and $2N$ Ticks. Each pulse has one Tick, one Add and one Read; its Tick return and final Read are two scalar outputs. The final window has one Read and $N-1$ Ticks, giving $N$ scalar replies. Fixed acknowledgements are added rather than counted as scalars. No autonomous Tick occurs between these operations, so the source's actual state at the held decoding cut is exactly $T^{N-1}x_L$.
+
+For the direct two-buffer native multiplication of Proposition 41.2, multiply the Tick count by $3N-2$ source scalar multiplications and $2N-2$ additions. Add also performs its actual root addition. Literal bit traffic is the sum of the serialized lengths of every input, reply and acknowledgement, together with operation/control framing. Source preparation, acquired-class assurance, root binding, the installed Add right and all retained backing remain additional coexisting resources, as in Assumption 36.2. $\square$
+

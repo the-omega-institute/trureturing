@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e4d92fcf0f91a2575e42fa3f8a3d30af6337ea6f8f634a220a2b68813e98ce49
+  normalized_sha256: sha256:e4d92fcf0f91a2575e42fa3f8a3d30af6337ea6f8f634a220a2b68813e98ce49
+cas_ref: sha256:e4d92fcf0f91a2575e42fa3f8a3d30af6337ea6f8f634a220a2b68813e98ce49
+coverage_gids:
+  - gid: D5/S3/Analytic/EulerGerm/LocalFactorCriticalLineNonvanishing.germLocalFactor_critical_line_nonzero_of_five_le
+    target_statement_id: sha256:d14c1d68d03ad6d86a7c3b74c2df15a6a6b737ebe1ddc680576a3579b2bec1d5
+  - gid: D5/S3/Weil/TestFunctions/FourierLaplaceClosedStripDecay.fourierLaplace_decay_closedStrip
+    target_statement_id: sha256:473225adfba0dab300ff5f42d9276dd60c234937a4df9a6667ed2ab9cd4077db
+receipts:
+  unresolved_subitems: []

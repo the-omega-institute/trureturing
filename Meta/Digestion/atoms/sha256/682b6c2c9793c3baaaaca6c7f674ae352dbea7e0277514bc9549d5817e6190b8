@@ -1,0 +1,72 @@
+**定理 29.1（行递推子系统不供应复合词下界）。**令 $\mathcal T_0$ 是只施加双侧单位律的自由含幺 $U$-项代数，无外部来源变量。存在全域函数 $h_n:\mathcal T_0\to[0,2]$，对全部 $n,j\ge0$ 和全部 $s,t\in\mathcal T_0$ 满足
+
+$$
+\begin{aligned}
+h_n(1)&=h_n(U^j1)=1,\\
+h_{n+1}(Ut)&=h_n(t),\\
+\sum_{k=0}^2h_{n+k}(s\cdot U^kt)&=3h_n(t),
+\end{aligned}
+\tag{29.1}
+$$
+
+但 $z=(U1)\cdot(U1)$ 满足 $h_0(z)=0$。因此这些全项递推、非负有界性及精确单位轨道读数，并不蕴含对该 $z$ 的任意有限比较 $h_0(1)\le C_zh_0(z)$。这是所列行递推子系统的反例，不是完整 (R) 的核反模型。
+
+证明。令 $\omega=e^{2\pi i/3}$、$\Theta=\{\pm1,\pm\omega,\pm\omega^2\}$，取九个不同符号组成的辅助代数
+
+$$
+A=\{e,p,q\}\sqcup\{b_\zeta:\zeta\in\Theta\}.
+\tag{29.2}
+$$
+
+这里的 $q$ 是辅助对象标签，不是原函数 $q(x)$。定义一元运算
+
+$$
+U_0e=p,\quad U_0p=q,\quad U_0q=e,\qquad
+U_0b_\zeta=b_{\omega^2\zeta}.
+\tag{29.3}
+$$
+
+令 $e$ 是乘法 $\odot$ 的双侧单位，其余乘积由下列规则全部给定：
+
+$$
+\begin{aligned}
+a\odot b_\zeta&=b_\zeta&&(a\in A),\\
+b_\zeta\odot p=b_\zeta\odot q&=b_\zeta,\\
+a\odot p&=b_{-1}&&(a\in\{p,q\}),\\
+a\odot q&=b_{\omega^2}&&(a\in\{p,q\}).
+\end{aligned}
+\tag{29.4}
+$$
+
+单位规则与第一行在 $e\odot b_\zeta$ 一致。这是完整二元运算；例如 $(p\odot q)\odot p=b_{\omega^2}$，但 $p\odot(q\odot p)=b_{-1}$，所以没有把辅助代数预设为结合代数。
+
+定义 $\chi(e)=\chi(p)=\chi(q)=0$、$\chi(b_\zeta)=\zeta$。它满足
+
+$$
+\chi(U_0t)=\omega^2\chi(t),\qquad
+\sum_{k=0}^2\omega^k\chi(s\odot U_0^kt)=3\chi(t)
+\quad(s,t\in A).
+\tag{29.5}
+$$
+
+第一式由定义直接得到。第二式在 $t=b_\zeta$ 时，右吸收规则使第 $k$ 项为 $\omega^k\omega^{2k}\zeta=\zeta$。在 $t=e$ 时，待算的是 $\chi(s)+\omega\chi(s\odot p)+\omega^2\chi(s\odot q)$：$s=e$ 时为零；$s=p,q$ 时为 $-\omega+\omega^4=0$；$s=b_\zeta$ 时为 $(1+\omega+\omega^2)\zeta=0$。由于 $U_0^3=I$，$t=p,q$ 是这个三项和的循环移位，只多一个非零相位因子，仍为零。故 (29.5) 对所有对象成立。
+
+置
+
+$$
+H_n(t)=1+\operatorname{Re}(\omega^n\chi(t)).
+\tag{29.6}
+$$
+
+$|\chi(t)|\le1$ 给 $0\le H_n\le2$，而 (29.5) 给
+
+$$
+H_{n+1}(U_0t)=H_n(t),\qquad
+\sum_{k=0}^2H_{n+k}(s\odot U_0^kt)=3H_n(t).
+\tag{29.7}
+$$
+
+并且 $H_n(e)=H_n(p)=H_n(q)=1$，$H_0(p\odot p)=H_0(b_{-1})=0$。
+
+自由性给唯一的求值映射 $\pi:\mathcal T_0\to A$，满足 $\pi(1)=e$、$\pi(Us)=U_0\pi(s)$、$\pi(st)=\pi(s)\odot\pi(t)$。取 $h_n=H_n\circ\pi$，(29.7) 与单位轨道取值逐项提升为 (29.1)，指定括号词 $z$ 的像为 $b_{-1}$，得到零值。这个通用公式同时覆盖全部有限单位项与全部括号深度，不留下有限截断以后的延拓义务。若 $h_0(1)\le C_zh_0(z)$，便要求 $1\le0$，故任何有限 $C_z$ 都不成立。∎
+

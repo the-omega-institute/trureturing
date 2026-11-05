@@ -1,0 +1,44 @@
+**Definition 1.2 (native preparation and held boundary).** Write $p$ for
+the original native probability called $Z$ in [F], to distinguish it
+from the process. For every $0<p<1$ put $r=1-p$, $H_{\rm n}=r/2$;
+fix any $k_0\in(0,H_{\rm n})$, preparation phases $\alpha_0,\beta_0$
+and all original fixed rotations $\delta_{ij}$. Set
+
+$$
+\begin{gathered}
+c_0=\tfrac12-k_0/r,\quad
+\mathcal S=\{-k_0<x<H_{\rm n}-k_0\},\\
+\Psi(x,y,z,w)
+ =\bigl(k_0+x,[\alpha_0+y/2],
+                    [\beta_0+c_0y-w/r]\bigr).
+\end{gathered}
+\tag{1.3}
+$$
+
+The brackets mean reduction modulo $2\pi$. Identifying each real
+ordered pair with a complex number, the ten signed doubled outputs
+$\mathcal R(k,\alpha,\beta)$, in their original order, are
+
+$$
+\begin{aligned}
+Y_{01}&=2\sqrt{k(H_{\rm n}-k)}e^{i(\delta_{01}+\alpha)},&
+Y_{02}&=2\sqrt{pk}e^{i(\delta_{02}+\beta)},\\
+Y_{03}&=2\sqrt{k(H_{\rm n}-k)}e^{i(\delta_{03}+\alpha)},&
+Y_{1,13}&=2\sqrt{k(H_{\rm n}-k)}e^{i(\delta_{1,13}-\alpha)},\\
+Y_{3,13}&=2\sqrt{k(H_{\rm n}-k)}e^{i(\delta_{3,13}-\alpha)}.
+\end{aligned}
+\tag{1.4}
+$$
+
+For any $I=[l,u]\Subset(0,H_{\rm n})$ with $l<k_0<u$ define
+
+$$
+\theta_I=\inf\{t:k_0+x_t\notin(l,u)\},\qquad
+O_t^I=\mathcal R\Psi(\mathbf Z_{t\wedge\theta_I}).
+\tag{1.5}
+$$
+
+At exit the formula uses its continuous extension to $I$ and then
+holds. The source itself continues after $\theta_I$. This observation
+restriction changes neither the native open slab nor any command guard.
+

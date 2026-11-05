@@ -1,0 +1,4 @@
+## 5. Native topology and coefficient laws do not descend
+
+A native graph is compared up to permutations fixing every declared leaf. A native coefficient law is the full symmetric $T$, including its diagonal coefficients, under the same equivalence. The distinction between unweighted support and coefficient law is material.
+

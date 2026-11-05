@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dfc9c462bdb783040719144cc4e90f7f28eefab355c7767b0cc78a13f7d36a1e
+  normalized_sha256: sha256:dfc9c462bdb783040719144cc4e90f7f28eefab355c7767b0cc78a13f7d36a1e
+cas_ref: sha256:dfc9c462bdb783040719144cc4e90f7f28eefab355c7767b0cc78a13f7d36a1e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: C0.2 开放桥清单只列出 locally uniform 且有显式误差界的 approximation 这一需求，没有给出收敛断言。
+    previous_atom_id: 1f925f402b684030bc4018c222780e5008c630d93b3f37a897f7a19ed13f6190
+    next_atom_id: 03071a37afccf55cc7c0f96b79d2cccabda8df809b2b4c2d39dfab9732d4031d

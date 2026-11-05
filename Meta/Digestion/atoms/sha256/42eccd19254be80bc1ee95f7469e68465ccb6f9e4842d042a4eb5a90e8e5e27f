@@ -1,0 +1,24 @@
+**Definition 75.1 (installation and the two counted coordinates).** Supply both actual sources, their preparation and acquisition as in Definitions 69.1 and 73.1, with one serial controller and adequate finite material for the following fixed $k,R$ task. Keep their two references and original authorities; no source is manufactured by a numerical representation of the other. At each settled cut require the native source to be $t_U$, and put
+
+$$
+r(U)=\sum_{i\in U}2^i,\qquad
+n(U)=\left\lfloor\frac{r(U)}R\right\rfloor,\qquad
+s(U)=r(U)-Rn(U),
+\qquad
+M_* =\left\lfloor\frac{2^k-1}{R}\right\rfloor
+     =\left\lceil\frac{2^k}{R}\right\rceil-1.
+\tag{75.1}
+$$
+
+The required path field and sole varying selected auxiliary register are
+
+$$
+x_U=T^{2N+n(U)}b,
+\qquad s=s(U)\in\{0,\ldots,R-1\}.
+\tag{75.2}
+$$
+
+No $n$, rank, mask, current predictor, input journal, past outputs or selector count is retained as another selected register. Fixed code and context may contain $k,R,N,T$ and the earned origin. The scalar-origin and direct residue consumers of §§59–67 are suppliers for exactly this kind of finite arithmetic consumption; the following uses only their original passive-root specialization, Lemma 39.2. It claims no additional implementation of a clock.
+
+The recovery phase selects only the path root Read and the residue register. The native reference is used for the subsequent actual Select actuation; it is not queried to recover $U$. A native traversal, separate archived subset, hidden counter or surviving source-dependent allocator state would be an additional selected input and would change the claimed alphabet. A common fixed-capacity work arena, including fixed-format exact integer and rational buffers large enough for this finite task, is supplied and charged. All scratch, request/reply buffers and variable local state are cleared before each settled cut; its available capacity and allocation shape there are the same for every subset. This finite backing requirement is an explicit installation premise, not a consequence of the number of program instructions. The path's actual rational values and their physical encoding are paid field material. Their finite maximum encoding capacity can likewise be fixed across this task, with canonical value encodings and zero padding; no additional source-dependent header or stale payload is offered to the decoder. Native source material is also paid, whether selected by the decoder or not.
+

@@ -1,0 +1,19 @@
+## 11. Fixed-word consequences and the continuing complete-target question
+
+**Corollary 11.1.** For every $m\ge5$, a preassigned word $M^aJJM^{2m-2-a}$ with $a$ in (3.5) admits no all-input countable palette for the full gain vector on the domain of Section 1 at $2m+1$ reads. For the other gaps, any positive critical realization must obey (3.3)–(3.4) and every condition of (10.1).
+
+**Proof.** The credited critical classification of Section 2 makes positive interpolation plus nonsingularity necessary for such fixed-word full-domain success. Theorem 3.1 excludes interpolation itself at the listed gaps. On the remaining gaps it supplies the stated necessary conditions. $\square$
+
+This corollary does not assert that every excluded word has no universal identity of any sign. An opposite-sign functional and its exceptional positive-source stratum are distinct issues; their countable-palette treatment is part of the credited critical theorem.
+
+The credited low-degree exclusions in *FIB Critical Mixed Gain Words and Clock-Pencil Obstructions*, Section 13, resolve $m=2,3,4$. They give sharp fixed mixed gain-ray counts six, eight, and ten for $d=1,2,3$, respectively. The quadratic proof uses equal repeated-state values and reflection; the cubic proofs use fourth differences on consecutive reciprocal values, six centered original clocks, and the positive shifted-parameter check. Those results are prior supplied mathematics, not consequences newly claimed from the $m\ge5$ proof.
+
+For every $m$, the credited mixed word $JM^{2m}$ succeeds at $2m+2$ reads, with positive scale $\operatorname{tr}(JP)$. The credited pure word $M^{2m}$ returns the exact gain and drift at $2m+1$ reads. Together with the earlier mixed obstruction through $2m$ reads, the exact critical classification gives the following status:
+
+| Problem | Established result and boundary |
+| --- | --- |
+| Fixed acquisition without a mixed-word requirement | Sharp gain count $2d+3=2m+1$, credited Hermite result |
+| Fixed mixed gain extraction, $d=1,2,3$ | Sharp counts six, eight, ten, with arbitrary countable palettes |
+| Fixed mixed gain extraction, $m\ge5$ | Either $2m+1$ or $2m+2$; the decision remains exactly (10.1) |
+| Adaptive gain extraction among several words | No sharp count or new joint-word lower bound follows from the present exclusions |
+| Complete-target recovery | The global sharp count remains unresolved, with or without the specified gain-output mechanism |

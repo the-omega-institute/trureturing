@@ -1,0 +1,6 @@
+After Definition 24.1 execute Reset, Add$(j,1)$ for every original label $1\le j\le L$, and Hold. For each $r=1,\ldots,q$ do the following finite operations, in the displayed order.
+
+1. For each $i$ with $b_{ri}=1$, in increasing $i$ order, actually split at the logical address $p_iL^{h_i(r-1)}$. Consume the entire Growth reply and record the appended raw label, namely the maintained previous length plus one, with its new right-terminal address. Increase the maintained length.
+2. Execute Hold and then Read$(j)$ for every original label $j=1,\ldots,L$, in increasing order. Retain $z_{rj}=1-\operatorname{Read}(j)$.
+3. For precisely those original labels whose reading was zero, execute Add$(j,1)$, including in the last round.
+

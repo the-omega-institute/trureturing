@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9bab483496ee432e4467ad62802122e83f4f0c9cd88b2b82eed7fa6fc2b95bd0
+  normalized_sha256: sha256:9bab483496ee432e4467ad62802122e83f4f0c9cd88b2b82eed7fa6fc2b95bd0
+cas_ref: sha256:9bab483496ee432e4467ad62802122e83f4f0c9cd88b2b82eed7fa6fc2b95bd0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 不同信仰分配关注的比较边界。
+    previous_atom_id: eab955ec7f51d5504734a34caa75605df8bd87cf26002ee9bdc62759565719db
+    next_atom_id: caec71d42d61d3de2bb3bc009adb5addf398bc2a6976b9f8387cb9f107866f63

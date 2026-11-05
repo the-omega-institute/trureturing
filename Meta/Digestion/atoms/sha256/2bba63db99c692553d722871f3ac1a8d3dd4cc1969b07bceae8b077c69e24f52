@@ -1,0 +1,15 @@
+**定理 7.2（近最优律必有有限跨事件依赖）。** 存在 $\delta,\eta>0$、一个固定有限非空词对集合 $W$ 和整数 $L\ge1$，其中所有 $u,v$ 非空、$u1v$ 合法、$|u|,|v|\le L$，使
+
+$$
+\forall P\in\mathcal S,\qquad
+d(P)\ge c_\star-\delta\ \Longrightarrow\
+\max_{(u,v)\in W}|\Gamma_{uv}(P)|\ge\eta.
+\tag{7.2}
+$$
+
+可取 $\delta=\varepsilon_{\mathcal R}/2$；见证词对可随 $P$ 改变。
+
+证明。上半连续性使 $K=\{P\in\mathcal S:d(P)\ge c_\star-\varepsilon_{\mathcal R}/2\}$ 紧。供应达到律使其非空，定理 7.1 使 $K\cap\mathcal R=\varnothing$。因此开集 $\{|\Gamma_{uv}|>0\}$ 覆盖 $K$，有一个有限子覆盖。空词任一侧使残差恒零；若 $u1v$ 非法，则 $u1$ 或 $1v$ 非法，使两项皆零。故子覆盖可取所述合法非空词对。连续函数 $f=\max_W|\Gamma_{uv}|$ 在紧 $K$ 上处处为正，取到正最小值 $\eta$；取最大词长为 $L$，即得结论。$\square$
+
+该结果直接涉及实际柱概率；它没有给出 $W,L,\eta,\delta$ 的数值或取得效率，也没有给出有限样本误差保证。依赖是近最优的必要条件，非达到的充分条件。一般平稳律仍可以有相关间隙。
+

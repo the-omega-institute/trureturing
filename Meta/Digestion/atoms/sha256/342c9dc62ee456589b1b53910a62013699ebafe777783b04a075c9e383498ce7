@@ -1,0 +1,6 @@
+**Corollary 4.2 (what uniform inverse statement is false).** On original
+controls with fixed duration $2$ and the common support band $[a,b]$, there
+is no function $\omega(\varepsilon)\to0$ as $\varepsilon\downarrow0$
+such that $\|k-\widetilde k\|_\infty\leq
+\omega(d_{\mathrm{op}}(\gamma,\widetilde\gamma))$ for all pairs in that
+class. 

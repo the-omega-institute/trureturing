@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f7cbfd9604e011e06aedb1687d87df91f151e2a24bcdcb98597242fa69b3a7ab
+  normalized_sha256: sha256:f7cbfd9604e011e06aedb1687d87df91f151e2a24bcdcb98597242fa69b3a7ab
+cas_ref: sha256:f7cbfd9604e011e06aedb1687d87df91f151e2a24bcdcb98597242fa69b3a7ab
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 比较指导者不在场时实践延续的不同宗教归因，不声称控制模型证明神学因果。
+    previous_atom_id: 8ba6a227abf4d4c06380b8de5a1ce432fd6ec715624a652aab95880610e1a3c2
+    next_atom_id: 050caec4de00dd9b875f16aeb0a82d4b4c048bc4b4144558a23488f1e2a7eaa9

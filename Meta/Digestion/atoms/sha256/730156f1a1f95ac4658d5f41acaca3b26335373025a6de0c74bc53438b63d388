@@ -1,0 +1,13 @@
+**约定 76.5（完全擦除的供应边界）。** 当 $M$ 只有一个值时，Environment Theorem 26.2、Corollary 26.3 对所有 full-support input-independent laws 供应唯一最大 common-correctable algebra
+
+$$
+\mathcal C_{n,p}=
+\begin{cases}
+M_3,&n=0,\\
+\{W\}'\cong M_2\oplus\mathbb C,&n=1,\\
+\mathbb CP\oplus\mathbb C(I_3-P),&n\ge2.
+\end{cases}
+$$
+
+共同 decoder 可分别取 $\operatorname{id}_3,\operatorname{Ad}_{a^\dagger},\operatorname{id}_3$。所以 $n\ge2$ 完全擦除后 exact sharp projections 恰为 $0,I_3,P,I_3-P$。Proposition 26.4 已说明 positive support 在 $0^n,e_1,e_2$ 上足够维持这一上界，删去所需支持则可扩大 correctable algebra；此处 $e_i$ 是第 $i$ chronological bit 为一的历史。一般支持分类和一般 correction 原理均引用 supplier；定理 76.2 使用的是每个 summary 的实际正支持。
+

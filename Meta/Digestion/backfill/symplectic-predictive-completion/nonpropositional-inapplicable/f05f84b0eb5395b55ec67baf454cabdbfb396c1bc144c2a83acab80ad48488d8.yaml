@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f05f84b0eb5395b55ec67baf454cabdbfb396c1bc144c2a83acab80ad48488d8
+  normalized_sha256: sha256:f05f84b0eb5395b55ec67baf454cabdbfb396c1bc144c2a83acab80ad48488d8
+cas_ref: sha256:f05f84b0eb5395b55ec67baf454cabdbfb396c1bc144c2a83acab80ad48488d8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅设置非闭合情形并定义epsilon、Q、Omega、D；没有附带界、可逆性或保持性结论。
+    previous_atom_id: 031008dc4c121392bf6d1b845932bce0b53bf5402f3c3c062eba1c5671039266
+    next_atom_id: 1b786978c888a46ad7e0b710e071fe1c6752ac574eda55867a2e723724bcbaca

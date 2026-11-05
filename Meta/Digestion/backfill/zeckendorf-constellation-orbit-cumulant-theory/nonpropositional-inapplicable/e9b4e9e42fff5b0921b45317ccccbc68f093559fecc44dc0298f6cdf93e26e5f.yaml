@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e9b4e9e42fff5b0921b45317ccccbc68f093559fecc44dc0298f6cdf93e26e5f
+  normalized_sha256: sha256:e9b4e9e42fff5b0921b45317ccccbc68f093559fecc44dc0298f6cdf93e26e5f
+cas_ref: sha256:e9b4e9e42fff5b0921b45317ccccbc68f093559fecc44dc0298f6cdf93e26e5f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 字母表有限是待讨论紧致性定理的假设片段，不是对某个已定义字母表的结论。
+    previous_atom_id: 410bc8fbc1f487faf91c829126f2fc8f0ecef6310b82305c200104e9c66c1002
+    next_atom_id: c03412db6cd5151b9f9b6c49e87c0f50147f132d800889bc79f17df6f016d6b0

@@ -1,0 +1,39 @@
+**Definition 1.2 (SCWLAB installation).** For every design in Definition
+1.1, every symmetric rational matrix $T$ with arbitrary rational diagonal
+and
+
+$$
+ T_{vw}\ne0\ \Longleftrightarrow\ v\sim w\quad(v\ne w),
+\tag{SC.2}
+$$
+
+and every $x\in\mathbb Q^V$, commission one actual source with this law
+and field. Edge signs and magnitudes, diagonals and field are unknown to
+the receiver. Authentic $u$, root/orientation, the complete initial raw
+label/address bijection $\lambda:\{1,\ldots,b\}\to B$, codecs and
+current/fresh rights are paid supplied design/context. Their values
+contain no advice about $T$ or $x$. The provider's coefficient and field
+commissioning, reception, clearing or isolation of dependent preparation
+records, source/reference backing and design transmission belong to the
+same run's initial bill $\mathcal I(u,T,x)$. A known design is an input,
+not an achievement of the numerical inverse. The family includes zero
+fields, singular and indefinite laws, repeated eigenvalues and arbitrary
+nonzero signed rational links.
+
+At every settled cut the field commands are
+
+$$
+ \mathrm{Tick}:z\mapsto A z,\qquad
+ \mathrm{Add}(j,q):z\mapsto z+q e_{\lambda(j)},\qquad
+ \mathrm{Read}(j):z\mapsto z_{\lambda(j)},\qquad
+ \mathrm{Hold}:z\mapsto z,
+\tag{SC.3}
+$$
+
+where $A$ is the current law. Tick, Add and Hold return fixed ACKs;
+Read returns its whole literal rational. Only requested Ticks evolve
+the field. Hold prevents unsolicited evolution during finite local work.
+There is no Reset, clone, interior read/actuator, coefficient port,
+eigenvalue port, supplied response table or field-dependent timing,
+allocation, work or capacity channel.
+

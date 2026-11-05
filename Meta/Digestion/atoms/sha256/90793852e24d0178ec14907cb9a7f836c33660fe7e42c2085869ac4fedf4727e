@@ -1,0 +1,18 @@
+**定义 1.1（完整 no11 词域与开放端点）。** 对整数 $n\ge1$，令
+
+$$
+B_n=\{b\in\{0,1\}^n:b_jb_{j+1}=0\ (1\le j<n)\},\qquad k(b)=\sum_{j=1}^n b_j.
+$$
+
+图 $\Gamma_n$ 的顶点为全部 $B_n$，边为全部合法 Hamming 一位差词对。检验端点插入时取 $b_0=b_{n+1}=0$，不把首尾相接。令
+
+$$
+h(a,b)=\begin{cases}ab/(a+b),&a+b>0,\\0,&a=b=0,\end{cases}
+\qquad
+\Phi_n(\mu)=\sum_{\{b,c\}\in E(\Gamma_n)}h(\mu_b,\mu_c),\qquad
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu).
+\tag{1.1}
+$$
+
+零质量不删除顶点或边；全零词、合法端点 $1$ 及任何分组接缝上的原边均保留。
+

@@ -1,0 +1,47 @@
+**Theorem 55.2 (self-sufficient prediction with real callable use).**
+The records returned by Theorem 54.2 initialize Definition 55.1 with
+$\widehat u=u=\nu(t)$. For every finite common adaptive continuation
+in $Q_A$, predictions terminate on complete frames and have exactly the
+actual full replies and corresponding settled source successors at each
+step. If those requests are actually forwarded, they execute on the
+same bound source and reestablish $\widehat u=u$ after every return.
+This includes successful $P$ and $S$, every refusal reason, unsupported
+tags and arbitrarily long finite addresses. A finite completion of a
+pending proper frame prefix resumes the same assertion.
+
+Proof. The initial equality is acquired by Theorem 54.2. Suppose it
+holds at a synchronized cut. Induction along the finite address proves
+that code navigation and actual logical navigation either reach
+corresponding constructors or first block at the same leaf. No code
+step follows a beta marker. The four target cases in Definition 53.3
+therefore agree, including the exact refusal reason. At a success the
+original material template has exactly the displayed logical replacement,
+and its Growth reply has the same kind and original requested address
+as the prediction. Applying this replacement to the code restores its
+equality with the actual logical term, including all newly created
+positions. The source's reused and fresh vertices are those of Definition
+53.1, not fresh objects chosen by the predictive calculation. Refusals
+and unsupported tags preserve both source and code.
+
+All code scans, finite replacements and framed output constructions
+terminate on the acquired finite words. Source serialization, current
+rights and sufficient material supply the corresponding real completed
+call. There is no source-dependent selector hidden in the predictor.
+After a complete reply, the pending update and finite cleanup establish
+the next synchronized cut. Induction on completed requests now proves
+the claim. A common policy can use its previous complete replies and
+shared retained inputs to choose the next request; equal replies make
+these choices agree. The same argument applies after fixing any common
+random tape used by that subsequent policy. It does not give a randomized
+acquisition lower bound.
+
+For partial frames, induction on received bits gives the same parser
+subphase and occupied backing for the actual prefix. Until completion
+there is no source call or completed reply; a finite supplied suffix
+returns to the complete-frame argument. Missing rights, interruption and
+observable exhaustion are outside Assumption 53.2, not extra refusal
+cases certified by this invariant. Thus a retained code is a finite
+self-sufficient predictive description, and the separately retained
+binding makes the proved continuation actual use. Neither property
+creates the other one's access premises. $\square$
+

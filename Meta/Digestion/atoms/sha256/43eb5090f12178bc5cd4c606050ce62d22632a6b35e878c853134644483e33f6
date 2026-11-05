@@ -1,0 +1,25 @@
+**引理 51.1（所需的确定配对数集中）。** 在任一单侧锚与标签条件律下，令 $\mu=\mathbb E W_k$。对 $n\ge1,x>0$，
+
+$$
+\Pr(S_n-n\mu\ge x)\le e^{-x^2/n},\qquad
+\Pr(S_n-n\mu\le-x)\le e^{-x^2/n}.
+\tag{51.1}
+$$
+
+单个 Bernoulli 坐标的经验均值 $\widehat b_n$ 则满足
+
+$$
+\Pr(\widehat b_n-b\ge x)\le e^{-2nx^2},\qquad
+\Pr(\widehat b_n-b\le-x)\le e^{-2nx^2}.
+\tag{51.2}
+$$
+
+**证明。** 对均值为 $b$ 的 Bernoulli 变量，令
+$K(u)=\log\mathbb E e^{u(B-b)}$。直接微分得 $K(0)=K'(0)=0$，且 $K''(u)=v(u)(1-v(u))\le1/4$，其中 $v(u)=be^u/(1-b+be^u)$。于是对所有实数 $u$，
+
+$$
+K(u)=u^2\int_0^1(1-v)K''(vu)\,dv\le u^2/8.
+$$
+
+对差分的一对独立坐标分别使用 $u,-u$，得到中心化指数矩至多 $e^{u^2/4}$；对 $n$ 个独立对相乘，得到 $e^{nu^2/4}$。指数 Markov 不等式并取 $u=2x/n$ 给出（51.1），换符号给下尾。单个坐标的 $n$ 项指数矩为 $e^{nu^2/8}$，对偏差 $nx$ 取 $u=4x$，得（51.2）。这些估计只在确定配对数下使用。$\square$
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:66239f648120cf82b641cb193f1e5dcb9033db58b96438059ec1f61925359271
+  normalized_sha256: sha256:66239f648120cf82b641cb193f1e5dcb9033db58b96438059ec1f61925359271
+cas_ref: sha256:66239f648120cf82b641cb193f1e5dcb9033db58b96438059ec1f61925359271
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Control/ControlQuotientUniversalMinimality.controlProfile
+    target_statement_id: sha256:3be03e7ef1a0ae8f35b44abe2a438fe698de4cd2e83feadf7f35511ea113be9f
+receipts:
+  unresolved_subitems: []

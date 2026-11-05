@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:de859d1688fd176f12b5612379de2d99a1d25aa2e1acbb136c513813eac46633
+  normalized_sha256: sha256:de859d1688fd176f12b5612379de2d99a1d25aa2e1acbb136c513813eac46633
+cas_ref: sha256:de859d1688fd176f12b5612379de2d99a1d25aa2e1acbb136c513813eac46633
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 说明商羯罗肯定终点与 MMM 可修订立场的不同，属于文本解释。
+    previous_atom_id: 329232a786fc86d533d3187b0974e8fe76d5d80a60ca728852deff560fc64e66
+    next_atom_id: e6f26a5fd5df640c97e25dd9e5e7399f8f8ba087a80af9b121408185ed88e33b

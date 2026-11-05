@@ -1,0 +1,13 @@
+**Proposition 80.5 (full wire traffic and return costs).** For a request
+with address length $d$, the input is exactly $2d+4$ bits; for index $k$
+it is $k+4$ bits; the unused tag costs three. The full replies have the
+following bit lengths, before the additional End and local-ACK actions:
+
+| Reply | Bit length |
+| --- | --- |
+| Tag | $5$ |
+| Boolean | $4$ |
+| Refusal | $5$ |
+| Growth or Recall at address $p$ | $2|p|+5$ |
+| Next with addresses $p,q$ | $2(|p|+|q|)+7$ |
+| OutOfRange or BadFrame | $3$ |

@@ -125,7 +125,7 @@ private lemma twirl_real_unit_invariance (g : ι → R)
 end
 noncomputable section
 variable {R : Type*} [Ring R] [Algebra ℂ R] [StarRing R] [StarModule ℂ R]
-private lemma CAR_nilpotent (b : R) (hbb : b * b + b * b = 0) : b * b = 0 := by
+lemma CAR_nilpotent (b : R) (hbb : b * b + b * b = 0) : b * b = 0 := by
   have hhalf := congrArg (fun X : R => (1 / 2 : ℂ) • X) hbb
   calc
     b * b = (1 / 2 : ℂ) • (b * b + b * b) := by module
@@ -377,7 +377,7 @@ end
 noncomputable section
 variable {R : Type*} [Ring R] [Algebra ℂ R]
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
-private lemma cliffordLinear_anticommutator (g : ι → R)
+lemma cliffordLinear_anticommutator (g : ι → R)
     (hsq : ∀ j, g j*g j=1) (hanti : ∀ j k, j ≠ k → g j*g k=-(g k*g j))
     (c d : ι → ℂ) :
     Fintype.linearCombination ℂ g c*Fintype.linearCombination ℂ g d+Fintype.linearCombination ℂ g d*Fintype.linearCombination ℂ g c =

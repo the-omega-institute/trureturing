@@ -1,0 +1,9 @@
+**Lemma 7.2.2 (Uniform rational inequalities).** The recurrence and enclosures (7.2.1)–(7.2.6) have the following bounds:
+
+| Quantity | Rational upper bound | Sufficient strict bound |
+|---|---:|---:|
+| $\max_i q_i$ | $110094427447/250000000000$ | $441/1000$ |
+| $\max_i\beta_i$ | $263610622981/1000000000000$ | $264/1000$ |
+| $\max_i\widetilde q_i$ | $47763641509/200000000000$ | $239/1000$ |
+| $\max_i\rho_BD_i$ | $247533043797/100000000000$ | $5/2$ |
+| $\max_i\rho_kD_i$ | $247533043797/10000000000$ | $25$ |

@@ -1,0 +1,24 @@
+**假设 54.1（额外的联合相干拒绝仪器）。** 沿用假设 53.1 的独立制备，记
+$w_j^{+}=w_j$、$w_j^{-}=Cw_j$，$\varepsilon\in\{+,-\}$ 表示第二局域实现方向。
+初态为 $\Psi_0^\varepsilon=u_0\otimes w_0^\varepsilon$。在对应模型中另供
+
+$$
+\begin{aligned}
+P_j^\varepsilon&=|u_j\rangle\langle u_j|\otimes
+ |w_j^\varepsilon\rangle\langle w_j^\varepsilon|,\\
+Q_1^\varepsilon&=I-P_1^\varepsilon,\\
+\mathcal L_+^\varepsilon(Y)&=P_1^\varepsilon YP_1^\varepsilon,
+&\mathcal L_-^\varepsilon(Y)&=Q_1^\varepsilon YQ_1^\varepsilon.
+\end{aligned}
+\tag{54.1}
+$$
+
+这些投影在局域失败空间上按零延拓，$I$ 是完整双系统空间的恒等。
+先记录联合旗标 $\sigma$，再在第一侧使用 $u_2$ 的定义 47.1 破坏性查询，
+在第二侧使用 $w_2^\varepsilon$ 的对应查询，分别记录 $\tau,\upsilon$。
+两次局域查询在每个联合旗标下都执行；第一侧失败仅使第一侧 Stop，不取消第二次查询。
+全部局域失败标记、两个结果和最终 Stop 均保留。因此完整终端字有八种
+$(\sigma,\tau,\mathrm{Stop}_A,\upsilon,\mathrm{Stop}_B,\mathrm{Stop})$，不是四种；
+以下用 $(\sigma,\tau,\upsilon)$ 简记其中固定的 Stop 和由正负结果确定的失败标记。
+联合负支 (54.1) 是额外供应，不能由 $P_1^\varepsilon$ 的乘积形式推出。
+

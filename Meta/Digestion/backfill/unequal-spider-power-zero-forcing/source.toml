@@ -1,0 +1,5 @@
+source_id = "unequal-spider-power-zero-forcing"
+path = "docs/develop/theory/UNEQUAL_SPIDER_POWER_ZERO_FORCING.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

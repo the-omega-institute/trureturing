@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:18f95fd387b018eaa59acd29d0c12e0a4003be52db45ca39685d4d964d3e376b
+  normalized_sha256: sha256:18f95fd387b018eaa59acd29d0c12e0a4003be52db45ca39685d4d964d3e376b
+cas_ref: sha256:18f95fd387b018eaa59acd29d0c12e0a4003be52db45ca39685d4d964d3e376b
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/Walks/AndersonDefectFamily.defect_family
+    target_statement_id: sha256:f71eb8440d57777c473699112c773afdc46bd0f2ca999372f925df8c27a20959
+receipts:
+  unresolved_subitems: []

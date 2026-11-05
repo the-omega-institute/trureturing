@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d3cf84d80314f513c56bead0fafaf51d3631cbdd0f68cb353335d8f131fd114c
+  normalized_sha256: sha256:d3cf84d80314f513c56bead0fafaf51d3631cbdd0f68cb353335d8f131fd114c
+cas_ref: sha256:d3cf84d80314f513c56bead0fafaf51d3631cbdd0f68cb353335d8f131fd114c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本项仅界定第164节的来源族为5040F_j，说明未覆盖其他仿射历史并披露外部输入及形式化范围；没有陈述新的数学命题。
+    previous_atom_id: 2b8218930545d657919e34d32b9105729ffec0853feddaf5bd9a83459c6c497b
+    next_atom_id: 8a5f4528a189702c71f39b1ebb5782f0175e83abc32cf17f08bd8296e75340ae

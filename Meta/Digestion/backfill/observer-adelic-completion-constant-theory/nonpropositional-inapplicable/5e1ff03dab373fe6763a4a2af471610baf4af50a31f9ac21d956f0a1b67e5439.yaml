@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5e1ff03dab373fe6763a4a2af471610baf4af50a31f9ac21d956f0a1b67e5439
+  normalized_sha256: sha256:5e1ff03dab373fe6763a4a2af471610baf4af50a31f9ac21d956f0a1b67e5439
+cas_ref: sha256:5e1ff03dab373fe6763a4a2af471610baf4af50a31f9ac21d956f0a1b67e5439
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只列出不因子化通过 B 的干预选项，并作观察与区别的认识论说明；未断言具体映射存在或任何算子等式。
+    previous_atom_id: 8a2cda1e658953e382dd19d8b45843b4dcfba68bf539f96ff720fed4c2a04437
+    next_atom_id: dfaf8224e3bfee8e61350a2d7b4cfe72140911af1603c201b9a06732e2a05abb

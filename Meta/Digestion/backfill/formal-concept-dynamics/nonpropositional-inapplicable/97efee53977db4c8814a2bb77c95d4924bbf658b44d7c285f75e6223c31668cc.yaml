@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:97efee53977db4c8814a2bb77c95d4924bbf658b44d7c285f75e6223c31668cc
+  normalized_sha256: sha256:97efee53977db4c8814a2bb77c95d4924bbf658b44d7c285f75e6223c31668cc
+cas_ref: sha256:97efee53977db4c8814a2bb77c95d4924bbf658b44d7c285f75e6223c31668cc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: A consensus audit question about access to counterexamples, with no existence or universality claim about a mathematical model.
+    previous_atom_id: 2916a95469832dcc599e83cc51005a04d32ad6ee3a094c69b7cacbc72e388eeb
+    next_atom_id: 17c22b1b3a17e31109b55005739d1ce5613af1361120e3adef7e18feffa244cc

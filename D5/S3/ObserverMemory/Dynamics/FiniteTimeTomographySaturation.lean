@@ -37,7 +37,7 @@ open D5.S3.Quantum.Entanglement.BipartiteSectorDecomposition
 open D5.S3.Quantum.Fibers.TraceZeroReadoutOrthogonalEquivalence
 open D5.S3.Quantum.Measurement.BasisMeasurementProjection
 
-private theorem all_future_kernel_eq_finrank_kernel
+theorem all_future_kernel_eq_finrank_kernel
     {K V Y : Type*} [Field K]
     [AddCommGroup V] [Module K V] [FiniteDimensional K V]
     [AddCommGroup Y] [Module K Y]

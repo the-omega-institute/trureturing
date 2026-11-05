@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bd2c83a83ca1e5fa482a1620223e1900de3e85cb94f11b47ce1da7f9192dbdac
+  normalized_sha256: sha256:bd2c83a83ca1e5fa482a1620223e1900de3e85cb94f11b47ce1da7f9192dbdac
+cas_ref: sha256:bd2c83a83ca1e5fa482a1620223e1900de3e85cb94f11b47ce1da7f9192dbdac
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义稀疏/遗漏质量模型及矩比较假设16.1；允许重合节点与非归一化权重是模型约定。
+    previous_atom_id: dde5b36e498ccd8be153439a9f2379a2da353a2f3ea0a2bfab9a8cb8ddc792d8
+    next_atom_id: 2127c6b65ed6bf47fd08642efb0448a2219500c364ccd4f7c2ffd89f6ed47d0c

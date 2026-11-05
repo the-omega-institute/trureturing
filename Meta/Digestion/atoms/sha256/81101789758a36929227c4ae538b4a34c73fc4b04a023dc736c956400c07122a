@@ -1,0 +1,24 @@
+### 21.1. Paid acquisition of the product
+
+Put $M_k=B^{\mathsf T}T^kB$ for $0\leq k<2N$, where $B$ denotes the $N\times b$ port matrix. Run the $b$ actual impulse trials that acquire these moments. Symmetry identifies every candidate Krylov Gram entry from the moment list. Choose a deterministic positive-rank Gram pivot and let $R$ be the resulting nonsingular $N\times N$ matrix of selected columns. The acquired tables are
+
+$$
+G=R^{\mathsf T}R,\qquad A=R^{-1}TR,\qquad D=R^{-1}B,
+\qquad E=B^{\mathsf T}R.
+$$
+
+Here $R:\mathcal Z\to\mathcal X$ maps selected Krylov coefficients to the actual native field space. Both spaces have rational dimension $N$, but their coordinates have different meanings: $x=Rz$ and $z=R^{-1}x$. The matrix $R$ is a proof witness formed from the unknown native law, not a supplied numerical input. The observer acquires $G,A,D,E$ from returned moments and the fixed pivot rule without knowing the entries of $R$ in the native frame. In particular $E=D^{\mathsf T}G$.
+
+Write $q=N(N+1)/2$. From the zero field, prepare $Rz$ by the selected port pulses in descending-power order and $N-1$ actual ticks. For each $e_i$ and $e_i+e_j$ with $i<j$, perform the actual $Q_g$ call and then the full $N$-epoch all-port read window. The read rows acquire $R^{\mathsf T}Q_g(Rz)$; solving with $G$ gives
+
+$$
+F(z)=R^{-1}Q_g(Rz),\qquad
+\mu(u,v)=R^{-1}\bigl(g*(Ru)*(Rv)\bigr).
+$$
+
+The immediate native output is $y=Q_g(Rz)$, its acquired coordinate is $F(z)=G^{-1}R^{\mathsf T}y$, and the actual window endpoint is $T^{N-1}y$ with acquired coordinate $A^{N-1}F(z)$. The notation $R^{\mathsf T}y$ denotes the selected entries of the returned read window, not an additional native-coordinate query. Polarization of the diagonal and pair probes recovers every entry of the bilinear table $\mu$. A final actual `Reset` followed by `Hold` returns the source to zero. No inverse of $T$ is used; only the positive Gram minor is solved.
+
+**(A1) Proposition 21.1 (acquired product and endpoint).** Under the stated Krylov promise, the finite run above determines $G,A,D,E,\mu$ exactly and ends at the actual zero state. Its acquired product is the native coordinate operation transported through the earned frame, and every scalar used in the reconstruction is a returned source value or an exact rational operation on returned values.
+
+**Proof.** The moment identities give the Gram matrix of every selected Krylov column. The pivot rule selects $N$ independent columns, so $R$ is invertible and $G$ is positive definite. For a selected column $T^kB_j$, multiplying by $T$ is represented by the corresponding shifted Krylov column; the Gram equations therefore solve the matrix of $T$ in the selected basis, giving $A$. The input and output matrices are the same change of basis, giving $D$ and $E$. For a prepared field $Rz$, the all-port window supplies the Gram pairing with every selected basis vector after $Q_g$; invertibility of $G$ gives the unique coefficient vector $F(z)$. Applying this to the diagonal and polarization probes gives $\mu$. The final `Reset` is an actual source command, so the endpoint is zero. Every operation in the argument is finite exact rational arithmetic on the acquired records. ∎
+

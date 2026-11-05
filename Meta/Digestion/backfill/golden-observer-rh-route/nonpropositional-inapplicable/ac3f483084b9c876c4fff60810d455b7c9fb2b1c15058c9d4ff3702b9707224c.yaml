@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ac3f483084b9c876c4fff60810d455b7c9fb2b1c15058c9d4ff3702b9707224c
+  normalized_sha256: sha256:ac3f483084b9c876c4fff60810d455b7c9fb2b1c15058c9d4ff3702b9707224c
+cas_ref: sha256:ac3f483084b9c876c4fff60810d455b7c9fb2b1c15058c9d4ff3702b9707224c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只记录条件可行性预测与失败时的实施处置；未提出需要证明的数学断言。文本定位：**可证伪预测(写在跑之前)**:若正确,定理只消费钉版 Mathlib(`riemannZeta` 的 Re s > 1 级数表示、`differentiableAt_riemannZeta`、解析延拓唯一性)与至多本仓 `ZetaCore`,公理集为标准三条;若交错部分和在 {0 < Re s}
+    previous_atom_id: cd9f047ec50f4a831d417fba17e83f05d63ad1bd77a46ff29fc879f478bd0e4e
+    next_atom_id: 7a43dab83f7491cdbf846dc2cddfc54e01686da6d2b8f204f231986fd8338aff

@@ -1,0 +1,8 @@
+### 1.2 四种对象不能混同
+
+| 层次 | 数学对象 | 本文赋予的用途 |
+| --- | --- | --- |
+| 局部态 | $\mathbb C^5,\ \mathbb C^5\otimes\mathbb C^5$ | 原始五模式接口及普通复合态；维数为 5 或 25 |
+| 关系格 | $A_4\oplus A_4\subset\Gamma\subset\mathbb R^8$ | 整数电荷、允许关系和积分扩张 |
+| 全局对称 | 紧 $E_8$，$\mathcal K=\mathfrak e_{8,\mathbb C}$ | Lie 闭包、248 维伴随载体及五分级 |
+| 读出记录 | 效果概率，$a+\varphi b$ | 实际观察等价和误差下的来源恢复 |

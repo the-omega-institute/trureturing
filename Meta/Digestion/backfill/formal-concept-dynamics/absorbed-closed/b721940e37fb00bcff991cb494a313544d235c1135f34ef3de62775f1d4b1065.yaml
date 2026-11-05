@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b721940e37fb00bcff991cb494a313544d235c1135f34ef3de62775f1d4b1065
+  normalized_sha256: sha256:b721940e37fb00bcff991cb494a313544d235c1135f34ef3de62775f1d4b1065
+cas_ref: sha256:b721940e37fb00bcff991cb494a313544d235c1135f34ef3de62775f1d4b1065
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Reporting/PublicCausalActivityCriterion.public_dynamic_equiv_iff_inert
+    target_statement_id: sha256:4eb0e02acf77918fe9c8707e6f75b7ae88abe61e8e4ee2233ae0da79bcd4c582
+receipts:
+  unresolved_subitems: []

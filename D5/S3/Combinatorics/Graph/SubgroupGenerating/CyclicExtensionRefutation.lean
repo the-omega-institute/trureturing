@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/SubgroupGenerating/CyclicExtensionRefutation.claim; result=D5/S3/Combinatorics/Graph/SubgroupGenerating/CyclicExtensionRefutation.result; claim=D5/S3/Combinatorics/Graph/SubgroupGenerating/CyclicExtensionRefutation.claim
    digest: The order-one cyclic group refutes the whole Section 5 SGB extension. -/
 
+/- Escape audit unfinished for source_matrix_isHermitian: https://github.com/the-omega-institute/trureturing/issues/20305 -/
 import Mathlib.Analysis.Matrix.Spectrum
 import Mathlib.Combinatorics.SimpleGraph.LapMatrix
 import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
@@ -54,7 +55,7 @@ noncomputable def sourceMatrix {V : Type} [Fintype V] (g : SimpleGraph V)
     | .signless => g.degMatrix ℝ + g.adjMatrix ℝ
     | .commonNeighbour => commonNeighbourMatrix g
 
-private theorem source_matrix_isHermitian {V : Type} [Fintype V]
+theorem source_matrix_isHermitian {V : Type} [Fintype V]
     (g : SimpleGraph V) (kind : MatrixKind) : (sourceMatrix g kind).IsHermitian := by
   classical
   cases kind with

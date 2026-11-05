@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6926da491a30913aec91c8375b7652e915cbd06c9e89ce14e58890f1f6c6f92d
+  normalized_sha256: sha256:6926da491a30913aec91c8375b7652e915cbd06c9e89ce14e58890f1f6c6f92d
+cas_ref: sha256:6926da491a30913aec91c8375b7652e915cbd06c9e89ce14e58890f1f6c6f92d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条仅规定第43.2节的受限合同：既定九行作用、确定正交交替环境及未指定输入上的完成自由；未断言完成存在、维数最优或后续方向的正交性。
+    previous_atom_id: 46d3c03cb6e022905a272e2b80cec3e25d404a985a340476ed75d28f35ca2601
+    next_atom_id: c0a8e6849830b7bca59ab10ef9d5a0b0e6537cee04ef4e7a68fef6d84d95a403

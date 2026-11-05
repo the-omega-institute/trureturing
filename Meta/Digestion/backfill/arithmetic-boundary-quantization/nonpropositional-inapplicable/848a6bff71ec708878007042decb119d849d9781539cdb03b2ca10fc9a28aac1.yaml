@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:848a6bff71ec708878007042decb119d849d9781539cdb03b2ca10fc9a28aac1
+  normalized_sha256: sha256:848a6bff71ec708878007042decb119d849d9781539cdb03b2ca10fc9a28aac1
+cas_ref: sha256:848a6bff71ec708878007042decb119d849d9781539cdb03b2ca10fc9a28aac1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Bibliographic locator for reference [L]: author/title/URL and the specific problem, theorem, equation and proof-section locations used by the surrounding text. The final column indexes topics in that source; the row does not state the RH equivalences themselves.'
+    previous_atom_id: 7f2ad75364680306b1386eac38f4bbab5fe6a19a4e077b16a0ddfe0bbe53cd12
+    next_atom_id: 09bd73abe36cd77ffe133b29eb7d9ed783f393c9e936ecd810950977abe25b7c

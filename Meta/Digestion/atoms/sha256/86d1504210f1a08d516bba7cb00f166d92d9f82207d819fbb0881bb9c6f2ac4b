@@ -1,0 +1,77 @@
+**Definition 28.1 (QN and requested-precision native service).** These
+sections use the original material of Definition 2.1, with the original
+unit, zero-diagonal adjacency law
+
+$$
+\operatorname{Tick}(x)=A_t x,
+\tag{28.1}
+$$
+
+rather than the contracting law (2.2). Growth is the persistent fresh-zero
+inclusion, without an attached Tick. Use the six-operation no-Reset
+installation of [Native Leaf Boundary Acquisition II, Assumption 34.1
+and Theorem 64.1](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_II.md#34-arbitrary-field-acquisition-in-the-six-operation-installation),
+abbreviated NLBAII, with these explicitly different numerical Read
+contracts. The term, complete terminal map and known law may already be
+earned; they are field-independent context, with actual source bindings
+and rights, rather than unknown coordinates supplied for free.
+
+In QN an installed rational $h>0$ specifies
+
+$$
+\operatorname{Read}_h(j)=\left\lfloor x_{\lambda(j)}/h\right\rfloor.
+\tag{28.2}
+$$
+
+The reply is the entire signed integer, with no clipping or saturation.
+In the separately installed requested-precision service, a completed
+$\operatorname{Read}(j,p)$, $p\in\mathbb N$, returns
+
+$$
+\left\lfloor 2^p x_{\lambda(j)}\right\rfloor.
+\tag{28.3}
+$$
+
+The precision request has its actual finite encoding and cost. Arbitrary
+rational $h$ in (28.2) is not a new opcode silently available in (28.3).
+Their identical fixed-scale subcase is $h=2^{-p_0}$ when that precision is
+actually installed. A robust variant of (28.3) allows either the displayed
+integer or that integer plus one at every successful Read; it is a
+separate interface. The positive results below use deterministic (28.2),
+not that variant.
+
+All other full requests and replies are NLBAII's original ones. Add is
+an exact rational translation at the actual currently bound terminal;
+Tick, Add and Hold have fixed acknowledgements. Successful P/S return the
+original Growth result and update the genuine roster and fresh grants by
+NLBAII Definition 17.3. Distinct absent, branch and wrong-type growth
+refusals, out-of-roster RangeRefusal, complete BadFrame, proper incomplete
+frames and disabled calls retain their meanings. In particular a complete
+former Reset tag is BadFrame with identity successor. Hold and Read do
+not evolve the field. Calls, matching retained updates, all output bytes,
+End, acknowledgement and Return are serially completed. There is no
+concurrent writer, unrequested evolution or exposed exhaustion branch.
+Every asserted finite execution has sufficient actual backing and rights.
+
+Fix a finite reachable initial tree with $N_0\ge2$ material vertices.
+The usual branching domain has at least three terminals; allowing also
+smaller reachable trees is an explicit extension of the same service
+rules, used only where stated. At attachment $x\in\mathbb Q^{N_0}$ is
+arbitrary. The receiver is cleared in the sense of NLBAII Definition
+61.1: every accessible initial record, program, selector, provider state,
+parser, counter, reference byte and advice is independent of $x$. Only
+successful numerical Reads add field information. Timing, allocation
+names, capacity, arithmetic duration, hidden archives and field-dependent
+metadata are not additional observations. Isolated producer records still
+have paid backing. Initially known $D$ in §30 will be an additional class
+promise, not a consequence of this dense entrance.
+
+A causal protocol can adapt its exact rational Adds, growth, Ticks,
+Holds, Reads, requested precisions and local computation to the whole
+acquired record. A terminating run has finitely many completed calls and
+finite acquired and produced strings; there is no common bound on their
+number, width or local work. After its acquisition cutoff, an autonomous
+predictor uses its retained record and source-independent computation,
+without further numerical source calls or dependent-archive consultation.
+A live handle forwarding later paid Reads is a different useful service.
+

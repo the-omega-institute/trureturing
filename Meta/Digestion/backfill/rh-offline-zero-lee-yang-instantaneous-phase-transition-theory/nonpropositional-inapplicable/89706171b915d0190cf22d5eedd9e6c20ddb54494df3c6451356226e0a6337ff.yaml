@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:89706171b915d0190cf22d5eedd9e6c20ddb54494df3c6451356226e0a6337ff
+  normalized_sha256: sha256:89706171b915d0190cf22d5eedd9e6c20ddb54494df3c6451356226e0a6337ff
+cas_ref: sha256:89706171b915d0190cf22d5eedd9e6c20ddb54494df3c6451356226e0a6337ff
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：仅有增订一结论地位总表的标题、空表头与分隔行；没有任何数据行或数学结论。
+    previous_atom_id: 38755226e93b1f6cdf3753c0689c1049c1f8f037678b92c75a55071fbd07d079
+    next_atom_id: 88370cacb81dd6e5bfefd93f6411e62283110b7702dc3b05c5359643a46c6caa

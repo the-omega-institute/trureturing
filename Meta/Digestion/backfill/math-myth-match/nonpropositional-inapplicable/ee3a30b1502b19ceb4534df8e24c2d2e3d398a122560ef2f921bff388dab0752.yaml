@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ee3a30b1502b19ceb4534df8e24c2d2e3d398a122560ef2f921bff388dab0752
+  normalized_sha256: sha256:ee3a30b1502b19ceb4534df8e24c2d2e3d398a122560ef2f921bff388dab0752
+cas_ref: sha256:ee3a30b1502b19ceb4534df8e24c2d2e3d398a122560ef2f921bff388dab0752
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：提出机会、目的、规范和身体情境的共同研究关系，不主张单一自由变量已完整解释。
+    previous_atom_id: 2ef92bf38ad9cf740302d9ba3b0da493ad1de6beb9c64452e4b2898079f2e8fe
+    next_atom_id: e3d1ef31404cc8c7513e3617c219baf5a9245729814a05ff298b8f6e52ad0d13

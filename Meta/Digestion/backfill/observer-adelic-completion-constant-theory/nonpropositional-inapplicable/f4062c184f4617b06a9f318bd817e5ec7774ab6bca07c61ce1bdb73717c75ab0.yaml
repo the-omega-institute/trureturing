@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f4062c184f4617b06a9f318bd817e5ec7774ab6bca07c61ce1bdb73717c75ab0
+  normalized_sha256: sha256:f4062c184f4617b06a9f318bd817e5ec7774ab6bca07c61ce1bdb73717c75ab0
+cas_ref: sha256:f4062c184f4617b06a9f318bd817e5ec7774ab6bca07c61ce1bdb73717c75ab0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 配对观察器的实验构造指令及缺陷术语约定；不声称存在满足新增谱性质的函数。'
+    previous_atom_id: f57d8313272f2f6513aa52a5c02598192ee03d650214f29057d8577f6d6aede2
+    next_atom_id: 01af78977a95ef8452fb5d82f0ed7d095ca49f7c3aea9bdef915b989126a6e31

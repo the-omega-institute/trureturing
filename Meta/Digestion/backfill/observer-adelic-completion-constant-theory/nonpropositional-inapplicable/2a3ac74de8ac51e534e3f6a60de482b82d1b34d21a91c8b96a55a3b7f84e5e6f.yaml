@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2a3ac74de8ac51e534e3f6a60de482b82d1b34d21a91c8b96a55a3b7f84e5e6f
+  normalized_sha256: sha256:2a3ac74de8ac51e534e3f6a60de482b82d1b34d21a91c8b96a55a3b7f84e5e6f
+cas_ref: sha256:2a3ac74de8ac51e534e3f6a60de482b82d1b34d21a91c8b96a55a3b7f84e5e6f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 构造保留定向数据的步骤要求，没有存在性或性质定理。
+    previous_atom_id: ab2985c91c6060955e68d0a91430ad8f5a099db5cefbedd495ba918da51f31d9
+    next_atom_id: 0003b5f2b3ae7824c64c0d5ca48b3a96efae6014f7518d78ab31e6f9dc6bbbfd

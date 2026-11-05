@@ -1,0 +1,5 @@
+source_id = "cdso-incidence-moments-and-capacity-phases"
+path = "docs/develop/theory/CDSO_INCIDENCE_MOMENTS_AND_CAPACITY_PHASES.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

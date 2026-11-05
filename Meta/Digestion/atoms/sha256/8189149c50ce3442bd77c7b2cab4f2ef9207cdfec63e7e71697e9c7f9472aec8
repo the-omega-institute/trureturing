@@ -1,0 +1,29 @@
+**Corollary 17.6 (Boundary strata and the continuum after relabeling).** Under (17.1), each labeled marginal pattern has exactly three vertex laws. A simplex vertex has four positive pair-omission masses, a relative interior point of an edge has five, and a relative interior point of the simplex has six. All these laws also have the same $n+1=a-1$ positive singleton-omission masses. Two minimizing laws are related by a label permutation if and only if, after mapping their recovered $P,j$ to one another, their parameter triples $(b_i)_{i\in P}$ differ by a permutation. Consequently a full set of representatives for all minimizing laws modulo relabeling is
+
+$$
+0\le b_1\le b_2\le b_3,\qquad b_1+b_2+b_3=\zeta.
+\tag{17.37}
+$$
+
+It is the nondegenerate closed triangle with vertices
+
+$$
+(0,0,\zeta),\qquad (0,\zeta/2,\zeta/2),
+\qquad (\zeta/3,\zeta/3,\zeta/3).
+\tag{17.38}
+$$
+
+In particular the continuum survives relabeling.
+
+**Proof.** The three internal pair masses in (17.30) always exceed zero. Of the other three pair masses, respectively one, two or three are positive at a vertex, in an edge interior, or in the simplex interior. Equation (17.31) supplies all singleton positivities. A permutation relating two laws must map their actual marginal vectors to one another, hence must map their recovered top triples and intermediate labels. The only remaining action on (17.29) is the permutation of the three top labels; permutations of lower labels do not affect $b$. Conversely every permutation of $b$ is induced by such a label permutation. Sorting the triple therefore gives a unique representative. To verify the triangle description directly, any sorted triple in (17.37) is the convex combination of the three vectors in (17.38) with coefficients
+
+$$
+\frac{b_3-b_2}{\zeta},\qquad
+\frac{2(b_2-b_1)}{\zeta},\qquad
+\frac{3b_1}{\zeta},
+$$
+
+which are nonnegative and sum to one. The vertices are not collinear because $\zeta>0$. ∎
+
+The nonlinear all-law optimum and the complete actual-law fibre correspondence in Theorem 17.5 are deductions for the common law of Definition 1.1; the attributed weak-duality, finite-Jensen and matching-polytope statements supply only the indicated intermediate steps. No conclusion here extends to $\lambda=3/2$ or $\lambda=2$, their adjoining boundary layers, smaller $a$, a least sufficient $A(\eta)$, unrestricted rare/dense competition, or realization by a finite graph with prescribed budgets. The full text of Zhao–Zhao, DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26), is not an input; its possible overlap remains unassessed. No worldwide priority assertion is made.
+

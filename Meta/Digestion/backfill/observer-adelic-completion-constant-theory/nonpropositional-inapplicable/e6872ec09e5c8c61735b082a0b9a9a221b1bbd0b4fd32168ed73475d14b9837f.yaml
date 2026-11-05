@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e6872ec09e5c8c61735b082a0b9a9a221b1bbd0b4fd32168ed73475d14b9837f
+  normalized_sha256: sha256:e6872ec09e5c8c61735b082a0b9a9a221b1bbd0b4fd32168ed73475d14b9837f
+cas_ref: sha256:e6872ec09e5c8c61735b082a0b9a9a221b1bbd0b4fd32168ed73475d14b9837f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 三个尺度分别回答什么问题的清单片段，仅问局部规范违约有多强，没有给出数值或定理。
+    previous_atom_id: 2149c4b5d5cf0775c6f27a5b713dd061dd50da2b09146f1320c93b72844cdf2b
+    next_atom_id: 6e53fedb8dbd10e78445cfe9996f2206fb0c01d561064e0108d3ef65f09e0572

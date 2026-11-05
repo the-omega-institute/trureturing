@@ -1,0 +1,249 @@
+**Theorem 3.1 (full-source fixed Markov recovery fails).** For every
+$a,\eta>0$ and every native preparation in Definitions 1.1–1.2, for
+every finite-index $L_{\rm ph}\le(2\pi\mathbb Z)^2$, and separately
+for each $\sigma\in\{0,+\}$, put $\chi=\chi_L^\sigma$ and
+$\mathcal B=\mathcal B_L^\sigma$. There is no Borel probability
+kernel $\Lambda:\mathcal B\rightsquigarrow G$ and conservative
+time-homogeneous Borel Markov semigroup $(Q_t)_{t\ge0}$ on
+$\mathcal B$ satisfying all of
+
+$$
+\begin{gathered}
+\Lambda_b(\chi^{-1}\{b\})=1\quad\hbox{for every }b\in\mathcal B,
+\qquad \Lambda_{b_0}=\delta_e,\\
+(\Lambda T_tf)(b)=(Q_t\Lambda f)(b)
+\quad\hbox{for every }t\ge0,\ b\in\mathcal B,
+\ f\in B_b(G;\mathbb C).
+\end{gathered}
+\tag{3.1}
+$$
+
+Here $T_t$ is the legitimate full source transition kernel of
+Definition 1.1, and $B_b$ denotes all bounded complex Borel functions.
+The link is one fixed kernel, with no density, continuity, finite
+support or computation restriction. The time in both semigroups is
+the same original elapsed time. In particular the result includes
+$d=1$, the bare current native display, under each outside rule.
+
+Proof. Fix either outside rule and suppose (3.1). The proof has four
+source-specific steps.
+
+First, source anchoring forces the invariant disintegration. For
+bounded Borel $g$ on $\mathcal B$, fiber support gives
+$\Lambda(g\circ\chi)=g$. Evaluating (3.1) at $b_0$ gives, as
+probability measures,
+
+$$
+T_t(e,\cdot)=Q_t(b_0,\cdot)\Lambda,\qquad
+Q_t(b_0,\cdot)=\chi_*T_t(e,\cdot).
+\tag{3.2}
+$$
+
+Use the actual source resolvent [S, (116.14)]. With
+
+$$
+b_\lambda=1-\lambda h^{-1}(F+\lambda)^{-1}h,\quad
+d_\lambda=\int b_\lambda\,dm,\quad
+\zeta_\lambda=\lambda\int_0^\infty e^{-\lambda t}T_t(e,\cdot)\,dt,
+\tag{3.3}
+$$
+
+that supplier states $\zeta_\lambda=(b_\lambda/d_\lambda)m$,
+$0\le b_\lambda\le1$, $d_\lambda>0$,
+$b_\lambda\to1$ in $L^2(m)$ and $d_\lambda\to1$ as
+$\lambda\downarrow0$. The last two limits also follow directly by
+applying the spectral theorem to
+$1-b_\lambda=\lambda h^{-1}(F+\lambda)^{-1}h$ and
+$\ker F=0$. No positive spectral gap is required. The use of $F$
+here is exactly the supplied resolvent formula for the full source,
+not replacement of $H$ by $F$.
+
+Integrating (3.2), and writing $\nu_\lambda=\chi_*\zeta_\lambda$,
+gives $\zeta_\lambda=\nu_\lambda\Lambda$. For the total variation
+norm of signed measures,
+
+$$
+\|\zeta_\lambda-m\|_{\rm var}
+\le\frac{\|b_\lambda-1\|_{L^1(m)}+|1-d_\lambda|}{d_\lambda}
+\longrightarrow0.
+\tag{3.4}
+$$
+
+Pushforward and probability kernels contract this norm. Passing to
+the limit proves
+
+$$
+\nu=\chi_*m,\qquad m=\nu\Lambda.
+\tag{3.5}
+$$
+
+Together with fiber support, (3.5) is the disintegration of the joint
+law $(\chi,\operatorname{id})_*m$. For example, on rectangles its
+value is $\int_B\Lambda_b(A)\,\nu(db)$ because $\chi(p)=b$
+$\Lambda_b$-almost surely. Thus the link has been identified on
+the relevant measure class without assigning countable weights to
+the continuous $z$ fibers in (2.3).
+
+Second, this disintegration reduces the full semigroup. Let
+$U:L^2(\nu)\to L^2(m)$ be $Ug=g\circ\chi$. It is an isometry;
+Jensen and (3.5) extend $\Lambda$ to a contraction in the opposite
+direction. Fiber support gives
+
+$$
+\langle Ug,f\rangle_m=\langle g,\Lambda f\rangle_\nu,
+\qquad U^*=\Lambda,\quad U^*U=I.
+\tag{3.6}
+$$
+
+Selfadjointness and $T_t1=1$ give $mT_t=m$. The bounded-Borel identities imply
+$\nu Q_tg=\nu\Lambda T_tUg=mT_tUg=\nu g$, so $Q_t$ too extends
+to an $L^2(\nu)$ contraction. Intertwining and (3.6) yield
+
+$$
+Q_t=U^*T_tU=Q_t^*,\qquad U^*T_t=Q_tU^*,\qquad T_tU=UQ_t.
+\tag{3.7}
+$$
+
+The last equality is the adjoint of the middle one, using
+selfadjointness of both semigroups. Consequently
+$\mathcal H=\operatorname{ran}U$ and $\mathcal H^\perp$ reduce
+$T_t$ and its generator $K$. All equalities extend by density from
+bounded inputs. The compression formula also gives strong
+continuity of $Q_t$. For the properly exceptional $N$,
+(3.5) gives $\Lambda_b(N)=0$ for $\nu$-almost every $b$; the
+Hilbert argument therefore uses legitimate versions. The source
+formula (3.2) uses the legitimate $e\notin N$. No claim about an
+ordinary value of an $L^2$ function at $e$ enters this step.
+
+Third, a central period survives every finite cover. The finite
+group $(2\pi\mathbb Z)^2/L_{\rm ph}$ has order $d$, so
+$(0,2\pi d)\in L_{\rm ph}$. Set
+
+$$
+\Delta=d\ell>0,\qquad D(x,y,z,w)=(x,y,z,w+\Delta).
+\tag{3.8}
+$$
+
+Inside the slab, $\vartheta(Dp)=\vartheta(p)+(0,-2\pi d)$;
+hence $\chi(Dp)=\chi(p)$ for either rule (2.2). We use only this
+inside equality, not any assertion about outside fibers. For any
+$q\in\mathcal S\setminus\{e,D^{-1}e\}$ choose a relatively compact
+open box $O$ around $q$ such that $O,DO\subset\mathcal S$ have
+disjoint closures avoiding $e$. No local injectivity of $\chi$ on
+$O$ is required or asserted. Given real
+$\varphi\in C_c^\infty(O)$, set
+
+$$
+W(p)=\varphi(p)/h(p)^2\quad(p\in O),\qquad
+W(Dp)=-\varphi(p)/h(Dp)^2\quad(p\in O),\qquad W=0\text{ otherwise}.
+\tag{3.9}
+$$
+
+Its compact supports avoid $e$, so $hW$ is in the punctured smooth
+core and $A(hW)=C(hW)=0$. Therefore $W\in D(K)$ for the full
+selector (1.3). Translation preserves raw Haar measure, and the
+two weighted integrals cancel against every bounded basic function
+$Ug$. Thus $W\in\mathcal H^\perp$ and reduction gives
+$KW\in\mathcal H^\perp$.
+
+Take any real smooth $f(k,\alpha)$, periodic in $\alpha$ with
+period $2\pi$, compactly supported in $0<k<H_{\rm n}$. Its
+pullback
+
+$$
+v(p)=f(k_0+x,\alpha_0+y/2)\quad(p\in\mathcal S),\qquad
+v(p)=0\quad(p\notin\mathcal S)
+\tag{3.10}
+$$
+
+is a bounded basic function under either outside rule. It is smooth
+across the slab walls since its height support is interior. It need
+not be in $D(K)$. On the compact punctured supports of $W$, the
+actual generator has local expression $K=-\mathcal D_h$, where
+
+$$
+\mathcal D_hv=a\sum_{j=1}^3X_j^2v+\eta\partial_w^2v
+ +2a\sum_{j=1}^3(X_j\log h)X_jv
+ +2\eta(\partial_w\log h)\partial_wv.
+\tag{3.11}
+$$
+
+Local weighted integration by parts, valid on those compact
+supports, gives
+
+$$
+0=\langle v,KW\rangle_m
+ =-\int_O\varphi(p)\{
+                  \mathcal D_hv(p)-\mathcal D_hv(Dp)\}\,d\mu(p).
+\tag{3.12}
+$$
+
+There are no source, wall or infinity boundary terms. This is a
+full-domain test using $W$; it does not differentiate a periodic
+function in an unverified generator domain. Direct differentiation
+of (3.10) gives
+
+$$
+\mathcal D_hv=a f_{kk}+\tfrac a4 f_{\alpha\alpha}
+ +2a(X_1\log h)f_k+a(X_2\log h)f_\alpha.
+\tag{3.13}
+$$
+
+The values of $k$ and $\alpha$ at $p,Dp$ agree modulo the period.
+Since $\varphi$ is arbitrary, (3.12) is pointwise equality of the
+smooth expressions. Smooth tests $f$ can have arbitrary independent
+first jets $f_k,f_\alpha$ at the given interior height and circle
+point, by a local circle chart and cutoffs. The second-order terms
+cancel identically. Since $a>0$, (3.13) forces
+
+$$
+(X_1\log h)(Dp)=(X_1\log h)(p),\qquad
+(X_2\log h)(Dp)=(X_2\log h)(p)
+\quad(p\in\mathcal S\setminus\{e,D^{-1}e\}).
+\tag{3.14}
+$$
+
+Finally, put $g(p)=\log h(Dp)-\log h(p)$ on this punctured slab.
+Central translation commutes with the fields, so (3.14) says
+$X_1g=X_2g=0$. Their bracket is $[X_1,X_2]=\partial_w$;
+therefore $\partial_wg=0$, then
+$\partial_yg=X_2g-x\partial_wg=0$ and $\partial_xg=0$.
+For each fixed $z$, the horizontal slice
+$(-k_0,H_{\rm n}-k_0)\times\mathbb R_y\times\mathbb R_w$ with
+at most the two displayed points removed is connected. A polygonal
+path can avoid finitely many points in this three-dimensional open
+strip. Thus $g$ is constant on each such slice, and
+
+$$
+h(Dp)=c(z)h(p),\qquad 0<c(z)<\infty.
+\tag{3.15}
+$$
+
+There is no need to prove constancy in $z$. For definiteness choose
+one fixed $x_*\ne0$ in the slab, $y=w=0$; the ratio there defines
+$c(z)$ for all $z$ and is smooth, hence measurable.
+
+Choose a bounded open box $E\subset\mathcal S$ whose $x$ interval
+avoids zero and whose $w$ width is less than $\Delta$. Such an
+interval exists for every permitted preparation. The boxes $D^nE$,
+$n\in\mathbb Z$, are pairwise disjoint. Their points and all their
+successive translates avoid both singular points, so iterating
+(3.15) forwards and backwards gives
+
+$$
+\begin{aligned}
+1=\int_Gh^2\,d\mu
+&\ge\sum_{n\in\mathbb Z}\int_{D^nE}h^2\,d\mu\\
+&=\int_E h(p)^2\sum_{n\in\mathbb Z}c(z)^{2n}\,d\mu(p)
+=\infty.
+\end{aligned}
+\tag{3.16}
+$$
+
+Tonelli applies to these nonnegative terms. For every positive
+$c$, the bilateral geometric series diverges: the positive tail
+does when $c\ge1$, the negative tail when $c\le1$.
+The box has positive measure and $h>0$ there. This contradiction
+proves (3.1) impossible. All tests used inside the slab are valid
+separately for each outside convention. $\square$
+

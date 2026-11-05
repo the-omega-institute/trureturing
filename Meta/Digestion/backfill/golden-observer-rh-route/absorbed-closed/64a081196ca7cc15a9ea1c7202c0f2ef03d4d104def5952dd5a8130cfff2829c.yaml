@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:64a081196ca7cc15a9ea1c7202c0f2ef03d4d104def5952dd5a8130cfff2829c
+  normalized_sha256: sha256:64a081196ca7cc15a9ea1c7202c0f2ef03d4d104def5952dd5a8130cfff2829c
+cas_ref: sha256:64a081196ca7cc15a9ea1c7202c0f2ef03d4d104def5952dd5a8130cfff2829c
+coverage_gids:
+  - gid: D5/S3/Zeros/Symmetry/MultiscaleFingerprintAppend.multiscale_fingerprint_append
+    target_statement_id: sha256:901093e8335d01bd27b987571b93bcf7b968a4ca9aca261799b03d875f45e91b
+  - gid: D5/S3/Zeros/Symmetry/MultiscaleFingerprintAppend.two_scale_collision_separation
+    target_statement_id: sha256:c017fb0af1ab33469cf8d90321f0378b80b3f902549fd8f678f566ce773cc533
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 099b66f1b2f740ae46e241f5f8ccb25a5979036fd42f7577028f1f954268e1d4
+    - 2908c6060e2655559923aac22b004364257d1011495a01cad1222fa587ac2036
+    - bf9e43afff4449c2bf836ccf95eee4b52545388f351841f8e907de7096440a20
+    - a6e5264d045fe8d2d1f5d9777e4f7e927a884f0e75cc8c531ea6dbb0f1e00fce

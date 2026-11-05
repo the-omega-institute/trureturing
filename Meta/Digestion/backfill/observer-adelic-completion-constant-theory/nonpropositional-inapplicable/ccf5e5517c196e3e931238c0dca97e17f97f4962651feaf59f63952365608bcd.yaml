@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ccf5e5517c196e3e931238c0dca97e17f97f4962651feaf59f63952365608bcd
+  normalized_sha256: sha256:ccf5e5517c196e3e931238c0dca97e17f97f4962651feaf59f63952365608bcd
+cas_ref: sha256:ccf5e5517c196e3e931238c0dca97e17f97f4962651feaf59f63952365608bcd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列举 inverse-branch observable 这一通道类型，不断言其存在。
+    previous_atom_id: 9291629dcb94aec4fea20f587d1469dead2b400f215f48d4cdac7663df32eaa2
+    next_atom_id: 8a2cda1e658953e382dd19d8b45843b4dcfba68bf539f96ff720fed4c2a04437

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5972fbc72538a5c45e48735c81c9591f04a4cbeddad1a6c30cecec2aac96b360
+  normalized_sha256: sha256:5972fbc72538a5c45e48735c81c9591f04a4cbeddad1a6c30cecec2aac96b360
+cas_ref: sha256:5972fbc72538a5c45e48735c81c9591f04a4cbeddad1a6c30cecec2aac96b360
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 《圣作选粹》XXVII 的潜能、镜灯比喻及启示条件解释；没有概率量或数学关系断言。
+    previous_atom_id: 049540dd3b0c7a2b8bc8862e2b92e0e9ee071dde34d1d7792ec1c7d984c84603
+    next_atom_id: 1bf0cc8487a80478c042c80d931a5fb114fc03c95492644c6c8d66bc9c800daa

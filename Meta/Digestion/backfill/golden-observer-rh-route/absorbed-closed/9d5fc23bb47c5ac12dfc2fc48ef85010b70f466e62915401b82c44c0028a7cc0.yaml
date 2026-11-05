@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:9d5fc23bb47c5ac12dfc2fc48ef85010b70f466e62915401b82c44c0028a7cc0
+  normalized_sha256: sha256:9d5fc23bb47c5ac12dfc2fc48ef85010b70f466e62915401b82c44c0028a7cc0
+cas_ref: sha256:9d5fc23bb47c5ac12dfc2fc48ef85010b70f466e62915401b82c44c0028a7cc0
+coverage_gids:
+  - gid: D5/S3/Weil/ZeroSum.truncatedZeroSum_tendsto
+    target_statement_id: sha256:c75b514b2dc6986b515e57c283cc498b11b5a9ecd47fe3caf440a5339589d6df
+  - gid: D5/S3/Weil/ZetaBridge/ConvolutionSquareCriticalLine.critical_line_truncated_sum_real_nonnegative
+    target_statement_id: sha256:180116e502120f72d95b7229643efab71d78862048b128c262174b7e4d31d1e6
+  - gid: D5/S3/Weil/ZetaBridge/ConvolutionSquareCriticalLine.critical_line_zero_summand_real_nonnegative
+    target_statement_id: sha256:7f14a35b01ea59b3a598cb971fd8dd15749cd080ee2f31072ff24292da863884
+  - gid: D5/S3/Weil/ZetaBridge/RhImpliesWeilPositivity.riemannHypothesis_implies_o6WeilPositivityStatement
+    target_statement_id: sha256:e404c4220959fdcc223cd27b976778366fe50d498e3d9c5e1a3fd012f10d22e0
+  - gid: D5/S3/Weil/ZetaBridge/RhLocatesZeroData.zeroData_zero_on_critical_line_of_rh
+    target_statement_id: sha256:dab2692f26d116b280b72038fb62ef822b04836707d89fd7b7df31b24dca2cba
+receipts:
+  unresolved_subitems: []

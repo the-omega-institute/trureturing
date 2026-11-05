@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:72e6d5d8ee40bcfeda208c811e8b3c494af56a8ed852a18ffc094c77cf210cfd
+  normalized_sha256: sha256:72e6d5d8ee40bcfeda208c811e8b3c494af56a8ed852a18ffc094c77cf210cfd
+cas_ref: sha256:72e6d5d8ee40bcfeda208c811e8b3c494af56a8ed852a18ffc094c77cf210cfd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Atom is a proposed formalization file-path plan under a section heading and fenced text block; it names future modules and contains no standalone mathematical assertion.
+    previous_atom_id: 1f37fea70cd468a90977a55f9c5962ffe6fc40e3c57c78cc8f9aea060808f800
+    next_atom_id: 4a245e59aca6ff0af1ec917d02de6993ac07009e44b7f76e1e07729860854daf

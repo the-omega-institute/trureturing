@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:16f052f9b472faf0e5fe26b571a845fc0677304fd48c759f3f58f0702506b9dc
+  normalized_sha256: sha256:16f052f9b472faf0e5fe26b571a845fc0677304fd48c759f3f58f0702506b9dc
+cas_ref: sha256:16f052f9b472faf0e5fe26b571a845fc0677304fd48c759f3f58f0702506b9dc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该行提出能量选择及实验标定研究问题，没有给出数学能量律或实验值。
+    previous_atom_id: 0ef0a1ab5f715125ed64faa178d05f92b57966d4145981191ae7251c2c1c15ab
+    next_atom_id: 7064841932e21de0b484058b36bf36c35a7562d2e65c0557be2d047a594b1705

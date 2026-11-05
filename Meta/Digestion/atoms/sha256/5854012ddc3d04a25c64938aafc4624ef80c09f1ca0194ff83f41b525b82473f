@@ -1,0 +1,79 @@
+**Theorem 28.2 (one-sided collision of the complete terminating record).**
+For every deterministic protocol of Definition 28.1, every rational
+entrance $x$ on which it terminates has a distinct rational entrance
+$x'=x+\epsilon\mathbf1$, $\epsilon>0$, with the identical complete
+terminating record, local state and stopping decision. This holds for
+fixed QN, and separately for arbitrary finite adaptively requested
+precisions. The final trees and contexts agree, while their fields differ
+by $\epsilon v$, where $v\ge0$ and $v$ is strictly positive on every
+original vertex. It also supplies a counterexample to an all-nuisance
+guarantee for the robust variant by its admissible zero-nuisance runs.
+
+Proof. Freeze one actual finite terminating run, including its input
+frames, adaptive choices, full replies and local execution. On its fixed
+prefix the field, as a function of the initial vector $z$, has form
+
+$$
+F_i z+c_i,\qquad
+F_i\in\mathbb Z_{\ge0}^{N_i\times N_0},\quad c_i\in\mathbb Q^{N_i}.
+\tag{28.4}
+$$
+
+Initially $F_i$ is the identity. Add changes only $c_i$; Tick
+left-multiplies both terms by the current nonnegative integer adjacency;
+successful growth zero-includes both terms; identity operations and
+refusals preserve them. Thus (28.4) follows by induction, with all matrix
+dimensions belonging to this same finite run.
+
+At successful Read $i$ let the frozen scalar be $a_i z+d_i$, with
+$a_i\ge0$ an integer row, and let its actual bin width be $h_i>0$.
+Here $h_i=h$ for QN and $h_i=2^{-p_i}$ for (28.3). Put
+
+$$
+q_i=\left\lfloor(a_i x+d_i)/h_i\right\rfloor,
+\qquad \sigma_i=h_i(q_i+1)-(a_i x+d_i)>0.
+\tag{28.5}
+$$
+
+Every upper slack is strictly positive, even when the original value is
+on the closed lower wall of its bin, and also for negative values.
+For each nonzero $a_i$ require
+
+$$
+0<\epsilon<\frac{\sigma_i}{a_i\mathbf1}.
+\tag{28.6}
+$$
+
+There are finitely many positive rational bounds. Choose one positive
+rational below all of them; if there are none choose any positive
+rational. At $x+\epsilon\mathbf1$ each sampled value has increased
+nonnegatively and remains strictly below the same upper wall. It remains
+at or above the same lower wall, so its entire floor integer agrees.
+Rows $a_i=0$ give identical values without a bound.
+
+The frozen path is now justified on this one alternative entrance, not
+assumed common. Equal complete previous replies and local states force
+the same next input bytes, operands, precision, selector and local
+choices. The graph and roster are the same; therefore guards, range,
+malformed/proper-prefix behavior and grants agree. At a Read, (28.5)–
+(28.6) give the same whole reply, hence the same framing and completion.
+Other results are field independent. Induction gives the same path,
+including stop and output, for the entire finite execution.
+
+Let $F$ be its final homogeneous map and $v=F\mathbf1$. Initially this
+vector is positive on all original vertices. Growth preserves their
+values and all their original edges. Each original vertex has an
+original neighbor since the initial tree is connected and $N_0\ge2$.
+A Tick therefore preserves strict positivity at each original vertex;
+elsewhere it preserves nonnegativity. Common Adds cancel from the
+difference. Consequently the final difference is $\epsilon v$ with
+the stated nonzero positive support. For the robust variant choose
+zero nuisance at every Read in both runs; that is a permitted pair of
+realizations. $\square$
+
+This argument uses positivity of the homogeneous dependence instead of
+continuity of floor at its walls. The off-boundary premise of
+[FinitePrefixLocalConstancy](../../../D5/S3/Observer/SymbolicStability/FinitePrefixLocalConstancy.lean)
+is not imposed at (28.5). Nor does §19's two-legal-output open-neighborhood
+argument change this deterministic interface or the law (28.1).
+

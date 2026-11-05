@@ -48,10 +48,15 @@ jobs:
         shell: bash
         run: bash tools/scripts/workflow/ci-entry.sh
 
+      - name: Read the pinned .NET SDK version
+        id: dotnet-sdk
+        run: |
+          version="$(jq -er '.sdk.version' global.json)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
       - name: Set up the pinned .NET SDK
         uses: actions/setup-dotnet@v5
         with:
-          global-json-file: global.json
+          dotnet-version: ${{ steps.dotnet-sdk.outputs.version }}
 
       - name: Build the candidate cache owner with locked dependencies
         run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Lean/StrataLint.Lean.csproj

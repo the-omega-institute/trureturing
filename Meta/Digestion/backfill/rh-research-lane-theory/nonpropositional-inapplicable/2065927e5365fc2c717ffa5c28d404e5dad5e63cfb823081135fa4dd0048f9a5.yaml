@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2065927e5365fc2c717ffa5c28d404e5dad5e63cfb823081135fa4dd0048f9a5
+  normalized_sha256: sha256:2065927e5365fc2c717ffa5c28d404e5dad5e63cfb823081135fa4dd0048f9a5
+cas_ref: sha256:2065927e5365fc2c717ffa5c28d404e5dad5e63cfb823081135fa4dd0048f9a5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本片只是“当前系统已有两个严格结构”的分类引介，两种结构的数学陈述分别在后续 atom。
+    previous_atom_id: d49d939dcaca884511f42953d091c959353d42f45d01c8909412e90f7eff1765
+    next_atom_id: 735913d4f64b53b04c3a6f1c180ad6bc9859ebe5d0fd11ac1eb75ccb61a6f7a0

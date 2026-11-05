@@ -1,0 +1,41 @@
+**定义 91.1（固定源、时间词与一个控制类型）。** 保留 (54.1) 的五维 $H$、等距 $B$、$U,W,\xi,e,f,q,r$ 及 $E=qq^\dagger$。在本节以后，$N$ 专指一个酉矩阵，不指 (54.1) 的子空间 $\ell^\perp$。固定
+
+$$
+\begin{gathered}
+0<d<1,\qquad c=d/2,\qquad \sin(2\theta)\ne0,\qquad P_\xi=\xi\xi^\dagger,\\
+a=Uq,\quad g=Uf,\quad
+\psi=\sqrt d\,a+\mathrm i\sqrt{1-d}\,g,\quad
+\rho_0=\psi\psi^\dagger,\\
+V_j=U\exp(\mathrm i\theta W)W^j,\qquad
+A_j=\tfrac12\operatorname{Ad}_{V_j}\quad(j=0,1),\\
+N\in U(3),\qquad [N,P_\xi]\ne0,\qquad A_N=\operatorname{Ad}_N.
+\end{gathered}
+\tag{91.1}
+$$
+
+这里 $A_j$ 是 qutrit 上的 CP 分支映射；(54.7) 的五维 Kraus 算子在本增补中记为 $\widehat K_{\theta,j}$，避免把算子与超算子混同。$N$ 是额外给定、已安装且可重复的同一个确定性控制类型；其存在和取得是合同前提。两个原生随机分支仍是原来的同一个仪器，角度始终固定。
+
+对字母表 $\{0,1,N\}$ 上的时间词 $w=b_1\cdots b_n$，最左字母最早作用，置
+
+$$
+\begin{gathered}
+U_0=V_0,\quad U_1=V_1,\quad U_N=N,\qquad
+U_w=U_{b_n}\cdots U_{b_1},\\
+A_w=A_{b_n}\cdots A_{b_1}
+=2^{-k(w)}\operatorname{Ad}_{U_w},\qquad
+k(w)=\#\{t:b_t\in\{0,1\}\},\\
+p(w,1)=\operatorname{Tr}(EA_w\rho_0),\qquad
+p(w,0)=\operatorname{Tr}((I_3-E)A_w\rho_0).
+\end{gathered}
+\tag{91.2}
+$$
+
+空词的 $U_\varnothing=I_3$、$A_\varnothing=\mathrm{id}$、$k(\varnothing)=0$。每个词的原始总质量为
+
+$$
+p(w,0)+p(w,1)=2^{-k(w)}.
+\tag{91.3}
+$$
+
+词中的 $0,1$ 指预定仪器时序中实际保留的标签事件，不是可强迫发生的操作。某个位置的 $N$ 在该次仪器使用数之后固定执行，与此前出现的随机标签无关；比较一个词的坐标不丢弃同一时序中的其他历史。
+

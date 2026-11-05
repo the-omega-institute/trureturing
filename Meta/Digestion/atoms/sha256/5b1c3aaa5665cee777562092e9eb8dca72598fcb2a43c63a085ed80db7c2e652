@@ -1,0 +1,19 @@
+**Definition 5.1 (The listed unordered pair classes).** Let $\mathcal L$ be
+the set of unordered pairs of graph-isomorphism classes represented by
+
+$$
+\{C_{(5,4,3)},C_{(4,5,3)}\}
+\quad\text{and}\quad
+\{C_{(5,h,h,4,3)},C_{(4,h,h,5,3)}\}\qquad(h\geq1).
+$$
+
+Graph isomorphisms allow arbitrary relabeling; unordered pairs allow
+exchange of their members. Reversal of a composition is already included
+because it induces a graph isomorphism. This is exactly the listed
+closure of [P1, Remark 3.11] and [R2, `pairIso`, `listed`]. The positive
+parameter $h$ has no upper bound. The all-$h$ specialization assertion
+for its five-part members is given by [R1, `result`], and the failure
+of exhaustiveness is given by [R2, `result`], using the pair
+$(2,2,2,2,2,1,4,3)$ and $(2,2,3,2,3,4,2)$. Neither assertion is a new
+conclusion of the following theorem.
+

@@ -1,0 +1,55 @@
+**命题 70.2（固定原生供应上的全字响应接续）。** 对每个逻辑单位向量 $\xi\in\mathbb C^2\otimes\mathbb C^2$ 及每个 $\delta>0$，存在定义 70.1 的有限正向制备字 $W$ 和整体相位 $\gamma$，使
+
+$$
+ \|\psi_W-e^{i\gamma}J\xi\|_2<\delta.
+ \tag{70.3}
+$$
+
+在码上，两个实际地址 $K_4,K_5$ 分别精确作用为 Bob 逻辑位上的
+
+$$
+ K_P=\zeta\begin{pmatrix}1&0\\0&\zeta\end{pmatrix},\qquad
+ K_Q=\zeta[I+(\zeta-1)Q],\qquad
+ Q=\begin{pmatrix}x&xy\\xy&x^2\end{pmatrix}=ee^*,\quad e=(y,x)^T.
+ \tag{70.4}
+$$
+
+两者保码，$K_Qe=\zeta^2e$，而 $\overline{\langle K_P,K_Q\rangle}$ 包含 $SU(2)$。式 (70.3) 是闭包中的可逼近性，不把 $J\xi$ 宣称为某个有限字的精确输出。
+
+对满足 (69.1) 的任意 $f$ 和 $D=1024$，定义
+
+$$
+ c_f=\min_{D^{-1/2}\le r\le1}f(r)>0,\qquad
+ \omega_f(t)=\sup_{\substack{r,r'\in[0,1]\\|r-r'|\le t}}|f(r)-f(r')|.
+ \tag{70.5}
+$$
+
+若两个物理单位向量满足 $\|\psi-e^{i\gamma}\phi\|_2\le t\le1$，则对任意全部原始字的事件 $E\subseteq\Omega_{10}$，
+
+$$
+ |P_f(E\mid\psi)-P_f(E\mid\phi)|
+ \le \frac{2D\omega_f(t)}{c_f},\qquad \omega_f(t)\longrightarrow0\quad(t\downarrow0).
+ \tag{70.6}
+$$
+
+对 (70.2) 两设置边缘差的误差，右端可用 $4D\omega_f(t)/c_f$。此界包括实际字在码外的全部响应；不先把码外振幅丢掉再归一。
+
+证明。完整复用 [v15](AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md) 定理 6.1–6.2，取其中 $n=2$、$m=7$。其 $4n+2=10$ 站点码逐字就是 (70.1)，八个非平凡 Fibonacci 任意子、总荷真空的标准块码就是其四维逻辑输入。第 $i$ 个编织生成元精确对应中心 $j=i-1$，$1\le i\le7$，故所需地址恰在 $0,\ldots,6$ 内。固定末端 $b_7=1,b_8=0$ 及左端 $b_{-1}=1$ 正是该对应的边界，不改用全零链的初始化合同。
+
+选一个逻辑酉 $U\in U(4)$ 满足 $U|00\rangle=\xi$，将其按 v15 的证明延拓为真空路径扇区上的酉
+$\widetilde U=J_{\rm block}UJ_{\rm block}^*+(I-J_{\rm block}J_{\rm block}^*)$。
+该定理消费 Freedman–Larsen–Wang，[math/0103200，§6 定理 6.2](https://arxiv.org/html/math/0103200#S6.Thmthm2) 的零亏格、八个非平凡标记情形；其例外 $g+n=1$ 不在此处。真空边界封口及 v15 的旁观末位对应保持同一表示。射影密度给所需编织字与整体相位；逐字母对应和 $K^{-1}=K^9$ 将所有逆替换成同一地址九次正向调用。v15 的算符范数保证施于初态即给 (70.3)。计算中可离开四维码，只有最终近似保证；完整合法路径扇区及所有实际输出均保留，不用精确无泄漏纠缠字替代这一步。
+
+在码上 $b_3=1,b_4=0$，所以中心 $4$ 的投影块为 $n_{b_5}$，给 $K_P$；$b_4=b_6=0$，中心 $5$ 的块为 $Q$，给 $K_Q$。两地址均不翻转固定填充位，故等式在整个码上成立。$y^2+x^2=1$ 给 $ee^*=Q$ 及本征关系。闭包结论直接消费 v15 定理 4.3；无需重证该二维密度，也不由它单独推断多体制备密度。这里没有最短字长、最小站点数或物理制备费用的断言。
+
+对响应接续，紧区间正性给 $c_f>0$，紧区间连续性给一致连续。任一 $D$ 维单位向量至少有一个坐标模长不小于 $D^{-1/2}$，故 $Z_f\ge c_f$。每个坐标的模长差不超过 $t$，因此事件分子 $N$ 与总分母 $Z$ 各相差至多 $D\omega_f(t)$。以带撇号表示另一向量，用 $0\le N'/Z'\le1$ 得
+
+$$
+ \left|\frac NZ-\frac{N'}{Z'}\right|
+ \le\frac{|N-N'|}{Z}+\frac{N'}{Z'}\frac{|Z'-Z|}{Z}
+ \le\frac{2D\omega_f(t)}{c_f}.
+ \tag{70.7}
+$$
+
+相位不影响模长。$B_s$ 酉，施于两向量后距离保持；对两设置各用一次 (70.6) 并用三角不等式即得差值界。这一证明从 (69.2) 直接得到，未把 Born 的迹距离或概率误差保证迁移给 $f$。∎
+

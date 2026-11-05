@@ -1,0 +1,54 @@
+**Definition 15.1 (fixed endpoint, excursion marks and added source information).**
+Retain without alteration Definitions 7.1 and 11.1, including every
+$a,\eta>0$, $g_c=16\sqrt{a\eta}$, the unit-source degree-$-3$
+$\Gamma$, raw Haar measure $\mu$, the entire complex selector (112.5),
+$h$, $m=h^2\mu$, $J_h$, $H$, $K$ and their original clock. In
+particular $m(G)=1$. In §§15--19 write [GL] for
+[Guarded lift limits and diffusion selection](FIB_NATIVE_GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md);
+[N] keeps its original meaning from Definition 1.1. Write $M=G\setminus\{e\}$ and use exactly the
+source-killed supplier
+
+$$
+ A_0=J_h^{-1}FJ_h,\qquad P_t^0=J_h^{-1}e^{-tF}J_h,
+ \qquad R_\lambda^0=(A_0+\lambda)^{-1}.
+\tag{15.1}
+$$
+
+Here $A_0$ is only a new notation for [S, (116.11)], not a
+replacement for $K$. All discounts $\lambda>0$ refer to original
+elapsed time. With $E_F$ the spectral resolution of $F$, put
+
+$$
+ \nu(B)=\langle h,E_F(B)h\rangle_{L^2(\mu)},\qquad
+ q_t=J_h^{-1}Fe^{-tF}h,\qquad
+ \kappa(t)=\int_{(0,\infty)}s e^{-ts}\,\nu(ds),\quad t>0.
+\tag{15.2}
+$$
+
+The measure $\nu$ is a probability measure with $\nu(\{0\})=0$.
+The symbol $q_t$ denotes an $L^2(m)$ density; it assigns no value
+$h(e)$.
+
+A returning mark consists of a duration $0<\zeta<\infty$ and a
+continuous path $\omega:[0,\infty)\to G$ with
+$\omega(0)=\omega(\zeta)=e$, $\omega(t)\in M$ for $0<t<\zeta$,
+and $\omega(t)=e$ after $\zeta$. Its four coordinates, including $z$,
+are retained. Denote this standard Borel space by $\mathcal W$.
+One can realize it as a Borel subset of
+$(0,\infty)\times C([0,\infty),G)$: avoidance on compact subintervals
+of $(0,\zeta)$ is expressed by positive minima of the distance to
+$e$, using rational subintervals. For killed cylinder expressions only,
+put $\omega(t)=\Delta$ when $t\ge\zeta$ and set every test on $M$
+equal to zero at $\Delta$.
+
+The additional source premise in this construction is sampling a
+Poisson random measure on $(0,\infty)\times\mathcal W$ with the
+intensity specified below, including its complete real-valued marks
+and labels. This is a declared stochastic source, not a consequence
+of bare finite FIB commands. The construction does not take a full
+endpoint trajectory as its random input. Such a trajectory will be
+constructed from these marks. Exact mark access, including the
+infinitely many small marks, is an information premise. The hidden
+$z$ coordinate is retained source information, with no additional
+native actuator or readout.
+

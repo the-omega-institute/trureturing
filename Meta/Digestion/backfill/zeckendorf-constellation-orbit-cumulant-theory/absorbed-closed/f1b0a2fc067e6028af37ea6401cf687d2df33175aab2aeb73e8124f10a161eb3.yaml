@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f1b0a2fc067e6028af37ea6401cf687d2df33175aab2aeb73e8124f10a161eb3
+  normalized_sha256: sha256:f1b0a2fc067e6028af37ea6401cf687d2df33175aab2aeb73e8124f10a161eb3
+cas_ref: sha256:f1b0a2fc067e6028af37ea6401cf687d2df33175aab2aeb73e8124f10a161eb3
+coverage_gids:
+  - gid: D5/S3/Analytic/GermWindow/GoldenGermWindowLineDichotomy.golden_continued_germ_line_zero_iff_of_rh
+    target_statement_id: sha256:4fc315c9a5c75f568cd6c5a89eb23a1fffa60fe8a6f958a85f2756cbcb4893ca
+receipts:
+  unresolved_subitems: []

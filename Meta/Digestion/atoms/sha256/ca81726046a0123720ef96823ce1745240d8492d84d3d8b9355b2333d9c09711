@@ -1,0 +1,22 @@
+**Definition 51.1 (four expressions at returned cuts).** Fix the initialized
+root binding, service entry, grants and Ready domain of Definition 47.2.
+Bare source space $S_0$ is the oriented support of actual source edges;
+bare source boundary $B_0$ is their actual terminal-address antichain,
+including the unary-marker distinction, as in AA Definition 17.3.
+The local compressed annotations $\mathcal R$ consist only of the
+source-located live rank contents and their absent-coordinate convention.
+Define
+
+$$
+S_r=(S_0,\mathcal R),\qquad B_r=(B_0,\mathcal R).
+\tag{AAII.12}
+$$
+
+These annotations are actual local branch records, not an unrestricted
+copy of input, output or controller chronology. Time $T_g$ is the
+complete actual successful $P/S$ word, as in AA Definition 21.1;
+its causal membership order is the separately defined $T_c$. Memory
+$M_r$ is the retained source and live local record backing with its
+currently callable seven-request driver and rights. Raw unused object
+names and obsolete scratch contents are not semantic readouts.
+

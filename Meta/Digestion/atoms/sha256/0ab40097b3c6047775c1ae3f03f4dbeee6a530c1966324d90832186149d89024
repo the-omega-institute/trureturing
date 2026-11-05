@@ -1,0 +1,145 @@
+**定理 11.1（指定缺陷站点的精确节点因子）。** 对任意整数 $r,m\ge3$，令 $L=rm$、$q=(m-1)r+1$，在 $\mathbb Z/L\mathbb Z$ 上取定义 6.1 的势
+
+$$
+U_i=\begin{cases}-1,&i\equiv0\pmod r\ \text{或}\ i=q,\\1,&\text{其余情形}。\end{cases}
+$$
+
+令 $t$ 为不定元，$K=\mathbb R(t)$，并记
+
+$$
+H=\Delta_L+t\operatorname{diag}(U),\qquad
+p=\det(\lambda I_L-H),\qquad
+Q=\det(\lambda I_{L-1}-H^{(q)}),\qquad
+g=\operatorname{monic\_gcd}_{K[\lambda]}(p,Q).
+$$
+
+这里 $H^{(q)}$ 是同时删除第 $q$ 行与第 $q$ 列所得的实际主子矩阵，其余对角元保持 $2+tU_i$。沿用约定 2.2、2.4，置
+
+$$
+a=2-\lambda+t,\qquad b=2-\lambda-t,\qquad
+\sigma_r=bS_{r-1}(a)-2S_{r-2}(a),\qquad
+N=r\left\lfloor\frac{m-1}{2}\right\rfloor.
+$$
+
+则在 $K[\lambda]$ 中有精确的首一恒等式
+
+$$
+\boxed{\quad g=(-1)^N\Psi_m(\sigma_r).\quad}
+$$
+
+因而 $\deg_\lambda g=N$，且 $g$ 无平方因子。
+
+**证明。** 令 $\widetilde U_i=-1$ 当且仅当 $i\equiv0\pmod r$，其余站点取 $1$，并令
+
+$$
+H_0=\Delta_L+t\operatorname{diag}(\widetilde U),\qquad
+p_0=\det(\lambda I_L-H_0).
+$$
+
+由 $\widetilde U_q=1$，有 $H=H_0-2tE_{qq}$。删除第 $q$ 行列后，两矩阵完全相同。行列式对第 $(q,q)$ 元的线性给出
+
+$$
+Q=\det(\lambda I_{L-1}-H_0^{(q)}),\qquad
+p=p_0+2tQ,\qquad
+\operatorname{monic\_gcd}(p,Q)=\operatorname{monic\_gcd}(p_0,Q).
+\tag{11.1}
+$$
+
+这里保留的是圈的主子矩阵，而非把删点后端点的对角元改成 $1$ 的路 Laplace 矩阵。零振幅不受在位秩一扰动影响，是此恒等式的本征向量表述；均匀圈上的对应见 S. Roy，[*A spectral viewpoint on the single defect tight-binding chain*](https://arxiv.org/html/2607.29467v1)，§2.1–2.2、式 (1)–(4)、(10)：其跃迁系数取 $\gamma=1$，背景常数对角元 $c$ 对应能量平移 $E=\lambda-c$，其缺陷强度对应 $2t$。此处 $H_0$ 的对角元具有周期 $r$，式 (11.1) 直接来自上述行列式线性。
+
+在周期背景 $\widetilde U$ 上，从状态 $Z_{q+1}=(z_{q+1},z_q)^{\mathsf T}$ 向前传递一个周期。因为 $q\equiv1\pmod r$，依次经过的站点 $q+1,\ldots,q+r$ 的系数是 $r-2$ 个 $a$、一个 $b$、一个 $a$。故该周期的传递矩阵为
+
+$$
+C=T(a)T(b)T(a)^{r-2},\qquad
+\det C=1,\qquad
+\operatorname{tr}C=\operatorname{tr}\bigl(T(a)^{r-1}T(b)\bigr)=\sigma_r,
+\tag{11.2}
+$$
+
+最后一个等式使用命题 6.9。从 $q+1$ 到 $q+L+1$ 恰经过 $m$ 个相同周期，所以背景的整圈单值矩阵是 $C^m$。由事实 3.2，实际周期边界与实际主子式满足
+
+$$
+(-1)^Lp_0=\operatorname{tr}(C^m)-2,\qquad
+(-1)^{L-1}Q=(C^m)_{21}.
+\tag{11.3}
+$$
+
+周期单值的标准对应见 G. Teschl，[*Jacobi Operators and Completely Integrable Nonlinear Lattices*](https://www.mat.univie.ac.at/~gerald/ftp/book-jac/jacop.pdf)，式 (1.28)–(1.30)、§7.1 式 (7.3)–(7.10)：取该书 Jacobi 系数 $a_{\mathrm T}(n)=-1$、$b_{\mathrm T}(n)=2+t\widetilde U_n$、谱参数 $z=\lambda$；交换该书状态 $(z_n,z_{n+1})^{\mathsf T}$ 的两个坐标，即得到本卷的 $(z_{n+1},z_n)^{\mathsf T}$ 与 $T(2+t\widetilde U_{n+1}-\lambda)$。该书判别式是单值迹的一半，因而单周期判别式为 $\sigma_r/2$，整圈的周期条件对应式 (11.3) 中的迹 $2$。
+
+取 $K$ 的代数闭包 $F$，令 $\lambda_*\in F$ 为 $p,Q$ 的任一公共根。下文把 $a,b,C,\sigma_r$ 均在 $\lambda=\lambda_*$ 处取值，仍用同一字母表示。由式 (11.1)、(11.3)，矩阵 $M=C^m$ 满足
+
+$$
+M_{21}=0,\qquad \operatorname{tr}M=2,\qquad \det M=1.
+$$
+
+若 $M_{11}=\alpha$、$M_{22}=\delta$，则 $\alpha+\delta=2$、$\alpha\delta=1$，从而 $(\alpha-1)^2=0$。域中没有非零幂零元，故 $\alpha=\delta=1$，于是
+
+$$
+C^me_1=e_1,\qquad e_1=(1,0)^{\mathsf T}.
+\tag{11.4}
+$$
+
+设
+
+$$
+s=S_{r-2}(a),\qquad v=S_{r-3}(a),\qquad h=bs-v.
+$$
+
+事实 3.2 的常系数情形给出 $T(a)^{r-2}$ 的第一列为 $(s,v)^{\mathsf T}$；也可由事实 4.1 与 $S_n$ 的递推直接读出。因此
+
+$$
+Ce_1=\begin{pmatrix}ah-s\\h\end{pmatrix}.
+\tag{11.5}
+$$
+
+现证明在这个公共根处 $h\ne0$。若 $h=0$，则 $Ce_1=-s e_1$，由式 (11.4) 得 $(-s)^m=1$，特别地 $s\ne0$。由于 $r\ge3$，多项式
+
+$$
+\bigl(-S_{r-2}(X)\bigr)^m-1\in\mathbb R[X]
+$$
+
+次数为 $m(r-2)>0$，且以 $a$ 为根。因此 $a$ 在 $\mathbb R$ 上代数，$s,v$ 也在 $\mathbb R$ 上代数。又 $h=0$ 与 $s\ne0$ 给出 $b=v/s$，故 $b$ 在 $\mathbb R$ 上代数。这迫使
+
+$$
+t=\frac{a-b}{2}
+$$
+
+在 $\mathbb R$ 上代数，与 $t$ 是不定元矛盾。于是式 (11.5) 的第二个坐标确实非零。
+
+以事实 4.1 计算式 (11.4)，有
+
+$$
+0=(C^m-I)e_1
+ =S_{m-1}(\sigma_r)Ce_1-
+   \bigl(S_{m-2}(\sigma_r)+1\bigr)e_1.
+\tag{11.6}
+$$
+
+取第二个坐标，因 $h\ne0$，得 $S_{m-1}(\sigma_r)=0$；再取第一个坐标，得 $S_{m-2}(\sigma_r)+1=0$。命题 4.2 (1) 给出这两个一元多项式的首一最大公因式为 $\Psi_m$。将其 Bézout 恒等式代入 $\sigma_r$，得到
+
+$$
+\Psi_m\bigl(\sigma_r(\lambda_*,t)\bigr)=0.
+\tag{11.7}
+$$
+
+这一步同时排除带边：$S_{m-1}(2)=m$、$S_{m-1}(-2)=(-1)^{m-1}m$ 均不为零，故任何公共根均不满足 $\sigma_r=\pm2$；标量单周期矩阵 $C=\pm I$ 已包含在被排除的 $h=0$ 情形中。
+
+还须控制最大公因式的重数。主子式 $Q\in\mathbb R[t][\lambda]$ 关于 $\lambda$ 首一且次数为 $L-1$。在 $t=0$ 处，它是对角元为 $2$、相邻非对角元为 $-1$ 的 $L-1$ 阶路矩阵的特征多项式。因此
+
+$$
+Q(\lambda,0)=\prod_{j=1}^{L-1}
+ \left(\lambda-2+2\cos\frac{\pi j}{L}\right).
+\tag{11.8}
+$$
+
+这些根两两不同：对 $1\le j\le L-1$，正弦向量 $y_i=\sin(\pi ji/L)$，$1\le i\le L-1$，在边界 $y_0=y_L=0$ 下给出本征值 $2-2\cos(\pi j/L)$，而余弦在 $(0,\pi)$ 上严格单调。故 $\operatorname{Res}_\lambda(Q,\partial_\lambda Q)$ 在 $t=0$ 的取值不为零；首一性使次数在这个取值下保持，结式的取值与系数取值可交换。于是 $Q$ 在 $K[\lambda]$ 中无重根，$g\mid Q$ 也无重根。
+
+对 $g$ 的任一首一不可约因子 $\pi$，在 $F$ 中取其一个根。它是 $p,Q$ 的公共根，式 (11.7) 表明 $\pi\mid\Psi_m(\sigma_r)$。因为 $g$ 无重根，合并全部不可约因子便得到反向整除
+
+$$
+g\mid\Psi_m(\sigma_r)\qquad\text{于 }K[\lambda].
+\tag{11.9}
+$$
+
+另一方面，命题 4.9 已给出无平方因子的首一多项式 $(-1)^N\Psi_m(\sigma_r)$ 整除 $g$；此处直接使用该结论。由 $S_{r-1}$ 首一且次数为 $r-1$，$bS_{r-1}(a)-2S_{r-2}(a)$ 关于 $\lambda$ 的首项为 $(-1)^r\lambda^r$，而 $\Psi_m$ 首一且次数为 $\lfloor(m-1)/2\rfloor$，故 $\Psi_m(\sigma_r)$ 的首项为 $(-1)^N\lambda^N$。两向整除与首一性遂给出所述恒等式；次数与无平方因子性随即成立。∎
+

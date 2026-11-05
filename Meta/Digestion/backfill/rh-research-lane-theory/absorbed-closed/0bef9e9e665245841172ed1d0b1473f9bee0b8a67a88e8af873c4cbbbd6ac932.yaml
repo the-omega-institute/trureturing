@@ -1,0 +1,18 @@
+fingerprints:
+  raw_sha256: sha256:0bef9e9e665245841172ed1d0b1473f9bee0b8a67a88e8af873c4cbbbd6ac932
+  normalized_sha256: sha256:0bef9e9e665245841172ed1d0b1473f9bee0b8a67a88e8af873c4cbbbd6ac932
+cas_ref: sha256:0bef9e9e665245841172ed1d0b1473f9bee0b8a67a88e8af873c4cbbbd6ac932
+coverage_gids:
+  - gid: D5/S3/Observer/AgencyHolonomy/PrimeSwapCurvature.prime_swap_curvature_spec
+    target_statement_id: sha256:18b89ebe2fc2826acc14d9d38093154e1dc8929613dde984b7d9c3c6cef78ecf
+  - gid: D5/S3/Weil/HolonomyBridge/OffLineOrbitParityDecomposition.off_line_orbit_parity_decomposition
+    target_statement_id: sha256:e9c3bd1747b450a0dae5ea505a9e8496a7d3b27181a1a728ca80b9677c8d03bd
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - da5b9430e17d39a13304b3236b65f61b8658da722086fd0a5692cd8ee9e38b84
+    - c3643a7966cfbda004421311a033183a808dd60193eb8112aadd664b3df8242d
+    - ca830f905b605a8a982c978b0c04b300b89438a9ecb2a3232b86f92be3b4c0d4
+    - 5ed9fa7c7ef5773ced3e4e6964acd0722ce9b5b6a29114e0dd1257417247bb90
+    - 46b62fcfb311e98564e4a8fba5d73586ad3cd5b25cf6897ab19ae2d5cb9c11aa
+    - 53121283b5b8d4dd1d98538f25b62423d39608273a4b3912e08241026aa3cf2d

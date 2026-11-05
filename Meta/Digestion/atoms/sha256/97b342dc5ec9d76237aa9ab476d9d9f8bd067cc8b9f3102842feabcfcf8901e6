@@ -1,0 +1,25 @@
+**Definition 71.1 (four data meanings and their exact domains).** Fix the
+actual opaque root binding, orientation, current authority and the
+source/adapter contract. At a synchronized outer Ready cut with physical
+term $u=J(v)\in\mathcal I$, define the following data using the original
+source meanings of AA §17:
+
+| View | Independently specified content |
+| --- | --- |
+| Space | Actual material address support $S_0(C(u))$, with source edges only |
+| Boundary | Actual terminal-material address antichain $B_0(C(u))$, including beta markers |
+| Time | Actual labelled successful-source causal lifecycle order $E(u)$ of AA Definition 17.1 |
+| Memory | The acquired live canonical word $v$ at the retained callable entry |
+
+Time records event membership, addresses, kinds and causal precedence.
+It does not record a chosen total serial order, refusals, communication,
+controller scheduling or macro boundaries. Space and Boundary do not
+include private record edges. Memory is an actually acquired current word;
+it is not a copy of the whole preparation or outer transcript. The common
+binding/authority context is retained actual material, not secretly part
+of the tree data or something any data conversion manufactures.
+For each view its domain below is precisely its image as $v$ ranges over
+$\mathcal D$, or the restriction to $\operatorname{Desc}(t)$ after a fixed
+entry. Arbitrary finite supports, arbitrary antichains or arbitrary
+labelled orders outside these images are not claimed to have inverses.
+

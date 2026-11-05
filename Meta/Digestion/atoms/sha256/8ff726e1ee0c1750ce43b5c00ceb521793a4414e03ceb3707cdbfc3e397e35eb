@@ -1,0 +1,35 @@
+**Definition 9.1 (The reused analytic family).** Write
+$\Phi(r,b)=(p(r,b),v(r,b))$ for the two acquired responses in
+Definition 2.1 and put $\lambda _0=2/5$. Theorem 7.2 in
+[AURIC–Langlands 语境与谱重构理论](AURIC_LANGLANDS_CONTEXT_AND_SPECTRAL_RECONSTRUCTION_THEORY.md),
+Section 7, “真实碰撞对的一参数延拓”, supplies a real analytic family
+through the exact zero of Theorem 4.3:
+
+$$
+\begin{aligned}
+x(\lambda)&=(b_0(\lambda),r_1(\lambda),b_1(\lambda)),&
+x(\lambda _0)&=(b_{0*},r_{1*},b_{1*}),\\
+W_2(\lambda)&=W(\lambda,b_0(\lambda)),&
+W_3(\lambda)&=W(r_1(\lambda),b_1(\lambda)),\\
+\beta(\lambda)&=(p(\lambda),v(\lambda))
+=\Phi(\lambda,b_0(\lambda)).
+\end{aligned}
+$$
+
+On a connected open interval $I$ containing $\lambda _0$, that theorem
+ensures
+
+$$
+\begin{gathered}
+W_2(\lambda),W_3(\lambda)\in C(\beta(\lambda)),\qquad
+W_2(\lambda)\ne W_3(\lambda),\qquad p(\lambda)\ne24,\\
+m(W_2(\lambda))=m(W_3(\lambda)),\qquad
+a(W_2(\lambda))<a(W_3(\lambda)).
+\end{gathered}
+$$
+
+The family is the branch of the three equations equating $p,v,m$,
+with $r(W_2)=\lambda$; it is not a new interpolation of readings.
+The gains and fixed drifts are exactly those of Definition 2.1.
+The domain of every entire child remains Definition 1.2.
+

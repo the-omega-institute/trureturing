@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.SeriesInequalities;
 
@@ -13,11 +15,38 @@ internal sealed class KarpQuadraticTruncationsDocument : IScribeDocumentDefiniti
         H("Karp-Zhang Quadratic Truncations"),
         Blocks(
             Paragraph(Text(
-                "The targets are r2 and r3 of issue #5969, from Dmitrii Karp and Yi Zhang, "
+                "The two-term r = 3 polynomial and the quadratic with coefficients h0, h1*t and h2*t*(t+3)/2 are truncations of the multiple-Pochhammer series studied by Dmitrii Karp and Yi Zhang, "
                     + "Log-concavity and log-convexity of series containing multiple Pochhammer "
                     + "symbols, Fractional Calculus and Applied Analysis 27 (2024), 458-486, "
                     + "DOI 10.1007/s13540-023-00238-0. The results concern only the specified "
                     + "truncations of Conjectures 1 and 2, not either full series conjecture.")),
+            Describe.Lean(
+                DescribeId.Create("pochhammer-turan-nonneg"),
+                DeclarationHandle.Create(Prefix + "pochhammer_turan_nonneg"),
+                H("Nonnegative equal-degree Pochhammer difference"),
+                StatementSource.FromAuthor(Disp(
+                    All("n", F.Id("Nat"), All("mu", F.Id("Real"),
+                        All("alpha", F.Id("Real"), All("beta", F.Id("Real"),
+                            Implies(Lt(Num(0), F.Id("mu")),
+                                Implies(Le(Num(0), F.Id("alpha")),
+                                    Implies(Le(Num(0), F.Id("beta")),
+                                        Le(Num(0), Subtract(
+                                            Multiply(Poch(Add(F.Id("mu"), F.Id("alpha"))),
+                                                Poch(Add(F.Id("mu"), F.Id("beta")))),
+                                            Multiply(Poch(F.Id("mu")),
+                                                Poch(Add(Add(F.Id("mu"), F.Id("alpha")), F.Id("beta"))))))))))))))),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Asymptotics/karpzhang2023pochhammer")),
+                Blocks(Paragraph(Text(
+                    "Equation (6), printed page 4 of arXiv:2305.09029v3: “Note that [log((µ)ₙᵣ)]″ = ψ′(µ + rn) − ψ′(µ) ≤ 0,” "
+                        + "where ψ is the digamma function. This log-concavity gives the four-point form: "
+                        + "the product at µ+α and µ+β dominates the product at µ and µ+α+β "
+                        + "for a positive base and nonnegative shifts. For each degree at least two, "
+                        + "take the source index to be one and its multiplier r to be the degree. "
+                        + "Degree zero gives equality; degree one gives the difference αβ ≥ 0. "
+                        + "Each Pochhammer symbol is Mathlib's ascending Pochhammer polynomial "
+                        + "in degree n evaluated at its parameter."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("r2-polynomial"),
                 DeclarationHandle.Create(Prefix + "r2Polynomial"),
@@ -71,4 +100,18 @@ internal sealed class KarpQuadraticTruncationsDocument : IScribeDocumentDefiniti
                         + "shifts are arbitrary nonnegative reals, extending the integer-shift "
                         + "scope of the paper's Theorem 3 for this truncation."))),
                 DescribeRole.Theorem))));
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, Seq(Open, F.Id(name), Colon, Sp, type, Close), Comma, Sp, body);
+    private static Formula Poch(Formula t) =>
+        App(Qualified("Polynomial", "eval"), t,
+            App(F.Id("ascPochhammer"), F.Id("Real"), F.Id("n")));
+    private static Formula Implies(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    private static Formula Le(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula Lt(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula Qualified(string owner, string name) =>
+        Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name)));
 }

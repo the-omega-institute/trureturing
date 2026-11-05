@@ -1,0 +1,65 @@
+#### 定理 7.3（三个正交朝向的稳定完整覆盖）
+
+令 $u_1,u_2,u_3$ 正交，在每个 $u_a^\perp$ 上放同一种 trine，
+得到九个条件概率 $q_{aj}$。则
+
+<a id="eq-trineinverse"></a>
+
+$$
+\begin{aligned}
+r&=\sum_{a,j}q_{aj}n_{aj},
+\end{aligned}
+\tag{14}
+$$
+
+<a id="eq-trinepurity"></a>
+
+$$
+\begin{aligned}
+\sum_{a,j}q_{aj}^2&=1+\frac{|r|^2}{3},
+\end{aligned}
+\tag{15}
+$$
+
+<a id="eq-trinedistance"></a>
+
+$$
+\begin{aligned}
+\sum_{a,j}\bigl(q_{aj}(r)-q_{aj}(s)\bigr)^2
+&=\frac{|r-s|^2}{3}.
+\end{aligned}
+\tag{16}
+$$
+
+**证明。**
+
+$\sum_aP_{u_a}=2I$。
+将 [(13)](#eq-trineone) 的中式对 $a$ 求和即得 [(14)](#eq-trineinverse)；
+末式求和得 [(15)](#eq-trinepurity)。
+对差向量 $d=r-s$，
+
+$$
+\sum_{a,j}(\Delta q_{aj})^2
+=\frac19d^{\mathsf T}\Bigl(\sum_{a,j}n_{aj}n_{aj}^{\mathsf T}\Bigr)d
+=\frac19d^{\mathsf T}(3I)d.
+$$
+
+这就是 [(16)](#eq-trinedistance)。 ∎
+
+这给完整状态识别和各向同性的误差度量。
+若将三个设置以等概率选择且保留设置标签，
+九个联合效果 $F_{aj}=E_{aj}/3=(I+n_{aj}\cdot\sigma)/9$ 构成单个 POVM，
+$p_{aj}=q_{aj}/3$，并有
+
+$$
+r=3\sum_{a,j}p_{aj}n_{aj},\qquad
+\operatorname{Tr}\rho^2=\frac{27}{2}\sum_{a,j}p_{aj}^2-1.
+$$
+
+主动设置选择及其记录是输入；被动更换坐标没有产生三份实验数据。
+这里的完备性针对同一制备态的精确概率族。
+实验估计需要重复制备的样本及设置标签，有限样本只给估计值；
+对单个未知态先后测三次，并不产生这里的九个精确概率。
+
+<a id="statement-7-4"></a>
+

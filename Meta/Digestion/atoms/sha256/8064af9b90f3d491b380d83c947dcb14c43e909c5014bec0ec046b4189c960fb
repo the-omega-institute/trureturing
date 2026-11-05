@@ -1,0 +1,51 @@
+## 10. Literature correspondence and the exact surviving scope
+
+**Mathematical citation 10.1 (standard tools and source-specific content).**
+The intertwining convention is the standard one in S. Pal and
+M. Shkolnikov, [*Intertwining diffusions and wave equations*,
+arXiv:1306.0857v2, §1, Definitions 1--2](https://arxiv.org/html/1306.0857v2#S1).
+Their stochastic link $L$ is $\Lambda$ here, their upstairs semigroup
+$P_t$ is the present $T_t$, their downstairs semigroup $Q_t$ has the
+same role as here, and their equation $Q_tL=LP_t$ is (7.10). The
+initial conditional law at the distinguished base source is exactly
+$\Lambda_{b_0}=\delta_e$. The state spaces here are $G$ and
+$\mathcal B_\ell$, with a link concentrated on a countable covering
+fiber, not a density with respect to four-dimensional Lebesgue
+measure. Consequently the differentiable link-density and joint
+diffusion hypotheses of their Theorems 1--2 are not assumed or used.
+No regularity of $Q_t$ is supplied by analogy with their SDEs.
+
+Their convention (1.1)--(1.2) puts a factor $1/2$ before a covariance
+matrix. In the present local formula that matrix is twice
+
+$$
+\begin{pmatrix}
+a&0&0&0\\
+0&a&0&ax\\
+0&0&a&0\\
+0&ax&0&ax^2+\eta
+\end{pmatrix},
+\tag{10.1}
+$$
+
+and the drift is precisely the first-order part of (9.6). This is
+only the parameter correspondence off the source. The full operator
+and source response are (7.2) and (8.5), not an SDE extension inferred
+from that matrix. The discount $\lambda$ in (8.5) multiplies the
+original time $t$; it does not rescale it.
+
+Uniqueness of conditional laws on standard Borel spaces, contraction
+of total variation by kernels, Jensen's inequality, Hilbert adjoints
+and the spectral theorem are established tools. Their elementary
+uses are shown in (8.5)--(9.5). The source input that makes them
+decisive is specifically [S, (116.12)--(116.14)] for the actual selector
+(112.5). Proposition 5.3 shows why an arbitrary mixing law cannot
+be assumed reversible in the general killed native class. Proposition
+8.1 proves that premise for this conservative source-anchored candidate;
+the adjoint step then reuses Proposition 5.4's mechanism. The endpoint
+application and its source-forced weights (8.2)--(8.4), together with
+the full-domain test (9.4)--(9.9), are repo-derived ordinary deductions.
+Neither standard intertwining theory nor the reused periodic-source
+observations alone supply that deduction. No worldwide priority or
+Lean certification is asserted.
+

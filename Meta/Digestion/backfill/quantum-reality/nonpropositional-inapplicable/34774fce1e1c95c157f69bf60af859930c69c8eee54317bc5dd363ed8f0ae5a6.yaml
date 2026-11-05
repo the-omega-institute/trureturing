@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:34774fce1e1c95c157f69bf60af859930c69c8eee54317bc5dd363ed8f0ae5a6
+  normalized_sha256: sha256:34774fce1e1c95c157f69bf60af859930c69c8eee54317bc5dd363ed8f0ae5a6
+cas_ref: sha256:34774fce1e1c95c157f69bf60af859930c69c8eee54317bc5dd363ed8f0ae5a6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 仅披露未运行 Lean 及符号核验不替代一般证明和经验验证，不声称一个新的数学结论。'
+    previous_atom_id: 78f71ca862824eca23190787f5e0fe91f0c555d4bf6dc3b19ea53cde03a5be2f
+    next_atom_id: 5d5b647a7fdbc6c8e6103dd774d6b536b9dc717bacff5ba682e5d6d10b384121

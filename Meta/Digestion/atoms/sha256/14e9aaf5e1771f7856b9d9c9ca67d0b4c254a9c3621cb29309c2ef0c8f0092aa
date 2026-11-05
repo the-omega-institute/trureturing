@@ -1,0 +1,4 @@
+**Corollary 48.2 (no uniform positive exact-resolution margin).** Under Theorem 48.1 the minimum distance between distinct endpoints cannot have a positive lower bound independent of $L$, either in native Euclidean coordinates or in the fixed predictive coordinates. Consequently bounded native amplitude and finite vector dimension do not supply a uniform finite-precision exact chronology instrument.
+
+Proof. A bounded box in finite-dimensional Euclidean space can be partitioned into finitely many boxes of diameter less than any specified $\varepsilon>0$. Once $(H+1)^L$ exceeds that finite count, two distinct endpoints lie in one box. The predictive image is another bounded finite-dimensional set because $\mathcal O_N$ is a fixed linear map, so the same argument applies there. This proves the absence of a uniform margin, without postulating a noise distribution or asserting impossibility for a differently specified approximate task. $\square$
+

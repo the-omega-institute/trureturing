@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3ef8fc9c5869c272a7b1cef40325457f392398b40680a2d8b76e9111a2721f47
+  normalized_sha256: sha256:3ef8fc9c5869c272a7b1cef40325457f392398b40680a2d8b76e9111a2721f47
+cas_ref: sha256:3ef8fc9c5869c272a7b1cef40325457f392398b40680a2d8b76e9111a2721f47
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 隐藏纤维的术语列表项“model space”，本条没有独立数学断言。
+    previous_atom_id: ec6c84f0ce0ac95fbcd079694d860803f3966ba7e54c580077f0b68ba18c538f
+    next_atom_id: f3603133dab09cd37d167f3119cbec159badc657bcfc5bb63a2b9d05c340a6b1

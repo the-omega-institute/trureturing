@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7cd6737cb28b7f09e8e12f7690f196c7eed47b480ff0026ef28aaa25047a7642
+  normalized_sha256: sha256:7cd6737cb28b7f09e8e12f7690f196c7eed47b480ff0026ef28aaa25047a7642
+cas_ref: sha256:7cd6737cb28b7f09e8e12f7690f196c7eed47b480ff0026ef28aaa25047a7642
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Research proposal to advance MMM through checkable correspondences. The text gives historical interpretation, bibliographic scope or methodological advice, rather than a mathematical assertion.'
+    previous_atom_id: 3bad942a89c652186d662f3bf1705814b06138c69198148f4aa797a4bb0d92cc
+    next_atom_id: a96a70e0c729df756011fefb872291bf9861b56b42d087ab08c6a090548c3bee

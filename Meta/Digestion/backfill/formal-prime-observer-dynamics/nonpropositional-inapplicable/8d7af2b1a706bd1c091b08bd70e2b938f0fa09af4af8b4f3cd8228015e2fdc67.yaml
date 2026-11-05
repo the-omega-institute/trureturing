@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8d7af2b1a706bd1c091b08bd70e2b938f0fa09af4af8b4f3cd8228015e2fdc67
+  normalized_sha256: sha256:8d7af2b1a706bd1c091b08bd70e2b938f0fa09af4af8b4f3cd8228015e2fdc67
+cas_ref: sha256:8d7af2b1a706bd1c091b08bd70e2b938f0fa09af4af8b4f3cd8228015e2fdc67
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: model sensitivity 及减号是前述概念性设计草图的词项，不陈述可检验的数学等式或不等式。
+    previous_atom_id: cbff55f7ee838c68703ff68522316faeaf448003766f635bdc35ddeee320a622
+    next_atom_id: fd65ad302c72f9c8c67e057fa11798e90cd54bdd0ec9ca95615d1a4666f54609

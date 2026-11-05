@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cf85c528109d3970041a94935c9e7e8a13b75e84bfd157378cc9a1b7ced55bef
+  normalized_sha256: sha256:cf85c528109d3970041a94935c9e7e8a13b75e84bfd157378cc9a1b7ced55bef
+cas_ref: sha256:cf85c528109d3970041a94935c9e7e8a13b75e84bfd157378cc9a1b7ced55bef
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 是第529节的章节标题和统一层的行文导语；四个新层是文稿组织描述，没有陈述特定对象上的数学命题。
+    previous_atom_id: 212e0d1a7d05d5c34a4f09a1c64d5706497e9470fd64cd486c3ac08ad3c469e2
+    next_atom_id: 930718b4d59d24e267ef2fd8f909ecdaa583af76cef76ef1401ee9b116a90e94

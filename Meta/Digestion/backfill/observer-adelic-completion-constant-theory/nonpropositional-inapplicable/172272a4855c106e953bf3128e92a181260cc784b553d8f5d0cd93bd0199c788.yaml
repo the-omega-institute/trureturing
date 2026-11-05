@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:172272a4855c106e953bf3128e92a181260cc784b553d8f5d0cd93bd0199c788
+  normalized_sha256: sha256:172272a4855c106e953bf3128e92a181260cc784b553d8f5d0cd93bd0199c788
+cas_ref: sha256:172272a4855c106e953bf3128e92a181260cc784b553d8f5d0cd93bd0199c788
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Terminology assigning the name sticky cluster to frequencies within inverse-window scale; no actual zeta clustering is asserted.
+    previous_atom_id: 9e5743040f80228b8ee5351b964d50dfc6f537e13997e96b85c06477e4cae1d5
+    next_atom_id: d0f8b25eb252d85caae1e45200193dccd69e2288767eeecdbe7bba17b24c232e

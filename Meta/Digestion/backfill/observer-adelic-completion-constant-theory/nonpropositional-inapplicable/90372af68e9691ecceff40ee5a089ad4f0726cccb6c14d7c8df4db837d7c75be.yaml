@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:90372af68e9691ecceff40ee5a089ad4f0726cccb6c14d7c8df4db837d7c75be
+  normalized_sha256: sha256:90372af68e9691ecceff40ee5a089ad4f0726cccb6c14d7c8df4db837d7c75be
+cas_ref: sha256:90372af68e9691ecceff40ee5a089ad4f0726cccb6c14d7c8df4db837d7c75be
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 受“目标是”统领的“证明 completion tower 紧性”待证任务项；未断言紧性已经成立。
+    previous_atom_id: 4df0f35c060b0bb39c9bf9cc13032ae52ba716014010bb3b12504367a96cf694
+    next_atom_id: 6ae8ec4b2fc01c390432ba8d25c5f2fb7156d1947f99ecc2eaaf6f96fe5074ef

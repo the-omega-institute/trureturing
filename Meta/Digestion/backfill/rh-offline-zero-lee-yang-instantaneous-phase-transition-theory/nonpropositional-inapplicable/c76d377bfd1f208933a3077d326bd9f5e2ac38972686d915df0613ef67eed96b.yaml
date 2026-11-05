@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c76d377bfd1f208933a3077d326bd9f5e2ac38972686d915df0613ef67eed96b
+  normalized_sha256: sha256:c76d377bfd1f208933a3077d326bd9f5e2ac38972686d915df0613ef67eed96b
+cas_ref: sha256:c76d377bfd1f208933a3077d326bd9f5e2ac38972686d915df0613ef67eed96b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：把指数值能量定义为占据数与 Fibonacci 权的有限和，不附加双射断言。
+    previous_atom_id: 6c24b0ded79d6b889f545d6db751f6a1aa4ae3f716431b14a37a466f0d221cc9
+    next_atom_id: f11b5c2687750d9f209f1d65565a18add7442907267d946ac55417f058631e5a

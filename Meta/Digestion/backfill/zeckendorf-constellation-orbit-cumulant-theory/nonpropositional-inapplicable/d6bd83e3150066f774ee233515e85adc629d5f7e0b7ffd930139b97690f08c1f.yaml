@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d6bd83e3150066f774ee233515e85adc629d5f7e0b7ffd930139b97690f08c1f
+  normalized_sha256: sha256:d6bd83e3150066f774ee233515e85adc629d5f7e0b7ffd930139b97690f08c1f
+cas_ref: sha256:d6bd83e3150066f774ee233515e85adc629d5f7e0b7ffd930139b97690f08c1f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the moment generator M_H as an expectation of the displayed product; the final word expansion introduces the following atom without asserting its coefficient identity here.
+    previous_atom_id: 9eb43e0abba30548f3f6b75575b2bef0a300c92de8b54cf4d777ae127eaa21a3
+    next_atom_id: 19aaf4b8d6f7510f0d0d63184d1020dbe1c4a214944e8ed6d37ebd2f604cc23d

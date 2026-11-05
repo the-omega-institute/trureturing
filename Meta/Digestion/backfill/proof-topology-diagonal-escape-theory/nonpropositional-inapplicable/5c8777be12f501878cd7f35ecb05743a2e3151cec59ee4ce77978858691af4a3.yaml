@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5c8777be12f501878cd7f35ecb05743a2e3151cec59ee4ce77978858691af4a3
+  normalized_sha256: sha256:5c8777be12f501878cd7f35ecb05743a2e3151cec59ee4ce77978858691af4a3
+cas_ref: sha256:5c8777be12f501878cd7f35ecb05743a2e3151cec59ee4ce77978858691af4a3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只有有限路径律与条件路径律节标题。
+    previous_atom_id: fdd984c71570e2fc301504a6749492a137c0f7ac2aed71857bf748c8bd11652b
+    next_atom_id: fcb3c88c13eb4e57f184cb3eacae1409192d039cb443a956f9fc9292fddb9d2f

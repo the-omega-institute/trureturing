@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5877adf2dfac3a2eff4cd44e360b546badf265b44b0d3ecf098945789e644852
+  normalized_sha256: sha256:5877adf2dfac3a2eff4cd44e360b546badf265b44b0d3ecf098945789e644852
+cas_ref: sha256:5877adf2dfac3a2eff4cd44e360b546badf265b44b0d3ecf098945789e644852
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅定义带标签排列源、受限观察、独立随机规则和损失合同；均匀性和最小风险在后续命题另述。
+    previous_atom_id: 0751ffc5d3fdc722a900135762389238485f72eb3f9297c7cc6481239fc52994
+    next_atom_id: 33ee5de7167e6d2b0ba61ccd20193e78230636ae8ebff0f30063e9d4a778e9c2

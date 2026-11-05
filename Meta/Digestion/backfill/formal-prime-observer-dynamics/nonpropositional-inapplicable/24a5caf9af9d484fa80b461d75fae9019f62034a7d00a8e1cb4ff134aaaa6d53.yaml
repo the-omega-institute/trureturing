@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:24a5caf9af9d484fa80b461d75fae9019f62034a7d00a8e1cb4ff134aaaa6d53
+  normalized_sha256: sha256:24a5caf9af9d484fa80b461d75fae9019f62034a7d00a8e1cb4ff134aaaa6d53
+cas_ref: sha256:24a5caf9af9d484fa80b461d75fae9019f62034a7d00a8e1cb4ff134aaaa6d53
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Upstream-only closure, pinned Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679: Nat.clog_le_iff_le_pow and Nat.le_pow_clog characterize the least k with N <= p^k for prime p (1<p); Real.natCeil_logb_natCast identifies that least natural exponent with the natural ceiling of log_p N. The enclosing section fixes prime p and the positive finite window N. D5 search covered all public/private Lean declarations, with cutoff/first-threshold, clog, ceiling/logb, p-adic depth, prime powers and capacity shapes; FiveModePredictiveLawGeometry.Core.cutoff_first_nonstrict concerns a logistic minority threshold and supplies no subgoal of this exact exponent minimum. FiniteIdentificationOutputCapacity bounds family cardinality but does not prove this least-exponent identity.'
+    previous_atom_id: ddb22927bce0d8ee316dcd29707ca2fed9b56f1f761f86065409694c07579876
+    next_atom_id: e97dfea752f6ab38c1cd9c71934c17815af6a9fac3128e295aae74d68b4b3707

@@ -1,0 +1,33 @@
+#### 定理 4.4（配分函数的变分与对偶）
+
+有
+
+$$
+\nabla\Psi=\mathbb{E}_pT=(X,Y,Z,\kappa),\qquad
+\nabla^2\Psi=\operatorname{Cov}_p(T)>0.
+$$
+
+对正均值域中的完整四维均值 $m$ 及其唯一概率律 $p_m$，
+
+$$
+\Psi^*(m)=\sup_\vartheta\{\vartheta\cdot m-\Psi(\vartheta)\}
+=\sum_sp_m(s)\log p_m(s)=-H(p_m).
+$$
+
+<a id="proof-4-4"></a>
+
+**证明。** 
+对有限指数和逐项求导得到均值与协方差。若 $c^T\operatorname{Cov}(T)c=0$，则 $c\cdot T$ 在全支撑上恒定。空模式使该常数为零；三个单模式依次使前三个系数为零，$13$ 模式使最后系数为零，故 Hessian 正定。最后展开
+
+$$
+D\!\left(p_m\middle\Vert p_\vartheta\right) 
+=\sum_sp_m\log p_m-\vartheta\cdot m+\Psi(\vartheta)\ge0.
+$$
+
+匹配的唯一参数取得等号，给出共轭式。
+ ∎
+
+这就是上一稿“预测、递归、变分”在本题的一次具体会合：递归计算配分函数，求导得到读出，凸对偶得到熵目标。一般指数族的背景见 [2](#ref-wj)。
+
+<a id="sec-5"></a>
+

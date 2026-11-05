@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fed9b6cff4706b07904b44cff9c497761639e460b035bfd1bea4a2eec6677615
+  normalized_sha256: sha256:fed9b6cff4706b07904b44cff9c497761639e460b035bfd1bea4a2eec6677615
+cas_ref: sha256:fed9b6cff4706b07904b44cff9c497761639e460b035bfd1bea4a2eec6677615
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 本行将 Prime–Gamma 正因子化列为未闭合桥，是未完成目标而非已证命题。'
+    previous_atom_id: e8a2125f8ea8eb9882045a2139a19aed625bd5d8a2edf46a3880d829ab4b956d
+    next_atom_id: 5df60bdede744f2ffd2495be34b1723af9c969099d6c7eda3e276e396e870ff1

@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:55e65be349d5e9965143652a44b465a3df8dda9d0da16162b339c43b6e5469dd
+  normalized_sha256: sha256:55e65be349d5e9965143652a44b465a3df8dda9d0da16162b339c43b6e5469dd
+cas_ref: sha256:55e65be349d5e9965143652a44b465a3df8dda9d0da16162b339c43b6e5469dd
+coverage_gids:
+  - gid: D5/S3/Divergence/ChannelMonotone.kl_divergence_channel_le
+    target_statement_id: sha256:fabdbd653c5be9b2ca8d9cd33b047e855c06070633a88011073e07acab5e976e
+  - gid: D5/S3/Divergence/ClassicalDPI.classical_dpi_identity
+    target_statement_id: sha256:1b95c362ec72ae6ca8f936a3dc397aed6aa4e609f922c64b0662dab79a09558c
+  - gid: D5/S3/TotalVariation/DataProcessing.total_variation_channel_le
+    target_statement_id: sha256:0fcf09f55b7d4d7d738c0302dadae43da45df416b2af70f466e283909e162ec6
+  - gid: D5/S3/TotalVariation/HellingerDataProcessing.bhattacharyya_channel_le
+    target_statement_id: sha256:0ad04470ae50fc52f4b12e073ee984b2b61fc5d855bc7bac11f8c9a60793e950
+  - gid: D5/S3/TotalVariation/HellingerDataProcessing.hellinger_sq_channel_le
+    target_statement_id: sha256:b1cb783ba3f4566c09131567e8625922cfa8ee9eeb71c1ecb5fb04223782c8ef
+receipts:
+  unresolved_subitems: []

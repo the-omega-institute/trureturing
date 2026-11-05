@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:04db2251bfd232d9f28f7d7dc565b5e75bbf685f845b8f649212b6226e9b3e07
+  normalized_sha256: sha256:04db2251bfd232d9f28f7d7dc565b5e75bbf685f845b8f649212b6226e9b3e07
+cas_ref: sha256:04db2251bfd232d9f28f7d7dc565b5e75bbf685f845b8f649212b6226e9b3e07
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯节标题 PA.1 带输出自动机与继续词等价；仅标识以下条目的主题，不包含量化命题、等式结论或证明断言。
+    previous_atom_id: 5f6915fa89a222c106e4898a2aa5bfdca3643216b042e20ab37f1ff8d12f8052
+    next_atom_id: b9fe5f3675166e3a679bfb5e5f4b29ec8d3d3670d369caef58a763d02966b0ed

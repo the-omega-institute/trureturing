@@ -9,6 +9,95 @@ namespace StrataLint.Tests;
 public sealed partial class WorktreeCommandTests
 {
     [Theory]
+    [InlineData("checkout-timeout")]
+    [InlineData("checkout-nonzero")]
+    [InlineData("checkout-index-lock")]
+    [InlineData("branch-timeout")]
+    [InlineData("add-timeout")]
+    public void FailedInitializationResumesSameDestination(string failure)
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        var target = Path.Combine(repository.Path, "interrupted-init");
+        var failed = WorktreeCommand.Run(repository.Path, InitializationArguments(target),
+            new InitializationFailureRunner(target, failure));
+        Assert.False(failed.Success);
+        using var receipt = JsonDocument.Parse(failed.Error["WORKTREE_FAILED ".Length..]);
+        Assert.Equal(target, receipt.RootElement.GetProperty("target").GetString());
+        Assert.False(string.IsNullOrWhiteSpace(receipt.RootElement.GetProperty("stage").GetString()));
+        Assert.Contains("same", receipt.RootElement.GetProperty("recovery_action").GetString(), StringComparison.Ordinal);
+        for (var attempt = 0; attempt < 2; attempt++)
+        {
+            var recovered = WorktreeCommand.Run(repository.Path, InitializationArguments(target));
+            Assert.True(recovered.Success, recovered.Error);
+            AssertRegisteredAndUsable(repository.Path, target, "lane/math/interrupted-init");
+        }
+        if (failure.StartsWith("checkout-", StringComparison.Ordinal))
+            WorktreeFixtureFile.AssertContent(Path.Combine(target, "README.md"), "partial checkout\n");
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void SuccessfulCanonicalInitializationRefusesAdvancedBase(bool changePin)
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        var target = Path.Combine(repository.Path, "interrupted-init");
+        ProcessOutput Initialize() => TestProcessRunner.Run("dotnet",
+            [typeof(WorktreeCommand).Assembly.Location, "worktree", .. InitializationArguments(target)],
+            repository.Path, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+        var created = Initialize();
+        Assert.Equal(0, created.ExitCode);
+        var creation = WorktreeHookFixture.RunGit(target, "rev-parse", "HEAD");
+        var pin = File.ReadAllText(Path.Combine(target, "lean-toolchain"));
+        Assert.False(File.Exists(Path.Combine(GitWorktreeDirectory.Read(target)!, "locked")));
+        if (changePin)
+            File.WriteAllText(Path.Combine(repository.Path, "lean-toolchain"), "leanprover/lean4:v4.34.2\n");
+        WorktreeHookFixture.RunGit(repository.Path, "add", "lean-toolchain");
+        WorktreeHookFixture.RunGit(repository.Path, "commit", "--allow-empty", "-m", "Advance requested base");
+
+        var reused = Initialize();
+
+        Assert.NotEqual(0, reused.ExitCode);
+        Assert.Contains("incompatible_base", Encoding.UTF8.GetString(reused.StandardError), StringComparison.Ordinal);
+        Assert.Equal(creation, WorktreeHookFixture.RunGit(target, "rev-parse", "HEAD"));
+        Assert.Equal(pin, File.ReadAllText(Path.Combine(target, "lean-toolchain")));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void RestoreFailureRecoversSameDestination(bool interrupted)
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        var target = Path.Combine(repository.Path, "interrupted-init");
+        var arguments = InitializationArguments(target).Where(value => value != "--skip-restore").ToArray();
+        var result = WorktreeCommand.Run(repository.Path, arguments, new RestoreFailureRunner(target, interrupted));
+        Assert.False(result.Success);
+        Assert.Contains("restore", result.Error, StringComparison.Ordinal);
+        var retry = WorktreeCommand.Run(repository.Path, InitializationArguments(target));
+        Assert.True(retry.Success, retry.Error);
+        WorktreeFixtureFile.AssertContent(Path.Combine(target, "retained.txt"), "restore bytes\n");
+    }
+
+    private sealed class RestoreFailureRunner(string target, bool interrupted) : IWorktreeProcessRunner
+    {
+        private readonly RecordingWorktreeProcessRunner inner = new();
+        public ProcessOutput Run(string fileName, IReadOnlyList<string> arguments, string workingDirectory, TimeSpan timeout)
+        {
+            if (fileName == "dotnet" && arguments.FirstOrDefault() == "restore")
+            {
+                File.WriteAllText(Path.Combine(target, "retained.txt"), "restore bytes\n");
+                if (interrupted) throw new TimeoutException("simulated restore interruption");
+                return new ProcessOutput(1, [], Encoding.UTF8.GetBytes("simulated restore failure"));
+            }
+            return inner.Run(fileName, arguments, workingDirectory, timeout);
+        }
+    }
+
+    [Theory]
     [InlineData("branch-timeout")]
     [InlineData("branch-nonzero")]
     [InlineData("branch-rejected")]
@@ -19,7 +108,7 @@ public sealed partial class WorktreeCommandTests
     [InlineData("checkout-timeout")]
     [InlineData("checkout-nonzero")]
     [InlineData("checkout-index-lock")]
-    public void InterruptedInitializationPreservesRecoveryAndAllowsAlternateContinuation(string failure)
+    public void InterruptedInitializationPreservesRecoveryAndResumesInPlace(string failure)
     {
         if (failure == "add-prepared" && OperatingSystem.IsWindows()) return;
         using var repository = new TemporaryDirectory();
@@ -29,24 +118,17 @@ public sealed partial class WorktreeCommandTests
         var runner = new InitializationFailureRunner(target, failure);
         var result = WorktreeCommand.Run(repository.Path, InitializationArguments(target), runner);
         Assert.False(result.Success);
-        Assert.Contains("simulated initialization", result.Error, StringComparison.Ordinal);
-        var createdTree = failure.StartsWith("checkout", StringComparison.Ordinal)
-            || failure is "add-prepared" or "add-timeout" or "add-nonzero";
+        Assert.True(result.Error.Contains("simulated initialization", StringComparison.Ordinal), result.Error);
+        var createdTree = failure != "branch-rejected";
         Assert.Equal(createdTree, Directory.Exists(target));
         Assert.Equal(createdTree, Directory.Exists(WorktreeMetadataPath(repository.Path, target)));
         Assert.Equal(failure == "branch-rejected" ? 1 : 0,
             GitExit(repository.Path, "show-ref", "--verify", "--quiet", $"refs/heads/{branch}"));
-        if (createdTree)
-            Assert.True(File.Exists(Path.Combine(WorktreeMetadataPath(repository.Path, target), "locked")));
-        var alternate = Path.Combine(repository.Path, "alternate-init");
-        var arguments = InitializationArguments(alternate)
-            .Select(argument => argument == "interrupted-init" ? "alternate-init" : argument).ToArray();
-        var retry = WorktreeCommand.Run(repository.Path, arguments,
-            new InitializationFailureRunner(alternate, "none"));
+        var retry = WorktreeCommand.Run(repository.Path, InitializationArguments(target));
         Assert.True(retry.Success, retry.Error);
-        AssertRegisteredAndUsable(repository.Path, alternate,
-            $"{WorktreeCommand.CreationNamespace}/math/alternate-init");
-        WorktreeFixtureFile.AssertContent(Path.Combine(alternate, "README.md"), "# worktree fixture\n");
+        AssertRegisteredAndUsable(repository.Path, target, branch);
+        WorktreeFixtureFile.AssertContent(Path.Combine(target, "README.md"),
+            failure.StartsWith("checkout", StringComparison.Ordinal) ? "partial checkout\n" : "# worktree fixture\n");
     }
 
     [Theory]
@@ -66,7 +148,7 @@ public sealed partial class WorktreeCommandTests
 
         Assert.False(result.Success);
         using var receipt = JsonDocument.Parse(result.Error["WORKTREE_FAILED ".Length..]);
-        Assert.Equal(JsonValueKind.Null, receipt.RootElement.GetProperty("cleanup_error").ValueKind);
+        Assert.Equal(JsonValueKind.String, receipt.RootElement.GetProperty("cleanup_error").ValueKind);
         Assert.False(Directory.Exists(target));
         Assert.False(Directory.Exists(WorktreeMetadataPath(repository.Path, target)));
         Assert.Equal(head, WorktreeHookFixture.RunGit(repository.Path, "rev-parse", "--verify", branchRef).Trim());
@@ -91,7 +173,7 @@ public sealed partial class WorktreeCommandTests
         var runner = new InitializationFailureRunner(target, failure);
         var result = WorktreeCommand.Run(repository.Path, InitializationArguments(target), runner);
         Assert.False(result.Success);
-        Assert.Contains("simulated initialization", result.Error, StringComparison.Ordinal);
+        Assert.True(result.Error.Contains("simulated initialization", StringComparison.Ordinal), result.Error);
         Assert.NotNull(runner.ChangedBranchOid);
         Assert.Equal(runner.ChangedBranchOid,
             WorktreeHookFixture.RunGit(repository.Path, "rev-parse", "--verify", branchRef).Trim());
@@ -161,7 +243,7 @@ public sealed partial class WorktreeCommandTests
         var result = WorktreeCommand.Run(repository.Path, InitializationArguments(target), runner);
 
         Assert.False(result.Success);
-        Assert.Contains("simulated concurrent creator", result.Error, StringComparison.Ordinal);
+        Assert.True(result.Error.Contains("simulated concurrent creator", StringComparison.Ordinal), result.Error);
         WorktreeFixtureFile.AssertContent(Path.Combine(target, "keep.txt"), "concurrent work\n");
         if (foreignLock)
             WorktreeFixtureFile.AssertContent(Path.Combine(WorktreeMetadataPath(repository.Path, target), "locked"),
@@ -184,7 +266,7 @@ public sealed partial class WorktreeCommandTests
         var result = WorktreeCommand.Run(repository.Path, InitializationArguments(target), runner);
 
         Assert.False(result.Success);
-        Assert.Contains("simulated concurrent creator", result.Error, StringComparison.Ordinal);
+        Assert.True(result.Error.Contains("simulated concurrent creator", StringComparison.Ordinal), result.Error);
         WorktreeFixtureFile.AssertContent(Path.Combine(target, "keep.txt"), "concurrent work\n");
         WorktreeFixtureFile.AssertContent(Path.Combine(WorktreeMetadataPath(repository.Path, target), "locked"),
             InitializationFailureRunner.ForeignLock + "\n");
@@ -234,7 +316,7 @@ public sealed partial class WorktreeCommandTests
         var runner = new InitializationFailureRunner(target, "add-timeout");
         var result = WorktreeCommand.Run(repository.Path, InitializationArguments(target), runner);
         Assert.False(result.Success);
-        Assert.Contains("simulated initialization", result.Error, StringComparison.Ordinal);
+        Assert.True(result.Error.Contains("simulated initialization", StringComparison.Ordinal), result.Error);
         Assert.True(Directory.Exists(target));
         Assert.DoesNotContain(runner.Inner.Invocations, call => call.FileName == "git"
             && (call.Arguments.Take(2).SequenceEqual(["worktree", "remove"])
@@ -270,7 +352,7 @@ public sealed partial class WorktreeCommandTests
 
         Assert.Equal(oidLength, head.Length);
         WorktreeFixtureFile.AssertContent(Path.Combine(repository.Path, ".git", "post-checkout.log"),
-            $"{new string('0', oidLength)} {head} 1\n");
+            string.Concat(Enumerable.Repeat($"{new string('0', oidLength)} {head} 1\n", failHook ? 2 : 1)));
         Assert.True(File.Exists(Path.Combine(repository.Path, ".git", "reference-transaction.log")));
         if (failHook)
         {
@@ -335,44 +417,23 @@ public sealed partial class WorktreeCommandTests
                     return rejected;
                 }
             }
-            if ((createBranch && failure == "branch-rejected") || (add && failure == "add-rejected"))
+            if (add && failure == "add-rejected")
+                return new ProcessOutput(1, [], Encoding.UTF8.GetBytes("simulated initialization rejection"));
+            if (createBranch && failure == "branch-rejected")
             {
-                var body = createBranch ? """
+                var hook = WorktreeHookFixture.Install(workingDirectory, "reference-transaction", """
                     if [ "$1" = prepared ]; then
                         echo 'simulated initialization rejection' >&2
                         exit 1
                     fi
-                    """ : """
-                    common=$(git rev-parse --git-common-dir)
-                    metadata="$common/worktrees/interrupted-init"
-                    if [ "$1" = prepared ] && [ -f "$metadata/commondir" ] && [ -f "$metadata/gitdir" ]; then
-                        test -f "$(cat "$metadata/gitdir")"
-                        test ! -f "$metadata/HEAD"
-                        cat "$metadata/locked" > "$common/rejected-initialization.log"
-                        echo 'simulated initialization rejection after linking' >&2
-                        exit 1
-                    fi
-                    """;
-                var hook = WorktreeHookFixture.Install(workingDirectory, "reference-transaction", body + "\n");
-                ProcessOutput rejected;
+                    """ + "\n");
                 try
                 {
-                    rejected = Inner.Run(fileName, arguments, workingDirectory, timeout);
+                    var rejected = Inner.Run(fileName, arguments, workingDirectory, timeout);
                     Assert.NotEqual(0, rejected.ExitCode);
+                    return rejected;
                 }
-                finally
-                {
-                    File.Delete(hook);
-                }
-                Assert.False(Directory.Exists(target));
-                Assert.False(Directory.Exists(WorktreeMetadataPath(workingDirectory, target)));
-                Assert.DoesNotContain($"worktree {LeanCacheGuard.PhysicalPath(target)}\n",
-                    WorktreeHookFixture.RunGit(workingDirectory, "worktree", "list", "--porcelain"), StringComparison.Ordinal);
-                Assert.Equal(add ? 0 : 1, GitExit(workingDirectory, "show-ref", "--verify", "--quiet", branchRef));
-                if (add)
-                    WorktreeFixtureFile.AssertContent(Path.Combine(workingDirectory, ".git", "rejected-initialization.log"),
-                        arguments[arguments.ToList().IndexOf("--reason") + 1] + "\n");
-                return rejected;
+                finally { File.Delete(hook); }
             }
             if (fileName == "git" && arguments.FirstOrDefault() == "reflog" && failure == "branch-receipt-error")
                 return new ProcessOutput(1, [], Encoding.UTF8.GetBytes("simulated branch receipt lookup failure"));
@@ -402,23 +463,11 @@ public sealed partial class WorktreeCommandTests
                 partialArguments[^2] = foreignTarget;
                 var reasonIndex = partialArguments.IndexOf("--reason");
                 if (failure.StartsWith("foreign-", StringComparison.Ordinal)) partialArguments[reasonIndex + 1] = ForeignLock;
-                var hook = WorktreeHookFixture.Install(workingDirectory, "reference-transaction", $$"""
-                    common=$(git rev-parse --git-common-dir)
-                    if [ "$1" = prepared ] && [ -f "$common/worktrees/{{Path.GetFileName(foreignTarget)}}/commondir" ]; then
-                        kill -KILL "$PPID"
-                    fi
-                    """ + "\n");
-                try
-                {
-                    var partial = Inner.Run(fileName, partialArguments, workingDirectory, timeout);
-                    Assert.NotEqual(0, partial.ExitCode);
-                }
-                finally
-                {
-                    File.Delete(hook);
-                }
+                var partial = Inner.Run(fileName, partialArguments, workingDirectory, timeout);
+                Assert.Equal(0, partial.ExitCode);
                 var metadata = WorktreeMetadataPath(workingDirectory, foreignTarget);
-                Assert.False(File.Exists(Path.Combine(metadata, "HEAD")));
+                // A partial registration has linking material but no HEAD.
+                File.Delete(Path.Combine(metadata, "HEAD"));
                 var inventory = WorktreeHookFixture.RunGit(workingDirectory, "worktree", "list", "--porcelain", "-z");
                 var fields = Assert.Single(inventory.Split("\0\0", StringSplitOptions.RemoveEmptyEntries)
                     .Select(record => record.Split('\0')),

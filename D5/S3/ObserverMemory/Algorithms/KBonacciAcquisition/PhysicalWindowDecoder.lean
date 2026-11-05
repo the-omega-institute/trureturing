@@ -285,7 +285,7 @@ theorem exceptional_row_coordinates (m : ℕ) (hm : 3 ≤ m)
   simpa [vertexBit, A, B, C, D] using And.intro h0
     (And.intro hlast (And.intro hpen (And.intro h10 (And.intro h11 h12))))
 
-private theorem terminal01_tail : ∀ (n : ℕ) (word : Fin (n + 2) → Bool) (s : ℕ),
+theorem terminal01_tail : ∀ (n : ℕ) (word : Fin (n + 2) → Bool) (s : ℕ),
     word ⟨n, by omega⟩ = false → word ⟨n + 1, by omega⟩ = true → tailAfter s word = 1 := by
   intro n
   induction n with

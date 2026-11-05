@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:78d9333841b586d0367ea46aec0c9538b44ba9be9900a881ae39542101869f1f
+  normalized_sha256: sha256:78d9333841b586d0367ea46aec0c9538b44ba9be9900a881ae39542101869f1f
+cas_ref: sha256:78d9333841b586d0367ea46aec0c9538b44ba9be9900a881ae39542101869f1f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Application-domain label only: financial data supply chains. It contains no mathematical assertion about any financial process, error bound or realization of the generic delegation theorem.'
+    previous_atom_id: ffaa95ffb5dbec06a10fa3cfba5ead803a4f347d1e59f2d68035d66974f91572
+    next_atom_id: 139b87d848523fb6c3951e9d5133acb395c856df0cf1a8bf761f3acb55f9ab6d

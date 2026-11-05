@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8372f4bcdf82caa1935692f3f5e0200d155fdbd9da58765fc8b6367f58979bd4
+  normalized_sha256: sha256:8372f4bcdf82caa1935692f3f5e0200d155fdbd9da58765fc8b6367f58979bd4
+cas_ref: sha256:8372f4bcdf82caa1935692f3f5e0200d155fdbd9da58765fc8b6367f58979bd4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅记录詹姆斯原典范围、项目对应和研究材料边界；没有新的数学断言。
+    previous_atom_id: 4fa622e645c584e3d2e6f32e59c53ebe9a984f5c5b334f4114d7c48356eab780
+    next_atom_id: 7742d749416305be56c135977907426bd80ed11bed259ec2ecf9f5276dc32a63

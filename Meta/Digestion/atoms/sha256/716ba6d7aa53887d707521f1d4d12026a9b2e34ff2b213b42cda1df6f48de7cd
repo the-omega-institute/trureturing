@@ -1,0 +1,41 @@
+**命题 3.1（由胶合类诱导的五分级）。**
+
+<a id="prop-grading"></a>
+
+以 $\Gamma/L_0\simeq\mathbb F_5$ 标记根空间，有
+
+$$
+\mathfrak g=\bigoplus_{j\in\mathbb F_5}\mathfrak g_j,\qquad
+[\mathfrak g_j,\mathfrak g_k]\subset\mathfrak g_{j+k}.
+$$
+
+令 $V,W\simeq\mathbb C^5$ 为两份标准模，则
+
+$$
+\begin{aligned}
+\mathfrak g_0&=\mathfrak{sl}(V)\oplus\mathfrak{sl}(W),\\
+\mathfrak g_1&=V\otimes\Lambda^2W,\\
+\mathfrak g_2&=\Lambda^2V\otimes W^*,\\
+\mathfrak g_3&=(\Lambda^2V)^*\otimes W,\\
+\mathfrak g_4&=V^*\otimes(\Lambda^2W)^*.
+\end{aligned}
+$$
+
+其维数依次为 $48,50,50,50,50$。
+
+**证明。**
+
+零类含两个 $A_4$ 的 $40$ 个根空间及八维 Cartan 空间，所以得到 $\mathfrak g_0$。
+类 $j$ 的最短权由引理 [2.1](#lem-discriminant) 给出，正是
+$\Lambda^jV\otimes\Lambda^{2j\bmod5}W$ 的权。
+在 $j=1,2,3,4$ 时化简外幂对偶即为所列模块。
+根空间括号在根之和为根时落入该和根空间，否则为零或 Cartan 元，
+故胶合类相加给出分级性质。证毕。
+ □
+
+设 $G$ 为紧连通 E8 群，取其标准紧实型；
+它的中心平凡。令 $\mathfrak h=\mathfrak{su}(5)\oplus\mathfrak{su}(5)\subset\mathfrak k$。
+记 $\zeta=e^{2\pi i/5}$。
+
+<a id="statement-3-2"></a>
+

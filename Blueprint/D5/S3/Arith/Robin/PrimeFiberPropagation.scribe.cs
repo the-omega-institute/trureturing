@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
 
@@ -44,6 +46,24 @@ internal sealed class PrimeFiberPropagationDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "No estimate on sigma beyond its positivity is used. The statement does not decide "
                         + "whether a given edge passes; that is a separate numerical or analytic question."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sigma-prime-power-successor"),
+                DeclarationHandle.Create(Prefix + "sigma_prime_pow_succ"),
+                H("The divisor sum at the next prime power"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, F.Id("q"), Colon, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
+                    Op("Nat", "Prime", F.Id("q")), Sp, Implies, Sp,
+                    Forall, Sp, F.Id("a"), Colon, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
+                    Op("ArithmeticFunction", "sigma", D(1), new Formula.Power(F.Id("q"),
+                        new Formula.Binary(F.Id("a"), FormulaBinaryOperator.Add, D(1)))), Sp, Eq, Sp,
+                    new Formula.Binary(new Formula.Binary(F.Id("q"), FormulaBinaryOperator.Multiply,
+                        Op("ArithmeticFunction", "sigma", D(1), new Formula.Power(F.Id("q"), F.Id("a")))),
+                        FormulaBinaryOperator.Add, D(1))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every prime natural q and natural a, sigma(1,q^(a+1)) equals q*sigma(1,q^a)+1. "
+                    + "The geometric divisor sum gives this recurrence; sigma_mul_prime uses it to compare consecutive prime layers."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("fibre-closure"),
@@ -106,4 +126,6 @@ internal sealed class PrimeFiberPropagationDocument : IScribeDocumentDefinition
                         + "exceeds 5040 is certified this way. A compression at most 5040 needs a separate argument, "
                         + "and integers with six or more distinct primes are not reached."))),
                 DescribeRole.Theorem))));
+    private static Formula Op(string owner, string name, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(F.Id(owner), Dot, F.Id(name))), [.. args]);
 }

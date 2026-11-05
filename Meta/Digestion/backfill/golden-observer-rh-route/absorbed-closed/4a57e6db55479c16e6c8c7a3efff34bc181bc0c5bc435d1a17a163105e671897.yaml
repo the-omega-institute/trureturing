@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:4a57e6db55479c16e6c8c7a3efff34bc181bc0c5bc435d1a17a163105e671897
+  normalized_sha256: sha256:4a57e6db55479c16e6c8c7a3efff34bc181bc0c5bc435d1a17a163105e671897
+cas_ref: sha256:4a57e6db55479c16e6c8c7a3efff34bc181bc0c5bc435d1a17a163105e671897
+coverage_gids:
+  - gid: D5/S3/Weil/ZeroData/UnconditionalCanonicalZeroData.zetaZeroData
+    target_statement_id: sha256:986e7bc0fad340e7c0ed69b916c9e698a0509e307cf8065ec34c13ad6412332a
+  - gid: D5/S3/Weil/ZeroSum.HasZetaZeroMultiplicity
+    target_statement_id: sha256:ebfe98ef88f34177b4d6ffae4b53318b99f5a8df043f17be2cdc1154f6f46965
+  - gid: D5/S3/Weil/ZeroSum.multiplicity_spec
+    target_statement_id: sha256:ec9c488bf14899378407fe738bec328e278c4a13ff47144f6c11bcdec781185b
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b6cf5e12fd88dd44314453de44bc3485ce6b184afd85d981cbf9bf04f6877c62
+  normalized_sha256: sha256:b6cf5e12fd88dd44314453de44bc3485ce6b184afd85d981cbf9bf04f6877c62
+cas_ref: sha256:b6cf5e12fd88dd44314453de44bc3485ce6b184afd85d981cbf9bf04f6877c62
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 仅列协议编译器 C:P→Pphys 的类型作为实现所需数据，无编译正确性结论。'
+    previous_atom_id: 941fa54ba5d61509c30665eeb058d19c5e4a9e7edced3257cf29337bb3ce750f
+    next_atom_id: 06f5008df580df9dab46cf18a172183f71b33979629f7e765a4caf1acb262089

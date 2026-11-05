@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:31eebcee0e48bd65ac5d44b3ea5882f0273ecf3d012811b51e9e94136b7b4507
+  normalized_sha256: sha256:31eebcee0e48bd65ac5d44b3ea5882f0273ecf3d012811b51e9e94136b7b4507
+cas_ref: sha256:31eebcee0e48bd65ac5d44b3ea5882f0273ecf3d012811b51e9e94136b7b4507
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此式以合法相容锚点命名 Observer 的建模定义，没有声称无限塔有锚点或有现实实现。
+    previous_atom_id: ad708c73b396e32d947668bce66e36bffb704d94d61dfabbb63c53f6398ee41d
+    next_atom_id: c17fc3fb10174d4a373d4554fcb3346a97dd313f0b1776b7d09dba57c5017ca0

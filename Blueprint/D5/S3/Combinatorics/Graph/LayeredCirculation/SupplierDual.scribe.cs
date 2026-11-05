@@ -58,6 +58,14 @@ internal sealed class SupplierDualDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("Exact source telescope, in the module declared generic contexts: def nodupIncomingWeights (G : EdgeGraph V E) (weight : E → 𝕜) (vertex : V) : Set 𝕜 := {r | ∃ (start : V) (walk : G.Walk start vertex), walk.edges.Nodup ∧ walkWeight weight walk = r} omit [LinearOrder 𝕜] in"))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("cycle-deletion-simple-walk"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.exists_nodup_visited_walkWeight_le"),
+                H("Nonpositive cycle deletion preserves endpoints and increases weight"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("If every closed walk has nonpositive weight, every walk of length at most a supplied natural bound has a walk with the same endpoints, no repeated visited vertex, and at least the original weight. Deleting a nonempty closed subwalk decreases length and cannot decrease weight; induction on the bound terminates. In a graph with finitely many vertices the resulting walk has fewer edges than vertices, supplying the finite bound for max-plus relaxation."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("maxincomingweight"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.maxIncomingWeight"),
                 H("maxIncomingWeight"),

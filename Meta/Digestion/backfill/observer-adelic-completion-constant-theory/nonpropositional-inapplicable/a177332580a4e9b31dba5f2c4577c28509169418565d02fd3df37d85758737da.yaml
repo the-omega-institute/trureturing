@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a177332580a4e9b31dba5f2c4577c28509169418565d02fd3df37d85758737da
+  normalized_sha256: sha256:a177332580a4e9b31dba5f2c4577c28509169418565d02fd3df37d85758737da
+cas_ref: sha256:a177332580a4e9b31dba5f2c4577c28509169418565d02fd3df37d85758737da
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 所需验证条件 limit positivity 的名称，没有极限正性断言。'
+    previous_atom_id: adf380704aa768b9b3283b712938d8479c6ef11298244cecade5ddfdcf15de76
+    next_atom_id: 0c7c6a4701333995b26419c90882672762887c6da69312c68bb5f94b1b695b38

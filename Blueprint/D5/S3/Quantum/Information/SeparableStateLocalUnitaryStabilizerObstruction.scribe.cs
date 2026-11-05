@@ -15,12 +15,18 @@ internal sealed class SeparableStateLocalUnitaryStabilizerObstructionDocument : 
         "A rank-two mixture of two nonorthogonal product states remains outside the full convex stabilizer hull under every local unitary.",
         H("Separable states outside every local-unitary stabilizer frame"),
         Blocks(
+            Node("unitary_preserves_overlap", "Unitary matrices preserve overlaps", UnitaryPreservesOverlapFormula(),
+                "A complex matrix whose adjoint is a left inverse preserves the overlap of every pair of vectors on its finite index type.", DescribeRole.Theorem, true),
             Node("pauli_square", "Pauli matrices square to the identity", PauliSquare(),
                 "Each Pauli matrix, including the identity, has square equal to the identity.", DescribeRole.Theorem, true),
             Node("pauli_projector_trace", "Nonidentity Pauli eigenprojectors have trace one", PauliProjectorTrace(),
                 "For a nonidentity Pauli label, either of its two spectral projectors has trace one.", DescribeRole.Theorem, true),
             Node("unitVector", "Normalized pure vectors", UnitFormula(),
                 "A pure vector has squared norm one. star is componentwise complex conjugation and dotProduct sums over the finite index type n. The Fintype argument is an instance, rather than a named mathematical variable.", DescribeRole.Definition),
+            Node("unit_e0", "The first qubit basis vector is normalized",
+                Disp(Unit(Seq(Bang, OpenBracket, D(1), Comma, D(0), CloseBracket))),
+                "The complex qubit vector with coordinates one and zero has squared norm one.",
+                DescribeRole.Theorem, true),
             Node("IsHermitianPauli", "Signed Hermitian two-qubit Paulis", PauliFormula(),
                 "The Pauli labels and literal matrices are those of StabilizerPairLocalUnitaryInequivalence: I, X, Y = i X Z, and Z. Only the real signs plus and minus are allowed, so these operators are Hermitian. The Kronecker product acts on the same two computational indices.", DescribeRole.Definition),
             Node("PureStabilizer", "Two independent commuting generators", PureFormula(),
@@ -54,6 +60,20 @@ internal sealed class SeparableStateLocalUnitaryStabilizerObstructionDocument : 
                     ProblemSlugRef.Create("qian-wang-2025-separable-states-stab-local-unitaries"),
                     ResolutionKind.Proved))),
         []));
+
+    private static Formula UnitaryPreservesOverlapFormula()
+    {
+        Formula n = F.Id("n"), a = F.Id("A"), x = F.Id("x"), y = F.Id("y");
+        Formula matrix = Call("Matrix", n, n, Complexes), vector = Arrow(n, Complexes);
+        Formula overlap(Formula u, Formula v) => Call("dotProduct", Call("star", u), v);
+        return Disp(All("n", Named("Type"), Seq(
+            OpenBracket, Call("Fintype", n), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", n), CloseBracket, Sp,
+            All("A", matrix, Logic(EqTo(Mul(Call("conjTranspose", a), a), D(1)),
+                FormulaLogicOperator.Implies, All("x", vector, All("y", vector,
+                    EqTo(overlap(Call("Matrix.mulVec", a, x), Call("Matrix.mulVec", a, y)),
+                        overlap(x, y)))))))));
+    }
 
     private static Formula PauliSquare() => Disp(All("p", Named("Pauli"),
         EqTo(Mul(Call("pauliMatrix", F.Id("p")), Call("pauliMatrix", F.Id("p"))), D(1))));

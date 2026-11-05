@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4ddf17c42b4054df9a5a84d36c2cc2c7dc8e8121e600caf0a85f981fd1f5afe5
+  normalized_sha256: sha256:4ddf17c42b4054df9a5a84d36c2cc2c7dc8e8121e600caf0a85f981fd1f5afe5
+cas_ref: sha256:4ddf17c42b4054df9a5a84d36c2cc2c7dc8e8121e600caf0a85f981fd1f5afe5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条仅给第32节的章节路线和接收合同，说明后文讨论整数矩阵、字符容量和误差比较，并规定接收门可随编号变化；未给这些对象的任何数学结论。
+    previous_atom_id: b08774f0136475275d75cadc7a9776e17cea74d45b7ae69bff60fc8cb92f00c5
+    next_atom_id: 8039d2ee68aa91af96abc9e3c6e0e3febfa04998efc77eaea4324669895876cb

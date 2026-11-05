@@ -1,0 +1,128 @@
+**Theorem 3.2 (Effective finite advice on the calibrated source).** There
+are fixed algorithms $G,H$, terminating on all the promised inputs of
+Definitions 1.1–1.3, with the following order of quantifiers. For every
+valid pair of model names and every rational $\varepsilon>0$, $G$
+outputs one finite timetable and endpoint, independent of $d$, $P$ and
+$a_P$. For every valid target name, $H$ then outputs a finite table for
+that same timetable and a rational error certificate. For every
+$0<d<1$, execution with that retained table on the source (1.1) is
+lawful in the declared stopping interface and calls the original
+terminal exactly once. It has
+
+$$
+\begin{gathered}
+\alpha_\ell=2^{-k(w_\ell)}>0,\qquad
+R_\ell=U_{w_\ell}^\dagger EU_{w_\ell},\qquad
+F_{\pi_P}=\sum_{\ell\in\Lambda_{\pi_P}}\alpha_\ell R_\ell,\\
+\sum_\ell\alpha_\ell=1,\qquad
+\|F_{\pi_P}-P\|_{\rm op}<\varepsilon.
+\end{gathered}
+\tag{3.4}
+$$
+
+For every mathematical density matrix $\mu$, including the actual
+$\rho_0$, set $E_1=E$, $E_0=I_3-E$, $P_1=P$, $P_0=I_3-P$. The complete
+terminal-record law and its comparison law are
+
+$$
+\begin{aligned}
+p_\mu(\ell,b)&=\alpha_\ell
+ \operatorname{Tr}(E_bU_{w_\ell}\mu U_{w_\ell}^\dagger),\\
+q_{P,\mu}(\ell,b)&=\alpha_\ell\operatorname{Tr}(P_b\mu),
+\qquad b\in\{0,1\},\\
+\sup_{\mu\succeq0,\,\operatorname{Tr}\mu=1}
+\operatorname{TV}(p_\mu,q_{P,\mu})&<\varepsilon.
+\end{aligned}
+\tag{3.5}
+$$
+
+Both terminal cells are retained even if one has zero probability. The
+leaf includes the full action and label record and all the markers in
+Definition 3.1. No success conditioning is used. The comparison law is
+a mathematical benchmark on that same archive, not an installed target
+measurement. The uniformity over $\mu$ grants no additional preparation.
+
+The algorithms operate on names. Different valid names for the same
+matrix may yield different certified timetables; no canonical
+name-independent selector is asserted. For each fixed naming, the
+same timetable works for every target, as required by the existential
+target-independent quantifiers of VI Theorem 96.1. Invalid names or
+failed source promises are outside the termination claim.
+
+**Proof.** The first search terminates by Lemma 2.3 and the rational
+loop (3.2) terminates since $k\ge1$. The second stage evaluates only a
+finite number of rows, so Lemma 2.1 proves its termination. Two
+consequences of (2.1) and (3.3) are
+
+$$
+\begin{aligned}
+\|U_w^\dagger EU_w-P\|_F<\delta/8
+ &\ \Longrightarrow\ u_w<\delta/4<\delta/2,\\
+\operatorname{hit}(w)=1
+ &\ \Longrightarrow\ \|U_w^\dagger EU_w-P\|_F<\delta/2.
+\end{aligned}
+\tag{3.6}
+$$
+
+Condition on any actual surviving block-entry history, and let $U_a$
+be its cumulative unitary. The net of Lemma 2.3 contains an $R_j$ with
+$\|R_j-U_aPU_a^\dagger\|_F<\delta/8$. If the actual labels through
+that reference checkpoint agree with $\omega$, the cumulative word
+there has effect $U_a^\dagger R_jU_a$, at distance less than
+$\delta/8$ from $P$. Hence the table stops there or at an earlier hit.
+To express this without generating unobserved outcomes after a stop,
+take the first hit along this reference path: matching its actually
+needed prefix has conditional probability $2^{-k_j}\ge2^{-k}$.
+This event is an actual stopped path. All other outcomes remain in
+the tree. The argument applies at every surviving block entry,
+although $U_a$ generally changes from one block to the next.
+
+The conditional probability of surviving a block without a hit is
+therefore at most $1-2^{-k}$. Iterating conditional probabilities gives
+the timeout mass
+
+$$
+\tau=\sum_{\ell:\,t_\ell=1}\alpha_\ell
+\le(1-2^{-k})^L<\delta.
+\tag{3.7}
+$$
+
+This is neither a Haar-mixing estimate nor an assumption of independent
+block states. It uses no reset, selected branch or independently drawn
+$N$. Each $\mathsf J$ node divides its incoming mass into two equal
+parts and each $\mathsf N$ node preserves it. A finite complete tree
+with forced final stopping thus gives $\sum_\ell\alpha_\ell=1$.
+Equation (1.2) gives (3.5)'s exact $p_\mu$ and its leaf marginal
+$\sum_b p_\mu(\ell,b)=\alpha_\ell$. This is the complete-tree supplier
+of VI Proposition 95.2, not a new normalization assumption.
+
+Every non-timeout leaf has Frobenius error less than $\delta/2$.
+For every timeout leaf the error is at most $\sqrt2<2$. Consequently
+
+$$
+D_F:=\sum_\ell\alpha_\ell\|R_\ell-P\|_F
+\le (\delta/2)(1-\tau)+2\tau
+<5\delta/2<\varepsilon.
+\tag{3.8}
+$$
+
+The triangle inequality bounds $\|F_{\pi_P}-P\|_{\rm op}$ by $D_F$.
+The two terminal differences for each leaf have equal absolute value,
+since their effects sum to the identity. Hence
+
+$$
+\operatorname{TV}(p_\mu,q_{P,\mu})
+=\sum_\ell\alpha_\ell
+ |\operatorname{Tr}[(R_\ell-P)\mu]|
+\le\sum_\ell\alpha_\ell\|R_\ell-P\|_{\rm op}\le D_F.
+\tag{3.9}
+$$
+
+Mismatch and timeout fields are deterministic functions of the full
+leaf. Keeping those fields alongside the leaf preserves (3.9), and
+keeps their original, unconditioned masses. Every event formed from
+the complete archive is subject to this total-variation bound. The
+finite certificate is supplied by Proposition 4.1 below; its construction
+does not alter the table. The retained-use claim follows from Proposition
+5.1. Neither conclusion uses $d$ in compilation. ∎
+

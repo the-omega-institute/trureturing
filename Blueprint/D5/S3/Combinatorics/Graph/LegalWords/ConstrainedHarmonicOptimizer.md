@@ -28,7 +28,19 @@ $$\forall n \in \mathbb{N},\; \forall p \in \mathrm{Legal}\left(n\right) \to \ma
 
 Phi_n(p) sums h(p_b,p_c) over exactly the native unordered edgeFinset of legalWordGraph n on EdgeCount.Legal n. Every legal Hamming-one edge is included. This includes the zero word, both open-path endpoints and edges between consecutive blocks in any block notation. The existing deletion-edge bijection reindexes this same sum by the occupied upper word and its true position.
 
-**Definition 1.3 (The entire normalized positive simplex).**
+**Theorem 1.3 (Native adjacency changes exactly one position).**
+
+$$\forall n \in \mathbb{N},\; \forall a \in \mathrm{Legal}\left(n\right),\; \forall b \in \mathrm{Legal}\left(n\right),\; (\mathrm{Adj}\left(\mathrm{legalWordGraph}\left(n\right), a, b\right)) \Leftrightarrow (\exists i \in \mathrm{Fin}\left(n\right),\; (\mathrm{val}\left(a\right)\left(i\right) \ne \mathrm{val}\left(b\right)\left(i\right)) \land (\forall j \in \mathrm{Fin}\left(n\right),\; (j \ne i) \Rightarrow (\mathrm{val}\left(a\right)\left(j\right) = \mathrm{val}\left(b\right)\left(j\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/LegalWords/ConstrainedHarmonicOptimizer.adj_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Two legal words are adjacent exactly when they differ at one position and agree at every other position. This characterization includes length zero.
+
+**Definition 1.4 (The entire normalized positive simplex).**
 
 $$\forall n \in \mathbb{N},\; \forall epsilon \in \mathbb{R},\; \mathrm{epsilonSimplex}\left(n, epsilon\right) = \{p: \mathrm{Legal}\left(n\right) \to \mathbb{R} \mid (\forall b \in \mathrm{Legal}\left(n\right),\; epsilon \le p\left(b\right)) \land (\sum_{b: \mathrm{Legal}\left(n\right)} (p\left(b\right)) = 1)\}$$
 
@@ -40,7 +52,7 @@ $$\forall n \in \mathbb{N},\; \forall epsilon \in \mathbb{R},\; \mathrm{epsilonS
 
 C_epsilon consists of every real vector with p_b>=epsilon at every original legal word and sum_b p_b=1. Insertion inequalities are not constraints defining this set. It is nonempty when epsilon<=1/M, where M is the number of original legal words, including equality and its uniform vector.
 
-**Definition 1.4 (Open-path position adjacency).**
+**Definition 1.5 (Open-path position adjacency).**
 
 $$\forall n \in \mathbb{N},\; \forall i \in \mathrm{Fin}\left(n\right),\; \forall j \in \mathrm{Fin}\left(n\right),\; (\mathrm{Near}\left(i, j\right)) \Leftrightarrow ((\mathrm{val}\left(i\right) + 1 = \mathrm{val}\left(j\right)) \lor (\mathrm{val}\left(j\right) + 1 = \mathrm{val}\left(i\right)))$$
 
@@ -52,7 +64,7 @@ $$\forall n \in \mathbb{N},\; \forall i \in \mathrm{Fin}\left(n\right),\; \foral
 
 Positions i and j are neighbors when their natural indices differ by one. There is no cyclic identification.
 
-**Definition 1.5 (The number of neighboring path positions).**
+**Definition 1.6 (The number of neighboring path positions).**
 
 $$\forall n \in \mathbb{N},\; \forall i \in \mathrm{Fin}\left(n\right),\; \mathrm{positionDegree}\left(i\right) = \mathrm{card}\left(\{j: \mathrm{Fin}\left(n\right) \mid \mathrm{Near}\left(i, j\right)\}\right)$$
 
@@ -64,7 +76,7 @@ $$\forall n \in \mathbb{N},\; \forall i \in \mathrm{Fin}\left(n\right),\; \mathr
 
 d_i counts neighboring positions in Fin n. It is a position degree, distinct from the degree of a legal-word vertex.
 
-**Definition 1.6 (The position-dependent ratio constant).**
+**Definition 1.7 (The position-dependent ratio constant).**
 
 $$\forall n \in \mathbb{N},\; \forall i \in \mathrm{Fin}\left(n\right),\; \mathrm{insertionLower}\left(i\right) = \frac{4 - \mathrm{positionDegree}\left(i\right)}{4 + \mathrm{positionDegree}\left(i\right)}$$
 
@@ -76,7 +88,7 @@ $$\forall n \in \mathbb{N},\; \forall i \in \mathrm{Fin}\left(n\right),\; \mathr
 
 q_i=(4-d_i)/(4+d_i). At length one this is 1, at an endpoint of a path of length at least two it is 3/5, and at an interior position it is 1/3.
 
-**Definition 1.7 (Bounds at every native upward insertion).**
+**Definition 1.8 (Bounds at every native upward insertion).**
 
 $$\forall n \in \mathbb{N},\; \forall p \in \mathrm{Legal}\left(n\right) \to \mathbb{R},\; (\mathrm{InsertionBounds}\left(n, p\right)) \Leftrightarrow (\forall e \in \mathrm{Marked}\left(n\right),\; (\mathrm{insertionLower}\left(\mathrm{val}\left(\mathrm{snd}\left(e\right)\right)\right) \cdot p\left(\mathrm{erase}\left(\mathrm{fst}\left(e\right), \mathrm{val}\left(\mathrm{snd}\left(e\right)\right)\right)\right) \le p\left(\mathrm{fst}\left(e\right)\right)) \land (p\left(\mathrm{fst}\left(e\right)\right) \le p\left(\mathrm{erase}\left(\mathrm{fst}\left(e\right), \mathrm{val}\left(\mathrm{snd}\left(e\right)\right)\right)\right)))$$
 
@@ -88,7 +100,7 @@ $$\forall n \in \mathbb{N},\; \forall p \in \mathrm{Legal}\left(n\right) \to \ma
 
 For every original marked edge, upper y and lower x=erase y i satisfy q_i*p_x<=p_y<=p_x. The marked word is the upper endpoint, not the lower endpoint.
 
-**Definition 1.8 (Conserved mass transfer on original coordinates).**
+**Definition 1.9 (Conserved mass transfer on original coordinates).**
 
 $$\forall n \in \mathbb{N},\; \forall p \in \mathrm{Legal}\left(n\right) \to \mathbb{R},\; \forall donor \in \mathrm{Legal}\left(n\right),\; \forall receiver \in \mathrm{Legal}\left(n\right),\; \forall u \in \mathbb{R},\; \forall b \in \mathrm{Legal}\left(n\right),\; \mathrm{transfer}\left(p, donor, receiver, u\right)\left(b\right) = p\left(b\right) + u \cdot \left((\operatorname{if} b = receiver \operatorname{then} 1 \operatorname{else} 0) - (\operatorname{if} b = donor \operatorname{then} 1 \operatorname{else} 0)\right)$$
 
@@ -100,7 +112,7 @@ $$\forall n \in \mathbb{N},\; \forall p \in \mathrm{Legal}\left(n\right) \to \ma
 
 Transfer u adds u to the receiver and subtracts u from the donor. All other original coordinates are retained and the sum of coordinates is unchanged.
 
-**Definition 1.9 (The native neighbor derivative sum).**
+**Definition 1.10 (The native neighbor derivative sum).**
 
 $$\forall n \in \mathbb{N},\; \forall p \in \mathrm{Legal}\left(n\right) \to \mathbb{R},\; \forall b \in \mathrm{Legal}\left(n\right),\; \mathrm{gradient}\left(p, b\right) = \sum_{z: \{z: \mathrm{Legal}\left(n\right) \mid \mathrm{Adj}\left(\mathrm{legalWordGraph}\left(n\right), b, z\right)\}} ((\frac{p\left(\mathrm{val}\left(z\right)\right)}{p\left(b\right) + p\left(\mathrm{val}\left(z\right)\right)})^{2})$$
 
@@ -112,7 +124,7 @@ $$\forall n \in \mathbb{N},\; \forall p \in \mathrm{Legal}\left(n\right) \to \ma
 
 At a positive vector, g_b(p) is the sum over all native neighbors c of (p_c/(p_b+p_c))^2. The derivative of a donor-to-receiver transfer is g_receiver-g_donor.
 
-**Theorem 1.10 (A violated insertion forces a feasible improvement).**
+**Theorem 1.11 (A violated insertion forces a feasible improvement).**
 
 $$\forall n \in \mathbb{N},\; \forall epsilon \in \mathbb{R},\; \forall p \in \mathrm{Legal}\left(n\right) \to \mathbb{R},\; ((1 \le n) \land ((0 < epsilon) \land ((p \in \mathrm{epsilonSimplex}\left(n, epsilon\right)) \land (\neg (\mathrm{InsertionBounds}\left(n, p\right)))))) \Rightarrow (\exists donor \in \mathrm{Legal}\left(n\right),\; \exists receiver \in \mathrm{Legal}\left(n\right),\; (\mathrm{Adj}\left(\mathrm{legalWordGraph}\left(n\right), donor, receiver\right)) \land ((p\left(receiver\right) < p\left(donor\right)) \land (\exists delta \in \mathbb{R},\; (0 < delta) \land ((delta < p\left(donor\right) - epsilon) \land (\forall u \in \mathbb{R},\; ((0 < u) \land (u < delta)) \Rightarrow ((\mathrm{transfer}\left(p, donor, receiver, u\right) \in \mathrm{epsilonSimplex}\left(n, epsilon\right)) \land (\mathrm{objective}\left(n, p\right) < \mathrm{objective}\left(n, \mathrm{transfer}\left(p, donor, receiver, u\right)\right))))))))$$
 
@@ -130,7 +142,7 @@ After all upper bounds hold, select the smallest upward ratio in a violating dir
 
 The complete-word and path-independent-set domain is the classical Fibonacci cube of Hsu and Codara--D'Antona. The formal theorem proves both extremal-ratio branches on the complete native edge set. Finite compactness and scalar calculus are standard tools.
 
-**Theorem 1.11 (The constrained maximum satisfies every insertion bound).**
+**Theorem 1.12 (The constrained maximum satisfies every insertion bound).**
 
 $$\forall n \in \mathbb{N},\; \forall epsilon \in \mathbb{R},\; ((1 \le n) \land ((0 < epsilon) \land (epsilon \le \frac{1}{\mathrm{card}\left(\mathrm{Legal}\left(n\right)\right)}))) \Rightarrow (\exists p \in \mathrm{Legal}\left(n\right) \to \mathbb{R},\; (p \in \mathrm{epsilonSimplex}\left(n, epsilon\right)) \land ((\mathrm{IsMaxOn}\left(\mathrm{objective}\left(n\right), \mathrm{epsilonSimplex}\left(n, epsilon\right), p\right)) \land (\mathrm{InsertionBounds}\left(n, p\right))))$$
 
@@ -148,6 +160,7 @@ This is a constrained positive-simplex result. It does not establish full-simple
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConstrainedHarmonicOptimizer.InsertionBounds`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConstrainedHarmonicOptimizer.Near`
+- Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConstrainedHarmonicOptimizer.adj_iff`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConstrainedHarmonicOptimizer.epsilonSimplex`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConstrainedHarmonicOptimizer.exists_constrained_optimizer_with_insertion_bounds`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LegalWords/ConstrainedHarmonicOptimizer.gradient`

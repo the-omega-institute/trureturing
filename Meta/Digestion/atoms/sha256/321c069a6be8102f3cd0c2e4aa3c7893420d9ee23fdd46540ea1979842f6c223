@@ -1,0 +1,17 @@
+### Definition 4.1: source-independence defect
+
+For a candidate hidden law \(\nu_{\alpha\beta\gamma}\), set
+
+\[
+\mathfrak d_{\mathrm{src}}(\nu)
+=
+D\!\left(
+\nu_{\alpha\beta\gamma}
+\middle\|
+\nu_\alpha\otimes\nu_\beta\otimes\nu_\gamma
+\right).
+\tag{4.1}
+\]
+
+It is zero exactly for a product source law. The defect belongs to the hidden lift, not to an arbitrary observed quotient. A visible \(\kappa\)-defect can be nonzero in a perfectly triangle-local model because two outputs share an edge. Conversely, \(\mathfrak d_{\mathrm{src}}=0\) for one selected hidden representation does not by itself prove that the observed distribution has the required response incidence unless the kernels are also supplied.
+

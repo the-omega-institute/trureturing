@@ -19,10 +19,10 @@ open D5.S3.Geometry.HyperbolicUpperHalfSpace
 namespace D5.S3.Geometry.HyperbolicPlaneRealization
 set_option autoImplicit false
 
-private def reflectPlane (M X : Fin 4 → ℝ) : Fin 4 → ℝ :=
+def reflectPlane (M X : Fin 4 → ℝ) : Fin 4 → ℝ :=
   X + (-(2 * lorentz X M / lorentz M M)) • M
 
-private theorem reflection_pair (M X Y : Fin 4 → ℝ) (hM : lorentz M M ≠ 0) :
+theorem reflection_pair (M X Y : Fin 4 → ℝ) (hM : lorentz M M ≠ 0) :
     lorentz (reflectPlane M X) (reflectPlane M Y) = lorentz X Y := by
   have h := lorentz_linear X M Y M 1 (-(2 * lorentz X M / lorentz M M))
     1 (-(2 * lorentz Y M / lorentz M M))
@@ -31,7 +31,7 @@ private theorem reflection_pair (M X Y : Fin 4 → ℝ) (hM : lorentz M M ≠ 0)
   field_simp
   <;> ring
 
-private theorem reflection_involutive (M : Fin 4 → ℝ) (hM : lorentz M M ≠ 0) :
+theorem reflection_involutive (M : Fin 4 → ℝ) (hM : lorentz M M ≠ 0) :
     Function.Involutive (reflectPlane M) := by
   let f : (Fin 4 → ℝ) →ₗ[ℝ] ℝ :=
     { toFun := fun X => 2 * lorentz X M / lorentz M M
@@ -83,7 +83,7 @@ theorem positive_time_of_pair (X Y : Fin 4 → ℝ)
   have hy1 : 1 ≤ Y 3^2 := by nlinarith [sq_nonneg (Y 0),sq_nonneg (Y 1),sq_nonneg (Y 2)]
   nlinarith
 
-private theorem reflection_future (M X : Fin 4 → ℝ) (hM : 0 < lorentz M M)
+theorem reflection_future (M X : Fin 4 → ℝ) (hM : 0 < lorentz M M)
     (hu : lorentz X X = -1) (ht : 0 < X 3) : 0 < reflectPlane M X 3 := by
   apply positive_time_of_pair X _ hu
     (by rw [reflection_pair M X X hM.ne', hu]) ht
@@ -97,7 +97,7 @@ private theorem reflection_future (M X : Fin 4 → ℝ) (hM : 0 < lorentz M M)
   rw [he]
   linarith
 
-private theorem adapted_reflection (N : Fin 4 → ℝ) (hN : 0 < lorentz N N) :
+theorem adapted_reflection (N : Fin 4 → ℝ) (hN : 0 < lorentz N N) :
     ∃ (M : Fin 4 → ℝ) (s : ℝ), 0 < lorentz M M ∧ s ≠ 0 ∧
       ∀ X, lorentz (reflectPlane M X) N = -s * X 1 := by
   let r := Real.sqrt (lorentz N N)
@@ -136,10 +136,10 @@ private theorem adapted_reflection (N : Fin 4 → ℝ) (hN : 0 < lorentz N N) :
   field_simp
   <;> ring
 
-private def vertical (z : UpperHalfPlane) : HyperbolicThreeSpace :=
+def vertical (z : UpperHalfPlane) : HyperbolicThreeSpace :=
   ⟨⟨WithLp.toLp 2 (Complex.mk z.re 0, z.im), z.im_pos⟩⟩
 
-private theorem vertical_cosh (z w : UpperHalfPlane) :
+theorem vertical_cosh (z w : UpperHalfPlane) :
     lorentz (lift (vertical z)) (lift (vertical w)) = -Real.cosh (dist z w) := by
   rw [UpperHalfPlane.cosh_dist']
   simp [lift, vertical, height, lorentz, Fin.sum_univ_succ]

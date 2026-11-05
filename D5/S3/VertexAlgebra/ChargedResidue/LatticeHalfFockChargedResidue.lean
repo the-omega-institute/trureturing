@@ -87,7 +87,7 @@ def chargedGroundSourceCoefficient (D : LatticeData) (hu : IsUnit D.G.det)
     (x : ActualTensor D hu) : ActualTensor D hu :=
   (correctedField D hu (chargedGroundSource D sigma tau epsilon eta q)).coeff e x
 
-private theorem corrected_coeff_add (D : LatticeData) (hu : IsUnit D.G.det)
+theorem corrected_coeff_add (D : LatticeData) (hu : IsUnit D.G.det)
     (a b : Carrier D) (e : ℤ) (x : ActualTensor D hu) :
     (correctedField D hu (a + b)).coeff e x =
       (correctedField D hu a).coeff e x + (correctedField D hu b).coeff e x := by
@@ -97,7 +97,7 @@ private theorem corrected_coeff_add (D : LatticeData) (hu : IsUnit D.G.det)
   simp only [HahnModule.of_symm_add, HahnSeries.coeff_add,
     HVertexOperator.coeff_apply_apply]
 
-private theorem corrected_coeff_smul (D : LatticeData) (hu : IsUnit D.G.det)
+theorem corrected_coeff_smul (D : LatticeData) (hu : IsUnit D.G.det)
     (c : ℂ) (a : Carrier D) (e : ℤ) (x : ActualTensor D hu) :
     (correctedField D hu (c • a)).coeff e x =
       c • (correctedField D hu a).coeff e x := by
@@ -109,7 +109,7 @@ private theorem corrected_coeff_smul (D : LatticeData) (hu : IsUnit D.G.det)
 /- The empty correction word is the charged singleton field on the actual
    tensor carrier.  This is the concrete bridge used by the projected slice
    expansion below; it does not introduce a second field construction. -/
-private theorem corrected_singleton_coeff_charged (D : LatticeData)
+theorem corrected_singleton_coeff_charged (D : LatticeData)
     (hu : IsUnit D.G.det) (charge : Charge D) (e : ℤ) (x : ActualTensor D hu) :
     (correctedField D hu (Finsupp.single charge (1 : Oscillator D))).coeff e x =
       (chargedField D hu charge).coeff e x := by

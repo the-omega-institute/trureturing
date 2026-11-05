@@ -20,7 +20,35 @@ The jet, shift and evaluator calculation is adapted from the preserved OriginalT
 
 The result concerns every algebraic polynomial and tensor state; it does not construct a completion by infinite oscillator series. Twisted locality, Jacobi and Borcherds identities, full VOA and CFT constructions, anomaly and fusion structures, string dynamics, spacetime reconstruction and AdS/CFT remain further mathematical obligations.
 
-**Theorem 1.1 (The exact canonical Hahn shift).**
+**Theorem 1.1 (The original normalized jet successor).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.jet_successor`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.jet_successor` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+Visibility-only exposure of the existing jet successor, with its exact original statement and proof body preserved. ActualMobiusCovariance consumes it to derive the signed-mode Pascal step and L1 product rule; no copied jet recurrence or alternate jet representation is introduced.
+
+**Theorem 1.2 (The original empty-correction charged readout).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.corrected_singleton_coeff_charged`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.corrected_singleton_coeff_charged` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
+
+*Commentary.*
+
+The existing exact statement and proof body are moved from the higher residue consumer to this common original corrected-field owner and made public. The old consumer uses the shared theorem. ActualMobiusCovariance consumes it in the charged source base. No duplicate supplier, copied correction proof or new covariance premise is introduced.
+
+**Theorem 1.3 (The exact canonical Hahn shift).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.shiftField_coefficient_public`
 
@@ -34,7 +62,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.shiftFie
 
 For every D:LatticeData, hu:IsUnit D.G.det, s:Nat, A:NativeField D hu and e:Int, (shiftField D hu s A).coeff e = A.coeff(e+2*s), as endomorphisms of ActualTensor D hu. Hahn monomial multiplication by t^(-2*s) changes the coordinate by exactly -2*s. Physical translation and full-source theta monodromy both use this same shift.
 
-**Theorem 1.2 (The exact all-source physical translation identity).**
+**Theorem 1.4 (The exact all-source physical translation identity).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.correctedField_translation_physical`
 
@@ -48,7 +76,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.correcte
 
 For every D:LatticeData, hu:IsUnit D.G.det, source:Carrier D, e:Int and v:ActualTensor D hu, (correctedField D hu (LatticeSugawaraConformal.translation D source)).coeff e v = (((e+2:Int):Complex)/2) smul (correctedField D hu source).coeff (e+2) v. The source translation is the actual Sugawara translation, the field is the native finite Corr-corrected Hahn field, and the target is the actual dependent tensor module. No derivative or seed law is assumed.
 
-**Theorem 1.3 (Negative current insertion on every source).**
+**Theorem 1.5 (Negative current insertion on every source).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.correctedField_negative_current_insertion`
 
@@ -70,6 +98,8 @@ Expand the actual b once over b.support. Two finite sup inequalities bound each 
 
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.correctedField_negative_current_insertion`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.correctedField_translation_physical`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.corrected_singleton_coeff_charged`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.jet_successor`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockOriginalTranslation.shiftField_coefficient_public`
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockChargedSeedPhysical](LatticeHalfFockChargedSeedPhysical.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockCorrectionTranslation](LatticeHalfFockCorrectionTranslation.md)

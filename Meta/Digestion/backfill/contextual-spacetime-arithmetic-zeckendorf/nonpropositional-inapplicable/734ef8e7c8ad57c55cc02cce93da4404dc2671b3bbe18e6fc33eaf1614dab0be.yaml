@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:734ef8e7c8ad57c55cc02cce93da4404dc2671b3bbe18e6fc33eaf1614dab0be
+  normalized_sha256: sha256:734ef8e7c8ad57c55cc02cce93da4404dc2671b3bbe18e6fc33eaf1614dab0be
+cas_ref: sha256:734ef8e7c8ad57c55cc02cce93da4404dc2671b3bbe18e6fc33eaf1614dab0be
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definition 216 gives the pointwise formulas for local/terminal normalization and their code lifts. Section and uniqueness identities belong to Theorem 217.
+    previous_atom_id: 7d97dc9cde150d239543e0d1b210f9de4340ce09b17f365d190d3eeb417746a8
+    next_atom_id: e73d3e178847e503725cc6176bfedf6da454e9e12f206e9eea47daae85a79b2d

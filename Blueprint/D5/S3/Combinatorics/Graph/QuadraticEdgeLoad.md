@@ -54,7 +54,43 @@ $$\forall V \in \mathrm{Type},\; [\mathrm{Fintype}\left(V\right)] \forall G \in 
 
 Kappa is the infimum of actual maximum loads over feasible allocations. The following minimum-attainment statement identifies it with a minimum.
 
-**Theorem 1.5 (An actual minimum).**
+**Theorem 1.5 (Equal shares are feasible).**
+
+$$\forall V \in \mathrm{Type},\; \forall G \in \mathrm{SimpleGraph}\left(V\right),\; \mathrm{Feasible}\left(G, (\lambda _: V, \lambda _: V, \frac{1}{2})\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/QuadraticEdgeLoad.half_feasible` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Assigning one half to every ordered pair satisfies the share bounds and the complementary-share equation on every edge.
+
+**Theorem 1.6 (Every vertex load is bounded by the maximum).**
+
+$$\forall V \in \mathrm{Type},\; [\mathrm{Fintype}\left(V\right)] \forall G \in \mathrm{SimpleGraph}\left(V\right),\; [\mathrm{DecidableRel}\left(\mathrm{Adj}\left(G\right)\right)] [\mathrm{Nonempty}\left(V\right)] \forall a \in V \to \left(V \to \mathrm{Real}\right),\; \forall b \in V,\; \mathrm{load}\left(G, a, b\right) \le \mathrm{maxLoad}\left(G, a\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/QuadraticEdgeLoad.load_le_maxLoad` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every allocation and every vertex, its load is at most the maximum over the full nonempty vertex set.
+
+**Theorem 1.7 (Every feasible allocation bounds the infimum).**
+
+$$\forall V \in \mathrm{Type},\; [\mathrm{Fintype}\left(V\right)] \forall G \in \mathrm{SimpleGraph}\left(V\right),\; [\mathrm{DecidableRel}\left(\mathrm{Adj}\left(G\right)\right)] [\mathrm{Nonempty}\left(V\right)] \forall a \in V \to \left(V \to \mathrm{Real}\right),\; \mathrm{Feasible}\left(G, a\right) \Rightarrow \mathrm{kappa}\left(G\right) \le \mathrm{maxLoad}\left(G, a\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/QuadraticEdgeLoad.kappa_le` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The maximum load of any feasible allocation is an upper bound for kappa.
+
+**Theorem 1.8 (An actual minimum).**
 
 $$\forall V \in \mathrm{Type},\; [\mathrm{Fintype}\left(V\right)] \forall G \in \mathrm{SimpleGraph}\left(V\right),\; [\mathrm{DecidableRel}\left(\mathrm{Adj}\left(G\right)\right)] [\mathrm{Nonempty}\left(V\right)] \exists a \in V \to \left(V \to \mathrm{Real}\right),\; \mathrm{Feasible}\left(G, a\right) \land \mathrm{maxLoad}\left(G, a\right) = \mathrm{kappa}\left(G\right)$$
 
@@ -66,7 +102,7 @@ $$\forall V \in \mathrm{Type},\; [\mathrm{Fintype}\left(V\right)] \forall G \in 
 
 The feasible set is a closed subset of the finite product of closed unit intervals and contains the equal-share allocation. Each load is continuous, as is their finite maximum. Compact minimum attainment therefore applies.
 
-**Theorem 1.6 (A strict allocation without a regular component).**
+**Theorem 1.9 (A strict allocation without a regular component).**
 
 $$\forall V \in \mathrm{Type},\; [\mathrm{Fintype}\left(V\right)] \forall G \in \mathrm{SimpleGraph}\left(V\right),\; [\mathrm{DecidableRel}\left(\mathrm{Adj}\left(G\right)\right)] [\mathrm{Nonempty}\left(V\right)] \neg (\exists C \in \mathrm{ConnectedComponent}\left(G\right),\; \forall b \in V,\; b \in \mathrm{supp}\left(C\right) \Rightarrow \mathrm{degree}\left(G, b\right) = \mathrm{maxDegree}\left(G\right)) \Rightarrow \left(\exists a \in V \to \left(V \to \mathrm{Real}\right),\; \mathrm{Feasible}\left(G, a\right) \land \left(\forall b \in V,\; \mathrm{load}\left(G, a, b\right) < \frac{\mathrm{maxDegree}\left(G\right)}{4}\right)\right)$$
 
@@ -78,7 +114,7 @@ $$\forall V \in \mathrm{Type},\; [\mathrm{Fintype}\left(V\right)] \forall G \in 
 
 If no component is maximum-degree regular, every vertex can reach a vertex whose degree is smaller than the maximum D. Let l(b) be the shortest walk length to such a vertex. Adjacent levels differ by at most one, and every positive level has a neighbor one level lower. For j at least one, put epsilon(j) equal to one half times (1/(8D)) to the power j. On an edge from level j to level j minus one, the higher vertex pays one half minus epsilon(j), and the lower vertex pays one half plus epsilon(j). Equal levels pay one half. A positive-level vertex saves at least epsilon(j)/2 on a descending edge, while all increases together are at most epsilon(j)/4. A level-zero vertex has a missing degree unit; its total increase is at most one eighth. Every vertex load is consequently strictly below D/4.
 
-**Theorem 1.7 (The complete equality characterization).**
+**Theorem 1.10 (The complete equality characterization).**
 
 $$\forall V \in \mathrm{Type},\; [\mathrm{Fintype}\left(V\right)] \forall G \in \mathrm{SimpleGraph}\left(V\right),\; [\mathrm{DecidableRel}\left(\mathrm{Adj}\left(G\right)\right)] [\mathrm{Nonempty}\left(V\right)] \mathrm{kappa}\left(G\right) = \frac{\mathrm{maxDegree}\left(G\right)}{4} \Leftrightarrow \left(\exists C \in \mathrm{ConnectedComponent}\left(G\right),\; \forall b \in V,\; b \in \mathrm{supp}\left(C\right) \Rightarrow \mathrm{degree}\left(G, b\right) = \mathrm{maxDegree}\left(G\right)\right)$$
 
@@ -93,8 +129,11 @@ Equal shares give the universal upper bound D/4. In a D-regular component, the t
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/QuadraticEdgeLoad.Feasible`
+- Truth anchor: `D5/S3/Combinatorics/Graph/QuadraticEdgeLoad.half_feasible`
 - Truth anchor: `D5/S3/Combinatorics/Graph/QuadraticEdgeLoad.kappa`
+- Truth anchor: `D5/S3/Combinatorics/Graph/QuadraticEdgeLoad.kappa_le`
 - Truth anchor: `D5/S3/Combinatorics/Graph/QuadraticEdgeLoad.load`
+- Truth anchor: `D5/S3/Combinatorics/Graph/QuadraticEdgeLoad.load_le_maxLoad`
 - Truth anchor: `D5/S3/Combinatorics/Graph/QuadraticEdgeLoad.maxLoad`
 - Truth anchor: `D5/S3/Combinatorics/Graph/QuadraticEdgeLoad.maximum_degree_equality_iff`
 - Truth anchor: `D5/S3/Combinatorics/Graph/QuadraticEdgeLoad.minimum_attained`

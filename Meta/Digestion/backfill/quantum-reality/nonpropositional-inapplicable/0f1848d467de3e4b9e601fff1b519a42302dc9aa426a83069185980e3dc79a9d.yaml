@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:0f1848d467de3e4b9e601fff1b519a42302dc9aa426a83069185980e3dc79a9d
+  normalized_sha256: sha256:0f1848d467de3e4b9e601fff1b519a42302dc9aa426a83069185980e3dc79a9d
+cas_ref: sha256:0f1848d467de3e4b9e601fff1b519a42302dc9aa426a83069185980e3dc79a9d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅汇报历史检查数量、程序入口与证据层次，不给被检查恒等式；待两个非命题子项结算后再终结父项。
+    previous_atom_id: 11bc11e599bd1f4ea0fb133c42df3778569f6523f0d0f3a8d921efd6b0956686
+    next_atom_id: d465bc22d0558b915c33bdf3cde123403fff51a5f068af32f74e225977f3e640
+  chain_atoms:
+    - 1521155796f324564e89e1b1a4d08f5f91e56f8501753adcb42ed7f9b61fb1a2
+    - a5f37d0a76ec94e8b958fb42f2105af43ce05ecde58f602035f8d04a113d9751

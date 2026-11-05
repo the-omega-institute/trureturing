@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1a97d929ee0d0c18882412079c525643eb8d889029f42587488aa7331aeda161
+  normalized_sha256: sha256:1a97d929ee0d0c18882412079c525643eb8d889029f42587488aa7331aeda161
+cas_ref: sha256:1a97d929ee0d0c18882412079c525643eb8d889029f42587488aa7331aeda161
+coverage_gids:
+  - gid: D5/S1/Deficit/Beatty/GoldenObserverRoute.phi
+    target_statement_id: sha256:79f284780ae7d5df0d90c2a5bf26678dbd3f417778134aed9560a296e6d7deb0
+  - gid: D5/S3/Weil/ZetaCore/Statement.RH_implies_on_line
+    target_statement_id: sha256:f45a822e24f1537f2dfb6afc5dd09a133ab4e90939dbfa91f75bf0ac43bc30e2
+receipts:
+  unresolved_subitems: []

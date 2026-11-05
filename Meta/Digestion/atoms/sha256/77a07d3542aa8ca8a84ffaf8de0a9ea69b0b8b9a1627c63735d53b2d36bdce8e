@@ -1,0 +1,108 @@
+**Theorem 9.1 (simple-spectrum depth recovery).** Supply the real binary
+instrument with success Kraus operator
+
+$$
+F=\operatorname{diag}(1,2,3,4,5)/6,
+\qquad L=(I-F^2)^{1/2},\qquad G=F^2.
+\tag{9.1}
+$$
+
+For every lawful source, the datum
+
+$$
+\mathcal T_F(S,A)=
+\bigl(S,K(A),b(A),K(FAF),K(F^2AF^2)\bigr)
+\tag{9.2}
+$$
+
+determines exactly $\mathcal G(S,A)$. The assertion holds algebraically
+for every real skew $A$, with no rank, purity or spectral genericity
+restriction on the source. Only the supplied filter has simple spectrum.
+The twenty base quadratic entries and fifteen square entries at each
+later depth suffice; later $b$ entries are unnecessary. The inverse is
+constructive by spectral decomposition and a homogeneous linear system
+in three unknowns on the repeated rank-four stratum.
+
+Proof. For any invertible symmetric $F$ the data in (9.2) determine
+
+$$
+\begin{aligned}
+N_0&=A^2=-K(A),\\
+N_1&=-F^{-1}K(FAF)F^{-1}=AGA,\\
+N_2&=-F^{-2}K(F^2AF^2)F^{-2}=AG^2A.
+\end{aligned}
+\tag{9.3}
+$$
+
+The rank-zero, rank-two and distinct rank-four cases are already resolved
+by $K,b$ in the proof of Theorem 8.2. Consider the remaining case (8.6)
+for two equal-data candidates. On the same oriented $W$, write
+$J=A/\lambda$, $J'=B/\lambda$. In an oriented orthonormal frame of $W$
+the self-dual skew space has the basis
+
+$$
+I_1=J_{12}+J_{34},\quad I_2=J_{13}-J_{24},\quad
+I_3=J_{14}+J_{23}.
+\tag{9.4}
+$$
+
+Multiplying these displayed matrices gives $I_r^2=-I$ and
+$I_rI_s+I_sI_r=0$ for $r\ne s$. In particular, every
+$Z=\sum z_rI_r$ satisfies $Z^2=-(\sum z_r^2)I$.
+Both $J,J'$ have unit coefficient vectors. If $J'\ne\pm J$, their
+coefficient inner product $c$ has $|c|<1$. The orthogonal map
+$C=J^{-1}J'=-JJ'$ satisfies
+
+$$
+C+C^T=2cI,\qquad C=cI+D,\qquad D^T=-D,
+\quad D^2=-(1-c^2)I.
+\tag{9.5}
+$$
+
+It has no real eigenvector: for $Cx=rx$ with real nonzero $x$,
+the symmetric part gives $r=c$, whence $Dx=0$, contradicting (9.5).
+
+Let $P=P_W$, $n=b/(2\lambda^2)$, and define operators on $W$ by
+
+$$
+H=PGP|_W,\qquad H_2=PG^2P|_W,\qquad v=PGn.
+\tag{9.6}
+$$
+
+Equality of $N_1$ gives $JHJ=J'HJ'$, equivalently equality of
+conjugation by $J$ and $J'$. Thus $C$ commutes with $H$. Equality of
+$N_2$ similarly makes it commute with $H_2$. Since $I=P+nn^T$,
+
+$$
+H_2=H^2+vv^T.
+\tag{9.7}
+$$
+
+If $v\ne0$, commutation with $vv^T$ preserves the real line
+$\mathbb Rv$, impossible by (9.5). If $v=0$, $n$ is an eigenvector of
+$G$ and $W$ is $G$-invariant. The restriction $H$ then has four distinct
+real eigenvalues because the five eigenvalues of $G$ in (9.1) are
+distinct. Commutation with $H$ preserves each real eigenline, again
+impossible. Therefore $J'=\pm J$. This proves injectivity on every
+stratum. Quadraticity gives its reverse implication.
+
+For the inverse in the remaining stratum, compute $W,\lambda,n,H,H_2$
+and $N_1,N_2$ from the data. Put $L_r=-N_r|_W/\lambda^2$ for $r=1,2$.
+Solve, in the three-dimensional space (9.4),
+
+$$
+ZH=L_1Z,\qquad ZH_2=L_2Z.
+\tag{9.8}
+$$
+
+The true $J$ is a solution. Every nonzero solution has
+$Z^2=-r^2I$ with $r=(\sum z_i^2)^{1/2}>0$. Its normalization $J''=Z/r$
+has the same square, the same Hodge chirality and the same conjugations
+of $H,H_2$ as $J$. Hence $\lambda J''$ has all the original data.
+The proved injectivity forces $J''=\pm J$, so the solution space of
+(9.8) is precisely a line. Either normalization returns the required
+orbit. Outside this stratum use the plane reconstruction in Theorem 8.2.
+No choice of an unknown-state eigenvector is an experimental control.
+No distinctness of pairwise products of filter eigenvalues is needed.
+$\square$
+

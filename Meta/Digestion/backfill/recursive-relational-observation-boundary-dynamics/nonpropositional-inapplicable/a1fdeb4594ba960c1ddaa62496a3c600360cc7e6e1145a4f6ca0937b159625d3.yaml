@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a1fdeb4594ba960c1ddaa62496a3c600360cc7e6e1145a4f6ca0937b159625d3
+  normalized_sha256: sha256:a1fdeb4594ba960c1ddaa62496a3c600360cc7e6e1145a4f6ca0937b159625d3
+cas_ref: sha256:a1fdeb4594ba960c1ddaa62496a3c600360cc7e6e1145a4f6ca0937b159625d3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section 43 title only.
+    previous_atom_id: e2cefe13018c3a0ac4c0b296c2dd2551345f53af7e8deae6b87ac01f92a52da2
+    next_atom_id: c8b673e3c7f4554ce4ef816a422740e7deeab555c9ad7f673cef3d69225c10ab

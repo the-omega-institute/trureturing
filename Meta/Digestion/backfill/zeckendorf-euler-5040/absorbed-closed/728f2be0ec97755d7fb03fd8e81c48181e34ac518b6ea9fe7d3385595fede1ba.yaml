@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:728f2be0ec97755d7fb03fd8e81c48181e34ac518b6ea9fe7d3385595fede1ba
+  normalized_sha256: sha256:728f2be0ec97755d7fb03fd8e81c48181e34ac518b6ea9fe7d3385595fede1ba
+cas_ref: sha256:728f2be0ec97755d7fb03fd8e81c48181e34ac518b6ea9fe7d3385595fede1ba
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource/FirstLayerMarginalAntitone.golden_upper_price_eq_finite_max
+    target_statement_id: sha256:3d4dc531dcda752fe91f946422f44cc421b637dfe49effad7acc7fd26671f680
+  - gid: D5/S3/Arith/GoldenResource/GoldenResourcePriceInterval.colossally_abundant_iff_price_interval_nonempty
+    target_statement_id: sha256:388ae863a9ed6ff2d621b162e56483b9fa36aa34d9148811d900163909d86166
+  - gid: D5/S3/Arith/GoldenResource/GoldenResourcePriceInterval.golden_upper_price_pos
+    target_statement_id: sha256:44cf326f645f629202414d03e5e5a442b630fceb2fd58736236e5ce4a10a56bb
+  - gid: D5/S3/Arith/GoldenResource/GoldenResourcePriceInterval.golden_upper_price_spec
+    target_statement_id: sha256:7a06efae5ee9c7a740c9ef98c70b5a84f61f48118eb7e0ef97ac48a69a20f685
+  - gid: D5/S3/Arith/GoldenResource/GoldenResourceThresholdCriterion.golden_resource_optimal_iff_layer_thresholds
+    target_statement_id: sha256:07dfae064c37a1fc84275cb5b2f41f58f49a028a212ccf7352eabf9a29fd6c0b
+receipts:
+  unresolved_subitems: []

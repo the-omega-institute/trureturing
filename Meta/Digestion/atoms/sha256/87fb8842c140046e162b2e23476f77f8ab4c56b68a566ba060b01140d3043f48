@@ -1,0 +1,72 @@
+**引理 31.1（所有较大取样数的统一控制）。** 设 $(B_k,C_k)_{k\ge0}$ 是独立同分布的对，每对内部是独立 Bernoulli 变量，均值分别为 $b,c\in(0,1)$，且 $\mu=b-c\ne0$。令
+
+$$
+W_k=B_k-C_k,\qquad S_n=\sum_{k=0}^{n-1}W_k,\qquad
+\Delta=|\mu|,\qquad\sigma=\operatorname{sgn}(\mu).
+$$
+
+则对每个整数 $m\ge1$，
+
+$$
+\Pr\{\exists n\ge m:\sigma S_n\le0\}\le e^{-m\Delta^2}.
+\tag{31.1}
+$$
+
+对任何非负整数值随机变量 $N$，无须适应性或独立性，亦有
+
+$$
+\{N\ge m,\ \sigma S_N\le0\}
+\subseteq\{\exists n\ge m:\sigma S_n\le0\}.
+\tag{31.2}
+$$
+
+**证明。** 第 25 节已证明每个 Bernoulli 变量的中心化对数矩满足 $K_b(u)\le u^2/8$，对所有实数 $u$ 成立。将该界分别用于一对中的两个独立坐标，对任意实数 $u$ 得
+
+$$
+\begin{aligned}
+\mathbb E e^{-u\sigma W_k}
+&=e^{-u\Delta}
+  \mathbb E e^{-u\sigma(B_k-b)}
+  \mathbb E e^{u\sigma(C_k-c)}\\
+&\le e^{-u\Delta+u^2/4}.
+\end{aligned}
+\tag{31.3}
+$$
+
+取 $u=2\Delta$，右端为 $e^{-\Delta^2}$。令 $\mathcal G_n=\sigma((B_k,C_k):0\le k<n)$，定义
+
+$$
+\mathcal M_n=\exp\{-2\Delta\sigma S_n+n\Delta^2\},\qquad
+\mathcal M_0=1.
+\tag{31.4}
+$$
+
+各项可积且非负。下一对独立于 $\mathcal G_n$，所以
+
+$$
+\mathbb E[\mathcal M_{n+1}\mid\mathcal G_n]
+=\mathcal M_n e^{\Delta^2}\mathbb E e^{-2\Delta\sigma W_n}
+\le\mathcal M_n.
+\tag{31.5}
+$$
+
+这证明它是非负超鞅。
+
+为给出所需的有限时域最大值论证，固定 $A>1$，令 $\tau=\inf\{n\ge0:\mathcal M_n\ge A\}$，空集取 $\infty$。对确定整数 $k\ge0$，有
+
+$$
+\mathcal M_{(k+1)\wedge\tau}-\mathcal M_{k\wedge\tau}
+=\mathbf1_{\{\tau>k\}}(\mathcal M_{k+1}-\mathcal M_k).
+\tag{31.6}
+$$
+
+因 $\{\tau>k\}\in\mathcal G_k$，由（31.5）每项期望不大于零。对 $k=0,\ldots,H-1$ 求和，其中 $H$ 为任意确定正整数，得到 $\mathbb E\mathcal M_{H\wedge\tau}\le1$。在 $\{\tau\le H\}$ 上该变量至少为 $A$，其余地方非负，故
+
+$$
+\Pr(\tau\le H)\le A^{-1}.
+$$
+
+令 $H\to\infty$，用事件递增的概率连续性得到 $\Pr(\tau<\infty)\le A^{-1}$。这里没有对无界停止时刻直接使用期望恒等式。
+
+若某个 $n\ge m$ 满足 $\sigma S_n\le0$，则（31.4）给出 $\mathcal M_n\ge e^{n\Delta^2}\ge e^{m\Delta^2}$。取 $A=e^{m\Delta^2}>1$，上述最大值界即为（31.1）。平局 $S_n=0$ 已包含在非严格坏事件中。式（31.2）逐点成立：在左侧事件上，实际整数 $N$ 自身就是右侧的一个见证。因而 $N$ 无须为停止时刻；证明最大值界所用的辅助 $\tau$ 与数据选择的 $N$ 是不同对象。$\square$
+

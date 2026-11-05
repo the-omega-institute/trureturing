@@ -1,0 +1,33 @@
+**Theorem 33.4 (one binary run's resource vector).** After any qualifying origin let $K_1$ be the number of Next calls, $R_1$ the number of Sample calls, and $Q_1$ the total number of Recall and Length calls in one finite binary continuation. Set $m=K_1+R_1I$, its actual binary length. Excluding the entrance and origin, the exact primitive counts are
+
+$$
+\begin{aligned}
+\mathrm{Tick}&=m,&\mathrm{Add}&=m,\\
+\mathrm{Read}&=K_1+R_1b(I+1),&
+\mathrm{Hold}&=K_1+R_1(I+1)+Q_1.
+\end{aligned}
+\tag{NLBAII.41}
+$$
+
+For the actual entrance in Proposition 33.3, including the origin, the same specimen's totals are
+
+$$
+\begin{aligned}
+P&=2L_0-1,&S&=L_0-1,&\mathrm{Reset}&=2,\\
+\mathrm{Add}&=L_0^2+1+m,&\mathrm{Tick}&=m,\\
+\mathrm{Read}&=L_0+K_1+R_1b(I+1),\\
+\mathrm{Hold}&=L_0+2+K_1+R_1(I+1)+Q_1.
+\end{aligned}
+\tag{NLBAII.42}
+$$
+
+Every primitive request, entire response, framing, return and retained update, both sides of the dispatcher, is paid at its actual finite bit width. These counts do not include unrelated additional raw calls; such calls incur their actual counts and work and can leave the binary image.
+
+Proof and size bounds. Count the definitions, including every zero Add inside Sample and its initial Hold and all-leaf read. Add the already attained Theorem 27.2 counts and the actual origin. No coordinate of this vector is chosen from another run.
+
+For explicit finite representations, the maximum field entry after $j$ binary steps satisfies $M_0=1$ and $M_{j+1}\le3M_j+1$, hence $M_j<3^{j+1}$. Thus each integer field entry has $O(j+1)$ bits. The actual source vector and retained predictive vector are separate simultaneous stores, each with $O(N(m+1))$ field bits, in addition to addresses, graph and code. Exact repeated neighbour summation uses a separate $N$-entry result buffer, at most $2(N-1)$ directed additions and $N$ initializations per actual Tick; source and predictor work are both charged. A literal window has $b(I+1)$ entries at their actual widths. Returned words, windows and complete replies also occupy actual output backing; caller-retained copies are not free.
+
+One may compute $h$ using $N-1$ applications of $\operatorname{Id}+A$, with entries at most $2\cdot4^{N-1}$. In (NLBAII.36), a force uses a shift and at most two subtractions. Induction bounds the sum of the absolute coefficient values of each $p_v$ by $3^I$. Storing $C$ as a dense array takes at most $Nb(I+1)$ integer slots of $O(I+1)$ bits; computation, copies, reconstruction and their scratch are paid. Exhaustive decoding a length-$m$ word examines at most $2^{m+1}-1$ candidates. Constructing their fields by sparse steps costs $O(N(m+1)2^m)$ scalar arithmetic operations with actual operand widths, besides comparisons and output; this is an attained finite bound, not an efficiency optimum. A sequential implementation can discard each failed candidate but must pay for the current candidate, reconstructed vector and live scratch alongside all retained source state.
+
+The separate entry archive, complete private raw table, canonical table, parser and partial packets, instruction code, traversal/address records, actual reference and grants, live decoded outputs, allocation and clearing costs all coexist when used and are charged. Old preparation of the specimen also remains charged; (NLBAII.42) does not erase it. The $2^m$ different length-$m$ words require at least $m$ bits of distinguishing capacity in any exact finite representation of their distinct fields. There is no bounded-lifetime-memory, constant-precision or inexpensive-decoder conclusion. $\square$
+

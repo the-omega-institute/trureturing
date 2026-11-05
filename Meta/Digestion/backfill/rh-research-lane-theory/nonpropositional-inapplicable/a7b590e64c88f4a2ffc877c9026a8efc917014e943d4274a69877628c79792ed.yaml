@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a7b590e64c88f4a2ffc877c9026a8efc917014e943d4274a69877628c79792ed
+  normalized_sha256: sha256:a7b590e64c88f4a2ffc877c9026a8efc917014e943d4274a69877628c79792ed
+cas_ref: sha256:a7b590e64c88f4a2ffc877c9026a8efc917014e943d4274a69877628c79792ed
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 标题、仓库取阅提交与 formalized-here 标签的释义均是文档来源和标签规则，不给出数学命题。
+    previous_atom_id: a69db59d420533b58e6bf2c4047ee4e054a92af16ebc9044dfe60370cce3b6da
+    next_atom_id: 33445bb2418870caccc90f14bd54009d4398d19d0409db58e25b7922f9224a77

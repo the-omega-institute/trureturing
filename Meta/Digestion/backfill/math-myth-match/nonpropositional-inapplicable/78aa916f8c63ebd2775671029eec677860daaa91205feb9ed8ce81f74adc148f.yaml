@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:78aa916f8c63ebd2775671029eec677860daaa91205feb9ed8ce81f74adc148f
+  normalized_sha256: sha256:78aa916f8c63ebd2775671029eec677860daaa91205feb9ed8ce81f74adc148f
+cas_ref: sha256:78aa916f8c63ebd2775671029eec677860daaa91205feb9ed8ce81f74adc148f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只说明 V.3.4—5 的强同一主张及其解释范围，明确不以函数外延或统计相等代替原典论证。
+    previous_atom_id: c63b6b187d6e0227a3d4f59d9665a68f41b6b2b2e355986d6784df8f44202dfd
+    next_atom_id: 3316829d34f97470155f9edce73b0e9ccf0d6bbe0f8a721e5219ac2b0c811816

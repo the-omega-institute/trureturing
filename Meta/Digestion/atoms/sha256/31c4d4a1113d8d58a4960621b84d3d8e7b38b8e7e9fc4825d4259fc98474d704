@@ -1,0 +1,25 @@
+**Definition 51.1 (the unchanged original installation).** Here return to the original ordered-terminal interface of NLBA §§10–13: Add$(j,q)$ and Read$(j)$ use the current left-to-right terminal roster, Tick applies unit zero-diagonal adjacency and returns a fixed acknowledgement, Reset zeros the field, and Hold is identity. There is no $\operatorname{Read}_0$ replacement. All $P/S$ guards, persistent zero extension, full replies, range/malformed/pending/disabled semantics and actual binding/authority/backing premises remain those of that original installation. Earned ordered geometry and a maintained roster are assumed; arbitrary unknown raw labels have not become free addresses.
+
+Fix any earned $t\in\mathcal D$ with $L\ge3$ terminals. Let $N=|V(C(t))|$, $I=N-L$, $A=A_t$, and let $e$ be its original first terminal. Fix every pair of distinct rational fields $x,y\in\mathbb Q^N$ on this same tree. The selection algorithm below owns both candidate vectors and the earned tree. It is not given an arbitrary unknown field through those candidate records.
+
+For each original terminal $z\ne e$ define the one legal edit $g_z$: if $z$ is an alpha logical leaf, use $P_z$; if $z=vL$ is a beta marker, use $S_v$. Write $B_z$ for the resulting adjacency, $\iota_z$ for the persistent zero lift, and
+
+$$
+\kappa_z=\operatorname{dist}_{C(t)}(e,z)+1.
+$$
+
+Editing this nonfirst terminal preserves $e$ as the current first terminal. For $0\le j\le I$ define complete experiment words
+
+$$
+\begin{aligned}
+V_j&=\operatorname{Tick}^{j};\operatorname{Read}(1),\\
+W^+_{z,j}&=\operatorname{Tick}^{j};g_z;
+                 \operatorname{Tick}^{\kappa_z+1};\operatorname{Read}(1),\\
+W^-_{z,j}&=\operatorname{Tick}^{j+1};g_z;
+                 \operatorname{Tick}^{\kappa_z};\operatorname{Read}(1).
+\end{aligned}
+\tag{51.1}
+$$
+
+Every Tick and Growth output is consumed; each word has exactly one successful scalar Read, of this original first terminal. These are alternative experiments starting at the same declared cut, not a single physically executed table and not parallel cloned sources.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:202f27267b003500da20abd5c4317af4f48058c987ee74849a19ddd5f93a9b75
+  normalized_sha256: sha256:202f27267b003500da20abd5c4317af4f48058c987ee74849a19ddd5f93a9b75
+cas_ref: sha256:202f27267b003500da20abd5c4317af4f48058c987ee74849a19ddd5f93a9b75
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: ML 卷来源范围说明，列引用章节与主题，不在本条给出独立数学结论。
+    previous_atom_id: 3d2a56561fd7896d746629773acc9c9b4bf39e7769b79dfcdfbec7e45ac5cce5
+    next_atom_id: b04fc25f90501aef46f8fc3e15ab0b74fdaaca99f5f1b40e1f53cdc4c15d5219

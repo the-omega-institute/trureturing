@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:126c9815705ff38d41d18c59b0063008cd56e782d35a4851b7ca82f23a5be4b3
+  normalized_sha256: sha256:126c9815705ff38d41d18c59b0063008cd56e782d35a4851b7ca82f23a5be4b3
+cas_ref: sha256:126c9815705ff38d41d18c59b0063008cd56e782d35a4851b7ca82f23a5be4b3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：仅把非零位移且 X=0 的给定点命名为离线谱事件，不主张此类点存在。
+    previous_atom_id: 26d64e7fb52f3d1bba2e079a490e8ae3fda7c148ccbf7d6f4f5297a20be18f58
+    next_atom_id: 8c9434ff8f6daa4a78eb4f3efac871b81bb9e728a9b310c4875ba79d5891a3e2

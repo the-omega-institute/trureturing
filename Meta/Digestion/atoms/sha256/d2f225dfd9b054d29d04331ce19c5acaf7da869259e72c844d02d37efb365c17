@@ -1,0 +1,56 @@
+## 46. Scope of the ordered intersection and mathematical attribution
+
+The original common-base question retains exactly the quantifiers of
+Definition 1.2: one entire $C(p,v)$ with $p\ne24$ and distinct
+$W_{J0},W_{J1}$ and distinct $W_{M0},W_{M1}$ satisfying
+
+$$
+a(W_{J0})=a(W_{J1}),\qquad m(W_{M0})=m(W_{M1}).
+\tag{46.1}
+$$
+
+The pairs are independently selected, may overlap, and their common
+terminal values need not agree. Theorem 42.1 supplies these two pair
+incidences at the excluded value $p=24$, with a shared member $W_A$;
+it does not supply a solution of (46.1) at an allowed base. The full-box
+bounds even separate their common terminal readings:
+$a(W_A)\in(457.67,457.69)$ and $m(W_A)\in(617.28,617.30)$.
+Its $p\ne24$ exclusion concerns only (43.3) on $X_{\cap}$.
+It supplies no exclusion farther along a continuation, on another
+branch, for another ordered pairing, or for arbitrary independent
+pairs in an entire child.
+
+Proposition 40.1 instead supplies a J pair at an allowed base
+$22.93<p_{\rm J}<22.94$, with four pairwise distinct listed M values.
+Those inequalities are not M injectivity on the entire child.
+The reflected forbidden-base intersection is not that four-world
+incidence, and neither construction establishes a component connection,
+an entire-child upper bound at its new base, or a solution of (46.1).
+Pairwise different gain directions, if established for any collection,
+would not by themselves imply joint linear independence or either
+missing collision incidence. No gain-direction condition is imposed
+on (46.1).
+
+A global impossibility theorem for (46.1) would have to cover every
+allowed base and every independent choice of pairs, including singular
+parent strata. An existence theorem would require exact legal worlds
+at one allowed common base. These alternatives remain the original
+question. Sampled gain zeros, lower degrees, repeated roots, zero drift
+and singular parent sources remain in its domain. Positivity and the
+$\Lambda$ bounds here justify only the specified regular-chart
+construction and its local uniqueness.
+
+The model, zero-safe parent and whole-world realization are those of
+Sections 1–2, 19 and 31 and
+[Common Parent Geometry](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md),
+Definitions 1.1–1.3 and Theorem 2.1. The reflection at $b=1/8$ is
+inherited from that parent geometry. The exact reduced root, the
+six-variable rational box, its isolated ordered $J(A,B)/M(A,C)$
+intersection and transverse local uniqueness are the result of
+*A certified local forbidden-base intersection for actual J and M
+pairs*, expressed here in the common notation. Sections 32–38 and
+40–41 retain the distinct fold and four-world J geometries attributed
+in Section 39. Fixed-node interpolation, the contraction principle,
+the Neumann-series criterion and the implicit-function theorem are
+classical tools, applied with the displayed model-specific hypotheses.
+

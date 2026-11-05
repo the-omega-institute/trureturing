@@ -1,0 +1,20 @@
+**定义 8.1（原完整边发射域；[普适缺陷卷][P4] 定义 4.1）。** 对每个整数 $N\ge1$，$\Theta_N$ 是全部实参数 $\theta=(\lambda,M_0,M_1)$，满足
+
+$$
+\lambda\ge0,\quad\lambda\mathbf1=1,\quad M_0,M_1\ge0,\quad
+A=M_0+M_1,\quad A\mathbf1=\mathbf1,\quad\lambda A=\lambda,\quad
+\lambda M_1^2\mathbf1=0.
+\tag{8.1}
+$$
+
+$\lambda$ 为行向量，$M_w=M_{w_1}\cdots M_{w_q}$，$M_\epsilon=I$。没有严格正条目、不可约或非周期假设。供应命题 4.2 的一个实际联合律为
+
+$$
+J_\theta(H_a=h_a,\ldots,H_{b+1}=h_{b+1},X_a=x_a,\ldots,X_b=x_b)
+=\lambda_{h_a}\prod_{i=a}^bM_{x_i}(h_i,h_{i+1}),\quad
+P_\theta([w])=\lambda M_w\mathbf1.
+\tag{8.2}
+$$
+
+左右相容分别用 $A\mathbf1=\mathbf1$ 和 $\lambda A=\lambda$；合法性用每位置 $11$ 零质量的可数并。故原接缝仍是 $\lambda M_uM_v\mathbf1$，不是两个边缘乘积。置 $C_N=\sup_{\theta\in\Theta_N}d(P_\theta)$。
+

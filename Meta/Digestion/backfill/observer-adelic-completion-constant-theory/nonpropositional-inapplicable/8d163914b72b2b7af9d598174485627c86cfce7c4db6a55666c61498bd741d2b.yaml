@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8d163914b72b2b7af9d598174485627c86cfce7c4db6a55666c61498bd741d2b
+  normalized_sha256: sha256:8d163914b72b2b7af9d598174485627c86cfce7c4db6a55666c61498bd741d2b
+cas_ref: sha256:8d163914b72b2b7af9d598174485627c86cfce7c4db6a55666c61498bd741d2b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 审计表的方法论边界：不把“道迹”识别为固定对象，不宣称自然族存在或唯一。
+    previous_atom_id: 83dba406ecc2a847d277eeedc69e45fd1473d405ee95d17724d31a752902e036
+    next_atom_id: bb0a84dda33418db2088282e078daf92e220f2f003e60dd4bf4f90c3c9f4b23d

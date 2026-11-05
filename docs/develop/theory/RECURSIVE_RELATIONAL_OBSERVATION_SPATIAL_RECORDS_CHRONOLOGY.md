@@ -1288,3 +1288,266 @@ $$
 There is no bound here on the compensating retry length in Theorem 24.2, no sharp cutoff for the public-alternation class, and no claim that equal original future laws recover an erased raw past. The promises and supplied-$U$ conditions do not remove any original source path or add a source reset, hidden segment-signature bank, hindsight prior, clock, acceptance condition or post-Stop Read. Exact aggregate order, occurrence-aware relational arity, count widths, retained data alphabets, original resources and materialized output remain separate quantities. Same-history acquisition and delivery are required whenever a mathematical inverse is used as an observer claim. Broader generation-to-observation maps, physical spacetime, global completion, exact effective posterior representation and total-resource minima require their own hypotheses and proofs. No finite unit settles the persistent mutual-recovery objective.
 
 ## 追加锚（本行以下为增补区）
+
+## 29. Acquired gap moments with a capacity parameter
+
+**Definition 29.1 (the actual gap measure and selected bank).** Fix any one finite or countable probability prior $\mu$ from Definition 6.1. Keep the same hidden $K$, conditionally fresh paid Reads, original seed extractor and payload parser, third-marker latch, fourth segment and unique Stop. Every selected history is the original normal form (SC.1). Write its retry prelude uniquely as
+
+$$
+u=X^{a_0}Y X^{a_1}Y\cdots Y X^{a_q},\qquad
+q=|u|_Y,\quad a_z\in\mathbb N,\quad
+\nu_u=\sum_{z=0}^{q}a_z\delta_z,\quad
+p=\sum_{z=0}^{q}a_z,\quad
+D=|\{z:a_z>0\}|.
+\tag{SC.73}
+$$
+
+Here $\mathbb N$ includes zero. The integer $z$ counts completed rejected $Y$ pairs preceding a rejected $X$ pair. It is neither a raw Read index nor a supplied source coordinate. The measure is positive with integer masses, and $D$ is precisely Definition 25.1's number of nonempty $X$ blocks. Runs of $Y$ can leave empty gaps, including the initial and terminal gaps.
+
+Install an integer $s\ge0$ before the first Read. It specifies record capacity and does not assert $D\le s$, restrict the source, or reveal future retries. Define
+
+$$
+\begin{aligned}
+m_j&=\int t^j\,d\nu_u(t)=\sum_{z=0}^{q}a_z z^j
+&& (0\le j\le2s),\\
+\mathcal B_s&=(R,w,Q^+,Z,q,m_0,\ldots,m_{2s},J_1,J_2,J_3),\\
+H_s&=(m_{i+j})_{0\le i,j\le s},\qquad
+\mathsf{Cert}_s(\mathcal B_s)\ \Longleftrightarrow\ \det H_s=0.
+\end{aligned}
+\tag{SC.74}
+$$
+
+Use $z^0=1$, including $0^0=1$, so $m_0=p$. The notation $\mathcal B_s$ denotes this augmented bank, not the bare snapshot or the original beta count $B$. Statements about certification concern the actual image of the writer below. A singular matrix submitted without the actual-image premise is not a source-authentication test.
+
+**Hypothesis 29.2 (from-zero ownership and continued use).** Use Hypothesis 18.1's original raw-letter recipient, finite phase/control, exact integer arithmetic and transaction order. Initialize $q,m_0,\ldots,m_{2s},J_1,J_2,J_3$ to zero before the first paid seed Read. At an actual equal-pair rejection in the seed control perform the following assignments, using the old $q$:
+
+$$
+\begin{array}{c|cc}
+\text{actual rejection}&q'&m'_j\ (0\le j\le2s)\\ \hline
+X=\alpha\alpha&q&m_j+q^j\\
+Y=\beta\beta&q+1&m_j
+\end{array}
+\tag{SC.75}
+$$
+
+The old seed-second-letter phase and the returned letter identify these events. A first seed letter and an accepting unequal pair do not write a retry moment or increment $q$. After seed acceptance all retry fields hold. On an actual alpha return from old $q_{\beta,i}$ in one of the first three payload segments, increment $J_i$; other events hold these three counters. In particular a pending beta has not yet counted a return. These are exactly Hypothesis 7.1's return writes, with no retained $U$ word.
+
+Acquire $R,w,Q^+,Z$ with the original seed and Definition 6.1's finite writers. Retain the selected $w$ at the third latch, rather than substituting a subsequently changing live weight. Finish the third-marker writes before that same latch, then hold the entire selected bank through all original fourth-segment events and Stop. The source still completes its fourth marker and executes its original Stop; the supplementary calculation supplies no extra Read, reset, earlier Stop, new acceptance event or post-Stop source access. Local transactions may take finite variable work before the next source action, as in Hypothesis 18.1; no fixed latency is presumed.
+
+A local decoder can read the held bank. A new recipient requires actual delivery of this whole bank, its source/cut and capacity binding, and an installed decoder, with transmission and receiver storage charged. The old bare-snapshot recipient and the old selected-marker colex decoder acquire no additional inputs automatically. Repeated local recovery requests read the same held bank and pay their own work and output costs.
+
+**Theorem 29.3 (the bank is earned on the original stream).** For every installed $s\ge0$, every allowed $\mu$ and every $h\in\mathcal H_3(\mu)$, Hypothesis 29.2 produces exactly (SC.73)–(SC.74) and the original three return counts. It preserves this same selected bank until and after the original Stop. No sparsity premise is needed for acquisition.
+
+Proof. At each completed rejected-pair frontier, $q$ counts precisely the rejected $Y$ pairs already observed. An $X$ rejection therefore lies in gap $q$ and adds one unit mass there, giving each increment $q^j$ in (SC.75). A $Y$ rejection changes only the gap for later $X$ rejections. Induction from the empty retry word proves all these equalities, including no $X$ retries, no $Y$ retries and intervening pending seed letters. The accepting pair changes the actual seed and parser phase, not the completed-rejection measure. The original payload transitions prove $J_i=j_i$ exactly as in Theorem 7.2. The finite marker table of Theorem 6.2 supplies $b_1,b_2,b_3$ on both seeds and all eight triples. Every assignment uses a returned letter and old actual control; the third-latch and hold rules are Hypotheses 7.1 and 18.1's same-history rules. Hence the record contains no event from another run or unread tail. $\square$
+
+## 30. Certification against unrestricted actual competitors
+
+**Theorem 30.1 (certified literal recovery on the original history domain).** For every $s\ge0$, fixed allowed $\mu$ and actual bank $\mathcal B_s(h)$,
+
+$$
+\det H_s(h)=0\quad\Longleftrightarrow\quad D(u(h))\le s.
+\tag{SC.76}
+$$
+
+Moreover, for all $h,g\in\mathcal H_3(\mu)$,
+
+$$
+\mathcal B_s(h)=\mathcal B_s(g),\quad
+\mathsf{Cert}_s(\mathcal B_s(h))
+\quad\Longrightarrow\quad h=g.
+\tag{SC.77}
+$$
+
+The competing $g$ has no sparsity promise. Empty measures and $s=0$ are included.
+
+Proof. Apply the existing finite Prony factorization to the occupied integer nodes $z$ and positive weights $a_z$, in characteristic zero, with $s+1$ observation rows. Its exact specialization is
+
+$$
+H_s=V\operatorname{diag}(a_z)V^{\mathsf T},\qquad
+V_{i,z}=z^i,\qquad
+c^{\mathsf T}H_sc=\sum_{z:a_z>0}a_z
+       \left(\sum_{i=0}^{s}c_i z^i\right)^2.
+\tag{SC.78}
+$$
+
+The supplier `prony_hankel_factorization` has no sufficiently-long-section restriction. If $D\le s$, factorization through $D$ columns gives singularity; this includes $D=0$. If $D\ge s+1$, a nonzero polynomial of degree at most $s$ cannot vanish at all those distinct real nodes. Strict positivity of the weights in (SC.78) makes the quadratic form positive definite, so the determinant is nonzero. This proves (SC.76). This second case uses positivity, not an application of `prony_hankel_rank` outside its hypothesis that the section has at least $D$ rows. At $s=0$, $H_0=(m_0)$, and (SC.76) says exactly that $p=0$.
+
+For (SC.77), put $S=\operatorname{supp}\nu_{u(h)}$ and
+
+$$
+P(t)=\prod_{z\in S}(t-z),\qquad \deg P=D\le s.
+\tag{SC.79}
+$$
+
+The empty product is $1$. The moment functional on polynomials through degree $2s$ is determined by the bank. The positive zero-square support restriction of Schmüdgen, Proposition 9.2(v), therefore applies to the two actual representing measures:
+
+$$
+\int P(t)^2\,d\nu_{u(g)}(t)
+=\int P(t)^2\,d\nu_{u(h)}(t)=0.
+\tag{SC.80}
+$$
+
+In this finite atomic specialization every summand is nonnegative, so every occupied gap of $g$ is a root of $P$, hence belongs to $S$. No bound on the number of gaps of $g$ was assumed. Extend its weights by zero on missing nodes of $S$. The first $D$ moments and the supplier `first_prony_moments_injective` on these distinct known nodes give identical weights. If $D=0$, (SC.80) with $P=1$ says that $g$ has zero total mass as well. Thus the two retry measures agree.
+
+The bank also retains the same $q$. Consequently (SC.73) reconstructs literally the same retry word, including all empty gaps and terminal $Y$ runs. Equal $R,w,Q^+,Z$ supplies the same seed and marker triple by Theorem 6.2; equal $J_i$ supplies the same return vector. The original normal-form bijection, Theorem 6.3, now gives $h=g$. The generic positive-moment and Vandermonde facts are reused intermediates; the actual-source conclusion depends on the earned gap measure, retained $q$, finite marker table and three actual return slots. $\square$
+
+**Theorem 30.2 (a finite exact local decoder and route agreement).** Every certified actual bank has a terminating exact decoder to its original raw third-latch history and Definition 7.3's occurrence-labelled precedence/incidence expression, using no further source Read. Computing the bank from that raw history returns the supplied bank. These conversions continue to refer to the selected past while the original fourth segment and Stop proceed.
+
+Proof. Recover the marker triple with Theorem 6.2. If $m_0=0$, set every $a_z=0$ and take $u=Y^q$. Otherwise find the least $r\in\{1,\ldots,s\}$ for which the leading $(r+1)$ by $(r+1)$ moment matrix is singular. Such an $r$ exists on this branch by certification. Formula (SC.76), applied to these smaller matrices, gives $r=D$; all preceding leading matrices are nonsingular. Solve exactly over $\mathbb Q$
+
+$$
+(m_{i+j})_{0\le i,j<r}
+\begin{pmatrix}c_0\\ \vdots\\c_{r-1}\end{pmatrix}
+=-\begin{pmatrix}m_r\\ \vdots\\m_{2r-1}\end{pmatrix},
+\qquad P(t)=t^r+\sum_{j=0}^{r-1}c_jt^j.
+\tag{SC.81}
+$$
+
+This is the existing Prony recurrence inverse: `prony_moment_linear_recurrence` shows that the true monic node polynomial solves (SC.81), and nonsingularity makes that solution unique. Thus $P$ is exactly (SC.79), not an arbitrary fitted recurrence. Equivalently the supplied `recurrence_window_identifies_node_roots` applies with precisely $r$ distinct modes and nonzero weights. No moments beyond $m_{2s}$ are used; finding $r$ uses $m_{2r}$ and (SC.81) uses only through $m_{2r-1}$.
+
+Enumerate the finite integers $z=0,\ldots,q$, retain exactly those with $P(z)=0$, and solve the square Vandermonde system
+
+$$
+\sum_{z:P(z)=0}a_z z^j=m_j\qquad(0\le j<r).
+\tag{SC.82}
+$$
+
+There are exactly $r$ such integers, and the solution is the actual positive integer weight vector; all other $a_z$ are zero. Exact rational elimination, or determinant formulas followed by exact division, suffices. This finite root scan needs no real root oracle, hidden-$K$ information, prior evaluator or source access. On a nonactual input the stated root count and integer positivity need not hold; the theorem's guarantee is on certified actual inputs.
+
+Keep only the at most $s$ recovered occupied nodes and their weights, interpreting all other gap weights as zero; no $q+1$ entry array is required. Emit $X^{a_0}$, then for each $z=1,\ldots,q$ emit $YX^{a_z}$, and append the accepted seed and three payload factors of (SC.1), using the held $R,b,J_i$. The emitted raw word is the actual $h$ by Theorem 30.1 and the original normal form. Every loop has a finite bound already in the bank or a recovered finite integer. For the occurrence relation, reuse Theorem 7.4; explicitly its retry prefix counts are
+
+$$
+x_j=\sum_{z=0}^{j-1}a_z\quad(1\le j\le q),\qquad
+X_i\prec Y_j\ \Longleftrightarrow\ i\le x_j.
+\tag{SC.83}
+$$
+
+The original return-slot incidences and within-kind ordinals come from the same $J_i$, and each block has its original two-letter expansion. Hence expanding the relation gives exactly the word just emitted; parsing that word gives the same relation and bank. This is route agreement with the supplied native relation, not a different relation defined by a desired inverse. Hypothesis 29.2 holds the selected record, so either output remains a reading of the same past through Stop. Output production can stream, or pay for materialization and any simultaneous copies. $\square$
+
+**Proposition 30.3 (the original predictive boundary survives on every bank).** Certified or not, every actual bank determines the original selected raw counts and hence the complete original future row at its $p_4$ cut:
+
+$$
+\begin{aligned}
+A&=4-w+2m_0+\sum_{i=1}^{3}J_i,&
+B&=1+2w+2q+\sum_{i=1}^{3}J_i,\\
+Z_{A,B}&=\sum_{k\ge1}\mu(k)r_k^A(1-r_k)^B>0,&
+\Pr(V\text{ has legal raw cylinder }v\mid h)
+&=\frac{Z_{A+\#\alpha(v),B+\#\beta(v)}}{Z_{A,B}}.
+\end{aligned}
+\tag{SC.84}
+$$
+
+For completed $v=(\beta\alpha)^j c_e$ the cylinder includes its required original $\mathrm{Stop}_e$ and deterministic events. This is semantic determination, not an installed evaluator for arbitrary real or countable $\mu$.
+
+Proof. Substitute $p=m_0$, the actual $q$ and $J_i$ into (SC.2). The original fixed-prior future calculation (SC.15), extended to all tags in Theorem 15.2, gives (SC.84); Future Response Sufficiency §§15,21 supplies the same posterior and permissions. Original noncompletion has probability zero and the complete stopped words determine the row. Subsequent live prediction uses the actual fourth-segment phase and updated live counts; it does not overwrite the selected bank. At fourth-marker completion only the original Stop is legal, and after its delivery no Read is legal. If ongoing prediction or a past delivery is retained as another readable object, its actual fields and costs are additional. $\square$
+
+## 31. Sharp monomial order and the meaning of certificate failure
+
+**Theorem 31.1 (degree $2s$ is sharp against unrestricted actual competitors).** For every $s\ge1$, every fixed allowed $\mu$, and every common choice of seed, marker triple and finite return vector, there exist distinct positive third-latch histories $h_-,h_+$ with identical $q$, these finite fields and return vector, and moments through degree $2s-1$, such that $D(u(h_-))=s$ and $D(u(h_+))=s+1$. Their raw counts, positive masses and complete original future rows coincide. Thus replacing degree $2s$ in (SC.74) by degree $2s-1$ cannot uniquely identify all capacity-$s$ actual histories among unrestricted actual competitors, even with all original future side information.
+
+Proof. Set $q=2s$ and specify actual gap multiplicities by
+
+$$
+\nu_- =\sum_{\substack{0\le z\le2s\\z\ \mathrm{odd}}}
+             \binom{2s}{z}\delta_z,\qquad
+\nu_+ =\sum_{\substack{0\le z\le2s\\z\ \mathrm{even}}}
+             \binom{2s}{z}\delta_z.
+\tag{SC.85}
+$$
+
+Insert these nonnegative integer multiplicities into (SC.73), with zero weights at the other gaps. Both are real legal retry words; neither is a signed source operation. The finite-difference identity gives
+
+$$
+\sum_{z=0}^{n}(-1)^z\binom nz z^j=0\quad(0\le j<n),\qquad
+\sum_{z=0}^{n}(-1)^z\binom nz z^n=(-1)^n n!.
+\tag{SC.86}
+$$
+
+For completeness, this reused elementary identity follows by expanding $(1-t)^n=\sum_z(-1)^z\binom nz t^z$ and applying $(t\,d/dt)^j$ at $t=1$. Below order $n$ each resulting derivative vanishes there; at order $n$ only the $n$th derivative remains, with value $(-1)^n n!$. It is an intermediate polynomial calculation, not a new moment theorem.
+
+With $n=2s$, the measures in (SC.85) therefore agree through $2s-1$ and differ at $2s$ by $(2s)!$. Both have total mass $p=2^{2s-1}$, but their support sizes are $s$ and $s+1$. Append the common actual seed and payload factors of (SC.1). Theorem 6.3 proves positivity for every permitted $\mu$ and distinctness of the raw histories. Formula (SC.84) gives equal counts and future rows; the two pasts also have the same positive mass $Z_{A,B}$. Every common complete legal fourth-segment word has positive conditional mass after each past. Its realized value, the common row itself, and independent decoder randomization cannot yield zero-error recovery of both identical truncated-bank inputs. The degree-$2s$ bank does certify $h_-$ and reject $h_+$ by Theorem 30.1. This sharpness is for the stated monomial bank and unrestricted competitors; it is not a lower bound for arbitrary record architectures or the whole raw $G_k$ interface. $\square$
+
+**Proposition 31.2 (failure is neither a collision certificate nor a general impossibility).** For every $s\ge0$, there are actual banks with $\det H_s\ne0$ whose complete actual fiber is a singleton, and other actual banks with $\det H_s\ne0$ whose fiber contains two distinct histories with identical full original future rows.
+
+Proof. For a singleton take $q=s$, all $a_0,\ldots,a_s=1$, and any fixed seed, marker triple and return vector. Here $D=s+1$, so the determinant is nonzero. An actual competitor sharing $q$ is supported on $\{0,\ldots,s\}$. Equality of moments $0,\ldots,s$, which are in the bank when $s\ge1$, forces all its weights to be one by the existing Vandermonde inverse. For $s=0$, $q=0,m_0=1$ already forces $u=X$. The remaining bank fields force the identical normal form in either case. Thus certification is sufficient, not necessary, for literal uniqueness on the bounded gap interval supplied by an actual $q$.
+
+For a collision take $q=2s+1$ and the even and odd parts of $\binom{2s+1}{z}\delta_z$. Identity (SC.86) gives equal moments through $2s$ and equal mass $2^{2s}$, while both supports have $s+1$ nodes. The determinant is nonzero for each. Inserting common seed, markers and returns yields distinct legal histories with identical entire $\mathcal B_s$ and, by (SC.84), identical full future rows. At $s=0$ this is the original retry pair $XY,YX$. Neither example supplies a converse impossibility from failure of this sufficient certificate. $\square$
+
+**Proposition 31.3 (which retained fields carry the recovery).** The moments alone, even at every degree, do not replace the other declared fields. In particular $q$ and the separate return slots carry actual chronological distinctions that their omission can erase. The certificate requires positive actual gap weights.
+
+Proof. Retry words $X$ and $XY$ have the identical measure $\delta_0$ but different terminal $Y$ counts; common seed and payload give different positive histories with the same moment sequence. If the three return counters are replaced only by their sum, the histories in (SC.13) have identical empty retry measure, $q=0$, the same finite fields, counts, return sum and original future row, yet different return incidence. This is the previously proved return collision, directly reused. Finally the signed measure $\delta_0-4\delta_1+6\delta_2-4\delta_3+\delta_4$ has moments $0,1,2$ all zero by (SC.86), although it is nonempty. It is not an actual gap measure. It demonstrates why a singular moment matrix without positivity cannot support (SC.80)'s inference. These examples locate the information or hypothesis being used; none weakens the original source contract. $\square$
+
+## 32. Simultaneous resources of acquisition, holding and recovery
+
+**Theorem 32.1 (attained held-data and finite arithmetic bounds).** At selected raw length $N$, Hypothesis 29.2's supplementary held bank, including its integer widths and representation metadata, has an exact encoding using
+
+$$
+O\bigl((s+1)^2\log(N+2)\bigr)
+\tag{SC.87}
+$$
+
+bits. This applies to every actual bank, including $D>s$. Arithmetic, original live state, decoder scratch, delivery and requested outputs have the additional simultaneous charges described below. There is no fixed-bit all-history conclusion even at $s=0$.
+
+Proof. At each pre-latch prefix its completed retry counts and return counts are at most $N$. With $\ell=\lceil\log_2(N+2)\rceil$, each moment satisfies
+
+$$
+0\le m_j\le(N+1)^{j+1},\qquad
+\operatorname{bits}(m_j)\le1+(j+1)\ell\quad(0\le j\le2s).
+\tag{SC.88}
+$$
+
+The bound includes $j=0$, zero moments and zero gap counts. Summing these widths gives at most $(2s+1)+(2s+1)(s+1)\ell$. The four integers $q,J_1,J_2,J_3$ use $O(\ell)$ bits. Finite selected fields have bounded alphabets. Length/occupancy descriptors for this finite list can use $O((s+1)[\log(s+2)+\log(\ell+1)])$ bits, within (SC.87); capacity and coordinate addressing are also encoded, not stored in a constant-size real register. Original state and installation remain separate from this supplementary held-data bound.
+
+The actual retry updates request $(2s+1)p$ moment-coordinate assignments, $q$ increments of the gap counter, and $\sum_iJ_i$ return-counter increments. Assignments with zero increment may be implemented as holds. At an $X$ event, compute $1,q,\ldots,q^{2s}$ by sequential exact multiplication and perform the additions. This uses $2s$ multiplications and $2s+1$ additions per $X$, a fixed number of reusable power/product buffers, and the original event routing. It needs no generic dense raw-word coefficient table. All allocation, zero initialization, reads/writes, metadata and bit arithmetic are charged. There are $O(N(s+1))$ such arithmetic operations through the selected latch, of growing width.
+
+Here is one deliberately coarse finite realization of certification and decoding, to make the local computation supply explicit. Evaluate determinants by finite permutation sums, solve (SC.81) and (SC.82) by determinant formulas and exact division, and scan all $q+1$ possible integer roots. Let
+
+$$
+W=(2s+3)\ell+2,\qquad
+L=4(s+2)\bigl(W+\lceil\log_2(s+2)\rceil+1\bigr).
+\tag{SC.89}
+$$
+
+A determinant of order at most $s+1$ with entries of at most $W$ bits has summands of at most $(s+1)W+1$ bits and a sum bounded in absolute value by $(s+1)!2^{(s+1)W}$. Cramer numerators have the same bound since their moment or Vandermonde entries satisfy this width envelope. The polynomial coefficients in (SC.81) are integers, because its solution is the product of distinct integer-root factors. On $0\le z\le q$, their evaluation has $O((s+1)\ell+s+1)$ bits: coefficient absolute sum is at most $(q+2)^{s+1}$. Thus $O(L)$-bit exact buffers suffice for these integer products, sums, divisions and root evaluations. For the final Vandermonde solve, determinant numerators and denominators again use $O(L)$ bits and the weights are the actual integers. This also bounds the chosen rational representation by storing numerator/denominator separately before division.
+
+Allowing matrices, permutations, loop indices and scratch copies, a sufficient decoder scratch allocation is $O((s+2)^2L)$ bits in addition to the intact held bank. A conservative bound for acquisition plus one certification and successful decoding is
+
+$$
+O\!\left(\left[N(s+1)+(s+2)!(s+2)^4
+                  +(q+1)(s+1)^2+N+1\right]L^2\right)
+\tag{SC.90}
+$$
+
+bit work, before explicit relation-output enumeration. Finite permutation enumeration bounds the determinant work; schoolbook integer multiplication/division gives the $L^2$ envelope. Root scanning and output loops have the displayed finite bounds. These are attained sufficient bounds for this specified calculation, not efficient-decoder or minimum-cost assertions. They are not inferred from the smaller held footprint. The original coarse count-rank decoder bounds of §20 remain sufficient bounds for their own construction and are not optimality benchmarks.
+
+For the continuing source, let $j_4$ and $e$ be its actual fourth-segment returns and completing bit. The total paid Reads through Stop are exactly $N+2j_4+1+e$; Stop itself is a separate original event. The original hidden-depth source, restoration/backing, original parser and unbounded original fields, actual finite record writes, selector and latch, installed $s$ and exact arithmetic/decoder, holding and all subsequent source work coexist with this bank and scratch. A separately maintained live predictive bank is charged as another bank. No bound on these original resources, or on $j_4$, follows from $N$.
+
+If raw chronology is materialized, add its $N$ letter positions. Explicit occurrence labels or the compact prefix-count relation need their actual $O(N\log(N+2))$ representation allowance; listing every ordered comparable pair can require $O(N^2\log(N+2))$ output bits and corresponding work. A streaming output instead pays its traffic and retained receiver representation. Simultaneously requested raw, relational and receiver copies add their spaces to the held bank and live source, rather than each borrowing the same omitted output buffer. An augmented delivery pays its literal encoded-bank traffic, protocol/source/cut binding and receiver storage, plus that receiver's installed decoder and workspace; retaining either output after decoding pays its holding. These costs are present on the same run, not separately chosen resource optima. No energy, latency or total-machine minimum is asserted.
+
+Finally $s=0$ still permits $u=Y^q$ with arbitrary $q$; all such banks are certified, and raw recovery must distinguish every $q$. Its exact counter width therefore grows without bound. A finite register count, (SC.87), or a finite program is not uniformly bounded memory. $\square$
+
+**Proposition 32.2 (a source-realized representation saving).** Fix $s=1$, seed $1$, markers $100$ and $J_1=J_2=J_3=0$. On the positive histories with $u=X^nY^n$, $n\ge1$, the acquired moment bank is certified and has $O(\log(n+2))$ held bits. The published uniform count-fiber rank-field allocation of §§19–20 uses $\Omega(n)$ data bits on their count cells, and the literal retry archive has $2n$ letter bits. This compares those supplied representations, not every compressor or their optimal total resource costs.
+
+Proof. These actual histories have $q=p=n$, $\nu_u=n\delta_0$, $(m_0,m_1,m_2)=(n,0,0)$ and $D=1$. They have $(A,B,N)=(2n+3,2n+3,4n+6)$, so (SC.87) is logarithmic. Their count fiber contains at least the $\binom{2n}{n}$ legal zero-return retry orderings, as in Theorem 10.1. The uniform rank buffer sized for that fiber has width at least $\log_2\binom{2n}{n}\ge2n-\log_2(2n+1)$. This is its full-cell field allocation, not a lower bound on the description length of this particular rank value or history under another code. The literal $U$ representation stores one bit for each of its $2n$ retries. Moment arithmetic, root scanning, rejection of uncertified banks and the larger original live source remain paid; the held saving does not establish coordinatewise total-resource dominance. $\square$
+
+## 33. Supplier correspondence and exact recovery limits
+
+**Definition 33.1 (subtraction of existing mathematics).** For this comparison, repository suppliers are taken at revision `5cec4fa83ae7bbb4e787c42606525db4cd11ed48`, retaining their own internal source-version conditions. The contribution of §§29–32 is `repo-derived`: the original seed rejection events acquire the positive preceding-$Y$ gap measure, its actually retained degree-$2s$ bank certifies a singleton among unrestricted actual histories, and the native-source inverse and sharp witnesses keep the same continued-use and resource contract. Generic moment determinacy, Prony inversion, polynomial finite differences and word inversion are reused intermediates, with no external-priority claim.
+
+The original grammar, positive normal-form domain and finite marker table are Theorems 6.2–6.3. Hypotheses 7.1 and 18.1 supply actual return writes, selected holding, transaction order and explicit delivery; Theorem 7.4 and Joint Moment Fibers Proposition 3.1 supply the occurrence-relation inverse. Sections 9 and 15 and Future Response Sufficiency §§9,15,21 supply the fixed common-prior future law. Sections 18–23 already supply a universal acquired exact rank and its conditional data-alphabet optimum with their stated side information. They remain all-history alternatives. No generic new rank or observability theorem is needed here.
+
+Theorem 25.2 already identifies preceding-$Y$ retry gaps in (SC.62) and proves whole-cutoff recovery when both competitors satisfy an alternation promise. Its Corollary 25.3 explicitly retains that restriction. Here the larger actually acquired bank separately supplies $q$, moments of those gap masses and all three returns; the positive support argument excludes competitors without that promise. This does not strengthen Corollary 25.3 at its old interface or duplicate its whole-$G_{4d+13}$ inverse. The all-tag return-compensation and joint-collision results of §§24,26–28 keep their exact original interfaces; moments of a separated retry measure and actually acquired returns are not freely extractable from an erased whole signature.
+
+For the finite algebraic suppliers, use [FinitePronyHankelReconstruction](../../../D5/S3/Analytic/GoldenTomography/FinitePronyHankelReconstruction.lean), `prony_hankel_factorization`, `prony_moment_linear_recurrence` and `first_prony_moments_injective`, with its owning [Scribe](../../../Blueprint/D5/S3/Analytic/GoldenTomography/FinitePronyHankelReconstruction.scribe.cs). The substitution is field $\mathbb Q$ or $\mathbb R$, modes the distinct occupied gap integers, weights their positive integer multiplicities, and sequence $m_j$. The rank theorem `prony_hankel_rank` keeps its sufficiently-long-section hypothesis $D\le\text{number of rows}$; short-section certification instead uses the positive Gram specialization (SC.78). [FiniteVandermondeTomography](../../../D5/S3/Analytic/GoldenTomography/FiniteVandermondeTomography.lean) supplies the distinct-node weight inverse, and [FinitePronyNodeIdentification](../../../D5/S3/Analytic/GoldenTomography/FinitePronyNodeIdentification.lean), `recurrence_window_identifies_node_roots`, supplies the full matching recurrence-window implication used in (SC.81). These are source-level mathematical attributions, with no new Lean verification claim.
+
+The positive support restriction is `literature-attested`: [Konrad Schmüdgen, *Ten Lectures on the Moment Problem*, arXiv:2008.12698v1, Lecture 9, Proposition 9.2(i),(iv),(v) and its proof](https://arxiv.org/pdf/2008.12698v1). In its notation take $\mathcal A=\operatorname{span}(1,t,\ldots,t^s)$ and $L(t^j)=m_j$ on $\mathcal A^2$ through degree $2s$. The actual finite positive measure represents $L$; a kernel polynomial has zero square integral and every positive representing measure is supported on its zero set. Taking the true node polynomial gives (SC.80). Existence of a representing measure is supplied by acquisition, not inferred from singularity. The finite-difference identity inside Theorem 31.1 and the Vandermonde inverse are classical algebra, not additional claims of new generic theory.
+
+**Definition 33.2 (other public source contracts).** The public FIB native central-noise Green results, including its internal analytic seam and one-face boundary family in §§26–35, use a killed Brownian cylinder, specified raw measures, conormal/Dirichlet response maps and a separately supplied law and clock. Their response-rank conclusions do not provide the actual rejected-pair events of (SC.75), nor a finite-bit bank acquisition service. The actual-tree/Fibonacci readout and golden-factor suppliers retain the different address and language hypotheses stated in Definition 17.2. Neither shared alpha/beta notation nor a moment matrix supplies transport from those sources to the fresh Read stream here.
+
+The public no-repetition quantum discrimination result uses injectively labelled product states from a normalized equal-overlap family, a complete POVM and a uniform finite ensemble. Its Gram matrix and inconclusive-effect positivity are not the integer retry measure or its acquired moment functional. The public Headley coordinate/cycle results concern finite additive abelian groups, their actual permutations and difference inventories. Their two-group/odd-product hypotheses supply no gap-measure observation or retry chronology here. Similarly the public SourceMobius, HalfFock correction and twisted-ground Gauss-elimination results retain their lattice/Fock or finite quadratic-form carriers; finite polynomial coordinates alone do not instantiate this source contract. Weak-star separation, Fourier generator-gap and hyperideal Gram-body results also retain their distinct topological, cyclic or Lorentz carriers. No conclusion from these results is required in (SC.73)–(SC.90), and no common-source correspondence with them is claimed.
+
+**Definition 33.3 (four expressions and remaining boundaries).** On the certified actual image, the earned held bank, raw chronology and original occurrence-labelled precedence/incidence expression determine one another, with route agreement by Theorem 30.2. The spatial expression is the supplied discrete marker scopes and parser-labelled retry/return incidences; temporal information is their occurrence order; the augmented boundary is the selected bank; memory is its actual acquired holding. The bare scopes, finite marker records and predictive law remain noninjective. This is joint conditional recovery on one actual process, not four bare independently sufficient views.
+
+Certification does not promise $D\le s$ before observation. Its failure has precisely Proposition 31.2's limited meaning. Its sharp degree is specific to the declared monomial bank with separately acquired $q,J_i$; it does not establish an all-history alphabet optimum, universal compression or a sharp length-only scattered-word threshold. The universal rank and literal archives remain stronger alternatives on all histories. Exact integers, positive actual weights, source/cut binding, original control rights and actual augmented delivery remain conditions of an observer use. Finite-precision real moments require a separate stability analysis. Recovering this selected finite raw past or its semantic future row does not recover the actual hidden $K$, metric space, durations, a source tree, an unrestricted four-view unification or the whole persistent research objective.
+
+## 追加锚（本行以下为增补区）

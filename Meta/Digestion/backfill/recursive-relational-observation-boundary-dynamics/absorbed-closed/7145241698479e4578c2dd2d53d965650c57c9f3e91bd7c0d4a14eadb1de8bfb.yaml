@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7145241698479e4578c2dd2d53d965650c57c9f3e91bd7c0d4a14eadb1de8bfb
+  normalized_sha256: sha256:7145241698479e4578c2dd2d53d965650c57c9f3e91bd7c0d4a14eadb1de8bfb
+cas_ref: sha256:7145241698479e4578c2dd2d53d965650c57c9f3e91bd7c0d4a14eadb1de8bfb
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Refinement/JointReadoutSupremum.pair_readout_kernel
+    target_statement_id: sha256:b92156a773a1f9ce87f6cc761d0b330325f24e1db4c3c9434edb0ceb0cff68d4
+receipts:
+  unresolved_subitems: []

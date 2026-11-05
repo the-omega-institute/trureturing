@@ -1,0 +1,6 @@
+## 484. 全部小标记的反射主项与完整投影预算
+
+**约定与解析假设。** 保留 §482–483 的原卷积 $b(h)$、全部 good sixth-power-free 标记 $q_R\le L$（包括单位）、实际 $G_L$ 与原 row Mellin profile。采用前卷假设 454.2 的解析输入，以及 [I1–I16、I14a、H1–H8、G7](../../../Library/Analytic/faveri2026fixedorder.md#an-unchanged-numerator-term-in-the-primitive-continuous-adjoint) 和 [PR1–PR10、SH6](../../../Library/Analytic/openai2026quasirh.md#joint-control-of-all-powerful-prime-reflection-choices) 的精确有限变换、原固定字符 $B_0=7/8$ zero-free/reciprocal-strip 输入及移动删因子合同。固定 $u=1+\eta+it$，$0<\eta<1/48$ 满足同一固定 cusp 的谱避让条件。特别地，$B_0=7/8$ 是保留的解析前提，不在此宣告为无条件定理。
+
+本节直接复用前卷 (456.5)–(456.11) 的完整 Gauss 平方支撑与 finite Euler split、(457.4)–(457.7) 的保留谱幂次正均方，以及 [Type-I 原稿 v1](https://rstation.ai/api/v1/papers/riemann_hypothesis_8/versions/1/download) §§5–7、[primitive-mean 原稿 v2](https://rstation.ai/api/v1/papers/riemann_hypothesis_10/versions/2/download) §§3–7 的实际原始 series 和局部反演。新增 `repo-derived` 推导是带固定标记乘子的多 mark 主项消费及其全部小标记原系数预算；不对上述筛、Gauss、反演、正均方或 inverse-$L$ 输入另作新结果或文献优先权断言。
+

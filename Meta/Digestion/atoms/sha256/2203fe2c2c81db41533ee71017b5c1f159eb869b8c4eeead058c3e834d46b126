@@ -1,0 +1,51 @@
+### 定义 1：任务与操作菜单相对的预测空间
+
+设有限模型有 $d$ 个隐藏状态，允许动作 $a$，实际读出 $y$。用非负矩阵表示一步过程：
+
+$$
+M_{a,y}\in\mathbb R_{\ge0}^{d\times d},
+\qquad
+\sum_yM_{a,y}\mathbf1=\mathbf1.
+$$
+
+失败、拒绝等结果也计入实际读出。
+
+对有限动作—读出序列
+
+$$
+w=(a_1,y_1)\cdots(a_k,y_k)
+$$
+
+定义
+
+$$
+M_w=M_{a_1,y_1}\cdots M_{a_k,y_k}.
+$$
+
+若当前状态分布为行向量 $\mu$，该实验序列的概率是
+
+$$
+P_\mu(w)=\mu M_w\mathbf1.
+$$
+
+定义未来测试空间
+
+$$
+V=\operatorname{span}\{M_w\mathbf1:w\text{ 有限}\}.
+$$
+
+取一组由测试向量组成的基
+
+$$
+B=[\,\mathbf1,v_2,\ldots,v_r\,],
+\qquad r=\dim V\le d,
+$$
+
+并令观察者的预测状态为
+
+$$
+z=\mu B.
+$$
+
+<a id="theorem-3"></a>
+

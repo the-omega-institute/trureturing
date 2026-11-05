@@ -1,0 +1,6 @@
+## 483. 六阶主字符块与全部小标记的原分子连续项
+
+**约定与解析假设。** 保留 §482 的固定 Eisenstein 算术、原有限 masks、primary/ray sectors 和 level $M$，以及 [I1–I6](../../../Library/Analytic/faveri2026fixedorder.md#an-unchanged-numerator-term-in-the-primitive-continuous-adjoint) 的实际 full-series cusp 族。固定 $u=1+\eta+it$，其中 $0<\eta<1/12$ 满足 I3 的谱避让条件。I4 的统一平方和指数为 $1+\eta$；I5 的核在零附近为 $x^{-\eta/2-\varepsilon}$，在无穷远任意阶衰减，各有限阶 Euler 导数及 Mellin 分离具有多项式 $t$ 成本。这些解析输入在此作为前提，所有形式与 level 保持固定。
+
+本节使用 [Type-I 原稿 v1](https://rstation.ai/api/v1/papers/riemann_hypothesis_8/versions/1/download) §§5–7 的固定形式变换与除数聚合，以及 [primitive-mean 原稿 v2](https://rstation.ai/api/v1/papers/riemann_hypothesis_10/versions/2/download) §§3、7 的完整局部反演和实际伴随公式。前者 Proposition 4 限定平方自由外模数，§482 限定外模数指数至多五；后者 Corollary 5 给通用连续余项均方，不给下述原系数消费。I9 和前卷 §457 的对应消费限定素标记。本节的 `repo-derived` 承重推导是估值六的主字符块及全部小标记的原分子连续项；已知筛法、Gauss 恒等式和反演公式只作输入，不另立为新结果，也不主张文献优先权。
+

@@ -1,5 +1,6 @@
 using StrataLint.Scribe;
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition;
 
@@ -65,6 +66,14 @@ internal sealed class PhysicalWindowDecoderDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every prior archive length a, child vertex v and coordinate i, the literal row at actual issued index a+i+1 increments the native scalar by that vertex label code coordinate. The modular phase includes the complete prior archive rotation."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("physical-window-terminal-tail"),
+                DeclarationHandle.Create(Owner + "terminal01_tail"),
+                H("A final zero followed by one fixes the terminal tail"),
+                StatementSource.FromAuthor(Disp(TerminalTailFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every Boolean word of length n+2 and every incoming tail s, a zero at position n followed by a one at position n+1 makes the chronological terminal tail exactly one."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("physical-window-exceptional-row-coordinates"),
@@ -158,4 +167,23 @@ internal sealed class PhysicalWindowDecoderDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("For odd m at least three and k=m+1, fix either original alphabet, an arbitrary acquired archive with remembered free scalar and prior endpoint, a successful positive parent, full surviving phase support equal to its physical window, and the assumed per-phase factorization of immutable INITIAL labels. If the actual rotated table has at least three distinct labels, let d be its binary ceiling logarithm. There exist injective selected codes and one archive-only original selector issuing the same complete donor-compensated suffix on every given original history compatible with that same entire archive. Every issued endpoint succeeds; the actual issued words equal the displayed suffix and their number is exactly d. The final own-endpoint differences equal the entire selected code of a label explicitly equal to f(INITIAL). The prescribed selector has a same-record PaidTrace and returns the immutable f(INITIAL) in the original execute with exact additional fee d. Every emitted word is legal; no early stop, omitted paid word, wait, reset, repair, hidden observation or sibling information is used. The proof derives each history's actual current phase, scalar and tail one from OriginalAcquiredTrace; arbitrary repeated labels remain in scope. This is suffix attainment, not a minimum-price or GLOBAL theorem."))),
                 DescribeRole.Theorem)
         )));
+
+    private static Formula TerminalTailFormula()
+    {
+        var n=StrataLint.Scribe.FormulaDsl.Id("n");
+        var w=StrataLint.Scribe.FormulaDsl.Id("w");
+        var s=StrataLint.Scribe.FormulaDsl.Id("s");
+        Formula Op(string name)=>Seq(Operatorname,Grp(StrataLint.Scribe.FormulaDsl.Id(name)));
+        Formula App(Formula fn,params Formula[] args)=>new Formula.Apply(fn,[..args]);
+        return All(n,Seq(Mathbb,Grp(StrataLint.Scribe.FormulaDsl.Id("N"))),
+            All(w,Rel(Call("Fin",Add(n,D(2))),To,Op("Bool")),
+                All(s,Seq(Mathbb,Grp(StrataLint.Scribe.FormulaDsl.Id("N"))),
+                    Imp(Equal(App(w,n),Op("false")),Imp(Equal(App(w,Add(n,D(1))),Op("true")),
+                        Equal(Call("tailAfter",s,w),D(1)))))));
+    }
+    private static Formula Rel(Formula a, Formula relation, Formula b) => Seq(a, Sp, relation, Sp, b);
+    private static Formula Par(Formula body) => Seq(Open, body, Close);
+    private static Formula Imp(Formula a, Formula b) => Par(Rel(Par(a), Implies, Par(b)));
+    private static Formula All(Formula w, Formula type, Formula body) =>
+        Par(Seq(Forall, Sp, Open, w, Colon, type, Close, Comma, Sp, Par(body)));
 }

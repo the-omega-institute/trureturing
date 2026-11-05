@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:66bf909aa5f986502ab8773f3a59aa134416bdad2ae91a90aa9702cb7a391ec8
+  normalized_sha256: sha256:66bf909aa5f986502ab8773f3a59aa134416bdad2ae91a90aa9702cb7a391ec8
+cas_ref: sha256:66bf909aa5f986502ab8773f3a59aa134416bdad2ae91a90aa9702cb7a391ec8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: An optional meta-decision-rule list item, with no existence, uniqueness or mathematical property asserted.
+    previous_atom_id: 3a7262aa0b3c4209ad2b81cc8dcf45921eece97363d19962da60566a4aef5f85
+    next_atom_id: 8dedc5b349ad615e51b170da5b9ad3776b561c35184ad6d5269ca9947c9c0814

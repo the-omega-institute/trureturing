@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:66cc7d64ce02385a9171328c7727f8ddec9b9c04aca3271912eaa4d22dc61ff8
+  normalized_sha256: sha256:66cc7d64ce02385a9171328c7727f8ddec9b9c04aca3271912eaa4d22dc61ff8
+cas_ref: sha256:66cc7d64ce02385a9171328c7727f8ddec9b9c04aca3271912eaa4d22dc61ff8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Boundary statement leaving the truth of RH to additional analysis; it asserts neither RH nor its negation.
+    previous_atom_id: 76f7ad9f37c95d1289577154064d6b72315d2743faf25eda994011bfda168619
+    next_atom_id: 395c2fbe709507c9e0352ddfb163f2ddc4f50d603fd22b81796aa7f544f4ca79

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:916be06a9d59758b28618a90c4ba7f11c4b242b3cf5b17b388c43a77eda15f06
+  normalized_sha256: sha256:916be06a9d59758b28618a90c4ba7f11c4b242b3cf5b17b388c43a77eda15f06
+cas_ref: sha256:916be06a9d59758b28618a90c4ba7f11c4b242b3cf5b17b388c43a77eda15f06
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: R-F 勘误与 M2 追加部的探针、产地和工单信息。
+    previous_atom_id: 5ab65f560ace945915cd8e81de84d44c2ce3c792035a1fef22d24af261cccdd9
+    next_atom_id: a53df19e55e965af36c14ab327ef31628f30db90bf111bf7a840643d3dcefe24

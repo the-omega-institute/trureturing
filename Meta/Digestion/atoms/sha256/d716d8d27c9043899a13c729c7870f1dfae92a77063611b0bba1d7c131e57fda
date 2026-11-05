@@ -1,0 +1,34 @@
+**定义 11.1（四顶点侧的实际有限分配）。** 对每个整数 $m\ge4$，取任意不交有限标号集 $A,B$，满足 $|A|=4$、$|B|=m$，令 $G=K_{4,m}$。本节采用定义 1.1–1.2 的普通邻接能量和全部阶乘权重，即对每个 $C\subseteq A\sqcup B$ 及每名玩家 $v$，
+
+$$
+\begin{aligned}
+w(C)&=\mathcal E(G[C])=2\sqrt{|C\cap A|\,|C\cap B|},\\
+\phi_v&=\sum_{S\subseteq(A\sqcup B)\setminus\{v\}}
+\frac{|S|!(m+3-|S|)!}{(m+4)!}
+\bigl(w(S\cup\{v\})-w(S)\bigr).
+\end{aligned}
+\tag{11.1}
+$$
+
+这里 $\mathcal E$ 是全部邻接特征值绝对值之和，$w(\varnothing)=0$。文献对应为 Arizmendi–Arizmendi，[*The graph energy game*, arXiv:2012.14114v2](https://arxiv.org/pdf/2012.14114v2)，§2.2、§2.4、Definition 3.1：玩家集为 $A\sqcup B$，总人数为 $m+4$，联盟图为 $G[C]$。该文 Theorems 3.5–3.6 的 vertex-energy 分配及 Proposition 4.13 的 $2$-energy 博弈不替代 (11.1)。
+
+本节局部记号为 $x_m=x_{4,m}$、$y_m=y_{4,m}$。取 $H_m=(m+1)(m+2)(m+3)(m+4)$，并令 $P_m(k)$ 为 (6.10) 中取 $b=m$ 的同一多项式。复用 (6.5)、(6.9)–(6.10)，有
+
+$$
+\begin{aligned}
+x_m&=\frac2{H_m}\sum_{k=0}^m\sqrt k\,P_m(k)>0,\\
+y_m&=\frac{4\sqrt m-4x_m}{m}>0,\qquad
+4x_m+my_m=4\sqrt m,\\
+u_m&=\frac{x_m}{\sqrt m},\qquad
+c_m=\sqrt m\,y_m=4(1-u_m),\qquad
+\tau_m=\frac{1-u_m}{u_m},\\
+d_m(i,j)&=2\sqrt{ij}-ix_m-jy_m
+\quad(0\le i\le4,\ 0\le j\le m),\\
+D_{4,m}&=\max_{C\subseteq A\sqcup B}\Delta(C;\phi)
+=\max_{\substack{0\le i\le4,\ 0\le j\le m\\i,j\in\mathbb Z}}d_m(i,j).
+\end{aligned}
+\tag{11.2}
+$$
+
+每次固定 $m$ 后，全部计数行使用 (11.2) 的同一实际支付对。两侧各自的标号双射逐项保持 (11.1) 的前驱集合、阶乘权重和边际，故这些式子适用于每对所述标号集。式 (6.9) 对应目标玩家以外的三名同侧玩家及 $m$ 名异侧玩家的全部前驱计数，包含零边际端点。计数 $(i,j)$ 的全部实际联盟及其数目仍由 (9.2) 给出，参数为 $a=4,b=m$。
+

@@ -1,0 +1,42 @@
+**Lemma 92.3 (Whole-map upper certificate and spectator).** Let
+$\sigma=\operatorname{sgn}(s)$ and define
+
+$$
+K_0=P_0+\sigma P_1,\qquad K_1=|1\rangle\langle2|,\qquad
+\mathcal R_\sigma(X)=K_0XK_0^\dagger+K_1XK_1^\dagger.
+\tag{92.9}
+$$
+
+Then $\mathcal R_\sigma$ is CPTP and, for every $\varphi$,
+
+$$
+e_{\mathcal R_\sigma}(\varphi)=(1-t)c.
+\tag{92.10}
+$$
+
+*Proof.* The two adjoint Kraus products sum to $P_0+P_1+P_2$. Directly,
+
+$$
+\mathcal R_\sigma^\dagger(E_\varphi)=
+ (1-q)P_0+qP_1+qP_2
+ +\sigma c\bigl(e^{-i\varphi}|0\rangle\langle1|
+                 +e^{i\varphi}|1\rangle\langle0|\bigr).
+\tag{92.11}
+$$
+
+Applying $\Phi_s^\dagger$ changes the off-diagonal coefficient to
+$s\sigma c=tc$ and leaves all three displayed diagonal entries fixed. The
+residual is therefore the direct sum of a $2\times2$ off-diagonal block
+with eigenvalues $\pm(1-t)c$ and the spectator entry $q$. Since
+$t\le1/2$ and $q\le10^{-3}$,
+
+$$
+q<\tfrac12\sqrt{q(1-q)}\le(1-t)c.
+\tag{92.12}
+$$
+
+Hence the spectator does not dominate, and (92.10) follows. The actual
+whole-qutrit decoder is
+$D_\sigma=\mathcal R_\sigma\circ\operatorname{Ad}_{U_0^\dagger}$,
+whose Kraus operators are $K_0U_0^\dagger,K_1U_0^\dagger$. $\square$
+

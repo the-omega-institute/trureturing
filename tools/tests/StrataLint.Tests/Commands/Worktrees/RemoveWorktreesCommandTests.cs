@@ -6,6 +6,32 @@ namespace StrataLint.Tests;
 public sealed partial class RemoveWorktreesCommandTests
 {
     [Fact]
+    public void NamedRemovalRendersClearanceBeforeFailedCheckpointRetry()
+    {
+        using var fixture = new RemovalFixture();
+        var target = fixture.Add("failed-retry");
+        fixture.CommitAndDirty(target);
+        var hooks = fixture.UnregisteredDirectory("rejecting-hooks");
+        var hook = Path.Combine(hooks, "pre-commit");
+        File.WriteAllText(hook, "#!/bin/sh\nexit 1\n");
+        if (!OperatingSystem.IsWindows()) File.SetUnixFileMode(hook, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        fixture.Git(target, "config", "core.hooksPath", hooks);
+        var metadata = fixture.Git(target, "rev-parse", "--absolute-git-dir").Trim();
+        var path = Path.Combine(metadata, "index.lock");
+        File.WriteAllText(path, "cleared before failure\n");
+        var result = fixture.Remove("failed-retry");
+        AssertResult(result, 74, 0, 1, 0);
+        Assert.True(Directory.Exists(target));
+        Assert.False(File.Exists(path));
+        using var receipt = JsonDocument.Parse(result.Output.Split('\n')[0]);
+        var clearance = Assert.Single(receipt.RootElement.GetProperty("native_locks").EnumerateArray());
+        Assert.Equal("native_lock_cleared", clearance.GetProperty("status").GetString());
+        Assert.Equal(path, clearance.GetProperty("path").GetString());
+        Assert.Equal("cleared before failure\n".Length, clearance.GetProperty("size").GetInt32());
+        Assert.True(clearance.GetProperty("age_seconds").GetDouble() >= 0);
+    }
+
+    [Fact]
     public void NamedDetachedBatchReportsUsableRecoveryBranches()
     {
         using var fixture = new RemovalFixture();
@@ -227,7 +253,7 @@ public sealed partial class RemoveWorktreesCommandTests
         AssertResult(result, 0, 1, 0, 0);
         AssertItem(result, "linked", "/fixture/linked", "removed");
         var request = Assert.Single(runner.Invocations, call => call.FileName == "python3");
-        Assert.Equal("-c", request.Arguments[1]);
+        Assert.Equal(new[] { "-I", "-B" }, request.Arguments.Take(2));
         Assert.Equal("linked", request.Arguments[request.Arguments.ToList().IndexOf("--names") + 1]);
         Assert.DoesNotContain("--force", request.Arguments);
     }
@@ -379,7 +405,7 @@ public sealed partial class RemoveWorktreesCommandTests
     {
         var result = Run(new InventoryRunner(), "--help");
         Assert.True(result.Success, result.Error);
-        foreach (var text in new[] { "--names", "--force", "300", "timeout", "complete", "whitespace", "24", "lock", "identity", "0/2", "WORKTREE_REMOVE_RESULT" })
+        foreach (var text in new[] { "--names", "--force", "1800", "timeout", "complete", "whitespace", "24", "lock", "identity", "0/2", "WORKTREE_REMOVE_RESULT" })
             Assert.Contains(text, result.Output, StringComparison.Ordinal);
         Assert.Contains("StrataLint worktree remove --names", WorktreeCommand.Usage, StringComparison.Ordinal);
     }

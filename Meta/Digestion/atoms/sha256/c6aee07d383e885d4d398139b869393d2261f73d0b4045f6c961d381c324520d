@@ -1,0 +1,15 @@
+### Corollary 61.4 (FIB register cost)
+
+If controller states receive independent fixed-length legal FIB names with no
+adjacent \(11\), then four states require length three:
+
+$$
+F_{\ell+2}\ge4
+\quad\Longleftrightarrow\quad
+\ell\ge3.
+$$
+
+The names \(000,010,100,101\) realize the four states. This is a static state
+capacity statement; rewriting a register, maintaining a program counter, and
+paying the physical action cost remain separate contracts.
+

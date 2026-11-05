@@ -1,0 +1,21 @@
+**Definition 6.3 (distinct observations).** The mode relation
+$\mathcal G$ exposes symmetric correlations and the imaginary coupling
+two-form up to simultaneous sign. The boundary observation is the
+probability law of a specified detector and its visible flags. Ordered
+response observations expose these laws after actual specified control
+words. In the depth interface those words contain zero, one or two
+successful applications of the same filter. The retained observation of a
+finite run is its actually written setting/outcome word, together with its
+source binding and readable backing. Its empirical frequencies are an
+extraction from that word. These definitions do not identify the word with
+its law, or the mode carrier with physical space, or operation count with
+physical duration.
+
+The results below concern this fixed boundary's closure and recovery of
+$\mathcal G$. AURIC–Langlands Theorem 4.2 already classifies complete real
+two-copy statistics by $\mathcal G$; Proposition 6.3 already supplies full
+quadratic-tensor recovery when all its effects are callable. Its §15
+already supplies a strictly lawful collision for $q$. Theorems 7.1, 8.2
+and 9.1 concern the additional filtering relations for this restricted
+boundary, rather than new proofs of those supplier results.
+

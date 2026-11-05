@@ -1,0 +1,36 @@
+**定义 76.1（原有编码之后的固定被动获取）。** 完整沿用定义 71.1–71.2、75.1 的全部假设及 [AA 定义 17.1、17.3 和定理 17.2](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md#17-birth-typed-local-growth-and-its-causal-reconstruction) 的原 birth-typed 局部源。固定同一个实际项 $u=\langle\beta,\langle\beta,\alpha\rangle\rangle$、(71.1) 的对称零对角单位邻接矩阵 $A$、坐标序 $(LL,L,\varepsilon,R,RL,RLL,RR)$ 及首个 canonical terminal 种子 $e=e_{LL}$。完整 earned terminal 表为 $(LL,RLL,RR)$，保留其穷尽 raw 对应及 canonical 逆表；下述命名终端调用均经真实绑定转成原 raw 调用，不增加地址端口。原出生类型、合法 $P/S$ 守卫和 material marker 非逻辑生长目标的约束均保留。
+
+在同一源上实际建立 whole zero，再实际执行 Add$(e,1)$ 和 Hold。对每个有限字 $w=d_0\cdots d_{m-1}\in\{0,1,2,3\}^*$，执行 (71.2) 的每个完整原 Next，即 Tick、Add$(e,d_i)$、Hold、Read$(e)$，包括三个原确认、整个 literal scalar、全部 framing 和完成返回。于是获取开始时
+
+$$
+x_w=F_w(A)e,\qquad
+F_w(z)=z^m+\sum_{i=0}^{m-1}d_i z^{m-1-i},
+\qquad F_\emptyset=1,\quad F_{0^m}=z^m.
+$$
+
+接收者只有 earned 图、完整映射、真实可调用上下文及此历史像承诺，没有字、长度、旧编码回复、journal、依赖于场的 advice 或可访问的相关 producer 状态。保留 genuine original-root reference/binding、方向、current/fresh authority、排他的完成调用串行化、无自主运动、按 literal 值决定宽度的完整精确 framing 及每个有限承诺运行所需的充足有限精确 backing；没有额外依赖于场的 timing、allocation 或 capacity 通道。解码期间源保持 held，且无其他写入者、撤权或崩溃；这些权利与资源是前提，不由解码产生。
+
+在完整编码结束之后，选取如下一个固定获取 schedule；它只依赖已知图，不依赖 $w$ 或 $m$：
+
+$$
+\operatorname{Tick};\operatorname{Tick};\operatorname{Tick};
+\operatorname{Hold};\operatorname{Read}(LL);\operatorname{Read}(RR);
+\operatorname{Tick};\operatorname{Hold};
+\operatorname{Read}(LL);\operatorname{Read}(RR);\operatorname{Hold}.
+\tag{76.1}
+$$
+
+每次调用先消费原有完整回复及完成返回，才进行下一次。此 schedule 属于定义 71.2 原有的 Tick、Hold、identity Add$(0)$、earned-terminal literal Read 被动菜单，实际用了四 Tick、三 Hold、四个额外 scalar Read，零 Add、零 growth、零 Reset，亦无其他干预。按定义 71.2，$K$ 计入获取 schedule 中所有实际 Tick，包括最后一次 Read 之后的 Tick；(76.1) 的 $K=4$，最后一次 Read 之后有零 Tick。原长度 $m$ 编码的 $m$ 个 Tick 及全部 Next 调用仍须实际执行并支付：从已建立的单位种子到此端点共有 $m+4$ 个 Tick，$K=4$ 不是整段编码与获取的总成本。
+
+按返回顺序记四个 literal scalars 为
+
+$$
+Y_4(w)=\bigl(
+e_{LL}^{\mathsf T}A^3F_w(A)e,\,
+e_{RR}^{\mathsf T}A^3F_w(A)e,\,
+e_{LL}^{\mathsf T}A^4F_w(A)e,\,
+e_{RR}^{\mathsf T}A^4F_w(A)e
+\bigr).
+\tag{76.2}
+$$
+

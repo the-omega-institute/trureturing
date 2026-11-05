@@ -32,6 +32,15 @@ internal sealed class SicMubCorrelationTraceNormEqualityDocument : IScribeDocume
             Node("claim", "The SIC–MUB trace-norm equality", ClaimFormula(),
                 "Conjecture 1 states that for local dimensions at least two, every pair of SIC families, every pair of complete MUB families, and every positive semidefinite trace-one bipartite operator, the complete-MUB trace norm equals the SIC trace norm multiplied by the two dimension factors.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Describe.Lean(
+                DescribeId.Create("sic-mub-correlation-trace-norm-trace-pairing-ext"),
+                DeclarationHandle.Create(Prefix + "trace_pairing_ext"),
+                H("Trace pairings on a spanning family"),
+                StatementSource.FromAuthor(TracePairingExtFormula()),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "Two complex square matrices are equal when their trace pairings agree on a family whose complex linear span is the full matrix space."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("sic-mub-correlation-trace-norm-result"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("The equality follows from two frames and an isometry"),
@@ -57,7 +66,7 @@ internal sealed class SicMubCorrelationTraceNormEqualityDocument : IScribeDocume
         provenance, Blocks(Paragraph(Text(prose))), role);
 
     private static Formula X(string name) => F.Id(name);
-    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula Parenthesized(Formula value) => new Formula.LatexSequence([Open, value, Close]);
     private static Formula Cast(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, Cast(X(name), type), Comma, Sp, Parenthesized(body));
@@ -112,6 +121,20 @@ internal sealed class SicMubCorrelationTraceNormEqualityDocument : IScribeDocume
     private static Formula Trace(Formula value) => Call("trace", value);
     private static Formula Of(Formula rows, Formula cols, Formula body) =>
         At(Qualified("Matrix", "of"), Lambda("i", rows, Lambda("j", cols, body)));
+
+    private static Formula TracePairingExtFormula()
+    {
+        Formula d = X("d"), iota = Iota, p = X("P"), x = X("X"), y = X("Y");
+        Formula matrix = Matrix(Fin(d), Fin(d));
+        Formula spanning = Equal(At(Qualified("Submodule", "span"), Complex(),
+            At(Qualified("Set", "range"), p)), Qualified("Top", "top"));
+        Formula pairings = All("i", iota,
+            Equal(Trace(Multiply(x, At(p, X("i")))), Trace(Multiply(y, At(p, X("i"))))));
+        return Disp(All("d", Nat(), Seq(Forall, Sp, Cast(iota, X("Type")), Comma, Sp,
+            Parenthesized(All("P", Arrow(iota, matrix),
+                Implication(spanning, All("X", matrix, All("Y", matrix,
+                    Implication(pairings, Equal(x, y))))))))));
+    }
 
     private static Formula SICFamilyFormula()
     {

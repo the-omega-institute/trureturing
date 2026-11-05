@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1a7f02348a693346aad8efc5f1b0b9701c5f326b25283b5abb4083aae276ee37
+  normalized_sha256: sha256:1a7f02348a693346aad8efc5f1b0b9701c5f326b25283b5abb4083aae276ee37
+cas_ref: sha256:1a7f02348a693346aad8efc5f1b0b9701c5f326b25283b5abb4083aae276ee37
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: “哪些规则有效”列出主权接口的一个议题，未断言规则有效性谓词的性质。'
+    previous_atom_id: db5d7259b99083c60ec45254e2af9f541fbbe60227b6c2ff0caada1787e03650
+    next_atom_id: 6b19e4c08d582a72d67e1f3ef3dadce52825ce30b5ccf816f436004c3895b198

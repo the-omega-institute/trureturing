@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:425189d1a824c75a06728a36b30296bb39f9a8d638a513cd260b51852f85f442
+  normalized_sha256: sha256:425189d1a824c75a06728a36b30296bb39f9a8d638a513cd260b51852f85f442
+cas_ref: sha256:425189d1a824c75a06728a36b30296bb39f9a8d638a513cd260b51852f85f442
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 提出重复表达须按用途与语境判断的哲学假设，没有概率定理。
+    previous_atom_id: 262aabf9a22a4df905332c2a5823ab29a53f601e4d760d52d893a81e3ab17dfc
+    next_atom_id: b4a183d1a31c91b80e25e632f2e00cb7014f901d45173667d3f654c781745d85

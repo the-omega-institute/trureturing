@@ -1,0 +1,22 @@
+**定义 60.2（指定协变的五维编码）。** 在 $(\xi,e,f)$ 基中写
+
+$$
+\rho=\begin{pmatrix}c&z^\dagger\\z&Q\end{pmatrix},\qquad
+c=d/2>0,\quad z\in\mathbb C^2,\quad Q\in\operatorname{Herm}_2(\mathbb C),
+\quad z_R=(\Re z,\Im z)^{\mathsf T}.
+\tag{60.8}
+$$
+
+指定编码与其动态为
+
+$$
+\mathcal P_5(\rho)=
+\begin{pmatrix}c&z_R^{\mathsf T}/\sqrt2\\z_R/\sqrt2&\mathfrak R(Q)/2\end{pmatrix},
+\qquad
+\widehat V_j=\operatorname{diag}(1,\mathfrak R(B_j)),\quad
+\widehat\Phi_j(Y)=\widehat V_jY\widehat V_j^{\mathsf T}/2,
+\tag{60.9}
+$$
+
+其中 $B_0=B_\zeta$、$B_1=B_\zeta\operatorname{diag}(1,-1)$，故去掉公共相位后的 $V_j=1\oplus B_j$。这一指定包括初始编码及此后每一步的协变编码；不允许另换一个后继轨迹仍称为同一编码。
+

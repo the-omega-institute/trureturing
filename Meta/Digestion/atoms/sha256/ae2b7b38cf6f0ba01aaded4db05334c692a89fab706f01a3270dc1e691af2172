@@ -1,0 +1,18 @@
+**Lemma 3.10 (one-call and finite complete-output stability).** Use the unhalved trace norm. On every density matrix $\sigma_{QZ}$,
+
+$$
+\|((\mathcal L_\gamma-\mathcal L_1)\otimes\operatorname{id}_Z)(\sigma)\|_1
+       =|1-\gamma|.
+\tag{3.23}
+$$
+
+Reading in either declared setting and retiring the measured carrier cannot increase this bound. For any one common classical-read task word $v$ with at most $h$ source calls, the complete joint output, including all actual bits, final system and reference, changes by at most $h|1-\gamma|$ when all its lifts are replaced by $\mathcal L_1$ at the same entrance.
+
+**Proof.** In record-first order, (3.2) is conjugation of $\tau_\gamma\otimes X$ by the mathematical block unitary with blocks $V_0,V_1$, where
+
+$$
+\tau_\gamma=\tfrac12\begin{pmatrix}1&\gamma\\\bar\gamma&1\end{pmatrix}.
+$$
+
+The same factorization holds with references. The two eigenvalues of $\tau_\gamma-\tau_1$ are $\pm|\gamma-1|/2$; tensor multiplicativity of the trace norm and $\|\sigma\|_1=1$ give (3.23). This factorization is a proof of a norm identity, not an additional callable controlled unitary or ancilla supply. A common CPTP read/retirement map contracts trace norm on Hermitian differences. To compare whole words, insert hybrids replacing one source call at a time. Prior complete histories form a normalized classical–quantum state; applying (3.23) to that state, with its old record in the reference, bounds this replacement by $|1-\gamma|$. Later common complete maps contract it. Sum over at most $h$ replacements. This argument compares complete branch tables, not individual normalized rare branches. $\square$
+

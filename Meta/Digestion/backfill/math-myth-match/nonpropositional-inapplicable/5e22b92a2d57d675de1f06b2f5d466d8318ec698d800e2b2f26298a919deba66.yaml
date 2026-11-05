@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5e22b92a2d57d675de1f06b2f5d466d8318ec698d800e2b2f26298a919deba66
+  normalized_sha256: sha256:5e22b92a2d57d675de1f06b2f5d466d8318ec698d800e2b2f26298a919deba66
+cas_ref: sha256:5e22b92a2d57d675de1f06b2f5d466d8318ec698d800e2b2f26298a919deba66
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：索引§257—267数学模块与正文综合的来源，明确源码阅读不等于本批kernel核验。
+    previous_atom_id: 9a930e653dde310291664dc1d98b8158af057ea67821637736fcb9ce59f84184
+    next_atom_id: 2f2e5d7556b32b56fd6c2363d76e1916b4bb69624a8eb0e82a39c3f869f96423

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:339583231e6852d2aaf2282854d5eeb842cb918e43cf23e7b3058745cf1cafa4
+  normalized_sha256: sha256:339583231e6852d2aaf2282854d5eeb842cb918e43cf23e7b3058745cf1cafa4
+cas_ref: sha256:339583231e6852d2aaf2282854d5eeb842cb918e43cf23e7b3058745cf1cafa4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 人格同一性各解释层的术语目录；未给出这些读出间的等式或因子化定理。
+    previous_atom_id: 8212e4e92c657bfd4fccd578d71ef0cdfeb8c3e90b01ffca639d12afe5d4e611
+    next_atom_id: 84ac32408b719cbcd378da5faccf26b6328e24c6ef7b08aca7abee405921a07e

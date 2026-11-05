@@ -1,0 +1,56 @@
+**Definition 5.1 (remaining private minimax question).** For comparison
+with the published deterministic classification, retain its constants
+
+$$
+\begin{gathered}
+c_0=\frac{\sqrt{65}-7}{8},\qquad
+q_c=\frac{3+2c+\sqrt{c(3+8c)}}{3+4c},\\
+D(c)=
+\begin{cases}
+\dfrac{c(3+c)}{5+4c},&0<c\le c_0,\\[5pt]
+\dfrac{c(3+c-q_c^2)}{3+2c},&c\ge c_0,
+\end{cases}
+\qquad
+E_\star(c)=\frac{(1+c)D(c)}{c}.
+\end{gathered}
+\tag{5.1}
+$$
+
+The two displayed expressions for $D$ agree at $c_0$.
+Uniform Report Designs, Sections 31--34, in particular Lemma 32.2,
+Theorem 31.4, Corollary 32.6, Theorem 33.4 and Corollary 34.6,
+with the wide-prior consequence in Section 34.7, give
+$c/3<(1+c)/2<E_\star(c)<1+c$ and the complete deterministic
+classification. In the private experiment, Theorem 3.3 together
+with those existing results already gives
+
+$$
+R_{\mathrm{private}}=
+\begin{cases}
+\dfrac12\min(2E,c/3),&0\le E\le c/3,\\[4pt]
+\dfrac{cE}{2(1+c)},&E\ge E_\star(c).
+\end{cases}
+\tag{5.2}
+$$
+
+These inherited exact regions follow respectively from $F=H$
+and from the published deterministic-grid equality; they are not
+additional origin-conditioned results. The unrestricted value is
+left unresolved here on exactly the intermediate parameter domain
+
+$$
+c>0,\qquad c/3<E<E_\star(c).
+\tag{5.3}
+$$
+
+On that domain the available quantitative conclusion is (3.4),
+with the published deterministic value used in its upper bound.
+On the subband (4.1) the particular family's exact value is (4.2),
+including its upper endpoint $E=(1+c)/2$, where $G=Q=c/2$.
+On (4.16) the unrestricted gap between the stated lower and upper
+bounds is the explicit positive number (4.17). The remaining
+question is to obtain a stronger fixed-pre-coin-world lower
+argument, a better lawful strategy, or matching bounds on (5.3).
+No reduction of the unrestricted infimum to finite mixtures is
+part of that question's definition or of the conclusions above.
+

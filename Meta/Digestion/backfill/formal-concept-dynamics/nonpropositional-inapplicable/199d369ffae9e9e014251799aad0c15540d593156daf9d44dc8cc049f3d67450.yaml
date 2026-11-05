@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:199d369ffae9e9e014251799aad0c15540d593156daf9d44dc8cc049f3d67450
+  normalized_sha256: sha256:199d369ffae9e9e014251799aad0c15540d593156daf9d44dc8cc049f3d67450
+cas_ref: sha256:199d369ffae9e9e014251799aad0c15540d593156daf9d44dc8cc049f3d67450
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: Introduces the history, blame and current-safety readout signatures H,B,S and asks to distinguish them; no forgetting or preservation equation is present.'
+    previous_atom_id: 13b596410e3b37675e831bce5a0793c0ef2fc6cb72795281665633a0cd11db41
+    next_atom_id: 078fd445852fef9f31bd9bedc223ae1c75b50c2c2e29f0dc53f01d8d571279ef

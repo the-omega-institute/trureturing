@@ -1,0 +1,152 @@
+### 8.2 The all-world carrier and the forced response
+
+Write $\mathscr R$ for exactly the carrier of
+[Support VII](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md),
+(15.4)–(15.6), rather than a differently normalized parent eliminant.
+The following finite polynomial definitions fix that normalization and
+the additional polynomials used in the bounds. Put
+
+$$
+\begin{gathered}
+D=x(x+1)(x+2),\qquad z_3=(24-d)(x+1)(x+2),\qquad z_4=(18-d)D,\\
+z_5=(p-d)x(x+2),\qquad z_6=(v-d)x(x+1),\\
+a_0=20z_3-45z_4+36z_5-10z_6,\\
+a_1=10z_3-20z_4+15z_5-4z_6,\qquad
+a_2=4z_3-6z_4+4z_5-z_6,\\
+z_*=xa_1-D(24-d),\\
+f=5dDa_2+a_0\bigl((294-10d)D-5a_2\bigr),\\
+K=4a_0^2z_*^2+2a_0(dD-a_0)z_*a_1
+ -(a_0+dD)\bigl(dD+(1-2x)a_0\bigr)a_1^2,\\
+F_0=405x^3+(975-18p+5v)x^2+(90-36p+5v)x-480.
+\end{gathered}
+\tag{8.2.1}
+$$
+
+In the polynomial ring, write $f=A_fd^2+B_fd+C_f$ and
+$K=\sum_{i=0}^4K_id^i$. Form the six-by-six Sylvester matrix whose
+rows are the coefficients of $d^3f,d^2f,df,f,dK,K$, in the columns
+$d^5,d^4,\ldots,1$. Then define $\mathscr R$ by
+
+$$
+\det\mathsf S=256D^8F_0^2\mathscr R.
+\tag{8.2.2}
+$$
+
+This is exact polynomial division, not pointwise cancellation at
+$F_0=0$. The quotient has integer coefficients, $512$ nonzero terms and
+multidegree $(18,6,6)$ in $(x,p,v)$, with
+
+$$
+[x^0]\mathscr R=10^6(32p-5v-366)^2
+ (120p^2-38pv-3360p+3v^2+522v+23112)^2.
+\tag{8.2.3}
+$$
+
+Keep the polynomial drift identity of Support VII, (16.1)–(16.3):
+
+$$
+\begin{aligned}
+\alpha={}&K_4(-B_f^3+2A_fB_fC_f)
+ +K_3A_f(B_f^2-A_fC_f)-K_2A_f^2B_f+K_1A_f^3,\\
+\zeta={}&K_4(-B_f^2C_f+A_fC_f^2)
+ +K_3A_fB_fC_f-K_2A_f^2C_f+K_0A_f^3,\\
+A={}&\alpha/(32D^3),\qquad Z=\zeta/(32D^3),\qquad Z_1=Z/F_0.
+\end{aligned}
+\tag{8.2.4}
+$$
+
+All three quotients in the last line are polynomials. Define further
+
+$$
+\begin{aligned}
+B_n={}&-20(x+1)(x+2)+45D-36x(x+2)+10x(x+1),\\
+B_1={}&\frac{-2A-(B_n+D)Z_1}{2D},\\
+L_7={}&-24(x+1)(x+2)+72D-6p\,x(x+2)+4v\,x(x+1),\\
+T_7={}&(x+1)(x+2)-4D+6x(x+2)-4x(x+1),\\
+N={}&\frac{-ZD+(3+2x)(L_7A-T_7Z)}{D},\qquad
+\Omega=N_xA-NA_x.
+\end{aligned}
+\tag{8.2.5}
+$$
+
+Here too $B_1,N$ are polynomial quotients with zero remainder. Thus
+these definitions do not introduce divisions by the numerical value of
+$F_0$ or $D$ when their coefficients are formed. For an explicit
+coefficient construction, expand every product by finite convolution,
+expand $\det\mathsf S$ as its $6!$ signed products, and perform the
+indicated exact divisions over $\mathbb Q[x,p,v]$. The numbers of
+nonzero terms of $(\alpha,\zeta,A,Z,Z_1,B_1,N,\Omega)$ are
+$(280,405,220,315,190,190,334,1512)$, respectively.
+
+The necessary, faithful all-world interface used below is Support VII,
+Section 15 and Lemma 15.1. In that interface
+
+$$
+\begin{gathered}
+x=(j+r)/U>0,\qquad j=b+r(1-r)/b,\qquad U=1+2b,\\
+h_3=(24-d)/x,\quad h_4=18-d,\quad
+h_5=(p-d)/(x+1),\quad h_6=(v-d)/(x+2),\\
+H(s)=\sum_{i=3}^6h_i
+ \prod_{\substack{3\le k\le6\\k\ne i}}\frac{s-k}{i-k},\\
+H_0=20h_3-45h_4+36h_5-10h_6,\\
+H_1=10h_3-20h_4+15h_5-4h_6,\quad
+H_2=4h_3-6h_4+4h_5-h_6,\\
+H_7=-h_3+4h_4-6h_5+4h_6,\\
+B_0=294/5-2d-H_2,\quad C_0=d^2+B_0^2,\\
+U=(-dH_0+B_0H_2)/C_0,\quad
+b=(U-1)/2,\quad j=U(24-d)/H_1,\quad r=xU-j,\\
+g=H/U,\qquad m=d+(3+2x)H_7.
+\end{gathered}
+\tag{8.2.6}
+$$
+
+At every actual off-$24$ world this interface gives
+$D>0$, $d\ne24$, $H_1\ne0$, $C_0>0$, $U>1$,
+$f=K=\mathscr R=0$ and $\alpha d+\zeta=0$.
+It includes $d=0$, $F_0=0$, singular original sources and all degree
+drops; the map from complete worlds to $(x,d)$ is injective. These are
+reused results, not converses from a resultant root.
+
+In particular, wherever $A\ne0$, an actual world has
+
+$$
+d=-Z/A,\qquad m=\mu(x;p,v):=N/A,\qquad
+\mu_x=\Omega/A^2.
+\tag{8.2.7}
+$$
+
+The extra source filter on a label where also $Z_1\ne0$ is
+
+$$
+b=B_1/Z_1.
+\tag{8.2.8}
+$$
+
+To verify these new polynomial forms directly, expansion gives
+$a_0=-2F_0+B_nd$ and $DH_7=L_7+T_7d$. Substituting $d=-Z/A$ in the
+second identity gives (8.2.7). If $Z,Z_1\ne0$, then $d\ne0$ and the
+actual equation $dU=-H_0$ gives
+
+$$
+U=\frac{-2F_0A-B_nZ}{DZ}
+  =\frac{-2A-B_nZ_1}{DZ_1},\qquad
+\frac{U-1}{2}=\frac{B_1}{Z_1}.
+\tag{8.2.9}
+$$
+
+This establishes (8.2.8) only where it will be guarded below; no
+nonzero-drift assumption is made on the central interval. The identity
+$\alpha d+\zeta=0$ follows without dividing by $A_f$: polynomially,
+
+$$
+\begin{gathered}
+A_f^3K-\alpha d-\zeta=fQ,\\
+Q=K_4(A_f^2d^2-A_fB_fd+B_f^2-A_fC_f)
+  +K_3A_f(A_fd-B_f)+K_2A_f^2.
+\end{gathered}
+\tag{8.2.10}
+$$
+
+Thus no assumption that the specialized quadratic retains its degree
+enters the forced drift.
+

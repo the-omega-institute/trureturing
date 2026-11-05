@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:18a187a1a4d4723eb4379ef76412fa0e5ca251a7b74c9b61a7ca2653890f1b79
+  normalized_sha256: sha256:18a187a1a4d4723eb4379ef76412fa0e5ca251a7b74c9b61a7ca2653890f1b79
+cas_ref: sha256:18a187a1a4d4723eb4379ef76412fa0e5ca251a7b74c9b61a7ca2653890f1b79
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: James on live, forced and momentous options. The text gives historical interpretation, bibliographic scope or methodological advice, rather than a mathematical assertion.'
+    previous_atom_id: c132058f5719ca0e8a7a802434099b2310fe84998482ea12b90c402a49203487
+    next_atom_id: 7c343b4efacca8d9795b0950be03058e55c127b584f8facf72866ca98246a5b5

@@ -1,0 +1,49 @@
+**Theorem 93.3 (Common individual optimum at $s=0$).** Define
+
+$$
+D_*(X)=\operatorname{Tr}(P_0X)P_0
+       +\operatorname{Tr}((I-P_0)X)P_1.
+\tag{93.4}
+$$
+
+Then $D_*$ is one whole-qutrit CPTP map, independent of $q$ and
+$\varphi$, and for every $0\le q\le1/2$ and every phase,
+
+$$
+\min_{D\ {\rm CPTP}}
+ \left\|\Phi_0^\dagger D^\dagger(E_\varphi)-E_\varphi\right\|_{\rm op}
+ =\left\|\Phi_0^\dagger D_*^\dagger(E_\varphi)-E_\varphi\right\|_{\rm op}
+ =h.
+\tag{93.5}
+$$
+
+In particular the same map attains every individual minimum and
+$\min_D\sup_\varphi e_D(\varphi)=h$.
+
+*Proof.* Kraus operators for (93.4) are
+$P_0,|1\rangle\langle1|,|1\rangle\langle2|$, whose adjoint products
+sum to $I_3$. Their adjoint sends
+
+$$
+D_*^\dagger(E_\varphi)=(1-q)P_0+q(P_1+P_2).
+\tag{93.6}
+$$
+
+The endpoint adjoint fixes this diagonal operator. The full residual is
+
+$$
+H_\varphi=
+\begin{pmatrix}
+0&-h e^{-i\varphi}&0\\
+-h e^{i\varphi}&0&0\\
+0&0&q
+\end{pmatrix},
+\tag{93.7}
+$$
+
+whose eigenvalues are $-h,h,q$. Since $0\le q\le1/2$ implies $q\le h$,
+its norm is $h$. The lower bound (93.2) proves optimality for every
+phase, and the same calculation includes both endpoints: at $q=0$ the
+residual is zero, while at $q=1/2$ its spectrum is
+$\{-1/2,1/2,1/2\}$. $\square$
+

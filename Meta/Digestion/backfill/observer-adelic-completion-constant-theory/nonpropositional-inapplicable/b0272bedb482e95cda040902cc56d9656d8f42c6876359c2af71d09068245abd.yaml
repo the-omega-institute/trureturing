@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b0272bedb482e95cda040902cc56d9656d8f42c6876359c2af71d09068245abd
+  normalized_sha256: sha256:b0272bedb482e95cda040902cc56d9656d8f42c6876359c2af71d09068245abd
+cas_ref: sha256:b0272bedb482e95cda040902cc56d9656d8f42c6876359c2af71d09068245abd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 在上述术语翻译表中将 D 块命名为直接散射，没有代数结论。'
+    previous_atom_id: 55be97a31dffcc07f806db59183b0f63fab57ee8b5503a4730079e959d061271
+    next_atom_id: a6015bbe8abb9b6c2d704790dd9bc346b4fd58541cd2ab7931de4c30710d1f58

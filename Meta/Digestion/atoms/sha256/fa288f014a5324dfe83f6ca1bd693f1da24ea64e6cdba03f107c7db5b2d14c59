@@ -1,0 +1,90 @@
+#### 定理 2.2（黄金系数的条件唯一性）
+
+在上述融合规则、规范和标量块下，局部酉性及全部带类型五边形恒等式等价于
+
+<a id="eq-Fgold"></a>
+
+$$
+r=\varphi^{-1},\qquad s=\sqrt{\varphi^{-1}},\qquad
+\varphi=\frac{1+\sqrt5}{2}.
+\tag{3}
+$$
+
+特别地，黄金数在这里来自*两条重组路径必须相融*与酉性的联立约束。
+
+**证明。**
+
+酉性直接给
+
+<a id="eq-Funit"></a>
+
+$$
+r^2+s^2=1.
+\tag{4}
+$$
+
+五边形的带类型形式为
+
+<a id="eq-pentagon"></a>
+
+$$
+\sum_j
+\mathsf F^{abc}_f(e,j)\mathsf F^{ajd}_z(f,g)
+\mathsf F^{bcd}_g(j,h)
+=
+\mathsf F^{ecd}_z(f,h)\mathsf F^{abh}_z(e,g).
+\tag{5}
+$$
+
+取 $a=b=c=d=z=\tau$、$e=h=\mathbf{1}$、$f=g=\tau$。
+左边 $j=\mathbf{1}$ 项为 $r^2$，$j=\tau$ 项为 $-rs^2$；
+右边因中间类型 $\mathbf{1}\otimes\mathbf{1}$ 不能给 $\tau$ 而为零。
+所以 $r(r-s^2)=0$。由 $r>0$ 得 $r=s^2$，代回 [(4)](#eq-Funit) 得
+$r^2+r=1$，唯一正根即 [(3)](#eq-Fgold)。
+
+还要证明充分性，而非只检查一个必要分量。
+在四片叶和根全为 $\tau$ 的三维空间，源、靶路径均按
+$(\mathbf{1},\tau),(\tau,\mathbf{1}),(\tau,\tau)$ 排序。
+矩阵采用列为输入、行为输出的约定。
+三步路径的中间标签为 $(j,f)$、$(j,g)$，两步路径的中间标签为 $(e,h)$；
+各标签对都采用上述顺序。
+令
+
+$$
+A=\begin{pmatrix}r&0&s\\0&1&0\\s&0&-r\end{pmatrix},\quad
+B=\begin{pmatrix}1&0&0\\0&r&s\\0&s&-r\end{pmatrix},\quad
+C=\begin{pmatrix}0&1&0\\r&0&s\\s&0&-r\end{pmatrix}.
+$$
+
+三步侧和两步侧分别是 $ABA$ 与 $CB$。直接相乘给
+
+$$
+ABA=
+\begin{pmatrix}
+r^2-rs^2&s^2&rs(1+r)\\
+s^2&r&-rs\\
+rs(1+r)&-rs&s^2-r^3
+\end{pmatrix},
+\quad
+CB=
+\begin{pmatrix}
+0&r&s\\
+r&s^2&-rs\\
+s&-rs&r^2
+\end{pmatrix}.
+$$
+
+使用 $s^2=r$、$r^2+r=1$，两者均为
+
+$$
+\begin{pmatrix}0&r&s\\r&r&-rs\\s&-rs&r^2\end{pmatrix}.
+$$
+
+若四片叶全为 $\tau$ 而根为 $\mathbf{1}$，两路都化为 $I_2$，用的是 $\mathsf F^2=I$。
+若有单位叶，删除单位叶后，非平凡的二维情形两路都是同一个 $\mathsf F$；
+其余非空情形均为一维恒等，空标签空间上的等式自动成立。
+这穷尽全部类型情形，证明完整五边形。 ∎
+
+<a id="fig-pentagon"></a>
+
+> 

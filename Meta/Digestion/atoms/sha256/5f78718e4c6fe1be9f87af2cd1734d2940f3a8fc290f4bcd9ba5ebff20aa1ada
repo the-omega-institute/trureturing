@@ -1,0 +1,26 @@
+#### 命题 6.5（来源零空间通常只给左模商）
+
+设 $\mathcal A\subseteq M_d(\mathbb{C} )$ 为含单位的 $*$ 代数，则
+
+$$
+\mathcal N_\rho=\{A:\operatorname{Tr} (\rho A^\dagger A)=0\}
+=\{A:A\sqrt\rho=0\}
+$$
+
+是左理想。内积 $\langle[A],[B]\rangle=\operatorname{Tr} (\rho A^\dagger B)$ 与左作用
+$\pi(X)[A]=[XA]$ 在 $\mathcal A/\mathcal N_\rho$ 上良定义。它一般不是按原乘法的双边代数商。
+
+**证明。**
+
+$A\sqrt\rho=0$ 蕴含 $XA\sqrt\rho=0$，故左作用良定义；映射 $[A]\mapsto A\sqrt\rho$ 验证内积和范数，且
+$\left\lVert XA\sqrt\rho\right\rVert _{\mathrm{HS}}\le\left\lVert X\right\rVert _{\mathrm{op}}\left\lVert A\sqrt\rho\right\rVert _{\mathrm{HS}}$。
+反例取 $\rho=\Pi_0,A=\Pi_1,B=\lvert 1\rangle \langle 0\rvert$，则 $A\in\mathcal N_\rho$，但 $AB=B\notin\mathcal N_\rho$。
+
+∎
+
+若 $\mathcal A=M_d(\mathbb{C} )$、$\operatorname{rank} \rho=r$，此循环表示的复维数为 $dr$：$A\sqrt\rho$ 在来源支持的 $r$ 个列方向上任意，其余为零。因此纯来源给 $d$，忠实混态给 $d^2$；最小关系表示不自动等于原局部载体。
+
+<a id="sec-7"></a>
+
+<a id="sec-golden"></a>
+

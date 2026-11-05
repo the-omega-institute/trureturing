@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b085ea764401ef3b0d9be90f95f698742d416c1bab54c00c569e27357689b59b
+  normalized_sha256: sha256:b085ea764401ef3b0d9be90f95f698742d416c1bab54c00c569e27357689b59b
+cas_ref: sha256:b085ea764401ef3b0d9be90f95f698742d416c1bab54c00c569e27357689b59b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 要求概念和过程显式声明类型的规范，未断言某个具体表达式类型正确。
+    previous_atom_id: 2f05434675b149bd6eb388253cc06d9f7e6706cb5a09a48cfba860434be4aca2
+    next_atom_id: b5fc6e4546398d1661cb0d2122ecfbf692a179ea184e59e271149f8661cea0fe

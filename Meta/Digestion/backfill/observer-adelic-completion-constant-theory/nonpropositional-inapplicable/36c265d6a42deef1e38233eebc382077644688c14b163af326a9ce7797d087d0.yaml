@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:36c265d6a42deef1e38233eebc382077644688c14b163af326a9ce7797d087d0
+  normalized_sha256: sha256:36c265d6a42deef1e38233eebc382077644688c14b163af326a9ce7797d087d0
+cas_ref: sha256:36c265d6a42deef1e38233eebc382077644688c14b163af326a9ce7797d087d0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 以 L1=L0+关于 L0 的语言作元语言构造的示意记号，并列举讨论主题；加号不是已定义数学运算，不含严格扩张或一致性定理。
+    previous_atom_id: 0ef3f2679c5476c6127ab8a881f787c36b3d67b972cb5e4071045344eae7dbd7
+    next_atom_id: e98ddd868f5ea7af503c64d591f5fad9cfa3293f8a995ae968b00a7e43973925

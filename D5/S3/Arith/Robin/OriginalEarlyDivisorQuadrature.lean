@@ -181,7 +181,7 @@ private lemma normalization_pos {t : ℝ} (ht : 1 < t) : 0 < normalization t := 
   exact mul_pos (OriginalMovingWindowMoment.weight_pos ht)
     (Real.rpow_pos_of_pos (by linarith) _)
 
-private lemma weight_deriv {x : ℝ} (hx : 1 < x) :
+lemma weight_deriv {x : ℝ} (hx : 1 < x) :
     HasDerivAt weight (weightSlope x) x := by
   have hx0 : 0 < x := by linarith
   have hd := (MellinWeightedVariation.hasDerivAt_scaleWeight (y := 1) hx0

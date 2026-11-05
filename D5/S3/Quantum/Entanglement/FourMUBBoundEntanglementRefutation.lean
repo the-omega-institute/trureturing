@@ -94,7 +94,7 @@ private theorem gram_distinct (α β : Fin 3) (h : α ≠ β) (t : Fin 8) :
   fin_cases α <;> fin_cases β <;> simp_all only [ne_eq, not_true_eq_false]
   all_goals fin_cases t
   all_goals norm_num [gram, phase, walsh, Fin.sum_univ_succ, Complex.normSq_apply, Complex.mul_re, Complex.mul_im, Complex.add_re, Complex.add_im, Complex.conj_re, Complex.conj_im]
-private theorem scale_sq : (Real.sqrt 8)⁻¹ ^ 2 = 1 / 8 := by
+theorem scale_sq : (Real.sqrt 8)⁻¹ ^ 2 = 1 / 8 := by
   rw [inv_pow, Real.sq_sqrt (by norm_num)]
   norm_num
 private theorem gram_scaled (α β : Fin 3) (k l : Fin 8) :
@@ -110,7 +110,7 @@ private theorem gram_scaled (α β : Fin 3) (k l : Fin 8) :
   rw [← hw]
   ring
 
-private theorem scale_complex_sq : (((Real.sqrt 8)⁻¹ : ℝ) : ℂ)^2 = 1 / 8 := by
+theorem scale_complex_sq : (((Real.sqrt 8)⁻¹ : ℝ) : ℂ)^2 = 1 / 8 := by
   rw [← Complex.ofReal_pow, scale_sq]
   norm_num
 private theorem scaledBasis_unitary (α : Fin 3) :

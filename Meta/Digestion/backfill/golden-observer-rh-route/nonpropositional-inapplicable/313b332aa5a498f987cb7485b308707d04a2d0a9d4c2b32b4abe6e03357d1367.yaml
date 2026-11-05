@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:313b332aa5a498f987cb7485b308707d04a2d0a9d4c2b32b4abe6e03357d1367
+  normalized_sha256: sha256:313b332aa5a498f987cb7485b308707d04a2d0a9d4c2b32b4abe6e03357d1367
+cas_ref: sha256:313b332aa5a498f987cb7485b308707d04a2d0a9d4c2b32b4abe6e03357d1367
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: B_T 被指定为预注册参数下尾项上界的进度坐标名称，未给尾项函数、数值或不等式。
+    previous_atom_id: 5c48045b655110a33cdb07db1ef033fba88ab53818f7c5b1f068815febca9c41
+    next_atom_id: 2f23c0bd5f158e62a7c89fd286424ffce75bcdb3708e00219b3ef9aaf08090f3

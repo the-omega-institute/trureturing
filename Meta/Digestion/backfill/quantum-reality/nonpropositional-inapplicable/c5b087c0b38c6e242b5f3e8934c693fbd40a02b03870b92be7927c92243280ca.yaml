@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c5b087c0b38c6e242b5f3e8934c693fbd40a02b03870b92be7927c92243280ca
+  normalized_sha256: sha256:c5b087c0b38c6e242b5f3e8934c693fbd40a02b03870b92be7927c92243280ca
+cas_ref: sha256:c5b087c0b38c6e242b5f3e8934c693fbd40a02b03870b92be7927c92243280ca
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 本表句只是把1−p_N和投影乘积/平行输运之差列为误差指标并提出研究问题，没有断言误差界或收敛率。'
+    previous_atom_id: ca0e228889852757bda0053c7e91f3bf9ab09dd32cdf3c34550ed19bc40ef8f9
+    next_atom_id: cac08abb059b217110484b524b4a21da720f414f54509977070e1917ee8a6cf6

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bc66064f78c6472289dee7a63cb9b19f8a0f78cc354a2856567c3f13bad0ccbd
+  normalized_sha256: sha256:bc66064f78c6472289dee7a63cb9b19f8a0f78cc354a2856567c3f13bad0ccbd
+cas_ref: sha256:bc66064f78c6472289dee7a63cb9b19f8a0f78cc354a2856567c3f13bad0ccbd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 指定共轭双通道的恢复对象与读数/解码合同范围，没有声称任何通道已经可逆。
+    previous_atom_id: 6533d121820c71bdbf858f6dccd66906ea53f8f9087eed1d38b2af33a9738907
+    next_atom_id: 64c2362aa5eccffd8cbe816a35d094358f78f7df10fadbd5a88eaea782345255

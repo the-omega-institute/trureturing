@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f613057761804d564699f4358a4941d181ce5f1bcdf1d2f90a04bec939b39718
+  normalized_sha256: sha256:f613057761804d564699f4358a4941d181ce5f1bcdf1d2f90a04bec939b39718
+cas_ref: sha256:f613057761804d564699f4358a4941d181ce5f1bcdf1d2f90a04bec939b39718
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional bibliography and source attribution: lists the mother-volume locations, the two beta-integer papers with exact locations, and Parry reference; distinguishes their scopes and attributes the proofs to the corresponding sections, without adding a theorem to be covered here.'
+    previous_atom_id: 596266a5ca65cf7004b3978b89eb07193d4af47f8264e4621e37ec82812c8a2f
+    next_atom_id: 7c0f5c2e998f73a0da05aa81aa5e378a3cb371b383bd3435a4b2c170eae09803

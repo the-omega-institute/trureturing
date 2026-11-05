@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e478a4764f485502bf0753744e8f09237e4b11f0091113edc558a2a68db05257
+  normalized_sha256: sha256:e478a4764f485502bf0753744e8f09237e4b11f0091113edc558a2a68db05257
+cas_ref: sha256:e478a4764f485502bf0753744e8f09237e4b11f0091113edc558a2a68db05257
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此句给出本节误差的物理解释，未定义或证明误差大小的数学关系。
+    previous_atom_id: 7a109e46b8ab8bcc2e853e07fc24caffd6f245a79de0b3e1f3d602ea7be7a2bf
+    next_atom_id: c0042d6d239bcd661945ef24f6776bd0d04b275ad13ce3317fd765a7d7305afe

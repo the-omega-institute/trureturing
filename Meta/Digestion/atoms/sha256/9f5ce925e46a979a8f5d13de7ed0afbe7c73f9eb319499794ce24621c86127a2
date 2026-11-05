@@ -1,0 +1,73 @@
+**Theorem 132.1 (A stable endpoint type for each original error; repo-derived).**
+Fix the source, $A,f$ as in Definition 131.1, and fix either $j=f$
+or $j=a$. There is $\varepsilon_j>0$, depending on these fixed
+choices, such that exactly one of the following patterns holds
+for every $0<\eta<\varepsilon_j$:
+
+(I) $r_j^+(\eta)=0$. Every compact minimizer has zero retention,
+$\nu_j(\eta)=\mu_j(\eta)$, and the original punctured
+reflection-side endpoint at error $\mu_j(\eta)$ is absent.
+
+(II) $r_j^-(\eta)=0<r_j^+(\eta)$. Zero and nonzero retention
+minimizers coexist, $\nu_j(\eta)=\mu_j(\eta)$, and the
+original punctured endpoint is present.
+
+(III) $r_j^-(\eta)>0$. Every compact minimizer is punctured,
+$\nu_j(\eta)>\mu_j(\eta)$, and the original punctured endpoint
+is present.
+
+In particular there is no infinite switching of endpoint types
+accumulating at $\eta=0$, also when $\delta_j=n_j-m_j=0$.
+The result classifies possible eventual behavior; it selects no
+one pattern for an unspecified allowed source. Equality of the
+two values alone does not distinguish (I) from (II).
+
+*Proof.* At any fixed positive $\eta$, nonempty compact fibers
+make exactly one of
+
+$$
+r_j^+=0,\qquad r_j^-=0<r_j^+,\qquad r_j^->0
+\tag{132.1}
+$$
+
+hold. Since a radius is nonnegative, $r_j^+=0$ means that every
+minimizer has zero retention. If $r_j^-=0<r_j^+$, attainment of
+both extrema supplies the two kinds of minimizers. If $r_j^->0$,
+no zero-retention minimizer exists. Moreover,
+
+$$
+\nu_j(\eta)=\mu_j(\eta)
+       \quad\Longleftrightarrow\quad r_j^-(\eta)=0.
+\tag{132.2}
+$$
+
+For the forward direction take an attained zero-retention minimum
+in (126.6); equality makes it a compact unrestricted minimizer.
+For the reverse direction take the attained radius-zero minimizer
+and compare with the restricted minimum. If $r_j^->0$, the
+restricted minimum still exists, so absence of equality and
+$\nu_j\ge\mu_j$ imply strict inequality.
+
+The endpoint equality criterion of Theorem 124.2 says exactly
+that the original punctured endpoint is present if and only if
+there is a compact minimizer with nonzero retention, equivalently
+$r_j^+>0$. This proves all pointwise pattern assertions, with the
+same raw probabilities and feasible set as that theorem.
+
+By Theorem 131.2, each of the three subsets of
+$(0,\bar\eta)$ defined in (132.1) is semialgebraic. A
+semialgebraic subset of the real line is a finite union of points
+and intervals: partition the line at the finitely many real roots
+of the nonzero polynomials in a Boolean description and observe
+that every sign is constant on each remaining interval. Choose
+$\varepsilon_j>0$ below every positive boundary point of these
+three sets and below $\bar\eta$. Their membership is then
+constant on $(0,\varepsilon_j)$; since they partition it, precisely
+one contains the whole interval. This uses no assumption on the
+tangent gap. If both $j$ are considered, shrinking to the smaller
+of their two intervals stabilizes both, without requiring their
+types to agree. This is the source-specific consequence of the
+real semialgebraic finiteness in Guo–Kim–Jiao–Pham, §2.1 cited
+above, not a conclusion that a particular source has a strict gap.
+$\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b69bfd93896aaf07676d2f8d72c34a023540c3dd778e35a285e6981eee267751
+  normalized_sha256: sha256:b69bfd93896aaf07676d2f8d72c34a023540c3dd778e35a285e6981eee267751
+cas_ref: sha256:b69bfd93896aaf07676d2f8d72c34a023540c3dd778e35a285e6981eee267751
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 区分描述原点固定与物理状态固定的用语，未给出一个新的量化动力学命题。'
+    previous_atom_id: 5dfca6ea50db94257d4f56c28f1db9946aa36f9d23c55c6d36c98d61a2f48b2f
+    next_atom_id: b051abde9db449f3751e46b9545ee53a26fc5eb4a6f44d8737fcdc6c4bd1ddcd

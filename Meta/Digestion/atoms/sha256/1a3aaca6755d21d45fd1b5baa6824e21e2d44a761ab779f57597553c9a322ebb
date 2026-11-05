@@ -1,0 +1,11 @@
+**Proposition 24.3 (arbitrarily large exact/stable gaps with controlled degree).** Fix $k,d\ge0$, $0\le s\le k$, the paid prefix $N=2k+d+3$, $T=N-1$, any allowed exact $D$, and
+
+$$
+ H_s(t)=c_*\prod_{j=2}^{s+1}(t-(T+j)),\qquad c_*\ne0.
+ \tag{24.4}
+$$
+
+The empty product is $1$. At $b=1+F_{T-1}/F_T$, the exact total optimum is $N+1$, whereas both stable totals are $N+s+2$. Their gap is exactly $s+1$. At $b=F_T/F_{T-1}$ the exact and uniformly consistent totals are $N+1$, with sharp square-root risk at that budget, whereas the linear-error total is $N+s+2$. Thus increasing the declared degree permits arbitrarily large gaps without changing the normalized strictly positive source domain or omitting any root read.
+
+**Proof.** This is the existing root arrangement (17.1), now used at the endpoint fibers: $\deg H_s=s$, $r_1=1$, and $r_2=s+2$. Exact endpoint injectivity and the already proved exact budget (16.1) give the $N+1$ exact totals. Apply (23.1)–(23.2) at $S=T$ and add the paid prefix. For the collapsed fiber both stable notions wait for the second nonroot; for the tangent fiber the first nonroot already has the sharp square-root decoder, while linear error requires the second. The full lower bounds retain $H_s$ itself and the same entire $D$ in both worlds. These are fixed-gain, prescribed-prefix comparisons; they assert neither optimal finite-error coefficients nor an unrestricted global optimum for the original uncalibrated model. $\square$
+

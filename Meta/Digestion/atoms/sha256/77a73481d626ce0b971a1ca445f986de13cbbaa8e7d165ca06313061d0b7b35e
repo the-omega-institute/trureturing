@@ -1,0 +1,20 @@
+**定义 6.3（同源的加法和次序读出）。** 对同一树，另定义 $q_+\alpha=a$、$q_+\beta=b$、$q_+\langle s,t\rangle=q_+s+q_+t$。记 $\gamma=\langle\beta,\alpha\rangle$，则 $q_+\gamma=a+b$，而 $q_B\gamma=c$。相应三向量的 Gram 分别为
+
+$$
+\operatorname{Gram}(a,b,a+b)
+=\begin{pmatrix}1&0&1\\0&1&1\\1&1&2\end{pmatrix},
+\qquad \operatorname{Gram}(a,b,c)=I_3.
+$$
+
+第一矩阵第三列是前两列之和，前两列独立，所以秩二、行列式零；第二矩阵秩三。源相同不意味着读出相同。第二种的第三方向来自真实有序二元响应，不由重复写替换符号产生。
+
+组成 $n(t)=(n_\alpha(t),n_\beta(t))^{\mathsf T}$ 是独立读数，满足 $n\rho=Mn$、$M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$。例如 $q_B(\rho^3\alpha)=a=q_B\alpha$，但
+
+$$
+\rho^3\alpha=\langle\langle\beta,\alpha\rangle,\beta\rangle
+\ne\alpha,
+\qquad n(\rho^3\alpha)=(1,2)^{\mathsf T}\ne(1,0)^{\mathsf T}.
+$$
+
+这就是读出三周期与来源不三周期的直接区别。计数与方向联合线性任务的最小维数五由 [FIB] §7.2 供应，不能将两项独立任务叠放为三个线性坐标。
+

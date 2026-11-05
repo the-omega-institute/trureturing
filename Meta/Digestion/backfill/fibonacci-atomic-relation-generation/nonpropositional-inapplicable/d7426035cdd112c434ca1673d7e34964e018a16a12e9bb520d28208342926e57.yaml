@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d7426035cdd112c434ca1673d7e34964e018a16a12e9bb520d28208342926e57
+  normalized_sha256: sha256:d7426035cdd112c434ca1673d7e34964e018a16a12e9bb520d28208342926e57
+cas_ref: sha256:d7426035cdd112c434ca1673d7e34964e018a16a12e9bb520d28208342926e57
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条仅为任意给定读出 f 和独立错误符号定义终端观察 O_f、源前缀与后缀比较合同，不断言最小性、饱和深度或实现定理。
+    previous_atom_id: 66926402772343bc592da448df6bfca1d09db8f4a6cf614d9cf8b69814b525d4
+    next_atom_id: f0aa23980d286d14fe76836773cddcc263207551801ceef82c3a2ed2c8b1a9fb

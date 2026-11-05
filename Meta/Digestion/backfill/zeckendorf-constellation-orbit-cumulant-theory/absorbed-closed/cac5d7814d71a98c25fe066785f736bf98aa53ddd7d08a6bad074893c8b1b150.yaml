@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:cac5d7814d71a98c25fe066785f736bf98aa53ddd7d08a6bad074893c8b1b150
+  normalized_sha256: sha256:cac5d7814d71a98c25fe066785f736bf98aa53ddd7d08a6bad074893c8b1b150
+cas_ref: sha256:cac5d7814d71a98c25fe066785f736bf98aa53ddd7d08a6bad074893c8b1b150
+coverage_gids:
+  - gid: D5/S3/Zeros/Symmetry/SignedZeckendorfOrbitCode.klein_actions_two_sign_bits
+    target_statement_id: sha256:e61e45103a72bb0faa673a4a787a9ec202282bae8d3341d8564b37b46cf2ade9
+receipts:
+  unresolved_subitems: []

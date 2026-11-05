@@ -1,0 +1,8 @@
+**核心结论** 五元素可以作为观察者内生的递归接口。每层的三维是相对于已指定观察者的关系空间；深度、接缝、观察者和跨层关系共同承载整体信息。
+
+本轮读取的仓库快照：[`the-omega-institute/trureturing`](https://github.com/the-omega-institute/trureturing/tree/d3c4ee1ee7f60f48b7dcdbd4967972029e18dfed)，分支 `dev`。
+
+固定提交：`d3c4ee1ee7f60f48b7dcdbd4967972029e18dfed`。
+
+范围：相关理论文本与 Lean 源码的只读核对、下述普通数学推导。未运行本轮 Lean 编译，未修改或提交仓库。本文的定义候选和纸面推导不冒充仓库已验收的新形式化结果。
+

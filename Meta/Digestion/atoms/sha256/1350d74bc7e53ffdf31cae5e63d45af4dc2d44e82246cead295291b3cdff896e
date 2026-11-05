@@ -1,0 +1,6 @@
+**Corollary 61.3 (zero-error random tapes).** If a randomized protocol has a field-independent random tape and, separately for every rational entry, zero error and almost-sure finite termination, the same bound holds almost surely for each entry.
+
+**Proof.** For fixed finite graph, $\mathbb Q^{N_0}$ is countable. Intersect the probability-one correctness/termination events for all entries. On the resulting probability-one set of tapes the deterministic frozen-transcript argument applies to every entry. If backing is part of the uniform termination premise, it must cover these admitted finite runs; a field-dependent failure channel is not silently allowed. $\square$
+
+The cleared-input condition is essential. A retained complete current predictor already contains numerical information and does not need this many new Reads to report itself. Theorem 49.1's analogous affine argument for cleared hidden cherry amplitudes is a supplier, not a second proof that the present rank survives arbitrary original growth. The latter needs (60.1) and symmetry. No lower bound for a larger returning-scalar interface, a Reset-closed task, noisy bounded-error recovery or unrestricted nonlinear register count is asserted.
+

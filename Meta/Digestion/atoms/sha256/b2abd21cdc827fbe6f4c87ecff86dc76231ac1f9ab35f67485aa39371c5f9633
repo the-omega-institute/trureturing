@@ -1,0 +1,26 @@
+**Definition 3.1 (uniform recovery control).** Compute $n_0$ from the
+retained public input. Submit, one at a time, the literal presence queries
+
+$$
+ C_L(n_0+1),\ C_L(n_0+2),\ C_L(n_0+4),\ldots,
+ C_L(n_0+2^k),
+ \tag{ACR.10}
+$$
+
+stopping at the first zero reply. Each word is actually materialized and
+submitted on the same root; local prediction does not replace the call.
+For $k=0$ return $n_0$. For $k\ge1$ the last true threshold and the
+first false threshold bracket the candidate interval
+
+$$
+ [n_0+2^{k-1},\ n_0+2^k-1].
+ \tag{ACR.11}
+$$
+
+For each nonsingleton surviving interval $[l,u]$, set
+$t=l+\lfloor(u-l+1)/2\rfloor$ and submit $C_L(t)$. On reply one
+keep $[t,u]$; on reply zero keep $[l,t-1]$. Repeat until a singleton. Compute $B_n$ by Fibonacci integer
+arithmetic. Actually write (ACR.4), its ready control and, if requested,
+the behavioral phase to the granted retained backing; expose it only
+at the completed stationary handoff.
+

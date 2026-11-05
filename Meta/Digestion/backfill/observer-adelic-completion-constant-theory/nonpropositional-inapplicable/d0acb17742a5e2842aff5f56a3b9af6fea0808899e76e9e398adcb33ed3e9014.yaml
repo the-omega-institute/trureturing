@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d0acb17742a5e2842aff5f56a3b9af6fea0808899e76e9e398adcb33ed3e9014
+  normalized_sha256: sha256:d0acb17742a5e2842aff5f56a3b9af6fea0808899e76e9e398adcb33ed3e9014
+cas_ref: sha256:d0acb17742a5e2842aff5f56a3b9af6fea0808899e76e9e398adcb33ed3e9014
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 分解后的 Archimedean 因子名词片段。'
+    previous_atom_id: 8c0a89f0533b35931b86cda46aada08cf0ea0febffea9bba6166ae1535a31f09
+    next_atom_id: 863b7a8e04855fe146af126ec0a6d73aef83819d68dd4c145675ae5bfc679c54

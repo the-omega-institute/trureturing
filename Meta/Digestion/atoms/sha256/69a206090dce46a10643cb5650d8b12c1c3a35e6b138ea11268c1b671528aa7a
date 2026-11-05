@@ -1,0 +1,49 @@
+**Theorem 9.1 (a positive command/diffusion gap at vanishing native form
+norm).** Fix the model of Definition 7.1. For every nonzero real
+$\varphi\in C_c^\infty(\Omega)$ with $0\le\varphi\le1$, and every
+positive sequence $\varepsilon_n\to0$, there exist real
+$h_n\in C_c^\infty(\Omega)$ with
+
+$$
+\begin{gathered}
+0\le h_n\le\varphi\le1,\qquad
+\operatorname{supp}h_n\subseteq\operatorname{supp}\varphi,
+\qquad \|h_n\|_{\mathcal F}\le\varepsilon_n,\\
+h_n(\bar q_{n,\omega}(t))=\varphi(\bar q_{n,\omega}(t))
+\quad(\omega\in\Xi_n,\ 0\le t<\zeta_{n,\omega}),\\
+\nu_n(h_n^2)=\nu_n(\varphi^2)\longrightarrow
+ c:=\nu(\varphi^2)>0,\qquad
+\nu(h_n^2)=\mathbb E_o\int_0^\tau h_n(Q_t)^2dt\longrightarrow0.
+\end{gathered}
+\tag{NT.14}
+$$
+
+In particular the difference of the two expected complete occupations of
+the bounded smooth observable $W_n=h_n^2$ tends to $c>0$.
+One may require all supports to lie in any fixed nonempty open
+$U\Subset\Omega\setminus\{o\}$ by choosing $\varphi\in C_c^\infty(U)$.
+
+Proof. Apply Theorem 8.1 with $f=\varphi$ at each $n$. Equality of
+restrictions proves the exact command identity, on each actual run before
+averaging. The single fixed test $\varphi^2$, extended by zero to the
+closed cylinder, satisfies (NT.8). Positivity of $\Gamma$ off $o$ and
+nonzero smoothness of $\varphi$ give $c>0$.
+
+To prove the diffusion limit even when $\operatorname{supp}\varphi$
+contains $o$, for every $M>0$ use $h_n^2\le1$ and write
+
+$$
+0\le\nu(h_n^2)
+\le M\|h_n\|_{L^2(\mu)}^2
+       +\int_{\{\Gamma>M\}}\Gamma\,d\mu.
+\tag{NT.15}
+$$
+
+First let $n\to\infty$, then $M\to\infty$. Integrability of the
+original full Green field makes the latter term vanish. Equation (NT.7)
+identifies the expectation. In the source-free case there is the simpler
+bound $\nu(h_n^2)\le(\sup_{\operatorname{supp}\varphi}\Gamma)
+\|h_n\|_2^2\to0$. Cutoffs in Theorem 8.1 can lie in $U$, and
+$h_n=\varphi\chi_n$ already has support in its fixed compact subset.
+No control of only the first cell is used. $\square$
+

@@ -190,7 +190,7 @@ private theorem reduced_recurrence (n : ℕ) (hn : 2 ≤ n) :
   rw [← hs] at he
   simpa using he
 
-private theorem binary (x : ZMod 2) : x = 0 ∨ x = 1 := by
+theorem binary (x : ZMod 2) : x = 0 ∨ x = 1 := by
   have hv : x.val = 0 ∨ x.val = 1 := by have := ZMod.val_lt x; omega
   rcases hv with hv | hv
   · left

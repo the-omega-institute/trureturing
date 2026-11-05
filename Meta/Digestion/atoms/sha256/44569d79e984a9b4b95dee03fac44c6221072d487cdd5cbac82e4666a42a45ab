@@ -1,0 +1,49 @@
+#### 定理 3.2（三投影稳定的完整通道分类）
+
+对 $H_5$ 上的 CPTP 通道，下列两条等价：
+
+1.  对所有输入保持 $N_x,N_y,N_z$；
+
+2.  存在正半定矩阵 $C$，$C_{ss}=1$，使
+
+$$
+
+\Lambda(\rho)=C\odot\rho,
+
+$$
+
+其中 $\odot$ 是模式基上的逐项乘积。
+
+因此这样的通道保持全部 $p_s=\rho_{ss}$，尤其保持 $\kappa$。它仍可以改变非对角相干。
+
+**证明。** 
+写 $\Lambda(\rho)=\sum_aL_a\rho L_a^\dagger$，$\sum_aL_a^\dagger L_a=I$。对任意固定投影 $N$，由 $\Lambda^\dagger(N)=N$ 得
+
+$$
+
+\begin{aligned}
+\sum_a[N,L_a]^\dagger[N,L_a]
+&=\Lambda^\dagger(N)-\Lambda^\dagger(N)N
+ -N\Lambda^\dagger(N)+N\\
+&=0.
+\end{aligned}
+
+$$
+
+每项均正半定，故每个 $L_a$ 都与 $N$ 对易。对三个 $N$ 同时应用此结论。五个模式的三元联合本征值各不相同，联合本征空间均一维，因此每个 $L_a$ 在模式基上对角。若对角元为 $\ell_{a,s}$，则
+
+$$
+
+C_{st}=\sum_a\ell_{a,s}\overline{\ell_{a,t}},\qquad C\ge0,\quad C_{ss}=1,
+
+$$
+
+且通道恰为上述 Schur 形式。反之，对 $C$ 作 Gram 分解给出这样的对角 Kraus 算子，立即得到 CPTP 与三读出稳定。
+ ∎
+
+这个结果并不禁止测量。精确测量全部五模式、仅测某种占位关系、或只泄漏部分记录，都可给出此类通道。它禁止的是：一个固定非选择操作在<em>对所有输入都保持三读出</em>的同时，普遍修改 $\kappa$。
+
+<a id="statement-3-3"></a>
+
+<a id="cor-robust"></a>
+

@@ -1,0 +1,26 @@
+**Definition 2.3 (The local quotient and its coefficient algebra).** Fix the underlying flag skeleton $G$, its selected cycles, and auxiliary
+edge directions. A local diagram includes an identification of its
+pruned suppressed underlying skeleton with $G$. This identification
+retains every flag of a loop and distinguishes parallel edges. It need
+not preserve the chosen cycles: their discrepancies contribute to
+[(1.2)](#eq-chi). For a circle fix an orientation; a temporary cut records
+the insertion list, and forgetting that cut is a cyclic permutation
+already allowed by CL.
+
+We now define the local relations without a circular “isomorphic
+skeleton” criterion. For any actual IHX central edge, first contract
+that edge, then prune the common contracted graph. If its contracted
+vertex survives, let $r$ be its degree in that pruned graph. The local
+cases are $r=2,3$, and the case where that vertex disappears. The case
+$r=4$ is always global. Local identifications are those induced by
+common contraction and suppression away from its degree-four case.
+AS, with its scalar, and ordinary CL are local as well. This defines
+$\mathcal L_{\boldsymbol\ell}(G)$. A global skeleton IHX that happens
+to return to a graph isomorphic to $G$ is therefore not placed in this
+local space's defining ideal.
+
+Write $s(e),t(e)$ for the oriented edge endpoints and put
+
+<a id="eq-poly"></a>
+<a id="eq:poly"></a>
+

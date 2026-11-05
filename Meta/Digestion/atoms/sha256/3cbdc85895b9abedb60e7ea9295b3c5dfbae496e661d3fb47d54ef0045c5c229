@@ -1,0 +1,67 @@
+**定理 11.1（严格正源的精确窗口）。** The polynomial $Q_t$ in (10.1) has two distinct roots satisfying (10.3) exactly when
+
+$$
+t\in\left(\frac34,\frac{31}{40}\right)
+       \ \cup\ \left(\frac78,1\right).
+                                                                  \tag{11.1}
+$$
+
+Equivalently, an actual fifth-$J$ two-target $L_2$ set exists at $H_p(y)$ exactly when
+
+$$
+y\in\mathcal I:=
+\left(\frac{132}5,\frac{672}{25}\right)
+\ \cup\
+\left(\frac{144}5,\frac{156}5\right).                            \tag{11.2}
+$$
+
+At the four excluded endpoints, the roots and their failure mechanisms are
+
+$$
+\begin{array}{c|c|c}
+t&\text{roots of }Q_t&\text{obstruction to a distinct legal pair}\\ \hline
+3/4&2,\ 8/3&\ell=8/3\text{ has zero source entries}\\
+31/40&40/19\text{ (double)}&\text{only one target}\\
+7/8&8/5\text{ (double)}&\text{only one target}\\
+1&1,\ 8/5&\ell=1\text{ has zero source entries}.
+\end{array}                                                       \tag{11.3}
+$$
+
+Proof. Two distinct legal roots are positive. Since $Q_t$ has constant coefficient $1$, it is not identically zero, and a degree drop leaves at most one root. Thus its leading coefficient $a_t=t^2-3/8$ is nonzero. The positive product of the roots gives $a_t>0$. Legality also gives $0<t<2$, and puts both roots strictly between $1/t$ and $2/t$. An upward quadratic is positive strictly outside its two roots, so
+
+$$
+Q_t(1/t)=-\frac{(8t-3)(t-1)}{8t^2}>0,\qquad
+Q_t(2/t)=-\frac{(4t-3)(t-2)}{4t^2}>0.                          \tag{11.4}
+$$
+
+With $0<t<2$, the second inequality implies $t>3/4$; the first then implies $t<1$. Its discriminant is
+
+$$
+\Delta_t=\left(\frac{11}8-3t\right)^2
+          -4\left(t^2-\frac38\right)
+        =5\left(t-\frac{31}{40}\right)\left(t-\frac78\right).
+                                                                  \tag{11.5}
+$$
+
+Two distinct real roots require $\Delta_t>0$, giving exactly (11.1).
+
+Conversely, let $t$ lie in (11.1). Then $a_t>0$, both endpoint values in (11.4) are positive, and $\Delta_t>0$. The vertex
+
+$$
+\ell_*=\frac{24t-11}{16t^2-6}
+$$
+
+lies strictly between $1/t$ and $2/t$: after multiplication by the positive $t(16t^2-6)$, the two inequalities have respective numerators
+
+$$
+8t^2-11t+6>0,\qquad 8t^2+11t-12>0.
+$$
+
+The first quadratic has discriminant $-71$ and positive leading coefficient. The second has value $3/4$ at $t=3/4$ and positive derivative for $t>3/4$. Since $Q_t(\ell_*)=-\Delta_t/(4a_t)<0$, there is a root on each side of this vertex inside $(1/t,2/t)$. These are its two roots. Moreover
+
+$$
+1<1/t<\ell<2/t<8/3,
+$$
+
+so all the strict source conditions hold. The affine relation $y=12+96t/5$ gives (11.2). Direct factorization at the endpoints gives (11.3); the two double roots are legal but each yields only one complete target. This also covers the discriminant-zero and leading-coefficient-zero possibilities. Theorem 10.1 supplies both directions of the asserted existence criterion. ∎
+

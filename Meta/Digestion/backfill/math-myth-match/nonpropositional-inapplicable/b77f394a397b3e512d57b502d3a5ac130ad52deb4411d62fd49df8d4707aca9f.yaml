@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b77f394a397b3e512d57b502d3a5ac130ad52deb4411d62fd49df8d4707aca9f
+  normalized_sha256: sha256:b77f394a397b3e512d57b502d3a5ac130ad52deb4411d62fd49df8d4707aca9f
+cas_ref: sha256:b77f394a397b3e512d57b502d3a5ac130ad52deb4411d62fd49df8d4707aca9f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 模拟器、任务、损失和真实联合等合同条件清单及未经验测量的边界。
+    previous_atom_id: 05bedce38b5b312a4fee011c202c88a96017571eb59eed241c33d62344a3f031
+    next_atom_id: ef000d50a23647aa1c08c3d25628457d13750b17282373536a7e67f84765cfa9

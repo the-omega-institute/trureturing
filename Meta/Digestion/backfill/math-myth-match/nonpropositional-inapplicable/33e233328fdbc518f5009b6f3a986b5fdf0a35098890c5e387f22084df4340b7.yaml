@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:33e233328fdbc518f5009b6f3a986b5fdf0a35098890c5e387f22084df4340b7
+  normalized_sha256: sha256:33e233328fdbc518f5009b6f3a986b5fdf0a35098890c5e387f22084df4340b7
+cas_ref: sha256:33e233328fdbc518f5009b6f3a986b5fdf0a35098890c5e387f22084df4340b7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 给出从原典、共同问题到翻译核对的研究方法，未设定一个待证的数学对象。
+    previous_atom_id: 8bd2305d953391510d49d0b38708a125d0dc4b769437bac26e0ac8c17352f8d6
+    next_atom_id: bc75e786d824f18b14274f519d064f2a05ffaeab80d285ed227a12df8435e2eb

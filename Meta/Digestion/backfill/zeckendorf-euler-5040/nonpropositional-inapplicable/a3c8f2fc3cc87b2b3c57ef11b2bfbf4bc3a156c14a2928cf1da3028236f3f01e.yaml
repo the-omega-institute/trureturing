@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a3c8f2fc3cc87b2b3c57ef11b2bfbf4bc3a156c14a2928cf1da3028236f3f01e
+  normalized_sha256: sha256:a3c8f2fc3cc87b2b3c57ef11b2bfbf4bc3a156c14a2928cf1da3028236f3f01e
+cas_ref: sha256:a3c8f2fc3cc87b2b3c57ef11b2bfbf4bc3a156c14a2928cf1da3028236f3f01e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这是研究安全包络增长、摘要与拼接的任务清单和方法分工，没有断言所需统一不变量已存在。
+    previous_atom_id: 888e82ba73351bc217a2c06739cf68bebc4c95a70bc08e56b020ad42b7ba8656
+    next_atom_id: e7957cad325701ffad41d9b78ec5956ae052aca5211970e499f1504ff48f34fa

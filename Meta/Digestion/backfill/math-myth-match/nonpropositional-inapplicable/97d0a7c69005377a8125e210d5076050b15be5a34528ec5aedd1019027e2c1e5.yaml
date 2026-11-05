@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:97d0a7c69005377a8125e210d5076050b15be5a34528ec5aedd1019027e2c1e5
+  normalized_sha256: sha256:97d0a7c69005377a8125e210d5076050b15be5a34528ec5aedd1019027e2c1e5
+cas_ref: sha256:97d0a7c69005377a8125e210d5076050b15be5a34528ec5aedd1019027e2c1e5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 后续章节的问题地图及研究立场，没有独立的数学结论。
+    previous_atom_id: 5cb7bb30cefae5fa01e2959047b4664373e8feb5894d4dff8f8a1bc1eb4b1611
+    next_atom_id: 612dbd6aa4d88a9ff30cc02828c513a3b91a71741edcee6c4092ddf15a127d9f

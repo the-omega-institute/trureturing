@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e3d1ef31404cc8c7513e3617c219baf5a9245729814a05ff298b8f6e52ad0d13
+  normalized_sha256: sha256:e3d1ef31404cc8c7513e3617c219baf5a9245729814a05ff298b8f6e52ad0d13
+cas_ref: sha256:e3d1ef31404cc8c7513e3617c219baf5a9245729814a05ff298b8f6e52ad0d13
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：解释《已答之问》第57章天生、遗传与教育品格的文本角色，保留经验核验边界。
+    previous_atom_id: ee3a30b1502b19ceb4534df8e24c2d2e3d398a122560ef2f921bff388dab0752
+    next_atom_id: 8514bceed4b955f24d64c76de678195a01351b198cb814f7ff546085c83f32b5

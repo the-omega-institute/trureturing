@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:163b1dab4b1f2e7b66df9c58cc8c53325a969787bcef006080ed6e657951aa9d
+  normalized_sha256: sha256:163b1dab4b1f2e7b66df9c58cc8c53325a969787bcef006080ed6e657951aa9d
+cas_ref: sha256:163b1dab4b1f2e7b66df9c58cc8c53325a969787bcef006080ed6e657951aa9d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该行询问哪些几何是编码不变量并要求未来区分语义不变量，未陈述所求不变量定理。
+    previous_atom_id: c48657debfb2bf836695d5b75d7c11e41c8d77102760f8186d47bf58f21d50dd
+    next_atom_id: 757dd12e6dff981005f7a15d716d40d4ecd4f760ee396af1f64f28831b94180c

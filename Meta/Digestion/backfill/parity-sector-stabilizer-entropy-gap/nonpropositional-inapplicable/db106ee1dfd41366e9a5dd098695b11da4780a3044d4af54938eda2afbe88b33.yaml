@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:db106ee1dfd41366e9a5dd098695b11da4780a3044d4af54938eda2afbe88b33
+  normalized_sha256: sha256:db106ee1dfd41366e9a5dd098695b11da4780a3044d4af54938eda2afbe88b33
+cas_ref: sha256:db106ee1dfd41366e9a5dd098695b11da4780a3044d4af54938eda2afbe88b33
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Expository Section 1 scope overview summarizing the parity-sector decomposition and the closed-form extrinsic terms and positive stabilizer-entropy gaps proved in Sections 3 and 4.
+    previous_atom_id: 4d9189523f308196ec696a74d787ef1889f67f23a50621315a84bea143508d70
+    next_atom_id: a9402e53bf6e4c580a8ff48abe838d5bbb9b600a3dd65a9d61618db7e8b56b31

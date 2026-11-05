@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0a95b73da984e273a0a4cb84eb46ec2845911549b695b256b7d2fc2649a9610d
+  normalized_sha256: sha256:0a95b73da984e273a0a4cb84eb46ec2845911549b695b256b7d2fc2649a9610d
+cas_ref: sha256:0a95b73da984e273a0a4cb84eb46ec2845911549b695b256b7d2fc2649a9610d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 可选合法性义务目录中的“概念读出良定义”标签。
+    previous_atom_id: d9ba3c521cc9a38ff70b1a861e4b9c0f5d2ad0d378ecdda64fabc92abdd80555
+    next_atom_id: 07ef1c774af3120fac128e2d1a0665fd058b361333a455668af073fb4198c2eb

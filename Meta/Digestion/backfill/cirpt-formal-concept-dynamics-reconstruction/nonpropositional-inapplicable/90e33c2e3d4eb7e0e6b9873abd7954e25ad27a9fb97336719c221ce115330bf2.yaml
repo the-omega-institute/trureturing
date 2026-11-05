@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:90e33c2e3d4eb7e0e6b9873abd7954e25ad27a9fb97336719c221ce115330bf2
+  normalized_sha256: sha256:90e33c2e3d4eb7e0e6b9873abd7954e25ad27a9fb97336719c221ce115330bf2
+cas_ref: sha256:90e33c2e3d4eb7e0e6b9873abd7954e25ad27a9fb97336719c221ce115330bf2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 阶段字段说明把 A 命名为 ADMIT，不断言任何状态被准入。
+    previous_atom_id: 2df748b6b168df10b6330b1555414bc86c38bf64b0bf360ef9bc42e8e8b42107
+    next_atom_id: 50ea957f4f7f99b98a8721f4a8f47ab5afebd14a5ff55c1b60cb3b3f00a4ac56

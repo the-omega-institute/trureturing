@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b606ab5c7cfa76b8bc0927e862e1bca5d51e2088450d6daa0bccdbccb9416c90
+  normalized_sha256: sha256:b606ab5c7cfa76b8bc0927e862e1bca5d51e2088450d6daa0bccdbccb9416c90
+cas_ref: sha256:b606ab5c7cfa76b8bc0927e862e1bca5d51e2088450d6daa0bccdbccb9416c90
+coverage_gids:
+  - gid: D5/S3/Weil/Pick/MinimalRelationalVisibility.minimal_relational_visibility
+    target_statement_id: sha256:ee3e2f62a07c125d0c7a2aa2bcd23eab87e9e7bfce1763e4ea1c0d44c354f693
+receipts:
+  unresolved_subitems: []

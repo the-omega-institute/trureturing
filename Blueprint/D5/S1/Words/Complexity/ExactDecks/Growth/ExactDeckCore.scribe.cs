@@ -14,6 +14,7 @@ internal sealed class ExactDecksGrowthExactDeckCoreDocument : IScribeDocumentDef
         "Exact fixed-length decks recover every shorter scattered count.",
         H("ExactDeckCore"),
         Blocks(
+            PublishedNode("scatteredCount_eq_count_sublistsLen", Disp(Seq(Forall, Sp, Parenthesized(Seq(F.Id("A"), Colon, Sp, PublishedName("Type"))), Comma, Sp, Parenthesized(Seq(OpenBracket, Seq(PublishedName("DecidableEq"), Sp, F.Id("A")), CloseBracket, Sp, To, Sp, Parenthesized(Seq(Forall, Sp, Parenthesized(Seq(PublishedName("pattern"), Colon, Sp, Seq(PublishedName("List"), Sp, F.Id("A")))), Comma, Sp, Parenthesized(Seq(Forall, Sp, Parenthesized(Seq(PublishedName("source"), Colon, Sp, Seq(PublishedName("List"), Sp, F.Id("A")))), Comma, Sp, Parenthesized(Seq(PublishedName("scatteredCount"), Sp, PublishedName("pattern"), Sp, PublishedName("source"), Sp, Eq, Sp, Parenthesized(Seq(Seq(PublishedName("source"), Dot, PublishedName("sublistsLen")), Sp, Seq(PublishedName("pattern"), Dot, PublishedName("length")))), Sp, Dot, Sp, PublishedName("count"), Sp, PublishedName("pattern"))))))))))), DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Paragraph(Text(
                 "The exact-deck objects formalize the source paper's actual vectors of all "
                 + "length-k scattered-subword counts. The repository bridge first proves that, "
@@ -70,4 +71,12 @@ internal sealed class ExactDecksGrowthExactDeckCoreDocument : IScribeDocumentDef
                 Call("cutoffMagnus", F.Id("k"), F.Id("right")))),
         _ => throw new ArgumentOutOfRangeException(nameof(declaration)),
     };
+
+    private static DocumentBlock PublishedNode(string name, Formula formula, DescribeRole role,
+        AssessedProvenance provenance) => Describe.Lean(
+        DescribeId.Create("singhvi-owner-" + name.Replace("_", "-").ToLowerInvariant()),
+        DeclarationHandle.Create("D5/S1/Words/Complexity/ExactDecks/Growth/ExactDeckCore." + name), H(name), StatementSource.FromAuthor(formula),
+        provenance, Blocks(Paragraph(Text("The formula relates a word's constant runs and its scattered-subword counts."))), role);
+    private static Formula PublishedName(string name) => Seq(Operatorname, Grp(F.Id(name)));
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 }

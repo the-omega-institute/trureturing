@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6343b4c5a6429c84904687aeea98a17e897e2196b9c661ae5c1a8c7e960d4014
+  normalized_sha256: sha256:6343b4c5a6429c84904687aeea98a17e897e2196b9c661ae5c1a8c7e960d4014
+cas_ref: sha256:6343b4c5a6429c84904687aeea98a17e897e2196b9c661ae5c1a8c7e960d4014
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proposed directory and Lean-module implementation order only; filenames describe planned work and assert no mathematical theorem.
+    previous_atom_id: 94fe120f98b1cb343d161f8473c7ccf9165fd58e2254404abba353cccaae0bbe
+    next_atom_id: c023915541d2c2b6ee444cbae157a3f0d8597c3170e38777fc13fd6b1bc59858

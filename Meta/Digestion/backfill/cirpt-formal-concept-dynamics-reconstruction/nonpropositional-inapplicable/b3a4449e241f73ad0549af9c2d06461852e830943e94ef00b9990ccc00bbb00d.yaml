@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b3a4449e241f73ad0549af9c2d06461852e830943e94ef00b9990ccc00bbb00d
+  normalized_sha256: sha256:b3a4449e241f73ad0549af9c2d06461852e830943e94ef00b9990ccc00bbb00d
+cas_ref: sha256:b3a4449e241f73ad0549af9c2d06461852e830943e94ef00b9990ccc00bbb00d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 将 Certify 解释为证明或反例类型的锚点，是科研词汇约定，没有全称认证结论。
+    previous_atom_id: 40a5201caa085db99e9b0400e69261b000338751520f38b25caad064e2798b97
+    next_atom_id: 03a66f42ad67ac9fc7fd278a7fd67b2ca2861f6a81857e42162584d2acc61b61

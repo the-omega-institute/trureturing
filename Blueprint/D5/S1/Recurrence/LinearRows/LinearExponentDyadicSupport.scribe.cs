@@ -17,6 +17,18 @@ internal sealed class LinearExponentDyadicSupportDocument : IScribeDocumentDefin
                 + "coefficient zero. For every m>1, [X^(m-1)](1-A)^m/(1-mX)=0. "
                 + "The inverse of the constant-one denominator is expressed by invOfUnit, "
                 + "and a(n) means the coefficient [X^n]A.")),
+            Describe.Lean(DescribeId.Create("linearrows-agree"),
+                DeclarationHandle.Create(Prefix + "Agree"), H("Agreement below a degree"),
+                StatementSource.FromAuthor(Disp(AgreementFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Two series agree at every natural degree strictly below n."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("linearrows-pow-change"),
+                DeclarationHandle.Create(Prefix + "pow_change"), H("First coefficient difference of a power"),
+                StatementSource.FromAuthor(Disp(PowerChangeFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For constant-one series agreeing below n, the degree-n difference of their e-th powers is e times the degree-n difference of the series."))),
+                DescribeRole.Theorem),
             Node("generatingSeries", "Construction over the integers",
                 "Write F=1-A. At degree n>0, put e=n+1 and g=(1-eX) inverse. "
                 + "Let R=[X^n](F^e g) and T=[X^(n-1)](F^(e-1) F' g+F^e g squared). "
@@ -49,12 +61,24 @@ internal sealed class LinearExponentDyadicSupportDocument : IScribeDocumentDefin
                 + "[X^n]U+[X^(n-2)]U. The frozen binary_catalan theorem says these "
                 + "summands are one when n+1 or n-1 is a power of two. They cannot "
                 + "both be one here, since two powers of two greater than two cannot "
-                + "differ by two. This proves the stated equivalence for every solution."))));
+                + "differ by two. This proves the stated equivalence for every solution."),
+            Node("derivative_map", "Derivative commutes with coefficient maps",
+                DerivativeMapFormula(),
+                "Mapping coefficients along a commutative-ring homomorphism commutes with the formal power-series derivative."),
+            Node("square_odd", "Odd coefficients of a square vanish",
+                SquareOddFormula(),
+                "Over ZMod 2, every coefficient of a square at an odd index is zero."))));
 
     private static DocumentBlock Node(string name, string title, string prose,
         DescribeRole role = DescribeRole.Theorem) =>
         Describe.Lean(DescribeId.Create("a397591-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Statement(name)),
+            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
+
+    private static DocumentBlock Node(string name, string title, Formula formula, string prose,
+        DescribeRole role = DescribeRole.Theorem) =>
+        Describe.Lean(DescribeId.Create("a397591-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
 
     private static Formula Call(string name, params Formula[] arguments) =>
@@ -69,6 +93,42 @@ internal sealed class LinearExponentDyadicSupportDocument : IScribeDocumentDefin
     private static Formula Bound(string name, Formula type) => Seq(Forall, Sp, F.Id(name), Colon, Sp, type, Comma, Sp);
     private static Formula Def(Formula a) => Call("DefiningEquation", a);
     private static Formula Coeff(Formula n, Formula a) => Call("coeff", n, a);
+    private static Formula RingContext(Formula ring) =>
+        Seq(OpenBracket, Call("CommRing", ring), CloseBracket);
+    private static Formula RingHom(Formula source, Formula target) =>
+        Seq(source, Sp, new Formula.Power(To, Seq(Plus, Star)), Sp, target);
+
+    private static Formula DerivativeMapFormula()
+    {
+        var r = F.Id("R");
+        var s = F.Id("S");
+        var hom = F.Id("hom");
+        var f = F.Id("F");
+        return Disp(Seq(
+            Forall, Sp, r, Colon, Sp, F.Id("Type"), Comma, Sp,
+            RingContext(r), Comma, Sp,
+            Forall, Sp, s, Colon, Sp, F.Id("Type"), Comma, Sp,
+            RingContext(s), Comma, Sp,
+            Forall, Sp, hom, Colon, Sp, RingHom(r, s), Comma, Sp,
+            Forall, Sp, f, Colon, Sp, SeriesTypeFor(r), Comma, Sp,
+            Equal(Call("map", hom, Call("derivative", r, f)),
+                Call("derivative", s, Call("map", hom, f)))));
+    }
+
+    private static Formula SeriesTypeFor(Formula ring) => Call("PowerSeries", ring);
+
+    private static Formula SquareOddFormula()
+    {
+        var f = F.Id("F");
+        var n = F.Id("n");
+        var index = new Formula.Binary(
+            Par(new Formula.Binary(Par(D(2)), FormulaBinaryOperator.Multiply,
+                Par(n))), FormulaBinaryOperator.Add, Par(D(1)));
+        return Disp(Seq(
+            Forall, Sp, f, Colon, Sp, SeriesTypeFor(Call("ZMod", D(2))), Comma, Sp,
+            Forall, Sp, n, Colon, Sp, NatType(), Comma, Sp,
+            Equal(Coeff(index, new Formula.Power(Par(f), D(2))), D(0))));
+    }
 
     private static Formula Definition()
     {
@@ -105,6 +165,37 @@ internal sealed class LinearExponentDyadicSupportDocument : IScribeDocumentDefin
         "integer_exists_unique" => Seq(Exists, Bang, Sp, F.Id("A"), Colon, Sp, SeriesType(), Comma, Sp, Def(F.Id("A"))),
         "a" => Seq(Bound("n", NatType()), Equal(Call("a", F.Id("n")), Coeff(F.Id("n"), Call("generatingSeries")))),
         "hanna_conjecture" => Conjecture(),
+        "derivative_map" => DerivativeMapFormula(),
+        "square_odd" => SquareOddFormula(),
         _ => throw new System.ArgumentOutOfRangeException(nameof(name))
     });
+
+    private static Formula OwnerAll(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, F.Id(name), Colon, Sp, type, Comma, Sp, body);
+    private static Formula OwnerImp(Formula premise, Formula conclusion) =>
+        Seq(Parenthesized(premise), Sp, Implies, Sp, Parenthesized(conclusion));
+    private static Formula OwnerRing(Formula body) => OwnerAll("R", Call("Type"),
+        Seq(OpenBracket, Call("CommRing", F.Id("R")), CloseBracket, Sp, body));
+    private static Formula AgreementFormula()
+    {
+        var n = F.Id("n"); var f = F.Id("F"); var g = F.Id("G"); var k = F.Id("k");
+        var series = Call("PowerSeries", F.Id("R"));
+        return OwnerRing(OwnerAll("n", NatType(), OwnerAll("F", series,
+            OwnerAll("G", series, Seq(Call("Agree", n, f, g), Sp, Iff, Sp,
+                Parenthesized(OwnerAll("k", NatType(), OwnerImp(Seq(k, Sp, Lt, Sp, n),
+                    Equal(Coeff(k, f), Coeff(k, g))))))))));
+    }
+    private static Formula PowerChangeFormula()
+    {
+        var n = F.Id("n"); var f = F.Id("F"); var g = F.Id("G"); var e = F.Id("e");
+        var series = Call("PowerSeries", F.Id("R"));
+        var difference = Sub(Coeff(n, f), Coeff(n, g));
+        var equality = Equal(Sub(Coeff(n, Pow(f, e)), Coeff(n, Pow(g, e))),
+            Mul(Parenthesized(Seq(e, Colon, Sp, F.Id("R"))), Parenthesized(difference)));
+        return OwnerRing(OwnerAll("n", NatType(), OwnerAll("F", series,
+            OwnerAll("G", series, OwnerImp(Equal(Call("constantCoeff", f), D(1)),
+                OwnerImp(Equal(Call("constantCoeff", g), D(1)),
+                    OwnerImp(Call("Agree", n, f, g), OwnerAll("e", NatType(), equality))))))));
+    }
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 }

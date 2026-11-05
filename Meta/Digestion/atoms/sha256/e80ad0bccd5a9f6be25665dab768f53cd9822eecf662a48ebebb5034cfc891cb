@@ -1,0 +1,33 @@
+### 定义 1.2（根一致笛卡尔提升）
+
+给定产品根对
+
+$$
+\mathbf x=(x_1,\ldots,x_m),
+\qquad
+\mathbf x'=(x'_1,\ldots,x'_m),
+$$
+
+以及记录元组 $\mathbf r=(r_1,\ldots,r_m)$，定义根一致提升谓词
+
+$$
+\operatorname{Lift}_W(\mathbf w;\mathbf x,\mathbf x';\mathbf r)
+$$
+
+为：$\mathbf w\in W$，且对每个 $i$ 都有
+
+$$
+(\delta_{i,w_i}(x_i),r_i),
+(\delta_{i,w_i}(x'_i),r_i)\in\operatorname{Term}_i,
+$$
+
+并且存在同一个调度
+
+$$
+\sigma\in\mathcal D_W(\mathbf w)
+$$
+
+能够从两个产品根 $\mathbf x$ 和 $\mathbf x'$ 都合法运行到同一联合记录 $\mathbf r$。根一致笛卡尔提升的合同要求对每个 $\mathbf w\in W$、每个产品根对和每个满足上述局部终端前提的记录元组都成立。特别地，$\mathbf w\notin W$ 的词元组不在该合同的量词内。
+
+“同一个”同时约束调度、全部局部投影和联合终端记录；不能为两个产品根分别选择不同调度。该条件是二组件根一致提升在多组件上的直接推广。
+

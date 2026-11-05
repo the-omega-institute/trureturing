@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7832c712e0a3e881aeef61d8634b4212f8d3cb06dbb68b61ff6cac669406ffaa
+  normalized_sha256: sha256:7832c712e0a3e881aeef61d8634b4212f8d3cb06dbb68b61ff6cac669406ffaa
+cas_ref: sha256:7832c712e0a3e881aeef61d8634b4212f8d3cb06dbb68b61ff6cac669406ffaa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 研究对象与理论命名的组织引言；具体数学代理命题分别在后续 atom。
+    previous_atom_id: d0d4356cdb4e36ca7575530f049cc5b91b3c001cd426d02c4dcc6ce943bf08a9
+    next_atom_id: 878aea6de2a746e818480e1ec63d58127c05b51883388f47a4e63b074ec19db3

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d6c1b1e84875e0d9eb4ca3a247a02923ea58a3662388720e9a26ea6f0f840469
+  normalized_sha256: sha256:d6c1b1e84875e0d9eb4ca3a247a02923ea58a3662388720e9a26ea6f0f840469
+cas_ref: sha256:d6c1b1e84875e0d9eb4ca3a247a02923ea58a3662388720e9a26ea6f0f840469
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 只约定径向逃逸深度的 min 记号并列举 Jet 深度；该片没有断言最小值存在、有限或最优。'
+    previous_atom_id: 278cdba98a55471afa20d631dd4166db3073c646330db29ca4d3ee37ca3a87e6
+    next_atom_id: 7ced1d9edb4491006c946d6f0fa1179bfaa9a8b22d72b69f0bdc95e46343d49d

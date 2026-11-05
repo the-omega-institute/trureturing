@@ -1,0 +1,139 @@
+## 40. Exact four-world J incidence
+
+For $x=(x_1,\ldots,x_7)$ set
+
+$$
+A=(1/4,x_1),\quad B=(x_2,x_3),\quad
+C=(x_4,x_5),\quad D=(x_6,x_7),
+$$
+
+where each ordered pair denotes $(r,b)$. These are source-point labels
+local to this section: $A$ is not the fold map, and $D$ is not the scalar
+denominator of (31.1). The center $c_{\rm J}$, box $X_{\rm J}$ and
+preconditioner $L_{\rm J}$ below are seven-dimensional; they are unrelated
+to the fold root-bracket integer $L_{\rm f}$ or the source entry $c_{\rm src}$. Define the rational map
+
+$$
+F_{\rm J}(x)=\begin{pmatrix}
+R_p(A)-R_p(B)\\ R_v(A)-R_v(B)\\ R_a(A)-R_a(B)\\
+R_p(A)-R_p(C)\\ R_v(A)-R_v(C)\\
+R_p(A)-R_p(D)\\ R_v(A)-R_v(D)
+\end{pmatrix}.                                                   \tag{40.1}
+$$
+
+Let $\rho_{\rm J}=10^{-11}$, and let $X_{\rm J}=\prod_{i=1}^7[c_i-\rho_{\rm J},c_i+\rho_{\rm J}]$,
+where $c_{\rm J}=(c_1,\ldots,c_7)$ and the following finite decimals
+are exact rationals:
+
+$$
+\begin{aligned}
+c_1&=0.114833501729356886661759878705,\\
+c_2&=0.761645896941701624224642579302,\\
+c_3&=0.311543071675176747899101662302,\\
+c_4&=0.861370986265965317403298544212,\\
+c_5&=0.117268362691626034293752321772,\\
+c_6&=0.243164373867715015960168619826,\\
+c_7&=0.217520896522692033906895429321,\\
+\end{aligned}                                                    \tag{40.2}
+$$
+
+Define the exact rational matrix
+
+$$
+L_{\rm J}=\begin{pmatrix}
+0.005593917741 & -0.000569413986 & -0.000371337599 & 0.000000000000 & 0.000000000000 & 0.000000000000 & 0.000000000000\\
+-0.035864955659 & 0.013565514774 & -0.002123235634 & 0.000000000000 & 0.000000000000 & 0.000000000000 & 0.000000000000\\
+0.023656485976 & -0.010018941343 & 0.001312265481 & 0.000000000000 & 0.000000000000 & 0.000000000000 & 0.000000000000\\
+0.007036346633 & -0.000716241170 & -0.000467089469 & -0.018406315740 & 0.007518312548 & 0.000000000000 & 0.000000000000\\
+0.004915382645 & -0.000500344795 & -0.000326294821 & -0.008343876383 & 0.000299728792 & 0.000000000000 & 0.000000000000\\
+-0.007874252954 & 0.000801533017 & 0.000522711688 & 0.000000000000 & 0.000000000000 & 0.020280074021 & -0.008064625967\\
+-0.005203066005 & 0.000529628552 & 0.000345391929 & 0.000000000000 & 0.000000000000 & 0.014078333191 & -0.006072527092
+\end{pmatrix}.                                                   \tag{40.3}
+$$
+
+**Proposition 40.1.** There is a unique $x_*\in X_{\rm J}$ satisfying $F_{\rm J}(x_*)=0$.
+The four associated worlds $W_A,W_B,W_C,W_D$ are distinct legal worlds in
+one entire $C(p_{\rm J},v_{\rm J})$, where
+
+$$
+\frac{2293}{100}<p_{\rm J}<\frac{2294}{100},\qquad
+\frac{12780}{100}<v_{\rm J}<\frac{12781}{100}.                           \tag{40.4}
+$$
+
+They satisfy
+
+$$
+a(W_A)=a(W_B),\qquad
+\frac{44766}{100}<a(W_A)<\frac{44767}{100},                       \tag{40.5}
+$$
+
+and their four terminal-M readings are pairwise distinct, with order
+$m(W_D)<m(W_B)<m(W_C)<m(W_A)$.
+In particular terminal J is not injective on all acquired children with
+$p\ne24$.
+
+**Proof.** All arithmetic bounds used here are specified over rational
+intervals. This also gives a finite reproduction of the existence proof.
+For a rational interval $I=[l,u]$, let
+
+$$
+\operatorname{rnd}_{36}(I)=10^{-36}
+ [\lfloor10^{36}l\rfloor,\lceil10^{36}u\rceil].                  \tag{40.6}
+$$
+
+After each addition, multiplication or reciprocal take $\operatorname{rnd}_{36}$ of
+the usual enclosing interval. Negation is exact. Products use the minimum
+and maximum of their four endpoint products. Reciprocals use
+$[1/u,1/l]$ and are used only when $0\notin I$. Division is multiplication
+by this reciprocal. Constants and input intervals are their exact
+rational intervals. For derivatives use seven-component interval jets:
+
+$$
+\begin{aligned}
+(v,q)+(w,t)&=(v+w,q+t),\\
+(v,q)(w,t)&=(vw,qw+vt),\\
+(v,q)^{-1}&=(v^{-1},-qv^{-1}v^{-1}).
+\end{aligned}                                                    \tag{40.7}
+$$
+
+Each operation on the right is the rounded interval operation just
+defined. Each variable $x_i$ begins with the $i$th unit derivative;
+constants have zero derivatives. Evaluate (31.4) through $\epsilon$,
+then $z_0,z_1,z_2,z_3,d$,
+then $t_5,t_6,t_7$, then the responses in (31.4), in displayed order.
+Within a sum evaluate terms from left to right. Evaluate (40.1) in row
+order. These rules enclose the map and its true first derivatives
+throughout the box, by induction on the displayed arithmetic expressions.
+
+The resulting strict rational comparisons are as follows. In the first
+table, the $i$th bound is for
+$\sum_j\sup_{x\in X_{\rm J}}|(I-L_{\rm J}DF_{\rm J}(x))_{ij}|$; compute each matrix product in
+increasing summation index starting at zero.
+
+| Row | Strict rational upper bound |
+| --- | --- |
+| 1 | $32\cdot10^{-8}$ |
+| 2 | $30\cdot10^{-7}$ |
+| 3 | $21\cdot10^{-7}$ |
+| 4 | $51\cdot10^{-8}$ |
+| 5 | $31\cdot10^{-8}$ |
+| 6 | $62\cdot10^{-6}$ |
+| 7 | $46\cdot10^{-6}$ |
+
+Evaluating $L_{\rm J}F_{\rm J}(c_{\rm J})$ by the same operations gives
+
+$$
+\|L_{\rm J}F_{\rm J}(c_{\rm J})\|_\infty<10^{-20},\qquad
+\sup_{x\in X_{\rm J}}\|I-L_{\rm J}DF_{\rm J}(x)\|_\infty<10^{-4}.                       \tag{40.8}
+$$
+
+The following additional enclosing intervals are obtained by the same
+expressions on the entire box; every endpoint is an exact rational.
+Only the common $p,v$ bounds in (40.4) are needed from the first world.
+
+| World | $\Lambda$ | $d$ | $g(7)$ | $a$ | $m$ |
+| --- | --- | --- | --- | --- | --- |
+| $A$ | $(2.90,2.91)$ | $(24.06,24.07)$ | $(75.50,75.51)$ | $(447.66,447.67)$ | $(604.27,604.29)$ |
+| $B$ | $(-0.70,-0.69)$ | $(28.28,28.30)$ | $(68.22,68.24)$ | $(447.66,447.67)$ | $(586.46,586.48)$ |
+| $C$ | $(1.65,1.66)$ | $(24.08,24.09)$ | $(75.35,75.36)$ | $(539.05,539.07)$ | $(604.13,604.15)$ |
+| $D$ | $(-0.20,-0.19)$ | $(31.96,31.97)$ | $(78.70,78.71)$ | $(371.76,371.78)$ | $(576.49,576.52)$ |

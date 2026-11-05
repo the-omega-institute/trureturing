@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:116c7841ccc2374854e7bba0dd8fa22800aa064720e662c0d4f19cf8f4dd482a
+  normalized_sha256: sha256:116c7841ccc2374854e7bba0dd8fa22800aa064720e662c0d4f19cf8f4dd482a
+cas_ref: sha256:116c7841ccc2374854e7bba0dd8fa22800aa064720e662c0d4f19cf8f4dd482a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: A background-convention caveat about omitting causal model parameters; no mathematical claim is added.
+    previous_atom_id: 205700fc1358ee9940595828bac837c75423bb4851283049dced86f47e448f0e
+    next_atom_id: ba70abf1fd29ce14d47ddff0d8f134b1f9b6226281b214b8b056ceee75434ac2

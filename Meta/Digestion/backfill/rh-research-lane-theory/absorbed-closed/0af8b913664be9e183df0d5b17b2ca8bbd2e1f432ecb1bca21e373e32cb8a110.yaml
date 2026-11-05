@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0af8b913664be9e183df0d5b17b2ca8bbd2e1f432ecb1bca21e373e32cb8a110
+  normalized_sha256: sha256:0af8b913664be9e183df0d5b17b2ca8bbd2e1f432ecb1bca21e373e32cb8a110
+cas_ref: sha256:0af8b913664be9e183df0d5b17b2ca8bbd2e1f432ecb1bca21e373e32cb8a110
+coverage_gids:
+  - gid: D5/S3/Observer/AgencyHolonomy/PhaseTwistedStableSwapCurvature.phase_twisted_channel_norm
+    target_statement_id: sha256:71049cdc4e9dab4b99aadf5660afb7c73bddfb764a33209bab0877757f42b1b4
+  - gid: D5/S3/Observer/AgencyHolonomy/PhaseTwistedStableSwapCurvature.relative_phase_reconstruction
+    target_statement_id: sha256:d6146886cd8a3d68a05fc129857469bb5e2b3b494447762f7adbcaaec4a5486d
+receipts:
+  unresolved_subitems: []

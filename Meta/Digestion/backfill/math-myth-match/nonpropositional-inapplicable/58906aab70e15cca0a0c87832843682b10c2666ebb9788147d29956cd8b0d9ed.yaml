@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:58906aab70e15cca0a0c87832843682b10c2666ebb9788147d29956cd8b0d9ed
+  normalized_sha256: sha256:58906aab70e15cca0a0c87832843682b10c2666ebb9788147d29956cd8b0d9ed
+cas_ref: sha256:58906aab70e15cca0a0c87832843682b10c2666ebb9788147d29956cd8b0d9ed
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 陈述新增问题与旧结论可追索的研究纪律，并限定终极概念的解释范围。
+    previous_atom_id: 26096de661d72d20545be17a65fa49e850623a8217e1621a4392aca5e95ef726
+    next_atom_id: b44628b45ad4b2356db0954fa1ac5f866297d7e6da9c3568437de229ac48488e

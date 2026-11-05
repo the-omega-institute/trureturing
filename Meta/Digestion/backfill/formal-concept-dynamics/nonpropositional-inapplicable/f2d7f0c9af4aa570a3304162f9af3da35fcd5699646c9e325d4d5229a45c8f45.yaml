@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f2d7f0c9af4aa570a3304162f9af3da35fcd5699646c9e325d4d5229a45c8f45
+  normalized_sha256: sha256:f2d7f0c9af4aa570a3304162f9af3da35fcd5699646c9e325d4d5229a45c8f45
+cas_ref: sha256:f2d7f0c9af4aa570a3304162f9af3da35fcd5699646c9e325d4d5229a45c8f45
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “哲学的发展”箭头串是研究工作流程，非对象之间已经存在的数学映射或因子化断言。
+    previous_atom_id: e41504ae7b9e7f8caa1fb006aeb53b49361ecb481fc2df79e122db830b03ae8f
+    next_atom_id: 0ddbd4703d9092ca27d28b2741e465572795cf0ef061e21584eb564be2a2126f

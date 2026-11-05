@@ -1,0 +1,4 @@
+Moreover $K$ is $\operatorname{diag}(w)$ times degree-at-most-$m$ evaluation, so $w_iR(i)=1$ for some $R\in\mathcal P_m$. The projective classes of $A_i$ modulo $L$ are injective functions of the original clock.
+
+2. There is a unique exceptional index $r$ with $Ce_r=0$, and all $A_i$ with $i\ne r$ span a two-dimensional plane containing $L$. The exceptional $A_r$ is outside that plane.
+

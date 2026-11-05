@@ -1,0 +1,94 @@
+**Proposition 26.2 (finite resources and an inhabited strict margin).**
+If the separately declared charges in Definition 26.1 are finite, the
+source-service rate is locally bounded on the permitted bounded-control
+calibration path, and all latencies meet the acquisition contract, then
+(26.1) is finite on this same source. If, additionally, the original
+stochastic source contract has the rate bound
+$c_Q(\zeta)\le C_Q^{\rm cost}(1+|\zeta|^2)$, its expected execution
+service charge to $T\wedge\tau$ is at most
+
+$$
+C_Q^{\rm cost}\int_0^T(1+M_Q(s;\zeta))ds,
+\tag{26.4}
+$$
+
+where the following completely specified polynomial is sufficient:
+
+$$
+\begin{aligned}
+M_Q(s;\zeta)={}&q_1^2+q_3^2+h^2+(|k|+s)^2
+ +3(|q_2|+C_0s)^2\\
+&+(2Q_{11}+4Q_{22}+Q_{33})s+12A_0^2.
+\end{aligned}
+\tag{26.5}
+$$
+
+Other original cost terms must still be added; no cost optimum is
+asserted. In particular this is not the native finite-bit tracking
+problem of [Paid point observation, §§44–49](FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md).
+
+The response margins are inhabited by a nonconstant source with evolving
+hidden records and nontrivial killing. For example, take
+
+$$
+A_0=C_0=1,\quad a=1/100,\quad c=1/10,\qquad
+\epsilon=\delta_t=\delta_h=\delta_u=\eta_a=\eta_c=10^{-6}.
+\tag{26.6}
+$$
+
+Whenever the permitted acquisition apparatus meets these finite error
+contracts, $C=4\cdot10^{-6}$, $R_a=24\cdot10^{-6}$ and
+$A\le0.010048$. Consequently $D_1\le0.020100<1/40$,
+and the actual Itô drift error at $Q=I_3$ is at most $0.005028$.
+Thus every equal-start $1$-Lipschitz killed observable has error less
+than $1/40$ at time $1$, and every equal-start Borel observable bounded
+by $1$ also has error less than $1/40$ by (25.5), since $\nu_{I_3}=1$.
+These bounds hold for all source starts, not only the calibration state.
+For the fully acquired start of Corollary 25.2, also take
+$H_{\min}=1$, $\Lambda_{\max}\le1$ and
+$\delta_\Lambda=\eta_s=10^{-6}$. Then its guard margin holds,
+$E<7\cdot10^{-6}$, and at $t=1$, $Q=I_3$, every observable with
+$M=L=1$ has the finite-record killed-response error less than
+$0.020108<1/40$. This last assertion uses the actual post-acquisition
+state and the reporting hold, rather than an exact current-state sensor.
+
+Proof. Under (24.8) a bounded-control acquisition in finite time stays
+in a compact part of $J$: $h$ changes by its finite control integral,
+$k$ by elapsed time, and the shear contribution to $q_2$ is at most
+$2A_0$. A locally bounded service rate is bounded on this compact
+state/control set. This proves finiteness of the actual integral.
+Formula (26.3) follows by bounding each endpoint coordinate in (24.8),
+including the initial $c\ell_0$ drift during the first read.
+A scalar quantizer with the indicated mesh gives its bit count.
+
+For execution, (25.2) gives the exact second moments of $q_1,q_3,h,k$.
+For the remaining coordinate use
+
+$$
+\mathbb E q_2(s)^2
+\le3(|q_2|+C_0s)^2+3Q_{22}s+12A_0^2.
+$$
+
+Summing proves $\mathbb E|Z_s|^2\le M_Q(s;\zeta)$ regardless of
+correlations among $W$'s components. Integrating the rate bound and
+using $\mathbf1_{s<\tau}\le1$ proves (26.4).
+
+For (26.6), $E_0=3\cdot10^{-6}$ and $E_1=7\cdot10^{-6}$;
+(24.5) gives the stated $C,R_a$ and
+$A\le|a|+2R_a=0.010048$. The arithmetic bounds in (24.4) are attainable
+with finite rational cosine enclosures and positive rounding budgets.
+The exact hold and unit pulse, with a finite-latency sensor completing
+within the specified intervals, exhibit a permitted acquisition in this
+conditional apparatus domain; the positive tolerance budgets allow
+finite-precision records. There is no reset between the two intervals.
+The source coefficient $a\sin h$ is nonconstant; $h$ is changed by
+$X_1$ and $k$ by both elapsed time and $X_2$. The survival probability in (25.3) is strictly
+between zero and one. Finally $CT+2A$ and $C+Q_{11}A/2$ give the stated
+numbers. In the finite-record initialization example,
+$|\widehat c|\le0.100004$, hence
+$\delta_2\le6.100004\cdot10^{-6}$ and
+$E^2\le(2+6.100004^2)10^{-12}<49\cdot10^{-12}$.
+Also $\widehat q_3\ge1-10^{-6}>\epsilon$ and
+$\kappa_1\le10^{-6}$. Substitution in (25.8) proves the final strict
+margin. QED.
+

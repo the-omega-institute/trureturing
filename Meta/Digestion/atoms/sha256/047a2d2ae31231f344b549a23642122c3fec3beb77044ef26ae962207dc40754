@@ -1,0 +1,102 @@
+**Theorem 5.1 (full-domain hidden-coordinate reflection).** Put
+$\mathfrak r(x,y,z,w)=(x,y,-z,w)$ and $\mathcal Pf=f\circ\mathfrak r$.
+For every original $a,\eta>0$, $\Gamma\circ\mathfrak r=\Gamma$,
+$h\circ\mathfrak r=h$, and
+
+$$
+\begin{gathered}
+A(\mathcal Pu)=A(u),\quad C(\mathcal Pu)=C(u)
+                       \quad(u\in D(S_{\min}^*)),\\
+\mathcal P D(H)=D(H),\quad H\mathcal P=\mathcal PH,\quad
+\mathcal P\mathscr V=\mathscr V,\quad
+\mathscr E(\mathcal Pf,\mathcal Pg)=\mathscr E(f,g),\\
+\operatorname{tr}(\mathcal Pf)=\operatorname{tr}(f)
+                       \quad(f\in\mathscr V),\quad
+T_t\mathcal P=\mathcal PT_t.
+\end{gathered}
+\tag{5.1}
+$$
+
+The full continuous-path law under the actual $\mathbb P_e$ is
+invariant under pointwise $\mathfrak r$. The observation exit and
+the entire held path $O^I$ are unchanged pathwise by reflection.
+
+Proof. The symmetry-through-full-form method is already used for
+planar rotations in [S, the proof of Theorem 120.2]. Here the
+specific hidden reflection additionally requires its actual maximal
+coefficients and is consumed into the path-law and risk conclusions.
+The independent $z$ heat factor in [G, Proposition 85.4,
+(85.12)] is $(4\pi t)^{-1/2}e^{-z^2/(4t)}$. Its central inverse
+transform and the unit-source heat integral are therefore $z$-even.
+This proves parity of the actual $\Gamma$ where that representation
+applies; its smoothness off $e$ extends the identity to all of
+$G\setminus\{e\}$. No finite value at $e$ is required. The map
+$\mathcal P$ is unitary for raw Haar measure, preserves the punctured
+core, commutes with $X_1,X_2,\partial_w$ and reverses $X_3$.
+It consequently commutes with $S_{\min}$ and its adjoint on their
+whole respective domains. This checks the potential as well as the
+principal part.
+
+The source coefficients require a further check. In the exact original
+chart [E, (109.1)–(109.3)] put
+$\kappa_0=\sqrt{\eta/a}$, $s=w-xy/2$, $t=s/\kappa_0$ and
+$\xi=(x,y,z)$. Reflection preserves $s$ and
+$R=|(\xi,t)|$; on $S^3$ it is an orthogonal reflection of the
+$z$ component. It fixes the positive angular profile
+
+$$
+e_0=\frac{\Phi|_{S^3}}{\|\Phi|_{S^3}\|_2},\qquad
+\Phi(\xi,t)=\frac{2}{\pi|\xi|}
+                         \arctan\frac{|\xi|}{|t|},
+\tag{5.2}
+$$
+
+with the supplied continuous values. Pullback also preserves the
+weighted cylinder remainder space in the full expansion [E, (112.2)]
+
+$$
+H_u(\tau,\omega)=(A(u)+\tau C(u))e_0(\omega)+Z_u(\tau,\omega),
+\qquad e^{\tau/8}Z_u\in H^1.
+\tag{5.3}
+$$
+
+Uniqueness of those coefficients gives their two identities in (5.1)
+for every complex maximal-domain vector, not just for zero states.
+The reflected coefficient-one maximal zero vector is again the
+coefficient-one vector of [E, Theorem 110.2]; its uniqueness gives
+$h\circ\mathfrak r=h$. The selector $A=\rho_*C$ is therefore
+preserved in its entire domain, with precisely the same $\rho_*$.
+The Friedrichs completion, when used as a supplier, is preserved by
+the same punctured-core unitary; it has not replaced this selector.
+
+Now $m$ is invariant under reflection. The punctured weighted form
+norm, its closure $\mathscr V_0$ and the constant in
+$\mathscr V_0\dotplus\mathbb C1$ are preserved. Formula (1.2)
+gives energy invariance and thus semigroup commutation. The source
+trace is the constant coefficient in that direct sum; it is invariant
+too. On the operator domain this agrees with the supplied identity
+$\operatorname{tr}(f)=C(hf)/C(h)$. Thus the trace statement includes
+the singular source component, rather than only off-source tests.
+
+To pass to the actual source-start law, use [S, Theorem 117.2]: for
+each $t>0$ and bounded Borel $f$,
+$\mathbb E_e f(\mathbf Z_t)=\operatorname{tr}(T_t[f])$.
+Trace invariance and semigroup commutation prove invariance of this
+marginal. For several positive ordered times, the Markov product is
+a nested expression of $T_t$ and multiplication by the test functions.
+Pullback by $\mathfrak r$ commutes with the former and transports the
+latter to the reflected test. The initial marginal at the earliest
+positive time is absolutely continuous with respect to $m$ by the
+same theorem; subsequent marginals also are. Hence the $L^2(m)$
+commutation identities determine these actual expectations without
+transition-version ambiguity on $m$-null sets. Taking the source
+trace at the first step proves reflection invariance of every
+finite-dimensional law, including time zero because $\mathfrak r e=e$.
+Rational-time cylinders generate the Borel sigma-field of continuous
+paths, giving full path-law invariance. This uses the legitimate
+source start, not an invariant-law surrogate.
+
+Finally (1.3)–(1.5) ignore $z$, including the height exit, so the
+observed path and its holding time agree pointwise on a reflected
+pair of source paths. $\square$
+

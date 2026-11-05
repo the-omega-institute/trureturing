@@ -1,0 +1,14 @@
+**Definition 4.1 (A constructive upper envelope).** For $\kappa>0$, define
+
+$$
+U(\kappa)=
+\begin{cases}
+2\sqrt2\,\kappa,&0<\kappa\le\sqrt2,\\
+\displaystyle\min_{j\in\mathbb Z_{\ge1}}
+\left(\frac{\kappa^2}j+4j-2\right),&\kappa\ge\sqrt2.
+\end{cases}
+\tag{4.1}
+$$
+
+The two values agree at $\kappa=\sqrt2$. The discrete minimum exists since $F_j(\kappa)\to\infty$ as $j\to\infty$ for fixed $\kappa$.
+

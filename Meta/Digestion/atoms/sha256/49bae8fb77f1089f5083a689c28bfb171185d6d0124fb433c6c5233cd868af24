@@ -1,0 +1,56 @@
+**Corollary 17.1 (restriction, relaxation and the original upper bound).**
+Fix any $n\ge1$, any $n$-leaf ordered scaffold $S$ and one persistent
+$\pi$. Give the original acquisition problem authentic advice $A=B=n$.
+Every deterministic effective protocol correct for its full authentic
+entrance domain, even with arbitrary finite adaptive forward updates
+under a source-blind extension of its actuator schedule, obeys (GPO.46)
+on the restricted family (GPO.43), and has one member in each bin obeying
+all of (GPO.48).
+
+For the published first-completion protocol of Theorem 9.2, the exact
+upper bounds (GPO.32)–(GPO.33), specialized to $B=n$, imply, for this
+fixed $n$,
+
+$$
+ Q=O_n(\log(k+2)),\qquad M_{\rm addr}=O_n(k+1),\qquad
+ W=O_n((k+1)\log(k+2)).
+ \tag{GPO.54}
+$$
+
+Therefore its worst costs over $K\le k\le2K-1$ have the optimal lag
+orders $\log(K+2)$, $K+1$, and $(K+1)\log(K+2)$ in these three
+coordinates. The lower orders hold simultaneously on one fixed member
+of each such bin for every competing protocol. This is a binwise
+worst-case assertion, not a logarithmic per-run lower bound on $Q$.
+
+Proof. Restrict original inputs to the actual originals $u_x$ with this
+scaffold, this fixed orientation and lag in the stated bin. Then grant
+the controller the true $S,\pi,K$ and immediate Read/update permissions
+of Assumption 13.2. The original code can ignore those inputs and extra
+permissions and execute precisely its original actions, including its
+actual preparations. Its full output projects by finite local work to
+$(u_x,k)$, with unchanged Reads, words and source updates. Every other
+accessible field is still common at initialization, the writer remains
+hidden, and the same register realizes every transition. Thus it is a
+competitor in the relaxed class; Theorems 15.1–15.2 apply a fortiori to
+its original run. A protocol with a more restrictive grant schedule is
+included by simply respecting that schedule. No installation or advice
+cost is removed from the real original run by this comparison.
+
+For the upper bound reuse Theorem 9.2 exactly, rather than transplanting
+the stationary comparator into the unknown-scaffold problem. With $B=n$,
+$H\le k+n-1$, $h_a\le2k+n$ and $d_B=\lceil\log_2n\rceil$,
+its $q_o$ is $O_n(\log(k+2))$ and $D_o\le4(k+n+1)$ is $O_n(k+1)$.
+Its stated $W\le D_oq_o$ yields (GPO.54). This is its one actual
+preparation update and stationary odd-cut acquisition, not a new
+zero-update procedure for unknown $\pi$.
+
+On the bin, (GPO.48) has $r=\lceil\log_2K\rceil$ and in particular
+$W\ge(K+1)(n+r)$, $Q\ge n+r$, $M_{\rm addr}\ge K+1$.
+For $K\ge2$, these have the asserted three lower orders; $n\ge1$
+also covers $K=1$ with positive constant lower bounds. The uniform
+upper bounds (GPO.54) have the corresponding orders throughout the bin.
+All constants may depend on the fixed $n$ and scaffold. No optimal
+dependence on an unknown leaf count, unknown shape, or $n$-varying
+original problem has been deduced. $\square$
+

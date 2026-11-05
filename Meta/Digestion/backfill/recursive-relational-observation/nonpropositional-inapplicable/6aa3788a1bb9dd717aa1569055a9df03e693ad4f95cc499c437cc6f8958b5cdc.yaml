@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6aa3788a1bb9dd717aa1569055a9df03e693ad4f95cc499c437cc6f8958b5cdc
+  normalized_sha256: sha256:6aa3788a1bb9dd717aa1569055a9df03e693ad4f95cc499c437cc6f8958b5cdc
+cas_ref: sha256:6aa3788a1bb9dd717aa1569055a9df03e693ad4f95cc499c437cc6f8958b5cdc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 钉版 Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679 的 Continuous.prodMap、IsClosed.preimage，分别作用于 j_XY、j_YZ 并按饱和等式改写，供应 R、S 的两个结论。D5 全树（含 private）按 saturation/preimage_image、closed inverse image、product continuity 检索，未找到在这些假设下供应该断言的冻结声明。
+    previous_atom_id: fd3e3df187fd0cf9bc2c653db29e48a90719f71f84e40b64c21014f445be043c
+    next_atom_id: 445217f67f739e1602bb5ff93311fb6a63cb23bb5e34e28e4527e94f949a86da

@@ -1,0 +1,31 @@
+**Definition 73.1 (coordinates and charging convention).** For the actual
+entry $t$ write $a,b$ for its alpha and beta leaf counts, $L=a+b$ for its
+leaf count, $n=2L-1$ for its number of logical nodes, and $h$ for its
+logical height. Put
+
+$$
+D=\sum_{p\in\mathcal L(t)}|p|,\qquad
+D_\beta=\sum_{p\text{ a beta leaf of }t}|p|,
+\qquad N=n+b.
+$$
+
+Here $\mathcal L(t)$ includes all logical positions; $N$ is the initial
+material vertex count, including beta markers. Count request and reply
+payload bits in Definition 53.3's fixed framing. Count End,
+acknowledgement, return and cleanup separately; payload lengths alone
+are not the communication protocol. Source structural assignments use
+AA §22's original three-reference-field representation: four assignments
+per promotion and eight per split, besides actual cursor, allocation,
+grant, observer and communication operations. Every literal reference
+or numerical operand pays its actual representation width.
+
+Old preparation is part of this same source's cost. Its legal successful
+event word has $b$ promotions and $L-1$ splits, hence
+$3+4b+8(L-1)$ source structural assignments including root initialization.
+If $e=b+L-1$ and $H$ is that word's sum of event-address depths, its
+addressed request/reply payloads are $2H+4e$ and $2H+5e$, with $e$ full
+completion cycles. Any additional producer activity is additional actual
+cost. The old word is not supplied as an observer input. Root allocation,
+producer control, actual references/grants, attachment, old I/O/backing
+and any genuinely retained old records remain charged.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b8b791b83959dd16ee341e4917c8516a6f86183b1f01810cccd6149222e82927
+  normalized_sha256: sha256:b8b791b83959dd16ee341e4917c8516a6f86183b1f01810cccd6149222e82927
+cas_ref: sha256:b8b791b83959dd16ee341e4917c8516a6f86183b1f01810cccd6149222e82927
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 方法列表项“消去低阶 exact mode”，本条仅列操作名称，没有独立数学断言。
+    previous_atom_id: 6054e34973c47396ee7b00ef38b1d9749c965288daa1497fc1d8ad4a6cbc4cd1
+    next_atom_id: 09df9c193827dccf0d446c12c36bcff328287a9ac6aef895e4774dacfcaa51f9

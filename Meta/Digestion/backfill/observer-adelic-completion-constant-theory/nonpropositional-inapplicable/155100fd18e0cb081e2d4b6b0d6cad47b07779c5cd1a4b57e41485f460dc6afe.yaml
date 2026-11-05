@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:155100fd18e0cb081e2d4b6b0d6cad47b07779c5cd1a4b57e41485f460dc6afe
+  normalized_sha256: sha256:155100fd18e0cb081e2d4b6b0d6cad47b07779c5cd1a4b57e41485f460dc6afe
+cas_ref: sha256:155100fd18e0cb081e2d4b6b0d6cad47b07779c5cd1a4b57e41485f460dc6afe
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 审计表标注 canonical memory forcing 到 xi 的桥尚未闭合，是研究状态说明，不断言该桥存在或不存在。
+    previous_atom_id: 42ea2d96e4b37b7932002425aaa68ec0ead61b6eea8f5f1c8f5795e62364b61f
+    next_atom_id: 16d8ce00ff13c184d2dd0cb5ef7e9b53ed697cb37c98d72829030edcda198d3f

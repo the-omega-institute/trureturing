@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c70d020e1c0b4122dc0f997932a25fa02bfb588b838a994466546153972f9a6f
+  normalized_sha256: sha256:c70d020e1c0b4122dc0f997932a25fa02bfb588b838a994466546153972f9a6f
+cas_ref: sha256:c70d020e1c0b4122dc0f997932a25fa02bfb588b838a994466546153972f9a6f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 说明本批来源、非原创声明与公开交流现实条件等未决边界。
+    previous_atom_id: d21654a1222390773cc2e883383199e64f16f92464cdf25b1b5c19497b11b8e3
+    next_atom_id: 6ab4477ca1ce3ed39c9e3b7ec470db70a0a3117306dbcd26c8f1df9045d40cd4

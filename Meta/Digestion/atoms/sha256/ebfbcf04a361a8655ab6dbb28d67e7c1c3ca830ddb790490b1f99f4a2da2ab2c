@@ -1,0 +1,246 @@
+### 14.3. A necessary quadratic with strict-source guards
+
+For an actual world at a base in $\mathcal S$, define the following
+rational functions of the same $x,p,v$:
+
+$$
+\begin{gathered}
+\gamma=294/5,\quad
+\tau=20/x-45+36/(x+1)-10/(x+2),\\
+\tau_2=4/x-6+4/(x+1)-1/(x+2),\qquad
+s=16/x+1/(x+2),\\
+c_0=480/x-810+36p/(x+1)-10v/(x+2),\\
+c_2=96/x-108+4p/(x+1)-v/(x+2),\qquad
+e=c_0-9c_2=162-384/x-v/(x+2).
+\end{gathered}
+\tag{14.8}
+$$
+
+All three denominators $x,x+1,x+2$ are positive. Interpolation gives
+$H_0=c_0-d\tau$, $H_2=c_2-d\tau_2$ and
+$9\tau_2-\tau=s-9$. The restored identities in (12.9) therefore give
+
+$$
+\begin{aligned}
+A_U&=d(U-\tau)+c_0=0,\\
+B_U&=(U+1)(c_2-d\tau_2)-(\gamma-2d)U=0.
+\end{aligned}
+\tag{14.9}
+$$
+
+Consequently the necessary quadratic is
+
+$$
+\begin{aligned}
+\Phi(U)
+ &=(U+1)\{c_2(U-\tau)+c_0\tau_2\}
+                     -\{\gamma(U-\tau)+2c_0\}U\\
+ &=(U-\tau)B_U+\{(U+1)\tau_2-2U\}A_U=0,\\
+\Phi(U)&=\lambda_2U^2+\lambda_1U+\lambda_0,\\
+\lambda_2&=c_2-\gamma,\\
+\lambda_1&=\{c_0(s-26)+e(\tau-1)\}/9+\gamma\tau,\\
+\lambda_0&=\{c_0(s-9)+e\tau\}/9.
+\end{aligned}
+\tag{14.10}
+$$
+
+In particular the factor $U+1$ multiplies the entire first bracket.
+The undivided identity in (14.10) is valid also at $d=0$ or
+$U=\tau$; no converse from $\Phi=0$ alone is asserted.
+
+The original source identity $j=b+r(1-r)/b$, together with
+$x=(j+r)/U$ and $U=1+2b$, gives
+
+$$
+\begin{gathered}
+r^2-(b+1)r+bxU-b^2=0,\\
+\Psi(U):=(5-8x)U^2+(8x-6)U+5=4(2r-b-1)^2\ge0.
+\end{gathered}
+\tag{14.11}
+$$
+
+If $x>13/16$, then $\Psi''<0$, $\Psi'(1)=4-8x<0$ and
+$\Psi(2)=13-16x<0$. Since the source has $U>1$, monotonicity on
+$[1,\infty)$ forces $1<U<2$. This uses the actual source equation,
+without selecting either of its quadratic roots.
+
+Here are sufficient rational bounds for (14.10). They hold on each
+entire indicated closed interval and all of $Z_{pw}$.
+
+| $x$ interval | Bounds for $\tau,s$ | Bounds for $c_0,c_2,e$ |
+| --- | --- | --- |
+| $[1/3,5/12]$ | $1<\tau<40$, $s>35$ | $c_0<-5000$, $c_2<0$, $e<0$ |
+| $I_c=[24/25,501/500]$ | $-11<\tau<-9$, $s<35/2$ | $c_0<-5500$, $c_2<0$, $e<130$ |
+| $[19/10,63/25]$ | $-30<\tau<0$, $s<9$ | $c_0<-3200$, $c_2<0$, $e<280$ |
+| $[27,34]$ | $-44<\tau<-43$, $1/3<s<1$ | $-1140<c_0<0$, $c_2<0$, $e>172$ |
+
+For completeness these bounds follow from elementary endpoint
+comparisons, not from evaluations at candidate roots. Put
+
+$$
+a(x)=\frac{36}{x+1}-\frac{92}{5(x+2)},\qquad
+a_2(x)=\frac4{x+1}-\frac{46}{25(x+2)}.
+\tag{14.12}
+$$
+
+Both functions are positive and strictly decreasing for $x>0$;
+this follows directly by comparison of their two terms and their
+derivatives, since $36>92/5$, $4>46/25$ and $x+1<x+2$.
+Also $\tau'<0$ and $s'<0$: for $\tau'$ the term
+$10/(x+2)^2$ is smaller than $20/x^2$. Now
+
+$$
+\begin{gathered}
+c_0=480/x-810+pa(x)-10w/(x+2),\\
+c_2=96/x-108+pa_2(x)-w/(x+2),\qquad
+87837/100\le-v\le10201/10.
+\end{gathered}
+\tag{14.13}
+$$
+
+For $[1/3,5/12]$, endpoint substitution gives $a>17$, $a_2>2$,
+$-10w/(x+2)<161$ and $-w/(x+2)<17$. Hence
+
+$$
+\begin{gathered}
+c_0<1440-810-457\cdot17+161=-6978,\\
+c_2<288-108-457\cdot2+17=-717,\\
+e\le162-4608/5+30603/70=-22569/70<0.
+\end{gathered}
+\tag{14.14}
+$$
+
+On $I_c$, $a>59/5$, $a_2>1$, the two positive $w$ terms are
+less than $130,13$, respectively, and
+$384/x>380$, $(-v)/(x+2)<348$. Therefore
+
+$$
+c_0<500-810-457\cdot59/5+130=-27863/5<-5500,\quad
+c_2<100-108-457+13=-452,\quad e<130.
+\tag{14.15}
+$$
+
+On $[19/10,63/25]$, $a>6$, $a_2>0$ and
+
+$$
+\begin{gathered}
+480/x-10w/(x+2)
+ \le480/(19/10)+(1877/5)/(39/10)=258526/741<350,\\
+c_0<350-810-457\cdot6=-3202,\qquad
+c_2<51-108+10=-47,\qquad e<162-152+262=272<280.
+\end{gathered}
+\tag{14.16}
+$$
+
+On $[27,34]$, $0<a<33/50$, $a_2>0$ and endpoint comparison gives
+
+$$
+\begin{gathered}
+c_0>14-810-534\cdot33/50+10=-28461/25>-1140,\\
+c_0<18-810+13=-779<0,\qquad c_2<4-108+2=-102,\\
+e>162-43/3+73/3=172.
+\end{gathered}
+\tag{14.17}
+$$
+
+The bounds on $\tau,s$ in the table are their monotone endpoint
+bounds on the same intervals. Thus $\Phi''=2(c_2-\gamma)<0$
+throughout all four ranges.
+
+On $[1/3,5/12]$, (14.10) has $\lambda_0<0$ and
+$\lambda_2<0$. Moreover
+$\lambda_1<-5000+\gamma\cdot40=-2648<0$.
+Thus $\Phi(U)<0$ for every $U>0$, which excludes any actual world.
+
+For the other ranges $x>13/16$, so $1<U<2$ by (14.11).
+The endpoint and derivative formulas from (14.10) are
+
+$$
+\begin{aligned}
+\Phi(1)&=2c_0(s-17)/9-(2e/9+\gamma)(1-\tau),\\
+\Phi(2)&=c_0(s-19)/3-(e/3+2\gamma)(2-\tau),\\
+\Phi'(1)&=c_0(s-24)/9-e(3-\tau)/9+\gamma(\tau-2),\\
+\Phi'(2)&=c_0(s-22)/9-e(5-\tau)/9+\gamma(\tau-4).
+\end{aligned}
+\tag{14.18}
+$$
+
+On $[19/10,63/25]$ these give
+
+$$
+\begin{aligned}
+\Phi(1)&>51200/9-(560/9+294/5)\,31=9686/5>0,\\
+\Phi(2)&>32000/3-(280/3+588/5)\,32=19584/5>0.
+\end{aligned}
+\tag{14.19}
+$$
+
+Concavity places $\Phi$ above its positive endpoint chord on
+$[1,2]$, excluding every source there. On $[27,34]$,
+
+$$
+\begin{aligned}
+\Phi(1)&<(2280/9)(50/3)-(344/9+294/5)\,44=-2104/45<0,\\
+\Phi'(1)&<3040-172\cdot46/9-2646=-4366/9<0.
+\end{aligned}
+\tag{14.20}
+$$
+
+Concavity then makes $\Phi$ strictly decreasing and negative for
+$U\ge1$, again excluding every source.
+
+The same source-side exclusion covers the unbounded tail. For
+$x\ge34$, $a(x)<18/x$, $a_2(x)>0$, and the strip bounds give
+
+$$
+\begin{gathered}
+-45<\tau<-43,\qquad 0<s<1,\qquad c_0>-1070,\qquad c_0<0,\\
+c_2<0,\qquad e>162.
+\end{gathered}
+\tag{14.21a}
+$$
+
+Here $a$ is decreasing and $a(x)<18/x$ follows by cross
+multiplication; also $-v\ge87837/100$ on the strip. Explicitly,
+
+$$
+c_0>-810-\frac{9132}{x}+\frac{3749}{10(x+2)}>-1070,
+$$
+
+because the last difference from $-1070$ equals $11173/6120$ at
+$x=34$ and has derivative
+$9132/x^2-3749/[10(x+2)^2]>0$ throughout the half-line. Further,
+
+$$
+e\ge162-\frac{384}{x}+\frac{87837}{100(x+2)}>162,
+$$
+
+since $49437x-76800>0$ there. The remaining displayed bounds follow
+from $\tau'<0$, $s'<0$, and the endpoint estimates
+$96/x-108+1877/(1800)<0$ and
+$480/x-810+1877/(180)<0$. Using (14.18), these inequalities yield
+
+$$
+\Phi(1)<\frac{36380}{9}-\frac{20856}{5}<0,
+\qquad
+\Phi'(1)<\frac{25680}{9}-828-2646<0.
+\tag{14.21b}
+$$
+
+Together with $\Phi''=2(c_2-\gamma)<0$, this makes $\Phi$ negative
+for every $U\ge1$. The source identity (14.11) gives $1<U<2$ for
+$x\ge34$, so no actual source occurs on the tail.
+
+Finally on $I_c$, (14.18) gives
+
+$$
+\Phi'(2)>2750-2080/9-882=14732/9>0.
+\tag{14.21}
+$$
+
+Since $\Phi''<0$, it follows that $\Phi'(U)\ge\Phi'(2)>0$ on
+$[1,2]$. For fixed $(x,p,v)$ there is at most one admissible $U$.
+Also $U-\tau>0$ there, so (14.9) uniquely fixes
+$d=-c_0/(U-\tau)$. The injective full-world inverse consequently
+permits at most one complete world for each such $x$.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:06450af68f2d972e85a542b1cf427eed2ddbd9856e429b69ef0b738b5e5447f2
+  normalized_sha256: sha256:06450af68f2d972e85a542b1cf427eed2ddbd9856e429b69ef0b738b5e5447f2
+cas_ref: sha256:06450af68f2d972e85a542b1cf427eed2ddbd9856e429b69ef0b738b5e5447f2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 转述宽恕资格的哲学争论并约定 Can、May、Ought 的含义，不断言任一规范谓词成立。
+    previous_atom_id: 7e9562677b4630e3ce92b160802c5fd3a48231af8aacc2438926c1e060f3082a
+    next_atom_id: 1f7956796ecbd73bb86f8a03a66260ff793c4328a559a5fd64647d81eb06947a

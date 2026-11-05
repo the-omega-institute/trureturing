@@ -76,7 +76,7 @@ private def diagonalEffect (i : n) : RealEffect n :=
       simp [IsSelfAdjoint, Matrix.star_eq_conjTranspose]⟩
     (by intro a b; simp [Matrix.single, apply_ite])
 
-private def pairEffect (i j : n) (hij : i ≠ j) : RealEffect n := by
+def pairEffect (i j : n) (hij : i ≠ j) : RealEffect n := by
   let v : n → ℂ := Pi.single i 1 + Pi.single j 1
   let P : Matrix n n ℂ := (2 : ℂ)⁻¹ • Matrix.vecMulVec v (star v)
   have hv : star v ⬝ᵥ v = 2 := by

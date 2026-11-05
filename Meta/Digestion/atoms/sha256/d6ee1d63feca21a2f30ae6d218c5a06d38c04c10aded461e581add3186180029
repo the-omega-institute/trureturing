@@ -1,0 +1,80 @@
+**定理 91.2（对整个原来源统一的两记录基实现）。** 定义一个与 $p,f$ 无关的等距及一个只作用于记录的酉矩阵
+
+$$
+ \begin{aligned}
+ V\eta&=\sqrt a\,D^3\eta\otimes|0\rangle
+          +\sqrt b\,D\eta\otimes|1\rangle,\\
+ T&=\frac1N
+ \begin{pmatrix}
+ 1-x^2\zeta^{-1}&x(1+\zeta^{-1})\\
+ x(1+\zeta^{-1})&x^2-\zeta^{-1}
+ \end{pmatrix}.
+ \end{aligned}
+ \tag{91.3}
+$$
+
+令 $F_{i|0}=|i\rangle\langle i|$、$F_{i|1}=T^*|i\rangle\langle i|T$。两者都是完整两结果 PVM，且
+
+$$
+ \begin{aligned}
+ (I\otimes\langle i|)V&=\sqrt{r_i}\,D^{t_{0i}},\\
+ (I\otimes\langle i|T)V&=\sqrt{r_i}\,D^{t_{1i}},\\
+ \Gamma_{si}(X)&=r_iD^{t_{si}}X(D^{t_{si}})^*,\\
+ \Gamma_{00}+\Gamma_{01}&=\Gamma_{10}+\Gamma_{11}=:\Phi
+ \qquad(X\in\mathcal B(H)).
+ \end{aligned}
+ \tag{91.4}
+$$
+
+这些是整个矩阵域的等式，张量任何未触动有限参考的恒等作用后仍成立。特别地，对每个原 $p,f$，两种读法使用同一个联合向量 $VK_pv$；对记录作相应投影后的系统条件射线分别是原 $K_0^{t_{si}}K_pv$ 的射线，而非另选一个依赖设置的制备。若在此比较模型中使用 Born 迹概率，其完整联合律为
+
+$$
+ Q_s(i,w\mid p,f)
+ =r_i\left|\langle w|K_fD^{t_{si}}K_pv\rangle\right|^2,
+ \quad i\in\{0,1\},\ w\in\Omega_{10},
+ \tag{91.5}
+$$
+
+并满足 $\sum_wQ_s(i,w\mid p,f)=r_i$、$\sum_{i,w}Q_s(i,w\mid p,f)=1$ 以及 $\sum_iQ_0(i,w\mid p,f)=\sum_iQ_1(i,w\mid p,f)$。此概率陈述的迹规则属于比较模型，尚未把旧未知 $P$ 设为 $Q$。
+
+证明。$V^*V=aI+bI=I$。为直接验证同一个 $T$，在 $R$ 内取两个实正交单位列
+
+$$
+ u=\sqrt a(1,x)^{\mathsf T},\qquad
+ h=\sqrt a(x,-1)^{\mathsf T}.
+$$
+
+(91.3) 恰为 $T=uu^*-\zeta^{-1}hh^*$，所以 $T$ 酉且 $Tu=u$。$\zeta+\zeta^{-1}=-x$ 给 $\zeta^2+x\zeta+1=0$，再用 $x^2+x=1$ 得
+
+$$
+ \zeta^3+x^2\zeta=1+x^2\zeta^2.
+ \tag{91.6}
+$$
+
+置 $z=\sqrt a(\zeta^3,x\zeta)^{\mathsf T}$、$z'=\sqrt a(1,x\zeta^2)^{\mathsf T}$。由 (91.6)，$u^*z=u^*z'$；又
+
+$$
+ h^*z=ax(\zeta^3-\zeta),\qquad
+ h^*z'=ax(1-\zeta^2)=-\zeta^{-1}h^*z.
+$$
+
+于是 $Tz=z'$。$D$ 在 $\ker\Pi$ 和 $\operatorname{ran}\Pi$ 上分别是 $1,\zeta$，故对这两个完整谱子空间分别应用 $Tu=u,Tz=z'$，即得前两条算子等式。这里没有按输入另选记录基，也没有以四维码替代十三维域。
+
+将分支算子代入得到 $\Gamma_{si}$。对任意 $X$，按 $I-\Pi,\Pi$ 分成四个矩阵块；两对角块的系数都是 $a+b=1$，交叉块的系数相等正是 $a\zeta^3+b\zeta=a+b\zeta^2$ 及其共轭。这给整个 $\Phi$ 恒等式，而不仅是 (88.1) 在某个纯态上的等式。各 $\Gamma_{si}$ 为 CP，迹为 $r_i\operatorname{Tr}X$；每个设置的和为保迹映射。算子恒等式张量恒等后仍成立，因而包括纠缠参考及全部未归一分支。共同后接 $\operatorname{Ad}_{K_f}$ 也保持等式。
+
+此等距确有数学酉完成，无须假设它属于原门生成群：对于单位列 $c=(c_0,c_1)^{\mathsf T}$，矩阵
+
+$$
+ R_c=\begin{pmatrix}c_0&-\bar c_1\\c_1&\bar c_0\end{pmatrix}
+$$
+
+酉且 $R_c|0\rangle=c$，所以 $(I-\Pi)\otimes R_u+\Pi\otimes R_z$ 在 $H\otimes R$ 上是将 $\eta\otimes|0\rangle$ 送至 $V\eta$ 的一个固定酉。其在原十位空间正交补上可另取恒等完成。这是存在构造，不是有限原字的合成结论。
+
+对单位 $\eta=K_pv$，每个分支范数平方为 $r_i>0$，条件系统向量是 $D^{t_{si}}\eta$；$D^t=\zeta^{-t}K_0^t|_H$ 保证所述原射线对应。Born 配对给 (91.5)，对全部 $1024$ 个标签求和给分支质量；非法路径标签在此比较模型中取零，没有先删除它们再归一。共同通道等式给其终端边缘相等。若带参考，完整未归一后继为
+
+$$
+ r_i(D^{t_{si}}\otimes I)X((D^{t_{si}})^*\otimes I),
+$$
+
+迹为 $r_i\operatorname{Tr}X$；这并不供应原菜单之外的参考制备、记录访问或测量后继续服务。∎
+

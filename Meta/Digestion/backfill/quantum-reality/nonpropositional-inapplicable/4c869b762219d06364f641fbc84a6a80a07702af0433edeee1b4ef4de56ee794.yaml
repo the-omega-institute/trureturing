@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4c869b762219d06364f641fbc84a6a80a07702af0433edeee1b4ef4de56ee794
+  normalized_sha256: sha256:4c869b762219d06364f641fbc84a6a80a07702af0433edeee1b4ef4de56ee794
+cas_ref: sha256:4c869b762219d06364f641fbc84a6a80a07702af0433edeee1b4ef4de56ee794
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段陈述 Rydberg/PXP 文献联系及素数能量的实验解释边界，区分编码、测量和耗散，未提出该具体模型的新数学定理。
+    previous_atom_id: 3843d7f3b3a5d6ffa2b9df714ddc4d5915de6bf1cc0c2c697874a7ddca1ac001
+    next_atom_id: 5183c19e15e62fc20391419a94181d9fe84c8aecd5095d44cb92009675f428f0

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1344c9336682ff3850d75d2a86e2089b2c579edbd1ff6590ad827ec8a9264642
+  normalized_sha256: sha256:1344c9336682ff3850d75d2a86e2089b2c579edbd1ff6590ad827ec8a9264642
+cas_ref: sha256:1344c9336682ff3850d75d2a86e2089b2c579edbd1ff6590ad827ec8a9264642
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 引入 transfer operator 的形式加权和及 r_i 的字段含义，没有断言收敛或可逆性。
+    previous_atom_id: 8dff657f437d8cc14823a1491ba0524115db71ccf51fc6b505ad971f6095ecd4
+    next_atom_id: 2203668d900fbaa137cc9e6fbcce57084acef3b48983769d685b9a1d2cb4c893

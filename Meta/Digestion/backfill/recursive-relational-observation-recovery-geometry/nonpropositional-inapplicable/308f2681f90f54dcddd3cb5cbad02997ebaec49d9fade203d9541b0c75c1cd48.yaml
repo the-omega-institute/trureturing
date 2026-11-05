@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:308f2681f90f54dcddd3cb5cbad02997ebaec49d9fade203d9541b0c75c1cd48
+  normalized_sha256: sha256:308f2681f90f54dcddd3cb5cbad02997ebaec49d9fade203d9541b0c75c1cd48
+cas_ref: sha256:308f2681f90f54dcddd3cb5cbad02997ebaec49d9fade203d9541b0c75c1cd48
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列出候选集充分的固定被动接口的附加假设，包括动作可用性、费用和终端合同的历史独立性；这些是条件而非由前文证明的结论。
+    previous_atom_id: b02d3675fbda1eef1377a97f522cbb3eaa1267f5273474f66ed9e3d0c74067a2
+    next_atom_id: 36afb98183dfc12c285873bd315b88deda9eadbb9413282c1a0f7e1f438e5357

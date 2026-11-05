@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7e59442381a851292a43ca92c6ce286d1ad4f190492b24f09eb45d8659c3c159
+  normalized_sha256: sha256:7e59442381a851292a43ca92c6ce286d1ad4f190492b24f09eb45d8659c3c159
+cas_ref: sha256:7e59442381a851292a43ca92c6ce286d1ad4f190492b24f09eb45d8659c3c159
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题仅由钉版上游及显式前件闭合。抽象反射共轭推导的依赖表行，只代入 A2、A3 并规范化复坐标。 上游声明：map_neg, map_add, Complex.conj_ofReal, Complex.conj_I, Complex.norm_conj. 检索范围：本仓 D5/**/*.lean（包含 private；按反射/共轭/模长/平方/绝对值及通用 checker 数学形状检索），Golden/Frozen/state；钉版 Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679（v4.35.0）。未找到在所选完整推导中供应该断言子目标的冻结声明。
+    previous_atom_id: f16afb1f3d49055eb604108834f71b1d0de07e4e2ae0bd774617d94f4e7be4fb
+    next_atom_id: a048cf5b8368d62335511f010f1be728dc0807b833f34839ed4037d49dc41218

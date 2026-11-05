@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c8604a06e113f9cff1513c259382649a63a45dec68bf98675946c20dfb3b6dd2
+  normalized_sha256: sha256:c8604a06e113f9cff1513c259382649a63a45dec68bf98675946c20dfb3b6dd2
+cas_ref: sha256:c8604a06e113f9cff1513c259382649a63a45dec68bf98675946c20dfb3b6dd2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: A meta-norm is an optional bridge for comparison; the pluralism comment is interpretive, not a formal conclusion.
+    previous_atom_id: bb4303d6de3de041412d7db4754f76c4a63c25f9ea417b55bf3de6f2abf45764
+    next_atom_id: bd6c03966db120be61cacf93b9c730e43687418236144902c4aaf5d52f5f9dc1

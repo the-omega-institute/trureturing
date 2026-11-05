@@ -1,0 +1,83 @@
+**Proposition 5.2 (sufficient complete-output error data).** Write
+$f_i=F_i'$ for source-family loss densities and define
+
+$$
+\kappa=\|K_T-\widetilde K_T\|_{\mathrm{op}},\qquad
+b_i=\frac1{p_i(a)}\int_0^T|f_i-\widetilde f_i|\,dt.
+$$
+
+For the fixed canonical instruments on all live inputs and arbitrary
+reference,
+
+$$
+d_{\mathrm{op}}\leq\kappa+\tfrac12\max_i b_i.
+\tag{IS.27}
+$$
+
+Proof. From (IS.3) and (IS.9), the failure density on a joint input is
+$(f_i/p_i(a))|f\rangle\langle f|\otimes\rho_{ii}^R$, where
+$\rho_{ii}^R\geq0$ and $\sum_i\operatorname{tr}\rho_{ii}^R=1$.
+Its integrated difference norm is
+$\sum_i b_i\operatorname{tr}\rho_{ii}^R\leq\max_i b_i$.
+For contractions $K,L$, adding and subtracting $L\rho K^*$ bounds
+$\|K\rho K^*-L\rho L^*\|_1$ by $2\|K-L\|_{\mathrm{op}}$, also
+after tensoring with the identity. Combine these estimates in (IS.7).
+$\square$
+
+The inputs in (IS.27) require certified $L^1$ loss-density error, including
+time/mode calibration, and terminal Kraus error, including terminal phase
+characters. Uniform CDF or signed-curve error cannot be substituted for
+these stronger data. For clarity, (IS.26) does provide a concrete route
+to loss-density convergence: with $D=\operatorname{TV}(k)\leq M+e$,
+product differentiation of $f_i=-(S p_i(k))'$ gives
+
+$$
+\int|f_i-\widetilde f_i|
+\leq(1+M/\eta+D)B+\delta+e.
+\tag{IS.28}
+$$
+
+Indeed $\int|S'-\widetilde S'|\leq(1+M/\eta)B$ follows from
+$S'=-\lambda S$, and $\int|\widetilde S'|\leq1$.
+The remaining product terms are bounded by $\delta$, $DB$ and $e$,
+using $p_i\leq1$ and $|p_i(k)-p_i(\widetilde k)|\leq\delta$.
+Hence a uniform margin, bounded $M$, strong $W^{1,1}$ height convergence
+and separately controlled terminal phase characters suffice for
+complete-output convergence through (IS.27). Explicitly, set
+$z_i=e^{-iH_i(T)}$ and
+$e_z=\max_i|z_i-\widetilde z_i|$. Since
+$|S p_i(k)-\widetilde S p_i(\widetilde k)|\leq B+\delta$ and
+$|\sqrt x-\sqrt y|\leq\sqrt{|x-y|}$ for nonnegative $x,y$,
+
+$$
+\kappa\leq\max_i\sqrt{\frac{B+\delta}{p_i(a)}}+e_z.
+\tag{IS.29}
+$$
+
+The phase term uses that every diagonal entry of $\widetilde K_T$ has
+modulus at most one. This is an explicit sufficient condition, not a claim
+that derivative convergence is necessary or that $e_z$ has been acquired.
+
+No relative phase waveform is recovered from the height estimate.
+Recovering it would need additional same-input phase-sensitive data at
+intermediate cuts and a declared real-lift anchor. A finite noisy version
+would additionally need certified sampling, clock/reference alignment and
+an anti-alias condition, such as a known bound keeping real phase increments
+between consecutive reads strictly within a selected unwrapping interval,
+with noise slack. Those data and their acquisition are absent here; no
+approximate phase-unwrapping theorem is asserted. Unknown past $\beta,m$
+remain unknown and are never passed to a controller.
+
+The common future original menu, when separately permitted, consists of
+prescribed original controls at the same base and matching current height,
+of any finite duration including zero, with both regularity alternatives
+and all signed winding sectors. `concatenate_original` supplies the literal
+prefix and the relatively translated real-phase tail. It supplies no
+post-failure positive-carrier restart. A common legal downstream quantum
+protocol on the retained joint output cannot increase its trace distance;
+such a protocol must use the same acquired-record policy, references,
+permissions and external inputs in both experiments. This observation does
+not allow access to omitted old programme fields, different legality guards
+or earlier quantum cuts. An acquisition service or complete internal
+observer still needs its own joint legality, failure and update proof.
+

@@ -1,0 +1,7 @@
+**Open problem 8.6 (Finite values, residual regimes and realizations).** Theorems 8.2, 8.4 and 8.5 resolve the following parts of the diverging-ratio request in Open problem 7.3: the leading surplus for $\sqrt a\ll h\ll a^{3/2}$, the leading value and uniform first correction for $h/a^{3/2}$ in any fixed compact positive interval, and the leading value for $h\gg a^{3/2}$. Theorem 7.2 already determines all fixed positive limits of $h/\sqrt a$. The remaining mathematical questions include:
+
+1. Determine the exact finite values $M(a,h)$, whether they are attained, and any least thresholds for eventual exact formulas.
+2. Classify equality and near-equality laws, and establish quantitative stability in the relevant scales. The necessary residual constraints (8.11)–(8.12) do not establish such a classification or stability theorem.
+3. Obtain sharp uniform estimates when $h/\sqrt a\to0$, and sharper remainders or uniform matching estimates in the moving regimes not specified by (7.20), (8.2), (8.6) or (8.18). In particular, the constant in (8.6) is not asserted to remain bounded when its compact interval approaches $0$ or $\infty$.
+4. Determine which optimizing or asymptotically optimizing laws admit connected finite-graph realizations at prescribed budgets, and the corresponding graph extremal values. The array-law upper bounds above do not impose the graph realization constraints.
+

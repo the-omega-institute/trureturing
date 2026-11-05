@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:10779d3a3a4bb974179e506df7f9a37b326000860e44f1b0041de01bd0cf71c6
+  normalized_sha256: sha256:10779d3a3a4bb974179e506df7f9a37b326000860e44f1b0041de01bd0cf71c6
+cas_ref: sha256:10779d3a3a4bb974179e506df7f9a37b326000860e44f1b0041de01bd0cf71c6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 本条列测量算子、记录强度、接触时长和环境记忆等建模与实验对照要求，不给出衰变公式。'
+    previous_atom_id: 06ca745687cd0e250f892a0f85bd90f4b91a4239a00d5cf114839f9d528ed6a4
+    next_atom_id: 70f40a826b6d89452fc65cdaff81adf4e47c0c1af45eacf070535923ab991dbb

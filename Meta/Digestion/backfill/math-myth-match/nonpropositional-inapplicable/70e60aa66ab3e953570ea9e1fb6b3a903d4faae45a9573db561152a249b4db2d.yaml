@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:70e60aa66ab3e953570ea9e1fb6b3a903d4faae45a9573db561152a249b4db2d
+  normalized_sha256: sha256:70e60aa66ab3e953570ea9e1fb6b3a903d4faae45a9573db561152a249b4db2d
+cas_ref: sha256:70e60aa66ab3e953570ea9e1fb6b3a903d4faae45a9573db561152a249b4db2d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 界定分析工作的任务和逻辑澄清的应用边界，不作新的数学断言。
+    previous_atom_id: 32874329ed7856e023616ab11ba04866348b8d3d1570b302d9bf249107cd9fd3
+    next_atom_id: 3cc09801f57b9114f6bfaca7dd2cf1493814b0323e24b2428e957b06240c27dc

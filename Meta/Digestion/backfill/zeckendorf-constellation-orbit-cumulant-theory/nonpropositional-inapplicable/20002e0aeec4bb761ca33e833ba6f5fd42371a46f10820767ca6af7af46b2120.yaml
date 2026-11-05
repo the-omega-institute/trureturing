@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:20002e0aeec4bb761ca33e833ba6f5fd42371a46f10820767ca6af7af46b2120
+  normalized_sha256: sha256:20002e0aeec4bb761ca33e833ba6f5fd42371a46f10820767ca6af7af46b2120
+cas_ref: sha256:20002e0aeec4bb761ca33e833ba6f5fd42371a46f10820767ca6af7af46b2120
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 以理想 correlation-completed zeta 应具有的形式提出双重乘积规范；未断言该对象存在或分解已成立。
+    previous_atom_id: 641cf6ff8f66b4f344d1f2cc487bcc4a369a2859562f5395dd0359e9ecc28489
+    next_atom_id: 6cd7690ad0a2d418ceaa05f993170f3dcd8ad4986e72929b264014b99baf7173
+  chain_atoms:
+    - e7dec86f86cb2abac076d18f5d573f69fbb9acb7524793907fd210bb49b6a9ad
+    - 81cd60ece59f8a9ba2ed822528f062a436cb1723e55c928aeb462e4b49c6d17f

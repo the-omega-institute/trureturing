@@ -1,0 +1,24 @@
+**定理 122.1（原模型的紧输出第三累积量响应）。** 对定义 121.1 的每个固定 $\beta$，
+每个确定正数序列 $\sigma_n$ 满足
+
+$$
+L_n:=\log(1/\sigma_n)\longrightarrow\infty,\qquad
+\limsup_n L_n/Q_n^3<c_q/2,
+\tag{122.1}
+$$
+
+以及每个 $R,\varepsilon>0$，均有
+
+$$
+\max_{\mathcal E\in\{\mathrm{pair},\mathrm{path}\}}
+\sup_{|S|=q_n}\mathbb P_S^{\mathcal E}\left\{
+\sup_{|y|\le R}\left|
+C3_x(y)-C3_x(0)-\sqrt{\delta_n}\,t_1'''y
+-\frac{\delta_n}{2}
+ \left.\partial_\alpha^3\frac1{W_\alpha}\right|_{\alpha=1}y^2
+\right|>\varepsilon\right\}\longrightarrow0.
+\tag{122.2}
+$$
+
+证明分解于以下各节，最后在第 127 节汇合。
+

@@ -1,0 +1,140 @@
+## 一、固定实际核，保留全部素数来源
+
+沿用上一轮的实际核
+
+
+<a id="display-2"></a>
+
+$$
+\mathscr K(t)=e^{-|t|/2}\mathcal F(e^{|t|}),
+$$
+
+
+其中
+
+
+<a id="display-3"></a>
+
+$$
+\begin{aligned}
+\mathcal F(x)
+={}&x(1+\gamma-\log x)-\log(2\pi)\\
+&+\sum_{k\ge1}\frac{x^{-2k}}{2k(2k+1)}
++\sum_{p^j\le x}\log p\left(\frac{x}{p^j}-1\right).
+\end{aligned}
+$$
+
+
+记
+
+
+<a id="display-4"></a>
+
+$$
+S=\mathscr K(0)=2+\gamma-\log(4\pi)>0.
+$$
+
+
+上一轮已从这个公式证明
+
+
+<a id="display-5"></a><a id="eq-1"></a>
+
+$$
+\boxed{
+\mathscr K(h)
+=
+S+\frac h2\log h
++\frac{\gamma-1+\log(2\pi)}2h
++O(h^2|\log h|)
+}
+\qquad(h\downarrow0).
+$$
+
+<p align="center" data-equation-number="1"><a href="#eq-1">(1)</a></p>
+
+
+下面使用的每个关系矩阵，都由这个同一实际核产生。
+
+为使素数来源更清楚，令
+
+
+<a id="display-6"></a>
+
+$$
+\Lambda(m)=
+\begin{cases}
+\log p,&m=p^j,\\
+0,&\text{其他情形},
+\end{cases}
+$$
+
+
+并定义
+
+
+<a id="display-7"></a>
+
+$$
+c_k=\frac1{2k(2k+1)},\qquad
+\lambda_k=2k+\frac12,
+$$
+
+
+
+<a id="display-8"></a>
+
+$$
+P(t)=\sum_{k\ge1}c_ke^{-\lambda_k|t|}.
+$$
+
+
+对 $t\ge0$，实际核可以精确写为
+
+
+<a id="display-9"></a><a id="eq-2"></a>
+
+$$
+\boxed{
+\mathscr K(t)
+=
+N(t)+P(t)
++\sum_{m\ge2}\frac{\Lambda(m)}{\sqrt m}\,
+g(t-\log m),
+}
+$$
+
+<p align="center" data-equation-number="2"><a href="#eq-2">(2)</a></p>
+
+
+其中
+
+
+<a id="display-10"></a>
+
+$$
+N(t)=(1+\gamma-t)e^{t/2}
+-\log(2\pi)e^{-t/2},
+$$
+
+
+
+<a id="display-11"></a>
+
+$$
+g(u)=
+\begin{cases}
+2\sinh(u/2),&u\ge0,\\
+0,&u<0.
+\end{cases}
+$$
+
+
+对每个固定 $t$，式 (2) 的素数和实际只有有限项。
+
+项目的[有限零点 Gram 层级](https://github.com/the-omega-institute/trureturing/blob/1a5020ef545f364fd70cf83f8829c38302284b1b/Blueprint/D5/S3/Weil/FiniteZeroGramHierarchy.md)已经明确区分了“给定正 Gram 分解”与“证明实际算术关系具有正性”。下面始终先处理实际二次型，再对已经证明为正的部分作归一化。
+
+---
+
+<a id="section-2"></a>
+

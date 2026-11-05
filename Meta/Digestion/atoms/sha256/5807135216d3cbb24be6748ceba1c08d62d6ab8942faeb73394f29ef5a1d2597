@@ -1,0 +1,39 @@
+**Theorem 28.2 (height soundness and sufficient-stage exactness).**
+On every admitted actual source, a completed height call returns a
+lower bound on the actual height of its start. Every positive
+frontier result is its exact height. When $R\ge r$, every such call
+at depth at most $h_0$ completes with its exact height. Terminal
+ranks zero and one always have height zero and need not be separated.
+All paths and tests in these sufficient-stage calls satisfy the guards.
+
+Proof. At any present cone, rank $q\ge1$ has height $q-1$, while
+rank zero has height zero, by Theorem 22.2. An actual passing rank
+certificate forces its proposed $q$ to equal the actual rank,
+regardless of how its paths were generated. Consequently a positive
+frontier result is exact; default zero is a lower bound. At an
+actually exposed branch, the identity
+$\operatorname{height}(v)=1+\max(\operatorname{height}(va),
+\operatorname{height}(vb))$ preserves lower bounds. Actual terminal
+stops return zero. This proves the first assertions for insufficient
+as well as sufficient stages, without certifying a recombined
+provisional value as an exact rank.
+
+At $R\ge r$, Theorem 27.3 puts the actual aligned core in the
+presentation loop. At every nonterminal frontier, Theorem 27.2 puts
+both actual integer seeds in their bounded loops. Its actual rank
+lies in $[2,H-m]$, since each edge decreases rank by at least one
+and the actual root rank is $n\le H$. At that trial the local model
+is the actual finite cone by (ACR.115) and the strict core cutoff.
+Its longest and shortest paths therefore pass (ACR.94). If an
+earlier trial already passed, its rank was also the actual one.
+Thus all frontier heights, and then all recombined heights, are exact.
+
+For completeness of the guards, a present physical word has depth at
+most $n-1\le H-1$, so the child-presence tests have length at most
+$H$. A rank trial has longest positive word length $m+q-1$ and
+negative test length at most $m+q\le H$. The trial can construct
+its paths in the local model at rank $q$, where those paths have
+the specified lengths. Shallow exploration stops at actual terminals;
+it never needs an edge past one. There is no rank-zero/rank-one
+comparison hidden in this argument. $\square$
+

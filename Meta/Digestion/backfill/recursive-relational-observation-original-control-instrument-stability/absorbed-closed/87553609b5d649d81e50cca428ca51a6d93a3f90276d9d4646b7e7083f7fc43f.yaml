@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:87553609b5d649d81e50cca428ca51a6d93a3f90276d9d4646b7e7083f7fc43f
+  normalized_sha256: sha256:87553609b5d649d81e50cca428ca51a6d93a3f90276d9d4646b7e7083f7fc43f
+cas_ref: sha256:87553609b5d649d81e50cca428ca51a6d93a3f90276d9d4646b7e7083f7fc43f
+coverage_gids:
+  - gid: D5/S3/Quantum/Fibers/OriginalDensityStability.loss_density_error
+    target_statement_id: sha256:bcd7324a78ba0fb142e0953b34038001e599ff5b257a5a680ac499b74c0528ee
+  - gid: D5/S3/Quantum/Fibers/OriginalDensityStability.variation_le
+    target_statement_id: sha256:8df7c76d5cc73025ef5f47ff0f136b2a2daa133caa069ed2532c444bd38de1a7
+receipts:
+  unresolved_subitems: []

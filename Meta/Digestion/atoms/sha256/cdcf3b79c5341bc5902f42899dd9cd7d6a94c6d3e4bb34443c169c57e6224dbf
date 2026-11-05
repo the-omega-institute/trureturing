@@ -1,0 +1,29 @@
+**引理 7.1（Choi 与完整操作范数）。** 任意复线性映射差 $\Delta$ 满足
+
+<a id="eq-7-1"></a>
+
+$$
+\|J_\Delta\|_1\le\|\Delta\|_\diamond\le d\|J_\Delta\|_1.
+\tag{7.1}
+$$
+
+证明：左边取最大纠缠输入；右边将任意参考向量写成 $u=\sum_j|j\rangle|u_j\rangle$ 并定义 $K_u|j\rangle=\sqrt d|u_j\rangle$，从而
+
+<a id="eq-7-u02"></a>
+
+$$
+(\Delta\otimes\operatorname{id})(|u\rangle\langle v|)
+=(I_m\otimes K_u)J_\Delta(I_m\otimes K_v^\dagger).
+$$
+
+**证明。** 左边取 $|\Omega_d\rangle$ 作为 diamond 范数的一个输入。右边取任意参考及单位向量 $u=\sum_j|j\rangle|u_j\rangle$、$v=\sum_j|j\rangle|v_j\rangle$，定义 $K_u|j\rangle=\sqrt d|u_j\rangle$、$K_v|j\rangle=\sqrt d|v_j\rangle$。二者算子范数至多 $\sqrt d$，直接展开给出
+
+$$
+(\Delta\otimes\operatorname{id})(|u\rangle\langle v|)
+=(I_m\otimes K_u)J_\Delta(I_m\otimes K_v^\dagger).
+$$
+
+迹范数至多 $d\|J_\Delta\|_1$。任意输入算子作奇异值分解 $X=\sum_\ell s_\ell|u_\ell\rangle\langle v_\ell|$，使用 $\sum_\ell s_\ell=\|X\|_1$ 及三角不等式，最后取上确界即得（7.1）。
+
+<a id="sec-7-2"></a>
+

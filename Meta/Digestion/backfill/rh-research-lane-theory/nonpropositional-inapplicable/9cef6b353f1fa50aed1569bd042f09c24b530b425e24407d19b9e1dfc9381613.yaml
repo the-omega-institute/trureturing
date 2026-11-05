@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9cef6b353f1fa50aed1569bd042f09c24b530b425e24407d19b9e1dfc9381613
+  normalized_sha256: sha256:9cef6b353f1fa50aed1569bd042f09c24b530b425e24407d19b9e1dfc9381613
+cas_ref: sha256:9cef6b353f1fa50aed1569bd042f09c24b530b425e24407d19b9e1dfc9381613
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: L14 的 Farey 文献版本及只取普通 RH 范围的引用纪律，不断言 GRH 或误差公式。'
+    previous_atom_id: 9e531941791a4e871c8d9b8e3162278a402993476ebc8a7b5916596f82226f02
+    next_atom_id: f8cd01efd6cd64b997b07ca62b4154ca7dccc8ca474de9f4b3c42b0292e48233

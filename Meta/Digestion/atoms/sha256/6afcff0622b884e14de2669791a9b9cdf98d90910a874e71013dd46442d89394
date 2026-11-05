@@ -1,0 +1,23 @@
+### Theorem 61.2 (pairwise controllability without joint controllability)
+
+For each \(i\), \(D(B_i)=1\), and every pair is one-step controllable:
+
+$$
+D(B_1\cup B_2)=D(B_1\cup B_3)=D(B_2\cup B_3)=1.
+$$
+
+But
+
+$$
+D(B_1\cup B_2\cup B_3)=+\infty.
+$$
+
+**Proof.** Use \(b\) on \(B_1\cup B_2\), \(a\) on \(B_1\cup B_3\), and \(c\) on
+\(B_2\cup B_3\). The response is \(z\), so one action suffices and zero
+actions cannot suffice because both targets remain possible.
+
+For all three classes, any first action has a class on which it returns
+\(\star\). That branch leaves both \((0,s_\dagger)\) and
+\((1,s_\dagger)\), with identical future responses. No later protocol can
+recover \(z\). \(\square\)
+

@@ -1,0 +1,19 @@
+**Construction 6.3 (selection from acquired content, followed by a real
+call).** Recover $h$ by any route of §5. If it has a growth, take its
+last growth address $p$; otherwise take $p=\varepsilon$. In the earned
+present logical code start at $p$ and descend left while the constructor
+is a branch. This finite descent ends at a logical leaf $q$. Submit $P_q$
+if it is alpha, or $S_q$ if it is beta. The address $p$ still exists,
+because the persistent edits never delete its logical position. Thus
+the selected call is enabled. The finite selector uses the acquired
+history and earned code, not a new Tag port or an external unknown
+selection oracle.
+
+The actual dispatcher traverses its genuine root links to $q$, checks
+the guard/rights, obtains the fresh material, performs the raw edit and
+returns its complete Growth. Its immediate field is
+$\iota_gx_{\rm now}$. If Theorem 6.2's fresh assay is also executed,
+the returned state is exactly (6.1), with its additional costs. The
+decoded history and selected address may then be cleared or retained;
+their real widths and retained capacities are charged either way.
+

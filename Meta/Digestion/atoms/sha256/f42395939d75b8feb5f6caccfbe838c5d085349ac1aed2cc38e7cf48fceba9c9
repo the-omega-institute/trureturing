@@ -1,0 +1,48 @@
+**Definition 1.1 (operators and weak solution).** For $\sigma>0$, let
+
+$$
+I_{0+}^{\sigma}v(x)=\frac1{\Gamma(\sigma)}
+ \int_0^x(x-t)^{\sigma-1}v(t)\,dt,
+\qquad
+I_{1-}^{\sigma}v(x)=\frac1{\Gamma(\sigma)}
+ \int_x^1(t-x)^{\sigma-1}v(t)\,dt.
+$$
+
+For $1<\alpha<2$, the left-sided Riemann–Liouville derivative is
+$D_{0+}^{\alpha}=D^2I_{0+}^{2-\alpha}$. For $0<s<1$, the half-order
+operators in the weak formulation are
+$D_{0+}^{s}=DI_{0+}^{1-s}$ and $D_{1-}^{s}=-DI_{1-}^{1-s}$.
+Write $H_0^s(0,1)$ for the closure of $C_c^\infty(0,1)$ in the norm
+$\|\widetilde v\|_{W^{s,2}(\mathbb R)}$, where $\widetilde v$ is the zero
+extension. The weak solution of
+
+$$
+D_{0+}^{\alpha}F=f\quad\hbox{in }(0,1),\qquad F(0)=F(1)=0
+$$
+
+means $F\in H_0^{\alpha/2}(0,1)$ with
+
+$$
+\int_0^1 D_{0+}^{\alpha/2}F(x)\,
+               D_{1-}^{\alpha/2}\psi(x)\,dx
+ =\int_0^1 f(x)\psi(x)\,dx
+\quad\text{for every }\psi\in H_0^{\alpha/2}(0,1).
+\tag{1.1}
+$$
+
+These are the operators and solution class of [LMS, Definition 1.1 and
+§3, equation (6)]. Its equation (7), in both directions, supplies the
+following representation for $f\in L^1(0,1)$ and $1<\alpha<2$:
+
+$$
+F_{\alpha,f}(x)=I_{0+}^{\alpha}f(x)
+                  -I_{0+}^{\alpha}f(1)x^{\alpha-1},
+\qquad F_{\alpha,f}(0)=0.
+\tag{1.2}
+$$
+
+In particular, the converse in that source says that (1.2) belongs to
+$H_0^{\alpha/2}(0,1)$ and is the unique weak solution of (1.1).
+This converse, with its stated $L^1$ hypothesis, is the weak-solution
+supplier used below.
+

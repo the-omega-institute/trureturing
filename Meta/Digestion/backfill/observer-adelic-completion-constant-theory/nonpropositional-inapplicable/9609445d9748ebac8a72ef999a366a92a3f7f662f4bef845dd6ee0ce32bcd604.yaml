@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9609445d9748ebac8a72ef999a366a92a3f7f662f4bef845dd6ee0ce32bcd604
+  normalized_sha256: sha256:9609445d9748ebac8a72ef999a366a92a3f7f662f4bef845dd6ee0ce32bcd604
+cas_ref: sha256:9609445d9748ebac8a72ef999a366a92a3f7f662f4bef845dd6ee0ce32bcd604
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Illustrative possible source of a golden observer: a fivefold-symmetry representation.'
+    previous_atom_id: 5c754aa5f7345ca8c18a388e43ac9d770bef120ab923863fd9ceb1b0bf8700ad
+    next_atom_id: 2fb4cac6073db3b4b094c4a0609a3403712eba679dc0f6442ed9f369a2e4f0e2

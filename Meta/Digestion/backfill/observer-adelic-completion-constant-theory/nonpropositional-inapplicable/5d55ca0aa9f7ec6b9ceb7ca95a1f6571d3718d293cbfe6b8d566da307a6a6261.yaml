@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5d55ca0aa9f7ec6b9ceb7ca95a1f6571d3718d293cbfe6b8d566da307a6a6261
+  normalized_sha256: sha256:5d55ca0aa9f7ec6b9ceb7ca95a1f6571d3718d293cbfe6b8d566da307a6a6261
+cas_ref: sha256:5d55ca0aa9f7ec6b9ceb7ca95a1f6571d3718d293cbfe6b8d566da307a6a6261
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: return-word 抽取这一方法名称，无数学断言。
+    previous_atom_id: df282e00a146c86bbe93b00cddde214923220995d9b6b57591c4833f06982150
+    next_atom_id: 53139a185d7c143482759ec8e64bec5b327cff87187f7fc591a6d2f8133f003f

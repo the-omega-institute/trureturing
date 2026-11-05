@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c1ffa7b9f08a2bd0de32454aced4a6ea632dc440ebdf838b3150e6f732df8e8f
+  normalized_sha256: sha256:c1ffa7b9f08a2bd0de32454aced4a6ea632dc440ebdf838b3150e6f732df8e8f
+cas_ref: sha256:c1ffa7b9f08a2bd0de32454aced4a6ea632dc440ebdf838b3150e6f732df8e8f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: N-6 建议采用所列七个字段度量进展并禁止 CPU/阶数/小数位代替逻辑进展，未给统计量等式或数值。
+    previous_atom_id: 47063d8e2ee04a99ef5fafa2a0081acd39a55da716f6c58fdd1f054e27b29c3a
+    next_atom_id: ca3b52bb69bfd698a8d700d4828f3ec85d6111a5e00fa3ae78db9c27a7a1c18b

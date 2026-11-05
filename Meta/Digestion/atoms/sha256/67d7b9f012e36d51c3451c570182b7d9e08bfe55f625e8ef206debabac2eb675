@@ -1,0 +1,19 @@
+**约定 55.1（原目标与供应范围）。** 本节至第 61 节保留定义 1.1–1.2 的全部 no11 词、合法 Hamming 边、开放端点、零质量约定及原整数位点密度 $d(P)$。记
+
+$$
+\mathcal E_0=\sigma(X_j:j\ne0),\quad F_0=\{X_{-1}=X_1=0\},\quad
+q=\mathbb E_P[X_0\mid\mathcal E_0],\quad I=[1/4,1/2].
+\tag{55.1}
+$$
+
+直接使用 [Universal 卷][U] 定理 2.2、3.1 的供应
+
+$$
+c_\star-d(P)\ge\Delta(P):=
+\mathbb E_P[\mathbf1_{F_0}\operatorname{dist}(q,I)^2],
+\qquad d(P)=c_\star\Longrightarrow q\in I\text{ 于 }F_0\text{ 几乎处处}.
+\tag{55.2}
+$$
+
+达到者的完整合法支撑也由同一定理供应。本节的事件标记不是从有限隐藏维数推出的。第 9–15 节已处理循环几何等待及其旋转商；下面的新增对象是实际标记的拆分相容性，以及允许零支撑的任意有限均值循环独立间隔。
+

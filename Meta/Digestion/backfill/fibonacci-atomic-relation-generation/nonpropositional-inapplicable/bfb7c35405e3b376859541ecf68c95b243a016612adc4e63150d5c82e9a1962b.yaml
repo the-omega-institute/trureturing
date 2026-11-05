@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bfb7c35405e3b376859541ecf68c95b243a016612adc4e63150d5c82e9a1962b
+  normalized_sha256: sha256:bfb7c35405e3b376859541ecf68c95b243a016612adc4e63150d5c82e9a1962b
+cas_ref: sha256:bfb7c35405e3b376859541ecf68c95b243a016612adc4e63150d5c82e9a1962b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 为未来数量读数序列和行为等价指定记号与定义，未断言其恢复性或核稳定性。
+    previous_atom_id: 1817e57359837b0bcc5182e7690d1c8e1ba491c7e44e862e1154dab5562450d5
+    next_atom_id: f5ee3cbffaf0797dfbb1baf0382994b13c5f005db2be0d43417cf707b0634b88

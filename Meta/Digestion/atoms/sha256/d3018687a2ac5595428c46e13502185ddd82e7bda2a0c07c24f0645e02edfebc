@@ -1,0 +1,14 @@
+#### 命题 8.2（去相干与可读记录的区别）
+
+若 $\sigma=\lvert \chi\rangle\langle \chi\rvert$ 为纯态，则 $\mathcal C$ 的两个条件指针为 $\lvert \chi\rangle,W\lvert \chi\rangle$，$\mathcal L$ 的两个指针为 $W\lvert \chi\rangle,W^2\lvert \chi\rangle$；两组的重叠均为 $m$。因此 $m=0$ 当且仅当这两个纯指针正交，此时可读指针测量给出 $P\rho P$ 与 $(I-P)\rho(I-P)$ 两支。
+
+若 $\sigma$ 混合，$m=0$ 只保证父通道去相干，不保证子系统自身携带可区分的指针。
+
+**证明。** 
+纯态结论由内积与正交投影测量直接得到。反例取 $\sigma=I_2/2$、$W=\operatorname{diag}(1,-1)$，则 $m=0$，但两个条件子态都为 $I_2/2$，不能由子系统单独区分。把纯化参考一起计入记录后，两条件纯化态的重叠才由 $m$ 描述。
+ ∎
+
+<a id="statement-8-3"></a>
+
+<a id="prop-internalvariance"></a>
+

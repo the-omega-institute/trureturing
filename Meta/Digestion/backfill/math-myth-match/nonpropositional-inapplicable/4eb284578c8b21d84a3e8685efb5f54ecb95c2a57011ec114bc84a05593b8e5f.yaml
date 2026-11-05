@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4eb284578c8b21d84a3e8685efb5f54ecb95c2a57011ec114bc84a05593b8e5f
+  normalized_sha256: sha256:4eb284578c8b21d84a3e8685efb5f54ecb95c2a57011ec114bc84a05593b8e5f
+cas_ref: sha256:4eb284578c8b21d84a3e8685efb5f54ecb95c2a57011ec114bc84a05593b8e5f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 阐明局部完成、持续生活和有限认识可以作为不同讨论对象，是会通方法立场。
+    previous_atom_id: 050caec4de00dd9b875f16aeb0a82d4b4c048bc4b4144558a23488f1e2a7eaa9
+    next_atom_id: 4631d7a37fdda69d91e20ede9260868802de91cf91a53753f634c68fa86a8613

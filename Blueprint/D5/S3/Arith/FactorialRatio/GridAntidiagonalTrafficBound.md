@@ -4,9 +4,23 @@
 
 A uniform strict binomial-ratio bound for antidiagonal grid obstructions at every n at least 496.
 
+**Theorem 1.1 (The upper logarithmic factorial envelope).**
+
+$$\forall m\in \mathbb{N}, 0 < m \Rightarrow \operatorname{log}\left(\operatorname{factorial}\left(m\right)\right) \le m \cdot \operatorname{log}\left(m\right) - m + \frac{\operatorname{log}\left(m\right)}{2} + \frac{\operatorname{log}\left(2 \cdot \pi\right)}{2} + \frac{1}{12 \cdot m}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FactorialRatio/GridAntidiagonalTrafficBound.log_factorial_upper_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Juan Gil, Zhenni Liang, Ayodeji Odetola, Michael Weiner (2026). *Points of maximal traffic on a grid with obstruction*. URL: <https://arxiv.org/abs/2609.01562>.
+
+*Commentary.*
+
+For every positive natural m, the logarithm of m! is at most m log m minus m plus one half of log m and one half of log(2*pi), with the explicit remainder 1/(12*m). The proof telescopes the pinned Robbins successive-difference estimate to the certified Stirling limit. This is the reusable supplier used by the grid peak estimate and by the literal factorial floor-cell estimate.
+
 Gil, Liang, Odetola and Weiner consider north-east lattice paths from (0,0) to (n,n) avoiding an obstruction B. Their Conjecture 7.4 concerns the points of maximum traffic when B lies on x+y=n. The arithmetic theorem below establishes a stronger sufficient strict inequality. The grid and path-count statements used to obtain the ordinary grid conclusion are published literature inputs; they are not Lean-verified in this module.
 
-**Definition 1.1 (The rational traffic ratio).**
+**Definition 1.2 (The rational traffic ratio).**
 
 Lean statement: `D5/S3/Arith/FactorialRatio/GridAntidiagonalTrafficBound.claim`
 
@@ -22,7 +36,7 @@ Let n and a be natural numbers with n at least 496, a at least one, and 2a<n. Bi
 
 The proposition claim says R(n,a)<1 for every such pair, without an upper bound on n. In particular it includes a=1 and the odd near-central pair (n,a)=(497,248). The condition 2a<n uses no truncated division by two. All subtractions occurring in binomial indices and denominators are nonnegative on this domain, and both denominators are positive.
 
-**Theorem 1.2 (The uniform strict inequality).**
+**Theorem 1.3 (The uniform strict inequality).**
 
 $$\forall n \in \mathbb{N}, a \in \mathbb{N},\; \left(496 \le n \land \left(1 \le a \land 2 \cdot a < n\right)\right) \Rightarrow \frac{\frac{n \cdot \left(n - 2 \cdot a + 1\right)}{n - a} \cdot \operatorname{choose}\left(n, a\right) \cdot \operatorname{choose}\left(n - 2, a - 1\right)}{\operatorname{choose}\left(2 \cdot n - 2, n - 1\right)} < 1$$
 
@@ -63,4 +77,5 @@ Equation (2.1), using coordinate interchange, covers the interior half 2a>n. At 
 ## References
 
 - Truth anchor: `D5/S3/Arith/FactorialRatio/GridAntidiagonalTrafficBound.claim`
+- Truth anchor: `D5/S3/Arith/FactorialRatio/GridAntidiagonalTrafficBound.log_factorial_upper_bound`
 - Truth anchor: `D5/S3/Arith/FactorialRatio/GridAntidiagonalTrafficBound.result`

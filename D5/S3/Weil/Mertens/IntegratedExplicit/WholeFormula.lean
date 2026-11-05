@@ -1,5 +1,5 @@
 /- GID: D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Weil/Mertens/IntegratedExplicit/WholeFormula
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -27,12 +27,6 @@ open D5.S3.Zeros.CompletedZeta
 open scoped BigOperators Topology FourierTransform
 
 namespace D5.S3.Weil.Mertens.IntegratedExplicit
-
-private theorem firstLiMass_normalization :
-    firstLiMass = 2 + Real.eulerMascheroniConstant - 2 * Real.log 2 - Real.log Real.pi := by
-  rw [firstLiMass, Real.log_mul (by norm_num)
-    (Real.sqrt_pos.2 Real.pi_pos).ne', Real.log_sqrt Real.pi_pos.le]
-  ring
 
 private theorem line_half_integerComplement {t : ℝ} (ht : t ≠ 0) :
     transformLine t / 2 ∈ Complex.integerComplement := by
@@ -142,7 +136,7 @@ private theorem transform_scalar_cancellation
             (s * (s - 1))) - (Real.log (2 * Real.pi) : ℂ) / s + R) =
         (d / 2 + (Real.eulerMascheroniConstant : ℂ) / 2 + 1 / s) +
           s * (s - 1) * R - s * (1 - (Real.log 2 : ℂ)) := by
-      rw [firstLiMass_normalization,
+      rw [firstLiMass_split,
         Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) Real.pi_ne_zero]
       push_cast
       field_simp [hs0, hs1]

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:29081217572ce15b5299a51e4ecf1543ea368b059f2d16039cac0b946325a020
+  normalized_sha256: sha256:29081217572ce15b5299a51e4ecf1543ea368b059f2d16039cac0b946325a020
+cas_ref: sha256:29081217572ce15b5299a51e4ecf1543ea368b059f2d16039cac0b946325a020
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅为后续定理设置变量 X 并说明其为完整状态空间；没有定理结论。
+    previous_atom_id: 64c420cb1f5b19c983e9f29a8430e95720283218505725b7a5b3984a7aa4ef12
+    next_atom_id: e3e39f20e8d74aad17080f5167d96ed1a79a85d92509465d1181e4a822ddb65e

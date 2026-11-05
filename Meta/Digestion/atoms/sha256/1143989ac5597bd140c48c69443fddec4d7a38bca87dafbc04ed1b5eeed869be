@@ -1,0 +1,42 @@
+### 129.B. Sector positivity and the Cayley commutator
+
+Suppose (129.1) is nonnegative on every bounded vector in the chosen angular sector. Bounded vectors are dense there, by truncating their modulus without changing angular character. Since $B$ is bounded, $B\ge0$ on the entire sector.
+
+Also $C\ge0$. For every $u$,
+$$
+\frac{d}{ds}\langle e^{-sP}u,C e^{-sP}u\rangle
+=-2\langle e^{-sP}u,B e^{-sP}u\rangle\le0.                                 \tag{129.7}
+$$
+Injectivity of $P$ implies $e^{-sP}u\to0$. Boundedness of $C$ makes the differentiated expression tend to zero, so its initial value is nonnegative.
+
+Put $b=(C-I)(C+I)^{-1}$. This is bounded self-adjoint. The exact identity
+$$
+(C+I)P(C+I)-(C-I)P(C-I)=4B
+$$
+and substitution by $(C+I)^{-1}v$ yield
+$$
+\|P^{1/2}bv\|\le\|P^{1/2}v\|.                                             \tag{129.8}
+$$
+Define $L(P^{1/2}v)=P^{1/2}bv$ on the dense range of $P^{1/2}$. It extends to a contraction. Taking adjoints gives
+$$
+bP^{1/2}=P^{1/2}L^*.                                                      \tag{129.9}
+$$
+Thus $e^{(d/2)K_\ell}be^{-(d/2)K_\ell}$ is an actual bounded operator of norm at most one.
+
+For $\Pi_R=\mathbf1_{[0,R]}(K_\ell)$, consider
+$$
+F_R(z)=\Pi_Re^{zK_\ell}be^{-zK_\ell}\Pi_R.
+$$
+Equation (129.9) bounds these entire functions by one on $\Re z=d/2$; adjoints give the same bound on $\Re z=-d/2$. For each fixed $R$, the functions are bounded on the strip. The three-lines theorem and Cauchy's estimate on a circle of radius $d/4$ bound $F'_R(0)$ by $4/d$, uniformly in $R$. Spectral limits give a bounded commutator form $[K_\ell,b]$ on $D(K_\ell)$.
+
+This form bound also proves $bD(K_\ell)\subset D(K_\ell)$, by the self-adjoint adjoint-domain characterization. The inverse of $I-b$ has the same domain property and bounded commutator. Explicitly put
+$$
+a=(I+b)/2=C(C+I)^{-1},\qquad\|a\|<1.
+$$
+Use $(I-b)^{-1}=\frac12\sum_{n\ge0}a^n$, and
+$\|[K_\ell,a^n]\|\le n\|a\|^{n-1}\|[K_\ell,a]\|$. Both the inverse and commutator series converge. Therefore $C=2(I-b)^{-1}-I$ satisfies
+$$
+[K_\ell,C]\text{ is bounded}.                                             \tag{129.10}
+$$
+Boundedness of $C$ is material in these steps.
+

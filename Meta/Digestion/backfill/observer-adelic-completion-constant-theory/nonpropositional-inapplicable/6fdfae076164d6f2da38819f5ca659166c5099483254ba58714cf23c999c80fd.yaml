@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6fdfae076164d6f2da38819f5ca659166c5099483254ba58714cf23c999c80fd
+  normalized_sha256: sha256:6fdfae076164d6f2da38819f5ca659166c5099483254ba58714cf23c999c80fd
+cas_ref: sha256:6fdfae076164d6f2da38819f5ca659166c5099483254ba58714cf23c999c80fd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅为隐藏自由与下降障碍作分类标题和讨论要求，没有具体数学判据。
+    previous_atom_id: 5cac7dcf1eef1dd6f62e21f5059ff33083377f2b6a650d91a8cab29fca3841b6
+    next_atom_id: 0e0ddc962d596433a303aa23f5ffac80f65196972ccae8092d3506a2d70557ab

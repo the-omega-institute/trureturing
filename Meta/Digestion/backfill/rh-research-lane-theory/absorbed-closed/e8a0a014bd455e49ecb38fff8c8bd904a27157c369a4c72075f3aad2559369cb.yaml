@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e8a0a014bd455e49ecb38fff8c8bd904a27157c369a4c72075f3aad2559369cb
+  normalized_sha256: sha256:e8a0a014bd455e49ecb38fff8c8bd904a27157c369a4c72075f3aad2559369cb
+cas_ref: sha256:e8a0a014bd455e49ecb38fff8c8bd904a27157c369a4c72075f3aad2559369cb
+coverage_gids:
+  - gid: D5/S3/Weil/BurnolGram/WeilFullGramInertia.exists_actual_full_weil_gram_with_exact_negative_index
+    target_statement_id: sha256:ea9ad09092751b8bcdb73a7e0268e9e3bc1fa24bf96c737691f04d4c4bc9db04
+receipts:
+  unresolved_subitems: []

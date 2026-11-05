@@ -1,0 +1,68 @@
+**Theorem 4.2 (Complete positive integer cancellation family).** For every integer $r\ge3$ and every $h=(h_0,\ldots,h_{2r})\in\mathbb Z_{>0}^{2r+1}$, writing $t=h_r$, one has
+
+$$
+hv_\beta=0
+\quad\Longleftrightarrow\quad
+h_{r+j}=t+\sum_{i=0}^{j-1}2^{j-1-i}h_i
+\quad\text{for every }j=1,\ldots,r.
+\tag{19}
+$$
+
+Consequently the $r+1$ independent parameters $h_0,\ldots,h_{r-1},t$ range freely over the positive integers and uniquely parameterize $\mathcal K_r$.
+
+*Proof.* Fix $r$ and a positive integer row $h$. Form polynomials in $\mathbb Q[X]$ by
+
+$$
+\begin{aligned}
+a(X)&=\sum_{i=0}^{r-1}h_iX^{r-1-i},\\
+b(X)&=\sum_{j=0}^{r-1}h_{r+j}X^{r-1-j},\\
+F(X)&=(X-2)\bigl(X^ra(X)+b(X)\bigr)+h_{2r},\\
+R(X)&=(X-2)b(X)-a(X)+h_{2r}.
+\end{aligned}
+$$
+
+The descending order in $v_\beta$ gives $F(\beta)=hv_\beta$. By (18),
+
+$$
+F(X)=(X-1)g_r(X)a(X)+R(X).
+\tag{20}
+$$
+
+Since the supplied $g_r$ is the minimal polynomial of $\beta$, a rational polynomial vanishes at $\beta$ exactly when it is divisible by $g_r$. Hence (20) implies
+
+$$
+hv_\beta=0\quad\Longleftrightarrow\quad g_r\mid R.
+$$
+
+The degree of $R$ is $r$ and its leading coefficient is $h_r=t>0$: the leading term comes from $Xb(X)$, while all other terms have degree at most $r-1$. As $g_r$ is monic of degree $r$, divisibility is therefore equivalent to the exact identity
+
+$$
+R(X)=t g_r(X).
+\tag{21}
+$$
+
+For $1\le j<r$, comparing coefficients of $X^{r-j}$ in (21) gives
+
+$$
+h_{r+j}-2h_{r+j-1}-h_{j-1}=-t.
+$$
+
+The constant coefficient gives $h_{2r}-2h_{2r-1}-h_{r-1}=-t$, the same formula for $j=r$. Thus the coefficient equations, including the already equal leading coefficients, are exactly
+
+$$
+h_r=t,\qquad
+h_{r+j}=2h_{r+j-1}+h_{j-1}-t
+\quad(1\le j\le r).
+\tag{22}
+$$
+
+Subtracting $t$ from both sides shows that $s_j=h_{r+j}-t$ satisfies $s_0=0$ and $s_j=2s_{j-1}+h_{j-1}$. Induction yields
+
+$$
+s_j=\sum_{i=0}^{j-1}2^{j-1-i}h_i,
+$$
+
+which proves the forward implication in (19). Conversely, the displayed sums satisfy this recurrence, hence every coefficient equation (22), hence (21), (20) and $F(\beta)=0$. This proves the reverse implication without additional conditions on $h$.
+
+Finally choose any positive integers $h_0,\ldots,h_{r-1},t$. Formula (19) assigns a positive integer to each remaining coordinate, so the resulting row belongs to $\mathcal K_r$. Every member is recovered from its first $r$ coordinates and its coordinate $h_r=t$; no two parameter choices give the same row. $\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a63efb04408f48645ee4101e65dcf218d60bb2b9cdd03f314afcc75bf1204607
+  normalized_sha256: sha256:a63efb04408f48645ee4101e65dcf218d60bb2b9cdd03f314afcc75bf1204607
+cas_ref: sha256:a63efb04408f48645ee4101e65dcf218d60bb2b9cdd03f314afcc75bf1204607
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaBridge/RieszBaezDuarte.baezDuarte
+    target_statement_id: sha256:696dc2cb72d7e7b6eb453c7ef84fb915831040aed28f6d492681ba52eb483d67
+  - gid: D5/S3/Weil/ZetaBridge/RieszBaezDuarte.riesz
+    target_statement_id: sha256:9e7e5ffde11ace2b81001dddf9262dea0f38a270e6bc7f3ab550e0ade17a51fa
+receipts:
+  unresolved_subitems: []

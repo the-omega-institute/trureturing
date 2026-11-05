@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bc8764552411a2b4246a9dc90e17654254a1550bf860780adb1e719ff4720eb0
+  normalized_sha256: sha256:bc8764552411a2b4246a9dc90e17654254a1550bf860780adb1e719ff4720eb0
+cas_ref: sha256:bc8764552411a2b4246a9dc90e17654254a1550bf860780adb1e719ff4720eb0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Fredholm 收敛段落在“还必须控制”之后列出 determinant normalization 这一待控制项目，不断言任何 determinant 恒等式或收敛。
+    previous_atom_id: 48034d0d64a6731c337777e79815558dd8b5c8e33786270dcfde7cf295bc5185
+    next_atom_id: 152fecce95515938f020068ca855463d04917dcc4dbc6a4e0ec5bf0d1e3ed657

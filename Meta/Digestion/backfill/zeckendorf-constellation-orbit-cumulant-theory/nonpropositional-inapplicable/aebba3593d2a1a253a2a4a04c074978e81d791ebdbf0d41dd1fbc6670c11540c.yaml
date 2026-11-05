@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aebba3593d2a1a253a2a4a04c074978e81d791ebdbf0d41dd1fbc6670c11540c
+  normalized_sha256: sha256:aebba3593d2a1a253a2a4a04c074978e81d791ebdbf0d41dd1fbc6670c11540c
+cas_ref: sha256:aebba3593d2a1a253a2a4a04c074978e81d791ebdbf0d41dd1fbc6670c11540c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section introduction specifying the intended finite-H and sigma-greater-than-one context; the convergence assertion occurs in the following atom.
+    previous_atom_id: cc6a5c74e7237af2331a0670ae60d790bc108dda0c24f1c9e05fb4d484722043
+    next_atom_id: 2b82f48f589f1c423d1b148a1e81b327806e4834ed5a594a5dfb6b26015afe5e

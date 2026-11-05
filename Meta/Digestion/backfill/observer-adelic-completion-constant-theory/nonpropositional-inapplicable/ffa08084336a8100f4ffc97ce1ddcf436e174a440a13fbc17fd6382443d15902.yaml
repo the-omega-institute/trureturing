@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ffa08084336a8100f4ffc97ce1ddcf436e174a440a13fbc17fd6382443d15902
+  normalized_sha256: sha256:ffa08084336a8100f4ffc97ce1ddcf436e174a440a13fbc17fd6382443d15902
+cas_ref: sha256:ffa08084336a8100f4ffc97ce1ddcf436e174a440a13fbc17fd6382443d15902
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 道不应被定义为某个形式对象的哲学用语约定，以及宇宙这一候选名字；无数学等式。
+    previous_atom_id: 184fd0cb8dd7bbda2df365e74095be726e9463ad91239bca4c0fe3ad13614953
+    next_atom_id: a15547f3579c594da9435bcc6518ed01abcacda0ff1f42f31093fda2fb270ecf

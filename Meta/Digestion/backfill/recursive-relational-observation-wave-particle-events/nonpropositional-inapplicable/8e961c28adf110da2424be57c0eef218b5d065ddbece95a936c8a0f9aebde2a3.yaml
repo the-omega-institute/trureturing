@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8e961c28adf110da2424be57c0eef218b5d065ddbece95a936c8a0f9aebde2a3
+  normalized_sha256: sha256:8e961c28adf110da2424be57c0eef218b5d065ddbece95a936c8a0f9aebde2a3
+cas_ref: sha256:8e961c28adf110da2424be57c0eef218b5d065ddbece95a936c8a0f9aebde2a3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Remark 30.5 identifies Gavorova arXiv:2011.08487v2, compares its quantifiers with the fixed-filter task, and warns that the normalization denominator cannot be dropped. This is literature and method commentary, not an independently stated distance inequality.
+    previous_atom_id: 9d951be85506baf88feff10ae05f6aa06c177bbdd7078cbec8a02124a056d9b4
+    next_atom_id: e26d0a2f32d8dcb232bdf71e89b51ac631999c360711cd660913ef962667e919

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3b1989f554c175ffef4aa8adef42b6f54475d71dfad4e79c324fd27caa80c716
+  normalized_sha256: sha256:3b1989f554c175ffef4aa8adef42b6f54475d71dfad4e79c324fd27caa80c716
+cas_ref: sha256:3b1989f554c175ffef4aa8adef42b6f54475d71dfad4e79c324fd27caa80c716
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the editorial label proposed theorem; no individual mathematical claim occurs in this atom.
+    previous_atom_id: f6cb8cfb443da461e25f098aa10eba52185e186941316512edf42dd153c43ddf
+    next_atom_id: 8669a56f089b96a2d4849f94b35aae9c0f248c2fc009257f83a52622f8f75f3d

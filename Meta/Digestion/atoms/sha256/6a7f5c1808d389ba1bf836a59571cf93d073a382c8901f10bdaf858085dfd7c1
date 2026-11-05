@@ -1,0 +1,36 @@
+**定理 7.2（自相似谱与不存在正规化点程序）。**
+
+<a id="thm-cantor"></a>
+
+$K_r$ 紧，并满足
+
+<a id="eq-selfsimilar"></a>
+
+$$
+\boxed{K_r=rK_r\ \cup\ (1-r+rK_r).}
+\tag{5}
+$$
+
+两块间隙为 $1-2r>0$。
+$\theta:X\to K_r$ 是同胚，$\sigma(\Theta)=K_r$，
+但 $\Theta$ 没有非零正规化本征向量。
+
+**证明。**
+
+几何级数一致收敛给 $\theta$ 连续及像紧。
+分离首位得到式 [(5)](#eq-selfsimilar)。
+若两个代码首次在第 $k$ 位不同，首个差贡献为 $(1-r)r^{k-1}$，
+其后全部尾差至多 $r^k$，
+故总差至少 $(1-2r)r^{k-1}>0$。
+编码单射；紧空间到 Hausdorff 空间的连续双射是同胚。
+
+若 $\lambda\notin K_r$，则 $1/(\theta-\lambda)$ 有界，给逆乘法算子。
+若 $\lambda\in K_r$，任意 $\varepsilon>0$ 的集合
+$|\theta-\lambda|<\varepsilon$ 是非空开集，因满支撑而有正测度；
+其正规化指示函数是误差至多 $\varepsilon$ 的近似本征向量。
+因此 $\lambda\in\sigma(\Theta)$。
+但一个点的逆像是单个二进制序列，测度为 $\lim_n2^{-n}=0$；
+支撑在该逆像上的 $L^2$ 本征函数只能为零。
+
+□
+

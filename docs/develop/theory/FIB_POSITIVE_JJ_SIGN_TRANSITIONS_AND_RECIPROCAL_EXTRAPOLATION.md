@@ -728,3 +728,196 @@ Fibonacci spectral and Cassini identities, geometric series, polynomial root cou
 The complete proofs of the all-degree contribution are Sections 4–9; the exact residual equivalence is Section 10. The full moving-trace proof is in the supplied source, Sections 2–6, and is reproduced with the calibrated and prescribed-prefix hypotheses in the companion critical volume, Sections 12 and 16. The DEV frontier statements retain the source-contained proof regions VI, Sections 1–6 and VII, Sections 1–6 and their explicitly credited nested interfaces. The determinant obligation, residual all-degree decision, adaptive joint-word bounds, local larger-family questions and global complete-target sharpness remain as stated above.
 
 ## 追加锚（本行以下为增补区）
+
+## 13. Uniform exclusion by exponentially weighted tail oscillation
+
+Keep the original-clock nodes, recurrence and interpolation equations (1.6)–(1.10). The real function $\phi^t$ used below is an auxiliary weight on a hypothetical interpolating polynomial. It supplies no observation or acquisition action.
+
+**Theorem 13.1 (all-degree positive $JJ$ exclusion).** For every integer $m\ge5$, every $a\in\{0,\ldots,2m-2\}$ and every $\rho>0$, no real polynomial of degree at most $m-1$ satisfies (1.9)–(1.10). In particular the entire existential criterion (10.1) is false. The exclusion uses no assumption on $\det\mathcal D$.
+
+**Proof.** Suppose that such a polynomial $R$ exists, and put $K=2m-2$. Theorem 3.1 supplies the first same-sign index $b$ and gives
+
+$$
+2\le b\le m-2,\qquad m-1\le a\le m+b-2.
+\tag{13.1}
+$$
+
+In particular,
+
+$$
+b+1\le a\le K-2.
+\tag{13.2}
+$$
+
+The lower inequality follows from $b\le m-2$ and $a\ge m-1$; the upper one follows from $a\le m+b-2\le2m-4$. Thus both tail blocks used below are present. The sign conclusions of Lemma 4.1 are
+
+$$
+\operatorname{sgn}u_k=(-1)^k\quad(0\le k\le b-1),\qquad
+\operatorname{sgn}u_k=\epsilon:=(-1)^{b-1}\quad(k\ge b-1).
+\tag{13.3}
+$$
+
+Use the spectral constants from (4.1):
+
+$$
+\begin{gathered}
+\phi=\frac{1+\sqrt5}{2}>1,\qquad
+\psi=-\phi^{-1},\qquad
+q=\psi/\phi=-\phi^{-2}<0,\\
+A=\frac{\phi^{-1}-\rho}{\sqrt5},\qquad
+B=\frac{\phi+\rho}{\sqrt5}>0,\qquad
+u_k=\phi^k(A+Bq^k).
+\end{gathered}
+\tag{13.4}
+$$
+
+Lemma 4.1 gives $A\ne0$ and $\operatorname{sgn}A=\epsilon$. For $b-1\le k\le K$, (13.3) therefore implies
+
+$$
+A(A+Bq^k)>0.
+\tag{13.5}
+$$
+
+The exact residual identity is
+
+$$
+\frac{\phi^k}{u_k}-\frac1A
+=\frac1{A+Bq^k}-\frac1A
+=-\frac{Bq^k}{A(A+Bq^k)}.
+\tag{13.6}
+$$
+
+Its denominator is positive by (13.5), and $q^k$ has sign $(-1)^k$. Consequently the residual is nonzero and
+
+$$
+\operatorname{sgn}\left(\frac{\phi^k}{u_k}-\frac1A\right)
+=(-1)^{k+1}\qquad(b-1\le k\le K).
+\tag{13.7}
+$$
+
+This is strict alternation about a fixed level on the same-sign tail. It is not an assertion about the signs of $1/u_k$ themselves.
+
+Define on the entire real line
+
+$$
+H(t)=\phi^tR(t),\qquad
+Q(t)=R'(t)+(\log\phi)R(t),\qquad
+H'(t)=\phi^tQ(t).
+\tag{13.8}
+$$
+
+Since $R(0)=1$, the polynomial $R$ is nonzero. If its actual degree is $n$, then $Q$ also has degree $n$: its leading coefficient is $\log\phi$ times the leading coefficient of $R$, because differentiation lowers degree and $\log\phi>0$. This includes $n=0$. In particular
+
+$$
+Q\ne0,\qquad \deg Q=n\le m-1.
+\tag{13.9}
+$$
+
+We count zeros of the single function $H'$ on three disjoint open intervals. The only calculus step is Rolle's theorem: between two distinct zeros of a differentiable function there is a zero of its derivative. Applying it to consecutive zeros places the derivative zeros in disjoint intervening intervals. This is the classical derivative-interlacing argument; see also Carl de Boor, *Divided Differences*, the discussion preceding Proposition 43, [arXiv:math/0502036](https://arxiv.org/abs/math/0502036). All functions here are smooth on the whole real line.
+
+First consider the unchanged original clocks $0,\ldots,b-1$. They are prefix clocks by (13.2). Equations (1.9) and (13.3) make the values of $R$, and hence of $H$, alternate in sign there. There is a distinct zero of $H$ in each of
+
+$$
+(0,1),(1,2),\ldots,(b-2,b-1).
+$$
+
+These are $b-1$ zeros. Rolle's theorem between consecutive such zeros gives at least $b-2$ distinct zeros of $H'$ in
+
+$$
+(0,b-1).
+\tag{13.10}
+$$
+
+When $b=2$, this contribution is zero and no derivative zero is required from this interval.
+
+Next consider the prefix-tail original clocks $b-1,\ldots,a$. At each of these clocks, (1.9) gives
+
+$$
+H(k)-1/A=\phi^k/u_k-1/A.
+\tag{13.11}
+$$
+
+By (13.7), these $a-b+2$ values alternate in sign. Thus $H-1/A$ has at least $a-b+1$ distinct zeros, one in each interval $(k,k+1)$ for $b-1\le k<a$. Rolle's theorem gives at least $a-b$ distinct zeros of its derivative, which is $H'$, in
+
+$$
+(b-1,a).
+\tag{13.12}
+$$
+
+Finally consider the suffix exponents $a,\ldots,K$. Their actual retained clocks are $a+2,\ldots,K+2$, not $a,\ldots,K$. At those clocks the interpolation equations give
+
+$$
+H(k+2)-\phi^2/A
+=\phi^2\left(\frac{\phi^k}{u_k}-\frac1A\right)
+\qquad(a\le k\le K).
+\tag{13.13}
+$$
+
+By (13.7), these $K-a+1$ values again alternate in sign. There are at least $K-a$ distinct zeros of $H-\phi^2/A$ between consecutive suffix clocks, and hence at least $K-a-1$ distinct zeros of $H'$ in
+
+$$
+(a+2,K+2).
+\tag{13.14}
+$$
+
+The suffix contribution is positive by (13.2). The two horizontal levels used in (13.11) and (13.13) are different; the argument differentiates each level separately. It makes no claim of alternation across the gap $(a,a+2)$ and counts no zero there.
+
+The intervals (13.10), (13.12) and (13.14) are disjoint. Adding their contributions gives at least
+
+$$
+(b-2)+(a-b)+(K-a-1)=K-3=2m-5
+\tag{13.15}
+$$
+
+distinct real zeros of $H'$. Since $\phi^t$ never vanishes, all of them are zeros of the same polynomial $Q$. Equation (13.9) and polynomial root counting imply
+
+$$
+2m-5\le n\le m-1,
+\tag{13.16}
+$$
+
+which would force $m\le4$. This contradicts $m\ge5$.
+
+Theorem 3.1 puts every candidate of (1.9)–(1.10) in the window used in this proof, so no other $a$, transition parity or positive-parameter cell remains. A parameter with a zero $u_k$ cannot satisfy the product equations $u_kR(k)=1$ or $u_kR(k+2)=1$ in the first place. The spectral case $A=0$ is already excluded by Lemma 4.1. Thus there is no excluded exceptional parameter left to check for the interpolation problem. As interpolation is a required conjunct of (10.1), that criterion has no solution, irrespective of the separate determinant condition. $\square$
+
+The source-specific content of the proof is the exact two-level alternation (13.11)–(13.13) on the retained original clocks and the disjoint derivative-root budget (13.15). These are repo-derived. The argument does not require real-rootedness of $R$ and permits every actual degree $n\le m-1$; the degree room for nonreal conjugate pairs noted in Section 10 does not affect (13.9). No reciprocal moment representation is used. In particular the integer-shift positive and signed moment results of Christian Berg, *Fibonacci numbers and orthogonal polynomials*, [arXiv:math/0609283](https://arxiv.org/abs/math/0609283), are not being extended to arbitrary $\rho$.
+
+## 14. Exact fixed mixed-acquisition threshold and its quantifiers
+
+**Corollary 14.1 (fixed mixed gain-ray threshold in every degree).** Fix any declared maximum degree $d\ge1$ and put $m=d+1$. On the full world domain (1.1)–(1.2), the least number of reads for a preassigned mixed acquisition word to admit all-input full-gain-ray extraction by an arbitrary countable palette is
+
+$$
+2m+2=2d+4.
+\tag{14.1}
+$$
+
+More precisely, every preassigned mixed terminal word with at most $2m+1$ reads fails all-input countable-palette extraction. The word $JM^{2m}$ succeeds with one fixed matrix at $2m+2$ reads and scale $\operatorname{tr}(JP)>0$.
+
+**Proof.** For $m\ge5$, Theorem 13.1 excludes interpolation for every original tuple $(m,a,\rho)$ with $0\le a\le2m-2$ and $\rho>0$. It therefore excludes every solution of the exact positive $JJ$ criterion, including its independent nonsingularity requirement. The complete critical classification in *FIB Critical Mixed Gain Words and Clock-Pencil Obstructions*, Sections 3–10, particularly Theorems 9.1 and 10.1, makes this absence equivalent to the absence of any all-input countable palette on a preassigned critical mixed word. The parameter correspondence is $d=m-1$, $K=2m-2$, $r=a+1$ and
+
+$$
+T=\{0,\ldots,2m\}\setminus\{a+1\},\qquad
+k_i=i\ (i\le a),\qquad k_i=i-2\ (i\ge a+2).
+\tag{14.2}
+$$
+
+Thus the criterion just excluded uses exactly $2m+1$ original reads, the acquired outlier, and both acquisitions of $M^a$ at clocks $a,a+2$. Its weights and operational matrix are precisely (1.8) and (2.1), with no exponent substituted for an acquisition clock. The classification's opposite-sign exceptional-source and countable-covering conclusions are essential to this implication: excluding the positive functional does not by itself exclude every unrestricted-sign identity or justify discarding exceptional sources.
+
+For $m=2,3,4$, the low-degree lower bounds are the already supplied Theorem 13.1, Lemma 13.2, Theorem 13.5 and Corollary 13.6 of that critical source. They exclude all-input palettes at the same critical budget and give the prior counts six, eight and ten. For every $m\ge2$, its Theorem 11.1 supplies the obstruction for mixed words with at most $2m$ reads. These credited results, together with Theorem 13.1 here for $m\ge5$, establish the claimed lower bound on every preassigned mixed terminal word.
+
+For the upper bound reuse *FIB Linear Gain-Ray Capacity and Hermite Readouts*, Theorem 6.1, equivalently the critical source's Theorem 14.1. It acquires $J$ followed by $2m$ individual $M$ actions. The initial read and every immediate read are counted, so the number is $2m+2$. At original clock $s+1$, $0\le s\le2m$, its cumulative matrix is $M^sJ$. The supplied Hermite readout uses the actual gain monomials $(s+1)^j$, $0\le j<m$, annihilates the constant drift, and returns
+
+$$
+\operatorname{tr}(JP)\,(\beta_0,\ldots,\beta_{m-1})^{\mathsf T}.
+\tag{14.3}
+$$
+
+Its clock-zero coefficient is zero, but that read is acquired. Since $\operatorname{tr}(JP)=P_{12}+P_{21}>0$, this is a nonzero gain ray for every strictly positive real rank-one trace-one source and every whole nonzero coefficient vector. It requires no root promise, restriction on coefficient signs or drift, actual-degree truncation, or nonvanishing of a particular spectral component. This is the credited upper construction, not a new construction. Combining the bounds proves (14.1). $\square$
+
+Theorem 13.1 settles the original all-degree positive $JJ$ decision (10.1) negatively. The alternative for fixed mixed gain extraction in Sections 10–11 is therefore its $2m+2$ branch at every $m\ge5$; Corollary 14.1 includes the credited lower degrees. No value, sign or singularity assertion about $\det\mathcal D$ is needed or obtained. Its independence from $\rho$ in (2.8) remains a separate identity.
+
+The quantifier in Corollary 14.1 fixes an acquisition word before ranging over all worlds and countable palettes. Its failures on different words do not assert a common failure world. In particular they do not rule out an adaptive protocol choosing different critical words on different histories. The separate adaptive gain-only critical question and global complete-target sharpness remain unresolved by this proof.
+
+For complete-target recovery with the specified fixed-linear gain mechanism, the general bounds remain the credited bounds (11.2), with the degree-one refinement stated there. The pure-$M$ exact gain-and-drift count $2d+3$ is still the credited Hermite theorem. The complete-target upper bound $2d+s+5\le3d+5$, $s=\deg g$, and sharpness only after the specified pure-$M$ calibration remain the supplied results of *FIB Moving-Trace Recovery and Sharp Calibrated Continuations*, Sections 2–6. Corollary 14.1 adds no unrestricted adaptive or complete-target lower bound and no global optimality claim for those different problems.
+
+## 追加锚（本行以下为增补区）

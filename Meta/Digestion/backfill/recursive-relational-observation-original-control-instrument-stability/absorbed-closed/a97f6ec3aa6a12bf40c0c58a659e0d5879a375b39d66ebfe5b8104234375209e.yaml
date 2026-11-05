@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:a97f6ec3aa6a12bf40c0c58a659e0d5879a375b39d66ebfe5b8104234375209e
+  normalized_sha256: sha256:a97f6ec3aa6a12bf40c0c58a659e0d5879a375b39d66ebfe5b8104234375209e
+cas_ref: sha256:a97f6ec3aa6a12bf40c0c58a659e0d5879a375b39d66ebfe5b8104234375209e
+coverage_gids:
+  - gid: D5/S3/Quantum/Fibers/OriginalRepeatedPrefix.early_late_native_survival
+    target_statement_id: sha256:aba43c0f99438d949b9d066e4537ab45a900bde0e962dba4be61ba6dc79bb74d
+  - gid: D5/S3/Quantum/Fibers/OriginalRepeatedResources.early_late_essential_speed
+    target_statement_id: sha256:9179da3a6d0e89082512c5e1277dda8cbe5aa4279a854021ff223e1db902ad7d
+  - gid: D5/S3/Quantum/Fibers/OriginalRepeatedResources.early_late_finite_c1
+    target_statement_id: sha256:e816d87d3573ab7a0eac2c62d3e854a3fdd1e9697e6108b69a5fc3a87c700621
+  - gid: D5/S3/Quantum/Fibers/OriginalRepeatedResources.early_late_integral_resources
+    target_statement_id: sha256:14a747a53c35ec54aa9d328ef2c569634545e54cd94b3ca7b1d5abd4a40c0af2
+  - gid: D5/S3/Quantum/Fibers/OriginalRepeatedResources.early_late_total_variation
+    target_statement_id: sha256:df329df062bb38f4d4a719fd77d795e74840599e4e4a52b204e56f3d3d15dba0
+receipts:
+  unresolved_subitems: []

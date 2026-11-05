@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:205a63e5d4af4f6ab37b08c81fe2f67c0f4303cb192daae7adf8cbd202465e0c
+  normalized_sha256: sha256:205a63e5d4af4f6ab37b08c81fe2f67c0f4303cb192daae7adf8cbd202465e0c
+cas_ref: sha256:205a63e5d4af4f6ab37b08c81fe2f67c0f4303cb192daae7adf8cbd202465e0c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Scope declaration only: the intended theorem concerns rectangular multiplicity counts, and disc, general Jordan-domain, zero-location and numerical-certificate obligations are excluded. This text states the boundary of the deliverable and asserts no additional theorem.'
+    previous_atom_id: 441aba8d4781d2d7d47cf6854da19b7124509766a8ebff84a0d16253720f4f98
+    next_atom_id: 0ab259536502a806256e53956b9851ec5704e78244ee398d79fced22026f4213

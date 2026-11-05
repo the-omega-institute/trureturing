@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e19c4692b463a633a755dfbfcd8715545524690b6d1016901c662dbad7c8a8a8
+  normalized_sha256: sha256:e19c4692b463a633a755dfbfcd8715545524690b6d1016901c662dbad7c8a8a8
+cas_ref: sha256:e19c4692b463a633a755dfbfcd8715545524690b6d1016901c662dbad7c8a8a8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 提出伊斯兰与佛教转向结构的有限比较及译法边界，不声称结构等价。
+    previous_atom_id: b7999e5e9983c61aa19c55515d1d94cf5ebdb5009f809da64e38d30ad8637a24
+    next_atom_id: 2413de7335cee87af9cc738d4e5604d41724988a1d7c2c5cb8a81dccfd7a9d27

@@ -1,0 +1,10 @@
+## 16. 闭合保持了什么，后续操作又要求什么
+
+令 $\mathcal A=C^*(I,A,B)$，并记前文所得 $\pi=\Phi|_{\mathcal A}$。$C_{89}$ 给出
+
+$$
+\pi(XY)=\pi(X)\pi(Y),\qquad \pi(X^\dagger)=\pi(X)^\dagger,qquad X,Y\in\mathcal A.
+$$
+
+这保持关系的组合结构，但尚不保证不同内容都能在目标接口区分。
+

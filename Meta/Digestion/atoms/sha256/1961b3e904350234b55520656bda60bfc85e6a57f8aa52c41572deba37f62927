@@ -1,0 +1,17 @@
+**Corollary 2.4 (an explicit resource route to the floor).** Fix
+$0<\eta\leq c/2$. If both paths obey
+$\eta\leq k,\widetilde k\leq c-\eta$ and
+$\operatorname{TV}(k),\operatorname{TV}(\widetilde k)\leq V$, then one
+may take $\sigma=e^{-V/\eta}$. A common height-speed bound $v_k$ and
+duration bound $T_*$ give the choice $V=v_kT_*$.
+
+Proof. Pointwise $\lambda\leq |k'|/\eta$; integrate and exponentiate.
+Absolute continuity identifies height variation with $\int|k'|$.
+$\square$
+
+This floor is sufficient and conservative. Positive support of each
+individual path supplies no common numerical $\eta$ or $V$ over the full
+original class. The theorems use the known preparation diagonal; they do
+not identify an unknown initial phase, winding, reference or preparation
+from an unlabelled collection of outputs.
+

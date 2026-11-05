@@ -1,0 +1,77 @@
+#### 定理 7.2（算符参数的精确编织谱条件）
+
+更一般地取 $0<\lambda<1$，在上述投影关系下，使用<em>同一个</em>子算符 $W$ 的两提升门满足
+
+$$
+
+\mathcal C_P(W)\mathcal C_Q(W)\mathcal C_P(W)
+=\mathcal C_Q(W)\mathcal C_P(W)\mathcal C_Q(W)
+
+$$
+
+当且仅当
+
+<a id="eq-braidpoly"></a>
+
+$$
+
+\boxed{(W-I)\,[W+\lambda(W-I)^2]=0.}
+\tag{6}
+
+$$
+
+将全部 $\mathcal C$ 换成 $\mathcal L$，条件相同。黄金 $\lambda=\varphi^{-2}$ 时，等价条件为
+
+<a id="eq-allowed"></a>
+
+$$
+
+\boxed{\operatorname{spec}(W)\subseteq\{1,\zeta,\bar\zeta\}.}
+\tag{7}
+
+$$
+
+**证明。** 
+令 $A=W-I$。按 $I+P\otimes A$、$I+Q\otimes A$ 展开两边的三重乘积，二阶共同项相消，得到
+
+$$
+
+(P-Q)\otimes(A+A^2+\lambda A^3).
+
+$$
+
+因 $P-Q\ne0$，张量积为零等价于第二因子为零。$A+A^2+\lambda A^3=(W-I)[W+\lambda(W-I)^2]$，即得。又
+
+$$
+
+\mathcal L_P(W)=(I\otimes W)\mathcal C_P(W),
+
+$$
+
+公共因子与全部提升门对易且可逆，两边均有 $(I\otimes W^3)$，故条件不变。
+
+有限维酉 $W$ 可谱分解，算符多项式为零当且仅当每个本征值满足相应标量方程。非平凡根由
+
+$$
+
+z+\lambda(z-1)^2=0
+
+$$
+
+给出。黄金情况下，除以 $\lambda z$ 得
+
+$$
+
+z+z^{-1}=2-\lambda^{-1}=2-\varphi^2=-\varphi^{-1},
+
+$$
+
+故根为 $e^{\pm3\pi i/5}$；另外保留首因子的根 $1$。不能在含 $1$ 的谱扇区上约掉 $W-I$。
+ ∎
+
+这一结论是指定共享算符参数形式的完整分类。允许的非标量 $W$ 可以有多个谱扇区，但在其谱基上是平凡编织与两种共轭手性的直和。它不是所有可能非交换算符值编织的分类；若不同边使用不同、非交换的子参数，必须重新求解完整 Yang--Baxter 型方程。
+
+<a id="statement-7-3"></a>
+
+<a id="cor-wholefails"></a>
+

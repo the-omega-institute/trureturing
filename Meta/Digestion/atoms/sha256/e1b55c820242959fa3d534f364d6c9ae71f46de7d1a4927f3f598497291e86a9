@@ -1,0 +1,53 @@
+**定义 61.1（公开深度、完整节点字与两个场码）。** 沿用定义 57.1 的实际来源、
+内积第一项共轭线性及 $v_t^X=\sqrt a\,J_Xw_t^X+\sqrt r\,e_t$，
+$X\in\{\mathrm c,R\}$，$n\ge1$，$h=r=1/(5n)$，$a=b=1-h$。
+叶的高度为零，$\operatorname{ht}\langle s,t\rangle=1+\max(\operatorname{ht}s,\operatorname{ht}t)$。
+对公开整数 $D\ge0$ 定义
+
+$$
+T_D=\{t\in T:\operatorname{ht}t\le D\},\quad
+A_D=\{p\in\{0,1\}^*:|p|<D\},\quad
+B_D=\{p:|p|\le D\},
+\quad N_D=2^D-1,\quad M_D=2^{D+1}-1.
+\tag{61.1}
+$$
+
+地址按长度再按字典序排列，所以旧地址总是新地址表的前缀。
+对每个 $p\in B_D$，用两位 $00,01,10,11$ 分别表示不存在的节点、
+$\alpha$ 叶、$\beta$ 叶、内部节点。完整连接这些两位字得
+$c_D(t)\in\{0,1\}^{b_D}$，$b_D=2M_D$。根存在，故 $c_D(t)\ne0^{b_D}$；
+标签 $00$ 不表示一个额外的源叶。此处 $c_D(t)$ 编码完整有序语法，
+不是只编码高度、叶数、$q(t)$ 或着色场。
+
+令 $F_{\mathrm c,D}$ 是 $F_{\mathrm c}$ 中由 $B\subseteq A_D$ 的 $e_B$ 张成的子空间；
+令 $F_{R,D}$ 是 $F_R$ 中由支撑包含于 $A_D$ 的 $e_\sigma$ 张成的子空间。
+取 $L_D=\operatorname{span}\{e_t:t\in T_D\}$ 及 $H_{X,D}=F_{X,D}\oplus L_D$。
+复场把 $e_B$ 编为各地址的占据位 $\mathbf1_{p\in B}$；实完成场复化后，
+把每个局部基值 $0,1,2$ 分别编为 $00,01,10$，局部字 $11$ 留空。
+记这些场基的编码为 $f_{X,D}$，并置
+
+$$
+q_{\mathrm c}=1,\qquad q_R=2,\qquad
+m_{X,D}=1+q_XN_D+b_D,\qquad
+\mathcal Q_{X,D}=\mathbb C^2_{\rm sector}
+ \otimes(\mathbb C^2)^{\otimes q_XN_D}
+ \otimes(\mathbb C^2)^{\otimes b_D}.
+\tag{61.2}
+$$
+
+三个因子依次是相干扇区位、场寄存器、完整节点字寄存器；$D=0$ 时场寄存器是
+一维空张量积。定义一个不依赖 $t,n$ 的线性映射 $E_{X,D}:H_{X,D}\to\mathcal Q_{X,D}$：
+
+$$
+\begin{aligned}
+E_{X,D}(e_\xi\oplus0)
+ &=|0\rangle|f_{X,D}(\xi)\rangle|0^{b_D}\rangle,\\
+E_{X,D}(0\oplus e_t)
+ &=|1\rangle|0^{q_XN_D}\rangle|c_D(t)\rangle.
+\end{aligned}
+\tag{61.3}
+$$
+
+第一式的 $\xi$ 分别为有限地址集 $B$ 或有限支撑函数 $\sigma$。
+扇区位属于输出态，不是被读取后丢弃的经典旗标。
+

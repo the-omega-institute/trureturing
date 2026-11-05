@@ -1,0 +1,13 @@
+#### 定义 6.1（素数相位空间）
+
+在全部素数的乘积圆周 $\mathbb{T}^{\mathcal P}$ 上取 Haar 概率测度。
+由唯一素因子分解定义字符
+
+$$
+\chi_n(\mathbf z)=\prod_p z_p^{\nu_p(n)}.
+$$
+
+每个乘积只有有限个非平凡因子，并且 $\chi_{mn}=\chi_m\chi_n$。
+
+<a id="thm-half"></a>
+

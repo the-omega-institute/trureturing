@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e4ae2a64ce49a3552e6d5bf5ad57109e82507373bae890d141ee309dddf49e67
+  normalized_sha256: sha256:e4ae2a64ce49a3552e6d5bf5ad57109e82507373bae890d141ee309dddf49e67
+cas_ref: sha256:e4ae2a64ce49a3552e6d5bf5ad57109e82507373bae890d141ee309dddf49e67
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional notation introduction (60.5): F2 and F3 are names for the displayed spans. The section heading introduces the next theorem; no dimension estimate, independence, containment or existence result is asserted in this atom. The dim F2 bound and first-environment containment are in the following Theorem 60.1 and remain open.'
+    previous_atom_id: f5261f57ae3ab66e20cd6832f6456fd027f76b001cb88340d31c8a9f9e8bf732
+    next_atom_id: f5681967600fa82e6950de9eda2d4712183c50464acf11a67c0bb91b4a7bd4f1

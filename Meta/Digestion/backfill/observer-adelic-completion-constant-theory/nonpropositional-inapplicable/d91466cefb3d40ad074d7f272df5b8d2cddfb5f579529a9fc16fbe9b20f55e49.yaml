@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d91466cefb3d40ad074d7f272df5b8d2cddfb5f579529a9fc16fbe9b20f55e49
+  normalized_sha256: sha256:d91466cefb3d40ad074d7f272df5b8d2cddfb5f579529a9fc16fbe9b20f55e49
+cas_ref: sha256:d91466cefb3d40ad074d7f272df5b8d2cddfb5f579529a9fc16fbe9b20f55e49
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 研究方向标题与引入语，不含数学等式或断言。'
+    previous_atom_id: 82af5bd3b12df522eddce12ddf597e0b8524584caac3fe3d898eca28c0ee961b
+    next_atom_id: 8cfdb96017bd94820d7f326a8e9010ca237c41fa320216a5d5670f3295fb28e2

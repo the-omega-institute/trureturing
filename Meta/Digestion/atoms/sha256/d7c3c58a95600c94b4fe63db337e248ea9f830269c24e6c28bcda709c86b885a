@@ -1,0 +1,16 @@
+**定义 2.1（分支）。** 取主值 $\operatorname{Log}w$，$-\pi<\arg w<\pi$，并置
+
+$$
+\Omega=\mathbb C\setminus[1,\infty)
+ =\{z:1-z\in\mathbb C\setminus(-\infty,0]\}.
+$$
+
+记 $L_{\boldsymbol{k}}(z)=\mathrm{CompositionContinuation.continued}\,[k_1,\ldots,k_d]\,z$。这是与定义 1.1 的圆盘级数相符的实际分支。其去零点归一化为
+
+$$
+\mathcal F(z)=
+\begin{cases}L_{\boldsymbol{k}}(z)/z^d,&z\ne0,\\ f_0,&z=0.\end{cases}
+$$
+
+在其非零区域记 $\mathcal A=\mathcal F^{-\ell}$。因而对 $z\ne0$，$\mathcal A(z)=(z^d/L_{\boldsymbol{k}}(z))^\ell$，而 $\mathcal A(0)=f_0^{-\ell}$；对商式在零点作总除法会给出错误的常数。
+

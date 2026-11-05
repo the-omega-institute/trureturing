@@ -83,7 +83,7 @@ private theorem map_expand (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matri
     simpa [Matrix.smul_single, smul_eq_mul] using Matrix.matrix_eq_sum_single A
   nth_rw 1 [he]
   simp only [map_sum, map_smul]
-private theorem kron_id_apply (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) (r : ℕ)
+theorem kron_id_apply (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) (r : ℕ)
     (P : Matrix (Fin n × Fin r) (Fin n × Fin r) 𝕜) (a b : Fin m × Fin r) :
     MatrixMap.kron Phi (LinearMap.id : MatrixMap (Fin r) (Fin r) 𝕜) P a b =
       Phi (fun i j => P (i, a.2) (j, b.2)) a.1 b.1 := by
@@ -193,7 +193,7 @@ private theorem sep_sum {I : Type} [Fintype I]
   convert hs using 1
   rw [Fintype.sum_sigma]
   exact Finset.sum_congr rfl (fun j _ => h j)
-private theorem ampl_kron (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) (r : ℕ)
+theorem ampl_kron (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) (r : ℕ)
     (A : Matrix (Fin n) (Fin n) 𝕜) (B : Matrix (Fin r) (Fin r) 𝕜) :
     (MatrixMap.kron Phi (LinearMap.id : MatrixMap (Fin r) (Fin r) _)) ((Matrix.kroneckerMap (· * ·)) A B) = (Matrix.kroneckerMap (· * ·)) (Phi A) B := by
   ext a b

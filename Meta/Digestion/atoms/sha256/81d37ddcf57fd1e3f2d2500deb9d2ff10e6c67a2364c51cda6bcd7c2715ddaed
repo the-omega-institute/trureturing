@@ -1,0 +1,10 @@
+**Proposition 50.1 (integer granularity is material).** The threshold of Theorem 45.2 cannot be extended merely by bounding the magnitudes of arbitrary rational pulses by a number smaller than $a$. For the original promised scalar source $T=(1/2)$, the acquired phase is $x_*=1/4$, $q(z)=2z-1$ and $a=2$. Its original rational Add interface admits the distinct equal-length words
+
+$$
+u=(1/4,0),\qquad v=(0,1/8),
+$$
+
+with the same endpoint $3/16$, despite all their pulse magnitudes being at most $1/4<a$.
+
+Proof. The common baseline is $T^2x_*=1/16$. The pulse contribution of $u$ is $(1/2)(1/4)=1/8$ and that of $v$ is $1/8$. Their difference polynomial is $z/4-1/8=q(z)/8$. The integral quotient and the integral leading-coefficient obstruction used in Theorem 45.2 do not apply to this rational difference polynomial. These inputs are legal in the original interface but are outside the integer menu of Definition 44.1. $\square$
+

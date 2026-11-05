@@ -24,14 +24,14 @@ def f : ℕ → ℕ → ℕ
 termination_by j m => (m, j)
 
 private noncomputable def F (j : ℕ) : PowerSeries ℚ := encode (fun m => f j m)
-private noncomputable def R : PowerSeries ℚ := largeSchroderSeries.map (Nat.castRingHom ℚ)
+noncomputable def R : PowerSeries ℚ := largeSchroderSeries.map (Nat.castRingHom ℚ)
 
-private theorem R_eq : R = 1 + X * R + X * R ^ 2 := by
+theorem R_eq : R = 1 + X * R + X * R ^ 2 := by
   have h := congrArg (PowerSeries.map (Nat.castRingHom ℚ))
     largeSchroderSeries_eq_one_add_X_mul_largeSchroderSeries_add_X_mul_largeSchroderSeries_sq
   simpa only [map_add, map_one, map_mul, map_X, map_pow, R] using h
 
-private theorem R_zero : constantCoeff R = 1 := by
+theorem R_zero : constantCoeff R = 1 := by
   simp [R, ← coeff_zero_eq_constantCoeff, coeff_map]
 private theorem F_zero (j : ℕ) : constantCoeff (F j) = 1 := by simp [F, f]
 private theorem F_coeff (j m : ℕ) : eCoeff (F j) m = (f j m : ℚ) := eCoeff_encode _ _

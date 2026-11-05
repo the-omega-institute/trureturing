@@ -1,0 +1,70 @@
+**命题 8.7（等删剖面的统一误差）。** 对每个 $b>a\ge5$ 和整数 $0\le k\le a/2$，令 $C_k$ 为删除恰好 $k$ 个 $A$ 顶点和 $k$ 个 $B$ 顶点后的联盟。则
+
+$$
+D_0(a,b)>0,
+$$
+
+且有精确主项与显式误差
+
+$$
+\left|
+\frac{\Delta(C_k;\phi)}{D_0(a,b)}
+-\left(\frac{8k}{L}-16\left(\frac{k}{L}\right)^2\right)
+\right|
+\le
+\frac{3456k}{L^2}
++\frac{16k^3}{aL^2(1-k/a)}.
+\tag{8.24}
+$$
+
+特别地，对每个固定 $M>0$，当 $k\le ML$ 且 $ML\le a/2$ 时，误差一致满足
+
+$$
+\left|
+\frac{\Delta(C_k;\phi)}{D_0(a,b)}
+-\left(\frac{8k}{L}-16\left(\frac{k}{L}\right)^2\right)
+\right|
+\le
+\varepsilon_M(a):=\frac{3456M}{L}+\frac{32M^3L}{a},
+\tag{8.25}
+$$
+
+其中 $\varepsilon_M(a)\to0$。
+
+**证明。** 此时 $x=k/a$、$y=k/b$，故 $x-y=k\delta$。由 (8.16) 和
+$D_0=\sqrt{ab}\delta^2L^2/64$，
+
+$$
+\frac{\Delta(C_k;\phi)}{D_0}
+=\frac{128}{\delta^2L^2}
+\left(Hk\delta-
+\frac12(\sqrt{1-k/a}-\sqrt{1-k/b})^2\right).
+\tag{8.26}
+$$
+
+其中线性项为 $128kH/(\delta L^2)$，
+它与 $8k/L$ 的差由 (8.1) 控制，至多
+$128\cdot27k/L^2=3456k/L^2$。又
+
+$$
+(\sqrt{1-k/a}-\sqrt{1-k/b})^2
+=\frac{k^2\delta^2}
+ {\bigl(\sqrt{1-k/a}+\sqrt{1-k/b}\bigr)^2}.
+$$
+
+用 $k/b\le k/a$ 得
+$S^2\ge4(1-k/a)$、$4-S^2\le4k/a$，从而
+
+$$
+0\le\frac1{2S^2}-\frac18
+=\frac{4-S^2}{8S^2}
+\le\frac{k}{8a(1-k/a)}.
+$$
+
+代入 (8.26) 即得第二项 $16k^3/[aL^2(1-k/a)]$，证明 (8.24)。若 $k\le ML$、$k/a\le1/2$，两项分别不超过
+$3456M/L$ 与 $32M^3L/a$，得到 (8.25)。∎
+
+第 3–4 节提供固定 $a$ 的极限，第 7 节提供联合正下界；(8.4) 的统一积分估计把这些中间结构接到 $a$、$b$ 同变的相对误差、实际整数见证及全体最大联盟的稳定性上。谱值、阶乘分配、优先级积分、删样本 Jensen 比较和移位逆矩分别采用上述仓内结果与原始文献；本节的定量联合推导不把这些经典中间步骤另算为新结果。
+
+二阶渐近修正、有限参数下的精确最大联盟、整数取整与并列结构，以及不受 $k=l$ 约束的分开删除律，仍未由上述估计决定。固定 $d$ 的 (8.19) 也未给出 $1\le d\le c(\log a)^2$ 的统一等删窗口。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2edc179f3facdf5f3e7e693dd1a19ea819067e311c30cdb5ebd17663871145d6
+  normalized_sha256: sha256:2edc179f3facdf5f3e7e693dd1a19ea819067e311c30cdb5ebd17663871145d6
+cas_ref: sha256:2edc179f3facdf5f3e7e693dd1a19ea819067e311c30cdb5ebd17663871145d6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 事件在列表中的位置被约定为操作次序，是坐标语义和执行约定；没有等式、排序定理或其他对象性质。
+    previous_atom_id: 4af6c4fc4836def5c1dbd5c5b4345daa83581ca57c5bde24a1d221f8c602ceb6
+    next_atom_id: 90d050404fc5199bb8ffb722be5cbcf0ce144e7c334a8fca63f0d466c24581f6

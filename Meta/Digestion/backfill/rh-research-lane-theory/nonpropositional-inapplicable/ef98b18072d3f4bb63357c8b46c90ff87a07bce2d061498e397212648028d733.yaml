@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ef98b18072d3f4bb63357c8b46c90ff87a07bce2d061498e397212648028d733
+  normalized_sha256: sha256:ef98b18072d3f4bb63357c8b46c90ff87a07bce2d061498e397212648028d733
+cas_ref: sha256:ef98b18072d3f4bb63357c8b46c90ff87a07bce2d061498e397212648028d733
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Suzuki arXiv v1 的纯文献地址，没有 theorem 断言。'
+    previous_atom_id: c6819430f5c09b6abbb7fd0b4f3661a55a58f2ed7b30d0dbaca51eeb77b2dcf2
+    next_atom_id: b94b0807fc63fadce049af8b0140fff17a248e6da0b669ba4d2c178040886775

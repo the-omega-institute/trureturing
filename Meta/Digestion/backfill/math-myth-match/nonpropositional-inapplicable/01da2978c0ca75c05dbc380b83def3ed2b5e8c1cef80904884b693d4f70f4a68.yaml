@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:01da2978c0ca75c05dbc380b83def3ed2b5e8c1cef80904884b693d4f70f4a68
+  normalized_sha256: sha256:01da2978c0ca75c05dbc380b83def3ed2b5e8c1cef80904884b693d4f70f4a68
+cas_ref: sha256:01da2978c0ca75c05dbc380b83def3ed2b5e8c1cef80904884b693d4f70f4a68
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Augustine on forgetting and limits of self-understanding. The text gives historical interpretation, bibliographic scope or methodological advice, rather than a mathematical assertion.'
+    previous_atom_id: 965b0130a94c5d75a061e3ef199d643e4eb75711f2b003abd7a138ec3fe2edc7
+    next_atom_id: 23be9c9d31122142d0fc4141b00885cac61d20bd9a80c635a21b6ce17af8cfac

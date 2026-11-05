@@ -8,7 +8,7 @@ internal sealed class TriangleSymmetricLocalRefutationDocument : IScribeDocument
 {
     private const string Prefix = "D5/S3/Quantum/Entanglement/TriangleSymmetricLocalRefutation.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Quantum/baumer2024trianglelocal");
+        LibraryNoteRef.Create("D5/L/QuantumContext/baumer2024trianglelocal");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "There is a distribution that is local in the triangle network and fully symmetric, with four outcomes per party, such that p(A = B = C) = 41/144 > 1/4. This answers yes the open problem of E. B\u00e4umer, V. Gitton, T. Kriv\u00e1chy, N. Gisin and R. Renner (arXiv:2405.08939), whose best local construction reached 1/4.",

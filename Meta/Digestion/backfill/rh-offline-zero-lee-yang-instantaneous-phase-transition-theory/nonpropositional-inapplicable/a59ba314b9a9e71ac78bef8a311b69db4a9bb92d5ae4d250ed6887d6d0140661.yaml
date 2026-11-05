@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a59ba314b9a9e71ac78bef8a311b69db4a9bb92d5ae4d250ed6887d6d0140661
+  normalized_sha256: sha256:a59ba314b9a9e71ac78bef8a311b69db4a9bb92d5ae4d250ed6887d6d0140661
+cas_ref: sha256:a59ba314b9a9e71ac78bef8a311b69db4a9bb92d5ae4d250ed6887d6d0140661
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：否定清单声明不冒称 RH 已证，不宣称 RH 为真或为假。 此文本两次出现均为不冒称已证的清单；本收据选择增订一 occurrence 1。
+    previous_atom_id: f6c5497a46e4c3f489eac1780f313c7cb8b4ea3de071cfff7a76f6e87163b4b4
+    next_atom_id: a30094f33644f9da568f5c136c6097df19aafeae842d8edb3e31647df17e5bf2

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:afb644c6465c21cb60d98af37e70ad089c6d6c41cb664601e9bb44167973609e
+  normalized_sha256: sha256:afb644c6465c21cb60d98af37e70ad089c6d6c41cb664601e9bb44167973609e
+cas_ref: sha256:afb644c6465c21cb60d98af37e70ad089c6d6c41cb664601e9bb44167973609e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “不可逆压缩”是时间箭头机制清单中的名词项，未陈述具体映射、不可逆定理或数值。
+    previous_atom_id: 3233d4abcebb790cb390e720ac32d88f9b6ac265565bfc5c242882556ce1f662
+    next_atom_id: 029b2ce936da5b3d743ba92219a01f2194e1f4ea81526b80f515a8a13987b4b7

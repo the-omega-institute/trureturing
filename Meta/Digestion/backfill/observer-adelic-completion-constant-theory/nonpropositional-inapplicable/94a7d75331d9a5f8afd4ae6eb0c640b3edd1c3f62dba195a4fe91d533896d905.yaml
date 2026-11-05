@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:94a7d75331d9a5f8afd4ae6eb0c640b3edd1c3f62dba195a4fe91d533896d905
+  normalized_sha256: sha256:94a7d75331d9a5f8afd4ae6eb0c640b3edd1c3f62dba195a4fe91d533896d905
+cas_ref: sha256:94a7d75331d9a5f8afd4ae6eb0c640b3edd1c3f62dba195a4fe91d533896d905
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 分类清单中的 sticky coherent blocks 类别名，没有存在性或界的断言。'
+    previous_atom_id: 8be89e0eacefb22533a7af491b36c55333346a2e065e491b9395a9150e037b5f
+    next_atom_id: 786e3b2d8a5947b4189b83782ada43bce77a9eb7bc42c8fa39edda0ba236ed90

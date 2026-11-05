@@ -1,0 +1,23 @@
+**定义 44.2（局部比较常数）。** 固定 $t\in(0,1)$，写 $P_\delta=P_{t,t+\delta}$、$P_0=P_{t,t}$，并定义
+
+$$
+\begin{aligned}
+D_t&=(1-t)^2+t,& f_t&=\frac{D_t}{1+t},&s_t&=\frac{t}{D_t},\\
+m_t&=\min(s_t,1-s_t),&b_t&=m_tf_t=\frac{\min(t,(1-t)^2)}{1+t},\\
+C_t&=\frac{1+2t}{t^2}+\frac3{t(1-t)},&
+d_t&=\frac{\min(t,1-t)}2,&
+\ell(\Delta)&=\log\log(e+1/\Delta)\quad(\Delta>0).
+\end{aligned}
+\tag{44.7}
+$$
+
+$D_t,s_t,m_t$ 与第 41 节相同，$C_t$ 与第 16–18 节相同；$b_t$ 是二值 Bayes 基线。若 $0<\epsilon<b_t$，另置
+
+$$
+\gamma_t=b_t-\epsilon>0,\qquad
+\beta_t=f_t-\epsilon/m_t=\gamma_t/m_t>0.
+\tag{44.8}
+$$
+
+所有对数为自然对数。下界只固定这样的 $t,\epsilon$ 后令分离度趋于零；两个构造则固定 $0<\epsilon\le1/4$，在全部非对角线开参数方形上满足（44.6）。
+

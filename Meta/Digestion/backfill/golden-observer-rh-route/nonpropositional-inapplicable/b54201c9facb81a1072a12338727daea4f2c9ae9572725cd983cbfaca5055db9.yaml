@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b54201c9facb81a1072a12338727daea4f2c9ae9572725cd983cbfaca5055db9
+  normalized_sha256: sha256:b54201c9facb81a1072a12338727daea4f2c9ae9572725cd983cbfaca5055db9
+cas_ref: sha256:b54201c9facb81a1072a12338727daea4f2c9ae9572725cd983cbfaca5055db9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只记录席位、模块、依赖次序与结账安排；未提出需要证明的数学断言。文本定位：## 四 预算与结算 两席位轮,可并行:席 A 在 `EulerGerm/GoldenGermWindowZeroCriterion.lean` 同模块证 G-g-1 与 G-g-2(deposit 绑 G-g-1 atom;G-g-2 走 PR-1b 收据后 PR-2 cover);席 B 在 `
+    previous_atom_id: b67e89d162887e989fc02b91ba8f8759a9eac542c3fd026dd428f82b82c74a4f
+    next_atom_id: af73ef4009c9d99f453360cab2b9a5ffdcc032b0b402121e79b95ee31bc7612f

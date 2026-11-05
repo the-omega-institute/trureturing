@@ -1,0 +1,45 @@
+## 6. 确定性原子载体是特殊的重合情形
+
+在 $\alpha,\beta$ 原子树的一个固定确定性动作菜单中，若策略、动作、合法性、失败分支和档案记录都没有外生随机性，则对每个固定实验 $E$ 都有
+
+$$
+\mu_s^E=\delta_{r_E(s)}.
+$$
+
+若固定实验 $E$ 的完整档案轨迹 $r_E(s)$ 与 $r_E(t)$ 不同，则对应的 Dirac 测度互相奇异；若轨迹相同，则完全相同。因此在这个明确的确定性载体上，对固定实验而言 law 分离就是一次运行零误差分离；对深度至多 $n$ 的实验族，\(\text{law 可分离}\) 指存在某个 $E$ 使 $\mu_s^E\ne\mu_t^E$，也就是 $(s,t)\notin A_n^{\mathrm{law}}$，因此
+
+$$
+\boxed{
+\text{law 可分离}
+\iff
+\text{一次运行可零误差分离}
+}
+\tag{6.1}
+$$
+
+上一卷的权限例子正属于这个情形。取
+
+$$
+t=\langle\langle\alpha,\beta\rangle,\alpha\rangle,
+\qquad
+u=\langle\alpha,\langle\beta,\alpha\rangle\rangle,
+$$
+
+并令 $s_t=(t,\mathsf{locked})$、$s_u=(u,\mathsf{locked})$。Unlock 的档案标签相同；只有之后的 Read_L 才给出
+
+$$
+\mathsf{branch}
+\quad\text{与}\quad
+\alpha.
+$$
+
+所以先前得到的
+
+$$
+(s_t,s_u)\in A_1,\qquad(s_t,s_u)\notin A_2
+$$
+
+同时可以解释为档案律残余的分离，也可以解释为一次有限运行的零误差分离。
+
+若把 Read_L 换成带正误差的传感器，语义标签仍然不同，但上述重合关系失效：有限次档案可能支持重叠，必须改用风险界、渐近判别或额外参考。不能把确定性原子例子的结论未经条件迁移到噪声设备。
+

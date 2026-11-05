@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:238add3b49165273fadde796671aa1952b68d0d66efb31eeb9d852b31d6c9c45
+  normalized_sha256: sha256:238add3b49165273fadde796671aa1952b68d0d66efb31eeb9d852b31d6c9c45
+cas_ref: sha256:238add3b49165273fadde796671aa1952b68d0d66efb31eeb9d852b31d6c9c45
+coverage_gids:
+  - gid: D5/S3/Arith/ExponentExchange/IntegerSwap.normalized_sigma_mul
+    target_statement_id: sha256:d46dcc91463f97aa1e40abc6a3ebbbf96ac89ac794eaf058b5d651a27da40072
+receipts:
+  unresolved_subitems: []

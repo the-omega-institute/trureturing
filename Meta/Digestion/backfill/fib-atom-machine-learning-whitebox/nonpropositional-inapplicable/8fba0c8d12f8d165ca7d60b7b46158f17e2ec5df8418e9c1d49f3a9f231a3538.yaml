@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8fba0c8d12f8d165ca7d60b7b46158f17e2ec5df8418e9c1d49f3a9f231a3538
+  normalized_sha256: sha256:8fba0c8d12f8d165ca7d60b7b46158f17e2ec5df8418e9c1d49f3a9f231a3538
+cas_ref: sha256:8fba0c8d12f8d165ca7d60b7b46158f17e2ec5df8418e9c1d49f3a9f231a3538
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: ML 卷相关章节的书目范围与合同限制，不重述其定理作为本条新断言。
+    previous_atom_id: e1512a215ec23210dca32b3326063a2d66e885590c0f63b950da91108f17f5cc
+    next_atom_id: 9dbdb7ed69f71344335bdd491fb02e6f7d75410e0f8ca480deb3133d40ae3ce9

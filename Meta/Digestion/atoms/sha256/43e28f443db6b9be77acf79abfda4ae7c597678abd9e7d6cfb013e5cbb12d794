@@ -1,0 +1,30 @@
+**Theorem 143.2 (A seven-row lower certificate; repo-derived).**
+On the entire complex tangent domain, $n_f\ge163/4000$.
+
+*Proof.* Choose the following seven literal signed rows, in the given order:
+
+$$
+((i_j,w_j,\sigma_j))_{j=1}^7
+ =((1,N0,+1),(1,N1,-1),(1,NN,-1),(3,1N,+1),
+   (5,NN,+1),(9,0,+1),(9,NN,-1)).
+\tag{143.3}
+$$
+
+Let $M$ be the $7\times7$ matrix whose first row is all ones and
+whose entry in row $r+1$, column $j$ is $\sigma_jU_{i_j,w_j,r}$,
+$1\le r\le6$. Put $c_j=\sigma_j\beta_{i_j,w_j}$,
+$d_0=\det M$, and $d_j=\det M^{(j)}$, where $M^{(j)}$ replaces
+column $j$ by $(1,0,0,0,0,0,0)^{\mathsf T}$.
+The following integer quadruples give the exact determinants:
+$d_j=[p_j]/(3\cdot2^{69})$.
+
+| $j$ | $p_j$ |
+|---|---|
+| 0 | $(-31220053431162,-22073591298906,100293003605827,70917713152081)$ |
+| 1 | $(-45484145366184,-32162113122336,28572580689496,20203972682396)$ |
+| 2 | $(-1558616643432,-1101578522784,21070201204248,14898880792756)$ |
+| 3 | $(1422651311326,1005908484762,4148583120107,2933487112869)$ |
+| 4 | $(-65894129011488,-46593623215968,60314417694432,42648266573880)$ |
+| 5 | $(52680843320784,37252123958808,-18757220296288,-13263213464480)$ |
+| 6 | $(39364427549952,27834693731904,-8967243112384,-6340716360072)$ |
+| 7 | $(-11751084592120,-8309002613292,13911684306216,9837035814732)$ |

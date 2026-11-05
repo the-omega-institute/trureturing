@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2ca6da154bc3461411811dbef00e1d13e78eca89aa2e05720cab5ea16a166b33
+  normalized_sha256: sha256:2ca6da154bc3461411811dbef00e1d13e78eca89aa2e05720cab5ea16a166b33
+cas_ref: sha256:2ca6da154bc3461411811dbef00e1d13e78eca89aa2e05720cab5ea16a166b33
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只列出相似变换名称“缩放”，公式已在相邻 atom 中。
+    previous_atom_id: 96edb5eade5897597001c2f77dee85f00f56b4b41a47feaf78b874e99686368e
+    next_atom_id: cd65ee973917a0e46b0a1aa0eaf531327c553ad0fcc4ca489cd6721b29868fbe

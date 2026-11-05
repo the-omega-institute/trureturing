@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:161d371dc830a4c1f7638b024b26f8fe9d4315320effb34deccbd5307a82e5c8
+  normalized_sha256: sha256:161d371dc830a4c1f7638b024b26f8fe9d4315320effb34deccbd5307a82e5c8
+cas_ref: sha256:161d371dc830a4c1f7638b024b26f8fe9d4315320effb34deccbd5307a82e5c8
+coverage_gids:
+  - gid: D5/S3/Geometry/Gluing/SecondBarycentricStarSeparation.coordinate_star_regions_disjoint
+    target_statement_id: sha256:15204bf8b0608e86f8faa9cfd333970309efad531aa27f29a1e1a1b53ecec31e
+  - gid: D5/S3/Geometry/Gluing/SecondBarycentricStarSeparation.coordinate_star_regions_separated
+    target_statement_id: sha256:fd8804e1d76e680c30d61ba91731296cb3b748b6fa8c851b402084ec01a5ea7e
+receipts:
+  unresolved_subitems: []

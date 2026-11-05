@@ -1,0 +1,59 @@
+**Theorem 3.1 (Uniform two-layer reduction at fixed cost).** Fix $C>0$. There exists an integer $N(C)$ such that every graph of order $n\ge N(C)$ with $E(G)\le C/n$ is a two-layer graph. Its number $s$ of sinks is bounded solely in terms of $C$, and every sink has degree at least $n/(3C)$. If its cyclomatic number is positive, then $s\ge2$.
+
+One sufficient choice is obtained by setting
+
+$$
+A=2C+1,\qquad K=\lceil\sqrt A\rceil,
+$$
+
+and taking any integer
+
+$$
+N(C)>\max\{1,C^2,3C,A^3,4AK^2,36C^2A\}.
+$$
+
+For this choice $s\le K$.
+
+**Proof.** For $n\ge N(C)$, put $\eta=C/n<1/3<\sqrt2-1$. The exact edge identity in Theorem 2.1 gives
+
+$$
+r^2\le\frac{2C+C^2/n}{n}\le\frac An,\qquad
+g(r)\ge\frac{r^2}{2+C/n}\ge\frac13r^2.
+$$
+
+The incidence bound implies
+
+$$
+s^2\le E(G)(2+C/n)(n-s)\le C(2+C/n)\le A,
+$$
+
+so $s\le K$. A directed path $v_0\to v_1\to v_2\to v_3$ would give
+
+$$
+1\le d_{v_0}\le(A/n)^{3/2}d_{v_3}
+\le\frac{A^{3/2}(n-1)}{n^{3/2}}<\frac{A^{3/2}}{\sqrt n}<1,
+$$
+
+which is impossible.
+
+Suppose $v$ is mixed. Every outgoing neighbor of $v$ is a sink: otherwise an incoming edge at $v$, this outgoing edge and an outgoing edge at its other endpoint form a forbidden directed path of length three. Therefore its outgoing degree $k$ is at most $K$. An incoming edge, whose smaller endpoint has degree at least one, and an outgoing edge, whose larger endpoint has degree at most $n-1$, imply
+
+$$
+\sqrt{n/A}\le d_v<\sqrt{An}.
+$$
+
+Since $n>4AK^2$, we have $d_v>2K$, so the incoming degree $j=d_v-k>d_v/2$. Its incoming edges alone cost
+
+$$
+E(G)\ge\frac{j}{3d_v^2}>\frac1{6d_v}
+>\frac1{6\sqrt{An}}>\frac Cn,
+$$
+
+where the final inequality follows from $n>36C^2A$. This contradiction excludes mixed vertices. Each vertex is now either a source or a sink and every edge joins the two classes. The individual-sink bound gives
+
+$$
+D_i\ge\frac{n}{C(2+C/n)}\ge\frac n{3C}.
+$$
+
+If $s=1$, every other vertex is a source with the single sink as its only possible neighbor. Simplicity and connectedness make the graph a star, whose cyclomatic number is zero. This proves the positive-cyclomatic assertion. ∎
+

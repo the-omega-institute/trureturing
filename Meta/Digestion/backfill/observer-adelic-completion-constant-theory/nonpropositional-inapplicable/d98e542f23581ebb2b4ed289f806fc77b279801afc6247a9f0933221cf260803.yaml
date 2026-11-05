@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d98e542f23581ebb2b4ed289f806fc77b279801afc6247a9f0933221cf260803
+  normalized_sha256: sha256:d98e542f23581ebb2b4ed289f806fc77b279801afc6247a9f0933221cf260803
+cas_ref: sha256:d98e542f23581ebb2b4ed289f806fc77b279801afc6247a9f0933221cf260803
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 待构造对象列表中的 Hardy block 名称；未断言该算子已构造或满足任何关系。
+    previous_atom_id: 0618f53018c35c577fa4a63f34737a29db0f5943e0bda504d74b9af816e3672c
+    next_atom_id: 1f584375fa791c8fb72ee8416ca2a16310b5ba77fb9e799ab8e881d485c1d562

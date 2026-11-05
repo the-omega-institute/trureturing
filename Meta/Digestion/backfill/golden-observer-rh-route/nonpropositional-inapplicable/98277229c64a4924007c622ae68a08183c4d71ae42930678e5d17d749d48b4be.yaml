@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:98277229c64a4924007c622ae68a08183c4d71ae42930678e5d17d749d48b4be
+  normalized_sha256: sha256:98277229c64a4924007c622ae68a08183c4d71ae42930678e5d17d749d48b4be
+cas_ref: sha256:98277229c64a4924007c622ae68a08183c4d71ae42930678e5d17d749d48b4be
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只记录声明适用范围或不作何种断言的边界；未提出需要证明的数学断言。文本定位：**边界**:不断言零点存在;不断言 O-6 ⟹ RH。
+    previous_atom_id: 252662b53c79650b4583bd41b52247782193399a9ce27e682269c98478dcbb91
+    next_atom_id: 1d4e651290a75bd527518c806c00cf9931a3cfff8c2beaa0f99a4d919c0ea770

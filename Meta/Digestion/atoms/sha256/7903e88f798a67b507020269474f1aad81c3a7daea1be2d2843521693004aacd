@@ -1,0 +1,14 @@
+**Theorem 2.1 (legal matrix monoid).** The finite $M/J$ word matrices, including $I$, are exactly the nonnegative integral $2\times2$ matrices of determinant $+1$ or $-1$.
+
+**Proof.** Products of $M,J$ have the stated properties. Conversely let
+$$
+H=\begin{pmatrix}h&t\\g&e\end{pmatrix}
+$$
+be nonnegative integral with $|\det H|=1$. Its rows are nonzero. When the first row dominates the second componentwise, subtract the second from the first. This is left multiplication by $U^{-1}$ and leaves a nonnegative integral unimodular matrix. When the second dominates the first, use $L^{-1}$ instead. Each subtraction strictly reduces the nonnegative integer sum of all entries, since the subtracted row is nonzero. The resulting rows cannot include a zero row because the determinant remains nonzero.
+
+If the rows are incomparable, first suppose $h>g$ and $t<e$. Write $h=g+\eta$ and $e=t+\theta$, with positive integers $\eta,\theta$. Then
+$$
+\det H=g\theta+\eta t+\eta\theta.
+$$
+Absolute determinant one forces $g=t=0$ and $\eta=\theta=1$, so $H=I$. The other incomparable case becomes this one after exchanging the rows, and gives $H=J$. Repeated subtraction must therefore terminate at $I$ or $J$. Reversing the reductions expresses the original matrix using $U,L,J$, and $U=JM$, $L=MJ$ are forward legal words. This is a finite decreasing-integer proof, with no inverse acquisition. ∎
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ed2f321754b6b2b643c11b930796928b245b5b2157125a8f08a1231d53299ec1
+  normalized_sha256: sha256:ed2f321754b6b2b643c11b930796928b245b5b2157125a8f08a1231d53299ec1
+cas_ref: sha256:ed2f321754b6b2b643c11b930796928b245b5b2157125a8f08a1231d53299ec1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此片仅列理论分支名称「Fredholm」，不单独声称行列式恒等式。
+    previous_atom_id: fd4ae7b314e5d2b8e31f0b3d0e1b28b1a556008d435aa81d2744413228d270a1
+    next_atom_id: 83b31f3874c9ba882ff189592e05a0c9cb75b23db0f13e3bf7ddff60fc7f709c

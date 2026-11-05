@@ -1,0 +1,12 @@
+**Proposition 4.2 (The slice $q=0$).** Let $q=0$. Then $\Phi$ is Schwarz if and only if $-1/(d-1)\le\lambda\le1$. On this slice the Schwarz maps of the family are exactly its completely positive maps. Stance: repo-derived; both proofs are given in full. The second uses only cited fact (c) (Choi's theorem) together with the Kraus form of Schur multipliers, which is proved inline: for $C=\sum_kc_kc_k^\ast\ge0$ one has $C\circ X=\sum_k\mathrm{diag}(c_k)\,X\,\mathrm{diag}(c_k)^\ast$, so $X\mapsto C\circ X$ is completely positive. The completely positive interval is read off cited fact (a)(ii).
+
+**Proof.** For $q=0$, Lemma 3.1 gives $S(X)=(1-\lambda)\big(\lambda\,Y^\ast Y+\mathrm{diag}(Y^\ast Y)\big)$ for traceless $X$, and by the invariance $S(X+cI)=S(X)$, which leaves $Y$ unchanged, the same formula holds for every $X$. If $\lambda>1$ or $\lambda<-1/(d-1)$, then (ii) or (iv) of Theorem 4.1 fails, so $\Phi$ is not Schwarz. If $0\le\lambda\le1$, both $\lambda Y^\ast Y$ and $\mathrm{diag}(Y^\ast Y)$ are positive semidefinite and $1-\lambda\ge0$. Let $-1/(d-1)\le\lambda<0$. For $v\in\mathbb C^d$, each row of $Yv$ is a sum of at most $d-1$ terms, so by the Cauchy–Schwarz inequality
+
+$$
+v^\ast Y^\ast Yv=\sum_i\Big|\sum_{j\ne i}y_{ij}v_j\Big|^2\le(d-1)\sum_i\sum_{j\ne i}|y_{ij}|^2|v_j|^2=(d-1)\,v^\ast\mathrm{diag}(Y^\ast Y)\,v .
+$$
+
+Hence $\lambda Y^\ast Y+\mathrm{diag}(Y^\ast Y)\ge\big(1+\lambda(d-1)\big)\,\mathrm{diag}(Y^\ast Y)\ge0$, and $S(X)\ge0$. For the last sentence, $q=0$ means $\alpha=0$ and $\beta=1-\lambda$ in cited fact (a)(ii), whose conditions become $0\le1-\lambda\le d/(d-1)$, that is, $-1/(d-1)\le\lambda\le1$.
+
+Second proof. For $q=0$, $\Phi(X)=C\circ X$ is the Schur (entrywise) multiplier by $C=\lambda J+(1-\lambda)I$, where $J$ is the all-ones matrix; the eigenvalues of $C$ are $1+(d-1)\lambda$ and $1-\lambda$, so $C\ge0$ exactly when $-1/(d-1)\le\lambda\le1$. A unital Schwarz map is positive, since $\Phi(X^\ast X)\ge\Phi(X)^\ast\Phi(X)\ge0$; applied to $J\ge0$ this gives $C=\Phi(J)\ge0$. Conversely, if $C=\sum_kc_kc_k^\ast$, then $C\circ X=\sum_k\mathrm{diag}(c_k)\,X\,\mathrm{diag}(c_k)^\ast$, so $\Phi$ is completely positive, and it is Schwarz by cited fact (c). ∎
+

@@ -1,0 +1,36 @@
+**命题 11.3（同一族的实际分支与非父层失败）。** Fix $y\in\mathcal I$ and the family $\mathcal A_y$ of (11.6). For each $W_\ell\in\mathcal A_y$, its predictions at original clocks $5,6,7$ are as follows; the last column holds for either final atom:
+
+$$
+\begin{array}{c|c|c|c|c}
+E_5&E_6&z_5&z_6&z_7\\ \hline
+J&J&0&-y/2&0\\
+J&M&0&-126/5&0\\
+M&J&0&48/5-y&0\\
+M&M&0&-156/5-48/(5\ell)&0.
+\end{array}                                                       \tag{11.7}
+$$
+
+In particular,
+
+$$
+\begin{gathered}
+L_2(\mathcal A_y,(H_p(y),J,0)),\\
+\mathcal A_y\subseteq
+\mathcal F((H_p(y),M,0,J,48/5-y)),\\
+L_1(\mathcal A_y,(H_p(y),M,0,J,48/5-y)),\\
+\neg L_2(\mathcal A_y,(H_p(y),M,0)),\qquad
+\neg L_3(\mathcal A_y,H_p(y)).
+\end{gathered}                                                     \tag{11.8}
+$$
+
+Proof. The first two rows were computed in Theorem 10.1. For fifth $M$, the cumulative matrix is $MC_0$, and $f_\ell(5)=0$ gives the same fifth read $0$. The two sixth trace factors are
+
+$$
+\operatorname{tr}(JMC_0P_\ell)=(2t+1/4)\ell,\qquad
+\operatorname{tr}(M^2C_0P_\ell)=1+13\ell/4.
+$$
+
+Multiplying by $f_\ell(6)=-48/(5\ell)$ and using $y=12+96t/5$ gives the last two sixth responses. The gain vanishes at $7$ for every final action. Lemma 9.3 proves the positive failure assertions. The last sixth response is injective in $\ell>0$, so fifth $M$, sixth $M$ separate the pair by clock six. This proves both negations in (11.8); it is the restriction of the existing whole-class inverse of Theorem 5.2 to this pair, not an inverse on $\mathcal P_y$.
+
+For the existing representatives in Proposition 5.3, the normalized parameters are $y=1632/55$, $t=81/88$ and $\ell=88/69,88/53$. They are instances of (11.6), with exactly the same $M,M$ separation as that proposition. ∎
+

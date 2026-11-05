@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:85c183294c46834753b0002c28de342278f5e615c3743a5146474e7876cbf494
+  normalized_sha256: sha256:85c183294c46834753b0002c28de342278f5e615c3743a5146474e7876cbf494
+cas_ref: sha256:85c183294c46834753b0002c28de342278f5e615c3743a5146474e7876cbf494
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 列举可选择的方向类型及有理方向；未断言普适黄金律。'
+    previous_atom_id: 8ede9f63ae48dd07b8a8a1b0943e6f7f90e830e962470d4af909607a1a3d549e
+    next_atom_id: 0df076427c9484b5dc06c4308e714b1742f38b001639e13ceb479a341cf9b59a

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:706ac5ce22b7e461a03172e504fa3eb1103a32c8e175cc80f7bdcaa93170fa7d
+  normalized_sha256: sha256:706ac5ce22b7e461a03172e504fa3eb1103a32c8e175cc80f7bdcaa93170fa7d
+cas_ref: sha256:706ac5ce22b7e461a03172e504fa3eb1103a32c8e175cc80f7bdcaa93170fa7d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proof-strategy and value assessment, without a separate mathematical statement.
+    previous_atom_id: ea4eb4550381482014261314272b05f455650074ada23ca1458e62a74688807a
+    next_atom_id: feb043a753b72d1f51f6e50b8470fe838169f8429abd522b87c13724ff23c828

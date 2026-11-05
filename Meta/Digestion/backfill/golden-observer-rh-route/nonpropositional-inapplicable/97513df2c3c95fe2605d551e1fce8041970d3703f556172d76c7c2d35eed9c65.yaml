@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:97513df2c3c95fe2605d551e1fce8041970d3703f556172d76c7c2d35eed9c65
+  normalized_sha256: sha256:97513df2c3c95fe2605d551e1fce8041970d3703f556172d76c7c2d35eed9c65
+cas_ref: sha256:97513df2c3c95fe2605d551e1fce8041970d3703f556172d76c7c2d35eed9c65
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 冻结资产数量、引用名称和方法论处置叙述；是成果目录与工作史，不是对象级数学命题。
+    previous_atom_id: c35a9e862819a19aaa767a953b7ae8f1528486551cc27db086c9ce19539e77d6
+    next_atom_id: afbcec948922802bd65734674257153998aa043537bd10a98ddd7305546842cf

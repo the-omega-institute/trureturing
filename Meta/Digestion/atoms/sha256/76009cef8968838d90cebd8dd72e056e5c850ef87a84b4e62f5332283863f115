@@ -1,0 +1,8 @@
+**Corollary 8.1 (the established bounds).** The following statements hold for every declared $d\ge1$.
+
+| Task or identity | Established read count |
+| --- | --- |
+| Nonzero universal scalar-linear gain identity on a mixed word | Impossible through $2d+2$ |
+| Complete-target protocol with an everywhere successful countable-palette gain output | At least $2d+3$, and at most $4d+5$ |
+| Gain-only extraction on a preassigned word, with countable fixed-matrix selection | Exactly $2d+3$ |
+| One all-input mixed-word gain map | A realization at $2d+4$ |

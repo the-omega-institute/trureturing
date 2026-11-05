@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:4debb265ca0752149ae6bdd59faa3dd4460f95f5dc3cf7390e716f7682edc1a0
+  normalized_sha256: sha256:4debb265ca0752149ae6bdd59faa3dd4460f95f5dc3cf7390e716f7682edc1a0
+cas_ref: sha256:4debb265ca0752149ae6bdd59faa3dd4460f95f5dc3cf7390e716f7682edc1a0
+coverage_gids:
+  - gid: D5/S3/Observer/AgencySelf/AgencyEnrichment.StrategyResidual
+    target_statement_id: sha256:a26c7b6b6182590eeb71bf88c3997e34ba68c47251e6dad0522856852cd82fc1
+receipts:
+  unresolved_subitems: []

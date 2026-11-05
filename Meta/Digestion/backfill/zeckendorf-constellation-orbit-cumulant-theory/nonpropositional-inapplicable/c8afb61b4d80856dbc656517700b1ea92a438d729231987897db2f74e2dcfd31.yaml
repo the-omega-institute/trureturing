@@ -1,0 +1,18 @@
+fingerprints:
+  raw_sha256: sha256:c8afb61b4d80856dbc656517700b1ea92a438d729231987897db2f74e2dcfd31
+  normalized_sha256: sha256:c8afb61b4d80856dbc656517700b1ea92a438d729231987897db2f74e2dcfd31
+cas_ref: sha256:c8afb61b4d80856dbc656517700b1ea92a438d729231987897db2f74e2dcfd31
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: A convention defining the six editorial evidence labels repo-closed, derived, proposed theorem, conditional theorem, conjecture, and model, without asserting a mathematical claim; all label children are settled.
+    previous_atom_id: df012e9057b5d8a7cb538fcbf266bc57fe8fc2dc157d7dfa63c6bb06b1f3b836
+    next_atom_id: 10953877be4869a15e23809e5121f2b3e4a153f19e526efc9dd438f12ebcfd64
+  chain_atoms:
+    - 9394a0403f568ba2a1892125c72a4b64cfc89ef20be7b71327f3dfa8e0b8680f
+    - f6cb8cfb443da461e25f098aa10eba52185e186941316512edf42dd153c43ddf
+    - 3b1989f554c175ffef4aa8adef42b6f54475d71dfad4e79c324fd27caa80c716
+    - 8669a56f089b96a2d4849f94b35aae9c0f248c2fc009257f83a52622f8f75f3d
+    - a603142bdc6d9ed8af43c654f2148ff3e2c4466d0313c84096e977a8fac9b848
+    - 170224aa51690ff2932992418a98f55a5a38fa482cc5b6c8c471d63d5d1edf44

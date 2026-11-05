@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c8e2c8506d98226cbb1a13bb92ad73dbf8a2b47dedb1275fe133acd3e367f79a
+  normalized_sha256: sha256:c8e2c8506d98226cbb1a13bb92ad73dbf8a2b47dedb1275fe133acd3e367f79a
+cas_ref: sha256:c8e2c8506d98226cbb1a13bb92ad73dbf8a2b47dedb1275fe133acd3e367f79a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 哲学文献来源、语言校勘范围及未解决的外推边界；没有新增数学结论。
+    previous_atom_id: 95562ccc8b82f847e57e8e69053c6443962fe8f86ba10d6580ae07d307df71e2
+    next_atom_id: 9d2a6394fd793099c19f72374995519a50c0125dc03c05c868f36b5afd9c1672

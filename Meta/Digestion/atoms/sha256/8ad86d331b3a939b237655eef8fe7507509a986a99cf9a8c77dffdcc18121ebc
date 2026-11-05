@@ -1,0 +1,74 @@
+**Theorem 11.2 (retained same-register continuation and cuts).** At
+Theorem 9.2's cut, let a supplied effective source-free logical native
+program have menu localStep, absolute four-valued Read, applyRho and
+stop, and initial control computed from its public task input and the
+retained $R_o$. Its instruction and continuation calculations have an
+actual finite-code evaluator. Then it has a presence-only compiled use
+on this same actual register and the retained adapter. At every completed
+macro boundary after $e$ logical updates,
+
+$$
+ r_e=\rho^eu,\qquad \widehat r_e=\rho^Nr_e=\rho^{2k+1+e}u,
+ \qquad N=2k+1\text{ fixed},\qquad \widehat e=N+e.   \tag{GPO.37}
+$$
+
+Every completed logical reply, continuation choice and entire terminal
+output agrees with the logical program. Every attained finite logical
+fragment whose evaluator work is finite has a finite compiled execution;
+logical termination with finite evaluator work implies compiled termination.
+No arbitrary program is asserted to terminate. The converse at completed
+boundaries also holds: a compiled execution produces only the corresponding
+logical instructions, replies and successors.
+
+Proof. Compute and retain $N=2K+1$ by paid local work and attach the
+consumer by an actual localStep. Definition 9.1 has acquired $K=k$ and
+its same-source relation; no unknown calibration operand remains. Use the
+Ready/NeedC/NeedG phase construction of ABT15.1, replacing its even macros
+by Theorem 11.1 and translating each literal by $\tau_\pi$. Ready stores
+the original effective control. NeedC stores the pending $(p,f)$ and
+actually obtained $b=1$; NeedG stores nonroot $(p,f)$ and actually obtained
+$b=0$. The continuation $f$ is retained effective control data, not an
+oracle. Its evaluator state and all intermediate word/counter work are
+also retained when a cut occurs.
+
+A logical localStep changes only control. For Read, Theorem 11.1 applies
+to $t=r_e$ and this fixed $N$, returns exactly $r_{r_e}(p)$ and only
+then evaluates $f$ on that reply. All macro Reads use the same stationary
+$\widehat r_e$. A logical update performs exactly one actual applyRho;
+the installed persistent orientation and
+$\rho\rho^Nr_e=\rho^N\rho r_e$ prove the next boundary relation. The
+old physical update epoch is $N+e$ and the old logical epoch is $e$;
+the former is a hidden writer field, not an input to control. Stop returns
+the very same complete output and adds no native Event. Induction on
+logical steps proves the assertions. Conversely every completed macro
+has just the indicated decoded reply, no other control branch; the other
+three instructions have their stated single successor/output. This proves
+the completed-boundary converse by induction as well.
+
+For a cut after the first Read of a two-call macro, the original logical
+Read has not completed, the original continuation has not run, and the
+same logical tree/register relation still holds. Store its acquired bit,
+phase and request. Resume with its one remaining Read, rather than
+repeating the first one. Cuts within finite evaluator work retain that
+work's current machine configuration. A cut at Ready can attach any
+source-free continuation with the declared input/control contract.
+
+More explicitly, process the actual physical trace online from the retained
+initial consumer state. Emit the original localStep and logical old-epoch
+update at their corresponding instructions, emit one logical Read only on
+macro completion, and emit no logical event for declared evaluator
+microsteps. Maintain the pending state just described. If $s_1$ is the
+state after a true fragment $h_1$, this causal interpretation satisfies
+
+$$
+ \Pi_o(s,h_1h_2)=\Pi_o(s,h_1)\,\Pi_o(s_1,h_2).     \tag{GPO.38}
+$$
+
+This follows directly by sequential processing, including a pending cut;
+it needs neither future events nor the hidden source. The actual writer
+still appends every event in $h_1h_2$. Thus the connection and output
+claims preserve all relevant successors and do not identify raw and
+logical logs. Crucially the offset stays $N=2k+1$ even when the absolute
+physical epoch $N+e$ is even. Neither a new even-lag acquisition nor a
+substitution of $(N+e)/2$ for the retained $k$ is performed. $\square$
+

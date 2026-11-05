@@ -1,0 +1,18 @@
+**Definition 10.3 (what the charges include).** The bit rows in (10.5)
+count outcome payload in its fixed order. The public schedule also
+requires its retained source/frame/calibration binding, the value $N$,
+program and setting descriptions, counters, backing, allocation and
+actual reads/writes. Distinct preparation occurrences are bound to their
+positions and pair roles. These further resources are additional to
+(10.5). Retaining the padded word preserves the executed order; retaining
+only outcome counts loses that order.
+
+For these coordinate choices there are twenty joint detector designs,
+fifteen single-copy designs and either two directional instruments or
+one calibrated filter instrument. There are respectively forty or fifty
+joint measurement/control configurations. A direction, a configuration,
+a detector call, a sample, a hardware generator, elementary gate count,
+physical duration and energy are different cost coordinates. In
+particular (10.5) is neither a hardware decomposition nor a lower bound
+on samples or memory. No Pareto comparison is inferred from it.
+

@@ -83,27 +83,8 @@ private lemma continuous_pairWeakFunctional :
       pairWeakFunctional p f) =
       (fun p => (∫ x, f x ∂p.1.toMeasure) - ∫ x, f x ∂p.2.toMeasure) := by
     funext p
-    change (∫ᵛ x, f x ∂•(signedPairMeasure p)) = _
-    rw [signedPairMeasure, VectorMeasure.integral_sub_vectorMeasure]
-    · have hflip : (ContinuousLinearMap.lsmul ℝ ℝ) =
-          (ContinuousLinearMap.lsmul ℝ ℝ).flip := by
-        ext a b
-        simp [mul_comm]
-      have htoSigned (q : FiniteMeasure K) :
-          (∫ᵛ x, f x ∂•q.toMeasure.toSignedMeasure) =
-            (∫ᵛ x, f x ∂<•q.toMeasure.toSignedMeasure) := by
-        unfold VectorMeasure.integral
-        congr 2
-        exact congrArg (fun B =>
-          VectorMeasure.transpose q.toMeasure.toSignedMeasure B) hflip
-      rw [htoSigned, htoSigned, VectorMeasure.integral_toSignedMeasure,
-        VectorMeasure.integral_toSignedMeasure]
-    · rw [VectorMeasure.Integrable, ← SignedMeasure.totalVariation_eq_variation]
-      exact f.continuous.integrable_of_hasCompactSupport
-        (HasCompactSupport.of_compactSpace _)
-    · rw [VectorMeasure.Integrable, ← SignedMeasure.totalVariation_eq_variation]
-      exact f.continuous.integrable_of_hasCompactSupport
-        (HasCompactSupport.of_compactSpace _)
+    exact NormPreservingLifts.signedFunctional_sub_toSignedMeasure
+      p.1.toMeasure p.2.toMeasure f
   rw [hEq]
   exact (FiniteMeasure.continuous_integral_continuousMap f).comp continuous_fst |>.sub
     ((FiniteMeasure.continuous_integral_continuousMap f).comp continuous_snd)
@@ -160,11 +141,8 @@ theorem exists_subsequence_tendsto_signedFunctional (C : ℝ) (hC : 0 ≤ C)
   have hμbound : μ.totalVariation.real univ ≤ C := by
     have hvar : μ.totalVariation ≤ p.1.toMeasure + p.2.toMeasure := by
       change (signedPairMeasure p).totalVariation ≤ p.1.toMeasure + p.2.toMeasure
-      rw [SignedMeasure.totalVariation_eq_variation, signedPairMeasure]
-      simpa only [Measure.variation_toSignedMeasure] using
-        (VectorMeasure.variation_sub_le
-          (μ := p.1.toMeasure.toSignedMeasure)
-          (ν := p.2.toMeasure.toSignedMeasure))
+      exact NormPreservingLifts.totalVariation_sub_toSignedMeasure_le
+        p.1.toMeasure p.2.toMeasure
     have huniv : μ.totalVariation univ ≤ (p.1.toMeasure + p.2.toMeasure) univ :=
       Measure.le_iff.1 hvar univ MeasurableSet.univ
     have hpSum : p.1.mass + p.2.mass ≤ Cnn := by

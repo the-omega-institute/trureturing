@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3cf339129e04009311e853b8de5aa4ead1ac6dd25a5daa96e11d4bc0b2359a73
+  normalized_sha256: sha256:3cf339129e04009311e853b8de5aa4ead1ac6dd25a5daa96e11d4bc0b2359a73
+cas_ref: sha256:3cf339129e04009311e853b8de5aa4ead1ac6dd25a5daa96e11d4bc0b2359a73
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在“尚未建立”清单中仅列待建 Haar floor 接口名称，不断言其数学性质。
+    previous_atom_id: 80d6179439a4c113c21c5676b84f5fddf4eb18527159ff02f786b521deb1542e
+    next_atom_id: 1c1273b4ef6b26a9f1262a81888212a3a75cab30c3a20398b618ec98d530a9bb

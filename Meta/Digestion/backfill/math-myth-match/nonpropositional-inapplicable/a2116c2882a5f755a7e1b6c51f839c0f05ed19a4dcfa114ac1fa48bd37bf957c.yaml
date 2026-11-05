@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a2116c2882a5f755a7e1b6c51f839c0f05ed19a4dcfa114ac1fa48bd37bf957c
+  normalized_sha256: sha256:a2116c2882a5f755a7e1b6c51f839c0f05ed19a4dcfa114ac1fa48bd37bf957c
+cas_ref: sha256:a2116c2882a5f755a7e1b6c51f839c0f05ed19a4dcfa114ac1fa48bd37bf957c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 不能把经文预设为两条绝对义务之和的解释要求。
+    previous_atom_id: e00915465e5ee757c9f9fe8416dc27b2689d01986562b3fe6dd5734e4b61fde2
+    next_atom_id: d6b82a117c9d24db4eeb5285e7185ffe3d88ecf65c6a040b52ccd5245067378b

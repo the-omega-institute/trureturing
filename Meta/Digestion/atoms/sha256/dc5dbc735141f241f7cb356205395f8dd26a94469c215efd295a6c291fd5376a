@@ -1,0 +1,20 @@
+**Proposition 11.4 (Singular-history nonnecessity).** In the same system prescribe
+
+$$
+t_0=0,\qquad t_j=2j-1\quad(j\geq1),\qquad
+\alpha_j=\frac14\quad(j\geq0).
+\tag{11.10}
+$$
+
+Then every initial state is zero from time $2$ onward, while the infinite series (11.1) equals $1$.
+
+*Proof.* The singular parameter is $b/(a+2b)=1/4$, hence every $\lambda_j=0$ and every $\delta_j=1$. The literal first Token-1 row and the inverse of $A$ in (11.6) give
+
+$$
+B_{1/4}=\begin{pmatrix}0&2/3\\0&-4\end{pmatrix},\qquad
+N_{1/4}=A^{-1}B_{1/4}
+=\begin{pmatrix}0&2/3\\0&0\end{pmatrix},\qquad N_{1/4}^2=0.
+$$
+
+The first two events are consecutive at times $0,1$, so every actual state is annihilated by time $2$, and every later transfer preserves zero. This is also the orthogonal singular-projection mechanism of Theorem 6.2, used here as an original-history consumer. The first gap is $d_0=1$ and every later gap is $2$. Since $\theta=\pi/2$, their squared sines are respectively $1$ and $0$, giving $W=1$. This supplies singular nonnecessity with infinitely many events and infinitely many singular factors. $\square$
+

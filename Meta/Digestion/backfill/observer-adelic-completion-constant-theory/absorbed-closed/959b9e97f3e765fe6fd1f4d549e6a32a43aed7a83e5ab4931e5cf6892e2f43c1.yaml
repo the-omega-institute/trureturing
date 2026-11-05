@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:959b9e97f3e765fe6fd1f4d549e6a32a43aed7a83e5ab4931e5cf6892e2f43c1
+  normalized_sha256: sha256:959b9e97f3e765fe6fd1f4d549e6a32a43aed7a83e5ab4931e5cf6892e2f43c1
+cas_ref: sha256:959b9e97f3e765fe6fd1f4d549e6a32a43aed7a83e5ab4931e5cf6892e2f43c1
+coverage_gids:
+  - gid: D5/S3/CompletionDynamics/ObserverJet/CompletedScalarOddCoupling.completed_scalar_has_no_linear_odd_coupling
+    target_statement_id: sha256:9ced023cb34c7e66589439931f175e480c80d499b77ff0a9467144e78798204c
+receipts:
+  unresolved_subitems: []

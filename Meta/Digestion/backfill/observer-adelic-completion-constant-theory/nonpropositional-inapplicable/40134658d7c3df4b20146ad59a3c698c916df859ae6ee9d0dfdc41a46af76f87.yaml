@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:40134658d7c3df4b20146ad59a3c698c916df859ae6ee9d0dfdc41a46af76f87
+  normalized_sha256: sha256:40134658d7c3df4b20146ad59a3c698c916df859ae6ee9d0dfdc41a46af76f87
+cas_ref: sha256:40134658d7c3df4b20146ad59a3c698c916df859ae6ee9d0dfdc41a46af76f87
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 建议形式化顺序及拟议模块路径清单，不主张所列模块存在或所列目标已证。
+    previous_atom_id: 6f0b184e3de8c712d60c188db6e8c6a56b8d25efbdbe2a8a5b4a828c7b54add0
+    next_atom_id: ee13284ff4d865e549f2241aec70bdbc71b39341476da1f97e81236f2138fd87

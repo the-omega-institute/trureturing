@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a98a9bc95bbd45f51dc0edf72aaf7e1f8c2d0eb76f3da5da19e294ba6566e2f8
+  normalized_sha256: sha256:a98a9bc95bbd45f51dc0edf72aaf7e1f8c2d0eb76f3da5da19e294ba6566e2f8
+cas_ref: sha256:a98a9bc95bbd45f51dc0edf72aaf7e1f8c2d0eb76f3da5da19e294ba6566e2f8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本片只引入双预算 (T,N) 并说明 T 的高度预算含义，没有给出检测不等式或 RH 等价。
+    previous_atom_id: a78da6b182e8d7eabca9c015a7c325ab2adfb1f22011ce0dfdf8bf7938e67017
+    next_atom_id: 5c5b071f49bad1aa272cf2088aea41ca92e7181a0589118b13cc78e5b16053d8

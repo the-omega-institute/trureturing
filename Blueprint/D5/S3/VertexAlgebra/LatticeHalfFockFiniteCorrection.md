@@ -6,7 +6,63 @@ Finite singleton and pair correction on the full ordinary lattice oscillator alg
 
 LatticeData consists of an arbitrary finite rank and a symmetric integral Gram matrix with even diagonal. Rank zero, degeneracy and indefinite forms are allowed. The source weight of (i,k) is k+1; the native half-Fock weight is 2k+1. The extra polynomial variable records physical negative shifts. Singleton weights are binomial(-1/2,m) times the charge pairing; pair weights are mn binomial(-1/2,m) binomial(-1/2,n)/(m+n) times the Gram pairing. No inverse Gram matrix, positivity, rank condition or occupation cutoff occurs.
 
-**Theorem 1.1 (Positive source weight half convolution).**
+**Theorem 1.1 (The original insertion L1 scalar cancellation).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.insertion_l1_scalar`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.insertion_l1_scalar` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
+
+*Commentary.*
+
+For every natural r,n, put m=r+1 and k(m,n)=m halfBinomial(m) halfBinomial(n)/(m+n). Then one half times halfBinomial(r) choose(1/2,n) equals (m+n)k(m,n), plus zero when n=0 or (n-1)k(m,n-1) otherwise, plus m k(m-1,n) when r is positive or the n=0 delta when r=0. Both boundary axes are retained. The proof uses the original half-binomial successor and Pascal identities. This is the scalar cancellation required by the original evaluated negative-current insertion route; it alone is not corrected-field L1 covariance.
+
+**Theorem 1.2 (The original half-binomial finite transform).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.half_binomial_transform`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.half_binomial_transform` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
+
+*Commentary.*
+
+Visibility-only exposure of the existing theorem with its exact original statement and proof body preserved. The new ActualCorrCovariance singleton_scalar proof consumes this finite transform; no new binomial proof is asserted.
+
+**Theorem 1.3 (Length and exact weight of a labelled remainder).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.labelledRemainders_size`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.labelledRemainders_size` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
+
+*Commentary.*
+
+Visibility-only exposure of the original joint length and wordWeight law. ActualCorrCovariance correctionWord_homogeneous consumes both clauses in the actual pair-matching branch, including repeated generators. Its proof body is unchanged.
+
+**Theorem 1.4 (Exact weight of the original occurrences enumeration).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.wordWeight_occurrences`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.wordWeight_occurrences` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
+
+*Commentary.*
+
+Visibility-only exposure of the original equality between wordWeight of occurrences and Finsupp.weight sourceWeight. ActualCorrCovariance consumes it to transport matching homogeneity to original oscillator polynomials. Its proof body is unchanged.
+
+**Theorem 1.5 (Positive source weight half convolution).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.halfBinomial_positive_convolution`
 
@@ -20,7 +76,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.halfBinomia
 
 For all natural m,n with m>0, sum over 0<=s<=n of halfBinomial(m+s) choose(1/2,n-s) equals m halfBinomial(m) halfBinomial(n)/(m+n), over Complex. The certificate uses the arbitrary-complex binomial recurrence, telescopes only the interior 0<=s<n, and treats s=n separately. Division uses m+n nonzero from m>0, and includes n=0. The divided extension at m=n=0 is false: its left side is 1 and its right side is 0. The actual finite-current insertion triangle consumes this theorem at m=sourceWeight(D,index)=index.2+1; no standalone general cross-form API is asserted.
 
-**Theorem 1.2 (The original pair derivation on an ordinary variable).**
+**Theorem 1.6 (The original pair derivation on an ordinary variable).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.pairDerivation_variable`
 
@@ -34,7 +90,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.pairDerivat
 
 The original generator lemma is public for direct reuse by correctionConnection_pair_commutator in CorrectionTranslation. Its statement and proof are retained; this is consumed support, not additional mathematical content.
 
-**Theorem 1.3 (The original half-binomial successor coefficient).**
+**Theorem 1.7 (The original half-binomial successor coefficient).**
 
 $$\forall d\in \mathbb{N}, \operatorname{halfBinomial}\left(d+1\right)=\frac{(\frac{-1}{2}-d)\operatorname{halfBinomial}\left(d\right)}{d+1}$$
 
@@ -48,7 +104,7 @@ $$\forall d\in \mathbb{N}, \operatorname{halfBinomial}\left(d+1\right)=\frac{(\f
 
 For every natural d, halfBinomial(d+1) = ((-1/2-d) halfBinomial(d))/(d+1), over Complex. This factorial-product recurrence supplies the weighted binomial transform and the two-coordinate pair recurrence.
 
-**Theorem 1.4 (Independent all-order reflection of the original pair coefficient).**
+**Theorem 1.8 (Independent all-order reflection of the original pair coefficient).**
 
 $$\forall m,n\in \mathbb{N}, \operatorname{pairScalar}\left(m+1, n+1\right)=\sum_{r=0}^{m} \sum_{s=0}^{n} ((-1)^{m+1}\operatorname{choose}\left(m+1, r+1\right))((-1)^{n+1}\operatorname{choose}\left(n+1, s+1\right))\operatorname{pairScalar}\left(r+1, s+1\right)$$
 
@@ -66,7 +122,7 @@ The finite binomial transform obeys an all-order inductive identity: its signed 
 
 In the actual pairPolynomial, the Gram entry stays unchanged. A reduced pair of orders r,s needs the extra shift power (m-r)+(n-s) to recover the original total source weight m+n+2. This scalar theorem alone does not prove correctionWord covariance or native all-state BPZ; labelled remainders, singleton contributions, and the operator transpose law remain required.
 
-**Theorem 1.5 (Pair derivations annihilate every shift power).**
+**Theorem 1.9 (Pair derivations annihilate every shift power).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.pairDerivation_shift`
 
@@ -80,7 +136,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.pairDerivat
 
 For every LatticeData, oscillator index and natural degree, pairDerivation sends X(none) raised to that degree to zero. The shift coordinate has derivative zero. This identity supplies the shift-generator case of commutation on arbitrary correction polynomials.
 
-**Theorem 1.6 (Pair derivations annihilate every pair coefficient).**
+**Theorem 1.10 (Pair derivations annihilate every pair coefficient).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.pairDerivation_pair`
 
@@ -94,7 +150,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.pairDerivat
 
 For every LatticeData and every three oscillator indices, pairDerivation annihilates pairPolynomial. Its scalar coefficient is constant and its polynomial factor is a shift power. This identity supplies generator commutation and permits pair coefficients to pass through insertions.
 
-**Theorem 1.7 (Symmetric differential insertions commute).**
+**Theorem 1.11 (Symmetric differential insertions commute).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.insertion_commute`
 
@@ -108,7 +164,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.insertion_c
 
 Each insertion is the sum of multiplication by the retained variable plus its singleton correction and the pair derivation. Pair derivations kill the shift variable and every singleton and pair coefficient. Their commutator vanishes on every polynomial generator; the mixed multiplication commutators cancel by Gram and pair-coefficient symmetry.
 
-**Theorem 1.8 (Occurrence order does not change the correction).**
+**Theorem 1.12 (Occurrence order does not change the correction).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.correctionWord_permutation`
 
@@ -122,7 +178,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.correctionW
 
 The insertion algorithm terminates by word length. Adjacent swaps use the actual commuting insertions, and transitivity gives every occurrence permutation. Repeated variables remain separate list occurrences; differentiation supplies their multiplicities. The existing monomial basis extends the construction linearly to every finite oscillator polynomial.
 
-**Theorem 1.9 (Every monomial enumeration gives the same finite correction).**
+**Theorem 1.13 (Every monomial enumeration gives the same finite correction).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.Corr_monomial_enumeration`
 
@@ -136,7 +192,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.Corr_monomi
 
 For every word whose occurrences permute the canonical list, the monomial-basis correction equals its word correction. The proof uses insertion commutation to compare these enumerations. Corr records this finite coefficient family as a linear map on the original oscillator algebra. The insertion of two occurrences expands into the full retained-plus-singleton product plus its pair derivative, including singleton-singleton contributions and repeated variables.
 
-**Theorem 1.10 (Differentiation contracts one labelled occurrence).**
+**Theorem 1.14 (Differentiation contracts one labelled occurrence).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.pairDerivation_matching`
 
@@ -150,7 +206,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.pairDerivat
 
 labelledRemainders traverses positions recursively. Each entry retains every occurrence except the selected one, including other occurrences of the same variable. The derivation of an arbitrary correction word is the finite sum of its pair coefficient times the correction of each such remainder. The proof commutes the pair derivation through an insertion and inducts on the actual source word.
 
-**Theorem 1.11 (Every word obeys the singleton and labelled-pair recurrence).**
+**Theorem 1.15 (Every word obeys the singleton and labelled-pair recurrence).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.correctionWord_matching`
 
@@ -164,7 +220,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.correctionW
 
 The active occurrence is either retained, removed as a singleton, or paired with exactly one labelled remaining occurrence. Recursive remainders shorten the word. Two occurrences therefore include retained factors, each singleton, the singleton-singleton term and the pair term, without erasing all equal variables.
 
-**Theorem 1.12 (Word corrections never exceed the ordinary source weight).**
+**Theorem 1.16 (Word corrections never exceed the ordinary source weight).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.correctionWord_shift_bound`
 
@@ -178,7 +234,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.correctionW
 
 Strong induction on occurrence count bounds the degree of the actual shift polynomial. A singleton spends the active source weight. A pair spends both removed weights, while the remainder has exactly the complementary weight. The bound applies without positivity, a charge norm bound or a rank hypothesis.
 
-**Theorem 1.13 (Every supported shift of an arbitrary polynomial is bounded).**
+**Theorem 1.17 (Every supported shift of an arbitrary polynomial is bounded).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.Corr_shift_bound`
 
@@ -214,13 +270,17 @@ This is an application of the classical twisted-lattice construction of Frenkel,
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.correctionWord_permutation`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.correctionWord_shift_bound`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.halfBinomial_positive_convolution`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.half_binomial_transform`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.half_successor`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.insertion_commute`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.insertion_l1_scalar`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.labelledRemainders_size`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.pairDerivation_matching`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.pairDerivation_pair`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.pairDerivation_shift`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.pairDerivation_variable`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.pairScalar_reflection`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection.wordWeight_occurrences`
 - Dependency: [D5/S3/VertexAlgebra/LatticeAllStateField](LatticeAllStateField.md)
 - Narrative reference: [D5/S3/VertexAlgebra/LatticeAllStateField](LatticeAllStateField.md)
 - Narrative reference: [D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients](LatticeHalfFockChargedTensorCoefficients.md)

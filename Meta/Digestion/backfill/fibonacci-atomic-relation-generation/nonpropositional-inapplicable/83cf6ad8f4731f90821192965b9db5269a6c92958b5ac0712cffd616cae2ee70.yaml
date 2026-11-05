@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:83cf6ad8f4731f90821192965b9db5269a6c92958b5ac0712cffd616cae2ee70
+  normalized_sha256: sha256:83cf6ad8f4731f90821192965b9db5269a6c92958b5ac0712cffd616cae2ee70
+cas_ref: sha256:83cf6ad8f4731f90821192965b9db5269a6c92958b5ac0712cffd616cae2ee70
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义向下封闭块族、重数表示和观察坐标 y_T；容斥反演另列 62.1。
+    previous_atom_id: 8f1f510cb92a2ee0ef9b35218f5ce164fd6740d62df515b4dc10593f3f0474d4
+    next_atom_id: a2ea1380f1ce3009a61c3f7a3c58dd6af3bd10cc7f0e23f4afad68f6327028ea

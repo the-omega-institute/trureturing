@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:626ec22d55813b167e3ce0ccc1d1a1ecdcb28b3a7942b6b83a9e1fd6a2d173a1
+  normalized_sha256: sha256:626ec22d55813b167e3ce0ccc1d1a1ecdcb28b3a7942b6b83a9e1fd6a2d173a1
+cas_ref: sha256:626ec22d55813b167e3ce0ccc1d1a1ecdcb28b3a7942b6b83a9e1fd6a2d173a1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条仅列举 operator-valued Euler product 作为候选描述类型，不断言其收敛或实现目标。
+    previous_atom_id: ffae18bd146e52560309e5cef17d1276a7bec769b8a1e949184bcec17cd8d936
+    next_atom_id: 13e8972c3cc9735575656a615575205a69ead1bb837aca6aaa8e2332458cbd78

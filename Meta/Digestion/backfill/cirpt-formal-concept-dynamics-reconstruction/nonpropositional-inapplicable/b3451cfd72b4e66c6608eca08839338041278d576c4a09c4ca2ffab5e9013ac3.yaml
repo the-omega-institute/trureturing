@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b3451cfd72b4e66c6608eca08839338041278d576c4a09c4ca2ffab5e9013ac3
+  normalized_sha256: sha256:b3451cfd72b4e66c6608eca08839338041278d576c4a09c4ca2ffab5e9013ac3
+cas_ref: sha256:b3451cfd72b4e66c6608eca08839338041278d576c4a09c4ca2ffab5e9013ac3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: ADMIT 作为合法性角色的语义说明。
+    previous_atom_id: d0a2dc9a3aef4cb9af85402d4e3f15cecb74e9e6d4bab8d5e2a29e8a4a8c1cde
+    next_atom_id: 1d85e2ae85499e4b0b0d7737c0dc46bf9911bdc0483c13f2861bd2ad38c239c7

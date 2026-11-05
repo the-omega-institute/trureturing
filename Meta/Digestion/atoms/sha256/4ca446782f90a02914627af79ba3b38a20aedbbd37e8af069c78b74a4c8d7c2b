@@ -1,0 +1,39 @@
+**Definition 115.1 (the unchanged endpoint and its positive cone).** Retain exactly the group, product, source, Haar measure, clock and units of Definition 114.1. Thus
+
+$$
+\begin{gathered}
+G=H^1\times\mathbb R,\qquad
+p p'=(x+x',y+y',z+z',w+w'+xy'),\qquad
+d\mu=dx\,dy\,dz\,dw,\\
+X_1=\partial_x,\qquad X_2=\partial_y+x\partial_w,\qquad
+X_3=\partial_z,\qquad L=-\sum_{i=1}^3X_i^2,\\
+L\Gamma=\delta_e,\qquad
+S=(aL+\eta D_w^2-g_c\Gamma)|_{\mathcal D_0},\qquad
+g_c=16\sqrt{a\eta},\qquad a,\eta>0,\\
+M=G\setminus\{e\},\qquad
+\mathcal D_0=C_c^\infty(M;\mathbb C),\qquad
+\mathcal H_+=\{f\in L^2(G,d\mu;\mathbb R):f\ge0\text{ a.e.}\}.
+\end{gathered}
+\tag{115.1}
+$$
+
+Here $\Gamma$ remains the original positive homogeneous degree-$-3$ unit-source Green field of $L$. Write $F$ for the Friedrichs operator of Theorem 87.4, with form $(\overline q_c,\mathcal Q_c)$, and let
+
+$$
+\begin{gathered}
+h=\frac{w_*}{\|w_*\|_2},\qquad
+c_h=C(h)=\|w_*\|_2^{-1}>0,\qquad
+\rho=\frac{A(h)}{C(h)},\\
+H=H_{\rm end},\qquad
+D(H)=\{u\in D(S^*):A(u)=\rho C(u)\},\qquad Hu=S^*u.
+\end{gathered}
+\tag{115.2}
+$$
+
+The vector $w_*$ is exactly (110.2); $A,C$, their source expansion and their boundary pairing are exactly (112.2)--(112.3). In particular $\ker F=\{0\}$, $h\notin\mathcal Q_c$, $\ker H=\mathbb Ch$, and $\mathcal D_0+\mathbb Ch$ is the supplied graph core of this actual $H$. The normalization in (115.2) chooses the coefficient-positive representative of the actual zero line, without imposing a condition on any finite-$\sigma$ state. Denote the closed form of $H$ by $q_H$, and set
+
+$$
+\mathcal C[v]=a\sum_{i=1}^3|X_iv|^2+\eta|\partial_wv|^2.
+\tag{115.3}
+$$
+

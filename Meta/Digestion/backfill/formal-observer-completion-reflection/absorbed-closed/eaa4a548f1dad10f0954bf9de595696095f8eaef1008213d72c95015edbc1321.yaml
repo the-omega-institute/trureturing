@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:eaa4a548f1dad10f0954bf9de595696095f8eaef1008213d72c95015edbc1321
+  normalized_sha256: sha256:eaa4a548f1dad10f0954bf9de595696095f8eaef1008213d72c95015edbc1321
+cas_ref: sha256:eaa4a548f1dad10f0954bf9de595696095f8eaef1008213d72c95015edbc1321
+coverage_gids:
+  - gid: D5/S3/Observer/LinearMemory/ZeroMemoryCriterion.eventualKernel
+    target_statement_id: sha256:34a7e89bd873b280c624954dff0733f643f70c3aacc014455d955993c189c921
+receipts:
+  unresolved_subitems: []

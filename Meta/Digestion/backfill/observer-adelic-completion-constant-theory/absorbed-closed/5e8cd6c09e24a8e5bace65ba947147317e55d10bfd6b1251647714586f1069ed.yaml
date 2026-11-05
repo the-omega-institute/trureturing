@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5e8cd6c09e24a8e5bace65ba947147317e55d10bfd6b1251647714586f1069ed
+  normalized_sha256: sha256:5e8cd6c09e24a8e5bace65ba947147317e55d10bfd6b1251647714586f1069ed
+cas_ref: sha256:5e8cd6c09e24a8e5bace65ba947147317e55d10bfd6b1251647714586f1069ed
+coverage_gids:
+  - gid: D5/S3/Analytic/Adelic/ToroidalJetDepth.toroidal_jet_depth_eq_vanishing_order
+    target_statement_id: sha256:f4b2b9be6fbbecdd798b2d25bf1c193facbf789c1004d2290b52fbc47005b1d2
+receipts:
+  unresolved_subitems: []

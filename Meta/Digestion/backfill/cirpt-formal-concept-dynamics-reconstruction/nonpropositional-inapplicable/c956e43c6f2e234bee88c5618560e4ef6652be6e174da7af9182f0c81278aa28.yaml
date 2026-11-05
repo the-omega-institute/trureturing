@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c956e43c6f2e234bee88c5618560e4ef6652be6e174da7af9182f0c81278aa28
+  normalized_sha256: sha256:c956e43c6f2e234bee88c5618560e4ef6652be6e174da7af9182f0c81278aa28
+cas_ref: sha256:c956e43c6f2e234bee88c5618560e4ef6652be6e174da7af9182f0c81278aa28
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 复用纪律清单中的 controlledBehavior 名称，不断言行为等价。
+    previous_atom_id: 5841ba97d0b07ccc88b8d2697a638358c148e865acfbd1fb2a2a47d9e583ba98
+    next_atom_id: 7241724d948b9f174f06b25b4cfd719eac2e68344c03fa6806ab00c54e58b9ea

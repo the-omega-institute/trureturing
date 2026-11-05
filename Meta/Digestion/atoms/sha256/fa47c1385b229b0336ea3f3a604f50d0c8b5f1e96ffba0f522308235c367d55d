@@ -1,0 +1,30 @@
+**Corollary 4.2 (Every positive resistance level and every optimizer).**
+For every integer pair $4\le a\le b$ and every real $R_0>0$, the level set
+
+$$
+\mathcal F_{a,b,R_0}
+=\{c\in(0,\infty)^{ab}:R(c)=R_0\}
+$$
+
+is nonempty and has the finite attained optimum
+
+$$
+\max_{c\in\mathcal F_{a,b,R_0}}\lambda_2(L(c))=\frac{M_{a,b}}{R_0}.
+\tag{4.9}
+$$
+
+Its labelled optimizers are exactly (4.2) with
+$\tau=M_{a,b}/R_0$. There are exactly $a$ such assignments when $a<b$.
+For $a=b=k$ there is exactly one, with every edge conductance
+$(4k-3)/R_0$.
+
+*Proof.* Theorem 4.1 bounds $\lambda_2R_0$ by $M_{a,b}$ at every
+feasible point. Take $\tau=M_{a,b}/R_0>0$ in its equality assignment.
+All edges have finite strictly positive conductance, and that theorem
+gives $R=M_{a,b}/\tau=R_0$ and $\lambda_2=\tau$. This proves both
+nonemptiness and attained finiteness inside the stated domain.
+Any optimizer must attain product equality, so Theorem 4.1 gives its
+labelled ray; the identity $R=M_{a,b}/\tau$ fixes the scale uniquely.
+In the balanced case $\tau/k=k(4k-3)/(kR_0)=(4k-3)/R_0$.
+The label counts follow from the distinct-ray classification. ∎
+

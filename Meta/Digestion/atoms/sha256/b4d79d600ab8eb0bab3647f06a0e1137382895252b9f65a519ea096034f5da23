@@ -1,0 +1,63 @@
+**Theorem 34.3 (callable use and dynamics compatibility).** Under the
+continued availability, completion and backing premises of Definition
+27.1, the returned memory supports the following installed finite
+procedures: answer a current or hypothetical finite presence/update
+request locally; actually execute a requested source Read or update
+on its retained binding; and continue from every completed call boundary
+with the correct current labelled tree and birth phase. These procedures
+use no further paid source read to learn the birth law. For every finite
+actual serial continuation, their predicted replies, physical tree
+successors and the four data routes of Theorem 34.2 agree with that
+same continuation of the actual source.
+
+Proof. For local prediction, parse the genuinely supplied finite
+request, copy the earned current data to scratch, and simulate its
+finite updates using the behavioral generator. A literal Read returns
+membership in the simulated support, including zero for any absent
+word. Each tree, request and loop is finite. A finite request may also
+be generated adaptively by installed source-free control from actual
+replies and separately acquired selector inputs. The selector's input,
+code, scratch and output are real resources; no unspecified full response
+oracle or already acquired future experiment is assumed.
+
+For an actual update $n\to n+1$, use the real source handle and wait
+for its completion. Update the local tree by replacing its alpha leaves
+with beta and its beta leaves by branches in physical lexicographic
+parent order. The next consumed block is exactly
+$z_{B_n+1},\ldots,z_{B_{n+1}}$. Advance the local law by precisely
+that many births, or recompute its position from the retained prefix
+and counter. Commit the new $n,B_n$ and data before exposing the next
+callable cut. The authentic autonomous law, the induction invariant
+$X_n^{\rm local}=X_n^{\rm actual}$ and the same ordered parent
+list give identical bits, persistent links, labels and successor support.
+The proof holds even for a singular recurrence or nonminimal Moore
+presentation, since it uses stream equality rather than inversion of
+private machine state.
+
+A real source Read is still called and charged if requested. Its reply
+agrees with the local membership calculation; a prediction does not
+pretend that this call was executed. Read and localStep consume no birth
+bit and leave the source views unchanged. Stop makes no further source
+transition. Induction gives the result for every finite serial action
+word, and then for every finite adaptive choice whose inputs are actually
+available. The source-view conversions commute with each update because
+they all compute this same $X_{n+1}$ and its actual birth events.
+They commute with stationary source operations by constancy.
+
+The maintained protocol may use internal busy phases between the actual
+acknowledgement and local-data commitment, and within request evaluation.
+Its actual phase flags, saved counters, partial acquired batch and
+buffers must persist there; a call is exposed only at a synchronized
+completed boundary. If an interruption, concurrent writer, revocation
+or source replacement breaks this invariant, this theorem gives no
+continued-use guarantee. It assumes the real binding and synchronization,
+not their inference from an abstract inverse. $\square$
+
+These assertions concern the source projections and completed callable
+cuts. They are not a full-state kernel for all observer instruction
+cuts. In particular Read/localStep multiplicities are erased by
+$\mathcal T^{\rm birth}$, while NCR's fixed initialized controller
+and primitive-clock hypotheses supply a different, finer historical
+inverse. Nothing here upgrades the birth trace to that unrestricted
+observer chronology or to Atlas's full joint field record.
+

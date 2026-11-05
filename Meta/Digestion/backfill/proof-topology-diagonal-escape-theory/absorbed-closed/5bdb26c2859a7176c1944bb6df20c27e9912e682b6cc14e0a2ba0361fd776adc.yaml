@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:5bdb26c2859a7176c1944bb6df20c27e9912e682b6cc14e0a2ba0361fd776adc
+  normalized_sha256: sha256:5bdb26c2859a7176c1944bb6df20c27e9912e682b6cc14e0a2ba0361fd776adc
+cas_ref: sha256:5bdb26c2859a7176c1944bb6df20c27e9912e682b6cc14e0a2ba0361fd776adc
+coverage_gids:
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.checked_expression_encloses
+    target_statement_id: sha256:55fd549ad21c17edd29bfbda30075f70836c1b8c2023a9cc913348680e05632f
+  - gid: D5/S3/Arith/FactorialRatio/BalaChebyshevFiveDivisibility.local_five
+    target_statement_id: sha256:415fd37578df0f773da1315120d87d374d4e08e7145e029d9d316059f49ad493
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 170693bfe6600765cf47702b4ea4f5b253438b28e05eb590d2dfe61ff1aa0445
+    - 9bda57f8809d109c2782c7135cdf66c2eccfff2eaeba405b1d12d0590b71271a

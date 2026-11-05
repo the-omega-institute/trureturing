@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d972fd0730e5d992a0e01b3b94a6bf49e1214f18bf489017aceb7943c5429fd8
+  normalized_sha256: sha256:d972fd0730e5d992a0e01b3b94a6bf49e1214f18bf489017aceb7943c5429fd8
+cas_ref: sha256:d972fd0730e5d992a0e01b3b94a6bf49e1214f18bf489017aceb7943c5429fd8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在设计要求列表中命名增长与衰减这两个须保留的方向，不断言某个响应的增长律。
+    previous_atom_id: 857ff2db5234d41fb43071bb05f5f89b4666c10ad0593020b552aa5036572ca9
+    next_atom_id: a30f9b6733babef2242ba67af41e5380c27657e7d09e408da26a07c4f221fe05

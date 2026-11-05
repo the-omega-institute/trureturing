@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fa4ce011075ad86c4949e5a11f70d98a13b18e4e46b194ad1961dfda99e578df
+  normalized_sha256: sha256:fa4ce011075ad86c4949e5a11f70d98a13b18e4e46b194ad1961dfda99e578df
+cas_ref: sha256:fa4ce011075ad86c4949e5a11f70d98a13b18e4e46b194ad1961dfda99e578df
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 成熟条件清单的引言及首个问题，要求识别含反例的纤维，不断言某个指定纤维含反例。
+    previous_atom_id: ca58dcf0e295fe3dbe7a59ba6095a88ec890faaac2c8aa534ff146bc98b5c4c4
+    next_atom_id: 180198c90dabffa96190b068ce069a1b7110418e5209bc42835286a9e5084475

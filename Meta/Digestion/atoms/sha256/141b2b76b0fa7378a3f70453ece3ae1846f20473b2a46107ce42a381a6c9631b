@@ -1,0 +1,16 @@
+**Definition 1.3 (numerical synchronization and its target).** A numerical
+reinstatement returns the exact actual pair $(n,B_n)$ and installs
+
+$$
+ M_n=(P,L,n,B_n)
+ \tag{ACR.4}
+$$
+
+in actually readable owned backing on the surviving binding. It may also
+install a behavioral recurrence phase and a callable local evaluator.
+The target is the earned mathematical memory of GPO Definition 34.1;
+source handles, rights and the exclusive call path remain separate actual
+prerequisites. A record is exposed as ready only after its real writes
+and handoff finish. No current tree or already available age is an input
+to this task.
+

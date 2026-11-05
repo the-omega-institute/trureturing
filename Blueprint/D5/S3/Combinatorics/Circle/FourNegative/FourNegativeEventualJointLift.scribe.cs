@@ -1,0 +1,19 @@
+using static StrataLint.Scribe.DefinitionDsl;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle.FourNegative;
+internal sealed class FourNegativeEventualJointLiftDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "An eventual physical four-negative joint lift",
+        H("One physical permutation and one literal fresh ear"),
+        Blocks(Describe.Lean(DescribeId.Create("actual-source-four-negative-eventual-joint-lift"),
+            DeclarationHandle.Create("D5/S3/Combinatorics/Circle/FourNegative/FourNegativeEventualJointLift.actualSource_four_negative_eventual_joint_lift"),
+            H("The independent four-gap eventual family"), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(),
+            Blocks(
+                Paragraph(Text("For every independent a,b,c>=2 and d>=a+b+c+3, set k=a+b+c+d and u=1+2^a+2^(a+b)+2^(a+b+c). There exist one permutation sigma of all Fin(k) labels and one j<=k such that OriginalOrder(k,u,sigma) and OriginalOrder(k+1,2u,earWord(k,sigma,j)). Both integer totals are zero, and both strips include every natural take-prefix, including empty and saturated takes. The next word keeps every old physical label in its original order and inserts the actual fresh label k at one literal cut.")),
+                Paragraph(Text("The source owner FourNegativeEventual supplies the centered old/new four-chain table and the simultaneous quarter-grid selector. Write B=tD_B+1,L=tD_L+1+z,M=tD_M+1+y+yz,A=P+D_B,N=Pt-1. The four positive blocks are P1=U[t/2-q]++V[n_B-1], P2=V[z/2-n_B]++W[n_L-1], P3=W[y/2-n_L]++X[n_M-1], P4=U[q-1]++X[x/2-n_M]. The old word is P1,alpha,P2,beta,P3,gamma,P4,delta, and the ear is immediately after gamma. Complementation is on physical labels even when numerical values or periods coincide.")),
+                Paragraph(Text("The old troughs are n_B*B-Aq,n_L*L-Aq,n_M*M-Aq, and their cumulative charges are n_B,n_L(1+z),n_M(1+y+yz). The next troughs are twice the corresponding old trough minus its charge. The selector and ceiling estimates prove positive reserves and old upper bounds 2*tau<Y-1. The paired_seam_bounds lemma converts those inequalities into both old and next peak bounds. The final old peak is (N-A)/2 and the final next peak is (2N+1-A)/2; the final negative returns each height to zero. Positive blocks stay between their endpoint heights. The general source_zero theorem supplies both full-cycle integer totals, and lift_order and marked_word transfer the natural physical construction to the exact Fin-label OriginalOrder and literal ear.")),
+                Paragraph(Text("The group-action viewpoint retains physical powers-of-two labels even when centered values coincide. The actual digit_data theorem couples each old value f to its same-phase charge q and enlarged value g=2f-q. For a prefix, Q=A-consumed(q), h=consumed(f), and the shadow r=h+Q give the exact enlarged height A+consumed(g)=h+r. A physical reserve controls these coupled heights while respecting occurrence multiplicity; equality of numerical source values alone cannot justify replacing physical labels or their charges.")),
+                Paragraph(Text("This is an eventual family within Circle Conjecture 3.1 of Damasdi, Frankl, Pach and Palvolgyi, Monochromatic configurations on a circle, arXiv:2504.10687v2. The separate MaxPlusTwo.EqualGaps.actualSource_equal_gaps_first_ear construction covers a=b=c>=2 and every d>=a+2, using one withheld physical U label and a literal ear at cut zero. The full independent max-plus-two cone and unrestricted physical J/C3.1 remain OPEN in this delivery. No unequal-gap cut-zero constructor is supplied here: the eventual theorem permits a general cut j, so its result does not discharge the requested unequal-gap cut-zero conclusion even above its own threshold."))),
+            DescribeRole.Theorem)), []));
+}

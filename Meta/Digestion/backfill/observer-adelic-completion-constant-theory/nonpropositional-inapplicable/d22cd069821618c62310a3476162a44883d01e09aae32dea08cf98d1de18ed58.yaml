@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d22cd069821618c62310a3476162a44883d01e09aae32dea08cf98d1de18ed58
+  normalized_sha256: sha256:d22cd069821618c62310a3476162a44883d01e09aae32dea08cf98d1de18ed58
+cas_ref: sha256:d22cd069821618c62310a3476162a44883d01e09aae32dea08cf98d1de18ed58
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Proposed atomic-extraction workflow: assign an optimal residual, request its Vandermonde decomposition and name output coordinates. No rank, uniqueness, support or successful implementation theorem is asserted here.'
+    previous_atom_id: 0b21c8985973ac86e84a2c8575edbc4d013bd717a763bffa19d82d9e3d8c75ea
+    next_atom_id: 725fd3d0bed4046c26345b78d40835c832407965435b211451761a83c8a04d94

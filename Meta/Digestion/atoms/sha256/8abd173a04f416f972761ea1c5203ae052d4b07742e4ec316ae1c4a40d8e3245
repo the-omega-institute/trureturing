@@ -1,0 +1,80 @@
+**Theorem 5.3 (Necessary near-optimal branches at the secondary scale).** Suppose $a\delta_a\to\lambda\in[0,\infty)$ and actual laws satisfy
+
+$$
+\frac{d(x_a)}{a^2}\longrightarrow\min\{2,1/\lambda\}.
+\tag{5.8}
+$$
+
+Let $t_a=\min_i y_i$, and on every term choose any least-marginal label $e_a$.
+
+If $0\le\lambda<1/2$, then $t_a\to1$.
+
+If $\lambda>1/2$, then
+
+$$
+t_a\to0,\qquad a^2t_a\to\lambda,\qquad
+\mathbb E[K^2\mid e_a\in T]\to1,\qquad
+\mathbb P(T=\{e_a\}\mid e_a\in T)\to1.\tag{5.9}
+$$
+
+In this case the other marginals tend uniformly to one and $e_a$ is eventually unique.
+
+If $\lambda=1/2$, then $\operatorname{dist}(t_a,\{0,1\})\to0$. Every subsequence has a further subsequence on which either $t_a\to1$, or $t_a\to0$ and (5.9) holds with $\lambda=1/2$. Both branches occur for actual asymptotically optimal families. A sequence need not choose the same branch at every index.
+
+**Proof.** Throughout this proof $\delta_a=O(1/a)$, so direct expansion gives
+
+$$
+B-q^3=O(a),\qquad B=r^3+O(a),\qquad q^3=r^3+O(a).
+\tag{5.10}
+$$
+
+The energy assumption implies $H\le B+Ma^2$ for one constant $M$. Write $\sigma^2=\operatorname{Var}(K)$. The exact identity
+
+$$
+\mathbb E K^3-q^3
+=\mathbb E[(K-q)^2(K+2q)]\ge(2q+1)\sigma^2
+\tag{5.11}
+$$
+
+and $H\ge\mathbb E K^3$ show that $\sigma^2=O(a)$ and $\mathbb E(K-a)^2=O(a)$.
+
+Pass to an arbitrary subsequence along which $t_a\to t_0\in[0,1]$. First suppose $t_0>0$. Put $V_T=\sum_{i\in T}(y_i^{-2}-1)$. Since
+$\sum_i(1-y_i)=s-q=1+\delta_a$, one has
+
+$$
+0\le V_T\le\frac{2(1+\delta_a)}{t_a^2}=O(1),
+\qquad
+\mathbb E V_T=2(1+\delta_a)+\sum_i\frac{(1-y_i)^2}{y_i}.
+\tag{5.12}
+$$
+
+Also $\mathbb E|K^2-a^2|\le(2a+2)\sqrt{\mathbb E(K-a)^2}=O(a^{3/2})$. The exact energy decomposition then yields
+
+$$
+\begin{aligned}
+H&=\mathbb E K^3+\mathbb E[K^2V_T]\\
+&\ge q^3+a^2\mathbb E V_T-O(a^{3/2}),\\
+\frac d{a^2}&\ge2+\sum_i\frac{(1-y_i)^2}{y_i}-o(1).
+\end{aligned}\tag{5.13}
+$$
+
+Thus this branch costs at least two. If its limiting cost equals two, the nonnegative sum tends to zero; its term at a least marginal forces $t_a\to1$.
+
+Now suppose $t_0=0$. Keeping the hub's excess over the unit core weights gives the pointwise-integrated estimate
+
+$$
+H\ge\mathbb E K^3+m^2(1/t_a-t_a)
+\ge q^3+m^2(1/t_a-t_a).\tag{5.14}
+$$
+
+Indeed the hub contributes $\mathbb E[K^2I_e]/t_a^2=m^2/t_a$, whereas replacing that weight by one would give $t_am^2$. By the energy upper bound and (5.10),
+$m^2/t_a=O(a^2)$ since $t_a\to0$. In particular $m/a=O(\sqrt{t_a})\to0$. The actual capacity (2.2) implies
+
+$$
+a^2t_a\le a\delta_a(1+o(1)).\tag{5.15}
+$$
+
+For $\lambda=0$ this contradicts $m^2/t_a=O(a^2)$ and $m^2\ge1$, so this branch is impossible. For $\lambda>0$, (5.14)–(5.15) imply its limiting cost is at least $1/\lambda$. If the limiting cost is exactly $1/\lambda$, the same inequalities force $a^2t_a\to\lambda$ and $m^2\to1$: the former has limsup at most $\lambda$, and $m^2/(a^2t_a)$ has limsup at most $1/\lambda$, while $m^2\ge1$. Then $\beta\to0$. Equation (5.5) proves the other-marginal statement and eventual uniqueness.
+
+For $\lambda<1/2$ a branch $t_a\to0$ would cost strictly more than two; for $\lambda>1/2$ a positive-limit branch would cost strictly more than $1/\lambda$. This proves the first two cases. At $\lambda=1/2$, every positive-limit branch has cost two and hence limit $t_0=1$ by (5.13); a zero-limit branch has the structure just proved. Compactness of $[0,1]$ gives the stated distance and subsequence assertions. The dense family has $t_a=q/s\to1$, while (1.4) at $t_a=\delta_a/a$ has $a^2t_a\to1/2$; both have limiting cost two by their explicit energies. ∎
+

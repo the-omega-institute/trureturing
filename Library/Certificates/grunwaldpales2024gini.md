@@ -15,6 +15,7 @@ triage: anchor
 ## Locator
 
 Author text: <https://arxiv.org/abs/2408.07658v1>.
+Additional locators: §4, Conjecture 2 (the stationary characterization for intervals whose quotient set has infimum zero), and Theorem 7 (the bounded-interval comparison characterization).
 R. Grünwald and Zs. Páles, *Comparison of Gini means with fixed number of variables*, arXiv:2408.07658v1, §4, introductory paragraph and Conjecture 1. The journal bibliographic reference is *Results in Mathematics* 80 (2025), article 54. The journal version's text is ASSUMED-UNVERIFIED; the quotations and locators bind to the arXiv version.
 
 ## Endpoint characterization

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:33893faa72bd7b7968e9d23724a055ebe757b088eedf1adc97f0e7ac84233eb5
+  normalized_sha256: sha256:33893faa72bd7b7968e9d23724a055ebe757b088eedf1adc97f0e7ac84233eb5
+cas_ref: sha256:33893faa72bd7b7968e9d23724a055ebe757b088eedf1adc97f0e7ac84233eb5
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Refinement/MultiTargetMinimalSufficiency.jointTarget_apply
+    target_statement_id: sha256:bb7f041e2900603fa4fbf400dc059fbbafa6eff5e36f83765ac4f6c7a83267ea
+receipts:
+  unresolved_subitems: []

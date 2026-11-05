@@ -1,0 +1,29 @@
+**定义 1.1（完整目标与采集规则）。** 令
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\tag{1.1}
+$$
+
+完整目标域 $\mathcal W_3$ 由三元组 $W=(P,g,\delta)$ 构成，其中
+
+$$
+P=\begin{pmatrix}a&b\\c&1-a\end{pmatrix},\qquad
+0<a<1,\quad b,c>0,\quad bc=a(1-a),\qquad
+0\ne g\in\mathbb R[T],\quad\deg g\le3,\quad\delta\in\mathbb R.
+\tag{1.2}
+$$
+
+这些条件恰好描述逐项严格正、秩一、迹一的全部实 $2\times2$ 来源矩阵。既不要求对称，也不排除对称；不对来源大小设上界。增益允许任意实际次数、任意系数符号、采样时刻的根及重根，漂移为任意实常数。
+
+按时间先后执行 $E_1\cdots E_i$，其中每个 $E_j\in\{M,J\}$，定义
+
+$$
+A_0=I,\qquad A_i=E_iA_{i-1}=E_i\cdots E_1,\qquad
+z_i(W)=g(i)\operatorname{tr}(A_iP)+\delta.
+\tag{1.3}
+$$
+
+只有一条不能重置、不能复制的实际轨迹。初读计数，每次单独动作之后立即读数；八次总读数使用原时钟 $0,\ldots,7$。不能跳读、把复合动作当一次动作、补传感器或重编号时钟。确定性策略可依赖全部实际历史选择下一动作、停止并返回完整的 $(P,g,\delta)$；不另加连续性或可测性条件。数学上讨论未选分支的响应，不表示策略取得了该响应。
+

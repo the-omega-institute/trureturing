@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c661b705db7f49589ac81f4faf0074c4080f5fbc192721ddb8bd785bb4093364
+  normalized_sha256: sha256:c661b705db7f49589ac81f4faf0074c4080f5fbc192721ddb8bd785bb4093364
+cas_ref: sha256:c661b705db7f49589ac81f4faf0074c4080f5fbc192721ddb8bd785bb4093364
+coverage_gids:
+  - gid: D5/S3/Weil/CurvatureLedgerBridgeRefutation.curvature_ledger_bridge_refuted
+    target_statement_id: sha256:5f9d4080c0930af2581c1102df043159f5e2a6e016932c245e0b462aa62bdd15
+receipts:
+  unresolved_subitems: []

@@ -80,6 +80,37 @@ internal sealed class NormPreservingLiftsDocument : IScribeDocumentDefinition
                 + "Its operator norm is bounded by the real total mass of the Hahn–Jordan totalVariation of s. SignedMeasure itself is not assigned a normed-space instance. "
                 + "weakSignedFunctional(s) means pointwise application of StrongDual.toWeakDual to this functional. totalVariationMass(s) means totalVariation(s)(univ), an extended nonnegative real; toReal is used only for its finite total mass.")),
             Describe.Lean(
+                DescribeId.Create("signed-functional-positive-difference"),
+                DeclarationHandle.Create(Owner + "signedFunctional_sub_toSignedMeasure"),
+                H("Signed integration of a positive difference"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    All("K", Call("Type", V("u"))), Call("CompactBorel", V("K")), Sp, Rightarrow,
+                    All("mu", Call("FiniteMeasure", V("K"))), All("nu", Call("FiniteMeasure", V("K"))),
+                    All("f", Call("ContinuousMap", V("K"), Real)),
+                    Call("signedFunctional", Call("signedDifference", V("mu"), V("nu")), V("f")), Sp, Eq, Sp,
+                    Call("integral", V("f"), V("mu")), Sp, Minus, Sp, Call("integral", V("f"), V("nu"))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For finite positive measures mu and nu on compact Borel K, the signed functional of their signed difference evaluates f as the difference of ordinary integrals. "
+                    + "Continuity gives the required integrability against finite variations. Real multiplication identifies the scalar pairing with its flip, "
+                    + "so Mathlib's integral_toSignedMeasure applies. No separation or regularity hypothesis is used."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("variation-positive-difference-bound"),
+                DeclarationHandle.Create(Owner + "totalVariation_sub_toSignedMeasure_le"),
+                H("Variation domination for positive differences"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    All("K", Call("Type", V("u"))), Call("MeasurableSpace", V("K")), Sp, Rightarrow,
+                    All("mu", Call("FiniteMeasure", V("K"))), All("nu", Call("FiniteMeasure", V("K"))),
+                    Call("totalVariation", Call("signedDifference", V("mu"), V("nu"))), Sp, Le, Sp,
+                    V("mu"), Sp, Plus, Sp, V("nu")))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For any measurable carrier, the total variation of mu.toSignedMeasure minus nu.toSignedMeasure is dominated by mu+nu. "
+                    + "This is the variation subtraction inequality together with variation_toSignedMeasure. "
+                    + "It does not require the two positive measures to be mutually singular or to be Jordan parts."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("signed-functional-norm-le"),
                 DeclarationHandle.Create(Owner + "signedFunctional_norm_le"),
                 H("Signed integration operator bound"),
@@ -161,5 +192,13 @@ internal sealed class NormPreservingLiftsDocument : IScribeDocumentDefinition
                         + "The new synthesis supplies the all-choices quantifier needed in the ordinary signed-measure condition (F) of the Talagrand candidate. "
                         + "It proves stability for any already given norm-preserving lifts; it does not construct lifts or prove their existence by Hahn–Banach or Riesz representation. "
                         + "It does not formalize the transfinite recursion, CH bookkeeping, Banach-space preservation theorem or Problem 8.2. No literature novelty or official acceptance of that problem is asserted."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("functional-map"),
+                DeclarationHandle.Create(Owner + "functional_map"),
+                H("Signed integration under continuous pushforward"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For arbitrary compact Borel source X and compact Borel target Y, every signed measure s, continuous p from X to Y and real continuous g on Y satisfy signedFunctional(s.map p)(g) = signedFunctional(s)(g composed with p). No Hausdorff, nonempty or injective-map premise is added. This is the existing private historical-capture integral-map supplier moved to its natural shared owner; historical capture and compact-family variation loss both consume it. The proof uses native vector integral_map and compact-source integrability."))),
                 DescribeRole.Theorem))));
 }

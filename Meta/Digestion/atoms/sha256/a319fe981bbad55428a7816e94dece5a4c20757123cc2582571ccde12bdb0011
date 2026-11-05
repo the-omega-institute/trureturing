@@ -1,0 +1,39 @@
+**Proposition 109.1 (same-run source counts).** Join exactly one preparation
+from §104 to its own fresh growth and Theorem 105.1. The six source-call
+coordinates through the dark cut are as follows; Reset is zero throughout.
+
+| Source and preparation | $P$ | $S$ | Read | Add | Tick | Hold |
+| --- | --- | --- | --- | --- | --- | --- |
+| General $u$, original general preparation | $b$ | $2a+3c-1$ | $k$ | $b(I+1)+4k$ | $I+4$ | $7$ |
+| Same chosen $u$, distinct marker preparation | $b$ | $2a+3c-1$ | $k$ | $6k$ | $5$ | $7$ |
+| Mixed $V_k$, original general preparation | $2k+1$ | $6k+1$ | $k$ | $(2k+1)(4k+1)+4k$ | $4k+4$ | $7$ |
+| Mixed $V_k$, marker preparation | $2k+1$ | $6k+1$ | $k$ | $6k$ | $5$ | $7$ |
+| All-beta $u$, original general preparation | $b$ | $3b-1$ | $k$ | $2b^2+4k$ | $2b+3$ | $7$ |
+| All-beta $u$, marker preparation | $b$ | $3b-1$ | $k$ | $6k$ | $5$ | $7$ |
+
+Each run ends with $M=5a+7c-1$ cells and $s=2a+3c$ labels, allocating
+$M-1$ cells beyond its own initial alpha. The explicit all-beta sequence
+has $b=2k+1$, so its final size/label counts are $14k+6,6k+3$;
+the mixed sequence has $14k+4,6k+2$. The rows using general $u$ are
+formulas specialized by the later rows, not additional experiments to
+be charged together.
+
+For $d<k$, a subsequent genuinely paid late handoff and one selected
+repair (107.1) add $k-d$ Reads, one grown Tick and one Hold to that
+chosen row. At $d=0$ joined Reads become $2k$. For the marker rows,
+joined Tick/Hold become $6,8$; for the mixed general row they become
+$4k+5,8$; for the all-beta general row they become $2b+4,8$.
+At $d=k$ there is no source-call increment. Optional physical return
+adds another Tick/Hold. Each later passive phase adds one Tick/Hold;
+the selected use adds one Add/Hold/Read. These optional paths are
+counted only if actually executed.
+
+**Proof.** Original construction uses $c$ promotions and $b-1$ splits.
+Fresh-only growth adds $a$ promotions and $a+2c$ splits; Theorem 105.1
+adds $(k,4k,4,6)$ in its displayed coordinate order. Addition to
+(104.1) or (104.2), separately, gives the first two rows. Substitution
+of (104.3)--(104.4) gives the remaining rows and material counts.
+The repair and suffix increments are their actual schedules above.
+No preparation, sensor choice or cost from the other family participates
+in any such addition. $\square$
+

@@ -1,0 +1,25 @@
+#### 命题 12.2（同端点二次动作给出不同答案）
+
+固定合法端点和 $T>0$，对绝对连续路径
+
+$$
+\mathcal A[\kappa]=\frac{1}{2}\int_0^T\dot\kappa^2du
+\ge\frac{(\kappa_T-\kappa_0)^2}{2T},
+$$
+
+唯一等号路径为仿射插值。若 $\alpha=\gamma R>0$ 且 $\kappa_0\ne\kappa_*$，指数流与同端点仿射路径满足
+
+$$
+\frac{\mathcal A_{\exp}}{\mathcal A_{\rm affine}}
+=\frac{\alpha T}{2}\coth\frac{\alpha T}{2}>1.
+$$
+
+**证明。**
+
+由端点差等于导数积分，Cauchy–Schwarz 得下界，等号要求导数几乎处处为常数。指数流导数为 $-\alpha(\kappa_0-\kappa_*)e^{-\alpha u}$，积分得
+$\mathcal A_{\exp}=(\kappa_0-\kappa_*)^2\alpha(1-e^{-2\alpha T})/4$；除以对应端点差的仿射作用得到比值。对 $x>0$，$x\cosh x-\sinh x>0$，因为导数为 $x\sinh x>0$，故 $x\coth x>1$。平衡或零速率时两作用均零，比例不定义。
+
+∎
+
+<a id="sec-13"></a>
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2ffc70a21712141d8cfaaf6105419ca1908bc3831216c44d92ca64c72f0d15d4
+  normalized_sha256: sha256:2ffc70a21712141d8cfaaf6105419ca1908bc3831216c44d92ca64c72f0d15d4
+cas_ref: sha256:2ffc70a21712141d8cfaaf6105419ca1908bc3831216c44d92ca64c72f0d15d4
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/CommonRuleInformationConvergence.common_rule_information_convergence
+    target_statement_id: sha256:290bd8bd61ae3bf0f16eebfd885de8738144b08fec7a648fd9eb7f2d1a859267
+receipts:
+  unresolved_subitems: []

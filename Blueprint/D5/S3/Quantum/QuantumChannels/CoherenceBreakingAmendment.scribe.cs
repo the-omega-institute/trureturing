@@ -15,6 +15,9 @@ internal sealed class CoherenceBreakingAmendmentDocument : IScribeDocumentDefini
         H("Amending coherence-breaking iterates with one unitary"),
         Blocks(
             Paragraph(Text("All matrices are complex and use the fixed incoherent basis indexed by Fin d. The superscript H denotes conjugate transpose, tr is the matrix trace, and a superscript [m] denotes m-fold function iteration. Subtraction in an iteration count is natural-number subtraction.")),
+            Node("off-diagonal", "Erasing the diagonal", OffDiagonalFormula(),
+                "offDiag", DescribeRole.Definition, AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The complex linear map offDiag replaces each diagonal entry by zero and preserves every other matrix entry.")))),
             Node("incoherent-kraus", "Incoherent Kraus operators", IncoherentFormula(),
                 "IsIncoherentKraus", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("Section 2 calls a Kraus representation incoherent when each individual Kraus operator preserves incoherence on every incoherent input. Equivalently, each column of every Kraus operator has support in at most one row: each basis vector is sent to a scalar multiple of a basis vector. This predicate imposes no trace-preservation condition.")))),
@@ -32,6 +35,12 @@ internal sealed class CoherenceBreakingAmendmentDocument : IScribeDocumentDefini
                 Blocks(
                     Paragraph(Text("Section 5 conjectures amendment for incoherent trace-preserving Kraus channels with coherence-breaking index n at least two. The n-th iterate is coherence-breaking, and none of the iterates with 1 <= k < n is coherence-breaking, as in the minimum defining the index in Section 2, Eq. (1). There is one unitary U whose conjugation, inserted in every intervening slot, makes the composite fail to be coherence-breaking. Trace preservation is the Kraus completeness equality below.")),
                     new DocumentBlock.DisplayFormula(KrausChannelFormula()))),
+            Node("monomial-unitary", "Unitary monomial matrices", MonomialUnitaryFormula(),
+                "monomial_unitary", DescribeRole.Theorem, AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A permutation matrix with one unit-modulus coefficient in each column is unitary.")))),
+            Node("monomial-projection", "Monomial conjugation commutes with diagonal erasure", MonomialProjectionFormula(),
+                "monomial_projection", DescribeRole.Theorem, AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Conjugation by a monomial matrix commutes with offDiag for arbitrary complex coefficients; no unit-modulus hypothesis is needed.")))),
             Describe.Lean(DescribeId.Create("coherence-breaking-amendment-result"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("A permutation with fourth-root phases amends the channel"),
@@ -51,6 +60,31 @@ internal sealed class CoherenceBreakingAmendmentDocument : IScribeDocumentDefini
         Describe.Lean(DescribeId.Create("coherence-breaking-amendment-" + id),
             DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(formula), provenance, prose, role);
+
+    private static Formula MonomialMatrix(Formula sigma, Formula omega) =>
+        Call("D5.S3.Quantum.Matrix.MonomialDiagonalPreserving.monomial",
+            Call("Equiv.symm", sigma), Call("Function.comp", omega, Call("Equiv.symm", sigma)));
+
+    private static Formula MonomialUnitaryFormula()
+    {
+        Formula d = V("d"), sigma = V("sigma"), omega = V("omega"), c = V("c");
+        Formula norm = All("c", Fin(d), Equal(Mul(At(omega, c), Call("star", At(omega, c))), D(1)));
+        Formula member = new Formula.Relation(MonomialMatrix(sigma, omega), FormulaRelationOperator.MemberOf,
+            Call("Matrix.unitaryGroup", Fin(d), Field("C")));
+        return Disp(All("d", Field("N"), All("sigma", Call("Equiv.Perm", Fin(d)),
+            All("omega", Fun(Fin(d), Field("C")), Implies(norm, member)))));
+    }
+
+    private static Formula MonomialProjectionFormula()
+    {
+        Formula d = V("d"), sigma = V("sigma"), omega = V("omega"), x = V("X");
+        Formula m = MonomialMatrix(sigma, omega);
+        Formula conjugation = Call("LinearMap.mulLeftRight", Field("C"),
+            Parenthesized(Seq(m, Comma, Sp, Adjoint(m))));
+        Formula eq = Equal(Call("offDiag", At(conjugation, x)), At(conjugation, Call("offDiag", x)));
+        return Disp(All("d", Field("N"), All("sigma", Call("Equiv.Perm", Fin(d)),
+            All("omega", Fun(Fin(d), Field("C")), All("X", Mat(d), eq)))));
+    }
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Named(string name)
@@ -105,6 +139,16 @@ internal sealed class CoherenceBreakingAmendmentDocument : IScribeDocumentDefini
         Parenthesized(Seq(u, Comma, Sp, Adjoint(u))));
     private static Formula KrausBinders(Formula body) =>
         All("d", Field("N"), All("r", Field("N"), All("K", Family(V("d"), V("r")), body)));
+
+    private static Formula OffDiagonalFormula()
+    {
+        Formula entry = At(Call("offDiag", V("X")), V("i"), V("j"));
+        Formula action = And(
+            Implies(Equal(V("i"), V("j")), Equal(entry, D(0))),
+            Implies(NotEqual(V("i"), V("j")), Equal(entry, At(V("X"), V("i"), V("j")))));
+        return Disp(All("d", Field("N"), All("X", Mat(V("d")),
+            All("i", Fin(V("d")), All("j", Fin(V("d")), action)))));
+    }
 
     private static Formula IncoherentFormula()
     {

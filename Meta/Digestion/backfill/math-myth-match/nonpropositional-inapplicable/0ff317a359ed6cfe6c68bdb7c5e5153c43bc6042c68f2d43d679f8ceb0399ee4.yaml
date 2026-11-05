@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0ff317a359ed6cfe6c68bdb7c5e5153c43bc6042c68f2d43d679f8ceb0399ee4
+  normalized_sha256: sha256:0ff317a359ed6cfe6c68bdb7c5e5153c43bc6042c68f2d43d679f8ceb0399ee4
+cas_ref: sha256:0ff317a359ed6cfe6c68bdb7c5e5153c43bc6042c68f2d43d679f8ceb0399ee4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 区分事件、因果影响、个体改善、保证、转变与神圣回应的语义及证据角色。
+    previous_atom_id: 069818f43162dcc7f1920c41f8f15581811b85bb90ab168e6f262ddb3265c26e
+    next_atom_id: feec1f7d75ca92642f3b15a5eae71102cc04f292f9180f507c84a1b19fb75008

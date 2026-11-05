@@ -1,0 +1,19 @@
+### 17.1. The same stationary law for all lengths and all stationary rows
+
+Every row of $A(a)$ sums to one. Every finite stochastic matrix has a stationary probability row; for example, a subsequential limit of Cesaro averages of any initial row is stationary. For any such $\lambda$, the finite interval masses
+
+$$
+J_\theta(H_l=h_l,\ldots,H_{r+1}=h_{r+1},X_l=x_l,\ldots,X_r=x_r)
+=\lambda_{h_l}\prod_{i=l}^rM_{x_i}(h_i,h_{i+1})
+\tag{17.6}
+$$
+
+are normalized. Right marginalization uses $A\mathbf1=\mathbf1$, and left marginalization uses $\lambda A=\lambda$. Thus the consistent distributions extend to one stationary two-sided law, exactly the construction of [Universal, Proposition 4.2][ClockUniversal]. Its visible cylinders are
+
+$$
+P_\theta([w]_l)=\lambda M_w\mathbf1.
+\tag{17.7}
+$$
+
+Every positive edge has $S_{i+1}=S_i+1$ and installs previous-bit coordinate $X_i$ at $H_{i+1}$. Consequently $H_i=(S_i,X_{i-1})$ simultaneously at all integer cuts almost surely. A one edge ends with previous bit one, from which another one has zero probability. Hence $M_1^2=0$, which implies the original scalar requirement $\lambda M_1^2\mathbf1=0$. This verifies membership in the unaltered (2.1); it does not strengthen that requirement for other members of $\Theta_{2m}$. Formula (17.6) applies equally to boundary parameters, zero stationary coordinates and mixtures of recurrent classes. Every concatenation $uv$ keeps its full mass $\lambda M_uM_v\mathbf1$.
+

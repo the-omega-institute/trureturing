@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c3316f8718cbaf877d76a8902e41790b59bb7f307fc2cc76f5d93881b730e758
+  normalized_sha256: sha256:c3316f8718cbaf877d76a8902e41790b59bb7f307fc2cc76f5d93881b730e758
+cas_ref: sha256:c3316f8718cbaf877d76a8902e41790b59bb7f307fc2cc76f5d93881b730e758
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只解释 V.3.7—8 的内外活动、像和趋近的等级语境，没有数学映射、误差界或存在命题。
+    previous_atom_id: 0356ccba8705e03fe6dd66bca40ddff782a9b895c6304b7d79c587bc7dd6d168
+    next_atom_id: bf8cad61009fe972784222b54c7111edfe34e66315171ac751ac06c45d9021a9

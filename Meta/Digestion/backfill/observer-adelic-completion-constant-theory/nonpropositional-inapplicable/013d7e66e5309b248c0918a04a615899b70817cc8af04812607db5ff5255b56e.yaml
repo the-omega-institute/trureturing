@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:013d7e66e5309b248c0918a04a615899b70817cc8af04812607db5ff5255b56e
+  normalized_sha256: sha256:013d7e66e5309b248c0918a04a615899b70817cc8af04812607db5ff5255b56e
+cas_ref: sha256:013d7e66e5309b248c0918a04a615899b70817cc8af04812607db5ff5255b56e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Requested output coordinate of an extraction workflow: budget curve.'
+    previous_atom_id: 725fd3d0bed4046c26345b78d40835c832407965435b211451761a83c8a04d94
+    next_atom_id: a57c74ce8fcbfa6cf62f4e3292e77843b4368b7fd6ac109b006b4ede14745a17

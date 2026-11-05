@@ -14,7 +14,7 @@ Direct frozen dependencies: F1--F6 are declaration identities, not module pins.
 F1: D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.trace_hermitian_product_real
   declaration statement_id: sha256:d57aafbe2afd1228c9b5e26bf06684ec80accc922d16f29290f16819337adc81
 F2: D5/S3/Quantum/Information/SLDSpectralEnergy.IsDensity
-  declaration statement_id: sha256:fc9bb0824d5818ff419f72f26095faecc04e62ab59bf26f4f2bcefbb2d380448
+  declaration statement_id: sha256:a10738dfb34d3f9f15b31e2052545ae2dd6f812042123ae918dc2a16912f1e85
 F3: D5/S3/Quantum/Information/PartialTraceMutualInformation.kronecker_eq_conj_diagonal_eigenvalues
   declaration statement_id: sha256:8b1b61a640dd9dac61868bff2b7627714c90764e99b8c320fdb404ae694c4b19
 F4: D5/S3/Quantum/Information/PartialTraceMutualInformation.partialTraceLeft
@@ -25,6 +25,8 @@ F6: D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.diagonalSt
   public declaration statement_id (producing Lean report): sha256:29d9fc8170caff55b46b44d1e754079f686dada4d842c9cbbb8ae807649435e7
   baseline private declaration statement_id: sha256:3da5fa3a2feed6b43a22b9342c899b6f94a1556ea1c0fb205175999a3338b7d1
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15282
+Escape audit unfinished for cfc_unitary_diagonal:
+https://github.com/the-omega-institute/trureturing/issues/19914
 All theorem proofs are bind-only; private auxiliaries have live consumers.
 Definitions encode the source objects or consumed internal expressions.
 Per-declaration classifications (frozen dependencies expand same-delivery helpers):
@@ -210,6 +212,7 @@ proof_shape: output_entropy_exp: bind-only; escape_witness: none
 -/
 
 import D5.S3.Quantum.Information.SLDSpectralEnergy
+import D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
 import D5.S3.Entropy.RenyiCombining.BinaryRenyiCombining
 import D5.S3.Weil.ZetaLinear.RankTrace
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
@@ -371,7 +374,7 @@ private lemma cfc_real_diagonal (d : n → ℝ) (f : ℝ → ℝ) :
   funext i
   simpa [z] using (cfc_algebraMap (R := ℝ) (A := ℂ) (d i) f)
 
-private lemma cfc_unitary_diagonal (U : Matrix.unitaryGroup n ℂ) (d : n → ℝ) (f : ℝ → ℝ) :
+lemma cfc_unitary_diagonal (U : Matrix.unitaryGroup n ℂ) (d : n → ℝ) (f : ℝ → ℝ) :
     cfc f ((U : Matrix n n ℂ) * diagonal (fun i => (d i : ℂ)) * star (U : Matrix n n ℂ)) =
       (U : Matrix n n ℂ) * diagonal (fun i => (f (d i) : ℂ)) * star (U : Matrix n n ℂ) := by
   let phi := (Unitary.conjStarAlgAut ℂ (Matrix n n ℂ) U).toStarAlgHom

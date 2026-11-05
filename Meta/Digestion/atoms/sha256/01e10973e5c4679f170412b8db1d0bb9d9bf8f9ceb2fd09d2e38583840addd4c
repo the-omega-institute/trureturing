@@ -1,0 +1,57 @@
+**Lemma 11.3 (Dense sublevel localization retaining the moment deficit).** Fix $L>0$. For all sufficiently large $a$, uniformly over $0<\delta\le L/a$, every actual dense law with $H\le H_d$ satisfies
+
+$$
+\sqrt V\le\frac{24\delta}{r\mu^3},\qquad
+0\le\Delta\le72\delta^2\mu^{-6},\qquad
+\max_i|c_i|=O_L(r\delta).
+\tag{11.6}
+$$
+
+In particular $y_i=\mu+O_L(\delta/r)$ for every label. These are consequences for this sublevel and are not extra assumptions on the law domain.
+
+**Proof.** Set $R_i=c_i+b$, as in Lemma 3.1. Its pointwise nonnegative residual is
+
+$$
+(1-I_i)(2r+1)(r-K)+I_i(s-K)(s-K-1).
+$$
+
+Consequently
+
+$$
+R_i\ge0,\qquad
+\sum_iR_i=S_0+\Delta,\qquad S_0=6r\delta.
+\tag{11.7}
+$$
+
+The sum identity follows from $\sum_i c_i=\mathbb E K^3-r^2q$ and $Z-r^2q+sb=6r\delta$. With $f(y)=r^2/y-b/y^2$, (8.6)–(8.8) give, for all sufficiently large $a$ in the stated window,
+
+$$
+H=\sum_i f(y_i)+\sum_i\frac{R_i}{y_i^2},\qquad
+\sum_i f(y_i)\ge sf(\mu)+\frac{r^2}{2}V,
+\qquad sf(\mu)+\frac{S_0}{\mu^2}=H_d.
+$$
+
+Indeed $\mu\ge1/2$ and $b/(r^2\mu)\le1/12$ eventually, and density is exactly the other hypothesis needed in (8.7). Put $M=\max_i y_i$. Since $M\le1$, the inverse-square tangent inequality yields
+
+$$
+\begin{aligned}
+\sum_i\frac{R_i}{y_i^2}
+&\ge\frac{S_0+\Delta}{M^2}\\
+&\ge\frac{S_0}{\mu^2}
+ -\frac{2S_0}{\mu^3}(M-\mu)+\Delta\\
+&\ge\frac{S_0}{\mu^2}
+ -\frac{2S_0}{\mu^3}\sqrt V+\Delta.
+\end{aligned}
+$$
+
+Thus
+
+$$
+H-H_d\ge\Delta+\frac{r^2}{2}V
+ -12r\delta\mu^{-3}\sqrt V.
+\tag{11.8}
+$$
+
+Under $H\le H_d$, nonnegativity of $\Delta$ first gives the bound for $\sqrt V$ in (11.6). Maximizing $12r\delta\mu^{-3}u-r^2u^2/2$ over $u\ge0$ gives the displayed bound for $\Delta$. Finally (11.7) implies
+$|c_i|\le b+S_0+\Delta=O_L(r\delta)$, since $\delta/r$ is uniformly bounded and tends to zero. ∎
+

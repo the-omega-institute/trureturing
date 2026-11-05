@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cbe94a32eaef2718c6bf5fe6752d5fd30284b437e30aa6484890cf26c021065e
+  normalized_sha256: sha256:cbe94a32eaef2718c6bf5fe6752d5fd30284b437e30aa6484890cf26c021065e
+cas_ref: sha256:cbe94a32eaef2718c6bf5fe6752d5fd30284b437e30aa6484890cf26c021065e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 选定两个有限索引族并命名 response matrix Q；没有声称其秩、可逆性或桥的实现存在。
+    previous_atom_id: f3396bb14ef506ea709b3a260f446b9a7bbfc660c60519b165187ec33a3a8b56
+    next_atom_id: dafa37b18266b8a507756b467189d9474def5657259502dd55778b2f4960a9b3

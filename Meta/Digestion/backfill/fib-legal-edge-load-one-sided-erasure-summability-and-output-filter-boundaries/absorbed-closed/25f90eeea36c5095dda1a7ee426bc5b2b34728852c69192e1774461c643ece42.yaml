@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:25f90eeea36c5095dda1a7ee426bc5b2b34728852c69192e1774461c643ece42
+  normalized_sha256: sha256:25f90eeea36c5095dda1a7ee426bc5b2b34728852c69192e1774461c643ece42
+cas_ref: sha256:25f90eeea36c5095dda1a7ee426bc5b2b34728852c69192e1774461c643ece42
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleTheorem42.native_component_rectangle_theorem42
+    target_statement_id: sha256:4f5a816753fde6b82a8eecd4102b0897966587c93bc5660ef4901f07a10f3113
+receipts:
+  unresolved_subitems: []

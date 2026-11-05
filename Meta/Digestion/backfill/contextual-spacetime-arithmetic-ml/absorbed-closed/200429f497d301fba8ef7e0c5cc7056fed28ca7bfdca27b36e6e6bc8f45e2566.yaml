@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:200429f497d301fba8ef7e0c5cc7056fed28ca7bfdca27b36e6e6bc8f45e2566
+  normalized_sha256: sha256:200429f497d301fba8ef7e0c5cc7056fed28ca7bfdca27b36e6e6bc8f45e2566
+cas_ref: sha256:200429f497d301fba8ef7e0c5cc7056fed28ca7bfdca27b36e6e6bc8f45e2566
+coverage_gids:
+  - gid: D5/S3/Observer/HilbertGeometry/HilbertPathFundamentalTheorem.finite_coordinate_derivative_bound
+    target_statement_id: sha256:a50c91bde599e55956278fb0143f86ba64d97b7d89ad049e1c53355b9e7c718d
+receipts:
+  unresolved_subitems: []

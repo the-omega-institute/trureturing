@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:589493a76367f6abe9cb4344a540c52fc3ecd8653c9fb70a38b28e6b1bb7cfdc
+  normalized_sha256: sha256:589493a76367f6abe9cb4344a540c52fc3ecd8653c9fb70a38b28e6b1bb7cfdc
+cas_ref: sha256:589493a76367f6abe9cb4344a540c52fc3ecd8653c9fb70a38b28e6b1bb7cfdc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条不承诺 residual envelope 随抽取深度趋零，不提供任何抽取深度极限或速率。
+    previous_atom_id: 00a5e30adf749c41c712357c686aaedcfba61ae232305bc1f623b05426d92d55
+    next_atom_id: 231738a7d890c50063cfcf64249d56bd79093de24c4d1c4be7ef1ea969cd15d8

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1b7351f51393dca937278386f3e205172f7a6e10094a781a7395a86e47e5d748
+  normalized_sha256: sha256:1b7351f51393dca937278386f3e205172f7a6e10094a781a7395a86e47e5d748
+cas_ref: sha256:1b7351f51393dca937278386f3e205172f7a6e10094a781a7395a86e47e5d748
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 投影前可保留结构的研究清单名词 connection；该片没有断言某个连接能充分恢复观察者。
+    previous_atom_id: 7da749020939d17b35d483fca705765c13455735e4d557b80a85c2acc1ecf636
+    next_atom_id: 03ecd23b8cc65cccdafb9f9daaf080cf353ddd5a69134e0cd908626a40575eca

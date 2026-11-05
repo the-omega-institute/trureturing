@@ -1,0 +1,58 @@
+#### 引理 5.3：Garside 半扭转的纯关系恒等式
+
+设  $\sigma_ 1,\ldots,\sigma_ {n-1}$  满足远距交换和相邻编织关系。
+令
+
+```math
+\Pi_n=\sigma_1\cdots\sigma_{n-1},\quad
+ \Omega_n=\sigma_{n-1}\cdots\sigma_1,\quad
+ \Delta_1=1,\quad \Delta_n=\Pi_n\Delta_{n-1}.
+```
+
+则
+
+<a id="eq-eq:garside"></a>
+
+```math
+\Delta_n=\Delta_{n-1}\Omega_n,\qquad
+ \Delta_n\sigma_j=\sigma_{n-j}\Delta_n\quad(1\le j<n).\tag{14}
+```
+
+
+**证明。**
+
+对第一式归纳。用归纳假设和  $\sigma_ {n-1}$  与  $\Delta_ {n-2}$  中全部生成元交换，得
+
+```math
+\Pi_n\Delta_{n-1}
+ =\Pi_{n-1}\sigma_{n-1}\Delta_{n-2}\Omega_{n-1}
+ =\Delta_{n-1}\sigma_{n-1}\Omega_{n-1}
+ =\Delta_{n-1}\Omega_n.
+```
+
+远距交换及一次相邻编织给滑移式
+
+```math
+\Pi_n\sigma_k=\sigma_{k+1}\Pi_n\quad(k\le n-2),\qquad
+ \Omega_n\sigma_k=\sigma_{k-1}\Omega_n\quad(k\ge2).
+```
+
+例如第一式先把右端  $\sigma_ k$  移过  $\sigma_ {n-1},\ldots,\sigma_ {k+2}$ ，
+把  $\sigma_ k\sigma_ {k+1}\sigma_ k$  改为  $\sigma_ {k+1}\sigma_ k\sigma_ {k+1}$ ，
+再把最左的  $\sigma_ {k+1}$  移过  $\sigma_ {k-1},\ldots,\sigma_ 1$ 。
+第二式反向同理。
+当  $j\le n-2$ ，归纳得到
+ $\Delta_ n\sigma_ j=\Pi_ n\sigma_ {n-1-j}\Delta_ {n-1} =\sigma_ {n-j}\Delta_ n$ 。
+当  $j=n-1$ ，改用另一分解：
+ $\Delta_ n\sigma_ {n-1}=\Delta_ {n-1}\sigma_ {n-2}\Omega_ n =\sigma_ 1\Delta_ n$ 。
+初始  $n=2$  显然，归纳完成。
+
+**证毕。**
+
+
+这是标准 Garside 半扭转关系；上述证明只用群关系，便于直接移植到项目矩阵。
+[\[14\]](#bib-garside)
+
+
+<a id="stmt-5-4"></a>
+

@@ -1,0 +1,39 @@
+**Definition 7.2 (unchanged command law and complete lifetime).** Put
+
+$$
+\delta_n=n^{-2},\quad m_n=n^3,\quad S_n=n,\quad T_n=n+\delta_n,
+\quad \Sigma=A^{1/2},\qquad
+d^j=\rho^{-1}\sum_iX_i(\rho a^{ij}).
+\tag{NT.3}
+$$
+
+Let $\Xi_n=(\{-1,1\}^2)^{m_n}$ with its uniform product probability
+$\pi_n$. At each alive node execute exactly G, Definition 29.2:
+
+$$
+\begin{gathered}
+v_i=d(q_i)\delta_n+\sqrt{2\delta_n}\Sigma(q_i)\xi_i,\qquad
+\theta=(t-i\delta_n)/\delta_n,\\
+(a,b,j)(t)=
+\left(a_i+\theta v_i^1,\ b_i+\theta v_i^2,
+ j_i+\theta a_i v_i^2+\tfrac12\theta^2v_i^1v_i^2\right),\\
+q(t)=\Phi_o(a,b,j)=
+\left(k_o+a,\ [\alpha_o+b/2],
+ [\beta_o+(\tfrac12-k_o/r)b-j/r]\right).
+\end{gathered}
+\tag{NT.4}
+$$
+
+Controls start at zero, and $j=\int a\,db$ is the actual chronological
+integral at every prefix. Cut a chord at its first hit of either $l$ or
+$u$, and hold thereafter. If every random cell survives, retain the
+original last interval $[S_n,T_n]$: height moves linearly from its current
+value to $u$ with $b$ and $j$ constant. Write $\bar q_{n,\omega}$ for
+the resulting held trajectory and $\zeta_{n,\omega}$ for its actual
+first hit. Then $0<\zeta_{n,\omega}\le T_n$. Unused signs are not
+rejected or reweighted. All native prefix guards remain in force.
+Only $0\le t<\zeta_{n,\omega}$ contributes to an alive observation;
+the post-hit hold and any later constant continuation contribute nothing.
+Stationary random cells before death, including a possible source hold
+at a coarse mesh, do contribute their entire duration.
+

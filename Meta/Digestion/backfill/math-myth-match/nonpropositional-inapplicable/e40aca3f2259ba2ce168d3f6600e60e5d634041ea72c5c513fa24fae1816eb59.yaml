@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e40aca3f2259ba2ce168d3f6600e60e5d634041ea72c5c513fa24fae1816eb59
+  normalized_sha256: sha256:e40aca3f2259ba2ce168d3f6600e60e5d634041ea72c5c513fa24fae1816eb59
+cas_ref: sha256:e40aca3f2259ba2ce168d3f6600e60e5d634041ea72c5c513fa24fae1816eb59
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 会通的分层比较问题与候选对应，明确没有统一谓词或相同量词。
+    previous_atom_id: a54c218af9049cff6c32a2d9c9bdebc9a0c4129ce3a20c5ed7f78b4d0429f02a
+    next_atom_id: 30fa94cdccce1ff35386d1b120f0a04806aa59a6c9f2b7126c2056b881399fe3

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:981f727882a7754db461ff42655bcdb7dc8b7098dca77e173eb713df14f0bc67
+  normalized_sha256: sha256:981f727882a7754db461ff42655bcdb7dc8b7098dca77e173eb713df14f0bc67
+cas_ref: sha256:981f727882a7754db461ff42655bcdb7dc8b7098dca77e173eb713df14f0bc67
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题和四类对象的阅读提示，没有数学断言。
+    previous_atom_id: b7eed4c4e4d5c1e6258978e485517a9d4070b0c0f3cc9388b8c7e2954e84fa42
+    next_atom_id: 2cc0fd3ffcf47221d2e889df3f7923c39fc4fa9d8c66951874b54f66cdaebb9e

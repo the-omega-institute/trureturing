@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:074e93a850389d499ed019c26b4b1c5d7f40f5f3d8e8e21cd0734ddc39eb5112
+  normalized_sha256: sha256:074e93a850389d499ed019c26b4b1c5d7f40f5f3d8e8e21cd0734ddc39eb5112
+cas_ref: sha256:074e93a850389d499ed019c26b4b1c5d7f40f5f3d8e8e21cd0734ddc39eb5112
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这里只用最小负 jet 阶与最小负 Hankel 阶引入两个深度记号；没有声称集合非空、最小值存在或与 RH 等价。
+    previous_atom_id: 1f685d2fd4dd90c7cfa937e045c449e54ecb2794aa82e1ed021c2360fa8dcfce
+    next_atom_id: 8b1923338da3563a52d0d40f0914a262e38e7277e0357c63d303778a201bb92c

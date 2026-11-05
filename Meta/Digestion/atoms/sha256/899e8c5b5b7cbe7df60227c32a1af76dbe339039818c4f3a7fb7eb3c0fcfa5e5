@@ -1,0 +1,33 @@
+#### 定理 8.1（Hopf 相位无全局连续选择）
+
+不存在对每个纯 qubit 态连续地选择一个归一化振幅代表的全局规则
+$s:S^2\to S^3$，使 $s(r)s(r)^\dagger=(I+r\cdot\sigma)/2$。
+
+**证明。**
+
+在北、南开图分别取
+
+$$
+s_N=\begin{pmatrix}
+\sqrt{(1+z)/2}\\
+(x+iy)/\sqrt{2(1+z)}
+\end{pmatrix},\quad
+s_S=\begin{pmatrix}
+(x-iy)/\sqrt{2(1-z)}\\
+\sqrt{(1-z)/2}
+\end{pmatrix}.
+$$
+
+这里 $(x,y,z)$ 是本节的 Bloch 坐标，不是黄金常数。
+在赤道 $x+iy=e^{i\phi}$，有 $s_S=e^{-i\phi}s_N$。
+若全局连续 $s$ 存在，则在闭北、南半球分别写为
+$s=g_Ns_N=g_Ss_S$，$g_N,g_S$ 连续取值于 $U(1)$。
+两者都可延伸至圆盘，所以赤道限制的绕数都是零。
+但赤道上 $g_N=g_Se^{-i\phi}$，绕数之差必须为 $-1$，矛盾。 ∎
+
+这是否定一张覆盖全部纯态的连续相位约定；
+它不否定密度矩阵的全局描述，更不否定一个具体全局纯态。
+Hopf 丛及其在量子比特中的角色是标准几何事实。（[14](#ref-urbantke)）
+
+<a id="statement-8-2"></a>
+

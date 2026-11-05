@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1be6b6b453aeccca0830dfb6d9560f071be83a6b4a16b3d854196a8e767df2f5
+  normalized_sha256: sha256:1be6b6b453aeccca0830dfb6d9560f071be83a6b4a16b3d854196a8e767df2f5
+cas_ref: sha256:1be6b6b453aeccca0830dfb6d9560f071be83a6b4a16b3d854196a8e767df2f5
+coverage_gids:
+  - gid: D5/S0/Tower/GoldenFixedPoint.golden_ratio_reciprocal_fixed_point
+    target_statement_id: sha256:1ad9de6bdaced54d0fb5e5d5d4938a46e1fcabc33cca5b7f335f1d21c2e4a914
+  - gid: D5/S1/FixedPoints/Algebraic/GoldenFixedPoint.golden_fixed_point_unique
+    target_statement_id: sha256:771aee0dba83a9ce3372477e12c888e107eba4084f286c96b7b01362ddf3e60f
+receipts:
+  unresolved_subitems: []

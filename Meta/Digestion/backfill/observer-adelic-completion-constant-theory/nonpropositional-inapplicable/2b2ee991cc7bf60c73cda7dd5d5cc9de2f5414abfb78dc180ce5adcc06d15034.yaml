@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2b2ee991cc7bf60c73cda7dd5d5cc9de2f5414abfb78dc180ce5adcc06d15034
+  normalized_sha256: sha256:2b2ee991cc7bf60c73cda7dd5d5cc9de2f5414abfb78dc180ce5adcc06d15034
+cas_ref: sha256:2b2ee991cc7bf60c73cda7dd5d5cc9de2f5414abfb78dc180ce5adcc06d15034
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅指定有理逼近残差和有限 floor 的记号并引出对应表；本 atom 不含表的数据行或对应关系断言。
+    previous_atom_id: 2c2fdac01e7cb0edcc282775a7eb3e26184cc3d3c65f805582a2ca12d721d162
+    next_atom_id: 1355f18243d48a92c417259170307040e715f53ead1a6ddf69c97ad5f2b9d019

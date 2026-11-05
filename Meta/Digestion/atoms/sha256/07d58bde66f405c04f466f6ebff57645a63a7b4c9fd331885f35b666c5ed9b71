@@ -1,0 +1,66 @@
+**Assumption 24.1 (analytic membership, actual permissions and acquisition).**
+Keep (23.1), $J,\Pi,g_D$, the original clock and $\mathcal Q$. Fix finite
+known bounds $A_0,C_0>0$. A single source has parameters $(a,c)$, fixed
+through acquisition and execution, with $|a|\le A_0$, $|c|\le C_0$, and
+its complete actual fields on all of $J$ are
+
+$$
+\begin{aligned}
+X_0&=(c e_2,0,1),&
+X_1&=(e_1+a\sin h\,e_2,1,0),\\
+X_2&=(e_2,0,1),&X_3&=(e_3,0,0).
+\end{aligned}
+\tag{24.1}
+$$
+
+The unit of the hidden phase and the frequency $1$ in $\sin h$ are fixed
+parts of membership. Full-space continuations are auxiliary; operations
+remain restricted by (23.1). Membership on the whole declared source is an
+independent premise, not a conclusion from observations. In particular it
+excludes the changing hidden scale of (23.2).
+The joint inner product, distance and coordinate labels have the actual
+common calibration (16.9); the acquisition below estimates $(a,c)$, not
+an unknown $\Pi$ or an unknown ambient dimension.
+
+The actual deterministic equation includes $X_0$ in the original clock:
+$\dot Z=X_0+\sum_a u_aX_a$. The original operation contract separately
+permits a hold $u=0$, a bounded piecewise $C^1$ pulse of the named control
+$X_1$, and each selected $Q$-Brownian execution in (16.6).
+These are permissions of this abstract source; they do not follow from
+the native FIB $P,Q$ menu.
+
+The preparation contract supplies one actual initial source with
+$|h_0|\le\delta_h$, $|q_i|\le R_0$, $q_3\ge H_{\min}>0$ and
+$|k_0|\le K_0$, with finite declared preparation time and charge.
+A permitted nondestructive sensor returns a vector $R_j\in\mathbb R^3$
+whose coordinate errors relative to $q(s_j)$ are at most $\epsilon>0$.
+Each read has its own finite duration and charge, and can complete while
+the prescribed control continues. Its sample time $s_j$ is its completion
+time; the source evolves by (24.1) throughout the read. No hidden-coordinate
+sensor is assumed. Before the first sample only a hold is applied, so the
+prepared bound on $h_0$ is preserved. Let this first-read duration satisfy
+$0\le\ell_0\le\ell_{\max}<\infty$, with a declared bound; absorb
+earlier preparation evolution into the stated preparation contract.
+
+There are three endpoint samples, at $s_0<s_1<s_2$, on this same evolving
+source. On $[s_0,s_1]$ execute a hold; on $[s_1,s_2]$ execute only the
+named $X_1$ pulse. Certified original-clock and command records give
+
+$$
+\begin{gathered}
+\tau_j=s_{j+1}-s_j,\quad |\tau_j-1|\le\delta_t<1
+\quad(j=0,1),\\
+U=\int_{s_1}^{s_2}u_1(t)dt,\quad |U-\tau_1|\le\delta_u,
+\quad |u_1(t)|\le U_*<\infty,\qquad u_2=u_3=0.
+\end{gathered}
+\tag{24.2}
+$$
+
+Read latencies, timing actions and command switches after $s_0$ occur
+inside these intervals; the apparatus must actually be able to meet
+(24.2). Their durations are not removed from $\tau_j$.
+All error bounds include the stated sensor and timing calibration;
+permission and finite price for obtaining these records are separate
+premises. No independent preparations, reset, exact instantaneous field
+sensor, derivative oracle or covariance-rate oracle is supplied.
+

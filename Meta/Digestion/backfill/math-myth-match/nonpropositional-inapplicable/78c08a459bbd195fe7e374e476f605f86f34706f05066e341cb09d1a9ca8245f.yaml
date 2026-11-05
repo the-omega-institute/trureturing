@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:78c08a459bbd195fe7e374e476f605f86f34706f05066e341cb09d1a9ca8245f
+  normalized_sha256: sha256:78c08a459bbd195fe7e374e476f605f86f34706f05066e341cb09d1a9ca8245f
+cas_ref: sha256:78c08a459bbd195fe7e374e476f605f86f34706f05066e341cb09d1a9ca8245f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 密尔、荀子和库萨所用版本、章节与未校勘范围的书目说明。
+    previous_atom_id: 8c56da6d2e099281c491f7ed1e3c9d5d449d6a2ee65f7207ade69bf1c02a3f7b
+    next_atom_id: c6b3ecd5cc9b25a3b3022d054311ea3a7e814f8fbed6bb2de7f2a21dc1c55228

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6b2e37b6df74d8d59d3a3a06f65e61d86a09922d28026ba1cbe43bdf26d2024f
+  normalized_sha256: sha256:6b2e37b6df74d8d59d3a3a06f65e61d86a09922d28026ba1cbe43bdf26d2024f
+cas_ref: sha256:6b2e37b6df74d8d59d3a3a06f65e61d86a09922d28026ba1cbe43bdf26d2024f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 对“记忆”一词的哲学释义；没有指定优化序、复杂度函数或声称某优化问题已经达到最小值。
+    previous_atom_id: 5672e303269af86e38f113ae12a7b75cfc743e2b577426b424ee2bb86252df78
+    next_atom_id: bd38c9aead9b223c3c1e4a973f35f7b04be0da225faf5289ecb43ef42aa5fa29

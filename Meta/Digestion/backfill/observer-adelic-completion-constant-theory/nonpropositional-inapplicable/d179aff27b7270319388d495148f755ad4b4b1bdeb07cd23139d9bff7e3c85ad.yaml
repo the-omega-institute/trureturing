@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d179aff27b7270319388d495148f755ad4b4b1bdeb07cd23139d9bff7e3c85ad
+  normalized_sha256: sha256:d179aff27b7270319388d495148f755ad4b4b1bdeb07cd23139d9bff7e3c85ad
+cas_ref: sha256:d179aff27b7270319388d495148f755ad4b4b1bdeb07cd23139d9bff7e3c85ad
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 上游绑定结算（不是非命题判定）。钉版 Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679；搜索范围：D5/**/*.lean（含 private）：sinh/cosh 的奇偶投影、integral_neg_eq_self、Dirac 积分和总质量形状；核对 ResolventParitySignatures、CayleyMomentTransport、CayleyLaguerreMomentTomography、FullCirclePrimalAttainment、CirclePrimalEquivalence、ExternalSupportInvisibility、LiCurvatureCriterion。未找到供应本条实际子目标的冻结定理；定义或相邻条件定理不冒充供应。 定义的 C_a/S_a 不额外断言存在性；C_a(f)=C_a((f+f∘neg)/2) 由 MeasureTheory.integral_neg_eq_self、Real.cosh_neg、MeasureTheory.integral_add、MeasureTheory.integral_div 给出；连续紧支撑保证积分性（Continuous.integrable_of_hasCompactSupport、HasCompactSupport.comp_homeomorph）。
+    previous_atom_id: c142337b6aa5238508a5544d2253ce0412476f30a3c21645c63747e3011b1319
+    next_atom_id: 53a2d0a9132597f7fb36a4a62a9d015f905e9769c26e7596c932bdbdf6cfce04

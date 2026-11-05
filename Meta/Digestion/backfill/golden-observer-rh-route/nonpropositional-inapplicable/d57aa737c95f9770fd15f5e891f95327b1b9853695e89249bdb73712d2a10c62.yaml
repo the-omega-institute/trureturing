@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d57aa737c95f9770fd15f5e891f95327b1b9853695e89249bdb73712d2a10c62
+  normalized_sha256: sha256:d57aa737c95f9770fd15f5e891f95327b1b9853695e89249bdb73712d2a10c62
+cas_ref: sha256:d57aa737c95f9770fd15f5e891f95327b1b9853695e89249bdb73712d2a10c62
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: A_external 是经过审计的外部 theorem 数这一进度字段说明，后句禁止事后增添成功坐标。
+    previous_atom_id: 2f23c0bd5f158e62a7c89fd286424ffce75bcdb3708e00219b3ef9aaf08090f3
+    next_atom_id: f8f852bf2c9ee4d29ff5dd314a4d7ab289fc395f2ec20d79c64b62d504e81ea3

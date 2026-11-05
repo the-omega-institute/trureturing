@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:01c729e0d55be3a5d8ce1c31c95a2838e765b157b90fd2062e8e209df7b09233
+  normalized_sha256: sha256:01c729e0d55be3a5d8ce1c31c95a2838e765b157b90fd2062e8e209df7b09233
+cas_ref: sha256:01c729e0d55be3a5d8ce1c31c95a2838e765b157b90fd2062e8e209df7b09233
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Trust/ReputationSufficiencyCriterion.reputation_sufficiency_criterion
+    target_statement_id: sha256:d07d869772ab43ce1c73f7ad25d3465f525b5c76d1434e67868e522276ee8044
+receipts:
+  unresolved_subitems: []

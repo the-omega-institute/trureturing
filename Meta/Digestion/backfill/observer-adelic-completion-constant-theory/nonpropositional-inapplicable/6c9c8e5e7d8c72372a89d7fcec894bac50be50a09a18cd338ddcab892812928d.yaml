@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6c9c8e5e7d8c72372a89d7fcec894bac50be50a09a18cd338ddcab892812928d
+  normalized_sha256: sha256:6c9c8e5e7d8c72372a89d7fcec894bac50be50a09a18cd338ddcab892812928d
+cas_ref: sha256:6c9c8e5e7d8c72372a89d7fcec894bac50be50a09a18cd338ddcab892812928d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 子因子包含与 Jones index 的术语对应，不包含实际包含构造或指数值断言。
+    previous_atom_id: 14fb598941720b93c070918be4756ee710725d7b2e196eb4080fcf7c2f9a663f
+    next_atom_id: db6728c577dd9c76d73d5b7605e6ec10ca00b25534faf53e05a2ed67901f3cff

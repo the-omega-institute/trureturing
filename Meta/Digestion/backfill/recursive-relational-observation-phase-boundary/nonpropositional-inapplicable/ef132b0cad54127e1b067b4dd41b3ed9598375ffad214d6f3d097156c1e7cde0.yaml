@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ef132b0cad54127e1b067b4dd41b3ed9598375ffad214d6f3d097156c1e7cde0
+  normalized_sha256: sha256:ef132b0cad54127e1b067b4dd41b3ed9598375ffad214d6f3d097156c1e7cde0
+cas_ref: sha256:ef132b0cad54127e1b067b4dd41b3ed9598375ffad214d6f3d097156c1e7cde0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional model contract for section 50: the displayed m0,m1, normalisation, nondegeneracy and environment overlap are stipulated hypotheses; the remaining sentences specify independent initialisation, allowed access, a fixed CPTP channel, resource accounting and the required recovery task. No capacity bound, support-growth claim, existence theorem or recovery construction is asserted here; these begin in the following Theorem 50.1.'
+    previous_atom_id: 791834e8351cd2c34cf45945531ef6dda3857f2bcecf2f0ec69528172f9e5ffa
+    next_atom_id: ca29b8e17d707766b236423d09e1f8b2d0e3e87b37e7dfb9d8262e754e3c644c

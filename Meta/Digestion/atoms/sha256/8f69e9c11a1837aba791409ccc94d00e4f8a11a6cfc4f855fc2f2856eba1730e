@@ -1,0 +1,28 @@
+**Theorem 8.2 (finite criterion for a fixed native weighting).** Under Definition 8.1, uniform recovery is equivalent to the following three conditions.
+
+1. The structural condition of Theorem 7.2 holds: every cyclic SCC is a directed named cycle, and every root condensation path meets at most one cyclic SCC.
+2. In the finite family decomposition below, any two cyclic families with the same endpoint have commensurable lap durations: their ratio belongs to $\mathbb Q_{>0}$. No commensurability between families with different endpoints is required.
+3. Every number in the following finite separation list is strictly greater than $2\epsilon$.
+
+Here is the decomposition and the complete list, all formed from the fixed native $d$. Let $\mathcal S$ be the finite set of simple root paths, including the empty path. Reuse the unique normal form in the sufficiency proof of Theorem 7.2: when $P\in\mathcal S$ visits a cyclic component $C$, a word in its family is
+
+$$
+u_{P,k}=\alpha L_c^k\gamma\beta,
+\qquad P=\alpha\gamma\beta,\qquad k\in\mathbb N_0,
+$$
+
+where $c$ is the first entry into $C$, $L_c$ is its one full named lap, and $\gamma$ is a proper initial cycle segment. This includes entry at the last vertex of $P$, an empty $\gamma$, a cyclic root, a self-loop and $k=0$. Put
+
+$$
+a_P=\tau(P),\qquad D_P=\sum_{e\text{ internal to }C}d(e)>0.
+$$
+
+Its time family is the ray $a_P+D_P\mathbb N_0$. A simple path visiting no cyclic component has the singleton family $\{P\}$ with time $a_P$. These word families are disjoint and exhaust $\mathcal P_r$; write $z_P$ for their common endpoint. The normal form depends only on condition 1, so applies to native real durations without using the integer construction in Theorem 7.2.
+
+Include $D_P$ for each cyclic family. For each unordered pair of distinct simple paths $P,Q$ with $z_P=z_Q$, include the following number, according to the two family types:
+
+| Families | Separation number |
+| --- | --- |
+| Two singletons | $\lvert a_P-a_Q\rvert$ |
+| A singleton $P$ and a ray $Q$ | $\min\{\lvert a_P-a_Q-n_0D_Q\rvert,\ \lvert a_P-a_Q-(n_0+1)D_Q\rvert\}$, where $n_0=\max\{0,\lfloor(a_P-a_Q)/D_Q\rfloor\}$ |
+| Two rays | $\operatorname{dist}(a_P-a_Q,h_{PQ}\mathbb Z)$, where $D_P=p h_{PQ}$ and $D_Q=q h_{PQ}$ for relatively prime positive integers $p,q$ |

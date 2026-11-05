@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:713323f68409cd83fdc6cd3e42910df2adf43c0fe96b500571e93ca2c52e93b7
+  normalized_sha256: sha256:713323f68409cd83fdc6cd3e42910df2adf43c0fe96b500571e93ca2c52e93b7
+cas_ref: sha256:713323f68409cd83fdc6cd3e42910df2adf43c0fe96b500571e93ca2c52e93b7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非经验解释目标列表结尾及经验同一性不能自动提升为本体同一性的解释界限。
+    previous_atom_id: 67e2616c39a485d956a87a84dc8d83e4b9cdef48e3d0d5f1c0098f574b4a0cd1
+    next_atom_id: 8a0220d4b0a804fb8b4b03614de690106b40240ad404a3f37f6d49a210b516b9

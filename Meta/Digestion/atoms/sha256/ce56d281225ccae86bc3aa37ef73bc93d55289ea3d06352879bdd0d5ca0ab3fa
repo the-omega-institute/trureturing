@@ -1,0 +1,52 @@
+**Theorem 11.1 (all-address odd-offset Read macro).** Fix $k\ge1$, any
+logical current tree $t\in\mathcal T$, and actual register
+$y=\rho^{2k+1}t$. For a nonroot address $p=ad$, $d\in\{L,R\}$, set
+
+$$
+ G_k^o(p)=aR^kLL.                                  \tag{GPO.36}
+$$
+
+In addition to (GPO.26), this is a total paid presence query. Its bit
+$g$ is one exactly when $p$ was present in $t$. The complete actual table
+is
+
+| Logical reply $r_t(p)$ | $g$ for nonroot $p$ | $b$ | $c$ |
+| --- | --- | --- | --- |
+| absent | $0$ | $0$ | $0$ |
+| alpha | $1$ | $0$ | $0$ |
+| beta | $1$ | $1$ | $0$ |
+| branch | $1$ | $1$ | $1$ |
+
+The following adaptive macro returns precisely $r_t(p)$ without updating
+$y$: first Read $B_k^o(p)$; if $b=1$, Read $C_k^o(p)$ and return beta
+or branch according as $c=0$ or $1$. If $b=0$ at the root, return alpha.
+If $b=0$ at a nonroot, Read $G_k^o(p)$ and return absent or alpha
+according as $g=0$ or $1$. Only paid presence bits enter this control.
+For $D_p=|p|+k+1$ its exact path costs are
+
+| Logical request/reply | $Q_p$ | $W_p$ | $M_p$ |
+| --- | --- | --- | --- |
+| root alpha | $1$ | $D_p$ | $D_p$ |
+| beta or branch, any $p$ | $2$ | $2D_p+1$ | $D_p+1$ |
+| nonroot alpha or absent | $2$ | $2D_p$ | $D_p$ |
+
+These are this macro's prices, without an odd-offset optimality assertion.
+
+Proof. By (GPO.27) at the arbitrary parent $a$, $g=1$ exactly when
+$r_t(a)=\mathsf{branch}$. In a full binary tree that is equivalent to
+presence of either child $ad$, including when $a$ itself was absent.
+This proves the guard. Lemma 8.1 gives all the other entries, explicitly
+including absence at a now-born address. If $b=1$, absence and alpha
+are excluded and $c$ distinguishes the two remaining replies. If $b=0$,
+only alpha or absence remains; the nonempty root excludes absence and
+the guard handles every nonroot. Lengths of $B_k^o,C_k^o,G_k^o$ are
+respectively $D_p,D_p+1,D_p$, proving the table by summing the actual
+calls. Malformed formal bit patterns can have a fixed absent default;
+they do not occur on this domain. $\square$
+
+For example take $k=1,t=\alpha,p=L$. The actual $T_3$ has a node at
+$L$, but $B_k^o(p)=LRL$ is absent and
+$G_k^o(p)=RLL$ is absent. The macro returns the original absence, rather
+than the current presence of that new node. This example illustrates the
+proved all-source guard, rather than substituting a finite check for it.
+

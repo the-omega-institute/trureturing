@@ -1,0 +1,53 @@
+### 引理 10.1（两个 Bell 投影的精确二维分块）
+
+<a id="lem-c92-bell-blocks"></a>
+
+对 $b=0,1$，令
+
+$$
+g_b=\lvert \Phi\rangle_{AB}\otimes\lvert b\rangle_C,
+ \qquad h_b=\lvert b\rangle_A\otimes\lvert \Phi\rangle_{BC},
+ \qquad e_b=g_b,\quad f_b=\frac{2h_b-g_b}{\sqrt3}.
+$$
+
+则 $e_0,f_0,e_1,f_1$ 为正交单位组。
+在每个平面 $\mathcal T_b=\operatorname{span}\{e_b,f_b\}$ 上，
+
+<a id="eq-c92-bell-block-pauli"></a>
+
+$$
+\Pi_L=\frac{I+\sigma_z}{2},\qquad
+ \Pi_R=\frac{I+\frac{\sqrt3}{2}\sigma_x-\frac12\sigma_z}{2}.
+\tag{10.2}
+$$
+
+在两平面的共同正交补上，两投影均为零。
+因此
+
+<a id="eq-c92-bell-spectrum"></a>
+
+$$
+\operatorname{spec} W_B=\{0,\tfrac12,\tfrac32\},
+ \quad\text{重数分别为 }4,2,2.
+\tag{10.3}
+$$
+
+**证明。**
+由 Bell 向量展开，
+$\langle g_b,g_c\rangle=\langle h_b,h_c\rangle=\delta_{bc}$，
+且 $\langle g_b,h_c\rangle=\delta_{bc}/2$。
+这给出所述正交单位组。
+在 $(e_b,f_b)$ 中，$g_b=e_b$、
+$h_b=\tfrac12e_b+\tfrac{\sqrt3}{2}f_b$，
+所以两个投影矩阵分别为
+
+$$
+\begin{pmatrix}1&0\\0&0\end{pmatrix},\qquad
+ \begin{pmatrix}1/4&\sqrt3/4\\\sqrt3/4&3/4\end{pmatrix},
+$$
+
+即式 [(10.2)](#eq-c92-bell-block-pauli)。
+两者之和为 $I+(\sqrt3\sigma_x+\sigma_z)/4$，
+无迹部分平方为 $I/4$，故每块特征值为 $1\pm1/2$。
+余下四维空间为两投影的共同核。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:485ade0771ba3d6978312939c99fa986ee58432c9edc166f1c8a7580a2b2e2fd
+  normalized_sha256: sha256:485ade0771ba3d6978312939c99fa986ee58432c9edc166f1c8a7580a2b2e2fd
+cas_ref: sha256:485ade0771ba3d6978312939c99fa986ee58432c9edc166f1c8a7580a2b2e2fd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 《克拉底鲁篇》的来源范围与尚未完成的数学、经验外推清单；没有为所列缺口给出结论。
+    previous_atom_id: 1a98629c2b5eeed2c666365029a95dd4a5cb27a51e081e8e4f04fb6fcba37138
+    next_atom_id: ea2f174ea6a13e6ffe101b722ba83345ef91ade6c5f610fa04771aab329532c6

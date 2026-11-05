@@ -1,0 +1,4 @@
+## 37. Two source parameters with the whole gain and drift still linear
+
+Throughout §§37–43, fix arbitrary $k,d\ge0$, the exact $L=3k+d+5$ original clocks and matrices of (26.2), a received $y\in\mathbb R^L$, and $\delta\ge0$. Compatibility means exactly $\mathcal W_\delta(y)$ in Definition 30.1. In particular every actual world has one strictly positive rank-one trace-one $P$, one whole $0\ne H\in\Pi_k$, and one whole $D\in\Pi_d$; every paid read has its raw error bounded by $\delta$. The construction below decides source boundedness at that very radius, including $e(y)=\delta$.
+

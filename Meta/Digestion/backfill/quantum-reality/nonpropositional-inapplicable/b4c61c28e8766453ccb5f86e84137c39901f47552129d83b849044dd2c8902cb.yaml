@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b4c61c28e8766453ccb5f86e84137c39901f47552129d83b849044dd2c8902cb
+  normalized_sha256: sha256:b4c61c28e8766453ccb5f86e84137c39901f47552129d83b849044dd2c8902cb
+cas_ref: sha256:b4c61c28e8766453ccb5f86e84137c39901f47552129d83b849044dd2c8902cb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 表格界定 c 的因果标定角色，排除把它直接称为比特率，是符号含义表而非传播或容量定理。'
+    previous_atom_id: 53e0d2c9679496fa898a45f83e2063d4714f7a735b9f4285453321f814b452ca
+    next_atom_id: c0c03f77b70b53fdaa6de234842eba7e343b58695dd24aa0cb0cebc86e736b0a

@@ -1,0 +1,18 @@
+## 50. 延伸范围、文献接口与剩余问题
+
+定理 49.3 在前卷第 45 节排除的非零曲率 $JM$ 子树之外，补齐初始 $J$ 的根桥梁、
+初始 $M$ 的全部分支，以及每个分支在实际第六读之后的末动作选择。
+它使前卷推论 45.2 所列的 $(2,1)$ 七读下界缺口得到本卷的普通证明；前卷
+关于该缺口的文字保留其原有适用范围。前卷一般次数下界、常漂移结果及其
+已证内容继续成立。
+
+本卷新增的具体数学是第 47 节五个兼容末步分叉、它们在第 48 节的共同父历史
+嵌套，以及第 49 节的完整根组合。$JJ,JM$ 和 $MMM,MJJ,MMJ$ 的源差、对角翻转
+及共同根证书是复用。矩阵有理求逆、几何级数扰动界、介值定理、正割线提升和
+不可区分历史归纳都是标准方法，不主张将它们改称新的通用数学。
+
+| 来源 | 所用关系及精确边界 |
+| --- | --- |
+| Li–Lee–Bresler, *A Unified Framework for Identifiability Analysis in Bilinear Inverse Problems with Applications to Subspace and Sparsity Models*, [arXiv:1501.06120v1](https://arxiv.org/html/1501.06120v1), Definition 2.7, Theorem 2.8 | `literature-attested`：给定变换群下的双线性可识别性及轨道、条件唯一性分解。正尺度规范适用于固定漂移切片；可变的仿射漂移必须保留为独立坐标。该定理不给出本卷的自适应七读下界，也不保证指定共同父历史内存在正实割线。 |
+| Krieg–Novak–Ullrich, *On the power of adaption and randomization*, [arXiv:2406.07108v2](https://arxiv.org/html/2406.07108v2), §2, §4 Proposition 10 及其证明 | `literature-attested`：任意确定性信息选择及沿实际选择保持相同信息的下界方法。其 Bernstein 数值下界有线性 Banach 空间目标与域内球条件；本卷没有建立这些条件，不调用该数值下界。引理 46.2 直接证明所需的有限历史逻辑，无可测性假设。 |
+| 本卷引理 47.2、命题 48.2、定理 49.3 | `repo-derived`：有限有理证书、正实实现、相容拼接及本合同下的具体下界；没有外部优先权、文献检索穷尽性或世界数最小性声明。 |

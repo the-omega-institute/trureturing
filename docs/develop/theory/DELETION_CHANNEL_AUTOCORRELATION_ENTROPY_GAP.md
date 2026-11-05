@@ -1,0 +1,276 @@
+# A deletion-channel family with opposite $\kappa^2$ and posterior-entropy orderings
+
+## 1. Model
+
+For $n>m$, let $\Sigma_\ell=\{0,1\}^{\ell}$. A source word
+$Y\in\Sigma_n$ is uniform, and a deletion mask is chosen uniformly from the
+$\binom{n}{m}$ increasing $m$-subsets of $[n]$. For $x\in\Sigma_m$ and
+$y\in\Sigma_n$, write
+
+$$
+  \omega_x(y)=\#\{(j_1<\cdots<j_m): y_{j_i}=x_i\text{ for every }i\}.
+$$
+
+Thus $\omega_x(y)$ counts index embeddings, with multiplicity. The total
+number of compatible mask--word pairs is
+
+$$
+  \mu_{n,m}:=\sum_{y\in\Sigma_n}\omega_x(y)
+  =\binom{n}{m}2^{n-m},
+$$
+
+independently of $x$. The posterior law and its entropy in bits are
+
+$$
+  p_x(y)=\frac{\omega_x(y)}{\mu_{n,m}},
+  \qquad
+  H_n(x)=-\sum_{y\in\Sigma_n}p_x(y)\log_2 p_x(y),
+$$
+
+with $0\log_2 0=0$. These are the uniform-binary, uniform-position
+fixed-length deletion-channel quantities used in the model of
+Atashpendar--Mestel--Roscoe--Ryan.
+
+For a binary word $w=w_1\cdots w_m$, define the positional autocorrelation
+coefficient
+
+$$
+ \kappa_m^2(w):=
+ \sum_{i=1}^{m}\sum_{j=1}^{m}
+ \binom{i+j-2}{i-1}
+ \binom{2m-i-j}{m-i}[w_i=w_j],
+$$
+
+where $[P]$ is $1$ or $0$ according as $P$ holds or fails. This is
+Equation (11) of Atashpendar--Mestel--Roscoe--Ryan (arXiv:1807.11609v1),
+with the same indexing and binomial weights.
+
+## 2. The odd family
+
+For $r\geq1$, put $m=2r+1$, $n=2r+2$, and define
+
+$$
+ x_r=0\,1^{\,2r-1}0,
+ \qquad
+ y_r=0^{\,r}1 0^{\,r}.
+ \tag{2.1}
+$$
+
+At these parameters $\binom{n}{m}=n$, so the mask is exactly one uniformly
+chosen deletion position. Put $f(t)=t\log_2 t$ for $t>0$.
+
+### Theorem 2.1 (joint finite comparison and limit)
+
+For every integer $r\geq2$, the model in Section 1 satisfies
+
+$$
+ \kappa_{2r+1}^2(y_r)-\kappa_{2r+1}^2(x_r)
+ =2\left[
+ \binom{2r}{r}^{\!2}
+ -\frac{\binom{4r}{2r}}{2r+1}-2
+ \right]>0,
+ \tag{2.2}
+$$
+
+and
+
+$$
+ H_{2r+2}(y_r)-H_{2r+2}(x_r)
+ =\frac{f(2r)+f(2)-2f(r+1)}{4(r+1)}>0.
+ \tag{2.3}
+$$
+
+Moreover,
+
+$$
+ \lim_{r\to\infty}
+ \bigl(H_{2r+2}(y_r)-H_{2r+2}(x_r)\bigr)=\frac12
+ \quad\text{bit}.
+ \tag{2.4}
+$$
+
+**Proof.**
+
+For the entropy calculation, we use the single-deletion run-length formula
+of Singhvi--Sabary--Bar-Lev--Yaakobi [2, 3]. If $x\in\Sigma_m$ has
+consecutive run lengths $a_1,\ldots,a_s$, with $\sum_i a_i=m$, it gives
+
+$$
+  H_{m+1}(x)=\log_2(2(m+1))
+  -\frac{1}{2(m+1)}\sum_{i=1}^{s}f(a_i+1).
+  \tag{2.5}
+$$
+
+To fix the normalization and index-embedding convention, there are
+$2(m+1)$ insertion pairs: an insertion position and an inserted bit. Inserting the bit equal to a run symbol into the $a_i+1$ positions of
+that run gives one supersequence of weight $a_i+1$. Every other insertion
+pair gives a supersequence of weight $1$; two different insertion pairs can
+coincide only in the preceding run-extension case. Hence, after expanding
+$-\sum_y p_x(y)\log_2p_x(y)$, the weight-one terms vanish and
+
+$$
+ H_{m+1}(x)=\log_2(2(m+1))
+ -\frac{1}{2(m+1)}\sum_i(a_i+1)\log_2(a_i+1).
+$$
+
+For the autocorrelation calculation, set
+
+$$
+ M_{ij}:=\binom{i+j-2}{i-1}\binom{2m-i-j}{m-i}
+ \qquad(1\leq i,j\leq m).
+$$
+
+The matrix $M$ is symmetric and every row has the same sum
+
+$$
+ S_m:=\sum_{j=1}^{m}M_{ij}=\binom{2m-1}{m-1}.
+ \tag{2.6}
+$$
+
+Indeed, with $k=j-1$, (2.6) is the finite Vandermonde identity
+
+$$
+ \sum_k\binom{(i-1)+k}{i-1}
+       \binom{(2m-i-1)-k}{m-i}
+ =\binom{2m-1}{m-1},
+$$
+
+where binomial coefficients outside their natural range are zero. This is
+the classical Vandermonde convolution: by the binomial series [4, Equation
+(26.3.4)], the left side is the coefficient of $t^{m-1}$ in
+
+$$
+ (1-t)^{-i}(1-t)^{-(m-i+1)}=(1-t)^{-(m+1)},
+$$
+
+whose coefficient is $\binom{2m-1}{m-1}$.
+
+If $P$ and $N$ are respectively the zero and one positions of a binary
+word, define $W(P,N)=\sum_{i\in P,\,j\in N}M_{ij}$. Since the ordered
+cross terms occur twice and all other entries are equal-letter terms,
+
+$$
+  \kappa_m^2(w)=mS_m-2W(P,N).
+  \tag{2.7}
+$$
+
+Write $B_r=\binom{2r}{r}$ and $C_r=\binom{4r}{2r}$. In this matrix,
+the endpoint entries are
+
+$$
+ M_{11}=M_{mm}=C_r,
+ \qquad M_{1m}=M_{m1}=1,
+ \qquad M_{r+1,r+1}=B_r^2,
+ \tag{2.8}
+$$
+
+and $S_m=\binom{4r+1}{2r}=\frac{4r+1}{2r+1}C_r$. The zero positions of
+$x_r$ are $1,m$, so (2.6) and (2.8) give
+
+$$
+ W(x_r)=2(S_m-C_r-1).
+ \tag{2.9}
+$$
+
+The one position of $y_r$ is $r+1$, so its zero positions are all other
+positions and
+
+$$
+ W(y_r)=S_m-B_r^2.
+ \tag{2.10}
+$$
+
+Subtracting (2.7), then using (2.9)--(2.10), yields
+
+$$
+ \kappa_m^2(y_r)-\kappa_m^2(x_r)
+ =2\bigl(B_r^2+S_m-2C_r-2\bigr)
+ =2\left(B_r^2-\frac{C_r}{2r+1}-2\right),
+$$
+
+which is (2.2) as an identity.
+
+It remains to prove its strict sign. Let
+
+$$
+ Q_r:=\frac{C_r}{2r+1},
+ \qquad D_r:=B_r^2-Q_r.
+$$
+
+The factorial formula for binomial coefficients [4, Equation (26.3.1)]
+gives
+
+$$
+ B_{r+1}^2=\alpha_rB_r^2,
+ \quad \alpha_r=\frac{4(2r+1)^2}{(r+1)^2},
+$$
+
+$$
+ Q_{r+1}=\beta_rQ_r,
+ \quad \beta_r=
+ \frac{2(4r+1)(4r+3)}{(r+1)(2r+3)}.
+$$
+
+For $r\geq1$,
+
+$$
+ \alpha_r-\beta_r
+ =\frac{2(8r^2+9r+3)}{(r+1)^2(2r+3)}>0,
+ \qquad \alpha_r>1.
+$$
+
+Thus $D_{r+1}=\alpha_rD_r+(\alpha_r-\beta_r)Q_r>D_r$ whenever
+$D_r>0$. At the required endpoint $D_2=\binom42^2-\binom84/5=22$,
+so $D_r>2$ for every $r\geq2$. This proves the strict inequality in
+(2.2).
+
+The run lengths of $x_r$ are $1,2r-1,1$, while those of $y_r$ are
+$r,1,r$. Applying (2.5) gives
+
+$$
+ \begin{aligned}
+ H_{2r+2}(y_r)-H_{2r+2}(x_r)
+ &=\frac{(2r)\log_2(2r)+2-2(r+1)\log_2(r+1)}{4(r+1)}\\
+ &=\frac{f(2r)+f(2)-2f(r+1)}{4(r+1)}.
+ \end{aligned}
+$$
+
+Because $f''(t)=1/(t\ln2)>0$, strict midpoint convexity at the distinct
+points $2$ and $2r$ gives $f(2)+f(2r)>2f(r+1)$ for $r>1$, proving
+(2.3). Finally, elementary logarithm rules rewrite this difference as
+
+$$
+ \frac12-
+ \frac{\log_2 r}{2(r+1)}-
+ \frac12\log_2\left(1+\frac1r\right).
+ \tag{2.11}
+$$
+
+Both subtracted terms tend to zero, proving (2.4). $\square$
+
+At $r=1$, the two words in (2.1) coincide: $x_1=y_1=010$. Both
+differences in (2.2)--(2.3) are then $0$, so the strict range $r\geq2$
+is exact for this family. The theorem concerns this joint family only; it
+does not assert a general finite $\kappa^2$-ordering, a result for more
+than one deletion, or a deletion-channel capacity statement. It also leaves
+unchanged the fixed-$m$, $n\to\infty$ asymptotic minimization regime studied
+in arXiv:1807.11609v1.
+
+## References
+
+1. A. Atashpendar, D. Mestel, A. W. Roscoe, and P. Y. A. Ryan, *A Proof of
+   Entropy Minimization for Outputs in Deletion Channels via Hidden Word
+   Statistics*, arXiv:1807.11609v1, Equations (1), (3), and (11), and the
+   finite-ordering discussion.
+2. S. Singhvi, O. Sabary, D. Bar-Lev, and E. Yaakobi, *The Input and Output
+   Entropies of the $k$-Deletion/Insertion Channel*, arXiv:2202.03024v2,
+   one-deletion run-length entropy theorem.
+3. S. Singhvi, O. Sabary, D. Bar-Lev, and E. Yaakobi, *Conditional Entropies
+   of $k$-Deletion/Insertion Channels*, arXiv:2407.10026v2, the one-deletion
+   entropy formula and its run-length extremal consequences.
+4. NIST Digital Library of Mathematical Functions,
+   [Equation (26.3.1)](https://dlmf.nist.gov/26.3.E1), the factorial formula,
+   and [Equation (26.3.4)](https://dlmf.nist.gov/26.3.E4), the binomial
+   series used in the Vandermonde convolution.
+
+## 追加锚（本行以下为增补区）

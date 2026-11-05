@@ -1,0 +1,32 @@
+**Definition 117.4 (the complete original passive target).** The target is exactly [Self Generated Predictive Memory, Assumption 1.1](RECURSIVE_RELATIONAL_OBSERVATION_SELF_GENERATED_PREDICTIVE_MEMORY.md#1-the-source-and-the-continuing-decoder-contract). To separate its parameters from the source coefficients and the resolvent discount, write
+
+$$
+\begin{gathered}
+p_{\rm N},q_{\rm N},r_{\rm N}>0,\qquad
+p_{\rm N}+q_{\rm N}+r_{\rm N}<1,\\
+s_{\rm N}=p_{\rm N}+q_{\rm N},\qquad
+a_{\rm N}=1-s_{\rm N},\qquad b_{\rm N}=1-r_{\rm N},\qquad
+c_{\rm N}=1-s_{\rm N}-r_{\rm N},\\
+P_{\rm N}=\begin{pmatrix}
+c_{\rm N}&p_{\rm N}&0&q_{\rm N}&r_{\rm N}\\
+q_{\rm N}&a_{\rm N}&p_{\rm N}&0&0\\
+0&q_{\rm N}&a_{\rm N}&p_{\rm N}&0\\
+p_{\rm N}&0&q_{\rm N}&a_{\rm N}&0\\
+r_{\rm N}&0&0&0&b_{\rm N}
+\end{pmatrix},\qquad
+\pi=\tfrac15(1,1,1,1,1).
+\end{gathered}
+\tag{117.10}
+$$
+
+Its rows and columns are indexed by $0,1,2,3,4$, with rows denoting departure states. The hidden chain has $X_0\sim\pi$ and this exact transition matrix, and its only records are
+
+$$
+Y_n=\chi(X_n),\qquad
+\chi(0)=0,\quad\chi(1)=1,\quad\chi(3)=3,\quad
+\chi(2)=\chi(4)=B.
+\tag{117.11}
+$$
+
+The parameters in (117.10) have no presumed identification with $a,\eta,r$ of the endpoint. Equalities $p_{\rm N}=q_{\rm N}$ or $r_{\rm N}=s_{\rm N}$ remain allowed. Exact realization requires equality of the complete unconditional finite-record laws of $(\widehat Y_n)$ and $(Y_n)$ at their corresponding indices, with the same subsequent reads and their chronological successors. It does not give the observer access to $X_n$, source resets, selected output labels, or a supplied past. In the endpoint candidate the actual initial state is $e$, not a sample from $m$; only its emitted records are required to have the stationary target law.
+

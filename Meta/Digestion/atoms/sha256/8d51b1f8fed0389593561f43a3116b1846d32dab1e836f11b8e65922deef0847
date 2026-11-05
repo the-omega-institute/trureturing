@@ -1,0 +1,48 @@
+**Definition 99.3 (work, widths and stores).**
+A sufficient finite observer constructs the rational $S_L$, $U$, row
+selector and square solve of (97.2), retaining the $bN$ measured
+scalars. Dense powers through exponent $M$, elimination and row
+selection give a conservative bound
+$O((M+bN+1)N^3)$ rational operations for acquisition, model and
+restricted-inverse construction. Maintaining $k$ forward fragments
+uses $O(kN)$ further rational operations with sparse adjacency.
+If reconstruction of Time from only the current predictor is requested,
+iterating the dense restricted inverse in (97.5) costs an additional
+$O(kN^2+MN^2)$ rational operations; the inverse is not a free
+instruction. Computing a present germ uses $N-1$ local sparse
+propagations, and exporting any view pays its full output and copying
+work. These are sufficient implementation bounds, not minima.
+
+An actual source Tick itself initializes $N$ new result slots and adds
+along $2(N-1)$ directed tree edges; a synchronized predictor pays its
+own update and old/new buffers. A dense implementation retains the
+$bN\times N$ scan representation, $O(N^2)$ basis/solve/inverse work,
+$bN$ sample scalars and $O(k)$ full feedback records when literal Time
+is retained. They coexist with plant/predictor old/new fields, graph,
+logical code, raw and canonical maps, row selectors, phase counter,
+code, references and grants. Producer inputs/control packets and
+isolated backing add their own stores. Parser/pending input, complete
+request, reply, End/acknowledgement/Return and report buffers have
+actual finite backing. Numerical slot counts exclude the actual
+structural strings and integer/counter widths, which are separately
+charged. A decoder may regenerate a numerical record instead of
+retaining it, but then pays the specified inverse, output and work
+buffers; it cannot claim both resources absent.
+
+Use NLBAII Definition 65.1's literal codec:
+$\ell(n/d)=2\mathsf b(|n|)+2\mathsf b(d)+3$ for a reduced rational
+with $d>0$, and selector payload $2\mathsf b(j)+1$. Add the actual
+$\ell(q)$ for every sent operand, $\ell(y)$ for every scalar reply,
+every selector, growth address, request/reply tag, complete framing,
+End, acknowledgement, Return, export and bit copy. Zero values are
+not empty outputs. Let $W$ be the maximum actual numerator/denominator
+bit width of this finite run, including elimination scratch, source
+fields, responses and reconstructed records. Multiply arithmetic
+counts by the chosen exact rational-operation cost at width $W$,
+and charge all actual copied bits and clearing writes. The arbitrary
+rational input already prevents an $N$-only width bound. The retained
+phase counter and $k$ feedback records likewise have no bounded
+lifetime bit cost. Finite control code and per-instance finite backing
+imply neither uniform precision nor bounded memory, physical time,
+energy, stability or conditioning.
+

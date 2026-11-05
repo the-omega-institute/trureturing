@@ -1,0 +1,26 @@
+#### 定理 9.2（相容有限区域定义整体态）
+
+设可数站点集每点带有限维空间。
+对每个有限区域 $\Lambda$ 给定密度矩阵 $\rho_\Lambda$，
+且 $\Lambda\subset\Gamma$ 时
+
+$$
+\operatorname{Tr}_{\Gamma\setminus\Lambda}\rho_\Gamma=\rho_\Lambda.
+$$
+
+则存在唯一准局域代数态 $\omega$，满足
+$\omega(A_\Lambda)=\operatorname{Tr}(\rho_\Lambda A_\Lambda)$。
+
+**证明。**
+
+把局部算符按 $A_\Lambda\mapsto A_\Lambda\otimes I$ 嵌入大区域。
+部分迹相容使定义与所选区域无关。
+在局部算符并集上，$\omega$ 线性、$\omega(I)=1$，
+且 $\omega(A^\dagger A)\ge0$。
+由于每个 $\rho_\Lambda$ 正且迹一，
+$|\omega(A_\Lambda)|\le\left\lVert A_\Lambda\right\rVert_{\rm op}$。
+故它唯一连续延拓至该并集的算子范数完备化，即准局域 $C^*$ 代数。
+正性由局部逼近及连续性保留，唯一性由局部并集稠密得到。 ∎
+
+<a id="statement-9-3"></a>
+

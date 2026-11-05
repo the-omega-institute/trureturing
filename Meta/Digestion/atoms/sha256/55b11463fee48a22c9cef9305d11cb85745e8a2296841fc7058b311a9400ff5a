@@ -1,0 +1,33 @@
+**Definition 24.1 (uncapped entry balls and the exact acquisition task).**
+Retain precisely Assumption 1.2's bound root, serial Read, returning Tick,
+Hold and arbitrary rational signed Add, with its assurances, rights and
+sufficient finite backing. There is no order cap. For a supplied rational
+$\rho\ge0$, let $\mathcal C_\rho$ consist of all finite $N\ge1$, rational
+symmetric Jacobi matrices with strictly positive adjacent links, and
+rational entry vectors $z$, such that
+
+$$
+\tfrac14 I\le T\le\tfrac34 I,\qquad \|z\|_2\le\rho.
+\tag{UFS.53}
+$$
+
+The enclosure is fixed for the entire class. No common positive lower
+bound on the links, denominator/width bound, order bound or additional
+source observation is supplied. The radius bounds the entry field only;
+subsequent authorized Add inputs need not obey it. The one-cell case has
+no adjacent-link condition. A controller is one source-independent finite
+effective program for the public $\rho$, with arbitrary finite adaptive
+computation, storage and commands on each finite run.
+
+An exact acquisition must terminate successfully with either the actual
+native order and law, the entire native impulse law in an effective
+finite description, or a finite self-sufficient predictor for the complete
+service from its **actual advanced stopping cut**. Such a predictor must
+compute the complete declared returns of every finite legal continuation,
+including its successive updated predictive state, without consulting new
+source returns for hypothetical evaluation. Fixed words are included;
+induction on matching replies then covers adaptive continuations. Keeping
+a callable reference and forwarding an unpredicted request is actual use,
+but alone is not this predictive acquisition. No claim here requires
+recovering an erased entry journal.
+

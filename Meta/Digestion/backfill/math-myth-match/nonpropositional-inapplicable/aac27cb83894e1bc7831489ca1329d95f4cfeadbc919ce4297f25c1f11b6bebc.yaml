@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aac27cb83894e1bc7831489ca1329d95f4cfeadbc919ce4297f25c1f11b6bebc
+  normalized_sha256: sha256:aac27cb83894e1bc7831489ca1329d95f4cfeadbc919ce4297f25c1f11b6bebc
+cas_ref: sha256:aac27cb83894e1bc7831489ca1329d95f4cfeadbc919ce4297f25c1f11b6bebc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Buddha-nature, possibility and realization require distinct doctrinal interpretations. The text gives historical interpretation, bibliographic scope or methodological advice, rather than a mathematical assertion.'
+    previous_atom_id: c252416806bf9d5a027f3a8a4c5e22bd199b7cd26dc077f8e0db9ea2fa647fd0
+    next_atom_id: 2aa46f4748710041f6dc929c0381b77a0726dec23f187ad7be19e29da803ea64

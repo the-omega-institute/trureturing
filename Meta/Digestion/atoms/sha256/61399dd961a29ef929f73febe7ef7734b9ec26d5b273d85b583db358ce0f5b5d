@@ -1,0 +1,19 @@
+**命题 19.9（四种有限读出不能互相冒领）。** 对有限状态集分别定义：
+
+1. 摘要覆盖是目标/未来映射在摘要纤维上恒定，即目标映射因子化通过摘要；
+2. 数值精度是一个明确的误差或有理区间约束，如
+   $|\widehat q-q|\le\varepsilon$；
+3. 根存在是有限声明域上的命题 $\exists t\,f(t)=0$（或给定压缩域上
+   的对应精确存在命题）；
+4. 证书恢复是输出有限 $\pi$ 且验证器 $V(I,\pi)=1$，并把取得、输出和
+   核验成本分别计入。
+
+摘要覆盖不推出给定精度，精度不推出根存在，根存在不推出可取得或可验证的
+证书，证书验证也不推出摘要在另一个未来菜单上仍覆盖。未来商、有限菜单和
+动态记忆的已有条件见
+[AURIC_FIB_ATOM_DYNAMIC_FUTURE_QUOTIENT_AND_FUTURE_CLOSED_MEMORY.md](AURIC_FIB_ATOM_DYNAMIC_FUTURE_QUOTIENT_AND_FUTURE_CLOSED_MEMORY.md)；
+矩恢复和精度边界见
+[AURIC_FIB_ATOM_MOMENT_TRIANGLES_AND_INVERSE_PRECISION.md](AURIC_FIB_ATOM_MOMENT_TRIANGLES_AND_INVERSE_PRECISION.md)。
+本命题只提供这些对象的有限接口，不把一个对象的结论转写成另一个对象的
+全局结论。
+

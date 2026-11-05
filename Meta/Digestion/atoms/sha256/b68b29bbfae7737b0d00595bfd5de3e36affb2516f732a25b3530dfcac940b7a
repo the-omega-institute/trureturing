@@ -1,0 +1,108 @@
+**Corollary 14.3 (nonempty confidence regions and charged precision).**
+Under Proposition 14.2 define the set of lawful candidates
+
+$$
+\mathcal C=
+\{(T,B)\in\mathcal L:
+ \|Q_F(B)-y\|_2\le\varepsilon_Q,
+ \|T-\widehat S\|_{\mathrm F}\le\varepsilon_S\}.
+\tag{14.10}
+$$
+
+With probability at least $1-\delta$ it contains the true source, and
+every two of its elements obey
+
+$$
+d_\pm(A,B)\le\sqrt{80621568000\varepsilon_Q},\qquad
+\|S-T\|_{\mathrm F}\le2\varepsilon_S.
+\tag{14.11}
+$$
+
+For prescribed skew-coordinate ambiguity $h>0$ and symmetric Frobenius
+ambiguity $g>0$, suppose
+$a_Q<h^2/80621568000$ and $a_S<g/2$.
+It suffices to choose the positive integer $N$ with
+
+$$
+N\ge\max\left\{
+\frac{100L_\delta}{(h^2/80621568000-a_Q)^2},\quad
+\frac{85L_\delta}{2(g/2-a_S)^2}
+\right\}.
+\tag{14.12}
+$$
+
+Every such region has the ambiguities at most $h,g$ on that event.
+The complete acquisition charges for this $N$ are
+
+$$
+\begin{array}{c|c}
+\text{source preparations}&115N\\
+\text{single-copy detector calls}&15N\\
+\text{local filter calls}&60N+U_1\le90N\\
+\text{joint detector calls}&20N+C_T\le50N\\
+\text{padded outcome-record bits}&155N.
+\end{array}
+\tag{14.13}
+$$
+
+The variables $U_1,C_T$ have exactly their actual-run meanings in
+Proposition 10.2. All preparations and actual calls on failed prefixes
+are charged. Both specimens execute their prescribed chain even if
+the other fails; an unexecuted detector is only padded.
+
+Proof. On the event (14.7), (14.8) puts $(S,A)$ in $\mathcal C$.
+For any two candidates in this set the triangle inequality bounds their
+quadratic-mean difference by $2\varepsilon_Q$, and their symmetric
+difference by $2\varepsilon_S$. Apply (14.2) and $d_\pm^2\le d_\pm D_\pm$
+to obtain (14.11). Inequality (14.12) makes
+$\varepsilon_Q\le h^2/80621568000$ and
+$\varepsilon_S\le g/2$, which proves the precision assertion.
+
+There are $50N$ pairs and $15N$ single specimens, giving $115N$
+preparations. The $15N$ depth-one pairs use $30N$ local filter calls;
+the depth-two pairs use $30N$ first calls and $U_1$ second calls.
+There are $20N$ unfiltered joint detector calls and $C_T$ filtered
+double-success calls. The payload is
+$15N+20N+3(15N)+5(15N)=155N$ bits. This is exactly (10.5), without
+free successful replacement. $\square$
+
+The region (14.10) is a set-valued precision assertion, not an installed
+point-output orbit decoder. For an arbitrary off-image readout outside
+the confidence event it can be empty. Certifying a candidate's lawfulness,
+finding one, evaluating residual bounds with finite arithmetic, and
+proving a bound on that computation's time and workspace remain separate
+tasks. The arithmetic tolerances in (14.8) are declared premises, not
+an uncharged algorithm. At zero arithmetic tolerance the displayed
+sufficient pair-precision budget scales as $h^{-4}$; no claim of sharp
+risk or resource optimality follows. There is no exact recovery of
+continuous parameters from a fixed finite record, in accordance with
+Proposition 10.4.
+
+The outcome payload in (14.13) retains order and failures. Its reads and
+writes, extraction of counts, source/frame/calibration backing, schedule
+and program descriptions, counters, allocation, arithmetic-output
+encoding, workspace and actual permissions require the further
+resources in Definition 10.3. The rows give neither elementary gate
+counts nor physical time or energy. Section 12's separately supplied
+coherent continuation is not executed or charged in this acquisition
+result; its necessary lower bound remains in its original prediction
+task. The present upper certificate does not assert an efficient
+predictor for that task or a matching lower bound.
+
+Attribution and scope. The evaluated number (13.17), the moment
+relations (13.10)–(13.16) and their consumer (14.4), (14.8)–(14.13)
+are a repository-derived synthesis for the fixed fifty means and the
+same lawful source. Nonsingular-polarization and product-distance
+stability are the published Wang–Xu and Zhuang suppliers cited above;
+bounded independent concentration is Hoeffding's inequality. These
+ingredients are not new general theorems or a claim of global
+literature originality. The certificate adds no observations or
+permissions, no nonreal reference, no source-dependent selector and no
+free post-selection. It uses the additional preparation/control
+service in Assumption 6.2, without implementing it in the old
+wait/read/Stop menu or by native $\alpha/\beta$ constructors. Physical
+Euclidean dimension, full joint prediction, lawful off-image decoding
+with proved arithmetic cost, fixed-record sharp risk and the remaining
+native acquisition/certification bridges retain their separate scopes.
+No Lean verification or physical realization is asserted.
+

@@ -1,0 +1,23 @@
+**Theorem 76.2 (two effective parities on every length-two transcript).** Fix any earned branching $u\in\mathcal D$, its authentic complete map/access, and the physically established whole-zero origin followed by Add$(e,1)$; Hold at its first terminal $e$. A producer encodes an arbitrary finite binary word $w=d_0\cdots d_{m-1}$ by actual
+
+$$
+\operatorname{Next}(d)=\operatorname{Tick};\operatorname{Add}(e,d);
+\operatorname{Hold};\operatorname{Read}(e).
+$$
+
+At late attachment the word, length, stored field copies, input/reply buffers and all accessible dependent advice or producer archives have been cleared or isolated; the actual source retains $x_w$. The late receiver has only the field-independent earned geometry/map/access and this origin/family promise. It must terminate and report the exact original word for every finite binary word. Its deterministic acquisition may use adaptive original $P/S$, rational Adds, Ticks, Holds, terminal Reads and the complete field-independent identity outcomes of Definition 75.1, without Reset or an additional numerical channel.
+
+On every terminating transcript for a word of length two, successful scalar Reads must include both values of the effective parity $|f|-|e|-T$ in (76.3). In particular the worst-case late Read requirement is at least two, even with adaptive original growth.
+
+**Proof.** The actual encoded field is
+
+$$
+x_w=F_w(A_u)e_e,\qquad
+F_w(z)=z^m+\sum_{i=0}^{m-1}d_i z^{m-1-i}.
+\tag{76.4}
+$$
+
+This follows by induction from the actual Tick/Add successors. For length two it is $A_u^2e_e+d_0A_ue_e+d_1e_e$. Take one terminating path at such an entry. If it has no effective-even Read, replace $d_1$ by $1-d_1$. The entry difference is $\pm e_e$. If it has no effective-odd Read, instead replace $d_0$; the difference is $\pm A_ue_e$.
+
+In either case freeze the original path. Lemma 76.1 makes the reply difference zero at every one of its Reads. Inductively the alternative entry actually follows this same path: before the first Read all nonnumerical replies and initial receiver data agree; at each Read its complete literal rational agrees; identical receiver state then selects the same next command, operand, address, growth, complete framing and stopping decision. Growth guards and bindings agree because the structural path agrees. Common Adds cancel from homogeneous differences. Thus the final reported word is identical on two different admitted binary words, contradicting exactness on both. Each missing parity gives this contradiction, proving the claim. The argument proves necessity of both parities, not sufficiency of arbitrary parity-diverse samples. $\square$
+

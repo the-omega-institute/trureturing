@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a8fe9503c84933874dc9b17b78e2e11e0c5ab18e47b5dadbf701bbed540d0c6a
+  normalized_sha256: sha256:a8fe9503c84933874dc9b17b78e2e11e0c5ab18e47b5dadbf701bbed540d0c6a
+cas_ref: sha256:a8fe9503c84933874dc9b17b78e2e11e0c5ab18e47b5dadbf701bbed540d0c6a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在正概率事件的前提下定义条件路径律的比值记号，没有另加独立性或 Markov 性结论。
+    previous_atom_id: fcb3c88c13eb4e57f184cb3eacae1409192d039cb443a956f9fc9292fddb9d2f
+    next_atom_id: 65cd63f929050f3e88f25bcc1dde35537daa780e1fc8d9687fd2d7b533d9f2c2

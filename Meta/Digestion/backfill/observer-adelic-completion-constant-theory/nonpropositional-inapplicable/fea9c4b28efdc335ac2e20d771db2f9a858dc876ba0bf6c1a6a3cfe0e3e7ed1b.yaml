@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fea9c4b28efdc335ac2e20d771db2f9a858dc876ba0bf6c1a6a3cfe0e3e7ed1b
+  normalized_sha256: sha256:fea9c4b28efdc335ac2e20d771db2f9a858dc876ba0bf6c1a6a3cfe0e3e7ed1b
+cas_ref: sha256:fea9c4b28efdc335ac2e20d771db2f9a858dc876ba0bf6c1a6a3cfe0e3e7ed1b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅为“白连续谱—原子谱互补定理”的名称标题及分隔符，没有定理陈述。
+    previous_atom_id: ec3b41df453d4732a3852fcc5dc448292ff4855cd28ff190f7af42849d438850
+    next_atom_id: 332bd7c8e61e8fbc5c5c728ba0bf21ee247b90148d409437005f45e42e4de255

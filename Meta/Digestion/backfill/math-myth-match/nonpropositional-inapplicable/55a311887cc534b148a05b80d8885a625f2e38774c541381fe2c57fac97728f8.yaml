@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:55a311887cc534b148a05b80d8885a625f2e38774c541381fe2c57fac97728f8
+  normalized_sha256: sha256:55a311887cc534b148a05b80d8885a625f2e38774c541381fe2c57fac97728f8
+cas_ref: sha256:55a311887cc534b148a05b80d8885a625f2e38774c541381fe2c57fac97728f8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 不同规范来源之间的比较方法和范围；属于引文解释、建模约定或研究建议，没有另立待证数学断言，本收据不验证其文献或经验真值。
+    previous_atom_id: 3a91981f62695b1c904b487a0fae13592934a06032bc9915a0ecea4ebe26f2e4
+    next_atom_id: a7973d0cf6ef5ac3955ac43138b24074475b223edfceae24b45b77bed8de57e9

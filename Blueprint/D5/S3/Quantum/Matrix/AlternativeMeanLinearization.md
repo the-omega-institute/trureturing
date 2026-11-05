@@ -54,7 +54,35 @@ $$\forall f: \mathbb{R} \to \mathbb{R}, (\operatorname{Rigid}\left(f\right)) \Le
 
 Rigid f requires, for every finite dimension n and every pair of complex positive definite matrices A and B, that the alternative mean be linearizable exactly when A and B commute and the real spectrum of A⁻¹♯B has at most two values. The quantifier includes dimension zero; its spectrum is empty and its matrices are unique.
 
-**Theorem 1.5 (Necessary and sufficient scalar conditions).**
+**Lemma 1.5 (The positive half-power is the square root).**
+
+$$\forall n: \mathbb{N}, \forall A: \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right), (\operatorname{PosDef}\left(A\right)) \Rightarrow (\operatorname{cfc}\left((\lambda x: \mathbb{R}, x^{\frac{1}{2}}), A\right) = \operatorname{sqrt}\left(A\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/AlternativeMeanLinearization.half_eq_sqrt` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. Dumitru; J. Franco; A. Merino (2026). *On The Linearization of Alternative Means*. DOI: [10.48550/arXiv.2606.25150](https://doi.org/10.48550/arXiv.2606.25150). URL: <https://arxiv.org/abs/2606.25150v1>.
+
+*Commentary.*
+
+For every positive definite complex matrix, the real functional calculus of x to the power one half equals its positive square root.
+
+**Lemma 1.6 (The two half-powers are mutual inverses).**
+
+$$\forall n: \mathbb{N}, \forall A: \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right), (\operatorname{PosDef}\left(A\right)) \Rightarrow ((\operatorname{cfc}\left((\lambda x: \mathbb{R}, x^{\frac{1}{2}}), A\right) \cdot \operatorname{cfc}\left((\lambda x: \mathbb{R}, x^{-\frac{1}{2}}), A\right) = 1) \land (\operatorname{cfc}\left((\lambda x: \mathbb{R}, x^{-\frac{1}{2}}), A\right) \cdot \operatorname{cfc}\left((\lambda x: \mathbb{R}, x^{\frac{1}{2}}), A\right) = 1))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/AlternativeMeanLinearization.half_inverse` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. Dumitru; J. Franco; A. Merino (2026). *On The Linearization of Alternative Means*. DOI: [10.48550/arXiv.2606.25150](https://doi.org/10.48550/arXiv.2606.25150). URL: <https://arxiv.org/abs/2606.25150v1>.
+
+*Commentary.*
+
+For every positive definite complex matrix, its real functional calculus powers one half and minus one half multiply to the identity in both orders.
+
+**Theorem 1.7 (Necessary and sufficient scalar conditions).**
 
 $$\forall f: \mathbb{R} \to \mathbb{R}, ((\operatorname{ContinuousOn}\left(f, \operatorname{Ioi}\left(0\right)\right)) \land ((\forall x: \mathbb{R}, (0 < x) \Rightarrow (0 < \operatorname{f}\left(x\right))) \land (\operatorname{f}\left(1\right) = 1))) \Rightarrow ((\operatorname{Rigid}\left(f\right)) \Leftrightarrow ((\operatorname{InjOn}\left(f, \operatorname{Ioi}\left(0\right)\right)) \land ((\operatorname{InjOn}\left((\lambda x, \frac{\operatorname{f}\left(x\right)}{x}), \operatorname{Ioi}\left(0\right)\right)) \land ((\operatorname{StrictConvexOn}\left(\mathbb{R}, \operatorname{Ioi}\left(0\right), (\lambda s, \operatorname{f}\left(\operatorname{sqrt}\left(s\right)\right)^{2})\right)) \lor (\operatorname{StrictConcaveOn}\left(\mathbb{R}, \operatorname{Ioi}\left(0\right), (\lambda s, \operatorname{f}\left(\operatorname{sqrt}\left(s\right)\right)^{2})\right))))))$$
 
@@ -78,4 +106,6 @@ Let g(s)=f(√s)². Rigidity is equivalent to injectivity of f and x↦f(x)/x on
 - Truth anchor: `D5/S3/Quantum/Matrix/AlternativeMeanLinearization.Rigid`
 - Truth anchor: `D5/S3/Quantum/Matrix/AlternativeMeanLinearization.altMean`
 - Truth anchor: `D5/S3/Quantum/Matrix/AlternativeMeanLinearization.gmInv`
+- Truth anchor: `D5/S3/Quantum/Matrix/AlternativeMeanLinearization.half_eq_sqrt`
+- Truth anchor: `D5/S3/Quantum/Matrix/AlternativeMeanLinearization.half_inverse`
 - Truth anchor: `D5/S3/Quantum/Matrix/AlternativeMeanLinearization.result`

@@ -685,3 +685,490 @@ The initialized-state/reached-state distinction is literature-attested in Petra 
 The attained result is paid acquisition and installed continued use of the arithmetic quotient on the changed two-coordinate current-port apparatus. It leaves unchanged the scalar AQBR definitions and all fixed-model settlements, including the original FARG133 reset-query formula and every fixed original-task/initialization restriction. Recovering the lost syntax, actual temporal fields and whole installation, realizing any claimed narrower backend port, and establishing mutual recovery of independently meaningful space, time, boundary and memory on the full intended process remain outside this arithmetic theorem. No universal physical space/time claim, alpha/beta primitive-minimality claim or completion of that full four-expression objective is asserted.
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Sharp continuous acquisition with return of the original arithmetic behavior
+
+**Definition 10.1 (the continuous return task and its read budget).** Keep precisely Definitions 9.1–9.2. In particular, the entry is any $v_0\in\mathbb N^2$, including zero, the public input is the integer $H\ge1$, the only actual updates are $R(u)=Mu$ and $G(u)=u+\alpha$, and every source reply other than a paid current gcd is a fixed acknowledgement. There is no initially acquired source label. A successful return policy terminates on every entry with an earned immutable $e=\bar v_0$, an installed mutable $c=\bar u_*$ at the same retained handle, and
+
+$$
+\mathcal B_H(u_*)(W)=\mathcal B_H(v_0)(W)
+\quad\text{for every }W\in\{R,G\}^{<\omega}.
+\tag{AQBRS.1}
+$$
+
+It must also retain the lawful, synchronized callable continuation of Definition 9.2. By the supplied full original-alpha quotient, FARG130.5, condition (AQBRS.1) is equivalent to $\bar u_*=\bar v_0$; it is stronger than merely knowing the entry label while leaving the handle at another behavior. A policy is one deterministic source-blind program using only the initial public inputs and its actual acquired replies. Its action counts and local work may depend on those replies. Termination is per entry; a finite worst read budget $J$ means $N_{\rm read}(v_0)\le J$ for every entry, without imposing a uniform bound on source size. Let $Q_{\rm ret}(H)$ be the least such $J$ when attainable. All other resource coordinates remain those of Definition 9.2 and are not minimized by this notation.
+
+For $H>1$ define the public integers
+
+$$
+B(H)=\max_{p^h\parallel H}h(p-1),\qquad
+L_H=\min\{l\ge1:M^l=I\text{ over }A_H\}.
+\tag{AQBRS.2}
+$$
+
+For a finite chronological word $W=A_1\cdots A_m$, define its closing word by reversing the order of its letters and replacing each letter with the indicated positive repetition:
+
+$$
+W^{\rm cl}=C_H(A_m)\cdots C_H(A_1),\qquad
+C_H(R)=R^{L_H-1},\qquad C_H(G)=G^{H-1}.
+\tag{AQBRS.3}
+$$
+
+An exponent zero denotes an empty block. This notation specifies actual positive source letters, each separately executed and charged. It supplies no inverse-action handle. FARG130.2 and `GraftAffineClosure.result` supply the finite modular period, so $L_H$ exists. The closing notation concerns the residue action alone; its integer source trajectory is still forward.
+
+**Theorem 10.2 (the sharp read budget on the original continuous apparatus).** For every integer $H\ge1$, the continuous return task of Definition 10.1 is attained by a single uniform finite algorithm on all $v_0\in\mathbb N^2$, and
+
+$$
+\boxed{\quad Q_{\rm ret}(1)=0,\qquad
+Q_{\rm ret}(H)=2B(H)\quad(H>1).\quad}
+\tag{AQBRS.4}
+$$
+
+The lower bound holds for the entire deterministic source-blind terminating competitor class of Definition 10.1, including policies that use arbitrary finite adaptive $R/G$ words between reads and arbitrary charged local computation. The attained run returns the same actual handle to its entry full original-$R/G$ arithmetic behavior and installs $e=c=\bar v_0$ there. It uses no reset, clone, saved entry source, source inverse, scalar multiplication, extra observation or free initial gcd. The optimized coordinate is paid reads only.
+
+**Proof (public preparation and positive closing).** Reuse the modular invertibility in FARG130: $\det M=-1$, and $G$ is translation by $\alpha$ on $A_H^2$. Thus on residues $C_H(R)$ is the inverse permutation of $R$ and $C_H(G)$ is the inverse permutation of $G$. Reading (AQBRS.3) in its stated chronological order cancels the last letter first, and gives
+
+$$
+\overline{W^{\rm cl}(W(u))}=\bar u
+\quad\text{for every actual }u\in\mathbb N^2.
+\tag{AQBRS.5}
+$$
+
+This is a local equality of residue actions. Every letter in its actual realization still maps $\mathbb N^2$ into itself. No coordinate of the source is subtracted. If $r(W)$ and $g(W)$ count the two letters in $W$, the actual word $WW^{\rm cl}$ contains exactly $L_Hr(W)$ replacements and $Hg(W)$ grafts. This includes the letters executed before its observation.
+
+All preparation uses finite integer input representations. Factor $H$ by trial division, compute the needed prime powers and CRT coefficients, and compute $L_H$ by multiplying the $2$-by-$2$ residue matrix until it first reaches $I$. These are computations on public binary integers. For an explicit termination bound, among the $H^4+1$ matrices $I,M,\ldots,M^{H^4}$ two coincide. Multiplying their equality locally by an inverse matrix yields a positive return exponent at most $H^4$. Consequently $1\le L_H\le H^4$, and the stated search terminates. The existing factorial period supplies another finite bound; no factorial-size word is required by this order search. Matrix inversion here is public local arithmetic, not a source operation.
+
+**Proof (one actual run attaining the bound).** Reuse the complete reset policy and positive short words of [Fibonacci Canonical Window Compiler Geometry, Theorems 1.4–1.6](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md), with its own definitions
+
+$$
+K=\min\{k\ge1:F_{k+4}\ge H\},\qquad
+\gamma=1+\left\lceil\frac{K+1}{2}\right\rceil,
+\qquad F_0=0,\ F_1=1.
+\tag{AQBRS.6}
+$$
+
+This supplier recovers $y_0=qM^Kv_0$ and $y_1=qM^{K+1}v_0$ modulo $H$. In each stage the prime-power digit policies share that stage's one direction; CRT combines their shifts into one $d\in A_H$. Its finite compiler gives an actual word $W(k,d)$, with exactly $k\in\{K,K+1\}$ replacements and at most $\gamma$ grafts, satisfying
+
+$$
+\gcd(qW(k,d)(u),H)=\gcd(qM^ku+d,H)
+\quad\text{for every }u\in\mathbb N^2.
+\tag{AQBRS.7}
+$$
+
+Use that supplier's choices and updates, without adding a new initial observation. Whenever it requests a word $W$, execute $W$ on the current actual source, make one paid current read there, retain the actual reply, and then execute all of $W^{\rm cl}$ before beginning another test or exposing the returned cut. The fixed acknowledgements are consumed throughout. Supply the retained gcd to the local reset-policy computation. Its next shift and word depend only on public inputs and preceding paid replies. In particular, the closing word depends on the known word and public $H,L_H$, not on an unknown source coordinate or a separately acquired entry code.
+
+Initially the current residue is $\bar v_0$. If it has this residue before a test, congruence and (AQBRS.7) make the one acquired reply exactly the reply of that reset test on $v_0$. Equation (AQBRS.5) then restores the current residue to $\bar v_0$. Induction over the actual tests proves both assertions at every completed test. There is only one integer source trajectory: the input to the next word can be a much larger integer pair than $v_0$. Periodicity of gcd makes its residue sufficient for the next acquired answer.
+
+The supplied policy completes each scalar stage in at most $B(H)$ paid tests. Its decoder is the existing inverse of $D_K=CM^K$, with $C$ from (AQBRP.12):
+
+$$
+e=D_K^{-1}\binom{y_0}{y_1}=\bar v_0.
+\tag{AQBRS.8}
+$$
+
+Thus the same continuous run has at most $2B(H)$ reads. Finish the last closing word, really store this earned $e$, and store a separate mutable $c=e$. This is a returned current label by (AQBRS.5). FARG130.5 gives (AQBRS.1), and Theorem 10.3 supplies the retained callable interface. Every loop and word is finite; the per-run completion and backing premises in Definition 9.1 suffice for termination. This constructs one program, uniform in $H$, rather than selecting a program by the hidden entry. The supplier's attaining source $D_K\bar v_0=(-1,-1)$ also follows this same reply history and uses all $2B(H)$ reads; alternatively the universal lower bound below forces the constructed policy's worst budget to be attained.
+
+**Proof (lower bound for arbitrary continuous policies).** Let a successful continuous policy have finite worst read budget $J$. Compare it with the exact reset-query class of FARG133.1, solely to obtain a lower bound. A local simulator keeps that policy's program state, its acquired replies and the cumulative chronological source-action word $A$, initially empty. It simulates local computations and fixed acknowledgements and appends each requested actual $R$ or $G$ to $A$. When the policy requests a paid current read, the simulator makes one reset-model terminal query with the entire word $A$, starting at the reset model's same unknown entry $v_0$. Previous reads were nondestructive, so its answer is exactly
+
+$$
+\gcd(qA(v_0),H),
+\tag{AQBRS.9}
+$$
+
+the answer of this continuous run at this cut. Feed it to the simulated policy and continue. The word $A$ omits read events but includes every source letter previously executed, including any policy-specific restoration or other adaptive action. It is one finite positive word selected by accessible history. An empty $A$ is an allowed charged query. Reusing $A$ for a repeated read still costs another query.
+
+Induction on acquired replies gives precisely the policy's actual local choices and replies for every $v_0$. There is no need to simulate unknown integer coordinates: neither the original controller nor its simulator can inspect them. All source services complete with fixed acknowledgements, and source-dependent time, capacity, cost or failure discrimination is excluded by Definition 9.1. Termination on each entry therefore gives a terminating reset-query policy with the identical earned entry output and exactly the same number of paid replies. Any operations after its final read are simulated before accepting that output; their acknowledgement contains no new information. The reset policy recovers $\bar v_0$ on all $\mathbb N^2$ and has worst budget at most $J$.
+
+Apply [FARG133.5](FIBONACCI_ATOMIC_RELATION_GENERATION.md) or, with $H$ the same positive modulus, [`terminal_gcd_acquisition_cost`](../../../D5/S3/Arith/FibonacciAtomic/TerminalGcdAcquisitionCost.lean). Its `acquisitionBudgets` are exactly terminating deterministic history policies, with a finite worst number of charged terminal tests; its source, target, words and full gcd answers are those just constructed. Its least-budget conclusion gives $J\ge2B(H)$. This reuses that supplier's complete prime-axis lower bound, including arbitrary adaptive choices and full-depth replies. No new affine-valuation lower-bound proof or independent-axis worst-case assumption is needed. The comparison does not give the continuous source a reset service. It proves that even entry identification alone in the continuous competitor class cannot beat this bound, hence neither can identification with return and retained use.
+
+For $H=1$ the residue carrier is a singleton and every gcd is $1$. Leave the source unchanged and install its unique label and continuation, using no source call. Nonnegativity of budgets proves minimality. All preceding arguments admit zero coordinates and the exact zero source. At $H=2$, the reused short-word policy uses $R$ and $RR$, and $L_H=3$; their positive closing blocks give nine actual replacements, zero grafts and two paid reads on this construction. The zero source stays zero in that case, but an observed saturated gcd still identifies only a residue, not the literal zero pair. $\square$
+
+**Theorem 10.3 (earned entry memory and synchronized continuation at the returned cut).** Under Theorem 10.2, retain the actual source binding and rights, the acquired action/reply tape and public decoding data, the immutable $e$, and the separate mutable $c=e$ after the last completed closing word. There are installed finite procedures for current output, hypothetical finite-word prediction, and actual original-$R/G$ execution. For every finite actual continuation $V$, at each completed call boundary they satisfy
+
+$$
+c_V=\overline{V(u_*)},\qquad
+\operatorname{Out}_H(c_V)=\mathcal B_H(u_*)(V)
+=\mathcal B_H(v_0)(V).
+\tag{AQBRS.10}
+$$
+
+They require no further paid source read. This conclusion is conditional on the same exclusive serialization, retained rights and sufficient per-run service/backing premises as Definition 9.1, including for the chosen continuation.
+
+**Proof.** Install the already supplied residue reader and updates of FARG130.1, FARG133.6 and (AQBRP.22):
+
+$$
+\operatorname{Out}_H(c)=\gcd(2c_1+3c_2,H),\qquad
+\delta_R(c)=Mc,\qquad \delta_G(c)=c+\alpha.
+\tag{AQBRS.11}
+$$
+
+Stored residue representatives are finite accessible integers, so these are terminating exact local computations. Current output evaluates this formula on the retained $c$. For prediction, read the actual supplied finite word, copy $c$ to a scratch pair, apply its letters there and evaluate the same output at every requested prefix, including the empty prefix. The source is unchanged by prediction. Its results are computed predictions from an earned label, not newly acquired source replies.
+
+For an actual single-letter execution, call that original action on the retained source handle, consume its completion acknowledgement, and then replace $c$ by the corresponding $\delta_R(c)$ or $\delta_G(c)$. Expose the next callable cut only after both steps have finished. Actual word execution repeats this interface; all its source calls and local updates are charged. The immutable entry register is not overwritten. The acquired cut has $c=\bar u_*=\bar v_0$. Each supplied local update commutes with its actual action, so induction on every finite $V$ proves the first equality in (AQBRS.10). The reader and behavior-return equality prove the other two. Applying the same induction to scratch evaluation proves its agreement with every possible actual continuation. There is no unreported intermediate observation between an actual source update and the local commit under exclusive serial control.
+
+In particular these registers implement the recovery routes of Definition 9.2 on this actual returned cut. The first two replacement-time quantities are $C c$, the spatial field is $c$, and the complete arithmetic boundary is the reader (AQBRS.11) evaluated after words. Their existing inverse correspondences from FARG5.4 and FARG130.5 agree with these computations because all use this same $c$. Actual replacement shifts the prospective progression, and an actual graft adds $qM^k\alpha$ to its $k$th term; the same local updates realize both transformations. The acquired memory now computes those fields at an actual source of the entry behavior, rather than only storing an entry answer while the callable source remains elsewhere. At $H=1$ the identical procedures use the singleton pair and constant output $1$. An unreported source action, revoked right or interrupted commit is outside the stated synchronization premise. $\square$
+
+## 11. Actual action counts, source growth and retained material
+
+**Theorem 11.1 (one-run resource vector of the sharp construction).** Fix $H>1$ and one actual run of the construction in Theorem 10.2. Let $T_0,T_1$ be its numbers of paid tests in the two supplied scalar stages, let $Q=T_0+T_1$, and let $g_j$ be the number of graft letters in the actual short word selected at test $j$. Put $A=N_R+N_G$ for the total executed source letters, including all closing words. Then the exact vector for this run is
+
+$$
+\begin{aligned}
+N_{\rm read}&=Q,\\
+N_R&=L_H\bigl(KT_0+(K+1)T_1\bigr),\\
+N_G&=H\sum_{j=1}^{Q}g_j.
+\end{aligned}
+\tag{AQBRS.12}
+$$
+
+Consequently this same construction has
+
+$$
+Q\le2B(H),\qquad
+N_R\le L_H(2K+1)B(H),\qquad
+N_G\le2H\gamma B(H).
+\tag{AQBRS.13}
+$$
+
+Let $A_*$ be its actual chronological source-action word with reads omitted, and let $r_i$ be the number of replacements strictly after the $i$th graft occurrence in that word. Its exact integer endpoint and every-prefix quantity bound are
+
+$$
+u_*=M^{N_R}v_0+\sum_{i=1}^{N_G}M^{r_i}\alpha,
+\qquad
+qu\le qu_*\le2^{N_R}\bigl(qv_0+2N_G\bigr)
+\quad\text{for every actual acquisition prefix }u.
+\tag{AQBRS.14}
+$$
+
+The endpoint has residue $\bar v_0$ even though (AQBRS.14) can describe a much larger actual pair. The counts in (AQBRS.12) are not the counts of the reset supplier without its new closing words, nor those of the parity scans in Theorem 9.3.
+
+**Proof.** For test $j$, its selected word has $k_j=K$ or $K+1$ replacements and $g_j$ grafts. Its closing word has $(L_H-1)k_j$ replacements and $(H-1)g_j$ grafts. There is exactly one paid read between the two words and none inside the closing word. Summing gives (AQBRS.12). The supplier gives $T_s\le B(H)$ and $g_j\le\gamma$, yielding (AQBRS.13) on this same run.
+
+The endpoint formula is the existing affine-word law, specialized to the actual completed word $A_*$: each replacement acts on the entry and on all previous grafts, and a graft contributes one $\alpha$ followed by exactly its remaining replacements. Reads leave that trajectory unchanged. On a nonnegative pair $u=(a',b')$,
+
+$$
+qRu=3a'+5b'\le2qu,\quad qRu-qu=a'+2b'\ge0,
+\qquad qGu=qu+2.
+\tag{AQBRS.15}
+$$
+
+Thus quantity never decreases along any actual prefix. Each graft's contribution to final quantity is at most $2\cdot2^{N_R}$, and the entry contribution at most $2^{N_R}qv_0$, proving (AQBRS.14). All coordinates are nonnegative throughout. This bound depends explicitly on the unknown entry and does not give the controller that quantity as an input. $\square$
+
+**Theorem 11.2 (finite local implementation and complete material account).** The construction of Theorem 10.2 admits the finite representation and local-work bounds below, from binary integer input $H>1$. Its source-service account is the same-run sum (AQBRS.16), in addition to the separately specified material and retention coordinates. The costs of Theorem 11.1 refer to its one executed trajectory. If $u_i$ is the actual pre-call source and $\rho_H,\tau,\gamma_{\rm svc}$ are the supplied finite tariffs of current read, replacement and graft, its source-service work is exactly
+
+$$
+W_{\rm svc}=
+\sum_{i\in\mathcal I_{\rm read}}\rho_H(u_i)
++\sum_{i\in\mathcal I_R}\tau(u_i)
++\sum_{i\in\mathcal I_G}\gamma_{\rm svc}(u_i).
+\tag{AQBRS.16}
+$$
+
+The call sets include the closing words. Add the actual local bit work, public input and output handling, acknowledgements, installed code/data, handle binding and rights, source/backing provision, source retention and retained records. The tariffs are an external resource account, not accessible source-dependent answers. A global replacement on a represented tree need not cost one rewrite or one bit operation.
+
+**Proof.** An explicit finite local realization uses the binary input $H$; its factorization, CRT data, modular matrix order, digit-prefix and stage state; a buffer for the currently selected short word; a reverse traversal of that buffer for its closing word; and repetition counters. With $b=\lceil\log_2(H+1)\rceil$, there are $O(b)$ prime-axis and Fibonacci entries of $O(b)$ bits each. The order counter uses $O(b)$ bits since $L_H\le H^4$. Negative local residues are reduced to their nonnegative representatives. Trial division, repeated modular matrix multiplication, extended Euclid, modular arithmetic, and finite digit and word traversals give an effective algorithm from these exact integer representations. No exact comparison against arbitrary real names is involved.
+
+One may retain an explicit chronological tape with one fixed-size action/acknowledgement tag for each source call and a $b$-bit field for each paid gcd. For this actual acquisition its tape and local workspace have the conservative bound
+
+$$
+O\bigl(A+Qb+b^2\bigr)\text{ bits},
+\tag{AQBRS.17}
+$$
+
+beyond installed code, service/binding data and actual source storage. The word buffer is only $O(b)$ letters: this is the supplied short compiler's length bound. The tape is written as calls complete; it is not an assumed pre-entry archive. All writing and later retention are paid. If a different tape representation is required, charge that representation and its processing instead.
+
+For example a sequential binary implementation using school arithmetic has a conservative local-work upper bound
+
+$$
+O\bigl(H^4b^3+(A+Q+1)b^5\bigr)
+\tag{AQBRS.18}
+$$
+
+for public preparation, test choice/compilation, closing-loop control, tape writing, local decoding and residue output. Indeed, the order search has at most $H^4$ fixed-size modular matrix multiplications; trial division uses at most $H$ trials. Each uses $O(b)$-bit integers and fits the first allowance. The finite prime-axis tables, Euclidean and CRT calculations and short-word compilation per read fit $O(b^5)$ by sequential scans of $O(b)$ entries and ordinary binary arithmetic. Each emitted letter, acknowledgement and tape tag, including each repeated closing letter, fits the same allowance. Decoding and writing the two residue registers fit the last constant allowance. These deliberately loose bounds do not absorb source service or source storage. Installation and delivery of callable service blocks and authentic rights are additional supplied costs, not consequences of a local binary program.
+
+For a separately supplied finite continuation $V$, actual execution adds exactly its own $\#R(V)$ and $\#G(V)$ source calls, their service tariffs at their actual later states, and local updates, input handling and requested outputs. The installed predictor adds zero paid reads. Hypothetical evaluation pays its own word input and local arithmetic/output but executes no source letter. Retaining further histories or results adds their actual writes and storage; there is no acquisition-only bound on an unbounded future tape. A binary pair implementation can translate (AQBRS.14) into a source-dependent operand-length bound. A tree or other backend must supply its own quantity-to-material correspondence and tariffs. Sufficient finite backing for each fixed run is a premise; neither finite code nor finite $Q$ supplies bounded backing over all unbounded entries or all future continuations. No total-work, action-count, workspace, storage or physical implementation optimum is asserted. $\square$
+
+## 12. Supplier correspondence and the precise recovery boundary
+
+**Definition 12.1 (source-relative mathematical contribution).** The new claim is the sharp continuous acquisition-and-return join (AQBRS.4), together with its actual closing trajectory, retained entry-behavior continuation and same-run account. Its hypotheses are exactly the pair apparatus of Definitions 9.1–9.2. Theorem 9.3 remains a different attained schedule with its own lower replacement count and its own endpoints; no smaller read count is substituted into that schedule's resource vector.
+
+The following ingredients are reused in their stated domains. FARG130.1–130.5 and [`GraftAffineClosure.result`](../../../D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.lean), with its [owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.scribe.cs), supply the complete-pair action, positive modular period, affine word law, consecutive-quantity inverse and full original-alpha behavior quotient. Its internal `period`, `wordAffine`, `castRun` and `residueAutonomous` arguments concern these same natural pairs, including zero; they do not themselves acquire an unknown entry or implement a source inverse. FARG133.1–133.6 and [`TerminalGcdAcquisitionCost.terminal_gcd_acquisition_cost`](../../../D5/S3/Arith/FibonacciAtomic/TerminalGcdAcquisitionCost.lean), with its [owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/TerminalGcdAcquisitionCost.scribe.cs), supply the exact reset-query budget. Its internal `scalar_word_realization`, `budget_equivalence`, `lower_axis` and `word_response` arguments already cover complete terminal replies and terminating adaptive history policies. They are not new lower-bound results here. The new lower-bound step is the correspondence (AQBRS.9) from every admitted continuous policy to that existing reset class.
+
+[Fibonacci Canonical Window Compiler Geometry, Sections 1.4–1.8](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md) supplies the short positive test words, the common-direction CRT policy and $D_K^{-1}$ decoder. The parameter match is its same $H,M,\alpha,q$, actual domain $\mathbb N^2$, two consecutive directions $K,K+1$, and complete current gcd; only its reset execution is replaced by the positive closing schedule proved here. The supplier's short-word bounds are used for $W_j$, while (AQBRS.12) counts the new physical closing letters too. AQBR5.1 and AQBR9.3 supply the earned-entry/current distinction and installed-update pattern; (AQBRS.10) applies it at the newly attained returned cut. The proof does not reproduce their arithmetic classification, scalar digit proof, CRT theorem, compiler proof or affine-valuation lower bound as a new contribution. This is `repo-derived` synthesis in the continuous contract, without a global literature-priority claim.
+
+The primary state-identification terminology is that of Petra van den Bos and Frits Vaandrager, [*State Identification for Labeled Transition Systems with Inputs and Outputs*, arXiv:1907.11034v2, PDF Section 4, Definitions 12–14, 17 and 20](https://arxiv.org/pdf/1907.11034v2): adaptive tests select inputs from preceding outputs and distinguish initial alternatives through their possible complete observations. Here the alternatives are exact arithmetic residues, the actual source remains infinite, and (AQBRS.5) supplies a source-specific behavior return between tests. The finite-machine terminology supplies neither this positive closing realization nor its sharp arithmetic read budget. The initialized-state versus reached-state distinction and the separately supplied reset-query interface retain the meanings stated in Definitions 1.3 and 9.2 and their cited primary sources.
+
+**Definition 12.2 (what this return recovers).** The acquired registers support the entire arithmetic boundary of every finite original-$R/G$ continuation at a real returned source cut. They recover the spatial residue and prospective replacement-time field through the already supplied equivalences of Section 9. These statements concern one actual source, the paid replies of its one run, and actual installed continued use. They leave the complete original chronology, source syntax and whole memory installation outside the inverse.
+
+For instance the positive word $G^H$ changes the integer source, adds $H$ actual source events and leaves the full arithmetic behavior unchanged. Equal residues of $v$ and $v+H\alpha$ remain equal after every common word, although the integer sources differ. Distinct ordered trees with the same composition remain indistinguishable by this arithmetic task. Acquired arithmetic fields also do not encode which local service blocks, records, handle identity and rights have been installed. These are the existing Section 9 separating examples, and they continue to apply after behavior return. In particular the word called closing is a modular restoration; it does not undo source growth, erase the executed chronology, recover a missing pre-entry archive or rewind physical time.
+
+The paid current gcd port, authentic bindings/rights and sufficient actual backing remain supplied premises. Realizing them on a narrower Native/LAB or physical backend is a separate obligation. Original scalar and reset-model statements, fixed original-task/initialization restrictions, and their open outcomes retain their own exact scopes. Unrestricted mutual recovery of independently meaningful space, time, boundary and memory, a physical duration or metric interpretation, whole-memory inversion, and total-resource parsimony are not consequences of this arithmetic theorem.
+
+## 追加锚（本行以下为增补区）
+
+## 13. Unknown future precisions on one retained original source
+
+**Assumption 13.1 (variable-modulus access and authentic cuts).** Retain the pair source, original $R/G$ actions, opaque binding, exclusive serialization, fixed acknowledgements, absent side channels and charged finite-run material premises of Definitions 9.1–9.2. Enlarge only the public read parameter: at a current cut the supplied port accepts any actually delivered positive binary integer $H$ and returns the paid value $\gcd(qu,H)$. This requires installation and lawful access for every modulus actually used, including moduli chosen by the controller. Access merely to the requested moduli does not imply this stronger menu. There is still one actual $v_0\in\mathbb N^2$ and one continuously updated source; no later request selects another original pair.
+
+Requests $H_1,H_2,\ldots$ are revealed successively at completed callable cuts. A controller must finish the current acquisition before admitting another request or external action. Between requests, every chosen finite continuation is executed through the synchronized original-action interface of Theorem 10.3. There is no promised bound or advance description of later moduli or continuations. A request generator may depend on all already exposed requests, replies, outputs and actions. A source-dependent supplied parameter is additional information when comparing identification tasks; the benchmark below retains its source-blind fixed-modulus meaning.
+
+The controller records each actual completed action and acknowledgement on this binding, including acquisition and closing letters, from entry onward. It also records every paid read with its modulus and its position in that action sequence. Let $A_t$ be the actual chronological action prefix through cut $t$, where $t$ counts completed source letters and $A_0$ is empty. Reads do not advance this index. A retained past-cut name consists of its genuine prefix position and binding association; a fabricated or counterfactual word is not an authentic past cut. Calling the record authentic assumes faithful recording under this exclusive service contract, not a cryptographic proof against a malicious recorder.
+
+At request prefix $n$, set
+
+$$
+H^{[n]}=\operatorname{lcm}(H_1,\ldots,H_n),\qquad
+m_n=\max_{1\le i\le n}B(H_i)=B(H^{[n]}),\qquad B(1)=0.
+\tag{AQBRO.1}
+$$
+
+The last equality follows from prime exponents in an lcm. The comparison quantity is the existing one-shot fixed-modulus worst budget $Q_{\rm ret}(H^{[n]})=2m_n$. It is a benchmark for obtaining that joint residue from an initially unlabelled pair. It is not defined as the offline optimum among variable-modulus policies, and it does not include prices, payload lengths or actions.
+
+**Definition 13.2 (a finite envelope for a read budget).** For an integer $b\ge1$ put
+
+$$
+E(b)=\prod_{\substack{p\text{ prime}\\p\le b+1}}
+ p^{\lfloor b/(p-1)\rfloor},\qquad E(0)=1.
+\tag{AQBRO.2}
+$$
+
+This is a public integer computed from $b$, independent of the hidden pair. The archive at envelope $E$ stores an immutable earned original label $e_E=v_0\bmod E$, a separate mutable current label $c_E=u\bmod E$, the actual action/reply record and cut names, and the installed procedures, binding and rights. The notation $\bmod E$ for a pair means coordinatewise reduction. Retaining an abstract label alone does not retain any of the other components.
+
+**Theorem 13.3 (earned common-original transport across an upgrade).** Suppose the current actual cut is $s$, with recorded prefix $A_s$. Apply Theorem 10.2 at any newly chosen $E>1$ to the current actual pair $x=A_s(v_0)$, using the variable-modulus port of Assumption 13.1. Let $s'$ be the actual cut after its final closing word. This one acquisition has the following simultaneous consequences.
+
+It earns a stage-entry label $d_E=x\bmod E$ and returns the actual source to $d_E$ modulo $E$, at cost at most $2B(E)$ paid reads. From the same earned label and the recorded prefix it computes $e_E=v_0\bmod E$. For every authentically recorded cut $t\le s'$, including cuts inside this acquisition, it computes $a_{E,t}=A_t(v_0)\bmod E$, and hence the entire arithmetic boundary and prospective replacement-time field at that actual past cut. It installs current $c_E=a_{E,s'}=d_E$ and synchronized continued use on this handle.
+
+If an earlier archive used $D\mid E$, the new original and every common past-cut label reduce to their old values modulo $D$. At the completed upgrade, the current label modulo $D$ equals its value at the upgrade's start. None of these claims says that $c_E=e_E$ when earlier actions have intervened, or that a handle to a past integer source has been recovered.
+
+**Proof.** Reuse the authentic affine-word supplier FARG130.2, equivalently the first word-law component of [`GraftAffineClosure.result`](../../../D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.lean), at graft $w=\alpha$. For a known chronological prefix, its coefficients can be computed without observing the source:
+
+$$
+A_t(v)=M^{k_t}v+z_t,\qquad
+(k_0,z_0)=(0,0),\qquad
+\begin{cases}
+(k,z)\longmapsto(k+1,Mz)&\text{on }R,\\
+(k,z)\longmapsto(k,z+\alpha)&\text{on }G.
+\end{cases}
+\tag{AQBRO.3}
+$$
+
+Here $z_t\in\mathbb N^2$ is a mathematical integer coefficient. An actual decoder may replay the stored word with $z_t$ reduced modulo the newly supplied $E$ at every step; it need not have stored an exact large $z_t$ beforehand. Since $\det M=-1$, the following are finite computations on acquired residues and public recorded letters:
+
+$$
+e_E=M^{-k_s}(d_E-z_s)\pmod E,
+\qquad
+a_{E,t}=M^{k_t}e_E+z_t\pmod E.
+\tag{AQBRO.4}
+$$
+
+Theorem 10.2 applies to $x\in\mathbb N^2$ with precisely its original access contract. Its entry variable is now $x$, rather than $v_0$. It gives $d_E=\bar x$, actual modular return at $s'$, and no uncharged initial read. Substitution of $x=M^{k_s}v_0+z_s$ proves the first formula of (AQBRO.4) is $v_0\bmod E$. The second consequently labels every recorded prefix, including the actual letters subsequently written by this acquisition. Its value at $s'$ agrees with $d_E$ because this acquisition returns modulo $E$. Theorem 10.3 installs the callable current reader and updater there, using $c_E=d_E$. Local inverse matrix arithmetic in (AQBRO.4) never invokes a source inverse.
+
+For each cut $t$ and each finite hypothetical continuation $V$, the installed past-cut procedure evaluates
+
+$$
+\mathcal S_E(A_t(v_0))=a_{E,t},\qquad
+\mathcal T_E(A_t(v_0))(j)=qM^ja_{E,t},\qquad
+\mathcal B_E(A_t(v_0))(V)=\gcd(qV(a_{E,t}),E).
+\tag{AQBRO.5}
+$$
+
+In the last expression $V$ acts on residues; the gcd uses any integer representative. These are the existing Section 9 recovery maps applied to earned data. They are computations of a boundary indexed by an authentic past cut, not newly observed replies or actual execution from that cut. A hypothetical word appended to $A_t$ stays a prediction unless it really occurred.
+
+Reduction modulo $D\mid E$ commutes with all integer affine operations. Both earned original labels are reductions of the same $v_0$, and both labels of a common past cut are reductions of $A_t(v_0)$. This proves archive compatibility without combining marginal observations from different source states. The completed acquisition acts as the identity modulo $E$ on its own entry, hence modulo $D$ too. During its private execution the physical source may leave that residue; those intermediate actual cuts are recorded and are not exposed as completed upgrade calls. All steps have finite exact binary realizations using replay, modular arithmetic and the already supplied fixed-modulus acquisition. $\square$
+
+## 14. A uniform online archive with a constant cumulative read bound
+
+**Theorem 14.1 (doubling envelopes, return and every finite request prefix).** Under Assumption 13.1 there is one deterministic program, uniform over all original pairs and successively revealed positive integer requests, which supplies the compatible archive of Definition 13.2 and the recovery of Theorem 13.3. It uses no future request or future continuation. If $C_n$ counts all paid source reads through completion of request $n$, then
+
+$$
+\begin{cases}
+C_n=0,&m_n=0,\\[2mm]
+C_n\le 4b_n-2<8m_n
+       =4Q_{\rm ret}(H^{[n]}),&m_n\ge1,
+\end{cases}
+\qquad
+b_n=2^{\lceil\log_2m_n\rceil}\quad(m_n\ge1).
+\tag{AQBRO.6}
+$$
+
+The exponent in $b_n$ is computed by integer doubling, without a real-number oracle. At every completed request the installed envelope is $E(b_n)$ when $m_n>0$, and is $1$ otherwise. It answers every requested modulus and every divisor of that envelope at the current cut or any retained authentic past cut. Current output, finite-word prediction and synchronized further original actions require no additional source read at these covered moduli. Actual actions and all local processing remain charged.
+
+The bound is pointwise for every completed finite request prefix, including when request choices depend on the accessible preceding history. It compares cumulative paid reads with the joint fixed-modulus benchmark; it asserts no optimal competitive ratio for the full variable-modulus problem.
+
+**Proof (what the envelope supplies).** For each prime $p$, the exponent in $E(b)$ is $\lfloor b/(p-1)\rfloor$ when $p\le b+1$ and zero otherwise. Therefore
+
+$$
+H\mid E(b)\ \Longleftrightarrow\ B(H)\le b,
+\qquad B(E(b))=b\quad(b\ge1),
+\qquad E(b)\mid E(b')\quad(0\le b\le b').
+\tag{AQBRO.7}
+$$
+
+For the first equivalence compare prime exponents. A positive exponent allowed by $B(H)\le b$ forces $p\le b+1$; each exponent is then at most $\lfloor b/(p-1)\rfloor$. The reverse implication uses the same inequalities. For equality $B(E(b))=b$, every axis has cost at most $b$, and the $2$-axis has exponent exactly $b$. Monotonicity follows by comparing floors. Thus $E(b)$ is the least common multiple of all positive $H$ with $B(H)\le b$. In particular a single earned label modulo this one integer covers every such request, rather than predicting which prime will be asked for next. This elementary divisibility calculation is an intermediate step for the acquisition construction.
+
+**Proof (the actual online controller).** Start with envelope $1$, its singleton original/current labels, and an empty actual action record. On receiving $H$, factor that public integer by finite trial division to compute $B(H)$. If $H$ divides the installed envelope, use the earned residue registers and Theorem 10.3; do not read the source. Otherwise compute the least power of two $b\ge B(H)$, form the exact public integer $E(b)$, and execute Theorem 13.3 on the very current source. Finish every physical closing letter, record it, compute the new common-original label, install current use, and only then complete the request.
+
+No intermediate skipped power of two is acquired. At a miss the new budget exceeds the old one; (AQBRO.7) shows that every previously requested modulus and every previous envelope divides the new envelope. Induction proves that at prefix $n$ this budget is exactly the least power of two covering $m_n$. The same induction with Theorem 13.3 proves original-label and past-cut compatibility, actual modular return at each upgrade, and correct synchronized current use between upgrades. This preserves one source and one archive even when intermediate continuations change its original behavior. An upgrade returns the behavior at that upgrade's entry; it does not undo those continuations.
+
+**Proof (cumulative payment and nonanticipation).** Let $b_1'<\cdots<b_J'$ be the budgets actually acquired by prefix $n$. They are distinct nonnegative powers of two, with last term $b_n$. At each such stage Theorem 10.2 is executed at the actual modulus $E(b_j')$, and (AQBRO.7) gives at most $2b_j'$ genuine paid reads. Thus
+
+$$
+C_n=\sum_{j=1}^J Q_j
+\le2\sum_{j=1}^J b_j'
+\le2(1+2+\cdots+b_n)
+=4b_n-2.
+\tag{AQBRO.8}
+$$
+
+For $m_n\ge1$ the least covering power satisfies $m_n\le b_n<2m_n$, proving (AQBRO.6). If every request is one, no acquisition is made. Public preparation, action selection inside the fixed-modulus routine and subsequent register updates depend only on delivered integers, recorded letters and already acquired replies. The algorithm uses neither a future request nor a source-indexed choice of initial code.
+
+The finite geometric payment inequality is the classical doubling argument in Chrobak–Kenyon–Noga–Young, [*Incremental Medians via Online Bidding*, Theorem 1(a) and Section 2](https://arxiv.org/html/cs/0504103v3). Here current requests reveal their budget, so the controller can skip unused bids; the displayed sum is an upper bound by that classical payment sequence. The source-specific content is that each actually paid envelope is acquired and returned on the same changing source and is transported to one original-cut archive. The bidding inequality alone supplies none of those correspondences. Its classical lower bounds do not prove an online lower bound in this apparatus. $\square$
+
+**Proposition 14.2 (what an acquired precision archive leaves undecided).** At any finite completed request prefix the construction supplies arithmetic recovery only at covered moduli and authentically recorded cuts. The retained action word supplies the original-action chronology from entry, separately from its arithmetic labels. Arithmetic fields alone do not recover that word, elapsed time, literal integer source, tree syntax, bindings, rights or the rest of the memory installation. In the absence of additional source-dependent input, no finite archive certifies arbitrary finer original residues solely from its finite paid transcript.
+
+If the acquired budgets are unbounded, their immutable original labels together determine the actual $v_0$ uniquely as a mathematical element of $\mathbb N^2$. This all-level injectivity does not provide a finite stopping certificate for exact unbounded-source recovery or a finite store for the entire stream.
+
+**Proof.** Fix a completed run with finite action history and all moduli actually read. Their lcm $D$ is finite; in this construction they divide the last envelope. For any original pair $v$, the pair $v+D\alpha$ is a distinct nonnegative source with the same initial residues modulo every read modulus. Congruence and deterministic branch induction give the same paid replies, selected actions, stopping decisions and outputs for this fixed request history. The requests and continuations may be held fixed as an admissible history when making this comparison. Choose a prime $p\nmid D$. The two original pairs differ modulo $p$, so a finite transcript has not acquired all finer residues. The unknown-source service assumptions must hold for each compared finite run, as in Definition 9.1; inaccessible service prices cannot distinguish them.
+
+The existing insertion $G^E$ preserves every arithmetic field modulo the installed $E$ and changes the literal integer source and action chronology. A separately nonzero path grade changes too. Thus chronology is available here because actual letters were recorded, not by inversion of an arithmetic boundary. Computation of a past-cut boundary never grants a saved source handle or physically executes its counterfactual continuations. The syntax and installation losses of Definition 12.2 still apply.
+
+For unbounded budgets, every positive modulus divides a sufficiently late envelope by (AQBRO.7). If two natural pairs had equal original labels at all those levels, each coordinate difference would be divisible by unbounded integers $E(b)$, forcing that integer difference to be zero. Every finite completed run still admits the preceding distinct source $v+D\alpha$. Hence all-level injectivity does not justify finite termination for exact recovery without a separately supplied finite source bound or certificate. Nor does abstract compatibility alone assert realization by a natural pair; Theorem 15.3 gives a hard-branch counterexample. $\square$
+
+## 15. Cumulative waste of a specified restarting policy
+
+**Definition 15.1 (independent prime restarts).** Fix the following competing strategy solely for this section. On each successive distinct prime request $p_i$, start afresh the exact two-stage fixed-modulus controller used in Theorem 10.2, with the canonical-window directions $K_i,K_i+1$ for that prime. In each scalar stage test digits $0,1,\ldots,p_i-2$ in that order, as in Canonical Window Compiler Geometry, Theorem 1.6. Finish its actual positive closing word after every paid test. Ignore all earlier earned residues when choosing and stopping these tests. There are no interstage external source actions. The current source is nevertheless the actual endpoint of the preceding stage, not a reset or a new entry. This definition fixes a strategy; lower bounds below concern its wasted repeated acquisition.
+
+Write
+
+$$
+D_i=\begin{pmatrix}qM^{K_i}\\qM^{K_i+1}\end{pmatrix},
+\qquad
+Z_i=D_i^{-1}\{-2,-1\}^2\subseteq(\mathbb Z/p_i\mathbb Z)^2
+\quad(p_i\ge3).
+\tag{AQBRO.9}
+$$
+
+The inverse is the existing unimodular consecutive-direction decoder. The four states in $Z_i$ are distinct. Each scalar $-2$ matches the last tested digit $p_i-2$; each scalar $-1$ is the inferred untested digit $p_i-1$. Both cost exactly $p_i-1$ reads under the specified test order. This uses complete gcd answers: the last matching answer is $p_i$, not a clipped failure bit.
+
+**Theorem 15.2 (one actual source realizing every prescribed finite hard prefix).** For any finite distinct odd primes $p_1,\ldots,p_n$ and any recursively chosen $z_i\in Z_i$, there exists one original $v_0\in\mathbb N^2$ on which the restarting strategy enters stage $i$ at residue $z_i$ and uses exactly $2(p_i-1)$ paid reads there, for all $i\le n$ on its single continuous trajectory. The choice of $z_i$ may depend on the already prescribed finite action words of preceding stages. In particular
+
+$$
+C_n^{\rm restart}=2\sum_{i=1}^n(p_i-1),\qquad
+Q_{\rm ret}\!\left(\prod_{i=1}^np_i\right)=2\max_{i\le n}(p_i-1).
+\tag{AQBRO.10}
+$$
+
+These ratios are unbounded over finite prime lists and their actual common sources. For every $n$ there are $n$ distinct odd primes in a dyadic interval $(P,2P]$ for which the ratio in (AQBRO.10) exceeds $n/2$. The envelope policy of Theorem 14.1, on that same chosen original pair and request list, retains its bound (AQBRO.6) on its own actual trajectory.
+
+**Proof (the common-source construction).** The scalar test count follows from Definition 15.1 and the actual reset-to-current-residue simulation of Theorem 10.2. Fix $z_i$ at the current stage. Running that finite controller on $z_i$ modulo $p_i$ determines all its replies and actual selected letters, including closing letters. Its hard path costs $2(p_i-1)$. Call the resulting chronological source word $S_i$. It is a definite public word once this prescribed branch is fixed. Let $A_{i-1}=S_1\cdots S_{i-1}$, with its affine coefficients from (AQBRO.3). Its reduction is bijective on $(\mathbb Z/p_i\mathbb Z)^2$, even though its integer action need not be onto $\mathbb N^2$. Prescribe the original congruence
+
+$$
+v_0\equiv M^{-k_{i-1}}(z_i-z_{i-1}^{\rm aff})\pmod{p_i},
+\qquad
+A_{i-1}(v)=M^{k_{i-1}}v+z_{i-1}^{\rm aff}.
+\tag{AQBRO.11}
+$$
+
+The superscript distinguishes the accumulated affine offset from the chosen hard state $z_i$. All primes are distinct, so ordinary finite integer CRT gives a simultaneous nonnegative representative for each coordinate of $v_0$ modulo $\prod_i p_i$. This is one pair, chosen once. Induction in $i$ now shows that its actual entry to stage $i$ is $z_i$ modulo $p_i$, its genuine replies are precisely the prescribed branch replies, and its actual word is $S_i$. No earlier source is replaced when imposing a later congruence. This proves (AQBRO.10). It combines integer congruences of the same original pair after invertible affine transport, rather than unrelated rational floor reports.
+
+**Proof (arbitrarily many comparable primes).** The elementary Euler argument supplies the required existence without a prime-asymptotic estimate. If $\sum_p1/p$ were finite, then
+
+$$
+\prod_{p\le x}(1-1/p)^{-1}
+\le\exp\!\left(2\sum_{p\le x}1/p\right)
+$$
+
+would remain bounded, since $-\log(1-t)\le2t$ for $0\le t\le1/2$. Expansion of each finite geometric product contains $1/k$ for every $1\le k\le\lfloor x\rfloor$, by prime factorization. The harmonic sums are unbounded, a contradiction. If the numbers of primes in all dyadic intervals $(2^j,2^{j+1}]$ had a common finite bound $N$, their reciprocal sum would instead be bounded by a finite initial part plus $\sum_jN/2^j$, also a contradiction. Thus these counts are unbounded. For each $n$ choose such an interval containing $n$ odd primes, put $P=2^j$, and apply the already proved common-source construction. Then
+
+$$
+\frac{\sum_i(p_i-1)}{\max_i(p_i-1)}
+\ge\frac{nP}{2P-1}>\frac n2.
+\tag{AQBRO.12}
+$$
+
+This classical prime argument is an intermediate existence step; the source-specific assertion is the simultaneous actual execution in (AQBRO.11). The policy of Theorem 14.1 is correct on every natural pair and every list under the same variable-port premise, so it also applies to this chosen pair. The two strategies execute different actual words; no equality of endpoints or of their action, memory or service-work costs is asserted. $\square$
+
+**Theorem 15.3 (finite hard realizations need not have an infinite natural source).** There is a sequence of distinct odd primes and recursively prescribed hard states for Definition 15.1 such that every finite prescribed prefix has a single natural-pair realization as in Theorem 15.2, while no $v_0\in\mathbb N^2$ realizes the entire infinite prescription. Equivalently its compatible residue prescriptions define a profinite thread outside the admitted natural-pair source image. Consequently this infinite adversarial thread is not an admissible single-source run, and it cannot prove an all-prefix lower bound on one actual natural pair.
+
+**Proof.** Enumerate $\mathbb N^2$ as $w_1,w_2,\ldots$ by increasing coordinate sum, breaking ties by the first coordinate. Choose distinct odd primes, for example in increasing order. Given the previously prescribed words, compute $A_{i-1}(w_i)\bmod p_i$. The four-element set $Z_i$ contains a $z_i$ different from that residue; choose the lexicographically first such state in nonnegative representatives. Specify its hard branch and actual word $S_i$, and prescribe the original residue by (AQBRO.11). This rule uses only finite integer calculations at each index.
+
+For each finite prefix, Theorem 15.2 gives a natural pair satisfying its congruences. The prescribed original residues are compatible under reduction along the finite products $P_n=\prod_{i\le n}p_i$, by CRT. They also extend to a thread in the usual full profinite pair ring by choosing arbitrary compatible $p_i$-adic lifts and coordinates at unlisted primes; this is a mathematical thread, not a newly supplied source service.
+
+If one natural pair realized every prescribed stage, it would equal $w_j$ for some $j$. Its input to stage $j$ would be $A_{j-1}(w_j)\bmod p_j$, which was deliberately excluded when choosing $z_j$. This contradicts its required hard state. Hence no natural pair realizes the entire prescription, despite realizability of each finite prefix. The quantifiers in Theorem 15.2 are $\forall n\,\exists v_0^{(n)}$, and they have not been exchanged for $\exists v_0\,\forall n$. The construction supplies an explicit unrealizable infinite adversarial thread; it makes no claim that every infinite hard prescription is unrealizable. $\square$
+
+## 16. The resource vector and supplier boundary of the online join
+
+**Theorem 16.1 (the same construction's separate resource coordinates).** Fix a completed finite request prefix of Theorem 14.1, its $J$ actual upgrades and any intervening finite original-action continuations. Write $E_j=E(b_j')$, and use $K_j,\gamma_j,L_{E_j}$ from Definitions 10.1 and (AQBRS.6) at that actual modulus. If $T_{j,0},T_{j,1}$ are its actual scalar-stage test counts and $g_{j,l}$ the graft count in its $l$th short test word, then its acquisition coordinates are exactly
+
+$$
+\begin{aligned}
+C_n&=\sum_{j=1}^J(T_{j,0}+T_{j,1}),\\
+N_R^{\rm acq}&=\sum_{j=1}^J L_{E_j}
+       \bigl(K_jT_{j,0}+(K_j+1)T_{j,1}\bigr),\\
+N_G^{\rm acq}&=\sum_{j=1}^J E_j\sum_{l=1}^{T_{j,0}+T_{j,1}}g_{j,l},
+\qquad T_{j,s}\le b_j',\quad g_{j,l}\le\gamma_j.
+\end{aligned}
+\tag{AQBRO.13}
+$$
+
+Add all actually requested continuation letters to their respective action counts. For total counts $N_R,N_G$, the exact endpoint and quantity bound are the affine-word formula and
+
+$$
+u_{\rm end}=M^{N_R}v_0+\sum_{l=1}^{N_G}M^{r_l}\alpha,
+\qquad qu\le qu_{\rm end}\le2^{N_R}(qv_0+2N_G),
+\tag{AQBRO.14}
+$$
+
+where $r_l$ counts replacements after that actual graft. The modulus and residue payload grow independently of the paid-read bound. In particular the following explicit finite bound holds, with $\mathsf h_b=\sum_{k=1}^b1/k$:
+
+$$
+\log_2E(b)
+\le b\log_2(b+1)\mathsf h_b
+\le b\log_2(b+1)(1+\log b)
+\quad(b\ge1),
+\tag{AQBRO.15}
+$$
+
+where the last logarithm is natural. No total-work, action, storage or source-retention ratio follows from (AQBRO.6).
+
+**Proof.** Apply Theorem 11.1 to every actual upgrade, using $B(E_j)=b_j'$. Each is executed at its actual input pair, so its test and closing counts sum exactly as in (AQBRO.13). The endpoint formula and monotonic quantity bound of Theorem 11.1 apply to the concatenated actual action word, including intervening continuations. Nonnegative coordinates persist. The source can grow even though each upgrade closes modulo its own envelope.
+
+For (AQBRO.15), take logarithms of (AQBRO.2), bound the floor by $b/(p-1)$ and $\log_2p$ by $\log_2(b+1)$, and bound the remaining sum over $p-1$ by the harmonic sum over $1,\ldots,b$. The elementary integral bound on that sum gives the last inequality, including $b=1$. This proves a finite bound on the public modulus representation, not a bound on the unknown actual source. Computing the product by enumeration and trial division and producing its binary representation are charged local work. There is no uniform constant bound on these parameter lengths as requests grow.
+
+For a concrete finite record representation let $A=N_R+N_G$ count all completed source letters, let $Q_j=T_{j,0}+T_{j,1}$, let $\ell_j=\lceil\log_2(E_j+1)\rceil$, and let $I$ be the total binary length of the delivered request moduli and retained non-action input/output data. If $F$ past-cut names are retained, with their integer positions, a sufficient local storage bound beyond installed code and service/binding/rights representations is
+
+$$
+O\!\left(A+I+\sum_{j=1}^J(Q_j+1)\ell_j
+       +F\log_2(A+2)+\max_j\ell_j^2+1\right)\text{ bits}.
+\tag{AQBRO.16}
+$$
+
+Take the maximum over an empty set to be zero. A binary action tag per actual letter retains the authentic source word; every paid reply is stored with its stage and position, using a sequential merged call tape. Stage delimiters and the public envelope schedule identify the read moduli. Each gcd field fits $\ell_j$ bits. Immutable original and upgrade endpoint labels and public moduli fit the $(Q_j+1)\ell_j$ allowances. The current label uses the latest envelope. Explicit cut positions need the displayed $F$ allowance. The squared workspace allowance covers the existing fixed-modulus preparation of Theorem 11.2 and ordinary modular replay; optional retained outputs are included in $I$.
+
+Theorem 11.2 supplies a finite local-work allowance for every upgrade at modulus $E_j$, and all its public preparation, word compilation and closing-loop control must be paid at that modulus. To transport a new label, replay the already retained $A_s$ at the new precision, reducing both the affine matrix and translation after each letter. Standard binary arithmetic gives a conservative additional $O((A_s+1)(\ell_j+\log_2(A_s+2))^3)$ bit-work bound, plus reading the word and writing the labels. Updating $M^{-k_s}$ letter by letter uses the fixed integer matrix $M^{-1}$, so no exact-real step or hidden original coordinate is involved. A past-cut evaluation replays its authentic prefix and then its supplied hypothetical word, paying for both lengths, modular arithmetic and requested output. Request factoring, envelope formation, future input/output and every tape write/retention are additional actual work. These bounds give finite procedures; they neither suppress repeated replay costs nor infer a computation ratio from the read ratio.
+
+Finally, for actual pre-call states $u_i$ and the actual chosen read modulus $H_i^{\rm call}$, source-service work is exactly
+
+$$
+W_{\rm svc}=
+ \sum_{i\in\mathcal I_{\rm read}}\rho_{H_i^{\rm call}}(u_i)
+ +\sum_{i\in\mathcal I_R}\tau(u_i)
+ +\sum_{i\in\mathcal I_G}\gamma_{\rm svc}(u_i).
+\tag{AQBRO.17}
+$$
+
+All closing letters and subsequent genuine continuations belong to these call sets. Add actual source/backing provision, source storage, binding, rights retention, installed services, local record allocation and their retention costs separately. Finite backing and completion for every chosen finite run remain premises. Keeping finite code and constant read factor supplies neither finite capacity for an unbounded future archive nor lawful service after rights are revoked. $\square$
+
+**Definition 16.2 (source-specific addition and exact suppliers).** The mathematical addition is the uniform common-original archive join of Theorems 13.3–14.1, with the specified restarting separation of Theorems 15.2–15.3 and the same-construction account of Theorem 16.1. Its domain is Assumption 13.1, including its explicitly stronger variable-modulus port menu. These are `repo-derived` conditional ordinary proofs; no new Lean verification or global literature-priority claim is attached to them.
+
+Theorem 10.2 supplies each exact fixed-modulus acquisition-and-return and its positive closing realization. Theorem 10.3 supplies earned synchronized use. Theorems 11.1–11.2 supply the actual letter counts and finite local realization for each acquisition. The [Canonical Window Compiler Geometry, Theorems 1.4–1.6](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md), supplies the two adjacent directions, short positive words, decoder and hard scalar digit histories. The correspondence in [FARG130–133](FIBONACCI_ATOMIC_RELATION_GENERATION.md) is their antecedent. None is reclassified as a new scalar acquisition, compiler, full-behavior quotient or fixed-modulus lower bound here.
+
+In [`GraftAffineClosure.lean`](../../../D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.lean), the word-affine statement is a component of the public conjunction `D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.result`, quantified over positive $H$, natural graft $w$, words and all natural pairs. Its proof contains a scoped `have wordAffine`; there is no separate public declaration named `GraftAffineClosure.wordAffine`. The substitution $w=\alpha$ and actual recorded chronological word supplies (AQBRO.3); this is affine transport and local inversion on earned operands, not acquisition by a formal inverse map. The original natural pair, actual action history and earned residue are the three matched inputs of the new bridge.
+
+In [`TerminalGcdAcquisitionCost.lean`](../../../D5/S3/Arith/FibonacciAtomic/TerminalGcdAcquisitionCost.lean), `D5.S3.Arith.FibonacciAtomic.TerminalGcdAcquisitionCost.costBound` is the maximum $h(p-1)$ over prime-power factors of its fixed argument $H$. The public `terminal_gcd_acquisition_cost (H : ℕ) (hH : 1 ≤ H)` identifies the least finite worst budget in `acquisitionBudgets H` as $0$ for $H=1$ and $2\,\mathrm{costBound}(H)$ otherwise. Its policies query terminal positive words with responses `terminalGcd H`, always at that same $H$. It does not permit a different modulus on each query and therefore supplies no lower bound for arbitrary variable-modulus online or offline policies. The constant four in (AQBRO.6) is an attained comparison to this fixed-modulus benchmark, not an optimality assertion.
+
+Chrobak, Kenyon, Noga and Young, [*Incremental Medians via Online Bidding*, arXiv:cs/0504103v3, Theorem 1 and Section 2](https://arxiv.org/html/cs/0504103v3), attribute the deterministic four and randomized $e$ upper bounds in classical online bidding to folklore and give their proofs. Only the finite geometric payment step is used here. Their randomized proof samples a uniform real logarithmic phase; it is not a finite-random-bit implementation of this source interface, and no randomized strengthening is claimed here. Integer CRT, unimodular inversion, the harmonic/product prime argument and finite affine replay are known intermediate mathematics inside the source-specific proofs, not new standalone results.
+
+The archive has acquired arithmetic data at recorded actual cuts and retained enough genuine action complement to transport those data. It has not constructed the paid gcd backend, supplied a Native/LAB or physical realization, recovered a callable past source, inverted source syntax or a memory installation, or derived a metric or physical clock. In particular its integer-pair congruences do not license CRT combination of separate rational floor reports in [Rooted Boundary History Recovery, Sections 24 and 29–30](RECURSIVE_RELATIONAL_OBSERVATION_ROOTED_BOUNDARY_HISTORY_RECOVERY.md); those sections have their own scale and legal-port contracts. Its finite-prefix and infinite-thread distinction remains consistent with [Effective Resolution, Sections 2.2.5–2.2.8](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION.md), while Theorem 15.3 adds a hard-branch construction for this actual restarting strategy. The unrestricted four-expression recovery problem retains the missing physical, syntax, whole-memory and universal-resource bridges stated in Definition 12.2.
+
+## 追加锚（本行以下为增补区）

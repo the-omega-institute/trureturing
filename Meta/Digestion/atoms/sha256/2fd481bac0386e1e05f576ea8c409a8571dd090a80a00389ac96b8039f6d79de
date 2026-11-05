@@ -1,0 +1,29 @@
+**Premise 1.4 (Credited score and rank interfaces).** [Guarded, Lemmas 3.2–3.3 and Definition 6.3] supplies compactness of the nonempty families in (1.8), continuity of their discrepancy, and
+
+$$
+\mathbb E_p\sum_i(W_i-r_i(W_{-i}))^2=\Phi_K(p)+\mathcal D_K(p\Vert r).
+\tag{1.9}
+$$
+
+For positive $p,r$ on the connected legal completion graph, $\mathcal D_K(p\Vert r)=0$ exactly when $p=r$. Concavity of $\Phi_K$ follows from the supplied concavity of $h$. In particular, $\mathcal D_K(\,\cdot\,\Vert r)$ is convex.
+
+For disjoint nonempty intervals $C_j\subseteq[1,n]$, let $\eta=W_{[1,n]\setminus C_j}$ be the entire complement, let $a_j,b_j$ be its adjacent bits, with zero at an open endpoint, and let $p_j^\eta=p(W_{C_j}=\cdot\mid\eta)$. The conditional-slicing argument of [Guarded, Theorem 7.1] gives, for any band-compatible $p$,
+
+$$
+\mathscr R_{N,n}(p)\ge
+\sum_j\mathbb E_p\delta_{N,|C_j|}^{a_j,b_j}(p_j^\eta).
+\tag{1.10}
+$$
+
+This use of its argument requires only positivity and the insertion inequalities, not the optimizer equation. Each candidate conditional on its left is a slice of one global $r$; the minima on its right can choose candidates separately. Restricting rows and columns of a cut matrix and dividing by a positive complement mass preserves its rank bound. Only extendible complements enter; all others contribute zero without division. No independence of adjacent or separated blocks is asserted.
+
+For an $(N+1)\times(N+1)$ minor $A_p$ of a cut matrix, [Guarded, Theorem 8.2] supplies
+
+$$
+\delta_{N,m}^{a,b}(p)\ge
+\frac{6^{-4m}}{2m(N!)^2}|\det A_p|^2.
+\tag{1.11}
+$$
+
+These inherited interfaces are necessary relaxations. They do not assert that all members of $\mathscr F$ have one common nonnegative matrix representation or a stationary extension.
+

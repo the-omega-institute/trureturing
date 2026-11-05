@@ -1,0 +1,60 @@
+**引理 3.2（固定五字的加权消元）。**
+
+记 $r_k=r_{0^k13}$（$k=0,1,2$），并置
+
+$$
+R=\frac{r_0+xr_1+r_2}{2+x}.
+$$
+
+则有精确公式
+
+$$
+\delta=r_\epsilon,\qquad A_{LL}=\frac{r_3-\delta}{x},
+$$
+
+<a id="eq:eliminate"></a>
+
+$$
+\boxed{A_{RR}=\frac R{x^2}-r_3-\frac\delta x,\qquad
+ \operatorname{Tr} A=\frac R{x^2}+xr_3-\frac{2\delta}{x}.}
+ \tag{7}
+$$
+
+进而
+
+<a id="eq:tracebounds"></a>
+
+$$
+|A_{RR}|\le\frac{2\varepsilon}{x^2},\qquad
+ |\operatorname{Tr} A|\le\frac{4\varepsilon}{x}.
+ \tag{8}
+$$
+
+**证明。**
+
+源的字面行限制（§112.5）是
+
+$$
+\langle e_*|K_3|_L=\lambda(1,0),\qquad
+ \langle e_*|K_{0^k13}|_L
+   =\lambda\zeta^k(\alpha,\lambda\zeta^k),
+ \quad\alpha=-x,\quad\lambda=y\zeta^{-1}.
+$$
+
+空字因 $e_*\perp L$ 给 $\delta=r_\epsilon$，字三给第二式。
+另外三个残差是
+
+$$
+r_k=x\left(x^2A_{LL}+xA_{RR}+z\zeta^{-k}+\bar z\zeta^k\right)+\delta,
+ \qquad z=\alpha\bar\lambda A_{LR}.
+$$
+
+由 $1+x\zeta+\zeta^2=0$ 及其共轭，取权重 $(1,x,1)$ 消去振荡项，得
+$R=x^3A_{LL}+x^2A_{RR}+\delta$。
+代入 $A_{LL}$ 及 $1-x^2=x$，即得 $A_{RR}$；加上 $A_{LL}$ 得迹式。
+因为 $|R|,|r_3|,|\delta|\le\varepsilon$，且
+$x^{-2}+1+x^{-1}=2x^{-2}$、
+$x^{-2}+x+2x^{-1}=4x^{-1}$，便得两个界。
+
+□
+

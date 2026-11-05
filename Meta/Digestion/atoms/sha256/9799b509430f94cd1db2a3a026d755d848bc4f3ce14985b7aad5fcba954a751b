@@ -1,0 +1,70 @@
+**定理 5.2（有限证书的精确端点与理论合同的联合完成）。** 定义 1.1 的场满足 C95，并采用定义 5.1 的完整解释时，其完整有限数学理论由有限直和复矩阵代数给出；其状态、概率、独立组合、有标签过程及连续可逆演化分别具有密度矩阵、Born、张量积、量子仪器及 Hamilton 形式。对其中任何满足定义 3.1、$n\ge2$ 的单球，有限残差证书在精确端点只保留三维 $M_2(\mathbb C)$，而非任意维关系球；非零残差的可解释范围及误差仍严格受定理 4.1 的自洽前提限制。
+
+证明。新的联立限制是定理 3.3–4.2 的有限标架结论；以下使用标准有限 $C^*$ 代数与完全正映射理论，把这一端点接到完整操作合同，不另把标准表示结果当作新增公理推导。
+
+由定理 2.1 得到忠实有限 $C^*$ 代数 $\mathcal A$。有限 $C^*$ 代数结构定理给
+
+$$
+\mathcal A\cong\bigoplus_sM_{d_s}(\mathbb C),\qquad
+A\cong\bigoplus_s\operatorname{Herm}_{d_s}(\mathbb C).
+$$
+
+其自伴随正元均有自伴随平方根，所以由实平方生成的锥恰是矩阵正锥。每个正归一泛函唯一表示为
+
+$$
+\omega(a)=\sum_s\operatorname{Tr}(\rho_sa_s),\qquad
+\rho_s\ge0,\quad\sum_s\operatorname{Tr}\rho_s=1.
+$$
+
+这是有限维迹配对与正锥自对偶；极点恰是某个单一扇区中的秩一投影。效果族 $e_j\ge0$、$\sum_je_j=1$ 因而给
+
+$$
+p(j\mid\omega)=\omega(e_j)=\sum_s\operatorname{Tr}(\rho_se_{j,s}).
+$$
+
+在一个纯态与秩一投影效果之间，它化为 $|\langle\phi,\psi\rangle|^2$。概率可加与归一来自正归一泛函的定义；复数平方形式则来自前面由两个实关系构造的矩阵表示，二者的逻辑角色不同。
+
+对并置，局部交换嵌入给乘法同态
+
+$$
+\pi:\mathcal A\otimes_{\mathrm{alg}}\mathcal B\longrightarrow\mathcal C,
+\qquad a\otimes b\longmapsto\iota_A(a)\iota_B(b).
+$$
+
+乘积张成给满射。若 $\pi(x)=0$，所有乘积态延拓给 $(\omega_A\otimes\omega_B)(x)=0$。局部状态线性张成全部自伴随对偶，复线性延拓后分离代数张量积，所以 $x=0$。故 $\pi$ 为同构；有限维时正张量范数唯一，得到通常复张量积及各扇区直和。这个论证明确使用乘积态供应；仅有“局部读数能区分已有联合态”不能替代它。
+
+设状态过程的对偶为 $\Phi^*$。对每个有限参考保正，正是矩阵层上 $\Phi^*\otimes\mathrm{id}_r$ 保正，即完全正；归一给含幺性，对偶状态映射保迹。在单矩阵块之间，由 Choi 正矩阵谱分解得到
+
+$$
+\Phi(\rho)=\sum_\mu K_\mu\rho K_\mu^*,\qquad
+\sum_\mu K_\mu^*K_\mu=I.
+$$
+
+直和情形按输入输出块给 Kraus 族，保迹归一跨全部输出块求和：
+
+$$
+\Phi(\rho)_t=\sum_{s,\mu}K_{ts\mu}\rho_sK_{ts\mu}^*,\qquad
+\sum_{t,\mu}K_{ts\mu}^*K_{ts\mu}=I_{d_s}\quad\text{对每个输入块 }s.
+$$
+
+保留结果标签 $j$ 时，同一论证给完全正分支 $\Phi_j$，总和保迹，联合记录为
+
+$$
+\rho\longmapsto\sum_j\Phi_j(\rho)\otimes|j\rangle\langle j|.
+$$
+
+若先丢弃标签，只能得到总过程，不能从中唯一恢复仪器。共同输入—输出过程存在性的条件直接使用 [V94，定义 2.2、定理 3.2](AURIC_COMMON_PROCESS_CONDITIONAL_RELATIONS_LATITUDE_FRAMES_V94.md) 的同源条件相容判据；本候选补上该判据所继承的有限复代数载体，不重证其信道插值。
+
+对保持全部可见读数、合并全部同资料态并固定忠实参照的全域回缩，另直接复用[二元参考与充分约化 V94，定理 4.2、9.1](AURIC_BINARY_REFERENCE_ENDOGENOUS_SUFFICIENT_REDUCTION_AND_QUANTUM_VISIBLE_ALGEBRA_V94.md#thm-c94-main)：在该卷声明的有限矩阵合同中，一个二元参考上的全部联合正性连同这些回缩条件，已足以给出唯一、完全正的块重置，并锁定可见代数与参照的模相容。这里的完全正性依赖整组回缩前件，不能把前面的任意过程参考条件一律降成二正性。
+
+C95 的 $D_h$ 在构造的代数中满足
+
+$$
+D_ha=\tfrac i2[h,a],\qquad
+e^{tD_h}a=e^{ith/2}ae^{-ith/2}.
+$$
+
+更一般的连续一参数 $*$ 自同构不能连续置换有限个中心扇区；每个矩阵块内的导子都是内导子，所以也有此 Hamilton 形式。对偶态演化为 $\dot\rho=-i[h,\rho]/2$。使用物理时间 $t_{\rm phys}$、能量 $H$ 时，$h=2H/\hbar$ 的共同标定给 $i\hbar\dot\psi=H\psi$；$\hbar$ 的数值不是由无量纲曲率恒等式推出。扇区之间的相对时间单位也不能仅由互不作用的单体结论固定。
+
+最后，单球满足精确 C95 时 $\mathfrak F=0$，定理 4.1 排除 $n=2$ 及 $n\ge4$，取得三维 Pauli 端点。定理 4.2 保证此步骤没有用局部三轴检验冒充完整维数检验。标准复代数表示、Kraus 与动力对应作为上述联立推导的中间工具使用；全维 SIC 存在性、某个指定 Hamiltonian、无限维极限及连续时空未进入该结论。∎
+

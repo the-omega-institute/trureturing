@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:49720e1dc603a1e1d406d6cd7f241337b98676af6a21b5ba9067a88e09dd8345
+  normalized_sha256: sha256:49720e1dc603a1e1d406d6cd7f241337b98676af6a21b5ba9067a88e09dd8345
+cas_ref: sha256:49720e1dc603a1e1d406d6cd7f241337b98676af6a21b5ba9067a88e09dd8345
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条引出第30节有限前缀与完整未来的比较任务，规定需要检查实际性与相容性，没有断言逆极限已经可实现。
+    previous_atom_id: cfc8fec65b68ac27e78d57a8463082355877ae5bc95a495e576b8e35f2d75e1b
+    next_atom_id: b6782b5673a756a67805b96a7642d68ae59281bf70cc12f79f895c62af65effc

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c5831b78f99c411436c26e8f7acf54c82477784a83bf357368ef5b544f1c2b03
+  normalized_sha256: sha256:c5831b78f99c411436c26e8f7acf54c82477784a83bf357368ef5b544f1c2b03
+cas_ref: sha256:c5831b78f99c411436c26e8f7acf54c82477784a83bf357368ef5b544f1c2b03
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：量子测量扰动这一未涵盖条件的列表片段。
+    previous_atom_id: e4346592782a6571d7f534a085b219ca7213329eedd8ec8f1b152dbb8b711b2b
+    next_atom_id: 48cfbbc832ce7abadeca1022ed3a50c4ff8b28ca1d1a04029af1bd963628137d

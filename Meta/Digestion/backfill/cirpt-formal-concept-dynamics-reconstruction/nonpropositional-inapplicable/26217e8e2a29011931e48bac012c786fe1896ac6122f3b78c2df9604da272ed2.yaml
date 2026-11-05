@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:26217e8e2a29011931e48bac012c786fe1896ac6122f3b78c2df9604da272ed2
+  normalized_sha256: sha256:26217e8e2a29011931e48bac012c786fe1896ac6122f3b78c2df9604da272ed2
+cas_ref: sha256:26217e8e2a29011931e48bac012c786fe1896ac6122f3b78c2df9604da272ed2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 阶段更新中准入 doctrine 一轴的语义说明。
+    previous_atom_id: ac5b27e22b44d84d89cf91b70135dbbac43c8b1e60fd333448eb68b2bbbc3f39
+    next_atom_id: 06ae96a90e62b45700ba73f357b25c3b324a6321ae3574276982fe53214ed7b7

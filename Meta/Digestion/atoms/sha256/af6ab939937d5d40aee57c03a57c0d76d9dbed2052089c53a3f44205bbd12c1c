@@ -1,0 +1,9 @@
+**[R]** [Li–Morgan–Siegrist inflection-point refutation](../../../Problems/li-morgan-siegrist-2026-inflection-points-conjecture-6-1.md),
+with the fixed-order polynomial example and the separated-pulse idea
+in its Triage section. The associated declaration is
+[LiMorganSiegristInflectionRefutation.result](../../../D5/S0/Certificates/LiMorganSiegristInflectionRefutation.lean).
+The mathematical addition of Theorem 2.1 relative to this source is the
+simultaneous compact-band interaction bound, rational positive
+polynomial approximation with a specified degree, and strict
+transition conclusion in the original weak solution class.
+

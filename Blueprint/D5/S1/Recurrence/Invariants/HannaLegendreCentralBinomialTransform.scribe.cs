@@ -41,6 +41,11 @@ internal sealed class HannaLegendreCentralBinomialTransformDocument : IScribeDoc
             Node("square_binomial_sum", "The binomial-square transform",
                 All("n", N(), All("t", N(), Eqn(SumRange("k", Add(X("n"), D(1)), Mul(Pow(Cast(Choose(X("n"), X("k")), Z()), D(2)), Cast(Choose(Sub(Add(Mul(D(2), X("n")), X("t")), X("k")), Mul(D(2), X("n"))), Z()))), Pow(Cast(Choose(Add(X("n"), X("t")), X("n")), Z()), D(2))))),
                 "A denominator-free telescoping certificate gives a recurrence in t. The initial finite sum is one; induction and the choose recurrence give the squared binomial coefficient. Natural subtraction truncates at zero.", DescribeRole.Theorem),
+            Node("coeff_one_add_pow", "Coefficients of a binomial power",
+                All("n", N(), All("k", N(), Eqn(
+                    Coeff(X("k"), Pow(Cast(Add(D(1), Var()), PSeries(Z())), X("n"))),
+                    Cast(Choose(X("n"), X("k")), Z())))),
+                "The coefficient in degree k of the n-th power of 1+X is Nat.choose n k, cast to the integers.", DescribeRole.Theorem),
             Node("R_coeff", "The exact alternating transform",
                 All("N", N(), Eqn(Coeff(X("N"), Reduced()), If(Seq(D(2), Mid, Sp, X("N")), Mul(Pow(Seq(Minus, D(1)), DivTwo()), Cast(Choose(X("N"), DivTwo()), Z())), D(0)))),
                 "Even coefficients are signed central binomial coefficients and odd coefficients vanish. Nat.div denotes natural integer division.", DescribeRole.Theorem),

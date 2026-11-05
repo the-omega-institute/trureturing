@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c825e261c5785a947f38d149761845cb8b948bb6e8c76f160bb3b31674ef66a5
+  normalized_sha256: sha256:c825e261c5785a947f38d149761845cb8b948bb6e8c76f160bb3b31674ef66a5
+cas_ref: sha256:c825e261c5785a947f38d149761845cb8b948bb6e8c76f160bb3b31674ef66a5
+coverage_gids:
+  - gid: D5/S3/Weil/ZeroInfinitude/CosinePacket.paperFT_cosineModulation
+    target_statement_id: sha256:e2820733e7b3058cd3edba2a6676574bab66bb04ac36c5ce8f536a63832887f3
+receipts:
+  unresolved_subitems: []

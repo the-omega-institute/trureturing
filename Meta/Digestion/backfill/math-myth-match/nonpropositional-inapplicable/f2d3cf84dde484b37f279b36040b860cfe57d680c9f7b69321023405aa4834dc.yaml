@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f2d3cf84dde484b37f279b36040b860cfe57d680c9f7b69321023405aa4834dc
+  normalized_sha256: sha256:f2d3cf84dde484b37f279b36040b860cfe57d680c9f7b69321023405aa4834dc
+cas_ref: sha256:f2d3cf84dde484b37f279b36040b860cfe57d680c9f7b69321023405aa4834dc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 现代哲学、奥古斯丁和庄子版本及校勘范围。
+    previous_atom_id: cfdc9669a79cfbfe821d2390261b706704c4ccf991d19f4bf478d88e4f091ed1
+    next_atom_id: 47c54f9bbb40fe9c92f9441d8d1658f6e584bfe1ebe03ab9f336cb930be1b257

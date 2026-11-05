@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7ad34c2dcf3ed53073e6c2fbaab912d1016e1f167cdfb60927e8165e8ad43a33
+  normalized_sha256: sha256:7ad34c2dcf3ed53073e6c2fbaab912d1016e1f167cdfb60927e8165e8ad43a33
+cas_ref: sha256:7ad34c2dcf3ed53073e6c2fbaab912d1016e1f167cdfb60927e8165e8ad43a33
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “严格非主张”明确不声称 residual envelope 已经收敛；仅记录本轮边界。
+    previous_atom_id: cc4b2247bb1422db42ba2996f680790ae324e2f95f151b7a6b66775dbc3c681c
+    next_atom_id: 14c9e0c8eff946f1c971e759374546f781412b015595d8869c10616294691782

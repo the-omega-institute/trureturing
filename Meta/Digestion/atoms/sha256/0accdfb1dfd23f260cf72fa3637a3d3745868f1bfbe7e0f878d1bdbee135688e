@@ -1,0 +1,6 @@
+The distinction is visible with $N=2$, $b=1$, $B=e_1$, $g=(1,1)$ and $R=[B,TB]$. Each matrix below is rational, symmetric, connected with positive off-diagonal support, full joint rank and invertible; $r=0$ and the only port-fixing native permutation is the identity. Hence $W=R^{-1}$ and the acquired-to-native decoder is $W^{-1}z$.
+
+- For $T=\begin{psmallmatrix}0&2\\2&0\end{psmallmatrix}$, $R=\operatorname{diag}(1,2)$. `Add(1,1);Tick` from zero gives native $2e_2$, acquired $e_2$, and decoded native $2e_2$. Applying $R^{-1}$ to that acquired $e_2$ would instead give $e_2/2$.
+- For $T=\begin{psmallmatrix}1&1\\1&2\end{psmallmatrix}$, $R=\begin{psmallmatrix}1&1\\0&1\end{psmallmatrix}$. The same word gives native $(1,1)$ and acquired $e_2$, decoded to $(1,1)$, whereas $R^{-1}e_2=(-1,1)$.
+- For $T=\begin{psmallmatrix}1/2&1/4\\1/4&1/2\end{psmallmatrix}$, $R=\begin{psmallmatrix}1&1/2\\0&1/4\end{psmallmatrix}$. The same word gives native $(1/2,1/4)$ and acquired $e_2$, decoded to $(1/2,1/4)$, whereas $R^{-1}e_2=(-2,4)$.
+

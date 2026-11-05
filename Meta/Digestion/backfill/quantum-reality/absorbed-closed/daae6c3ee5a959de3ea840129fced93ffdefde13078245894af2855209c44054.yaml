@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:daae6c3ee5a959de3ea840129fced93ffdefde13078245894af2855209c44054
+  normalized_sha256: sha256:daae6c3ee5a959de3ea840129fced93ffdefde13078245894af2855209c44054
+cas_ref: sha256:daae6c3ee5a959de3ea840129fced93ffdefde13078245894af2855209c44054
+coverage_gids:
+  - gid: D5/S3/QuantumBounds/ReferenceFrame/ReferenceFrameTaxExact.reference_frame_tax_exact
+    target_statement_id: sha256:e396a77022b4a182e36dae2a9dfd6208085ef3d392b09825f1ff1238bbbd073a
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9af058c78ced2d4f264a7cdb5fe8cf91d9cb4e9946cac17e3bb6e6d4608a17de
+  normalized_sha256: sha256:9af058c78ced2d4f264a7cdb5fe8cf91d9cb4e9946cac17e3bb6e6d4608a17de
+cas_ref: sha256:9af058c78ced2d4f264a7cdb5fe8cf91d9cb4e9946cac17e3bb6e6d4608a17de
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只说明候选源、replay、axiom audit 与准入是不同状态，不含数学断言。
+    previous_atom_id: 261ff928f6ea5ef66b0c2bf0c0e2aeb0ed45c4ce39e41497577c1684074140cd
+    next_atom_id: 60a5f42652cd42f66be301f6c0d3765836c394ed9c722ce8d5aa153c00d607bc

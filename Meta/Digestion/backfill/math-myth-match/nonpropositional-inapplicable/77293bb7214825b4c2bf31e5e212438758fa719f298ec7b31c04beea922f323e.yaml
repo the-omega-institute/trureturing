@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:77293bb7214825b4c2bf31e5e212438758fa719f298ec7b31c04beea922f323e
+  normalized_sha256: sha256:77293bb7214825b4c2bf31e5e212438758fa719f298ec7b31c04beea922f323e
+cas_ref: sha256:77293bb7214825b4c2bf31e5e212438758fa719f298ec7b31c04beea922f323e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅界定概率模型与施莱尔马赫宗教定义的用途差别，不重述概率优化结论。
+    previous_atom_id: 5a95ee041b8963809d30609ac414b6c92cd62f4f2886193c1e2e020f490332f7
+    next_atom_id: c20d21a0ec25811bbbca7cbf5b7f0388ab1715f5d3d30df5effd8280edb174e7

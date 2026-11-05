@@ -1,0 +1,19 @@
+### 引理 76.2（有效目标的单射性）
+
+$\theta\mapsto\mathcal T_{k,d}(\theta)$ 在 $\Theta_{k,d}$ 上单射。
+
+**证明。** 记第二分量为多项式 $H$。其常数项为
+
+$$
+H(0)=\operatorname{tr}S>0.
+$$
+
+所以 $\operatorname{tr}S=H(0)$；若 $[t^\ell]H$ 表示 $H$ 的第 $\ell$ 次系数，
+则
+
+$$
+\gamma_\ell=\frac{[t^\ell]H}{H(0)}.
+$$
+
+第一分量遂恢复 $S=H(0)S/\operatorname{tr}S$，第三分量恢复 $D$。∎
+

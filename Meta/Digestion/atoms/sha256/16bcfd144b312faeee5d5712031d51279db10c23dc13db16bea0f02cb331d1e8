@@ -1,0 +1,18 @@
+**Proposition 63.2 (preserved-entry acquisition).** Theorem 58.2, from arbitrary attachment through its restored handoff and with no optional continuation, has
+
+$$
+\begin{aligned}
+P&=2L-1,& S&=c,&\mathrm{Reset}&=0,\\
+\mathrm{Read}&=L+R_{\rm mark}+b(I+1),\\
+\mathrm{Add}&=2L+c+b(I+1),\\
+\mathrm{Tick}&=2I+1,&\mathrm{Hold}&=L+2I+4.
+\end{aligned}
+\tag{63.4}
+$$
+
+There are $a+c=L$ successful growths, $a+2c$ new material cells, $a+2c$ binding assignments, and $4a+8c$ structural reference assignments under §21's three-reference-field convention. Field ACK payloads number $3L+c+b(I+1)+4I+5$; the Read scalars and the $2L-1+c$ complete growth/refusal replies are separate outputs.
+
+**Proof.** Arming has $L$ Read and Add and two Holds. The $L$ leaf assays have $R_{\rm mark}$ Reads, $L+c$ rearming Adds and $L$ Holds; traversal has $2L-1$ P and $c$ S; final marking adds one Hold. Observation has $b(I+1)$ Read, $I$ Tick and Hold. Restoration has $I+1$ Tick and Hold and $b(I+1)$ Add. These sums give (63.4), and summing Add/Tick/Hold gives its ACK count. The original material templates give each fresh/reference count. Saving $z$, changing the target/control operands, constructing and returning $x,f$ and the four exports add real storage, traffic and local calculation; they do not add a hidden source call. $\square$
+
+Equal primitive counts with the old nulling construction do not imply equal total costs: the target values, retained old values, controls, outputs, widths and calculation differ. Conversely those differences do not justify a claim that either complete total-cost vector dominates the other.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7417de5cd7ef81e1684b21f88e530ad85105d9243fd3e0994c263d79ecc66b17
+  normalized_sha256: sha256:7417de5cd7ef81e1684b21f88e530ad85105d9243fd3e0994c263d79ecc66b17
+cas_ref: sha256:7417de5cd7ef81e1684b21f88e530ad85105d9243fd3e0994c263d79ecc66b17
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 提出礼与伦理习惯可共享的研究问题，并保留规范概念的差异，不断言两种养成等价。
+    previous_atom_id: 6641b3a19a042c99fd5410970cb9aaffc18d2e4e0d927d9baa1fa0fd3cfbf970
+    next_atom_id: 77e2588774ae72739a5c4741f5fe6d11de44724d746bc367360703cf2e75f6d7

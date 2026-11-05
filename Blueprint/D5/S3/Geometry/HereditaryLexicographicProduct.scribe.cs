@@ -1,0 +1,36 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry;
+
+internal sealed class HereditaryLexicographicProductDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Geometry/HereditaryLexicographicProduct.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/GraphInvariants/carnerobravo2025independenceproducts");
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Unsuspended hereditary sphere-wedge coproduct types for actual lexicographic graph products.",
+        H("Hereditary lexicographic product"),
+        Blocks(
+            Node("source-sp", "sourceSP", "The source's unsuspended SP alternatives",
+                "For an actual topological space X, sourceSP is ContractibleSpace X or the existence of an arbitrary index type J, natural sphere dimensions d(j), actual sphere points q(j), and an actual homotopy equivalence X to CompactWedgeFiniteFactor.FamilyWedge q. The quotient identifies all supplied sphere points with its additional common point. J is not assumed finite; dimensions may be zero; an empty J gives a point. SP is not a suspension operator.", DescribeRole.Definition),
+            Node("source-p", "sourceP", "The source's three P alternatives",
+                "P permits SP or an actual homotopy equivalence to an arbitrary dependent coproduct of ordinary sphere wedges. Both original outer and inner index families are unrestricted. In particular an empty outer type gives the empty space, whereas each empty inner family gives a point component. This is the contractible, wedge, or disjoint union of wedges classification in Section 2 of Carnero Bravo arXiv:2505.06457v2.", DescribeRole.Definition),
+            Node("source-sw", "sourceSW", "The explicit empty-induced convention for hereditary SP",
+                "For every nonempty induced vertex set S, require sourceSP of the actual native independence realization of G.induce S. The native realization of the vertexless graph is empty, while contractible spaces and ordinary wedges are nonempty. Consequently a literal all-subsets SP predicate with only these nonempty alternatives would make every SW assumption impossible. This definition states the nonempty-induced convention explicitly, without adding an empty sphere to SP or a suspension. The paper states any induced subgraph without separately resolving this boundary; excluding the vertexless input, or separately allowing its augmented empty model, gives the same nonempty obligations. The output theorem handles the vertexless target separately by an actual empty outer coproduct.", DescribeRole.Definition),
+            Node("source-w", "sourceW", "Hereditary P includes every induced subset",
+                "For every induced vertex set S, including the empty one, require sourceP of the actual independence realization. The empty target is covered by the disjoint-union alternative with zero outer summands, so no nonemptiness assumption is imposed on output subsets.", DescribeRole.Definition),
+            Node("product", "lexicographicProduct", "The graph on the actual product vertex type",
+                "On V times U, adjacency is an outer G edge, or equality of the outer coordinates together with an inner H edge. This is exactly the product edge set in the primary source. An explicit sigma-to-product graph isomorphism, restricted by Mathlib SimpleGraph.Iso.induce, connects it to the heterogeneous substitution graph.", DescribeRole.Definition),
+            Node("result", "result", "The complete unsuspended hereditary product conclusion",
+                "For all finite vertex types V,U in any common universe, simple graphs G,H with their original orders at least two, and sourceSW hypotheses on both factors, sourceW holds for the actual lexicographicProduct G H. The two order hypotheses remain in the facade; the underlying stronger substitution induction does not need them. The sphere-model indices in either input may be arbitrary and may live in separate universes. The output has actual finite outer and inner sphere witnesses. No endpoint, WPlus predicate, join closure, wedge closure, HEP or native-model identification appears among the facade's hypotheses.\n\nFor a nonempty selected product set, transport it through the actual sigma/product isomorphism. OccupiedFiberSubstitution.independenceHomeomorph then identifies its independence realization with substitution over exactly the occupied base vertices and actual nonempty selected fibers. Original unselected or empty fibers impose no extra premise. Heredity on the occupied base is transported through nestedInduceIso and its actual image in the original base; each selected fiber inherits unsuspended SP from H. Compactness of every native finite realization and its actual singleton vertex allow CompactSphereNormalForm.compactWedgeModel, compactModel and contractibleModel to produce finite sphere-list models without assuming finiteness of either original index family. nativeModelHomeomorph supplies the actual native WPlus witnesses.\n\nUse the unchanged hereditarySubstitutionCore once. Its homotopy input is composition of equivalences, its point input is the one-empty-bouquet contractible model, its ordinary-join input is the actual finiteComponentJoinClosure followed by the native ordinary/simplicial join homeomorphism, and its coordinate-vertex wedge input is selectedVertexWedgeClosure followed by the original quotient/native vertex-gluing homeomorphism. An actual coordinate vertex is proved to be a singleton face before the wedge closure is applied. The original induction handles an empty current link with the augmented simplicial unit, not an ordinary join with an empty factor. Finally transport the finite native model back to the actual sphere coproduct to obtain sourceP.\n\nFor an empty selected product set, prove its native realization empty from the nonempty-face convention and use CompactSphereNormalForm.emptyModel with zero outer components. This branch never substitutes a point for the empty space. The statement is the affirmative unsuspended Question 22 conclusion under the explicitly stated empty-induced convention. Theorem 21 of the source establishes only a suspended conclusion.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("carnero-bravo-2025-hereditary-lexicographic-products"),
+                    ResolutionKind.Proved)))));
+
+    private static DocumentBlock Node(string id, string declaration, string title, string prose,
+        DescribeRole role, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
+            DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose.Replace("\n\n", " ")))), role, openProblemResolutionClaim: resolution);
+}

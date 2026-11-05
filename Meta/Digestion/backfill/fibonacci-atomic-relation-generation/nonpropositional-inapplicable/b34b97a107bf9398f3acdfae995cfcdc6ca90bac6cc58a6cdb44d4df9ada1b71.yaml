@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b34b97a107bf9398f3acdfae995cfcdc6ca90bac6cc58a6cdb44d4df9ada1b71
+  normalized_sha256: sha256:b34b97a107bf9398f3acdfae995cfcdc6ca90bac6cc58a6cdb44d4df9ada1b71
+cas_ref: sha256:b34b97a107bf9398f3acdfae995cfcdc6ca90bac6cc58a6cdb44d4df9ada1b71
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义有限视界等价关系及无限视界交的记号；不附带有限视界充分性或稳定时间的定理。
+    previous_atom_id: ef220d7da0dac7eeed095942eba2484d4f28a8430b967e6d9bf7898a1380ea35
+    next_atom_id: 92503972964a52fe74c6456b14794c11aa1f60760c46b1e8138ee4c306d07eda

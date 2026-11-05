@@ -1,0 +1,126 @@
+**Theorem 12.3 (Every integer boundary and every face-value tie).** Retain
+$X,Y,Z$ from (12.2).
+If $a=b=2$, then $Y=Z>X$ for every $d\ge1$.
+If $a=2<b$, then $Z>\max\{X,Y\}$ and the remaining comparison is
+
+$$
+\operatorname{sgn}(X-Y)
+ =\operatorname{sgn}\bigl(4b-4(d-1)-d^2-3\bigr).
+\tag{12.5}
+$$
+
+For $d=1,2$ this sign is positive. For $d\ge3$, it changes according
+as $b$ is below, equal to, or above
+
+$$
+ b_0=d-1+\frac{d^2+3}{4}.
+\tag{12.6}
+$$
+
+The equality $X=Y$ occurs exactly when $d\ge3$ is odd and $b=b_0$.
+For even $d$ there is no integer tie.
+
+If $a\ge3$, then $Z\ge Y$, with equality exactly when $a=b$, and
+
+$$
+\begin{aligned}
+\operatorname{sgn}(X-Z)
+ &=\operatorname{sgn}\bigl(4a-2b(d-1)-d^2-3\bigr),\\
+\operatorname{sgn}(X-Y)
+ &=\operatorname{sgn}\bigl(4b-2a(d-1)-d^2-3\bigr).
+\end{aligned}
+\tag{12.7}
+$$
+
+More explicitly, for $d=1$ one has $X>Z\ge Y$.
+For $d=2$, one has $X>Z\ge Y$ if $b\le2a-4$.
+If $d=2$ and $b\ge2a-3$, then $Z>X>Y$ except that
+$(a,b)=(3,3)$ gives $Z=Y>X$.
+For $d\ge3$ one always has $Z>X$, while the position of $X$
+relative to $Y$ is decided by comparing $b$ to
+
+$$
+ b_0=\frac{a(d-1)}2+\frac{d^2+3}{4}:
+ \quad b<b_0\Rightarrow X<Y,\quad
+ b=b_0\Rightarrow X=Y,\quad
+ b>b_0\Rightarrow X>Y.
+\tag{12.8}
+$$
+
+Here $X=Y$ occurs exactly for odd $d\ge3$ and the integer $b=b_0$.
+There is no $X=Z$ tie and no three-way tie. Together with $Y=Z$
+exactly at $a=b$, the listed equalities exhaust all ties.
+
+*Proof.* For real $k<n/2$ set
+
+$$
+ f(k)=n-k+1+\frac{n-1}{n-2k+1}.
+$$
+
+For integers $3\le r<s<n/2$, subtraction gives
+
+$$
+ f(s)-f(r)=(s-r)
+ \left(-1+\frac{2(n-1)}{(n-2r+1)(n-2s+1)}\right),\qquad
+ f''(k)=\frac{8(n-1)}{(n-2k+1)^3}>0.
+\tag{12.9}
+$$
+
+For $a,b\ge3$ the denominator for $r=a,s=b$ exceeds $2(n-1)$,
+because
+
+$$
+ (2b+d+1)(2a+d+1)-2(n-1)
+ =4ab+2(a+b)(d-1)+d^2+3>0.
+$$
+
+Thus $f(a)>f(b)$ if $a<b$, and equality holds if $a=b$.
+For $r=a,s=m$ and for $r=b,s=m$, the numerators of the parentheses
+in (12.9), after multiplication by the positive denominators, are
+respectively
+
+$$
+ J_a=4a-2b(d-1)-d^2-3,\qquad
+ J_b=4b-2a(d-1)-d^2-3.
+\tag{12.10}
+$$
+
+The factors $m-a=b$ and $m-b=a$ are positive. This proves (12.7).
+For $d=1$, $J_a=4a-4>0$ and $J_b=4b-4>0$.
+For $d=2$, $J_a=4a-2b-7$ is positive precisely when
+$b\le2a-4$, and is negative precisely when $b\ge2a-3$;
+it cannot vanish. Also $J_b=4b-2a-7$ is positive for all
+$a\ge3,b\ge a$ except $(a,b)=(3,3)$, where it is $-1$.
+For $d\ge3$,
+$J_a\le4a-4b-d^2-3<0$.
+The sign and zero of $J_b$ are exactly (12.8).
+If $d$ is even its right-hand equation
+$4b=2a(d-1)+d^2+3$ has an odd right side, so has no integer solution.
+If $d\ge3$ is odd the value in (12.8) is an integer and is greater
+than $a$, so it gives precisely the stated tie, strictly below $Z$.
+These calculations also exclude $X=Z$ and three-way ties.
+
+For $a=2$, compare the two-hub value $Z$ directly to $X$. Subtracting
+$n(n-2)$ from each gives
+
+$$
+ X-n(n-2)=\frac{m-d(m-2)}{d+1},\qquad
+ Z-n(n-2)=\frac n{n-2}>1.
+\tag{12.11}
+$$
+
+At $d=1$ the first expression is $1$; at $d\ge2$ it is at most
+$(4-m)/(d+1)\le0$, since $m\ge4$. Hence $Z>X$ always.
+If also $b=2$, the $AC$ and $BC$ faces have the same two-hub value,
+proving $Y=Z>X$.
+If $b\ge3$, then $m=b+2\ge5$ and $n\ge11$. One has
+$f(3)=n-1+4/(n-5)<n$, whereas
+$Z-n(n-3)=n+1+2/(n-2)>n+1$.
+The just-proved $X<Z$ gives the other endpoint inequality for $f(m)$.
+Convexity in (12.9) bounds $f$ on $[3,m]$ by its endpoint maximum,
+which is strictly below $Z-n(n-3)$. In particular $Y<Z$.
+Both $b$ and $m$ are at least $3$, so (12.9) gives the sign (12.5)
+by $J_b$ with $a=2$. It is positive for $d=1,2$ and $b\ge3$.
+Solving $J_b=0$ for $d\ge3$ gives (12.6), with the same parity test
+as above. All the face comparisons have now been covered. ∎
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:36e08946faf602836812e2d93686c6c2be405ca1666d2b3571e384808db8f55d
+  normalized_sha256: sha256:36e08946faf602836812e2d93686c6c2be405ca1666d2b3571e384808db8f55d
+cas_ref: sha256:36e08946faf602836812e2d93686c6c2be405ca1666d2b3571e384808db8f55d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这是进入哲学争论前采用的十类诊断术语约定；等号连接的是术语释义，没有断言某个模型满足待证明关系。
+    previous_atom_id: 56d59469656198123ac7c886046eb8ec949fd17a7c6dad15df5756df471d81e9
+    next_atom_id: c34666c0138355d255e9af12e76aedf65297e7b1c01a20d9066110a4df31486b

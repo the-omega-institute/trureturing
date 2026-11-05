@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:19db7cda66f9007b78bc1f68dc781d701cf72a834f8b963ef85ab37e39f613db
+  normalized_sha256: sha256:19db7cda66f9007b78bc1f68dc781d701cf72a834f8b963ef85ab37e39f613db
+cas_ref: sha256:19db7cda66f9007b78bc1f68dc781d701cf72a834f8b963ef85ab37e39f613db
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/ResidualCoverage/WeightedResidualCoverage.marginalGain_antitone
+    target_statement_id: sha256:2732ab3a2a1cf18eabbb29d68db03a6480a51c2481e8dad5371f06d7e8b3bd6a
+receipts:
+  unresolved_subitems: []

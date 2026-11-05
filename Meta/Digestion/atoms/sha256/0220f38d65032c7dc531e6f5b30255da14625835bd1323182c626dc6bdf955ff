@@ -1,0 +1,80 @@
+**Proposition 102.2 (a collision through every adaptive three-Read policy).**
+Let a deterministic causal receiver obey all the installation and
+information restrictions of Definition 82.1 and terminate on every admitted
+word. If it performs at most three successful late terminal Reads on every
+word, two distinct admitted words give the same entire receiver transcript
+and the same terminal report. Correctness of that report is not assumed.
+
+**Proof.** The one-row collision used below is valid above any finite
+prescribed degree. Indeed for a frozen $\rho$, (82.3) gives
+
+$$
+0\le\rho A^ke\le (\rho h/27)c^k,\qquad c=95/48<2.
+$$
+
+Varying $n$ digits at powers $p,p+2,\ldots,p+2(n-1)$ gives $4^n$
+polynomials but only $O_\rho(c^{2n})$ nonnegative integer row values.
+Since $c^2<4$, two collide for some finite $n$. Appending the same
+leading monomial $z^K$, with $K$ of parity $p$ above these powers and
+any prescribed bound, gives distinct members of $\mathcal C_p$ with
+the same row value. This is Lemma 82.2's construction; common rational
+affine offsets do not affect it.
+
+Before the first successful Read, all obtained replies are field-independent.
+If the receiver stops on this common path, distinct words already have the
+same report. An infinite path without a successful Read contradicts
+termination. Otherwise freeze the first Read row $\rho_1$, its offset
+and one effective parity $p$, and put $q=1-p$. Choose
+$P_0\ne P_1$ in $\mathcal C_p$ colliding under $\rho_1$.
+For every $Q\in\mathcal C_q$ above both their degrees, the inputs
+$P_i+Q$ have the same first reply. Thus this whole family shares the
+next path up to a stop or a second successful Read. A stop gives a
+collision; an infinite path without that second Read violates termination
+on any one member. Hence only the finite second-Read case needs analysis.
+
+If the second row $\rho_2$ has parity $q$, choose distinct high-degree
+$Q_0,Q_1\in\mathcal C_q$ colliding under $\rho_2$. All four genuine
+inputs $P_i+Q_j$ now have identical first and second replies: the first
+depends only on $P_i$ and the second only on $Q_j$. The next path is
+again common and finite up to a stop or a third successful Read. A stop
+already fails to separate the rectangle. Otherwise freeze that third row
+$\rho_3$. The two possible effective parities give the following explicit
+pairs:
+
+| Third parity | Common factor fixed | Distinct inputs retained | Why all three replies agree |
+| --- | --- | --- | --- |
+| $p$ | $P_0$ | $P_0+Q_0$, $P_0+Q_1$ | the first and third rows annihilate the $Q$ difference; the second is the chosen $Q$ collision |
+| $q$ | $Q_0$ | $P_0+Q_0$, $P_1+Q_0$ | the second and third rows annihilate the $P$ difference; the first is the chosen $P$ collision |
+
+In particular, when the third row sees $P$, it is $P$ that is fixed.
+The varying $Q$ has only the second row to satisfy. When the third row
+sees $Q$, it is $Q$ that is fixed and the varying $P$ has only the
+first row to satisfy. There is no requirement that the original $P$
+collision survive a second $p$ row, or that the original $Q$ collision
+survive a second $q$ row.
+
+If instead the second row has parity $p$, restrict to $P=P_0$ and
+leave all high monic $Q\in\mathcal C_q$ free. Their first two replies
+are equal. If the common path stops before a third Read, choose any two
+different such $Q$. If there is a third Read of parity $p$, the same
+two choices also have equal third replies. If its parity is $q$, apply
+the one-row collision to this now fixed $\rho_3$, choosing two monic
+$Q$ above $\deg P_0$. These have equal third replies and still equal
+first and second replies. An infinite path without the next Read or a
+stop is again excluded by pointwise termination.
+
+In every branch the selected pair follows the frozen paths in the actual
+source. This is induction on complete replies: equal receiver states choose
+the same next frames, operands, target addresses and growth. Structural
+guards, fresh-zero inclusions, raw-label updates and identity refusals agree;
+common Adds have equal affine contributions. Equal scalar values give equal
+literal widths, framing and completed returns. Missing rights and pending
+frames obey the same original context and carry no additional numerical
+channel. Thus the induction applies also when the second or third row was
+chosen adaptively after the common earlier replies. After the last of at
+most three successful Reads, the pair has the same remaining path and
+report: another successful Read would violate the assumed bound on those
+actual inputs, and an infinite remaining path would violate termination.
+The polynomials in each selected pair are distinct, so their words differ.
+No uniform time, degree, growth or Tick bound was used. $\square$
+

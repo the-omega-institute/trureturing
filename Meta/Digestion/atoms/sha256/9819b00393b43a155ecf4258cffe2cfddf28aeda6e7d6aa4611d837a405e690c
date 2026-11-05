@@ -1,0 +1,17 @@
+## 4. 最小预测核心与四种状态视图
+
+令四个状态视图为保持接口类型的映射；每个 $Y_i$ 都是带同一接口类型标记的析取。
+
+$$
+e_i:Z\longrightarrow Y_i,
+\qquad
+i\in\{\mathrm{space},\mathrm{time},\mathrm{boundary},\mathrm{memory}\}.
+$$
+
+这里的 time 可以是完整时间记录；若只保留交换型累计量，它还需额外满足
+相应的 cocycle 条件。定义最小预测核心
+
+$$
+C_{\mathscr T}=Z/\sim_{\mathscr T}.
+$$
+

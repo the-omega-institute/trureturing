@@ -1,0 +1,84 @@
+**定理 79.1（原始联合记录的全角度连续上界）。** 对任意 $0<d<1$、任意 $\theta\in\mathbb R$，写
+
+$$
+\theta=\theta_*+\delta,\qquad \theta_*=m\pi/2,\quad m\in\mathbb Z.
+\tag{79.1}
+$$
+
+用定理 57.1 在例外角度 $\theta_*$ 的同一个全 $\mathcal K_d$ 模型作为比较器 $q^{(*)}$，则其状态数为三（$d\le2/3$）或六（$d>2/3$），并且对全部整数 $H\ge0$，
+
+$$
+\Delta_H(\mathcal K_d;q^{(*)})
+\le\min\{1,2H|\sin(\delta/2)|\}
+\le\min\{1,H|\delta|\}.
+\tag{79.2}
+$$
+
+这些分支、效果和全族制备固定，既不随终点改变，也不按实际随机词选择。
+
+证明。先具体指定所复用的比较器。置 $\Sigma=(6+3d)/8$、$s_\rho=\rho_{aa}-d$ 和
+
+$$
+b(\rho)=(e_d,d+s_\rho,e_d-s_\rho)^{\mathsf T},\qquad
+P_0b=(b_2,b_1,b_3)^{\mathsf T},\quad
+P_1b=(b_3,b_1,b_2)^{\mathsf T}.
+\tag{79.3}
+$$
+
+当 $d\le2/3$ 时，取
+
+$$
+p^{(*)}(\rho)=b(\rho)/\Sigma,\qquad
+f_{\rm cl}^{(*)}=(\Sigma,0,0)^{\mathsf T},\qquad
+T_0^{(*)}=P_0/2,\quad T_1^{(*)}=P_1/2.
+\tag{79.4}
+$$
+
+当 $m$ 为奇数时交换两个标签；偶数时不交换。定理 57.1 保证这是全部复 $\mathcal K_d$ 上的合法仿射制备与固定效果，并精确匹配 $\theta_*$ 的两种终端联合记录。
+
+当 $d>2/3$ 时，使用该定理的六顶点构造：顶点是 $(1,\Sigma-1,0)$ 的全部置换，动态是 (79.3) 在这些顶点上诱导的两个置换各乘 $1/2$，效果为顶点的第一坐标。为 $s_\rho$ 的可行区间 $[0,s_{\max}]$ 的两个端点各固定一个顶点凸分解，再按 $s_\rho/s_{\max}$ 插值其权重，得到整个 $\mathcal K_d$ 上同一个仿射制备。奇数 $m$ 同样交换标签。此处只复用合法上构造，不断言六状态最小。
+
+现在比较两角度的实际酉。对 $j=0,1$，
+
+$$
+\|V_j(\theta)-V_j(\theta_*)\|_{\rm op}
+=\|e^{\mathrm i\delta W}-I_3\|_{\rm op}
+=2|\sin(\delta/2)|.
+\tag{79.5}
+$$
+
+长度 $n$ 的相同时间词逐项望远镜展开，所有其他因子均酉，故
+
+$$
+\|V_h(\theta)-V_h(\theta_*)\|_{\rm op}
+\le2n|\sin(\delta/2)|.
+\tag{79.6}
+$$
+
+对任意密度 $\rho$ 和两个酉 $V,V'$，由二元测量的迹距离收缩及乘积差展开，
+
+$$
+\begin{aligned}
+|\operatorname{Tr}(E[V\rho V^\dagger-V'\rho(V')^\dagger])|
+&\le\tfrac12\|V\rho V^\dagger-V'\rho(V')^\dagger\|_1\\
+&\le\|V-V'\|_{\rm op}.
+\end{aligned}
+\tag{79.7}
+$$
+
+每个词的两个概率差互为负数，两角度的词质量又都为 $2^{-n}$，所以完整 TV 恰为
+
+$$
+\begin{split}
+&\frac12\sum_{h,b}|p_\rho^{(\theta)}(h,b)
+ -q_\rho^{(*)}(h,b)|\\
+&\quad=2^{-n}\sum_{h\in\{0,1\}^n}
+|\operatorname{Tr}(E[V_h(\theta)\rho V_h(\theta)^\dagger
+ -V_h(\theta_*)\rho V_h(\theta_*)^\dagger])|\\
+&\quad\le\min\{1,2n|\sin(\delta/2)|\}.
+\end{split}
+\tag{79.8}
+$$
+
+这是均匀平均而非对某个稀有词的条件化。对 $\rho$ 和 $n\le H$ 取上确界，得到 (79.2)。选择另一个例外角度或改变 $\delta$ 的正负都不改变证明；比较器始终使用其规定的标签交换。∎
+

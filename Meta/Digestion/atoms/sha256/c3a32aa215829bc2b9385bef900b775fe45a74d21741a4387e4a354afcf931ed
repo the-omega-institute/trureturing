@@ -1,0 +1,73 @@
+## 100. What the supporting-readout fibre retains and loses
+
+Let $\mathcal C$ denote the full set of complex CPTP maps
+$\mathcal R:M_3\to M_3$ in Definition 96.1. Define the scalar readout
+and the optimality indicator on this same domain by
+
+$$
+\mathfrak r(\mathcal R)=\operatorname{Tr}(SJ_{\mathcal R}),\qquad
+\chi_{\rm opt}(\mathcal R)=
+\begin{cases}1,&e(\mathcal R)=L,\\0,&e(\mathcal R)>L.\end{cases}
+\tag{100.1}
+$$
+
+The exact minimum ensures that these cases exhaust $\mathcal C$.
+On legal decoders, (97.2) also identifies the supporting-test value:
+
+$$
+b_{\rm test}-\operatorname{Tr}(WJ_{\mathcal R})
+                    =L+\mathfrak r(\mathcal R).
+\tag{100.2}
+$$
+
+Thus either scalar carries the same information. The zero fibre
+contains both $\mathcal R_*$ and $\mathcal R_{\rm bad}$, but
+
+$$
+\begin{array}{c|ccc}
+ &\mathfrak r&e&\chi_{\rm opt}\\ \hline
+\mathcal R_*&0&L&1\\
+\mathcal R_{\rm bad}&0&1&0
+\end{array}
+\tag{100.3}
+$$
+
+The first row uses (96.5),(96.10); the second is Proposition 99.1.
+If a function $f$ on $\mathfrak r(\mathcal C)$ satisfied
+$e=f\circ\mathfrak r$, the two rows would require both $f(0)=L$
+and $f(0)=1$, impossible since $L<1$. The identical argument for
+$\chi_{\rm opt}$ rules out its factorization through $\mathfrak r$.
+Any deterministic postprocessing of this scalar still gives the same
+value on the two maps and cannot restore either answer.
+
+This is the fibre-constancy criterion restated in Definition 74.1,
+applied to a concrete observation on the legal decoder domain.
+The conclusion concerns the scalar supporting readout, equivalently
+the weighted value (100.2). It asserts neither equality of the full
+individual test-data vectors nor equality of the two Choi ranges.
+It also does not identify this scalar observation with the physical
+terminal state available to a decoder.
+
+What survives is useful and precise: every optimal decoder must have
+Choi support in the explicit common $K$ (or $K_D$), and every
+nearoptimizer must obey the gap-controlled mass budget (98.4).
+What the zero fibre loses is the original all-input loss and the
+answer to optimality. Membership in that support remains necessary
+even after TP is imposed, and Proposition 99.1 proves it insufficient.
+Proposition 99.2 separately prevents interpreting projection as a
+legal-decoder reconstruction.
+
+The matrix arguments are a source-specific application of standard
+positive-semidefinite complementarity, spectral decomposition and
+Choi weak duality. Terminal §126 relates the supporting framework to
+Coutts, Girard and Watrous, Theorem 3; the explicit premises and trace
+identities above are the ones used here. No new general theorem or
+literature-priority claim is needed for these consequences. Complete
+classification or uniqueness of optimizers, minimum Kraus rank,
+minimum supporting-test cardinality, controller-state counts,
+hardware gains and quantitative distance or repair to a legal
+optimizer are not established by this argument. Other horizons and
+the unrelated open boundaries of §95 remain outside these deductions.
+
+[F96TERM]: https://github.com/the-omega-institute/trureturing/blob/94514292022da7e8c018c6bc99ccbfd8aa04b6bb/docs/develop/theory/AURIC_FIB_ACTUAL_ERASED_HISTORY_TERMINAL_RECOVERY.md "Terminal recovery, §§118–126; exact second-horizon value and fixed supporting certificate"
+

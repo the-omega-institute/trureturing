@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9ec141fef9b619f57ab72e304a401483d2ef935158c7c0a0970b773e6756d4f6
+  normalized_sha256: sha256:9ec141fef9b619f57ab72e304a401483d2ef935158c7c0a0970b773e6756d4f6
+cas_ref: sha256:9ec141fef9b619f57ab72e304a401483d2ef935158c7c0a0970b773e6756d4f6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section heading and introductory sentence only; the three mathematical versions are separate following atoms, and this atom states no equality or implication.
+    previous_atom_id: da20042ff73ef05b1d4ad1921f4edb32bc55e6e2ddb3134ada3dd5fa93d780c0
+    next_atom_id: 7b1db87e378c7c8ae07a3d5f1888831cfb2336e7637974d5d0ceb0878500a3c6

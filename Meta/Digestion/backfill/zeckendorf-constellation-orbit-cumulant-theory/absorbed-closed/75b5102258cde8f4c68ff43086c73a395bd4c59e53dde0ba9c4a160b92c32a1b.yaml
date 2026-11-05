@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:75b5102258cde8f4c68ff43086c73a395bd4c59e53dde0ba9c4a160b92c32a1b
+  normalized_sha256: sha256:75b5102258cde8f4c68ff43086c73a395bd4c59e53dde0ba9c4a160b92c32a1b
+cas_ref: sha256:75b5102258cde8f4c68ff43086c73a395bd4c59e53dde0ba9c4a160b92c32a1b
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaBridge/ClassicExplicitFormula.weil_explicit_formula
+    target_statement_id: sha256:d0ab27a1af6591536c6381fffd1c6808499c0426820445c6d7c3eae0f07825b1
+receipts:
+  unresolved_subitems: []

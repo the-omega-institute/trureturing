@@ -1,0 +1,26 @@
+**Corollary 5.1 (Periodic selection at a common-law tie).** Set
+
+$$
+P_* =\operatorname{lcm}_{j\in J_*}
+\frac{a+j-1}{\gcd(a+j-1,a-1)}.
+\tag{5.5}
+$$
+
+Then $\chi_N$ and the set
+$\{j\in J_*:\chi_{j,N}=\chi_N\}$ depend only on $N$ modulo
+$P_*$. On any residue class for which exactly one index attains
+$\chi_N$, all sufficiently large exact graph minimizers belong
+to that cap's source-type class in Theorem 1.3. If several indices
+attain $\chi_N$, every large exact minimizer belongs to one of
+their classes; the first-order formula alone does not assert
+that all of these classes contain an exact minimizer.
+
+**Proof.** The residue of $(a-1)N$ modulo $a+j-1$ has period
+$(a+j-1)/\gcd(a+j-1,a-1)$. Formula (1.8) proves the first
+assertion, and Theorem 1.3 proves the others. Growing Proposition
+15.6 shows that in the stated domain $J_*$ has one member or
+two adjacent members, including all actual scalar ties. No
+choice of independent marginal optimizers is involved in this
+periodic comparison: each coefficient belongs to its own
+actual equality law (1.7). ∎
+

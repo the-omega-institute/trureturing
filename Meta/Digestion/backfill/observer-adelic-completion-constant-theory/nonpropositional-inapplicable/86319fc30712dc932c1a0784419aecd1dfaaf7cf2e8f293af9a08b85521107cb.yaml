@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:86319fc30712dc932c1a0784419aecd1dfaaf7cf2e8f293af9a08b85521107cb
+  normalized_sha256: sha256:86319fc30712dc932c1a0784419aecd1dfaaf7cf2e8f293af9a08b85521107cb
+cas_ref: sha256:86319fc30712dc932c1a0784419aecd1dfaaf7cf2e8f293af9a08b85521107cb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节引言及参数表表头；不含数学结论。
+    previous_atom_id: dfaf8224e3bfee8e61350a2d7b4cfe72140911af1603c201b9a06732e2a05abb
+    next_atom_id: 5d65e3e63a79684961cedb177bcecaafb830760ee31cb75f4a1dfc64598758ce

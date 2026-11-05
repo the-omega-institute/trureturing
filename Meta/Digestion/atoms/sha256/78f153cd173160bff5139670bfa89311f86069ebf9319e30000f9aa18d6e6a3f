@@ -1,0 +1,36 @@
+**命题 4.6（树运输与回路相容）。**
+若五个正交事件 $P_s$ 的和为一，
+沿连通图的树给带支撑的部分等距，取根运输 $T_0=P_0$，使根到 $s$ 的运输 $T_s$ 满足
+
+$$
+T_s=P_sT_sP_0,\quad T_s^\dagger T_s=P_0,\quad
+T_sT_s^\dagger=P_s,
+$$
+
+则 $E_{st}=T_sT_t^\dagger$ 满足定义 [4.4](#def:matrixunits)。
+沿不同路径运输同一个 $\jmath$ 得到同一个局部复单位，
+当且仅当相应根角回路运输与 $\jmath$ 交换。
+
+证明。
+支撑正交使 $T_t^\dagger T_u=\delta_{tu}P_0$，所以矩阵单位关系成立。
+同一终点的另一运输可写为 $T'_s=T_sh$，
+其中 $h=T_s^\dagger T'_s$ 是根角的酉元素。
+于是
+$T'_s\jmath T_s'^\dagger=T_s\jmath T_s^\dagger$
+当且仅当 $h\jmath h^\dagger=\jmath$，即所述交换条件。
+证毕。
+
+这里的回路判据只要求 $h\in Z_{U(P_0\mathfrak A P_0)}(\jmath)$，
+即根角酉群中 $\jmath$ 的中心化子。它不要求 $h=P_0$，也不要求每条路径的运输算子相同。
+表示若为 $\mathbb C^5\otimes\mathbb C^m$，这套生成代数可作用为
+$M_5(\mathbb C)\otimes I_m$，五个 $P_s$ 的秩就都是 $m$；
+因此“事件等价”不蕴含环境中秩一，也不蕴含无重数。
+在实底层空间上的复共轭 $C$ 满足 $CJC^{-1}=-J$；若另行加入这种操作，
+$J$ 便不再居于整个扩大的实操作代数的中心。它不是上述复线性生成代数中的酉元。
+
+保持复结构不要求全部回路相位为零：
+$h=\cos\theta\,P_0+\sin\theta\,\jmath$ 就保持 $\jmath$。
+但若额外操作反转该虚单位，定理 [4.5](#thm:globalcomplex) 只描述生成子代数，
+不能无条件宣称整个可访问代数都以 $J$ 为中心。
+原 DAG 没有实际逆边时，形式伴随也不能当作已获准的反向控制。
+

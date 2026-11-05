@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6a22ca5e69e7c1e4be78d5a3830d787561acd748dc7abb80a32f61c0de31e2f9
+  normalized_sha256: sha256:6a22ca5e69e7c1e4be78d5a3830d787561acd748dc7abb80a32f61c0de31e2f9
+cas_ref: sha256:6a22ca5e69e7c1e4be78d5a3830d787561acd748dc7abb80a32f61c0de31e2f9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅引入圆周可行集与 Haar floor 的定义；不另断言可行、极值存在或等价定理。
+    previous_atom_id: 394afdc11924c5c1363c4dbbe3b00d5c8d242e4e50ea0c10f25bbfc26cd4a800
+    next_atom_id: ba3d2170900033101957bce958d24551e36a9537e97ec9d5d953ae860794a4c3

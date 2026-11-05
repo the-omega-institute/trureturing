@@ -60,8 +60,11 @@ $h(f^2)=2h(f)$ and $h(qf^2)=2h(f)+1$.
 `Dynamics.q_power_height` uses the even and odd cases of the exponent to prove
 $h(q^n)=n$. `Dynamics.q_power_hitting_set` identifies the exact hitting sets
 under transport, and `Dynamics.length_q_power` proves the source length
-$n+1$ for every natural $n$. These declarations are private helpers of the
-settling module; the public theorem is `result`.
+$n+1$ for every natural $n$. The six public prerequisites `Dynamics.nonzero_of_odd`,
+`Dynamics.nonzero_eq_one`, `Dynamics.degree_q`, `Dynamics.q_ne_zero`,
+`Dynamics.eq_one_of_degree_zero` and `Dynamics.oddPart_factor` are consumed
+by `GallardoRahavandrainyCollatzLengthBound`. The other auxiliary declarations
+are private helpers; `result` settles the conjecture.
 
 ## Falsifier
 
@@ -88,9 +91,119 @@ $n=2,\ldots,12$, including $n=9$ with
 $[36,32,32,32,32,32,30,30,4,0]$ and length 10.
 These finite checks corroborate the proof and do not establish its universal scope.
 
-The escape audit of the sole public theorem `result` is unfinished:
+The escape audit of all seven public theorems is unfinished under
+[#20796](https://github.com/the-omega-institute/trureturing/issues/20796).
+The exact-domain registration boundary of `result` is detailed in
 [#19534](https://github.com/the-omega-institute/trureturing/issues/19534).
 No validated four-slot registration is asserted.
+
+### Declaration roles and source consumers
+
+The table is extracted from the elaborated declaration dependency graph.
+Bind-only entries organize consumed proofs. The admission basis is
+`open-problem-resolution (#19299; Proved)`.
+
+| Declaration | `proof_shape` | Escape witness | A direct source consumer |
+| --- | --- | --- | --- |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.M` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyCollatzLengthBound.evenTerm` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.oddPart` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyCollatzLengthBound.oddPart_data` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.oddSeq` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyCollatzLengthBound.evenTerm` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.collatzLength` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.length_q_power` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.claim` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.result` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.m` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.B` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.R` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.R_A_adjacent_degree` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.h` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.auxiliary` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.Terminates` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.gap` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.h_sInf` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.h_eq` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.mq` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.R_A_top` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.R_one` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.terminates_next` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.h_one` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_power_height` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.terminates_one` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.termination` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.h_spec` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.h_step` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.h_min` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.h_step` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.h_eq` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.h_step` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.terminates_prepend` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.gap` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.terminates_next` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.gap` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.h_step` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.gap` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.nonzero_of_odd` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyCollatzLengthBound.step_data` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.nonzero_eq_one` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyCollatzLengthBound.oddPart_data` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.monic_of_nezero` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.degree_R_square` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.m_ne_zero` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.R_erase` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.degree_m` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.R_m` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.m_odd` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.odd_R` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_odd` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_ne_zero` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.degree_q` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyCollatzLengthBound.numerator_degree` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_ne_zero` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyCollatzLengthBound.numerator_degree` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.odd_R` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.degree_R_le` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.degree_m_mul` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.R_erase` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.degree_pow_m_mul` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_square_doubling` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.odd_pow_m_mul` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.height_gap` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.degree_top_add` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.R_A_top` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.top_add_ne_one` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.gap` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.R_top_add` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.R_A_two_adjacent` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.same_step_delete` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.gap` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.gap` | content | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.gap` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.height_delete` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.erase_top` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.R_erase` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.odd_erase` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.delete_height` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.erase_degree_lt` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_square_doubling` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.eq_one_of_degree_zero` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyCollatzLengthBound.positive_degree` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.R_m` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.termination` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.degree_one_eq_m` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.termination` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.termination` | content | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.termination` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.height_delete` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.height_step` | content | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.height_step` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.auxiliary` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.height_delete` | content | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.height_delete` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.delete_height` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.height_gap` | content | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.height_gap` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_square_doubling` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.A` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.A_ne_one` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.B` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.B_ne_one` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.A_odd` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.auxiliary` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.B_odd` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.auxiliary` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.degree_A` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.A_ne_one` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.degree_B` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.B_ne_one` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.A_ne_one` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_square_doubling` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.B_ne_one` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.auxiliary` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.nextCoeff_m` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.degree_R_square` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.nextCoeff_q` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.nextCoeff_A` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.nextCoeff_square` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.degree_R_square` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.nextCoeff_A` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.auxiliary` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.delete_height` | content | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.delete_height` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.auxiliary` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.R_erase` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.degree_R_le` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.degree_R_le` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_square_doubling` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.degree_R_square` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.square_doubling` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.square_two_steps` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.square_doubling` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.square_doubling` | content | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.square_doubling` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_power_height` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.auxiliary` | content | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.auxiliary` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_square_doubling` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.R_A_top` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.R_A_adjacent_degree` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.R_A_adjacent_degree` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.R_A_two_adjacent` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.R_A_two_adjacent` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_square_doubling` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.R_q` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_square_doubling` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_square_doubling` | content | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_square_doubling` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_power_height` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_power_height` | content | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_power_height` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.length_q_power` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.iota_m` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.transport` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.iota_q` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_power_hitting_set` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.iota_injective` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_power_hitting_set` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.oddPart_factor` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyCollatzLengthBound.oddPart_data` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.iota_factor` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.oddPart_iota_factor` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.oddPart_iota_factor` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.initial_oddPart` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.T` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.T_factor` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.numerator_ne_zero` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.T_odd` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.T_odd` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.T_iterate_odd` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.T_factor` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.reversal_conjugacy` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.transport` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.seq_transport` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.reverse_degree` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.reversal_conjugacy` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.reverse_invol` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.reverse_eq_one` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.reverse_m` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.reversal_conjugacy` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.reversal_conjugacy` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.T_iterate_reverse` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.reverse_one` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.reverse_eq_one` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_reverse` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_pow_reverse` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_pow_reverse` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_power_hitting_set` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.T_iterate_odd` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_power_hitting_set` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.T_iterate_reverse` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_power_hitting_set` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.initial_oddPart` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.seq_transport` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.seq_transport` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_power_hitting_set` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.reverse_eq_one` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_power_hitting_set` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.q_power_hitting_set` | bind-only | `none` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.length_q_power` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.length_q_power` | content | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.Dynamics.length_q_power` | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.result` |
+| `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.result` | content | `D5.S1.Recurrence.GallardoRahavandrainyBinaryCollatz.result` | `settlement` |
 
 ## Triage
 
@@ -106,9 +219,9 @@ No validated four-slot registration is asserted.
 | Stronger length formula, including $n=0,1$ | Proved; kernel-checked | Consumed `Dynamics.length_q_power` states the same length formula for all natural $n$. |
 | Nested squaring/$q$ construction | Proved in prose | Starting at $f_0=1$, set $f_{j+1}=q^{\varepsilon_j}f_j^2$ with $\varepsilon_j\in\{0,1\}$. The two identities give $h(f_{j+1})=2h(f_j)+\varepsilon_j$, hence $h(f_k)=\sum_{j<k}2^{k-1-j}\varepsilon_j$. Each $f_j(0)=1$ by multiplication. The height identities supply this consequence; it is not an additional public Lean theorem. |
 | Source results depending on Conjecture 3.11 | Open; literature reading | The cited conjecture is settled with the source's conventions; no exhaustive dependency audit of the paper's other results is asserted. Lemma 3.3 is the power-of-two subfamily. |
-| General bound and sharpening of Theorem 1.2 | Open | No new general bound or sharpening beyond the exact family is claimed. |
+| General bound and sharpening of Theorem 1.2 | Proved; kernel-checked | The separate module `GallardoRahavandrainyCollatzLengthBound.rA_quadratic` gives the source terminal-pair bound for every nonzero binary polynomial. Its distinct question and length convention are in the dossier for #20129. |
 | Literature status | Open; literature reading | The screen below is partial; completeness is `ASSUMED-UNVERIFIED`. |
-| Production escape audit | Open | The exact natural-indexed theorem has no validated four-slot registration; issue #19534 states the missing evidence. |
+| Production escape audit | Open | The seven public theorems have no validated four-slot registrations; #20796 identifies all targets, and #19534 details the original result. |
 
 ### Literature scope
 
@@ -126,4 +239,4 @@ searched scope; they do not establish exhaustive absence of prior art.
 
 Literature completeness remains `ASSUMED-UNVERIFIED`, including the full text
 of Hicks–Mullen–Yucas–Zavislak and detailed Nichols proof passages.
-The escape audit remains unfinished under #19534.
+The escape audit remains unfinished under #20796 and #19534.

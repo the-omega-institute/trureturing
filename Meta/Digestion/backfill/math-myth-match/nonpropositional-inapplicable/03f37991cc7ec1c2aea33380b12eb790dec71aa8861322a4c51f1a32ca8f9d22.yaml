@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:03f37991cc7ec1c2aea33380b12eb790dec71aa8861322a4c51f1a32ca8f9d22
+  normalized_sha256: sha256:03f37991cc7ec1c2aea33380b12eb790dec71aa8861322a4c51f1a32ca8f9d22
+cas_ref: sha256:03f37991cc7ec1c2aea33380b12eb790dec71aa8861322a4c51f1a32ca8f9d22
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Projection as an interpretive proposal and conditions for cross-tradition comparison. The text gives historical interpretation, bibliographic scope or methodological advice, rather than a mathematical assertion.'
+    previous_atom_id: b5589d31172dd971cb86856962950969115ec1c05bd199ef77be23584264bd64
+    next_atom_id: 49f2f1c286c0309fd7ba853926aa10bbf860746f7f1a0248df0b999704a66881

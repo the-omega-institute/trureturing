@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4da0163bd18938e24d5e20548c8903726328c70d8d3230f77a3640d0fb676bd6
+  normalized_sha256: sha256:4da0163bd18938e24d5e20548c8903726328c70d8d3230f77a3640d0fb676bd6
+cas_ref: sha256:4da0163bd18938e24d5e20548c8903726328c70d8d3230f77a3640d0fb676bd6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 分解后的标题和 Euler product 名词片段；没有独立命题。'
+    previous_atom_id: 637389956f09f16875b54e641b1075dcb58fe36d246c3c2341012b85382ee0a5
+    next_atom_id: 8c0a89f0533b35931b86cda46aada08cf0ea0febffea9bba6166ae1535a31f09

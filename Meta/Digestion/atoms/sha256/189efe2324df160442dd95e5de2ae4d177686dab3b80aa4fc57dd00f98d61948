@@ -1,0 +1,14 @@
+**Definition 103.1 (the stronger structural task).** Fix any finite original
+term $u\in\mathcal D$ of Definition 75.1, with $a$ alpha leaves, $c$ beta
+leaves, $b=a+c$, and $N=2b+c-1$ material cells. A refinement is a finite
+word of enabled original $P/S$ calls, with exactly the original addressed
+guards and persistent templates. No marker is a logical target. For this
+structural task no Tick, Add, Read, reset, deletion, rerooting, reweighting,
+self-loop, graft or replacement of an old cell is allowed. The cost pair
+$(p,s)\in\mathbb N^2$ counts successful promotions and splits. Refusals
+cannot improve the task and are unnecessary for the witnesses below.
+The logical code and actual bindings must already have been earned;
+this definition does not acquire them for free.
+
+Write $v$ for the final term and $B=A_v$ for its actual unit adjacency.
+The task is that the primitive map $w\mapsto Bw$ be injective on the

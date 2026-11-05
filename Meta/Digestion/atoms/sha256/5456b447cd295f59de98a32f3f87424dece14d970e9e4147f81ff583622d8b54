@@ -1,0 +1,86 @@
+**Proposition 97.2 (Complete spectrum and exact positive gap).** Put
+
+$$
+A=a+b,\qquad
+u=\frac{\sqrt b\,|00\rangle+\sqrt a\,|11\rangle}{\sqrt A},
+\qquad
+h=\frac{\sqrt a\,|00\rangle-\sqrt b\,|11\rangle}{\sqrt A}.
+\tag{97.4}
+$$
+
+Then the certificate kernel and its orthogonal projections are
+
+$$
+\begin{aligned}
+K&=\ker S=\operatorname{span}_{\mathbb C}
+ \{h,|12\rangle,|20\rangle,|21\rangle,|22\rangle\},\\
+P&=|h\rangle\langle h|+|12\rangle\langle12|
+ +|20\rangle\langle20|+|21\rangle\langle21|+|22\rangle\langle22|,\\
+Q&=I_9-P=|u\rangle\langle u|+|10\rangle\langle10|
+                    +|01\rangle\langle01|+|02\rangle\langle02|.
+\end{aligned}
+\tag{97.5}
+$$
+
+In particular $\dim_{\mathbb C}K=5$ and $\operatorname{rank}S=4$.
+The spectrum, with multiplicities, is
+
+$$
+\operatorname{spec}(S)=
+\{0,0,0,0,0,\ \tau A,\ s_{10},\ s_{01},\ s_{02}\}.
+\tag{97.6}
+$$
+
+Its least positive eigenvalue and a safe rational lower bound are
+
+$$
+\begin{gathered}
+\gamma_S=s_{02},\qquad 0.008742<\gamma_S<0.008743,\\
+\gamma_0=\frac{4371}{500000}=0.008742<\gamma_S,\qquad
+S\succeq\gamma_S Q\succeq\gamma_0Q .
+\end{gathered}
+\tag{97.7}
+$$
+
+The symbol $\gamma_S$ denotes this spectral gap only. It is distinct
+from the cubic coefficient denoted $\gamma$ in Terminal (122.1).
+
+*Proof.* Since $a,b>0$, the vectors $u,h$ have norm one and inner
+product zero. The first term of $S$ in (96.10) equals
+$\tau A|u\rangle\langle u|$. The other three displayed terms act on
+three different coordinate vectors, all orthogonal to $u$ and $h$.
+The four remaining coordinate vectors in (97.5) occur in no nonzero
+entry of $S$. Thus the nine vectors
+
+$$
+u,\ |10\rangle,\ |01\rangle,\ |02\rangle,\
+h,\ |12\rangle,\ |20\rangle,\ |21\rangle,\ |22\rangle
+\tag{97.8}
+$$
+
+form an orthonormal eigenbasis, with eigenvalues in the order
+$\tau A,s_{10},s_{01},s_{02},0,0,0,0,0$.
+
+To identify the least positive value rather than merely bound it,
+use the source's strict rational enclosures in (124.13):
+
+$$
+0.054474<s_{10}<0.054475,\qquad
+0.027084<s_{01}<0.027085,\qquad
+0.008742<s_{02}<0.008743 .
+\tag{97.9}
+$$
+
+Terminal (120.12) also gives $\tau>0.067$, $a>0.937$ and
+$b>0.337$, hence
+
+$$
+\tau A>0.067(0.937+0.337)=0.085358.
+\tag{97.10}
+$$
+
+These rational inequalities yield the strict ordering
+$0<s_{02}<s_{01}<s_{10}<\tau A$. They prove (97.7) on the
+orthonormal eigenbasis. In particular $\gamma_0$ is a strict lower
+bound, not a replacement definition of the exact gap. $\square$
+

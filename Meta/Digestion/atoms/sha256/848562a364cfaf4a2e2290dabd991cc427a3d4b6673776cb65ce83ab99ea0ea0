@@ -1,0 +1,30 @@
+**Proposition 8.3 (All one-read attaining starts).** Fix any installed
+table and deterministic initial state $r$ with $q_1(r)=1$. Its correct
+mass is $S_1$ if and only if it starts with $\operatorname{Read}(t)$
+whose active phase $\alpha=t\bmod2$ and active edge
+$e=\{\ell,\ell+1\}$, $t=2\ell+\alpha$, satisfy
+$v_\alpha\notin e$, and its reply-zero and reply-one successors
+halt with labels $h_{1-\alpha}(\sigma)$ and $h_\alpha(\sigma)$,
+respectively. Both successors have positive source probability.
+Consequently every such start visits at least one read state and two
+distinct halt states with positive source probability.
+
+Proof. An initial halt has correct mass at most $a/2<S_1$.
+For every integer first address both reply sections are positive:
+their masses are $1-\eta$ and $\eta$. Thus $q_1(r)=1$ forces
+each successor to be a halt; a further read would exclude that entire
+positive section from $E_1$.
+
+Put $\beta=1-\alpha$. On reply zero the phase-$\beta$ majority
+state has mass $a/2$. The largest phase-$\alpha$ state mass is
+$a^2/2$ if $v_\alpha\in e$, and $ac/2$ otherwise, by Lemma 3.1.
+Both are strictly below $a/2$. Since $b<a$, the unique maximizing
+zero-reply label is $h_\beta(\sigma)$.
+On reply one only phase $\alpha$ remains. Its maximal state mass is
+$\eta/2$ if $v_\alpha\in e$ and $a\eta$ otherwise.
+The former is strictly smaller because $a>1/2$; in the latter case
+the unique maximizer is $h_\alpha(\sigma)$, since $a>b$.
+Hence equality at $S_1$ holds exactly as asserted. The two phase
+label sets are disjoint, so their halt states differ from one another
+and from the read state. $\square$
+

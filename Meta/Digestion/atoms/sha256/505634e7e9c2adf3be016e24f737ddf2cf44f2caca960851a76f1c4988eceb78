@@ -1,0 +1,39 @@
+**Construction 99.2 (joined paid entrance on this specimen).**
+Directly use NLBAII Construction 62.3, with its $u$ equal to this
+chosen term and its $I=N-b$. Starting at a known-zero allocated
+alpha, execute its legal constructor word: $c$ promotions and $b-1$
+splits, allocating exactly $N-1$ new cells. Receive an arbitrary
+owned target $x$ into separately backed producer storage. Use the
+existing terminal-control right inverse $KC=I_N$: compute
+$Cx=(h_0,\ldots,h_I)$, Add all $b$ terminal coordinates of $h_I$,
+then execute one Tick and all Adds of each descending block through
+$h_0$. This really ends at $KCx=x$, with $I$ Ticks and $b(I+1)$
+Adds, including zero Adds. Execute one handoff Hold and actually
+clear or isolate every dependent producer record before the receiver
+starts. Erased and isolated capacities, copies and clearing work are
+still resources of this same run.
+
+Joined to (99.1), the source calls are exactly
+
+$$
+\begin{gathered}
+\mathrm P=c,\quad \mathrm S=b-1,\quad
+\mathrm{Read}=bN+k,\quad
+\mathrm{Add}=b(I+1)+k,\\
+\mathrm{Tick}=I+1+LN+k,\qquad
+\mathrm{Hold}=2+LN+k,
+\qquad \mathrm{fresh\ cells}=N-1.
+\tag{99.2}
+\end{gathered}
+$$
+
+The two extra Holds here are the producer handoff and receiver primer;
+the producer's $I$ Ticks do not add unlisted Holds in this specified
+held serialized construction. Owned-target reception, control solve,
+constructor navigation, authentic bindings and all complete transactions
+are charged separately. This producer demonstrates attainable arbitrary
+entrances; it does not provide free unknown-field advice to the receiver.
+If the entrance graph/map instead came from another genuine acquisition,
+its own full run and endpoint must be joined, rather than charged as
+this constructor word without proof.
+

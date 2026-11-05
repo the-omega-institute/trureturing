@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e954368a5fcf3e6d18b4b87685516b93f028618e1de61a3fd4c80e0fcb5c239f
+  normalized_sha256: sha256:e954368a5fcf3e6d18b4b87685516b93f028618e1de61a3fd4c80e0fcb5c239f
+cas_ref: sha256:e954368a5fcf3e6d18b4b87685516b93f028618e1de61a3fd4c80e0fcb5c239f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只规定两目标函数族、独立采样、测试分布与算法权限；没有陈述未见概率或 minimax 结论。
+    previous_atom_id: e140f8abc18ac8aee7c78678ead2bf483704e2309f30bef6bfd6e2caea81f54d
+    next_atom_id: 42aaa9964770bfc810d43ea42ba9168f7e44a31b4b8d0919c860346331cba4fb

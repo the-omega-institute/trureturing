@@ -1,0 +1,20 @@
+**定义 1.1（相容来源与实际操作菜单）。** 令 $X$ 是包含当前记录、量具标定和控制条件的来源状态集合。固定操作字母表 $\mathscr A$，每个允许生成元 $a$ 给出 $T_a:X\to X$，读出为 $o:X\to Y$。若操作有守卫，须将守卫状态及可区分失败结果包含在 $X,Y$ 中，而非在比较时删去失败词。有限词 $w=(a_1,\ldots,a_n)$ 按时间从左至右执行，约定
+
+$$
+T_w=T_{a_n}\cdots T_{a_1},\qquad T_{\varepsilon}=I,
+\qquad \mathcal E_{\mathcal O}(x)(w)=o(T_wx).
+$$
+
+定义 $x\sim_{\mathcal O}y$ 当且仅当对所有 $w\in\mathscr A^*$，两者的读出相等。行为环境是 $X/{\sim_{\mathcal O}}$，行为表示的值域取有效像 $\mathcal E_{\mathcal O}(X)$，不取任意可写输出函数的集合。随机实验时，行为值改为该实际协议的完整输出分布，控制与条件事件仍属于同一实现。
+
+所用行为商计算来自 [OBS] §§3、4、8 及上述 §206。为明确本卷的来源范围，其因子化计算如下：若两来源行为相同，则对任何后续词 $w$，
+
+$$
+\mathcal E_{\mathcal O}(T_ax)(w)
+=\mathcal E_{\mathcal O}(x)(aw)
+=\mathcal E_{\mathcal O}(y)(aw)
+=\mathcal E_{\mathcal O}(T_ay)(w).
+$$
+
+所以操作在商上良定义，空词保持当前读出。若一个摘要 $\eta$ 使全部响应因子化，则 $\eta(x)=\eta(y)$ 蕴含 $x\sim_{\mathcal O}y$，因而 $\eta(X)\to X/{\sim_{\mathcal O}}$、$\eta(x)\mapsto[x]$ 是良定义满射。这是任务最小性，未声称恢复来源全部内部结构。
+

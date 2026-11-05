@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8ff5188fa055f262eaf6ffcd010edc0656d56a7dfb88a5938954a62029addcf2
+  normalized_sha256: sha256:8ff5188fa055f262eaf6ffcd010edc0656d56a7dfb88a5938954a62029addcf2
+cas_ref: sha256:8ff5188fa055f262eaf6ffcd010edc0656d56a7dfb88a5938954a62029addcf2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Dual 路线中的 finite negative witness search 任务名，没有见证存在性断言。'
+    previous_atom_id: 283a944279e43209e72f61eefd1924ccae919da4f0f25eeca203eaeb4e38fc3c
+    next_atom_id: f7fab56ab19c84a2562b1d7ce023839b1ceee6bf68180359709a20d673a2faa2

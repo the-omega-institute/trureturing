@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:209b7144ecb6b4f3e78e164e6f202cfea8e21acfa2126ae2ba61e496abdfc656
+  normalized_sha256: sha256:209b7144ecb6b4f3e78e164e6f202cfea8e21acfa2126ae2ba61e496abdfc656
+cas_ref: sha256:209b7144ecb6b4f3e78e164e6f202cfea8e21acfa2126ae2ba61e496abdfc656
+coverage_gids:
+  - gid: D5/S3/Factorization/Automata/GuardedPrimeProduct.machine
+    target_statement_id: sha256:f7b845152d511655f67fd4a0e12b7ba2cc2232c45dc49fd6f0dec3b594d3c05a
+receipts:
+  unresolved_subitems: []

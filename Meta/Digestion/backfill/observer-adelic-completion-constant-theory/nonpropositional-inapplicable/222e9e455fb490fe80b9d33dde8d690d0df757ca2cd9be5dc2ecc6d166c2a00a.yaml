@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:222e9e455fb490fe80b9d33dde8d690d0df757ca2cd9be5dc2ecc6d166c2a00a
+  normalized_sha256: sha256:222e9e455fb490fe80b9d33dde8d690d0df757ca2cd9be5dc2ecc6d166c2a00a
+cas_ref: sha256:222e9e455fb490fe80b9d33dde8d690d0df757ca2cd9be5dc2ecc6d166c2a00a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The atom is a list label without a mathematical assertion.
+    previous_atom_id: a2332d7f92afab364a5b936de34b8643ab18af8797bb6a1ab0737b5eebc20f60
+    next_atom_id: e4dd321dffefa8fac9409598790001ce1d43c324014ac27a929c9d8275eb2b97

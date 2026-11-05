@@ -1,0 +1,28 @@
+**命题 24.1（同一时钟六历史的末次动作）。** At the clock-six prefix $JMJJJJ$, the matrix is $L$. The final-$J$ matrix is $N$, and the final-$M$ matrix is
+
+$$
+ML=J+L=\begin{pmatrix}1&1\\2&1\end{pmatrix}.
+                                                                  \tag{24.1}
+$$
+
+For a regular zero-drift pair (23.6), final $M$ has the same reading on both worlds,
+
+$$
+z_7^M=h(7)(q+1),
+                                                                  \tag{24.2}
+$$
+
+including $h(7)=0$. For a regular drift-$24$ pair (23.13),
+
+$$
+z_7^M(r)=24+g(7)(T-r+\ell),\qquad
+z_7^M(r_+)-z_7^M(r_-)=-g(7)(r_+-r_-).
+                                                                  \tag{24.3}
+$$
+
+Thus it splits that pair exactly when $g(7)\ne0$. If $g(7)=0$, both final actions read $24$ on this pair. In particular the zero-seventh-gain stratum is retained, rather than inferred away from regularity.
+
+If a known family at this same clock-six history has $L_1$ and contains a regular drift-$24$ final-$J$ collision pair with $g(7)\ne0$, it must contain a target outside that pair. These assertions concern the indicated reached prefix, with no change of clock or gain.
+
+Proof. The final-$M$ trace is $j+\ell$. In (23.6), $j=q\ell$ and $g=h/\ell$, giving (24.2). In (23.13), $j=T-r$ and the gain is common, giving (24.3). Both pairs already share their final-$J$ reading by construction. If the final-$M$ difference is nonzero, any losing final-$M$ child needs two distinct targets and contains at most one member of this pair, so it needs an outside target. If that difference is zero, the same pair survives both final choices and has $L_1$ at this clock-six history. This does not assert failure at an earlier node. ∎
+

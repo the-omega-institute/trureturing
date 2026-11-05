@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:24ebf668676a3fda3e8f38738cd78287e61ab34548b4c7fe94328d37c4d717d6
+  normalized_sha256: sha256:24ebf668676a3fda3e8f38738cd78287e61ab34548b4c7fe94328d37c4d717d6
+cas_ref: sha256:24ebf668676a3fda3e8f38738cd78287e61ab34548b4c7fe94328d37c4d717d6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 合读《论语》两章并限定中英译法和礼的语境，是文本诠释。
+    previous_atom_id: 20146557414b9ed27e408054f73037ac3d1823e632ba179c7e631da24c6c1700
+    next_atom_id: cd47df404ae1a0bc5012de1b4f0554e08db307f0e454bbd54b87ca208f8eae76

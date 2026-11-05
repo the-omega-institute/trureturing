@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:df5a334238210a00833796764a519d22ef1fef112095596785ce3e75b8504791
+  normalized_sha256: sha256:df5a334238210a00833796764a519d22ef1fef112095596785ce3e75b8504791
+cas_ref: sha256:df5a334238210a00833796764a519d22ef1fef112095596785ce3e75b8504791
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 以给定交织等式作为外侧或补侧算子实现的术语定义，未声称任意逻辑算子存在实现，也未推出交换性；末句为框架出处。
+    previous_atom_id: 1c14e3b8cc1807f34b25f2194ef3080adbfcd906884741247e87cec6ca5b3258
+    next_atom_id: de0cc0003514f790d9047ab81b8c072dfebd443266e269e6bd87b66bbdf01d05

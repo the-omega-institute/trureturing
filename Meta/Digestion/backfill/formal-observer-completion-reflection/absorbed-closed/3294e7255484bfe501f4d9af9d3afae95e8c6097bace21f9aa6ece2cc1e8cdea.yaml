@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3294e7255484bfe501f4d9af9d3afae95e8c6097bace21f9aa6ece2cc1e8cdea
+  normalized_sha256: sha256:3294e7255484bfe501f4d9af9d3afae95e8c6097bace21f9aa6ece2cc1e8cdea
+cas_ref: sha256:3294e7255484bfe501f4d9af9d3afae95e8c6097bace21f9aa6ece2cc1e8cdea
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Completion/CommutingCompletionExchange.commutativity_hypothesis_is_necessary
+    target_statement_id: sha256:4a78c0690b06aa0a8af30592765073259e6a555b40fe1582d5bc1672c3acff52
+receipts:
+  unresolved_subitems: []

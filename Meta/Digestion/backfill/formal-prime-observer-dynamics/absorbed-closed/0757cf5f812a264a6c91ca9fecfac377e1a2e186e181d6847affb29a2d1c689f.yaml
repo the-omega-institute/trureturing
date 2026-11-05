@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0757cf5f812a264a6c91ca9fecfac377e1a2e186e181d6847affb29a2d1c689f
+  normalized_sha256: sha256:0757cf5f812a264a6c91ca9fecfac377e1a2e186e181d6847affb29a2d1c689f
+cas_ref: sha256:0757cf5f812a264a6c91ca9fecfac377e1a2e186e181d6847affb29a2d1c689f
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/InterventionsExchange/MarginalTransportCouplingGap.marginal_transport_does_not_determine_coupling
+    target_statement_id: sha256:2c87ecf8a1d614b0c9435f4641c4b3ddf0045a7f98fcbdfd29f1efedea147d23
+receipts:
+  unresolved_subitems: []

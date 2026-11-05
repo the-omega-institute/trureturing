@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:cf1ec9146a147d75c6d280f3f8093865262c1d0bce3d68e98c1e261d55dd92e8
+  normalized_sha256: sha256:cf1ec9146a147d75c6d280f3f8093865262c1d0bce3d68e98c1e261d55dd92e8
+cas_ref: sha256:cf1ec9146a147d75c6d280f3f8093865262c1d0bce3d68e98c1e261d55dd92e8
+coverage_gids:
+  - gid: D5/S3/Weil/ZeroSum.IsNontrivialZero
+    target_statement_id: sha256:a6f28644b8712884b7100900df67fa81c252c0efbf56110547c40f3f8a1de820
+  - gid: D5/S3/Weil/ZeroSum.SymmetricConvergent
+    target_statement_id: sha256:7c64008adb5d54551d0aa5e1583767596ea0734aaaaa680fc87a7e02be4143d3
+  - gid: D5/S3/Weil/ZeroSum.ZeroData
+    target_statement_id: sha256:6113c5c5e0fafd781150a3d4774c4b6125e713165d38bad0217159ea22e9e338
+  - gid: D5/S3/Weil/ZeroSum.spectralParameter
+    target_statement_id: sha256:7845e7a476e150751a7eb339437b31ef182436922d50047329af0da5a693ba91
+  - gid: D5/S3/Weil/ZeroSum.truncatedZeroSum
+    target_statement_id: sha256:c449939783169e775ae441f4b04192ccfd1e962a1b9a5eebf6011b1ca1d72ccc
+  - gid: D5/S3/Weil/ZeroSum.zeroSum
+    target_statement_id: sha256:9ba901509d3b9b50e8142119bfbc227bc61fd3fcc08c995077ebaddd0d3e6cd6
+receipts:
+  unresolved_subitems: []

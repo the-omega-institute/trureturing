@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:66eba5c94e58ac60e044056ac810e296a187d0524e89d50bce0988050698ffa8
+  normalized_sha256: sha256:66eba5c94e58ac60e044056ac810e296a187d0524e89d50bce0988050698ffa8
+cas_ref: sha256:66eba5c94e58ac60e044056ac810e296a187d0524e89d50bce0988050698ffa8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 审计表仅将 Laguerre/Jensen 层级标为成熟图表，并提醒它不自动完成目标，没有陈述任何具体不等式。
+    previous_atom_id: 1f338a675a8d906e55f49b3276c4966eb5ac7afc30ad5d286c466389f46ae912
+    next_atom_id: 925ed86fd5e78c7328a58e2d63306a5af5d2c72d8da499bcbd253fa32ef62c4c

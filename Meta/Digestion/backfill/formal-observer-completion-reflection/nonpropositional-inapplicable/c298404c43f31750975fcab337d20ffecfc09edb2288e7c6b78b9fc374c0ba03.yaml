@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c298404c43f31750975fcab337d20ffecfc09edb2288e7c6b78b9fc374c0ba03
+  normalized_sha256: sha256:c298404c43f31750975fcab337d20ffecfc09edb2288e7c6b78b9fc374c0ba03
+cas_ref: sha256:c298404c43f31750975fcab337d20ffecfc09edb2288e7c6b78b9fc374c0ba03
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 表行把 static quantum visible-space 定位于正文81–88并标论文层级，只提供交叉引用与状态元数据。'
+    previous_atom_id: 2e3c9ec1cb7d2e7f282ee2aee5f2b9e34e044407b68553956b7b144d97713000
+    next_atom_id: 6d8b4dbe00a4ce2c8ddf429101f6447f3311f1f0978759691f78750b527593d3

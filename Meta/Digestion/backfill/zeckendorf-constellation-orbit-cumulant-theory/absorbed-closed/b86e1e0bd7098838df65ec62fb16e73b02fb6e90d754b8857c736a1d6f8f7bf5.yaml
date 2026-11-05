@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:b86e1e0bd7098838df65ec62fb16e73b02fb6e90d754b8857c736a1d6f8f7bf5
+  normalized_sha256: sha256:b86e1e0bd7098838df65ec62fb16e73b02fb6e90d754b8857c736a1d6f8f7bf5
+cas_ref: sha256:b86e1e0bd7098838df65ec62fb16e73b02fb6e90d754b8857c736a1d6f8f7bf5
+coverage_gids:
+  - gid: D5/S3/CompletionDynamics/GoldenMobius/GoldenCrossRatioLinearization.golden_cross_ratio_linearization
+    target_statement_id: sha256:b6c6532859fbb5a4a7aeadd94233d4b83798811ca7ab21ede79ad13846e87d55
+  - gid: D5/S3/CompletionDynamics/GoldenMobius/GoldenCrossRatioLinearization.golden_mobius_sub_conjugate
+    target_statement_id: sha256:a59390a511b1fe85d8e86743e3801d6fa793097fb98a20f82880287220441668
+  - gid: D5/S3/CompletionDynamics/GoldenMobius/GoldenCrossRatioLinearization.golden_mobius_sub_golden
+    target_statement_id: sha256:a1515fec56940ff04ac1a2b51720b354907580862ac5e49ab3a2f84065545921
+receipts:
+  unresolved_subitems: []

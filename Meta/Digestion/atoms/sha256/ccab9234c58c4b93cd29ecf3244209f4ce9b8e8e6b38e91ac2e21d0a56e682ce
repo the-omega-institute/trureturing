@@ -1,0 +1,51 @@
+**Definition 31.1 (grade-determined snapshot blocks).** Reuse the
+constructor serialization of
+[AAII Definition 54.1](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_II.md#54-a-destructive-probe-acquires-both-the-entry-and-its-real-endpoint):
+$\sigma(\alpha)=00$, $\sigma(\beta)=01$, and
+$\sigma(\langle v,w\rangle)=10\sigma(v)\sigma(w)$.
+The tags are parsed in preorder. One pending subtree slot is replaced
+by two at a branch and filled at a leaf, so the first return to zero
+pending slots uniquely ends the serialized tree. A tree with $L$ leaves
+has $2L-1$ vertices. In particular a grade-$b$ native term has
+
+$$
+|\sigma(t)|=4L-2\le4b+2,
+\tag{IV.89}
+$$
+
+since each split adds one leaf and hence $L\le b+1$. These serialization
+and parsing facts are existing suppliers, not additional claims of
+coding novelty.
+
+For each integer $j\ge0$, put
+
+$$
+M_j=2^j,\qquad \Delta_j=\max\left(1,
+\left\lfloor\frac{2^j}{j+1}\right\rfloor\right),\qquad
+\mathcal S_j=\{M_j+q\Delta_j:q\ge0,\ M_j+q\Delta_j<2M_j\}.
+\tag{IV.90}
+$$
+
+The positive snapshot grades are $\mathcal S=\bigcup_{j\ge0}\mathcal S_j$.
+For $n\ge1$, $b(n)$ is the largest snapshot grade at most $n$; set
+$b(0)=0$. All these quantities are computed from the current grade,
+without a retained schedule index or a supplied horizon.
+
+At grade $n\ge1$ the maintained word consists of
+$\sigma(t(h_{b(n)}))$ followed by the AAII94 ordinal chunks for just
+the events after that prefix. Here $h_i$ denotes the length-$i$ prefix
+of the actual history. Precisely,
+
+$$
+J_*(h)=\sigma(t(h_{b(n)}))
+\prod_{i=b(n)+1}^{n}\operatorname{bin}_{w_i}(r_i),
+\qquad w_i=\lceil\log_2L_i\rceil,
+\quad J_*(\varepsilon)=\varepsilon,
+\tag{IV.91}
+$$
+
+where concatenation is chronological, and $r_i,L_i$ are the actual
+pre-event logical leaf rank and leaf count of AAII Definition 94.1.
+There is no stored block header, width, event kind or historical cut
+marker. The empty initial word is treated separately at grade zero.
+

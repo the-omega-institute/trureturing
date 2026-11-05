@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2f9f2e111258224d943c9f416690308516a9e47d359287ebbe6d070b55f92a3f
+  normalized_sha256: sha256:2f9f2e111258224d943c9f416690308516a9e47d359287ebbe6d070b55f92a3f
+cas_ref: sha256:2f9f2e111258224d943c9f416690308516a9e47d359287ebbe6d070b55f92a3f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：798.1只登记各论文和哲学原典的阅读段落、转述来源及未核验范围；其中定理名称仅用于文献定位，本条没有给出独立数学命题，也不据此结算被引用定理。
+    previous_atom_id: 9d002c72a3d2081780477435d476484de87e58988815043d355fa066f4a4edce
+    next_atom_id: 691bb47bb8c9d5492f3a3bede379c605b3c6276c9da538ee5663b2a499bfc3a8

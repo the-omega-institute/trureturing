@@ -1,0 +1,69 @@
+**Definition 45.1 (reduced signed bases).** Order the $F$ labels $\ell=(J,\eta)$ of (44.9) in any fixed order. For each chart define
+
+$$
+ A_{\nu,\ell}=-\eta n_J^{\mathsf T}C_\nu,
+ \qquad \lambda_\ell=\delta h_J-\eta n_J^{\mathsf T}b.
+ \tag{45.1}
+$$
+
+These are a row of length $p$ and a scalar. Equations (44.6) and (44.8) give exactly $K_\nu=\{q:A_\nu q\le\lambda\}$. For every $p$-element row subset $I$, in induced order, define
+
+$$
+ \begin{aligned}
+ \Delta_{\nu,I}&=\det A_{\nu,I},\\
+ N_{\nu,I,j}&=\det(A_{\nu,I}\text{ with column }j
+                                \text{ replaced by }\lambda_I)
+                                             &&(0\le j<p),\\
+ S_{\nu,I,\ell}&=
+       \det\begin{pmatrix}A_{\nu,I}&\lambda_I\\
+                           A_{\nu,\ell}&\lambda_\ell\end{pmatrix}.
+ \end{aligned}
+ \tag{45.2}
+$$
+
+These symbols are the reduced data of this section, not the raw data of (38.3). The reduced predicate is
+
+$$
+ \begin{split}
+ \Theta_{\nu,I}:\quad&\Delta_{\nu,I}\ne0,\qquad
+          N_{\nu,I,j}\ne0\text{ for at least one }j<p,\\
+ &\operatorname{sgn}S_{\nu,I,\ell}
+        \in\{0,\operatorname{sgn}\Delta_{\nu,I}\}
+                   \quad\text{for every }\ell.
+ \end{split}
+ \tag{45.3}
+$$
+
+A second finite label selects a common raw witness. Order the $V$ vertices of (44.10). Let $T=(t_0,\ldots,t_r)$ be an increasing $(r+1)$-element subset of that list, and set
+
+$$
+ E_T=\begin{pmatrix}1&\cdots&1\\v_{t_0}&\cdots&v_{t_r}\end{pmatrix},
+ \qquad c_T=\det E_T.
+ \tag{45.4}
+$$
+
+Retain just the subsets with $c_T\ne0$; call their number $\mathcal T$. In particular $1\le\mathcal T\le\binom V{r+1}$. These constant matrices depend only on $k,d$. For each $(\nu,I,T)$ form the $r+1$ scalar polynomials
+
+$$
+ \begin{aligned}
+ u_{\nu,I}&=\Delta_{\nu,I}b-C_\nu N_{\nu,I},\\
+ M_{\nu,I,T,a}&=
+   \det\left(E_T\text{ with column }a\text{ replaced by }
+                  \binom{\delta\Delta_{\nu,I}}{u_{\nu,I}}\right)
+                                     \quad(0\le a\le r).
+ \end{aligned}
+ \tag{45.5}
+$$
+
+Here $N_{\nu,I}$ is the column of the $p$ gain numerators. The **complete certificate predicate** is
+
+$$
+ \Xi_{\nu,I,T}:\quad\Theta_{\nu,I}\quad\text{and}\quad
+ \operatorname{sgn}M_{\nu,I,T,a}
+       \in\{0,\operatorname{sgn}(c_T)\operatorname{sgn}(\Delta_{\nu,I})\}
+                                     \quad(0\le a\le r).
+ \tag{45.6}
+$$
+
+All predicates involve only signs of explicit polynomials in $\alpha,\beta$ with coefficients determined by the given record, radius and paid history. A zero polynomial has sign zero. Neither factoring nor any determinant inversion is imposed on an unknown actual gain value.
+

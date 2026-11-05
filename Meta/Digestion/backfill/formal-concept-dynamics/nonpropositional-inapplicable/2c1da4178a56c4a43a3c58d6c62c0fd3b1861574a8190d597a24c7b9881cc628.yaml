@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2c1da4178a56c4a43a3c58d6c62c0fd3b1861574a8190d597a24c7b9881cc628
+  normalized_sha256: sha256:2c1da4178a56c4a43a3c58d6c62c0fd3b1861574a8190d597a24c7b9881cc628
+cas_ref: sha256:2c1da4178a56c4a43a3c58d6c62c0fd3b1861574a8190d597a24c7b9881cc628
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: '取两种不同权限 a≠b、Sufficient(P):=a∈P∨b∈P；单点集合最小充分、交为空且不充分，任意 least 必须包含于两个单点而空集不充分。所有事实由集合单点/包含/交的规范化与 IsLeast 定义给出，不需要新的归纳或构造映射。 Upstream: Set.mem_singleton_iff, Set.mem_inter_iff, Set.subset_def, Set.eq_empty_iff_forall_notMem, IsLeast. mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679. Searched all D5/*.lean, including private declarations, by object and shape: set intersection/singleton/minimal permissions; product/read-write state; sound/exact abstraction; agreement/nonempty intersections. Existing PermissionIntersectionLeast requires a sufficient intersection and does not supply the insufficient-intersection counterexample; no matching frozen supplier was found for these claims.'
+    previous_atom_id: eb0e0ddab767e178ba7d9331690bfaa22314ade4c1ad9df133927ef3765817e6
+    next_atom_id: 8478329ea0c4d52a5dab2863ab5602aa576a1591de7ba10a8e0b5bd0e419e13f

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fa1180a11f2d2dab28c945a287c832e5f54472df8229cb47a8a23960f3e47b1e
+  normalized_sha256: sha256:fa1180a11f2d2dab28c945a287c832e5f54472df8229cb47a8a23960f3e47b1e
+cas_ref: sha256:fa1180a11f2d2dab28c945a287c832e5f54472df8229cb47a8a23960f3e47b1e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 日期和理论稿的编辑、解释、准入边界说明；不宣称数学结论成立。
+    previous_atom_id: e5fce0306832de2d99c4d223c186f5adf5ab8dd2f52455b2d441c69f4d24dec5
+    next_atom_id: 1d9bca8813b0f42ece9affcb46bb9a7e059c3e80421b61132207f3281f9b1fb0

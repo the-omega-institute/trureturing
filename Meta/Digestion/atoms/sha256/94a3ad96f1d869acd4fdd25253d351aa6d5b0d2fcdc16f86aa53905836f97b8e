@@ -1,0 +1,50 @@
+**Proposition 2.2 (composition, scale and native witness).** For every
+$n\ge1$,
+
+$$
+a(U_n)=a(V_n)=2n+2,\qquad b(U_n)=b(V_n)=2,
+\tag{2.3}
+$$
+
+and their total node count is
+
+$$
+S(U_n)=S(V_n)=4n+7.
+\tag{2.4}
+$$
+
+Their common acquired scale is
+
+$$
+w_n=W(U_n)=W(V_n)=2n+2+2\varphi
+    =2(n+\varphi^2),
+\qquad \varphi=\frac{1+\sqrt5}{2}.
+\tag{2.5}
+$$
+
+The INITIAL reached list at $Q=(L,R)$ and its exterior are the same for the
+two sources, while the equality partition is
+
+$$
+\Pi(U_n)=\{\{1,2\}\},
+\qquad
+\Pi(V_n)=\{\{1\},\{2\}\}.
+\tag{2.6}
+$$
+
+At epoch zero the genuine Read at address $RRL$ returns
+
+$$
+\operatorname{Read}_{U_n}(RRL)=\mathsf{alpha},
+\qquad
+\operatorname{Read}_{V_n}(RRL)=\mathsf{beta}.
+\tag{2.7}
+$$
+
+Proof. $C_n$ has $n$ alpha leaves and $2n-1$ nodes.  Each of $A,B$ has
+one alpha leaf, one beta leaf and three nodes.  The free ordered constructor
+therefore gives (2.3)--(2.5), with $2(2n+3)+1=4n+7$ nodes.  The right
+child of the root is $X_n$ in $U_n$ and $Y_n$ in $V_n$; the next right step
+reaches $A$ or $B$, and the final left step reads alpha or beta.  The two
+child subtrees are otherwise the same, giving (2.6). $\square$
+
