@@ -58,6 +58,10 @@ $$\forall \left(d: \mathbb{N}\right), \left(\left(0 < d\right) \Rightarrow \left
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumContext/FinitePreparationCertification.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/zhang-ying-schmid` (proved) by `D5/S3/QuantumContext/FinitePreparationCertification.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zhang-ying-schmid","declaration_gid":"D5/S3/QuantumContext/FinitePreparationCertification.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Yujie Zhang, Yìlè Yīng, David Schmid (2026). *Quantifiers and witnesses for the nonclassicality of measurements and of states*. DOI: [10.22331/q-2026-07-30-2180](https://doi.org/10.22331/q-2026-07-30-2180). URL: <https://arxiv.org/abs/2504.02944v3>.

@@ -46,7 +46,10 @@ internal sealed class FinitePreparationCertificationDocument : IScribeDocumentDe
                         + "Strict separation from the Born table gives a continuous linear functional and a real bound. Expansion in coordinate singletons expresses that functional as the displayed double sum.")),
                     Paragraph(Text("The compactness argument allows arbitrary preparation index types and target tables. The conjecture keeps the POVM and positive finite-dimension assumptions of the source. "
                         + "The ontic sums are discrete; continuous measurable ontic models and quantitative bounds on preparations, noise or samples are outside this statement."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("zhang-ying-schmid"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock DefinitionNode(string id, string name, string title, Formula formula, AssessedProvenance provenance, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
