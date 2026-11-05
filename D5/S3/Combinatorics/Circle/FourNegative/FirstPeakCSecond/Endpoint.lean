@@ -42,7 +42,7 @@ private theorem reserve_cast (a b c d : ℕ) (hd : 2≤d) :
 open private all_nat_joint from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.CMiddle
 open private actual_nat_joint_iff from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 
-set_option maxHeartbeats 2400000 in
+set_option maxHeartbeats 4000000 in
 /-- For every a>c>max(b,d), b,d>=2, one physical permutation and one literal
 fresh-label cut satisfy both complete actual OriginalOrder predicates.
 The b<=d branch includes b=d; the strict d<b branch constructs its own exact
