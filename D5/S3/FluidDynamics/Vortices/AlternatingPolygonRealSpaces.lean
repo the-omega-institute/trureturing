@@ -1,10 +1,10 @@
 /- GID: D5/S3/FluidDynamics/Vortices/AlternatingPolygonRealSpaces
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/FluidDynamics/Vortices/AlternatingPolygonRealSpaces
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Actual real stable and unstable spaces, with dimensions twice m minus two. -/
+   digest: Actual real stable and unstable spaces, with dimensions 2*(m-2). -/
 
 import D5.S3.FluidDynamics.Vortices.AlternatingPolygonComplexSpectrum
 import Mathlib.LinearAlgebra.DFinsupp
