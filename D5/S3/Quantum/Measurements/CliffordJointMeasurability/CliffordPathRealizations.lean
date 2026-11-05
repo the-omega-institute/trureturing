@@ -69,7 +69,6 @@ import D5.S3.Quantum.QuantumChannels.TomiyamaDiagonalKPositivity
 import D5.S3.Quantum.FiniteDimensional
 import D5.S3.Weil.ZetaLinear.RankTrace
 import D5.S3.QuantumBounds.MerminMeasurementDependence.Model
-import Mathlib.Combinatorics.SimpleGraph.CycleGraph
 namespace D5.S3.Quantum.Measurements.CliffordJointMeasurability.CliffordPathRealizations
 noncomputable section
 open scoped ComplexOrder

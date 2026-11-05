@@ -7,8 +7,6 @@
    digest: Refutes the N = 10 edge bound of Barriga et al.: a 23-edge coupling realizes F_10. -/
 
 import D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
-import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

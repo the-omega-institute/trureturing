@@ -8,7 +8,6 @@
 
 import D5.S3.Quantum.Entanglement.LocalObservationPartialTraceEquivalence
 import D5.S3.Quantum.Foundation.FiniteStateChannel
-import Mathlib.LinearAlgebra.Matrix.Permutation
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

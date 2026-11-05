@@ -21,8 +21,6 @@ Direct frozen dependencies: D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.ham
 
 import D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
 import Mathlib.LinearAlgebra.Matrix.Permutation
-import Mathlib.LinearAlgebra.Matrix.Circulant
-import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

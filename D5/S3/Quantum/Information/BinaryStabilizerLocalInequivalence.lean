@@ -20,7 +20,6 @@ Direct frozen dependencies: D5/S3/Quantum/Information/StabilizerPairLocalUnitary
 -/
 
 import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
-import Mathlib.NumberTheory.Zsqrtd.GaussianInt
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

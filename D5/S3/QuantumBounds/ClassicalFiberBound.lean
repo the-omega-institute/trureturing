@@ -18,7 +18,6 @@
 
 import D5.S3.QuantumBounds.CHSHWitness
 import Mathlib.Algebra.Star.CHSH
-import Mathlib.Algebra.Order.Star.Real
 
 namespace D5.S3.QuantumBounds.ClassicalFiberBound
 

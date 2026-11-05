@@ -5,14 +5,7 @@
    anchors: []
    digest: Fixed B-ary trees satisfy leaf, clog, necessity, and degenerate bounds. -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Finset.Union
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Data.Nat.Log
+import Mathlib
 
 /- Library-search audit trail (2026-08-25):
    * The residue-specialized `adaptiveProtocol`, `adaptiveTranscript`, and

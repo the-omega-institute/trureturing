@@ -61,7 +61,6 @@ import D5.S3.Weil.ZetaLinear.Sylvester
 import D5.S3.Quantum.Matrix.SpectralPower
 
 import D5.S3.Combinatorics.Permanental.PanSkanderaWangAllSplitsChain
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
 
 /-! The source assertion and its explicit inverse-M-matrix refutation. -/
 

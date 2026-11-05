@@ -49,9 +49,6 @@ The pair-indexed matrix type is written out; exponential decay uses Real.exp dir
 
 import D5.S3.Quantum.Dynamics.PronkoFredkinNonCyclicAnnihilation
 import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
-import Mathlib.Analysis.Calculus.Deriv.Mul
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
-import Mathlib.Tactic.NormNum.RealSqrt
 
 noncomputable section
 

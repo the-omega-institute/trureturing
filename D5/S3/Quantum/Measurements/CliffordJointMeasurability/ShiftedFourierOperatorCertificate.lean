@@ -82,8 +82,6 @@ import D5.S3.Quantum.Measurements.CliffordJointMeasurability.CliffordPathRealiza
 import D5.S3.Quantum.Dynamics.PolygonalFourierCouplings
 import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
 import Mathlib.NumberTheory.LegendreSymbol.AddCharacter
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Complex
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 namespace D5.S3.Quantum.Measurements.CliffordJointMeasurability.ShiftedFourierOperatorCertificate
 open D5.S3.Quantum.Measurements.CliffordJointMeasurability.CliffordPathRealizations
 private lemma sine_weight_product (j : ℕ) (θ : ℝ) :

@@ -7,7 +7,6 @@
 
 import D5.S3.ConceptDynamics.Faithfulness.JointFaithfulnessLeibnizCriterion
 import D5.S3.Quantum.QubitWitnesses
-import Mathlib.LinearAlgebra.Matrix.IsDiag
 
 /- Library-search audit trail (2026-08-26):
    * Exact repository hits `jointReadout`, `bornProbability`,
