@@ -45,7 +45,7 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   intro h
   obtain ⟨w, y, hw, hs, hx, hn⟩ := h (k := ULift.{u} ℝ) (H := ULift.{v} ℝ)
-    (LinearIsometry.id (ULift.{u} ℝ)) (ULift.up 1) 0
+    (LinearIsometry.id : ULift.{v} ℝ →ₗᵢ[ULift.{u} ℝ] ULift.{v} ℝ) (ULift.up 1) 0
   have hz : (ULift.up 1 : ULift.{v} ℝ) = 0 := hx
   exact one_ne_zero (congrArg ULift.down hz)
 private theorem dependence : ObservationalDependence signature.{u,v} actual := by
@@ -54,7 +54,7 @@ private theorem dependence : ObservationalDependence signature.{u,v} actual := b
   refine ⟨p, 0, ULift.up 1, ?_⟩
   intro h
   have hz := congrArg (fun f : ULift.{v} ℝ → ULift.{v} ℝ => (f 0).down) h
-  have hz' : (0 : ℝ) = 1 := hz
+  have hz' : (0 : ℝ) = 1 := by simpa [actual, realize, p] using hz
   exact zero_ne_one hz'
 
 def family : Registration arena.{u,v} (type_of% (@exists_wold_decomposition.{u,v})) where
@@ -125,7 +125,7 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   intro h
   have hz := h (k := ULift.{u} ℝ) (H := ULift.{v} ℝ)
-    (LinearIsometry.id (ULift.{u} ℝ)) 0 (fun _ => 0) (fun _ => zero_mem _) 0 0 (by simp)
+    (LinearIsometry.id : ULift.{v} ℝ →ₗᵢ[ULift.{u} ℝ] ULift.{v} ℝ) 0 (fun _ => 0) (fun _ => zero_mem _) 0 0 (by simp)
   norm_num [rejected, realize] at hz
 private theorem dependence : ObservationalDependence signature.{u,v} actual := by
   intro i
