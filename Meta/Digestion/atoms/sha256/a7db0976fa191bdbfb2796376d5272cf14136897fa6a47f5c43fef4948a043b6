@@ -1,0 +1,13 @@
+**定义 190.1（固定分量的比较域）。** 沿用定义 138.1、145.1、177.1 的整个 $E$、$\mathcal K=\mathbb C^E$、原 $\mathcal P_j,K_j,H_j$ 和唯一 ready。令 $\mathscr B_j$ 为原 $H_j$ 的配置支撑图分量；$1\le j\le9$ 时它们是原可翻转二点块和阻塞单点，$j=0,10$ 时全是单点。以 $P_B$ 表示分量的坐标投影，以 $Q_B=\mathcal P_j|_B$ 表示二点块上的 (146.2)，以 $\epsilon_B\in\{0,1\}$ 表示单点上的原投影值。比较族 $\widetilde H=(\widetilde H_j)_{j=0}^{10}$ 满足
+
+$$
+\widetilde H_j^*=\widetilde H_j,\qquad
+[\widetilde H_j,P_B]=0\ (B\in\mathscr B_j),\qquad
+e^{-i\widetilde H_j}=K_j.
+\tag{190.1}
+$$
+
+每次原调用仍是同一恒定生成元的一个单位脉冲，接缝不重抽配置、不增加跳动；无调用时生成元为零。只把 (145.1) 的内部演化改成 $\widetilde U_j(s)=e^{-is\widetilde H_j}$，并在 (145.2) 中同时以 $\widetilde H_j,\widetilde\psi_s$ 计算同一平方最小电流率。初配置仍为确定 $q_{\rm r}$。原配置报告、正分支纯更新、独立积分风险驱动及同一合法原因果档案核仍按假设 145.2 指定。
+
+这不是只给端点便推出的模型：分量保持、平方分布、最小率及各来源接口都是显式前件。特别是本节不将未知脉冲的比较族自动认作假设 A 的同一跨地址局部函数族。所有程序仍为原 $\mathsf T(a),\mathsf R(a,f)$，$a\in\mathsf W_{11}$、$f\in\mathsf W$；只允许正向整数调用。数学内部时刻、配置和跳时不新增可读权限。
+
