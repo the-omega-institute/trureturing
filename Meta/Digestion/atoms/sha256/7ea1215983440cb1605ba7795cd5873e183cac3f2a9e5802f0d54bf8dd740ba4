@@ -1,0 +1,137 @@
+**定理 143.2（每个有限大小都有纯终端原生见证）。** 只采用 $\mathcal B$ 中的相干执行、ready、全域终端充分性及零失败前件；不需要 140.1 的逐地址记录统计守恒 C、140.2 的读器插入不扰动 D 或任何记录质量公式。固定一个旧标签
+
+$$
+w_* =1000000010,
+\qquad m=2^n+1,\qquad
+\gamma_n=\sin^2(\pi/m)>0,\qquad
+\delta_n=\frac{\gamma_n^2}{32n}>0.
+\tag{143.3}
+$$
+
+对每个整数 $n\ge1$，存在有限原七地址前缀 $p_0,\ldots,p_{m-1}\in\mathsf W$ 和有限原七地址接续 $f_0,\ldots,f_{m-1}\in\mathsf W$，使对任意随机编码 $\alpha_i\in\Delta(S)$ 及任意响应向量 $b_j\in[0,1]^S$，均有
+
+$$
+\max_{0\le i,j<m}
+\left|H(p_i;f_j,w_*)-
+             \sum_{s=1}^n\alpha_i(s)b_j(s)\right|>\delta_n.
+\tag{143.4}
+$$
+
+这些 $m^2$ 个实际程序都从同一个 $R_0v$ 开始，只执行有限正向原字和同一个旧终端。该结论甚至允许任意 $[0,1]$ 值单事件响应，不靠其它标签的归一化限制来强化下界。因此它排除 (143.2)，也排除任何声称精确供应所有原十一地址前缀、原七地址未来的完整有限经典预测状态。
+
+证明。先在同一个旧 $H$ 内选数学目标，随后把严格分离转回实际有限字。置 $u=e_{00000}$、$z=e_{00100}=v$，它们是 II (77.2) 的两个正交路径。对 $0\le i<m$ 置
+
+$$
+\theta_i=\frac{\pi i}{m},\qquad
+\psi_i=\cos\theta_i\,u+\sin\theta_i\,z,\qquad
+\eta_i=-\sin\theta_i\,u+\cos\theta_i\,z.
+\tag{143.5}
+$$
+
+定义纸面目标表
+
+$$
+T_{ij}=|\langle\eta_j,\psi_i\rangle|^2
+      =\sin^2\!\left(\frac{\pi(i-j)}m\right).
+\tag{143.6}
+$$
+
+于是 $T_{ii}=0$，而 $i\ne j$ 时 $T_{ij}\ge\gamma_n$。后者因为非零整数距离 $|i-j|$ 在 $1,\ldots,m-1$ 内，正弦平方在这些角度的最小值为 $\sin^2(\pi/m)$。这些向量与表不授予任意输入、额外效果或连续旋钮的物理权限。
+
+下面给出有限正因子分解的分离步骤。它是零模式／非负支撑计数的初等方法在此表上的使用，不另立一般非负秩定理。令
+
+$$
+\varepsilon_n=2\delta_n=\frac{\gamma_n^2}{16n},
+\qquad t=\frac{\gamma_n}{4n},
+\qquad B_{ij}=\sum_{s=1}^n\alpha_i(s)b_j(s).
+\tag{143.7}
+$$
+
+假设 $\max_{ij}|B_{ij}-T_{ij}|\le\varepsilon_n$。每个对角元满足 $B_{jj}\le\varepsilon_n$。对每个 $i$ 取阈值支撑
+
+$$
+A_i=\{s\in S:\alpha_i(s)\ge t\}.
+\tag{143.8}
+$$
+
+$S$ 只有 $2^n$ 个子集，而有 $m=2^n+1$ 个 $A_i$，故存在 $i\ne j$ 使 $A_i=A_j$。对 $s\in A_j$，非负性及对角元上界给
+
+$$
+\alpha_j(s)b_j(s)\le B_{jj}\le\varepsilon_n,
+\qquad b_j(s)\le\varepsilon_n/t=\gamma_n/4.
+\tag{143.9}
+$$
+
+在 $A_i$ 外有 $\alpha_i(s)<t$，且 $b_j(s)\le1$。因此
+
+$$
+B_{ij}
+\le \frac{\gamma_n}{4}\sum_{s\in A_i}\alpha_i(s)
+       +\sum_{s\notin A_i}\alpha_i(s)
+\le \frac{\gamma_n}{4}+nt
+=\frac{\gamma_n}{2}.
+\tag{143.10}
+$$
+
+另一方面，$0<\gamma_n\le1$、$n\ge1$ 给
+
+$$
+B_{ij}\ge T_{ij}-\varepsilon_n
+\ge\gamma_n-\frac{\gamma_n^2}{16n}
+\ge\frac{15\gamma_n}{16}>\frac{\gamma_n}{2},
+\tag{143.11}
+$$
+
+矛盾。这一步适用于任意重叠的随机编码和任意继续响应，没有使用确定性编码或门更新的可逆性。
+
+现在供应真正原生的有限表。消费 II 77.2 在整个 $13$ 维 $H$ 上的射影密度，而不把数学目标视为可执行控制。取 $\rho=\delta_n/4$。对每个 $i$ 可选有限正向 $p_i\in\mathsf W$，以及仅用于比较范数的相位 $c_i$，使
+
+$$
+\|c_iK_{p_i}v-\psi_i\|<\rho.
+\tag{143.12}
+$$
+
+对每个 $j$ 选数学 $V_j\in U(H)$，使 $V_j\eta_j=u$，并在正交补酉补全。于是 $V_j^*u=\eta_j$。同一射影密度给有限正向 $f_j\in\mathsf W$ 和相位 $d_j$，满足
+
+$$
+\|d_jK_{f_j}|_H-V_j\|_{\rm op}<\rho.
+\tag{143.13}
+$$
+
+每个逆字母在 II 77.2 中已经由 $K_j^{-1}=K_j^9$ 换成正向调用。这里同时只作有限次选择；每个所选字都有限，没有执行极限字、任意 $V_j$ 或任意 $\psi_i$。
+
+II 100.1 的同一个 ready 嵌入给
+
+$$
+K_fR_0=R_0K_f|_H,
+\qquad R_0^*N_{w_*}R_0=|u\rangle\langle u|
+\qquad(f\in\mathsf W).
+\tag{143.14}
+$$
+
+故 $\mathcal B$ 的终端前件在每个实际 $p_if_j$ 上给
+
+$$
+H_{ij}:=H(p_i;f_j,w_*)
+=\|N_{w_*}K_{f_j}K_{p_i}R_0v\|^2
+=|\langle u,K_{f_j}K_{p_i}v\rangle|^2.
+\tag{143.15}
+$$
+
+(143.12)–(143.13) 与酉性给
+
+$$
+\|d_jc_iK_{f_j}K_{p_i}v-V_j\psi_i\|<2\rho.
+\tag{143.16}
+$$
+
+两振幅的模均至多一，故其模平方之差至多振幅差的两倍；相位不影响模平方。因此
+
+$$
+|H_{ij}-T_{ij}|<4\rho=\delta_n
+\quad\text{对全部 }i,j.
+\tag{143.17}
+$$
+
+这里连续性只用于已明确供应的矩阵二次型；没有对未知编码 $a\mapsto\alpha_a$ 或未知响应取极限。若某组 $\alpha_i,b_j$ 使 (143.4) 左侧至多 $\delta_n$，三角不等式将给 $\max_{ij}|B_{ij}-T_{ij}|<2\delta_n=\varepsilon_n$，与 (143.8)–(143.11) 矛盾。证明完成。∎
+
