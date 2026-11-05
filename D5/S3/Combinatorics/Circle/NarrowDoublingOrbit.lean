@@ -1,29 +1,10 @@
-/-
-Implementation candidate: UNCOMPILED (2026-11-05).
-Canonical integration target: D5/S3/Combinatorics/Circle/NarrowDoublingOrbit.
-Original payload baseline: 4ab00abdc2aebf3805d4a6c39bbc01ccc943e53f.
-
-Attribution: elementary finite cyclic order, least-period and gcd arguments;
-Pro ordinary reasoning and independent native ordinary-proof checking supplied
-by the caller. Neither input is Lean/kernel evidence. No novelty claim.
-
-The candidate below now includes the all-modulus denominator classification,
-the fixed-Q block consumer, and the abstract-existence equivalence.
-No declaration in this file has yet received elaboration or kernel evidence.
-Canonical worktree creation was refused at the disk-admission boundary.
-Full Circle J remains OPEN. No physical prefix realization is asserted.
-
-Original target awaiting actual elaboration, with r := period X Q and g := Nat.gcd X Q:
-  for every odd X >= 3 and 0 < Q < X,
-  2 * diameter X Q < X implies
-    2 <= r /\ r = orderOf (2 : ZMod (denominator X Q)) /\
-    denominator X Q = 2^r - 1 /\ 2 * diameter X Q = X - g.
-The exact fixed-Q HeightBlock consequence must then conclude this same
-denominator identity, for every k and initial layer m₀, from one r-layer
-block. The added source derives the single gap cycle from the actual temporal
-orbit and derives its recurrence from directed endpoint congruences.
-Neither denominator conclusion is replaced by a premise.
--/
+/- GID: D5/S3/Combinatorics/Circle/NarrowDoublingOrbit
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Circle/NarrowDoublingOrbit
+   mirror-E: none(waiver:no-escape-mirror-specified)
+   anchors: [mathlib/module/Mathlib.Dynamics.PeriodicPts.Defs, mathlib/module/Mathlib.GroupTheory.OrderOfElement]
+   utility: none
+   digest: Actual arbitrary-seed narrow doubling orbits have Mersenne reduced modulus and exact diameter. -/
 import D5.S1.Words.AssociatedMersenne.CircularWords
 import Mathlib.Data.Int.ModEq
 import Mathlib.Data.ZMod.Basic
@@ -31,6 +12,25 @@ import Mathlib.Dynamics.PeriodicPts.Lemmas
 import Mathlib.GroupTheory.OrderOfElement
 import Mathlib.Data.Finset.Sort
 import Mathlib.Tactic
+
+/-! # Narrow doubling orbits at arbitrary odd modulus
+
+For odd X >= 3 and 0 < Q < X, the actual least period r, gcd g and standard
+orbit diameter W satisfy r >= 2, r = orderOf (2 : ZMod (X/g)) and, when
+2*W < X, X/g = 2^r-1 and 2*W = X-g. The proof derives the sorted rotation,
+its single actual temporal cycle, the adjacent-gap recurrence and gcd
+cancellation. Nonunit seeds remain in scope.
+
+The fixed-Q consumers use one consecutive block of the actual period.
+The converse chooses Q existentially. Full physical Circle J remains OPEN:
+no physical realization, nested masks, joint-strip sufficiency or prescribed-Q
+sufficiency is asserted.
+
+Attribution: elementary finite cyclic order, least-period and gcd arguments.
+Caller-supplied Pro reasoning and independent ordinary checking were fallible
+inputs; the successful native scoped Lean build establishes the formal proof.
+No literature novelty or official acceptance is claimed.
+-/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -119,7 +119,7 @@ private theorem period_eq_order {X : ℕ} (hX : 0 < X) (Q : ℕ) :
 
 private theorem period_pos {X : ℕ} (hX : 0 < X) (hodd : Odd X) (Q : ℕ) :
     0 < period X Q := by
-  letI : NeZero X := ⟨Nat.ne_of_gt hX⟩
+  let : NeZero X := ⟨Nat.ne_of_gt hX⟩
   have hu : IsUnit (2 : ZMod X) :=
     (ZMod.isUnit_iff_coprime 2 X).mpr (Nat.coprime_two_left.mpr hodd)
   exact Function.minimalPeriod_pos_of_mem_periodicPts
@@ -176,6 +176,8 @@ private theorem residue_injective (X Q : ℕ) :
   intro i hi j hj hij
   apply Function.iterate_injOn_Iio_minimalPeriod
     (f := fun z : ZMod X => 2 * z) (x := (Q : ZMod X)) hi hj
+  change (fun z : ZMod X => 2 * z)^[i] (Q : ZMod X) =
+    (fun z : ZMod X => 2 * z)^[j] (Q : ZMod X)
   rw [iterate_double, iterate_double]
   have h : Nat.ModEq X (2 ^ i * Q) (2 ^ j * Q) := hij
   have h' := (ZMod.natCast_eq_natCast_iff _ _ X).mpr h
@@ -223,13 +225,13 @@ private theorem diameter_le_of_interval {X Q L U : ℕ}
   have hmax := (hb _ ((orbit X Q).max'_mem hne)).2
   have hmin := (hb _ ((orbit X Q).min'_mem hne)).1
   unfold diameter
-  rw [dif_pos hne]
+  rw [dite_eq_left hne]
   omega
 
 /-- On any interval of span less than X/2, doubling followed by reduction
 preserves strict circular order. The two branches are derived from bounds. -/
 private theorem narrow_cyclic_order {X L U a b c : ℤ}
-    (hX : 0 < X) (hL : 0 ≤ L) (hU : U < X) (hW : 2 * (U - L) < X)
+    (_hX : 0 < X) (hL : 0 ≤ L) (hU : U < X) (hW : 2 * (U - L) < X)
     (ha : L ≤ a ∧ a ≤ U) (hb : L ≤ b ∧ b ≤ U) (hc : L ≤ c ∧ c ≤ U) :
     CyclicBetween ((2 * a) % X) ((2 * b) % X) ((2 * c) % X) ↔
       CyclicBetween a b c := by
@@ -324,7 +326,7 @@ private theorem block_narrow_data {X Q : ℕ} (hX : 3 ≤ X) (hodd : Odd X)
 
 /-- The geometric circular-order part is derived from narrowness for the
 actual arbitrary-modulus orbit. The later sorted-shift and gap proofs consume
-this candidate geometric argument. -/
+this geometric argument. -/
 private theorem narrow_orbit_preserves_cyclic_order {X Q : ℕ}
     (hX : 3 ≤ X) (hodd : Odd X) (hnarrow : 2 * diameter X Q < X)
     {a b c : ℕ} (ha : a ∈ orbit X Q) (hb : b ∈ orbit X Q)
@@ -340,11 +342,12 @@ private theorem narrow_orbit_preserves_cyclic_order {X Q : ℕ}
   have hLU : L ≤ U := (orbit X Q).min'_le_max' hne
   have hUX : U < X := by
     obtain ⟨n, _, hn⟩ := Finset.mem_image.mp ((orbit X Q).max'_mem hne)
+    change (orbit X Q).max' hne < X
     rw [← hn]
     exact Nat.mod_lt _ hXp
   have hW : 2 * ((U : ℤ) - L) < X := by
     have hd : diameter X Q = U - L := by
-      simp only [diameter, dif_pos hne, U, L]
+      simp only [diameter, dite_eq_left hne, U, L]
     rw [hd] at hnarrow
     omega
   exact narrow_cyclic_order (by exact_mod_cast hXp) (by positivity)
@@ -406,7 +409,9 @@ private theorem cyclic_perm_is_shift {r : ℕ} (hr : 2 ≤ r)
   let z : Fin r := ⟨0, by omega⟩
   have hall (n : ℕ) : ∀ hn : n < r, p ⟨n, hn⟩ = cycAdd (p z) n := by
     induction n with
-    | zero => intro hn; simpa only [cycAdd_zero] using (rfl : p z = p z)
+    | zero =>
+      intro hn
+      rw [cycAdd_zero]
     | succ n ih =>
       intro hn
       let i : Fin r := ⟨n, by omega⟩
@@ -467,7 +472,7 @@ private theorem narrow_doubling_sorted_shift {X Q : ℕ} (hX : 3 ≤ X) (hodd : 
     e.toEquiv.trans (t.trans e.toEquiv.symm)
   have hp (i : Fin (period X Q)) : a (p i) = (2 * a i) % X := by
     change (e (e.symm (T (e i)))).val = (2 * (e i).val) % X
-    rw [e.apply_symm_apply] <;> rfl
+    rw [e.apply_symm_apply]
   have hpi (i : Fin (period X Q)) : (a (p i) : ℤ) = (2 * (a i : ℤ)) % X := by
     simpa only [Int.natCast_mod, Nat.cast_mul, Nat.cast_ofNat] using
       congrArg (fun z : ℕ => (z : ℤ)) (hp i)
@@ -495,7 +500,7 @@ private theorem narrow_doubling_sorted_shift {X Q : ℕ} (hX : 3 ≤ X) (hodd : 
 /-- Transfer the actual temporal orbit to any sorted-index doubling map.
 The cycle, its return, and the absence of an earlier return are derived;
 none of these is an additional hypothesis about the sorted shift.
-This new proof text has not yet been elaborated. -/
+ -/
 private theorem sorted_doubling_actual_cycle {X Q : ℕ}
     (hX : 0 < X) (hodd : Odd X)
     (p : Fin (period X Q) → Fin (period X Q))
@@ -520,7 +525,6 @@ private theorem sorted_doubling_actual_cycle {X Q : ℕ}
     | succ n ih =>
       rw [Function.iterate_succ_apply', hstep, ih, ← residue_succ]
       congr 1
-      omega
   refine ⟨?_, ?_, ?_⟩
   · intro i j
     obtain ⟨m, _, hmi⟩ := hphase i
@@ -556,7 +560,7 @@ private theorem sorted_doubling_actual_cycle {X Q : ℕ}
 /-- The derived sorted shift acts transitively on directed adjacent gaps:
 the gap is indexed by its initial point, so the same index map acts on it.
 This records the actual r-cycle before any numerical gap recurrence is used.
-This new proof text has not yet been elaborated. -/
+ -/
 private theorem narrow_doubling_sorted_cycle {X Q : ℕ}
     (hX : 3 ≤ X) (hodd : Odd X) (hQ : 0 < Q) (hQX : Q < X)
     (hnarrow : 2 * diameter X Q < X) :
@@ -594,9 +598,8 @@ private theorem gap_cycle_growth {α : Type*} [DecidableEq α]
     | zero => intro _; simp
     | succ n ih =>
       intro hn
-      change G (p^[n + 1 + 1] w) = (2 : ℤ) ^ (n + 1) * G (p w)
       rw [Function.iterate_succ_apply', hrec,
-        if_neg (hearly (n + 1) (by omega) (by omega)), ih (by omega), pow_succ]
+        ite_eq_right (hearly (n + 1) (by omega) (by omega)), ih (by omega), pow_succ]
       ring
   have hlast := hwalk (r - 1) (by omega)
   rw [Nat.sub_add_cancel (by omega : 1 ≤ r), hreturn] at hlast
@@ -608,14 +611,14 @@ private theorem gap_cycle_growth {α : Type*} [DecidableEq α]
   have hM : ((2 ^ r - 1 : ℕ) : ℤ) = (2 : ℤ) ^ r - 1 := by
     have hp : 0 < (2 : ℕ) ^ r := pow_pos (by omega) r
     rw [Nat.cast_sub (by omega : 1 ≤ (2 : ℕ) ^ r)]
-    push_cast <;> rfl
+    push_cast; rfl
   refine ⟨?_, hlast⟩
   rw [hM, hpow]
   nlinarith [hlast, hfirst]
 
 /-- Numerical gap data for the actual arbitrary-seed orbit. All geometric
 and cycle hypotheses used in gap_cycle_growth are proved here from the
-original narrowness hypothesis. Candidate proof text; not yet elaborated. -/
+original narrowness hypothesis. -/
 private theorem narrow_gap_arithmetic {X Q : ℕ}
     (hX : 3 ≤ X) (hodd : Odd X) (hQ : 0 < Q) (hQX : Q < X)
     (hnarrow : 2 * diameter X Q < X) :
@@ -644,7 +647,7 @@ private theorem narrow_gap_arithmetic {X Q : ℕ}
   have hW : (diameter X Q : ℤ) = (a w : ℤ) - a z := by
     have hle : a z ≤ a w := a.monotone (by change 0 ≤ r - 1; omega)
     unfold diameter
-    rw [dif_pos hne, ← hw, ← hz]
+    rw [dite_eq_left hne, ← hw, ← hz]
     omega
   have hWpos : 0 < (diameter X Q : ℤ) := by
     have hzw : z < w := by change 0 < r - 1; dsimp [r]; omega
@@ -658,7 +661,7 @@ private theorem narrow_gap_arithmetic {X Q : ℕ}
   have hGwrap : G w = (X : ℤ) - diameter X Q := by
     change (a (next w) : ℤ) - a w +
       (if w.val + 1 < r then 0 else (X : ℤ)) = _
-    rw [hnextw, if_neg (by dsimp [w]; omega)]
+    rw [hnextw, ite_eq_right (by dsimp [w]; omega)]
     omega
   have hordinary (i : Fin r) (hi : i ≠ w) : 0 < G i ∧ 2 * G i < X := by
     have hi' : i.val + 1 < r := by
@@ -675,7 +678,7 @@ private theorem narrow_gap_arithmetic {X Q : ℕ}
       omega)
     have hGi : G i = (a (next i) : ℤ) - a i := by
       change (a (next i) : ℤ) - a i + (if i.val + 1 < r then 0 else (X : ℤ)) = _
-      rw [if_pos hi', add_zero]
+      rw [ite_eq_left hi', add_zero]
     rw [hGi]
     omega
   have hbounds (i : Fin r) : 0 ≤ G i ∧ G i < X := by
@@ -712,20 +715,20 @@ private theorem narrow_gap_arithmetic {X Q : ℕ}
     rw [Int.emod_eq_of_lt (hbounds (p i)).1 (hbounds (p i)).2] at he
     by_cases hi : i = w
     · subst i
-      rw [if_pos rfl]
+      rw [ite_eq_left rfl]
       calc
         G (p w) = (2 * G w) % X := he
         _ = (2 * G w - (X : ℤ)) % X := by simp only [Int.sub_emod_right]
         _ = 2 * G w - (X : ℤ) :=
           Int.emod_eq_of_lt (by rw [hGwrap]; omega) (by rw [hGwrap]; omega)
-    · rw [if_neg hi]
+    · rw [ite_eq_right hi]
       exact he.trans (Int.emod_eq_of_lt (by have := hbounds i; omega)
         (hordinary i hi).2)
   have hprod := gap_cycle_growth r hr p w G X (hreturn w)
     (fun n hn hnr => hearly w n hn hnr) hrec
   have hd : G (p w) = (X : ℤ) - 2 * diameter X Q := by
     have he := hrec w
-    rw [if_pos rfl, hGwrap] at he
+    rw [ite_eq_left rfl, hGwrap] at he
     omega
   have hgpoint (i : Fin r) : (Nat.gcd X Q : ℤ) ∣ (a i : ℤ) := by
     obtain ⟨n, _, he⟩ := Finset.mem_image.mp
@@ -746,10 +749,10 @@ private theorem narrow_gap_arithmetic {X Q : ℕ}
     · exact hgX
   exact ⟨G (p w), by omega, hggap (p w), hprod.1, by omega⟩
 
-/-- Candidate all-odd-modulus classification, including nonunit seeds.
+/-- All-odd-modulus classification, including nonunit seeds.
 Its source proof uses the actual sorted gap cycle; no transitivity,
 recurrence, reduced-modulus classification, or unit-seed premise is added.
-No elaboration/kernel/official acceptance has yet occurred for this text. -/
+No physical or official acceptance is asserted. -/
 theorem narrow_classification {X Q : ℕ} (hX : 3 ≤ X) (hodd : Odd X)
     (hQ : 0 < Q) (hQX : Q < X) (hnarrow : 2 * diameter X Q < X) :
     2 ≤ period X Q ∧
@@ -801,7 +804,7 @@ theorem narrow_classification {X Q : ℕ} (hX : 3 ≤ X) (hodd : Odd X)
   rw [hdg] at hdiam
   exact ⟨hr, period_eq_order hXp Q, hDeq, by omega⟩
 
-/-- Candidate finite-horizon reduction: one consecutive block of
+/-- Finite-horizon reduction: one consecutive block of
 the actual period forces the entire fixed-Q orbit to be narrow and doubling
 to be a transitive cyclic shift of its sorted points, with no early return.
 The classification consumer is stated separately below. -/
@@ -848,9 +851,10 @@ theorem exists_narrow_of_mersenne_dvd {X t : ℕ} (hX : 3 ≤ X) (hodd : Odd X)
   have hM : 3 ≤ M := by dsimp [M]; omega
   have hMg : M * g = X := Nat.mul_div_cancel' hdiv
   have hg : 0 < g := by
-    by_contra hz
-    have : g = 0 := by omega
-    rw [this, mul_zero] at hMg
+    apply Nat.pos_of_ne_zero
+    intro hzero
+    have he := hMg
+    rw [hzero, mul_zero] at he
     omega
   have hgX : g < X := by
     calc
@@ -929,7 +933,7 @@ theorem exists_narrow_of_mersenne_dvd {X t : ℕ} (hX : 3 ≤ X) (hodd : Odd X)
     · exact (orbit X g).le_max' _ hmaxmem
   have hdiam : 2 * diameter X g = X - g := by
     unfold diameter
-    rw [dif_pos hne, hmax, hmin]
+    rw [dite_eq_left hne, hmax, hmin]
     have hgp : g ≤ g * 2 ^ (t - 1) := by
       simpa only [mul_one] using
         Nat.mul_le_mul_left g (show 1 ≤ 2 ^ (t - 1) by omega)
