@@ -2,11 +2,11 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
 
 import Reg.Support.DependentFamily
-import D5.S3.Quantum.Completion.RawAnchoredRadicalDescent
+import D5.S3.Quantum.Completion.RawAnchoredFourierQuotient
 
 /-! The original comparison family for the source reconstruction problem. -/
 
-namespace Reg.D5.S3.Quantum.Completion.RawAnchoredRadicalDescent
+namespace Reg.D5.S3.Quantum.Completion.RawAnchoredFourierQuotient
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 universe u
@@ -33,11 +33,11 @@ def comparisonReadout : Realization comparisonSignature.{u} :=
   realize comparisonSignature (fun _ p x => p.comparison x.1 x.2)
     (fun e => nomatch e)
 
-end Reg.D5.S3.Quantum.Completion.RawAnchoredRadicalDescent
+end Reg.D5.S3.Quantum.Completion.RawAnchoredFourierQuotient
 
 /-! Full-telescope source registration of original marker comparison invariance. -/
 
-namespace Reg.D5.S3.Quantum.Completion.RawAnchoredRadicalDescent.MarkerReadouts
+namespace Reg.D5.S3.Quantum.Completion.RawAnchoredFourierQuotient.MarkerReadouts
 open _root_.D5.S3.Quantum.Completion.RawAnchoredRadicalDescent
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 noncomputable section
@@ -86,7 +86,7 @@ def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@raw_marker_readouts.{u}) (Realization signature) Unit Unit := {
   unitName := `D5.S3.Quantum.Completion.RawAnchoredRadicalDescent.raw_marker_readouts.__information_unit
-  realizationName := `Reg.D5.S3.Quantum.Completion.RawAnchoredRadicalDescent.MarkerReadouts.source_registration
+  realizationName := `Reg.D5.S3.Quantum.Completion.RawAnchoredFourierQuotient.MarkerReadouts.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -102,7 +102,7 @@ def registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Quantum.Completion.RawAnchoredRadicalDescent
+    owner := `D5.S3.Quantum.Completion.RawAnchoredFourierQuotient
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -117,4 +117,4 @@ def registration :
   options := #[] }
 
 end
-end Reg.D5.S3.Quantum.Completion.RawAnchoredRadicalDescent.MarkerReadouts
+end Reg.D5.S3.Quantum.Completion.RawAnchoredFourierQuotient.MarkerReadouts
