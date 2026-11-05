@@ -33,13 +33,16 @@ internal sealed class CentralStirlingOddSquareDivisibilityDocument : IScribeDocu
                     + "each higher-order term contains m^2. Thus m^2 divides twice the central "
                     + "Stirling number. Since m^2 is coprime to two, it divides the number itself. "
                     + "Setting m=2*n+1 proves the assertion, including n=0 and all odd composite columns.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bala-a007820"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) => Describe.Lean(
         DescribeId.Create("bala-a007820-" + name), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(formula), provenance,
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula ClaimBody()
     {

@@ -22,6 +22,10 @@ $$\forall n: \mathbb{N}, (2 \cdot n + 1)^{2} \mid \operatorname{Nat}.\operatorna
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Parity/CentralStirlingOddSquareDivisibility.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bala-a007820` (proved) by `D5/S1/Recurrence/Parity/CentralStirlingOddSquareDivisibility.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bala-a007820","declaration_gid":"D5/S1/Recurrence/Parity/CentralStirlingOddSquareDivisibility.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Bala (2025). *OEIS A007820 COMMENTS conjecture on square divisibility of odd central Stirling numbers*. URL: <https://oeis.org/A007820>.
