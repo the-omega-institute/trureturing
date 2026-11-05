@@ -38,15 +38,14 @@ internal sealed class ActualRobinIntervalDocument : IScribeDocumentDefinition
                 H("Consume endpoint estimates in the original inequality"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Assuming EndpointRobinEstimates, every natural n>5040 satisfies sigma(n)<exp(gamma)*n*log(log(n)). The final logarithm/exponential transport pays its positivity conditions and retains the original sigma, integer factor and iterated logarithm. This conditional reduction proves neither the all-price endpoint estimates nor RH."))),
-                DescribeRole.Theorem,
+                DescribeRole.Theorem),
             ActualRobinFinitePressureNarrative.Create(),
             ActualRobinDirectedLogNarrative.Create())));
 }
 
 internal static class ActualRobinFinitePressureNarrative
 {
-    internal static ScribeNode Create() => ScribeNode.Create(
-        "Finite actual-pressure certificate consumption remains conditional on explicit arithmetic evidence.",
+    internal static DocumentBlock Create() => new DocumentBlock.Section(
         H("Finite actual-pressure continuation"),
         Blocks(
             Paragraph(Text("This is source implementation support for the existing Robin finite consumer. Neither this narrative nor its private Lean source has been compiled. The persistent packet has 1330 rational cells, 2660 endpoint tests, 664579 purported primes and 665320 candidate layers through 10000000; those are packet claims and Python evidence, not kernel acceptance. The finite theorem and the full Robin/RH goal remain open.")),
@@ -62,8 +61,7 @@ internal static class ActualRobinFinitePressureNarrative
 
 internal static class ActualRobinDirectedLogNarrative
 {
-    internal static ScribeNode Create() => ScribeNode.Create(
-        "Executable directed logarithms supply the existing finite consumer's arithmetic primitives.",
+    internal static DocumentBlock Create() => new DocumentBlock.Section(
         H("Directed logarithm input correspondence"),
         Blocks(
             Paragraph(Text("The mathematical recurrence belongs to GoldenResource.DirectedLogarithmBounds. This is only its consuming continuation in ActualRobinInterval; the ended endpoint/cell/tangent implementation remains the supplier. The Lean file is a SAME-SOURCE splice after fp_finite_consumer, with the new arithmetic import added at the top. It has not been compiled and exposes no standalone accepted theorem.")),
