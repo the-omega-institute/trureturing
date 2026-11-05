@@ -974,15 +974,13 @@ private theorem J_square {M : Type*} [MulOneClass M]
   rw [marker_cyclotomic U c h, smul_zero] at he
   exact eq_neg_iff_add_eq_zero.mpr he
 
-private def phaseRoot : ℂ := ⟨-1 / 2, Real.sqrt 3 / 2⟩
-
-private theorem phaseRoot_cube : phaseRoot ^ 3 = 1 := by
+private theorem phase_cube : omega ^ 3 = 1 := by
   have hs : (Real.sqrt 3) ^ 2 = 3 := Real.sq_sqrt (by norm_num)
   have hs₃ := congrArg (fun t : ℝ => t * Real.sqrt 3) hs
-  apply Complex.ext <;> norm_num [phaseRoot, pow_succ, Complex.mul_re, Complex.mul_im]
+  apply Complex.ext <;> norm_num [omega, pow_succ, Complex.mul_re, Complex.mul_im]
   all_goals nlinarith
 
-private def phaseCharacter : AddChar (ZMod 3) ℂ := AddChar.zmodChar 3 phaseRoot_cube
+private def phaseCharacter : AddChar (ZMod 3) ℂ := AddChar.zmodChar 3 phase_cube
 
 private theorem phase_cases (k : ZMod 3) : k = 0 ∨ k = 1 ∨ k = 2 := by
   have hk := k.val_lt
@@ -1001,7 +999,7 @@ private theorem phaseCharacter_injective : Function.Injective phaseCharacter := 
   all_goals rcases phase_cases b with rfl | rfl | rfl
   all_goals try rfl
   all_goals norm_num [phaseCharacter, AddChar.zmodChar_apply, ZMod.val_one, ZMod.val_ofNat,
-      phaseRoot, pow_succ,
+      omega, pow_succ,
       Complex.ext_iff, Complex.mul_re, Complex.mul_im] at hab
   all_goals nlinarith
 
@@ -1018,7 +1016,7 @@ private theorem complexMode_re {M : Type*} [MulOneClass M]
 
 private theorem complexMode_marker {M : Type*} [MulOneClass M]
     (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (α : V c →ₗ[ℝ] ℝ) (x : V c) :
-    complexMode U c h α (markerQuotient U c h x) = phaseRoot * complexMode U c h α x := by
+    complexMode U c h α (markerQuotient U c h x) = omega * complexMode U c h α x := by
   have hn : Real.sqrt (3 : ℝ) ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr (by norm_num))
   have hj : complexMode U c h α (J U c h x) =
       Complex.I * complexMode U c h α x := by
@@ -1028,7 +1026,7 @@ private theorem complexMode_marker {M : Type*} [MulOneClass M]
     simp only [J, LinearMap.smul_apply, LinearMap.add_apply, LinearMap.id_apply]
     match_scalars <;> field_simp <;> ring
   rw [hr, map_sub, map_smul, map_smul, hj]
-  apply Complex.ext <;> simp [phaseRoot, Complex.mul_re, Complex.mul_im] <;> ring
+  apply Complex.ext <;> simp [omega, Complex.mul_re, Complex.mul_im] <;> ring
 
 private theorem complexMode_bound {M : Type*} [MulOneClass M]
     (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (α : V c →ₗ[ℝ] ℝ)
@@ -1363,36 +1361,12 @@ local notation "A" => visibleGroup U c h
 local notation "T" => visibleMarker U c h
 local notation "f" => visibleEnergy U c h
 
-private theorem visible_marker_two (x : A) : T (T x) = -x - T x := by
-  obtain ⟨a, rfl⟩ := visibleLabel_surjective U c h x
-  have hc := congrArg (W c).mkQ (marker_cyclotomic U c h (beta c a))
-  have he : visibleLabel U c h a + T (visibleLabel U c h a) +
-      T (T (visibleLabel U c h a)) = 0 := by
-    simp only [← visibleLabel_marker]
-    apply Subtype.ext
-    change gamma c a + gamma c (U a) + gamma c (U (U a)) = 0
-    simpa only [map_add, map_zero, markerQuotient_beta, gamma] using hc
-  calc
-    _ = (visibleLabel U c h a + T (visibleLabel U c h a) +
-      T (T (visibleLabel U c h a))) - visibleLabel U c h a - T (visibleLabel U c h a) := by abel
-    _ = _ := by rw [he]; abel
-
 private theorem energy_zero : f 0 = 0 := visibleComparison_diagonal U c h 0
 private theorem energy_nonneg (x : A) : 0 ≤ f x := visibleComparison_nonneg U c h x 0
 
 private theorem comparison_energy (x y : A) : visibleComparison U c h x y = f (x - y) := by
   have ht := raw_visible_translation_invariant U c h x y (-y)
   simpa only [add_neg_cancel, sub_eq_add_neg, visibleEnergy] using ht.symm
-
-private theorem energy_marker (x : A) : f (T x) = f x := by
-  obtain ⟨a, rfl⟩ := visibleLabel_surjective U c h x
-  have hz : visibleLabel U c h (1 : M) = 0 := Subtype.ext (gamma_one c)
-  have hm := (raw_marker_readouts U c h).1 a 1
-  rw [h.marker_one] at hm
-  change visibleComparison U c h (T (visibleLabel U c h a)) 0 =
-    visibleComparison U c h (visibleLabel U c h a) 0
-  rw [← visibleLabel_marker, ← hz, visibleComparison_label, visibleComparison_label]
-  exact hm
 
 private theorem energy_balance (x y : A) :
     f (x + y) + f (x + T y) + f (x + T (T y)) = 3 * f x + 3 * f y := by

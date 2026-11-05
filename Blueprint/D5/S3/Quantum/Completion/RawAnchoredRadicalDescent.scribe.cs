@@ -35,8 +35,8 @@ internal sealed class RawAnchoredRadicalDescentDocument : IScribeDocumentDefinit
         Seq(Open, Forall, Sp, variable, Colon, Sp, carrier, Comma, Sp, body, Close);
     private static Formula AllM(Formula variable, Formula body) => All(variable, M, body);
     private static Formula AllV(Formula variable, Formula body) => All(variable, Call("V", F.Id("c")), body);
-    private static Formula Arrow(Formula a, Formula b) => Seq(a, Sp, Rightarrow, Sp, b);
-    private static Formula Both(Formula a, Formula b) => Seq(Open, a, Sp, Land, Sp, b, Close);
+    private static Formula Arrow(Formula a, Formula b) => Seq(Open, a, Sp, Rightarrow, Sp, b, Close);
+    private static Formula Both(Formula a, Formula b) => Seq(Open, Open, a, Close, Sp, Land, Sp, Open, b, Close, Close);
     private static Formula Sum3(Formula a, Formula b, Formula c) => Plus2(Plus2(a, b), c);
     private static Formula Conjunction(params Formula[] clauses)
     {
