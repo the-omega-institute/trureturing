@@ -1395,3 +1395,526 @@ information or interface described in §10. The long-term recovery problem
 remains open beyond these conditional results.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. Right-label trades and complete recognition with all point anchors
+
+**Definition 12.1 (actual-point domains and trades).** Keep Definition 1.1
+without changing either alphabet, either literal source, the support of
+$\theta$, or the complete transported relation target. In §§12–14 the true
+source is $G_0$, so $\theta<1$. Use UJB Theorem 15.2 to denote its
+$27$ points by $Q$, its $36$ selected lines by $L$, and its literal
+fibres by $X_\ell,Y_p$, of sizes two and nine. These names refer to the
+actual assignment for a proof; they are not observer inputs. Let
+$D\subseteq\mathcal E_g$ expose all $72$ left and $243$ right labels.
+For a right label $y$, let $p(y)$ be its actual point and put
+
+$$
+\begin{aligned}
+\mathcal L_D(y)&=\{\ell\in L:\exists x\in X_\ell\ (x,y)\in D\},\\
+C_D(y)&=\bigcap_{\ell\in\mathcal L_D(y)}P(\ell).
+\end{aligned}
+\tag{PCR.1201}
+$$
+
+There is at least one observed neighbour of $y$. Thus $C_D(y)$ is
+exactly a selected three-point line if $\mathcal L_D(y)$ has one member,
+and exactly $\{p(y)\}$ if it has at least two members. Distinct lines
+through a point have no second intersection. The two literal twins of
+one left type still give just one member of $\mathcal L_D(y)$.
+
+Define a directed graph $\mathcal A_D$ on $Q$ by putting an arc
+$p\longrightarrow q$, for $p\ne q$, exactly when some $y\in Y_p$
+has $q\in C_D(y)$. A right-label assignment is a map $f:Y\to Q$
+with $f(y)\in C_D(y)$ and $|f^{-1}(p)|=9$ for every $p$.
+The actual assignment $p(y)$ is one such map. A cycle trade chooses
+one witnessing label at each vertex of a directed simple cycle and
+moves it to the next point, leaving every other label in place.
+
+**Theorem 12.2 (exact fixed-left trade criterion).** With the actual left
+injection held fixed and the right image held equal to $Y$, the following
+are equivalent: the full relation is uniquely forced by $D$; the actual
+point assignment is the only right-label assignment; and $\mathcal A_D$
+has no directed cycle. Every other assignment differs from the actual one
+by a union of capacity-preserving directed cycle trades. Every trade used
+in this assertion is realized by a supported full injection of the original
+literal $G_0$, not just by a matrix with the same margins.
+
+Proof. For each $f$, biject the nine literal endpoints over $p$ to the
+nine labels in $f^{-1}(p)$. Doing this at every point constructs a full
+right injection with image $Y$. Keep the actual left injection. Every
+observed pair is still positive by (PCR.1201), and conversely any such
+right injection supplies exactly such an $f$. Different point assignments
+change the relation, because different points have different eight-label
+left neighbourhoods by UJB Theorem 15.2. Permutations within a point fibre
+change no relation and are not ambiguity for this target.
+
+For a different assignment draw one directed edge $p(y)\to f(y)$ for
+each moved label. At every point, the number of incoming edges equals
+the number of outgoing edges: both assignments have capacity nine there.
+A nonempty finite balanced directed multigraph decomposes into directed
+cycles. Indeed follow outgoing edges from an edge until a vertex repeats,
+remove the resulting directed cycle, and repeat; deleting a cycle preserves
+balance. Splitting at repeated vertices gives simple cycles. Their edges
+are precisely moves allowed by $C_D(y)$.
+
+Conversely, on a directed simple cycle choose a witnessing $y\in Y_p$
+for each outgoing arc at $p$. These labels are distinct since their actual
+points are distinct. Move one label out of and one into each cycle point.
+Every capacity stays nine and every moved label stays in its domain.
+This gives a different feasible assignment, realized by permuting the
+images of those literal right endpoints in the actual full injection.
+No left map, unused ambient word, or source branch has been changed.
+
+Both generators have positive prior mass when $\theta<1$. For any
+attained complete-pair history, keep its pairs, repetitions and original
+indices in the alternative realization; all are still edges. Fill every
+other original slot with any edge of the alternative relation. The same
+fixed $N$ iid preparation gives each such compatible array mass
+$1944^{-N}>0$. Thus the obstruction is compatible with the actual finite
+source and its native preparation, not a new sampling permission. $\square$
+
+**Definition 12.3 (full27-anchor class).** A full-support positive set
+$D\subseteq\mathcal E_g$ for $G_0$ is in this class if it contains
+$27$ distinct right labels
+$a_1,\ldots,a_{27}$, each with eight distinct acquired left neighbours,
+and these $27$ neighbourhoods are different. Choose one such collection.
+Since the true right degree is eight, these are complete neighbourhoods;
+the anchors lie one at each actual point. Extra positive edges and extra
+saturated columns are allowed. This is the class used for the minimum
+below, rather than a restriction of the full-injection prior. Attaining such a
+set within the original fixed $N$ is a separate acquisition condition.
+
+**Theorem 12.4 (singleton/capacity recognition is complete in this class).**
+For a positive set in Definition 12.3, the existing algorithm of
+Definition 2.2 accepts if and only if $D$ is a certificate against all of
+$\mathcal G_\theta$. Equivalently, it accepts if and only if the graph
+$\mathcal A_D$ of Definition 12.1 is acyclic. The selected anchors and
+acquired pairs suffice for the algorithm; it needs no actual coordinates,
+true injections, or hidden choice of $p(y)$. In particular this is exact
+on attained full-support histories of this class. Testing a mathematical
+witness set does not assert its acquisition within the fixed $N$.
+
+Proof. Reuse the saturated-anchor argument in Theorem 2.1. In any
+compatible generator the anchors' eight-neighbour sets are exact by the
+right degree. They are $27$ distinct right types, ruling out $G_1$,
+which has only nine. In $G_0$ they exhaust its point types. Hence the
+left labels' membership patterns in these columns give the complete
+line-point table and its $36$ two-label left fibres in label coordinates.
+The table is the same for every compatible full left injection. Missing
+anchor incidences are forced by saturation, not supplied as observed
+negatives. Full support also forces both image sets to be exactly $X,Y$.
+
+An anchor now names its singleton point type. Every other label has exactly
+the domain (PCR.1201), computed from this table. Every assignment with
+nine labels at each anchor type is realizable using the actual left map,
+as in Theorem 12.2; every candidate with an arbitrary full left map has
+one of these assignments in the same table. Thus uniqueness against all
+supported generators is exactly the fixed-table uniqueness of Theorem 12.2.
+
+For completeness of the particular algorithm, singleton assignment and
+removal of a type already occupied by nine assigned labels preserve every
+feasible assignment. On this positive domain they cannot produce a wrong
+assignment, empty domain, or excess capacity, because the actual assignment
+remains feasible throughout. If all labels are assigned, uniqueness follows.
+If the algorithm stalls, consider the types with positive remaining capacity.
+At each such type $p$ an actual label of $Y_p$ is still unassigned. Its
+residual domain contains its true type and, because it is not a singleton,
+another type of positive remaining capacity. Draw that outgoing arc from
+$p$. Every vertex of this nonempty finite graph has an outgoing arc, so
+following arcs gives a directed cycle. Its witnessing labels are unassigned
+and its trade preserves all already assigned labels and all capacities.
+Theorem 12.2 realizes a different full relation. Thus a stall is genuine
+ambiguity, and a certificate cannot stall. This proves the exact criterion
+and completeness of Definition 2.2 on the stated class. $\square$
+
+**Proposition 12.5 (acyclic fixed-left domains need not certify unknown left
+maps).** There is full-support positive $G_0$ evidence with every
+$C_D(y)$ a singleton, no saturated columns, and a different compatible
+full left injection. Thus outside the anchored class, absence of the
+fixed-left cycle obstruction is only necessary for a certificate.
+
+Proof. Name the four selected directions $d_1,d_2,d_3,d_4$, the two
+literal representatives of each line $0,1$, and the nine right labels at
+$p$ as $y_{p,0},\ldots,y_{p,8}$. These are construction names only.
+At each point give column $0$ the representatives $0$ of its $d_1,d_2$
+lines; column $1$ their representatives $1$; column $2$ the representatives
+$0$ of its $d_3,d_4$ lines; and column $3$ their representatives $1$.
+Give each of columns $4,\ldots,8$ the same two left neighbours as column
+$2$. Every column has two neighbours from distinct line types.
+
+Fix $p_0$ and let $x,x'$ be representatives $0$ of its $d_1,d_2$
+lines. At the other points of the first line replace any use of $x$ by
+its twin, and do the analogous replacement for $x'$ on the second line.
+These replacements preserve two distinct line types in every column.
+Every left label still occurs: $x,x'$ occur at column $y_{p_0,0}$,
+their twins occur in column $1$, and all other line representatives occur
+in the indicated columns at their points. All $243$ right labels occur,
+so the resulting evidence has exactly $486$ distinct pairs and full support.
+Every domain is a singleton, so $\mathcal A_D$ is empty.
+
+Postcompose the actual left injection with the transposition of its image
+labels $x,x'$, keeping the right injection. The only evidence involving these two labels is their
+common column $y_{p_0,0}$, adjacent to both, so all evidence is preserved.
+Their full line neighbourhoods differ, so the transported relation changes.
+Both injections remain full and supported. For any fixed $N\ge486$ an
+array listing these pairs and then repeating one of them is a positive
+finite realization for both generators. This example grants no acquisition
+at a smaller $N$. It shows why a fixed-left criterion alone cannot replace
+the all-left-map argument in Theorem 12.4. $\square$
+
+## 13. The six-point closure minimum for the actual four directions
+
+**Definition 13.1 (selected-line closure).** For $S\subseteq Q$, let
+$\operatorname{cl}_K(S)$ be the smallest set containing $S$ and the
+third point of any selected line whose other two points it contains.
+Only the $36$ lines of (PCR.3) are allowed; closure under all $117$
+affine lines is a different operation. A generating set has
+$\operatorname{cl}_K(S)=Q$.
+
+**Theorem 13.2 (exact minimum six).** The minimum size of a generating set
+for this selected-line closure is six. This holds in the actual $G_0$
+geometry and hence under every transported incidence isomorphism.
+
+Proof. Use the basis
+
+$$
+b_1=(0,0,1),\qquad b_2=(1,0,0),\qquad b_3=(1,2,1)
+\tag{PCR.1301}
+$$
+
+of the actual $F^3$. Its fourth selected direction is
+$F(b_1+b_2+b_3)=F(1,1,1)$, since
+$b_1+b_2+b_3=(2,2,2)$. Thus in the coordinates
+$w=xb_1+yb_2+zb_3$ the permitted directions are the three coordinate
+axes and $F(1,1,1)$. This is a correctness change of coordinates for the
+specified source, not an observer's known frame.
+
+For the lower bound define the evaluation vector over $F_3$
+
+$$
+v(x,y,z)=(1,x,y,z,xy-xz,xy-yz)\in F_3^6.
+\tag{PCR.1302}
+$$
+
+On any coordinate line each component is an affine function of the line
+parameter, whose sum over $F_3$ is zero. On a diagonal line the sum of
+each of $xy,xz,yz$ is $-1$, because $\sum_t1=\sum_t t=0$ and
+$\sum_t t^2=-1$ in $F_3$. Their displayed differences therefore also
+sum to zero. Consequently $v(a)+v(b)+v(c)=0$ on every permitted line.
+Adding its third point cannot increase the span of the evaluation vectors
+already present.
+
+The $27$ evaluation vectors span all of $F_3^6$. To see this, a linear
+functional vanishing on them would give a polynomial
+
+$$
+c_0+c_1x+c_2y+c_3z+c_4(xy-xz)+c_5(xy-yz)
+\tag{PCR.1303}
+$$
+
+vanishing on $F_3^3$. A polynomial of degree at most one in each variable
+that vanishes on this grid is zero: hold two variables fixed, use the
+three roots in the remaining variable, and iterate. The coefficients of
+$xz$ and $yz$ first give $c_4=c_5=0$, and then all the other
+coefficients vanish. A proper subspace of $F_3^6$ has a nonzero
+annihilating functional, proving the span assertion. Since closure cannot
+increase this span, a generating set needs at least six points.
+
+For the matching construction take
+
+$$
+S_* =\{(0,0,0),(1,0,0),(0,1,0),(1,1,0),(0,0,1),(1,0,1)\}
+\tag{PCR.1304}
+$$
+
+in the coordinates (PCR.1301). Coordinate-line closure of the two
+$2\times2$ squares fills both planes $z=0$ and $y=0$: first fill
+the third entries of their two parallel rows, then their columns. For a
+point $(x,y,z)$ with $y\ne z$, its diagonal line meets those two
+planes at parameters $-z$ and $-y$, which are distinct. The point is
+therefore in the closure as well. The only remaining possibilities have
+$y=z\ne0$. At fixed $x,z\ne0$, the other two values of $y$ are
+unequal to $z$ and already present; the coordinate $y$-line supplies
+the missing value. All $27$ points are obtained. This is a finite
+constructive completion order, proving the upper bound and exactness.
+Transporting the lines transports the same closure argument. $\square$
+
+The six-dimensional evaluation space uses the extra diagonal direction
+as well as the finite field. The axis-parallel integer-grid value $2^3$
+is not the minimum for these four selected directions. Neither the seed
+coordinates nor the linear evaluations are additional observed data.
+
+## 14. Defining points, the 480 anchored minimum and the 297 general bound
+
+**Lemma 14.1 (acyclic trades force a generating set of pinned points).**
+Under Definition 12.1 put
+
+$$
+S_D=\{p\in Q:C_D(y)=\{p\}\text{ for every }y\in Y_p\}.
+\tag{PCR.1401}
+$$
+
+If $\mathcal A_D$ is acyclic, then
+$\operatorname{cl}_K(S_D)=Q$, and in particular $|S_D|\ge6$.
+With one saturated anchor at each point, membership in $S_D$ means
+that all eight other labels at that point have singleton domains.
+
+Proof. List the vertices of the acyclic graph in an order in which every
+arc points to an earlier vertex. Process this order. If $p\in S_D$,
+it is available as a seed. Otherwise some $y\in Y_p$ has a non-singleton
+domain, which by Definition 12.1 is a selected line $\{p,q,r\}$.
+Both $p\to q$ and $p\to r$ are arcs, so $q,r$ have already been
+processed. The two-of-three rule now adds $p$. This proves generation;
+Theorem 13.2 gives its minimum. An anchor has its eight incident left
+neighbours, hence a singleton domain, giving the last assertion. $\square$
+
+**Theorem 14.2 (uniform 480-pair G0 certificate).** For every supported
+transported $G_0$ there is a certificate of exactly $480$ distinct
+positive complete pairs in the full27-anchor class. It forces the entire
+literal $1944$-edge relation against all supported full injections of both
+branches, with no known-label promise or restriction of the prior.
+
+Proof. Construct in the actual source coordinates and then transport.
+Choose one literal right anchor at each of the $27$ points and acquire
+all eight of its incident pairs, giving $216$ pairs as in Theorem 2.1.
+Choose the six points $S_*$ of (PCR.1304). For each of their eight
+nonanchor right labels include two incident pairs from distinct line types.
+This adds $6\cdot8\cdot2=96$ pairs and makes all six point types
+fully assigned by the singleton rule, including their anchors.
+
+Order the other $21$ points by any construction of their selected-line
+closure from $S_*$. When adding $p$, choose a selected line
+$\{p,q,r\}$ whose other two points were added earlier. For each of the
+eight nonanchor right labels at $p$, include just one pair to a literal
+left representative of this line. This adds $21\cdot8=168$ pairs.
+The blocks use disjoint right labels, so there are exactly
+
+$$
+216+96+168=480
+\tag{PCR.1402}
+$$
+
+distinct pairs, not a count after suppressing literal twins. The anchors
+expose all left labels and all other right labels have been included.
+
+Theorem 12.4 fixes the complete labelled type table and excludes $G_1$.
+The six seed types have all nine labels assigned. Inductively, a chosen
+line for the next point has its other two capacities already filled by nine
+distinct labels each. Every nonanchor label under consideration is distinct
+from those eighteen labels. Its one positive incidence restricts it to this
+line, so injectivity forces its remaining point. All eight labels there are
+assigned, filling that type in turn. The algorithm assigns every right
+label, returns the complete lifted relation and accepts. Coordinates,
+anchors and representative choices specify an existence witness only;
+Definition 2.2 recognizes attained evidence without being given them.
+The full-injection and both-branch conclusion follows from Theorem 12.4,
+not merely from a fixed-left calculation. $\square$
+
+**Theorem 14.3 (480 is exactly minimal in the full27-anchor class).** Every
+certificate in Definition 12.3 has at least $480$ distinct pairs, even
+when arbitrary additional positive edges are permitted. Theorem 14.2
+attains this lower bound.
+
+Proof. Choose one of its $27$-anchor collections. Its columns contribute
+exactly $216$ distinct pairs. Each of the $216$ other right labels must
+occur at least once. Thus the starting count is $432$.
+
+A certificate has no directed cycle by Theorem 12.4. Lemma 14.1 gives
+at least six points in $S_D$. At each such point all eight nonanchor
+labels have singleton domains. Each requires observed neighbours in at
+least two different line types, so has degree at least two in the evidence.
+These $8|S_D|$ distinct columns each contribute at least one pair beyond
+the starting count. Therefore
+
+$$
+|D|\ge216+216+8|S_D|\ge432+48=480.
+\tag{PCR.1403}
+$$
+
+An extra edge to the other twin of an already observed line does not make
+a singleton domain. More edges in any column cannot evade this counting
+argument. It applies to every anchor collection chosen as above and to all
+extra positive evidence, without assuming that the evidence has the
+particular shape of Theorem 14.2. $\square$
+
+**Theorem 14.4 (297 necessary pairs for unrestricted G0 certificates).**
+Every positive complete-pair certificate for a supported $G_0$ under
+Definition 1.1 has at least $297$ distinct pairs, without an anchor
+hypothesis. In particular an attained certificate needs at least $297$
+completed original slots. This is a necessary bound, not an unrestricted
+construction or a sufficient recognition rule.
+
+Proof. Theorem 4.1 forces all $72$ and $243$ endpoint labels to be
+exposed, using the actual alphabet slack $128>72$, $256>243$.
+Hold the actual left injection fixed and permit every right injection on
+the actual image, a subset of the original competitor family. A directed
+cycle would already give a different supported relation by Theorem 12.2,
+so the graph must be acyclic. Lemma 14.1 supplies at least six points
+whose nine literal right labels all have singleton domains.
+
+Every right column contributes at least one pair; the $9|S_D|$ columns
+at these points each require at least a second pair from a distinct line
+type. Thus
+
+$$
+|D|\ge243+9|S_D|\ge243+54=297.
+\tag{PCR.1404}
+$$
+
+All those column counts refer to different acquired label pairs. Repetition
+of a pair at several original indices does not increase $|D|$, and each
+completed slot contributes at most one member of it. The cycle alternatives
+are actual full-injection finite-source alternatives as in Theorem 12.2.
+No sufficiency against changing the left map is inferred; Proposition 12.5
+shows exactly why that inference would be invalid. $\square$
+
+If $q_0^{\min}$ denotes the unrestricted minimum certificate size for a
+fixed transported $G_0$, these results give
+$297\le q_0^{\min}\le480$. The full-injection family makes this
+minimum invariant under transport. Whether fewer than $480$ pairs can
+force the full relation without all $27$ anchors remains unresolved here.
+The value $480$ is asserted optimal only in Definition 12.3's evidence
+class. No $G_1$ minimum or improved $G_1$ upper bound follows.
+The former $576$ and $324$ sufficient witnesses remain valid.
+
+## 15. Acquired forcing, original continuation and the scope of the increment
+
+**Corollary 15.1 (the stronger witness reaches the existing consumers).**
+Keep the actual fixed finite $N$, public $\theta$, original root Read
+menu, full indexed cache and paid controller of §§5–6. For a cap
+$0\le n\le N$, scan original complete slots as in Definition 5.1,
+retaining their original indices, masks and values. At each completion,
+the label-only algorithm of Definition 2.2 can be run whenever its
+$27$-anchor pattern is present. On this attained class it is an exact
+certificate test by Theorem 12.4. On other evidence it makes no completeness
+claim; Definition 1.2 still gives the full-family recognition criterion.
+No factorial map enumeration is needed for the new anchored test.
+
+For each supported actual $G_0$ fix, for this probability argument only,
+one transported $480$-pair witness of Theorem 14.2. Its coverage in the
+first $n$ original slots has exact conditional probability $F_{480}(n)$,
+where $F_q$ and its occupancy recurrence are those of PCR.7–PCR.8.
+Thus this is a sufficient event for acceptance. If the scan retains the
+existing full-family test as well, its mixture acceptance probability is
+at least
+
+$$
+(1-\theta)F_{480}(n)+\theta F_{324}(n).
+\tag{PCR.1501}
+$$
+
+This reuses the $G_1$ witness unchanged. The formula is not an exact
+probability of finding any certificate or a deterministic acquisition
+budget. The fixed witness can be covered only if $n\ge480$, and has
+positive coverage probability when that holds. For the original scan,
+$n<297$ excludes a $G_0$ certificate of positive complete pairs alone;
+$n\ge297$ gives no guarantee of one. Finite repetitions still allow
+failure at every cap. A wholly unread reserved original slot requires
+$n\le N-1$; this witness supplies a positive reserved-slot event only
+when $N\ge481$. No original slot or finite cap is enlarged.
+
+Whenever certification succeeds, its output is the complete transported
+$E$ with all $72$ left and $243$ right label attachments and all
+$1944$ literal edges. For $G_0$ this is precisely the input of
+Proposition 8.7, which already constructs and uses the intrinsic affine heap,
+marked directions and full affine incidence from acquired data. There is
+no replacement of $E$ by a source-bit decision, an anonymous point table,
+or a promised coordinate frame. With the retained full indexed cache,
+Proposition 6.1 and UJB Theorem 17.1 supply the original indexed
+conditional array law, repeated/partial-slot updates, recorded replay,
+all allowed replies and bounded adaptive continuation. Their existing
+formula (PCR.9) and controller/resource assumptions apply unchanged.
+The inverse domain of UJB Theorem 17.2 still keeps the fixed prior,
+fixed partial cache, indexed completed records and an unread original slot.
+
+Proof. A superset of a certificate is a certificate on the attained domain:
+it only removes competitors, while the actual generator remains. Once the
+fixed $480$ witness is covered its anchors are saturated and its whole
+positive evidence is in Definition 12.3. Theorems 12.4 and 14.2 therefore
+justify the anchored test at that completion. The original slots remain
+iid conditional on the one shared generator, so the existing fixed-witness
+occupancy calculation applies with $q=480$. Using the existing $324$
+witness on the other branch gives (PCR.1501). These events have their
+original finite-slot meaning. The final relation and continuation claims
+are applications of the named existing consumers, rather than new proofs
+of affine rigidity, generic target constancy or indexed conditioning.
+$\square$
+
+The acquisition tariff is still exactly $15m$ original-root Reads after
+$m$ completed scanned slots, operand-length sum $15m(15m+3)/2$ and
+maximum $15m+1$ for $m>0$, with zero costs for the empty scan. The
+number $480$ counts distinct witness pairs, whereas $m$ counts actual
+completed slots, including repetitions. All $N$ slots were already
+prepared: UJB §§5.2–5.3 supply the actual $\alpha/\beta$ LAB $P/S$
+construction and its $75N+4$ events. Its random edge preparation, iid
+law and two shared full injections are model premises; they do not follow
+from bare two-atom syntax. Map selection, preparation operands, installation,
+source-blind controller, computation and storage remain separately paid.
+
+The anchored computation is finite on small acquired sets: at most $243$
+columns can have degree eight, and comparing their eight-label neighbour
+sets finds the $27$ different anchor types. For a chosen collection there
+are $72\cdot27$ left/anchor incidence entries and at most
+$243\cdot27$ label/type domain entries. A direct implementation can
+scan these entries, assign a singleton, delete newly saturated types and
+repeat, with at most $243$ assignments and $27$ capacity saturations.
+This supplies a finite bound without enumerating unknown injection
+permutations. Comparisons of words, counters, scanning for anchors,
+working domains and the returned relation still use computation and
+storage; the graph $\mathcal A_D$ with the true assignment is only a
+proof device. The observer never asks an unacquired membership question.
+
+**Definition 15.2 (sources, novelty scope and unresolved recovery).** The
+following are the mathematical correspondences and boundaries.
+
+* The saturated anchors and basic capacity peeling are reused from §§2, 4;
+  UJB Theorem 15.2 supplies the original line structure and literal
+  capacities. §§8–11 and UJB §§16–17 already supply geometry, inversion
+  boundaries, masks, records and continuation. The source-specific additions
+  here are the realized cycle criterion, completeness of the existing
+  peeling in the anchored class, the six-point closure proof and their
+  connected certificate/minimality consequences.
+* [Balister–Bollobás–Lee–Narayanan, *Line percolation*, Theorem 2.3
+  and §6](https://arxiv.org/pdf/1403.6851v3) give the minimum $r^d$
+  for axis-parallel line percolation on an integer grid and use polynomial
+  vanishing to prove its lower bound. That numerical theorem does not
+  cover the finite field with a fourth direction here. Theorem 13.2 uses
+  the mature polynomial/evaluation-span method with the explicit source
+  correspondence (PCR.1301), line-sum identities (PCR.1302) and a matching
+  six-point construction. Its source-specific dimension is proved here.
+* [Cavenagh–Ramadurai, *On the distances between Latin squares and the
+  smallest defining set size*, Lemma 1.1](https://arxiv.org/pdf/1602.07734v1)
+  states the necessary condition that a defining set meets every contained
+  Latin trade. This is the mature trade-hitting perspective; the exact
+  equivalence needed here is proved in Theorem 12.2. Prescribed-margin
+  cycle trades are also credited in §7. Here the competitor family is the two
+  actual full-injection orbits, not all margin matrices or Latin squares.
+  Theorem 12.2 proves which right-label trades are realized in this source;
+  anchors supply the additional all-left-map reduction in Theorem 12.4.
+  No Latin-square or margin-matrix numerical bound is transferred.
+* The formal target-fibre and experiment-pair-cover suppliers in §7 remain
+  the abstract criteria with their existing hypotheses. These ordinary
+  paper proofs do not add a Lean declaration or claim fresh kernel checking.
+  The synthesis is repository-derived in the stated source. The literature
+  correspondences give no worldwide originality or priority claim.
+
+The claims have concrete failure tests: a directed cycle must realize the
+specified changed full relation; an anchored stall must yield such a cycle;
+a five-point closure generating all $27$ points would contradict the
+six-dimensional invariant; and any anchored certificate below $480$ or
+unrestricted $G_0$ certificate below $297$ would violate the corresponding
+pinned-column count. These are statements about the original full family,
+not permission to treat absent pairs as negative observations or to replace
+the source by a relaxed incidence problem.
+
+The unrestricted gap $297\ldots480$ remains open here. Certification still
+does not recover hidden twin coordinates, the actual origin, unread realized
+bits, a serial preparation history or physical spacetime. It supplies no
+new owner permission, Busy query, source oracle, chosen-label query, sampler,
+reset, interrupt, graft or physical inverse. All original slots, masks,
+indices, repeated and partial values and the full record/reply/return
+contract remain necessary inputs where the existing consumer requires them.
+This closes a scoped relation-acquisition and recognition gap for that
+consumer; it does not complete the long-term mutual-recovery programme.
+
+## 追加锚（本行以下为增补区）
