@@ -22,8 +22,10 @@ Its SHA-256 is
 The supplier and host use Lean 4.35.0 and Mathlib
 `56a005855ea17e0b0958f73ec801ae140b0a1679`.
 Equal pins do not establish automatic dependency admission: the A17
-predicates remain open. The proposed reuse form is the A17.2 source
-transplant, with independent source and admission interpretation required.
+predicates remain open. The native module
+`D5/S3/HilbertOperators/WoldDecomposition.lean` reuses the necessary source
+closure by transplantation under A17.2, without a new Lake dependency or
+changes to the pins. Its Blueprint Scribe describes the retained endpoints.
 
 Let k be any RCLike field and H any inner product space over k, with
 independent universes, and V a linear isometry H to H. Write
@@ -57,14 +59,19 @@ The full license, including its machine-learning intended-use preface, is
 retained at `docs/reports/lovasz-suppliers/atlas-LICENSE.txt`, SHA-256
 `fc78801eadec58b04e0d5cabe735eb6808e23f47b0cb92b89b55792019b54131`.
 The source copyright is Meta Platforms, Inc. and affiliates, all rights
-reserved. The caller's custody intake reports HTTP 404 for root NOTICE.
-This reference makes no blanket legal-clearance claim. Retire this
+reserved. The complete Git tree at the immutable revision contains `LICENSE`
+as the only license or notice entry along the source's ancestor chain:
+the repository root, `MathlibExt`, `MathlibExt/Analysis`, and
+`MathlibExt/Analysis/InnerProductSpace`. This tree fact and the retained
+license do not constitute blanket legal clearance. Retire this
 transplant when an actually adopted pinned Mathlib revision provides the
 equivalent finite support, norm and residual-restriction statements at the
 same scope, and directly reuse that Mathlib source.
 
 The special Hardy/finite-Blaschke pure-isometry infinite decomposition in
 OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY section 1733 is not asserted to
-be this generic finite/residual theorem. No coverage or atom is claimed.
-The proposed generic deposit-uncovered route requires independent
-correspondence review before any freeze.
+be this generic finite/residual theorem. It concerns a complex Hardy space,
+a finite Blaschke multiplier and an infinite pure-isometry decomposition;
+the native statements quantify over arbitrary real or complex inner product
+spaces and retain a possibly nonzero residual intersection. No theory-atom
+coverage, infinite Hardy decomposition or basis result is claimed here.

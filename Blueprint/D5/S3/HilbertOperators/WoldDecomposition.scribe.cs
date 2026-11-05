@@ -17,7 +17,7 @@ internal sealed class WoldDecompositionDocument : IScribeDocumentDefinition
                 All("x", V("H"), All("n", V("Nat"), Some("w", Arrow(V("Nat"), V("H")), Some("y", V("H"),
                     And(All("j", V("Nat"), Member(Call("w", V("j")), Call("W", V("V")))),
                         And(All("j", V("Nat"), Imp(Le(V("n"), V("j")), Eqn(Call("w", V("j")), D(0)))), Reconstruction()))))))),
-                "For every x and every natural n, including zero, a single family w and remainder y realize all clauses together. Every w j lies in W(V), w j vanishes for j >= n, and x is the sum over j in Finset.range n of (V^j)(w j), plus (V^n)y. SumRange(n,f) denotes that finite sum; PowerApply(V,j,z) denotes (V^j)z. Completeness gives the orthogonal range splitting. The source induction splits the old remainder and updates its coefficient family at n. No separability, finite dimension or ambient surjectivity is required."),
+                "For every x and every natural n, including zero, a single family w and remainder y realize all clauses together. Every w j lies in W(V), w j vanishes for j >= n, and x is the sum over j in Finset.range n of (V^j)(w j), plus (V^n)y. SumRange(n,f) denotes that finite sum; PowerApply(V,j,z) denotes (V^j)z; PowerWanderingFamily(V,w) denotes j mapped to (V^j)(w j). Completeness gives the orthogonal range splitting. The source induction splits the old remainder and updates its coefficient family at n. No separability, finite dimension or ambient surjectivity is required."),
             Entry("finite-pythagorean-identity", "wold_norm_sq", Context(false,
                 All("n", V("Nat"), All("w", Arrow(V("Nat"), V("H")),
                     All("hw", All("j", V("Nat"), Member(Call("w", V("j")), Call("W", V("V")))),
