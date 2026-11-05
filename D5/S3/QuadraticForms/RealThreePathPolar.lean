@@ -25,7 +25,7 @@ namespace D5.S3.QuadraticForms.RealThreePathPolar
 variable {V : Type*} [AddCommGroup V] [Module ℝ V]
 
 /-- The three-path identity reads the same function at every real scalar recipe. -/
-def Balance (U : V → V) (q : V → ℝ) : Prop :=
+@[expose] def Balance (U : V → V) (q : V → ℝ) : Prop :=
   let Q := fun x => q x - q 0
   ∀ (x y : V) (t : ℝ),
     Q (x + t • y) + Q (x + t • U y) + Q (t • U x + y) =
@@ -305,7 +305,10 @@ theorem raw_real_polar (U : V → V) (q : V → ℝ)
       (∀ x y, B x y = B y x) ∧
       (∀ x, q x = q 0 + B x x) ∧ (∀ x, 0 ≤ B x x) ∧
       (∀ x, B (U x) (U x) = B x x) ∧
-      (∀ x y, B x y + B x (U y) + B (U x) y = 0) := by
+      (∀ x y, B x y + B x (U y) + B (U x) y = 0) ∧
+      (∀ x y, B (U x) (U y) = B x y) ∧
+      (∀ x, B x x = 0 ↔ x ∈ B.ker) ∧
+      (∀ x, x + U x + U (U x) ∈ B.ker) := by
   obtain ⟨E, A, B, hdec, hb, hsym, hd, hp, hnull⟩ := raw_even_data U q hq h
   let Q := fun x => q x - q 0
   have hz : Q 0 = 0 := sub_self _
@@ -382,7 +385,7 @@ theorem raw_real_polar (U : V → V) (q : V → ℝ)
     have hh := hnull (x + U x + U (U x)) (by rw [← hd]; exact hcycle x)
     simp only [map_add, hAU] at hh
     linarith
-  refine ⟨B, ?_, hsym, ?_, (fun x => by rw [hd]; exact hp x), hEU, horient⟩
+  refine ⟨B, ?_, hsym, ?_, (fun x => by rw [hd]; exact hp x), hEU, horient, hBU, ?_, ?_⟩
   · intro x y
     rw [hdec (x + y), hdec (x - y), hA, hA, ← hd, ← hd]
     simp only [map_add, map_sub, LinearMap.add_apply, LinearMap.sub_apply]
@@ -391,5 +394,16 @@ theorem raw_real_polar (U : V → V) (q : V → ℝ)
   · intro x
     rw [hdec, hA, ← hd]
     ring
+
+  · intro x
+    constructor
+    · intro hx
+      ext y
+      exact hn x hx y
+    · intro hx
+      exact congrArg (fun f => f x) hx
+  · intro x
+    ext y
+    exact hn _ (hcycle x) y
 
 end D5.S3.QuadraticForms.RealThreePathPolar
