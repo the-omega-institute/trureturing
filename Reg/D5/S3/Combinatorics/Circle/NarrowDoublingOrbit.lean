@@ -3,9 +3,10 @@ import D5.S3.Combinatorics.Circle.NarrowDoublingOrbit
 import Reg.Support.DependentFamily
 import Reg.Support.SingleDependentReadout
 
-/-! Faithful whole-family audit attempt for narrow_classification.
-The remaining five public source results have no registration in this mirror.
-Kernel compilation of this record alone does not establish source binding. -/
+/-! Faithful whole-family audit attempts for the denominator theorem, actual
+explicit numerator reconstruction and exact anchored classification.
+The original five auxiliary public results remain unregistered.
+Kernel compilation of these records does not establish source binding. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section

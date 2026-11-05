@@ -1623,49 +1623,4 @@ theorem exists_narrow_iff_mersenne_dvd {X : ℕ} (hX : 3 ≤ X) (hodd : Odd X) :
       exists_narrow_of_mersenne_dvd hX hodd ht hdiv
     exact ⟨Q, hQ, hQX, hnarrow⟩
 
--- BEGIN TRANSIENT BOUNDARY CHECKS
-example : explicitNumerator 2 1 1 = 2 := by norm_num [explicitNumerator]
-
-example : Anchored 3 2 := by
-  apply (anchored_explicit_classification (X := 3) (Q := 2)
-    (by decide) (by decide) (by decide) (by decide)).1.mpr
-  refine ⟨2, 1, 1, by decide, by decide, by decide, by decide,
-    by decide, by decide, by decide, ?_⟩
-  norm_num [explicitNumerator]
-
-example : Anchored 15 8 ∧ Anchored 15 10 := by
-  constructor
-  · apply (anchored_explicit_classification (X := 15) (Q := 8)
-      (by decide) (by decide) (by decide) (by decide)).1.mpr
-    refine ⟨4, 1, 1, by decide, by decide, by decide, by decide,
-      by decide, by decide, by decide, ?_⟩
-    norm_num [explicitNumerator]
-  · apply (anchored_explicit_classification (X := 15) (Q := 10)
-      (by decide) (by decide) (by decide) (by decide)).1.mpr
-    refine ⟨2, 1, 1, by decide, by decide, by decide, by decide,
-      by decide, by decide, by decide, ?_⟩
-    norm_num [explicitNumerator]
-
-example : period 15 8 = 4 ∧ period 15 10 = 2 := by
-  constructor
-  · exact ((anchored_explicit_classification (X := 15) (Q := 8)
-      (by decide) (by decide) (by decide) (by decide)).2
-      4 1 1 (by decide) (by decide) (by decide) (by decide)
-      (by decide) (by decide) (by decide) (by norm_num [explicitNumerator])).1
-  · exact ((anchored_explicit_classification (X := 15) (Q := 10)
-      (by decide) (by decide) (by decide) (by decide)).2
-      2 1 1 (by decide) (by decide) (by decide) (by decide)
-      (by decide) (by decide) (by decide) (by norm_num [explicitNumerator])).1
-
-example : ¬ Anchored 3 1 := by
-  intro h
-  have hh := (h 1).1
-  norm_num [residue] at hh
-
-example : ¬ Anchored 31 24 := by
-  intro h
-  have hh := (h 2).2
-  norm_num [residue] at hh
--- END TRANSIENT BOUNDARY CHECKS
-
 end D5.S3.Combinatorics.Circle.NarrowDoublingOrbit
