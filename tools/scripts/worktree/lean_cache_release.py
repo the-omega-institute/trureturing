@@ -168,6 +168,9 @@ def _observe(verb, status, *, phase=None, reason=None, error=None, mode=None,
 
 
 def receipt(verb, status, **fields):
+    global LOG_LAST
+    attempt_only = fields.pop("_attempt_only", False)
+    previous = LOG_LAST
     phase = fields.pop("_phase", None)
     error = fields.pop("_error", None)
     expected_bytes = fields.pop("_expected_bytes", None)
@@ -177,6 +180,8 @@ def receipt(verb, status, **fields):
     _observe(verb, status, phase=phase, reason=fields.get("reason"),
              error=error, mode=mode, expected_bytes=expected_bytes,
              transferred_bytes=transferred_bytes, validated_bytes=validated_bytes)
+    if attempt_only:
+        LOG_LAST = previous
     print("LEAN_CACHE_" + verb.upper() + " " + json.dumps({"status": status, **fields}, separators=(",", ":")))
 
 
@@ -984,9 +989,8 @@ def fetch_locked(root, partition, deadline, refresh_stale=False, approved_tag=No
                     try:
                         temporary.cleanup()
                     except OSError as error:
-                        if LOG is not None:
-                            LOG.emit("cleanup_deferred", operation="fetch", action="fetch",
-                                     stage="cleanup", outcome="deferred", error_type=type(error).__name__)
+                        receipt("fetch", "cleanup-deferred", _attempt_only=True, _error=error,
+                                _phase="cleanup", reason=str(error), resolved=tag)
                 return 0
             except RollbackFailed as error:
                 receipt("fetch", "rollback-failed", _error=error, reason=str(error), backup=error.backup,

@@ -447,7 +447,7 @@ def _log_result(action, result):
     failure = result.get("failure")
     reason = result.get("reason")
     if reason is None and isinstance(failure, dict):
-        reason = failure.get("reason") or failure.get("error")
+        reason = failure.get("reason")
     status = result.get("status") or result.get("pool", {}).get("status")
     if reason is None:
         reason = next((item.get("reason") for item in result.get("items", [])
@@ -660,7 +660,8 @@ def _main(argv=None):
                        status="refused" if isinstance(error, Refused) and not isinstance(error, GitFailure)
                        else "failed",
                        outcome="refused" if isinstance(error, Refused) and not isinstance(error, GitFailure)
-                       else "failed", reason=str(error), error=error)
+                       else "failed", reason=str(error) if isinstance(error, Refused)
+                       and not isinstance(error, GitFailure) else "operation_failed", error=error)
         # Only remove/qualify use the qualification failure boundary. Other
         # commands retain their existing refusal and exception contracts.
         if options.action in ("remove", "qualify") and (

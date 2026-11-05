@@ -333,6 +333,26 @@ class MaintenanceLogTests(unittest.TestCase):
         self.assertEqual("install", rows[-1]["stage"])
         self.assertIsNone(rows[-1]["error_type"])
         self.assertNotIn("PRIVATE", json.dumps(rows))
+        from contextlib import redirect_stdout
+        release.LOG = None
+        class DeferredCleanup:
+            name = str(self.root / "private-stage")
+            def cleanup(self):
+                raise OSError("private cleanup diagnostic")
+        def installed(*args, **kwargs):
+            release.receipt("fetch", "unpacked", _phase="install")
+        business = io.StringIO()
+        with patch.object(release, "release_key", return_value={}), \
+             patch.object(release, "snapshot_candidates", return_value=[("partition", "tag")]), \
+             patch.object(release, "fetch_staging_cleanup"), \
+             patch.object(release, "restore_snapshot", side_effect=installed), \
+             patch.object(release.tempfile, "TemporaryDirectory", return_value=DeferredCleanup()), \
+             redirect_stdout(business):
+            self.assertEqual(0, release.fetch_locked(self.main, "partition", time.monotonic() + 10))
+        self.assertIn('"status":"cleanup-deferred"', business.getvalue())
+        self.assertIn("private cleanup diagnostic", business.getvalue())
+        self.assertEqual("unpacked", release.LOG_LAST["status"])
+        self.assertNotIn("error_type", release.LOG_LAST)
 
     def test_protocol_refusal_records_action_and_bounded_reason(self):
         command = [sys.executable, "-B", str(SOURCE / "tools/scripts/worktree/worktree_protocol.py"),
