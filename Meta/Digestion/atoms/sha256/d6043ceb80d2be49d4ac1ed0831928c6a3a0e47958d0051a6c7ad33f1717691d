@@ -1,0 +1,128 @@
+**Lemma 11.2 (Uniform full-template comparison).** There are
+$A_{R,J_0,c},C_{R,J_0,c}$ such that for all the above pairs with
+$a\ge A_{R,J_0,c}$ and every integer $N\ge ca^2$, each
+$\widehat{\mathfrak C}_{j,N}$ is nonempty and
+
+$$
+\left|\widehat V_{j,N}-S_j-\frac{\bar\chi_{j,N}}N\right|
+ \le \frac{C_{R,J_0,c}a^5}{N^2}.
+\tag{11.2}
+$$
+
+The estimate is uniform in every integer remainder. In particular its
+lower bound applies to the minimum over every old winning-branch
+template, including unbalanced tail allocations.
+
+**Proof.** Bounded $j$ gives $r,m\asymp a$, $n\asymp_R\sqrt a$,
+$\alpha\ge1/2$ and $\beta\asymp_{R,J_0}a^{-3/2}$.
+The identities (10.1) still hold, uniformly over these branches, except
+that no assertion of law optimality is used. Thus $F>0$ for
+$N\ge ca^2$. For arbitrary $e,o$ in (6.2), all core degrees
+are $\alpha N+O_{R,J_0}(a)$ and exceed $m$. Balanced tail degrees
+are $\beta N+O_{R,J_0}(1)$, hence tend uniformly to infinity even
+at $N=ca^2$. They exceed $2$, the maximum source degree incident
+to a tail. Together with (6.13), this proves the precise source and
+edge counts, simplicity, connectedness and strict orientation of every
+balanced construction. It proves nonemptiness without the unnecessary
+requirement that tail degrees exceed $s$ at this smaller scale.
+
+We first reduce every graph in the template class to such balanced
+tails. Strict orientation at its connector forces each integer tail
+degree $q_k\ge3$, even if it is far from its balanced degree. In
+fact (6.7) is strictly positive for every real $x\ge3$. To check the
+extra interval, the numerator $x^3-3x^2-2$ is increasing on this
+range and at least $-2$, whereas
+$x^2+4\le2(x^2+1)$ and $3x^2+8\ge35$. Thus the second term
+of (6.7) exceeds
+$140/[3x^3(x^2+1)^{3/2}]$, which exceeds the possible negative
+part $2/[x^3(x^2+1)^{3/2}]$ of its first term.
+
+If $q_k\ge q_l+2$, transfer a singleton from $k$ to $l$.
+The donor degree after the transfer is at least $4$ and both
+connector degrees are still strictly less than their tail degrees.
+Core degrees and all source degrees remain fixed. The connector at
+each tail and the full cores preserve connectedness, and changing one
+singleton neighborhood preserves simplicity and both budgets. Strict
+convexity decreases $g(q_k)+g(q_l)$ as in (6.8). Repetition terminates,
+for example by the strictly decreasing integer sum of squared tail
+degrees, at the balanced degrees $b,b+1$. Hence minimizing over the
+whole template class is equivalent to minimizing over balanced tails
+and arbitrary feasible $e,o$. This supplies a full-template lower
+bound, rather than a comparison of two chosen constructions.
+
+We estimate the value on every such balanced graph using its same actual
+empirical law. Put $z_i=e_i-o_i$, $\delta_i=\sigma+z_i$ and use
+$B_i$ from (7.4), before any coupled core minimization. Uniformly,
+
+$$
+\begin{gathered}
+|\sigma|\le C,\quad |\varphi|\le Ca,\quad
+\sum_i|\delta_i|\le Ca,\quad \sum_i\delta_i^2\le Ca^2,
+\quad \max_i|B_i|\le Ca^3,\\
+q_k=\beta N+\nu_k,\quad |\nu_k|\le C,\quad
+\sum_i\delta_i=\sigma,\quad \sum_k\nu_k=-\sigma.
+\end{gathered}
+\tag{11.3}
+$$
+
+Here and within this proof $C$ depends only on $R,J_0,c$.
+For example $\sum|z_i|\le n+d=O(a)$ proves the offset bounds,
+and
+$B_i=m^2\sigma+(r^2-m^2)d-r^2o_i+4e_i$ proves the numerator
+bound. The balanced tail offsets are exactly those of (7.7), with
+$\gamma=O(1)$, proving their uniform boundedness. For large $a$,
+$|\delta_i|\le\alpha N/2$ and $|\nu_k|\le\beta N/2$.
+Taylor expansion of the exact law identity (7.5), with these bounds,
+gives the first two terms in (7.6). Its summed core error is bounded by
+
+$$
+\frac C{N^2}\sum_i
+       (m^2\delta_i^2+|B_i\delta_i|)
+ \le\frac{Ca^4}{N^2};
+\tag{11.4}
+$$
+
+the summed tail error is at most
+$Cn\beta^{-3}/N^2\le Ca^5/N^2$. These estimates follow from the
+Taylor remainder for $(1+x)^{-2}$ on $|x|\le1/2$; in the term
+with $B_i/N$ its remainder after the constant term is bounded by
+$C|B_i\delta_i|/N^2$. No fixed-parameter error is being reused
+as a joint-growth error.
+
+The constant term is $m^3/\alpha+n/\beta=S_j$.
+For clarity the linear coefficient is exactly
+
+$$
+\frac{m^3\varphi+r^3d+4n-2m^2\sigma}{\alpha^2}
+       +(3n+\sigma)\eta^2
+ =nb_j+dc_j.
+\tag{11.5}
+$$
+
+Indeed $\sum_iB_i=m^3\varphi+r^3d+4n$,
+$\sum_i\delta_i=\sigma$, $\sum_k\nu_k=-\sigma$;
+substitution of $\varphi=\sigma-d$, $r\sigma=d-n$ and $m=r+1$
+into (1.8) proves the equality. This is rational algebra and does not
+use any winning-branch inequality.
+
+It remains to pass from this law energy to the original graph objective.
+The scalar inequality
+$0\le x-2(\sqrt{1+x}-1)\le x^2/4$ for $x\ge0$ yields
+
+$$
+0\le H(x_G)-W(G)
+ \le\frac N4\sum_{ui\in E}\frac{d_G(u)^4}{d_G(i)^4}.
+\tag{11.6}
+$$
+
+At a core the fourth-power numerator is
+$Fm^4+(d-o_i)r^4+16e_i\le CNa^4$ and its degree is at least
+$\alpha N/2$. Summing over $m=O(a)$ cores bounds their part
+by $Ca^5/N^2$. At a balanced tail the numerator is $q_k+15$,
+so its part is at most $CN/q_k^3\le C/(\beta^3N^2)$;
+summing over $n$ tails again gives $Ca^5/N^2$.
+Equations (11.3)--(11.6) bound the absolute error on every balanced
+graph, uniformly over its endpoints, omissions, all $d,t$ and labels.
+Their minimum has the same bound. The balancing reduction proves that
+this minimum is $\widehat V_{j,N}$, completing (11.2). ∎
+
