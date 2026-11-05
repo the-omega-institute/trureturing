@@ -40,7 +40,7 @@ $$\forall M: Type, [\operatorname{MulOneClass}\left(M\right)], U: M \to M, u: M,
 
 The full telescope is arbitrary M with only a two-sided unit, U:M to M, u:M, a subset N containing 1 and closed under x times U^k u for every x in N and k in ZMod 3, an injective complex additive character chi of ZMod 3, complex functions f and D, and a finite real C bounding normSq(f x) for every x in N. The displayed local recursion is an additional hypothesis. Character orthogonality yields a child energy of 3 times (normSq(f x)+normSq(f u)+normSq(D x)). Induction over every PhaseWords n gives 3^n times (normSq(f 1)+n normSq(f u)) as a lower bound on the total energy. The upper bound is 3^n C. An Archimedean argument forces normSq(f u)=0. AddChar.wInner_cWeight_eq_boole is the reused scalar orthogonality supplier; it imposes a group law only on the phase index.
 
-This is the conditional history mechanism consumed by RawAnchoredRadicalDescent. That consumer constructs the actual original quotient, derives the Fourier recursion and its uniform bound, and applies this theorem separately to both ordered pairings. The history theorem itself remains conditional on its stated recursion and uniform bound. No independent admission or atom coverage is asserted by this description.
+This is the conditional history mechanism consumed by RawAnchoredRadicalDescent. That consumer constructs the actual original quotient, derives the Fourier recursion and its uniform bound, and applies this theorem separately to both ordered pairings. The history theorem itself remains conditional on its stated recursion and uniform bound.
 
 ## References
 
