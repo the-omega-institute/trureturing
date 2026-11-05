@@ -597,6 +597,73 @@ private theorem narrow_doubling_sorted_cycle {X Q : ℕ}
   exact ⟨s, hs, sorted_doubling_actual_cycle (by omega) hodd
     (fun v => cycAdd s v.val) hs⟩
 
+/-- Arithmetic of the already derived sorted shift. -/
+private theorem shift_iterate_cast {r : ℕ} (hr : 0 < r) (s i : Fin r) (n : ℕ) :
+    (((fun v : Fin r => cycAdd s v.val)^[n] i).val : ZMod r) =
+      (i.val : ZMod r) + (n : ZMod r) * s.val := by
+  letI : NeZero r := ⟨hr.ne'⟩
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [Function.iterate_succ_apply']
+    change (((s.val + ((fun v : Fin r => cycAdd s v.val)^[n] i).val) % r : ℕ) :
+      ZMod r) = _
+    rw [ZMod.natCast_mod, Nat.cast_add, ih]
+    push_cast
+    ring
+
+/-- Transitivity supplies a genuine modular inverse, rather than assuming one. -/
+private theorem transitive_shift_inverse {r : ℕ} (hr : 2 ≤ r) (s : Fin r)
+    (htrans : ∀ i j : Fin r, ∃ n < r,
+      (fun v : Fin r => cycAdd s v.val)^[n] i = j) :
+    0 < s.val ∧ Nat.Coprime s.val r ∧
+      ∃ u < r, (s.val : ZMod r) * (u : ZMod r) = 1 := by
+  letI : NeZero r := ⟨by omega⟩
+  let z : Fin r := ⟨0, by omega⟩
+  let o : Fin r := ⟨1, by omega⟩
+  obtain ⟨u, hu, he⟩ := htrans z o
+  have hc := shift_iterate_cast (by omega : 0 < r) s z u
+  rw [he] at hc
+  have hunit : (s.val : ZMod r) * (u : ZMod r) = 1 := by
+    simpa [z, o, mul_comm] using hc.symm
+  have hmod : Nat.ModEq r (s.val * u) 1 := by
+    apply (ZMod.natCast_eq_natCast_iff _ _ _).mp
+    simpa only [Nat.cast_mul, Nat.cast_one] using hunit
+  have hs : 0 < s.val := by
+    by_contra hn
+    have hz : s.val = 0 := by omega
+    have hc' := hmod.eq_of_lt_of_lt
+      (by simp [hz]; omega) (by omega : 1 < r)
+    simp [hz] at hc'
+  exact ⟨hs, Nat.coprime_of_mul_modEq_one u hmod, u, hu, hunit⟩
+
+/-- Inverting the actual shift identifies the exponent at each sorted gap.
+The last gap corresponds to exponent r-1, without a natural-subtraction seam. -/
+private theorem shift_gap_location {r u : ℕ} (hr : 0 < r) (s i : Fin r)
+    (hu : (s.val : ZMod r) * (u : ZMod r) = 1) (hw : r - 1 < r) :
+    (fun v : Fin r => cycAdd s v.val)^[gapExponent r u i.val + 1]
+      ⟨r - 1, hw⟩ = i := by
+  letI : NeZero r := ⟨hr.ne'⟩
+  have hwcast : ((r - 1 : ℕ) : ZMod r) = -1 := by
+    rw [Nat.cast_sub (by omega : 1 ≤ r), ZMod.natCast_self, Nat.cast_one]
+    ring
+  have he : (gapExponent r u i.val : ZMod r) =
+      (u : ZMod r) * ((i.val : ZMod r) + 1) - 1 :=
+    ZMod.natCast_zmod_val _
+  have hcast := shift_iterate_cast hr s (⟨r - 1, hw⟩ : Fin r)
+    (gapExponent r u i.val + 1)
+  rw [hwcast, Nat.cast_add, Nat.cast_one, he] at hcast
+  have heq : (((fun v : Fin r => cycAdd s v.val)^[gapExponent r u i.val + 1]
+      ⟨r - 1, hw⟩).val : ZMod r) = (i.val : ZMod r) := by
+    rw [hcast]
+    calc
+      -1 + ((u : ZMod r) * ((i.val : ZMod r) + 1) - 1 + 1) * s.val =
+          ((s.val : ZMod r) * u) * ((i.val : ZMod r) + 1) - 1 := by ring
+      _ = (i.val : ZMod r) := by rw [hu]; ring
+  apply Fin.ext
+  exact ((ZMod.natCast_eq_natCast_iff _ _ _).mp heq).eq_of_lt_of_lt
+    (Fin.isLt _) i.isLt
+
 private theorem shift_commutes_successor {r : ℕ} (s i : Fin r) :
     cycAdd s (cycAdd i 1).val = cycAdd (cycAdd s i.val) 1 := by
   apply Fin.ext
