@@ -35,3 +35,9 @@ admission and independent source and proof review. This dossier asserts no
 freeze, independent review, novelty certification, or solved-problem count.
 The bounded prior-art screen remains partial; the unsuccessful global query
 provides no negative result.
+
+The four-slot source registration is unfinished under
+[issue #26804](https://github.com/the-omega-institute/trureturing/issues/26804).
+The complete source reconstruction, enrolled-template application, equivalence
+bridge, whole-family variation and sensitivity, actual observational dependence,
+and current binding evidence remain missing. No validated registration is claimed.

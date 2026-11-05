@@ -14,16 +14,16 @@ internal sealed class IsraelA103573RootFloorDocument : IScribeDocumentDefinition
         H("Israel's A103573 ceiling formula"),
         Blocks(
             Node("f", "The root difference", All("x", Real(), Equal(Call("f", F.Id("x")),
-                Sub(Call("sqrt", F.Id("x")), Power(F.Id("x"), Div(D(1), D(3))))))),
+                Sub(Call("sqrt", F.Id("x")), Power(F.Id("x"), Div(D(1), D(3)))))),
                 "For a nonnegative real argument, sqrt is the nonnegative square root and the real power with exponent 1/3 is the nonnegative cube root.", DescribeRole.Definition),
             Node("T", "The explicit approximation", All("n", Nat(), Equal(Call("T", F.Id("n")), TBody())),
                 "All rational coefficients and exponents are real. The approximation is zero at n=0.", DescribeRole.Definition),
             Node("IsSourceSequence", "The source sequence", All("a", SequenceType(),
-                Iff(Call("IsSourceSequence", F.Id("a")), SourceBody(F.Id("a"))))),
+                Iff(Call("IsSourceSequence", F.Id("a")), SourceBody(F.Id("a")))),
                 "At every natural index n, the sequence takes the least natural k whose ordinary integer floor of sqrt(k)-k^(1/3) is n. The floor is integer valued even when its argument is negative.", DescribeRole.Definition),
             Node("claim", "The full ceiling assertion", Iff(F.Id("claim"), ClaimBody()),
                 "The assertion includes existence of the source sequence and applies to every sequence satisfying its leastness definition, at every index including zero.", DescribeRole.Definition),
-            Node("result", "Two consecutive ceiling values", F.Id("claim"),
+            Node("result", "Two consecutive ceiling values", ClaimBody(),
                 "For n>0 the polynomial q(t)=t^3-t^2 increases strictly on t>=1 and supplies a threshold r with sqrt(r)-r^(1/3)=n. Put y=n^(1/3) and P_n(X)=X*(X+3*n^2)^2-((3*n+1)*X+n^3)^2. Exact polynomial expansion gives P_n(T(n))<0<P_n(T(n)+1), since the residual factors have positive coefficients. The discarded factor in the square comparison is positive, so these signs imply T(n)<r<T(n)+1. The least admissible integer is ceil(r): its root difference lies in [n,n+1), and all smaller nonnegative integers have root difference below n. Ceiling monotonicity leaves the two stated integer possibilities. At n=0 the least candidate and the approximation are both zero.", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role) =>
@@ -50,7 +50,7 @@ internal sealed class IsraelA103573RootFloorDocument : IScribeDocumentDefinition
     {
         var a=F.Id("a"); var n=F.Id("n");
         var an=Cast(new Formula.Apply(a,[n]),Ints());
-        var c=Seq(Lceil,Sp,Call("T",n),Sp,Rceil);
+        var c=Call("ceil",Call("T",n));
         return And(new Formula.Bind(FormulaQuantifier.Exists,FormulaIdentifier.Create("a"),SequenceType(),Call("IsSourceSequence",a)),
             All("a",SequenceType(),Implies(Call("IsSourceSequence",a),All("n",Nat(),
                 new Formula.Logic(Equal(an,c),FormulaLogicOperator.Or,Equal(an,Add(c,D(1))))))));
