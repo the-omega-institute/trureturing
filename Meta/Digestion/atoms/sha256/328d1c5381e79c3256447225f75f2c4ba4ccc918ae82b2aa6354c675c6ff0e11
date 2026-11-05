@@ -1,0 +1,14 @@
+**推论 114.3（两点误差只在有界法向范围内直接传播）。** 固定 $c,a$，若两点残差分别满足 $|\Phi_c(a,a)|\le\varepsilon_0$、$|\Phi_c(a,a+\eta_c(a))|\le\varepsilon_1$，其中 $\varepsilon_0,\varepsilon_1\ge0$，则
+
+$$
+\begin{aligned}
+\|\eta_c(a)\|_q&\le\sqrt{(\varepsilon_0+\varepsilon_1)/2},\\
+|\Phi_c(a,a+n)|&\le\varepsilon_0+
+\sqrt{2(\varepsilon_0+\varepsilon_1)}\,\|n\|_q
+\qquad(n\in N_c).
+\end{aligned}
+\tag{114.5}
+$$
+
+证明。由 (114.3) 与两残差的绝对值界取得第一式。因 $q(D_ac,n)=q(\eta_c(a),n)$，(114.4) 的恒等式及 Cauchy–Schwarz 给第二式。该估计未在任意大小的 $n$ 上给统一误差，也没有给全部对象或过程网络的稳定性。∎
+
