@@ -1457,31 +1457,39 @@ private def originalModel {M : Type u} [MulOneClass M]
     rw [he]
     exact R.minimal
 
-private theorem rawModel_balance {M : Type u} [MulOneClass M]
+private theorem rawLabel_balance {M : Type u} [MulOneClass M]
     (U : M → M) (c : M → M → ℝ) (hU : U 1 = 1)
-    (S : RawHilbertRepresentation.{u, v} U c) : RawBalance U c := by
-  let T : S.carrier →+ S.carrier :=
-    (omega • (LinearMap.id : S.carrier →ₗ[ℂ] S.carrier)).toAddMonoidHom
-  let R : HilbertRepresentation T (fun x : S.carrier => ‖x‖ ^ 2) :=
-    { carrier := S.carrier
+    (H : Type v) [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+    (F : M → H) (hprod : ∀ a b, F (a*b) = F a + F b)
+    (hphase : ∀ a, F (U a) = omega • F a)
+    (hdist : ∀ a b, c a b = ‖F a - F b‖ ^ 2) : RawBalance U c := by
+  let T : H →+ H :=
+    (omega • (LinearMap.id : H →ₗ[ℂ] H)).toAddMonoidHom
+  let R : HilbertRepresentation T (fun x : H => ‖x‖ ^ 2) :=
+    { carrier := H
       label := AddMonoidHom.id _
       normSq := fun _ => rfl
       phase := fun _ => rfl
       minimal := by
         simp only [AddMonoidHom.coe_id, Set.range_id, Submodule.span_univ]
         exact top_unique (Submodule.le_topologicalClosure _) }
-  have hb := (three_way_hilbert_characterization.{v, v, v} T (fun x : S.carrier => ‖x‖ ^ 2)
+  have hb := (three_way_hilbert_characterization.{v, v, v} T (fun x : H => ‖x‖ ^ 2)
     (fun x => sq_nonneg ‖x‖)).2.1 R
-  refine ⟨hU, fun a b => by rw [S.distance]; positivity,
-    fun a => by simp [S.distance], ?_⟩
+  refine ⟨hU, fun a b => by rw [hdist]; positivity,
+    fun a => by simp [hdist], ?_⟩
   intro a b d e
   have he (a b d e : M) :
-      S.label (a*d) - S.label (b*e) =
-        (S.label a - S.label b) + (S.label d - S.label e) := by
-    rw [S.product, S.product]; abel
-  simp only [S.distance, he, S.phase, ← smul_sub, smul_smul]
+      F (a*d) - F (b*e) =
+        (F a - F b) + (F d - F e) := by
+    rw [hprod, hprod]; abel
+  simp only [hdist, he, hphase, ← smul_sub, smul_smul]
   simpa only [T, LinearMap.toAddMonoidHom_coe, LinearMap.smul_apply,
-    LinearMap.id_apply, smul_smul] using hb (S.label a - S.label b) (S.label d - S.label e)
+    LinearMap.id_apply, smul_smul] using hb (F a - F b) (F d - F e)
+
+private theorem rawModel_balance {M : Type u} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (hU : U 1 = 1)
+    (S : RawHilbertRepresentation.{u, v} U c) : RawBalance U c :=
+  rawLabel_balance U c hU S.carrier S.label S.product S.phase S.distance
 
 private theorem visible_label_zero_of_model_zero {M : Type u} [MulOneClass M]
     (U : M → M) (c : M → M → ℝ) (h : RawBalance U c)
@@ -1578,15 +1586,19 @@ private def factoredModel {M : Type u} [MulOneClass M]
     exact S.minimal
 
 /-- The complete Hilbert criterion on the original unital magma, with unique minimal models. -/
-theorem raw_hilbert_characterization {M : Type u} [MulOneClass M]
+private theorem raw_hilbert_criterion {M : Type u} [MulOneClass M]
     (U : M → M) (c : M → M → ℝ) (hU : U 1 = 1) :
     (RawBalance U c ↔ Nonempty (RawHilbertRepresentation.{u, u} U c)) ∧
-    (∀ (S : RawHilbertRepresentation.{u, v} U c), RawBalance U c) ∧
+    (∀ (H : Type v) [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+      (F : M → H), (∀ a b, F (a*b) = F a + F b) →
+      (∀ a, F (U a) = omega • F a) →
+      (∀ a b, c a b = ‖F a - F b‖ ^ 2) → RawBalance U c) ∧
     (∀ (h : RawBalance U c) (S : RawHilbertRepresentation.{u, v} U c)
       (T : RawHilbertRepresentation.{u, w} U c),
       ∃! e : S.carrier ≃ₗᵢ[ℂ] T.carrier, ∀ a, e (S.label a) = T.label a) := by
   refine ⟨⟨fun h => ⟨originalModel U c h (groupModel U c h)⟩,
-    fun ⟨S⟩ => rawModel_balance U c hU S⟩, rawModel_balance U c hU, ?_⟩
+    fun ⟨S⟩ => rawModel_balance U c hU S⟩,
+    fun H _ _ _ F hprod hphase hdist => rawLabel_balance U c hU H F hprod hphase hdist, ?_⟩
   intro h S T
   obtain ⟨e, he, hu⟩ :=
     (three_way_hilbert_characterization.{u, v, w} (visibleMarker U c h) (visibleEnergy U c h)
@@ -1596,8 +1608,11 @@ theorem raw_hilbert_characterization {M : Type u} [MulOneClass M]
     have hx := he (visibleLabel U c h a)
     change e (S.label (originalLabel U c h (visibleLabel U c h a))) =
       T.label (originalLabel U c h (visibleLabel U c h a)) at hx
-    simpa only [model_constant_on_fibres U c h S _ a (originalLabel_spec U c h _),
-      model_constant_on_fibres U c h T _ a (originalLabel_spec U c h _)] using hx
+    rw [model_constant_on_fibres U c h S _ a
+      (originalLabel_spec U c h (visibleLabel U c h a)),
+      model_constant_on_fibres U c h T _ a
+      (originalLabel_spec U c h (visibleLabel U c h a))] at hx
+    exact hx
   · intro e' he'
     apply hu
     intro x
@@ -1626,9 +1641,8 @@ private theorem model_image_smul {M : Type u} [MulOneClass M]
   | algebraMap r =>
       rintro z ⟨x, rfl⟩
       refine ⟨r • x, ?_⟩
-      simpa only [map_zsmul, Int.cast_smul_eq_zsmul] using
-        (show r • R.label x = (r : ℂ) • R.label x from
-          (Int.cast_smul_eq_zsmul ℂ r (R.label x)).symm)
+      change R.label (r • x) = (r : ℂ) • R.label x
+      rw [map_zsmul, Int.cast_smul_eq_zsmul]
   | add r s _ _ hr hs =>
       intro z hz
       obtain ⟨x, hx⟩ := hr z hz
@@ -1723,8 +1737,11 @@ instance quotientModule {M : Type u} [MulOneClass M]
     (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) :
     Module Eisenstein (VisibleQuotient U c h) := (quotientImageEquiv U c h).module Eisenstein
 
+/-- The generator is the actual complex cube root inside its generated integer subring. -/
+def omegaScalar : Eisenstein := ⟨omega, Algebra.subset_adjoin (Set.mem_singleton omega)⟩
+
 /-- The source's complete visible algebra on the actual zero-comparison quotient. -/
-theorem raw_visible_algebra {M : Type u} [MulOneClass M]
+private theorem raw_visible_algebra {M : Type u} [MulOneClass M]
     (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) :
     (∀ a b, c a b = 0 ↔ gamma c a = gamma c b) ∧
     (∀ a b d e, c a b = 0 → c d e = 0 → c (a*d) (b*e) = 0) ∧
@@ -1736,8 +1753,9 @@ theorem raw_visible_algebra {M : Type u} [MulOneClass M]
     (∀ a b, (Quotient.mk _ (a*b) : VisibleQuotient U c h) = Quotient.mk _ a + Quotient.mk _ b) ∧
     (∃ e : VisibleQuotient U c h ≃ₗ[Eisenstein] visibleImage U c h (groupModel U c h),
       ∀ a, (e (Quotient.mk _ a)).val = (groupModel U c h).label (visibleLabel U c h a)) ∧
+    (∀ a, (Quotient.mk _ (U a) : VisibleQuotient U c h) = omegaScalar • Quotient.mk _ a) ∧
     (∀ (r : Eisenstein) (x : VisibleQuotient U c h), r ≠ 0 → r • x = 0 → x = 0) := by
-  refine ⟨raw_zero_comparison_iff U c h, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  refine ⟨raw_zero_comparison_iff U c h, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro a b d e hab hde
     apply (raw_zero_comparison_iff U c h _ _).mpr
     rw [gamma_mul, gamma_mul, (raw_zero_comparison_iff U c h _ _).mp hab,
@@ -1766,6 +1784,14 @@ theorem raw_visible_algebra {M : Type u} [MulOneClass M]
     change visibleLabel U c h (a*b) = visibleLabel U c h a + visibleLabel U c h b
     exact visibleLabel_mul U c h a b
   · exact ⟨(quotientImageEquiv U c h).linearEquiv Eisenstein, fun _ => rfl⟩
+  · intro a
+    let e := (quotientImageEquiv U c h).linearEquiv Eisenstein
+    apply e.injective
+    rw [map_smul]
+    apply Subtype.ext
+    change (groupModel U c h).label (visibleLabel U c h (U a)) =
+      omega • (groupModel U c h).label (visibleLabel U c h a)
+    rw [visibleLabel_marker, (groupModel U c h).phase]
   · intro r x hr hx
     apply (quotientImageEquiv U c h).injective
     apply Subtype.ext
@@ -1775,6 +1801,38 @@ theorem raw_visible_algebra {M : Type u} [MulOneClass M]
     change (r : ℂ) • (e x).val = 0 at he
     have hrC : (r : ℂ) ≠ 0 := by intro he; apply hr; exact Subtype.ext he
     have hz := (smul_eq_zero.mp he).resolve_left hrC
+    change (e x).val = (e 0).val
+    rw [map_zero]
     exact hz
+
+/-- The whole original Hilbert classification, including all visible-algebra clauses. -/
+theorem raw_hilbert_characterization {M : Type u} [MulOneClass M]
+    (U : M → M) (c : M → M → ℝ) (hU : U 1 = 1) :
+    ((RawBalance U c ↔ Nonempty (RawHilbertRepresentation.{u, u} U c)) ∧
+    (∀ (H : Type v) [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+      (F : M → H), (∀ a b, F (a*b) = F a + F b) →
+      (∀ a, F (U a) = omega • F a) →
+      (∀ a b, c a b = ‖F a - F b‖ ^ 2) → RawBalance U c) ∧
+    (∀ (h : RawBalance U c) (S : RawHilbertRepresentation.{u, v} U c)
+      (T : RawHilbertRepresentation.{u, w} U c),
+      ∃! e : S.carrier ≃ₗᵢ[ℂ] T.carrier, ∀ a, e (S.label a) = T.label a)) ∧
+    ∀ h : RawBalance U c,
+    ((∀ a b, c a b = 0 ↔ gamma c a = gamma c b) ∧
+    (∀ a b d e, c a b = 0 → c d e = 0 → c (a*d) (b*e) = 0) ∧
+    (∀ a b, c a b = 0 → c (U a) (U b) = 0) ∧
+    (∀ a b d, c ((a*b)*d) (a*(b*d)) = 0) ∧
+    (∀ a b, c (a*b) (b*a) = 0) ∧
+    (∀ a, c (U (U (U a))) a = 0) ∧
+    (∀ a, (Quotient.mk _ (U a * U (U a)) : VisibleQuotient U c h) = -Quotient.mk _ a) ∧
+    (∀ a b, (Quotient.mk _ (a*b) : VisibleQuotient U c h) = Quotient.mk _ a + Quotient.mk _ b) ∧
+    (∃ e : VisibleQuotient U c h ≃ₗ[Eisenstein] visibleImage U c h (groupModel U c h),
+      ∀ a, (e (Quotient.mk _ a)).val = (groupModel U c h).label (visibleLabel U c h a)) ∧
+    (∀ a, (Quotient.mk _ (U a) : VisibleQuotient U c h) = omegaScalar • Quotient.mk _ a) ∧
+    (∀ (r : Eisenstein) (x : VisibleQuotient U c h), r ≠ 0 → r • x = 0 → x = 0)) ∧
+    (∃ Q : QuadraticMap ℤ (visibleGroup U c h) ℝ,
+      (∀ x, Q x = visibleEnergy U c h x) ∧
+      ∀ x y, visibleComparison U c h x y = Q (x-y)) := by
+  exact ⟨raw_hilbert_criterion U c hU,
+    fun h => ⟨raw_visible_algebra U c h, raw_visible_quadratic U c h⟩⟩
 
 end D5.S3.Quantum.Completion.RawAnchoredRadicalDescent

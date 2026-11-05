@@ -53,9 +53,9 @@ internal sealed class RawThreePhaseDescentDocument : IScribeDocumentDefinition
                     All(X, All(Z, Seq(Open,
                         Eqn(Read(Third(X), Z), Read(X, Z)), Sp, Land, Sp,
                         Eqn(Read(Z, Third(X)), Read(Z, X)), Close))), Close)),
-                "For s(n)=c(U^n u,U^n v), the raw law at the two units gives s(n+1)+s(n+2)=2s(n). Nonnegativity at every natural n rules out the growing alternating component by induction and an Archimedean contradiction. Subtracting the balance identity for (u,v) from that for (Uu,Uv) gives contextual invariance. Specializing either contextual input to the unit yields every row and column equality. Only the readings have period three; the original marker need not have period three.",
+                "For s(n)=c(U^n u,U^n v), the raw law at the two units gives s(n+1)+s(n+2)=2s(n). The original ThreeWayBalance.nonneg_recurrence_constant is reused directly, with its two summands exchanged by commutativity. Nonnegativity is required at every natural index; its existing proof rules out the growing alternating component. Subtracting the balance identity for (u,v) from that for (Uu,Uv) gives contextual invariance. Specializing either contextual input to the unit yields every row and column equality. Only the readings have period three; the original marker need not have period three.",
                 DescribeRole.Theorem),
-            Paragraph(Text("This is the Section 2 prerequisite of C133 Continuation V. The anchored free-space bilinear form, both radical pairings, zero-fibre elimination, full fibre collapse and the complete Hilbert representation criterion remain open. No physical preparation, scalar control, reference or clock follows from this result.")))));
+            Paragraph(Text("This is a consumed prerequisite of RawAnchoredRadicalDescent on the original unital magma. Marker invariance and contextual subtraction are applications of the frozen recurrence and normalization, and are not new mathematical-content witnesses. No physical preparation, scalar control, reference or clock follows from this result.")))));
 
     private static Formula Balance() => Eqn(
         Add(Add(Read(Mul(A, X), Mul(B, Y)),

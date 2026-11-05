@@ -30,24 +30,35 @@ internal sealed class ThreePhaseHistoryRigidityDocument : IScribeDocumentDefinit
         H("Three-Phase History Rigidity"),
         Blocks(
             Entry("three-phase-words", "PhaseWords", "Phase words retain order and multiplicity",
-                Seq(Eqn(Call("PhaseWords", D(0)), Call("Unit")), Comma, Sp,
-                    Eqn(Call("PhaseWords", Seq(F.Id("n"), Plus, D(1))),
-                        Seq(Call("PhaseWords", F.Id("n")), Sp, Times, Sp, Three))),
+                Seq(Open, Eqn(Call("PhaseWords", D(0)), Call("Unit")), Sp, Land, Sp,
+                    All(F.Id("n"), Seq(Mathbb, Grp(F.Id("N"))),
+                        Eqn(Call("PhaseWords", Seq(F.Id("n"), Plus, D(1))),
+                            Seq(Call("PhaseWords", F.Id("n")), Sp, Times, Sp, Three))), Close),
                 "The phase words have cardinality 3^n for every natural n. Distinct words remain distinct indices even when their original magma labels coincide.",
                 DescribeRole.Definition),
             Entry("three-phase-ordered-history", "orderedHistory", "Actual original left-bracketed histories",
-                Seq(Eqn(Call("orderedHistory", U, T, D(0), F.Id("w")), D(1)), Comma, Sp,
-                    Eqn(Call("orderedHistory", U, T, Seq(F.Id("n"), Plus, D(1)),
-                        Call("pair", F.Id("w"), K)),
-                        Seq(Call("orderedHistory", U, T, F.Id("n"), F.Id("w")), Sp,
-                            Cdot, Sp, Call("iterate", U, Call("val", K), T)))),
+                HistoryFormula(),
                 "The original type M is any MulOneClass. Each child applies its given binary operation once on the right of the existing history. No associativity or commutativity is used, and no depth cap or deduplication is introduced.",
                 DescribeRole.Definition),
             Entry("bounded-phase-recursion-vanishes", "bounded_phase_recursion_vanishes",
                 "Conditional vanishing from an assumed Fourier recursion", TheoremFormula(),
                 "The full telescope is arbitrary M with only a two-sided unit, U:M to M, u:M, a subset N containing 1 and closed under x times U^k u for every x in N and k in ZMod 3, an injective complex additive character chi of ZMod 3, complex functions f and D, and a finite real C bounding normSq(f x) for every x in N. The displayed local recursion is an additional hypothesis. Character orthogonality yields a child energy of 3 times (normSq(f x)+normSq(f u)+normSq(D x)). Induction over every PhaseWords n gives 3^n times (normSq(f 1)+n normSq(f u)) as a lower bound on the total energy. The upper bound is 3^n C. An Archimedean argument forces normSq(f u)=0. AddChar.wInner_cWeight_eq_boole is the reused scalar orthogonality supplier; it imposes a group law only on the phase index.",
                 DescribeRole.Theorem),
-            Paragraph(Text("This is a conditional Section 3 mechanism for C133 Continuation V. Neither the Fourier recursion nor its uniform bound is derived here from RawBalance. Applying it to both ordered bilinear pairings, constructing the raw radical quotient, proving beta(N)=0 and full gamma-fibre collapse, and the complete Hilbert criterion remain open. There is no full-Theorem-1.3 consumer or admission claim.")))));
+            Paragraph(Text("This is the conditional history mechanism consumed by RawAnchoredRadicalDescent. That consumer constructs the actual original quotient, derives the Fourier recursion and its uniform bound, and applies this theorem separately to both ordered pairings. The history theorem itself remains conditional on its stated recursion and uniform bound. No independent admission or atom coverage is asserted by this description.")))));
+
+    private static Formula HistoryFormula() => Seq(
+        Forall, Sp, M, Colon, Sp, F.Id("Type"), Comma, Sp,
+        OpenBracket, Call("MulOneClass", M), CloseBracket, Comma, Sp,
+        U, Colon, Sp, M, Sp, To, Sp, M, Comma, Sp,
+        T, Colon, Sp, M, Comma, Sp, Open,
+        All(F.Id("w"), Call("PhaseWords", D(0)),
+            Eqn(Call("orderedHistory", U, T, D(0), F.Id("w")), D(1))), Sp, Land, Sp,
+        All(F.Id("n"), Seq(Mathbb, Grp(F.Id("N"))),
+            All(F.Id("w"), Call("PhaseWords", F.Id("n")), All(K, Three,
+                Eqn(Call("orderedHistory", U, T, Seq(F.Id("n"), Plus, D(1)),
+                    Call("pair", F.Id("w"), K)),
+                    Seq(Call("orderedHistory", U, T, F.Id("n"), F.Id("w")), Sp,
+                        Cdot, Sp, Call("iterate", U, Call("val", K), T)))))), Close);
 
     private static Formula TheoremFormula()
     {

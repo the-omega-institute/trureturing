@@ -204,17 +204,10 @@ internal sealed class RawAnchoredRadicalDescentDocument : IScribeDocumentDefinit
                 H("The complete original-domain Hilbert criterion and minimal uniqueness"),
                 StatementSource.FromAuthor(Disp(HilbertCriterion())),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The frozen three_way_hilbert_characterization is applied to exactly visibleGroup(U,c,h), visibleMarker(U,c,h) and visibleEnergy(U,c,h). Composing its additive label with visibleLabel gives the original F, and surjectivity of visibleLabel identifies the two actual ranges. The converse applies the same supplier to the identity representation of the candidate Hilbert carrier, with omega scalar multiplication, and substitutes the two original differences into its three-way norm law. For any other original model, equality of gamma implies zero original comparison and hence equal labels. This proves factorization through the same actual visible group; no factorization certificate is assumed in the raw model. The supplier's unique complex-linear isometry then gives the unique original-label-preserving unitary, including models in independent universes."))),
+                Blocks(Paragraph(Text("The frozen three_way_hilbert_characterization is applied to exactly visibleGroup(U,c,h), visibleMarker(U,c,h) and visibleEnergy(U,c,h). Composing its additive label with visibleLabel gives the original F, and surjectivity of visibleLabel identifies the two actual ranges. The converse quantifies over any complete complex Hilbert carrier and original label map with the product, phase and distance identities; it imposes no minimality or factorization hypothesis. It applies the same supplier to the identity representation of that carrier, with omega scalar multiplication, and substitutes the two original differences into its three-way norm law. The unit-zero identity already follows from product additivity at the unit. For any other original model, equality of gamma implies zero original comparison and hence equal labels. This proves factorization through the same actual visible group; no factorization certificate is assumed in the raw model. The supplier's unique complex-linear isometry then gives the unique original-label-preserving unitary, including models in independent universes."))),
                 DescribeRole.Theorem),
-            Paragraph(Text("Eisenstein is the actual subalgebra Algebra.adjoin_Z({omega}) inside the complex numbers. visibleImage(U,c,h,R) has carrier range(R.label) and inherits complex scalar multiplication restricted to Eisenstein. Algebra.adjoin_induction proves that this actual image is closed: integers use additive scalar multiplication, omega uses the actual marker phase, and sum/product closure uses the same range. zeroComparisonSetoid(U,c,h) has literal relation c(a,b)=0; VisibleQuotient is its Quotient. The quotient group is transported through the proved bijection to visibleGroup, and the Eisenstein module is transported through the actual image equivalence. No new scalar ring, recipe, completion point or physical operation is supplied.")),
-            Describe.Lean(
-                DescribeId.Create("raw-visible-algebra"),
-                DeclarationHandle.Create(Gid + "raw_visible_algebra"),
-                H("The actual zero-comparison quotient and torsion-free Eisenstein image"),
-                StatementSource.FromAuthor(Disp(OriginalWithProof(VisibleAlgebra()))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("If the chosen Hilbert labels of a and b agree, the distance formula gives equality of every original row and every original column. This gives equality of q and r and annihilates both ordered B pairings of beta(a)-beta(b) against every beta label. The proved joint nondegeneracy forces beta(a)=beta(b), hence gamma(a)=gamma(b). Thus the actual energy is definite, and c(a,b)=0 is exactly equality of gamma. The original product and marker formulas give the congruence and all visible algebra identities. The linear image equivalence identifies the actual quotient with the label image. A nonzero Eisenstein scalar stays nonzero in the complex numbers, so its action on the Hilbert carrier has zero kernel; the same holds on the image and on the transported quotient. The zero model is included. No isotropic-to-radical shortcut or assertion W=0 is used."))),
-                DescribeRole.Theorem),
+            Paragraph(Text("Eisenstein is the actual subalgebra Algebra.adjoin_Z({omega}) inside the complex numbers. visibleImage(U,c,h,R) has carrier range(R.label) and inherits complex scalar multiplication restricted to Eisenstein. Algebra.adjoin_induction proves that this actual image is closed: integers use additive scalar multiplication, omega uses the actual marker phase, and sum/product closure uses the same range. omegaScalar is omega as an element of that generated subring. zeroComparisonSetoid(U,c,h) has literal relation c(a,b)=0; VisibleQuotient is its Quotient. The quotient group is transported through the proved bijection to visibleGroup, and the Eisenstein module is transported through the actual image equivalence. No new scalar ring, recipe, completion point or physical operation is supplied.")),
+            Paragraph(Text("If the chosen Hilbert labels of a and b agree, the distance formula gives equality of every original row and every original column. This gives equality of q and r and annihilates both ordered B pairings of beta(a)-beta(b) against every beta label. The proved joint nondegeneracy forces beta(a)=beta(b), hence gamma(a)=gamma(b). Thus the actual energy is definite, and c(a,b)=0 is exactly equality of gamma. The original product and marker formulas give the congruence and all visible algebra identities. The linear image equivalence identifies the actual quotient with the label image. A nonzero Eisenstein scalar stays nonzero in the complex numbers, so its action on the Hilbert carrier has zero kernel; the same holds on the image and on the transported quotient. The zero model is included. No isotropic-to-radical shortcut or assertion W=0 is used.")),
             Paragraph(Text("These are mathematical consequences of the full original balance under U(1)=1, with every finite history depth allowed. The original operation may remain nonassociative and noncommutative and U cubed need not be the identity on original recipes. The group and module laws identify only their zero-comparison classes. Completion and scalar extension supply no extra actual recipes or physical controls. The whole source atom awaits independent cumulative admission and canonical deposit/coverage.")))));
 
     private static Formula Frame(Formula body) => Seq(
@@ -224,17 +217,40 @@ internal sealed class RawAnchoredRadicalDescentDocument : IScribeDocumentDefinit
         F.Id("c"), Colon, Sp, M, Sp, To, Sp, M, Sp, To, Sp, Real, Comma, Sp, body);
     private static Formula Model => Call("RawHilbertRepresentation", F.Id("U"), F.Id("c"));
     private static Formula Label(Formula model, Formula a) => Call("label", model, a);
-    private static Formula HilbertCriterion()
+    private static Formula HilbertPart()
     {
         var s = F.Id("S"); var t = F.Id("T"); var e = F.Id("j");
         var unique = Arrow(Call("RawBalance", F.Id("U"), F.Id("c")),
             All(s, Model, All(t, Model, Seq(Exists, Sp, Bang, Sp, e, Colon, Sp,
                 Call("LinearIsometryEquiv", Seq(Mathbb, Grp(F.Id("C"))), Call("carrier", s), Call("carrier", t)),
                 Comma, Sp, AllM(A, Eqn(Seq(e, Open, Label(s,A), Close), Label(t,A)))))));
-        return Frame(Arrow(Eqn(Mark(D(1)), D(1)), Conjunction(
+        return Conjunction(
             Seq(Open, Call("RawBalance", F.Id("U"), F.Id("c")), Sp, Iff, Sp, Call("Nonempty", Model), Close),
-            Arrow(Model, Call("RawBalance", F.Id("U"), F.Id("c"))), unique)));
+            GeneralConverse(), unique);
     }
+    private static Formula GeneralConverse()
+    {
+        var h = F.Id("H"); var f = F.Id("F");
+        Formula label(Formula a) => Seq(f, Open, a, Close);
+        Formula distance = Seq(Call("norm", Minus2(label(A),label(B))), Caret, Grp(D(2)));
+        return All(h, F.Id("Type"), Seq(
+            OpenBracket, Call("NormedAddCommGroup",h), CloseBracket, Comma, Sp,
+            OpenBracket, Call("InnerProductSpace",Seq(Mathbb,Grp(F.Id("C"))),h), CloseBracket, Comma, Sp,
+            OpenBracket, Call("CompleteSpace",h), CloseBracket, Comma, Sp,
+            All(f, Seq(M,Sp,To,Sp,h),
+                Arrow(AllM(A,AllM(B,Eqn(label(Product(A,B)),Plus2(label(A),label(B))))),
+                    Arrow(AllM(A,Eqn(label(Mark(A)),Seq(Call("omega"),Sp,Cdot,Sp,label(A)))),
+                        Arrow(AllM(A,AllM(B,Eqn(Read(A,B),distance))),
+                            Call("RawBalance", F.Id("U"), F.Id("c"))))))));
+    }
+    private static Formula QuadraticResult() => Seq(
+        Exists, Sp, F.Id("Q"), Colon, Sp,
+        Call("QuadraticMap", Seq(Mathbb, Grp(F.Id("Z"))), Visible, Real), Comma, Sp,
+        Both(All(X, Visible, Eqn(Call("Q", X), Energy(X))),
+            All(X, Visible, All(Y, Visible, Eqn(Comparison(X,Y),Call("Q",Minus2(X,Y)))))));
+    private static Formula HilbertCriterion() => Frame(Arrow(Eqn(Mark(D(1)),D(1)),
+        Both(HilbertPart(), All(F.Id("h"), Call("RawBalance",F.Id("U"),F.Id("c")),
+            Both(VisibleAlgebra(),QuadraticResult())))));
     private static Formula Quot => Call("VisibleQuotient", F.Id("U"), F.Id("c"), F.Id("h"));
     private static Formula QClass(Formula a) => Call("Quotientmk", Call("zeroComparisonSetoid", F.Id("U"), F.Id("c"), F.Id("h")), a);
     private static Formula VisibleAlgebra()
@@ -254,6 +270,7 @@ internal sealed class RawAnchoredRadicalDescentDocument : IScribeDocumentDefinit
             Seq(Exists, Sp, j, Colon, Sp, Call("LinearEquiv", Call("Eisenstein"), Quot,
                 Call("visibleImage", F.Id("U"), F.Id("c"), F.Id("h"),model)), Comma, Sp,
                 AllM(A, Eqn(Call("val", Seq(j,Open,QClass(A),Close)), Label(model,Call("visibleLabel",F.Id("U"),F.Id("c"),F.Id("h"),A))))),
+            AllM(A,Eqn(QClass(Mark(A)),Seq(Call("omegaScalar"),Sp,Cdot,Sp,QClass(A)))),
             All(s,Call("Eisenstein"),All(X,Quot,Arrow(Seq(s,Sp,Neq,Sp,D(0)),
                 Arrow(Eqn(Seq(s,Sp,Cdot,Sp,X),D(0)),Eqn(X,D(0)))))));
     }
