@@ -3,6 +3,7 @@
    mirror-B: D5/B/S1/Words/Complexity/PrefixCountFactorSet
    mirror-E: none(waiver:pure-word-combinatorics)
    anchors: []
+   utility: none
    digest: Prefix growth on a word subshift equals its base factor complexity. -/
 
 import D5.S1.Dynamics.Symbolic.PrefixGrowthEntropy
