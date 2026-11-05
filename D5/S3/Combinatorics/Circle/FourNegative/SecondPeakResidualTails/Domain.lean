@@ -99,8 +99,9 @@ theorem original_ear_partition (a b c d : ℕ) (hdom : OriginalDomain a b c d) :
     (physicalEarWord a b c d : Multiset ℕ) =
       (List.range (size a b c d+1) : Multiset ℕ) := by
   have hp := original_physical_partition a b c d hdom
-  simp only [physicalEarWord, cut0, earSlot0, insertAt, List.take_zero,
-    List.drop_zero, List.nil_append, List.singleton_append]
+  change ((size a b c d ::
+    physicalWord a b c d (residualBanks a b c d) (residualOrder c d)) : Multiset ℕ) =
+      (List.range (size a b c d+1) : Multiset ℕ)
   rw [← Multiset.cons_coe, hp]
   rw [List.range_succ, ← Multiset.coe_add]
   exact (Multiset.singleton_add _ _).symm.trans (add_comm _ _)
