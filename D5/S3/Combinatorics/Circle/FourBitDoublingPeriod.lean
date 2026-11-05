@@ -10,17 +10,12 @@ import D5.S3.Combinatorics.Circle.NarrowDoublingOrbit
 import D5.S3.Combinatorics.Circle.ZeroSumSubsets
 
 /-!
-Four-gap doubling periods from proper binary support rotations.
-Repository input: 1d7563a7afc3c179b50e46b14c30e3d8338e5aa5.
-Mathlib input: 56a005855ea17e0b0958f73ec801ae140b0a1679; Lean 4.35.0.
+# Four-gap periods of doubling
 
-The support-to-return bridge uses binary uniqueness, never cancellation of Q.
-The finite gap bridge proves both directions by comparing the increasing
-four-point lists after translating an occupied point back to zero. Thus its
-index shifts are converted to the prefix sums a, a+b, a+b+c of the gaps.
-Only the final theorem is public. Every helper is consumed by that theorem.
-No kernel, axiom-closure, audit, independent-verification, acceptance, or
-literature-novelty claim accompanies this candidate.
+Binary support translation detects returns without cancellation of the seed.
+Inverse occupied-prefix rotations compare increasing four-point sets and force
+one, two or four entries in the primitive directed gap block. Its sum is the
+actual Function.minimalPeriod, and its multiples are exactly all natural returns.
 -/
 
 set_option autoImplicit false

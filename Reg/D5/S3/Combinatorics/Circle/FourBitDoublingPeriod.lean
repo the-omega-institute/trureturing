@@ -3,8 +3,8 @@ import D5.S3.Combinatorics.Circle.FourBitDoublingPeriod
 import Reg.Support.DependentFamily
 import Reg.Support.SingleDependentReadout
 
-/-! Four-slot source registration attempt. Source binding is subject to issue #11434;
-no declared_validated status is asserted by these typed proof terms. -/
+/-! Source-bound four-slot registration for the complete four-gap theorem.
+The varied operand is the actual natural residue function. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 open LeanInformationAudit
