@@ -22,7 +22,10 @@ Sarah Klanderman, Chloe Lewis, Harlea Monson, Koki Shibata and Danika Van Niel,
 The quotation below preserves the source wording, with mathematical macros
 expanded and line wrapping normalized; no endorsement is implied.
 
-## Exact source
+## Verified locator
+
+DOI: [10.48550/arXiv.2511.13439](https://doi.org/10.48550/arXiv.2511.13439).
+Versioned source: https://arxiv.org/abs/2511.13439v2.
 
 Conjecture 4.2, printed page 15, `AMS_Proceedings.tex` lines 962–964:
 
