@@ -59,6 +59,9 @@ private def finiteObstruction : Bool :=
 set_option maxHeartbeats 2000000 in
 set_option maxRecDepth 100000 in
 private theorem finiteObstruction_true : finiteObstruction = true := by
+  simp only [finiteObstruction,
+    show List.finRange 5 = ([0,1,2,3,4] : List (Fin 5)) from rfl,
+    List.permutations, List.permutationsAux_cons, List.permutationsAux_nil]
   decide +kernel
 
 /- The Boolean certificate covers an arbitrary sigma because an

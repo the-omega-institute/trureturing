@@ -1,20 +1,23 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/Completion
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/Completion
+   mirror-E: none(waiver:physical-dependent-source-registration)
+   anchors: [D5/S3/Combinatorics/Circle/FourNegative/PacketNormalForm/Source]
+   utility: none
+   digest: Native charge completes original certificates, orders and all natural repetitions. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.C3DiagonalPhysicalGates
 import D5.S3.Combinatorics.Circle.PeriodicShorteningArithmetic
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
 import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
-/- UNCOMPILED SOURCE PREPARATION. The common completion has two actual
-   consumers: C2Endpoint and Endpoint. It consumes original native charge,
-   packet, lift and period proofs at their canonical names. Original-owner
-   visibility changes are listed, not applied, in source-manifest.json.
-   No kernel, official or full-Circle acceptance is claimed. -/
+/-! Native charge completes original certificates, orders and all natural repetitions. Original source owners supply the reused proofs. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 4000000
 
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails
 open PacketNormalForm SourceWidth PeriodicShortening RunFirstEarTransport
-open private seed sourceMod charge actual_values chain_values source_signs from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private seed sourceMod actual_values chain_values source_signs from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open private finiteChecks finiteEarChecks finiteChecks_equiv from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
 open private oldMass newMass from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 open private strip_iff_packetChecks from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Packets
@@ -508,7 +511,7 @@ private theorem residual_original_orders (a b c d : ℕ) (hdom : OriginalDomain 
 
 /-- Shared substantive completion, consumed by the C2 endpoint and the
     full-domain Endpoint. Every assumption about physical sides is discharged
-    by those consumers before the final public result. UNCOMPILED. -/
+    by those consumers before the final public result.  -/
 theorem residual_joint_lift_of_physical_gates (a b c d : ℕ) (hdom : OriginalDomain a b c d) (sides : ActualPhysicalGateSides a b c d) :
     ∃ sigma : List (Fin (a+b+c+d)),
       sigma.map Fin.val =

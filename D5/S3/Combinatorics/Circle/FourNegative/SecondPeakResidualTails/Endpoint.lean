@@ -1,16 +1,18 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/Endpoint
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/Endpoint
+   mirror-E: none(waiver:physical-dependent-source-registration)
+   anchors: [D5/S3/Combinatorics/Circle/FourNegative/PacketNormalForm/Source]
+   utility: none
+   digest: Complete original-domain residual joint physical lift at literal cut zero. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.C2Endpoint
 
-/- UNCOMPILED SOURCE PREPARATION. Every original residual cone is covered;
-   the final result assumes OriginalDomain alone. Actual physical gates are
-   discharged here, then the common native remaining-charge proof constructs
-   the original certificate and the SAME physical sigma at literal cut0.
-   Full Circle J remains OPEN. -/
+/-! Complete original-domain residual joint physical lift at literal cut zero. Original source owners supply the reused proofs. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails
 open PacketNormalForm SourceWidth PeriodicShortening RunFirstEarTransport
-open private charge from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 
 /-- Both sides are ACTUAL physical gates, over the unchanged full domain. -/
 private theorem residual_physical_gates (a b c d : ℕ)
@@ -25,7 +27,7 @@ private theorem residual_physical_gates (a b c d : ℕ)
 /-- Entire residual OriginalDomain: one actual physical permutation, both
     complete original orders at literal cut0, matched-new -A and fresh A
     separately, every natural repeated prefix, and both repeated zero totals.
-    Complete candidate proof body only; UNCOMPILED. -/
+     -/
 theorem actualSource_residual_joint_lift (a b c d : ℕ) (hdom : OriginalDomain a b c d) :
     ∃ sigma : List (Fin (a+b+c+d)),
       sigma.map Fin.val =

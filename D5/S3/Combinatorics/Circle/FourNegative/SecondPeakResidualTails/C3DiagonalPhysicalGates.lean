@@ -1,21 +1,21 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/C3DiagonalPhysicalGates
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/C3DiagonalPhysicalGates
+   mirror-E: none(waiver:physical-dependent-source-registration)
+   anchors: [D5/S3/Combinatorics/Circle/FourNegative/PacketNormalForm/Source]
+   utility: none
+   digest: Canonical signed terminals and bank masses transport gates to physical labels. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.PhysicalMasses
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.C3Gates
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.DiagonalGates
 
-/- Source preparation only: UNCOMPILED. No parser, elaborator or kernel run.
-   The original-owner remove-private prerequisites are in source-manifest.json.
-   All source proofs are consumed at their canonical addresses, without copies.
-   The only sides delivered are OLD LOWER and NEW UPPER. Opposite sides,
-   remaining charge, DataCertificate, both OriginalOrders and repeated prefixes
-   remain the caller's obligations. In particular this is not a Circle result. -/
+/-! Canonical signed terminals and bank masses transport gates to physical labels. Original source owners supply the reused proofs. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails
 open private sourceMod charge nextBase nextNewBase chain_values source_totals from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open private DataCertificate from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
-open private label from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 open scoped BigOperators
 open PacketNormalForm
 

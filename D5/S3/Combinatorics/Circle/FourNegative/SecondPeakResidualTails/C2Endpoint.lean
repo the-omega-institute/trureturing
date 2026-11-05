@@ -1,11 +1,14 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/C2Endpoint
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/C2Endpoint
+   mirror-E: none(waiver:physical-dependent-source-registration)
+   anchors: [D5/S3/Combinatorics/Circle/FourNegative/PacketNormalForm/Source]
+   utility: none
+   digest: Actual c2 physical sides with the exceptional order retained. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.C2Gates
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.Completion
 
-/- UNCOMPILED superseding C2Endpoint. The original 632-line preparation is
-   immutable. Its c2-specific parameter, signed-terminal and bank transport
-   is retained; its completion is consolidated into Completion, with real
-   c2 and full-domain consumers. The public endpoint telescope is unchanged.
-   Required original/prepared owner publications are NOT applied here. -/
+/-! Actual c2 physical sides with the exceptional order retained. Original source owners supply the reused proofs. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 4000000
@@ -14,7 +17,6 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails
 open PacketNormalForm SourceWidth PeriodicShortening RunFirstEarTransport
 open private sourceMod charge nextBase nextNewBase chain_values source_totals from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open private oldMass newMass from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
-open private label from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 open private scalarMass boundary2 oldBoundary2 newBoundary2 from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.C2Gates
 open scoped BigOperators
 
@@ -228,7 +230,7 @@ theorem c2_physical_gates (b d : ℕ) (hd : 4 ≤ d) (hbd : d < b) :
     ring
 
 /-- Preserved exact c2 endpoint, now consuming the shared physical
-    remaining-charge/certificate/order/period completion. UNCOMPILED. -/
+    remaining-charge/certificate/order/period completion.  -/
 theorem actualSource_c2_residual_joint_lift (b d : ℕ) (hd : 4 ≤ d) (hbd : d < b) :
     ∃ sigma : List (Fin (3+b+2+d)),
       sigma.map Fin.val =

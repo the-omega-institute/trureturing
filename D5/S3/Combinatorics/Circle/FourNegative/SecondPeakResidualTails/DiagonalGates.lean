@@ -1,20 +1,20 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/DiagonalGates
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/DiagonalGates
+   mirror-E: none(waiver:physical-dependent-source-registration)
+   anchors: [D5/S3/Combinatorics/Circle/FourNegative/PacketNormalForm/Source]
+   utility: none
+   digest: Universal doubled gates for diagonal boundary and selector-tail charts. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.DiagonalArithmetic
 import Mathlib.Tactic
 
-/- UNCOMPILED SOURCE PREPARATION.  No Lean/kernel/official acceptance.
-   Only the actual supplied bank definitions are consumed.  These are doubled
-   INTEGER gates; terminal division, parity, centered-source identification,
-   charge transport and the original physical certificate remain separate.
-   Terminal chain order is [0,3,2,1].  New chain X succeeds to OLD A.
-   H(4)=0 is the doubled old telescope; G(4)=0 includes separate fresh 2A,
-   so the matched-new doubled telescope is -2A, not zero. -/
+/-! Universal doubled gates for diagonal boundary and selector-tail charts. Original source owners supply the reused proofs. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxRecDepth 4096
 set_option maxHeartbeats 2000000
 
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails
-open private charge from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open scoped BigOperators
 
 /- Coefficients/identities: uxwv-lowest-diagonal-complement-selector-20261102.py, universal_case. -/
@@ -502,10 +502,10 @@ private theorem diagonal_cast_banks (c delta ell k : ℕ) (hc : 3 ≤ c)
     split_ifs <;> rfl
   funext i j
   fin_cases i <;> fin_cases j <;>
-    simp [diagonalBanks, hu', hw', hv', hx', hp1, Nat.cast_add, Nat.cast_mul] <;>
-    simp only [hz, Nat.cast_mul, Nat.cast_ofNat] <;> ring
+    simp [diagonalBanks, hu', hw', hv', hx', hp1, hz,
+      Nat.cast_add, Nat.cast_mul, Nat.cast_ofNat] <;> ring
 
-/-- UNCOMPILED.  Every c>=3, delta and ell, for the actual diagonal banks.
+/--   Every c>=3, delta and ell, for the actual diagonal banks.
     The four boundary charts remain literal.  In the unbounded tail S is
     the original integer selector, not an arbitrary assumed gate witness. -/
 theorem diagonal_doubled_gates (c delta ell : ℕ) (hc : 3 ≤ c) :

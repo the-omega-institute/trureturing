@@ -1,20 +1,17 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/C2Gates
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/C2Gates
+   mirror-E: none(waiver:physical-dependent-source-registration)
+   anchors: [D5/S3/Combinatorics/Circle/FourNegative/PacketNormalForm/Source]
+   utility: none
+   digest: Universal doubled gates for all five c2 bank charts. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.C2Arithmetic
 
-/- UNCOMPILED SOURCE PREPARATION.  No Lean invocation or kernel acceptance.
-   Exact scalar gates for c=2,a=3,e=d-3>=1,ell=b-d-1>=0.
-   The public endpoint uses the supplied c2Banks/c2Order/c2_alpha_exact.
-   All five charts are universal in e and ell; no finite controls are used.
-   Scalar divisions below are exact.  Identifying these scalars with the
-   original centered source, physical masses and DataCertificate is NOT done.
-   Canonical original proofs must be consumed at their owners, not copied.
-   In particular the general PeriodicShorteningArithmetic.charge_sum and the
-   SecondPeakLowXTail remaining-charge endpoint are not reproved here. -/
+/-! Universal doubled gates for all five c2 bank charts. Original source owners supply the reused proofs. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails
-open private charge chain_values from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open private DataCertificate from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
 open scoped BigOperators
 
 /-- With x=8,z=4,w=8h,y=16ht, these are exactly [A,B,L,K]. -/
@@ -34,22 +31,6 @@ def c2OldSuccessor (h t : ℤ) : Fin 4 → ℤ :=
 /-- The last new successor is OLD A, including in the e=4 chart. -/
 def c2NewSuccessor (h t : ℤ) : Fin 4 → ℤ :=
   ![c2NewHead h t 1, c2NewHead h t 2, c2NewHead h t 3, c2OldHead h t 0]
-
-def c2ChainScale (h t : ℤ) : Fin 4 → ℤ := ![8*h,4,16*h*t,8]
-
-/-- Ring identities only; the canonical chain_values theorem must later
-    identify the original source terminals and the separate fresh value A. -/
-theorem c2_scalar_cycles (h t : ℤ) :
-    (∀ r : Fin 4,
-      c2ChainScale h t r*c2OldHead h t r = c2N h t+c2OldSuccessor h t r ∧
-      c2ChainScale h t r*c2NewHead h t r = c2Q h t+c2NewSuccessor h t r) ∧
-    c2NewSuccessor h t 3 = c2OldHead h t 0 := by
-  constructor
-  · intro r
-    fin_cases r <;> constructor <;>
-      norm_num [c2ChainScale,c2OldHead,c2NewHead,c2N,c2Q,
-        c2OldSuccessor,c2NewSuccessor] <;> ring
-  · rfl
 
 def c2OldDrop (h t : ℤ) : Fin 4 → ℤ :=
   ![1+36*h-1536*h^2*t, 3+144*h-2048*h^2*t,
@@ -72,28 +53,6 @@ theorem c2_scalar_drops (h t : ℤ) (r : Fin 4) :
     fin_cases r <;>
       norm_num [c2NewDrop,c2NewHead,c2OldHead,c2NewSuccessor,c2Q,c2N] <;> ring
   exact ⟨ho,hn,by omega,by omega⟩
-
-def c2HeadCharge (h t : ℤ) : Fin 4 → ℤ := ![0,1,5,1+80*h*t]
-def c2TerminalCharge (h t : ℤ) : Fin 4 → ℤ := ![1,3,1+40*h*t,5+320*h*t]
-
-theorem c2_scalar_charges (h t : ℤ) (r : Fin 4) :
-    2*c2OldHead h t r-c2NewHead h t r = c2HeadCharge h t r ∧
-    2*c2OldDrop h t r-c2NewDrop h t r = c2TerminalCharge h t r := by
-  fin_cases r <;> constructor <;>
-    norm_num [c2OldHead,c2NewHead,c2OldDrop,c2NewDrop,
-      c2HeadCharge,c2TerminalCharge] <;> ring
-
-/-- All four nonterminal heads AND all four terminal drops.  Applying these
-    identities to actual labels still requires canonical chain_values. -/
-theorem c2_charge_nonneg (h t : ℤ) (hh : 2 ≤ h) (ht : 1 ≤ t) :
-    ∀ r : Fin 4, 0 ≤ 2*c2OldHead h t r-c2NewHead h t r ∧
-      0 ≤ 2*c2OldDrop h t r-c2NewDrop h t r := by
-  have hh0 : 0 ≤ h := by omega
-  have ht0 : 0 ≤ t := by omega
-  intro r
-  rw [(c2_scalar_charges h t r).1,(c2_scalar_charges h t r).2]
-  fin_cases r <;> constructor <;>
-    norm_num [c2HeadCharge,c2TerminalCharge] <;> positivity
 
 private def scalarMass (head : Fin 4 → ℤ) (M : Fin 4 → Fin 4 → ℤ)
     (row : Fin 4) : ℤ :=
@@ -679,81 +638,5 @@ theorem c2_doubled_gates (e ell : ℕ) (he : 1 ≤ e) :
     2*scalarMass (c2NewHead (2^e) (2^ell)) (fun i j => (c2Banks e ell i j : ℤ)) row ≤ _
   linarith only [hp]
 
-/-- Separate scalar old0, matched new -2A, and fresh 2A + matched new0.
-    These are doubled totals; no general native-source charge sum is reproved. -/
-theorem c2_doubled_totals (e ell : ℕ) (he : 1 ≤ e) :
-    (∑ row : Fin 4, 2*c2OldMass e ell row+
-      c2OldSuccessor (2^e) (2^ell) (c2Order e row)-c2N (2^e) (2^ell)) = 0 ∧
-    (∑ row : Fin 4, 2*c2NewMass e ell row+
-      c2NewSuccessor (2^e) (2^ell) (c2Order e row)-c2Q (2^e) (2^ell)) =
-        -2*c2OldHead (2^e) (2^ell) 0 ∧
-    2*c2OldHead (2^e) (2^ell) 0+
-      (∑ row : Fin 4, 2*c2NewMass e ell row+
-        c2NewSuccessor (2^e) (2^ell) (c2Order e row)-c2Q (2^e) (2^ell)) = 0 := by
-  have hg := c2_doubled_gates e ell he
-  have ho : (∑ row : Fin 4, 2*c2OldMass e ell row+
-      c2OldSuccessor (2^e) (2^ell) (c2Order e row)-c2N (2^e) (2^ell)) = 0 := by
-    convert hg.2.1 using 1 <;>
-      simp [Fin.sum_univ_succ,c2OldMass,c2OldBoundary2,oldBoundary2,boundary2] <;> ring
-  have hn : 2*c2OldHead (2^e) (2^ell) 0+
-      (∑ row : Fin 4, 2*c2NewMass e ell row+
-        c2NewSuccessor (2^e) (2^ell) (c2Order e row)-c2Q (2^e) (2^ell)) = 0 := by
-    convert hg.2.2 using 1 <;>
-      simp [Fin.sum_univ_succ,c2NewMass,c2NewBoundary2,newBoundary2,boundary2] <;> ring
-  exact ⟨ho,by linarith only [hn],hn⟩
-
-/-- Undoubled scalar totals, using the proved exact terminal halves.
-    The fresh term is A; the matched-new total is separately -A. -/
-theorem c2_totals (e ell : ℕ) (he : 1 ≤ e) :
-    (∑ row : Fin 4, c2OldMass e ell row+
-      c2OldDrop (2^e) (2^ell) (c2Order e row)) = 0 ∧
-    (∑ row : Fin 4, c2NewMass e ell row+
-      c2NewDrop (2^e) (2^ell) (c2Order e row)) = -c2OldHead (2^e) (2^ell) 0 ∧
-    c2OldHead (2^e) (2^ell) 0+
-      (∑ row : Fin 4, c2NewMass e ell row+
-        c2NewDrop (2^e) (2^ell) (c2Order e row)) = 0 := by
-  have hg := c2_doubled_totals e ell he
-  have ho : 2*(∑ row : Fin 4, c2OldMass e ell row+
-      c2OldDrop (2^e) (2^ell) (c2Order e row)) =
-      ∑ row : Fin 4, 2*c2OldMass e ell row+
-        c2OldSuccessor (2^e) (2^ell) (c2Order e row)-c2N (2^e) (2^ell) := by
-    rw [Finset.mul_sum]
-    apply Finset.sum_congr rfl
-    intro row _
-    have hd := (c2_scalar_drops (2^e) (2^ell) (c2Order e row)).1
-    linarith only [hd]
-  have hn : 2*(∑ row : Fin 4, c2NewMass e ell row+
-      c2NewDrop (2^e) (2^ell) (c2Order e row)) =
-      ∑ row : Fin 4, 2*c2NewMass e ell row+
-        c2NewSuccessor (2^e) (2^ell) (c2Order e row)-c2Q (2^e) (2^ell) := by
-    rw [Finset.mul_sum]
-    apply Finset.sum_congr rfl
-    intro row _
-    have hd := (c2_scalar_drops (2^e) (2^ell) (c2Order e row)).2.1
-    linarith only [hd]
-  exact ⟨by linarith only [ho,hg.1],
-    by linarith only [hn,hg.2.1],by linarith only [hn,hg.2.1]⟩
-
-/-- The separate fresh scalar A lies in the new strip. -/
-theorem c2_fresh_bounds (e ell : ℕ) (he : 1 ≤ e) :
-    0 ≤ c2OldHead (2^e) (2^ell) 0 ∧
-    c2OldHead (2^e) (2^ell) 0 ≤ c2N (2^e) (2^ell) := by
-  have hhN : 2 ≤ (2:ℕ)^e := by
-    simpa using Nat.pow_le_pow_right (by decide : 0 < (2:ℕ)) he
-  have htN : 1 ≤ (2:ℕ)^ell := by have := Nat.two_pow_pos ell; omega
-  have hh : (2:ℤ) ≤ 2^e := by exact_mod_cast hhN
-  have ht : (1:ℤ) ≤ 2^ell := by exact_mod_cast htN
-  generalize (2:ℤ)^e = h at hh ⊢
-  generalize (2:ℤ)^ell = t at ht ⊢
-  have hH : 0 ≤ h-2 := by omega
-  have hT : 0 ≤ t-1 := by omega
-  have hh0 : 0 ≤ h := by omega
-  have ht0 : 0 ≤ t := by omega
-  constructor
-  · norm_num [c2OldHead] <;> positivity
-  · have hp : 0 ≤ 4096 * (h - 2)^2 * (t - 1) + 4096 * (h - 2)^2 + 15744 * (h - 2) * (t - 1) + 15744 * (h - 2) + 15104 * (t - 1) + 15094 := by positivity
-    have hi : c2N h t-c2OldHead h t 0 = 4096 * (h - 2)^2 * (t - 1) + 4096 * (h - 2)^2 + 15744 * (h - 2) * (t - 1) + 15744 * (h - 2) + 15104 * (t - 1) + 15094 := by
-      norm_num [c2N,c2OldHead] <;> ring
-    linarith only [hi,hp]
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails

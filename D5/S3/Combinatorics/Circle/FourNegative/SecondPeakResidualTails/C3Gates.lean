@@ -1,21 +1,20 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/C3Gates
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/C3Gates
+   mirror-E: none(waiver:physical-dependent-source-registration)
+   anchors: [D5/S3/Combinatorics/Circle/FourNegative/PacketNormalForm/Source]
+   utility: none
+   digest: Universal doubled gates for the c3 fixed and parity-tail bank charts. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.C3Arithmetic
 import Mathlib.Tactic
 
-/- UNCOMPILED SOURCE PREPARATION.  No Lean/kernel/official acceptance.
-   Only the actual supplied bank definitions are consumed.  These are doubled
-   INTEGER gates; terminal division, parity, centered-source identification,
-   charge transport and the original physical certificate remain separate.
-   Terminal chain order is [0,3,2,1].  New chain X succeeds to OLD A.
-   H(4)=0 is the doubled old telescope; G(4)=0 includes separate fresh 2A,
-   so the matched-new doubled telescope is -2A, not zero. -/
+/-! Universal doubled gates for the c3 fixed and parity-tail bank charts. Original source owners supply the reused proofs. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxRecDepth 4096
 set_option maxHeartbeats 2000000
 
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails
-open private charge from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open private DataCertificate from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
 open scoped BigOperators
 
 /- Coefficients/identities: uxwv-c3-a5-full-tail-20261102.py, universal_case. -/
@@ -78,10 +77,7 @@ private theorem c3_fixed2 (t : ℤ)
     calc
       0 ≤ (15692 + (32584 * (t-1))) := by positivity
       _ = ((-16892) + (32584 * t)) := by ring
-  have g6 : 0 ≤ (67592 : ℤ) := by
-    calc
-      0 ≤ 67592 := by positivity
-      _ = 67592 := by ring
+  have g6 : 0 ≤ (67592 : ℤ) := by norm_num
   dsimp only [c3DoubledGates]
   refine ⟨?_, ?_, ?_, ?_⟩
   · norm_num [Fin.sum_univ_succ] <;> ring
@@ -122,10 +118,7 @@ private theorem c3_fixed3 (t : ℤ)
     calc
       0 ≤ (334502 + (368290 * (t-1))) := by positivity
       _ = ((-33788) + (368290 * t)) := by ring
-  have g6 : 0 ≤ (135176 : ℤ) := by
-    calc
-      0 ≤ 135176 := by positivity
-      _ = 135176 := by ring
+  have g6 : 0 ≤ (135176 : ℤ) := by norm_num
   dsimp only [c3DoubledGates]
   refine ⟨?_, ?_, ?_, ?_⟩
   · norm_num [Fin.sum_univ_succ] <;> ring
@@ -166,10 +159,7 @@ private theorem c3_fixed4 (t : ℤ)
     calc
       0 ≤ (5125574 + (5193154 * (t-1))) := by positivity
       _ = ((-67580) + (5193154 * t)) := by ring
-  have g6 : 0 ≤ (270344 : ℤ) := by
-    calc
-      0 ≤ 270344 := by positivity
-      _ = 270344 := by ring
+  have g6 : 0 ≤ (270344 : ℤ) := by norm_num
   dsimp only [c3DoubledGates]
   refine ⟨?_, ?_, ?_, ?_⟩
   · norm_num [Fin.sum_univ_succ] <;> ring
@@ -210,10 +200,7 @@ private theorem c3_fixed5 (t : ℤ)
     calc
       0 ≤ (28077062 + (28212226 * (t-1))) := by positivity
       _ = ((-135164) + (28212226 * t)) := by ring
-  have g6 : 0 ≤ (540680 : ℤ) := by
-    calc
-      0 ≤ 540680 := by positivity
-      _ = 540680 := by ring
+  have g6 : 0 ≤ (540680 : ℤ) := by norm_num
   dsimp only [c3DoubledGates]
   refine ⟨?_, ?_, ?_, ?_⟩
   · norm_num [Fin.sum_univ_succ] <;> ring
@@ -254,10 +241,7 @@ private theorem c3_fixed6 (t : ℤ)
     calc
       0 ≤ (127457414 + (127727746 * (t-1))) := by positivity
       _ = ((-270332) + (127727746 * t)) := by ring
-  have g6 : 0 ≤ (1081352 : ℤ) := by
-    calc
-      0 ≤ 1081352 := by positivity
-      _ = 1081352 := by ring
+  have g6 : 0 ≤ (1081352 : ℤ) := by norm_num
   dsimp only [c3DoubledGates]
   refine ⟨?_, ?_, ?_, ?_⟩
   · norm_num [Fin.sum_univ_succ] <;> ring
@@ -298,10 +282,7 @@ private theorem c3_fixed7 (t : ℤ)
     calc
       0 ≤ (12429554 + (12970222 * (t-1))) := by positivity
       _ = ((-540668) + (12970222 * t)) := by ring
-  have g6 : 0 ≤ (2162696 : ℤ) := by
-    calc
-      0 ≤ 2162696 := by positivity
-      _ = 2162696 := by ring
+  have g6 : 0 ≤ (2162696 : ℤ) := by norm_num
   dsimp only [c3DoubledGates]
   refine ⟨?_, ?_, ?_, ?_⟩
   · norm_num [Fin.sum_univ_succ] <;> ring
@@ -507,7 +488,7 @@ private theorem c3_cast_banks (e ell : ℕ) (he : 2 ≤ e) :
   fin_cases i <;> fin_cases j <;>
     simp [c3Banks, hu', hw', hp1, Nat.cast_add, Nat.cast_mul] <;> ring
 
-/-- UNCOMPILED.  Actual c3 banks, public e>=2 and every ell.
+/--   Actual c3 banks, public e>=2 and every ell.
     All four old lower seams and new upper peaks are doubled integer
     inequalities; both complete telescopes are zero with separate fresh A.
     No centered-source or DataCertificate assertion is made here. -/
