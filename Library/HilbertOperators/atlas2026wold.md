@@ -79,6 +79,6 @@ the native statements quantify over arbitrary real or complex inner product
 spaces and retain a possibly nonzero residual intersection. No theory-atom
 coverage, infinite Hardy decomposition or basis result is claimed here.
 
-## Verified
+## Verified locator
 
 https://github.com/facebookresearch/atlas-lean/blob/a60759060b5616df0d5775b42da4d337719feb32/MathlibExt/Analysis/InnerProductSpace/WoldDecomposition.lean
