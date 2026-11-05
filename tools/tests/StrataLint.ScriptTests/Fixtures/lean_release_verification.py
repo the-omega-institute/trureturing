@@ -167,6 +167,8 @@ os.execv({real_git}, [{real_git}, *sys.argv[1:]])
         material.write_bytes(payload)
         write(self.bin / "sitecustomize.py", '''
 import errno, json, os, pathlib, tarfile
+import sys
+sys.path.insert(0, os.environ["FAKE_RELEASE_HELPER"])
 import lean_cache_release_io
 original_extract = lean_cache_release_io.extract_members
 def extract(archive, path, members, deadline):
@@ -187,7 +189,8 @@ def extract(archive, path, members, deadline):
 lean_cache_release_io.extract_members = extract
 ''')
         reading = self.root / "space-reading.json"
-        result = self.verification("publish", PYTHONPATH=str(self.bin), FAKE_SPACE_READING=str(reading))
+        result = self.verification("publish", PYTHONPATH=str(self.bin), FAKE_SPACE_READING=str(reading),
+            FAKE_RELEASE_HELPER=str(self.publisher.parent))
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertIn('"status":"published"', result.stdout)
         self.assertEqual(payload, material.read_bytes())

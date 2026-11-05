@@ -1107,15 +1107,16 @@ def main():
             if LOG is not None:
                 code = error.code if isinstance(error, SystemExit) and isinstance(error.code, int) else 130 \
                     if isinstance(error, KeyboardInterrupt) else 1
-                _observe(CURRENT_OPERATION or "unknown", "failed",
+                _observe(CURRENT_OPERATION or "unknown",
+                         "cancelled" if isinstance(error, KeyboardInterrupt) else "failed",
                          phase=CURRENT_PHASE, reason=type(error).__name__, error=error)
-                LOG.finish(code, operation=CURRENT_OPERATION, action=CURRENT_OPERATION,
+                LOG.finish(code, operation=CURRENT_OPERATION, action=CURRENT_OPERATION, mode=CURRENT_MODE,
                            status=LOG_LAST.get("status"), outcome=LOG_LAST.get("outcome"),
                            stage=LOG_LAST.get("phase"), error_type=LOG_LAST.get("error_type"),
                            reason_code=LOG_LAST.get("reason_code"))
             raise
         if LOG is not None:
-            LOG.finish(exit_code, operation=CURRENT_OPERATION, action=CURRENT_OPERATION,
+            LOG.finish(exit_code, operation=CURRENT_OPERATION, action=CURRENT_OPERATION, mode=CURRENT_MODE,
                        status=LOG_LAST.get("status"), outcome=LOG_LAST.get("outcome"),
                        stage=LOG_LAST.get("phase"), error_type=LOG_LAST.get("error_type"),
                        reason_code=LOG_LAST.get("reason_code"))

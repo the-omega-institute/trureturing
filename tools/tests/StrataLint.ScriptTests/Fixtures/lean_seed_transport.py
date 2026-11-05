@@ -298,6 +298,8 @@ def record(**event):
 def copytree(source, target, *args, **kwargs):
     record(operation="copytree", source=str(source), target=str(target))
     raise OSError(errno.ENOSPC, "no space for a duplicate unpacked tree")
+import sys
+sys.path.insert(0, os.environ["FAKE_RELEASE_HELPER"])
 import lean_cache_release_io
 original_extract, original_rename = lean_cache_release_io.extract_members, pathlib.Path.rename
 def extract(archive, path, members, deadline):
@@ -321,7 +323,8 @@ def rename(source, target):
 shutil.copytree, lean_cache_release_io.extract_members, pathlib.Path.rename = copytree, extract, rename
 ''')
         (self.root / "install-events").unlink(missing_ok=True)
-        return {"PYTHONPATH": str(self.bin), "FAKE_INSTALL_LOG": str(self.root / "install-events"),
+        return {"PYTHONPATH": str(self.bin), "FAKE_RELEASE_HELPER": str(self.publisher.parent),
+                "FAKE_INSTALL_LOG": str(self.root / "install-events"),
                 "FAKE_INSTALL_FAILURE": failure}
 
     def installation_events(self):

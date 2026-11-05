@@ -32,9 +32,9 @@ internal static class LeanProgram
                     // transfer failures leave the normal build responsible for success.
                     var result = LeanCacheEnsureCommand.Run(root, rest, runner, new ApfsDirectoryCloner(),
                         continueOnCacheGetFailure: true);
-                    exitCode = result.ExitCode ?? (result.Success ? 0 : 2);
                     Console.Out.Write(result.Output);
                     Console.Error.Write(result.Error);
+                    exitCode = result.ExitCode ?? (result.Success ? 0 : 2);
                 }
             }
             else throw new ArgumentException("expected lean-utility-input, ensure-cache, with-cache-reader or with-cache-writer");
