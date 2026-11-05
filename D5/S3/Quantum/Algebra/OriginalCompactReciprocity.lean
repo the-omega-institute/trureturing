@@ -253,6 +253,7 @@ private theorem fullReciprocity_of_kernels_ranges
       refine ⟨⟨((Submodule.span ℝ {A}).mkQ K,
         (Submodule.span ℝ {x}).mkQ y), relation_mem G A K x y ?_⟩, rfl⟩
       change K.val x + A.val y = 0
+      change A.val y = -K.val x at hy
       rw [hy]
       simp
   · constructor
@@ -512,10 +513,10 @@ private theorem skew_plane_frame {V : Type*} [AddCommGroup V] [Module ℝ V]
       change T y = 0 at hy
       have h0 : ⟪b 0,y⟫_ℝ = 0 := by
         have := congrArg (fun z => ⟪b 1,z⟫_ℝ) hy
-        simpa [hT, b.inner_eq_ite] using this
+        simpa [hT, inner_sub_right, real_inner_smul_right, b.inner_eq_ite] using this
       have h1 : ⟪b 1,y⟫_ℝ = 0 := by
         have := congrArg (fun z => ⟪b 0,z⟫_ℝ) hy
-        simpa [hT, b.inner_eq_ite] using this
+        simpa [hT, inner_sub_right, real_inner_smul_right, b.inner_eq_ite] using this
       apply Submodule.mem_span_singleton.mpr
       refine ⟨⟪b 2,y⟫_ℝ, ?_⟩
       simpa [h0,h1] using (hexp y).symm
@@ -530,7 +531,7 @@ private theorem skew_plane_frame {V : Type*} [AddCommGroup V] [Module ℝ V]
     constructor
     · rintro ⟨z,rfl⟩
       change ⟪b 2,T z⟫_ℝ = 0
-      simp [hT, b.inner_eq_ite]
+      simp [hT, inner_sub_right, real_inner_smul_right, b.inner_eq_ite]
     · intro hy
       change ⟪b 2,y⟫_ℝ = 0 at hy
       refine ⟨⟪b 1,y⟫_ℝ • b 0 - ⟪b 0,y⟫_ℝ • b 1, ?_⟩
@@ -555,8 +556,10 @@ private theorem skew_realizes_perp {V : Type*} [AddCommGroup V] [Module ℝ V]
     ring
   · change ⟪x,x⟫_ℝ = 1 at hxx
     change ⟪x,y⟫_ℝ = 0 at hxy
-    rw [hS, hxx, real_inner_comm y x, hxy]
-    simp
+    have hyx : ⟪y,x⟫_ℝ = 0 := by
+      rw [real_inner_comm]
+      exact hxy
+    simp only [hS, hxx, hyx, one_smul, zero_smul, sub_zero]
 
 private theorem skew_dimension_le_three {V : Type*} [AddCommGroup V] [Module ℝ V]
     [FiniteDimensional ℝ V] (B : InnerProductSpace.Core ℝ V) (hV : finrank ℝ V = 3)
