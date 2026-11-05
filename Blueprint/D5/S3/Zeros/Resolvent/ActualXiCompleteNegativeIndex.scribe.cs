@@ -33,15 +33,15 @@ internal sealed class ActualXiCompleteNegativeIndexDocument : IScribeDocumentDef
                 )
             ),
             Describe.Lean(
-                DescribeId.Create("actual-xi-complete-derivative-hankel-index"),
+                DescribeId.Create("actual-xi-negative-index-matrix-sup"),
                 DeclarationHandle.Create(
-                    "D5/S3/Zeros/Resolvent/ActualXiCompleteNegativeIndex.actual_complete_derivative_hankel_index"),
+                    "D5/S3/Zeros/Resolvent/ActualXiCompleteNegativeIndex.actual_negativeIndex_eq_matrix_sup"),
                 H("Supremum of finite derivative Hankel indices"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "The derivative-Hankel endpoint states that the supremum of all finite actual derivative Hankel negative indices equals ENat.card QuartetRepresentative. It consumes actual_negativeIndex_eq_matrix_sup and actual_complete_negative_index, so the reconstruction and actual-energy joins are part of the final proof chain. Together the endpoints retain complete actual index = quartet count = finite-matrix index supremum, in zero, finite, and infinite cases, without an RH premise or a modulus-square replacement."))
+                        "The actual_negativeIndex_eq_matrix_sup endpoint identifies the complete polynomial-space negative index with the supremum of all finite actual derivative Hankel negative indices through the reconstruction and actual-energy joins. Together with actual_complete_negative_index, it yields complete actual index = quartet count = finite-matrix index supremum, in zero, finite, and infinite cases, without an RH premise or a modulus-square replacement."))
                 )
             )
         )

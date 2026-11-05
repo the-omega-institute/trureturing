@@ -316,11 +316,4 @@ theorem actual_complete_negative_index :
         (s := (∅ : Set QuartetRepresentative)) (by simp)
     exact actual_lower_of_rep_embedding e
 
-/-- The supremum of finite original-derivative Hankel indices is the same
-complete quartet count. This consumes the support and energy transfer. -/
-theorem actual_complete_derivative_hankel_index :
-    (⨆ N : ℕ, negativeIndex (actualCoefficientEnergy N)) = actualQuartetCount := by
-  change actualMatrixNegativeIndex = actualQuartetCount
-  rw [← actual_negativeIndex_eq_matrix_sup, actual_complete_negative_index]
-
 end D5.S3.Zeros.Resolvent.ActualXiCompleteNegativeIndex
