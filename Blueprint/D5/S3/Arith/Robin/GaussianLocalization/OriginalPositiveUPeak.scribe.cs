@@ -46,7 +46,10 @@ internal sealed class OriginalPositiveUPeakDocument : IScribeDocumentDefinition
                     + "to the asserted peak constant nine.")),
                 Paragraph(Text(
                     "The signed W/K exchange identifies integral Re(H)*K with Re(E). "
-                    + "GaussianSignedLocalization.signed_localization_debit retains the full "
+                    + "The localization helper combines integral_mono, indicator decomposition and order algebra; "
+                    + "it is bind-only proof support consumed by full_E_upper_of_central_bound, "
+                    + "not an independent content or admission witness. "
+                    + "The consumed private signed_localization_debit helper retains the full "
                     + "negative debit -integral Re(H)*V before relaxing it to its absolute value. "
                     + "The exact complement is ([0,infinity)\\J) union (-infinity,0); "
                     + "both endpoints of J stay central, and the singleton zero is transported "
