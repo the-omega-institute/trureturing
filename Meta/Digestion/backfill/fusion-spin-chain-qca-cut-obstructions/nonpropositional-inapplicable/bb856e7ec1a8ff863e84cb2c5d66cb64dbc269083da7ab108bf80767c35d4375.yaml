@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bb856e7ec1a8ff863e84cb2c5d66cb64dbc269083da7ab108bf80767c35d4375
+  normalized_sha256: sha256:bb856e7ec1a8ff863e84cb2c5d66cb64dbc269083da7ab108bf80767c35d4375
+cas_ref: sha256:bb856e7ec1a8ff863e84cb2c5d66cb64dbc269083da7ab108bf80767c35d4375
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This section heading and permission declaration fixes which measurement settings are allowed: the two adjacent vacuum-channel projections P,Q and a phase pulse on the first pair. It explicitly separates these permissions from the preceding P-only argument. It asserts a modeling permission, not a mathematical proposition or an experimental realization; no theorem coverage or physical feasibility is claimed.'
+    previous_atom_id: 86f0f252a21e8a2d0dbe4318f72ee1122cf19712e5a9de510cf44226a0cefab3
+    next_atom_id: e57bdc5f02a09ac4830ccf8b295ad493b31599d4810f7b48b44cc8ef9a34c03d

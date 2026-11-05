@@ -1,0 +1,14 @@
+## 6. 来源与适用边界
+
+**来源表态。**
+
+| 来源 | 精确范围与使用边界 |
+| --- | --- |
+| `D5/S1/Words/AdmissibleWords/KBonacciActualEndpointOperators.actual_endpoint_operators` | `repo-derived` 供应实际窗口、端点外积、串接律、全端点闭包、计数与非零秩至多一；不供应本卷的迹观察张成/核分类。 |
+| `KBONACCI_SELF_CALIBRATING_BOUNDARIES.md` 第 3–4 节 | `repo-derived` 供应边界状态、端点命题、单窗口非闭合与 Hankel 秩；不把这些结果解释成关系矩阵的标量迹核。 |
+| `FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_SYNTHESIS.md` | `repo-derived` 供应关系读数、目标相对框架与开放的类型边界；不供应 KBonacci 载体映射。 |
+| R. A. Horn and C. R. Johnson, *Matrix Analysis*, 2nd ed., Cambridge University Press, 2013, Chapters 0–1, [DOI](https://doi.org/10.1017/CBO9780511810817) | `literature-attested`：矩阵单位、秩、迹与有限维线性代数的标准工具；不供应本卷的 KBonacci 端点合同或正秩一识别应用。 |
+| 本卷的定理 2.2–4.2 | `repo-derived` 的综合推导；从上述端点合同计算张成、标量观察核与严格逐元正秩一识别，不主张文献新颖性或优先权。 |
+
+**适用边界。** 严格逐元正秩一类允许非对称，也包含其对称子类；结论不覆盖一般半正定矩阵。迹合同固定为 $\operatorname{tr}(EA)$；改变配对、允许窗口、来源域或输出合同都需要重新计算。KBonacci 到 FIB 的载体、操作、读数与目标等价关系的类型桥保持开放。
+

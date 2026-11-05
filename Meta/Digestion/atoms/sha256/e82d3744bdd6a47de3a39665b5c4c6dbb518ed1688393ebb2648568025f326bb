@@ -1,0 +1,28 @@
+**命题 15.1（单个实际平均算子不必有 Liouville 性）。**存在满足全部原始前件与完整 (R)、且 $U1_M\ne1_M$ 的模型，同时具有连续、非负、有界、非常数的 $h$ 与非负势 $f$，满足
+
+$$
+hU=h,\qquad K_{a_\star}h=h,\qquad
+0\le h\le f,\qquad fU=f,\qquad K_{a_\star}f=f+1.
+\tag{15.1}
+$$
+
+**证明。**取 $M=(\mathbb C,+)$，原单位 $1_M=0$，$Uz=\omega z+1$、$c(z,w)=|z-w|^2$，并取实际背景 $a_\star=1\in\mathbb C$。标记迭代的两端差为 $\omega^k(u-v)$，三角色求和立即给完整 (R)，而 $U1_M=1\ne0$。令
+
+$$
+\mathcal L=\mathbb Z+\omega\mathbb Z,\qquad
+h(z)=\operatorname{dist}(z,\mathcal L)^2.
+\tag{15.2}
+$$
+
+这是连续的非负函数。将任意 $z$ 按格基 $1,\omega$ 写成整数部分与有界基本平行四边形中的余项，得 $h$ 有界；$h(0)=0$、$h(1/2)>0$ 给非常数。格满足 $\omega\mathcal L=\mathcal L$、$1+\mathcal L=\mathcal L$，所以 $U$ 及每个 $z\mapsto a_\star+U^kz$ 都是保持该格的欧氏等距变换，故逐项有 $hU=h$、$h(a_\star+U^kz)=h(z)$，从而 $K_{a_\star}h=h$。
+
+单位轨道为 $p_0=0,p_1=1,p_2=1+\omega$、三步重复。置 $m=1/(1-\omega)$，则第 12 节的实际移位均值势为
+
+$$
+f(z)=\frac13\sum_{j=0}^2|z-p_j|^2
+=|z-m|^2+|m|^2.
+\tag{15.3}
+$$
+
+$U^kz=m+\omega^k(z-m)$，所以三项平方平均给 $fU=f$ 与 $K_af=f+|a|^2$，特别 $K_{a_\star}f=f+1$。各 $p_j$ 均在格中，故 $h(z)\le|z-p_j|^2$ 对每个 $j$ 成立，平均后得 $h\le f$。
+

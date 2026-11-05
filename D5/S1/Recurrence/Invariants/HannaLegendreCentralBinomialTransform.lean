@@ -8,6 +8,7 @@
 
 /-
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19311
+Escape audit for coeff_one_add_pow unfinished: https://github.com/the-omega-institute/trureturing/issues/22605
 admission_basis: escape-witness (square_binomial_sum)
 escape_witness: square_binomial_sum (binomial-square recurrence induction)
 Direct frozen dependencies: D5/S1/Recurrence/Residue/ContinuedFractionOddSquare.map_inverse.
@@ -33,7 +34,9 @@ Declaration assessment (definitions have no proof_shape):
   F: definition; consumers: F_recurrence, square_binomial_sum.
   F_recurrence: bind-only; consumers: square_binomial_sum.
   square_binomial_sum: content; consumers: reduced_term_coeff.
-  coeff_one_add_pow: bind-only; consumers: coeff_one_sub_pow, alternating_square, weighted_alternating_coefficient.
+  coeff_one_add_pow: bind-only; escape_witness: none; direct frozen dependencies: none;
+    consumers: coeff_one_sub_pow, alternating_square, weighted_alternating_coefficient,
+    HannaA181070Integrality.binomDiv, HannaA181070Integrality.binomCong.
   coeff_one_sub_pow: bind-only; consumers: alternating_square, weighted_alternating_coefficient, coeff_one_sub_sq_pow.
   alternating_square: bind-only; consumers: R_coeff.
   weighted_alternating_coefficient: bind-only; consumers: weighted_alternating_succ.
@@ -225,7 +228,7 @@ theorem square_binomial_sum (n t : ℕ) :
       linear_combination hr - hc2
     exact sub_eq_zero.mp ((mul_eq_zero.mp heq).resolve_left (pow_ne_zero _ (ne_of_gt ht)))
 
-private theorem coeff_one_add_pow (n k : ℕ) :
+theorem coeff_one_add_pow (n k : ℕ) :
     coeff k ((1+X : PowerSeries ℤ)^n) = (n.choose k : ℤ) := by
   have hright : (1+X : PowerSeries ℤ)^n =
       ((1+Polynomial.X : Polynomial ℤ)^n).toPowerSeries := by simp

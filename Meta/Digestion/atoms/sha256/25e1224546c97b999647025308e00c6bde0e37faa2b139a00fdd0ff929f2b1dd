@@ -1,0 +1,80 @@
+**定理 119.1（测试域、共同切向量与角度标量）。** 固定有限 EJA 各简单块上 $c,p$ 的秩向量 $\mathbf k,\mathbf l$，相应幂等元流形记为 $M_{\mathbf k},M_{\mathbf l}$。候选的该分量有自然光滑对应
+
+$$
+\begin{aligned}
+\mathcal T_{\mathbf k,\mathbf l}
+ &=\{(c,p,n):c\in M_{\mathbf k},\
+ p\in M_{\mathbf l},\ n\in\nu_cM_{\mathbf k}\}\\
+ &\cong M_{\mathbf l}\times\nu M_{\mathbf k},\\
+(c,p,n)&\longmapsto(p,(c,n)).
+\end{aligned}
+\tag{119.1}
+$$
+
+若 $N=\dim E$、$r_{\mathbf l}=\dim M_{\mathbf l}$，其总维数为 $N+r_{\mathbf l}$，比 $\mathsf F_{\rm zero}$ 对应分量的 $2N$ 少 $N-r_{\mathbf l}$ 个数学参数。非零对象上该差严格为正。
+
+证明。裸有限 EJA 的原 $q$ 法空间为 $N_c$，直接消费 (111.4)–(111.5) 的成熟流形与 Peirce 识别；(119.1) 的逆映射为 $(p,(c,n))\mapsto(c,p,n)$。法丛总维数为 $N$，故给维数公式。非零对象的原单位 $u\ne0$ 属于每个 $N_p$，因而 $r_{\mathbf l}=\dim E_{1/2}(p)<N$。零对象两域均为点。完整域仍是全部秩向量的有限不交并，没有删除零或满秩分量。
+
+在同一候选下，定义 $J_c=2D_c$ 在 $E_{1/2}(c)$ 上的限制。定理 110.2 给同一原向量
+
+$$
+\begin{aligned}
+V(c,p)&=2D_cp=J_cP_cp=-J_pP_pc,\\
+V(c,p)&\in T_cM_{\mathbf k}\cap T_pM_{\mathbf l},\\
+W_c(p)&=W_p(c)=\tfrac12\|V(c,p)\|_q^2.
+\end{aligned}
+\tag{119.2}
+$$
+
+两处切向性分别是 (110.4) 对幂等元 $c,p$ 的应用，两个方向相反来自 SC；余量相等由两次同一范数校准给出。这些是两个切口及原作用之间的明确对应，不只是一对标量相同。
+
+完整原背景完成 (111.2) 后，各分量才成为
+
+$$
+M_{\mathbf l}=\prod_s\operatorname{Gr}_{\mathbb C}(l_s,n_s),\qquad
+N=\sum_sn_s^2,\qquad
+N-r_{\mathbf l}=\sum_s\{l_s^2+(n_s-l_s)^2\}.
+\tag{119.3}
+$$
+
+原 $q(x,y)=\sum_sw_s\operatorname{Tr}(x_sy_s)$ 的全部 $w_s>0$ 保留。为解释双切口标量，在一个原块中写
+
+$$
+c=\begin{pmatrix}I_k&0\\0&0\end{pmatrix},\qquad
+p=\begin{pmatrix}A&B\\B^*&C\end{pmatrix}.
+\tag{119.4}
+$$
+
+成熟的两投影主角度工具只作本条中间步骤；可参照 Terry A. Loring, *Principal angles and approximation for quaternionic projections*, [arXiv:1306.1923v1](https://arxiv.org/abs/1306.1923v1)，§1 开头明确展示的二阶 $P_\theta,Q_\theta$。本条直接使用压缩矩阵 $A=(cpc)|_{\operatorname{ran}c}$ 的谱，不另需全块计数公式。由 $p^2=p$ 有 $A-A^2=BB^*$，代入原余量给
+
+$$
+\begin{aligned}
+W_c(p)
+ &=w\operatorname{Tr}(BB^*)
+ =w\{\operatorname{Tr}(cp)-\operatorname{Tr}(cpcp)\}\\
+ &=\tfrac w2\|[c,p]\|_{\rm HS}^2.
+\end{aligned}
+\tag{119.5}
+$$
+
+令压缩谱值 $\lambda_j\in[0,1]$ 写成 $\lambda_j=\cos^2\theta_j$；这包含必要的零谱值、公共像方向和直角方向。各原块因而给成熟的角度表达
+
+$$
+W_c(p)=\sum_sw_s\sum_j
+ \cos^2\theta_{s,j}\sin^2\theta_{s,j}
+=\tfrac14\sum_sw_s\sum_j\sin^2(2\theta_{s,j}).
+\tag{119.6}
+$$
+
+零或满秩的空谱、零角及直角均贡献零。故 $W_c(p)=0$ 恰为逐块可交换；它不区分相同切口与正交切口，不是通常的 Grassmann 距离，也不决定原 $D$ 的方向。
+
+在原角单位 $e$ 的三维数学截面内，取 $c=(e+Z)/2$、$p=(e+m_xX+m_yY+m_zZ)/2$、$|\mathbf m|=1$，则
+
+$$
+W_c(p)=\tfrac w4(m_x^2+m_y^2),\qquad
+2D_cp=\tfrac12(m_yX-m_xY).
+\tag{119.7}
+$$
+
+若两条 Bloch 方向夹角为 $\gamma$，这里的像空间主角度为 $\theta=\gamma/2$。$e$ 不充当整个原单位，数学角不供应实际 $M_2$、时钟或操作。裸 Spin7 的概复边界仍由命题 100.3 保留；不能用上述局部切向量代替完整背景给出的相容复结构。∎
+

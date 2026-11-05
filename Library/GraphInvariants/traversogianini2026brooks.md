@@ -2,10 +2,10 @@
 bibkey: traversogianini2026brooks
 authors: Juan Pablo Traverso Gianini
 year: 2026
-title: "BrooksSubcubic, finite chordal elimination and finite Menger certificates: Lean sources"
+title: "Graph theorem Lean sources: BrooksSubcubic, chordal elimination, Menger and Hamiltonian closure"
 doi: null
-url: https://github.com/Vilin97/lean-pool/tree/91c154506e3d08a1a25e4966c22c99212bf9df54/LeanPool/BrooksSubcubic
-claim: "Subcubic four-clique-free graphs are three-colorable; finite chordal graphs are exactly those admitting perfect elimination rankings."
+url: https://github.com/jtraverso
+claim: "Subcubic four-clique-free graphs are three-colorable; finite chordal graphs admit perfect elimination rankings; finite Menger certificates and Hamiltonian closure and Ore degree-sum criteria hold."
 strata_touched:
   - D5/S3/Combinatorics/Graph/Brooks/Coloring
   - D5/S3/Combinatorics/Graph/Brooks/Cuts
@@ -16,6 +16,7 @@ strata_touched:
   - D5/S3/Combinatorics/Graph/Chordal/Characterization
   - D5/S3/Combinatorics/Graph/Walks/MengerCertificates
   - D5/S3/Combinatorics/Graph/Walks/EdgeMengerCertificates
+  - D5/S3/Combinatorics/Graph/Walks/HamiltonianClosure
 license: Apache-2.0
 triage: anchor
 ---
@@ -29,6 +30,9 @@ Connectedness is not a hypothesis. The theorem is the subcubic specialization
 of Brooks' theorem, not a new graph-coloring theorem.
 
 ## Verified locator
+
+Author source collection: https://github.com/jtraverso. The immutable theorem
+source locators are given with each result below.
 
 https://github.com/Vilin97/lean-pool/tree/91c154506e3d08a1a25e4966c22c99212bf9df54/LeanPool/BrooksSubcubic
 
@@ -213,6 +217,39 @@ no NOTICE path. The received source bytes have SHA-256:
 - MengerCore.lean: 2222b03a08e2c238d415133b30ea337086d1e4c6c87b4eca29010885ded80700.
 - LICENSE: c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4.
 
+## Vertex-deletion connectivity and terminal-clean fans
+
+The same immutable source supplies `exists_fan` in
+`MengerHamilton/ChvatalErdosAux.lean`, whose received source bytes have SHA-256
+275f7eac4a156883ad28b3d606fa73af18ab532c45a0d3ee7b892494f458c440.
+`D5/S3/Combinatorics/Graph/Walks/ConnectivityFan` adapts its separator argument
+to an arbitrary finite terminal set B. Deleting fewer than k vertices leaves
+a connected graph; for every x outside B there are min(k, |B|) paths from x to
+distinct terminals, meeting B only at their ends and sharing only x.
+The receiver's original `MengerCertificates.Fam` and `fam_of_le` supply the
+terminal-clean disjoint certificates directly. No cyclic-array representation
+or second Menger proof is introduced. The source and receiver pins, author,
+Apache license and retirement condition stated above also apply to this slice.
+The cycle-existence argument from `exists_cycArr_of_conn` is expressed using
+ordinary native walks, the tree edge count and the degree sum identity.
+`exists_maximal_cycle_fans` uses the existing Brooks cycle-support cardinality
+theorem to choose an ordinary cycle of maximum length and constructs the
+terminal-clean fans for that same cycle.
+
+The accompanying `CycleDetour` construction uses the cycle-extension argument
+of `MengerHamilton/LongerCycle.lean`, source SHA-256
+4ef266555bdeaaed3cf380d1745519d14a74cc98160bc2e154f91cb95a0805f9.
+The receiver uses its existing ordered path cutter and path-ring splicer,
+with an exact inventory on the induced union of the actual supports.
+The `ChvatalErdos` statement follows `chvatal_erdos_aux` rather than the
+source's `IsKConnected` wrapper: k is arbitrary, with no added bound k < |V|.
+The native successor relation is read from rotated cycle darts.
+
+The mathematical source is V. Chvatal and P. Erdos, *A note on Hamiltonian
+circuits*, Discrete Mathematics 2 (1972), 111–113,
+DOI 10.1016/0012-365x(72)90079-9, Theorem 1. The original paper attributes
+the fan theorem to G. A. Dirac, *Généralisations du théorème de Menger*.
+
 Retire the port when this repository's own pinned Mathlib contains an equivalent
 entire finite set-form certificate and arbitrary-walk duality, after migrating
 consumers lawfully to direct applications. An upstream acceptance event alone is
@@ -245,3 +282,45 @@ attribution above also apply to this slice. The original Diestel text is not a
 checked source here. No novelty is claimed. Retire this edge port only when the
 receiver's own adopted Mathlib pin supplies the equivalent entire finite edge
 theorem and affected consumers and records have migrated lawfully.
+
+
+## Hamiltonian single-edge closure and Ore's theorem
+
+The same immutable Juan Pablo Traverso Gianini source supplies the known
+Bondy--Chvatal single-edge closure theorem and Ore's degree-sum theorem. For
+any finite vertex type V and simple undirected graph G, distinct nonadjacent
+u,v with |V| ≤ deg_G(u)+deg_G(v) satisfy
+(G sup edge(u,v)).IsHamiltonian if and only if G.IsHamiltonian. The closure
+statement has no external cardinality or connectedness hypothesis. For
+|V| ≥ 3, the same degree-sum bound on every distinct nonadjacent pair implies
+G.IsHamiltonian. The degrees are those of the original G.
+
+The selected live source is MengerHamilton/ClosureAux.lean, the
+endpoint-neighborhood counting and index-crossing argument in
+exists_cycArr_of_path and the single-edge reduction in
+isHamiltonian_of_sup_edge, together with Hamiltonian.lean's
+isHamiltonian_sup_edge_iff and ore. The native receiver uses actual Walk
+prefixes and reversed suffixes, the existing EdgeSlicing cycle-opening
+theorem, and PathRingSplicing's actual cycle construction. Full support
+counts establish that the two rearranged pieces span every vertex exactly
+once. The donor's CycArr representation, complete-graph construction,
+MengerCore, Menger, ChvatalErdosAux, Dirac and Chvatal--Erdos are not received
+as part of this theorem.
+
+The donor and receiver pins, Apache-2.0 license, authorship, copyright and
+no-NOTICE source-tree reading above apply. The full software license remains
+in docs/reports/licenses/menger-hamiltonian-LICENSE.txt. Historical locators
+are J. A. Bondy and V. Chvatal, *A method in graph theory*, Discrete
+Mathematics 15 (1976), 111--135,
+[DOI 10.1016/0012-365X(76)90078-9](https://doi.org/10.1016/0012-365X(76)90078-9),
+and Oystein Ore, *Note on Hamilton Circuits*, The American Mathematical
+Monthly 67 (1960), 55,
+[DOI 10.2307/2308928](https://doi.org/10.2307/2308928).
+Crossref metadata verifies these locators; the original full papers have
+not been read. This is attributed known-theorem source reception with no
+originality or global theorem-absence claim.
+
+Retire the port only when the receiver's own adopted Mathlib pin supplies
+the equivalent complete finite single-edge closure and Ore statements,
+after the affected consumers and frozen records migrate lawfully. Upstream
+acceptance alone does not meet this retirement condition.
