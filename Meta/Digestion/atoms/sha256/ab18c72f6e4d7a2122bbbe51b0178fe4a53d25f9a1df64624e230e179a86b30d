@@ -1,0 +1,64 @@
+**定理 10.1 方差给射线速度。**
+
+```math
+\boxed{\|\xi\|^2=\frac{\langle H^2\rangle-h^2}{\hbar^2}
+=\frac{(\Delta H)^2}{\hbar^2}.}
+```
+
+\*\*证明。\*\*展开 (H−hI)² 的期望即得。证毕。
+
+采用
+
+```math
+ds_{\mathrm{FS}}^2
+=\langle d\psi,d\psi\rangle-|\langle\psi,d\psi\rangle|^2,
+\qquad
+d_{\mathrm{FS}}([\psi],[\phi])
+=\arccos|\langle\psi,\phi\rangle|,
+```
+
+故 FS 速度为 ΔH/ℏ。单位 Bloch 球的速度是这一速度的两倍。这里的尺度约定已经固定，不能与含 2ℏ 因子的另一度量混用。
+
+\*\*定理 10.2 即时二能级截面。\*\*若 ξ≠0，当前态和切向落在复二维空间 span{ψ,ξ} 中。取与 ψ 正交的单位 u，若 ξ=zu，则在基 (ψ,u) 下
+
+```math
+\dot\rho=|\xi\rangle\langle\psi|+|\psi\rangle\langle\xi|
+=
+\begin{pmatrix}0&\bar z\\z&0\end{pmatrix},
+```
+
+因此
+
+```math
+\mathbf r(0)=(0,0,1),\qquad
+\boxed{\dot{\mathbf r}(0)=(2\operatorname{Re}z,2\operatorname{Im}z,0).}
+```
+
+这是当前一阶信息的完整三维提升，不保证以后一直留在同一二维载体。
+
+\*\*命题 10.3 该切向的规范圆实现。\*\*令 ν=‖ξ‖>0、u=ξ/ν，取
+
+```math
+K_{\min}=|\xi\rangle\langle\psi|-|\psi\rangle\langle\xi|.
+```
+
+则
+
+```math
+e^{tK_{\min}}\psi
+=\cos(\nu t)\psi+\sin(\nu t)u.
+```
+
+\*\*证明。\*\*Kminψ=νu，Kminu=−νψ，且在二者正交补上为零；指数级数直接给该式。它水平且在局部最短区间内是 FS 测地线。证毕。
+
+任意反自伴 K 若满足 Kψ=ξ，均写为 K=Kmin+C，其中 C\*=−C、Cψ=0。两个块在 Hilbert–Schmidt 配对下正交，因此
+
+```math
+\|K\|_{\mathrm{HS}}^2
+=2\|\xi\|^2+\|C\|_{\mathrm{HS}}^2.
+```
+
+所以 Kmin 是这一指定矩阵范数下唯一的最小实现。这个优化定义给规范圆，并没有证明自然的实际 Hamiltonian 必须选择该最小值；第 8 节已经给不同曲率反例。此处最小的是指定的 Hilbert–Schmidt 范数，并非未经定义的最短时间或最低实验能耗。若 ξ=0，规范生成元为零，规范曲线就是常值。
+
+\*\*白话图景。\*\*当前内容加上眼前的变化方向，只需两个相干方向就能看清；归一以后是球上的一点和切箭头。把当前看不见的额外动作都取零，就有一条规范大圆。实际历史是否沿它走，还由整个门决定。
+

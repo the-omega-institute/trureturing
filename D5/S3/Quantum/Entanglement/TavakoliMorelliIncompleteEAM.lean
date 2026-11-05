@@ -149,7 +149,7 @@ theorem traceNorm_mul_le_hsSq {κ : Type*} [Fintype κ]
   rw [hsSq_toEuclideanCLM R b, hsSq_toEuclideanCLM S b] at h
   exact h
 
-private theorem traceNorm_gram_le {ι κ : Type*}
+theorem traceNorm_gram_le {ι κ : Type*}
     [Fintype ι] [Fintype κ]
     (F G : Matrix ι κ ℂ) :
     D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm (Fᴴ * G) ≤

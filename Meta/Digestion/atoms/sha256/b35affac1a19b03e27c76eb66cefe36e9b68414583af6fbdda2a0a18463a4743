@@ -1,0 +1,181 @@
+### 证明：有限插值消主项，高幂压尾项
+
+取
+
+$$
+r=\frac{|\lambda_0|}{4},
+\qquad
+E=\{\lambda\in\mathcal T:|\lambda|\ge r\}.
+$$
+
+$E$ 是有限共轭对称集合，包含 $\lambda_0,\bar\lambda_0$。
+
+定义 Lagrange 基多项式
+
+$$
+\ell_0(z)
+=
+\prod_{\substack{\zeta\in E\\\zeta\ne\lambda_0}}
+\frac{z-\zeta}{\lambda_0-\zeta}.
+$$
+
+它在 $\lambda_0$ 取一，在 $E$ 的其他点取零。令
+
+$$
+\ell_{\bar0}(z)=\overline{\ell_0(\bar z)}.
+$$
+
+选单位复数 $u$，使
+
+$$
+\omega_{\lambda_0}u^2=-|\omega_{\lambda_0}|.
+
+$$
+
+<a id="eq-5-7"></a>
+
+(5.7)
+
+对整数 $m\ge1$，定义
+
+$$
+\boxed{
+p_m(z)
+=
+z^m
+\left[
+u\lambda_0^{-m}\ell_0(z)
++
+\bar u\,\bar\lambda_0^{-m}\ell_{\bar0}(z)
+\right].
+}
+
+$$
+
+<a id="eq-5-8"></a>
+
+(5.8)
+
+<!-- editorial-note: n26 begin -->
+<a id="n26"></a>
+
+**编者注 n26（插值的实性与相位）。** 因为 $r=|\lambda_0|/4>0$ 且非零聚点不存在，$E$ 有限并共轭对称；其节点互异，Lagrange 分母均非零。权重非零，故可选单位 $u$ 满足（5.7）。$\ell_{\bar0}$ 的系数是 $\ell_0$ 的共轭，第二项的系数也是第一项的共轭，所以乘以 $z^m$ 后仍为实系数。目标点的交叉 Lagrange 值为零，正好给出 $u,\bar u$，其他 $E$ 节点为零，不要求目标谱点为模最大的点。
+
+<!-- editorial-note: n26 end -->
+
+它具有实系数，且
+
+$$
+p_m(\lambda_0)=u,\qquad
+p_m(\bar\lambda_0)=\bar u,
+$$
+
+在 $E$ 的其余点全部为零。
+
+令 $L_r$ 是两份 Lagrange 多项式在 $|z|\le r$ 上的共同上界。例如可取
+
+$$
+L_r=
+\prod_{\substack{\zeta\in E\\\zeta\ne\lambda_0}}
+\frac{r+|\zeta|}{|\lambda_0-\zeta|}.
+$$
+
+于是
+
+$$
+|p_m(z)|\le2L_r4^{-m}
+\qquad(|z|\le r).
+
+$$
+
+<a id="eq-5-9"></a>
+
+(5.9)
+
+再记
+
+$$
+T_r=\sum_{|\lambda|<r}|\omega_\lambda|<\infty.
+$$
+
+目标共轭对的贡献恰为
+
+$$
+-2|\omega_{\lambda_0}|,
+$$
+
+全部尾项的绝对值至多为
+
+$$
+4L_r^2T_r16^{-m}.
+$$
+
+因此
+
+$$
+\boxed{
+\mathcal L(p_m^2)
+\le
+-2|\omega_{\lambda_0}|
++
+4L_r^2T_r16^{-m}.
+}
+
+$$
+
+<a id="eq-5-10"></a>
+
+(5.10)
+
+<!-- editorial-note: n27 begin -->
+<a id="n27"></a>
+
+**编者注 n27（尾界常数与有限次数）。** 共轭对称使两份 Lagrange 多项式在半径 $r$ 盘上有同一个所列积上界。每份乘入 $z^m\lambda_0^{-m}$ 后至多 $L_r4^{-m}$，两份相加后平方模至多 $4L_r^2 16^{-m}$；乘尾部绝对权重和即得（5.10）。目标共轭对恰为 $-2|\omega_{\lambda_0}|$，而整个泛函为实数，故可用尾部绝对值作上界。$T_r$ 有限且 $\omega_{\lambda_0}\ne0$，于是存在有限整数 $m$ 满足严格阈值，次数至多 $m+|E|-1$。这是存在性和误差控制，未执行谱枚举或算出实际系数。
+
+<!-- editorial-note: n27 end -->
+
+取有限 $m$ 使
+
+$$
+4L_r^2T_r16^{-m}<|\omega_{\lambda_0}|,
+$$
+
+便得到
+
+$$
+\mathcal L(p_m^2)<-|\omega_{\lambda_0}|<0.
+$$
+
+而
+
+$$
+\deg p_m\le m+|E|-1.
+$$
+
+因此严格负方向已经出现在某个有限 $J_N$ 中。
+
+这个构造不要求所选离线零点最近，也不要求它具有最大的实部。
+
+最后，因为二次型 $u^{\mathsf T}J_Nu$ 对有限系数向量连续，严格负值在充分小扰动下保持。用有理系数逼近 $p_m$，再清除分母，就得到
+
+$$
+\boxed{
+\exists p\in\mathbb Z[t]:
+\mathcal L(p^2)<0.
+}
+
+$$
+
+<a id="eq-5-11"></a>
+
+(5.11)
+
+证毕。
+
+<!-- editorial-note: n28 begin -->
+<a id="n28"></a>
+
+**编者注 n28（整数化与全层量词）。** 固定已得多项式的有限次数后，$u^{\mathsf T}J_Nu$ 是实系数向量的连续函数；严格负裕量保持于某个开邻域。有理向量稠密，故可取同次数的有理系数，再乘正整数公分母 $D$；二次型乘 $D^2$，负号保留，得到（5.11）。不要求先给出可执行的搜索界。式（5.12）在全部 $N\ge0$ 上量化：RH 给出正实谱的正平方和；若任一离线零点存在，前面的有限实、再整数负见证使某一层失败。单独验证有限多层不推出 RH。Suzuki 的矩问题是所引文献背景，不把他的另一条矩列直接当作本篇的 $c_j$。
+
+<!-- editorial-note: n28 end -->
+

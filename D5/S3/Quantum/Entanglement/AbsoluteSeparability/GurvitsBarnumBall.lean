@@ -146,7 +146,7 @@ private theorem averaged_psd_bound
     Complex.add_re] at h
   exact (mul_le_mul_iff_right₀ (pow_pos (show (0 : ℝ) < 4 by norm_num) m)).mp h
 
-private def flip (H : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) :
+def flip (H : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) :
     Matrix (Fin n × Fin m) (Fin n × Fin m) ℂ :=
   H.submatrix Prod.swap Prod.swap
 
@@ -171,7 +171,7 @@ private theorem flip_blockPositive
   rw [heq]
   exact hpos y z
 
-private theorem trace_flip
+theorem trace_flip
     (H : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) : trace (flip H) = trace H := by
   simp only [trace, diag_apply, flip, submatrix_apply, Fintype.sum_prod_type, Prod.swap_prod_mk]
   rw [sum_comm]

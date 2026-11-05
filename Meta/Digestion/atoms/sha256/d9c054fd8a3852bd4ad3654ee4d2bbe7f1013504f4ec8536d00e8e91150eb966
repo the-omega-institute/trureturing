@@ -1,0 +1,59 @@
+### 定理 4.5（Petz 的显式比较损失界）
+
+<a id="thm-c122-chi-square-recovery"></a>
+
+对任意 $X$，
+
+<a id="eq-c122-chi-loss"></a>
+
+$$
+\|X-SX\|_\sigma^2
+ \le\|X\|_\sigma^2-\|NX\|_\tau^2.
+\tag{29}
+$$
+
+定义
+
+$$
+\chi^2_{1/2}(\rho\Vert\sigma)
+ =\|\rho-\sigma\|_\sigma^2
+ =\operatorname{Tr}(\rho\sigma^{-1/2}\rho\sigma^{-1/2})-1.
+$$
+
+则对每个输入态 $\rho$，同一个 $P$ 满足
+
+<a id="eq-c122-explicit-state-recovery"></a>
+
+$$
+\boxed{\quad
+ \|\rho-PN(\rho)\|_1^2
+ \le\chi^2_{1/2}(\rho\Vert\sigma)
+   -\chi^2_{1/2}(N\rho\Vert\tau).
+ \quad}
+\tag{30}
+$$
+
+右端为零，当且仅当 $PN(\rho)=\rho$。
+
+**证明。**
+令 $x=\Gamma_\sigma^{-1/2}X$。由于 $0\le D\le I$，有 $D^2\le D$，故
+
+$$
+\|X-SX\|_\sigma^2=\langle x,D^2x\rangle
+ \le\langle x,Dx\rangle
+ =\|X\|_\sigma^2-\|NX\|_\tau^2.
+$$
+
+代入 $X=\rho-\sigma$，使用 $S\sigma=\sigma$ 和前引理，得到式~[(30)](#eq-c122-explicit-state-recovery)。若右端为零，则 $D^{1/2}x=0$，故 $SX=X$；反之，$SX=X$ 意味着 $Dx=0$，损失为零。
+
+这个结论给出一个指定映射的误差，而非只证明某个恢复器存在。它使用 $\chi^2_{1/2}$ 损失，没有把一般相对熵近等式自动配给未经旋转的 Petz 映射。
+
+同样的证明包含内部相关性。对任意内部参考 $Z$ 及其满秩参考态 $\omega$，直接计算得
+
+$$
+P_{\sigma\otimes\omega,\,N\otimes\operatorname{id}_Z}
+   =P_{\sigma,N}\otimes\operatorname{id}_Z.
+$$
+
+因此式~[(30)](#eq-c122-explicit-state-recovery) 对*任意联合输入态*也成立，只需把基准换成 $\sigma\otimes\omega$；输入本身可纠缠。这里的界依赖该输入的比较损失。要把它变成一个覆盖全部输入的 diamond 数值，仍须取相应最坏值，或使用第~[3](#sec-c122-explicit-guarantees) 节的有限证书与维数估计。
+

@@ -1,0 +1,70 @@
+**定理 66.2（C106 的必要充分性与内生误差界）。** 对任何上述比较类，C106 当且仅当
+
+$$
+\lim_{\varepsilon\downarrow0}
+\mathfrak Q_{\mathscr C}(\varepsilon)=0.
+\tag{66.2}
+$$
+
+更具体地，对所有 $r,\varepsilon\ge0$，
+
+$$
+\chi_{\mathscr C}(r,\varepsilon)
+\le\frac r2+\frac12\mathfrak Q_{\mathscr C}(\varepsilon).
+\tag{66.3}
+$$
+
+反向，取式 (59.2) 的有限表和覆盖半径，记 $u=r_N(R)$，则对任意 $R>0$、整数 $N\ge0$、$\varepsilon\ge0$，
+
+$$
+\boxed{
+\mathfrak Q_{\mathscr C}(\varepsilon)
+\le\min\left\{2,\quad
+2\varepsilon+
+\max\left[
+4e^{u/4}\sqrt{\chi_{\mathscr C}(u,\varepsilon)}
++2N\sqrt{2\varepsilon},\quad4e^{-R/2}
+\right]\right\}.
+}
+\tag{66.4}
+$$
+
+因此，在定义 64.1 的共同二元与供应前提内，(64.4) 精确刻画整族统一重构所需的边界正则性。这个必要充分性没有把射线校准、环境兼容或共同调暗一并消掉。
+
+证明。先证明必要方向的定量式。射线校准和二元完全正性给同一两权重处的概率上界
+
+$$
+p^*(h)=\frac{(1+e^{-h/2})^2}{4},
+\qquad p_\phi(h)\le p^*(h).
+\tag{66.5}
+$$
+
+这来自 $|m(1,e^{-h})|\le e^{-h/2}$，不以平方根更新为前提。平方根参照取得此上界，且与实际分支具有相同成功效果 $H_h$。两输出差迹为零，定理 62.1 的半迹范数估计给
+
+$$
+\begin{aligned}
+\kappa_\phi(h)
+&=1-p^*(h)-\frac\gamma2+
+\bigl(p^*(h)-p_\phi(h)\bigr)\\
+&\le\frac h2+\frac12\mathfrak D(M).
+\end{aligned}
+\tag{66.6}
+$$
+
+其中 $1-p^*(h)=(1-e^{-h})/4+(1-e^{-h/2})/2\le h/2$。对同一受限模型及 $h$ 取上确界，即得 (66.3)。若 (66.2) 成立，先把 $r/2$ 取小，再把 $\mathfrak Q(\varepsilon)/2$ 取小，便得 (64.4)。
+
+充分方向复用定理 59.2、60.1 的承重证明，不要求预给 $\omega$。在 $s\in[-R,0]$ 上选同一最近表点 $ma+nb\in S_N$；其余位移的绝对值不超过 $u$。式 (65.3)、距离的反向对称及两条生成边的预算给
+
+$$
+d_\phi(s)\le
+2e^{u/4}\sqrt{\chi_{\mathscr C}(u,\varepsilon)}
++N\sqrt{2\varepsilon}.
+\tag{66.7}
+$$
+
+式 (60.6) 的有限共同 Stinespring 比较将它乘以至多二；$s<-R$ 的小权重部分仍由 $4e^{-R/2}$ 控制，残余质量项由 $2\gamma\le2\varepsilon$ 控制。各中心块取最大范数，效果共同调暗再给 $\|E\|$ 因子，最后对效果取上确界而用 $\|E\|\le1$，得到 (66.4)。零效果、零谱值和 $c=0$ 的处理均由该证明保留。
+
+若 (64.4) 成立，给目标误差，先取有限 $R$ 控制尾项；再用 (64.4) 取得足够小的高度预算、一个 $r_0\le1$ 及 $\varepsilon_0$。由 $r_N(R)\downarrow0$ 选有限 $N$ 使 $u\le r_0$，此时 $e^{u/4}\le e^{1/4}$，局部项受所选高度控制。最后保持 $\varepsilon\le\varepsilon_0$ 并继续缩小它，使 $2\varepsilon$、$2N\sqrt{2\varepsilon}$ 足够小。所有选择对全部有限对象、效果和框架共同成立，故得到 (66.2)。
+
+这里转换的是一个实际二射线标量关系与全对象、全谱及数学参考范数之间的控制，不是在定义中先写全族平方根误差趋零。候选仍独立要求边界关系成立；对 $\chi$ 的定义不自动认证其上界、取得方式或费用。∎
+

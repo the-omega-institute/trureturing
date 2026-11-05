@@ -1,0 +1,25 @@
+**Definition 4.1 (Explicit spectral and lattice conditions).** Let $r\ge3$ be an integer, and let $M_r$ be the incidence matrix of $\varphi_{2r+1}$ with column $j$ equal to the letter-count vector of $\varphi_{2r+1}(j)$. Let $\beta_r\in(1,2)$ be the root of $\beta_r^r(\beta_r-2)=-1$, and put
+
+$$
+v_{\beta_r}=
+\bigl(\beta_r^{2r-1}(\beta_r-2),
+      \beta_r^{2r-2}(\beta_r-2),\ldots,
+      \beta_r-2,1\bigr)^T.
+$$
+
+This is the $\beta_r$ right eigenvector in [Dvořáková–Pelantová, Appendix, P2](https://arxiv.org/html/2509.06104v1#S9). For a length row $h=(h_0,\ldots,h_{2r})$, impose explicitly both the cancellation and the lattice equations
+
+$$
+h\cdot v_{\beta_r}=0,
+\qquad
+h_{r+j}=h_r+\sum_{i=0}^{j-1}2^{j-1-i}h_i
+\quad(1\le j\le r).
+$$
+
+Write
+
+$$
+T=\sum_{i=0}^{2r}h_i,
+\qquad C_r(\ell)=(\ell+1)(2^{r+1}+r-1)-2^r.
+$$
+

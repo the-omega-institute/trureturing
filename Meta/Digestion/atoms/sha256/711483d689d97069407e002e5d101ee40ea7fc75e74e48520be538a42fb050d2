@@ -1,0 +1,13 @@
+**Theorem 39.14 (no uniform finite read cap, even with further forward actions).** Fix any authentic starting prefix $u$ with $c>0$. A deterministic controller has no source-dependent record from before that cut. Allow arbitrary finite further forward actions, adaptive current scales and local finite computation on the same source. If it terminates correctly for every positive rational original, no uniform finite bound on its number of current replies can recover unbounded original $q_1$. Pointwise finite recovery remains possible by Proposition 39.8 and Theorem 39.7 with $B=1$.
+
+Proof. Assume a cap $N$. For every possible further finite action prefix $v$, the composite matrix $A_vA_u$ still has lower-left entry $c'>0$: its lower row is a nonnegative row with positive lower-right entry, so $c'=\gamma a+\delta c\ge c$. Its attained response approaches $a'/c'$ strictly from below as the original $x\to\infty$. At a requested scale $D$, feed the tail response
+
+$$
+\rho(D,A_vA_u)=\lceil Da'/c'\rceil-1.
+\tag{39.29}
+$$
+
+Every finite sequence of these responses is realized by all sufficiently large rational originals, since the finitely many maps/scales on that deterministic branch each stabilize to this response. Source-independent action acknowledgements also agree.
+
+Each phase between replies on this tail branch must finish its local computation and finite actions, and either stop or issue another read. If a phase instead continued forever without a new reply, the finite earlier tail prefix would be realized by every sufficiently large actual original, giving a nonterminating actual run and contradicting the pointwise completion premise. After at most $N$ replies the branch must stop: a further read would be realized by a sufficiently large actual source and violate the uniform cap. The completed tail branch is finite and therefore realized by every rational original beyond some finite $X$. Choose two such originals with different unit indices. Their entire actual transcripts, decisions, further actions and output coincide, so that output cannot recover both unit indices. This contradicts correctness. The argument covers every $c>0$ and any finite forward action scope; it does not infer $q_1$ failure merely from rational noninjectivity. Earlier source-dependent records or earned bounded localization remove the tail premise; pure translations satisfy (39.26). $\square$
+

@@ -1,0 +1,18 @@
+### 定义 2.1（有限局部读出资料）
+
+给定有限非空节点集 $V$，每个节点有非零有限维复载体 $\mathcal H_i$，
+并沿用此前已声明的组合接口
+
+$$
+\mathcal H=\bigotimes_{i\in V}\mathcal H_i.
+$$
+
+取覆盖 $V$ 的非空有限 patch 族 $\mathscr C$，每个 $C\in\mathscr C$ 为非空子集。
+局部资料是 Hermitian 表 $R_C\in\operatorname{Herm}(\mathcal H_C)$，表示实线性响应
+$h_C\mapsto\operatorname{Tr}(R_Ch_C)$。暂不假定 $R_C$ 为正或迹一。
+记 $\iota_C(h_C)=h_C\otimes I_{C^c}$，按节点次序嵌入整个载体。
+
+取 Hermitian 表只是有限实线性读出的迹对偶表示，并未预先断言这些表已经是量子态。
+共同复代数、伴随及张量嵌入是前序重构接口；本轮不把它们藏进“内生”一词。
+也未假定存在与这些资料匹配的全态。
+

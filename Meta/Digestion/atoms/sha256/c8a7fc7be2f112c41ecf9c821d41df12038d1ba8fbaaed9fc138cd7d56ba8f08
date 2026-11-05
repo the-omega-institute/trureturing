@@ -1,0 +1,50 @@
+### 命题 8.2（共同核的 Hilbert 实现及接续方向）
+
+<a id="prop-c117-gns"></a>
+
+$K$ 的每个有限 Gram 表半正定。
+商空间 $\mathcal A/N_\omega$ 具有内积
+$\langle [h],[k]\rangle=\omega(h^*k)$，其完备化记为 $\mathcal H_\omega$。
+令 $\xi=[1]$，则
+
+$$
+\pi(a)[h]=[ah],\qquad
+ \|\pi(a)\|\le\|a\|,\qquad
+ \omega(a)=\langle \xi,\pi(a)\xi\rangle.
+$$
+
+零空间等价允许共同的未来左接续，一般不允许任意右接续。
+
+**证明。**
+对任意有限系数 $z_i$，
+
+$$
+\sum_{i,j}\bar z_i z_jK(h_i,h_j)
+ =\omega\!\left[
+ \left(\sum_i z_ih_i\right)^*
+ \left(\sum_j z_jh_j\right)\right]\ge0.
+$$
+
+二阶正性给出
+$|K(h,k)|^2\le K(h,h)K(k,k)$。
+因此零范数对象与所有对象正交，零空间为线性子空间，
+上述商内积良定义且正定。
+由 $a^*a\le\|a\|^2I$，
+
+$$
+\|ah\|_\omega^2
+ =\omega(h^*a^*ah)\le\|a\|^2\omega(h^*h).
+$$
+
+所以 $N_\omega$ 是左理想，左乘在商上良定义且有界，
+从而延伸到完备化。乘法及伴随关系直接由内积验证，
+而 $\|\xi\|^2=\omega(I)=1$，得到最后的读出式。
+
+右接续的反例可在 $M_2(\mathbb C)$ 中取
+$\omega(a)=\langle 0\rvert a\lvert 0\rangle$、$h=P_1=\lvert 1\rangle\langle 1\rvert$、
+$X=\lvert 0\rangle\langle 1\rvert+\lvert 1\rangle\langle 0\rvert$。
+此时 $[h]=0$，但 $hX\lvert 0\rangle=\lvert 1\rangle$，故 $[hX]\ne0$。
+
+因此，零空间商只是当前接口的比较压缩，不删除来源记录，
+也不允许把当前不可区分的历史任意重新接线。
+

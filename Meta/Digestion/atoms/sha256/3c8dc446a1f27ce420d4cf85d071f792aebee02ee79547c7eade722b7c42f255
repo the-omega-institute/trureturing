@@ -1,0 +1,23 @@
+### 定理 13.5（平方根及 Lüders 更新）
+
+<a id="thm-c117-luders"></a>
+
+理想实现唯一为 $T_E(X)=\sqrt E X\sqrt E$，最大值为
+
+$$
+\frac{\operatorname{Tr} E+(\operatorname{Tr}\sqrt E)^2}{d(d+1)}.
+$$
+
+对投影 $P$，正成功概率下的条件态为 $P\rho P/\operatorname{Tr}(\rho P)$。
+
+**证明。**
+二阶矩给 $R(T)=[\operatorname{Tr} E+\sum_a|\operatorname{Tr} K_a|^2]/[d(d+1)]$。令 $L=\sqrt E$，在其正支持的特征基上写 $L\lvert i\rangle=\lambda_i\lvert i\rangle$，$\lambda_i>0$。所有 $K_a$ 在 $\ker E$ 上为零，可写为 $K_a=A_aL$、$\sum_aA_a^*A_a=P_{\operatorname{Ran} E}$。向量 $v_i=(\langle i\rvert A_a\lvert i\rangle)_a$ 满足 $\|v_i\|\le1$，故
+
+$$
+\sum_a|\operatorname{Tr} K_a|^2
+ =\left\|\sum_i\lambda_iv_i\right\|^2
+ \le\left(\sum_i\lambda_i\right)^2.
+$$
+
+$K=L$ 达到此界。等号迫使所有 $v_i$ 为同一个单位向量 $(c_a)_a$，且每个 $A_a\lvert i\rangle=c_a\lvert i\rangle$，从而 $K_a=c_aL$、$\sum_a|c_a|^2=1$，给同一个映射 $X\mapsto LXL$。$E=0$ 时所有 Kraus 算子均为零，结论仍成立。
+

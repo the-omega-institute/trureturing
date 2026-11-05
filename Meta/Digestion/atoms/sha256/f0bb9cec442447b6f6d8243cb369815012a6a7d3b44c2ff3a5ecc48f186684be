@@ -1,0 +1,22 @@
+**Definition 18.1 (promotion erasure).** Fix $t\in\mathcal D$, put
+$s=|I(t)|$, and let $\Sigma(t)$ consist of the words listing $I(t)$ once,
+with every branch ancestor before its branch descendants. Erasing all
+promotions defines $\pi:\mathcal H(t)\to\Sigma(t)$. For
+$\sigma=(v_1,\ldots,v_s)$ write $\operatorname{pos}_\sigma(v_i)=i$.
+For each $p\in A(t)$ set
+
+$$
+\ell_p=\begin{cases}0,&p=\varepsilon,\\
+\operatorname{pos}_\sigma(\operatorname{parent}(p)),&p\ne\varepsilon,
+\end{cases}
+\qquad
+u_p=\begin{cases}\operatorname{pos}_\sigma(p),&p\in I(t),\\
+s+1,&p\notin I(t).
+\end{cases}
+\tag{AA.68}
+$$
+
+Gap $j$, for $0\le j\le s$, is after exactly $j$ splits. Let $\Gamma(t,\sigma)$
+be the assignments $\gamma$ with $\ell_p\le\gamma(p)<u_p$ for every
+$p\in A(t)$, and put $m_j(\gamma)=|\{p:\gamma(p)=j\}|$.
+

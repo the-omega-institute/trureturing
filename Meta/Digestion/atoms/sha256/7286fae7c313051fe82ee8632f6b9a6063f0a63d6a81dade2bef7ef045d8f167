@@ -1,0 +1,70 @@
+**Theorem 28.2 (exact outgoing multiplicity at every representative).**
+All $Q_d(k)$ are native reachable. For every $0\le k<m$ and every
+reachable ordered representative $t$ of $U_{d,k}$, exactly
+
+$$
+q_d(k)=2^{d-\operatorname{pop}(k)}
+\tag{IV.74}
+$$
+
+actual alpha-leaf promotions $P_p$ have next quotient $U_{d,k+1}$.
+Their ordered outputs are pairwise distinct. No other successful event
+has that next quotient. Moreover
+
+$$
+a(Q_d(k))=m-k,\qquad c(Q_d(k))=m+k,\qquad
+N(Q_d(k))=3m+k-1.
+\tag{IV.75}
+$$
+
+Both $U_{d,0}$ and $U_{d,m}$ have singleton native orientation fibres;
+the latter's unique term is the all-beta perfect tree $Q_d(m)$.
+
+**Proof.** Every alpha leaf is the right leaf of a bottom $C$ cherry.
+There is no alpha at an $L$-ending address. AA17.2 therefore gives
+native realizability: from the prescribed birth type, promote an
+alpha-born root if its target is non-alpha, split if the target is a
+branch, and recursively build its beta-born left and alpha-born right
+children. These steps have their actual guards and use no graft or
+unrestricted orientation operation. Counting bottom cherries gives
+(IV.75). At $k=0$ every bottom cherry has the forced ordering $C$,
+and all higher children are recursively equal; at $k=m$ every leaf
+is beta and all children are recursively equal. This proves both
+singleton claims on the native domain.
+
+For the uniform count induct on $d$, simultaneously over every
+representative. At $d=0,k=0$, the unique term is $C$ and precisely
+$P_R$ qualifies, giving $q_0(0)=1$. At a higher level write
+$n=2^{d-1}$. A child of class $U_{d-1,r}$ has $n-r$ alpha leaves,
+so different $r$ give different classes. Each current child is a
+reachable representative of its prescribed class: the native leaf
+condition restricts to it, and these child roots are non-alpha.
+Consequently the induction applies in either actual child order.
+
+If $k=2r$, both child classes are $U_{d-1,r}$ and the required next
+multiset is $\{U_{d-1,r},U_{d-1,r+1}\}$. A qualifying promotion can
+occur in either child, with exactly the inductively counted choices
+in that child. If $k=2r+1$, the current child classes are $r,r+1$ in
+either order and the required next classes are $r+1,r+1$. Only the
+child with class $r$ can change. Promoting in the other child leaves
+an unchanged class $r$, which has the wrong alpha count. Within the
+class-$r$ child the promotion must be exactly an inductively
+qualifying one. Hence, uniformly in the representative,
+
+$$
+q_d(2r)=2q_{d-1}(r),\qquad
+q_d(2r+1)=q_{d-1}(r).
+\tag{IV.76}
+$$
+
+The binary popcount identities prove (IV.74). Different selected
+addresses are distinct alpha leaves; after promoting one, another
+still contains alpha, so the ordered outputs differ. Equal-child
+automorphisms identify their unordered observations, not these
+ordered outputs, and introduce no division or extra multiplicity.
+All these $P$ guards are actual alpha guards. Every $S$ increases
+the leaf count, whereas $U_{d,k+1}$ has the same leaf count as
+$U_{d,k}$, excluding every split. The count is outgoing from a fixed
+current representative. It is not a count of predecessors of the
+next quotient, nor of unrestricted orientations. $\square$
+

@@ -8,7 +8,7 @@ internal sealed class InteriorPathTransferConverseRefutationDocument : IScribeDo
 {
     private const string Prefix = "D5/S3/Quantum/Dynamics/InteriorPathTransferConverseRefutation.";
     private const string SourceGid = "D5/L/GraphInvariants/kirkland2019rationalweightspst";
-    private const string SecondSourceGid = "D5/L/GraphInvariants/bailey2024orthogonalpst";
+    private const string SecondSourceGid = "D5/L/Eigenstructure/bailey2024orthogonalpst";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create(SourceGid);
     private static readonly LibraryNoteRef SecondSource = LibraryNoteRef.Create(SecondSourceGid);
 

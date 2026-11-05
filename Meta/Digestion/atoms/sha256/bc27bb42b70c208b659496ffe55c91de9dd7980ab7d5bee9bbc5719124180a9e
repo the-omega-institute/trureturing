@@ -1,0 +1,21 @@
+**Theorem 5 (the $3$-$5$-$7$ alternative).** If $n\in T$ and $n>1$, then
+$$
+3\mid n\quad\text{or}\quad5\mid n\quad\text{or}\quad7\mid n.
+$$
+
+**Proof.** If $3\mid n$ or $5\mid n$, the conclusion already holds, so assume $3\nmid n$ and $5\nmid n$. By Theorem 3, $n$ is odd, and the assumptions on $3$ and $5$ give $\gcd(n,15)=1$. Corollary 2 then permits cancellation of $15$ and gives
+$$
+n\mid15^n-1.
+$$
+Let $p$ be the least prime divisor of $n$, which exists because $n>1$. The known order mechanism used here occurs in the repository's private lemma `minFac_sub_one_le_of_dvd_pow_sub_one`, consumed by `firoozbakht_a092028`. Its hypotheses are a natural base $N>2$, an exponent $m>1$, and $m\mid N^m-1$; its proof takes the least prime divisor of $m$ and shows that the order of $N$ modulo that prime is one. Here $N=15$, $m=n$, and that least prime is $p$, so all these hypotheses have been established. The same least-prime order argument also occurs in the solution to Parvardi's Problem 3. The following specialization consumes this known mechanism within the present recurrence argument.
+
+Since $p\nmid15$, Fermat's theorem gives $15^{p-1}\equiv1\pmod p$, so let $d$ be the least positive integer with $15^d\equiv1\pmod p$. Write $n=hd+r$ with integers $h\ge0$ and $0\le r<d$. Since $p\mid15^n-1$,
+$$
+1\equiv15^n=(15^d)^h15^r\equiv15^r\pmod p.
+$$
+If $r>0$, this contradicts the minimality of $d$, so $r=0$ and $d\mid n$. The same division argument applied to $p-1$ and Fermat's congruence gives $d\mid p-1$. Thus
+$$
+d\mid\gcd(n,p-1).
+$$
+If a prime $r$ divided this gcd, then $r\mid n$ and $r\mid p-1$, so $r<p$, contradicting the choice of $p$ as the least prime divisor of $n$. Therefore $\gcd(n,p-1)=1$, hence $d=1$. Consequently $p\mid15-1=14$. The prime $p$ is odd and is neither $3$ nor $5$, so $p=7$. In particular $7\mid n$, and the inclusive disjunction follows. ∎
+

@@ -1,0 +1,48 @@
+**Correspondence 12.1 (the source-specific increment).** AA §§17–22 supply
+the original source, full history/linear-extension domain, shuffle
+reconstruction, source-derived event count, support/boundary parsing and
+all acquired service/return hypotheses. AAII §§75–83 supply static
+enumerative rank and its rewriting service; §§94–98 supply the ordinal
+recorder and service reused in §11. These are not new coding or service
+constructions. The repository's
+[PrefixFreeCode](../../../D5/S0/Computability/Coding/PrefixFreeCode.lean)
+(first-codeword uniqueness, empty-word degeneracy and finite Kraft),
+[KraftConverse](../../../D5/S0/Computability/Coding/KraftConverse.lean),
+and the immutable-extension suppliers already listed in Correspondence
+8.1 concern mature static prefix/cylinder capacity or adjoining words
+incomparable with frozen codewords. Here the old word must instead prefix
+its own later histories at different native sources. No fresh compilation
+of those declarations is asserted.
+
+Cover's primary [*Enumerative Source Encoding*, §I, Propositions 1–2 and
+inverse algorithm](https://isl.stanford.edu/~cover/papers/transIT/0073cove.pdf)
+indexes a finite set of fixed-length words over a finite alphabet. For
+one $t$, take that set to be the complete $\mathcal H(t)$: event labels
+range over its finite addressed event alphabet and every history has
+length $N(t)$. This supplies static indexing and inversion, with no
+constraint relating the records of $h$ and $he$ at different sources.
+
+Alon and Orlitsky's primary [*Source Coding and Graph Entropies*,
+§§1.1–1.3, pp. 1–3](https://web.math.princeton.edu/~nalon/PDFS/entropies3.pdf)
+defines restricted-input zero-error messages to be unequal and
+non-prefix-related on confusable inputs. Take $X=h$, $Y=t(h)$ and support
+$\{(h,t(h))\}$, with any full-support distribution on the countable native
+histories. Confusability is then exactly equality of the current source,
+so their restricted-input condition is (IV.15). Their unrestricted-input
+condition requires global prefix freedom, which is not imposed here.
+Their static/expected-length and independent-block objectives do not
+impose native literal-prefix coherence or the simultaneous per-source
+maximum criterion of (IV.17). The side-information/prefix principle,
+like the cylinder count (IV.22), is mature mathematics.
+
+The repo-derived increment is the explicit complete-native $17/63$
+contradiction: every old history has three actual continuations, yet the
+full terminal fibre still has static width six. Neither prefix/Kraft
+counting, shuffle reconstruction, static ranking nor the existing service
+is presented as a new general theorem. This is a source-specific ordinary
+mathematical proof, with no worldwide novelty or fresh Lean/kernel claim.
+The end-visible optimum of §§1–8 allows prefix-related terminated words;
+AAII §100 instead assumes exact source widths; AAII §99 reads its weighted
+predecessor records from the tail. Their hypotheses and conclusions keep
+their stated scopes, and none supplies the forward bridge excluded here.
+

@@ -1,0 +1,62 @@
+#### 定理 4.1：三个二元读数的有限三维提升
+
+三个实数 $\alpha,\beta,\gamma$ 可由某个实内积空间中的三个单位方向实现， 当且仅当
+
+$$
+|\alpha|,|\beta|,|\gamma|\le1,\qquad
+ \Delta=1+2\alpha\beta\gamma-\alpha^2-\beta^2-\gamma^2\ge0.
+$$
+
+所有可实现的三元读数都可在 $\mathbb R^3$ 中实现；第三项的准确允许区间为
+
+$$
+\boxed{
+ \alpha\beta-\sqrt{(1-\alpha^2)(1-\beta^2)}
+ \le\gamma\le
+ \alpha\beta+\sqrt{(1-\alpha^2)(1-\beta^2)}.
+ }
+$$
+
+**证明。**
+
+必要性来自 $G\ge0$：任意 $a,b,c$ 满足 $(a,b,c)G(a,b,c)^{\mathsf T}=Q(au+bv+cw)\ge0$。 其二阶主子式给三项绝对值界，三阶行列式给 $\Delta\ge0$。
+
+反向，在 $|\alpha|<1$ 时，取
+
+$$
+\begin{aligned}
+ u&=(1,0,0),\\
+ v&=(\alpha,\sqrt{1-\alpha^2},0),\\
+ w&=\left(\beta,
+ \frac{\gamma-\alpha\beta}{\sqrt{1-\alpha^2}},
+ \delta\right),\qquad
+ \delta^2=\frac{\Delta}{1-\alpha^2}.
+ \end{aligned}
+$$
+
+这些向量长度为一，并给所需的三项配对。 若 $\alpha=\pm1$，行列式成为 $\Delta=-(\gamma-\alpha\beta)^2$，故 $\gamma=\alpha\beta$。 取 $v=\alpha u$、$w=(\beta,\sqrt{1-\beta^2},0)$ 即可。 最后重写
+
+$$
+\Delta=(1-\alpha^2)(1-\beta^2)-(\gamma-\alpha\beta)^2
+$$
+
+就得到区间公式，包括全部端点。证毕。
+
+$\square$
+
+```mermaid
+flowchart TB
+    FIX["固定 α = 3/5；横轴 β、纵轴 γ"] --> BOX
+    subgraph BOX["两两边界方框：−1 ≤ β ≤ 1，−1 ≤ γ ≤ 1"]
+        direction TB
+        ELL["共同可实现域（椭圆内及边界）：β² + γ² − (6/5)βγ ≤ 16/25"]
+        GOOD["可共存点：(β,γ) = (0.3,0.6)"] -->|"满足椭圆约束"| ELL
+        BAD["(β,γ) = (9/10,−9/10)：两两合格"] --> FAIL["合计失败：落在椭圆外，没有共同三维实现"]
+    end
+    ELL --> SIGN["坐标是有符号的关系读数，尚未解释为概率"]
+    classDef feasible fill:#d9f0ed,stroke:#127b70;
+    classDef invalid fill:#fde7e7,stroke:#b32626;
+    class ELL,GOOD feasible;
+    class BAD,FAIL invalid;
+```
+

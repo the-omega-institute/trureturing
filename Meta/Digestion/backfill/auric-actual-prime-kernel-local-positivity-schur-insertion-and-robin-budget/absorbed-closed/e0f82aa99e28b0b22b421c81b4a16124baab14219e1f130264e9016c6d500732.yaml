@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e0f82aa99e28b0b22b421c81b4a16124baab14219e1f130264e9016c6d500732
+  normalized_sha256: sha256:e0f82aa99e28b0b22b421c81b4a16124baab14219e1f130264e9016c6d500732
+cas_ref: sha256:e0f82aa99e28b0b22b421c81b4a16124baab14219e1f130264e9016c6d500732
+coverage_gids:
+  - gid: D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelCusp.cusp_quadratic_limit
+    target_statement_id: sha256:a3b400f358d0133ee7adee9b46687a6edbc48455e8f636b3d89116a3438adef7
+  - gid: D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelCusp.cusp_remainder_bound
+    target_statement_id: sha256:4b63090d3cb2a563a1eeba021ec58c794d407717902e134301451b9df29ce7f0
+receipts:
+  unresolved_subitems: []

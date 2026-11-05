@@ -1,0 +1,48 @@
+**Theorem 21.2 (uniform ceiling on the certificate).** Let $\gamma$ be the unique positive solution of
+
+$$
+(1+\gamma)^{1+\gamma}=2\gamma^\gamma.
+\tag{IV.56}
+$$
+Then $0<\gamma<1/3$, and every positive block list satisfies
+
+$$
+E\le\gamma\log_2N.
+\tag{IV.57}
+$$
+Thus changing the block sizes inside this certificate mechanism cannot produce a superlogarithmic all-recorder obstruction. Equation (IV.57) says nothing about an upper bound on actual recorder redundancy.
+
+**Proof.** The function
+$\phi(a)=(1+a)\ln(1+a)-a\ln a$ is strictly increasing for $a>0$, tends to $0$ as $a\downarrow0$, and satisfies $\phi(1/3)>\ln2$ because
+$(4/3)^4/(1/3)=256/27>8$. Hence (IV.56) has one positive solution and it lies in $(0,1/3)$. The same equation and elementary differentiation give, for $x\ge0$,
+
+$$
+2x\le(1+x)^{1+\gamma}.
+\tag{IV.58}
+$$
+
+Put $d(s)=2^{\lceil\log_2s\rceil}$ and
+$R=2^{L_{\rm cut}}/F(T)$. We prove $R\le N^\gamma$ by induction while adding the outer blocks. The empty list has $N=1$ and $R=1$. Suppose the inner tail has event count $n$ and ratio at most $n^\gamma$. Adding an outer block of size $s$ changes the count to
+$N_{\rm new}=n+s+1$ and the product factor to $n+s-1$, so
+
+$$
+R_{\rm new}=\frac{d(s)R_{\rm tail}}{n+s-1}.
+\tag{IV.59}
+$$
+If $s=1$, then $d(s)=1$ and $R_{\rm new}\le n^{\gamma-1}\le1$. If $s\ge2$, writing $x=(s-1)/n$ and using the integer inequality $d(s)\le2(s-1)$ gives
+
+$$
+R_{\rm new}
+ \le \frac{2x}{1+x}n^\gamma
+ \le (1+x)^\gamma n^\gamma
+ = (n+s-1)^\gamma
+ \le N_{\rm new}^\gamma,
+\tag{IV.60}
+$$
+where the middle inequality is (IV.58). Consequently
+
+$$
+L_{\rm cut}-G(T)\le L_{\rm cut}-\log_2F(T)=\log_2R\le\gamma\log_2N.
+$$
+Taking the positive part proves (IV.57). The native correspondence is the one in §§13–16: at each block the actual edits are $S_p,S_{pL},\ldots,S_{pL^{s_i-1}}$ and $P_{pR}$, with all complete interleavings retained, and $N=a+2c-1$. $\square$
+

@@ -1,0 +1,40 @@
+**Definition 3.2 (explicit evaluation of the tables).** Process vertices after all their children. For each $p$ and allowed $b$, initialize an accumulator $H$ indexed by
+
+$$
+ (t,a,h)\in\{0,1,2\}\times\{0,1,2\}^X\times\{0,1\}
+$$
+
+with value zero at $(0,0,b)$ and $+\infty$ elsewhere. Here $t$ records the saturated sum of the bits of processed children. Process the children $u$ in their fixed order. For every finite old accumulator entry $H(t,a,h)$ and every finite child entry $A_u(b,c,a',h')$, form
+
+$$
+ \begin{aligned}
+ e_x&=\mathbf1\{x=v\in X\}\,c+\mathbf1\{x=u\in X\}\,b,\quad x\in X,\\
+ \widehat t&=t\oplus c,\qquad
+ \widehat a=a\oplus a'\oplus e,\qquad
+ \widehat h=\max(h,h').
+ \end{aligned}
+ \tag{3.6}
+$$
+
+In a fresh accumulator at $(\widehat t,\widehat a,\widehat h)$ keep the least value of $H(t,a,h)+A_u(b,c,a',h')$ among all such pairs. Unreached entries are $+\infty$. Replace the old accumulator by the fresh one. After the last child, put
+
+$$
+ A_v(p,b,a,h)=\min_{t\in\{0,1,2\}}
+ \left(H(t,a,h)+\mathbf1\{v\notin X,\ b=0,\ p+t=1\}\right).
+ \tag{3.7}
+$$
+
+The condition $p+t=1$ is an equality of ordinary integers; $p+t\geq2$ never satisfies it. Disallowed $b$ give only infinite entries. This initialization also specifies the entire leaf computation.
+
+For the root $o=1$, define
+
+$$
+ L_\sigma(S)=\min_{b,a}
+ \left(A_o(0,b,a,1)+
+  \sum_{x\in X}(1-\sigma(x))\mathbf1\{a_x\oplus d_\sigma(x)=1\}\right),
+ \qquad L(S)=\min_\sigma L_\sigma(S).
+ \tag{3.8}
+$$
+
+The condition $h=1$ is required. Empty sets are excluded even when they would have zero cost. Infinite entries are ignored in minima, and an entirely impossible minimum stays infinite.
+

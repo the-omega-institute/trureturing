@@ -1,0 +1,9 @@
+则 $\ell_\sigma(\rho)\ge0$，且下列三项等价：
+
+1. $\ell_\sigma(\rho)=0$；
+
+2. $\mathcal R_\sigma\mathcal N(\rho)=\rho$；
+
+3. 存在同一个 CPTP 映射 $\mathcal S$，使
+          $\mathcal S\mathcal N(\rho)=\rho$ 且 $\mathcal S(\tau)=\sigma$。
+

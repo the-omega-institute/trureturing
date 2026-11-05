@@ -1,0 +1,84 @@
+### 命题 13.1（只保单系统正性，平方缺额仍可正负相消）
+
+<a id="prop-c94-positive-not-two-positive"></a>
+
+在一个 qubit 上取
+
+$$
+R=\frac{\operatorname{id}+\mathsf T}{2},\qquad
+ \mathcal S=\operatorname{span}_{\mathbb R}\{I,X,Z\},\qquad
+ \tau=I_2/2,
+$$
+
+其中 $\mathsf T$ 是固定计算基的转置。
+$R$ 正、保迹，保持全部 $\mathcal S$ 读数，融合所有同读数状态，并固定忠实 $\tau$。
+但它不是 $2$-positive，且 $\mathcal S+i\mathcal S$ 不是普通乘积下的代数。
+
+**证明。**
+转置保持单个正矩阵的正性和迹，故其与恒等的平均也如此。
+对 Bloch 态，$R$ 的作用为 $(x,y,z)\mapsto(x,0,z)$，
+因而读数保持、融合及 $R\tau=\tau$ 均直接成立。
+但是 $XZ=-iY$ 不属于 $\mathcal S+i\mathcal S$。
+
+取 $a=(X+iZ)/2$，则 $E(a)=a$，且
+
+$$
+a^\dagger a=\frac{I+Y}{2},\qquad
+ \boxed{D_a=-\frac Y2.}
+$$
+
+所以 $\operatorname{Tr}(\tau D_a)=0$，但 $D_a$ 的特征值为 $\pm1/2$。
+缺少二元参考检查时，零响应允许正负相消，不能推出平方闭合。
+
+更直接地，令 $\Phi=\lvert \Phi\rangle\langle \Phi\rvert$，
+$\lvert \Phi\rangle=(\lvert 00\rangle+\lvert 11\rangle)/\sqrt2$，$F$ 为交换算符。
+逐项转置给
+
+$$
+(\operatorname{id}\otimes R)(\Phi)=\frac12\Phi+\frac14F.
+$$
+
+反对称向量 $\lvert \psi_-\rangle=(\lvert 01\rangle-\lvert 10\rangle)/\sqrt2$
+满足 $\Phi\lvert \psi_-\rangle=0$、$F\lvert \psi_-\rangle=-\lvert \psi_-\rangle$，
+故该输出在此方向的响应为 $-1/4$。
+它不是正算符，证明 $R$ 不具 $2$-positive 性。
+
+这个负响应可集中成一个有限三维报告。
+问事件 $\lvert \psi_-\rangle\langle \psi_-\rvert$ 与其补，得到候选表
+
+$$
+\operatorname{diag}(-1/4,5/4)=\frac12\left(I-\frac32Z\right),
+ \qquad \mathbf b=(0,0,-3/2).
+$$
+
+这不是一份合法 qubit 态；它是落在 Bloch 球外的失败见证。
+只看单系统的实 Bloch 圆盘时没有负概率，接上一个内部二元参考才暴露失败。
+
+<a id="fig-c94-bloch-witness"></a>
+
+```text
+                         z
+                         ↑
+                    · ·  1  · ·
+                 ·       │       ·
+               ·         │         ·
+         ─────·──────────0──────────·────→ x
+               ·         │         ·
+                 ·       │       ·
+                    · · −1  · ·
+                         │
+                         ● −3/2   ← 球外失败证书
+
+           合法截面：y = 0，x² + z² ≤ 1
+           参考检查：Q = diag(−1/4, 5/4)，p₋ = −1/4
+```
+
+字符图仅作示意；原图的精确区域与失败报告如下：
+
+| 图示对象 | 精确区域或数值 |
+|---|---|
+| 合法二元报告截面 | y = 0，x² + z² ≤ 1；单位圆边界的 z 轴交点为 ±1。 |
+| 球外红点 | b = (0, 0, −3/2)，位于单位圆盘之外。 |
+| 归一候选报告 | Q = diag(−1/4, 5/4)，总迹为一，含负响应 p₋ = −1/4。 |
+| 图示资格 | 参考检查的失败证书；不是可制备态或物理轨迹。 |
+

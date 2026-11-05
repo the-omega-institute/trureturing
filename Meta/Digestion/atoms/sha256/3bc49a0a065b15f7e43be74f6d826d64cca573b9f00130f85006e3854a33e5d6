@@ -1,0 +1,8 @@
+## 5. The multi-entropy twists
+
+Throughout this section the datum is that of Convention 2.4: $R=\mathbb Z_n^{\mathtt q-1}$, $t_k=e_k$ ($k<\mathtt q$), $t_{\mathtt q}=0$, weights $x$. Write $\Delta_{\mathtt q}$, $D_{\mathtt q}$, $\Gamma_{\mathtt q}$ for its replica determinant, residual polynomial and Schreier multigraph, and for $j\in\mathbb Z_n^{\mathtt q-1}$ (with $j_{\mathtt q}=0$)
+
+$$
+\nu_j=\sum_{k<l}x_kx_l\sin^2\frac{\pi(j_k-j_l)}{n}.
+$$
+

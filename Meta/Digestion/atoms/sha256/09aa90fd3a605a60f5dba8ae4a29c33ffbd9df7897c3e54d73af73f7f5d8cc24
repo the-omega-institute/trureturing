@@ -1,0 +1,8 @@
+For every $\psi\in U_N$ and every $\phi\in P_N$,
+
+$$
+\rho_3(\phi)=\rho_3(\psi)
+\quad\Longleftrightarrow\quad
+\phi=c\psi\ \text{for some }c\in\mathbb C\text{ with }|c|=1.
+$$
+

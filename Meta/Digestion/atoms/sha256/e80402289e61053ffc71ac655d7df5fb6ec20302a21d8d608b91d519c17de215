@@ -1,0 +1,20 @@
+**定理 17.3（已交替但未 Jacobi 时的两参数正交缺额）。** 在定义 14.1 下，另已得到或明确要求两方 $B$ 交替，但不要求 Jacobi 或 C98。固定伙伴 $v\ne0$，令 $\mathcal W_{\rm mix}$ 为一方完整混合族的残差平方和，沿用定理 11.1 的正数 $\mathsf a,\mathsf h,\mathsf c$。则
+
+$$
+\boxed{\frac{\mathcal W_{\rm mix}(\kappa,\beta)}{\|v\|^2}
+=\mathsf c\left(\kappa+\frac{\mathsf h}{\mathsf c}\right)^2
++\mathsf h\beta^2
++\frac{\mathsf a\mathsf c-\mathsf h^2}{\mathsf c}.}\tag{17.5}
+$$
+
+最佳两参数唯一为 $(-\mathsf h/\mathsf c,0)$，且
+
+$$
+|\beta|\le\sqrt{\mathcal W_{\rm mix}/(\|v\|^2\mathsf h)}
+\tag{17.6}
+$$
+
+的常数一可达到。
+
+证明。式 (16.7) 给混合算子 $E_{ij}=K_{ij}-\kappa D_z+\beta L_z$，其中 $z=B(e_i,e_j)$。前两项斜伴，$L_z$ 自伴，故两部分在 Hilbert–Schmidt 内积下正交。又 $\|L_z\|_{\rm HS}^2=q(z,z)$。定理 11.1 已在未假设 Jacobi 时证明 $\operatorname{Tr}(K_{ij}D_z)=q(z,z)$，故逐对求和、配方得到 (17.5)。三个系数严格为正和缺额非负也由该定理承担。两个平方项给唯一极小点与 (17.6)。两方取共同标尺的非交换有限复 $C^*$ 场，$\kappa$ 取其精确比较系数，则曲率平方和缺额均为零，任意 $\beta$ 达到 (17.6)。此定理的混合解释明确依赖双方已交替；不向交替前的全部噪声模型外推。∎
+

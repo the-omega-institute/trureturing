@@ -1,0 +1,32 @@
+### 1.4 这个二元数值能怎样读到
+
+在带有共轭参考副本的空间中，令
+
+$$
+\lvert \sqrt\sigma\rangle
+ =(\sqrt\sigma\otimes I)\sum_i\lvert i\rangle\otimes\lvert \bar i\rangle.
+$$
+
+它已归一化。直接展开矩阵元得到
+
+<a id="eq-c122-operational-pair"></a>
+
+$$
+b_{\sigma,\mathcal N}(A,B)
+ =\operatorname{Tr}\!\left[
+ (B\otimes A^{\mathsf T})
+ (\mathcal N\otimes\operatorname{id})
+ \lvert \sqrt\sigma\rangle\langle \sqrt\sigma\rvert
+ \right].
+\tag{5}
+$$
+
+因此，若该参考纯化与对应的两端效果已经供应，
+这个数值就是一次联合二元读出的概率。
+$A^{\mathsf T}$ 是共轭参考上的效果，不要求实现把任意未知状态转置的非法通道。
+
+这种实验与“先在源上作 Lüders 测量 $A$，再送入 $\mathcal N$”有区别：
+后者使用 $\sqrt A\,\sigma\sqrt A$，前者使用 $\sqrt\sigma A\sqrt\sigma$。
+二者一般不相等。不能把它们的统计数据互相替换，
+也不能由公式存在推出观察者已经拥有纯化、逆门和滤片。
+

@@ -1,0 +1,60 @@
+**Proposition 3.2 (the actual witnessed-relation adapter).** Put
+$F=\mathbb F_3$, $V=F^2$, $W=F^3$, $Z=F^2$, and retain the source maps
+
+$$
+\begin{aligned}
+B_0(v,w)&=(v_1w_1+v_2w_2,\ v_1w_2+v_2w_3),\\
+B_1(v,w)&=(v_1w_1-v_2w_2,\ v_2w_1+v_1w_2).
+\end{aligned}
+$$
+
+Let $A=(V\setminus\{0\})\times Z$ and $T=W\times Z$, interpreted in
+$S_i$ as $a=(v,0,s;0)$ and $t=(0,w,z;1)$. The endpoint map is a bijection
+
+$$
+\begin{aligned}
+O_6(S_i)&\longrightarrow E_i\subseteq A\times T,\\
+x&\longmapsto(x^2,x^3),\\
+E_i&=\{((v,s),(w,z)):v\ne0,\ B_i(v,w)=s\}.
+\end{aligned}
+\tag{UJB.7502}
+$$
+
+The simple typed incidence graph $G_i=(A,T,E_i)$ has
+
+$$
+|A|=72,\quad |T|=243,\quad d_A=27,\quad d_T=8,\quad M:=|E_i|=1944.
+\tag{UJB.7503}
+$$
+
+Consequently (UJB.7501) becomes conditionally iid uniform edge sampling
+from $G_i$, with every witness and edge having mass $1/M$.
+
+Proof. The group construction and order classification are those of the
+cited source, §§2–3; no new group construction is needed. Substitution
+in its multiplication gives, for $x=(u,w,c;1)$ with $u\ne0$,
+
+$$
+x^2=(2u,0,-B_i(u,w);0),\qquad
+x^3=(0,w,c+B_i(u,w);1).
+$$
+
+Set $v=2u$, $s=-B_i(u,w)$, $z=c+B_i(u,w)$. Bilinearity gives
+$B_i(v,w)=s$. Conversely every pair in (UJB.7502) has the unique preimage
+$x=(2v,w,z+s;1)$: here $B_i(2v,w)=2s=-s$, so substitution returns both
+specified endpoints. Mathematically the same inverse is $x=a^2t$; it
+is used only to prove the bijection and grants no observer operation.
+For each nonzero $v$, the source proves $B_i(v,-):W\to Z$ has rank two,
+hence exactly three solutions for every $s$. There are nine free $z$
+values, giving degree $27$ on $A$; every $(w,z)$ has exactly one neighbor
+for each of the eight nonzero $v$, giving degree $8$. This proves
+(UJB.7503) and the uniform pushforward. In particular all three $w$
+coordinates remain: $w_3$ is free for $B_1$, not deleted.
+
+In the [base witnessed relation, Definition 1.2](RECURSIVE_RELATIONAL_OBSERVATION.md),
+the witness set is $O_6(S_i)$ and its two endpoint maps are these powers.
+Here each endpoint pair has exactly one witness; passing to the support
+therefore loses no witness multiplicity. Repeated draws still give
+indexed edge occurrences, each of mass $1/M$, and must not be collapsed
+when computing sample probabilities. $\square$
+

@@ -1,0 +1,34 @@
+### 定理 6.1（二元不确定性的完整平方预算）
+
+定义
+
+$$
+\begin{aligned}
+(G_{\rm in})_{ij}&=\phi_\rho(\delta A_i^\dagger\delta A_j),\\
+(G_{\rm out})_{ij}&=\phi_\eta(\Phi(\delta A_i)^\dagger\Phi(\delta A_j)),\\
+L_{ij}&=\phi_\eta(\Gamma_\Phi(A_i,A_j)).
+\end{aligned}
+$$
+
+则
+
+$$
+\boxed{G_{\rm in}=G_{\rm out}+L,\qquad L\ge0.}
+$$
+
+写成 $L=\begin{pmatrix}a&c\\\bar c&b\end{pmatrix}$，有
+
+$$
+\boxed{a+b=0\quad\Longleftrightarrow\quad C_{89}\text{ 成立}.}
+$$
+
+**证明。**由输入输出校准的对偶关系，将 $G_{\rm in}$ 写成 $\phi_\eta(\Phi(\delta A_i^\dagger\delta A_j))$，逐项相减即得预算。由引理 5.1，
+
+$$
+L_{ij}=\langle D(A_i)\sqrt\eta,D(A_j)\sqrt\eta\rangle_{\rm HS},
+$$
+
+所以 $L$ 正。其对角元分别为 $\|D(A)\sqrt\eta\|_{\rm HS}^2$ 与 $\|D(B)\sqrt\eta\|_{\rm HS}^2$。$\eta>0$ 使 $\sqrt\eta$ 可逆，故它们之和为零恰好意味着 $D(A)=D(B)=0$。
+
+这个标量证书是精确理论等式，不意味着有限次带误差实验能认证实数严格为零。它同时显示：只要 $C_{89}$ 成立，输入输出完整二元不确定性 Gram 矩阵就相等；这并没有要求矩阵本身为零。
+

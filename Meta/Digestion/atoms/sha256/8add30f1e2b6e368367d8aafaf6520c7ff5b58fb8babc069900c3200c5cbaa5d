@@ -1,0 +1,4 @@
+## 1. Scope
+
+The $k$-fidelities of an $n$-qubit map are obtained by truncating the expansion of the process fidelity over tensor products of single-qubit SIC states. This volume shows that every $k$-fidelity is a fixed linear functional of the Pauli-weight distribution of the map, with an explicit binomial coefficient for each weight. From this formula it derives the alternating sign of the truncation error, the exact set of pairs ($k$-fidelity, process fidelity) realised by $n$-qubit channels, a linear relation among all $k$-fidelities valid for every trace-preserving map, and the joint range of $(F_0,\dots,F_{n-1})$ as an explicit simplex.
+

@@ -1,0 +1,13 @@
+**定义 1.3（完整标架上的有限见证）。** 固定 $b,d\in J_B$，使 $r_B=\|B_B(b,d)\|>0$。对 $V_A$ 的完整正交单位基 $e_1,\ldots,e_n$，令
+
+$$
+\begin{aligned}
+G_A(\lambda)&=r_B^{-2}\sum_{i<j}\sum_k
+\|R_\lambda(e_i\otimes b,e_k\otimes d,e_j\otimes1_B)\|^2,\\
+Q_A&=-\sum_i\operatorname{ad}_{e_i}^{\,2},\qquad
+\operatorname{ad}_uv=B_A(u,v).
+\end{aligned}\tag{1.3}
+$$
+
+这是完整基上的有限未平均平方和。另一边的 $G_B$ 交换因子定义；没有看到的维度不得从求和中省略。
+

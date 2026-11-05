@@ -1,0 +1,14 @@
+### 命题 9.2（非 Hermitian 元不能只查一个平方）
+
+取 $\Phi(x)=\langle0|x|0\rangle$ 及 $x=|0\rangle\langle1|$。则
+
+$$
+\Phi(x^\dagger x)=0=|\Phi(x)|^2,\qquad \Phi(xx^\dagger)=1.
+$$
+
+所以单侧平方相容不能替代 $\Delta_\Phi(x)=\Delta_\Phi(x^\dagger)=0$。
+
+**证明。**$x^\dagger x=|1\rangle\langle1|$、$xx^\dagger=|0\rangle\langle0|$，直接代入。
+
+只查两个关系的交叉项也不够。对 $E_z,A=\sigma_x,B=\sigma_z$，有 $\Gamma_{E_z}(A,B)=0$，但 $\Delta_{E_z}(A)=I$；一项交叉比较没有变化，不能代替两端各自的平方账。
+

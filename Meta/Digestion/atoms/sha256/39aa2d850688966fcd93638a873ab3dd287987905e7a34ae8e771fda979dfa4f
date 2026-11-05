@@ -1,0 +1,3 @@
+The metric $\delta$ is the shortest POP/APPEND distance, so every actual
+update path is at least its endpoint distance.
+

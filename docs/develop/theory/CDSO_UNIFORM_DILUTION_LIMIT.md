@@ -4635,3 +4635,264 @@ rooted pattern, or universal original-graph finite sufficiency
 follows from the certificate at a single coefficient.
 
 ## 追加锚（本行以下为增补区）
+
+## 37. An active-price ceiling and the comparison parameters
+
+**Definition 37.1 (Return comparison coordinates).** Retain exactly (7.3), (20.1), (27.1) and (31.1), with the nonlinear cost $g(t)=2(\sqrt{1+t^2}-1)$. Write
+
+$$
+\begin{gathered}
+p(x)=\vartheta_x,\quad L_2(x)=\mathsf T_2(x)=\mathfrak B(x)-p(x),\quad
+h_e=e g(2/e),\quad H(p)=\min_{e\ge3}\{ep+h_e\},\quad J(p)=H(p)-p\quad(p>0),\\
+x_0=1/5000,\qquad x_*=2\{g(2/3)-g(1/3)\},\qquad
+V_j(L)=2-\sqrt{4-(L/j)^2}\quad(0<L<2j),\\
+\mathcal D_{jd}(x)=(d-1)\{p(x)+g(2/d)\}
+ +\frac{x-V_j(L_2(x))}{j-1}+g(j/d)-L_2(x)\quad(3\le j<d,\ L_2(x)<2j).
+\end{gathered}
+\tag{37.1}
+$$
+
+**Lemma 37.2 (Exact comparison coordinates and the possible entrance range).** For every $x>0$,
+
+$$
+J(p(x))=\mathfrak B(x)-x,\qquad
+L_2(x)=x-2p(x)+H(p(x)),\qquad p(x)>x/4.
+\tag{37.2}
+$$
+
+The functions $J$ and $p(x)$ are continuous and strictly increasing. If an actual normalized scalarized optimum has injection only at row one, then $x\le x_*$ and $p(x)\le x/2$.
+
+**Proof.** Proposition 31.2 makes the maximum defining $p(x)$ attained. The inequalities $(e-1)p(x)+h_e\ge\mathfrak B(x)-x$, with equality for a maximizing $e$, give the first identity; the second follows by subtraction. Each affine function defining $J$ has slope at least two. Its locally finite minimum is continuous and strictly increasing, with limits zero and infinity at the two ends of $(0,\infty)$. The same properties of $\mathfrak B(x)-x$, whose affine slopes are $d-1\ge2$, prove the assertion about $p$ by inversion.
+
+For a minimizing entrance degree $d$, choose $e=4d-3$. Taylor's lower bound for $g$ and its quadratic upper bound give
+
+$$
+C_d\ge\frac{d+3}{d^2}-\frac{d+15}{4d^4}>\frac4{4d-3}\ge h_{4d-3}.
+\tag{37.3}
+$$
+
+The strict inequality is equivalent to $36d^3-40d^2-57d+45>0$, valid for $d\ge3$. Therefore $f_{4d-3}(x)>x/4$, proving (37.2). Theorem 31.3 gives $p(x)\le u_2\le x/2$ under the actual-optimum hypothesis. The elementary square bounds $59/100<x_*<3/5$, $C_3<63/100$ and $C_4>1/10$ imply that $B_3(x)<B_d(x)$ for $d\ge4$ whenever $x\ge x_*$: for $d=4$ compare $x+C_4-C_3$, and for $d\ge5$ compare $(d-3)x-C_3$. Hence at such an $x$, $p(x)\ge f_3(x)=x-x_*/2$. Together with $p(x)\le x/2$, this forces $x\le x_*$. ∎
+
+**Lemma 37.3 (Exact nonlinear ceiling on every active row).** Fix any scalarized countable optimum and any attained all-degree dual at a harmless cap. If row $k$ is active and $\ell<2k$, then
+
+$$
+u_k\le V_k(\ell).
+\tag{37.4}
+$$
+
+If the optimum has injection only at row one, a positive action $(2,j,d)$ with $j\ge3$ necessarily satisfies $\mathcal D_{jd}(x)\le0$.
+
+**Proof.** Saturation gives positive unmarked mass in every active row. At one of its unmarked contacts, $b_d=u_k+g(k/d)$. Since $m_d\ge b_d$ and that column is active, $\ell=(d-1)b_d+m_d\ge db_d$. Thus $u_k\le\ell/d-g(k/d)$. For $0<a<2$, differentiation gives
+
+$$
+\sup_{z\ge0}\{az-g(z)\}=2-\sqrt{4-a^2}.
+\tag{37.5}
+$$
+
+Apply this with $a=\ell/k$ and $z=k/d$. This proves (37.4) using the exact cost, and strengthens the active-row estimate (19.2).
+
+For a row-one optimum, put $p_*=u_2$ and $\ell=\Psi(x)$. Theorem 31.3 and feasible pair comparison give $p_*\ge p(x)$ and $\ell\le L_2(x)$. Lemma 37.2 gives $x\le x_*$. Also $L_2(x)<B_3(x)<243/100<6$, so (37.4) applies to every active $j\ge3$. At a positive action, Proposition 20.2 gives
+
+$$
+0=(d-1)\{p_*+g(2/d)\}
+ +\frac{x-u_j}{j-1}+g(j/d)-\ell\ge\mathcal D_{jd}(x).
+\tag{37.6}
+$$
+
+Here $V_j$ is increasing, so $u_j\le V_j(\ell)\le V_j(L_2(x))$. All prices, contacts and incidences in this argument belong to the same actual optimum and its all-degree dual. ∎
+
+## 38. Analytic exclusion at small comparison prices
+
+**Lemma 38.1 (A uniform small-price departure inequality).** Suppose $0<p\le10^{-4}$ and $2p\le x\le4p$. Set $L=x-2p+H(p)$ and, for $3\le j<d$, set
+
+$$
+D_{jd}=(d-1)\{p+g(2/d)\}+\frac{x-V_j(L)}{j-1}+g(j/d)-L.
+\tag{38.1}
+$$
+
+Then $D_{jd}>0$ for every such integer pair. Consequently, under the row-one-optimum hypothesis, no positive action $2\longrightarrow j\ge3$ exists when $0<x\le x_0$.
+
+**Proof.** Put $s=\sqrt p\le1/100$. Rounding $2/s$ to a nearest integer $e$ and using $g(t)\le t^2$ gives
+
+$$
+H(p)\le ep+4/e\le4s+\frac{s^3}{8-2s}\le4s+s^3/7,
+\qquad L\le4s+2s^2+s^3/7.
+\tag{38.2}
+$$
+
+The last upper bound yields, for every $j\ge3$,
+
+$$
+V_j(L)\le\frac{4p}{j^2}(1+21s/20)<\frac{2p}{j}\le\frac xj.
+\tag{38.3}
+$$
+
+To verify the first inequality, write $a=1+s/2+s^2/28$ and $z=(2sa/j)^2$. Then $a^2\le1+s+s^2/3<9/8$, so $z\le s^2/2$. Rationalizing $V_j$ and using $2/(1+\sqrt{1-z})\le1+z$ gives
+$V_j(L)/(4p/j^2)\le a^2(1+z)\le1+s+s^2\le1+21s/20$.
+
+Write $h(t)=tp+2\sqrt{t^2+4}-2t$ and $R_d=h(d)-H(p)\ge0$. Subtraction in (38.1) gives exactly
+
+$$
+D_{jd}=R_d+p-\frac{j-2}{j-1}x-\frac{V_j(L)}{j-1}
+                  +g(j/d)-g(2/d)\ge R_d-3p.
+\tag{38.4}
+$$
+
+The critical point of $h$ lies strictly between $3/(2s)$ and $5/(2s)$; this follows directly from $s\tau(s^2)=2(2-s^2)/\sqrt{4-s^2}$. Its derivative is negative before that point and positive after it. Taylor's lower bound $g(t)\ge t^2-t^4/4$, evaluated at these two endpoints, therefore gives
+
+$$
+\begin{aligned}
+d\le3/(2s)&\ \Longrightarrow\ R_d\ge s/6-(32/27+1/7)s^3>3p,\\
+d\ge5/(2s)&\ \Longrightarrow\ R_d\ge s/10-(32/125+1/7)s^3>3p.
+\end{aligned}
+\tag{38.5}
+$$
+
+This proves the assertion outside $3/2\le w=ds\le5/2$. Inside this interval,
+
+$$
+R_d\ge\frac{s(w-2)^2}{w}-(32/27+1/7)s^3.
+\tag{38.6}
+$$
+
+For $j=3$, (38.3), the same Taylor bounds, and the tangent inequality $5/w^2\ge5/4-(5/4)(w-2)$ imply
+
+$$
+\begin{aligned}
+D_{3d}&\ge\frac25s(w-2)^2-\frac54s^2(w-2)+\frac{s^2}{36}
+ -(32/27+1/7+7/30)s^3-4s^4\\
+&\ge\frac{s^2}{36}-(32/27+1/7+7/30+125/128+4s)s^3\\
+&>s^2\{1/36-(8/3)s\}\ge p/900>0.
+\end{aligned}
+\tag{38.7}
+$$
+
+The second line completes the square. The coefficient in parentheses is less than $8/3$ for $s\le1/100$. For $j=4$, use $V_4(L)\le21p/80$ and $R_d\ge0$; for $j\ge5$, use (38.4) before discarding its last difference and the monotonicity of $g$. These give respectively
+
+$$
+\begin{aligned}
+D_{4d}&\ge p(1-8/3-7/80+48/25)-(1024/81)p^2>p/10,\\
+D_{jd}&\ge(84/25-3)p-(2500/81)p^2>p/3\quad(j\ge5).
+\end{aligned}
+\tag{38.8}
+$$
+
+Here $g(4/d)-g(2/d)\ge12/d^2-64/d^4$ and $g(5/d)-g(2/d)\ge21/d^2-625/(4d^4)$, with $3/(2s)\le d\le5/(2s)$. This proves the full integer assertion. Finally, for an actual row-one optimum with $x\le x_0$, Lemma 37.2 gives $x/4<p(x)\le x/2\le10^{-4}$. Apply the assertion with $p=p(x)$, $L=L_2(x)$, and contradict (37.6). ∎
+
+## 39. Exact endpoint exclusion on the remaining coefficient interval
+
+**Proposition 39.1 (A finite algebraic inequality for the whole interval).** For every $x\in[x_0,x_*]$ and integers $3\le j<d\le580$,
+
+$$
+\mathcal D_{jd}(x)>x/50.
+\tag{39.1}
+$$
+
+**Proof.** All entrance minimizers on this interval have degree at most 144. Indeed $C_{72}\le75/72^2$ and
+$\mathfrak B(x)/x\le72+5000C_{72}<145$. Also $p(x)>x/4\ge1/20000$. The derivative of $ep+h_e$ in its real argument is greater than $p-4/e^2$, so every return minimizer has degree at most 580. Thus both minima in (37.2) may be taken over these finite ranges.
+
+For the continuous extension $C(t)=(t-1)g(1/t)+g(2/t)$, direct differentiation gives
+
+$$
+C''(t)=\frac{2(t^3-3t^2-2)}{t^3(t^2+1)^{3/2}}
+       +\frac{8(3t^2+8)}{t^3(t^2+4)^{3/2}}>0\quad(t\ge3).
+\tag{39.2}
+$$
+
+For the sign, use $((t^2+4)/(t^2+1))^{3/2}<3/2$. The resulting numerator is greater than $2t^3+10t^2+116/3$. Since $C(t)>0$ tends to zero, it is decreasing. The extension $h(t)=2\sqrt{t^2+4}-2t$ is also decreasing and strictly convex. Hence entrance changes occur only at $t_d=C_d-C_{d+1}$, and return changes only at $r_e=h_e-h_{e+1}$. At a return change, (37.2) gives the coefficient
+
+$$
+X_e=\max_{3\le a\le144}\frac{(e-1)r_e+h_e-C_a}{a-1}.
+\tag{39.3}
+$$
+
+This is the inverse of $\min_a\{(a-1)x+C_a\}$ at $(e-1)r_e+h_e$. Therefore all phase endpoints in $[x_0,x_*]$ are exactly the members there of
+
+$$
+\mathcal Q=\{x_0,x_*\}\cup\{t_d:3\le d\le143\}
+                       \cup\{X_e:3\le e\le579\}.
+\tag{39.4}
+$$
+
+Between successive endpoints both $p(x)$ and $L_2(x)$ are affine. The function $V_j$ is convex on $(0,2j)$, so $\mathcal D_{jd}(x)-x/50$ is concave on each such phase. Its positivity at every endpoint suffices. Throughout the interval $0<L_2(x)<B_3(x)<243/100<2j$.
+
+Here is a complete rational specification of the endpoint comparisons. All intervals below are integer intervals representing the enclosed real number multiplied by $A=10^{18}$. For $1\le k<d\le580$, define
+
+$$
+\begin{gathered}
+n_{kd}=\left\lfloor\sqrt{\left\lfloor A^2(d^2+k^2)/d^2\right\rfloor}\right\rfloor,\\
+G_{kd}^-=2n_{kd}-2A,\qquad G_{kd}^+=G_{kd}^-+2,\\
+C_d^-=(d-1)G_{1d}^-+G_{2d}^-,\quad C_d^+=(d-1)G_{1d}^++G_{2d}^+,\qquad
+h_e^-=eG_{2e}^-,\quad h_e^+=eG_{2e}^+.
+\end{gathered}
+\tag{39.5}
+$$
+
+The square inequalities $n_{kd}^2d^2\le A^2(d^2+k^2)<(n_{kd}+1)^2d^2$ enclose the exact $g(k/d)$. Construct an interval $[q_-,q_+]$ for each candidate in (39.4) by ordinary outward interval arithmetic: addition and subtraction use the corresponding endpoint sums and differences; multiplication or division by a positive integer rounds the lower endpoint down and the upper endpoint up; minima and maxima act separately on the two endpoints. In particular use $r_e\in[h_e^--h_{e+1}^+,h_e^+-h_{e+1}^-]$ in (39.3). The endpoints $x_0$ and $x_*$ have intervals $[A/5000,A/5000]$ and $[2(G_{23}^--G_{13}^+),2(G_{23}^+-G_{13}^-)]$.
+
+The intervals decide membership strictly for every other candidate: 71 entrance points and 276 return points lie strictly between the endpoints; the other 70 and 301 candidates lie outside. All 349 retained intervals are pairwise disjoint. For each retained interval put
+
+$$
+\begin{gathered}
+B_- =\min_{3\le a\le144}(a q_-+C_a^-),\quad
+B_+ =\min_{3\le a\le144}(a q_++C_a^+),\\
+p_- =\max_{3\le e\le580}\left\lfloor\frac{B_--q_+-h_e^+}{e-1}\right\rfloor,\quad
+p_+ =\max_{3\le e\le580}\left\lceil\frac{B_+-q_--h_e^-}{e-1}\right\rceil,\qquad L_+=B_+-p_-,\\
+z_j=\left\lfloor\sqrt{\left\lfloor(4A^2j^2-L_+^2)/j^2\right\rfloor}\right\rfloor,\qquad V_j^+=2A-z_j,\\
+K_{qjd}=(d-1)(p_-+G_{2d}^-)
+ +\left\lfloor\frac{q_--V_j^+}{j-1}\right\rfloor+G_{jd}^--L_+.
+\end{gathered}
+\tag{39.6}
+$$
+
+These integers satisfy $A\mathcal D_{jd}(q)\ge K_{qjd}$. In particular $L_+/A$ encloses $L_2(q)$ from above, and $z_j/A$ encloses its required square root from below. The complete finite comparisons are the following; each minimum includes every retained $q$ in the indicated row and every $4\le d\le580$, $3\le j<d$.
+
+| Endpoint window | Points | Comparisons | $\min\lfloor10^{12}K_{qjd}/q_+\rfloor$ | Strict bound $K_{qjd}/q_+$ |
+| --- | --- | --- | --- | --- |
+| $[1/5000,1/1000)$ | 197 | 32850341 | 20422291405 | $>1/50$ |
+| $[1/1000,1/100)$ | 108 | 18009324 | 35287873393 | $>7/200$ |
+| $[1/100,1/10)$ | 33 | 5502849 | 80874749690 | $>2/25$ |
+| $[1/10,x_*]$ | 11 | 1834283 | 162915745818 | $>4/25$ |
+
+There are $577\cdot578/2=166753$ comparisons per endpoint and 58196797 in total. Every entry is determined by the integer square inequalities and directed quotients in (39.5)--(39.6); no approximate optimizer or presumed contact is an input. Since each strict bound exceeds or equals $1/50$, this proves positivity at all phase endpoints. Phasewise concavity proves (39.1), including both ends and all degree ties. ∎
+
+## 40. Full return, scalarized attainment and the original graph consumer
+
+**Theorem 40.1 (The full row-one return assertion).** For every $x>0$, every actual normalized scalarized optimal flow with injection only at row one has source support exactly $\{1,2\}$ and finite incidence support. In particular
+
+$$
+\Psi(x)=\mathsf T_2(x),\qquad G_2=0
+\tag{40.1}
+$$
+
+for every attained all-degree dual at a harmless cap. Thus the implication in Open boundary 33.1 holds with all its original hypotheses.
+
+**Proof.** Use the actual all-degree dual supplied by Theorem 15.3 and Lemma 27.2. Entrance rigidity and Lemma 37.2 put $0<x\le x_*$ and make every row-one action target two. Lemma 38.1 excludes every action $2\longrightarrow j\ge3$ when $x\le x_0$. For $x\ge x_0$, a positive row-two action has, by Lemma 20.3,
+
+$$
+d\le1+\ell/u_2\le1+L_2(x)/p(x)
+ <1+4\{72+5000C_{72}\}<581.
+\tag{40.2}
+$$
+
+Here $C_{72}\le75/72^2$, and $\ell\le L_2(x)\le\mathfrak B(x)$. Its integer degree is therefore at most 580. Proposition 39.1 now contradicts the necessary inequality (37.6) for every $j\ge3$. All actions out of row two must return to two.
+
+The exact resolvent (21.2) makes the active rows precisely those reachable from the nonzero injection. Its only reachable rows are one and two, both active. Lemma 20.3 gives finitely many actions at each of these fixed rows, and Proposition 20.2 reconstructs the same finite normalized array satisfying every constraint in (7.3). Proposition 23.2 expresses this flow as a convex combination of actual normalized pair flows, preserving both resource and cost. Its objective is at least $\mathsf T_2(x)$, while pair feasibility gives the reverse inequality for $\Psi$. This proves the first equality in (40.1); Corollary 31.4 proves $G_2=0$ for every attained dual, including tied minimizing degrees. ∎
+
+**Corollary 40.2 (Universal scalarized and exact capped finite attainment).** One has $S=(0,\infty)$. Every capped problem $\mathcal L(\alpha,\beta;R)$ with $\alpha,\beta>0$ and $R>1$ has a finite attainer. For every countable capped optimum there is a finite capped optimum with exactly its resource and cost.
+
+**Proof.** Fix $x>0$ and a harmless cap. Theorem 21.1 supplies a normalized one-injection scalarized optimum, since $\lambda=0$. If its injection is at $h\ge2$, Lemma 23.1 makes its reachable support finite. If its injection is at one, Theorem 40.1 makes it finite. Proposition 20.2 gives a finite feasible array in either case. Hence $x\in S$, answering the existence obligation of Open boundary 30.1.
+
+For a capped problem choose any attained dual, put $x=(\alpha+\lambda)/\beta$, and take any countable capped optimum $Q_*$. Proposition 28.2 puts $Q_*$ in $\mathscr O_x$. Universal $S$ supplies the two-sided sequences $x(1\pm1/(n+2))\in S$, so Theorem 28.1 supplies finite arrays at both exact resource endpoints of this scalarized face. Their appropriate convex mixture has exactly $r(Q_*),c(Q_*)$ and retains every countable balance. If $\lambda>0$, complementarity gives $r(Q_*)=R$ and the mixture hits that cap exactly. If $\lambda=0$, its preserved resource is at most $R$, with equality allowed. Equation (28.6) gives capped optimality in both cases. Coincident resource endpoints and scalarized ties are included. ∎
+
+**Corollary 40.3 (Every positive compact rectangle and every original integer sequence).** Open problem 18.2 has the affirmative answer with exactly $M_{\mathcal K}=\widehat M_{\mathcal K}$ in (17.1)--(17.3), for every positive finite-endpoint rectangle, including equal endpoints. Thus $F_{\widehat M_{\mathcal K}}=F$ everywhere on that rectangle, with the original $J_0$, admissibility $R_j>1$, infeasible-branch convention and all winning ties. On every integer sequence (29.7), the exact original-graph limit and bounded-tail recovery in (29.8) hold with exactly $B_{\mathcal K}$ in (18.1).
+
+**Proof.** At any positive pair, choose any winning branch of the unchanged finite minimum (10.2). Its parameters are $\alpha=2\kappa/D$, $\beta=D\kappa$, $R=R_j=Dj/\kappa>1$. Corollary 40.2 supplies finite attainment even if its cap binds. Theorem 17.1 gives the common endpoint-only cutoff without separating tied winners, hence the stated uniform equality. Theorem 18.1 then applies to every sequence $a_n\ge4$, $h_n,N_n\ge1$ with $a_n\to\infty$, $h_n/\sqrt{a_n}\to\kappa>0$, $N_n/a_n^{3/2}\to D>0$. Its strict-cap mixing, Theorem 8.1 and Theorem 11.1 preserve all marked balances, strict incidence inequalities and exact counts $N_n$, $a_n+1+h_n$, $a_nN_n$, at every sufficiently large term, with no congruence restriction. Proposition 12.2 supplies the full-class lower limit. This is precisely the transfer in Corollary 29.4, now with its finite-attainment premise supplied. ∎
+
+**Attribution 40.4 (Mathematical inputs and remaining scope).** The active-price ceiling, full-coefficient departure exclusion and their attainment consequences are deductions for this volume's exact marked arrays. The finite rational table is a proof of explicit algebraic inequalities over whole coefficient phases, rather than a finite-cutoff LP estimate. Differentiation, convexity, completing the square and integer square brackets are intermediate elementary tools; no countable moment representation or unproved dual-completion ansatz is used. The primal and all-degree dual existence inputs remain exactly Theorems 15.3, 15.6 and Lemma 27.2.
+
+The original normalization is Albalahi--Das--Ali--Barman--Hamza, [arXiv:2510.24809v1](https://arxiv.org/html/2510.24809v1), Section 1, equation (1) and its following definition, DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176): maximum endpoint degree in the denominator, with $1/\sqrt2$ dropped. The finite affine duality used in Theorem 15.3 is Boyd--Vandenberghe, [*Convex Optimization*](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf), Sections 5.2.3--5.2.4, printed pp.226--227, including feasibility under the affine refinement and attained dual value when finite. No extremal theorem from the first source is a premise here. Technical full-text overlap with Zhao--Zhao, DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26), remains unassessed; no worldwide-priority assertion is made.
+
+The conclusions answer 33.1, 30.1 and 18.2 through the separate proofs above. They bound a recovery sequence, not every original graph minimizer or the core sink degrees. They assert no exact attaining connected rooted pattern, no smaller-order error, no moving-rectangle extension to zero or infinity, and no extension beyond the original common-law and graph domains. Corollary 15.4 continues to exclude exact branch attainment by a single fixed rooted pattern.
+
+## 追加锚（本行以下为增补区）

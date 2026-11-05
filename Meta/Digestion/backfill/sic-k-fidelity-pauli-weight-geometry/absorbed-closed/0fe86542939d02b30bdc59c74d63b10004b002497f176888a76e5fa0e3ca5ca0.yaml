@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:0fe86542939d02b30bdc59c74d63b10004b002497f176888a76e5fa0e3ca5ca0
+  normalized_sha256: sha256:0fe86542939d02b30bdc59c74d63b10004b002497f176888a76e5fa0e3ca5ca0
+cas_ref: sha256:0fe86542939d02b30bdc59c74d63b10004b002497f176888a76e5fa0e3ca5ca0
+coverage_gids:
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityAchievableRegion.achievableRegion
+    target_statement_id: sha256:405892f4929ec204081f7094d6f562cb8f0152b682e1ce1369ac0fd307f95284
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityAchievableRegion.achievableRegion_intermediate_and_high_characterization
+    target_statement_id: sha256:aaeec0f56bf73540c91e0cd8432298fa4c647c2b1a1368cd37da472d25bc676f
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityAchievableRegion.achievableRegion_zero_characterization
+    target_statement_id: sha256:0c74d451cf50fdc0ca7e610e8d5c06b8a5c08d7384e56ef933ab685c18be6c1f
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityAchievableRegion.extremalAbscissa
+    target_statement_id: sha256:dae16a240123dd492fc4daf8be9194b517bcef59ec21cde57ea0faf9bf2feba1
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityAchievableRegion.optWeight
+    target_statement_id: sha256:cee97a252e2a09c4f606cc4a5c800fbf695e05b848cae8d7831ee162e498f691
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityAchievableRegion.tailCoeff
+    target_statement_id: sha256:6cc3e1c633aaf624e8ed837749ee7577dcc6d55709efe8b3a7976a657e9cdaf7
+receipts:
+  unresolved_subitems: []

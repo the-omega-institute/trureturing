@@ -1,0 +1,18 @@
+**证明定理 1.3 的其余蕴涵与唯一性。**$1\Rightarrow2$ 为命题 2.4。若有 (1.2)，对实系数 $\sum_i\alpha_i=0$，
+
+$$
+\sum_{i,j}\alpha_i\alpha_jc(x_i,x_j)
+=-2\left\|\sum_i\alpha_iF(x_i)\right\|^2\le0,
+$$
+
+且 $c$ 对称，故 $3\Rightarrow4\Rightarrow1$。反向表示推出 (R)，直接展开 $\sum_k\|X+\omega^kY\|^2$。在任意表示中，(4.2) 满足 $F(V_Ua)=\omega Fa$，因此第一变量线性的全部复 Gram 由原比较恢复为
+
+$$
+\langle Fa,Fb\rangle
+=\frac{q(a)+q(b)-c(a,b)}2
++\frac{i}{2\sqrt3}\bigl(c(V_Ua,b)-c(a,V_Ub)\bigr).
+\tag{4.5}
+$$
+
+相同 Gram 给最小闭复张成空间之间唯一的保标签酉同构。证毕。
+

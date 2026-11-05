@@ -1,0 +1,83 @@
+**定理 127.1（原测试域的旗流形结构与进一步降维）。** 在裸有限 EJA 上，固定切口各简单块的秩所成流形为 $M_{\mathbf k}$，新测试域为
+
+$$
+\mathcal T_{\rm prim}
+=\{(c,p,r):c^2=c,\ p\in\operatorname{Prim}(E),\ r^2=r,\ r\in\nu_cM_{\mathbf k}\}.
+\tag{127.1}
+$$
+
+这里 $\nu_cM_{\mathbf k}=N_c$ 使用原 $q$，直接消费 (111.4)–(111.5)。取得完整原背景的复重构后，固定保持原结构的表示
+
+$$
+E\cong\bigoplus_{t=1}^mH_{n_t}(\mathbb C),\qquad
+q(x,y)=\sum_t w_t\operatorname{Tr}(x_ty_t),\quad w_t>0.
+\tag{127.2}
+$$
+
+则 $\operatorname{Prim}(E)=\bigsqcup_s\mathbb{CP}^{n_s-1}$；原中心标签保留，不因块同构而识别。若 $p$ 位于原块 $s$，固定每块 $\operatorname{rank}c_t=k_t$、$\operatorname{rank}(c_tr_t)=a_t$、$\operatorname{rank}((I-c_t)r_t)=b_t$，相应三元组分层自然对应
+
+$$
+\mathcal T_{s,\mathbf k,\mathbf a,\mathbf b}
+\cong\mathbb{CP}^{n_s-1}\times
+\prod_t\frac{U(n_t)}{U(a_t)\times U(k_t-a_t)\times U(b_t)\times U(n_t-k_t-b_t)}.
+\tag{127.3}
+$$
+
+$0\le a_t\le k_t$、$0\le b_t\le n_t-k_t$，零维扇区按 $U(0)$ 为平凡群解释。相对定义 118.1 中第一输入处于同一 primitive 分量的旧域，新分层严格减少
+
+$$
+\sum_t\{a_t^2+(k_t-a_t)^2+b_t^2+(n_t-k_t-b_t)^2\}
+\tag{127.4}
+$$
+
+个数学参数；每个非零原对象该差均为正。
+
+证明。先在一个复块上说明互逆映射。由 (119.5)，$W_c(r)=0$ 恰为 $cr=rc$。这样的投影对给出四个有序正交子空间
+
+$$
+\begin{aligned}
+H_{11}&=\operatorname{ran}(cr),&H_{10}&=\operatorname{ran}(c(I-r)),\\
+H_{01}&=\operatorname{ran}((I-c)r),&H_{00}&=\operatorname{ran}((I-c)(I-r)),
+\end{aligned}
+\tag{127.5}
+$$
+
+其维数依次为 $a,k-a,b,n-k-b$，正交直和为整个 $\mathbb C^n$。反向给定这样的四分解，令 $\Pi_{\epsilon\eta}$ 为各扇区正交投影，置
+
+$$
+c=\Pi_{11}+\Pi_{10},\qquad r=\Pi_{11}+\Pi_{01}.
+\tag{127.6}
+$$
+
+两式与 (127.5) 互逆。酉群在固定维数的四分解上传递，稳定子恰为四个分块酉群，故得到 (127.3) 的旗流形因子。$p$ 独立选取原块 $s$ 中一条复直线的秩一投影，其他块为零；反向取其像直线，便给第一因子的互逆对应。所有映射通过固定原结构表示拉回，不更换原 $D$ 或 $q$。
+
+忘掉 $r$ 的旗流形投影到底空间 $\operatorname{Gr}_{\mathbb C}(k,n)$，纤维为 $\operatorname{Gr}_{\mathbb C}(a,k)\times\operatorname{Gr}_{\mathbb C}(b,n-k)$。准确的整体是关联丛
+
+$$
+U(n)\times_{U(k)\times U(n-k)}
+\bigl(\operatorname{Gr}_{\mathbb C}(a,k)\times\operatorname{Gr}_{\mathbb C}(b,n-k)\bigr),
+\tag{127.7}
+$$
+
+一般不能把它写成底空间与纤维的全局平凡乘积。由群及稳定子的实维数，
+
+$$
+\dim_{\mathbb R}\mathcal T_{s,\mathbf k,\mathbf a,\mathbf b}
+=2(n_s-1)+\sum_t\{n_t^2-a_t^2-(k_t-a_t)^2-b_t^2-(n_t-k_t-b_t)^2\}.
+\tag{127.8}
+$$
+
+上一轮 (119.1) 在同一 primitive $p$ 分量上的维数为 $N+2(n_s-1)$，$N=\sum_tn_t^2$；相减恰为 (127.4)。每个非空原块的四个非负整数之和为 $n_t>0$，平方和严格为正。新域是有限多个这种分层的不交并；故其最大分层维数也严格小于旧域对应 primitive 分量的最大值，进而小于旧完整域的最大值。这个比较同时使用 $p$ 的 primitive 限制和 $r$ 的幂等限制，不把单独缩小 $p$ 的最大维数冒称处处严格下降；例如单个复二阶或三阶块上，primitive 投影分量已经达到全部投影的最大维数。
+
+纯经典 $E=\mathbb R^m$、$m\ge1$ 时，新域有 $m4^m$ 个点：$c,r$ 各有 $2^m$ 种，$p$ 有 $m$ 种。旧双切口域则有 $4^m$ 个 $\mathbb R^m$ 分量。离散计数和维数是不同读数；零对象的新测试域为空，代数结论按定理 126.2 平凡成立。
+
+三维有限图景直接沿 (119.7)。在一个秩二数学角、角单位 $e$ 内，取 $c=(e+Z)/2$、$p=(e+m_xX+m_yY+m_zZ)/2$、$|\mathbf m|=1$，则
+
+$$
+W_c(p)=\tfrac w4(m_x^2+m_y^2),\qquad
+2D_cp=\tfrac12(m_yX-m_xY).
+\tag{127.9}
+$$
+
+角内受 $e$ 支持的法向幂等读回只有 $0,c,e-c,e$；整个原对象的读回还包括角外及其法向子代数中的全部幂等元，包括原单位。最细输入的横向影子被原 $J_c=2D_c$ 作四分之一转动。角单位不充当整个原单位；该数学截面不供应实际 $M_2$、时钟或新操作。裸 Spin7 边界仍沿命题 100.3：逐切口平方关系不能代替完整交换子曲率及其相容复结构。∎
+

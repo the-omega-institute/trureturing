@@ -1,0 +1,18 @@
+**Definition 1.3 (entry knowledge and the three tasks).** At entry the controller is given a genuinely acquired value $s_o=\eta_o(C_0)$ for the actual positive entry source $C_0$. In the complete-fiber contract all its other initial accessible source information factors through $s_o$; the admitted entries are exactly
+
+$$
+E_{s_o}=\{C\ge1:\eta_o(C)=s_o\}.
+\tag{AQBR.4}
+$$
+
+This initial acquisition is stipulated and has its own prior cost. It is not obtained free by the procedures below. A single controller for a supplied $s_o$ must succeed for every entry in (AQBR.4), rather than choosing a program after learning the unknown $C_0$.
+
+Entry identification means outputting $\eta_n(C_0)$. Reached-state homing means installing an accurate current $\eta_n(C_*)$ at termination, allowing it to differ from the entry label. Acquisition-and-behavior-return requires both entry identification and
+
+$$
+\eta_n(C_*)=\eta_n(C_0),
+\tag{AQBR.5}
+$$
+
+together with an installed callable current reader and updater for every finite subsequent legal word. Termination is required on every admitted entry. Return in (AQBR.5) concerns the task behavior, not equality of integers, source syntax, original records or elapsed time.
+

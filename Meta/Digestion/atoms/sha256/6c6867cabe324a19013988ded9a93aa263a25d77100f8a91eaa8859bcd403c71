@@ -1,0 +1,45 @@
+**定理 B-44.5（同奇偶二十边形的严格联合亏额）。** B-44.1 的每个原剩余族均满足
+
+$$
+|\mathcal F|\le69320276<L=69753940.
+\tag{44.7}
+$$
+
+证明。依 B-44.3 选择 $i\ne j$，使 $a_i,a_j>8502$。取 B-41.4 中属于同一原族的两个实际条件子族
+$\mathcal C_{ij}=\mathcal F\cap\mathcal X(M_i\mid M_j)$、$\mathcal D_{ij}=\mathcal F\cap\mathcal X(M_j\mid M_i)$。其基数和恰为 $z_{ij}$，且各含自己的核。B-37.2、B-41.3 的双族保条件压缩给某个 $1\le d=|J|\le6$ 上的非空交叉相交向上族 $\mathscr C,\mathscr D$，两侧完整条件权重分别不小于压缩前实际基数。
+
+若 $d\le5$，B-41.3 及 $G_d(20)\ge G_5(20)$ 给 $d_{ij}=s-z_{ij}\ge G_5(20)$。若 $d=6$，式 (41.3) 的每子集层权重为
+
+$$
+(\omega_0,\ldots,\omega_6)
+=(2782476,1031643,385698,145620,55626,21554,8502).
+\tag{44.8}
+$$
+
+两侧权重均严格大于 $\omega_6$，故 $\mathscr C\ne\{J\}$；它也不是全部非空子集族，否则交叉相交性强制 $\mathscr D\subseteq\{J\}$，与对侧权重矛盾。$\mathscr C$ 不含空集，因此 B-44.4 适用。
+
+令 $\alpha_r=q_r/\binom6r$，$\mu$ 是 (44.8) 的完整条件权重，$\overline{\mathscr C}=\{J\setminus R:R\in\mathscr C\}$。层占比因向上性非降。保留式 (41.9) 的 $r=0,1$ 两项，其余项非负，得
+
+$$
+\begin{aligned}
+\mu(\overline{\mathscr C})-\mu(\mathscr C)
+&\ge G_6(20)+6(\omega_1-\omega_5)(\alpha_5-\alpha_1)\\
+&=G_6(20)+(\omega_1-\omega_5)(q_5-q_1)\\
+&\ge2773974+1010089=3784063=G_5(20).
+\end{aligned}
+\tag{44.9}
+$$
+
+式 (41.8) 遂给 $d_{ij}\ge G_5(20)$。这里只用各侧权重不减，不假定压缩保留某个核迹，也不声称三个对能够同时压缩。其余两个对仍由 B-41.3 给 $d_{uv}\ge G_6(20)$。三个 $d$ 均属于原 $\mathcal F$；用 B-41.4 的同族恒等式及原有 $\eta\ge0$、$\ell_i\ge2$，得到
+
+$$
+\begin{aligned}
+2(|\mathcal F|-L)
+&\le h_{20}-6-\sum_{u<v}d_{uv}\\
+&\le8464690-6-3784063-2\cdot2773974=-867327.
+\end{aligned}
+\tag{44.10}
+$$
+
+左边为偶整数，故 $|\mathcal F|-L\le-433664$，即 (44.7)。任意四见证只通过原有的实际族分解与同族恒等式使用，其具体完成未受限制。∎
+
