@@ -31,7 +31,7 @@ internal sealed class WoldDecompositionDocument : IScribeDocumentDefinition
                     All("z", Call("R", V("V")), Eqn(Call("Coe", Call("U", V("V"), V("z"))), Call("V", Call("Coe", V("z"))))))),
                 "U(V) is woldResidualEquiv V, a linear isometric equivalence R(V) to itself over k. Its forward function is literally the linear restriction of V, so after subtype coercion U(V)z = Vz for every z. Invariance shifts the power-range witnesses. For surjectivity take a V-preimage of a residual point; injectivity of V and the next power-range witness put that preimage in every power range. The equivalence packages this bijection and preservation of inner products. Completeness is absent from its full telescope. These finite and residual statements give no infinite direct-sum or coefficientwise uniqueness theorem.", DescribeRole.Definition))));
 
-    private static Block Entry(string id, string decl, Formula statement, string explanation, DescribeRole role = DescribeRole.Theorem) =>
+    private static DocumentBlock Entry(string id, string decl, Formula statement, string explanation, DescribeRole role = DescribeRole.Theorem) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create("D5/S3/HilbertOperators/WoldDecomposition." + decl),
             H(decl), StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(explanation))), role);
