@@ -13,6 +13,10 @@ triage: anchor
 
 # Finite cyclic orthogonal projections
 
+## Verified locator
+
+https://arxiv.org/pdf/1809.05858v1 — Section 4.2, Theorem 4.2, printed page 21 (PDF page 24).
+
 Section 4.2, Theorem 4.2 on printed page 21 (PDF page 24) of
 arXiv:1809.05858v1 states Halperin's theorem for a real or complex Hilbert
 space and an integer J at least 2. For closed linear subspaces
