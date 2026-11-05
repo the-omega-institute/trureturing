@@ -1,0 +1,234 @@
+# Directed logarithm arithmetic, first stop and width
+
+## Abstract
+
+Total directed integer logarithms with uniform widths for the actual finite-pressure primitives.
+
+**Theorem 1.1 (totalBounds_width).**
+
+Lean statement: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalBounds_width`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalBounds_width` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Exact Lean statement; the finite packet instance remains an independent unpaid obligation.
+
+**Theorem 1.2 (encloses_iff_rat).**
+
+Lean statement: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.encloses_iff_rat`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.encloses_iff_rat` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Exact Lean statement; the finite packet instance remains an independent unpaid obligation.
+
+**Theorem 1.3 (bounds_sound).**
+
+Lean statement: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.bounds_sound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.bounds_sound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Exact Lean statement; the finite packet instance remains an independent unpaid obligation.
+
+**Theorem 1.4 (bounds_total_correct).**
+
+Lean statement: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.bounds_total_correct`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.bounds_total_correct` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Exact Lean statement; the finite packet instance remains an independent unpaid obligation.
+
+**Theorem 1.5 (totalBounds_correct).**
+
+Lean statement: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalBounds_correct`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalBounds_correct` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Exact Lean statement; the finite packet instance remains an independent unpaid obligation.
+
+**Theorem 1.6 (totalLogTwo_correct).**
+
+Lean statement: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalLogTwo_correct`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalLogTwo_correct` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Exact Lean statement; the finite packet instance remains an independent unpaid obligation.
+
+**Theorem 1.7 (log_bounds_sound).**
+
+Lean statement: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.log_bounds_sound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.log_bounds_sound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Exact Lean statement; the finite packet instance remains an independent unpaid obligation.
+
+**Theorem 1.8 (totalLogBounds_correct).**
+
+Lean statement: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalLogBounds_correct`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalLogBounds_correct` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Exact Lean statement; the finite packet instance remains an independent unpaid obligation.
+
+**Theorem 1.9 (layer_bounds_sound).**
+
+Lean statement: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.layer_bounds_sound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.layer_bounds_sound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Exact Lean statement; the finite packet instance remains an independent unpaid obligation.
+
+**Theorem 1.10 (totalLayerBounds_correct).**
+
+Lean statement: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalLayerBounds_correct`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalLayerBounds_correct` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Exact Lean statement; the finite packet instance remains an independent unpaid obligation.
+
+**Theorem 1.11 (totalLogTwo_width).**
+
+Lean statement: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalLogTwo_width`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalLogTwo_width` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Exact Lean statement; the finite packet instance remains an independent unpaid obligation.
+
+**Theorem 1.12 (totalLogBounds_width).**
+
+Lean statement: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalLogBounds_width`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalLogBounds_width` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Exact Lean statement; the finite packet instance remains an independent unpaid obligation.
+
+**Theorem 1.13 (totalLogBounds_width_finite).**
+
+Lean statement: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalLogBounds_width_finite`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalLogBounds_width_finite` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Exact Lean statement; the finite packet instance remains an independent unpaid obligation.
+
+**Theorem 1.14 (totalLayerBounds_width).**
+
+Lean statement: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalLayerBounds_width`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalLayerBounds_width` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Exact Lean statement; the finite packet instance remains an independent unpaid obligation.
+
+**Theorem 1.15 (totalLayerBounds_error).**
+
+Lean statement: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalLayerBounds_error`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalLayerBounds_error` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Exact Lean statement; the finite packet instance remains an independent unpaid obligation.
+
+The implementation retains the actual fixed-point Option recurrence, scale S=10^30, exact rounding, old-state assignment order, post-step tail test, and early returns. The immutable predecessor supplies successful-Option soundness source; the caller's ordinary integer argument is fallible proof input. Neither constitutes independent adjudication or kernel evidence. The full real finite-pressure objective, signed infinite tail, Robin n>5040 and RH remain open. PR20756 retains native integration and delivery priority.
+
+For natural n and d>0, C(n,d)=(n+d-1)/d satisfies n<=C(n,d)*d<n+d. The consumed private arithmetic proves C(n,d)<=m iff n<=d*m, monotonicity in n, and C(C(n,a),b)=C(n,a*b) for positive a,b. The composition proof uses both inequalities of the ceiling characterization; it includes numerator zero. No unproved ceiling validator or rounding hypothesis is supplied by the consumer.
+
+Let Z=333333333333333333333333333334=C(S,3) and B=111111111111111111111111111112=C(Z*Z,S). Exact natural arithmetic gives 8B<=S, B<S, Z<8^33=633825300114114700748351602688, and 2S<=67*(S-B). For zd>0 and 3zn<=zd, the proof derives zh=C(S*zn,zd)<=Z by multiplying S<=3Z and 3zn<=zd. Monotonic ceiling and zh^2<=Z^2 give the actual coefficient b=C(zh^2,S)<=B. These integer bounds include the endpoint 3zn=zd; this alone says nothing about analytic endpoint soundness.
+
+For any actual state ph, put r=C(ph,8). Then ph<=8r and 8b<=S imply ph*b<=r*S, hence the ACTUAL ph update C(ph*b,S)<=C(ph,8). Ceiling composition propagates ph<=C(Z,8^k) through step to ph_next<=C(Z,8^(k+1)). At k=33, Z<8^33 gives ph<=1. The actual tail numerator 2phS is then at most 2S, and its positive denominator (2*33+1)*(S-b) is at least 67*(S-B)>=2S. The ceiling characterization gives tail<=1, including a zero numerator.
+
+loop_success is induction on the actual loop's fuel, generalized over its current State. Its invariant is k<33, ph<=C(Z,8^k), and 33<=k+fuel. The stop branch returns the exact pair (new.lo,new.hi+tail); it never replaces an earlier result by the step-33 pair. In the failed-test branch, the new state has k<=33. Equality k=33 contradicts the proved tail bound, so k<33 and the remaining-fuel induction applies. Starting at k=0 proves bounds succeeds for EVERY fuel>=33 on zd>0, 3zn<=zd. The zero-input branch returns some(0,0) immediately, even with zero fuel. Fuel 100 therefore cannot reach none on that integer domain.
+
+The width proof is independently integral and covers zd>0, 3zn<=zd, including the closed endpoint and the immediate zero branch. floor_mul_bounds supplies q*d<=n<(q+1)*d; floor_ceil_gap proves zlo<=zhi<=zlo+1 before any subtraction. Multiplying 3zn<=zd and the floor inequality gives 3zlo<=S. Thus zhi^2<=zlo^2+2zlo+1<zlo^2+S. Combining this with zlo^2<(a+1)S and the ceiling characterization proves a<=b<=a+2. The prior uniform coefficient bound also gives 8b<=S. These are derived for the actual square coefficients, not assumed parameters.
+
+WidthInvariant belongs to the actual State: 3pl<=S, pl<=ph<=pl+3, the sharper ph<=pl+1 when old k=0, lo<=hi, and hi<=lo+3k. The lower update is at most pl because a<=b<=S, so 3pl<=S propagates without appealing to a logarithm or a field cast. The exact product inequality ph*b<=pl*a+3b+2pl, the floor lower estimate and the strict ceiling upper estimate give 24*(next.ph*S)<24*(next.pl*S)+73S. This is the natural-number form of next gap<3/8+2/3+2=73/24<4. If next.ph>=next.pl+4, multiplying by positive S contradicts it, hence next.ph<=next.pl+3. Ordering follows separately from monotonic products and floor<=ceil.
+
+The OLD-state sum increment is ceil(2ph/(2k+1))-floor(2pl/(2k+1)). At old k=0, denominator 1 is exact and the initial power gap<=1 gives increment gap<=2, hence <=3. At k>0 the denominator is at least 3 and ph<=pl+3; 2ph<=2pl+6 and the strict floor estimate imply ceil(2ph/odd)<=floor(2pl/odd)+3. Both directed sum order and hi<=lo+3k therefore propagate. No absolute or Nat difference is silently treated as a signed difference.
+
+next_index_lt_33 is factored from the predecessor totality argument and consumed by both loop_success and loop_width. The latter follows the actual early-stop branches and returns a witness j for the first stopping index, with old k<j<=33. The true branch immediately uses the exact returned pair, sumGap at NEW k=j, and actual tail<=1. The false branch cannot reach j=33 and recurses. Thus the returned upper is at most lower+3*33+1=lower+100, before forming any Nat subtraction. totalBounds_width consumes actual success and this first-stop proof at fuel 100; it does not infer width from the mere existence of a fuel-100 result.
+
+The actual pair identities transport width through LOG2=atanh(1/7)+atanh(1/5), yielding totalLogTwo width<=200. Range reduction gives the actual totalLogBounds width<=200*k+100, with ordering proved before subtraction. If n<=10000000*d and the actual range witness holds, k>=24 would imply n>=d*2^24>10000000*d, so k<=23 and width<=4700. totalLayerBounds is definitionally totalBounds(1,2B+1) and has width<=100 for B>=2. Combining its actual enclosure and width gives 0<=upper-log(1+1/B)<=100/S.
+
+The original bounds_sound, log_bounds_sound and layer_bounds_sound successful-Option statements are preserved. Analytic correctness remains STRICT: 3zn<zd, equivalently z<1/3. The public RobinRationalBasis.log_expansion_remainder_bound is consumed at y=(1+z)/(1-z) with derived 1<=y<2 and atanhParameter(y)=z. The directed power and sum invariant transports its sharp remainder to ceilDiv(2phS,(2k+1)*(S-b)). There is no generic endpoint enclosure claim at z=1/3, since that gives y=2, outside this public supplier.
+
+bounds_total_correct combines the same loop's uniform success with the preserved soundness theorem for every fuel>=33 in the strict analytic domain. totalBounds is the natural getD accessor of bounds at fuel 100; totalBounds_correct proves both its exact Option identity and its enclosure. Thus its default (0,0) is unreachable on that domain. It contains no assumed enclosure. The stronger integer coefficient bound is also consumed in the analytic coefficient invariant, replacing a redundant coarse real estimate.
+
+totalLogTwo accesses logTwo(100), whose actual two inputs are z=1/7 and z=1/5. totalLogTwo_correct consumes totalBounds_correct to prove success; preserved logTwo soundness uses 2=(4/3)*(3/2), with no decimal approximation. totalLogBounds(n,d,k) accesses logBounds(n,d,k,100). Its theorem consumes totalLogTwo_correct and totalBounds_correct for (n-d*2^k)/(n+d*2^k); d>0 and d*2^k<=n<d*2^(k+1) imply the strict atanh domain, including k=0 and zero reduced numerator. Range reduction proves log(n/d)=k*log(2)+log((1+z)/(1-z)). Integer range witnesses replace the Python exponent selector; equivalence to its bit_length implementation is not asserted.
+
+totalLayerBounds(B) accesses layerBounds(B,100). For B>=2 its total correctness consumes totalBounds_correct at (1,2B+1), then the preserved layer soundness identifies the transformed argument with 1+1/B. In the finite owner, B is the natural sum p+...+p^a. Prime p and a>=1 prove B>=2; its real cast is the existing fpLayerDenom. The exact generator scale and all recorded integer data are retained.
+
+The finite owner splice now derives its logarithm primitives from totalLogBounds_correct and totalLayerBounds_correct. FPLogEvaluation records pair=totalLogBounds(n,d,k), exact rational input identity, range and positive lower integer; it has no successful-run or log-enclosure field. Layer records similarly identify their stored pair with totalLayerBounds. Those identities feed the existing fp_finite_consumer through the existing private proof path. The private directed consumer now also returns the actual layer-list sum error: for every list of length N of recorded prime layers, including repeated entries, 0<=sum(du)-sum(log(1+1/B))<=100*N/S. Its singleton case supplies the same hd input to the pressure proof; its general conclusion exports the accumulated budget. This does not establish completeness or any missing concrete input. The retained first/last/prime2/X sample pairs and layer samples are exact data identities checked by ordinary kernel decide scripts when this owner is compiled. The full FPLogInputs instance and all forward prime inclusion, enumeration, cutoff, coverage, prefix, square and margin instances remain absent. No 665k-row packet is regenerated or expanded. Native scoped kernel and Scribe evidence does not itself establish SOURCE, Reg, CI or freeze acceptance. PR20756 retains first delivery priority; this continuation is WIP without an independent PR.
+
+## References
+
+- Truth anchor: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.bounds_sound`
+- Truth anchor: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.bounds_total_correct`
+- Truth anchor: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.encloses_iff_rat`
+- Truth anchor: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.layer_bounds_sound`
+- Truth anchor: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.log_bounds_sound`
+- Truth anchor: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalBounds_correct`
+- Truth anchor: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalBounds_width`
+- Truth anchor: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalLayerBounds_correct`
+- Truth anchor: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalLayerBounds_error`
+- Truth anchor: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalLayerBounds_width`
+- Truth anchor: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalLogBounds_correct`
+- Truth anchor: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalLogBounds_width`
+- Truth anchor: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalLogBounds_width_finite`
+- Truth anchor: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalLogTwo_correct`
+- Truth anchor: `D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.totalLogTwo_width`
+- Dependency: [D5/S3/Arith/GoldenResource/RobinRationalBasis](RobinRationalBasis.md)
