@@ -267,6 +267,12 @@ jobs:
           ref: ${{ github.sha }}
           fetch-depth: 2
           persist-credentials: false
+      - name: Fetch fixed search-reduction fixture baselines
+        run: |
+          git fetch --no-tags --depth=1 origin \
+            b530df86e6e9c4709edecd3009bb96c3d4ebc8be \
+            a5e5b163319079eeb1b4b431395c65e43beb4b07 \
+            b02b98342945a1a724a227db4fa38e376640e573
       - name: Verify the candidate and list the changed paths
         env:
           CI_HIT_PATHS: '*'
@@ -501,6 +507,12 @@ jobs:
           ref: ${{ github.sha }}
           fetch-depth: 2
           persist-credentials: false
+      - name: Fetch fixed search-reduction fixture baselines
+        run: |
+          git fetch --no-tags --depth=1 origin \
+            b530df86e6e9c4709edecd3009bb96c3d4ebc8be \
+            a5e5b163319079eeb1b4b431395c65e43beb4b07 \
+            b02b98342945a1a724a227db4fa38e376640e573
       - name: Validate the protected push and strip checkout remote
         env:
           CI_HIT_PATHS: '*'
