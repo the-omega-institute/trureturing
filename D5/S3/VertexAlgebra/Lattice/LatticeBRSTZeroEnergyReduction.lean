@@ -1,5 +1,12 @@
-/-
-SOURCE-ONLY current-operator port; no native elaboration or kernel acceptance.
+/- GID: D5/S3/VertexAlgebra/Lattice/LatticeBRSTZeroEnergyReduction
+   generality: I
+   mirror-B: D5/B/S3/VertexAlgebra/Lattice/LatticeBRSTZeroEnergyReduction
+   mirror-E: none(waiver:algebraic-original-brst-zero-energy-reduction)
+   anchors: []
+   utility: none
+   digest: The critical lattice BRST quotient admits zero-energy representatives and a square-zero descended antighost. -/
+
+/- Current-operator port on the actual lattice matter-ghost carrier.
 
 The full-basis energyWeight/P0/EInv/h mechanism is adapted from the completed
 OriginalBrstReassembly source in LatticeBcGhostCohomologyReassemblySupport
@@ -20,10 +27,8 @@ c1 has energy -1, c0 has energy 0, and the vacuum intercept is zero. There is no
 charge restriction or positivity assumption. Rank 26 and BOTH Gram inverses are
 used to obtain actual Q²=0, hence its commutation with the actual total L0.
 
-The sole live endpoint is Delta on the EXISTING full Cohomology. Its imported
-CohomologyField API is the fixed, completed but UNCOMPILED source draft with
-SHA256 048d060860b115eebc685b77e6d9b4a1426e054bcf800954c7301c4151939ed1.
-Native acceptance of that exact API and of this consumer remains pending.
+The sole live endpoint is Delta on the EXISTING full Cohomology, using the
+imported LatticeBRSTCohomologyField API on the actual tensor-state carrier.
 Square-zero here does not establish a product law, second-order law or full BV.
 No multiplicativity of P0 or preservation of arbitrary cycles by raw B0 is used.
 -/
