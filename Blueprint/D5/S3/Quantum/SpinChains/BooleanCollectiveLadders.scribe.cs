@@ -7,33 +7,39 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.SpinChains;
 internal sealed class BooleanCollectiveLaddersDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.";
+    private static readonly LibraryNoteRef Srinivasan =
+        LibraryNoteRef.Create("D5/L/LieTheory/srinivasan2010symmetricchains");
+    private static readonly LibraryNoteRef Feinsilver =
+        LibraryNoteRef.Create("D5/L/LieTheory/feinsilver2011booleanlattice");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Complete complex Boolean decomposition into every native spin block, with derived primitive multiplicities and normalized strings.",
         H("Complete complex Boolean spin decomposition"),
         Blocks(
             Paragraph(Text("The carrier is V(N) = EuclideanSpace(ℂ, Fin(N) → Fin(2)), with its complex Hermitian inner product. Every configuration is retained. A zero bit denotes membership. These are the single-block algebra and spanning prerequisites in TOKEN_GRAPH_BLOWUP_DEFECT_DECOMPOSITION, Theorem 6.2, equations (6.6)–(6.8). The classical Boolean representation is cited there to Srinivasan, arXiv:1001.0280v2, and Feinsilver, arXiv:1102.0368v2; no claim of mathematical novelty is made.")),
-            Node("occupancy", "Occupancy", Occupancy(), DescribeRole.Definition),
-            Node("U", "The native collective raising map", Native(true), DescribeRole.Definition),
-            Node("L", "The native collective lowering map", Native(false), DescribeRole.Definition),
-            Node("number", "The number operator", Number(), DescribeRole.Definition),
-            Node("Z", "Centered occupancy", Centered(), DescribeRole.Definition),
-            Node("rankSpace", "Homogeneous rank space", Rank(), DescribeRole.Definition),
-            Node("primitive", "Every primitive vector", Primitive(), DescribeRole.Definition),
-            Node("finitePrimitiveStrings", "The finite strings", Strings(), DescribeRole.Definition),
-            Node("result", "Span and exact primitive-string identities", Result(), DescribeRole.Theorem),
-            Node("previousChoose", "Previous binomial coefficient", Previous(), DescribeRole.Definition),
-            Node("primitive_multiplicity", "Every primitive multiplicity", Multiplicity(), DescribeRole.Theorem),
-            Node("primitiveBasis", "Primitive orthonormal bases", PrimitiveBasis(), DescribeRole.Definition),
-            Node("normalizedString", "Normalized full strings", Normalized(), DescribeRole.Definition),
-            Node("stringBasis", "Complete string basis", BasisValue(false), DescribeRole.Definition),
-            Node("stringUnitary", "String coordinate unitary", Coordinates(false), DescribeRole.Definition),
-            Node("nativeBasis", "Reversed native spin basis", BasisValue(true), DescribeRole.Definition),
-            Node("nativeUnitary", "Full native spin unitary", Coordinates(true), DescribeRole.Definition),
-            Node("nativeMatrix", "All native matrix blocks", NativeBlocks(), DescribeRole.Definition),
-            Node("nativeU", "Native raising on all blocks", NativeOperator("U"), DescribeRole.Definition),
-            Node("nativeL", "Native lowering on all blocks", NativeOperator("L"), DescribeRole.Definition),
-            Node("nativeZ", "Native weights on all blocks", NativeOperator("Z"), DescribeRole.Definition),
-            Node("native_decomposition", "Multiplicity, complete basis and native intertwiners", FullResult(), DescribeRole.Theorem),
+            Paragraph(Text("The classical statements are literature-attested. Feinsilver, §3, Eq. (8), §3.1, Eq. (10), and §§4.2–4.2.2 give the primitive-string action, cutoff, norms, spanning and orthogonality; Proposition 4.3 on p. 15 gives the primitive multiplicity. Set the paper's site count n=2S, vacuum level ℓ=t and principal number N=2S−2t; its T and T* are U and L, and its diagonal operator is −2Z. Srinivasan, Theorem 1.2 on p. 3, Eqs. (3)–(5) on pp. 4–5, and §2 on p. 8 give the orthogonal chains, their normalized coefficients, multiplicities and unitary coordinates. The papers formulate the Boolean carrier for positive site counts; the empty-site case here is the direct one-dimensional extension with zero collective operators.")),
+            Paragraph(Text("Repository-derived nodes describe the bit-zero encoding, conversion of the original collective matrices to Lean linear maps, the natural-number predecessor convention, the choice of mathlib's primitive orthonormal basis, and the reversal into the repository's Jplus/Jz coordinates. They acknowledge the classical sources and assert no new Boolean representation theorem.")),
+            Node("occupancy", "Occupancy", Occupancy(), DescribeRole.Definition, AssessedProvenance.FromRepo(Feinsilver)),
+            Node("U", "The native collective raising map", Native(true), DescribeRole.Definition, AssessedProvenance.FromRepo(Feinsilver)),
+            Node("L", "The native collective lowering map", Native(false), DescribeRole.Definition, AssessedProvenance.FromRepo(Feinsilver)),
+            Node("number", "The number operator", Number(), DescribeRole.Definition, AssessedProvenance.FromRepo(Feinsilver)),
+            Node("Z", "Centered occupancy", Centered(), DescribeRole.Definition, AssessedProvenance.FromRepo(Feinsilver)),
+            Node("rankSpace", "Homogeneous rank space", Rank(), DescribeRole.Definition, AssessedProvenance.FromLiterature(Feinsilver)),
+            Node("primitive", "Every primitive vector", Primitive(), DescribeRole.Definition, AssessedProvenance.FromLiterature(Feinsilver)),
+            Node("finitePrimitiveStrings", "The finite strings", Strings(), DescribeRole.Definition, AssessedProvenance.FromLiterature(Feinsilver)),
+            Node("result", "Span and exact primitive-string identities", Result(), DescribeRole.Theorem, AssessedProvenance.FromLiterature(Feinsilver)),
+            Node("previousChoose", "Previous binomial coefficient", Previous(), DescribeRole.Definition, AssessedProvenance.FromRepo(Feinsilver)),
+            Node("primitive_multiplicity", "Every primitive multiplicity", Multiplicity(), DescribeRole.Theorem, AssessedProvenance.FromLiterature(Feinsilver)),
+            Node("primitiveBasis", "Primitive orthonormal bases", PrimitiveBasis(), DescribeRole.Definition, AssessedProvenance.FromRepo(Srinivasan, Feinsilver)),
+            Node("normalizedString", "Normalized full strings", Normalized(), DescribeRole.Definition, AssessedProvenance.FromLiterature(Srinivasan)),
+            Node("stringBasis", "Complete string basis", BasisValue(false), DescribeRole.Definition, AssessedProvenance.FromLiterature(Srinivasan)),
+            Node("stringUnitary", "String coordinate unitary", Coordinates(false), DescribeRole.Definition, AssessedProvenance.FromLiterature(Srinivasan)),
+            Node("nativeBasis", "Reversed native spin basis", BasisValue(true), DescribeRole.Definition, AssessedProvenance.FromRepo(Srinivasan, Feinsilver)),
+            Node("nativeUnitary", "Full native spin unitary", Coordinates(true), DescribeRole.Definition, AssessedProvenance.FromRepo(Srinivasan, Feinsilver)),
+            Node("nativeMatrix", "All native matrix blocks", NativeBlocks(), DescribeRole.Definition, AssessedProvenance.FromRepo(Srinivasan, Feinsilver)),
+            Node("nativeU", "Native raising on all blocks", NativeOperator("U"), DescribeRole.Definition, AssessedProvenance.FromRepo(Srinivasan, Feinsilver)),
+            Node("nativeL", "Native lowering on all blocks", NativeOperator("L"), DescribeRole.Definition, AssessedProvenance.FromRepo(Srinivasan, Feinsilver)),
+            Node("nativeZ", "Native weights on all blocks", NativeOperator("Z"), DescribeRole.Definition, AssessedProvenance.FromRepo(Srinivasan, Feinsilver)),
+            Node("native_decomposition", "Multiplicity, complete basis and native intertwiners", FullResult(), DescribeRole.Theorem, AssessedProvenance.FromRepo(Srinivasan, Feinsilver)),
             Paragraph(Text("The raising and lowering maps are Matrix.toEuclideanLin of the existing PronkoFredkinAntiAdjointExpansion.totalPlus and totalMinus, using the existing sigmaPlus, sigmaMinus and site operators. Their tensor multiplication is reused from StabilizerPairLocalUnitaryInequivalence.tensor_mul. The proof derives the concrete commutator and complex adjoint relation. At each rank, orthogonal decomposition into the image of the preceding rank and its complement constructs primitive generators; induction proves full span. Thus neither a complete basis nor a homogeneous complement is an assumption. The pinned mathlib sl₂ primitive-vector theorems supply the recurrence and terminal zero for positive site counts; the empty-site carrier is handled directly by the zero collective maps. All natural S, including S=0, and primitive strings of spin zero are included.")),
             Paragraph(Text("In the formulas, powers act by composition, ⟪v,w⟫ is complex Hermitian inner product, and scalars act on the left. Subtraction in the natural quantities d = 2S−2t and S−t is truncated; the lowering coefficient and weight are interpreted in ℂ after casting their natural operands. The notation scalar·vector denotes complex scalar multiplication. descFactorial(d,q) is the natural descending product ∏_{a=0}^{q−1}(d−a), equal to d!/(d−q)! when q≤d. The zero-power and zero-deficit cases are included. The result permits any primitive vector, without a reality restriction or a restriction to the permutation-invariant sector.")),
             Paragraph(Text("For each rank t≤S, the dimension is derived as choose(2S,t)−previousChoose(2S,t), where previousChoose(N,0)=0 and previousChoose(N,t+1)=choose(N,t). Fixed-occupancy configurations are identified with t-element subsets, and the actual rank space is identified with the complex function space on these subsets. The commutator and adjoint identity prove injectivity of U below the middle rank. Orthogonal splitting of rank t+1 into U(rank t) and its primitive subspace then gives the dimension formula; no rank multiplicity is assumed.")),
@@ -41,10 +47,11 @@ internal sealed class BooleanCollectiveLaddersDocument : IScribeDocumentDefiniti
             Paragraph(Text("CopyIndex(S) is the dependent pair (t,a), and NativeIndex(S) is ((t,a),r), with r in Fin(d+1). EuclideanSpace(ℂ,NativeIndex(S)) is the finite Hilbert direct sum, over all primitive copies, of native spin-(S−t) spaces. The native basis vector at ((t,a),r) is the normalized string at (t,(a,Fin.rev(r))). Thus r=d−k=2j−k, including d=0. The coordinate unitary is constructed from this complete basis. nativeMatrix is the dependent block diagonal of the supplied native matrices; nativeU uses PrecessionSpinOneSeparableBound.Jplus, nativeL its conjugate transpose, and nativeZ its Jz. The raising matrix entry is sqrt(r·(d+1−r)) at row r−1, column r; the lowering entry is sqrt((r+1)·(d−r)) at row r+1, column r. Entries outside the range vanish, and Jz has weight d/2−r. Equivalently on ascending normalized strings, U has coefficient sqrt((k+1)·(d−k)), L has coefficient sqrt(k·(d−k+1)), and Z has weight −(S−t)+k. Both endpoints, all multiplicities and spin zero are included.")),
             Paragraph(Text("The native U/L/Z intertwiners are proved through the constructed basis and its full-span proof. They hold for every vector on the entire complex Boolean carrier and use no supplied basis, unitary, completeness, homogeneous complement, or multiplicity hypothesis. These are the single-site decomposition clauses of Theorem 6.2 only. Graph tensors, half-filling restrictions, projectors, token adjacency, energy gaps, and downstream section 32.2 remain separate. The public escape registration is unfinished under issue https://github.com/the-omega-institute/trureturing/issues/26983; this document claims neither registration validation nor atom closure."))), []));
 
-    private static DocumentBlock Node(string name, string title, Formula formula, DescribeRole role) =>
+    private static DocumentBlock Node(string name, string title, Formula formula, DescribeRole role,
+        AssessedProvenance provenance) =>
         Describe.Lean(DescribeId.Create("boolean-collective-" + name.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(name switch {
+            provenance, Blocks(Paragraph(Text(name switch {
                 "occupancy" => "Every zero bit contributes one occupied coordinate.",
                 "U" => "This is the existing unweighted totalPlus matrix acting on Euclidean coordinates.",
                 "L" => "This is the existing unweighted totalMinus matrix, the Hermitian adjoint of U.",
