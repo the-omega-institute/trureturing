@@ -19,7 +19,7 @@ import Batteries.Tactic.OpenPrivate
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency true
 set_option maxRecDepth 4096
 
 noncomputable section
@@ -145,7 +145,10 @@ def physicalCycles (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (beta : Charge D) (level : ℤ) : Submodule ℂ (fixedSector H beta level) where
   carrier := {x | totalCharge D H x.val = 0 ∧ ghostB D 0 x.val = 0 ∧
     N D x.val = x.val}
-  zero_mem' := by simp only [Submodule.coe_zero, map_zero, and_self]
+  zero_mem' := by
+    change totalCharge D H (0 : State D) = 0 ∧ ghostB D 0 (0 : State D) = 0 ∧
+      N D (0 : State D) = 0
+    exact ⟨map_zero _, map_zero _, map_zero _⟩
   add_mem' := by
     rintro x y ⟨qx, bx, nx⟩ ⟨qy, by0, ny⟩
     exact ⟨by simpa only [Submodule.coe_add, map_add, qx, qy, add_zero],
@@ -213,7 +216,10 @@ theorem mem_physicalBoundaries
 abbrev PhysicalQuotient (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (beta : Charge D) (level : ℤ) (critical : D.rank = 26)
     (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1) :=
-  physicalCycles H beta level ⧸ physicalBoundaries H beta level critical hHG hGH
+  @HasQuotient.Quotient (physicalCycles H beta level)
+    (Submodule ℂ (physicalCycles H beta level))
+    (Submodule.hasQuotient (R := ℂ) (M := physicalCycles H beta level))
+    (physicalBoundaries H beta level critical hHG hGH)
 
 /-- The actual physical subquotient maps into the original global quotient. -/
 def quotientToGlobal (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
@@ -222,6 +228,7 @@ def quotientToGlobal (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     PhysicalQuotient H beta level critical hHG hGH →ₗ[ℂ]
       LatticeBRSTCohomologyField.Cohomology D H critical hHG hGH :=
   (physicalBoundaries H beta level critical hHG hGH).liftQ
+    (R := ℂ) (M := physicalCycles H beta level)
     (physicalClass H beta level critical hHG hGH) (by
       intro x hx
       apply LinearMap.mem_ker.mpr
