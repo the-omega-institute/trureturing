@@ -584,7 +584,7 @@ abbrev S := QuadraticAlgebra O (-1) (-tau)
 def eta : S := QuadraticAlgebra.omega
 def inc : O →+* S := algebraMap O S
 
-private theorem t_sq : t ^ 2 = 1 - t := by
+theorem t_sq : t ^ 2 = 1 - t := by
   have ht : (phi⁻¹ : ℝ) ^ 2 = 1 - phi⁻¹ := by
     change Real.goldenRatio⁻¹ ^ 2 = 1 - Real.goldenRatio⁻¹
     rw [Real.inv_goldenRatio]
@@ -611,7 +611,7 @@ private theorem zeta_sum : zeta + star zeta = -t := by
   · simpa [t, hz, two_mul] using hcos
   · simp [t]
 
-private theorem zeta_norm : zeta * star zeta = 1 := by
+theorem zeta_norm : zeta * star zeta = 1 := by
   change zeta * (starRingEnd ℂ) zeta = 1
   rw [Complex.mul_conj, Complex.normSq_eq_norm_sq]
   simp [zeta, Complex.norm_exp]
@@ -671,7 +671,7 @@ def parity (b : Basis) : ZMod 2 :=
 def exponent (b : Basis) : ℕ := if parity b = 0 then 0 else 1
 
 private theorem parity_root : parity rootWord = 0 := by simp [parity]
-private theorem flip_flip (i : Fin 16) (b : Basis) : flip i (flip i b) = b := by
+theorem flip_flip (i : Fin 16) (b : Basis) : flip i (flip i b) = b := by
   funext k
   by_cases hk : k = i
   · subst k; simp [flip]
@@ -749,7 +749,7 @@ def step (j : Address) (h : Basis → S) (z : Basis) : S :=
 def amplitude (h : Basis → S) (z : Basis) : ℂ :=
   beta ^ exponent z * physical (h z)
 
-private theorem p_action (j : Address) (w : Basis → ℂ) (z : Basis) :
+theorem p_action (j : Address) (w : Basis → ℂ) (z : Basis) :
     (goldenP j).mulVec w z = evalO t t_sq (diagonal j z) * w z +
       (if active j z then beta^3 * w (flip (center j) z) else 0) := by
   simp only [goldenP, Matrix.add_mulVec, ← Matrix.mulVec_mulVec, Pi.add_apply]
@@ -1008,7 +1008,7 @@ private theorem cauchy_two (a b x y : ℂ) :
   nlinarith [norm_nonneg (a*x+b*y), norm_nonneg a, norm_nonneg b,
     norm_nonneg x, norm_nonneg y]
 
-private theorem flip_sum (i : Fin 16) (f : Basis → ℝ) :
+theorem flip_sum (i : Fin 16) (f : Basis → ℝ) :
     ∑ z, f (flip i z) = ∑ z, f z := by
   let e : Basis ≃ Basis := ⟨flip i, flip i, flip_flip i, flip_flip i⟩
   exact e.sum_comp f
@@ -1018,7 +1018,7 @@ private theorem phi_cubic : phi^3 = phi + phi^2 := by
   have h : phi^2 = phi+1 := Real.goldenRatio_sq
   nlinarith
 
-private theorem active_flip (j : Address) (z : Basis) :
+theorem active_flip (j : Address) (z : Basis) :
     active j (flip (center j) z) = active j z := by
   have hl : left j ≠ center j := by
     intro h; have hh := congrArg Fin.val h; simp [left, center] at hh
@@ -1775,19 +1775,19 @@ private theorem c_value : c = -t*zeta^3 := by
         a_value, Coeff.zeta_sq]
     _ = -t*(t-t*zeta) := by linear_combination (1-zeta)*Coeff.t_sq
 
-private theorem star_t : star t = t := by simp [t]
-private theorem star_beta : star beta = beta := by simp [beta]
+theorem star_t : star t = t := by simp [t]
+theorem star_beta : star beta = beta := by simp [beta]
 private theorem phase_norm (n : ℕ) : zeta^n * star (zeta^n) = 1 := by
   rw [star_pow, ← mul_pow, Coeff.zeta_norm, one_pow]
 
-private theorem a_norm : a * star a = t^2 := by
+theorem a_norm : a * star a = t^2 := by
   rw [a_value, star_neg, star_t]; ring
-private theorem b_norm : b * star b = t := by
+theorem b_norm : b * star b = t := by
   rw [b_value, star_mul, star_neg, star_beta]
   calc
     _ = beta^2 * (zeta^4*star (zeta^4)) := by ring
     _ = t := by rw [phase_norm, Coeff.beta_sq, mul_one]
-private theorem c_norm : c * star c = t^2 := by
+theorem c_norm : c * star c = t^2 := by
   rw [c_value, star_mul, star_neg, star_t]
   calc
     _ = t^2*(zeta^3*star (zeta^3)) := by ring
