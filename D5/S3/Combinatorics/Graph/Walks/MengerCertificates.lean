@@ -93,7 +93,7 @@ private lemma path_R {H : SimpleGraph V} {A X Y : Finset V} (hYX : Y ⊆ X) {a v
 
 /-- `k` pairwise disjoint `A`–`B` paths, each meeting `A` only at its start and `B` only at its
 end. -/
-private def Fam (G : SimpleGraph V) (A B : Finset V) (k : ℕ) : Prop :=
+def Fam (G : SimpleGraph V) (A B : Finset V) (k : ℕ) : Prop :=
   ∃ P : Fin k → Σ a b : V, G.Walk a b,
     (∀ i, (P i).1 ∈ A ∧ (P i).2.1 ∈ B ∧ (P i).2.2.IsPath ∧
       (∀ w ∈ (P i).2.2.support, w ∈ A → w = (P i).1) ∧
@@ -400,7 +400,7 @@ private lemma fam_step {G : SimpleGraph V} {e : Sym2 V} {x y : V} (hxy : G.Adj x
 
 /-- Core of Menger's theorem: if every `A`–`B` separator has at least `k` vertices, there are
 `k` disjoint `A`–`B` paths. -/
-private theorem fam_of_le [Finite V] (n : ℕ) : ∀ (G : SimpleGraph V), G.edgeSet.ncard = n →
+theorem fam_of_le [Finite V] (n : ℕ) : ∀ (G : SimpleGraph V), G.edgeSet.ncard = n →
     ∀ (A B : Finset V) (k : ℕ), (∀ X, Separates G A B X → k ≤ X.card) → Fam G A B k := by
   classical
   induction n using Nat.strong_induction_on with
