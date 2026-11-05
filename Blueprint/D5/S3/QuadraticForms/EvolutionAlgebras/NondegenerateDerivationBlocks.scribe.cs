@@ -30,28 +30,6 @@ internal sealed class NondegenerateDerivationBlocksDocument : IScribeDocumentDef
                 StatementSource.FromAuthor(Disp(FullReducedFormula())), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Over an algebraically closed field of characteristic zero, every finite natural basis with nonzero squares admits a normalization and an actual surjective Lie map from all actual derivations to the product of the reduced block skew algebras. The kernel is solvable. The map subtracts each class scalar diagonal before applying the canonical setwise-preserver quotient action. Pointwise-stabilizer lifts prove surjectivity. The common diagonal and reduced kernel embeds into a product of canonical kernels with zero triple brackets, and the remaining diagonal quotient is abelian. Every small, empty, isotropic and degenerate block is retained here; no semisimplicity hypothesis on derivations is imposed. The original semisimple full block decomposition remains a separate theorem with its original hypotheses. This is part of the supplied Ma-then-Zhang credited argument; the linear and Lie constructions retain classical credit."))), DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("mul-basis-right"),
-                DeclarationHandle.Create(Prefix + "mul_basis_right"),
-                H("Multiplication by a natural basis vector on the right"),
-                StatementSource.FromAuthor(Disp(NaturalProductContext(All(X("x"),X("V"),All(X("j"),Iota,
-                    Eq(Apply(Mu,X("x"),Apply(X("b"),X("j"))),
-                        Smul(Apply(Seq(X("b"),Dot,Name("repr")),X("x"),X("j")),
-                            Apply(Mu,Apply(X("b"),X("j")),Apply(X("b"),X("j")))))))))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For a field k, a k-vector space V, a bilinear product mu and a finite natural basis b indexed by I, mu(x,b(j)) is the j-th coordinate of x times mu(b(j),b(j)). Expanding x in b eliminates every mixed product. The derivation equations and ideal arguments use this formula."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("mul-basis-left"),
-                DeclarationHandle.Create(Prefix + "mul_basis_left"),
-                H("Multiplication by a natural basis vector on the left"),
-                StatementSource.FromAuthor(Disp(NaturalProductContext(All(X("x"),X("V"),All(X("i"),Iota,
-                    Eq(Apply(Mu,Apply(X("b"),X("i")),X("x")),
-                        Smul(Apply(Seq(X("b"),Dot,Name("repr")),X("x"),X("i")),
-                            Apply(Mu,Apply(X("b"),X("i")),Apply(X("b"),X("i")))))))))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Under the same field, vector-space, bilinear-product, finite-index and natural-basis hypotheses, mu(b(i),x) is the i-th coordinate of x times mu(b(i),b(i)). This uses zero mixed products without assuming associativity or a unit."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("pi-piliering"),
                 DeclarationHandle.Create(Prefix + "piLieRing"),
                 H("piLieRing"),
@@ -196,9 +174,6 @@ internal sealed class NondegenerateDerivationBlocksDocument : IScribeDocumentDef
     }
     private static Formula AlgebraContext(Formula body) =>All(X("k"), Type, Instance(Call("Field", X("k")), All(X("V"), Type, Instance(Call("AddCommGroup", X("V")), Instance(Call("Module", X("k"), X("V")), body)))));
     private static Formula ProductContext(Formula body) =>AlgebraContext(All(Mu, Product, body));
-    private static Formula NaturalProductContext(Formula body) =>ProductContext(All(Iota,Type,
-        All(X("b"),Basis(Iota,X("V")),Hyp(Natural(X("b"),Iota),Instance(Call("Fintype",Iota),body)))));
-    private static Formula Smul(Formula a,Formula b) =>Seq(a,Sp,Cdot,Sp,b);
     private static Formula Basis(Formula index, Formula v) =>Apply(Qualified("Module", "Basis"), index, X("k"), v);
     private static Formula Natural(Formula b, Formula index) =>All(X("i"), index, All(X("j"), index, Imp(Ne(X("i"), X("j")), Eq(Apply(Mu, Apply(b, X("i")), Apply(b, X("j"))), D(0)))));
     private static Formula MatrixForm(Formula n) =>Apply(Seq(Name("Matrix"), Dot, new Formula.Subscript(Name("toLinearMap"), D(2)), Apos), X("k"), Seq(D(1), Sp, Colon, Sp, Call("Matrix", n, n, X("k"))));

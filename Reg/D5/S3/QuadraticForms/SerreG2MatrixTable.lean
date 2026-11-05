@@ -86,7 +86,7 @@ noncomputable def registration :
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (Fin 14)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.QuadraticForms.SerreG2MatrixTable
     definition := none
