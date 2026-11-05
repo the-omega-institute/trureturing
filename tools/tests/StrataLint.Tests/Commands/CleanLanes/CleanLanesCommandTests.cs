@@ -232,10 +232,10 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Theory]
-    [InlineData(299, 86400, true)]
-    [InlineData(300, 86399, false)]
-    [InlineData(300, 86400, true)]
-    [InlineData(0, 86401, true)]
+    [InlineData(299, 21600, true)]
+    [InlineData(300, 21599, false)]
+    [InlineData(300, 21600, true)]
+    [InlineData(0, 21601, true)]
     [InlineData(300, -1, false)]
     public void CommitAgeBoundaryDoesNotDependOnBehindCount(int behind, int seconds, bool removable)
     {
@@ -430,7 +430,7 @@ public sealed partial class CleanLanesCommandTests
         var child = fixture.AddNestedWorktree(parent);
         CleanLanesFixture.Git(child, "commit", "--allow-empty", "-m", "nested work");
         if (childEligible) fixture.AdvanceBase(300);
-        else CleanLanesFixture.GitAt(child, new DateTimeOffset(2030, 1, 1, 12, 0, 0, TimeSpan.Zero),
+        else CleanLanesFixture.GitAt(child, new DateTimeOffset(2030, 1, 1, 23, 0, 0, TimeSpan.Zero),
             "commit", "--allow-empty", "-m", "recent child work");
         var preview = fixture.Run("--lanes-only");
         Assert.True(preview.Success, preview.Error);

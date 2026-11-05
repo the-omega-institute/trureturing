@@ -9,10 +9,10 @@ public sealed partial class CleanLanesCommandTests
     [Theory]
     [InlineData(-1, false)]
     [InlineData(10800, false)]
-    [InlineData(86399, false)]
-    [InlineData(86400, true)]
-    [InlineData(86401, true)]
-    public void HeadCommitAgeRequiresAtLeastTwentyFourHours(int seconds, bool reclaim)
+    [InlineData(21599, false)]
+    [InlineData(21600, true)]
+    [InlineData(21601, true)]
+    public void HeadCommitAgeRequiresAtLeastSixHours(int seconds, bool reclaim)
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddWorkedLane("harness/commit-age-boundary", landed: false);
