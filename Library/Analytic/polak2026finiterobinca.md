@@ -23,6 +23,12 @@ residual and event interfaces in §8.2–8.8 on pp.18–28 were inspected.
 This is a primary-source applicability check, not a whole-paper proof audit,
 independent rerun of its certificates, peer-review claim, or Lean verification.
 
+## Verified locator
+
+DOI: 10.5281/zenodo.21808589
+
+Source: https://doi.org/10.5281/zenodo.21808589
+
 ## Finite theorem and residual interface
 
 The preprint claims Robin's strict inequality for every
