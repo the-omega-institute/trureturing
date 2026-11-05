@@ -17,12 +17,15 @@ internal sealed class FccPointGroupShellsDocument : IScribeDocumentDefinition
         Blocks(
             Definition("lattice", "L", "The even-sum lattice", LatticeFormula(),
                 "Coordinates are indexed by Fin 3, namely zero, one and two. The coordinate sum is even. "
+                    + "Here mod denotes integer % (Int.emod), with nonnegative remainder; modulo two "
+                    + "the remainder is zero or one. "
                     + "This is the integer realization of the face centered cubic lattice D3."),
             Definition("contacts", "contactGraph", "The twelve contact steps", ContactFormula(),
                 "An edge changes exactly two distinct coordinates by one in absolute value and fixes the "
                     + "third. Each of the three choices of a coordinate pair has four sign choices. "
                     + "Both endpoints belong to the lattice."),
-            Definition("origin", "origin", "The specified center", All("i", Call("Fin", D(3)), Eq(App(V("origin"), V("i")), D(0))),
+            Definition("origin", "origin", "The specified center", All("i", Call("Fin", D(3)),
+                Eq(App(Call("val", V("origin")), V("i")), D(0))),
                 "The center has all three coordinates zero."),
             Definition("distance", "d", "Shortest-walk distance", All("x", V("L"),
                 Eq(Call("d", V("x")), App(Q("SimpleGraph", "dist"), V("contactGraph"),
@@ -35,6 +38,14 @@ internal sealed class FccPointGroupShellsDocument : IScribeDocumentDefinition
                     + "a coordinate modulo two, and permuting coordinates preserves their sum. "
                     + "The restricted action is literal evaluation of the same signed permutation. "
                     + "All reflections are included."),
+            Definition("lattice-action", "latticeAction", "The restricted signed-permutation action",
+                All("w", V("W"), All("x", V("L"),
+                    Eq(Call("val", Call("smul", V("w"), V("x"))),
+                        App(Call("val", V("w")), Call("val", V("x")))))),
+                "Here smul(w,x) denotes w acting on x, and val is the underlying value of a subtype. "
+                    + "The displayed equation defines the action by evaluating the underlying permutation "
+                    + "on the underlying integer triple. Its value lies in L because signed permutations "
+                    + "preserve the parity of the coordinate sum."),
             Definition("shell", "Shell", "A shell at any natural radius", All("n", Naturals(),
                 Eq(Call("Shell", V("n")), SetOf("x", V("L"), Eq(Call("d", V("x")), V("n"))))),
                 "The radius is any natural number, including zero."),
@@ -93,12 +104,14 @@ internal sealed class FccPointGroupShellsDocument : IScribeDocumentDefinition
     private static Formula ContactFormula()
     {
         var x = V("x"); var y = V("y");
-        Formula Delta(byte i) => Call("abs", Sub(Coord(y, i), Coord(x, i)));
+        Formula X(byte i) => Coord(Call("val", x), i);
+        Formula Y(byte i) => Coord(Call("val", y), i);
+        Formula Delta(byte i) => Call("abs", Sub(Y(i), X(i)));
         return All("x", V("L"), All("y", V("L"), Iff(
             App(Q("SimpleGraph", "Adj"), V("contactGraph"), x, y),
-            Or(And(Eq(Delta(0), D(1)), And(Eq(Delta(1), D(1)), Eq(Coord(y, 2), Coord(x, 2)))),
-               Or(And(Eq(Delta(0), D(1)), And(Eq(Coord(y, 1), Coord(x, 1)), Eq(Delta(2), D(1)))),
-                  And(Eq(Coord(y, 0), Coord(x, 0)), And(Eq(Delta(1), D(1)), Eq(Delta(2), D(1)))))))));
+            Or(And(Eq(Delta(0), D(1)), And(Eq(Delta(1), D(1)), Eq(Y(2), X(2)))),
+               Or(And(Eq(Delta(0), D(1)), And(Eq(Y(1), X(1)), Eq(Delta(2), D(1)))),
+                  And(Eq(Y(0), X(0)), And(Eq(Delta(1), D(1)), Eq(Delta(2), D(1)))))))));
     }
 
     private static Formula GroupFormula()
@@ -130,8 +143,8 @@ internal sealed class FccPointGroupShellsDocument : IScribeDocumentDefinition
         var x = Q("PowerSeries", "X");
         var series = App(Q("PowerSeries", "mk"),
             Seq(LambdaLower, Sp, V("n"), Sp, Mapsto, Sp, Cast(Call("A", V("n")), Integers())));
-        return Eq(Mul(Mul(Mul(Paren(Sub(D(1), x)), Pow(Paren(Sub(D(1), Pow(x, D(2)))), D(2))),
-            Paren(Sub(D(1), Pow(x, D(3))))), series), Sub(D(1), Pow(x, D(5))));
+        return Eq(Mul(Mul(Mul(Parenthesized(Sub(D(1), x)), Pow(Parenthesized(Sub(D(1), Pow(x, D(2)))), D(2))),
+            Parenthesized(Sub(D(1), Pow(x, D(3))))), series), Sub(D(1), Pow(x, D(5))));
     }
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
@@ -140,22 +153,22 @@ internal sealed class FccPointGroupShellsDocument : IScribeDocumentDefinition
     private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
     private static Formula Call(string name, params Formula[] args) => App(Seq(Operatorname, Grp(V(name))), args);
     private static Formula Q(string owner, string name) => Seq(Operatorname, Grp(V(owner), Dot, V(name)));
-    private static Formula Paren(Formula f) => Seq(Open, f, Close);
-    private static Formula Arrow(Formula a, Formula b) => Seq(Paren(a), Sp, To, Sp, b);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula Arrow(Formula a, Formula b) => Seq(Parenthesized(a), Sp, To, Sp, b);
     private static Formula Coord(Formula x, byte i) => App(x, D(i));
-    private static Formula Cast(Formula a, Formula t) => Paren(Seq(a, Colon, Sp, t));
+    private static Formula Cast(Formula a, Formula t) => Parenthesized(Seq(a, Colon, Sp, t));
     private static Formula SetOf(string name, Formula t, Formula body) =>
         Seq(OpenBrace, V(name), Colon, Sp, t, Sp, Mid, Sp, body, CloseBrace);
     private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, F.Eq, Sp, b);
-    private static Formula Iff(Formula a, Formula b) => Seq(Paren(a), Sp, F.Iff, Sp, Paren(b));
+    private static Formula Iff(Formula a, Formula b) => Seq(Parenthesized(a), Sp, F.Iff, Sp, Parenthesized(b));
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
     private static Formula Pow(Formula a, Formula b) => new Formula.Power(a, b);
     private static Formula All(string name, Formula t, Formula body) =>
-        Seq(Forall, Sp, V(name), Colon, Sp, t, Comma, Sp, Paren(body));
+        Seq(Forall, Sp, V(name), Colon, Sp, t, Comma, Sp, Parenthesized(body));
     private static Formula Ex(string name, Formula t, Formula body) =>
-        Seq(Exists, Sp, V(name), Colon, Sp, t, Comma, Sp, Paren(body));
-    private static Formula And(Formula a, Formula b) => Seq(Paren(a), Sp, Land, Sp, Paren(b));
-    private static Formula Or(Formula a, Formula b) => Seq(Paren(a), Sp, Lor, Sp, Paren(b));
+        Seq(Exists, Sp, V(name), Colon, Sp, t, Comma, Sp, Parenthesized(body));
+    private static Formula And(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Land, Sp, Parenthesized(b));
+    private static Formula Or(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Lor, Sp, Parenthesized(b));
 }
