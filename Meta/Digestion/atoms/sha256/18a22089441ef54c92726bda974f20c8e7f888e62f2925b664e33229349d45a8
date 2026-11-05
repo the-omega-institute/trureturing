@@ -1,0 +1,14 @@
+**定义 1.3（端点裸类）。** 令 $X=\mathbb P(\mathcal K)=\mathbb{CP}^{88}$。$\mathscr C_{\rm end}$ 由同一个连续映射 $\Pi:X\to\Delta(E)$ 组成，其向量提升满足
+
+$$
+\begin{gathered}
+\Pi_q(\lambda z)=\Pi_q(z)\quad(\lambda\in\mathbb C\setminus\{0\}),\qquad
+z_q=0\ \Longrightarrow\ \Pi_q(z)=0,\\
+\sum_{q\in B}\Pi_q(K_jz)=\sum_{q\in B}\Pi_q(z)
+\quad(z\ne0,\ j=0,\ldots,10,\ B\in\mathscr B_j).
+\end{gathered}
+\tag{1.3}
+$$
+
+$\Delta(E)$ 指逐坐标非负且总和为一。没有可微性、有限次数、径向性、可分性、未知算子正性、节点外严格正性或内部 $t$ 方程。旧 $\mathscr C_{\rm nat}$ 是在相同域、节点和概率条件上，把 (1.3) 最后一行换成 III (157.3) 的全部 $t\in[0,1]$。
+

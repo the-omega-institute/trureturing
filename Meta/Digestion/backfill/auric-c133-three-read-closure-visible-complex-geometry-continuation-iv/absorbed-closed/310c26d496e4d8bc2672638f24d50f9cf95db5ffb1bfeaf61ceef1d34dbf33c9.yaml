@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:310c26d496e4d8bc2672638f24d50f9cf95db5ffb1bfeaf61ceef1d34dbf33c9
+  normalized_sha256: sha256:310c26d496e4d8bc2672638f24d50f9cf95db5ffb1bfeaf61ceef1d34dbf33c9
+cas_ref: sha256:310c26d496e4d8bc2672638f24d50f9cf95db5ffb1bfeaf61ceef1d34dbf33c9
+coverage_gids:
+  - gid: D5/S3/StatisticalMechanics/RandomWalks/HarmonicSquareDifferences.harmonic_square_iterate
+    target_statement_id: sha256:27658bc53a74ae6c52648275a3e00ff5ca98b4799b260523c1f72ecaabc7ab65
+receipts:
+  unresolved_subitems: []
