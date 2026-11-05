@@ -16,6 +16,7 @@ import Mathlib.Analysis.InnerProductSpace.Trace
 import Mathlib.Algebra.Lie.OfAssociative
 import Mathlib.LinearAlgebra.Dimension.RankNullity
 import Mathlib.Topology.Algebra.Group.Subgroup
+import Mathlib.Topology.Algebra.Field
 
 namespace D5.S3.Quantum.Algebra.OriginalCompactReciprocity
 
@@ -646,6 +647,39 @@ theorem original_rigidity (hG : IsCompact (G : Set (W →L[ℝ] W)ˣ))
   rw [LinearMap.finrank_range_of_inj hinj,hd.2]
   exact skew_dimension_le_three B hd.1 (skewEndomorphisms B) (fun T => T.property)
 
+private theorem determinant_sq_of_preserves {V : Type*} [AddCommGroup V] [Module ℝ V]
+    [FiniteDimensional ℝ V] (B : InnerProductSpace.Core ℝ V) (e : V ≃ₗ[ℝ] V)
+    (he : ∀ u v : V, B.inner (e u) (e v) = B.inner u v) :
+    LinearMap.det e.toLinearMap ^ 2 = 1 := by
+  classical
+  let : NormedAddCommGroup V := B.toNormedAddCommGroup
+  let : InnerProductSpace ℝ V := InnerProductSpace.ofCore B.toCore
+  let f : V ≃ₗᵢ[ℝ] V := e.isometryOfInner he
+  let b := stdOrthonormalBasis ℝ V
+  have hh := (Matrix.det_of_mem_unitary (f.toMatrix_mem_unitaryGroup b b)).2
+  change star (Matrix.det (LinearMap.toMatrix b.toBasis b.toBasis e.toLinearMap)) *
+    Matrix.det (LinearMap.toMatrix b.toBasis b.toBasis e.toLinearMap) = 1 at hh
+  simpa only [star_trivial, ← sq, LinearMap.det_toMatrix] using hh
+
+private theorem determinant_one_on_component (B : InnerProductSpace.Core ℝ W)
+    (hB : ∀ (g : G) (u v : W), B.inner (g.val.val u) (g.val.val v) = B.inner u v) :
+    ∀ g ∈ connectedComponent (1 : G), g.val.val.det = 1 := by
+  let d : G → ℝ := fun g => g.val.val.det
+  have hd : Continuous d := ContinuousLinearMap.continuous_det.comp
+    (Units.continuous_val.comp continuous_subtype_val)
+  have hsq : Set.EqOn (d ^ 2) 1 (connectedComponent (1 : G)) := by
+    intro g _
+    exact determinant_sq_of_preserves B
+      (ContinuousLinearEquiv.unitsEquiv ℝ W g.val).toLinearEquiv (hB g)
+  have hone : d (1 : G) = 1 := by
+    change LinearMap.det (1 : W →ₗ[ℝ] W) = 1
+    exact map_one _
+  have hsq' : Set.EqOn (d ^ 2) ((fun _ : G => (1 : ℝ)) ^ 2)
+      (connectedComponent (1 : G)) := by simpa using hsq
+  have heq := isPreconnected_connectedComponent.eq_of_sq_eq hd.continuousOn
+    continuousOn_const hsq' (fun _ => one_ne_zero) mem_connectedComponent hone
+  exact fun g hg => heq hg
+
 /-- Every skew generator for the derived metric exponentiates inside the actual
 identity component of the original group, on the same full W. -/
 theorem original_exponential_rigidity
@@ -657,11 +691,12 @@ theorem original_exponential_rigidity
         B.inner (g.val.val u) (g.val.val v) = B.inner u v) ∧
       finrank ℝ W = 3 ∧ finrank ℝ (OriginalLie G) = 3 ∧
       LinearMap.range (originalAction G) = skewEndomorphisms B ∧
+      (∀ g ∈ connectedComponent (1 : G), g.val.val.det = 1) ∧
       ∀ K : W →L[ℝ] W, K.toLinearMap ∈ skewEndomorphisms B →
         ∀ t : ℝ, ∃ g : G, g ∈ connectedComponent (1 : G) ∧
           g.val.val = NormedSpace.exp (t • K) := by
   obtain ⟨B, hB, hW, hL, hrange⟩ := original_rigidity G hG A x ha hx hAx h
-  refine ⟨B, hB, hW, hL, hrange, ?_⟩
+  refine ⟨B, hB, hW, hL, hrange, determinant_one_on_component G B hB, ?_⟩
   intro K hK t
   rw [← hrange] at hK
   obtain ⟨L, hLK⟩ := hK

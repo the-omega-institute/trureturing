@@ -105,3 +105,93 @@ def family : Registration arena.{0} (type_of% (@mem_velocitySpace_iff_exp.{0})) 
     norm_num at hh
 
 end Reg.D5.S3.Quantum.Algebra.OriginalCompactReciprocity.CurveExponential
+
+namespace Reg.D5.S3.Quantum.Algebra.OriginalCompactReciprocity.OriginalExponential
+
+abbrev signature : Signature where
+  Params := CurveExponential.Parameters.{u}
+  State p := OriginalLie p.G × p.W
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} := realize signature.{u}
+  (fun _ p _ => ∃ B : InnerProductSpace.Core ℝ p.W,
+    (∀ (g : p.G) (v w : p.W), B.inner (g.val.val v) (g.val.val w) = B.inner v w) ∧
+    Module.finrank ℝ p.W = 3 ∧ Module.finrank ℝ (OriginalLie p.G) = 3 ∧
+    LinearMap.range (originalAction p.G) = skewEndomorphisms B ∧
+    (∀ g ∈ connectedComponent (1 : p.G), g.val.val.det = 1) ∧
+    ∀ K : p.W →L[ℝ] p.W, K.toLinearMap ∈ skewEndomorphisms B →
+      ∀ t : ℝ, ∃ g : p.G, g ∈ connectedComponent (1 : p.G) ∧
+        g.val.val = NormedSpace.exp (t • K)) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ (p : CurveExponential.Parameters.{u}) (A : OriginalLie p.G) (x : p.W),
+    A ≠ 0 → x ≠ 0 → A.val x = 0 → FullReciprocity p.G A x → R.readout () p (A,x)
+
+/-- Exact reconstruction retains the original compact group, witnesses and all conclusions. -/
+theorem full_telescope_bridge :
+    (type_of% (@original_exponential_rigidity.{u})) ↔ arena.{u}.Law actual := by
+  constructor
+  · intro h p A x
+    exact h p.G p.compact A x
+  · intro h W _ _ _ G hG A x
+    exact h ⟨W,G,hG⟩ A x
+
+theorem actual_positive : arena.{u}.Law actual :=
+  full_telescope_bridge.mp (@original_exponential_rigidity.{u})
+
+end Reg.D5.S3.Quantum.Algebra.OriginalCompactReciprocity.OriginalExponential
+
+namespace Reg.D5.S3.Quantum.Algebra.OriginalCompactReciprocity.ReverseFullRelation
+
+/-- No compactness or nonzero-dimensional premise is hidden in the source family. -/
+structure Parameters where
+  W : Type u
+  [normed : NormedAddCommGroup W]
+  [inner : InnerProductSpace ℝ W]
+  [finite : FiniteDimensional ℝ W]
+  G : MatrixGroup W
+  B : InnerProductSpace.Core ℝ W
+
+attribute [instance] Parameters.normed Parameters.inner Parameters.finite
+
+abbrev signature : Signature where
+  Params := Parameters.{u}
+  State p := OriginalLie p.G × p.W
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} := realize signature.{u}
+  (fun _ p s => FullReciprocity p.G s.1 s.2) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ p : Parameters.{u}, Module.finrank ℝ p.W = 3 →
+    LinearMap.range (originalAction p.G) = skewEndomorphisms p.B →
+    ∃ s : OriginalLie p.G × p.W,
+      s.1 ≠ 0 ∧ s.2 ≠ 0 ∧ s.1.val s.2 = 0 ∧ R.readout () p s
+
+/-- Both bijections refer to the entire original relation in the exact source telescope. -/
+theorem full_telescope_bridge :
+    (type_of% (@fullReciprocity_of_full_skew.{u})) ↔ arena.{u}.Law actual := by
+  constructor
+  · intro h p hW hfull
+    obtain ⟨A,x,ha,hx,hAx,hQ⟩ := h p.G p.B hW hfull
+    exact ⟨(A,x),ha,hx,hAx,hQ⟩
+  · intro h W _ _ _ G B hW hfull
+    obtain ⟨s,ha,hx,hAx,hQ⟩ := h ⟨W,G,B⟩ hW hfull
+    exact ⟨s.1,s.2,ha,hx,hAx,hQ⟩
+
+theorem actual_positive : arena.{u}.Law actual :=
+  full_telescope_bridge.mp (@fullReciprocity_of_full_skew.{u})
+
+end Reg.D5.S3.Quantum.Algebra.OriginalCompactReciprocity.ReverseFullRelation
