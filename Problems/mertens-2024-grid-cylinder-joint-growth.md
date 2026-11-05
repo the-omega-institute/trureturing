@@ -27,6 +27,19 @@ counts those of C_m Cartesian P_n. There is no bound on either aspect ratio.
 `MertensGridGrowth.JointGrowth` is exactly this event and `result` proves it.
 Natural dimensions express the source integer domain m>=3,n>=1 without loss.
 
+## Motivation
+
+The grid and cylinder differ only at a seam of 2n boundary vertices.
+Equality of their growth constants expresses that this boundary change has
+vanishing cost per vertex when both dimensions grow without an aspect-ratio
+restriction.
+
+## Gap
+
+The finite comparison alone does not establish that either joint limit
+exists. The required existence step is the unrestricted grid limit, followed
+by a cylinder estimate uniform in the other dimension.
+
 ## Route
 
 The two graph families have the same labelled vertex set. Adding cylinder
@@ -48,18 +61,37 @@ log rate lies between that rate and that rate plus log 4/m, uniformly in n.
 Exponentiating gives the exact event with mu=exp L. Neither an iterated
 limit nor a preexisting grid-limit assumption is substituted for this argument.
 
-## Source and admission boundary
+## Falsifier
 
-Preregistration and immutable forecasts are in issue #26699. The supplied
-independent mathematical screening approved source correspondence and the
-uncompiled argument. The Lean proof is a separate artifact; screening is
-not its kernel or admission evidence. The exact journal PDF has SHA-256
+A counterexample to the complete event would have to exclude every mu in
+[1,2]: for each such mu, some positive epsilon would admit arbitrarily
+large pairs m,n for which at least one of the two displayed errors is at
+least epsilon. Agreement on fixed strips, an iterated limit or a diagonal
+sequence alone does not establish the event.
+
+## Evidence
+
+The mathematical source is the final Journal of Integer Sequences 27 (2024),
+Article 24.7.6, https://emis.de/ft/35919, p. 19 after equation (22).
+Its PDF has SHA-256
 9a1c2e36ef5d634a6ebf7a178205b38f10f6663f50848a2d0522173f2ba35d93.
 ArXiv v1 places the conjecture on p. 20 and is not byte-identical.
+The source definitions on pp. 1–2 identify ordinary labelled dominating
+subsets, including nonminimal ones. Equations (15)–(17) specify joint growth.
+The declarations `finite_seam_bound`, `tiling_count` and `result` in
+`D5/S3/Combinatorics/Graph/Domination/MertensGridGrowth` supply the finite
+comparison, tiling estimate and complete joint event, respectively.
 
-The bounded prior search and named-source recheck do not establish global
-openness or priority. The intended admission basis is open-problem-resolution;
-final source qualification, declaration-level proof shape, four-slot Reg
-completion and independent admission remain separate review obligations.
-No numerical value of mu, grid convergence rate, minimal-domination count,
-fixed-width substitute or symmetry-reduced enumeration is asserted.
+## Triage
+
+Theorem: the target is the single proposition
+`MertensGridGrowth.JointGrowth`, with ordinary closed domination, the two
+specified Cartesian graph products, one common mu and one common cutoff
+for both counts. The route includes existence of the unrestricted joint
+limit.
+
+## ASSUMED-UNVERIFIED
+
+No worldwide openness or priority claim is made. No numerical value of mu,
+grid convergence rate, minimal-domination count, fixed-width substitute or
+symmetry-reduced enumeration is asserted.

@@ -24,7 +24,8 @@ are not byte-identical.
 
 The repository proof uses direct finite boundary repair and block tiling.
 It does not import an asserted grid limit or a fixed-width transfer count.
-The source and independent mathematical screen establish the target's
-identity; the bounded search does not establish worldwide priority.
+The final journal PDF at https://emis.de/ft/35919 has SHA-256
+9a1c2e36ef5d634a6ebf7a178205b38f10f6663f50848a2d0522173f2ba35d93.
+No worldwide openness or priority claim is made.
 No author code or substantial source text is reproduced. This note uses
 citation-only attribution and assigns no invented publisher license.
