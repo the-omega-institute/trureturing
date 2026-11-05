@@ -66,7 +66,7 @@ theorem diagonal_alpha_bounds (z h : ℤ) (hz : 8 ≤ z) (hh : 8*z ≤ h)
   have hhalf0 : 0 ≤ 7*z/2 := Int.ediv_nonneg (by omega) (by norm_num)
   have hhalf1 : 7*z/2 ≤ 4*z := by omega
   have hzh : 0 ≤ z*h := mul_nonneg (by omega) (by omega)
-  have hterm : 0 ≤ (2*z+1)*diagonalS z h := mul_nonneg (by omega) hs.1.le
+  have hterm : 0 ≤ (2*z+1)*diagonalS z h := mul_nonneg (by omega) (by omega)
   have hnum0 : 0 < diagonalNumerator z h := by
     dsimp only [diagonalNumerator]
     nlinarith only [hz, hh, hzh, hterm, hhalf1]
@@ -82,7 +82,7 @@ theorem diagonal_alpha_bounds (z h : ℤ) (hz : 8 ≤ z) (hh : 8*z ≤ h)
   have hnum1 : diagonalNumerator z h < 4*(z+1)*(z*h) := by
     dsimp only [diagonalNumerator]
     nlinarith only [hdiff, hhalf0]
-  refine ⟨ha0, (mul_lt_mul_left hden).mp ?_⟩
+  refine ⟨ha0, (mul_lt_mul_iff_right₀ hden).mp ?_⟩
   simpa only [heq, diagonalNumerator] using hnum1
 
 /-- Natural masks are formed only after proving the signed quantities
