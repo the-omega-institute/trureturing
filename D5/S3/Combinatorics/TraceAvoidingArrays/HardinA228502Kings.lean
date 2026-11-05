@@ -11,7 +11,7 @@ admission_basis: open-problem-resolution (#26982; Proved)
 escape_witness: count_eq_v proves count k = v k for arbitrary k by first-row decomposition and induction;
 counting_bridge transports this invariant to the literal board count.
 Direct frozen dependencies: none; all mathematical imports are pinned Mathlib.
-a: proof_shape=bind-only; consumers=board_iff, counting_bridge, initial, recurrence, generating_function, result
+a: proof_shape=bind-only; consumers=counting_bridge, initial, recurrence, generating_function, result
 Row: proof_shape=bind-only; consumers=ValidRow, Compatible, Safe, step, v, count, total
 ValidRow: proof_shape=bind-only; consumers=validRowDecidable, safe_cons, count_zero, step, v
 Compatible: proof_shape=bind-only; consumers=compatibleDecidable, safe_cons, step

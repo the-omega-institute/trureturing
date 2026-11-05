@@ -10,6 +10,8 @@ open LeanInformationAudit PowerSeries
 
 noncomputable section
 
+attribute [local irreducible] a
+
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
 
@@ -32,14 +34,13 @@ abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hb := h.2.2.1 5 (by decide)
-  have ha := result.2.2.1 5 (by decide)
-  change ((a 5 + 1 : ℕ) : ℤ) = _ at hb
-  push_cast at hb
-  have hz : (1 : ℤ) = 0 := add_left_cancel
-    (show (a 5 : ℤ) + 1 = (a 5 : ℤ) + 0 by
-      simpa only [add_zero] using hb.trans ha.symm)
-  exact Int.one_ne_zero hz
+  have impossible (n : ℕ) (hn : 5 ≤ n) : False := by
+    have hb := h.2.2.1 n hn
+    have ha := result.2.2.1 n hn
+    change ((a n + 1 : ℕ) : ℤ) = _ at hb
+    have he : ((a n + 1 : ℕ) : ℤ) = (a n : ℤ) := hb.trans ha.symm
+    exact Nat.succ_ne_self (a n) (Int.ofNat.inj he)
+  exact impossible 5 (by decide)
 
 def family : Registration arena (type_of% @result) where
   actual := actual
