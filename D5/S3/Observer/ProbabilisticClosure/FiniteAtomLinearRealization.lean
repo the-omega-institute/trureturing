@@ -443,7 +443,7 @@ def nativeEvent {Seed : Type*} [MeasurableSpace Seed] (policy : Policy Seed)
     (n : ℕ) (h : State) (B : Set Seed) : Set (Seed × Source) :=
   {p | p.1 ∈ B ∧ actualRun policy p.1 p.2 n = h}
 
-theorem native_active_history_fiber {Seed : Type*} [MeasurableSpace Seed]
+private theorem native_active_history_fiber {Seed : Type*} [MeasurableSpace Seed]
     (policy : Policy Seed) (n : ℕ) (actions : List Side) (B : Set Seed) :
     nativeEvent policy n ⟨actions, List.replicate n false, false⟩ B =
       {u | u ∈ B ∧ zeroReplay policy u n = actions} ×ˢ
