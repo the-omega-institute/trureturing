@@ -1,7 +1,7 @@
 /- GID: D5/S0/Certificates/Quandles/PresentedColoringSpace
    generality: G
    anchors: [lake/module/D5.S0.Certificates.Quandles.PresentedQuandle]
-   utility: quandle-coloring-space
+   utility: none
    digest: Satisfying generator assignments are equivalent to homomorphisms from a presented quandle.
 -/
 
