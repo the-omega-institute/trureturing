@@ -1,0 +1,4 @@
+**Theorem 10.2 (Eventually nonsingular histories and exact prefix transport).** Suppose an infinite event list has only finitely many singular events. Take $s=0$ if there are none, and otherwise take $s$ to be one plus the last singular event index. Put $F=\Phi_{0,s}$. Apply the following alternatives to the wholly nonsingular tail beginning at $s$.
+
+1. If $D_s<\infty$, its prescribed matrix $H_s$ from Theorem 8.3 gives
+

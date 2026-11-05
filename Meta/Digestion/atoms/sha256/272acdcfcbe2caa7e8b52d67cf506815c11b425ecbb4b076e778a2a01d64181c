@@ -1,0 +1,15 @@
+#### 定义 5.1（相位不变多项式）
+
+在已给的复线性空间 $\mathbb{C}^d$ 上，将 $z\sim e^{i\theta}z$ 视为共同相位等价。
+多项式指全空间实坐标上的多项式；等价地可唯一写成
+
+$$
+P(z,\overline z)=\sum_{\alpha,\beta}c_{\alpha\beta}
+z^\alpha\overline z^\beta.
+$$
+
+若对全部 $z,\theta$ 有 $P(e^{i\theta}z,e^{-i\theta}\overline z)=P(z,\overline z)$，
+称其相位不变。
+
+<a id="thm:invariant"></a>
+

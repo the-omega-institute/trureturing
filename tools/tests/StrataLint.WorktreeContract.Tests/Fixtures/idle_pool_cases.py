@@ -226,6 +226,11 @@ class IdlePoolCases:
         self.g(self.tree, "reset", "--hard", self.base)
         self.pool_return()
         idle = self.g(self.tree, "branch", "--show-current").strip()
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        preserved = [self.tree / ".git", metadata / "HEAD", metadata / "logs/HEAD",
+                     self.main / ".git/refs/heads" / idle, self.main / ".git/logs/refs/heads" / idle]
+        preserved.extend(self.tree / name for name in self.g(self.tree, "ls-files", "-z").split("\0") if name)
+        before = {file: file.read_bytes() for file in preserved}
         holder = self.hold("--operation", "idle-pool") if self.implicit_pool_busy else None
 
         def command(name, exact=None):
@@ -242,12 +247,30 @@ class IdlePoolCases:
         self.assertEqual([0, 0], [code for _, code in results], results)
         receipts = [json.loads(output) for (output, _), _ in results]
         self.assertEqual(2, len({row["path"] for row in receipts}), receipts)
-        self.assertEqual(0 if holder else 1, sum(row["status"] == "claimed" for row in receipts), receipts)
+        claimed_count = sum(row["status"] == "claimed" for row in receipts)
+        self.assertLessEqual(claimed_count, 1, receipts)
+        if not holder and claimed_count == 0:
+            # No pool lock does not guarantee that activity can be observed.
+            self.assertTrue(any(
+                refusal["path"] == str(self.tree)
+                and refusal["stage"] in ("activity", "activity_recheck")
+                and refusal["reason"].startswith("task_activity_unavailable:")
+                for receipt in receipts for refusal in receipt.get("idle_claim_refusals", [])), receipts)
+        else:
+            self.assertEqual(0 if holder else 1, claimed_count, receipts)
+        if claimed_count == 0:
+            self.assertEqual(str(metadata), self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+            self.assertEqual(idle, self.g(self.tree, "branch", "--show-current").strip())
+            self.assertEqual(self.base, self.g(self.tree, "rev-parse", "HEAD").strip())
+            self.assertEqual(before, {file: file.read_bytes() for file in preserved})
+            self.assertEqual("", self.g(self.tree, "status", "--porcelain"))
         for i, receipt in enumerate(receipts):
             self.assertEqual("lane/math/implicit-" + str(i), receipt["branch"])
             self.assertEqual(receipt["branch"], self.g(receipt["path"], "branch", "--show-current").strip())
             self.assertEqual(self.base, self.g(receipt["path"], "rev-parse", "HEAD").strip())
-            if receipt["status"] != "claimed":
+            if receipt["status"] == "claimed":
+                self.assertEqual(str(self.tree), receipt["path"])
+            else:
                 self.assertEqual("succeeded", receipt["status"])
                 self.assertEqual(str(self.root / ("trureturing-implicit-" + str(i))), receipt["path"])
                 if holder:

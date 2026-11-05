@@ -1,0 +1,63 @@
+**Definition 41.1 (source, chronological words and exact fibres).** Retain
+§40's one actual source/epoch, authentic root binding, current exclusive
+rights, ancestral tapes and sufficient finite material for each stated
+finite run. Fix any attained $t_0\in\mathcal D_+$ of LAB §§9.1–9.4, with
+composition $v=v(t_0)=(a,b)$, where $a\ge0$ and $b>0$. Here
+$\mathcal D_+=\mathcal D\setminus\{\alpha\}$ is the native **tree** domain,
+not a set of pairs. Use the distinct pair domain
+
+$$
+\mathcal Q_+=\mathbb N_0\times\mathbb N_{>0},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad e=\binom10,
+\qquad F(u)=Mu,\quad G(u)=u+e.
+\tag{41.1}
+$$
+
+Pairs and their column vectors are identified only for this arithmetic.
+The actual macros realizing $F$ and $G$ are respectively LAB Definition
+9.3's whole-frontier $\mathsf R$ and current leftmost-beta $\mathsf G$.
+At an $F$ call, acquire the finite current logical frontier in left-first
+order, seal that entry list, promote each entry-alpha and split each
+entry-beta exactly once. At a $G$ call, acquire the current leftmost beta
+path/reference and split that leaf. Each inner call consumes its complete
+reply, acknowledgement and real return. New leaves do not reenter an
+old frontier list. These procedures supply actual operands and guards;
+pair notation supplies neither a source reference nor permission.
+
+All words are chronological from left to right:
+
+$$
+\operatorname{Run}(\varepsilon,u)=u,\qquad
+\operatorname{Run}(hF,u)=F(\operatorname{Run}(h,u)),\qquad
+\operatorname{Run}(hG,u)=G(\operatorname{Run}(h,u)).
+\tag{41.2}
+$$
+
+LAB Theorems 9.4 and 12.2 give $t_h\in\mathcal D_+$ and
+$v(t_h)=\operatorname{Run}(h,v)$ at every completed prefix, for every
+finite word admitted with the stated sufficient resources. All
+continuations refer to this same bound source; alternatives do not
+supply simultaneous copies, a reset, an inverse edit or another
+initialization. Resource sufficiency is quantified per finite run,
+not by one fixed finite arena that holds every unbounded history.
+
+For an integer pair $q=(A,B)$ and $k\in\mathbb Z$, put
+
+$$
+\begin{aligned}
+\mathcal W_v^{(k)}(q)
+ &=\{h\in\{F,G\}^*:|h|_F=k,\ \operatorname{Run}(h,v)=q\},\\
+\mathcal W_v(q)&=\mathop{\dot\bigcup}_{k\ge0}\mathcal W_v^{(k)}(q),
+&N_v^{(k)}(q)&=|\mathcal W_v^{(k)}(q)|,\quad
+N_v(q)=|\mathcal W_v(q)|.
+\end{aligned}
+\tag{41.3}
+$$
+
+For $q\notin\mathcal Q_+$ or $k<0$ the corresponding set is empty and
+its count is zero. Histories consist of successfully completed macros;
+the empty word is included. The source parameter is always $v$, never
+an unannounced eventual endpoint. Different native trees of composition
+$v$ have the same macro-word dictionaries under this legality contract;
+their actual trees, bindings and tapes are not thereby identified.
+
