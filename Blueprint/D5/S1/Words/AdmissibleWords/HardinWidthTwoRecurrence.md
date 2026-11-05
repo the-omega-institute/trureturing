@@ -84,6 +84,10 @@ $$(\forall n: Nat, ((4 \leq n) \implies ((\operatorname{a}\left(n\right): Int) =
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/AdmissibleWords/HardinWidthTwoRecurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin-a206981-width-two-recurrence` (proved) by `D5/S1/Words/AdmissibleWords/HardinWidthTwoRecurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin-a206981-width-two-recurrence","declaration_gid":"D5/S1/Words/AdmissibleWords/HardinWidthTwoRecurrence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2012). *OEIS A206981 — Width-two binary arrays avoiding alternating triples*. URL: <https://oeis.org/A206981>.

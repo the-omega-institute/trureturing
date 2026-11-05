@@ -39,7 +39,9 @@ internal sealed class HardinWidthTwoRecurrenceDocument : IScribeDocumentDefiniti
                 StatementSource.FromAuthor(Disp(ClaimBody())),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("Width two excludes horizontal and diagonal triples, leaving two independent legal columns. A positive-length column is determined by its first bit and its adjacent XOR switches. A forbidden triple occurs exactly when two consecutive switches are true. The existing admissible-word enumeration therefore gives 2 F(n+1) columns and 4 F(n+1)^2 arrays for each n ≥ 1. Mathlib's Fin.partialSum inverse laws reconstruct the bits from the switches. The Fibonacci recurrence yields the signed order-three recurrence by polynomial algebra. Comparing formal-series coefficients, with initial counts 4, 16 and 36, proves the generating-function identity."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin-a206981-width-two-recurrence"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string text) =>
         Describe.Lean(DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title),
