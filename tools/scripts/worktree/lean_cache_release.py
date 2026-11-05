@@ -27,6 +27,8 @@ except ImportError:
 
 from lean_cache import SHARED_SEED_PLATFORMS, normalized_platform, partition_path, seed_partitions
 from lean_cache_topology import checkout_topology, git_absolute_path, warm_dev_remediation
+from lean_cache_release_io import (remaining, ArchiveOutput, ArchiveInput, archive_sha,
+                                   copy_chunks, extract_members)
 
 # Use the report entry's declared format and execution capture, never program hashes.
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / "lean-inspector"))
@@ -50,6 +52,8 @@ RELEASE_OPERATION_TIMEOUT_MAX_SECONDS = 21600
 LOG = None
 LOG_LAST = {}
 CURRENT_OPERATION = None
+CURRENT_MODE = "production"
+CURRENT_PHASE = "preflight"
 
 
 def operation_deadline():
@@ -69,68 +73,31 @@ def operation_deadline():
     return time.monotonic() + seconds
 
 
-def remaining(deadline):
-    seconds = deadline - time.monotonic()
-    if seconds <= 0:
-        raise TimeoutError("Release operation deadline exhausted")
-    return seconds
-
-
-class ArchiveOutput:
-    """Check the publication budget at each bounded tar/gzip output write."""
-    def __init__(self, output, deadline):
-        self.output, self.deadline = output, deadline
-
-    def __getattr__(self, name):
-        return getattr(self.output, name)
-
-    def write(self, block):
-        remaining(self.deadline)
-        count = self.output.write(block)
-        remaining(self.deadline)
-        return count
-
-
-def archive_sha(path, deadline):
-    value = hashlib.sha256()
-    with path.open("rb") as source:
-        while True:
-            remaining(deadline)
-            block = source.read(1024 * 1024)
-            if not block:
-                return value.hexdigest()
-            value.update(block)
-            remaining(deadline)
-
-
-def copy_chunks(source, target, deadline):
-    transferred = 0
-    while True:
-        remaining(deadline)
-        block = source.read(1024 * 1024)
-        if not block:
-            return transferred
-        target.write(block)
-        transferred += len(block)
-        remaining(deadline)
-
-
-def extract_members(archive, destination, members, deadline):
-    for member in members:
-        remaining(deadline)
-        target = destination / member.name
-        if member.isdir():
-            target.mkdir(parents=True, exist_ok=True)
-            os.chmod(target, member.mode & 0o7777)
-            continue
-        source = archive.extractfile(member)
-        if source is None:
-            raise ValueError("archive member has no file content: " + member.name)
-        target.parent.mkdir(parents=True, exist_ok=True)
-        with source, target.open("wb") as output:
-            copy_chunks(source, output, deadline)
-        os.chmod(target, member.mode & 0o7777)
-        remaining(deadline)
+@contextlib.contextmanager
+def observed_phase(phase, **fields):
+    global CURRENT_PHASE
+    CURRENT_PHASE = phase
+    started = time.monotonic()
+    if LOG is not None:
+        LOG.emit("phase_started", operation=CURRENT_OPERATION, action=CURRENT_OPERATION,
+                 mode=CURRENT_MODE, stage=phase,
+                 **{key: value for key, value in fields.items() if key != "validated_bytes"})
+    try:
+        yield
+    except BaseException as error:
+        _observe(CURRENT_OPERATION or "fetch", "cancelled" if isinstance(error, KeyboardInterrupt)
+                 else "failed", phase=phase, reason=type(error).__name__, error=error)
+        if LOG is not None:
+            LOG.emit("phase_finished", operation=CURRENT_OPERATION, action=CURRENT_OPERATION,
+                     mode=CURRENT_MODE, stage=phase, outcome=LOG_LAST["outcome"],
+                     error_type=LOG_LAST["error_type"],
+                     phase_duration_seconds=round(time.monotonic() - started, 3))
+        raise
+    else:
+        if LOG is not None:
+            LOG.emit("phase_finished", operation=CURRENT_OPERATION, action=CURRENT_OPERATION,
+                     mode=CURRENT_MODE, stage=phase, outcome="complete",
+                     phase_duration_seconds=round(time.monotonic() - started, 3), **fields)
 
 
 class GitHubCommandError(subprocess.CalledProcessError):
@@ -158,15 +125,24 @@ def _reason_code(value):
     raw = str(value).strip()
     if not raw:
         return None
-    code = raw.split(":", 1)[0].split(None, 1)[0]
-    code = re.sub(r"[^A-Za-z0-9_.-]", "_", code)
-    return code[:96] or "unknown"
+    lowered = raw.lower()
+    for word, code in (("deadline", "deadline_exhausted"), ("timed out", "timeout"),
+                       ("checksum", "checksum_mismatch"), ("digest", "digest_mismatch"),
+                       ("size", "size_mismatch"), ("linked worktree", "linked_worktree"),
+                       ("no published snapshot", "snapshot_unavailable")):
+        if word in lowered:
+            return code
+    return "operation_error"
 
 
 def _error_category(status, reason, explicit=None):
+    if isinstance(explicit, (TimeoutError, subprocess.TimeoutExpired)):
+        return "timeout"
+    if isinstance(explicit, KeyboardInterrupt):
+        return "cancellation"
     if explicit:
         return type(explicit).__name__ if isinstance(explicit, BaseException) else str(explicit)[:96]
-    if status in ("published", "unpacked", "skipped", "exists", "staging-cleanup"):
+    if status in ("published", "unpacked", "skipped", "exists", "staging-cleanup", "resolved"):
         return None
     text = str(reason or "").lower()
     if "timeout" in text or "timed out" in text or "deadline" in text:
@@ -179,9 +155,9 @@ def _error_category(status, reason, explicit=None):
 def _observe(verb, status, *, phase=None, reason=None, error=None, mode=None,
              expected_bytes=None, transferred_bytes=None, validated_bytes=None):
     global LOG_LAST
-    payload = dict(action=verb, operation=verb, transport=verb, mode=mode,
-                   phase=phase or status, outcome=status,
-                   reason_code=_reason_code(reason),
+    payload = dict(action=verb, operation=verb, transport=verb, mode=CURRENT_MODE,
+                   phase=phase or CURRENT_PHASE, status=status, outcome=status,
+                   reason_code=type(error).__name__ if error is not None else _reason_code(reason),
                    error_type=_error_category(status, reason, error),
                    expected_bytes=expected_bytes, transferred_bytes=transferred_bytes,
                    validated_bytes=validated_bytes)
@@ -639,7 +615,7 @@ def publish(root, partition, verification=None, *, build_report=True):
         receipt("publish", "skipped", reason="POSIX cache locking unavailable: " + str(error))
         return 1 if verification is not None else 0
     except report_reuse.INVALID_SEED + (EOFError, subprocess.SubprocessError, tarfile.TarError) as error:
-        receipt("publish", "failed", reason=str(error))
+        receipt("publish", "failed", _error=error, reason=str(error))
         return 1 if verification is not None else (0 if content_validated else 2)
     return 0
 
@@ -729,48 +705,59 @@ def clone_local_parts(local_assets, stage, parts, deadline):
 def restore_snapshot(root, partition, tag, stage, deadline, verification=None, refresh_stale=False, *,
                      cache_key, approved_producer=None, require_compatible_seed=False, on_installed=None,
                      local_assets=None):
-    metadata, manifest, parts = snapshot_manifest(partition, tag, stage, deadline,
-        expected=verification if approved_producer is None else {"producer_commit_sha": approved_producer},
-        verification=verification is not None, cache_key=cache_key)
+    with observed_phase("manifest"):
+        metadata, manifest, parts = snapshot_manifest(partition, tag, stage, deadline,
+            expected=verification if approved_producer is None else {"producer_commit_sha": approved_producer},
+            verification=verification is not None, cache_key=cache_key)
     assets = metadata["assets"]
     commit = manifest["producer_commit_sha"]
-    if local_assets is None:
-        gh(deadline, "release", "download", tag, "--repo", REPO, "--dir", str(stage),
-           *(argument for part in parts for argument in ("--pattern", part["name"])))
-    else:
-        clone_local_parts(local_assets, stage, parts, deadline)
-    for part in parts:
-        path = stage / part["name"]
-        if part["sha256"] != archive_sha(path, deadline) or part["bytes"] != path.stat().st_size:
-            raise ValueError("part checksum or size mismatch: " + part["name"])
-    for asset in assets:
-        if asset.get("digest") != "sha256:" + archive_sha(stage / asset["name"], deadline):
-            raise ValueError("transferred asset digest mismatch")
-    if len(parts) > 1:
-        with (stage / ASSET).open("wb") as archive:
-            for part in parts:
-                path = stage / part["name"]
-                start = archive.tell()
-                with path.open("rb") as source:
-                    copy_chunks(source, archive, deadline)
-                archive.flush()
-                remaining(deadline)
-                if archive.tell() - start != part["bytes"]:
-                    raise ValueError("part copy size mismatch: " + part["name"])
-                path.unlink()
-    if (manifest.get("archive_sha256") != archive_sha(stage / ASSET, deadline)
-            or manifest.get("archive_bytes") != (stage / ASSET).stat().st_size):
-        raise ValueError("archive checksum or size mismatch")
+    with observed_phase("transfer", expected_bytes=manifest["archive_bytes"]):
+        if local_assets is None:
+            gh(deadline, "release", "download", tag, "--repo", REPO, "--dir", str(stage),
+               *(argument for part in parts for argument in ("--pattern", part["name"])))
+        else:
+            clone_local_parts(local_assets, stage, parts, deadline)
+    with observed_phase("part_validation", validated_bytes=manifest["archive_bytes"]):
+        for part in parts:
+            path = stage / part["name"]
+            if part["sha256"] != archive_sha(path, deadline) or part["bytes"] != path.stat().st_size:
+                raise ValueError("part checksum or size mismatch: " + part["name"])
+        for asset in assets:
+            if asset.get("digest") != "sha256:" + archive_sha(stage / asset["name"], deadline):
+                raise ValueError("transferred asset digest mismatch")
+    with observed_phase("reassembly"):
+        if len(parts) > 1:
+            with (stage / ASSET).open("wb") as archive:
+                for part in parts:
+                    path = stage / part["name"]
+                    start = archive.tell()
+                    with path.open("rb") as source:
+                        copy_chunks(source, archive, deadline)
+                    archive.flush()
+                    remaining(deadline)
+                    if archive.tell() - start != part["bytes"]:
+                        raise ValueError("part copy size mismatch: " + part["name"])
+                    path.unlink()
+    with observed_phase("archive_validation", validated_bytes=manifest["archive_bytes"]):
+        if (manifest.get("archive_sha256") != archive_sha(stage / ASSET, deadline)
+                or manifest.get("archive_bytes") != (stage / ASSET).stat().st_size):
+            raise ValueError("archive checksum or size mismatch")
     lake = root / ".lake"
     if lake.is_symlink():
         raise ValueError("shared cache target is forbidden")
     installed, backup, base_prepared, base_recorded = [], None, False, False
     target, base = lake / "build", root / report_reuse.BASE_RECORD
     try:
-        with tarfile.open(stage / ASSET) as archive:
-            members = archive.getmembers()
+        with (stage / ASSET).open("rb") as compressed, tarfile.open(
+                name=str(stage / ASSET), fileobj=ArchiveInput(compressed, deadline)) as archive:
+            with observed_phase("tar_scan"):
+                members = []
+                for member in archive:
+                    remaining(deadline)
+                    members.append(member)
             paths = {}
             for member in members:
+                remaining(deadline)
                 path = pathlib.PurePosixPath(member.name)
                 if (path.is_absolute() or ".." in path.parts or not path.parts
                         or path.parts[0] != "build"
@@ -780,6 +767,7 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
                     raise ValueError("archive contains an invalid cache member: duplicate path")
                 paths[path] = member
             for path in paths:
+                remaining(deadline)
                 if any(parent in paths and not paths[parent].isdir() for parent in path.parents):
                     raise ValueError("archive contains an invalid cache member: file ancestor")
             # Consume gzip's footer before installing the extracted build.
@@ -790,7 +778,8 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
             # until extraction staging and the seed/base installation complete.
             with tempfile.TemporaryDirectory(prefix=".release-", dir=lake) as temporary:
                 unpacked = pathlib.Path(temporary)
-                extract_members(archive, unpacked, members, deadline)
+                with observed_phase("extraction"):
+                    extract_members(archive, unpacked, members, deadline)
                 source = unpacked / "build"
                 if not source.is_dir():
                     raise ValueError("archive has no project build")
@@ -799,25 +788,27 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
                     if not checked["compatible"]:
                         raise ValueError("staged report seed is incompatible: " + checked["report_format"])
                 remaining(deadline)
-                if not target.is_symlink() and (not target.exists() or (target.is_dir()
-                        and (refresh_stale or not any(target.iterdir())))):
-                    (source / ".release-refreshed-at").write_text(
-                        datetime.datetime.now(datetime.timezone.utc).isoformat() + "\n", encoding="utf-8")
-                    backup = pathlib.Path(tempfile.mkdtemp(prefix=".release-backup-", dir=lake))
-                    if target.is_dir():
-                        target.rename(backup / "build")
-                    if base.exists() or base.is_symlink():
-                        base.rename(backup / "base.json")
-                    base_prepared = True
-                    source.rename(target)
-                    installed.append("build")
-                    base_recorded = report_reuse.record_seed_base(root, commit)
-                    if not base_recorded:
-                        report_reuse.invalidate_seed_base(root)
-                        if approved_producer is not None:
-                            raise ValueError("approved snapshot base could not be recorded")
-                    if on_installed is not None:
-                        on_installed()
+                with observed_phase("install"):
+                    remaining(deadline)
+                    if not target.is_symlink() and (not target.exists() or (target.is_dir()
+                            and (refresh_stale or not any(target.iterdir())))):
+                        (source / ".release-refreshed-at").write_text(
+                            datetime.datetime.now(datetime.timezone.utc).isoformat() + "\n", encoding="utf-8")
+                        backup = pathlib.Path(tempfile.mkdtemp(prefix=".release-backup-", dir=lake))
+                        if target.is_dir():
+                            target.rename(backup / "build")
+                        if base.exists() or base.is_symlink():
+                            base.rename(backup / "base.json")
+                        base_prepared = True
+                        source.rename(target)
+                        installed.append("build")
+                        base_recorded = report_reuse.record_seed_base(root, commit)
+                        if not base_recorded:
+                            report_reuse.invalidate_seed_base(root)
+                            if approved_producer is not None:
+                                raise ValueError("approved snapshot base could not be recorded")
+                        if on_installed is not None:
+                            on_installed()
     except BaseException as install_error:
         if backup is not None:
             # Keep both trees if rollback itself fails; never clean that backup.
@@ -852,7 +843,7 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
             **{key: manifest[key] for key in ("workflow_run_id", "workflow_run_attempt") if key in manifest},
             release_target=metadata.get("target_commitish"), base_recorded=base_recorded, **cleanup,
             _phase="install", _expected_bytes=manifest.get("archive_bytes"),
-            _transferred_bytes=sum(part["bytes"] for part in parts),
+            _transferred_bytes=sum(part["bytes"] for part in parts) if local_assets is None else None,
             _validated_bytes=sum(part["bytes"] for part in parts))
     return bool(installed)
 
@@ -867,11 +858,11 @@ def fetch_verification(root, partition, identity):
             restore_snapshot(root, partition, tag, pathlib.Path(temporary), deadline, identity, cache_key=cache_key)
         return 0
     except RollbackFailed as error:
-        receipt("fetch", "rollback-failed", mode="verification", reason=str(error),
+        receipt("fetch", "rollback-failed", mode="verification", _error=error, reason=str(error),
                 backup=error.backup, resolved=tag, partition=partition)
         return 2
     except (OSError, EOFError, ImportError, ValueError, KeyError, TypeError, subprocess.SubprocessError, tarfile.TarError) as error:
-        receipt("fetch", "miss", mode="verification", reason=str(error), resolved=tag, partition=partition)
+        receipt("fetch", "miss", mode="verification", _error=error, reason=str(error), resolved=tag, partition=partition)
         return 1
 
 
@@ -909,11 +900,11 @@ def fetch_candidate(root, partition, tag, producer):
                 raise ValueError("candidate snapshot was not installed")
         return 0
     except RollbackFailed as error:
-        receipt("fetch", "rollback-failed", mode="candidate", reason=str(error), backup=error.backup)
+        receipt("fetch", "rollback-failed", mode="candidate", _error=error, reason=str(error), backup=error.backup)
         return 2
     except (OSError, EOFError, ImportError, ValueError, KeyError, TypeError,
             subprocess.SubprocessError, tarfile.TarError) as error:
-        receipt("fetch", "miss", mode="candidate", reason=str(error), resolved=tag, partition=partition)
+        receipt("fetch", "miss", mode="candidate", _error=error, reason=str(error), resolved=tag, partition=partition)
         return 1
 
 
@@ -925,7 +916,7 @@ def fetch(root, partition, writer_owned=False, refresh_stale=False, approved_tag
     try:
         linked, main_checkout = checkout_topology(root)
     except ValueError as error:
-        receipt("fetch", "refused", reason=str(error))
+        receipt("fetch", "refused", _error=error, reason=str(error))
         return 1
     if linked:
         receipt("fetch", "refused", reason="linked worktree: release archive disabled",
@@ -939,7 +930,7 @@ def fetch(root, partition, writer_owned=False, refresh_stale=False, approved_tag
         with contextlib.nullcontext() if writer_owned else cache_guard(root):
             return fetch_locked(root, partition, deadline, refresh_stale, approved_tag, approved_producer, local_assets)
     except (OSError, ImportError, ValueError) as error:
-        receipt("fetch", "miss", reason=str(error), partition=partition)
+        receipt("fetch", "miss", _error=error, reason=str(error), partition=partition)
         return 1
 
 
@@ -988,15 +979,17 @@ def fetch_locked(root, partition, deadline, refresh_stale=False, approved_tag=No
                     try:
                         temporary.cleanup()
                     except OSError as error:
-                        receipt("fetch", "cleanup-deferred", reason=str(error), resolved=tag)
+                        if LOG is not None:
+                            LOG.emit("cleanup_deferred", operation="fetch", action="fetch",
+                                     stage="cleanup", outcome="deferred", error_type=type(error).__name__)
                 return 0
             except RollbackFailed as error:
-                receipt("fetch", "rollback-failed", reason=str(error), backup=error.backup,
+                receipt("fetch", "rollback-failed", _error=error, reason=str(error), backup=error.backup,
                         resolved=tag, partition=partition)
                 return 2
             except (OSError, EOFError, ValueError, KeyError, TypeError, subprocess.SubprocessError, tarfile.TarError) as error:
                 reason = str(error)
-                receipt("fetch", "miss", reason=reason, resolved=tag, partition=partition)
+                receipt("fetch", "miss", _error=error, reason=reason, resolved=tag, partition=partition)
                 if approved_tag is not None or isinstance(error, (TimeoutError, subprocess.TimeoutExpired)):
                     break
     except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
@@ -1034,8 +1027,11 @@ def _main():
     parser.add_argument("--refresh-stale", action="store_true",
                         help="replace an expired private project build after validating the complete snapshot")
     args = parser.parse_args()
-    global CURRENT_OPERATION, LOG_LAST
-    CURRENT_OPERATION = args.command
+    global CURRENT_OPERATION, CURRENT_MODE, LOG_LAST
+    CURRENT_OPERATION, CURRENT_MODE = args.command, args.mode
+    LOG_LAST = {}
+    if LOG is not None:
+        LOG.emit("operation_started", operation=CURRENT_OPERATION, action=CURRENT_OPERATION, mode=CURRENT_MODE)
     try:
         args.repository = args.repository.resolve()
         if args.no_build and args.command != "publish":
@@ -1081,7 +1077,7 @@ def _main():
                          args.approved_tag, args.approved_producer, args.local_assets)
         return publish(args.repository, partition, verification, build_report=not args.no_build)
     except RollbackFailed as error:
-        receipt(args.command, "rollback-failed", reason=str(error), backup=error.backup)
+        receipt(args.command, "rollback-failed", _error=error, reason=str(error), backup=error.backup)
         return 2
     except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
         receipt(args.command, "miss" if args.command == "fetch" else "failed",
@@ -1090,7 +1086,8 @@ def _main():
 
 
 def main():
-    global LOG, LOG_LAST
+    global LOG, LOG_LAST, CURRENT_OPERATION, CURRENT_PHASE
+    LOG_LAST, CURRENT_OPERATION, CURRENT_PHASE = {}, None, "preflight"
     LOG = MaintenanceLog.from_environment() if MaintenanceLog else None
     if LOG is not None:
         LOG.emit("run_started", action=os.environ.get("TRURETURING_MAINTENANCE_SCRIPT"),
@@ -1106,7 +1103,7 @@ def main():
                 code = error.code if isinstance(error, SystemExit) and isinstance(error.code, int) else 130 \
                     if isinstance(error, KeyboardInterrupt) else 1
                 _observe(CURRENT_OPERATION or "unknown", "failed",
-                         phase="exception", reason=type(error).__name__, error=error)
+                         phase=CURRENT_PHASE, reason=type(error).__name__, error=error)
                 LOG.finish(code, operation=CURRENT_OPERATION, action=CURRENT_OPERATION,
                            status=LOG_LAST.get("status"), outcome=LOG_LAST.get("outcome"),
                            stage=LOG_LAST.get("phase"), error_type=LOG_LAST.get("error_type"),

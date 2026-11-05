@@ -1,4 +1,3 @@
-using System.Text.Json;
 using System.Collections.Immutable;
 using StrataLint.Engine;
 
@@ -117,7 +116,7 @@ internal static class CliApplication
             ["compile-proof"] = static (_, tail, console) =>
                 RenderTestEvidence("compile-proof", tail, console),
             ["clean-lanes"] = static (environment, tail, console) =>
-                RenderCommand(environment.CleanLanes(tail), console, "clean-lanes"),
+                RenderCommand(environment.CleanLanes(tail), console),
             ["coverage"] = static (environment, tail, console) =>
                 RenderCommand(environment.Coverage(tail), console),
             ["cover-atom"] = static (environment, tail, console) =>
@@ -171,7 +170,7 @@ internal static class CliApplication
             ["truth-release"] = static (environment, tail, console) =>
                 RenderExplicit(environment.TruthRelease(tail), console),
             ["worktree"] = static (environment, tail, console) =>
-                RenderCommand(environment.Worktree(tail), console, "worktree"),
+                RenderCommand(environment.Worktree(tail), console),
         }.ToImmutableDictionary(StringComparer.Ordinal);
 
     internal static ImmutableArray<string> ImplementedCommands { get; } =
@@ -348,79 +347,17 @@ internal static class CliApplication
         return 3;
     }
 
-    private static int RenderCommand(CommandResult result, ICliConsole console,
-        string? maintenanceOperation = null)
+    private static int RenderCommand(CommandResult result, ICliConsole console)
     {
+        if (result.Output.Length > 0) console.WriteOutput(result.Output);
+        if (result.Error.Length > 0) console.WriteError(result.Error);
         var exitCode = result.ExitCode ?? (result.Success ? 0 : 2);
         if (exitCode is < 0 or > 255 || result.Success != (exitCode == 0))
         {
             throw new InvalidOperationException("command returned an invalid exit code");
         }
 
-        if (maintenanceOperation is not null)
-            ObserveMaintenanceResult(maintenanceOperation, result, exitCode);
-        if (result.Output.Length > 0) console.WriteOutput(result.Output);
-        if (result.Error.Length > 0) console.WriteError(result.Error);
         return exitCode;
-    }
-
-    private static void ObserveMaintenanceResult(string operation, CommandResult result, int exitCode)
-    {
-        JsonElement? payload = null;
-        foreach (var line in (result.Output + "\n" + result.Error).Split('\n').Reverse())
-        {
-            var candidate = line.Trim();
-            var prefix = candidate.StartsWith("LEAN_CACHE ", StringComparison.Ordinal)
-                ? "LEAN_CACHE " : candidate.StartsWith("WORKTREE_FAILED ", StringComparison.Ordinal)
-                    ? "WORKTREE_FAILED " : string.Empty;
-            if (prefix.Length == 0) continue;
-            try
-            {
-                using var document = JsonDocument.Parse(candidate[prefix.Length..]);
-                if (document.RootElement.ValueKind == JsonValueKind.Object)
-                {
-                    payload = document.RootElement.Clone();
-                    break;
-                }
-            }
-            catch (JsonException) { }
-        }
-
-        if (payload is not JsonElement value)
-        {
-            MaintenanceLogAdapter.Record(operation, exitCode == 0 ? "succeeded" : "failed",
-                "render", null, exitCode == 0 ? null : "CommandResult");
-            return;
-        }
-
-        string? Text(string name) =>
-            value.TryGetProperty(name, out var item) && item.ValueKind == JsonValueKind.String
-                ? item.GetString() : null;
-        var status = Text("status") ?? (exitCode == 0 ? "succeeded" : "failed");
-        var stage = Text("stage") ?? Text("phase") ?? (exitCode == 0 ? "complete" : "result");
-        var reason = Text("reason") ?? Text("diagnostic") ?? Text("archive_reason");
-        var reasonCode = BoundedCode(reason);
-        var errorType = exitCode == 0 ? null : status == "refused" ? "Refused" : "CommandResult";
-        var details = new Dictionary<string, object?>();
-        foreach (var name in new[]
-        {
-            "method", "archive_status", "archive_mode", "archive_skip_reason",
-            "project_olean_state", "mathlib_olean_state", "stamp_miss", "cold_build_consent"
-        })
-            if (value.TryGetProperty(name, out var item)
-                && item.ValueKind is JsonValueKind.String or JsonValueKind.True or JsonValueKind.False)
-                details[name] = item.Clone();
-
-        MaintenanceLogAdapter.Record(operation, status, stage, reasonCode, errorType, details);
-    }
-
-    private static string? BoundedCode(string? value)
-    {
-        if (string.IsNullOrWhiteSpace(value)) return null;
-        var code = value.Trim().Split(':', ' ', StringSplitOptions.RemoveEmptyEntries)[0];
-        var filtered = new string(code.Where(character => char.IsAsciiLetterOrDigit(character)
-            || character is '_' or '-' or '.').ToArray());
-        return filtered.Length == 0 ? "unknown" : filtered[..Math.Min(96, filtered.Length)];
     }
 
     private static int RenderExplicit(

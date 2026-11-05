@@ -9,6 +9,7 @@ public static class MaintenanceLogAdapter
 {
     private static string? source;
     private static string? state;
+    private static Dictionary<string, object?> lastFields = new();
     private static string executable = "python3";
 
     public static void Start()
@@ -44,7 +45,8 @@ public static class MaintenanceLogAdapter
         if (state is null) return;
         try
         {
-            _ = Observe("finish", "--state", state, "--exit-code", exitCode.ToString(CultureInfo.InvariantCulture));
+            _ = Observe("finish", "--state", state, "--exit-code", exitCode.ToString(CultureInfo.InvariantCulture),
+                "--fields", JsonSerializer.Serialize(lastFields));
         }
         catch
         {
@@ -76,6 +78,7 @@ public static class MaintenanceLogAdapter
                         fields[key] = value;
             }
 
+            lastFields = fields;
             _ = Observe("emit", "--state", state, "--event", "operation_finished",
                 "--fields", JsonSerializer.Serialize(fields));
         }

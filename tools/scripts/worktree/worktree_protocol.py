@@ -12,6 +12,7 @@ import fcntl
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import shutil
 import stat
@@ -441,13 +442,16 @@ def _log_operation(action, *, status=None, outcome=None, reason=None, error=None
 def _log_result(action, result):
     if not isinstance(result, dict):
         _log_operation(action, status="failed", outcome="invalid_result",
-                        reason="invalid_structured_result", error=ValueError)
+                        reason="invalid_structured_result", error=ValueError())
         return
     failure = result.get("failure")
     reason = result.get("reason")
     if reason is None and isinstance(failure, dict):
         reason = failure.get("reason") or failure.get("error")
-    status = result.get("status")
+    status = result.get("status") or result.get("pool", {}).get("status")
+    if reason is None:
+        reason = next((item.get("reason") for item in result.get("items", [])
+                       if isinstance(item, dict) and item.get("reason")), None)
     _log_operation(action, status=status, outcome=status, reason=reason,
                    error_type=("Refused" if status == "refused" else None),
                    stage=result.get("stage") or (failure or {}).get("stage")
@@ -683,7 +687,9 @@ def main(argv=None):
             code = error.code if isinstance(error, SystemExit) and isinstance(error.code, int) else 1
             if isinstance(error, KeyboardInterrupt):
                 code = 130
-            LOG.finish(code, error_type=type(error).__name__)
+            LOG.finish(code, action=LOG_ACTION, operation=LOG_ACTION,
+                       status="cancelled" if isinstance(error, KeyboardInterrupt) else "failed",
+                       error_type=type(error).__name__)
         raise
     if LOG is not None:
         finish_fields = dict(operation=LOG_ACTION, action=LOG_ACTION,

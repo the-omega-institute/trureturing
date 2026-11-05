@@ -298,8 +298,8 @@ def record(**event):
 def copytree(source, target, *args, **kwargs):
     record(operation="copytree", source=str(source), target=str(target))
     raise OSError(errno.ENOSPC, "no space for a duplicate unpacked tree")
-import lean_cache_release
-original_extract, original_rename = lean_cache_release.extract_members, pathlib.Path.rename
+import lean_cache_release_io
+original_extract, original_rename = lean_cache_release_io.extract_members, pathlib.Path.rename
 def extract(archive, path, members, deadline):
     record(operation="extract", path=str(path))
     result = original_extract(archive, path, members, deadline)
@@ -318,7 +318,7 @@ def rename(source, target):
                 and not source.parent.name.startswith(".release-backup-"))):
         raise OSError(errno.EIO, "injected rename failure")
     return original_rename(source, target)
-shutil.copytree, lean_cache_release.extract_members, pathlib.Path.rename = copytree, extract, rename
+shutil.copytree, lean_cache_release_io.extract_members, pathlib.Path.rename = copytree, extract, rename
 ''')
         (self.root / "install-events").unlink(missing_ok=True)
         return {"PYTHONPATH": str(self.bin), "FAKE_INSTALL_LOG": str(self.root / "install-events"),

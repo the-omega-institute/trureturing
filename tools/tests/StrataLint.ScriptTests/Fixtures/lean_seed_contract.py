@@ -50,8 +50,8 @@ if sys.argv[0].endswith("lean_cache_release.py"):
     sys.path.insert(0, os.environ["FAKE_REASSEMBLY_HELPER"])
     import cache_material
     original_open, original_unlink = pathlib.Path.open, pathlib.Path.unlink
-    import lean_cache_release
-    original_copy, original_extract, original_sha = lean_cache_release.copy_chunks, lean_cache_release.extract_members, lean_cache_release.archive_sha
+    import lean_cache_release_io
+    original_copy, original_extract, original_sha = lean_cache_release_io.copy_chunks, lean_cache_release_io.extract_members, lean_cache_release_io.archive_sha
     failure = os.environ["FAKE_REASSEMBLY_FAILURE"]
     sources, validated = {}, {}
     output = None
@@ -125,7 +125,7 @@ if sys.argv[0].endswith("lean_cache_release.py"):
         sample(pathlib.Path(archive.name).parent, "extract")
         return original_extract(archive, path, members, deadline)
     pathlib.Path.open, pathlib.Path.unlink = open_path, unlink
-    lean_cache_release.copy_chunks, lean_cache_release.extract_members, lean_cache_release.archive_sha = copy, extract, sha
+    lean_cache_release_io.copy_chunks, lean_cache_release_io.extract_members, lean_cache_release_io.archive_sha = copy, extract, sha
 ''')
         log = self.root / "reassembly-events"
         log.unlink(missing_ok=True)

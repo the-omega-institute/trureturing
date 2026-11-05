@@ -43,7 +43,7 @@ internal static partial class LeanCacheEnsureCommand
         string? stampMiss = null,
         ClonefileReceipt? clonefile = null,
         LeanArchiveAttempt? archive = null) =>
-        new(
+        ObserveEnsureResult(new(
             false,
             string.Empty,
             RenderReceipt(
@@ -56,7 +56,7 @@ internal static partial class LeanCacheEnsureCommand
                 MathlibOleanInventory.Unknown,
                 stampMiss,
                 clonefile,
-                archive));
+                archive)));
 
     private static CommandResult RefusedSymlink(string root, string pinSha256) =>
         FailureReceipt(
@@ -133,6 +133,42 @@ internal static partial class LeanCacheEnsureCommand
             archive_producer_commit_sha = archive?.ProducerCommitSha,
             archive_workflow_run_id = archive?.WorkflowRunId,
         }) + "\n";
+
+    private static CommandResult ObserveEnsureResult(CommandResult result)
+    {
+        try
+        {
+            const string prefix = "LEAN_CACHE ";
+            var receipt = result.Success ? result.Output : result.Error;
+            if (!receipt.StartsWith(prefix, StringComparison.Ordinal)) return result;
+            using var document = JsonDocument.Parse(receipt[prefix.Length..]);
+            var payload = document.RootElement;
+            string? Text(string name) => payload.TryGetProperty(name, out var value)
+                && value.ValueKind == JsonValueKind.String ? value.GetString() : null;
+            var details = new Dictionary<string, object?>();
+            foreach (var name in new[] { "method", "archive_status", "archive_mode",
+                "project_olean_state", "mathlib_olean_state", "stamp_miss", "cold_build_consent" })
+                if (payload.TryGetProperty(name, out var value)
+                    && value.ValueKind is JsonValueKind.String or JsonValueKind.True or JsonValueKind.False)
+                    details[name] = value.Clone();
+            var degraded = Text("archive_status") is "miss" or "rejected" or "failed";
+            var warm = Text("project_olean_state") == "warm" && Text("mathlib_olean_state") == "warm";
+            details["degraded"] = degraded;
+            details["cache_fallback"] = degraded ? warm ? "warm" :
+                Text("project_olean_state") == "cold" || Text("mathlib_olean_state") == "cold"
+                    ? "build_required" : "unknown" : "none";
+            MaintenanceLogAdapter.Record("ensure-cache", Text("status"),
+                result.Success ? "complete" : Text("method") ?? "preflight",
+                degraded ? "optional_archive_unsuccessful" : result.Success ? null : "ensure_failed",
+                result.Success ? null : "CommandResult", details);
+        }
+        catch (Exception error) when (error is JsonException or InvalidOperationException)
+        {
+            MaintenanceLogAdapter.Record("ensure-cache", result.Success ? "succeeded" : "failed",
+                "result", "invalid_receipt", error.GetType().Name);
+        }
+        return result;
+    }
 
     private static string ArchiveStatus(LeanArchiveAttempt? archive) =>
         (archive?.Outcome ?? LeanArchiveOutcome.NotAttempted) switch
