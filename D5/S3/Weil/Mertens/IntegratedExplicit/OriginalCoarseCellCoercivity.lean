@@ -13,8 +13,8 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 /-!
 The finite-cell condition concerns literal complex integrals of the inclusive
 atomic prefix. No completed detail space or hat-function equivalence is used.
-The candidate analytic inference is uniform low-band suppression by finite-cell
-cancellation, consumed by the original full-kernel endpoint.
+Finite-cell cancellation uniformly suppresses low-band spectral mass, giving
+the original full-kernel inequality from the logarithmic multiplier bound.
 -/
 
 noncomputable section
