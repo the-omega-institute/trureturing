@@ -34,6 +34,11 @@ exactly one representative $(a,b,c)$ with $a\ge b\ge c\ge0$ and even coordinate 
 This fixes the group interpretation of the OEIS word “orbits”; the rotation subgroup
 is a different action.
 
+## Verified locator
+
+Conway–Sloane: https://doi.org/10.1098/rspa.1997.0126.
+OEIS: https://oeis.org/A008368, with the immutable entry linked above.
+
 ## Generating function
 
 The repository theorem concerns the literal shell-orbit count, including radius zero.
