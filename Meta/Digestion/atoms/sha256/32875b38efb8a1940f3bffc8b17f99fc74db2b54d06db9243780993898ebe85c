@@ -1,0 +1,21 @@
+**定理 9.1（原细分支的等价刻画）。**输入、输出各满足定义 7.1。给定同一实际测试的有限细分支 $L_j:M_{\rm in}\to M_{\rm out}$，不预设其可加。以下条件等价：
+
+$$
+\boxed{\sum_j Q_{\rm out}(L_jx+U_{\rm out}L_jy)
+=Q_{\rm in}(x+U_{\rm in}y)\quad(x,y\in M_{\rm in});}
+\tag{P9}
+$$
+
+存在唯一有界复线性 $K_j:H_{\rm in}\to H_{\rm out}$，使
+
+$$
+F_{\rm out}L_j=K_jF_{\rm in},\qquad \sum_jK_j^*K_j=I.
+\tag{9.1}
+$$
+
+**证明。**写 $a_x=F_{\rm in}x$、$b_x=\bigoplus_jF_{\rm out}L_jx$。(P9) 的对角 $x=y$ 利用 $|1+\zeta|=1$ 给 $\|b_x\|=\|a_x\|$。减去对角量后得到 $\operatorname{Re}(\zeta h(b_x,b_y))=\operatorname{Re}(\zeta h(a_x,a_y))$；交换 $x,y$ 又给共轭配对的一式。若 $h=u+iv$，两项分别为 $-u/2-\sqrt3v/2$、$-u/2+\sqrt3v/2$，故恢复完整复 Gram。于是 $a_x\mapsto b_x$ 在复线性包上良定义且等距，唯一延到完成。取坐标给 $K_j$ 和 (9.1)。反向用直和等距作用于 $a_x+\zeta a_y$ 即得 (P9)。$\square$
+
+它给可见协变 $F_{\rm out}L_jU_{\rm in}=F_{\rm out}U_{\rm out}L_j$。若保留第 5.2 节原档案逐字协变 $L_jU_{\rm in}=U_{\rm out}L_j$ 的合同，则该原条件仍保留，不能冒称已由 (P9) 得到。具体地，在 $M=\mathbb C\times\mathbb N$ 取分量聚合、$q(z,n)=|z|^2$、$U(z,n)=(\zeta z,n+1)$ 与 $L(z,n)=(z,2n)$，(T7)、单分支 (P9) 均成立，两个协变复合的档案却分别为 $2n+2$、$2n+1$。
+
+在定理 8.1 的原实签名及该逐字协变下，旧全部距离校准与 (P9) 等价：旧条件由定理 5.4 给 (9.1)，继而给 (P9)；反向由 (9.1) 给所有差的合计范数不变。因此完整原来源比较没有暗中撤销档案合同，减少的是可见校准的输入种类。
+

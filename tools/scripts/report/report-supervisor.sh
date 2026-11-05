@@ -26,6 +26,14 @@ REPOSITORY_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 RESOURCE_OBSERVATION_LIB="$REPOSITORY_ROOT/tools/scripts/lib/resource-observation-lib.sh"
 [[ -r "$RESOURCE_OBSERVATION_LIB" ]] || exit 2
 source "$RESOURCE_OBSERVATION_LIB"
+if [[ -f "$REPOSITORY_ROOT/tools/scripts/lib/maintenance-log-lib.sh" ]]; then
+  source "$REPOSITORY_ROOT/tools/scripts/lib/maintenance-log-lib.sh"
+fi
+if [[ "${TRURETURING_MAINTENANCE_SCRIPT:-}" == lean-report ]]; then
+  if declare -F maintenance_log_begin >/dev/null; then
+  maintenance_log_begin lean-report "$REPOSITORY_ROOT" "$$" "$PPID"
+fi
+fi
 if [[ -d /private/tmp ]]; then DEFAULT_HOST_TMP=/private/tmp; else DEFAULT_HOST_TMP=/tmp; fi
 STATE_ROOT="${STRATALINT_SUPERVISOR_ROOT:-$DEFAULT_HOST_TMP/stratalint-report-supervisor-${UID:-$(id -u)}}"
 RUN_ROOT="$STATE_ROOT/runs"
@@ -660,6 +668,7 @@ finish() {
   else
     resource_observe "report-supervisor-$ROLE" "$REPOSITORY_ROOT" "$FD_PEAK" "$RSS_PEAK_KB" || true
   fi
+  if declare -F maintenance_log_finish >/dev/null; then maintenance_log_finish "$rc"; fi
   if [[ -n "$SLOT_DIR" ]]; then rm -rf -- "$SLOT_DIR"; fi
   rm -rf -- "$TMP_ROOT"
   exit "$rc"

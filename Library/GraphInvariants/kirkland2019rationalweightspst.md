@@ -113,7 +113,7 @@ The open question that follows it:
 > It is an open question if the converse holds even if there are eigenvectors with zeros in the jth place.  We note that in the more relaxed setting of PGST, this more general conjectured version of the converse fails to be true \cite{internal}: PGST can occur between internal vertices of paths in the absence of PGST between the end vertices.
 
 The question is restated as open by R. Bailey, arXiv:2412.16351
-(`Library/GraphInvariants/bailey2024orthogonalpst.md`). The module
+(`Library/Eigenstructure/bailey2024orthogonalpst.md`). The module
 `D5/S3/Quantum/Dynamics/InteriorPathTransferConverseRefutation` refutes the
 general converse on five vertices without potentials.
 

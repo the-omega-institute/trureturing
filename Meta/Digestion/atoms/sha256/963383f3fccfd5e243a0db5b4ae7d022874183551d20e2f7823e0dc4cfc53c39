@@ -1,0 +1,38 @@
+**定理 84.2（保正交不作用但破坏原子零接触的完整模型）。** 存在完整 $B+\mathrm O_\pi+\mathrm{SJ}$ 模型不满足 $\mathrm Z_\pi$，即使原全部 CP 菜单、任意纠缠联合准备及原有限历史均保留。
+
+证明。取定理 33.1、33.3 的完整 tagged-CP 骨架，原 $q_A$ 为普通迹，全部对象及已声明联合为带原因子标签的有限复矩阵代数直和。整个原 $P=\mathbb C\oplus M_3$ 上取 $\Gamma_P=\operatorname{id}$；在与 $P$ 标签不同的原三阶对象 $A_0$ 上取 $\Gamma_{A_0}=\operatorname{Ad}_{v}$、$v=\operatorname{diag}(1,-1,1)$。直接和、经典复制、重括号与交换仍按原标签运输，实际张量取 $\Gamma_{AB}=\Gamma_A\otimes\Gamma_B$。从模型定义起指定原关系为
+
+$$
+F_A(a,b)=\Gamma_A\!\left(\frac i2[a,b]\right).
+\tag{84.2}
+$$
+
+它在每个整个原 $E_A$ 上实双线性、交替且杀掉单位。每对正交原始投影相乘为零，故其交换子为零；因此 $\mathrm O_\pi$ 对所有原对象及联合纠缠原子成立。X 的同侧保持例如为
+
+$$
+F_{AB}(a\otimes I,a'\otimes I)=F_A(a,a')\otimes I;
+\tag{84.3}
+$$
+
+交叉两侧的交换子为零，故交叉原 $D=0$ 也成立。整个指针上的 $F_P=\delta$，所以直接满足 SJ。
+
+$B$ 其余条款与原 $D$ 的这一赋值无关：P/G、精确 $N_u$、AC、Xs 和全事件 R 仍由原完整 CP 仪器、全部联合密度及原合法连线满足。原 F 的具名支持双返回按 (33.1) 对每条原细路径 $K$ 保留 $\operatorname{Ad}_{\sqrt{q_K}K^+}$、原 $q_K$、同数反向资料和失败完成；原遗忘、粗细标签、全部输出以及任意有限合法接续均不变。这里不要求原 CP 事件与 $\Gamma$ 交换，亦不要求各 $D_a$ 是导子，因为那正是待删除的零接触所负责的后果。普通复坐标从模型定义起存在，不借用失效候选的重构。
+
+仍在原 $A_0$ 的前二阶数学角取命题 84.1 的 $p,r$，并令
+
+$$
+a=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\qquad
+s=\frac12\begin{pmatrix}1&-i\\i&1\end{pmatrix}.
+$$
+
+$s$ 是整个三阶块的原始投影。直接矩阵乘法给
+
+$$
+\delta_ap=\frac1{10}\begin{pmatrix}4&3\\3&-4\end{pmatrix},\qquad
+F_{A_0}(a,p)=\frac1{10}\begin{pmatrix}4&-3\\-3&-4\end{pmatrix},\qquad
+q_{A_0}(r,F_{A_0}(s,p))=\frac6{25}\ne0.
+\tag{84.4}
+$$
+
+最后一步使用二阶角单位与 $p$ 交换，故 $F(s,p)=F(a,p)/2$。原菜单实际包含质量一的准备 $\alpha_r(x)=\operatorname{Tr}(rx)$，满足 $\alpha_r(p)=0$，却有上述非零一阶读数。由此在原始生成元、原始正元和原始零读数三者上直接否定 $\mathrm Z_\pi$，不借用任何删除后未证的等价。∎
+

@@ -1,0 +1,56 @@
+**Proposition 7.4 (Every-state failure when damping approaches the undamped endpoint).** In the literal system $a=b=c=1$, prescribe $\varepsilon_t=1$ at every integer time, so $t_j=j$, and prescribe before choosing $u_0$ the nonconstant sequence
+
+$$
+\alpha_j=\frac{2^{j+3}-1}{2^{j+3}+1}\in(0,1)\qquad(j\geq0).
+\tag{7.18}
+$$
+
+Then $\alpha_j\uparrow1$, $\mathcal E_\varepsilon=\infty$, but every nonzero real initial state has a strictly positive limiting original $Q$-norm. More precisely, for the actual recurrence $u_{j+1}=N_{\alpha_j}u_j$,
+
+$$
+\frac12\|u_0\|_Q\leq\lim_{t\to\infty}\|u_t\|_Q\leq\|u_0\|_Q,
+\qquad S_{\varepsilon,\boldsymbol\alpha}=\{0\}.
+\tag{7.19}
+$$
+
+Thus the following unrestricted extension of the fixed-parameter angular-divergence implication is false: for every fixed positive triple, every prescribed binary schedule with infinitely many events, every prescribed interior event-parameter sequence and every real initial vector, $\mathcal E_\varepsilon=\infty$ implies $u_t\to0$.
+
+*Proof.* The original matrices from Theorem 2.1 are
+
+$$
+A=\begin{pmatrix}1&0\\-2&2\end{pmatrix},\qquad
+M=\begin{pmatrix}-1&1\\-1&0\end{pmatrix},\qquad
+N_{\alpha_j}=\frac1{1+\alpha_j}
+\begin{pmatrix}1-3\alpha_j&2\alpha_j\\1-3\alpha_j&\alpha_j-1\end{pmatrix},
+$$
+
+and the original quadratic form is $Q(x,y)=x^2+(y-x)^2+y^2$. The integers $2^{j+3}$ strictly increase to infinity, so $\alpha_j=1-2/(2^{j+3}+1)$ strictly increases to one while remaining strictly interior. Its event factor in (7.3) is exactly
+
+$$
+\lambda_j=\frac{3\alpha_j-1}{1+\alpha_j}
+=1-2^{-j-2}\in(0,1),\qquad
+\sum_{j=0}^\infty(1-\lambda_j)=\frac12.
+\tag{7.20}
+$$
+
+Use the original-coordinate factorization (7.5), which is valid at each of these interior parameters without (U). Decompose any actual input as $z=Pz+(I-P)z$, orthogonally for $Q$. Since $M$ is a $Q$-isometry and $0<\lambda_j<1$,
+
+$$
+\begin{aligned}
+\|N_{\alpha_j}z\|_Q^2
+&=\|Pz\|_Q^2+\lambda_j^2\|(I-P)z\|_Q^2,\\
+\lambda_j\|z\|_Q&\leq\|N_{\alpha_j}z\|_Q\leq\|z\|_Q.
+\end{aligned}
+$$
+
+Apply these inequalities successively to $z=u_j$ in the prescribed recurrence. For every integer $n\geq1$ this gives
+
+$$
+\left(\prod_{j=0}^{n-1}\lambda_j\right)\|u_0\|_Q
+\leq\|u_n\|_Q\leq\|u_0\|_Q.
+$$
+
+For nonnegative numbers $r_j\leq1$, induction using $(1-x)(1-y)\geq1-x-y$ proves $\prod_{j=0}^{n-1}(1-r_j)\geq1-\sum_{j=0}^{n-1}r_j$. With $r_j=2^{-j-2}$, the right side here is $1/2+2^{-n-1}>1/2$. Hence every chronological norm is at least $\|u_0\|_Q/2$. These are bounds on every actual trajectory, rather than a determinant assertion. The norms are also nonincreasing, so their limits exist and satisfy (7.19), including arbitrary initial scales. For $u_0\ne0$ positive definiteness gives a strictly positive limit; for $u_0=0$ the entire trajectory is zero. The elementary positive-product comparison used here is the same principle underlying (6.9) and (6.18), with its finite-product proof supplied above.
+
+Finally $\theta=\arccos(-1/2)=2\pi/3$ and every gap is one. Thus every term of $\mathcal E_\varepsilon$ is $\sin^2(2\pi/3)=3/4$, and the sum diverges. At the same time $\lambda_j\uparrow1$, so no $\rho<1$ bounds all of them. This verifies the failure of the stated unrestricted implication without contradicting Theorem 7.2 or the fixed-map statements. $\square$
+
