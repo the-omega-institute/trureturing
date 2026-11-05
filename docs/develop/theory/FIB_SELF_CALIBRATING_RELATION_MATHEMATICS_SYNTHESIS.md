@@ -2036,3 +2036,170 @@ $$
 它把“自校准了什么”推进到一个更明确的层次：我们不仅检查表示是否保留当前目标，还检查当前摘要是否在声明操作下能定义后继；若不能，能指出具体遗漏的关联以及它进入后继的方向。补全后的摘要可以已经闭合，而状态仍然运动。
 
 本节仍是条件性理论综合。有限维生成元、联合结构、实际读口、物理取得、全部目标覆盖、噪声和有限样本认证没有由此自动供应；R5-007 全文也未把本节转成新的 Lean/kernel 声明。它补的是后继闭合和隐藏关联的反例边界，不把“闭合”冒充“静止”，也不把纸面联合模型冒充现实装置。
+
+## 25.30 完成历史奇偶的非延拓障碍
+
+### 25.30.1 一个正的奇偶校准供应
+
+`origin/dev@820a9e83b51` 的
+[`CubicThetaOddParity`](../../../D5/S3/Arith/ModularForms/CubicThetaOddParity.lean)
+提供一条独立的正向奇偶校准。对
+
+$$
+\operatorname{CoreFiber}(n)=\{p\in\mathbb Z^2:\operatorname{coreExponent}(p)=n\},
+$$
+
+`coreOddEquiv n` 是
+
+$$
+\operatorname{CoreFiber}(n)\simeq
+\operatorname{CoreFiber}(4n+1),
+$$
+
+而 $\operatorname{CoreFiber}(4n+3)$ 是空的。消费到整数幂级数
+`integralT` 后，现有定理
+`integralT_coeff_mod_four` 精确给出
+
+$$
+[q^{4n+1}]\,\mathsf{integralT}=[q^n]\,\mathsf{integralT},
+\qquad
+[q^{4n+3}]\,\mathsf{integralT}=0.
+$$
+
+这是一个由纤维双射和空纤维得到的正性读出：$4n+1$ 保留核心计数，
+$4n+3$ 没有核心。它只校准该模四算术对象的支持与递推，不与下述
+RRO 的来源、操作或历史目标建立共同实现。
+
+### 25.30.2 RRO 的完整回复点与完成历史目标
+
+现在固定 [Sparse Literal History Transport §50](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md#50-有限字面历史的规范下界与语义上树) 的
+有限地址集 $\Sigma^*$（$\Sigma=\{L,R\}$）和四值回复集
+
+$$
+\mathcal A=\{\mathsf{absent},\alpha,\beta,\mathsf{branch}\}.
+$$
+
+令 $r_u(p)\in\mathcal A$ 是该卷的有限树回复。取
+
+$$
+t=\langle\beta,\alpha\rangle=P_2,
+$$
+
+并使用 [Sparse Native Entry Acquisition §§2,11](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_NATIVE_ENTRY_ACQUISITION.md#2-coordinates-that-can-be-earned-without-the-entry) 的已完成 OLD-frontier 操作 $F$。对每个 $r\ge0$，令
+
+$$
+u_r=F^r(t)=\rho^r t=P_{r+2},
+\qquad
+c_r:\Sigma^*\to\mathcal A,
+\qquad
+c_r(p)=r_{u_r}(p).
+$$
+
+$c_r$ 是整个有限地址上的**完整回复点**，不包含调用次数、epoch、provenance
+或控制历史，因而不是有限 transcript。由同一来源、每次均在其已达到且
+有限资源承诺域内完成的递推
+
+$$
+P_0=\alpha,\quad P_1=\beta,\quad
+P_{q+2}=\langle P_{q+1},P_q\rangle
+$$
+
+可归纳得到其最小叶深度为 $\lfloor q/2\rfloor$。因此，对任意
+有限地址深度 $D$，只要 $r\ge2D+2$，便有
+
+$$
+\forall p\in\Sigma^*,\ |p|\le D\Longrightarrow
+c_r(p)=\mathsf{branch}.
+$$
+
+令 $\Omega:\Sigma^*\to\mathcal A$ 为恒取
+$\mathsf{branch}$ 的语义上树（SLH §50 的 $\Omega$）。它只是完成空间中的
+累积点，从不属于有限原来源。并在已达到的
+完整回复点族上定义完成历史目标
+
+$$
+T:\{c_r:r\ge0\}\to\{0,1\},
+\qquad T(c_r)=r\bmod2.
+$$
+
+$c_r$ 彼此不同（例如 $P_{r+2}$ 的叶数随递推增加），所以 $T$ 定义良好。
+这里的奇偶读取的是已经完成的 $F$ 次数；它不是由有限树地址回复的
+某个未声明标签代替的静态属性。
+
+为明确“趋近”所指的观察完成，定义
+
+$$
+\mathcal Y=\mathcal A^{\Sigma^*}
+$$
+
+为离散四值集上的乘积空间；基本柱集由有限 $M\subseteq\Sigma^*$ 和
+指定 $\xi:M\to\mathcal A$ 给出：
+
+$$
+U(M,\xi)=\{c\in\mathcal Y:\forall p\in M,\ c(p)=\xi(p)\}.
+$$
+
+这是本节明确定义的地址观察完成，不是对实际来源空间紧致性、来源像
+或物理实现的额外假设。若 $D(M)=\max_{p\in M}|p|$（空菜单取
+$D(\varnothing)=0$），上述有限深度结论给出
+
+$$
+c_r\longrightarrow\Omega
+\quad(r\to\infty)
+$$
+
+在这个柱拓扑中的逐柱意义。
+
+### 25.30.3 地址乘积上的非延拓与有限菜单失败
+
+不存在在 $\Omega$ 连续的函数
+
+$$
+\widetilde T:\mathcal Y\to\{0,1\}
+$$
+
+使得 $\widetilde T(c_r)=T(c_r)$ 对所有 $r$ 成立。事实上，若它在
+$\Omega$ 连续，离散陪域给出一个包含 $\Omega$ 的有限柱邻域，在该邻域
+上 $\widetilde T$ 必须恒定；但由上节，所有充分大的 $c_r$ 都进入该柱，
+而 $T(c_r)$ 随 $r$ 奇偶交替，矛盾。
+
+同一事实有一个不使用拓扑术语的有限菜单形式。对每个固定有限
+$M\subseteq\Sigma^*$，定义
+
+$$
+\operatorname{obs}_M(c)=(c(p))_{p\in M}.
+$$
+
+则
+
+$$
+\nexists\,\tau_M:\mathcal A^M\to\{0,1\},\quad
+\forall r\ge0,\quad
+T(c_r)=\tau_M(\operatorname{obs}_M(c_r)).
+$$
+
+取任意 $r\ge2D(M)+2$，$c_r$ 与 $c_{r+1}$ 在 $M$ 上完全相同，
+而 $T(c_r)\ne T(c_{r+1})$。所以没有一个固定有限地址菜单能够在整个
+已达到的 $\{F^r(t):r\ge0\}$ 上决定完成历史奇偶。这里的奇偶是
+完成的 $F$ 次数（等价于 $P_{r+2}$ 的索引模二），不是稀疏来源中的
+primitive-event 计数 $n(u)$。该结论是
+RRO 源、具体 $F$ 操作、有限地址回复和历史目标的联合障碍，不能简化为
+“某个无限对象不是紧的”或一般的紧致性重述。
+
+### 25.30.4 来源边界与归属
+
+上述两条奇偶路线必须分开读取：CubicTheta 的模四系数关系是正向的
+算术支持校准；RRO 的地址乘积结果是完成历史目标对固定有限菜单的
+非延拓。后者不否定每个固定 $r$ 在其承诺域内的有限获取，也不提供对
+无界 $r$ 的统一获取协议。它不认证来源真实性、发生身份、epoch、权限、
+物理 provenance 或 controller 历史，不恢复 Busy/Stop 细节，也不把
+柱拓扑中的极限点当作实际来源。
+
+本节的有限菜单结论只针对固定的非自适应有限地址集；它不排除地址深度
+随 $r$ 增长的自适应程序、来源相关菜单或无限菜单。每个有限 $r$ 仍在
+其已达到的有限资源来源域内。本节是 `repo-derived` 的来源特定综合；没有文献原创性主张，没有新增
+Lean 声明或当前编译认证。已有 `integralT_coeff_mod_four`、SLH §50 的
+语义 $\Omega$ 与 Sparse Native Entry Acquisition §§2、11 的完成 $F$
+及 $u_r=\rho^rt$ 被作为供应事实使用。新增内容是把它们接成精确的
+完整回复点、历史奇偶和有限菜单非延拓关系；它不冒充物理取得或项目范围
+的自校准定理。
