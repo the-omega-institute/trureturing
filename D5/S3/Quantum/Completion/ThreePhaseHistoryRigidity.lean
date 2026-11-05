@@ -37,7 +37,7 @@ instance phaseWordsFintype (n : ℕ) : Fintype (PhaseWords n) := by
       letI := ih
       exact inferInstanceAs (Fintype (PhaseWords n × ZMod 3))
 
-private lemma phaseWords_card (n : ℕ) : Fintype.card (PhaseWords n) = 3 ^ n := by
+lemma phaseWords_card (n : ℕ) : Fintype.card (PhaseWords n) = 3 ^ n := by
   induction n with
   | zero =>
       change Fintype.card Unit = 1
@@ -55,7 +55,7 @@ def orderedHistory {M : Type*} [MulOneClass M] (U : M → M) (u : M) :
   | 0, _ => 1
   | n + 1, w => orderedHistory U u n w.1 * U^[w.2.val] u
 
-private lemma history_mem {M : Type*} [MulOneClass M]
+lemma history_mem {M : Type*} [MulOneClass M]
     (U : M → M) (u : M) (N : Set M) (h₁ : (1 : M) ∈ N)
     (hs : ∀ x ∈ N, ∀ k : ZMod 3, x * U^[k.val] u ∈ N)
     (n : ℕ) (w : PhaseWords n) : orderedHistory U u n w ∈ N := by
