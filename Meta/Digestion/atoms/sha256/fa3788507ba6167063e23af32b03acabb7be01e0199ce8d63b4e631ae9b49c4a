@@ -1,0 +1,59 @@
+**Definition 50.1 (original pairs and the positive scalar supplier).** Keep the original certificate basis $T=(b_+\ b_-)$, ordinary transpose and one actual shared feedback. Set
+
+$$
+\begin{aligned}
+ I&=[11/5,9/4],&h&=\sqrt{1/2},&c&=\sqrt{(1+h)/2},&s&=\sqrt{(1-h)/2},\\
+ k&=c-h,&d&=2(h+c),&e&=2(h+s),&p&=1-q,\\
+ \beta^\phi&=(\sqrt p,e^{i\phi}\sqrt q)^{\mathsf T},&
+ E&=(T\beta^\phi(\beta^\phi)^\dagger T^\dagger)^{\mathsf T},&q&\in[0,1],&\phi&\in\mathbb R.
+\end{aligned}
+\tag{50.1}
+$$
+
+Thus $E\ge0$, $\operatorname{Tr}E=1$ and $\operatorname{rank}E=1$, and every original normalized pure effect occurs. For one $U\in U(4)$, let $w=\operatorname{diag}(UU_+^\dagger)$ and use the same $A,B,P,Q$ as (23.2). In particular $A=|\sum_jw_j|$ and $B=|w_1-w_2+i(w_3-w_4)|$. The original distances and defect are
+
+$$
+\begin{aligned}
+ \rho_\sigma(E,U)&=\min_{|\lambda|=1}\bigl(\|E-E_\sigma\|_{\mathrm F}^2+\|U-\lambda U_\sigma\|_{\mathrm F}^2\bigr),&
+ \rho&=\min\{\rho_+,\rho_-\},\\
+ \rho_+&=8+2q-2A,&\rho_-&=10-2q-2B,\\
+ g(E,U)&=d^2p+e^2q-|\sqrt p\,P+e^{i\phi}\sqrt q\,Q|^2.
+\end{aligned}
+\tag{50.2}
+$$
+
+Each $\lambda$ is a single scalar on the whole feedback, as in (23.11); there are no column controls. If $\rho_+=\rho=\xi\in I$, put
+
+$$
+\begin{aligned}
+ t&=\xi/2,&x&=1-\xi/4+q/2,&y&=\sqrt{1-x^2},&L&=1+x,\\
+ R_0&=hx+c,&\Gamma_0&=\sqrt p\,R_0+\sqrt q\,hy,&
+ G_\xi(q)&=d^2p+e^2q-4\Gamma_0^2,\\
+ \mu&=\tfrac12(hk\sqrt p/R_0+h\sqrt q/y),&
+ \nu&=\tfrac12\bigl(k\sqrt p+(h^2x-s^2)\sqrt q/(hy)\bigr),&t_c&=s\sqrt{qL}/x,\\
+ \mathfrak D_+(x,q)&=4\mu\nu x^2/L-s^2q,&
+ \omega(\xi,q)&=\nu-t_c^2/(4\mu)=L\mathfrak D_+(x,q)/(4\mu x^2),\\
+ B_{\mathrm{gain}}&=\frac{k^2\sqrt p}{8R_0}+\frac{2s\sqrt q\,L}{3\sqrt3\,x},&
+ J&=\frac{\max\{0,-\omega\}^2}{4B_{\mathrm{gain}}}.
+\end{aligned}
+\tag{50.3}
+$$
+
+These are exactly the positive row $(a,b,\ell,m)=(h,c,h,s)$ of (46.2): $B_{\mathrm{gain}}=C_{\mathrm{gain},+}$, $\max\{0,-\omega\}=\eta_+$ and $J=J_+$ in (47.1). In particular $B_{\mathrm{gain}}$ is distinct from the trace modulus $B$. The full population range is $[0,\min\{1,\xi/2\}]=[0,1]$, and throughout it
+
+$$
+ 7/16\le x\le19/20<1,\qquad y>0,\quad R_0>0,\quad\mu>0,\quad B_{\mathrm{gain}}>0.
+\tag{50.4}
+$$
+
+At $q=0$ the first summands keep $\mu,B_{\mathrm{gain}}$ positive; at $q=1$ the second summands do so. No singular $x=1$ slice occurs in $I$. Let $\delta_\circ(t)$ be the unique positive geometric selector of Theorem 37.5, and set
+
+$$
+ q_\xi=t-\delta_\circ(t),\qquad
+ V(\xi)=G_\xi(q_\xi)=N_{\mathrm{geo}}(\xi)+\kappa\xi,\qquad
+ D_{\mathrm{sel}}(\xi)=\mathfrak D_+(1-\xi/4+q_\xi/2,q_\xi).
+\tag{50.5}
+$$
+
+The determinant agrees with (36.43) and (43.1), with their second argument $p=1-q$. The supplier $V$ here is only the selected positive rank-one geometric value, without a premise of unrestricted optimality.
+

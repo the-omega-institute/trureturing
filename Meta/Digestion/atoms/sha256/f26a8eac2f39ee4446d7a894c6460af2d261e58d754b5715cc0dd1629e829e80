@@ -1,0 +1,31 @@
+**图 1。**完整记录的几何：两个入口是同一来源的两种等距编码。图中箭头不是“整个 $\Omega$ 复位为一个原子”。
+
+```latex
+\begin{tikzpicture}[>=Latex,font=\small]
+\begin{scope}[shift={(-3.3,0)}]
+\draw[fill=teal!4,draw=teal!70!black] (0,0) circle (1.65);
+\draw[teal!50!black] (-1.65,0) arc[start angle=180,end angle=360,x radius=1.65,y radius=.45];
+\draw[dashed,teal!50!black] (1.65,0) arc[start angle=0,end angle=180,x radius=1.65,y radius=.45];
+\draw[->] (-2,0)--(2,0) node[right] {$r_x$};
+\draw[->] (0,-1.9)--(0,2.05) node[above] {$r_z$};
+\draw[->] (-.8,-.8)--(.95,.95) node[right] {$r_y$};
+\draw[->,very thick,teal!80!black] (0,0)--(.75,.65);
+\fill[teal!80!black] (.75,.65) circle (.045);
+\node[align=center,text width=5.9cm] at (0,-2.7) {两条历史的 Gram 球\\$r=(2\Re c,-2\Im c,p-q)/(p+q)$\\球面：两比较向量线性相关};
+\end{scope}
+\begin{scope}[shift={(3.7,0)}]
+\coordinate (v1) at (-1.35,-.8);
+\coordinate (v2) at (1.3,-.7);
+\coordinate (v3) at (0,1.45);
+\draw[->,thick,teal!70!black] (v1)--node[below] {$c_{12}$}(v2);
+\draw[->,thick,teal!70!black] (v2)--node[right] {$c_{23}$}(v3);
+\draw[->,thick,teal!70!black] (v3)--node[left] {$c_{31}$}(v1);
+\foreach \v/\lab in {v1/1,v2/2,v3/3}{\fill (\v) circle (.05);}
+\node[below left] at (v1) {$[\psi_1]$};
+\node[below right] at (v2) {$[\psi_2]$};
+\node[above] at (v3) {$[\psi_3]$};
+\node[align=center,text width=5.9cm] at (0,-2.7) {三条射线的关系环：$B=c_{12}c_{23}c_{31}$\\运输相位 $\bar B/|B|$，成功率 $|B|^2$\\距离与相位共同受 Gram 正性约束};
+\end{scope}
+\end{tikzpicture}
+```
+

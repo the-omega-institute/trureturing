@@ -198,7 +198,187 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer
 
 For every finite simple graph with decidable adjacency and every real pair-weight function, the original wLap is Hermitian.
 
-**Definition 1.17 (The constant-space projection matrix).**
+**Theorem 1.17 (Native weighted edge action).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_mul`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_mul` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every n,G,w,x and vertex i, the original matrix action is the sum over adjacent j of w(i,j)*(x i-x j).
+
+**Theorem 1.18 (Constants lie in the native kernel).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_one`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_one` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every n,G,w, the original Laplacian sends the all-ones vector to zero.
+
+**Theorem 1.19 (The constant projector is Hermitian).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.proj_hermitian`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.proj_hermitian` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every n, constProj n is Hermitian.
+
+**Theorem 1.20 (The constant projector averages coordinates).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.proj_mul`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.proj_mul` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every n,x,i, its matrix action at i is the coordinate sum of x divided by n.
+
+**Theorem 1.21 (The constant quadratic form).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.proj_energy`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.proj_energy` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every n,x, the constant-projector energy is the square of the coordinate sum divided by n.
+
+**Theorem 1.22 (Idempotence of the constant projector).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.proj_sq`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.proj_sq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive n, constProj n squared equals itself.
+
+**Theorem 1.23 (The original Laplacian annihilates constants).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_proj`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_proj` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every n,G,w, wLap G w times constProj n is zero.
+
+**Theorem 1.24 (The native Laplacian image has sum zero).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_sum`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every n,G,w,x, the coordinate sum of wLap G w acting on x is zero.
+
+**Definition 1.25 (Original pair-difference vector).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.delta`
+
+*Formalization.* `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.delta` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every n,p,q, delta p q is the difference of the two standard coordinate vectors.
+
+**Theorem 1.26 (Pair differences have zero sum).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.delta_sum`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.delta_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every n,p,q, the coordinate sum of delta p q is zero.
+
+**Theorem 1.27 (Pair differences read coordinate gaps).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.delta_dot`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.delta_dot` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every n,p,q,x, dotProduct (delta p q) x equals x p-x q.
+
+**Theorem 1.28 (Distinct pair differences are nonzero).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.delta_ne`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.delta_ne` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every n and distinct p,q, delta p q is nonzero.
+
+**Theorem 1.29 (The constant projector kills pair differences).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.proj_delta`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.proj_delta` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every n,p,q, constProj n acting on delta p q is zero.
+
+**Theorem 1.30 (Symmetric pair sums count unordered pairs twice).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.double_sum_lt`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.double_sum_lt` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every n and symmetric real pair function f with zero diagonal, the sum over all ordered pairs equals twice the sum over i less than j.
+
+**Theorem 1.31 (Independent-part pair-gap identity).**
+
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.pair_gap_sum`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.pair_gap_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every m, real function s on Fin m and real t, the ordered off-diagonal sum of s i+s j-2*t equals 2*(m-1)*(sum s-m*t).
+
+**Definition 1.32 (The constant-space projection matrix).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.constProj`
 
@@ -210,7 +390,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer
 
 Every entry is the reciprocal of the number of vertices.
 
-**Theorem 1.18 (The native zero eigenvalue has multiplicity one).**
+**Theorem 1.33 (The native zero eigenvalue has multiplicity one).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.zero_eigenvalue_count`
 
@@ -222,7 +402,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer
 
 For m positive and every positive edge weighting of K2m, exactly one indexed native Hermitian eigenvalue is zero.
 
-**Theorem 1.19 (The Rayleigh value and the native eigenvalues).**
+**Theorem 1.34 (The Rayleigh value and the native eigenvalues).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lambda2_spectral`
 
@@ -234,7 +414,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer
 
 For m positive and every positive edge weighting, lambda2 is positive, L-lambda2*(I-P) is positive semidefinite, and every nonzero native eigenvalue is at least lambda2.
 
-**Theorem 1.20 (Harmonic all-pairs resistance and the native spectrum).**
+**Theorem 1.35 (Harmonic all-pairs resistance and the native spectrum).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.resistance_spectral`
 
@@ -246,7 +426,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer
 
 For m positive and every positive edge weighting, the harmonic totalRes is (m+2) times the sum of reciprocal native Hermitian eigenvalues, with the zero inverse interpreted as zero.
 
-**Definition 1.21 (The two conductances incident to a leaf).**
+**Definition 1.36 (The two conductances incident to a leaf).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.leafSum`
 
@@ -258,7 +438,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer
 
 The original leafSum is the sum of its two hub-to-leaf conductances.
 
-**Theorem 1.22 (The native Laplacian trace).**
+**Theorem 1.37 (The native Laplacian trace).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_trace`
 
@@ -270,7 +450,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer
 
 The trace equals twice the sum of all leafSum values, for arbitrary real weights.
 
-**Theorem 1.23 (The sharp product bound and its trace equality consequence).**
+**Theorem 1.38 (The sharp product bound and its trace equality consequence).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.product_bound_trace`
 
@@ -282,7 +462,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer
 
 For every m at least three and positive edge weighting, lambda2*totalRes is at most C_m; equality forces the sum of leafSum values to be m*lambda2.
 
-**Theorem 1.24 (The positive uniform parameters forced by equality).**
+**Theorem 1.39 (The positive uniform parameters forced by equality).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.equality_parameters`
 
@@ -294,7 +474,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer
 
 Product equality forces positive a and b, common across every leaf, with a+b=lambda2 and (m+2)*a*b=lambda2 squared.
 
-**Theorem 1.25 (The explicit representative has its prescribed edge restriction).**
+**Theorem 1.40 (The explicit representative has its prescribed edge restriction).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.uniformWeights_edges`
 
@@ -306,7 +486,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer
 
 The original uniformWeights representative has first-hub conductance a and second-hub conductance b on every leaf.
 
-**Theorem 1.26 (Bounds and square of the splitting ratio).**
+**Theorem 1.41 (Bounds and square of the splitting ratio).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.splitRatio_facts`
 
@@ -318,7 +498,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer
 
 For m at least three, splitRatio is strictly between zero and one and its square is (m-2)/(m+2).
 
-**Theorem 1.27 (Both common-sign quadratic solutions).**
+**Theorem 1.42 (Both common-sign quadratic solutions).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.parameter_roots`
 
@@ -330,7 +510,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer
 
 For every m at least three, if a+b=t and (m+2)*a*b=t squared, then the ordered pair is t/2*(1+rho),t/2*(1-rho), or the reverse pair.
 
-**Theorem 1.28 (The extremal Rayleigh and harmonic resistance values).**
+**Theorem 1.43 (The extremal Rayleigh and harmonic resistance values).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.uniform_extremal`
 
@@ -342,7 +522,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer
 
 For every m at least three and positive a,b,t satisfying a+b=t and (m+2)*a*b=t squared, any positive K2m weighting with that edge restriction has lambda2=t and totalRes=C_m/t.
 
-**Theorem 1.29 (Hub exchange interchanges the two edge families).**
+**Theorem 1.44 (Hub exchange interchanges the two edge families).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.exchange_edges`
 
@@ -354,7 +534,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer
 
 The original hub swap maps EdgeRestriction a b to EdgeRestriction b a for arbitrary real a and b.
 
-**Theorem 1.30 (The fixed-resistance maximum and all maximizers).**
+**Theorem 1.45 (The fixed-resistance maximum and all maximizers).**
 
 $$\forall m \in \mathrm{Nat},\; (3 \le m) \Rightarrow (\forall R \in \mathrm{Real},\; (0 < R) \Rightarrow ((\forall w \in \operatorname{Sym2}\left(\operatorname{Fin}\left(2 + m\right)\right) \to \mathrm{Real},\; (\forall e \in \operatorname{Sym2}\left(\operatorname{Fin}\left(2 + m\right)\right),\; (e \in \operatorname{SimpleGraph}.\operatorname{edgeSet}\left(\operatorname{K2m}\left(m\right)\right)) \Rightarrow (0 < w\left(e\right))) \Rightarrow ((\operatorname{totalRes}\left(\operatorname{K2m}\left(m\right), w\right) = R) \Rightarrow (\operatorname{lambda2}\left(\operatorname{K2m}\left(m\right), w\right) \le \operatorname{maxValue}\left(m, R\right)))) \land (((\forall e \in \operatorname{Sym2}\left(\operatorname{Fin}\left(2 + m\right)\right),\; (e \in \operatorname{SimpleGraph}.\operatorname{edgeSet}\left(\operatorname{K2m}\left(m\right)\right)) \Rightarrow (0 < \operatorname{uniformWeights}\left(m, \operatorname{plusConductance}\left(m, R\right), \operatorname{minusConductance}\left(m, R\right)\right)\left(e\right))) \land ((\operatorname{totalRes}\left(\operatorname{K2m}\left(m\right), \operatorname{uniformWeights}\left(m, \operatorname{plusConductance}\left(m, R\right), \operatorname{minusConductance}\left(m, R\right)\right)\right) = R) \land ((\operatorname{lambda2}\left(\operatorname{K2m}\left(m\right), \operatorname{uniformWeights}\left(m, \operatorname{plusConductance}\left(m, R\right), \operatorname{minusConductance}\left(m, R\right)\right)\right) = \operatorname{maxValue}\left(m, R\right)) \land (\operatorname{EdgeRestriction}\left(m, \operatorname{plusConductance}\left(m, R\right), \operatorname{minusConductance}\left(m, R\right), \operatorname{uniformWeights}\left(m, \operatorname{plusConductance}\left(m, R\right), \operatorname{minusConductance}\left(m, R\right)\right)\right))))) \land (((\forall e \in \operatorname{Sym2}\left(\operatorname{Fin}\left(2 + m\right)\right),\; (e \in \operatorname{SimpleGraph}.\operatorname{edgeSet}\left(\operatorname{K2m}\left(m\right)\right)) \Rightarrow (0 < \operatorname{uniformWeights}\left(m, \operatorname{minusConductance}\left(m, R\right), \operatorname{plusConductance}\left(m, R\right)\right)\left(e\right))) \land ((\operatorname{totalRes}\left(\operatorname{K2m}\left(m\right), \operatorname{uniformWeights}\left(m, \operatorname{minusConductance}\left(m, R\right), \operatorname{plusConductance}\left(m, R\right)\right)\right) = R) \land ((\operatorname{lambda2}\left(\operatorname{K2m}\left(m\right), \operatorname{uniformWeights}\left(m, \operatorname{minusConductance}\left(m, R\right), \operatorname{plusConductance}\left(m, R\right)\right)\right) = \operatorname{maxValue}\left(m, R\right)) \land (\operatorname{EdgeRestriction}\left(m, \operatorname{minusConductance}\left(m, R\right), \operatorname{plusConductance}\left(m, R\right), \operatorname{uniformWeights}\left(m, \operatorname{minusConductance}\left(m, R\right), \operatorname{plusConductance}\left(m, R\right)\right)\right))))) \land ((\forall w \in \operatorname{Sym2}\left(\operatorname{Fin}\left(2 + m\right)\right) \to \mathrm{Real},\; (\forall e \in \operatorname{Sym2}\left(\operatorname{Fin}\left(2 + m\right)\right),\; (e \in \operatorname{SimpleGraph}.\operatorname{edgeSet}\left(\operatorname{K2m}\left(m\right)\right)) \Rightarrow (0 < w\left(e\right))) \Rightarrow ((\operatorname{totalRes}\left(\operatorname{K2m}\left(m\right), w\right) = R) \Rightarrow ((\operatorname{lambda2}\left(\operatorname{K2m}\left(m\right), w\right) = \operatorname{maxValue}\left(m, R\right)) \Leftrightarrow ((\operatorname{EdgeRestriction}\left(m, \operatorname{plusConductance}\left(m, R\right), \operatorname{minusConductance}\left(m, R\right), w\right)) \lor (\operatorname{EdgeRestriction}\left(m, \operatorname{minusConductance}\left(m, R\right), \operatorname{plusConductance}\left(m, R\right), w\right)))))) \land ((\neg \left(\exists w \in \operatorname{Sym2}\left(\operatorname{Fin}\left(2 + m\right)\right) \to \mathrm{Real},\; (\operatorname{EdgeRestriction}\left(m, \operatorname{plusConductance}\left(m, R\right), \operatorname{minusConductance}\left(m, R\right), w\right)) \land (\operatorname{EdgeRestriction}\left(m, \operatorname{minusConductance}\left(m, R\right), \operatorname{plusConductance}\left(m, R\right), w\right))\right)) \land ((\forall w \in \operatorname{Sym2}\left(\operatorname{Fin}\left(2 + m\right)\right) \to \mathrm{Real},\; (\operatorname{EdgeRestriction}\left(m, \operatorname{plusConductance}\left(m, R\right), \operatorname{minusConductance}\left(m, R\right), w\right)) \Rightarrow (\operatorname{EdgeRestriction}\left(m, \operatorname{minusConductance}\left(m, R\right), \operatorname{plusConductance}\left(m, R\right), \operatorname{exchangeWeights}\left(m, w\right)\right))) \land ((\forall w \in \operatorname{Sym2}\left(\operatorname{Fin}\left(2 + m\right)\right) \to \mathrm{Real},\; (\operatorname{EdgeRestriction}\left(m, \operatorname{minusConductance}\left(m, R\right), \operatorname{plusConductance}\left(m, R\right), w\right)) \Rightarrow (\operatorname{EdgeRestriction}\left(m, \operatorname{plusConductance}\left(m, R\right), \operatorname{minusConductance}\left(m, R\right), \operatorname{exchangeWeights}\left(m, w\right)\right))) \land (\forall w \in \operatorname{Sym2}\left(\operatorname{Fin}\left(2 + m\right)\right) \to \mathrm{Real},\; \forall z \in \operatorname{Sym2}\left(\operatorname{Fin}\left(2 + m\right)\right) \to \mathrm{Real},\; (\forall e \in \operatorname{Sym2}\left(\operatorname{Fin}\left(2 + m\right)\right),\; (e \in \operatorname{SimpleGraph}.\operatorname{edgeSet}\left(\operatorname{K2m}\left(m\right)\right)) \Rightarrow (w\left(e\right) = z\left(e\right))) \Rightarrow ((\operatorname{lambda2}\left(\operatorname{K2m}\left(m\right), w\right) = \operatorname{lambda2}\left(\operatorname{K2m}\left(m\right), z\right)) \land (\operatorname{totalRes}\left(\operatorname{K2m}\left(m\right), w\right) = \operatorname{totalRes}\left(\operatorname{K2m}\left(m\right), z\right))))))))))))$$
 
@@ -375,20 +555,35 @@ The weighted energy is a sum of positive edge squares, so its kernel is exactly 
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.adj_hub_hub`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.adj_leaf_leaf`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.constProj`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.delta`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.delta_dot`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.delta_ne`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.delta_sum`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.double_sum_lt`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.equality_parameters`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.exchangeWeights`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.exchange_edges`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.hub`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lambda2_spectral`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_hermitian`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_mul`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_one`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_proj`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_sum`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.lap_trace`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.leaf`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.leafSum`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.maxValue`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.minusConductance`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.pair_gap_sum`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.parameter_roots`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.plusConductance`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.product_bound_trace`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.proj_delta`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.proj_energy`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.proj_hermitian`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.proj_mul`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.proj_sq`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.resistance_spectral`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.result`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/FiedlerResistanceK2mOptimizer.sharpConstant`

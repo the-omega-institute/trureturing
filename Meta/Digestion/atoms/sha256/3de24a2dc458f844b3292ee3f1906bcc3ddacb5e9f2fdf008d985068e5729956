@@ -1,0 +1,2 @@
+**定义 27.2（Pauli 与双曲面的数学解释）。** 仅作 (27.1) 的一个数学支持图景，可对一个抽象 $n=2$ 因子用 Pauli 坐标 $x=tI+\mathbf v\cdot\boldsymbol\sigma$，有 $x>0$ 当且仅当 $t>\|\mathbf v\|$，且 $\det x=t^2-\|\mathbf v\|^2$。去掉正尺度的行列式一截面是未来单位双曲面，等价于 $SL(2,\mathbb C)/SU(2)$ 的双曲三空间；用 $\mathbf v/t$ 则是开球坐标，也与迹一截面的开 Bloch 球对应。这里的双曲度量是由齐性空间运输的度量，不是把普通 Bloch 球的欧氏度量叫作双曲度量。Lorentz/spin 的 Jordan 乘法直接复用 [C117 引理 2.2](AURIC_COMMON_SOURCE_SELF_REFERENCE_AND_OBSERVER_SEQUENCES_C117.md#section-2)，不重作结构来源。此图景中的 $J$ 作用于六实维 $\mathfrak{sl}_2(\mathbb C)$，不作用于三维球的切空间；它既不供应一个实际 $M_2$ 对象，也不要求无 $M_2$ 满足签名含有这样的对象。
+

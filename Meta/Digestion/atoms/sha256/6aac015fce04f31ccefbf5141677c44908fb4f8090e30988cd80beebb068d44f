@@ -1,0 +1,116 @@
+**Theorem 41.2 (all chronological runs at every fixed replacement count).**
+Let $f_0=0,f_1=1,f_{j+2}=f_{j+1}+f_j$, and write
+
+$$
+u_0=e=(1,0),\qquad
+u_j=M^je=(f_{j-1},f_j)\quad(j\ge1).
+\tag{41.4}
+$$
+
+For each $k\ge0$, every finite chronological word with exactly $k$
+letters $F$ has a unique form
+
+$$
+h=G^{n_k}F G^{n_{k-1}}F\cdots F G^{n_0},\qquad
+(n_0,\ldots,n_k)\in\mathbb N_0^{k+1}.
+\tag{41.5}
+$$
+
+Thus $n_j$ is the number of $G$ letters in the unique run with exactly
+$j$ later $F$ letters; zero runs are retained. For $k=0$, (41.5) means
+just $G^{n_0}$. This is a bijection of literal words with the displayed
+nonnegative vectors, and its affine action is
+
+$$
+\operatorname{Run}(h,u)=M^ku+\tau(h),\qquad
+\tau(h)=\sum_{j=0}^k n_j u_j
+\quad(u\in\mathcal Q_+).
+\tag{41.6}
+$$
+
+Two words induce the same affine map on the **whole pair domain**
+$\mathcal Q_+$ if and only if their $k$ and $\tau$ agree. The complete
+number of literal words in the affine-action class $(k,(x,y))$, for
+integer $x,y$, is
+
+$$
+P_k(x,y)=
+\#\left\{(n_0,\ldots,n_k)\in\mathbb N_0^{k+1}:
+                  \sum_{j=0}^k n_j u_j=(x,y)\right\}.
+\tag{41.7}
+$$
+
+Define $P_k(x,y)=0$ if $k<0$, $x<0$ or $y<0$. On $x,y\ge0$ its complete
+boundary cases are
+
+$$
+P_0(x,y)=\mathbf1_{\{y=0\}},\qquad
+P_1(x,y)=1,\qquad P_2(x,y)=1+\min(x,y).
+\tag{41.8}
+$$
+
+For every $k\ge2$ an explicit finite count, with no unspecified normal
+form choices, is
+
+$$
+P_k(x,y)=
+\sum_{n_2=0}^{x+y}\cdots\sum_{n_k=0}^{x+y}
+\mathbf1_{\{\sum_{j=2}^k f_{j-1}n_j\le x\}}
+\mathbf1_{\{\sum_{j=2}^k f_jn_j\le y\}}
+\quad(x,y\ge0).
+\tag{41.9}
+$$
+
+Equivalently, for $k\ge1$ and $x,y\ge0$,
+
+$$
+\begin{aligned}
+P_k(x,y)&=\sum_{m=0}^{x+y}
+ P_{k-1}(x-mu_{k,1},y-mu_{k,2}),\\
+\sum_{x,y\ge0}P_k(x,y)X^xY^y
+ &=\prod_{j=0}^k(1-X^{u_{j,1}}Y^{u_{j,2}})^{-1}.
+\end{aligned}
+\tag{41.10}
+$$
+
+These are counts of all run multiplicities, not only binary digits or
+one chosen family of words.
+
+Proof. Cut a word at each occurrence of $F$. This gives precisely the
+$k+1$ runs of $G$ in (41.5), including empty runs, and reassembly is the
+inverse. Each $G$ adds $e$; each later $F$ multiplies that contribution
+by $M$. There are exactly $j$ such later multiplications for the run
+$n_j$, proving (41.6). This specializes the existing chronological
+affine-word supplier of `GraftAffineClosure`; induction using $M$ gives
+(41.4). No new native graft operation is inferred from that supplier.
+
+For completeness of the action classification, suppose
+$M^ku+\tau=M^\ell u+\sigma$ for every $u\in\mathcal Q_+$. Compare its
+values at $(0,1),(1,1),(0,2)$. Subtraction gives equality of both matrix
+columns, hence $M^k=M^\ell$, and then $\tau=\sigma$. These powers are
+distinct: $M^j(1,1)$ stays beta-positive and its coordinate sum strictly
+increases at every step. Thus $M^k=M^\ell$ forces $k=\ell$. The converse
+is immediate from (41.6). This is equality of maps, not conjugacy under
+a change of coordinates.
+
+Every $u_j$ has nonnegative integer coordinates with positive sum. For
+fixed $(x,y)\ge0$, each admissible $n_j$ is at most $x+y$, so (41.7) is
+finite. Since $u_0=(1,0)$ and $u_1=(0,1)$, any chosen $n_2,\ldots,n_k$
+forces
+
+$$
+n_0=x-\sum_{j=2}^k f_{j-1}n_j,\qquad
+n_1=y-\sum_{j=2}^k f_jn_j.
+$$
+
+These two residuals are nonnegative exactly under (41.9)'s inequalities.
+This proves that count, including all tuples and excluding all invalid
+ones. At $k=0$ only $n_0=x,y=0$ is possible; at $k=1$ the tuple is
+$(x,y)$. At $k=2$, $n_2$ ranges from zero through $\min(x,y)$, giving
+(41.8). In particular this last action class consists exactly of
+$G^j F G^{y-j} F G^{x-j}$ for those $j$. Grouping (41.7) by $n_k=m$
+proves the finite sum in (41.10); expanding each geometric series
+proves its coefficient identity. Nonzero generator sums make every
+coefficient finite. Negative residuals and out-of-domain indices give
+zero throughout. $\square$
+

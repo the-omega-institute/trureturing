@@ -1,0 +1,69 @@
+### 定理 5.6（有限读数的显式 diamond 误差界）
+
+<a id="thm-c122-finite-tomography"></a>
+
+设真实过程 $\mathcal N$ 与名义过程 $\mathcal N_0$ 均为从 $M_d$ 到 $M_k$ 的 CPTP 映射。若对全部上述准备 $P_a$、效果 $F_b$，有
+
+$$
+\left|\operatorname{Tr}\bigl(F_b[\mathcal N(P_a)-\mathcal N_0(P_a)]\bigr)\right|
+ \le\nu,
+$$
+
+则令 $\beta_k=k\sqrt{8k-7}\,\nu$，有
+
+<a id="eq-c122-tomography-diamond"></a>
+
+$$
+\|\mathcal N-\mathcal N_0\|_\diamond
+ \le\delta_{\rm tom}:=
+ \min\{2,[1+(2+\sqrt2)(d-1)]\beta_k\}.
+\tag{38}
+$$
+
+特别地，精确读数完全相同就确定同一条通道。该结论覆盖全部纠缠参考，不是仅对所测试的纯态成立。
+
+**证明。**
+记 $\Delta=\mathcal N-\mathcal N_0$。固定一个已列准备，写
+$Y=\Delta(P_a)=Y^*$。对角投影给 $|Y_{jj}|\le\nu$；两个平衡投影分别给
+
+$$
+|\operatorname{Re} Y_{j\ell}|\le2\nu,\qquad
+ |\operatorname{Im} Y_{j\ell}|\le2\nu\quad(j\ne\ell).
+$$
+
+例如 $\operatorname{Tr}(F^+_{j\ell}Y)=(Y_{jj}+Y_{\ell\ell})/2+\operatorname{Re} Y_{j\ell}$，而 $+i$ 效果将最后一项换成 $-\operatorname{Im} Y_{j\ell}$。于是
+
+$$
+\|Y\|_2^2\le[k+8k(k-1)]\nu^2,
+ \qquad \|Y\|_1\le\sqrt k\,\|Y\|_2\le\beta_k.
+$$
+
+源端矩阵单位可以显式重构：对 $r<s$，
+
+$$
+E_{rs}=P^+_{rs}+iP^{+i}_{rs}
+          -\frac{1+i}{2}(P_r+P_s).
+$$
+
+所以 $\|\Delta(E_{rr})\|_1\le\beta_k$，并且
+$\|\Delta(E_{rs})\|_1\le(2+\sqrt2)\beta_k$ 对所有 $r\ne s$ 成立；下三角用保持伴随性处理。
+
+取任意参考 $Z$ 与联合态 $\rho=\sum_{r,s}E_{rs}\otimes\rho_{rs}$。
+记 $p_r=\operatorname{Tr}\rho_{rr}$。由正平方根分块，$\rho_{rs}=A_rA_s^*$，故
+$\|\rho_{rs}\|_1\le\|A_r\|_2\|A_s\|_2=\sqrt{p_rp_s}$。
+因此
+
+$$
+\begin{aligned}
+\|(\Delta\otimes\operatorname{id}_Z)(\rho)\|_1
+ &\le\beta_k\sum_rp_r
+ +(2+\sqrt2)\beta_k\sum_{r\ne s}\sqrt{p_rp_s}\\
+ &\le[1+(2+\sqrt2)(d-1)]\beta_k,
+\end{aligned}
+$$
+
+其中 $\sum_r\sqrt{p_r}\le\sqrt d$。参考维数从未受限。
+任意算子输入先用
+$\frac12\left(\begin{smallmatrix}0&X\\X^*&0\end{smallmatrix}\right)$
+作不改变迹范数的 Hermitian 化，再分解正、负部分，即把全参考态界提升为 diamond 范数界。两个通道之差另有普遍上界 $2$，完成证明。
+

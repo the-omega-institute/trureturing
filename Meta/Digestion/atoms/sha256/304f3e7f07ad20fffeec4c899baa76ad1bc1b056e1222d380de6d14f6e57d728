@@ -1,0 +1,10 @@
+**定义 91.3（原指针的横向边界 $\mathsf C_d$）。** 原 $W_d=E_{1/2}(d)$ 非零。把 (91.1) 在 $W_d\times W_d$ 上的限制作同一复半双线性延拓，记作 $K_d^W$。要求其右根空间非零：
+
+$$
+\boxed{\exists\,0\ne\zeta\in W_d\otimes_{\mathbb R}\mathbb C\quad
+ K_d^W(\eta,\zeta)=0\quad\text{对所有 }\eta.}
+\tag{91.3}
+$$
+
+这是有限矩阵退化的坐标无关条件，即使 (91.2) 被删除仍有定义；没有在整个 $E_P$ 上取退化，因为原法向本来就应成为零方向。完整新候选分别记为 $\mathsf C_{\rm Gram}(B_*)=B_*+\mathsf G_{\rm fin}+\mathsf C_d$，其中 $B_*$ 只能分别取 $B$ 或 $\mathsf B_{\rm cl}$。
+

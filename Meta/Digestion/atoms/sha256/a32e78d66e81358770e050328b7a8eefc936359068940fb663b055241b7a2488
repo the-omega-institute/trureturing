@@ -1,0 +1,151 @@
+**定理 31.1（固定原数据上的 C126/C124 等价）。** 对每份固定原 $q/L$，完整 C126 与完整 C124 在所有原数据上恒等对应。具体地，I、II 和 S 在上述原背景下推出：每个所需原对象和每个实际联合对象的原 $D$ 都满足假设 1.5 的全部导子律及曲率抵消。反向从原 D 得到 I、II、S。正向只消费 P/G、AC、I/II/S、X 及定理 30.1 的实际身份参考；不消费 F，不预设复张量，不假设原 $D$ 自守恒或中心零。
+
+**证明。** 将定理 22.1 中不使用 C 或 D 的部分直接用于固定 P/G：$E$ 是同一原空间上的 Euclidean Jordan 代数，$q$ 为正 Frobenius 型，$\mathfrak k$ 是原指定 Lie 代数内的斜伴随内导子代数。故 I 已给每个原 $D_a$ 的导子律。以下证明曲率等式。
+
+先把 I/II 的局部可能性列全，再对原实际参考使用它。使用成熟的有限简单 EJA 分类及其紧自同构表示，写
+
+$$
+E=\bigoplus_s J_s,\qquad
+Z=\bigoplus_s\mathbb R u_s,\qquad
+V_s=\{x\in J_s:\tau_s^J(x)=0\},\qquad
+\mathfrak k=\bigoplus_s\mathfrak k_s.
+\tag{31.1}
+$$
+
+这里 $q|_{J_s}$ 为正倍数的 Jordan 迹型，不同理想正交；因此 $E_0=\bigoplus_sV_s$，这也是固定 $q$ 投影所得的同一个 $E_0$。有限 EJA 的导子全是内导子的有限和，故这里的 $\mathfrak k_s$ 就是该简单理想的完整紧自同构 Lie 代数；该成熟内导子事实亦见 BGW Appendix E 的 Lemma E.1 证明及注 30，不把它误用于任意非半单 Jordan 代数。$D:E\to\mathfrak k$ 由 II 是 $\mathfrak k$ 模同态。下表中的表示资料只作为这个同态计算的已知中间步骤；简单因子采用不重复的约定，秩二矩阵另归入自旋项。
+
+| 简单 $J_s$ | $V_s$ 及维数 | $\mathfrak k_s$ 及其伴随表示 | 对 $V_s\to\mathfrak k_s$ 的结果 |
+| --- | --- | --- | --- |
+| $\mathbb R$ | $0$ | $0$ | 零 |
+| $H_n(\mathbb R),\ n\ge3$ | 无迹实对称，$n(n+1)/2-1$，不可约 | $\mathfrak{so}(n)$，维数 $n(n-1)/2$ | 零；$n=4$ 时伴随分成两个三维项，均不等于九维 $V_s$ |
+| $H_n(\mathbb C),\ n\ge3$ | 无迹 Hermitian，$n^2-1$ | $\mathfrak{su}(n)$ | $a\mapsto\lambda_s\delta_a$，$\lambda_s\in\mathbb R$，$\delta_ab=i[a,b]/2$ |
+| $H_n(\mathbb H),\ n\ge3$ | 无迹 quaternionic Hermitian，$n(2n-1)-1$，不可约 | $\mathfrak{sp}(n)$，维数 $n(2n+1)$ | 零 |
+| $H_3(\mathbb O)$ | 不可约二十六维 | 紧 $\mathfrak f_4$，维数五十二 | 零 |
+| $\mathrm{Spin}_m=\mathbb R\oplus\mathbb R^m,\ m\ge2$ | 标准向量 $\mathbb R^m$ | $\mathfrak{so}(m)=\Lambda^2\mathbb R^m$ | 仅 $m=3$ 有一维同态空间；它就是 $H_2(\mathbb C)$ 的上一复公式 |
+
+自旋乘法约定为 $(t,v)\circ(s,w)=(ts+v\cdot w,tw+sv)$，故紧代数是 $\mathfrak{so}(m)$；不把不同文献的总维数指标混用。$m=2$ 的伴随是一维平凡模，而标准二维模没有不变泛函，所以该行的无迹输入仍为零。$m=4$ 的 $\Lambda^2$ 分为自对偶及反自对偶的两个三维模，四维标准模不是其中任一个。$m\ge5$ 时标准模不可约，伴随也不可约且维数不同；$m=3$ 由有向三维体积型识别标准模与伴随模。$H_2(\mathbb R)$、$H_2(\mathbb H)$ 分别是 $m=2,5$；$m=1$ 的自旋代数已分裂为两个经典理想。
+
+表中不可约性、维数及紧代数取自有限 EJA 分类和相应各向同性表示；例如 Barnum–Hilgert 的 §4、Table 1 及 Appendix C.3。对复系列的同态空间维数还须说明实域问题：以 $a\mapsto ia/2$ 识别 $V_s$ 与紧简单代数 $\mathfrak{su}(n)$ 的伴随模，其复化是简单 $\mathfrak{sl}_n(\mathbb C)$ 的伴随模。复 Schur 引理给标量，保持实型使标量为实数；$n=2$ 同理。此处没有把任意实不可约表示的交换环都断言为 $\mathbb R$。
+
+还必须计算所有中心和跨块输入。每个非经典 $V_t$ 都有 $\operatorname{span}(\mathfrak k_tV_t)=V_t$，而 $\mathfrak k_s$ 在 $J_t$ 上作用为零（$s\ne t$）。若 $a\in V_t$，II 对 $K\in\mathfrak k_t$ 使 $D_{Ka}$ 在 $s\ne t$ 的分量为零，故所有跨块 $V_t\to\mathfrak k_s$ 都为零，包括目标为 $\mathfrak{so}(2)$ 的情形。若输入 $z\in Z$，II 则要求 $D_z$ 位于 $Z(\mathfrak k)$。唯一有非零中心的 $\mathfrak k_s$ 是 $\mathrm{Spin}_2$ 的 $\mathfrak{so}(2)$。于是局部 I/II 的完整正常形是
+
+$$
+(D_ab)_s=
+\begin{cases}
+\lambda_s\dfrac i2[a_s,b_s],
+ &J_s=H_{n_s}(\mathbb C),\ n_s\ge2,\\[2mm]
+\ell_s(z(a))R_sb_s,
+ &J_s=\mathrm{Spin}_2,\\
+0,&\text{其余简单理想},
+\end{cases}
+\tag{31.2}
+$$
+
+其中 $R_s(t,(v_1,v_2))=(0,(-v_2,v_1))$，每个 $\ell_s:Z\to\mathbb R$ 任意。允许 $\ell_s$ 依赖全部中心坐标，绝不先删去跨块中心项。这些可能性也确实满足局部 I/II。尤其仅凭局部 I/II 不能推出 $D_z=0$ 或 $D_aa=0$；后面的实际参考正是处理这一缺口的步骤。
+
+现在只在原 AC 指针使用 S。Jordan 谱定理及极射线分类给 $d=cp$，其中 $p$ 是一个唯一简单理想 $J_{t_0}$ 内的原始幂等元，$0<c\le1$；它在整个锥内非中心，故该理想非经典且 $d_0\ne0$。这个阶段不需要预知它是复矩阵理想。对其秩 $r$，固定投影给
+
+$$
+d_0=c(p-u_{t_0}/r)\in V_{t_0},\qquad
+(d_0)_t=0\ (t\ne t_0).
+\tag{31.3}
+$$
+
+若 $J_{t_0}$ 不是复系列，(31.2) 给 $D^P_{d_0}=0$，包括 $\mathrm{Spin}_2$；后者的全部 $\ell_s$ 也因 $z(d_0)=0$ 消失。另一方面 $L_{d_0}u_P=d_0\ne0$ 且 $L_{d_0}$ 是实自伴随算子，故 $\operatorname{Tr}_{\mathbb R,E_P}L_{d_0}^2>0$。这与 S 矛盾。因此 $J_{t_0}=H_r(\mathbb C)$、$r\ge2$。
+
+在这个块取任意无迹 Hermitian $a$，用它的实特征值 $a_1,\ldots,a_r$ 对 $H_r(\mathbb C)$ 的实矩阵基取迹。$L_a$ 在对角方向的特征值为 $a_i$，在每对非对角的两个实方向上为 $(a_i+a_j)/2$；$\delta_a=i[a,\cdot]/2$ 在相应二平面上为旋转，角速度 $(a_i-a_j)/2$。所以
+
+$$
+\begin{aligned}
+\operatorname{Tr}_{\mathbb R,H_r}L_a^2
+ &=\frac r2\operatorname{Tr}(a^2)+\frac12(\operatorname{Tr}a)^2,\\
+-\operatorname{Tr}_{\mathbb R,H_r}\delta_a^2
+ &=\frac r2\operatorname{Tr}(a^2)-\frac12(\operatorname{Tr}a)^2.
+\end{aligned}
+\tag{31.4}
+$$
+
+此为证明中的有限符号恒等式，不是数值标定。将 (31.3) 代入，其他块的 $L_{d_0}$、$D_{d_0}$ 都为零，S 恰给
+
+$$
+\lambda_{t_0}^2=1.
+\tag{31.5}
+$$
+
+这一步只确定该原块的大小与容许取向；没有把原 $D$ 调整到这个大小。特别地，$-\operatorname{Tr}D_{d_0}^2$ 的正性也只是在这一步被证明。
+
+接着固定任意所需对象 $A$，取定理 30.1 的实际 $B=A P^{\otimes k}$，以 $j$ 表示其中的整个原 $P$。在 $B$ 的简单 Jordan 分解 $E_B=\bigoplus_vJ_v^B$ 中，以 $\pi_v$ 记数学理想投影。令 $e=u_{t_0}\in E_P$，并定义
+
+$$
+\mathcal V=\{v:\pi_vj(e)\ne0\},\qquad
+\varphi_v=\pi_vj|_{J_{t_0}}.
+\tag{31.6}
+$$
+
+投影是证明用的线性/Jordan 操作，不是新增原事件或支持角对象。每个 $\varphi_v$ 都是 Jordan 同态；$v\in\mathcal V$ 时非零，核是简单 $J_{t_0}$ 的理想，所以它是单射。此处无需它含 $J_v^B$ 的单位或满射。
+
+对 $p,q,r\in J_{t_0}$，X 保持原 $D$，故逐次应用给
+
+$$
+\varphi_v\bigl([D^P_p,D^P_q]r\bigr)
+=\bigl([D^B_{j(p)},D^B_{j(q)}]j(r)\bigr)_v.
+\tag{31.7}
+$$
+
+在 (31.2) 的任一非复目标理想内，右边的两个算子均为零，或均为同一个 $R_v$ 的倍数；因此它们交换。可是在 $J_{t_0}$ 内，(31.5) 及矩阵交换子恒等式给
+
+$$
+[D^P_p,D^P_q]r=-[L_p,L_q]r,
+\tag{31.8}
+$$
+
+且后式并非恒零：在任一数学二阶子角内取不交换的两个 Hermitian 元及一个被其交换子非平凡作用的元即可。这个子角只用于证明非零，不作为实际 $M_2$ 对象。若 $v\in\mathcal V$ 是非复目标，(31.7) 会令一个非零元的单射像为零，矛盾。因此每个 $v\in\mathcal V$ 都是复矩阵理想。
+
+在这样的复目标上，(31.2) 给某个实 $\lambda_v$。Jordan 同态还给
+
+$$
+\bigl([L_{j(p)},L_{j(q)}]j(r)\bigr)_v
+=\varphi_v([L_p,L_q]r).
+$$
+
+把它与 (31.7)–(31.8) 以及复块恒等式
+$[\lambda_v\delta_x,\lambda_v\delta_y]= -\lambda_v^2[L_x,L_y]$ 比较，得到
+
+$$
+(\lambda_v^2-1)\varphi_v([L_p,L_q]r)=0
+\quad\text{对全部 }p,q,r\in J_{t_0}.
+$$
+
+利用上面非零元及单射性，遂得每个 $v\in\mathcal V$ 都满足 $\lambda_v^2=1$。因此 $B$ 的这些完整简单理想上已经有原曲率抵消，对其中的任意输入成立，不只对指针像成立。
+
+剩下的是把这些块上的结论忠实地带回整个 $E_A$。证明下述分离性质：
+
+$$
+\bigl[\pi_v\iota_A(x)=0\text{ 对所有 }v\in\mathcal V\bigr]
+\quad\Longrightarrow\quad x=0.
+\tag{31.9}
+$$
+
+若前件成立，则在 $v\in\mathcal V$ 上 $\iota_A(x)$ 为零；在 $v\notin\mathcal V$ 上 $j(d)$ 为零，因为 $d=e\circ d$。于是 $\iota_A(x)\circ j(d)=0$ 在完整 $E_B$ 中成立。对定理 30.1 的每个实际 $\eta_\gamma$ 评价，得 $\gamma(x)=0$。P 的实际准备正锥包是完整正对偶锥，因而这些准备线性分离整个 $E_A$，得到 $x=0$。这一步使用实际乘积准备及其原始概率；单有局部嵌入或块维数不足以代替它。
+
+现在对任意 $a,b,c\in E_A$，令
+
+$$
+x=\bigl([L_a,L_c]+[D^A_a,D^A_c]\bigr)b.
+\tag{31.10}
+$$
+
+X 的 Jordan/D 保持使 $\iota_A(x)$ 等于 $B$ 内同一三元式在 $\iota_A(a),\iota_A(b),\iota_A(c)$ 上的值。每个 $v\in\mathcal V$ 都已标定为 $\lambda_v^2=1$ 的复块，故这个值的 $v$ 分量为零。(31.9) 给 $x=0$，即原完整曲率抵消。$A$ 任意，定理 30.1 的量词又覆盖全部所需对象与联合对象，正向遂完成。
+
+特别地，(31.9) 对所有 $x\in E_A$ 成立，没有删去中心、经典块或任何跨块坐标。局部正常形中可能的 $\mathrm{Spin}_2$ 中心项没有被偷设为零：它们与其他非复可能性一同受实际参考分离约束。现在已有原 D，可以直接应用 V95 定理 2.1 或本卷定理 23.1，取得全原空间上的复乘法，并作为后果取得 $D_aa=0$、$D_ab=-D_ba$、$D_z=0$。因而原对象最终没有简单 $\mathrm{Spin}_2$ 或其他非复因子，纯经典对象的 $D$ 为零；这些均是结论。此处也不要求 $a\mapsto D_a$ 在中心上单射，或在所有对象上非零。
+
+反向设完整 C124 的原 D 成立。直接复用 V95 定理 2.1 及 (23.2)–(23.7)，在同一空间有
+
+$$
+E=\left(\bigoplus_sM_{n_s}(\mathbb C)\right)_{\rm sa},\qquad
+D_ab=\frac i2[a,b],\qquad
+\mathfrak k=\bigoplus_{s:n_s\ge2}\operatorname{ad}\mathfrak{su}(n_s).
+$$
+
+所以 I 成立；Jacobi 恒等式给每个 $K\in\mathfrak k$ 的 $[K,D_a]=D_{Ka}$，即 II。固定 $q$ 是逐块正迹倍数，故 $a-z(a)$ 逐块无迹；(31.4) 在每个块上相加给 S，特别适用于那一只原 $d_0$。这不需要改原效果或挑另一个标定效果。其他原合同保持恒等，双向完成。∎
+

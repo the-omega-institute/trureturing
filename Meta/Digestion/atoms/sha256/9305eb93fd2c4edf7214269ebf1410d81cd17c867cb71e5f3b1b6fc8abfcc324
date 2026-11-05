@@ -1,0 +1,41 @@
+### 证明第一步：每个右半平面离线零点贡献一个负方向
+
+设 $a$ 是 $F$ 的右半平面极点，留数为 $r\ne0$。其镜像极点为 $-\bar a$，留数为 $\bar r$。
+
+这一对贡献
+
+$$
+F_a(z)=\frac r{z-a}+\frac{\bar r}{z+\bar a}.
+$$
+
+它对应的 Pick 核为
+
+$$
+\frac r{(z-a)(\bar w+a)}
++
+\frac{\bar r}{(z+\bar a)(\bar w-\bar a)}.
+$$
+
+在两个特征函数
+
+$$
+u(z)=\frac1{z-a},\qquad
+v(z)=\frac1{z+\bar a}
+$$
+
+上，系数矩阵是
+
+$$
+\begin{pmatrix}
+0&r\\
+\bar r&0
+\end{pmatrix}.
+$$
+
+其特征值为 $\pm|r|$，恰有一个负方向。
+
+所有临界线极点的留数则为正，贡献正 Gram 核。因此，若右半平面不同极点只有 $\kappa$ 个，任何有限矩阵最多有 $\kappa$ 个负方向。
+
+<!-- editorial-note: n17 begin -->
+<a id="n17"></a>
+

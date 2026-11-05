@@ -4,7 +4,19 @@
 
 Shrinking prime windows and rounded finite exchanges give uniform logarithmic layer rigidity.
 
-**Theorem 1.1 (Growing prime capacity).**
+**Theorem 1.1 (The theta error with eight logarithmic savings).**
+
+Lean statement: `D5/S3/Arith/Robin/PriceRecord/LogarithmicLayerRigidity.theta_error_eight`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/LogarithmicLayerRigidity.theta_error_eight` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The difference theta(t)-t is o(t/log(t)^8) as the real variable t tends to infinity. The medium prime number theorem controls psi(t)-t, and the established square-root bound for psi(t)-theta(t) transfers that control to theta. Both error terms vanish at this logarithmic scale. This existing PNT consequence supplies shrinking prime windows and the uniform finite logarithmic prime-square refinements. No RH hypothesis or novelty claim is involved.
+
+**Theorem 1.2 (Growing prime capacity).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/LogarithmicLayerRigidity.shrinking_prime_windows`
 
@@ -18,7 +30,7 @@ For each fixed C>0 there is T>1 such that every real x>=T and every natural N<=c
 
 The unconditional MediumPNT remainder is x*exp(-c*log(x)^(1/10)) for some c>0. Together with the existing psi-theta square-root error it gives theta(x)-x=o(x/log(x)^8). On [x/2,2*x], the endpoint errors are at most 512*x/log(x)^8 each. The theta increment in either window is at least x/(2*log(x)^3), while each prime contributes at most 2*log(x). Thus at least x/(4*log(x)^4) actual primes are available. This eventually exceeds the requested rounded cubic logarithmic cardinality.
 
-**Theorem 1.2 (Uniform second-order law).**
+**Theorem 1.3 (Uniform second-order law).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/LogarithmicLayerRigidity.price_record_logarithmic_layer_rigidity`
 
@@ -44,4 +56,5 @@ This result is a layer law. The Riemann hypothesis, Robin's inequality beyond 50
 
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/LogarithmicLayerRigidity.price_record_logarithmic_layer_rigidity`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/LogarithmicLayerRigidity.shrinking_prime_windows`
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/LogarithmicLayerRigidity.theta_error_eight`
 - Dependency: [D5/S3/Arith/Robin/PriceRecord/FixedLayerRigidity](FixedLayerRigidity.md)

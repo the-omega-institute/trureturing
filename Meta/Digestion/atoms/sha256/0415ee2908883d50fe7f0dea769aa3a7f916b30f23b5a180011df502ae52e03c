@@ -1,0 +1,107 @@
+### 3.3 三条原始记录怎样读成一个三角形
+
+继续使用上例的 $120^\circ$ 旋转矩阵 $A$，取更易画出的三维模型
+
+<a id="c133geo-three-dimensional-source"></a>
+
+$$
+V=\mathbb R^2\oplus\mathbb R,\qquad U(x,z)=(Ax,2z),\qquad
+ R((x,z),(y,w))=x\cdot y.
+\tag{11}
+$$
+
+其 $D(x,z)=(0,7z)$ 对当前读口不可见，而 $U^3(x,z)=(x,8z)$。取 $v=(1,0,1)$，则
+
+$$
+v=(1,0,1),\qquad
+ Uv=(-\tfrac12,\tfrac{\sqrt3}2,2),\qquad
+ U^2v=(-\tfrac12,-\tfrac{\sqrt3}2,4).
+$$
+
+原始三向量不合为零：它们留下 $Dv=(0,0,7)$。在当前读数商中，三者等长、两两夹角 $120^\circ$，比较表为
+
+<a id="c133geo-triangle-gram"></a>
+
+$$
+G=\begin{pmatrix}
+ 1&-\tfrac12&-\tfrac12\\
+ -\tfrac12&1&-\tfrac12\\
+ -\tfrac12&-\tfrac12&1
+ \end{pmatrix}\succeq0,\qquad
+ \operatorname{spec}G=\{0,\tfrac32,\tfrac32\}.
+\tag{12}
+$$
+
+<a id="c133geo-source-visible-figure"></a>
+
+```latex
+\begin{tikzpicture}[font=\small,>=Latex]
+ \path[use as bounding box] (-0.10,-0.25) rectangle (12.10,4.95);
+ \node at (2.18,4.65) {原始三维：第三坐标仍在变化};
+ \begin{scope}[xshift=2.08cm,yshift=1.13cm,
+   x={(1.20cm,0cm)},y={(0.45cm,0.45cm)},z={(0cm,0.59cm)}]
+  % Every curve below lies exactly on x^2+y^2=1.
+  \draw[teal!25,domain=0:360,samples=121,variable=\ang]
+   plot ({cos(\ang)},{sin(\ang)},0);
+  \draw[teal!16,domain=0:360,samples=121,variable=\ang]
+   plot ({cos(\ang)},{sin(\ang)},4.35);
+  \draw[teal!16] (1,0,0)--(1,0,4.35);
+  \draw[teal!16] (-1,0,0)--(-1,0,4.35);
+  \draw[black!40,->] (0,0,0)--(1.58,0,0) node[below] {$x$};
+  \draw[black!40,->] (0,0,0)--(0,1.58,0) node[right] {$y$};
+  \draw[black!45,->] (0,0,0)--(0,0,4.80) node[above] {$z$};
+  \foreach \h in {1,2,4}{
+    \draw[black!45] (-0.035,0,\h)--(0.035,0,\h);
+    \node[font=\scriptsize,anchor=east] at (-0.065,0,\h) {$\h$};
+  }
+  \coordinate (vzero) at (1,0,1);
+  \coordinate (vone) at (-0.5,{sqrt(3)/2},2);
+  \coordinate (vtwo) at (-0.5,{-sqrt(3)/2},4);
+  \draw[blue!55,densely dashed] (1,0,0)--(vzero);
+  \draw[orange!65!black,densely dashed] (-0.5,{sqrt(3)/2},0)--(vone);
+  \draw[purple!60,densely dashed] (-0.5,{-sqrt(3)/2},0)--(vtwo);
+  \draw[blue!70!black,thick,->] (0,0,0)--(vzero);
+  \draw[orange!80!black,thick,->] (0,0,0)--(vone);
+  \draw[purple!75!black,thick,->] (0,0,0)--(vtwo);
+  \fill[blue!70!black] (vzero) circle[radius=1.6pt];
+  \fill[orange!80!black] (vone) circle[radius=1.6pt];
+  \fill[purple!75!black] (vtwo) circle[radius=1.6pt];
+  \node[anchor=west,blue!70!black] at (1.04,0,1.04) {$v$};
+  \node[anchor=west,orange!80!black,fill=white,inner sep=1pt]
+   at (-0.38,{sqrt(3)/2},2.07) {$Uv$};
+  \node[anchor=east,purple!75!black] at (-0.56,{-sqrt(3)/2},4.05) {$U^2v$};
+ \end{scope}
+ \node[font=\footnotesize] at (2.18,0.34) {$Q=1:\ x^2+y^2=1$};
+ \node[font=\footnotesize] at (2.18,-0.03) {$Dv=(0,0,7)$};
+
+ \draw[black!55,->,thick] (4.47,2.43)--(7.06,2.43);
+ \node[font=\footnotesize,align=center] at (5.76,3.11)
+  {$\pi(x,y,z)=(x,y)$};
+ \node[font=\footnotesize] at (5.76,1.94) {当前读数的商};
+
+ \node at (9.45,4.65) {可见二维：三角形与相位圆};
+ \begin{scope}[xshift=9.45cm,yshift=2.43cm,x=1.42cm,y=1.42cm]
+  \fill[teal!5] (0,0) circle[radius=1.42cm];
+  \draw[teal!55!black] (0,0) circle[radius=1.42cm];
+  \draw[black!28,->] (-1.18,0)--(1.35,0);
+  \draw[black!28,->] (0,-1.18)--(0,1.21);
+  \coordinate (pzero) at (1,0);
+  \coordinate (pone) at (-0.5,{sqrt(3)/2});
+  \coordinate (ptwo) at (-0.5,{-sqrt(3)/2});
+  \draw[teal!65!black,thick] (pzero)--(pone)--(ptwo)--cycle;
+  \draw[blue!65!black,->] (0,0)--(pzero);
+  \draw[orange!75!black,->] (0,0)--(pone);
+  \draw[purple!70!black,->] (0,0)--(ptwo);
+  \fill[blue!70!black] (pzero) circle[radius=1.6pt];
+  \fill[orange!80!black] (pone) circle[radius=1.6pt];
+  \fill[purple!75!black] (ptwo) circle[radius=1.6pt];
+  \node[anchor=west,blue!70!black] at (1.06,0.09) {$\pi v$};
+  \node[anchor=south east,orange!80!black] at (-0.55,0.92) {$\pi Uv$};
+  \node[anchor=north east,purple!75!black] at (-0.55,-0.92) {$\pi U^2v$};
+  \node[anchor=north west,font=\scriptsize] at (0.035,-0.025) {$0$};
+ \end{scope}
+ \node[font=\footnotesize] at (9.45,0.34) {$\pi v+\pi Uv+\pi U^2v=0$};
+ \node[font=\footnotesize] at (9.45,-0.03) {$\|\pi v\|=\|\pi Uv\|=\|\pi U^2v\|=1$};
+\end{tikzpicture}
+```
+

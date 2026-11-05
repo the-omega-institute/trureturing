@@ -1,0 +1,64 @@
+**Proposition 42.7 (equal content at unequal completion cuts).** Start
+from the same attained multileaf $t$, with any one coherent prior
+primitive history and its tapes. Let $p$ be its leftmost beta address.
+Compare these two legal alternative executions: a fully returned $G$,
+and an $F$ paused after its first successful primitive has completed
+maintenance, its literal reply, acknowledgement and inner return. Their
+logical source and all ancestral-tape contents are equal. Their complete
+outer controller/Busy/Ready/return states differ. Thus this content
+projection cannot certify outer completion or distinguish these two
+macro situations.
+
+There is also a stronger source-only collision at every multileaf entry:
+the fully completed word $GF$ and the execution of $F$ followed by
+exactly the first two successful primitives of a second $F$ have the
+same logical source. The latter second macro is genuinely incomplete.
+Their primitive chronologies and coherent tape contents differ.
+
+Proof. The first old-frontier row in $F$ is the acquired current
+leftmost beta. Hence both compared first executions perform exactly
+$S_p$ on the same source. The all-event appends are identical and
+complete at the chosen inner-return cut, giving the same logical
+source and tape words. There is at least one other old-frontier row
+because $t$ is multileaf. The $F$ caller retains those unprocessed rows
+and its continuation and has not returned; $G$ has returned. Even at
+beta the content equality holds if $F$ is paused before its outer
+return, though no further primitive row then remains. Such equality
+is a statement about a projection of legal joint states, not equality
+of full observers.
+
+For the stronger collision, let $E$ be the nonempty left-first sequence
+of edits at all old leaves other than $p$. Its addresses are
+prefix-incomparable with $p$. The successful primitive expansions are
+
+$$
+\begin{aligned}
+GF &: S_p\,S_{pL}\,P_{pR}\,E,\\
+F\text{ then two primitives of }F &: S_p\,E\,S_{pL}\,P_{pR}.
+\end{aligned}
+\tag{42.11}
+$$
+
+Indeed after $G$, the first two frontier leaves are the new beta at
+$pL$ and alpha at $pR$. After the first $F$, exactly these are again
+the first two leaves of the next sealed frontier. Both displayed
+executions replace the old subtree beta at $p$ by
+$\langle\langle\beta,\alpha\rangle,\beta\rangle$ and replace every
+other old leaf once by its $\rho$ image. Edits in $E$ commute with
+those at $pL,pR$ because their target subtrees are disjoint; hence
+the logical endpoints agree. The second frontier also contains
+leaves outside $p$, so after its first two rows that macro still has
+unprocessed rows. The two primitive lists differ: immediately after
+$S_p$, one edits $pL$, the other edits an address outside $p$.
+AA19.2's source-relative tape bijection therefore makes their tape
+contents different at the common endpoint. $\square$
+
+The first comparison uses the source-and-tape-content projection;
+the second uses only logical source. Neither supplies an outer
+FetchGrowth call while busy or during unfinished maintenance. At an
+inner Ready cut the surrounding caller can still be Busy, and the
+outer request contract need not admit recall. Mathematical evaluation
+of a coherent tape word is separate from a lawful callable observation.
+These collisions do not refute the completed-word theorem: one side
+of each comparison is outside its completed-macro domain.
+

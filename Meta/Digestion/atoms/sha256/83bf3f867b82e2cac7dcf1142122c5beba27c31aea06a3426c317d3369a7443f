@@ -1,0 +1,37 @@
+**Lemma 2.3 (The prices are the constrained first variation).**
+Extend the rational expression (1.2) to real arrays whose
+marginals are positive. Its partial derivative at (1.7), for a
+type with counts $L,B$, is
+
+$$
+g_j(L,B)=\frac{L(K^2-2m^2)}{\alpha^2}
+              +B(K^2-2)\eta^2.
+\tag{2.9}
+$$
+
+For every $x\in\mathcal X(a,h)$,
+
+$$
+DH(x^*)[x-x^*]=\sum_T\rho_j(|T\cap C|,|T\cap D|)x_T.
+\tag{2.10}
+$$
+
+**Proof.** For a sink $i$, the numerator of its summand in $H$ is
+$A_i(x)=\sum_{T\ni i}|T|^2x_T$. Differentiation gives
+
+$$
+\frac{\partial H}{\partial x_T}
+=\sum_{i\in T}\left(\frac{K^2}{y_i^2}
+                           -\frac{2A_i(x)}{y_i^3}\right).
+$$
+
+At the cap, $A_i=\alpha m^2$ for $i\in C$ and
+$A_k=\beta$ for $k\in D$, proving (2.9). In particular
+$g_j(m,0)=-m^3/\alpha^2$ and $g_j(0,1)=-\eta^2$.
+The affine function of cardinality agreeing with these two values
+is $\kappa_j+\lambda_j K$, where
+$\kappa_j=-\eta^2-\lambda_j$. Subtracting it gives exactly
+(2.1). Both the total mass and the mean of $x-x^*$ vanish.
+The affine subtraction therefore changes no first variation.
+The price vanishes on the support of $x^*$, proving (2.10). ∎
+

@@ -1,0 +1,49 @@
+**定理 162.1（完整原范围的有限提升）。** 在完整 $B$ 与另名完整 $\mathsf B_{\rm cl}$ 中，分别有
+
+$$
+\mathsf C_{0,h}(B_*)\Longleftrightarrow\mathsf C_3(B_*)
+\Longleftrightarrow B_*+\mathsf F_{\rm cut}.
+\tag{162.1}
+$$
+
+正向不要求直接实际 $AP$、不要求嵌入保持 $q$ 或 primitive，也不预设原联合的复张量表示。
+
+证明。两个背景分别由母卷定理 30.1、引理 67.3 独立供应每个原对象及实际联合的 $D_au=0$。因此秩至少三及秩至多一的对象可直接使用定理 161.1。固定尚余的秩二原对象 $A$；同一原身份参考给一个已声明的实际 $J=AP^{\otimes k}$、$k\ge1$，以及原含幺 Jordan/$D$ 嵌入 $i:E_A\to E_J$ 和 $j:E_P\to E_J$。只选已供应的一个 $k,J$。
+
+原 AC 的 primitive 效果 $d$ 非中央，故整个原 $P$ 至少有两颗正交 primitive $s_1,s_2$。取 $A$ 的两颗正交 primitive $p_1,p_2$ 及各自的数学纯态 $\alpha_a,\beta_b$，使 $\alpha_a(p_a)=\beta_b(s_b)=1$。母卷定理 69.1 的一般边缘结论不消费 $\mathsf Q$、SC 或标定，直接在固定 $J$ 给四个数学归一正态
+
+$$
+\gamma_{ab}\bigl(i(x)\circ j(y)\bigr)=\alpha_a(x)\beta_b(y),
+\qquad a,b\in\{1,2\}.
+\tag{162.2}
+$$
+
+在 $\mathsf B_{\rm cl}$ 中使用其已证闭正锥延拓；在 $B$ 中原实际准备的有限正锥生成蕴含该闭覆盖，故同一数学延拓适用，也可直接用有限正和。二者均不将数学正和、极限或纯态命名为实际准备。其余 $k-1$ 个原指针位置仍用同一归一 AC 准备。
+
+设 $h_{ab}\ge0$ 是 $\gamma_{ab}$ 关于原正 Frobenius 型 $q_J$ 的密度。因两个嵌入含幺且 $\gamma_{ab}(i(p_a))=\gamma_{ab}(j(s_b))=1$，有
+
+$$
+q_J(h_{ab},u_J-i(p_a))=q_J(h_{ab},u_J-j(s_b))=0.
+\tag{162.3}
+$$
+
+这里使用成熟的 EJA 正元零内积判据：$x,y\ge0$、$q_J(x,y)=0$ 蕴含 $x\circ y=0$。它也可在 $h_{ab}=\sum_\ell\lambda_\ell t_\ell$ 的正谱展开中使用：每个 $\lambda_\ell>0$ 的 primitive $t_\ell$ 对两个正补元的内积均为零，故 $t_\ell\le i(p_a),j(s_b)$。取其中一颗，记为 $t_{ab}$。不同 $(a,b)$ 的 $t_{ab}$ 位于至少一对正交幂等元之下；Peirce 正交性使它们两两正交。因此
+
+$$
+\operatorname{rank}E_J\ge4.
+\tag{162.4}
+$$
+
+这只用联合正态的支持，没有先断言 $i(p_a)\circ j(s_b)$ 本身是正元或投影，没有断言每个简单联合块的秩均至少四。
+
+整个原 $J$ 也满足 $\mathsf F_{0,h}$ 和独立右单位，所以定理 161.1 给它的全部 $\mathsf F_{\rm cut}$。从而 $D^J$ 交替、逐第一槽为 Jordan 导子，且每个联合幂等元 $f$ 满足 $(D_f^J)^2=-P_f^J/4$。原 $i$ 保持 $\circ,D$ 且单射，将导子律和交替性拉回 $A$；对任意原幂等元 $c$ 及原 $x$，还有
+
+$$
+i\bigl((D_c^A)^2x\bigr)
+=(D_{i(c)}^J)^2i(x)
+=-P_{i(c)}^Ji(x)/4=-i(P_c^Ax)/4.
+\tag{162.5}
+$$
+
+所以原 $D_c^A$ 满足同一平方恒等式。EJA 导子对任意正 Frobenius 型均斜伴随：成熟的内导子表示为 $[L_a,L_b]$ 的有限和，而所有 $L_a$ 对该原型自伴随。交替性和导子律又使 $D_c^A$ 消去 $E_1(c)\oplus E_0(c)$，保持 $E_{1/2}(c)$。因此按 (156.10) 的同一原 $q_A$ 展开恢复 $A$ 的全部配平。没有将 $q_J$ 拉回替换原不等权 $q_A$。$A$ 任意，所有原对象及实际联合遂全部恢复；反向只是限制测试域。∎
+
