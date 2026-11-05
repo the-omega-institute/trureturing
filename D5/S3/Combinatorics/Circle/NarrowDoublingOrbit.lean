@@ -59,6 +59,16 @@ noncomputable def diameter (X Q : ℕ) : ℕ :=
     (orbit X Q).max' h - (orbit X Q).min' h
   else 0
 
+/-- Exponent of the directed gap at sorted index `i`. Subtraction takes
+place in `ZMod r`, including at `i + 1 = r`. -/
+def gapExponent (r u i : ℕ) : ℕ :=
+  ((u : ZMod r) * ((i : ZMod r) + 1) - 1).val
+
+/-- The prescribed maximum for the unit shift `s` with inverse `u` modulo `r`.
+No orbit or narrowness predicate is used in this arithmetic definition. -/
+def explicitNumerator (r s u : ℕ) : ℕ :=
+  2 ^ (r - 1) + ∑ i ∈ Finset.range (s - 1), 2 ^ gapExponent r u i
+
 /-- Strict positively oriented circular order, cut at zero. -/
 private def CyclicBetween (a b c : ℤ) : Prop :=
   (a < b ∧ b < c) ∨ (b < c ∧ c < a) ∨ (c < a ∧ a < b)
