@@ -1,0 +1,10 @@
+**引理 1.2（同步等距与单项控制）。**有 $c(Ux,Uy)=c(x,y)$，且
+
+$$
+c(a\cdot u,b\cdot v)\le3\bigl(c(a,b)+c(u,v)\bigr),\qquad
+c(x,y)\le3\bigl(q(x)+r(y)\bigr).
+\tag{1.2}
+$$
+
+**证明。**第一项复用[《任意标记的五点正性桥梁与仿射复几何》](AURIC_C133_UNANCHORED_MARKER_FINITE_POSITIVITY_BRIDGE.md)引理 2.1 的非负递推，那里仅使用 (R)。原式的第零项不大于三项总和，给第一条界；再取 $(a,b,u,v)=(x,1,1,y)$ 得第二条界。没有使用尚未取得的三角不等式。
+

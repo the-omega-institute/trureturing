@@ -1,0 +1,15 @@
+**定义 151.3（Born 比较行与规范块代表）。** 对 $u\in S(\mathcal K_i)$ 定义数学行
+
+$$
+r_u^i(h,w)=\langle u,E^i_{h,w}u\rangle,
+\qquad
+D_i(T)=\sum_{s\in S_i}P_sTP_s,
+\qquad
+\bar\rho_u=D_i(|u\rangle\langle u|).
+\tag{151.6}
+$$
+
+对任意块密度 $\sigma\in\mathcal A_i$，$\sigma\ge0$、$\operatorname{Tr}\sigma=1$，置 $r_\sigma(h,w)=\operatorname{Tr}(\sigma E^i_{h,w})$。这些行组成数学凸集 $\mathfrak R_i$。由 (151.2)，不同的规范块密度给不同的完整行，且 $r_u^i=r_{\bar\rho_u}$。若 $t_i(a)=\|M_i\chi_a\|^2>0$，记 $r_{\chi_a}^i=r_{M_i\chi_a/\sqrt{t_i(a)}}^i$；$t_i(a)=0$ 时不定义该条件行。
+
+$|u\rangle\langle u|$ 是整个 $\mathcal K_i$ 上的环境纯态矩阵；$\bar\rho_u$ 是其对原未来效果的唯一块密度代表。二者不是同一个对象。这里的二次型先只作为 Born 比较行，只有另外给出实际概率接口时才等于实际概率。凸集及其线段也不是装置已经取得的随机准备。
+
