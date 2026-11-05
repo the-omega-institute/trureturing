@@ -1,0 +1,52 @@
+**Lemma 147.3 (high-frequency correction with three independent differentials).** Let $N$ be any positive odd integer. Let $V_N$ be the space of bounded real classes invariant under $R_{2\pi/N}$ and odd under $R_\pi$. For every $c\in\mathbb R^3$ there exist $w,h_1,h_2,h_3\in V_N$ such that
+
+$$
+q(w)=c,\qquad B_j(w,h_k)=\delta_{jk}\quad(1\le j,k\le3).
+\tag{147.5}
+$$
+
+*Proof.* First, every nonzero pencil $q_\lambda=\sum_j\lambda_jq_j$ has infinite negative index on $V_N$. If $(\lambda_1,\lambda_3)\ne(0,0)$, use Corollary 133.3 with source time $2d$, gap $d$, and coefficients $(\alpha,\beta,\gamma)=(\lambda_1,\lambda_3,\lambda_2)$. It supplies a negative bounded real test at each of the distinct positive odd multiples of $N$, with zero polar cross-pairings. Those tests belong to $V_N$. If only $\lambda_2\ne0$, apply the same corollary with source time $2d$, gap $2d$, and coefficients $(\lambda_2,0,0)$. Its form is exactly $\lambda_2\langle gv,T_{2d}v\rangle_m=\lambda_2q_2(v)$. This invocation concerns the same operator's pair form; it changes none of the observation epochs in (147.1). Intersecting arbitrarily large negative subspaces with any finite-codimensional linear subspace $W\subset V_N$ proves the same infinite-index property on $W$.
+
+We need the following consequence, proved here on these spaces:
+
+$$
+q(W)=\mathbb R^3
+\quad\hbox{for every finite-codimensional }W\subset V_N.
+\tag{147.6}
+$$
+
+For each unit vector $\lambda\in\mathbb R^3$, select a five-dimensional negative subspace for $q_\lambda$ in $W$. Negativity on its unit sphere persists for pencil coefficients in a neighborhood of $\lambda$. A finite cover of the coefficient sphere and the sum of the selected subspaces give a finite-dimensional $E\subset W$ on which every unit pencil has at least five negative eigenvalues. Equip $E$ with any Euclidean inner product. Continuity of eigenvalues and compactness supply a single $\delta>0$ such that the fifth smallest eigenvalue of every unit pencil is at most $-\delta$.
+
+Fix a target $c$, choose $R>0$ with $R^2>\|c\|/\delta$, and minimize $H(x)=\|q(x)-c\|^2$ on $\|x\|=R$ in $E$. Suppose its residual $\lambda=q(x)-c$ is nonzero. In a five-dimensional negative spectral subspace for $q_{\lambda/\|\lambda\|}$ choose $w\ne0$ satisfying the four linear equations
+
+$$
+B_j(x,w)=0\quad(j=1,2,3),\qquad (x,w)_E=0.
+\tag{147.7}
+$$
+
+Along $x(t)=R(x+tw)/\|x+tw\|$, differentiation gives
+
+$$
+\begin{aligned}
+\left.\frac{d^2}{dt^2}H(x(t))\right|_{t=0}
+&=4\left(q_\lambda(w)-\frac{\lambda\cdot q(x)}{R^2}\|w\|^2\right)\\
+&\le4\|\lambda\|\|w\|^2
+             \left(-\delta+\frac{\|c\|}{R^2}\right)<0.
+\end{aligned}
+\tag{147.8}
+$$
+
+Here $\lambda\cdot q(x)=\|\lambda\|^2+\lambda\cdot c\ge-\|\lambda\|\|c\|$. This contradicts minimality and proves (147.6). The argument uses a finite sphere to find an actual vector; it asserts no compactness of the full bounded-function space.
+
+Now set $T_jx=B_j(x,\cdot)\in V_N^*$, using the algebraic dual. Every nonzero linear combination of these three operators has infinite rank: a negative definite subspace of dimension $k$ for its polar form forces rank at least $k$. Thus they span a three-dimensional operator space with no nonzero finite-rank member. The contrapositive of Meshulam–Šemrl, *Locally linearly dependent operators*, Theorem 2.2, with real field, $n=3$ and $c=1$, gives some $x\in V_N$ for which the three functionals $B_j(x,\cdot)$ are independent. This theorem applies to arbitrary vector spaces, including $V_N$ and its algebraic dual. Choose $h_k\in V_N$ with $B_j(x,h_k)=\delta_{jk}$.
+
+On the finite-codimensional subspace
+
+$$
+W=\{z\in V_N:B_j(x,z)=0,\ B_j(z,h_k)=0
+                         \text{ for all }j,k\},
+\tag{147.9}
+$$
+
+apply (147.6) to find $z$ with $q(z)=c-q(x)$. Then $w=x+z$ satisfies (147.5). The cited primary result is R. Meshulam and P. Šemrl, *Pacific Journal of Mathematics* **203** (2002), 441–459, [doi:10.2140/pjm.2002.203.441](https://doi.org/10.2140/pjm.2002.203.441), Theorem 2.2 and its proof, pp. 444–445. Its local-dependence alternative is the known intermediate; the source-specific inputs to this correction are the original pencils and their angular tests. $\square$
+
