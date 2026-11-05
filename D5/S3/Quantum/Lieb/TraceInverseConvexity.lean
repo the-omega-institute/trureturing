@@ -54,6 +54,20 @@ theorem weighted_trace_inverse_convexOn (C : Matrix d d ℂ) (hC : C.PosSemidef)
     simpa only [Matrix.mul_add, Matrix.mul_smul, Matrix.trace_add,
       Matrix.trace_smul, Complex.add_re, Complex.smul_re, smul_eq_mul] using htrace
 
+/-- A positive witness reverses the trace of the inverse along the positive-definite order.
+
+This is the order companion to `weighted_trace_inverse_convexOn`; it is the
+finite-dimensional monotonicity bridge used by divergence constructions. -/
+theorem weighted_trace_inverse_antitone (C : Matrix d d ℂ) (hC : C.PosSemidef) :
+    AntitoneOn (fun A : Matrix d d ℂ => (Matrix.trace (C * A⁻¹)).re)
+      {A : Matrix d d ℂ | A.PosDef} := by
+  intro A hA B hB hAB
+  have hmatrix : B⁻¹ ≤ A⁻¹ := by
+    simpa only [Matrix.nonsing_inv_eq_ringInverse] using
+      (CStarAlgebra.antitoneOn_ringInverse hA.isStrictlyPositive
+        hB.isStrictlyPositive hAB)
+  exact weighted_trace_re_mono C hC hmatrix
+
 /-- The real trace of the inverse is convex on the positive-definite cone.
 
 This is the finite-matrix scalar bridge from Mathlib's operator convexity of
