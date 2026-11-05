@@ -2,14 +2,16 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Measurements/ConnectedExclusionCalibration
    mirror-E: none(waiver:unbounded-finite-graph-family)
-   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected, mathlib/module/Mathlib.Combinatorics.SimpleGraph.Clique]
+   anchors: []
    utility: none
-   digest: A single zero seed calibrates the original independent-configuration response on every finite connected exclusion graph. -/
+   digest: One zero seed calibrates the same response on finite connected exclusion graphs. -/
 
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 import Mathlib.Combinatorics.SimpleGraph.Clique
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Tactic
+
+/-! Calibration and concentration of the original response on independent configurations. -/
 
 noncomputable section
 
@@ -54,18 +56,24 @@ private theorem atom_le_marginal (S : Finset (Finset V)) (T : S → S → ℝ)
     (ht : k ∈ t.val) : T t s ≤ marginal S T k s := by
   have h := Finset.single_le_sum
     (s := Finset.univ) (f := fun u : S => if k ∈ u.val then T u s else 0)
-    (fun u _ => by split_ifs; exact hT.nonneg u s; exact le_rfl)
+    (fun u _ => by
+      split_ifs
+      · exact hT.nonneg u s
+      · exact le_rfl)
     (Finset.mem_univ t)
-  simpa only [if_pos ht] using h
+  simpa only [marginal, ite_eq_left ht] using h
 
 private theorem atom_le_complement (S : Finset (Finset V)) (T : S → S → ℝ)
     (a b : V → ℝ) (hT : ResponseLaws S T a b) (k : V) (t s : S)
     (ht : k ∉ t.val) : T t s ≤ 1 - marginal S T k s := by
   have h := Finset.single_le_sum
     (s := Finset.univ) (f := fun u : S => if k ∉ u.val then T u s else 0)
-    (fun u _ => by split_ifs; exact hT.nonneg u s; exact le_rfl)
+    (fun u _ => by
+      by_cases hu : k ∉ u.val
+      · simpa only [ite_eq_left hu] using hT.nonneg u s
+      · simp only [ite_eq_right hu, le_refl])
     (Finset.mem_univ t)
-  simp only [if_pos ht] at h
+  simp only [ite_eq_left ht] at h
   have hsum : (∑ u : S, if k ∉ u.val then T u s else 0) + marginal S T k s = 1 := by
     rw [marginal, ← Finset.sum_add_distrib]
     convert hT.normalized s using 1
@@ -168,14 +176,14 @@ theorem connected_response_calibration (G : SimpleGraph V)
   intro t s
   by_cases hts : t = s
   · subst t
-    rw [if_pos rfl]
+    rw [ite_eq_left rfl]
     have hsum : (∑ t : S, T t s) = T s s := by
       apply Finset.sum_eq_single s
       · intro t _ hne
         exact hwrong t s hne
       · simp
     linarith [hT.normalized s]
-  · rw [if_neg hts]
+  · rw [ite_eq_right hts]
     exact hwrong t s hts
 
 #print axioms connected_response_calibration
