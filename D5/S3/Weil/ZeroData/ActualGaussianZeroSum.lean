@@ -9,7 +9,7 @@
    with no reciprocal weights in E itself. The majorant uses the previously
    proved actual inverse-square mass. Sharp tail constants and the original
    finite Cassel time are implemented in ActualGaussianDirectTail. -/
-import D5.S3.Arith.Robin.CompleteActualSignedGaussianExchange
+import D5.S3.Arith.Robin.GaussianLocalization.CompleteActualSignedGaussianExchange
 import Mathlib.Tactic
 
 set_option autoImplicit false

@@ -10,7 +10,7 @@ internal sealed class CompleteActualSignedGaussianExchangeDocument : IScribeDocu
         Blocks(
             Describe.Lean(
                 DescribeId.Create("actual-signed-k-exchange"),
-                DeclarationHandle.Create("D5/S3/Arith/Robin/CompleteActualSignedGaussianExchange.actual_signed_K_exchange"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/GaussianLocalization/CompleteActualSignedGaussianExchange.actual_signed_K_exchange"),
                 H("The signed Gaussian transform over all actual occurrences"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),

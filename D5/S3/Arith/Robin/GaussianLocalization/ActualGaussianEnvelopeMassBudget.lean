@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/Robin/ActualGaussianEnvelopeMassBudget
+/- GID: D5/S3/Arith/Robin/GaussianLocalization/ActualGaussianEnvelopeMassBudget
    generality: I
-   mirror-B: D5/B/S3/Arith/Robin/ActualGaussianEnvelopeMassBudget
+   mirror-B: D5/B/S3/Arith/Robin/GaussianLocalization/ActualGaussianEnvelopeMassBudget
    mirror-E: none(waiver:analytic-proof-without-numeric-projection)
    anchors: []
    utility: none

@@ -10,7 +10,7 @@ internal sealed class ActualGaussianEnvelopeMassBudgetDocument : IScribeDocument
         Blocks(
             Describe.Lean(
                 DescribeId.Create("actual-gaussian-full-hv-bound"),
-                DeclarationHandle.Create("D5/S3/Arith/Robin/ActualGaussianEnvelopeMassBudget.full_Hv_le_four"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/GaussianLocalization/ActualGaussianEnvelopeMassBudget.full_Hv_le_four"),
                 H("The full signed envelope response"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),

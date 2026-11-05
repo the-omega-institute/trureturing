@@ -10,7 +10,7 @@ internal sealed class OriginalPositiveUPeakDocument : IScribeDocumentDefinition
         H("The original positive complete-U peak"),
         Blocks(Describe.Lean(
             DescribeId.Create("original-positive-u-peak"),
-            DeclarationHandle.Create("D5/S3/Arith/Robin/OriginalPositiveUPeak.original_positive_U_peak"),
+            DeclarationHandle.Create("D5/S3/Arith/Robin/GaussianLocalization/OriginalPositiveUPeak.original_positive_U_peak"),
             H("The original closed quantitative witness interval"),
             StatementSource.FromAuthor(PeakFormula()),
             AssessedProvenance.FromRepo(),

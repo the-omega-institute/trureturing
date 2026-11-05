@@ -1,18 +1,18 @@
-/- GID: D5/S3/Arith/Robin/OriginalPositiveUPeak
+/- GID: D5/S3/Arith/Robin/GaussianLocalization/OriginalPositiveUPeak
    generality: I
-   mirror-B: D5/B/S3/Arith/Robin/OriginalPositiveUPeak
+   mirror-B: D5/B/S3/Arith/Robin/GaussianLocalization/OriginalPositiveUPeak
    mirror-E: none(waiver:analytic-proof-without-numeric-projection)
    anchors: []
    utility: none
    digest: Quantitative complete Gaussian localization for the original positive-U theorem. -/
-/- COMPLETE SOURCE OVERLAY ONLY — UNCOMPILED.
-   Original section479, original 100/500-scale interval, complete inclusive U.
-   Current shared Gaussian and integrated-formula suppliers are reused.
-   No compilation, kernel acceptance, registration or RH claim. -/
+/- Original section 479: the 100/500-scale closed interval and complete
+   inclusive U. Current shared Gaussian and integrated-formula suppliers are
+   reused. The theorem is conditional on the stated actual-zero premises;
+   it neither proves RH nor supplies an off-critical zero. -/
 import D5.S3.Analytic.GaussianSignedLocalization
 import D5.S3.Weil.Mertens.IntegratedExplicit.WholeFormula
 import D5.S3.Weil.ZeroData.ActualGaussianDirectTail
-import D5.S3.Arith.Robin.OriginalGaussianIntegralBudgets
+import D5.S3.Arith.Robin.GaussianLocalization.OriginalGaussianIntegralBudgets
 import Mathlib.MeasureTheory.Integral.Bochner.Set
 import Mathlib.Tactic
 
@@ -161,7 +161,7 @@ private theorem full_E_upper_of_central_bound
 /-- Original positive complete-U witness. The ONLY premises are an ACTUAL
 nontrivial zero and its stated beta/gamma inequalities. Original constants
 100, 500, 4, 28 and the inclusive complete Mangoldt U are unchanged.
-This is a complete proof-script candidate, not a native acceptance receipt. -/
+The separate conditional integer application is documented in the owning Scribe. -/
 theorem original_positive_U_peak (ρ : ℂ) (hρ : IsNontrivialZero ρ)
     (hβ : 1 / 2 < ρ.re) (hγ : 0 < ρ.im) :
     let δ := ρ.re - 1 / 2

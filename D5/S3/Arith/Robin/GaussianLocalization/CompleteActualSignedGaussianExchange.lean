@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/Robin/CompleteActualSignedGaussianExchange
+/- GID: D5/S3/Arith/Robin/GaussianLocalization/CompleteActualSignedGaussianExchange
    generality: I
-   mirror-B: D5/B/S3/Arith/Robin/CompleteActualSignedGaussianExchange
+   mirror-B: D5/B/S3/Arith/Robin/GaussianLocalization/CompleteActualSignedGaussianExchange
    mirror-E: none(waiver:analytic-exchange-without-numeric-projection)
    anchors: []
    utility: none

@@ -10,7 +10,7 @@ internal sealed class OriginalGaussianIntegralBudgetsDocument : IScribeDocumentD
         Blocks(
             Describe.Lean(
                 DescribeId.Create("original-gaussian-central-budget"),
-                DeclarationHandle.Create("D5/S3/Arith/Robin/OriginalGaussianIntegralBudgets.central_original"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/GaussianLocalization/OriginalGaussianIntegralBudgets.central_original"),
                 H("The original localization budgets on their exact domains"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),

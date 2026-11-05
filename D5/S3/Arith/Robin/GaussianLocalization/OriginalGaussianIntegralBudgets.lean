@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/Robin/OriginalGaussianIntegralBudgets
+/- GID: D5/S3/Arith/Robin/GaussianLocalization/OriginalGaussianIntegralBudgets
    generality: I
-   mirror-B: D5/B/S3/Arith/Robin/OriginalGaussianIntegralBudgets
+   mirror-B: D5/B/S3/Arith/Robin/GaussianLocalization/OriginalGaussianIntegralBudgets
    mirror-E: none(waiver:analytic-proof-without-numeric-projection)
    anchors: []
    utility: none
@@ -8,7 +8,7 @@
 /- SOURCE IMPLEMENTATION ONLY. Original F5: whole Hv, positive central
    response, complete nonnegative exterior, and the entire negative axis.
    No integral is used without a preceding integrability proof. -/
-import D5.S3.Arith.Robin.ActualGaussianEnvelopeMassBudget
+import D5.S3.Arith.Robin.GaussianLocalization.ActualGaussianEnvelopeMassBudget
 import D5.S3.Fourier.Asymptotics.GaussianComplexMoments
 import D5.S3.Fourier.Asymptotics.CountableGaussianQuadraticFourthMoment
 import Mathlib.MeasureTheory.Group.Integral
