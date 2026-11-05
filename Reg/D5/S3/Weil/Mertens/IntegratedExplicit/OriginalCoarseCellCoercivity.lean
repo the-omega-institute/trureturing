@@ -2,6 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.Mertens.IntegratedExplicit.OriginalCoarseCellCoercivity
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound audit for the full arbitrary-beta finite-cell endpoint. -/
 noncomputable section
 universe u
 open MeasureTheory Set Filter
@@ -71,7 +72,16 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Weil.Mertens.IntegratedExplicit.OriginalCoarseCellCoercivity
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg", "body", "arg", "arg", "body", "arg", "arg", "arg", "body", "body", "body", "body", "body", "body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
