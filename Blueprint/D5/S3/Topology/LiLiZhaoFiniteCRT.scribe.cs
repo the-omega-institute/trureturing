@@ -9,7 +9,7 @@ internal sealed class LiLiZhaoFiniteCRTDocument : IScribeDocumentDefinition
         "Finite prime-residue cylinders supply the compatibility bridge for the Li--Li--Zhao prime-tail topology construction.",
         H("Prime-tail topology bridge"),
         Blocks(
-            Paragraph(Text("The underlying space is the set N of natural numbers including zero. The function primeSeq(i), abbreviated p(i), is the increasing enumeration Nat.nth Nat.Prime i, starting with p(0)=2. For natural i and a, residue(i,a) is the set of x with x congruent to a modulo p(i). For a finite set s of natural indices and an arbitrary assignment a:N to N, finiteCylinder(s,a) is the intersection of residue(i,a(i)) over i in s; the empty intersection is the whole space. No bound on the residues is needed for CRT.")),
+            Paragraph(Text("The underlying space is the set N of natural numbers including zero. The function primeSeq(i), abbreviated p(i), is the increasing enumeration Nat.nth Nat.Prime i, starting with p(0)=2. For natural i and a, residue(i,a) is the set of x with x congruent to a modulo p(i). For a finite set s of natural indices and an arbitrary assignment a:N to N, finiteCylinder(s,a) is the intersection of residue(i,a(i)) over i in s; the empty intersection is the whole space. No bound on the residues is needed for CRT. Nonempty(S) means that some natural number belongs to S; inter denotes set intersection and mod denotes the natural remainder. TOneSpace and TTwoSpace mean T1 and Hausdorff, with the displayed topology.")),
             Entry("finite-crt", "finite_crt", "Finite Chinese-remainder compatibility",
                 All("s", Supports, All("a", Assignments, Exists("x", N,
                     All("i", N, Implies(Mem(I, S), Eq(Mod(X, Prime(I)), Mod(App("a", I), Prime(I)))))))),
@@ -51,7 +51,7 @@ internal sealed class LiLiZhaoFiniteCRTDocument : IScribeDocumentDefinition
                 "Quasi-sobriety would give the whole irreducible closed space a generic point x. T1 makes the closure of the singleton x equal to that singleton; the natural number x+1 shows that it is smaller than the whole space. Thus even existence of a generic point fails, and in particular the space is not sober."),
             Paragraph(Text("These are the prime-tail topologies of Li--Li--Zhao, Sober topologies on a set, Example 3.9. Their underlying N-zero is Lean's N. Their prime p(k), indexed from 1, is primeSeq(k-1); their tail at index n+1 is tailTopology(n). This reindexing preserves every tail and their common-open topology. Their meet is our Mathlib supremum, by the order convention above. The construction proves every tail Hausdorff and the common topology T1, irreducible on the whole space, and non-quasi-sober. No claim about the separate cofinite-topology comparison in Remark 3.10 is included.")))));
 
-    private static ScribeNode Entry(string id, string name, string title, Formula statement,
+    private static DocumentBlock Entry(string id, string name, string title, Formula statement,
         string proof, DescribeRole role = DescribeRole.Theorem, AssessedProvenance? provenance = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create("D5/S3/Topology/LiLiZhaoFiniteCRT." + name),
             H(title), StatementSource.FromAuthor(F.Disp(statement)), provenance ??
@@ -86,9 +86,9 @@ internal sealed class LiLiZhaoFiniteCRTDocument : IScribeDocumentDefinition
     private static Formula Cylinder(Formula s, Formula a) => App("finiteCylinder", s, a);
     private static Formula Mod(Formula x, Formula p) => App("mod", x, p);
     private static Formula All(string name, Formula type, Formula body) =>
-        F.Seq(F.Forall, F.Sp, Id(name), F.Colon, type, F.Comma, F.Sp, body);
+        F.Seq(F.Open, F.Forall, F.Sp, Id(name), F.Colon, type, F.Comma, F.Sp, body, F.Close);
     private static Formula Exists(string name, Formula type, Formula body) =>
-        F.Seq(F.Exists, F.Sp, Id(name), F.Colon, type, F.Comma, F.Sp, body);
+        F.Seq(F.Open, F.Exists, F.Sp, Id(name), F.Colon, type, F.Comma, F.Sp, body, F.Close);
     private static Formula Binary(Formula a, Formula op, Formula b) => F.Seq(F.Open, a, op, F.Sp, b, F.Close);
     private static Formula And(Formula a, Formula b) => Binary(a, F.Land, b);
     private static Formula Implies(Formula a, Formula b) => Binary(a, F.Implies, b);
