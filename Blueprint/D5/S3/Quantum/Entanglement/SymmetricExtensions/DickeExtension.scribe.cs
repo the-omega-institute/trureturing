@@ -18,6 +18,11 @@ internal sealed class DickeExtensionDocument : IScribeDocumentDefinition
                 + "is a function from I to L, so matrices act on the actual tensor product of the local "
                 + "complex spaces. Two selected registers a and b are distinct and ordered. "
                 + "Every partial trace below is unnormalized.")),
+            Paragraph(Text("The marginal-to-global support mechanism is prior Hansenne-Xu-Kraft-Guehne mathematics. "
+                + "The application note has byline Haobo Ma then Wenlin Zhang. Li-Huang-Ruan-Zeng, "
+                + "arXiv:1809.05641v1, Theorem 2, prove existence of a leaf-Bose extension for qubit leaves "
+                + "and arbitrary bipartite inputs by changing the witness. Their result does not assert "
+                + "the same individual witness or full Bose support including the root in arbitrary dimension.")),
             Node("edgeSplit", "Splitting the actual tensor factors",
                 Seq(Call("edgeSplit", X("a"), X("b")), Colon, Sp, Open, X("I"), To, X("L"), Close,
                     Sp, Equiv, Sp, Open, X("L"), Times, X("L"), Close, Times,
