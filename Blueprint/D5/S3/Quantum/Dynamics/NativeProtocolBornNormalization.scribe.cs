@@ -57,7 +57,7 @@ internal sealed class NativeProtocolBornNormalizationDocument : IScribeDocumentD
         Formula k=Power(Call("kappa"),Seq(D(2),Star,Call("maxCalls",T),Star,Call("card",Call("CutBasis",I))));
         Formula inv=Call("inv",k),rho=Call("smul",Call("complex",Call("inv",p)),cut);
         Formula ex(string name,Formula type,Formula body)=>Seq(Open,Exists,Sp,F.Id(name),Colon,Sp,type,Comma,Sp,body,Close);
-        Formula imp(Formula a,Formula b)=>new Formula.Logic(a,FormulaLogicOperator.Implies,b);
+        Formula imp(Formula a,Formula b)=>Seq(Open,new Formula.Logic(a,FormulaLogicOperator.Implies,b),Close);
         Formula le(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.LessThanOrEqual,b);
         Formula positive=new Formula.Relation(D(0),FormulaRelationOperator.LessThan,p);
         Formula spectral=ex("h",Call("IsHermitian",cut),ex("q",Call("IsHermitian",rho),
