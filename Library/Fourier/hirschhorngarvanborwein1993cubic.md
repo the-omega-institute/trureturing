@@ -14,6 +14,8 @@ triage: anchor
 
 # Classical cubic theta four-dissections
 
+## Verified locator
+
 Hirschhorn, Garvan and Borwein, *Canadian Journal of Mathematics* 45(4),
 673-694, DOI [10.4153/CJM-1993-038-2](https://doi.org/10.4153/CJM-1993-038-2).
 The publisher metadata and Crossref record agree on the authors, title,
