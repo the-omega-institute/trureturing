@@ -15,6 +15,13 @@ import Mathlib.Algebra.Polynomial.OfFn
 import Mathlib.LinearAlgebra.Pi
 import Mathlib.SetTheory.Cardinal.Embedding
 
+/-!
+The complete ordinary-square energy of the actual positive-height xi spectrum
+has negative index equal to the number of distinct off-line zero quartets.
+The same index is the supremum of the finite original-derivative Hankel indices.
+No RH or finite-representative premise is imposed on the complete identities.
+-/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -294,9 +301,10 @@ theorem actual_complete_negative_index :
     letI : Fintype QuartetRepresentative := Fintype.ofFinite QuartetRepresentative
     apply le_antisymm
     · exact actual_upper_of_finite_representatives
-    · have h := actual_lower_of_rep_embedding
+    · change ENat.card QuartetRepresentative ≤ negativeIndex actualEnergy
+      rw [ENat.card_eq_coe_fintype_card]
+      exact actual_lower_of_rep_embedding
         (Fintype.equivFin QuartetRepresentative).symm.toEmbedding
-      simpa only [actualQuartetCount, ENat.card_eq_coe_fintype_card] using h
   · letI : Infinite QuartetRepresentative := not_finite_iff_infinite.mp hfinite
     have htop : actualQuartetCount = ⊤ := ENat.card_eq_top_of_infinite
     rw [htop]
