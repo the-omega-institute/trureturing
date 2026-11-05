@@ -1,0 +1,19 @@
+**定义 5.1（轨道方窗与实际右平移）。**对整数 $L\ge1$，置
+
+$$
+C_L(u,v)=\frac1{L^2}\sum_{0\le n,m<L}c(U^nu,U^mv),\qquad
+K_L(a,u;b,v)=\frac1{L^2}\sum_{0\le n,m<L}c(a\cdot U^nu,b\cdot U^mv).
+\tag{5.1}
+$$
+
+在自由实差空间 $E$ 上定义线性算子
+
+$$
+\mathcal T_L^u e_a=\frac1L\sum_{n=0}^{L-1}
+\bigl(e_{a\cdot U^nu}-e_{U^nu}\bigr),\qquad
+\mathcal A_L=\mathcal T_L^1.
+\tag{5.2}
+$$
+
+单位 $a=1$ 时右端为零，故此定义与 $e_1=0$ 相容。这些平均只是有限标量和或自由空间向量，不作为 $M$ 中的新对象或单位。
+
