@@ -31,7 +31,7 @@ open scoped BigOperators ComplexConjugate
 private theorem node_ne_zero (n : PositiveZero) : node n ≠ 0 :=
   inv_ne_zero (pow_ne_zero _ (gamma_ne_zero n))
 
-private theorem weight_ne_zero (n : PositiveZero) : weight n ≠ 0 := by
+theorem weight_ne_zero (n : PositiveZero) : weight n ≠ 0 := by
   rw [weight_node]
   apply div_ne_zero
   · exact mul_ne_zero (mul_ne_zero (by norm_num)
@@ -39,7 +39,7 @@ private theorem weight_ne_zero (n : PositiveZero) : weight n ≠ 0 := by
       (pow_ne_zero _ (node_ne_zero n))
   · exact node_denominator_ne_zero n
 
-private theorem node_large_finite (r : ℝ) (hr : 0 < r) :
+theorem node_large_finite (r : ℝ) (hr : 0 < r) :
     {n : PositiveZero | r ≤ ‖node n‖}.Finite := by
   have hF : {n : ℕ | ‖actualData.gamma n‖ ≤ r⁻¹}.Finite :=
     actualData.locallyFinite r⁻¹

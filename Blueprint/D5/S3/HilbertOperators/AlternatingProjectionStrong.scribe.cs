@@ -13,6 +13,13 @@ internal sealed class AlternatingProjectionStrongDocument : IScribeDocumentDefin
         "The actual powers of two orthogonal projections converge in norm on every vector to the projection onto the intersection, in an arbitrary complete real or complex Hilbert space.",
         H("Strong convergence of alternating orthogonal projections"), Blocks(
             Paragraph(Text("For a closed k-linear subspace U of H, P(U) denotes the actual orthogonal projection onto U from H to H. Comp(A,B) applies B first and then A. Inf(U,V) denotes the closed linear intersection. Powers are powers of bounded endomorphisms: the zeroth power is the identity, and applying the nth power agrees with n iterations of the same map.")),
+            Describe.Lean(DescribeId.Create("contractive-regular-powers-convergence"),
+                DeclarationHandle.Create(Prefix + "tendsto_pow_of_regular"),
+                H("From averages and regularity to powers"),
+                StatementSource.FromAuthor(Disp(UpgradeFormula())), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("Let k be any RCLike field and H any normed k-vector space, with independent universes u and v. Let T be a bounded k-linear endomorphism with operator norm at most one, and let x,p be vectors. Suppose Tp=p, the increments T^(n+1)x-T^n x tend to zero, and the Birkhoff averages of the actual T-orbit of x tend to p. Then the actual powers T^n x tend to p. Completeness and an inner product are not required for this upgrade.")),
+                    Paragraph(Text("In the formula, Orbit(T,x) is the sequence n mapped to T^n x, IncrementOrbit(T,x) is n mapped to T^(n+1)x-T^n x, and CesaroOrbit(k,T,x) is m mapped to birkhoffAverage k T id m x. Every Tendsto uses the natural atTop filter and the norm topology on H. For a fixed positive averaging window the transported-average error tends to zero by finite telescoping; contractivity bounds the remaining error by the original average error."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("alternating-projection-strong-convergence"),
                 DeclarationHandle.Create(Prefix + "tendsto_alternating_projection_pow"),
                 H("Actual nonaveraged powers"), StatementSource.FromAuthor(Disp(EndpointFormula())),
@@ -47,6 +54,25 @@ internal sealed class AlternatingProjectionStrongDocument : IScribeDocumentDefin
         Seq(Par(left), Sp, Rightarrow, Sp, right);
     private static Formula TypeAt(string level) =>
         Seq(Operatorname, Grp(V("Type")), Underscore, Grp(V(level)));
+    private static Formula UpgradeFormula()
+    {
+        var real = Seq(Mathbb, Grp(V("R")));
+        var nat = Seq(Mathbb, Grp(V("N")));
+        Formula Limit(Formula f, Formula p) =>
+            Call("Tendsto", f, Call("atTop", nat), Call("nhds", p));
+        var body = All("T", Call("ContinuousLinearMap", V("k"), V("H"), V("H")),
+            Imp(Seq(new Formula.Norm(V("T")), Sp, Leq, Sp, D(1)),
+                All("x", V("H"), All("p", V("H"),
+                    Imp(Seq(Call("T", V("p")), Sp, Eq, Sp, V("p")),
+                        Imp(Limit(Call("IncrementOrbit", V("T"), V("x")), D(0)),
+                            Imp(Limit(Call("CesaroOrbit", V("k"), V("T"), V("x")), V("p")),
+                                Limit(Call("Orbit", V("T"), V("x")), V("p")))))))));
+        body = Seq(Inst(Call("RCLike", V("k"))),
+            Inst(Call("NormedAddCommGroup", V("H"))),
+            Inst(Call("NormedSpace", V("k"), V("H"))), body);
+        return All("u", Call("UniverseLevel"), All("v", Call("UniverseLevel"),
+            All("k", TypeAt("u"), All("H", TypeAt("v"), body))));
+    }
     private static Formula EndpointFormula()
     {
         var real = Seq(Mathbb, Grp(V("R")));
