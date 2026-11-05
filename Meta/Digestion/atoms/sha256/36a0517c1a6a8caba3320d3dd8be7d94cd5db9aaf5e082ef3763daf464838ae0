@@ -1,0 +1,18 @@
+**定理 8.4（从原生几何到同一有限复载体）。** 在定义 8.1–8.3、C95 及所有原准备和原效果的有限性前件下，每个非零对象有一个由 $J,u$ 和原记录身份唯一确定到保持这些资料的 $*$-同构的有限复 $C^*$ 载体
+
+$$
+\mathcal A=\bigoplus_{s\in S}M_{d_s}(\mathbb C),\qquad
+A=\mathcal A_{\rm sa},\qquad
+A_+=\bigoplus_sM_{d_s}(\mathbb C)_+,
+$$
+
+且 $S_s\mapsto\rho_s\ge0$、$E_e\mapsto 0\le E_e\le I$ 给出
+
+$$
+u(s)=\sum_s{\rm Tr}(\rho_s),\qquad
+\langle e,s\rangle=\sum_s{\rm Tr}(E_{e,s}\rho_s).
+\tag{8.1}
+$$
+
+证明。定理 2.1 已由 C95 给出结合的有限复 $C^*$ 乘法及其自伴部，故有限维 $C^*$ 结构定理给出不等大小的矩阵直和。有限 projectivity 使每个面由定义 8.2(2) 的原 filter 表示；BBKM Proposition 3.1 将它与同一原面的一一对应固定。再用 Proposition 5.1 的有限谱展开，把每个效果写成有限个互相正交原子效果的实线性组合。Theorem 6.1 的 $J$ 把这些原子逐一送到原子态，并由 Appendix B 的 STP 得到正定、对称且正的配对。原单位 $u$ 送到各块单位矩阵，因而 (8.1) 的迹系数由原归一化而非任意 Frobenius 选择确定。定义 8.2(1) 的序生成性把参考正性提升为整个矩阵正锥，故数学效果为 $0\le E\le I$。BMU Theorem 16 若在额外纯性前件下使用，只说明同一几何的 Jordan 兼容性；它没有加入强对称性，也没有删去任意不等直和。∎
+

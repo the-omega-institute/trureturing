@@ -1,0 +1,21 @@
+**定理 122.2（反向数学表示与实际供应的区别）。** 任意有限复矩阵直和之间的完全正成功映射，都存在满足返回及 O 的有限数学细化。若相应标签细记录、遗忘和下式补偿实际在菜单内，这份细化履行 F。通常完整有限完全正菜单满足 C114，包括 C113 的标准所选滤波。
+
+证明。直接引用有限 Choi–Kraus 定理，[Watrous，The Theory of Quantum Information，定理 2.22](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，逐块取有限 $K_a$。非零单算子支的支持为
+
+$$
+P_a=\operatorname{supp}(K_a^\dagger K_a),\quad
+Q_a=\operatorname{supp}(K_aK_a^\dagger).
+$$
+
+两支撑阶数均为 $\operatorname{rank}K_a$，限制后的 $K_a$ 可逆。取 Moore–Penrose 逆，并令
+
+$$
+U_a(Y)=q_aK_a^+Y(K_a^+)^\dagger,
+\qquad 0<q_a\le\lambda_{\min}^+(K_a^\dagger K_a).
+\tag{122.2}
+$$
+
+则 $U_a$ 完全正，成功效果的最大特征值为 $q_a/\lambda_{\min}^+(K_a^\dagger K_a)\le1$，所以迹不增。$K_a^+K_a=P_a$、$K_aK_a^+=Q_a$ 给两条 (120.2)。由极分解，归一化后的 $\beta_a$ 为 $V_a(\cdot)V_a^\dagger$，故任一合法三量组都满足 O。标签总映射的迹等于原 $T$ 的迹，仍为成功过程；完整完全正菜单供应它及上述补偿。零映射用一个零支处理。
+
+这里的反向结论首先是数学存在表示；一个稀疏菜单可以只供应 $T$ 而没有它的细记录或逆支，不能把“原 $T$ 完全正”直接升级为“该菜单已履行 F”。该供应边界与 C102 的实际伙伴边界同样保留。∎
+

@@ -1,0 +1,61 @@
+## 参考文献
+
+<a id="ref-second"></a>
+
+\[1\] trureturing，*AURIC FIB 二阶关系完成*，§53.1（占位与概率维数）、§§109–110（联合记录与历史块递归）。
+
+<https://github.com/the-omega-institute/trureturing/blob/d3c4ee1ee7f60f48b7dcdbd4967972029e18dfed/docs/develop/theory/AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md>
+
+<a id="ref-observer"></a>
+
+\[2\] trureturing，*AURIC FIB 观察者内生三轴几何与预测接口*，§§6–9。
+
+<https://github.com/the-omega-institute/trureturing/blob/d3c4ee1ee7f60f48b7dcdbd4967972029e18dfed/docs/develop/theory/AURIC_FIB_OBSERVER_INTERNAL_THREE_AXIS_GEOMETRY_AND_PREDICTIVE_INTERFACE.md>
+
+<a id="ref-omega"></a>
+
+\[3\] trureturing，*AURIC Ω 静态相融纤维理论*，§§1、4、7、12。
+
+<https://github.com/the-omega-institute/trureturing/blob/d3c4ee1ee7f60f48b7dcdbd4967972029e18dfed/docs/develop/theory/AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md>
+
+<a id="ref-fib"></a>
+
+\[4\] trureturing，*FIB 关系延拓几何*，定义2.1–2.4、定理2.3。
+
+<https://github.com/the-omega-institute/trureturing/blob/d3c4ee1ee7f60f48b7dcdbd4967972029e18dfed/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md>
+
+<a id="ref-mixed"></a>
+
+\[5\] trureturing，`FiveModeMixedCoordinates.lean`，`mixed_coordinates_global_chart`。
+
+<https://github.com/the-omega-institute/trureturing/blob/d3c4ee1ee7f60f48b7dcdbd4967972029e18dfed/D5/S1/Words/AdmissibleWords/FiveModeMixedCoordinates.lean>
+
+<a id="ref-joint"></a>
+
+\[6\] trureturing，`JointReadoutSupremum.lean`，`pair_readout_kernel`。
+
+<https://github.com/the-omega-institute/trureturing/blob/d3c4ee1ee7f60f48b7dcdbd4967972029e18dfed/D5/S3/ObserverMemory/Refinement/JointReadoutSupremum.lean>
+
+<a id="ref-escape"></a>
+
+\[7\] trureturing，`EscapePairs.lean`，`escapePairs_anti`、`escapePairs_insert`。
+
+<https://github.com/the-omega-institute/trureturing/blob/d3c4ee1ee7f60f48b7dcdbd4967972029e18dfed/D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean>
+
+<a id="ref-target"></a>
+
+\[8\] trureturing，`TargetRecoveryCriterion.lean`，`target_recovery_criterion`。
+
+<https://github.com/the-omega-institute/trureturing/blob/d3c4ee1ee7f60f48b7dcdbd4967972029e18dfed/D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean>
+
+<a id="ref-cdp"></a>
+
+\[9\] G. Chiribella, G. M. D’Ariano, P. Perinotti. *Informational derivation of Quantum Theory*. Phys. Rev. A 84, 012311 (2011).
+
+<https://arxiv.org/abs/1011.6451v3>
+
+<a id="ref-barnum"></a>
+
+\[10\] H. Barnum, A. Wilce. *Local tomography and the Jordan structure of quantum theory*. arXiv:1202.4513v2.
+
+<https://arxiv.org/abs/1202.4513v2>

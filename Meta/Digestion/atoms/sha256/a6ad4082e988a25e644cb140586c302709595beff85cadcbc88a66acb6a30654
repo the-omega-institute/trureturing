@@ -1,0 +1,15 @@
+### 定义 2.2（C129：回读相容的单余量续写）
+
+从空表开始，对每个有限列表 $L$ 与每个新历史 $h\in X$，存在 $c\in\mathbb C^n,r\in\mathbb C$，使
+
+<a id="eq-c129-candidate"></a>
+
+$$
+\boxed{G_{L+h}=\begin{pmatrix}
+ G_L&G_Lc\\ c^*G_L&c^*G_Lc+|r|^2
+ \end{pmatrix}.}
+\tag{1}
+$$
+
+其中 $|r|^2=\bar r r$。空表情形就是 $K(h,h)=|r|^2$。日志可含重复历史；该条件没有要求每次 $r\ne0$，也没有预先供应正单位。
+

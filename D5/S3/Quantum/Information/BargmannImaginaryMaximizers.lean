@@ -569,7 +569,7 @@ private theorem root_rotated_real {n : ℕ} [NeZero n] (k : ZMod n) : (Complex.e
       -((2*(k.val : ℝ)-1)*(Real.pi/n)) := by ring
   simpa only [Complex.ofReal_one, one_mul, hangle, Real.cos_neg] using
     (Ray.rotated_ray_real (Real.pi/n) (2*(k.val : ℝ)*(Real.pi/n)) 1)
-private theorem weighted_edge_bound {ι : Type*} [Fintype ι] (w c : ι → ℝ) (M : ℝ) (hw : ∀ k, 0 ≤ w k) (hwsum : ∑ k, w k = 1) (hc : ∀ k, c k ≤ M) : (∑ k, c k*w k) ≤ M ∧ ((∑ k, c k*w k) = M ↔ ∀ k, c k < M → w k = 0) := by
+theorem weighted_edge_bound {ι : Type*} [Fintype ι] (w c : ι → ℝ) (M : ℝ) (hw : ∀ k, 0 ≤ w k) (hwsum : ∑ k, w k = 1) (hc : ∀ k, c k ≤ M) : (∑ k, c k*w k) ≤ M ∧ ((∑ k, c k*w k) = M ↔ ∀ k, c k < M → w k = 0) := by
   classical
   have hgap : ∀ k, 0 ≤ (M-c k)*w k := fun k => mul_nonneg (sub_nonneg.mpr (hc k)) (hw k)
   have hsum : (∑ k, (M-c k)*w k) = M-(∑ k,c k*w k) := by

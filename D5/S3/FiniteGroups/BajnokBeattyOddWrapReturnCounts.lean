@@ -217,7 +217,7 @@ private theorem four_fiber_card (L : ℕ) (p m a b : ℤ) (v1 v2 : Plane)
     Fintype.card_subtype_or_disjoint _ _ hsecond,
     Fintype.card_subtype_or_disjoint _ _ hthird]
 
-private theorem odd_boundary_count_of_sumDiff (p m a b : ℤ) (v1 v2 : Plane)
+theorem odd_boundary_count_of_sumDiff (p m a b : ℤ) (v1 v2 : Plane)
     (hp : 0 < p) (hpo : Odd p) (hmo : Odd m) (hao : Odd a) (hbo : Odd b)
     (ha : 0 < a) (ham : a < m) (hb : 0 < b) (hbm : b < m)
     (hv1 : sumDiff v1 = ![p*m, -p*a])

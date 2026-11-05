@@ -1,0 +1,82 @@
+**定理 110.2（不先消费导子律的全域归约）。** 对任意有限 EJA、任意原正 Frobenius 内积 $q$ 与任意原实双线性 $D$，
+
+$$
+\mathsf F_{\rm zero}\Longleftrightarrow
+\mathsf F_{\rm cut}\Longleftrightarrow
+\mathsf F_{\rm fib}.
+\tag{110.2}
+$$
+
+任一条件均给出定理 107.2 的全部同一原结构结论，包括双单位湮灭、全 SC、全部 $D_a$ 的 Jordan 导子律、原 $q$-斜伴随，以及全部幂等元的 $D_c^2=-P_c/4$。正向恢复全配平不需要先证明导子或斜伴随。
+
+证明。使用 (107.3) 的原 Peirce 恒等式，记
+
+$$
+P_c=4(L_c-L_c^2),\qquad N_c=\ker P_c,\qquad
+W_c(x)=\tfrac12\|P_cx\|_q^2.
+\tag{110.3}
+$$
+
+所以 $W_c(n)=0$ 恰为 $n\in N_c$，且 $W_c(x+n)=W_c(x)$。先设 $\mathsf F_{\rm zero}$。取 $n=0$，再与任意 $n\in N_c$ 的原等式相减，得到
+
+$$
+W_c(a)=W_c(2D_ca),\qquad
+q(D_ac,n)=0\quad(n\in N_c),\qquad
+D_ac\in E_{1/2}(c).
+\tag{110.4}
+$$
+
+这是同一条关系给出的长度与完整法向读回，不是另加的两个候选。令 $a=c$，右侧 $D_cc$ 已切向，而 $P_cc=0$，故
+
+$$
+0=W_c(c)=W_c(2D_cc)=2\|D_cc\|_q^2,\qquad D_cc=0.
+\tag{110.5}
+$$
+
+任意正交幂等元 $p,r$ 的和仍幂等，将 (110.5) 用于 $p,r,p+r$，得 $D_pr+D_rp=0$。任意 $x$ 的谱分解 $x=\sum_i\lambda_i r_i$ 因而给
+
+$$
+D_xx=\sum_i\lambda_i^2D_{r_i}r_i+
+ \sum_{i<j}\lambda_i\lambda_j(D_{r_i}r_j+D_{r_j}r_i)=0.
+\tag{110.6}
+$$
+
+双线性极化恢复全 SC，即 $D_xy=-D_yx$。此时才有 $D_ca=-D_ac\in\operatorname{im}P_c$。对任意、没有同纤维限制的 $a,b$，直接展开
+
+$$
+\begin{aligned}
+W_c(b+2D_ca)
+ &=\tfrac12\|P_cb+2D_ca\|_q^2\\
+ &=W_c(b)+2q(P_cb,D_ca)+W_c(2D_ca)\\
+ &=W_c(b)+2q(b,D_ca)+W_c(a)\\
+ &=W_c(a)+W_c(b)-2q(D_ac,b).
+\end{aligned}
+\tag{110.7}
+$$
+
+这给全域 $\mathsf F_{\rm cut}$，没有先用 $q(D_ca,a)=0$，也没有假定任意 $b-a$ 是法向量。
+
+反向设 $\mathsf F_{\rm cut}$。当 $n\in N_c$ 时，在全配平取 $b=n$，由沿核平移不变性直接得到
+
+$$
+W_c(a)=2q(D_ac,n)+W_c(n+2D_ca)
+      =2q(D_ac,n)+W_c(2D_ca),
+\tag{110.8}
+$$
+
+故 $\mathsf F_{\rm zero}$ 成立。这一步不需要预给 $D_cN_c=0$。与 $\mathsf F_{\rm fib}$ 的等价可复用定理 107.2；也有更短的直接接线：同纤维内比较 $b=a$ 与 $b=a+n$ 给 (107.4)。取 $a=b=c$，令 $v=D_cc$，切向性给 $0=2q(v,c)+W_c(c+2v)=2\|v\|_q^2$；再按 (110.6) 的正交和与谱展开恢复 SC。于是同纤维的 $b=a$ 等式中
+
+$$
+\begin{aligned}
+2W_c(a)
+ &=-2q(D_ca,a)+W_c(a+2D_ca)\\
+ &=-2q(D_ca,a)+W_c(a)+W_c(2D_ca)+2q(P_ca,D_ca)\\
+ &=W_c(a)+W_c(2D_ca),
+\end{aligned}
+\tag{110.9}
+$$
+
+因为 $D_ca$ 已切向，两个交叉项相消，恢复 (110.4)。这里不必先把两个交叉项分别证明为零。
+
+全部原结构结论现在直接消费定理 107.2，不重复其导子与斜伴随证明。零对象平凡；零、单位、中央与所有秩的幂等元均在域中。特别 $P_u=0$ 使 (110.4) 给 $D_au=0$，SC 给 $D_ua=0$；中央切口由 (107.2) 给 $D_c=0$。纯经典直和的幂等元张成全空间，故此时 $D=0$。原正块权由原 Peirce 正交性全程保留。∎
+

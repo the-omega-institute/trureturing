@@ -16,7 +16,7 @@ escape_witness: explicit unimodular coordinate descent identifies both actual
 quotients with one noncyclic product. The live gap calculation establishes
 all-radius order and the unique discrete maximum, which the imported family
 count does not assert. No primality, counting or covering hypothesis is added.
-The private descent is consumed by same_group_different_growth.
+The descent is consumed by same_group_different_growth and the square-displacement extension.
 No literature novelty or open-problem claim is made.
 -/
 
@@ -28,7 +28,7 @@ open BajnokBeattyAsymmetricGrowth BajnokBeattyExtremalGrowth
 open NearSquareLatticeRigidity BajnokBeattyCayleyNecessity
 open scoped Classical
 
-private theorem same_group_coordinate_descent
+theorem same_group_coordinate_descent
     (p D x y u v alpha beta : ℤ) (v1 v2 : Plane)
     (hp : 0 < p) (hD : 0 < D)
     (hbez : alpha*x+beta*y = 1) (hdet : x*v-y*u = -D)

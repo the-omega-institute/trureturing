@@ -1,0 +1,23 @@
+**定义 135.1（秩型二一一候选）。** 分别保留母卷定义 41.1 的完整 $B$ 与母卷定义 67.1 的完整 $\mathsf B_{\rm cl}$，任一背景记为 $B_*$，两条准备条件不互换。沿用定义 130.1 的整个原有限 EJA、原正 Frobenius 型 $q$、原乘法 $L_a x=a\circ x$ 及任意原实双线性 $D$；记
+
+$$
+P_c=4(L_c-L_c^2),\qquad N_c=\ker P_c=E_1(c)\oplus E_0(c),\qquad
+W_c(x)=\tfrac12q(P_cx,P_cx).
+$$
+
+本候选唯一新增关系为
+
+$$
+\boxed{\mathsf F_{211}:\quad
+c^2=c,\quad\operatorname{rank}_E c\le2,\quad
+p\in\operatorname{Prim}(E),\quad
+r^2=r,\quad\operatorname{rank}_E r\le1,\quad P_cr=0
+\quad\Longrightarrow\quad
+W_c(p)=2q(D_pc,r)+W_c(2D_cp).}
+\tag{135.1}
+$$
+
+记 $\mathsf C_{211}(B_*)=B_*+\mathsf F_{211}$。两个秩都属于整个原 $E$。主切口允许零、一颗原子或两颗正交原子之和，包括跨中央块之和；第一输入是整个 $E$ 的非零 primitive；读回允许零或整个 $E$ 中没有横向分量的一颗 primitive，不预先删去切口外的角。零读回仍是关系的一部分。SC、导子、双单位、原 $q$-斜伴随及复分类均不作为新前提。
+
+关系逐一施于全部原对象及实际联合，包括旧输出、失败输出、经典标签与实际供应的 $AP^{\otimes k}$。完整原 X 的含幺嵌入、同一 $D$ 保持、交叉零、乘积张成、每对实际准备的实际乘积准备，以及 Xs、全事件 R、F、整个 AC、精确 $N_u$ 和每条所消费合法连线均保持。原相关准备及其零、次归一质量、不等正块权、设备身份、失败、细记录、遗忘、具名同数支持双返回和全部合法有限顺序、自适应与并行历史不变。缩小数学测试的秩不新增实际准备、读口或器件。
+

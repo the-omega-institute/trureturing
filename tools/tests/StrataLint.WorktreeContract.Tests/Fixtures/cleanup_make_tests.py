@@ -152,16 +152,6 @@ class CleanupMakeTests(NativeFixture):
         branch = "lane/governance/" + name
         self.git("worktree", "add", "-b", branch, tree, self.baseline)
         self.git("push", "origin", branch)
-        # Eligibility uses history/reflog age, independent of source-path handling.
-        administration = Path(self.git("rev-parse", "--absolute-git-dir", cwd=tree))
-        for log in (administration / "logs/HEAD", self.repository / ".git/logs/refs/heads" / branch):
-            lines = []
-            for line in log.read_text().splitlines():
-                metadata, separator, message = line.partition("\t")
-                fields = metadata.split(" ")
-                fields[-2] = "1700000000"
-                lines.append(" ".join(fields) + separator + message)
-            log.write_text("\n".join(lines) + "\n")
         return tree
 
     def diverge_main_adapter(self):
@@ -216,7 +206,7 @@ class CleanupMakeTests(NativeFixture):
         self.assertTrue(self.current.exists())
         self.assertEqual("locked_recent", items[str(self.current)]["reason"])
         if not preview:
-            self.assertEqual("stale_behind", items[str(self.local)]["reason"])
+            self.assertEqual("head_commit_age", items[str(self.local)]["reason"])
             recovery = self.root / "recovered-dirty"
             self.git("worktree", "add", recovery, "lane/governance/dirty")
             self.assertEqual("unpublished dirty\n", (recovery / "owned").read_text())

@@ -1,0 +1,24 @@
+**定义 5.1（从原 C99 二元边重新指定前件）。** 本节起另取[原卷定义 20.1](AURIC_COMPOSITE_COMPARISON_FINITE_WITNESSES_COMMON_QUANTUM_SCALE_V96.md#20-保留条件取值的实际关系延伸)的二元实际边。第 1–4 节的四通道闭包、$\kappa,\beta$、有序活动参照和 $\Theta$ 均不是本节前件或报告。局部 $J_A,J_B$ 是非零有限维实空间，分别有正定内积 $g_J$、交换含幺 Frobenius 双线性乘法 $S_J$，以及非零实线性指派 $D^J:J_J\to\operatorname{Der}(J_J,S_J)$。记 $L^J_ac=S_J(a,c)$、$B_J(a,c)=D^J_ac$。不预设交替、Jacobi 或 $D^J_{1_J}=0$。
+
+同一实际联合空间和内积为 $V=J_A\otimes_{\mathbb R}J_B$、$g_V=g_A\otimes g_B$。$M:V\times V\to V$ 是任意交换含幺 Frobenius 双线性乘法，单位恰为 $1_A\otimes1_B$；$\Gamma:V\to\operatorname{End}_{\mathbb R}(V)$ 任意实线性。原卷 (20.1)、(20.2) 原样对全部输入成立，即
+
+$$
+\begin{aligned}
+M(a\otimes1_B,c\otimes d)&=S_A(a,c)\otimes d,\\
+M(1_A\otimes b,c\otimes d)&=c\otimes S_B(b,d),\\
+\Gamma_{a\otimes b}(c\otimes1_B)&=D^A_ac\otimes b,\\
+\Gamma_{a\otimes b}(1_A\otimes d)&=a\otimes D^B_bd.
+\end{aligned}
+\tag{5.1}
+$$
+
+仅将原卷 (20.3) 的零恒等式替换为同一实际运算的三线性残差
+
+$$
+E(H,X,Y)=\Gamma_HM(X,Y)
+       -M(\Gamma_HX,Y)-M(X,\Gamma_HY).
+\tag{5.2}
+$$
+
+不另要求 $\Gamma_H$ 是导子、斜伴随或满足 Jacobi，也不将 $M$ 投影到任何四通道空间。这里研究的是 C99 所用二元边的局部交替桥；原卷定义 20.2 对原整体再作活动延伸的存在量词，不由小残差自动供应。
+

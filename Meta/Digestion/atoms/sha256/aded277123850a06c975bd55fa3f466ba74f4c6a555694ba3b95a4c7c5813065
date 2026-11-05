@@ -1,0 +1,145 @@
+**定理 141.1（裸非零读回恢复完整原关系）。** 在任意有限 EJA、任意原正 Frobenius 型 $q$ 及任意原实双线性 $D$ 上，$\mathsf F_{211}^{+}\Longleftrightarrow\mathsf F_{211}$，并恢复定理 135.2 的全部原局部关系，特别有
+
+$$
+D_au=0\qquad(a\in E).
+\tag{141.1}
+$$
+
+分别在完整原 $B$ 和完整原 $\mathsf B_{\rm cl}$ 上，因而有
+
+$$
+\mathsf C_{211}^{+}(B_*)
+\Longleftrightarrow\mathsf C_{211}(B_*)
+\Longleftrightarrow\mathsf C_2(B_*)
+\Longleftrightarrow\mathsf C_{\rm zero}(B_*)
+\Longleftrightarrow\mathsf C_{\rm co}(B_*).
+\tag{141.2}
+$$
+
+裸结论不另假设 (141.1)、SC、导子或原 $q$-斜伴随。完整背景中仍可从原接口独立取得 (141.1)，给出较短的框架行和路线；裸证明则以切口两侧的同一批 Peirce 分量替代这个前提。
+
+证明。先核对完整背景中的单位来源。母卷定理 30.1 的非 D 供应部分以精确 $N_u$ 的身份事件和全事件 R，对每个所需原对象 $A$ 给某个实际已声明联合 $J=AP^{\otimes k}$、$k\ge1$；不要求直接声明 $AP$。这一步在闭准备背景也保留，不消费原准备的有限正锥生成。令 $R=P^{\otimes k}$。原 X 的嵌入含幺并保持同一 $D$，交叉零取 $b=u_R$ 给
+
+$$
+\iota_A(D^A_a u_A)
+=D^J_{\iota_A(a)}\iota_A(u_A)
+=D^J_{\iota_A(a)}u_J
+=D^J_{\iota_A(a)}\iota_R(u_R)=0.
+\tag{141.3}
+$$
+
+原嵌入单射，故 (141.1) 成立。相同量词包括旧联合、输出、标签和参考本身。这里只使用 30.1 的实际联合存在及原 X，不调用其后的 SC、导子、原 $q$-斜伴随、曲率或复分类。
+
+下面证明不带单位前提的裸结论。$E=0$ 时唯一双线性 $D=0$，两测试域为空，结论平凡。设 $m=\operatorname{rank}E\ge1$，$\tau$ 为整个原 EJA 的规范谱迹，满足 $\tau(r)=1$ 对每个整个原 primitive $r$ 成立。它只是辅助数学迹，不替换原准备评价或质量。以原 $q$ 定义唯一的 $\zeta_q$，使
+
+$$
+q(\zeta_q,x)=\tau(x),\qquad q(\zeta_q,u)=m.
+\tag{141.4}
+$$
+
+此元对每个幂等切口都是法向的。为直接核对而不预设复分类，使用成熟的谱迹型 Frobenius 性，定义 $T$ 满足 $q(Tx,y)=\tau(x\circ y)$。两种型的 Frobenius 性给 $TL_a=L_aT$，而 $Tu=\zeta_q$，故 $Tx=L_x\zeta_q$。于是对任意幂等元 $c$，
+
+$$
+L_c\zeta_q=Tc,\qquad L_c^2\zeta_q=T(c^2)=Tc,
+\qquad P_c\zeta_q=0.
+\tag{141.5}
+$$
+
+特别 $T=L_{\zeta_q}$ 与全部 $L_a$ 对易。成熟的正交简单理想分解若写成 $q|_{J_s}=w_s\tau_s(\,\cdot\circ\cdot\,)$，则 $\zeta_q=\sum_su_s/w_s$；没有把原来不等的 $w_s$ 改成相等。谱迹型及该成熟权重事实的来源见定义 144.1。
+
+假设 (140.1)。固定允许的 $c,p$，各非零法向原子 $r$ 的读数 $q(D_pc,r)$ 都是同一个数。取包含 $c$ 的完整 primitive frame，其 $m$ 个原子均在 $N_c$ 且和为 $u$，得到这个共同数为 $q(D_pc,u)/m$。定义辅助双线性分解
+
+$$
+\beta(a,b)=\frac{q(D_ab,u)}m,\qquad
+\Delta_ab=D_ab-\beta(a,b)\zeta_q.
+\tag{141.6}
+$$
+
+由 (141.4)，对每个允许的法向原子有 $q(\Delta_pc,r)=0$。定理 135.2 中已核对的角谱事实说明这些原子张成完整 $N_c$；整个 $E$ 的 primitive 又张成 $E$。这里只延拓线性法向读数，故
+
+$$
+\Delta_ac\in E_{1/2}(c)
+\quad(a\in E,\ c^2=c,\ \operatorname{rank}c\le2).
+\tag{141.7}
+$$
+
+固定 $a$，令 $S=\Delta_a$。在任意完整 primitive frame $(r_i)$ 中，(141.7) 给全部 $q(Sr_i,r_j)=0$。对 $x=\sum_i\lambda_ir_i$ 谱展开，有 $q(Sx,x)=q(Sx,x^2)=0$。实二次极化给 $q$-斜伴随；对三次式的 $x+ty$ 取一次项得
+
+$$
+0=q(Sy,x^2)+2q(Sx,x\circ y)
+=q\bigl(-S(x^2)+2x\circ Sx,y\bigr).
+$$
+
+原 $q$ 非退化，故平方导子律成立，再极化得完整 Jordan 导子律，且 $Su=0$。这是定理 130.2 使用的成熟导子恢复机制，此处施于辅助 $\Delta$，尚未将它认作原 $D$。
+
+由 (141.5)，$P_cD_cp=P_c\Delta_cp$，因此原非零读回等式化成
+
+$$
+W_c(p)-W_c(2\Delta_cp)=2\beta(p,c).
+\tag{141.8}
+$$
+
+下面消去这个共同偏差，不能预先令它为零，也不在裸证明中假设 $\beta(a,u)=0$。取任意完整 primitive frame $(r_i)$，主切口为 $c=\sum_{i\in S}r_i$，其中 $1\le|S|\le2$，令 $d=\Delta_c$。每个 $r_i$ 均与 $c$ 相容，所以 (141.8) 给
+
+$$
+\beta(r_i,c)=-\|P_cdr_i\|_q^2\le0.
+\tag{141.9a}
+$$
+
+由已得导子律，$dr_i\in E_{1/2}(r_i)=\bigoplus_{j\ne i}V_{ij}$。成熟的共同 Peirce 分解中，$P_c$ 只保留一端属于 $S$、另一端不属于 $S$ 的 $V_{ij}$；不同 $V_{ij}$ 对原 $q$ 正交。因此在 $S$ 内取不同的 $i$，$P_cdr_i$ 的关系空间互不相交，故彼此正交；在 $S$ 外取不同的 $i$ 同样如此。分别在两侧把 (141.9a) 相加，并用辅助导子的 $du=0$，得到
+
+$$
+\begin{aligned}
+\beta(c,c)&=-\sum_{i\in S}\|P_cdr_i\|_q^2=-\|P_cdc\|_q^2,\\
+\beta(u-c,c)&=-\sum_{i\notin S}\|P_cdr_i\|_q^2
+=-\|P_cd(u-c)\|_q^2=\beta(c,c),\\
+2\beta(c,c)&=\beta(u,c).
+\end{aligned}
+\tag{141.9b}
+$$
+
+这里只对第一槽的线性读数及正交范数和作求和。即使 $u-c$ 的秩很大，它也只出现在第一槽的线性和与辅助导子上，没有被用作新的主切口。
+
+对任意两个正交 primitive $p,s$，分别对 $c=p+s,p,s$ 使用最后一式，再相减，得到 $\beta(p,s)+\beta(s,p)=0$。两项由 (141.9a) 分别非正，故都为零。再将任意 $p$ 补成完整 frame，以 $c=p$ 的第二式得 $\beta(p,p)=\beta(u-p,p)=0$。总秩一时 $u-p=0$，同一式仍成立。因此每个完整 frame 都满足
+
+$$
+\beta(r_i,r_j)=0\quad(\text{全部 }i,j).
+\tag{141.9c}
+$$
+
+特别在 (141.9a) 取 $c=p$、输入 $p$，由 (141.7) 得 $P_p\Delta_pp=\Delta_pp$，故 $\Delta_pp=0$。若已在完整背景中取用 (141.3)，(141.9c) 也可更短地由各行非正与 $\sum_j\beta(r_i,r_j)=\beta(r_i,u)=0$ 得到；上述裸推导不使用这条行和前提。
+
+再取两个正交 primitive $p,s$，令 $v=\Delta_sp$。由 (141.7)，$v\in E_{1/2}(p)$；对 $p\circ s=0$ 应用导子 $\Delta_s$，用 $\Delta_ss=0$，得 $v\circ s=0$。因此 $v\in E_{1/2}(p)\cap E_0(s)\subseteq E_{1/2}(p+s)$。主切口 $c=p+s$ 的整个原秩为二，输入 $p$ 和非零法向读回 $r=p$ 合法，且 $\beta(p,p+s)=0$。代入 (141.8) 得
+
+$$
+0=W_{p+s}(2\Delta_{p+s}p)=2\|v\|_q^2,
+\qquad \Delta_sp=0.
+\tag{141.10}
+$$
+
+这也涵盖跨中央块的正交对。于是同一完整 frame 中 $\Delta_{r_i}r_j=0$ 对全部 $i,j$ 成立。对任意 $x$ 在其谱 frame 展开，分别有 $\Delta_xx=0$ 和 $\beta(x,x)=0$。再实极化得
+
+$$
+\Delta_ab=-\Delta_ba,\qquad \beta(a,b)=-\beta(b,a).
+\tag{141.11}
+$$
+
+最后对任意两个 primitive $p,c$，原 Frobenius 性与 $p^2=p,c^2=c$ 直接给
+
+$$
+W_c(p)=2q(c,p)-2q(c\circ p,c\circ p)=W_p(c).
+\tag{141.12}
+$$
+
+令 $v=\Delta_cp=-\Delta_pc$。导子律使 $v$ 同时切于 $p,c$，故两个方向的长度项都是 $2\|v\|_q^2$。在 (141.8) 交换 $p,c$，由 (141.12) 得 $\beta(p,c)=\beta(c,p)$。结合 (141.11)，$\beta$ 在所有 primitive 对上为零；只对这个双线性型使用张成，得 $\beta=0$。因此
+
+$$
+D=\Delta,\qquad
+W_c(p)=W_c(2D_cp),\qquad
+q(D_pc,r)=0
+\quad(r\in\operatorname{Prim}(E)\cap N_c).
+\tag{141.13}
+$$
+
+缺失的 $r=0$ 等式现已恢复，非零读回仍是原等式，遂得 $\mathsf F_{211}$。反向仅限制读回量词。定理 135.2 随后在同一原 $q,D,L$ 上恢复任意秩切口、SC、双单位、全部原导子、原 $q$-斜伴随及全部 $D_c^2=-P_c/4$。全程没有在偏差消失前将辅助推动认作原 $D$；辅助分解仅在 $\beta=0$ 后消失。将裸结论逐原对象应用即得完整 (141.2)；(141.3) 仍是原接口独立供应的单位关系。∎
+

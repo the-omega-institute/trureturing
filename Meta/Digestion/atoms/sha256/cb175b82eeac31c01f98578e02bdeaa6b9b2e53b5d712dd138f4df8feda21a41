@@ -1,0 +1,171 @@
+**Theorem 9.2 (Infinite-loss tail classification and exact functional).** On the entire domain of Definition 9.1, every tail input decays if and only if
+
+$$
+\boxed{\quad\mathcal B_s+\mathcal A_s=\infty.\quad}
+\tag{9.5}
+$$
+
+In this branch the stable space is $\mathbb R^2$ and every full chronological limiting norm is zero. In the complementary branch both series are finite; the stable space is one line and the exact full chronological limiting norm is $|\ell_s(z)|$, for the following nonzero prescribed-data functional.
+
+Let $K$ be the least nonnegative integer such that $\sigma_k\geq3/4$ for every $k\geq K$, and put $\rho=8/9$. Define real rows, starting at $K$, by
+
+$$
+a_K=f_K^TG,\qquad b_K=(Jf_K)^TG,
+$$
+
+$$
+a_{k+1}=c_ka_k+\mu_ks_kb_k,\qquad
+b_{k+1}=-s_ka_k+\mu_kc_kb_k\quad(k\geq K).
+\tag{9.6}
+$$
+
+The row series and scalar product
+
+$$
+\Lambda=a_K+\sum_{k=K}^\infty\big((c_k-1)a_k+\mu_ks_kb_k\big),
+\qquad \gamma=\prod_{k=K}^\infty\sigma_k
+\tag{9.7}
+$$
+
+converge, the row series absolutely and the product to a positive number. The functional is
+
+$$
+\boxed{\quad\ell_s(z)=\gamma\Lambda\Phi_{s,n_K}z.\quad}
+\tag{9.8}
+$$
+
+For $n\geq K$, write $S_n=\sum_{k=n}^\infty(1-\sigma_k)$ and $E_n=\sum_{k=n}^\infty s_k^2$. In dual $Q$-norm the independently specified truncations satisfy
+
+$$
+\left\|\ell_s-
+\left(\prod_{k=K}^{n-1}\sigma_k\right)a_n\Phi_{s,n_K}\right\|_{Q,*}
+\leq S_n+E_n+\rho\sqrt{\frac{2E_n}{1-\rho^2}}.
+\tag{9.9}
+$$
+
+Thus the limiting object has a prescribed-data error bound as well as exact original-model correspondence. There is no finite annihilation of a nonzero tail input in either branch.
+
+*Proof.* All finite-dimensional constructions in Definition 9.1 take place in the original plane with its fixed inner product $Q$. To verify them, represent a $Q$-self-adjoint matrix in the orthonormal basis $e,Je$. The matrix of $R_k$ then has the real symmetric form $\begin{pmatrix}x&y\\y&z\end{pmatrix}$. Its characteristic discriminant is $(x-z)^2+4y^2\geq0$. Its quadratic form is $\|T_kw\|_Q^2>0$ for $w\ne0$, so both characteristic roots are positive. The ordinary two-by-two characteristic identity gives exactly the roots (9.2) and, when they differ, the self-adjoint idempotent $E_k$ displayed above. When they agree, $x=z$ and $y=0$, so $R_k=\sigma_k^2I$. This also verifies that $E_k$ is nonzero and that projecting one of $e,Je$ must succeed. This is the real two-dimensional spectral decomposition, consumed here only to decompose the actual finite blocks.
+
+Nonexpansiveness of the factors gives $0<\sigma_k\leq1$. The orthonormal pair $f_k,Jf_k$ diagonalizes $R_k$, so $T_kf_k$ and $T_kJf_k$ are orthogonal, with lengths $\sigma_k,\zeta_k$. Orientation in the basis $e,Je$ gives
+
+$$
+T_kf_k=\sigma_kg_k,\qquad
+T_kJf_k=\sigma_k\mu_kJg_k,
+\qquad 0<|\mu_k|\leq1.
+\tag{9.10}
+$$
+
+Indeed the coefficient of $Jg_k$ has modulus $\zeta_k$ and sign $\operatorname{sgn}(\det T_k)$, and $\zeta_k=|\mathfrak d_k|/\sigma_k$. Since $J$ is an orthogonal quarter-turn, (9.3) yields
+
+$$
+g_k=c_kf_{k+1}-s_kJf_{k+1},\qquad
+Jg_k=s_kf_{k+1}+c_kJf_{k+1},\qquad c_k^2+s_k^2=1.
+$$
+
+Thus a block input with coordinates $(A,B)$ in $f_k,Jf_k$ has output coordinates
+
+$$
+\sigma_k(c_kA+\mu_ks_kB,\ -s_kA+\mu_kc_kB)
+\tag{9.11}
+$$
+
+in $f_{k+1},Jf_{k+1}$. This is an exact finite identity for the prescribed original block, with its sign of determinant retained.
+
+If $\mathcal B_s=\infty$, the original input at boundary $n_m$ has norm at most
+
+$$
+\left(\prod_{k=0}^{m-1}\sigma_k\right)\|z\|_Q
+\leq\exp\left(-\sum_{k=0}^{m-1}(1-\sigma_k)\right)\|z\|_Q\longrightarrow0.
+$$
+
+Only disjoint-block submultiplicativity is used in this bound. Monotonicity of every intermediate event norm proves full-time decay. This establishes (9.5) in the first branch without any angle assumption.
+
+Suppose henceforth $\mathcal B_s<\infty$. Then $\sigma_k\to1$, so the prescribed $K$ exists, and
+
+$$
+|\mu_k|\leq\frac{1/2}{(3/4)^2}=\rho=\frac89<1\quad(k\geq K).
+\tag{9.12}
+$$
+
+Also the product in (9.7) is positive: on $[3/4,1]$, integration of $1/x$ gives $0\leq-\log x\leq(4/3)(1-x)$, so its logarithmic sum is finite. The finitely many blocks before $K$ are nonsingular. This is the only reduction to a uniform contraction bound, and it concerns the normalized disjoint blocks, not the original $\lambda_j$.
+
+For an arbitrary input at boundary $n_K$, divide the actual input at boundary $n_k$ by $\prod_{i=K}^{k-1}\sigma_i$. Write the resulting vector as $A_kf_k+B_kJf_k$. By (9.11),
+
+$$
+A_{k+1}=c_kA_k+\mu_ks_kB_k,\qquad
+B_{k+1}=-s_kA_k+\mu_kc_kB_k,
+$$
+
+$$
+A_{k+1}^2+B_{k+1}^2
+=A_k^2+B_k^2-(1-\mu_k^2)B_k^2.
+\tag{9.13}
+$$
+
+These are exactly the scalar identities used in (7.10), with the block junctions supplying the angles. The proof uses these identities and the bound (9.12), rather than requiring the block angles to be integer multiples of $\theta$. In particular the normalized norms decrease to a limit $l\geq0$, and
+
+$$
+(1-\rho^2)\sum_{k=K}^\infty B_k^2\leq A_K^2+B_K^2.
+\tag{9.14}
+$$
+
+If $l>0$, eventually $A_k^2\geq l^2/2$, since $B_k\to0$. The second recurrence gives
+
+$$
+s_k^2A_k^2=(\mu_kc_kB_k-B_{k+1})^2
+\leq2\rho^2B_k^2+2B_{k+1}^2.
+$$
+
+It follows that $\sum s_k^2<\infty$. Thus $\mathcal A_s=\infty$ forces $l=0$ for every normalized input, and hence for every original input. Monotonicity between block boundaries again gives the full chronological conclusion.
+
+It remains to prove the complementary branch, its exact functional and its nonzero value on some input. Suppose $\mathcal A_s<\infty$. The rows in (9.6) give $A_k=a_kw$ and $B_k=b_kw$ for normalized input $w$ at $n_K$. The maps in (9.13) are nonexpansive, so $\|a_k\|_{Q,*}\leq1$. Apply (9.14) to the two unit inputs $e,Je$ and add. The dual norm identity $\|f\|_{Q,*}^2=|fe|^2+|fJe|^2$ gives
+
+$$
+\sum_{k=K}^\infty\|b_k\|_{Q,*}^2\leq\frac2{1-\rho^2}.
+\tag{9.15}
+$$
+
+Because $c_k\geq0$, one has $1-c_k=s_k^2/(1+c_k)\leq s_k^2$. Therefore, for every $n\geq K$,
+
+$$
+\begin{aligned}
+\sum_{k=n}^\infty
+\|(c_k-1)a_k+\mu_ks_kb_k\|_{Q,*}
+&\leq E_n+\rho\sqrt{E_n}
+\left(\sum_{k=n}^\infty\|b_k\|_{Q,*}^2\right)^{1/2}\\
+&\leq E_n+\rho\sqrt{\frac{2E_n}{1-\rho^2}}.
+\end{aligned}
+\tag{9.16}
+$$
+
+This proves absolute convergence of (9.7), including the displayed tail bound. Its summands are $a_{k+1}-a_k$, so $a_k\to\Lambda$ in the row space. For every $w$, (9.14) gives $B_k\to0$, and hence (9.13) gives the exact normalized norm limit $|\Lambda w|$. In particular $\|\Lambda\|_{Q,*}\leq1$.
+
+To show this row is nonzero, choose $N\geq K$ with
+
+$$
+\sum_{k=N}^\infty s_k^2<\frac{(1-\rho)^2}{4}.
+$$
+
+The finite normalized blocks from $K$ to $N$ are all invertible, so an input $w$ at $n_K$ can be chosen whose normalized vector at $n_N$ is $f_N$. Its subsequent coordinates satisfy $A_N=1,B_N=0$ and $|A_k|\leq1$. The second recurrence implies by induction
+
+$$
+|B_k|\leq\sum_{i=N}^{k-1}\rho^{k-1-i}|s_i|\quad(k>N).
+$$
+
+Weighted Cauchy--Schwarz gives
+
+$$
+|B_k|^2\leq\frac1{1-\rho}
+\sum_{i=N}^{k-1}\rho^{k-1-i}s_i^2,
+\qquad
+\sum_{k=N}^\infty B_k^2\leq
+\frac1{(1-\rho)^2}\sum_{i=N}^\infty s_i^2<\frac14.
+$$
+
+The second inequality follows by summing the nonnegative geometric weights, first over finite ranges and then taking their increasing limit. Telescoping (9.13) from this unit input yields $l^2\geq1-\sum_{k=N}^\infty B_k^2>3/4$. Consequently $\Lambda w\ne0$. This is the finite-prefix nonsingularity argument of (7.16)--(7.17), now applied to the explicitly normalized original blocks; it requires no uniform inverse.
+
+The actual tail input $z$ reaches $n_K$ as $\Phi_{s,n_K}z$. Restoring the divided scalar factors gives (9.8) and the exact limiting norm. Both $\gamma>0$ and invertibility of $\Phi_{s,n_K}$ preserve nonzeroness of the functional. Its kernel is therefore a line. At every intermediate time the actual norm lies between successive block-boundary norms, so this is the limit along the entire chronological history, including unbounded gaps and arbitrary first-event time.
+
+For completeness, $\gamma_n=\prod_{k=K}^{n-1}\sigma_k$ satisfies $0\leq\gamma_n-\gamma\leq S_n$: finite products of $1-r_i$ are at least $1-\sum r_i$, and passage to the limit gives this bound. Combine it with (9.16), $\|a_n\|_{Q,*}\leq1$, $\gamma\leq1$ and nonexpansiveness of $\Phi_{s,n_K}$ to obtain (9.9). Thus neither the scalar product nor the functional is an unspecified limiting remainder. All tail factors are nonsingular, so Theorem 8.2 excludes finite annihilation of a nonzero input. This completes both directions of (9.5) and all limiting-space assertions. $\square$
+

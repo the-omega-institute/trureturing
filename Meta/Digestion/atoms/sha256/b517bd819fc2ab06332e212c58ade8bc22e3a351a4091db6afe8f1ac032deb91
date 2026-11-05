@@ -1,0 +1,39 @@
+### 8.1　纯态、混态与可观测量
+
+一个已供应的非零纯制备 $a$ 给
+
+$$
+\psi_a=\frac{\Phi(a)}{\|\Phi(a)\|},\qquad
+\rho_a=|\psi_a\rangle\langle\psi_a|,\qquad
+p_C(s\mid a)=\operatorname{tr}(\rho_aE_{C,s}).
+$$
+
+全局非零复倍数产生同一事件响应，因此射线是这些事件的状态表示；任意射线是否可准备是另一项问题。 下文的纯制备指这种向量表示。若读出族不分离各态，不同射线仍可能有完全相同的实际读数； 例如只供应一组对角测试就保留一个经典子理论。把全部操作纯态与射线一一对应还需要足够的读出与制备。
+
+若内部经典记录以权重 $\lambda_j$ 选择已有制备 $\psi_j$，并在遗忘选择记录时遵守同一联合概率的粗分组， 则
+
+$$
+p_C(s)=\sum_j\lambda_j p_C(s\mid\psi_j)
+=\operatorname{tr}(\rho E_{C,s}),\qquad
+\rho=\sum_j\lambda_j|\psi_j\rangle\langle\psi_j|\succeq0,\quad\operatorname{tr}\rho=1.
+$$
+
+这给可用混合制备的密度算子，不需要一个在 $\Omega$ 外部掷币的观察者。 所有密度矩阵均可准备，还要求相应纯制备和混合权重实际可用。
+
+对于已绑定的锐利测试，给各结果实数刻度 $\lambda_s$，便有
+
+$$
+A=\sum_s\lambda_sP_s=A^*,\qquad
+\mathbb E(A)=\operatorname{tr}(\rho A).
+$$
+
+反过来，有限维自伴算子的谱分解给一个数学 PVM；它成为实际可观测量还需要对应的测试供应。
+
+若从一般概率评价而非制备向量出发，满效应区间 $0\le E\le I$ 上的非负、归一、上下文一致评价，满足二元可加
+
+$$
+p(E+F)=p(E)+p(F)\quad(E+F\le I),
+$$
+
+则有限维 Busch 型定理给唯一 $\rho\succeq0,\operatorname{tr}\rho=1$ 及 $p(E)=\operatorname{tr}(\rho E)$ [\[11\]](#ref-busch)。 它不要求 $E,F$ 对易，但要求完整效应域；本轮实际事件表示并未偷偷借入这一满域假设。
+

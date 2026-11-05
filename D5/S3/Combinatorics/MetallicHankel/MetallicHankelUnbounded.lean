@@ -27,10 +27,42 @@ open MetallicHankelUnboundedTransfer MetallicHankelUnboundedGrowth
 open TrivSqZeroExt
 
 set_option maxHeartbeats 4000000 in
-/-- Conjecture E(2), including the separate golden cycle. -/
-theorem result : MetallicHankelUnboundedDefs.claim := by
+/-- The actual metallic continuants, their supported normal boundary data,
+and the bounded base row and growing first higher row from the same series. -/
+theorem normal_family (n : ℕ) (hn : 1 ≤ n) :
+    ∃ Φ : PowerSeries ℤ, IsMetallic n Φ ∧
+      (∀ Ψ, IsMetallic n Ψ → Ψ = Φ) ∧
+      (∀ j, (shiftedHankel Φ (n + 1) j).natAbs ≤ 1) ∧
+      (∀ M : ℕ, ∃ j, M < (shiftedHankel Φ (n + 3) j).natAbs) ∧
+      ∃ (L : ℕ) (k : ℕ → ℕ) (b : ℕ → ℤ) (D Q : ℕ → PowerSeries ℤ)
+        (s : ℕ → ℕ),
+        L = (if n = 1 then 3 else 6 * n - 4) ∧
+        (∀ p, let z := Nat.rec TailState.v₂ (fun _ z => nextState (max n 2) z) p
+          k p = (if n = 1 then (if p % 3 = 2 then 1 else 0)
+            else (fractionData (max n 2) z).1) ∧
+          b p = (if n = 1 then (if p % 3 = 1 then 1 else -1)
+            else (fractionData (max n 2) z).2.1) ∧
+          D p = (if n = 1 then (if p % 3 = 2 then 1 + X - X ^ 2 else 1 + X)
+            else (fractionData (max n 2) z).2.2)) ∧
+        s 0 = 0 ∧ (∀ p, s (p + 1) = s p + k p + 1) ∧
+        Q 0 = 1 ∧ Q 1 = D 0 ∧
+        (∀ p, Q (p + 2) = D (p + 1) * Q (p + 1) -
+          C (b (p + 1)) * X ^ (k p + k (p + 1) + 2) * Q p) ∧
+        (∀ p, constantCoeff (Q p) = 1 ∧ ∀ r, s p < r → coeff r (Q p) = 0) ∧
+        ∀ K : ℕ, 1 ≤ K →
+          let ρ := if n % 2 = 0 then 2 * n * (n + 1) else 4 * n * (n + 1)
+          let p := (K * (if n % 2 = 0 then 1 else 2)) * L
+          let N := K * ρ
+          let c := fun r => if r ≤ s p then coeff (s p - r) (Q p) else 0
+          let d := fun r => if r ≤ s (p - 1) then coeff (s (p - 1) - r) (Q (p - 1)) else 0
+          s p = N ∧ c N = 1 ∧
+          (∀ r, N < r → c r = 0) ∧
+          d (s (p - 1)) = 1 ∧ (∀ r, N ≤ r → d r = 0) ∧
+          (∀ t, t < N → ∑ r ∈ range (N + 1), c r * coeff (n + 1 + r + t) Φ = 0) ∧
+          (∀ t, t < N → ∑ r ∈ range N, d r * coeff (n + 1 + r + t) Φ =
+            if t = N - 1 then -1 else 0) ∧
+          shiftedHankel Φ (n + 1) N = 1 := by
   classical
-  intro n hn
   let a := max n 2
   have ha : 2 ≤ a := le_max_right _ _
   have an (h : n ≠ 1) : a = n := by dsimp [a]; omega
@@ -650,27 +682,120 @@ theorem result : MetallicHankelUnboundedDefs.claim := by
     refine ⟨(M + 1) * P - 1, ?_⟩
     rw [subsequence (M + 1) (by omega)]
     nlinarith
-  refine ⟨?_, ?_⟩
+  refine ⟨Φ, metallic, unique, base_bound, first_unbounded, L, k, b, D, Q, s,
+    ?_, ?_, s_zero, s_step, q_zero, q_one, ?_, ?_, ?_⟩
   · by_cases hn1 : n = 1
-    · exact ⟨Φ, metallic⟩
-    · exact (MetallicHankel.result n (by omega)).1
-  · intro Ψ hΨ ℓ hℓ M
-    rw [unique Ψ hΨ]
-    by_cases he : ℓ = n + 3
-    · subst ℓ
-      exact first_unbounded M
-    · by_contra hf
-      have upper (j : ℕ) : (shiftedHankel Φ ℓ j).natAbs ≤ M := by
-        exact Nat.le_of_not_gt (fun hj => hf ⟨j, hj⟩)
-      let M' := max M 1
-      have hb := MetallicHankelUnboundedStrip.bounded_strip Φ (n + 1) ℓ
-        (4 * (n + 5)) M' (by omega) (by dsimp [M']; omega)
-        (coefficient_growth n hn Φ metallic)
-        (fun j => (base_bound j).trans (by dsimp [M']; omega))
-        (fun j => (upper j).trans (le_max_left _ _))
-      obtain ⟨j, hj⟩ := first_unbounded
-        (2 ^ (Nat.log2 M' + 2 * ((n + 3) - (n + 1)) * (ℓ - (n + 3)) + 1))
-      have ht := hb (n + 3) j (by omega) hℓ
-      omega
+    · simp [L, hn1]
+    · simp only [L, if_neg hn1, L₀, length_eq, an hn1]
+  · intro p
+    exact ⟨rfl, rfl, rfl⟩
+  · intro p
+    simpa only [numerator, v, show p + 1 ≠ 0 by omega, if_false] using q_step p
+  · intro p
+    exact ⟨(degrees p).1, (degrees p).2.1⟩
+  · intro K hK
+    let e : ℕ := if n % 2 = 0 then 1 else 2
+    let q := K * e
+    let p := q * L
+    let ρ := if n % 2 = 0 then 2 * n * (n + 1) else 4 * n * (n + 1)
+    let N := K * ρ
+    let c₀ := fun r => if r ≤ s p then coeff (s p - r) (Q p) else 0
+    let d₀ := fun r => if r ≤ s (p - 1) then coeff (s (p - 1) - r) (Q (p - 1)) else 0
+    change s p = N ∧ c₀ N = 1 ∧ (∀ r, N < r → c₀ r = 0) ∧
+      d₀ (s (p - 1)) = 1 ∧ (∀ r, N ≤ r → d₀ r = 0) ∧
+      (∀ t, t < N → ∑ r ∈ range (N + 1), c₀ r * coeff (n + 1 + r + t) Φ = 0) ∧
+      (∀ t, t < N → ∑ r ∈ range N, d₀ r * coeff (n + 1 + r + t) Φ =
+        if t = N - 1 then -1 else 0) ∧ shiftedHankel Φ (n + 1) N = 1
+    have he : 0 < e := by dsimp [e]; split_ifs <;> omega
+    have hq : 0 < q := Nat.mul_pos (by omega) he
+    have hp : 0 < p := Nat.mul_pos hq Lpos'
+    have hpred : p - 1 + 1 = p := by omega
+    have hsp : s p = N := by
+      rw [show p = q * L from rfl, smultiple]
+      dsimp [q, e, N, ρ, P]
+      by_cases hn1 : n = 1
+      · simp [hn1]
+        <;> ring
+      · by_cases hpar : n % 2 = 0
+        · simp [hn1, hpar]
+          <;> ring
+        · simp [hn1, hpar]
+          <;> ring
+    have hprev : s p = s (p - 1) + k (p - 1) + 1 := by
+      simpa only [hpred] using s_step (p - 1)
+    have hsignprev : h (p - 1) = -1 := by
+      dsimp [h]
+      rw [hpred]
+      change -(∏ i ∈ range (q * L), b i) = -1
+      rw [bmultiple]
+    have c_eq (r : ℕ) (hr : r ≤ s p) : c₀ r = c p r := by simp [c₀, c, hr]
+    have d_eq (r : ℕ) (hr : r ≤ s (p - 1)) : d₀ r = c (p - 1) r := by
+      simp [d₀, c, hr]
+    have truncate (t : ℕ) :
+        (∑ r ∈ range N, d₀ r * coeff (n + 1 + r + t) Φ) =
+          ∑ r ∈ range (s (p - 1) + 1), c (p - 1) r * coeff (n + 1 + r + t) Φ := by
+      have hf : (range N).filter (fun r => r ≤ s (p - 1)) = range (s (p - 1) + 1) := by
+        ext r
+        simp only [mem_filter, mem_range]
+        omega
+      simp only [d₀, ite_mul, zero_mul]
+      rw [← sum_filter, hf]
+    refine ⟨hsp, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+    · simpa [c₀, hsp] using (degrees p).1
+    · intro r hr
+      simp [c₀, hsp, show ¬ r ≤ N by omega]
+    · simpa [d₀] using (degrees (p - 1)).1
+    · intro r hr
+      simp [d₀, show ¬ r ≤ s (p - 1) by omega]
+    · intro t ht
+      rw [← hsp]
+      have hsum : (∑ r ∈ range (s p + 1), c₀ r * coeff (n + 1 + r + t) Φ) =
+          ∑ r ∈ range (s p + 1), c p r * coeff (n + 1 + r + t) Φ := by
+        apply sum_congr rfl
+        intro r hr
+        rw [c_eq r (by simp only [mem_range] at hr; omega)]
+      rw [hsum]
+      exact (moments p).2.1 t (by omega)
+    · intro t ht
+      rw [truncate]
+      split_ifs with hlast
+      · have hindex : t = s (p - 1) + k (p - 1) := by omega
+        rw [hindex, (moments (p - 1)).2.2, hsignprev]
+      · exact (moments (p - 1)).2.1 t (by omega)
+    · rw [← hsp]
+      change shiftedHankel Φ (n + 1) (s (q * L)) = 1
+      rw [determinant_multiple]
+      apply Even.neg_one_pow
+      by_cases hnpar : n % 2 = 0
+      · have hnEven : Even n := Nat.even_iff.mpr hnpar
+        exact hnEven.mul_right q
+      · have he2 : e = 2 := by simp [e, hnpar]
+        rw [show q = K * 2 by dsimp [q]; rw [he2]]
+        exact even_two.mul_left K |>.mul_left n
+
+/-- Conjecture E(2), including the separate golden cycle. -/
+theorem result : MetallicHankelUnboundedDefs.claim := by
+  classical
+  intro n hn
+  obtain ⟨Φ, metallic, unique, base_bound, first_unbounded, _⟩ := normal_family n hn
+  refine ⟨⟨Φ, metallic⟩, ?_⟩
+  intro Ψ hΨ ℓ hℓ M
+  rw [unique Ψ hΨ]
+  by_cases he : ℓ = n + 3
+  · subst ℓ
+    exact first_unbounded M
+  · by_contra hf
+    have upper (j : ℕ) : (shiftedHankel Φ ℓ j).natAbs ≤ M := by
+      exact Nat.le_of_not_gt (fun hj => hf ⟨j, hj⟩)
+    let M' := max M 1
+    have hb := MetallicHankelUnboundedStrip.bounded_strip Φ (n + 1) ℓ
+      (4 * (n + 5)) M' (by omega) (by dsimp [M']; omega)
+      (coefficient_growth n hn Φ metallic)
+      (fun j => (base_bound j).trans (by dsimp [M']; omega))
+      (fun j => (upper j).trans (le_max_left _ _))
+    obtain ⟨j, hj⟩ := first_unbounded
+      (2 ^ (Nat.log2 M' + 2 * ((n + 3) - (n + 1)) * (ℓ - (n + 3)) + 1))
+    have ht := hb (n + 3) j (by omega) hℓ
+    omega
 
 end D5.S3.Combinatorics.MetallicHankel.MetallicHankelUnbounded

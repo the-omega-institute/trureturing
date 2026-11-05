@@ -522,3 +522,876 @@ comparison bounds. Those stability results therefore do not provide an
 acquisition or recognition bridge for this two-source experiment.
 
 ## 追加锚（本行以下为增补区）
+
+## 8. Incidence-only affine recovery and the observable reverse
+
+**Definition 8.1 (acquired quotient and transversal graph).** In this section
+$E\subseteq X\times Y$ is the complete relation returned by Definition 1.2,
+with surviving source $G_0$. Thus $X\subseteq\mathcal L$ and
+$Y\subseteq\mathcal R$ are the actual used label sets, of sizes $72,243$.
+All neighbourhoods below are computed from this acquired $E$. Put
+
+$$
+L=X/{\approx},\quad x\approx x'\iff N_E(x)=N_E(x'),\qquad
+Q=Y/{\sim},\quad y\sim y'\iff N_E(y)=N_E(y').
+$$
+
+Retain the computable membership maps $\pi_X:X\to L$, $\pi_Y:Y\to Q$,
+their fibres $X_\ell,Y_p$, and the induced incidence
+$\bar E\subseteq L\times Q$. For $\ell\in L$ write
+$P(\ell)=\{p:(\ell,p)\in\bar E\}$. Define a graph $\Gamma_E$ on $L$:
+different vertices $\ell,m$ are joined precisely when
+
+$$
+P(\ell)\cap P(m)=\varnothing,\qquad
+\bigl|\{n\in L:P(n)\cap P(\ell)\ne\varnothing,
+                    \ P(n)\cap P(m)\ne\varnothing\}\bigr|=3.
+\tag{RRO.8.1}
+$$
+
+The set $\mathfrak P$ of connected components of this graph is the selected
+direction set. For each joined pair take the union of the point sets of its
+three common transversals; let $\mathcal B$ be the set of these unions,
+with repetitions removed. These are definitions by finite incidence tests.
+An arbitrary partition of $Q$ by nine disjoint selected lines is not the
+definition of a direction. For example, six $e_1$-lines with second
+coordinate $0$ or $1$, and three $e_3$-lines with second coordinate $2$,
+partition $F^3$ but mix two directions.
+
+**Lemma 8.2 (the graph recovers exactly the four directions).** The quotient
+has $27$ points, $36$ selected lines, capacities $|X_\ell|=2$,
+$|Y_p|=9$, and $108$ incidences. The four components of $\Gamma_E$ are
+exactly the four parallel classes of UJB Theorem 15.2, each with nine lines.
+The set $\mathcal B$ consists of the $18$ affine planes whose direction
+spaces are spanned by two different selected directions. Given $p\in Q$
+and different $D,E'\in\mathfrak P$, there is a unique such plane
+$B_{D,E'}(p)$ through $p$, and exactly three lines from each of $D,E'$
+lie in it. There is a unique selected line $L_D(p)$ of direction $D$
+through $p$.
+
+Proof. Use UJB Theorem 15.2 as a correctness correspondence, rather than
+as controller input: its map $\kappa:Q\to F^3$ sends $P(\ell)$ to an
+affine line in
+
+$$
+K=\{F(0,0,1),F(1,0,0),F(1,2,1),F(1,1,1)\}.
+\tag{RRO.8.2}
+$$
+
+The stated capacities and incidence counts are that supplier's exact literal
+counts. Every three displayed direction vectors are independent: in the
+listed order the four three-column determinants are $2,1,2,1$ in $F$.
+In particular the four projective points form a frame.
+
+Consider two different parallel lines $a+Fd,b+Fd$ in a direction
+$Fd\in K$. For $Fe\in K\setminus\{Fd\}$, an $e$-line meets both
+exactly when $b-a\in\operatorname{span}(d,e)$. If this condition holds,
+the three $e$-lines through the three points of the first line are distinct,
+meet the second, are disjoint, and exhaust that affine plane. If it fails,
+there are none. The planes $\operatorname{span}(d,e)$ for the three
+choices of $Fe$ intersect pairwise just in $Fd$, by triple independence.
+Since $b-a\notin Fd$, at most one choice works. The common-transversal
+count is therefore either zero or three, and the latter case is exactly a
+join inside this parallel class.
+
+For disjoint lines $a+Fd,b+Fe$ of different selected directions,
+$b-a\notin\operatorname{span}(d,e)$. Each of the two other directions
+$Ff$ gives a basis $(d,e,f)$. The unique expansion of $b-a$ in that
+basis has nonzero $f$ coefficient. It gives exactly one $f$-line meeting
+both lines. A line in direction $d$ or $e$ cannot meet both. Thus there
+are exactly two common transversals, and no graph edge joins different
+parallel classes.
+
+Within a fixed $d$-class, identify its nine lines with $F^3/Fd$.
+The graph joins cosets differing by a nonzero multiple of one of the three
+other projected directions. Any two of these projected directions span this
+two-dimensional quotient, again by triple independence. Moves along them
+connect all nine cosets. The components are therefore exactly the four
+classes, with no appeal to exact-cover enumeration.
+
+For a joined pair its three transversals exhaust precisely a plane in the
+two involved directions. Conversely every translate of
+$\operatorname{span}(d,e)$ contains three parallel $d$-lines, so any two
+of them produce that plane. There are six different two-direction spaces
+and three translates each: a third selected direction belongs to none of
+these spaces. This proves the $18$ count and all uniqueness assertions.
+It also gives the disjoint-pair transversal histogram: for each direction,
+the nine quotient vertices have six neighbours, yielding $27$ unordered
+pairs with count three and nine with count zero. Across different directions
+there are $6\cdot9\cdot6=324$ disjoint pairs, each with count two.
+Hence the counts for $0,2,3$ transversals are $36,324,108$. $\square$
+
+**Definition 8.3 (constructed charts and output representation).** Choose
+$o\in Q$, an ordered triple of different selected directions
+$(D_1,D_2,D_3)$, and a point $a_i\ne o$ on each $L_{D_i}(o)$.
+Set $a_i(0)=o$, $a_i(1)=a_i$, and let $a_i(2)$ be the third point
+on this line. Construct
+
+$$
+\begin{aligned}
+u(x,y)&=L_{D_2}(a_1(x))\cap L_{D_1}(a_2(y)),\\
+C(x,y,z)&=L_{D_3}(u(x,y))\cap B_{D_1,D_2}(a_3(z)),
+                       \qquad (x,y,z)\in F^3.
+\end{aligned}
+\tag{RRO.8.3}
+$$
+
+Intersections in this formula mean their unique point. A chart is
+$\phi=C^{-1}:Q\to F^3$. It retains the mark $D$ on each of the four
+selected parallel classes, with coordinate direction
+$\delta_\phi(D)\in\mathbb P^2(F)$. These four directions form a frame;
+they need not equal the particular set (RRO.8.2). The first three are the
+coordinate axes; the fourth has all three coordinates nonzero and depends
+on the three chosen nonzero steps. Fixing its representative to $(1,1,1)$
+is an optional normalization, not a condition on all constructed charts.
+A point output is represented observably by its nine-label fibre $Y_p$,
+for example as a sorted list. Its lexicographically first label is an
+optional public representative, not the actual hidden $z=0$ label.
+
+**Theorem 8.4 (constructive chart invariance).** All intersections in
+(RRO.8.3) exist uniquely and $C$ is a bijection. There are
+$27\cdot(4\cdot3\cdot2)\cdot2^3=5184$ constructed chart choices.
+The operation
+
+$$
+H(p,q,r)=C\bigl(\phi(p)-\phi(q)+\phi(r)\bigr)
+\tag{RRO.8.4}
+$$
+
+is independent of all these choices, of all twin representative orderings,
+and of any coordinate chart that realizes the selected incidence as the
+lines of a four-point projective frame over $F$. It is an affine ternary
+operation on $Q$ and is equivariant under incidence isomorphisms.
+
+Proof. Under the correctness map $\kappa$ of Lemma 8.2 let
+$b=\kappa(o)$ and $v_i=\kappa(a_i)-b$. Each $v_i$ is nonzero,
+and the three are independent. The remaining point on its axis is
+$b+2v_i$. Lemma 8.2 identifies the first intersection in (RRO.8.3) as
+$b+xv_1+yv_2$. Its $v_3$-line meets the plane
+$b+zv_3+\operatorname{span}(v_1,v_2)$ at exactly one point. Consequently
+
+$$
+\kappa(C(x,y,z))=b+xv_1+yv_2+zv_3.
+\tag{RRO.8.5}
+$$
+
+This proves existence, uniqueness and bijectivity, and proves every
+constructed chart is affine relative to the source correspondence.
+Inserting (RRO.8.5) into (RRO.8.4) yields
+
+$$
+\kappa(H(p,q,r))=\kappa(p)-\kappa(q)+\kappa(r),
+\tag{RRO.8.6}
+$$
+
+which contains none of the choices. The three independent direction choices,
+the origin, and the two choices on each axis give the displayed count.
+Each construction uses only incidence, graph components and intersections.
+Thus an incidence isomorphism carries a chosen construction to the
+construction with the image origin, directions and axis points, proving
+equivariance without access to $\kappa$.
+
+More generally, let $\psi:Q\to F^3$ be any chart realizing the four
+selected classes as a frame of affine directions. The proofs of Lemma 8.2
+apply in those coordinates because they used only triple independence.
+The same incidence construction then gives
+$\psi(C(x,y,z))=b'+xv'_1+yv'_2+zv'_3$ with independent $v'_i$.
+Comparing with (RRO.8.5) proves $\psi\kappa^{-1}$ is affine. An affine
+change $f(x)=Ax+b$ satisfies
+$f(x)-f(y)+f(z)=f(x-y+z)$; hence it gives exactly the same $H$.
+This also proves uniqueness among $F_3$ affine torsor structures in which
+the selected incidence realizes a four-direction frame. No claim of
+uniqueness among arbitrary ternary tables satisfying only a few identities
+is needed. Reordering labels inside fibres changes no incidence object.
+Finally (RRO.8.6) proves
+$H(p,q,q)=p$, $H(p,p,r)=r$, $H(p,q,r)=H(r,q,p)$ and
+$H(H(p,q,r),s,t)=H(p,q,H(r,s,t))$ by coordinate cancellation.
+Choosing any origin turns this torsor into a vector space over $F$,
+without distinguishing that origin intrinsically. $\square$
+
+**Theorem 8.5 (full affine lines, planes and incidence).** For $p\ne q$
+define
+
+$$
+\ell(p,q)=\{p,q,H(q,p,q)\}.
+\tag{RRO.8.7}
+$$
+
+For $r\notin\ell(p,q)$ define $\Pi(p,q,r)$ as the smallest subset
+containing $p,q,r$ and closed under $H$. Then the distinct sets
+$\ell(p,q)$ are exactly the $117$ full affine lines, in $13$ parallel
+classes of nine. The distinct $\Pi(p,q,r)$ are exactly the $39$ full
+affine planes, with nine points each. Point-line, point-plane and line-plane
+incidence are respectively membership, membership and containment. Each
+point lies on $13$ full lines, each plane contains $12$ full lines, and
+each full line lies in four planes. All of these objects are independent of
+charts. The four selected classes remain marked among the thirteen; each
+original $P(\ell)$ is its corresponding full line.
+
+Proof. In any constructed chart write $a=\phi(p)$ and
+$d=\phi(q)-a$. Formula (RRO.8.7) is exactly
+$\{a,a+d,a+2d\}=a+Fd$, including its third distinct point.
+For a nonempty $H$-closed set $S$ and $a\in\phi(S)$, its translate
+$V=\phi(S)-a$ contains zero, is closed under
+$u+v$ by $H(u+a,a,v+a)$, and under negation by $H(a,u+a,a)$.
+It is therefore an $F_3$ vector subspace. Conversely every coset of an
+$F_3$ subspace is $H$-closed. It follows that
+
+$$
+\phi(\Pi(p,q,r))
+ =\{a+x(\phi(q)-a)+y(\phi(r)-a):x,y\in F\}.
+\tag{RRO.8.8}
+$$
+
+The noncollinearity condition makes its two generators independent, so it
+has nine points and is precisely an affine plane. Every line and plane has
+such generators, proving exhaustiveness rather than just producing some
+incidences. The same argument recovers every affine flat by $H$-closure.
+
+There are $(3^3-1)/(3-1)=13$ one-dimensional subspaces, each with nine
+cosets. Two-dimensional subspaces are kernels of nonzero linear forms,
+where precisely the two nonzero scalar multiples give the same kernel.
+There are therefore $26/2=13$ plane directions and three cosets each.
+Within a plane its four directions have three line cosets each. Plane
+directions containing a fixed line direction correspond to the four
+one-dimensional subspaces of the two-dimensional quotient. These counts
+prove all asserted incidence numbers. Lemma 8.2 and (RRO.8.5) identify
+the original $36$ blocks with the lines in the four selected directions.
+Because definitions (RRO.8.7) and $H$-closure use the invariant $H$, their
+sets and incidences are chart independent. $\square$
+
+**Theorem 8.6 (observable literal reverse).** Retain $X,Y$, the actual
+membership maps $\pi_X,\pi_Y$, their labelled fibres, the selected class
+marks and the incidence of the $36$ selected full lines with $Q$. Define
+
+$$
+\operatorname{Lift}(\bar E,\pi_X,\pi_Y)
+ =\{(x,y)\in X\times Y:(\pi_X(x),\pi_Y(y))\in\bar E\}
+ =\bigcup_{(\ell,p)\in\bar E}X_\ell\times Y_p.
+\tag{RRO.8.9}
+$$
+
+This lift is exactly $E$. Its twin quotient returns the same incidence,
+capacities and selected direction marks. Thus full geometry with the four
+selected classes and these attachments reverses to the literal label
+relation. The full affine geometry by itself omits which four of its
+thirteen directions were supplied and which labels attach to each line and
+point; those fields are retained in this inverse.
+
+Proof. If an edge has representatives $x,y$, changing $x$ inside its
+left fibre preserves adjacency to $y$. Changing $y$ inside its right
+fibre then preserves adjacency to the new $x$. Hence every incident
+class pair lifts to the entire product of its fibres, and a nonincident
+class pair lifts to none. This proves both inclusions in (RRO.8.9).
+Taking equal neighbourhoods of this same $E$ recovers the defining
+classes, and (RRO.8.1) recovers their marks. Each of $108$ incidences
+lifts to $2\cdot9$ distinct edges, giving $1944$ in total.
+For correctness only, if hidden injections $\lambda,\varrho$ transport
+$E_0$ to $E$, the observable maps satisfy
+$\pi_X(\lambda(v,s))=[(v,s)]$ and
+$\pi_Y(\varrho(w,z))=[w]$ under the UJB identification. This is a
+commuting correspondence with a hidden witness, not an extra input to the
+lift. Neither map requires recovering those injections. $\square$
+
+**Proposition 8.7 (lawful controller and separate costs).** A common
+controller under UJB Assumption 5.2 can, on a successful positive
+certificate scan, compute the preceding objects and compute $H$ on right
+point classes of subsequently acquired input records. It returns the output
+fibre $Y_{H(p,q,r)}$, or an explicitly declared public representative.
+If input indices repeat, it uses the same acquired record on every
+occurrence. The stationary original root and its original Read menu are
+unchanged.
+
+Proof. Install the finite recognition, graph and chart algorithms from the
+public source tables and public $N$ only. On the acquired scan records run
+Definition 1.2. Failure is a declared output; on success the returned $E$
+and its surviving branch determine whether the $G_0$ construction applies.
+Every later required input bit at original slot $j$, local coordinate $h$,
+is acquired by the original decoder address in PCR.6, or reused from that
+slot's cache. Right labels give $p=\pi_Y(y_j)$ directly; complete pairs
+may also be retained for the reverse and inversion below. All subsequent
+steps are finite computations on acquired records. No source-dependent
+controller installation, hidden reference, chosen-label query or group
+operation occurs. Multiple operands at one index refer to one $Y_j$.
+UJB Theorem 17.1 supplies every adaptive continuation law with these very
+masks, including deterministic replay. $\square$
+
+Here are explicit finite computation bounds, independent of acquisition.
+After $E$ is supplied, a $72$ by $243$ Boolean table suffices to compute
+all neighbourhoods and memberships; sorting or comparing those bit rows
+and columns adds its own finite work. After quotienting, there are
+$\binom{36}{2}=630$ pairs and at most $630\cdot36=22680$ candidate
+transversal tests, each involving two intersections of three-point sets.
+Connected components, the $18$ plane sets, the $108$ point-direction
+entries and the $162$ point/two-direction plane entries are finite tables.
+One chart uses nine first intersections and $27$ second intersections;
+enumerating all $5184$ choices uses at most $5184\cdot36=186624$
+such singleton-intersection operations after these tables are present.
+Only one chart and its inverse need be stored to evaluate $H$; storing its
+entire table instead uses $27^3=19683$ point entries. Enumerating all point
+pairs and all noncollinear triples recovers the full line and plane sets;
+the resulting membership tables have $117\cdot3$ and $39\cdot9$
+point entries. Comparisons, deduplication, arithmetic on indices and
+coordinate words, and output storage are additional computation. These
+bounds give no optimality or efficient-discovery claim.
+
+Acquisition is the original tariff. A scan of slots $1,\ldots,m\le N$
+that completes every pair makes $15m$ Read invocations, with operand-length
+sum $15m(15m+3)/2$ and maximum length $15m+1$ by PCR.6. At $m=576$
+these are $8640$, $37337760$, and $8641$. Completing a later partial
+slot pays for its missing coordinates at their original addresses; an
+invoked reread still costs an invocation even if it adds no information.
+Input records, the fixed $N$ originally prepared slots, preparation events,
+installation, mathematical computation and memory are separate resources.
+An existence certificate does not promise that a fixed scan attains it;
+$H$ creates neither a sample nor a Read reply.
+
+## 9. Inversion and the full indexed conditional law
+
+**Definition 9.1 (source inverse target).** In FGP, equations (1.2)--(1.3),
+embed $a=(v,s)\in A$, $t=(w,z)\in T$ as
+$\widetilde a=(v,0,s;0)$, $\widetilde t=(0,w,z;1)$.
+Their two products have last vector coordinates
+$s+z+B_i(v,w)$ and $z-s$ respectively; hence
+
+$$
+\widetilde a\widetilde t=\widetilde t\widetilde a
+ \iff B_i(v,w)=s,\qquad
+\iota(v,s)=(-v,-s),\qquad \widetilde t^{-1}=\widetilde t.
+\tag{RRO.9.1}
+$$
+
+In particular $(a,t)\mapsto(\iota(a),t)$ is an involutive permutation
+of $E_i$. For a full generator $g=(i,\lambda,\varrho)$ define its
+label inverse target on $\mathcal E_g$ by
+
+$$
+J_g(x,y)=(\lambda(\iota(\lambda^{-1}(x))),y).
+\tag{RRO.9.2}
+$$
+
+The first component alone is denoted $I_g(x)$. These are mathematical
+targets associated to the actual paired-power witness; the observer is not
+supplied an inversion port.
+
+**Theorem 9.2 (fixed-input recovery and ambiguity).** For a certified $G_0$
+relation and acquired edge $(x,y)$, $I_g(x)$ is the other member of
+$X_{\pi_X(x)}$, so $J_g(x,y)$ is computable from acquired information.
+If $G_1$ has positive prior weight, then for every transported $G_1$
+relation and every input edge there are full supported realizations with
+that same $E$, the same entire prepared label array containing the input,
+and different inverse labels for that input. This holds at every fixed
+$N\ge4$ for any prescribed such array.
+
+Proof. In $G_0$, the exact left fibre in UJB Theorem 15.2 is
+$\{(v,s),(-v,-s)\}$. Its members differ since $v\ne0$, and
+(RRO.9.1) identifies the other member as the inverse.
+
+For $G_1$, identify $F^2$ with $E_9=F[\iota]$, where
+$\iota^2=-1$. A left fibre is
+$C_c=\{(v,cv):v\in E_9^\times\}$, of size eight, and inversion
+pairs $a$ with $-a$ inside it. For the actual literal preimage $a$ of
+$x$, choose $b\in C_c\setminus\{a,-a\}$ and let $\sigma$
+transpose $a,b$, fixing all other left endpoints. This preserves the
+whole edge relation. Put $\lambda'=\lambda\circ\sigma$ and leave
+$\varrho$ unchanged. Every prepared label pair remains exactly the same
+by using its corresponding preimage under the new injection. All those
+preimages remain edges. The two generators have positive full-injection
+prior mass when $\theta>0$, and each compatible length-$N$ array has
+conditional mass $M^{-N}>0$.
+
+In the second realization the input $x$ has preimage $b$ and inverse
+label $\lambda'(-b)=\lambda(-b)$; in the first it has inverse label
+$\lambda(-a)$. The four endpoints $a,b,-a,-b$ are distinct, so these
+outputs differ. All observed bits at all indices, including repeats, are
+identical. Thus the failure is pointwise even with the full label array,
+and cannot be removed by a more informative Read of that same array.
+$\square$
+
+**Definition 9.3 (actual finite measure on the full domain).** No
+certification of $E$ is assumed in this definition or in Theorems 9.4--9.5.
+Fix public $N,\theta$ and the full original prior of UJB.9001. With
+$(q)_r=q(q-1)\cdots(q-r+1)$, let
+
+$$
+\pi_\theta(g)=\frac{w_i}{(128)_{72}(256)_{243}},\quad
+w_0=1-\theta,\quad w_1=\theta,\qquad
+\mu(g,\mathbf y)=\pi_\theta(g)M^{-N}
+                 \prod_{j=1}^N\mathbf1_{\{y_j\in\mathcal E_g\}}.
+\tag{RRO.9.3}
+$$
+
+Here $g$ ranges over both sources and all full injections; zero-weight
+sources are omitted. The label array ranges over
+$(\mathcal L\times\mathcal R)^N$, with one variable per original
+index. This is a probability measure because every $\mathcal E_g$ has
+$M=1944$ distinct edges. For any consistent indexed cache
+$D=((m_j,d_j))_{j=1}^N$, with arbitrary masks in its fifteen coordinates,
+write
+
+$$
+\begin{aligned}
+A_j(g,D)&=\{y\in\mathcal E_g:y|_{m_j}=d_j\},\qquad n_j(g,D)=|A_j(g,D)|,\\
+L_g(D)&=\prod_{j=1}^N\frac{n_j(g,D)}M,\qquad
+Z(D)=\sum_g\pi_\theta(g)L_g(D),\\
+W_D(g)&=\frac{\pi_\theta(g)L_g(D)}{Z(D)},\qquad
+Q_{g,j,D}(y)=\frac{\mathbf1_{\{y\in A_j(g,D)\}}}{n_j(g,D)}.
+\end{aligned}
+\tag{RRO.9.4}
+$$
+
+The domain is exactly $Z(D)>0$. The last factor is used only when
+$W_D(g)>0$, where all its denominators are positive. Empty masks have
+$n_j=M$; a completed supported slot has $n_j=1$. Contradictory evidence
+has zero normalizer and no conditional law. Duplicate observations impose
+one restriction while their actual invocations retain their costs.
+
+**Theorem 9.4 (normalized joint target pushforward).** Let $S\subseteq[N]$
+be any set of distinct target indices. Let
+$F(g,(y_j)_{j\in S})$ be any deterministic finite-valued target or vector
+of targets, with repeated requested indices evaluated using that same
+$y_j$. Then its actual law conditional on any positive cache is
+
+$$
+\begin{aligned}
+\Pr(F=z\mid D)
+ &=\frac{\sum_{g,\mathbf y}\mu(g,\mathbf y)
+       \mathbf1_{\{\mathbf y\text{ satisfies }D\}}
+       \mathbf1_{\{F(g,\mathbf y_S)=z\}}}{Z(D)}\\
+ &=\sum_{g:W_D(g)>0}W_D(g)
+   \sum_{(y_j)\in\prod_{j\in S}A_j(g,D)}
+       \left(\prod_{j\in S}\frac1{n_j(g,D)}\right)
+       \mathbf1_{\{F(g,\mathbf y_S)=z\}}.
+\end{aligned}
+\tag{RRO.9.5}
+$$
+
+This includes joint inverse targets at partial, complete and wholly unread
+slots, regardless of whether $E$ is certified. It also includes geometric
+targets and their joint laws with inverses as follows. On $i=0$, construct
+$Q_g,H_g,\pi_{Y,g}$ from the candidate relation $\mathcal E_g$ by §8,
+and encode a geometric output for indices $j,k,l$ as
+
+$$
+G_g(j,k,l)=Y^g_{H_g(\pi_{Y,g}(y_j^{R}),
+                              \pi_{Y,g}(y_k^{R}),
+                              \pi_{Y,g}(y_l^{R}))}.
+\tag{RRO.9.6}
+$$
+
+This is a nine-element subset of the fixed ambient $\mathcal R$; it is
+not a point name in an unshared hidden chart. On $i=1$ give this target
+the separate failure tag $\bot$. Thus (RRO.9.5) defines the joint law on
+the full original domain, including uncertainty about the source. A law
+conditional also on $i=0$ instead restricts the sums to that event and
+divides by its positive conditional probability. It does not assume that
+an uncertified actual $E$ was acquired.
+
+Proof. Summing $\mu$ over arrays satisfying $D$ factors into $N$
+independent edge counts and gives exactly $Z(D)$. Conditional on a fixed
+$g$ and $D$, the array coordinates are independent and uniform on their
+own $A_j(g,D)$, proving (RRO.9.4). Summing out all indices outside $S$
+gives one from each normalized coordinate factor, proving the second line
+of (RRO.9.5). The first line is the direct event-indicator formula for the
+same measure. Summing either expression over all outputs gives one, since
+exactly one output indicator is true for each realized tuple.
+
+The target vector uses a single $g$, so every component shares the same
+source, full injections and inverse pairing. It uses one edge variable for
+each distinct original index, so no occurrence is independently resampled.
+For example, $(J_g(Y_j),J_g(Y_j))$ is supported on the diagonal and
+$(J_g(Y_j),J_g(J_g(Y_j)))=(J_g(Y_j),Y_j)$ holds identically.
+For different indices the factors separate only conditional on $g,D$;
+the outer sum is still joint. Formula (RRO.9.6) is well-defined by the
+chart invariance of Theorem 8.4 on each candidate $G_0$ relation. Applying
+the preceding finite pushforward to it, or to it together with any inverse
+coordinates, proves the remaining statements. $\square$
+
+For a single partial slot the inverse formula is, explicitly,
+
+$$
+\Pr(J_g(Y_j)=u\mid D)
+ =\sum_{g:W_D(g)>0} W_D(g)\frac{
+       |\{y\in A_j(g,D):J_g(y)=u\}|}{n_j(g,D)}.
+\tag{RRO.9.7}
+$$
+
+The indexed likelihood is already in $W_D$; the inner conditional count
+is divided by $n_j$. Equivalently the full-array sum in the first line
+of (RRO.9.5) uses $\mu$ and the cache indicator once, with no further
+likelihood factor. A separately acquired fixed input is included by adding
+its complete indexed record to $D$; if it is merely a proposed edge,
+conditioning on its presence is an additional event, not an unannounced
+premise. The formulas compute mathematical target laws. Theorem 9.2
+prevents a $G_1$ latent inverse from being treated as a readable output
+merely because its posterior can be evaluated.
+
+**Theorem 9.5 (compatibility with native continuation).** Marginalizing
+(RRO.9.5) to array coordinates gives exactly UJB.9005 and UJB.17002.
+Conjoining new indexed masks gives the original ratio
+$Z(D\wedge D')/Z(D)$ of UJB.17001, including original repeated indices.
+Thus all native continuation laws, deterministic derived readouts of
+acquired records, and their joint outputs are computed on the same actual
+measure. No latent target becomes an observer port by this identity.
+
+Proof. Taking the target to be the array itself gives the mixture of
+$\prod_jQ_{g,j,D}$ with weights $W_D$, which is precisely UJB.9005.
+The numerator for a new cylinder is its intersection with the old one,
+so its mass is $Z(D\wedge D')$. A repeated known bit conjoins nothing
+new and has conditional probability one; a contrary repeat has numerator
+zero. Completing an old partial slot replaces its factor by the full
+restriction in the same product, rather than multiplying a second partial
+likelihood. UJB Theorem 16.2 evaluates these very normalizers with literal
+capacities, and Theorem 17.1 supplies its exhaustive original-root operand
+classification and controller composition. For any attained native
+transcript under Assumption 5.2, UJB Proposition 9.2 proves its
+controller/seed likelihood is constant across all arrays satisfying its
+cache, so the source-dependent conditional law is the one above. For a
+further common controller with array-indexed transcript measure $K_y$,
+its observable continuation law is the unchanged finite mixture
+$\sum_y\mathsf I_D(y)K_y$ of UJB.17003. A deterministic output computed
+from actually acquired $E$ and inputs can be appended to that transcript.
+An output depending on an unidentified $g$ has only the mathematical
+pushforward (RRO.9.5) until a lawful acquisition proves it constant on the
+observation fibre. $\square$
+
+The formulas are exact finite expressions in the public $\theta$.
+For rational $\theta$ and finite explicitly represented rational controller
+weights, exhaustive enumeration terminates in rational arithmetic. With an
+arbitrary real parameter they remain identities; no effective arithmetic
+on an unrepresented real or arbitrary measurable controller measure is
+assumed. One direct bound enumerates
+$2(128)_{72}(256)_{243}$ generators, with unsupported branches omitted,
+constructs $1944$ edges per generator, and tests their masks at all $N$
+indices. For targets at $s$ distinct indices the inner product has at most
+$1944^s$ edge assignments per generator. Full-array enumeration has at
+most $1944^N$ per generator. Streaming can avoid retaining all assignments;
+weights, growing integers, target computation and output storage still cost
+resources. These are mathematical computation bounds, not additional
+Reads or an acquisition saving. The existing capacity evaluator is reused
+for the normalizers; no claim that it alone identifies a hidden inverse
+matching is made.
+
+**Proposition 9.6 (unread marginals and shared inverse matchings).** At
+fixed $g$, $J_g$ permutes the $1944$ edges. A wholly unread original
+slot therefore has the same conditional marginal law after applying $J_g$
+as before applying it, even after averaging over $W_D$. At fixed $g$ its
+inverse left endpoint is uniform on the $72$ used left labels. The latter
+statement does not assert conditional uniformity over those labels after
+arbitrary partial evidence, nor over a single shared set of $72$ labels
+when that set itself is uncertain.
+
+On a certified $G_1$ relation, for any positive indexed cache of label bits,
+the latent inverse pairing inside each size-eight left fibre is uniform
+among its $105$ perfect matchings, and the nine such pairings are independent.
+For a fixed left input, each of the seven other labels has inverse
+probability $1/7$. For distinct $x,x'$ in that fibre,
+
+$$
+\Pr(I(x)=x',I(x')=x\mid E,D)=1/7,
+\tag{RRO.9.8}
+$$
+
+not $1/49$. A repeated request for the same input has the same inverse
+with probability one. These certified-$E$ simplifications are special
+cases of (RRO.9.5), not its general domain.
+
+Proof. Bilinearity gives $B_i(-v,w)=-s$, so $J_g$ is an edge involution
+with no fixed left endpoint. Every left endpoint has degree $27$.
+An unread slot has $Q_{g,j,D}=M^{-1}\mathbf1_{\mathcal E_g}$;
+pushing it through this permutation preserves that law, and then so does
+the outer mixture. Conditioning a partially read input can break this
+uniformity because its allowed edge set need not be invariant under $J_g$.
+
+For a fixed $G_1$ labelled relation, every compatible generator gives
+exactly the same likelihood $\prod_j|E\cap B_j(D)|/M$. It therefore
+cancels from the conditional distribution of hidden associations within
+that relation. The component decomposition is nine disjoint complete
+bipartite graphs with capacities $8,27$. Given the component association,
+all $8!$ bijections on each left fibre are independent and uniform, as are
+all right bijections; permuting whole components leaves the following
+local calculation unchanged. A fixed involution of four unordered pairs
+transports to each perfect matching under exactly $2^4\cdot4!=384$
+bijections. Hence the $8!/384=105$ matchings have equal mass, independently
+in each fibre. There are $15$ matchings with a prescribed partner of $x$.
+If $x$ is paired with $x'$, involutivity also pairs $x'$ with $x$;
+this proves (RRO.9.8). The same matching is used on all indices and targets.
+$\square$
+
+**Example 9.7 (actual full-injection partial evidence).** The following
+exact calculations use $\theta=0$, $N=4$ and the original ambient
+$128$ left labels. They do not replace the source by a smaller model.
+Let $K$ be the number of used left labels with first bit zero. Before
+conditioning, $K\sim\operatorname{Hypergeom}(128,64,72)$.
+If only that bit of slot two is acquired as zero, its likelihood is
+$K/72$. Given the used label set, the input label is uniform on its $K$
+zero-bit labels and its distinct inverse partner is uniform on the other
+$71$ used labels by exchangeability of the full injection. Thus
+
+$$
+\Pr(\operatorname{bit}_1(I_g(Y_2^L))=0\mid \operatorname{bit}_1(Y_2^L)=0)
+ =\frac{\mathbb E[K(K-1)]}{71\mathbb E[K]}=\frac{63}{127}.
+\tag{RRO.9.9}
+$$
+
+Here $\operatorname{bit}_1$ reads the first bit of a left label. The
+ratio follows also by choosing two distinct labels uniformly from $128$:
+after a zero-bit
+first label, exactly $63$ of the remaining $127$ have that bit zero.
+A second multiplication by the likelihood instead gives the different
+ratio $\mathbb E[K^2(K-1)]/(71\mathbb E[K^2])=287/575$.
+
+If slot one is acquired completely as the pair $(0,0)$ of all-zero left
+and right words, then under that event
+$K=1+H$ with $H\sim\operatorname{Hypergeom}(127,63,71)$: the left
+image contains zero, and its other $71$ labels are a uniform subset of the
+remaining $127$. The right-edge constraint does not distinguish these
+remaining label names. Now additionally acquire just the first left bit
+of slot two as zero, leaving slots three and four unread. The inverse
+partner of slot one's left label, conditional on this image, is uniform
+among its other $71$ labels. The correct probability that this partner has
+first bit zero is
+
+$$
+\frac{\mathbb E[K(K-1)]}{71\mathbb E[K]}=\frac{287}{575}.
+\tag{RRO.9.10}
+$$
+
+Using the slot-two likelihood twice would instead give
+$\mathbb E[K^2(K-1)]/(71\mathbb E[K^2])=32879/65475$,
+whose difference from (RRO.9.10) is $4564/1505925>0$.
+These evaluations follow from the hypergeometric factorial-moment identity
+$\mathbb E[(H)_r]=(71)_r(63)_r/(127)_r$, and its
+$(128,64,72)$ counterpart for (RRO.9.9). To prove that identity, count
+ordered $r$-tuples of distinct marked population elements: each is included
+in the uniform subset with probability $(71)_r/(127)_r$, and there are
+$(63)_r$ such tuples. Expanding $K^2$ and $K^2(K-1)$ into factorial
+powers gives the displayed rational values. These positive-cache examples
+explain why full-realization event conditioning and normalized per-slot
+conditioning must agree; an extra evidence factor changes the law.
+
+## 10. References, retained memory and absent operations
+
+**Proposition 10.1 (actual hidden references remain unidentified).** The
+observable recovery of §8 does not recover the source's actual origin,
+actual injections or its within-point right-twin reference.
+
+Proof. For any $d\in F^3$, the simultaneous source permutations
+
+$$
+(v,s)\mapsto(v,s+B_0(v,d)),\qquad (w,z)\mapsto(w+d,z)
+\tag{RRO.10.1}
+$$
+
+preserve $E_0$ by bilinearity. Compensate both full injections by the
+inverse permutations and transport every literal prepared edge accordingly.
+The complete labelled relation and every prepared label pair remain
+unchanged, while a nonzero $d$ changes the actual coordinate origin's
+label attachment. Both full-injection realizations have positive prior
+weight whenever $G_0$ is supported, and all those arrays have the same
+mass. Thus even completing every prepared slot cannot identify that
+hidden reference. Independently, transposing any two of the nine right
+endpoints $(w,z)$ at one fixed $w$, and compensating the right injection,
+preserves all label observations while changing the actual $z$ attachment.
+The operation $H$ is invariant under these alternatives. A publicly chosen
+origin or output representative is a convention on acquired label sets;
+it does not distinguish the actual hidden alternative. $\square$
+
+**Proposition 10.2 (memory, history and G1 geometry boundaries).** The
+following are failures of recovery under the stated forgetful maps.
+
+1. Retaining $E$, an unordered set of completed pairs and the posterior of
+   the full generator does not retain the completed slots' indexed replay.
+2. A promised native endpoint determines its labelled generation order and
+   its set of successful histories in the existing supplier domain, but
+   does not determine the actual serial preparation word.
+3. The $G_1$ literal relation is nine disjoint $K_{8,27}$ components;
+   its twin quotient has nine left classes, nine right classes, and nine
+   matching incidences, each a $K_{1,1}$. It does not supply an intrinsic
+   $F_3$ affine plane on its nine components or the $G_0$ affine torsor.
+
+Proof. For item 1 take $N\ge4$, different complete pairs $u,v$ of one
+supported relation, and arrays with slots one and two respectively
+$(u,v)$ and $(v,u)$, leaving at least slot three unread. Both events
+have likelihood $M^{-2}\mathbf1_{\{u,v\in\mathcal E_g\}}$ for
+every generator. Thus their generator posteriors, unordered completed sets
+and joint unread laws coincide. Reading a differing bit of slot one gives
+different deterministic replies. The original index record distinguishes
+them, as UJB Theorem 17.1 requires.
+
+For item 2, `NativePromiseCausalBoundary.result` has hypotheses
+$N\ge4$ and the full promised assignment $z:\operatorname{Fin}(15N)\to
+\mathsf{Bool}$. It characterizes all successful serial words by labelled
+event linear extensions and gives two distinct successful words at the same
+endpoint. Retaining the endpoint, or any quotient of it, therefore cannot
+choose which word actually occurred. Recovering the entire set of possible
+histories is different from selecting the actual one.
+
+For item 3, UJB Theorem 15.2 identifies component value
+$c=s/v=w_1+\iota w_2\in E_9$. Each component contains eight literal
+left endpoints and $3\cdot9=27$ right endpoints; all free $w_3,z$
+values remain. Arbitrary simultaneous permutations of whole components
+preserve the incidence, as do arbitrary permutations within their twin
+fibres. If a natural affine plane on the nine anonymous components were
+recovered from incidence alone, every such permutation would preserve its
+ternary operation. A transposition of two components fixes seven points.
+A nonidentity affine map of $F_3^2$ has either no fixed point or a fixed
+affine subspace of dimension at most one, hence at most three fixed points:
+its fixed-point equation is $(A-I)x=-b$, and a two-dimensional solution
+space would force the identity. Such a transposition cannot be affine.
+Thus even the component-plane structure suggested by a hidden field chart
+is not an invariant of this anonymous relation. $\square$
+
+**Theorem 10.3 (retained interfaces and limits).** The exact domains are:
+
+(a) A certified complete $G_0$ relation with its acquired label attachments
+recovers $H$ and full affine incidence by §§8.1--8.5. Retaining the four
+selected classes and the membership maps reverses to $E$ by Theorem 8.6.
+Acquired right input records suffice for the controller's point-valued
+operation. Complete edge records also allow its $G_0$ inverse target.
+
+(b) Every positive attained indexed cache, including uncertified relations,
+partial slots and repeated indices, has the full joint laws of §§9.3--9.5.
+These preserve the one shared generator and all original array indices.
+For the support-closure inverse of UJB Theorem 17.2, additionally retain the
+fixed public prior, fixed partial cache and indexed completed values, and
+require at least one completely unread slot. Without that last condition
+the unread law can be an empty product; it has no claimed general inverse.
+The direct indexed law still evaluates the remaining old-slot Reads.
+
+(c) For a fixed $G_1$ input $x$, retaining its actual partner label suffices
+to evaluate $I_g(x)$. For the whole inverse interface on all used labels,
+retaining one actual inverse matching in each left fibre suffices. These are
+sufficient extra data, not minimal reference claims. The relation and even
+the complete prepared label array fail to supply the fixed input's partner
+by Theorem 9.2; a distribution of partners is not a realized partner.
+
+(d) An actual serial word requires information distinguishing the legal
+linear extensions, together with an authorized history-readout contract.
+The static relation and the stationary Read endpoint supply no such port.
+The equations defining $B_i$, $H$ or $J_g$ introduce no source mutation,
+multiplication/inversion call, extra prepared sample, fresh randomness or
+quantum channel.
+
+Proof. Parts (a)--(c) assemble the indicated constructions on exactly their
+input domains. In (c) applying the retained partner map, or the retained
+matching at the input label, computes the target; Theorem 9.2 proves failure
+without the missing datum. Part (d) follows from Proposition 10.2 and the
+exclusive original-root Read contract of UJB Assumption 5.2. Its controller
+has only that declared source port; computing a mathematical relation on
+records cannot add a permitted action. $\square$
+
+## 11. Source correspondences and mathematical scope
+
+**Definition 11.1 (reused suppliers and their parameters).** The source
+correspondences used here are the following.
+
+* UJB Theorem 15.2 identifies $Q$ with the actual $w\in F^3$ point
+  coordinate and $L$ with the solution lines of $B_0(v,w)=s$, identifies
+  the four kernels (RRO.8.2), and supplies their $2,9$ capacities. For
+  $G_1$ it supplies the component equation $s/v=w_1+\iota w_2$ with
+  capacities $8,27$, retaining every $w_3,z$. This is the correctness
+  map in the incidence proof; it is not a controller input.
+* UJB.9001--UJB.9005 give the full shared-injection probability measure:
+  $\pi_\theta$ is unchanged, $n_j/M$ is its $r_j(g;D)$,
+  $W_D=\pi_D$, and $Q_{g,j,D}$ is exactly its normalized indexed
+  factor. UJB Theorem 16.2 supplies capacity evaluation of $Z$ for every
+  cache. Theorems 17.1--17.2 supply updates, original-index replay,
+  controller continuation and the fixed-partial-cache/unread inverse.
+  No capacity or quotient compression removes the latent association
+  required by the targets $J_g$.
+* FGP equations (1.2)--(1.3), (3.4), (3.6)--(3.7), and UJB Proposition
+  3.2 identify the actual $4374$-element groups and the order-six
+  paired-power bijection onto the $1944$ edges, with all $72,243$
+  endpoints. The commuting interpretation and inverse edge target use
+  these embeddings; an abstract relation edge is not a supplied group call.
+* Cara--Rottey--Van de Voorde,
+  [arXiv:1207.4726v3, Corollary 3.7](https://arxiv.org/abs/1207.4726v3),
+  supplies the general point-preserving rigidity theorem for
+  $T_2^*(K)$ with $q>2$, full subgeometry closure and Property $(*)$.
+  Here $q=3$; the four determinants in Lemma 8.2 prove the frame
+  hypothesis. Its smallest subgeometry is all $\operatorname{PG}(2,3)$
+  because $F_3$ has no proper subfield. Property $(*)$ excludes an
+  intersection equal to two intersecting projective lines, with or without
+  their intersection point. Such sets have seven or six points over $F_3$,
+  whereas $K$ has four. The point and line sorts here are retained, so
+  Corollary 3.7, rather than an unverified sort-exchange condition from the
+  incidence-graph version in Corollary 3.6, is the applicable supplier.
+  Its ambient hyperplane stabilizer restricts to an affine semilinear map;
+  the field automorphism over $F_3$ is trivial. De Winter--Rottey--Van de
+  Voorde, [arXiv:1407.3953v1, introduction and §2](https://arxiv.org/abs/1407.3953v1),
+  gives the frame and smallest-subgeometry terminology. Theorem 8.4 also
+  gives the explicit incidence construction in this finite instance. This
+  is an application of established affine rigidity, not a new general
+  rigidity claim; neither paper supplies acquired labels or Read tariffs.
+* [`InvolutionDescent.kernelStable_iff_exists_descended`](../../../D5/S3/ConceptDynamics/ObservationTopology/InvolutionDescent.lean)
+  takes a surjective readout and a transformation preserving its fibres;
+  `descended_unique` gives uniqueness of its induced quotient map. Here
+  inversion preserves each left twin fibre in both sources, so its induced
+  action on $L$ is the identity. This says nothing about selecting a label
+  within that fibre. Size two in $G_0$, together with no fixed point,
+  selects the other label; size eight in $G_1$ leaves the ambiguity proved
+  in Theorem 9.2.
+* [`TargetRecoveryCriterion.target_recovery_criterion`](../../../D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean)
+  states constancy of a target on readout fibres exactly when it factors
+  through that readout. For the inverse target take states to be supported
+  full generators and prepared arrays with the input index retained, and
+  the readout to be $(E,\mathbf y)$ or its acquired subrecord. Theorem
+  9.2 supplies constancy for certified $G_0$ with acquired input and a
+  pair of differing targets on one $G_1$ readout fibre.
+  [`PushforwardComposition.pushforward_comp`](../../../D5/S3/Entropy/Forgetting/PushforwardComposition.lean)
+  is finite real-mass pushforward composition. Its correspondence is the
+  two equal summation orders in (RRO.9.5); it never authorizes independent
+  redraws of the hidden generator for different outputs.
+* [`ActualTreeReadoutAcquisition.readout`](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean)
+  has an actual finite address and four possible replies. In UJB the
+  decoder address extracts a designated bit of the same stationary comb;
+  acquisition and address costs stay as in PCR.6. The hypotheses and final
+  existential clause of
+  [`NativePromiseCausalBoundary.result`](../../../D5/S3/Arith/FibonacciAtomic/Geometry/NativePromiseCausalBoundary.lean)
+  are exactly those stated in Proposition 10.2, with $N\ge4$. These are
+  source correspondences, not fresh compiled Lean applications.
+* Existing RRO Proposition 92.2 in
+  AURIC_OMEGA_FULL_INPUT_RECOVERY_CERTIFICATES_II is a support-safe
+  variational supplier: restrict a norm calculation to the actual support
+  before taking the indicated inverse. It supplies no omitted fibre or
+  observer action here. C107 in
+  [AURIC_COMPOSITE_COMPARISON_FINITE_WITNESSES_COMMON_QUANTUM_SCALE_V96,
+  Definitions 70.1--70.2 and Theorem 72.2](AURIC_COMPOSITE_COMPARISON_FINITE_WITNESSES_COMMON_QUANTUM_SCALE_V96.md)
+  retains actual completely positive success branches, their success effects,
+  common dimming, collective binary-cut bounds and the same calibration
+  preparation/readout paths. Its joint boundary relation is a condition on
+  that whole common comparison class, not on separate optimizers.
+  [`StaticTensorWorld`](../../../D5/S3/Quantum/Foundation/StaticTensorWorld.lean)
+  instead supplies finite positive Frobenius comparison objects with zero
+  action and actual carrier equivalences to real tensor products; its
+  `result` refutes universal associativity even under all finite static
+  closure. Neither structure is supplied by this incidence and Read
+  contract. Their mathematical tensor or preparation data cannot be inferred
+  from recovered affine incidence, and they supply no quantum/random port.
+
+**Proposition 11.2 (falsification polarity and retained scope).** The
+positive recovery statements would fail if an actual transported $G_0$
+relation violated Lemma 8.2, if (RRO.8.3) had a non-singleton required
+intersection, if two allowed charts gave different $H$, if full affine
+incidence differed from Theorem 8.5, if the observable lift differed from
+$E$, or if conditional event summation disagreed with (RRO.9.5) on a
+positive original cache. The mixed-direction cover in Definition 8.1
+illustrates why a disjoint cover is insufficient to define a direction.
+The $G_1$ differing-inverse pair and the distinct serial words at one
+endpoint support the respective non-recovery statements; they are not
+falsifiers of them. Refuting those negative statements would require
+invalidating their witnesses under the stated source and Read assumptions.
+
+The incidence construction and literal/indexed interfaces are ordinary
+finite mathematical consequences for these actual sources, with the
+literature and repository suppliers mapped above. They are not fresh Lean
+verification, a novelty certificate, an optimal reference or certificate
+catalogue, an acquisition improvement, or a physical spacetime claim.
+All positive supported full injections, fixed finite $N$, masks and original
+indices remain in the law's domain. Further recovery of an actual reference,
+serial history, source action or quantum/random port requires the additional
+information or interface described in §10. The long-term recovery problem
+remains open beyond these conditional results.
+
+## 追加锚（本行以下为增补区）

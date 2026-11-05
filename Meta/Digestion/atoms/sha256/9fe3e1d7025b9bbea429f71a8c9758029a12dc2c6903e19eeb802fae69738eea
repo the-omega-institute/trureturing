@@ -1,0 +1,86 @@
+### 引理 3.9（实际二元判别的完整有限证书）
+
+<a id="lem-c122-binary-certificate"></a>
+
+给定同一来源基 $e_1,\ldots,e_d$，对所有基对 $e_r,e_s$，以及 $d-1$ 对
+$(e_1+e_j)/\sqrt2,(e_1-e_j)/\sqrt2$，各供应一个实际二元效果。
+若每对的两个条件错误均不超过 $0\le\varepsilon\le1/2$，则存在内部环境态 $\xi$，使
+
+<a id="eq-c122-binary-delta"></a>
+
+$$
+\|\widehat{\mathcal N}-\mathcal S_\xi\|_\diamond
+ \le\delta:=\min\{2,\,2(d+1)\sqrt{\varepsilon(1-\varepsilon)}\}.
+\tag{21}
+$$
+
+**证明。**
+先看任意被比较的 $u,v$。设实际效果 $0\le F\le I_K$ 的错误为
+$e_u=1-\operatorname{Tr}(F\mathcal N(P_u))$、$e_v=\operatorname{Tr}(F\mathcal N(P_v))$，其中 $P_u=\lvert u\rangle\langle u\rvert$。
+把等距输出按可见端与环境排列，记 $v_u=Vu,v_v=Vv$。环境迹范数的酉对偶给出
+
+$$
+\|\widehat{\mathcal N}(\lvert u\rangle\langle v\rvert)\|_1
+ =\max_{U_E\text{ 酉}}|\langle v_v,(I_K\otimes U_E)v_u\rangle|.
+$$
+
+在内积中插入 $F+(I-F)$，各项分别以 $F^{1/2}$ 和 $(I-F)^{1/2}$ 作用在两个向量上，再用 Cauchy–Schwarz。环境酉与这些效果交换，故
+
+<a id="eq-c122-actual-binary-cross"></a>
+
+$$
+\|\widehat{\mathcal N}(\lvert u\rangle\langle v\rvert)\|_1
+ \le\sqrt{(1-e_u)e_v}+\sqrt{e_u(1-e_v)}.
+\tag{22}
+$$
+
+若 $e_u=\sin^2\alpha,e_v=\sin^2\beta$，右侧为 $\sin(\alpha+\beta)$。
+在 $e_u,e_v\le\varepsilon\le1/2$ 下，$\alpha,\beta\le\arcsin\sqrt\varepsilon\le\pi/4$，所以每个交叉范数都不超过
+$\eta=2\sqrt{\varepsilon(1-\varepsilon)}$。
+
+记 $R_{rs}=\widehat{\mathcal N}(\lvert e_r\rangle\langle e_s\rvert)$。基对测试给出
+$\|R_{rs}\|_1\le\eta$，$r\ne s$。对相加、相减对 $u=(e_1+e_j)/\sqrt2$、$v=(e_1-e_j)/\sqrt2$，令
+$C_j=\widehat{\mathcal N}(\lvert u\rangle\langle v\rvert)$，则
+
+$$
+C_j=\tfrac12(R_{11}-R_{1j}+R_{j1}-R_{jj}),\qquad
+ C_j+C_j^*=R_{11}-R_{jj}.
+$$
+
+故 $\|R_{jj}-R_{11}\|_1\le2\eta$。取 $\xi=R_{11}$。
+
+最后取任意参考 $Q$ 和联合态
+$\rho=\sum_{r,s}\lvert e_r\rangle\langle e_s\rvert\otimes\rho_{rs}$，令 $p_r=\operatorname{Tr}\rho_{rr}$。
+把它纯化为 $\sum_re_r\otimes w_r$，其中 $w_r\in Q\otimes A$，则
+$\rho_{rs}=\operatorname{Tr}_A\lvert w_r\rangle\langle w_s\rvert$、$\|w_r\|^2=p_r$。再次用迹范数酉对偶，
+
+$$
+\|\rho_{rs}\|_1
+ =\max_{U_Q\text{ 酉}}|\langle w_s,(U_Q\otimes I_A)w_r\rangle|
+ \le\sqrt{p_rp_s}.
+$$
+
+逐块展开通道差并取迹范数，便得到
+
+$$
+\|[(\widehat{\mathcal N}-\mathcal S_\xi)\otimes\operatorname{id}_Q](\rho)\|_1
+ \le2\eta\sum_rp_r+\eta\sum_{r\ne s}\sqrt{p_rp_s}
+ \le(d+1)\eta.
+$$
+
+这里 $\sum_rp_r=1$、$(\sum_r\sqrt{p_r})^2\le d$，从未要求参考与来源独立。
+对全部有限参考输入态取上确界即得 diamond 上界，再用通道差的普遍界 $2$。
+
+代入式~[(20)](#eq-c122-decoupling-petz)，得到特别直观的简界
+
+<a id="eq-c122-binary-explicit"></a>
+
+$$
+\|\mathcal P_{\pi,\mathcal N}\mathcal N-\operatorname{id}_H\|_\diamond
+ \le\min\{2,\,8(d^2-1)\sqrt{\varepsilon(1-\varepsilon)}\}.
+\tag{23}
+$$
+
+使用 C121 非均匀相干图的谱证书时，只需把其更小的 $\delta$ 直接代入同一个公式。
+式~[(23)](#eq-c122-binary-explicit) 是本证明提供的充分保证；其 $\sqrt\varepsilon$ 指数与维数常数不宣称最优。它与 C121 的维数无关 $\sqrt\delta$ 信息–扰动界不矛盾：此处明确使用固定源维数及特殊的 Petz 回接结构。
+

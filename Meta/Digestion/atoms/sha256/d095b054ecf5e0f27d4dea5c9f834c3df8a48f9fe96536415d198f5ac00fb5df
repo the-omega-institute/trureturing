@@ -1,0 +1,81 @@
+**Corollary 42.5 (the original bad sets and first boundaries are
+phase-domain questions).** Define subsets of $(0,R]$ by
+
+$$
+\begin{aligned}
+ \mathcal B_{\mathrm{ph}}
+   &=\{\xi:\exists X\in\mathcal P_\xi\setminus\mathcal G_\xi,\
+                                      f(X)\le N(\xi)\},\\
+ \mathcal S_{\mathrm{ph}}
+   &=\{\xi:m_{\mathrm{ph}}(\xi)<N(\xi)\}.
+\end{aligned}
+\tag{42.28}
+$$
+
+Then
+
+$$
+\begin{aligned}
+ \mathcal B\cap(0,R]&=\mathcal B_{\mathrm{ph}},&
+ \mathcal S\cap(0,R]&=\mathcal S_{\mathrm{ph}},\\
+ \alpha&=\inf\mathcal B_{\mathrm{ph}},&
+ \beta&=\inf\mathcal S_{\mathrm{ph}}.
+\end{aligned}
+\tag{42.29}
+$$
+
+At both $b=\alpha,\beta$, the value is $m_{\mathrm{ph}}(b)=N(b)$,
+and every selected geometric pair is a phase and original global
+minimizer. The exhaustive-equality prefix includes $\alpha$
+exactly when
+$\mathcal A_{\mathrm{ph},\alpha}=\mathcal G_\alpha$.
+For every $0<\xi\le R$ the exact value formula is
+
+$$
+ m(\xi)=
+   \min_{\substack{w\in\mathbb T^4,\ \sigma\in\{+,-\}\\
+                              \sigma\ \mathrm{admissible}}}
+                    M_\sigma(w,\xi)-\kappa\xi .
+\tag{42.30}
+$$
+
+Consequently the full original value certificate $m(\xi)=N(\xi)$
+at such a level is equivalent to
+
+$$
+ M_\sigma(w,\xi)\ge V(\xi)
+ \quad\hbox{for every }w\in\mathbb T^4
+                       \hbox{ and every admissible }\sigma.
+\tag{42.31}
+$$
+
+All effects on both arcs of Theorem 36.2, including their mixed and
+singular endpoints, remain in this certificate.
+
+*Proof.* Equation (42.24) proves equality of the strict-loss sets.
+For either the original or phase domain, geometric feasibility
+gives a value at most $N$. If it is strictly less, an attained
+minimizer is nongeometric and witnesses the corresponding bad set.
+If it equals $N$, a bad-set witness is exactly an extra global
+minimizer outside $\mathcal G_\xi$. Thus membership in each bad set
+is exactly failure of exhaustive geometric equality.
+Equation (42.26) now proves equality of the bad sets, even though
+an arbitrary nonglobal witness need not transport to a
+nongeometric witness term by term.
+By (42.3), both original infima lie strictly below $R$; restricting
+either original set to $(0,R]$ therefore leaves its infimum
+unchanged. This proves (42.29).
+The endpoint value and prefix-inclusion statements are Theorem 39.5
+combined with (42.24)--(42.26).
+
+Every $w\in\mathbb T^4$ here has the explicit actual realization
+$U=\operatorname{diag}(w)U_+$. Applying the attained effect profile
+(36.6)--(36.7) at each such $U$ and then (42.24) proves (42.30).
+Its minimum is attained since $\mathcal P_\xi$ is compact.
+Geometric feasibility proves the equivalence with (42.31).
+The profile and its equality preimage are unchanged, including
+$uv=0$, zero coherence, degenerate arcs and rank changes.
+For a proposed boundary, (42.31) must still be proved on all the
+required preceding levels; the equivalence does not supply that
+inequality. $\square$
+

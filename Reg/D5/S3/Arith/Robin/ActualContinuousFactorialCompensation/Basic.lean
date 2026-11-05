@@ -35,6 +35,9 @@ The unfinished registrations are tracked at
 https://github.com/the-omega-institute/trureturing/issues/25738.
 No declared_validated status is claimed. -/
 
+/- The public Basic.G_formula is the exact source supplier consumed by the
+SignedLaplace D5 proof; this mirror retains the existing laws and bridges. -/
+
 abbrev signature : Signature where
   Params := Unit
   State _ := ℝ
@@ -176,5 +179,58 @@ private theorem compensationSensitivity : Sensitivity compensationArena compensa
     exact (hji (Subsingleton.elim j i)).elim
   · intro e
     exact nomatch e
+
+namespace H_harmonic
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ => H) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law V := ∀ (x : ℝ),
+    (V.readout () ()) x = (harmonic ⌊x⌋₊ : ℝ)
+
+private theorem actual_law : arena.Law actual := @H_harmonic
+
+private theorem sourceBridge :
+    (type_of% (@H_harmonic)) ↔ arena.Law actual := Iff.rfl
+
+end H_harmonic
+
+namespace epsilonDensity_integrable
+
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ => epsilonDensity) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law V := IntegrableOn (V.readout () ()) (Ioi (1 : ℝ))
+
+private theorem actual_law : arena.Law actual := @epsilonDensity_integrable
+
+private theorem sourceBridge :
+    (type_of% (@epsilonDensity_integrable)) ↔ arena.Law actual := Iff.rfl
+
+end epsilonDensity_integrable
 
 end Reg.D5.S3.Arith.Robin.ActualContinuousFactorialCompensation

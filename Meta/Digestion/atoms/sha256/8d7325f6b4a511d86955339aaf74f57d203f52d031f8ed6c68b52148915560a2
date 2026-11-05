@@ -1,0 +1,47 @@
+**Proposition 10.4 (Graph-specific classification of exact ties).**
+After increasing the $R$-only threshold $A_R$, on any fixed residue
+$\rho$ modulo $P$, two allocation germs from (8.4) satisfy
+
+$$
+\mathscr A_{\rho,j,z}\equiv\mathscr A_{\rho,j',z'}
+\quad\Longleftrightarrow\quad
+j=j'\ \text{and}\ \{z_i:i\in C\}=\{z_i':i\in C'\}
+\text{ as multisets}.
+\tag{10.6}
+$$
+
+This is a branch-and-histogram classification, not uniqueness of a
+labelled graph or of an isomorphism class.
+
+**Proof.** The normalized frequencies $c$ of core terms are
+$m_j/\alpha_j$, $r_j/\alpha_j$ and $2/\alpha_j$;
+tail terms have frequencies $\eta_j,2\eta_j$. Enlarge $A_R$ so
+that, for every winning index,
+
+$$
+\eta_j\ge13a,\qquad
+m_j/\alpha_j\le4a,\qquad 2/\alpha_j\le4.
+\tag{10.7}
+$$
+
+Indeed $n_j\ge3\sqrt a$ eventually, $r_j\ge a$ and $j\le J$,
+so $\eta_j\ge3a^{3/2}/J$. A full-core frequency is at least
+$a$, hence cannot equal a connector frequency. Nor can it equal a tail
+frequency by (10.7). Full-core frequencies at distinct branches are
+distinct, since $m_jr_j/(a-1)$ strictly increases in $j$. Finally a
+full-core frequency cannot equal any missing-one frequency: such an
+equality would require $m_j(m_j-1)=r_{j'}^2$, whereas the left side
+lies strictly between $(m_j-1)^2$ and $m_j^2$.
+
+Consequently each full-core signature occurs only among full-core terms
+of its own branch. Its grouped coefficient in one germ is its positive
+integer multiplicity times $\alpha_j+\varphi_ju$, whose constant
+term is positive. Lemma 10.3 excludes identity for distinct branches.
+Within one branch, the first signature coordinate is
+$(\sigma_j+z_i)/\alpha_j$. Equality of all its full-core grouped
+coefficients therefore recovers exactly the multiplicity of every value
+of $z_i$. Conversely (8.4) is symmetric in the coordinates of $z$;
+$L,z_0$ and all remaining sums are determined by this multiset. Equal
+histograms on the fixed state hence give identical functions. No
+separation of the other frequency classes from each other is needed. ∎
+

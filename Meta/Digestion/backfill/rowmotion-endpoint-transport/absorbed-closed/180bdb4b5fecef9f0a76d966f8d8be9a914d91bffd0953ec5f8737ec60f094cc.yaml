@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:180bdb4b5fecef9f0a76d966f8d8be9a914d91bffd0953ec5f8737ec60f094cc
+  normalized_sha256: sha256:180bdb4b5fecef9f0a76d966f8d8be9a914d91bffd0953ec5f8737ec60f094cc
+cas_ref: sha256:180bdb4b5fecef9f0a76d966f8d8be9a914d91bffd0953ec5f8737ec60f094cc
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Geometry/RowmotionEndpointTransport.endpoint_transport
+    target_statement_id: sha256:4c9eec7ae0c59bb4d612aede3456e233acd17e28990d480813482121956a0f3d
+receipts:
+  unresolved_subitems: []

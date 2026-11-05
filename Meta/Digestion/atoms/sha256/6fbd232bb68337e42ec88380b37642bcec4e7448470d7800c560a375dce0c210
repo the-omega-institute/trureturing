@@ -1,0 +1,23 @@
+**定义 14.1（定理 10.1 中保原归一化基的表示）。** 即使把 BMU16 的输出只读作 Jordan 锥的序同构，而不先把原归一化单位包含在该输出中，定理 10.1 所用的保基表示也按以下规则取得。设 $f:V_o\to J$ 是该锥同构，$\tau_J$ 为规范 Jordan 迹。原严格正单位唯一写成
+
+$$
+ u_o(v)=\tau_J(w\circ f(v)),\qquad w\in\operatorname{int}J_+.
+$$
+
+以标准 Jordan 二次表示 $\mathsf Q_z=2L_z^2-L_{z^2}$ 定义
+
+$$
+ f_0=\mathsf Q_{w^{1/2}}f,\qquad
+ a(v)=\tau_J\bigl(\theta(a)\circ f_0(v)\bigr).
+\tag{14.1}
+$$
+
+这里 $\theta:E_o\to J$ 是第二式唯一确定的对偶序同构。Jordan 正锥的标准二次表示是序自同构，$\mathsf Q_z$ 对规范迹配对自伴随且 $\mathsf Q_z1=z^2$，所以
+
+$$
+ \tau_J(f_0(v))=\tau_J(w\circ f(v))=u_o(v),\qquad
+ \theta(u_o)=1_J.
+$$
+
+因此这一步不独立假定原 $u_o$ 恰是任意所选坐标中的标准迹，也没有引入一个自由的自对偶配对。原子 projective unit 的唯一支持归一态给 $\phi_o=f_0^{-1}\theta=\theta^*R_J\theta$；这就是 BBKM Theorem 6.1 的唯一原子映射。标准二次表示性质只作为原单位运输的中间工具使用；在 special 矩阵端点，$\mathsf Q_z(y)=zyz$，式 (14.1) 就是把原单位权重共同移入状态密度。原每个准备的强度与所有 Born 响应均保持，而不是把实际成功率重新定标。
+

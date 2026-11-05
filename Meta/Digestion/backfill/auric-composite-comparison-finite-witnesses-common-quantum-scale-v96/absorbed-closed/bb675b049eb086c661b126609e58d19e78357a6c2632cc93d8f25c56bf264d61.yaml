@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:bb675b049eb086c661b126609e58d19e78357a6c2632cc93d8f25c56bf264d61
+  normalized_sha256: sha256:bb675b049eb086c661b126609e58d19e78357a6c2632cc93d8f25c56bf264d61
+cas_ref: sha256:bb675b049eb086c661b126609e58d19e78357a6c2632cc93d8f25c56bf264d61
+coverage_gids:
+  - gid: D5/S3/Quantum/Matrix/UniformVarianceCentering.hermitian_block_centering_and_gram_bound
+    target_statement_id: sha256:ab950b7707c6cd728e73a2230625a1f0c81bc30912fda639b9b77e98d3ed1630
+receipts:
+  unresolved_subitems: []

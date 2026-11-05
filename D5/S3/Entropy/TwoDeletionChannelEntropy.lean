@@ -496,7 +496,7 @@ private lemma altDeletionPhi_closed (m : ℕ) (hm : 1 ≤ m) (b : Bool) :
     push_cast
     ring
 
-private lemma deletion_total {m n : ℕ} (x : Fin m → Bool) :
+lemma deletion_total {m n : ℕ} (x : Fin m → Bool) :
     (∑ y : Fin n → Bool, embeddings x y) = n.choose m * 2^(n-m) := by
   simp_rw [embeddings_eq_count]
   simpa only [List.length_ofFn] using deletion_total_list n (List.ofFn x)

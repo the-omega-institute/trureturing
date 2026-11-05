@@ -33,7 +33,7 @@ private lemma adj_hub_leaf (m : ℕ) (i : Fin 2) (j : Fin m) : (K2m m).Adj (hub 
 private lemma sum_vertices {m : ℕ} (f : Fin (2 + m) → ℝ) : ∑ i, f i = f (hub m 0) + f (hub m 1) + ∑ i, f (leaf m i) := by
   rw [Fin.sum_univ_add]
   simp [hub, leaf, Fin.sum_univ_two]
-private lemma lap_mul {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj] (w : Sym2 (Fin n) → ℝ) (x : Fin n → ℝ) (i : Fin n) : (wLap G w *ᵥ x) i = ∑ j with G.Adj i j, w s(i,j) * (x i - x j) := by
+lemma lap_mul {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj] (w : Sym2 (Fin n) → ℝ) (x : Fin n → ℝ) (i : Fin n) : (wLap G w *ᵥ x) i = ∑ j with G.Adj i j, w s(i,j) * (x i - x j) := by
   have he (j : Fin n) : wLap G w i j = (if i = j then ∑ k with G.Adj i k, w s(i,k) else 0) - (if G.Adj i j then w s(i,j) else 0) := by
     by_cases h : i = j
     · subst j; simp [wLap]
@@ -66,7 +66,7 @@ lemma lap_hermitian {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj] (w 
   · subst j; rfl
   · simp only [wLap, if_neg h, if_neg (Ne.symm h), G.adj_comm]
     rw [Sym2.eq_swap]
-private lemma lap_one {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj] (w : Sym2 (Fin n) → ℝ) : wLap G w *ᵥ (1 : Fin n → ℝ) = 0 := by
+lemma lap_one {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj] (w : Sym2 (Fin n) → ℝ) : wLap G w *ᵥ (1 : Fin n → ℝ) = 0 := by
   ext i
   simp [lap_mul]
 private lemma energy_nonneg {m : ℕ} (w : Sym2 (Fin (2 + m)) → ℝ) (hw : ∀ e ∈ (K2m m).edgeSet, 0 < w e) (x : Fin (2 + m) → ℝ) : 0 ≤ dotProduct x (wLap (K2m m) w *ᵥ x) := by
@@ -104,28 +104,28 @@ private lemma energy_zero_iff {m : ℕ} (hm : 0 < m) (w : Sym2 (Fin (2 + m)) →
     rw [energy]
     simp
 def constProj (n : ℕ) : Matrix (Fin n) (Fin n) ℝ := fun _ _ => (n : ℝ)⁻¹
-private lemma proj_hermitian (n : ℕ) : (constProj n).IsHermitian := by
+lemma proj_hermitian (n : ℕ) : (constProj n).IsHermitian := by
   apply Matrix.IsHermitian.ext
   intro i j
   simp [constProj]
-private lemma proj_mul {n : ℕ} (x : Fin n → ℝ) (i : Fin n) : (constProj n *ᵥ x) i = (∑ j, x j) / n := by
+lemma proj_mul {n : ℕ} (x : Fin n → ℝ) (i : Fin n) : (constProj n *ᵥ x) i = (∑ j, x j) / n := by
   simp only [Matrix.mulVec, dotProduct, constProj, ← Finset.mul_sum]
   ring
-private lemma proj_energy {n : ℕ} (x : Fin n → ℝ) : dotProduct x (constProj n *ᵥ x) = (∑ j, x j) ^ 2 / n := by
+lemma proj_energy {n : ℕ} (x : Fin n → ℝ) : dotProduct x (constProj n *ᵥ x) = (∑ j, x j) ^ 2 / n := by
   simp only [dotProduct, proj_mul, ← Finset.sum_mul]
   ring
-private lemma proj_sq {n : ℕ} (hn : 0 < n) : constProj n * constProj n = constProj n := by
+lemma proj_sq {n : ℕ} (hn : 0 < n) : constProj n * constProj n = constProj n := by
   have hn0 : (n : ℝ) ≠ 0 := by positivity
   ext i j
   simp [Matrix.mul_apply, constProj]
   field_simp
-private lemma lap_proj {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj] (w : Sym2 (Fin n) → ℝ) : wLap G w * constProj n = 0 := by
+lemma lap_proj {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj] (w : Sym2 (Fin n) → ℝ) : wLap G w * constProj n = 0 := by
   have hrow (i : Fin n) : ∑ j, wLap G w i j = 0 := by
     have h := congrFun (lap_one G w) i
     simpa [Matrix.mulVec, dotProduct] using h
   ext i j
   simp [Matrix.mul_apply, constProj, ← Finset.sum_mul, hrow]
-private lemma lap_sum {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj] (w : Sym2 (Fin n) → ℝ) (x : Fin n → ℝ) : ∑ i, (wLap G w *ᵥ x) i = 0 := by
+lemma lap_sum {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj] (w : Sym2 (Fin n) → ℝ) (x : Fin n → ℝ) : ∑ i, (wLap G w *ᵥ x) i = 0 := by
   have h := Matrix.dotProduct_mulVec (1 : Fin n → ℝ) (wLap G w) x
   rw [← (lap_hermitian G w).isSymm.eq, Matrix.vecMul_transpose, lap_one] at h
   simpa [dotProduct, (lap_hermitian G w).isSymm.eq] using h
@@ -172,15 +172,15 @@ private lemma inverse_properties {m : ℕ} (hm : 0 < m) (w : Sym2 (Fin (2 + m)) 
   refine ⟨hN, ?_, hNP, hPN⟩
   rw [add_mul, hPN] at hBN
   exact eq_sub_iff_add_eq.mpr hBN
-private def delta {n : ℕ} (p q : Fin n) : Fin n → ℝ := Pi.single p 1 - Pi.single q 1
-private lemma delta_sum {n : ℕ} (p q : Fin n) : ∑ i, delta p q i = 0 := by simp [delta, Finset.sum_sub_distrib]
-private lemma delta_dot {n : ℕ} (p q : Fin n) (x : Fin n → ℝ) : dotProduct (delta p q) x = x p - x q := by
+def delta {n : ℕ} (p q : Fin n) : Fin n → ℝ := Pi.single p 1 - Pi.single q 1
+lemma delta_sum {n : ℕ} (p q : Fin n) : ∑ i, delta p q i = 0 := by simp [delta, Finset.sum_sub_distrib]
+lemma delta_dot {n : ℕ} (p q : Fin n) (x : Fin n → ℝ) : dotProduct (delta p q) x = x p - x q := by
   simp [delta, sub_dotProduct]
-private lemma delta_ne {n : ℕ} {p q : Fin n} (hpq : p ≠ q) : delta p q ≠ 0 := by
+lemma delta_ne {n : ℕ} {p q : Fin n} (hpq : p ≠ q) : delta p q ≠ 0 := by
   intro h
   have := congrFun h p
   simp [delta, hpq] at this
-private lemma proj_delta {n : ℕ} (p q : Fin n) : constProj n *ᵥ delta p q = 0 := by
+lemma proj_delta {n : ℕ} (p q : Fin n) : constProj n *ᵥ delta p q = 0 := by
   ext i
   simp [proj_mul, delta_sum]
 private lemma inv_delta_equation {m : ℕ} (hm : 0 < m) (w : Sym2 (Fin (2 + m)) → ℝ) (hw : ∀ e ∈ (K2m m).edgeSet, 0 < w e) (p q : Fin (2 + m)) :
@@ -239,7 +239,7 @@ private lemma pairRes_inverse {m : ℕ} (hm : 0 < m) (w : Sym2 (Fin (2 + m)) →
   rcases le_total p q with hpq | hqp
   · rw [min_eq_left hpq, max_eq_right hpq]
   · rw [min_eq_right hqp, max_eq_left hqp]; ring
-private lemma double_sum_lt {n : ℕ} (f : Fin n → Fin n → ℝ) (hsymm : ∀ i j, f i j = f j i) (hdiag : ∀ i, f i i = 0) : (∑ i, ∑ j, f i j) = 2 * ∑ i, ∑ j with i < j, f i j := by
+lemma double_sum_lt {n : ℕ} (f : Fin n → Fin n → ℝ) (hsymm : ∀ i j, f i j = f j i) (hdiag : ∀ i, f i i = 0) : (∑ i, ∑ j, f i j) = 2 * ∑ i, ∑ j with i < j, f i j := by
   have hsplit : (∑ i, ∑ j, f i j) = (∑ i, ∑ j with i < j, f i j) + (∑ i, ∑ j with j < i, f i j) := by
     rw [← Finset.sum_add_distrib]
     apply Finset.sum_congr rfl
@@ -428,7 +428,7 @@ private lemma leaf_pair_bound {m : ℕ} (w : Sym2 (Fin (2+m)) → ℝ) (t : ℝ)
   have h := psd_rayleigh w t hP (delta (leaf m i) (leaf m j)) (delta_sum _ _)
   rw [leaf_delta_norm hij,leaf_delta_energy w hij] at h
   linarith
-private lemma pair_gap_sum {m : ℕ} (s : Fin m → ℝ) (t : ℝ) : (∑ i, ∑ j, if i = j then 0 else s i + s j - 2*t) = 2 * (m-1 : ℝ) * ((∑ i, s i) - m*t) := by
+lemma pair_gap_sum {m : ℕ} (s : Fin m → ℝ) (t : ℝ) : (∑ i, ∑ j, if i = j then 0 else s i + s j - 2*t) = 2 * (m-1 : ℝ) * ((∑ i, s i) - m*t) := by
   have he (i j : Fin m) : (if i = j then 0 else s i+s j-2*t) = (s i+s j-2*t) - if i = j then (2*s i-2*t) else 0 := by
     split_ifs with h
     · subst j; ring
