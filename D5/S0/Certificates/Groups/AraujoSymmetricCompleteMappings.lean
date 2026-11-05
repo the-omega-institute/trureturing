@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Certificates/Groups/AraujoSymmetricCompleteMappings
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/PerfectMatchings/AraujoBrauerCompleteMapping.result; premises=D5/S0/Certificates/Groups/AraujoSymmetricCompleteMappings.signs_two,D5/S0/Certificates/Groups/AraujoSymmetricCompleteMappings.signs_three
    digest: Brauer complete-mapping existence constructions and classification. -/
 
 /-
