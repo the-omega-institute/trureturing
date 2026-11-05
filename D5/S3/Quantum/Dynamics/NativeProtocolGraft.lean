@@ -239,6 +239,11 @@ private theorem label_attach (T : Tree L) (C : Path T → Tree M)
 def eventMass (T : Tree L) (event : Path T → Basis → Bool) : ℝ :=
   ∑ p, ∑ z, if event p z then mass T p z else 0
 
+/-! A history event is lifted to the complete terminal basis record without
+discarding any terminal word. -/
+def historyEvent {L : Type} {T : Tree L} (event : Path T → Bool) :
+    Path T → Basis → Bool := fun p _ => event p
+
 private theorem graft_event (T : Tree L) (C : Path T → Tree M)
     (event : (p : Path T) → Path (C p) → Basis → Bool) :
     eventMass (graft T C) (fun r z =>
@@ -1598,6 +1603,52 @@ def cross (v w : Basis → ℂ) : Qubit :=
 
 def reduced (v : Basis → ℂ) : Qubit := cross v v
 
+/-! The raw reduced matrix supplied by one actual history event at the fixed
+original b1 cut. The sum retains every selected history and all complement
+coordinates; it performs no normalization. -/
+def eventReduced {L : Type} (T : Tree L) (event : Path T → Bool) : Qubit :=
+  ∑ p, if event p then reduced ((operator T p).mulVec omega0) else 0
+
+private theorem reduced_trace (v : Basis → ℂ) :
+    (Matrix.trace (reduced v)).re = ∑ z, Complex.normSq (v z) := by
+  rw [reduced, cross,
+    D5.S3.Quantum.Information.PartialTraceMutualInformation.trace_partialTraceRight]
+  simp only [Matrix.trace, Matrix.diag_apply, Matrix.vecMulVec_apply,
+    Function.comp_apply, Pi.star_apply]
+  rw [← (cut : Basis ≃ Fin 2 × Rest).sum_comp]
+  simp only [Equiv.symm_apply_apply]
+  calc
+    (∑ x, v x * star (v x)).re =
+        ∑ x, (v x * star (v x)).re := by
+      exact Complex.re_sum Finset.univ (fun x => v x * star (v x))
+    _ = ∑ x, Complex.normSq (v x) := by
+      apply Finset.sum_congr rfl
+      intro x _
+      simp [Complex.normSq_apply, Complex.mul_re, Complex.star_def]
+
+private theorem eventReduced_trace {L : Type} (T : Tree L)
+    (event : Path T → Bool) :
+    (Matrix.trace (eventReduced T event)).re = eventMass T (historyEvent event) := by
+  classical
+  change
+    (Matrix.trace (∑ p, if event p then reduced ((operator T p).mulVec omega0) else 0)).re =
+      ∑ p, ∑ z, if event p then
+        Complex.normSq ((operator T p).mulVec omega0 z) else 0
+  rw [Matrix.trace_sum]
+  calc
+    (∑ p, Matrix.trace (if event p then reduced ((operator T p).mulVec omega0) else 0)).re =
+        ∑ p, (Matrix.trace (if event p then
+          reduced ((operator T p).mulVec omega0) else 0)).re := by
+      exact Complex.re_sum Finset.univ (fun p => Matrix.trace (if event p then
+        reduced ((operator T p).mulVec omega0) else 0))
+    _ = ∑ p, ∑ z, if event p then
+        Complex.normSq ((operator T p).mulVec omega0 z) else 0 := by
+      apply Finset.sum_congr rfl
+      intro p _
+      by_cases hp : event p
+      · simp [hp, reduced_trace]
+      · simp [hp]
+
 private theorem ket_cut (x : Basis) (i : Fin 2) (e : Rest) :
     ket x (cut.symm (i,e)) =
       if i = (cut x).1 then if e = (cut x).2 then 1 else 0 else 0 := by
@@ -1616,6 +1667,16 @@ private theorem source_rest (x y z x' y' z' : Bool) :
 private theorem reduced_positive (v : Basis → ℂ) : (reduced v).PosSemidef :=
   D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight_posSemidef
     (Matrix.posSemidef_vecMulVec_self_star (v ∘ cut.symm))
+
+private theorem eventReduced_posSemidef {L : Type} (T : Tree L)
+    (event : Path T → Bool) : (eventReduced T event).PosSemidef := by
+  classical
+  unfold eventReduced
+  apply Matrix.posSemidef_sum
+  intro p _
+  split_ifs with hp
+  · exact reduced_positive ((operator T p).mulVec omega0)
+  · exact Matrix.PosSemidef.zero
 
 
 private theorem cut_source_bit (x y z : Bool) :
@@ -2004,6 +2065,21 @@ theorem original_empty_petz_consumer :
     (original_event_resource_bounds _ _).2.1⟩
 
 #print axioms original_empty_petz_consumer
+
+/-! The first proved bridge toward V88 theorem 24.1: at the actual original
+b1 cut, a history event supplies its unnormalized positive reduced matrix and
+the exact raw trace. The determinant and full-rank spectral clauses remain
+separate obligations. -/
+theorem original_event_cut_mass_and_psd {L : Type} (T : Tree L)
+    (event : Path T → Bool) :
+    (Matrix.trace (eventReduced T event)).re = eventMass T (historyEvent event) ∧
+    (eventReduced T event).PosSemidef ∧
+    (0 < eventMass T (historyEvent event) →
+      (Coeff.kappa ^ (2 * maxCalls T))⁻¹ ≤ eventMass T (historyEvent event)) := by
+  refine ⟨eventReduced_trace T event, eventReduced_posSemidef T event, ?_⟩
+  exact (original_event_resource_bounds T (historyEvent event)).1
+
+#print axioms original_event_cut_mass_and_psd
 
 end
 
