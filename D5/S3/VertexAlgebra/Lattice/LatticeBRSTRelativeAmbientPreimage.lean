@@ -276,8 +276,10 @@ private theorem sector_N_delta :
 
 private theorem sector_N_hdelta :
     nE * (hE * (qE - dE)) = (hE * (qE - dE)) * nE := by
+  letI : Ring (Module.End ℂ E) := inferInstance
   apply sub_eq_zero.mp
-  rw [comm_mul, sector_N_h, sector_N_delta, neg_mul, neg_add_cancel]
+  rw [comm_mul, sector_N_h, sector_N_delta]
+  rw [neg_mul hE (qE - dE), neg_add_cancel]
 
 variable (hp : F.pPlus beta ≠ 0) (critical : D.rank = 26)
 
@@ -298,6 +300,7 @@ Ward identity on the actual shell. Neither commutation nor an SDR is input. -/
 theorem B0_corrected_homotopy_compatibility
     (shell : groundEnergy beta + (level : ℂ) - 1 = 0) :
     bE * homotopy + homotopy * bE = 0 := by
+  letI : Ring (Module.End ℂ E) := inferInstance
   have hBQ : bE * qE + qE * bE = 0 := by
     rw [add_comm, sector_B0_original_ward, shell, zero_smul]
   have hBh : bE * hE + hE * bE = 0 :=
@@ -305,9 +308,9 @@ theorem B0_corrected_homotopy_compatibility
   have hBdelta : bE * (qE - dE) + (qE - dE) * bE = 0 := by
     calc
       _ = (bE * qE + qE * bE) - (bE * dE + dE * bE) := by
-        rw [mul_sub, sub_mul]
+        rw [mul_sub bE qE dE, sub_mul qE dE bE]
         abel
-      _ = 0 := by rw [hBQ, sector_B0_d0, sub_self]
+      _ = 0 := by rw [hBQ, sector_B0_d0 F B H hHG hGH beta level, sub_self]
   have swapH : bE * hE = -(hE * bE) := eq_neg_iff_add_eq_zero.mpr hBh
   have swapDelta : bE * (qE - dE) = -((qE - dE) * bE) :=
     eq_neg_iff_add_eq_zero.mpr hBdelta
@@ -315,8 +318,10 @@ theorem B0_corrected_homotopy_compatibility
     calc
       _ = (bE * hE) * (qE - dE) := (mul_assoc _ _ _).symm
       _ = -(hE * bE) * (qE - dE) := by rw [swapH]
-      _ = -hE * (bE * (qE - dE)) := by rw [neg_mul, mul_assoc, neg_mul]
-      _ = _ := by rw [swapDelta, neg_mul, mul_neg, neg_neg, mul_assoc]
+      _ = -hE * (bE * (qE - dE)) := by rw [neg_mul (hE * bE) (qE - dE), mul_assoc, neg_mul hE (bE * (qE - dE))]
+      _ = _ := by
+        rw [swapDelta, neg_mul hE (-((qE - dE) * bE)),
+          mul_neg hE ((qE - dE) * bE), neg_neg, mul_assoc]
   have inverseCommute : bE * FinitePerturbation.Input.K c cutoff = FinitePerturbation.Input.K c cutoff * bE :=
     commutes_inversePolynomial bE (hE * (qE - dE)) factorCommute cutoff
   change bE * (FinitePerturbation.Input.K c cutoff * hE) + (FinitePerturbation.Input.K c cutoff * hE) * bE = 0
@@ -328,21 +333,25 @@ theorem B0_corrected_homotopy_compatibility
 
 private theorem corrected_homotopy_N :
     nE * homotopy - homotopy * nE = -homotopy := by
+  letI : Ring (Module.End ℂ E) := inferInstance
   have inverseCommute : nE * FinitePerturbation.Input.K c cutoff = FinitePerturbation.Input.K c cutoff * nE :=
     commutes_inversePolynomial nE (hE * (qE - dE))
       (sector_N_hdelta F B H hHG hGH beta level) cutoff
   change nE * (FinitePerturbation.Input.K c cutoff * hE) - (FinitePerturbation.Input.K c cutoff * hE) * nE = -(FinitePerturbation.Input.K c cutoff * hE)
-  rw [comm_mul, sub_eq_zero.mpr inverseCommute, sector_N_h, zero_mul, zero_add, mul_neg]
+  rw [comm_mul, sub_eq_zero.mpr inverseCommute, sector_N_h, zero_mul, zero_add]
+  exact mul_neg (FinitePerturbation.Input.K c cutoff) hE
 
 /-- Every integral ghost degree is retained; corrected H lowers the native
 number eigenvalue by one. This uses the existing number laws for h and Q. -/
 theorem corrected_homotopy_ghost_degree (degree : ℤ) (state : E)
     (homogeneous : N D state.val = (degree : ℂ) • state.val) :
     N D (homotopy state).val = ((degree - 1 : ℤ) : ℂ) • (homotopy state).val := by
+  letI : AddCommGroup E := inferInstance
+  letI : Module ℂ E := inferInstance
   have number : nE state = (degree : ℂ) • state := Subtype.ext homogeneous
   have eq := LinearMap.congr_fun
     (corrected_homotopy_N F B H hHG hGH beta level hp critical) state
-  change nE (homotopy state) - homotopy (nE state) = -homotopy state at eq
+  simp only [LinearMap.sub_apply, Module.End.mul_apply, LinearMap.neg_apply] at eq
   rw [number, map_smul] at eq
   have lowered : nE (homotopy state) = ((degree - 1 : ℤ) : ℂ) • homotopy state := by
     calc
@@ -403,7 +412,7 @@ theorem actual_sector_transferred_compression (u : U) :
       ((inclusion u : E) : State D)) = _
   rw [hI, tail]
   simp only [LinearMap.sub_apply, hd0, sub_zero]
-  simpa only [Module.End.mul_apply, hP] using compress
+  simpa only [Module.End.mul_apply, hP, totalL0] using compress
 
 private theorem on_shell_transferred_zero
     (shell : groundEnergy beta + (level : ℂ) - 1 = 0) : transferred = 0 := by
@@ -468,6 +477,7 @@ theorem relative_ambient_boundary_homotopy_preimage
       degree state homogeneous,
     congrArg Subtype.val preimageEquation⟩
 
+include F B hp in
 /-- Equality of two degree-one relative cycles in the LITERAL GLOBAL original
 kernel/range quotient is equivalent to a same-sector degree-zero relative
 primitive of their difference. The quotient and unrestricted incoming range
@@ -501,7 +511,7 @@ theorem literal_physical_equality_iff_relative_preimage
       simp only [Submodule.coe_sub, map_sub, firstDegree, secondDegree, one_smul]
     have repaired := relative_ambient_boundary_homotopy_preimage
       F B H hHG hGH beta level hp critical shell 1 (first - second)
-        relativeDifference cycleDifference degreeDifference ambient
+        relativeDifference cycleDifference (by simpa only [Int.cast_one] using degreeDifference) ambient
     refine ⟨homotopy (first - second), repaired.1, ?_, repaired.2.2⟩
     simpa only [sub_self, Int.cast_zero, zero_smul] using repaired.2.1
   · rintro ⟨preimage, _relative, _homogeneous, equation⟩

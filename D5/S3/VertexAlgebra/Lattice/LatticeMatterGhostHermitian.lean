@@ -87,7 +87,8 @@ theorem Hmg_add_left (x z y : State D) :
   · intro S
     apply Finset.sum_eq_zero
     intro T hT
-    rw [Hm_zero_left, zero_mul]
+    change Hm (0 : Carrier D) ((slices D y) T) * Hg (ket S) (ket T) = 0
+    rw [Hm_zero_left (D := D) ((slices D y) T), zero_mul]
   · intro S v w
     simp only [Hm_add_left, add_mul, Finsupp.sum_add]
 
@@ -100,7 +101,8 @@ theorem Hmg_smul_left (a : ℂ) (x y : State D) :
     intro S
     apply Finset.sum_eq_zero
     intro T hT
-    rw [Hm_zero_left, zero_mul])]
+    change Hm (0 : Carrier D) ((slices D y) T) * Hg (ket S) (ket T) = 0
+    rw [Hm_zero_left (D := D) ((slices D y) T), zero_mul])]
   simp only [Hm_smul_left]
   change (∑ S ∈ (slices D x).support,
     ∑ T ∈ (slices D y).support,
