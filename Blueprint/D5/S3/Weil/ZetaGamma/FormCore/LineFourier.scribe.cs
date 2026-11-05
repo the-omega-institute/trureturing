@@ -30,7 +30,7 @@ internal sealed class LineFourierDocument : IScribeDocumentDefinition
                 H("angularFourier"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The angular Fourier transform is the raw Fourier transform evaluated at z/(2*pi). The existing private integral calculation identifies the kernel exp(-i*z*x), fixing the sign and angular normalization for arbitrary complex inputs."))),
+                Blocks(Paragraph(Text("The angular Fourier transform is the raw Fourier transform evaluated at z/(2*pi). The integral equality angularFourier_eq_integral identifies the kernel exp(-i*z*x), fixing the sign and angular normalization for arbitrary complex inputs. The finite-cell coercivity proof consumes this original equality together with angular_extended_plancherel to identify the mass of the actual rho density."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("gamma-form-core-linefourier-angular-extended-plancherel"),

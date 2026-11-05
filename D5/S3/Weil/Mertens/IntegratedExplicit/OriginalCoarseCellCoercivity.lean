@@ -28,8 +28,7 @@ namespace D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelMomentCertificate
 private lemma phase_sub_bound (w u v : ℝ) :
     ‖phase w u - phase w v‖ ≤ |w| * |u - v| := by
   have he : phase w u - phase w v = phase w v * (phase w (u-v) - 1) := by
-    rw [mul_sub, mul_one, ← phase_add]
-    congr 1 <;> ring
+    rw [mul_sub, mul_one, ← phase_add, show v + (u-v) = u by ring]
   rw [he, norm_mul, phase_norm, one_mul]
   have h := Real.norm_exp_I_mul_ofReal_sub_one_le (x := w * (u-v))
   have he' : phase w (u-v) = Complex.exp (Complex.I * ((w * (u-v) : ℝ) : ℂ)) := by
@@ -67,34 +66,34 @@ private lemma cell_transform_bound (A : ℝ → ℂ) (hA : Integrable A)
   nlinarith [mul_le_mul_of_nonneg_left hp (norm_nonneg (A u))]
 
 private lemma cell_fourier_bound (A : ℝ → ℂ) (hA : Integrable A)
-    (D h : ℝ) (n : ℕ) (hn : 0 < n) (hh : 0 < h) (hend : (n : ℝ)*h = D)
+    (D h : ℝ) (n : ℕ) (hn : 0 < n) (hh : 0 < h) (hend : (n : ℝ) * h = D)
     (hs : ∀ u, u ∉ Icc 0 D → A u = 0)
-    (hz : ∀ k < n, (∫ u in (k:ℝ)*h..((k+1:ℕ):ℝ)*h, A u) = 0)
+    (hz : ∀ k < n, (∫ u in (k : ℝ) * h..((k + 1 : ℕ) : ℝ) * h, A u) = 0)
     (w : ℝ) : ‖Ahat A w‖ ≤ (|w| * h) * ∫ u, ‖A u‖ := by
   have hD : 0 ≤ D := by rw [← hend]; positivity
   have window (f : ℝ → ℂ) (hf : ∀ u, u ∉ Icc 0 D → f u = 0) :
-      (∫ u, f u) = ∫ u in (0:ℝ)..D, f u := by
+      (∫ u, f u) = ∫ u in (0 : ℝ)..D, f u := by
     rw [intervalIntegral.integral_of_le hD, ← integral_Icc_eq_integral_Ioc]
     exact (setIntegral_eq_integral_of_forall_compl_eq_zero hf).symm
-  have hwindow : Ahat A w = ∫ u in (0:ℝ)..D, A u * phase (-w) u :=
+  have hwindow : Ahat A w = ∫ u in (0 : ℝ)..D, A u * phase (-w) u :=
     window _ (fun u hu => by rw [hs u hu, zero_mul])
   have hsum := intervalIntegral.sum_integral_adjacent_intervals
-    (a := fun k : ℕ => (k:ℝ)*h) (n := n)
+    (a := fun k : ℕ => (k : ℝ) * h) (n := n)
     (fun k _ => (transform_integrable hA w).intervalIntegrable)
   have hnrm := intervalIntegral.sum_integral_adjacent_intervals
-    (f := fun u => ‖A u‖) (a := fun k : ℕ => (k:ℝ)*h) (n := n)
+    (f := fun u => ‖A u‖) (a := fun k : ℕ => (k : ℝ) * h) (n := n)
     (fun k _ => hA.norm.intervalIntegrable)
   simp only [Nat.cast_zero, zero_mul, hend] at hsum hnrm
   rw [hwindow, ← hsum]
   calc
-    _ ≤ ∑ k ∈ Finset.range n, ‖∫ u in (k:ℝ)*h..((k+1:ℕ):ℝ)*h,
+    _ ≤ ∑ k ∈ Finset.range n, ‖∫ u in (k : ℝ) * h..((k + 1 : ℕ) : ℝ) * h,
         A u * phase (-w) u‖ := norm_sum_le _ _
     _ ≤ ∑ k ∈ Finset.range n, (|w| * h) *
-        ∫ u in (k:ℝ)*h..((k+1:ℕ):ℝ)*h, ‖A u‖ := by
+        ∫ u in (k : ℝ) * h..((k + 1 : ℕ) : ℝ) * h, ‖A u‖ := by
       apply Finset.sum_le_sum
       intro k hk
-      have he : ((k+1:ℕ):ℝ)*h - (k:ℝ)*h = h := by push_cast; ring
-      simpa only [he] using cell_transform_bound A hA ((k:ℝ)*h) (((k+1:ℕ):ℝ)*h)
+      have he : ((k + 1 : ℕ) : ℝ) * h - (k : ℝ) * h = h := by push_cast; ring
+      simpa only [he] using cell_transform_bound A hA ((k : ℝ) * h) (((k + 1 : ℕ) : ℝ) * h)
         w (by push_cast; nlinarith) (hz k (Finset.mem_range.mp hk))
     _ = (|w| * h) * ∫ u, ‖A u‖ := by
       rw [← Finset.mul_sum, hnrm, intervalIntegral.integral_of_le hD,
@@ -103,7 +102,7 @@ private lemma cell_fourier_bound (A : ℝ → ℂ) (hA : Integrable A)
       intro u hu
       simp [hs u hu]
 
-private lemma window_l1_sq (A : ℝ → ℂ) (hA : Integrable A)
+private lemma window_l1_sq (A : ℝ → ℂ) (_hA : Integrable A)
     (hA2 : MemLp A 2) (D : ℝ) (hD : 0 < D)
     (hs : ∀ u, u ∉ Icc 0 D → A u = 0) :
     (∫ u, ‖A u‖)^2 ≤ D * ∫ u, ‖A u‖^2 := by
@@ -112,12 +111,12 @@ private lemma window_l1_sq (A : ℝ → ℂ) (hA : Integrable A)
     setIntegral_eq_integral_of_forall_compl_eq_zero (fun u hu => by simp [hs u hu])
   have he2 : (∫ u, ‖A u‖^2 ∂μ) = ∫ u, ‖A u‖^2 :=
     setIntegral_eq_integral_of_forall_compl_eq_zero (fun u hu => by simp [hs u hu])
-  have hv : μ.real univ = D := by simp [μ, Real.volume_Icc, hD.le]
+  have hv : μ.real univ = D := by simp [μ, hD.le]
   have h := integral_mul_norm_le_Lp_mul_Lq
     (μ := μ) Real.HolderConjugate.two_two
-    (f := fun u => ‖A u‖) (g := fun _ : ℝ => (1:ℝ))
+    (f := fun u => ‖A u‖) (g := fun _ : ℝ => (1 : ℝ))
     (by simpa using hA2.norm.restrict (s := Icc 0 D))
-    (by simpa using (memLp_const (1:ℝ) : MemLp (fun _ : ℝ => (1:ℝ)) 2 μ))
+    (by simpa using (memLp_const (1 : ℝ) : MemLp (fun _ : ℝ => (1 : ℝ)) 2 μ))
   simp only [Real.norm_eq_abs, abs_norm, norm_one, mul_one,
     Real.rpow_two, one_pow, integral_const, smul_eq_mul, mul_one,
     ← Real.sqrt_eq_rpow, he1, he2, hv] at h
@@ -129,7 +128,7 @@ private lemma window_l1_sq (A : ℝ → ℂ) (hA : Integrable A)
 private lemma actual_mass {I : Type*} [Fintype I]
     (D : ℝ) (x : I → ℝ) (a : I → ℂ) (ha : ∑ i, a i = 0)
     (hx : ∀ i, x i ≤ D) :
-    (∫ ξ, (1:ℝ) ∂rho («prefix» x a)) = energy x a := by
+    (∫ _ξ, (1 : ℝ) ∂rho («prefix» x a)) = energy x a := by
   let A := «prefix» x a
   have hA := (prefix_L1_L2 x a ha D hx).1
   have hAq := (prefix_L1_L2 x a ha D hx).2
@@ -141,22 +140,25 @@ private lemma actual_mass {I : Type*} [Fintype I]
     apply integral_congr_ae
     apply ae_of_all
     intro u
-    unfold phase
-    congr 1
-    · rw [mul_comm]
-    congr 1
-    push_cast
-    ring
+    change A u * phase (-w) u = Complex.exp ((-(w*u) : ℝ)*Complex.I) * A u
+    have hp : phase (-w) u = Complex.exp ((-(w*u) : ℝ)*Complex.I) := by
+      unfold phase
+      congr 1
+      push_cast
+      ring
+    rw [hp, mul_comm]
   have he (f : ℝ → ℂ) (hf : Integrable (fun u => ‖f u‖^2)) :
       (∫⁻ u, ‖f u‖ₑ^2) = ENNReal.ofReal (∫ u, ‖f u‖^2) := by
     rw [ofReal_integral_eq_lintegral_ofReal hf (ae_of_all _ (fun _ => sq_nonneg _))]
     apply lintegral_congr_ae
-    exact ae_of_all _ fun u => by rw [ENNReal.ofReal_pow (norm_nonneg _) 2, ofReal_norm]
+    exact ae_of_all _ fun u => by
+      dsimp only
+      rw [ENNReal.ofReal_pow (norm_nonneg _) 2, ofReal_norm]
   have hp := ZetaGamma.FormCore.LineFourier.angular_extended_plancherel hA hA2
   rw [he A hAq, ← hh, he (Ahat A) (normSq_Ahat_integrable x a ha D hx)] at hp
   have hr := congrArg ENNReal.toReal hp
   simp only [ENNReal.toReal_mul, ENNReal.toReal_ofReal (integral_nonneg (fun _ => sq_nonneg _)),
-    ENNReal.toReal_ofReal (by positivity : (0:ℝ) ≤ 1/(2*Real.pi))] at hr
+    ENNReal.toReal_ofReal (by positivity : (0 : ℝ) ≤ 1/(2*Real.pi))] at hr
   rw [rho, integral_withDensity_eq_integral_toReal_smul
     ((density_continuous hA).measurable.ennreal_ofReal) (by simp)]
   simp only [ENNReal.toReal_ofReal (density_nonneg _ _), smul_eq_mul, mul_one]
@@ -168,10 +170,10 @@ private lemma actual_mass {I : Type*} [Fintype I]
 
 private lemma low_band_mass {I : Type*} [Fintype I]
     (D h R : ℝ) (hD : 0 < D) (hR : 0 < R) (n : ℕ) (hn : 0 < n)
-    (hh : 0 < h) (hend : (n:ℝ)*h = D)
+    (hh : 0 < h) (hend : (n : ℝ) * h = D)
     (x : I → ℝ) (a : I → ℂ) (hx : ∀ i, x i ∈ Icc 0 D) (ha : ∑ i, a i = 0)
-    (hz : ∀ k < n, (∫ u in (k:ℝ)*h..((k+1:ℕ):ℝ)*h, «prefix» x a u) = 0) :
-    (∫ ξ in Icc (-R) R, (1:ℝ) ∂rho («prefix» x a)) ≤
+    (hz : ∀ k < n, (∫ u in (k : ℝ) * h..((k + 1 : ℕ) : ℝ) * h, «prefix» x a u) = 0) :
+    (∫ _ξ in Icc (-R) R, (1 : ℝ) ∂rho («prefix» x a)) ≤
       (D * R^3 / Real.pi * h^2) * energy x a := by
   let A := «prefix» x a
   have hA := (prefix_L1_L2 x a ha D (fun i => (hx i).2)).1
@@ -204,11 +206,10 @@ private lemma low_band_mass {I : Type*} [Fintype I]
         (integrableOn_const (by simp [Real.volume_Icc])) measurableSet_Icc hb
     _ = _ := by
       rw [integral_const]
-      simp only [measureReal_restrict_apply measurableSet_univ, univ_inter,
+      simp only [measureReal_restrict_apply MeasurableSet.univ, univ_inter,
         Real.volume_real_Icc, sub_neg_eq_add]
       rw [max_eq_left (by linarith : 0 ≤ R+R), smul_eq_mul]
-      field_simp
-      <;> ring
+      field_simp; ring
 
 universe u
 
@@ -220,7 +221,7 @@ theorem original_coarse_cell_coercivity (D β : ℝ) (hD : 0 < D) (hβ : 0 < β)
       g 0 = 0 ∧ g N = D ∧ StrictMono g ∧
       ∀ (I : Type u) (_ : Fintype I) (x : I → ℝ) (a : I → ℂ),
         (∀ i, x i ∈ Icc 0 D) → (∑ i, a i = 0) →
-        (∀ k < N, (∫ u in g k..g (k+1), «prefix» x a u) = 0) →
+        (∀ k < N, (∫ u in g k..g (k + 1), «prefix» x a u) = 0) →
         β * (∫ u : ℝ, ‖«prefix» x a u‖^2) ≤ (quadratic x a P).re := by
   let R : ℝ := Real.exp (2*β + Real.log 13/2) + 1
   have hR : 0 < R := by dsimp [R]; positivity
@@ -230,40 +231,41 @@ theorem original_coarse_cell_coercivity (D β : ℝ) (hD : 0 < D) (hβ : 0 < β)
     have hl := Real.log_le_log (Real.exp_pos _) hr
     rw [Real.log_exp] at hl
     linarith [(pMultiplier_logarithmic_bounds ξ).2.2.2.1]
-  have ht : Tendsto (fun n : ℕ => D*R^3/Real.pi * (D/(n:ℝ))^2) atTop (𝓝 0) := by
+  have ht : Tendsto (fun n : ℕ => D*R^3/Real.pi * (D/(n : ℝ))^2) atTop (𝓝 0) := by
     simpa using ((tendsto_const_div_atTop_nhds_zero_nat D).pow 2).const_mul
       (D*R^3/Real.pi)
-  obtain ⟨N, hN, hsmall⟩ := ((eventually_ge_atTop (1:ℕ)).and
-    (ht.eventually_lt_const (by norm_num : (0:ℝ) < 1/2))).exists
+  obtain ⟨N, hN, hsmall⟩ := ((eventually_ge_atTop (1 : ℕ)).and
+    (ht.eventually_lt_const (by norm_num : (0 : ℝ) < 1/2))).exists
   have hN0 : 0 < N := by omega
   let h : ℝ := D / N
   have hh : 0 < h := div_pos hD (by exact_mod_cast hN0)
-  have hend : (N:ℝ)*h = D := by dsimp [h]; field_simp
-  refine ⟨N, hN, (fun k => (k:ℝ)*h), by simp, hend, ?_, ?_⟩
+  have hend : (N : ℝ) * h = D := by dsimp [h]; field_simp
+  refine ⟨N, hN, (fun k => (k : ℝ) * h), by simp, hend, ?_, ?_⟩
   · intro i j hij
     exact mul_lt_mul_of_pos_right (by exact_mod_cast hij) hh
   intro I inst x a hx ha hz
   let A := «prefix» x a
   let μ := rho A
   let B := Icc (-R) R
-  letI : IsFiniteMeasure μ := actual_rho_finite x a ha D (fun i => (hx i).2)
+  haveI : IsFiniteMeasure μ := actual_rho_finite x a ha D (fun i => (hx i).2)
   have hspec := complete_positive_mixture_spectral_identity D hD.le x a hx ha
   have hmass := actual_mass D x a ha (fun i => (hx i).2)
   have hlow := low_band_mass D h R hD hR N hN0 hh hend x a hx ha hz
   have hE : 0 ≤ energy x a := integral_nonneg (fun _ => sq_nonneg _)
-  have hhalf : (∫ ξ in B, (1:ℝ) ∂μ) ≤ energy x a / 2 := by
+  have hhalf : (∫ ξ in B, (1 : ℝ) ∂μ) ≤ energy x a / 2 := by
     exact hlow.trans (by nlinarith [mul_le_mul_of_nonneg_right hsmall.le hE])
-  have hi : Integrable (B.indicator (fun _ : ℝ => (1:ℝ))) μ :=
+  have hi : Integrable (B.indicator (fun _ : ℝ => (1 : ℝ))) μ :=
     (integrable_const _).indicator measurableSet_Icc
-  have hbound : 2*β * (energy x a - ∫ ξ in B, (1:ℝ) ∂μ) ≤
+  have hbound : 2*β * (energy x a - ∫ ξ in B, (1 : ℝ) ∂μ) ≤
       ∫ ξ, pMultiplier ξ ∂μ := by
     calc
-      _ = ∫ ξ, 2*β * ((1:ℝ) - B.indicator (fun _ => (1:ℝ)) ξ) ∂μ := by
+      _ = ∫ ξ, 2*β * ((1 : ℝ) - B.indicator (fun _ => (1 : ℝ)) ξ) ∂μ := by
         rw [integral_const_mul, integral_sub (integrable_const _) hi,
           integral_indicator measurableSet_Icc, hmass]
       _ ≤ _ := by
-        apply integral_mono (((integrable_const (1:ℝ)).sub hi).const_mul _) hspec.1
+        apply integral_mono (((integrable_const (1 : ℝ)).sub hi).const_mul _) hspec.1
         intro ξ
+        change 2*β * (1 - B.indicator (fun _ : ℝ => (1 : ℝ)) ξ) ≤ pMultiplier ξ
         by_cases hξ : ξ ∈ B
         · simp only [indicator_of_mem hξ, sub_self, mul_zero]
           exact (pMultiplier_logarithmic_bounds ξ).2.1
