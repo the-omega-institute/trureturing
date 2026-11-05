@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.GaussianLocalization;
 
 internal sealed class OriginalGaussianIntegralBudgetsDocument : IScribeDocumentDefinition
 {

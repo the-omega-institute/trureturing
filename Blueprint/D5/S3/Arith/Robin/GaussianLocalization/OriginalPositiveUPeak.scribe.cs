@@ -1,7 +1,7 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.GaussianLocalization;
 
 internal sealed class OriginalPositiveUPeakDocument : IScribeDocumentDefinition
 {
@@ -46,9 +46,9 @@ internal sealed class OriginalPositiveUPeakDocument : IScribeDocumentDefinition
                     + "to the asserted peak constant nine.")),
                 Paragraph(Text(
                     "The signed W/K exchange identifies integral Re(H)*K with Re(E). "
-                    + "The localization helper combines integral_mono, indicator decomposition and order algebra; "
-                    + "it is bind-only proof support consumed by full_E_upper_of_central_bound, "
-                    + "not an independent content or admission witness. "
+                    + "On J, integral_mono bounds Re(H)*V by b*V since V is nonnegative. "
+                    + "Indicator decomposition separates J from its full complement, and "
+                    + "subtracting the full V integral gives the signed localization inequality. "
                     + "The consumed private signed_localization_debit helper retains the full "
                     + "negative debit -integral Re(H)*V before relaxing it to its absolute value. "
                     + "The exact complement is ([0,infinity)\\J) union (-infinity,0); "
