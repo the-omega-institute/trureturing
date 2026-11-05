@@ -14,6 +14,9 @@ namespace D5.S1.Dynamics.Shadowing.CoherentFollower
 
 universe u v w
 
+variable {I : Type u} {A : I → Type v} [∀ i, TopologicalSpace (A i)]
+variable (S : LanguageSystem A)
+
 /-!
   The concrete two-coordinate face used in Peng's finite-face question.
 
