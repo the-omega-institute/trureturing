@@ -6,10 +6,12 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S0/Certificates/BalaComplexShiftDeterminantRefutation.claim; result=D5/S0/Certificates/BalaComplexShiftDeterminantRefutation.result; claim=D5/S0/Certificates/BalaComplexShiftDeterminantRefutation.claim
    digest: The one-based complex-shift determinant conjecture in OEIS A086205 fails at n = 1 and z = 1. -/
 
-import Mathlib.Data.Complex.Basic
+import Mathlib.Basic.Complex.Basic
 import Mathlib.RingTheory.Binomial
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.Tactic.NormNum
+
+/-! The arbitrary-complex-shift assertion of OEIS A086205 fails already at size one. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -28,6 +30,6 @@ def claim : Prop := ∀ (n : ℕ) (z : ℂ), shiftedDet n z = shiftedDet n 0
 theorem result : ¬ claim := by
   intro h
   have hbad := h 1 1
-  norm_num [shiftedDet, Matrix.det_unique, Ring.choose_one_right] at hbad
+  norm_num [shiftedDet, Matrix.det_fin_one, Ring.choose_one_right] at hbad
 
 end D5.S0.Certificates.BalaComplexShiftDeterminantRefutation
