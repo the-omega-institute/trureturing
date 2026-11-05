@@ -12,7 +12,7 @@ In I, E2=E0+A-(3s/4)L and F2=F0+2A-(3s/4)SV. For adjacent II and III, E2=A-L-(q/
 
 In III, fresh A is already present in F1: F0=SV-qSU contains no fresh term; F1=F0+A+SW-2SV; F2=F1+(q/2)SU+A-SW. The last A in this increment comes from the original X-terminal identity. There is only one physical fresh occurrence. Using the late timing in this branch would change the actual bank1 window.
 
-These inequalities hold throughout the original cone 2<=a<=d<b<c. They establish the windows for the specified inventory transfer. No literature novelty is claimed; unrestricted four-gap joint lifting and the full Circle/J/C3.1 remain OPEN.
+These inequalities hold for all natural a,d,b,c with 2<=a, a<=d, d<b and b<c. They establish the windows for the specified inventory transfer. No literature novelty is claimed; unrestricted four-gap joint lifting and the full Circle/J/C3.1 remain OPEN.
 
 ## References
 
