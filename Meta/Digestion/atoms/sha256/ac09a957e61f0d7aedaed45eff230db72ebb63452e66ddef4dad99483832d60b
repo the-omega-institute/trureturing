@@ -1,0 +1,65 @@
+### 定理 1.4（二元互易唯一确定 Petz 回推）
+
+<a id="thm-c122-petz-basic"></a>
+
+在上述支持对象之间，式 [(2)](#eq-c122-reciprocity) 有唯一线性解：
+
+<a id="eq-c122-petz"></a>
+
+$$
+\boxed{\quad
+ \mathcal N^\sharp_\sigma(X)
+ =\sigma^{1/2}\mathcal N^*
+       \!\left(\tau^{-1/2}X\tau^{-1/2}\right)\sigma^{1/2}.
+ \quad}
+\tag{3}
+$$
+
+该解完全正、保迹，并且 $\mathcal N^\sharp_\sigma(\tau)=\sigma$。
+
+**证明。**
+将两侧以迹对偶重写：
+
+$$
+\operatorname{Tr}\!\left[A\,\Gamma_\sigma\mathcal N^*(B)\right]
+ =\operatorname{Tr}\!\left[A\,\mathcal N^\sharp_\sigma\Gamma_\tau(B)\right].
+$$
+
+效果实线性张成全部自伴矩阵，进而复线性张成全部矩阵；
+迹配对非退化，所以
+$\mathcal N^\sharp_\sigma\Gamma_\tau=\Gamma_\sigma\mathcal N^*$。
+在支持上 $\Gamma_\tau$ 可逆，立即得到唯一公式。
+
+设 $\mathcal N$ 的 Kraus 算子为 $K_i$，令
+$L_i=\sigma^{1/2}K_i^*\tau^{-1/2}$。
+则回推为 $\sum_iL_iXL_i^*$，故对任意有限参考仍保持正性。
+又
+
+$$
+\sum_iL_i^*L_i
+ =\tau^{-1/2}\Bigl(\sum_iK_i\sigma K_i^*\Bigr)\tau^{-1/2}
+ =P,
+$$
+
+这是输出支持对象的单位，所以保迹。
+最后
+$\mathcal N^\sharp_\sigma(\tau)=\sigma^{1/2}\mathcal N^*(P)\sigma^{1/2}=\sigma$。
+
+式 [(3)](#eq-c122-petz) 是已知的 Petz 转置通道，本稿不主张其公式新颖。
+这里的工作是把它作为本轮内部二元约束的唯一解，
+与项目的实际支持、同一过程和有限证书要求接起来。 [3](#ref-petz1986)、[4](#ref-jencova2024)
+
+若需要在原输出全空间上定义回推，可使用广义逆并补全：
+
+<a id="eq-c122-completion"></a>
+
+$$
+\widehat{\mathcal N^\sharp_\sigma}(X)
+ =\mathcal N^\sharp_\sigma(PXP)+\operatorname{Tr}[(I-P)X]\,\sigma.
+\tag{4}
+$$
+
+这确实是 CPTP；第二项是检测支持外分量后重备参考。
+它对 $\mathcal N$ 的全部输出与原回推相同。
+支持外的选择不是互易关系所确定的；尤其不能把任意全空间补全都当成保持全部张量组合规律的同一个规则。
+

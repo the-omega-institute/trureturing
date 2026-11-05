@@ -1,0 +1,34 @@
+#### 命题 8.1（不同纯态没有非零共同正子算符）
+
+若单位纯态 $x,y$ 不共线，且
+
+$$
+0\le A\le|x\rangle \langle x|,\qquad A\le|y\rangle \langle y|,
+$$
+
+则 $A=0$。
+
+**证明。**
+
+对 $v\perp x$，$0\le\langle v,Av\rangle \le0$。
+由正平方根，$A^{1/2}v=0$，故 $Av=0$。
+因此 $\operatorname{ran}  A\subseteq\operatorname{span} \{x\}$。
+同理它也包含在 $\operatorname{span} \{y\}$，两条不同直线的交为零。
+
+□
+
+这不排除后选择投影产生共同分支。
+两个正交态也可以经过同一个非零收缩分支得到同一幅度；
+下节给出这项任务的精确最大值。
+
+对已声明共享锚空间 $S$，始终有
+
+$$
+\langle x,y\rangle =\langle P_Sx,P_Sy\rangle +\langle (I-P_S)x,(I-P_S)y\rangle .
+$$
+
+两项分别形成正核。
+N2 已完整说明：只有第二项在所要求的跨侧比较中为零，
+共享部分才足以决定全部跨关系[4](#ref-n2)。
+本稿不把共同前缀、同根来源或一个共享投影自动等同于这项充分性。
+

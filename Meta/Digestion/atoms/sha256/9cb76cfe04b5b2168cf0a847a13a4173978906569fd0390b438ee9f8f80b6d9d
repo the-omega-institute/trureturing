@@ -1,0 +1,76 @@
+## 固定来源与证明归属
+
+<a id="ref-v80"></a>
+
+**[1]**
+项目 v80：[全部结果二元差分不增、有限定向锚与内生量子过程](https://github.com/the-omega-institute/trureturing/blob/c63ab162315fddd0801cbe9f47dbf3eda6e13360/docs/develop/theory/AURIC_ALL_OUTCOME_BINARY_DIFFERENCE_NONEXPANSION_FINITE_ORIENTED_ANCHORS_AND_ENDOGENOUS_QUANTUM_PROCESSES_V80.md)。
+重点为第 3、5、6.3、16 节，同一实际接口的等价及范围。
+
+<a id="ref-v79"></a>
+
+**[2]**
+项目 v79：[二元反向相容、有限相位证书与量子读出重建](https://github.com/the-omega-institute/trureturing/blob/c63ab162315fddd0801cbe9f47dbf3eda6e13360/docs/develop/theory/AURIC_BINARY_REVERSAL_COMPATIBILITY_FINITE_PHASE_CERTIFICATES_AND_QUANTUM_READOUT_RECONSTRUCTION_V79.md)。
+
+<a id="ref-v67"></a>
+
+**[3]**
+项目 V67：[单一本体态中的历史脚本、内容寻址与量子纠缠](https://github.com/the-omega-institute/trureturing/blob/c63ab162315fddd0801cbe9f47dbf3eda6e13360/docs/develop/theory/AURIC_HISTORY_SCRIPTS_CONTENT_ADDRESSING_AND_QUANTUM_ENTANGLEMENT_IN_ONE_ONTIC_STATE_V67.md)。
+重点为第 2.3--2.4、4.2、6.2、6.4 节。
+
+<a id="ref-n2"></a>
+
+**[4]**
+项目 N2：[共享历史充分性、最小内部补全与维数预算](https://github.com/the-omega-institute/trureturing/blob/c63ab162315fddd0801cbe9f47dbf3eda6e13360/docs/develop/theory/AURIC_SHARED_HISTORY_SUFFICIENCY_MINIMAL_INTERNAL_COMPLETION_AND_DIMENSION_BUDGET_N2_V78_CONTINUATION.md)。
+
+<a id="ref-foundations"></a>
+
+**[5]**
+项目基础与记录卷：[Foundations and Records](https://github.com/the-omega-institute/trureturing/blob/c63ab162315fddd0801cbe9f47dbf3eda6e13360/docs/develop/theory/ContextualSpacetimeQuantum/001_016_FOUNDATIONS_AND_RECORDS.md)，第 6 节。
+已有共同振幅分支界、任意记录族提取条件及一般 Gram 判据归属。
+
+<a id="ref-closure"></a>
+
+**[6]**
+项目 v78 闭包续稿：[内生闭包、有限根证书与结果核递归](https://github.com/the-omega-institute/trureturing/blob/c63ab162315fddd0801cbe9f47dbf3eda6e13360/docs/develop/theory/AURIC_ENDOGENOUS_CLOSURE_FINITE_ROOT_CERTIFICATES_AND_OUTCOME_KERNEL_RECURSION_V78_CONTINUATION.md)。
+重点为第 7.2、8.1 节的受支配核、效果与实际收缩。
+
+<a id="ref-synthesis"></a>
+
+**[7]**
+项目 v78 综合稿：[内生关系量子理论与统一关系公理](https://github.com/the-omega-institute/trureturing/blob/c63ab162315fddd0801cbe9f47dbf3eda6e13360/docs/develop/theory/AURIC_ENDOGENOUS_RELATIONAL_QUANTUM_THEORY_UNIFIED_RELATIONAL_AXIOMS_V78_SYNTHESIS.md)。
+
+<a id="ref-whole"></a>
+
+**[8]**
+项目设置--源续稿：[单一纯整体中的设置--源关系](https://github.com/the-omega-institute/trureturing/blob/c63ab162315fddd0801cbe9f47dbf3eda6e13360/docs/develop/theory/AURIC_SINGLE_PURE_WHOLE_SETTING_SOURCE_RELATIONS_V78_CONTINUATION.md)。
+本快照新增第 8--12 节；第 9.1 定理给特定完整有限自适应菜单的内部供应。
+
+<a id="ref-reconstruction"></a>
+
+**[9]**
+项目相干恢复续卷 V：[原生恢复前沿与精确 ready 边界](https://github.com/the-omega-institute/trureturing/blob/c63ab162315fddd0801cbe9f47dbf3eda6e13360/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_V.md)。
+第 9--10 节的恢复结论以具体原生菜单、跳跃过程与未来核为前件。
+
+<a id="ref-omega"></a>
+
+**[10]**
+项目整体结构稿：[Omega 静态相容纤维理论](https://github.com/the-omega-institute/trureturing/blob/c63ab162315fddd0801cbe9f47dbf3eda6e13360/docs/develop/theory/AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)。
+定义 1.1 及第 3--4 节区分整体、路径运输与未来响应商。
+
+<a id="ref-cjw"></a>
+
+**[11]**
+A. Chefles, R. Jozsa, A. Winter.
+*On the existence of physical transformations between sets of quantum states*.
+International Journal of Quantum Information 2(1), 11--21 (2004).
+[arXiv:quant-ph/0307227v1](https://arxiv.org/abs/quant-ph/0307227v1)。
+第 3 节定理 3 及式 (9) 给概率纯态变换的一般 Gram 半正定判据；
+本稿共同完整幅度是其秩一固定记录特化。
+
+<a id="ref-watrous"></a>
+
+**[12]**
+J. Watrous. *The Theory of Quantum Information*, Chapter 2.
+[作者公开章稿：基本概念、通道与完全正表示](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)。
+标准 Choi、Kraus 与完整记录表示。
+

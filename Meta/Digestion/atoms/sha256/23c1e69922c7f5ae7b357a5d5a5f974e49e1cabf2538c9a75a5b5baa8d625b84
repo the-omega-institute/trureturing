@@ -1,0 +1,71 @@
+### 定义 23.1（共同分支与未条件化联合读数）
+
+设 $H=\mathbb C^d$、$d\ge1$，$K$ 有限维，$J:H\to K$ 为指定等距。固定一族数学比较投影与权重
+$\mathscr D=\{(w_s,p_s)\}_{s\in S}$，满足
+
+$$
+w_s\ge0,\quad \sum_sw_s=1,\quad
+p_s^2=p_s=p_s^\dagger,\quad \operatorname{Tr}p_s=1,\quad
+\sum_sw_sp_s\otimes p_s=\frac{I+\mathsf S}{d(d+1)},
+\tag{23.1}
+$$
+
+其中 $\mathsf S$ 为 $H\otimes H$ 上的交换算子。比较投影的精确二阶矩是数学前件；实际准备可以不是这些投影。
+
+同一实际分支由一个正复线性映射 $T:M(H)\to M(K)$ 表示，其实际效果与名义效果满足
+
+$$
+E=T^\dagger(I_K),\qquad 0\le E,E_0\le I_H,\qquad
+\|E-E_0\|_{\mathrm{op}}\le\epsilon,\quad 0\le\epsilon\le1.
+\tag{23.2}
+$$
+
+每个标签 $s$ 对应实际态 $\rho_s$ 和实际二元效果 $F_s$：
+
+$$
+\rho_s\ge0,\quad\operatorname{Tr}\rho_s=1,\quad
+0\le F_s\le I_K,\qquad
+G_s=Jp_sJ^\dagger,\quad q_s=\operatorname{Tr}T(\rho_s).
+\tag{23.3}
+$$
+
+共同分支前件要求：在同一输入、输出和读回坐标中，标签 $s$、成功及读回接受的未条件化联合概率恰为
+
+$$
+\Pr(s,\mathrm{success},\mathrm{accept})
+=w_s\operatorname{Tr}[F_sT(\rho_s)].
+\tag{23.4}
+$$
+
+此处的 $T$ 对全部标签相同；若另有固定的记忆条件或历史索引，所有公式须在同一个条件或索引上成立。后续对任意输入调用该分支时，也使用这个 $T$。仅在校准时存在一个拟合映射，不是此共同分支前件。
+
+给定非负数 $a,b,\nu$ 与实读数 $\widehat R$，假设同时成立
+
+$$
+\begin{aligned}
+\frac12\sum_sw_s\|\rho_s-p_s\|_1&\le a,\\
+\sum_sw_sq_s\|F_s-G_s\|_{\mathrm{op}}&\le b,\\
+\left|\widehat R-\sum_sw_s\operatorname{Tr}[F_sT(\rho_s)]\right|&\le\nu.
+\end{aligned}
+\tag{23.5}
+$$
+
+读回误差按实际未条件化成功概率 $q_s$ 加权。若只给出逐标签上界
+$q_s\le\bar q_s$、$\|F_s-G_s\|_{\mathrm{op}}\le b_s$，则 $b=\sum_sw_s\bar q_sb_s$ 是允许的预算；不需要将任何读数先除以 $q_s$。这些不等式若带随机性，以下结论只在它们共同成立的同一事件上适用，不从分别的边缘置信水平断言联合事件。
+
+记
+
+$$
+\begin{aligned}
+L_A(X)&=J\sqrt A\,X\sqrt A\,J^\dagger,\qquad 0\le A\le I_H,\\
+Q(A)&=\sum_sw_s[\operatorname{Tr}(p_s\sqrt A)]^2
+=\frac{\operatorname{Tr}A+(\operatorname{Tr}\sqrt A)^2}{d(d+1)},\\
+R(T)&=\sum_sw_s\operatorname{Tr}[G_sT(p_s)],\\
+\omega_d(\epsilon)&=\min\left\{1,\frac{\epsilon+2d\sqrt\epsilon}{d+1}\right\},\\
+u&=Q(E_0)-\widehat R+a+b+\nu+\omega_d(\epsilon).
+\end{aligned}
+\tag{23.6}
+$$
+
+$R(T)$ 是同一个映射在数学比较设计上的评价，不将 $p_s$ 的精确实际供应加入 (23.3)。全文的 diamond 范数沿用 (20.4)，不带 $1/2$。
+

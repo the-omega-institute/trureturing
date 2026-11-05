@@ -1,0 +1,49 @@
+**图 1。**
+
+```latex
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[>=Latex,font=\small]
+\begin{scope}[xshift=-3.5cm]
+\draw[->,ink!55] (-1.6,-1.4)--(1.9,-1.4);
+\draw[->,ink!55] (-1.4,-1.6)--(-1.4,1.5);
+\coordinate (x) at (-.95,-.35);
+\coordinate (y) at (-.45,.65);
+\coordinate (xc) at (.65,-.05);
+\coordinate (yc) at (1.15,.95);
+\draw[->,accent,thick] (x)--(y);
+\draw[->,accent,thick] (xc)--(yc);
+\draw[->,warm,dashed] (x)--(xc) node[midway,below] {$+c$};
+\draw[->,warm,dashed] (y)--(yc) node[midway,above] {$+c$};
+\fill[ink] (x) circle(2pt) node[left] {$y$};
+\fill[ink] (y) circle(2pt) node[left] {$x$};
+\fill[ink] (xc) circle(2pt) node[right] {$y+c$};
+\fill[ink] (yc) circle(2pt) node[right] {$x+c$};
+\node[align=center,text width=5.8cm] at (.1,-2.02)
+{共同加项改变两端\\同一差向量保持};
+\end{scope}
+\begin{scope}[xshift=3.5cm]
+\draw[ink!65] (0,0) circle(1.4);
+\draw[->,ink!55] (-1.65,0)--(1.75,0) node[right] {$X$};
+\draw[->,ink!55] (0,-1.6)--(0,1.65) node[above] {$Y$};
+\fill[accent] (.14,.42) circle(2.4pt);
+\fill[warm] (.84,.14) circle(2.4pt);
+\draw[->,warm,thick] (.22,.43) to[bend left=16] (.78,.22);
+\node[anchor=east] at (.08,.5) {$(s,\mathbf r)$};
+\node[anchor=north] at (.78,.02) {$(s',\mathbf r')$};
+\node[align=center,text width=5.8cm] at (0,-2.02)
+{归一球点可以改变\\必须连同强度尺度比较};
+\end{scope}
+\end{tikzpicture}
+\caption{左图的箭头表示同一幅度差分；右图只示意归一坐标可以移动。
+共同加项保持的是 $s(1-X)$，不是把尺度删除后的同一个球点。}
+\end{figure}
+```
+
+**白话图景。**两条历史同时搬动同一份内容，它们之间的差别不变。
+归一化会改变图上的比例，所以球里的点可以移动；
+把强度标尺带回来，才看见同一个差别。
+三维表示是每个二元关系的截面，共同核负责这些截面能否组成一个整体。
+
+<a id="section-8"></a>
+

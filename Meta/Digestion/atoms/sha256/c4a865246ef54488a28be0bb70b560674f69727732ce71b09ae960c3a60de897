@@ -1,0 +1,73 @@
+**Corollary 41.5 (actual mixed contact and the two first boundaries).**
+Suppose $0<b<4$ and an actual mixed pair satisfies
+$\rho(E,U)=b$ and $g(E,U)\le V(b)$.
+The continuous family of Theorem 41.3 satisfies, for every
+$0<\theta\le\min\{\epsilon(E),4-b\}$,
+
+$$
+\begin{aligned}
+ \rho(E_\theta,U)&=b+\theta,\\
+ f(E_\theta,U)-N_{\mathrm{geo}}(b+\theta)
+    &=g(E,U)-V(b+\theta)\\
+    &\le V(b)-V(b+\theta)<0.
+\end{aligned}
+\tag{41.18}
+$$
+
+At an equality contact $g(E,U)=V(b)$, the inequality before the last
+strict sign is an equality. Every displayed competitor is an attained
+original pair, and $E_\theta\to E$ as $\theta\downarrow0$.
+The comparison includes level four when reached, and includes the pure
+endpoint when $b+\epsilon(E)\le4$. It implies $\beta\le b$.
+
+In particular a mixed pair in $\mathcal A_\alpha$ forces
+$\alpha=\beta$. It is an additional endpoint minimizer and the
+exhaustive-geometric-equality prefix excludes its endpoint.
+If $\alpha<\beta$, every extra minimizer at $\alpha$, and every
+minimizer at any level in $[\alpha,\beta)$, is pure.
+A mixed pair in $\mathcal A_\beta$ also supplies (41.18), but does
+not rule out an earlier pure equality tie at $\alpha<\beta$.
+The produced strict right competitors need not be globally minimizing.
+
+*Proof.* Constant $g$ and the exact original distance in (41.10)
+give the equality in (41.18). Theorem 41.2 makes its final comparison
+strict for every indicated positive parameter. For arbitrarily small
+such parameters with $b+\theta<4$, the attained competitor implies
+$m(b+\theta)<N_{\mathrm{geo}}(b+\theta)$, so
+$b+\theta\in\mathcal S$. Taking their infimum gives $\beta\le b$.
+This conclusion uses actual pairs, with no core-infimum attainment
+assumption and no continuation of a globally minimizing branch.
+
+At either $b=\alpha$ or $b=\beta$, Theorem 39.5 gives
+$g(E,U)=V(b)$ for every pair in $\mathcal A_b$.
+If a mixed one occurs at $\alpha$, the preceding result and
+$\alpha\le\beta$ imply equality of the boundaries.
+The sets $\mathcal G_b$ consist of pure effects, so this mixed pair
+belongs to $\mathcal A_\alpha\setminus\mathcal G_\alpha$.
+The endpoint alternative in Theorem 39.5 then excludes $\alpha$
+from the initial exhaustive-equality prefix.
+If $\alpha<\beta$, Theorem 41.4 instead forces purity throughout
+$[\alpha,\beta)$. No assertion that such extra pure pairs exist at
+$\alpha$ is needed; the endpoint may also have only geometric minimizers.
+
+For a mixed minimizer at $\beta$, (41.18) establishes strict loss
+immediately to its right. It supplies no restriction on an earlier
+pure extra minimizer, so it supplies no general coincidence conclusion.
+Theorem 40.4 does retain its separation consequence: with
+$\mathscr U_\beta=\{U:(E,U)\in\mathcal G_\beta\}$ there is
+$r_\beta>0$ such that every mixed pair in $\mathcal A_\beta$ satisfies
+
+$$
+ \operatorname{dist}_{\mathrm F}(U,\mathscr U_\beta)\ge r_\beta.
+\tag{41.19}
+$$
+
+Indeed (40.24) with $K=\{\beta\}$ would otherwise put its feedback
+in the neighborhood where (40.23) gives a strictly better same-level
+effect. This uses the full actual common-scalar feedback orbits.
+It neither identifies nor excludes those separated mixed endpoints.
+The bounds above compare the constructed pairs with the selected value;
+they do not compare them with all other original competitors at their
+new levels. Thus global minimality of the right competitors is not
+implied. $\square$
+

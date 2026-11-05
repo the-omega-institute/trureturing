@@ -1,0 +1,124 @@
+**命题 18.2（Legality, interaction and separation from the supplied
+graph domains）。** Every $H_{r,t}$ is a connected even-order graph
+in Definition 17.1. Hence it satisfies (17.3)–(17.4) and, for every
+equal even fibre size, (17.19)–(17.20), on the original global
+half-filled carrier. Its two longer-odd-cycle wheel regions share
+actual fibres and permit transfer of occupancy between regions.
+It lies outside every sufficient whole-graph $s=2$ confinement
+domain stated through Section 16 of the owning volume.
+
+Proof. Each wheel is connected and they share the edge $uv$;
+the leaves preserve connectedness. The core has
+$(n_1+1)+(n_2+1)-2=n_1+n_2$ vertices, so the full order is
+$m=n_1+n_2+2$, even and at least $16$.
+The following are the entire induced open neighborhoods.
+At $h_a$ it is exactly the cycle $C_{n_a}$.
+At a private rim vertex it is the path through its own hub between
+its two rim neighbors. At $v_{1,3}$ the two leaves add two isolated
+vertices to that path. At either leaf it is a single vertex.
+At the shared vertices the neighborhoods are exactly the paths
+
+$$
+\begin{aligned}
+G_u:&\quad
+v_{1,n_1-1}-h_1-v-h_2-v_{2,n_2-1},\\
+G_v:&\quad
+v_{1,2}-h_1-u-h_2-v_{2,2}.
+\end{aligned}
+\tag{18.1}
+$$
+
+Indeed there is no edge between private vertices of different rims;
+the spokes and the two incident rim edges give exactly the displayed
+adjacencies. The inequalities $n_a\geq7$ preclude additional rim
+adjacencies among the listed vertices. Each listed path, isolated
+vertex and union of them is bipartite. Thus (17.1) holds at every
+vertex, with two genuinely longer odd cycles as hub neighborhoods.
+Theorem 17.2 and Corollary 17.3 apply with no extra filling condition.
+
+To verify interaction on the original carrier, fix any even $s\geq2$
+and put $k=ms/2$. Define the regional occupancy
+$M_a=\sum_{i\in W_a}n_i$ there. The sets $W_1,W_2$ share the
+actual base vertices $u,v$, hence their same Boolean fibres and
+the actual edge $uv$; they are not disjoint tensor factors.
+Choose one coordinate $x\in B_u$ and one $y\in B_{h_2}$.
+There exists a $k$-subset $T$ with $x\in T$, $y\notin T$:
+choose its other $k-1$ coordinates from the remaining $ms-2$,
+which is possible because $1\leq k\leq ms-1$.
+Let $T'=T\setminus\{x\}\cup\{y\}$. The spoke $uh_2$ makes
+$\langle T'|K_s|T\rangle=1$, while $h_2\notin W_1$ and
+$u\in W_1$. Consequently
+
+$$
+\langle T'|[M_1,K_s]|T\rangle
+=(M_1(T')-M_1(T))\langle T'|K_s|T\rangle=-1.
+\tag{18.2}
+$$
+
+Using $y\in B_{h_1}$ instead proves $[M_2,K_s]\ne0$.
+Thus neither region has separately conserved occupancy under the
+original global half-filling dynamics. These are overlapping
+interacting regions, not independent half-filled single wheels.
+
+We check noncoverage against the exact sufficient hypotheses of
+the owning volume. Each hub has just one neighborhood component,
+namely the nonbipartite cycle $C_{n_a}$, $n_a\geq7$.
+Thus Section 7's wholly bipartite-neighborhood condition fails,
+and Definition 14.1's requirement of at least one bipartite
+component in each neighborhood also fails. The same hub contradicts
+Definition 15.1(a), bipartite-or-$C_5$.
+Definition 15.1(b) does hold, as in Corollary 17.3, but its
+confinement theorem assumes $s\geq4$ and supplies no $s=2$ conclusion.
+
+The core obtained by deleting the two leaves is two-connected.
+Each wheel remains connected after deleting any one of its vertices:
+a deleted hub leaves a cycle, and a deleted rim vertex leaves its
+hub joined to all vertices of a path. After deleting any vertex
+of the union, the two surviving wheels still share at least one
+of $u,v$. Their union therefore stays connected. A pendant vertex
+cannot belong to any two-connected subgraph, so this core is a
+maximal two-connected block of $H_{r,t}$. It is not a clique:
+$v_{1,0}$ and $v_{1,2}$ are not adjacent. Hence the block-graph
+hypotheses of Sections 12–13 fail, including the all-even
+block-graph consequence.
+
+The graph is not complete multipartite. The vertex $v_{1,0}$ is
+nonadjacent to both $v_{1,2}$ and $v_{1,3}$, whereas the latter
+two are adjacent. In a complete multipartite graph distinct
+nonadjacent vertices must lie in one independent part, which
+these three relations make impossible. Thus neither the balanced
+nor the dominant-part domains of Sections 10–11, nor their
+combined complete-multipartite conclusion, apply.
+
+The global flat least-mode assumption of Sections 3–6 also fails.
+Let $\lambda=\min\operatorname{spec}A(H_{r,t})$.
+A least Fourier vector on the first induced rim, extended by zero
+at every other vertex, has Rayleigh quotient
+$-2\cos(\pi/n_1)<-1$. Edges to vertices with zero coordinates
+contribute zero. Therefore
+$\lambda\leq-2\cos(\pi/n_1)<-1$.
+If a modulus-one vector $z$ satisfied $A(H_{r,t})z=\lambda z$,
+the equation at either leaf would give
+$\lambda z_{\ell_i}=z_{v_{1,3}}$. Taking moduli forces
+$|\lambda|=1$, a contradiction. The general full-state defect
+certificate of Section 2 imposes no such graph condition, but is
+a lower bound and does not itself assert exact every-ground
+confinement at $s=2$. Section 6 also has a larger-scale requirement.
+
+The individual-wheel domain of Definition 16.1 does not contain
+$H_{r,t}$: an individual wheel there has no degree-one vertex,
+whereas $H_{r,t}$ has two. Nor is it the five-rim-with-leaves
+family of Proposition 15.3. Removing all degree-one vertices from
+that family leaves a six-vertex wheel, while here it leaves the
+core of order $n_1+n_2\geq14$ just described. Proposition 15.4
+concerns individual wheels at $s\geq4$, except for its already
+supplied five-rim endpoint. Finally, the odd-fibre domains of
+Sections 8–9 do not include $s=2$.
+
+This exhausts the stated sufficient graph domains through Section 16.
+The separation is relative to those exact source hypotheses;
+it is not a claim that confinement fails elsewhere, a necessity
+result or a priority assertion. The new consumer is the entire
+family $r,t\geq3$, with the interaction (18.2) on its original
+carrier. $\square$
+

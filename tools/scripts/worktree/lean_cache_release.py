@@ -19,6 +19,12 @@ import tempfile
 import time
 from urllib.parse import quote
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
+try:
+    from maintenance_log import MaintenanceLog
+except ImportError:
+    MaintenanceLog = None
+
 from lean_cache import SHARED_SEED_PLATFORMS, normalized_platform, partition_path, seed_partitions
 from cache_material import sha
 from lean_cache_topology import checkout_topology, git_absolute_path, warm_dev_remediation
@@ -661,8 +667,14 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
     if len(parts) > 1:
         with (stage / ASSET).open("wb") as archive:
             for part in parts:
-                with (stage / part["name"]).open("rb") as source:
+                path = stage / part["name"]
+                start = archive.tell()
+                with path.open("rb") as source:
                     shutil.copyfileobj(source, archive, length=1024 * 1024)
+                archive.flush()
+                if archive.tell() - start != part["bytes"]:
+                    raise ValueError("part copy size mismatch: " + part["name"])
+                path.unlink()
     if (manifest.get("archive_sha256") != sha(stage / ASSET)
             or manifest.get("archive_bytes") != (stage / ASSET).stat().st_size):
         raise ValueError("archive checksum or size mismatch")
@@ -918,7 +930,7 @@ def latest_snapshot(root, partition, deadline):
     return None
 
 
-def main():
+def _main():
     parser = argparse.ArgumentParser()
     parser.add_argument("command", choices=("address", "publish", "fetch"))
     parser.add_argument("--repository", type=pathlib.Path, default=pathlib.Path(__file__).resolve().parents[3])
@@ -985,6 +997,32 @@ def main():
         receipt(args.command, "miss" if args.command == "fetch" else "failed",
                 reason=("verification: " if args.mode == "verification" else "") + str(error))
         return 1 if args.command == "fetch" else 2
+
+
+def main():
+    log = MaintenanceLog.from_environment() if MaintenanceLog else None
+    if log is not None:
+        log.emit("run_started")
+    previous_run_id = os.environ.get("TRURETURING_MAINTENANCE_RUN_ID")
+    if log is not None:
+        os.environ["TRURETURING_MAINTENANCE_RUN_ID"] = log.run_id
+    try:
+        try:
+            exit_code = _main()
+        except BaseException as error:
+            if log is not None:
+                code = error.code if isinstance(error, SystemExit) and isinstance(error.code, int) else 130 \
+                    if isinstance(error, KeyboardInterrupt) else 1
+                log.finish(code, error_type=type(error).__name__)
+            raise
+        if log is not None:
+            log.finish(exit_code)
+        return exit_code
+    finally:
+        if previous_run_id is None:
+            os.environ.pop("TRURETURING_MAINTENANCE_RUN_ID", None)
+        else:
+            os.environ["TRURETURING_MAINTENANCE_RUN_ID"] = previous_run_id
 
 
 if __name__ == "__main__":

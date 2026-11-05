@@ -1,0 +1,32 @@
+### 4.4 完整仪器、更新与不确定界
+
+若原事件族 $\Phi_j:M_{d_j}\to M_m$ 各满足来源预算，并且全部原记录满足
+$\sum_j\Phi_j(I)=I$，则态方向
+
+$$
+\mathcal T_j(\rho)=\sum_\nu A_{j\nu}\rho A_{j\nu}^*,\qquad
+ \sum_{j,\nu}A_{j\nu}^*A_{j\nu}=I
+$$
+
+构成完全正仪器。各支迹不增，总带标签输出保迹；
+$p_j=\operatorname{Tr}(\rho E_j)$，$E_j=\Phi_j(I)$。
+只有 $p_j>0$ 时定义条件态 $\rho_j=\mathcal T_j(\rho)/p_j$。
+
+若同空间某支效果为投影 $P$，并保持 $\operatorname{Ran} P$ 中每条纯射线，则
+$A_\nu(I-P)=0$；逐射线保持又迫使 $A_\nu v$ 与 $v$ 共线。
+对基向量及两两和应用，得 $A_\nu=c_\nu P$。
+若 $P\ne0$，效果归一给 $\sum_\nu|c_\nu|^2=1$，因而
+$\mathcal T(\rho)=P\rho P$。$P=0$ 时所有 Kraus 项为零。
+仅有结果可重复性仍允许结果子空间内的旋转，不能单独推出 Lüders 更新。
+
+有限锐测量由正交投影族与实结果构成，自伴算符由有限谱分解表示。
+对自伴 $A,B$ 中心化为 $A_0,B_0$，算符历史正形式
+$\Gamma_\rho(X,Y)=\operatorname{Tr}(\rho X^*Y)$ 的二阶 Gram 正性给
+
+$$
+\operatorname{Var}_\rho(A)\operatorname{Var}_\rho(B)\ge|\operatorname{Tr}(\rho A_0B_0)|^2
+ \ge\tfrac14|\operatorname{Tr}(\rho[A,B])|^2.
+$$
+
+位置、动量、具体交换常数及无限维无界算符的定义域不由本轮预算选定。
+

@@ -1,0 +1,31 @@
+#### 命题 4.4（有限精度关系证书）
+
+固定三轴、$r>0$。若另知 $d_-\le\Delta\le d_+$，则相容纤维准确变为
+
+$$
+L'=\max\left\{L,\frac{XY+d_-}{r}\right\},
+\qquad
+U'=\min\left\{U,\frac{XY+d_+}{r}\right\}.
+$$
+
+有相容来源恰当且仅当 $L'\le U'$；此时目标的最小最坏误差为 $|J_f|(U'-L')/2$。
+特别地若证书与来源相容，且 $|\Delta-\widehat\Delta|\le\varepsilon$，则
+
+$$
+\operatorname{risk}(f)\le
+|J_f|\min\left\{\frac w2,\frac{\varepsilon}{r}\right\}
+\le |J_f|\min\left\{\frac r4,\frac{\varepsilon}{r}\right\}.
+$$
+
+**证明。**
+
+用 $\Delta=r\kappa-XY$ 将关系区间拉回并与原区间相交。
+应用定理 [3.4](#thm-task)，再用 $w\le r/2$。
+
+∎
+
+因此无条件质量很小的关系，其绝对误差可以小；相应条件关系却未必精确。
+选择关系坐标时应同时说明固定的边缘、质量与所预测的任务。
+
+<a id="section-5"></a>
+

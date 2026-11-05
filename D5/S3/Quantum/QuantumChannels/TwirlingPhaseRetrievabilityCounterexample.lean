@@ -172,7 +172,7 @@ def claim : Prop :=
     pr (twirl (blockRep rho m)) = max (beta (blockRep rho m)) k
 
 
-private theorem chi_unit (i : Fin 3) (g : (Multiplicative (ZMod 3))) : star ((ZMod.stdAddChar
+theorem chi_unit (i : Fin 3) (g : (Multiplicative (ZMod 3))) : star ((ZMod.stdAddChar
     ((ZMod.finEquiv 3 i) * g.toAdd))) * (ZMod.stdAddChar ((ZMod.finEquiv 3 i) * g.toAdd)) = 1 :=
     by
   rw [Complex.star_def, ← Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_norm_sq]

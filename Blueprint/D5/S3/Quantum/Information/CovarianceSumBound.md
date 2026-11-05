@@ -40,7 +40,31 @@ $$\operatorname{Var}\left(\rho, A\right) = \operatorname{E}\left(\rho, {A}^{2}\r
 
 Variance uses the same state and the same expectation as covariance.
 
-**Theorem 1.4 (Symmetry).**
+**Theorem 1.4 (Expectation of a real scalar multiple).**
+
+$$\forall (n: Type*) [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)], \forall (rho: \operatorname{DensityState}\left(n\right)), \forall (t: \mathbb{R}), \forall (A: \operatorname{Matrix}\left(n, n, \mathbb{C}\right)), \operatorname{expectation}\left(rho, {t} \cdot A\right) = t \times \operatorname{expectation}\left(rho, A\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/CovarianceSumBound.expect_smul` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite index type, moving a real scalar through the density-state expectation multiplies the expectation by that scalar.
+
+**Theorem 1.5 (Expectation of the identity).**
+
+$$\forall (n: Type*) [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)], \forall (rho: \operatorname{DensityState}\left(n\right)), \operatorname{expectation}\left(rho, 1\right) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/CovarianceSumBound.expect_one` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every density state has unit expectation on the identity observable, by its trace-one condition.
+
+**Theorem 1.6 (Symmetry).**
 
 $$\operatorname{Cov}\left(\rho, A, B\right) = \operatorname{Cov}\left(\rho, B, A\right)$$
 
@@ -52,7 +76,7 @@ $$\operatorname{Cov}\left(\rho, A, B\right) = \operatorname{Cov}\left(\rho, B, A
 
 Exchanging the two observables preserves symmetrized covariance.
 
-**Theorem 1.5 (Right additivity).**
+**Theorem 1.7 (Right additivity).**
 
 $$\operatorname{Cov}\left(\rho, A, B+C\right) = \operatorname{Cov}\left(\rho, A, B\right) + \operatorname{Cov}\left(\rho, A, C\right)$$
 
@@ -64,7 +88,7 @@ $$\operatorname{Cov}\left(\rho, A, B+C\right) = \operatorname{Cov}\left(\rho, A,
 
 For every fixed state and A, covariance is additive in its right argument.
 
-**Theorem 1.6 (Self-covariance is variance).**
+**Theorem 1.8 (Self-covariance is variance).**
 
 $$\operatorname{Cov}\left(\rho, A, A\right) = \operatorname{Var}\left(\rho, A\right)$$
 
@@ -76,7 +100,7 @@ $$\operatorname{Cov}\left(\rho, A, A\right) = \operatorname{Var}\left(\rho, A\ri
 
 The two definitions agree on equal observables.
 
-**Theorem 1.7 (Variance is nonnegative).**
+**Theorem 1.9 (Variance is nonnegative).**
 
 $$0 \le \operatorname{Var}\left(\rho, A\right)$$
 
@@ -88,7 +112,7 @@ $$0 \le \operatorname{Var}\left(\rho, A\right)$$
 
 For a Hermitian observable, its centered square has nonnegative expectation.
 
-**Theorem 1.8 (Cauchy-Schwarz in a density state).**
+**Theorem 1.10 (Cauchy-Schwarz in a density state).**
 
 $$\lvert \operatorname{Cov}\left(\rho, A, B\right) \rvert \le \sqrt{\operatorname{Var}\left(\rho, A\right) \operatorname{Var}\left(\rho, B\right)}$$
 
@@ -100,7 +124,7 @@ $$\lvert \operatorname{Cov}\left(\rho, A, B\right) \rvert \le \sqrt{\operatornam
 
 For Hermitian A and B, centered observables belong to the weighted matrix semi-inner product space. Its real pairing is exactly covariance.
 
-**Theorem 1.9 (Spectral half-width bound).**
+**Theorem 1.11 (Spectral half-width bound).**
 
 $$\operatorname{Var}\left(\rho, A\right) \le {\Delta}^{2}$$
 
@@ -112,7 +136,7 @@ $$\operatorname{Var}\left(\rho, A\right) \le {\Delta}^{2}$$
 
 Assume Delta is nonnegative and every spectral value of Hermitian A lies in [c-Delta,c+Delta]. Delta is the half width. Continuous functional calculus bounds the square centered at c, and subtracting the squared mean displacement bounds the variance.
 
-**Theorem 1.10 (Sum from variance bounds).**
+**Theorem 1.12 (Sum from variance bounds).**
 
 $$\sum_{x,y \in Q} \lvert \operatorname{Cov}\left(\rho, \operatorname{R}\left(x\right), \operatorname{R}\left(y\right)\right) \rvert \le \operatorname{card}\left(Q\right) b {\Delta}^{2}$$
 
@@ -124,7 +148,7 @@ $$\sum_{x,y \in Q} \lvert \operatorname{Cov}\left(\rho, \operatorname{R}\left(x\
 
 On a finite set Q, assume every R(x) is Hermitian, each variance is at most Delta squared, and for each x in Q at most b elements y in Q have nonzero covariance. Summing only these supports gives the bound.
 
-**Theorem 1.11 (Sparse covariance sum bound).**
+**Theorem 1.13 (Sparse covariance sum bound).**
 
 $$\sum_{x,y \in Q} \lvert \operatorname{Cov}\left(\rho, \operatorname{R}\left(x\right), \operatorname{R}\left(y\right)\right) \rvert \le \operatorname{card}\left(Q\right) b {\Delta}^{2}$$
 
@@ -145,6 +169,8 @@ For a finite set Q and a density state, assume all R(x), x in Q, are Hermitian w
 - Truth anchor: `D5/S3/Quantum/Information/CovarianceSumBound.covariance_sum_le`
 - Truth anchor: `D5/S3/Quantum/Information/CovarianceSumBound.covariance_sum_le_of_variance`
 - Truth anchor: `D5/S3/Quantum/Information/CovarianceSumBound.covariance_symm`
+- Truth anchor: `D5/S3/Quantum/Information/CovarianceSumBound.expect_one`
+- Truth anchor: `D5/S3/Quantum/Information/CovarianceSumBound.expect_smul`
 - Truth anchor: `D5/S3/Quantum/Information/CovarianceSumBound.expectation`
 - Truth anchor: `D5/S3/Quantum/Information/CovarianceSumBound.variance`
 - Truth anchor: `D5/S3/Quantum/Information/CovarianceSumBound.variance_le_half_width_sq`

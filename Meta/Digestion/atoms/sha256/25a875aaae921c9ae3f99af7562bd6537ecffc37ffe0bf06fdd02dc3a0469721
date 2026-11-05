@@ -1,0 +1,83 @@
+*Proof.* By (1.8), the interval consists exactly of its bottom $R$, its
+top $S$, and the elements $E_L=R\oplus L$ indexed by lines $L\subset T$.
+Put $w=b+s$ and $D=s/w$. For $a=a_L$ define
+
+$$
+\alpha_a=\frac{a}{b+a},\qquad \beta_a=\frac{s-a}{w}.
+\tag{3.2}
+$$
+
+These denominators are positive even if $b=0$. Directly from (1.2) and
+(1.7), including the convention $d_0(0,0)=0$, all distances are
+
+$$
+\begin{aligned}
+d_c(R,S)&=D,& d_c(R,E_L)&=\alpha_{a_L},&
+d_c(E_L,S)&=\beta_{a_L},\\
+d_c(E_L,E_N)&=D\quad(L\ne N),&&d_c(X,X)&=0.
+\end{aligned}
+\tag{3.3}
+$$
+
+For every $a\in[m,M]$ one has $0<a<s$ and
+
+$$
+0\le\alpha_a\le D,\qquad 0\le\beta_a\le D,\qquad
+\alpha_a+\beta_a-D
+=\frac{a(s-a)}{(b+a)w}>0.
+\tag{3.4}
+$$
+
+For example, $\alpha_a\le D$ is equivalent to $ab\le sb$; the last
+identity remains strict at $b=0$. We now exhaust all possible endpoints
+and middle elements.
+
+If $X=Z$, then $\Delta_c(X,Y,Z)=-2d_c(X,Y)\le0$.
+If $X\ne Z$ are comparable, their unordered pair has one of the forms
+$\{R,S\}$, $\{R,E_L\}$, or $\{E_L,S\}$.
+For endpoints $R,S$, a middle element $E_N$ gives
+$D-\alpha_{a_N}-\beta_{a_N}<0$ by (3.4), and a middle endpoint gives zero.
+For endpoints $R,E_L$, the middle $S$ gives
+$\alpha_{a_L}-D-\beta_{a_L}\le0$; any other line element $E_N$ gives
+$\alpha_{a_L}-\alpha_{a_N}-D\le0$.
+For endpoints $E_L,S$, the middle $R$ gives
+$\beta_{a_L}-\alpha_{a_L}-D\le0$; any other line element $E_N$ gives
+$\beta_{a_L}-D-\beta_{a_N}\le0$.
+Middle endpoints again give zero. Reversing endpoints leaves the defect
+unchanged, so every comparable case is included.
+
+It remains to consider distinct line endpoints $X=E_L$, $Z=E_N$.
+A middle endpoint gives zero; a third, distinct line element gives $-D$.
+For $Y=R$, equations (3.2)–(3.3) and $a_L,a_N\ge m$ give
+
+$$
+\begin{aligned}
+\Delta_c(E_L,R,E_N)
+&=D-\frac{a_L}{b+a_L}-\frac{a_N}{b+a_N}\\
+&\le\frac{s}{w}-\frac{2m}{b+m}\\
+&<\frac{s-2m}{w}=\frac{M-m}{w}.
+\end{aligned}
+\tag{3.5}
+$$
+
+Here $a/(b+a)$ is nondecreasing for $a>0$, including when $b=0$;
+the strict inequality uses $w=b+m+M>b+m$ and $m>0$.
+Finally, if $Y=S$, the actual overlap $r$ of $L,N$ lies in $[0,1)$,
+so Theorem 2.1 gives
+
+$$
+\Delta_c(E_L,S,E_N)\le\frac{r(M-m)}w\le\frac{M-m}w.
+\tag{3.6}
+$$
+
+This proves the upper bound for every ordered triple, not only for triples
+whose middle is the top.
+
+If $M>m$, all non-top cases above are either nonpositive or strictly below
+$(M-m)/w$, while (3.6) is strict because $r<1$. Thus the upper bound cannot
+be attained. On the other hand, choose the actual lines from (2.7) for any
+sequence $r_j\in[0,1)$ tending to one. The resulting defects are
+$r_j(M-m)/w$, tending to $(M-m)/w$, which proves (3.1).
+If $M=m$, the exhaustive upper bound is zero, and $X=Y=Z=R$ attains it.
+$\square$
+

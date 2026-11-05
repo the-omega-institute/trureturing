@@ -1,0 +1,5 @@
+**partial** fibre; the terminal example is $R_{000}=\{011,100,110\}$.
+At these parameters (IV.102)'s uniform lower bound is zero. This finite
+example supplies neither an all-$k$ scheme nor an asymptotic obstruction.
+Its finite checks, like the ordinary proofs here, are not Lean verification.
+

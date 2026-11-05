@@ -1,0 +1,11 @@
+**定义 B-14.3（对数重叠代价）。** 在给定实或复内积空间中，对非零 $`u,v`$ 定义
+
+
+```math
+s(u,v)=\frac{|\langle u,v\rangle|^2}{\|u\|^2\|v\|^2},\qquad
+\mathcal{\text{ℐ}}(u:v)=-\log_2s(u,v),\qquad -\log_20=+\infty.
+```
+
+
+经典 Cauchy–Schwarz 给 $`0\le s\le1`$。若另供归一化纯态及投影测量，平方重叠是该概率，也是 [B-L8] 的平方保真度约定；未供量子载体时只使用内积定义。
+

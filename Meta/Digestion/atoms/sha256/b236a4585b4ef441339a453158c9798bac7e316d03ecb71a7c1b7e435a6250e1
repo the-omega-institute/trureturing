@@ -1,0 +1,41 @@
+### 4.3 更大结构：四维正关系锥及其球截面
+
+再保留失衡坐标 $D=(p-q)/2$，有
+
+<a id="eq-c130-lorentz-cone"></a>
+
+$$
+\begin{aligned}
+ G_{f,g}=\begin{pmatrix}p&b\\\bar b&q\end{pmatrix}\succeq0
+ &\quad\Longleftrightarrow\quad T\ge\sqrt{x^2+y^2+D^2},\\
+ \det G_{f,g}&=T^2-x^2-y^2-D^2.
+ \end{aligned}
+\tag{8}
+$$
+
+这是二阶 Hermitian 正矩阵的标准 Lorentz 锥表示 [6](#ref-arrighi2003)。
+预算平衡截面 $D=0$ 给图中的三维圆锥；忘掉 $D$ 也投影到同一圆锥，所以这张三维图尚未认证一个已指定的不平衡关系表。
+
+令 $\lambda=e^{s/2}$，上述相反缩放在 $(T,D)$ 上正是
+
+$$
+\begin{pmatrix}T_s\\D_s\end{pmatrix}
+ =\begin{pmatrix}\cosh s&\sinh s\\\sinh s&\cosh s\end{pmatrix}
+ \begin{pmatrix}T\\D\end{pmatrix},
+ \qquad x_s=x,\quad y_s=y.
+$$
+
+它保持 $T^2-D^2=pq$。这是关系预算重配的双曲变换，不是已经推出物理时空或观察者运动。
+
+若 $T>0$，用表自身的迹 $2T$ 归一：
+
+$$
+\frac{G_{f,g}}{2T}=\frac{I+\mathbf r\cdot\boldsymbol\sigma}{2},
+ \qquad \mathbf r=\left(\frac xT,-\frac yT,\frac DT\right),
+ \qquad \|\mathbf r\|\le1.
+$$
+
+球面对应秩一，内部对应秩二；$p=0<q$ 和 $q=0<p$ 给两极。$T=0$ 则整张表为零，保留为锥顶而不能归一。
+完整锥的秩一边界允许预算不平衡；相位优化的半和界取等还要求 $p=q$，二者不是同一边界。
+这里先得到比较表的几何，实际可制备范围仍由原接口说明。
+

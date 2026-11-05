@@ -286,11 +286,6 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   honest evidence boundary: 11 obsolete worktrees represented 108 GiB of logical data,
   and each duplicate Lean inspection cost about 192 seconds. No replacement log or
   synthetic seat result was invented.
-- The real `make clean-lanes BASE=origin/dev` dry-run classified 98 records and marked 71
-  removable while changing neither the worktree inventory nor local-ref hashes. Force
-  mutation ran only inside disposable Git fixtures; 9/9 focused cleanup tests covered
-  merged, dirty, unmerged, current, orphan, detached, broken-pointer, gitless, symlink,
-  and foreign cases. The shared repository was never subjected to an unreviewed force run.
 - The first ceremony gate fetched newly merged PR #139 and correctly failed infrastructure
   admission because base `204538aac6dcb45302148dc4b59a53034dab3648` was not yet an
   ancestor of the candidate. Its pair stage still proved one 187-second inspection, a

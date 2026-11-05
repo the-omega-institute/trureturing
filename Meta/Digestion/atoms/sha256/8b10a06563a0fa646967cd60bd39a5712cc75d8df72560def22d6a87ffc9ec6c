@@ -1,0 +1,14 @@
+**证明。**
+$p=1$ 时已有 $CJ=W$。设 $0<p<1$，定义
+
+$$
+B=\frac{(I-\Pi_g)CJ}{\sqrt{1-p}},\qquad
+ \theta=\arcsin\sqrt p.
+$$
+
+有 $W^*W=B^*B=I_S$、$W^*B=0$，以及
+
+$$
+CJ=\sin\theta\,W+\cos\theta\,B.
+$$
+

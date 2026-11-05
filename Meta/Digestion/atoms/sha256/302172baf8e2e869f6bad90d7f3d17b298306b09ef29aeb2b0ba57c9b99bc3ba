@@ -1,0 +1,39 @@
+**定理 B-41.4（同一原族的三个缺口）。** 在定义B-41.1的原问题中，置
+$K_{ij}=M_i\cup M_j$、$m_{ij}=m_{K_{ij}}$。则 $2\le m_{ij}\le m$。每个三个核均活跃的同一原族 $\mathcal F$ 满足
+
+$$
+2(|\mathcal F|-L)
+\le h_n-6-\sum_{i<j}G_{m_{ij}}(n)
+\le h_n-6-3G_m(n).
+\tag{41.10}
+$$
+
+证明。第三匹配的两条耳 $M_k$ 均在 $E_{K_{ij}}$ 内且互相兼容，所以 $m_{ij}\ge2$；兼容 $K_{ij}$ 的任何兼容子集与它合并共有 $4+m_{ij}$ 条兼容耳，故 $m_{ij}\le m$。
+
+固定 $i<j$，取原族自身的两个子族
+
+$$
+\mathcal C_{ij}=\mathcal F\cap\mathcal X(M_i\mid M_j),\qquad
+\mathcal D_{ij}=\mathcal F\cap\mathcal X(M_j\mid M_i).
+$$
+
+$a_i,a_j>0$ 保证两侧非空；原完整耳相交性保证它们交叉相交。引理B-37.4证明中对全部 $D$ 迹的分类准确给
+$|\mathcal C_{ij}|+|\mathcal D_{ij}|=z_{ij}$，因此(41.7)给
+
+$$
+d_{ij}=s-z_{ij}\ge G_{m_{ij}}(n).
+\tag{41.11}
+$$
+
+使用同一个 $\mathcal F$ 的(37.21)、(37.23)，得到
+
+$$
+\begin{aligned}
+2(|\mathcal F|-L)
+&=h_n-2\eta-\sum_i\ell_i-\sum_{i<j}d_{ij}\\
+&\le h_n-6-\sum_{i<j}G_{m_{ij}}(n).
+\end{aligned}
+$$
+
+再用(41.2)即得第二界。这里 $\eta\ge0$、每个 $\ell_i\ge2$ 以及三个(41.11)同时属于原族；没有合并分别可达的边缘极值，也没有使用 $A>w_2$。∎
+

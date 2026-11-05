@@ -1,0 +1,22 @@
+**定理 B-40.1（supplied long-gap matching-core bound; computer-assisted）。** If F is any family of actual triangulations of this same polygon which is pairwise intersecting in complete ear sets, and
+
+$$
+a_i=|F\cap\Gamma(M_i)|>0\quad(i=1,2,3),
+$$
+
+then
+
+$$
+A=a_1+a_2+a_3\le4290<4344.
+$$
+
+For the original four-witness domain, the three pairs are
+
+$$
+M_1=\{f_{12},f_{34}\},\quad M_2=\{f_{13},f_{24}\},\quad M_3=\{f_{14},f_{23}\}.
+$$
+
+Here $D=\{f_{ab}:1\le a<b\le4\}$ has arbitrary $K_4$ labelling, with $f_{ab}=f_{ba}$, $S_a=\{f_{ab}:b\ne a\}$, and the four arbitrarily specified actual witnesses satisfy $\operatorname{Ear}(T_a)=S_a$. The original family contains all four witnesses and is pairwise intersecting in full ear sets. The proposed bound needs no witness hypothesis, so it applies to every such choice. The existing original-family consequence and the distinct sharpness statement are separated in §40.5. No maximality or saturation assumption is made.
+
+The proposed proof gives the geometric and combinatorial reductions explicitly and specifies the remaining finite arithmetic by a complete standard-library Python verifier in the private experiment companion. It is an ordinary computer-assisted finite proof, not a Lean/kernel proof. The two enumeration implementations are checks within the supplied source.
+

@@ -1,0 +1,21 @@
+**定义 7.2（三实坐标有限截面）。** 在原九号活动对 $r={\rm r}$、$r^+=r\cup\{9\}$ 上，取数学截面
+$z=\beta e_r+\gamma e_{r^+}$，$|\beta|^2+|\gamma|^2=1$。沿 IX6.1、X6.2 的 Bloch 对应，令
+
+$$
+X_b=2\operatorname{Re}(\overline\beta\gamma),\quad
+Y_b=2\operatorname{Im}(\overline\beta\gamma),\quad
+Z_b=|\beta|^2-|\gamma|^2.
+\tag{7.2}
+$$
+
+展开得 $X_b^2+Y_b^2+Z_b^2=(|\beta|^2+|\gamma|^2)^2=1$。在定理 3.2 的条件下，两配置权重才是 $(1+Z_b)/2,(1-Z_b)/2$；相对复相位保留在 $X_b,Y_b$ 中。原局部投影的 Pauli 轴是
+
+$$
+Q_*=(I+n\cdot\sigma)/2,\qquad
+n=(2xy,0,x-x^2),\qquad
+|n|^2=4x^3+(x-x^2)^2=(x+x^2)^2=1.
+\tag{7.3}
+$$
+
+L 只比较这两个基极点与其它原基点的支持关系；它没有预给球面其它点的两权重，U 在整个截面也满足 L。只有原 R 与完整选择补上 Born。三实坐标表示的是原 $\mathbb{CP}^1$ 的二维球面，不是把 $\mathbb{CP}^{88}$ 改成三实维，更不是物理空间维数或新相位门的断言。
+

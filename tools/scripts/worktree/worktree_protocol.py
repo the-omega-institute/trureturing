@@ -20,9 +20,19 @@ import sys
 import time
 from urllib.parse import unquote, urlsplit
 
+try:
+    from maintenance_log import MaintenanceLog
+except ImportError:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    try:
+        from maintenance_log import MaintenanceLog
+    except ImportError:
+        MaintenanceLog = None
+
 if __name__ == "__main__":
     sys.modules["worktree_protocol"] = sys.modules[__name__]
 
+LOG = None
 OPEN_SCOPES = []
 GIT_TERMINATION_GRACE_SECONDS = 30
 # An empty core.fsmonitor disables it both where Git reads a boolean and where
@@ -420,7 +430,11 @@ def with_command(options):
         # while a descendant still owns a copy of an open file description.
         os.environ["WORKTREE_SCOPE_FDS"] = ",".join(map(str, scope_fds()))
         os.chdir(path)
-        os.execvpe(options.argv[0], options.argv, git_environment())
+        environment = git_environment()
+        if LOG is not None:
+            LOG.emit("exec_started", action="with")
+            environment = LOG.child_environment(environment)
+        os.execvpe(options.argv[0], options.argv, environment)
 
 
 def reuse(options, allow_recovered_base=False):
@@ -463,7 +477,7 @@ def reuse(options, allow_recovered_base=False):
                     branch=options.branch, base_revision=base)
 
 
-def main(argv=None):
+def _main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, default=Path.cwd())
     commands = parser.add_subparsers(dest="action", required=True)
@@ -492,6 +506,7 @@ def main(argv=None):
     pool = commands.add_parser("pool")
     pool.add_argument("--dev", required=True)
     pool.add_argument("--force", action="store_true")
+    pool.add_argument("--exclude-path", type=Path, action="append", default=[])
     recovery = commands.add_parser("recover-init")
     recovery.add_argument("--path", type=Path, required=True)
     recovery.add_argument("--branch", required=True)
@@ -504,15 +519,12 @@ def main(argv=None):
     removal.add_argument("--force", action="store_true")
     removal.add_argument("--preview", action="store_true")
     removal.add_argument("--expected", action="append", default=[])
+    pending = commands.add_parser("removal-pending")
+    pending.add_argument("--path", type=Path, required=True)
     qualification = commands.add_parser("qualify")
     qualification.add_argument("--path", action="append", type=Path, required=True)
     qualification.add_argument("--stream", action="store_true")
     qualification.add_argument("--budget-seconds", type=float)
-    retirement = commands.add_parser("retire-branch")
-    retirement.add_argument("--branch", required=True)
-    retirement.add_argument("--commit", required=True)
-    retirement.add_argument("--preview", action="store_true")
-    retirement.add_argument("--expected-reflog-sha256")
     for action in ("prepare-mirror", "validate-mirror"):
         mirror = commands.add_parser(action)
         mirror.add_argument("--base", required=True)
@@ -533,6 +545,10 @@ def main(argv=None):
         publication.add_argument("--commit", default="HEAD")
         publication.add_argument("--writers-joined", action="store_true")
     options = parser.parse_args(argv)
+    global LOG
+    LOG = MaintenanceLog("worktree-protocol", options.source) if MaintenanceLog else None
+    if LOG is not None:
+        LOG.emit("run_started", action=options.action)
     try:
         if options.action == "with":
             if options.argv[:1] == ["--"]:
@@ -543,7 +559,8 @@ def main(argv=None):
         elif options.action in ("return", "claim", "pool"):
             from worktree_pool import return_tree, claim, sweep
             result = (return_tree(options) if options.action == "return" else claim(options)
-                      if options.action == "claim" else sweep(options.source, options.dev, options.force))
+                      if options.action == "claim" else sweep(options.source, options.dev, options.force,
+                                                             options.exclude_path))
             print(json.dumps(result), flush=True)
             return 74 if result.get("pool", result).get("status") == "failed" else 0
         elif options.action == "recover-init":
@@ -561,6 +578,9 @@ def main(argv=None):
                 result = dict(event=result["event"], status=result["status"], item_count=len(result["items"]))
             print(json.dumps(result), flush=True)
             return 74 if result["status"] == "failed" else 0
+        elif options.action == "removal-pending":
+            from worktree_preservation import removal_pending
+            print(json.dumps(removal_pending(options)), flush=True)
         elif options.action == "remove":
             from worktree_preservation import remove
             result = remove(options)
@@ -568,12 +588,6 @@ def main(argv=None):
             if result["status"] == "refused":
                 return 68 if all(row.get("reason", "").startswith("locked_") for row in result["items"]) else 73
             return 74 if result["status"] == "failed" else 0
-        elif options.action == "retire-branch":
-            from worktree_preservation import retire_branch
-            result = retire_branch(options)
-            print(json.dumps(result), flush=True)
-            if result["status"] == "partial_or_indeterminate":
-                return 74
         elif options.action == "prepare-mirror":
             from worktree_publication import prepare_mirror
             print(json.dumps(prepare_mirror(options)), flush=True)
@@ -600,6 +614,23 @@ def main(argv=None):
                                   native_locks=error.native_locks)), flush=True)
         print("WORKTREE_RETAINED " + str(error), file=sys.stderr, flush=True)
         return 68 if options.action == "remove" and str(error).startswith("locked_") else 73
+
+
+def main(argv=None):
+    global LOG
+    LOG = None
+    try:
+        exit_code = _main(argv)
+    except BaseException as error:
+        if LOG is not None:
+            code = error.code if isinstance(error, SystemExit) and isinstance(error.code, int) else 1
+            if isinstance(error, KeyboardInterrupt):
+                code = 130
+            LOG.finish(code, error_type=type(error).__name__)
+        raise
+    if LOG is not None:
+        LOG.finish(exit_code)
+    return exit_code
 
 
 if __name__ == "__main__":

@@ -1,0 +1,26 @@
+fingerprints:
+  raw_sha256: sha256:102b4af0d946328e5bcb874d3368ccfb696eacf17f5f1748fb9ed1734f0b31f2
+  normalized_sha256: sha256:102b4af0d946328e5bcb874d3368ccfb696eacf17f5f1748fb9ed1734f0b31f2
+cas_ref: sha256:102b4af0d946328e5bcb874d3368ccfb696eacf17f5f1748fb9ed1734f0b31f2
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/WeightedLegalPathTemperleyLieb.weighted_legal_path_temperley_lieb
+    target_statement_id: sha256:c5840426ee67329d7e147afd844cfbf9239b96250b6ae03493bdc022b484fdbd
+  - gid: D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_nonneg
+    target_statement_id: sha256:7412f30d565d9b30ebbf77bf0f5b93d44fe0082f8be41fd64fea60f00cdf2dfa
+  - gid: D5/S3/Quantum/Measurement/FourQubitParentConstruction.B_formula
+    target_statement_id: sha256:122dfb664a9aecda1276f65410e907267c5957de6b1b0b65ad3a41eb07008d82
+  - gid: D5/S3/Quantum/Measurement/FourQubitParentConstruction.norm_sq_coords
+    target_statement_id: sha256:f23ce90192e65a577cef49c49b0e8faee7bb260aff7718ad9af577a74447de33
+  - gid: D5/S3/Quantum/Measurement/FourQubitParentConstruction.scalarB_hermitian
+    target_statement_id: sha256:827ebc7dddb5b5467ea002db225801ee6102c882553ec95352c154f108ba50dc
+  - gid: D5/S3/Quantum/Measurement/FourQubitParentConstruction.scalarB_posSemidef_iff
+    target_statement_id: sha256:51c0b7784dc30b230c33e6130813ce55f2b0f56d8948986f668f045dcd555905
+  - gid: D5/S3/Quantum/Schatten/TraceNorm.transitionMass_sq
+    target_statement_id: sha256:a2d0a838066e82e6b9dbed2c00ea904afe5a9ae566ce8d089852d367718f9fa6
+  - gid: D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.reindex_traceNorm
+    target_statement_id: sha256:2422ccb9af655e75065a2ca7f28f6fdcc73bda08849c764524e19f7de31b786b
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - e57bdc5f02a09ac4830ccf8b295ad493b31599d4810f7b48b44cc8ef9a34c03d
+    - 0216c3861467dc748e9d88f4c49c1dbd45967a3eb221141e166997c56c000023

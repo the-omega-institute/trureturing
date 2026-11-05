@@ -1,0 +1,50 @@
+**Definition 28.2 (whole charging domain).** For the specified full-archive
+then handoff execution, retain and charge the original full archive; no
+reversible erasure, deallocation or release of its grants is performed.
+During conversion the source, full archive, acquired access list, copied
+authorized words, source/branch correspondence, representative word,
+selected destination backing and pending output/workspace coexist.
+Copies and representative buffers may be cleared/reused only with their
+actual charged work after construction and service return. Source-reference
+widths, descriptor fields and table links are separate material, even
+when their contents have a singleton conditional alphabet.
+
+Source construction has the located source-field count $3+4P+8S$ of
+Proposition 22.1. Full-mode tape acquisition has its $V+3S+4D$ auxiliary
+data-field assignments there, in addition to grant/allocation operations.
+Selected conversion creates $S$ actual four-field descriptors and exactly
+$D_\chi$ linked side cells; an append to an already located header uses
+the same four data-field assignments per cell as §22. Locating descriptors,
+canonical-list insertion/linking, root/head bindings, initialization,
+reference copies and grant operations are additional. After conversion a
+selected event at depth $d$ makes $d$ selected ancestor appends; an
+unselected event makes none. Both still pay source navigation, event-kind
+and predicate evaluation, pending maintenance and any new descriptor.
+
+For one actual run let $c_j$ count each actual operation in the primitive
+categories of Assumption 20.1, together with installation/grants, request
+bit retention/parsing, source traversal, copy/scan, backed-counter work,
+canonical table lookup/insertion, predicate steps, ancestor comparisons,
+allocation/initialization, answer construction, bit output, End/ACK,
+return and scratch clearing/reuse. With any specified per-occurrence
+tariffs the total price is their sum over this same run, retaining
+reference-width dependence where the tariff has it. Equations
+(AA.94)–(AA.95) give exact contributions to this vector; they do not
+replace the remaining $c_j$ by zero or by separately optimal runs.
+Simultaneous scratch includes full acquired frames, unary index/length
+marks, traversal stacks, pending appends, finite-word/occurrence counters,
+copy and output buffers and their links. The literal converter may
+materialize the whole representative, so it has no claimed linear-work
+or bounded-scratch advantage. Even before handoff, $D$ and the complete
+input length grow quadratically in $n$. An online selected-only service
+would omit initial full retention, but is a different run and supplies
+no deletion claim about this handoff run.
+
+The indispensable-coordinate theorem is about whole-coordinate access
+on the complete fixed endpoint fibre. It does not assert that every
+adaptive algorithm must read every such coordinate on every run. Giving
+an acquired order bit directly changes the interface and can suffice
+here; giving an observable work meter changes the conditioning. No
+whole-price optimum, universal generator minimum, physical bound or
+bounded-memory consequence of finite program size follows.
+

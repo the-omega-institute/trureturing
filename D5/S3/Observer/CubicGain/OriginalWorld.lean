@@ -28,7 +28,7 @@ private theorem coefficients_polynomial (a : Gain) :
   simp [Polynomial.ofFn_eq_sum_monomial,Fin.sum_univ_four,gainCoefficients,gainPoly]
   ring
 
-private theorem coefficient_degree (c : Gain) : (Polynomial.ofFn 4 c).degree ≤ 3 :=
+theorem coefficient_degree (c : Gain) : (Polynomial.ofFn 4 c).degree ≤ 3 :=
   Polynomial.degree_le_of_natDegree_le
     (Nat.le_of_lt_succ (Polynomial.ofFn_natDegree_lt (by norm_num) c))
 

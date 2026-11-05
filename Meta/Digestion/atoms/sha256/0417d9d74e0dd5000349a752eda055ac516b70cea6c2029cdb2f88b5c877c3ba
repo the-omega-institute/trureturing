@@ -1,0 +1,85 @@
+**Theorem 39.2 (exact source-relative obstruction at acquired cuts).**
+For this one fixed total $C^\dagger$ and every $e\ge0$,
+
+$$
+K_{C^\dagger}(w_e^0)\sim_{Q_{C^\dagger}}K_{C^\dagger}(w_e^1)
+\quad\Longleftrightarrow\quad
+M_e\text{ never halts on blank input}.
+\tag{AA.122}
+$$
+
+In the halting case a finite common legal addressed-growth continuation
+followed by FetchSelected$(2)$ distinguishes the literal selected
+identity. NextSelected$(2)$ on the same two continued cuts actually
+consumes that recorded identity and grows its current source in one
+run, while the other returns OutOfRange without growth. Thus
+undecidability concerns the complete acquired-source task itself.
+
+Proof. First suppose $M_e$ never halts. Consider any common legal event
+continuation from $t_e$, with the two controls initially $0,1$. If a
+reset or setting event occurs, both next controls are equal. Thereafter
+the deterministic selector gives equal bits on every common event,
+regardless of what machine indices later addresses encode. It suffices
+to consider the prefix before the first such event.
+
+Root promotion has already occurred and cannot recur. Before a reset or
+setting event, every possible test event must have first index $j=e$.
+For $j<e$, the cone $L^jR$ is still an alpha leaf at the cut; reaching
+any strict-descendant test address in that cone requires its split
+$S_{L^jR}$, a reset. For $j>e$, reaching that cone requires the as-yet
+unperformed pure-spine split $S_{L^{e+1}}$, also a reset. This covers all
+$j\ne e$ and uses actual creation prerequisites, not a promise restricting
+the client's future requests. Promotions or arbitrary work elsewhere do
+not bypass the creating splits. The common source can grow arbitrarily
+elsewhere, but any path to such a test has already made the controls equal.
+
+The tests remaining in the active cone have the form
+$P_{r_eL^{n+2}R}$. Before synchronization their bits are nevertheless zero
+in both states because $H(e,n)$ is false for every finite $n$. All other
+nonsynchronizing future events have bit zero. The original root selected
+identity is preserved. Thus the bit words are equal for every actual
+legal continuation, whether synchronization eventually occurs or not.
+There is no requirement to decide whether it will occur. We have
+$0\equiv_{t_e}1$; Proposition 36.2 proves equality for the entire request
+task, including arbitrary selected-consumer interleavings.
+
+Now suppose $M_e$ halts within $n$ steps, choosing any sufficiently large
+finite $n\ge0$. At $t_e$, the address $r_eLL$ is a beta leaf, created by
+$b_e$. Execute the splits
+
+$$
+S_{r_eL^2},\ S_{r_eL^3},\ \ldots,\ S_{r_eL^{n+2}}
+\quad\text{followed by}\quad
+c_{e,n}=P_{r_eL^{n+2}R}.
+\tag{AA.123}
+$$
+
+For $n=0$ this split list has one entry. Each split acts on the current
+left beta descendant produced by the preceding one. The last split
+creates precisely the right alpha leaf promoted by $c_{e,n}$. Hence
+this is a legal finite continuation from both current sources. None of
+these splits is pure-left, at an offshoot root $L^jR$, or at the one-left
+gate $L^jRL$: their first $R$ is the one in $r_e$, followed by at least
+two $L$'s. Nor is any a setting promotion. They preserve the controls
+$0,1$ and select nothing. The final promotion is exactly the test for
+$(e,n)$, selecting zero in state $0$ and one in state $1$.
+
+Let $p=r_eL^{n+2}R$. The new selected words are, respectively,
+$P_\varepsilon$ and $P_\varepsilon P_p$. Their actual local records are
+acquired by §32 at these same events, including the mark at $p$ and its
+proper-ancestor side appends. FetchSelected$(2)$ thus returns OutOfRange
+in the first run and the literal $P_p$ in the second. It preserves those
+records and makes no source change. Now NextSelected$(2)$ in the second
+run calls that actual acquired decoder, retains $P_p$ and its address,
+and navigates to the current beta leaf $p$. The left descent there is
+empty, so it executes the genuinely enabled $S_p$ on the bound source,
+returning both $P_p$ and $S_p$. This split is unselected, because $p$
+ends in $R$ after an internal $R$ and is in none of the reset-split
+classes, and all remaining split cases select zero. Its maintenance
+still creates the new empty descriptor and logical child marks.
+The first run instead returns OutOfRange, performs no growth and keeps
+its source. The returned full words and actual source successors differ.
+This is not a guessed old identity or a free response oracle used to
+manufacture a separation. It proves failure of (AA.112), completing
+both directions of (AA.122). $\square$
+

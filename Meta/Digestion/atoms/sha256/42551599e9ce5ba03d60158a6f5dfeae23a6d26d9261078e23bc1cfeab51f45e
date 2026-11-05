@@ -1,0 +1,47 @@
+**Definition 9.1 (normalized effect measures).** Write
+
+$$
+\operatorname{Dens}_2
+ =\{E\in M_2(\mathbb C):E=E^\dagger,\ E\succeq0,\ \operatorname{Tr}E=1\},
+\qquad
+\mathcal K=\operatorname{Dens}_2\times U(4).
+\tag{9.2}
+$$
+
+For an original protocol of Definition 1.2, omit its zero effects and set, for every remaining outcome,
+
+$$
+t_y=\operatorname{Tr}D_y>0,\qquad E_y=D_y/t_y,
+\qquad
+\mu=\sum_{y:D_y\ne0}t_y\,\delta_{(E_y,U_y)}.
+\tag{9.3}
+$$
+
+Here $\delta_{(E,U)}$ denotes a point mass, distinct from the certificate defect $\delta(b)$ of (8.4). A positive semidefinite effect of trace zero is zero, and its summand in (1.4) is zero for every feedback unitary. Omitting it changes neither the channel nor the completeness relation and imposes no condition on its feedback. All outcomes with nonzero contribution remain present.
+
+Let $\mathcal M$ be the following set of positive finite Borel measures on $\mathcal K$:
+
+$$
+\mathcal M
+ =\left\{\mu\ge0:\ \mu(\mathcal K)=2,
+                    \quad\int_{\mathcal K}E\,d\mu(E,U)=I_2\right\}.
+\tag{9.4}
+$$
+
+The measure (9.3) belongs to $\mathcal M$, since $\sum_y t_y=\operatorname{Tr}I_2=2$ and $\sum_y t_yE_y=I_2$. The unitary in each atom is the actual original $U_y$, shared by all pieces of that outcome; it is not replaced by feedback optimized after a refinement.
+
+For an atom and a measure define the linear maps
+
+$$
+\begin{aligned}
+G_{(E,U)}(X)
+ &=U\bigl((R_0E^{\mathsf T}R_0^\dagger)\circ X\bigr)U^\dagger,\\
+\Phi_\mu(X)
+ &=\int_{\mathcal K}G_{(E,U)}(X)\,d\mu(E,U),
+ \qquad X\in M_4(\mathbb C).
+\end{aligned}
+\tag{9.5}
+$$
+
+The integrals are entrywise finite-dimensional integrals. For (9.3), homogeneity in the effect gives $\Phi_\mu=\Phi$ exactly.
+

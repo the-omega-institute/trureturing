@@ -1,0 +1,80 @@
+**Proposition 28.1 (the family bill and its conditioning).** On any lawful
+growth history to $t_n$, with one complete successful growth request per
+event and no additional requests, the actual quantities are
+
+$$
+\begin{aligned}
+P&=n+3,& S&=n+4,& N&=2n+7,& V&=3n+12,\\
+D&=n^2+5n+7,&
+D_\chi:=\sum_{e\in E_\chi(t_n)}|\operatorname{addr}(e)|&=n+3.
+\end{aligned}
+\tag{AA.94}
+$$
+
+The old literal archive has $S$ headers and $D$ side cells. Direct
+selected literal tapes with a descriptor at every branch have $S$
+descriptors and $D_\chi$ side cells, despite only the root having a
+nontrivial selected-word choice. The fixed-access counts are respectively
+$n+1$ and one, and the selected conditional alphabet is two, or one
+fixed-width content bit. These are four different resource quantities.
+
+With $A=R_\chi(t_n)$ the handoff's first authorized complete-tape scans
+read exactly
+
+$$
+\sum_{p\in A}|W_p|=n^2+5n+5=D-2
+\tag{AA.95}
+$$
+
+side cells, and its construction makes exactly $D_\chi$ selected side
+appends. An optional literal selected-address journal has
+$2D_\chi+2=2n+8$ address-framing bits. A materialized representative
+full-address journal in the converter has $2D+N=2n^2+12n+21$ such bits.
+The source, pointers, headers, lengths, control, rights and temporary
+work are additional to all these payloads. If the access list is received
+in the framing of Assumption 26.1, $A=R_\chi(t_n)$ has an additional
+$n^2+3n+3$ ingress bits: $n+2$ count bits and $(n+1)^2$ address bits.
+A locally constructed source-only list instead pays its actual traversal,
+backing and binding work, with no such incoming list assumed. For example
+one fixed preparation program can compute (AA.82) from the acquired
+source and (AA.86), build this list and bind only these authorized reads.
+The current owner supplies the required live grants in either case.
+
+For the four-bit installation, the entire growth request stream contains
+$5N+2D=2n^2+20n+49$ input bits, and its growth replies contain
+$6N+2D=2n^2+22n+56$ bits, before their separately charged End/acknowledgement
+edges. Handoff adds its four request bits and four HandoffOK reply bits.
+With the received-list alternative, growth, list, Handoff and the one
+following NextSelected request together receive $3n^2+23n+62$ bits.
+The subsequent NextSelected$(1)$ adds six request bits. Its reply has
+$4n+18$ bits if the first selected event is $S_q$, and fourteen if it is
+$S_R$, followed in either case by End/acknowledgement/Return. This actual
+next action creates two source vertices and one empty selected descriptor;
+it appends no selected side cell. The two paths therefore need not have
+equal service runtime, output length or total price.
+
+Proof. Count events in (AA.87) and use (AA.78). The depth sum of spine
+splits is $(n+1)(n+2)/2$; of the $n$ side promotions it is $n(n+3)/2$;
+the two events at $q$ contribute $2(n+2)$ and the two at $R$ contribute
+two. Root events contribute zero. Their sum is $D$ in (AA.94).
+Only $S_q,S_R$ are selected, giving $D_\chi=n+2+1$. Projection appends
+one cell at each proper ancestor, so these sums are exact cell/append
+counts. Theorem 25.2 gives the support and alphabet claims.
+
+The root full tape has length $2n+5$. Equation (AA.89) gives lengths
+$2n+4-2i$ at $p_i$, $1\le i\le n$, whose sum is $n^2+3n$.
+These give (AA.95). The omitted $p_{n+1}$ tape has the forced two right
+symbols; the other omitted tapes are empty. Address framing is the
+credited $2|p|+1$ convention of Proposition 22.2, giving both journal
+counts without kind bits on the lawful domain. A request contributes
+four tag bits and $2|p|+1$ address bits; a growth reply contributes four
+tag bits, one kind bit and those same address bits. Summing proves
+the stream formulas. The access list has addresses
+$\varepsilon,L,\ldots,L^n$, giving $1+\sum_{i=1}^n(2i+1)=(n+1)^2$
+address bits and $|U(n+1)|=n+2$ count bits. Adding these, Handoff
+and the next six-bit request to the growth stream gives the displayed
+combined ingress length. The subsequent request has four tag bits and
+$U(1)=10$. A Next reply has four tag bits and two kind/address pairs,
+with lengths $(n+2,n+3)$ or $(1,2)$ by (AA.90). Both new events are
+unselected splits. This proves the final counts. $\square$
+

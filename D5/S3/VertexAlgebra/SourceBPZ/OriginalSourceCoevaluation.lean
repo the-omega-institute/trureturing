@@ -34,11 +34,6 @@ open LatticeGeneratingFieldLocality LatticePositiveEnergy LatticeInvolution
 open LatticeAllStateField MvPolynomial OriginalSourcePairing SourcePairingLaws
 open SignedOscillatorWick OriginalCurrentMetric
 open LatticeHalfFock (gramComplex)
-open private modeMatrix complex_det_unit FactorialBilinear.form
-  FactorialBilinear.monomial_left from
-  D5.S3.VertexAlgebra.TwistedGround.SignedOscillatorWick
-open private substitution_monomial_weight from
-  D5.S3.VertexAlgebra.SourceBPZ.SourcePairingLaws
 
 /-- Same-mode inverse of the original integer-frequency Wick covariance. -/
 def inverseOscillator (D : LatticeData) : Oscillator D →ₐ[ℂ] Oscillator D :=

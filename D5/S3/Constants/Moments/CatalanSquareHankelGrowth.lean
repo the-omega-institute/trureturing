@@ -57,7 +57,7 @@ def catalanSquareHankelMatrix (n r : Nat) : Matrix (Fin n) (Fin n) Real :=
 def catalanSquareHankelDet (r n : Nat) : Real :=
   Matrix.det (catalanSquareHankelMatrix n r)
 
-private lemma beta_moment_formula (m : Nat) :
+lemma beta_moment_formula (m : Nat) :
     catalanMoment m = (catalan m : Real) := by
   rw [catalanMoment, catalanBetaMeasure, betaMeasure]
   change (∫ x : Real, (4 * x) ^ m

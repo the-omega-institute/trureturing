@@ -167,21 +167,12 @@ def digest(path):
 
 
 def coordinates(repository):
-    helper = Path(repository) / 'tools/scripts/report/lean-report-input.sh'
     lake = Path(repository) / '.lake'
-    # Pre-ensure validation must leave an absent .lake eligible for whole-tree
-    # donor seeding. Existing trees keep their reusable input memo.
+    # Keep pre-ensure queries out of the cold project tree. Hashing and memo
+    # eligibility are shared with the shell entry, in this process.
     with (nullcontext(str(lake / 'lean-input-memo')) if lake.exists() else
             tempfile.TemporaryDirectory(prefix='lean-report-input-memo.', dir=os.environ.get('TMPDIR'))) as memo:
-        env = dict(os.environ, STRATALINT_LEAN_INPUT_MEMO_ROOT=memo)
-        values = subprocess.check_output([str(helper), 'address', '--repository', str(repository)], text=True, env=env).strip().split(' ')
-    if len(values) != 4 or any(not HEX.fullmatch(value) for value in values):
-        raise ValueError('malformed repository input address')
-    repository_id, producer, sources, config = values
-    pair = subprocess.check_output([str(helper), 'coordinates', producer, producer, sources, config], text=True).strip().split(' ')
-    if len(pair) != 2 or pair[1] != repository_id or not HEX.fullmatch(pair[0]):
-        raise ValueError('malformed report input coordinates')
-    return dict(repository=repository_id, producer=producer, sources=sources, config=config, input=pair[0])
+        return selection.input_coordinates(repository, memo_root=memo)
 
 
 def production_origin(repository, executable, *, inputs=None):

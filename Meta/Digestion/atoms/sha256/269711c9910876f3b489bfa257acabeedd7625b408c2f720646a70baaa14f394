@@ -1,0 +1,34 @@
+### 例 8.3（关系表的纯度不等于条件物理纯度）
+
+取 $\omega(a)=\operatorname{Tr}(a)/2$。有限 GNS 表示可写成
+$v_h=h/\sqrt2$，内积为 Hilbert–Schmidt 内积。
+若 $h=k=I$，则 $G/t$ 秩一，但两条历史的条件物理态都是混态 $I/2$。
+若 $h=I,k=\sigma_z$，则 $p=q=1,c=0$，
+两个比较向量正交，条件物理态却仍同为 $I/2$。
+因此条件态相同也不等于比较射线相同。
+
+记录还涉及一个必须固定的转置约定。
+在矩阵接口 $\omega(a)=\operatorname{Tr}(\rho a)$ 中，相干控制两条历史，
+并保留路径记录，得到的未归一记录块为
+
+$$
+\frac12
+ \begin{pmatrix}
+  \operatorname{Tr}(h\rho h^*)&\operatorname{Tr}(h\rho k^*)\\
+  \operatorname{Tr}(k\rho h^*)&\operatorname{Tr}(k\rho k^*)
+ \end{pmatrix}
+ =\frac12\begin{pmatrix}p&\bar c\\c&q\end{pmatrix}.
+$$
+
+这里可先共同缩放 $h,k$，使控制操作成为合法分支；
+共同尺度不改变下述归一化。
+成功后记录态是 $G^{\mathsf T}/t$，其第二个 Bloch 坐标为
+$+2\operatorname{Im} c/t$，而 [(16)](#eq-c117-pair-ball) 的 Gram 表取负号。
+两者的谱、秩和纯度相同，不能因此忽略相位符号。
+直接比较相干历史还可验证
+
+$$
+\|v_h+e^{i\phi}v_k\|^2
+ =p+q+2\operatorname{Re}(e^{i\phi}c).
+$$
+

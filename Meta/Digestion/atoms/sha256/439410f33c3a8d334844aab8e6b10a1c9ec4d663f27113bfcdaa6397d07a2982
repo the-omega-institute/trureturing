@@ -1,0 +1,45 @@
+**定理 18.3（全部固定项的有限预算与零漂移归约）。**在 (18.1) 下，每个原有限比较矩阵都能在某个处处有限、非负、零对角、满足全部原始 (R) 且 $\Omega(1)=0$ 的可数含幺项模型中精确保留。
+
+**证明。**取 $v=Uz_1$，则 $Uv=1$，同步等距给 $q(v)=r(p_1)$、$r(v)=q(p_1)$。对任意实际数组 $s\in M_N$，原上界 (1.2) 给
+
+$$
+\begin{aligned}
+q_N(U_Ns)&=c_N(s,\mathbf v)
+\le3\left(q_N(s)+\frac{q(p_1)}N\right),\\
+r_N(U_Ns)&\le3\left(r_N(s)+\frac{r(p_1)}N\right),\\
+q_N(st)&\le3(q_N(s)+q_N(t)),\\
+r_N(st)&\le3(r_N(s)+r_N(t)).
+\end{aligned}
+\tag{18.8}
+$$
+
+固定原标签 $a_1,\ldots,a_m$，用自由含幺项代数的唯一单位约简正规形，解释 $x_i\mapsto\Lambda_Na_i$、单位符号为真实 $\mathbf1$。置 $C_1=\max\{q(p_1),r(p_1)\}$，在正规形上递归定义
+
+$$
+\begin{aligned}
+B(1)&=0,&
+B(x_i)&=\max\{q(a_i),r(a_i)\},\\
+B(Us)&=3(B(s)+C_1),&
+B(st)&=3(B(s)+B(t))\quad(s,t\ne1).
+\end{aligned}
+\tag{18.9}
+$$
+
+含单位因子的乘积先约简，故任意 $s,t$ 都有 $B(st)\le3(B(s)+B(t))$，而非无条件的递推等式。式 (18.2)、(18.8) 逐项给
+
+$$
+q_N(s_N),r_N(s_N)\le B(s),\qquad
+0\le c_N(s_N,t_N)\le3(B(s)+B(t)).
+\tag{18.10}
+$$
+
+每个预算有限且不依赖 $N$。对全部可数有序项对取共同对角子列，得到处处有限核 $c_\infty$；非负、零对角及每条完整 (R) 都通过有限标量等式传到极限。单位符号始终是真单位，且
+
+$$
+q_N(\mathbf p_j)=q(p_j)/N,\qquad
+r_N(\mathbf p_j)=r(p_j)/N.
+\tag{18.11}
+$$
+
+故 $\Omega_\infty(1)=0$，同时 $c_\infty(x_i,x_j)=c(a_i,a_j)$。此构造没有进行零费用商。
+

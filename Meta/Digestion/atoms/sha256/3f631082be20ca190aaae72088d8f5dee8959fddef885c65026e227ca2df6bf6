@@ -1,0 +1,22 @@
+**Theorem 6.2 (Prescribed-schedule classification).** In the full domain of Definition 6.1, every initial state tends to zero if and only if the following appropriate condition holds:
+
+$$
+\begin{array}{ll}
+\lambda\ne0:&\text{there are infinitely many events and }\mathcal E_\varepsilon=\infty;\\[2pt]
+\lambda=0:&\text{an orthogonal consecutive gap exists, or there are infinitely many events and }\mathcal E_\varepsilon=\infty.
+\end{array}
+\tag{6.4}
+$$
+
+Here $\lambda=0$ is exactly $\alpha=b/(a+2b)\in(0,1)$. The exact stable spaces are as follows.
+
+1. In every case in (6.4), $S_{\varepsilon,\alpha}=\mathbb R^2$. At $\lambda=0$, an orthogonal gap from $t_j$ to $t_{j+1}$ makes every trajectory exactly zero from time $t_{j+1}+1$ onward.
+2. If there are infinitely many events, $\mathcal E_\varepsilon<\infty$, and no orthogonal-gap annihilation at $\lambda=0$, then $S_{\varepsilon,\alpha}$ is a line. The schedule-and-parameter functional $L_{\varepsilon,\alpha}$ given by (6.9) in the singular case and (6.20) in the nonsingular case is nonzero and satisfies
+
+$$
+S_{\varepsilon,\alpha}=\ker L_{\varepsilon,\alpha},\qquad
+\lim_{t\to\infty}\|u_t\|_Q=|L_{\varepsilon,\alpha}(u_0)|.
+\tag{6.5}
+$$
+
+3. With no events, $S_{\varepsilon,\alpha}=\{0\}$. With finitely many events and $\lambda\ne0$, it is also $\{0\}$.

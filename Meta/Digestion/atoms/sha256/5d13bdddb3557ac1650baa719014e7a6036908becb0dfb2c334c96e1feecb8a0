@@ -1,0 +1,72 @@
+**定理 20.1（A necessary original-cone equality, only at $S=1$）。**
+Use Definition 19.1 at $S=1$. Suppose an original sector deficient
+at $p$ attains $E_2$. For every actual connected component $C$ of
+$H[N_H(p)]$, set $D=\{p\}\cup C$ and let
+$\varepsilon_D(0)$ be the minimum of positive token adjacency on
+
+$$
+\operatorname{span}_{\mathbb C}
+\{|T\rangle:T\subseteq D\times[2],\ |T|=|D|\}
+\tag{20.1}
+$$
+
+for the actual induced cone $H[D]=K_1\vee H[C]$. The carrier in
+(20.1) is the entire original Boolean zero-weight carrier, with
+all spin-zero and spin-one choices and all feasible component
+weights. Then necessarily
+
+$$
+\varepsilon_D(0)=e_C(0),
+\tag{20.2}
+$$
+
+where $e_C(0)$ is the uniform-spin-one zero-weight minimum in
+(19.3). This is a necessary condition for the stated deficient
+minimum, not a sufficient condition or an equivalence.
+
+Proof. At $S=1$ the deficient spin is $J_p=0$. Theorem 19.2
+provides a unit actual ground vector $\Psi=\chi_p\otimes f$ with
+all other spins one, and each actual component is separately a
+singlet with reduced support on its local zero-weight ground
+space. Thus $D$ has total weight zero and
+$\langle\Psi,K_D\Psi\rangle=e_C(0)$; all spokes vanish because
+$p$ is spin zero. Put $O=V(H)\setminus D$ and
+$\rho_O=\operatorname{tr}_D|\Psi\rangle\langle\Psi|$.
+It has joint weight zero. Every crossing edge incident to $p$
+has zero expectation, and every crossing edge incident to $C$
+has zero expectation by the component version of (19.9). Hence,
+with $b_O=\operatorname{tr}(\rho_OK_O)$,
+
+$$
+E_2=e_C(0)+b_O.
+\tag{20.3}
+$$
+
+Choose any normalized minimizer $v_D$ on the entire carrier
+(20.1), with no local-spin restriction. Its one-site ladder
+expectations vanish because its total weight is zero. The product
+density $|v_D\rangle\langle v_D|\otimes\rho_O$ belongs to the
+original whole-graph half-filled carrier; each crossing edge
+has zero expectation. The whole-space variational principle gives
+
+$$
+e_C(0)+b_O=E_2\leq\varepsilon_D(0)+b_O.
+\tag{20.4}
+$$
+
+On the other hand, for any unit $u_C\in\mathcal G_C(0)$,
+$\chi_p\otimes u_C$ is an actual normalized vector in (20.1)
+with energy $e_C(0)$. Thus $\varepsilon_D(0)\leq e_C(0)$.
+Together with (20.4) this proves equality. If $O=\varnothing$,
+use $\rho_O=1$ and $b_O=0$ and the proof is unchanged.
+The same actual outside density is retained throughout; no
+independently minimized outside energy is substituted.
+
+The spin-one hypothesis is used because the selected singlet pair
+is the entire fibre at $p$. For $S\geq2$, a deficient spin can
+leave nonzero spin on the remaining coordinates at $p$, and those
+coordinates can remain entangled with the outside. Theorem 19.2
+does not remove that whole fibre. No whole-fibre cone equality
+at those scales follows from this argument or is asserted here.
+$\square$
+
