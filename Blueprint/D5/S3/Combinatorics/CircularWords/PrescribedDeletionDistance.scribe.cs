@@ -57,8 +57,8 @@ internal sealed class PrescribedDeletionDistanceDocument : IScribeDocumentDefini
                 + "label must belong to ReadoutAlphabet A x_i; erased coordinates may be filled with the true "
                 + "word for this existence/uniqueness argument, because those values are never compared. "
                 + "The theorem gives a unique codeword under 2t+e<k-2. Three-label reconstruction transfers "
-                + "codeword uniqueness to circle uniqueness. This is an exact application of an existing "
-                + "generic theorem and should be checked transiently, not retained as a bind-only declaration.")),
+                + "codeword uniqueness to circle uniqueness. This is an exact application of the existing "
+                + "generic theorem to the actual circular deletion code.")),
             Paragraph(Text("Sharpness uses the same actual attaining pair C,D. Let Delta be its k-2 "
                 + "disagreeing labels. If 2t+e>=k-2, erase min(e,k-2) labels in Delta. Partition the remaining "
                 + "q<=2t labels into P,Q of sizes at most t. At labels in P receive D's readout and elsewhere "
