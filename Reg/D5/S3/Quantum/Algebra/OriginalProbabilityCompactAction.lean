@@ -6,7 +6,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Algebra.OriginalProbabilityCompactAction
 
 noncomputable section
-universe u v w
+universe u v w x y
 namespace Reg.D5.S3.Quantum.Algebra.OriginalProbabilityCompactAction
 
 structure Parameters where
@@ -85,7 +85,12 @@ def centeredActual : Realization centeredSignature.{u,v,w} := realize centeredSi
       Submodule.span ℝ (Set.range (fun g : ρ.range.topologicalClosure =>
         g.val.val (p.row 1-c))) = p.mass.ker ∧
       (p.mass.ker ≠ ⊥ → p.row 1-c ≠ 0) ∧
-      ∀ g : ρ.range.topologicalClosure, (∀ v : p.mass.ker, g.val.val v = v) → g = 1)
+      (∀ g : ρ.range.topologicalClosure, (∀ v : p.mass.ker, g.val.val v = v) → g = 1) ∧
+      ∃ r : ρ.range.topologicalClosure →* (p.mass.ker →L[ℝ] p.mass.ker)ˣ,
+        Continuous r ∧ Function.Injective r ∧
+        (∀ (g : ρ.range.topologicalClosure) (v : p.mass.ker),
+          ((r g).val v : p.V) = g.val.val v) ∧
+        IsCompact (r.range : Set (p.mass.ker →L[ℝ] p.mass.ker)ˣ))
   (fun e => nomatch e)
 
 abbrev centeredArena : Arena where
@@ -104,5 +109,81 @@ theorem centered_full_telescope_bridge :
 
 theorem centered_actual_positive : centeredArena.{u,v,w}.Law centeredActual :=
   centered_full_telescope_bridge.mp (@centered_continuation.{u,v,w})
+
+
+structure ProbabilityParameters where
+  V : Type u
+  [normed : NormedAddCommGroup V]
+  [space : NormedSpace ℝ V]
+  [finite : FiniteDimensional ℝ V]
+  Γ : Type v
+  [group : Group Γ]
+  I : Type w
+  F : Type x
+  O : F → Type y
+  [testNonempty : Nonempty F]
+  row : Γ → V
+  read : V →ₗ[ℝ] (I → ℝ)
+  injective : Function.Injective read
+  spanning : Submodule.span ℝ (Set.range row) = ⊤
+  positive : ∀ a i, 0 ≤ read (row a) i
+  label : ∀ f, O f → I
+  covering : ∀ i, ∃ f j, label f j = i
+  normalized : ∀ a f, HasSum (fun j => read (row a) (label f j)) 1
+  futurePrefix : Γ → I → I
+  shift : ∀ a g i, read (row (a*g)) i = read (row a) (futurePrefix g i)
+
+attribute [instance] ProbabilityParameters.normed ProbabilityParameters.space
+  ProbabilityParameters.finite ProbabilityParameters.group ProbabilityParameters.testNonempty
+
+abbrev probabilitySignature : Signature where
+  Params := ProbabilityParameters.{u,v,w,x,y}
+  State _ := Unit
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def probabilityActual : Realization probabilitySignature.{u,v,w,x,y} :=
+  realize probabilitySignature.{u,v,w,x,y}
+  (fun _ p _ => ∃ mass : p.V →ₗ[ℝ] ℝ, (∀ a, mass (p.row a) = 1) ∧
+    (∀ v f, HasSum (fun j => p.read v (p.label f j)) (mass v)) ∧
+∃ ρ : p.Γᵐᵒᵖ →* (p.V →L[ℝ] p.V)ˣ,
+    (∀ a g, (ρ (MulOpposite.op g)).val (p.row a) = p.row (a*g)) ∧
+    IsCompact (ρ.range.topologicalClosure : Set (p.V →L[ℝ] p.V)ˣ) ∧
+    ∃ c : p.V, mass c = 1 ∧
+      (∀ g : ρ.range.topologicalClosure, g.val.val c = c) ∧
+      (∀ (g : ρ.range.topologicalClosure) v, mass (g.val.val v) = mass v) ∧
+      Submodule.span ℝ (Set.range (fun a => p.row a-c)) = mass.ker ∧
+      Submodule.span ℝ (Set.range (fun g : ρ.range.topologicalClosure =>
+        g.val.val (p.row 1-c))) = mass.ker ∧
+      (mass.ker ≠ ⊥ → p.row 1-c ≠ 0) ∧
+      (∀ g : ρ.range.topologicalClosure, (∀ v : mass.ker, g.val.val v = v) → g = 1) ∧
+      ∃ r : ρ.range.topologicalClosure →* (mass.ker →L[ℝ] mass.ker)ˣ,
+        Continuous r ∧ Function.Injective r ∧
+        (∀ (g : ρ.range.topologicalClosure) (v : mass.ker),
+          ((r g).val v : p.V) = g.val.val v) ∧
+        IsCompact (r.range : Set (mass.ker →L[ℝ] mass.ker)ˣ))
+  (fun e => nomatch e)
+
+abbrev probabilityArena : Arena where
+  signature := probabilitySignature.{u,v,w,x,y}
+  Law R := ∀ p : ProbabilityParameters.{u,v,w,x,y}, R.readout () p ()
+
+/-- Arbitrary original outcome types and every probability normalization remain quantified. -/
+theorem probability_full_telescope_bridge :
+    (type_of% (@probability_frontend.{u,v,w,x,y})) ↔
+      probabilityArena.{u,v,w,x,y}.Law probabilityActual := by
+  constructor
+  · intro h p
+    exact h p.row p.read p.injective p.spanning p.positive p.label p.covering p.normalized
+      p.futurePrefix p.shift
+  · intro h V _ _ _ Γ I _ F O _ row read hinj hspan hpos label hcover hnorm futurePrefix hshift
+    exact h ⟨V,Γ,I,F,O,row,read,hinj,hspan,hpos,label,hcover,hnorm,futurePrefix,hshift⟩
+
+theorem probability_actual_positive : probabilityArena.{u,v,w,x,y}.Law probabilityActual :=
+  probability_full_telescope_bridge.mp (@probability_frontend.{u,v,w,x,y})
 
 end Reg.D5.S3.Quantum.Algebra.OriginalProbabilityCompactAction

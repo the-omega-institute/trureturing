@@ -15,6 +15,8 @@ public import Mathlib.Topology.Order.Compact
 public import Mathlib.MeasureTheory.Measure.Haar.Basic
 public import Mathlib.MeasureTheory.Group.Integral
 public import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
+public import Mathlib.Topology.Algebra.InfiniteSum.Order
+public import Mathlib.Topology.Algebra.InfiniteSum.Ring
 public import Mathlib.Tactic
 
 /-! Complete original prediction rows and their reversible continuations. -/
@@ -25,7 +27,7 @@ namespace D5.S3.Quantum.Algebra.OriginalProbabilityCompactAction
 
 open Set
 noncomputable section
-universe u v w
+universe u v w x y
 variable {V : Type u} [NormedAddCommGroup V] [NormedSpace ℝ V]
   [FiniteDimensional ℝ V] {Γ : Type v} {I : Type w}
 
@@ -157,6 +159,70 @@ theorem continuation_compact [Group Γ]
   exact hT k.unop a
 
 
+private theorem kernel_representation (H : Subgroup (V →L[ℝ] V)ˣ) [CompactSpace H]
+    (mass : V →ₗ[ℝ] ℝ)
+    (hpres : ∀ (g : H) v, mass (g.val.val v) = mass v)
+    (hfaithful : ∀ g : H, (∀ v : mass.ker, g.val.val v = v) → g = 1) :
+    ∃ r : H →* (mass.ker →L[ℝ] mass.ker)ˣ,
+      Continuous r ∧ Function.Injective r ∧
+      (∀ (g : H) (v : mass.ker), ((r g).val v : V) = g.val.val v) ∧
+      IsCompact (r.range : Set (mass.ker →L[ℝ] mass.ker)ˣ) := by
+  let T (g : H) : mass.ker →ₗ[ℝ] mass.ker := g.val.val.toLinearMap.restrict (by
+    intro v hv
+    change mass (g.val.val v) = 0
+    rw [hpres]
+    exact hv)
+  let R (g : H) : mass.ker →L[ℝ] mass.ker := (T g).toContinuousLinearMap
+  let r : H →* (mass.ker →L[ℝ] mass.ker)ˣ := {
+    toFun g := {
+      val := R g
+      inv := R g⁻¹
+      val_inv := by
+        apply ContinuousLinearMap.ext
+        intro v
+        apply Subtype.ext
+        change (g.val*g.val⁻¹).val v = v
+        rw [mul_inv_cancel]
+        rfl
+      inv_val := by
+        apply ContinuousLinearMap.ext
+        intro v
+        apply Subtype.ext
+        change (g.val⁻¹*g.val).val v = v
+        rw [inv_mul_cancel]
+        rfl }
+    map_one' := by apply Units.ext; apply ContinuousLinearMap.ext; intro v; apply Subtype.ext; rfl
+    map_mul' _ _ := by apply Units.ext; apply ContinuousLinearMap.ext; intro v; apply Subtype.ext; rfl }
+  have heval (g : H) (v : mass.ker) : ((r g).val v : V) = g.val.val v := rfl
+  let ev : (mass.ker →L[ℝ] mass.ker) →ₗ[ℝ] (mass.ker → mass.ker) := {
+    toFun A v := A v
+    map_add' _ _ := rfl
+    map_smul' _ _ := rfl }
+  have hev : Function.Injective ev := by
+    intro A B h
+    apply ContinuousLinearMap.ext
+    intro v
+    exact congrFun h v
+  have hcont : Continuous R := by
+    apply (ev.isClosedEmbedding_of_injective (LinearMap.ker_eq_bot.mpr hev)).toIsEmbedding.continuous_iff.mpr
+    apply continuous_pi
+    intro v
+    apply Continuous.subtype_mk
+    change Continuous (fun g : H => g.val.val (v : V))
+    fun_prop
+  have hr : Continuous r := Units.continuous_iff.mpr ⟨hcont,hcont.comp continuous_inv⟩
+  have hinj : Function.Injective r := by
+    intro g h hgh
+    have hh : r (g⁻¹*h) = 1 := by rw [map_mul,map_inv,hgh,inv_mul_cancel]
+    have he : g⁻¹*h = 1 := hfaithful _ (by
+      intro v
+      have hv := congrArg (fun u : (mass.ker →L[ℝ] mass.ker)ˣ => ((u.val v : mass.ker) : V)) hh
+      change ((r (g⁻¹*h)).val v : V) = (v : V) at hv
+      rw [heval] at hv
+      exact hv)
+    exact inv_mul_eq_one.mp he
+  exact ⟨r,hr,hinj,heval,isCompact_range hr⟩
+
 /-- The actual compact continuation closure has a normalized fixed center;
 its original mass-zero space is cyclic and the restricted action is faithful. -/
 theorem centered_continuation [Group Γ]
@@ -177,8 +243,13 @@ theorem centered_continuation [Group Γ]
         Submodule.span ℝ (Set.range (fun g : ρ.range.topologicalClosure =>
           g.val.val (row 1-c))) = mass.ker ∧
         (mass.ker ≠ ⊥ → row 1-c ≠ 0) ∧
-        ∀ g : ρ.range.topologicalClosure,
-          (∀ v : mass.ker, g.val.val v = v) → g = 1 := by
+        (∀ g : ρ.range.topologicalClosure,
+          (∀ v : mass.ker, g.val.val v = v) → g = 1) ∧
+        ∃ r : ρ.range.topologicalClosure →* (mass.ker →L[ℝ] mass.ker)ˣ,
+          Continuous r ∧ Function.Injective r ∧
+          (∀ (g : ρ.range.topologicalClosure) (v : mass.ker),
+            ((r g).val v : V) = g.val.val v) ∧
+          IsCompact (r.range : Set (mass.ker →L[ℝ] mass.ker)ˣ) := by
   classical
   obtain ⟨ρ,hρ,hcompact⟩ := continuation_compact row read hread hspan hbound futurePrefix hshift
   let H := ρ.range.topologicalClosure
@@ -270,12 +341,8 @@ theorem centered_continuation [Group Γ]
       change row a-c ∈ Submodule.span ℝ (Set.range (fun g : H => g.val.val (row 1-c)))
       rw [← hg]
       exact Submodule.subset_span ⟨g,rfl⟩
-  refine ⟨ρ,hρ,hcompact,c,hmc,hc,hpres,hW,hcyclic,?_,?_⟩
-  · intro hnonzero he
-    apply hnonzero
-    rw [← hcyclic,he]
-    simp
-  · intro g hg
+  have hfaithful : ∀ g : H, (∀ v : mass.ker, g.val.val v = v) → g = 1 := by
+    intro g hg
     apply Subtype.ext
     apply Units.ext
     ext v
@@ -285,6 +352,85 @@ theorem centered_continuation [Group Γ]
     change g.val.val (v-mass v • c) = v-mass v • c at hh
     rw [map_sub,map_smul,hc] at hh
     simpa only [sub_add_cancel] using congrArg (fun z : V => z+mass v • c) hh
+  refine ⟨ρ,hρ,hcompact,c,hmc,hc,hpres,hW,hcyclic,?_,hfaithful,?_⟩
+  · intro hnonzero he
+    apply hnonzero
+    rw [← hcyclic,he]
+    simp
+  · exact kernel_representation H mass hpres hfaithful
+
+
+private theorem normalized_prediction_mass {F : Type x} {O : F → Type y} [Nonempty F]
+    (row : Γ → V) (read : V →ₗ[ℝ] (I → ℝ))
+    (hspan : Submodule.span ℝ (Set.range row) = ⊤)
+    (label : ∀ f, O f → I)
+    (hnorm : ∀ a f, HasSum (fun j => read (row a) (label f j)) 1) :
+    ∃ mass : V →ₗ[ℝ] ℝ, (∀ a, mass (row a) = 1) ∧
+      ∀ v f, HasSum (fun j => read v (label f j)) (mass v) := by
+  classical
+  have hex (v : V) : ∃ m : ℝ, ∀ f, HasSum (fun j => read v (label f j)) m := by
+    have hv : v ∈ Submodule.span ℝ (Set.range row) := by rw [hspan]; trivial
+    induction hv using Submodule.span_induction with
+    | mem v hv =>
+      obtain ⟨a,rfl⟩ := hv
+      exact ⟨1,hnorm a⟩
+    | zero => exact ⟨0,by intro f; simpa using (hasSum_zero : HasSum (fun _ : O f => (0 : ℝ)) 0)⟩
+    | add v w hv hw hiv hiw =>
+      obtain ⟨m,hm⟩ := hiv
+      obtain ⟨n,hn⟩ := hiw
+      exact ⟨m+n,fun f => by simpa only [map_add,Pi.add_apply] using (hm f).add (hn f)⟩
+    | smul r v hv hiv =>
+      obtain ⟨m,hm⟩ := hiv
+      exact ⟨r*m,fun f => by simpa only [map_smul,Pi.smul_apply,smul_eq_mul] using (hm f).mul_left r⟩
+  let f0 : F := Classical.choice inferInstance
+  let m (v : V) := (hex v).choose
+  have hm (v : V) (f : F) : HasSum (fun j => read v (label f j)) (m v) := (hex v).choose_spec f
+  let mass : V →ₗ[ℝ] ℝ := {
+    toFun := m
+    map_add' v w := (hm (v+w) f0).unique (by
+      simpa only [map_add,Pi.add_apply] using (hm v f0).add (hm w f0))
+    map_smul' r v := (hm (r • v) f0).unique (by
+      simpa only [map_smul,Pi.smul_apply,smul_eq_mul,RingHom.id_apply] using (hm v f0).mul_left r) }
+  exact ⟨mass,fun a => (hm (row a) f0).unique (hnorm a f0),hm⟩
+
+/-- Nonnegative normalized original tests construct the mass, compact actual
+continuations and their faithful cyclic action on the full mass-zero space. -/
+theorem probability_frontend [Group Γ] {F : Type x} {O : F → Type y} [Nonempty F]
+    (row : Γ → V) (read : V →ₗ[ℝ] (I → ℝ))
+    (hread : Function.Injective read)
+    (hspan : Submodule.span ℝ (Set.range row) = ⊤)
+    (hpos : ∀ a i, 0 ≤ read (row a) i)
+    (label : ∀ f, O f → I) (hcover : ∀ i, ∃ f j, label f j = i)
+    (hnorm : ∀ a f, HasSum (fun j => read (row a) (label f j)) 1)
+    (futurePrefix : Γ → I → I)
+    (hshift : ∀ a g i, read (row (a*g)) i = read (row a) (futurePrefix g i)) :
+    ∃ mass : V →ₗ[ℝ] ℝ, (∀ a, mass (row a) = 1) ∧
+      (∀ v f, HasSum (fun j => read v (label f j)) (mass v)) ∧
+    ∃ ρ : Γᵐᵒᵖ →* (V →L[ℝ] V)ˣ,
+      (∀ a g, (ρ (MulOpposite.op g)).val (row a) = row (a*g)) ∧
+      IsCompact (ρ.range.topologicalClosure : Set (V →L[ℝ] V)ˣ) ∧
+      ∃ c : V, mass c = 1 ∧
+        (∀ g : ρ.range.topologicalClosure, g.val.val c = c) ∧
+        (∀ (g : ρ.range.topologicalClosure) v, mass (g.val.val v) = mass v) ∧
+        Submodule.span ℝ (Set.range (fun a => row a-c)) = mass.ker ∧
+        Submodule.span ℝ (Set.range (fun g : ρ.range.topologicalClosure =>
+          g.val.val (row 1-c))) = mass.ker ∧
+        (mass.ker ≠ ⊥ → row 1-c ≠ 0) ∧
+        (∀ g : ρ.range.topologicalClosure,
+          (∀ v : mass.ker, g.val.val v = v) → g = 1) ∧
+        ∃ r : ρ.range.topologicalClosure →* (mass.ker →L[ℝ] mass.ker)ˣ,
+          Continuous r ∧ Function.Injective r ∧
+          (∀ (g : ρ.range.topologicalClosure) (v : mass.ker),
+            ((r g).val v : V) = g.val.val v) ∧
+          IsCompact (r.range : Set (mass.ker →L[ℝ] mass.ker)ˣ) := by
+  classical
+  obtain ⟨mass,hmass,hall⟩ := normalized_prediction_mass row read hspan label hnorm
+  have hbound : ∀ a i, read (row a) i ∈ Set.Icc (0 : ℝ) 1 := by
+    intro a i
+    obtain ⟨f,j,rfl⟩ := hcover i
+    refine ⟨hpos a _,?_⟩
+    simpa using sum_le_hasSum ({j} : Finset (O f)) (fun k _ => hpos a (label f k)) (hnorm a f)
+  exact ⟨mass,hmass,hall,centered_continuation row read hread hspan hbound futurePrefix hshift mass hmass⟩
 
 end
 end D5.S3.Quantum.Algebra.OriginalProbabilityCompactAction
