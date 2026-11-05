@@ -16,7 +16,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Ascending
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
-open private mask_complement from D5.S3.Combinatorics.Circle.ThreeBitSource
+open D5.S3.Combinatorics.Circle.ThreeBitSource (mask_complement)
 open private size sourceMod base newBase chainLength chainStart oldValue newValue
   chain_values negatives source_signs
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source

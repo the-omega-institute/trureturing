@@ -27,8 +27,7 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakParityTail
 open scoped BigOperators
 open private physicalDomain physical_coordinates selected_arithmetic
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakParityTail.PhysicalSelection
-open private mask_complement
-  from D5.S3.Combinatorics.Circle.ThreeBitSource
+open D5.S3.Combinatorics.Circle.ThreeBitSource (mask_complement)
 open private size base newBase oldValue newValue chainLength chainStart
   chainOf chain_index chain_values negatives source_totals
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
