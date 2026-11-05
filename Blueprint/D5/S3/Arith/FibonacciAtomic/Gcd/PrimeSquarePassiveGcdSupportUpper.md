@@ -6,9 +6,9 @@ A single memoized original prime-square tree determines every positive gcd futur
 
 **Theorem 1.1 (One tree for all natural source pairs).**
 
-Lean statement: `D5/S3/Arith/FibonacciAtomic/PrimeSquarePassiveGcdSupportUpper.result`
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Gcd/PrimeSquarePassiveGcdSupportUpper.result`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/PrimeSquarePassiveGcdSupportUpper.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Gcd/PrimeSquarePassiveGcdSupportUpper.result` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -24,6 +24,6 @@ The union has at most r+(p-2) elements. Uniform dependent memoization pays exact
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/PrimeSquarePassiveGcdSupportUpper.result`
-- Dependency: [D5/S3/Arith/FibonacciAtomic/PrimePowerPassiveGcdController](PrimePowerPassiveGcdController.md)
-- Dependency: [D5/S3/ConceptDynamics/Experiment/PassiveQueryMemoization](../../ConceptDynamics/Experiment/PassiveQueryMemoization.md)
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Gcd/PrimeSquarePassiveGcdSupportUpper.result`
+- Dependency: [D5/S3/Arith/FibonacciAtomic/PrimePowerPassiveGcdController](../PrimePowerPassiveGcdController.md)
+- Dependency: [D5/S3/ConceptDynamics/Experiment/PassiveQueryMemoization](../../../ConceptDynamics/Experiment/PassiveQueryMemoization.md)

@@ -8,7 +8,7 @@ Equality cases of both affine dyadic-cost bounds on Mersenne probability simplic
 
 $$\forall h: \mathbb{N}, (2 \le h \Rightarrow \forall p: \operatorname{Fin}\left((2^{h} - 1)\right) \to \mathbb{R}, (((\forall i: \operatorname{Fin}\left((2^{h} - 1)\right), 0 \le \operatorname{p}\left(i\right)) \land \sum_{i \in \operatorname{Fin}\left((2^{h} - 1)\right)}\operatorname{p}\left(i\right) = 1) \Rightarrow \forall t: \mathbb{R}, (t = \operatorname{min}\left(p\right) \Rightarrow ((\operatorname{L}\left(p\right) = (h 2^{h} - 2) t \Leftrightarrow \exists j: \operatorname{Fin}\left((2^{h} - 1)\right), (p = \operatorname{delta}\left(j\right) \lor p = \operatorname{v}\left(j\right))) \land (\operatorname{L}\left(p\right) = ((h + 2) 2^{h} - 2) t - 2 \Leftrightarrow (p = u \lor \exists r: \mathbb{N}, \exists j: \operatorname{Fin}\left((2^{h} - 1)\right), p = \operatorname{s}\left(r, j\right)))))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/MersenneDyadicEqualityLaws.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Dyadic/MersenneDyadicEqualityLaws.result` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -24,5 +24,5 @@ For a high-interval law set q(i)=Mp(i)-1. Its coordinates are nonnegative and su
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/MersenneDyadicEqualityLaws.result`
-- Dependency: [D5/S3/Arith/FibonacciAtomic/MersenneDyadicSupportLines](MersenneDyadicSupportLines.md)
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Dyadic/MersenneDyadicEqualityLaws.result`
+- Dependency: [D5/S3/Arith/FibonacciAtomic/MersenneDyadicSupportLines](../MersenneDyadicSupportLines.md)
