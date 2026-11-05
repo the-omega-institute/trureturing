@@ -20,7 +20,7 @@ For one map T, average the first m iterates of a point of K. Convexity keeps eac
 
 For a finite subfamily, the common fixed locus already obtained is closed and convex. Global commutation makes the next map preserve that locus, so the single-map result extends the fixed family. The finite fixed loci have the finite intersection property inside compact K; their intersection contains a point fixed by every index. The empty index case follows from nonemptiness of K.
 
-The proof is a native integration of the immutable ATLAS Lean supplier for this known theorem. Its precise revision, retained license and adopted-pin retirement condition are in the Library note. This theorem asserts existence only; it supplies no unique point, algorithm, convergence rate or measured downstream application.
+This theorem asserts existence only; it supplies no unique point, algorithm or convergence rate.
 
 ## References
 
