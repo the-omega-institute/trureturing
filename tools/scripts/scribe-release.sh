@@ -8,6 +8,10 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/../.." && pwd -P)"
 if [[ -f "$ROOT/tools/scripts/maintenance_log.py" ]]; then
+  if [[ -n "${TRURETURING_MAINTENANCE_RUN_ID:-}" ]]; then
+    export TRURETURING_MAINTENANCE_PARENT_RUN_ID="$TRURETURING_MAINTENANCE_RUN_ID"
+  fi
+  unset TRURETURING_MAINTENANCE_RUN_ID
   run_id=""
   if run_id="$(python3 -B "$ROOT/tools/scripts/maintenance_log.py" begin \
       --repository "$ROOT" --script scribe-release --owner-pid "$$" --parent-pid "$PPID" \

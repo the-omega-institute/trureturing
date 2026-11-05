@@ -12,6 +12,7 @@ public sealed class HostCleanupScriptTests
     [InlineData("group_signal_has_one_native_delivery")]
     [InlineData("shared_common_directory_and_correlation")]
     [InlineData("failing_destination_is_best_effort")]
+    [InlineData("bash_owner_boundary")]
     [InlineData("consumer_audit")]
     public void MaintenanceLoggingPreservesCommandBehavior(string probe)
     {

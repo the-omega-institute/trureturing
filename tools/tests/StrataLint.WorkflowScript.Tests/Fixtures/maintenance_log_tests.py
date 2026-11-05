@@ -6,6 +6,7 @@ from pathlib import Path
 import signal
 import subprocess
 import sys
+import shutil
 import tempfile
 import time
 import unittest
@@ -55,12 +56,12 @@ class MaintenanceLogTests(unittest.TestCase):
             cwd=self.main, env=env, stdin=subprocess.DEVNULL,
             capture_output=True, check=True, timeout=15)
 
-    def assert_finished(self, code, script="fixture"):
+    def assert_finished(self, code, script="fixture", owner_pid=None):
         rows = self.rows(script)
         self.assertEqual(["run_started", "run_finished"], [row["event"] for row in rows])
         self.assertEqual(code, rows[-1]["exit_code"])
         self.assertEqual(rows[0]["run_id"], rows[-1]["run_id"])
-        self.assertEqual(rows[0]["pid"], os.getpid())
+        self.assertEqual(rows[0]["pid"], owner_pid or os.getpid())
         self.assertIsNone(rows[-1]["parent_run_id"])
 
     def native(self, code, *, script="fixture", input_data=None):
@@ -86,15 +87,16 @@ class MaintenanceLogTests(unittest.TestCase):
         marker = self.root / f"signal-{signum}-{handled}"
         if handled:
             code = ("import signal,time; from pathlib import Path; "
-                    f"signal.signal(signal.{signum}, lambda *_: (Path({str(marker)!r}).touch(), exit(7))); "
+                    f"signal.signal(signal.{signum}, lambda *_: (Path({str(marker)!r}).touch(), __import__('sys').exit(7))); "
+                    "print('ready',flush=True); "
                     "time.sleep(60)")
         else:
-            code = "import time; time.sleep(60)"
+            code = "import time; print('ready',flush=True); time.sleep(60)"
         script = f"signal-{signum}-{handled}"
         run_id = self.begin(script)
         with subprocess.Popen([sys.executable, "-c", code], cwd=self.main, env=self.environment,
-                              stdout=subprocess.PIPE, stderr=subprocess.PIPE) as job:
-            time.sleep(0.15)
+                              stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) as job:
+            self.assertEqual("ready\n", job.stdout.readline())
             job.send_signal(getattr(signal, signum))
             job.communicate(timeout=5)
             expected = 7 if handled else -getattr(signal, signum)
@@ -153,6 +155,22 @@ class MaintenanceLogTests(unittest.TestCase):
         run_id = self.begin("unwritable", environment=env)
         self.finish(run_id, 19, "unwritable", environment=env)
         self.assertEqual([], self.rows("unwritable"))
+
+    def test_bash_owner_boundary(self):
+        scripts = self.main / "tools/scripts/worktree"
+        scripts.mkdir(parents=True)
+        shutil.copy2(SOURCE / "tools/scripts/maintenance_log.py", self.main / "tools/scripts/maintenance_log.py")
+        shutil.copy2(SOURCE / "tools/scripts/worktree/warm-donor.sh", scripts / "warm-donor.sh")
+        bin_dir = self.root / "bin"
+        bin_dir.mkdir()
+        (bin_dir / "git").write_text("#!/bin/sh\ncase \"$1\" in symbolic-ref) echo dev;; status) exit 0;; *) exit 2;; esac\n")
+        (bin_dir / "git").chmod(0o700)
+        env = dict(self.environment, PATH=str(bin_dir) + os.pathsep + os.environ.get("PATH", ""))
+        result = subprocess.run(["/bin/bash", str(scripts / "warm-donor.sh")], cwd=self.main,
+                                env=env, stdin=subprocess.DEVNULL, capture_output=True, timeout=15)
+        self.assertNotEqual(0, result.returncode)
+        rows = self.rows("warm-donor")
+        self.assert_finished(result.returncode, "warm-donor", rows[0]["pid"])
 
     def test_consumer_audit(self):
         consumers = {

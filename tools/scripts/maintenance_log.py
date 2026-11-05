@@ -27,6 +27,7 @@ import uuid
 ENV_LOG_DIR = "TRURETURING_MAINTENANCE_LOG_DIR"
 ENV_LOG_DIAGNOSTICS = "TRURETURING_MAINTENANCE_LOG_DIAGNOSTICS"
 ENV_RUN_ID = "TRURETURING_MAINTENANCE_RUN_ID"
+ENV_PARENT_RUN_ID = "TRURETURING_MAINTENANCE_PARENT_RUN_ID"
 
 
 def log_directory(repository: Path) -> Path:
@@ -63,9 +64,9 @@ class MaintenanceLog:
         self.started = time.monotonic()
         self.run_id = run_id or uuid.uuid4().hex
         self.path = None
-        parent_run_id = os.environ.get(ENV_RUN_ID)
+        parent_run_id = os.environ.get(ENV_RUN_ID) or os.environ.get(ENV_PARENT_RUN_ID)
         if parent_run_id == self.run_id:
-            parent_run_id = os.environ.get("TRURETURING_MAINTENANCE_PARENT_RUN_ID")
+            parent_run_id = os.environ.get(ENV_PARENT_RUN_ID)
         self.context = dict(run_id=self.run_id, parent_run_id=parent_run_id,
                             pid=owner_pid or os.getpid(), parent_pid=parent_pid or os.getppid())
         try:
