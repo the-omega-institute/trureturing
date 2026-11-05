@@ -1089,7 +1089,9 @@ private theorem explicit_point_geometry {r s u : ℕ} (hr : 2 ≤ r)
   let e := Equiv.ofBijective E ⟨hEinj, Finite.surjective_of_injective hEinj⟩
   have hsum : P r = ∑ i ∈ Finset.range r, 2 ^ i := by
     have he := Equiv.sum_comp e (fun j : Fin r => (2 : ℕ) ^ j.val)
-    simpa only [Fin.sum_univ_eq_sum_range, e, Equiv.ofBijective_apply, E, P, delta] using he
+    change (∑ i : Fin r, (2 : ℕ) ^ gapExponent r u i.val) =
+      (∑ i : Fin r, (2 : ℕ) ^ i.val) at he
+    simpa only [Fin.sum_univ_eq_sum_range, P, delta] using he
   have htotal : P r = M := by
     have he : (∑ i ∈ Finset.range r, (2 : ℕ) ^ i) + 1 = 2 ^ r := by
       simpa using geom_sum_mul_add (1 : ℕ) r
@@ -1203,7 +1205,8 @@ private theorem explicit_point_geometry {r s u : ℕ} (hr : 2 ≤ r)
         rw [← hPsucc, Nat.sub_add_cancel (by omega : 1 ≤ r), htotal]
       have hc := congrArg (fun n : ℕ => (n : ZMod M)) he
       rw [Nat.cast_add, ZMod.natCast_self] at hc
-      change ((P s + P 0 : ℕ) : ZMod M) - (P s + P (r - 1)) = delta (r - 1)
+      change ((P s + P 0 : ℕ) : ZMod M) - ((P s + P (r - 1) : ℕ) : ZMod M) =
+        (delta (r - 1) : ZMod M)
       rw [hPzero]
       push_cast
       linear_combination -hc
@@ -1220,7 +1223,7 @@ private theorem explicit_point_geometry {r s u : ℕ} (hr : 2 ≤ r)
     have hp : shift z = ⟨s, hsr⟩ := cycAdd_zero _
     dsimp [b]
     rw [hp]
-    change 2 * ((P s + P 0 : ℕ) : ZMod M) - (P s + P s) = 0
+    change 2 * ((P s + P 0 : ℕ) : ZMod M) - ((P s + P s : ℕ) : ZMod M) = 0
     rw [hPzero]
     push_cast
     ring
@@ -1251,6 +1254,168 @@ private theorem explicit_point_geometry {r s u : ℕ} (hr : 2 ≤ r)
     have he := hPsucc (s - 1)
     rw [Nat.sub_add_cancel (by omega : 1 ≤ s), hdeltaUnit] at he
     omega
+
+/-- The actual anchored interval, stated without truncated subtraction. -/
+def Anchored (X Q : ℕ) : Prop :=
+  ∀ n : ℕ, residue X Q n ≤ Q ∧ Q ≤ residue X Q n + (X - 1) / 2
+
+private theorem anchored_narrow_maximum {X Q : ℕ} (hX : 3 ≤ X) (hodd : Odd X)
+    (hQX : Q < X) (ha : Anchored X Q) :
+    2 * diameter X Q < X ∧ IsGreatest (↑(orbit X Q) : Set ℕ) Q := by
+  classical
+  have hXp : 0 < X := by omega
+  have hne := orbit_nonempty hXp hodd Q
+  have hbound (b : ℕ) (hb : b ∈ orbit X Q) :
+      b ≤ Q ∧ Q ≤ b + (X - 1) / 2 := by
+    obtain ⟨n, _, rfl⟩ := Finset.mem_image.mp hb
+    exact ha n
+  have hmem : Q ∈ orbit X Q := by
+    rw [← residue_zero hQX]
+    exact residue_mem_orbit hXp hodd Q 0
+  have hgreat : IsGreatest (↑(orbit X Q) : Set ℕ) Q :=
+    ⟨hmem, fun b hb => (hbound b hb).1⟩
+  have hmax : (orbit X Q).max' hne = Q :=
+    le_antisymm (hbound _ ((orbit X Q).max'_mem hne)).1
+      (Finset.le_max' _ Q hmem)
+  have hlo := (hbound _ ((orbit X Q).min'_mem hne)).2
+  have hdiam : diameter X Q ≤ (X - 1) / 2 := by
+    unfold diameter
+    rw [dite_eq_left hne, hmax]
+    omega
+  exact ⟨by omega, hgreat⟩
+
+private theorem explicit_scaled_construction {X Q r s u : ℕ}
+    (hX : 3 ≤ X) (hodd : Odd X) (hQ : 0 < Q) (hQX : Q < X)
+    (hr : 2 ≤ r) (hs : 0 < s) (hsr : s < r)
+    (hu : (s : ZMod r) * u = 1) (hdiv : 2 ^ r - 1 ∣ X)
+    (hQeq : Q = (X / (2 ^ r - 1)) * explicitNumerator r s u) :
+    Anchored X Q ∧ period X Q = r ∧ Nat.gcd X Q = X / (2 ^ r - 1) := by
+  classical
+  have hXp : 0 < X := by omega
+  let M := 2 ^ r - 1
+  let g := X / M
+  let h := 2 ^ (r - 1)
+  have hMg : M * g = X := Nat.mul_div_cancel' hdiv
+  have hg : 0 < g := by
+    by_contra hn
+    have : g = 0 := by omega
+    rw [this, Nat.mul_zero] at hMg
+    omega
+  have hMp : 0 < M := by
+    have hp : 1 < (2 : ℕ) ^ r := one_lt_pow' (by omega) (by omega)
+    dsimp [M]
+    omega
+  letI : NeZero r := ⟨by omega⟩
+  let a : Fin r → ℕ := fun i => explicitPoint r s u i.val
+  let w : Fin r := ⟨r - 1, by omega⟩
+  let z : Fin r := ⟨0, by omega⟩
+  let p : Fin r → Fin r := fun i => cycAdd ⟨s, hsr⟩ i.val
+  obtain ⟨habounds, hastrict, hamax, hasteps, hawidth, _⟩ :=
+    explicit_point_geometry hr hs hsr hu
+  have hXg : X = g * M := by rw [← hMg]; ring
+  have hmax : Q = g * a w := by simpa only [a, w, g, M, hamax] using hQeq
+  have hscale (i : Fin r) : (2 * (g * a i)) % X = g * a (p i) := by
+    rw [hXg]
+    calc
+      (2 * (g * a i)) % (g * M) = (g * (2 * a i)) % (g * M) := by congr 1; ring
+      _ = g * ((2 * a i) % M) := Nat.mul_mod_mul_left _ _ _
+      _ = g * a (p i) := by rw [← hasteps i]
+  have hres (n : ℕ) : residue X Q n = g * a (p^[n] w) := by
+    induction n with
+    | zero => simpa only [Function.iterate_zero_apply, residue_zero hQX] using hmax
+    | succ n ih => rw [residue_succ, ih, hscale, Function.iterate_succ_apply']
+  have horbit : orbit X Q = Finset.univ.image (fun i : Fin r => g * a i) := by
+    ext b
+    constructor
+    · intro hb
+      obtain ⟨n, _, rfl⟩ := Finset.mem_image.mp hb
+      exact Finset.mem_image.mpr ⟨p^[n] w, Finset.mem_univ _, (hres n).symm⟩
+    · intro hb
+      obtain ⟨i, _, rfl⟩ := Finset.mem_image.mp hb
+      have he := hres (gapExponent r u i.val + 1)
+      rw [shift_gap_location (by omega : 0 < r) ⟨s, hsr⟩ i hu] at he
+      rw [← he]
+      exact residue_mem_orbit hXp hodd Q _
+  have hinj : Function.Injective (fun i : Fin r => g * a i) := by
+    intro i j he
+    apply hastrict.injective
+    exact mul_left_cancel₀ hg.ne' he
+  have hperiod : period X Q = r := by
+    rw [← orbit_card, horbit, Finset.card_image_of_injective _ hinj,
+      Finset.card_univ, Fintype.card_fin]
+  have hMstep : M + 1 = 2 * h := by
+    have he : (2 : ℕ) ^ r = 2 * 2 ^ (r - 1) := by
+      calc
+        (2 : ℕ) ^ r = 2 ^ (r - 1 + 1) := by congr 1; omega
+        _ = _ := by rw [pow_succ]; ring
+    dsimp [M, h]
+    omega
+  have hhp : 0 < h := pow_pos (by omega) _
+  have hsub : h - 1 + 1 = h := Nat.sub_add_cancel (by omega)
+  have hscaled : 2 * (g * (h - 1)) + g = X := by
+    nlinarith only [hMg, hMstep, hsub]
+  have hhalf : g * (h - 1) ≤ (X - 1) / 2 := by omega
+  have ha : Anchored X Q := by
+    intro n
+    let i := p^[n] w
+    have hilo : a z ≤ a i := hastrict.monotone (by change 0 ≤ i.val; omega)
+    have hihi : a i ≤ a w := hastrict.monotone
+      (by change i.val ≤ r - 1; have := i.isLt; omega)
+    have haw : a w = a z + (h - 1) := hawidth
+    have hdist : a w ≤ a i + (h - 1) := by omega
+    have hgd := Nat.mul_le_mul_left g hdist
+    rw [Nat.mul_add] at hgd
+    rw [hres, hmax]
+    exact ⟨Nat.mul_le_mul_left g hihi, by omega⟩
+  have hnarrow := (anchored_narrow_maximum hX hodd hQX ha).1
+  have hdenom : denominator X Q = M := by
+    rw [(narrow_classification hX hodd hQ hQX hnarrow).2.2.1, hperiod]
+  have hgcprod : Nat.gcd X Q * M = X := by
+    rw [← hdenom]
+    exact Nat.mul_div_cancel' (Nat.gcd_dvd_left X Q)
+  have hgcd : Nat.gcd X Q = g := by
+    apply mul_right_cancel₀ hMp.ne'
+    exact hgcprod.trans hXg
+  exact ⟨ha, hperiod, hgcd⟩
+
+/-- Exact anchored arithmetic classification. The second conjunct derives
+actual period and gcd scale for every arithmetic witness; these are not
+replacement assumptions in the converse. -/
+theorem anchored_explicit_classification {X Q : ℕ} (hX : 3 ≤ X) (hodd : Odd X)
+    (hQ : 0 < Q) (hQX : Q < X) :
+    (Anchored X Q ↔ ∃ r s u : ℕ, 2 ≤ r ∧ 0 < s ∧ s < r ∧ Nat.Coprime s r ∧
+      u < r ∧ (s : ZMod r) * u = 1 ∧ 2 ^ r - 1 ∣ X ∧
+      Q = (X / (2 ^ r - 1)) * explicitNumerator r s u) ∧
+    (∀ r s u : ℕ, 2 ≤ r → 0 < s → s < r → Nat.Coprime s r → u < r →
+      (s : ZMod r) * u = 1 → 2 ^ r - 1 ∣ X →
+      Q = (X / (2 ^ r - 1)) * explicitNumerator r s u →
+      period X Q = r ∧ Nat.gcd X Q = X / (2 ^ r - 1)) := by
+  constructor
+  · constructor
+    · intro ha
+      obtain ⟨hn, hg⟩ := anchored_narrow_maximum hX hodd hQX ha
+      have hc := narrow_classification hX hodd hQ hQX hn
+      obtain ⟨s, u, hs, hsr, hcop, hu, hunit, _, hgreat⟩ :=
+        narrow_explicit_numerator hX hodd hQ hQX hn
+      have heq : Q = Nat.gcd X Q * explicitNumerator (period X Q) s u :=
+        le_antisymm (hgreat.2 hg.1) (hg.2 hgreat.1)
+      have hprod : Nat.gcd X Q * (2 ^ period X Q - 1) = X := by
+        rw [← hc.2.2.1]
+        exact Nat.mul_div_cancel' (Nat.gcd_dvd_left X Q)
+      have hdiv : 2 ^ period X Q - 1 ∣ X := by
+        exact ⟨Nat.gcd X Q, by rw [← hprod]; ring⟩
+      have hMp : 0 < 2 ^ period X Q - 1 := by
+        have hp : 1 < (2 : ℕ) ^ period X Q := one_lt_pow' (by omega) (by omega)
+        omega
+      have hscale : X / (2 ^ period X Q - 1) = Nat.gcd X Q := by
+        rw [← hprod, Nat.mul_div_cancel _ hMp]
+      refine ⟨period X Q, s, u, hc.1, hs, hsr, hcop, hu, hunit, hdiv, ?_⟩
+      rw [hscale]
+      exact heq
+    · rintro ⟨r, s, u, hr, hs, hsr, _, _, hu, hdiv, heq⟩
+      exact (explicit_scaled_construction hX hodd hQ hQX hr hs hsr hu hdiv heq).1
+  · intro r s u hr hs hsr _ _ hu hdiv heq
+    exact (explicit_scaled_construction hX hodd hQ hQX hr hs hsr hu hdiv heq).2
 
 /-- Finite-horizon reduction: one consecutive block of
 the actual period forces the entire fixed-Q orbit to be narrow and doubling
