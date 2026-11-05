@@ -126,9 +126,9 @@ theorem c3_inventory (e ell : ℕ) (he : 1 ≤ e) :
   have hW := w_inventory e ell (c3R e) 5 (c3High e) hc.2 (c3_high_inventory e he)
   intro chain
   fin_cases chain
-  · convert hU using 1 <;> ext bank <;> fin_cases bank <;> simp [c3Banks]
-  · convert (show MaskInventory 2 ![0,0,0,3] from by apply inventory_of_finite_bits <;> decide) using 1 <;> ext bank <;> fin_cases bank <;> simp [c3Banks]
-  · convert hW using 1 <;> ext bank <;> fin_cases bank <;> simp [c3Banks, wMasks]
-  · convert (show MaskInventory 4 ![0,12,0,3] from by apply inventory_of_finite_bits <;> decide) using 1 <;> ext bank <;> fin_cases bank <;> simp [c3Banks]
+  · convert hU using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [c3Banks])
+  · convert (show MaskInventory 2 ![0,0,0,3] from by apply inventory_of_finite_bits <;> decide) using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [c3Banks])
+  · convert hW using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [c3Banks, wMasks])
+  · convert (show MaskInventory 4 ![0,12,0,3] from by apply inventory_of_finite_bits <;> decide) using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [c3Banks])
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails
