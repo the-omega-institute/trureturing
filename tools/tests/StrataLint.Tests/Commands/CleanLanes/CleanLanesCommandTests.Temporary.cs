@@ -47,9 +47,9 @@ public sealed partial class CleanLanesCommandTests
         var parent = fixture.AddGitlessJudgeSnapshot("trureturing-parent");
         var nested = fixture.AddNestedWorktree(parent);
         var registered = fixture.AddDetachedJudge("trureturing-registered");
-        CleanLanesFixture.GitAt(nested, new DateTimeOffset(2030, 1, 1, 12, 0, 0, TimeSpan.Zero),
+        CleanLanesFixture.GitAt(nested, new DateTimeOffset(2030, 1, 1, 23, 0, 0, TimeSpan.Zero),
             "commit", "--allow-empty", "-m", "nested work");
-        CleanLanesFixture.GitAt(registered, new DateTimeOffset(2030, 1, 1, 12, 0, 0, TimeSpan.Zero),
+        CleanLanesFixture.GitAt(registered, new DateTimeOffset(2030, 1, 1, 23, 0, 0, TimeSpan.Zero),
             "commit", "--allow-empty", "-m", "detached work");
         fixture.AddGitlessJudgeSnapshot("trureturing-registered");
         var alias = Path.Combine(Path.GetDirectoryName(parent)!, "trureturing-alias");
