@@ -1,5 +1,5 @@
 /-
-SOURCE CANDIDATE ONLY: UNCOMPILED / UNACCEPTED.
+Directed integer logarithm bounds; see current scoped verification receipts.
 Intended canonical owner: D5/S3/Arith/GoldenResource/DirectedLogarithmBounds.
 This implements the integer recurrence of exact_pressure_certificate.py,
 SHA256 f99780ee4fdc76814f65e2dc7012e950420bddee552751fda807ee4d5e121f76.
@@ -10,7 +10,7 @@ proof and the original soundness statements. Analytic correctness still
 has STRICT parameter domain z<1/3. No packet admission or finite-pressure
 result is asserted. The additional integer width proof follows the first
 actual return by step 33, then is transported through the total accessors.
-No compiler or kernel has run on this candidate.
+Kernel and axiom status must be read from current scoped verification receipts.
 -/
 import D5.S3.Arith.GoldenResource.RobinRationalBasis
 import Mathlib.Data.Nat.Cast.Order.Field
@@ -113,7 +113,7 @@ private theorem ceil_real_bounds (n d : ℕ) (hd : 0 < d) :
   · calc
       (ceilDiv n d : ℝ) < ((n : ℝ) + d) / d :=
         (lt_div_iff₀ hdR).2 (by exact_mod_cast h.2)
-      _ = (n : ℝ) / d + 1 := by field_simp [hdR.ne']; ring
+      _ = (n : ℝ) / d + 1 := by field_simp [hdR.ne']
 
 /-- The same scale and initial directed square coefficients as the generator. -/
 structure Coefficients where
@@ -611,6 +611,7 @@ private theorem step_invariant {c : Coefficients} {z : ℝ} {s : State}
         _ ≤ (2 * ((scale : ℝ) * z ^ (2 * s.k + 1))) / (2 * s.k + 1 : ℕ) :=
           div_le_div_of_nonneg_right (by nlinarith only [hs.powerLo]) hodd.le
         _ = _ := by ring
+    push_cast at hterm ⊢
     nlinarith only [hs.sumLo, hlSum, hterm]
   · change scale * atanhPartial z (s.k + 1) ≤
       ((s.hi + ceilDiv (2 * s.ph) (2 * s.k + 1) : ℕ) : ℝ)
@@ -620,6 +621,7 @@ private theorem step_invariant {c : Coefficients} {z : ℝ} {s : State}
       calc
         _ = (2 * ((scale : ℝ) * z ^ (2 * s.k + 1))) / (2 * s.k + 1 : ℕ) := by ring
         _ ≤ _ := div_le_div_of_nonneg_right (by nlinarith only [hs.powerHi]) hodd.le
+    push_cast at hterm ⊢
     nlinarith only [hs.sumHi, hhSum, hterm]
 
 private theorem power_ratios {z : ℝ} {s : State} (hs : Invariant z s) :
@@ -691,7 +693,7 @@ private theorem state_enclosure {c : Coefficients} {z : ℝ} {s : State}
   have htail : (scale : ℝ) *
       (2 * z ^ (2 * s.k + 1) / ((2 * s.k + 1 : ℕ) * (1 - z ^ 2))) ≤ tail c s := by
     apply (mul_le_mul_of_nonneg_left hrem hS.le).trans
-    convert hceil using 1 <;> dsimp only [tail] <;>
+    convert hceil using 1 <;> simp only [tail] <;>
       field_simp [hS.ne', hdiff.ne', (show (2 : ℝ) * s.k + 1 ≠ 0 by positivity)] <;> ring
   have hlog := public_remainder hz0 hz3 s.k
   have hl := mul_le_mul_of_nonneg_left hlog.1 hS.le
@@ -855,7 +857,7 @@ theorem log_bounds_sound (n d k fuel : ℕ) (hd : 0 < d)
       have hid := reduction_log n d k hd hrange
       unfold Encloses at h1 h2 ⊢
       rw [hid]
-      push_cast
+      push_cast at h2 ⊢
       have hl := mul_le_mul_of_nonneg_left h1.1 (Nat.cast_nonneg k : (0 : ℝ) ≤ k)
       have hh := mul_le_mul_of_nonneg_left h1.2 (Nat.cast_nonneg k : (0 : ℝ) ≤ k)
       constructor <;> nlinarith only [hl, hh, h2.1, h2.2]
@@ -890,7 +892,7 @@ theorem layer_bounds_sound (B fuel : ℕ) (hB : 2 ≤ B) (p : ℕ × ℕ)
     push_cast
     field_simp [hBR.ne', (show (2 : ℝ) * B + 1 ≠ 0 by positivity)]
     ring
-  simpa only [hid] using h
+  simpa only [Nat.cast_one, hid] using h
 
 def totalLayerBounds (B : ℕ) : ℕ × ℕ := (layerBounds B 100).getD (0, 0)
 
@@ -913,6 +915,7 @@ private theorem totalLogTwo_pair : totalLogTwo =
     simp only [logTwo, ha, hb]
   unfold totalLogTwo
   rw [hp]
+  rfl
 
 theorem totalLogTwo_width : totalLogTwo.1 ≤ totalLogTwo.2 ∧
     totalLogTwo.2 - totalLogTwo.1 ≤ 200 := by
@@ -936,6 +939,7 @@ private theorem totalLogBounds_pair (n d k : ℕ) (hd : 0 < d)
     simp only [logBounds, ha, hb]
   unfold totalLogBounds
   rw [hp]
+  rfl
 
 theorem totalLogBounds_width (n d k : ℕ) (hd : 0 < d)
     (hrange : d * 2 ^ k ≤ n ∧ n < d * 2 ^ (k + 1)) :

@@ -1047,14 +1047,11 @@ private theorem fp_finite_consumer
 
 
 /-
-UNCOMPILED / UNACCEPTED OWNER SPLICE, NOT AN IMPORTABLE MODULE.
+Directed-logarithm continuation in the same owning source file.
 
-Add `import D5.S3.Arith.GoldenResource.DirectedLogarithmBounds` to the existing
-ActualFinitePressureConsumer.lean continuation, then insert this fragment
-AFTER fp_finite_consumer, BEFORE that source's namespace/section closing ends.
-Its private names are deliberately resolved IN THAT SAME SOURCE FILE.
-Importing the ended consumer as another module cannot expose its private names.
-No copy of its endpoint/cell/tangent proofs is made here.
+This continuation follows fp_finite_consumer and resolves its private names
+in this file. It reuses the existing endpoint/cell/tangent proofs directly.
+Kernel and axiom status must be read from current scoped verification receipts.
 
 Only integer range witnesses, exact total-accessor data identities, and
 rational field identities replace the logarithmic primitive hypotheses. The full table has
@@ -1391,8 +1388,8 @@ private theorem fp_finite_consumer_directed
     heLog hqDef hsqrt huLog hwLog hwLogLog hprefixSubset hon hoff hD hL hmargin
 
 /- The exact first/last-cell evaluations above use ONLY the first and last
-records. Their primitive input correspondences follow. The `by decide`
-data-identity proofs are source scripts, NOT executed kernel checks here. -/
+records. Their primitive input correspondences follow. Ordinary kernel
+`decide` checks the data identities when this module is compiled. -/
 
 private structure FPBoundaryLogs (un vn : ℕ) where
   left : FPLogEvaluation ((un : ℚ) / 100)
@@ -1437,7 +1434,7 @@ private theorem fp_boundary_primitives (un vn : ℕ) (e : FPBoundaryLogs un vn) 
   · exact hll.2.1
 
 /-- Partial concrete suppliers: two rows only; this is not FPLogInputs for
-all 1330 rows. Every numerical data-identity proof above remains UNEXECUTED. -/
+all 1330 rows. The full packet instance is not supplied. -/
 private theorem fp_first_and_last_log_primitives :
     FPBoundaryPrimitives 1849 1867 fpFirstBoundary ∧
       FPBoundaryPrimitives 995838609 1000000000 fpLastBoundary := by
