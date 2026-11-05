@@ -1,0 +1,67 @@
+#### 定理 12.7：Pauli 关系与原 Born 配对
+
+上述算子自伴，并满足
+
+$$
+\widehat X\widehat Y
+=\kappa(X,Y)I+i\widehat{[X,Y]},\qquad
+\operatorname{Tr}\widehat X=0,\quad
+\operatorname{Tr}(\widehat X\widehat Y)=2\kappa(X,Y).
+\tag{12.5}
+$$
+
+对单位 $X=X(q)$，
+
+$$
+P_X=\tfrac12(I+\widehat X)
+$$
+
+恰为振幅 $q$ 的复秩一正交投影。
+
+**证明。**
+
+左乘纯转向和右乘 $\iota$ 都反自伴且彼此交换，故它们的负乘积自伴。四元数乘法给 (12.5) 的乘法式。取单位 $Y\perp X$，$\widehat Y\widehat X\widehat Y=-\widehat X$，所以迹为零，再由乘法式得迹配对。
+
+对任意 $r$，有
+
+$$
+P_{X(q)}r
+=\tfrac12(r-q\iota q^*r\iota )
+=q\,\pi_\iota (q^*r)
+=q\cdot\langle q,r\rangle.
+$$
+
+这正是复秩一正交投影公式。
+
+$\square$
+
+$I,\widehat{\mathfrak g}$ 张成全部自伴 $2\times2$ 复算子，因为它们四实维且线性独立。因此 $\operatorname{End}_\mathbb C(\mathcal H)\cong M_2(\mathbb C)$。由乘法式还直接得到反对易关系
+
+$$
+\widehat X\widehat Y+\widehat Y\widehat X=2\kappa(X,Y)I.
+$$
+
+这正是相应的 Clifford 关系；本稿从四元数直接构造振幅与自伴算子。
+
+原轨道闭包为 $c+S(W)$，最小闭凸完成为 $c+\overline B(W)$。任一原事件唯一写成
+
+$$
+f(tc+w)=\eta t+B(b,w).
+$$
+
+原概率界给 $\|b\|\le\min(\eta,1-\eta)$。对 $\|w\|_B\le1$，令
+
+$$
+\rho_w=\tfrac12(I+\widehat{R_w}),\qquad
+E_f=\eta I+\widehat{R_b}.
+$$
+
+则 $\rho_w\ge0,\operatorname{Tr}\rho_w=1,0\le E_f\le I$，由 (12.5) 得
+
+$$
+\boxed{f(c+w)=\operatorname{Tr}(\rho_wE_f).}
+\tag{12.6}
+$$
+
+原完整标签归一化给 $\sum_kE_k=I$，失败标签继续保留。数学闭凸完成及全部锐效果的存在，不自动供应原随机准备、读口或原分支过程。
+

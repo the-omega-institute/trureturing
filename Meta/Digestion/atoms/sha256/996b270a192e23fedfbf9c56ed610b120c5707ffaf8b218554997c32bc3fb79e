@@ -1,0 +1,34 @@
+#### 定理 12.2：结合性、正范数与四元数
+
+$\mathcal Q$ 是含幺结合实代数，满足
+
+$$
+q^*\star q=\|q\|^2\,1,\qquad
+\|(a,B)\|^2=a^2+\kappa(B,B),\qquad
+\|q\star r\|=\|q\|\|r\|.
+$$
+
+每个非零元可逆，且 $\mathcal Q\cong\mathbb H$。
+
+**证明。**
+
+只需验证三个纯转向的结合律。由 (10.6) 与迹配对不变性，$(B\star K)\star C$ 与 $B\star(K\star C)$ 的标量部分同为 $-\kappa([B,K],C)=-\kappa(B,[K,C])$，向量部分同为
+
+$$
+-\kappa(B,K)C-\kappa(K,C)B+\kappa(B,C)K.
+$$
+
+所以结合。直接代入得 $q^*q=\|q\|^2$，且 $(qr)^*=r^*q^*$；结合性于是给范数乘法。逆为 $q^*/\|q\|^2$。
+
+取 $\kappa$-正交单位 $\iota ,v$，令 $w=[\iota ,v]$。式 (10.6)–(10.7) 给
+
+$$
+\iota ^2=v^2=w^2=-1,\quad \iota v=w,\quad v\iota =-w
+$$
+
+及循环关系。这正是 Hamilton 四元数乘法表。[\[17\]](#ref-baez)
+
+$\square$
+
+从此本节省略 $\star$，但保留类型：$\mathcal Q$ 的乘法由比较和括号新定义。原 $W$ 上的算子顺序乘法仍在 $\operatorname{End}(W)$ 中；第 11 节已经证明：原三维斜对称生成元生成的结合代数是 $M_3(\mathbb R)$，不是 $\mathcal Q$ 或 $M_2(\mathbb C)$。具体地，正交单位轴生成元满足 $R_iR_j=E_{ji}$（$i\ne j$）、$R_i^2+I=E_{ii}$，故给全部实矩阵单位。这几种表示通过明确构造相连，不能相互冒名。
+

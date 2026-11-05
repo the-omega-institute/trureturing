@@ -373,8 +373,11 @@ public sealed partial class WorktreeCommandTests
             idleBranch, "HEAD");
         TestGit.Run(repository.Path, "worktree", "add", idle, idleBranch["refs/heads/".Length..]);
 
+        var committed = DateTimeOffset.FromUnixTimeSeconds(long.Parse(
+            TestGit.Run(idle, "show", "-s", "--format=%ct", "HEAD").Trim(),
+            System.Globalization.CultureInfo.InvariantCulture));
         var result = CleanLanesCommand.Run(repository.Path, ["--force", "--lanes-only"],
-            new DateTimeOffset(2030, 1, 2, 0, 0, 0, TestBudgets.ZeroDuration));
+            committed.AddHours(6));
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("head_commit_age", result.Output, StringComparison.Ordinal);

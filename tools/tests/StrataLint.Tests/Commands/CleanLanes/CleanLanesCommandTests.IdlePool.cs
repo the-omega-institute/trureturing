@@ -28,7 +28,7 @@ public sealed partial class CleanLanesCommandTests
         using var fixture = new CleanLanesFixture();
         var old = AddIdleSweepCandidate(fixture, 'e', 1000000000);
         CleanLanesFixture.GitAt(fixture.RepositoryWorkingDirectory,
-            new DateTimeOffset(2030, 1, 1, 12, 0, 0, TimeSpan.Zero), "commit", "--allow-empty", "-m", "recent pool commit");
+            new DateTimeOffset(2030, 1, 1, 23, 0, 0, TimeSpan.Zero), "commit", "--allow-empty", "-m", "recent pool commit");
         var young = AddIdleSweepCandidate(fixture, 'f', 1000000001);
         var native = InjectIdlePoolProgram(fixture,
             "sys.modules['worktree_pool'].available_fraction = lambda source: 0.04\n");

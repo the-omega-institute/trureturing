@@ -18,7 +18,7 @@ internal static partial class CleanLanesCommand
         "USAGE: StrataLint clean-lanes [--base REV] [--force] [--lanes-only] "
         + "[--active-paths-file FILE]";
 
-    private const long MinimumReclaimableLaneAgeSeconds = 24L * 60 * 60;
+    private const long MinimumReclaimableLaneAgeSeconds = 6L * 60 * 60;
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
