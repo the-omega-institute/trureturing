@@ -111,7 +111,7 @@ internal sealed class PositiveRelationSupportNecessityDocument : IScribeDocument
                 + "and all nine z values are retained for both sources.")),
             Paragraph(Text("The nonzero v subtype has cardinality 8, so A has cardinality 8 × 9 = 72, "
                 + "and T has cardinality 27 × 9 = 243. The "
-                + "the ambient word carriers (Fin 7 → Bool) and (Fin 8 → Bool) have "
+                + "ambient word carriers (Fin 7 → Bool) and (Fin 8 → Bool) have "
                 + "cardinalities 128 and 256. Both source relations have every left "
                 + "and right endpoint incident; their literal edge sets each have 1944 "
                 + "pairs. The strict inequalities 72 < 128 and 243 < 256 provide the "
