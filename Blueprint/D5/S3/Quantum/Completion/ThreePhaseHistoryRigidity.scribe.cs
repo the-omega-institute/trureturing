@@ -14,16 +14,13 @@ internal sealed class ThreePhaseHistoryRigidityDocument : IScribeDocumentDefinit
     private static Formula T => F.Id("u");
     private static Formula K => F.Id("k");
     private static Formula C => F.Id("C");
-    private static Formula Chi => F.Id("chi");
     private static Formula Three => Call("ZMod", D(3));
-    private static Formula Read(Formula a) => Call("f", a);
     private static Formula Child => Seq(X, Sp, Cdot, Sp,
         Call("iterate", U, Call("val", K), T));
     private static Formula Eqn(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
     private static Formula All(Formula a, Formula type, Formula body) =>
         Seq(Open, Forall, Sp, a, Colon, Sp, type, Comma, Sp, body, Close);
     private static Formula InSet(Formula a) => Seq(a, Sp, InMacro, Sp, N);
-    private static Formula Energy(Formula a) => Call("normSq", Read(a));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "All ordered finite histories bound energy increments; raw comparison balance yields marker readouts.",
@@ -91,64 +88,45 @@ internal sealed class ThreePhaseHistoryRigidityDocument : IScribeDocumentDefinit
     private static class RawReadouts
     {
         private const string Gid = "D5/S3/Quantum/Completion/ThreePhaseHistoryRigidity.";
-    private static Formula M => F.Id("M");
-    private static Formula A => F.Id("a");
-    private static Formula B => F.Id("b");
-    private static Formula U => F.Id("u");
-    private static Formula V => F.Id("v");
-    private static Formula X => F.Id("x");
-    private static Formula Y => F.Id("y");
-    private static Formula Z => F.Id("z");
-    private static Formula K => F.Id("k");
-    private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));
-    private static Formula Eqn(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
-    private static Formula Plus2(Formula a, Formula b) => Seq(a, Sp, Plus, Sp, b);
-    private static Formula Minus2(Formula a, Formula b) => Seq(a, Sp, Minus, Sp, b);
-    private static Formula Three(Formula a) => Seq(D(3), Sp, Cdot, Sp, a);
-    private static Formula Product(Formula a, Formula b) => Seq(Open, a, Sp, Cdot, Sp, b, Close);
-    private static Formula Mark(Formula a) => Call("U", a);
-    private static Formula BetaOf(Formula a) => Call("beta", F.Id("c"), a);
-    private static Formula ROf(Formula a) => Call("markerQuotient", F.Id("U"), F.Id("c"), F.Id("h"), a);
-    private static Formula GammaOf(Formula a) => Call("gamma", F.Id("c"), a);
-    private static Formula RhoOf(Formula a) => Call("rho", F.Id("U"), F.Id("c"), F.Id("h"), a);
-    private static Formula TDef(Formula a, Formula b) => Call("defect", F.Id("c"), a, b);
-    private static Formula Form(Formula a, Formula b) => Call("quotientForm", F.Id("c"), a, b);
-    private static Formula Read(Formula a, Formula b) => Call("c", a, b);
-    private static Formula Member(Formula a, string b) => Seq(a, Sp, InMacro, Sp, Call(b == "Rad" ? "radical" : b, F.Id("c")));
-    private static Formula All(Formula variable, Formula carrier, Formula body) =>
-        Seq(Open, Forall, Sp, variable, Colon, Sp, carrier, Comma, Sp, body, Close);
-    private static Formula AllM(Formula variable, Formula body) => All(variable, M, body);
-    private static Formula AllV(Formula variable, Formula body) => All(variable, Call("V", F.Id("c")), body);
-    private static Formula Arrow(Formula a, Formula b) => Seq(Open, a, Sp, Rightarrow, Sp, b, Close);
-    private static Formula Both(Formula a, Formula b) => Seq(Open, Open, a, Close, Sp, Land, Sp, Open, b, Close, Close);
-    private static Formula Sum3(Formula a, Formula b, Formula c) => Plus2(Plus2(a, b), c);
-    private static Formula Conjunction(params Formula[] clauses)
-    {
-        var result = clauses[^1];
-        for (var i = clauses.Length - 2; i >= 0; --i)
-            result = Both(clauses[i], result);
-        return result;
-    }
-    private static Formula Iterate(Formula map, Formula n, Formula a) =>
-        Seq(Open, map, Close, Caret, Grp(n), Open, a, Close);
+        private static Formula M => F.Id("M");
+        private static Formula A => F.Id("a");
+        private static Formula B => F.Id("b");
+        private static Formula U => F.Id("u");
+        private static Formula V => F.Id("v");
+        private static Formula Z => F.Id("z");
+        private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));
+        private static Formula Eqn(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
+        private static Formula Plus2(Formula a, Formula b) => Seq(a, Sp, Plus, Sp, b);
+        private static Formula Minus2(Formula a, Formula b) => Seq(a, Sp, Minus, Sp, b);
+        private static Formula Three(Formula a) => Seq(D(3), Sp, Cdot, Sp, a);
+        private static Formula Product(Formula a, Formula b) => Seq(Open, a, Sp, Cdot, Sp, b, Close);
+        private static Formula Mark(Formula a) => Call("U", a);
+        private static Formula Read(Formula a, Formula b) => Call("c", a, b);
+        private static Formula All(Formula variable, Formula carrier, Formula body) =>
+            Seq(Open, Forall, Sp, variable, Colon, Sp, carrier, Comma, Sp, body, Close);
+        private static Formula AllM(Formula variable, Formula body) => All(variable, M, body);
+        private static Formula Arrow(Formula a, Formula b) => Seq(Open, a, Sp, Rightarrow, Sp, b, Close);
+        private static Formula Both(Formula a, Formula b) => Seq(Open, Open, a, Close, Sp, Land, Sp, Open, b, Close, Close);
+        private static Formula Sum3(Formula a, Formula b, Formula c) => Plus2(Plus2(a, b), c);
+        private static Formula Conjunction(params Formula[] clauses)
+        {
+            var result = clauses[^1];
+            for (var i = clauses.Length - 2; i >= 0; --i)
+                result = Both(clauses[i], result);
+            return result;
+        }
 
-    private static Formula Original(Formula body) => Seq(
-        Forall, Sp, M, Colon, Sp, F.Id("Type"), Comma, Sp,
-        OpenBracket, Call("MulOneClass", M), CloseBracket, Comma, Sp,
-        F.Id("U"), Colon, Sp, M, Sp, To, Sp, M, Comma, Sp,
-        F.Id("c"), Colon, Sp, M, Sp, To, Sp, M, Sp, To, Sp, Real, Comma, Sp,
-        Arrow(Call("RawBalance", F.Id("U"), F.Id("c")), body));
+        private static Formula Original(Formula body) => Seq(
+            Forall, Sp, M, Colon, Sp, F.Id("Type"), Comma, Sp,
+            OpenBracket, Call("MulOneClass", M), CloseBracket, Comma, Sp,
+            F.Id("U"), Colon, Sp, M, Sp, To, Sp, M, Comma, Sp,
+            F.Id("c"), Colon, Sp, M, Sp, To, Sp, M, Sp, To, Sp, Real, Comma, Sp,
+            Arrow(Call("RawBalance", F.Id("U"), F.Id("c")), body));
 
-    private static Formula OriginalWithProof(Formula body) => Seq(
-        Forall, Sp, M, Colon, Sp, F.Id("Type"), Comma, Sp,
-        OpenBracket, Call("MulOneClass", M), CloseBracket, Comma, Sp,
-        F.Id("U"), Colon, Sp, M, Sp, To, Sp, M, Comma, Sp,
-        F.Id("c"), Colon, Sp, M, Sp, To, Sp, M, Sp, To, Sp, Real, Comma, Sp,
-        All(F.Id("h"), Call("RawBalance", F.Id("U"), F.Id("c")), body));
 
 
         internal static DocumentBlock Balance() =>
-Describe.Lean(
+            Describe.Lean(
                 DescribeId.Create("raw-three-phase-balance"),
                 DeclarationHandle.Create(Gid + "RawBalance"),
                 H("The original raw balance hypotheses"),
@@ -162,7 +140,7 @@ Describe.Lean(
                 DescribeRole.Definition);
 
         internal static DocumentBlock Marker() =>
-Describe.Lean(
+            Describe.Lean(
                 DescribeId.Create("raw-marker-readouts"),
                 DeclarationHandle.Create(Gid + "raw_marker_readouts"),
                 H("The comparison has derived marker invariance"),
@@ -177,17 +155,17 @@ Describe.Lean(
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For s(n)=c(U^n u,U^n v), the raw law at the two units gives s(n+1)+s(n+2)=2s(n). Apply ThreeWayBalance.nonneg_recurrence_constant directly, exchanging the summands. Subtracting consecutive original balance identities gives contextual invariance. Specializing either contextual input to the unit gives every row and column equality. These equalities supply the ordered anchored-kernel descent below. Only the readings have period three; the original marker need not have period three."))),
                 DescribeRole.Theorem);
-    private static Formula RawBalanceFormula() => Eqn(
-        Sum3(Read(Product(A, U), Product(B, V)),
-            Read(Product(A, Mark(U)), Product(B, Mark(V))),
-            Read(Product(A, Mark(Mark(U))), Product(B, Mark(Mark(V))))),
-        Plus2(Three(Read(A, B)), Three(Read(U, V))));
+        private static Formula RawBalanceFormula() => Eqn(
+            Sum3(Read(Product(A, U), Product(B, V)),
+                Read(Product(A, Mark(U)), Product(B, Mark(V))),
+                Read(Product(A, Mark(Mark(U))), Product(B, Mark(Mark(V))))),
+            Plus2(Three(Read(A, B)), Three(Read(U, V))));
 
-    private static Formula Frame(Formula body) => Seq(
-        Forall, Sp, M, Colon, Sp, F.Id("Type"), Comma, Sp,
-        OpenBracket, Call("MulOneClass", M), CloseBracket, Comma, Sp,
-        F.Id("U"), Colon, Sp, M, Sp, To, Sp, M, Comma, Sp,
-        F.Id("c"), Colon, Sp, M, Sp, To, Sp, M, Sp, To, Sp, Real, Comma, Sp, body);
+        private static Formula Frame(Formula body) => Seq(
+            Forall, Sp, M, Colon, Sp, F.Id("Type"), Comma, Sp,
+            OpenBracket, Call("MulOneClass", M), CloseBracket, Comma, Sp,
+            F.Id("U"), Colon, Sp, M, Sp, To, Sp, M, Comma, Sp,
+            F.Id("c"), Colon, Sp, M, Sp, To, Sp, M, Sp, To, Sp, Real, Comma, Sp, body);
     }
 
 }

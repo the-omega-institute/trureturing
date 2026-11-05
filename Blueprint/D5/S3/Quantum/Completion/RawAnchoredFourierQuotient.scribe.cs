@@ -48,13 +48,6 @@ internal sealed class RawAnchoredFourierQuotientDocument : IScribeDocumentDefini
     private static Formula Iterate(Formula map, Formula n, Formula a) =>
         Seq(Open, map, Close, Caret, Grp(n), Open, a, Close);
 
-    private static Formula Original(Formula body) => Seq(
-        Forall, Sp, M, Colon, Sp, F.Id("Type"), Comma, Sp,
-        OpenBracket, Call("MulOneClass", M), CloseBracket, Comma, Sp,
-        F.Id("U"), Colon, Sp, M, Sp, To, Sp, M, Comma, Sp,
-        F.Id("c"), Colon, Sp, M, Sp, To, Sp, M, Sp, To, Sp, Real, Comma, Sp,
-        Arrow(Call("RawBalance", F.Id("U"), F.Id("c")), body));
-
     private static Formula OriginalWithProof(Formula body) => Seq(
         Forall, Sp, M, Colon, Sp, F.Id("Type"), Comma, Sp,
         OpenBracket, Call("MulOneClass", M), CloseBracket, Comma, Sp,
@@ -133,73 +126,62 @@ internal sealed class RawAnchoredFourierQuotientDocument : IScribeDocumentDefini
                 Blocks(Paragraph(Text("The unit basis vector lies in both radicals, so pi(E0)=V and the beta labels span V. Testing both ordered pairings against these labels gives joint nondegeneracy. The complete raw law supplies the q and r averages and the bilinear balance, hence the unweighted and inverse-weighted constraints. Solving their three-character system gives the two original phase children. Bilinear Fourier cancellation makes the cross-defect pairing zero; linear extension gives B(W,W)=0, while the phase identities give R(W)=W. The same W supplies the actual gamma product and marker identities. Its isotropy, the difference diagonal identity and comparison nonnegativity force both directed comparisons to vanish on each gamma fibre. Isotropy alone does not say that W is a radical."))),
                 DescribeRole.Theorem))));
 
-    private static Formula RawBalanceFormula() => Eqn(
-        Sum3(Read(Product(A, U), Product(B, V)),
-            Read(Product(A, Mark(U)), Product(B, Mark(V))),
-            Read(Product(A, Mark(Mark(U))), Product(B, Mark(Mark(V))))),
-        Plus2(Three(Read(A, B)), Three(Read(U, V))));
-
-    private static Formula Frame(Formula body) => Seq(
-        Forall, Sp, M, Colon, Sp, F.Id("Type"), Comma, Sp,
-        OpenBracket, Call("MulOneClass", M), CloseBracket, Comma, Sp,
-        F.Id("U"), Colon, Sp, M, Sp, To, Sp, M, Comma, Sp,
-        F.Id("c"), Colon, Sp, M, Sp, To, Sp, M, Sp, To, Sp, Real, Comma, Sp, body);
     private static class HistoryMode
     {
         private const string Gid = "D5/S3/Quantum/Completion/RawAnchoredFourierQuotient.";
-    private static Formula M => F.Id("M");
-    private static Formula U => F.Id("U");
-    private static Formula N => F.Id("N");
-    private static Formula X => F.Id("x");
-    private static Formula T => F.Id("u");
-    private static Formula K => F.Id("k");
-    private static Formula C => F.Id("C");
-    private static Formula Chi => F.Id("chi");
-    private static Formula Three => Call("ZMod", D(3));
-    private static Formula Read(Formula a) => Call("f", a);
-    private static Formula Child => Seq(X, Sp, Cdot, Sp,
-        Call("iterate", U, Call("val", K), T));
-    private static Formula Eqn(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
-    private static Formula All(Formula a, Formula type, Formula body) =>
-        Seq(Open, Forall, Sp, a, Colon, Sp, type, Comma, Sp, body, Close);
-    private static Formula InSet(Formula a) => Seq(a, Sp, InMacro, Sp, N);
-    private static Formula Energy(Formula a) => Call("normSq", Read(a));
+        private static Formula M => F.Id("M");
+        private static Formula U => F.Id("U");
+        private static Formula N => F.Id("N");
+        private static Formula X => F.Id("x");
+        private static Formula T => F.Id("u");
+        private static Formula K => F.Id("k");
+        private static Formula C => F.Id("C");
+        private static Formula Chi => F.Id("chi");
+        private static Formula Three => Call("ZMod", D(3));
+        private static Formula Read(Formula a) => Call("f", a);
+        private static Formula Child => Seq(X, Sp, Cdot, Sp,
+            Call("iterate", U, Call("val", K), T));
+        private static Formula Eqn(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
+        private static Formula All(Formula a, Formula type, Formula body) =>
+            Seq(Open, Forall, Sp, a, Colon, Sp, type, Comma, Sp, body, Close);
+        private static Formula InSet(Formula a) => Seq(a, Sp, InMacro, Sp, N);
+        private static Formula Energy(Formula a) => Call("normSq", Read(a));
 
 
         internal static DocumentBlock Description() =>
-Entry("bounded-phase-recursion-vanishes", "bounded_phase_recursion_vanishes",
+            Entry("bounded-phase-recursion-vanishes", "bounded_phase_recursion_vanishes",
                 "Conditional vanishing from an assumed Fourier recursion", TheoremFormula(),
                 "The full telescope is arbitrary M with only a two-sided unit, U:M to M, u:M, a subset N containing 1 and closed under x times U^k u for every x in N and k in ZMod 3, an injective complex additive character chi of ZMod 3, complex functions f and D, and a finite real C bounding normSq(f x) for every x in N. The displayed local recursion is an additional hypothesis. Character orthogonality yields a child energy of 3 times (normSq(f x)+normSq(f u)+normSq(D x)). Induction over every PhaseWords n gives 3^n times (normSq(f 1)+n normSq(f u)) as a lower bound on the total energy. The upper bound is 3^n C. An Archimedean argument forces normSq(f u)=0. AddChar.wInner_cWeight_eq_boole is the reused scalar orthogonality supplier; it imposes a group law only on the phase index.",
                 DescribeRole.Theorem);
-    private static Formula TheoremFormula()
-    {
-        Formula closed = All(X, M, Seq(InSet(X), Sp, Rightarrow, Sp,
-            All(K, Three, InSet(Child))));
-        Formula bounded = All(X, M, Seq(InSet(X), Sp, Rightarrow, Sp,
-            Energy(X), Sp, Le, Sp, C));
-        Formula recursion = All(X, M, Seq(InSet(X), Sp, Rightarrow, Sp,
-            All(K, Three, Eqn(Read(Child), Seq(Read(X), Sp, Plus, Sp,
-                Call("chi", K), Read(T), Sp, Plus, Sp,
-                Call("chi", Seq(Minus, K)), Call("D", X))))));
-        Formula complex = Seq(Mathbb, Grp(F.Id("C")));
-        Formula arrow = Seq(M, Sp, To, Sp, complex);
-        return Seq(Forall, Sp, M, Colon, Sp, F.Id("Type"), Comma, Sp,
-            OpenBracket, Call("MulOneClass", M), CloseBracket, Comma, Sp,
-            U, Colon, Sp, M, Sp, To, Sp, M, Comma, Sp,
-            T, Colon, Sp, M, Comma, Sp, N, Colon, Sp, Call("Set", M), Comma, Sp,
-            Chi, Colon, Sp, Call("AddChar", Three, complex), Comma, Sp,
-            F.Id("f"), Comma, Sp, F.Id("D"), Colon, Sp, arrow, Comma, Sp,
-            C, Colon, Sp, Mathbb, Grp(F.Id("R")), Comma, Sp, Open,
-            InSet(D(1)), Sp, Land, Sp, closed, Sp, Land, Sp,
-            Call("Injective", Chi), Sp, Land, Sp, bounded, Sp, Land, Sp, recursion,
-            Close, Sp, Rightarrow, Sp, Eqn(Read(T), D(0)));
-    }
+        private static Formula TheoremFormula()
+        {
+            Formula closed = All(X, M, Seq(InSet(X), Sp, Rightarrow, Sp,
+                All(K, Three, InSet(Child))));
+            Formula bounded = All(X, M, Seq(InSet(X), Sp, Rightarrow, Sp,
+                Energy(X), Sp, Le, Sp, C));
+            Formula recursion = All(X, M, Seq(InSet(X), Sp, Rightarrow, Sp,
+                All(K, Three, Eqn(Read(Child), Seq(Read(X), Sp, Plus, Sp,
+                    Call("chi", K), Read(T), Sp, Plus, Sp,
+                    Call("chi", Seq(Minus, K)), Call("D", X))))));
+            Formula complex = Seq(Mathbb, Grp(F.Id("C")));
+            Formula arrow = Seq(M, Sp, To, Sp, complex);
+            return Seq(Forall, Sp, M, Colon, Sp, F.Id("Type"), Comma, Sp,
+                OpenBracket, Call("MulOneClass", M), CloseBracket, Comma, Sp,
+                U, Colon, Sp, M, Sp, To, Sp, M, Comma, Sp,
+                T, Colon, Sp, M, Comma, Sp, N, Colon, Sp, Call("Set", M), Comma, Sp,
+                Chi, Colon, Sp, Call("AddChar", Three, complex), Comma, Sp,
+                F.Id("f"), Comma, Sp, F.Id("D"), Colon, Sp, arrow, Comma, Sp,
+                C, Colon, Sp, Mathbb, Grp(F.Id("R")), Comma, Sp, Open,
+                InSet(D(1)), Sp, Land, Sp, closed, Sp, Land, Sp,
+                Call("Injective", Chi), Sp, Land, Sp, bounded, Sp, Land, Sp, recursion,
+                Close, Sp, Rightarrow, Sp, Eqn(Read(T), D(0)));
+        }
 
-    private static DocumentBlock Entry(string id, string declaration, string title,
-        Formula formula, string narrative, DescribeRole role) => Describe.Lean(
-            DescribeId.Create(id), DeclarationHandle.Create(Gid + declaration), H(title),
-            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(narrative))), role);
+        private static DocumentBlock Entry(string id, string declaration, string title,
+            Formula formula, string narrative, DescribeRole role) => Describe.Lean(
+                DescribeId.Create(id), DeclarationHandle.Create(Gid + declaration), H(title),
+                StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(narrative))), role);
     }
 
 }
