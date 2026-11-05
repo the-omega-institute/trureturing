@@ -1,0 +1,21 @@
+**Proposition 156.4 (what an actual-partition realization must add).** Suppose the certificate of Route condition 156.3 is available with a uniform finite-cell realization as follows: there are increasing finite Borel partitions $\mathcal P_n$ of the original $G$ and common quantile maps $u\mapsto D_n(u)$ such that the actual maps
+
+$$
+F_n(u)=\left(\mathcal H_{43}(\mathbf1_{D_n(u)})-\mathcal H_{43}(f),
+ \Delta_{\mathcal R_\ast}(\mathbf1_{D_n(u)})\right)
+\tag{156.7}
+$$
+
+converge uniformly on the certificate ball, after the same scaling used in (156.6), to the corresponding fractional map. If the degree or boundary estimate persists for one finite $n$, then one actual whole-$G$ Borel partition $D_n$ has all sixty-three displayed coordinates exact, and (156.3) and the complement identities give
+
+$$
+\Delta(D_n)=0.
+\tag{156.8}
+$$
+
+*Proof.* The first forty-three coordinates and the twenty coordinates in $\mathcal R_\ast$ form a finite map with sixty-three components. The uniform approximation and the degree or boundary estimate give a zero by the finite-dimensional Brouwer or degree argument used in Section 154.E. The resulting partition is produced by one common quantile construction, so every slot uses its own indicator and propagated terminal. Equation (156.3) supplies the omitted repeated coordinate, while Section 154.F supplies the coordinates with label $B$. No weak fractional limit is substituted for this finite actual partition. $\square$
+
+The two propositions isolate the unpaid bridge without changing the original problem. The remaining proof obligations are the existence of the invariant reservoir and twenty legal perturbation directions, the weighted Schur-complement determinant and its nonlinear remainder estimate, pointwise simplex legality, the finite-cell boundary estimate, and preservation of the actual terminal factors. A failure of any one of these conditions for one permitted $\theta$ falsifies this SRS-20 route only; it does not refute $F_{64}(\theta)$ or the universal target.
+
+The fixed-start summable continuation of Corollary 155.4 remains an independent sufficient route. It is not implied by (156.6), and it is not needed if the finite actual completion succeeds. Conversely, failure of the finite rank certificate leaves the fixed-start route open. The scalar four-score contrast and finite-horizon tests described in the proportional-containment advisory provide a diagnostic for candidate families, but they do not supply the source-specific rank or the actual finite partition required here.
+
