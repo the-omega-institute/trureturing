@@ -701,6 +701,14 @@ private theorem event_conjugate_bound {L : Type} (T : Tree L)
     _ ≤ _ := by simpa [initial_energy] using whole_tree_energy T initial
 
 
+/-- Exact branch evaluation and the complete nonphysical energy budget.
+This consumed interface keeps the original tree, paths and root unchanged. -/
+theorem original_branch_evaluations {L : Type} (T : Tree L) :
+    (∀ p : Path T, amplitude (branch T p initial) = (operator T p).mulVec omega0) ∧
+    treeEnergy T initial ≤ kappa^(2*maxCalls T) := by
+  refine ⟨fun p => ?_, ?_⟩
+  · rw [branch_physical, initial_physical]
+  · simpa [initial_energy] using whole_tree_energy T initial
 
 end Coeff
 

@@ -238,5 +238,343 @@ theorem original_complete_born_law {L : Type} (T : NativeProtocolGraft.Tree L)
     · exact Complex.normSq_nonneg _
   exact ⟨ht, ⟨hn, hb.trans_eq ht⟩, eventCut_positive T I event, eventCut_trace T I event⟩
 
+
+/-- Hamming parity on the retained and complementary original positions. -/
+def rowParity (I : Finset (Fin 16)) (i : CutBasis I) : ZMod 2 :=
+  ∑ k, if i k then 1 else 0
+
+def restParity (I : Finset (Fin 16)) (z : CutRest I) : ZMod 2 :=
+  (∑ k, if z k then 1 else 0) -
+    ∑ k : Fin 16, if rootWord k then 1 else 0
+
+def rowExponent (I : Finset (Fin 16)) (i : CutBasis I) : ℕ :=
+  if rowParity I i = 0 then 0 else 1
+
+def restExponent (I : Finset (Fin 16)) (z : CutRest I) : ℕ :=
+  if restParity I z = 0 then 0 else 1
+
+private theorem zmod_cases (x : ZMod 2) : x = 0 ∨ x = 1 := by
+  have hv := x.val_lt
+  have hr := ZMod.natCast_zmod_val x
+  interval_cases x.val <;> simp_all
+
+private theorem split_parity (I : Finset (Fin 16)) (i : CutBasis I) (z : CutRest I) :
+    Coeff.parity ((splitAt I).symm (i,z)) = rowParity I i + restParity I z := by
+  classical
+  have hl (k : {k : Fin 16 // k ∈ I}) :
+      ((splitAt I).symm (i,z)) k = i k := by
+    change (if h : k.val ∈ I then i ⟨k.val,h⟩ else z ⟨k.val,h⟩) = i k
+    simp only [dite_eq_left k.property]
+  have hr (k : {k : Fin 16 // k ∉ I}) :
+      ((splitAt I).symm (i,z)) k = z k := by
+    change (if h : k.val ∈ I then i ⟨k.val,h⟩ else z ⟨k.val,h⟩) = z k
+    simp only [dite_eq_right k.property]
+  have hs := Fintype.sum_subtype_add_sum_subtype (fun k : Fin 16 => k ∈ I)
+    (fun k => if ((splitAt I).symm (i,z)) k then (1 : ZMod 2) else 0)
+  simp only [hl,hr] at hs
+  unfold Coeff.parity rowParity restParity
+  rw [← hs, add_sub_assoc]
+  congr 1
+  apply Finset.sum_congr
+  · ext k; simp
+  · intro k _; rfl
+
+private theorem split_exponent (I : Finset (Fin 16)) (i : CutBasis I) (z : CutRest I) :
+    Coeff.exponent ((splitAt I).symm (i,z)) =
+      (rowExponent I i + restExponent I z) % 2 := by
+  rcases zmod_cases (rowParity I i) with hi | hi <;>
+    rcases zmod_cases (restParity I z) with hz | hz <;>
+    norm_num [Coeff.exponent, split_parity, rowExponent, restExponent, hi, hz] <;> decide
+
+/-- Removing the row and column square-root factors stays in the original
+four-integer coefficient ring, since tau inverse is tau plus one. -/
+def cutCoefficient (I : Finset (Fin 16)) (h : Basis → Coeff.S)
+    (i : CutBasis I) (z : CutRest I) : Coeff.S :=
+  Coeff.inc ((Coeff.tau+1)^(rowExponent I i * restExponent I z)) *
+    h ((splitAt I).symm (i,z))
+
+private theorem cut_amplitude (I : Finset (Fin 16)) (h : Basis → Coeff.S)
+    (i : CutBasis I) (z : CutRest I) :
+    Coeff.amplitude h ((splitAt I).symm (i,z)) =
+      beta^rowExponent I i * beta^restExponent I z *
+        Coeff.physical (cutCoefficient I h i z) := by
+  have hi : rowExponent I i = 0 ∨ rowExponent I i = 1 := by
+    unfold rowExponent; split_ifs <;> simp
+  have hz : restExponent I z = 0 ∨ restExponent I z = 1 := by
+    unfold restExponent; split_ifs <;> simp
+  have ht : Coeff.physical (Coeff.inc Coeff.tau) = t := by
+    simp [Coeff.physical, Coeff.evalS, Coeff.inc]
+  have he := split_exponent I i z
+  unfold Coeff.amplitude cutCoefficient
+  simp only [map_mul, map_pow, map_add, map_one, ht]
+  rw [he]
+  rcases hi with hi | hi <;> rcases hz with hz | hz <;>
+    simp only [hi,hz,Nat.zero_mul,Nat.mul_zero,Nat.one_mul,Nat.mul_one,
+      Nat.zero_add,Nat.add_zero,pow_zero,pow_one,one_mul] <;> norm_num
+  rw [← mul_assoc, ← pow_two, Coeff.beta_sq]
+  have htq := Coeff.t_sq
+  linear_combination -(Coeff.physical (h ((splitAt I).symm (i,z)))) * htq
+
+
+private theorem evalS_star (u v : ℂ) (hu hv) (huStar : star u = u)
+    (hvStar : v + star v = -u) (x : Coeff.S) :
+    Coeff.evalS u v hu hv (star x) = star (Coeff.evalS u v hu hv x) := by
+  have hr (a : Coeff.O) : star (Coeff.evalO u hu a) = Coeff.evalO u hu a := by
+    simp [Coeff.evalO, huStar]
+  change Coeff.evalO u hu (star x).re + Coeff.evalO u hu (star x).im * v =
+    star (Coeff.evalO u hu x.re + Coeff.evalO u hu x.im * v)
+  simp only [QuadraticAlgebra.re_star, QuadraticAlgebra.im_star,
+    map_add, map_mul, map_neg, Coeff.evalO_tau, star_add, star_mul, hr]
+  linear_combination -(Coeff.evalO u hu x.im) * hvStar
+
+private theorem physical_star (x : Coeff.S) :
+    Coeff.physical (star x) = star (Coeff.physical x) := by
+  have hz : zeta ≠ 0 := by
+    intro hz
+    simpa [hz] using Coeff.zeta_norm
+  have hs : zeta + star zeta = -t := by
+    apply mul_left_cancel₀ hz
+    rw [mul_add, Coeff.zeta_norm]
+    linear_combination Coeff.zeta_sq
+  unfold Coeff.physical
+  apply evalS_star t zeta _ _ (by simp [t]) hs
+
+private theorem nonphysical_star (x : Coeff.S) :
+    Coeff.nonphysical (star x) = star (Coeff.nonphysical x) := by
+  have hs : Coeff.conjugateZeta + star Coeff.conjugateZeta = (phi : ℂ) := by
+    apply Complex.ext
+    · simp [Coeff.conjugateZeta, Complex.exp_re, Real.cos_pi_div_five, phi]
+      ring
+    · simp
+  unfold Coeff.nonphysical
+  apply evalS_star (-(phi : ℂ)) Coeff.conjugateZeta _ _ (by simp) (by simpa using hs)
+
+private theorem inc_star (x : Coeff.O) : star (Coeff.inc x) = Coeff.inc x := by
+  apply QuadraticAlgebra.ext
+  · change x + (-Coeff.tau)*0 = x
+    ring
+  · change -(0 : Coeff.O) = 0
+    exact neg_zero
+
+/-- Coefficients for the same original cut after extracting its row factors. -/
+def cutKernel {L : Type} (T : NativeProtocolGraft.Tree L) (I : Finset (Fin 16))
+    (event : Path T → Bool) : Matrix (CutBasis I) (CutBasis I) Coeff.S :=
+  fun i j => ∑ p, ∑ z : CutRest I, if event p then
+    Coeff.inc (Coeff.tau ^ restExponent I z) *
+      cutCoefficient I (Coeff.branch T p Coeff.initial) i z *
+      star (cutCoefficient I (Coeff.branch T p Coeff.initial) j z) else 0
+
+private theorem cutKernel_hermitian {L : Type} (T : NativeProtocolGraft.Tree L)
+    (I : Finset (Fin 16)) (event : Path T → Bool) :
+    (cutKernel T I event)ᴴ = cutKernel T I event := by
+  classical
+  apply Matrix.ext
+  intro i j
+  simp only [Matrix.conjTranspose_apply, cutKernel, star_sum]
+  apply Finset.sum_congr rfl
+  intro p _
+  apply Finset.sum_congr rfl
+  intro z _
+  split_ifs <;> simp only [star_mul, star_star, inc_star, star_zero] <;> ring
+
+private theorem eventCut_factor {L : Type} (T : NativeProtocolGraft.Tree L)
+    (I : Finset (Fin 16)) (event : Path T → Bool) :
+    eventCut T I event =
+      Matrix.diagonal (fun i => beta^rowExponent I i) *
+        (cutKernel T I event).map Coeff.physical *
+      Matrix.diagonal (fun i => beta^rowExponent I i) := by
+  classical
+  apply Matrix.ext
+  intro i j
+  simp only [Matrix.diagonal_mul, Matrix.mul_diagonal, Matrix.map_apply, cutKernel,
+    map_sum, mul_assoc, Finset.mul_sum, Finset.sum_mul]
+  simp only [eventCut, Matrix.sum_apply]
+  change (∑ p, (if event p then cutReduced I ((operator T p).mulVec omega0) else 0) i j) = _
+  apply Finset.sum_congr rfl
+  intro p _
+  by_cases he : event p
+  · simp only [he, ite_true, map_mul, map_pow, physical_star, cutReduced,
+      D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight,
+      Matrix.vecMulVec_apply, Function.comp_apply, Pi.star_apply]
+    rw [← (Coeff.original_branch_evaluations T).1 p]
+    apply Finset.sum_congr rfl
+    intro z _
+    rw [cut_amplitude, cut_amplitude]
+    have ht : Coeff.physical (Coeff.inc Coeff.tau) = t := by
+      simp [Coeff.physical, Coeff.evalS, Coeff.inc]
+    rw [ht]
+    simp only [star_mul, star_pow, show star beta = beta by simp [beta]]
+    have hb : beta^restExponent I z * beta^restExponent I z = t^restExponent I z := by
+      rw [← mul_pow, ← pow_two, Coeff.beta_sq]
+    linear_combination
+      (beta^rowExponent I i * beta^rowExponent I j *
+        Coeff.physical (cutCoefficient I (Coeff.branch T p Coeff.initial) i z) *
+        star (Coeff.physical (cutCoefficient I (Coeff.branch T p Coeff.initial) j z))) * hb
+  · simp [he]
+
+private theorem fixed_coefficient (x : Coeff.S) (hx : star x = x) :
+    Coeff.inc x.re = x := by
+  have hi : -x.im = x.im := congrArg QuadraticAlgebra.im hx
+  have hir := congrArg QuadraticAlgebra.re hi
+  have hii := congrArg QuadraticAlgebra.im hi
+  have hz : x.im = 0 := by
+    apply QuadraticAlgebra.ext <;> simp only [QuadraticAlgebra.re_neg,
+      QuadraticAlgebra.im_neg, QuadraticAlgebra.re_zero, QuadraticAlgebra.im_zero] at * <;> omega
+  apply QuadraticAlgebra.ext <;> simp [Coeff.inc, hz]
+
+/-- The actual determinant's inverse-golden integer coordinates. -/
+def cutDetCoordinates {L : Type} (T : NativeProtocolGraft.Tree L)
+    (I : Finset (Fin 16)) (event : Path T → Bool) : Coeff.O :=
+  (∏ i : CutBasis I, Coeff.tau^rowExponent I i) * (cutKernel T I event).det.re
+
+
+private def evaluatedCut {L : Type} (f : Coeff.S →+* ℂ) (b : ℂ)
+    (T : NativeProtocolGraft.Tree L) (I : Finset (Fin 16)) (event : Path T → Bool) :
+    Matrix (CutBasis I) (CutBasis I) ℂ :=
+  Matrix.diagonal (fun i => b^rowExponent I i) *
+    (cutKernel T I event).map f * Matrix.diagonal (fun i => b^rowExponent I i)
+
+/-- Apply the chosen nonphysical evaluation to the same integral cut formula.
+Both row factors use beta-prime, without conjugating the second one. -/
+def conjugateEventCut {L : Type} (T : NativeProtocolGraft.Tree L)
+    (I : Finset (Fin 16)) (event : Path T → Bool) :
+    Matrix (CutBasis I) (CutBasis I) ℂ :=
+  evaluatedCut Coeff.nonphysical Coeff.conjugateBeta T I event
+
+private theorem evaluatedCut_det {L : Type} (f : Coeff.S →+* ℂ) (b u : ℂ)
+    (hu : u ^ 2 = 1 - u) (hf : ∀ x, f (Coeff.inc x) = Coeff.evalO u hu x)
+    (hb : b ^ 2 = u) (T : NativeProtocolGraft.Tree L)
+    (I : Finset (Fin 16)) (event : Path T → Bool) :
+    (evaluatedCut f b T I event).det = Coeff.evalO u hu (cutDetCoordinates T I event) := by
+  classical
+  have hx : Coeff.inc (cutKernel T I event).det.re = (cutKernel T I event).det := by
+    apply fixed_coefficient
+    rw [← Matrix.det_conjTranspose, cutKernel_hermitian]
+  have hp : (∏ i : CutBasis I, b^rowExponent I i) *
+      (∏ i : CutBasis I, b^rowExponent I i) = ∏ i : CutBasis I, u^rowExponent I i := by
+    rw [← Finset.prod_mul_distrib]
+    apply Finset.prod_congr rfl
+    intro i _
+    rw [← mul_pow, ← pow_two, hb]
+  have hd : ((cutKernel T I event).map f).det = f (cutKernel T I event).det :=
+    (f.map_det _).symm
+  simp only [evaluatedCut, Matrix.det_mul, Matrix.det_diagonal]
+  rw [hd, ← hx, hf]
+  unfold cutDetCoordinates
+  simp only [map_mul, map_prod, map_pow, Coeff.evalO_tau]
+  linear_combination Coeff.evalO u hu (cutKernel T I event).det.re * hp
+
+private theorem cut_det_physical {L : Type} (T : NativeProtocolGraft.Tree L)
+    (I : Finset (Fin 16)) (event : Path T → Bool) :
+    (eventCut T I event).det = (Coeff.realPhysical (cutDetCoordinates T I event) : ℂ) := by
+  rw [eventCut_factor]
+  change (evaluatedCut Coeff.physical beta T I event).det = _
+  rw [evaluatedCut_det Coeff.physical beta t Coeff.t_sq
+    (fun x => by simp [Coeff.physical, Coeff.evalS, Coeff.inc]) Coeff.beta_sq]
+  simp [Coeff.realPhysical, Coeff.evalO, t]
+
+private theorem cut_det_conjugate {L : Type} (T : NativeProtocolGraft.Tree L)
+    (I : Finset (Fin 16)) (event : Path T → Bool) :
+    (conjugateEventCut T I event).det =
+      (Coeff.realConjugate (cutDetCoordinates T I event) : ℂ) := by
+  have hb : Coeff.conjugateBeta^2 = -(phi : ℂ) := by
+    simp [Coeff.conjugateBeta, mul_pow, ← Complex.ofReal_pow,
+      Real.sq_sqrt Coeff.phi_positive.le]
+  have hu : (-(phi : ℂ))^2 = 1- (-(phi : ℂ)) := by
+    have hh : phi^2 = phi+1 := Real.goldenRatio_sq
+    exact_mod_cast (by nlinarith only [hh] : (-phi)^2 = 1-(-phi))
+  unfold conjugateEventCut
+  rw [evaluatedCut_det Coeff.nonphysical Coeff.conjugateBeta (-(phi : ℂ)) hu
+    (fun x => by simp [Coeff.nonphysical, Coeff.evalS, Coeff.inc]) hb]
+  simp [Coeff.realConjugate, Coeff.evalO]
+
+
+private theorem cut_conjugate_amplitude (I : Finset (Fin 16)) (h : Basis → Coeff.S)
+    (i : CutBasis I) (z : CutRest I) :
+    Coeff.conjugateAmplitude h ((splitAt I).symm (i,z)) =
+      Coeff.conjugateBeta^rowExponent I i * Coeff.conjugateBeta^restExponent I z *
+        Coeff.nonphysical (cutCoefficient I h i z) := by
+  have hi : rowExponent I i = 0 ∨ rowExponent I i = 1 := by
+    unfold rowExponent; split_ifs <;> simp
+  have hz : restExponent I z = 0 ∨ restExponent I z = 1 := by
+    unfold restExponent; split_ifs <;> simp
+  have ht : Coeff.nonphysical (Coeff.inc Coeff.tau) = -(phi : ℂ) := by
+    simp [Coeff.nonphysical, Coeff.evalS, Coeff.inc]
+  have hb : Coeff.conjugateBeta^2 = -(phi : ℂ) := by
+    simp [Coeff.conjugateBeta, mul_pow, ← Complex.ofReal_pow,
+      Real.sq_sqrt Coeff.phi_positive.le]
+  have he := split_exponent I i z
+  unfold Coeff.conjugateAmplitude cutCoefficient
+  simp only [map_mul, map_pow, map_add, map_one, ht]
+  rw [he]
+  rcases hi with hi | hi <;> rcases hz with hz | hz <;>
+    simp only [hi,hz,Nat.zero_mul,Nat.mul_zero,Nat.one_mul,Nat.mul_one,
+      Nat.zero_add,Nat.add_zero,pow_zero,pow_one,one_mul] <;> norm_num
+  rw [← mul_assoc, ← pow_two, hb]
+  have htq : (-(phi : ℂ))^2 = 1- (-(phi : ℂ)) := by
+    have hh : phi^2 = phi+1 := Real.goldenRatio_sq
+    exact_mod_cast (by nlinarith only [hh] : (-phi)^2 = 1-(-phi))
+  linear_combination -(Coeff.nonphysical (h ((splitAt I).symm (i,z)))) * htq
+
+private theorem conjugateEventCut_signed {L : Type} (T : NativeProtocolGraft.Tree L)
+    (I : Finset (Fin 16)) (event : Path T → Bool) (i j : CutBasis I) :
+    conjugateEventCut T I event i j =
+      ∑ p, ∑ z : CutRest I, if event p then
+        (-1 : ℂ)^(restExponent I z + rowExponent I j) *
+        Coeff.conjugateAmplitude (Coeff.branch T p Coeff.initial) ((splitAt I).symm (i,z)) *
+        star (Coeff.conjugateAmplitude (Coeff.branch T p Coeff.initial) ((splitAt I).symm (j,z)))
+      else 0 := by
+  classical
+  simp only [conjugateEventCut, evaluatedCut, Matrix.diagonal_mul, Matrix.mul_diagonal,
+    Matrix.map_apply, cutKernel, map_sum, Finset.mul_sum, Finset.sum_mul]
+  apply Finset.sum_congr rfl
+  intro p _
+  apply Finset.sum_congr rfl
+  intro z _
+  by_cases he : event p
+  · simp only [he, ite_true, map_mul, map_pow, nonphysical_star]
+    rw [cut_conjugate_amplitude, cut_conjugate_amplitude]
+    have ht : Coeff.nonphysical (Coeff.inc Coeff.tau) = -(phi : ℂ) := by
+      simp [Coeff.nonphysical, Coeff.evalS, Coeff.inc]
+    have hb : Coeff.conjugateBeta^2 = -(phi : ℂ) := by
+      simp [Coeff.conjugateBeta, mul_pow, ← Complex.ofReal_pow,
+        Real.sq_sqrt Coeff.phi_positive.le]
+    have hs : star Coeff.conjugateBeta = -Coeff.conjugateBeta := by
+      simp [Coeff.conjugateBeta]
+    rw [ht]
+    simp only [star_mul, star_pow, hs]
+    have hj : rowExponent I j = 0 ∨ rowExponent I j = 1 := by
+      unfold rowExponent; split_ifs <;> simp
+    have hz : restExponent I z = 0 ∨ restExponent I z = 1 := by
+      unfold restExponent; split_ifs <;> simp
+    have hh := congrArg (fun a : ℂ =>
+      (Coeff.conjugateBeta^rowExponent I i * Coeff.conjugateBeta^rowExponent I j *
+        Coeff.nonphysical (cutCoefficient I (Coeff.branch T p Coeff.initial) i z) *
+        star (Coeff.nonphysical (cutCoefficient I (Coeff.branch T p Coeff.initial) j z))) * a) hb
+    rcases hj with hj | hj <;> rcases hz with hz | hz <;>
+      simp only [hj,hz,Nat.zero_add,Nat.add_zero,show (1+1 : ℕ) = 2 by rfl,
+        pow_zero,pow_one,neg_one_sq,mul_one,one_mul,neg_one_mul,neg_neg] at hh ⊢ <;>
+      first | (solve | ring) | linear_combination -hh
+  · simp [he]
+
+/-- The actual same-cut determinant has quadratic integer coordinates, and
+its other evaluation is the determinant of the exact signed embedded cut. -/
+theorem original_event_cut_integer_coordinates {L : Type} (T : NativeProtocolGraft.Tree L)
+    (event : Path T → Bool) (I : Finset (Fin 16)) :
+    (eventCut T I event).trace = (eventMass T (historyEvent event) : ℂ) ∧
+    (eventCut T I event).det = (Coeff.realPhysical (cutDetCoordinates T I event) : ℂ) ∧
+    (conjugateEventCut T I event).det =
+      (Coeff.realConjugate (cutDetCoordinates T I event) : ℂ) ∧
+    ∀ i j : CutBasis I, conjugateEventCut T I event i j =
+      ∑ p, ∑ z : CutRest I, if event p then
+        (-1 : ℂ)^(restExponent I z + rowExponent I j) *
+        Coeff.conjugateAmplitude (Coeff.branch T p Coeff.initial) ((splitAt I).symm (i,z)) *
+        star (Coeff.conjugateAmplitude (Coeff.branch T p Coeff.initial) ((splitAt I).symm (j,z)))
+      else 0 :=
+  ⟨eventCut_trace T I event, cut_det_physical T I event, cut_det_conjugate T I event,
+    conjugateEventCut_signed T I event⟩
+
+#print axioms original_event_cut_integer_coordinates
+
 #print axioms original_complete_born_law
 end D5.S3.Quantum.Dynamics.NativeProtocolBornNormalization

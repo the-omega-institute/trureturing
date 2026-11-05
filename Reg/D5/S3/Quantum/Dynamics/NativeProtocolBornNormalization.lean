@@ -103,4 +103,73 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 
 #print axioms family
 #print axioms registration
+
+abbrev cutArena : Arena where
+  signature := signature
+  Law r := ∀ (L : Type) (T : NativeTree L) (e : Path T → Bool) (I : Finset (Fin 16)),
+    (eventCut T I e).trace = (r.readout () L ⟨T,e,I⟩ : ℂ) ∧
+    (eventCut T I e).det = (Coeff.realPhysical (cutDetCoordinates T I e) : ℂ) ∧
+    (conjugateEventCut T I e).det = (Coeff.realConjugate (cutDetCoordinates T I e) : ℂ) ∧
+    ∀ i j : CutBasis I, conjugateEventCut T I e i j =
+      ∑ p, ∑ z : CutRest I, if e p then
+        (-1 : ℂ)^(restExponent I z + rowExponent I j) *
+        Coeff.conjugateAmplitude (Coeff.branch T p Coeff.initial) ((splitAt I).symm (i,z)) *
+        star (Coeff.conjugateAmplitude (Coeff.branch T p Coeff.initial) ((splitAt I).symm (j,z)))
+      else 0
+
+private theorem cut_rejected_law : ¬ cutArena.Law rejected := by
+  intro h
+  let T : NativeTree Unit := .leaf ()
+  have ht := (original_complete_born_law T (fun _ => false) ∅).2.2.2
+  have hb := (h Unit T (fun _ => false) ∅).1
+  change (eventCut T ∅ (fun _ => false)).trace = (2 : ℂ) at hb
+  rw [ht] at hb
+  simp [eventMass, historyEvent] at hb
+
+def cutFamily : Registration cutArena (type_of% (@original_event_cut_integer_coordinates)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨fun _ T e I => original_event_cut_integer_coordinates T e I,
+    rejected,cut_rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected,?_,?_,cut_rejected_law⟩
+      · intro j h
+        exact (h (Subsingleton.elim _ _)).elim
+      · funext e
+        exact nomatch e
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def cutRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@original_event_cut_integer_coordinates) (Realization signature) Unit Unit where
+  unitName :=
+    `D5.S3.Quantum.Dynamics.NativeProtocolBornNormalization.original_event_cut_integer_coordinates.__information_unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Dynamics.NativeProtocolBornNormalization.cutFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨cutArena⟩
+  objectArena := .source ⟨cutArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source cutArena ⟨cutFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ _ x => eventMass x.tree (historyEvent x.event)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms cutFamily
+#print axioms cutRegistration
+
 end Reg.D5.S3.Quantum.Dynamics.NativeProtocolBornNormalization
