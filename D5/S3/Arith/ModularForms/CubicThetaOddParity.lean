@@ -69,10 +69,11 @@ noncomputable def coreOddEquiv (n : ℕ) :
         norm_num
       have hpar := (core_exponent_mod_four_one p.1).mp hm
       have hi := odd_affine_inverse p.1 hpar.1 hpar.2
-      have he := core_exponent_odd_affine q
+      have he := core_exponent_odd_affine
+        ((1 - p.1.1) / 2, -p.1.2 / 2)
       rw [hi, p.2] at he
-      dsimp [q] at he
       push_cast at he
+      change coreExponent ((1 - p.1.1) / 2, -p.1.2 / 2) = _
       omega⟩
   left_inv p := by
     apply Subtype.ext
@@ -118,7 +119,7 @@ theorem core_product_coeff_mod_four (n : ℕ) :
     exact_mod_cast core_fiber_four_mul_add_one_card n
   · rw [coeff_core_product]
     have h := core_fiber_four_mul_add_three_empty n
-    exact_mod_cast Nat.card_eq_zero_of_isEmpty (CoreFiber (4 * n + 3))
+    exact_mod_cast (Nat.card_of_isEmpty : Nat.card (CoreFiber (4 * n + 3)) = 0)
 
 noncomputable abbrev f1 : PowerSeries ℤ := PowerSeries.pentagonalSeries ℤ
 
@@ -155,13 +156,16 @@ theorem map_invOfUnit_f1 :
   simp only [map_mul, map_one, f1_map] at hz
   have hq := PowerSeries.mul_invOfUnit (PowerSeries.pentagonalSeries ℚ) 1
     CubicThetaCoreProduct.euler_constant_one
+  have hq' : PowerSeries.invOfUnit (PowerSeries.pentagonalSeries ℚ) 1 *
+      PowerSeries.pentagonalSeries ℚ = 1 := by
+    rw [mul_comm, hq]
   calc
     PowerSeries.map (Int.castRingHom ℚ) (PowerSeries.invOfUnit f1 1) =
         1 * PowerSeries.map (Int.castRingHom ℚ) (PowerSeries.invOfUnit f1 1) := by rw [one_mul]
     _ = (PowerSeries.invOfUnit (PowerSeries.pentagonalSeries ℚ) 1 *
         PowerSeries.pentagonalSeries ℚ) *
         PowerSeries.map (Int.castRingHom ℚ) (PowerSeries.invOfUnit f1 1) := by
-      rw [mul_comm, hq, one_mul]
+      rw [hq', one_mul]
     _ = PowerSeries.invOfUnit (PowerSeries.pentagonalSeries ℚ) 1 *
         (PowerSeries.pentagonalSeries ℚ *
           PowerSeries.map (Int.castRingHom ℚ) (PowerSeries.invOfUnit f1 1)) := by ring
@@ -173,23 +177,29 @@ theorem integralT_map :
       (PowerSeries.expand 3 (by decide)
         (PowerSeries.pentagonalSeries ℚ)) ^ 3 *
         PowerSeries.invOfUnit (PowerSeries.pentagonalSeries ℚ) 1 := by
-  rw [integralT, map_mul, f3_map, map_pow, map_invOfUnit_f1]
+  rw [integralT, map_mul, map_pow, f3_map, map_invOfUnit_f1]
 
 theorem integralT_coeff_mod_four (n : ℕ) :
     PowerSeries.coeff (4 * n + 1) integralT = PowerSeries.coeff n integralT ∧
     PowerSeries.coeff (4 * n + 3) integralT = 0 := by
   have hq := core_product_coeff_mod_four n
-  have hmap := congrArg (fun F : PowerSeries ℚ =>
-      PowerSeries.coeff (4 * n + 1) F = PowerSeries.coeff n F) integralT_map
+  have hmap1 := congrArg (fun F : PowerSeries ℚ =>
+      PowerSeries.coeff (4 * n + 1) F) integralT_map
+  have hmapn := congrArg (fun F : PowerSeries ℚ =>
+      PowerSeries.coeff n F) integralT_map
   have hmap3 := congrArg (fun F : PowerSeries ℚ =>
       PowerSeries.coeff (4 * n + 3) F) integralT_map
   constructor
   · have hc : ((PowerSeries.coeff (4 * n + 1) integralT : ℤ) : ℚ) =
         ((PowerSeries.coeff n integralT : ℤ) : ℚ) := by
-      simpa only [PowerSeries.coeff_map, Int.coe_castRingHom] using hmap.trans hq.1
+      rw [PowerSeries.coeff_map] at hmap1 hmapn
+      exact hmap1.trans (hq.1.trans hmapn.symm)
     exact Int.cast_injective hc
   · have hc : ((PowerSeries.coeff (4 * n + 3) integralT : ℤ) : ℚ) = 0 := by
-      simpa only [PowerSeries.coeff_map, Int.coe_castRingHom] using hmap3.trans hq.2
-    exact Int.cast_injective (by simpa using hc)
+      rw [PowerSeries.coeff_map] at hmap3
+      exact hmap3.trans hq.2
+    have hc' : ((PowerSeries.coeff (4 * n + 3) integralT : ℤ) : ℚ) =
+        ((0 : ℤ) : ℚ) := by simpa using hc
+    exact Int.cast_injective hc'
 
 end D5.S3.Arith.ModularForms.CubicThetaOddParity
