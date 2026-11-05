@@ -16,6 +16,8 @@ public import Mathlib.Analysis.Normed.Algebra.Exponential
 public import Mathlib.Analysis.SpecialFunctions.Exponential
 public import Mathlib.Analysis.Calculus.Taylor
 public import Mathlib.Analysis.Calculus.Deriv.Comp
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.Analysis.Normed.Affine.AddTorsorBases
 public import Mathlib.Analysis.LocallyConvex.Separation
 public import Mathlib.Analysis.Calculus.Deriv.Slope
 public import Mathlib.Topology.Order.Compact
@@ -626,11 +628,21 @@ private lemma perturbed_interior [FiniteDimensional ℝ E] (L : E →ₗ[ℝ] E)
       (L (w t) + (ε * Real.exp (a * t)) • d) t := by
     have hflow := (hasDerivAt_exp_smul_const' (LinearMap.toContinuousLinearMap L) t).clm_apply
       (hasDerivAt_const t y)
+    have hflow' : HasDerivAt (fun s : ℝ => originalFlow L s y)
+        (L (originalFlow L t y)) t := by
+      simpa only [originalFlow, mul_apply_eq_comp, map_zero, add_zero,
+        LinearMap.coe_toContinuousLinearMap'] using hflow
     have hpert := (((hasDerivAt_id t).const_mul a).exp.const_mul ε).smul_const A.unit
-    convert hflow.add hpert using 1 <;>
-      simp only [w, d, originalFlow, mul_apply_eq_comp, LinearMap.toContinuousLinearMap_apply,
-        map_add, map_smul, smul_sub, smul_smul]
-    <;> module
+    have hpert' : HasDerivAt (fun s : ℝ => (ε * Real.exp (a * s)) • A.unit)
+        ((ε * Real.exp (a * t) * a) • A.unit) t := by
+      simpa only [id_eq, mul_one, mul_assoc] using hpert
+    have he : L (w t) + (ε * Real.exp (a * t)) • d =
+        L (originalFlow L t y) + (ε * Real.exp (a * t) * a) • A.unit := by
+      dsimp [w, d]
+      simp only [map_add, map_smul, smul_sub, smul_smul]
+      module
+    rw [he]
+    exact hflow'.add hpert'
   have hw : Continuous w := continuous_iff_continuousAt.mpr (fun t => (hd t).continuousAt)
   have hw0 : w 0 ∈ interior (A.cone : Set E) := by
     simpa [w, originalFlow] using A.add_unit_interior y hy ε hε
@@ -650,9 +662,9 @@ private lemma perturbed_interior [FiniteDimensional ℝ E] (L : E →ₗ[ℝ] E)
   have hwT : w T ∈ A.cone := by
     have hc : IsClosed (w ⁻¹' (A.cone : Set E)) := A.closed.preimage hw
     have hs : Ico 0 T ⊆ w ⁻¹' (A.cone : Set E) :=
-      fun s hs => interior_subset (hbefore s hs)
+      fun s hs => @interior_subset E _ (A.cone : Set E) (w s) (hbefore s hs)
     apply closure_minimal hs hc
-    rw [closure_Ico hTpos.ne']
+    rw [closure_Ico hTpos.ne]
     exact ⟨hTpos.le, le_rfl⟩
   obtain ⟨β, hβ, hβz, hβu⟩ := A.boundary_support (w T) hwT hT.1.2
   have hder := β.hasFDerivAt.comp_hasDerivAt T (hd T)
@@ -692,10 +704,80 @@ theorem cross_positive_flow [FiniteDimensional ℝ E] (L : E →ₗ[ℝ] E)
       (𝓝[>] 0) (𝓝 (originalFlow L t y)) := by
     have hc : Continuous
         (fun ε : ℝ => originalFlow L t y + (ε * Real.exp (a * t)) • A.unit) := by fun_prop
-    simpa using hc.continuousAt.tendsto.mono_left nhdsWithin_le_nhds
+    simpa using (hc.tendsto (0 : ℝ)).mono_left nhdsWithin_le_nhds
   apply A.closed.mem_of_tendsto hlim
   filter_upwards [self_mem_nhdsWithin] with ε hε
   exact interior_subset (hw ε hε)
+
+private lemma zero_contact_flow [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E)
+    (hzero : ∀ β ∈ A.positiveDual, ∀ y : E, y ∈ A.cone → β y = 0 → β (H y) = 0) :
+    ∀ t : ℝ, ∀ y : E, y ∈ A.cone → originalFlow H t y ∈ A.cone := by
+  have hcp : ∀ z ∈ A.cone, ∀ β : E →ₗ[ℝ] ℝ,
+      (∀ v ∈ A.cone, 0 ≤ β v) → β z = 0 → 0 ≤ β (H z) := by
+    intro z hz β hβ hb
+    exact le_of_eq (hzero (LinearMap.toContinuousLinearMap β) hβ z hz hb).symm
+  have hcm : ∀ z ∈ A.cone, ∀ β : E →ₗ[ℝ] ℝ,
+      (∀ v ∈ A.cone, 0 ≤ β v) → β z = 0 → 0 ≤ β ((-H) z) := by
+    intro z hz β hβ hb
+    have hh := hzero (LinearMap.toContinuousLinearMap β) hβ z hz hb
+    change β (H z) = 0 at hh
+    simpa only [LinearMap.neg_apply, map_neg, hh, neg_zero] using (le_refl (0 : ℝ))
+  intro t y hy
+  by_cases ht : 0 ≤ t
+  · exact A.cross_positive_flow H hcp t ht y hy
+  · have hp := A.cross_positive_flow (-H) hcm (-t) (by linarith) y hy
+    simpa [originalFlow, neg_smul, smul_neg] using hp
+
+/-- The same original H satisfies the quantitative preparation criterion iff its
+actual exponential is positive and unital at every real time. The original
+coefficient extends unchanged to the entire positive dual and to radius r with
+exact factor r; conversely the original order-norm square-operator norm works,
+including the complementary-effect minimum. -/
+theorem quantitative_generator_iff [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E)
+    (hu : H A.unit = 0) (P : Set (E →L[ℝ] ℝ))
+    (hP : P ⊆ A.positiveDual)
+    (hspan : closure (PointedCone.hull ℝ P : Set (E →L[ℝ] ℝ)) = A.positiveDual) :
+    ((∃ K : ℝ, 0 ≤ K ∧ ∀ α ∈ P, A.Certificate H K α) ↔
+      ∀ t : ℝ, (∀ y ∈ A.cone, originalFlow H t y ∈ A.cone) ∧
+        originalFlow H t A.unit = A.unit) ∧
+    (∀ K : ℝ, 0 ≤ K → (∀ α ∈ P, A.Certificate H K α) →
+      (∀ β ∈ A.positiveDual, A.Certificate H K β) ∧
+      (∀ β ∈ A.positiveDual, ∀ r : ℝ, 0 < r → ∀ y : E,
+        y ∈ A.cone → r • A.unit - y ∈ A.cone →
+        |β (H y)| ^ 2 ≤ K * r * β y * β A.unit)) ∧
+    ((∀ t : ℝ, (∀ y ∈ A.cone, originalFlow H t y ∈ A.cone) ∧
+        originalFlow H t A.unit = A.unit) →
+      (∀ β ∈ A.positiveDual, A.Certificate H ‖A.operator H * A.operator H‖ β) ∧
+      (∀ β ∈ A.positiveDual, ∀ x : E, x ∈ A.cone → A.unit - x ∈ A.cone →
+        |β (H x)| ^ 2 ≤ ‖A.operator H * A.operator H‖ *
+          min (β x) (β (A.unit - x)) * β A.unit)) := by
+  have hreverse (hflow : ∀ t : ℝ, (∀ y ∈ A.cone, originalFlow H t y ∈ A.cone) ∧
+      originalFlow H t A.unit = A.unit) :
+      ∀ β ∈ A.positiveDual, A.Certificate H ‖A.operator H * A.operator H‖ β := by
+    intro β hβ x hx hux
+    exact A.reverse_certificate H hu (fun t => (hflow t).1) β.toLinearMap hβ x hx hux
+  refine ⟨⟨?_, ?_⟩, ?_, ?_⟩
+  · rintro ⟨K, hK, hc⟩
+    have hs := A.source_certificate H P K hK hP hspan hc
+    intro t
+    exact ⟨A.zero_contact_flow H hs.2.2 t, A.flow_unit H hu t⟩
+  · intro hflow
+    exact ⟨‖A.operator H * A.operator H‖, _root_.norm_nonneg _,
+      fun α hα => hreverse hflow α (hP hα)⟩
+  · intro K hK hc
+    have hs := A.source_certificate H P K hK hP hspan hc
+    exact ⟨hs.1, hs.2.1⟩
+  · intro hflow
+    refine ⟨hreverse hflow, ?_⟩
+    intro β hβ x hx hux
+    have h1 := hreverse hflow β hβ x hx hux
+    have h2 := hreverse hflow β hβ (A.unit - x) hux (by simpa using hx)
+    have he : |β (H (A.unit - x))| ^ 2 = |β (H x)| ^ 2 := by
+      simp [map_sub, hu]
+    rw [he] at h2
+    rcases le_total (β x) (β (A.unit - x)) with h | h
+    · simpa only [min_eq_left h] using h1
+    · simpa only [min_eq_right h] using h2
 
 /-- The constructed original norm, its dual mass bound, and the exact original
 operator and exponential interfaces. This is a dependency of the quantitative
@@ -759,4 +841,107 @@ theorem original_order_unit_norm_interface [FiniteDimensional ℝ E] :
   · exact A.positive_inverse_isometry
 
 end Data
+
+/-- The algebraic Archimedean order-unit assumptions on the original cone.
+No closedness, topological interior or norm assumption is part of these data. -/
+structure ArchimedeanData (E : Type*) [AddCommGroup E] [Module ℝ E] where
+  cone : ConvexCone ℝ E
+  unit : E
+  zero_mem : (0 : E) ∈ cone
+  salient : cone.Salient
+  unit_mem : unit ∈ cone
+  order_unit : ∀ v : E, ∃ r : ℝ, 0 < r ∧
+    r • unit - v ∈ cone ∧ r • unit + v ∈ cone
+  archimedean : ∀ v : E, (∀ ε : ℝ, 0 < ε → v + ε • unit ∈ cone) → v ∈ cone
+
+namespace ArchimedeanData
+
+variable (B : ArchimedeanData E)
+
+private lemma interior_unit [FiniteDimensional ℝ E] :
+    B.unit ∈ interior (B.cone : Set E) := by
+  have hs : Submodule.span ℝ (B.cone : Set E) = ⊤ := by
+    apply top_unique
+    intro v _
+    obtain ⟨r, hr, _, hp⟩ := B.order_unit v
+    have hru := B.cone.smul_mem hr B.unit_mem
+    have hh := (Submodule.span ℝ (B.cone : Set E)).sub_mem
+      (Submodule.subset_span hp) (Submodule.subset_span hru)
+    simpa only [add_sub_cancel_left] using hh
+  have ha : affineSpan ℝ (B.cone : Set E) = ⊤ := by
+    rw [affineSpan_eq_span_of_zero_mem (subset_affineSpan ℝ _ B.zero_mem), hs]
+    rfl
+  obtain ⟨v, hv⟩ := B.cone.convex.interior_nonempty_iff_affineSpan_eq_top.mpr ha
+  obtain ⟨r, hr, hm, _⟩ := B.order_unit v
+  have hru : r • B.unit ∈ interior (B.cone : Set E) := by
+    have hh : v + (r • B.unit - v) ∈ interior
+        ((B.cone : Set E) + (B.cone : Set E)) :=
+      subset_interior_add_left ⟨v, hv, r • B.unit - v, hm, rfl⟩
+    have hsum : (B.cone : Set E) + (B.cone : Set E) ⊆ B.cone := by
+      rintro _ ⟨a, ha, b, hb, rfl⟩
+      exact B.cone.add_mem ha hb
+    simpa only [add_sub_cancel] using interior_mono hsum hh
+  have hscale : r⁻¹ • (r • B.unit) ∈ interior (B.cone : Set E) := by
+    apply interior_mono (s := r⁻¹ • (B.cone : Set E)) ?_ ?_
+    · rintro _ ⟨v, hv, rfl⟩
+      exact B.cone.smul_mem (inv_pos.mpr hr) hv
+    · rw [interior_smul₀ (inv_ne_zero hr.ne')]
+      exact smul_mem_smul_set hru
+  simpa only [inv_smul_smul₀ hr.ne'] using hscale
+
+private lemma closed [FiniteDimensional ℝ E] : IsClosed (B.cone : Set E) := by
+  apply isClosed_of_closure_subset
+  intro v hv
+  apply B.archimedean v
+  intro ε hε
+  have heps : ε • B.unit ∈ interior (B.cone : Set E) := by
+    apply interior_mono (s := ε • (B.cone : Set E)) ?_ ?_
+    · rintro _ ⟨w, hw, rfl⟩
+      exact B.cone.smul_mem hε hw
+    · rw [interior_smul₀ hε.ne']
+      exact smul_mem_smul_set B.interior_unit
+  have hh : v + ε • B.unit ∈ closure (B.cone : Set E) + interior (B.cone : Set E) :=
+    ⟨v, hv, ε • B.unit, heps, rfl⟩
+  rw [isOpen_interior.closure_add (B.cone : Set E)] at hh
+  obtain ⟨a, ha, b, hb, he⟩ := hh
+  rw [← he]
+  exact B.cone.add_mem ha (interior_subset hb)
+
+/-- The same original cone and unit, with their finite-dimensional topology
+properties proved from the algebraic order-unit and Archimedean assumptions. -/
+def toData [FiniteDimensional ℝ E] : Data E where
+  cone := B.cone
+  unit := B.unit
+  zero_mem := B.zero_mem
+  salient := B.salient
+  closed := by exact closed B
+  interior_unit := by exact interior_unit B
+
+
+/-- The complete quantitative criterion for the original algebraic Archimedean
+order-unit cone, with closedness and the interior-unit property derived in any
+auxiliary finite-dimensional real normed topology. -/
+theorem archimedean_quantitative_generator_iff [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E)
+    (hu : H B.unit = 0) (P : Set (E →L[ℝ] ℝ))
+    (hP : P ⊆ B.toData.positiveDual)
+    (hspan : closure (PointedCone.hull ℝ P : Set (E →L[ℝ] ℝ)) = B.toData.positiveDual) :
+    IsClosed (B.cone : Set E) ∧ B.unit ∈ interior (B.cone : Set E) ∧
+    ((∃ K : ℝ, 0 ≤ K ∧ ∀ α ∈ P, B.toData.Certificate H K α) ↔
+      ∀ t : ℝ, (∀ y ∈ B.cone, Data.originalFlow H t y ∈ B.cone) ∧
+        Data.originalFlow H t B.unit = B.unit) ∧
+    (∀ K : ℝ, 0 ≤ K → (∀ α ∈ P, B.toData.Certificate H K α) →
+      (∀ β ∈ B.toData.positiveDual, B.toData.Certificate H K β) ∧
+      (∀ β ∈ B.toData.positiveDual, ∀ r : ℝ, 0 < r → ∀ y : E,
+        y ∈ B.cone → r • B.unit - y ∈ B.cone →
+        |β (H y)| ^ 2 ≤ K * r * β y * β B.unit)) ∧
+    ((∀ t : ℝ, (∀ y ∈ B.cone, Data.originalFlow H t y ∈ B.cone) ∧
+        Data.originalFlow H t B.unit = B.unit) →
+      (∀ β ∈ B.toData.positiveDual,
+        B.toData.Certificate H ‖B.toData.operator H * B.toData.operator H‖ β) ∧
+      (∀ β ∈ B.toData.positiveDual, ∀ x : E, x ∈ B.cone → B.unit - x ∈ B.cone →
+        |β (H x)| ^ 2 ≤ ‖B.toData.operator H * B.toData.operator H‖ *
+          min (β x) (β (B.unit - x)) * β B.unit)) := by
+  exact ⟨closed B, interior_unit B, B.toData.quantitative_generator_iff H hu P hP hspan⟩
+
+end ArchimedeanData
 end D5.S3.Topology.OrderUnitNorm
