@@ -42,7 +42,7 @@ internal sealed class DensitySpanDocument : IScribeDocumentDefinition
     private static Formula Mat(Formula d) => Call("Matrix", Fin(d), Fin(d), Field("C"));
     private static Formula Set(Formula type) => Call("Set", type);
     private static Formula Trace(Formula a) => Call("tr", a);
-    private static Formula D(long n) => FormulaDsl.D(n);
+    private static Formula D(byte n) => FormulaDsl.D(n);
     private static Formula Parenthesized(Formula x) => Seq(Open, x, Close);
 
     private static Formula IsDensityFormula()

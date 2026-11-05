@@ -14,18 +14,18 @@ internal sealed class QubitBlochDocument : IScribeDocumentDefinition
         Blocks(
             Node("B", "B", "Real coordinates multiply the three single-qubit Pauli matrices.",
                 DescribeRole.Definition, All("a", Vectors(), Equal(Call("B", X("a")),
-                    Add(Add(Smul(Typed(Apply(X("a"), Num(0)), Complexes()), Apply(X("pauliMatrix"), Qualified("Pauli", "X"))),
-                        Smul(Typed(Apply(X("a"), Num(1)), Complexes()), Apply(X("pauliMatrix"), Qualified("Pauli", "Y")))),
-                        Smul(Typed(Apply(X("a"), Num(2)), Complexes()), Apply(X("pauliMatrix"), Qualified("Pauli", "Z"))))))),
+                    Add(Add(Smul(Typed(Apply(X("a"), D(0)), Complexes()), Apply(X("pauliMatrix"), Qualified("Pauli", "X"))),
+                        Smul(Typed(Apply(X("a"), D(1)), Complexes()), Apply(X("pauliMatrix"), Qualified("Pauli", "Y")))),
+                        Smul(Typed(Apply(X("a"), D(2)), Complexes()), Apply(X("pauliMatrix"), Qualified("Pauli", "Z"))))))),
             Describe.Lean(DescribeId.Create("qubit-bloch-b-formula"),
                 DeclarationHandle.Create(Prefix + "B_formula"), H("The Pauli coordinate matrix"),
                 StatementSource.FromAuthor(Disp(All("a", Vectors(), Equal(Call("B", X("a")),
-                    Mat(Typed(Apply(X("a"), Num(2)), Complexes()),
-                        Subtract(Typed(Apply(X("a"), Num(0)), Complexes()),
-                            Multiply(Qualified("Complex", "I"), Typed(Apply(X("a"), Num(1)), Complexes()))),
-                        Add(Typed(Apply(X("a"), Num(0)), Complexes()),
-                            Multiply(Qualified("Complex", "I"), Typed(Apply(X("a"), Num(1)), Complexes()))),
-                        Negate(Typed(Apply(X("a"), Num(2)), Complexes()))))))),
+                    Mat(Typed(Apply(X("a"), D(2)), Complexes()),
+                        Subtract(Typed(Apply(X("a"), D(0)), Complexes()),
+                            Multiply(Qualified("Complex", "I"), Typed(Apply(X("a"), D(1)), Complexes()))),
+                        Add(Typed(Apply(X("a"), D(0)), Complexes()),
+                            Multiply(Qualified("Complex", "I"), Typed(Apply(X("a"), D(1)), Complexes()))),
+                        Negate(Typed(Apply(X("a"), D(2)), Complexes()))))))),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The Pauli expansion gives the four complex matrix entries."))),
                 DescribeRole.Theorem),
             Node("scalarB", "scalarB", "A real scalar identity is added to the traceless Bloch matrix.",
@@ -40,6 +40,7 @@ internal sealed class QubitBlochDocument : IScribeDocumentDefinition
             DeclarationHandle.Create(Prefix + id), H(title), StatementSource.FromAuthor(Disp(formula)),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
 
+    private static Formula Apply(Formula function, Formula argument) => new Formula.Apply(function, [argument]);
     private static Formula X(string name) => F.Id(name);
     private static Formula Typed(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
@@ -56,7 +57,7 @@ internal sealed class QubitBlochDocument : IScribeDocumentDefinition
     private static Formula All(string v, Formula domain, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(v), domain, body);
     private static Formula Call(string name, params Formula[] args) => new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
     private static Formula Qualified(string owner, string name) => Seq(Operatorname, Grp(X(owner), Dot, X(name)));
-    private static Formula Identity() => Typed(Num(1), Matrices());
+    private static Formula Identity() => Typed(D(1), Matrices());
     private static Formula Matrices() => Call("Matrix", Fin(2), Fin(2), Complexes());
     private static Formula Mat(Formula a, Formula b, Formula c, Formula d) => Seq(Begin, Grp(X("pmatrix")), a, Amp, b, RowBreak, c, Amp, d, End, Grp(X("pmatrix")));
 }
