@@ -85,8 +85,8 @@ internal sealed class LeanCacheChunkFixture : IDisposable
                 def add(self, *args, **kwargs): pass
                 def __exit__(self, *args):
                     shutil.copyfile(pathlib.Path(os.environ["CHUNK_FIXTURE"]) / "archive", self.path)
-            def open_archive(path, mode="r", **kwargs):
-                return PackedFixture(path) if mode == "w:gz" else original(path, mode, **kwargs)
+            def open_archive(name=None, mode="r", **kwargs):
+                return PackedFixture(name) if mode == "w:gz" else original(name, mode, **kwargs)
             tarfile.open = open_archive
             """);
     }
