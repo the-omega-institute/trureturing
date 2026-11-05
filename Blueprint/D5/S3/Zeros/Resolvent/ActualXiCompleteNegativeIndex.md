@@ -30,20 +30,20 @@ ActualXiIntegerCriterion supplies node_large_finite and weight_ne_zero at their 
 
 **Theorem 1.2 (Supremum of finite derivative Hankel indices).**
 
-Lean statement: `D5/S3/Zeros/Resolvent/ActualXiCompleteNegativeIndex.actual_complete_derivative_hankel_index`
+Lean statement: `D5/S3/Zeros/Resolvent/ActualXiCompleteNegativeIndex.actual_negativeIndex_eq_matrix_sup`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Zeros/Resolvent/ActualXiCompleteNegativeIndex.actual_complete_derivative_hankel_index` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Zeros/Resolvent/ActualXiCompleteNegativeIndex.actual_negativeIndex_eq_matrix_sup` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-The derivative-Hankel endpoint states that the supremum of all finite actual derivative Hankel negative indices equals ENat.card QuartetRepresentative. It consumes actual_negativeIndex_eq_matrix_sup and actual_complete_negative_index, so the reconstruction and actual-energy joins are part of the final proof chain. Together the endpoints retain complete actual index = quartet count = finite-matrix index supremum, in zero, finite, and infinite cases, without an RH premise or a modulus-square replacement.
+The actual_negativeIndex_eq_matrix_sup endpoint identifies the complete polynomial-space negative index with the supremum of all finite actual derivative Hankel negative indices through the reconstruction and actual-energy joins. Together with actual_complete_negative_index, it yields complete actual index = quartet count = finite-matrix index supremum, in zero, finite, and infinite cases, without an RH premise or a modulus-square replacement.
 
 ## References
 
-- Truth anchor: `D5/S3/Zeros/Resolvent/ActualXiCompleteNegativeIndex.actual_complete_derivative_hankel_index`
 - Truth anchor: `D5/S3/Zeros/Resolvent/ActualXiCompleteNegativeIndex.actual_complete_negative_index`
+- Truth anchor: `D5/S3/Zeros/Resolvent/ActualXiCompleteNegativeIndex.actual_negativeIndex_eq_matrix_sup`
 - Dependency: [D5/S3/Constants/Moments/CountableHankelIntegerFamily](../../Constants/Moments/CountableHankelIntegerFamily.md)
 - Dependency: [D5/S3/Constants/Moments/CountableHankelNegativeIndex](../../Constants/Moments/CountableHankelNegativeIndex.md)
 - Dependency: [D5/S3/Weil/ZetaLinear/ExactStickyReduction](../../Weil/ZetaLinear/ExactStickyReduction.md)
