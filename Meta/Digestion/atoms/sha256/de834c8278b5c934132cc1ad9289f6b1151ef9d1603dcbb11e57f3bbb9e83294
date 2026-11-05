@@ -1,0 +1,17 @@
+**定理 224.1（完整条件等价）。** 对两个分别具名的完整原背景，
+
+$$
+\begin{aligned}
+B_*+\mathsf F_{\rm rec}
+&\Longleftrightarrow B_*+\mathsf F_{\rm odd}
+\Longleftrightarrow B_*+\mathsf F_{\rm cut},\\
+\mathsf C_{\rm rec}(B)
+&\Longleftrightarrow B+\mathrm Z+\mathrm{SC}+\mathrm{SJ},\\
+\mathsf C_{\rm rec}(\mathsf B_{\rm cl})
+&\Longleftrightarrow\mathsf B_{\rm cl}+\mathsf Q+\mathrm{SC}+\mathrm{SJ}.
+\end{aligned}
+\tag{224.1}
+$$
+
+证明。选中目标均秩大于 $R_*\ge3$，每个保留对象总秩也至少三。定理 223.1 在每个目标独立恢复完整奇部，其余三层逐字相同，故得到第一个等价。定理 214.1 在同一个原 $J,i,j_0,\mathcal V_N$ 内，先以交叉零配对和原分离族取得每个原对象的 SC；随后定理 215.1 消去 $\lambda_T,\ell_T,G_T$，回迁全部幂等元平方及完整配平。没有将单个目标投影视为等距、单射或 primitive 保持。反向完整配平给原斜伴随导子，故 (222.2) 在任意 primitive 基上成立。其余等价直接消费定理 216.1 的两个原接口；$\mathsf Q$ 仍取母卷定义 67.2 对全部原准备、效果和任意小原质量的量词。∎
+

@@ -1,0 +1,62 @@
+**定理 206.1（同一原数据的完整配平）。** 两个分别具名的完整原背景上都有
+
+$$
+B_*+\mathsf F_{\rm hs}
+\ \Longleftrightarrow\ B_*+\mathsf F_{>P}
+\ \Longleftrightarrow\ B_*+\mathsf F_{\rm cut}.
+\tag{206.1}
+$$
+
+证明。先固定上述实际 $J$。定理 181.1 与全域交替给 $k_{ep}p=-k_{pe}e$，故全部正交 $k$ 为零。primitive 张成遂使不同简单块输入的 $D$ 为零；(204.1) 的 $\ell_T$ 因而全零，$G_T$ 交替。
+
+固定 $T\in\mathcal V_N$ 及外部源块 $S\ne T$。取 $S$ 中正交 primitive $e,s$、$y^2=e+s$ 和 $p_\pm=(e+s\pm y)/2$。正交消失与 SC 给
+
+$$
+D_e(e+s)=0,\quad D_ep_-=-D_ep_+,\quad
+W_e(p_-)=W_e(p_+).
+\tag{206.2}
+$$
+
+任取 primitive $r\in T$，它是两个半角的合法角外读回。两份 (203.2) 的能量相同，线性项反号，相减得
+
+$$
+0=q(D_{p_+}e,r)
+=G_T(p_+,e)q_T(u_T,r).
+\tag{206.3}
+$$
+
+最后一因子为正，故 $G_T(p_+,e)=G_T(p_-,e)=0$，进而 $G_T(y,e)=0$。对固定 primitive $e\in S$，正交 primitive 张成 $E_0^S(e)$，上述 Peirce 边张成 $T_e^S$，对角由交替为零，所以 $G_T(a,e)=0$ 对全部 $a\in S$ 成立。再用 primitive 张成第二槽得 $G_T|_{S\times S}=0$。秩一源块由交替直接处理；不同外部源块的混合输入已为零。于是
+
+$$
+\pi_TD^J_{ab}=\delta_T(a_T,b_T)
+\qquad(T\in\mathcal V_N).
+\tag{206.4}
+$$
+
+令 $\phi_T=\pi_Ti$。它含幺、保持 Jordan，并由 (206.4) 保持同一 $D$；各 $\phi_T$ 不必单射，但全族分离 $A$。$\delta_T$ 的导子律和全部幂等元平方因此沿该分离族带回。具体地，对原幂等元 $c$ 和任意 $x$，
+
+$$
+\phi_T((D_c^A)^2x)
+=(\delta_T)_{\phi_Tc}^2\phi_Tx
+=-P_{\phi_Tc}^T\phi_Tx/4
+=-\phi_T(P_c^Ax)/4.
+\tag{206.5}
+$$
+
+$\phi_Tc$ 只是幂等元，不需要 primitive 或秩保持；$P_c$ 是 $L_c$ 的多项式。分离性给原 $D_c^2=-P_c/4$；导子缺陷同样逐目标为零，故原 $D_a$ 为 Jordan 导子。
+
+有限 EJA 的导子是 $[L_a,L_b]$ 的有限和，各 $L_a$ 对原正 Frobenius 型 $q_A$ 自伴随，所以原 $D_a$ 对原 $q_A$ 斜伴随。由平方和斜伴随，$D_c\ker P_c=0$、$P_cD_c=D_cP_c=D_c$。对任意原 $a,b$，令 $d=D_ca$，则
+
+$$
+\begin{aligned}
+2q(D_ac,b)+W_c(b+2D_ca)
+&=-2q(d,b)+\tfrac12\|P_cb+2d\|_q^2\\
+&=W_c(b)+2\|d\|_q^2\\
+&=W_c(b)-2q(a,D_c^2a)\\
+&=W_c(b)+W_c(a).
+\end{aligned}
+\tag{206.6}
+$$
+
+这在任意原幂等元切口和任意原输入上恢复整个 $\mathsf F_{\rm cut}$，包括未承担测试的原小对象与原完整指针。全过程使用各对象自己的原 $q_A$，不等块权保持。反向只是缩域；定理 197.1 给中间等价。∎
+

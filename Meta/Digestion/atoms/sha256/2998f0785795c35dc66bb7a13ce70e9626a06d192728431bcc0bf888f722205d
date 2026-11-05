@@ -1,0 +1,50 @@
+#### 定理 6.2：原分支的完整复 Gram 表示
+
+式 (17) 当且仅当存在唯一有界复线性算子 $K_j:H_{\rm in}\to H_{\rm out}$，使
+
+$$
+F_{\rm out}L_j=K_jF_{\rm in},\qquad
+ \sum_jK_j^*K_j=I.
+\tag{19}
+$$
+
+其中 $H$ 取各自最小复 Hilbert 包。于是
+
+$$
+E_e=\sum_{j\in e}K_j^*K_j,\qquad
+ 0\le E_e\le I,\qquad
+ w_e(x)=h(Fx,E_eFx),\qquad \sum_eE_e=I.
+\tag{20}
+$$
+
+最后的求和对完整事件划分成立。
+
+**证明。**
+
+令 $a_x=F_{\rm in}x$，$b_x=\bigoplus_jF_{\rm out}L_jx$。 式 (17) 等价于
+
+$$
+\|b_x+\zeta b_y\|^2=\|a_x+\zeta a_y\|^2.
+$$
+
+取 $y=x$ 并用 $|1+\zeta|=1$，得到 $\|b_x\|^2=\|a_x\|^2$。 消去这两项对角量后，得到复配对差 $z=h(b_x,b_y)-h(a_x,a_y)$ 满足 $\operatorname{Re}(\zeta z)=0$；交换 $x,y$ 又有 $\operatorname{Re}(\zeta\bar z)=0$。若 $z=u+iv$，两式为 $-u/2-\sqrt3v/2=0$ 与 $-u/2+\sqrt3v/2=0$，故 $z=0$。
+
+因此标签对应 $a_x\mapsto b_x$ 保持完整复 Gram。 任一有限关系 $\sum c_ra_{x_r}=0$ 的对应向量平方为同一 Gram 和，故 $\sum c_rb_{x_r}=0$。该对应在复线性包上良定义、复线性且等距，唯一延至完成。 取直和坐标即得 $K_j$；等距性给式 (19)。 反向由同一个直和等距作用于 $a_x+\zeta a_y$ 即得原比较。 式 (20) 再由原强度绑定与有限求和得到。
+
+$\square$
+
+可见协变是结论：
+
+$$
+F_{\rm out}L_jU_{\rm in}
+ =F_{\rm out}U_{\rm out}L_j.
+$$
+
+这不等于原档案逐字协变。明确地，在原实载体 $V=\mathbb C\oplus\mathbb R$ 上取
+
+$$
+q(z,a)=|z|^2,\qquad U(z,a)=(\zeta z,a+1),\qquad L(z,a)=(z,2a).
+$$
+
+主候选及单分支 (17) 均成立，但 $LU(z,a)$ 的档案坐标为 $2a+2$，$UL(z,a)$ 的为 $2a+1$。 若某项原合同另要求逐字协变，它仍须保留，不能从可见表示补写出来。
+

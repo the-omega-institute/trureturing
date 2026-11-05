@@ -1,0 +1,32 @@
+#### 命题 6.1：带边界条件的 Schur 递归判据
+
+设 $A$ 为有限维 Hermitian 矩阵，$b$ 为列向量，$c\in\mathbb R$。则
+
+$$
+\begin{pmatrix}A&b\\b^\dagger&c\end{pmatrix}\succeq0
+$$
+
+当且仅当
+
+$$
+A\succeq0,\qquad b\in\operatorname{Ran}A,\qquad
+\delta=c-b^\dagger A^+b\ge0,
+$$
+
+其中 $A^+$ 为 Moore–Penrose 逆。若 $A$ 正定，可把 $A^+$ 换为 $A^{-1}$。
+
+**证明。**
+
+正性先给 $A\succeq0$。若 $v\in\ker A$ 但 $v^\dagger b\ne0$，令上块向量沿 $v$ 取任意复倍数、下块取一，可使二次型为负。因此 $b\perp\ker A$，即 $b\in\operatorname{Ran}A$。令 $q=A^+b$，则 $Aq=b$，并有对任意 $u,t$
+
+$$
+u^\dagger Au+2\Re(u^\dagger bt)+c|t|^2
+=(u+qt)^\dagger A(u+qt)+\delta|t|^2.
+$$
+
+取 $u=-qt$ 给必要的 $\delta\ge0$，而右式又证明充分性。
+
+$\square$
+
+该判据可把联合相容检查递归化，但 $b$ 必须保留新对象与整个旧结构的交叉关系。当 $A$ 或 $b$ 被放入一个关系端口时，它们的内部尺寸可以增长；五个端口不是固定五个标量。单元可仍采用五角色语法，其载荷需要继续展开。
+
