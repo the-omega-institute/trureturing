@@ -6,6 +6,7 @@
    utility: none
    digest: Integral odd four-dissection of the actual three-core Euler quotient. -/
 
+import D5.S1.Recurrence.Residue.ContinuedFractionOddSquare
 import D5.S3.Arith.ModularForms.CubicThetaCoreProduct
 import Mathlib.Tactic.IntervalCases
 
@@ -150,26 +151,9 @@ private theorem f1_constant_one : PowerSeries.constantCoeff f1 = 1 := by
 private theorem map_invOfUnit_f1 :
     PowerSeries.map (Int.castRingHom ℚ) (PowerSeries.invOfUnit f1 1) =
       PowerSeries.invOfUnit (PowerSeries.pentagonalSeries ℚ) 1 := by
-  have hz := congrArg (PowerSeries.map (Int.castRingHom ℚ))
-    (PowerSeries.mul_invOfUnit f1 1 f1_constant_one)
-  simp only [map_mul, map_one, f1_map] at hz
-  have hq := PowerSeries.mul_invOfUnit (PowerSeries.pentagonalSeries ℚ) 1
-    CubicThetaCoreProduct.euler_constant_one
-  have hq' : PowerSeries.invOfUnit (PowerSeries.pentagonalSeries ℚ) 1 *
-      PowerSeries.pentagonalSeries ℚ = 1 := by
-    rw [mul_comm, hq]
-  calc
-    PowerSeries.map (Int.castRingHom ℚ) (PowerSeries.invOfUnit f1 1) =
-        1 * PowerSeries.map (Int.castRingHom ℚ) (PowerSeries.invOfUnit f1 1) := by rw [one_mul]
-    _ = (PowerSeries.invOfUnit (PowerSeries.pentagonalSeries ℚ) 1 *
-        PowerSeries.pentagonalSeries ℚ) *
-        PowerSeries.map (Int.castRingHom ℚ) (PowerSeries.invOfUnit f1 1) := by
-      rw [hq', one_mul]
-    _ = PowerSeries.invOfUnit (PowerSeries.pentagonalSeries ℚ) 1 *
-        (PowerSeries.pentagonalSeries ℚ *
-          PowerSeries.map (Int.castRingHom ℚ) (PowerSeries.invOfUnit f1 1)) := by ring
-    _ = PowerSeries.invOfUnit (PowerSeries.pentagonalSeries ℚ) 1 * 1 := by rw [hz]
-    _ = PowerSeries.invOfUnit (PowerSeries.pentagonalSeries ℚ) 1 := by rw [mul_one]
+  simpa only [f1_map] using
+    D5.S1.Recurrence.Residue.ContinuedFractionOddSquare.map_inverse
+      (Int.castRingHom ℚ) f1 f1_constant_one
 
 private theorem integralT_map :
     PowerSeries.map (Int.castRingHom ℚ) integralT =
