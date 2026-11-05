@@ -35,6 +35,8 @@ internal sealed class NativeProtocolBornNormalizationDocument : IScribeDocumentD
             All("e",Call("Function",Call("Path",T),Call("Bool")),
             All("I",Call("Finset",Call("Fin",D(1,6))),law)))));
     }
+    private static Formula FiniteSum(Formula i, Formula set, Formula term) =>
+        Seq(Sum, Underscore, Grp(i, Sp, InMacro, Sp, set), Sp, term);
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
     private static Formula All(string name, Formula type, Formula body) =>
