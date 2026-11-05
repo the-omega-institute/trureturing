@@ -1,0 +1,5 @@
+source_id = "cdso-periodic-connection-cost"
+path = "docs/develop/theory/CDSO_PERIODIC_CONNECTION_COST.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
