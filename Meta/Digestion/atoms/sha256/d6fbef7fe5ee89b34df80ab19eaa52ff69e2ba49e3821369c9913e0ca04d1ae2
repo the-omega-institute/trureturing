@@ -1,0 +1,43 @@
+**Proposition 43.6 (different remaining addressed actions).** Fix
+$C=\langle\beta,\alpha\rangle$, $n_0=2$, and compare completed $FG$
+followed by active $F$ at progress three, with completed $GF$ followed
+by active $F$ at progress two. Both current entries have four old leaves,
+both cuts are strictly internal, and both sources are
+
+$$
+y=\langle\langle\langle C,\beta\rangle,\beta\rangle,\beta\rangle.
+\tag{43.10}
+$$
+
+Their remaining next source actions differ, even with the same fixed
+initial source and current command $F$.
+
+Proof. Direct addressed expansion from $C$ gives
+
+$$
+\begin{array}{c|c|c}
+W&\text{completed primitive expansion from }C&u=\operatorname{Run}(W,C)\\\hline
+FG&S_L\,P_R\,S_{LL}&\langle\langle C,\alpha\rangle,\beta\rangle\\
+GF&S_L\,S_{LL}\,P_{LR}\,P_R&\langle\langle C,\beta\rangle,\beta\rangle
+\end{array}
+\tag{43.11}
+$$
+
+The chronological old-leaf lists of both displayed entries have addresses
+$LLL,LLR,LR,R$. Their respective tags are $(\beta,\alpha,\alpha,\beta)$
+and $(\beta,\alpha,\beta,\beta)$. In the first case the active edits
+are $S_{LLL}P_{LLR}P_{LR}$; in the second they are
+$S_{LLL}P_{LLR}$. Substituting their guarded effects literally gives
+(43.10) in each case. The first remaining schedule is $S_R$ and the
+second is $S_{LR}S_R$. Hence the next source edits, addresses and their
+resulting trees differ. The entries have $n=5,6$ and the common source
+has $n=8$, agreeing with the two progresses. Coherent post-advancement
+cuts can have the same between-rows subphase. Their full tapes and
+physical controllers are not asserted equal. $\square$
+
+Zero-edit distinctions are separate: an active newly admitted $F$ at
+$j=0$ has the same syntax as its preceding idle cut, and an exhausted
+$F$ before outer return has the same syntax as its following idle cut.
+The latter changes $W$ on real return without a source edit. Neither
+example supplies the strict-interior ambiguity just proved.
+
