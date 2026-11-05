@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:private-consumed-by-physical-endpoint)
    mirror-E: none(waiver:private-consumed-by-physical-endpoint)
-   anchors: [mathlib/module/Mathlib.Data.Int.DivMod.Lemmas]
+   anchors: [mathlib/module/Mathlib.Data.Int.ModEq]
    utility: none
    digest: Constructive paired available grids and exact equal-maximum seam inequalities. -/
 import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
