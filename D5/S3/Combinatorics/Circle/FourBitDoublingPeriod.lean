@@ -2,9 +2,10 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/FourBitDoublingPeriod
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Dynamics.PeriodicPts.Defs, mathlib/module/Mathlib.Algebra.Ring.GeomSum]
+   anchors: [mathlib/module/Mathlib.Dynamics.PeriodicPts.Defs,
+     mathlib/module/Mathlib.Algebra.Ring.GeomSum]
    utility: none
-   digest: Proper four-point binary supports determine the actual doubling period from primitive gap blocks. -/
+   digest: Primitive gap blocks determine actual four-bit doubling periods. -/
 import D5.S3.Combinatorics.Circle.NarrowDoublingOrbit
 import D5.S3.Combinatorics.Circle.ZeroSumSubsets
 
@@ -51,12 +52,16 @@ private theorem turn_injective {r : ℕ} (h : ℕ) :
     change (k.val + h) % r = (h % r + k.val) % r
     rw [Nat.mod_add_mod, Nat.add_comm]
   apply (cycAdd_bijective t).1
+  change cycAdd t i.val = cycAdd t j.val
   rw [← hc i, ← hc j]
   exact he
 
 private theorem rot_comp {r : ℕ} (A : Finset (Fin r)) (h k : ℕ) :
     rot k (rot h A) = rot (h + k) A := by
-  simp only [rot, Finset.image_image, Function.comp_def, turn, cycAdd_assoc]
+  simp only [rot, Finset.image_image, Function.comp_def]
+  congr 1
+  funext i
+  exact cycAdd_assoc i h k
 
 private theorem rot_full {r : ℕ} (A : Finset (Fin r)) : rot r A = A := by
   have ht (i : Fin r) : turn r i = i := by
@@ -329,18 +334,20 @@ private theorem bounded_stabilizer {a b c d h : ℕ}
   let A := pack (r := r) (raw a b c)
   let z : Fin r := ⟨0, by dsimp [r]; omega⟩
   have hz : z ∈ A := by simp [A, pack, z, raw]
+  change rot h A = A at hs
   have hm : turn h z ∈ A := hs ▸ Finset.mem_image_of_mem (turn h) hz
+  have hhr : h < r := hh
   have hv : h ∈ raw a b c := by
     have hv' : (turn h z).val ∈ raw a b c := by
       simpa only [A, pack, Finset.mem_filter, Finset.mem_univ, true_and] using hm
-    simpa only [turn, cycAdd_val, z, zero_add, Nat.mod_eq_of_lt hh] using hv'
+    simpa only [turn, cycAdd_val, z, zero_add, Nat.mod_eq_of_lt hhr] using hv'
   obtain ⟨h₁, h₂, h₃⟩ := prefix_stabilizers ha hb hc hd
   simp only [raw, Finset.mem_insert, Finset.mem_singleton] at hv
   rcases hv with h0 | h1 | h2 | h3
   · exact Or.inl h0
-  · exact Or.inr (Or.inl ⟨h1, h₁.mp (h1 ▸ hs)⟩)
-  · exact Or.inr (Or.inr (Or.inl ⟨h2, h₂.mp (h2 ▸ hs)⟩))
-  · exact Or.inr (Or.inr (Or.inr ⟨h3, h₃.mp (h3 ▸ hs)⟩))
+  · exact Or.inr (Or.inl ⟨h1, h₁.mp (by simpa only [h1] using hs)⟩)
+  · exact Or.inr (Or.inr (Or.inl ⟨h2, h₂.mp (by simpa only [h2] using hs)⟩))
+  · exact Or.inr (Or.inr (Or.inr ⟨h3, h₃.mp (by simpa only [h3] using hs)⟩))
 
 /-- The exact actual least dynamical period and all natural return exponents
 of a four-bit seed, including nonunit seeds and all four gaps at least two.
@@ -377,13 +384,20 @@ theorem four_gap_actual_period (a b c d : ℕ)
     omega
   have hmask : mask A = Q := by
     rw [mask_values, pack_values (raw a b c) hT]
-    have h01 : (0 : ℕ) ≠ a := by omega
-    have h02 : (0 : ℕ) ≠ a + b := by omega
-    have h03 : (0 : ℕ) ≠ a + b + c := by omega
-    have h12 : a ≠ a + b := by omega
-    have h13 : a ≠ a + b + c := by omega
-    have h23 : a + b ≠ a + b + c := by omega
-    simp [raw, h01, h02, h03, h12, h13, h23, Q, Nat.add_assoc]
+    have e0 : (0 : ℕ) ∉ ({a, a + b, a + b + c} : Finset ℕ) := by
+      simp only [Finset.mem_insert, Finset.mem_singleton]
+      omega
+    have e1 : a ∉ ({a + b, a + b + c} : Finset ℕ) := by
+      simp only [Finset.mem_insert, Finset.mem_singleton]
+      omega
+    have e2 : a + b ∉ ({a + b + c} : Finset ℕ) := by
+      simp only [Finset.mem_singleton]
+      omega
+    change (∑ n ∈ raw a b c, 2 ^ n) = Q
+    rw [raw, Finset.sum_insert e0, Finset.sum_insert e1,
+      Finset.sum_insert e2, Finset.sum_singleton]
+    simp only [pow_zero, Q]
+    omega
   have hQ : Q < M := by
     rw [← hmask]
     exact mask_lt_mersenne A hproper
@@ -391,7 +405,10 @@ theorem four_gap_actual_period (a b c d : ℕ)
       Function.IsPeriodicPt (fun z : ZMod M => 2 * z) h (Q : ZMod M) ↔ rot h A = A := by
     simpa only [hmask] using periodic_iff_support A hproper h
   obtain ⟨h₁, h₂, _⟩ := prefix_stabilizers hap hbp hcp hdp
-  have hp : 0 < p := by dsimp [p]; split_ifs <;> dsimp [r] <;> omega
+  have hp : 0 < p := by
+    have hr : 0 < r := by dsimp [r]; omega
+    dsimp [p]
+    split_ifs <;> omega
   have hper : Function.IsPeriodicPt (fun z : ZMod M => 2 * z) p (Q : ZMod M) := by
     apply (bridge p).mpr
     dsimp [p]
@@ -408,16 +425,16 @@ theorem four_gap_actual_period (a b c d : ℕ)
     bounded_stabilizer hap hbp hcp hdp hlt hnret
   have heq : NarrowDoublingOrbit.period M Q = p := by
     by_cases he : a = b ∧ b = c ∧ c = d
-    · have hpa : p = a := by simp only [p, if_pos he]
+    · have hpa : p = a := by simp only [p, ite_eq_left he]
       have hlt : NarrowDoublingOrbit.period M Q < r := by dsimp [r]; omega
       have hclass := hnsmall hlt
       omega
     · by_cases halt : a = c ∧ b = d
-      · have hpab : p = a + b := by simp only [p, if_neg he, if_pos halt]
+      · have hpab : p = a + b := by simp only [p, ite_eq_right he, ite_eq_left halt]
         have hlt : NarrowDoublingOrbit.period M Q < r := by dsimp [r]; omega
         have hclass := hnsmall hlt
         omega
-      · have hpr : p = r := by simp only [p, if_neg he, if_neg halt]
+      · have hpr : p = r := by simp only [p, ite_eq_right he, ite_eq_right halt]
         by_contra hne
         have hlt : NarrowDoublingOrbit.period M Q < r := by omega
         have hclass := hnsmall hlt
