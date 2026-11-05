@@ -72,6 +72,10 @@ $$\forall (n: \mathbb{N}), ((\operatorname{Odd}\left(n\right)) \Rightarrow (\{(z
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Lorentz/ChengChenLorentzInvariantRange.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lorentzrange` (proved) by `D5/S3/Quantum/Entanglement/Lorentz/ChengChenLorentzInvariantRange.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lorentzrange","declaration_gid":"D5/S3/Quantum/Entanglement/Lorentz/ChengChenLorentzInvariantRange.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Y. Cheng and L. Chen (2026). *Construction of three-qubit positive-partial-transpose entangled states of rank four*. URL: <https://arxiv.org/abs/2605.19530v2>.

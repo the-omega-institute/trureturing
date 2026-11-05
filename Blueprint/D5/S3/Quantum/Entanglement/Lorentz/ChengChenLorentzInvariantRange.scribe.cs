@@ -39,7 +39,9 @@ internal sealed class ChengChenLorentzInvariantRangeDocument : IScribeDocumentDe
                     Paragraph(Text(
                         "The diagonal pair state p|0⋯0⟩⟨0⋯0|+(1−p)|1⋯1⟩⟨1⋯1| has invariant −2p(1−p). "
                         + "Choosing p=(1−sqrt(1+2x))/2 attains every x in [−1/2,0]."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("lorentzrange"), ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula, string prose,
