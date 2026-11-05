@@ -42,7 +42,7 @@ $$(\forall L: \operatorname{Type}\left(\right), (\forall T: \operatorname{Tree}\
 
 *Commentary.*
 
-For every original tree and each unchanged original path, evaluating the computed coefficient branch gives the chronological original operator product on omega0. The sum of the squared nonphysical branch norms over the complete original tree is at most kappa to twice maxCalls. This consumed interface directly reuses the existing branch_physical, initial_physical and whole_tree_energy proofs; it adds no independent mathematics. Its live consumer is the same-cut coefficient factorization and embedding bridge in NativeProtocolBornNormalization. Its four-slot source audit remains unfinished under issue 26627.
+For every original tree and each unchanged original path, evaluating the computed coefficient branch gives the chronological original operator product on omega0. The sum of the squared nonphysical branch norms over the complete original tree is at most kappa to twice maxCalls. The branch identity and complete-tree energy bound supply the coefficient factorization and conjugate-embedding estimate for the same acquired-event cut in NativeProtocolBornNormalization.
 
 ## References
 
