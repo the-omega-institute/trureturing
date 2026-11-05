@@ -33,14 +33,11 @@ RemyDegenne/brownian-motion (Apache-2.0), commit
    adapter is deliberately private and does not recreate the retired module. -/
 private def variance (m : ℝ) (hm : 0 < m) : ℝ≥0 := ⟨2 * m, by positivity⟩
 
-@[simp] private theorem variance_coe (m : ℝ) (hm : 0 < m) :
-    (variance m hm : ℝ) = 2 * m := rfl
-
 private theorem variance_ne_zero (m : ℝ) (hm : 0 < m) : variance m hm ≠ 0 := by
   intro h
   have hcoe : (variance m hm : ℝ) = 0 := by rw [h]; rfl
   have hm2 : 0 < 2 * m := by positivity
-  exact hm2.ne' (by simpa only [variance_coe] using hcoe)
+  exact hm2.ne' (by simpa only [variance] using hcoe)
 
 /-- The project supplier already contains the scalar even-moment proof and
 its RemyDegenne/brownian-motion attribution.  Only n=1 and n=2 are used here. -/
@@ -123,9 +120,9 @@ private theorem g_second_fourth (m M : ℝ) (hm : 0 < m) :
     (∫ y : ℝ, (y - M) ^ 4 * g m M y) = 12 * m ^ 2 := by
   obtain ⟨h2, h4⟩ := pdf_moments M (variance m hm) (variance_ne_zero m hm)
   constructor
-  · simpa only [← g_eq_pdf m M hm, variance_coe, mul_comm] using h2
+  · simpa only [← g_eq_pdf m M hm, variance, mul_comm] using h2
   · have h4' : (∫ y : ℝ, (y - M) ^ 4 * g m M y) = 3 * (2 * m) ^ 2 := by
-      simpa only [← g_eq_pdf m M hm, variance_coe, mul_comm] using h4
+      simpa only [← g_eq_pdf m M hm, variance, mul_comm] using h4
     calc
       _ = 3 * (2 * m) ^ 2 := h4'
       _ = 12 * m ^ 2 := by ring
