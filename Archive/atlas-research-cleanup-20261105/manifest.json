@@ -1,0 +1,1220 @@
+{
+  "purpose": "Historical source preservation before completed-task cleanup",
+  "canonical_source_revision": "1d1f6ffffa619bdb625504fc202be7d116452519",
+  "drafts": [
+    {
+      "git_blob": "019a613d74fb412826739db57b0cef570362f51c",
+      "sha256": "38a14a6e4be586d192ade94f0bb8e94211c2acd36b3d937fcce6dba6ba846865",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/019a613d74fb412826739db57b0cef570362f51c/FiniteObservationVariation.lean",
+      "origins": [
+        "local/finite-observation-uniform-recovery-20261030/context/Reg/D5/S3/Topology/Measures/FiniteObservationVariation.lean"
+      ]
+    },
+    {
+      "git_blob": "01e85a9b40382b1fda6b0dbc988a788ff083df9e",
+      "sha256": "acb35d805a22491f7236dd280c80d9a05d853601878e05617c5f451b89d6e01b",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/01e85a9b40382b1fda6b0dbc988a788ff083df9e/geometry1.lean",
+      "origins": [
+        "macstudio/atlas-research-bridges-20261103/paired-laws-formal-6aea6046/geometry1.lean"
+      ]
+    },
+    {
+      "git_blob": "02a38c9a8507e5f710f1576691afdf8e0082ce0b",
+      "sha256": "615e559942e38747f577ba2f8b6978a423e281a181c7c4f22fd5210bdeabac5d",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/02a38c9a8507e5f710f1576691afdf8e0082ce0b/IntegratedOwnerProbe.lean",
+      "origins": [
+        "local/finite-observation-registration-24319-20261031/regular-topology-owner-integration/IntegratedOwnerProbe.lean"
+      ]
+    },
+    {
+      "git_blob": "04bccd1667edce38627c1227809cb8de4b206f47",
+      "sha256": "5b897a76101c344edfaf589030cc9b6b6f8f2dcf867158d047d20ca8281d3a90",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/04bccd1667edce38627c1227809cb8de4b206f47/rejected.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/native-identification-via-stability-20261105/context/rejected.lean",
+        "local/atlas-research-bridges-20261103/paired-final-correspondence-20261105/evidence-final/payload/revision-2.lean",
+        "local/atlas-research-bridges-20261103/paired-final-correspondence-20261105/evidence-final/revision-2/source.lean",
+        "local/atlas-research-bridges-20261103/paired-final-correspondence-20261105/payload/revision-2.lean"
+      ]
+    },
+    {
+      "git_blob": "05ca419dfa642a50a6a81346f25c15ab62f7f5d1",
+      "sha256": "939ac287549e31fad015867af3ea517e51e273ab583412d2768f43727dcce60f",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/05ca419dfa642a50a6a81346f25c15ab62f7f5d1/PairedDeletionSharpness.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/paired-sharpness-real-source/source/D5/S3/Combinatorics/CircularWords/PairedDeletionSharpness.lean"
+      ]
+    },
+    {
+      "git_blob": "066a1a1e158a9344ff9710444fd581adae1498ff",
+      "sha256": "cd992b3731f029af4fe7cfb6e9bb446e0307dafe31e70f4c411e90fbbfa3c93b",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/066a1a1e158a9344ff9710444fd581adae1498ff/revision-1-source.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/paired-application-emission-recovery-20261105/evidence-final/exact-resource-retry-2/source.lean",
+        "local/atlas-research-bridges-20261103/paired-application-emission-recovery-20261105/evidence-final/payload/PairedDeletionApplicationCheck.lean",
+        "local/atlas-research-bridges-20261103/paired-application-emission-recovery-20261105/evidence-final/revision-1-resource-continuation/after/D5/S3/TotalVariation/PairedDeletionApplicationCheck.lean",
+        "local/atlas-research-bridges-20261103/paired-application-emission-recovery-20261105/evidence-final/revision-2/revision-1-source.lean",
+        "local/atlas-research-bridges-20261103/paired-application-emission-recovery-20261105/prepared/PairedDeletionApplicationCheck.lean"
+      ]
+    },
+    {
+      "git_blob": "09d35016db97d2161d9175d8f30fc5293c3f1bc8",
+      "sha256": "33b282f269988ff8a806c33e6b093fc2a73088a9b47ae383a29d5d1af1c77dc8",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/09d35016db97d2161d9175d8f30fc5293c3f1bc8/first-IndependentApplications.lean",
+      "origins": [
+        "local/finite-observation-uniform-recovery-20261030/review-round-1/tests/first-IndependentApplications.lean"
+      ]
+    },
+    {
+      "git_blob": "0ae273ea5c61e7f03b7a339ae9870ecd466219d2",
+      "sha256": "f167bbb3c3b906bbcdaa43f214cbac66bf744b62903e329635a60fb11443b556",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/0ae273ea5c61e7f03b7a339ae9870ecd466219d2/ArbitraryBlockParityCollision.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/all-support-marginal-theory/ArbitraryBlockParityCollision.lean"
+      ]
+    },
+    {
+      "git_blob": "1082eeef7c3ce6b4f83663bfbe59737fe70829e1",
+      "sha256": "5f855902032c1fd3b75fb8167ec347631925281e1e6f56539c079c483f3046ee",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/1082eeef7c3ce6b4f83663bfbe59737fe70829e1/PairedDeletionLaw.private.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/paired-law-native-verified/source/PairedDeletionLaw.private.lean",
+        "local/atlas-research-bridges-20261103/paired-laws-formal/evidence/native/PairedDeletionLaw.final.lean",
+        "local/atlas-research-bridges-20261103/paired-laws-formal/source/PairedDeletionLaw.private.lean"
+      ]
+    },
+    {
+      "git_blob": "1100eb9e66f9439e40ff268b9e9e5dfb72050b09",
+      "sha256": "1ced8191e0b8863c00c90611068f539bdd64aaf241dcc24449bbe2e18b24f94b",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/1100eb9e66f9439e40ff268b9e9e5dfb72050b09/AtlasObservationCheck-1ced8191e0b8.lean",
+      "origins": [
+        "local/atlas-theory-relations-20261031/implementation/evidence/checks/revisions/AtlasObservationCheck-1ced8191e0b8.lean"
+      ]
+    },
+    {
+      "git_blob": "158708f9be29058d3ee9adb284a902664d20813a",
+      "sha256": "fc1682328b4fbab78c480e3fa147ef4adbde3422b726a16f709604c2db76d7d7",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/158708f9be29058d3ee9adb284a902664d20813a/remote-checkType.lean",
+      "origins": [
+        "local/finite-observation-registration-24319-20261031/execution/remote-checkType.lean"
+      ]
+    },
+    {
+      "git_blob": "1675218b456651ec84f5385ffa3fd27dee9377d6",
+      "sha256": "0ce0f444da63f07303e065fce37080c1f9f0e464847fe24ed9bc87b7813294a1",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/1675218b456651ec84f5385ffa3fd27dee9377d6/PairedDeletionLaw.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/paired-law-native-verified/source/PairedDeletionLaw.lean",
+        "local/atlas-research-bridges-20261103/paired-laws-formal/source/PairedDeletionLaw.lean"
+      ]
+    },
+    {
+      "git_blob": "17a1eaf9ac238d7befad90dc655f67b895182e9b",
+      "sha256": "a736a97b2e8a641237ebba69d41d70bf23f600d2c8c321be08183ba0f4e7415a",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/17a1eaf9ac238d7befad90dc655f67b895182e9b/PrescribedDeletionDistance.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/r3-canonical-content/execution/actual-heca/content/D5/S3/Combinatorics/CircularWords/PrescribedDeletionDistance.lean",
+        "local/atlas-research-bridges-20261103/robust-observation-formal-check/candidate/D5/S3/Combinatorics/CircularWords/PrescribedDeletionDistance.lean",
+        "local/atlas-research-bridges-20261103/robust-observation-formal-check/execution/retention/native-archive/D5/S3/Combinatorics/CircularWords/PrescribedDeletionDistance.lean",
+        "local/finite-observation-registration-24319-20261031/work/a1/D5/S3/Combinatorics/CircularWords/PrescribedDeletionDistance.lean"
+      ]
+    },
+    {
+      "git_blob": "1895f78c0bc8175ecb1f339453723efc77bfee79",
+      "sha256": "7cf72d821eccc08a43b824676d890c59dfcbd03742b27eda3ff9841c0e88f789",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/1895f78c0bc8175ecb1f339453723efc77bfee79/core1.lean",
+      "origins": [
+        "macstudio/atlas-research-bridges-20261103/paired-laws-formal-6aea6046/core1.lean"
+      ]
+    },
+    {
+      "git_blob": "19631a9399207a756570a668340ea78f8fcaaf0f",
+      "sha256": "0e5ed1ee9803923169000470ce6858c17cf3f6d968e703219517d417148a0a59",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/19631a9399207a756570a668340ea78f8fcaaf0f/v2-LocalLeafInverse.lean",
+      "origins": [
+        "macstudio/paired-law-canonical-20261105/v2-LocalLeafInverse.lean"
+      ]
+    },
+    {
+      "git_blob": "1e48ff7b2c872a48dabb658a339d7cfb4165bdd0",
+      "sha256": "c2c80a9127498442cf5676fe5ba1b4dd123dba86de77e5546441d83a6f1fad86",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/1e48ff7b2c872a48dabb658a339d7cfb4165bdd0/AtlasObservationCheck-c2c80a912749.lean",
+      "origins": [
+        "local/atlas-theory-relations-20261031/implementation/evidence/checks/revisions/AtlasObservationCheck-c2c80a912749.lean"
+      ]
+    },
+    {
+      "git_blob": "1e824b71992ec3acf8b2f02157be1fff495aa735",
+      "sha256": "a616a71a0c13cc20c34fc91cd1fb5d10ab0afa22a163b573151e41d8cc515778",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/1e824b71992ec3acf8b2f02157be1fff495aa735/TypeAxioms.lean",
+      "origins": [
+        "macstudio/atlas-research-bridges-20261103/r4-canonical-content/TypeAxioms.lean"
+      ]
+    },
+    {
+      "git_blob": "218be6627031fa0105d8178685951c51e896ae8f",
+      "sha256": "df539f8e4c40410ee89ef62ce8b863b728c29f812e3da6ba47125c76b53724f6",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/218be6627031fa0105d8178685951c51e896ae8f/decoder-v1.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/robust-observation-formal-check/execution/failed-sources/decoder-v1.lean"
+      ]
+    },
+    {
+      "git_blob": "22ac13b7274d335cd4426025e526ebf73f155380",
+      "sha256": "25a7aee57cd33594bbebeba10f3532bec2c4f4c6950ca22e22f1bdd639d79c2e",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/22ac13b7274d335cd4426025e526ebf73f155380/ExactApplications.lean",
+      "origins": [
+        "local/finite-observation-uniform-recovery-20261030/implementation/ExactApplications.lean"
+      ]
+    },
+    {
+      "git_blob": "22dc494ebeeaa3a54cdd5e56ab7bb3dff4ecbc7f",
+      "sha256": "009913027bae2529435e17a36a5da0df05189bec1da65738c99002e3eddf3092",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/22dc494ebeeaa3a54cdd5e56ab7bb3dff4ecbc7f/AdaptiveTwoReadout.before-canonical-api-revision.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/adaptive-two-formal-check/AdaptiveTwoReadout.before-canonical-api-revision.lean"
+      ]
+    },
+    {
+      "git_blob": "22ed3798824987fa5695bd5ce9b74d2b361edd64",
+      "sha256": "31264203feaa0f8c138f91ba24235da2d28a3575190d80cbea83e954ebf31d06",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/22ed3798824987fa5695bd5ce9b74d2b361edd64/Verification.lean",
+      "origins": [
+        "macstudio/atlas-research-bridges-20261103/paired-fiber-verification-resume-6aea4eac/Verification.lean"
+      ]
+    },
+    {
+      "git_blob": "23969539429d1abdc484ca547c2f64e2d0d313e3",
+      "sha256": "55318b2739a6ab6baad382e497a6c22d2f92e804366bf9921db46708a041a015",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/23969539429d1abdc484ca547c2f64e2d0d313e3/AllPublicAxioms.lean",
+      "origins": [
+        "macstudio/atlas-measure-20261030/AllPublicAxioms.lean"
+      ]
+    },
+    {
+      "git_blob": "24b17d5c5120451eb4b4430d5156a446dd5462ed",
+      "sha256": "e89428d4c787a4250211e5f31c10cbee05b48b096fac064ed57f710187dd5800",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/24b17d5c5120451eb4b4430d5156a446dd5462ed/probe2.lean",
+      "origins": [
+        "macstudio/finite-observation-registration-24319-20261031/heca/worktrees/687a402e/finite-observation-registration-24319-a1-2/probe2.lean"
+      ]
+    },
+    {
+      "git_blob": "2686a15ee8e6bcbb10cc89fb3c81c75865eb2238",
+      "sha256": "0f2ff93c7e419a6714568eb9b44ddc16fe80903177e17204e278039c37349682",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/2686a15ee8e6bcbb10cc89fb3c81c75865eb2238/ExactApplications.lean",
+      "origins": [
+        "local/atlas-lean-bridges-pages-20261030/evidence/measure/ExactApplications.lean"
+      ]
+    },
+    {
+      "git_blob": "28a155e579a33dce4ddf601ecdcba80fff4dd6a6",
+      "sha256": "22ddd9116fceb5b64686695a6b3c4bc222a283ecab5a30f9279b9e06dd49934d",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/28a155e579a33dce4ddf601ecdcba80fff4dd6a6/AllSupportMarginalCollision.lean",
+      "origins": [
+        "macstudio/atlas-research-bridges-20261103/r4-canonical-content/audit-attempt/AllSupportMarginalCollision.lean"
+      ]
+    },
+    {
+      "git_blob": "298f38fe3d1611d5146991e94a21a067d8ac7792",
+      "sha256": "26f4e215d8f0bc0ce29dc1a6ef6ea0a26cfe92333193298372fae061bd8f8d1c",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/298f38fe3d1611d5146991e94a21a067d8ac7792/AdaptiveTwoReadout.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/next-observation-theory/AdaptiveTwoReadout.lean"
+      ]
+    },
+    {
+      "git_blob": "2b9f4de65129739746ef7b07483b3529fa8433fe",
+      "sha256": "d066e4a1698c6d4b9e99d6972f1c1bae0a4a598a5982e63726f38104be58e26d",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/2b9f4de65129739746ef7b07483b3529fa8433fe/WeakStarBoundary.lean",
+      "origins": [
+        "local/finite-observation-uniform-recovery-20261030/implementation/WeakStarBoundary.lean"
+      ]
+    },
+    {
+      "git_blob": "2bd115b4fa6aae4a75990495e8159472c09e956a",
+      "sha256": "c342d83220fc895b9a4c730dfbd77db413e6e33d6a10fc2dd91c8ecbaabe789b",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/2bd115b4fa6aae4a75990495e8159472c09e956a/Topology_Compactness_CompactlyGeneratedSpace.lean",
+      "origins": [
+        "local/atlas-lean-bridges-pages-20261030/evidence/measure/mathlib/Topology_Compactness_CompactlyGeneratedSpace.lean"
+      ]
+    },
+    {
+      "git_blob": "2cb4f1cf3228b22a125a63e3070d1e4d1febc033",
+      "sha256": "42010cfd72bc2f45ab856c4ed4cbad248f9db7458adadd3708c1a33bf49779e0",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/2cb4f1cf3228b22a125a63e3070d1e4d1febc033/AtlasBoundaryCheck-42010cfd72bc.lean",
+      "origins": [
+        "local/atlas-theory-relations-20261031/implementation/evidence/checks/revisions/AtlasBoundaryCheck-42010cfd72bc.lean"
+      ]
+    },
+    {
+      "git_blob": "2e77a207dbcf0a93f135a6d25e39461b718f6561",
+      "sha256": "00fb2f1bdffd1b7254bfc4ecb1d4afdf11a6647e7a1a5cb6ab3aa9e149325ca1",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/2e77a207dbcf0a93f135a6d25e39461b718f6561/Topology_ContinuousMap_LocallyConstant.lean",
+      "origins": [
+        "local/atlas-lean-bridges-pages-20261030/evidence/measure/mathlib/Topology_ContinuousMap_LocallyConstant.lean"
+      ]
+    },
+    {
+      "git_blob": "2ee9a7875bb65c6863b8b0f085f0f9438ac7d204",
+      "sha256": "58165a0b32fe79c78cca7508f321f2a06ee2a06c80678060b20caad969b26b7a",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/2ee9a7875bb65c6863b8b0f085f0f9438ac7d204/remote-probeContext.lean",
+      "origins": [
+        "local/finite-observation-registration-24319-20261031/execution/remote-probeContext.lean"
+      ]
+    },
+    {
+      "git_blob": "2f963ad4ee4dcdc767fac4d80fb187dc5356e14e",
+      "sha256": "1b566718db8dbde40618e9b3078a5505af321f74fc9301a0fb090956d85dfefd",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/2f963ad4ee4dcdc767fac4d80fb187dc5356e14e/PairedDeletionLaw.finalcheck.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/paired-law-native-verified/source/PairedDeletionLaw.finalcheck.lean",
+        "local/atlas-research-bridges-20261103/paired-laws-formal/evidence/native/core3.lean",
+        "local/atlas-research-bridges-20261103/paired-laws-formal/source/PairedDeletionLaw.finalcheck.lean"
+      ]
+    },
+    {
+      "git_blob": "35335e4d871ba737ad07499cec2839456c44626d",
+      "sha256": "832a38a87ee089563de67279d3dea48ea06465a017176bd12798cefe9031f226",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/35335e4d871ba737ad07499cec2839456c44626d/PairedDeletionFiber-v2.lean",
+      "origins": [
+        "macstudio/atlas-research-bridges-20261103/paired-fiber-formal-check/PairedDeletionFiber-v2.lean"
+      ]
+    },
+    {
+      "git_blob": "36c76ad1a103d709d02fa98232e2bc531bb354c6",
+      "sha256": "79fe789c082cc22d0ee904d0b29c7358b11d6af35811f77460bbe03a5a763421",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/36c76ad1a103d709d02fa98232e2bc531bb354c6/remote-probePaths-original.lean",
+      "origins": [
+        "local/finite-observation-registration-24319-20261031/execution/remote-probePaths-original.lean"
+      ]
+    },
+    {
+      "git_blob": "370c4c70168ccef64254f120516cfc033f51a49b",
+      "sha256": "150252a6c28db623bff76615804214e3cd300adeceec9694efd8d6ae015eafc8",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/370c4c70168ccef64254f120516cfc033f51a49b/r6-Verification.lean",
+      "origins": [
+        "macstudio/atlas-research-bridges-20261103/paired-fiber-verification-resume-6aea4eac/r6-Verification.lean"
+      ]
+    },
+    {
+      "git_blob": "38012fbf531626882e493cf6bde33abe1670c4b2",
+      "sha256": "d14de545227c6ff869147fa1fa2c2cc3d85b95c2b9c33822c6c3da3bc68140d0",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/38012fbf531626882e493cf6bde33abe1670c4b2/RegAxioms.lean",
+      "origins": [
+        "macstudio/atlas-measure-20261030/RegAxioms.lean"
+      ]
+    },
+    {
+      "git_blob": "3ab798ed3f1aca502dd331c99070ed3fa781724f",
+      "sha256": "e5e6ea5f2104d6677f265ac7cee181dffcad0cef7ba7f3be5127d95125e4b5ce",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/3ab798ed3f1aca502dd331c99070ed3fa781724f/AtlasObservationCheck.lean",
+      "origins": [
+        "local/atlas-theory-relations-20261031/implementation/evidence/checks/AtlasObservationCheck.lean",
+        "local/atlas-theory-relations-20261031/implementation/evidence/proofs-native/checks/AtlasObservationCheck.lean",
+        "local/atlas-theory-relations-20261031/math-review-round-1/tests/archive-inputs/checks/AtlasObservationCheck.lean"
+      ]
+    },
+    {
+      "git_blob": "42dbe2d5653cfcf0a4a34a4a16537ac8d98c65bd",
+      "sha256": "131c03801faf20a8c4c3782cee060c88bcbc2c4987347ccf458fadb4ce8e99cd",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/42dbe2d5653cfcf0a4a34a4a16537ac8d98c65bd/RegularSignedLift.lean",
+      "origins": [
+        "local/finite-observation-uniform-recovery-20261030/context/D5/S3/Topology/Measures/RegularSignedLift.lean"
+      ]
+    },
+    {
+      "git_blob": "44b8ea0c49d0c7b08b603a0d7554497638d7c10d",
+      "sha256": "368d40ace75cfd2362eca2782e4bc119c615f490f9a582d63028fa2ac8903a57",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/44b8ea0c49d0c7b08b603a0d7554497638d7c10d/PrescribedDeletionDistance.before.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/robust-observation-formal-check/execution/retention/PrescribedDeletionDistance.before.lean"
+      ]
+    },
+    {
+      "git_blob": "4c0ed08d894a223d7e262fdb98c79fa73d168443",
+      "sha256": "5e40f0e047c3a50085520c22ba9f98ffd9715770cb2a34387f639740138f4b68",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/4c0ed08d894a223d7e262fdb98c79fa73d168443/UniformCycleAttainment.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/mean-repair-focused-review-20261105/snapshot/repo/D5/S3/Combinatorics/CircularWords/UniformCycleAttainment.lean",
+        "local/atlas-research-bridges-20261103/mean-repair-terminal-collection-20261105/snapshot/after/D5/S3/Combinatorics/CircularWords/UniformCycleAttainment.lean",
+        "local/atlas-research-bridges-20261103/mean-report-terminal-collection-20261105/snapshot/predecessor/after/D5/S3/Combinatorics/CircularWords/UniformCycleAttainment.lean",
+        "local/atlas-research-bridges-20261103/mean-report-terminal-collection-20261105/snapshot/validation/snapshot/D5/S3/Combinatorics/CircularWords/UniformCycleAttainment.lean"
+      ]
+    },
+    {
+      "git_blob": "4e269bd2b259d76bc6e2e7658b8c61e96ab8b4b0",
+      "sha256": "bbea0b2fe86b3fa57a86e0cde0396c4150fdbabaa7e58c8975528efc1737e7e8",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/4e269bd2b259d76bc6e2e7658b8c61e96ab8b4b0/FiniteHistoryCanonicalTree.after.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/finite-history-header-terminal-collection-20261105/FiniteHistoryCanonicalTree.after.lean",
+        "local/atlas-research-bridges-20261103/paired-final-correspondence-20261105/evidence-final/before/D5/S3/ConceptDynamics/Experiment/FiniteHistoryCanonicalTree.lean",
+        "local/atlas-research-bridges-20261103/paired-final-correspondence-20261105/evidence/before/D5/S3/ConceptDynamics/Experiment/FiniteHistoryCanonicalTree.lean"
+      ]
+    },
+    {
+      "git_blob": "4e5731437ce9464a7ac78ab4bebc53241f4b8353",
+      "sha256": "d8be01b21c98391f5484b5604efec290efd00153b983ebbeffb5d0cc349af8de",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/4e5731437ce9464a7ac78ab4bebc53241f4b8353/PairedDeletionSharpness.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/paired-final-correspondence-20261105/evidence-final/after/D5/S3/Combinatorics/CircularWords/PairedDeletionSharpness.lean",
+        "local/atlas-research-bridges-20261103/paired-final-correspondence-20261105/evidence-final/before/D5/S3/Combinatorics/CircularWords/PairedDeletionSharpness.lean",
+        "local/atlas-research-bridges-20261103/paired-final-correspondence-20261105/evidence/before/D5/S3/Combinatorics/CircularWords/PairedDeletionSharpness.lean",
+        "local/atlas-research-bridges-20261103/paired-law-canonical-validation/PairedDeletionSharpness.lean",
+        "local/atlas-research-bridges-20261103/paired-retention-focused-review-20261105/snapshot/D5/S3/Combinatorics/CircularWords/PairedDeletionSharpness.lean",
+        "local/atlas-research-bridges-20261103/paired-source-review-20261105/snapshot/D5/S3/Combinatorics/CircularWords/PairedDeletionSharpness.lean"
+      ]
+    },
+    {
+      "git_blob": "4fd6a061dee98add03927087c37171edf6307e3a",
+      "sha256": "6604efce6b799b2df8007c15e85a72bcec3e64f61674a7caa6826e091a0c8193",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/4fd6a061dee98add03927087c37171edf6307e3a/SingleDeletionFiberCount.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/canonical-r1-and-fiber-count/source/SingleDeletionFiberCount.lean"
+      ]
+    },
+    {
+      "git_blob": "50aa7ec650055fec8d0d4d522d369f3f9bca6d81",
+      "sha256": "642e77936aa3a61503319ea9bd5e9694f0173cd9bfd925bf6328dcf9e248d498",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/50aa7ec650055fec8d0d4d522d369f3f9bca6d81/FiniteHistoryCanonicalTree.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/finite-policy-cost-formal-check/source/FiniteHistoryCanonicalTree.lean"
+      ]
+    },
+    {
+      "git_blob": "54cde4553254cb1d1233974ccefc1b9bcbc77a5b",
+      "sha256": "be0f13346272417e33ee94853cc9d68225cc981678388bfbd56acb4e81e00a3f",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/54cde4553254cb1d1233974ccefc1b9bcbc77a5b/a2_scope_probe.lean",
+      "origins": [
+        "local/finite-observation-registration-24319-20261031/execution/a2_scope_probe.lean"
+      ]
+    },
+    {
+      "git_blob": "578da5936b36045446afb0653c402830e82330eb",
+      "sha256": "e987dc073deccd74f612575e8b37613b110fa83e04152d31ca91e73692083926",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/578da5936b36045446afb0653c402830e82330eb/PairedDeletionFiber.prefix.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/paired-law-native-verified/source/PairedDeletionFiber.prefix.lean"
+      ]
+    },
+    {
+      "git_blob": "598acbdd034a7cbaaab6344e4c00af91ac8c2a2d",
+      "sha256": "24e139cd44b20dd666f5bdd71350aa7485921681d4e6dde9d94743504eee6524",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/598acbdd034a7cbaaab6344e4c00af91ac8c2a2d/AdaptiveTwoReadout.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/adaptive-two-formal-check/AdaptiveTwoReadout.lean",
+        "local/atlas-research-bridges-20261103/adaptive-two-formal-check/native/accepted/AdaptiveTwoReadout.lean"
+      ]
+    },
+    {
+      "git_blob": "5a463b729af34298f56a14ba0fdfd8440cfecd81",
+      "sha256": "6ac43122a658d477b7eb4b8e99f8806946def49ac1a6f8ca0a95f08ac939871c",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/5a463b729af34298f56a14ba0fdfd8440cfecd81/candidate-v2.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/robust-observation-formal-check/execution/failed-sources/candidate-v2.lean"
+      ]
+    },
+    {
+      "git_blob": "5ab1772ea29fa359a876554df11a75f863fe9b63",
+      "sha256": "629cce050d246f4e126c28eeb78c42d9c359e07963d27f0499e5d9a5d61187bc",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/5ab1772ea29fa359a876554df11a75f863fe9b63/full1.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/paired-laws-formal/evidence/native/full1.lean"
+      ]
+    },
+    {
+      "git_blob": "5b6c2cf301f20f0d4784a5674e230865be248231",
+      "sha256": "975de4da2aa0f88eeec5a838eb061e597c896a9764d07c2fe746036b782eb086",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/5b6c2cf301f20f0d4784a5674e230865be248231/probePaths.lean",
+      "origins": [
+        "local/finite-observation-registration-24319-20261031/execution/probePaths.lean"
+      ]
+    },
+    {
+      "git_blob": "5b74a6bbc58c0abef30a1bc8109ac76b15609290",
+      "sha256": "5c2f41b3b2ee35a280a6d9e2601c2571cbe073dab91664d47b33f51ca53be5c6",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/5b74a6bbc58c0abef30a1bc8109ac76b15609290/PairedDeletionLawForest.draft.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/paired-law-native-verified/source/PairedDeletionLawForest.draft.lean",
+        "local/atlas-research-bridges-20261103/paired-laws-formal/source/PairedDeletionLawForest.draft.lean"
+      ]
+    },
+    {
+      "git_blob": "5bea2ee5c2511d2e3680c9f3bad16d067f71dff6",
+      "sha256": "6cbf959dc70e4c938ef64cc29c3fec4559f65e484affb37f8e8c0258908ab141",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/5bea2ee5c2511d2e3680c9f3bad16d067f71dff6/RegularTopologyCandidate.lean",
+      "origins": [
+        "local/finite-observation-registration-24319-20261031/regular-topology-check/RegularTopologyCandidate.lean",
+        "local/finite-observation-registration-24319-20261031/regular-topology-check/evidence/remote-final/RegularTopologyCandidate.lean"
+      ]
+    },
+    {
+      "git_blob": "5d8c4378a06d5424d592ac619c454a0f158bb182",
+      "sha256": "196cde5aa011866570efdacb6383b3b7384bf0e140e62d5da1e8dee4ef5823a9",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/5d8c4378a06d5424d592ac619c454a0f158bb182/PairedDeletionFiber.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/paired-fiber-source-implementation/PairedDeletionFiber.lean"
+      ]
+    },
+    {
+      "git_blob": "5e9f4b40caae5a204c56918e7ad399d15ce9a74e",
+      "sha256": "3b7c591b70b16183976a620e8cc6ec6921d70350f0af34a334b4121f576fe83e",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/5e9f4b40caae5a204c56918e7ad399d15ce9a74e/PairedDeletionFiber.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/next-observation-theory/PairedDeletionFiber.lean"
+      ]
+    },
+    {
+      "git_blob": "5f60668e6fbd32bb586f192601d332160dce7278",
+      "sha256": "5058605bd1650838aeb43719115e9a973feaaf70203f279a506cf6528ed332c9",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/5f60668e6fbd32bb586f192601d332160dce7278/AtlasFiniteSignedCheck-5058605bd165.lean",
+      "origins": [
+        "local/atlas-theory-relations-20261031/implementation/evidence/checks/revisions/AtlasFiniteSignedCheck-5058605bd165.lean"
+      ]
+    },
+    {
+      "git_blob": "635e9e1d363517156173c1fe0e97c2a2892fe23b",
+      "sha256": "547e2ad2c8df2892b401cb18f0fbbfaa5fa3c6c20e015720ecaf276d008565c0",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/635e9e1d363517156173c1fe0e97c2a2892fe23b/core2.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/paired-laws-formal/evidence/native/core2.lean"
+      ]
+    },
+    {
+      "git_blob": "63dc017b7b55974f1f46090d10f4ee560d01591f",
+      "sha256": "a5e3f98f97c369d327af8c5583815360d37c5ba3b0988c455f76ba375fbcaf5e",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/63dc017b7b55974f1f46090d10f4ee560d01591f/minimum-budget-exact-check.lean",
+      "origins": [
+        "macstudio/finite-observation-registration-24319-20261031/research-minimum-continuation-6ae9a69b/minimum-budget-exact-check.lean"
+      ]
+    },
+    {
+      "git_blob": "643ec337a8293a7d5170ac18ed1208b6cc3ad384",
+      "sha256": "41151e63c3ab9c2a98fb7ab603c1877a7c5225b05d234d066272cb41de020be6",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/643ec337a8293a7d5170ac18ed1208b6cc3ad384/PairedDeletionFiber-r4.lean",
+      "origins": [
+        "macstudio/atlas-research-bridges-20261103/paired-fiber-verification-resume-6aea4eac/PairedDeletionFiber-r4.lean"
+      ]
+    },
+    {
+      "git_blob": "64ef30c5611fbc46262bb7aad30e8f3b63e8849b",
+      "sha256": "6f270007f47a27120c17c8c4df9bd088506f5bb0ca34ca4d1c0f19f8a0560059",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/64ef30c5611fbc46262bb7aad30e8f3b63e8849b/EndpointCheck.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/mean-report-terminal-collection-20261105/snapshot/predecessor/EndpointCheck.lean"
+      ]
+    },
+    {
+      "git_blob": "684a74a8318119c1b21d9ca4f985ee919720c3c5",
+      "sha256": "749683d1d87bd0c3abbb84f11e53385bf8928e19ff179c35123bf6aaaa52ff20",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/684a74a8318119c1b21d9ca4f985ee919720c3c5/revision-1-source.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/paired-final-correspondence-20261105/evidence-final/payload/PairedDeletionApplicationCheck.lean",
+        "local/atlas-research-bridges-20261103/paired-final-correspondence-20261105/evidence-final/revision-1/source.lean",
+        "local/atlas-research-bridges-20261103/paired-final-correspondence-20261105/evidence-final/revision-2/revision-1-source.lean",
+        "local/atlas-research-bridges-20261103/paired-final-correspondence-20261105/payload/PairedDeletionApplicationCheck.lean"
+      ]
+    },
+    {
+      "git_blob": "687eb639514b9055009a926428f494f892f8a538",
+      "sha256": "a1f2bd9cca5f3dae38fb1089f612ecb7d8e1c1731b86ad144b1ae2ccacff20e7",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/687eb639514b9055009a926428f494f892f8a538/SourceCheck.lean",
+      "origins": [
+        "local/finite-observation-registration-24319-20261031/functional-proper-source/SourceCheck.lean"
+      ]
+    },
+    {
+      "git_blob": "6ae832d16bfa07eed23bf1ca4a29e8ae2f1fd5a0",
+      "sha256": "9b0a3e475e71612eeb89fb85cae9aef368249bf0b5ee285be803607418021f2b",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/6ae832d16bfa07eed23bf1ca4a29e8ae2f1fd5a0/Basic.lean",
+      "origins": [
+        "local/atlas-theory-relations-20261031/implementation/evidence/mathlib/Mathlib/MeasureTheory/VectorMeasure/Basic.lean"
+      ]
+    },
+    {
+      "git_blob": "6c75f12ce534dd4eef9f94333ef4b9587fbe0f42",
+      "sha256": "132da0f4ff1e3ff5e6eaf8d6efcbce1f4aba29d18cc051fa784476dd4941ee00",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/6c75f12ce534dd4eef9f94333ef4b9587fbe0f42/Topology_Separation_Profinite.lean",
+      "origins": [
+        "local/atlas-lean-bridges-pages-20261030/evidence/measure/mathlib/Topology_Separation_Profinite.lean"
+      ]
+    },
+    {
+      "git_blob": "7048998bfbdbf4aa594715a6aa1a6f8a193b2abc",
+      "sha256": "824f51e38e641b2dd07b15297b76f7ad3542c5db8ab0690e41f7327914027fd2",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/7048998bfbdbf4aa594715a6aa1a6f8a193b2abc/LocalLeafInverse.lean",
+      "origins": [
+        "macstudio/paired-law-canonical-20261105/LocalLeafInverse.lean"
+      ]
+    },
+    {
+      "git_blob": "706dc017a8433d1b60d1a7506e7f6ea892b23066",
+      "sha256": "33bc1562b691d7655f42e749ee43134e34d5f4301c4a2d72af0cbdebc45575e3",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/706dc017a8433d1b60d1a7506e7f6ea892b23066/source.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/native-identification-via-stability-20261105/evidence/native/correction-1/source.lean",
+        "local/atlas-research-bridges-20261103/native-identification-via-stability-20261105/payload/PairedDeletionStabilityCheck.lean",
+        "local/atlas-research-bridges-20261103/paired-retention-focused-review-20261105/snapshot/evidence/native-stability/native/correction-1/source.lean"
+      ]
+    },
+    {
+      "git_blob": "70ad58e8eb1bd14c26aee8800db1868774704deb",
+      "sha256": "4bc17183f5d895761ed3b2578124ccbae0e4b348e8afffbdb47980b4940b1040",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/70ad58e8eb1bd14c26aee8800db1868774704deb/full-carrier-retention-exact-check.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/paired-source-retention-repair-20261105/prepared/full-carrier-retention-exact-check.lean"
+      ]
+    },
+    {
+      "git_blob": "73336db663f6f4bfb53f7513f4945b561419438c",
+      "sha256": "bea4b7841736edf699870c0f07a72918bb8b29e545aa41b0b8c61936bf07d683",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/73336db663f6f4bfb53f7513f4945b561419438c/remote-NormPreservingLifts.lean",
+      "origins": [
+        "local/finite-observation-registration-24319-20261031/execution/evidence/a2-recovered-NormPreservingLifts.lean",
+        "local/finite-observation-registration-24319-20261031/execution/remote-NormPreservingLifts.lean",
+        "local/finite-observation-registration-24319-20261031/functional-proper-source/NormPreservingLifts.before.lean"
+      ]
+    },
+    {
+      "git_blob": "77111ec33d7358e9cae73557f2d1071ffb0585d0",
+      "sha256": "f297154cf642a54bab2f6dd410abb9e49b0ade5ca54267d218eca592e86782ec",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/77111ec33d7358e9cae73557f2d1071ffb0585d0/failed-application-final.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/paired-application-emission-recovery-20261105/evidence-final/failed-application-final.lean",
+        "local/atlas-research-bridges-20261103/paired-application-emission-recovery-20261105/evidence-final/payload/revision-2.lean",
+        "local/atlas-research-bridges-20261103/paired-application-emission-recovery-20261105/evidence-final/revision-2-validation/source.lean",
+        "local/atlas-research-bridges-20261103/paired-application-emission-recovery-20261105/prepared/revision-2/PairedDeletionApplicationCheck.lean"
+      ]
+    },
+    {
+      "git_blob": "7a1af97fbb3c9f5069dc38be795d62ff185168ec",
+      "sha256": "2b7be61648c409e11103d3daa0db071945812ece10121819bbbec85844ec2c61",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/7a1af97fbb3c9f5069dc38be795d62ff185168ec/SingleDeletionFiberCount.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/single-deletion-fiber-count/SingleDeletionFiberCount.lean",
+        "local/atlas-research-bridges-20261103/single-deletion-fiber-native-recovery/SingleDeletionFiberCount.lean"
+      ]
+    },
+    {
+      "git_blob": "7e2930489d7cca97dcda472069f96415e398eeb9",
+      "sha256": "25b6c7d240bc44e4117027e37a02ef165f87b7740095826078ec84d51204fc9e",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/7e2930489d7cca97dcda472069f96415e398eeb9/probability-applications-exact-check.lean",
+      "origins": [
+        "macstudio/finite-observation-registration-24319-20261031/research-minimum-continuation-6ae9a69b/probability-applications-exact-check.lean"
+      ]
+    },
+    {
+      "git_blob": "7eae4eab2d788ed803bcf87b77a61e49a606bc20",
+      "sha256": "58baf06222ac51d1543a390b18efe5db6fcfeb4be20d4b04272404a344522576",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/7eae4eab2d788ed803bcf87b77a61e49a606bc20/PrescribedDeletionDistance.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/robust-observation-formal-check/inputs/original-candidate/D5/S3/Combinatorics/CircularWords/PrescribedDeletionDistance.lean",
+        "local/atlas-research-bridges-20261103/robust-observation-theory/candidate/D5/S3/Combinatorics/CircularWords/PrescribedDeletionDistance.lean"
+      ]
+    },
+    {
+      "git_blob": "80b514830712dd04170db1c626199f12869c939c",
+      "sha256": "c2281034cc6a6a896e69e2f27dcc765f1964f57b3ddc13e8f9bfc6f41654f0f8",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/80b514830712dd04170db1c626199f12869c939c/ThreeSpecifiedDeletions.lean",
+      "origins": [
+        "macstudio/mean-optimum-6aea7a19/inputs/ThreeSpecifiedDeletions.lean"
+      ]
+    },
+    {
+      "git_blob": "83aa6467a243cbfc96977c5c1ee0bb57b8b0b0b5",
+      "sha256": "0576cba669c961485b9e3d2e72956dc77df702397c03ebc1f37522240a02e489",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/83aa6467a243cbfc96977c5c1ee0bb57b8b0b0b5/Topology_Category_Profinite_Product.lean",
+      "origins": [
+        "local/atlas-lean-bridges-pages-20261030/evidence/measure/mathlib/Topology_Category_Profinite_Product.lean"
+      ]
+    },
+    {
+      "git_blob": "84003576a96bb76f869af154c3274a25ea1bc7c8",
+      "sha256": "6f2f657416eccd1a3047849e542102c9ad9ed23bc2b39ab82c2f71a079edb24b",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/84003576a96bb76f869af154c3274a25ea1bc7c8/FiniteObservationVariation.lean",
+      "origins": [
+        "local/finite-observation-uniform-recovery-20261030/context/D5/S3/Topology/Measures/FiniteObservationVariation.lean"
+      ]
+    },
+    {
+      "git_blob": "856cbcc233e737213d15ba01e200aec639820509",
+      "sha256": "d0f66ef50c99f7b331eb79cdf4093ff734eef11d48fc6a72f909c1432f1c4d61",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/856cbcc233e737213d15ba01e200aec639820509/AtlasFiniteSignedCheck.lean",
+      "origins": [
+        "local/atlas-theory-relations-20261031/implementation/evidence/checks/AtlasFiniteSignedCheck.lean",
+        "local/atlas-theory-relations-20261031/implementation/evidence/proofs-native/checks/AtlasFiniteSignedCheck.lean",
+        "local/atlas-theory-relations-20261031/math-review-round-1/tests/archive-inputs/checks/AtlasFiniteSignedCheck.lean"
+      ]
+    },
+    {
+      "git_blob": "8611b51f02faa34bb31eeae8af84c09a7c8ce4a5",
+      "sha256": "a0ec30cab7efd43c356311b1e4aa4f779bdbc7eb448817325316e4b644f172f2",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/8611b51f02faa34bb31eeae8af84c09a7c8ce4a5/probe.lean",
+      "origins": [
+        "local/finite-observation-registration-24319-20261031/execution/probe.lean"
+      ]
+    },
+    {
+      "git_blob": "871262591e499b8d35ecc19ff00a891641b2a3f8",
+      "sha256": "c76d4955474d4a1a7f557254e173872e01a2391d11e3561eecb1a0cd5b6146ad",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/871262591e499b8d35ecc19ff00a891641b2a3f8/exact_checks.lean",
+      "origins": [
+        "macstudio/finite-observation-registration-24319-20261031/review-a2-tests-6ae9e84c/exact_checks.lean",
+        "macstudio/finite-observation-registration-24319-20261031/review-a2-tests-6ae9e84c/python312/exact_checks.lean"
+      ]
+    },
+    {
+      "git_blob": "878ab74a1e58b6448b9e91456c781f65b38d40cd",
+      "sha256": "ce4c090c45e815bbca05b7c7d3241982dce8da8954b5b62aa45f24691ff944cf",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/878ab74a1e58b6448b9e91456c781f65b38d40cd/retention-transient-final.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/paired-source-retention-repair-20261105/evidence-final/retention-transient-final.lean",
+        "local/atlas-research-bridges-20261103/paired-source-retention-repair-20261105/prepared/full-carrier-retention-exact-check-revision2.lean"
+      ]
+    },
+    {
+      "git_blob": "8e3ea8bad9f0a8ccbd4bb24cf56c9fdf63e5781f",
+      "sha256": "ebf2bf31e2ff68f8a6a620e409f48367aa5ed74702a9d1c1fb156e2181a9d72d",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/8e3ea8bad9f0a8ccbd4bb24cf56c9fdf63e5781f/PairedDeletionFiber-r5.lean",
+      "origins": [
+        "macstudio/atlas-research-bridges-20261103/paired-fiber-verification-resume-6aea4eac/PairedDeletionFiber-r5.lean"
+      ]
+    },
+    {
+      "git_blob": "921c5152844b88802be437d19bdcd9ba02247ff2",
+      "sha256": "74e0e01eb64ceef9e189f66462b3888421e3005f7499c9ac57480591e2a631c5",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/921c5152844b88802be437d19bdcd9ba02247ff2/Applications.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/paired-law-native-verified/source/Applications.lean",
+        "local/atlas-research-bridges-20261103/paired-laws-formal/source/Applications.lean"
+      ]
+    },
+    {
+      "git_blob": "941a9130efd32894b8aba3bcb495559013fdd336",
+      "sha256": "6f6a6d9cac00c4f038caa2e2114e42e5530a376ab7d10430b0ce38b66afa0b46",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/941a9130efd32894b8aba3bcb495559013fdd336/remote-probeBinders.lean",
+      "origins": [
+        "local/finite-observation-registration-24319-20261031/execution/remote-probeBinders.lean"
+      ]
+    },
+    {
+      "git_blob": "9e279664499549037c9eb7f1abef17e85820f431",
+      "sha256": "74cc0e144adaf20239c4c7feddac89788069d7336dc2d40753dfb650bf4217ce",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/9e279664499549037c9eb7f1abef17e85820f431/core3-ImportInventory.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/paired-laws-formal/evidence/native/core3-ImportInventory.lean"
+      ]
+    },
+    {
+      "git_blob": "9feb0326fa3bfccbac294b71c8678648a5276658",
+      "sha256": "4c041f9c3696b0bb8f663d4dbeb64022220871e9d944b082bd764b3797996767",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/9feb0326fa3bfccbac294b71c8678648a5276658/CheckCanonical.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/mean-optimum-actual-validation/source/CheckCanonical.lean"
+      ]
+    },
+    {
+      "git_blob": "a1e0c06abd619acd517b9c121fb20a1c94fe9b8a",
+      "sha256": "3705633a648ebb6fec045ca08b26da036d5745b8ed0e43cbe8d9a4d12f19eb70",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/a1e0c06abd619acd517b9c121fb20a1c94fe9b8a/RegularSignedLift.lean",
+      "origins": [
+        "local/finite-observation-registration-24319-20261031/completion-audit/criterion-evidence/source/Reg/D5/S3/Topology/Measures/RegularSignedLift.lean",
+        "local/finite-observation-registration-24319-20261031/completion-audit/residual-gap/source/Reg/D5/S3/Topology/Measures/RegularSignedLift.lean",
+        "local/finite-observation-registration-24319-20261031/regular-topology-owner-integration/evidence/RegularSignedLift.clean-integrated.lean",
+        "local/finite-observation-registration-24319-20261031/regular-topology-owner-integration/evidence/RegularSignedLift.patch-target.lean",
+        "local/finite-observation-registration-24319-20261031/work/a1/Reg/D5/S3/Topology/Measures/RegularSignedLift.lean"
+      ]
+    },
+    {
+      "git_blob": "a6848efb8c0c97db7e60d90d578e30686f1aa505",
+      "sha256": "3bbecb5f08aa5efa681cfea9e8723add11a8bab1f0ea12c41de96b0469909971",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/a6848efb8c0c97db7e60d90d578e30686f1aa505/LocalLeafInverseCheck.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/native-identification-via-stability-20261105/evidence/native/before/D5/S3/TotalVariation/LocalLeafInverseCheck.lean",
+        "local/atlas-research-bridges-20261103/paired-application-emission-recovery-20261105/evidence-final/after/D5/S3/TotalVariation/LocalLeafInverseCheck.lean",
+        "local/atlas-research-bridges-20261103/paired-application-emission-recovery-20261105/evidence-final/before/D5/S3/TotalVariation/LocalLeafInverseCheck.lean",
+        "local/atlas-research-bridges-20261103/paired-final-check-repair-20261105/v7-LocalLeafInverseCheck.lean",
+        "local/atlas-research-bridges-20261103/paired-final-correspondence-20261105/evidence/before/D5/S3/TotalVariation/LocalLeafInverseCheck.lean",
+        "local/atlas-research-bridges-20261103/paired-source-review-20261105/snapshot/evidence/full-carrier-exact-check.lean",
+        "local/atlas-research-bridges-20261103/paired-source-review-20261105/snapshot/evidence/v7-LocalLeafInverseCheck.lean"
+      ]
+    },
+    {
+      "git_blob": "a6e04238bee7af91cac2724285fb4a033d0ad576",
+      "sha256": "6ae70ea9be6f7f4f56eca4243bef79a5010f8445b46497158ee56a6f44cd99d1",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/a6e04238bee7af91cac2724285fb4a033d0ad576/PairedDeletionFiber.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/paired-fiber-formal-check/PairedDeletionFiber.lean"
+      ]
+    },
+    {
+      "git_blob": "a7220104193f5c792948d7663feb6da626d5032a",
+      "sha256": "731ce59ac11e9b83ee11ae77105c959c4d6a0e7027eabd97784c0b193817e421",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/a7220104193f5c792948d7663feb6da626d5032a/EndpointCheckRevision3.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/mean-repair-focused-review-20261105/snapshot/evidence/EndpointCheckRevision3.lean",
+        "local/atlas-research-bridges-20261103/mean-repair-terminal-collection-20261105/evidence/sealed-implementation/EndpointCheckRevision3.lean",
+        "local/atlas-research-bridges-20261103/mean-report-terminal-collection-20261105/snapshot/predecessor/EndpointCheckRevision3.lean"
+      ]
+    },
+    {
+      "git_blob": "a79a0802e95c70bde3323b59790556e7328d17b4",
+      "sha256": "6d16f7bfe8be94a489e37f20f7dc510c0d156f77b4bb31551569e1ebd60ea358",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/a79a0802e95c70bde3323b59790556e7328d17b4/IndependentApplications.lean",
+      "origins": [
+        "local/atlas-theory-relations-20261031/math-review-round-1/tests/IndependentApplications.lean"
+      ]
+    },
+    {
+      "git_blob": "a8099c13b6f56c50ce2a866e20b254b6ef7690c8",
+      "sha256": "691e5cd39093fcc276bc1d9837e7a879b1a08baf70ca22ec231b8bcc7cedf2bd",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/a8099c13b6f56c50ce2a866e20b254b6ef7690c8/RegularTopologyCandidate.input.lean",
+      "origins": [
+        "local/finite-observation-registration-24319-20261031/regular-topology-check/versions/RegularTopologyCandidate.input.lean",
+        "local/finite-observation-registration-24319-20261031/source-class-investigation/RegularTopologyCandidate.lean"
+      ]
+    },
+    {
+      "git_blob": "a8e7cb050f0b9b4b0b04ff545c3887c3786df80d",
+      "sha256": "3a8061e6b4e610f8c2898880bc1f58bb00d76ad359343759417b241629b1a8b5",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/a8e7cb050f0b9b4b0b04ff545c3887c3786df80d/Cycle.lean",
+      "origins": [
+        "local/atlas-lean-bridges-pages-20261030/evidence/circular/MathlibCycle.lean",
+        "local/atlas-research-bridges-20261103/mean-optimum-actual-validation/evidence/Cycle.lean"
+      ]
+    },
+    {
+      "git_blob": "ac036ec6b27bf9e9e7a8782ab410709f0e4fbaf8",
+      "sha256": "e49033acf2d3dd75a3fea4657583cd0a37dc0a5917daa7ee43f8f4037c68ff3e",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/ac036ec6b27bf9e9e7a8782ab410709f0e4fbaf8/CheckActualOptimum.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/mean-optimum-actual-validation/source/CheckActualOptimum.lean"
+      ]
+    },
+    {
+      "git_blob": "acc4ee85f18ff9067635263ff200b5a3b0527424",
+      "sha256": "60f705f846f421b604a5ff7b76df936bdae06a13477fc0718ae7ed9402548d4d",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/acc4ee85f18ff9067635263ff200b5a3b0527424/Check.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/single-deletion-fiber-count/Check.lean",
+        "local/atlas-research-bridges-20261103/single-deletion-fiber-native-recovery/Check.lean"
+      ]
+    },
+    {
+      "git_blob": "ae4adcdfda3b15e87c574ba6c08e3ccfb36e67c6",
+      "sha256": "d25d9c220810be8814f543b3ce598b282d3ae77cca94d702aee3ca9f7fbaaa77",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/ae4adcdfda3b15e87c574ba6c08e3ccfb36e67c6/IndependentApplications-v1.lean",
+      "origins": [
+        "local/atlas-theory-relations-20261031/math-review-round-1/tests/IndependentApplications-v1.lean"
+      ]
+    },
+    {
+      "git_blob": "afc4c85ddf72ae170dc854fc6fea956586397281",
+      "sha256": "ed384cef6d12297f50b82c5e341b379de5ae5fbf33adaa954714ecbef2ba2381",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/afc4c85ddf72ae170dc854fc6fea956586397281/RegularTopologyProbe.inhabited-failure.lean",
+      "origins": [
+        "local/finite-observation-registration-24319-20261031/regular-topology-check/versions/RegularTopologyProbe.inhabited-failure.lean"
+      ]
+    },
+    {
+      "git_blob": "b0946dc09f13226e9410ce9d3d569bf8c43c1db3",
+      "sha256": "c4853a53b07658455ff2a48208f1764ed4bbd1db4e4c2d583e5555b844fb2f17",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/b0946dc09f13226e9410ce9d3d569bf8c43c1db3/PairedDeletionLaw.body.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/paired-law-native-verified/source/PairedDeletionLaw.body.lean",
+        "local/atlas-research-bridges-20261103/paired-laws-formal/source/PairedDeletionLaw.body.lean"
+      ]
+    },
+    {
+      "git_blob": "b200db1d125d7a6f6f4197a66fb7c609ce30a496",
+      "sha256": "e8f56403cccce85828cdaef2e8548e2ef61f14d7d252d79c954f95c34c48a6ea",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/b200db1d125d7a6f6f4197a66fb7c609ce30a496/MeasureTheory_VectorMeasure_Variation_Basic.lean",
+      "origins": [
+        "local/atlas-lean-bridges-pages-20261030/evidence/measure/mathlib/MeasureTheory_VectorMeasure_Variation_Basic.lean"
+      ]
+    },
+    {
+      "git_blob": "b4447913c287c440420865ae9fafdd02d617e11d",
+      "sha256": "656235703cd011c8108dba66ba058187b7a91e8ca6762ca4fdf66e3f7cc0fe96",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/b4447913c287c440420865ae9fafdd02d617e11d/RegularTopologyProbe.lean",
+      "origins": [
+        "local/finite-observation-registration-24319-20261031/regular-topology-check/RegularTopologyProbe.lean",
+        "local/finite-observation-registration-24319-20261031/regular-topology-check/evidence/remote-final/RegularTopologyProbe.lean"
+      ]
+    },
+    {
+      "git_blob": "b59c5e4798cc540086d52c446f8997993b1ed0a0",
+      "sha256": "a166e7572a324c68a0d0b261492bcbf618f244e8b05b70d00e1d792333892b45",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/b59c5e4798cc540086d52c446f8997993b1ed0a0/v4-LocalLeafInverseCheck.lean",
+      "origins": [
+        "macstudio/paired-law-canonical-20261105/v4-LocalLeafInverseCheck.lean"
+      ]
+    },
+    {
+      "git_blob": "b86e3f80eab5b8c46f98b85ee0e47701d36cc9a9",
+      "sha256": "cc39193ce5a0cc4b830a653a8c5cd8ff007ef9237bc42de1ceda8eab7bc23765",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/b86e3f80eab5b8c46f98b85ee0e47701d36cc9a9/PairedDeletionFiber-finalcheck.lean",
+      "origins": [
+        "macstudio/atlas-research-bridges-20261103/paired-fiber-verification-resume-6aea4eac/PairedDeletionFiber-finalcheck.lean"
+      ]
+    },
+    {
+      "git_blob": "b9afc88591517d2bbb847d4ebbf898f6e51a6255",
+      "sha256": "9a9f46791a8af3cab690c363a61d1d2557af3bfce5ab383aaed62c7758df8735",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/b9afc88591517d2bbb847d4ebbf898f6e51a6255/PairedDeletionLaw.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/paired-final-correspondence-20261105/evidence-final/after/D5/S3/Combinatorics/CircularWords/PairedDeletionLaw.lean",
+        "local/atlas-research-bridges-20261103/paired-final-correspondence-20261105/evidence-final/before/D5/S3/Combinatorics/CircularWords/PairedDeletionLaw.lean",
+        "local/atlas-research-bridges-20261103/paired-final-correspondence-20261105/evidence/before/D5/S3/Combinatorics/CircularWords/PairedDeletionLaw.lean",
+        "local/atlas-research-bridges-20261103/paired-retention-focused-review-20261105/snapshot/D5/S3/Combinatorics/CircularWords/PairedDeletionLaw.lean",
+        "local/atlas-research-bridges-20261103/paired-source-retention-repair-20261105/evidence-final/after/D5/S3/Combinatorics/CircularWords/PairedDeletionLaw.lean",
+        "local/atlas-research-bridges-20261103/paired-source-retention-repair-20261105/prepared/D5/S3/Combinatorics/CircularWords/PairedDeletionLaw.lean"
+      ]
+    },
+    {
+      "git_blob": "bc10c2cf9ae9bc1ad939d49e94c53238a00f51c1",
+      "sha256": "7ef84d960ea9d82555538957ff85cdfefd5e1814f626e95d5477810450c2cfd6",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/bc10c2cf9ae9bc1ad939d49e94c53238a00f51c1/Topology_Compactness_Compact.lean",
+      "origins": [
+        "local/atlas-lean-bridges-pages-20261030/evidence/measure/mathlib/Topology_Compactness_Compact.lean"
+      ]
+    },
+    {
+      "git_blob": "bd3651b54a0aeb5c19065387f2f211f6de6ecfbf",
+      "sha256": "26b4cdec8282bf7a8f400a2c192860b5a1a0c2de3980fc5458a5d64d28ed4dc0",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/bd3651b54a0aeb5c19065387f2f211f6de6ecfbf/AllSupportMarginalCollision.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/all-support-marginal-formal-check/source/AllSupportMarginalCollision.lean"
+      ]
+    },
+    {
+      "git_blob": "bf02259e4a66bf4fe03bc1774bfbafe1f3a416d9",
+      "sha256": "5557d325c7a109deec692ef1a9ba7745c42d1df20d390e4aa39b3205822f10f2",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/bf02259e4a66bf4fe03bc1774bfbafe1f3a416d9/remote-RegularSignedLift.lean",
+      "origins": [
+        "local/finite-observation-registration-24319-20261031/execution/evidence/a2-recovered-RegularSignedLift.lean",
+        "local/finite-observation-registration-24319-20261031/execution/remote-RegularSignedLift.lean"
+      ]
+    },
+    {
+      "git_blob": "bfbdee4cb38f6ff5247bb40cf52a187547d82882",
+      "sha256": "e5bb5ede245e340f1fe1f69b721059c1d2779deddac8bb5fb5d3c6154e42f5ff",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/bfbdee4cb38f6ff5247bb40cf52a187547d82882/AtlasBoundaryCheck.lean",
+      "origins": [
+        "local/atlas-theory-relations-20261031/implementation/evidence/checks/AtlasBoundaryCheck.lean",
+        "local/atlas-theory-relations-20261031/implementation/evidence/proofs-native/checks/AtlasBoundaryCheck.lean",
+        "local/atlas-theory-relations-20261031/math-review-round-1/tests/archive-inputs/checks/AtlasBoundaryCheck.lean"
+      ]
+    },
+    {
+      "git_blob": "c153fcdaadc8ffa7d91ef1a0b2f884911c341642",
+      "sha256": "1f80bb53660942f586a03a33b8de230a1cb39f7f409a27a9dc106f1318337d72",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/c153fcdaadc8ffa7d91ef1a0b2f884911c341642/BoundaryChecks.lean",
+      "origins": [
+        "local/finite-observation-uniform-recovery-20261030/implementation/BoundaryChecks.lean"
+      ]
+    },
+    {
+      "git_blob": "c2a8f55346787694d03350f96041b234a1015359",
+      "sha256": "2471ceb403c949b6443387a69b1cc1a8d46e27fe1b1ac2c80b01917a7f370272",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/c2a8f55346787694d03350f96041b234a1015359/NormPreservingLifts.lean",
+      "origins": [
+        "local/finite-observation-uniform-recovery-20261030/context/D5/S3/Topology/Measures/NormPreservingLifts.lean"
+      ]
+    },
+    {
+      "git_blob": "c357f2aac23cde6d308750489533e5331f6fd46f",
+      "sha256": "6d3153df2dc8aaddc32c2c36b701f25e31a44027b292b115ee7162c6dcaf849c",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/c357f2aac23cde6d308750489533e5331f6fd46f/MeasureTheory_VectorMeasure_Variation_SignedMeasure.lean",
+      "origins": [
+        "local/atlas-lean-bridges-pages-20261030/evidence/measure/mathlib/MeasureTheory_VectorMeasure_Variation_SignedMeasure.lean"
+      ]
+    },
+    {
+      "git_blob": "cb1f034a257f9fecf78eebb8319ead1cb76e376a",
+      "sha256": "4f66beb6d8872e220637a1ce94aa33a107edb7bbfc7e732e96a9521405455804",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/cb1f034a257f9fecf78eebb8319ead1cb76e376a/FiniteObservationVariation.lean",
+      "origins": [
+        "local/finite-observation-registration-24319-20261031/completion-audit/criterion-evidence/source/Reg/D5/S3/Topology/Measures/FiniteObservationVariation.lean",
+        "local/finite-observation-registration-24319-20261031/completion-audit/residual-gap/source/Reg/D5/S3/Topology/Measures/FiniteObservationVariation.lean",
+        "local/finite-observation-registration-24319-20261031/work/a1/Reg/D5/S3/Topology/Measures/FiniteObservationVariation.lean"
+      ]
+    },
+    {
+      "git_blob": "cce52e42a697338cd9eb6cc66109eb5b539ba039",
+      "sha256": "7496736b8eaf41586ee0ebf07bae12234e8bf9c358e52f59280c74e0d1974420",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/cce52e42a697338cd9eb6cc66109eb5b539ba039/SourceCheck.lean",
+      "origins": [
+        "macstudio/finite-observation-registration-24319-20261031/review-final3-tests-6ae9fe59/SourceCheck.lean"
+      ]
+    },
+    {
+      "git_blob": "cd59bad1227c140a4af6e76619a27771444890e9",
+      "sha256": "66119d5b752f5ba9197513f2304790b162db6322f01022fadafda648554ff0e4",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/cd59bad1227c140a4af6e76619a27771444890e9/PrescribedDeletionDistance.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/r3-final-integration-20261105/execution/content/D5/S3/Combinatorics/CircularWords/PrescribedDeletionDistance.lean"
+      ]
+    },
+    {
+      "git_blob": "ce98269bebf92a77396e37cdd71f77ef79ab202e",
+      "sha256": "4d2e12f6d3427a32b564665721e3d4973bd9f5b70f4f6e8f4265aeea98c90737",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/ce98269bebf92a77396e37cdd71f77ef79ab202e/CheckCanonical.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/canonical-r1-and-fiber-count/source/CheckCanonical.lean"
+      ]
+    },
+    {
+      "git_blob": "d3ee4a7a843210272e0ca83c8e0d16eed578b67c",
+      "sha256": "771c644c9687f90f9c7c5cb0ed90fe3f2719180661a88b85ee8cb2ee55dbe007",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/d3ee4a7a843210272e0ca83c8e0d16eed578b67c/RegularSignedLift.lean",
+      "origins": [
+        "local/finite-observation-registration-24319-20261031/regular-topology-check/evidence/remote-final/Reg/D5/S3/Topology/Measures/RegularSignedLift.lean",
+        "local/finite-observation-registration-24319-20261031/regular-topology-check/evidence/remote-final/shadow/Reg/D5/S3/Topology/Measures/RegularSignedLift.lean",
+        "local/finite-observation-registration-24319-20261031/regular-topology-check/shadow/Reg/D5/S3/Topology/Measures/RegularSignedLift.lean",
+        "local/finite-observation-registration-24319-20261031/regular-topology-owner-integration/evidence/RegularSignedLift.integrated.lean"
+      ]
+    },
+    {
+      "git_blob": "d46181e3d508959b05447e7deaa46d13226b8ad6",
+      "sha256": "c19e8f393f6e4b568ab64729e1e5e01ae8930207710a912e9727d2f24f30d6db",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/d46181e3d508959b05447e7deaa46d13226b8ad6/LocalLeafInverseCheck.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/paired-final-check-repair-20261105/source-inputs/LocalLeafInverseCheck.lean",
+        "local/atlas-research-bridges-20261103/paired-law-canonical-validation/LocalLeafInverseCheck.lean"
+      ]
+    },
+    {
+      "git_blob": "db58ff7fb6e5ed9b381f54c3951de160eb2e9e81",
+      "sha256": "61161fee2e06bb67088400b24cff68c62cef8a858eba2f8b9f11ad2b5e441e77",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/db58ff7fb6e5ed9b381f54c3951de160eb2e9e81/RegularTopologyProbe.syntax-failure.lean",
+      "origins": [
+        "local/finite-observation-registration-24319-20261031/regular-topology-check/versions/RegularTopologyProbe.syntax-failure.lean"
+      ]
+    },
+    {
+      "git_blob": "db70393e03555911281cf386799b4fb7ace92989",
+      "sha256": "d571eca86592b7922e9b54fbe9da7d3fe2b0f4a38bb9c5f744a4bd75af28bc11",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/db70393e03555911281cf386799b4fb7ace92989/TwoQueryAmbiguityCost.lean",
+      "origins": [
+        "macstudio/two-query-cost-6aea6583/TwoQueryAmbiguityCost.lean"
+      ]
+    },
+    {
+      "git_blob": "dde89428eb55043e95a322d20588606e9148065b",
+      "sha256": "7b4f65e5ae2fc5a641779d29cd9f132f8b1d06f7b6bfbc45b37d2f1352c6c816",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/dde89428eb55043e95a322d20588606e9148065b/AtlasBoundaryCheck-7b4f65e5ae2f.lean",
+      "origins": [
+        "local/atlas-theory-relations-20261031/implementation/evidence/checks/revisions/AtlasBoundaryCheck-7b4f65e5ae2f.lean"
+      ]
+    },
+    {
+      "git_blob": "def9dd66b4f8efe442c561b90484ff6ec972e6d0",
+      "sha256": "438f6e59616db087776b0f5ed088b7709c4ecf0ff5fbc36ddfdb8da8ced2dce9",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/def9dd66b4f8efe442c561b90484ff6ec972e6d0/RegularSignedLift.before.lean",
+      "origins": [
+        "local/finite-observation-registration-24319-20261031/regular-topology-owner-integration/evidence/RegularSignedLift.before.lean"
+      ]
+    },
+    {
+      "git_blob": "dfbfaf9440acb4fe10d2f50eb2a93ce6089267d6",
+      "sha256": "6d61cb6c27902a4f6fb6033265b27314767f1609b07b13bfe91e9165f5422035",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/dfbfaf9440acb4fe10d2f50eb2a93ce6089267d6/FourCycleMarginalCollision.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/robust-observation-theory/inputs/reviewed/D5/S3/Combinatorics/CircularWords/FourCycleMarginalCollision.lean",
+        "local/finite-observation-registration-24319-20261031/work/a1/D5/S3/Combinatorics/CircularWords/FourCycleMarginalCollision.lean"
+      ]
+    },
+    {
+      "git_blob": "e011cb6ab23a7aeb1c8889c0f4d6b055a4f4abc4",
+      "sha256": "71d18fd348ce27bd1ff53da6a2c7654faf71c710c828de97c372c42b19cc92e1",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/e011cb6ab23a7aeb1c8889c0f4d6b055a4f4abc4/AtlasObservationCheck-71d18fd348ce.lean",
+      "origins": [
+        "local/atlas-theory-relations-20261031/implementation/evidence/checks/revisions/AtlasObservationCheck-71d18fd348ce.lean"
+      ]
+    },
+    {
+      "git_blob": "e1455418e10dad52ad4df84255884833b2245836",
+      "sha256": "2b7cb692e691ac84be0354ffa5c512cfdf1ee0b1445a084fb03d88741d42cddd",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/e1455418e10dad52ad4df84255884833b2245836/ImportInventory.lean",
+      "origins": [
+        "macstudio/atlas-research-bridges-20261103/paired-fiber-verification-resume-6aea4eac/ImportInventory.lean"
+      ]
+    },
+    {
+      "git_blob": "e3a9dd5bf2e4d7a572adeaac1e7c099e01552912",
+      "sha256": "e8f6a12bec6a84c42f053bf7942a087a9077c06ec181ccaa2eaebbf1c131d25b",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/e3a9dd5bf2e4d7a572adeaac1e7c099e01552912/EndpointCheckRevision2.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/mean-report-terminal-collection-20261105/snapshot/predecessor/EndpointCheckRevision2.lean"
+      ]
+    },
+    {
+      "git_blob": "e7039f34ea24406e98346e290e7a28103de32d52",
+      "sha256": "93a57d39e1c3cac64e6b24fae3d2198fdd63a22b02fc76689e34beb723eb46de",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/e7039f34ea24406e98346e290e7a28103de32d52/AtlasFiniteSignedCheck-93a57d39e1c3.lean",
+      "origins": [
+        "local/atlas-theory-relations-20261031/implementation/evidence/checks/revisions/AtlasFiniteSignedCheck-93a57d39e1c3.lean"
+      ]
+    },
+    {
+      "git_blob": "e712da589ee365cd880d6fc2dbd5d16f3448d9ab",
+      "sha256": "b63be6073bc0b49bdf322f9c9bf151d7d0a1a71a00dd3c1133e189b971b6ec79",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/e712da589ee365cd880d6fc2dbd5d16f3448d9ab/decoder-v2.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/robust-observation-formal-check/execution/failed-sources/decoder-v2.lean"
+      ]
+    },
+    {
+      "git_blob": "e80a14cfd407e5c3bb58d02e697a2f1569d962df",
+      "sha256": "54da51d6d9414d8c5379fdadb8a12b6ff3e440db1d54474bfa4e01f746378017",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/e80a14cfd407e5c3bb58d02e697a2f1569d962df/IndependentApplications.lean",
+      "origins": [
+        "local/finite-observation-uniform-recovery-20261030/review-round-1/tests/IndependentApplications.lean"
+      ]
+    },
+    {
+      "git_blob": "e8bc4725e57907c4958d6b6c8c6ff005a2bee9b8",
+      "sha256": "afd2e91978d365c58b89a7dfb7fb15a03f2a6f035b5329b4670c6abd62d9ece1",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/e8bc4725e57907c4958d6b6c8c6ff005a2bee9b8/AtlasBoundaryCheck-afd2e91978d3.lean",
+      "origins": [
+        "local/atlas-theory-relations-20261031/implementation/evidence/checks/revisions/AtlasBoundaryCheck-afd2e91978d3.lean"
+      ]
+    },
+    {
+      "git_blob": "ea453c7a1773cdc898dc563a3c16b1b3bceca754",
+      "sha256": "526f8aa5ca7f39644a054787781994675c095fa8bc8fed1804960a81109cdd18",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/ea453c7a1773cdc898dc563a3c16b1b3bceca754/NormPreservingLifts.lean",
+      "origins": [
+        "local/finite-observation-registration-24319-20261031/completion-audit/criterion-evidence/source/Reg/D5/S3/Topology/Measures/NormPreservingLifts.lean",
+        "local/finite-observation-registration-24319-20261031/completion-audit/residual-gap/source/Reg/D5/S3/Topology/Measures/NormPreservingLifts.lean",
+        "local/finite-observation-registration-24319-20261031/functional-proper-source/owner.final.lean",
+        "local/finite-observation-registration-24319-20261031/work/a1/Reg/D5/S3/Topology/Measures/NormPreservingLifts.lean"
+      ]
+    },
+    {
+      "git_blob": "ea862223bd9cda53b05ac6ee7f5da5e181ca8833",
+      "sha256": "de0263beabd112a89adb44c959823223e890808623a76610b097a1147f560041",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/ea862223bd9cda53b05ac6ee7f5da5e181ca8833/remote-probeBinders2.lean",
+      "origins": [
+        "local/finite-observation-registration-24319-20261031/execution/remote-probeBinders2.lean"
+      ]
+    },
+    {
+      "git_blob": "eecf6b2d614b4dc4786691e53b83df5b7c8135d2",
+      "sha256": "c535ca9b61bacb05d32d99a031b352cb5d9ef4a625ce11c8cabf4fd3de7462b1",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/eecf6b2d614b4dc4786691e53b83df5b7c8135d2/AtlasBoundaryCheck-c535ca9b61ba.lean",
+      "origins": [
+        "local/atlas-theory-relations-20261031/implementation/evidence/checks/revisions/AtlasBoundaryCheck-c535ca9b61ba.lean"
+      ]
+    },
+    {
+      "git_blob": "ef137fc78e39827c1a3f7f979b17cdfdcdd33abc",
+      "sha256": "e26efb8aa3688d21d6ba476ba8c9f9f6dc6eca1b7fd1c8f9ff926d0b8e5bc728",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/ef137fc78e39827c1a3f7f979b17cdfdcdd33abc/DecoderApplication.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/robust-observation-formal-check/execution/retention/native-archive/DecoderApplication.lean",
+        "local/atlas-research-bridges-20261103/robust-observation-formal-check/transient/DecoderApplication.lean"
+      ]
+    },
+    {
+      "git_blob": "efb751ed213b907690e6d70bf85cb53c4b572f64",
+      "sha256": "793beccaf579465a3e600c2ea5abfdd9cb22d04b2adcbc5c107bcabfdf4e8fbd",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/efb751ed213b907690e6d70bf85cb53c4b572f64/v2-LocalLeafInverseCheck.lean",
+      "origins": [
+        "macstudio/paired-law-canonical-20261105/v2-LocalLeafInverseCheck.lean"
+      ]
+    },
+    {
+      "git_blob": "f1cdf0f4fc8f70d7f90dc0f31823258a78e9654f",
+      "sha256": "c0372d7f7da280515abb799f1c095f81b41e0f38a898ae5bb2eb779fbc905582",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/f1cdf0f4fc8f70d7f90dc0f31823258a78e9654f/AttainingPolicySuffix.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/mean-optimum-actual-validation/source/AttainingPolicySuffix.lean"
+      ]
+    },
+    {
+      "git_blob": "f1d94b27ee329fc88909478130cc48e828bac64b",
+      "sha256": "83c07d9a519f88c99485f090e7f988bf5774f32061de9961748a619a22642b18",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/f1d94b27ee329fc88909478130cc48e828bac64b/thue-morse-reduced-abelian-odd.lean",
+      "origins": [
+        "local/atlas-lean-bridges-pages-20261030/evidence/pages/architecture-source-snapshot/site/assets/proofs/thue-morse-reduced-abelian-odd.lean",
+        "local/atlas-lean-bridges-pages-20261030/evidence/pages/performance-comparison/baseline/source/site/assets/proofs/thue-morse-reduced-abelian-odd.lean",
+        "local/atlas-lean-bridges-pages-20261030/evidence/pages/performance-comparison/candidate-before/source/site/assets/proofs/thue-morse-reduced-abelian-odd.lean"
+      ]
+    },
+    {
+      "git_blob": "f248a13bd3573ddda881df5dceae868f362f75a9",
+      "sha256": "187856eac861e93c41fdbf6cffa58f8757d93f3308ff3cc47481c903c5d8f3c2",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/f248a13bd3573ddda881df5dceae868f362f75a9/pre-removal-PairedDeletionLaw.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/paired-law-canonical-validation/PairedDeletionLaw.lean",
+        "local/atlas-research-bridges-20261103/paired-retention-focused-review-20261105/snapshot/evidence/pre-removal-PairedDeletionLaw.lean",
+        "local/atlas-research-bridges-20261103/paired-source-retention-repair-20261105/evidence-final/before/D5/S3/Combinatorics/CircularWords/PairedDeletionLaw.lean",
+        "local/atlas-research-bridges-20261103/paired-source-retention-repair-20261105/repo-context/actual-PairedDeletionLaw.lean",
+        "local/atlas-research-bridges-20261103/paired-source-review-20261105/snapshot/D5/S3/Combinatorics/CircularWords/PairedDeletionLaw.lean"
+      ]
+    },
+    {
+      "git_blob": "f3d223704f57538c82dbadcca02d423207428885",
+      "sha256": "07119175b64e3fd232e4789a487dcf1eed1e1939a20d356981bcc3f48f12c298",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/f3d223704f57538c82dbadcca02d423207428885/Basic.lean",
+      "origins": [
+        "local/atlas-theory-relations-20261031/implementation/evidence/mathlib/Mathlib/MeasureTheory/Measure/TotalVariation/Basic.lean"
+      ]
+    },
+    {
+      "git_blob": "f51849afa323ba0a8ac161273a9313e1a75a3644",
+      "sha256": "99247e6f558a8959c9eba3a743ae47bafd694496f00803b0baeff4f7b58b2ed8",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/f51849afa323ba0a8ac161273a9313e1a75a3644/RegularTopologyCandidate.compiled-99247e6f.lean",
+      "origins": [
+        "local/finite-observation-registration-24319-20261031/regular-topology-check/versions/RegularTopologyCandidate.compiled-99247e6f.lean"
+      ]
+    },
+    {
+      "git_blob": "f53f8aae507fcd00edde828a0c757ec4bed211e9",
+      "sha256": "40311c6132a8e029f0e84334fc1159e21c30b4150ca511767b43c9045faaa498",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/f53f8aae507fcd00edde828a0c757ec4bed211e9/Defs.lean",
+      "origins": [
+        "local/atlas-theory-relations-20261031/implementation/evidence/mathlib/Mathlib/MeasureTheory/Measure/TotalVariation/Defs.lean"
+      ]
+    },
+    {
+      "git_blob": "f905a9f553db506c12053360061ea92d3d775da5",
+      "sha256": "6053d8f1275c5e42ec9a3282413657cccc48e249b5d66204a6e3196cd384eff0",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/f905a9f553db506c12053360061ea92d3d775da5/LocalLeafInverse.lean",
+      "origins": [
+        "local/atlas-research-bridges-20261103/paired-final-correspondence-20261105/evidence-final/after/D5/S3/TotalVariation/LocalLeafInverse.lean",
+        "local/atlas-research-bridges-20261103/paired-final-correspondence-20261105/evidence-final/before/D5/S3/TotalVariation/LocalLeafInverse.lean",
+        "local/atlas-research-bridges-20261103/paired-final-correspondence-20261105/evidence/before/D5/S3/TotalVariation/LocalLeafInverse.lean",
+        "local/atlas-research-bridges-20261103/paired-law-canonical-validation/LocalLeafInverse.lean",
+        "local/atlas-research-bridges-20261103/paired-retention-focused-review-20261105/snapshot/D5/S3/TotalVariation/LocalLeafInverse.lean",
+        "local/atlas-research-bridges-20261103/paired-source-review-20261105/snapshot/D5/S3/TotalVariation/LocalLeafInverse.lean"
+      ]
+    },
+    {
+      "git_blob": "fed0d86c98e53c189cbd407157c1da793d08142f",
+      "sha256": "05b7edbd807b49aa2419e0370dcba59c81ca35092ddc7dcb3d61fa47f1d1edde",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/fed0d86c98e53c189cbd407157c1da793d08142f/AtlasBoundaryCheck-05b7edbd807b.lean",
+      "origins": [
+        "local/atlas-theory-relations-20261031/implementation/evidence/checks/revisions/AtlasBoundaryCheck-05b7edbd807b.lean"
+      ]
+    },
+    {
+      "git_blob": "ff1571be88a5135d3db8190b7c9f7722774a218d",
+      "sha256": "2e0da41f0e7651a8ffcea113d924a9305c3f6b42bd2f23f1b91ab7e1ed09b4e3",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/ff1571be88a5135d3db8190b7c9f7722774a218d/a2_axioms.lean",
+      "origins": [
+        "local/finite-observation-registration-24319-20261031/execution/a2_axioms.lean"
+      ]
+    },
+    {
+      "git_blob": "ffa39b04c60e14c162ecce8a882d3778d1802f9c",
+      "sha256": "f296644b467b849d929958032e95400faab71341400e6ee070ba330b3a0fcf86",
+      "archive_path": "Archive/atlas-research-cleanup-20261105/drafts/ffa39b04c60e14c162ecce8a882d3778d1802f9c/AtlasBoundaryCheck-f296644b467b.lean",
+      "origins": [
+        "local/atlas-theory-relations-20261031/implementation/evidence/checks/revisions/AtlasBoundaryCheck-f296644b467b.lean"
+      ]
+    }
+  ]
+}

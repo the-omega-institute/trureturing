@@ -1,0 +1,4 @@
+import D5.S3.Combinatorics.CircularWords.AllSupportMarginalCollision
+set_option pp.universes true in
+#check @D5.S3.Combinatorics.CircularWords.AllSupportMarginalCollision.all_support_marginal_collision
+#print axioms D5.S3.Combinatorics.CircularWords.AllSupportMarginalCollision.all_support_marginal_collision

@@ -1,0 +1,4 @@
+import D5.S3.Topology.Measures.FiniteObservationVariation
+#check D5.S3.Topology.Measures.FiniteObservationVariation.exists_uniform_finite_readout_variation
+#check _root_.D5.S3.Topology.Measures.FiniteObservationVariation.exists_uniform_finite_readout_variation
+#check D5.S3.Topology.Measures.NormPreservingLifts.signedFunctional

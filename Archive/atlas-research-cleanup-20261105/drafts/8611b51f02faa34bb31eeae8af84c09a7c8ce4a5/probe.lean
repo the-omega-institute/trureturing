@@ -1,0 +1,15 @@
+import LeanInformationAuditInterface.Contract.Registration
+import Reg.Support.DependentFamily
+open _root_.D5.S3.ConceptDynamics.InformationEscape
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+#check LeanInformationAudit.Contract.Registration
+#check LeanInformationAudit.Contract.SourceSelection
+#check LeanInformationAudit.Contract.Correspondence
+#check D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration
+#check D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization
+#check D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Variation
+#check D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Sensitivity
+#check D5.S3.ConceptDynamics.InformationEscape.DependentFamily.ObservationalDependence
+#print LeanInformationAudit.Contract.Registration
+#print LeanInformationAudit.Contract.SourceSelection

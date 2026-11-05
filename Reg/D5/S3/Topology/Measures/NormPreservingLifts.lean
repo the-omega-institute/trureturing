@@ -290,7 +290,7 @@ noncomputable def registration :
   sourceSelection := some {
     owner := `D5.S3.Topology.Measures.NormPreservingLifts
     definition := none
-    coordinates := #[]
+    coordinates := #[0, 1, 10, 11, 12]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 12
@@ -304,5 +304,146 @@ noncomputable def registration :
 /- The current producer still records any source-selector contract gap for
 this target under https://github.com/the-omega-institute/trureturing/issues/24319.
 The older finite-family issue 24040 is not used to cover this extension. -/
+
+/-! ## Lossless equality-predicate observation at the original equality prefix
+
+The raw conclusion is `@Eq ℝ lhs rhs`. Its proper application prefix `@Eq ℝ`
+has type `ℝ → (ℝ → Prop)`. Function-operand selection therefore observes
+`x ↦ (x = ·)`, with no dictionary coordinate: Params is the canonical empty
+pack Unit, State is ℝ, and Output is ℝ → Prop. This representation loses no
+real value, as `equality_predicate_injective` proves. In the Law its state is
+the original signed integral after pushforward, and its remaining argument is
+the original continuous pullback integral. Neither integral is replaced by a
+proxy or hidden in the observer's parameters.
+
+The complete original telescope is retained below, including both universes,
+every dictionary, s, p and g. At actual, the Law reduces to the exact original
+equality; at another realization it varies that original equality relation,
+without an added equality conjunct. `unit_source_value` additionally checks
+that every real state of the observer occurs as an actual source integral.
+The earlier integral-family mathematics and its unresolved selector remain
+above; this is a distinct source-occurrence registration.
+-/
+namespace EqualityReadout
+
+abbrev signature : DependentFamily.Signature where
+  Params := Unit
+  State := fun _ => ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output := fun _ _ => ℝ → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : DependentFamily.Realization signature :=
+  DependentFamily.realize signature (fun _ _ x => Eq x)
+    (fun a => Empty.elim a)
+
+def arena : DependentFamily.Arena where
+  signature := signature
+  Law := fun r => ∀ {X : Type u} {Y : Type v}
+    [TopologicalSpace X] [CompactSpace X] [MeasurableSpace X] [BorelSpace X]
+    [TopologicalSpace Y] [CompactSpace Y] [MeasurableSpace Y] [BorelSpace Y]
+    (s : SignedMeasure X) (p : C(X, Y)) (g : C(Y, ℝ)),
+    r.readout () () (signedFunctional (s.map p) g)
+      (signedFunctional s (g.comp p))
+
+theorem source_bridge : functionalScope.{u,v} ↔ arena.{u,v}.Law actual :=
+  Iff.rfl
+
+theorem actual_positive : arena.{u,v}.Law actual :=
+  @functional_map.{u,v}
+
+theorem equality_predicate_injective :
+    Function.Injective (fun x : ℝ => (fun y : ℝ => x = y)) := by
+  intro x y h
+  exact (Eq.mp (congrFun h x) rfl).symm
+
+theorem actual_source_predicate {X : Type u} {Y : Type v}
+    [TopologicalSpace X] [CompactSpace X] [MeasurableSpace X] [BorelSpace X]
+    [TopologicalSpace Y] [CompactSpace Y] [MeasurableSpace Y] [BorelSpace Y]
+    (s : SignedMeasure X) (p : C(X, Y)) (g : C(Y, ℝ)) :
+    actual.readout () () (signedFunctional (s.map p) g) =
+      (fun z : ℝ => signedFunctional (s.map p) g = z) :=
+  rfl
+
+theorem unit_source_value (c : ℝ) :
+    signedFunctional
+      (((Measure.dirac (ULift.up () : ULift.{u} Unit)).toSignedMeasure).map
+        (ContinuousMap.const (ULift.{u} Unit) (ULift.up () : ULift.{v} Unit)))
+      (ContinuousMap.const (ULift.{v} Unit) c) = c := by
+  rw [_root_.D5.S3.Topology.Measures.NormPreservingLifts.functional_map]
+  have h := signedFunctional_sub_toSignedMeasure (K := ULift.{u} Unit)
+    (Measure.dirac (ULift.up ())) 0 (ContinuousMap.const _ c)
+  simpa using h
+
+def rejected : DependentFamily.Realization signature :=
+  DependentFamily.realize signature (fun _ _ _ _ => False)
+    (fun a => Empty.elim a)
+
+theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
+  intro h
+  exact h (X := ULift.{u} Unit) (Y := ULift.{v} Unit) 0
+    (ContinuousMap.const _ (ULift.up ())) (ContinuousMap.const _ 0)
+
+theorem actual_dependence :
+    DependentFamily.ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), (0 : ℝ), (1 : ℝ), ?_⟩
+  intro h
+  have heq : (0 : ℝ) = 1 := equality_predicate_injective h
+  exact zero_ne_one heq
+
+def familyRegistration : DependentFamily.Registration arena.{u,v} functionalScope.{u,v} where
+  actual := actual
+  bridge := source_bridge.{u,v}
+  variation := ⟨actual_positive.{u,v}, rejected, rejected_law.{u,v}⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law.{u,v}⟩
+      intro j hji
+      exact False.elim (hji (@Subsingleton.elim Unit _ j i))
+    · intro a
+      exact Empty.elim a
+  dependence := actual_dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@functional_map) (DependentFamily.Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.Topology.Measures.NormPreservingLifts.EqualityReadout.__information_unit
+  realizationName := `Reg.D5.S3.Topology.Measures.NormPreservingLifts.EqualityReadout.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u,v}⟩
+  objectArena := .source ⟨arena.{u,v}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u,v} ⟨familyRegistration.{u,v}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
+  readout := some (DependentFamily.realize signature
+    (fun _ _ x => Eq x) (fun a => Empty.elim a))
+  variation := .evidence ⟨(show True from trivial)⟩ trivial
+  sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Topology.Measures.NormPreservingLifts
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end EqualityReadout
 
 end Reg.D5.S3.Topology.Measures.NormPreservingLifts

@@ -1,0 +1,35 @@
+import SingleDeletionFiberCount
+import D5.S3.Combinatorics.CircularWords.DeletionReadoutReconstruction
+
+open D5.S3.Combinatorics.CircularWords
+open CircularDeletionTransport CyclicInsertionGap SingleDeletionFiberCount
+open DeletionReadoutReconstruction
+
+set_option autoImplicit false
+universe u
+variable {α : Type u} [DecidableEq α]
+
+noncomputable section
+
+-- This transient application is the canonical SupportedCircle/deletionReadout fiber.
+example {A : Finset α} (hA : 3 ≤ A.card) (x : A)
+    (B : SupportedCircle (A.erase x.val)) :
+    Nat.card {C : SupportedCircle A // deletionReadout A x C = B.val} = A.card - 1 := by
+  let e : {C : SupportedCircle A // deletionReadout A x C = B.val} ≃
+      {C : Cycle α // C.Nodup ∧ C.toFinset = A ∧ delete x.val C = B.val} :=
+    { toFun := fun C => ⟨C.val.val, C.val.property.1, C.val.property.2, C.property⟩
+      invFun := fun C => ⟨⟨C.val, C.property.1, C.property.2.1⟩, C.property.2.2⟩
+      left_inv := fun C => rfl
+      right_inv := fun C => rfl }
+  exact (Nat.card_congr e).trans (deletion_fiber_card hA x.property B.property.1 B.property.2)
+
+-- An explicit finite carrier witnesses that Nat.card does not hide infinitude.
+example {A : Finset α} {x : α} (hx : x ∈ A) {B : List α}
+    (hB : B.Nodup) (hB0 : B ≠ []) (sB : B.toFinset = A.erase x) :
+    Fintype {C : Cycle α // C.Nodup ∧ C.toFinset = A ∧ delete x C = (B : Cycle α)} :=
+  Fintype.ofEquiv (Fin B.length) (insertionEquiv hx hB hB0 sB)
+
+#check @insertionEquiv
+#check @deletion_fiber_card
+#print axioms insertionEquiv
+#print axioms deletion_fiber_card
