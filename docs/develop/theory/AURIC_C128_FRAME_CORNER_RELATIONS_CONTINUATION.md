@@ -2010,69 +2010,67 @@ $$
 
 母卷 (85.8)–(85.20) 此后只消费这份完整正乘积泛函供应、同一原 P/G 的 EJA 结构、静态 X、整个原指针的实际幂及逐对象 $R_0$，不再消费有限正和恰好取得每个正泛函。故沿其同一证明，正幺切片及 JB 平方不等式先给全变量模身份，再由整个 $P$ 的实际自复合取得非经典复参考块，最后在每个 $A$ 自己实际拥有的某个 $AP^{\otimes k}$ 内应用数学角上的 general-JB 判据，得到全部原复载体和逐中心对表示。每个 $k$ 仍各取原供应值，不添加直接 $AP$、共同指数、实际 $M_2$ 或额外比较。∎
 
-## 247. 对每个输出读回作同一次谱极化
+## 247. 原交换子及输出读回的记号
 
-**引理 247.1（共同谱消失的全输出因式分解）。** 在 $T=H_n(\mathbb C)$、$q=w\operatorname{Tr}(\,\cdot\,\cdot\,)$、$w>0$ 上，设实双线性 $\delta:T\times T\to T$ 交替，并在每个共同谱框架子代数上消失。记
+**定义 247.1（同一原迹型的读回算子）。** 在 $T=H_n(\mathbb C)$、$q=w\operatorname{Tr}(\,\cdot\,\cdot\,)$、$w>0$ 上，记
 
 $$
 \kappa(a,b)=i(ab-ba).
 \tag{247.1}
 $$
 
-则存在同一个实线性 $F:T\to T$，使 $\delta(a,b)=F(\kappa(a,b))$。不要求每个 $\delta_a$ 是 Jordan 导子。
-
-证明。对每个 $z\in T$，由正定 $q$ 唯一定义 $R_z$：
+对实双线性 $\delta:T\times T\to T$，由正定 $q$ 唯一定义每个 $z\in T$ 的实线性读回算子 $R_z$：
 
 $$
 q(R_za,b)=q(\delta(a,b),z).
 \tag{247.2}
 $$
 
-$R_z$ 斜伴随，且 $\delta(a,a^2)=0$ 给 $q(R_za,a^2)=0$。在 $a+tb$ 处取一次项，原 Frobenius 性及斜伴随给
-
-$$
-0=q\bigl(-R_z(a^2)+2a\circ R_za,b\bigr).
-\tag{247.3}
-$$
-
-非退化性、再极化，得到 $R_z$ 的 Jordan 导子律。这是引理 229.1 的同一谱极化，对任意输出 $z$ 而非只对单位使用。
-
-有限 EJA 导子内性及 (237.3) 给 $R_z(a)=i[H_z,a]$，$H_z$ Hermitian。唯一选取 $\operatorname{Tr}H_z=0$；唯一性来自与全部 Hermitian 元交换的矩阵只有复标量，因此 $z\mapsto H_z$ 实线性。令 $F$ 是这一线性映射的原 $q$ 伴随。迹循环给
-
-$$
-q(\delta(a,b),z)=q(H_z,\kappa(a,b))
-=q(F\kappa(a,b),z),
-\tag{247.4}
-$$
-
-遂得结论。内导子事实只作为中间步骤，其出处继续取定理 237.2 已指明的 Tao–Gowda 第二节及其所引来源。这里不从自伴元的零乘积擅自推断复双线性延拓在任意矩阵上的零乘积性质。∎
+这只是同一原 $q$ 的表示记号，不给原 $D_a$ 添加导子、斜伴随或交换子前件。
 
 ## 248. 次序差的本征框架先给每条边的一个实系数
 
-**引理 248.1（只在缺陷静止的原子上恢复切向）。** 设简单复块 $T=H_n(\mathbb C)$、$n\ge3$ 上的原 $\bar D$ 满足右单位及全部正交、二原子内部和半角角外三层。引理 211.1 给同一 $\lambda,\delta$，引理 229.1 给同一标量缺陷导子 $S$。可选一组数学 frame $(e_i)$，使 $Se_i=0$；对该 frame 的每条实二维 Peirce 边，存在对称的实系数 $\alpha_{ij}=\alpha_{ji}$，使
+**引理 248.1（只在缺陷静止的原子上恢复切向）。** 设简单复块 $T=H_n(\mathbb C)$、$n\ge3$ 上的原 $\bar D$ 满足右单位及全部正交、二原子内部和半角角外三层。引理 211.1 给同一 $\lambda,\delta$，引理 229.1 给同一标量缺陷导子 $S$。存在同一个实线性 $F:T\to T$，使 $\delta=F\kappa$；可选一组数学 frame $(e_i)$，使 $Se_i=0$。对该 frame 的每条实二维 Peirce 边，存在对称的实系数 $\alpha_{ij}=\alpha_{ji}$，使
 
 $$
 \delta(e_i,y)=\alpha_{ij}\kappa(e_i,y),\qquad
 F|_{V_{ij}}=\alpha_{ij}\operatorname{Id}
-\quad(y\in V_{ij},\ i\ne j),
+\quad(y\in V_{ij},\ i\ne j).
 \tag{248.1}
 $$
 
-其中 $F$ 是引理 247.1 的同一个全输出算子。
+证明。先在本引理内部复用成熟的因式分解工具。Haagerup–Laustsen，*Weak amenability of C*-algebras and a theorem of Goldstein*，定理 3.1(1) 与引理 3.4，原文第 237–238 页（[原始 PDF](https://www.isibang.ac.in/~soumyashant/misc/collected-works-of-haagerup/1990s/1998_Weak_amenability_of_C-star_algebras_and_a_theorem_of_Goldstein.pdf)，DOI `10.1515/9783110802009.223`），分别给自伴正交消失双线性型的乘积表示及反对称型的三次极化。其有限维原迹型实现如下。
 
-证明。将 $S$ 写成 $i[H,\,\cdot\,]$ 并取 $H$ 的本征 frame，不是预先把原 $\bar D_a$ 写成导子。固定 $e=e_i$。对正规 $y\in V_{es}$、$y^2=e+s$，引理 221.1 给 $q(\delta(e,y),e)=q(\delta(e,y),s)$ 及全部角外读回为零。补全 frame 后，
+引理 211.1 的 $\delta$ 交替且在共同谱框架上消失，故每个 $R_z$ 斜伴随，$\delta(a,a^2)=0$ 给 $q(R_za,a^2)=0$。在 $a+tb$ 处取一次项，原 Frobenius 性及斜伴随给
+
+$$
+0=q\bigl(-R_z(a^2)+2a\circ R_za,b\bigr).
+\tag{248.2}
+$$
+
+非退化性、再极化，得到 $R_z$ 的 Jordan 导子律。这正是上述引理 3.4 的实 Hermitian 版本；对标量型 $q(\delta(a,b),z)$ 作唯一复双线性延拓时，有限维性保证有界，Hermitian 输入零乘积保证共同谱消失，因而也满足定理 3.1(1) 的自伴正交前件。不要求延拓在任意复矩阵零乘积处消失。
+
+有限 EJA 导子内性及 (237.3) 给 $R_z(a)=i[H_z,a]$。唯一选取 $\operatorname{Tr}H_z=0$；唯一性来自与全部 Hermitian 元交换的矩阵只有复标量，因此 $z\mapsto H_z$ 实线性。令 $F$ 为此映射的原 $q$ 伴随。迹循环给
+
+$$
+q(\delta(a,b),z)=q(H_z,\kappa(a,b))
+=q(F\kappa(a,b),z).
+\tag{248.3}
+$$
+
+这给同一个 $F$，而非预设各 $\delta_a$ 或原 $\bar D_a$ 为导子。内导子事实的出处仍取定理 237.2 指明的 Tao–Gowda 第二节及其所引来源。
+
+现在将 $S$ 写成 $i[H,\,\cdot\,]$ 并取 $H$ 的本征 frame。固定 $e=e_i$。对正规 $y\in V_{es}$、$y^2=e+s$，引理 221.1 给 $q(\delta(e,y),e)=q(\delta(e,y),s)$ 及全部角外读回为零。补全 frame 后，
 
 $$
 2q(\delta(e,y),e)=q(\delta(e,y),u_T)
 =q(Se,y)=0.
-\tag{248.2}
+\tag{248.4}
 $$
 
-一般切向 $y\in T_e$ 的正规秩二角和缩放给同一结论，包含零切向。于是对每个这样的 $y$，其 $e$、对应 $s_y$ 和全部角外法向读回均为零。
+每个非零 $y\in T_e$ 都在某个 $V_{es_y}$ 内，缩放给同一结论，零切向亦然。为直接检验下方整个法向块，写 $e=|u\rangle\langle u|$、$y(z)=|u\rangle\langle z|+|z\rangle\langle u|$，$z\perp u$。固定任意 $r=|v\rangle\langle v|\perp e$。实线性泛函 $z\mapsto q(\delta(e,y(z)),r)$ 在 $\mathbb Cv$ 上由 (248.4) 为零，在 $u^\perp\cap v^\perp$ 上由角外零读回为零。正交分解给它在全部 $u^\perp$ 上为零。全部这样的 $r$ 张成下方 Hermitian 块，顶端读回也由 (248.4) 为零，故 $\delta_e(T_e)\subset T_e$。共同谱消失另给 $\delta_e(N_e)=0$。
 
-现在只复用定理 175.1 证明中固定 $e$ 的线性步骤 (175.3)–(175.4)。具体地，$B_e=(I-P_e)\delta_e|_{T_e}$ 的值在 $E_0(e)$ 中满足 $y^2\circ B_e(y)=\lambda_yB_e(y)/2$，其中 $\lambda_y=\operatorname{Tr}(y^2)/2$。将 $y+az$ 代入、取两个不同 Peirce 边，原 Peirce 交换双射迫使全部 $B_e(y)$ 分量为零。因此 $\delta_e(T_e)\subset T_e$；此处没有调用缺少前件的定理 175.1 整体结论。共同谱消失另给 $\delta_e(N_e)=0$。
-
-对 $y\in V_{ij}$，$e_i+e_j$ 与 $y$ 共同可谱化，故 $\delta(e_j,y)=-\delta(e_i,y)$。两端刚取得的切向性给输出落在 $T_{e_i}\cap T_{e_j}=V_{ij}$。引理 221.1 的 $q(\delta(e_i,y),y)=0$ 对该边全部 $y$ 成立，所以二维实线性作用是固定四分之一转动 $\kappa(e_i,\,\cdot\,)$ 的实倍数。交换 $i,j$ 同时使这两个作用反号，故 $\alpha_{ij}=\alpha_{ji}$。最后 $\kappa(e_i,\,\cdot\,)$ 在 $V_{ij}$ 上可逆，引理 247.1 给 (248.1) 的 $F$ 限制。∎
+对 $y\in V_{ij}$，$e_i+e_j$ 与 $y$ 共同可谱化，故 $\delta(e_j,y)=-\delta(e_i,y)$。两端刚取得的切向性给输出落在 $T_{e_i}\cap T_{e_j}=V_{ij}$。引理 221.1 的 $q(\delta(e_i,y),y)=0$ 对该边全部 $y$ 成立，所以二维实线性作用是固定四分之一转动 $\kappa(e_i,\,\cdot\,)$ 的实倍数。交换 $i,j$ 同时使这两个作用反号，故 $\alpha_{ij}=\alpha_{ji}$。最后 $\kappa(e_i,\,\cdot\,)$ 在 $V_{ij}$ 上可逆，$\delta=F\kappa$ 给 (248.1) 的 $F$ 限制。∎
 
 ## 249. 第三个框架方向把两条边连续混合
 
@@ -2239,7 +2237,7 @@ $$
 
 ## 254. 来源、内生约束与完整白话
 
-**定义 254.1（综合范围）。** 成熟静态分类、正幺 JB 平方不等式、顺序积、general-JB 判据及逐扇区表示只通过母卷定理 85.2 的准确条件应用使用；闭准备新增桥是 (246.1) 在同一实际联合内的极限。有限 EJA 导子内性仍取 Tao–Gowda 第二节及其所引 Faraut–Korányi、Koecher；三维角与 Peirce 工具沿定义 244.1 的原来源。全输出谱极化、缺陷本征框架、第三顶点混边和对角三角相容性的结合，是这里恢复原全部互易的新推导，文献状态为 $\texttt{repo-derived}$，不主张新分类或历史优先权。
+**定义 254.1（综合范围）。** 成熟静态分类、正幺 JB 平方不等式、顺序积、general-JB 判据及逐扇区表示只通过母卷定理 85.2 的准确条件应用使用；闭准备新增桥是 (246.1) 在同一实际联合内的极限。有限 EJA 导子内性仍取 Tao–Gowda 第二节及其所引 Faraut–Korányi、Koecher；三维角与 Peirce 工具沿定义 244.1 的原来源。引理 248.1 内的全输出因式分解与三次极化是 Haagerup–Laustsen 定理 3.1(1)、引理 3.4 的成熟中间工具，文献状态为 $\texttt{literature-attested}$，不单列为新定理。闭准备静态桥、缺陷本征框架、第三顶点混边和对角三角相容性的结合，是这里恢复原全部互易及完整消费者的新综合推导，文献状态为 $\texttt{repo-derived}$，不主张新分类或历史优先权。
 
 定理 250.1 的局部结论只针对复 Hermitian 块；没有把它宣称为实型或四元数型裸块的分类。全背景的复型由原静态合同先给，原 $D$ 的取向与动力尺度则在定理 251.2 的后续重构中取得，两者不循环互借。完整背景仍是独立前件，不从空前提推出实际菜单、经验规律或本体真实性。完全删去三层中的某一整层、降低原总秩门槛，以及更简的整体背景仍未由这里解决。
 
