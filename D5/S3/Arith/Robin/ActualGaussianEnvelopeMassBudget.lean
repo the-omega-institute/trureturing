@@ -8,7 +8,7 @@
 /- SOURCE ONLY. Complete spectral response and direct inverse-square bound.
    The norm of the signed integral is bounded; no pointwise smallness of
    the absolute-value integrand is asserted. -/
-import D5.S3.Weil.ZeroData.ActualGaussianMass
+import D5.S3.Weil.ZeroData.ActualGaussianZeroSum
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -17,7 +17,7 @@ noncomputable section
 open MeasureTheory
 open scoped BigOperators
 open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
-open D5.S3.Weil.ZeroData.ActualGaussianMass
+open D5.S3.Weil.ZeroData.ActualGaussianZeroSum
 open D5.S3.Arith.Robin.CompleteActualSignedGaussianExchange
 
 namespace D5.S3.Arith.Robin.ActualGaussianEnvelopeMassBudget

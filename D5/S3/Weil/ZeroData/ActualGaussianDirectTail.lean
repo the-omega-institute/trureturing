@@ -17,7 +17,6 @@ noncomputable section
 open scoped BigOperators
 open D5.S3.Weil.ZeroSum
 open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
-open D5.S3.Weil.ZeroData.ActualGaussianMass
 open D5.S3.Weil.ZeroData.ActualGaussianZeroSum
 open D5.S3.Weil.ZeroData.ActualGaussianLocalWindow
 

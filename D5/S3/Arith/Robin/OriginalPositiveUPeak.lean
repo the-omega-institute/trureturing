@@ -13,7 +13,6 @@ import D5.S3.Analytic.GaussianSignedLocalization
 import D5.S3.Weil.Mertens.IntegratedExplicit.WholeFormula
 import D5.S3.Weil.ZeroData.ActualGaussianDirectTail
 import D5.S3.Arith.Robin.OriginalGaussianIntegralBudgets
-import D5.S3.Arith.Robin.MangoldtPeakExponentialBudget
 import Mathlib.MeasureTheory.Integral.Bochner.Set
 import Mathlib.Tactic
 
@@ -34,6 +33,24 @@ open D5.S3.Arith.Robin.ActualGaussianEnvelopeMassBudget
 open D5.S3.Weil.Mertens.IntegratedExplicit
 
 namespace D5.S3.Arith.Robin.OriginalPositiveUPeak
+
+/-- The original lower time bound alone pays the final exponential budget.
+The elementary second Taylor term avoids an unnecessary logarithm estimate. -/
+private theorem exponential_dominates (δ D m : ℝ) (hδ : 0 < δ) (hD : 0 < D)
+    (hm : 100 * D ^ 2 / δ ^ 2 ≤ m) :
+    4000 * m * D ^ 2 < Real.exp (17 * δ * m) := by
+  have hδsq : 0 < δ ^ 2 := sq_pos_of_pos hδ
+  have hDsq : 0 < D ^ 2 := sq_pos_of_pos hD
+  have hmpos : 0 < m := (div_pos (by positivity) hδsq).trans_le hm
+  have ht : 100 * D ^ 2 ≤ m * δ ^ 2 := (div_le_iff₀ hδsq).mp hm
+  have hprod := mul_le_mul_of_nonneg_right ht hmpos.le
+  have hstrict : 0 < m * D ^ 2 := mul_pos hmpos hDsq
+  have hquad : 4000 * m * D ^ 2 < (17 * δ * m) ^ 2 / 2 := by
+    nlinarith
+  have he := Real.pow_div_factorial_le_exp
+    (x := 17 * δ * m) (by positivity) 2
+  norm_num only [Nat.factorial, Nat.cast_ofNat, Nat.cast_one, mul_one] at he
+  exact hquad.trans_le he
 
 /-- Connect the two literal occurrence sums, then pay the ENTIRE correction.
 The equality is proved by unfolding the actual coefficients, never assumed.
@@ -198,7 +215,7 @@ theorem original_positive_U_peak (ρ : ℂ) (hρ : IsNontrivialZero ρ)
   have hEupper : (E m ρ.im).re ≤ 2000 * m * D ^ 2 * Real.exp (33 * m / 4) :=
     full_E_upper_of_central_bound m ρ.im hm hheight hH
   have hTaylor :=
-    D5.S3.Arith.Robin.MangoldtPeakExponentialBudget.exponential_dominates
+    exponential_dominates
       δ D m hδ (by linarith : 0 < D) hmlo
   have ha : a = 33 / 4 + 17 * δ + δ ^ 2 := by dsimp only [a, δ]; ring
   have haTime : 17 * δ * m + 33 * m / 4 ≤ a * m := by

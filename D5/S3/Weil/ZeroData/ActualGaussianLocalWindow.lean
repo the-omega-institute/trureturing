@@ -19,7 +19,7 @@ open scoped BigOperators
 open D5.S3.Weil.ZeroSum
 open D5.S3.Weil.Convention
 open D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
-open D5.S3.Weil.ZeroData.ActualGaussianMass
+open D5.S3.Weil.ZeroData.ActualGaussianZeroSum
 
 private theorem radius_le (rho : ℂ) (hrho : IsNontrivialZero rho) :
     D5.S3.Weil.ZeroSum.spectralRadius rho ≤ |rho.im| + 1 := by
