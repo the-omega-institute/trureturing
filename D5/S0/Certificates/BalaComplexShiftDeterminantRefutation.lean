@@ -30,6 +30,8 @@ def claim : Prop := ∀ (n : ℕ) (z : ℂ), shiftedDet n z = shiftedDet n 0
 theorem result : ¬ claim := by
   intro h
   have hbad := h 1 1
-  norm_num [shiftedDet, Matrix.det_fin_one, Ring.choose_one_right] at hbad
+  unfold shiftedDet at hbad
+  rw [Matrix.det_fin_one, Matrix.det_fin_one] at hbad
+  norm_num [Ring.choose_one_right] at hbad
 
 end D5.S0.Certificates.BalaComplexShiftDeterminantRefutation
