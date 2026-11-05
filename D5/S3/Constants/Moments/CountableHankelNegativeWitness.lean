@@ -37,7 +37,7 @@ private theorem eval_bound (p : ℝ[X]) {z : ℂ} (hz : ‖z‖ ≤ 1) :
       rw [norm_mul, Complex.norm_real, Real.norm_eq_abs, norm_pow]
       exact mul_le_of_le_one_right (abs_nonneg _) (pow_le_one₀ (norm_nonneg _) hz)
 
-private theorem square_summable {ι : Type*} (z w : ι → ℂ)
+theorem square_summable {ι : Type*} (z w : ι → ℂ)
     (hz : ∀ i, ‖z i‖ ≤ 1) (hw : Summable (fun i => ‖w i‖)) (p : ℝ[X]) :
     Summable (fun i => w i * (p.eval₂ Complex.ofRealHom (z i)) ^ 2) := by
   let C := ∑ k ∈ p.support, |p.coeff k|
@@ -48,7 +48,7 @@ private theorem square_summable {ι : Type*} (z w : ι → ℂ)
   exact mul_le_mul_of_nonneg_left (pow_le_pow_left₀ (norm_nonneg _) (eval_bound p (hz i)) 2)
     (norm_nonneg _)
 
-private theorem pair_polynomial {ι : Type*} (z : ι → ℂ)
+theorem pair_polynomial {ι : Type*} (z : ι → ℂ)
     (c : Equiv.Perm ι) (hc : ∀ i, z (c i) = conj (z i))
     (E : Finset ι) (hE : ∀ i, i ∈ E ↔ c i ∈ E)
     (i₀ : ι) (hi₀ : i₀ ∈ E) (hni : conj (z i₀) ≠ z i₀) :
@@ -83,10 +83,10 @@ private theorem pair_polynomial {ι : Type*} (z : ι → ℂ)
     D5.S3.Constants.NewtonHankelRealRootCriterion.vectorPolynomialValue] using
     ha (z i) (by rw [himage]; exact Finset.mem_image.mpr ⟨i, hi, rfl⟩)
 
-private def peak (p : ℝ[X]) (z₀ b : ℂ) (m : ℕ) : ℝ[X] :=
+def peak (p : ℝ[X]) (z₀ b : ℂ) (m : ℕ) : ℝ[X] :=
   X ^ m * (C (-(b / z₀ ^ m).re) * p ^ 2 + C (b / z₀ ^ m).im * p)
 
-private theorem peak_at (p : ℝ[X]) (z₀ b : ℂ) (hz₀ : z₀ ≠ 0)
+theorem peak_at (p : ℝ[X]) (z₀ b : ℂ) (hz₀ : z₀ ≠ 0)
     (hp : p.eval₂ Complex.ofRealHom z₀ = Complex.I) (m : ℕ) :
     (peak p z₀ b m).eval₂ Complex.ofRealHom z₀ = b := by
   simp only [peak, Polynomial.eval₂_mul, Polynomial.eval₂_pow, Polynomial.eval₂_X,
@@ -96,7 +96,7 @@ private theorem peak_at (p : ℝ[X]) (z₀ b : ℂ) (hz₀ : z₀ ≠ 0)
     apply Complex.ext <;> simp <;> ring
   rw [hv, mul_div_cancel₀ _ (pow_ne_zero _ hz₀)]
 
-private theorem peak_bound (p : ℝ[X]) (z₀ b z : ℂ) (hz₀ : z₀ ≠ 0)
+theorem peak_bound (p : ℝ[X]) (z₀ b z : ℂ) (hz₀ : z₀ ≠ 0)
     (hz : ‖z‖ ≤ 1) (m : ℕ) :
     ‖(peak p z₀ b m).eval₂ Complex.ofRealHom z‖ ≤
       ‖b‖ * ((∑ k ∈ p.support, |p.coeff k|) ^ 2 +

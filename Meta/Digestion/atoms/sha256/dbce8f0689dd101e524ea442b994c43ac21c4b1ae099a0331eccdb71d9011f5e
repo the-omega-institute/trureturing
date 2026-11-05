@@ -1,0 +1,14 @@
+**命题 164.5（不属于任何有限相干多项式次数）。** 对每个 $0<\varepsilon<1$ 和每个有限整数 $k\ge1$，(164.11) 不在定义 157.4 的 $\mathscr Q_k$ 中。
+
+证明。$\operatorname{ran}R_{\varnothing}$ 的维数是 $2^4=16$。取其中一个与 $w_{\varnothing}$ 正交的单位向量 $v$；这是同一载体内的数学选择。此时 $a_{\varnothing}(v)=0$、$v_{\varnothing}(v)=v$，所以 (164.10) 中空扇区的方括号内值为 $-1$。连续性给 $v$ 的一个非空实开邻域，包含于 $\mathcal K\setminus\{0\}$，在该邻域内 $h=0$。然而 (164.18) 给 $h(z_*)>0$。
+
+若 $\Pi^{(\varepsilon)}\in\mathscr Q_k$，取其空配置分子 $F_{\varnothing}$，则
+
+$$
+F_{\varnothing}-|z_{\varnothing}|^2N^{k-1}
+=\varepsilon N^kh(z)\qquad(z\ne0).
+\tag{164.19}
+$$
+
+左端是实、虚坐标上的多项式，在上述非空实开集上为零，故由多项式恒等性处处为零。这与 $z_*$ 处右端严格为正矛盾。此论证不要求对任意连续函数作多项式逼近。∎
+
