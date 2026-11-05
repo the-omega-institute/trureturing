@@ -4387,3 +4387,93 @@ Theorem 146.1 supplies actual $\mathscr D_{12}$ partitions of exact rank two, wi
 The source-specific composition (155.11), (155.17)–(155.19) and (155.23)–(155.27) is repository-derived relative to the retained conditional suppliers. The spectral positivity is the existing §134 result, the regular directions and finite partition mechanism are those of §§147 and 154, and the fixed-point intermediate is the finite-dimensional closed-ball form of Brouwer, [*Über Abbildung von Mannigfaltigkeiten*, DOI 10.1007/BF01456931](https://doi.org/10.1007/BF01456931). These classical tools and the finite-table variance calculation are consumed within this source application; no historical novelty is asserted for them. The eventual-label limit uses the elementary summable-set argument within this full-law consumer. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 156. The repeated-label rank boundary and the corrected finite completion route
+
+**Definition 156.1 (the repeated-label residual map).** Retain the original telescope, the whole-$G$ partition space and the calibrated fiber $\mathscr F_{154}(\theta)$ of Definition 155.1. Let
+
+$$
+\mathcal R_{\mathrm{rep}}
+ =\{(y,z,w)\in I^3:\text{ at least two of }y,z,w\text{ are equal}\},
+ \qquad |\mathcal R_{\mathrm{rep}}|=21.
+\tag{156.1}
+$$
+
+For $D\in\mathscr F_{154}(\theta)$ write
+
+$$
+\Gamma_\theta(D)
+ =\bigl(\Delta(D)_{yzw}\bigr)_{(y,z,w)\in\mathcal R_{\mathrm{rep}}}
+ \in\mathbb R^{21}.
+\tag{156.2}
+$$
+
+The six distinct-label coordinates, BBB, all source marginals and all ordered pair coordinates are already fixed on this fiber. Every coordinate in (156.2) still uses the same partition's own terminal factor $P\mathbf1_{D_w}$.
+
+**Proposition 156.2 (one exact relation removes one repeated-label row).** Under the unchanged hypotheses of Definition 156.1, every $D\in\mathscr F_{154}(\theta)$ satisfies
+
+$$
+\sum_{\rho\in\mathcal R_{\mathrm{rep}}}\Gamma_\theta(D)_\rho=0.
+\tag{156.3}
+$$
+
+Consequently the repeated-label residuals on the exact $\mathcal H_{43}$ fiber take values in the twenty-dimensional hyperplane
+
+$$
+V_{20}=\left\{q\in\mathbb R^{21}:\sum_{\rho\in\mathcal R_{\mathrm{rep}}}q_\rho=0\right\}.
+\tag{156.4}
+$$
+
+In particular, no local family that remains in the exact $\mathcal H_{43}$ fiber can have a $21\times21$ Jacobian from its parameters onto all twenty-one repeated-label coordinates.
+
+*Proof.* Equation (154.32) is obtained by expanding the complement $u_B=1-\sum_{a\in I}u_a$ in the three slots. On $\mathscr F_{154}(\theta)$ the pair residuals vanish, the six distinct-label residuals vanish, and the BBB residual vanishes. The remaining term in that complement expansion is exactly the sum in (156.3). Thus every differentiable or polynomial family in the fiber has differential in $V_{20}$, whose dimension is twenty. The conclusion is a rank bound and does not use a choice of coordinates, a rounding construction or a parameterization of the family. $\square$
+
+The rank bound is a route boundary rather than a negative result for the original target. It shows that a proposed $21$-row Schur-complement determinant would be identically singular for the structural reason (156.3). One repeated-label coordinate must be recovered from the other twenty after the calibrated equations have been solved.
+
+**Route condition 156.3 (SRS-20 finite repeated-label completion).** Fix one $\rho_\ast\in\mathcal R_{\mathrm{rep}}$ and put
+
+$$
+\mathcal R_\ast=\mathcal R_{\mathrm{rep}}\setminus\{\rho_\ast\}.
+\tag{156.5}
+$$
+
+A source-specific finite completion certificate for an original $\theta$ consists of a bounded invariant slack set $E$, a positive Section 155 ray $X$, a number $t_\theta>0$, a bounded ball $B_{20}\subset\mathbb R^{20}$ and pointwise simplex tuples $u^{(t,z)}$ on the original $G$, for $0<t<t_\theta$ and $z\in B_{20}$, such that
+
+$$
+\begin{aligned}
+&u^{(t,0)}=f^0+tX,\qquad
+  \mathcal H_{43}(u^{(t,z)})=\mathcal H_{43}(f^0),\\
+&t^{-2}\bigl(\Delta_{\mathcal R_\ast}(u^{(t,z)})\bigr)
+   =r_{\theta,\ast}+S_\theta z+\varepsilon_\theta(t,z),\\
+&\sup_{z\in B_{20}}\|\varepsilon_\theta(t,z)\| \longrightarrow0,
+ \qquad \det S_\theta\ne0.
+\end{aligned}
+\tag{156.6}
+$$
+
+Here $\Delta_{\mathcal R_\ast}$ is evaluated with the original trilinear form and the common tuple in all three slots. The certificate must also supply a closed-ball degree or boundary estimate that places a zero of the finite map in $B_{20}$; invertibility of $S_\theta$ by itself is not such a degree estimate. Its legal perturbations must preserve the original source marginals, the pointwise simplex inequalities and the actual terminal convention throughout the ball. The constants and the choice of the omitted row may depend on $\theta$, but the original $G$, $m$, $P$, $g$, epochs, source law, readout and permitted representative $b$ may not change.
+
+The intended algebraic mechanism is finite-dimensional. A zero of the twenty rows in (156.6), together with the exact $\mathcal H_{43}$ equations, gives sixty-three exact coordinates. Proposition 156.2 then recovers the omitted $\rho_\ast$ coordinate. The complement identities of Section 154.F recover the coordinates containing $B$, so all sixty-four ordered equations follow for the same whole-$G$ tuple.
+
+**Proposition 156.4 (what an actual-partition realization must add).** Suppose the certificate of Route condition 156.3 is available with a uniform finite-cell realization as follows: there are increasing finite Borel partitions $\mathcal P_n$ of the original $G$ and common quantile maps $u\mapsto D_n(u)$ such that the actual maps
+
+$$
+F_n(u)=\left(\mathcal H_{43}(\mathbf1_{D_n(u)})-\mathcal H_{43}(f),
+ \Delta_{\mathcal R_\ast}(\mathbf1_{D_n(u)})\right)
+\tag{156.7}
+$$
+
+converge uniformly on the certificate ball, after the same scaling used in (156.6), to the corresponding fractional map. If the degree or boundary estimate persists for one finite $n$, then one actual whole-$G$ Borel partition $D_n$ has all sixty-three displayed coordinates exact, and (156.3) and the complement identities give
+
+$$
+\Delta(D_n)=0.
+\tag{156.8}
+$$
+
+*Proof.* The first forty-three coordinates and the twenty coordinates in $\mathcal R_\ast$ form a finite map with sixty-three components. The uniform approximation and the degree or boundary estimate give a zero by the finite-dimensional Brouwer or degree argument used in Section 154.E. The resulting partition is produced by one common quantile construction, so every slot uses its own indicator and propagated terminal. Equation (156.3) supplies the omitted repeated coordinate, while Section 154.F supplies the coordinates with label $B$. No weak fractional limit is substituted for this finite actual partition. $\square$
+
+The two propositions isolate the unpaid bridge without changing the original problem. The remaining proof obligations are the existence of the invariant reservoir and twenty legal perturbation directions, the weighted Schur-complement determinant and its nonlinear remainder estimate, pointwise simplex legality, the finite-cell boundary estimate, and preservation of the actual terminal factors. A failure of any one of these conditions for one permitted $\theta$ falsifies this SRS-20 route only; it does not refute $F_{64}(\theta)$ or the universal target.
+
+The fixed-start summable continuation of Corollary 155.4 remains an independent sufficient route. It is not implied by (156.6), and it is not needed if the finite actual completion succeeds. Conversely, failure of the finite rank certificate leaves the fixed-start route open. The scalar four-score contrast and finite-horizon tests described in the proportional-containment advisory provide a diagnostic for candidate families, but they do not supply the source-specific rank or the actual finite partition required here.
+
+## 追加锚（本行以下为增补区）
