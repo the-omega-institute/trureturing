@@ -404,6 +404,22 @@ instance piLieAlgebra {k α : Type*} [CommRing k] {H : α → Type*}
     [∀ a, LieRing (H a)] [∀ a, LieAlgebra k (H a)] : LieAlgebra k (∀ a,H a) :=
   { (inferInstance : Module k (∀ a,H a)) with
     lie_smul := fun c f g => funext (fun a => lie_smul c (f a) (g a)) }
+
+private def piHom {k L α : Type*} [CommRing k] [LieRing L] [LieAlgebra k L]
+    (H : α → Type*) [∀ a, LieRing (H a)] [∀ a, LieAlgebra k (H a)]
+    (f : ∀ a, L →ₗ⁅k⁆ H a) : L →ₗ⁅k⁆ ∀ a, H a :=
+  { LinearMap.pi (fun a => (f a).toLinearMap) with
+    map_lie' := by
+      intro x y
+      funext a
+      exact (f a).map_lie x y }
+
+private def codRestrictHom {k L M : Type*} [CommRing k]
+    [LieRing L] [LieAlgebra k L] [LieRing M] [LieAlgebra k M]
+    (f : L →ₗ⁅k⁆ M) (S : LieSubalgebra k M) (hf : ∀ x, f x ∈ S) :
+    L →ₗ⁅k⁆ S :=
+  { f.toLinearMap.codRestrict S.toSubmodule hf with
+    map_lie' := fun {x y} => Subtype.ext (f.map_lie x y) }
 end D5.S3.QuadraticForms.EvolutionAlgebras.NondegenerateDerivationBlocks.Pi
 
 namespace D5.S3.QuadraticForms.EvolutionAlgebras.NondegenerateDerivationBlocks.BlockLinear
@@ -980,20 +996,27 @@ noncomputable instance reducedBlockLieAlgebra (a : α) :
   unfold reducedBlockLie
   infer_instance
 
+private noncomputable def reducedPreserverQuotientHom (a : α) :
+    D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.preserver
+      (Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k)
+        (1 : Matrix {i : ι // label i = a} {i : ι // label i = a} k))
+      (blockW b label w a) →ₗ⁅k⁆ reducedBlockLie b label w a :=
+  D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.preserverQuotientLieHom
+    _ _ (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.NormalForm.standardForm_symm _)
+
+include hn hsq hw hsep in
+private noncomputable def normalizedReducedBlockHom [CharZero k]
+    (hl : Function.Surjective label) (a : α) :
+    derivations μ →ₗ⁅k⁆ reducedBlockLie b label w a :=
+  (reducedPreserverQuotientHom b label w a).comp
+    (correctedPreserverHom μ b label w hn hsq hw hsep hl a)
+
 include hn hsq hw hsep in
 private noncomputable def normalizedReducedHom [CharZero k]
     (hl : Function.Surjective label) : derivations μ →ₗ⁅k⁆
       ∀ a, reducedBlockLie b label w a :=
-  { LinearMap.pi (fun a =>
-      ((D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.preserverQuotientLieHom
-        _ _ (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.NormalForm.standardForm_symm _)).comp
-        (correctedPreserverHom μ b label w hn hsq hw hsep hl a)).toLinearMap) with
-    map_lie' := by
-      intro D E
-      funext a
-      exact ((D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.preserverQuotientLieHom
-        _ _ (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.NormalForm.standardForm_symm _)).comp
-        (correctedPreserverHom μ b label w hn hsq hw hsep hl a)).map_lie D E }
+  Pi.piHom (fun a => reducedBlockLie b label w a)
+    (fun a => normalizedReducedBlockHom μ b label w hn hsq hw hsep hl a)
 
 include hn hsq hw hsep in
 private theorem correctedRestrict_eq_of_diagonal_zero [CharZero k]
@@ -1112,15 +1135,16 @@ private noncomputable def diagonalReducedKernelBlockHom [CharZero k]
   let f : N →ₗ⁅k⁆ D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.stabilizer
       (Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k) (1 : Matrix _ _ k))
       (blockW b label w a) :=
-    { ((restrictDerivation μ b label w hn hsq hsep a).comp
-        ((normalizedReducedHom μ b label w hn hsq hw hsep hl).ker.incl.comp N.incl)).toLinearMap.codRestrict _
-        (fun x => restrictBlock_mem_stabilizer_of_diagonal_zero
-          μ b label w hn hsq hw hsep hl x.val.val (hd x) a) with
-      map_lie' := fun {x y} => Subtype.ext
-        (((restrictDerivation μ b label w hn hsq hsep a).comp
-          ((normalizedReducedHom μ b label w hn hsq hw hsep hl).ker.incl.comp N.incl)).map_lie x y) }
-  refine { f.toLinearMap.codRestrict _ (fun x => ?_) with
-    map_lie' := fun {x y} => Subtype.ext (f.map_lie x y) }
+    Pi.codRestrictHom ((restrictDerivation μ b label w hn hsq hsep a).comp
+      ((normalizedReducedHom μ b label w hn hsq hw hsep hl).ker.incl.comp N.incl)) _
+      (fun x => restrictBlock_mem_stabilizer_of_diagonal_zero
+        μ b label w hn hsq hw hsep hl x.val.val (hd x) a)
+  refine Pi.codRestrictHom f
+    (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.quotientLieHom
+      (Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k) (1 : Matrix _ _ k))
+      (blockW b label w a)
+      (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.NormalForm.standardForm_symm
+        {i : ι // label i = a})).ker.toLieSubalgebra (fun x => ?_)
   apply LieHom.mem_ker.mpr
   have hz := congrFun (LieHom.mem_ker.mp x.val.property) a
   have hnorm := normalizedReducedHom_of_diagonal_zero μ b label w hn hsq hw hsep hl x.val.val (hd x) a
