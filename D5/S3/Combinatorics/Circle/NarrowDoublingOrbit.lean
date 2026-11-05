@@ -87,11 +87,7 @@ private def CyclicBetween (a b c : ℤ) : Prop :=
 private theorem iterate_double (X Q n : ℕ) :
     (fun z : ZMod X => 2 * z)^[n] (Q : ZMod X) =
       (2 : ZMod X) ^ n * (Q : ZMod X) := by
-  induction n with
-  | zero => simp
-  | succ n ih =>
-    rw [Function.iterate_succ_apply', ih, pow_succ]
-    ring
+  exact mul_left_iterate_apply (n := n) (2 : ZMod X) (Q : ZMod X)
 
 private theorem residue_eq_val (X Q n : ℕ) :
     residue X Q n = ((2 : ZMod X) ^ n * (Q : ZMod X)).val := by
@@ -675,11 +671,6 @@ private theorem shift_gap_location {r u : ℕ} (hr : 0 < r) (s i : Fin r)
   exact ((ZMod.natCast_eq_natCast_iff _ _ _).mp heq).eq_of_lt_of_lt
     (Fin.isLt _) i.isLt
 
-private theorem shift_commutes_successor {r : ℕ} (s i : Fin r) :
-    cycAdd s (cycAdd i 1).val = cycAdd (cycAdd s i.val) 1 := by
-  apply Fin.ext
-  simp only [cycAdd_val, Nat.add_mod_mod, Nat.mod_add_mod, Nat.add_assoc]
-
 /-- Algebra along a genuine cycle, applied below to the derived actual gap
 action. This is not a replacement hypothesis in the classification. -/
 private theorem gap_cycle_growth {α : Type*} [DecidableEq α]
@@ -794,7 +785,7 @@ private theorem narrow_gap_arithmetic {X Q : ℕ}
     · have ho := hordinary i hi
       omega
   have hcomm (i : Fin r) : p (next i) = next (p i) :=
-    shift_commutes_successor s i
+    cycAdd_index_add s i 1
   have hpoint (i : Fin r) :
       Int.ModEq (X : ℤ) (a (p i)) (2 * (a i : ℤ)) := by
     have he : (a (p i) : ℤ) = (2 * (a i : ℤ)) % X := by
@@ -1222,7 +1213,7 @@ private theorem explicit_point_geometry {r s u : ℕ} (hr : 2 ≤ r)
   let b : Fin r → ZMod M := fun i => 2 * (a i : ZMod M) - a (shift i)
   have hbnext (i : Fin r) : b (cycAdd i 1) = b i := by
     have hc : shift (cycAdd i 1) = cycAdd (shift i) 1 :=
-      shift_commutes_successor ⟨s, hsr⟩ i
+      cycAdd_index_add ⟨s, hsr⟩ i 1
     have h1 := hgap i
     have h2 := hgap (shift i)
     rw [← hc] at h2
