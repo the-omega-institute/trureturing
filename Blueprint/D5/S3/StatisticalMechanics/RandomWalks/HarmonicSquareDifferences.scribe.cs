@@ -11,7 +11,7 @@ internal sealed class HarmonicSquareDifferencesDocument : IScribeDocumentDefinit
         LibraryNoteRef.Create("D5/L/StatisticalMechanics/lippnermangoubi2015harmonic");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Every order of the normalized Laplacian of a harmonic square is a finite average of ordered mixed-difference squares.",
+        "Every order of the normalized Laplacian of a harmonic square is a nonnegative finite average of ordered mixed-difference squares.",
         H("Harmonic squares and all orders of mixed differences"),
         Blocks(
             Node("mean", "The actual nearest-neighbour mean", "translationMean", MeanFormula(),
@@ -22,14 +22,14 @@ internal sealed class HarmonicSquareDifferencesDocument : IScribeDocumentDefinit
                 "A word of length k is any function Fin k to Direction d. No injectivity condition is imposed: a direction may occur any number of times, and words with a common endpoint are still different words. Mathlib's fwdDiff a f is the function x mapped to f(x+a)-f(x). mixedDifference composes those operators with the first letter outermost. At k=0 there is exactly one word, the function from the empty type, and its mixed difference is H itself."),
             Describe.Lean(DescribeId.Create("harmonic-square-all-orders"),
                 DeclarationHandle.Create(Prefix + "harmonic_square_iterate"),
-                H("The mixed-square identity in every order"),
+                H("The mixed-square identity and nonnegativity in every order"),
                 StatementSource.FromAuthor(IdentityFormula()),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(
-                    Paragraph(Text("Let d be any positive natural number and let H be any real function on the whole integer lattice with PH=H. For every natural k and every lattice point x, L iterated k times on the pointwise square of H equals (2d)^(-k) times the sum of the squares of all length-k mixed differences of H at x. There is no boundedness, growth, periodicity, sign or symmetry assumption on H. The order-zero identity is H(x)^2=H(x)^2, with coefficient one and the single empty word.")),
+                    Paragraph(Text("Let d be any positive natural number and let H be any real function on the whole integer lattice with PH=H. For every natural k and every lattice point x, L iterated k times on the pointwise square of H equals (2d)^(-k) times the sum of the squares of all length-k mixed differences of H at x, and that iterate is nonnegative. There is no boundedness, growth, periodicity, sign or symmetry assumption on H. The order-zero identity is H(x)^2=H(x)^2, with coefficient one and the single empty word.")),
                     Paragraph(Text("Translation commutes with a forward difference because the lattice addition is commutative. The finite mean therefore commutes with each forward difference, and every mixed difference of H remains harmonic. For a harmonic f, expand (f(x+v)-f(x))^2 and average. The cross term is -2f(x)Pf(x), and the constant term is f(x)^2 because the weights sum to one. Consequently L(f^2) is the average of the forward-difference squares. Apply this identity to every harmonic mixed difference in the length-k sum. Linearity of L and the bijection between a length-(k+1) word and its first letter together with its tail give the next order, with exactly one additional factor (2d)^(-1).")),
-                    Paragraph(Text("Every summand and the normalization are nonnegative, so L^k(H^2)(x)>=0 for every k. Since P=I+L and the identity operator commutes with L, the finite binomial formula is P^N(H^2)=sum_(j=0)^N choose(N,j)L^j(H^2). For N>=3, retaining the j=3 term yields P^N(H^2)(x)>=choose(N,3)L^3(H^2)(x). For N<3 the binomial coefficient is zero and the inequality follows from the nonnegative expansion. This is the finite estimate used after equation (2.1) in the constant-Poisson argument.")),
-                    Paragraph(Text("Lippner and Mangoubi give this classical identity in arXiv:1312.4550v3, Theorem 2.1, Claim 2.2 and Remark 2.3. Here the mean and the differences are the literal signed-coordinate operators of the integer lattice. The remaining constant-Poisson argument requires the growth estimate for P^N(H^2), the limiting vanishing of third differences and the reconstruction of a quadratic polynomial. Those conclusions and the subsequent classification do not follow from harmonicity alone. The zero-dimensional singleton case is separate and uses no division by d."))),
+                    Paragraph(Text("Every summand and the normalization are nonnegative, giving the public theorem's second conclusion L^k(H^2)(x)>=0 for every k, including k=0. This sign conclusion is an elementary consequence of the same identity. The following finite binomial estimate is a separate mathematical consequence and is not a conclusion of the Lean declaration. Since P=I+L and the identity operator commutes with L, the finite binomial formula is P^N(H^2)=sum_(j=0)^N choose(N,j)L^j(H^2). For N>=3, retaining the j=3 term yields P^N(H^2)(x)>=choose(N,3)L^3(H^2)(x). For N<3 the binomial coefficient is zero and the inequality follows from the nonnegative expansion. This is the finite estimate used after equation (2.1) in the constant-Poisson argument.")),
+                    Paragraph(Text("Lippner and Mangoubi give this classical identity in arXiv:1312.4550v3, Theorem 2.1, Claim 2.2 and Remark 2.3. Here the mean and the differences are the literal signed-coordinate operators of the integer lattice. The formal delivery stops at the all-order identity and its pointwise nonnegativity. The finite binomial estimate, constant-Poisson subtraction, sixth-moment and subcubic growth estimates, limiting vanishing of third differences and reconstruction of a quadratic polynomial remain separate formal obligations. The original constant-Poisson target has growth exponent alpha<3, including the downstream log2(6) case. Those conclusions and the subsequent classification do not follow from harmonicity alone. The zero-dimensional singleton case is separate and uses no division by d."))),
                 DescribeRole.Theorem)),
         []));
 
@@ -99,7 +99,9 @@ internal sealed class HarmonicSquareDifferencesDocument : IScribeDocumentDefinit
         Formula lhs = Call("Function.iterate", Call("laplacian", d), k, Call("square", Hf), x);
         Formula rhs = Mul(Pow(Weight(d), k), FiniteSum("w", Words(d, k),
             Pow(Call("mixedDifference", k, w, Hf, x), D(2))));
-        Formula identity = All("k", Nat(), All("x", Lat(d), Eq(lhs, rhs)));
+        Formula nonnegative = new Formula.Relation(D(0), FormulaRelationOperator.LessThanOrEqual, lhs);
+        Formula conclusion = new Formula.Logic(Par(Eq(lhs, rhs)), FormulaLogicOperator.And, Par(nonnegative));
+        Formula identity = All("k", Nat(), All("x", Lat(d), conclusion));
         Formula harmonic = All("H", Func(d), Imp(Call("Harmonic", Hf), identity));
         return Disp(All("d", Nat(), Imp(Lt(D(0), d), harmonic)));
     }

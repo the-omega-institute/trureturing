@@ -28,21 +28,23 @@ def rejected : Realization signature :=
   realize signature (fun _ _ _ => fun _ => 1) (fun e => nomatch e)
 
 /-- The original harmonic input remains in the premises and on the right.
-Only the full function operand in the left-hand square is observed. -/
+Only the full function operand in the equality's left-hand square is observed;
+the nonnegativity conjunct retains the original harmonic input. -/
 def arena : Arena where
   signature := signature
   Law R := ∀ {d : ℕ}, 0 < d → ∀ H : Lattice d → ℝ,
     Harmonic H → ∀ (k : ℕ) (x : Lattice d),
-      ((laplacian d)^[k]) (square (R.readout () d H)) x =
+      (((laplacian d)^[k]) (square (R.readout () d H)) x =
         ((2 * (d : ℝ))⁻¹) ^ k *
-          ∑ w : Word d k, (mixedDifference k w H x) ^ 2
+          ∑ w : Word d k, (mixedDifference k w H x) ^ 2) ∧
+        0 ≤ ((laplacian d)^[k]) (square H) x
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hzero : Harmonic (fun _ : Lattice 1 => (0 : ℝ)) := by
     change translationMean 1 0 = 0
     exact map_zero _
-  have hh := h (d := 1) (by norm_num) (fun _ => 0) hzero 0 (fun _ => 0)
+  have hh := (h (d := 1) (by norm_num) (fun _ => 0) hzero 0 (fun _ => 0)).1
   norm_num [rejected, realize, square, mixedDifference] at hh
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
@@ -60,8 +62,9 @@ def evidence : Registration arena (type_of% (@harmonic_square_iterate)) where
     arena.Law actual rejected rejected_law
   dependence := actual_dependence
 
-/-- The selected operand is H in the left-hand `square H`; all six original
-binders and the complete lattice function survive in the dependent arena. -/
+/-- The selected operand is H in the equality's left-hand `square H`; all six
+original binders, the complete lattice function and both conclusion clauses
+survive in the dependent arena. -/
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@harmonic_square_iterate) (Realization signature) Unit Unit where
   unitName := `D5.S3.StatisticalMechanics.RandomWalks.HarmonicSquareDifferences.harmonic_square_iterate.__information_unit
@@ -86,7 +89,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body",
-        "fn", "arg", "fn", "arg", "arg"]
+        "fn", "arg", "fn", "arg", "fn", "arg", "arg"]
       stateBinder := 2
       functionOperand := false
       stateOperand := none

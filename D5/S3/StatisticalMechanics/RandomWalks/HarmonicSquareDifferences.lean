@@ -155,12 +155,14 @@ private theorem sum_words_succ {d k : ℕ} (F : Word d (k + 1) → ℝ) :
   simp [Fin.consEquiv]
 
 /-- Every iterate of `P-I` on a harmonic square is the normalized sum of all
-ordered mixed-difference squares, including order zero and repeated letters. -/
+ordered mixed-difference squares and is pointwise nonnegative, including order
+zero and repeated letters. -/
 theorem harmonic_square_iterate {d : ℕ} (hd : 0 < d) (H : Lattice d → ℝ)
     (hH : Harmonic H) (k : ℕ) (x : Lattice d) :
-    ((laplacian d)^[k]) (square H) x =
+    (((laplacian d)^[k]) (square H) x =
       ((2 * (d : ℝ))⁻¹) ^ k *
-        ∑ w : Word d k, (mixedDifference k w H x) ^ 2 := by
+        ∑ w : Word d k, (mixedDifference k w H x) ^ 2) ∧
+      0 ≤ ((laplacian d)^[k]) (square H) x := by
   have hall : ∀ k : ℕ,
       ((laplacian d)^[k]) (square H) =
         ((2 * (d : ℝ))⁻¹) ^ k •
@@ -180,6 +182,14 @@ theorem harmonic_square_iterate {d : ℕ} (hd : 0 < d) (H : Lattice d → ℝ)
       simp only [mixedDifference, Fin.cons_zero, Fin.tail_cons]
       rw [Finset.sum_comm, pow_succ]
   have hx := congrFun (hall k) x
-  simpa only [Pi.smul_apply, smul_eq_mul, Finset.sum_apply, square] using hx
+  have heq : ((laplacian d)^[k]) (square H) x =
+      ((2 * (d : ℝ))⁻¹) ^ k *
+        ∑ w : Word d k, (mixedDifference k w H x) ^ 2 := by
+    simpa only [Pi.smul_apply, smul_eq_mul, Finset.sum_apply, square] using hx
+  refine ⟨heq, ?_⟩
+  rw [heq]
+  exact mul_nonneg
+    (pow_nonneg (inv_nonneg.mpr (mul_nonneg (by norm_num) (Nat.cast_nonneg d))) k)
+    (Finset.sum_nonneg fun w _ => sq_nonneg (mixedDifference k w H x))
 
 end D5.S3.StatisticalMechanics.RandomWalks.HarmonicSquareDifferences
