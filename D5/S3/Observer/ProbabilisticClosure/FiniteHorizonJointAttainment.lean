@@ -4,11 +4,13 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Original-history shape control jointly attains finite paid-count and marginal root risk. -/
+   digest: Finite history control jointly attains paid-count and marginal root optima. -/
 
 import D5.S3.Observer.ProbabilisticClosure.BeneficialMarkerDeflection
 import D5.S3.Observer.ProbabilisticClosure.RawFiniteAtomLinearRealization
 import Mathlib.Data.Bool.Count
+
+/-! Finite optimal marker routes retain the original independent seed and shared source. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -371,7 +373,7 @@ private theorem root_cylinder_mass (alpha q : unitInterval) (actions : List Side
       by_cases heq : r = root <;> simp [hs, heq]
     rw [measureReal_def, measure_congr he]
     by_cases heq : r = root
-    · rw [if_pos heq, if_pos heq, ← measureReal_def, conditional_prefix_mass]
+    · rw [ite_eq_left heq, ite_eq_left heq, ← measureReal_def, conditional_prefix_mass]
     · simp [heq]
   rw [source_law_real, hc true, hc false]
   cases root <;> simp
@@ -410,7 +412,7 @@ private theorem actual_shape_risk {Seed : Type u} [MeasurableSpace Seed]
         simp [forcedRootDecoder, hs, hroot, hn]
       · have hf : (actualRun (shapePolicy d) p.1 p.2 n).stopped = false := Bool.eq_false_iff.mpr hs
         have hn : prefixNoMarker p.2 actions := hr ▸ (hb.2.1.mp hf)
-        simp only [Set.mem_prod, Set.mem_univ, true_and, Set.mem_setOf_eq]
+        simp only [Set.mem_prod, Set.mem_univ, true_and, Set.mem_ofPred_eq]
         change (forcedRootDecoder alpha μ actions (actualRun (shapePolicy d) p.1 p.2 n) ≠ p.2.1) =
           (prefixNoMarker p.2 actions ∧ p.2.1 = !c)
         simp only [forcedRootDecoder, hs, Bool.false_eq_true, ite_false, hn, true_and]
@@ -456,7 +458,7 @@ private theorem moment_antitone (μ : Measure unitInterval) [IsProbabilityMeasur
 private theorem even_risk_minimum (alpha : unitInterval) (μ : Measure unitInterval)
     [IsProbabilityMeasure μ] (N : ℕ) (hN : 1 ≤ N) :
     min (evenRisk alpha μ N false) (evenRisk alpha μ N true) = minimumRisk alpha μ (2 * N) := by
-  have hp := mul_le_mul_of_nonneg_left (moment_antitone μ N) (unitInterval.one_minus_nonneg alpha)
+  have hp := mul_le_mul_of_nonneg_left (moment_antitone μ N) (unitInterval.one_sub_nonneg alpha)
   have hm : moment μ N ≤ moment μ (N - 1) := by
     simpa [Nat.sub_add_cancel hN] using moment_antitone μ (N - 1)
   have hq := mul_le_mul_of_nonneg_left hm (unitInterval.nonneg alpha)
@@ -533,7 +535,7 @@ private theorem optimal_shapes_exist (alpha : unitInterval) (μ : Measure unitIn
     have hmin := even_risk_minimum alpha μ (n / 2) hN
     rw [hne] at hmin
     dsimp [d]
-    rw [if_pos hne]
+    rw [ite_eq_left hne]
     by_cases ht : evenRisk alpha μ (n / 2) true < evenRisk alpha μ (n / 2) false
     · simpa [terminal, ht, min_eq_right ht.le] using hmin
     · simpa [terminal, ht, min_eq_left (le_of_not_gt ht)] using hmin
@@ -585,19 +587,42 @@ private theorem shape_risk_optimal {Seed : Type*} [MeasurableSpace Seed]
       rw [hne]
       exact shape_risk_odd d ν alpha μ (n / 2)
 
+private theorem capped_count_integrable {Seed : Type*} [MeasurableSpace Seed]
+    (policy : Policy Seed) (ν : Measure Seed) [IsProbabilityMeasure ν]
+    (alpha : unitInterval) (μ : Measure unitInterval) [IsProbabilityMeasure μ] (n : ℕ) :
+    Integrable (fun p : Seed × Source => (actualQueryCount policy p.1 p.2 n : ℝ))
+      (priorLaw ν alpha μ) := by
+  have hm : Measurable (fun p : Seed × Source => (actualQueryCount policy p.1 p.2 n : ℝ)) :=
+    (measurable_of_countable (fun h : State => (h.actions.length : ℝ))).comp
+      (RawFiniteAtomLinearRealization.measurable_actual_run policy n)
+  apply Integrable.of_bound hm.aestronglyMeasurable (n : ℝ)
+  apply Eventually.of_forall
+  intro p
+  have hb := (stopped_execution_replay_bridge policy p.1 p.2 n).2.2.2.2.2
+  have hc : (actualQueryCount policy p.1 p.2 n : WithTop ℕ) ≤ n := by
+    rw [hb]
+    exact min_le_left _ _
+  have hcn : actualQueryCount policy p.1 p.2 n ≤ n := by exact_mod_cast hc
+  rw [Real.norm_eq_abs, abs_of_nonneg (show 0 ≤
+    (actualQueryCount policy p.1 p.2 n : ℝ) from Nat.cast_nonneg _)]
+  exact_mod_cast hcn
+
 /-- One original-history execution and one measurable root decoder attain both coordinates. -/
 def JointAttains {Seed : Type*} [MeasurableSpace Seed]
     (policy : Policy Seed) (decode : State → Bool) (ν : Measure Seed)
     (alpha : unitInterval) (μ : Measure unitInterval) (n : ℕ) : Prop :=
-  Measurable decode ∧ cappedMean policy ν alpha μ n = minimumMean alpha μ n ∧
+  Measurable decode ∧
+    Integrable (fun p : Seed × Source => (actualQueryCount policy p.1 p.2 n : ℝ))
+      (priorLaw ν alpha μ) ∧
+    cappedMean policy ν alpha μ n = minimumMean alpha μ n ∧
     marginalError policy decode ν alpha μ n = minimumRisk alpha μ n
 
 /-- Every finite horizon has its own joint attainer; all admissible shape choices coexist. -/
 theorem result {Seed : Type*} [MeasurableSpace Seed]
     (ν : Measure Seed) [IsProbabilityMeasure ν]
-    (a : ℝ) (b : unitInterval) (ha : 0 < a) (hb : 0 < (b : ℝ)) (hab : a + (b : ℝ) = 1)
+    (a : ℝ) (b : unitInterval) (_ha : 0 < a) (_hb : 0 < (b : ℝ)) (hab : a + (b : ℝ) = 1)
     (μ : Measure unitInterval) [IsProbabilityMeasure μ]
-    (hQ : ∀ᵐ (q : unitInterval) ∂μ, 0 < (q : ℝ) ∧ (q : ℝ) < 1) :
+    (_hQ : ∀ᵐ (q : unitInterval) ∂μ, 0 < (q : ℝ) ∧ (q : ℝ) < 1) :
     (∀ n, ∃ (policy : Policy Seed) (decode : State → Bool), JointAttains policy decode ν b μ n) ∧
     (∀ n d, OptimalShapes b μ n d →
       ∃ (policy : Policy Seed) (decode : State → Bool), JointAttains policy decode ν b μ n ∧
@@ -622,7 +647,8 @@ theorem result {Seed : Type*} [MeasurableSpace Seed]
       ∃ (policy : Policy Seed) (decode : State → Bool), JointAttains policy decode ν b μ n ∧
         ∀ (seed : Seed) m, 1 ≤ m → parity (zeroReplay policy seed (2 * m)) = (d m, d m) := by
     refine ⟨shapePolicy d, forcedRootDecoder b μ (replay d n), ?_, ?_⟩
-    · exact ⟨measurable_of_countable _, shape_mean_optimal d ν b μ n hd,
+    · exact ⟨measurable_of_countable _, capped_count_integrable (shapePolicy d) ν b μ n,
+        shape_mean_optimal d ν b μ n hd,
         shape_risk_optimal d ν b μ n hd⟩
     · intro seed m hm
       exact prescribed_even_parity d seed m hm
