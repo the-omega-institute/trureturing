@@ -4639,7 +4639,7 @@ The tensor quotient, multilinearity and finite-dimensional rank count used here 
 ## 追加锚（本行以下为增补区）
 ## 158. Positive 003 energy and the terminal compensator boundary
 
-**Definition 158.1 (a two-label first-order-calibrated ray with terminal compensation).** Retain the original supplier telescope, the trilinear form $\mathcal C$, the prescribed tuple $f$, the residual $\Delta$ of Definition 155.1, and the full first-order map $\Lambda_{134}$ and kernel $V=\ker\Lambda_{134}$ of Definition 134.1. Retain also Proposition 134.2 and the propagation identity $Pf_3=cg$. For bounded real Borel representatives $v,w$ and a nonzero real $t$, consider the pointwise tuple
+**Definition 158.1 (a two-label first-order-calibrated ray with terminal compensation).** Retain the complete telescope of Definition 155.1, hence Definitions 134.1, 135.1 and 154.1, including the residual $\Delta$, the positivity-improvement and conservation suppliers, the trilinear form $\mathcal C$, and the prescribed tuple $f$. Retain also the full first-order map $\Lambda_{134}$ and kernel $V=\ker\Lambda_{134}$ of Definition 134.1, Proposition 134.2, and the propagation identity $Pf_3=cg$. For bounded real Borel representatives $v,w$ and a nonzero real $t$, consider the pointwise tuple
 
 $$
 \begin{aligned}
