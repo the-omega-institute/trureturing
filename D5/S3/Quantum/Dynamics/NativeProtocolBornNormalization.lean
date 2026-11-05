@@ -574,6 +574,93 @@ theorem original_event_cut_integer_coordinates {L : Type} (T : NativeProtocolGra
   ⟨eventCut_trace T I event, cut_det_physical T I event, cut_det_conjugate T I event,
     conjugateEventCut_signed T I event⟩
 
+private theorem determinant_frobenius_bound {n : Type} [Fintype n] [DecidableEq n]
+    (M : Matrix n n ℂ) (R : ℝ) (hR : 0 ≤ R)
+    (hM : (∑ i, ∑ j, ‖M i j‖^2) ≤ R^2) :
+    ‖M.det‖ ≤ R^Fintype.card n := by
+  let G := Mᴴ * M
+  have hG : G.PosSemidef := Matrix.posSemidef_conjTranspose_mul_self M
+  have ht : (∑ i, hG.1.eigenvalues i) = ∑ i, ∑ j, ‖M i j‖^2 := by
+    have hh := congrArg Complex.re hG.1.trace_eq_sum_eigenvalues
+    simp only [Complex.re_sum, Complex.ofReal_re] at hh
+    rw [← hh]
+    dsimp [G]
+    simp only [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply,
+      Matrix.conjTranspose_apply, Complex.re_sum]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro i _
+    apply Finset.sum_congr rfl
+    intro j _
+    simp [Complex.star_def, Complex.conj_mul', Complex.normSq_eq_norm_sq]
+  have he (i : n) : hG.1.eigenvalues i ≤ R^2 :=
+    (Finset.single_le_sum (fun j _ => hG.eigenvalues_nonneg j) (Finset.mem_univ i)).trans
+      (ht ▸ hM)
+  have hd : ‖M.det‖^2 = ∏ i, hG.1.eigenvalues i := by
+    have hh := congrArg Complex.re hG.1.det_eq_prod_eigenvalues
+    simp only [G, Matrix.det_mul, Matrix.det_conjTranspose,
+      RCLike.ofReal_eq_complex_ofReal, ← Complex.ofReal_prod, Complex.ofReal_re] at hh
+    rw [← hh]
+    simp [Complex.star_def, Complex.conj_mul', Complex.normSq_eq_norm_sq]
+  have hp := Finset.prod_le_prod (fun i _ => hG.eigenvalues_nonneg i)
+    (fun i _ => he i)
+  simp only [Finset.prod_const, Finset.card_univ] at hp
+  rw [← hd, ← pow_mul, Nat.mul_comm 2, pow_mul] at hp
+  exact (sq_le_sq₀ (norm_nonneg _) (pow_nonneg hR _)).mp hp
+
+private theorem conjugate_cut_frobenius {L : Type} (T : NativeProtocolGraft.Tree L)
+    (I : Finset (Fin 16)) (event : Path T → Bool) :
+    (∑ i, ∑ j, ‖conjugateEventCut T I event i j‖^2) ≤
+      (Coeff.treeEnergy T Coeff.initial)^2 := by
+  classical
+  let A (i : CutBasis I) (q : Path T × CutRest I) : ℂ :=
+    Coeff.conjugateAmplitude (Coeff.branch T q.1 Coeff.initial) ((splitAt I).symm (i,q.2))
+  have hb (i j : CutBasis I) : ‖conjugateEventCut T I event i j‖ ≤
+      ∑ q : Path T × CutRest I, ‖A i q‖ * ‖A j q‖ := by
+    rw [conjugateEventCut_signed, Fintype.sum_prod_type]
+    refine (norm_sum_le _ _).trans (Finset.sum_le_sum (fun p _ => ?_))
+    refine (norm_sum_le _ _).trans (Finset.sum_le_sum (fun z _ => ?_))
+    by_cases he : event p
+    · simp [he, norm_mul, norm_pow, A]
+    · simp [he, mul_nonneg (norm_nonneg _) (norm_nonneg _)]
+  have hs (i j : CutBasis I) : ‖conjugateEventCut T I event i j‖^2 ≤
+      (∑ q, ‖A i q‖^2) * (∑ q, ‖A j q‖^2) :=
+    (pow_le_pow_left₀ (norm_nonneg _) (hb i j) 2).trans
+      (Finset.sum_mul_sq_le_sq_mul_sq Finset.univ _ _)
+  have ht : (∑ i, ∑ q, ‖A i q‖^2) = Coeff.treeEnergy T Coeff.initial := by
+    simp only [Fintype.sum_prod_type, A, Coeff.treeEnergy, Coeff.energy,
+      Complex.normSq_eq_norm_sq]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro p _
+    rw [← Fintype.sum_prod_type]
+    exact (splitAt I).symm.sum_comp _
+  calc
+    _ ≤ ∑ i, ∑ j, (∑ q, ‖A i q‖^2) * (∑ q, ‖A j q‖^2) :=
+      Finset.sum_le_sum (fun i _ => Finset.sum_le_sum (fun j _ => hs i j))
+    _ = (∑ i, ∑ q, ‖A i q‖^2)^2 := by
+      simp only [pow_two, Finset.mul_sum, Finset.sum_mul]
+    _ = _ := by rw [ht]
+
+/-- The other embedding of the actual same-cut determinant has the sharp
+resource exponent, using the complete original tree energy without path counts. -/
+theorem original_event_cut_conjugate_bound {L : Type} (T : NativeProtocolGraft.Tree L)
+    (event : Path T → Bool) (I : Finset (Fin 16)) :
+    |Coeff.realConjugate (cutDetCoordinates T I event)| ≤
+      Coeff.kappa^(2*maxCalls T*Fintype.card (CutBasis I)) := by
+  have hn : 0 ≤ Coeff.treeEnergy T Coeff.initial := by
+    unfold Coeff.treeEnergy Coeff.energy
+    positivity
+  have hd := determinant_frobenius_bound (conjugateEventCut T I event)
+    (Coeff.treeEnergy T Coeff.initial) hn (conjugate_cut_frobenius T I event)
+  rw [(original_event_cut_integer_coordinates T event I).2.2.1,
+    Complex.norm_real, Real.norm_eq_abs] at hd
+  exact hd.trans (by
+    rw [pow_mul]
+    exact pow_le_pow_left₀ hn (Coeff.original_branch_evaluations T).2 _)
+
+#print axioms original_event_cut_conjugate_bound
+
 #print axioms original_event_cut_integer_coordinates
 
 #print axioms original_complete_born_law
