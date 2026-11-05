@@ -24,6 +24,18 @@ internal sealed class NarrowDoublingOrbitDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "All actual residues and X are divisible by g=gcd(X,Q), so g divides each directed gap, including d. The actual return gives D|(2^r-1). Writing d=g*u in integers and cancelling positive g from X=gD=(2^r-1)d gives (2^r-1)|D. Antisymmetry gives D=2^r-1, cancellation gives d=g, and 2W=X-g follows. The generic gap-cycle helper is consumed after its actual cycle and recurrence hypotheses are derived from the original narrowness assumptions. These proof terms are included in the successful scoped Lean build."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("actual-orbit-explicit-numerator"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/NarrowDoublingOrbit.narrow_explicit_numerator"),
+                H("Explicit reconstruction of the actual narrow orbit"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For odd X>=3, 0<Q<X and standard-residue diameter W with 2W<X, put r=period(X,Q) and g=gcd(X,Q). The theorem derives a shift 0<s<r, coprimality of s and r, and an inverse 0<=u<r with su=1 in ZMod r. Subtraction in e_i=[u(i+1)-1]_r takes place modulo r. Define delta_i=2^e_i, a_j=sum_(i<s)delta_i+sum_(i<j)delta_i and q=2^(r-1)+sum_(i<s-1)delta_i. The actual orbit equals {g*a_j:0<=j<r}, and its greatest element is g*q.")),
+                    Paragraph(Text(
+                        "This uses the derived sorted cycle and the existing directed-gap growth proof. Transitivity produces the inverse by reaching sorted index 1 from index 0. Multiplying the exponent formula by s identifies the original sorted gap at each index, including the long final gap. Doubling the least sorted point cannot wrap, since its image would then be smaller than that least point. Its unwrapped image at index s therefore fixes the minimum as the first s gaps; telescoping recovers every point. The gap at s-1 has exponent zero, giving the displayed maximum.")),
+                    Paragraph(Text(
+                        "The seed Q may occupy any sorted position. Equality Q=g*q additionally requires Q to be the orbit maximum, as in the anchored interval condition; X=3,Q=1 must not be assigned q(2,1)=2. A Mersenne denominator and maximality alone do not imply narrowness, as X=31,Q=24 shows. This reconstruction does not establish the converse construction for every unit shift, the full anchored iff, uniqueness or counting, or any common physical permutation realization. These remain separate obligations."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("fixed-q-one-period-narrow-reduction"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Circle/NarrowDoublingOrbit.fixedQ_block_forces_narrow"),
                 H("One consecutive actual-period block covers every fixed-Q phase"),

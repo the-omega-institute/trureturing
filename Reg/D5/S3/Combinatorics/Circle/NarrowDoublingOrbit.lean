@@ -150,4 +150,117 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
 #print axioms audit
 
 end narrow_classification
+
+namespace narrow_explicit_numerator
+
+abbrev signature : Signature where
+  Params := ℕ
+  State _ := ℕ
+  Role := Fin 1
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Finset ℕ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ X Q => orbit X Q) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => ∅) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {X Q : ℕ}, 3 ≤ X → Odd X → 0 < Q → Q < X →
+    2 * diameter X Q < X →
+    ∃ s u : ℕ, 0 < s ∧ s < period X Q ∧ Nat.Coprime s (period X Q) ∧
+      u < period X Q ∧ (s : ZMod (period X Q)) * u = 1 ∧
+      R.readout 0 X Q = (Finset.range (period X Q)).image
+        (fun j => Nat.gcd X Q * explicitPoint (period X Q) s u j) ∧
+      IsGreatest (↑(R.readout 0 X Q) : Set ℕ)
+        (Nat.gcd X Q * explicitNumerator (period X Q) s u)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  obtain ⟨Q, hQ, hQX, _, _, _, hn⟩ :=
+    exists_narrow_of_mersenne_dvd (X := 3) (t := 2)
+      (by decide) (by decide) (by decide) (by norm_num)
+  obtain ⟨s, u, _, _, _, _, _, _, hg⟩ :=
+    h (X := 3) (Q := Q) (by decide) (by decide) hQ hQX hn
+  simpa only [rejected, realize, Finset.coe_empty, Set.mem_empty_iff_false] using hg.1
+
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  obtain ⟨Q, hQ, hQX, hr, _, _, _⟩ :=
+    exists_narrow_of_mersenne_dvd (X := 3) (t := 2)
+      (by decide) (by decide) (by decide) (by norm_num)
+  refine ⟨3, 0, Q, ?_⟩
+  change orbit 3 0 ≠ orbit 3 Q
+  intro he
+  have hmem : Q ∈ orbit 3 Q := by
+    apply Finset.mem_image.mpr
+    refine ⟨0, ?_, ?_⟩
+    · rw [Finset.mem_range, hr]; decide
+    · simp [residue, Nat.mod_eq_of_lt hQX]
+  rw [← he] at hmem
+  obtain ⟨n, _, hn⟩ := Finset.mem_image.mp hmem
+  have hzero : Q = 0 := by simpa [residue] using hn.symm
+  omega
+
+private theorem actual_sensitivity : Sensitivity arena actual := by
+  constructor
+  · intro i
+    refine ⟨rejected, ?_, rfl, rejected_law⟩
+    intro j hji
+    exact False.elim (hji (Subsingleton.elim _ _))
+  · intro e
+    exact nomatch e
+
+def source_registration : Registration arena
+    (type_of% (@_root_.D5.S3.Combinatorics.Circle.NarrowDoublingOrbit.narrow_explicit_numerator)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.Combinatorics.Circle.NarrowDoublingOrbit.narrow_explicit_numerator,
+    rejected, rejected_law⟩
+  sensitivity := actual_sensitivity
+  dependence := actual_dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+    (@_root_.D5.S3.Combinatorics.Circle.NarrowDoublingOrbit.narrow_explicit_numerator)
+    (type_of% (realize signature (fun _ X Q => orbit X Q) (fun e => nomatch e)))
+    Nat Unit := {
+  unitName := `D5.S3.Combinatorics.Circle.NarrowDoublingOrbit.narrow_explicit_numerator.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Circle.NarrowDoublingOrbit.narrow_explicit_numerator.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ X Q => orbit X Q) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Circle.NarrowDoublingOrbit
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }, {
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "arg"]
+      stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms audit
+
+end narrow_explicit_numerator
+
 end Reg.D5.S3.Combinatorics.Circle.NarrowDoublingOrbit
