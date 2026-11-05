@@ -224,14 +224,9 @@ theorem original_complete_born_law {L : Type} (T : NativeProtocolGraft.Tree L)
     rw [whole_tree_energy]
     simp [Coeff.energy, omega0]
   have hn : 0 ≤ eventMass T (historyEvent event) := by
-    unfold eventMass
-    apply Finset.sum_nonneg
-    intro p _
-    apply Finset.sum_nonneg
-    intro z _
-    split_ifs
-    · exact Complex.normSq_nonneg _
-    · exact le_rfl
+    have hc := original_event_cut_mass_and_psd T event
+    rw [← hc.1]
+    exact (RCLike.nonneg_iff.mp hc.2.1.trace_nonneg).1
   have hb : eventMass T (historyEvent event) ≤ ∑ p, ∑ z, mass T p z := by
     unfold eventMass
     apply Finset.sum_le_sum

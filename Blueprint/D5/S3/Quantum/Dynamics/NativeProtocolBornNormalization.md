@@ -31,4 +31,4 @@ This is a partial consequence of V88 definitions 23.1 and 23.2 and the physical 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Dynamics/NativeProtocolBornNormalization.original_complete_born_law`
-- Dependency: [D5/S3/Quantum/Dynamics/NativeProtocolGraft](NativeProtocolGraft.md)
+- Dependency: [D5/S3/Quantum/Dynamics/NativeProtocolCalibration](NativeProtocolCalibration.md)
