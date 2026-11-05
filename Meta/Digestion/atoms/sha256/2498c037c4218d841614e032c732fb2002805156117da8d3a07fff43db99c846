@@ -1,0 +1,58 @@
+**定理 68.1（有限有序单位空间上的定量闭包接口）。** 设 $(E,C,u)$ 是有限维 Archimedean 有序单位空间，$H:E\to E$ 实线性，$\mathcal P\subset C^*$ 满足 $\overline{\operatorname{cone}(\mathcal P)}=C^*$。以下两个条件在另有 $Hu=0$ 时等价：
+
+(a) 存在一个有限 $K\ge0$，对所有 $\alpha\in\mathcal P$、$0\le x\le u$ 满足 $|\alpha(Hx)|^2\le K\alpha(x)\alpha(u)$；
+
+(b) 同一个 $H$ 是保单位序导子，即 $e^{tH}$ 对每个实 $t$ 保正且 $e^{tH}u=u$。
+
+(a) 的同一个 $K$ 对全部 $\beta\in C^*$ 及数学效果有效；对任意 $r>0$ 和 $0\le y\le ru$，准确的缩放式是
+
+$$
+|\beta(Hy)|^2\le Kr\,\beta(y)\beta(u).
+\tag{68.1}
+$$
+
+反向从 (b) 可取
+
+$$
+K=\|H^2\|_{u\to u},\qquad
+\|v\|_u=\inf\{r\ge0:-ru\le v\le ru\},
+\tag{68.2}
+$$
+
+这是一个可用的系数，不声称它是最优系数。本定理不要求 Jordan 乘法、SC、参考、读口或可调用指数。
+
+证明。固定 $H,x$。对任意数学正和 $\beta_n=\sum_j c_{nj}\alpha_{nj}$，三角不等式及加权 Cauchy–Schwarz 给
+
+$$
+\begin{aligned}
+|\beta_n(Hx)|
+&\le\sqrt K\sum_jc_{nj}
+ \sqrt{\alpha_{nj}(x)\alpha_{nj}(u)}\\
+&\le\sqrt{K\,\beta_n(x)\beta_n(u)}.
+\end{aligned}
+\tag{68.3}
+$$
+
+取 $\beta_n\to\beta\in C^*$，在固定 $Hx,x,u$ 上评价连续，故平方后同一式延伸到 $\beta$。这一步不要求各 $c_{nj}$ 或各实际准备的质量有统一下界；若 $\beta(u)=0$，由 $|\beta(v)|\le\beta(u)\|v\|_u$ 有 $\beta=0$。对 $y/r$ 应用效果估计，线性性给 (68.1)，其中因子 $r$ 不能删除。
+
+任意 $y\ge0$ 均有某个有限 $r>0$ 使 $y\le ru$。于是 $\beta(y)=0$ 蕴含 $\beta(Hy)=0$，对全部正泛函而非仅实际准备成立。现在只作为中间工具应用 Niestegge, *Dynamical Correspondence in a Generalized Quantum Theory*, [arXiv:1402.0158v2, §4 Lemma 3](https://arxiv.org/html/1402.0158v2#S4)：有界实算子的全状态零接触等价于对所有实参数的指数保正。有限维给 $H$ 有界，闭锥与内点单位给所需 Archimedean 完备空间；零接触已覆盖每个归一正泛函，故满足该引理的全部条件。再用单独给定的 $Hu=0$，得到保单位，正向完成。这里未套用该文的其他量子代数前提。
+
+反向设 (b)。$e^{tH}$ 与逆 $e^{-tH}$ 都保正且保单位，故它们在 $\|\cdot\|_u$ 上互为等距。固定 $\beta\ge0$，记 $m=\beta(u)$。$m=0$ 时结论已成立。令 $0\le x\le u$，$z=x-u/2$，则 $\|z\|_u\le1/2$，且 $H^2u=0$。在整条实线上令
+
+$$
+f(t)=\beta(e^{tH}x),\qquad
+0\le f(t)\le m,\qquad
+|f''(t)|=|\beta(e^{tH}H^2z)|
+\le\frac m2\|H^2\|_{u\to u}=:M.
+\tag{68.4}
+$$
+
+使用 Glaeser, *Racine carrée d'une fonction différentiable*, Annales de l'Institut Fourier 13(2), 203–210, [Lemma I, pp. 203–204](https://www.numdam.org/item/AIF_1963__13_2_203_0/) 的标量估计作为中间步骤。原引理假设整条实线上严格正的 $C^2$ 函数及二阶导数的统一上界；对 $f+\varepsilon$ 应用再令 $\varepsilon\downarrow0$，得到非负版本 $|f'(0)|^2\le2Mf(0)$。也可直接看 Taylor 上界：对所有实 $s$，
+
+$$
+0\le f(s)\le f(0)+s f'(0)+\tfrac12Ms^2.
+\tag{68.5}
+$$
+
+故当 $M>0$ 时右侧二次式的判别式非正，$f'(0)^2-2Mf(0)\le0$；不是非负。$M=0$ 时在全实线上非负的右侧线性式迫使 $f'(0)=0$。由于 $f'(0)=\beta(Hx)$，(68.4) 给 (68.2) 的估计。对 $u-x$ 同样应用，还可将右侧的 $\beta(x)$ 换为 $\min\{\beta(x),\beta(u-x)\}$。这是标量估计在同一保单位序群上的应用，未将文献称作原 $D$ 的量子尺度定理。∎
+

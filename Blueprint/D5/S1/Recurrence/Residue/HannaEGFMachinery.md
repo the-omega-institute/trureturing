@@ -204,5 +204,7 @@ Every exponential coefficient of the derivative of exp is one. Subtracting the c
 - Truth anchor: `D5/S1/Recurrence/Residue/HannaEGFMachinery.residual_transfer`
 - Truth anchor: `D5/S1/Recurrence/Residue/HannaEGFMachinery.sourceRhs`
 - Dependency: [D5/S1/Recurrence/Invariants/PowerSeriesNormalizedContraction](../Invariants/PowerSeriesNormalizedContraction.md)
+- Dependency: [D5/S1/Recurrence/Invariants/UnitReversionSquareParity](../Invariants/UnitReversionSquareParity.md)
 - Dependency: [D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree](../Parity/ExponentialImplicitParityPeriodThree.md)
+- Dependency: [D5/S1/Recurrence/Residue/IntegralEGFComposition](IntegralEGFComposition.md)
 - Dependency: [D5/S1/Recurrence/Residue/QuarticEGFFixedPoint](QuarticEGFFixedPoint.md)
