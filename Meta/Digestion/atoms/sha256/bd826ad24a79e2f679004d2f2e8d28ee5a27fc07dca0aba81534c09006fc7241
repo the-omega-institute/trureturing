@@ -1,0 +1,8 @@
+**本轮最短表述** 三元保留本层已经读出的形状；内部参考与未展关系组成下一次比较的两端。二元关系归一化后再次给三元。递归要同时保留总量、来源和联合关系，才不会在归一化时丢失旧信息。
+
+固定项目版本：[the-omega-institute/trureturing，dev](https://github.com/the-omega-institute/trureturing/tree/046c7ac2521a8429a0aeaeaee08b7b23d0bf20ff)。
+
+提交：`046c7ac2521a8429a0aeaeaee08b7b23d0bf20ff`；2026-11-05 15:09:00 UTC。
+
+本轮核对当前理论文稿及有关 Lean 声明；未重新编译 Lean。以下为附证明的数学条件推导。仓库收录的上一轮 R5-003 属于同一研究链，不作为独立验证。
+
