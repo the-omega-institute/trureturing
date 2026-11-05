@@ -46,3 +46,11 @@ remain in their owning modules and
 `docs/reports/licenses/menger-hamiltonian-LICENSE.txt`. They are not a donor
 Hamilton-connectedness proof. The new endpoint-preserving argument uses native
 walks and the receiver's ordered two-cut slicing theorem.
+
+## Verified locator
+
+DOI: https://doi.org/10.1016/0012-365x(72)90079-9
+
+Source: https://users.renyi.hu/~p_erdos/1972-02.pdf
+
+Theorem 3, pp. 112–113.
