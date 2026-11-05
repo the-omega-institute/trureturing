@@ -285,3 +285,144 @@ then $0$ and $v$ have identical current readout and different next readout. If $
 The source-specific statements (163.1)–(163.8) use only finite-dimensionality of the appended readout, real linearity of the specified successor, nonatomicity, rank-nullity, the $L^2$ contraction of $T_{d/2}$ and Proposition 134.2. They do not construct a nonlinear residual-zero tuple, a legal simplex family, an exact H43 partition, a terminal compensator, an SRS-20 or $F_{64}$ witness, a physical successor operation or a Lean/kernel theorem.
 
 ## 追加锚（本行以下为增补区）
+
+## 164. Countable successor stacks: prefix escape and the exact-kernel boundary
+
+Section 163 treats one finite successor horizon at a time. A countable stack of successor coordinates has a stricter exact kernel, so the finite-horizon argument must be diagonalized with its quantifiers kept visible. The next statements give the diagonal finite-prefix escape and record why it does not by itself produce a vector silent to every coordinate.
+
+**Definition 164.1 (finite prefixes of a countable readout stack).** Let
+
+$$
+\mathcal X=L^\infty(G,m;\mathbb R),
+\qquad V=\ker\Lambda_{134},
+$$
+
+and let $(\mathscr R_j)_{j\ge0}$ be a countable family of real-linear maps
+
+$$
+\mathscr R_j:\mathcal X\longrightarrow\mathbb R^{r_j},
+\qquad r_j<\infty.
+$$
+
+Define
+
+$$
+W_{\le n}=V\cap\bigcap_{j=0}^{n}\ker\mathscr R_j,
+\qquad
+W_\infty=V\cap\bigcap_{j=0}^{\infty}\ker\mathscr R_j.
+\tag{164.1}
+$$
+
+When a specified real-linear successor $T$ is available, the successor stack is the special case $\mathscr R_j=\mathscr R\circ T^j$ whenever these compositions are defined on $\mathcal X$.
+
+**Proposition 164.2 (finite-prefix diagonal escape).** Let $B_n\subset G$ be Borel sets with $m(B_n)>0$ and
+
+$$
+\int_{B_n}g^2\,dm\longrightarrow0.
+\tag{164.2}
+$$
+
+Then there are bounded real Borel functions $v_n$ such that
+
+$$
+\begin{gathered}
+v_n\in W_{\le n},
+\qquad \|v_n\|_\infty=1,
+\qquad \operatorname{supp}(v_n)\subset B_n,\\
+0<q(v_n)\le c\int_{B_n}g^2\,dm\longrightarrow0.
+\end{gathered}
+\tag{164.3}
+$$
+
+Moreover, for every fixed $j$, $\mathscr R_j(v_n)=0$ for all $n\ge j$. If $m(B_n)\to0$, the sequence is weak-star null in $L^\infty(m)$.
+
+*Proof.* Put
+
+$$
+N_n=64+\sum_{j=0}^{n}r_j+1
+$$
+
+and choose $N_n$ pairwise disjoint Borel subsets $A_{n,1},\ldots,A_{n,N_n}$ of positive measure inside $B_n$. Their indicators span an $N_n$-dimensional subspace $F_n$ of $\mathcal X$. The combined map
+
+$$
+\Phi_n=(\Lambda_{134},\mathscr R_0,\ldots,\mathscr R_n):
+F_n\longrightarrow
+\mathbb R^{64+\sum_{j=0}^{n}r_j}
+$$
+
+has a nonzero kernel by rank-nullity. Choose a nonzero $v_n$ in that kernel and scale its indicator coefficients so that their maximum absolute value is one. Disjointness gives $\|v_n\|_\infty=1$ and $\operatorname{supp}(v_n)\subset B_n$; the kernel equations give $v_n\in W_{\le n}$ and the eventual vanishing of each fixed coordinate. Proposition 134.2 gives $q(v_n)>0$. Since $|v_n|\le1$, the Markov $L^2$ contraction gives
+
+$$
+0<q(v_n)=c\|T_{d/2}(gv_n)\|_2^2
+\le c\|gv_n\|_2^2
+\le c\int_{B_n}g^2\,dm,
+$$
+
+which proves (164.3). When $m(B_n)\to0$, for every $h\in L^1(m)$,
+
+$$
+\left|\int_G h v_n\,dm\right|
+\le\int_{B_n}|h|\,dm\longrightarrow0
+$$
+
+by absolute continuity of the integral. $\square$
+
+**Corollary 164.3 (finite-prefix coercivity remains zero).** For every $n$,
+
+$$
+\inf\left\{q(v):v\in W_{\le n},\ \|v\|_\infty=1\right\}=0.
+\tag{164.4}
+$$
+
+Indeed, for a fixed $n$ repeat the rank-nullity construction with the finite map $(\Lambda_{134},\mathscr R_0,\ldots,\mathscr R_n)$ on a sequence of positive-measure sets whose $g^2$-mass tends to zero. The same estimate as in (164.3) gives arbitrarily small positive values of $q$ in $W_{\le n}$. The diagonal sequence from Proposition 164.2 is eventually invisible to every fixed finite subset of the countable stack, while retaining unit $L^\infty$ norm and positive energy at each finite index. If $\mathscr R_j=\mathscr R\circ T^j$, this says that every fixed finite list of successor coordinates vanishes along the sequence after a finite stage. It does not say that any $v_n$ belongs to $W_\infty$.
+
+**Proposition 164.4 (finite-prefix escape does not imply a common infinite escape).** There is an abstract positive quadratic form and a countable readout stack for which every finite-prefix unit sphere has zero infimum, while the exact infinite kernel has a positive coercivity infimum. Take
+
+$$
+\mathcal Y=\ell^\infty(\mathbb N_0),
+\qquad
+Q(x)=x_0^2+\sum_{k=1}^{\infty}2^{-k}x_k^2,
+$$
+
+and let $\mathscr S_j(x)=x_{j+1}$. Then
+
+$$
+Y_{\le n}=\bigcap_{j=0}^{n}\ker\mathscr S_j
+$$
+
+contains every unit vector $e_k$ with $k\ge n+2$. Hence
+
+$$
+\inf\{Q(x):x\in Y_{\le n},\ \|x\|_\infty=1\}=0,
+$$
+
+and the particular choice $e_{n+2}$ gives the displayed diagonal bound
+
+$$
+Q(e_{n+2})=2^{-(n+2)}\longrightarrow0.
+$$
+
+On the other hand,
+
+$$
+Y_\infty=\bigcap_{j=0}^{\infty}\ker\mathscr S_j
+ =\operatorname{span}\{e_0\},
+$$
+
+and every unit vector in $Y_\infty$ has $Q(x)=1$. Thus
+
+$$
+\inf\{Q(x):x\in Y_\infty,\ \|x\|_\infty=1\}=1.
+\tag{164.5}
+$$
+
+This is a logical separation example, not a model of the FIB heat form. It shows that the passage from all finite prefixes to the common infinite kernel requires an additional compactness, correction, or exact-common-kernel argument.
+
+**Corollary 164.5 (the remaining infinite-horizon obligation).** Proposition 164.2 proves coordinatewise finite-prefix escape for any countable family of finite-dimensional successor readouts. To obtain a genuine FIB infinite-horizon energy-collapse statement, one must additionally construct either
+
+1. a sequence in $W_\infty$ with unit norm and shrinking $g^2$-mass, or
+2. an exact correction procedure that converts the prefix sequence into $W_\infty$ while preserving nonzero norm and the energy estimate.
+
+Neither condition follows from rank-nullity applied separately to the finite prefixes. Consequently, a countable successor stack may still control the full calibrated kernel even though every finite horizon has zero coercivity infimum. The statements (164.1)--(164.5) do not construct a physical successor, a nonlinear residual-zero tuple, a legal simplex family, an exact H43 partition, a terminal compensator, an SRS-20 or $F_{64}$ witness, or a Lean/kernel theorem.
+
+## 追加锚（本行以下为增补区）
