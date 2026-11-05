@@ -45,7 +45,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hz : imbalance singleton = 0 := by simp [imbalance]
   have hx := h (k := 1) (n := 1) (by decide) (by decide) singleton hz
   change 1 + 2 ≤ 2 * 1 at hx
-  omega
+  exact (by decide : ¬ ((1 : ℕ) + 2 ≤ 2 * 1)) hx
 
 def source_registration : Registration arena (type_of% (@result)) where
   actual := actual
@@ -61,8 +61,8 @@ def source_registration : Registration arena (type_of% (@result)) where
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨0, 0, 1, ?_⟩
-    change (0 : ℕ) ≠ 1
+    refine ⟨1, 1, 2, ?_⟩
+    change (1 : ℕ) ≠ 2
     decide
 
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
