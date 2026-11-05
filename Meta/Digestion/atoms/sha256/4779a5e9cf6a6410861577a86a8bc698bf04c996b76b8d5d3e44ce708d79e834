@@ -1,0 +1,19 @@
+### 26.2　暗四面体强制相反相位对的总量
+
+在 $H_0$ 中固定
+
+$$
+\begin{gathered}
+x=e_0+e_2,\qquad y=e_1,\qquad
+q_s=(x+s y)/\eta,\quad Q_s=q_sq_s^*
+\quad(s\in\mu_6),\\
+X=xx^*/2,\qquad Y=yy^*,\qquad
+f(v)=\mu(vv^*)\quad(v\in D^6,\ v^*v=1),\\
+a_s=\mu(Q_s)=\widehat\mu((Q_s)_{\rm act}),\qquad
+\alpha=\mu(Y),\qquad C=2\mu(X)+\alpha.
+\end{gathered}
+\tag{26.6}
+$$
+
+$q_s$ 是原 $D_sB$ 的第一列，故最后一行的活动一致性由应用 26.2 的真实框架比较取得。$X$ 是全部 $M_6(D)$ 幂等子域中的投影；没有把范数二的 $x$ 归一成一条未经供应的活动单位叶，也没有假定其概率等于某个系数平方。
+
