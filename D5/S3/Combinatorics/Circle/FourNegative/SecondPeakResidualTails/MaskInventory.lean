@@ -2,10 +2,7 @@ import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD.LowBits
 import D5.S3.Combinatorics.Circle.ThreeBitSource
 import Mathlib.Tactic
 
-/- Source preparation only: UNCOMPILED.  In canonical integration publish
-   ThreeBitSource.mask_complement at its original declaration (remove private).
-   The references below deliberately use that future public address; there is
-   no copied proof or forwarding wrapper for that result here. -/
+/-! Exact binary inventories, consuming the original public complement proof. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 

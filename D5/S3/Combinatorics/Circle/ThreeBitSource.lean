@@ -288,7 +288,7 @@ private theorem actual_source_chains (x y z : ℕ)
       he hrel.2.2
 
 /-- The complementary first coefficient is exactly the complementary bit support. -/
-theorem mask_complement (u m n : ℕ) (h : m + n = 2 ^ u - 1) :
+public theorem mask_complement (u m n : ℕ) (h : m + n = 2 ^ u - 1) :
     Disjoint m.bitIndices.toFinset n.bitIndices.toFinset ∧
       m.bitIndices.toFinset ∪ n.bitIndices.toFinset = Finset.range u := by
   classical
