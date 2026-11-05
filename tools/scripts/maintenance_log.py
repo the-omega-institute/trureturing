@@ -14,6 +14,7 @@ transcripts.
 from __future__ import annotations
 
 import argparse
+import base64
 from datetime import datetime, timezone
 import fcntl
 import json
@@ -68,7 +69,8 @@ class MaintenanceLog:
         if parent_run_id == self.run_id:
             parent_run_id = os.environ.get(ENV_PARENT_RUN_ID)
         self.context = dict(run_id=self.run_id, parent_run_id=parent_run_id,
-                            pid=owner_pid or os.getpid(), parent_pid=parent_pid or os.getppid())
+                            pid=owner_pid or os.getpid(), parent_pid=parent_pid if parent_pid is not None else
+                            (os.getppid() if owner_pid is None else None))
         try:
             if not script or any(character not in
                     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.-" for character in script):
@@ -103,6 +105,21 @@ class MaintenanceLog:
     def child_environment(self, environment=None):
         return dict(os.environ if environment is None else environment, **{ENV_RUN_ID: self.run_id})
 
+    def state(self) -> str:
+        payload = dict(context=self.context, path=str(self.path) if self.path else None,
+                       started=self.started)
+        return self.run_id + ":" + base64.b64encode(json.dumps(payload).encode()).decode()
+
+    @classmethod
+    def restore(cls, state: str) -> "MaintenanceLog":
+        payload = json.loads(base64.b64decode(state.split(":", 1)[1]))
+        log = cls.__new__(cls)
+        log.context = payload["context"]
+        log.run_id = log.context["run_id"]
+        log.path = Path(payload["path"]) if payload["path"] else None
+        log.started = payload["started"]
+        return log
+
     @classmethod
     def from_environment(cls) -> "MaintenanceLog | None":
         script = os.environ.get("TRURETURING_MAINTENANCE_SCRIPT")
@@ -129,53 +146,36 @@ def _parse_owner(value: str | None) -> int | None:
         raise argparse.ArgumentTypeError("owner pid must be an integer")
 
 
-def begin(options: argparse.Namespace) -> int:
-    log = MaintenanceLog(options.script, options.repository, owner_pid=options.owner_pid,
-                         parent_pid=options.parent_pid)
-    log.emit("run_started")
-    # The caller captures this value; no business stream is read or written.
-    print(log.run_id, flush=True)
-    return 0
-
-
-def emit(options: argparse.Namespace) -> int:
-    log = MaintenanceLog(options.script, options.repository, run_id=options.run_id,
-                         owner_pid=options.owner_pid, parent_pid=options.parent_pid)
-    log.emit(options.event, **json.loads(options.fields) if options.fields else {})
-    return 0
-
-
-def finish(options: argparse.Namespace) -> int:
-    log = MaintenanceLog(options.script, options.repository, run_id=options.run_id,
-                         owner_pid=options.owner_pid, parent_pid=options.parent_pid)
-    fields = json.loads(options.fields) if options.fields else {}
-    log.finish(options.exit_code, **fields)
-    return 0
-
-
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="subcommand", required=True)
-    common = argparse.ArgumentParser(add_help=False)
-    common.add_argument("--script", required=True)
-    common.add_argument("--repository", type=Path)
-    common.add_argument("--run-id")
-    common.add_argument("--owner-pid", type=_parse_owner)
-    common.add_argument("--parent-pid", type=_parse_owner)
-    start = commands.add_parser("begin", parents=[common], help="record a native owner start")
-    start.set_defaults(handler=begin)
-    event = commands.add_parser("emit", parents=[common], help="record an observation")
+    start = commands.add_parser("begin", help="record a native owner start and return its state")
+    start.add_argument("--script", required=True)
+    start.add_argument("--repository", type=Path)
+    start.add_argument("--owner-pid", type=_parse_owner)
+    start.add_argument("--parent-pid", type=_parse_owner)
+    event = commands.add_parser("emit", help="record an observation from loaded state")
+    event.add_argument("--state", required=True)
     event.add_argument("--event", required=True)
     event.add_argument("--fields", help="JSON object of bounded observation fields")
-    event.set_defaults(handler=emit)
-    end = commands.add_parser("finish", parents=[common], help="record a native owner result")
+    end = commands.add_parser("finish", help="record a native owner result from loaded state")
+    end.add_argument("--state", required=True)
     end.add_argument("--exit-code", required=True, type=int)
     end.add_argument("--fields", help="JSON object of bounded outcome fields")
-    end.set_defaults(handler=finish)
     options = parser.parse_args(argv)
-    if options.subcommand != "begin" and not options.run_id:
-        parser.error(f"{options.subcommand} requires --run-id")
-    return options.handler(options)
+    if options.subcommand == "begin":
+        log = MaintenanceLog(options.script, options.repository, owner_pid=options.owner_pid,
+                             parent_pid=options.parent_pid)
+        log.emit("run_started")
+        print(log.state(), flush=True)
+    else:
+        log = MaintenanceLog.restore(options.state)
+        fields = json.loads(options.fields) if options.fields else {}
+        if options.subcommand == "finish":
+            log.finish(options.exit_code, **fields)
+        else:
+            log.emit(options.event, **fields)
+    return 0
 
 
 if __name__ == "__main__":

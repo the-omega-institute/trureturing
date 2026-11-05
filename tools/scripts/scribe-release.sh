@@ -7,20 +7,14 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/../.." && pwd -P)"
-if [[ -f "$ROOT/tools/scripts/maintenance_log.py" ]]; then
-  if [[ -n "${TRURETURING_MAINTENANCE_RUN_ID:-}" ]]; then
-    export TRURETURING_MAINTENANCE_PARENT_RUN_ID="$TRURETURING_MAINTENANCE_RUN_ID"
-  fi
-  unset TRURETURING_MAINTENANCE_RUN_ID
-  run_id=""
-  if run_id="$(python3 -B "$ROOT/tools/scripts/maintenance_log.py" begin \
-      --repository "$ROOT" --script scribe-release --owner-pid "$$" --parent-pid "$PPID" \
-      </dev/null 2>/dev/null)" && [[ "$run_id" =~ ^[0-9a-f]{32}$ ]]; then
-    export TRURETURING_MAINTENANCE_RUN_ID="$run_id"
-    export TRURETURING_MAINTENANCE_SCRIPT=scribe-release
-    export TRURETURING_MAINTENANCE_REPOSITORY="$ROOT"
-  fi
+if [[ -f "$ROOT/tools/scripts/lib/maintenance-log-lib.sh" ]]; then
+  source "$ROOT/tools/scripts/lib/maintenance-log-lib.sh"
 fi
+if declare -F maintenance_log_begin >/dev/null; then
+  maintenance_log_begin scribe-release "$ROOT" "$$" "$PPID"
+fi
+trap 'rc=$?; if declare -F maintenance_log_finish >/dev/null; then maintenance_log_finish "$rc"; fi; exit "$rc"' EXIT
+
 
 fail() {
   printf 'SCRIBE_RELEASE %s\n' "$2" >&2
@@ -98,12 +92,7 @@ cleanup() {
     fi
   fi
   if [[ -n "$TEMP_DIRECTORY" ]]; then rm -rf -- "$TEMP_DIRECTORY" || rc=1; fi
-  if [[ -n "${TRURETURING_MAINTENANCE_RUN_ID:-}" ]]; then
-    python3 -B "$ROOT/tools/scripts/maintenance_log.py" finish \
-      --repository "$ROOT" --script scribe-release \
-      --run-id "$TRURETURING_MAINTENANCE_RUN_ID" --owner-pid "$$" \
-      --exit-code "$rc" </dev/null >/dev/null 2>/dev/null || true
-  fi
+  if declare -F maintenance_log_finish >/dev/null; then maintenance_log_finish "$rc"; fi
   exit "$rc"
 }
 trap cleanup EXIT

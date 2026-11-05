@@ -13,7 +13,9 @@ public sealed class HostCleanupScriptTests
     [InlineData("shared_common_directory_and_correlation")]
     [InlineData("failing_destination_is_best_effort")]
     [InlineData("bash_owner_boundary")]
-    [InlineData("consumer_audit")]
+    [InlineData("bash_group_signal_matches_native")]
+    [InlineData("concurrent_rows_and_inherited_descriptor")]
+    [InlineData("elapsed_and_deleted_source_completion")]
     public void MaintenanceLoggingPreservesCommandBehavior(string probe)
     {
         if (OperatingSystem.IsWindows()) return;

@@ -3,79 +3,57 @@ using System.Globalization;
 
 namespace StrataLint.Engine;
 
-/// <summary>
-/// Best-effort completion adapter for native owners whose lifecycle starts in
-/// a shell entrypoint. It never starts or supervises the business command.
-/// </summary>
+/// <summary>Records observations without supervising the business command.</summary>
 public static class MaintenanceLogAdapter
 {
+    private static string? source;
+    private static string? state;
+
     public static void Start()
     {
         var script = Environment.GetEnvironmentVariable("TRURETURING_MAINTENANCE_SCRIPT");
         var repository = Environment.GetEnvironmentVariable("TRURETURING_MAINTENANCE_REPOSITORY");
         if (string.IsNullOrEmpty(script) || string.IsNullOrEmpty(repository)
             || !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TRURETURING_MAINTENANCE_RUN_ID"))) return;
-
-        var helper = Path.Combine(repository, "tools", "scripts", "maintenance_log.py");
-        if (!File.Exists(helper)) return;
         try
         {
-            using var process = CreateProcess(helper, "begin", script, repository);
-            process.StartInfo.ArgumentList.Add("--owner-pid");
-            process.StartInfo.ArgumentList.Add(Environment.ProcessId.ToString(CultureInfo.InvariantCulture));
-            if (!process.Start()) return;
-            process.StandardInput.Close();
-            var runId = process.StandardOutput.ReadToEnd().Trim();
-            _ = process.StandardError.ReadToEnd();
-            process.WaitForExit();
-            if (process.ExitCode == 0 && runId.Length == 32
-                && runId.All(static character => char.IsAsciiHexDigit(character)))
-                Environment.SetEnvironmentVariable("TRURETURING_MAINTENANCE_RUN_ID", runId);
+            source = File.ReadAllText(Path.Combine(repository, "tools", "scripts", "maintenance_log.py"));
+            var result = Observe("begin", "--script", script, "--repository", repository,
+                "--owner-pid", Environment.ProcessId.ToString(CultureInfo.InvariantCulture));
+            var separator = result.IndexOf(':');
+            if (separator == 32 && result[..separator].All(char.IsAsciiHexDigit))
+            {
+                state = result;
+                Environment.SetEnvironmentVariable("TRURETURING_MAINTENANCE_RUN_ID", result[..separator]);
+            }
         }
         catch
         {
-            // Maintenance logging is observation only and cannot change the command result.
+            // Observation failure cannot change the native command result.
         }
     }
 
     public static void Finish(int exitCode)
     {
-        var script = Environment.GetEnvironmentVariable("TRURETURING_MAINTENANCE_SCRIPT");
-        var repository = Environment.GetEnvironmentVariable("TRURETURING_MAINTENANCE_REPOSITORY");
-        var runId = Environment.GetEnvironmentVariable("TRURETURING_MAINTENANCE_RUN_ID");
-        if (string.IsNullOrEmpty(script) || string.IsNullOrEmpty(repository) || string.IsNullOrEmpty(runId)) return;
-
-        var helper = Path.Combine(repository, "tools", "scripts", "maintenance_log.py");
-        if (!File.Exists(helper)) return;
-
+        if (state is null) return;
         try
         {
-            using var process = CreateProcess(helper, "finish", script, repository);
-            process.StartInfo.ArgumentList.Add("--run-id");
-            process.StartInfo.ArgumentList.Add(runId);
-            process.StartInfo.ArgumentList.Add("--owner-pid");
-            process.StartInfo.ArgumentList.Add(Environment.ProcessId.ToString(CultureInfo.InvariantCulture));
-            process.StartInfo.ArgumentList.Add("--exit-code");
-            process.StartInfo.ArgumentList.Add(exitCode.ToString(CultureInfo.InvariantCulture));
-            if (!process.Start()) return;
-            process.StandardInput.Close();
-            process.WaitForExit();
-            _ = process.StandardOutput.ReadToEnd();
-            _ = process.StandardError.ReadToEnd();
+            _ = Observe("finish", "--state", state, "--exit-code", exitCode.ToString(CultureInfo.InvariantCulture));
         }
         catch
         {
-            // Maintenance logging is observation only and cannot change the command result.
+            // Source and cwd may already have been removed; the writer is loaded.
         }
     }
 
-    private static Process CreateProcess(string helper, string action, string script, string repository)
+    private static string Observe(params string[] arguments)
     {
-        var process = new Process
+        using var process = new Process
         {
             StartInfo = new ProcessStartInfo
             {
                 FileName = "python3",
+                WorkingDirectory = Path.GetPathRoot(Path.GetTempPath())!,
                 UseShellExecute = false,
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true,
@@ -83,12 +61,15 @@ public static class MaintenanceLogAdapter
             },
         };
         process.StartInfo.ArgumentList.Add("-B");
-        process.StartInfo.ArgumentList.Add(helper);
-        process.StartInfo.ArgumentList.Add(action);
-        process.StartInfo.ArgumentList.Add("--script");
-        process.StartInfo.ArgumentList.Add(script);
-        process.StartInfo.ArgumentList.Add("--repository");
-        process.StartInfo.ArgumentList.Add(repository);
-        return process;
+        process.StartInfo.ArgumentList.Add("-c");
+        process.StartInfo.ArgumentList.Add(source!);
+        foreach (var argument in arguments) process.StartInfo.ArgumentList.Add(argument);
+        process.Start();
+        process.StandardInput.Close();
+        var output = process.StandardOutput.ReadToEndAsync();
+        var error = process.StandardError.ReadToEndAsync();
+        process.WaitForExit();
+        _ = error.GetAwaiter().GetResult();
+        return process.ExitCode == 0 ? output.GetAwaiter().GetResult().Trim() : "";
     }
 }
