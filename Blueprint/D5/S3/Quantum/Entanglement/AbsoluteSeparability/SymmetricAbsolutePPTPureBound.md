@@ -32,7 +32,21 @@ $$\forall I \in \operatorname{Type},\; \forall L \in \operatorname{Type},\; [\op
 
 Partial transposition distributes over finite matrix sums.
 
-**Theorem 1.3 (Antisymmetric product estimate).**
+**Theorem 1.3 (Hermiticity of a rank-one partial transpose).**
+
+$$\forall A \in \operatorname{Type},\; \forall B \in \operatorname{Type},\; \forall psi \in (A\times B) \to \mathbb{C},\; \operatorname{Matrix.IsHermitian}\left((\operatorname{Matrix.of}\left(\operatorname{fun} (x: (A\times B)) \mapsto \operatorname{fun} (y: (A\times B)) \mapsto \operatorname{Matrix.vecMulVec}\left(psi, \operatorname{star}\left(psi\right)\right)\left((y.1, x.2), (x.1, y.2)\right)\right): \operatorname{Matrix}\left((A\times B), (A\times B), \mathbb{C}\right))\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsoluteSeparability/SymmetricAbsolutePPTPureBound.pt_rank_hermitian` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* J. Louvet, E. Serrano-Ensástiga, T. Bastin, J. Martin (2025). *Nonequivalence between absolute separability and positive partial transposition in the symmetric subspace*. DOI: [10.1103/PhysRevA.111.042418](https://doi.org/10.1103/PhysRevA.111.042418). URL: <https://arxiv.org/abs/2411.16461v2>.
+
+*Commentary.*
+
+For arbitrary index types, exchanging the first coordinates of the row and column of Matrix.vecMulVec psi (star psi) gives a Hermitian matrix. Transposing this matrix gives the second-factor partial transpose.
+
+**Theorem 1.4 (Antisymmetric product estimate).**
 
 $$\forall A \in \operatorname{Type},\; \forall B \in \operatorname{Type},\; [\operatorname{Fintype}\left(A\right)] [\operatorname{Fintype}\left(B\right)] \forall V \in \operatorname{Matrix}\left(A, B, \mathbb{C}\right),\; \forall M \in \operatorname{Matrix}\left(A, B, \mathbb{C}\right),\; \sum_{(i: B)} (\sum_{(j: B)} (\operatorname{Complex.normSq}\left(\left(\operatorname{Matrix.transpose}\left(V\right) \cdot M\right)\left(i, j\right) - \left(\operatorname{Matrix.transpose}\left(V\right) \cdot M\right)\left(j, i\right)\right))) \le 2 \cdot (\sum_{(i: A)} (\sum_{(j: B)} (\operatorname{Complex.normSq}\left(V\left(i, j\right)\right)))) \cdot (\sum_{(i: A)} (\sum_{(j: B)} (\operatorname{Complex.normSq}\left(M\left(i, j\right)\right))))$$
 
@@ -46,7 +60,7 @@ $$\forall A \in \operatorname{Type},\; \forall B \in \operatorname{Type},\; [\op
 
 The squared Frobenius mass of the antisymmetric part of a product is at most twice the product of the two squared Frobenius masses. Expanding row wedges and applying Cauchy–Schwarz gives this estimate.
 
-**Theorem 1.4 (Compression of a lower bound).**
+**Theorem 1.5 (Compression of a lower bound).**
 
 $$\forall I \in \operatorname{Type},\; [\operatorname{Fintype}\left(I\right)] [\operatorname{DecidableEq}\left(I\right)] \forall A \in \operatorname{Matrix}\left(I, I, \mathbb{C}\right),\; \forall Q \in \operatorname{Matrix}\left(I, I, \mathbb{C}\right),\; \forall a \in \mathbb{R},\; (\operatorname{Matrix.IsHermitian}\left(Q\right)) \Rightarrow ((Q \cdot Q = Q) \Rightarrow ((Q \cdot A \cdot Q = A) \Rightarrow ((\operatorname{Matrix.PosSemidef}\left(A + (a) \cdot ((1: \operatorname{Matrix}\left(I, I, \mathbb{C}\right)))\right)) \Rightarrow (\operatorname{Matrix.PosSemidef}\left(A + (a) \cdot (Q)\right)))))$$
 
@@ -60,7 +74,7 @@ $$\forall I \in \operatorname{Type},\; [\operatorname{Fintype}\left(I\right)] [\
 
 A lower bound by a scalar identity compresses to the same scalar times any Hermitian projector supporting the matrix.
 
-**Theorem 1.5 (Half-trace bound).**
+**Theorem 1.6 (Half-trace bound).**
 
 $$\forall I \in \operatorname{Type},\; \forall L \in \operatorname{Type},\; [\operatorname{Fintype}\left(I\right)] [\operatorname{DecidableEq}\left(I\right)] [\operatorname{Fintype}\left(L\right)] [\operatorname{DecidableEq}\left(L\right)] \forall S \in \operatorname{Finset}\left(I\right),\; \forall A \in \operatorname{Matrix}\left(I \to L, I \to L, \mathbb{C}\right),\; (\operatorname{Matrix.PosSemidef}\left(A\right)) \Rightarrow (\operatorname{Matrix.PosSemidef}\left(\operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricAbsolutePPTPureBound.partialTransposeOn}\left(S, A\right) + (\frac{\operatorname{Complex.re}\left(\operatorname{Matrix.trace}\left(A\right)\right)}{2}) \cdot ((1: \operatorname{Matrix}\left(I \to L, I \to L, \mathbb{C}\right)))\right))$$
 
@@ -81,4 +95,5 @@ The partial transpose of a positive matrix is bounded below by minus half its tr
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/SymmetricAbsolutePPTPureBound.partialTransposeOn`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/SymmetricAbsolutePPTPureBound.partialTranspose_sum`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/SymmetricAbsolutePPTPureBound.psd_partialTranspose_half_trace`
+- Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/SymmetricAbsolutePPTPureBound.pt_rank_hermitian`
 - Dependency: [D5/S3/Quantum/Recovery/PetzSpectralCoordinates](../../Recovery/PetzSpectralCoordinates.md)
