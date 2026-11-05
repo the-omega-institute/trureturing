@@ -21,6 +21,12 @@ internal sealed class HardinA240513LadderDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("The cell type is Fin n × Fin 2 and each board is a function from this type to Bool. False is zero. The displayed finite-set cardinality is the filter cardinality in a: its local neighbor count adds the equal-valued cell in the other column, the previous row when the row index is positive, and the next row when that row remains in the board. In width two, Fin.rev exchanges the two columns. The existential first-row condition makes a 0 = 0; for every positive height it is exactly A(0,0) = false. In height one the two choices for the other entry are both legal, so a 1 = 2."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("finite-certificate"), DeclarationHandle.Create(Prefix + "finite_certificate"),
+                H("The finite continuation identity"),
+                StatementSource.FromAuthor(Disp(CertificateFormula())),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("Here r and s range over binary rows Fin 2 → Bool. The integer continuation vector starts with v 0 r s = 1 when the last row s satisfies its boundary condition against r, and zero otherwise. Its step sums v k s t over the binary rows t for which s satisfies its interior condition against r and t. The equality holds on every ordered row pair. Applying this same linear step propagates the equality to every shift; taking the boundary-weighted total then gives the recurrence in result. The finite equality is checked by kernel reduction."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                 H("The signed recurrence and formal generating function"),
                 StatementSource.FromAuthor(Disp(ResultFormula())),
@@ -48,6 +54,18 @@ internal sealed class HardinA240513LadderDocument : IScribeDocumentDefinition
         var columnStep = OrOf(Eq(pc, Add(qc, D(1))), Eq(qc, Add(pc, D(1))));
         var rowStep = OrOf(Eq(pr, Add(qr, D(1))), Eq(qr, Add(pr, D(1))));
         return OrOf(AndOf(Eq(pr, qr), columnStep), AndOf(Eq(pc, qc), rowStep));
+    }
+
+    private static Formula CertificateFormula()
+    {
+        var r = V("r"); var s = V("s");
+        Formula Vector(byte k) => Call("v", D(k), r, s);
+        var rhs = Add(Mul(D(2), Vector(4)), Vector(3));
+        rhs = Sub(rhs, Vector(2));
+        rhs = Sub(rhs, Mul(D(2), Vector(1)));
+        rhs = Add(rhs, Vector(0));
+        var row = Arrow(Call("Fin", D(2)), V("Bool"));
+        return All("r", row, All("s", row, Eq(Vector(5), rhs)));
     }
 
     private static Formula ResultFormula()

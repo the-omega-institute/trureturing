@@ -3,8 +3,53 @@
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA240513Ladder
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA240513Ladder.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA240513Ladder.finite_certificate
    digest: Literal binary ladder counts, their signed recurrence and generating series. -/
+
+/-
+admission_basis: open-problem-resolution (#26893; Proved)
+escape_witness: count_eq_v (the all-k continuation-count invariant, used by counting_bridge)
+Direct frozen dependencies: none; the mathematical imports are pinned Mathlib.
+The literal count retains the first-entry constraint and both open end boundaries.
+The induction in count_eq_v identifies finite continuation counts with v for every k;
+counting_bridge uses that invariant to connect literal boards to the transfer vectors.
+With same-delivery helpers inlined, these are content, as are recurrence,
+generating_function and result, whose all-length conclusions use that counting bridge.
+The finite decide certificate and initial values are normalization, hence bind-only.
+The induction in vector_recurrence only distributes the same linear step over an
+already supplied equality; total_recurrence only distributes its weighted sum.
+Neither establishes a further non-normalization fact or supplies an escape witness.
+The local boundary decompositions are finite-index and finite-sum normalization.
+The following declarations give proof_shape and their mathematical consumers.
+equalBit: proof_shape=bind-only; consumers=HardinA240513Ladder.Legal, HardinA240513Ladder.Boundary, HardinA240513Ladder.Interior
+Legal: proof_shape=bind-only; consumers=HardinA240513Ladder.a, HardinA240513Ladder.legal_iff
+instDecidableLegal: proof_shape=bind-only; consumers=HardinA240513Ladder.a
+a: proof_shape=bind-only; consumers=HardinA240513Ladder.counting_bridge, HardinA240513Ladder.initial, HardinA240513Ladder.result
+Row: proof_shape=bind-only; consumers=HardinA240513Ladder.Boundary, HardinA240513Ladder.Interior, HardinA240513Ladder.v
+Boundary: proof_shape=bind-only; consumers=HardinA240513Ladder.TailGood, HardinA240513Ladder.v, HardinA240513Ladder.total
+Interior: proof_shape=bind-only; consumers=HardinA240513Ladder.TailGood, HardinA240513Ladder.step
+instDecidableBoundary: proof_shape=bind-only; consumers=HardinA240513Ladder.v, HardinA240513Ladder.total
+instDecidableInterior: proof_shape=bind-only; consumers=HardinA240513Ladder.step
+TailGood: proof_shape=bind-only; consumers=HardinA240513Ladder.count, HardinA240513Ladder.legal_iff
+instDecidableTailGood: proof_shape=bind-only; consumers=HardinA240513Ladder.count
+tailGood_cons: proof_shape=bind-only; consumers=HardinA240513Ladder.count_succ
+legal_iff: proof_shape=bind-only; consumers=HardinA240513Ladder.counting_bridge
+step: proof_shape=bind-only; consumers=HardinA240513Ladder.v, HardinA240513Ladder.count_succ, HardinA240513Ladder.vector_recurrence
+v: proof_shape=bind-only; consumers=HardinA240513Ladder.count_eq_v, HardinA240513Ladder.finite_certificate, HardinA240513Ladder.vector_recurrence
+count: proof_shape=bind-only; consumers=HardinA240513Ladder.count_zero, HardinA240513Ladder.count_succ, HardinA240513Ladder.count_eq_v
+count_zero: proof_shape=bind-only; consumers=HardinA240513Ladder.count_eq_v
+count_succ: proof_shape=bind-only; consumers=HardinA240513Ladder.count_eq_v
+count_eq_v: proof_shape=content; consumers=HardinA240513Ladder.counting_bridge
+total: proof_shape=bind-only; consumers=HardinA240513Ladder.counting_bridge, HardinA240513Ladder.total_recurrence
+counting_bridge: proof_shape=content; consumers=HardinA240513Ladder.initial, HardinA240513Ladder.recurrence
+finite_certificate: proof_shape=bind-only; consumers=HardinA240513Ladder.vector_recurrence
+vector_recurrence: proof_shape=bind-only; consumers=HardinA240513Ladder.total_recurrence
+total_recurrence: proof_shape=bind-only; consumers=HardinA240513Ladder.recurrence
+initial: proof_shape=bind-only; consumers=HardinA240513Ladder.recurrence, HardinA240513Ladder.generating_function
+recurrence: proof_shape=content; consumers=HardinA240513Ladder.generating_function, HardinA240513Ladder.result
+generating_function: proof_shape=content; consumers=HardinA240513Ladder.result
+result: proof_shape=content; consumers=terminal result
+-/
 
 import Mathlib.RingTheory.PowerSeries.Basic
 import Mathlib.Tactic
@@ -184,8 +229,8 @@ private theorem counting_bridge (k : ℕ) : (a (k + 2) : ℤ) = total (v k) := b
 
 set_option maxRecDepth 4096 in
 set_option maxHeartbeats 4000000 in
--- Six continuation vectors on sixteen row-pair states are reduced in the kernel.
-private theorem finite_certificate : ∀ r s : Row,
+/-- The six continuation vectors satisfy the order-five identity on every row-pair state. -/
+theorem finite_certificate : ∀ r s : Row,
     v 5 r s = 2 * v 4 r s + v 3 r s - v 2 r s - 2 * v 1 r s + v 0 r s := by
   decide +kernel
 
