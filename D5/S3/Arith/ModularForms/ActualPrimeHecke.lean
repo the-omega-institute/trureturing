@@ -654,6 +654,21 @@ theorem primeHecke_qExpansion_coeff (p : ℕ) [Fact p.Prime] (k : ℤ)
   rw [primeHecke_action]
   ring
 
+/-- A normalized prime-Hecke eigenform has eigenvalue equal to its `p`-th q-expansion coefficient.
+
+This is the outward Fourier-coefficient bridge for the actual analytic Hecke operator. -/
+theorem primeHecke_eigenvalue_eq_qExpansion_coeff
+    (p : ℕ) [Fact p.Prime] (k : ℤ) (f : CuspForm 𝒮ℒ k)
+    (hnorm : (qExpansion 1 f).coeff 1 = 1) {lam : ℂ}
+    (heig : primeHecke p k f = lam • f) :
+    lam = (qExpansion 1 f).coeff p := by
+  have hp₁ : ¬ p ∣ 1 := (Fact.out : Nat.Prime p).not_dvd_one
+  have h := primeHecke_qExpansion_coeff p k f 1
+  rw [heig, FunLike.coe_smul,
+      ModularForm.qExpansion_smul one_pos one_mem_strictPeriods_SL lam f,
+      PowerSeries.coeff_smul, smul_eq_mul, hnorm] at h
+  simpa [hp₁] using h
+
 end
 
 end D5.S3.Arith.ModularForms
