@@ -16,8 +16,6 @@ universe u
 
 structure Parameters where
   Vertex : Type u
-  finiteVertex : Fintype Vertex
-  decideVertex : DecidableEq Vertex
   configurations : Finset (Finset Vertex)
   response : configurations → configurations → ℝ
   output : configurations
@@ -45,7 +43,7 @@ abbrev arena : Arena where
     (T : S → S → ℝ) (a b : V → ℝ) (_hT : ResponseLaws S T a b)
     (_hG : G.Connected) (_hseed : ∃ k, a k = 0),
     (∀ k, a k = 0 ∧ b k = 1) ∧ ∀ t s,
-      r.readout () ⟨V, fv, dv, S, T, t⟩ s = if t = s then 1 else 0
+      r.readout () ⟨V, S, T, t⟩ s = if t = s then 1 else 0
 
 theorem actual_law : arena.{u}.Law actual := by
   exact @connected_response_calibration
@@ -112,7 +110,7 @@ def source_registration : Registration arena.{u}
       exact nomatch i
   dependence := by
     intro i
-    refine ⟨⟨SampleVertex, inferInstance, inferInstance, sampleFamily,
+    refine ⟨⟨SampleVertex, sampleFamily,
       sampleResponse, emptyRecord⟩, emptyRecord, singletonRecord, ?_⟩
     norm_num [actual, realize, sampleResponse, emptyRecord, singletonRecord]
 
@@ -139,7 +137,7 @@ noncomputable def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Measurements.ConnectedExclusionCalibration
     definition := none
-    coordinates := #[0, 1, 2, 4, 6, 12]
+    coordinates := #[0, 4, 6, 12]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "arg", "body", "body", "fn", "arg"]
