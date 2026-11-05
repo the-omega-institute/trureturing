@@ -4829,4 +4829,100 @@ Thus varying the first-order direction does not evade the fixed-ray cost while i
 
 The source-specific statements (159.3)–(159.10) are `repo-derived` consequences of the retained first-order map, multilinearity, the Markov $L^1$ contraction, and the positive $(0,0,3)$ coefficient. They are a boundary for bounded two-label rays and do not assert an exact whole-$G$ finite partition, a degree certificate, a uniform spectral gap or a Lean/kernel theorem.
 
+## 160. Finite-dimensional energy coercivity for the calibrated kernel
+
+**Definition 160.1 (a fixed finite-dimensional kernel reservoir).** Retain the complete telescope of Definition 155.1, the two-label family of Definition 159.1, and the positive coefficient of Proposition 134.2. Let $k\ge1$ and let
+
+$$
+B:\mathbb R^k\longrightarrow V=\ker\Lambda_{134}
+\tag{160.1}
+$$
+
+be an injective real linear map. Its range is a fixed finite-dimensional first-order calibrated reservoir. Put
+
+$$
+\mathfrak q_B(z)
+ =c\langle gBz,P(gBz)\rangle_m
+ =c\|T_{d/2}(gBz)\|_{L^2(m)}^2,
+\qquad z\in\mathbb R^k.
+\tag{160.2}
+$$
+
+All norms on the parameter space are Euclidean, while function bounds use $L^\infty(m)$.
+
+**Proposition 160.2 (uniform heat-energy coercivity on a fixed reservoir).** There is a number $\alpha_B>0$ such that
+
+$$
+\mathfrak q_B(z)\ge\alpha_B\|z\|_2^2
+\qquad(z\in\mathbb R^k).
+\tag{160.3}
+$$
+
+Moreover, with
+
+$$
+K_B=\max_{\|z\|_2=1}\|Bz\|_\infty<\infty,
+\tag{160.4}
+$$
+
+every unit parameter $z$ has $\mathfrak q_B(z)\ge\alpha_B$.
+
+*Proof.* The map $z\mapsto gBz$ is continuous from $\mathbb R^k$ into $L^2(m)$: boundedness of $g$ in $L^2(m)$ and finite-dimensional norm equivalence give
+
+$$
+\|gB(z-z')\|_2
+ \le\|g\|_2\,\|B(z-z')\|_\infty
+ \le C_B\|g\|_2\,\|z-z'\|_2
+\tag{160.5}
+$$
+
+for some finite $C_B$. The $L^2$ contraction of $T_{d/2}$ then makes $\mathfrak q_B$ continuous. If $z\ne0$, injectivity gives $Bz\ne0$, and Proposition 134.2 gives
+
+$$
+\mathfrak q_B(z)>0.
+\tag{160.6}
+$$
+
+The Euclidean unit sphere is compact, so the continuous positive function $\mathfrak q_B$ has a positive minimum $\alpha_B$ there. Since $\mathfrak q_B$ is quadratic, scaling gives (160.3). The same compactness gives (160.4). $\square$
+
+**Proposition 160.3 (a fixed finite reservoir cannot hide its energy in a vanishing terminal correction).** Let $t_n\ne0$ with $t_n\to0$, let $z_n\in\mathbb R^k$ satisfy $\|z_n\|_2=1$, and set $v_n=Bz_n$. Suppose that for bounded real Borel $w_n$ the tuples
+
+$$
+u_y^{(n)}=f_y+t_n\sigma_yv_n+t_n^2\tau_yw_n
+\tag{160.7}
+$$
+
+are legal, have zero full residual, and satisfy $\sup_n\|w_n\|_\infty<\infty$. Then
+
+$$
+\|w_n\|_\infty
+\ge
+\frac{\alpha_B}
+ {\|\psi_0\|_1+2FK_B|t_n|+K_B^2t_n^2},
+\tag{160.8}
+$$
+
+and hence
+
+$$
+\liminf_{n\to\infty}\|w_n\|_\infty
+\ge\frac{\alpha_B}{\|\psi_0\|_1}>0.
+\tag{160.9}
+$$
+
+In particular, no such fixed finite-dimensional reservoir admits exact full-law corrections whose order-$t^2$ terminal compensators tend to zero uniformly along its unit parameter sphere.
+
+*Proof.* Proposition 160.2 gives
+
+$$
+c\langle gv_n,P(gv_n)\rangle_m=\mathfrak q_B(z_n)\ge\alpha_B.
+\tag{160.10}
+$$
+
+Also $\|v_n\|_\infty\le K_B$. Apply Proposition 159.3 with $K=K_B$, $\alpha=\alpha_B$, and $w_n$ as in (160.7). Its $(0,0,3)$ identity uses the actual terminal $Pu^{(n)}_3$, so (160.8) follows without replacing that terminal by $Pf_3$. Taking the limit gives (160.9). $\square$
+
+**Corollary 160.4 (the finite-dimensional SRS escape condition).** A proposed small-amplitude completion using one fixed injective finite-dimensional map $B:\mathbb R^{20}\to\ker\Lambda_{134}$ cannot simultaneously have, on a parameter sphere of nonzero radius, exact full-law residual zero and terminal compensators $w_t\to0$. To avoid the obstruction it must leave at least one of these hypotheses: use changing finite-dimensional reservoirs, allow the compensator to retain a positive size, or arrange a genuine energy collapse outside every fixed finite-dimensional reservoir. The result does not supply any of those alternatives, and it does not settle the general SRS-20 route or $F_{64}$.
+
+The source-specific statements (160.3)–(160.10) use only finite-dimensional compactness, injectivity of the positive heat form on the retained kernel, and Proposition 159.3. They do not claim a spectral gap on the full $L^\infty$ space, an exact H43 finite partition, a nonlinear degree estimate, a physical realization or a Lean/kernel theorem.
+
 ## 追加锚（本行以下为增补区）
