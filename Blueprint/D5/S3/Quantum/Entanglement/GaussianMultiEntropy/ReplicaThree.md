@@ -8,7 +8,7 @@ The scientific source is An exact balancing law for order-three Gaussian multi-e
 
 **Definition 1.1 (The order-three parameter).**
 
-$$kappa=\frac{3(a^2-1)}{4(N-1)}$$
+$$\forall N,a \in \mathbb{R}, \kappa(N,a)=\frac{3(a^2-1)}{4(N-1)}$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThree.kappa` (`✓ std3`).
 
@@ -28,7 +28,7 @@ $$GM_{3}=\frac{\log\frac{(1+\kappa s)^2}{D_{x}D_{y}D_{z}}}{12}$$
 
 *Commentary.*
 
-For every positive integer x,y,z and real a >= 1, let N = x + y + z, s = xy + xz + yz, and D_u = 1 + kappa u(N - u). The actual GaussianMultiEntropyAsymptotic.GM3 3 x y z a equals log((1 + kappa s)^2/(D_x D_y D_z))/12. This is the real eMinus fully symmetric pure bosonic Gaussian family, with the original Lebesgue replica integrals, twists and entropy normalizations. At replica three the nine tripartite weights consist of zero, two occurrences of each labelled cut coefficient multiplied by 3/4, and two occurrences of 3s/4. The existing all-n integral/Fourier bridge and positive products justify the logarithmic reduction. All ties and permutations are in scope. Real party sizes in the scalar supplier are a scalar extension only. Replica-one continuation, higher-replica balancing, other Gaussian branches and large-N/Page asymptotics remain separate; in particular this does not take over issue 22644.
+For every positive integer x,y,z and real a >= 1, let N = x + y + z, s = xy + xz + yz, and D_u = 1 + kappa u(N - u). The actual GaussianMultiEntropyAsymptotic.GM3 3 x y z a equals log((1 + kappa s)^2/(D_x D_y D_z))/12. This is the real eMinus fully symmetric pure bosonic Gaussian family, with the original Lebesgue replica integrals, twists and entropy normalizations. At replica three the nine tripartite weights consist of zero, two occurrences of each labelled cut coefficient multiplied by 3/4, and two occurrences of 3s/4. The existing all-n integral/Fourier bridge and positive products justify the logarithmic reduction. All ties and permutations are in scope. Real party sizes in the scalar supplier are a scalar extension only. Replica-one continuation, higher-replica balancing, other Gaussian branches and large-N/Page asymptotics remain separate; the fixed-a Page/large-N target of issue 22644 has a separate range.
 
 **Theorem 1.3 (Physical vacuum and squeezing).**
 

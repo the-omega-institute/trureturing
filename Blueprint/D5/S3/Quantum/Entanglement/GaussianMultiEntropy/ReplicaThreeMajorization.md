@@ -4,7 +4,7 @@
 
 On each positive-real fixed-sum plane the order-three scalar expression is strictly Schur-convex. Among comparable triples equality occurs exactly for permutations. This does not assert that incomparable triples have different values, or that real scalar sizes are physical fractional modes.
 
-The finite balancing law is from Haobo Ma then Wenlin Zhang, An exact balancing law for order-three Gaussian multi-entropy, 4 November 2026, CC BY 4.0. The majorization criterion is classical (Marshall, Olkin and Arnold); the physical family is due to Camargo and Nishida. The existing PositiveSimplexGeometryAndMixing and LogScalarCurvatureMonotone modules supply the positive T-transform chain, and retain their existing authorship and audit boundaries.
+The finite balancing law is from Haobo Ma then Wenlin Zhang, An exact balancing law for order-three Gaussian multi-entropy, 4 November 2026, CC BY 4.0. The majorization criterion is classical (Marshall, Olkin and Arnold); the physical family is due to Camargo and Nishida. The existing PositiveSimplexGeometryAndMixing and LogScalarCurvatureMonotone modules supply the positive T-transform chain, and retain their existing authorship.
 
 **Theorem 1.1 (Majorization, strictness and permutation equality).**
 

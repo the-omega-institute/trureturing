@@ -8,7 +8,7 @@ Scientific source: Haobo Ma then Wenlin Zhang, An exact balancing law for order-
 
 **Definition 1.1 (The scalar B=C curve).**
 
-$$F(k,N,b)=V(k,N-2b,b,b)$$
+$$\forall k \in \mathbb{R}, \forall N \in \mathbb{R}, \forall b \in \mathbb{R}, F(k,N,b)=V(k,N-2b,b,b)$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeCurve.curve` (`✓ std3`).
 
@@ -20,7 +20,7 @@ F(k,N,b)=V(k,N-2b,b,b). For k>0 and N>0 its positive scalar domain is 0<b<N/2. F
 
 **Definition 1.2 (The exact derivative coefficient).**
 
-$$D=\frac{k^2b(3b-N)[N+k(2A^2b+3Ab^2+2b^3)]}{6LRM}$$
+$$\forall k \in \mathbb{R}, \forall N \in \mathbb{R}, \forall b \in \mathbb{R}, D(k,N,b)=\frac{k^2b(3b-N)[N+k(2(N-2b)^2b+3(N-2b)b^2+2b^3)]}{6(1+2kb(N-2b))(1+kb(N-b))(1+k(2Nb-3b^2))}$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeCurve.curveDerivative` (`✓ std3`).
 

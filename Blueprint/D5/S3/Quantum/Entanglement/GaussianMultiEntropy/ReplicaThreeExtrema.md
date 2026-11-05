@@ -8,7 +8,7 @@ Scientific source: Haobo Ma then Wenlin Zhang, An exact balancing law for order-
 
 **Definition 1.1 (The balanced representative).**
 
-$$b(N)=(q+\delta_0,q+\delta_1,q)$$
+$$\forall N \in \mathbb{N}, b(N)=(\lfloor\frac{N}{3}\rfloor+\mathbf{1}_{0<mod\left(N, 3\right)},\lfloor\frac{N}{3}\rfloor+\mathbf{1}_{1<mod\left(N, 3\right)},\lfloor\frac{N}{3}\rfloor)$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeExtrema.balanced` (`✓ std3`).
 
@@ -20,7 +20,7 @@ Write N=3q+r with q=N/3 and r=N%3 in {0,1,2}, and put delta_0=[r>0], delta_1=[r>
 
 **Definition 1.2 (The extreme representative).**
 
-$$e(N)=(N-2,1,1)$$
+$$\forall N \in \mathbb{N}, e(N)=(N-2,1,1)$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeExtrema.extreme` (`✓ std3`).
 
@@ -32,7 +32,7 @@ The extreme positive integer representative is (N-2,1,1). Its full permutation c
 
 **Definition 1.3 (Balanced integer triples).**
 
-$$B(x) \iff \forall i,j,x_i\le x_j+1$$
+$$\forall x \in \{0,1,2\}\to \mathbb{N}, B(x) \iff \forall i \in \{0,1,2\}, \forall j \in \{0,1,2\}, x_i\le x_j+1$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeExtrema.IsBalanced` (`✓ std3`).
 

@@ -8,7 +8,7 @@ Scientific source: Haobo Ma then Wenlin Zhang, An exact balancing law for order-
 
 **Definition 1.1 (The pair sum).**
 
-$$s=xy+xz+yz$$
+$$\forall x \in \mathbb{R}, \forall y \in \mathbb{R}, \forall z \in \mathbb{R}, s\left(x, y, z\right)=xy+xz+yz$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeScalar.pairSum` (`✓ std3`).
 
@@ -20,7 +20,7 @@ The second elementary symmetric polynomial s = xy + xz + yz of the three labelle
 
 **Definition 1.2 (A labelled cut factor).**
 
-$$D_{x}=1+kx(y+z)$$
+$$\forall k \in \mathbb{R}, \forall x \in \mathbb{R}, \forall y \in \mathbb{R}, \forall z \in \mathbb{R}, D\left(k, x, y, z\right)=1+kx(y+z)$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeScalar.cut` (`✓ std3`).
 
@@ -32,7 +32,7 @@ D_x = 1 + k x(y + z). The three factors D_x, D_y and D_z are labelled occurrence
 
 **Definition 1.3 (The scalar value).**
 
-$$V(k,x,y,z)=\frac{2\log(1+ks)-\log D_{x}-\log D_{y}-\log D_{z}}{12}$$
+$$\forall k \in \mathbb{R}, \forall x \in \mathbb{R}, \forall y \in \mathbb{R}, \forall z \in \mathbb{R}, V(k,x,y,z)=\frac{2\log(1+ks\left(x, y, z\right))-\log D\left(k, x, y, z\right)-\log D\left(k, y, x, z\right)-\log D\left(k, z, x, y\right)}{12}$$
 
 *Formalization.* `D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeScalar.value` (`✓ std3`).
 
@@ -64,7 +64,7 @@ $$V(k,x,y,z)=V(k,y,z,x)$$
 
 *Commentary.*
 
-For all real k,x,y,z, V(k,x,y,z)=V(k,y,z,x). The majorization proof consumes this helper to order any three distinct party indices without dropping labelled multiplicities.
+For all real k,x,y,z, V(k,x,y,z)=V(k,y,z,x). Together with swap symmetry this gives invariance under all permutations of the three party labels, retaining every cut occurrence.
 
 **Theorem 1.6 (The logarithmic quotient).**
 
