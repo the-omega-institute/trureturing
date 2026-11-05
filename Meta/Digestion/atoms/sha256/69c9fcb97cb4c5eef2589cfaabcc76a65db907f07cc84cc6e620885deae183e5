@@ -1,0 +1,72 @@
+**Corollary 56.3 (a full-domain quadratic support bound).**
+For either row, let $\delta_0=b^2-a^2=\ell^2-m^2=h/2$.  For all
+$\alpha,\beta\ge0$ and every point of the same closed triangle,
+
+$$
+\begin{aligned}
+\alpha R^2+\beta C^2\n&\le \mathcal H_\sigma(\alpha,\beta;u)\\
+&:=\alpha\left(abL^2+\frac{(b-a)^2u}{2}\right)
+ +\beta(\ell^2+m^2)\left(1-\frac u2\right)\\
+&\quad+\sqrt{\frac{\delta_0^2(\alpha+\beta)^2T}{4}
+             +\beta^2\ell^2m^2W}.
+\end{aligned}
+\tag{56.8}
+$$
+
+Consequently, for $p=1-q$, $E_\sigma=K_\sigma^2p+K_{-\sigma}^2q$,
+and every $z>0$, with
+
+$$
+\alpha=p+\sqrt{pq}\,z,\qquad
+\beta=q+\frac{\sqrt{pq}}{z},
+$$
+
+one has the exact full-domain lower envelope
+
+$$
+G_\sigma\ge E_\sigma-4\mathcal H_\sigma(\alpha,\beta;u),
+\qquad
+G_\sigma\ge E_\sigma-4\inf_{z>0}\mathcal H_\sigma(\alpha,\beta;u),
+\tag{56.9}
+$$
+
+with the endpoint populations obtained by the corresponding limit.
+
+*Proof.* In the ordered coordinates,
+
+$$
+R^2=abL^2+\frac{(b-a)^2u}{2}+\frac{\delta_0t}{2},
+$$
+
+$$
+C^2=(\ell^2+m^2)\left(1-\frac u2\right)
+      +\frac{\delta_0t}{2}+2\ell mF.
+$$
+
+Thus the part depending on $(t,2F)$ is
+$\delta_0(\alpha+\beta)t/2+\beta\ell m(2F)$.
+The ellipse (56.5) and Cauchy--Schwarz bound its maximum by the square
+root in (56.8), proving the first inequality.  Finally,
+
+$$
+\Gamma^2=pR^2+qC^2+2\sqrt{pq}\,RC
+\le \alpha R^2+\beta C^2,
+$$
+
+because $zR^2+C^2/z\ge2RC$.  Since
+$G_\sigma=E_\sigma-4\Gamma^2$, (56.9) follows. \hfill$\square$
+
+The support bound is exact for the auxiliary $(t,2F)$ fibre, but its
+relaxation need not be attained by the minimizer of $G_\sigma$.  The
+remaining problem is therefore reduced to the explicit $(q,u,z)$ lower
+envelope in (56.9).  No uniform comparison with $23/50$ has yet been
+proved, and no global negative minimizer has been certified.  Thus
+
+$$
+A_-(13/4)>A_+(13/4)
+$$
+
+remains open; (56.1) and (56.9) are strict progress toward the two
+quantified alternatives without changing their domains or their source
+contracts.
+
