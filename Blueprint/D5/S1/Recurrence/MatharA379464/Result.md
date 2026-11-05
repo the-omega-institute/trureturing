@@ -176,6 +176,10 @@ $$\forall n \in \mathbb{N},\; (7 \le n) \Rightarrow (3 \cdot \left((n:\mathbb{Z}
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/MatharA379464/Result.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mathar379464` (proved) by `D5/S1/Recurrence/MatharA379464/Result.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mathar379464","declaration_gid":"D5/S1/Recurrence/MatharA379464/Result.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. J. Mathar; Emely Hanna Li Lobnig; Thomas Scheuerle (2025). *OEIS A379464, generalized Motzkin paths with negative boundary*. URL: <https://oeis.org/A379464/internal>.
