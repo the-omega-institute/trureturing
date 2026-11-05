@@ -367,9 +367,7 @@ internal static class CliApplication
     private static void ObserveMaintenanceResult(string operation, CommandResult result, int exitCode)
     {
         JsonElement? payload = null;
-        foreach (var line in (result.Output + "
-" + result.Error).Split('
-').Reverse())
+        foreach (var line in (result.Output + "\n" + result.Error).Split('\n').Reverse())
         {
             var candidate = line.Trim();
             var prefix = candidate.StartsWith("LEAN_CACHE ", StringComparison.Ordinal)
