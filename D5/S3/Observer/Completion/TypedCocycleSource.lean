@@ -6,6 +6,7 @@
    utility: none
    digest: Exhaustive legal words and native totals on the shared-name two-loop source. -/
 
+import D5.S0.Automata.TypedPartialDFAOOverBase
 import Mathlib.Tactic
 import Mathlib.Data.List.Count
 
@@ -64,13 +65,23 @@ def advance : History → Name → Option History
   | .mid m n, .e => some (.terminal m n)
   | _, _ => none
 
+private theorem execute_eq_run_transition (z : Vertex) (w : List Name) :
+    execute z w =
+      D5.S0.Automata.TypedPartialDFAOOverBase.runTransition transition z w := by
+  induction w generalizing z with
+  | nil => rfl
+  | cons b w ih =>
+    simp only [execute, D5.S0.Automata.TypedPartialDFAOOverBase.runTransition]
+    cases hb : transition z b with
+    | none => rfl
+    | some z' => exact ih z'
+
 private theorem execute_append (z : Vertex) (u v : List Name) :
     execute z (u ++ v) = (execute z u).bind (fun z' => execute z' v) := by
-  induction u generalizing z with
-  | nil => rfl
-  | cons b u ih =>
-    simp only [List.cons_append, execute]
-    cases hh : transition z b <;> simp [hh, ih]
+  simpa only [execute_eq_run_transition,
+    D5.S0.Automata.TypedPartialDFAOOverBase.PartialDFA.evalFrom] using
+    (D5.S0.Automata.TypedPartialDFAOOverBase.PartialDFA.evalFrom_append
+      { start := z, step := transition } z u v)
 
 private theorem execute_replicate_a (m : ℕ) :
     execute .p (List.replicate m .a) = some .p ∧
