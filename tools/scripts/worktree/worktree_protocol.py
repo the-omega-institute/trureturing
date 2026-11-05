@@ -453,7 +453,7 @@ def _log_result(action, result):
         reason = next((item.get("reason") for item in result.get("items", [])
                        if isinstance(item, dict) and item.get("reason")), None)
     _log_operation(action, status=status, outcome=status, reason=reason,
-                   error_type=("Refused" if status == "refused" else None),
+                   error_type=("Refused" if status == "refused" else "CommandResult" if status == "failed" else None),
                    stage=result.get("stage") or (failure or {}).get("stage")
                    if isinstance(failure, dict) else result.get("stage"))
 
@@ -477,7 +477,7 @@ def with_command(options):
         os.chdir(path)
         environment = git_environment()
         if LOG is not None:
-            LOG.emit("exec_started", action="with")
+            LOG.emit("exec_started", action="with", operation="with")
             environment = LOG.child_environment(environment)
         os.execvpe(options.argv[0], options.argv, environment)
 

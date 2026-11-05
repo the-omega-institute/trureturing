@@ -542,6 +542,8 @@ def publish(root, partition, verification=None, *, build_report=True):
             "LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build",
             "LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], cwd=root)
         if build.returncode:
+            _observe("publish", "failed", phase="build",
+                     error=subprocess.CalledProcessError(build.returncode, "make"))
             return build.returncode
     report = root / ".lake/build/stratalint/raw-lean-report.json"
     content_validated = False
@@ -748,9 +750,11 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
     installed, backup, base_prepared, base_recorded = [], None, False, False
     target, base = lake / "build", root / report_reuse.BASE_RECORD
     try:
-        with (stage / ASSET).open("rb") as compressed, tarfile.open(
-                name=str(stage / ASSET), fileobj=ArchiveInput(compressed, deadline)) as archive:
+        with contextlib.ExitStack() as opened:
+            compressed = opened.enter_context((stage / ASSET).open("rb"))
             with observed_phase("tar_scan"):
+                archive = opened.enter_context(tarfile.open(
+                    name=str(stage / ASSET), fileobj=ArchiveInput(compressed, deadline)))
                 members = []
                 for member in archive:
                     remaining(deadline)
@@ -958,6 +962,7 @@ def fetch_locked(root, partition, deadline, refresh_stale=False, approved_tag=No
         raise ValueError("local assets require an approved production refresh")
     fetch_staging_cleanup(root, now=time.time())
     reason = "no published snapshot in this partition"
+    final_error = None
     cache_key = release_key(root)
     try:
         if approved_tag is not None:
@@ -988,13 +993,13 @@ def fetch_locked(root, partition, deadline, refresh_stale=False, approved_tag=No
                         resolved=tag, partition=partition)
                 return 2
             except (OSError, EOFError, ValueError, KeyError, TypeError, subprocess.SubprocessError, tarfile.TarError) as error:
-                reason = str(error)
+                reason, final_error = str(error), error
                 receipt("fetch", "miss", _error=error, reason=reason, resolved=tag, partition=partition)
                 if approved_tag is not None or isinstance(error, (TimeoutError, subprocess.TimeoutExpired)):
                     break
     except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
-        reason = str(error)
-    receipt("fetch", "miss", reason=reason, partition=partition)
+        reason, final_error = str(error), error
+    receipt("fetch", "miss", _error=final_error, reason=reason, partition=partition)
     return 1
 
 
@@ -1081,7 +1086,7 @@ def _main():
         return 2
     except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
         receipt(args.command, "miss" if args.command == "fetch" else "failed",
-                reason=("verification: " if args.mode == "verification" else "") + str(error))
+                _error=error, reason=("verification: " if args.mode == "verification" else "") + str(error))
         return 1 if args.command == "fetch" else 2
 
 

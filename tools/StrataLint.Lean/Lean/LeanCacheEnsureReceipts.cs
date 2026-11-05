@@ -158,7 +158,7 @@ internal static partial class LeanCacheEnsureCommand
                 Text("project_olean_state") == "cold" || Text("mathlib_olean_state") == "cold"
                     ? "build_required" : "unknown" : "none";
             MaintenanceLogAdapter.Record("ensure-cache", Text("status"),
-                result.Success ? "complete" : Text("method") ?? "preflight",
+                result.Success ? "complete" : Text("method") is null or "none" ? "preflight" : Text("method"),
                 degraded ? "optional_archive_unsuccessful" : result.Success ? null : "ensure_failed",
                 result.Success ? null : "CommandResult", details);
         }

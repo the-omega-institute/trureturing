@@ -30,6 +30,7 @@ public static class MaintenanceLogAdapter
                 var resolved = payload.RootElement.GetProperty("interpreter").GetString();
                 if (string.IsNullOrEmpty(resolved) || !Path.IsPathFullyQualified(resolved)) return;
                 executable = resolved;
+                lastFields = new();
                 state = result;
                 Environment.SetEnvironmentVariable("TRURETURING_MAINTENANCE_RUN_ID", result[..separator]);
             }
@@ -51,6 +52,12 @@ public static class MaintenanceLogAdapter
         catch
         {
             // Source and cwd may already have been removed; the writer is loaded.
+        }
+        finally
+        {
+            state = null;
+            source = null;
+            lastFields.Clear();
         }
     }
 

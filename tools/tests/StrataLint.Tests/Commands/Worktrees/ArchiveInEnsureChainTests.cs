@@ -9,6 +9,59 @@ namespace StrataLint.Tests;
 /// </summary>
 public sealed partial class LeanCacheEnsureCommandTests
 {
+    [Fact]
+    public void FinalEnsureObservationDistinguishesWarmFallbackFromRequiredBuild()
+    {
+        var names = new[] { "TRURETURING_MAINTENANCE_SCRIPT", "TRURETURING_MAINTENANCE_REPOSITORY",
+            "TRURETURING_MAINTENANCE_LOG_DIR", "TRURETURING_MAINTENANCE_RUN_ID" };
+        var previous = names.ToDictionary(name => name, Environment.GetEnvironmentVariable);
+        try
+        {
+            foreach (var warm in new[] { false, true })
+            {
+                using var repository = new TemporaryDirectory();
+                var fixture = new EnsureArchiveFixture(repository.Path, "observed-fallback");
+                MathlibProjectionFixture.Write(Path.Combine(fixture.Target, ".lake"));
+                if (warm)
+                {
+                    fixture.WriteProjectOlean();
+                    File.SetLastWriteTimeUtc(Path.Combine(fixture.Target, ".lake", "build", "lib", "lean", "Warm.olean"),
+                        TestEnvironmentBridge.UtcNow().AddHours(-7));
+                }
+                var scripts = Path.Combine(repository.Path, "tools", "scripts");
+                File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "maintenance_log.py"),
+                    Path.Combine(scripts, "maintenance_log.py"));
+                Environment.SetEnvironmentVariable(names[0], "ensure-cache");
+                Environment.SetEnvironmentVariable(names[1], fixture.Target);
+                Environment.SetEnvironmentVariable(names[2], Path.Combine(repository.Path, "logs"));
+                Environment.SetEnvironmentVariable(names[3], null);
+                StrataLint.Engine.MaintenanceLogAdapter.Start();
+                var runner = new RecordingWorktreeProcessRunner
+                {
+                    ArchiveReceipt = "LEAN_CACHE_FETCH {\"status\":\"miss\",\"reason\":\"private detail\"}\n",
+                    ArchiveExitCode = 1,
+                };
+                var receipt = fixture.Ensure(runner);
+                Assert.Equal(1, runner.ArchiveInvocations);
+                Assert.Equal("miss", receipt.GetProperty("archive_status").GetString());
+                StrataLint.Engine.MaintenanceLogAdapter.Finish(0);
+                var rows = File.ReadAllLines(Path.Combine(repository.Path, "logs", "ensure-cache.jsonl"));
+                using var final = JsonDocument.Parse(rows[^1]);
+                Assert.Equal(0, final.RootElement.GetProperty("exit_code").GetInt32());
+                Assert.True(final.RootElement.GetProperty("degraded").GetBoolean());
+                Assert.Equal(warm ? "warm" : "build_required",
+                    final.RootElement.GetProperty("cache_fallback").GetString());
+                Assert.Equal("miss", final.RootElement.GetProperty("archive_status").GetString());
+                Assert.DoesNotContain("private detail", string.Join("\n", rows), StringComparison.Ordinal);
+            }
+        }
+        finally
+        {
+            StrataLint.Engine.MaintenanceLogAdapter.Finish(0);
+            foreach (var (name, value) in previous) Environment.SetEnvironmentVariable(name, value);
+        }
+    }
+
     [Theory]
     [InlineData(null, 2580)]
     [InlineData("21600", 21720)]

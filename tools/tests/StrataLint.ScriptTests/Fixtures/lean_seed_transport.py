@@ -44,7 +44,7 @@ exit "${FAKE_BUILD_EXIT:-0}"
         helper_dir.mkdir(parents=True, exist_ok=True)
         # Exercise the production shell entry point with its declared transport
         # dependencies in the fixture repository.
-        for name in ("lean-cache-publish.sh", "cache_material.py", "lean_cache.py", "lean_cache_release.py", "lean_cache_topology.py", "lean_actions.py"):
+        for name in ("lean-cache-publish.sh", "cache_material.py", "lean_cache.py", "lean_cache_release.py", "lean_cache_release_io.py", "lean_cache_topology.py", "lean_actions.py"):
             shutil.copy2(PUBLISH.with_name(name), helper_dir / name)
         prepare_release_report(self.root)
         shutil.copy2(ROOT / "Makefile", self.root / "Makefile")
@@ -473,6 +473,61 @@ shutil.copytree, lean_cache_release_io.extract_members, pathlib.Path.rename = co
                 self.assertEqual(1, result.returncode, result.stdout + result.stderr)
                 self.assertIn("invalid cache member", result.stdout)
                 self.assertEqual([], list((self.root / ".lake").iterdir()))
+
+    def test_fetch_local_deadlines_preserve_active_cache_and_name_the_phase(self):
+        material = self.root / ".lake/build/lib/lean/D5/A.olean"
+        material.write_bytes(random.Random(41).randbytes(3 * 1024 * 1024))
+        self.assertEqual(0, self.transport("publish").returncode)
+        self.three_parts(next(self.remote.iterdir()))
+        write(self.root / ".lake/build/keep.txt", "old build")
+        write(self.root / ".lake/lean-report-seed-base.json", "old base")
+        lake = self.root / ".lake"
+        before = {str(path.relative_to(lake)): path.read_bytes() for path in lake.rglob("*") if path.is_file()}
+        shutil.copy2(ROOT / "tools/scripts/maintenance_log.py", self.root / "tools/scripts/maintenance_log.py")
+        for phase in ("part_validation", "reassembly", "archive_validation", "tar_scan", "extraction"):
+            with self.subTest(phase=phase):
+                environment = self.deadline_probe(1)
+                with (self.bin / "sitecustomize.py").open("a") as probe:
+                    probe.write('''
+import sys
+original_open = pathlib.Path.open
+class TimedFetchReader:
+    def __init__(self, source): self.source = source
+    def __getattr__(self, name): return getattr(self.source, name)
+    def __enter__(self): return self
+    def __exit__(self, *args): return self.source.__exit__(*args)
+    def read(self, size=-1):
+        global clock
+        block = self.source.read(size)
+        if block and getattr(sys.modules.get("__main__"), "CURRENT_PHASE", None) == os.environ["FAKE_FETCH_PHASE"]:
+            with original_open(pathlib.Path(os.environ["FAKE_REMOTE"]).parent / "fetch-reads", "a") as log:
+                log.write(str(len(block)) + "\\n")
+            clock = 2
+        return block
+def open_path(path, mode="r", *args, **kwargs):
+    source = original_open(path, mode, *args, **kwargs)
+    return TimedFetchReader(source) if mode == "rb" and path.name.startswith("lean-build.tgz") else source
+pathlib.Path.open = open_path
+''')
+                (self.root / "fetch-reads").unlink(missing_ok=True)
+                logs = self.root / "logs"
+                log = logs / "lean-cache-publish.jsonl"
+                log.unlink(missing_ok=True)
+                result = self.transport("fetch", arguments=("--refresh-stale",), **environment,
+                    FAKE_FETCH_PHASE=phase, TRURETURING_MAINTENANCE_LOG_DIR=str(logs))
+                self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+                self.assertIn("deadline exhausted", result.stdout)
+                self.assertEqual(before, {str(path.relative_to(lake)): path.read_bytes()
+                    for path in lake.rglob("*") if path.is_file()})
+                consumed = sum(map(int, (self.root / "fetch-reads").read_text().splitlines()))
+                self.assertGreater(consumed, 0)
+                self.assertLessEqual(consumed, 1024 * 1024)
+                rows = [json.loads(line) for line in log.read_text().splitlines()]
+                self.assertEqual("fetch", rows[-1]["operation"])
+                self.assertEqual("production", next(row["mode"] for row in rows if "mode" in row))
+                self.assertEqual(phase, rows[-1]["stage"])
+                self.assertEqual("timeout", rows[-1]["error_type"])
+                self.assertTrue(any("phase_duration_seconds" in row for row in rows))
 
     def preparation_deadline_probe(self, phase):
         # Small incompressible material reaches archive hashing and multipart

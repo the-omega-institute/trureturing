@@ -127,7 +127,12 @@ internal static class WorktreeCommand
             else
             {
                 var claimed = WorktreePoolCommand.TryClaim(options, runner, out idleClaimFallback, out idleClaimRefusals);
-                if (claimed is not null) return claimed;
+                if (claimed is not null)
+                {
+                    MaintenanceLogAdapter.Record("worktree-init", claimed.Success ? "succeeded" : "failed",
+                        "claim", claimed.Success ? null : "claim_failed", claimed.Success ? null : "CommandResult");
+                    return claimed;
+                }
             }
             if (Directory.Exists(options.Path) || RunProcess(runner, "git",
                 ["show-ref", "--verify", "--quiet", $"refs/heads/{options.Branch}"], options.Source,
@@ -142,6 +147,7 @@ internal static class WorktreeCommand
                 }
                 if (LeanPinSet.TryReadWorktree(options.Path, out var reason) is null)
                     throw new InvalidOperationException(reason);
+                MaintenanceLogAdapter.Record("worktree-init", "succeeded", "recovery", null, null);
                 return WithIdleClaimEvidence(reused);
             }
             if (Environment.GetEnvironmentVariable("WORKTREE_REQUIRE_DISK_CHECK") == "1")
