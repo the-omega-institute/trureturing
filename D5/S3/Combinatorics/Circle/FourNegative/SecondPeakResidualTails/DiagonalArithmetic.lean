@@ -71,15 +71,16 @@ theorem diagonal_boundary_scales (c : ℕ) (hc : 3 ≤ c) :
     diagonalH c 0 = 2 ^ c / 2 ∧ diagonalH c 1 = 2 ^ c ∧
     diagonalH c 2 = 2 * 2 ^ c ∧ diagonalH c 3 = 4 * 2 ^ c := by
   have hz : (2 : ℕ) ^ c = 2 * 2 ^ (c-1) := by
-    rw [show c = (c-1)+1 by omega, pow_succ]
-    ring
+    calc
+      (2 : ℕ)^c = 2^((c-1)+1) := by congr 1; omega
+      _ = 2*2^(c-1) := by rw [pow_succ]; ring
   refine ⟨?_, ?_, ?_, ?_⟩
   · simp only [diagonalH, diagonalExponent, Nat.add_zero]
     omega
   · simp [diagonalH, diagonalExponent]
-  · rw [diagonalH, show diagonalExponent c 2 = c+1 by dsimp [diagonalExponent]; omega]
+  · rw [diagonalH, show diagonalExponent c 2 = c+1 by dsimp [diagonalExponent] <;> omega]
     rw [pow_succ]; ring
-  · rw [diagonalH, show diagonalExponent c 3 = c+2 by dsimp [diagonalExponent]; omega]
+  · rw [diagonalH, show diagonalExponent c 3 = c+2 by dsimp [diagonalExponent] <;> omega]
     rw [pow_add]; norm_num <;> ring
 
 /-- The exact divisibilities in the boundary formulas are consumed before
@@ -100,7 +101,7 @@ theorem diagonal_boundary_capacities (z : ℕ) (hz : 8 ≤ z) (hz8 : 8 ∣ z) :
     rw [hZ]
     ring
   have hsq : 8*z ≤ z*z := by nlinarith [Nat.mul_le_mul_left z hz]
-  have hhalf0 : 1 ≤ z*z/4+3*z/8 := by nlinarith only [hz, hz4, hsq]
+  have hhalf0 : 1 ≤ z*z/4+3*z/8 := by omega
   have hhalf : (z*z/4+3*z/8-1)+1 = z*z/4+3*z/8 := by omega
   have hhalfprod : 2*(z*(z/2)) = z*z := by nlinarith only [hz2]
   have htwodiv : 5*z/2 ≤ z*z := by nlinarith only [hz5, hsq]
@@ -109,7 +110,9 @@ theorem diagonal_boundary_capacities (z : ℕ) (hz : 8 ≤ z) (hz8 : 8 ∣ z) :
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
   · nlinarith only [hz, hz3, hz4, hhalf, hhalfprod, hsq]
   · nlinarith only [hz, hsq]
-  · nlinarith only [hz, htwo, hsq]
+  · have hsub : z*z-5*z/2 ≤ z*z := Nat.sub_le _ _
+    have hpos : 0 < z*z := by positivity
+    nlinarith only [hsub, hpos]
   · nlinarith only [hz, hz17, hsq]
   · omega
   · omega
@@ -127,7 +130,8 @@ theorem diagonal_capacities (c delta : ℕ) (hc : 3 ≤ c) :
         ⟨hb.1, by omega⟩)
   · by_cases h1 : delta = 1
     · subst delta
-      simpa [diagonalAlpha, diagonalR, hs.2.1] using ⟨hb.2.1, hb.2.2.2.2.1⟩
+      simpa [diagonalAlpha, diagonalR, hs.2.1] using
+        (show 2^c < 2^c*2^c ∧ 2^c-3 < 2^c from ⟨hb.2.1, hb.2.2.2.2.1⟩)
     · by_cases h2 : delta = 2
       · subst delta
         simpa [diagonalAlpha, diagonalR, hs.2.2.1] using
@@ -146,7 +150,9 @@ theorem diagonal_capacities (c delta : ℕ) (hc : 3 ≤ c) :
 theorem diagonal_normal_high_inventory (c : ℕ) (hc : 3 ≤ c) :
     MaskInventory (c+1) ![2*2^c-4,2,0,1] := by
   have hz : (2 : ℕ) ^ c = 2 * 2 ^ (c-1) := by
-    rw [show c = (c-1)+1 by omega, pow_succ]; ring
+    calc
+      (2 : ℕ)^c = 2^((c-1)+1) := by congr 1; omega
+      _ = 2*2^(c-1) := by rw [pow_succ]; ring
   have hp := Nat.two_pow_pos (c-1)
   have hi : MaskInventory (c-1) ![2^(c-1)-1,0,0,0] := by
     exact inventory_02 (c-1) (2^(c-1)-1) 0 (by omega)
@@ -211,7 +217,9 @@ theorem diagonal_inventory (c delta ell : ℕ) (hc : 3 ≤ c) :
   have hV : MaskInventory (c-1) ![0,0,0,2^c/2-1] := by
     apply inventory_03
     have hh : (2 : ℕ) ^ c = 2 * 2^(c-1) := by
-      rw [show c = (c-1)+1 by omega, pow_succ]; ring
+      calc
+      (2 : ℕ)^c = 2^((c-1)+1) := by congr 1; omega
+      _ = 2*2^(c-1) := by rw [pow_succ]; ring
     omega
   have hX : MaskInventory c ![0,2^c-2,0,1] := by
     apply inventory_13
@@ -220,9 +228,9 @@ theorem diagonal_inventory (c delta ell : ℕ) (hc : 3 ≤ c) :
     (c+1) (diagonalHigh c delta) hcapa.2 (diagonal_high_inventory c delta hc)
   intro chain
   fin_cases chain
-  · convert hU using 1 <;> ext bank <;> fin_cases bank <;> simp [diagonalBanks]
-  · convert hV using 1 <;> ext bank <;> fin_cases bank <;> simp [diagonalBanks]
-  · convert hW using 1 <;> ext bank <;> fin_cases bank <;> simp [diagonalBanks, wMasks, diagonalH]
-  · convert hX using 1 <;> ext bank <;> fin_cases bank <;> simp [diagonalBanks]
+  · convert hU using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [diagonalBanks])
+  · convert hV using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [diagonalBanks])
+  · convert hW using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [diagonalBanks, wMasks, diagonalH])
+  · convert hX using 1 <;> first | rfl | (ext bank; fin_cases bank <;> simp [diagonalBanks])
 
 end D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails
