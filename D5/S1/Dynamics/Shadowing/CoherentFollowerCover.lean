@@ -614,6 +614,22 @@ theorem restrictPath_surjective {F G : Finset I} (h : F ⊆ G) :
     rw [prepend_drop] at heq
     exact heq
 
+/**
+  The concrete two-coordinate face used in Peng's finite-face question.
+
+  The `image_eq` field of `S` is the explicit whole-word compatibility
+  premise.  This corollary only specializes the general lifting theorem; it
+  does not construct that premise for a proposed shadowing extension.
+*/
+theorem two_face_restrictPath_surjective {α β : I} (hαβ : α ≠ β) :
+    Surjective (S.restrictPath (F := ({β} : Finset I))
+      (G := ({α, β} : Finset I)) (by
+        intro i hi
+        have hi' : i = β := Finset.mem_singleton.mp hi
+        subst i
+        simp)) := by
+  exact S.restrictPath_surjective _
+
 /-- Whole-path equality, in the existing graph-language interface. -/
 theorem projected_path_language {F G : Finset I} (h : F ⊆ G) :
     graphLanguage (S.Edge (F := G)) (S.restrictVertex h) =
