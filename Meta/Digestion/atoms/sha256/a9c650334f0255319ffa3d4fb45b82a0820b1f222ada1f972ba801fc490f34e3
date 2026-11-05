@@ -1,0 +1,46 @@
+**定理 78.2（面积背景中的精确方向等价）。** 固定任意非零有限 EJA、正 Frobenius 型 $q$、平方锥和单位，且原实际准备的有限正锥包恰为完整正对偶。对实双线性原 F，若全域 $\mathsf A$ 成立，则
+
+$$
+\mathsf Q\quad\Longleftrightarrow\quad\mathsf T
+\quad\Longleftrightarrow\quad\mathsf T_+
+\quad\Longleftrightarrow\quad\mathrm Z.
+\tag{78.2}
+$$
+
+面积还直接给 SC、交替性、$F(a,u)=F(u,a)=0$；在原 AC 指针上给 S2。这些结论逐对象成立，因而分别适用于 $B_R$ 与 $B_0$，方向等价本身不消费 R、$R_0$、$O_3$、II、协变或矩阵分类。
+
+证明。在 (76.1) 取 $b=a$，正定性给 $F(a,a)=0$；极化给交替性。取 $b=u$，Frobenius 性给 $q(a^2,u)=q(a,a)$，所以 $F(a,u)=0$，交替性再给 $F(u,a)=0$。对任一幂等元 $e$，成熟的正交 Peirce 分解及 Frobenius 性把同一面积右端写成
+
+$$
+\|F(a,e)\|_q^2
+=q(a,(L_e-L_e^2)a)
+=\tfrac14\|a_{1/2}\|_q^2.
+\tag{78.3}
+$$
+
+故 $F(e,z)=0$ 对所有 $z\in E_0(e)\oplus E_1(e)$ 成立。这里使用的是标准 EJA 谱与 Peirce 工具，见定义 79.3 的来源，不另主张其为新增结果。
+
+若 $\mathsf Q$ 成立，对第二槽极化得
+
+$$
+q(c,F(a,b))+q(b,F(a,c))=0.
+\tag{78.4}
+$$
+
+于是每个原 $F(a,\cdot)$ 的斜伴随是推论。对 $z\in E_0(e)\oplus E_1(e)$，(78.3)–(78.4) 给 $q(z,F(e,a))=-q(F(e,z),a)=0$；交替性遂给 $\mathsf T$。反向，任取完整 Jordan 标架及 $b=\sum_i\lambda_i p_i$。由 $\mathsf T$，$F(a,p_j)\in E_{1/2}(p_j)$，而每个 $p_i$ 都在其正交补 $E_0(p_j)\oplus E_1(p_j)$。故所有 $q(p_i,F(a,p_j))=0$，双线性即给 $\mathsf Q$。
+
+若 $\mathsf T$ 成立，令 $x=\sum_i\lambda_i p_i\ge0$，只取 $\lambda_i>0$ 的项，则 $p_i\le s(x)$。任意 $z\in E_0(s(x))$ 都在每个 $E_0(p_i)$ 中，所以 $q(z,F(a,x))=0$，得到 $\mathsf T_+$。反过来，将 $\mathsf T_+$ 分别用于 $e$ 和 $u-e$，且用 $F(a,u-e)=-F(a,e)$，便同时消去 $F(a,e)$ 的 $E_0(e)$ 与 $E_1(e)$ 分量，得到 $\mathsf T$。
+
+再核对正面与全部实际准备的对应。由自对偶性，任一正泛函为 $q(y,\cdot)$，$y\ge0$。标准 Peirce 正性给
+
+$$
+y\ge0,\quad q(e,y)=0\quad\Longleftrightarrow\quad y\in C\cap E_0(e).
+\tag{78.5}
+$$
+
+所需方向也可直接在本推导内验证：写 $y=z^2$，则 $q(e,y)=q(L_ez,z)$；$L_e$ 的特征值为 $0,1/2,1$，零值迫使 $z\in E_0(e)$，其平方仍在该子代数。若 $q(y,x)=0$，正谱展开使每个 $q(y,p_i)=0$，故 $y\in E_0(s(x))$。于是 $\mathsf T_+$ 给所有这些正泛函的零接触，特别给原 Z。
+
+反向从原 Z 到全部正泛函，严格使用原准备有限正锥包条件：$\varphi=\sum_jc_j\alpha_j$、$c_j\ge0$，$\varphi(x)=0$ 时每个正权 $\alpha_j(x)=0$，所以 $\varphi(F(a,x))=0$。所有 $y\in C\cap E_0(s(x))$ 都满足此式；该正锥张成完整 $E_0(s(x))$，故得到 $\mathsf T_+$。此处没有把数学纯态误称为实际归一准备。
+
+最后，原 AC 效果由其原极射线、$0\le d\le u$ 和确定配对已是非经典理想中的原始幂等元，直接复用 (60.1) 的归一化。$E_{1/2}(d)\ne0$；在 (78.3) 取任意非零横向元便给 $4\|F(d,x)\|_q^2=\|x\|_q^2$，即 S2。该一步没有取得 II 或逐字 S；后者只在下一条的真实前件下接入。∎
+
