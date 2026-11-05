@@ -25,14 +25,18 @@ internal sealed class HardinA204612Document : IScribeDocumentDefinition
             Node("claim", "Hardin's empirical formula", Equal(V("claim"), Parenthesized(ClaimBody())), true, true,
                 FormulaQuote + " The index n is natural, the strict threshold is 15 < n, and all eleven subtractions in the arguments are natural subtraction. The count is cast to the integers before the signed arithmetic on the right hand side."),
             Node("result", "The eleven-term recurrence", ClaimBody(), false, false,
-                "Coding the two initial rows and all subsequent rows gives a labeled path on 68 boundary states. The literal array count equals the total of a power of the transition matrix applied to the initial multiplicities. A degree-eleven polynomial residual belongs to an invariant span of eleven paired boundary-bit differences whose total is zero. Every further transition power preserves that span, so taking totals yields the displayed identity at every n > 15. This proves the source formula; minimal order, a smaller threshold and larger widths are separate questions."))));
+                "Coding the two initial rows and all subsequent rows gives a labeled path on 68 boundary states. The literal array count equals the total of a power of the transition matrix applied to the initial multiplicities. A degree-eleven polynomial residual belongs to an invariant span of eleven paired boundary-bit differences whose total is zero. Every further transition power preserves that span, so taking totals yields the displayed identity at every n > 15. This proves the source formula; minimal order, a smaller threshold and larger widths are separate questions.",
+                resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("hardin-a204612"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        bool definition, bool literature, string prose) => Describe.Lean(
+        bool definition, bool literature, string prose,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("hardina204612-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), definition ? DescribeRole.Definition : DescribeRole.Theorem);
+            Blocks(Paragraph(Text(prose))), definition ? DescribeRole.Definition : DescribeRole.Theorem,
+            openProblemResolutionClaim: resolution);
 
     private static Formula V(string value) => F.Id(value);
     private static Formula NatType() => Seq(Mathbb, Grp(V("N")));
