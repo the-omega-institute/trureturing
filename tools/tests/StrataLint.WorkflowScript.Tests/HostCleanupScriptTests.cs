@@ -16,6 +16,9 @@ public sealed class HostCleanupScriptTests
     [InlineData("bash_group_signal_matches_native")]
     [InlineData("concurrent_rows_and_inherited_descriptor")]
     [InlineData("elapsed_and_deleted_source_completion")]
+    [InlineData("csharp_completion_after_cwd_deletion")]
+    [InlineData("python_owner_children_have_immediate_parent")]
+    [InlineData("warm_donor_sigpipe_has_native_stderr")]
     public void MaintenanceLoggingPreservesCommandBehavior(string probe)
     {
         if (OperatingSystem.IsWindows()) return;

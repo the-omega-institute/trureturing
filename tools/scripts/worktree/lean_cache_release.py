@@ -1003,17 +1003,26 @@ def main():
     log = MaintenanceLog.from_environment() if MaintenanceLog else None
     if log is not None:
         log.emit("run_started")
-    try:
-        exit_code = _main()
-    except BaseException as error:
-        if log is not None:
-            code = error.code if isinstance(error, SystemExit) and isinstance(error.code, int) else 130 \
-                if isinstance(error, KeyboardInterrupt) else 1
-            log.finish(code, error_type=type(error).__name__)
-        raise
+    previous_run_id = os.environ.get("TRURETURING_MAINTENANCE_RUN_ID")
     if log is not None:
-        log.finish(exit_code)
-    return exit_code
+        os.environ["TRURETURING_MAINTENANCE_RUN_ID"] = log.run_id
+    try:
+        try:
+            exit_code = _main()
+        except BaseException as error:
+            if log is not None:
+                code = error.code if isinstance(error, SystemExit) and isinstance(error.code, int) else 130 \
+                    if isinstance(error, KeyboardInterrupt) else 1
+                log.finish(code, error_type=type(error).__name__)
+            raise
+        if log is not None:
+            log.finish(exit_code)
+        return exit_code
+    finally:
+        if previous_run_id is None:
+            os.environ.pop("TRURETURING_MAINTENANCE_RUN_ID", None)
+        else:
+            os.environ["TRURETURING_MAINTENANCE_RUN_ID"] = previous_run_id
 
 
 if __name__ == "__main__":

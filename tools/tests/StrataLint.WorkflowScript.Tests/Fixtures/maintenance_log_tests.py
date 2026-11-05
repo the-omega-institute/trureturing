@@ -7,6 +7,7 @@ import signal
 import subprocess
 import sys
 import shutil
+import shlex
 import tempfile
 import time
 import unittest
@@ -242,6 +243,97 @@ class MaintenanceLogTests(unittest.TestCase):
         self.assertEqual(16, len(rows))
         self.assertEqual(8, len({row["run_id"] for row in rows}))
         self.assertEqual(8, sum(row["event"] == "run_finished" for row in rows))
+
+    def test_csharp_completion_after_cwd_deletion(self):
+        project = self.root / "native-host"
+        project.mkdir()
+        adapter = SOURCE / "tools/StrataLint.Engine/Runtime/MaintenanceLogAdapter.cs"
+        from xml.sax.saxutils import escape
+        (project / "Host.csproj").write_text(
+            '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType>'
+            '<TargetFramework>net10.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings>'
+            '<Nullable>enable</Nullable></PropertyGroup><ItemGroup><Compile Include="' +
+            escape(str(adapter)) + '" /></ItemGroup></Project>')
+        (project / "Program.cs").write_text(
+            'using StrataLint.Engine; Directory.SetCurrentDirectory(args[0]); '
+            'MaintenanceLogAdapter.Start(); using var data = new MemoryStream(); '
+            'Console.OpenStandardInput().CopyTo(data); '
+            'Console.OpenStandardOutput().Write(data.ToArray()); '
+            'Console.OpenStandardError().Write(data.ToArray()); '
+            'Thread.Sleep(250); Directory.Delete(args[0], true); '
+            'MaintenanceLogAdapter.Finish(19); return 19;')
+        built = subprocess.run(['dotnet', 'build', str(project / 'Host.csproj'), '-c', 'Release',
+                                '-nr:false', '--nologo', '--verbosity', 'quiet'],
+                               env=self.environment, capture_output=True, timeout=60)
+        self.assertEqual(0, built.returncode, built.stdout + built.stderr)
+        scripts = self.main / 'tools/scripts'
+        scripts.mkdir(parents=True)
+        shutil.copy2(LOGGER, scripts / 'maintenance_log.py')
+        env = dict(self.environment, TRURETURING_MAINTENANCE_SCRIPT='fixture',
+                   TRURETURING_MAINTENANCE_REPOSITORY=str(self.main))
+        payload = b'native bytes\x00\xff'
+        result = subprocess.run(['dotnet', str(project / 'bin/Release/net10.0/Host.dll'), str(self.main)],
+                                env=env, input=payload, capture_output=True, timeout=15)
+        self.assertEqual(19, result.returncode)
+        self.assertEqual(payload, result.stdout)
+        self.assertEqual(payload, result.stderr)
+        self.assert_finished(19, owner_pid=self.rows()[0]['pid'])
+        self.assertGreaterEqual(self.rows()[-1]['duration_seconds'], 0.25)
+
+    def test_python_owner_children_have_immediate_parent(self):
+        import importlib.util
+        sys.path.insert(0, str(SOURCE / 'tools/scripts'))
+        sys.path.insert(0, str(SOURCE / 'tools/scripts/worktree'))
+        from unittest.mock import patch
+        scripts = self.main / 'tools/scripts'
+        scripts.mkdir(parents=True)
+        child = (f'#!{sys.executable}\nimport sys; sys.path.insert(0,{str(LOGGER.parent)!r})\n'
+                 'from maintenance_log import MaintenanceLog\n'
+                 'log=MaintenanceLog("inner"); log.emit("run_started"); log.finish(0)\n')
+        # Exercise the existing host clean_worktrees and cache publish subprocess boundaries.
+        (scripts / 'clean-lanes.sh').write_text('exec ' + shlex.quote(sys.executable) + ' ' + shlex.quote(str(self.root / 'child.py')) + '\n')
+        (self.root / 'child.py').write_text(child)
+        spec = importlib.util.spec_from_file_location('host_cleanup_probe', SOURCE / 'tools/scripts/host-cleanup.py')
+        host = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(host)
+        with patch.dict(os.environ, self.environment, clear=True), patch.object(host, 'run_clean',
+                side_effect=lambda options: host.clean_worktrees(options.repository, 'dev', False)):
+            self.assertEqual(0, host.main(['clean', '--repository', str(self.main)]))
+        self.assertEqual(self.rows('host-cleanup')[0]['run_id'], self.rows('inner')[0]['parent_run_id'])
+        import lean_cache_release as release
+        binary = self.root / 'bin'
+        binary.mkdir()
+        (binary / 'make').write_text(child + 'sys.exit(19)\n')
+        (binary / 'make').chmod(0o700)
+        env = dict(self.environment, PATH=str(binary) + os.pathsep + os.environ['PATH'],
+                   TRURETURING_MAINTENANCE_SCRIPT='lean-cache-publish',
+                   TRURETURING_MAINTENANCE_REPOSITORY=str(self.main))
+        with patch.dict(os.environ, env, clear=True), patch.object(release, '_main',
+                side_effect=lambda: release.publish(self.main, None)):
+            self.assertEqual(19, release.main())
+        self.assertEqual(self.rows('lean-cache-publish')[0]['run_id'], self.rows('inner')[-1]['parent_run_id'])
+
+    def test_warm_donor_sigpipe_has_native_stderr(self):
+        scripts = self.main / 'tools/scripts/worktree'
+        scripts.mkdir(parents=True)
+        shutil.copy2(SOURCE / 'tools/scripts/worktree/warm-donor.sh', scripts / 'warm-donor.sh')
+        (self.main / 'tools/scripts/lib').mkdir()
+        shutil.copy2(LOGGER, self.main / 'tools/scripts/maintenance_log.py')
+        shutil.copy2(SOURCE / 'tools/scripts/lib/maintenance-log-lib.sh', self.main / 'tools/scripts/lib/maintenance-log-lib.sh')
+        binary = self.root / 'bin'
+        binary.mkdir()
+        (binary / 'git').write_text('#!/bin/sh\necho lane\n')
+        (binary / 'git').chmod(0o700)
+        env = dict(self.environment, PATH=str(binary) + os.pathsep + os.environ['PATH'])
+        read_fd, write_fd = os.pipe()
+        os.close(read_fd)
+        try:
+            result = subprocess.run(['/bin/bash', str(scripts / 'warm-donor.sh')], env=env,
+                                    stdout=write_fd, stderr=subprocess.PIPE, timeout=15)
+        finally:
+            os.close(write_fd)
+        self.assertEqual(-signal.SIGPIPE, result.returncode)
+        self.assertEqual(b'', result.stderr)
 
 
 if __name__ == "__main__":

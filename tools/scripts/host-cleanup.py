@@ -1273,6 +1273,7 @@ def _main(arguments=None):
     LOG = MaintenanceLog("host-cleanup", options.repository if options.command == "clean" else REPOSITORY) if MaintenanceLog else None
     if LOG is not None:
         LOG.emit("run_started", action=options.command)
+        os.environ["TRURETURING_MAINTENANCE_RUN_ID"] = LOG.run_id
     try:
         if options.command == "active-paths":
             codex = Path(os.environ.get("CODEX_HOME") or Path.home() / ".codex")
@@ -1304,18 +1305,25 @@ def _main(arguments=None):
 def main(arguments=None):
     global LOG
     LOG = None
+    previous_run_id = os.environ.get("TRURETURING_MAINTENANCE_RUN_ID")
     try:
-        exit_code = _main(arguments)
-    except BaseException as error:
+        try:
+            exit_code = _main(arguments)
+        except BaseException as error:
+            if LOG is not None:
+                code = error.code if isinstance(error, SystemExit) and isinstance(error.code, int) else 1
+                if isinstance(error, KeyboardInterrupt):
+                    code = 130
+                LOG.finish(code, error_type=type(error).__name__)
+            raise
         if LOG is not None:
-            code = error.code if isinstance(error, SystemExit) and isinstance(error.code, int) else 1
-            if isinstance(error, KeyboardInterrupt):
-                code = 130
-            LOG.finish(code, error_type=type(error).__name__)
-        raise
-    if LOG is not None:
-        LOG.finish(exit_code)
-    return exit_code
+            LOG.finish(exit_code)
+        return exit_code
+    finally:
+        if previous_run_id is None:
+            os.environ.pop("TRURETURING_MAINTENANCE_RUN_ID", None)
+        else:
+            os.environ["TRURETURING_MAINTENANCE_RUN_ID"] = previous_run_id
 
 
 if __name__ == "__main__":

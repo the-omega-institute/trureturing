@@ -107,7 +107,7 @@ class MaintenanceLog:
 
     def state(self) -> str:
         payload = dict(context=self.context, path=str(self.path) if self.path else None,
-                       started=self.started)
+                       started=self.started, interpreter=sys.executable)
         return self.run_id + ":" + base64.b64encode(json.dumps(payload).encode()).decode()
 
     @classmethod

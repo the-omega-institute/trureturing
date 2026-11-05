@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Globalization;
+using System.Text.Json;
 
 namespace StrataLint.Engine;
 
@@ -8,6 +9,7 @@ public static class MaintenanceLogAdapter
 {
     private static string? source;
     private static string? state;
+    private static string executable = "python3";
 
     public static void Start()
     {
@@ -23,6 +25,10 @@ public static class MaintenanceLogAdapter
             var separator = result.IndexOf(':');
             if (separator == 32 && result[..separator].All(char.IsAsciiHexDigit))
             {
+                using var payload = JsonDocument.Parse(Convert.FromBase64String(result[(separator + 1)..]));
+                var resolved = payload.RootElement.GetProperty("interpreter").GetString();
+                if (string.IsNullOrEmpty(resolved) || !Path.IsPathFullyQualified(resolved)) return;
+                executable = resolved;
                 state = result;
                 Environment.SetEnvironmentVariable("TRURETURING_MAINTENANCE_RUN_ID", result[..separator]);
             }
@@ -52,7 +58,7 @@ public static class MaintenanceLogAdapter
         {
             StartInfo = new ProcessStartInfo
             {
-                FileName = "python3",
+                FileName = executable,
                 WorkingDirectory = Path.GetPathRoot(Path.GetTempPath())!,
                 UseShellExecute = false,
                 RedirectStandardInput = true,
