@@ -4637,3 +4637,100 @@ Consequently one cannot replace the remaining twenty equations by thirteen equat
 The tensor quotient, multilinearity and finite-dimensional rank count used here are standard linear-algebra tools. The source-specific thirteen-dimensional boundary is repo-derived from the retained FIB suppliers and the definitions above; no historical novelty is claimed for the standard tools. Their role is to identify the two zero channels of the original prescribed $f$ and the resulting source-specific obstruction to the uniform quadratic SRS scaling. They do not provide a new general purification theorem, a full-law witness, physical realization or Lean/kernel certification.
 
 ## 追加锚（本行以下为增补区）
+## 158. Positive 003 energy and the terminal compensator boundary
+
+**Definition 158.1 (a two-label first-order-calibrated ray with terminal compensation).** Retain the complete telescope of Definition 155.1, hence Definitions 134.1, 135.1 and 154.1, including the residual $\Delta$, the positivity-improvement and conservation suppliers, the trilinear form $\mathcal C$, and the prescribed tuple $f$. Retain also the full first-order map $\Lambda_{134}$ and kernel $V=\ker\Lambda_{134}$ of Definition 134.1, Proposition 134.2, and the propagation identity $Pf_3=cg$. For bounded real Borel representatives $v,w$ and a nonzero real $t$, consider the pointwise tuple
+
+$$
+\begin{aligned}
+u^{(t;v,w)}_0&=f_0+tv,&
+u^{(t;v,w)}_1&=f_1-tv,\\
+u^{(t;v,w)}_3&=f_3+t^2w,&
+u^{(t;v,w)}_B&=f_B-t^2w.
+\end{aligned}
+\tag{158.1}
+$$
+
+The sum of its four coordinates is one identically. Whenever the four coordinates lie in the pointwise simplex, call (158.1) legal. In the $(0,0,3)$ coefficient the terminal is this tuple's own $P u^{(t;v,w)}_3$; every other coefficient retains its corresponding tuple terminal.
+
+**Proposition 158.2 (strict positive energy on the pure two-label ray).** If $v\in V$, then every legal tuple (158.1) satisfies
+
+$$
+\begin{aligned}
+\Delta\bigl(u^{(t;v,w)}\bigr)_{003}
+={}&t^2\left[c\langle gv,P(gv)\rangle_m
+                 +\mathcal C(f_0,f_0,w)\right]\\
+&+t^3\left[\mathcal C(v,f_0,w)+\mathcal C(f_0,v,w)\right]
++t^4\mathcal C(v,v,w).
+\end{aligned}
+\tag{158.2}
+$$
+
+In particular, for the uncompensated ray $w=0$ and every nonzero $v\in V$,
+
+$$
+\Delta\bigl(u^{(t;v,0)}\bigr)_{003}
+=t^2c\langle gv,P(gv)\rangle_m>0.
+\tag{158.3}
+$$
+
+Thus a nonzero pure two-label direction in the exact first-order kernel cannot by itself be an exact full-law correction at any nonzero amplitude.
+
+*Proof.* Expand the $(0,0,3)$ coefficient using multilinearity and (158.1). The coefficient of $t$ is the first-order functional $\ell_{003}(v)$ in (134.11), which vanishes because $v\in V$. The coefficient of $t^2$ from the two $0$ slots is
+
+$$
+\mathcal C(v,v,f_3)=c\langle gv,P(gv)\rangle_m
+$$
+
+by (134.15)–(134.16). The $t^2w$ change in the third slot contributes $\mathcal C(f_0,f_0,w)$; the two mixed $t^3$ terms and the $t^4$ term are the remaining multilinear choices. Equation (134.13) makes the first term strictly positive when $v\ne0$. The actual terminal convention is used throughout the expansion. $\square$
+
+**Proposition 158.3 (a quantitative terminal compensator cost).** For bounded real $v,w$, define
+
+$$
+\begin{aligned}
+\psi_0&=P\bigl(f_0P(gf_0)\bigr),\\
+\psi_{\mathrm{mix}}&=P\bigl(f_0P(gv)\bigr)+P\bigl(vP(gf_0)\bigr),\\
+\psi_v&=P\bigl(vP(gv)\bigr).
+\end{aligned}
+\tag{158.4}
+$$
+
+If $v\in V$ is nonzero, (158.1) is legal, and its $(0,0,3)$ residual vanishes, then
+
+$$
+\|w\|_{L^\infty(m)}
+\ge
+\frac{c\langle gv,P(gv)\rangle_m}
+     {\|\psi_0\|_{L^1(m)}+|t|\,\|\psi_{\mathrm{mix}}\|_{L^1(m)}
+                         +t^2\|\psi_v\|_{L^1(m)}}
+>0.
+\tag{158.5}
+$$
+
+The denominator is finite, and $\|\psi_0\|_{L^1(m)}>0$ for every original tuple.
+
+*Proof.* Self-adjointness of $P$ gives
+
+$$
+\begin{aligned}
+\mathcal C(f_0,f_0,w)&=\int_Gw\,\psi_0\,dm,\\
+\mathcal C(v,f_0,w)+\mathcal C(f_0,v,w)&=\int_Gw\,\psi_{\mathrm{mix}}\,dm,\\
+\mathcal C(v,v,w)&=\int_Gw\,\psi_v\,dm.
+\end{aligned}
+\tag{158.6}
+$$
+
+If the residual in (158.2) is zero, divide by $t^2$ and move the compensator terms to the other side. The $L^1$–$L^\infty$ bound and (158.6) give (158.5). The original bounds $g\in L^2(m)$, $f_0,v\in L^\infty(m)$ and the $L^2$ contraction of $P$ give finiteness. Since $f_0\ge1/4$ and $gf_0>0$ almost everywhere, positivity improvement gives $P(gf_0)>0$ almost everywhere. Conservation then gives
+
+$$
+\int_G\psi_0\,dm
+=\int_G f_0P(gf_0)\,dm>0,
+$$
+
+so $\psi_0\ne0$ in $L^1(m)$. The numerator is strictly positive by (134.13), so the displayed lower bound is positive. $\square$
+
+**Corollary 158.4 (the fixed-ray route boundary).** Fix a nonzero $v\in V$. No sequence of legal tuples of the form (158.1) can make the $(0,0,3)$ residual zero while its compensators satisfy $\|w\|_{L^\infty(m)}\to0$ and $t\to0$. In particular, shrinking the amplitude does not remove the positive energy that a second-order terminal correction must cancel. The lower bound is a necessary cost for this fixed-ray ansatz, not a uniform residual floor for arbitrary exact partitions. Mixed orders, a varying first-order direction, or corrections outside $V$ remain separate routes; the result neither refutes the general SRS-20 condition nor settles $F_{64}$.
+
+The source-specific statements (158.2)–(158.5) are `repo-derived` applications of the retained positive coefficient (134.13)–(134.16), self-adjointness and the original terminal convention. The positivity and $L^1$–$L^\infty$ estimates are standard intermediate tools; no historical novelty, physical realization, Lean/kernel certification or full-law witness is asserted.
+
+## 追加锚（本行以下为增补区）
