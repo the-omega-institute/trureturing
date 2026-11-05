@@ -8,7 +8,7 @@ For three sequential weak measurements of projection observables on a pure state
 
 $$\operatorname{nestedAnti}\left(0, A\right) = A\left(0\right),\qquad\operatorname{nestedAnti}\left(n + 1, A\right) = A\left(0\right) \cdot \operatorname{nestedAnti}\left(n, A \circ \operatorname{succ}\right) + \operatorname{nestedAnti}\left(n, A \circ \operatorname{succ}\right) \cdot A\left(0\right)$$
 
-*Formalization.* `D5/S3/Quantum/Measurement/SequentialWeakPointerRefutation.nestedAnti` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Measurement/Weak/SequentialWeakPointerRefutation.nestedAnti` (`✓ std3`).
 
 *Citation.* Alastair A. Abbott; Ralph Silva; Julian Wechs; Nicolas Brunner; Cyril Branciard (2019). *Anomalous Weak Values Without Post-Selection*. DOI: [10.22331/q-2019-10-14-194](https://doi.org/10.22331/q-2019-10-14-194). URL: <https://arxiv.org/abs/1805.09364v3>.
 
@@ -20,7 +20,7 @@ The nested anticommutator of n + 1 matrices A_0, ..., A_n is A_0 for n = 0 and {
 
 $$\operatorname{pointerMean}\left(A, \psi\right) = 2^{-n} \cdot \operatorname{Re} \langle\psi, \operatorname{nestedAnti}\left(n, A\right) \psi\rangle$$
 
-*Formalization.* `D5/S3/Quantum/Measurement/SequentialWeakPointerRefutation.pointerMean` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Measurement/Weak/SequentialWeakPointerRefutation.pointerMean` (`✓ std3`).
 
 *Citation.* Alastair A. Abbott; Ralph Silva; Julian Wechs; Nicolas Brunner; Cyril Branciard (2019). *Anomalous Weak Values Without Post-Selection*. DOI: [10.22331/q-2019-10-14-194](https://doi.org/10.22331/q-2019-10-14-194). URL: <https://arxiv.org/abs/1805.09364v3>.
 
@@ -32,7 +32,7 @@ In the weak regime without post-selection, the mean product of the pointer posit
 
 $$claim \Leftrightarrow (\forall d : \mathbb{N}, \forall n : \mathbb{N}, \forall A : \operatorname{Fin}\left(n + 1\right) \to \mathbb{C}^{d\times d}, (\forall i : \operatorname{Fin}\left(n + 1\right), \operatorname{IsStarProjection}\left(A\left(i\right)\right)) \Rightarrow \forall \psi : \mathbb{C}^{d}, (\langle\psi, \psi\rangle = 1) \Rightarrow -\frac{1}{8} \le \operatorname{pointerMean}\left(A, \psi\right))$$
 
-*Formalization.* `D5/S3/Quantum/Measurement/SequentialWeakPointerRefutation.claim` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Measurement/Weak/SequentialWeakPointerRefutation.claim` (`✓ std3`).
 
 *Citation.* Alastair A. Abbott; Ralph Silva; Julian Wechs; Nicolas Brunner; Cyril Branciard (2019). *Anomalous Weak Values Without Post-Selection*. DOI: [10.22331/q-2019-10-14-194](https://doi.org/10.22331/q-2019-10-14-194). URL: <https://arxiv.org/abs/1805.09364v3>.
 
@@ -44,11 +44,11 @@ The conjecture: for every dimension d, every number n + 1 of observables, every 
 
 $$\neg claim$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/SequentialWeakPointerRefutation.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/Weak/SequentialWeakPointerRefutation.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/abbott-2019-sequential-weak-pointer-bound` (refuted) by `D5/S3/Quantum/Measurement/SequentialWeakPointerRefutation.result`.
+*Resolves.* `Problems/abbott-2019-sequential-weak-pointer-bound` (refuted) by `D5/S3/Quantum/Measurement/Weak/SequentialWeakPointerRefutation.result`.
 
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"abbott-2019-sequential-weak-pointer-bound","declaration_gid":"D5/S3/Quantum/Measurement/SequentialWeakPointerRefutation.result","resolution_kind":"refuted"} -->
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"abbott-2019-sequential-weak-pointer-bound","declaration_gid":"D5/S3/Quantum/Measurement/Weak/SequentialWeakPointerRefutation.result","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 
@@ -60,7 +60,7 @@ Take d = 3, the state e_3, and the rational projections P_1 = (1/3)[[1, 1, -1], 
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Measurement/SequentialWeakPointerRefutation.claim`
-- Truth anchor: `D5/S3/Quantum/Measurement/SequentialWeakPointerRefutation.nestedAnti`
-- Truth anchor: `D5/S3/Quantum/Measurement/SequentialWeakPointerRefutation.pointerMean`
-- Truth anchor: `D5/S3/Quantum/Measurement/SequentialWeakPointerRefutation.result`
+- Truth anchor: `D5/S3/Quantum/Measurement/Weak/SequentialWeakPointerRefutation.claim`
+- Truth anchor: `D5/S3/Quantum/Measurement/Weak/SequentialWeakPointerRefutation.nestedAnti`
+- Truth anchor: `D5/S3/Quantum/Measurement/Weak/SequentialWeakPointerRefutation.pointerMean`
+- Truth anchor: `D5/S3/Quantum/Measurement/Weak/SequentialWeakPointerRefutation.result`
