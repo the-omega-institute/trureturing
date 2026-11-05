@@ -1,0 +1,22 @@
+**定理 3.2（全树平均与固定树预算）。**对全部两组叶子输入，
+
+$$
+\frac1{3^{N-1}}\sum_{\kappa\in\mathcal K_T}
+ c\bigl(H_{T,\kappa}(\mathbf a),H_{T,\kappa}(\mathbf b)\bigr)
+=\sum_{i=1}^Nc(a_i,b_i).
+\tag{3.1}
+$$
+
+若第 $i$ 个叶子的深度为 $d_i$，则对每个固定内部配置 $\kappa$ 及全部独立叶子指数 $n_i,m_i\ge0$，
+
+$$
+\begin{aligned}
+&c\bigl(H_{T,\kappa}(U^{n_1}a_1,\ldots,U^{n_N}a_N),
+ H_{T,\kappa}(U^{m_1}b_1,\ldots,U^{m_N}b_N)\bigr)\\
+&\qquad\le3\sum_{i=1}^N3^{d_i}\bigl(\Omega(a_i)+\Omega(b_i)\bigr).
+\end{aligned}
+\tag{3.2}
+$$
+
+**证明。**对内部结点数归纳。固定根下的两棵子树配置，对根的三个标记平均，由 (R) 得左右子树费用之和；再分别取子树平均，即得 (3.1)。逐结点使用 (1.2) 的第一条界及同步等距，给每个叶子费用至多乘 $3^{d_i}$，然后代入 (2.4)，得到 (3.2)。两端使用同一个 $T,\kappa$；叶子标记次数可以独立。树形变化或深度增长时，(3.2) 不提供与树深无关的预算。
+

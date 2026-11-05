@@ -9,7 +9,7 @@ internal sealed class DetectorSensorDickeOptimalityDocument : IScribeDocumentDef
     private const string Owner = "D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality";
     private static readonly LibraryNoteRef Paper = LibraryNoteRef.Create("D5/L/QuantumBounds/zhanguptahillery2024detectorsensor");
     private static Formula V(string name) => F.Id(name);
-    private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Q(string owner, string name) => Seq(Operatorname, Grp(V(owner)), Dot, Operatorname, Grp(V(name)));
     private static Formula Call(Formula name, params Formula[] args) => new Formula.Apply(name, [.. args]);
     private static Formula Call(string name, params Formula[] args) => Call(V(name), args);
@@ -55,6 +55,9 @@ internal sealed class DetectorSensorDickeOptimalityDocument : IScribeDocumentDef
         H("DetectorSensorDickeOptimality"), Blocks(
             Node("psd_cauchy_schwarz", PsdCauchySchwarzFormula(),
                 "A positive semidefinite complex matrix satisfies Cauchy–Schwarz for its sesquilinear form: the squared absolute mixed value is bounded by the product of the two real diagonal values. The form may be degenerate.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("P_sq", ConstantProjectionSquareFormula(),
+                "The all-ones matrix divided by its positive dimension is idempotent.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("fire", FireFormula(), "Section 2, pages 2–3: “Let |𝜙ᵢ⟩ = (𝐼^{⊗𝑖} ⊗ 𝑈 ⊗ 𝐼^{⊗(𝑛−𝑖−1)})|𝜓⟩.” A Boolean word labels the tensor eigenbasis; true is u₊ and false is u₋. Angles are in radians.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Paper)),
             Node("isoSuccess", SuccessFormula(), "Section 2, page 3: “these final states have an equal prior probability”. The success is the mean of the Born probabilities for the correct outcomes. LocalPOVM is the existing finite family of positive semidefinite effects summing to the identity.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Paper)),
@@ -119,6 +122,17 @@ internal sealed class DetectorSensorDickeOptimalityDocument : IScribeDocumentDef
         var instances = Seq(OpenBracket, Call("Fintype", h), CloseBracket, Comma, Sp,
             OpenBracket, Call("DecidableEq", h), CloseBracket, Comma, Sp, Parenthesized(parameters));
         return All("h", V("Type"), instances);
+    }
+
+    private static Formula ConstantProjectionSquareFormula()
+    {
+        var ones = Call(Q("Matrix", "of"),
+            Call(Q("Function", "const"), FinN,
+                Call(Q("Function", "const"), FinN, Cast(D(1), Complex))));
+        var projection = Call(Q("HSMul", "hSMul"),
+            Call(Q("Inv", "inv"), Cast(Call(Q("Nat", "cast"), N), Real)), ones);
+        return All("n", Nat, Impl(Seq(D(0), Sp, Lt, Sp, N),
+            Eqn(Mul(Parenthesized(projection), Parenthesized(projection)), projection)));
     }
 
     private static Formula FireFormula() => All("n", Nat, All("theta", Real, All("i", FinN, All("psi", State,

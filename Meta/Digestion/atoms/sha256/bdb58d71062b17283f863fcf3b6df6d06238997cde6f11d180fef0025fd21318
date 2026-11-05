@@ -1,0 +1,11 @@
+After increasing $N_0$, every exact minimizer has a partition
+$C\dot\cup D=[s]$ associated to some
+$j\in J_*$ with $\chi_{j,N}=\chi_N$, and has precisely these
+source neighborhoods:
+
+1. exactly $n$ two-element sets $\{i,k\}$, with $i\in C$, $k\in D$,
+   one for each $k\in D$;
+2. exactly $d_{j,N}$ sets $C\setminus\{i\}$, with $i\in C$;
+3. full cores $C$ and singleton tails $\{k\}$ for every remaining
+   source.
+

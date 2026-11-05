@@ -136,7 +136,19 @@ $$\forall A \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \op
 
 For any Hermitian complex two-by-two matrix A with trace one, its Bloch coordinates are twice the real part of A(0,1), minus twice the imaginary part of A(0,1), and twice the real part of A(0,0) minus one. This formula identifies arbitrary density inputs with the coordinates used in matrix_contraction_from_pauli and in the affine reconstruction of an isolated qubit ensemble.
 
-**Theorem 1.12 (All three bounds are exact).**
+**Theorem 1.12 (The three-coordinate scalar-product bound).**
+
+$$\forall w1 \in \mathbb{R},\; \forall w2 \in \mathbb{R},\; \forall w3 \in \mathbb{R},\; \forall y1 \in \mathbb{R},\; \forall y2 \in \mathbb{R},\; \forall y3 \in \mathbb{R},\; (\operatorname{dotProduct}\left((![w1, w2, w3]: \operatorname{Fin}\left(3\right) \to \mathbb{R}), (![y1, y2, y3]: \operatorname{Fin}\left(3\right) \to \mathbb{R})\right))^{2} \le \operatorname{dotProduct}\left((![w1, w2, w3]: \operatorname{Fin}\left(3\right) \to \mathbb{R}), (![w1, w2, w3]: \operatorname{Fin}\left(3\right) \to \mathbb{R})\right) \cdot \operatorname{dotProduct}\left((![y1, y2, y3]: \operatorname{Fin}\left(3\right) \to \mathbb{R}), (![y1, y2, y3]: \operatorname{Fin}\left(3\right) \to \mathbb{R})\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/HiaiRuskaiRiemannianContraction.cauchy_three` (`✓ std3`). ∎
+
+*Citation.* Mathlib contributors (2026). *Finite Cauchy-Schwarz inequality in ordered commutative semirings*. URL: <https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Algebra/Order/BigOperators/Ring/Finset.lean>.
+
+*Commentary.*
+
+For every pair of real three-coordinate vectors, the squared scalar product is at most the product of the two squared lengths.
+
+**Theorem 1.13 (All three bounds are exact).**
 
 $$\forall alpha \in \mathbb{R},\; \forall tau \in \mathbb{R},\; (\operatorname{admissible}\left(alpha, tau\right)) \Rightarrow ((\operatorname{eta}\left(\operatorname{kDualWY}, alpha, tau\right) = \frac{(alpha)^{2} \cdot \left(1 + \operatorname{Real.sqrt}\left(1 - (tau)^{2}\right)\right)}{2 \cdot \left(1 - (tau)^{2}\right)}) \land ((\operatorname{eta}\left(fun (x : \mathbb{R}) \mapsto \operatorname{Real.rpow}\left(x, 0 - \frac{1}{2}\right), alpha, tau\right) = \frac{(alpha)^{2}}{\operatorname{Real.sqrt}\left(1 - (tau)^{2}\right)}) \land (\operatorname{eta}\left(\operatorname{dslope}\left(\operatorname{Real.log}, 1\right), alpha, tau\right) = \frac{(alpha)^{2} \cdot \operatorname{Real.log}\left(\frac{1 + tau}{1 - tau}\right)}{2 \cdot tau})))$$
 
@@ -157,6 +169,7 @@ For every extreme kernel, a scalar pinching identity bounds the input metric bel
 ## References
 
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/HiaiRuskaiRiemannianContraction.admissible`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/HiaiRuskaiRiemannianContraction.cauchy_three`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/HiaiRuskaiRiemannianContraction.claim`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/HiaiRuskaiRiemannianContraction.density_coordinates`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/HiaiRuskaiRiemannianContraction.eta`

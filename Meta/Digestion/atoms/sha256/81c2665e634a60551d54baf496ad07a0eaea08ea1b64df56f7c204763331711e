@@ -1,0 +1,62 @@
+**Corollary 53.6 (the scalar uniqueness question and the actual endpoint consumer).**
+For every tuple in Definition 53.1 with $D_\sigma<0$, retain the
+full profile and both endpoint fibres from Proposition 51.4:
+
+$$
+ M(Y)=\max_{(L-\sqrt Y)^2\le X\le1}\Gamma_\sigma(x,q;X,Y),
+ \qquad x^2\le Y\le1.
+\tag{53.36}
+$$
+
+It has exactly one global maximizing argument $Y_*$, with
+$X_*=\widehat X(Y_*)$. Thus the right side of (52.1) holds uniformly
+over all the parameters (53.1) with $D_\sigma<0$.
+
+Retain the actual aligning endpoint set $\mathcal E_\xi(a_\xi)$
+of (45.20), where $a_\xi=m(\xi)+\kappa\xi$. If an actual endpoint
+$(E,U)\in\mathcal E_\xi(a_\xi)$ has active sign and population
+satisfying these hypotheses, its ordered lengths are exactly
+$(X_*,Y_*)$ and
+
+$$
+ a_\xi=\mathsf E_\sigma(q)-4G_*^2.
+\tag{53.37}
+$$
+
+Its literal endpoint coherence conditions remain
+
+$$
+ |z_{\rm coh}|^2=t_\sigma(1-t_\sigma),\qquad
+ \operatorname{Re}(Pz_{\rm coh}\overline Q)
+                       =|P||Q||z_{\rm coh}|.
+\tag{53.38}
+$$
+
+Every modulus-compatible phase remains allowed when the product on
+the right is zero.
+
+**Proof.** Proposition 51.4 gives the exact argmax identity (51.23),
+including both endpoint fibres and their unique fibre maximizers.
+Theorem 53.4 makes its left side the singleton $\{(X_*,Y_*)\}$.
+Its right side therefore has exactly one argument $Y_*$, and
+$X_*=\widehat X(Y_*)$. This answers the uniform scalar uniqueness
+question isolated in Definition 52.2. Separate concavity in the two
+coordinates did not control the mixed derivative in (51.24).
+Here (53.21)--(53.25) control the full mixed term on a convex set,
+and Lemma 53.2 places every possible original global maximizer in
+that set. Global concavity of $M$ on its entire interval is not a
+premise of this conclusion.
+
+For the actual endpoint, Theorems 45.7 and 48.5 and Corollary 51.5
+force its lengths to maximize the entire original triangle.
+Indeed, (51.28) compares it with every same-slice competitor,
+and Proposition 53.5 retains their actual simultaneous realization
+and the same true original distance. Equality forced by original
+global minimality makes its lengths a global maximizing pair.
+Theorem 53.4 fixes that pair to $(X_*,Y_*)$; substituting into
+(51.27) gives (53.37). The coherence conditions in (53.38) are those
+of the original endpoint set. This implication is conditional on an
+endpoint from the slice actually belonging to
+$\mathcal E_\xi(a_\xi)$; it proves no existence of a contributing
+negative-determinant slice. $\square$
+

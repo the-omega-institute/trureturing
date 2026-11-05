@@ -1,0 +1,12 @@
+**定义 106.1（不指定菜单的完整候选）。** 保留定义 103.1 的各自完整原背景 $B_*$ 与原余量 $W_c$，只要求
+
+$$
+\boxed{\mathsf F_{\rm cut}:\quad
+c\circ c=c\ \Longrightarrow\quad
+W_c(a)+W_c(b)=2q(D_ac,b)+W_c(b+2D_ca)
+\quad(a,b,c\in E_A,\ A\text{ 为全部原对象及实际联合}).}
+\tag{106.1}
+$$
+
+记 $\mathsf C_{\rm cut}(B_*)=B_*+\mathsf F_{\rm cut}$。原单位与零切口均在域中，不指定基、谱菜单、原子或秩一例外；只在证明其有限表示时作这些选择。完整原 $q/L/\circ/D$、质量与全部原过程资料仍按定义 103.1 保留，没有把 $D_ac$ 与 $D_ca$ 预先交换。
+

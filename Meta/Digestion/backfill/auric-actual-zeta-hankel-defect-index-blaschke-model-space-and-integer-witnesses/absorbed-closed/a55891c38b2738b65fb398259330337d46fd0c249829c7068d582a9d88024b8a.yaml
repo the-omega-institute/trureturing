@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a55891c38b2738b65fb398259330337d46fd0c249829c7068d582a9d88024b8a
+  normalized_sha256: sha256:a55891c38b2738b65fb398259330337d46fd0c249829c7068d582a9d88024b8a
+cas_ref: sha256:a55891c38b2738b65fb398259330337d46fd0c249829c7068d582a9d88024b8a
+coverage_gids:
+  - gid: D5/S3/Constants/Moments/CountableHankelNegativeWitness.exists_real_negative
+    target_statement_id: sha256:acc4c149ce0fe1e8cf80bb8636e719718deb589aad48d21799df2b16b5e2de79
+receipts:
+  unresolved_subitems: []

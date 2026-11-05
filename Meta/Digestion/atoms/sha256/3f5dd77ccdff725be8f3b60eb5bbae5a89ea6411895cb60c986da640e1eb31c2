@@ -1,0 +1,84 @@
+**Theorem 41.3 (complete fixed-source endpoint fibres).** For every fixed
+attained source $t_0$ of Definition 41.1, every $q\in\mathcal Q_+$ and
+every $k\ge0$,
+
+$$
+\begin{aligned}
+\mathcal W_v^{(k)}(q)&\ \longleftrightarrow\
+ \left\{n\in\mathbb N_0^{k+1}:
+          \sum_{j=0}^k n_j u_j=q-M^kv\right\}\quad(k\ge0),\\
+N_v^{(k)}(q)&=P_k\bigl((q-M^kv)_1,(q-M^kv)_2\bigr).
+\end{aligned}
+\tag{41.11}
+$$
+
+Subtraction here is in $\mathbb Z^2$, so negative residuals invoke the
+zero convention. Put $s_0=a+b$ and $\Delta=A+B-s_0$. If $\Delta<0$ then
+$N_v(q)=0$; otherwise the **full** endpoint count is
+
+$$
+N_v(A,B)=\sum_{k=0}^{\Delta}
+ P_k\bigl(A-(M^kv)_1,B-(M^kv)_2\bigr).
+\tag{41.12}
+$$
+
+In particular $\mathcal W_v(v)=\{\varepsilon\}$, while every other
+endpoint of potential at most $s_0$ has empty fibre. At higher potential
+and for $k\ge0$, the exact last-letter recurrence is
+
+$$
+\begin{aligned}
+\mathcal W_v^{(k)}(A,B)
+ &=\{hF:h\in\mathcal W_v^{(k-1)}(B-A,A)\}
+       \ \dot\cup\
+   \{hG:h\in\mathcal W_v^{(k)}(A-1,B)\},\\
+N_v^{(k)}(A,B)
+ &=\mathbf1_{\{1\le A\le B\}}N_v^{(k-1)}(B-A,A)
+   +\mathbf1_{\{A\ge1\}}N_v^{(k)}(A-1,B).
+\end{aligned}
+\tag{41.13}
+$$
+
+The first set in (41.13) is omitted unless $1\le A\le B$, and the
+second unless $A\ge1$. Its bases, also for total counts, are
+
+$$
+N_v^{(k)}(v)=\mathbf1_{\{k=0\}},\qquad
+N_v^{(k)}(A,B)=0\quad(A+B\le s_0,\ (A,B)\ne v).
+\tag{41.14}
+$$
+
+The invalid-endpoint and negative-$k$ conventions of Definition 41.1
+apply before these formulas. Summing (41.13) over $k$ gives the same
+recurrence for $N_v$, with source base one. Higher-potential unreachable
+endpoints receive zero; no additional base history is inserted there.
+
+Proof. The bijection (41.5) and exact action (41.6) give (41.11) in both
+directions. Every resulting finite word has its legal same-source
+native realization under Definition 41.1's resource premises. There is
+no restriction to selected blocks, and no shape assumption on $t_0$
+beyond membership in $\mathcal D_+$.
+
+For $s(A,B)=A+B$, a forward $F$ increases $s$ by the current beta count,
+which is at least one; a $G$ increases it by one. Every history ending
+at $q$ therefore has length at most $\Delta$, and in particular
+$k\le\Delta$. The empty word alone has potential $s_0$ and ends at $v$.
+This proves finiteness, (41.12) and (41.14), including $\Delta=0$.
+
+Any nonempty word has one last letter. Solving $F(x,y)=(A,B)$ gives
+$(x,y)=(B-A,A)$, which belongs to $\mathcal Q_+$ exactly when
+$1\le A\le B$. Solving $G(x,y)=(A,B)$ gives $(A-1,B)$, valid exactly
+when $A\ge1$ for a valid target. Each last-letter class is in bijection
+with its predecessor fibre. The classes are disjoint as literal words,
+even when their native edits or endpoints coincide. Their predecessor
+potentials are respectively $B$ and $A+B-1$, both strictly below
+$A+B$ on the permitted branches. Induction from (41.14), with zeros
+below the source and outside the pair domain, proves (41.13) and shows
+that it counts exactly the same complete fibres as (41.12). $\square$
+
+At one fixed source, equality of endpoints means only
+$M^kv+\tau=M^\ell v+\sigma$. It need not force $k=\ell$. If $k=\ell$,
+it does force $\tau=\sigma$ and hence equality of the whole affine pair
+actions; neither conclusion identifies the corresponding native tree
+actions. These distinctions are witnessed next.
+
