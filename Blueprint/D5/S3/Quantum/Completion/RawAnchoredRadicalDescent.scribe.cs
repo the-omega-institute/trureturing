@@ -20,24 +20,17 @@ internal sealed class RawAnchoredRadicalDescentDocument : IScribeDocumentDefinit
     private static Formula Eqn(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
     private static Formula Plus2(Formula a, Formula b) => Seq(a, Sp, Plus, Sp, b);
     private static Formula Minus2(Formula a, Formula b) => Seq(a, Sp, Minus, Sp, b);
-    private static Formula Three(Formula a) => Seq(D(3), Sp, Cdot, Sp, a);
     private static Formula Product(Formula a, Formula b) => Seq(Open, a, Sp, Cdot, Sp, b, Close);
     private static Formula Mark(Formula a) => Call("U", a);
     private static Formula BetaOf(Formula a) => Call("beta", F.Id("c"), a);
-    private static Formula ROf(Formula a) => Call("markerQuotient", F.Id("U"), F.Id("c"), F.Id("h"), a);
     private static Formula GammaOf(Formula a) => Call("gamma", F.Id("c"), a);
-    private static Formula RhoOf(Formula a) => Call("rho", F.Id("U"), F.Id("c"), F.Id("h"), a);
-    private static Formula TDef(Formula a, Formula b) => Call("defect", F.Id("c"), a, b);
-    private static Formula Form(Formula a, Formula b) => Call("quotientForm", F.Id("c"), a, b);
     private static Formula Read(Formula a, Formula b) => Call("c", a, b);
     private static Formula Member(Formula a, string b) => Seq(a, Sp, InMacro, Sp, Call(b == "Rad" ? "radical" : b, F.Id("c")));
     private static Formula All(Formula variable, Formula carrier, Formula body) =>
         Seq(Open, Forall, Sp, variable, Colon, Sp, carrier, Comma, Sp, body, Close);
     private static Formula AllM(Formula variable, Formula body) => All(variable, M, body);
-    private static Formula AllV(Formula variable, Formula body) => All(variable, Call("V", F.Id("c")), body);
     private static Formula Arrow(Formula a, Formula b) => Seq(Open, a, Sp, Rightarrow, Sp, b, Close);
     private static Formula Both(Formula a, Formula b) => Seq(Open, Open, a, Close, Sp, Land, Sp, Open, b, Close, Close);
-    private static Formula Sum3(Formula a, Formula b, Formula c) => Plus2(Plus2(a, b), c);
     private static Formula Conjunction(params Formula[] clauses)
     {
         var result = clauses[^1];
@@ -45,9 +38,6 @@ internal sealed class RawAnchoredRadicalDescentDocument : IScribeDocumentDefinit
             result = Both(clauses[i], result);
         return result;
     }
-    private static Formula Iterate(Formula map, Formula n, Formula a) =>
-        Seq(Open, map, Close, Caret, Grp(n), Open, a, Close);
-
     private static Formula Original(Formula body) => Seq(
         Forall, Sp, M, Colon, Sp, F.Id("Type"), Comma, Sp,
         OpenBracket, Call("MulOneClass", M), CloseBracket, Comma, Sp,
@@ -144,12 +134,6 @@ internal sealed class RawAnchoredRadicalDescentDocument : IScribeDocumentDefinit
             Paragraph(Text("Eisenstein is the actual subalgebra Algebra.adjoin_Z({omega}) inside the complex numbers. visibleImage(U,c,h,R) has carrier range(R.label) and inherits complex scalar multiplication restricted to Eisenstein. Algebra.adjoin_induction proves that this actual image is closed: integers use additive scalar multiplication, omega uses the actual marker phase, and sum/product closure uses the same range. omegaScalar is omega as an element of that generated subring. zeroComparisonSetoid(U,c,h) has literal relation c(a,b)=0; VisibleQuotient is its Quotient. The quotient group is transported through the proved bijection to visibleGroup, and the Eisenstein module is transported through the actual image equivalence. No new scalar ring, recipe, completion point or physical operation is supplied.")),
             Paragraph(Text("If the chosen Hilbert labels of a and b agree, the distance formula gives equality of every original row and every original column. This gives equality of q and r and annihilates both ordered B pairings of beta(a)-beta(b) against every beta label. The proved joint nondegeneracy forces beta(a)=beta(b), hence gamma(a)=gamma(b). Thus the actual energy is definite, and c(a,b)=0 is exactly equality of gamma. The original product and marker formulas give the congruence and all visible algebra identities. The linear image equivalence identifies the actual quotient with the label image. A nonzero Eisenstein scalar stays nonzero in the complex numbers, so its action on the Hilbert carrier has zero kernel; the same holds on the image and on the transported quotient. The zero model is included. No isotropic-to-radical shortcut or assertion W=0 is used.")),
             Paragraph(Text("These are mathematical consequences of the full original balance under U(1)=1, with every finite history depth allowed. The original operation may remain nonassociative and noncommutative and U cubed need not be the identity on original recipes. The group and module laws identify only their zero-comparison classes. Completion and scalar extension supply no extra actual recipes or physical controls.")))));
-
-    private static Formula RawBalanceFormula() => Eqn(
-        Sum3(Read(Product(A, U), Product(B, V)),
-            Read(Product(A, Mark(U)), Product(B, Mark(V))),
-            Read(Product(A, Mark(Mark(U))), Product(B, Mark(Mark(V))))),
-        Plus2(Three(Read(A, B)), Three(Read(U, V))));
 
     private static Formula Frame(Formula body) => Seq(
         Forall, Sp, M, Colon, Sp, F.Id("Type"), Comma, Sp,

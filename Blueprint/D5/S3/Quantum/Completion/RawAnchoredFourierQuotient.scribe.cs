@@ -55,9 +55,6 @@ internal sealed class RawAnchoredFourierQuotientDocument : IScribeDocumentDefini
         F.Id("c"), Colon, Sp, M, Sp, To, Sp, M, Sp, To, Sp, Real, Comma, Sp,
         Arrow(Call("RawBalance", F.Id("U"), F.Id("c")), body));
 
-    private static Formula Visible => Call("visibleGroup", F.Id("U"), F.Id("c"), F.Id("h"));
-    private static Formula Comparison(Formula x, Formula y) => Call("visibleComparison", F.Id("U"), F.Id("c"), F.Id("h"), x, y);
-    private static Formula Energy(Formula x) => Call("visibleEnergy", F.Id("U"), F.Id("c"), F.Id("h"), x);
     private static Formula OriginalWithProof(Formula body) => Seq(
         Forall, Sp, M, Colon, Sp, F.Id("Type"), Comma, Sp,
         OpenBracket, Call("MulOneClass", M), CloseBracket, Comma, Sp,
