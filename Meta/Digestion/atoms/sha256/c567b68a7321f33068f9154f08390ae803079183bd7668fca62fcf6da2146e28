@@ -1,0 +1,24 @@
+**Definition 39.1 (the physical pair count).** Use the causal record
+contract of Definition 34.1. Thus $k\ge1$ is fixed before the inputs,
+$K_0$ is any fixed finite word, every label occurs once in an arbitrary
+order with an arbitrary bit, the settled public input is the exact current
+set $A$, and the only persistent private record is the visible whole word
+$K$. POP and APPEND each cost one, every edit and every intermediate word is
+charged, and separately paid scratch is cleared at each logical cut. For a
+terminal assignment $x\in\{0,1\}^k$, let $R_x$ contain **all** reachable
+terminal words. These fibres may be history-dependent, have many words, and
+be disconnected. Put
+
+$$
+T_L=\{w\in\{0,1\}^{*}:|w|\le L\},\qquad
+\delta(u,v)=|u|+|v|-2|\operatorname{lcp}(u,v)|,
+$$
+
+and, for integers $L,D\ge0$,
+
+$$
+P(L,D)=\#\bigl\{\{u,v\}\subseteq T_L:u\ne v,
+\ \delta(u,v)\le2D\bigr\}.
+\tag{IV.111}
+$$
+

@@ -1,0 +1,37 @@
+**引理 2.1（无固定锚的恒等式）。**令 $p_k=U^k1$、$q(a)=c(a,1)$、$r(a)=c(1,a)$。在自由实差空间 $E=\operatorname{span}_{\mathbb R}\{e_a=\delta_a-\delta_1\}$ 上置
+
+$$
+B(e_a,e_b)=\frac{q(a)+r(b)-c(a,b)}2,\qquad
+\mathcal N=\{z:B(z,E)=B(E,z)=0\}.
+\tag{2.1}
+$$
+
+此刻 $B$ 可非对称、不定号。映射 $Se_a=e_{Ua}-e_{p_1}$ 保持 $B$。定义
+
+$$
+X_k(a,u)=e_{a\cdot U^ku}-e_{p_k},\qquad
+D_k(a,u)=e_{a\cdot U^ku}-e_{a\cdot p_k}-e_{U^ku}+e_{p_k}.
+\tag{2.2}
+$$
+
+则
+
+$$
+\sum_k B(X_k(a,u),X_k(b,v))=3B(e_a,e_b)+3B(e_u,e_v),
+\tag{2.3}
+$$
+
+$$
+\sum_k B(D_k(a,u),D_k(b,v))=0.
+\tag{2.4}
+$$
+
+**证明。**令 $s_n=c(U^nu,U^nv)$。(R) 的背景取 $(1,1)$ 得 $s_{n+1}+s_{n+2}=2s_n$。解为 $A+B_0(-2)^n$；全部整数 $n\ge0$ 上的有限非负性迫 $B_0=0$，故 $c(Uu,Uv)=c(u,v)$。四点极化公式
+
+$$
+2B(e_x-e_s,e_y-e_t)=-c(x,y)+c(x,t)+c(s,y)-c(s,t)
+\tag{2.5}
+$$
+
+随后给 $B(Sx,Sy)=B(x,y)$。对 (2.5) 取 $x=a\cdot U^ku,s=p_k,y=b\cdot U^kv,t=p_k$ 并求和，依次使用 (R) 的输入 $(a,b,u,v)$、$(a,1,u,1)$、$(1,b,1,v)$ 及 $(1,1,1,1)$，得 (2.3)。对其两端分别在输入矩形 $(a,u),(a,1),(1,u),(1,1)$ 上取交替和，所有只依赖单个输入轴的项消失，得 (2.4)。全程未重括号。
+

@@ -23,7 +23,13 @@ import tempfile
 import time
 import uuid
 
+try:
+    from maintenance_log import MaintenanceLog
+except (ImportError, OSError):
+    MaintenanceLog = None
+
 REPOSITORY = Path(__file__).resolve().parents[2]
+LOG = None
 # BSD file flags by which the owner or the system marks an entry as not to be removed or changed.
 PROTECTED_FLAGS = (stat.UF_IMMUTABLE | stat.UF_APPEND | stat.UF_NOUNLINK |
                    stat.SF_IMMUTABLE | stat.SF_APPEND | stat.SF_NOUNLINK)
@@ -62,7 +68,11 @@ class LowDiskSpace(RuntimeError):
 
 
 def emit(event, **fields):
-    print(json.dumps(dict(event=event, **fields), ensure_ascii=True), flush=True)
+    row = dict(event=event, **fields)
+    print(json.dumps(row, ensure_ascii=True), flush=True)
+    if event.endswith("_summary") or event.endswith("_warning") or event == "worktree_disk":
+        if LOG is not None:
+            LOG.emit(event, **fields)
 
 
 def check_disk(paths, allow_low_disk=False):
@@ -1139,6 +1149,9 @@ def clean_from_anchor(options, caller, disk_descriptor):
             print(json.dumps(dict(event="host_cleanup_warning", path=result["path"],
                                   action=result["action"], reason=result["reason"],
                                   diagnostic=result.get("detail") or result["reason"])), file=sys.stderr)
+            if LOG is not None:
+                LOG.emit("host_cleanup_warning", path=result["path"], action=result["action"],
+                         reason=result["reason"])
 
     def unobservable(path, error):
         reason = "vanished" if isinstance(error, FileNotFoundError) else "unreadable"
@@ -1236,7 +1249,7 @@ def clean_from_anchor(options, caller, disk_descriptor):
     return 1 if failed else 0
 
 
-def main(arguments=None):
+def _main(arguments=None):
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
     disk = commands.add_parser("check-disk", help="reject worktree creation below 5%% available disk space")
@@ -1256,6 +1269,11 @@ def main(arguments=None):
     clean.add_argument("--delete", action="store_true")
     clean.add_argument("--verbose", action="store_true", help="list individual paths, including kept artifacts")
     options = parser.parse_args(arguments)
+    global LOG
+    LOG = MaintenanceLog("host-cleanup", options.repository if options.command == "clean" else REPOSITORY) if MaintenanceLog else None
+    if LOG is not None:
+        LOG.emit("run_started", action=options.command)
+        os.environ["TRURETURING_MAINTENANCE_RUN_ID"] = LOG.run_id
     try:
         if options.command == "active-paths":
             codex = Path(os.environ.get("CODEX_HOME") or Path.home() / ".codex")
@@ -1282,6 +1300,30 @@ def main(arguments=None):
     except (OSError, ValueError, subprocess.SubprocessError) as error:
         print("HOST_CLEANUP_FAILED " + str(error), file=sys.stderr)
         return 1
+
+
+def main(arguments=None):
+    global LOG
+    LOG = None
+    previous_run_id = os.environ.get("TRURETURING_MAINTENANCE_RUN_ID")
+    try:
+        try:
+            exit_code = _main(arguments)
+        except BaseException as error:
+            if LOG is not None:
+                code = error.code if isinstance(error, SystemExit) and isinstance(error.code, int) else 1
+                if isinstance(error, KeyboardInterrupt):
+                    code = 130
+                LOG.finish(code, error_type=type(error).__name__)
+            raise
+        if LOG is not None:
+            LOG.finish(exit_code)
+        return exit_code
+    finally:
+        if previous_run_id is None:
+            os.environ.pop("TRURETURING_MAINTENANCE_RUN_ID", None)
+        else:
+            os.environ["TRURETURING_MAINTENANCE_RUN_ID"] = previous_run_id
 
 
 if __name__ == "__main__":
