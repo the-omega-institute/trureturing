@@ -3,6 +3,8 @@ fingerprints:
   normalized_sha256: sha256:9ee98da0af702130d8831088a460e68998152997b0f3897cd0482ea8b3e8114d
 cas_ref: sha256:9ee98da0af702130d8831088a460e68998152997b0f3897cd0482ea8b3e8114d
 coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/Constructor/OriginalCanonicalClassification.original_canonical_synthesis
+    target_statement_id: sha256:099367a5fe5b1b4e3fec0157c916d35ec00033a1a17a8db91dc4ebe0bd2175f5
   - gid: D5/S3/Arith/FibonacciAtomic/Observer/Constructor/OriginalFiniteResolution.original_finite_resolution
     target_statement_id: sha256:db6b372aad7126681a971b0a9c7a4593a2acf8ca5576e1a86592b318ec715a0c
   - gid: D5/S3/Arith/FibonacciAtomic/Observer/Constructor/OriginalFunctionalNormalization.root_link_normalization
