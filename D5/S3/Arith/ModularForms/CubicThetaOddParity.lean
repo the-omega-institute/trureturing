@@ -24,7 +24,7 @@ open D5.S3.Arith.ModularForms.CubicThetaCoreProduct
 
 private def oddAffine (p : ℤ × ℤ) : ℤ × ℤ := (1 - 2 * p.1, -2 * p.2)
 
-theorem core_exponent_mod_four_one (p : ℤ × ℤ) :
+private theorem core_exponent_mod_four_one (p : ℤ × ℤ) :
     coreExponent p % 4 = 1 ↔ p.1 % 2 = 1 ∧ p.2 % 2 = 0 := by
   have hx0 := Int.emod_nonneg p.1 (by norm_num : (4 : ℤ) ≠ 0)
   have hx4 := Int.emod_lt_of_pos p.1 (by norm_num : (0 : ℤ) < 4)
@@ -34,7 +34,7 @@ theorem core_exponent_mod_four_one (p : ℤ × ℤ) :
     norm_num [coreExponent, eisensteinNorm, pow_two, Int.add_emod, Int.mul_emod,
       Int.sub_emod, hx, hy] <;> omega
 
-theorem core_exponent_mod_four_ne_three (p : ℤ × ℤ) :
+private theorem core_exponent_mod_four_ne_three (p : ℤ × ℤ) :
     coreExponent p % 4 ≠ 3 := by
   have hx0 := Int.emod_nonneg p.1 (by norm_num : (4 : ℤ) ≠ 0)
   have hx4 := Int.emod_lt_of_pos p.1 (by norm_num : (0 : ℤ) < 4)
@@ -44,7 +44,7 @@ theorem core_exponent_mod_four_ne_three (p : ℤ × ℤ) :
     norm_num [coreExponent, eisensteinNorm, pow_two, Int.add_emod, Int.mul_emod,
       Int.sub_emod, hx, hy] <;> omega
 
-theorem core_exponent_odd_affine (p : ℤ × ℤ) :
+private theorem core_exponent_odd_affine (p : ℤ × ℤ) :
     coreExponent (oddAffine p) = 4 * coreExponent p + 1 := by
   dsimp [oddAffine, coreExponent, eisensteinNorm]
   ring
@@ -87,11 +87,11 @@ noncomputable def coreOddEquiv (n : ℕ) :
     have hpar := (core_exponent_mod_four_one p.1).mp hm
     exact odd_affine_inverse p.1 hpar.1 hpar.2
 
-theorem core_fiber_four_mul_add_one_card (n : ℕ) :
+private theorem core_fiber_four_mul_add_one_card (n : ℕ) :
     Nat.card (CoreFiber (4 * n + 1)) = Nat.card (CoreFiber n) := by
   exact (Nat.card_congr (coreOddEquiv n)).symm
 
-theorem core_fiber_four_mul_add_three_empty (n : ℕ) :
+private theorem core_fiber_four_mul_add_three_empty (n : ℕ) :
     IsEmpty (CoreFiber (4 * n + 3)) := by
   letI : IsEmpty (CoreFiber (4 * n + 3)) := ⟨by
     intro p
@@ -101,7 +101,7 @@ theorem core_fiber_four_mul_add_three_empty (n : ℕ) :
     norm_num at hm⟩
   exact inferInstance
 
-theorem core_product_coeff_mod_four (n : ℕ) :
+private theorem core_product_coeff_mod_four (n : ℕ) :
     PowerSeries.coeff (4 * n + 1)
         ((PowerSeries.expand 3 (by decide)
           (PowerSeries.pentagonalSeries ℚ)) ^ 3 *
@@ -121,24 +121,24 @@ theorem core_product_coeff_mod_four (n : ℕ) :
     have h := core_fiber_four_mul_add_three_empty n
     exact_mod_cast (Nat.card_of_isEmpty : Nat.card (CoreFiber (4 * n + 3)) = 0)
 
-noncomputable abbrev f1 : PowerSeries ℤ := PowerSeries.pentagonalSeries ℤ
+private noncomputable abbrev f1 : PowerSeries ℤ := PowerSeries.pentagonalSeries ℤ
 
-noncomputable abbrev f3 : PowerSeries ℤ :=
+private noncomputable abbrev f3 : PowerSeries ℤ :=
   PowerSeries.expand 3 (by decide) f1
 
 noncomputable def integralT : PowerSeries ℤ :=
   f3 ^ 3 * PowerSeries.invOfUnit f1 1
 
-theorem f1_map :
+private theorem f1_map :
     PowerSeries.map (Int.castRingHom ℚ) f1 = PowerSeries.pentagonalSeries ℚ := by
   exact map_pentagonal (Int.castRingHom ℚ)
 
-theorem f3_map :
+private theorem f3_map :
     PowerSeries.map (Int.castRingHom ℚ) f3 =
       PowerSeries.expand 3 (by decide) (PowerSeries.pentagonalSeries ℚ) := by
   rw [f3, PowerSeries.map_expand, f1_map]
 
-theorem f1_constant_one : PowerSeries.constantCoeff f1 = 1 := by
+private theorem f1_constant_one : PowerSeries.constantCoeff f1 = 1 := by
   change PowerSeries.constantCoeff (PowerSeries.pentagonalSeries ℤ) = 1
   calc
     _ = PowerSeries.coeff 0 (PowerSeries.pentagonalSeries ℤ) :=
@@ -148,7 +148,7 @@ theorem f1_constant_one : PowerSeries.constantCoeff f1 = 1 := by
       rw [show _root_.pentagonal (0 : ℤ) = 0 by decide] at h
       simpa only [Int.coe_negOnePow, Int.natAbs_zero, pow_zero] using h
 
-theorem map_invOfUnit_f1 :
+private theorem map_invOfUnit_f1 :
     PowerSeries.map (Int.castRingHom ℚ) (PowerSeries.invOfUnit f1 1) =
       PowerSeries.invOfUnit (PowerSeries.pentagonalSeries ℚ) 1 := by
   have hz := congrArg (PowerSeries.map (Int.castRingHom ℚ))
@@ -172,7 +172,7 @@ theorem map_invOfUnit_f1 :
     _ = PowerSeries.invOfUnit (PowerSeries.pentagonalSeries ℚ) 1 * 1 := by rw [hz]
     _ = PowerSeries.invOfUnit (PowerSeries.pentagonalSeries ℚ) 1 := by rw [mul_one]
 
-theorem integralT_map :
+private theorem integralT_map :
     PowerSeries.map (Int.castRingHom ℚ) integralT =
       (PowerSeries.expand 3 (by decide)
         (PowerSeries.pentagonalSeries ℚ)) ^ 3 *
