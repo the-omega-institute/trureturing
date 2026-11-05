@@ -4,7 +4,8 @@ import Reg.Support.DependentFamily
 
 /-! Original finite-count laws with source-indexed numerical observations. -/
 
-open LeanInformationAudit
+open LeanInformationAudit Filter
+open scoped Topology
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam
 
@@ -375,6 +376,178 @@ noncomputable def tilingRegistration : Contract.Registration
     readouts := #[{
       path := #["body", "fn", "arg"]
       stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+abbrev seamSignature : Signature where
+  Params := ℕ × (ℕ × ℕ)
+  State _ := ℕ × ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def seamActual : Realization seamSignature :=
+  realize seamSignature (fun _ p v => torusAdjacent p.1 p.2 v) (fun e => nomatch e)
+
+def seamRejected : Realization seamSignature :=
+  realize seamSignature (fun _ p v => ¬ torusAdjacent p.1 p.2 v) (fun e => nomatch e)
+
+def seamArena : Arena where
+  signature := seamSignature
+  Law r := ∀ {n : ℕ} (u v : ℕ × ℕ),
+    (u.1 < n - 1 ∧ u.2 < n - 1) → (v.1 < n - 1 ∧ v.2 < n - 1) →
+    (r.readout () (n, u) v ↔ freeAdjacent u v)
+
+private theorem seamRejectedLaw : ¬ seamArena.Law seamRejected := by
+  intro h
+  have hf := @h 3 (0, 0) (0, 0) (by decide) (by decide)
+  simp [seamRejected, realize, torusAdjacent, freeAdjacent] at hf
+
+private theorem seamDependence : ObservationalDependence seamSignature seamActual := by
+  intro i
+  refine ⟨(3, (0, 0)), (0, 0), (1, 0), ?_⟩
+  simp [seamActual, realize, torusAdjacent, gap]
+
+def seamFamily : Registration seamArena (type_of% (@empty_seam_adjacency)) where
+  actual := seamActual
+  bridge := Iff.rfl
+  variation := ⟨@empty_seam_adjacency, seamRejected, seamRejectedLaw⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨seamRejected, ?_, rfl, seamRejectedLaw⟩
+      intro j hj
+      exact (hj (Subsingleton.elim (α := Unit) j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := seamDependence
+
+abbrev logSignature : Signature where
+  Params := Unit
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def logActual : Realization logSignature :=
+  realize logSignature (fun _ _ n => Real.log (freeCount n : ℝ)) (fun e => nomatch e)
+
+def logRejected : Realization logSignature :=
+  realize logSignature (fun _ _ n => -(n : ℝ) ^ 2) (fun e => nomatch e)
+
+def logArena : Arena where
+  signature := logSignature
+  Law r := ∃ s : ℝ, 0 ≤ s ∧ Filter.Tendsto
+    (fun n : ℕ => r.readout () () n / (n : ℝ) ^ 2) Filter.atTop (nhds s)
+
+private theorem logRejectedLaw : ¬ logArena.Law logRejected := by
+  rintro ⟨s, hs, ht⟩
+  change Filter.Tendsto (fun n : ℕ => -(n : ℝ) ^ 2 / (n : ℝ) ^ 2)
+    Filter.atTop (nhds s) at ht
+  have hb : Filter.Tendsto (fun n : ℕ => -(n : ℝ) ^ 2 / (n : ℝ) ^ 2)
+      Filter.atTop (nhds (-1 : ℝ)) := by
+    apply tendsto_const_nhds.congr'
+    filter_upwards [Filter.eventually_gt_atTop 0] with n hn
+    have hn0 : (n : ℝ) ≠ 0 := by exact_mod_cast hn.ne'
+    field_simp [hn0]
+  have heq : s = -1 := tendsto_nhds_unique ht hb
+  norm_num [heq] at hs
+
+private theorem logDependence : ObservationalDependence logSignature logActual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  have h0 : freeCount 0 = 1 := by
+    norm_num [freeCount, independentSets, board, Finset.range_succ]
+  have h1 : freeCount 1 = 2 := by
+    norm_num [freeCount, independentSets, board, freeAdjacent, gap,
+      Finset.range_succ, Finset.powerset_insert]
+  change Real.log (freeCount 0 : ℝ) ≠ Real.log (freeCount 1 : ℝ)
+  rw [h0, h1]
+  simpa using (Real.log_pos (by norm_num : (1 : ℝ) < 2)).ne'
+
+def logFamily : Registration logArena (type_of% (@free_log_limit)) where
+  actual := logActual
+  bridge := Iff.rfl
+  variation := ⟨@free_log_limit, logRejected, logRejectedLaw⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨logRejected, ?_, rfl, logRejectedLaw⟩
+      intro j hj
+      exact (hj (Subsingleton.elim (α := Unit) j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := logDependence
+
+noncomputable def seamRegistration : Contract.Registration
+    (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.empty_seam_adjacency)
+    (Realization seamSignature) Unit Unit where
+  unitName := `Reg.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.empty_seam_adjacency.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.seamFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨seamArena⟩
+  objectArena := .source ⟨seamArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source seamArena ⟨seamFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some seamActual
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+noncomputable def logRegistration : Contract.Registration
+    (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.free_log_limit)
+    (Realization logSignature) Unit Unit where
+  unitName := `Reg.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.free_log_limit.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.logFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨logArena⟩
+  objectArena := .source ⟨logArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source logArena ⟨logFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some logActual
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["arg", "body", "arg", "fn", "fn", "arg", "body", "fn", "arg"]
+      stateBinder := 1
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
