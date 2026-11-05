@@ -1,0 +1,125 @@
+**定理 156.1（带原单位供应的局部恢复）。** 在任意有限 EJA、任意原正 Frobenius 型 $q$ 与任意原实双线性 $D$ 上，若另有 $D_au=0$ 对全部 $a\in E$ 成立，则
+
+$$
+\mathsf F_3\Longleftrightarrow\mathsf F_{\rm in}
+\Longleftrightarrow\mathsf F_{\rm cut}.
+\tag{156.1}
+$$
+
+同一原 $D$ 因而满足 SC、交替性、双单位、原 $q$-斜伴随 Jordan 导子律，以及全部幂等元的 $D_c^2=-P_c/4$。局部定理的单位前提在完整 $B$ 和另名 $\mathsf B_{\rm cl}$ 中分别由原接口独立供应。
+
+证明。反向只限制原关系的测试域。$E=0$ 时唯一 $D=0$，原子域为空，结论成立。以下令 $m=\operatorname{rank}E\ge1$。
+
+先固定一颗 primitive $e$，证明 $\operatorname{span}\mathcal A_e=E$。法向 primitive 张成 $N_e$，且分别是 $e$ 或与 $e$ 正交的 primitive，故均在 $\mathcal A_e$。对任意 $0\ne v\in T_e:=E_{1/2}(e)$，只用定理 151.1 中不含配平的成熟角构造：写 $v^2=\lambda e+z$，$z\in E_0(e)$，$\lambda=\tau(v^2)/2>0$。Jordan 恒等式与幂结合性给 $v^3=\lambda v$、$z^2=\lambda z$、$\tau(z)=\lambda$，故
+
+$$
+s=z/\lambda\in\operatorname{Prim}(E),\quad s\perp e,\qquad
+y=v/\sqrt\lambda,\quad y^2=e+s,\quad e\circ y=s\circ y=y/2.
+$$
+
+于是整个原 $E$ 中的两个非零互补 primitive
+
+$$
+p_\pm=(e+s\pm y)/2,\qquad
+\tau(p_\pm\circ e)=\tfrac12,\qquad p_+-p_-=y
+\tag{156.2}
+$$
+
+都在 $\mathcal A_e$，故其差张成 $T_e$。若 $T_e=0$，这一部分为空。因此三层输入张成完整原空间，而没有把它们的二次能量直接线性延拓。
+
+令 $q(\zeta,x)=\tau(x)$，并置
+
+$$
+\beta(a,b)=q(D_ab,u)/m,\qquad \Delta_ab=D_ab-\beta(a,b)\zeta.
+\tag{156.3}
+$$
+
+沿定理 146.1 的 Frobenius 谱迹论证，$P_c\zeta=0$ 对全部幂等元成立，每颗 primitive $r$ 有 $q(\zeta,r)=1$。特别地，若 $E=\bigoplus_tJ_t$、$q|_{J_t}=w_t\tau_t(\,\cdot\circ\cdot\,)$，则 $\zeta=\sum_tu_t/w_t$；没有统一各块的正权。
+
+固定 $e$ 和允许的 $p\in\mathcal A_e$，(155.2) 使 $q(D_pe,r)$ 对全部法向 primitive $r$ 取共同值。把 $e$ 扩入整个完整 frame，其 $m$ 颗 primitive 均法向且和为 $u$，所以该值恰为 $\beta(p,e)$。法向原子张成 $N_e$，遂有 $\Delta_pe\in T_e$；再用刚证明的第一槽张成，取得
+
+$$
+\Delta_ae\in T_e\qquad(a\in E,\ e\text{ primitive}).
+\tag{156.4}
+$$
+
+这一步只延拓线性的法向读数。固定 $a$、记 $S=\Delta_a$。任一 frame $(r_i)$ 有 $q(Sr_i,r_j)=0$，所以对任一自身谱分解的 $x$，有 $q(Sx,x)=q(Sx,x^2)=0$。前式极化得 $S^{\dagger_q}=-S$；后式在 $x+ty$ 的一次项给
+
+$$
+0=q(Sy,x^2)+2q(Sx,x\circ y)
+=q(-S(x^2)+2x\circ Sx,y).
+$$
+
+原 $q$ 非退化，再极化得到每个 $\Delta_a$ 的 Jordan 导子律，并有 $\Delta_au=0$。原配平在允许的 primitive 对上于是化为
+
+$$
+W_e(p)-W_e(2\Delta_ep)=2\beta(p,e)\qquad(p\in\mathcal A_e).
+\tag{156.5}
+$$
+
+在任一 frame $(r_i)$ 中，$\tau(r_i\circ r_j)\in\{0,1\}$，故 (156.5) 给
+
+$$
+\beta(r_i,r_j)=-\|P_{r_j}\Delta_{r_j}r_i\|_q^2\le0,\qquad
+\sum_j\beta(r_i,r_j)=\beta(r_i,u)=0.
+\tag{156.6}
+$$
+
+最后一个等式正是本局部定理第一次使用原 $D_au=0$ 的位置。每行非正且和为零，故每项为零；特别地 (156.4) 给 $\Delta_pp=0$。对正交 primitive $p,s$，导子律给
+
+$$
+v=\Delta_sp\in E_{1/2}(p)\cap E_0(s)\subseteq E_{1/2}(p+s).
+$$
+
+取秩二切口 $c=p+s$、输入和读回均为 $p\le c$，它仍是 (155.2) 的合法测试。因为 $\beta(p,c)=0$、$\Delta_pc$ 切于 $c$，该测试准确给 $0=2\|v\|_q^2$。因此正交原子互不推动。沿每个 $a$ 自己的谱框架，$\Delta_aa=\beta(a,a)=0$，双线性极化给
+
+$$
+\Delta_ab=-\Delta_ba,\qquad \beta(a,b)=-\beta(b,a).
+\tag{156.7}
+$$
+
+现在才交换原子的角色。原 Frobenius 性直接给
+
+$$
+W_e(p)=2q(e,p)-2q(e\circ p,e\circ p)=W_p(e).
+\tag{156.8}
+$$
+
+$\tau(p\circ e)=\tau(e\circ p)$，所以 $p\in\mathcal A_e$ 当且仅当 $e\in\mathcal A_p$；删域没有破坏交换的合法性。由 (156.4)、(156.7)，$\Delta_ep=-\Delta_pe$ 同时切于两颗原子，故 (156.5) 的两个长度项在交换后相同，取得 $\beta(p,e)=\beta(e,p)$。结合交替性，$\beta(p,e)=0$ 在全部允许对上成立。固定 $e$ 的允许输入张成 $E$，再在第二槽使用 primitive 张成，得到
+
+$$
+\beta=0,\qquad D=\Delta.
+\tag{156.9}
+$$
+
+原 $D$ 至此成为原 $q$-斜伴随导子并满足 SC 和双单位。
+
+最后恢复被删的连续角度，直接复用定理 146.1 的逐 Peirce 边推导，但核对其长度输入确实属于新域。固定 frame，记 $D_i=D_{r_i}$、$V_{ij}=E_{1/2}(r_i)\cap E_{1/2}(r_j)$。原子互不推动与导子律使 $D_i$ 保持全部 $V_{jk}$；交替性使 $i\notin\{j,k\}$ 时 $D_iV_{jk}=0$，且在 $V_{ij}$ 上 $D_j=-D_i$。任取 $0\ne v\in V_{ij}$，成熟秩二角给
+
+$$
+v^2=\gamma(r_i+r_j),\quad\gamma>0,\qquad
+p_v=(r_i+r_j)/2+v/(2\sqrt\gamma)\in\operatorname{Prim}(E).
+$$
+
+它满足 $\tau(p_v\circ r_i)=1/2$，因此以切口 $r_i$、输入 $p_v$ 使用 (156.5) 合法，准确得到 $4\|D_iv\|_q^2=\|v\|_q^2$。若该边为零则略去。对任意秩切口 $c=\sum_i\varepsilon_ir_i$，在 $V_{ij}$ 上 $D_c=(\varepsilon_i-\varepsilon_j)D_i$、$P_c=(\varepsilon_i-\varepsilon_j)^2I$，对角 frame 空间上二者均为零。原 $q$-正交相加与斜伴随性给
+
+$$
+P_cD_c=D_cP_c=D_c,\qquad
+4\|D_cx\|_q^2=\|P_cx\|_q^2,\qquad D_c^2=-P_c/4.
+\tag{156.10}
+$$
+
+任意 $a,b\in E$ 时，令 $d=D_ca=-D_ac\in E_{1/2}(c)$，便有
+
+$$
+\begin{aligned}
+2q(D_ac,b)+W_c(b+2D_ca)
+&=-2q(d,b)+\tfrac12\|P_cb+2d\|_q^2\\
+&=W_c(b)+2\|d\|_q^2=W_c(b)+W_c(a).
+\end{aligned}
+$$
+
+这恢复全部原 $\mathsf F_{\rm cut}$，包含零、单位、中央及任意秩切口，也恢复 $\mathsf F_{\rm in}$。总秩一与零切空间已由同一证明覆盖。
+
+完整背景的单位供应仍是母卷定理 30.1、引理 67.3 的独立论证：对每个原 $A$，精确 $N_u$ 给身份事件，全事件 R 给某个实际 $J=AP^{\otimes k}$，$k\ge1$；原 X 的含幺、同一 $D$ 保持和交叉零给 $i(D^A_au_A)=D^J_{i(a)}j_R(u_R)=0$，$i$ 单射。没有要求直接 $AP$，也没有消费 SC、复分类或配平结论。故本定理在两个原完整背景中都没有增添独立单位公理。∎
+

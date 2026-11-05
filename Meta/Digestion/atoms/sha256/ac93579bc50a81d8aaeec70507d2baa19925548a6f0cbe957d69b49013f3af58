@@ -1,0 +1,11 @@
+**引理 2.2（次三次增长的格点 Poisson 刚性）。**若 $Q:\mathbb Z^d\to\mathbb R$ 满足
+
+$$
+\Delta_0Q=C_0,\quad |Q(n)|\le C(1+\|n\|)^\alpha,\quad\alpha<3,
+\qquad
+\Delta_0=\sum_{i=1}^d(T_{e_i}+T_{-e_i}-2I),
+$$
+
+则 $Q$ 是至多二次的普通多项式。
+
+**证明。**可稍增指数使 $2<\alpha<3$。置 $H(n)=Q(n)-C_0\|n\|_2^2/(2d)$，则 $\Delta_0H=0$，且 $H$ 保持该增长界。

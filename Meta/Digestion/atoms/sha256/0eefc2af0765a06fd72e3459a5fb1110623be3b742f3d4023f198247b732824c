@@ -1,0 +1,125 @@
+**定理 130.2（秩二入口恢复任意秩配平）。** 在任意有限 EJA、任意原正 Frobenius 型 $q$ 和任意原实双线性 $D$ 上，
+
+$$
+\mathsf F_2\Longleftrightarrow\mathsf F_{\rm primtri}
+\Longleftrightarrow\mathsf F_{\rm idem}
+\Longleftrightarrow\mathsf F_{\rm zero}
+\Longleftrightarrow\mathsf F_{\rm fib}\Longleftrightarrow\mathsf F_{\rm cut}.
+\tag{130.2}
+$$
+
+同一原 SC、双单位湮灭、全部 Jordan 导子律、原 $q$-斜伴随及全部 $D_c^2=-P_c/4$ 因而恢复。证明不消费尚未取得的高秩切口校准。
+
+证明。零对象没有 primitive，唯一双线性 $D=0$，两边均平凡。以下设 $E\ne0$，并先只假设 (130.1)。
+
+先取 $r=0$，再与任一允许幂等元 $r$ 的等式相减，得到
+
+$$
+W_c(p)=W_c(2D_cp),\qquad q(D_pc,r)=0
+\quad(\operatorname{rank}c\le2).
+\tag{130.3}
+$$
+
+这里只延拓第二个线性读数。$N_c=E_1(c)\oplus E_0(c)$ 是含单位的 EJA 子代数，其幂等元属于原 $E$ 且实线性张成 $N_c$；整个 $E$ 的 primitive 又实线性张成 $E$。因此对每个 primitive 主切口 $c$ 已有
+
+$$
+q(D_ac,n)=0\quad(a\in E,\ n\in N_c),\qquad
+D_ac\in E_{1/2}(c).
+\tag{130.4}
+$$
+
+此处没有将主切口的量词延拓到任意秩。
+
+固定 $a$，令 $T=D_a$。在任一完整 primitive frame $(r_i)$ 中，(130.4) 与 Peirce 正交性给全部 $q(Tr_i,r_j)=0$。对任意 $x=\sum_i\lambda_i r_i$ 作谱展开得 $q(Tx,x)=0$，实极化给
+
+$$
+q(Tx,y)=-q(x,Ty).
+\tag{130.5}
+$$
+
+同一个谱展开还给 $q(Tx,x^2)=0$，因为 $x^2=\sum_i\lambda_i^2r_i$。将 $x+ty$ 代入这个三次恒等式，取 $t$ 的一次项，再用 (130.5) 和原 Frobenius 性，得到
+
+$$
+\begin{aligned}
+0&=q(Ty,x^2)+2q(Tx,x\circ y)\\
+ &=q\bigl(-T(x^2)+2x\circ Tx,y\bigr).
+\end{aligned}
+$$
+
+原 $q$ 非退化，故 $T(x^2)=2x\circ Tx$。对 $x+y$ 实极化给完整导子律；取 $x=u$ 给 $Tu=2Tu$，故 $Tu=0$。于是
+
+$$
+D_a(x\circ y)=D_ax\circ y+x\circ D_ay,\qquad D_au=0.
+\tag{130.6}
+$$
+
+这里的三次极化是成熟导子恢复机制；来源和原 $q$ 的模对应见定义 134.1。推导始终使用原正 Frobenius 型，包括不等块权。现在才对任意幂等元 $c$ 微分 $c^2=c$，取得 $D_ac=2c\circ D_ac$ 和全部秩切口的切向性。
+
+接着恢复正交原子之间的关系。在 (130.3) 取主切口与第一输入均为 primitive $p$，切向性给 $0=W_p(2D_pp)=2\|D_pp\|_q^2$，故 $D_pp=0$。若 $p,s$ 是正交 primitive，令 $v=D_sp$。对 $p\circ s=0$ 应用导子 $D_s$，用 $D_ss=0$，得 $v\in E_0(s)$；(130.4) 又给 $v\in E_{1/2}(p)$。因此
+
+$$
+v\in E_{1/2}(p)\cap E_0(s)\subseteq E_{1/2}(p+s).
+$$
+
+主切口 $c=p+s$ 的整个原秩恰为二，第一输入 $p$ primitive，故 (130.3) 可用。$D_cp=v$ 而 $W_c(p)=0$，从而 $0=W_c(2v)=2\|v\|_q^2$。交换 $p,s$ 亦同。于是每个完整 primitive frame 都有
+
+$$
+D_{r_i}r_j=0\quad(\text{全部 }i,j).
+\tag{130.7}
+$$
+
+对任意 $x=\sum_i\lambda_i r_i$ 谱展开得 $D_xx=0$，再极化取得 SC，即 $D_ab=-D_ba$。此后才由 $D_au=0$ 得 $D_ua=0$。跨中央块的 $p+s$ 同样属于这里的测试域。
+
+固定任一这样的 frame，记 $D_i=D_{r_i}$、$V_{ij}$ 为共同 Peirce 空间。由 (130.6)–(130.7)，$[D_i,L_{r_j}]=L_{D_ir_j}=0$，故 $D_i$ 保持各 $V_{jk}$。若 $i\notin\{j,k\}$，SC 和 (130.4) 给
+
+$$
+D_iV_{jk}\subseteq E_0(r_i)\cap E_{1/2}(r_i)=\{0\}.
+$$
+
+由 $D_u=0$，在 $V_{ij}$ 上 $D_i+D_j=0$。记 $A_{ij}=D_i|_{V_{ij}}$，则 $A_{ji}=-A_{ij}$，并且这些算子对原 $q$ 斜伴随。
+
+在 $0\ne v\in V_{ij}$ 上，直接消费 (126.10)–(126.11) 已给出的原 Frobenius、Jordan 恒等式及秩可加性计算：
+
+$$
+v^2=\gamma(r_i+r_j),\quad\gamma>0,\qquad
+p_v=\frac{r_i+r_j}{2}+\frac{v}{2\sqrt\gamma}\in\operatorname{Prim}(E).
+\tag{130.8}
+$$
+
+该计算不使用任何 $D$ 条件或复分类，primitive 身份属于整个 $E$；连接的原子等长不等于不同简单块等权。以秩一主切口 $r_i$、第一输入 $p_v$ 使用 (130.3)，即得 (126.12) 中相同的计算
+
+$$
+\frac{\|v\|_q^2}{8\gamma}
+=\frac{\|A_{ij}v\|_q^2}{2\gamma},\qquad
+4\|A_{ij}v\|_q^2=\|v\|_q^2.
+\tag{130.9}
+$$
+
+零向量亦满足最后一式。这一步只使用秩一主切口，没有调用高秩原子校准。
+
+最后固定任意秩幂等元 $c$，选取包含它的 primitive 谱框架，写
+
+$$
+c=\sum_i\varepsilon_i r_i,\quad\varepsilon_i\in\{0,1\},\qquad
+x=\sum_ix_i r_i+\sum_{i<j}x_{ij},\quad x_{ij}\in V_{ij}.
+$$
+
+(130.7) 使 $D_c$ 杀掉所有对角 $r_i$；非端点作用为零和 $A_{ji}=-A_{ij}$ 给
+
+$$
+D_c|_{V_{ij}}=(\varepsilon_i-\varepsilon_j)A_{ij},\qquad
+P_c|_{V_{ij}}=(\varepsilon_i-\varepsilon_j)^2I.
+\tag{130.10}
+$$
+
+后一式由 $L_c|_{V_{ij}}=(\varepsilon_i+\varepsilon_j)I/2$ 直接计算。所有不同 Peirce 分量对原 $q$ 正交，故 (130.9) 逐项相加给
+
+$$
+4\|D_cx\|_q^2
+=\sum_{i<j}(\varepsilon_i-\varepsilon_j)^2\|x_{ij}\|_q^2
+=\|P_cx\|_q^2.
+\tag{130.11}
+$$
+
+这直接恢复任意 $x$ 的长度校准，不用 $x$ 的谱框架，也不从 primitive 上的二次消失盲目延拓。由 (130.6)，任意 $D_ac$ 都在 $E_{1/2}(c)$，所以对任意 $n\in N_c$ 有 $q(D_ac,n)=0$。与 (130.11) 合并即得全部 $\mathsf F_{\rm zero}$。反向只限制它的量词；其余等价直接消费定理 110.2、118.2、126.2。最后将 (130.11) 实极化，并用原 $q$-斜伴随，得到 $D_c^2=-P_c/4$。中央切口的 $P_c=0$ 因而给 $D_c=0$；纯经典空间上 $D=0$。∎
+
