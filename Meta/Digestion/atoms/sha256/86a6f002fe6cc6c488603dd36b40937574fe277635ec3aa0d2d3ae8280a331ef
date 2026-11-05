@@ -1,0 +1,15 @@
+**定义 22.1（双模耦合）。**沿用第 21 节的 $\zeta,B,H_4,A,A'$，另置
+
+$$
+\eta=1-\zeta,\qquad t=\eta^{-1},\qquad
+O=\mathbb Z[\zeta],\quad A=O[1/3],\quad A'=A[1/2],
+\qquad \mu _6=\{\pm1,\pm\zeta,\pm\zeta^2\},
+$$
+
+$$
+R_2=\frac12\begin{pmatrix}1&-\bar\eta\\\eta&1\end{pmatrix}.
+\tag{22.1}
+$$
+
+$R_2$ 是新增双模门的名称，与原右抽签 $R_0$ 不同。$N(z)=z\bar z$ 表示几何平方范数，$N(\eta)=3$；这里不将矩阵元的平方范数先行解释为原点击概率。
+

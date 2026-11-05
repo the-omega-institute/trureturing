@@ -1,0 +1,22 @@
+**定理 169.1（精确的共同框架几何）。** 记 $\mathcal O_k(E)$ 为整个 $E$ 中有序的 $k$ 颗两两正交 primitive。新零层恰为两份 $\mathcal O_2(E)$ 和一份 $\mathcal O_3(E)$；秩二内部层恰为另一份 $\mathcal O_2(E)$。记未变的秩一半重叠正常读回层为 $\mathcal H(E)$，则带标签全域为
+
+$$
+\mathcal T_{\rm fr}(E)\cong
+\mathcal H(E)\sqcup\mathcal O_2(E)\sqcup\mathcal O_2(E)
+\sqcup\mathcal O_2(E)\sqcup\mathcal O_3(E).
+\tag{169.1}
+$$
+
+在完整原复重构后，写 $E=\bigoplus_tH_{n_t}(\mathbb C)$。$\mathcal O_k$ 的一个分支由 $k$ 个有序位置的块归属指定；若块 $t$ 获得 $m_t$ 个位置，则其流形及实维数为
+
+$$
+\prod_t\frac{U(n_t)}{U(1)^{m_t}\times U(n_t-m_t)},
+\qquad \sum_tm_t=k,\quad 0\le m_t\le n_t,
+\qquad d(m)=\sum_tm_t(2n_t-m_t-1).
+\tag{169.2}
+$$
+
+原块标签和位置分配不同给不同分支，不将其商掉。若 $k$ 超过总秩，域为空。
+
+证明。零层的三种互斥情形为 $r=c$、$r=p$、$r\perp c,p$，前两者分别由有序对 $(c,p)$ 决定，第三者由有序三元组 $(c,p,r)$ 决定。原始幂等元相容时只能相等或正交，所以没有第四种情形。秩二层由有序对 $(p,c-p)$ 唯一恢复 $(c,p,r=p)$。复型中的正交原子就是有序正交复直线；固定块中的 $m_t$ 条线有 (169.2) 的稳定子，单位群维数相减给所列维数。∎
+

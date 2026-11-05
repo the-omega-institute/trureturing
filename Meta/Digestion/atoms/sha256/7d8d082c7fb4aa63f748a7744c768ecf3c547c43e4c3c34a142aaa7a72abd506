@@ -1,0 +1,20 @@
+### 8.5　已经可得到的量子特征
+
+平方几何立即给二阶干涉。对三条相干路径振幅 $x,y,z$，展开范数可得
+
+$$
+\|x+y+z\|^2-\|x+y\|^2-\|x+z\|^2-\|y+z\|^2
++\|x\|^2+\|y\|^2+\|z\|^2=0.
+$$
+
+所以在这个固定的相干路径模型中没有独立的三阶干涉项；路径强度不能自动当成不相交事件概率。
+
+若已供应共同张量结构与可逆物理过程，普适纯态克隆也被排除： 即使允许机器留下依赖输入的单位向量记录 $g_\psi$，保内积仍会要求
+
+$$
+|\langle \psi,\phi\rangle|=|\langle \psi,\phi\rangle|^2\,|\langle g_\psi,g_\phi\rangle|
+\le|\langle \psi,\phi\rangle|^2,
+$$
+
+与 $0<|\langle \psi,\phi\rangle|<1$ 矛盾。 对已供应的自伴 $A,B$，Cauchy–Schwarz 同时给 $\Delta_\rho A\,\Delta_\rho B\ge\frac12|\operatorname{tr}(\rho[A,B])|$。 具体位置、动量和它们的对易关系仍不由抽象有限几何决定。
+

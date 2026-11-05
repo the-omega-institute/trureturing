@@ -1,0 +1,81 @@
+**定理 164.4（原始连续射线类中的全局反例）。** 对任意固定 $0<\varepsilon<1$，令
+
+$$
+\Pi_q^{(\varepsilon)}(z)=b_q(z)+\varepsilon c_qh(z)
+\quad(q\in E,\ z\ne0).
+\tag{164.11}
+$$
+
+则 $\Pi^{(\varepsilon)}\in\mathscr C_{\rm nat}$，且在每个坐标上有
+
+$$
+\Pi_q^{(\varepsilon)}(z)\ge(1-\varepsilon)b_q(z),
+\qquad
+\Pi_q^{(\varepsilon)}(z)>0\ \Longleftrightarrow\ z_q\ne0.
+\tag{164.12}
+$$
+
+每个这样的密度都不同于 $\Pi^{\rm B}$，并满足原全部十一地址、全部支撑分量的 (157.3)。
+
+证明。先给同时控制所有修正节点的全域估计。对每个 $s\in S$，
+
+$$
+z_s=\kappa_sa_s+\langle s|v_s\rangle,\qquad
+0\le[\kappa_s|a_s|-\|v_s\|]_+\le|z_s|,
+\qquad 0\le h(z)\le b_s(z).
+\tag{164.13}
+$$
+
+第二个不等式是逆三角不等式及 $|\langle s|v_s\rangle|\le\|v_s\|$；方括号内非正时仍成立。因此任何一个 $S$ 坐标为零都迫使 $h=0$。对 $q\notin S$ 密度不变；对 $q\in S$，$c_q=1$ 时非负修正，$c_q=-1$ 时由 $h\le b_q$ 得 (164.12)。节点为零时密度为零，节点以外严格为正。再由
+
+$$
+\sum_{q\in E}c_q=\sum_{s\subseteq O}(-1)^{|s|}=(1-1)^5=0
+\tag{164.14}
+$$
+
+得 $\sum_q\Pi_q^{(\varepsilon)}=1$，所以这些向量确在 $\Delta(E)$ 内。
+
+$h$ 是非零向量域上有限个连续函数的最小值除以正的 $N$，故连续。对任意 $\lambda\in\mathbb C\setminus\{0\}$，$a_s(\lambda z)=\lambda a_s(z)$、$v_s(\lambda z)=\lambda v_s(z)$，而 $N(\lambda z)=|\lambda|^2N(z)$。因而 $h(\lambda z)=h(z)$，(164.11) 也不变。按复射影空间的商拓扑，它下降为整个 $\mathbb P(\mathcal K)$ 上的连续映射；相位或模长缩放均未遗漏。
+
+接着逐类核对原生方程。直接复用定理 157.2 证明末段的参考分量恒等式：对每个原 $j$ 和每个 $B\in\mathscr B_j$，$\sum_{q\in B}b_q(U_j(t)z)=\sum_{q\in B}b_q(z)$。该恒等式来自支撑分量的坐标投影与 $H_j$ 对易，与把 $b$ 当作实际概率无关。只需检查修正的分量和。
+
+对每个奇地址 $j\in O$，若 $B$ 含有某个 $s\in S$，则其两个邻位都是零；$j=1,9$ 的外邻位也分别为原固定 $b_0=b_{10}=0$。由 §157 的精确支撑分量描述，
+
+$$
+B=\{s,\ s\mathbin{\triangle}\{j\}\}\subseteq S,\qquad
+\sum_{q\in B}c_q=0.
+\tag{164.15}
+$$
+
+两点的奇偶相反。其余分量完全不交 $S$，其 $c$ 也全为零。这同时包括有偶邻位占据的单点分量以及不交 $S$ 的二维分量。因此对每个奇地址的每个分量，修正总量恒为零；并未要求 $h$ 在奇地址下不变。
+
+对每个偶地址 $j\in J_{\rm ev}$，引理 164.2 给 $h(U_j(t)z)=h(z)$。不论 $B$ 是单点还是二维块，其修正总量均为
+
+$$
+\sum_{q\in B}\bigl(\Pi_q^{(\varepsilon)}(z)-b_q(z)\bigr)
+=\varepsilon h(z)\sum_{q\in B}c_q.
+\tag{164.16}
+$$
+
+右端在这个 $U_j$ 下不变；特别包含地址零、十的全部单点。奇、偶两类穷尽十一地址，证明对每个 $z\ne0$、每个 $t\in[0,1]$ 的完整 (157.3)。同一个 (164.11) 同时满足这些方程，不为不同分量另选密度。
+
+最后给精确非 Born 见证：
+
+$$
+z_*=\frac1{\sqrt{32}}\sum_{s\in S}w_s,\qquad
+\|z_*\|=1,\qquad
+a_s(z_*)=\frac1{\sqrt{32}},\quad v_s(z_*)=0.
+\tag{164.17}
+$$
+
+任意 $q=s\cup r$ 的坐标为 $x^{m_s-|r|}(-y)^{|r|}/\sqrt{32}\ne0$，故见证保留全部 $89$ 个非零坐标。由于 $0\le m_s\le4$、$m_{\varnothing}=4$，
+
+$$
+h(z_*)=\frac{x^8}{32}>0,\qquad
+\Pi_{\varnothing}^{(\varepsilon)}(z_*)-b_{\varnothing}(z_*)
+=\frac{\varepsilon x^8}{32}>0.
+\tag{164.18}
+$$
+
+例如 $\varepsilon=1/2$ 时差为 $x^8/64$。$z_*$ 是原全射线量词内的数学向量，不声明有从唯一 ready 精确制备它的原程序。∎
+

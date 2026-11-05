@@ -1,0 +1,83 @@
+**Lemma 9.4 (Uniform graph realization and near-minimum comparison).**
+There are $A_R,U_R,E_R,T_R$ such that, whenever (9.1) holds,
+$a\ge A_R$ and $N\ge a^{24}$, the original graph class is
+nonempty and contains a graph with
+
+$$
+W(G)\le M+\chi_N/N+U_Ra^{10}/N^2.
+\tag{9.38}
+$$
+
+Every original graph with value at most the right side of (9.38)
+satisfies the same-law bounds
+
+$$
+0\le H(x_G)-W(G)\le T_Ra^{17}/N^2,\qquad
+0\le H(x_G)-M\le E_Ra^{7/2}/N.
+\tag{9.39}
+$$
+
+**Proof.** Uniformly for the bounded winning indices,
+$m,r\in[a,2a]$, $n\asymp_R\sqrt a$, $\alpha\ge1/2$ and
+$\beta\asymp_R a^{-3/2}$. The displayed price formulas give
+$b_j=O_R(a^3)$, $c_j=O_R(a^2)$, hence
+$0<\chi_{j,N}=O_R(a^{7/2})$ and $M=O_R(a^3)$.
+
+Choose a winning $j$ with $\chi_{j,N}=\chi_N$. Reuse Lemma 4.2's
+single joint construction: $n$ connectors, $d=d_{j,N}<r$
+missing-one core sources, and
+
+$$
+F=\frac{(a-1)N-n-(r-1)d}{r},\qquad T=N-F-n-d.
+\tag{9.40}
+$$
+
+The residue makes $F,T$ integers. The exact shared budgets are
+$F+T+n+d=N$ and $mF+rd+2n+T=aN$. Write
+$f_0=(n+(r-1)d)/r=O_R(a)$, so $F=\alpha N-f_0$ and
+$T=n\beta N-n+(n-d)/r$. Give the $T$ singleton sources to
+the $n$ tails with counts differing by at most one. Each tail degree
+then differs from $\beta N+1/r-d/(rn)$ by less than one.
+A core degree is $F+d-o_i+e_i$, where $o_i$ and $e_i$ count its
+omissions and connector endpoints. Thus the law satisfies
+
+$$
+\|x_G-x^{j,*}\|_1=O_R(a/N),\qquad
+\min_i y_i\ge\beta/2
+\tag{9.41}
+$$
+
+for the stated threshold, after increasing $A_R$.
+Here $F,T>0$. A full-core source connects all core sinks, and the
+one connector per tail connects every tail. Repeated neighborhoods
+belong to different sources, so the graph is simple and bipartite.
+All sink degrees exceed $s$ once $N\ge a^{24}$ and $a\ge A_R$;
+indeed $\beta N/2\gg_R s$. This proves strict orientation for
+the same graph, including every integer residue.
+
+On the segment to its cap the least marginal is at least $\beta/2$.
+Equation (9.34) and (9.41) bound the absolute Taylor remainder by
+$O_R(a^{15/2}(a/N)^2)=O_R(a^{19/2}/N^2)$.
+Its linear term is exactly $(nb_j+dc_j)/N=\chi_N/N$.
+As $W\le H$, this proves (9.38) with the stated $a^{10}$ envelope.
+
+For every competitor on this upper sublevel, $W\le L_Ra^3$ for
+an $R$-only $L_R$: use $M=O_R(a^3)$, the price bound and (9.38).
+The edge inequality in the original domain gives
+$\vartheta H\le W\le H$, with $\vartheta=2/(1+\sqrt2)$, and
+$H\ge\sum_i y_i^{-1}$ as in (3.10). Therefore the actual
+marginals obey $y_i\ge\vartheta/(L_Ra^3)$.
+Applying (3.11) with $s\le2a$ gives the first bound of (9.39),
+with, for example, $T_R=4(L_R/\vartheta)^4$.
+Together with (9.38) and $\chi_N=O_R(a^{7/2})$ it gives
+
+$$
+H-M\le O_R(a^{7/2}/N)+U_Ra^{10}/N^2+T_Ra^{17}/N^2
+\le E_Ra^{7/2}/N,
+\tag{9.42}
+$$
+
+since $N\ge a^{24}$. Nonnegativity is the definition of $M$.
+All these bounds concern the same actual law and graph; no independent
+choice of marginal data has entered. ∎
+

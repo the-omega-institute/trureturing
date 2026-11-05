@@ -18,7 +18,7 @@ public sealed partial class CleanLanesCommandTests
         using var fixture = new CleanLanesFixture();
         var parent = fixture.AddLandedLane("harness/failed-parent");
         var child = fixture.AddNestedWorktree(parent);
-        CleanLanesFixture.GitAt(child, new DateTimeOffset(2030, 1, 1, 12, 0, 0, TimeSpan.Zero),
+        CleanLanesFixture.GitAt(child, new DateTimeOffset(2030, 1, 1, 23, 0, 0, TimeSpan.Zero),
             "commit", "--allow-empty", "-m", "retained nested work");
         fixture.LockLane(parent, "worktree-init:malformed");
         var runner = fixture.CreateRunner((file, args, _) =>
