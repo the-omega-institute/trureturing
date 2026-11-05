@@ -214,6 +214,10 @@ $$\forall n \in Nat,\; (1 \le n) \Rightarrow (\forall u \in List\left(Nat\right)
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/YoungFibonacci/PetrovScottMultiplicityDominance.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/multiplicity-dominance` (proved) by `D5/S3/Combinatorics/YoungFibonacci/PetrovScottMultiplicityDominance.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"multiplicity-dominance","declaration_gid":"D5/S3/Combinatorics/YoungFibonacci/PetrovScottMultiplicityDominance.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Leonid Petrov and Jeanne Scott (2026). *Random Fibonacci words via clone Schur functions*. DOI: [10.1017/fms.2025.10165](https://doi.org/10.1017/fms.2025.10165). URL: <https://arxiv.org/abs/2412.21126v2>.

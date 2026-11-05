@@ -88,14 +88,18 @@ internal sealed class PetrovScottMultiplicityDominanceDocument : IScribeDocument
                 + "of twos in every reversed prefix, independently of the initial runs. Equal weight and hike "
                 + "give equal lengths and convert this to the required forward-prefix inequalities. "
                 + "At the first different letter, dominance excludes the opposite descending lexicographic direction.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem))));
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("multiplicity-dominance"),
+                    ResolutionKind.Proved)))));
 
     private static AssessedProvenance Literature() => AssessedProvenance.FromLiterature(Source);
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) => Describe.Lean(
+        AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("petrov-scott-multiplicity-" + (name == "Gamma" ? "active-set" : name.ToLowerInvariant())),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula WordFormula()
     {
