@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e8c44367a245cd557ac35347138c15de7858ac4985fc372278c07e8f8b3071f5
+  normalized_sha256: sha256:e8c44367a245cd557ac35347138c15de7858ac4985fc372278c07e8f8b3071f5
+cas_ref: sha256:e8c44367a245cd557ac35347138c15de7858ac4985fc372278c07e8f8b3071f5
+coverage_gids:
+  - gid: D5/S3/QuadraticForms/RealThreePathRepresentation.original_hilbert_characterization
+    target_statement_id: sha256:d8ed6cee8612507ca08a37b5c376984ed9fe1b4fbba72d7f0b3ab707c95c2fc4
+receipts:
+  unresolved_subitems: []

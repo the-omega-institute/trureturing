@@ -1,0 +1,13 @@
+**定义 88.2（先于原 D 识别的数学选择）。** 只用 [C128 定理 246.1](AURIC_C128_FRAME_CORNER_RELATIONS_CONTINUATION.md#246-闭准备也供应同一原静态复载体)，对每个原 $A$ 固定任意含幺 Jordan 坐标 $E_A=\bigoplus_s H_{n_s}(\mathbb C)$。此坐标只依原非 $D$ 结构，允许各块独立取向，不要求不同对象的坐标相容；此时尚不识别原 $D$。原型仍为 $q_A(x,y)=\sum_s w_s\operatorname{Tr}(x_sy_s)$、$w_s>0$，$\tau_A=\sum_s\operatorname{Tr}$，不将 $w_s$ 归一或相等化。定理 246.1 分别适用于完整 $B$ 与完整 $\mathsf B_{\rm cl}$，闭背景里的数学极限态不因此成为实际准备。
+
+固定原有序半重叠对 $(e,p)$：二者是整个 $E_A$ 的 primitive，$\tau_A(e\circ p)=1/2$。它们必位于同一简单块 $t$，且其像张成二维复子空间。令 $c_{ep}=\operatorname{supp}(e+p)$，这是同一原 Jordan 空间内的秩二幂等元；置
+
+$$
+V_{ep}=E_0(c_{ep})\cong\bigoplus_{s:k_s>0}H_{k_s}(\mathbb C),\qquad
+k_t=n_t-2,\quad k_s=n_s\ (s\ne t),\qquad
+\mathcal R_{ep}=\operatorname{Prim}(V_{ep})=\{r\in\operatorname{Prim}(E_A):r\perp e,p\}.
+\tag{88.1}
+$$
+
+最后的等号由正投影 $r$ 与 $e,p$ 分别正交当且仅当其像正交于二者的张成空间得到。每个其他简单块完整保留，经典块 $n_s=1$ 也完整保留。在各补块中任取有序正交基 $v_{s,1},\ldots,v_{s,k_s}$，所有选择仅依原非 $D$ 结构及 $(e,p)$，在比较不同原 $D$ 前固定；不要求连续、自然、跨对象相容或实际可执行，也不指定唯一选法。$c_{ep}$ 和 $V_{ep}$ 都不是新供应的实际对象。
+

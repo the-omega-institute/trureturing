@@ -1,0 +1,57 @@
+#### 定理 2.1：横向旋转协变
+
+令
+
+$$
+D_\theta=\operatorname{diag}(e^{-i\theta/2},e^{i\theta/2}),\qquad
+\rho'=D_\theta\rho D_\theta^\dagger.
+$$
+
+则
+
+$$
+\begin{pmatrix}x'_1\\x'_3\end{pmatrix} =
+\begin{pmatrix}\cos\theta&-\sin\theta\\
+\sin\theta&\cos\theta\end{pmatrix}
+\begin{pmatrix}x_1\\x_3\end{pmatrix},
+\qquad x'_2=x_2.
+\tag{3}
+$$
+
+正性、迹、行列式及式 (2) 均保持。
+
+**证明。**
+
+对角项不变，交叉项变为 $c'=e^{-i\theta}c$。把实部、虚部分别代入式 (1) 得旋转矩阵。其余量在酉共轭下保持。
+
+$\square$
+
+这使用户的“$F[2]$ 的 $F[1]$、$F[3]$ 各向同性”成为一个精确的 $SO(2)$ 陈述：固定中间读数，横向关系只改变方位，规律保持相同。纯态时横向轨道满足
+
+$$
+x_1^2+x_3^2=1-x_2^2.
+$$
+
+这是固定高度的一条纬圆，在两极退化为点。
+
+```mermaid
+flowchart LR
+    subgraph LATITUDE["固定 x₂，横向 (x₁,x₃) 转动"]
+        AXIS["x₂ = F[2]"]
+        L1["纬圆上的球面点"] -->|"横向转动"| L2["不同球面点"]
+        L2 -->|"同一纬圆"| L1
+        AXIS --- L1
+        LNOTE["不同球面点，仍服从同一归一关系"]
+    end
+    subgraph FIBRE["固定全部三元 x"]
+        R1["e^(iχ)ψ 的整圈代表"] -->|"共同相位"| R2["同一整圈中的代表"]
+        R2 -->|"共同相位"| R1
+        R1 --> X["固定全部三元 x"]
+        RNOTE["共同相位不改三元；这是提升纤维，区别于左侧纬圆"]
+    end
+```
+
+$$
+x_2=F[2],\qquad (x_1,x_3),\qquad e^{i\chi}\psi,\qquad x.
+$$
+

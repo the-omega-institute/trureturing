@@ -1,0 +1,162 @@
+### 22.2. The complete unitary quadratic form
+
+Fix $\sigma\in\{+,-\}$. The vectors $b_\sigma$ and matrices $U_\sigma$ are exactly (6.7) and (6.3), and $E_\sigma=\bar b_\sigma\bar b_\sigma^\dagger$. Define the row weights and certificate eigenvalues by
+
+| $\sigma$ | $u$ | $v$ | $\chi$ | $L$ | $M$ |
+| --- | --- | --- | --- | --- | --- |
+| $+$ | $c$ | $s$ | $1$ | $d$ | $e$ |
+| $-$ | $s$ | $c$ | $-1$ | $e$ | $d$ |
+
+Thus $L=2(h+u)$ and $M=2(h+v)$. Direct multiplication of the fixed source matrices gives
+
+$$
+\begin{aligned}
+W_\sigma&:=U_\sigma\operatorname{diag}(R_0b_\sigma)
+          =\operatorname{diag}(h,h,u,u),\\
+V_\sigma&:=U_\sigma\operatorname{diag}(R_0b_{-\sigma})
+          =\operatorname{diag}(h,-h,i\chi v,-i\chi v).
+\end{aligned}
+\tag{22.3}
+$$
+
+In particular, $\operatorname{Tr}W_\sigma=L$ and $\operatorname{Tr}V_\sigma=0$. These products preserve the conjugation convention: the vector entering $R_0$ is $b$, whereas the measured effect is the projection onto $\bar b$.
+
+Near $\mathcal S_\sigma$, every rank-one effect has the unique local ray coordinate
+
+$$
+b(z)=\frac{b_\sigma+zb_{-\sigma}}{\sqrt{1+|z|^2}},
+\qquad E(z)=\overline{b(z)}\,\overline{b(z)}^\dagger,
+\qquad z=x+iy.
+\tag{22.4}
+$$
+
+After taking the scalar feedback phase quotient, every nearby $U$ can be written
+
+$$
+U=e^{i\varphi}e^{iX}U_\sigma,
+\qquad X=X^\dagger,\qquad\operatorname{Tr}X=0,
+\qquad \|X\|_{\mathrm F}\ \text{small}.
+\tag{22.5}
+$$
+
+Indeed, choose a representative of $UU_\sigma^\dagger$ near $I_4$, take its small Hermitian logarithm, and subtract one quarter of its trace; the subtracted scalar is absorbed in $\varphi$. This permits every off-diagonal entry of $X$.
+
+For sufficiently small coordinates, the minimizing sign in Definition 11.1 is $\sigma$. The effect projections of the two classes have Frobenius distance $\sqrt2$, so disjoint sufficiently small neighborhoods select that sign. The scalar phase minimum has the exact expression
+
+$$
+\begin{aligned}
+\rho(E(z),U)
+&=\frac{2|z|^2}{1+|z|^2}+8-2|\operatorname{Tr}e^{iX}|,\\
+g(E(z),U)
+&=\frac{L^2+M^2|z|^2
+ -|\operatorname{Tr}(e^{iX}(W_\sigma+zV_\sigma))|^2}
+ {1+|z|^2}.
+\end{aligned}
+\tag{22.6}
+$$
+
+The first identity follows from
+$\min_{|\lambda|=1}\|A-\lambda B\|_{\mathrm F}^2
+=8-2|\operatorname{Tr}(B^\dagger A)|$ for $A,B\in U(4)$; the second follows from (22.2) and the eigenbasis of $H_0$ in (3.9).
+
+Set $r^2=|z|^2+\|X\|_{\mathrm F}^2$. Taylor expansion of these exact identities gives, with constants uniform over the two signs,
+
+$$
+\rho=N+O(r^4),\qquad g=Q_\sigma+O(r^3),
+\qquad N=2|z|^2+\operatorname{Tr}X^2,
+\tag{22.7}
+$$
+
+where the full quadratic form is
+
+$$
+Q_\sigma=M^2|z|^2+L\operatorname{Tr}(W_\sigma X^2)
+ -(\operatorname{Tr}(W_\sigma X))^2
+ -2L\operatorname{Re}\!\left(iz\operatorname{Tr}(XV_\sigma)\right).
+\tag{22.8}
+$$
+
+To see every second-order term, expand the trace in (22.6) as
+
+$$
+L+i\operatorname{Tr}(XW_\sigma)
+ +iz\operatorname{Tr}(XV_\sigma)
+ -\tfrac12\operatorname{Tr}(X^2W_\sigma)+O(r^3).
+$$
+
+Its linear term is purely imaginary. Squaring its modulus and subtracting from the certificate numerator gives (22.8). The numerator has zero constant and linear terms, so division by $1+|z|^2$ leaves its quadratic term unchanged. Similarly, $\operatorname{Tr}X=0$ implies
+$|\operatorname{Tr}e^{iX}|=4-\tfrac12\operatorname{Tr}X^2+O(\|X\|_{\mathrm F}^4)$, which proves the distance expansion. These are Taylor bounds on an entire coordinate ball; no direction is fixed in their remainders.
+
+Write the diagonal of $X$ as
+
+$$
+(X_{11},X_{22},X_{33},X_{44})
+=(\gamma+p,\gamma-p,-\gamma+q,-\gamma-q),
+\qquad \gamma,p,q\in\mathbb R,
+$$
+
+and put $w=(h,h,u,u)$. Then
+
+$$
+N=2(x^2+y^2)+4\gamma^2+2p^2+2q^2
+  +2\sum_{i<j}|X_{ij}|^2,
+\tag{22.9}
+$$
+
+$$
+\begin{aligned}
+Q_\sigma={}&M^2(x^2+y^2)+2Lh\,p^2+2Lu\,q^2
+ +4Lh\,yp+4\chi Lv\,xq+16hu\,\gamma^2\\
+&+L\sum_{i<j}(w_i+w_j)|X_{ij}|^2.
+\end{aligned}
+\tag{22.10}
+$$
+
+For example, $\operatorname{Tr}(XV_\sigma)=2hp+2i\chi vq$,
+$\operatorname{Tr}(XW_\sigma)=2(h-u)\gamma$, and
+
+$$
+\operatorname{Tr}(W_\sigma X^2)
+=2(h+u)\gamma^2+2hp^2+2uq^2
+ +\sum_{i<j}(w_i+w_j)|X_{ij}|^2.
+$$
+
+Substitution proves (22.10), including all twelve real off-diagonal variables. Relative to the corresponding summands of $N$, the two remaining blocks are
+
+$$
+A_\sigma=
+\begin{pmatrix}M^2/2&Lh\\Lh&Lh\end{pmatrix}
+\quad\text{on }(y,p),
+\qquad
+B_\sigma=
+\begin{pmatrix}M^2/2&\chi Lv\\\chi Lv&Lu\end{pmatrix}
+\quad\text{on }(x,q).
+\tag{22.11}
+$$
+
+The factor of two in both block contributions agrees with (22.9).
+
+The smaller eigenvalue of $A_+$ is exactly $\kappa$, since
+
+$$
+4\det(A_+-zI_2)
+=4z^2-2(\sqrt2d+e^2)z+\sqrt2de^2-2d^2=f(z).
+\tag{22.12}
+$$
+
+Here $f$ is the polynomial of Theorem 21.3. For completeness, all other blocks admit a strict comparison using only rational certificates. The half-angle formulas give
+
+$$
+\frac{7071}{10000}<h<\frac{7072}{10000},\qquad
+\frac{9238}{10000}<c<\frac{9239}{10000},\qquad
+\frac{3826}{10000}<s<\frac{3827}{10000}.
+\tag{22.13}
+$$
+
+Substituting these bounds into $f(1/25)$ gives $f(1/25)<-9/100<0$. Since $f(0)>0$ and its smaller positive root is $\kappa$, as established in Theorem 21.3, this proves $0<\kappa<1/25$. For each matrix $D$ in the following table, the same rational bounds give the indicated strict lower bounds for the leading entry and determinant of $D-I_2/20$:
+
+| $D$ | $(D-I_2/20)_{11}$ | $\det(D-I_2/20)$ |
+| --- | --- | --- |
+| $B_+$ | $>2$ | $>5$ |
+| $A_-$ | $>5$ | $>5$ |
+| $B_-$ | $>5$ | $>7/100$ |
