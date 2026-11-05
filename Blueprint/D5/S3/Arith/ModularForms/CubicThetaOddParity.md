@@ -53,4 +53,5 @@ Hirschhorn, Garvan and Borwein state the classical four-dissections in identitie
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaOddParity.coreOddEquiv`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaOddParity.integralT`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaOddParity.integralT_coeff_mod_four`
+- Dependency: [D5/S1/Recurrence/Residue/ContinuedFractionOddSquare](../../../S1/Recurrence/Residue/ContinuedFractionOddSquare.md)
 - Dependency: [D5/S3/Arith/ModularForms/CubicThetaCoreProduct](CubicThetaCoreProduct.md)
