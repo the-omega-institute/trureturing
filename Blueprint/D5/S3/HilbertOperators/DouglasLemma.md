@@ -70,7 +70,7 @@ The chosen preimage lies in the kernel's orthogonal complement and maps under B 
 
 **Definition 1.6 (douglasFactorLin).**
 
-$$\forall (u: \operatorname{UniverseLevel}()), \forall (v: \operatorname{UniverseLevel}()), \forall (w: \operatorname{UniverseLevel}()), \forall (k: \operatorname{Type}_{u}), \forall (E: \operatorname{Type}_{v}), \forall (F: \operatorname{Type}_{w}), [\operatorname{RCLike}(k)] [\operatorname{NormedAddCommGroup}(E)] [\operatorname{NormedAddCommGroup}(F)] [\operatorname{InnerProductSpace}(k, E)] [\operatorname{InnerProductSpace}(k, F)] [\operatorname{CompleteSpace}(E)] [\operatorname{CompleteSpace}(F)] \forall (A: \operatorname{Map}(k, E, F)), \forall (B: \operatorname{Map}(k, E, F)), \forall (h: \operatorname{Range}(A) \leq \operatorname{Range}(B)), (\operatorname{douglasFactorLin}(A, B, h) \in \operatorname{Lin}(k, E, E)) \land (\forall (x: E), \operatorname{douglasFactorLin}(A, B, h, x) = \operatorname{douglasFactorFun}(A, B, h, x))$$
+$$\forall (u: \operatorname{UniverseLevel}()), \forall (v: \operatorname{UniverseLevel}()), \forall (w: \operatorname{UniverseLevel}()), \forall (k: \operatorname{Type}_{u}), \forall (E: \operatorname{Type}_{v}), \forall (F: \operatorname{Type}_{w}), [\operatorname{RCLike}(k)] [\operatorname{NormedAddCommGroup}(E)] [\operatorname{NormedAddCommGroup}(F)] [\operatorname{InnerProductSpace}(k, E)] [\operatorname{InnerProductSpace}(k, F)] [\operatorname{CompleteSpace}(E)] [\operatorname{CompleteSpace}(F)] \forall (A: \operatorname{Map}(k, E, F)), \forall (B: \operatorname{Map}(k, E, F)), \forall (h: \operatorname{Range}(A) \leq \operatorname{Range}(B)), \forall (x: E), \operatorname{douglasFactorLin}(A, B, h, x) = \operatorname{douglasFactorFun}(A, B, h, x)$$
 
 *Formalization.* `D5/S3/HilbertOperators/DouglasLemma.douglasFactorLin` (`✓ std3`).
 
@@ -78,7 +78,7 @@ $$\forall (u: \operatorname{UniverseLevel}()), \forall (v: \operatorname{Univers
 
 *Commentary.*
 
-douglasFactorLin packages the chosen preimage function as a k-linear endomorphism. Addition and scalar multiplication preserve orthogonal membership and the required B-image; uniqueness proves the two linearity laws. The displayed membership specifies the linear-map type together with its underlying function.
+douglasFactorLin packages the chosen preimage function as a k-linear endomorphism. Addition and scalar multiplication preserve orthogonal membership and the required B-image; uniqueness proves the two linearity laws. The formula identifies its underlying function; its bundled type is Lin(k,E,E).
 
 **Theorem 1.7 (continuous_douglasFactorLin).**
 
@@ -94,7 +94,7 @@ The canonical linear factor is continuous by the sequential closed graph theorem
 
 **Definition 1.8 (douglasFactor).**
 
-$$\forall (u: \operatorname{UniverseLevel}()), \forall (v: \operatorname{UniverseLevel}()), \forall (w: \operatorname{UniverseLevel}()), \forall (k: \operatorname{Type}_{u}), \forall (E: \operatorname{Type}_{v}), \forall (F: \operatorname{Type}_{w}), [\operatorname{RCLike}(k)] [\operatorname{NormedAddCommGroup}(E)] [\operatorname{NormedAddCommGroup}(F)] [\operatorname{InnerProductSpace}(k, E)] [\operatorname{InnerProductSpace}(k, F)] [\operatorname{CompleteSpace}(E)] [\operatorname{CompleteSpace}(F)] \forall (A: \operatorname{Map}(k, E, F)), \forall (B: \operatorname{Map}(k, E, F)), \forall (h: \operatorname{Range}(A) \leq \operatorname{Range}(B)), (\operatorname{douglasFactor}(A, B, h) \in \operatorname{Map}(k, E, E)) \land (\forall (x: E), \operatorname{douglasFactor}(A, B, h, x) = \operatorname{douglasFactorLin}(A, B, h, x))$$
+$$\forall (u: \operatorname{UniverseLevel}()), \forall (v: \operatorname{UniverseLevel}()), \forall (w: \operatorname{UniverseLevel}()), \forall (k: \operatorname{Type}_{u}), \forall (E: \operatorname{Type}_{v}), \forall (F: \operatorname{Type}_{w}), [\operatorname{RCLike}(k)] [\operatorname{NormedAddCommGroup}(E)] [\operatorname{NormedAddCommGroup}(F)] [\operatorname{InnerProductSpace}(k, E)] [\operatorname{InnerProductSpace}(k, F)] [\operatorname{CompleteSpace}(E)] [\operatorname{CompleteSpace}(F)] \forall (A: \operatorname{Map}(k, E, F)), \forall (B: \operatorname{Map}(k, E, F)), \forall (h: \operatorname{Range}(A) \leq \operatorname{Range}(B)), \forall (x: E), \operatorname{douglasFactor}(A, B, h, x) = \operatorname{douglasFactorLin}(A, B, h, x)$$
 
 *Formalization.* `D5/S3/HilbertOperators/DouglasLemma.douglasFactor` (`✓ std3`).
 
