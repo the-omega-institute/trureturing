@@ -1,0 +1,54 @@
+**Definition 23.3 (finite feedback criterion).** Fix a real $\gamma\ge0$ and $w\in\mathcal W$, and abbreviate $A=A(w)$, $B=B(w)$, $u=u(w)$, $v=v(w)$. Put
+
+$$
+\begin{aligned}
+p_0&=\frac{1-A+B}{2},\qquad \omega=uv,\\
+\alpha_+&=d^2-u^2-\gamma(8-2A),&
+\beta_+&=e^2-v^2-\gamma(10-2A),\\
+\alpha_-&=d^2-u^2-\gamma(10-2B),&
+\beta_-&=e^2-v^2-\gamma(8-2B).
+\end{aligned}
+\tag{23.16}
+$$
+
+Use the closed intervals
+
+$$
+\begin{aligned}
+I_+&=[\max\{0,p_0\},1]\quad\text{if }p_0\le1,
+ & I_+&=\varnothing\quad\text{if }p_0>1,\\
+I_-&=[0,\min\{1,p_0\}]\quad\text{if }p_0\ge0,
+ & I_-&=\varnothing\quad\text{if }p_0<0.
+\end{aligned}
+\tag{23.17}
+$$
+
+For $\sigma\in\{+,-\}$ set
+
+$$
+q_\sigma(p)=\alpha_\sigma p+\beta_\sigma(1-p)
+                   -2\omega\sqrt{p(1-p)}.
+\tag{23.18}
+$$
+
+Form a finite set $\mathcal V_\gamma(w)$ as follows. For each nonempty interval $I_\sigma=[a,b]$, include the two values $q_\sigma(a),q_\sigma(b)$; they may coincide. If $\omega>0$, also define
+
+$$
+\begin{aligned}
+D_\sigma&=\sqrt{(\alpha_\sigma-\beta_\sigma)^2+4\omega^2},\\
+p_\sigma^*&=\frac12\left(1-
+                    \frac{\alpha_\sigma-\beta_\sigma}{D_\sigma}\right),
+\end{aligned}
+\tag{23.19}
+$$
+
+and include $(\alpha_\sigma+\beta_\sigma-D_\sigma)/2$ exactly when
+$p_\sigma^*\in I_\sigma$. If $\omega=0$, include no stationary value and do not use (23.19). Define
+
+$$
+\nu_\gamma(w)=\min\mathcal V_\gamma(w).
+\tag{23.20}
+$$
+
+At least one interval is nonempty, so this is a minimum of a nonempty set of at most six explicit real values. The intervals may be singletons. When $p_0\in[0,1]$, both intervals contain their common endpoint $p_0$.
+
