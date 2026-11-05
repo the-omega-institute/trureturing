@@ -40,6 +40,10 @@ $$\forall e \in \mathrm{Real},\; 0 < e \Rightarrow \left(\exists N \in \mathrm{N
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/ToroidalKingsPeakEntropy.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a394697-toroidal-king-peak-entropy` (proved) by `D5/S3/Combinatorics/Graph/ToroidalKingsPeakEntropy.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a394697-toroidal-king-peak-entropy","declaration_gid":"D5/S3/Combinatorics/Graph/ToroidalKingsPeakEntropy.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Vaclav Kotesovec (2026). *OEIS A394697: maximum coefficient of the toroidal king independence polynomial*. URL: <https://oeis.org/A394697>.
