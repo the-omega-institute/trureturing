@@ -425,4 +425,113 @@ This is a logical separation example, not a model of the FIB heat form. It shows
 
 Neither condition follows from rank-nullity applied separately to the finite prefixes. Consequently, a countable successor stack may still control the full calibrated kernel even though every finite horizon has zero coercivity infimum. The statements (164.1)--(164.5) do not construct a physical successor, a nonlinear residual-zero tuple, a legal simplex family, an exact H43 partition, a terminal compensator, an SRS-20 or $F_{64}$ witness, or a Lean/kernel theorem.
 
+## 165. The orbit-closure criterion for a countable successor stack
+
+Section 164 leaves the exact common kernel as the missing infinite-horizon object. A useful distinction is available when the successor readout extends to $L^2(m)$ and its coordinates have Hilbert-space representers. In that case the countable stack is governed by the closed heat orbit of those representers; finite-prefix rank-nullity does not have to be used as a proxy for the exact intersection.
+
+**Definition 165.1 (an $L^2$-representable successor stack).** Retain the original probability space $(G,m)$, the calibrated bounded kernel
+
+$$
+V=\ker\Lambda_{134}\subset L^\infty(G,m;\mathbb R),
+$$
+
+and put $H=L^2(G,m;\mathbb R)$. Let $P=T_d$ be the original self-adjoint contraction on $H$. Suppose a finite-dimensional readout $R$ has scalar coordinates
+
+$$
+R_k(v)=\langle v,\psi_k\rangle_H,
+\qquad 1\le k\le r,
+$$
+
+for fixed $\psi_k\in H$, and define the specified successor stack by
+
+$$
+R_j=R\circ P^j,\qquad j\ge0.
+$$
+
+Let
+
+$$
+\mathcal C=\overline{\operatorname{span}_{\mathbb R}
+ \{P^j\psi_k:j\ge0,\ 1\le k\le r\}}^{\,H}.
+\tag{165.1}
+$$
+
+The closure is in $H$; no density or cyclicity assumption is built into the definition.
+
+**Proposition 165.2 (exact common-kernel/orbit-closure equivalence).** For every $v\in V$, viewed as its $H$-class,
+
+$$
+\bigl(\forall j\ge0,\ R_j(v)=0\bigr)
+\quad\Longleftrightarrow\quad
+v\in\mathcal C^\perp.
+\tag{165.2}
+$$
+
+Consequently the exact common infinite kernel of the bounded calibrated classes is
+
+$$
+W_\infty
+=V\cap L^\infty(G,m;\mathbb R)\cap\mathcal C^\perp,
+\tag{165.3}
+$$
+
+with the first intersection understood in the original $m$-class sense.
+
+*Proof.* For $v\in V$ and every $j,k$, self-adjointness of $P$ gives
+
+$$
+R_j(v)_k
+ =\langle P^jv,\psi_k\rangle_H
+ =\langle v,P^j\psi_k\rangle_H.
+\tag{165.4}
+$$
+
+Thus all successor coordinates vanish exactly when $v$ is orthogonal to every generator in (165.1). Orthogonality is preserved under real linear combinations and $H$-limits, so this is equivalent to $v\in\mathcal C^\perp$. Intersecting with the original bounded calibrated domain gives (165.3). The argument uses no compactness of the unit sphere and no assertion that the stack is physically realized. $\square$
+
+**Corollary 165.3 (the cyclicity boundary).** Let
+
+$$
+H_{\mathrm{cal}}=\overline{\operatorname{span}_{\mathbb R}V}^{\,H}.
+$$
+
+If $H_{\mathrm{cal}}\subseteq\mathcal C$, equivalently the successor readout orbit is dense in the $L^2$ calibration subspace, then $W_\infty=\{0\}$ as a space of $m$-classes. Hence no normalized exact infinite-horizon escape direction exists for that stack. This is a conditional observability statement: it does not assert the required density for the original FIB readout.
+
+Conversely, if $\mathcal C^\perp\cap V$ contains bounded classes supported on Borel sets $B_n$ with
+
+$$
+\|v_n\|_\infty=1,
+\qquad
+\int_{B_n}g^2\,dm\longrightarrow0,
+$$
+
+then Proposition 134.2 and the Markov contraction give
+
+$$
+0<q(v_n)\le c\int_{B_n}g^2\,dm\longrightarrow0,
+$$
+
+and every $v_n$ is silent to the entire countable stack. The corollary identifies the exact remaining construction: it does not manufacture a localized sequence from nonzeroity of $\mathcal C^\perp$ alone.
+
+**Corollary 165.4 (finite prefixes and their limit).** Define
+
+$$
+\mathcal C_n=\operatorname{span}_{\mathbb R}
+ \{P^j\psi_k:0\le j\le n,\ 1\le k\le r\}.
+$$
+
+Then
+
+$$
+W_{\le n}=V\cap L^\infty(G,m;\mathbb R)\cap\mathcal C_n^\perp,
+\qquad
+W_\infty=\bigcap_{n\ge0}W_{\le n},
+\tag{165.5}
+$$
+
+and $\overline{\bigcup_n\mathcal C_n}=\mathcal C$. The finite-prefix escape of Proposition 164.2 therefore says only that each $\mathcal C_n^\perp$ contains normalized low-energy classes. It supplies no nonzero element of the limiting orthogonal complement $\mathcal C^\perp$ unless an additional orbit-complement or correction argument is proved.
+
+If the readout coordinates are initially given only as real-linear maps on $L^\infty$, the representer hypothesis in Definition 165.1 is an additional bridge: an arbitrary algebraic functional need not extend continuously to $L^2$. In the complex formulation, real and imaginary coordinates must be split before applying the real inner-product calculation above.
+
+The statements (165.1)--(165.5) are an exact functional-analytic boundary for the countable successor question. They do not establish orbit density, a nonzero orbit complement, a physical successor, a nonlinear residual-zero tuple, a legal simplex family, an exact H43 partition, a terminal compensator, an SRS-20 or $F_{64}$ witness, or a Lean/kernel theorem.
+
 ## 追加锚（本行以下为增补区）
