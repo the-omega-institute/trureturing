@@ -2,13 +2,29 @@
 set -u -o pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
-if [[ "${TRURETURING_MAINTENANCE_LOG_WARM_DONOR:-0}" != 1 && -f "$ROOT/tools/scripts/maintenance_log.py" ]]; then
-  export TRURETURING_MAINTENANCE_LOG_WARM_DONOR=1
-  exec python3 -B "$ROOT/tools/scripts/maintenance_log.py" run \
-    --repository "$ROOT" --script warm-donor -- \
-    /bin/bash "$ROOT/tools/scripts/worktree/warm-donor.sh" "$@"
+if [[ -f "$ROOT/tools/scripts/maintenance_log.py" ]]; then
+  run_id=""
+  if run_id="$(python3 -B "$ROOT/tools/scripts/maintenance_log.py" begin \
+      --repository "$ROOT" --script warm-donor --owner-pid "$$" --parent-pid "$PPID" \
+      </dev/null 2>/dev/null)" && [[ "$run_id" =~ ^[0-9a-f]{32}$ ]]; then
+    export TRURETURING_MAINTENANCE_RUN_ID="$run_id"
+    export TRURETURING_MAINTENANCE_SCRIPT=warm-donor
+    export TRURETURING_MAINTENANCE_REPOSITORY="$ROOT"
+  fi
 fi
 cd "$ROOT"
+
+finish_maintenance_log() {
+  local rc="$?"
+  if [[ -n "${TRURETURING_MAINTENANCE_RUN_ID:-}" ]]; then
+    python3 -B "$ROOT/tools/scripts/maintenance_log.py" finish \
+      --repository "$ROOT" --script warm-donor \
+      --run-id "$TRURETURING_MAINTENANCE_RUN_ID" --owner-pid "$$" \
+      --exit-code "$rc" </dev/null >/dev/null 2>/dev/null || true
+  fi
+  return "$rc"
+}
+trap finish_maintenance_log EXIT
 
 receipt() {
   local status="$1"

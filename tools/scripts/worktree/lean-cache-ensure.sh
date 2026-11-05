@@ -29,7 +29,7 @@ donor=()
 [[ -z "${STRATALINT_LEAN_CACHE_DONOR_REPOSITORY:-}" ]] || donor=(--donor-repository "$STRATALINT_LEAN_CACHE_DONOR_REPOSITORY")
 command=("${cli[@]}" ensure-cache ${donor[@]+"${donor[@]}"} ${restore[@]+"${restore[@]}"})
 if [[ -f "$ROOT/tools/scripts/maintenance_log.py" ]]; then
-  exec python3 -B "$ROOT/tools/scripts/maintenance_log.py" run \
-    --repository "$ROOT" --script lean-cache-ensure -- "${command[@]}"
+  export TRURETURING_MAINTENANCE_SCRIPT=lean-cache-ensure
+  export TRURETURING_MAINTENANCE_REPOSITORY="$ROOT"
 fi
 exec "${command[@]}"

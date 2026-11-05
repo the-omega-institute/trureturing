@@ -10,7 +10,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd -P)"
 command=(python3 "$SCRIPT_DIR/lean_cache_release.py" "$@")
 if [[ -f "$ROOT/tools/scripts/maintenance_log.py" ]]; then
-  exec python3 -B "$ROOT/tools/scripts/maintenance_log.py" run \
-    --repository "$ROOT" --script lean-cache-publish -- "${command[@]}"
+  export TRURETURING_MAINTENANCE_SCRIPT=lean-cache-publish
+  export TRURETURING_MAINTENANCE_REPOSITORY="$ROOT"
 fi
 exec "${command[@]}"

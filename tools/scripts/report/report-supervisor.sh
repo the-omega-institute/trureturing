@@ -26,6 +26,17 @@ REPOSITORY_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 RESOURCE_OBSERVATION_LIB="$REPOSITORY_ROOT/tools/scripts/lib/resource-observation-lib.sh"
 [[ -r "$RESOURCE_OBSERVATION_LIB" ]] || exit 2
 source "$RESOURCE_OBSERVATION_LIB"
+MAINTENANCE_LOG_RUN_ID=""
+if [[ "${TRURETURING_MAINTENANCE_SCRIPT:-}" == lean-report \
+      && -f "$REPOSITORY_ROOT/tools/scripts/maintenance_log.py" ]]; then
+  if MAINTENANCE_LOG_RUN_ID="$(python3 -B "$REPOSITORY_ROOT/tools/scripts/maintenance_log.py" begin \
+      --repository "$REPOSITORY_ROOT" --script lean-report --owner-pid "$$" --parent-pid "$PPID" \
+      </dev/null 2>/dev/null)" && [[ "$MAINTENANCE_LOG_RUN_ID" =~ ^[0-9a-f]{32}$ ]]; then
+    export TRURETURING_MAINTENANCE_RUN_ID="$MAINTENANCE_LOG_RUN_ID"
+  else
+    MAINTENANCE_LOG_RUN_ID=""
+  fi
+fi
 if [[ -d /private/tmp ]]; then DEFAULT_HOST_TMP=/private/tmp; else DEFAULT_HOST_TMP=/tmp; fi
 STATE_ROOT="${STRATALINT_SUPERVISOR_ROOT:-$DEFAULT_HOST_TMP/stratalint-report-supervisor-${UID:-$(id -u)}}"
 RUN_ROOT="$STATE_ROOT/runs"
@@ -659,6 +670,12 @@ finish() {
     resource_observe "report-supervisor-$ROLE" "$REPOSITORY_ROOT" unknown unknown || true
   else
     resource_observe "report-supervisor-$ROLE" "$REPOSITORY_ROOT" "$FD_PEAK" "$RSS_PEAK_KB" || true
+  fi
+  if [[ -n "$MAINTENANCE_LOG_RUN_ID" ]]; then
+    python3 -B "$REPOSITORY_ROOT/tools/scripts/maintenance_log.py" finish \
+      --repository "$REPOSITORY_ROOT" --script lean-report \
+      --run-id "$MAINTENANCE_LOG_RUN_ID" --owner-pid "$$" \
+      --exit-code "$rc" </dev/null >/dev/null 2>/dev/null || true
   fi
   if [[ -n "$SLOT_DIR" ]]; then rm -rf -- "$SLOT_DIR"; fi
   rm -rf -- "$TMP_ROOT"

@@ -7,11 +7,15 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/../.." && pwd -P)"
-if [[ "${TRURETURING_MAINTENANCE_LOG_SCRIBE_RELEASE:-0}" != 1 && -f "$ROOT/tools/scripts/maintenance_log.py" ]]; then
-  export TRURETURING_MAINTENANCE_LOG_SCRIBE_RELEASE=1
-  exec python3 -B "$ROOT/tools/scripts/maintenance_log.py" run \
-    --repository "$ROOT" --script scribe-release -- \
-    /bin/bash "$ROOT/tools/scripts/scribe-release.sh" "$@"
+if [[ -f "$ROOT/tools/scripts/maintenance_log.py" ]]; then
+  run_id=""
+  if run_id="$(python3 -B "$ROOT/tools/scripts/maintenance_log.py" begin \
+      --repository "$ROOT" --script scribe-release --owner-pid "$$" --parent-pid "$PPID" \
+      </dev/null 2>/dev/null)" && [[ "$run_id" =~ ^[0-9a-f]{32}$ ]]; then
+    export TRURETURING_MAINTENANCE_RUN_ID="$run_id"
+    export TRURETURING_MAINTENANCE_SCRIPT=scribe-release
+    export TRURETURING_MAINTENANCE_REPOSITORY="$ROOT"
+  fi
 fi
 
 fail() {
@@ -90,6 +94,12 @@ cleanup() {
     fi
   fi
   if [[ -n "$TEMP_DIRECTORY" ]]; then rm -rf -- "$TEMP_DIRECTORY" || rc=1; fi
+  if [[ -n "${TRURETURING_MAINTENANCE_RUN_ID:-}" ]]; then
+    python3 -B "$ROOT/tools/scripts/maintenance_log.py" finish \
+      --repository "$ROOT" --script scribe-release \
+      --run-id "$TRURETURING_MAINTENANCE_RUN_ID" --owner-pid "$$" \
+      --exit-code "$rc" </dev/null >/dev/null 2>/dev/null || true
+  fi
   exit "$rc"
 }
 trap cleanup EXIT

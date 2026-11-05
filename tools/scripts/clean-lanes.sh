@@ -43,12 +43,8 @@ if [[ "$LANES_ONLY" == "1" ]]; then arguments+=(--lanes-only); fi
 if [[ -n "$ACTIVE_PATHS_FILE" ]]; then arguments+=(--active-paths-file "$ACTIVE_PATHS_FILE"); fi
 
 if [[ -f "$ROOT/tools/scripts/maintenance_log.py" ]]; then
-  exec python3 -B "$ROOT/tools/scripts/maintenance_log.py" run \
-    --repository "$ROOT" --script clean-lanes -- \
-    dotnet run \
-    --project "$ROOT/tools/StrataLint.Cli/StrataLint.Cli.csproj" \
-    --configuration Release \
-    -- "${arguments[@]}"
+  export TRURETURING_MAINTENANCE_SCRIPT=clean-lanes
+  export TRURETURING_MAINTENANCE_REPOSITORY="$ROOT"
 fi
 exec dotnet run \
   --project "$ROOT/tools/StrataLint.Cli/StrataLint.Cli.csproj" \

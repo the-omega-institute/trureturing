@@ -7,18 +7,12 @@ namespace StrataLint.WorkflowScript.Tests;
 public sealed class HostCleanupScriptTests
 {
     [Theory]
-    [InlineData("bytes_and_stdin")]
-    [InlineData("partial_progress")]
-    [InlineData("status_and_launch_failures")]
-    [InlineData("termination")]
-    [InlineData("handled_signal")]
-    [InlineData("shared_routing_and_correlation")]
-    [InlineData("deleted_worktree")]
-    [InlineData("lock_lifetime")]
-    [InlineData("protocol_exec")]
-    [InlineData("script_guards")]
-    [InlineData("host_cleanup_outcomes")]
-    [InlineData("host_cleanup_failures")]
+    [InlineData("native_bytes_and_stdin")]
+    [InlineData("direct_owner_pid_handled_and_unhandled_int_term")]
+    [InlineData("group_signal_has_one_native_delivery")]
+    [InlineData("shared_common_directory_and_correlation")]
+    [InlineData("failing_destination_is_best_effort")]
+    [InlineData("consumer_audit")]
     public void MaintenanceLoggingPreservesCommandBehavior(string probe)
     {
         if (OperatingSystem.IsWindows()) return;

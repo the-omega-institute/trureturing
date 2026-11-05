@@ -19,6 +19,9 @@ import tempfile
 import time
 from urllib.parse import quote
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
+from maintenance_log import MaintenanceLog
+
 from lean_cache import SHARED_SEED_PLATFORMS, normalized_platform, partition_path, seed_partitions
 from cache_material import sha
 from lean_cache_topology import checkout_topology, git_absolute_path, warm_dev_remediation
@@ -924,7 +927,7 @@ def latest_snapshot(root, partition, deadline):
     return None
 
 
-def main():
+def _main():
     parser = argparse.ArgumentParser()
     parser.add_argument("command", choices=("address", "publish", "fetch"))
     parser.add_argument("--repository", type=pathlib.Path, default=pathlib.Path(__file__).resolve().parents[3])
@@ -991,6 +994,23 @@ def main():
         receipt(args.command, "miss" if args.command == "fetch" else "failed",
                 reason=("verification: " if args.mode == "verification" else "") + str(error))
         return 1 if args.command == "fetch" else 2
+
+
+def main():
+    log = MaintenanceLog.from_environment()
+    if log is not None:
+        log.emit("run_started")
+    try:
+        exit_code = _main()
+    except BaseException as error:
+        if log is not None:
+            code = error.code if isinstance(error, SystemExit) and isinstance(error.code, int) else 130 \
+                if isinstance(error, KeyboardInterrupt) else 1
+            log.finish(code, error_type=type(error).__name__)
+        raise
+    if log is not None:
+        log.finish(exit_code)
+    return exit_code
 
 
 if __name__ == "__main__":
