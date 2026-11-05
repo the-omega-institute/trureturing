@@ -65,4 +65,5 @@ For every dimension n, every r with two distinct sites and every objective C in 
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseHierarchy.objective_minimum`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseHierarchy.parriloPolar`
 - Dependency: [D5/S3/QuadraticForms/ParriloHierarchy](../../../QuadraticForms/ParriloHierarchy.md)
-- Dependency: [D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseEdgeSymbol](BoseEdgeSymbol.md)
+- Dependency: [D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseLDUI](BoseLDUI.md)
+- Dependency: [D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseSOSDuality](BoseSOSDuality.md)
