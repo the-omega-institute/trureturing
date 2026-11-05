@@ -118,6 +118,10 @@ $$\neg((\exists (HStar: (\mathbb{R}\times\mathbb{R}) \to \mathbb{R} \to \mathbb{
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/JonesAloyEntropyConstancy.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/jones-aloy-entropy` (refuted) by `D5/S3/Quantum/JonesAloyEntropyConstancy.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"jones-aloy-entropy","declaration_gid":"D5/S3/Quantum/JonesAloyEntropyConstancy.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Caroline L. Jones; Albert Aloy; Gerard Higgins; Markus P. Müller (2026). *Certified randomness from quantum speed limits*. DOI: [10.1103/bnrq-sp5w](https://doi.org/10.1103/bnrq-sp5w). URL: <https://arxiv.org/abs/2506.14526v3>.
