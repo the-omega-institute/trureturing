@@ -45,7 +45,11 @@ internal sealed class BalaComplexShiftDeterminantRefutationDocument : IScribeDoc
                     + "the unshifted entry is choose(1,1) = 1. A one-by-one determinant "
                     + "equals its entry. The asserted equality would imply 2 = 1 in "
                     + "the complex numbers, refuting the printed universal assertion."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a086205-bala-complex-shift-determinant-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula ClaimBody()
     {
