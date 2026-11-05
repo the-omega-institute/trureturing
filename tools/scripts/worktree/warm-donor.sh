@@ -75,4 +75,6 @@ if (( lean_rc != 0 )); then
 fi
 
 receipt warmed complete
-finish_maintenance_log 0
+receipt_rc=$?
+finish_maintenance_log "$receipt_rc"
+exit "$receipt_rc"

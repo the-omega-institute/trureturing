@@ -335,6 +335,29 @@ class MaintenanceLogTests(unittest.TestCase):
         self.assertEqual(-signal.SIGPIPE, result.returncode)
         self.assertEqual(b'', result.stderr)
 
+    def test_warm_donor_output_failure_is_not_success(self):
+        scripts = self.main / 'tools/scripts/worktree'
+        scripts.mkdir(parents=True)
+        shutil.copy2(SOURCE / 'tools/scripts/worktree/warm-donor.sh', scripts / 'warm-donor.sh')
+        (self.main / 'tools/scripts/lib').mkdir()
+        shutil.copy2(LOGGER, self.main / 'tools/scripts/maintenance_log.py')
+        shutil.copy2(SOURCE / 'tools/scripts/lib/maintenance-log-lib.sh', self.main / 'tools/scripts/lib/maintenance-log-lib.sh')
+        binary = self.root / 'bin'
+        binary.mkdir()
+        (binary / 'git').write_text('#!/bin/sh\nif [ "$1" = symbolic-ref ]; then echo dev; fi\nexit 0\n')
+        (binary / 'make').write_text('#!/bin/sh\nexit 0\n')
+        for path in binary.iterdir():
+            path.chmod(0o700)
+        env = dict(self.environment, PATH=str(binary) + os.pathsep + os.environ['PATH'])
+        output = self.root / 'read-only-output'
+        output.touch()
+        # A non-signal stdout write error must retain the receipt's failure status.
+        with output.open('rb') as stream:
+            result = subprocess.run(['/bin/bash', str(scripts / 'warm-donor.sh')], env=env,
+                                    stdout=stream, stderr=subprocess.PIPE, timeout=15)
+        self.assertNotEqual(0, result.returncode)
+        self.assert_finished(result.returncode, 'warm-donor', self.rows('warm-donor')[0]['pid'])
+
 
 if __name__ == "__main__":
     unittest.main()

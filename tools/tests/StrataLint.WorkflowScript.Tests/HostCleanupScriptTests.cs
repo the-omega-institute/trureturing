@@ -19,6 +19,7 @@ public sealed class HostCleanupScriptTests
     [InlineData("csharp_completion_after_cwd_deletion")]
     [InlineData("python_owner_children_have_immediate_parent")]
     [InlineData("warm_donor_sigpipe_has_native_stderr")]
+    [InlineData("warm_donor_output_failure_is_not_success")]
     public void MaintenanceLoggingPreservesCommandBehavior(string probe)
     {
         if (OperatingSystem.IsWindows()) return;
