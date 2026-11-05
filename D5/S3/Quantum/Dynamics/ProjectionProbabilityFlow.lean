@@ -21,6 +21,7 @@ import Mathlib.Analysis.Calculus.Deriv.Star
 import Mathlib.Analysis.Calculus.MeanValue
 import Mathlib.Analysis.CStarAlgebra.Projection
 import Mathlib.Analysis.SpecialFunctions.Exponential
+import Mathlib.Analysis.LocallyConvex.WithSeminorms
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
