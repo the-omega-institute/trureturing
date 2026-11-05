@@ -1,0 +1,35 @@
+#### 命题 9.5：任意精确附近仍可完整五维
+
+在 $W=\mathbb R^5,G=SO(5),e=e_1$ 中，对 $0<\varepsilon<1/2$ 定义
+
+$$
+K_\varepsilon=J_{12}+(1+\varepsilon)J_{45},\qquad
+L_\varepsilon=J_{13}+\varepsilon J_{34}.
+$$
+
+这对见证完整生成 $\mathfrak{so}(5)$，且
+
+$$
+\lVert M(K_\varepsilon,L_\varepsilon)-(I_5+P_e)\rVert_{\rm op}
+\le3\varepsilon+2\varepsilon^2\longrightarrow0.
+$$
+
+**证明。**
+
+算子 $\operatorname{ad}_{K_\varepsilon}^2$ 在 $J_{13}$、$J_{34}$ 上的本征值分别为 $-1$、$-(1+\varepsilon)^2$，彼此不同。 有限多项式插值从 $L_\varepsilon$ 分别恢复 $J_{13},J_{34}$。再与 $K_\varepsilon$ 取交换子得到 $J_{23},J_{35}$，因此以坐标 $3$ 为中心的四条星边均在生成代数中。任意两条星边的交换子给相应叶边，故生成全部 $\mathfrak{so}(5)$。
+
+记 $P_j=e_j e_j^{\mathsf T}$、$E_{ij}=e_i e_j^{\mathsf T}$。直接展开得
+
+$$
+M-(I_5+P_1)
+=2\varepsilon(P_4+P_5)
+ +\varepsilon^2(P_3+2P_4+P_5)
+ -\varepsilon(E_{14}+E_{41}).
+$$
+
+三项的算子范数分别为 $2\varepsilon$、$2\varepsilon^2$、$\varepsilon$，得到所列上界。来源在完整 $SO(5)$ 下循环；$\varepsilon=0$ 时等式准确，但完整生成退化成前述直积代数。
+
+$\square$
+
+所以准确的谱差额定理不自动给出稳健的维数认证。误差容许下，仍需控制生成关系的退化；这项限制也属于本轮逆向核查。
+
