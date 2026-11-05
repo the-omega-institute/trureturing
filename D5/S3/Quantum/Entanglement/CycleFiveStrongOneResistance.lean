@@ -31,6 +31,8 @@ Direct frozen dependencies:
   statement_id: sha256:4607242f5ca0464588fa7eea47cf23ce7ba387f9018664f7796740270945b0f5
 -/
 import D5.S3.Quantum.Entanglement.CycleSixStrongTwoResistanceRefutation
+import Mathlib.NumberTheory.Zsqrtd.GaussianInt
+import Mathlib.Data.Nat.Bitwise
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 0

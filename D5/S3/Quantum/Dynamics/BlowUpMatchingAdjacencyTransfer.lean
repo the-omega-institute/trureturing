@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Dynamics.RationalWeightPathTransfer
 import D5.S3.Zeros.Convolution.PerfectMatchingCount
 import D5.S3.Combinatorics.PerfectMatchings.FiniteEndpointPairing
+import Mathlib.Combinatorics.SimpleGraph.LapMatrix
 
 /-! Adjacency transfer from integral eigenvalue support and uniform clone matchings. -/
 

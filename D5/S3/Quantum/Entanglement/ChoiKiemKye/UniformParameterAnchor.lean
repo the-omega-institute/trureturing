@@ -78,6 +78,8 @@
 import D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction
 import D5.S3.Quantum.Information.BinaryStabilizerLocalInequivalence
 import D5.S3.SpectralTopology.HermitianEigenvaluePerturbation
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
+import Mathlib.Analysis.Normed.Module.Normalize
 
 noncomputable section
 namespace D5.S3.Quantum.Entanglement.ChoiKiemKye.UniformParameterAnchor

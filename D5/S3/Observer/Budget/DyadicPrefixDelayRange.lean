@@ -7,6 +7,7 @@
    digest: Causal final-query delays realize whole dyadic prefix time tables. -/
 
 import D5.S3.Observer.Budget.TerminalClockCompression
+import Mathlib.Data.Nat.ModEq
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

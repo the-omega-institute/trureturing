@@ -20,6 +20,7 @@ Direct frozen dependencies: D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.ham
 -/
 
 import D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
+import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
