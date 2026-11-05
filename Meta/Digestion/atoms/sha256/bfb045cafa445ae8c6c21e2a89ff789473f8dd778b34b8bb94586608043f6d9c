@@ -1,0 +1,11 @@
+## 22. Sharp uniform local producer rigidity for arbitrary shared unitary feedback
+
+Keep exactly the record $R_0$ of Definition 1.1, the ordinary transpose in (1.4), and the actual producer distance $\rho$ and defect $g=a+\tau$ of Definition 11.1. In particular, one original effect has one feedback matrix $U\in U(4)$, shared by all its columns. Put
+
+$$
+h=\frac1{\sqrt2},\qquad c=\cos(\pi/8),\qquad s=\sin(\pi/8),
+\qquad d=\sqrt2+2c,\qquad e=\sqrt2+2s.
+$$
+
+The constants $\kappa$ and $R_*=\kappa^{-1}$ are those of Theorem 21.3; that theorem's restricted finite-scale result and sharpness path are reused here. The new domain is a uniform neighborhood of both optimizer classes with unrestricted unitary feedback. The local conclusion also extends to positive effects through the same-feedback calculation below.
+
