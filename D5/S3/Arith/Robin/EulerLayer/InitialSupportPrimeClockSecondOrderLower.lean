@@ -13,6 +13,8 @@ import D5.S3.Arith.Robin.LogarithmBounds
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.Tactic
 
+/-! Uniform second-order lower transfer to the exact largest-prime clock. -/
+
 namespace D5.S3.Arith.Robin.EulerLayer.InitialSupportPrimeClockSecondOrderLower
 
 open Finset Filter Asymptotics
@@ -112,7 +114,7 @@ private theorem scalar_identity {L : ℝ} (hL : 0 < L) (hY : 0 < L - c) :
   have h3a : 1 + 1 / L^3 ≠ 0 := by positivity
   have h4a : 1 + 1 / L^4 ≠ 0 := by positivity
   have hq : 1 - c * L⁻¹ ≠ 0 := by
-    have heq : 1 - c * L⁻¹ = (L - c) / L := by field_simp [hL.ne']; ring
+    have heq : 1 - c * L⁻¹ = (L - c) / L := by field_simp [hL.ne']
     rw [heq]
     exact (div_pos hY hL).ne'
   unfold r H G R Q
@@ -129,8 +131,9 @@ private theorem scalar_limits :
         (tendsto_id : Tendsto (fun L : Real => L) atTop atTop))
   have hH : Tendsto H atTop (𝓝 A) := by
     have h1 := hY.const_div_atTop B
-    have h3 := ((tendsto_pow_atTop (by norm_num : (3 : ℕ) ≠ 0)).comp hY)
-      .const_div_atTop (3200 : ℝ)
+    have hY3 : Tendsto (fun L : ℝ => (L - c)^3) atTop atTop :=
+      (tendsto_pow_atTop (by norm_num : (3 : ℕ) ≠ 0)).comp hY
+    have h3 := hY3.const_div_atTop (3200 : ℝ)
     simpa [H] using
       ((tendsto_const_nhds : Tendsto (fun _ : ℝ => A) atTop (𝓝 A)).sub h1).sub h3
   have hG : ContinuousAt G 0 := by
@@ -181,7 +184,8 @@ private theorem D_near_upper {p : ℝ} (hp : 1 < p) (hL : 0 < Real.log p) :
     exact mul_le_mul_of_nonneg_left hs (Real.sqrt_nonneg p)
   have hlog : Real.log (p * a) ≤ L + 1 / L^3 := by
     rw [Real.log_mul hp0.ne' ha.ne']
-    exact add_le_add_left hl L
+    change L + Real.log a ≤ L + 1 / L^3
+    linarith only [hl]
   change D (p * a) ≤ D p * (a * (1 + 1 / L^4))
   calc
     D (p * a) ≤ (Real.sqrt p * a) * (L + 1 / L^3) :=
@@ -248,7 +252,8 @@ private theorem near_clock_transfer {ε X₀ : ℝ} (hε : 0 < ε)
   have hC : 0 ≤ C := by
     by_contra hn
     have hnonpos := mul_nonpos_of_nonneg_of_nonpos (D_pos hX1).le (le_of_not_ge hn)
-    linarith [(hT p hTP).1]
+    have hHL : 0 < H L := (hT p hTP).1
+    linarith only [hHL, hHC, hnonpos]
   let k := (1 + 1 / L^3) * (1 + 1 / L^4)
   have hk : 0 < k := by dsimp [k]; positivity
   have hD : D X ≤ D p * k :=
@@ -270,7 +275,9 @@ private theorem near_clock_transfer {ε X₀ : ℝ} (hε : 0 < ε)
 private theorem far_growth :
     Tendsto (fun p : ℝ => Real.sqrt p / (8 * (Real.log p)^3)) atTop atTop := by
   have hsmall : Tendsto (fun p : ℝ => (Real.log p)^3 / Real.sqrt p) atTop (𝓝 0) := by
-    simpa only [Real.rpow_natCast, ← Real.sqrt_eq_rpow] using
+    have hpow : ∀ p : ℝ, Real.log p ^ (3 : ℝ) = (Real.log p)^ (3 : ℕ) :=
+      fun p => Real.rpow_natCast (Real.log p) 3
+    simpa only [hpow, ← Real.sqrt_eq_rpow] using
       (_root_.isLittleO_log_rpow_rpow_atTop (3 : ℝ)
         (by norm_num : (0 : ℝ) < 1 / 2)).tendsto_div_nhds_zero
   have h8 : Tendsto (fun p : ℝ => 8 * ((Real.log p)^3 / Real.sqrt p))
@@ -407,8 +414,7 @@ theorem initial_support_prime_clock_second_order_lower :
               Real.sqrt 2 * (2 + Real.log 2) > -ε := by
   intro ε hε
   obtain ⟨X₀, hX₀, hbound⟩ :=
-    D5.S3.Arith.Robin.PrimeMinCorrectionSecondOrderLower
-      .uniform_min_tail_robin_second_order_lower
+    D5.S3.Arith.Robin.PrimeMinCorrectionSecondOrderLower.uniform_min_tail_robin_second_order_lower
   obtain ⟨Tθ, hTθ⟩ := eventually_atTop.mp theta_window_eventually
   obtain ⟨Tnear, hTnear⟩ := near_clock_transfer hε (X₀ := X₀) (by
     intro m P hm hs ht hX
