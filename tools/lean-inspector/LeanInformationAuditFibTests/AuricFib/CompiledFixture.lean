@@ -79,7 +79,7 @@ def parameterized (_n : Nat) : Application.{0,0,0,0,0,0} NativeContinuation.Null
   evidence := .native { reconstruction := .exact } bridge (.absent "parameterized contract") [] [.seam, .guard, .reply, .atom]
 
 
-open LeanInformationAudit.AuricFib (NativePrediction)
+open LeanInformationAudit.AuricFib
 
 /-- The same original source supplies both a positive invariant and concrete
 counterexamples for weaker observations. The one-window source law stays absent. -/
@@ -116,8 +116,9 @@ def predictionEmpty : Application.{0,0,0,0,0,0} NativeContinuation.NullReplyFibe
 
 /-- Prediction evidence cannot turn a non-native occurrence into this source. -/
 def predictionWrongSource : Application.{0,0,0,0,0,0} unrelated where
-  evidence := .typed { source := LeanInformationAudit.Analysis.Source.unobserved unrelated
-    `LeanInformationAuditFibTests.AuricFib.CompiledFixture
+  evidence := .typed {
+    source := LeanInformationAudit.Analysis.Source.unobserved unrelated
+      `LeanInformationAuditFibTests.AuricFib.CompiledFixture
     plan := { task := (), initial := [], additions := [] }
     acquisition := .unavailable "no finite presentation requested" }
   prediction := some { source := wrongSource, contract := {
