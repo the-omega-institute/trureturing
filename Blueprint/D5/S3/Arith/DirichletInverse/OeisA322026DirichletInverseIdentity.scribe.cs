@@ -17,7 +17,7 @@ internal sealed class OeisA322026DirichletInverseIdentityDocument
         H("The OEIS A322026 Dirichlet-inverse identity"),
         Blocks(
             Node("a", "The A322026 rank formula", AFormula(),
-                "The source formula is A071521(A065331(n)): count nonnegative exponent pairs whose 2,3-number is at most the product of the 2- and 3-adic valuation powers.",
+                "The formal function sets a(0)=0. For positive n, the source formula is A071521(A065331(n)): count nonnegative exponent pairs whose 2,3-number is at most the product of the 2- and 3-adic valuation powers.",
                 DescribeRole.Definition),
             Node("b", "The A322026 Dirichlet inverse", BFormula(),
                 "b is the integer-valued Dirichlet inverse of a under positive-index Dirichlet convolution; the zero index is carried by the arithmetic-function convention.",
@@ -44,16 +44,19 @@ internal sealed class OeisA322026DirichletInverseIdentityDocument
         AssessedProvenance.FromLiterature(Source),
         Blocks(Paragraph(Text(prose))), role);
 
-    private static Formula AFormula() => Disp(Seq(
-        Forall, Sp, F.Id("n"), InMacro, Sp, Naturals(), Comma, Sp,
-        Equal(Call("a", F.Id("n")),
-            Call("latticeCount", Multiply(
-                new Formula.Power(D(2), Call("factorization", F.Id("n"), D(2))),
-                new Formula.Power(D(3), Call("factorization", F.Id("n"), D(3))))))));
+    private static Formula AFormula() => Disp(new Formula.Aligned([
+        Equal(Call("a", D(0)), D(0)),
+        Universal("n", new Formula.Logic(
+            new Formula.Relation(D(0), FormulaRelationOperator.LessThan, F.Id("n")),
+            FormulaLogicOperator.Implies,
+            Equal(Call("a", F.Id("n")),
+                Call("latticeCount", Multiply(
+                    new Formula.Power(D(2), Call("factorization", F.Id("n"), D(2))),
+                    new Formula.Power(D(3), Call("factorization", F.Id("n"), D(3))))))))
+    ]));
 
     private static Formula BFormula() => Disp(Equal(
-        Call("b", F.Id("n")),
-        Call("dirichletInverse", Call("a", F.Id("n")))));
+        F.Id("b"), Call("dirichletInverse", F.Id("a"))));
 
     private static Formula ResultFormula() => Disp(Universal("n",
         Equal(Call("a", F.Id("n")),
