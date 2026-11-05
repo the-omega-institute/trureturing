@@ -1,0 +1,8 @@
+**定义 131.1（承重综合与复用边界）。** Kraus／Stinespring 表示、正映射范数公式、Sylvester 谱分离积分、有限维 Jordan 分解、紧环面递归和可逆 CPTP 分类均为成熟工具。Schwarz 等号的乘法域依据可参见 [Choi–Johnston–Kribs，The multiplicative domain in quantum error correction，定理 8](https://arxiv.org/pdf/0811.0947v1)；(129.9) 之后的同角证明也明确给出本节所需的保星结论。可逆 CPTP 的一般编码分类参见 [Nayak–Sen，Invertible Quantum Operations and Perfect Encryption of Quantum States](https://arxiv.org/abs/quant-ph/0605041)，此处没有在取得精确 CPTP 逆之前调用该结论。
+
+一般单 Kraus 差映射的范数等式直接沿用本卷 (100.4) 及其成熟来源 [Magajna，The norm of a symmetric elementary operator，定理 1.1](https://users.fmf.uni-lj.si/magajna/Articles/NormSymmetricElOp.pdf)，不把该等式或矩形嵌入另计为新增理论。Sylvester 分离界也可与仓内 `D5/S3/HilbertOperators/DavisKahanProjector.lean` 的 `TauCeti.ContinuousLinearMap.opNorm_le_div_of_comp_sub_comp_eq` 对应；推论 128.1 在正文中给出了所需积分证明。
+
+本节本仓推导的承重接口是：从原 $E^2,E^4$ 两层正输入半程缺陷取得 (127.4) 的算子范数界；将其用于同一原分支的有间隔谱角；以及在精确半程边界上，由各选定效果平方链的严格返回余量先取得可逆正常形，再以原根效果的弱互易控制完整参考更新。原卷定理 85.1 在精确互易、半程下的正常形和定理 87.1 的精确选择仍按原假设复用；本节不把它们另行认领。
+
+原卷定理 97.1 及本卷定理 103.2 的完整对数障碍族仍有 $D\to0$，只限制 (130.1) 若存在时的收敛率。本卷定理 102.1 要求返回误差也趋零；它不解决固定任意 $c<1$ 的问题。§§106–112 使用精确返回及同向读数，§§113–119 另给正分支的合同，均不代替本节所需的原 CP 及带噪返回前提。不作穷尽文献、原创优先权、物理实现或最优常数主张。
+

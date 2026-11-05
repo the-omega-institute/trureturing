@@ -1,0 +1,21 @@
+**定理 12.1（单位轨道势的精确递推）。**取 $\ell^\infty(\mathbb N_0)$ 上的正、归一、移位不变实均值 $\Lambda$，置
+
+$$
+f(a)=\Lambda_n c(a,p_n),\qquad g(a)=\Lambda_n c(p_n,a).
+\tag{12.1}
+$$
+
+则 $f,g$ 有限非负，$f\circ U=f$、$g\circ U=g$，且
+
+$$
+\begin{aligned}
+\frac13\sum_{k=0}^2f(a\cdot U^ku)&=q(a)+f(u),\\
+\frac13\sum_{k=0}^2g(a\cdot U^ku)&=r(a)+g(u).
+\end{aligned}
+\tag{12.2}
+$$
+
+**证明。**由 (1.2) 与推论 2.2，$c(a,p_n)\le3(q(a)+\Omega(1))$，反向不超过 $3(r(a)+\Omega(1))$，所以均值有定义。取 (R) 的 $(b,v)=(1,p_n)$ 后对 $n$ 取同一个均值。每个左项的第二标签为 $p_{n+k}$，移位不变性给第一式；对转置核重复给第二式。这里只交换有限求和与一个线性均值，没有交换两个无限均值。
+
+取 $a=1$，两种势沿 $U$ 轨道均满足 $x_{n+1}+x_{n+2}=2x_n$。轨道上界保证其有界，因而通解的 $(-2)^n$ 项为零，得到 $fU=f$、$gU=g$。正移位均值的存在与有限加权复合算子的均值相容性是经典工具；参见 El-hady、Brzdęk，*Banach Limit and Fixed Point Approach in the Ulam Stability of the Quadratic Functional Equation*，DOI 10.3390/axioms14030206，第 3 节及 Remark 1。这里不调用其 Theorem 8 的交换群二次方程结论。
+

@@ -1,0 +1,42 @@
+### 定理 4.2（局部纯复位必把完整输入移入记录）
+
+<a id="thm-c117-reset"></a>
+
+设 $V:H_d\to H_A\otimes R$ 等距，且每个单位输入都满足
+
+$$
+\operatorname{Tr}_R(V\lvert \psi\rangle\langle \psi\rvert V^*)=P_a.
+$$
+
+则存在一个等距映射 $W:H_d\to R$，使
+
+<a id="eq-c117-reset-factor"></a>
+
+$$
+\boxed{V\psi=a\otimes W\psi.}
+\tag{8}
+$$
+
+因此 $\dim R\ge d$，并且
+
+<a id="eq-c117-record-gram"></a>
+
+$$
+\boxed{\langle W\psi,W\phi\rangle=\langle \psi,\phi\rangle.}
+\tag{9}
+$$
+
+**证明。**
+对每个单位 $\psi$，有
+
+$$
+\|((I-P_a)\otimes I_R)V\psi\|^2
+ =\operatorname{Tr}[(I-P_a)P_a]=0.
+$$
+
+所以 $\operatorname{Ran} V\subseteq\mathbb C a\otimes R$。定义
+$W=(\langle a\rvert\otimes I_R)V$，就有 $V=a\otimes W$，且
+$W^*W=V^*V=I$。内积与维数结论直接成立。
+
+这是 no-hiding 结构的纯输出有限维情形 [10](#ref-nohiding)。记录不是只保存“曾经有过一个输入”的经典标号；它必须保持输入的相干关系。如果输入还与参考 $Q$ 纠缠，式 [(8)](#eq-c117-reset-factor) 接上 $I_Q$ 后表明这些参考关系也完整移到 $R\otimes Q$。
+

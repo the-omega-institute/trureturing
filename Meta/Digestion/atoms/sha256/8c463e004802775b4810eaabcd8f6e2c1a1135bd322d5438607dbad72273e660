@@ -1,0 +1,149 @@
+**Theorem 47.4 (an explicit negative-determinant exclusion region).**
+Let $\mathcal R_+$ be the following region, defined entirely by the
+fixed functions in (46.11), (46.13), (46.25) and (47.1):
+
+$$
+\begin{aligned}
+ \mathcal R_+=\biggl\{(\xi,q):\;&0<\xi\le13/4,\quad 0<q<1,
+          \quad q<\xi/2,\quad x=1-\xi/4+q/2<\sqrt{2/3},\\
+ &\mathfrak D_+(x,q)<0,\quad C_{\mathrm{gain},+}(x,q)>1/4,
+       \quad\eta_+(x,q)<2/5,\\
+ &\Gamma_0(x,q)<13/10,\quad G_+^{\mathrm{can}}(x,q)>3\biggr\}.
+\end{aligned}
+\tag{47.14}
+$$
+
+It contains $(\xi,q)=(13/4,1/8)$, where $x=1/4$, and contains a
+relative neighborhood of that point in $(0,13/4]\times(0,1)$.
+For every slice in $\mathcal R_+$, every actual original pure pair in
+that slice, with arbitrary relative coherence phase, obeys
+
+$$
+ g(E,U)>\frac{771}{625}>\frac{17}{16}>V(\xi),\qquad
+ g(E,U)-V(\xi)>\frac{1711}{10000}.
+\tag{47.15}
+$$
+
+Thus this nonempty interior-population region excludes both same-level
+equality and strict competition even though its determinant is negative.
+
+*Proof.* First certify the anchor using rational inequalities. At
+$x=1/4$, $q=1/8$, put $u_0=\sqrt{7/8}$, $v_0=\sqrt{1/8}$,
+$y=\sqrt{15}/4$. The following open intervals have exact rational
+endpoints:
+
+$$
+\begin{array}{c|rrrrrr}
+ z&h&c&s&u_0&v_0&y\\ \hline
+ 1000z\text{ lower bound}&707&923&382&935&353&968\\
+ 1000z\text{ upper bound}&708&924&383&936&354&969.
+\end{array}
+\tag{47.16}
+$$
+
+They follow by squaring and $h^2=1/2$, $c^2=(1+h)/2$,
+$s^2=(1-h)/2$. For the upper bound on $c$, use also
+$h<442/625$, which follows by squaring; then
+$(1+h)/2<1067/1250<(924/1000)^2$. In particular
+
+$$
+ \frac{215}{1000}<k<\frac{217}{1000},\qquad
+ \frac{4399}{4000}<R_0<\frac{1101}{1000},\qquad
+ \frac{73}{500}<s^2<\frac{293}{2000}.
+\tag{47.17}
+$$
+
+At this anchor the exact coefficients reduce to
+
+$$
+ \mu=\frac12\left(\frac{hk u_0}{R_0}+\frac{hv_0}{y}\right),
+ \qquad
+ \nu=\frac12\left(k u_0-\frac{(s^2-1/8)v_0}{hy}\right).
+\tag{47.18}
+$$
+
+For completeness, monotone substitution of (47.16)--(47.17) gives
+
+$$
+\begin{aligned}
+ \mu&>\frac12\left(
+  \frac{707\cdot215\cdot935}{1101\cdot10^6}
+        +\frac{707\cdot353}{969\cdot1000}\right)>\frac{19}{100},\\
+ \mu&<\frac12\left(
+  \frac{708\cdot217\cdot936\cdot4}{4399\cdot10^6}
+        +\frac{708\cdot354}{968\cdot1000}\right)<\frac15,\\
+ \nu&>\frac12\left(\frac{215\cdot935}{10^6}
+        -\frac{43\cdot354}{2\cdot707\cdot968}\right)>\frac9{100},\\
+ \nu&<\frac{217\cdot936}{2\cdot10^6}<\frac{11}{100}.
+\end{aligned}
+\tag{47.19}
+$$
+
+Here $s^2-1/8>0$. Since $x^2/L=1/20$, these exact bounds imply
+
+$$
+\begin{aligned}
+ \mathfrak D_+&=\frac{\mu\nu}{5}-\frac{s^2}{8}
+  <\frac15\frac15\frac{11}{100}-\frac{73}{4000}<0,\\
+ 0<\eta_+&=\frac{5s^2}{8\mu}-\nu
+  <\frac{5(293/2000)}{8(19/100)}-\frac9{100}<\frac25.
+\end{aligned}
+\tag{47.20}
+$$
+
+For the gain coefficient it suffices to retain the coherent summand.
+Using $s>3/8$, $v_0>7/20$ and $\sqrt3<7/4$ gives
+
+$$
+ C_{\mathrm{gain},+}
+   >\frac{10s v_0}{3\sqrt3}
+   >\frac{10(3/8)(7/20)}{3(7/4)}=\frac14.
+\tag{47.21}
+$$
+
+The amplitude and energy satisfy
+
+$$
+\begin{aligned}
+ \Gamma_0&=u_0(c+h/4)+v_0hy\\
+ &<\frac{936}{1000}\frac{1101}{1000}
+       +\frac{354\cdot708\cdot969}{10^9}<\frac{13}{10},\\
+ \mathsf E_+(1/8)
+   &=\frac72(h+c)^2+\frac12(h+s)^2\\
+   &>\frac72\left(\frac{1630}{1000}\right)^2
+       +\frac12\left(\frac{1089}{1000}\right)^2>\frac{49}{5},\\
+ G_+^{\mathrm{can}}
+   &>\frac{49}{5}-4\left(\frac{13}{10}\right)^2
+      =\frac{76}{25}>3.
+\end{aligned}
+\tag{47.22}
+$$
+
+Also $1/4<\sqrt{2/3}$ and all population and level inequalities in
+(47.14) hold. This certifies the anchor without a numerical optimization.
+All functions defining its strict inequalities are continuous for
+$0<x<1$, $0<q<1$ and $C_{\mathrm{gain},+}>0$. Thus (47.14) contains
+a relative neighborhood of the anchor, with levels strictly below
+$13/4$ and populations on both sides of $1/8$.
+
+On every slice in (47.14), $0\le J_+<4/25$. Theorem 47.3 yields
+
+$$
+ g(E,U)>3-8\frac{13}{10}\frac4{25}
+                -4\left(\frac4{25}\right)^2
+          =\frac{771}{625}.
+\tag{47.23}
+$$
+
+For the selected comparator reuse (44.19) and Theorem 41.2, not an
+unproved negative-branch comparison:
+
+$$
+ V(\xi)\le V(13/4)<(h+s)^2-\frac3{16}<\frac{17}{16}.
+\tag{47.24}
+$$
+
+Indeed $h<5/7$, $s<2/5$ give
+$(h+s)^2<(39/35)^2<5/4$. Finally
+$771/625-17/16=1711/10000$, proving (47.15). $\square$
+

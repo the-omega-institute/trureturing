@@ -1,0 +1,10 @@
+### 4.2 四维：没有改变转向，却有额外内容可以溜走
+
+取 $W=\mathbb C^2$ 的实四维空间、$\mathfrak g=\mathfrak u(2)$。令
+
+$$
+x=e_1,\quad A=\operatorname{diag}(0,i),\quad y=ie_1.
+$$
+
+则 $Ax=Ay=0$，但 $y\notin\mathbb R x$。所以 $(0,[y])\ne(0,0)$ 仍在完整关系中，双向唯一性失败。被遗漏的是同一复直线里的第二个实方向。
+

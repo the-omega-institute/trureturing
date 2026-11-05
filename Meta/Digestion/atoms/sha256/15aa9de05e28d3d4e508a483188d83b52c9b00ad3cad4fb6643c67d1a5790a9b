@@ -1,0 +1,35 @@
+**命题 13.3（单位右因子缺陷的显式界）。**置 $p=p_j$、$\delta=\max\{\sqrt{q(p)},\sqrt{r(p)}\}$，并定义
+
+$$
+H_c(a,p;z)=c(ap,z)-c(a,z)-c(p,z)+r(z)-q(ap)+q(a)+q(p).
+\tag{13.3}
+$$
+
+若有 $\mathrm{DT}$，则对全部 $a,z$ 和 $j\ge0$，
+
+$$
+\begin{aligned}
+|H_c(a,p;z)|
+&\le2\delta\left[
+\sqrt3\bigl(\sqrt{c(a,z)}+\sqrt{q(a)}\bigr)+\sqrt{r(z)}
+\right]+8\delta^2,\\
+|H_{c^{\mathsf T}}(a,p;z)|
+&\le2\delta\left[
+\sqrt3\bigl(\sqrt{c(z,a)}+\sqrt{r(a)}\bigr)+\sqrt{q(z)}
+\right]+8\delta^2.
+\end{aligned}
+\tag{13.4}
+$$
+
+这里 $c^{\mathsf T}(x,y)=c(y,x)$；它的锚定费用是 $q^{\mathsf T}=r$、$r^{\mathsf T}=q$。
+
+**证明。**式 (10.5) 给 $d(ap,a),d(a,ap)\le\sqrt3\,\delta$。在 (13.3) 中，将读数分为 $c(ap,z)-c(a,z)$、$c(p,z)-c(1,z)$、$q(ap)-q(a)$ 及 $q(p)$。引理 13.2 分别给三个平方差的上界
+
+$$
+2\sqrt3\,\delta\sqrt{c(a,z)}+3\delta^2,\qquad
+2\delta\sqrt{r(z)}+\delta^2,\qquad
+2\sqrt3\,\delta\sqrt{q(a)}+3\delta^2.
+$$
+
+最后 $q(p)\le\delta^2$，合计得到第一式。转置核仍满足完整 (R) 及 $\mathrm{DT}$，同一推导给第二式。没有将小费用无条件解释为上下文不可区分。
+

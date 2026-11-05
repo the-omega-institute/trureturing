@@ -1,0 +1,69 @@
+**定理 128.1（完整候选的原消费者与法向承重）。** 分别在两份原背景上有
+
+$$
+\begin{aligned}
+\mathsf C_{\rm primtri}(B_*)
+ &\Longleftrightarrow\mathsf C_{\rm zero}(B_*)
+ \Longleftrightarrow\mathsf C_{\rm co}(B_*),\\
+\mathsf C_{\rm primtri}(B)
+ &\Longleftrightarrow B+\mathrm Z+\mathrm{SC}+\mathrm{SJ},\\
+\mathsf C_{\rm primtri}(\mathsf B_{\rm cl})
+ &\Longleftrightarrow\mathsf B_{\rm cl}+\mathsf Q+\mathrm{SC}+\mathrm{SJ}.
+\end{aligned}
+\tag{128.1}
+$$
+
+这里 $\mathsf Q$ 专指母卷定义 67.2 的统一近零证书，与证明中的 $Q_c$ 区分。原有限补谱表示和完整原量子消费者都保留。若删除法向读回，只保留 (126.1) 的 $r=0$ 测试，则即使保留完整原背景、SC、双单位、$\mathrm O_\pi$、整个指针 SJ 和全部已安装 CP 过程，也不能恢复 (126.1)。
+
+证明。定理 126.2 逐全部原对象及实际联合应用，直接消费定理 111.1、120.1。定义 103.1 的原实基、完整谱框架、二次与双线性表、总秩一的单位测试及零对象空表保持原样；本轮没有证明更小有限菜单。为明确新入口如何接回现有 QM，逐项保留以下原对应。
+
+| 原结构及承重条件 | 同一原数据上的消费者 |
+| --- | --- |
+| 完整实际联合背景与母卷定理 64.2 或 71.3 | 恢复完整 $[D_a,D_b]=-[L_a,L_b]$，由 $a\cdot b=a\circ b-iD_ab$ 得 $\mathcal A_A\cong\bigoplus_sM_{n_s}(\mathbb C)$、$E_A=(\mathcal A_A)_{\rm sa}$、$D_ab=i[a,b]/2$；原中心、经典块、不等块大小与取向保留。 |
+| 原准备、原比较及其双对偶运输 | $\rho_\alpha=B_Ax_\alpha\ge0$，$\alpha(e)=\tau_A(\rho_\alpha e)$，$\tau_A(\rho_\alpha)=\alpha(u_A)$；原零质量、次归一质量及不等正 $q$ 块权保持，运输不替换原比较或具名返回。自伴随谱分解给谱概率，不新增实际读口。 |
+| 原 X 的同一含幺嵌入、交叉零、乘积张成与实际乘积准备 | 原嵌入成为含幺 $*$-嵌入，取得普通复张量；只作用于原已声明联合及实际供应的参考，不从某个 $AP^{\otimes k}$ 推断任意特定参考已经供应。 |
+| 全事件 R 与完整相关准备锥上的同记录参考执行 | 每个原事件 CP/TNI，原完整测试 TP；闭准备分支先消费母卷定理 69.2 的连续正延拓，乘积态保正不代替全相关入口。 |
+| 指定原群、整个 AC、精确 $N_u$、Xs 及所消费合法连线 | 每个效果取得所选完整有限平方根词，成功映射 $\rho\mapsto\sqrt e\rho\sqrt e$，投影时为所选 Lüders 支；失败继续到原输出端，实际丢弃后才取其原系数。 |
+| 原 F、实际细记录与遗忘 | 每个非零单中心细支 $S_\ell=\operatorname{Ad}_{K_\ell}$，原粗事件 $\Phi_f=\sum_\ell S_\ell$；零细标签、实际分组及原可访问记录保留，数学 Kraus 分解不替代它们。 |
+| 具名同数支持双返回及原失败完成 | $U_\ell=q_\ell\operatorname{Ad}_{K_\ell^+}$，在原支持角的两侧复合均为同一个 $q_\ell>0$ 倍恒等；反向资料、进一步合法接续及原返回数保持。 |
+| 原准备与全部合法有限顺序、自适应及并行历史 | 原端口、顺序、记录、失败、中心细权及质量完整进入下面的历史恒等式。 |
+| 原 $B$ 与另命名 $\mathsf B_{\rm cl}$ | 前者保留实际准备的有限正锥生成；后者沿母卷定理 72.1 只给运输后密度锥的闭覆盖，不把极限数学态授予新的实际准备身份。 |
+
+具体地，对原准备、原历史 $h=(f_1,\ldots,f_m)$ 和末端效果 $w$，
+
+$$
+\alpha(T_{f_1}\cdots T_{f_m}w)
+=\tau\!\left(w\,\Phi_{f_m}\cdots\Phi_{f_1}(\rho_\alpha)\right).
+\tag{128.2}
+$$
+
+这些结论消费完整原背景；裸定理 126.2 本身不声称完整复分类、物理时钟、$\hbar$、旧输出理想校准或独立仪器共同组装。
+
+删除见证直接复用定理 112.1 的完整 tagged-CP $\mathcal D_3$ 中央剪切模型，不另装一套过程。其整个指针为 $P=\mathbb C\oplus Q_P$、$Q_P=M_3^{P_0}$，另标签原对象为 $A_0=Q_A=M_3^{A_0}$；指针原因子 $h=0$，$A_0$ 取 $h=Y$。逐块原作用是
+
+$$
+D^A_ab=\Gamma_A\!\left(\tfrac i2[a,b]\right),\qquad
+\Gamma_A(x)=x+\frac{\operatorname{Tr}(h_Ax)}{n_A}I_A,\qquad
+h_{AB}=h_A\otimes I_B+I_A\otimes h_B.
+\tag{128.3}
+$$
+
+这里联合采用加性 $h$，不是 $\Gamma_A\otimes\Gamma_B$；定理 112.1 已逐原联合核对同一 $D$ 的 X。中央输出差被任意 $P_c$ 湮灭，所以该完整模型甚至满足全部实输入的长度校准，涵盖全部联合纠缠切口。原全部联合密度准备、CP 菜单、AC、精确 $N_u$、Xs、全事件 R、记录、失败、同数支持双返回和全部合法历史直接保留，精确准备覆盖也给另命名的闭背景。
+
+在原 $A_0$ 取 $e=e_{11}+e_{22}$、$X=e_{12}+e_{21}$，并令
+
+$$
+c=e_{11},\qquad p=(e+X)/2,\qquad r=I_3.
+\tag{128.4}
+$$
+
+$p$ 是整个 $A_0$ 中的 primitive，$r$ 幂等且 $W_c(r)=0$。沿 (120.3) 的同一原计算，
+
+$$
+D_pc=Y/4+I_3/6,\qquad q(D_pc,r)=\tfrac12,\qquad
+W_c(p)=W_c(2D_cp)=\tfrac14.
+\tag{128.5}
+$$
+
+于是 (126.1) 要求 $\tfrac14=2\cdot\tfrac12+\tfrac14=1+\tfrac14$，矛盾。完整模型不具有原 $q$-斜伴随性：$q(D_pc,u)=1/2$ 而 $D_pu=0$；命题 109.1 的额外斜伴随裸局部模型不与它混合。此处 CP 过程从模型定义起已安装，失败针对由长度校准恢复同一原 $D$ 的推断。把交叉项任一槽投到切空间会丢掉法向读回；投到法空间仍保留 $q((I-P_c)D_pc,r)=q(D_pc,r)$。∎
+

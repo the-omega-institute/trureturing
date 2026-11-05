@@ -1,0 +1,8 @@
+### 例 7.1（只要求返回参考，不能选定回推）
+
+令 $\sigma=\tau=I/d$、$\mathcal N=\operatorname{id}$。恒等回推和替代回推
+$\mathcal R_0(X)=\operatorname{Tr}(X)I/d$ 都满足 $\mathcal R(\tau)=\sigma$。
+取 $A=B$ 为秩一投影，真正的前向配对为 $1/d$，
+替代回推的反向配对为 $1/d^2$。
+因此“能把自己的起点找回来”没有保住二元互易。
+

@@ -1,0 +1,40 @@
+### 8.1 两条历史的三维关系坐标
+
+写 $v_h=\pi(h)\xi$、$v_k=\pi(k)\xi$，并令
+
+$$
+p=\|v_h\|^2,\quad q=\|v_k\|^2,\quad c=\langle v_h,v_k\rangle,\qquad
+ G=\begin{pmatrix}p&c\\\bar c&q\end{pmatrix}.
+$$
+
+正性给出 $p,q\ge0$、$|c|^2\le pq$。
+当 $t=p+q>0$，有
+
+<a id="eq-c117-pair-ball"></a>
+
+$$
+\frac Gt=\frac12(I+r\cdot\sigma),\qquad
+ r=\frac{(2\operatorname{Re} c,-2\operatorname{Im} c,p-q)}t,\qquad
+ |r|^2=1-\frac{4(pq-|c|^2)}{t^2}.
+\tag{16}
+$$
+
+这是将矩阵四个实分量除以迹后的直接恒等式。
+$G$ 秩一当且仅当两个比较向量线性相关；其归一化点在球面上。
+两向量独立时，点在球内。若 $p=0$，正性迫使 $c=0$，
+但不能为历史 $h$ 定义条件归一态。
+若 $p=q=0$，整块为零，连归一化关系球也未定义。
+
+当 $p,q>0$，两个 GNS 射线之间的距离为
+
+$$
+d_{\mathrm{FS}}([v_h],[v_k])
+ =\arccos\frac{|c|}{\sqrt{pq}}.
+$$
+
+它是比较空间的射影距离。
+把 $|c|^2/(pq)$ 解释成可实现的秩一转移概率，
+还需相应投影属于允许的物理读口；
+一般的 $\pi_\omega(\mathcal A)$ 未必包含
+$\mathcal H_\omega$ 上的全部秩一投影。
+

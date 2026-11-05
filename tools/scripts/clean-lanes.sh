@@ -42,6 +42,14 @@ if [[ "$FORCE" == "1" ]]; then arguments+=(--force); fi
 if [[ "$LANES_ONLY" == "1" ]]; then arguments+=(--lanes-only); fi
 if [[ -n "$ACTIVE_PATHS_FILE" ]]; then arguments+=(--active-paths-file "$ACTIVE_PATHS_FILE"); fi
 
+if [[ -f "$ROOT/tools/scripts/maintenance_log.py" ]]; then
+  if [[ -n "${TRURETURING_MAINTENANCE_RUN_ID:-}" ]]; then
+    export TRURETURING_MAINTENANCE_PARENT_RUN_ID="$TRURETURING_MAINTENANCE_RUN_ID"
+  fi
+  unset TRURETURING_MAINTENANCE_RUN_ID
+  export TRURETURING_MAINTENANCE_SCRIPT=clean-lanes
+  export TRURETURING_MAINTENANCE_REPOSITORY="$ROOT"
+fi
 exec dotnet run \
   --project "$ROOT/tools/StrataLint.Cli/StrataLint.Cli.csproj" \
   --configuration Release \

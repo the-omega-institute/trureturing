@@ -1,0 +1,17 @@
+**定义 87.2（有限谱候选 $\mathrm{C128}^{\mathrm{fin}}$）。** 在每个原对象采用定义 87.1 的一份表，要求
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm Z_{\mathrm{fin}}:\quad
+&q(r,D_{b_i}p)=0
+&&\bigl(1\le i\le N,\ p\in\mathcal P,\ r\in\mathcal R_p\bigr),\\
+\mathrm O_{\mathrm{fin}}:\quad
+&D_pr=0
+&&\bigl(p\ne r,\ p,r\in\mathcal F,\ \mathcal F\in\mathscr F\bigr).
+\end{aligned}}
+\tag{87.2}
+$$
+
+$\mathrm O_{\mathrm{fin}}$ 包含两个次序。完整候选为 $B+\mathrm Z_{\mathrm{fin}}+\mathrm O_{\mathrm{fin}}+\mathrm{SJ}$，SJ 仍在整个同一原指针 $E_P$ 上成立。这里只缩小原子测试域，未删除完整 $B$、独立前提或原联合，也未从有限数学等式推断实际认证的误差与成本。
+

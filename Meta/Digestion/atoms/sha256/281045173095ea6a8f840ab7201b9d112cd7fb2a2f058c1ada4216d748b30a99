@@ -1,0 +1,36 @@
+## 11. 更大的几何：正锥、双曲空间与交换子
+
+qubit 的任意自伴矩阵写为 $X=x_0I+\mathbf x\cdot\boldsymbol\sigma$，有
+
+$$
+\det X=x_0^2-|\mathbf x|^2,\qquad
+X\ge0\iff x_0\ge|\mathbf x|.
+$$
+
+这就是未来 Lorentz 正锥。正矩阵中行列式为一的截面是
+
+$$
+x_0^2-|\mathbf x|^2=1,\quad x_0>0,
+$$
+
+即双曲三维空间 $\mathrm{SL}(2,\mathbb C)/\mathrm{SU}(2)$ 的一个模型。$\mathrm{SL}(2,\mathbb C)$ 的极分解对应 boost 与旋转分解，这一几何对应是成熟结果 [5](#ref-moretti)。
+
+若 $\widehat A=e^{(\alpha/2)\mathbf n\cdot\boldsymbol\sigma}$，则 $X\mapsto\widehat A X\widehat A^*$ 为 boost。物理成功滤片取 $A=c\widehat A$，$0<c\le e^{-|\alpha|/2}$，保证 $A^2\le I$。输入 Bloch 向量 $\mathbf r$ 的成功概率和后态分别是
+
+$$
+\begin{aligned}
+p&=c^2(\cosh\alpha+\sinh\alpha\,\mathbf n\cdot\mathbf r),
+\end{aligned}
+\tag{22}
+$$
+
+$$
+\begin{aligned}
+\mathbf r'&=\frac{\mathbf r+[(\cosh\alpha-1)\mathbf n\cdot\mathbf r+\sinh\alpha]\mathbf n}
+{\cosh\alpha+\sinh\alpha\,\mathbf n\cdot\mathbf r}.
+\end{aligned}
+\tag{23}
+$$
+
+这解释了两个非共线正伸缩产生旋转。此处是 qubit 内容正锥的 Lorentz 几何，不能直接等同为物理时空或引力方程；双曲度量、Fubini–Study 度量与 Bures 度量也应分别识别。
+
