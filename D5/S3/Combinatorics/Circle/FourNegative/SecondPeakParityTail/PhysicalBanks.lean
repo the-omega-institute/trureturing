@@ -28,9 +28,8 @@ open scoped BigOperators
 open private physicalDomain physical_coordinates selected_arithmetic
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakParityTail.PhysicalSelection
 open D5.S3.Combinatorics.Circle.ThreeBitSource (mask_complement)
-open private size base newBase oldValue newValue chainLength chainStart
-  chainOf chain_index chain_values negatives source_totals
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private base newBase oldValue newValue chainOf chain_index chain_values source_totals from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (size chainLength chainStart negatives)
 
 private def lowWeight (a b d S : ℕ) : ℕ :=
   (2^(d-a)-S)*2^(b-d-1)

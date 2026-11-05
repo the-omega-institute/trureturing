@@ -16,7 +16,7 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open private source_table from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.SourceTable
 
-private def size (a b c d : ℕ) : ℕ := a + b + c + d
+def size (a b c d : ℕ) : ℕ := a + b + c + d
 private def seed (a b c : ℕ) : ℕ := 1 + 2 ^ a + 2 ^ (a+b) + 2 ^ (a+b+c)
 private def sourceMod (a b c d : ℕ) : ℤ :=
   (2 : ℤ)^a * 2^b * 2^c * 2^d - 1
@@ -27,8 +27,8 @@ private def base (a b c d : ℕ) : Fin 4 → ℤ :=
     2^d * (2^b * 2^c) + 1 + 2^b + 2^b * 2^c]
 private def charge (b c : ℕ) : Fin 4 → ℤ := ![0, 1, 1+2^c, 1+2^b+2^b*2^c]
 private def newBase (a b c d : ℕ) (r : Fin 4) : ℤ := 2 * base a b c d r - charge b c r
-private def chainLength (a b c d : ℕ) : Fin 4 → ℕ := ![d,c,b,a]
-private def chainStart (b c d : ℕ) : Fin 4 → ℕ := ![0,d,d+c,d+c+b]
+def chainLength (a b c d : ℕ) : Fin 4 → ℕ := ![d,c,b,a]
+def chainStart (b c d : ℕ) : Fin 4 → ℕ := ![0,d,d+c,d+c+b]
 private def nextBase (a b c d : ℕ) : Fin 4 → ℤ :=
   ![base a b c d 1, base a b c d 2, base a b c d 3, base a b c d 0]
 private def nextNewBase (a b c d : ℕ) : Fin 4 → ℤ :=
@@ -37,7 +37,7 @@ private def oldValue (a b c d i : ℕ) : ℤ :=
   centered (sourceMod a b c d) ((2 : ℤ)^i * base a b c d 0)
 private def newValue (a b c d i : ℕ) : ℤ :=
   centered (2 * sourceMod a b c d + 1) ((2 : ℤ)^i * (2 * base a b c d 0))
-private def negatives (a b c d : ℕ) : List ℕ :=
+def negatives (a b c d : ℕ) : List ℕ :=
   [d-1,d+c-1,d+c+b-1,size a b c d-1]
 
 private theorem actual_values (a b c d : ℕ) :

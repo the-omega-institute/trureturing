@@ -17,7 +17,7 @@ open private Checks strict_checks
   from D5.S3.Combinatorics.Circle.FourNegative.EqualLastThreeUpper.Arithmetic
 open private block_data terminal_signs checks_strip range_end range_join finish
   from D5.S3.Combinatorics.Circle.FourNegative.EqualLastThreeUpper.Physical
-open private blocksWord from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure (blocksWord)
 
 private theorem inventory (a s : ℕ) (hs : 2 ≤ s) (ha : s < a) :
     (List.range' (a + 2 * s - 1) (s + 1) ++ List.range (3 * s - 1) ++

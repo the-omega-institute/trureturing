@@ -22,8 +22,8 @@ open private A B L K H SU SV SW window quotient quotient_bounds E Ep R Rp G Gp
 open private word from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.Banks
 open private rowBase rowHeads rowSeams freshCut source_certificate
   from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.SourceCertificate
-open private size base newBase charge sourceMod oldValue newValue chain_values
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private base newBase charge sourceMod oldValue newValue chain_values from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (size)
 open private insertAt from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
 open private gap_power half_power
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.Arithmetic

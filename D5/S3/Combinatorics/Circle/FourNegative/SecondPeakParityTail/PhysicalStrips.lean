@@ -27,9 +27,8 @@ open private parityMask parityMass parityPeak selectorNumerator six_strip_sides
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakParityTail.StripAlgebra
 open private qHead qNewHead qModulus qTerminal
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.Model
-open private size base newBase charge oldValue newValue sourceMod chainStart chainLength
-  nextBase nextNewBase
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private base newBase charge oldValue newValue sourceMod nextBase nextNewBase from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (size chainStart chainLength)
 open private native_masses
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 

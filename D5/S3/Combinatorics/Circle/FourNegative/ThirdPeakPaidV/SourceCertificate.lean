@@ -19,15 +19,14 @@ open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm
 open private full stock complement banks word terminals banks_inventory banks_good banks_masses v_stock_masks
   from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.Banks
 open private window from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.Arithmetic
-open private size base newBase charge sourceMod oldValue newValue negatives chainLength chainStart
-  nextBase nextNewBase chain_values packet_masses source_signs
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private base newBase charge sourceMod oldValue newValue nextBase nextNewBase chain_values packet_masses source_signs from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (size negatives chainLength chainStart)
 open private oldMass newMass from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 open private DataCertificate DataCertificate.mk orderedPackets finiteChecks finiteEarChecks
   finiteChecks_equiv finiteEarChecks_equiv
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
-open private blocksWord insertAt
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
+open private insertAt from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure (blocksWord)
 open private packetChecks withEar strip_iff_packetChecks
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Packets
 open private finitePackets finite_packet_checks finite_ear_checks withEar_positive withEar_negatives

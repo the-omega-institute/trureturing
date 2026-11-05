@@ -13,9 +13,8 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm
 open SourceWidth PeriodicShortening RunFirstEarTransport
-open private size seed sourceMod base newBase oldValue newValue negatives
-  weightedMask packet_masses source_signs source_totals chain_values negatives_nodup actual_values
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private seed sourceMod base newBase oldValue newValue weightedMask packet_masses source_signs source_totals chain_values negatives_nodup actual_values from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (size negatives)
 open private insertAt from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
 open private strip_of_prefix from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Transport
 open private DataCertificate from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate

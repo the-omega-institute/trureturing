@@ -19,7 +19,8 @@ open private paidH paidEarly paid_source
   from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.Allocation
 open private word from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.Banks
 open private freshCut from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.SourceCertificate
-open private size sourceMod base oldValue newValue from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private sourceMod base oldValue newValue from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (size)
 open private insertAt from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
 open private label lift_order marked_word
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift

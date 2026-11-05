@@ -30,10 +30,8 @@ open private physical_moduli terminal_index physical_terminal_values
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.Terminals
 open private physical_margins
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLowXTail.Selection
-open private size seed sourceMod base newBase charge chainLength chainStart
-  nextBase nextNewBase oldValue newValue negatives chainOf chain_index
-  chain_values source_signs source_totals new_base_bounds actual_values
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private seed sourceMod base newBase charge nextBase nextNewBase oldValue newValue chainOf chain_index chain_values source_signs source_totals new_base_bounds actual_values from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (size chainLength chainStart negatives)
 open private native_masses
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 open private four_perm four_strip

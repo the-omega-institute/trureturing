@@ -16,9 +16,8 @@ open D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open private full stock complement stock_split canonical_inventory stock_good stock_mass complement_mass
   from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.Banks
-open private size sourceMod base newBase charge oldValue newValue chainLength chainStart
-  nextBase nextNewBase negatives chainOf chain_index chain_values source_totals
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private sourceMod base newBase charge oldValue newValue nextBase nextNewBase chainOf chain_index chain_values source_totals from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (size chainLength chainStart negatives)
 open private native_masses from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 open private insertAt from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
 

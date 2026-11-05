@@ -16,13 +16,12 @@ open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm
 open private full stock complement banks word terminals banks_inventory banks_good banks_masses
   from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualSecond.Banks
 open private window from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualSecond.Arithmetic
-open private size base newBase charge sourceMod oldValue newValue negatives chainLength chainStart
-  nextBase nextNewBase chain_values packet_masses
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private base newBase charge sourceMod oldValue newValue nextBase nextNewBase chain_values packet_masses from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (size negatives chainLength chainStart)
 open private oldMass newMass from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 open private DataCertificate DataCertificate.mk orderedPackets finiteChecks finiteEarChecks
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
-open private blocksWord from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure (blocksWord)
 open private native_masses from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 
 private def rowBase (a b c : ℕ) (side : Bool) : Fin 4→ℤ :=

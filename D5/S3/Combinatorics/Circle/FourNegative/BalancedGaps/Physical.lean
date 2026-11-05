@@ -14,10 +14,9 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.BalancedGaps
 open PacketNormalForm
 open private offsets order ear transfer correction
   from D5.S3.Combinatorics.Circle.FourNegative.BalancedGaps.Arithmetic
-open private size chainStart chainLength negatives
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open private blocksWord from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
-open private orderedPackets from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (size chainStart chainLength negatives)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure (blocksWord)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate (orderedPackets)
 
 private def positivePacket (a b c d : ℕ) (r : Fin 4) : Finset ℕ :=
   Finset.Ico (chainStart b c d r) (chainStart b c d r + (chainLength a b c d r-1))

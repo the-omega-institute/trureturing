@@ -16,7 +16,7 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm
 open SourceWidth
 open private slide_ear_right from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Transport
 
-private def blocksWord : List (List ℕ × ℕ) → List ℕ
+def blocksWord : List (List ℕ × ℕ) → List ℕ
   | [] => []
   | (P,n) :: bs => P ++ n :: blocksWord bs
 

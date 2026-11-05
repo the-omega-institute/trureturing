@@ -18,9 +18,8 @@ open SourceWidth PeriodicShortening RunFirstEarTransport
 open D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
 open private A B L K SU SV SW old2 new2 middle universal discrepancy selector_exists pow_split
   from D5.S3.Combinatorics.Circle.FourNegative.SecondThirdMaximum.Arithmetic
-open private size sourceMod base newBase charge chainLength chainStart nextBase nextNewBase
-  oldValue newValue chain_values source_signs negatives source_totals new_base_bounds
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private sourceMod base newBase charge nextBase nextNewBase oldValue newValue chain_values source_signs source_totals new_base_bounds from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (size chainLength chainStart negatives)
 open private insertAt from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
 open private actual_nat_joint_iff from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 open private native_masses from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native

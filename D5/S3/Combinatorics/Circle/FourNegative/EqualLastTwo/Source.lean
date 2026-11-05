@@ -14,9 +14,8 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.EqualLastTwo
 open SourceWidth PeriodicShortening RunFirstEarTransport
-open private size seed sourceMod base newBase charge chainLength chainStart nextBase nextNewBase
-  oldValue newValue chain_values source_totals actual_values new_base_bounds
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private seed sourceMod base newBase charge nextBase nextNewBase oldValue newValue chain_values source_totals actual_values new_base_bounds from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source (size chainLength chainStart)
 open private last_double from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Source
 
 private def rank (a b d : ℕ) := a+b+d+d
