@@ -4733,4 +4733,100 @@ so $\psi_0\ne0$ in $L^1(m)$. The numerator is strictly positive by (134.13), so 
 
 The source-specific statements (158.2)–(158.5) are `repo-derived` applications of the retained positive coefficient (134.13)–(134.16), self-adjointness and the original terminal convention. The positivity and $L^1$–$L^\infty$ estimates are standard intermediate tools; no historical novelty, physical realization, Lean/kernel certification or full-law witness is asserted.
 
+## 159. The variable-ray and kernel-leakage boundary
+
+**Definition 159.1 (bounded two-label rays and the first-order leakage norm).** Retain the complete telescope of Definition 155.1 and the two-label tuple of Definition 158.1. Thus $f$, $P$, $g$, the actual terminal convention, the trilinear form $\mathcal C$, the full first-order map $\Lambda_{134}$, and $V=\ker\Lambda_{134}$ are unchanged. For bounded real Borel $v,w$ and $|t|\le1$, write
+
+$$
+u_y(t;v,w)=f_y+t\sigma_yv+t^2\tau_yw,
+\qquad
+\sigma=(1,-1,0,0),\quad \tau=(0,0,1,-1),
+\tag{159.1}
+$$
+
+in the label order $(0,1,3,B)$. Let $F=\max_y\|f_y\|_\infty$ (so $F<\infty$), and for $K,W\ge0$ put
+
+$$
+\mathfrak C(F,K,W)
+ =3WF^2+3F(K+W)^2+(K+W)^3.
+\tag{159.2}
+$$
+
+The norm of a finite readout vector is its coordinate maximum. The tuple is called $(K,W)$-bounded when $\|v\|_\infty\le K$ and $\|w\|_\infty\le W$.
+
+**Proposition 159.2 (exact corrections are asymptotically first-order calibrated).** For every $(K,W)$-bounded tuple (159.1),
+
+$$
+\bigl\|\Delta(u(t;v,w))-t\Lambda_{134}(v)\bigr\|_{\max}
+ \le \mathfrak C(F,K,W)t^2.
+\tag{159.3}
+$$
+
+Consequently, if a sequence of legal $(K,W)$-bounded tuples has $t_n\ne0$, $t_n\to0$, and $\Delta(u(t_n;v_n,w_n))=0$, then
+
+$$
+\|\Lambda_{134}(v_n)\|_{\max}
+ \le \mathfrak C(F,K,W)|t_n|\longrightarrow0.
+\tag{159.4}
+$$
+
+In particular, a fixed nonzero first-order leakage cannot be cancelled by a bounded terminal correction of order $t^2$.
+
+*Proof.* For one ordered coordinate $(y,z,w)$, expand the trilinear expression in the three factors $f_\bullet+t\sigma_\bullet v+t^2\tau_\bullet w$. The terms linear in $t$ are exactly $t\ell_{yzw}(v)$. The three terms linear in $t^2w$ have absolute value at most $3t^2WF^2$. Every term containing two perturbation factors is bounded by $F(|t|K+t^2W)^2$, and the term containing three perturbation factors is bounded by $(|t|K+t^2W)^3$, because
+
+$$
+|\mathcal C(a,b,c)|\le \|a\|_\infty\|b\|_\infty\|c\|_\infty
+\tag{159.5}
+$$
+
+for all bounded real inputs. Since $|t|\le1$, the latter two contributions are bounded by $3Ft^2(K+W)^2$ and $t^2(K+W)^3$. Summing these three bounds gives (159.3), uniformly over the 64 coordinates. If the residual vanishes, divide (159.3) by $|t_n|$ to obtain (159.4). The legality assumption is only the pointwise simplex condition; the estimate itself uses boundedness and the original form. $\square$
+
+**Proposition 159.3 (a uniform-energy variable-ray obstruction).** Let $t_n\to0$ with $t_n\ne0$, let $v_n\in V$ satisfy $\|v_n\|_\infty\le K$, and let $w_n$ satisfy $\|w_n\|_\infty\le W$. Define
+
+$$
+A_n=c\langle gv_n,P(gv_n)\rangle_m
+   =c\|T_{d/2}(gv_n)\|_{L^2(m)}^2.
+\tag{159.6}
+$$
+
+If the tuples (159.1) are legal, their full residuals vanish, and $A_n\ge\alpha>0$, then
+
+$$
+\|w_n\|_\infty
+\ge
+\frac{\alpha}
+ {\|\psi_0\|_1+2FK|t_n|+K^2t_n^2},
+\tag{159.7}
+$$
+
+where $\psi_0$ is (158.4). Hence
+
+$$
+\liminf_{n\to\infty}\|w_n\|_\infty
+\ge \frac{\alpha}{\|\psi_0\|_1}>0.
+\tag{159.8}
+$$
+
+*Proof.* Because $v_n\in V$, the exact $(0,0,3)$ expansion (158.2) applies with $v=v_n$ and $w=w_n$. The dual functions of (158.4) obey
+
+$$
+\|\psi_{\mathrm{mix}}(v_n)\|_1\le2FK,
+\qquad
+\|\psi_v(v_n)\|_1\le K^2.
+\tag{159.9}
+$$
+
+Indeed, positivity and $L^1$ contraction of $P$, $\|g\|_1=1$, and $\|f_0\|_\infty\le F$ give each of the two mixed terms a bound $FK$; the quadratic term is bounded by $K^2$. Applying the $L^1$–$L^\infty$ estimate to (158.2), using its vanishing and $A_n\ge\alpha$, gives (159.7). Proposition 158.3 gives $\|\psi_0\|_1>0$, and taking the limit yields (159.8). $\square$
+
+**Corollary 159.4 (the only bounded variable-ray escape is energy collapse).** Under the bounded, legal hypotheses above, with $v_n\in V$ and $\sup_n\|w_n\|_\infty<\infty$, if $\|w_n\|_\infty\to0$ while the residuals vanish, then
+
+$$
+c\|T_{d/2}(gv_n)\|_{L^2(m)}^2=A_n\longrightarrow0.
+\tag{159.10}
+$$
+
+Thus varying the first-order direction does not evade the fixed-ray cost while its positive energy stays uniformly visible. Any bounded variable-ray construction with vanishing terminal compensators must send its weighted heat energy to zero. The estimate supplies no uniform lower bound for arbitrary directions: high-frequency or otherwise energy-collapsing sequences, mixed orders, and non-kernel corrections satisfying only the necessary leakage condition (159.4) remain open. The result neither proves the SRS-20 route nor settles $F_{64}$.
+
+The source-specific statements (159.3)–(159.10) are `repo-derived` consequences of the retained first-order map, multilinearity, the Markov $L^1$ contraction, and the positive $(0,0,3)$ coefficient. They are a boundary for bounded two-label rays and do not assert an exact whole-$G$ finite partition, a degree certificate, a uniform spectral gap or a Lean/kernel theorem.
+
 ## 追加锚（本行以下为增补区）
