@@ -13,6 +13,18 @@ internal sealed class NondegenerateDerivationBlocksDocument : IScribeDocumentDef
         "Stabilizer kernels and derivation blocks of nondegenerate evolution algebras.",
         H("Derivation blocks of nondegenerate evolution algebras"),
         Blocks(
+            Describe.Lean(DescribeId.Create("reduced-block-space"), DeclarationHandle.Create(
+                Prefix + "reducedBlockSpace"), H("The actual nondegenerate reduced block space"),
+                StatementSource.FromAuthor(Disp(ReducedBlockFormula(false))), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a field k, a k-vector space V, a finite index type I, an arbitrary class index type alpha, a basis b, a class label and square representatives w, put B equal to the standard symmetric form on the coordinate space of the fiber over a, W equal to blockW(b,label,w,a), and U equal to the B-orthogonal complement of W. The reduced space is the actual quotient U/ker(B restricted to U), with its canonical additive group, k-module and finite-dimensional structure. This definition permits empty fibers and degenerate or isotropic W."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("reduced-block-form"), DeclarationHandle.Create(
+                Prefix + "reducedBlockForm"), H("The induced nondegenerate block form"),
+                StatementSource.FromAuthor(Disp(ReducedBlockFormula(true))), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("On the actual reduced block quotient, the induced bilinear form evaluates representatives by the restriction of B to U. The kernel has been divided out, so the form is nondegenerate. The canonical pointwise-stabilizer quotient construction supplies its symmetry, nondegeneracy and the surjective reduced Lie action used below."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("reduced-block-lie"), DeclarationHandle.Create(
+                Prefix + "reducedBlockLie"), H("The actual reduced orthogonal Lie algebra"),
+                StatementSource.FromAuthor(Disp(ReducedBlockLieFormula())), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("This is the actual Lie subalgebra of skew-adjoint endomorphisms for the reduced block form, with its inherited commutator and k-linear structure. Naming its carrier and canonical Lie instances shares the same mathematical object throughout the dependent product and the full derivation action."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("full-reduced-surjection"), DeclarationHandle.Create(
                 Prefix + "nonzero_square_reduced_orthogonal_surjection"), H("Full derivations and nondegenerate reduced blocks"),
                 StatementSource.FromAuthor(Disp(FullReducedFormula())), AssessedProvenance.FromRepo(),
@@ -136,6 +148,37 @@ internal sealed class NondegenerateDerivationBlocksDocument : IScribeDocumentDef
     private static Formula LieEquivalence(Formula a, Formula b) =>Call("LieEquiv", X("k"), a, b);
     private static Formula Sum(Formula i, Formula type, Formula body) =>Call("DirectSum", type, Fn(i, body));
     private static Formula Nonempty(Formula t) =>Call("Nonempty", t);
+    private static Formula ReducedBlockFormula(bool form)
+    {
+        var args = new Formula[] { X("b"), X("label"), X("w"), X("a") };
+        var left = Apply(Qualified("Decomposition", form ? "reducedBlockForm" : "reducedBlockSpace"), args);
+        var standard = MatrixForm(Fiber(X("label"), X("a"), Iota));
+        var fixedSpace = Apply(Qualified("Decomposition", "blockW"), args);
+        var complement = Call("orthogonal", standard, fixedSpace);
+        Formula body = form
+            ? All(X("x"), complement, All(X("y"), complement,
+                Eq(Apply(left, Call("quotientClass", X("x")), Call("quotientClass", X("y"))),
+                    Apply(standard, Val(X("x")), Val(X("y"))))))
+            : Eq(left, Call("Quotient", complement, Call("ker", Call("restrict", standard, complement))));
+        body = All(X("a"), Alpha, body);
+        body = All(X("w"), Arrow(Alpha, X("V")), body);
+        body = All(X("label"), Arrow(Iota, Alpha), body);
+        body = All(X("b"), Basis(Iota, X("V")), body);
+        body = All(Alpha, Type, body);
+        body = All(Iota, Type, Instance(Call("Fintype", Iota), body));
+        return AlgebraContext(body);
+    }
+    private static Formula ReducedBlockLieFormula()
+    {
+        var args = new Formula[] { X("b"), X("label"), X("w"), X("a") };
+        Formula body = All(X("a"), Alpha,
+            Eq(Apply(Qualified("Decomposition", "reducedBlockLie"), args),
+                Call("skewAdjointLieSubalgebra", Apply(Qualified("Decomposition", "reducedBlockForm"), args))));
+        body = All(X("w"), Arrow(Alpha, X("V")), body);
+        body = All(X("label"), Arrow(Iota, Alpha), body);
+        body = All(X("b"), Basis(Iota, X("V")), body);
+        return AlgebraContext(All(Iota, Type, Instance(Call("Fintype", Iota), All(Alpha, Type, body))));
+    }
     private static Formula FullReducedFormula()
     {
         var bp = Seq(X("b"), Apos);

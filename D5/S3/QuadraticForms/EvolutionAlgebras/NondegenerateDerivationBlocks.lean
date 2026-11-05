@@ -930,7 +930,32 @@ private theorem diagonalKernel_quotient_abelian :
     Function.Injective.isLieAbelian (f := f.range.incl) Subtype.val_injective hf
   exact f.quotKerEquivRange.injective.isLieAbelian hr
 
-noncomputable def reducedBlockForm (a : α) :=
+/-- The nondegenerate quotient of the orthogonal complement of a block's
+pointwise fixed subspace. Naming the actual quotient also keeps its module
+structure shared in dependent families of reduced orthogonal blocks. -/
+def reducedBlockSpace (a : α) : Type _ :=
+  let B : LinearMap.BilinForm k ({i : ι // label i = a} → k) :=
+    Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k) (1 : Matrix _ _ k)
+  let U := B.orthogonal (blockW b label w a)
+  U ⧸ LinearMap.ker (B.restrict U)
+
+noncomputable instance reducedBlockSpaceAddCommGroup (a : α) :
+    AddCommGroup (reducedBlockSpace b label w a) := by
+  unfold reducedBlockSpace
+  infer_instance
+
+noncomputable instance reducedBlockSpaceModule (a : α) :
+    Module k (reducedBlockSpace b label w a) := by
+  unfold reducedBlockSpace
+  infer_instance
+
+noncomputable instance reducedBlockSpaceFiniteDimensional (a : α) :
+    FiniteDimensional k (reducedBlockSpace b label w a) := by
+  unfold reducedBlockSpace
+  infer_instance
+
+noncomputable def reducedBlockForm (a : α) :
+    LinearMap.BilinForm k (reducedBlockSpace b label w a) :=
   let B : LinearMap.BilinForm k ({i : ι // label i = a} → k) :=
     Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k) (1 : Matrix _ _ k)
   let W := blockW b label w a
@@ -940,10 +965,25 @@ noncomputable def reducedBlockForm (a : α) :=
       (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.NormalForm.standardForm_symm _).isRefl
         x.val y.val) le_rfl
 
+/-- The actual skew-adjoint Lie algebra on the reduced block. Its named Lie
+instances keep this dependent carrier shared in the full derivation action. -/
+def reducedBlockLie (a : α) : Type _ :=
+  skewAdjointLieSubalgebra (reducedBlockForm b label w a)
+
+noncomputable instance reducedBlockLieRing (a : α) :
+    LieRing (reducedBlockLie b label w a) := by
+  unfold reducedBlockLie
+  infer_instance
+
+noncomputable instance reducedBlockLieAlgebra (a : α) :
+    LieAlgebra k (reducedBlockLie b label w a) := by
+  unfold reducedBlockLie
+  infer_instance
+
 include hn hsq hw hsep in
 private noncomputable def normalizedReducedHom [CharZero k]
     (hl : Function.Surjective label) : derivations μ →ₗ⁅k⁆
-      ∀ a, skewAdjointLieSubalgebra (reducedBlockForm b label w a) :=
+      ∀ a, reducedBlockLie b label w a :=
   { LinearMap.pi (fun a =>
       ((D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.preserverQuotientLieHom
         _ _ (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.NormalForm.standardForm_symm _)).comp
@@ -1023,16 +1063,48 @@ private theorem normalizedReducedHom_surjective [CharZero k]
         (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.NormalForm.standardForm_symm _) (F a))))
 
 include hn hsq hw hsep in
+private def diagonalReducedKernel [CharZero k]
+    (hl : Function.Surjective label) : Type _ :=
+  ((diagonalHom μ b label w hn hsq hw hsep).comp
+    (normalizedReducedHom μ b label w hn hsq hw hsep hl).ker.incl).ker
+
+include hn hsq hw hsep in
+private noncomputable instance diagonalReducedKernelLieRing [CharZero k]
+    (hl : Function.Surjective label) :
+    LieRing (diagonalReducedKernel μ b label w hn hsq hw hsep hl) := by
+  unfold diagonalReducedKernel
+  infer_instance
+
+include hn hsq hw hsep in
+private noncomputable instance diagonalReducedKernelLieAlgebra [CharZero k]
+    (hl : Function.Surjective label) :
+    LieAlgebra k (diagonalReducedKernel μ b label w hn hsq hw hsep hl) := by
+  unfold diagonalReducedKernel
+  infer_instance
+
+private def reducedBlockKernel (a : α) : Type _ :=
+  (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.quotientLieHom
+    (Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k)
+      (1 : Matrix {i : ι // label i = a} {i : ι // label i = a} k))
+    (blockW b label w a)
+    (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.NormalForm.standardForm_symm
+      {i : ι // label i = a})).ker
+
+private noncomputable instance reducedBlockKernelLieRing (a : α) :
+    LieRing (reducedBlockKernel b label w a) := by
+  unfold reducedBlockKernel
+  infer_instance
+
+private noncomputable instance reducedBlockKernelLieAlgebra (a : α) :
+    LieAlgebra k (reducedBlockKernel b label w a) := by
+  unfold reducedBlockKernel
+  infer_instance
+
+include hn hsq hw hsep in
 private noncomputable def diagonalReducedKernelBlockHom [CharZero k]
     (hl : Function.Surjective label) (a : α) :
-    ((diagonalHom μ b label w hn hsq hw hsep).comp
-      (normalizedReducedHom μ b label w hn hsq hw hsep hl).ker.incl).ker →ₗ⁅k⁆
-    (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.Stabilizer.quotientLieHom
-      (Matrix.toLinearMap₂' k (S₁ := k) (S₂ := k)
-        (1 : Matrix {i : ι // label i = a} {i : ι // label i = a} k))
-      (blockW b label w a)
-      (D5.S3.QuadraticForms.OrthogonalPointwiseStabilizers.NormalForm.standardForm_symm
-        {i : ι // label i = a})).ker := by
+    diagonalReducedKernel μ b label w hn hsq hw hsep hl →ₗ⁅k⁆
+      reducedBlockKernel b label w a := by
   let N := ((diagonalHom μ b label w hn hsq hw hsep).comp
     (normalizedReducedHom μ b label w hn hsq hw hsep hl).ker.incl).ker
   have hd (x : N) (i : ι) : b.repr (x.val.val.val (b i)) i = 0 :=
@@ -1211,11 +1283,16 @@ Small orthogonal blocks have deliberately not yet been discarded. -/
 theorem nonzero_square_reduced_orthogonal_surjection [CharZero k]
     (hn : ∀ i j, i ≠ j → μ (b i) (b j) = 0)
     (hs : ∀ i, μ (b i) (b i) ≠ 0) :
+    let α := Set.range (fun i => k ∙ μ (b i) (b i))
+    let label : ι → α := Set.rangeFactorization (fun i => k ∙ μ (b i) (b i))
+    let w : α → V := squareRepresentative μ b
     ∃ b' : Module.Basis ι k V,
       (∀ i j, i ≠ j → μ (b' i) (b' j) = 0) ∧
-      ∃ f : derivations μ →ₗ⁅k⁆ ∀ a : Set.range (fun i => k ∙ μ (b i) (b i)),
-        skewAdjointLieSubalgebra (reducedBlockForm b'
-          (Set.rangeFactorization (fun i => k ∙ μ (b i) (b i))) (squareRepresentative μ b) a),
+      let H : α → Type _ := fun a =>
+        reducedBlockLie b' label w a
+      letI : ∀ a, LieRing (H a) := fun a => inferInstance
+      letI : ∀ a, LieAlgebra k (H a) := fun a => inferInstance
+      ∃ f : derivations μ →ₗ⁅k⁆ ∀ a : α, H a,
         Function.Surjective f ∧ LieAlgebra.IsSolvable f.ker := by
   classical
   let label := Set.rangeFactorization (fun i => k ∙ μ (b i) (b i))

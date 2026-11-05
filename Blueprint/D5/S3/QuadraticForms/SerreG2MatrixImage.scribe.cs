@@ -9,7 +9,8 @@ internal sealed class SerreG2MatrixImageDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/QuadraticForms/SerreG2MatrixImage.";
     private static Formula K => X("k");
     private static Formula Image => Call("matrixImage", K);
-    private static Formula G2 => Call("LieAlgebra.g2", K);
+    private static Formula G2 => new Formula.Apply(Seq(Qualified("LieAlgebra"), Dot,
+        new Formula.Subscript(Seq(Operatorname, Grp(X("g"))), D(2))), [K]);
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An actual matrix image of the standard Serre G2 algebra.", H("Serre G2 and its seven-dimensional representation"),
         Blocks(
@@ -22,7 +23,7 @@ internal sealed class SerreG2MatrixImageDocument : IScribeDocumentDefinition
             Entry("matrixImage_finrank", "Dimension of the actual matrix image", Context(Eq(Call("Module.finrank", K, Image), D(1,4))),
                 "Explicit coordinate extraction is a left inverse to assembly. It gives a linear equivalence from k to the power fourteen onto the matrix image and proves its dimension fourteen.", DescribeRole.Theorem),
             Entry("serreMap", "Map from mathlib's actual Serre G2", Context(Call("LieHom", K, G2, Image)),
-                "The six Chevalley generators satisfy the actual CartanMatrix.G2 Serre relations in the matrix image. The universal free Lie map therefore descends through exactly mathlib's Serre quotient, producing a genuine Lie homomorphism from LieAlgebra.g2 k.", DescribeRole.Definition),
+                "The six Chevalley generators satisfy the actual CartanMatrix.G₂ Serre relations in the matrix image. The universal free Lie map therefore descends through exactly mathlib's Serre quotient, producing a genuine Lie homomorphism from LieAlgebra.g₂ k.", DescribeRole.Definition),
             Entry("serreMap_surjective", "Surjectivity from actual Serre words", Context(Call("Function.Surjective", Call("serreMap", K))),
                 "Fourteen explicit Lie words in the actual Serre generators map to the fourteen spanning matrices. Their linear combinations prove surjectivity onto the whole matrix image.", DescribeRole.Theorem),
             Entry("correspondence_of_isSimple", "Proved correspondence under simplicity", Context(
