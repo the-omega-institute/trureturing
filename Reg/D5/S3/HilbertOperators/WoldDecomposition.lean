@@ -87,7 +87,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.HilbertOperators.WoldDecomposition
     definition := none
-    coordinates := #[0,2]
+    coordinates := #[0,2,3]
     readouts := #[{
       path := #["body","body","body","body","body","body","body","body","body",
         "arg","body","arg","body","arg","arg","fn","arg","arg","fn","fn"]
@@ -165,7 +165,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.HilbertOperators.WoldDecomposition
     definition := none
-    coordinates := #[0,2]
+    coordinates := #[0,2,3]
     readouts := #[{
       path := #["body","body","body","body","body","body","body","body","body","body","body","body",
         "fn","arg","fn","arg","fn"]

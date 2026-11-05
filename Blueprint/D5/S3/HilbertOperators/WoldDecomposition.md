@@ -18,7 +18,7 @@ W(V) is wanderingSub V, the orthogonal complement of the linear range of V. Scal
 
 **Theorem 1.2 (exists_wold_decomposition).**
 
-$$\forall (k: Type*), [\operatorname{RCLike}(k)] \forall (H: Type*), [\operatorname{NormedAddCommGroup}(H)] [\operatorname{InnerProductSpace}(k, H)] [\operatorname{CompleteSpace}(H)] \forall (V: \operatorname{LinearIsometry}(k, H, H)), \forall (x: H), \forall (n: Nat), \exists (w: Nat \to H), \exists (y: H), (\forall (j: Nat), \operatorname{w}(j) \in \operatorname{W}(V)) \land ((\forall (j: Nat), (n \leq j) \Rightarrow (\operatorname{w}(j) = 0)) \land (x = (\operatorname{SumRange}(n, \operatorname{PowerWanderingFamily}(V, w)))+(\operatorname{PowerApply}(V, n, y))))$$
+$$\forall (k: Type*), [\operatorname{RCLike}(k)] \forall (H: Type*), [\operatorname{NormedAddCommGroup}(H)] [\operatorname{InnerProductSpace}(k, H)] [\operatorname{CompleteSpace}(H)] \forall (V: \operatorname{LinearIsometry}(k, H, H)), \forall (x: H), \forall (n: Nat), \exists (w: Nat \to H), \exists (y: H), (\forall (j: Nat), \operatorname{w}(j) \in \operatorname{W}(V)) \land ((\forall (j: Nat), (n \leq j) \Rightarrow (\operatorname{w}(j) = 0)) \land ((x = (\operatorname{SumRange}(n, \operatorname{PowerWanderingFamily}(V, w)))+(\operatorname{PowerApply}(V, n, y))) \land (\operatorname{NormSquare}(x) = (\operatorname{SumRange}(n, \operatorname{NormSquareFamily}(w)))+(\operatorname{NormSquare}(y)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/HilbertOperators/WoldDecomposition.exists_wold_decomposition` (`✓ std3`). ∎
 
@@ -26,7 +26,7 @@ $$\forall (k: Type*), [\operatorname{RCLike}(k)] \forall (H: Type*), [\operatorn
 
 *Commentary.*
 
-For every x and every natural n, including zero, a single family w and remainder y realize all clauses together. Every w j lies in W(V), w j vanishes for j >= n, and x is the sum over j in Finset.range n of (V^j)(w j), plus (V^n)y. SumRange(n,f) denotes that finite sum; PowerApply(V,j,z) denotes (V^j)z; PowerWanderingFamily(V,w) denotes j mapped to (V^j)(w j). Completeness gives the orthogonal range splitting. The source induction splits the old remainder and updates its coefficient family at n. No separability, finite dimension or ambient surjectivity is required.
+For every x and every natural n, including zero, a single family w and remainder y realize all clauses together. Every w j lies in W(V), w j vanishes for j >= n, and x is the sum over j in Finset.range n of (V^j)(w j), plus (V^n)y. The exact conjunction is coefficient membership AND (tail support AND (reconstruction AND squared norm identity)), inside the same existential w,y. For these SAME witnesses, norm(x)^2 is the sum of norm(w j)^2 over j < n plus norm(y)^2. SumRange(n,f) denotes that finite sum; PowerApply(V,j,z) denotes (V^j)z; PowerWanderingFamily(V,w) denotes j mapped to (V^j)(w j). Completeness gives the orthogonal range splitting. The source induction splits the old remainder and updates its coefficient family at n, then wold_norm_sq supplies the norm equation for that family and remainder. No separability, finite dimension or ambient surjectivity is required.
 
 **Theorem 1.3 (wold_norm_sq).**
 
@@ -38,7 +38,7 @@ $$\forall (k: Type*), [\operatorname{RCLike}(k)] \forall (H: Type*), [\operatorn
 
 *Commentary.*
 
-For any n, family w with every coefficient in W(V), y and x satisfying exactly the reconstruction equation, norm(x)^2 equals the sum over j in Finset.range n of norm(w j)^2 plus norm(y)^2. NormSquareFamily(w) is j mapped to norm(w j)^2. This theorem needs neither completeness nor the support condition. It applies to the SAME w and y supplied by exists_wold_decomposition. The source norm induction groups the terminal wandering coefficient with V y and uses orthogonality and isometry.
+For any n, family w with every coefficient in W(V), y and x satisfying exactly the reconstruction equation, norm(x)^2 equals the sum over j in Finset.range n of norm(w j)^2 plus norm(y)^2. NormSquareFamily(w) is j mapped to norm(w j)^2. This theorem needs neither completeness nor the support condition. The proof of exists_wold_decomposition applies it to the SAME w and y constructed there. The source norm induction groups the terminal wandering coefficient with V y and uses orthogonality and isometry.
 
 **Definition 1.4 (residualSub).**
 
