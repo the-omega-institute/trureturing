@@ -3,9 +3,8 @@
    mirror-B: D5/B/S3/Arith/ModularForms/CubicThetaOddParity
    mirror-E: none(waiver:integral-odd-euler-dissection)
    anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.Pentagonal.PowerSeries]
-   utility: consumer=D5/S3/Arith/ModularForms/CubicThetaOddParity.integralT_coeff_mod_four
-   digest: Integral odd four-dissection of the actual three-core Euler quotient.
--/
+   utility: none
+   digest: Integral odd four-dissection of the actual three-core Euler quotient. -/
 
 import D5.S3.Arith.ModularForms.CubicThetaCoreProduct
 import Mathlib.Tactic.IntervalCases
