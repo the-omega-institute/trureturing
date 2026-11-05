@@ -322,7 +322,7 @@ private theorem rate_tiling {a b M N : ℕ} (ha : 0 < a) (hb : 0 < b)
       have ha' : (a : ℝ) ≠ 0 := by positivity
       have hb' : (b : ℝ) ≠ 0 := by positivity
       field_simp
-      
+
     _ ≤ _ := by
       apply (div_le_div_iff_of_pos_right hd).mpr
       simpa only [Nat.cast_mul] using hl
