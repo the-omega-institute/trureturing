@@ -1087,7 +1087,6 @@ algebraic certificates; no Lean, kernel or digestion status is asserted.
 
 ## 追加锚（本行以下为增补区）
 
-
 ## 51. Positive-prefix population cost, recovery gain and complete pure equality
 
 The objects are those of Definitions 1.1, 11.1 and 23.1 in the
@@ -2946,3 +2945,199 @@ criterion in Definition 54.2; Theorem 52.2 is not extended beyond
 $61/25$, and no determinant or population restriction is introduced.
 
 ## 追加锚（本行以下为增补区）
+
+## 56. A full-triangle fibre majorant and a sharper positive comparator
+
+Theorem 56.1 (an attained positive upper bound at thirteen-fourths).
+At the same original level as Definition 54.2,
+
+$$
+\boxed{A_+(13/4)<\frac{11497119}{25000000}<\frac{23}{50}.}
+\tag{56.1}
+$$
+
+*Proof.* In the positive row take
+
+$$
+q=\frac35,\quad p=\frac25,\quad x=\frac{39}{80},\quad
+L=\frac{119}{80},\quad X=\frac{31}{100},\quad Y=\frac{93}{100}.
+\tag{56.2}
+$$
+
+The point is strictly inside the attained triangle because
+$\sqrt X>11/20$, $\sqrt Y>24/25$, and
+$11/20+24/25=151/100>119/80$.  In particular all displayed
+radicals are on their positive branches.  With $T=L^2-X-Y=249/256$,
+the simultaneous formulas of Continuation II, Definition 46.1 give
+
+$$
+F^2=\frac{1365995967}{157450240000}>\left(\frac{931}{10000}\right)^2,
+$$
+
+and, for the positive row,
+
+$$
+R^2=\frac{31}{200}+\frac{93c^2}{100}+\frac{249hc}{256},\qquad
+C^2=\frac{69}{200}+\frac{7s^2}{100}+2hsF.
+\tag{56.3}
+$$
+
+The positive rational enclosures for $h,s,c$ obtained by squaring their
+defining identities give
+
+$$
+R>\frac{6293}{5000},\qquad C>\frac{398}{625},qquad
+\frac25d^2+\frac35e^2<\frac{7107}{1000}.
+\tag{56.4}
+$$
+
+Also $\sqrt{2/5}>1581/2500$ and $\sqrt{3/5}>1549/2000$, hence
+
+$$
+\Gamma>\frac{16114253}{12500000}>\frac{12891}{10000}.
+$$
+
+Substitution in the simultaneously attained defect yields
+
+$$
+G_+<\frac{7107}{1000}-4\left(\frac{12891}{10000}\right)^2
+ =\frac{11497119}{25000000}<\frac{23}{50}.
+$$
+
+Lemma 46.2 and the ordinary-transpose alignment reconstruct one whole
+feedback and one effect with the fixed labels, so this is an upper bound
+for the full positive minimum.  It is not a global-minimum certificate.
+\hfill$\square$
+
+**Theorem 56.2 (exact coupled fibre ellipse).**
+Fix either row of Definition 46.1, fix $q$ and $x$ with $0<x<1$, and
+write $L=1+x$.  For a point of the closed attained triangle, interchange
+$X,Y$ when necessary so that $X\le Y$; this interchange preserves the
+triangle and $F$, and weakly increases both $R$ and $C$ because
+$b^2-a^2=\ell^2-m^2=h/2>0$.  Put
+
+$$
+u=X+Y,\qquad t=Y-X,\qquad
+B=(2-u)^2,\qquad D=L^2(2u-L^2),\qquad M=\min\{B,D\},
+$$
+
+and
+
+$$
+W=\frac{BD}{u^2},\qquad
+\kappa=1+\frac{4(1-u)(u-L^2)^2}{u^4}\quad(u\le1),
+$$
+
+$$
+T=\begin{cases}W/\kappa,&u\le1,\\M,&u\ge1.
+\end{cases}
+$$
+
+Then $u^2-t^2=4XY>0$, $0\le t^2\le M$, and
+
+$$
+\boxed{\frac{t^2}{T}+\frac{4F^2}{W}\le1}
+\tag{56.5}
+$$
+
+whenever $T,W>0$, with the degenerate boundary values interpreted by
+continuity.  The two definitions of $T$ agree at $u=1$.
+
+*Proof.* The box constraints give $t^2\le B$.  If $u\le L^2$, the
+triangle condition gives $2\sqrt{XY}\ge L^2-u$ and hence
+$t^2\le D$.  If $u\ge L^2$, then $L^2\le2$ and
+$D-B$ is increasing on $[L^2,2]$, with
+$D-B=4(L^2-1)>0$ at $u=L^2$; therefore $t^2\le B\le D$ in this
+case as well.  Directly from the definition of $Z$ and $F$,
+
+$$
+4F^2=f(t^2):=\frac{(B-t^2)(D-t^2)}{u^2-t^2}.
+\tag{56.6}
+$$
+
+For $r=t^2$, direct differentiation gives
+
+$$
+f(r)=B+D-u^2-r+
+ \frac{4(u-1)(u-L^2)^2}{u^2-r},\qquad
+f''(r)=\frac{8(u-1)(u-L^2)^2}{(u^2-r)^3}.
+\tag{56.7}
+$$
+
+If $u\le1$, concavity places $f$ below its tangent at zero:
+$f(r)\le f(0)-\kappa r=W-\kappa r$.  If $u\ge1$, convexity and
+$f(M)=0$ place $f$ below the chord from $(0,W)$ to $(M,0)$:
+$f(r)\le W(1-r/M)$.  These are exactly (56.5).  The endpoint cases
+follow by continuity.  \hfill$\square$
+
+**Corollary 56.3 (a full-domain quadratic support bound).**
+For either row, let $\delta_0=b^2-a^2=\ell^2-m^2=h/2$.  For all
+$\alpha,\beta\ge0$ and every point of the same closed triangle,
+
+$$
+\begin{aligned}
+\alpha R^2+\beta C^2\n&\le \mathcal H_\sigma(\alpha,\beta;u)\\
+&:=\alpha\left(abL^2+\frac{(b-a)^2u}{2}\right)
+ +\beta(\ell^2+m^2)\left(1-\frac u2\right)\\
+&\quad+\sqrt{\frac{\delta_0^2(\alpha+\beta)^2T}{4}
+             +\beta^2\ell^2m^2W}.
+\end{aligned}
+\tag{56.8}
+$$
+
+Consequently, for $p=1-q$, $E_\sigma=K_\sigma^2p+K_{-\sigma}^2q$,
+and every $z>0$, with
+
+$$
+\alpha=p+\sqrt{pq}\,z,\qquad
+\beta=q+\frac{\sqrt{pq}}{z},
+$$
+
+one has the exact full-domain lower envelope
+
+$$
+G_\sigma\ge E_\sigma-4\mathcal H_\sigma(\alpha,\beta;u),
+\qquad
+G_\sigma\ge E_\sigma-4\inf_{z>0}\mathcal H_\sigma(\alpha,\beta;u),
+\tag{56.9}
+$$
+
+with the endpoint populations obtained by the corresponding limit.
+
+*Proof.* In the ordered coordinates,
+
+$$
+R^2=abL^2+\frac{(b-a)^2u}{2}+\frac{\delta_0t}{2},
+$$
+
+$$
+C^2=(\ell^2+m^2)\left(1-\frac u2\right)
+      +\frac{\delta_0t}{2}+2\ell mF.
+$$
+
+Thus the part depending on $(t,2F)$ is
+$\delta_0(\alpha+\beta)t/2+\beta\ell m(2F)$.
+The ellipse (56.5) and Cauchy--Schwarz bound its maximum by the square
+root in (56.8), proving the first inequality.  Finally,
+
+$$
+\Gamma^2=pR^2+qC^2+2\sqrt{pq}\,RC
+\le \alpha R^2+\beta C^2,
+$$
+
+because $zR^2+C^2/z\ge2RC$.  Since
+$G_\sigma=E_\sigma-4\Gamma^2$, (56.9) follows. \hfill$\square$
+
+The support bound is exact for the auxiliary $(t,2F)$ fibre, but its
+relaxation need not be attained by the minimizer of $G_\sigma$.  The
+remaining problem is therefore reduced to the explicit $(q,u,z)$ lower
+envelope in (56.9).  No uniform comparison with $23/50$ has yet been
+proved, and no global negative minimizer has been certified.  Thus
+
+$$
+A_-(13/4)>A_+(13/4)
+$$
+
+remains open; (56.1) and (56.9) are strict progress toward the two
+quantified alternatives without changing their domains or their source
+contracts.
