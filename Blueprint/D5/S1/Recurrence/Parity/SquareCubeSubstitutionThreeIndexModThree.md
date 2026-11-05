@@ -24,6 +24,10 @@ $$\forall n: \mathbb{N}, (1 < n) \implies ((3: \mathbb{Z}) \mid \operatorname{Sq
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Parity/SquareCubeSubstitutionThreeIndexModThree.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/h3894-square-cube-three-index` (proved) by `D5/S1/Recurrence/Parity/SquareCubeSubstitutionThreeIndexModThree.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"h3894-square-cube-three-index","declaration_gid":"D5/S1/Recurrence/Parity/SquareCubeSubstitutionThreeIndexModThree.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2025). *OEIS A389474, A389475 and A389472: composition-series congruences*. URL: <https://oeis.org/A389474>.

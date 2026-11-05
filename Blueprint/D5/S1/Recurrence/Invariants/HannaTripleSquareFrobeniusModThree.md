@@ -62,6 +62,10 @@ $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{I
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/HannaTripleSquareFrobeniusModThree.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/h3894-triple-square-frobenius-mod-three` (proved) by `D5/S1/Recurrence/Invariants/HannaTripleSquareFrobeniusModThree.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"h3894-triple-square-frobenius-mod-three","declaration_gid":"D5/S1/Recurrence/Invariants/HannaTripleSquareFrobeniusModThree.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2025). *OEIS A389474, A389475 and A389472: composition-series congruences*. URL: <https://oeis.org/A389474>.
