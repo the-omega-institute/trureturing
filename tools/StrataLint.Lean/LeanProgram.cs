@@ -1,4 +1,5 @@
 using StrataLint.Engine;
+using System.Text.Json;
 using System.Runtime.InteropServices;
 
 namespace StrataLint.EngineeringScope;
@@ -32,9 +33,10 @@ internal static class LeanProgram
                     // transfer failures leave the normal build responsible for success.
                     var result = LeanCacheEnsureCommand.Run(root, rest, runner, new ApfsDirectoryCloner(),
                         continueOnCacheGetFailure: true);
+                    exitCode = result.ExitCode ?? (result.Success ? 0 : 2);
+                    RecordEnsureObservation(result, exitCode);
                     Console.Out.Write(result.Output);
                     Console.Error.Write(result.Error);
-                    exitCode = result.ExitCode ?? (result.Success ? 0 : 2);
                 }
             }
             else throw new ArgumentException("expected lean-utility-input, ensure-cache, with-cache-reader or with-cache-writer");
@@ -46,6 +48,56 @@ internal static class LeanProgram
         }
         MaintenanceLogAdapter.Finish(exitCode);
         return exitCode;
+    }
+
+    private static void RecordEnsureObservation(CommandResult result, int exitCode)
+    {
+        const string prefix = "LEAN_CACHE ";
+        var line = result.Output.Split('\n').FirstOrDefault(value =>
+            value.StartsWith(prefix, StringComparison.Ordinal));
+        if (line is null)
+        {
+            MaintenanceLogAdapter.Record("ensure-cache", exitCode == 0 ? "succeeded" : "failed",
+                "result", null, exitCode == 0 ? null : "CommandResult");
+            return;
+        }
+
+        try
+        {
+            using var document = JsonDocument.Parse(line[prefix.Length..]);
+            var payload = document.RootElement;
+            string? Text(string name) =>
+                payload.TryGetProperty(name, out var value) && value.ValueKind == JsonValueKind.String
+                    ? value.GetString() : null;
+            var status = Text("status") ?? (exitCode == 0 ? "succeeded" : "failed");
+            var reason = Text("reason") ?? Text("archive_reason");
+            var details = new Dictionary<string, object?>();
+            foreach (var name in new[]
+            {
+                "method", "archive_status", "archive_mode", "archive_skip_reason",
+                "project_olean_state", "mathlib_olean_state", "stamp_miss", "cold_build_consent"
+            })
+                if (payload.TryGetProperty(name, out var value)
+                    && value.ValueKind is JsonValueKind.String or JsonValueKind.True or JsonValueKind.False)
+                    details[name] = value.Clone();
+            MaintenanceLogAdapter.Record("ensure-cache", status, "result",
+                BoundedCode(reason), exitCode == 0 ? null : status == "refused" ? "Refused" : "CommandResult",
+                details);
+        }
+        catch (JsonException)
+        {
+            MaintenanceLogAdapter.Record("ensure-cache", exitCode == 0 ? "succeeded" : "failed",
+                "result", "malformed_receipt", "JsonException");
+        }
+    }
+
+    private static string? BoundedCode(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value)) return null;
+        var code = value.Trim().Split(':', ' ', StringSplitOptions.RemoveEmptyEntries)[0];
+        var filtered = new string(code.Where(character => char.IsAsciiLetterOrDigit(character)
+            || character is '_' or '-' or '.').ToArray());
+        return filtered.Length == 0 ? "unknown" : filtered[..Math.Min(96, filtered.Length)];
     }
 
     private static int RunReader(string root, string[] arguments)

@@ -52,6 +52,39 @@ public static class MaintenanceLogAdapter
         }
     }
 
+    public static void Record(string operation, string? status, string? stage,
+        string? reasonCode, string? errorType, IReadOnlyDictionary<string, object?>? details = null)
+    {
+        if (state is null || string.IsNullOrWhiteSpace(operation)) return;
+        try
+        {
+            var fields = new Dictionary<string, object?>
+            {
+                ["action"] = operation,
+                ["operation"] = operation,
+                ["status"] = status,
+                ["outcome"] = status,
+                ["stage"] = stage,
+                ["reason_code"] = reasonCode,
+                ["error_type"] = errorType,
+            };
+            if (details is not null)
+            {
+                foreach (var (key, value) in details)
+                    if (key is not ("action" or "operation" or "status" or "outcome" or "stage"
+                        or "reason_code" or "error_type"))
+                        fields[key] = value;
+            }
+
+            _ = Observe("emit", "--state", state, "--event", "operation_finished",
+                "--fields", JsonSerializer.Serialize(fields));
+        }
+        catch
+        {
+            // Observation failure cannot change the native command result.
+        }
+    }
+
     private static string Observe(params string[] arguments)
     {
         using var process = new Process

@@ -33,6 +33,8 @@ if __name__ == "__main__":
     sys.modules["worktree_protocol"] = sys.modules[__name__]
 
 LOG = None
+LOG_ACTION = None
+LOG_LAST = {}
 OPEN_SCOPES = []
 GIT_TERMINATION_GRACE_SECONDS = 30
 # An empty core.fsmonitor disables it both where Git reads a boolean and where
@@ -413,6 +415,45 @@ def read_input(source, file):
         return target.read_bytes()
 
 
+def _reason_code(value):
+    if value is None:
+        return None
+    raw = str(value).strip()
+    if not raw:
+        return None
+    code = raw.split(":", 1)[0].split(None, 1)[0]
+    code = re.sub(r"[^A-Za-z0-9_.-]", "_", code)
+    return code[:96] or "unknown"
+
+
+def _log_operation(action, *, status=None, outcome=None, reason=None, error=None, **fields):
+    global LOG_LAST
+    payload = dict(action=action, operation=action, status=status, outcome=outcome,
+                   reason_code=_reason_code(reason),
+                   error_type=(type(error).__name__ if error is not None else None))
+    payload.update({key: value for key, value in fields.items() if value is not None})
+    payload = {key: value for key, value in payload.items() if value is not None}
+    LOG_LAST = payload
+    if LOG is not None:
+        LOG.emit("operation_finished", **payload)
+
+
+def _log_result(action, result):
+    if not isinstance(result, dict):
+        _log_operation(action, status="failed", outcome="invalid_result",
+                        reason="invalid_structured_result", error=ValueError)
+        return
+    failure = result.get("failure")
+    reason = result.get("reason")
+    if reason is None and isinstance(failure, dict):
+        reason = failure.get("reason") or failure.get("error")
+    status = result.get("status")
+    _log_operation(action, status=status, outcome=status, reason=reason,
+                   error_type=("Refused" if status == "refused" else None),
+                   stage=result.get("stage") or (failure or {}).get("stage")
+                   if isinstance(failure, dict) else result.get("stage"))
+
+
 def with_command(options):
     if not options.argv:
         raise Refused("missing_command")
@@ -545,27 +586,34 @@ def _main(argv=None):
         publication.add_argument("--commit", default="HEAD")
         publication.add_argument("--writers-joined", action="store_true")
     options = parser.parse_args(argv)
-    global LOG
+    global LOG, LOG_ACTION, LOG_LAST
+    LOG_ACTION = options.action
+    LOG_LAST = {}
     LOG = MaintenanceLog("worktree-protocol", options.source) if MaintenanceLog else None
     if LOG is not None:
-        LOG.emit("run_started", action=options.action)
+        LOG.emit("run_started", action=options.action, operation=options.action)
     try:
         if options.action == "with":
             if options.argv[:1] == ["--"]:
                 options.argv.pop(0)
             with_command(options)
         elif options.action == "reuse":
-            print(json.dumps(reuse(options)), flush=True)
+            result = reuse(options)
+            _log_result(options.action, result)
+            print(json.dumps(result), flush=True)
         elif options.action in ("return", "claim", "pool"):
             from worktree_pool import return_tree, claim, sweep
             result = (return_tree(options) if options.action == "return" else claim(options)
                       if options.action == "claim" else sweep(options.source, options.dev, options.force,
                                                              options.exclude_path))
+            _log_result(options.action, result)
             print(json.dumps(result), flush=True)
             return 74 if result.get("pool", result).get("status") == "failed" else 0
         elif options.action == "recover-init":
             from worktree_publication import recover_initialization
-            print(json.dumps(recover_initialization(options)), flush=True)
+            result = recover_initialization(options)
+            _log_result(options.action, result)
+            print(json.dumps(result), flush=True)
         elif options.action == "qualify":
             from worktree_preservation import qualify_batch
             def emit(row):
@@ -576,6 +624,7 @@ def _main(argv=None):
                                    emit_started if options.stream else None)
             if options.stream:
                 result = dict(event=result["event"], status=result["status"], item_count=len(result["items"]))
+            _log_result(options.action, result)
             print(json.dumps(result), flush=True)
             return 74 if result["status"] == "failed" else 0
         elif options.action == "removal-pending":
@@ -584,6 +633,7 @@ def _main(argv=None):
         elif options.action == "remove":
             from worktree_preservation import remove
             result = remove(options)
+            _log_result(options.action, result)
             print(json.dumps(result), flush=True)
             if result["status"] == "refused":
                 return 68 if all(row.get("reason", "").startswith("locked_") for row in result["items"]) else 73
@@ -597,9 +647,16 @@ def _main(argv=None):
                                             options.merge, options.message)), flush=True)
         else:
             from worktree_publication import checkpoint, publish, finalize
-            print(json.dumps(dict(checkpoint=checkpoint, publish=publish, finalize=finalize)[options.action](options)), flush=True)
+            result = dict(checkpoint=checkpoint, publish=publish, finalize=finalize)[options.action](options)
+            _log_result(options.action, result)
+            print(json.dumps(result), flush=True)
         return 0
     except Exception as error:
+        _log_operation(options.action,
+                       status="refused" if isinstance(error, Refused) and not isinstance(error, GitFailure)
+                       else "failed",
+                       outcome="refused" if isinstance(error, Refused) and not isinstance(error, GitFailure)
+                       else "failed", reason=str(error), error=error)
         # Only remove/qualify use the qualification failure boundary. Other
         # commands retain their existing refusal and exception contracts.
         if options.action in ("remove", "qualify") and (
@@ -629,7 +686,14 @@ def main(argv=None):
             LOG.finish(code, error_type=type(error).__name__)
         raise
     if LOG is not None:
-        LOG.finish(exit_code)
+        finish_fields = dict(operation=LOG_ACTION, action=LOG_ACTION,
+                             status=LOG_LAST.get("status"),
+                             outcome=LOG_LAST.get("outcome"),
+                             stage=LOG_LAST.get("stage"),
+                             reason_code=LOG_LAST.get("reason_code"),
+                             error_type=LOG_LAST.get("error_type"))
+        LOG.finish(exit_code, **{key: value for key, value in finish_fields.items()
+                                 if value is not None})
     return exit_code
 
 

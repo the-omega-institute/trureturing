@@ -26,7 +26,6 @@ except ImportError:
     MaintenanceLog = None
 
 from lean_cache import SHARED_SEED_PLATFORMS, normalized_platform, partition_path, seed_partitions
-from cache_material import sha
 from lean_cache_topology import checkout_topology, git_absolute_path, warm_dev_remediation
 
 # Use the report entry's declared format and execution capture, never program hashes.
@@ -47,6 +46,10 @@ CHUNK_BYTES = 1610612736
 # Fetch includes all snapshot attempts; publish starts only after the current report succeeds.
 RELEASE_OPERATION_TIMEOUT_SECONDS = 1800
 RELEASE_OPERATION_TIMEOUT_MAX_SECONDS = 21600
+
+LOG = None
+LOG_LAST = {}
+CURRENT_OPERATION = None
 
 
 def operation_deadline():
@@ -97,6 +100,37 @@ def archive_sha(path, deadline):
             if not block:
                 return value.hexdigest()
             value.update(block)
+            remaining(deadline)
+
+
+def copy_chunks(source, target, deadline):
+    transferred = 0
+    while True:
+        remaining(deadline)
+        block = source.read(1024 * 1024)
+        if not block:
+            return transferred
+        target.write(block)
+        transferred += len(block)
+        remaining(deadline)
+
+
+def extract_members(archive, destination, members, deadline):
+    for member in members:
+        remaining(deadline)
+        target = destination / member.name
+        if member.isdir():
+            target.mkdir(parents=True, exist_ok=True)
+            os.chmod(target, member.mode & 0o7777)
+            continue
+        source = archive.extractfile(member)
+        if source is None:
+            raise ValueError("archive member has no file content: " + member.name)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        with source, target.open("wb") as output:
+            copy_chunks(source, output, deadline)
+        os.chmod(target, member.mode & 0o7777)
+        remaining(deadline)
 
 
 class GitHubCommandError(subprocess.CalledProcessError):
@@ -118,7 +152,55 @@ def gh(deadline, *args):
     return checked_run(["gh", *args], deadline).stdout
 
 
+def _reason_code(value):
+    if value is None:
+        return None
+    raw = str(value).strip()
+    if not raw:
+        return None
+    code = raw.split(":", 1)[0].split(None, 1)[0]
+    code = re.sub(r"[^A-Za-z0-9_.-]", "_", code)
+    return code[:96] or "unknown"
+
+
+def _error_category(status, reason, explicit=None):
+    if explicit:
+        return type(explicit).__name__ if isinstance(explicit, BaseException) else str(explicit)[:96]
+    if status in ("published", "unpacked", "skipped", "exists", "staging-cleanup"):
+        return None
+    text = str(reason or "").lower()
+    if "timeout" in text or "timed out" in text or "deadline" in text:
+        return "timeout"
+    if "cancel" in text or "interrupt" in text:
+        return "cancellation"
+    return "failure"
+
+
+def _observe(verb, status, *, phase=None, reason=None, error=None, mode=None,
+             expected_bytes=None, transferred_bytes=None, validated_bytes=None):
+    global LOG_LAST
+    payload = dict(action=verb, operation=verb, transport=verb, mode=mode,
+                   phase=phase or status, outcome=status,
+                   reason_code=_reason_code(reason),
+                   error_type=_error_category(status, reason, error),
+                   expected_bytes=expected_bytes, transferred_bytes=transferred_bytes,
+                   validated_bytes=validated_bytes)
+    payload = {key: value for key, value in payload.items() if value is not None}
+    LOG_LAST = payload
+    if LOG is not None:
+        LOG.emit("operation_finished", **payload)
+
+
 def receipt(verb, status, **fields):
+    phase = fields.pop("_phase", None)
+    error = fields.pop("_error", None)
+    expected_bytes = fields.pop("_expected_bytes", None)
+    transferred_bytes = fields.pop("_transferred_bytes", None)
+    validated_bytes = fields.pop("_validated_bytes", None)
+    mode = fields.get("mode")
+    _observe(verb, status, phase=phase, reason=fields.get("reason"),
+             error=error, mode=mode, expected_bytes=expected_bytes,
+             transferred_bytes=transferred_bytes, validated_bytes=validated_bytes)
     print("LEAN_CACHE_" + verb.upper() + " " + json.dumps({"status": status, **fields}, separators=(",", ":")))
 
 
@@ -577,7 +659,7 @@ def snapshot_manifest(partition, tag, stage, deadline, expected=None, verificati
     recorded = {asset["name"]: asset.get("digest") for asset in assets}
     gh(deadline, "release", "download", tag, "--repo", REPO, "--dir", str(stage),
        "--pattern", manifest_name)
-    if recorded.get(manifest_name) != "sha256:" + sha(stage / manifest_name):
+    if recorded.get(manifest_name) != "sha256:" + archive_sha(stage / manifest_name, deadline):
         raise ValueError("transferred asset digest mismatch")
     manifest = report_reuse.publication.read_json((stage / manifest_name).read_bytes())
     if not isinstance(manifest, dict):
@@ -659,10 +741,10 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
         clone_local_parts(local_assets, stage, parts, deadline)
     for part in parts:
         path = stage / part["name"]
-        if part["sha256"] != sha(path) or part["bytes"] != path.stat().st_size:
+        if part["sha256"] != archive_sha(path, deadline) or part["bytes"] != path.stat().st_size:
             raise ValueError("part checksum or size mismatch: " + part["name"])
     for asset in assets:
-        if asset.get("digest") != "sha256:" + sha(stage / asset["name"]):
+        if asset.get("digest") != "sha256:" + archive_sha(stage / asset["name"], deadline):
             raise ValueError("transferred asset digest mismatch")
     if len(parts) > 1:
         with (stage / ASSET).open("wb") as archive:
@@ -670,12 +752,13 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
                 path = stage / part["name"]
                 start = archive.tell()
                 with path.open("rb") as source:
-                    shutil.copyfileobj(source, archive, length=1024 * 1024)
+                    copy_chunks(source, archive, deadline)
                 archive.flush()
+                remaining(deadline)
                 if archive.tell() - start != part["bytes"]:
                     raise ValueError("part copy size mismatch: " + part["name"])
                 path.unlink()
-    if (manifest.get("archive_sha256") != sha(stage / ASSET)
+    if (manifest.get("archive_sha256") != archive_sha(stage / ASSET, deadline)
             or manifest.get("archive_bytes") != (stage / ASSET).stat().st_size):
         raise ValueError("archive checksum or size mismatch")
     lake = root / ".lake"
@@ -707,7 +790,7 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
             # until extraction staging and the seed/base installation complete.
             with tempfile.TemporaryDirectory(prefix=".release-", dir=lake) as temporary:
                 unpacked = pathlib.Path(temporary)
-                archive.extractall(unpacked, members=members)
+                extract_members(archive, unpacked, members, deadline)
                 source = unpacked / "build"
                 if not source.is_dir():
                     raise ValueError("archive has no project build")
@@ -767,7 +850,10 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
             installed=installed,
             producer_commit_sha=commit, publication_id=manifest["publication_id"], partition=partition,
             **{key: manifest[key] for key in ("workflow_run_id", "workflow_run_attempt") if key in manifest},
-            release_target=metadata.get("target_commitish"), base_recorded=base_recorded, **cleanup)
+            release_target=metadata.get("target_commitish"), base_recorded=base_recorded, **cleanup,
+            _phase="install", _expected_bytes=manifest.get("archive_bytes"),
+            _transferred_bytes=sum(part["bytes"] for part in parts),
+            _validated_bytes=sum(part["bytes"] for part in parts))
     return bool(installed)
 
 
@@ -948,6 +1034,8 @@ def _main():
     parser.add_argument("--refresh-stale", action="store_true",
                         help="replace an expired private project build after validating the complete snapshot")
     args = parser.parse_args()
+    global CURRENT_OPERATION, LOG_LAST
+    CURRENT_OPERATION = args.command
     try:
         args.repository = args.repository.resolve()
         if args.no_build and args.command != "publish":
@@ -981,8 +1069,10 @@ def _main():
         partition = partition_path(args.repository)
         if args.command == "address":
             cache_key = release_key(args.repository)
-            print(json.dumps({"partition": partition, "cache_key": cache_key,
-                              "release_prefix": prefix(partition, cache_key), "asset": ASSET}))
+            payload = {"partition": partition, "cache_key": cache_key,
+                       "release_prefix": prefix(partition, cache_key), "asset": ASSET}
+            _observe("address", "resolved", phase="address")
+            print(json.dumps(payload))
             return 0
         if args.command == "fetch":
             if verification is not None:
@@ -1000,9 +1090,11 @@ def _main():
 
 
 def main():
-    log = MaintenanceLog.from_environment() if MaintenanceLog else None
-    if log is not None:
-        log.emit("run_started")
+    global LOG, LOG_LAST
+    LOG = MaintenanceLog.from_environment() if MaintenanceLog else None
+    if LOG is not None:
+        LOG.emit("run_started", action=os.environ.get("TRURETURING_MAINTENANCE_SCRIPT"),
+                 operation=CURRENT_OPERATION)
     previous_run_id = os.environ.get("TRURETURING_MAINTENANCE_RUN_ID")
     if log is not None:
         os.environ["TRURETURING_MAINTENANCE_RUN_ID"] = log.run_id
@@ -1013,10 +1105,18 @@ def main():
             if log is not None:
                 code = error.code if isinstance(error, SystemExit) and isinstance(error.code, int) else 130 \
                     if isinstance(error, KeyboardInterrupt) else 1
-                log.finish(code, error_type=type(error).__name__)
+                _observe(CURRENT_OPERATION or "unknown", "failed",
+                         phase="exception", reason=type(error).__name__, error=error)
+                log.finish(code, operation=CURRENT_OPERATION, action=CURRENT_OPERATION,
+                           status=LOG_LAST.get("status"), outcome=LOG_LAST.get("outcome"),
+                           stage=LOG_LAST.get("phase"), error_type=LOG_LAST.get("error_type"),
+                           reason_code=LOG_LAST.get("reason_code"))
             raise
         if log is not None:
-            log.finish(exit_code)
+            log.finish(exit_code, operation=CURRENT_OPERATION, action=CURRENT_OPERATION,
+                       status=LOG_LAST.get("status"), outcome=LOG_LAST.get("outcome"),
+                       stage=LOG_LAST.get("phase"), error_type=LOG_LAST.get("error_type"),
+                       reason_code=LOG_LAST.get("reason_code"))
         return exit_code
     finally:
         if previous_run_id is None:
