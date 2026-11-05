@@ -16,11 +16,13 @@ public sealed partial class LeanCacheEnsureCommandTests
     {
         if (OperatingSystem.IsWindows()) return;
         using var setup = new TemporaryDirectory();
-        const string manifest = "{\"packages\":[{\"type\":\"git\",\"name\":\"mathlib\",\"rev\":\"0123456789abcdef0123456789abcdef01234567\"}]}";
-        File.WriteAllText(Path.Combine(setup.Path, "lake-manifest.json"), manifest);
+        var manifest = System.Text.Json.Nodes.JsonNode.Parse(LeanCacheFixtureFile.Manifest())!;
+        manifest["packages"]![0]!["rev"] = "0123456789abcdef0123456789abcdef01234567";
+        var manifestText = manifest.ToJsonString();
+        File.WriteAllText(Path.Combine(setup.Path, "lake-manifest.json"), manifestText);
         StrataLint.TestSupport.RegPackageFixture.Write(setup.Path);
         LeanCacheStamp.Write(Path.Combine(setup.Path, ".lake"),
-            LeanPinSet.Create([], System.Text.Encoding.UTF8.GetBytes(manifest)));
+            LeanPinSet.Create([], System.Text.Encoding.UTF8.GetBytes(manifestText)));
         MathlibProjectionFixture.Write(Path.Combine(setup.Path, ".lake"));
         var files = Directory.EnumerateFiles(setup.Path, "*", SearchOption.AllDirectories)
             .ToDictionary(path => Path.GetRelativePath(setup.Path, path).Replace('\\', '/'), File.ReadAllText);
