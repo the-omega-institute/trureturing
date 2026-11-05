@@ -6,7 +6,7 @@ Sequence Machine's OEIS A322026 identity with the Dirichlet inverse correction.
 
 **Definition 1.1 (The A322026 rank formula).**
 
-$$\forall n\in \mathbb{N}, \operatorname{a}\left(n\right) = \operatorname{latticeCount}\left(2^{\operatorname{factorization}\left(n, 2\right)} \cdot 3^{\operatorname{factorization}\left(n, 3\right)}\right)$$
+$$\begin{aligned}\operatorname{a}\left(0\right) = 0\\\forall n \in \mathbb{N},\; 0 < n \Rightarrow \operatorname{a}\left(n\right) = \operatorname{latticeCount}\left(2^{\operatorname{factorization}\left(n, 2\right)} \cdot 3^{\operatorname{factorization}\left(n, 3\right)}\right)\end{aligned}$$
 
 *Formalization.* `D5/S3/Arith/DirichletInverse/OeisA322026DirichletInverseIdentity.a` (`✓ std3`).
 
@@ -14,11 +14,11 @@ $$\forall n\in \mathbb{N}, \operatorname{a}\left(n\right) = \operatorname{lattic
 
 *Commentary.*
 
-The source formula is A071521(A065331(n)): count nonnegative exponent pairs whose 2,3-number is at most the product of the 2- and 3-adic valuation powers.
+The formal function sets a(0)=0. For positive n, the source formula is A071521(A065331(n)): count nonnegative exponent pairs whose 2,3-number is at most the product of the 2- and 3-adic valuation powers.
 
 **Definition 1.2 (The A322026 Dirichlet inverse).**
 
-$$\operatorname{b}\left(n\right) = \operatorname{dirichletInverse}\left(\operatorname{a}\left(n\right)\right)$$
+$$b = \operatorname{dirichletInverse}\left(a\right)$$
 
 *Formalization.* `D5/S3/Arith/DirichletInverse/OeisA322026DirichletInverseIdentity.b` (`✓ std3`).
 
