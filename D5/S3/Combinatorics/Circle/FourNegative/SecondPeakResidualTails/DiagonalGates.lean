@@ -502,8 +502,8 @@ private theorem diagonal_cast_banks (c delta ell k : ℕ) (hc : 3 ≤ c)
     split_ifs <;> rfl
   funext i j
   fin_cases i <;> fin_cases j <;>
-    simp [diagonalBanks, hu', hw', hv', hx', hp1, hz,
-      Nat.cast_add, Nat.cast_mul, Nat.cast_ofNat] <;> ring
+    simp [diagonalBanks, hu', hw', hv', hx', hp1, Nat.cast_add, Nat.cast_mul] <;>
+    (try simp only [hz, Nat.cast_mul, Nat.cast_ofNat]) <;> ring
 
 /--   Every c>=3, delta and ell, for the actual diagonal banks.
     The four boundary charts remain literal.  In the unbounded tail S is
