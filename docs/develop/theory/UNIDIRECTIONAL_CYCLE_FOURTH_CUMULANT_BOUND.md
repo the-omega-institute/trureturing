@@ -464,6 +464,8 @@ independent interarrival times, which does not make its increments on
 disjoint fixed time intervals independent. Those hypotheses therefore do
 not supply a fourth winding-cumulant bound for Definition 1.1.
 
+## 追加锚（本行以下为增补区）
+
 ## 5. Quantitative fixed-dimension gap as an application of moment bounds
 
 **Proposition 5.1 (A coarse two-sided gap on the full positive simplex).**
