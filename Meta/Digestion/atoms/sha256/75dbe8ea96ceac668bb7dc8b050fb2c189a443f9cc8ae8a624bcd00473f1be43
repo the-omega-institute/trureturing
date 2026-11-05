@@ -1,0 +1,35 @@
+**定理 237.2（导子双锚限制的单射性）。** 定义 237.1 的每一对双锚都使
+
+$$
+\operatorname{Der}(T)\longrightarrow T\oplus T,
+\qquad S\longmapsto(Sa_T,Sb_T)
+\tag{237.2}
+$$
+
+为单射。
+
+证明。先在同一所选矩阵坐标中工作。所用成熟事实是有限 EJA 的每个 Jordan 导子都是有限个 $[L_x,L_y]$ 的和；Tao–Gowda《A Representation Theorem for Lyapunov-like Transformations on Euclidean Jordan Algebras》第二节明确陈述此事实，并指向 Faraut–Korányi 命题 VI.1.2 与 Koecher 定理 8。这里只把它作为本定理的中间步骤。对实、复或四元数结合矩阵，直接展开原 Jordan 乘法得
+
+$$
+[L_x,L_y]z=\tfrac14[[x,y],z].
+\tag{237.3}
+$$
+
+故运输后的任意导子可写 $S(z)=[K,z]$，其中 $K^*=-K$。这不涉及原 $D$，也不要求所选坐标保存原 $q_T$。
+
+若 $S(A_n)=0$，其 $(r,s)$ 元为 $(s-r)K_{rs}$，互异对角值迫使 $K=\operatorname{diag}(h_1,\ldots,h_n)$，且 $\bar h_r=-h_r$。对角 $K$ 与任意 Hermitian $B$ 的交换子满足
+
+$$
+[K,B]_{rs}=h_rB_{rs}-B_{rs}h_s.
+\tag{237.4}
+$$
+
+实情形已有 $h_r=0$。复和四元数情形，$B_{\mathbb F,n}$ 的全部实星边先给 $h_1=h_j=:h$。复情形公共 $hI$ 为中央矩阵，所以 $[K,z]=0$ 对全部 $z$ 成立，不必要求代表矩阵 $K$ 本身为零。四元数情形的两条弦另给
+
+$$
+h\mathbf i=\mathbf i h,\qquad h\mathbf j=\mathbf j h.
+\tag{237.5}
+$$
+
+写纯虚 $h=\alpha\mathbf i+\beta\mathbf j+\gamma\mathbf k$。第一式给 $\beta=\gamma=0$，第二式再给 $\alpha=0$，故 $K=0$。因此各类均有 $S=0$，运输回原 $T$ 即证。这里没有把四元数乘法交换，也没有把复中央代表误判成非零导子。∎
+

@@ -1,0 +1,27 @@
+### 3.2　条件归一化要保留绝对质量
+
+在有限完整复载体中，内部投影 $E$ 给出角代数 $E\mathcal A E$，单位元是 $E$。若 $\rho\succeq0,\operatorname{Tr}\rho=1$，令
+
+$$
+m=\operatorname{Tr}(E\rho)>0,\qquad
+\rho_E=\frac{E\rho E}{m}.
+$$
+
+选秩二 $E$ 便得到式 (1) 的局部三元。这里 $m$ 是该分支在整体中的质量。一般 Gram 模型的 $N$ 则是比较尺度，只有接到这样的事件接口后才具有分支概率意义。[\[1\]](#ref-v41)
+
+若连续进行条件分支且第 $j$ 步条件成功质量为 $m_j$，实际整段历史质量为
+
+$$
+W_n=W_0\prod_{j=1}^{n}m_j.
+$$
+
+零质量分支不作归一化。只存每一步条件三元会丢失 $W_n$。
+
+更完整地，相对于 $E\oplus(I-E)$ 分块，
+
+$$
+\rho=\begin{pmatrix}A&C\\C^\dagger&B\end{pmatrix}.
+$$
+
+条件态 $A/\operatorname{Tr}A$ 没有自动保存 $\operatorname{Tr}A$、$B$ 或跨块相干 $C$。若本次只计算条件任务，可以明确缩小范围；若声称无损保留整个来源，则这些数据必须由其余内部记录承担。
+

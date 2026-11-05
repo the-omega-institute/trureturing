@@ -1,0 +1,106 @@
+**Theorem 150.2 (simultaneous original pair laws with arbitrary finite moments).** Under exactly the retained original suppliers of Definition 150.1, for every $\theta\in\Theta$ and every finite $\Psi\subset L^1(G,m;\mathbb C)$ there exists one pointwise Borel partition $D=(D_y)_{y\in\mathcal L}$ of the whole original $G$ such that
+
+$$
+\begin{gathered}
+Q_r(\mathbf1_{D_y},\mathbf1_{D_z})=Q_r(f_y,f_z)
+\quad(r\in\mathcal R,\ y,z\in\mathcal L),\\
+\int_G\psi\mathbf1_{D_y}\,dm=\int_G\psi f_y\,dm
+\quad(\psi\in\Psi,\ y\in\mathcal L).
+\end{gathered}
+\tag{150.3}
+$$
+
+In particular this same partition belongs to $\mathscr D_{12}(\theta)$. The quantifier order is $\forall\theta\ \forall\Psi\ \exists D$; the three pairs and all finite moments use that single $D$.
+
+*Proof.* Replace the finite complex moment list by its real and imaginary parts, obtaining a finite real list $\Psi_{\mathbb R}$. Work first with real $L^\infty(m)$ classes. We verify the entire three-form pencil on every possible overlap, before choosing any extremal tuple.
+
+For $\lambda=(\lambda_{12},\lambda_{13},\lambda_{23})\ne0$ and a Borel $E$ with $m(E)>0$, put $\mathcal V_E=\{v\in L^\infty(m;\mathbb R):v=0\text{ a.e. off }E\}$. If $(\lambda_{12},\lambda_{23})\ne(0,0)$, use Corollary 133.3 with original source time $t=2d$, gap $d$, and
+
+$$
+(\alpha,\beta,\gamma)
+ =(\lambda_{12},\lambda_{23},\lambda_{13}).
+\tag{150.4}
+$$
+
+Its pencil (133.17) is exactly
+
+$$
+q_\lambda(v)=\sum_{r\in\mathcal R}\lambda_rq_r(v)
+ =\int_G(\lambda_{12}g+\lambda_{23}Pg)vPv\,dm
+   +\lambda_{13}\int_GgvP^2v\,dm.
+\tag{150.5}
+$$
+
+All hypotheses are supplied for this actual source: Theorem 133.2 gives the global essential bounds, Markov contraction gives the bound for $Pg$, and the rotation, analytic regularity and nonconstancy of $\alpha g+\beta Pg$ are the original suppliers used in Corollary 129.3. Localization (127.4), as consumed in (133.18), gives infinite negative index on $\mathcal V_E$ for arbitrary $E$, without requiring $E$ to be rotation invariant.
+
+If $(\lambda_{12},\lambda_{23})=(0,0)$, then $\lambda_{13}\ne0$. Apply Corollary 133.3 with the same source time $2d$, semigroup gap $2d$, and coefficients $(\lambda_{13},0,0)$. Its form is exactly $\lambda_{13}\int gvT_{2d}v\,dm=\lambda_{13}q_{13}(v)$, again with infinite negative index on $\mathcal V_E$. This is an index statement about the existing total-gap pair form, with $T_{2d}=P^2$; the observation epochs in (150.2) remain unchanged.
+
+Consequently every nonzero $q_\lambda$ has infinite negative index on each $\mathcal V_E$. This property survives any finite family of homogeneous linear constraints: intersect an arbitrarily large negative-definite subspace with their common kernel and apply rank–nullity. It also implies that the three restricted forms are linearly independent, since a zero pencil cannot have negative index.
+
+Let $\mathcal S$ be the weak-star compact simplex of Proposition 123.2 and define the single fiber
+
+$$
+\mathcal K=\left\{a\in\mathcal S:
+\begin{array}{ll}
+Q_r(a_y,a_z)=Q_r(f_y,f_z)&(r\in\mathcal R,\ y,z\in\mathcal L),\\
+\int\psi a_y\,dm=\int\psi f_y\,dm
+ &(\psi\in\Psi_{\mathbb R},\ y\in\mathcal L)
+\end{array}\right\}.
+\tag{150.6}
+$$
+
+It is nonempty because it contains $f$. It is compact: each ordered pair coordinate is a marginal sum of the continuous map $\Phi_3$ of Proposition 123.2, and each moment against an $L^1(m)$ function is weak-star continuous. No convexity of $\mathcal K$ is needed.
+
+Use the continuous strictly convex separating functional $J$ of (122.30), with a countable separating family in the real $L^1(m)$ unit ball, and choose a maximizer $a$ on $\mathcal K$. Choose pointwise Borel simplex representatives as in Proposition 123.2. If $a$ is not an indicator tuple almost everywhere, finiteness of the label set gives distinct $i,j$ and $\kappa>0$ for which
+
+$$
+E=\{a_i\ge\kappa,\ a_j\ge\kappa\},\qquad m(E)>0.
+\tag{150.7}
+$$
+
+Inside $\mathcal V_E$ impose the finite linear constraints
+
+$$
+\begin{gathered}
+Q_r(v,a_z)=Q_r(a_z,v)=0
+\quad(r\in\mathcal R,\ z\in\mathcal L),\\
+\int_G\psi v\,dm=0\quad(\psi\in\Psi_{\mathbb R}),
+\end{gathered}
+\tag{150.8}
+$$
+
+and call their common kernel $V$. There are at most $24+|\Psi_{\mathbb R}|$ real constraints. They are defined on bounded classes; for example the two densities for $Q_{12}$ are $gPa_z$ and $P(ga_z)$, and the corresponding densities for the other two forms are obtained using $P^2$ or $Pg$. All are in $L^1(m)$ by the original Markov contractions and source integrability. Each nonzero pencil still has infinite negative index on $V$, and the three forms remain independent there. Apply the already proved common-zero-plane assertion of Lemma 125.3 to these three forms on $V$. In particular it supplies a nonzero $v\in V$ with
+
+$$
+q_{12}(v)=q_{13}(v)=q_{23}(v)=0.
+\tag{150.9}
+$$
+
+Only that quadratic assertion of the lemma is used. The individual weighted joint forms of (125.3) and their all-pencil premise are not invoked.
+
+Choose a bounded Borel representative of $v$ vanishing pointwise off $E$, and a number $s>0$ with $s\|v\|_\infty\le\kappa$. Put $\sigma_i=1$, $\sigma_j=-1$ and $\sigma_y=0$ otherwise, and set $a_y^\pm=a_y\pm s\sigma_yv$. As in (122.28), these are distinct pointwise Borel simplex tuples, with midpoint $a$. For every ordered pair, the exact expansion is
+
+$$
+\begin{aligned}
+Q_r(a_y^\pm,a_z^\pm)-Q_r(a_y,a_z)
+={}&\pm s\{\sigma_yQ_r(v,a_z)+\sigma_zQ_r(a_y,v)\}\\
+ &+s^2\sigma_y\sigma_zq_r(v)=0.
+\end{aligned}
+\tag{150.10}
+$$
+
+Their prescribed moments are unchanged by (150.8). Thus $a^+,a^-\in\mathcal K$. Strict convexity gives $J(a)<(J(a^+)+J(a^-))/2$, contradicting maximality. It follows that $a$ is an indicator tuple almost everywhere. The contradiction uses perturbations inside this one common fiber, rather than separately chosen pair witnesses.
+
+On the Borel null set where the four chosen representatives do not give exactly one indicator equal to one, assign the label $B$. This produces a pointwise Borel partition of all of $G$. Each positive-time marginal is absolutely continuous with respect to $m$, and the pair laws are marginals of the actual density $W$ in (123.3). Hence this common null-set repair preserves all pair coordinates, as well as every $L^1(m)$ moment, proving (150.3). The argument depends on $b$ only through its permitted $m$-class and its everywhere simplex bounds, so it applies to every representative allowed in $\Theta$.
+
+Finally the row and column sums of the preserved pair laws give, respectively,
+
+$$
+Q_{12}(u,1)=\int gu\,dm,\qquad
+Q_{12}(1,u)=\int(Pg)u\,dm,\qquad
+Q_{23}(1,u)=\int(P^2g)u\,dm.
+\tag{150.11}
+$$
+
+The original source identities identify these densities with $g_{2d},g_{3d},g_{4d}$. Summing (150.3) over the other label therefore gives all twelve marginal equalities defining $\mathscr D_{12}(\theta)$ for this same $D$. $\square$
+
