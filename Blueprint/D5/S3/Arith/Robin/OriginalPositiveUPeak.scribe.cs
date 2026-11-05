@@ -112,12 +112,12 @@ internal sealed class OriginalPositiveUPeakDocument : IScribeDocumentDefinition
         var real = F.Seq(F.Mathbb, F.Grp(F.Id("R")));
         var half = new Formula.Fraction(F.D(1), F.D(2));
         var delta = new Formula.Binary(Call("re", rho), FormulaBinaryOperator.Subtract, half);
-        var d = Add(Call("im", rho), F.D(10));
-        var m0 = new Formula.Fraction(Mul(F.D(100), new Formula.Power(d, F.D(2))), new Formula.Power(delta, F.D(2)));
-        var m1 = new Formula.Fraction(Mul(F.D(500), new Formula.Power(d, F.D(4))), new Formula.Power(delta, F.D(2)));
+        var d = Add(Call("im", rho), F.D(1, 0));
+        var m0 = new Formula.Fraction(Mul(F.D(1, 0, 0), new Formula.Power(d, F.D(2))), new Formula.Power(delta, F.D(2)));
+        var m1 = new Formula.Fraction(Mul(F.D(5, 0, 0), new Formula.Power(d, F.D(4))), new Formula.Power(delta, F.D(2)));
         var a = F.Id("A");
         var member = new Formula.Relation(a, FormulaRelationOperator.MemberOf,
-            Call("Icc", Call("exp", Mul(F.D(4), m0)), Call("exp", Mul(F.D(28), m1))));
+            Call("Icc", Call("exp", Mul(F.D(4), m0)), Call("exp", Mul(F.D(2, 8), m1))));
         var peak = Lt(Mul(Call("sqrt", a), Add(Mul(F.D(4), Call("log", a)), F.D(9))), Call("U", a));
         var witness = new Formula.BindMany(FormulaQuantifier.Exists,
             [new Formula.BoundVariable(FormulaIdentifier.Create("A"), real)],

@@ -104,7 +104,8 @@ private theorem g_power_integrable (m M : ℝ) (hm : 0 < m) (n : ℕ) :
     funext y
     simp only [D5.S3.Fourier.Asymptotics.GaussianComplexMoments.densityMonomial,
       zero_mul, Complex.exp_zero, mul_one]
-    rw [← Complex.ofReal_pow, ← Complex.ofReal_mul, Complex.ofReal_re]
+    rw [← Complex.ofReal_pow, ← Complex.ofReal_mul]
+    rfl
   simpa only [D5.S3.Fourier.Asymptotics.GaussianComplexMoments.gaussianDensity,
     g, sub_zero, show 2 * (2 * m) = 4 * m by ring,
     show 2 * Real.pi * (2 * m) = 4 * Real.pi * m by ring] using hr.comp_sub_right M
