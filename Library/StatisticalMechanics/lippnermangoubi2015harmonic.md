@@ -39,3 +39,8 @@ This attribution concerns an established mathematical identity. The
 constant-Poisson subtraction, the growth estimates and the passage from
 vanishing third differences to a quadratic polynomial are separate arguments.
 No article text or external proof code is reproduced here.
+
+## Locator
+
+- DOI: https://doi.org/10.1215/00127094-3164790
+- Source: https://arxiv.org/html/1312.4550v3
