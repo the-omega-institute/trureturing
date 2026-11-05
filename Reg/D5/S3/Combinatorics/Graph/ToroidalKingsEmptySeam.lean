@@ -13,6 +13,34 @@ namespace Reg.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam
 
 noncomputable section
 
+private theorem singleton_powerset (a : ℕ × ℕ) :
+    ({a} : Finset (ℕ × ℕ)).powerset = {∅, {a}} := by
+  ext s
+  simp [Finset.subset_singleton_iff]
+
+
+private theorem peak_two_gt_one : 1 < peak 2 := by
+  classical
+  let S : Finset (Finset (ℕ × ℕ)) := {{(0, 0)}, {(0, 1)}}
+  have hsub : S ⊆ (independentSets (board 2) (torusAdjacent 2)).filter
+      (fun s => s.card = 1) := by
+    intro s hs
+    simp only [S, Finset.mem_insert, Finset.mem_singleton] at hs
+    rcases hs with rfl | rfl <;>
+      norm_num [independentSets, board, torusAdjacent]
+  have hcard : S.card = 2 := by decide
+  have hc : 2 ≤ coefficient 2 1 := by
+    have hh := Finset.card_le_card hsub
+    rw [hcard] at hh
+    exact hh
+  have hm : coefficient 2 1 ≤ peak 2 :=
+    Finset.le_sup (by decide : 1 ∈ Finset.range (2 ^ 2 + 1))
+  omega
+
+private theorem peak_zero : peak 0 = 1 := by
+  norm_num [peak, coefficient, independentSets, board, torusAdjacent,
+    Finset.filter_singleton]
+
 abbrev countSignature : Signature where
   Params := Unit
   State _ := ℕ
@@ -45,7 +73,7 @@ private theorem lowerDependence : ObservationalDependence countSignature lowerAc
   norm_num [lowerActual, realize, a063443, tilingPlacements, peak, coefficient,
     torusCount, freeCount, independentSets, board, torusAdjacent, freeAdjacent, gap,
     Finset.range_add_one, Finset.powerset_insert, Finset.filter_insert, Finset.filter_singleton,
-      Finset.product_eq_biUnion, Finset.singleton_def]
+      Finset.product_eq_biUnion, singleton_powerset]
 
 def lowerFamily : Registration lowerArena
     (type_of% (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.free_le_torus)) where
@@ -118,7 +146,7 @@ private theorem upperDependence : ObservationalDependence countSignature upperAc
   norm_num [upperActual, realize, a063443, tilingPlacements, peak, coefficient,
     torusCount, freeCount, independentSets, board, torusAdjacent, freeAdjacent, gap,
     Finset.range_add_one, Finset.powerset_insert, Finset.filter_insert, Finset.filter_singleton,
-      Finset.product_eq_biUnion, Finset.singleton_def]
+      Finset.product_eq_biUnion, singleton_powerset]
 
 def upperFamily : Registration upperArena
     (type_of% (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.torus_le_free)) where
@@ -192,7 +220,7 @@ private theorem modalLossDependence : ObservationalDependence countSignature mod
   norm_num [modalLossActual, realize, a063443, tilingPlacements, peak, coefficient,
     torusCount, freeCount, independentSets, board, torusAdjacent, freeAdjacent, gap,
     Finset.range_add_one, Finset.powerset_insert, Finset.filter_insert, Finset.filter_singleton,
-      Finset.product_eq_biUnion, Finset.singleton_def]
+      Finset.product_eq_biUnion, singleton_powerset]
 
 def modalLossFamily : Registration modalLossArena
     (type_of% (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.count_le_mul_peak)) where
@@ -262,10 +290,9 @@ private theorem modalUpperRejectedLaw : ¬ modalUpperArena.Law modalUpperRejecte
 private theorem modalUpperDependence : ObservationalDependence countSignature modalUpperActual := by
   intro i
   refine ⟨(), 0, 2, ?_⟩
-  norm_num [modalUpperActual, realize, a063443, tilingPlacements, peak, coefficient,
-    torusCount, freeCount, independentSets, board, torusAdjacent, freeAdjacent, gap,
-    Finset.range_add_one, Finset.powerset_insert, Finset.filter_insert, Finset.filter_singleton,
-      Finset.product_eq_biUnion, Finset.singleton_def]
+  change peak 0 ≠ peak 2
+  rw [peak_zero]
+  exact ne_of_lt peak_two_gt_one
 
 def modalUpperFamily : Registration modalUpperArena
     (type_of% (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.peak_le_count)) where
@@ -338,7 +365,7 @@ private theorem tilingDependence : ObservationalDependence countSignature tiling
   norm_num [tilingActual, realize, a063443, tilingPlacements, peak, coefficient,
     torusCount, freeCount, independentSets, board, torusAdjacent, freeAdjacent, gap,
     Finset.range_add_one, Finset.powerset_insert, Finset.filter_insert, Finset.filter_singleton,
-      Finset.product_eq_biUnion, Finset.singleton_def]
+      Finset.product_eq_biUnion, singleton_powerset]
 
 def tilingFamily : Registration tilingArena
     (type_of% (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.tiling_free_identity)) where
@@ -477,7 +504,7 @@ private theorem logDependence : ObservationalDependence logSignature logActual :
   have h1 : freeCount 1 = 2 := by
     norm_num [freeCount, independentSets, board, freeAdjacent, gap,
       Finset.range_add_one, Finset.powerset_insert, Finset.filter_insert, Finset.filter_singleton,
-      Finset.product_eq_biUnion, Finset.singleton_def]
+      Finset.product_eq_biUnion, singleton_powerset]
   change Real.log (freeCount 0 : ℝ) ≠ Real.log (freeCount 1 : ℝ)
   rw [h0, h1]
   simpa only [Nat.cast_one, Nat.cast_ofNat, Real.log_one] using

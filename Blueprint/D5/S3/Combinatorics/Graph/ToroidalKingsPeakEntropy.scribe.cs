@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph;
 
@@ -21,6 +23,30 @@ internal sealed class ToroidalKingsPeakEntropyDocument : IScribeDocumentDefiniti
 
     private static DocumentBlock Node(string id, string name, string title, string prose,
         DescribeRole role, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(DescribeId.Create(id),
-        DeclarationHandle.Create(Owner + name), H(title), StatementSource.WithoutFormula(),
+        DeclarationHandle.Create(Owner + name), H(title), name == "result" ? StatementSource.FromAuthor(ResultFormula()) : StatementSource.WithoutFormula(),
         AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role, resolution);
+
+    private static Formula Const(string n) =>
+        new Formula.NamedConstant(FormulaIdentifier.Create(n));
+    private static Formula Call(string n, params Formula[] a) =>
+        new Formula.Apply(Const(n), [.. a]);
+    private static Formula Bind(FormulaQuantifier q, string n, Formula t, Formula b) =>
+        new Formula.Bind(q, FormulaIdentifier.Create(n), t, b);
+    private static Formula Rel(Formula a, FormulaRelationOperator r, Formula b) =>
+        new Formula.Relation(a, r, b);
+    private static Formula Logic(Formula a, FormulaLogicOperator r, Formula b) =>
+        new Formula.Logic(a, r, b);
+
+    private static Formula ResultFormula()
+    {
+        Formula e = F.Id("e"), n = F.Id("n"), upper = F.Id("N");
+        Formula error = Call("abs", Call("sub", Call("rootGrowth", Const("peak"), n), Const("a247413")));
+        Formula tail = Bind(FormulaQuantifier.ForAll, "n", Const("Nat"),
+            Logic(Rel(upper, FormulaRelationOperator.LessThanOrEqual, n),
+                FormulaLogicOperator.Implies, Rel(error, FormulaRelationOperator.LessThan, e)));
+        Formula exists = Bind(FormulaQuantifier.Exists, "N", Const("Nat"),
+            Logic(Rel(D(3), FormulaRelationOperator.LessThanOrEqual, upper), FormulaLogicOperator.And, tail));
+        return Disp(Bind(FormulaQuantifier.ForAll, "e", Const("Real"),
+            Logic(Rel(D(0), FormulaRelationOperator.LessThan, e), FormulaLogicOperator.Implies, exists)));
+    }
 }

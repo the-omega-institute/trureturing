@@ -13,6 +13,34 @@ namespace Reg.D5.S3.Combinatorics.Graph.ToroidalKingsPeakEntropy
 
 noncomputable section
 
+private theorem singleton_powerset (a : ℕ × ℕ) :
+    ({a} : Finset (ℕ × ℕ)).powerset = {∅, {a}} := by
+  ext s
+  simp [Finset.subset_singleton_iff]
+
+
+private theorem peak_two_gt_one : 1 < peak 2 := by
+  classical
+  let S : Finset (Finset (ℕ × ℕ)) := {{(0, 0)}, {(0, 1)}}
+  have hsub : S ⊆ (independentSets (board 2) (torusAdjacent 2)).filter
+      (fun s => s.card = 1) := by
+    intro s hs
+    simp only [S, Finset.mem_insert, Finset.mem_singleton] at hs
+    rcases hs with rfl | rfl <;>
+      norm_num [independentSets, board, torusAdjacent]
+  have hcard : S.card = 2 := by decide
+  have hc : 2 ≤ coefficient 2 1 := by
+    have hh := Finset.card_le_card hsub
+    rw [hcard] at hh
+    exact hh
+  have hm : coefficient 2 1 ≤ peak 2 :=
+    Finset.le_sup (by decide : 1 ∈ Finset.range (2 ^ 2 + 1))
+  omega
+
+private theorem peak_zero : peak 0 = 1 := by
+  norm_num [peak, coefficient, independentSets, board, torusAdjacent,
+    Finset.filter_singleton]
+
 abbrev signature : Signature where
   Params := Unit
   State _ := ℕ
@@ -45,15 +73,12 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 2, ?_⟩
-  have hp : peak 2 = 4 := by
-    norm_num [peak, coefficient, independentSets, board, torusAdjacent, gap,
-      Finset.range_add_one, Finset.powerset_insert, Finset.filter_insert, Finset.filter_singleton,
-      Finset.product_eq_biUnion, Finset.singleton_def]
   have hr : 1 < rootGrowth peak 2 := by
-    rw [rootGrowth, hp]
-    exact Real.one_lt_rpow (by norm_num) (by norm_num)
+    apply Real.one_lt_rpow
+    · exact_mod_cast peak_two_gt_one
+    · norm_num
   change rootGrowth peak 0 ≠ rootGrowth peak 2
-  simpa only [rootGrowth, Nat.cast_zero, zero_pow (by decide : 2 ≠ 0), inv_zero, Real.rpow_zero] using hr.ne
+  simpa only [rootGrowth, peak_zero, Nat.cast_one, Real.one_rpow] using hr.ne
 
 def family : Registration arena
     (type_of% (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsPeakEntropy.result)) where

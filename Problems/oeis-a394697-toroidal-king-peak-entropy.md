@@ -78,5 +78,5 @@ replacement occurs.
 Kernel checking, source fidelity, escape registration, independent
 admission, freezing and normal publication have separate evidence
 requirements. This dossier makes no merge, priority or delivered-KPI
-claim. The source-family registrations and emitted mirror must be
-validated before a complete publication handoff.
+claim. The source-family audit follows the registration or linked-issue
+delivery boundary, while Scribe emission supplies the mathematical mirror.
