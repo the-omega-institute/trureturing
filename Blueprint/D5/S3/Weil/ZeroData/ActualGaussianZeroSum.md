@@ -29,4 +29,4 @@ The actual strip 0<Re(rho)<1 contributes at most exp(17*m). Hence the summand no
 ## References
 
 - Truth anchor: `D5/S3/Weil/ZeroData/ActualGaussianZeroSum.E_summable`
-- Dependency: [D5/S3/Arith/Robin/CompleteActualSignedGaussianExchange](../../Arith/Robin/CompleteActualSignedGaussianExchange.md)
+- Dependency: [D5/S3/Arith/Robin/GaussianLocalization/CompleteActualSignedGaussianExchange](../../Arith/Robin/GaussianLocalization/CompleteActualSignedGaussianExchange.md)
