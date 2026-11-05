@@ -38,7 +38,13 @@ internal static partial class IngestCommand
             var wholeSourceRecords = DigestionQuerySelection.ReadAtoms(repository, wholeSourceIds);
             (currentRaw, current, document) = DigestionQuerySelection.Load(DigestionQuerySelection.Merge(currentRaw, wholeSourceRecords.Raw));
             var workingRaw = currentRaw;
-            var recoveryPaths = ImmutableHashSet<string>.Empty;
+            var recoveryPaths = RecoverableDuplicatePaths(currentRaw, document, sourceIds);
+            if (!recoveryPaths.IsEmpty)
+            {
+                currentRaw = ReadRecoveryCas(repository, currentRaw, recoveryPaths);
+                workingRaw = RemoveRecoveredPaths(currentRaw, recoveryPaths);
+                (workingRaw, current, document) = DigestionQuerySelection.Load(workingRaw);
+            }
             var cache = new Dictionary<(string Id, string Hash), AtomizedTheoryDocument>();
             var kindCache = new Dictionary<(string Id, string Hash), (AtomizedTheoryDocument Document, Dictionary<string, string> Kinds)>();
             Func<string, TheoryAtomizer> atomizers = id => (bytes) =>
@@ -198,6 +204,7 @@ internal static partial class IngestCommand
             .ToImmutableArray();
         dependencies.BeforeCommit?.Invoke();
         RequireUnclaimedAtomIds(repositoryRoot, plan.AddedAtomIds);
+        RequireReportFreeInputs(repositoryRoot, currentRaw, ledgerUpdates, recoveryPaths);
         var allCasObjects = plan.CasObjects.Concat(plan.ContextCasObjects)
             .GroupBy(static item => item.Reference, StringComparer.Ordinal)
             .Select(static group => group.First())
