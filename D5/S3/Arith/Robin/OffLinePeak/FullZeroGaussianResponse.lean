@@ -1,6 +1,6 @@
 /- GID: D5/S3/Arith/Robin/OffLinePeak/FullZeroGaussianResponse
    generality: G
-   mirror-B: D5/B/S3/Arith/Robin/FullZeroGaussianResponse
+   mirror-B: D5/B/S3/Arith/Robin/OffLinePeak/FullZeroGaussianResponse
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none

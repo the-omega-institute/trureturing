@@ -1,6 +1,6 @@
 /- GID: D5/S3/Arith/Robin/OffLinePeak/OffLineCompleteMertensPeak
-   generality: G
-   mirror-B: D5/B/S3/Arith/Robin/OffLineCompleteMertensPeak
+   generality: I
+   mirror-B: D5/B/S3/Arith/Robin/OffLinePeak/OffLineCompleteMertensPeak
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
