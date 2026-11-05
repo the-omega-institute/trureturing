@@ -71,7 +71,10 @@ internal static partial class IngestCommand
         && string.Equals(left.SourcePath, right.SourcePath, StringComparison.Ordinal)
         && string.Equals(left.Atomizer, right.Atomizer, StringComparison.Ordinal)
         && left.Fingerprints == right.Fingerprints
-        && string.Equals(left.CasRef, right.CasRef, StringComparison.Ordinal);
+        && string.Equals(left.CasRef, right.CasRef, StringComparison.Ordinal)
+        && left.Fingerprints.RawSha256 == "sha256:" + left.AtomId
+        && left.CasRef == left.Fingerprints.RawSha256
+        && DigestionFingerprint.IsCanonicalSha256(left.Fingerprints.NormalizedSha256);
 
     private static bool IsRecoverableOpen(DigestionLedgerEntry entry) =>
         entry.ProjectedStatus == new DigestionStatus(
@@ -85,7 +88,23 @@ internal static partial class IngestCommand
             DigestionMigrationState.Absorbed,
             DigestionTruthState.Closed)
         && !entry.Coverage.IsEmpty
+        && entry.Coverage.All(static edge =>
+            DigestionFingerprint.IsCanonicalSha256(edge.TargetStatementId))
         && entry.Receipts.IsEmpty;
+
+    private static RawRepositorySnapshot ReadRecoveryCas(
+        IRepositoryGateway repository,
+        RawRepositorySnapshot raw,
+        ImmutableHashSet<string> recoveryPaths)
+    {
+        if (recoveryPaths.IsEmpty) return raw;
+        var paths = recoveryPaths.Select(static path =>
+            DigestionCasStore.RootPath + Path.GetFileNameWithoutExtension(path)).ToArray();
+        var captured = repository.ReadCurrent(paths.Select(DigestionQuerySelection.Literal).ToArray());
+        if (paths.Any(path => !captured.Entries.Any(entry => entry.Path == path)))
+            throw new InvalidOperationException("ingest recovery CAS input is missing");
+        return DigestionQuerySelection.Merge(raw, captured);
+    }
 
     private static RawRepositorySnapshot RemoveRecoveredPaths(
         RawRepositorySnapshot raw,

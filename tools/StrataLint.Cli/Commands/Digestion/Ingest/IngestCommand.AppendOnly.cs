@@ -38,6 +38,18 @@ internal static partial class IngestCommand
         ImmutableHashSet<string>? recoveryPaths = null)
     {
         var before = current.Entries.ToDictionary(entry => entry.Path, StringComparer.Ordinal);
+        if (recoveryPaths is { IsEmpty: false })
+        {
+            // Recovery removes an occurrence, so its retained identity and all
+            // captured scoped inputs must still be the ones used for planning.
+            foreach (var entry in current.Entries)
+            {
+                var inputPath = Path.Combine(root, entry.Path);
+                if (!File.Exists(inputPath)
+                    || !File.ReadAllBytes(inputPath).AsSpan().SequenceEqual(entry.Bytes.AsSpan()))
+                    throw new IOException($"ledger changed under us: {entry.Path}");
+            }
+        }
         foreach (var update in updates)
         {
             var path = Path.Combine(root, update.Path);
