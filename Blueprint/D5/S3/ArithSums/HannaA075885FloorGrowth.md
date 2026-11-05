@@ -48,6 +48,10 @@ $$\exists L \in \mathbb{R}, (0 < L) \land (\operatorname{HasSum}\left((fun (j: \
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/HannaA075885FloorGrowth.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanna-a075885` (proved) by `D5/S3/ArithSums/HannaA075885FloorGrowth.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna-a075885","declaration_gid":"D5/S3/ArithSums/HannaA075885FloorGrowth.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna; OEIS Foundation Inc. (2002). *OEIS A075885 revision 28: Hanna's floor-prefix root-limit conjecture*. URL: <https://oeis.org/A075885>.

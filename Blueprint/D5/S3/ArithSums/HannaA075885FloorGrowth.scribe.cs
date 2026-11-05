@@ -50,7 +50,9 @@ internal sealed class HannaA075885FloorGrowthDocument : IScribeDocumentDefinitio
                 + "parts identifies the sum with the source series. The sum/product bounds "
                 + "then give convergence of normalized logarithms, and continuity of Real.exp "
                 + "gives the real root limit.", DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("hanna-a075885"), ResolutionKind.Proved)))));
 
     private static string SourceSentence() =>
         "OEIS A075885 revision 28, COMMENT (unpaginated): "
@@ -71,10 +73,11 @@ internal sealed class HannaA075885FloorGrowthDocument : IScribeDocumentDefinitio
     }
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("hanna-a075885-" + name.ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula V(string name) => F.Id(name);
     private static Formula Q(string owner, string name) => Seq(
         Operatorname, Grp(V(owner)), Dot, Operatorname, Grp(V(name)));
