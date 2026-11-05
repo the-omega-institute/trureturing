@@ -7,6 +7,8 @@ coverage_gids:
     target_statement_id: sha256:db6b372aad7126681a971b0a9c7a4593a2acf8ca5576e1a86592b318ec715a0c
   - gid: D5/S3/Arith/FibonacciAtomic/Observer/Constructor/OriginalFunctionalNormalization.root_link_normalization
     target_statement_id: sha256:a6bf7798faf502f01b65651663d0466cd63add09e1c0de0ecdd1297941db274b
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/Constructor/OriginalNativeConstruction.original_native_construction
+    target_statement_id: sha256:6b73030a8983995474c7d298642187860c8e2d569f7601f199b2f05abe420682
 receipts:
   unresolved_subitems: []
   chain_atoms:
