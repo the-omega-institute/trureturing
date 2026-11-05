@@ -1,0 +1,24 @@
+**定理 89.3（SJ 后由原数据确定的 Hamilton 几何）。** 在 $\mathrm{C128}^{\mathrm{fin}}$ 下，每个非经典原简单块的原子流形为 $\mathbb{CP}^{r-1}$。令 $P_p=P_{1/2}(p)$，则原数据给
+
+$$
+\begin{aligned}
+J_p&=2D_p|_{T_pM},&
+J_p^2&=-I,& q(J_pv,J_pw)&=q(v,w),\\
+X_a(p)&=D_ap=-\tfrac12J_pP_pa,&
+\omega_p(v,w)&=2q(J_pv,w),&
+\iota_{X_a}\omega&=df_a.
+\end{aligned}
+\tag{89.4}
+$$
+
+相容度量是 $g=2q|_{TM}$。$\omega$ 闭合、$J$ 可积，故得到与原取向及尺度相容的 Kähler 结构。
+
+证明。定理 88.3、86.2 已在同一原数据上恢复复乘积和 $F(a,b)=i[a,b]/2$；推论 65.2 给任意 primitive 的 $J_p$。SC 令 $D_ap=-D_pa$，而导子性和 $D_pp=0$ 令 $D_p$ 只作用于半 Peirce 分量，得 $X_a=-J_pP_pa/2$。于是对任意 $v\in T_pM$，
+
+$$
+\omega_p(X_a,v)=2q\!\left(J_p\left(-\tfrac12J_pP_pa\right),v\right)=q(a,v)=df_a(p)(v).
+\tag{89.5}
+$$
+
+在所得复矩阵块中，原 $q(a,b)=c\operatorname{Tr}(ab)$，其中 $c=q(p,p)>0$ 在同一简单块不随 $p$ 改变。复射影坐标将 $J$ 识别为相应取向的标准复结构，$g,\omega$ 为正定倍数的 Fubini–Study 结构，故可积与闭合成立。此处借用的是成熟射影几何，不是仅从局部余切下降推断 Jacobi 或可积性。Ashtekar–Schilling, *Geometrical Formulation of Quantum Mechanics*, [arXiv:gr-qc/9706069v1](https://arxiv.org/abs/gr-qc/9706069v1)，§II.B–C，特别是 (2.14)–(2.16)，给射影态的 Hamilton 场、交换子对应及 Kähler 几何；其规范尺度含 $\hbar$，不能直接当作本卷原 $D$ 的物理时钟。这里由 (89.5) 明确本卷的系数。若改用规范纯态期望 $h_a=f_a/c$，则应同时取 $\omega^{\mathrm{norm}}=\omega/c$，仍有 $\iota_{X_a}\omega^{\mathrm{norm}}=dh_a$。这些是派生形式，没有替换原 $q$ 或准备质量。一维经典块的切空间为零。∎
+

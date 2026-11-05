@@ -1,0 +1,44 @@
+**命题 4.3（R 与端点的既有删除反事实）。** 删除 R 时，$\mathscr C_2$ 仍包含非 Born 密度；删除端点时，双校准和全域 R 也不足以选择 Born。
+
+**证明。** 第一项精确复用 IX 定义 3.1、定理 3.2 的固定密度。为钉住同一全域见证，令
+$S_-=\{s\subseteq O:|s|\text{ 奇}\}$，
+$A_s=\{j\in\{2,4,6,8\}:j-1,j+1\notin s\}$、
+$m_s=|A_s|$，置
+
+$$
+\begin{gathered}
+R_s=\sum_{r\subseteq A_s}|s\cup r\rangle\langle s\cup r|,\quad
+w_s=\sum_{r\subseteq A_s}x^{m_s-|r|}(-y)^{|r|}e_{s\cup r},
+\quad \kappa_s=x^{m_s},\\
+a_s(z)=\langle w_s,z\rangle,\quad
+v_s(z)=R_sz-a_s(z)w_s,\quad
+c_q=\begin{cases}(-1)^{|q|},&q\subseteq O,\\0,&q\not\subseteq O,\end{cases}\\
+h_-(z)=\frac1{\|z\|^2}\min_{s\in S_-}
+[\kappa_s|a_s(z)|-\|v_s(z)\|]_+^2,\quad
+\Pi_q^*(z)=\frac{|z_q|^2}{\|z\|^2}+\frac12c_qh_-(z).
+\end{gathered}
+\tag{4.6}
+$$
+
+内积对第二变量线性，$[u]_+=\max\{u,0\}$。IX 定理 3.2 已逐项证明这个同一公式属于 $\mathscr C_{\rm cal}$、满足全部原端点及全部基态校准，却违反节点和原实际 R；由定理 3.1 它也属于 $\mathscr C_2$。其明确节点读数为：在
+$z_-=\frac14\sum_{s\in S_-}w_s$ 处，
+$\|z_-\|=1$、$(z_-)_\varnothing=0$，而
+$\Pi_\varnothing^*(z_-)=\frac1{32}\min_{s\in S_-}\kappa_s^2>0$。
+这是 (3.7) 已有严格性的同一个完整密度，原端点的验证直接消费 IX，未另造一个见证。
+
+第二项取 VIII4.1、IX4.1 已给的另一个固定全域密度
+
+$$
+\Pi_q^{\rm quart}(z)=\frac{|z_q|^4}{\sum_{r\in E}|z_r|^4}.
+\tag{4.7}
+$$
+
+它连续、复射线不变、非负归一，并满足全部基态校准。对 $q\in E_i$，记录质量是相应四次和除总四次和；再乘投影后的同一密度，分母消去给全域 R，零投影也按零处理。它确实失守原端点：在 $z=e_\varnothing+e_{\{8\}}$ 上，原九号活动对 $\{\varnothing,\{9\}\}$ 的质量起初为 $1/2$，门后为
+
+$$
+\frac{x^4+x^2}{1+x^4+x^2}<\frac12,
+\tag{4.8}
+$$
+
+因为原活动块的两模平方为 $x^2,x$，$x^4<x$、$x+x^2=1$。所以它没有暗中保留被删除的端点条件。两个删除命题各用自己的固定密度，不将不同反例的性质拼成一个反例。∎
+

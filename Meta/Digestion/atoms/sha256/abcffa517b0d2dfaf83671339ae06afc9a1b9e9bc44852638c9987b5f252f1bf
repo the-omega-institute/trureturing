@@ -1,0 +1,38 @@
+**Definition 1.1 (Source coordinates and matrices).** Let $m\geq1$ be an integer, let $n=m+1$, and let $v=(v_1,\ldots,v_{m+1})\in(0,\infty)^{m+1}$. A centered pair vector is $z=(z_1,\ldots,z_m)^T\in\mathbb R^m$, extended by $z_0=z_{m+1}=0$; use the same zero extension for $w$. Define the real $m\times m$ matrices $A=A(m,v)$ and $B=B(m,v)$ by their rows:
+
+$$
+(Aw)_i=
+\begin{cases}
+w_i,&i\text{ odd},\\
+(v_i+v_{i+1})w_i-2v_{i+1}w_{i-1}-2v_iw_{i+1},&i\text{ even},
+\end{cases}
+\qquad 1\leq i\leq m,
+$$
+
+$$
+(Bz)_i=
+\begin{cases}
+-z_i+\dfrac{2v_{i+1}}{v_i+v_{i+1}}z_{i-1}
+     +\dfrac{2v_i}{v_i+v_{i+1}}z_{i+1},&i\text{ odd},\\
+-(v_i+v_{i+1})z_i,&i\text{ even}.
+\end{cases}
+$$
+
+For a real parameter $0<\alpha<1$, define $B_\alpha=B_\alpha(m,v)$ by
+
+$$
+(B_\alpha z)_1=
+\frac{v_2(1-2\alpha)-\alpha v_1}{v_2+\alpha v_1}z_1
++\frac{2\alpha v_1}{v_2+\alpha v_1}z_2,
+\qquad
+(B_\alpha z)_i=(Bz)_i\quad(2\leq i\leq m).
+$$
+
+Here $z_2=0$ when $m=1$. All denominators are positive. The equations $Aw=b$ determine the odd coordinates $w_i=b_i$ first; each even row then determines its sole remaining unknown $w_i$, since $v_i+v_{i+1}>0$. Thus $A$ is invertible. The two transfers are the literal matrices
+
+$$
+M=A^{-1}B,\qquad N_\alpha=A^{-1}B_\alpha.
+$$
+
+These rows are the centered odd/even relations and the solved Token-1 first row of Wallner, Krupke, Schmidt and Fekete, *Pass the Bucket: Efficient, Robust, Local Load Balancing for Teams of Heterogeneous Robots*, [arXiv:2608.27085v1, Sections IV.A and IV.B.1](https://arxiv.org/html/2608.27085v1#S4). In the [repository definitions `A`, `B`, `Balpha`, `Malpha`](../../../D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.lean), source pair $i$ has index $i-1$ and source velocity $v_j$ has index $j-1$; in particular, `i.val % 2 = 0` denotes an odd source row, and `Malpha` is $N_\alpha$. No basis change is made.
+
