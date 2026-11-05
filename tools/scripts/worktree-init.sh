@@ -30,6 +30,14 @@ fi
 creation_arguments=()
 if [[ "${WORKTREE_PREFER_IDLE:-0}" == 1 ]]; then creation_arguments+=(--prefer-idle); fi
 
+if [[ -f "$ROOT/tools/scripts/maintenance_log.py" ]]; then
+  if [[ -n "${TRURETURING_MAINTENANCE_RUN_ID:-}" ]]; then
+    export TRURETURING_MAINTENANCE_PARENT_RUN_ID="$TRURETURING_MAINTENANCE_RUN_ID"
+  fi
+  unset TRURETURING_MAINTENANCE_RUN_ID
+  export TRURETURING_MAINTENANCE_SCRIPT=worktree-init
+  export TRURETURING_MAINTENANCE_REPOSITORY="$ROOT"
+fi
 exec dotnet run \
   --project tools/StrataLint.Cli/StrataLint.Cli.csproj \
   --configuration Release \

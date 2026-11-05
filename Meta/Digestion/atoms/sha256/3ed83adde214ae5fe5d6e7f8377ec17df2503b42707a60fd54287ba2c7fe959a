@@ -1,0 +1,114 @@
+**Theorem 7.3 (Complete pointwise-nonsingular stable-space classification).** In Definition 7.1 assume (U) and $\lambda_j\ne0$ at every event, with no uniform positive lower bound. For an empty or finite event list,
+
+$$
+S_{\varepsilon,\boldsymbol\alpha}=\{0\}.
+$$
+
+For infinitely many events and $\mathcal E_\varepsilon=\infty$ this space is $\mathbb R^2$. For infinitely many events and $\mathcal E_\varepsilon<\infty$ it is the kernel of the following explicitly specified nonzero original-coordinate linear functional. Use (7.6) and (7.9), and define real rows and a row series by
+
+$$
+\begin{gathered}
+\mathfrak a_j=p_j^TGV_j,\qquad
+\mathfrak b_j=q_j^TGV_j,\\
+\Lambda=\mathfrak a_0+
+\sum_{j=0}^\infty\bigl((c_j-1)\mathfrak a_j+
+                              \lambda_js_j\mathfrak b_j\bigr),\qquad
+L_{\varepsilon,\boldsymbol\alpha}(u)=\Lambda u.
+\end{gathered}
+\tag{7.12}
+$$
+
+The row series converges absolutely. All its rows, matrices, signs and scalar coefficients depend solely on the prescribed positive triple, schedule and event parameters; in particular $p_0=M^{-t_0}e$ incorporates the arbitrary first event time. For every real initial vector, at its original norm scale,
+
+$$
+\lim_{t\to\infty}\|u_t\|_Q
+=|L_{\varepsilon,\boldsymbol\alpha}(u_0)|,\qquad
+S_{\varepsilon,\boldsymbol\alpha}=\ker L_{\varepsilon,\boldsymbol\alpha}.
+\tag{7.13}
+$$
+
+Consequently the stable space in this case is one real line, and every state outside it has a strictly positive limiting $Q$-norm. These assertions cover every finite prefix, both arithmetic types of the angle, every positive integer gap, variable signs, and nonzero event factors arbitrarily close to zero.
+
+*Proof.* The infinite-energy case is Theorem 7.2. Suppose the event list is infinite and its angular energy is finite. The identities (7.5)–(7.11) remain available, since their derivation did not require a constant parameter.
+
+For a real row $f$ use the dual norm $\|f\|_{Q,*}=\sup_{\|z\|_Q=1}|fz|$. Because $e,Je$ are $Q$-orthonormal,
+
+$$
+\|f\|_{Q,*}^2=|fe|^2+|fJe|^2.
+$$
+
+This follows by writing $z=xe+yJe$: the supremum over $x^2+y^2=1$ is the Euclidean length of $(fe,fJe)$. Every $\mathcal K_j$ is nonexpansive, so $\|V_jz\|_Q\leq\|z\|_Q$ and $\|\mathfrak a_j\|_{Q,*}\leq1$. Apply (7.11) to the two initial vectors $e$ and $Je$. Their $B_j$ coordinates are respectively $\mathfrak b_je$ and $\mathfrak b_jJe$, and both initial norms are one. Adding the resulting inequalities gives
+
+$$
+\sum_{j=0}^\infty\|\mathfrak b_j\|_{Q,*}^2
+\leq\frac{2}{1-\rho^2}.
+\tag{7.14}
+$$
+
+Also $1-c_j=s_j^2/(1+c_j)\leq s_j^2$. The triangle inequality and Cauchy–Schwarz therefore give
+
+$$
+\begin{aligned}
+\sum_{j=0}^\infty
+\|(c_j-1)\mathfrak a_j+\lambda_js_j\mathfrak b_j\|_{Q,*}
+&\leq\sum_{j=0}^\infty s_j^2+
+\rho\left(\sum_{j=0}^\infty s_j^2\right)^{1/2}
+\left(\sum_{j=0}^\infty\|\mathfrak b_j\|_{Q,*}^2\right)^{1/2}
+<\infty.
+\end{aligned}
+\tag{7.15}
+$$
+
+This proves absolute convergence in the two-dimensional row space, so (7.12) defines a real linear functional without referring to any unknown stable space. Since (7.10) holds for every initial vector, its first identity is the row identity
+
+$$
+\mathfrak a_{j+1}-\mathfrak a_j
+=(c_j-1)\mathfrak a_j+\lambda_js_j\mathfrak b_j.
+$$
+
+The series in (7.12) thus telescopes to $\Lambda=\lim_{n\to\infty}\mathfrak a_n$. For any $u_0$, it follows that $A_n=\mathfrak a_nu_0\to\Lambda u_0$, whereas (7.11) gives $B_n\to0$. Taking the norm in the orthonormal frame proves $\|v_n\|_Q\to|\Lambda u_0|$. Equation (7.8) now proves the full-time limit in (7.13), with no normalization of $u_0$.
+
+It remains to prove $\Lambda\ne0$ using only pointwise nonsingularity. Choose an integer $N\geq0$ for which
+
+$$
+E_N:=\sum_{j=N}^\infty s_j^2<\frac{(1-\rho)^2}{4}.
+\tag{7.16}
+$$
+
+Such an $N$ exists by convergence of the nonnegative series. Each $\mathcal K_j$ has eigenvalues $1,\lambda_j$, so the finite product $V_N$ is invertible. Select the real initial vector $u_*=V_N^{-1}p_N$. This is a legitimate vector in the stated unrestricted initial-state domain; there is no bound imposed on the norm of that finite inverse. Its interaction vector at index $N$ is exactly $v_N=p_N$, with $A_N=1$, $B_N=0$ and $\|v_N\|_Q=1$. Subsequent norms are at most one, and hence $|A_j|\leq1$ for $j\geq N$.
+
+For this trajectory, the second identity in (7.10) gives
+
+$$
+|B_{j+1}|\leq|s_j|+\rho|B_j|,\qquad
+|B_j|\leq\sum_{k=N}^{j-1}\rho^{j-1-k}|s_k|\quad(j>N).
+$$
+
+The second inequality follows by induction from $B_N=0$. Weighted Cauchy–Schwarz and the geometric sum give
+
+$$
+|B_j|^2\leq\frac1{1-\rho}
+\sum_{k=N}^{j-1}\rho^{j-1-k}s_k^2.
+$$
+
+Sum first over a finite range of $j$ and then increase that range. All summands are nonnegative, and for each fixed $k$ the weights sum to $1/(1-\rho)$. Consequently
+
+$$
+\sum_{j=N}^\infty B_j^2\leq\frac{E_N}{(1-\rho)^2}.
+$$
+
+Telescoping the exact norm loss (7.10), starting at the unit vector $v_N$, now yields
+
+$$
+\lim_{j\to\infty}\|v_j\|_Q^2
+=1-\sum_{j=N}^\infty(1-\lambda_j^2)B_j^2
+\geq1-\frac{E_N}{(1-\rho)^2}>\frac34.
+\tag{7.17}
+$$
+
+Thus $|L_{\varepsilon,\boldsymbol\alpha}(u_*)|>0$, proving that the row $\Lambda$ is nonzero. Only the finitely many nonzero numbers $\lambda_0,\ldots,\lambda_{N-1}$ were inverted. The tail estimates use (U) and do not divide by any tail $\lambda_j$. In particular no positive lower bound on the entire sequence has entered the proof.
+
+Positive definiteness and continuity of $Q$ imply $u_t\to0$ exactly when $\|u_t\|_Q\to0$. The limit formula therefore identifies the stable space as the kernel of this nonzero row, a one-dimensional subspace in the original coordinate plane, and gives a positive limit at each point outside it. The fixed-parameter functional (6.20) and (7.12) have the same absolute value on every vector when $\lambda_j$ is constant, since both give that same norm limit; either functional describes the same stable line.
+
+For a finite list of $r\geq1$ events, $V_r=\mathcal K_{r-1}\cdots\mathcal K_0$ is invertible for the same pointwise reason. Equation (7.8) gives the eventually constant norm $\|V_ru_0\|_Q$, which is positive exactly when $u_0\ne0$. With no events the norm is always $\|u_0\|_Q$. These observations prove the remaining cases. The arithmetic assertions in Corollary 6.3 concern only $d_j\theta$, so they apply unchanged: for a rational angle ratio, finite energy is equivalent to finitely many nonresonant gaps; an irrational angle ratio admits no resonant or orthogonal positive integer gap. Neither case changes any estimate above. $\square$
+

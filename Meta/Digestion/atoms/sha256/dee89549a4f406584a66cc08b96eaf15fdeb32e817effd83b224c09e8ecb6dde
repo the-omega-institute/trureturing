@@ -1,0 +1,115 @@
+**Lemma 3.1 (A local lower expansion with a quadratic error in
+exceptional mass).** Fix $a,h$ and a winning cap partition. There
+are a neighborhood $\mathcal U$ of $x^*$ in the probability
+simplex and constants $A,c,p_0>0$, depending on $a,h$, such that
+every $x\in\mathcal U\cap\mathcal X(a,h)$ satisfies the following.
+Write
+
+$$
+\varepsilon=\sum_{T\text{ exceptional}}x_T,\qquad
+\nu_k=y_k-\beta\quad(k\in D),\qquad
+P(x)=\sum_T\rho_j(|T\cap C|,|T\cap D|)x_T.
+\tag{3.1}
+$$
+
+Then
+
+$$
+\begin{aligned}
+H(x)&\ge S_j+P(x)+c\sum_{k\in D}\nu_k^2-A\varepsilon^2,\\
+P(x)&\ge p_0\varepsilon,\\
+H(x)&\ge S_j+\frac{p_0}{2}\varepsilon
+                         +c\sum_{k\in D}\nu_k^2.
+\end{aligned}
+\tag{3.2}
+$$
+
+There is also an ordinary Taylor expansion
+
+$$
+H(x)=S_j+P(x)+O_{a,h}(\|x-x^*\|^2)
+\tag{3.3}
+$$
+
+in this neighborhood, where the norm is Euclidean. No global
+convexity of $H$ is asserted.
+
+**Proof.** Set $z=x_C$, $w_k=x_{\{k\}}$ for $k\in D$, and regard
+the exceptional masses as variables. The original normalization
+and mean give the exact identity
+
+$$
+rz+\sum_{T\text{ exceptional}}(|T|-1)x_T=a-1.
+\tag{3.4}
+$$
+
+Consequently $z-\alpha=O_{a,h}(\varepsilon)$. For a core label let
+
+$$
+e_i=\sum_{\substack{T\text{ exceptional}\\i\in T}}x_T,
+\qquad
+f_i=\sum_{\substack{T\text{ exceptional}\\i\in T}}|T|^2x_T.
+$$
+
+Its marginal and numerator are $z+e_i$ and $m^2z+f_i$. The core
+contribution is therefore the smooth function
+
+$$
+H_C=\sum_{i\in C}\frac{m^2z+f_i}{(z+e_i)^2}.
+\tag{3.5}
+$$
+
+All its arguments differ from their cap values by
+$O_{a,h}(\varepsilon)$, so its Taylor remainder is bounded in
+absolute value by a constant times $\varepsilon^2$.
+
+For a tail label put
+
+$$
+q_k=\sum_{\substack{T\text{ exceptional}\\k\in T}}
+(|T|^2-1)x_T\ge0.
+$$
+
+Then $q_k=O_{a,h}(\varepsilon)$ and the tail contribution is
+exactly
+
+$$
+H_D=\sum_{k\in D}\left(\frac1{y_k}+\frac{q_k}{y_k^2}\right).
+\tag{3.6}
+$$
+
+Shrink the neighborhood so that
+$\beta/2<y_k<3\beta/2$. The positive second derivative of $1/t$
+on this interval gives constants $c_1,A_1>0$ with
+
+$$
+\begin{aligned}
+\sum_{k\in D}\frac1{y_k}
+ &\ge \frac n\beta-\eta^2\sum_k\nu_k+c_1\sum_k\nu_k^2,\\
+\sum_{k\in D}\frac{q_k}{y_k^2}
+ &\ge\eta^2\sum_k q_k-A_1\varepsilon
+                           \left(\sum_k\nu_k^2\right)^{1/2}.
+\end{aligned}
+\tag{3.7}
+$$
+
+The elementary inequality
+$uv\le c_1v^2/2+u^2/(2c_1)$ absorbs the last product into half
+the positive quadratic term, with another $O_{a,h}(\varepsilon^2)$
+error. The sum of the linear terms from (3.5)--(3.7) is precisely
+$DH(x^*)[x-x^*]=P(x)$ by Lemma 2.3. This proves the first line
+of (3.2). There are finitely many exceptional types and their
+prices are positive by Lemma 2.2. Their least price $p_0>0$ proves
+the second line. Shrink $\mathcal U$ again so that
+$A\varepsilon\le p_0/2$, obtaining the third line.
+
+All marginal denominators are positive in a real open
+neighborhood of the cap. The full rational function has bounded
+second derivatives on a smaller neighborhood, giving (3.3).
+The first inequality in (3.7) is the scalar supporting-tangent
+inequality applied to $1/t$ after subtracting a positive
+quadratic; see Boyd--Vandenberghe, *Convex Optimization*, §3.1.3,
+[author text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf);
+the positive second derivative above verifies the needed
+convexity. No such hypothesis is imposed on $H$. ∎
+

@@ -1,0 +1,17 @@
+**定义 8.7（承重来源与跨来源边界）。** 本节的 `repo-derived` 综合是同一原 $89$ 坐标连续密度的平稳响应—校准桥 (8.7) 及同一固定灭位 (8.12)。双种子传播、完整 Born 选择、一般有限平衡事实与既有反密度按原结论复用，不另认领为新结果，也不作全球原创或优先权声明。
+
+| 数学来源 | 本节使用的精确内容及不转移的条件 |
+| --- | --- |
+| 本卷引理 2.1、(3.3) | 删去第 $k$ 地址后，同一完整原字传播固定 $b_k$ 的配置基射线；供应 (8.3) 的两个粗响应常数，不供应整个切口扇区的传递性。 |
+| 固定 III (144.12)、定义 1.4 | 唯一 ready 的原有限正向前字射线稠密性与原实际 R；(8.6) 只在投影非零邻域取极限。稠密性不依赖未知密度校准，不授予极限控制。 |
+| 固定 IX 引理 2.1、定理 2.2 | 在全部基态校准已从平稳见证推出以后，消费同一个原 R，先恢复整块支撑，再选择全部 Born；没有倒取结论作本节前提。 |
+| [Freedman–Larsen–Wang][FLW]，Theorem 0.1、§2 Definitions 1–2、Lemma 2.1 | 成熟中间输入沿本卷引理 2.1 的逐基、逐生成元对应及固定 III 的完整群结论复用。仍是 $r=5$ 的原 Jones 扇区，不重证轨道，也不从另一个模型借门。 |
+| [Aldous–Fill，Chapter 2 §2.1.1，(2.1)](https://www.stat.berkeley.edu/~aldous/RWG/Book_Ralph/Ch2.S1.html) | 成熟的有限平稳平衡方程。其行随机记号 $p_{sq}$ 对应这里的 $T(q,s)$；本节只用代数平衡，不调用要求不可约性的唯一性、遍历或时间平均定理。一般可约矩阵的存在性由 (8.14) 的标准平均论证直接给出。 |
+| 本卷定理 4.1、命题 4.3 与固定 IX 定义 3.1、定理 3.2 | 同一全域抹位、校准非 Born、四次 R 密度及其已证明性质，供应命题 8.5 的完整删除边界。 |
+
+[原生切口配平续篇 §§122–129](https://github.com/the-omega-institute/trureturing/blob/05992b304be20a393c6c277d4431119457116ea1/docs/develop/theory/AURIC_C128_NATIVE_CUT_BALANCE_CONTINUATION.md) 的来源是有限 EJA、原 $q,\circ,D$、完整对象与联合；其向量关系、primitive 测试及原事件 CP 消费者没有识别为这里的 $T$ 或 $\mu$。[C139 §§7–11](https://github.com/the-omega-institute/trureturing/blob/05992b304be20a393c6c277d4431119457116ea1/docs/develop/theory/AURIC_C139_MUTUAL_PROBES_AND_INTRINSIC_RECOVERY_OF_SQUARE_GEOMETRY.md) 的正配方与未归一比较量也没有识别为有界配置概率；其命题 10.1 的有界障碍仍保留。
+
+[C117 续篇 §44](https://github.com/the-omega-institute/trureturing/blob/05992b304be20a393c6c277d4431119457116ea1/docs/develop/theory/AURIC_COMMON_SOURCE_SELF_REFERENCE_AND_OBSERVER_SEQUENCES_C117_CONTINUATION.md) 是原十三维载体中的局部效果覆盖，仍独立供应其整体效果入口及全部基底校准；它没有供应 (8.2) 的原生见证。[C133W §§22–30](https://github.com/the-omega-institute/trureturing/blob/05992b304be20a393c6c277d4431119457116ea1/docs/develop/theory/AURIC_C133_UNANCHORED_MARKER_BOUNDED_ORBITS_CONTINUATION_W.md) 的一般 magma、实际单位词、完整四变量关系与外部行传播缺口，也未与本节线性单纯形矩阵建立同源映射。各自的原始读数、质量、实际历史、记录、返回、参考、联合、过程和时间条件继续分别保留。
+
+因此 (8.2) 在原来源中的供应仍是开放桥梁；只要另一个来源未证明到同一 $\Pi$、同一 $T(q,s)=\Pi_q(e_s)$ 和全部原接口的对应，就不能用其“平稳”“正性”或“传播”同名来填补。这份原生数学等价关系不主张完整量子起源已经得到，也不将独立输入的信息量、最小性或实际取得成本计作已减少。
+
