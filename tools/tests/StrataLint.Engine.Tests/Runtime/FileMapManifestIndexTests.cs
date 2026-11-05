@@ -29,7 +29,7 @@ public sealed class FileMapManifestIndexTests
         var entry = Entry("Meta/**/*.json");
         var manifest = Manifest([Entry("**/*.json"), entry, Entry("M*ta/*.json"), entry, Entry("Meta/data.json")]);
 
-        Assert.Equal(manifest.Entries, manifest.Match("Meta/data.json"));
+        Assert.Equal(manifest.Entries.ToArray(), manifest.Match("Meta/data.json").ToArray());
         Assert.Equal(new[] { manifest.Entries[0], manifest.Entries[2] }, manifest.Match("Mata/data.json"));
         Assert.Empty(manifest.Match("Else/data.txt"));
     }

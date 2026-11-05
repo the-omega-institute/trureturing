@@ -95,6 +95,7 @@ internal sealed class FileMapManifest
 {
     private readonly Dictionary<string, ImmutableArray<FileMapEntry>> entriesByRoot;
     private readonly ImmutableArray<FileMapEntry> unrootedEntries;
+
     internal FileMapManifest(
         FileMapResidencePolicy residencePolicy,
         ImmutableArray<FileMapEntry> entries,
