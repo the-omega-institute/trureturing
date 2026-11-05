@@ -47,12 +47,13 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
   refine ⟨(), 0, 2, ?_⟩
   have hp : peak 2 = 4 := by
     norm_num [peak, coefficient, independentSets, board, torusAdjacent, gap,
-      Finset.range_succ, Finset.powerset_insert]
+      Finset.range_add_one, Finset.powerset_insert, Finset.filter_insert, Finset.filter_singleton,
+      Finset.product_eq_biUnion, Finset.singleton_def]
   have hr : 1 < rootGrowth peak 2 := by
     rw [rootGrowth, hp]
     exact Real.one_lt_rpow (by norm_num) (by norm_num)
   change rootGrowth peak 0 ≠ rootGrowth peak 2
-  simpa [rootGrowth] using hr.ne'
+  simpa only [rootGrowth, Nat.cast_zero, zero_pow (by decide : 2 ≠ 0), inv_zero, Real.rpow_zero] using hr.ne
 
 def family : Registration arena
     (type_of% (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsPeakEntropy.result)) where

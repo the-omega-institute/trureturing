@@ -44,7 +44,8 @@ private theorem lowerDependence : ObservationalDependence countSignature lowerAc
   refine ⟨(), 0, 2, ?_⟩
   norm_num [lowerActual, realize, a063443, tilingPlacements, peak, coefficient,
     torusCount, freeCount, independentSets, board, torusAdjacent, freeAdjacent, gap,
-    Finset.range_succ, Finset.powerset_insert]
+    Finset.range_add_one, Finset.powerset_insert, Finset.filter_insert, Finset.filter_singleton,
+      Finset.product_eq_biUnion, Finset.singleton_def]
 
 def lowerFamily : Registration lowerArena
     (type_of% (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.free_le_torus)) where
@@ -116,7 +117,8 @@ private theorem upperDependence : ObservationalDependence countSignature upperAc
   refine ⟨(), 0, 1, ?_⟩
   norm_num [upperActual, realize, a063443, tilingPlacements, peak, coefficient,
     torusCount, freeCount, independentSets, board, torusAdjacent, freeAdjacent, gap,
-    Finset.range_succ, Finset.powerset_insert]
+    Finset.range_add_one, Finset.powerset_insert, Finset.filter_insert, Finset.filter_singleton,
+      Finset.product_eq_biUnion, Finset.singleton_def]
 
 def upperFamily : Registration upperArena
     (type_of% (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.torus_le_free)) where
@@ -181,6 +183,7 @@ private theorem modalLossRejectedLaw : ¬ modalLossArena.Law modalLossRejected :
   intro h
   have hf := h 0
   change (((0 : ℕ) ^ 2 + 1) * peak (0 : ℕ)) + 1 ≤ ((0 : ℕ) ^ 2 + 1) * peak (0 : ℕ) at hf
+  simp only [Nat.zero_pow (by decide : 0 < 2), zero_add, one_mul] at hf
   omega
 
 private theorem modalLossDependence : ObservationalDependence countSignature modalLossActual := by
@@ -188,7 +191,8 @@ private theorem modalLossDependence : ObservationalDependence countSignature mod
   refine ⟨(), 0, 1, ?_⟩
   norm_num [modalLossActual, realize, a063443, tilingPlacements, peak, coefficient,
     torusCount, freeCount, independentSets, board, torusAdjacent, freeAdjacent, gap,
-    Finset.range_succ, Finset.powerset_insert]
+    Finset.range_add_one, Finset.powerset_insert, Finset.filter_insert, Finset.filter_singleton,
+      Finset.product_eq_biUnion, Finset.singleton_def]
 
 def modalLossFamily : Registration modalLossArena
     (type_of% (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.count_le_mul_peak)) where
@@ -260,7 +264,8 @@ private theorem modalUpperDependence : ObservationalDependence countSignature mo
   refine ⟨(), 0, 2, ?_⟩
   norm_num [modalUpperActual, realize, a063443, tilingPlacements, peak, coefficient,
     torusCount, freeCount, independentSets, board, torusAdjacent, freeAdjacent, gap,
-    Finset.range_succ, Finset.powerset_insert]
+    Finset.range_add_one, Finset.powerset_insert, Finset.filter_insert, Finset.filter_singleton,
+      Finset.product_eq_biUnion, Finset.singleton_def]
 
 def modalUpperFamily : Registration modalUpperArena
     (type_of% (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.peak_le_count)) where
@@ -332,7 +337,8 @@ private theorem tilingDependence : ObservationalDependence countSignature tiling
   refine ⟨(), 0, 2, ?_⟩
   norm_num [tilingActual, realize, a063443, tilingPlacements, peak, coefficient,
     torusCount, freeCount, independentSets, board, torusAdjacent, freeAdjacent, gap,
-    Finset.range_succ, Finset.powerset_insert]
+    Finset.range_add_one, Finset.powerset_insert, Finset.filter_insert, Finset.filter_singleton,
+      Finset.product_eq_biUnion, Finset.singleton_def]
 
 def tilingFamily : Registration tilingArena
     (type_of% (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.tiling_free_identity)) where
@@ -467,13 +473,15 @@ private theorem logDependence : ObservationalDependence logSignature logActual :
   intro i
   refine ⟨(), 0, 1, ?_⟩
   have h0 : freeCount 0 = 1 := by
-    norm_num [freeCount, independentSets, board, Finset.range_succ]
+    norm_num [freeCount, independentSets, board, Finset.range_add_one, Finset.filter_singleton]
   have h1 : freeCount 1 = 2 := by
     norm_num [freeCount, independentSets, board, freeAdjacent, gap,
-      Finset.range_succ, Finset.powerset_insert]
+      Finset.range_add_one, Finset.powerset_insert, Finset.filter_insert, Finset.filter_singleton,
+      Finset.product_eq_biUnion, Finset.singleton_def]
   change Real.log (freeCount 0 : ℝ) ≠ Real.log (freeCount 1 : ℝ)
   rw [h0, h1]
-  simpa using (Real.log_pos (by norm_num : (1 : ℝ) < 2)).ne'
+  simpa only [Nat.cast_one, Nat.cast_ofNat, Real.log_one] using
+    (ne_of_lt (Real.log_pos (by norm_num : (1 : ℝ) < 2)))
 
 def logFamily : Registration logArena (type_of% (@free_log_limit)) where
   actual := logActual

@@ -52,8 +52,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), (fun _ _ => 0), (fun r c => (r : ℝ) * c), ?_⟩
-  change (fun (_ _ : ℕ) => (0 : ℝ)) ≠ (fun r c => (r : ℝ) * c)
+  refine ⟨(), (fun _ _ => 0), (fun (r c : ℕ) => (r : ℝ) * c), ?_⟩
+  change (fun (_ _ : ℕ) => (0 : ℝ)) ≠ (fun (r c : ℕ) => (r : ℝ) * c)
   intro h
   have h0 := congrFun (congrFun h 1) 1
   norm_num at h0

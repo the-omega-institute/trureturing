@@ -36,6 +36,6 @@ internal sealed class ToroidalKingsEmptySeamDocument : IScribeDocumentDefinition
     private static DocumentBlock Node(string id, string name, string title, string prose,
         DescribeRole role = DescribeRole.Definition) => Describe.Lean(
         DescribeId.Create(id), DeclarationHandle.Create(Owner + name), H(title),
-        StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+        StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
         Blocks(Paragraph(Text(prose))), role);
 }

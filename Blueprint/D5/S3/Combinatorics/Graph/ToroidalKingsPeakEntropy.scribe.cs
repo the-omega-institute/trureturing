@@ -21,6 +21,6 @@ internal sealed class ToroidalKingsPeakEntropyDocument : IScribeDocumentDefiniti
 
     private static DocumentBlock Node(string id, string name, string title, string prose,
         DescribeRole role, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(DescribeId.Create(id),
-        DeclarationHandle.Create(Owner + name), H(title), StatementSource.FromLean(),
+        DeclarationHandle.Create(Owner + name), H(title), StatementSource.WithoutFormula(),
         AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role, resolution);
 }
