@@ -27,4 +27,14 @@ def initializedWindow : Application.{0,0,0,0,0,0}
       actions := LeanInformationAudit.AuricFib.NativePrediction.allActions
       evidence := .closed (LeanInformationAudit.AuricFib.NativePrediction.memory_closed _) } }
 
+def initializedWindowQuantity : Application.{0,0,0,0,0,0}
+    NativeContinuation.NullReplyFiber.native_execution where
+  evidence := initializedWindow.evidence
+  prediction := some {
+    source := source
+    contract := {
+      summary := .seamReply
+      actions := LeanInformationAudit.AuricFib.NativePrediction.allActions
+      evidence := .separated LeanInformationAudit.AuricFib.NativePrediction.quantitySeparation } }
+
 end Reg.D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber

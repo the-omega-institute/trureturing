@@ -118,6 +118,43 @@ end AuricFibUniversalProduction
         cleanup_module(MODULE)
         cls.work.cleanup()
 
+    def test_native_prediction_integration_probe(self):
+        owner = 'Reg.D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber'
+        report = self.directory / 'native-prediction-probe.json'
+        with zipfile.ZipFile(STATE / 'modules' / (owner + '.zip')) as bundle:
+            for suffix in ('', '.materials.zip', '.provenance.json'):
+                Path(str(report) + suffix).write_bytes(bundle.read('raw-lean-report.json' + suffix))
+        rows = {row['application'].removeprefix(owner + '.'): row
+                for row in fib_analysis.consume(report)['applications']}
+        actual = {}
+        for name, claim, summary in (('initializedWindow', 'closed', 'memory'),
+                                     ('initializedWindowQuantity', 'separated', 'seamReply')):
+            row = rows[name]
+            self.assertIsNotNone(row['request'])
+            found = row['reading']['continuation_target']['predictive_closure']
+            self.assertEqual(row['request']['compiled_prediction'], found)
+            self.assertEqual((found['kind'], found['claim'], found['summary']),
+                             ('available', claim, summary))
+            self.assertEqual(found['actions'], ['zero', 'low', 'high', 'ends', 'middle'])
+            self.assertFalse(row['reading']['disposition']['is_lean_proof'])
+            actual[name] = found
+        self.assertIn('every finite word', actual['initializedWindow']['word_scope'])
+        witness = actual['initializedWindowQuantity']['witness']
+        self.assertEqual(witness['left']['composition'], [3, 0])
+        self.assertEqual(witness['right']['composition'], [0, 2])
+        self.assertEqual(witness['word'], ['zero'])
+        self.assertTrue(witness['same_summary']['identity'])
+        self.assertTrue(witness['different_reply']['identity'])
+        source = ROOT / (owner.replace('.', '/') + '.lean')
+        result = json.dumps({
+            'module': owner, 'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest(),
+            'applications': actual}, sort_keys=True)
+        print('FIB_INTEGRATION_PROBE ' + result, flush=True)
+        if summary_path := os.environ.get('GITHUB_STEP_SUMMARY'):
+            with open(summary_path, 'a') as summary:
+                summary.write('FIB integration probe' + chr(10) + chr(10))
+                summary.write('```json' + chr(10) + result + chr(10) + '```' + chr(10))
+
     def test_compiled_clients_boundaries(self):
         current = self.first
         for key in ('finite', 'constant', 'quotient', 'restricted', 'empty', 'singleton', 'delayed', 'decodedNat'):
