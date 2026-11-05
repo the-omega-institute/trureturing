@@ -20,7 +20,7 @@ Real coordinates multiply the three single-qubit Pauli matrices.
 
 $$\forall a \in \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(3\right)\right),\; \operatorname{B}\left(a\right) = \begin{pmatrix}(a\left(2\right): \mathbb{C})&((a\left(0\right): \mathbb{C})) - ((\operatorname{Complex.I}) \cdot ((a\left(1\right): \mathbb{C})))\\((a\left(0\right): \mathbb{C})) + ((\operatorname{Complex.I}) \cdot ((a\left(1\right): \mathbb{C})))&-(a\left(2\right): \mathbb{C})\end{pmatrix}$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/Bloch/QubitBloch.B_formula` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/Bloch/QubitBloch.B_formula_core` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -43,6 +43,6 @@ A real scalar identity is added to the traceless Bloch matrix.
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Measurement/Bloch/QubitBloch.B`
-- Truth anchor: `D5/S3/Quantum/Measurement/Bloch/QubitBloch.B_formula`
+- Truth anchor: `D5/S3/Quantum/Measurement/Bloch/QubitBloch.B_formula_core`
 - Truth anchor: `D5/S3/Quantum/Measurement/Bloch/QubitBloch.scalarB`
 - Dependency: [D5/S3/Quantum/Information/Pauli/PauliMatrix](../../Information/Pauli/PauliMatrix.md)
