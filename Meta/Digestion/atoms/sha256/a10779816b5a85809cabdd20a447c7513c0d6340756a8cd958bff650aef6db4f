@@ -1,0 +1,6 @@
+# FIB 自校准关系数学：统一接口续卷
+
+本卷是 [FIB 自校准关系数学 IV](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md) 与 KBonacci 自校准边界、实际取得资源卷之间的薄综合接口。它只组织并解释已有结果，不新增 Lean 声明，不把应用性绑定包装成新的数学内容。每个结论仍相对于明确的来源域、读数、操作和目标；理论正文不是 kernel 真源。
+
+统一接口沿用 IV 的连续编号，以便回接既有失败纤维、正源和报告费用章节。KBonacci 的编码、边界和余数供应见 [KBONACCI_SELF_CALIBRATING_BOUNDARIES](KBONACCI_SELF_CALIBRATING_BOUNDARIES.md)；关系量具的基本重建见 [FIB 自校准关系数学](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md)；实际取得和源相关资源见相应 `KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES` 续卷。
+

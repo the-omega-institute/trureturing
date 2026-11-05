@@ -4003,3 +4003,734 @@ The twenty-one repeated-label ambient $I^3$ coordinates are not individually for
 The original-source inputs to this derivation are the exact correction and ordered-functional results 152.A–C, their consumed sphere argument (147.6)–(147.8), the orbit positivity (153.8)–(153.10), the proved folded rank (153.16), and the finite-partition construction 153.E. The classical intermediates in those reused correction results are R. Meshulam and P. Šemrl, *Locally linearly dependent operators*, [doi:10.2140/pjm.2002.203.441](https://doi.org/10.2140/pjm.2002.203.441), Theorem 2.2, and B. S. Mityagin, *The zero set of a real analytic function*, [arXiv:1512.07276v1](https://arxiv.org/abs/1512.07276v1), Proposition 0. The fixed-point intermediate is L. E. J. Brouwer, *Über Abbildung von Mannigfaltigkeiten*, [doi:10.1007/BF01456931](https://doi.org/10.1007/BF01456931), in its finite-dimensional closed-ball form. Their original hypotheses and the retained endpoint, source and analytic suppliers remain in force. The additional coattainment follows from the two-mode reversal separation (154.13)–(154.16), the BBB coefficient (154.17), their exact protected corrections and the single finite partition (154.31). $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 155. Positive BB3 inputs, finite coupled improvement and source-ratio selection
+
+**Definition 155.1 (the original full-law consumer and the calibrated fiber).** Retain the complete telescope of Definitions 134.1, 135.1 and 154.1, including all inherited endpoint, source and analytic suppliers of Appendix II §§115–117, 123–125 and 133. Thus $\theta=(a,\eta,d,b)$ ranges over every original finite $a,\eta,d>0$ and every permitted everywhere Borel representative $b$ of $g_d$ satisfying $0<b\le M$. The original product on $G=H^1\times\mathbb R$, raw Haar measure $\mu$, source $e$, unit-source field $L\Gamma=\delta_e$, coefficient-one $w_*$, coefficient-positive normalized $h$, actual full self-adjoint endpoint with selector $A_{\rm src}=\rho C_{\rm src}$, and full conservative source-inclusive $K$ are unchanged. Keep
+
+$$
+\begin{gathered}
+m=h^2\mu,\qquad T_s=e^{-sK},\qquad P=T_d,\qquad
+ g_j=P^jg=g_{(2+j)d}\ (j=0,1,2),\qquad g=g_{2d},\\
+M=1+\|g_d\|_\infty,\qquad c=(4M)^{-1},\qquad p=\tfrac14,\\
+f_3=cb,\qquad f_B=p,\qquad f_0=f_1=(\tfrac34-cb)/2,\\
+\mathcal C(u,v,w)=\int_GguP(vPw)\,dm,\qquad
+\Phi_3(u)=(\mathcal C(u_y,u_z,u_w))_{y,z,w\in\mathcal L},\qquad
+\Delta(u)=\Phi_3(u)-\Phi_3(f),\quad \mathcal L=\{0,1,3,B\}.
+\end{gathered}
+\tag{155.1}
+$$
+
+The diffusion starts at the original $e$, with source law $g_{s+r}=T_rg_s$, epochs $2d,3d,4d$, and the same prescribed $f$ at all three epochs with conditionally independent fresh read noises. For a whole-$G$ pointwise Borel partition $D$, write $\Delta(D)=\Delta(\mathbf1_D)$ and $r(D)=\Delta(D)_{BB3}$. Its terminal factors are always its own $P\mathbf1_{D_w}$. Put
+
+$$
+\mathscr F_{154}(\theta)
+ =\{D:\ D\text{ is such a partition and }
+             \mathcal H_{43}(\mathbf1_D)=\mathcal H_{43}(f)\}.
+\tag{155.2}
+$$
+
+By the complement identities in 154.F, membership means all twelve original source marginals, every ordered pair law at each pair of epochs, all six permutations of $013$, and BBB are exact. The governing universal target remains
+
+$$
+\forall\theta\quad F_{64}(\theta),\qquad
+F_{64}(\theta):\ \exists D\text{ one whole-}G
+ \text{ pointwise Borel partition with }\Delta(D)=0.
+\tag{155.3}
+$$
+
+For two actual partitions let $A(D,D')$ be the Borel set where their labels differ. Set $G_0=\|g\|_\infty<\infty$; source propagation and Markov contraction give $\|g_j\|_\infty\le G_0$ for $j=0,1,2$.
+
+**Theorem 155.2 (coupled actual endpoints with positive BB3 and controlled full-residual improvement).** Under exactly Definition 155.1, for every original $\theta$ there exist bounded Borel functions $X_y$, a number $t_0>0$, and a vector $R\in\mathbb R^{64}$ such that, with
+
+$$
+\mathfrak M=\sum_{y\in\mathcal L}\|X_y\|_1,\qquad
+\kappa=R_{BB3}>0,\qquad J=\|R\|_\infty>0,
+\tag{155.4}
+$$
+
+the following quantifiers hold. Here $t$ and $t'$ are readout amplitudes. For every $0<t<t_0$, every $0<\varepsilon<1$, and every
+
+$$
+t'=(1-\varepsilon)t,\qquad q_\varepsilon=2\varepsilon-\varepsilon^2,
+\qquad
+0<\delta<\tfrac14\min\{(t')^2\kappa,
+                              q_\varepsilon t^2J\},
+\tag{155.5}
+$$
+
+there exist actual $D,D'\in\mathscr F_{154}(\theta)$, co-selected by the same finite-cell quantile construction on the original $G$, satisfying
+
+$$
+\begin{gathered}
+\|\Delta(D)-t^2R\|_\infty<\delta,\qquad
+\|\Delta(D')-(t')^2R\|_\infty<\delta,\\
+r(D)>t^2\kappa-\delta>0,\qquad
+r(D')>(t')^2\kappa-\delta>0,\\
+m(A(D,D'))\le3\varepsilon t\mathfrak M+\delta,\\
+\|\Delta(D')\|_\infty
+ \le\|\Delta(D)\|_\infty-q_\varepsilon t^2J+2\delta
+ <\|\Delta(D)\|_\infty-\tfrac12q_\varepsilon t^2J.
+\end{gathered}
+\tag{155.6}
+$$
+
+In particular, the improvement concerns the norm of the complete sixty-four-coordinate residual. More precisely,
+
+$$
+\|\Delta(D')-(1-\varepsilon)^2\Delta(D)\|_\infty
+ <\bigl(1+(1-\varepsilon)^2\bigr)\delta.
+\tag{155.7}
+$$
+
+All constants may depend on $\theta$ and the selected original-space functions. No parameter-uniform inverse estimate is part of the assertion.
+
+*Proof.* Use the actual corrected functions $x_0,x_1,x_3$ from (154.19)–(154.21), with their invariant slack set $E$ and invariant representative $f^0$. They are bounded Borel, supported in $E$, odd under the original half-turn, and have disjoint positive angular spectra. They satisfy
+
+$$
+q_r(x_a)=0,\qquad Q_r(x_a,x_b)=0\quad(a\ne b),
+\qquad r\in\{12,13,23\}.
+\tag{155.8}
+$$
+
+Retain also the seven-column Gram nonsingularity in (154.21) and the thirty-six lower directions of 154.D. Define
+
+$$
+s=x_0+x_1+x_3,\qquad
+X_a=x_a\ (a=0,1,3),\quad X_B=-s,\qquad
+u^{(\tau)}=f^0+\tau X.
+\tag{155.9}
+$$
+
+Choose $t_0>0$ small enough that every $0\le\tau\le t_0$ gives a pointwise simplex tuple, with a common positive lower bound for its components $0,1,B$ on $G$ and for component $3$ on $E$. This follows from (154.4), boundedness, and the support of the $X_y$ in $E$. All identities of classes may be made pointwise on a common Borel conull set and repaired on its complement as in 154.D.
+
+For every coordinate, expansion of the original trilinear form has zero linear term: each such term contains one odd function and otherwise invariant factors. Its cubic term also vanishes, since all three $X$ factors are odd and the original measure, $g$ and $P$ are half-turn invariant. Consequently
+
+$$
+\Delta(u^{(\tau)})=\tau^2R,\qquad
+R_{yzw}=\mathcal C(X_y,X_z,f_w^0)
+       +\mathcal C(X_y,f_z^0,X_w)
+       +\mathcal C(f_y^0,X_z,X_w).
+\tag{155.10}
+$$
+
+The marginal, pair, six distinct-label and BBB equalities in (154.20), (154.23)–(154.24) hold for every such $\tau$. Thus $\mathcal H_{43}(u^{(\tau)})=\mathcal H_{43}(f)$. The invariance and disjoint-spectrum cancellations used there do not select a single value of $\tau$.
+
+Here $s\ne0$: its frequency-$n_0$ component is the nonzero low-frequency input $v_0$ of (154.8), which occurs in neither of the other two functions or their high corrections. Source propagation gives $Pf_3^0=cg$. Hence (155.8) gives the following actual stochastic coefficient, before any partition approximation:
+
+$$
+\begin{aligned}
+R_{BB3}
+ &=\mathcal C(s,s,f_3^0)
+       -p\mathcal C(s,1,x_3)-p\mathcal C(1,s,x_3)\\
+ &=c\langle gs,P(gs)\rangle_m
+       -pQ_{13}(s,x_3)-pQ_{23}(s,x_3)\\
+ &=c\|T_{d/2}(gs)\|_2^2=:\kappa>0.
+\end{aligned}
+\tag{155.11}
+$$
+
+The last inequality uses $g>0$ almost everywhere, $s\ne0$, and the injective full self-adjoint heat operator of (134.17)–(134.18). The two ordered pair terms vanish because each summand is either a diagonal term or a disjoint-spectrum term in (155.8). This is the source-specific positive coefficient of §134 applied to $s$; it asserts no coercive lower bound.
+
+Fix $t,\varepsilon,\delta$ as in the statement. The forty-three bounded directions $e_k$ of (154.25)–(154.28) can be chosen once from these fixed $x_a$, independently of $\tau>0$. For
+
+$$
+u_\tau(z)=u^{(\tau)}+\sum_{k=1}^{43}z_ke_k,\qquad
+F_\tau(z)=\mathcal H_{43}(u_\tau(z))-\mathcal H_{43}(f),\qquad
+A_\tau=DF_\tau(0),
+\tag{155.12}
+$$
+
+$A_\tau$ is invertible for every $0<\tau<t_0$. Indeed the marginal block is the same invertible source Gram block, the twenty-seven pair-direction block is $\tau$ times its fixed invertible block, and the final seven-direction block is $\tau^2\mathsf G$. The off-diagonal blocks do not alter the block triangular argument of 154.D. Component-$3$ directions remain supported in $E$, so each center has a legal closed ball in these directions.
+
+Use Euclidean norm on $\mathbb R^{43}$ and choose a finite $B>0$ with
+
+$$
+\sum_y\left\|\sum_kz_ke_{k,y}\right\|_1\le B\|z\|.
+\tag{155.13}
+$$
+
+Choose one sufficiently small radius $r>0$ for both centers $\tau=t,t'$ such that their closed balls are legal,
+
+$$
+6Br<\delta,\qquad 3G_0Br<\delta/2,\qquad
+\sup_{\|z\|\le r}\|z-A_\tau^{-1}F_\tau(z)\|<r/3
+ \quad(\tau=t,t').
+\tag{155.14}
+$$
+
+The last inequalities follow from $F_\tau(0)=0$ and its invertible derivative at each of the two fixed positive centers. No common lower bound as $t'$ tends to zero has been assumed.
+
+Apply exactly the common coordinate-quantile construction of 154.E, using the same finite partitions $\mathcal P_n$, the same nested cuts in each cell, and the same order $0,1,3,B$ for both balls. Denote this common rounding map by $\mathcal D_n(u)$. It satisfies
+
+$$
+\begin{gathered}
+m(A(\mathcal D_n(u),\mathcal D_n(v)))
+ =\tfrac12\sum_y m(\mathcal D_{n,y}(u)\mathbin\triangle
+                                      \mathcal D_{n,y}(v))
+ \le3\sum_y\|u_y-v_y\|_1,\\
+\|\Phi_3(\mathbf1_{\mathcal D_n(u)})-\Phi_3(u)\|_\infty
+ \le2\|W-W_n\|_1,\\
+\|\mathcal H_{43}(\mathbf1_{\mathcal D_n(u)})
+                         -\mathcal H_{43}(u)\|_2
+ \le2\sqrt{43}\,\|W-W_n\|_1.
+\end{gathered}
+\tag{155.15}
+$$
+
+The first estimate is (154.29) divided by two. For the other two estimates, with the original path density $W$ and its cellwise conditional expectation $W_n$, the integrals against $W_n$ agree by the four cell masses, for every slot product in question. Replacing $W_n$ by $W$ costs at most $2\|W-W_n\|_1$ per coordinate. This applies to all sixty-four triple coordinates, as well as the forty-three calibrated coordinates. These bounds are uniform over both balls, and $\|W-W_n\|_1\to0$.
+
+Choose one finite $n$ so large that
+
+$$
+2\|W-W_n\|_1<\delta/2,\qquad
+2\sqrt{43}\max_{\tau=t,t'}\|A_\tau^{-1}\|\,
+                     \|W-W_n\|_1<r/3.
+\tag{155.16}
+$$
+
+For each center let $F_{n,\tau}(z)=\mathcal H_{43}(\mathbf1_{\mathcal D_n(u_\tau(z))})-\mathcal H_{43}(f)$. The same continuity argument as in 154.E makes these actual maps continuous. By (155.14)–(155.16), $z\mapsto z-A_\tau^{-1}F_{n,\tau}(z)$ maps the closed radius-$r$ ball into itself. Brouwer supplies roots $z_t,z_{t'}$ in that ball. Put
+
+$$
+D=\mathcal D_n(u_t(z_t)),\qquad
+D'=\mathcal D_n(u_{t'}(z_{t'})).
+\tag{155.17}
+$$
+
+They are pointwise Borel partitions of all of the original $G$, exact for $\mathcal H_{43}$. Each is evaluated against the original $W$, hence with its own propagated terminal indicators.
+
+For any two legal simplex tuples, telescoping the three factors against $W$ bounds one coefficient difference by
+
+$$
+\int g_0|u_y-v_y|\,dm+
+\int g_1|u_z-v_z|\,dm+
+\int g_2|u_w-v_w|\,dm
+ \le3G_0\sum_a\|u_a-v_a\|_1.
+\tag{155.18}
+$$
+
+Equations (155.13)–(155.16) and (155.18) give the two residual approximations in (155.6). The first line of (155.15) gives
+
+$$
+m(A(D,D'))\le3\bigl(\varepsilon t\mathfrak M
+                         +B\|z_t\|+B\|z_{t'}\|\bigr)
+ <3\varepsilon t\mathfrak M+\delta.
+\tag{155.19}
+$$
+
+The positive BB3 bounds and (155.7) follow from (155.10)–(155.11) and these approximations. Finally $\|\Delta(D)\|_\infty\ge t^2J-\delta$ and $\|\Delta(D')\|_\infty\le(t')^2J+\delta$ prove the improvement in (155.6). Restoring the originally given representative $b$ changes no target integral, by the original positive-time absolute continuity. $\square$
+
+**Theorem 155.3 (the exact source-ratio donor identity and a necessary selection cost).** Retain Definition 155.1. Let $D\in\mathscr D_{12}(\theta)$ satisfy $r(D)>0$. For every actual whole-$G$ pointwise Borel partition $D^*$ satisfying $\Delta(D^*)=0$, define the coarse cells
+
+$$
+E_S=D_0\cup D_1,\quad E_3=D_3,\quad E_B=D_B,
+\qquad
+E_S^*=D_0^*\cup D_1^*,\quad E_3^*=D_3^*,\quad E_B^*=D_B^*.
+\tag{155.20}
+$$
+
+For $k=0,1,2$ put $\nu_k(A)=\int_Ag_k\,dm$ and $\bar g=(g_0+g_1+g_2)/3$. These are the original three source marginals and their bookkeeping average; every joint coefficient remains the original integral (155.1). Write
+
+$$
+\begin{gathered}
+t_r=\int_Gg_{rd}f_3\,dm\quad(r=2,3,4),\qquad
+\bar t=(t_2+t_3+t_4)/3,\\
+\pi_i=\int_{E_i}\bar g\,dm,\qquad
+\rho_i^{(k)}=\nu_k(E_i)/\pi_i\quad(i=S,3,B),\\
+T_{ij}=\int_{E_i\cap E_j^*}\bar g\,dm,\qquad
+Z_{ij}^{(k)}=\nu_k(E_i\cap E_j^*)-\rho_i^{(k)}T_{ij}.
+\end{gathered}
+\tag{155.21}
+$$
+
+The row reference is always the original donor $E_i$. The exact table identities are
+
+$$
+\begin{gathered}
+\sum_jT_{ij}=\pi_i,\qquad \sum_iT_{ij}=\pi_j,\qquad
+\sum_jZ_{ij}^{(k)}=0,\\
+\sum_i\bigl(\rho_i^{(k)}T_{ij}+Z_{ij}^{(k)}\bigr)
+        =\rho_j^{(k)}\pi_j,\\
+\sum_{i,j}(\rho_i^{(k)}-\rho_j^{(k)})^2T_{ij}
+ =2\sum_{i,j}(\rho_j^{(k)}-\rho_i^{(k)})Z_{ij}^{(k)}
+ \quad(k=0,1,2).
+\end{gathered}
+\tag{155.22}
+$$
+
+In particular put $\rho_i=\rho_i^{(0)}$. Their source-specific values obey
+
+$$
+\begin{gathered}
+\pi_3=\bar t,\quad \pi_B=\tfrac14,\quad \pi_S=\tfrac34-\bar t,\\
+\rho_3=t_2/\bar t>1=\rho_B>
+ \rho_S=(\tfrac34-t_2)/(\tfrac34-\bar t),\\
+\gamma=\min\{\rho_3-1,1-\rho_S\}>0,\qquad
+\mathfrak d_\rho=\rho_3-\rho_S>0.
+\end{gathered}
+\tag{155.23}
+$$
+
+Let $A_c$ be the set where $D,D^*$ have different coarse labels in $\{S,3,B\}$. Every such exact correction must pay
+
+$$
+\begin{gathered}
+\mathfrak S(D,D^*):=\sum_{i\ne j}|Z_{ij}^{(0)}|
+ \ge\frac{\gamma^2}{2\mathfrak d_\rho}\int_{A_c}\bar g\,dm
+ \ge\frac{\gamma^2}{6\mathfrak d_\rho}\,r(D)>0,\\
+ m(A_c)\ge\frac{r(D)}{3G_0}>0.
+\end{gathered}
+\tag{155.24}
+$$
+
+Thus nonproportional selection across coarse labels is necessary. The conclusion applies to every exact full correction, with no restriction on its direction, support, number of pieces or construction.
+
+*Proof.* Summing a full law over its other two labels gives each of its three original source marginals. Therefore $D^*\in\mathscr D_{12}(\theta)$. In fact the table identities (155.22) hold for any two members of $\mathscr D_{12}(\theta)$, independently of their pair or triple laws. Additivity of the intersections gives the first two lines. For fixed $k$, abbreviate $\rho_i^{(k)}$ to $a_i$ and $Z_{ij}^{(k)}$ to $Z_{ij}$. Expansion of the square, the two table margins, and the recipient equations give
+
+$$
+\begin{aligned}
+\sum_{i,j}(a_i-a_j)^2T_{ij}
+ &=2\sum_j a_j^2\pi_j-2\sum_j a_j\sum_i a_iT_{ij}\\
+ &=2\sum_{i,j}a_jZ_{ij}
+ =2\sum_{i,j}(a_j-a_i)Z_{ij}.
+\end{aligned}
+\tag{155.25}
+$$
+
+The last equality uses the zero row sums of $Z$. This is the elementary finite-table variance identity; its general algebra is a classical intermediate, not an additional source theorem.
+
+Proposition 135.2 gives $0<t_4<t_3<t_2\le1/4$ for every original tuple. The prescribed source masses of $3,B,S$ at epoch $rd$ are $t_r,1/4,3/4-t_r$. These facts give (155.23), with positive denominators and three distinct ratios. Hence the $k=0$ identity in (155.22) yields
+
+$$
+\gamma^2\sum_{i\ne j}T_{ij}
+ \le\sum_{i,j}(\rho_i-\rho_j)^2T_{ij}
+ \le2\mathfrak d_\rho\sum_{i\ne j}|Z_{ij}^{(0)}|.
+\tag{155.26}
+$$
+
+The off-diagonal table mass is exactly $\int_{A_c}\bar g\,dm$.
+
+The input and corrected BB3 coefficients differ by $r(D)$. Telescoping their three actual indicator factors against the original $W$ bounds that difference by the probability of a changed $B$ label in the first slot, a changed $B$ label in the second, or a changed $3$ label in the third. Each changed set is contained in $A_c$. Thus
+
+$$
+0<r(D)\le\nu_0(A_c)+\nu_1(A_c)+\nu_2(A_c)
+             =3\int_{A_c}\bar g\,dm\le3G_0m(A_c).
+\tag{155.27}
+$$
+
+This proves (155.24). Every factor used in this telescoping is the actual partition indicator for its own slot; the calculation neither fixes an external terminal nor substitutes $cg$ for $P\mathbf1_{D_3^*}$.
+
+If transfers preserve the original donor source profiles, in the precise sense
+
+$$
+\nu_k(E_i\cap E_j^*)=\rho_i^{(k)}T_{ij}
+       \quad(i,j=S,3,B;\ k=0,1,2),
+\tag{155.28}
+$$
+
+then $Z=0$, so (155.26) forces every off-diagonal $T_{ij}$ to vanish. Already preservation of the single $k=0$ ratio in (155.28) suffices. Since $\bar g>0$ almost everywhere, $E_B^*=E_B$ and $E_3^*=E_3$ modulo $m$. Their own propagated indicators and their BB3 coefficient are consequently unchanged. Such transfers cannot repair this positive-BB3 input.
+
+The same exclusion holds if “preserving the donor source ratio” refers just to the native ratio of epochs $3d$ and $2d$. Indeed these donor ratios are
+
+$$
+\widetilde\rho_3=t_3/t_2<1=\widetilde\rho_B<
+ \widetilde\rho_S=(\tfrac34-t_3)/(\tfrac34-t_2).
+\tag{155.29}
+$$
+
+Apply (155.25) with $T_{ij}$ replaced by $\nu_0(E_i\cap E_j^*)$, margins $\nu_0(E_i)$, and errors $\nu_1(E_i\cap E_j^*)-\widetilde\rho_i\nu_0(E_i\cap E_j^*)$. If all those errors vanish, the distinct ratios again force all off-diagonal masses to vanish. Equivalence of $\nu_0$ and $m$ gives the same conclusion. Null modifications of a partition remain possible, and affect none of the original positive-time laws.
+
+Finite proportional subdivisions of a donor under the three measures $\nu_k$ are the linear operation supplied by Dvoretzky–Wald–Wolfowitz, *Relations among certain ranges of vector measures*, [DOI 10.2140/pjm.1951.1.59, §3 Theorem 4 and Lemma 2, pp. 66–67](https://msp.org/pjm/1951/1-1/pjm-v1-n1-p06-s.pdf). Their finite atomless-measure hypotheses hold on every donor, since $\nu_k\ll m\ll\mu$. When a transfer uses one common fraction for all three measures, it satisfies (155.28). The obstruction above concerns combining such transfers with preservation of all recipient source masses and repair of the positive BB3 coefficient; DWW itself prescribes only linear integrals. $\square$
+
+**Corollary 155.4 (the coupled full-law obligation).** For every original $\theta$ and every choice of the endpoints in Theorem 155.2, each hypothetical exact full correction $D^*$ of its selected input $D$ satisfies the exact donor identity (155.22) and
+
+$$
+\mathfrak S(D,D^*)>
+ \frac{\gamma^2}{6\mathfrak d_\rho}(t^2\kappa-\delta)>0.
+\tag{155.30}
+$$
+
+Both endpoints are genuinely partially calibrated inputs with their own terminals: they have positive BB3 residual and a strict finite improvement in the complete residual norm, and neither is a full $F_{64}$ witness. No assertion is made that an arbitrary nonproportional table is realizable as a full correction, or that paying this necessary cost suffices.
+
+For the selected input $D$, a sufficient remaining obligation for the original $F_{64}(\theta)$ is a sequence of actual partitions $D_n\in\mathscr F_{154}(\theta)$, starting at $D_1=D$, such that
+
+$$
+\|\Delta(D_n)\|_\infty\longrightarrow0,\qquad
+\sum_{n=1}^{\infty}m(A(D_n,D_{n+1}))<\infty.
+\tag{155.31}
+$$
+
+Under (155.31) there is one whole-$G$ pointwise Borel partition $D_\infty$ attaining the full original law, and
+
+$$
+m(A(D_n,D_\infty))\le
+ \sum_{k=n}^{\infty}m(A(D_k,D_{k+1})).
+\tag{155.32}
+$$
+
+The quantifiers of Theorem 155.2 co-select $D$ and $D'$ after $t,\varepsilon,\delta$ and a common finite refinement have been chosen. They do not supply a successor starting at a previously fixed actual $D$, or a sequence satisfying (155.31). The lower selection cost (155.24) is necessary for an exact repair; it does not assert that such costs fail to be summable.
+
+*Proof.* Apply Theorem 155.3 to (155.6). Positivity of BB3 excludes exact full-law equality for either endpoint. Theorem 155.3 quantifies over every actual full correction, so its conditional necessity does not require the existence of one.
+
+The measure of the union of the change sets from index $n$ onward is at most the right side of (155.32). Finiteness of the series makes the limsup of those sets null. Outside that Borel null set the finite-valued labels are eventually constant. Their eventual values define Borel cells; assign $B$ on the exceptional set to obtain one pointwise partition of all of $G$. This proves (155.32). For any pair of actual partitions $E,F$, telescoping as in (155.27) gives
+
+$$
+\|\Phi_3(\mathbf1_E)-\Phi_3(\mathbf1_F)\|_\infty
+ \le3G_0m(A(E,F)).
+\tag{155.33}
+$$
+
+Thus (155.31)–(155.32) imply $\Delta(D_\infty)=0$, with its own propagated terminals. The same argument for one-slot and two-slot products preserves the calibrated equalities. The finite construction in Theorem 155.2 gives two roots in one newly chosen rounding family; neither root is required to equal any partition fixed before that family was selected. Consequently iteration from an existing endpoint is an additional obligation, even when the numerical upper bounds $\varepsilon t$ could be chosen summably.
+
+Theorem 146.1 supplies actual $\mathscr D_{12}$ partitions of exact rank two, with all four exact terminal contrasts and full-law error tending to zero. It supplies no positive-BB3 hypothesis, and is not required to lie in $\mathscr F_{154}$. The necessity in Theorem 155.3 therefore gives no uniform residual floor on $\mathscr D_{12}$ and no obstruction to those §146 partitions. The universal exact target (155.3) and a fixed-start summable correction chain remain unresolved by these results.
+
+The source-specific composition (155.11), (155.17)–(155.19) and (155.23)–(155.27) is repository-derived relative to the retained conditional suppliers. The spectral positivity is the existing §134 result, the regular directions and finite partition mechanism are those of §§147 and 154, and the fixed-point intermediate is the finite-dimensional closed-ball form of Brouwer, [*Über Abbildung von Mannigfaltigkeiten*, DOI 10.1007/BF01456931](https://doi.org/10.1007/BF01456931). These classical tools and the finite-table variance calculation are consumed within this source application; no historical novelty is asserted for them. The eventual-label limit uses the elementary summable-set argument within this full-law consumer. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 156. The repeated-label rank boundary and the corrected finite completion route
+
+**Definition 156.1 (the repeated-label residual map).** Retain the original telescope, the whole-$G$ partition space and the calibrated fiber $\mathscr F_{154}(\theta)$ of Definition 155.1. Let
+
+$$
+\mathcal R_{\mathrm{rep}}
+ =\{(y,z,w)\in I^3:\text{ at least two of }y,z,w\text{ are equal}\},
+ \qquad |\mathcal R_{\mathrm{rep}}|=21.
+\tag{156.1}
+$$
+
+For $D\in\mathscr F_{154}(\theta)$ write
+
+$$
+\Gamma_\theta(D)
+ =\bigl(\Delta(D)_{yzw}\bigr)_{(y,z,w)\in\mathcal R_{\mathrm{rep}}}
+ \in\mathbb R^{21}.
+\tag{156.2}
+$$
+
+The six distinct-label coordinates, BBB, all source marginals and all ordered pair coordinates are already fixed on this fiber. Every coordinate in (156.2) still uses the same partition's own terminal factor $P\mathbf1_{D_w}$.
+
+**Proposition 156.2 (one exact relation removes one repeated-label row).** Under the unchanged hypotheses of Definition 156.1, every $D\in\mathscr F_{154}(\theta)$ satisfies
+
+$$
+\sum_{\rho\in\mathcal R_{\mathrm{rep}}}\Gamma_\theta(D)_\rho=0.
+\tag{156.3}
+$$
+
+Consequently the repeated-label residuals on the exact $\mathcal H_{43}$ fiber take values in the twenty-dimensional hyperplane
+
+$$
+V_{20}=\left\{q\in\mathbb R^{21}:\sum_{\rho\in\mathcal R_{\mathrm{rep}}}q_\rho=0\right\}.
+\tag{156.4}
+$$
+
+In particular, no local family that remains in the exact $\mathcal H_{43}$ fiber can have a $21\times21$ Jacobian from its parameters onto all twenty-one repeated-label coordinates.
+
+*Proof.* Equation (154.32) is obtained by expanding the complement $u_B=1-\sum_{a\in I}u_a$ in the three slots. On $\mathscr F_{154}(\theta)$ the pair residuals vanish, the six distinct-label residuals vanish, and the BBB residual vanishes. The remaining term in that complement expansion is exactly the sum in (156.3). Thus every differentiable or polynomial family in the fiber has differential in $V_{20}$, whose dimension is twenty. The conclusion is a rank bound and does not use a choice of coordinates, a rounding construction or a parameterization of the family. $\square$
+
+The rank bound is a route boundary rather than a negative result for the original target. It shows that a proposed $21$-row Schur-complement determinant would be identically singular for the structural reason (156.3). One repeated-label coordinate must be recovered from the other twenty after the calibrated equations have been solved.
+
+**Route condition 156.3 (SRS-20 finite repeated-label completion).** Fix one $\rho_\ast\in\mathcal R_{\mathrm{rep}}$ and put
+
+$$
+\mathcal R_\ast=\mathcal R_{\mathrm{rep}}\setminus\{\rho_\ast\}.
+\tag{156.5}
+$$
+
+A source-specific finite completion certificate for an original $\theta$ consists of a bounded invariant slack set $E$, a positive Section 155 ray $X$, a number $t_\theta>0$, a closed ball $B_{20}\subset\mathbb R^{20}$ centered at $0$ with positive radius, and pointwise simplex tuples $u^{(t,z)}$ on the original $G$, for $0<t<t_\theta$ and $z\in B_{20}$, such that
+
+$$
+\begin{aligned}
+&u^{(t,0)}=f^0+tX,\qquad
+  \mathcal H_{43}(u^{(t,z)})=\mathcal H_{43}(f^0),\\
+&t^{-2}\bigl(\Delta_{\mathcal R_\ast}(u^{(t,z)})\bigr)
+   =r_{\theta,\ast}+S_\theta z+\varepsilon_\theta(t,z),\\
+&\sup_{z\in B_{20}}\|\varepsilon_\theta(t,z)\| \longrightarrow0
+\quad(t\downarrow0),
+ \qquad \det S_\theta\ne0.
+\end{aligned}
+\tag{156.6}
+$$
+
+Here $\Delta_{\mathcal R_\ast}$ is evaluated with the original trilinear form and the common tuple in all three slots. The certificate must also supply a closed-ball degree or boundary estimate that places a zero of the finite map in $B_{20}$; invertibility of $S_\theta$ by itself is not such a degree estimate. Its legal perturbations must preserve the original source marginals, the pointwise simplex inequalities and the actual terminal convention throughout the ball. The constants and the choice of the omitted row may depend on $\theta$, but the original $G$, $m$, $P$, $g$, epochs, source law, readout and permitted representative $b$ may not change.
+
+The intended algebraic mechanism is finite-dimensional. A zero of the twenty rows in (156.6), together with the exact $\mathcal H_{43}$ equations, gives sixty-three exact coordinates. Proposition 156.2 then recovers the omitted $\rho_\ast$ coordinate. Proposition 150.3 and its three-slot complement expansion (150.13) recover every coordinate containing $B$, so all sixty-four ordered equations follow for the same whole-$G$ tuple.
+
+**Proposition 156.4 (what an actual-partition realization must add).** Suppose the certificate of Route condition 156.3 is available with a same-dimensional finite-cell realization as follows. There are an admissible $t\in(0,t_\theta)$ and an index $n_0$ such that, for every $n\ge n_0$ and $z\in B_{20}$, a finite Borel partition $D_{n,t}(z)$ of the original $G$ is obtained from one common quantile construction, its four cells are Borel, pairwise disjoint and cover $G$, and
+
+$$
+\mathcal H_{43}(\mathbf1_{D_{n,t}(z)})=\mathcal H_{43}(f)
+\quad\text{for every }z\in B_{20}.
+\tag{156.7}
+$$
+
+The remaining-coordinate map
+
+$$
+R_{n,t}(z)=t^{-2}\Delta_{\mathcal R_\ast}(\mathbf1_{D_{n,t}(z)})
+\colon B_{20}\longrightarrow\mathbb R^{20}
+\tag{156.8}
+$$
+
+is continuous for each $n$ and converges uniformly on $B_{20}$, as $n\to\infty$ with this fixed $t$, to the fractional map
+
+$$
+t^{-2}\Delta_{\mathcal R_\ast}(u^{(t,z)})
+ =r_{\theta,\ast}+S_\theta z+\varepsilon_\theta(t,z).
+$$
+
+Assume in addition that one selected $n\ge n_0$ has a boundary or degree estimate for this $20\to20$ map, for example that $R_{n,t}$ is nonzero on $\partial B_{20}$ and has nonzero degree at $0$ relative to $B_{20}$. Uniform approximation alone does not supply this estimate; it is part of the finite completion certificate. Then one actual whole-$G$ Borel partition $D_{n,t}(z_0)$ has all twenty coordinates in $\mathcal R_\ast$ exact for some $z_0\in B_{20}$, and (156.3) and the complement identities give
+
+$$
+\Delta(D_{n,t}(z_0))=0.
+\tag{156.9}
+$$
+
+*Proof.* The exact $\mathcal H_{43}$ condition removes those forty-three coordinates before the degree argument, so $R_{n,t}$ has equal-dimensional domain and codomain. The boundary or degree hypothesis therefore gives $R_{n,t}(z_0)=0$ by the finite-dimensional argument used in Section 154.E. The resulting partition is produced by one common quantile construction, so every slot uses its own indicator and propagated terminal. Equation (156.3) supplies the omitted repeated coordinate, while Proposition 150.3 and (150.13) recover the coordinates containing $B$. No weak fractional limit is substituted for this finite actual partition. $\square$
+
+The two propositions isolate the unpaid bridge without changing the original problem. The remaining proof obligations are the existence of the invariant reservoir and twenty legal perturbation directions, the weighted Schur-complement determinant and its nonlinear remainder estimate, pointwise simplex legality, an exact-$\mathcal H_{43}$ finite-cell family with the stated continuity and boundary estimate, and preservation of the actual terminal factors. A quantile realization that only makes the $\mathcal H_{43}$ coordinates small gives a $20\to43+20$ residual map and is insufficient by itself; it would require a separate $63$-parameter calibration theorem. A failure of any one of these conditions for one permitted $\theta$ falsifies this SRS-20 route only; it does not refute $F_{64}(\theta)$ or the universal target.
+
+The fixed-start summable continuation of Corollary 155.4 remains an independent sufficient route. It is not implied by (156.6), and it is not needed if the finite actual completion succeeds. Conversely, failure of the finite rank certificate leaves the fixed-start route open. The scalar four-score contrast and finite-horizon tests described in the proportional-containment advisory provide a diagnostic for candidate families, but they do not supply the source-specific rank or the actual finite partition required here.
+
+## 追加锚（本行以下为增补区）
+## 157. Two zero contrast channels and the quadratic rank boundary
+
+**Definition 157.1 (the original affine readout and its zero channels).** Retain the complete original supplier telescope of Definition 155.1, the same trilinear form $\mathcal C$, the same readout $f$ and the exact $\mathcal H_{43}$ calibration of Sections 154 and 156. The calibration notation also applies to bounded Borel pointwise simplex tuples $u=(u_y)_{y\in\mathcal L}$ on the original $G$, with the same tuple in all three slots. Put
+
+$$
+\begin{gathered}
+V=\mathbb R^{\mathcal L},\qquad
+s(v)=\sum_{y\in\mathcal L}v_y,\qquad H=\ker s,\\
+a=(3/8,3/8,0,1/4),\qquad
+q=(-c/2,-c/2,c,0),\qquad f(x)=a+b(x)q,\\
+\Lambda(v)=\bigl(v_0-v_1,\ v_B-\tfrac14s(v)\bigr),
+\qquad \pi=\Lambda|_H.
+\end{gathered}
+\tag{157.1}
+$$
+
+The two components of $\Lambda(f)$ vanish pointwise, including for the originally prescribed representative $b$. For a simplex tuple $u$, their actual values are
+
+$$
+\eta_1(u)=u_0-u_1,\qquad \eta_2(u)=u_B-\tfrac14.
+\tag{157.2}
+$$
+
+These are linear combinations of the same four readout channels, not new observations, independent noises or a changed terminal. The restriction $\pi:H\to\mathbb R^2$ is onto and has kernel $\mathbb Rq$. Indeed $\pi(v)=0$ on $H$ means $v_0=v_1$, $v_B=0$ and $v_3=-2v_0$, while $c>0$.
+
+**Proposition 157.2 (the thirteen-dimensional quadratic limit).** Fix any original $\theta$. Let $B$ be a positive-radius closed ball in a finite-dimensional parameter space. For $0<t<t_0$ and $z\in B$, suppose that $u^{(t,z)}$ is a bounded Borel pointwise simplex tuple satisfying
+
+$$
+\mathcal H_{43}(u^{(t,z)})=\mathcal H_{43}(f).
+\tag{157.3}
+$$
+
+Assume that there is a finite constant $K$ such that
+
+$$
+\sup_{z\in B}\max_{y\in\mathcal L}
+\|u_y^{(t,z)}-f_y\|_{L^\infty(m)}\le Kt,
+\tag{157.4}
+$$
+
+and that the full finite-dimensional residual has a uniform quadratic limit
+
+$$
+\sup_{z\in B}
+\|t^{-2}\Delta(u^{(t,z)})-Q(z)\|\longrightarrow0.
+\tag{157.5}
+$$
+
+Then every $Q(z)$ belongs to the fixed linear space
+
+$$
+\begin{aligned}
+\mathcal W
+ &=q\otimes H\otimes H+H\otimes q\otimes H
+                         +H\otimes H\otimes q,\\
+\mathcal W_{13}
+ &=\{R\in\mathcal W:R_\sigma=0
+                         \text{ for all }\sigma\in\mathcal T_6\},\\
+\dim\mathcal W&=19,\qquad \dim\mathcal W_{13}=13.
+\end{aligned}
+\tag{157.6}
+$$
+
+The dimension is that of a containing linear space. The proposition does not assert that all thirteen directions are realized by legal source-specific tuples.
+
+*Proof.* The exact marginal and ordered-pair coordinates in (157.3), completed with the simplex identities in the slots, give all pair equalities, including those involving $B$. For example the two marginal densities of $Q_{12}$ are $g,Pg$, those of $Q_{13}$ are $g,P^2g$, and those of $Q_{23}$ are $Pg,P^2g$. Therefore every one-index contraction of $\Delta(u^{(t,z)})$ vanishes. The same calculation as Proposition 150.3, which uses only the simplex sums and multilinearity, gives
+
+$$
+\Delta(u^{(t,z)})\in H^{\otimes3}.
+\tag{157.7}
+$$
+
+Write $\delta=u-f$. Because $\Lambda f=0$ pointwise, the exact three-channel projection is
+
+$$
+\begin{aligned}
+\bigl(\Lambda^{\otimes3}\Delta(u)\bigr)_{\alpha\beta\gamma}
+ &=\mathcal C\bigl((\Lambda\delta)_\alpha,
+                   (\Lambda\delta)_\beta,
+                   (\Lambda\delta)_\gamma\bigr),\\
+&\hspace{30mm}\alpha,\beta,\gamma\in\{1,2\}.
+\end{aligned}
+\tag{157.8}
+$$
+
+The original Markov contraction and $\int g\,dm=1$ give
+
+$$
+|\mathcal C(v_1,v_2,v_3)|
+ \le\|v_1\|_\infty\|v_2\|_\infty\|v_3\|_\infty.
+\tag{157.9}
+$$
+
+On $H$, $(\Lambda\delta)_1=\delta_0-\delta_1$ and $(\Lambda\delta)_2=\delta_B$. Thus (157.4) implies the uniform bound
+
+$$
+\sup_{z\in B}\|\Lambda^{\otimes3}
+                 \Delta(u^{(t,z)})\|_{\max}
+ \le8K^3t^3.
+\tag{157.10}
+$$
+
+Equations (157.5), (157.7) and (157.10) show that
+$Q(z)\in\ker(\pi^{\otimes3})$. Choose any linear complement $U$ of $\mathbb Rq$ in $H$. The tensor decomposition of
+$H=\mathbb Rq\oplus U$ shows that this kernel is exactly the sum of the seven tensor summands having at least one $q$ slot. The only surviving quotient summand is $U^{\otimes3}$, of dimension eight. Hence the kernel is $\mathcal W$ and has dimension $27-8=19$.
+
+Every tensor in $\mathcal W$ has zero BBB coordinate because $q_B=0$. The six coordinate restrictions indexed by $\mathcal T_6$ are independent on $\mathcal W$. To see this, put $h_i=e_i-e_B$ for $i\in I$. If a functional
+$\ell=\sum_{\{i,j,k\}=I}\lambda_{ijk}[ijk]$ vanishes on $\mathcal W$, evaluate it on $q\otimes h_j\otimes h_k$ for each ordered pair of distinct $j,k\in I$. With $i$ the remaining label, exactly one summand survives:
+
+$$
+0=\ell(q\otimes h_j\otimes h_k)=q_i\lambda_{ijk}.
+\tag{157.11}
+$$
+
+All three $q_i$ are nonzero, so all six coefficients vanish. This proves that the restrictions have rank six and that their joint kernel in $\mathcal W$ has dimension $19-6=13$. The exact six distinct-label equations in (157.3) put every limit $Q(z)$ in that kernel. $\square$
+
+**Corollary 157.3 (the additional scaling obligation for SRS-20).** Retain Route condition 156.3 and require in addition the uniform proximity bound (157.4) throughout its twenty-dimensional ball. Then its proposed affine leading map cannot have $\det S_\theta\ne0$. More precisely,
+
+$$
+\operatorname{rank}S_\theta\le13.
+\tag{157.12}
+$$
+
+The same conclusion holds if (157.4) is replaced by
+
+$$
+\sup_{z\in B_{20}}\max_y
+\|u_y^{(t,z)}-f_y\|_\infty=o(t^{2/3}).
+\tag{157.13}
+$$
+
+*Proof.* On the exact $\mathcal H_{43}$ fiber, the full residual is determined linearly by the twenty selected repeated-label coordinates: Proposition 156.2 recovers the omitted row, and Proposition 150.3 recovers the coordinates containing $B$. Thus the uniform limit in (156.6) supplies the full limit (157.5). The space satisfying all pair constraints, the six distinct-label zeros and BBB has dimension $27-6-1=20$. Deleting one repeated-label row identifies it with $\mathbb R^{20}$. Proposition 157.2 puts the leading residuals inside the image of $\mathcal W_{13}$ under this identification. Since $B_{20}$ has positive radius, differences of the affine values $r_{\theta,\ast}+S_\theta z$ show that the range of $S_\theta$ lies in that thirteen-dimensional image. This proves (157.12). Under (157.13), the right side of (157.10) is replaced by $8o(t^{2/3})^3=o(t^2)$, giving the same limit argument. $\square$
+
+The new condition is not present in (156.6): its center is fixed to $f^0+tX$, but its off-center tuples are not required to remain uniformly $O(t)$ close to $f$. Since $f=f^0$ almost everywhere, the essential-supremum estimates above respect the original permitted representative and do not add a pointwise identification on the null exceptional set. Corollary 157.3 excludes a regular small-amplitude scaling class; it neither refutes Route condition 156.3 without that additional condition nor refutes $F_{64}(\theta)$.
+
+The seven unpaid leading directions have an explicit observable description. The eight tensors in (157.8) use the channels $u_0-u_1$ and $u_B-1/4$. On a zero-pair residual their all-second-channel coordinate is BBB, already fixed by $\mathcal H_{43}$. The other seven impose seven additional independent constraints on the twenty-dimensional calibrated quadratic limit. Their independence is the dimension calculation in (157.6), not a claim that seven source-specific cubic corrections exist.
+
+For an all-odd deviation under the original half-turn, the three factors in each right side of (157.8) are odd. The original invariant $g$ and commuting $P$ make that integral zero exactly. Such an exactly calibrated odd family has residual in $\mathcal W_{13}$ at every amplitude, not merely at quadratic order. Even corrections or a different scaling therefore require an actual nonzero three-channel contribution if they are to leave this subspace. For a general family, the identity (157.8) and bound (157.9) show that a nonzero projected $t^2$ limit at some fixed parameter cannot arise from deviations of size $o(t^{2/3})$. Meeting this necessary scale does not supply legality, rank, a zero or a degree estimate.
+
+Consequently one cannot replace the remaining twenty equations by thirteen equations and discard the higher-order terms. A prospective finite completion must still solve the seven contrast equations at their actual order together with the thirteen quadratic directions, the original forty-three calibrations and the whole-$G$ partition realization. The source-specific rank, mixed-scale legality, nonlinear boundary control and finite actual partition remain unresolved. The fixed-start summable route of Corollary 155.4 remains separate and unchanged.
+
+The tensor quotient, multilinearity and finite-dimensional rank count used here are standard linear-algebra tools. The source-specific thirteen-dimensional boundary is repo-derived from the retained FIB suppliers and the definitions above; no historical novelty is claimed for the standard tools. Their role is to identify the two zero channels of the original prescribed $f$ and the resulting source-specific obstruction to the uniform quadratic SRS scaling. They do not provide a new general purification theorem, a full-law witness, physical realization or Lean/kernel certification.
+
+## 追加锚（本行以下为增补区）
+## 158. Positive 003 energy and the terminal compensator boundary
+
+**Definition 158.1 (a two-label first-order-calibrated ray with terminal compensation).** Retain the complete telescope of Definition 155.1, hence Definitions 134.1, 135.1 and 154.1, including the residual $\Delta$, the positivity-improvement and conservation suppliers, the trilinear form $\mathcal C$, and the prescribed tuple $f$. Retain also the full first-order map $\Lambda_{134}$ and kernel $V=\ker\Lambda_{134}$ of Definition 134.1, Proposition 134.2, and the propagation identity $Pf_3=cg$. For bounded real Borel representatives $v,w$ and a nonzero real $t$, consider the pointwise tuple
+
+$$
+\begin{aligned}
+u^{(t;v,w)}_0&=f_0+tv,&
+u^{(t;v,w)}_1&=f_1-tv,\\
+u^{(t;v,w)}_3&=f_3+t^2w,&
+u^{(t;v,w)}_B&=f_B-t^2w.
+\end{aligned}
+\tag{158.1}
+$$
+
+The sum of its four coordinates is one identically. Whenever the four coordinates lie in the pointwise simplex, call (158.1) legal. In the $(0,0,3)$ coefficient the terminal is this tuple's own $P u^{(t;v,w)}_3$; every other coefficient retains its corresponding tuple terminal.
+
+**Proposition 158.2 (strict positive energy on the pure two-label ray).** If $v\in V$, then every legal tuple (158.1) satisfies
+
+$$
+\begin{aligned}
+\Delta\bigl(u^{(t;v,w)}\bigr)_{003}
+={}&t^2\left[c\langle gv,P(gv)\rangle_m
+                 +\mathcal C(f_0,f_0,w)\right]\\
+&+t^3\left[\mathcal C(v,f_0,w)+\mathcal C(f_0,v,w)\right]
++t^4\mathcal C(v,v,w).
+\end{aligned}
+\tag{158.2}
+$$
+
+In particular, for the uncompensated ray $w=0$ and every nonzero $v\in V$,
+
+$$
+\Delta\bigl(u^{(t;v,0)}\bigr)_{003}
+=t^2c\langle gv,P(gv)\rangle_m>0.
+\tag{158.3}
+$$
+
+Thus a nonzero pure two-label direction in the exact first-order kernel cannot by itself be an exact full-law correction at any nonzero amplitude.
+
+*Proof.* Expand the $(0,0,3)$ coefficient using multilinearity and (158.1). The coefficient of $t$ is the first-order functional $\ell_{003}(v)$ in (134.11), which vanishes because $v\in V$. The coefficient of $t^2$ from the two $0$ slots is
+
+$$
+\mathcal C(v,v,f_3)=c\langle gv,P(gv)\rangle_m
+$$
+
+by (134.15)–(134.16). The $t^2w$ change in the third slot contributes $\mathcal C(f_0,f_0,w)$; the two mixed $t^3$ terms and the $t^4$ term are the remaining multilinear choices. Equation (134.13) makes the first term strictly positive when $v\ne0$. The actual terminal convention is used throughout the expansion. $\square$
+
+**Proposition 158.3 (a quantitative terminal compensator cost).** For bounded real $v,w$, define
+
+$$
+\begin{aligned}
+\psi_0&=P\bigl(f_0P(gf_0)\bigr),\\
+\psi_{\mathrm{mix}}&=P\bigl(f_0P(gv)\bigr)+P\bigl(vP(gf_0)\bigr),\\
+\psi_v&=P\bigl(vP(gv)\bigr).
+\end{aligned}
+\tag{158.4}
+$$
+
+If $v\in V$ is nonzero, (158.1) is legal, and its $(0,0,3)$ residual vanishes, then
+
+$$
+\|w\|_{L^\infty(m)}
+\ge
+\frac{c\langle gv,P(gv)\rangle_m}
+     {\|\psi_0\|_{L^1(m)}+|t|\,\|\psi_{\mathrm{mix}}\|_{L^1(m)}
+                         +t^2\|\psi_v\|_{L^1(m)}}
+>0.
+\tag{158.5}
+$$
+
+The denominator is finite, and $\|\psi_0\|_{L^1(m)}>0$ for every original tuple.
+
+*Proof.* Self-adjointness of $P$ gives
+
+$$
+\begin{aligned}
+\mathcal C(f_0,f_0,w)&=\int_Gw\,\psi_0\,dm,\\
+\mathcal C(v,f_0,w)+\mathcal C(f_0,v,w)&=\int_Gw\,\psi_{\mathrm{mix}}\,dm,\\
+\mathcal C(v,v,w)&=\int_Gw\,\psi_v\,dm.
+\end{aligned}
+\tag{158.6}
+$$
+
+If the residual in (158.2) is zero, divide by $t^2$ and move the compensator terms to the other side. The $L^1$–$L^\infty$ bound and (158.6) give (158.5). The original bounds $g\in L^2(m)$, $f_0,v\in L^\infty(m)$ and the $L^2$ contraction of $P$ give finiteness. Since $f_0\ge1/4$ and $gf_0>0$ almost everywhere, positivity improvement gives $P(gf_0)>0$ almost everywhere. Conservation then gives
+
+$$
+\int_G\psi_0\,dm
+=\int_G f_0P(gf_0)\,dm>0,
+$$
+
+so $\psi_0\ne0$ in $L^1(m)$. The numerator is strictly positive by (134.13), so the displayed lower bound is positive. $\square$
+
+**Corollary 158.4 (the fixed-ray route boundary).** Fix a nonzero $v\in V$. No sequence of legal tuples of the form (158.1) can make the $(0,0,3)$ residual zero while its compensators satisfy $\|w\|_{L^\infty(m)}\to0$ and $t\to0$. In particular, shrinking the amplitude does not remove the positive energy that a second-order terminal correction must cancel. The lower bound is a necessary cost for this fixed-ray ansatz, not a uniform residual floor for arbitrary exact partitions. Mixed orders, a varying first-order direction, or corrections outside $V$ remain separate routes; the result neither refutes the general SRS-20 condition nor settles $F_{64}$.
+
+The source-specific statements (158.2)–(158.5) are `repo-derived` applications of the retained positive coefficient (134.13)–(134.16), self-adjointness and the original terminal convention. The positivity and $L^1$–$L^\infty$ estimates are standard intermediate tools; no historical novelty, physical realization, Lean/kernel certification or full-law witness is asserted.
+
+## 追加锚（本行以下为增补区）

@@ -302,3 +302,441 @@ Engelfriet, [*Tree Automata and Tree Grammars*, arXiv:1510.02036v1, Definition 3
 Term-DAG equality, finite decision-tree counting, finite-tree parsing and integer bisection are credited intermediate methods. Relative to these methods and the cited repository results, Theorems 3.3–5.1 are a `repo-derived` source-specific acquisition interface with explicit proofs. No worldwide originality or fresh Lean claim is made. Provenance, whole-event chronology, physical recovery, minimal individual views and the infinite RRO target have exactly the unresolved scope described in §6.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 8. An earned packet and an occurrence cut through a compressed source
+
+**Definition 8.1 (attachment and the descriptive parameter).** Retain Definitions 1.1–1.2 and the pre-Stop same-source handoff of Theorem 6.1. At a genuine completed checkpoint the actually earned packet is $(t,W)$, its current source is $u=\operatorname{Run}(W,t)$, and
+
+$$
+N=n_0+|W|+2,\qquad h=\operatorname{height}(u),\qquad L=\ell(u).
+\tag{8.1}
+$$
+
+Only after that acquisition construct Definition 4.1's ground DAG $D$ for $u$. Its nodes denote tree VALUES; two paths to one node still denote two distinct source occurrences. Write $s$ for its number of nodes. Unused candidate DAGs are not inputs to this continuation. The bound $s=O(N)$ follows from (2.1): at most $2n_0-1$ entry-skeleton nodes, $|W|+2$ pure-level nodes and $n_0-1+|W|$ spine nodes suffice, with a constant number of extra leaves. Also $h\le n_0-1+|W|<N$. Physical source objects and acquisition's actual records remain attached, independently of this representation.
+
+A coherent old-row cut is Rooted Definition 43.1's $F_j(u)$, $0\le j\le L$. For an active native $G$ only $j=0,1$ is allowed. All old rows are those actually acquired and sealed by LAB Definition 9.3. Neither $D$ nor a computed address replaces such a row, its target reference, navigation, guard, authority or reference comparison. The compact description is initially at the supervisor that received the packet; driver-private fields have their own owner.
+
+**Definition 8.2 (two tables and one cut).** In topological order store for each old DAG node $v$ its old root $O_v$, the exact binary integer $l_v=\ell(\operatorname{val}(v))$, and a transformed root $T_v$. The transformed table is
+
+$$
+T_\alpha=\beta,\qquad T_\beta=\langle\beta,\alpha\rangle,
+\qquad T_{\langle v,w\rangle}=\langle T_v,T_w\rangle.
+\tag{8.2}
+$$
+
+The leaf-count table uses $l_\alpha=l_\beta=1$ and $l_{\langle v,w\rangle}=l_v+l_w$, including TWO summands when $v=w$. It counts unfolded occurrences, not distinct DAG nodes.
+
+For $0\le q\le l_v$ define a mixed root $M(v,q)$. At $q=0$ use $O_v$; at $q=l_v$ use $T_v$. Otherwise $v=\langle a,b\rangle$ and
+
+$$
+M(v,q)=
+\begin{cases}
+\langle M(a,q),O_b\rangle,&q<l_a,\\
+\langle T_a,O_b\rangle,&q=l_a,\\
+\langle T_a,M(b,q-l_a)\rangle,&q>l_a.
+\end{cases}
+\tag{8.3}
+$$
+
+The first and last cases descend into only ONE child occurrence. Distinct calls to a shared node with different $q$ are not identified. At most one unfinished recursive descent remains, whose left siblings have been wholly transformed and whose right siblings are still old. Its direction word is an occurrence address, not a source reference. A materialization of this recursion retains only its current path of mixed branch nodes, rather than every previously produced mixed root.
+
+**Theorem 8.3 (compact coherent partial geometry).** From the earned packet and a backed valid integer $j$, (8.2)–(8.3) construct an exact description of $F_j(u)$ without any new source query or full expansion. A description of active $G$ is obtained by restricting to $j\in\{0,1\}$. The old and transformed tables and the live mixed branches together have at most $2s+h+3$ descriptive nodes. They use $O(N\log(N+2))$ bits, including the binary progress and the cut path, before the optional count table and binding metadata. The count table and computation workspace use $O(N^2)$ additional bits. These are live descriptive bounds, not bounds on the physical source, actual OLD list, archive or total local-action records.
+
+Proof. Topological induction gives $\operatorname{val}(T_v)=\rho(\operatorname{val}(v))$. In an old branch, all leaves of the left child precede all leaves of the right child. If $q<l_a$ only the left child has been partly edited; if $q=l_a$ it has been wholly edited; and if $q>l_a$ the remaining $q-l_a$ edits lie in the right child. Induction on height therefore proves
+
+$$
+\operatorname{val}(M(v,q))=F_q(\operatorname{val}(v)).
+\tag{8.4}
+$$
+
+This uses the original prefix operation, not its inverse or a redefinition of the executor. At an old alpha its one edit is $P$; at an old beta it is $S$. Distinct old leaf addresses are prefix-incomparable, so the source effects at all earlier rows preserve the next old operand, exactly as in LAB9.4. On $\mathcal D_+$ the first leaf is beta, hence $F_1(u)=G(u)$ as a source value, without identifying the commands or protocols.
+
+There are $s$ old nodes, at most $s+3$ transformed nodes and at most $h$ mixed branch nodes. Every new mixed node points to fixed table roots or a lower mixed node, so no cyclic description is introduced. Topological node identifiers have $O(\log(N+2))$ bits. A binary tree of height $h$ has at most $2^h$ leaves, hence $j$ and every $l_v$ have at most $h+1=O(N)$ bits. Storing all $s$ counts therefore takes $O(N^2)$ bits; a recursion stack with at most $h$ such counters fits the same bound. The geometry graph, its path, roots and $j$ use the claimed smaller bound. For $G$, the same construction can stop after its one first-leaf edit; it need not transform the other occurrences. No source-dependent table was supplied before acquisition. $\square$
+
+**Theorem 8.4 (explicit bit work and occurrence selection).** There is a finite binary-tape computation of the tables and of any one root in Theorem 8.3 using $O(N^4)$ bit work and $O(N^2)$ workspace. Recomputing the root after each actually completed old row costs $O(N^4)$ per such row; this does not make an entire $F$ call polynomial in $N$. The old address and tag of row $j+1$, if $j<L$, can be computed within the same bound, as descriptive data only.
+
+Proof. Put the topological tables in a sequential array of $O(N^2)$ bits. A lookup by identifier can scan the entire array, using backed binary position counters. Computing one count uses two such lookups and an addition on $O(N)$ bits. Across $O(N)$ nodes this costs $O(N^3)$ bit work, with room in $O(N^4)$ for identifier framing, copying and the transformed table. To select the next old leaf, start at the root with zero-based rank $j$; at $\langle a,b\rangle$ descend left if $j<l_a$, and otherwise descend right with rank $j-l_a$. Append the corresponding direction bit and continue until an old leaf is reached. Its rank test and address distinguish occurrences even when table nodes are shared. At most $h$ descents, each with a full array scan and $O(N)$-bit arithmetic, again cost $O(N^3)$, conservatively $O(N^4)$ including all scratch copies and clearing. The recursion for $M$ has the same bounded number of accesses. It creates at most $h$ branches, which can be written sequentially in a separate reusable region. No algorithmic lookup requires scanning an ever-growing archive. These operations are on acquired strings and derived DAGs; the computed old address cannot be cast into a physical reference. $\square$
+
+## 9. Material child edges during the actual source templates
+
+**Definition 9.1 (material descriptions).** Let $E$ denote a terminal material vertex, $U(x)$ a vertex with only a left child $x$, and $V(x,y)$ a vertex with ordered left and right children. These describe rooted child-edge shapes, with repeated occurrences unfolded. AA Definition 17.3's materialization is
+
+$$
+C(\alpha)=E,\qquad C(\beta)=U(E),\qquad
+C(\langle a,b\rangle)=V(C(a),C(b)).
+\tag{9.1}
+$$
+
+Its support is the set of reachable $L/R$ words, including the empty word, and its boundary is the maximal-address antichain. Each present nonroot address $pd$ specifies the edge $p\longrightarrow pd$. Parent fields, source-header fields, headers, tape links and reserved but unattached objects are excluded. A raw material description may contain $U(U(E))$ and need not be $C(y)$ for any logical tree $y$.
+
+**Theorem 9.2 (exact support at source-write cuts).** Fix the original ordered attachment template of AA Definition 20.2, with its field layout as counted in AA Proposition 22.1. Suppose the next actually acquired old operand is at $p$, after $j$ earlier old rows, and put $S_j=\operatorname{supp}(C(F_j(u)))$. The following are exactly the changes to rooted material support at that operand:
+
+| Actual source-template cut | Material subtree at $p$ | Rooted support |
+| --- | --- | --- |
+| $P$, before its attachment | $E$ | $S_j$ |
+| $P$, after attaching the new terminal left marker | $U(E)$ | $S_j\cup\{pL\}$ |
+| $S$, before either new attachment | $U(E)$ | $S_j$ |
+| $S$, after extending the reused marker, before attaching the right alpha | $U(U(E))$ | $S_j\cup\{pLL\}$ |
+| $S$, after attaching the right alpha | $V(U(E),E)$ | $S_j\cup\{pLL,pR\}$ |
+
+At every other field-operation cut between these attachments, the rooted child-edge support is unchanged. Each displayed support has an exact material DAG with $O(N)$ descriptive nodes and $O(N\log(N+2))$ bits. Its boundary is its maximal-address antichain and determines that support by prefix closure; an expanded enumeration is not included in the compact bound.
+
+Proof. In $P$, the old logical alpha is a terminal vertex. AA20.2 initializes a fresh terminal marker and attaches it at the old root's left slot; this adds exactly $pL$. In $S$, the old beta already has its actual terminal marker at $pL$. The template reuses that vertex as the new left beta root, first attaching a fresh terminal at its left slot. Exactly $pLL$ becomes reachable. Attaching the new right alpha at the old root then adds exactly $pR$. Its final source shape is $C(\langle\beta,\alpha\rangle)$. All these objects are distinct in the actual source; the DAG's reuse of $E$ describes their equal shapes only.
+
+Initializations of unattached objects cannot add a root-reachable edge. Parent-field initialization, binding the branch tape header, append-cell linking, advancing header tails, arithmetic, output and return affect excluded fields or no source fields. AA22.1 specifies precisely these source assignments, with no further child-edge modification. Thus the table covers the support at every cut of this specified source template, including cuts within initialization and between source completion and maintenance completion. It is not a theorem for a differently ordered source template, interrupts or a foreign writer.
+
+Materialize the tables of §8 topologically; each logical node contributes a bounded number of material nodes. To replace the subtree at the ONE occurrence $p$, retain the siblings on its occurrence path and rebuild that path around the appropriate constant-size material subtree in the table. Since $|p|\le h$, this adds $O(h)$ nodes, regardless of other paths to the same descriptive node. The union formulas give the support and every child edge of that unfolded material DAG exactly. A finite rooted child tree is prefix closed in addresses, so support and terminal antichain recover one another. During the split's middle cut its unary child is nonterminal; arity parsing it as a logical beta would discard a real edge and is invalid. This is a raw material view, not a logical literal reply available during editing. $\square$
+
+## 10. Paid maintenance with the original owners and original milestones
+
+**Definition 10.1 (owner-local attachment).** Assume the original LAB supervisor and driver retain their original local memories, connections, guards and program counters, and permit finite local bookkeeping in their own arenas. They have the same no-crash, exclusive-rights and finite-supply hypotheses as AA20.1 and LAB11. This is an attachment of paid local work to the existing execution, not a replacement selector or a new request. A parent has no added right to inspect the driver's private arena. Original source operations and their order remain those of the sealed OLD list or the one acquired $G$ operand.
+
+At the supervisor store the earned $(t,W)$, a root of $D$, the tables of §8, the active command identity, a binary base ordinal $j$, a pending-update discriminator and two backed descriptor banks with their construction cursors. The old $(t,W)$ remains a completed-checkpoint packet during Busy. The supervisor also retains its original actually acquired frontier rows/cursor or $G$ locator, received inner bits, full replies and saved continuation. Those original fields are not reconstructed from $D$.
+
+At the driver retain its original acquired request, actual operand/reference, pending kind/address, source-template location, reserved objects, ancestral-maintenance and pending-append cursors, arithmetic banks and output/return fields. Added finite local notes distinguish the source attachments of Theorem 9.2 and the driver-local bookkeeping before/after them. Each note belongs to its actual received original frame; a previous call's archived note is not a patch for a new unaccepted frame. The last accepted call's kind/address and attachment note remain backed past original driver cleanup, until at least the next original call; its immutable record remains archived. This retention has its own bill and needs no new acknowledgement from the supervisor. Their values are written from that owner's ACTUAL actions, not inferred from a source query or read remotely. The existing addressed frame already supplies its $p$ and kind; no packet or private-state payload is smuggled into that frame. At a return, the supervisor learns only the original full reply, End and return through the existing bound connection. Its later ordinal update uses that acquired event.
+
+Each owner gives its added work its own actual records: acquired operands used in a local computation, its routine/cursor, completed descriptor writes, local source-attachment notes, validation of the original returned kind/address, and once-only posting of inner and outer completion. Retained records have actual allocated backing. Their writing and copying are charged separately from the live descriptor; they are not asserted to equal the old local microhistory. Original old records and recipients remain intact.
+
+**Definition 10.2 (the relation at a cut).** The maintenance invariant is a relation between these actually stored owner components, the original joint process and its source. A mathematical decoder of that relation uses the supervisor's base root/ordinal and, during an outstanding original inner call, the DRIVER'S OWN actual local attachment phase. It applies the corresponding patch of Theorem 9.2 at the outstanding operand. Original driver phase and local note disambiguate the interval after a source write but before a later bookkeeping mirror is posted. Before dispatch there is no driver patch. After a returned row has been posted, there is no pending patch for that row.
+
+A bank under construction has no current-root status. Before a source-changing attachment, prepare its old and prospective constant-size material patches locally, retaining the original actual phase. Before posting a new ordinal or completed word, construct the new supervisor bank while retaining the old bank and a pending-completion flag. Every bit-write cut therefore has an old complete bank, actual progress in scratch and a stored original or local control location selecting its interpretation. A finite selector write publishes the completed bank; later clearing is charged. No multiword atomic arithmetic or free instantaneous copying is assumed.
+
+This relation is not a single-observer collected state. In particular the supervisor alone need not know whether a driver-private source attachment has occurred. Gathering private notes into a requester, exporting a Busy read or admitting a query before an original return requires an additional, presently unsupplied communication/access contract. The material decoder is a mathematical relation on one joint execution, not a new physical operand or grant.
+
+**Theorem 10.3 (maintenance at every update and return cut).** Under Definition 10.1, the compact relation can be maintained throughout each supplied finite native $F/G$ call. At a coherent cut it gives §8's exact logical source; during a source template it gives §9's exact rooted material child edges. Original logical legality, all-event ancestral records, arithmetic hooks, complete original replies, End/ACK, inner and outer return, old archives and local work remain accounted for. Posting the active letter into the completed packet happens exactly once at the genuine outer return.
+
+Proof. At admission the previous source is $u$ and the base ordinal is zero. Receive/parser, stationary frontier acquisition and sealing have no source change. Before sealing there need not be a next-row operand; only the old root is asserted. Partial acquired frontier lists, path stacks and their growing backing remain original supervisor material. A complete original sealed list earns its first operand. $G$ instead earns its actual current leftmost beta by the original descent. The descriptive leaf selector may check correspondence with these acquired addresses/tags, but cannot dispatch an operand on their behalf.
+
+For a row, original navigation reobtains the target from the same root, compares its reference and checks its guard. Before acceptance and during Reserve or arithmetic preparation, the source is unchanged. At acceptance LAB11.1 retains its actual kind/target and old arithmetic banks and computes successors from old operands. The new source-phase note is recorded locally; attaching one or two source edges gives exactly Theorem 9.2's successive patches. A cut before a note mirror catches up is interpreted by the original local control position, with the pending transaction still backed. The note alone is never used to pretend a write has happened. Source-complete but Maintain-pending cuts have the FULL new material source, even though ancestor tapes, arithmetic or local notes can still be incomplete.
+
+Maintain uses the original actual parent-chain cursor, child-reference comparisons, headers and pending cell links. Header head/next can change before tail; those cuts retain the actual pending append and never count it twice. The old/new arithmetic banks and their write cursor remain meaningful while individual fields are overwritten; no assertion identifies a half-written residue pair with the final vector. All proper-ancestor appends, scalar and pair commits and pending-state discharge occur before original BuildAnswer. The descriptor changes neither their values nor this publication order. It has no authority to release a reply while those obligations remain.
+
+BuildAnswer seals the original Growth kind/address word. Every Print prefix, End, supplied ACK, driver's Return and scratch cleanup is retained. Source geometry remains the same throughout them. The supervisor receives and backs every bit and validates the actual returned kind/address and its saved continuation. Before a complete real inner return it has no new completed-row milestone. After that return, its raw frontier cursor may still point to the returned row. Keep that row/pending flag while constructing and posting the bank for $j+1$; the pending patch continues to describe its already changed source. On posting, replace it by $M(\operatorname{root},j+1)$ and clear the patch exactly once. List advancement then follows the actual next link. If advancement precedes a later bookkeeping cleanup, the pending discriminator still retains the returned-row milestone; it cannot be mistaken for a new source action. This also covers the last row returning before exhaustion is posted, the cursor is cleared or consumed backing is released. No scan of an already released completed prefix is needed.
+
+Induction on original inner returns proves the coherent source law. Each earlier old row leaves every later old address, tag and reference intact by LAB9.4, so every remaining original guard is still legitimate. At exhaustion the source is $\rho u$ for $F$ or $G(u)$ for $G$. Clearing the list is not outer completion. Keep the outer sealed response, emission cursor, End, pending ACK, return-to-root and cleanup. Until the actual outer return the old packet still says $W$. At that event retain a pending-outer-return note while constructing the packet $WX$ and its new compact checkpoint DAG from (2.1), then post it once; a cut before posting has a completed return with an explicitly unposted packet, rather than a false Busy packet or a duplicate letter. Rebuilding from (2.1) prevents repeated calls from accumulating old transformed tables as live geometry. Archives of their actual computations remain separate paid records.
+
+Original source arithmetic is updated once per actual accepted $P/S$, not by a macro-end overwrite; reads, refusals, prediction and acknowledgements add no source event. Source geometry cannot replace the ancestral tapes or full returned payloads. All added work is finite local work with actual backing and its own records. Erasing only the added bookkeeping actions from the augmented execution leaves the original ordered LAB actions, inputs and full replies. The original local-event trace embeds in this augmented trace; the two complete microhistories are generally different. This establishes maintenance without altering the original menus, sealed frontier, rights or accepted-event hooks. $\square$
+
+**Theorem 10.4 (separate live, per-row and full-call bills).** For a call with parameter $N$ in (8.1), let $k$ be its number of actually completed old rows. Apart from the inherited LAB bill and actual metadata/record costs, added descriptor computation has the bounds
+
+$$
+\begin{aligned}
+\text{live geometry nodes}&=O(N),\\
+\text{live geometry bits}&=O(N\log(N+2)),\\
+\text{count/scratch bits}&=O(N^2),\\
+\text{descriptor bit work through }k\text{ rows}&=O((k+1)N^4),\\
+\text{one full }F\text{ descriptor bit work}&=O((L+1)N^4),\\
+\text{one full }G\text{ descriptor bit work}&=O(N^4).
+\end{aligned}
+\tag{10.1}
+$$
+
+These include building the entry tables, constant-size patches along the acquired occurrence path, both descriptor banks, rebuilding at outer return and clearing/reuse. Counts, references, bindings, original protocol storage and archive lengths are distinct quantities.
+
+More precisely let $T$ be the number of non-record-writer bit operations of the added descriptive routines, including actual hook/note work, let $B$ be the total bit length of actual variable metadata copied into their new records, and retain the fixed interface size $b$ of Definition 1.2. With sequentially appended records of operation tags, bounded locations/cursors, acquired operands and results, the extra record writing/backing admits the conservative bound
+
+$$
+O\bigl(B+(T+1)(b+\log(N+T+2))\bigr).
+\tag{10.2}
+$$
+
+This is a bit-tape content-work/backing bound. Actual allocation, grants and reference-width-dependent links have their additional prices under Definition 1.2. The recording routines' own sequential reads/writes are charged by this bound; their deterministic serialization is not silently identified with the earlier local trace. If an installation imposes a richer recording contract, add its actual bill. In particular (10.1) is not a bound on $T$ for arbitrarily many original protocol actions or on all physical time.
+
+Proof. Apply Theorem 8.4 at entry, once per completed row and at outer posting. Preparing a bounded number of raw patches or banks entails at most a bounded number of its occurrence-path computations. Reusable live buffers give the first three bounds. A fixed local routine can store a finite instruction tag, its finite-table location and cursor in $O(b+\log(N+T+2))$ bits per recorded bit operation, with copied variable payloads charged to $B$. Sequential append avoids rescanning earlier records. The resulting length bounds its material backing and the sequential writing/copying work, proving (10.2). Actual phase hooks beyond these routines contribute their actual bit operations to $T$ and their actual payload widths to $B$; they do not disappear in an $O(N)$ geometry count.
+
+For a FULL $F$, the original sealed list has exactly $L$ rows, so even just their existence, actual inner calls and return milestones cost $\Omega(L)$. If the entry has counts $(a,b')$, its exact source additions are $a+2b'$ vertices and $b'$ headers. With $J_F=\sum_{p\in\operatorname{Leaves}(u)}|p|$, it adds $J_F$ side cells and has original inner request/reply lengths $2J_F+4L$ and $2J_F+5L$, with $L$ inner End/ACK pairs. These are LAB13.2's inherited prices, not new compression savings. The actually acquired OLD list has $L$ target rows and $J_F$ address letters, with actual reference/next-link widths additional. For $G$ the corresponding source additions are two vertices, one header and $|\lambda(u)|$ side cells, and one complete original inner call. Both calls retain outer traffic, Return and cleanup, old source/backing, all earlier ancestral records, arithmetic operands, reserved unattached resources and acquisition's records. Full source size, list size, total tape size and the growing new local archive can thus be exponential in $N$ or depend on earlier unrelated traffic. No fixed physical arena or polynomial whole-installation time follows. $\square$
+
+## 11. Exact-current-source capacity at a fixed authentic checkpoint
+
+**Definition 11.1 (the forward source task and exposed information).** Fix ONE authentic acquired checkpoint packet $(t,W)$ and its actual entry $u$, call identity $F$, binding and supplied execution contract. Choose one specified reachable coherent cut $c_j$ for each $j$ in an explicitly chosen nonempty set $J\subseteq\{0,\ldots,L\}$. For a more general set of concrete cuts, use the number of DISTINCT progress values in each exposed-information fibre; multiple phases with the same current source do not increase source capacity. This is the forward task of distinguishing the EXACT CURRENT LOGICAL SOURCE $F_j(u)$; it is different from Rooted §43.7's recovery of entry/history when the current source $y$ is fixed.
+
+Let $Z(j)$ be ALL varying side information exposed to the proposed decoder at these selected cuts. This includes any readable actual phase, consumed/remaining-row count, address, row/list contents, full reply history, arithmetic residue, private note if lawfully collected, elapsed-output information if exposed, and any identity or archive whose variation is usable. An uncollected private driver state is not part of the decoder's input. If a checkpoint is reached with several possible retained chronologies, fix that actual checkpoint/chronology here, or include its varying exposed part in $Z$. For each realizable $z$ put
+
+$$
+J_z=\{j\in J:Z(j)=z\},\qquad q_z=|J_z|.
+\tag{11.1}
+$$
+
+Widths below concern fixed-width binary supplement content conditional on this input. They do not count free side information twice or treat varying accessible fields as fixed constants.
+
+**Theorem 11.2 (sharp conditional source capacity and a consumer).** On each nonempty fibre $J_z$, an exact-current-source supplement must have at least $q_z$ values, and $q_z$ values suffice. Its sharp fixed-width conditional capacity is $\lceil\log_2 q_z\rceil$ bits. A common alphabet for all $z$ must have at least $\max_z q_z$ values, and that many suffice if the finite fibres and their ranking are supplied or computable from the specified side-information map. If $Z$ is not fixed, the joint exposed pair $(Z,\text{supplement})$ must distinguish all $|J|$ sources. This is not an unconditional extra-memory requirement or a full-controller minimality theorem.
+
+A concrete consumer, given the acquired checkpoint and a backed exact $j$, constructs §8's current-source DAG and evaluates any supplied finite logical address on that DESCRIPTION, returning alpha, beta, branch or absent. It performs no Busy source read. This consumer genuinely needs to distinguish every source in its conditional fibre if it must answer all such descriptive addresses exactly.
+
+Proof. Every old-row primitive increases $n=a+2b-1$ by exactly one, so
+
+$$
+n(F_j(u))=n(u)+j.
+\tag{11.2}
+$$
+
+Consequently all current trees in $J$ are distinct. If two indices in $J_z$ shared a supplement, an exact decoder would have equal inputs and unequal required sources. Conversely the rank of $j$ in the finite ordered set $J_z$ identifies it, and (8.3) supplies its source. This is finite-fibre injection and ranking, used as an intermediate coding fact. A rank is not thereby acquired from $z$ alone; a supplied effective map or earned progress is still necessary. For several $z$, the same ranks can be reused across fibres, proving the common-alphabet statement and the joint-information qualification.
+
+The address consumer follows the chosen DAG root along its input, testing constructors; descent beyond a leaf returns absent. It reads only its backed description. With array scans its bit work is $O(N^4+(|p|+1)N^2)$, including construction and reading the entire submitted finite word; its scratch is $O(N^2+|p|)$. Distinct finite ordered labelled trees have a first differing constructor at some finite address, so one common exact all-address answer function cannot serve two unequal trees. Alternatively exact current $n$ is already a separating numerical consumer by (11.2). Neither consumer manufactures source rights, old physical operands, driver-private phases or chronology. $\square$
+
+**Theorem 11.3 (attained exponential family and the size of progress).** Put $C=\langle\beta,\alpha\rangle$ and, for $r\ge0$, take the actually completed checkpoint
+
+$$
+t=C,\qquad W=F^r,\qquad u_r=\rho^r C=P_{r+2}.
+\tag{11.3}
+$$
+
+It is attained from alpha by the root promotion and split and then the original completed $F$ calls; the packet is eligible for §§1–6's actual acquisition with $n_0=2$. Write $L_r=\ell(u_r)$. Then $L_0=2$, $L_1=3$, $L_{r+2}=L_{r+1}+L_r$, and
+
+$$
+2^{\lfloor r/2\rfloor}\le L_r\le 2^{r+1}.
+\tag{11.4}
+$$
+
+Conditional on this fixed checkpoint and no distinguishing side information, the coherent prefix set $J=\{0,\ldots,L_r\}$ requires and attains exactly $\lceil\log_2(L_r+1)\rceil$ supplement bits. For the common interior between-row phase use $J=\{1,\ldots,L_r-1\}$; its sharp width is $\lceil\log_2(L_r-1)\rceil$, which grows as $\Theta(r+1)$ for $r\ge1$. At that phase, exposing $j$, an equivalent count or all identifying remaining-list information can instead make every fibre singleton. No contradictory lower bound survives that exposure.
+
+Proof. Equation (2.3) gives both $u_r=P_{r+2}$ and the leaf recurrence. Its two-step doubling inequality gives the lower bound; each $F$ at most doubles leaves, giving the upper. All prefixes are legitimate prefixes of LAB's same sealed OLD execution, with finite supply for each chosen finite run. Each interior prefix can pause after the actual row advancement and before dispatch of its next row, so their original control location can be the same; its varying data are precisely what $Z$ must count. For attainment, apply Theorem 11.2 and encode the zero-based rank of the earned progress $j$ at the stated fixed binary width: use $j$ for $J=\{0,\ldots,L_r\}$ and $j-1$ for $J=\{1,\ldots,L_r-1\}$. For $r\ge1$, the recurrence also gives $L_r-1\ge L_{r-1}$, so the logarithmic widths grow linearly in $r+1$. These are conditional alphabets over reachable cuts, not simultaneous physical copies. Since the earned packet has length $O(r+1)$, the example explains why a binary progress value can need linearly many packet-size bits while the current expanded source and a full next $F$ have exponentially many occurrences. It also shows why an $O(N)$ number of descriptive nodes cannot be charged as $O(N)$ pointer bits or as a constant-size progress register. $\square$
+
+## 12. Occurrences, continuation phases and the history retained by other menus
+
+**Proposition 12.1 (sharing does not merge source occurrences).** There is an attained checkpoint whose compact DAG has two references to one beta node but whose two old beta rows require different actual source actions. A single in-place edit of that shared descriptive node gives the wrong partial source.
+
+Proof. From alpha execute $P_\varepsilon S_\varepsilon P_R$ to obtain $v=\langle\beta,\beta\rangle$. It can be an earned entry with $n_0=3$ and empty completed word. Its DAG can share the beta VALUE. Its old leaves are the distinct actual references at $L$ and $R$. After its first old row,
+
+$$
+F_1(v)=\langle C,\beta\rangle,
+\qquad F_2(v)=\langle C,C\rangle.
+\tag{12.1}
+$$
+
+Editing the shared beta description everywhere would produce the second source at the first cut. Equation (8.3) instead rebuilds the root with transformed left occurrence and old right occurrence. The physical source has no sharing by AA17.1; its equal beta shapes, markers and eventual branches remain distinct actual objects. $\square$
+
+**Proposition 12.2 (geometry does not determine phase or retained chronology).** Reachable executions settle three separate failures: equal source can have different next protocol instructions; equal source can have different remaining old-source schedules; and equal source can have different retained original generation chronology and later recall. The compact maintenance relation preserves these distinctions without claiming geometry recovers their private data.
+
+Proof. Before the first edit an admitted $F$ and its preceding idle checkpoint share $u$. After the last source attachment the source can already be $\rho u$ while Maintain, arithmetic, Growth output, inner ACK/Return, list exhaustion or outer output/ACK/Return is still pending. These are reachable cuts of AA20.2 and LAB11, and Theorem 9.2 also gives the raw intermediate split cut. The completed word changes only on genuine outer return. Thus equal source is not a decoder for continuation phase. Even at the common interior phase, Rooted Proposition 43.6's fixed-$C$ $FG/GF$ witness has the same current source and different next marks ($R$ versus $LR$). Its full calculation and Rooted Theorem 43.7's growing family are reused; they are not a new completed-history inverse or a claim that their private tapes are equal.
+
+For retained chronology, after the common prefix $P_\varepsilon S_\varepsilon$, the independent events $S_L$ and $P_R$ may occur in either order. Both original guarded words end at $\langle C,\beta\rangle$, but their indexed generation recall differs at the first swapped index. AA17.2's linear-extension theorem proves the legality, and AA19.2's actual full routing tapes retain their different serial orders. Each final tree is also a permissible entry with $n_0=4$ and empty completed word; the same compact entry packet cannot name which pre-entry chronology occurred. Finally inserting a completed original Tag request changes control traffic and records while preserving source and generation word, as AA21's witness already shows. A geometry descriptor, macro word and even successful-event word therefore have different kernels. Their old archives, full replies and actual control records are retained by §10 rather than recovered from geometry. $\square$
+
+**Definition 12.3 (the parameter when other legal calls intervene).** The compact bound in §§8–11 is for a segment whose source-changing outer calls since acquisition are native $F/G$. The installation keeps ALL original legal legacy, scalar and pair menus, including queries, refusals, prediction, FetchGrowth and Next. To describe a finite serialized mixture, retain an explicit extended checkpoint description: the acquired entry, completed native macro letters, and every actual newly executed addressed primitive event of each other source-changing call, in its actual order, together with its enclosing-call/return delimiters. Do not replace an in-range Next event by its recalled old event. This description includes the already earned $W$ and all later actual instructions. At a non-native edit, retain the native-only packet as a historical checkpoint and use the extended description for the current source; the $F/G$ subsequence no longer denotes that source. Keep full original requests, replies and records separately, including zero-edit calls.
+
+Let $A$ be the number of retained source-changing macro/primitive instructions in this extended description, counting one for a native macro letter and one for each primitive event outside those native macros, and let $P$ be the sum of the lengths of the explicit primitive addresses. Put
+
+$$
+\widehat N=(n_0+2+A+P)^2.
+\tag{12.2}
+$$
+
+Call delimiters and any other retained event payloads have their actual additional encoded sizes; in particular arbitrarily many zero-edit calls cannot be bounded by $\widehat N$. The complete retained process parameter includes those sizes as well. Only the geometry-size claim below uses (12.2).
+
+**Theorem 12.4 (finite mixtures with a growing parameter).** For the mixture of Definition 12.3, checkpoint geometry and a subsequent coherent or source-template partial native $F/G$ admit $O(\widehat N)$ live descriptive nodes, $O(\widehat N\log(\widehat N+2))$ geometry bits, $O(\widehat N^2)$ count/scratch bits and conservative $O(\widehat N^4)$ descriptor work per selected actual row. Additional mixed-call records, native expansion costs and every zero-edit call retain their actual bills. No bound in the native $F/G$ subsequence length alone is asserted for arbitrary mixtures.
+
+Proof. Start from the literal entry skeleton and evaluate the retained instructions in order. For a full native $F$, form table (8.2), then keep only its reachable transformed DAG as the next checkpoint geometry. It has at most the old number of branch nodes plus the two leaves and the beta-image branch, hence at most $s+3$ nodes if the old DAG had $s$; the whole old table need not stay LIVE after that real return. A native $G$ copies only its current leftmost occurrence path, adding at most $h+3$ nodes. A primitive outside those macros at its actual address $p$ adds at most $|p|+3$ nodes by the same occurrence-path construction. Old unused descriptive buffers may be cleared/reused, while their actual computation records are archived separately. None of this deletes physical source vertices or old source records.
+
+Height increases by at most one per retained primitive or native macro, so it is at most $n_0+A$. Summing the displayed node increments gives at most
+
+$$
+O\bigl(n_0+A(n_0+A+3)+P\bigr)=O(\widehat N)
+\tag{12.3}
+$$
+
+live nodes. The original returned kind/address and accepted-event record supply each non-native instruction; its guard is still checked physically. Thus Theorems 8.3–9.2 and their sequential-array proof apply with the larger bound $\widehat N$ on DAG size and height. Reconstructing the checkpoint from all retained instructions has, for example, $O((A+1)\widehat N^4)$ descriptive work; it is additional preprocessing, not hidden in a per-row bound. For a subsequent pure native block one can again use (2.1) to rebuild a compact checkpoint, but no such optimization is needed for (12.3).
+
+A scalar call's actual $P/S$ expansion is retained if it is outside a native macro; an in-range Next retains its newly executed kind/address AFTER its actual recall and current left descent. Source arithmetic, tapes and replies pass the same LAB11 hook for all of them. A query, refused call, prediction or out-of-range Next preserves geometry but adds its real traffic, continuation and record material. Original serialization admits these calls only at the original outer returned cuts, never inside a sealed active native call. Extending bookkeeping by their actual returned events therefore preserves the original legal menu and all histories without treating a native subsequence as the whole execution. $\square$
+
+## 13. Source correspondence and the remaining relational boundary
+
+**Definition 13.1 (mathematical attribution and scope).** The constructions of §§8–12 are `repo-derived` conditional mathematics on the actually earned packet and the original LAB execution. Their source-specific content is the one-path compact mixed-prefix representation, its raw material source-template refinement, the paid distributed maintenance relation and the forward exact-current-source capacity at a fixed checkpoint. The supplied finite-DAG method and finite-fibre counting are intermediate tools, not new general compression or coding theorems.
+
+Engelfriet's [Definition 3.62](https://arxiv.org/html/1510.02036v1) supplies ranked-tree homomorphism by recursively substituted children. Equation (8.2) is its elementary ground-DAG evaluation for this particular $\rho$. Lohrey–Maneth–Reh, [introduction, Proposition 3 and §5](https://arxiv.org/html/1511.02141v2), distinguishes subtree-sharing DAGs from the more general supplied TSLP and states polynomial supplied-TSLP equality. Its computational model charges bounded-width word registers, with widths specified separately for navigation and equality. Here no constant-register, constant-delay, supplied-unknown-grammar or acquisition theorem is transferred. The occurrence-path recursion and the sequential bit-tape bill are proved in §§8–9 themselves; no uninspected zipper theorem is required.
+
+Rooted §§42–43 supplies the completed inverse, native prefix/image distinctions, progress/entry/next-mark conversions, actual post-return cursor distinction and conditional CURRENT-SOURCE-fixed history fibres. Theorem 11.2 concerns the other direction with CHECKPOINT fixed and current source varying; it does not relabel that inverse as new. LAB9.3–9.4 supplies the authentic OLD list, its prefix-incomparable operands, original guarded effects and the one beta split for $G$. LAB10–11 supplies the actual full inner traffic, private continuations, old/new arithmetic banks, every-event hook and outer lock. LAB13 and AA22.1 supply the original located resource accounts. AA17.3 and AA20.2 supply exactly the rooted material projection and ordered attachment phases used in §9, including the temporarily non-native unary chain. Their auxiliary fields and reserved objects remain outside source support but inside physical backing.
+
+The existing NativeLocalSourceExecution and NativeCompletedHistoryRecovery declarations mentioned in §7 remain suppliers with their stated scopes. The Native Literal Journal Adapter has a different installation/menu; its journal equations are not used to identify LAB's augmented local trace or private drivers. The finite DAG supplies neither pointer identity nor authority. Owner-local maintenance supplies no already collected external Busy state. Source support, terminal boundary and descriptive current logical geometry are mutually computable where stated; exact phase, all-event chronology and callable physical memory require their retained owner components and lawful access. No new Lean certification, worldwide originality, arbitrary observer access, physical inverse, reset, interrupt, new session, universal executor or infinite coherent thread is asserted. These remain boundaries on continuing the relational recovery programme.
+
+## 追加锚（本行以下为增补区）
+
+## 14. Literal ancestral words before their last append has finished
+
+**Definition 14.1 (the source-complete single-event domain).** In §§14–18, $t$ denotes the CURRENT logical source, rather than the acquired entry of Definition 1.1. Retain one actual AA20.1 installation, its known-alpha origin, actual root/source binding, current exclusive source and auxiliary rights, original literal ancestral tapes, finite backing and local acknowledgement. A cut $c$ in the domain $\mathcal K$ belongs to the following original execution interval.
+
+Before the selected event, the actual successful generation word is $w^-$, and every original tape equals its AA19.1 projection of $w^-$. The preceding accepted event has finished its maintenance and arithmetic hook; there is exactly ONE accepted but unfinished new event $e=(k,p)$, with its actual acquired kind, address and reference. It is an original enabled $P_p$ or $S_p$, possibly inside an original macro or Next. Reserve has supplied the required finite material. The WHOLE source template has finished, including parent fields, initialized auxiliary slots and, for a split, the initialized and bound empty header. Thus the source is the actual attained logical term after $e$, not the middle unary-chain cut of Theorem 9.2. The cut lies at entry to, or during, this event's original bottom-up Maintain interval, including the link-before-tail subphases. For a root edit include the degenerate zero-ancestor interval. Arithmetic, reply and return may still be owed. No competing writer, crash, interrupt, revocation, reset, new session, graft or inverse source action is admitted.
+
+Write $w^+=w^-e$ for the successful-event word through this accepted source edit. It is not a claim that the event's call, or its enclosing macro, has returned. The original pending fields, banks, cursors, backing and private continuations exist, but are NOT supplied as a summary to the recovery map below. The literal append order is exactly AA20.2 and AA22.1: initialize a fresh cell's side and null next, link it from the previous tail or empty head, and only then advance the header tail. A pending append is completed before ascending to the next proper logical ancestor. All hypotheses concern one actual source and its records, not separately compatible descriptions.
+
+**Definition 14.2 (head words and count deficits).** At each current logical branch address $v\in I(t)$, let $U_v(c)$ be the side word obtained by starting at that branch's actual bound header head and following actual next links to null. A null head denotes the empty word. This definition ignores the header TAIL and excludes reserved or initialized cells not yet linked from head. It is a mathematical projection of owned record fields; it is not a Busy query. New headers are included even when their words are empty.
+
+Use the birth-typed counts of AA19.1, with the left child born beta and the right child born alpha:
+
+$$
+\begin{aligned}
+x_v(t)&=e_\beta(t_{vL}),& y_v(t)&=e_\alpha(t_{vR}),\\
+e_b(u)&=a(u)+2b(u)-1-\mathbf1_{\{b=\beta\}},\\
+\delta_v^L(c)&=x_v(t)-|U_v(c)|_L,&
+\delta_v^R(c)&=y_v(t)-|U_v(c)|_R.
+\end{aligned}
+\tag{14.1}
+$$
+
+Here $a(u),b(u)$ count alpha and beta leaves; the subscript $b$ in $e_b$ is a birth type. Differences in (14.1) are integers, not truncated natural subtraction. They compare the SAME current child occurrence with its actual attached record. A shared descriptive DAG node never identifies two headers at different source occurrences. The root's historical birth is alpha even when it belongs to syntax sort $B$; only its CHILDREN use the displayed beta/alpha birth types.
+
+Define a word operation on the numerical domain $\delta^L,\delta^R\ge0$, $\delta^L+\delta^R\le1$ by
+
+$$
+\operatorname{close}_t(v,U)=
+\begin{cases}
+U,&(x_v-|U|_L,y_v-|U|_R)=(0,0),\\
+UL,&(x_v-|U|_L,y_v-|U|_R)=(1,0),\\
+UR,&(x_v-|U|_L,y_v-|U|_R)=(0,1).
+\end{cases}
+\tag{14.2}
+$$
+
+On other numerical inputs it is undefined. This numerical domain is NOT asserted to recognize actual reachable cuts. In particular it contains families whose deficits lie in unrelated branches, which cannot come from one pending original event.
+
+## 15. Recovering the completed record without a phase capsule
+
+**Theorem 15.1 (the unfinished-literal-memory bridge).** For every $c\in\mathcal K$, every head word is finite and well defined, every deficit pair in (14.1) is one of $(0,0),(1,0),(0,1)$, and
+
+$$
+\widehat W_v(c):=\operatorname{close}_t(v,U_v(c))=W_v(w^+)
+\qquad(v\in I(t)).
+\tag{15.1}
+$$
+
+Consequently current source plus current head words determine exactly the complete original successful-event word $w^+$, every indexed generation answer through that event, and the source/record state that this event's genuine completion will restore. Neither the accepted address nor a retained phase capsule is an input. The same statement holds with current source support replaced by its terminal boundary, at these source-complete cuts. It is a statement about the eventual RECORD, without discharging unfinished physical writes or returns.
+
+More precisely, if $p$ has depth $d>0$, enumerate its proper ancestors from the root as $v_0,\ldots,v_{d-1}$. The branches with nonzero deficit form an initial segment of this list. At each such $v_i$ the unique missing symbol is the next direction of $p$ after $v_i$. There is no deficit at any other branch. A newly split $p$ has an empty head word, $x_p=y_p=0$, and no missing symbol of its own.
+
+Proof. The correct pre-event invariant supplies the full projections of $w^-$. The source operation changes no logical branch outside the operand's ancestor chain, and produces one new branch only when the operand is split. For an old proper ancestor $v$ of $p$, the event belongs to exactly one of its child subtrees. Both $P$ and $S$ increase that child's birth-typed event count by one. Thus its required final multiplicities differ from the old tape's multiplicities by precisely ONE in the actual traversed side. The other child count is unchanged. At every old branch which is not a proper ancestor of $p$, both strict-descendant event counts and the required word are unchanged. A split at $p$ is a root event of that subtree, not an event strictly below $p$; its new beta/alpha children have zero events since their respective births. Its freshly installed empty header is therefore already correct.
+
+Maintain visits proper ancestors from deepest to shallowest. At a visited ancestor, before the linking assignment the new cell is unreachable from head and the head word is still $W_v(w^-)$. Its payload and null next are initialized before linking, so the linking assignment extends the finite head chain by exactly the one actual side and no other symbol. From that assignment onwards the head word is $W_v(w^+)$. Tail advancement changes no head-reachable word. The original pending subphase prevents another append or ascent from treating the old tail as a finished append. No other writer can alter the chain. Induction over these original field assignments proves that every relevant word is either its full old projection or that projection with exactly this final symbol appended. It also proves finiteness, the deficit alternatives and the rootward initial-segment statement, including cuts before the first link and after the last link but before its tail update.
+
+Formula (14.2) supplies precisely the missing final symbol in the first case, and changes nothing in the second. This proves (15.1). Apply AA Theorem 19.2's EXISTING inverse to the completed family: its forced local root prefixes and the now-complete child shuffles recover exactly $w^+$. This does not reprove that inverse. In particular, when needed, decoding its last index $n(t)=a(t)+2b(t)-1$ also recovers the accepted $(k,p)$; that identity was not an input to (14.2). Replaying the preceding finite word is a mathematical description of the predecessor, not a physical inverse operation.
+
+At a source-complete cut the child-edge support is $C(t)$ of (9.1). Its terminal antichain recovers it by prefix closure, and AA17.3 parses it as the same $t$, including the material beta markers. Attaching the same head-word observations at their logical branch addresses therefore gives exactly the same calculation from either geometric view. All routes refer to this actual source and these actual records. $\square$
+
+**Theorem 15.2 (only mixed child orders add eventual-record information).** Put
+
+$$
+\mathcal A(t)=\{v\in I(t):x_v(t)>0\ \text{and}\ y_v(t)>0\}.
+\tag{15.2}
+$$
+
+On $\mathcal K$, the current source together with ONLY the original head words $U_v(c)$ at $v\in\mathcal A(t)$ still determines every completed word in (15.1). At other branches the completed word is forced by the source: $L^{x_v}$ if $y_v=0$, and $R^{y_v}$ if $x_v=0$, with the empty word when both vanish. No extra “which side is pending” bit, accepted-address string or ancestor-progress capsule is necessary for this eventual-record calculation. This is neither a claim that the original literal installation has fewer headers nor that evaluation needs no workspace.
+
+Proof. At a mixed branch use (14.1)–(14.2) on its actual head word. At a nonmixed branch, every word with the prescribed final multiplicities has the displayed single-side form. AA19.2 gives those multiplicities to the actual completed word, and Theorem 15.1 identifies that word with the pending event's completion. Thus no observation of a nonmixed tape is needed for its EVENTUAL content. In particular an empty new header remains a physically required header even though its content is forced. Substituting these words into the same AA19.2 inverse recovers $w^+$. The construction uses the order of already acquired literal symbols, not a compressed-rank installation or a retained copy of the controller. $\square$
+
+## 16. The exact future indexed-generation task on the actual image
+
+**Definition 16.1 (completion before the selected future task).** Let $\mathcal K_{\rm ret}\subseteq\mathcal K$ consist of cuts for which the already accepted enclosing call has NO further successful source events before its next genuine outer returned cut. This includes a native $G$, a legacy addressed $P/S$, the single new event of an in-range Next, and the final row of a native $F$. For a macro retain its actual outer lock, full inner traffic, arithmetic hook, supervisor continuation and complete outer return. Write $\operatorname{ret}(c)$ for the original execution continued through all those outstanding obligations, with its supplied End/ACK and finite backing. There is no injected request during this continuation. By original completion, its source and tapes at that returned cut are $(t,\mathcal W(w^+))$.
+
+The future task is exactly AA21.1's original $Q_g$: all seven complete request kinds, including guards/refusals, complete replies, FetchGrowth, and Next's recalled pair, new actual event and semantic successor. It starts only AFTER $\operatorname{ret}(c)$. It disregards fresh-name spellings, elapsed microsteps and private scratch as AA21.1 does, while retaining the actual common binding, current rights and declared finite supply. The residual output of the ALREADY accepted call, the time until return and its current phase are not outputs of this future task. They remain original obligations. Arithmetic moduli, connections and any immutable attachment data are kept fixed; equality for this legacy task does not assert recovery of a varying private arithmetic attachment or of the entire scalar/pair task.
+
+For fixed current $t$ define the actually attained set and its explicit record coordinate by
+
+$$
+\begin{aligned}
+\mathcal K_{{\rm ret},t}&=\{c\in\mathcal K_{\rm ret}:\operatorname{source}(c)=t\},\\
+\Theta_t(c)&=(\widehat W_v(c))_{v\in\mathcal A(t)},\\
+\mathcal I_t&=\{\Theta_t(c):c\in\mathcal K_{{\rm ret},t}\}.
+\end{aligned}
+\tag{16.1}
+$$
+
+Additional restrictions on the acquired checkpoint, active macro or original schedule restrict these actual sets as well. They do not license treating the full AA19.2 shuffle product as attained inside that restricted schedule. All equality below is on these images.
+
+**Theorem 16.2 (source-specific exact task criterion).** Two cuts $c,c'\in\mathcal K_{\rm ret}$ have the same future $Q_g$ behavior after their respective original completions if and only if
+
+$$
+t(c)=t(c')\quad\text{and}\quad
+\Theta_{t(c)}(c)=\Theta_{t(c')}(c').
+\tag{16.2}
+$$
+
+In particular, for any proposed additional accessible relational observation $R(c)$ at fixed $t$, it supports exact answers to EVERY eventual indexed-generation request if and only if, on the actual domain,
+
+$$
+R(c)=R(c')\quad\Longrightarrow\quad\Theta_t(c)=\Theta_t(c').
+\tag{16.3}
+$$
+
+Given the same source, this is also the criterion for the full future $Q_g$ task, including Next. Thus $\Theta_t$ is the precise distinction that must survive over geometry; any representation of it is a least distinction in the sense of observational refinement. The raw mixed head words suffice by Theorem 15.2, but may distinguish cuts which the future task identifies. No physical storage optimum follows.
+
+Proof. By Theorems 15.1–15.2 the pair in (16.2) determines exactly the source and FULL completed tape family at $\operatorname{ret}(c)$. AA21.2 therefore supplies agreement of all future original guards, full replies, settled updates and finite request sequences, including Next's genuine current-source selection and its appended new event. This uses the completed-history result only AFTER proving its inputs from the unfinished words.
+
+Conversely, different current sources remain different through this no-further-growth completion. A Tag at a first differing logical constructor separates them. At equal source, unequal $\Theta_t$ gives unequal full completed tape families. AA19.2's bijection gives unequal generation words. Their equal source fixes their common length $n(t)$, so FetchGrowth at their first differing index returns different literal kind/address pairs. This is an original legal request only after the corresponding outer return. It proves necessity even if a selected single Next happens to have the same new action in two histories; the original task also returns the old pair and permits every FetchGrowth index.
+
+The same separation proves the necessity in (16.3). For sufficiency, each realized observation value specifies a unique normalized mixed family; supplement by the source-forced pure words and use the supplied indexed inverse. This factorization is a semantic existence statement on the actual image. A proposed executable decoder still needs an effective way of obtaining that family from $R$, its actual input access and charged finite work. For the concrete $R=(U_v)_{v\in\mathcal A(t)}$, equations (14.1)–(14.2) are such a finite computation on those observations. The substantive input theorem is the one-event deficit law, not a new general coding or behavioral-congruence theorem. $\square$
+
+**Theorem 16.3 (recovery routes and their exact limitation).** On the image in (16.1), supplemented source support, supplemented terminal boundary, $w^+$, and the eventual original source-backed $Q_g$ memory recover the SAME semantic state at $\operatorname{ret}(c)$. Here the geometric supplements are the mixed head words interpreted by (14.2); equality is after their normalization. These routes recover one another only as future-task classes. They do not recover a particular raw unfinished layout, tail field, program counter or return phase.
+
+Proof. Theorems 15.1–15.2 convert either supplemented geometric view to $(t,\mathcal W(w^+))$ and hence $w^+$. Conversely a finite legal $w^+$ determines its source, completed routing words, material support and terminal boundary by the existing AA19.2/21.2 round trips. Their mixed completed words represent the same class (16.2); they need not reproduce the earlier $U_v(c)$. The original callable memory exists at the actual returned cut by AA20.3–20.5 and LAB11, with its binding and rights retained rather than manufactured by that reconstruction. A head-link assignment followed by a tail assignment already supplies two distinct physical cuts with the same normalized words. The completed history cannot distinguish those cuts. $\square$
+
+## 17. Original cuts and an actual G-to-Next continuation
+
+**Theorem 17.1 (empty headers, root edits and zero-deficit pending writes).** A newly split operand's empty word is correct even while proper ancestors lack symbols. A root edit can have no multiplicity deficit anywhere while arithmetic and full return are outstanding. At a nonroot append all deficits can vanish before its last tail write. These cases belong to the stated original construction; none permits early return or a Busy request.
+
+Proof. For a root promotion the new source is beta, has no branch tapes, and forces the word $P_\varepsilon$. For the following root split the new source $C=\langle\beta,\alpha\rangle$ has its initialized empty root header, $x_\varepsilon=y_\varepsilon=0$, and forces $P_\varepsilon S_\varepsilon$. Maintain has zero proper ancestors in both cases, but the source-complete cut precedes the original arithmetic commit, BuildAnswer, Print/End, ACK and Return. A native $G$ invoked at beta realizes the second case with an additional outer completion still owed.
+
+For a nonroot example start with $C$ and accept $P_R$. After its whole source template the source is $\langle\beta,\beta\rangle$. The root's required counts are $(x,y)=(0,1)$ and its old head is null. Before linking, $U_\varepsilon=\varepsilon$ and the deficit is $(0,1)$. After writing the initialized cell into head, $U_\varepsilon=R$ and both deficits are zero, although tail is still null and the pending append has not been discharged. After the tail write the same head word persists. A later second append, for example from an original $S_L$ after this call has fully returned, instead writes the old tail's next before advancing the nonnull tail; the same distinction holds. Thus zero deficit certifies completed SYMBOL CONTENT, never completed pointer maintenance. A split's own fresh header has zero required child counts by Theorem 15.1 regardless of such ancestor deficits. $\square$
+
+**Theorem 17.2 (incomplete order is consumed after a genuine original G).** There are two original reachable executions with the same earned entry/source packet and the same source-complete $G$ geometry, whose incomplete mixed head words determine different eventual FetchGrowth and Next replies. In each execution the claimed future request is enabled only after the actual complete $G$ return.
+
+Proof. Put $C=\langle\beta,\alpha\rangle$ and $u=\langle C,\beta\rangle$. Use AA20.5's two actually legal words, with every preceding request fully completed:
+
+$$
+w_A=P_\varepsilon S_\varepsilon S_LP_R,\qquad
+w_B=P_\varepsilon S_\varepsilon P_RS_L.
+\tag{17.1}
+$$
+
+Both have source $u$ and event index four. They can be pre-entry histories of the same source geometry with earned native packet $(u,\varepsilon)$ and authentic $n_0=4$; the packet does not supply which chronology occurred. Their original root tapes are respectively $LR$ and $RL$, while the tape at $L$ is empty. This reuses the old separation; the continuation and its unfinished record below are the additional bridge.
+
+Now execute the original pair $G$ request $01$ of LAB10.2 on each actual source. Its actual current-leftmost descent acquires beta at $LL$ and its actual reference. The supervisor sends the original internal $S_{LL}$ frame to the bound driver; Navigate compares the acquired reference and Guard accepts the actual beta. Finish the original source template, including binding the new empty header at $LL$. The common current source is
+
+$$
+z=\langle\langle C,\alpha\rangle,\beta\rangle.
+\tag{17.2}
+$$
+
+The root's required counts are $(2,1)$, the branch $L$ has counts $(1,0)$, and the new branch $LL$ has counts $(0,0)$. Before either ancestral link, the actual words and their normalized completions are
+
+| Branch | $U$ in execution A | $U$ in execution B | $\widehat W$ in A | $\widehat W$ in B |
+| --- | --- | --- | --- | --- |
+| $\varepsilon$ | $LR$ | $RL$ | $LRL$ | $RLL$ |
+| $L$ | empty | empty | $L$ | $L$ |
+| $LL$ | empty | empty | empty | empty |
+
+Only the root is mixed in the final source. Reading its incomplete ORDER is necessary on this two-execution image; the source forces all other eventual words. The missing final $L$ at the root is forced by counts and needs no phase bit. Bottom-up Maintain first links $L$ at branch $L$, leaving only the root deficit; then it advances that header's tail and ascends. It links the final $L$ at the root before advancing the root tail. At this last link cut every deficit is zero and the root tail is still pending, exactly the obstruction of Theorem 17.1. The new $LL$ header remains correctly empty throughout.
+
+Continue the ORIGINAL execution. Finish the root tail and pending cursor, all ancestral maintenance and the LAB11 all-event commit. This split increases $(a,b)$ by $(1,0)$ and quantity by two; scalar successors and pair successors are written from their own pre-edit banks, not replaced by a macro-end overwrite. The driver constructs and prints the FULL Growth reply with kind $S$ and address $LL$, then End, the supplied inner ACK, actual root Return and scratch cleanup. The supervisor backs and parses the entire reply and End, validates kind/address against its saved call, acknowledges and consumes the actual inner return. This $G$ has exactly one inner event. It then constructs and prints its original outer acknowledgement $00$, followed by End, outer ACK, real outer Return and cleanup, before releasing the lock. The earned completed native packet may now post its $G$ once. There is no query or parent-private read in this interval. Its original source additions are two vertices, one header and two ancestral side cells, with their actual initialization, references, links, grants and backing; the equal normalized words at an earlier cut waive none of them.
+
+Only now supply a complete original public FetchGrowth$(3)$ request. The original handler scans the now-complete actual tapes and returns Recall with $(S,L)$ in A and $(P,R)$ in B. Its whole kind/address payload, End, supplied ACK and Return are consumed. A complete original Next$(3)$ request can then follow. Its INTERNAL FetchGrowth handler acquires that same old pair without an outer return, navigates from the SAME bound root to $L$ or $R$ in $z$, and performs the original current left descent. In A it reaches beta at $LLL$; in B it reaches beta at $R$. The actual enabled new events are therefore
+
+$$
+\begin{aligned}
+\text{A: }&S_{LLL},&\text{Next reply: }&((S,L),(S,LLL)),\\
+\text{B: }&S_R,&\text{Next reply: }&((P,R),(S,R)).
+\end{aligned}
+\tag{17.3}
+$$
+
+The corresponding source successors are different: A changes a proper descendant of the left subtree, while B changes the right beta into $C$. Each new event performs its original source edits, full ancestral appends, every-event arithmetic hook and complete Next payload/End/ACK/Return. The recalled old event is not counted as a second new edit. Previous indexed answers persist; at the next returned cut index six recalls the actual event in (17.3). Indices zero and greater than five before this Next are OutOfRange, with Next then making no edit. All connections and recipients are the original ones. This realizes the future task whose differing record was already mathematically determined at the unfinished cuts in the table. $\square$
+
+## 18. Access, remaining obligations and the exact source correspondence
+
+**Definition 18.1 (three meanings of evaluation).** The projections $U_v$, the integer counts and (14.2) first define mathematics on an actual cut. They do not grant the supervisor or an external requester access to driver-private headers during Busy. The original driver owns the source/record rights, but its original Maintain schedules its specified parent-chain appends, not a whole-source deficit traversal.
+
+A separate finite evaluation on lawfully acquired source/record observations can compute these formulas: obtain child counts by finite postorder addition with birth typing, scan each selected actual head/next chain to null while counting its side bits, apply (14.2), insert the source-forced pure words, and use AA19.2's finite inverse. Running such an evaluation as owner-local bookkeeping would require expressly scheduled additional local work with stable inputs, paid field and bit reads/writes, backed counters and stacks, copying, allocation, any required records and cleanup. It is not installed or invoked by the theorem. An external evaluation requires its actual acquisition and communication contract; it cannot automatically collect the owners' components from §10. An earned compact source can supply descriptive counts, but it cannot supply an unread literal tape or a physical source reference.
+
+The operative future evaluation in Theorem 17.2 is instead the UNCHANGED original FetchGrowth/Next scan after full original return. It reads its own bound records under AA20.1, uses its original acquired unary index marks, within-side counter, address and continuation backing, and pays AA22.3's traversal/output costs. No deficit checker is inserted into that execution. All claimed operative steps in that theorem are original scheduled actions.
+
+**Theorem 18.2 (symbol recovery does not pay a physical obligation).** No statement in §§15–16 permits discharge of an original pending append, commit, output or return merely from equality of source counts and head multiplicities. In particular it gives neither an enabled Busy query nor a bound polynomial in the compact parameter $N$ for all original source/record work.
+
+Proof. At depth $d$, the event owes one original cell append at each of its $d$ proper ancestors. Its head word can already include the cell while the tail assignment, pending-cursor advance or arithmetic commit remains enabled and unfinished. Theorem 17.1 supplies actual such cuts. AA22.1's initialized-cell, linking and tail assignments remain the specified physical work; (14.2) performs none of them. Before the original pending state is discharged, BuildAnswer cannot release the event reply. Original print backing, every payload bit, End/ACK, inner Return and, inside a macro, outer payload/End/ACK/Return retain their original order and price. Old/new arithmetic banks, reserved cells, private continuations and archived records remain simultaneously backed where their phases overlap.
+
+Even when $\mathcal A(t)$ is empty, the original literal installation still retains every branch header and its actual side cells, including pure-side tapes. Restricting a mathematical observation to mixed nodes deletes no objects. Computing source counts or obtaining words also has its actual bill. A literal whole-source traversal visits unfolded occurrences, and head scans visit actual tape cells; neither cost is bounded by the number of compact DAG nodes alone. Theorem 10.4's existing distinction between compact descriptive work and original physical work therefore persists. The theorem removes a missing-symbol INFORMATION requirement under its hypotheses; it removes no original construction or protocol obligation. $\square$
+
+**Definition 18.3 (suppliers and unresolved recovery boundaries).** The count law, full completed routing inverse and seven-request task are reused from [AA §§19–21](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md#19-acquired-local-records-for-all-generation-events); the precise source/header template and located link-before-tail assignments are AA20.2/22.1. The actual $G$, private routing, arithmetic banks and all-event commit are [LAB §§9–11](RECURSIVE_RELATIONAL_OBSERVATION_LAB_ARITHMETIC_GROWTH.md#9-actual-pair-actions-and-exact-composition-reachability). Rooted §§42–44 and §§8–13 here supply the earned checkpoint, source geometry and coherent partial-frontier results. Their completed and partial source/history inverses are not reproved. NativeLocalSourceExecution.native_execution and NativeCompletedHistoryRecovery.completed_history_recovery remain previously formalized suppliers in their stated syntax/replay scopes, not certification of these unfinished physical-record claims.
+
+The additional result is the `repo-derived` one-accepted-event head-word completion law and its actual-image future-task criterion for the ORIGINAL LITERAL installation. The count-based removal of forced pure-side words is an information projection only. AAII §§47–52 and §§75–80 already give installed compressed coordinates for other layouts; no rank bank, journal or replacement layout is installed here. Finite counting, source parsing, the old shuffle inverse and semantic factorization are reused tools, without a new general coding theorem or worldwide originality claim. These ordinary mathematical proofs have no fresh Lean certification and no digestion or freezing claim.
+
+For an interior row of an unfinished $F$, Theorem 15.1 still recovers the record through that very accepted event. The remaining sealed OLD rows can cause more real events before any outer request is legal; they and their actual operands/continuation must still be executed. Theorem 16.2 deliberately concerns $\mathcal K_{\rm ret}$, not such an uncompleted suffix. Multiple outstanding accepted events, incomplete source/header installation, reordered linking, crash recovery, observable exhaustion and arbitrary access have no theorem here. Source completeness, the pre-event record invariant and one-event serialization are essential premises. Bare geometry still cannot recover serial order, physical phase or callable rights. Mutual recovery for the larger ongoing relational programme remains unresolved beyond the stated actual-image bridge.
+
+## 追加锚（本行以下为增补区）
