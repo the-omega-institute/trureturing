@@ -341,7 +341,7 @@ theorem exists_isHamiltonian_of_connectivity_independence [Finite V]
     (hindependence : ∀ S : Set V, G.IsIndepSet S → S.ncard < k) :
     ∀ a b : V, a ≠ b → ∃ p : G.Walk a b, p.IsHamiltonian := by
   classical
-  letI := Fintype.ofFinite V
+  let := Fintype.ofFinite V
   intro a b hab
   have hk : 0 < k := by
     simpa using hindependence ∅ (by simp)
@@ -371,6 +371,7 @@ theorem exists_isHamiltonian_of_connectivity_independence [Finite V]
   have hsat : min k p.support.toFinset.card = k := by omega
   have hbound := hindependence I hI
   omega
+
 
 #print axioms maximal_path_fan_obstruction
 #print axioms exists_isHamiltonian_of_connectivity_independence

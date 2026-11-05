@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Combinatorics.Graph.Walks.HamiltonConnected
 
+/-! Faithful dependent-family audit of the full Hamilton-connectedness telescope. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -44,7 +46,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
     (by intro S hS; change Nat.card V + 1 < 3 at hS; omega)
     (by
       intro S _
-      have hle : S.ncard ≤ Nat.card V := Set.ncard_le_ncard (Set.subset_univ S)
+      have hle : S.ncard ≤ Nat.card V := by simpa using Set.ncard_le_ncard (Set.subset_univ S)
       omega)
     (⟨0⟩ : V) (⟨1⟩ : V) (by decide)
   have heq := SimpleGraph.reachable_bot.mp (show (⊥ : SimpleGraph V).Reachable ⟨0⟩ ⟨1⟩ from ⟨p⟩)

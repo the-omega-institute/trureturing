@@ -8,7 +8,7 @@ url: https://users.renyi.hu/~p_erdos/1972-02.pdf
 claim: "Theorem 3: an s-connected graph with no independent set of s vertices is Hamiltonian-connected."
 strata_touched:
   - D5/S3/Combinatorics/Graph/Walks/HamiltonConnected
-license: bibliographic-reference
+license: citation-only
 triage: anchor
 ---
 
