@@ -49,6 +49,9 @@ internal sealed class PerfectBalanceDimensionDocument : IScribeDocumentDefinitio
     private static Formula Imp(Formula a, Formula b) =>
         new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
     private static Formula Parenthesized(Formula a) => Seq(Open, a, Close);
+    private static Formula Rationals() => Seq(Mathbb, Grp(F.Id("Q")));
+    private static Formula Typed(Formula value, Formula type) =>
+        Parenthesized(Seq(value, Colon, Sp, type));
     private static Formula Nat() => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));
     private static Formula Fin(Formula n) => Call("Fin", n);
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
@@ -65,9 +68,9 @@ internal sealed class PerfectBalanceDimensionDocument : IScribeDocumentDefinitio
     private static Formula Carrier() => Call("LatinRectangle", F.Id("k"), F.Id("n"));
     private static Formula WithArray(Formula body) => Sizes(All("L", Carrier(), body));
     private static Formula Position(Formula row, Formula symbol) =>
-        Call("val", Call("positions", F.Id("L"), row, symbol));
+        Typed(Call("val", Call("positions", F.Id("L"), row, symbol)), Rationals());
     private static Formula TargetDistance() => new Formula.Fraction(
-        Mul(F.Id("k"), Add(F.Id("n"), D(1))), D(3));
+        Mul(Typed(F.Id("k"), Rationals()), Add(Typed(F.Id("n"), Rationals()), D(1))), D(3));
 
     private static Formula ArrayFormula()
     {
@@ -76,14 +79,19 @@ internal sealed class PerfectBalanceDimensionDocument : IScribeDocumentDefinitio
             Lambda("i", Fin(F.Id("k")), Call("A", F.Id("i"), F.Id("j")))));
         return Disp(Sizes(Eq(Carrier(), Call("Subtype", Lambda("A", ArrayType(), And(rows, columns))))));
     }
-    private static Formula PositionsFormula() => Disp(WithArray(All("i", Fin(F.Id("k")),
-        Eq(Call("positions", F.Id("L"), F.Id("i")),
-            Call("inverseBijection", Call("val", F.Id("L"), F.Id("i")))))));
+    private static Formula PositionsFormula()
+    {
+        Formula Row(Formula symbol) => new Formula.Apply(Call("val", F.Id("L")), [F.Id("i"), symbol]);
+        Formula Inverse(Formula symbol) => Call("positions", F.Id("L"), F.Id("i"), symbol);
+        return Disp(WithArray(All("i", Fin(F.Id("k")), All("u", Fin(F.Id("n")),
+            And(Eq(Row(Inverse(F.Id("u"))), F.Id("u")),
+                Eq(Inverse(Row(F.Id("u"))), F.Id("u")))))));
+    }
     private static Formula DistanceFormula() => Disp(WithArray(All("u", Fin(F.Id("n")),
-        All("v", Fin(F.Id("n")), Eq(Call("pairDistance", F.Id("L"), F.Id("u"), F.Id("v")),
+        All("v", Fin(F.Id("n")), Eq(Typed(Call("pairDistance", F.Id("L"), F.Id("u"), F.Id("v")), Rationals()),
             SumOver("i", F.Id("k"), Abs(Sub(Position(F.Id("i"), F.Id("u")),
                 Position(F.Id("i"), F.Id("v"))))))))));
-    private static Formula ImbalanceFormula() => Disp(WithArray(Eq(Call("imbalance", F.Id("L")),
+    private static Formula ImbalanceFormula() => Disp(WithArray(Eq(Typed(Call("imbalance", F.Id("L")), Rationals()),
         SumOver("u", F.Id("n"), SumOver("v", F.Id("n"),
             Call("ite", Lt(F.Id("u"), F.Id("v")),
                 Abs(Sub(Call("pairDistance", F.Id("L"), F.Id("u"), F.Id("v")), TargetDistance())), D(0)))))));

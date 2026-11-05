@@ -18,7 +18,7 @@ The carrier consists of arrays A with k rows and n columns, entries in Fin n, in
 
 **Definition 1.2 (Symbol positions).**
 
-$$\forall k \in \mathrm{Nat},\; \forall n \in \mathrm{Nat},\; \forall L \in \operatorname{LatinRectangle}\left(k, n\right),\; \forall i \in \operatorname{Fin}\left(k\right),\; \operatorname{positions}\left(L, i\right) = \operatorname{inverseBijection}\left(\operatorname{val}\left(L, i\right)\right)$$
+$$\forall k \in \mathrm{Nat},\; \forall n \in \mathrm{Nat},\; \forall L \in \operatorname{LatinRectangle}\left(k, n\right),\; \forall i \in \operatorname{Fin}\left(k\right),\; \forall u \in \operatorname{Fin}\left(n\right),\; (\operatorname{val}\left(L\right)\left(i, \operatorname{positions}\left(L, i, u\right)\right) = u) \land (\operatorname{positions}\left(L, i, \operatorname{val}\left(L\right)\left(i, u\right)\right) = u)$$
 
 *Formalization.* `D5/S3/Combinatorics/Latin/PerfectBalanceDimension.positions` (`✓ std3`).
 
@@ -30,7 +30,7 @@ The position permutation is the inverse of the bijective row map. Thus A(i,posit
 
 **Definition 1.3 (Pair distance).**
 
-$$\forall k \in \mathrm{Nat},\; \forall n \in \mathrm{Nat},\; \forall L \in \operatorname{LatinRectangle}\left(k, n\right),\; \forall u \in \operatorname{Fin}\left(n\right),\; \forall v \in \operatorname{Fin}\left(n\right),\; \operatorname{pairDistance}\left(L, u, v\right) = \sum_{i \in \operatorname{Fin}\left(k\right)} (\lvert \operatorname{val}\left(\operatorname{positions}\left(L, i, u\right)\right) - \operatorname{val}\left(\operatorname{positions}\left(L, i, v\right)\right) \rvert)$$
+$$\forall k \in \mathrm{Nat},\; \forall n \in \mathrm{Nat},\; \forall L \in \operatorname{LatinRectangle}\left(k, n\right),\; \forall u \in \operatorname{Fin}\left(n\right),\; \forall v \in \operatorname{Fin}\left(n\right),\; (\operatorname{pairDistance}\left(L, u, v\right): \mathbb{Q}) = \sum_{i \in \operatorname{Fin}\left(k\right)} (\lvert (\operatorname{val}\left(\operatorname{positions}\left(L, i, u\right)\right): \mathbb{Q}) - (\operatorname{val}\left(\operatorname{positions}\left(L, i, v\right)\right): \mathbb{Q}) \rvert)$$
 
 *Formalization.* `D5/S3/Combinatorics/Latin/PerfectBalanceDimension.pairDistance` (`✓ std3`).
 
@@ -42,7 +42,7 @@ Sum the absolute differences of symbol positions across all rows. Rational arith
 
 **Definition 1.4 (Total imbalance).**
 
-$$\forall k \in \mathrm{Nat},\; \forall n \in \mathrm{Nat},\; \forall L \in \operatorname{LatinRectangle}\left(k, n\right),\; \operatorname{imbalance}\left(L\right) = \sum_{u \in \operatorname{Fin}\left(n\right)} (\sum_{v \in \operatorname{Fin}\left(n\right)} (\operatorname{ite}\left(u < v, \lvert \operatorname{pairDistance}\left(L, u, v\right) - \frac{k \cdot \left(n + 1\right)}{3} \rvert, 0\right)))$$
+$$\forall k \in \mathrm{Nat},\; \forall n \in \mathrm{Nat},\; \forall L \in \operatorname{LatinRectangle}\left(k, n\right),\; (\operatorname{imbalance}\left(L\right): \mathbb{Q}) = \sum_{u \in \operatorname{Fin}\left(n\right)} (\sum_{v \in \operatorname{Fin}\left(n\right)} (\operatorname{ite}\left(u < v, \lvert \operatorname{pairDistance}\left(L, u, v\right) - \frac{(k: \mathbb{Q}) \cdot \left((n: \mathbb{Q}) + 1\right)}{3} \rvert, 0\right)))$$
 
 *Formalization.* `D5/S3/Combinatorics/Latin/PerfectBalanceDimension.imbalance` (`✓ std3`).
 
