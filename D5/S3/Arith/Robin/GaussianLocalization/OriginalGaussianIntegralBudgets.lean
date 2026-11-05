@@ -37,7 +37,7 @@ private theorem variance_ne_zero (m : ℝ) (hm : 0 < m) : variance m hm ≠ 0 :=
   intro h
   have hcoe : (variance m hm : ℝ) = 0 := by rw [h]; rfl
   have hm2 : 0 < 2 * m := by positivity
-  exact hm2.ne' (by simpa only [variance] using hcoe)
+  exact hm2.ne' (by simpa only [show (variance m hm : ℝ) = 2 * m from rfl] using hcoe)
 
 /-- The project supplier already contains the scalar even-moment proof and
 its RemyDegenne/brownian-motion attribution.  Only n=1 and n=2 are used here. -/
@@ -120,9 +120,9 @@ private theorem g_second_fourth (m M : ℝ) (hm : 0 < m) :
     (∫ y : ℝ, (y - M) ^ 4 * g m M y) = 12 * m ^ 2 := by
   obtain ⟨h2, h4⟩ := pdf_moments M (variance m hm) (variance_ne_zero m hm)
   constructor
-  · simpa only [← g_eq_pdf m M hm, variance, mul_comm] using h2
+  · simpa only [← g_eq_pdf m M hm, show (variance m hm : ℝ) = 2 * m from rfl, mul_comm] using h2
   · have h4' : (∫ y : ℝ, (y - M) ^ 4 * g m M y) = 3 * (2 * m) ^ 2 := by
-      simpa only [← g_eq_pdf m M hm, variance, mul_comm] using h4
+      simpa only [← g_eq_pdf m M hm, show (variance m hm : ℝ) = 2 * m from rfl, mul_comm] using h4
     calc
       _ = 3 * (2 * m) ^ 2 := h4'
       _ = 12 * m ^ 2 := by ring
