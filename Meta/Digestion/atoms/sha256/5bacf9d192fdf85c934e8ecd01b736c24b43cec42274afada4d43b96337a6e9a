@@ -1,0 +1,34 @@
+Each slot has two or three leaves; every continuation has at least four.
+Consequently even in the unordered quotient the continuation is the
+unique larger child at each comb position. These positions identify the
+labels and active subset without tags or allocation identities. Since
+$[D_0]=[D_1]$, this quotient is independent of the bits at macro-cuts.
+The ordered slots distinguish $C,D_0,D_1$ and recover their bits. The
+intermediate quotient during a two-event insertion need not be
+bit-independent. Event counting gives the stated grades. $\square$
+
+For a native recorder $R$ put $K_0=J_R(\mathrm{prep}_k)$ and
+$K_i=J_R(\mathrm{prep}_k\,\mathrm{insertions}_{1:i})$ at macro-cuts.
+This $K_0$ is fixed independently of the unknown bits and order. A
+coding decoder first forms $U_{k,A}$, applies the native decoder to
+$(U_{k,A},K)$, and reads the ordered slots. Update reconstructs that
+same current term, performs the two guarded native events through the
+native recorder interface, and clears all additional scratch. No old
+term or history is retained. With $e_r$ denoting the actual native
+record edits on event $r$, on every induced run
+
+$$
+c_i=e_{g_0+2i-1}+e_{g_0+2i},\qquad
+\sum_{i=1}^m c_i=\sum_{r=g_0+1}^{g_0+2m}e_r,\qquad
+\max_i c_i\le2d,
+\tag{IV.108}
+$$
+
+where $d$ is the maximum single-event payload cost over all prepared
+insertion runs for this $k$. Their true induced payload peak equals the
+native peak from the prepared cut through these events, including $K_0$,
+both subevent cuts and every edit word. Preparation cost remains charged
+on the native side; it is not part of the insertion suffix sum. Extra
+parsing, reconstruction, addresses, navigation and scratch remain
+separately paid, with no constant overhead or workspace bound asserted.
+

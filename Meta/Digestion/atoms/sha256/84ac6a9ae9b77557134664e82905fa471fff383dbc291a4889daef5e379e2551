@@ -1,0 +1,38 @@
+**定理 171.1（全部原消费者返回）。** 两份背景分别有
+
+$$
+\begin{aligned}
+\mathsf C_{\rm fr}(B)&\Longleftrightarrow B+\mathrm Z+\mathrm{SC}+\mathrm{SJ},\\
+\mathsf C_{\rm fr}(\mathsf B_{\rm cl})&\Longleftrightarrow
+\mathsf B_{\rm cl}+\mathsf Q+\mathrm{SC}+\mathrm{SJ}.
+\end{aligned}
+\tag{171.1}
+$$
+
+证明。先由定理 168.1 恢复完整 $\mathsf F_{\rm cut}$，再消费定理 164.2 的同一结构链。$\mathsf Q$ 仍逐字取母卷定义 67.2：有限非负 $K(A,a)$ 可依赖原对象与方向，统一于全部原实际准备、整个数学效果区间及任意小原质量。逐项消费者为：
+
+| 恢复的原关系与保留入口 | 同一原模型上的结论 |
+| --- | --- |
+| 原导子律、SC、切口平方及完整实际联合，母卷定理 64.2 或 71.3 | $[D_a,D_b]=-[L_a,L_b]$；$a\cdot b=a\circ b-iD_ab$ 给 $\bigoplus_sM_{n_s}(\mathbb C)$ 的同空间复乘法，原经典块、中心、不等块大小与取向保留。 |
+| 原正比较、全部准备及双对偶运输 | $\alpha(e)=\tau_A(\rho_\alpha e)$、$\rho_\alpha\ge0$、$\tau_A(\rho_\alpha)=\alpha(u_A)$；Born 与谱概率保留零、次归一质量及不等正块权。 |
+| 原 X 的含幺 Jordan/$D$ 嵌入、交叉零、乘积张成及实际乘积准备 | 已声明实际联合取得普通复张量；不从数学角或某个参考存在性新增指定实际对象。 |
+| 全事件 R、原相关准备和同记录执行 | 每个原事件 CP/TNI，原完整装置 TP；闭分支先用母卷引理 69.2 的完整相关锥延拓。 |
+| 原指定群、整个 AC、精确 $N_u$、Xs 和被消费合法连线 | 每个效果有一份所选完整有限平方根词，成功支 $\rho\mapsto\sqrt e\rho\sqrt e$，投影时为 Lüders 支；各原失败出口、输出及实际丢弃系数保持。 |
+| 原 F、细记录、分组、遗忘及具名同数支持双返回 | 原非零细支 $S_\ell=\operatorname{Ad}_{K_\ell}$、粗事件 $\Phi_f=\sum_\ell S_\ell$，原返回 $U_\ell=q_\ell\operatorname{Ad}_{K_\ell^+}$；两侧支持复合、同一原 $q_\ell>0$、反向资料、零细标签和继续使用均保留。 |
+| 所有原合法有限历史 | 原身份、端口、记录、中心细权、质量和失败进入 (171.2)，不增加新的操作合法性。 |
+| 分别具名的 $B$ 与 $\mathsf B_{\rm cl}$ | 前者保留有限正生成；后者只取得母卷定理 72.1 的运输后密度锥闭覆盖，极限数学态不获得实际准备身份。 |
+
+因此对每条原合法历史 $h=(f_1,\ldots,f_m)$ 及末端效果 $w$，仍有
+
+$$
+\alpha(T_{f_1}\cdots T_{f_m}w)
+=\tau\!\left(w\,\Phi_{f_m}\cdots\Phi_{f_1}(\rho_\alpha)\right),
+\tag{171.2}
+$$
+
+其中右端迹按末端对象解释，与定理 164.2 的原历史运输相同。∎
+
+成熟中间工具仍是谱定理、联合 Peirce 分解、正交投影、正元零配对、有限维张量张成、旗流形及外代数。Tao–Gowda, *A Representation Theorem for Lyapunov-like Transformations on Euclidean Jordan Algebras*, [作者原文](https://userpages.umbc.edu/~gowda/papers/trGOW12-01.pdf)，Proposition 3 给保单位 Lyapunov-like 映射与导子的成熟桥；它要求完整零接触关系，不能跳过 (167.2)–(167.6) 的恢复。Barnum–Graydon–Wilce, [arXiv:1606.09331v3](https://arxiv.org/html/1606.09331v3)，Definition 4.1 与 Theorem 4.12 使用更强的动力复合及伴随条件，不把它们加入原 X。Plevnik, *Linear preservers of rank k projections*, [arXiv:2512.10645v2](https://arxiv.org/html/2512.10645v2)，§1 的线性固定秩投影保持问题提供相关检索方向；这里的原双线性 $D$ 尚无投影保持映射，未用该文结论代替证明。
+
+新增综合为 (167.2)–(167.6) 的共同框架读回恢复、(169.1)–(169.3) 的精确删域，以及把已有裸三形式 (109.1) 补成 (170.2)–(170.5) 的完整原联合反模型。不主张这些成熟工具的新颖性或文献优先权。内生性仍精确指原定义间的相容约束，不是任意 $\Omega$ 自动满足的定义真理。纸笔证明未作 Lean/kernel 核验或经验验证；物理实例化、时钟、$\hbar$、任意独立仪器组装、统一稳定和更便宜认证均未由此证明。
+
