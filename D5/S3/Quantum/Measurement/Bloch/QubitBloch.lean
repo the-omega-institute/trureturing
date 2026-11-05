@@ -6,8 +6,9 @@
    utility: none
    digest: Generic qubit Bloch coordinates used by parent constructions and weighted rays. -/
 
-/- B_formula: proof_shape: bind-only; escape_witness: none; consumer: scalarB_det and the
-   weighted-ray effect factorization. -/
+/- B_formula_core: proof_shape: bind-only; escape_witness: none; consumer:
+   FourQubitParentConstruction.B_formula and WeightedRayStochasticRigidity.effect_factor.
+   This shared helper supplies no new content or escape credit. -/
 
 import D5.S3.Quantum.Information.Pauli.PauliMatrix
 
@@ -27,7 +28,7 @@ def B (a : EuclideanSpace ℝ (Fin 3)) : Matrix (Fin 2) (Fin 2) ℂ :=
   (a 0 : ℂ) • pauliMatrix .X + (a 1 : ℂ) • pauliMatrix .Y +
     (a 2 : ℂ) • pauliMatrix .Z
 
-theorem B_formula (a : EuclideanSpace ℝ (Fin 3)) :
+theorem B_formula_core (a : EuclideanSpace ℝ (Fin 3)) :
     B a = !![(a 2 : ℂ), (a 0 : ℂ) - Complex.I * (a 1 : ℂ);
       (a 0 : ℂ) + Complex.I * (a 1 : ℂ), -(a 2 : ℂ)] := by
   ext i j

@@ -57,7 +57,7 @@ theorem dependence : ObservationalDependence signature actual := by
   have hp : 0 < gain := by unfold gain; positivity
   norm_num [actual, realize, probability, effect,
     _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB,
-    _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula,
+    _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula_core,
     Matrix.trace, Matrix.mul_apply, Matrix.vecMul, dotProduct, Fin.sum_univ_two] at hc
   linarith
 

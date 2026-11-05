@@ -261,7 +261,7 @@ private theorem effect_factor (s : Fin 5) : effect s = weight s • ray (group s
   ext i j
   fin_cases s <;> fin_cases i <;> fin_cases j <;>
     apply Complex.ext <;>
-    simp [effect, weight, ray, group, direction, blochMatrix, scalarB, B_formula,
+    simp [effect, weight, ray, group, direction, blochMatrix, scalarB, B_formula_core,
       Complex.mul_re, Complex.mul_im, Complex.div_re, Complex.div_im] <;>
     field_simp <;> ring_nf <;> norm_num [Real.sq_sqrt] <;> ring
 

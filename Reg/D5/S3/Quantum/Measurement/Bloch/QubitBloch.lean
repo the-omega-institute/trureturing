@@ -35,23 +35,23 @@ theorem vectorDependence : ObservationalDependence vectorSignature vectorActual 
   refine ⟨(), 0, !₂[0,0,1], ?_⟩
   intro h
   have hh := congrArg (fun A : Mat => A 0 0) h
-  norm_num [vectorActual, realize, B_formula, Matrix.cons_val_succ, Matrix.cons_val_zero] at hh
+  norm_num [vectorActual, realize, B_formula_core, Matrix.cons_val_succ, Matrix.cons_val_zero] at hh
 
 @[reducible] def formulaArena : Arena where
   signature := vectorSignature
   Law R := ∀ a : Vec, R.readout () () a = !![(a 2 : ℂ), (a 0 : ℂ) - Complex.I * (a 1 : ℂ); (a 0 : ℂ) + Complex.I * (a 1 : ℂ), -(a 2 : ℂ)]
 theorem formulaPositive : formulaArena.Law vectorActual := by
-  intro a; exact B_formula a
+  intro a; exact B_formula_core a
 theorem formulaNegative : ¬ formulaArena.Law vectorRejected := by
   intro h
   have hh := h 0
   have he := congrArg (fun A : Mat => A 0 0) hh
-  norm_num [vectorRejected, realize, B_formula, Matrix.one_apply] at he
+  norm_num [vectorRejected, realize, B_formula_core, Matrix.one_apply] at he
   change (1 : ℂ) = 0 at he
   norm_num at he
 
 def formulaEvidence : Registration formulaArena
-    (type_of% (@_root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula)) where
+    (type_of% (@_root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula_core)) where
   actual := vectorActual
   bridge := Iff.rfl
   variation := ⟨formulaPositive, vectorRejected, formulaNegative⟩
@@ -61,9 +61,9 @@ def formulaEvidence : Registration formulaArena
   dependence := vectorDependence
 
 noncomputable def formulaRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula)
+    (@_root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula_core)
     (type_of% (realize vectorSignature (fun _ _ a => B a) (fun e => nomatch e))) Unit Unit := {
-  unitName := Lean.Name.str (Lean.Name.str `D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula
+  unitName := Lean.Name.str (Lean.Name.str `D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula_core
     "Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch/Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch.formulaArena/[anonymous]") "__information_unit",
   realizationName := `Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch.formulaEvidence,
   realizationSource := none,

@@ -15,6 +15,14 @@ internal sealed class FourQubitParentConstructionDocument : IScribeDocumentDefin
             Node("Compatible4", "Compatible4", "Definition 2.13 (p. 12): “Let g ∈ ℕ, d ∈ ℕ, and kₓ ∈ ℕ for all x ∈ [g]. Let (Eᵢ∣ₓ)ᵢ∈[kₓ], x ∈ [g] be a collection of g d-dimensional POVMs. These measurements are compatible if there exists another d-dimensional POVM (Jᵢ₁,…,ᵢg)ᵢ₁∈[k₁],…,ᵢg∈[kg] such that” the marginal equality holds. Here g = 4, d = 2 and each outcome set is Bool. The sixteen functions Fin 4 → Bool index the joint outcomes; true denotes the positive sign.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source), All("E", Measurements(), Equal(Call("Compatible4", X("E")), And(All("i", Fin(4), Call("IsPOVM", Apply(X("E"), X("i")))), Ex("J", Parents(), And(Call("IsPOVM", X("J")), All("i", Fin(4), All("b", BoolType(), Equal(Apply(X("E"), X("i"), X("b")), Marginal(X("J"), X("i"), X("b"))))))))))),
             Node("noisy", "noisy", "Definition 2.15 (p. 13): “Let k ∈ ℕ and let (Eᵢ)ᵢ∈[k] be a POVM. Let s ∈ [0, 1] be a noise parameter. Then, we define the POVM (Eᵢ(s))ᵢ∈[k] with” Eᵢ(s) := sEᵢ + (1 − s)I/k “as the noisy version of (Eᵢ)ᵢ∈[k].” Here k = 2 and real scalars act on complex matrices.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source), All("s", Reals(), All("E", Measurements(), All("i", Fin(4), All("b", BoolType(), Equal(Call("noisy", X("s"), X("E"), X("i"), X("b")), Add(Smul(X("s"), Apply(X("E"), X("i"), X("b"))), Smul(Subtract(Num(1), X("s")), Smul(Typed(Fraction(Num(1),Num(2)), Complexes()), Identity()))))))))),
             Node("endpoint", "endpoint", "The sharp retained-signal parameter is 2/√13.", DescribeRole.Definition, AssessedProvenance.FromRepo(), Equal(Typed(X("endpoint"), Reals()), Fraction(Num(2), Root(Num(13))))),
+            Node("B_formula", "B_formula", "The Pauli expansion gives these four complex matrix entries.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(), All("a", Vectors(),
+                    Equal(Call("B", X("a")), Mat(Typed(Apply(X("a"), Num(2)), Complexes()),
+                        Subtract(Typed(Apply(X("a"), Num(0)), Complexes()),
+                            Multiply(Qualified("Complex", "I"), Typed(Apply(X("a"), Num(1)), Complexes()))),
+                        Add(Typed(Apply(X("a"), Num(0)), Complexes()),
+                            Multiply(Qualified("Complex", "I"), Typed(Apply(X("a"), Num(1)), Complexes()))),
+                        Negate(Typed(Apply(X("a"), Num(2)), Complexes())))))),
             Node("B_zero", "B_zero", "The zero Bloch vector gives the zero matrix.", DescribeRole.Theorem, AssessedProvenance.FromRepo(), Equal(Call("B", Typed(Num(0), Vectors())), Typed(Num(0), Matrices()))),
             Node("B_real_smul", "B_real_smul", "The Bloch matrix is homogeneous for the real scalar action.", DescribeRole.Theorem, AssessedProvenance.FromRepo(), All("c", Reals(), All("a", Vectors(), Equal(Call("B", Smul(X("c"),X("a"))), Smul(X("c"), Call("B",X("a"))))))),
             Node("B_neg", "B_neg", "Negating the vector negates its Bloch matrix.", DescribeRole.Theorem, AssessedProvenance.FromRepo(), All("a", Vectors(), Equal(Call("B", Negate(X("a"))), Negate(Call("B",X("a")))))),
@@ -64,6 +72,7 @@ internal sealed class FourQubitParentConstructionDocument : IScribeDocumentDefin
     private static Formula Implication(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Equivalence(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);
     private static Formula Identity() => Typed(Num(1), Matrices());
+    private static Formula Mat(Formula a, Formula b, Formula c, Formula d) => Seq(Begin, Grp(X("pmatrix")), a, Amp, b, RowBreak, c, Amp, d, End, Grp(X("pmatrix")));
     private static Formula Interval(Formula a, Formula b) => Apply(Qualified("Set","Icc"),a,b);
     private static Formula SumIn(string v, Formula s, Formula b) => Seq(new Formula.Subscript(Sum, Member(X(v), s)), Sp, b);
     private static Formula Marginal(Formula J, Formula i, Formula b) => Seq(new Formula.Subscript(Sum, Seq(Typed(X("e"),Signs()), Comma, Sp, Equal(Apply(X("e"),i), b))), Sp, Apply(J,X("e")));

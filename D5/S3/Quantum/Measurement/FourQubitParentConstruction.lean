@@ -6,6 +6,8 @@
    utility: none
    digest: Bloch coordinates and an exact joint parent for four noisy qubit POVMs. -/
 /-
+  B_formula: proof_shape: bind-only; escape_witness: none; consumer: B_add, B_smul,
+    trace_B_mul, scalarB_hermitian, scalarB_det, scalarB_norm_square.
   B_smul: proof_shape: bind-only; escape_witness: none; consumer: B_real_smul.
   B_real_smul: proof_shape: bind-only; escape_witness: none; consumer: weighted_noisy_unbiased.
   B_neg: proof_shape: bind-only; escape_witness: none;
@@ -37,10 +39,12 @@
       statement_id: sha256:cfaddf4a17693b52013e93be8cd6559e7021ed57ca0305492712468b57f882f7
     D5/S3/Quantum/FiniteDimensional.qubitZ
       statement_id: sha256:381a2bec567456715f58fe6c0c413d59d37882b8499fc81a486c49e7c081d78c
-  Shared B, B_formula, scalarB, and the Pauli carrier are supplied by the generic
-  QubitBloch and PauliMatrix sources; this I module consumes those declarations directly.
+  Shared B, scalarB, and the Pauli carrier are supplied by the generic QubitBloch and
+  PauliMatrix sources. B_formula consumes QubitBloch's single coordinate-matrix proof.
   Same-delivery prerequisite: FourVectorSignSumBound.four_vector_inequality.
   Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/14767.
+  B_formula escape audit unfinished; shared Reg inspection boundary:
+    https://github.com/the-omega-institute/trureturing/issues/25908.
   Utility is none: the universal analytic parent construction is the main content;
   finite identities are consumed in its proof and in the extremal certificates.
 -/
@@ -66,6 +70,9 @@ def Compatible4 (E : (Fin 4 → Bool → Matrix (Fin 2) (Fin 2) ℂ)) : Prop :=
 def noisy (s : ℝ) (E : (Fin 4 → Bool → Matrix (Fin 2) (Fin 2) ℂ)) : (Fin 4 → Bool → Matrix (Fin 2) (Fin 2) ℂ) :=
   fun i b => s • E i b + (1 - s) • ((1 / 2 : ℂ) • (1 : (Matrix (Fin 2) (Fin 2) ℂ)))
 def endpoint : ℝ := 2 / Real.sqrt 13
+theorem B_formula (a : (EuclideanSpace ℝ (Fin 3))) :
+    B a = !![(a 2 : ℂ), (a 0 : ℂ) - Complex.I * (a 1 : ℂ);
+      (a 0 : ℂ) + Complex.I * (a 1 : ℂ), -(a 2 : ℂ)] := B_formula_core a
 @[simp] theorem B_zero : B (0 : (EuclideanSpace ℝ (Fin 3))) = 0 := by
   simp [B]
 @[simp] private theorem B_add (a b : (EuclideanSpace ℝ (Fin 3))) : B (a + b) = B a + B b := by

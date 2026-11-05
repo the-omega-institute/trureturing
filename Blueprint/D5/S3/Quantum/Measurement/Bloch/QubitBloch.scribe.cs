@@ -18,7 +18,7 @@ internal sealed class QubitBlochDocument : IScribeDocumentDefinition
                         Smul(Typed(Apply(X("a"), D(1)), Complexes()), Apply(X("pauliMatrix"), Qualified("Pauli", "Y")))),
                         Smul(Typed(Apply(X("a"), D(2)), Complexes()), Apply(X("pauliMatrix"), Qualified("Pauli", "Z"))))))),
             Describe.Lean(DescribeId.Create("qubit-bloch-b-formula"),
-                DeclarationHandle.Create(Prefix + "B_formula"), H("The Pauli coordinate matrix"),
+                DeclarationHandle.Create(Prefix + "B_formula_core"), H("The Pauli coordinate matrix"),
                 StatementSource.FromAuthor(Disp(All("a", Vectors(), Equal(Call("B", X("a")),
                     Mat(Typed(Apply(X("a"), D(2)), Complexes()),
                         Subtract(Typed(Apply(X("a"), D(0)), Complexes()),
