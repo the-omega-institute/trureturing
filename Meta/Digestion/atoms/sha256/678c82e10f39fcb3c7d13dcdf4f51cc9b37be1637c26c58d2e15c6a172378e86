@@ -1,0 +1,18 @@
+**定义 164.3（统一节点上界与奇位奇偶修正）。** 对所有 $z\ne0$，置
+
+$$
+\begin{gathered}
+[u]_+=\max\{u,0\},\\
+h(z)=\frac{1}{N}\min_{s\in S}
+ \bigl[\kappa_s|a_s(z)|-\|v_s(z)\|\bigr]_+^2,\\
+c_q=
+\begin{cases}
+(-1)^{|q|},&q\in S,\\
+0,&q\in E\setminus S.
+\end{cases}
+\end{gathered}
+\tag{164.10}
+$$
+
+这些是全域公式，既不在节点除以坐标，也不只在全支撑开集上定义。
+
