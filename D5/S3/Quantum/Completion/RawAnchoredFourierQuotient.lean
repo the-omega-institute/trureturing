@@ -4,12 +4,13 @@
    mirror-E: none(waiver:unbounded-original-domain-descent)
    anchors: []
    utility: none
-   digest: Raw balance yields the actual Fourier defect quotient and additive marker descent. -/
+   digest: Raw Fourier quotients and bounded history recursion supply original fibre descent. -/
 
 import Mathlib.LinearAlgebra.Finsupp.LinearCombination
 import Mathlib.LinearAlgebra.Quotient.Bilinear
 import Mathlib.Tactic
-import D5.S3.QuadraticForms.ThreeWayBalance
+import Mathlib.Analysis.Fourier.FiniteAbelian.Orthogonality
+import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import D5.S3.Quantum.Completion.ThreePhaseHistoryRigidity
 import D5.S3.QuadraticForms.ThreeWayPositiveKernel
@@ -27,49 +28,6 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Quantum.Completion.RawAnchoredRadicalDescent
 
 universe u v w
-
-/-- The original finite real comparison and its full two-ended balance law. -/
-structure RawBalance {M : Type*} [MulOneClass M] (U : M → M) (c : M → M → ℝ) : Prop where
-  marker_one : U 1 = 1
-  nonneg : ∀ a b, 0 ≤ c a b
-  diagonal : ∀ a, c a a = 0
-  balance : ∀ a b u v,
-    c (a * u) (b * v) + c (a * U u) (b * U v) +
-      c (a * U (U u)) (b * U (U v)) = 3 * c a b + 3 * c u v
-
-private lemma marker_invariant {M : Type*} [MulOneClass M]
-    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) (u v : M) :
-    c (U u) (U v) = c u v := by
-  let s : ℕ → ℝ := fun n => c (U^[n] u) (U^[n] v)
-  have hr (n : ℕ) : s (n + 1) + s (n + 2) = 2 * s n := by
-    have hh := h.balance 1 1 (U^[n] u) (U^[n] v)
-    simp only [one_mul, h.diagonal, mul_zero, zero_add] at hh
-    change c (U^[n + 1] u) (U^[n + 1] v) +
-      c (U^[n + 2] u) (U^[n + 2] v) = 2 * c (U^[n] u) (U^[n] v)
-    simp only [Function.iterate_succ_apply']
-    linarith
-  exact D5.S3.QuadraticForms.ThreeWayBalance.nonneg_recurrence_constant s
-    (fun n => h.nonneg _ _) (fun n => by simpa only [add_comm] using hr n)
-
-/-- Both contextual readings and complete rows/columns have marker period three.
-The underlying marker itself need not be periodic, surjective or multiplicative. -/
-theorem raw_marker_readouts {M : Type*} [MulOneClass M]
-    (U : M → M) (c : M → M → ℝ) (h : RawBalance U c) :
-    (∀ u v, c (U u) (U v) = c u v) ∧
-    (∀ a b u v, c (a * U (U (U u))) (b * U (U (U v))) = c (a * u) (b * v)) ∧
-    (∀ u z, c (U (U (U u))) z = c u z ∧ c z (U (U (U u))) = c z u) := by
-  have hm := marker_invariant U c h
-  have hc (a b u v : M) :
-      c (a * U (U (U u))) (b * U (U (U v))) = c (a * u) (b * v) := by
-    have h₀ := h.balance a b u v
-    have h₁ := h.balance a b (U u) (U v)
-    rw [hm] at h₁
-    linarith
-  refine ⟨hm, hc, ?_⟩
-  intro u z
-  constructor
-  · simpa [h.marker_one] using hc 1 z u 1
-  · simpa [h.marker_one] using hc z 1 1 u
 
 open D5.S3.QuadraticForms.ThreeWayPositiveKernel
 
@@ -918,3 +876,76 @@ theorem raw_anchored_radical_descent {M : Type*} [MulOneClass M]
   exact quotientForm_beta c (h.diagonal 1)
 
 end D5.S3.Quantum.Completion.RawAnchoredRadicalDescent
+
+open scoped BigOperators ComplexConjugate
+
+namespace D5.S3.Quantum.Completion.ThreePhaseHistoryRigidity
+
+private lemma phase_energy (χ : AddChar (ZMod 3) ℂ) (hχ : Function.Injective χ)
+    (Z A D : ℂ) :
+    ∑ k : ZMod 3, Complex.normSq (Z + χ k * A + χ⁻¹ k * D) =
+      3 * (Complex.normSq Z + Complex.normSq A + Complex.normSq D) := by
+  have h01 : (1 : AddChar (ZMod 3) ℂ) ≠ χ := by
+    intro hh
+    have hx : χ 1 = χ 0 := by rw [← hh]; simp
+    have := hχ hx
+    norm_num at this
+  have h02 : (1 : AddChar (ZMod 3) ℂ) ≠ χ⁻¹ := by
+    intro hh
+    have hx : χ (-1) = χ 0 := by
+      simpa using congrArg (fun ψ : AddChar (ZMod 3) ℂ => ψ 1) hh.symm
+    have := hχ hx
+    norm_num at this
+  have h12 : χ ≠ χ⁻¹ := by
+    intro hh
+    have hx : χ 1 = χ (-1) := by
+      simpa using congrArg (fun ψ : AddChar (ZMod 3) ℂ => ψ 1) hh
+    exact (by decide : (1 : ZMod 3) ≠ -1) (hχ hx)
+  let f : ZMod 3 → ℂ := Z • (⇑(1 : AddChar (ZMod 3) ℂ)) +
+    A • (⇑χ) + D • (⇑(χ⁻¹))
+  have hi : RCLike.wInner RCLike.cWeight f f =
+      ((Complex.normSq Z + Complex.normSq A + Complex.normSq D : ℝ) : ℂ) := by
+    dsimp only [f]
+    simp only [RCLike.wInner_add_left, RCLike.wInner_add_right,
+      RCLike.wInner_smul_left, RCLike.wInner_smul_right,
+      AddChar.wInner_cWeight_eq_boole]
+    simp only [ite_true, ite_eq_right h01, ite_eq_right h02, ite_eq_right h12,
+      ite_eq_right (Ne.symm h01), ite_eq_right (Ne.symm h02), ite_eq_right (Ne.symm h12),
+      smul_eq_mul, mul_zero, mul_one, zero_add, add_zero]
+    change Z * conj Z + A * conj A + D * conj D =
+      ((Complex.normSq Z + Complex.normSq A + Complex.normSq D : ℝ) : ℂ)
+    simp only [Complex.mul_conj, Complex.ofReal_add]
+  have hh := congrArg Complex.re hi
+  have hs : (RCLike.wInner (𝕜 := ℂ) RCLike.cWeight f f).re =
+      (1 / 3 : ℝ) * ∑ k : ZMod 3, Complex.normSq (f k) := by
+    simp [RCLike.wInner, RCLike.cWeight,
+      Complex.normSq_eq_norm_sq, ← Complex.ofReal_pow, ← Finset.mul_sum]
+  rw [hs] at hh
+  have hf (k : ZMod 3) : f k = Z + χ k * A + χ⁻¹ k * D := by
+    simp [f, mul_comm]
+  simp only [Complex.ofReal_re, hf] at hh
+  linarith
+
+/-- A bounded Fourier mode vanishes using every ordered finite history.
+Only the phase-index type is a group; no algebraic law is assumed on M beyond
+its two-sided unit. The local Fourier recursion and uniform bound are premises. -/
+theorem bounded_phase_recursion_vanishes {M : Type*} [MulOneClass M]
+    (U : M → M) (u : M) (N : Set M) (h₁ : (1 : M) ∈ N)
+    (hs : ∀ x ∈ N, ∀ k : ZMod 3, x * U^[k.val] u ∈ N)
+    (χ : AddChar (ZMod 3) ℂ) (hχ : Function.Injective χ)
+    (f D : M → ℂ) (C : ℝ)
+    (hb : ∀ x ∈ N, Complex.normSq (f x) ≤ C)
+    (hr : ∀ x ∈ N, ∀ k : ZMod 3,
+      f (x * U^[k.val] u) = f x + χ k * f u + χ⁻¹ k * D x) :
+    f u = 0 := by
+  have he (x : M) (hx : x ∈ N) :
+      3 * (Complex.normSq (f x) + Complex.normSq (f u)) ≤
+        ∑ k : ZMod 3, Complex.normSq (f (x * U^[k.val] u)) := by
+    simp_rw [hr x hx]
+    rw [phase_energy χ hχ]
+    nlinarith [Complex.normSq_nonneg (D x)]
+  have hz := bounded_energy_increment_nonpos U u N h₁ hs
+    (fun x => Complex.normSq (f x)) (Complex.normSq (f u)) C hb he
+  exact Complex.normSq_eq_zero.mp (le_antisymm hz (Complex.normSq_nonneg _))
+
+end D5.S3.Quantum.Completion.ThreePhaseHistoryRigidity

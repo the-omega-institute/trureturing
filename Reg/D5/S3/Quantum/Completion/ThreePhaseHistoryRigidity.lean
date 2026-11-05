@@ -1,11 +1,44 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
+
+import Reg.Support.DependentFamily
 import D5.S3.Quantum.Completion.ThreePhaseHistoryRigidity
 
-/-! Full-telescope source registration of the retained C133-V prerequisite. -/
+/-! The original comparison family for the source reconstruction problem. -/
 
 namespace Reg.D5.S3.Quantum.Completion.ThreePhaseHistoryRigidity
-open _root_.D5.S3.Quantum.Completion.ThreePhaseHistoryRigidity
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+universe u
+
+/-- Every operand of the original source telescope, before any RawBalance premise. -/
+structure Parameters where
+  Carrier : Type u
+  magma : MulOneClass Carrier
+  marker : Carrier → Carrier
+  comparison : Carrier → Carrier → ℝ
+
+/-- Observations are actual ordered comparisons on the original carrier. -/
+def comparisonSignature : Signature where
+  Params := Parameters.{u}
+  State p := p.Carrier × p.Carrier
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def comparisonReadout : Realization comparisonSignature.{u} :=
+  realize comparisonSignature (fun _ p x => p.comparison x.1 x.2)
+    (fun e => nomatch e)
+
+end Reg.D5.S3.Quantum.Completion.ThreePhaseHistoryRigidity
+
+/-! Full-telescope source registration of original marker comparison invariance. -/
+
+namespace Reg.D5.S3.Quantum.Completion.ThreePhaseHistoryRigidity.MarkerReadouts
+open _root_.D5.S3.Quantum.Completion.RawAnchoredRadicalDescent
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 noncomputable section
 set_option autoImplicit false
@@ -13,7 +46,7 @@ set_option relaxedAutoImplicit false
 universe u
 
 abbrev signature : Signature :=
-  Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℂ) (fun _ => ℂ → Prop)
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ → Prop)
 def actual : Realization signature :=
   realize signature (fun _ _ x y => x = y) (fun e => nomatch e)
 def rejected : Realization signature :=
@@ -22,41 +55,38 @@ def rejected : Realization signature :=
 def arena : Arena where
   signature := signature
   Law R := ∀ {M : Type u} [MulOneClass M]
-    (U : M → M) (u : M) (N : Set M), (1 : M) ∈ N →
-    (∀ x ∈ N, ∀ k : ZMod 3, x * U^[k.val] u ∈ N) →
-    ∀ (χ : AddChar (ZMod 3) ℂ), Function.Injective χ →
-    ∀ (f D : M → ℂ) (C : ℝ),
-    (∀ x ∈ N, Complex.normSq (f x) ≤ C) →
-    (∀ x ∈ N, ∀ k : ZMod 3,
-      f (x * U^[k.val] u) = f x + χ k * f u + χ⁻¹ k * D x) →
-    R.readout () () (f u) 0
+    (U : M → M) (c : M → M → ℝ), RawBalance U c →
+    (∀ u v, R.readout () () (c (U u) (U v)) (c u v)) ∧
+    (∀ a b u v, c (a * U (U (U u))) (b * U (U (U v))) = c (a * u) (b * v)) ∧
+    (∀ u z, c (U (U (U u))) z = c u z ∧ c z (U (U (U u))) = c z u)
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  exact h (M := ULift.{u} Unit) id 1 Set.univ (Set.mem_univ _)
-    (fun _ _ _ => Set.mem_univ _) ZMod.stdAddChar ZMod.injective_stdAddChar
-    (fun _ => 0) (fun _ => 0) 0 (fun _ _ => by simp)
-    (fun _ _ _ => by simp)
+  have hz : RawBalance (id : ULift.{u} Unit → ULift.{u} Unit)
+      (fun _ _ => (0 : ℝ)) := ⟨rfl, fun _ _ => le_rfl, fun _ => rfl,
+        fun _ _ _ _ => by norm_num⟩
+  exact (h id (fun _ _ => 0) hz).1 1 1
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), (0 : ℂ), (1 : ℂ), ?_⟩
+  refine ⟨(), (0 : ℝ), (1 : ℝ), ?_⟩
   intro he
-  have hbad : (1 : ℂ) = 0 := Eq.mp (congrFun he 0) rfl
+  have hbad : (1 : ℝ) = 0 := Eq.mp (congrFun he 0) rfl
   exact one_ne_zero hbad
 
-def source_registration : Registration arena.{u} (type_of% @bounded_phase_recursion_vanishes.{u}) where
+def source_registration : Registration arena.{u} (type_of% @raw_marker_readouts.{u}) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@bounded_phase_recursion_vanishes.{u}, rejected, rejected_law⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  variation := ⟨@raw_marker_readouts.{u}, rejected, rejected_law⟩
+  sensitivity :=
+    Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@bounded_phase_recursion_vanishes.{u}) (Realization signature) Unit Unit := {
-  unitName := `D5.S3.Quantum.Completion.ThreePhaseHistoryRigidity.bounded_phase_recursion_vanishes.__information_unit
-  realizationName := `Reg.D5.S3.Quantum.Completion.ThreePhaseHistoryRigidity.source_registration
+      (@raw_marker_readouts.{u}) (Realization signature) Unit Unit := {
+  unitName := `D5.S3.Quantum.Completion.RawAnchoredRadicalDescent.raw_marker_readouts.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Completion.ThreePhaseHistoryRigidity.MarkerReadouts.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -76,7 +106,8 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      path := #["body", "body", "body", "body", "body", "fn", "arg",
+        "body", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -86,4 +117,4 @@ def registration :
   options := #[] }
 
 end
-end Reg.D5.S3.Quantum.Completion.ThreePhaseHistoryRigidity
+end Reg.D5.S3.Quantum.Completion.ThreePhaseHistoryRigidity.MarkerReadouts

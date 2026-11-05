@@ -121,33 +121,7 @@ internal sealed class RawAnchoredFourierQuotientDocument : IScribeDocumentDefini
         "Raw balance yields the actual Fourier defect quotient and additive marker descent.",
         H("Raw Anchored Fourier Defect Descent"),
         Blocks(
-            Describe.Lean(
-                DescribeId.Create("raw-three-phase-balance"),
-                DeclarationHandle.Create(Gid + "RawBalance"),
-                H("The original raw balance hypotheses"),
-                StatementSource.FromAuthor(Disp(Frame(Eqn(Call("RawBalance", F.Id("U"), F.Id("c")),
-                    Conjunction(Eqn(Mark(D(1)), D(1)),
-                        AllM(A, AllM(B, Seq(D(0), Sp, Le, Sp, Read(A, B)))),
-                        AllM(A, Eqn(Read(A, A), D(0))),
-                        AllM(A, AllM(B, AllM(U, AllM(V, RawBalanceFormula()))))))))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("M has only a binary operation and a two-sided unit. U is an arbitrary self-map fixing the unit, and c is finite and real-valued. No associativity, commutativity, cancellation, inverse, marker homomorphism, surjectivity, periodicity, symmetry or positive-semidefinite form is assumed."))),
-                DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("raw-marker-readouts"),
-                DeclarationHandle.Create(Gid + "raw_marker_readouts"),
-                H("The comparison has derived marker invariance"),
-                StatementSource.FromAuthor(Disp(Original(Conjunction(
-                    AllM(U, AllM(V, Eqn(Read(Mark(U), Mark(V)), Read(U, V)))),
-                    AllM(A, AllM(B, AllM(U, AllM(V,
-                        Eqn(Read(Product(A, Mark(Mark(Mark(U)))), Product(B, Mark(Mark(Mark(V))))),
-                            Read(Product(A, U), Product(B, V))))))),
-                    AllM(U, AllM(Z, Both(
-                        Eqn(Read(Mark(Mark(Mark(U))), Z), Read(U, Z)),
-                        Eqn(Read(Z, Mark(Mark(Mark(U)))), Read(Z, U))))))))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For s(n)=c(U^n u,U^n v), the raw law at the two units gives s(n+1)+s(n+2)=2s(n). Apply ThreeWayBalance.nonneg_recurrence_constant directly, exchanging the summands. Subtracting consecutive original balance identities gives contextual invariance. Specializing either contextual input to the unit gives every row and column equality. These equalities supply the ordered anchored-kernel descent below. Only the readings have period three; the original marker need not have period three."))),
-                DescribeRole.Theorem),
+            HistoryMode.Description(),
             Paragraph(Text("Let E be the full finite-support real space on M, e(a)=delta(a)-delta(1), and E0 the real span of the e(a). Put q(a)=c(a,1), r(a)=c(1,a), and kernel(a,b)=(q(a)+r(b)-c(a,b))/2. B0 is its bilinear extension to E. Rad is the intersection of the left and right radicals, V=E/Rad, pi is the quotient map, beta(a)=pi(e(a)), and B is the induced ordered bilinear form. S is the free linear extension of U. R is its induced operator on V.")),
             Paragraph(Text("Put T(a,u)=beta(a*u)-beta(a)-beta(u), W=span(range T), gamma(a)=beta(a) mod W, and let rho be the operator induced by R on V/W. All spans and quotients are real. Function images of subspaces are written pi(E0) and R(W). Superscripts on U and rho denote iteration, including the zeroth iterate.")),
             Describe.Lean(
@@ -170,4 +144,62 @@ internal sealed class RawAnchoredFourierQuotientDocument : IScribeDocumentDefini
         OpenBracket, Call("MulOneClass", M), CloseBracket, Comma, Sp,
         F.Id("U"), Colon, Sp, M, Sp, To, Sp, M, Comma, Sp,
         F.Id("c"), Colon, Sp, M, Sp, To, Sp, M, Sp, To, Sp, Real, Comma, Sp, body);
+    private static class HistoryMode
+    {
+        private const string Gid = "D5/S3/Quantum/Completion/RawAnchoredFourierQuotient.";
+    private static Formula M => F.Id("M");
+    private static Formula U => F.Id("U");
+    private static Formula N => F.Id("N");
+    private static Formula X => F.Id("x");
+    private static Formula T => F.Id("u");
+    private static Formula K => F.Id("k");
+    private static Formula C => F.Id("C");
+    private static Formula Chi => F.Id("chi");
+    private static Formula Three => Call("ZMod", D(3));
+    private static Formula Read(Formula a) => Call("f", a);
+    private static Formula Child => Seq(X, Sp, Cdot, Sp,
+        Call("iterate", U, Call("val", K), T));
+    private static Formula Eqn(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
+    private static Formula All(Formula a, Formula type, Formula body) =>
+        Seq(Open, Forall, Sp, a, Colon, Sp, type, Comma, Sp, body, Close);
+    private static Formula InSet(Formula a) => Seq(a, Sp, InMacro, Sp, N);
+    private static Formula Energy(Formula a) => Call("normSq", Read(a));
+
+
+        internal static DocumentBlock Description() =>
+Entry("bounded-phase-recursion-vanishes", "bounded_phase_recursion_vanishes",
+                "Conditional vanishing from an assumed Fourier recursion", TheoremFormula(),
+                "The full telescope is arbitrary M with only a two-sided unit, U:M to M, u:M, a subset N containing 1 and closed under x times U^k u for every x in N and k in ZMod 3, an injective complex additive character chi of ZMod 3, complex functions f and D, and a finite real C bounding normSq(f x) for every x in N. The displayed local recursion is an additional hypothesis. Character orthogonality yields a child energy of 3 times (normSq(f x)+normSq(f u)+normSq(D x)). Induction over every PhaseWords n gives 3^n times (normSq(f 1)+n normSq(f u)) as a lower bound on the total energy. The upper bound is 3^n C. An Archimedean argument forces normSq(f u)=0. AddChar.wInner_cWeight_eq_boole is the reused scalar orthogonality supplier; it imposes a group law only on the phase index.",
+                DescribeRole.Theorem);
+    private static Formula TheoremFormula()
+    {
+        Formula closed = All(X, M, Seq(InSet(X), Sp, Rightarrow, Sp,
+            All(K, Three, InSet(Child))));
+        Formula bounded = All(X, M, Seq(InSet(X), Sp, Rightarrow, Sp,
+            Energy(X), Sp, Le, Sp, C));
+        Formula recursion = All(X, M, Seq(InSet(X), Sp, Rightarrow, Sp,
+            All(K, Three, Eqn(Read(Child), Seq(Read(X), Sp, Plus, Sp,
+                Call("chi", K), Read(T), Sp, Plus, Sp,
+                Call("chi", Seq(Minus, K)), Call("D", X))))));
+        Formula complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula arrow = Seq(M, Sp, To, Sp, complex);
+        return Seq(Forall, Sp, M, Colon, Sp, F.Id("Type"), Comma, Sp,
+            OpenBracket, Call("MulOneClass", M), CloseBracket, Comma, Sp,
+            U, Colon, Sp, M, Sp, To, Sp, M, Comma, Sp,
+            T, Colon, Sp, M, Comma, Sp, N, Colon, Sp, Call("Set", M), Comma, Sp,
+            Chi, Colon, Sp, Call("AddChar", Three, complex), Comma, Sp,
+            F.Id("f"), Comma, Sp, F.Id("D"), Colon, Sp, arrow, Comma, Sp,
+            C, Colon, Sp, Mathbb, Grp(F.Id("R")), Comma, Sp, Open,
+            InSet(D(1)), Sp, Land, Sp, closed, Sp, Land, Sp,
+            Call("Injective", Chi), Sp, Land, Sp, bounded, Sp, Land, Sp, recursion,
+            Close, Sp, Rightarrow, Sp, Eqn(Read(T), D(0)));
+    }
+
+    private static DocumentBlock Entry(string id, string declaration, string title,
+        Formula formula, string narrative, DescribeRole role) => Describe.Lean(
+            DescribeId.Create(id), DeclarationHandle.Create(Gid + declaration), H(title),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(narrative))), role);
+    }
+
 }
