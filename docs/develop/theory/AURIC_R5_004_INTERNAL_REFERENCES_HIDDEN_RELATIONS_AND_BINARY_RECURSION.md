@@ -312,8 +312,7 @@ $\square$
 | 完整球面三元 $x$     | 归一复双元 $\psi$  | 整个 $U(1)$ 圆           |
 | 完整定向三轴标架       | $SU(2)$ 旋量标架   | 两点 $\{U,-U\}$          |
 
-最后一行由 $`U(\psi)=\left(\begin{smallmatrix}\alpha&-\bar\beta\\
-\beta&\bar\alpha\end{smallmatrix}\right)`$ 实现。共同相位使 $U\mapsto U\operatorname{diag}(e^{i\chi},e^{-i\chi})$，保持法向但转动横向标架。 若完整标架已固定，只剩 $\chi=0,\pi$，不是整圈自由。
+最后一行由 $U(\psi)=\left(\begin{smallmatrix}\alpha&-\bar\beta\\ \beta&\bar\alpha\end{smallmatrix}\right)$ 实现。共同相位使 $U\mapsto U\operatorname{diag}(e^{i\chi},e^{-i\chi})$，保持法向但转动横向标架。 若完整标架已固定，只剩 $\chi=0,\pi$，不是整圈自由。
 
 **白话对应。** 三元像本层已经确定的方向；完整提升还需要说明它相对于哪一个内部参考取相位。参考换一点，隐藏关系就反向补偿，原对象不变。横向各向同性允许围着法向转动；它并不允许把已经读出的相对相位重新称作全部隐藏。
 
