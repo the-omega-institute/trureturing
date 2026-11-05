@@ -1,0 +1,91 @@
+**定理 136.1（读回射线分层）。** 相对定理 131.1 的 $\mathsf F_2$ 数学测试域，$\mathsf F_{211}$ 的测试域在整个 Jordan 总秩至少二时严格缩小，总秩至多一时相同。零对象的两域都为空。
+
+仅在完整原复重构后，固定同一原表示 $E\cong\bigoplus_tH_{n_t}(\mathbb C)$ 及原不等块权 $q(x,y)=\sum_tw_t\operatorname{Tr}(x_ty_t)$。令第一输入的原子位于块 $s$，主切口的块秩为 $\mathbf k=(k_t)$、$\sum_tk_t\le2$，并记
+
+$$
+\mathcal B_{s,\mathbf k}
+=\mathbb {CP}^{n_s-1}\times\prod_t\operatorname{Gr}_{\mathbb C}(k_t,n_t),\qquad
+b_{s,\mathbf k}=2(n_s-1)+\sum_t2k_t(n_t-k_t).
+\tag{136.1}
+$$
+
+在此底空间上，$\mathcal S_t$ 为第 $t$ 个 Grassmann 因子的秩 $k_t$ 典范子丛的拉回，$\mathcal S_t^\perp$ 为原 Hermitian 正交补丛。测试域精确分成零读回层与下列带标签层：
+
+$$
+\begin{array}{c|c|c}
+\text{读回}&\text{总空间}&\text{实维数}\\ \hline
+r=0&\mathcal B_{s,\mathbf k}&b_{s,\mathbf k}\\
+r\text{ 在块 }t\text{ 的切口内}&\mathbb P_{\mathbb C}(\mathcal S_t),\ k_t\ge1&b_{s,\mathbf k}+2(k_t-1)\\
+r\text{ 在块 }t\text{ 的切口外}&\mathbb P_{\mathbb C}(\mathcal S_t^\perp),\ k_t\le n_t-1&b_{s,\mathbf k}+2(n_t-k_t-1).
+\end{array}
+\tag{136.2}
+$$
+
+不将射影纤维预先视为全局直积。内、外读回的第 $t$ 个联合旗因子分别是
+
+$$
+\frac{U(n_t)}{U(1)\times U(k_t-1)\times U(n_t-k_t)},\qquad
+\frac{U(n_t)}{U(k_t)\times U(1)\times U(n_t-k_t-1)}.
+\tag{136.3}
+$$
+
+其余块仍为原 Grassmann 因子，第一输入的复射影因子独立保留；零维 $U(0)$ 为平凡群。令 $n_{\max}=\max_tn_t$，则非零 $E$ 的最大分层实维数是
+
+$$
+\begin{aligned}
+M_{211}=2(n_{\max}-1)+\max_{\substack{0\le k_t\le n_t\\\sum_tk_t\le2}}
+\left\{\sum_t2k_t(n_t-k_t)+
+2\max_t\max(0,k_t-1,n_t-k_t-1)\right\}.
+\end{aligned}
+\tag{136.4}
+$$
+
+单个复块 $H_n(\mathbb C)$ 上，准确为
+
+$$
+M_{211}(1)=0,\quad M_{211}(2)=4,\quad M_{211}(3)=10,\qquad
+M_{211}(n)=8n-16\quad(n\ge4).
+\tag{136.5}
+$$
+
+相对 $M_2(n)$，最大连续维数严格下降当且仅当 $n\ge4$。这不同于测试域在总秩二起就严格删除的判据。
+
+证明。若总秩至少二，任取 primitive $p$、主切口 $c=0$ 和旧读回 $r=u$，得到旧域中被删去的一点。总秩一时所有幂等元只有零和一个 primitive，没有可删读回。
+
+在复表示中，primitive 是单块的秩一投影。$P_cr=0$ 等价于 $c,r$ 交换，故它的像直线全在该块切口内或外。发送 $(p,c,r)$ 到该直线，反向取正交投影，给 (136.2) 的双射与光滑互逆。单位群传递性及保留这条线和切口的稳定子给 (136.3)。群维数，或底维数加射影纤维维数，给 (136.2)。这些关联丛是定理 131.1 四扇区旗域中只保留一条读回线的分层。
+
+对固定 $\mathbf k$，第一输入块可独立最大化；读回的块、内外和零三个选择给 (136.4)。即使 $k_t=0$ 或 $n_t$，不合法的分支在该式只贡献负一，其外侧零项会排除它，因此公式包含所有边界。
+
+单块令
+
+$$
+h(n,k)=2k(n-k)+2\max(0,k-1,n-k-1),\quad0\le k\le\min(2,n).
+$$
+
+$n=1,2,3$ 直接列举得到 (136.5) 的前三值。$n\ge4$ 时，$h(n,0)=2n-2$、$h(n,1)=4n-6$、$h(n,2)=6n-14$；最后一项同时不小于前两项，分别相差 $4n-12$、$2n-8$。再加第一输入的 $2n-2$，得到 (136.5)。
+
+沿 (131.4)，$n\ge2$ 时 $M_2(n)=2n-2+n^2-2-\lceil(n-2)^2/2\rceil$。$n=2,3$ 给相同最大值，$n=1$ 都为零；$n\ge4$ 的差为
+
+$$
+M_2(n)-M_{211}(n)=
+\begin{cases}
+2(m-2)^2+2,&n=2m,\quad m\ge2,\\
+2(m^2-3m+3),&n=2m+1,\quad m\ge2.
+\end{cases}
+\tag{136.6}
+$$
+
+两式严格为正。多块仍以 (136.4) 与 (131.4) 比较，不套单块阈值。
+
+纯经典 $E=\mathbb R^m$、$m\ge1$ 时，所有切口可交换，$p$ 有 $m$ 种，$c$ 有 $1+m+\binom m2$ 种，$r$ 有零和 $m$ 个原子，故
+
+$$
+|\mathcal T_{211}(\mathbb R^m)|
+=m\left(1+m+\binom m2\right)(m+1),\qquad
+|\mathcal T_2(\mathbb R^m)|
+=m\left(1+m+\binom m2\right)2^m.
+\tag{136.7}
+$$
+
+$m=1$ 两者均为四，$m\ge2$ 时 $2^m>m+1$，因为后者只数空集和单元素集而前者还数二元素集。两域连续维数仍都为零；点数、连续维数与实际认证成本是不同量。∎
+

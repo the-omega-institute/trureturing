@@ -1,0 +1,38 @@
+**命题 22.2（活动双方仍可保留一个非 Jordan 的整体）。** 定义 20.1 不蕴含实际 $M$ 为 Jordan，也不蕴含实际整体是有限复 $C^*$ 自伴部分。
+
+证明。两方均取
+
+$$
+J=\operatorname{Herm}_2(\mathbb C)\oplus\mathbb R^2,
+\qquad
+S(a,c)=\tfrac12(ac+ca),
+\qquad B(a,c)=\tfrac i2(ac-ca),
+$$
+
+并用正的逐块迹内积；在经典 $\mathbb R^2$ 块取 $\langle u,v\rangle=(u_1v_1+u_2v_2)/2$。它们活动，且共同 $\lambda=1$。令 $u=(1,1),z=(1,-1)$ 仅支持经典块。在双方的纯经典联合块上，以下四元正交归一：
+
+$$
+e=u\otimes u,\quad p=z\otimes u,
+\quad r=u\otimes z,\quad q=z\otimes z.
+$$
+
+标准乘法满足 $p^2=r^2=q^2=e$、$pr=q,pq=r,rq=p$。$q\in V$。对任意实数 $t\ne0$，取
+
+$$
+M_t(X,Y)=M_{\rm q}(X,Y)
++t\,g_{AB}(q,X)g_{AB}(q,Y)q.
+\tag{22.6}
+$$
+
+定理 22.1 保证全部局部模作用、条件作用、实际联合导子律、正 Frobenius 比较及活动性仍成立。补项仅将上述乘法表中的 $q^2$ 改为 $e+tq$。
+
+但在这个实际整体中，取 $x=p+q$，有
+
+$$
+x^2=2e+2r+tq,
+\qquad [\mathbb L_x,\mathbb L_{x^2}]p=2tq\ne0.
+\tag{22.7}
+$$
+
+例如两种嵌套结果分别为 $4e+4r+3tq+tp$ 与 $4e+4r+tq+tp$。Jordan 恒等式失效，因此实际整体不能保持其比较而同构为有限复 $C^*$ 自伴部分。这里不是缺少非交换活动，而是所有已有变化都看不见的静态联合记录仍可被变形。∎
+

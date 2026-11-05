@@ -1,0 +1,105 @@
+**Theorem 44.2 (population-sensitive lower bound and complete actual
+saturation).** For every original normalized effect $E$ and every actual
+shared feedback $U$,
+
+$$
+\boxed{\qquad g(E,U)\ge L(p,\epsilon).\qquad}
+\tag{44.3}
+$$
+
+Equality in (44.3) holds exactly in the following union, with
+$|\lambda|=1$:
+
+$$
+\begin{aligned}
+&z=0,\quad U=\lambda U_+,\quad d^2p\ge e^2(1-p),\\
+&\hspace{2.9cm}\text{or}\\[-2pt]
+&z=0,\quad U=\lambda U_-,\quad d^2p\le e^2(1-p).
+\end{aligned}
+\tag{44.4}
+$$
+
+The description includes singular effects, coincident weighted eigenvalues,
+and every common scalar representative. In the coincident case both lines
+of (44.4) are allowed. No independent feedback is assigned to the two
+certificate columns.
+
+**Proof.** For a fixed actual $U$, let $a=(P,Q)$ be the row from (23.12) and
+write
+
+$$
+K=H-a^\dagger a.
+\tag{44.5}
+$$
+
+Formula (23.12), applied to every normalized pure effect while this same
+$U$ is held fixed, and nonnegativity of the actual defect from Lemma 9.3,
+give $b^\dagger Kb\ge0$ for every unit vector $b$. Hence $K\succeq0$.
+Because $H$ is positive definite, the row
+$b_0=aH^{-1/2}$ satisfies
+
+$$
+b_0^\dagger b_0\preceq I,\qquad \|b_0\|\le1.
+\tag{44.6}
+$$
+
+Set
+
+$$
+C=H^{1/2}FH^{1/2}\succeq0.
+\tag{44.7}
+$$
+
+The same actual $U$ and the original transpose give, directly from
+(23.12),
+
+$$
+g(E,U)=\operatorname{Tr}(C)-b_0Cb_0^\dagger.
+\tag{44.8}
+$$
+
+Therefore
+
+$$
+g(E,U)\ge\operatorname{Tr}(C)-\lambda_{\max}(C)
+          =\lambda_{\min}(C).
+\tag{44.9}
+$$
+
+The trace and determinant of $C$ are
+
+$$
+\operatorname{Tr}(C)=D(p),\qquad
+\det C=d^2e^2\det F=\frac{d^2e^2\epsilon}{2}.
+\tag{44.10}
+$$
+
+The characteristic polynomial of the Hermitian two-by-two matrix $C$ has
+discriminant $D(p)^2-2d^2e^2\epsilon\ge0$. Its smaller root is exactly
+$L(p,\epsilon)$, proving (44.3).
+
+It remains to prove that no equality case has been lost. If $F$ is positive
+definite and equality holds, both inequalities in (44.9) are equalities.
+Thus $\|b_0\|=1$ and $b_0^\dagger$ lies in the top eigenspace of $C$.
+The first condition makes $K$ singular. Choose a unit vector in $\ker K$
+and use it as a pure certificate-basis effect with this same actual $U$.
+Its actual defect is zero by (44.5), so Lemma 11.2 forces
+$U=\lambda U_+$ or $U=\lambda U_-$. In the first case the row in
+(23.12) is $(\lambda d,0)$, and in the second it is $(0,\lambda e)$.
+The top-eigenspace condition then becomes respectively
+
+$$
+z=0,\quad d^2p\ge e^2(1-p),
+\qquad\text{or}\qquad
+z=0,\quad d^2p\le e^2(1-p).
+\tag{44.11}
+$$
+
+Conversely, each condition in (44.11) gives equality directly in (23.12)
+and (44.9). If $F$ is singular, its trace-one positivity makes it rank one,
+so $L=0$; equality is $g=0$, and Lemma 11.2 gives exactly the two original
+zero pairs. Those are the $p=1$ and $p=0$ instances already contained in
+(44.4). A repeated eigenvalue is the equality case
+$d^2p=e^2(1-p)$ in one of the two diagonal lines, and both optimizer rows
+attain the same value. This proves the complete saturation statement.
+

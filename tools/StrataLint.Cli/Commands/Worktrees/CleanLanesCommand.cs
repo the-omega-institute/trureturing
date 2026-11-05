@@ -18,9 +18,7 @@ internal static partial class CleanLanesCommand
         "USAGE: StrataLint clean-lanes [--base REV] [--force] [--lanes-only] "
         + "[--active-paths-file FILE]";
 
-    private const long MinimumReclaimableLaneAgeSeconds = 24L * 60 * 60;
-    private const long MinimumMergedLaneAgeSeconds = 3L * 60 * 60;
-    private const long MinimumBehindCommits = 300;
+    private const long MinimumReclaimableLaneAgeSeconds = 6L * 60 * 60;
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
@@ -76,7 +74,6 @@ internal static partial class CleanLanesCommand
             var extraSweepsAllowed = InspectRegisteredLanes(
                 root,
                 commonGitDirectory,
-                baseCommit,
                 devCommit,
                 options.Force,
                 inventory,
@@ -221,7 +218,6 @@ internal static partial class CleanLanesCommand
     private static bool InspectRegisteredLanes(
         string repositoryRoot,
         string commonGitDirectory,
-        string? baseCommit,
         string? devCommit,
         bool force,
         IReadOnlyList<RegisteredWorktree> inventory,
@@ -254,7 +250,7 @@ internal static partial class CleanLanesCommand
             events.Add(QualificationEvent(item, new QualificationResult(item.IdentityFailure, QualificationOutcome.Failed)));
         }
         var poolForce = force && failedPaths.Count == 0;
-        var poolPaths = InspectIdlePool(repositoryRoot, devCommit, poolForce, inventory, events, runner,
+        var poolPaths = InspectIdlePool(repositoryRoot, devCommit, poolForce, inventory, events, runner, now,
             CompleteRemoval, Observe);
         var qualifications = QualifyLockedLanes(repositoryRoot, inventory.Where(item => item.Locked
             && !poolPaths.Contains(item.Path) && !failedPaths.Contains(item.Path) && item.Path != inventory[0].Path
@@ -313,7 +309,7 @@ internal static partial class CleanLanesCommand
                 continue;
             }
 
-            var selection = SelectForReclaim(item, baseCommit, devCommit, runner, now);
+            var selection = SelectForReclaim(item, runner, now);
             if (selection.BlockReason is not null)
             {
                 events.Add(WithSelection(BlockedWorktree(item, selection.BlockReason), selection));
@@ -322,7 +318,7 @@ internal static partial class CleanLanesCommand
 
             if (force)
             {
-                var removal = RemoveLane(repositoryRoot, item, baseCommit, devCommit, selection, runner, now,
+                var removal = RemoveLane(repositoryRoot, item, selection, runner, now,
                     protectObservedWorktree: Observe);
                 events.Add(WithSelection(RemovalEvent(item, removal), selection));
                 CompleteRemoval(item, removal);
@@ -341,7 +337,7 @@ internal static partial class CleanLanesCommand
                 item.Branch,
                 item.Head,
                 "would_remove",
-                selection.RemovalReason(item.Locked)), selection));
+                selection.RemovalReason()), selection));
             remainingPaths.Remove(item.Path);
         }
 
@@ -361,7 +357,7 @@ internal static partial class CleanLanesCommand
         && (item.Action is "failed" or "partially_removed" or "deferred"
             || IsSingleWorktreeResult(item) && item.Action == "skipped"
                 && (item.SelectedForRemoval || item.Reason is not
-                    ("main_worktree" or "nested_worktree" or "recently_updated" or "not_far_behind"
+                    ("main_worktree" or "nested_worktree" or "recently_updated"
                     or "locked_recent" or "initialization_in_progress" or "idle_pool" or "idle_locked" or "idle_dirty")));
 
     private static void InspectTempJudges(

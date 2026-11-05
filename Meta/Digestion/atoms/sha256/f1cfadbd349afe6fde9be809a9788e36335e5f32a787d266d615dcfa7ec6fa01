@@ -1,0 +1,26 @@
+**定义 13.1（只删除第九位的原域）。** 对象、矩阵和量词严格沿用定义 1.1–1.4、8.1：全部 $89$ 个复坐标、原基与内积、固定外位、整个 $X=\mathbb{CP}^{88}$、全部十一门及每一个原支撑分量、唯一 ready、全部有限正向前字和原实际 R 均保留。由[固定 II][II] (100.2) 的嵌入，
+
+$$
+{\rm r}=\{3,7\},\qquad e_{\rm r}=R_0e_{00100},\qquad
+\chi_a=K_ae_{\rm r},\quad a\in\mathsf W_{11}.
+\tag{13.1}
+$$
+
+仍由同一 $\Pi$ 定义 $T(q,s)=\Pi_q(e_s)$、$m_i$ 和 $\nu_k$。置
+
+$$
+\begin{aligned}
+\mathsf S_{+8}&:\quad
+\exists\mu\in\Delta(E),\quad T\mu=\mu,
+\quad \nu_k(\mu)>0\quad(1\le k\le8),\\
+\mathscr C_8&=\{\Pi\in\mathscr C_{\rm end}:\mathrm R,\ \mathsf S_{+8}\},\\
+\mathscr P_8&=\{p\in\Delta(E):p(E_1)=0,
+\quad \nu_k(p)>0\quad(1\le k\le8)\},\\
+\Pi^p_q([z])&=p_q\quad(q\in E,\ z\ne0),\qquad
+\Pi^{\rm B}_q([z])=|z_q|^2/\|z\|^2.
+\end{aligned}
+\tag{13.2}
+$$
+
+这里要求同一个 $\mu$，不要求它全支撑，也不要求 $\nu_9(\mu)>0$。不预设基态校准、$T=I$、节点、二次型、PSD、一般效果可加性或其它支持相容条件。R 只在原实际 $\chi_a$ 上量化，零投影右端为零且不评价 $\Pi(0)$。原七地址后字、全部标签、$26+63$ 载体及 §5 的实际合同仍各按原范围；本定义没有新增准备或操作。
+

@@ -29,6 +29,11 @@ internal sealed class HermiteSignedModeDocument : IScribeDocumentDefinition
                 + "It defines the physicists normalization directly; it does not rescale a probabilists argmax. "
                 + "The coefficient extraction proof shows that every coefficient in the source range equals signedCoeff(n,j).",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Dlmf)),
+            Node("polynomial_coeff", "Exact coefficient extraction", ExtractionFormula(),
+                "For every natural n and j with j at most n, the coefficient of X to the power j in the original physicists polynomial "
+                + "equals signedCoeff(n,j). This includes zero coefficients outside the parity support. "
+                + "The absolute-mode selector consumes this same extraction theorem; its statement and proof also serve the signed selector.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Dlmf)),
             Node("a", "A certified smallest maximizing exponent", AFormula(),
                 "mode(n) is the largest r satisfying 4r at most n and 16(2r)(2r-1) at most "
                 + "(n-4r+1)(n-4r+2)(n-4r+3)(n-4r+4). The finite set contains zero. "
@@ -62,7 +67,7 @@ internal sealed class HermiteSignedModeDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
-        Describe.Lean(DescribeId.Create("hermite-signed-mode-" + name.ToLowerInvariant()),
+        Describe.Lean(DescribeId.Create("hermite-signed-mode-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
             provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
@@ -100,6 +105,12 @@ internal sealed class HermiteSignedModeDocument : IScribeDocumentDefinition
     }
     private static Formula AFormula() => All("n",Nat(),Equal(A(F.Id("n")),
         Sub(F.Id("n"),Mul(D(4),Call("mode",F.Id("n"))))));
+    private static Formula ExtractionFormula()
+    {
+        var n=F.Id("n"); var j=F.Id("j");
+        return All("n",Nat(),All("j",Nat(),Arrow(LessEqual(j,n),
+            Equal(Coeff(n,j),Call("signedCoeff",n,j)))));
+    }
     private static Formula SmallestBody(Formula n, Formula j)
     {
         var k=F.Id("k");

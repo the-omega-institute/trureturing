@@ -1,0 +1,25 @@
+**定义 25.5（固定原历史上的相位六边形）。**沿用 (24.22)、(24.31) 的 $x_0=e_0+e_2,z_0=e_0-e_2,y_0=e_1$，对 $s\in\mu _6$ 置
+
+$$
+\begin{gathered}
+q_s=(x_0+s y_0)/\eta,\quad Q_s=q_sq_s^*,\\
+r_s=(x_0-2s y_0)/\eta,\quad T_s=r_sr_s^*/2,\quad Z=P_{z_0}=z_0z_0^*/2,\\
+D_s=\operatorname{diag}(1,s,1).
+\end{gathered}
+\tag{25.13}
+$$
+
+$D_s$ 是相位酉矩阵，$T_s$ 始终是秩一投影，二者不共用记号。固定一个原活动角保持的旧前接 $h\in U_3(A)$，以角外恒等嵌入，并要求全部六个 $hD_s$ 的原读出、逆向回拉、同一准备／参考／历史以及原两只独立抽签均合法供应。这里 $h$ 是该固定历史中的读口共轭参数，不把六个不同条件准备混合。定义
+
+$$
+\begin{aligned}
+a_s^h&=F_w(hQ_sh^*)=\mu((hQ_sh^*)_{\rm act}),\\
+b_s^h&=F_w(hT_sh^*),\qquad c^h=F_w(hZh^*),\\
+\Delta_s(b^h)&=3b_{-s}^h+b_s^h-2b_{\zeta s}^h-2b_{\zeta^2s}^h,\\
+E_s^h&=b_s^h+b_{-s}^h.
+\end{aligned}
+\tag{25.14}
+$$
+
+下文省略上标时仍固定这一原历史与 $h$。$a_s^h$ 是原活动单位射线概率；$b_s^h,c^h$ 的实际值由一暗块粗读法给出，不把类型二方向当作活动单位叶。
+

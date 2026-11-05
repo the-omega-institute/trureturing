@@ -1,0 +1,56 @@
+#### 定义 3.1：来源比较代数与二元平方总量
+
+由同一个来源定义
+
+$$
+P_ez=B(e,z)e,\qquad
+\mathcal A_e=\operatorname{span}_{\mathbb R}\{I_W,P_e\}\subseteq\operatorname{End}_{\mathbb R}(W).
+$$
+
+对 $K,L\in\mathfrak g$，定义二元平方总量
+
+$$
+M(K,L)=K^*K+L^*L=-K^2-L^2.
+$$
+
+它是自伴正半定算子，并满足
+
+$$
+B(z,M(K,L)z)=\lVert Kz\rVert_B^2+\lVert Lz\rVert_B^2.
+$$
+
+$\mathcal A_e$ 由已经定义的单位与来源投影生成；没有预先给其中两个方向指定系数。
+
+**本轮唯一候选 $\Omega Q$-017：二元平方总量的唯一异常来自原来源。**
+
+$$
+\boxed{\exists K,L\in\mathfrak g:\qquad
+\operatorname{Lie}\langle K,L\rangle=\mathfrak g,\qquad
+M(K,L)\in\mathcal A_e\setminus\mathbb RI_W.}
+\tag{Q17}
+$$
+
+即存在实数 $\alpha,\gamma$，使
+
+$$
+-K^2-L^2=\alpha I_W+\gamma P_e,
+\qquad M(K,L)\notin\mathbb RI_W.
+\tag{3.1}
+$$
+
+不预置 $\alpha$、$\gamma$ 的数值或相对正负，不预设三维、秩二、正交、来源圆或非交换。
+
+**白话：** 把两种原变化的作用量合在一起。除了来源这一条方向，其余方向完全一样；来源确实不同，但先不规定它多多少或少多少。两种变化还要生成全部原连续变化，全部可读方向也都来自这个来源。下面证明，这个唯一差额必恰好多一份，而且整体只能是三维。
+
+非标量条件本身排除 $\dim W=1$，故候选成立时 $n=\dim W\ge2$，$I_W,P_e$ 线性独立，系数唯一。它们均可从原平方总量定义：
+
+$$
+\alpha=\frac{\operatorname{Tr}M-B(e,Me)}{n-1},\qquad
+\gamma=B(e,Me)-\alpha.
+\tag{3.2}
+$$
+
+因此式 (3.1) 中的系数是原关系的读数，而不是另外输入的参数。
+
+与 Q16 相比，本轮把原生成元次数从四降回二，并把上一轮仍需直接要求的特定返回结构，退回到一个*尚未指定差额大小*的来源各向同性条件。它重新使用单位算子来表达“其余方向相同”；因此不宣称每一个符号计数指标都同时下降。其新的数学工作是证明唯一差额的量值由谱的成对性强制，而非把旧的归一系数藏在定义中。
+

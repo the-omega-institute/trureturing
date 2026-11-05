@@ -1,0 +1,25 @@
+### 命题 6.2（有限三维表示及零尺度边界）
+
+若 $s=a+b>0$，则
+
+$$
+\frac Ls=\frac12(I+\mathbf r\cdot\boldsymbol\sigma),\quad
+\mathbf r=\frac{(2\operatorname{Re}c,-2\operatorname{Im}c,a-b)}{a+b},\quad |\mathbf r|\le1.
+$$
+
+若 $a,b>0$，也可使用上半球坐标
+
+$$
+\mathbf q=\frac{(\operatorname{Re}c,\operatorname{Im}c,\sqrt{ab-|c|^2})}{\sqrt{ab}}\in S^2_+.
+$$
+
+恢复整个二元缺额块，Bloch 球坐标须配合总尺度 $s$；上半球坐标则须配合 $a,b$，或等价地配合 $s$ 与 $a/b$。闭合对应 $s=0$，此时归一化缺额球没有定义。
+
+**证明。**$L\ge0$ 给出 $a,b\ge0$ 及 $ab-|c|^2\ge0$。直接计算
+
+$$
+1-|\mathbf r|^2=\frac{4(ab-|c|^2)}{(a+b)^2},\qquad |\mathbf q|^2=1.
+$$
+
+由 $s,\mathbf r$ 或 $a,b,\mathbf q$ 都能恢复 $a,b,c$；若 $a+b=0$，正性迫使整个 $L=0$，不能再除以尺度来指定特权方向。
+

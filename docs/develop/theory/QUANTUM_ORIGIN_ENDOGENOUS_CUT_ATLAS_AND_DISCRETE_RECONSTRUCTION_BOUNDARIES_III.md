@@ -3847,3 +3847,234 @@ For every pair $a,b$ with $|a|^2+|b|^2=N-1$ at each of these nine scales, this a
 **文献 58.1（Reused ingredients and precise scope）。** [Part I](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES.md), Definition 16.1 and (16.6)--(16.7), supply the original basis, its sign convention and its coefficient bound. Theorem 33.1, specifically the fine estimate (33.20), supplies the inequality $332008\epsilon$ for a complete table normalized on its own three-dimensional identity when $N\ge648$. Proposition 19.1 supplies the complementary-column projections used in (57.3)--(57.4). R. T. Rockafellar, *Convex Analysis*, Princeton University Press, §11, supplies the standard finite-dimensional separation principle used between (55.9) and (55.11). The perturbation (55.2)--(55.9) and the subsequent exact finite-coefficient conclusion are the interface asserted here; the final direct row reuses the existing projections. The conclusions are ordinary mathematical deductions in the stated finite-grid setting, with no global literature-priority assertion.
 
 ## 追加锚（本行以下为增补区）
+
+## 59. Exact integer-norm descent on a three-coordinate face
+
+**定理 59.1（Costed rank-one descent on every original dyadic grid）。** Fix any coordinate face $S$ of Definition 54.2, any $N=2^m$ with $m\ge1$, and any nonzero $v\in\mathbb Z[i]^3$ with $s=\|v\|^2\le N$. Write
+
+$$
+ q_N(v)=\delta_{vv^*/N}-\delta_0,\qquad [E]=\delta_E-\delta_0.
+\tag{59.1}
+$$
+
+Then $q_N(v)$ is a finite real combination of rows in $\mathcal R_{S,N}$ and anchors in $\mathcal B_S\cup\{0\}$ with total absolute coefficient sum at most $100\cdot4^s$. No values of a function on different grids are identified.
+
+Proof. All symbols in this proof have denominator $N$. We first specify the exact row identities and the initial cases, and then give a strict descent. For positive grid matrices with $A+B=C+D\le S$, the identity
+
+$$
+ [A]+[B]-[C]-[D]=r(C,B,A-C)
+\tag{59.2}
+$$
+
+uses a single legal row: its four endpoints are $C,B,A,D$, and its fifth effect is $S-A-B$. In particular $[A]+[B]-[A+B]=r(0,B,A)$. Repeatedly using this last identity gives, whenever $LT\le S$ for a positive integer $L$,
+
+$$
+ [LT]=L[T]-\sum_{k=1}^{L-1}r(0,kT,T).
+\tag{59.3}
+$$
+
+Every complement in (59.3) is $S-(k+1)T\ge0$.
+
+If $s=1$, the matrix $vv^*/N$ is $D_j/N$. Apply (59.3) with $L=N$ to express its centered symbol with cost at most $2/N+(N-1)/N\le3$. For $s=2$, either $vv^*/N=2D_j/N$, or $v$ has two unit coordinates. In the latter case $T=vv^*/2$ is one of the four two-coordinate unit-phase projections. Two are $R_{jk},J_{jk}$ in (54.3); each of the other two is the orthogonal complement of one of these inside $D_j+D_k$. Formula (59.2), comparing the two orthogonal projections with $D_j,D_k$, expresses its centered symbol with cost at most five. Applying (59.3) with $L=N/2$ consequently expresses $q_N(v)$ with cost at most six. The single-coordinate case follows by the same scaling from $D_j$. Thus the bound eleven is valid for every $s\le2$.
+
+For $s=3$, necessarily $N\ge4$. If there are two nonzero coordinates, their squared norms are two and one. Let $w$ vanish on the norm-two coordinate and equal $i$ times the norm-one coordinate of $v$. Then $w\equiv v\pmod{1+i}$, $\|w\|^2=1$, and $\operatorname{Re}(v^*w)=0$. The largest eigenvalue of $vv^*+ww^*$ is $2+\sqrt2<4$. The integral vectors
+
+$$
+ u=(v+w)/(1+i),\qquad z=(v-w)/(1+i)
+\tag{59.4}
+$$
+
+both have squared norm two. Equation (59.2) applied to $vv^*/N+ww^*/N=uu^*/N+zz^*/N\le S$ gives a certificate of cost at most $1+3\cdot11=34$.
+
+In the remaining case write $v_0=(a,b,c)$ with $a,b,c$ units and put $v_1=(-a,b,c)$, $v_2=(a,-b,c)$. For each of the three pairs, $v_i\equiv v_j\pmod{1+i}$ and $|v_i^*v_j|=1$. Hence the largest eigenvalue of $v_iv_i^*+v_jv_j^*$ is four, and (59.4) produces one vector of squared norm two and another of squared norm four. The latter outer product is twice the outer product of a vector of squared norm two. Its centered symbol has cost at most $2\cdot11+1=23$ by (59.3). Thus each equation for $q_N(v_i)+q_N(v_j)$ has right-hand certificate cost at most $1+11+23=35$. Half the sum of the equations for pairs $(0,1),(0,2)$ minus the equation for $(1,2)$ expresses $q_N(v_0)$ with cost at most $105/2<100$. This proves a common initial bound of one hundred for $s\le3$, including all coordinate phases.
+
+Now use strong induction on the positive integer $s\ge4$. Put $\pi=1+i$. If every coordinate of $v$ is divisible by $\pi$, then $v=\pi u$ and $vv^*=2uu^*$. Equation (59.3) with $L=2$ reduces the certificate to two copies at squared norm $s/2<s$, and one row.
+
+Otherwise let $r\in\{1,2,3\}$ be the number of coordinates not divisible by $\pi$. For such a coordinate $v_j=x+iy$, the integers $x,y$ have opposite parity. Choose a unit $w_j$ so that
+
+$$
+ |\operatorname{Re}(\overline{v_j}w_j)|=\min(|x|,|y|)
+ \le (|v_j|^2-1)/4;
+\tag{59.5}
+$$
+
+set the other $w_j$ equal to zero. To check the inequality, put $t=\min(|x|,|y|)$. Opposite parity gives $|v_j|^2\ge t^2+(t+1)^2\ge4t+1$, also when $t=0$. Thus
+
+$$
+ w\equiv v\pmod\pi,\qquad \|w\|^2=r,\qquad
+ |\operatorname{Re}(v^*w)|\le(s-r)/4.
+\tag{59.6}
+$$
+
+First suppose $s<N$ and put $k=N-s$. If $r\le k$, then $vv^*+ww^*\le(s+r)S\le NS$. The vectors (59.4) are integral and satisfy
+
+$$
+ \max(\|u\|^2,\|z\|^2)
+ =\frac{s+r+2|\operatorname{Re}(v^*w)|}{2}
+ \le\frac{3s+r}{4}<s.
+\tag{59.7}
+$$
+
+Also $r<s$. Equation (59.2) therefore expresses $q_N(v)$ using three smaller squared norms and one row.
+
+The congruence $r\equiv s\equiv k\pmod2$ shows that the only omitted possibility is $k=1,r=3$. For $N\ge16$, use the unit choice in Part I, (33.11)--(33.12), which gives $\|w\|^2=3$, $w\equiv v\pmod\pi$ and
+
+$$
+ vv^*+ww^*\le NS,\qquad |v^*w|^2\le N-3.
+\tag{59.8}
+$$
+
+Here $\sqrt{N-3}<(N-4)/2$, because $N^2-12N+28>0$ for $N\ge16$. Consequently the norms in (59.4) are at most $(N+2)/2+\sqrt{N-3}<N-1=s$. This again gives strict descent.
+
+At $N=8$, the omitted vector has squared coordinate norms $5,1,1$. On the norm-five coordinate choose a unit $w_j$ with $\overline{v_j}w_j=1+2i$ or $1-2i$; every Gaussian integer of norm five permits one of these choices. On the other coordinates put $w_j=-v_j$. Then $v^*w=-1\pm2i$, $\|w\|^2=3$ and $w\equiv v\pmod\pi$. The Gram matrix of the two columns $v,w$ has diagonal $7,3$ and off-diagonal squared modulus five. Its complement in $8I_2$ has diagonal $1,5$ and determinant zero, so $vv^*+ww^*\le8S$. The two transformed vectors have squared norms four and six, both below seven. At $N=4$ this exceptional case has $s=3$, already proved; at $N=2$ it is an initial case. These are all dyadic possibilities.
+
+Finally suppose $s=N$. Since $N$ is even, $r=2$. Permute notation so $v=(a,b,c)$ with $a,b$ not divisible by $\pi$ and $c$ divisible by $\pi$. Each of $|a|^2,|b|^2$ is one modulo four. As $s\ge4$ is divisible by four, $|c|^2\equiv2\pmod4$, so $c\ne0$. Put
+
+$$
+ w=(-\overline b,\overline a,0),\qquad r'=\|w\|^2=N-|c|^2<N.
+\tag{59.9}
+$$
+
+Then $v^*w=0$, $w\equiv v\pmod\pi$, and $vv^*+ww^*\le NS$. The two transformed vectors have squared norm $(N+r')/2<N$. This is again a reduction to three smaller positive squared norms and one row. These are the orthogonal parity identities of Part I, (33.16), used here without its large-$N$ estimates.
+
+In every induction step the certificate cost is at most $1+3\cdot100\cdot4^{s-1}\le100\cdot4^s$; the divisible case uses only two smaller terms. All row endpoints and their complements were checked before the induction was applied. Each step lowers a positive integer, so the resulting lists are finite. The initial cases and this induction prove the assertion. $\square$
+
+## 60. Coarse face certificates and the original complementary-column target
+
+**定理 60.1（Exact costed face supply and all-scale original target）。** For every coordinate face $S$ and every dyadic $N\ge2$, each $E\in K_{S,N}$ has a centered certificate using $\mathcal R_{S,N}$ and $\mathcal B_S\cup\{0\}$ with cost at most
+
+$$
+ M_N=3N(100\cdot4^N+1).
+\tag{60.1}
+$$
+
+For every $m\ge1$, $N=2^m$, and every $a,b\in\mathbb Z[i]$ with $|a|^2+|b|^2=N-1$, the projection $P$ of (57.1) has a finite certificate in the original space $W_{4,N}$, using only original legal rows and anchors in $\mathcal B_4\cup\{0\}$, with total absolute coefficient sum at most the single finite real constant
+
+$$
+ L=3072(100\cdot4^{512}+1)+4.
+\tag{60.2}
+$$
+
+Proof. Reuse the integral positive-semidefinite three-dimensional decomposition proved in Part I, (33.5)--(33.8). It applies to $NE$ for every $N$; the large-scale assumption there is needed for the later error estimates, not for this integral decomposition. Thus
+
+$$
+ NE=\sum_{j=1}^{\ell}v_jv_j^*,\qquad
+ v_j\in\mathbb Z[i]^3\setminus\{0\},\qquad \ell\le\operatorname{Tr}(NE)\le3N.
+\tag{60.3}
+$$
+
+Each summand and every partial sum, divided by $N$, lies between zero and $E\le S$. In particular $\|v_j\|^2\le N$. Successive additive rows give
+
+$$
+ [E]=\sum_{j=1}^{\ell}q_N(v_j)
+ -\sum_{j=2}^{\ell}r\left(0,\sum_{h<j}v_hv_h^*/N,v_jv_j^*/N\right).
+\tag{60.4}
+$$
+
+Theorem 59.1 bounds the cost by $\ell\,100\cdot4^N+\ell-1\le M_N$. For $E=0$ the empty certificate suffices.
+
+For the original target use precisely the legal row $r$ in (57.7)--(57.9), with $Q_1,E$ on the two specified coordinate faces. Its identity, in centered symbols, is
+
+$$
+ \delta_P=r+[D_3]+[E]-[Q_1]+\delta_0.
+\tag{60.5}
+$$
+
+Theorem 56.1 embeds each face row with all five legality effects on the original four-dimensional grid. The symbols in $[D_3]$ and $\delta_0$ are actual anchors. Applying (60.1) twice therefore gives total cost at most $1+2+2M_N+1=2M_N+4$ for every original Gaussian pair, with no parameter reduction or covariance assumption. For $N\le512$, monotonicity of the displayed numerical bound gives $2M_N+4\le L$. For $N\ge1024$, reuse Theorem 57.1, whose cost $1328089$ is less than (60.2). These two domains exhaust all $N=2^m$, $m\ge1$. All coefficients are real, all lists are finite, and all equalities used are identities of free symbols generated by the original rows. $\square$
+
+**定义 60.2（Scope and mathematical attribution）。** Theorem 60.1 concerns the exact original-Hermitian relation for the specific family (57.1). It does not assert the parent's approximate-density existence conclusion or a physical realization. The integral decomposition, orthogonal parity exchange and exceptional-margin unit choice are reused from Part I, Theorem 33.1; its cited Hermite bounds and Gaussian module facts retain their original attributions. The new deduction is the strict squared-norm descent (59.5)--(59.9), its complete small-norm initialization and the exact norm-seven exchange, which supply finite coefficient bounds at the formerly omitted scales. The fine constant and the final complementary-column row are reused from Theorem 57.1.
+
+## 追加锚（本行以下为增补区）
+
+## 61. Complement transfer closes the full quadratic-margin event
+
+**定理 61.1（四维二次谱析取的全事件闭合）。** Retain the original table, the labelled binary and ternary menus, and the tomography matrix $H$ of Definition 50.1. Let $A_0$ and $C_0$ be the finite constants of Definition 53.1, and put
+
+$$
+ A_{\mathrm{full}}=A_0,\qquad
+ C_{\mathrm{full}}=C_0+902824+10.
+\tag{61.1}
+$$
+
+For every integer $m\ge1$, with $N=2^m$, every $\epsilon\in[0,1/10]$, and every $E\in K_{4,m}$ satisfying
+
+$$
+ \lambda_{\max}(E)\le 1-\frac{A_{\mathrm{full}}}{N^2}
+ \quad\text{or}\quad
+ \lambda_{\min}(E)\ge\frac{A_{\mathrm{full}}}{N^2},
+\tag{61.2}
+$$
+
+the same single table obeys
+
+$$
+ \boxed{\ |p(E)-\operatorname{Tr}(HE)|
+       \le C_{\mathrm{full}}\left(\epsilon+\frac1N\right).\ }
+\tag{61.3}
+$$
+
+The constants are independent of $N$, the table, $\epsilon$ and $E$.
+
+**证明。** Write $e(X)=p(X)-\operatorname{Tr}(HX)$, with the convention $e(0)=p(0)$ when a residual is zero. For $N<2048$, Part I, Theorem 16.2 gives $\lVert H\rVert_{\mathrm{op}}\le8$ and hence $|e(E)|\le33$. Since $N_0\ge2048$ and $C_0\ge33N_0$ by Definition 53.1, (61.3) follows at every such scale.
+
+Assume now $N\ge2048$. First suppose the upper alternative in (61.2). It gives $\lVert E\rVert_{\mathrm{op}}<1$, so Part I, Theorem 57.4 supplies a decomposition residual $G_0=G/N$, either zero or a positive-definite Gaussian integral interval atom, with
+
+$$
+ |e(E)-e(G_0)|\le902824\epsilon,\qquad 0\preceq G_0\preceq E.
+\tag{61.4}
+$$
+
+If $G=0$, the zero convention and $p(0)\le2\epsilon$ give the required estimate. Otherwise $G_0\preceq E$ implies
+
+$$
+ \lambda_{\max}(G_0)\le\lambda_{\max}(E)
+ \le1-A_0/N^2.
+\tag{61.5}
+$$
+
+Part III, Theorem 53.3 therefore gives $|e(G_0)|\le C_0(\epsilon+1/N)$. Combining this with (61.4) proves (61.3) in the upper branch.
+
+Now suppose the lower alternative in (61.2), and set $F=I_4-E$. Then $F\in K_{4,m}$, $\lVert F\rVert_{\mathrm{op}}<1$, and
+
+$$
+ \lambda_{\max}(F)=1-\lambda_{\min}(E)
+ \le1-A_0/N^2.
+\tag{61.6}
+$$
+
+Apply Part I, Theorem 57.4 to $F$. It supplies a residual $G_F/N$, zero or a positive-definite interval atom, with $G_F/N\preceq F$ and
+
+$$
+ |e(F)-e(G_F/N)|\le902824\epsilon.
+\tag{61.7}
+$$
+
+The zero case again has $|e(0)|\le2\epsilon$. In the nonzero case, (61.6) and $G_F/N\preceq F$ give the upper margin required by Part III, Theorem 53.3, so
+
+$$
+ |e(F)|\le(C_0+902824)\epsilon+C_0/N.
+\tag{61.8}
+$$
+
+Finally the original binary row for $(E,F)$ and the existing anchor estimate $|\operatorname{Tr}H-1|\le9\epsilon$ give
+
+$$
+ |e(E)+e(F)|
+ =|p(E)+p(F)-\operatorname{Tr}H|
+ \le10\epsilon.
+\tag{61.9}
+$$
+
+Equations (61.8)--(61.9) yield
+
+$$
+ |e(E)|\le(C_0+902824+10)\left(\epsilon+\frac1N\right),
+$$
+
+which is (61.3). The lower branch therefore uses the complement before extraction; no lower spectral margin is asserted for a subatom of $E$.
+
+The only inputs beyond the displayed definitions are the original-grid residual decomposition of Theorem 57.4, the absolute upper-margin atom estimate of Theorem 53.3, and the binary complement estimate (61.9), which is the same relation recorded in Part II, (164.11). The result is an ordinary theory-text consequence on one supplied finite table. It adds no cross-scale relation, continuum extension, probability-acquisition premise, physical realization or kernel verification, and it makes no claim about the smaller value of $A$ or the optimality of $C_{\mathrm{full}}$. $\square$
+
+**定义 61.2（Result boundary）。** Theorem 61.1 closes the original four-dimensional quadratic-margin estimate at the explicit finite threshold $A_0=2A_\dagger$ inherited from Definition 53.1. It does not assert the estimate for every $A>2$, remove the dependence on the previously fixed finite-menu constants, or supply a physical implementation of the table. The former residual atom obligation (57.15) is consumed by the upper-margin closure (53.21) together with complement-before-extraction; the source's dimension-$d\ge4$ unrestricted finite-menu counterfamily remains a separate statement.
+
+## 追加锚（本行以下为增补区）

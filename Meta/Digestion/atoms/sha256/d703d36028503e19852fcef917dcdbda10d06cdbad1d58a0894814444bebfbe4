@@ -1,0 +1,33 @@
+**命题 157.3（一个归一节点变形的精确原生违例）。** 令 $e=\varnothing$、$r=\{1\}$、$s=\{2\}$ 为 $E$ 中的三条路径，固定 $0<\varepsilon\le1$，取
+
+$$
+\begin{aligned}
+\widetilde\Pi_e&=\frac{p_e}{N}+\varepsilon\frac{p_ep_r}{N^2},&
+\widetilde\Pi_r&=\frac{p_r}{N}-\varepsilon\frac{p_ep_r}{N^2},\\
+\widetilde\Pi_q&=\frac{p_q}{N}\qquad(q\notin\{e,r\}).
+\end{aligned}
+\tag{157.19}
+$$
+
+该族属于完整类 $\mathscr Q_2$，连续、归一、非负且满足节点条件，但不是 Born。对原地址 $j=2$ 的分量 $B=\{e,s\}$ 和数学向量 $z=(|e\rangle+|r\rangle)/\sqrt2$，有
+
+$$
+\sum_{q\in B}\widetilde\Pi_q(U_2(t)z)
+ -\sum_{q\in B}\widetilde\Pi_q(z)
+ =-\varepsilon x^3\sin^2\!\left(\frac{3\pi t}{10}\right)<0
+\quad(0<t\le1).
+\tag{157.20}
+$$
+
+证明。两个修正相消，给归一化。对 $r$，$\widetilde\Pi_r=(p_r/N)(1-\varepsilon p_e/N)\ge0$；其余项非负。所有分子都有相应节点因子，且为实值双次数 $(2,2)$ 多项式；(157.7) 的系数对应给 Hermitian 表示和 $\sum_qA_q=I_W$，所以确属 $\mathscr Q_2$。在所列 $z$ 上，$\widetilde\Pi_e=1/2+\varepsilon/4$，与 Born 不同。
+
+地址二将 $e,s$ 组成 (146.2) 的原块，$r$ 因邻位一占据而为单点。由 (157.2) 的投影指数式，置
+
+$$
+a(t)=\left|1+(e^{i\alpha t}-1)x\right|^2
+ =1-4x^3\sin^2(\alpha t/2),
+\tag{157.21}
+$$
+
+则演化后的三个质量依次为 $p_e=a(t)/2$、$p_s=(1-a(t))/2$、$p_r=1/2$，其他坐标仍为零。总范数为一，$B$ 上的 Born 总质量恒为 $1/2$；修正量从 $\varepsilon/4$ 变为 $\varepsilon a(t)/4$，给 (157.20)。此处 $0<\alpha t/2\le3\pi/10<\pi$，故不等号严格。所用 $z$ 是定理全射线量词内的向量，不是另一个已获准的 ready 或准备程序。∎
+

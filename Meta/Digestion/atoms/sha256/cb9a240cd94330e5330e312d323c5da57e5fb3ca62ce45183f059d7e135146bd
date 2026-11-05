@@ -1,0 +1,24 @@
+**定义 47.1（对象与原比较）。** 对象是全部带名字、基和接口的非零有限复矩阵直和
+
+$$
+\mathcal A_A=\bigoplus_{s\in S_A}M_{n_s}(\mathbb C).
+$$
+
+同构对象不因此成为同一原对象。全部有限张量对象、有限非空标签直和及其具名结合、交换、单位接口均包含在对象域内。取标量对象 $I=\mathbb C$，原指针 $P=M_2(\mathbb C)$，在其原基中固定 $p_0=|0\rangle\langle0|$、$p_1=|1\rangle\langle1|=I-p_0$，并包含整个 $P^{\otimes k}$，$k\ge0$。对象域从开始固定，不在证明中把支撑角追加为新实际对象。
+
+每个对象及联合对象取
+
+$$
+E_A=(\mathcal A_A)_{\rm sa},\quad C_A=(\mathcal A_A)_+,\quad
+u_A=I_A,\quad
+ g_A^0(x,y)=q_A(x,y)=\tau_A(xy),\quad
+\tau_A=\sum_s\operatorname{Tr}_{n_s},
+$$
+
+$$
+a\circ b=(ab+ba)/2,\qquad D_ab=\frac i2[a,b],\qquad
+G_A=\prod_s\{\operatorname{Ad}_{v_s}:v_s\in GL(n_s,\mathbb C)\}.
+$$
+
+这些是模型的初始原关系，不是从候选器件的输出来反向选择 D。它们正是 [C127] 命题 5.1、13.1 及定理 33.1 的普通迹特例；固定 q/L 的选择为该特例既定选择。X 为普通复张量的原含幺嵌入。
+

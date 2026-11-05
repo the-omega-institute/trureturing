@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith;
 internal sealed class FiniteFieldQuadraticCharacterSumDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef LidlNiederreiter =
-        LibraryNoteRef.Create("D5/L/ArithSums/lidlniederreiter1997finitefields");
+        LibraryNoteRef.Create("D5/L/CharacterSums/lidlniederreiter1997finitefields");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The shifted quadratic character sum over an odd finite field is -1 away from the singular parameter.",

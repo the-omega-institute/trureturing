@@ -131,6 +131,7 @@ run_phase() {
 
 # Validate required authored inputs before provisioning or consuming artifacts.
 run_phase inputs python3 "$SCRIPT_DIR/../scripts/report/lean-report-selection.py" validate --repository "$REPOSITORY"
+run_phase batch-size python3 "$SCRIPT_DIR/native.py" batch-size
 if [[ -n "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
   [[ "$STRATALINT_LEAN_PRODUCER_DLL" == /* && -f "$STRATALINT_LEAN_PRODUCER_DLL" ]] \
     || { echo 'inspect.sh: candidate Lean producer must be an existing absolute path' >&2; exit 2; }

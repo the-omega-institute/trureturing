@@ -1,0 +1,38 @@
+**Theorem 139.1 (exact-marginal approximation with an endogenous terminal factor).** For every admissible invariant stochastic tuple $u$ of Definition 136.1, there are $E_n\in\mathscr E_\theta$ whose indicators converge componentwise weak-star to $u$ and satisfy
+
+$$
+A_{E_n}\longrightarrow A(u),\qquad
+\det A_{E_n}\longrightarrow\det A(u).
+\tag{139.1}
+$$
+
+In this limit each actual matrix uses its own terminal factor $P\mathbf1_{C_n}$.
+
+*Proof.* Work on the actual quotient $(X,\bar m)$ of (136.5). Let $\mathcal P_n$ be refining finite Borel partitions generating its Borel sigma-algebra modulo null sets. In the Dvoretzky–Wald–Wolfowitz theorem cited in Proposition 136.2, use the finite list consisting of $\bar\nu_2,\bar\nu_3,\bar\nu_4$ and all measures $\bar m|_A$ for $A\in\mathcal P_n$. They are finite atomless measures on the same Borel space. The resulting single three-cell partition $E_n$ satisfies, simultaneously,
+
+$$
+\bar\nu_j(E_{n,i})=\int_Xu_i\,d\bar\nu_j,
+\qquad
+\bar m(E_{n,i}\cap A)=\int_Au_i\,d\bar m.
+\tag{139.2}
+$$
+
+The first equations are precisely the nine required marginals. The second equations imply weak-star convergence: for any $L^1(\bar m)$ test $\phi$, approximate it by $\mathcal P_n$-simple $\psi_n$ in $L^1$. The pairing with $\psi_n$ of $\mathbf1_{E_{n,i}}-u_i$ is zero, and the remaining pairing has absolute value at most $\|\phi-\psi_n\|_1$. Lift the cells to $G$ and assign the null axis to $S$. Pairing with an arbitrary $L^1(m)$ test reduces by angular integration to a quotient $L^1$ test, so the lifted indicators converge weak-star on $G$ as well.
+
+The actual three-time density from Appendix II §123 is
+
+$$
+W(x,y,z)=g(x)p_d(x,y)p_d(y,z)\ge0,\qquad
+\int_{G^3}W\,dm^{\otimes3}=1.
+\tag{139.3}
+$$
+
+The equality follows by integrating first in $z$, then in $y$, using conservation, and finally the mass-one source density. Thus $W\in L^1(m^3)$. Approximate it in $L^1$ by finite sums of rectangular tensors $a(x)b(y)c(z)$ with factors in $L^1(m)$. On each tensor, the integral against three bounded weak-star convergent components factors into three convergent scalar pairings. The approximation error is uniform for components in $[0,1]$. It follows that
+
+$$
+\mathcal C(\mathbf1_{E_{n,i}},\mathbf1_{E_{n,j}},\mathbf1_{C_n})
+\longrightarrow\mathcal C(u_i,u_j,u_C).
+$$
+
+This is exactly (139.1), including the changing terminal factor. Continuity of the determinant polynomial completes the proof. The use of $W$ is the actual common-readout continuity mechanism of §123, specialized with the exact linear-marginal constraints (139.2); it is not an exact nonlinear purification theorem. $\square$
+

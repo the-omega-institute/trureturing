@@ -1,0 +1,32 @@
+**定理 58.1（C105 的内部距离、局部特例及两条边的计费）。** 在定义 57.1 下，$d_\phi$ 是平移不变的 Hilbert 伪度量，满足
+
+$$
+d_\phi(u+v)\le d_\phi(u)+d_\phi(v),\qquad
+0\le d_\phi(h)\le2\sqrt c.
+\tag{58.1}
+$$
+
+它的包络 (57.5) 单调、次可加。C105 自动满足 C104 的等权连续性。若只在某个 $|h|\le h_0$ 邻域另有 $d_\phi(h)\le L|h|$，其中 $L<\infty$、$h_0>0$，则同一界对全部 $h$ 成立，因而 $\omega(r)=Lr$ 是 C105 的一个特例。
+
+两条实际亏损同时约束独立退相干与生成边：
+
+$$
+\begin{aligned}
+0\le\gamma&\le\delta_*:=\min(\delta_a,\delta_b),\\
+d_\phi(a)&\le\eta_a:=\sqrt{2\delta_a},\qquad
+d_\phi(b)\le\eta_b:=\sqrt{2\delta_b}.
+\end{aligned}
+\tag{58.2}
+$$
+
+证明。三个有限 Gram 点 $0,u,u+v$ 的三角不等式给第一式；向量范数均为 $\sqrt c$，故得第二式。对 $|h|\le r+t$，将 $h$ 按同一符号分成绝对值分别不超过 $r,t$ 的两段，便得 $\omega_\phi(r+t)\le\omega_\phi(r)+\omega_\phi(t)$。若 $\phi$ 在零处连续，则 $d_\phi(h)\to0$，给 (57.5) 在零处趋零。反向利用定理 51.1 证明内的有限 Gram 估计
+
+$$
+|\phi(s+h)-\phi(s)|\le\sqrt c\,d_\phi(h)
+\tag{58.3}
+$$
+
+及 (57.3)，得到全局一致连续，特别是 C104 第四项。局部线性界则对任意给定 $h$ 取有限整数 $k$ 使 $|h|/k\le h_0$，反复使用三点三角不等式，得到 $d_\phi(h)\le k\,d_\phi(h/k)\le L|h|$。这没有使用无限维实际对象。
+
+最后，正定性给 $\Re\phi(a),\Re\phi(b)\le c$，故 $1-c\le\delta_a,\delta_b$；又有 $c-\Re\phi(a)\le1-\Re\phi(a)=\delta_a$，对 $b$ 同理，得到 (58.2)。所有关系都来自同一 $\phi$，不是将分别可达的记录或最优值拼接。∎
+

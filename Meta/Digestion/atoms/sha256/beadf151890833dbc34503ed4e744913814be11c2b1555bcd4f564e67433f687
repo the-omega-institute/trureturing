@@ -1,0 +1,72 @@
+#### 定理 9.2（保留全部信息的正对角相似分解）
+
+对上述严格正关系，令
+
+$$
+u_i=\sqrt{c_i\ell_i},\qquad
+D=\operatorname{diag}\sqrt{\ell_i/c_i},\qquad
+P=uu^{\mathsf T}/S.
+$$
+
+则 $P$ 是实纯态，且
+
+$$
+\boxed{DRD^{-1}=uu^{\mathsf T},\qquad R=S D^{-1}PD.}
+$$
+
+完整等价数据为总尺度 $S$、正概率向量 $q_i=R_{ii}/S$，
+以及正对角 $D$ 模共同正倍数，其逆式为
+
+$$
+P_{ij}=\sqrt{q_iq_j},\qquad
+\frac{d_j}{d_i}=\sqrt{\frac{R_{ij}}{R_{ji}}},\qquad
+R_{ij}=S\sqrt{q_iq_j}\frac{d_j}{d_i}.
+$$
+
+**证明。**
+
+逐项相乘得到
+
+$$
+\sqrt{\ell_i/c_i}\,c_i\ell_j\sqrt{c_j/\ell_j}
+=\sqrt{c_i\ell_i}\sqrt{c_j\ell_j}.
+$$
+
+$\|u\|^2=S$，所以 $P$ 正、迹一且秩一。
+两方向矩阵元之比给 $R_{ij}/R_{ji}=(d_j/d_i)^2$，
+严格正性选择唯一正平方根，并确定 $D$ 的比例类。
+任意 $S>0$、正概率 $q$ 与正对角比例类反向给
+$c_i=\sqrt S\sqrt{q_i}/d_i$、$\ell_i=\sqrt S\sqrt{q_i}d_i$，
+所以表示双向完备。
+
+□
+
+参数账式是
+
+$$
+1+(k-1)+(k-1)=2k-1.
+$$
+
+只留下纯态代表 $P$，就丢掉尺度及非对称比值。例如固定
+
+$$
+P=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix},\qquad D=\operatorname{diag}(1,t),
+$$
+
+所有 $t>0$ 对应
+
+$$
+R_t=\frac S2\begin{pmatrix}1&t\\t^{-1}&1\end{pmatrix},
+$$
+
+它们共享同一个 $P$，关系却各不相同。
+严格正性也不可省略：$\left(\begin{smallmatrix}1&1\\0&0\end{smallmatrix}\right)$
+不能由正对角相似变成对称矩阵。
+
+这个 $D$ 依赖目标且通常非酉，给出的是完整代数分解，
+没有供应 K-bonacci 到原生 FIB 的来源、操作、物理制备或读数协议桥。
+源文的该物理／来源级桥仍开放；本轮分解保留了需要额外传递的规范数据。
+新协议也未供应噪声稳定性或有限精度成本，不能把精确单射等同于自动取得。
+
+<a id="section-10"></a>
+

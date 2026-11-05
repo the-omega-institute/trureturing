@@ -1,0 +1,38 @@
+**定义 138.1（来源与固定操作域）。** 本卷续接[相干重建续卷 II][II]，其数学供应固定于提交 `1f8199f2f7bb97c98cbe68c95ce3cbde36354ed0`。沿用 II 定义 77.1、100.1、117.1、121.1 的同一个复 Fibonacci 路径模型：
+
+$$
+\begin{gathered}
+H=V_8^{\mathbf1},\quad \dim H=13,\qquad
+\mathcal K=V_{12}^{\mathbf1},\quad \dim\mathcal K=89,\\
+J:H\otimes\mathbb C^2\longrightarrow\mathcal K,\qquad
+\mathcal C=\operatorname{ran}J,\quad \dim\mathcal C=26,\quad
+\dim\mathcal C^\perp=63,\\
+R_0\psi=J(\psi,0),\qquad v=e_{00100},\qquad
+\chi_a=K_aR_0v,\qquad a\in\mathsf W_{11}=\{0,\ldots,10\}^{<\infty}.
+\end{gathered}
+\tag{138.1}
+$$
+
+字按实际调用先后连接，故 $K_{ag}=K_gK_a$。唯一 ready 源为 $R_0v$。所有前缀、精度和比较程序共用这一来源及一套固定规则，不按所需结论重新选择规则；这不假定独立重复抽样。原后读域保持为 $\mathsf W=\{0,\ldots,6\}^{<\infty}$，不把新增前读控制移到后读域。
+
+完整路径基仍由 II 的 $b_{-1},\ldots,b_{12}$ 编码，固定 $b_{-1}b_0=10$、$b_{10}b_{11}b_{12}=010$；内部 $b_1\cdots b_9$ 无相邻占据。令 $M_i$ 为 $b_9=i$ 的投影，$N_w$ 为原十位 $b_{-1},\ldots,b_8$ 等于 $w$ 的投影。字面终端集为 $\Omega_{10}=\{0,1\}^{10}$，全部 $1024$ 标签保留，无路径的标签取零投影。II (117.1) 给
+
+$$
+M_0+M_1=I_{89},\qquad \sum_{w\in\Omega_{10}}N_w=I_{89},
+\qquad [M_i,N_w]=0.
+\tag{138.2}
+$$
+
+局部门的字面矩阵沿用 II (77.1)。明确置 $\varphi=(1+\sqrt5)/2$、$x=\varphi^{-1}$、$y=\sqrt{x}$、$\zeta=e^{3\pi i/5}$；$n_j$ 是位 $b_j=1$ 的投影，中心 $j$ 的二维矩阵为
+
+$$
+K_j=\zeta[I+(\zeta-1)\mathcal P_j],\qquad
+\mathcal P_j=n_{j-1}n_{j+1}+(1-n_{j-1})(1-n_{j+1})Q_j,
+\qquad Q_j=\begin{pmatrix}x&xy\\xy&x^2\end{pmatrix}_{b_j}.
+\tag{138.2a}
+$$
+
+公式取同一合法路径空间上的限制，固定边界位照其字面值使用；完整来源与规范对应由 II §77 供应。
+
+实际程序只有 II (121.1) 的 $\mathsf T(a)$ 和 $\mathsf R(a,f)$：前者执行 $a$ 后调用旧终端，后者执行 $a$、读取并保留 $b_9=i$、执行一个外生且不依赖 $i$ 的原七地址字 $f$，再调用旧终端。每个程序均保留真实调用字、调用顺序、读器结果、细档案及全部终端结果。比较某个边缘不删除这些档案，也不声称两个程序具有相同完整档案律。
+

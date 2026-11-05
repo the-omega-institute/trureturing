@@ -1,0 +1,14 @@
+因此 $Q=C(\sum_j\ell_j^2)\le5\delta I_H$。在原直和代数上置 $K(X)=C(\sum_j\ell_jX\ell_j)$，它完全正，$K^*(I_H)=Q$。直接展开，得到
+
+$$
+\operatorname{id}-\Phi=\tfrac12\{Q,\cdot\}-K.
+\tag{86.5}
+$$
+
+具体地，记 $A_\alpha=\sum_jc_{j,\alpha}(h_j)_{\alpha\alpha}$、$b_\alpha=\sum_jc_{j,\alpha}^2$，则
+
+$$
+Q_\alpha=I_\alpha-2A_\alpha+b_\alpha I_\alpha,\qquad
+K(X)_\alpha=\Phi(X)_\alpha-\{A_\alpha,X_\alpha\}+b_\alpha X_\alpha.
+$$
+

@@ -1,0 +1,32 @@
+### 一个实际极点已经给出严格正下界
+
+若 $p\in\mathbb D$ 是 $\Phi$ 的任一极点，则 $J(p)=0$、$I(p)\ne0$，且
+
+$$
+\boxed{
+\varepsilon\ge(1-|p|^2)|I(p)|^2>0.
+}
+
+$$
+
+<a id="eq-3-6"></a>
+
+(3.6)
+
+证明只需使用再生核
+
+$$
+k_p(w)=\frac1{1-\bar p w}.
+$$
+
+它属于 $K_J$，范数平方为 $(1-|p|^2)^{-1}$。又由 $I=Jh+k$，
+
+$$
+k(p)=I(p).
+$$
+
+Cauchy–Schwarz 因而给出式（3.6）。
+
+<!-- editorial-note: n13 begin -->
+<a id="n13"></a>
+

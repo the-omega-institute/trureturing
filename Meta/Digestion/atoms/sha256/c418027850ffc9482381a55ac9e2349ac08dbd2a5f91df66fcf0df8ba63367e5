@@ -1,0 +1,9 @@
+**Theorem 39.2 (edge-specific pair-capacity obstruction).** Every
+admissible causal recorder with finite peak $L$ and worst logical update bill
+$D$ satisfies
+
+$$
+ k2^{k-1}\le P(L,D),
+\tag{IV.112}
+$$
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2e93398a757cb31faebe5f5dd62702a7d3f337d961321f101b66d490778dae50
+  normalized_sha256: sha256:2e93398a757cb31faebe5f5dd62702a7d3f337d961321f101b66d490778dae50
+cas_ref: sha256:2e93398a757cb31faebe5f5dd62702a7d3f337d961321f101b66d490778dae50
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/OrderedGNSProjection.ordered_gns_characterization
+    target_statement_id: sha256:82426315105bca1ab5de04ec9d622d164094b63f8878ac86148ed88962139037
+receipts:
+  unresolved_subitems: []

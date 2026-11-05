@@ -4,7 +4,77 @@
 
 The sum of skewness and kurtosis of every finite positive unidirectional cycle exceeds −8/27, the greatest lower bound over all cycle sizes.
 
-**Definition 1.1 (The asymptotic lower endpoint).**
+**Definition 1.1 (Normalized inverse rates).**
+
+$$\forall (n: \mathbb{N}), (\forall (k: \operatorname{Fin}\left(n\right) \to \mathbb{R}), ((\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound.normalizedRates}\left(k\right): \operatorname{Fin}\left(n\right) \to \mathbb{R}) = \operatorname{fun} (i: \operatorname{Fin}\left(n\right)) \mapsto (\frac{\operatorname{Inv.inv}\left(k\left(i\right)\right)}{\operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, (1: \mathbb{N}), \operatorname{fun} (j: \operatorname{Fin}\left(n\right)) \mapsto (\operatorname{Inv.inv}\left(k\left(j\right)\right))\right)})))$$
+
+*Formalization.* `D5/S3/StatisticalMechanics/UnicyclicSkewnessPlusKurtosisLowerBound.normalizedRates` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Krzysztof Ptaszyński (2022). *Bounds on skewness and kurtosis of steady-state currents*. DOI: [10.1103/PhysRevE.106.024119](https://doi.org/10.1103/PhysRevE.106.024119). URL: <https://arxiv.org/abs/2204.08421v4>.
+
+*Commentary.*
+
+For every natural n and real rate vector k, normalizedRates k divides each inverse rate by their first power sum. Real inversion and division are total; positivity is assumed only in the moment theorem.
+
+**Definition 1.2 (Normalized inverse-rate moment p).**
+
+$$\forall (n: \mathbb{N}), (\forall (k: \operatorname{Fin}\left(n\right) \to \mathbb{R}), ((\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound.p}\left(k\right): \mathbb{R}) = \operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, (2: \mathbb{N}), \operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound.normalizedRates}\left(k\right)\right)))$$
+
+*Formalization.* `D5/S3/StatisticalMechanics/UnicyclicSkewnessPlusKurtosisLowerBound.p` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Krzysztof Ptaszyński (2022). *Bounds on skewness and kurtosis of steady-state currents*. DOI: [10.1103/PhysRevE.106.024119](https://doi.org/10.1103/PhysRevE.106.024119). URL: <https://arxiv.org/abs/2204.08421v4>.
+
+*Commentary.*
+
+This is the degree 2 power sum of the same normalized inverse-rate vector, for every natural n and real k.
+
+**Definition 1.3 (Normalized inverse-rate moment q).**
+
+$$\forall (n: \mathbb{N}), (\forall (k: \operatorname{Fin}\left(n\right) \to \mathbb{R}), ((\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound.q}\left(k\right): \mathbb{R}) = \operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, (3: \mathbb{N}), \operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound.normalizedRates}\left(k\right)\right)))$$
+
+*Formalization.* `D5/S3/StatisticalMechanics/UnicyclicSkewnessPlusKurtosisLowerBound.q` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Krzysztof Ptaszyński (2022). *Bounds on skewness and kurtosis of steady-state currents*. DOI: [10.1103/PhysRevE.106.024119](https://doi.org/10.1103/PhysRevE.106.024119). URL: <https://arxiv.org/abs/2204.08421v4>.
+
+*Commentary.*
+
+This is the degree 3 power sum of the same normalized inverse-rate vector, for every natural n and real k.
+
+**Definition 1.4 (Normalized inverse-rate moment r).**
+
+$$\forall (n: \mathbb{N}), (\forall (k: \operatorname{Fin}\left(n\right) \to \mathbb{R}), ((\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound.r}\left(k\right): \mathbb{R}) = \operatorname{D5.S3.Quantum.Transport.StrongAbsorption.Foundations.powerSum}\left(n, (4: \mathbb{N}), \operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound.normalizedRates}\left(k\right)\right)))$$
+
+*Formalization.* `D5/S3/StatisticalMechanics/UnicyclicSkewnessPlusKurtosisLowerBound.r` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Krzysztof Ptaszyński (2022). *Bounds on skewness and kurtosis of steady-state currents*. DOI: [10.1103/PhysRevE.106.024119](https://doi.org/10.1103/PhysRevE.106.024119). URL: <https://arxiv.org/abs/2204.08421v4>.
+
+*Commentary.*
+
+This is the degree 4 power sum of the same normalized inverse-rate vector, for every natural n and real k.
+
+**Theorem 1.5 (Joint moments of the same normalized vector).**
+
+$$\forall (n: \mathbb{N}), (((2: \mathbb{N}) \le n) \to (\forall (k: \operatorname{Fin}\left(n\right) \to \mathbb{R}), ((\forall (i: \operatorname{Fin}\left(n\right)), ((0: \mathbb{R}) < k\left(i\right))) \to (((0: \mathbb{R}) < \operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound.p}\left(k\right)) \land (((0: \mathbb{R}) \le \operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound.q}\left(k\right)) \land (((\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound.q}\left(k\right))^{(2: \mathbb{N})} \le (\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound.p}\left(k\right)) \cdot (\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound.r}\left(k\right))) \land (\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound.r}\left(k\right) < (\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound.p}\left(k\right))^{(2: \mathbb{N})})))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/UnicyclicSkewnessPlusKurtosisLowerBound.normalized_moments` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Krzysztof Ptaszyński (2022). *Bounds on skewness and kurtosis of steady-state currents*. DOI: [10.1103/PhysRevE.106.024119](https://doi.org/10.1103/PhysRevE.106.024119). URL: <https://arxiv.org/abs/2204.08421v4>.
+
+*Commentary.*
+
+For n ≥ 2 and every positive k, these four facts hold jointly for its normalized inverse rates. The proof applies the original public kurtosis moments theorem after proving positivity of the first power sum. The same suppliers support the sum and difference endpoints.
+
+**Definition 1.6 (The asymptotic lower endpoint).**
 
 $$(\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound.lowerBound}: \mathbb{R}) = \frac{-(8: \mathbb{R})}{(27: \mathbb{R})}$$
 
@@ -16,7 +86,7 @@ $$(\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBo
 
 The real constant −8/27 is the lower endpoint for the sum of skewness and kurtosis in main.tex lines 434-437. Line 424 describes the limit of infinitely many states with one rate a = A/N relative to the other rates; this endpoint corresponds to A = 1/2. The constant will be approached by positive cycles of increasing size.
 
-**Definition 1.2 (Strict finite-cycle inequality and greatest lower bound).**
+**Definition 1.7 (Strict finite-cycle inequality and greatest lower bound).**
 
 $$(\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound.claim}) \Leftrightarrow ((\forall (n: \mathbb{N}), (((2: \mathbb{N}) \le n) \to (\forall (k: \operatorname{Fin}\left(n\right) \to \mathbb{R}), ((\forall (i: \operatorname{Fin}\left(n\right)), ((0: \mathbb{R}) < k\left(i\right))) \to (\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound.lowerBound} < (\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.skewness}\left(k\right)) + (\operatorname{D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.kurtosis}\left(k\right))))))) \land (\operatorname{IsGLB}\left(\{(s: \mathbb{R}) \mid \exists (n: \mathbb{N}), (((2: \mathbb{N}) \le n) \land (\exists (k: \operatorname{Fin}\left(n\right) \to \mathbb{R}), ((\forall (i: \operatorname{Fin}\left(n\right)), ((0: \mathbb{R}) < k\left(i\right))) \land (s = (\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.skewness}\left(k\right)) + (\operatorname{D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.kurtosis}\left(k\right))))))\}, \operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound.lowerBound}\right)))$$
 
@@ -30,7 +100,7 @@ $$(\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBo
 
 For every natural n at least two and every strictly positive real rate vector k indexed by Fin n, skewness k + kurtosis k strictly exceeds lowerBound. The same constant is the greatest lower bound of all these values as n varies. The source states in main.tex lines 434-437: “min(S + K) = −8/27 for A = 1/2, max(S + K) = 2 for A → 0.” Line 424 specifies the asymptotic limit. The assertion here reads the lower minimum as an infimum and adds strictness for every finite positive cycle. The source calls the extremal-topology assertion a numerical conjecture in line 792. Only the lower endpoint for the two inverse-rate expressions on unidirectional cycles is asserted here; neither a finite-size extremal topology nor the upper endpoint is asserted.
 
-**Theorem 1.3 (The strict bound and its sharp limiting value).**
+**Theorem 1.8 (The strict bound and its sharp limiting value).**
 
 $$(\forall (n: \mathbb{N}), (((2: \mathbb{N}) \le n) \to (\forall (k: \operatorname{Fin}\left(n\right) \to \mathbb{R}), ((\forall (i: \operatorname{Fin}\left(n\right)), ((0: \mathbb{R}) < k\left(i\right))) \to (\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound.lowerBound} < (\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.skewness}\left(k\right)) + (\operatorname{D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.kurtosis}\left(k\right))))))) \land (\operatorname{IsGLB}\left(\{(s: \mathbb{R}) \mid \exists (n: \mathbb{N}), (((2: \mathbb{N}) \le n) \land (\exists (k: \operatorname{Fin}\left(n\right) \to \mathbb{R}), ((\forall (i: \operatorname{Fin}\left(n\right)), ((0: \mathbb{R}) < k\left(i\right))) \land (s = (\operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessMinimum.skewness}\left(k\right)) + (\operatorname{D5.S3.StatisticalMechanics.UnicyclicKurtosisLowerBound.kurtosis}\left(k\right))))))\}, \operatorname{D5.S3.StatisticalMechanics.UnicyclicSkewnessPlusKurtosisLowerBound.lowerBound}\right))$$
 
@@ -60,6 +130,11 @@ Finally, the strict inequality makes lowerBound a lower bound of the set of all 
 
 - Truth anchor: `D5/S3/StatisticalMechanics/UnicyclicSkewnessPlusKurtosisLowerBound.claim`
 - Truth anchor: `D5/S3/StatisticalMechanics/UnicyclicSkewnessPlusKurtosisLowerBound.lowerBound`
+- Truth anchor: `D5/S3/StatisticalMechanics/UnicyclicSkewnessPlusKurtosisLowerBound.normalizedRates`
+- Truth anchor: `D5/S3/StatisticalMechanics/UnicyclicSkewnessPlusKurtosisLowerBound.normalized_moments`
+- Truth anchor: `D5/S3/StatisticalMechanics/UnicyclicSkewnessPlusKurtosisLowerBound.p`
+- Truth anchor: `D5/S3/StatisticalMechanics/UnicyclicSkewnessPlusKurtosisLowerBound.q`
+- Truth anchor: `D5/S3/StatisticalMechanics/UnicyclicSkewnessPlusKurtosisLowerBound.r`
 - Truth anchor: `D5/S3/StatisticalMechanics/UnicyclicSkewnessPlusKurtosisLowerBound.result`
 - Dependency: [D5/S3/StatisticalMechanics/UnicyclicKurtosisLowerBound](UnicyclicKurtosisLowerBound.md)
 - Dependency: [D5/S3/StatisticalMechanics/UnicyclicSkewnessMinimum](UnicyclicSkewnessMinimum.md)

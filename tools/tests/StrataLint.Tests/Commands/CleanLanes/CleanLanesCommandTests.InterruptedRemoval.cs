@@ -82,7 +82,7 @@ public sealed partial class CleanLanesCommandTests
             var item = Assert.Single(ReadItems(result.Output), row => row.GetProperty("path").GetString() == lane);
             Assert.Equal("skipped", item.GetProperty("action").GetString());
             Assert.Equal("recently_updated", item.GetProperty("reason").GetString());
-            Assert.Equal("original_selectors", item.GetProperty("selection_reason").GetString());
+            Assert.Equal("head_commit_age", item.GetProperty("selection_reason").GetString());
             Assert.True(fixture.WorktreeRegistered(lane));
             Assert.Equal(status, CleanLanesFixture.Git(lane, "status", "--porcelain"));
             Assert.Equal(record, File.ReadAllBytes(Path.Combine(metadata, "worktree-removal")));

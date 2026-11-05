@@ -1,0 +1,22 @@
+### 引理 7.2（左比较已经给出的性质）
+
+无须 $C_{88}$，左比较投影已经满足
+
+$$
+E|_A=\operatorname{id}_A,\qquad E^2=E,\qquad E(I)=I,
+\qquad \phi_\rho\circ E=\phi_\rho,
+$$
+
+以及左模性质 $E(bx)=bE(x)$（$b\in A$）。
+
+**证明。**前四项来自投影、$I\in A$ 及以 $a=I$ 进行左比较。对 $a,b\in A$，
+
+$$
+\langle a,E(bx)\rangle_\rho
+=\langle b^\dagger a,x\rangle_\rho
+=\langle b^\dagger a,E(x)\rangle_\rho
+=\langle a,bE(x)\rangle_\rho,
+$$
+
+唯一性给出左模性质。
+

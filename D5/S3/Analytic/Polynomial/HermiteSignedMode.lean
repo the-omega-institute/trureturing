@@ -216,7 +216,7 @@ def IsSmallestMax (n j : ℕ) : Prop :=
   j ≤ n ∧ (∀ k, k ≤ n → (physicistsHermite n).coeff k ≤ (physicistsHermite n).coeff j) ∧
     ∀ k, k ≤ n → (physicistsHermite n).coeff k = (physicistsHermite n).coeff j → j ≤ k
 
-private theorem polynomial_coeff (n j : ℕ) (hj : j ≤ n) :
+theorem polynomial_coeff (n j : ℕ) (hj : j ≤ n) :
     (physicistsHermite n).coeff j = signedCoeff n j := by
   classical
   simp only [physicistsHermite, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial]

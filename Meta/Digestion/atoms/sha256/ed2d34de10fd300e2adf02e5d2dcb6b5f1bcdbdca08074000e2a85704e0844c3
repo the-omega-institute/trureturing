@@ -1,0 +1,169 @@
+**Theorem 40.2 (all-effect comparison in the enlarged geometric shape).**
+For every original $(E,U)\in\mathcal C_{34}$ with
+$0<\rho(E,U)=\xi\le4$, there is an original rank-one pair
+$(\widehat E,\widehat U)\in\mathcal C_{34}$ such that
+
+$$
+ \rho(\widehat E,\widehat U)=\xi,\qquad
+ f(E,U)\ge f(\widehat E,\widehat U)
+                       +\frac{49}{180}\epsilon(E).
+\tag{40.6}
+$$
+
+The comparison feedback $\widehat U$ is allowed to differ from $U$.
+Consequently, at every such original level,
+
+$$
+\begin{aligned}
+ \min_{\substack{(E,U)\in\mathcal C_{34}\\\rho(E,U)=\xi}}f(E,U)
+     &=N_{\mathrm{geo}}(\xi),\\
+ f(E,U)&\ge N_{\mathrm{geo}}(\xi)+\frac{49}{180}\epsilon(E).
+\end{aligned}
+\tag{40.7}
+$$
+
+The complete preimage of equality $f(E,U)=N_{\mathrm{geo}}(\xi)$
+in this all-effect comparison is exactly $\mathcal G_\xi$.
+It consists of the existing two selected pure orientations, with
+all their actual common-scalar representatives and no other pairs.
+
+*Proof.* First account for the original signs before choosing a path.
+For an arbitrary geometric feedback, $A=2(1+x)$ and $B=2|y|$.
+If $x<0$, both feedback-distance terms exceed four:
+$8-2A=4-4x>4$ and $8-2B=8-4|y|>4$.
+The corresponding effect-distance terms are nonnegative, so such a
+feedback cannot occur at the stated levels, even with a mixed effect.
+Thus $x\ge0$. A negative minimizing sign at $\rho\le4$ requires
+$8-4|y|\le4$, hence $x=0$, $|y|=1$ and $\rho=4$;
+its effect-distance term must vanish, so $E=E_-$.
+This is an already pure pair. At $x=0$ the positive branch likewise
+has level at most four only for $E=E_+$, also pure.
+In particular every mixed case has $x>0$ and the positive sign is
+unique, since its negative feedback-distance term alone exceeds four.
+For an already pure input take $(\widehat E,\widehat U)=(E,U)$
+in (40.6). Theorem 37.5 applies to its later comparison with $N_{\mathrm{geo}}$,
+including the negative-sign exception just identified.
+
+It remains to prove (40.6) for mixed inputs. Align the coherence as
+in (40.3)--(40.5), keeping the original feedback for this first step.
+This does not increase $f$, and $\eta>0$ is unchanged. The following
+two estimates cover every remaining geometric feedback.
+First, substitution of (40.1) gives
+
+$$
+\begin{aligned}
+ b(x)&=4x^2+8hcx-2h-8s,\\
+ b(2/3)&=\frac{16}{9}+\frac83c-\frac{16}{3}s-2h
+       >\frac{16}{9}+\frac{12}{5}-\frac{32}{15}-\frac32
+        =\frac{49}{90}.
+\end{aligned}
+\tag{40.8}
+$$
+
+The function $b(x)$ is strictly increasing for $x\ge0$.
+If $x\ge2/3$, apply (36.20) to the actual positive branch,
+with its population $r$ and its pure endpoint $t-\delta$.
+The resulting rank-one effect uses this unchanged $U$, has the same
+original distance and decreases $g$ by at least
+$b(x)\eta\ge(49/90)\eta$.
+This proves (40.6) in this sector, including $x=1$, where $v=0$;
+no phase division is required there.
+
+Second, suppose $0<x<2/3$. Regard $t,r$ as fixed and decrease
+$\delta$, so $x=1-\delta/2$ increases, until
+
+$$
+ \delta_f=\max\{2/3,t-r\}.
+\tag{40.9}
+$$
+
+The starting $\delta_i$ is greater than both $2/3$ and $t-r$.
+For every $\delta\in[\delta_f,\delta_i]$ use the single actual
+unitary in (40.2) and the single effect
+
+$$
+ E_\delta=
+ \left[T\begin{pmatrix}
+ 1-r&\tau i\sqrt{t-\delta-r^2}\\
+ -\tau i\sqrt{t-\delta-r^2}&r
+ \end{pmatrix}T^\dagger\right]^{\mathsf T}.
+\tag{40.10}
+$$
+
+Here $r$ is the original fixed population. As $\delta$ decreases,
+$a^2=t-\delta-r^2$ increases from its nonnegative initial value,
+and its upper bound $a^2\le r(1-r)$ is exactly $\delta\ge t-r$.
+Thus (40.10) remains positive with trace one and ends either at purity
+or at $x=2/3$. Its positive branch remains exactly $2t$ by (40.4).
+Throughout this path $x>0$ and $y<1$, so the negative feedback-distance
+term is $8-4y>4\ge2t$. Hence the preserved distance is the original
+joint minimum, not merely one chosen branch.
+The phase $\lambda$ and orientation $\tau$ may be kept fixed along
+this entire path.
+
+For $a>0$, differentiation of the exact expression (40.5) gives
+
+$$
+ \partial_\delta\Phi_t
+ =2hu(1-r)-2xr+2hva
+          +2hu\left(\frac ya-\frac{xa}{y}\right).
+\tag{40.11}
+$$
+
+Indeed $u_\delta=-h$, $v_\delta=hx/y$ and $a_\delta=-1/(2a)$.
+On the present segment $x\le2/3$, $y^2\ge5/9$ and $a\le1/2$.
+Consequently
+
+$$
+ \frac ya-\frac{xa}{y}
+ =\frac{y^2-xa^2}{ya}
+ \ge\frac{5/9-1/6}{1/2}=\frac79.
+\tag{40.12}
+$$
+
+The first and third terms of (40.11) are nonnegative,
+$2xr\le4/3$, and $2hu\ge4hc>63/25$ by (40.1).
+It follows that
+
+$$
+ \partial_\delta\Phi_t
+   >-\frac43+\frac{63}{25}\frac79=\frac{47}{75}.
+\tag{40.13}
+$$
+
+If the initial coherence is zero, it is positive at every interior
+point of this decreasing-$\delta$ path. Apply the derivative estimate
+on closed subsegments with positive coherence and pass to the initial
+endpoint using continuity of (40.5). This gives, also in that case,
+
+$$
+ \Phi_t(\delta_i,r)-\Phi_t(\delta_f,r)
+       \ge\frac{47}{75}(\delta_i-\delta_f).
+\tag{40.14}
+$$
+
+If $\delta_f=t-r$, the final effect is already pure.
+Otherwise $\delta_f=2/3$ and its remaining half-impurity is
+$\eta_f=\delta_f+r-t\ge0$.
+Apply the same-feedback construction of (36.20) at this actual endpoint
+feedback. By (40.8) it decreases $g$ by at least $(49/90)\eta_f$
+and yields a rank-one pair at the same original distance.
+Because $\eta_i-\eta_f=\delta_i-\delta_f$ and
+$47/75>49/90$, the total decrease is at least
+$(49/90)\eta_i=(49/180)\epsilon(E)$.
+Every intermediate pair and the final pair are realized by the explicit
+unitaries and ordinary-transpose effects above. Since the original
+level is unchanged, subtracting $\kappa\xi$ preserves the entire
+comparison. This proves (40.6).
+
+Apply Theorem 37.5 to the final rank-one pair to obtain (40.7).
+Its selected pairs themselves are admissible original all-effect
+competitors, so they attain the asserted minimum. Equality at
+$N_{\mathrm{geo}}$ forces $\epsilon(E)=0$ by (40.7);
+Theorem 37.5 then supplies exactly $\mathcal G_\xi$ and its converse.
+In particular its strict comparison against the negative-sign pair
+at level four remains applicable. All zero-coherence and population
+endpoints have either been handled directly or reduced to that
+rank-one equality theorem. No mixed equality case or alternative
+actual lift is introduced. $\square$
+

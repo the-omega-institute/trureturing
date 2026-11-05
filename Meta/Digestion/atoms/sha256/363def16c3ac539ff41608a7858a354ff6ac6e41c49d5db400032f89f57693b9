@@ -1,0 +1,119 @@
+**Theorem 45.7 (exact pure phase value and geometric-equality
+certificate).** For $0<\xi\le R$, $w\in\mathbb T^4$ and an admissible
+sign $\sigma$, put
+
+$$
+ C_\sigma(w,\xi)=\Delta_\sigma(w)+b_\sigma(w)t_\sigma(w,\xi)
+       -2u(w)v(w)\sqrt{t_\sigma(w,\xi)(1-t_\sigma(w,\xi))}.
+\tag{45.19}
+$$
+
+This is the minimum over the coherence phases of the pure endpoint,
+not the minimum over the whole effect arc. Define its full aligning
+endpoint set at a real raw value $a$ by
+
+$$
+\begin{aligned}
+ \mathcal E_\xi(a)=\bigcup_{\substack{w\in\mathbb T^4,\ \sigma\ \mathrm{admissible}\\
+                                     C_\sigma(w,\xi)=a}}
+ \biggl\{\Bigl(\bigl(TF_\sigma(t_\sigma,z)T^\dagger\bigr)^{\mathsf T},
+                            \operatorname{diag}(w)U_+\Bigr):\ &
+ |z|^2=t_\sigma(1-t_\sigma),\\[-2pt]
+ &\operatorname{Re}(Pz\bar Q)=uv|z|\biggr\}.
+\end{aligned}
+\tag{45.20}
+$$
+
+Every actual common scalar representative is retained. If $uv|z|=0$,
+all phases satisfying the modulus condition are allowed. Then
+
+$$
+\begin{aligned}
+ a_\xi&:=m(\xi)+\kappa\xi
+       =\min_{\substack{w\in\mathbb T^4,\ \sigma\ \mathrm{admissible}}}
+                                      C_\sigma(w,\xi),\\
+ \mathcal A_{\mathrm{ph},\xi}
+       &=\mathcal A_{\mathrm{ph,p},\xi}=\mathcal E_\xi(a_\xi).
+\end{aligned}
+\tag{45.21}
+$$
+
+The minimum displayed here is attained. The original value certificate
+is precisely the pure phase lower inequality
+
+$$
+ m(\xi)=N(\xi)
+ \quad\Longleftrightarrow\quad
+ C_\sigma(w,\xi)\ge V(\xi)
+ \quad\text{for every }w\in\mathbb T^4
+                         \text{ and every admissible }\sigma.
+\tag{45.22}
+$$
+
+The exhaustive geometric-equality certificate requires both this
+inequality and its complete equality set:
+
+$$
+\begin{aligned}
+ \mathcal A_\xi=\mathcal G_\xi
+ \quad\Longleftrightarrow\quad
+ \mathcal A_{\mathrm{ph,p},\xi}=\mathcal G_\xi
+ \quad\Longleftrightarrow\quad
+ \bigl[&C_\sigma(w,\xi)\ge V(\xi)
+                  \text{ for every admissible }(w,\sigma),\\
+       &\mathcal E_\xi(V(\xi))=\mathcal G_\xi\bigr].
+\end{aligned}
+\tag{45.23}
+$$
+
+For an arbitrary original pure pair $X=(E,U)$ with $\rho(X)=\xi$, write
+$F=T^\dagger E^{\mathsf T}T=\psi\psi^\dagger$ with $\|\psi\|=1$.
+Its exact original minimizing-lift condition remains, for any
+spectral/Birkhoff decomposition of Theorem 42.3,
+
+$$
+ X\in\mathcal A_\xi
+ \quad\Longleftrightarrow\quad
+ \left\{\begin{array}{ll}
+  (E,U_j)\in\mathcal E_\xi(a_\xi)&\text{for every positive-weight }j,\\
+  (a_j-a)\psi=0&\text{for every positive-weight }j.
+ \end{array}\right.
+\tag{45.24}
+$$
+
+It is sufficient for one such decomposition to satisfy these conditions;
+when $X$ minimizes, every such decomposition satisfies them. Outside
+exhaustive geometric equality, (45.24) does not assert that $U$ is phase.
+
+*Proof.* Every pure original effect at an admissible sign has
+$q=t_\sigma$ by (45.3). Substitution in the exact same-feedback identity
+(36.14) gives its lower value (45.19), attained exactly by the phases
+in (45.20). For $uv=0$ the identity is independent of the coherence
+phase; for $t_\sigma=0$ or $1$ its coherence is zero. Thus the statement
+also includes all pure singletons and zero amplitudes. Every
+$w\in\mathbb T^4$ has the explicit whole unitary realization
+$\operatorname{diag}(w)U_+$, and every endpoint constructed in (45.20)
+has the exact original distance by (36.10)--(36.12). No relaxation of
+phase feasibility, rank or sign is being minimized.
+
+Theorem 45.5 makes the full original minimum equal to this pure phase
+minimum. Compact attainment from Definition 45.1, and the exact endpoint
+phase equality just proved, give both lines of (45.21) and attainment
+of its right side. The selected geometric pairs attain raw value
+$V(\xi)$, so $a_\xi\le V(\xi)$. Formula (45.21) now proves (45.22)
+in both directions. Under that lower inequality, equality of a pure
+phase input to $V$ forces both $C_\sigma=V$ and the aligning phase
+condition. Hence its entire minimizing set is exactly
+$\mathcal E_\xi(V)$, proving the last equivalence in (45.23).
+The first equivalence is (42.26) with the phase purity of Theorem 45.5.
+The equality-set condition by itself is not a lower bound and cannot
+replace the first condition in the brackets.
+
+Finally apply (42.25). Since $F$ is a rank-one projection,
+$F^{1/2}=F=\psi\psi^\dagger$, and
+$(a_j-a)F^{1/2}=0$ is equivalent to $(a_j-a)\psi=0$.
+Insert the phase minimizing set (45.21) to obtain (45.24), with the
+same necessity for every decomposition and sufficiency for one as in
+Theorem 42.4. This is a condition on the actual original lift, not an
+identification of every pure lift with a diagonal feedback. $\square$
+
