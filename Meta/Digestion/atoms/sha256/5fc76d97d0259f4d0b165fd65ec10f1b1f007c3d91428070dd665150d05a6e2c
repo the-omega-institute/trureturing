@@ -1,0 +1,11 @@
+## 25. A finite-scale cap around the opposite optimizer
+
+Keep the fixed record $R_0$ of (1.1), the original producer quantities
+of Definition 11.1, and all reduced data of Definition 23.1. Put
+
+$$
+\gamma=\frac1{25},\qquad
+\mathcal C_-=\{w\in\mathcal W:B(w)\ge23/6\}.
+\tag{25.1}
+$$
+
