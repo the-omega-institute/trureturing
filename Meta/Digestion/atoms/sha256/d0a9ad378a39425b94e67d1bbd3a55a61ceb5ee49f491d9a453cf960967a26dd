@@ -1,0 +1,55 @@
+**Corollary 39.3 (near-minimal memory and the $D=1$ boundary).** Exact
+terminal decoding gives
+
+$$
+2^k\le|T_L|=2^{L+1}-1,\qquad L\ge k.
+\tag{IV.116}
+$$
+
+Combining (IV.112) with (IV.114) gives the integer necessity
+
+$$
+D\ge
+\left\lceil\log_2\left(1+\frac{k\,2^{k-L}}{10}\right)\right\rceil.
+\tag{IV.117}
+$$
+
+Consequently, for any fixed integer additive allowance $c\ge0$, the regime
+$L\le k+c$ forces
+
+$$
+D\ge\left\lceil\log_2\left(1+\frac{k}{10\,2^c}\right)\right\rceil,
+$$
+
+so the worst logical update is logarithmic in $k$ at fixed additive peak
+redundancy. These are necessary bounds; they provide no matching coding
+construction and do not rule out constant $D$ when an unrestricted linear
+peak is available.
+
+For $D\le1$, the concatenation of the $k$ update paths puts every terminal
+word within distance $k$ of the same $K_0$. A radius-$k$ ball in the binary
+word tree is contained isometrically in a radius-$k$ ball of the infinite
+trivalent tree. That ball has $3\,2^k-2$ vertices and $3\,2^k-3$ edges;
+its $3\,2^{k-1}-2$ internal vertices have degree three. A distance-two
+pair has a unique midpoint, so the number of distance-one-or-two pairs is
+
+$$
+(3\,2^k-3)+3(3\,2^{k-1}-2)=15\,2^{k-1}-9.
+$$
+
+Thus (IV.112) excludes $D\le1$ for every $k\ge15$ with arbitrary fixed
+$K_0$. If $K_0=\varepsilon$, all terminal words lie in $T_k$, and (IV.115)
+gives $P(k,1)=5\,2^k-7$; hence the same obstruction excludes $D\le1$ for
+$k\ge10$. These are sufficient exclusions, not sharp thresholds, and they
+make no claim that every fixed $D>1$ is impossible.
+
+The parameters $k=L=10,D=1$ separate static capacity from update capacity:
+$T_{10}$ has $2047$ words for $1024$ assignments, but (IV.112) asks for
+$5120$ distinct physical pairs while $P(10,1)=5113$. The model itself is
+inhabited at peak $L=k$: initialize $K_0=0^k$, let public $A$ select the
+labelled positions in $K$, and rebuild the required tail in paid scratch;
+this has exact current decoding, peak $k$, and at most $2k$ paid edits per
+arbitrary-order update. With a fixed known arrival order, appending each
+new bit gives the separate comparison $L=k,D=1$. Neither comparison is a
+construction for the unrestricted logarithmic-update target.
+

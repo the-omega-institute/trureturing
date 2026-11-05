@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:70e2ac930139007a10d13015e1260be31a32bf86d22f861c635955de7462899d
+  normalized_sha256: sha256:70e2ac930139007a10d13015e1260be31a32bf86d22f861c635955de7462899d
+cas_ref: sha256:70e2ac930139007a10d13015e1260be31a32bf86d22f861c635955de7462899d
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/ForcedThresholdPrefix.first_tour_common_archive
+    target_statement_id: sha256:61c9548e44ba3657f4cd8baf62ff36b3a1c8fee5249dc43823b1ae99ac11415c
+receipts:
+  unresolved_subitems: []
