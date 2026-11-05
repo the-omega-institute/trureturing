@@ -278,7 +278,10 @@ private theorem sector_N_hdelta :
     nE * (hE * (qE - dE)) = (hE * (qE - dE)) * nE := by
   apply sub_eq_zero.mp
   rw [comm_mul, sector_N_h, sector_N_delta]
-  rw [neg_mul (α := Module.End ℂ E), neg_add_cancel]
+  apply LinearMap.ext
+  intro v
+  simp only [LinearMap.add_apply, Module.End.mul_apply, LinearMap.neg_apply,
+    neg_add_cancel, LinearMap.zero_apply]
 
 variable (hp : F.pPlus beta ≠ 0) (critical : D.rank = 26)
 
@@ -303,31 +306,41 @@ theorem B0_corrected_homotopy_compatibility
     rw [add_comm, sector_B0_original_ward, shell, zero_smul]
   have hBh : bE * hE + hE * bE = 0 :=
     sector_B0_h F B H hHG hGH beta level
-  have hBdelta : bE * (qE - dE) + (qE - dE) * bE = 0 := by
+  have deltaAlgebra {R : Type} [Ring R] (b q d : R)
+      (bq : b * q + q * b = 0) (bd : b * d + d * b = 0) :
+      b * (q - d) + (q - d) * b = 0 := by
     calc
-      _ = (bE * qE + qE * bE) - (bE * dE + dE * bE) := by
-        rw [mul_sub bE qE dE, sub_mul qE dE bE]
+      _ = (b * q + q * b) - (b * d + d * b) := by
+        rw [mul_sub, sub_mul]
         abel
-      _ = 0 := by rw [hBQ, sector_B0_d0 F B H hHG hGH beta level, sub_self]
-  have swapH : bE * hE = -(hE * bE) := eq_neg_iff_add_eq_zero.mpr hBh
-  have swapDelta : bE * (qE - dE) = -((qE - dE) * bE) :=
-    eq_neg_iff_add_eq_zero.mpr hBdelta
-  have factorCommute : bE * (hE * (qE - dE)) = (hE * (qE - dE)) * bE := by
+      _ = 0 := by rw [bq, bd, sub_self]
+  have hBdelta : bE * (qE - dE) + (qE - dE) * bE = 0 :=
+    deltaAlgebra (R := Module.End ℂ E) bE qE dE hBQ
+      (sector_B0_d0 F B H hHG hGH beta level)
+  have algebra {R : Type} [Ring R] (b h d : R)
+      (bh : b * h + h * b = 0) (bd : b * d + d * b = 0) :
+      b * (h * d) = (h * d) * b := by
+    have swapH : b * h = -(h * b) := eq_neg_iff_add_eq_zero.mpr bh
+    have swapD : b * d = -(d * b) := eq_neg_iff_add_eq_zero.mpr bd
     calc
-      _ = (bE * hE) * (qE - dE) := by simp only [mul_assoc]
-      _ = -(hE * bE) * (qE - dE) := by rw [swapH]
-      _ = -hE * (bE * (qE - dE)) := by simp only [neg_mul, mul_assoc]
-      _ = _ := by
-        rw [swapDelta]
-        simp only [neg_mul, mul_neg, neg_neg, mul_assoc]
+      _ = (b * h) * d := (mul_assoc _ _ _).symm
+      _ = -(h * b) * d := by rw [swapH]
+      _ = -(h * (b * d)) := by simp only [neg_mul, mul_assoc]
+      _ = _ := by rw [swapD, mul_neg, neg_neg, mul_assoc]
+  have factorCommute : bE * (hE * (qE - dE)) = (hE * (qE - dE)) * bE :=
+    algebra (R := Module.End ℂ E) bE hE (qE - dE) hBh hBdelta
   have inverseCommute : bE * FinitePerturbation.Input.K c cutoff = FinitePerturbation.Input.K c cutoff * bE :=
     commutes_inversePolynomial bE (hE * (qE - dE)) factorCommute cutoff
-  change bE * (FinitePerturbation.Input.K c cutoff * hE) + (FinitePerturbation.Input.K c cutoff * hE) * bE = 0
-  calc
-    _ = FinitePerturbation.Input.K c cutoff * (bE * hE + hE * bE) := by
-      rw [← mul_assoc, inverseCommute]
-      simp only [mul_assoc, mul_add]
-    _ = 0 := by rw [hBh, mul_zero]
+  have homotopyAlgebra {R : Type} [Ring R] (b k h : R)
+      (bk : b * k = k * b) (bh : b * h + h * b = 0) :
+      b * (k * h) + (k * h) * b = 0 := by
+    calc
+      _ = k * (b * h + h * b) := by
+        rw [← mul_assoc, bk]
+        simp only [mul_assoc, mul_add]
+      _ = 0 := by rw [bh, mul_zero]
+  exact homotopyAlgebra (R := Module.End ℂ E) bE
+    (FinitePerturbation.Input.K c cutoff) hE inverseCommute hBh
 
 private theorem corrected_homotopy_N :
     nE * homotopy - homotopy * nE = -homotopy := by
@@ -350,12 +363,16 @@ theorem corrected_homotopy_ghost_degree (degree : ℤ) (state : E)
     (corrected_homotopy_N F B H hHG hGH beta level hp critical) state
   simp only [LinearMap.sub_apply, Module.End.mul_apply, LinearMap.neg_apply] at eq
   rw [number, map_smul] at eq
-  have lowered : nE (homotopy state) = ((degree - 1 : ℤ) : ℂ) • homotopy state := by
+  have algebra {V : Type} [AddCommGroup V] [Module ℂ V]
+      (a b : V) (z : ℂ) (equation : a - z • b = -b) : a = (z - 1) • b := by
+    rw [sub_smul, one_smul]
+    have h := sub_eq_iff_eq_add.mp equation
     calc
-      _ = -(homotopy state : E) + (degree : ℂ) • (homotopy state : E) := by
-        rwa [sub_eq_iff_eq_add] at eq
-      _ = _ := by simp only [Int.cast_sub, Int.cast_one, sub_smul, one_smul]; abel
-  exact congrArg Subtype.val lowered
+      a = -b + z • b := h
+      _ = z • b - b := by abel
+  have lowered := algebra (V := E) (nE (homotopy state)) (homotopy state) (degree : ℂ) eq
+  simpa only [sectorN_coe, Submodule.coe_smul, Int.cast_sub, Int.cast_one] using
+    congrArg Subtype.val lowered
 
 private theorem sector_inversePolynomial_coe (n : ℕ) (v : E) :
     (FinitePerturbation.inversePolynomial (hE * (qE - dE)) n v : State D) =
