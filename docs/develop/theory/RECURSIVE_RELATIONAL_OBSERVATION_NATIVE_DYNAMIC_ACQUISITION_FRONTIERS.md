@@ -1299,233 +1299,243 @@ C133 的 $R\to N5$ 恢复与 FIB 的 full64 同分割恢复仍以各自原来源
 
 ## 13. 任意字面历史的精确 q 支持与有界续接
 
-本节把第 11–12 节的原生执行合同与任意有限 truthful history 接起来。目标值始终是初始寄存器的 $q(t)$；当前寄存器在历史末端可以是 $\rho^E t$，其中 $E$ 是实际已经执行的更新次数。所有新读仍是当前唯一寄存器上的真实 literal Read；派生出的旧回复只是控制中的有限计算，不是新的 I/O 事件。模式表查找、q 叉积、完整图比较和停止判定都在可访问 control 中以有限个 localStep 执行；每个 localStep 都进入 chronological trace 并收费，定理 13.7 的 bound 只限制 raw Read 数。
+**约定 13.0（目标、记录与可访问控制）。** 来源、替换、四值字面口和四动作菜单均取定义 11.1。目标是初始来源的 $q(t)$。若已实际更新 $E$ 次，当前唯一寄存器为 $\rho^E t$；由 [Process Geometry (PG.4402)](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)，当前方向为 $R^E q(t)$，其中 $Ra=b,Rb=k,Rk=a$。初始方向、当前方向、认证 epoch、寄存器、已取得记录和可访问控制分别保留。知道 $q(t)$ 和 $E$ 可以计算当前方向，却不能据此取得当前原树或任意 literal 回复。
 
-### 13.1 历史纤维和有限深度模式
+本节的续接入口是尚未执行 absorbing stop 的实际交接控制。共同保留输入含有限旧记录及其认证 epoch；程序只能使用已经存入控制的这些数据，不能另读外部记录、寄存器、时钟或隐含来源标签。若原控制未保留这些输入，须另供合法且付费的交接，不能从一个数学纤维自动取得它们。有限模式枚举、原子回复计算、叉积表、比较、地址生成及输出计算都在可访问控制中以真实 localStep 完成；完整记录保留这些步骤。以下 raw-Read 界不承担它们的费用。
 
-**定义 13.1（truthful chronological history 与原始纤维）。** 写一个有限原始记录为
+### 13.1 全部有限记录的共同来源支持
 
-$$
-H=((e_1,u_1,y_1),\ldots,(e_m,u_m,y_m)),
-\qquad
-u_i\in\{L,R\}^{*},\quad
-y_i\in\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}.
-$$
-
-它可以由完整事件词删去 localStep 后得到；若保留完整事件词，则 $e_i$ 必须等于该读事件以前实际出现的 update 数。记 $\operatorname{chron}(H)$ 为这个检查以及固定取得控制器的 source-blind replay 检查；不满足检查的记录没有 truthful witness。对满足检查的记录定义
+**定义 13.1（chronological 检查与历史纤维）。** 固定共同安装的确定有效控制、来源无关初态及共同输入。有限候选记录 $H$ 的字面投影写作
 
 $$
-V(H)=
-\left\{t\in\mathcal T:
- \ \forall i\le m,
- \operatorname{readout}(u_i,\rho^{e_i}t)=y_i
-\right\}.
+H_{\rm lit}=((e_1,u_1,y_1),\ldots,(e_m,u_m,y_m)),\qquad
+e_i\in\mathbb N,\quad u_i\in\{L,R\}^{*},\quad
+ y_i\in\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}.
+$$
+
+记录还保留所声明的有限完整事件词 $w_H$，其事件为 localStep、update 和 read；$E$ 是末端更新数。令 $\operatorname{chron}(H)$ 表示以下共同检查：字面投影确为 $w_H$ 的全部 Read；从 epoch $0$ 起，每个 update 的标签是更新前计数，每个 Read 的标签是其之前的实际更新数；从共同初态用所列回复作 source-blind replay，所选 primitive、地址、localStep 和 update 顺序与 $w_H$ 一致，且没有在已经执行 stop 之后继续。这个检查只处理给定的有限词，不对不可达回复分支假设终止。省写成一个字面列表时，其声明的有限日程和 replay 检查仍属于 $H$，不能默默删去。特别地，递减 epoch 的列表没有 chronological 实现。
+
+定义
+
+$$
+V(H)=\begin{cases}
+\{t\in\mathcal T:\ \forall i,\ r_{\rho^{e_i}t}(u_i)=y_i\},
+ &\operatorname{chron}(H),\\
+\varnothing,&\neg\operatorname{chron}(H),
+\end{cases}
+\qquad r_s(u)=\operatorname{readout}(u,s).
 \tag{13.1}
 $$
 
-这里的同一个 $t$ 同时解释全部事件；不能为不同地址或不同 epoch 独立选择来源。空记录的 $V(H)=\mathcal T$。重复地址给出重复约束，absent 是四值口的合法回复，且不同 $e_i$ 的同一地址仍按各自的 $\rho^{e_i}t$ 检验。若 $\operatorname{chron}(H)$ 失败，约定 $V(H)=\varnothing$。历史末端的当前寄存器是 $\rho^E t$，其中 $E$ 是完整事件词的更新数；这个 $E$ 可由已认证的事件顺序得到，而不是由 $q(t)$ 推出。
+同一个 $t$ 须同时解释全部地址和全部 epoch。chron 通过时，逐事件归纳说明满足这些等式的每个 $t$ 都实际重放到同一旧控制，当前寄存器为 $\rho^E t$；反向由实际逐读真值给出。这直接使用 §11.3 的来源证书与重放，对应 `NativeSerialMachine.actual_register_execution`、`reached_prefix_replay` 和 `NativeSerialDepth.transfer`。这里的来源族不额外带相等口、成员承诺或大小限制。本文后续续接只在 active 交接入口使用。
 
-**定义 13.2（深度模式、共同填充和 q 表）。** 对 $d\ge0$，深度 $d$ 模式是有限有序二叉树，允许在恰好深度 $d$ 的 frontier 位置放孔 $\square$，深度不足的 $\alpha,\beta$ 仍是具体叶。记 $\operatorname{Fill}(\pi)$ 为把每个孔以任意非空有限树填满所得的集合；每个 $t\in\mathcal T$ 有唯一的深度 $d$ 模式 $\operatorname{pat}_d(t)$ 及唯一填充。定义有限 q 表
+**定义 13.2（已有有限前缀单元的 q 求值）。** 复用 [Sparse Literal History Transport，以下简称 SLH，定义 74.2](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md) 及 [NativeDepthPatterns](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean) 的深度模式：深度 $d$ 模式记录严格小于 $d$ 的全部原构造符，早叶 $\alpha,\beta$ 结束该支，恰在达到的深度 $d$ 位置留下各自独立的孔。$\operatorname{Fill}(\pi)$ 是以任意有限非空树填孔所得集合，每棵来源有唯一模式 $\operatorname{pat}_d(t)$ 和唯一孔值元组。孔的独立性是在同一原树内的不同位置独立填充，不是为不同历史事件各取来源。
+
+在该已有语法上计算有限表
 
 $$
 \begin{aligned}
-Q(\square)&=S,\\
-Q(\alpha)&=\{a\},\qquad Q(\beta)=\{b\},\\
+Q(\square)&=S,\qquad Q(\alpha)=\{a\},\quad Q(\beta)=\{b\},\\
 Q(\langle\pi_0,\pi_1\rangle)
-  &=\{x\times y:x\in Q(\pi_0),\ y\in Q(\pi_1)\}.
+ &=\{x\times y:x\in Q(\pi_0),\ y\in Q(\pi_1)\}.
 \end{aligned}
 \tag{13.2}
 $$
 
-因此
+这里 $S=\{0,\pm a,\pm b,\pm k\}$ 及其全部有限树代表直接取自 Process Geometry §44、(PG.4408)，零代表可取 $\langle\alpha,\alpha\rangle$。按模式求值的结构归纳给
 
 $$
-Q(\pi)=\{q(t):t\in\operatorname{Fill}(\pi)\}.
+Q(\pi)=q[\operatorname{Fill}(\pi)].
 \tag{13.3}
 $$
 
-等式 (13.3) 的证明是对模式的结构归纳；孔处的 $S=\{0,\pm a,\pm b,\pm k\}$ 每一个值都有有限树见证，具体树可取 Process Geometry §44 的七值表中的叶、cherry 与定向叉积实例。由交叉积表，$Q(\pi)$ 是可直接计算的有限子集，而不是把各事件的边缘回复任意相乘。
+孔处每个值都有实际有限代表；配对处分别取两个子模式的代表，再实际配对，给出共同有限树。这是有限树语法的既有求值方法在七值 q 上的应用。
 
-令
+置 $D_H=0$（$m=0$），否则 $D_H=1+\max_i|u_i|$。由 SLH 引理 50.2、(SLH.74.7) 及 `NativeDepthPatterns.original_prefix_locality`，对 $|u|<D_H$，$r_{\rho^e t}(u)$ 在同一个深度 $D_H$ 模式的所有填充上恒定，包括原来缺席而以后出生的地址；记作 $\operatorname{patread}_e(u,\pi)$。其有效计算可直接复用 SLH §29 的叶扇区守卫和准确语法，不需要来源查询。定义
 
 $$
-D_H=\begin{cases}
-0,&m=0,\\
-1+\max\{\,|u_i|:i\le m\},&m>0.
+\mathcal P_H=\begin{cases}
+\{\pi\text{ 为深度 }D_H\text{ 模式}:\ \forall i,\ \operatorname{patread}_{e_i}(u_i,\pi)=y_i\},
+ &\operatorname{chron}(H),\\
+\varnothing,&\neg\operatorname{chron}(H).
 \end{cases}
-$$
-
-对深度 $D_H$ 模式 $\pi$ 和 $|u|<D_H$，定义 $\operatorname{patread}_e(u,\pi)$ 为任意填充在 epoch $e$ 的回复。它是良定义的：Sparse Literal History Transport §3.2 的闭前缀等式 $P_r\rho=f_rP_r$ 以及 §§29.1–29.4、50.3、51.2、56.2、74.2（特别是 (74.7)）说明 epoch 可以不同而只需同一原始深度前缀；NativeDepthPatterns 的 original_prefix_locality 给出相同的有限地址依赖。于是定义相容模式集
-
-$$
-\mathcal P_H=
-\left\{\pi\text{ 为深度 }D_H\text{ 模式}:
-\operatorname{patread}_{e_i}(u_i,\pi)=y_i\quad(1\le i\le m)
-\right\}.
 \tag{13.4}
 $$
 
-这是一个有限集。它只检查共同源模式，不把 repeated、absent 或 mixed-epoch 约束拆成独立来源。
+这只是在已有有限模式上作共同过滤；SLH §§29.1–29.4 已给全部语义约束的准确语法与有限见证。chron/replay 守卫在 (13.1)、(13.4) 中完全相同。
 
-**定理 13.3（任意有限历史的精确 q 支持）。** 对每一个有限原始记录 $H$，
+**定理 13.3（任意有限记录的精确初始 q 支持）。** 对每个有限候选记录，包括 chron 失败的记录，
 
 $$
-\boxed{\qquad
-q[V(H)]=\bigcup_{\pi\in\mathcal P_H}Q(\pi).
-\qquad}
+V(H)=\bigcup_{\pi\in\mathcal P_H}\operatorname{Fill}(\pi),
+\qquad
+\boxed{\quad q[V(H)]=\bigcup_{\pi\in\mathcal P_H}Q(\pi).\quad}
 \tag{13.5}
 $$
 
-若 $\mathcal P_H=\varnothing$，则 $V(H)=\varnothing$ 且右侧为空。若 $H=[]$，则 $\mathcal P_H=\{\square\}$，从而 $q[V(H)]=S$。对右侧的每一个 $z$，存在一个单一有限共同来源 $t\in V(H)$ 使 $q(t)=z$；该 $t$ 是某个 $\pi\in\mathcal P_H$ 的一次实际有限填充，不是逐事件拼接出来的假想树。
+第一式各项互不相交；第二式右侧每个值都有一个实际有限共同来源，满足全部记录及控制重放。这里的存在见证不表示已经物理取得或准备该树。
 
-**证明。** 任取 $t\in V(H)$。其唯一模式 $\pi=\operatorname{pat}_{D_H}(t)$ 对所有 $i$ 给出与 $t$ 相同的 epoch 回复，故 $\pi\in\mathcal P_H$，并且 $q(t)\in Q(\pi)$。这给出左侧包含右侧。反之，取 $z\in Q(\pi)$。按 (13.3) 选一个实际有限填充 $t\in\operatorname{Fill}(\pi)$ 使 $q(t)=z$。模式的深度覆盖每个 $u_i$，前缀局部性给出 $\operatorname{readout}(u_i,\rho^{e_i}t)=\operatorname{patread}_{e_i}(u_i,\pi)=y_i$，故 $t\in V(H)$。这给出另一包含。若有 contradictory repeated reply、错误的 absent、或不能由共同 epoch 解释的混合记录，恰好没有相容模式；若多个 epoch 的回复来自同一个填充，则它们在 (13.4) 中同时通过。例如
-$H=[]$ 给出 $S$；$((0,\varepsilon,\alpha),(0,\varepsilon,\beta))$ 给出空集；重复同一三元组不改变纤维；$((0,L,\mathsf{absent}))$ 的共同来源只能是根叶，因而 q 支持为 $a$、$b$ 两值，而根上的 absent 直接不相容；定理 12.8 的 $((0,LL,\beta),(1,LR,\beta))$ 则按两个 epoch 同时筛选同一来源，不能改写成 stationary 两读证书。证毕。
+**证明。** chron 失败时两边均空。chron 通过时，取 $t\in V(H)$，其唯一模式 $\pi=\operatorname{pat}_{D_H}(t)$ 在每个 $(e_i,u_i)$ 给相同回复，故 $\pi\in\mathcal P_H$。反之，对任意 $\pi\in\mathcal P_H$ 及其任意有限填充 $t$，前缀局部性同时给出全部等式 $r_{\rho^{e_i}t}(u_i)=y_i$。连同已通过的 chron 检查，定义 13.1 给 $t\in V(H)$ 及实际重放。唯一模式保证并不交。再用 (13.3) 得支持等式：每个选定 $z\in Q(\pi)$ 的有限填充是一个同时解释所有 epoch 的来源，绝非逐事件拼接。证毕。
 
-不同的相容 ground pattern 可以给出不同的 q，因此定理 13.3 不把 $q[V(H)]$ 假定为 singleton；只有定理 13.5 的非零 singleton 情形才强迫完整来源唯一。这个定理也说明了 ARH §27.2 的 independent-hole cylinder 不能被直接当成这里的来源合同。那里可作有限模式和共同像的算法供应；本处每个 $\pi$ 的所有孔仍由同一个原始树 $t$ 一次性填充，并且所有 epoch 事件共同检查。该有限模式应用是 repo-derived；有限树 grammar、epoch locality、七值叉积表和原生执行/重放分别复用 SLH、NativeDepthPatterns、Process Geometry §44 与第 11 节的已有结果。
+本定理包括以下退化情形，其语义计算都在相应的 chron 守卫之内。初始空记录给 $\mathcal P_H=\{\square\}$ 和支持 $S$；同一 epoch 同一地址的相反标签给空集；两个均合法的日程若只多重复同一三元组，其语义纤维相同。根 absent 给空集，而合法先读 $L$ 并得 absent 时，满树只能是根叶，故 $V(H)=\{\alpha,\beta\}$，支持为 $\{a,b\}$。混合 epoch 的合法实例取定理 12.8 的真实记录，原来源 $\langle\langle\beta,\alpha\rangle,\alpha\rangle$ 同时见证两次 $\beta$ 回复及非零初始值；不能将其改读成 stationary 零证书。列表 $((1,\varepsilon,\beta),(0,\varepsilon,\alpha))$ 虽在纯字面方程上由原 $\alpha$ 满足，却因 epoch 递减而在 (13.1)、(13.4) 两处都给空集。即使 epoch 正确，若固定控制的首请求是 $L$ 而候选记录首读为 $\varepsilon$，replay 守卫仍使两边同时为空。这些结论分别由叶／分支语法、约束合取和 chron 守卫直接得到。
 
-### 13.2 非零 q 的刚性边界
+### 13.2 非零值的原来源刚性
 
-先记一个模式事实。若 $\pi$ 有至少一个 frontier 孔，则
+**引理 13.4（自由孔的零填充与非零无界叶族）。** 若模式 $\pi$ 有孔，则 $0\in Q(\pi)$。若还存在 $z\ne0$、$z\in Q(\pi)$，则对每一个指定孔 $v$ 和整数 $M$，都有填充 $t\in\operatorname{Fill}(\pi)$，使 $q(t)=z$ 且 $v$ 下方原叶数大于 $M$；因而该模式有无限多个非零来源。
+
+**证明。** 把一个孔填成零 cherry，零沿祖先叉积传到根，证明第一项。第二项先由 (13.3) 固定一个根值为 $z$ 的共同填充。该填充中每个子树都非零，否则根为零；特别是指定孔的值为某个 $x\in S\setminus\{0\}$。复用 §11.2 的单位轴叉积表，令
 
 $$
-0\in Q(\pi).
+A_0=\alpha,\quad A_{n+1}=\langle\beta,\langle A_n,\beta\rangle\rangle,
+\qquad
+B_0=\beta,\quad B_{n+1}=\langle\alpha,\langle B_n,\alpha\rangle\rangle.
 \tag{13.6}
 $$
 
-确实，把该孔填成任意 $q=0$ 的有限树；零沿从孔到根的交叉积传播。若 $Q(\pi)$ 还含有非零值，则该孔所在上下文的交叉积系数没有被零化，因而可以在孔以下任意给定的有限前缀后，继续填入零 q 树或同一非零轴的无限大小族，得到 q 值不同而所有指定有限回复相同的填充。这个“深填充”事实只用七值叉积表；例如
+由 $b\times(a\times b)=a$、$a\times(b\times a)=b$ 归纳，$q(A_n)=a,q(B_n)=b$，叶数均为 $2n+1$。$\langle\beta,A_n\rangle$ 的值为 $k$，叶数亦无界。对 $n\ge1$ 交换 $A_n$ 或 $B_n$ 的根孩子给 $-a,-b$；交换 $\langle\beta,A_n\rangle$ 的根孩子给 $-k$。因此每个非零 $x$ 都有叶数无界的有限树族。只用相同值 $x$ 的族替换指定孔，保留其余孔值，根叉积递归仍给 $z$，而指定孔下叶数可超过 $M$。这些树大小无界，故无限。证毕。
+
+本引理只选择保持非零值的特定填充，不声称每种后续有限细化都保留非零可能。例如单孔模式容许非零，而细化为两个孩子均为 $\alpha$ 的 cherry 后仅有零值。
+
+**定理 13.5（非零 singleton 与原来源 singleton 等价）。** 若 $V(H)\ne\varnothing$ 且 $z\ne0$，则
 
 $$
-A_0=\alpha,\quad
-A_{n+1}=\langle\beta,\langle A_n,\beta\rangle\rangle
-\quad\Longrightarrow\quad q(A_n)=a,
-$$
-
-$$
-B_0=\beta,\quad
-B_{n+1}=\langle\alpha,\langle B_n,\alpha\rangle\rangle
-\quad\Longrightarrow\quad q(B_n)=b,
-\qquad
-K_n=\langle\beta,A_n\rangle
-\quad\Longrightarrow\quad q(K_n)=k.
+\boxed{\quad q[V(H)]=\{z\}
+\quad\Longleftrightarrow\quad
+\exists t,\ V(H)=\{t\}\ \text{且}\ q(t)=z.\quad}
 \tag{13.7}
 $$
 
-交换左右次序或交换叶标签给出相应的负轴族。把这些族放在固定有限模式的同一个 frontier 孔之后，既保持此前所有有限 literal 回复，又使填充树彼此不同；若该孔上下文对某个非零轴给出非零根值，则这些树的根 q 也保持非零。这个构造是后面有限非零集等价性的来源，而不是把有限输出集合误作有限来源集合。
-
-**引理 13.4（非单例历史纤维含零 q）。** 若 $V(H)$ 含两个不同的树，则 $0\in q[V(H)]$。
-
-**证明。** 取两个共同 witness 的最早未被历史回复固定的分叉位置，并把它们的共同已检查前缀写成深度模式。这里的“未被固定”是有限模式检查器的精确定义：若两个已接受的具体填充在一个被检查的原始前缀上有不同构造，前缀局部性会使某个 epoch 回复不同；所以它们的首个差异落在检查器没有展开的 frontier 之后。把该差异位置切成孔，保留其余已检查前缀，得到的模式仍被 (13.4) 接受。若该分叉以下仍有未展开位置，就得到一个属于 $\mathcal P_H$ 的自由孔模式；按 (13.6) 它有零 q 填充，且填充保留所有历史回复。若分叉是一个树的早叶与另一个树的分支，或两个具体叶的不同延伸，则在分叉处删去尚未被历史访问的后继，得到同样的自由孔模式；absent 约束只会固定已走到的早叶，不会把未访问的后缀变成第二个来源。对 mixed epoch，先取 $D_H$ 原始模式，再用 §3.2 的闭前缀等式运输，故删孔不改变任何 $e_i$ 的已检查回复。于是有 $\pi\in\mathcal P_H$ 且 $0\in Q(\pi)$，再由定理 13.3 得 $0\in q[V(H)]$。证毕。
-
-**定理 13.5（非零 singleton 只在 singleton 来源纤维出现）。** 假设 $V(H)\ne\varnothing$，且 $z\ne0$。则
+**证明。** 右向左直接成立。证左向右时，chron 已通过，故实际纤维就是 SLH §29 的纯字面语义语言。直接复用 SLH 定理 50.3：在四值序 $\mathsf{absent}<\alpha<\beta<\mathsf{branch}$ 的逐地址树序下，存在实际有限最小树 $L_H$ 和语义上端 $U_H$，使
 
 $$
-\boxed{\quad
-q[V(H)]=\{z\}
-\quad\Longleftrightarrow\quad
-V(H)=\{t\}\ \text{且}\ q(t)=z .
-\quad}
+V(H)=[L_H,U_H]\cap\mathcal T.
 \tag{13.8}
 $$
 
-因此在这个 unrestricted literal-history contract 下，严格早于原来源身份的 q 识别只能发生在 $z=0$；即使 $q[V(H)]$ 已经是一个非零 singleton，也已经同时识别了完整有限来源。
+由非零 singleton 假设，$q(L_H)=z\ne0$。假设另有 $t\in V(H)$、$t\ne L_H$。逐分支比较 $L_H<t$，必在 $L_H$ 的某个叶地址 $p$ 首次严格增大：或者原叶为 $\alpha$，而 $t$ 在 $p$ 是 $\beta$ 或分支；或者原叶为 $\beta$，而 $t$ 在 $p$ 是分支。否则所有构造符都相等，便是同一树。
 
-**证明。** 右向左直接成立。若左侧成立而 $V(H)$ 含两个不同的树，引理 13.4 给出 $0\in q[V(H)]$，与 $z\ne0$ 矛盾；故 $V(H)=\{t\}$，且其 q 必为 $z$。证毕。
+第一种情形，仅把 $L_H$ 在 $p$ 的 $\alpha$ 翻为 $\beta$，得到 $s$。由 SLH 引理 50.2 的叶序与逐孩子比较，$L_H\le s\le t\le U_H$；故 $s\in V(H)$。但引理 11.3 的非零逐叶敏感性给 $q(s)\ne q(L_H)=z$，矛盾。第二种情形，仅把该 $\beta$ 改成 $\langle\alpha,\alpha\rangle$ 得到 $s$。任意分支均不小于这个最小 cherry，故同样有 $L_H\le s\le t\le U_H$，所以 $s\in V(H)$。该 cherry 的零值沿祖先传到根，给 $q(s)=0\ne z$，仍矛盾。因此不存在第二个 $t$，证明成立。语义上端不是实际来源；本证明只使用实际有限的 $L_H,s,t$。证毕。
 
-这一定理只谈初始 q 与初始来源纤维。它不说当前 $q(\rho^E t)$ 已被历史确定，也不说历史后的未来 literal 回复或完整档案已被确定；定理 12.7 的同零证据反例仍然适用。
+刚性来自实际区间的中间来源与逐叶敏感性，不来自“不同前缀一定被旧历史区分”。尤其非单例纤维未必含零：上节 $L=\mathsf{absent}$ 的合法记录恰给 $\{\alpha,\beta\}$，支持 $\{a,b\}$。定理 13.5 只要求并证明非零 singleton 的较精确结论；零值的提前识别由下一节与第 13.4 节给出。
 
-### 13.3 统一有限 raw-Read 续接的充要条件
+### 13.3 统一有限额外 raw Read 的准确判据
 
-**定义 13.6（有界续接）。** 固定一个 truthful 历史 $H$，令 $E$ 为其末端当前 epoch。一个续接控制器 $\Gamma$ 从历史 replay 所到达的控制开始，在同一物理寄存器 $\rho^E t$ 上只使用第 11.1 节允许的 localStep、当前 literal read、applyRho 和 pre-stop stop。它必须对每个 $t\in V(H)$ 有限终止，输出初始 $q(t)$，并将实际 Read、update、localStep 按出现顺序追加到原记录。称 $\Gamma$ 有 uniform raw-Read bound，若存在与 $t$ 无关的有限 $B$，使每个这样的续接至多执行 $B$ 次新的 raw Read；地址长度、localStep 数、控制存储、applyRho 次数和总时间不计入这个单一 bound。
+**定义 13.6（固定历史后的有界续接）。** 固定非空纤维的 active 交接记录 $H$，共同可访问输入和物理寄存器按约定 13.0 保留。续接 $\Gamma_H$ 是一个对全部 $t\in V(H)$ 共同的确定有效程序，在当前 $\rho^E t$ 上只用 localStep、当前 literal Read、applyRho 和最终 stop，有限终止并输出初始 $q(t)$。它将所有真实动作按序追加到旧记录。统一 raw-Read 界指存在有限整数 $B$，对所有 $t\in V(H)$，新 Read 数均不超过 $B$；不据此限制地址长度、更新数、localSteps、时间、控制、存储或完整档案。
 
-令 $\mathcal P_H^{\mathrm{free}}$ 是含至少一个 frontier 孔的 $\mathcal P_H$。则：
+程序可依共同的固定 $H$ 构造，但不得依纤维中未知的真实 $t$ 构造。令 $\mathcal P_H^{\rm free}$ 是 $\mathcal P_H$ 中有孔的模式，$N_H=\{t\in V(H):q(t)\ne0\}$。
 
-**定理 13.7（自由孔零准则与有限非零来源等价）。** 对 $V(H)\ne\varnothing$，以下三件事等价：
+**定理 13.7（历史纤维的统一读取界）。** 在定义 13.6 的入口下，以下三项等价：
 
-1. 存在一个可在当前 epoch 合法执行的续接 $\Gamma$，允许它自适应地调用 applyRho，并有 uniform raw-Read bound；
-2. 对每个 $\pi\in\mathcal P_H^{\mathrm{free}}$，
-   $$
-   Q(\pi)=\{0\};
-   \tag{13.9}
-   $$
-3. 非零来源集合
-   $$
-   N_H=\{t\in V(H):q(t)\ne0\}
-   \tag{13.10}
-   $$
-   是有限集。
+1. 存在具有统一有限额外 raw-Read 界的正确续接，允许自适应 applyRho。
+2. 对每个 $\pi\in\mathcal P_H^{\rm free}$，$Q(\pi)=\{0\}$。
+3. $N_H$ 是有限集。
 
-**证明：$2\Rightarrow3$。** 深度 $D_H$ 模式总数有限。若模式有自由孔，(13.9) 下其所有填充都是零 q；非零来源只能来自没有孔的相容模式。无孔模式是一个具体有限树，故非零来源至多是有限多个模式的有限多个树。
+判据仅依共同保留记录有效决定。通过时有不执行新更新的付费续接。
 
-**证明：$3\Rightarrow2$。** 若某个自由孔模式 $\pi$ 有非零 $x\in Q(\pi)$，则 (13.6) 给出零填充；而 (13.7) 及其孔后深填充构造给出无限多个彼此不同、仍满足 $\pi$ 和 $H$ 的非零填充来源，矛盾于 $N_H$ 有限。因此每个自由孔模式的 q 表恰为 $\{0\}$。
+**证明。** $2\Rightarrow3$：模式总数有限，有孔模式在条件 2 下只给零值；无孔模式各为一棵具体有限树，故只有有限多个非零来源。$3\Rightarrow2$：若某个有孔模式还支持非零值，引理 13.4 给无限个非零填充，由 (13.5) 全在 $V(H)$ 中，矛盾。每个有孔模式又必支持零，所以其表只能是 $\{0\}$。
 
-**证明：$2\Rightarrow1$。** 先列出有限集 $N_H=\{t_1,\ldots,t_r\}$。对每个 $t_j$，令 $\Delta(t_j)$ 是它的有限完整 literal 图：包含所有节点地址，并包含每个叶地址的两个立即孩子地址。若一个有限树在 $\Delta(t_j)$ 上给出与 $t_j$ 相同的四值回复，则按节点深度归纳它就是 $t_j$。续接在当前 epoch $E$ 依次对每个 $u\in\Delta(t_j)$ 使用 Sparse Literal History Transport §2.2 的解码表：读取由 $E,u$ 计算出的一个或两个当前地址，利用真实回复解出初始的 $\operatorname{readout}(u,t)$。当前地址与 epoch 都由已认证控制状态给出；不把 $t$、来源成员资格或 q 端口当作输入。若某个 $\Delta(t_j)$ 完全匹配，输出 $q(t_j)$ 并在 pre-stop 位置停止；若全部不匹配，输出 $0$。每个 $t\in N_H$ 会匹配自己的图，任何零 q 来源不会匹配非零 $t_j$ 的完整图，故输出正确。每个旧地址至多两次当前 Read，所以
+证 $2\Rightarrow1$。在控制中有限枚举相容无孔模式，按叉积表保留非零者，得到准确有限表 $N_H=\{t_1,\ldots,t_r\}$，不从来源取得额外字段。对每个 $t_j$，令 $\Delta(t_j)$ 包含它的全部节点地址及每个叶的两个立即孩子地址。任意原树在该有限图上与 $t_j$ 的四值回复全同，就有完全相同的有序构造符，因而就是 $t_j$。
+
+在当前 epoch $E$，对这些有限旧地址逐一使用 SLH 定理 2.2 的历史解码：用由 $E,u$ 计算出的至多两个当前物理地址真实读取，解出初始 $r_t(u)$，包括 absent 守卫。若一个完整图匹配，就输出它的 $q(t_j)$；全部不匹配则输出零。非零来源必匹配自己的图；任何来源一旦匹配，就恰为该 $t_j$；全部不匹配的来源由条件 2 必为零。因此程序正确，且
 
 $$
-B\le
-2\sum_{j=1}^{r}|\Delta(t_j)|<\infty .
+B\le2\sum_{j=1}^{r}|\Delta(t_j)|<\infty.
+\tag{13.9}
+$$
+
+每个所需当前地址长至多 $|u|+\lceil E/2\rceil$，每次实际调用都记录并付费，包括重复地址。有限枚举、解码、比较和输出各用有限个 localStep 完成；不需要更新、旧版本 raw 访问或物理回滚。$r=0$ 时经本地计算直接交付零，新 Read 数为零。以上是实际当前 Reads 解出旧值的计算，不把派生旧回复登记成新 I/O。
+
+证 $1\Rightarrow2$。设正确续接有界 $B$，但某个有孔模式 $\pi$ 支持非零 $z$。指定一个孔地址 $v$，用引理 13.4 选择 $t\in\operatorname{Fill}(\pi)$，使 $q(t)=z\ne0$ 且 $v$ 下有超过 $B$ 个原叶。固定 $\Gamma_H$ 在这个 $t$ 上的实际有限停止运行。对其每个 $v$ 下原叶地址 $p$，只翻转该叶得 $t^p$。翻转仍在同一个 $\pi$ 的孔内，故 (13.5) 保证 $t^p\in V(H)$；旧记录及到达的旧控制相同。由引理 11.3，$q(t^p)\ne q(t)$。
+
+若新运行从未 Read 一个以 $p$ 为前缀的地址，则 §11.2 的离叶锥等式在每个实际 epoch 都使 $t$ 与 $t^p$ 的新回复相同。从相同交接控制和认证 $E$ 开始，对这条实际有限运行逐事件归纳：localStep 和 applyRho 的选择相同，更新计数相同，下一 Read 的地址相同且回复相同，所以一直到相同 stop 和相同输出。两来源都在 $V(H)$，该输出不可能同时等于两个不同初始 q，矛盾。故每个上述原叶都要求一个新的叶锥 Read。不同叶锥前缀不可比，一个 Read 至多服务其中一个叶，遂有超过 $B$ 个新 Read，再次矛盾。
+
+这项必要性只用所选实际 $t$ 的终止运行和同一历史内的实际竞争来源；没有把不可达回复词当作有限终止分支，也没有要求非零可能在任意细化后存活。applyRho 可以完全自适应，离锥等式逐次用于其真实 epoch，故允许更新不能逃开该矛盾。三个条件的有效性来自有限模式、七值表和上面的显式构造。证毕。
+
+$V(H)$ 本身可以无限而 $N_H$ 有限。准则区分的是独立孔圆柱是否仍容许非零来源，不是七值输出域的大小，也不是把任意旧行的共享孔、等式或不等式误当独立孔；后者仍须使用 SLH §74 的完整入口与约束。
+
+### 13.4 未取得原来源的零值消费者
+
+**定义 13.8（三地址测试与全域后备）。** 定义一次出现未知子树的原树上下文
+
+$$
+C[s]=\langle\beta,\langle\alpha,\langle\beta,s\rangle\rangle\rangle,
+\qquad
+H_C=((0,L,\beta),(0,RL,\alpha),(0,RRL,\beta)).
+\tag{13.10}
+$$
+
+共同原生控制器 $A$ 从定义 11.1 的无来源特定信息初态起，依序真实 Read $L,RL,RRL$，保留每个回复及其间实际 localSteps，不执行更新。三个回复依序为 $\beta,\alpha,\beta$ 时，在控制中对 $S$ 的七个候选 $x$ 逐项计算 $b\times(a\times(b\times x))$，确认全部为零后交付零；这些有限表计算各以真实 localStep 执行，不要求取得未知子树的实际 $x$。否则在同一寄存器上接定理 11.8 的完整生产和有限 q 求值。失败测试的全部 Reads、absent 回复和 localSteps 均保留。成功与后备的交付位置均在程序自身 stop 之前。
+
+**命题 13.9（零 q 证据的来源未决与无限族分离）。** $A$ 对全部有限原树有限终止并输出初始 q。其成功记录的完整原来源纤维为
+
+$$
+V(H_C)=\{C[s]:s\in\mathcal T\},\qquad
+q[V(H_C)]=\{0\}.
 \tag{13.11}
 $$
 
-所有解码中实际发生的当前 Reads、重复地址、localSteps 与可能的 update 都保留；本构造选择不调用 update，因而是允许 adaptive applyRho 的一个 paid stationary 实例。旧回复的表查找、图比较和叉积计算均由这些可访问 control 的 localStep 完成，不把 CPU、存储或地址生成费用伪装成 raw Read。若 $r=0$，控制器直接在当前 pre-stop 点输出零，raw-Read 费用为零。
-
-**证明：$1\Rightarrow2$。** 设 $\Gamma$ 有 bound $B$，而某个 $\pi\in\mathcal P_H^{\mathrm{free}}$ 有非零 $x\in Q(\pi)$。对每个可能的回复词，$\Gamma$ 是 source-blind 的确定控制；在至多 $B$ 次 Read 的前提下，所有有限回复分支的实际 Read 地址、所处 epoch 和它们之间的 localStep/update 轨迹组成有限集合。这是有限分支树归纳：每条回复词给出一条有限轨迹，回复字母表有限，深度至多 $B$，而每条轨迹因终止合同本身有限。把这些 epoch-address 对通过 original-prefix locality 拉回初始树，取一个同时超过它们所需深度的有限模式细化。自由孔的深填充引理给出两个填充 $t_0,t_1\in V(H)$，它们在这整个有限观察集合的每一个实际 epoch 地址上回复相同，却有 $q(t_0)\ne q(t_1)$；可取一个为零、另一个为非零。于是从相同的历史控制开始，逐事件归纳得到 $\Gamma$ 在两者上执行相同的 localStep、相同的 update、相同的 Read 地址并收到相同回复，直到相同的 stop。它必须给出同一个输出，不能同时等于两个不同的初始 q，矛盾。故 (13.9) 成立。证毕。
-
-定理 13.7 的“有限”只针对非零来源集合，不是总来源集合。自由孔可以有无限多个零 q 填充；这正是零输出可以有限停止的原因。反之，$q[V(H)]$ 的七值有限性本身绝不提供完整 continuation state，也不产生地址、epoch、来源形状或后继档案。
-
-### 13.4 不暴露零 proper subtree 的无限族与实际读取节省
-
-第 13.7 条允许的零停止并不等于每个零来源都有短 local certificate。下面给出另一种真实 acquisition saving：利用 literal 分支回复推断父节点，跳过根的一个实际 Read；它作用在一个所有 proper subtree 都是非零的无限族上，因此不是暴露一个已有零子树的重述。
-
-沿用定义 12.3 的 $B_{n,i}$。已有七值计算给出每个 $B_{n,i}$ 的 q 是 $\pm i$。此外，对每个 $i$，$B_{n,i}$ 的每一个 proper subtree 的 q 都非零：$n=0$ 时直接检查三个 gadget 及其子树；递归步中每个 proper subtree 落在两个较小的 $B_{n,j}$ 之一，归纳假设适用。定义
+令 $T_n=C[A_n]$，$A_n$ 取 (13.6)，$n\ge0$。这是一族两两不同的原来源；每个 $T_n$ 的根值为零，每个 proper subtree 的 q 均非零。它们在 $A$ 上有完全相同的成功记录和交付控制，源身份仍有无限个可能，实际费用为
 
 $$
-Y_n=\langle B_{n,a},B_{n,a}\rangle,\qquad n\ge0.
+R_A(T_n)=|J_A(T_n)|=3,\qquad W_A(T_n)=1+2+3=6.
 \tag{13.12}
 $$
 
-则
+反之，任何从共同来源无关初态出发、在定义 11.1 同一原生菜单下、仅将 stop 输出类型取为原树而对全部原树有限正确恢复初始完整原树的控制器 $F$，即使自适应 applyRho，在同一 $T_n$ 上都满足
 
 $$
-q(Y_n)=q(B_{n,a})\times q(B_{n,a})=0,
+R_F(T_n)\ge|J_F(T_n)|\ge2n+4>3,
+\qquad
+W_F(T_n)\ge2n^2+9n+9>6.
 \tag{13.13}
 $$
 
-且 $Y_n$ 的每个 proper subtree 都有非零 q；$(Y_n)_{n\ge0}$ 两两不同，故是一个明确的无限原来源族。
+这里是原树恢复任务本身的下界，不以某个指定 producer 的多读次数为比较标准。
 
-**定义 13.8（shape-first 原生控制器）。** 在根先 Read 地址 $L$。若回复 absent，根必为叶，再 Read $\varepsilon$ 取得其 $\alpha/\beta$ 标签并输出相应 q。若回复非 absent，根必为 branch；把已取得的 $L$ 回复交给左子树收集器，再 Read $R$ 并交给右子树收集器。收集器收到地址 $u$ 的真实回复：若为 $\alpha$ 或 $\beta$，返回相应轴；若为 branch，分别 Read $uL,uR$，递归收集两个子树并返回叉积。对 truthful full-tree 输入，branch 的孩子不可能是 absent；该分支可保留一个显式的非法回复后备而不改变合法运行。所有读、localStep 和最终 stop 都按第 11.1 节的 chronological 规则执行，控制从不读取 register、epoch 或隐藏 history。
+**证明。** 三个真实叶回复逐级强迫根、$R$ 和 $RR$ 为分支，左孩子分别为所见 $\beta,\alpha,\beta$；满树语法保证 $RRR$ 处存在任意非空有限 $s$。反之每个 $C[s]$ 都给这些回复，且相同确定控制给完全相同的测试前缀。因此得到 (13.11) 的来源等式，没有取得 $s$ 的形状或值。
 
-**命题 13.9（无限非零 proper-subtree 族上的严格坐标节省）。** 令 $N(t)$ 为有限树节点数。shape-first 对每个根为 branch 的 $t$ 恰好读取每一个非根节点一次，根不读；因而
+对任意 $x=q(s)$，标准向量三重积恒等式及 $a\perp b$、$|b|=1$ 给
 
 $$
-R_{\mathrm{sf}}(t)=|J_{\mathrm{sf}}(t)|=N(t)-1.
+a\times(b\times x)=b(a\mathbin\cdot x),\qquad
+q(C[s])=b\times\bigl(a\times(b\times x)\bigr)=0.
 \tag{13.14}
 $$
 
-NativeFullSourceProducer 的完整原来源生产对同一 $t$ 读取每个节点一次，故
+该计算直接使用 Process Geometry §44 的同一单位正交制备与叉积，未增加源更新权限；$C[s]$ 是对原来源的数学分类，不是在取得时免费构造或 graft 一个未知树。因此所有成功测试都正确，且 $N_{H_C}=\varnothing$：定理 13.7 的准则在这个无限历史纤维上通过，余下 q 交付需要零次新 Read。测试失败时，完整生产／求值在原寄存器上有限正确，连同固定有限测试使 $A$ 全域终止且正确。没有对 $\{T_n\}$ 或 $C[\mathcal T]$ 施加输入承诺。
+
+由 (13.6)，每个 $A_n$ 的值为 $a$。同时归纳可知它的所有子树非零：递归新添的叶为 $\beta$，中间子树 $\langle A_n,\beta\rangle$ 的值为 $a\times b=-k$，新根值仍为 $a$，其余由归纳假设。在 $T_n$ 中，新添的 proper subtree 值依次为 $q(\langle\beta,A_n\rangle)=k$、$q(\langle\alpha,\langle\beta,A_n\rangle\rangle)=a\times k=b$，以及所添叶的 $a,b$；均非零。只有最后的根叉积 $b\times b$ 为零。因此成功并未暴露任何原 proper 零子树。
+
+直接由递归有
 
 $$
-R_{\mathrm{full}}(t)=|J_{\mathrm{full}}(t)|=N(t).
+L(A_n)=2n+1,\quad E(A_n)=2n^2+3n,\qquad
+L(T_n)=2n+4,\quad E(T_n)=2n^2+9n+9.
 \tag{13.15}
 $$
 
-特别对 $Y_n$，
+前两式初值为 $1,0$；每次构造加两叶，叶深度和增加 $2L(A_n)+3=4n+5$，归纳即得。嵌入 $C$ 使原 $A_n$ 全部叶加深三层，并添深度 $1,2,3$ 的三叶，所以 $E(T_n)=E(A_n)+3L(A_n)+6$，给后两式及族的互异性。$A$ 只查询三个不同固定地址，故 (13.12) 由实际调用计数直接成立；全部 $s$ 都给共同回复，所以成功记录仍不能从无限纤维中恢复原来源。
+
+最后证 (13.13)。对任何原树 $t$ 的每个原叶 $p$，翻转标签得不同的 $t^p$，无论其 q 是否相同。若 $F$ 在 $t$ 的实际运行中没有以 $p$ 为前缀的 Read，§11.2 的离锥等式与逐事件重放就给 $t^p$ 上完全相同的终止输出；完整原树目标却要求分别输出 $t$、$t^p$，矛盾。因此每个叶锥必有实际 Read。不同叶锥给不同提交地址，地址长度至少为该叶深度，遂在同一实际运行上有
 
 $$
-R_{\mathrm{sf}}(Y_n)=|J_{\mathrm{sf}}(Y_n)|
- =N(Y_n)-1
- <N(Y_n)
- =R_{\mathrm{full}}(Y_n)=|J_{\mathrm{full}}(Y_n)|.
-\tag{13.16}
+R_F(t)\ge|J_F(t)|\ge L(t),\qquad W_F(t)\ge E(t).
 $$
 
-**证明。** 根的 $L$ Read 同时取得左孩子根的回复；非 absent 使根的 branch 身份由满二叉树语法确定，故不需 Read 根。随后每个非根节点恰在父收集器的 child Read 中出现一次；branch 节点的两个孩子和叶节点的标签都由这些回复确定。若根为叶，定义中的 absent 探针和根 Read 仍给出有限正确运行。故 shape-first 对全部有限原树终止并输出 q，且保留实际完整来源所需的每一个非根 literal 回复；每次递归返回和根叉积都在控制中经实际 localStep 完成并计入记录。NativeFullSourceProducer 的节点枚举、真实回复和 source 不变性由第 11.8 节供应，给出 (13.15)。$Y_n$ 的根是 branch，代入即得 (13.16)；(13.13) 及 proper-subtree 归纳说明该节省不是识别一个已暴露的零 proper subtree。证毕。
+这里不需要非零假设，因为被比较的目标是原树身份。代入 (13.15) 即得 (13.13)。下界与三个实际测试使用同一来源语法、原根、初始化限制和菜单，既无免费参考树，也无免费大小、证书地址或成员口。证毕。
 
-式 (13.16) 是实际 Read 数与 distinct literal address 数的逐坐标严格改善。根地址长度为零，所以两者的地址 tariff $W$ 在此族上相同；本节不把它冒称为 $W$、总时间、memory、energy 或 whole-resource 的普遍改善。该控制器也不提供所有输入上的最小性，只给出一个 all-domain terminating lawful controller 及一族明确 witness。
+若测试失败，$A$ 的实际 Read 数为 $3+2L(t)-1$，地址 tariff 为 $6+2E(t)-2L(t)+2$：前三个请求仍收费，后备生产即使重复这些地址也仍保留实际调用。故 (13.12)–(13.13) 是指定无限族上的任务分离，不是全输入资源支配或最优性主张。localStep 数、控制存储、源准备、记录保留、寻址实现和物理成本均另计。
 
-### 13.5 适用边界
+**推论 13.10（合法零交付与后继边界）。** 在命题 11.9 所用 Process Geometry **定理 44.8** 的原反馈权限下，$A$ 可在成功或后备求值后的 active 控制交付初始 $q(t)$，随后执行同一个 $f$ 表规定的消费者。交付时来源仍为 $t$，epoch 为 $0$；完整记录先保留测试及实际后备，再追加实际求值／交付 localSteps 和消费者动作。成功时 $q=0$，该消费者取 $f(0)=0$ 的停止分支，不需源更新。此交付不能恢复全部 literal 后继任务。
 
-定理 13.3 的 $q[V(H)]$ 是初始 q 的精确可能集合；它不把一个七值结果当作完整 continuation state。定理 13.7 的续接在已认证的 active pre-stop handoff 上使用；absorbing stop 以后仍没有可恢复的后继事件。当前 q、初始 q、实际当前寄存器和历史档案分别保留，不能用历史的 q 支持集合代替它们。
+**证明。** $A$ 的两种取得分支都有限正确、保持原寄存器及 epoch；在求值已完成而尚未执行 stop 的控制处接消费者，即满足命题 11.9 的同一交接论证。既有消费者所需的 graft 等权限仍只属于其原合同，不倒灌为取得阶段的权限。成功族的来源身份由 (13.11) 仍未决；例如 $C[\alpha]$、$C[\beta]$ 有相同完整成功前缀和零输出，但同 epoch 的后继 Read$(RRR)$ 分别回复 $\alpha,\beta$。对相同控制作零新源信息的确定计算不能区分二者，实际再读 $RRR$ 则区分。因此取得 q 的交付并不供应该后继任务；若合同要求一次实际 Read，计算值也不能替代该事件。证毕。
 
-本节没有给出原端口的完整 B-program/UJB 对应、whole-resource backing、空间/时间/边界/记忆的互恢复，也没有结算 C133 的 $R\Rightarrow DT$ 正性、FIB full64、UJB 或全局 whole-recovery。shape-first 的 $R,|J|$ 改善不蕴含物理实现成本、地址 tariff 改善或任意输入的资源支配；finite nonzero criterion 也不把有限输出域当作有限总资源。所有这些更强义务仍按定义 12.9 的原来源、合法操作、chronological record 和后继合同分别证明。
+### 13.5 来源与恢复范围
+
+**约定 13.11（复用与未决桥梁）。** 有限模式与准确语义复用 SLH §29、定理 50.3、定义 74.2 及 `NativeDepthPatterns`；当前读恢复旧回复复用 SLH 定理 2.2；非零敏感性、离锥重放、完整原树取得和 pre-stop 消费位置复用本卷 §§11–12。通用证书／敏感性方法的文献归属沿用 §11.6 所引 Buhrman–de Wolf 综述，向量恒等式及单位叉积语义沿用 Process Geometry §44。新增的具体推导是该实际历史纤维上的非零刚性、自由孔与统一读取界的等价，以及未取得原子树的三地址零消费者和同源任务分离；均按 repo-derived 的普通数学理解，不作新形式认证或文献原创性主张。
+
+$q[V(H)]$ 只是初始 q 的可能集合；即使连同 $E$ 可以计算当前 q 的可能集合 $R^E q[V(H)]$，也没有取得原树、当前 literal 状态、完整旧档案、操作权限或入口。定理 13.7 的充要条件只在约定 13.0、定义 13.6 的完整 active 交接上成立；absorbing stop 不产生后继。有限输出域、有限额外 raw-Read 数和 whole-resource 有界是不同命题。
+
+定义 12.9 的原 B-program／exact UJB 对应、原端口完整后继、共同 whole-resource backing、空间／时间／边界／记忆的合法双向恢复仍须各自的同源映射与执行证明。这里的三地址分离与统一读取准则不结算 C133 的 $R\Rightarrow DT$ 正性、FIB full64 或整体恢复，也不将这些原域替换为树 q 域。数学取得、物理实现和取得总成本分别承担各自条件。
 
 ## 追加锚（本行以下为增补区）
