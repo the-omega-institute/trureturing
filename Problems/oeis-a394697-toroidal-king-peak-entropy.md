@@ -75,8 +75,30 @@ positive real epsilon there is N≥3 such that every integer n≥N has
 absolute root error less than epsilon. No even-only or total-count
 replacement occurs.
 
-Kernel checking, source fidelity, escape registration, independent
-admission, freezing and normal publication have separate evidence
-requirements. This dossier makes no merge, priority or delivered-KPI
-claim. The source-family audit follows the registration or linked-issue
-delivery boundary, while Scribe emission supplies the mathematical mirror.
+The formal tiling object is the disjoint-large-tile placement encoding
+with canonical unit completion. A separate partition-type tiling object
+and a bijection theorem for `tilingBlocks` are not provided;
+`tilingBlocks` is not on the limit theorem's dependency path.
+
+
+## Triage
+
+- **Kernel-checked:** `ToroidalKingsPeakEntropy.result` proves the full
+  maximum-coefficient limit through every integer $n\ge3$, including
+  odd side lengths, with the independently defined A247413 constant.
+- **Kernel-checked:** `RectangularCountEntropy.square_log_limit` gives
+  square-area convergence from rectangular subadditivity, symmetry
+  and area bounds. `ToroidalKingsEmptySeam.free_log_limit` applies it
+  to free king configurations.
+- **Kernel-checked:** `ToroidalKingsEmptySeam.tiling_free_identity`
+  identifies the placement count at $m$ with the free king count at
+  $m-1$. The separate conventional-partition interpretation of
+  `tilingBlocks` remains **open**.
+- **Open:** quantitative convergence rates, numerical certification of
+  the constant, and extensions to other tile sets or graphs are not
+  established by these declarations.
+
+The free-board entropy, maximum-versus-total comparison and tiling
+correspondence retain their cited prior-literature credit. The formal
+conclusion supplies the exact all-square toroidal assertion within
+the stated placement encoding.
