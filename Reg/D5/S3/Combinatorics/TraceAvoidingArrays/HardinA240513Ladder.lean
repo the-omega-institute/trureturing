@@ -86,37 +86,27 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
 namespace FiniteCertificate
 
-/-- Refer to the original continuation vector without copying its definition. -/
-elab "ladderPrivate% " n:ident : term => do
-  let scopePrefix := Lean.Name.num
-    `_private.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA240513Ladder 0
-  let sourceName := scopePrefix ++
-    (`D5.S3.Combinatorics.TraceAvoidingArrays.HardinA240513Ladder ++ n.getId)
-  Lean.Meta.mkConstWithFreshMVarLevels sourceName
-
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature (Fin 2 → Bool)
     (fun _ => Fin 2 → Bool) (fun _ => ℤ)
 
 def actual : Realization signature :=
-  realize signature (fun _ r s => (ladderPrivate% v) 5 r s) (fun e => nomatch e)
+  realize signature (fun _ r s => v 5 r s) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ r s => (ladderPrivate% v) 5 r s + 1) (fun e => nomatch e)
+  realize signature (fun _ r s => v 5 r s + 1) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ r s : Fin 2 → Bool,
     R.readout () r s =
-      2 * (ladderPrivate% v) 4 r s + (ladderPrivate% v) 3 r s -
-        (ladderPrivate% v) 2 r s - 2 * (ladderPrivate% v) 1 r s +
-          (ladderPrivate% v) 0 r s
+      2 * v 4 r s + v 3 r s - v 2 r s - 2 * v 1 r s + v 0 r s
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h (fun _ => false) (fun _ => false)
   have ha := finite_certificate (fun _ => false) (fun _ => false)
-  change (ladderPrivate% v) 5 (fun _ => false) (fun _ => false) + 1 = _ at hb
+  change v 5 (fun _ => false) (fun _ => false) + 1 = _ at hb
   linarith
 
 def family : Registration arena (type_of% @finite_certificate) where
@@ -128,8 +118,8 @@ def family : Registration arena (type_of% @finite_certificate) where
   dependence := by
     intro i
     refine ⟨(fun _ => false), (fun _ => false), (fun _ => true), ?_⟩
-    change (ladderPrivate% v) 5 (fun _ => false) (fun _ => false) ≠
-      (ladderPrivate% v) 5 (fun _ => false) (fun _ => true)
+    change v 5 (fun _ => false) (fun _ => false) ≠
+      v 5 (fun _ => false) (fun _ => true)
     decide +kernel
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
@@ -146,7 +136,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ r s => (ladderPrivate% v) 5 r s) (fun e => nomatch e))
+    (fun _ r s => v 5 r s) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

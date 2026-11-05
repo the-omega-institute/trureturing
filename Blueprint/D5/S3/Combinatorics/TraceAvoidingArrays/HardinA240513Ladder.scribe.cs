@@ -15,6 +15,42 @@ internal sealed class HardinA240513LadderDocument : IScribeDocumentDefinition
         H("Hardin and Barker's binary ladder formulas"),
         Blocks(
             Paragraph(Text("OEIS A240513, revision 11, NAME: \"" + NameQuote + "\" The entry has no page numbers. Rows and columns are labeled, boundaries are open, and diagonal cells are not neighbors. For a binary alphabet, introduction of new values in row-major order means precisely that the first entry is zero. The value one need not occur.")),
+            Describe.Lean(DescribeId.Create("equal-bit"), DeclarationHandle.Create(Prefix + "equalBit"),
+                H("The equal-bit indicator"),
+                StatementSource.FromAuthor(Disp(EqualBitFormula())),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("The natural-valued indicator is one for equal bits and zero otherwise. It contributes one for each equal-valued neighbor in the local conditions."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("row"), DeclarationHandle.Create(Prefix + "Row"),
+                H("A binary row"),
+                StatementSource.FromAuthor(Disp(Eq(V("Row"), Arrow(Call("Fin", D(2)), V("Bool"))))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("A row assigns a bit to each of the two labeled columns. There are four rows and sixteen ordered row-pair states."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("boundary"), DeclarationHandle.Create(Prefix + "Boundary"),
+                H("The boundary-row condition"),
+                StatementSource.FromAuthor(Disp(BoundaryFormula())),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("Boundary r s checks row r when s is its only neighboring row. The other column and the adjacent row provide its two possible neighbors."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("interior"), DeclarationHandle.Create(Prefix + "Interior"),
+                H("The interior-row condition"),
+                StatementSource.FromAuthor(Disp(InteriorFormula())),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("Interior r s t checks the middle row s between r and t. The sum of its three equal-bit indicators must differ from two at each column."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("step"), DeclarationHandle.Create(Prefix + "step"),
+                H("The continuation step"),
+                StatementSource.FromAuthor(Disp(StepFormula())),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("For an integer-valued function w on row pairs, step w r s sums w s t over all four rows t satisfying Interior r s t. Rows failing that condition contribute zero."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("v"), DeclarationHandle.Create(Prefix + "v"),
+                H("The continuation vectors"),
+                StatementSource.FromAuthor(Disp(VectorFormula())),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+                Blocks(Paragraph(Text("The zero-length continuation checks the terminal boundary row s against r. Each successor applies step to the previous vector, so v k r s counts the legal choices of k further rows with integer values."))),
+                DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("a"), DeclarationHandle.Create(Prefix + "a"),
                 H("The literal array count"),
                 StatementSource.FromAuthor(Disp(CountFormula())),
@@ -34,6 +70,53 @@ internal sealed class HardinA240513LadderDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("OEIS A240513, revision 11, first FORMULA: \"Empirical: a(n) = 2*a(n-1) + a(n-2) - a(n-3) - 2*a(n-4) + a(n-5).\" Its second FORMULA, attributed to Colin Barker, is \"Empirical g.f.: x*(2 - x)*(1 - x^2 - 2*x^3) / ((1 - x)*(1 - x - 2*x^2 - x^3 + x^4)).\" The recurrence holds for every natural n at least six, after casting all counts to integers. The series is PowerSeries.mk of these integer coefficients. Its constant coefficient is zero, so it is the source's series beginning at height one. The denominator has constant coefficient one; the asserted identity clears that denominator and requires no convergence assumption.")),
                     Paragraph(Text("An internal state is an ordered pair of binary rows, giving sixteen states without a symmetry quotient. A boundary row compares its two available neighbors, and an interior row compares its three available neighbors. Splitting the finite function space at the first row gives the continuation sum. Induction on the number of remaining rows proves that this sum counts the literal boards, including the first-entry constraint and both end boundaries. The terminal continuation vectors satisfy v5 = 2 v4 + v3 - v2 - 2 v1 + v0 at every state. Linearity propagates this identity to all subsequent vectors. The initial counts 0, 2, 3, 6, 10, 21 and 42 supply the height-six case and the low coefficients. Comparing coefficients of the formal series proves the displayed product identity."))),
                 DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin240513"), ResolutionKind.Proved)))));
+
+    private static Formula EqualBitFormula()
+    {
+        var x = V("x"); var y = V("y");
+        return All("x", V("Bool"), All("y", V("Bool"),
+            Eq(Call("equalBit", x, y), Conditional(Eq(x, y), D(1), D(0)))));
+    }
+
+    private static Formula BoundaryFormula()
+    {
+        var r = V("r"); var s = V("s"); var j = V("j");
+        var neighbors = Add(Call("equalBit", App(r, Call("rev", j)), App(r, j)),
+            Call("equalBit", App(s, j), App(r, j)));
+        return All("r", V("Row"), All("s", V("Row"),
+            Seq(Call("Boundary", r, s), Sp, F.Iff, Sp,
+                Parenthesized(All("j", Call("Fin", D(2)), Seq(neighbors, Sp, Neq, Sp, D(2)))))));
+    }
+
+    private static Formula InteriorFormula()
+    {
+        var r = V("r"); var s = V("s"); var t = V("t"); var j = V("j");
+        var neighbors = Add(Add(Call("equalBit", App(s, Call("rev", j)), App(s, j)),
+            Call("equalBit", App(r, j), App(s, j))), Call("equalBit", App(t, j), App(s, j)));
+        return All("r", V("Row"), All("s", V("Row"), All("t", V("Row"),
+            Seq(Call("Interior", r, s, t), Sp, F.Iff, Sp,
+                Parenthesized(All("j", Call("Fin", D(2)), Seq(neighbors, Sp, Neq, Sp, D(2))))))));
+    }
+
+    private static Formula StepFormula()
+    {
+        var w = V("w"); var r = V("r"); var s = V("s"); var t = V("t");
+        var sum = Seq(Sum, Underscore, Grp(t, Colon, Sp, V("Row")), Sp,
+            Parenthesized(Conditional(Call("Interior", r, s, t), App(w, s, t), D(0))));
+        return All("w", Arrow(V("Row"), Arrow(V("Row"), V("Int"))),
+            All("r", V("Row"), All("s", V("Row"), Eq(Call("step", w, r, s), sum))));
+    }
+
+    private static Formula VectorFormula()
+    {
+        var k = V("k"); var r = V("r"); var s = V("s");
+        return new Formula.Aligned([
+            All("r", V("Row"), All("s", V("Row"),
+                Eq(Call("v", D(0), r, s), Conditional(Call("Boundary", s, r), D(1), D(0))))),
+            All("k", V("Nat"), All("r", V("Row"), All("s", V("Row"),
+                Eq(Call("v", Add(k, D(1)), r, s), Call("step", Call("v", k), r, s)))))
+        ]);
+    }
 
     private static Formula CountFormula()
     {
@@ -90,6 +173,9 @@ internal sealed class HardinA240513LadderDocument : IScribeDocumentDefinition
     private static Formula V(string name) => F.Id(name);
     private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
     private static Formula Call(string name, params Formula[] args) => App(Seq(Operatorname, Grp(V(name))), args);
+    private static Formula Conditional(Formula condition, Formula yes, Formula no) =>
+        Seq(Operatorname, Grp(V("if")), Sp, Parenthesized(condition), Sp,
+            Operatorname, Grp(V("then")), Sp, yes, Sp, Operatorname, Grp(V("else")), Sp, no);
     private static Formula Q(string owner, string name) => Seq(Operatorname, Grp(V(owner), Dot, V(name)));
     private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
     private static Formula Cells(Formula n) => Seq(Call("Fin", n), Sp, Times, Sp, Call("Fin", D(2)));

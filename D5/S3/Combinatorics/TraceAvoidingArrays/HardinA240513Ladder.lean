@@ -35,7 +35,7 @@ instDecidableTailGood: proof_shape=bind-only; consumers=HardinA240513Ladder.coun
 tailGood_cons: proof_shape=bind-only; consumers=HardinA240513Ladder.count_succ
 legal_iff: proof_shape=bind-only; consumers=HardinA240513Ladder.counting_bridge
 step: proof_shape=bind-only; consumers=HardinA240513Ladder.v, HardinA240513Ladder.count_succ, HardinA240513Ladder.vector_recurrence
-v: proof_shape=bind-only; consumers=HardinA240513Ladder.count_eq_v, HardinA240513Ladder.finite_certificate, HardinA240513Ladder.vector_recurrence
+v: proof_shape=bind-only; consumers=HardinA240513Ladder.count_eq_v, HardinA240513Ladder.finite_certificate, HardinA240513Ladder.vector_recurrence, Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA240513Ladder.FiniteCertificate.actual, Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA240513Ladder.FiniteCertificate.rejected, Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA240513Ladder.FiniteCertificate.arena, Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA240513Ladder.FiniteCertificate.family, Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA240513Ladder.FiniteCertificate.audit
 count: proof_shape=bind-only; consumers=HardinA240513Ladder.count_zero, HardinA240513Ladder.count_succ, HardinA240513Ladder.count_eq_v
 count_zero: proof_shape=bind-only; consumers=HardinA240513Ladder.count_eq_v
 count_succ: proof_shape=bind-only; consumers=HardinA240513Ladder.count_eq_v
@@ -63,7 +63,7 @@ to Colin Barker. All arithmetic in those formulas is over the integers.
 
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA240513Ladder
 
-private def equalBit (x y : Bool) : ℕ := if x = y then 1 else 0
+def equalBit (x y : Bool) : ℕ := if x = y then 1 else 0
 
 private def Legal {n : ℕ} (A : Fin n × Fin 2 → Bool) : Prop :=
   (∃ i : Fin n, i.val = 0 ∧ A (i, 0) = false) ∧
@@ -81,12 +81,12 @@ private instance {n : ℕ} (A : Fin n × Fin 2 → Bool) : Decidable (Legal A) :
 def a (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun A : Fin n × Fin 2 → Bool => Legal A)).card
 
-private abbrev Row := Fin 2 → Bool
+abbrev Row := Fin 2 → Bool
 
-private def Boundary (r s : Row) : Prop :=
+def Boundary (r s : Row) : Prop :=
   ∀ j : Fin 2, equalBit (r j.rev) (r j) + equalBit (s j) (r j) ≠ 2
 
-private def Interior (r s t : Row) : Prop :=
+def Interior (r s t : Row) : Prop :=
   ∀ j : Fin 2,
     equalBit (s j.rev) (s j) + equalBit (r j) (s j) + equalBit (t j) (s j) ≠ 2
 
@@ -156,10 +156,10 @@ private theorem legal_iff (k : ℕ) (A : Fin (k + 2) × Fin 2 → Bool) :
           dite_eq_left (show 0 < i.val by omega),
           dite_eq_left (show i.val + 1 < k + 2 by omega)] using hh
 
-private def step (v : Row → Row → ℤ) (r s : Row) : ℤ :=
+def step (v : Row → Row → ℤ) (r s : Row) : ℤ :=
   ∑ t : Row, if Interior r s t then v s t else 0
 
-private def v : ℕ → Row → Row → ℤ
+def v : ℕ → Row → Row → ℤ
   | 0, r, s => if Boundary s r then 1 else 0
   | k + 1, r, s => step (v k) r s
 
