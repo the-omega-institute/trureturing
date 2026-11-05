@@ -8,7 +8,6 @@
 
 import D5.S3.Combinatorics.PositionSets.VertexPositionRatioRefutation
 import Mathlib.Data.Fin.Tuple.Sort
-import Mathlib.GroupTheory.GroupAction.Basic
 import Mathlib.RingTheory.PowerSeries.Expand
 import Mathlib.RingTheory.PowerSeries.WellKnown
 
