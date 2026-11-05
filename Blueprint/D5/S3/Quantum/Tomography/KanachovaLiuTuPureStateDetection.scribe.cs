@@ -28,13 +28,16 @@ internal sealed class KanachovaLiuTuPureStateDetectionDocument : IScribeDocument
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Every entangled pure state is detected", ClaimFormula(),
                 "Writing the two rows of psi as u and v, the vector (U conjugate(v), −U conjugate(u)) has expectation equal to minus the sum of the squared absolute values of the three two-by-two minors. A non-product input has a nonzero minor, so this expectation is strictly negative. The reconstruction is Hermitian. The Hermitian spectral theorem therefore supplies a negative real eigenvalue and a nonzero eigenvector. The result concerns arbitrary complex amplitudes, including zero coordinates; it imposes no restriction on either Schmidt basis.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kanachova-liu-tu-2026-pure-state-detection"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("klt-pure-state-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-        Blocks(SourceParagraph(prose)), role);
+        Blocks(SourceParagraph(prose)), role, openProblemResolutionClaim: resolution);
 
     private static DocumentBlock SourceParagraph(string prose)
     {

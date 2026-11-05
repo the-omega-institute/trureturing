@@ -58,6 +58,10 @@ $$\forall (psi: (Fin\left(2\right)\times Fin\left(3\right)) \to \mathbb{C}), (do
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Tomography/KanachovaLiuTuPureStateDetection.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kanachova-liu-tu-2026-pure-state-detection` (proved) by `D5/S3/Quantum/Tomography/KanachovaLiuTuPureStateDetection.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kanachova-liu-tu-2026-pure-state-detection","declaration_gid":"D5/S3/Quantum/Tomography/KanachovaLiuTuPureStateDetection.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Veronica Kanachova; Feng Liu; Zhoudunming Tu (2026). *Qubit–Qutrit Quantum Tomography of hadronic Λφ and ΛK*0 systems*. DOI: [10.48550/arXiv.2609.11151](https://doi.org/10.48550/arXiv.2609.11151). URL: <https://arxiv.org/abs/2609.11151v1>.
