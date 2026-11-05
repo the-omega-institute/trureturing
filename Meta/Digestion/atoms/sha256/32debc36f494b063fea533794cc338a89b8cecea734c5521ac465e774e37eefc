@@ -1,0 +1,17 @@
+**Corollary 55.3 (a relatively open same-level obstruction).**
+There is a neighborhood of $(q,X,Y)=(1/5,1/5,17/20)$, with
+$x=3/16+q/2$, whose reconstructed original pairs are all uniquely
+negative-active at true distance $13/4$ and have $g<5081/10000$.
+
+*Proof.* The strict population, coordinate, curved-triangle and
+$|Z|<1$ inequalities persist near (55.2). There $R,C>0$ and the
+radical defect is continuous. Put $\delta=239944/125000000$.
+By (55.8) its central value is below $5081/10000-\delta$.
+Restrict the neighborhood so its variation is less than $\delta/2$;
+then every value is below $5081/10000-\delta/2$.
+The reconstruction (55.9)--(55.11) is continuous there, and
+$4(1-x)+2q=13/4$ throughout. The same two-sign budget preserves
+unique negative activity. This gives a relatively open family of attained triangle parameters
+on that same level; even fixing $q=1/5$ leaves an open
+two-dimensional family of triangle coordinates. $\square$
+
