@@ -44,7 +44,8 @@ private theorem odd_two_slope_values (k : ℕ) (hk : 2 ≤ k) :
   have ht0 : 0 < t := by dsimp [t]; positivity
   have hht : h = 2 * t := by
     dsimp [h, t]
-    rw [show k = (k - 1) + 1 by omega, pow_succ]
+    conv_lhs => rw [show k = (k - 1) + 1 by omega]
+    rw [pow_succ]
     ring
   have hQ : (Q : ℤ) = h ^ 2 + h := by
     dsimp [Q, h]
@@ -94,15 +95,16 @@ private theorem odd_two_slope_values (k : ℕ) (hk : 2 ≤ k) :
         simp only [Fin.val_castSucc, hi0, pow_zero, Nat.cast_mul, Nat.cast_ofNat, hQ]
         rw [hM]; ring
     by_cases hik : i.val = k
-    · simp only [hi0, if_false, hik, if_pos]
+    · simp only [if_neg hi0, if_pos hik]
       constructor
       · apply old_value i _ (t + 1) (by constructor <;> nlinarith)
-        rw [hik]; change h * (Q : ℤ) = _
+        rw [hik]
+        change h * (Q : ℤ) = -(h ^ 2 - t - 1) + (t + 1) * N
         rw [hQ, hN, hht]; ring
       · apply new_value i.castSucc _ (t + 1)
           (by rw [hN]; constructor <;> nlinarith)
         simp only [Fin.val_castSucc, hik, Nat.cast_mul, Nat.cast_ofNat, hQ]
-        change h * (2 * (h ^ 2 + h)) = _
+        change h * (2 * (h ^ 2 + h)) = -(2 * h ^ 2 - t - 1) + (t + 1) * M
         rw [hM, hht]; ring
     by_cases hik' : i.val < k
     · simp only [hi0, hik, hik', if_false, if_pos]
@@ -131,7 +133,7 @@ private theorem odd_two_slope_values (k : ℕ) (hk : 2 ≤ k) :
       have hz0 : 0 < z := by dsimp [z]; positivity
       have hz : 2 * z ≤ h := by
         have he := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2)
-          (show (i.val - k - 1) + 1 ≤ k by have := i.isLt; dsimp [r] at this; omega)
+          (show (i.val - k - 1) + 1 ≤ k by have := i.isLt; change i.val < 2 * k + 1 at this; omega)
         simpa [pow_add, h, z, mul_comm] using he
       have hp : (2 : ℤ) ^ i.val = 2 * h * z := by
         rw [show i.val = k + 1 + (i.val - k - 1) by omega, pow_add, pow_add]
@@ -214,34 +216,34 @@ private theorem two_slope_arithmetic (h t x y : ℤ)
   rcases he with he | he
   · have hx' : x = 0 := by
       apply le_antisymm _ hx0
-      apply (mul_le_mul_left hfac).mp
+      apply (mul_le_mul_iff_right₀ hfac).mp
       nlinarith
     subst x
     have hy : (h + 1) * y = (h + 1) * (h - 2) + 1 := by nlinarith
     have hya : h - 2 < y := by
-      apply (mul_lt_mul_left hh0).mp
+      apply (mul_lt_mul_iff_right₀ hh0).mp
       nlinarith [hy]
     have hyb : y < h - 1 := by
-      apply (mul_lt_mul_left hh0).mp
+      apply (mul_lt_mul_iff_right₀ hh0).mp
       nlinarith [hy]
     omega
   · have hprod := mul_le_mul_of_nonneg_left hx (show 0 ≤ 2 * h by omega)
     have hsq : 2 * h * t = h ^ 2 := by nlinarith [ht]
     have hx' : x = t - 1 := by
       apply le_antisymm hx
-      apply (mul_le_mul_left hfac).mp
+      apply (mul_le_mul_iff_right₀ hfac).mp
       nlinarith [hsq]
     rw [hx'] at hp0 hp he
     have hy : (h + 1) * y = 3 * t := by nlinarith [hsq]
     have hya : 1 < y := by
-      apply (mul_lt_mul_left hh0).mp
+      apply (mul_lt_mul_iff_right₀ hh0).mp
       rw [hy]; nlinarith [ht]
     have hyb : y < 2 := by
-      apply (mul_lt_mul_left hh0).mp
+      apply (mul_lt_mul_iff_right₀ hh0).mp
       rw [hy]; nlinarith [ht]
     omega
 
-private theorem odd_two_slope_no_joint (k : ℕ) (hk : 2 ≤ k) :
+theorem odd_two_slope_no_joint (k : ℕ) (hk : 2 ≤ k) :
     ¬ ∃ sigma : List (Fin (2 * k + 1)), ∃ cut : ℕ,
       cut ≤ 2 * k + 1 ∧
       OriginalOrder (2 * k + 1) (2 ^ (2 * k) + 2 ^ k) sigma ∧
@@ -260,7 +262,8 @@ private theorem odd_two_slope_no_joint (k : ℕ) (hk : 2 ≤ k) :
     exact this
   have hht : h = 2 * t := by
     dsimp [h, t]
-    rw [show k = (k - 1) + 1 by omega, pow_succ]; ring
+    conv_lhs => rw [show k = (k - 1) + 1 by omega]
+    rw [pow_succ]; ring
   obtain ⟨hH, hN, hvalues, hfresh⟩ := odd_two_slope_values k hk
   intro ⟨sigma, cut, hcut, hold, hnew⟩
   have hlen : sigma.length = r := by simpa using hold.1.length_eq
@@ -279,10 +282,13 @@ private theorem odd_two_slope_no_joint (k : ℕ) (hk : 2 ≤ k) :
   let y : ℤ := yN
   have hx0 : 0 ≤ x := by dsimp [x]; positivity
   have hxlt : x < t := by
+    dsimp only [x, xN, t]
     exact_mod_cast lane_bound S 1 (k - 1)
   have hx : x ≤ t - 1 := by omega
   have hy0 : 0 ≤ y := by dsimp [y]; positivity
-  have hylt : y < h := by exact_mod_cast lane_bound S (k + 1) k
+  have hylt : y < h := by
+    dsimp only [y, yN, h]
+    exact_mod_cast lane_bound S (k + 1) k
   have hy : y ≤ h - 1 := by omega
   have hsum (v : Fin r → ℤ) : (pre.map v).sum = ∑ j ∈ S, v j := by
     exact (List.sum_toFinset v hpreND).symm
@@ -298,16 +304,16 @@ private theorem odd_two_slope_no_joint (k : ℕ) (hk : 2 ≤ k) :
     by_cases hjl : j.val < k
     · have hc : 1 ≤ j.val ∧ j.val < 1 + (k - 1) := by omega
       have hc' : ¬(k + 1 ≤ j.val ∧ j.val < k + 1 + k) := by omega
-      simpa only [f, g, hj0, hjk, hjl, if_false, if_pos, laneWeight,
-        hc, hc', Nat.cast_pow, Nat.cast_ofNat, Nat.cast_zero, mul_zero, add_zero]
+      simpa only [f, g, h, t, r, Q, hj0, hjk, hjl, if_false, if_pos, laneWeight,
+        hc, hc', and_self, ite_true, ite_false, Nat.cast_pow, Nat.cast_ofNat, Nat.cast_zero, mul_zero, add_zero]
         using hv
     · have hc : ¬(1 ≤ j.val ∧ j.val < 1 + (k - 1)) := by omega
       have hc' : k + 1 ≤ j.val ∧ j.val < k + 1 + k := by
         have := j.isLt
         dsimp [r] at this
         omega
-      simpa only [f, g, hj0, hjk, hjl, if_false, if_pos, laneWeight,
-        hc, hc', Nat.cast_pow, Nat.cast_ofNat, Nat.cast_zero, mul_zero,
+      simpa only [f, g, h, t, r, Q, hj0, hjk, hjl, if_false, if_pos, laneWeight,
+        hc, hc', and_self, ite_true, ite_false, Nat.cast_pow, Nat.cast_ofNat, Nat.cast_zero, mul_zero,
         zero_add, Nat.sub_sub] using hv
   have hcastX : (∑ j ∈ S, (laneWeight 1 (k - 1) j : ℤ)) = x := by
     simp [x, xN]
@@ -343,18 +349,20 @@ private theorem odd_two_slope_no_joint (k : ℕ) (hk : 2 ≤ k) :
     change f i = _ at hv
     rw [hv]
     rcases hi with hi | hi
-    · simp [hi]
+    · simp [hi, h]
     · have hi0 : i.val ≠ 0 := by omega
-      simp only [hi0, hi, if_false, if_pos]
+      simp only [if_neg hi0, if_pos hi]
+      change -(h ^ 2 - t - 1) ≤ _
       nlinarith [hht]
   have hgi : g i ≤ -(2 * h ^ 2 - 2 * h - 1) := by
     have hv := (hvalues i).2
     change g i = _ at hv
     rw [hv]
     rcases hi with hi | hi
-    · simp [hi]
+    · simp [hi, h]
     · have hi0 : i.val ≠ 0 := by omega
-      simp only [hi0, hi, if_false, if_pos]
+      simp only [if_neg hi0, if_pos hi]
+      change -(2 * h ^ 2 - t - 1) ≤ _
       nlinarith [hht]
   have hp0 := (hold.2.2 (pre.length + 1)).1
   rw [htake', List.map_append, List.sum_append, List.map_singleton,
