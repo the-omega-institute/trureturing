@@ -4819,13 +4819,16 @@ letter is $F$. $\square$
 **Definition 44.3 (sparse spine decoder).** The decoder first reads the
 root and the $H$ left-spine nodes, and reads each right-root at address
 $L^iR$ ($0\le i<H$). It then scans the right-root rows from the tail.
-The last row is tagged with level zero. At a row whose successor level is
-$q$, one literal witness at the canonical leftmost address of depth $q+1$
-decides whether its level is $q$ or $q+1$; the witness is found by the
-standard doubling search when $q$ is first encountered. A row that fails
+For a nonempty born block, its last row is tagged with level zero. For
+$q\ge1$, the canonical
+witness $L^{q-1}$ distinguishes $P_q$ from $P_{q+1}$; for $q=0$ the
+empty address does so. Thus one literal witness decides whether the
+preceding born row has level $q$ or $q+1$. A row that fails
 the pure word test is opened by the finite $\rho$-peeler: it follows the
 two children of each exposed seed node, records the tag, and skips every
-uniform $\rho$ layer symbolically. The peeler stops after $n_0+1$ seed
+uniform $\rho$ layer symbolically. The empty-word candidate is the boundary
+$H$ and is parsed directly; every nonempty candidate is treated as above.
+The peeler stops after $n_0+1$ seed
 leaves. It enumerates the at most $H+1$ possible boundary positions
 between the initial and born blocks, retains those with an entry having
 $n=n_0$, and replays (44.1) against the read rows. The unique surviving
@@ -4854,10 +4857,18 @@ The rows returned by the peeler are exactly (44.1), including the entry
 seeds $r_i$ and all $k_i$.
 
 Proof. The spine and right-root pass costs $2H+1$. The tail scan uses one
-witness per row; equal successive levels are certified by the same
-canonical witness, and a new level is located by doubling and one binary
-search. There are at most $n_0+1$ seed leaves, hence at most that many
-level changes requiring a search. This gives the third term of (44.2).
+witness per born row. The witness claim follows by induction from
+$P_0=\alpha$, $P_1=\beta$, and
+$P_{q+1}=\langle\rho(P_q),\rho(P_{q-1})\rangle$: at $L^{q-1}$ the two
+responses are respectively beta and branch (with the root cases $q=0,1$
+separate). A first row whose seed is not alpha is opened by the peeler;
+the candidate boundary enumeration also covers an initial row that happens
+to have the pure-word shape. There are at most $n_0+1$ seed leaves, hence
+the quadratic term bounds all opened nodes; the displayed logarithmic term
+is a harmless upper bound for the finite binary counters used to enumerate
+boundary positions and levels.
+For the empty candidate, $H=d(t)\le n_0$ and the same seed-node bound
+directly parses $z=t$ in the quadratic budget.
 After a level is known, $\delta$ removes one uniform $\rho$ layer without
 opening its descendants. Opening a seed exposes at most $n_0+1$ leaves and
 at most $2n_0+1$ internal nodes; each exposed node uses its two child
