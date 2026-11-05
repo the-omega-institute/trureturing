@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Equal-mass finite-poset upper-set inequalities characterize ordered nonnegative couplings. -/
+   digest: Finite-poset upper-set inequalities characterize ordered nonnegative couplings. -/
 
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
@@ -17,8 +17,8 @@ Source: facebookresearch/atlas-lean, MathlibExt/Probability/StrassenCoupling.lea
 Immutable source URL:
   https://github.com/facebookresearch/atlas-lean/blob/a60759060b5616df0d5775b42da4d337719feb32/MathlibExt/Probability/StrassenCoupling.lean
 Source SHA256: 1f02f5f2d11d673f8a90273c5cd00c81f12c0579f0e8f543aaa96499060be672
-Modifications: native namespace and header, internal upper-set predicate, and omission
-of the unit-mass wrapper; retained mathematical statements and proof bodies are unchanged.
+Modifications: native namespace/header, private upper-set predicate, definitionally
+unfolded public upper-set condition, and omitted unit-mass wrapper; proof bodies unchanged.
 Retire this source only when the locally adopted Mathlib pin contains the full equivalent
 finite-partial-order, arbitrary equal nonnegative mass statement, including zero and empty cases.
 -/
@@ -41,16 +41,16 @@ import Mathlib.Tactic.Push
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.Zify
 
+/-!
+# Finite Strassen stochastic domination
+-/
+
 @[expose] public section
 
 section
 open Finset
 
 namespace D5.S3.Analytic.Probability.FiniteOrderedStrassen
-
-/-!
-# Finite Strassen stochastic domination
--/
 
 /-- `U` is upward-closed / an upper set: `x ∈ U` and `x ≤ y` implies `y ∈ U`. -/
 private def IsUpperSet {α : Type*} [Preorder α] (U : Finset α) : Prop :=
@@ -542,7 +542,8 @@ theorem forall_isUpperSet_sum_le_iff_exists_coupling
     (hp_nonneg : ∀ x, 0 ≤ p x)
     (hq_nonneg : ∀ x, 0 ≤ q x)
     (hsum : ∑ x : α, p x = ∑ x : α, q x) :
-    (∀ U : Finset α, IsUpperSet U → ∑ x ∈ U, p x ≤ ∑ x ∈ U, q x) ↔
+    (∀ U : Finset α, (∀ ⦃x y : α⦄, x ∈ U → x ≤ y → y ∈ U) →
+      ∑ x ∈ U, p x ≤ ∑ x ∈ U, q x) ↔
     ∃ π : α → α → ℝ,
       (∀ x y, 0 ≤ π x y) ∧
       (∀ x, ∑ y : α, π x y = p x) ∧
