@@ -2,7 +2,11 @@ fingerprints:
   raw_sha256: sha256:9ee98da0af702130d8831088a460e68998152997b0f3897cd0482ea8b3e8114d
   normalized_sha256: sha256:9ee98da0af702130d8831088a460e68998152997b0f3897cd0482ea8b3e8114d
 cas_ref: sha256:9ee98da0af702130d8831088a460e68998152997b0f3897cd0482ea8b3e8114d
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/Constructor/OriginalFiniteResolution.original_finite_resolution
+    target_statement_id: sha256:db6b372aad7126681a971b0a9c7a4593a2acf8ca5576e1a86592b318ec715a0c
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/Constructor/OriginalFunctionalNormalization.root_link_normalization
+    target_statement_id: sha256:a6bf7798faf502f01b65651663d0466cd63add09e1c0de0ecdd1297941db274b
 receipts:
   unresolved_subitems: []
   chain_atoms:
