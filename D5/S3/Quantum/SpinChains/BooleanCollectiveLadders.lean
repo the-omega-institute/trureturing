@@ -1025,11 +1025,19 @@ private lemma nativeMatrix_U (S : ℕ) (hS : 1 ≤ S) :
     · subst c
       rw [nativeMatrix, Matrix.blockDiagonal'_apply_eq, raising_entry]
       by_cases hk : k.val + 1=r.val
-      · have he : k = ⟨r.val - 1,by omega⟩ := Fin.ext (by omega)
-        subst k
-        simp [hk]
+      · have he : k = (⟨r.val - 1,
+            Nat.lt_of_le_of_lt (Nat.sub_le _ _) r.isLt⟩ : Fin (2 * S - 2 * b.1.val + 1)) := by
+          apply Fin.ext
+          change k.val = r.val - 1
+          omega
+        have hs : (⟨b,k⟩ : NativeIndex S) = ⟨b,⟨r.val - 1,by omega⟩⟩ :=
+          congrArg (fun q => (⟨b,q⟩ : NativeIndex S)) he
+        rw [ite_eq_left hs, ite_eq_left hk, mul_one]
       · have he : k ≠ (⟨r.val - 1,by omega⟩ : Fin (2 * S - 2 * b.1.val + 1)) := by
-          intro he; have := congrArg Fin.val he; omega
+          intro he
+          have hv := congrArg Fin.val he
+          change k.val = r.val - 1 at hv
+          omega
         simp [hk, he]
     · rw [nativeMatrix, Matrix.blockDiagonal'_apply_ne _ _ _ hcb]
       have he : (⟨c,k⟩ : NativeIndex S) ≠ ⟨b,⟨r.val - 1,by omega⟩⟩ := by
