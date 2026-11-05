@@ -4762,3 +4762,191 @@ claim. Theorems concern finite coherent prefixes and their stated
 logical projections; the continuing RRO recovery problem remains open.
 
 ## 追加锚（本行以下为增补区）
+
+## 44. Sparse acquisition of an unknown entry and its native history
+
+### 44.1 The paid stationary contract
+
+**Definition 44.1 (sparse-acquisition instance).** Fix one authentic LAB
+root, source occurrence, binding and certification epoch. Let $t$ be an
+unknown attained native entry with
+
+$$
+n(t)=n_0>1,qquad z=\operatorname{Run}(W,t),qquad W\in\{F,G\}^{m},
+$$
+
+where every letter is a completed native macro, including its inner and
+outer return. The controller is given the integer $n_0$, the current
+leftmost binary depth $H$ and the permitted live root binding with its
+four-reply literal operation. It is not given $t$, $W$, $m$, $z$, an
+expanded syntax, a hidden tape or history-dependent advice. The source is
+stationary while acquisition runs. $F$ is LAB Definition 9.3's sealed
+old-frontier substitution $\rho$ and $G$ is its current-leftmost-beta
+split; a $G$ is not a root graft.
+
+Each literal request is an actual call at a word over $\{L,R\}$ and
+returns exactly alpha, beta, branch or absent. We charge (i) one raw call
+for every request, including repeated and absent replies, (ii) one unit
+for every submitted address letter, (iii) every arithmetic operation,
+counter cell, stack cell, record, copy and output letter, and (iv) source
+binding and response transport. A finite backing store is paid material;
+only the stated $n_0,H$ and the live interface are initial data. This is
+the literal interface of NativeFullSourceProducer/NativeSerialMachine,
+with the same-source journal rows of the Native Literal Journal Adapter;
+none of their source or record fields is a free oracle here.
+
+**Lemma 44.2 (spine and run coordinates).** For every instance of
+Definition 44.1, $H=d(t)+m$, where $d(t)$ is the leftmost spine depth of
+$t$. If the final spine is numbered from the root, its right subtrees are
+
+$$
+\rho^K r_1,\ldots,\rho^K r_{d(t)},
+\rho^{k_1}\alpha,\ldots,\rho^{k_m}\alpha,
+\tag{44.1}
+$$
+
+with $K=|W|_F$ and $k_i=|W_{>i}|_F$. The first block has at most
+$n_0+1$ leaves in total, and $k_m=0$, while consecutive $k_i$ differ by
+zero or one.
+
+Proof. This is Lemma 42.2's spine formula (42.4). Every completed macro
+adds one spine position, and $n_0=a(t)+2b(t)-1$ bounds the entry's leaf
+count by $n_0+1$. The suffix count changes by one exactly when the next
+letter is $F$. $\square$
+
+### 44.2 A source-blind decoder
+
+**Definition 44.3 (sparse spine decoder).** The decoder first reads the
+root and the $H$ left-spine nodes, and reads each right-root at address
+$L^iR$ ($0\le i<H$). It then scans the right-root rows from the tail.
+The last row is tagged with level zero. At a row whose successor level is
+$q$, one literal witness at the canonical leftmost address of depth $q+1$
+decides whether its level is $q$ or $q+1$; the witness is found by the
+standard doubling search when $q$ is first encountered. A row that fails
+the pure word test is opened by the finite $\rho$-peeler: it follows the
+two children of each exposed seed node, records the tag, and skips every
+uniform $\rho$ layer symbolically. The peeler stops after $n_0+1$ seed
+leaves. It enumerates the at most $H+1$ possible boundary positions
+between the initial and born blocks, retains those with an entry having
+$n=n_0$, and replays (44.1) against the read rows. The unique surviving
+candidate is passed to Theorem 42.4's inverse.
+
+The pure-word test is the decidable grammar
+
+$$
+P_0=\alpha,\qquad P_{q+1}=\rho(P_q),
+$$
+
+and the peeler uses the actual-image inverse $\delta$ of (42.5). A failed
+grammar, failed replay, or nonunique candidate returns `off-promise`; it
+does not assert source provenance.
+
+**Lemma 44.4 (peeler bound and correctness).** On every promised source,
+the decoder of Definition 44.3 makes at most
+
+$$
+2H+4(n_0+1)^2+6(n_0+1)\lceil\log_2(H+n_0+2)\rceil+12
+\tag{44.2}
+$$
+
+literal calls. Every submitted address has length at most $H+n_0+2$.
+The rows returned by the peeler are exactly (44.1), including the entry
+seeds $r_i$ and all $k_i$.
+
+Proof. The spine and right-root pass costs $2H+1$. The tail scan uses one
+witness per row; equal successive levels are certified by the same
+canonical witness, and a new level is located by doubling and one binary
+search. There are at most $n_0+1$ seed leaves, hence at most that many
+level changes requiring a search. This gives the third term of (44.2).
+After a level is known, $\delta$ removes one uniform $\rho$ layer without
+opening its descendants. Opening a seed exposes at most $n_0+1$ leaves and
+at most $2n_0+1$ internal nodes; each exposed node uses its two child
+replies. The two passes over the exposed nodes give the quadratic term.
+All addresses consist of a spine prefix, one right step, and at most
+$n_0+1$ seed steps, proving the length bound.
+
+Induction from the terminal row proves the suffix levels: a completed $G$
+leaves the level and a completed $F$ increments it. The grammar induction
+proves that every skipped layer is exactly $\rho$, while every opened node
+is an actual seed node. Thus every surviving boundary candidate has the
+form (44.1). Lemma 44.2 and the replay test retain the actual one. Theorem
+42.4 makes the resulting $(t,W)$ unique for $n_0>1$. $\square$
+
+**Theorem 44.5 (effective sparse acquisition).** Definition 44.3 is a
+source-blind stationary acquisition that returns the unique $(t,W)$ and
+the compact exact description
+
+$$
+\mathsf C(z)=(n_0,d(t);r_1,\ldots,r_{d(t)};K;k_1,\ldots,k_m;W),
+\tag{44.3}
+$$
+
+where each seed is stored once and each exponent is stored in binary. Its
+raw-call count is $O(H+n_0^2+n_0\log(H+n_0+2))$, peak submitted-address
+length is $O(H+n_0)$, and its compact description has $O(n_0+m)$ source
+items. With the accounting of Definition 44.1, the total submitted-letter
+cost of this implementation is
+
+$$
+O\bigl(H^2+n_0H+n_0^2\log(H+n_0+2)\bigr),
+\tag{44.4}
+$$
+
+and its local arithmetic, backing, copying and output work is polynomial
+in the numeric parameters $H+n_0$ and in the emitted description length.
+
+Proof. Lemma 44.4 gives the calls and address bound. Each of the $H$
+spine rows contributes at most $H+2$ submitted letters, giving $O(H^2)$;
+the seed and search rows contribute the remaining terms in (44.4).
+The entry has at most $n_0+1$ leaves, so storing its seeds and the
+run-length word uses $O(n_0+m)$ items. The replay is finite and exact by
+Theorem 42.4. Every counter increment, binary comparison, address copy,
+record seal and output write is a finite paid operation; unary encodings
+may increase the polynomial degree but do not change the displayed
+numeric bound. $\square$
+
+The construction is a compact semantic source description, not a claim
+that its expanded tree has been copied. A full traversal writes every
+expanded node. For a fixed multileaf entry and $W=F^m$, the leaf count of
+$\rho^m(t)$ grows as a positive Fibonacci recurrence, so that traversal
+has exponential expanded size, whereas (44.3) has $O(n_0+m)$ items.
+
+### 44.3 Sharp query price and the executor handoff
+
+**Proposition 44.6 (linear lower bound at a fixed entry).** Fix any
+legitimate multileaf entry $t$ with $n(t)=n_0>1$ and no accessible
+history-dependent advice. Any uniformly correct literal acquisition of
+the completed history on the family of words of length $m$ makes
+$\Omega(m)$ raw calls in the worst case. Consequently, for fixed $n_0$
+the sparse construction has matching $\Theta(m)$ raw-query order because
+$H=d(t)+m$.
+
+Proof. Theorem 42.4 says that the $2^m$ words have distinct final syntax.
+A deterministic transcript of $q$ four-valued replies has at most $4^q$
+leaves, so $4^q\ge2^m$ and $q\ge m/2$. The same argument applies to a
+randomized controller after fixing a successful branch. Lemma 44.2 gives
+$H=d(t)+m$ and Theorem 44.5 gives the matching upper order. This is a
+query statement only; it does not claim optimal physical time or
+polynomiality in the bit length of $n_0$. $\square$
+
+After a successful acquisition, the controller hands the existing LAB
+executor the same authenticated root binding, epoch, rights and saved
+continuation, together with $\mathsf C(z)$ as a semantic boundary. Only
+after a genuinely completed outer $F$ or $G$ return may it append that
+letter to $W$ and update (44.3). Operand acquisition, controller phase,
+full replies, ACK/return, journal rows, source edits and their costs remain
+the supplied LAB and Native Literal Journal contracts. Finishing source
+writes before the outer return does not update completed history.
+
+The result does not decode arbitrary busy cuts or full CPU/wait chronology,
+invert physical edits, execute an arbitrary effective program, provide the
+four individual minimal view kernels, or construct an infinite coherent
+thread. The $n_0=1$ beta boundary retains the two first-letter ambiguity
+of (42.8); empty words and short spines are handled by the base case of
+the decoder, while this theorem explicitly excludes that boundary.
+
+### 44.4 Correspondence and scope
+
+Lohrey--Maneth--Reh, [arXiv:1511.02141v2, Proposition 3](https://arxiv.org/html/1511.02141v2), supplies the standard constant-delay traversal fact once a grammar-compressed tree is supplied; it does not supply this paid acquisition. Engelfriet, [arXiv:1510.02036v1, Definition 3.62](https://arxiv.org/html/1510.02036v1), supplies the recursive homomorphism setting corresponding to the uniform $\rho$ layers. The actual source, address, reply, epoch and journal obligations come from LAB §§9.3--9.4, the Native producer/machine sources, and the Native Literal Journal Adapter. Thus (44.2)--(44.4) are a source-specific acquisition and maintained semantic-boundary result under the orbit promise. Off-promise recognition, provenance, completed-history decoding beyond the stated source, physical recovery and the original infinite RRO objective remain open.
+
+## 追加锚（本行以下为增补区）
