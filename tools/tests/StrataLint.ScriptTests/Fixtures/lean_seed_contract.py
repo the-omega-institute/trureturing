@@ -3,6 +3,7 @@ import json
 import hashlib
 import os
 import platform
+import pathlib
 import random
 import subprocess
 import datetime
@@ -770,6 +771,13 @@ def _all_test_cases():
 
 
 if __name__ == "__main__":
+    if len(sys.argv) == 5 and sys.argv[1] == "--ensure-cleanup":
+        fixture = TransportTests("ensure_post_install_cleanup_consumer")
+        fixture.native_cli, setup, warm = sys.argv[2:]
+        fixture.native_setup = pathlib.Path(setup)
+        fixture.initially_warm = warm == "warm"
+        result = unittest.TextTestRunner(verbosity=2).run(fixture)
+        raise SystemExit(0 if result.wasSuccessful() else 1)
     if len(sys.argv) == 2 and sys.argv[1] == "--list":
         for case in _all_test_cases():
             print(case.id().rsplit(".", 1)[-1])

@@ -9,6 +9,32 @@ namespace StrataLint.Tests;
 /// </summary>
 public sealed partial class LeanCacheEnsureCommandTests
 {
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ProductionCleanupWarningPreservesInstalledArchiveThroughEnsure(bool warm)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var setup = new TemporaryDirectory();
+        const string manifest = "{\"packages\":[{\"type\":\"git\",\"name\":\"mathlib\",\"rev\":\"0123456789abcdef0123456789abcdef01234567\"}]}";
+        File.WriteAllText(Path.Combine(setup.Path, "lake-manifest.json"), manifest);
+        StrataLint.TestSupport.RegPackageFixture.Write(setup.Path);
+        LeanCacheStamp.Write(Path.Combine(setup.Path, ".lake"),
+            LeanPinSet.Create([], System.Text.Encoding.UTF8.GetBytes(manifest)));
+        MathlibProjectionFixture.Write(Path.Combine(setup.Path, ".lake"));
+        var files = Directory.EnumerateFiles(setup.Path, "*", SearchOption.AllDirectories)
+            .ToDictionary(path => Path.GetRelativePath(setup.Path, path).Replace('\\', '/'), File.ReadAllText);
+        var request = Path.Combine(setup.Path, "native-setup.json");
+        File.WriteAllText(request, JsonSerializer.Serialize(files));
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("python3", ["-B",
+            Path.Combine(root, "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py"),
+            "--ensure-cleanup", Path.Combine(root, "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"),
+            request, warm ? "warm" : "cold"], root, TimeSpan.FromSeconds(90), 1024 * 1024);
+        Assert.True(result.ExitCode == 0, System.Text.Encoding.UTF8.GetString(result.StandardOutput)
+            + System.Text.Encoding.UTF8.GetString(result.StandardError));
+    }
+
     [Fact]
     public void FinalEnsureObservationDistinguishesWarmFallbackFromRequiredBuild()
     {

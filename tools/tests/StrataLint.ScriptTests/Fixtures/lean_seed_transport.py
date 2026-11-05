@@ -125,6 +125,69 @@ exit "${FAKE_BUILD_EXIT:-0}"
     def test_linked_production_fetch_refuses_before_gh_or_lake_writes(self):
         self.assert_linked_fetch_guarded()
 
+    def cleanup_fault_environment(self):
+        write(self.bin / "sitecustomize.py", """
+import os, pathlib, tempfile
+original = tempfile.TemporaryDirectory.cleanup
+def cleanup(stage):
+    original(stage)
+    if pathlib.Path(stage.name).name.startswith("lean-fetch-"):
+        root = pathlib.Path(os.environ["FAKE_CLEANUP_ROOT"])
+        assert (root / ".lake/build/lib/lean/D5/A.olean").read_text() == "locally-produced-olean"
+        (root / "cleanup-fault").write_text("post-install cleanup OSError")
+        raise OSError("injected post-install cleanup failure")
+tempfile.TemporaryDirectory.cleanup = cleanup
+""")
+        return dict(PYTHONPATH=str(self.bin), FAKE_CLEANUP_ROOT=str(self.root))
+
+    def test_post_install_cleanup_warning_keeps_fetch_result(self):
+        self.assertEqual(0, self.transport("publish").returncode)
+        shutil.rmtree(self.root / ".lake/build")
+        result = self.transport("fetch", **self.cleanup_fault_environment())
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        receipts = [json.loads(line.partition(" ")[2]) for line in result.stdout.splitlines()
+                    if line.startswith("LEAN_CACHE_FETCH ")]
+        self.assertEqual("unpacked", receipts[-1]["status"])
+        warnings = [json.loads(line.partition(" ")[2]) for line in result.stdout.splitlines()
+                    if line.startswith("LEAN_CACHE_FETCH_WARNING ")]
+        self.assertEqual(["cleanup-deferred"], [row["status"] for row in warnings])
+        self.assertTrue((self.root / "cleanup-fault").is_file())
+        self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+
+    def ensure_post_install_cleanup_consumer(self):
+        for relative, content in json.loads(self.native_setup.read_text()).items():
+            write(self.root / relative, content)
+        shutil.copy2(ROOT / "tools/scripts/maintenance_log.py", self.root / "tools/scripts/maintenance_log.py")
+        self.commit_fixture()
+        self.assertEqual(0, self.transport("publish").returncode)
+        if self.initially_warm:
+            write(self.root / ".lake/build/lib/lean/D5/A.olean", "old active bytes")
+            write(self.root / ".lake/build/.release-refreshed-at", "2000-01-01T00:00:00+00:00")
+        else:
+            shutil.rmtree(self.root / ".lake/build")
+        environment = self.transport_environment(**self.local_environment(), **self.cleanup_fault_environment(),
+            TRURETURING_MAINTENANCE_SCRIPT="ensure-cache", TRURETURING_MAINTENANCE_REPOSITORY=str(self.root),
+            TRURETURING_MAINTENANCE_LOG_DIR=str(self.root / "logs"))
+        environment.pop("TRURETURING_MAINTENANCE_RUN_ID", None)
+        result = subprocess.run(["dotnet", self.native_cli, "worktree", "ensure-cache", "--path", str(self.root)],
+            cwd=self.root, env=environment, capture_output=True, text=True, timeout=60)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        receipt = json.loads(next(line.partition(" ")[2] for line in result.stdout.splitlines()
+                                 if line.startswith("LEAN_CACHE ")))
+        self.assertEqual("unpacked", receipt["archive_status"], result.stdout)
+        self.assertEqual("warm", receipt["project_olean_state"])
+        self.assertEqual("warm", receipt["mathlib_olean_state"])
+        self.assertTrue((self.root / "cleanup-fault").is_file())
+        self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+        rows = [json.loads(line) for file in (self.root / "logs").glob("*.jsonl") for line in file.read_text().splitlines()]
+        final = next(row for row in rows if row["event"] == "run_finished" and row["script"] == "ensure-cache")
+        self.assertEqual((0, "unpacked", False, "none"),
+            tuple(final[key] for key in ("exit_code", "archive_status", "degraded", "cache_fallback")))
+        warning = next(row for row in rows if row.get("status") == "cleanup-deferred")
+        self.assertEqual(("cleanup", "OSError"), (warning["phase"], warning["error_type"]))
+        fetched = next(row for row in rows if row["event"] == "run_finished" and row.get("operation") == "fetch")
+        self.assertEqual((0, "unpacked"), (fetched["exit_code"], fetched["status"]))
+
     def test_main_production_fetch_reaches_release_listing(self):
         log = self.root / "main-gh-calls"
         result = self.transport("fetch", FAKE_GH_LOG=str(log))
