@@ -1,0 +1,36 @@
+**定义 76.2（同一完整 tagged 矩阵签名上的两个扩张）。** 取定理 33.1 的整个 $\mathcal D_3$ tagged-CP 签名的普通迹特例：原对象是带原因子及块标签的有限非空直和和全部有限实际张量，块大小为三的幂；原 $g_A^0=q_A=\tau_A(xy)$，$\tau_A$ 为各块普通迹之和，$L$ 是原矩阵 Jordan 乘法。原准备含全部联合密度，原菜单、同记录执行、中心、输出、零支、失败、遗忘、具名返回数和全部合法有限历史逐字取定理 33.1。取原指针 $P=\mathbb C\oplus M_3(\mathbb C)$，其 AC 效果在三阶块为 $d=e_{11}$、在经典块为零。另有不同原标签的生成对象 $A_0=M_3(\mathbb C)$。同维的不同标签不被识别；任意原 CP 器件仍可连接它们。
+
+以下仅定义这两个扩张的数学数据，不增加原对象、器件或合法调用。记 $\delta^A_a b=i[a,b]/2$。在 $A_0$ 中令
+
+$$
+h=e_{11}-e_{22},\qquad y=i(e_{12}-e_{21}),\qquad
+\kappa_{A_0}y=h,\quad \kappa_{A_0}h=-y,
+\tag{76.2}
+$$
+
+并令 $\kappa_{A_0}$ 在 $\operatorname{span}\{h,y\}^{\perp_q}$ 上为零。它是固定单位的实斜对称线性算子；在所有其他原生成块上取 $\kappa=0$，尤其 $\kappa_P=0$。原直和和经典副本逐块延拓；在每个原张量上，利用 $E_{AB}=E_A\otimes_{\mathbb R}E_B$，定义
+
+$$
+\kappa_{AB}=\kappa_A\otimes\operatorname{Id}_{E_B}
++\operatorname{Id}_{E_A}\otimes\kappa_B.
+\tag{76.3}
+$$
+
+括号、交换和直和分配按同一原因子标签运输。这一规则在所有有限原对象上定义数据，包括任意重复的 $A_0$ 因子；不把一个原始九阶块与另一个三阶张量对象强行识别。置
+
+$$
+H_A=\kappa_A(\operatorname{Id}_{E_A}-\kappa_A^2)^{-1/2},
+\qquad t=\frac{\pi}{3\sqrt2},\qquad J_A=\exp(tH_A),
+\tag{76.4}
+$$
+
+其中逆平方根是正定自伴随算子的有限维谱定义。两个原 D 解释分别为
+
+$$
+D^{+,A}_a b=\delta^A_a b,
+\qquad D^{-,A}_a b=J_A\delta^A_a b.
+\tag{76.5}
+$$
+
+$\kappa,H,J$ 只用于指定反模型；面积候选不含这些辅助数据。特别是 $\kappa$ 的斜性不是对原 $D^-$ 偷加斜伴随，$J$ 也不被假定为保锥映射、Jordan 自同构或实际过程。
+
