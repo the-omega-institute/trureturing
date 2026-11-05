@@ -1,0 +1,22 @@
+**定义 185.1（原对象与十调用时间的对应）。** 直接使用 [FIB_SOURCE_COMPLETION_DYNAMICS §§2–3、5、8–9][FIBSRC183] 的原完成来源。为区别本卷脉冲 $\alpha$，将该卷的整数向量 $\alpha$ 在此写为 $e_{\rm A}=(1,0)^{\mathsf T}$：
+
+$$
+\begin{aligned}
+\Omega_{\rm F}&=\{\xi\in\{0,1\}^{\mathbb N}:\xi_j\xi_{j+1}=0\},\quad
+G_{\rm F}=\widehat{\mathbb Z}^{2},\quad K=\Omega_{\rm F}\times G_{\rm F},\\
+M&=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+\delta(\xi,z)=(\sigma\xi,M^{-1}(z-\xi_0 e_{\rm A})).
+\end{aligned}
+\tag{185.1}
+$$
+
+原 §5 的共同尾公式在这里给
+
+$$
+\delta^r(\xi,z)
+=\left(\sigma^r\xi,M^{-r}\left[z-\sum_{j<r}\xi_jM^je_{\rm A}\right]\right).
+\tag{185.2}
+$$
+
+取该卷的 Parry 符号律 $\nu_{\rm P}$ 与 $G_{\rm F}$ 上归一 Haar 律 $\mu_{\rm H}$，令 $\lambda=\nu_{\rm P}\times\mu_{\rm H}$；也允许任意 $\delta$ 不变 Borel 概率 $\rho$。固定一个有限整数 $r\ge1$，令定义 184.3 的 $F=\delta^r$、$\mu=\rho$。这是每十个原地址 $1$ 调用推进恰好 $r$ 次原剥离的模型对应；$\mathcal R$ 仍可读完整 $(\xi,z)$，不局限于有限前缀或模余数。原添零映射不是此处的推进，剥离也没有被换成另一种移位。
+
