@@ -52,6 +52,7 @@ internal sealed class StinespringDocument : IScribeDocumentDefinition
         result = Inst("StarOrderedRing", result, V("A"));
         result = Inst("PartialOrder", result, V("A"));
         result = Inst("CStarAlgebra", result, V("A"));
-        return All("A", Call("Type", V("u")), All("H", Call("Type", V("u")), result));
+        return All("u", V("Universe"), All("A", Call("Type", V("u")),
+            All("H", Call("Type", V("u")), result)));
     }
 }

@@ -24,8 +24,11 @@ Source: facebookresearch/atlas-lean at immutable revision
 Original source SHA-256:
 0910650fe26746abe5689911e2d48c7cdff9a10882d71682ff136fccae26fa39.
 Adaptations: native header and namespace, removal of module/public wrappers
-and source-local numbering comments. Mathematical statements and proof bodies
-are preserved. This is a narrow source transplant of known mathematics under
+and source-local numbering comments; omission of three definitional helpers
+whose proof constants are absent from the elaborated endpoint closure. Their
+uses retain the same definitional equalities locally inside the consuming
+proofs. Retained mathematical statements and substantive proof steps are
+preserved. This is a narrow source transplant of known mathematics under
 A17.2, with no new Lake dependency and no original mathematical claim.
 Retire this transplant and directly reuse equivalent Mathlib declarations when
 this repository actually adopts a pinned Mathlib revision providing the same
@@ -42,6 +45,16 @@ import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
 import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
 import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
+
+/-!
+# Generic Stinespring dilation
+
+A completely positive map from a unital complex C*-algebra to bounded operators
+on a complex Hilbert space is a compression of a unital star representation.
+The construction uses the separated completion of its positive semidefinite
+form on finitely supported vectors. All spaces share one arbitrary universe;
+no finite dimension, separability or normalization of the map is assumed.
+-/
 
 
 section
@@ -315,10 +328,6 @@ private theorem stinespring_pre_inner_single (A H : Type u) [CStarAlgebra A] [Pa
     (φ : A →CP (H →L[ℂ] H)) (a : StinespringPre A H φ) :
     StinespringPre.toPre A H φ (StinespringPre.ofPre A H φ a) = a := rfl
 
-@[simp] private theorem StinespringPre.ofPre_toPre (A H : Type u) [CStarAlgebra A] [PartialOrder A]
-    [StarOrderedRing A] [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
-    (φ : A →CP (H →L[ℂ] H)) (a : A →₀ H) :
-    StinespringPre.ofPre A H φ (StinespringPre.toPre A H φ a) = a := rfl
 
 private noncomputable def stinespringLeftMul0 (A H : Type u) [CStarAlgebra A] [PartialOrder A]
     [StarOrderedRing A] [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
@@ -339,10 +348,12 @@ private theorem stinespringLeftMul0_mul (A H : Type u) [CStarAlgebra A] [Partial
     (φ : A →CP (H →L[ℂ] H)) (c d : A) :
     stinespringLeftMul0 A H φ (c * d)
       = stinespringLeftMul0 A H φ c ∘ₗ stinespringLeftMul0 A H φ d := by
+  have ofPre_toPre_inline (g : A →₀ H) :
+    StinespringPre.ofPre A H φ (StinespringPre.toPre A H φ g) = g := rfl
   apply LinearMap.ext
   intro f
   simp only [stinespringLeftMul0, LinearMap.coe_comp, Function.comp_apply,
-    Finsupp.lmapDomain_apply, LinearEquiv.coe_coe, StinespringPre.ofPre_toPre]
+    Finsupp.lmapDomain_apply, LinearEquiv.coe_coe, ofPre_toPre_inline]
   rw [← Finsupp.mapDomain_comp]
   have hfun : (fun a : A => (c * d) * a) = ((fun a => c * a) ∘ fun a => d * a) := by
     funext a
@@ -366,6 +377,8 @@ private theorem stinespringLeftMul0_inner (A H : Type u) [CStarAlgebra A] [Parti
     [StarOrderedRing A] [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
     (φ : A →CP (H →L[ℂ] H)) (f g : StinespringPre A H φ) (c : A) :
     ⟪f, stinespringLeftMul0 A H φ c g⟫_ℂ = stinespringPhi A H φ f c g := by
+  have ofPre_toPre_inline (g : A →₀ H) :
+    StinespringPre.ofPre A H φ (StinespringPre.toPre A H φ g) = g := rfl
   have hmid : ∀ (a : A) (x : H),
       ((Finsupp.mapDomain (fun b => c * b) (StinespringPre.ofPre A H φ g)).sum
         (fun b y => ⟪x, φ (star a * b) y⟫_ℂ))
@@ -381,7 +394,7 @@ private theorem stinespringLeftMul0_inner (A H : Type u) [CStarAlgebra A] [Parti
   rw [stinespring_pre_inner_def]
   change stinespringForm φ _ _ = _
   simp only [stinespringForm, stinespringLeftMul0, LinearMap.coe_comp, Function.comp_apply,
-    Finsupp.lmapDomain_apply, LinearEquiv.coe_coe, StinespringPre.ofPre_toPre,
+    Finsupp.lmapDomain_apply, LinearEquiv.coe_coe, ofPre_toPre_inline,
     stinespringPhi]
   exact Finsupp.sum_congr (fun a _ => hmid a _)
 
@@ -527,22 +540,20 @@ private noncomputable def stinespringRep (A H : Type u) [CStarAlgebra A] [Partia
     (φ : A →CP (H →L[ℂ] H)) (c : A) : stinespringK A H φ →L[ℂ] stinespringK A H φ :=
   (stinespringLeftMul A H φ c).completion
 
-private theorem stinespringLeftMul_apply (A H : Type u) [CStarAlgebra A] [PartialOrder A]
-    [StarOrderedRing A] [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
-    (φ : A →CP (H →L[ℂ] H)) (c : A) (f : StinespringPre A H φ) :
-    (stinespringLeftMul A H φ c) f = stinespringLeftMul0 A H φ c f := rfl
 
 private theorem stinespringRep_add (A H : Type u) [CStarAlgebra A] [PartialOrder A]
     [StarOrderedRing A] [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
     (φ : A →CP (H →L[ℂ] H)) (c d : A) :
     stinespringRep A H φ (c + d) = stinespringRep A H φ c + stinespringRep A H φ d := by
+  have leftMul_apply_inline (d : A) (g : StinespringPre A H φ) :
+    stinespringLeftMul A H φ d g = stinespringLeftMul0 A H φ d g := rfl
   apply ContinuousLinearMap.ext
   intro z
   induction z using UniformSpace.Completion.induction_on with
   | hp => apply isClosed_eq <;> fun_prop
   | ih g =>
     simp only [stinespringRep, ContinuousLinearMap.completion_apply_coe, add_apply,
-      ← UniformSpace.Completion.coe_add, stinespringLeftMul_apply]
+      ← UniformSpace.Completion.coe_add, leftMul_apply_inline]
     apply completion_coe_eq_of_inner_eq
     intro w
     rw [stinespringLeftMul0_inner, stinespringPhi_add, ← stinespringLeftMul0_inner,
@@ -552,6 +563,8 @@ private theorem stinespringRep_smul (A H : Type u) [CStarAlgebra A] [PartialOrde
     [StarOrderedRing A] [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
     (φ : A →CP (H →L[ℂ] H)) (r : ℂ) (c : A) :
     stinespringRep A H φ (r • c) = r • stinespringRep A H φ c := by
+  have leftMul_apply_inline (d : A) (g : StinespringPre A H φ) :
+    stinespringLeftMul A H φ d g = stinespringLeftMul0 A H φ d g := rfl
   apply ContinuousLinearMap.ext
   intro z
   induction z using UniformSpace.Completion.induction_on with
@@ -560,7 +573,7 @@ private theorem stinespringRep_smul (A H : Type u) [CStarAlgebra A] [PartialOrde
       (ContinuousLinearMap.continuous _)
   | ih g =>
     simp only [stinespringRep, ContinuousLinearMap.completion_apply_coe, smul_apply,
-      ← UniformSpace.Completion.coe_smul, stinespringLeftMul_apply]
+      ← UniformSpace.Completion.coe_smul, leftMul_apply_inline]
     apply completion_coe_eq_of_inner_eq
     intro w
     rw [stinespringLeftMul0_inner, stinespringPhi_smul, ← stinespringLeftMul0_inner,
@@ -577,32 +590,38 @@ private theorem stinespringRep_mul (A H : Type u) [CStarAlgebra A] [PartialOrder
     [StarOrderedRing A] [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
     (φ : A →CP (H →L[ℂ] H)) (c d : A) :
     stinespringRep A H φ (c * d) = stinespringRep A H φ c * stinespringRep A H φ d := by
+  have leftMul_apply_inline (d : A) (g : StinespringPre A H φ) :
+    stinespringLeftMul A H φ d g = stinespringLeftMul0 A H φ d g := rfl
   apply ContinuousLinearMap.ext
   intro z
   induction z using UniformSpace.Completion.induction_on with
   | hp => apply isClosed_eq <;> fun_prop
   | ih g =>
     simp only [stinespringRep, ContinuousLinearMap.completion_apply_coe, mul_apply_eq_comp,
-      stinespringLeftMul_apply]
+      leftMul_apply_inline]
     rw [stinespringLeftMul0_mul]
     rfl
 
 private theorem stinespringRep_one (A H : Type u) [CStarAlgebra A] [PartialOrder A]
     [StarOrderedRing A] [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
     (φ : A →CP (H →L[ℂ] H)) : stinespringRep A H φ 1 = 1 := by
+  have leftMul_apply_inline (d : A) (g : StinespringPre A H φ) :
+    stinespringLeftMul A H φ d g = stinespringLeftMul0 A H φ d g := rfl
   apply ContinuousLinearMap.ext
   intro z
   induction z using UniformSpace.Completion.induction_on with
   | hp => apply isClosed_eq <;> fun_prop
   | ih g =>
     simp only [stinespringRep, ContinuousLinearMap.completion_apply_coe,
-      stinespringLeftMul_apply, stinespringLeftMul0_one, LinearMap.id_apply,
+      leftMul_apply_inline, stinespringLeftMul0_one, LinearMap.id_apply,
       one_apply_eq_self]
 
 private theorem stinespringRep_star (A H : Type u) [CStarAlgebra A] [PartialOrder A]
     [StarOrderedRing A] [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
     (φ : A →CP (H →L[ℂ] H)) (c : A) :
     stinespringRep A H φ (star c) = star (stinespringRep A H φ c) := by
+  have leftMul_apply_inline (d : A) (g : StinespringPre A H φ) :
+    stinespringLeftMul A H φ d g = stinespringLeftMul0 A H φ d g := rfl
   rw [ContinuousLinearMap.star_eq_adjoint]
   refine (ContinuousLinearMap.eq_adjoint_iff _ _).mpr ?_
   intro x y
@@ -610,7 +629,7 @@ private theorem stinespringRep_star (A H : Type u) [CStarAlgebra A] [PartialOrde
   | hp => apply isClosed_eq <;> fun_prop
   | ih x y =>
     simp only [stinespringRep, ContinuousLinearMap.completion_apply_coe,
-      stinespringLeftMul_apply, UniformSpace.Completion.inner_coe]
+      leftMul_apply_inline, UniformSpace.Completion.inner_coe]
     rw [stinespringLeftMul0_adj, star_star]
 
 private noncomputable def stinespringStarAlgHom (A H : Type u) [CStarAlgebra A] [PartialOrder A]
@@ -625,10 +644,6 @@ private noncomputable def stinespringStarAlgHom (A H : Type u) [CStarAlgebra A] 
     simp only [Algebra.algebraMap_eq_smul_one, stinespringRep_smul, stinespringRep_one]
   map_star' c := stinespringRep_star A H φ c
 
-private theorem stinespringStarAlgHom_apply (A H : Type u) [CStarAlgebra A] [PartialOrder A]
-    [StarOrderedRing A] [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
-    (φ : A →CP (H →L[ℂ] H)) (c : A) :
-    stinespringStarAlgHom A H φ c = stinespringRep A H φ c := rfl
 
 private noncomputable def stinespringV0 (A H : Type u) [CStarAlgebra A] [PartialOrder A]
     [StarOrderedRing A] [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
@@ -682,10 +697,16 @@ private theorem stinespringV_inner_rep (A H : Type u) [CStarAlgebra A] [PartialO
     (φ : A →CP (H →L[ℂ] H)) (a : A) (x y : H) :
     ⟪stinespringV A H φ y, stinespringStarAlgHom A H φ a (stinespringV A H φ x)⟫_ℂ
       = ⟪y, φ a x⟫_ℂ := by
-  simp only [stinespringV_apply, stinespringStarAlgHom_apply, stinespringRep,
-    ContinuousLinearMap.completion_apply_coe, stinespringLeftMul_apply,
+  have ofPre_toPre_inline (g : A →₀ H) :
+    StinespringPre.ofPre A H φ (StinespringPre.toPre A H φ g) = g := rfl
+  have leftMul_apply_inline (d : A) (g : StinespringPre A H φ) :
+    stinespringLeftMul A H φ d g = stinespringLeftMul0 A H φ d g := rfl
+  have starAlgHom_apply_inline (d : A) :
+    stinespringStarAlgHom A H φ d = stinespringRep A H φ d := rfl
+  simp only [stinespringV_apply, starAlgHom_apply_inline, stinespringRep,
+    ContinuousLinearMap.completion_apply_coe, leftMul_apply_inline,
     stinespringLeftMul0, LinearMap.coe_comp, Function.comp_apply, LinearEquiv.coe_coe,
-    StinespringPre.ofPre_toPre, Finsupp.lmapDomain_apply, Finsupp.mapDomain_single,
+    ofPre_toPre_inline, Finsupp.lmapDomain_apply, Finsupp.mapDomain_single,
     UniformSpace.Completion.inner_coe, stinespring_pre_inner_def,
     stinespringForm_single]
   rw [star_one, one_mul, mul_one]
@@ -700,7 +721,6 @@ Every completely positive map `φ : A →CP B(H)` from a unital C*-algebra `A` t
 K`. Source: Stinespring dilation theorem, W. F. Stinespring, Proc. Amer. Math. Soc. 6 (1955); see
 Paulsen, Completely Bounded Maps; Lean is general CP map A →CP B(H) dilation V† π(a) V, not
 finite-dimensional Kraus form.
-
 -/
 theorem stinespring_dilation
     {A H : Type u} [CStarAlgebra A] [PartialOrder A] [StarOrderedRing A]

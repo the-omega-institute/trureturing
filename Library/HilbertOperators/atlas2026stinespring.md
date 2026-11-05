@@ -28,8 +28,10 @@ Equal pins do not establish dependency admission: the A17 predicates remain
 open. The native module reuses this leaf proof by narrow source transplant
 under A17.2, with no new Lake dependency. Its ten imports are Mathlib modules.
 The native header and namespace replace the source module/public wrappers;
-source-local numbering comments are omitted. Mathematical statements and
-proof bodies are preserved.
+source-local numbering comments and three definitional helpers absent from
+the elaborated endpoint closure are omitted. Their simplifier uses retain
+the same definitional equalities locally in the consuming proofs. Retained statements and substantive
+proof steps are preserved.
 
 For every universe u, let A and H be types in Type u. Assume CStarAlgebra A,
 PartialOrder A, StarOrderedRing A, NormedAddCommGroup H,
@@ -68,9 +70,8 @@ The full upstream license, including its machine-learning intended-use
 preface, is retained byte for byte at
 `docs/reports/lovasz-suppliers/atlas-LICENSE.txt`, SHA-256
 `fc78801eadec58b04e0d5cabe735eb6808e23f47b0cb92b89b55792019b54131`.
-The original copyright notice is retained in the Lean source. The approved
-immutable-tree source screen identified the root LICENSE as the only
-applicable license or notice along the ancestor chain. This is mathematical
+The original copyright notice is retained in the Lean source. The immutable source tree has the root LICENSE as the only applicable
+license or notice along the source ancestor chain. This is mathematical
 theorem-library use. The source and license evidence do not constitute a
 blanket legal-clearance claim.
 
