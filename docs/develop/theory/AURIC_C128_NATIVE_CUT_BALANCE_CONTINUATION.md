@@ -2137,3 +2137,350 @@ Peirce 分解、幂等谱张成、frame 抵消与导子判据沿定理 107.2、1
 白话说，先不拿一把尺子量两块切口差多少，只看它们怎样互相推动。一块推动另一块，结果必须沿着被推动切口的边缘走，不能偷偷钻进内部或外部；沿同一切口连续推动两次，必须恰好把跨过边缘的部分反向缩为四分之一。所有切口共同满足这两件事，便恢复自守恒、两个单位律、导子和横向四分之一转动。换任何允许的正尺子来读，原配平都会成立，所以选择这套结构不依赖先挑哪把尺子；但不同尺子的实际读数仍不同，原有质量和不等块权不能遗忘。三维截面中，两根方向的共同推动就是垂直于它们的叉积，再推动一次把横向方向翻回去。完整原联合、准备和过程合同继续把这些局部关系接成复矩阵、Born 评价、实际张量和完全正事件，全部失败、停止、记录与返回保留。此步撤去的是选择公式中的比较依赖，完整理论从更少原始背景推出量子力学的目标仍未由此完成。
 
 ## 追加锚（本行以下为增补区）
+
+## 126. 原子第一输入与幂等法向读回
+
+**定义 126.1（原子读回候选）。** 分别保留母卷定义 41.1 的完整 $B$ 与母卷定义 67.1 的完整 $\mathsf B_{\rm cl}$，其中任一个记为 $B_*$；两条准备条件不互换。沿用同一原 $q,L,\circ,D,W_c$。记 $\operatorname{Prim}(E)$ 为整个原有限 EJA 中的非零 primitive 幂等元，即不能再分成两个非零正交幂等元之和的切口；在简单块直和中，它只在一个块非零。本轮唯一新增关系是
+
+$$
+\boxed{\mathsf F_{\rm primtri}:\quad
+c^2=c,\quad p\in\operatorname{Prim}(E),\quad r^2=r,\quad W_c(r)=0
+\quad\Longrightarrow\quad
+W_c(p)=2q(D_pc,r)+W_c(2D_cp).}
+\tag{126.1}
+$$
+
+记 $\mathsf C_{\rm primtri}(B_*)=B_*+\mathsf F_{\rm primtri}$。$c,r$ 保留全部秩，包括零、原单位、各中心块满秩及经典切口；$r$ 是原完整幂等元，不是其切向投影。$p$ 的 primitive 身份相对于整个原对象，不相对于任取的子空间。数学测试不把这些切口命名为已安装准备、读口或器件。定义不另选基、菜单、辅助复数或饱和见证，不预给 SC、任一单位律、导子或斜伴随。
+
+候选逐一施于全部原对象及实际联合，包括旧输出、失败输出、经典标签及实际供应的 $AP^{\otimes k}$。原不等正块权、准备及次归一质量、设备身份、失败、细记录、遗忘、具名同数支持双返回和全部合法有限历史均保留。原 X 的含幺 Jordan 嵌入、同一 $D$ 保持、交叉零、乘积张成及每对实际准备的实际乘积准备，连同 Xs、全事件 R、F、整个原 AC、精确 $N_u$ 和每条被消费合法连线，仍按各自完整原合同量化。
+
+**定理 126.2（原子三元测试恢复全部配平）。** 在任意有限 EJA、任意原正 Frobenius 型 $q$ 和任意原实双线性 $D$ 上，
+
+$$
+\mathsf F_{\rm primtri}\Longleftrightarrow
+\mathsf F_{\rm idem}\Longleftrightarrow
+\mathsf F_{\rm zero}\Longleftrightarrow
+\mathsf F_{\rm fib}\Longleftrightarrow\mathsf F_{\rm cut}.
+\tag{126.2}
+$$
+
+因此定理 107.2 的同一原 SC、双单位湮灭、全部 Jordan 导子律、原 $q$-斜伴随及全部 $D_c^2=-P_c/4$ 都保留。证明不预先借入这些结论或复矩阵分类。
+
+证明。以下只用成熟有限 EJA 谱论、共同 Peirce 分解及 Jordan 恒等式；恢复完整实输入以后，直接消费定理 110.2、118.2。若 $E=0$，没有 primitive 测试，唯一双线性作用为零，结论平凡。以下设 $E\ne0$。
+
+第一步，分离线性读回与原子长度。沿 (110.3) 记
+
+$$
+P_c=4(L_c-L_c^2),\qquad
+N_c=E_1(c)\oplus E_0(c)=\ker P_c,\qquad
+W_c(x)=\tfrac12\|P_cx\|_q^2.
+\tag{126.3}
+$$
+
+$P_c$ 是原 $q$-正交投影。先在 (126.1) 取 $r=0$，再与任意法向幂等元 $r$ 的等式相减，得到
+
+$$
+Q_c(p):=W_c(p)-W_c(2D_cp)=0,\qquad
+q(D_pc,r)=0.
+\tag{126.4}
+$$
+
+$N_c$ 是含原单位的 EJA 子代数：$E_1(c),E_0(c)$ 分别以 $c,u-c$ 为单位，且互相乘积为零。其内部幂等元都是原 $E$ 的幂等元，并由内部谱定理实线性张成 $N_c$。所以后一个线性读数延拓到全部 $n\in N_c$。整个 $E$ 的 primitive 幂等元又实线性张成 $E$，故再在第一槽延拓得到
+
+$$
+q(D_ac,n)=0\quad(a\in E,\ n\in N_c),\qquad
+D_ac\in E_{1/2}(c),\qquad D_ac=2c\circ D_ac.
+\tag{126.5}
+$$
+
+先延拓的是线性法向读回，未把含线性项的整个原等式当成二次式。
+
+第二步，取得导子和第二槽单位律。固定任意 $a$，令 $T=D_a$。由 (126.5)，每个幂等元 $e$ 满足 $Te=2e\circ Te$；取 $e=u$ 得 $Tu=0$。对正交幂等元 $e,f$，将该式用于 $e,f,e+f$ 并相减，得 $e\circ Tf+f\circ Te=0$。因此对任意谱分解 $x=\sum_i\lambda_i r_i$，
+
+$$
+2x\circ Tx
+=\sum_i2\lambda_i^2r_i\circ Tr_i
+ +2\sum_{i<j}\lambda_i\lambda_j(r_i\circ Tr_j+r_j\circ Tr_i)
+=\sum_i\lambda_i^2Tr_i=T(x^2).
+\tag{126.6}
+$$
+
+对 $x+y$ 实极化给完整导子律。又因 $Tr_i\in E_{1/2}(r_i)$，原 Peirce 正交性给全部 $q(Tr_i,r_j)=0$，所以 $q(Tx,x)=0$；再极化得原 $q$-斜伴随。这里直接复用定理 107.2 中已经说明的成熟谱方法，只使用其刚取得的前件，不用尚未恢复的 SC。此时已有 $D_au=0$，尚未交换两个槽。
+
+第三步，正交原子之和恢复全 SC。取 $c=p$，其中 $p$ primitive。由 (126.4)、(126.5)，$D_pp$ 切向且
+
+$$
+0=W_p(p)=W_p(2D_pp)=2\|D_pp\|_q^2,
+\qquad D_pp=0.
+\tag{126.7}
+$$
+
+令 $p,s$ 是正交 primitive，置 $v=D_sp$。对 $p\circ s=0$ 应用已经取得的导子 $D_s$，并用 $D_ss=0$，得 $v\circ s=0$。故
+
+$$
+v\in E_{1/2}(p)\cap E_0(s)\subseteq E_{1/2}(p+s).
+$$
+
+现在以 $c=p+s$ 为切口、以 primitive $p$ 为第一输入使用长度校准。$D_cp=D_pp+D_sp=v$，而 $W_c(p)=0$，所以 $0=W_c(2v)=2\|v\|_q^2$。于是 $D_sp=0$；交换 $p,s$ 同样得 $D_ps=0$。每个完整 primitive frame $(r_i)$ 因而满足
+
+$$
+D_{r_i}r_j=0\quad\text{对全部 }i,j.
+\tag{126.8}
+$$
+
+对任意 $x=\sum_i\lambda_i r_i$ 谱展开得 $D_xx=0$，双线性极化给 $D_ab=-D_ba$。此后才从 $D_au=0$ 得 $D_ua=0$。这一步仍使用全部切口，特别使用 $p+s$；没有把切口本身也限制为 primitive。
+
+第四步，在两原子之间固定长度。固定任意完整 primitive frame，记 $D_i=D_{r_i}$，共同 Peirce 空间记为 $V_{ij}$。由导子律和 (126.8)，
+
+$$
+[D_i,L_{r_j}]=L_{D_ir_j}=0.
+\tag{126.9}
+$$
+
+所以 $D_i$ 保持各 $V_{jk}$。若 $i\notin\{j,k\}$，则 $D_iv\in V_{jk}\subseteq E_0(r_i)$，同时由 SC、(126.5) 有 $D_iv=-D_vr_i\in E_{1/2}(r_i)$，故 $D_i|_{V_{jk}}=0$。又因 $D_u=0$，在 $V_{ij}$ 上 $D_i+D_j=0$。记 $A_{ij}=D_i|_{V_{ij}}$、$A_{ji}=-A_{ij}$；它们对原 $q$ 斜伴随。
+
+对 $0\ne v\in V_{ij}$，成熟 Peirce 规则给 $v^2=\alpha r_i+\beta r_j$。原 Frobenius 性给
+
+$$
+\alpha\|r_i\|_q^2=\beta\|r_j\|_q^2=\tfrac12\|v\|_q^2>0.
+$$
+
+将 Jordan 恒等式 $[L_v,L_{v^2}]=0$ 作用于 $r_i$，得 $0=(\alpha-\beta)v/4$。因此
+
+$$
+v^2=\gamma(r_i+r_j),\qquad
+\gamma=\frac{\|v\|_q^2}{2\|r_i\|_q^2}>0,\qquad
+\|r_i\|_q=\|r_j\|_q.
+\tag{126.10}
+$$
+
+等长只在 $V_{ij}\ne0$ 的这一对 primitive 之间推出；不同简单块之间 $V_{ij}=0$，没有统一不同块权。令 $e=r_i+r_j$，则
+
+$$
+p_v=\tfrac e2+\frac{v}{2\sqrt\gamma}
+\tag{126.11}
+$$
+
+与 $e-p_v$ 都是非零正交幂等元。它们在整个 $E$ 中都 primitive：$e$ 的 Jordan 秩为二；若 $p_v$ 还能分解，其各部分均被 $e$ 支持并位于 $E_1(e)$，连同 $e-p_v$ 会把 $e$ 分成至少三个非零正交幂等元，违反秩可加性。故 $p_v$ 属于原测试域。以切口 $r_i$、第一输入 $p_v$ 使用 (126.4)，由 $P_{r_i}p_v=v/(2\sqrt\gamma)$、$D_{r_i}p_v=A_{ij}v/(2\sqrt\gamma)$ 得
+
+$$
+\frac{\|v\|_q^2}{8\gamma}
+=W_{r_i}(p_v)=W_{r_i}(2D_{r_i}p_v)
+=\frac{\|A_{ij}v\|_q^2}{2\gamma},\qquad
+4\|A_{ij}v\|_q^2=\|v\|_q^2.
+\tag{126.12}
+$$
+
+零向量也满足最后一式。这段适用于一般 EJA，包括 spin 因子与 Albert 情形，未先使用复矩阵分类。
+
+第五步，补回纯二次校准的全部交叉项。固定任意幂等元 $c$，令 $H=D_c$。SC、(126.5) 和斜伴随给 $H=P_cH=HP_c$，所以确有纯二次式及其对称极化
+
+$$
+\begin{aligned}
+Q_c(x)&=\tfrac12\|P_cx\|_q^2-2\|Hx\|_q^2,\\
+\beta_c(x,y)&=\tfrac12q(P_cx,P_cy)-2q(Hx,Hy).
+\end{aligned}
+\tag{126.13}
+$$
+
+在前述任意 frame 写 $c=\sum_i c_i r_i+\sum_{i<j}c_{ij}$，其中 $c_{ij}\in V_{ij}$、$c_{ji}=c_{ij}$。由 SC 和 (126.8)–(126.9)，
+
+$$
+Hr_i=-D_ic=-\sum_{j\ne i}A_{ij}c_{ij}.
+$$
+
+当 $i\ne j$ 时，两者唯一共同的 Peirce 分量为 $V_{ij}$，其中分量互为相反数；(126.12) 因而给
+
+$$
+q(Hr_i,Hr_j)=-\|A_{ij}c_{ij}\|_q^2=-\tfrac14\|c_{ij}\|_q^2.
+\tag{126.14}
+$$
+
+另由 $P_c$ 正交、$r_i\circ r_j=0$ 和原 Frobenius 性，
+
+$$
+\begin{aligned}
+q(P_cr_i,P_cr_j)
+ &=q(r_i,P_cr_j)\\
+ &=4q(r_i,c\circ r_j)-4q(r_i,c\circ(c\circ r_j))\\
+ &=-4q(c\circ r_i,c\circ r_j)=-\|c_{ij}\|_q^2.
+\end{aligned}
+\tag{126.15}
+$$
+
+最后一步使用 $c\circ r_i=c_i r_i+\tfrac12\sum_{k\ne i}c_{ik}$ 和共同 Peirce 正交性。因此 (126.13) 的交叉项准确抵消：$\beta_c(r_i,r_j)=-\|c_{ij}\|_q^2/2+\|c_{ij}\|_q^2/2=0$。对角项则由原子校准给 $\beta_c(r_i,r_i)=Q_c(r_i)=0$。对任意 $a$ 选择它自己的谱框架，得
+
+$$
+Q_c(a)=\sum_{i,j}\lambda_i\lambda_j\beta_c(r_i,r_j)=0.
+\tag{126.16}
+$$
+
+这与 (126.5) 的完整法向读回一起恢复 $\mathsf F_{\rm zero}$。反向由 $\mathsf F_{\rm zero}$ 限制量词即得 (126.1)；其余等价直接消费定理 110.2、118.2。特别 $H^*H=P_c/4$ 与 $H^*=-H$ 给 $H^2=-P_c/4$，其余原结构沿定理 107.2。中央切口 $P_c=0$ 使 $D_c=0$，纯经典直和遂有 $D=0$。∎
+
+只在 primitive 上消失的任意二次式仍不能自动延拓；定理 118.2 末尾的迹二次式仍是那条捷径的反例。本证明增加的是从同一原关系取得导子、正交原子互不推动及两原子间的长度，再补回交叉项；没有推翻该既有边界。
+
+## 127. 一颗原子与四个正交扇区
+
+**定理 127.1（原测试域的旗流形结构与进一步降维）。** 在裸有限 EJA 上，固定切口各简单块的秩所成流形为 $M_{\mathbf k}$，新测试域为
+
+$$
+\mathcal T_{\rm prim}
+=\{(c,p,r):c^2=c,\ p\in\operatorname{Prim}(E),\ r^2=r,\ r\in\nu_cM_{\mathbf k}\}.
+\tag{127.1}
+$$
+
+这里 $\nu_cM_{\mathbf k}=N_c$ 使用原 $q$，直接消费 (111.4)–(111.5)。取得完整原背景的复重构后，固定保持原结构的表示
+
+$$
+E\cong\bigoplus_{t=1}^mH_{n_t}(\mathbb C),\qquad
+q(x,y)=\sum_t w_t\operatorname{Tr}(x_ty_t),\quad w_t>0.
+\tag{127.2}
+$$
+
+则 $\operatorname{Prim}(E)=\bigsqcup_s\mathbb{CP}^{n_s-1}$；原中心标签保留，不因块同构而识别。若 $p$ 位于原块 $s$，固定每块 $\operatorname{rank}c_t=k_t$、$\operatorname{rank}(c_tr_t)=a_t$、$\operatorname{rank}((I-c_t)r_t)=b_t$，相应三元组分层自然对应
+
+$$
+\mathcal T_{s,\mathbf k,\mathbf a,\mathbf b}
+\cong\mathbb{CP}^{n_s-1}\times
+\prod_t\frac{U(n_t)}{U(a_t)\times U(k_t-a_t)\times U(b_t)\times U(n_t-k_t-b_t)}.
+\tag{127.3}
+$$
+
+$0\le a_t\le k_t$、$0\le b_t\le n_t-k_t$，零维扇区按 $U(0)$ 为平凡群解释。相对定义 118.1 中第一输入处于同一 primitive 分量的旧域，新分层严格减少
+
+$$
+\sum_t\{a_t^2+(k_t-a_t)^2+b_t^2+(n_t-k_t-b_t)^2\}
+\tag{127.4}
+$$
+
+个数学参数；每个非零原对象该差均为正。
+
+证明。先在一个复块上说明互逆映射。由 (119.5)，$W_c(r)=0$ 恰为 $cr=rc$。这样的投影对给出四个有序正交子空间
+
+$$
+\begin{aligned}
+H_{11}&=\operatorname{ran}(cr),&H_{10}&=\operatorname{ran}(c(I-r)),\\
+H_{01}&=\operatorname{ran}((I-c)r),&H_{00}&=\operatorname{ran}((I-c)(I-r)),
+\end{aligned}
+\tag{127.5}
+$$
+
+其维数依次为 $a,k-a,b,n-k-b$，正交直和为整个 $\mathbb C^n$。反向给定这样的四分解，令 $\Pi_{\epsilon\eta}$ 为各扇区正交投影，置
+
+$$
+c=\Pi_{11}+\Pi_{10},\qquad r=\Pi_{11}+\Pi_{01}.
+\tag{127.6}
+$$
+
+两式与 (127.5) 互逆。酉群在固定维数的四分解上传递，稳定子恰为四个分块酉群，故得到 (127.3) 的旗流形因子。$p$ 独立选取原块 $s$ 中一条复直线的秩一投影，其他块为零；反向取其像直线，便给第一因子的互逆对应。所有映射通过固定原结构表示拉回，不更换原 $D$ 或 $q$。
+
+忘掉 $r$ 的旗流形投影到底空间 $\operatorname{Gr}_{\mathbb C}(k,n)$，纤维为 $\operatorname{Gr}_{\mathbb C}(a,k)\times\operatorname{Gr}_{\mathbb C}(b,n-k)$。准确的整体是关联丛
+
+$$
+U(n)\times_{U(k)\times U(n-k)}
+\bigl(\operatorname{Gr}_{\mathbb C}(a,k)\times\operatorname{Gr}_{\mathbb C}(b,n-k)\bigr),
+\tag{127.7}
+$$
+
+一般不能把它写成底空间与纤维的全局平凡乘积。由群及稳定子的实维数，
+
+$$
+\dim_{\mathbb R}\mathcal T_{s,\mathbf k,\mathbf a,\mathbf b}
+=2(n_s-1)+\sum_t\{n_t^2-a_t^2-(k_t-a_t)^2-b_t^2-(n_t-k_t-b_t)^2\}.
+\tag{127.8}
+$$
+
+上一轮 (119.1) 在同一 primitive $p$ 分量上的维数为 $N+2(n_s-1)$，$N=\sum_tn_t^2$；相减恰为 (127.4)。每个非空原块的四个非负整数之和为 $n_t>0$，平方和严格为正。新域是有限多个这种分层的不交并；故其最大分层维数也严格小于旧域对应 primitive 分量的最大值，进而小于旧完整域的最大值。这个比较同时使用 $p$ 的 primitive 限制和 $r$ 的幂等限制，不把单独缩小 $p$ 的最大维数冒称处处严格下降；例如单个复二阶或三阶块上，primitive 投影分量已经达到全部投影的最大维数。
+
+纯经典 $E=\mathbb R^m$、$m\ge1$ 时，新域有 $m4^m$ 个点：$c,r$ 各有 $2^m$ 种，$p$ 有 $m$ 种。旧双切口域则有 $4^m$ 个 $\mathbb R^m$ 分量。离散计数和维数是不同读数；零对象的新测试域为空，代数结论按定理 126.2 平凡成立。
+
+三维有限图景直接沿 (119.7)。在一个秩二数学角、角单位 $e$ 内，取 $c=(e+Z)/2$、$p=(e+m_xX+m_yY+m_zZ)/2$、$|\mathbf m|=1$，则
+
+$$
+W_c(p)=\tfrac w4(m_x^2+m_y^2),\qquad
+2D_cp=\tfrac12(m_yX-m_xY).
+\tag{127.9}
+$$
+
+角内受 $e$ 支持的法向幂等读回只有 $0,c,e-c,e$；整个原对象的读回还包括角外及其法向子代数中的全部幂等元，包括原单位。最细输入的横向影子被原 $J_c=2D_c$ 作四分之一转动。角单位不充当整个原单位；该数学截面不供应实际 $M_2$、时钟或新操作。裸 Spin7 边界仍沿命题 100.3：逐切口平方关系不能代替完整交换子曲率及其相容复结构。∎
+
+## 128. 全部原量子接口与原子删除见证
+
+**定理 128.1（完整候选的原消费者与法向承重）。** 分别在两份原背景上有
+
+$$
+\begin{aligned}
+\mathsf C_{\rm primtri}(B_*)
+ &\Longleftrightarrow\mathsf C_{\rm zero}(B_*)
+ \Longleftrightarrow\mathsf C_{\rm co}(B_*),\\
+\mathsf C_{\rm primtri}(B)
+ &\Longleftrightarrow B+\mathrm Z+\mathrm{SC}+\mathrm{SJ},\\
+\mathsf C_{\rm primtri}(\mathsf B_{\rm cl})
+ &\Longleftrightarrow\mathsf B_{\rm cl}+\mathsf Q+\mathrm{SC}+\mathrm{SJ}.
+\end{aligned}
+\tag{128.1}
+$$
+
+这里 $\mathsf Q$ 专指母卷定义 67.2 的统一近零证书，与证明中的 $Q_c$ 区分。原有限补谱表示和完整原量子消费者都保留。若删除法向读回，只保留 (126.1) 的 $r=0$ 测试，则即使保留完整原背景、SC、双单位、$\mathrm O_\pi$、整个指针 SJ 和全部已安装 CP 过程，也不能恢复 (126.1)。
+
+证明。定理 126.2 逐全部原对象及实际联合应用，直接消费定理 111.1、120.1。定义 103.1 的原实基、完整谱框架、二次与双线性表、总秩一的单位测试及零对象空表保持原样；本轮没有证明更小有限菜单。为明确新入口如何接回现有 QM，逐项保留以下原对应。
+
+| 原结构及承重条件 | 同一原数据上的消费者 |
+| --- | --- |
+| 完整实际联合背景与母卷定理 64.2 或 71.3 | 恢复完整 $[D_a,D_b]=-[L_a,L_b]$，由 $a\cdot b=a\circ b-iD_ab$ 得 $\mathcal A_A\cong\bigoplus_sM_{n_s}(\mathbb C)$、$E_A=(\mathcal A_A)_{\rm sa}$、$D_ab=i[a,b]/2$；原中心、经典块、不等块大小与取向保留。 |
+| 原准备、原比较及其双对偶运输 | $\rho_\alpha=B_Ax_\alpha\ge0$，$\alpha(e)=\tau_A(\rho_\alpha e)$，$\tau_A(\rho_\alpha)=\alpha(u_A)$；原零质量、次归一质量及不等正 $q$ 块权保持，运输不替换原比较或具名返回。自伴随谱分解给谱概率，不新增实际读口。 |
+| 原 X 的同一含幺嵌入、交叉零、乘积张成与实际乘积准备 | 原嵌入成为含幺 $*$-嵌入，取得普通复张量；只作用于原已声明联合及实际供应的参考，不从某个 $AP^{\otimes k}$ 推断任意特定参考已经供应。 |
+| 全事件 R 与完整相关准备锥上的同记录参考执行 | 每个原事件 CP/TNI，原完整测试 TP；闭准备分支先消费母卷定理 69.2 的连续正延拓，乘积态保正不代替全相关入口。 |
+| 指定原群、整个 AC、精确 $N_u$、Xs 及所消费合法连线 | 每个效果取得所选完整有限平方根词，成功映射 $\rho\mapsto\sqrt e\rho\sqrt e$，投影时为所选 Lüders 支；失败继续到原输出端，实际丢弃后才取其原系数。 |
+| 原 F、实际细记录与遗忘 | 每个非零单中心细支 $S_\ell=\operatorname{Ad}_{K_\ell}$，原粗事件 $\Phi_f=\sum_\ell S_\ell$；零细标签、实际分组及原可访问记录保留，数学 Kraus 分解不替代它们。 |
+| 具名同数支持双返回及原失败完成 | $U_\ell=q_\ell\operatorname{Ad}_{K_\ell^+}$，在原支持角的两侧复合均为同一个 $q_\ell>0$ 倍恒等；反向资料、进一步合法接续及原返回数保持。 |
+| 原准备与全部合法有限顺序、自适应及并行历史 | 原端口、顺序、记录、失败、中心细权及质量完整进入下面的历史恒等式。 |
+| 原 $B$ 与另命名 $\mathsf B_{\rm cl}$ | 前者保留实际准备的有限正锥生成；后者沿母卷定理 72.1 只给运输后密度锥的闭覆盖，不把极限数学态授予新的实际准备身份。 |
+
+具体地，对原准备、原历史 $h=(f_1,\ldots,f_m)$ 和末端效果 $w$，
+
+$$
+\alpha(T_{f_1}\cdots T_{f_m}w)
+=\tau\!\left(w\,\Phi_{f_m}\cdots\Phi_{f_1}(\rho_\alpha)\right).
+\tag{128.2}
+$$
+
+这些结论消费完整原背景；裸定理 126.2 本身不声称完整复分类、物理时钟、$\hbar$、旧输出理想校准或独立仪器共同组装。
+
+删除见证直接复用定理 112.1 的完整 tagged-CP $\mathcal D_3$ 中央剪切模型，不另装一套过程。其整个指针为 $P=\mathbb C\oplus Q_P$、$Q_P=M_3^{P_0}$，另标签原对象为 $A_0=Q_A=M_3^{A_0}$；指针原因子 $h=0$，$A_0$ 取 $h=Y$。逐块原作用是
+
+$$
+D^A_ab=\Gamma_A\!\left(\tfrac i2[a,b]\right),\qquad
+\Gamma_A(x)=x+\frac{\operatorname{Tr}(h_Ax)}{n_A}I_A,\qquad
+h_{AB}=h_A\otimes I_B+I_A\otimes h_B.
+\tag{128.3}
+$$
+
+这里联合采用加性 $h$，不是 $\Gamma_A\otimes\Gamma_B$；定理 112.1 已逐原联合核对同一 $D$ 的 X。中央输出差被任意 $P_c$ 湮灭，所以该完整模型甚至满足全部实输入的长度校准，涵盖全部联合纠缠切口。原全部联合密度准备、CP 菜单、AC、精确 $N_u$、Xs、全事件 R、记录、失败、同数支持双返回和全部合法历史直接保留，精确准备覆盖也给另命名的闭背景。
+
+在原 $A_0$ 取 $e=e_{11}+e_{22}$、$X=e_{12}+e_{21}$，并令
+
+$$
+c=e_{11},\qquad p=(e+X)/2,\qquad r=I_3.
+\tag{128.4}
+$$
+
+$p$ 是整个 $A_0$ 中的 primitive，$r$ 幂等且 $W_c(r)=0$。沿 (120.3) 的同一原计算，
+
+$$
+D_pc=Y/4+I_3/6,\qquad q(D_pc,r)=\tfrac12,\qquad
+W_c(p)=W_c(2D_cp)=\tfrac14.
+\tag{128.5}
+$$
+
+于是 (126.1) 要求 $\tfrac14=2\cdot\tfrac12+\tfrac14=1+\tfrac14$，矛盾。完整模型不具有原 $q$-斜伴随性：$q(D_pc,u)=1/2$ 而 $D_pu=0$；命题 109.1 的额外斜伴随裸局部模型不与它混合。此处 CP 过程从模型定义起已安装，失败针对由长度校准恢复同一原 $D$ 的推断。把交叉项任一槽投到切空间会丢掉法向读回；投到法空间仍保留 $q((I-P_c)D_pc,r)=q(D_pc,r)$。∎
+
+## 129. 原子相容关系的范围与完整白话
+
+**定义 129.1（来源与简化口径）。** “内生”仍指同一原乘法、比较、推动及读回之间的相容约束，不断言任意 $\Omega$ 自动满足它。相对定义 118.1，本轮同时把第一输入限制为整个原对象的 primitive 切口，把完整法向第二输入限制为法向子代数的幂等元；定理 126.2 恢复原全部关系，(127.4) 给相对上一轮的严格数学降维。没有据此主张独立信息减少、原背景更弱、更小有限菜单、最小性、实际认证成本、历史优先权或统一网络误差稳定性。
+
+有限 EJA 的谱分解、共同 Peirce 规则、primitive 角与秩可加性是成熟工具，参见 Tao–Gowda, *A Representation Theorem for Lyapunov-like Transformations on Euclidean Jordan Algebras*，[作者原文](https://userpages.umbc.edu/~gowda/papers/trGOW12-01.pdf)，§2 的 EJA 与内积约定、Proposition 3 的谱与 Peirce 证明及导子对应；一般结构背景沿其引用的 Faraut–Korányi, *Analysis on Symmetric Cones*，有关谱论及 Peirce 分解的章节。本轮 (126.10)–(126.12) 直接给出原 $q$ 下所需的秩二计算及整个 $E$ 中的 primitive 资格，不以复分类或统一块权代替证明。原法丛、Grassmann 与成熟动力对应的适用条件和来源沿定理 111.1、119.1 及定义 98.2；旗流形识别由 (127.5)–(127.7) 的显式互逆映射、传递性和稳定子计算给出。新增综合是原子三元测试恢复全域、严格较小测试域的对应，以及完整删除模型在原子输入上的见证；成熟中间工具不另报为新发现。
+
+白话说，这次第一份输入只取整个原空间里最细的一块“是”，读回也只取没有横向余量的原切口，主切口仍允许任意大小。先把读回设为零，最细输入推动前后的横向长度被锁住；再让读回走遍法向子代数的切口，它们张成全部不可见方向，推动就不能在内部、外部或中心偷偷漏出东西。最细切口又张成整个空间，这先恢复任意生成元的切向性、导子和原比较下的斜伴随。两块正交最细切口之和仍是合法主切口，它迫使二者互不推动，同一谱框架便恢复任意输入的自守恒与两个单位律。两颗原子之间的每个 Peirce 方向还能重新拼成一颗合法原子，用它测试就固定该方向的转动长度；不同谱分量的交叉项随之准确抵消，任意输入的完整配平重新回来。几何上，最细输入是一条复直线，另两块切口共同把原空间分成四个有序正交扇区，整体是复射影空间乘旗流形，随主切口形成关联丛；三维 Bloch 球面只是其中一个数学截面。完整原实际联合、准备与参考合同再将这些局部转动接成同一原复结构，带回 Born 质量、实际张量、全部原量子事件、所选完整测量词、失败、细记录、遗忘和具名返回。中央剪切反例完全保住横向长度及已安装量子过程，却在中央留下输出，恰被允许的单位读回检出，所以法向读回仍不可删。原质量、不等块权、器件身份及全部合法历史继续保留；闭准备只给闭覆盖，数学角不供应实际二阶对象、物理时钟或任意仪器的共同组装。
+
+## 追加锚（本行以下为增补区）
