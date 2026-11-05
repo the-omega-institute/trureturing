@@ -33,7 +33,6 @@ internal sealed class DensitySpanDocument : IScribeDocumentDefinition
     private static Formula V(string name) => F.Id(name);
     private static Formula Field(string name) => Seq(Mathbb, Grp(V(name)));
     private static Formula Call(string name, params Formula[] args) => new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
-    private static Formula At(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
     private static Formula All(string x, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(x), type, body);
     private static Formula Eq(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.Equal, y);
     private static Formula Mem(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.MemberOf, y);
@@ -49,7 +48,7 @@ internal sealed class DensitySpanDocument : IScribeDocumentDefinition
     {
         Formula d = V("d"), a = V("A");
         return All("d", Field("N"), All("A", Mat(d),
-            new Formula.Relation(Call("IsDensity", a), FormulaRelationOperator.Iff,
+            new Formula.Logic(Call("IsDensity", a), FormulaLogicOperator.Iff,
                 Parenthesized(And(Call("PosSemidef", a), Eq(Trace(a), D(1)))))));
     }
 
@@ -57,7 +56,7 @@ internal sealed class DensitySpanDocument : IScribeDocumentDefinition
     {
         Formula d = V("d"), t = V("T"), rho = V("rho");
         return All("d", Field("N"), All("T", Set(Mat(d)),
-            new Formula.Relation(Call("TomographicallyComplete", t), FormulaRelationOperator.Iff,
+            new Formula.Logic(Call("TomographicallyComplete", t), FormulaLogicOperator.Iff,
                 Parenthesized(And(
                     All("rho", Mat(d), new Formula.Logic(Parenthesized(Mem(rho, t)), FormulaLogicOperator.Implies,
                         Parenthesized(And(Call("PosSemidef", rho), Eq(Trace(rho), D(1)))))),

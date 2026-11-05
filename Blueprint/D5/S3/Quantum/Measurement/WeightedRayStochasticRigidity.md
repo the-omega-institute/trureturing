@@ -31,5 +31,5 @@ No stochastic inverse or invertibility is assumed. The result classifies this fi
 - Truth anchor: `D5/S3/Quantum/Measurement/WeightedRayStochasticRigidity.original_five_effect_classification`
 - Dependency: [D5/S3/Quantum/Information/ActualQubitChordObstruction](../Information/ActualQubitChordObstruction.md)
 - Dependency: [D5/S3/Quantum/Measurement/AntidistinguishabilityGram](AntidistinguishabilityGram.md)
-- Dependency: [D5/S3/Quantum/Measurement/FourQubitParentConstruction](FourQubitParentConstruction.md)
-- Dependency: [D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation](../QuantumChannels/ConcealmentKernelNecessityRefutation.md)
+- Dependency: [D5/S3/Quantum/Measurement/Bloch/QubitBloch](Bloch/QubitBloch.md)
+- Dependency: [D5/S3/QuantumStates/DensitySpan](../../QuantumStates/DensitySpan.md)

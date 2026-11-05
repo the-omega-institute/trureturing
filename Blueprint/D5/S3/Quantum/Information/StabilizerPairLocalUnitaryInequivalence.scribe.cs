@@ -68,8 +68,6 @@ internal sealed class StabilizerPairLocalUnitaryInequivalenceDocument : IScribeD
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Equal(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
-    private static Formula And(Formula left, Formula right) =>
-        new Formula.Logic(left, FormulaLogicOperator.And, right);
     private static Formula Or(Formula left, Formula right) =>
         new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Or, Parenthesized(right));
     private static Formula Iff(Formula left, Formula right) =>

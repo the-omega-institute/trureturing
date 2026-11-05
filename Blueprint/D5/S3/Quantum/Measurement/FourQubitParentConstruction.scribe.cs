@@ -65,7 +65,6 @@ internal sealed class FourQubitParentConstructionDocument : IScribeDocumentDefin
     private static Formula Equivalence(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);
     private static Formula Identity() => Typed(Num(1), Matrices());
     private static Formula Interval(Formula a, Formula b) => Apply(Qualified("Set","Icc"),a,b);
-    private static Formula Mat(Formula a, Formula b, Formula c, Formula d) => Seq(Begin, Grp(X("pmatrix")), a, Amp, b, RowBreak, c, Amp, d, End, Grp(X("pmatrix")));
     private static Formula SumIn(string v, Formula s, Formula b) => Seq(new Formula.Subscript(Sum, Member(X(v), s)), Sp, b);
     private static Formula Marginal(Formula J, Formula i, Formula b) => Seq(new Formula.Subscript(Sum, Seq(Typed(X("e"),Signs()), Comma, Sp, Equal(Apply(X("e"),i), b))), Sp, Apply(J,X("e")));
 }

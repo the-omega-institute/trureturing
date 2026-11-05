@@ -195,7 +195,4 @@ internal sealed class ConcealmentKernelNecessityRefutationDocument : IScribeDocu
         return Iff(V("claim"), body);
     }
 
-    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
-
-
 }
