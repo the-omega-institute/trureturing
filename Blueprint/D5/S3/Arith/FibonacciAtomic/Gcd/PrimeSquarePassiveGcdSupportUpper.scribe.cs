@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.Gcd;
 
 internal sealed class PrimeSquarePassiveGcdSupportUpperDocument : IScribeDocumentDefinition
 {
@@ -10,7 +10,7 @@ internal sealed class PrimeSquarePassiveGcdSupportUpperDocument : IScribeDocumen
         Blocks(
             Describe.Lean(
                 DescribeId.Create("prime-square-passive-gcd-support-upper"),
-                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/PrimeSquarePassiveGcdSupportUpper.result"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Gcd/PrimeSquarePassiveGcdSupportUpper.result"),
                 H("One tree for all natural source pairs"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(

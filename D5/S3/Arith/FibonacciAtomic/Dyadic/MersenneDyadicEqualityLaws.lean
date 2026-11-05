@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/FibonacciAtomic/MersenneDyadicEqualityLaws
+/- GID: D5/S3/Arith/FibonacciAtomic/Dyadic/MersenneDyadicEqualityLaws
    generality: G
-   mirror-B: D5/B/S3/Arith/FibonacciAtomic/MersenneDyadicEqualityLaws
+   mirror-B: D5/B/S3/Arith/FibonacciAtomic/Dyadic/MersenneDyadicEqualityLaws
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
@@ -13,7 +13,7 @@ import Mathlib.Analysis.Convex.Jensen
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Arith.FibonacciAtomic.MersenneDyadicEqualityLaws
+namespace D5.S3.Arith.FibonacciAtomic.Dyadic.MersenneDyadicEqualityLaws
 
 open scoped BigOperators
 open D5.S3.Arith.FibonacciAtomic.DyadicSupportLines
@@ -689,4 +689,4 @@ theorem result (h : ℕ) (hh : 2 ≤ h) (p : Fin (2 ^ h - 1) → ℝ)
   exact ⟨⟨first_forward p hp hs, first_reverse p⟩,
     ⟨second_forward p hp hs, second_reverse p⟩⟩
 
-end D5.S3.Arith.FibonacciAtomic.MersenneDyadicEqualityLaws
+end D5.S3.Arith.FibonacciAtomic.Dyadic.MersenneDyadicEqualityLaws
