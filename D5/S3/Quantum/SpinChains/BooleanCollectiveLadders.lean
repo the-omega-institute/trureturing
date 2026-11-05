@@ -935,17 +935,18 @@ private def nativeIndexEquiv (S : ℕ) : StringIndex S ≃ NativeIndex S where
 /-- Complete native - coordinate basis; native coordinate r is 2j - k. -/
 def nativeBasis (S : ℕ) (hS : 1 ≤ S) :
     OrthonormalBasis (NativeIndex S) ℂ (Space (2 * S)) :=
-  (stringBasis S hS).reindex (nativeIndexEquiv S)
+  OrthonormalBasis.ofRepr ((stringUnitary S hS).trans
+    (LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ (nativeIndexEquiv S)))
 
 /-- Constructed complex unitary onto every native spin block and primitive copy. -/
 def nativeUnitary (S : ℕ) (hS : 1 ≤ S) :
     Space (2 * S) ≃ₗᵢ[ℂ] EuclideanSpace ℂ (NativeIndex S) :=
-  (stringUnitary S hS).trans
-    (LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ (nativeIndexEquiv S))
+  (nativeBasis S hS).repr
 
 private lemma nativeBasis_apply (S : ℕ) (hS : 1 ≤ S) (a : NativeIndex S) :
     nativeBasis S hS a = normalizedString S ⟨a.1.1,a.1.2,a.2.rev⟩ := by
-  simp [nativeBasis, OrthonormalBasis.reindex_apply, nativeIndexEquiv,
+  change ((stringBasis S hS).reindex (nativeIndexEquiv S)) a = _
+  simp [OrthonormalBasis.reindex_apply, nativeIndexEquiv,
     stringBasis, OrthonormalBasis.coe_mk]
 
 open D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound (Jplus Jz)
@@ -1013,7 +1014,10 @@ private lemma nativeMatrix_U (S : ℕ) (hS : 1 ≤ S) :
   classical
   ext ⟨c,k⟩ ⟨b,r⟩
   rw [LinearMap.toMatrix_apply, OrthonormalBasis.coe_toBasis_repr_apply,
-    OrthonormalBasis.repr_apply_apply, nativeBasis_U]
+    OrthonormalBasis.repr_apply_apply]
+  change inner ℂ (nativeBasis S hS ⟨c,k⟩) (U (2 * S) (nativeBasis S hS ⟨b,r⟩)) =
+    nativeMatrix S Jplus ⟨c,k⟩ ⟨b,r⟩
+  rw [nativeBasis_U]
   by_cases hr : 0 < r.val
   · rw [dite_eq_left hr, inner_smul_right,
       orthonormal_iff_ite.mp (nativeBasis S hS).orthonormal]
@@ -1049,7 +1053,10 @@ private lemma nativeMatrix_Z (S : ℕ) (hS : 1 ≤ S) :
   classical
   ext ⟨c,k⟩ ⟨b,r⟩
   rw [LinearMap.toMatrix_apply, OrthonormalBasis.coe_toBasis_repr_apply,
-    OrthonormalBasis.repr_apply_apply, nativeBasis_Z, inner_smul_right,
+    OrthonormalBasis.repr_apply_apply]
+  change inner ℂ (nativeBasis S hS ⟨c,k⟩) (Z (2 * S) (nativeBasis S hS ⟨b,r⟩)) =
+    nativeMatrix S Jz ⟨c,k⟩ ⟨b,r⟩
+  rw [nativeBasis_Z, inner_smul_right,
     orthonormal_iff_ite.mp (nativeBasis S hS).orthonormal]
   by_cases hcb : c=b
   · subst c
@@ -1071,7 +1078,14 @@ private lemma native_intertwiner (S : ℕ) (hS : 1 ≤ S)
   have he := A.toMatrix_mulVec_repr (nativeBasis S hS).toBasis
     (nativeBasis S hS).toBasis v
   rw [hM] at he
+  have hrepr : ((nativeBasis S hS).toBasis.repr v : NativeIndex S → ℂ) =
+      ((nativeBasis S hS).repr v).ofLp := by
+    funext i
+    exact OrthonormalBasis.coe_toBasis_repr_apply _ _ _
+  rw [hrepr] at he
   ext a
+  change ((nativeBasis S hS).repr (A v)) a =
+    (M *ᵥ ((nativeBasis S hS).repr v).ofLp) a
   simpa only [OrthonormalBasis.coe_toBasis_repr_apply] using (congrFun he a).symm
 
 /-- The full Boolean decomposition, with derived multiplicities and actual native intertwiners. -/
