@@ -225,6 +225,19 @@ def dirichletTranslationTwist (N : ℕ) [NeZero N]
   (gaussSum χ⁻¹ (ZMod.stdAddChar (N := N)))⁻¹ •
     ∑ u : ZMod N, (χ⁻¹ u) • restrictedTranslation N k u
 
+/-- The finite Fourier weight in the primitive twist is the character value times its
+Gauss sum.  This is the algebraic half of the future q-expansion coefficient theorem. -/
+theorem primitive_inv_gauss_weight
+    (N : ℕ) [NeZero N] (χ : DirichletCharacter ℂ N)
+    (hχ : χ.IsPrimitive) (n : ℕ) :
+    ∑ u : ZMod N, (χ⁻¹ u) * ZMod.stdAddChar ((n : ZMod N) * u) =
+      χ (n : ZMod N) * gaussSum χ⁻¹ (ZMod.stdAddChar (N := N)) := by
+  have hχi : (χ⁻¹).IsPrimitive := by
+    simpa [DirichletCharacter.isPrimitive_def, DirichletCharacter.conductor_inv] using hχ
+  simpa [gaussSum, AddChar.mulShift_apply, inv_inv] using
+    (gaussSum_mulShift_of_isPrimitive
+      (e := ZMod.stdAddChar (N := N)) hχi (n : ZMod N))
+
 /- The conductor-one case is the normalization anchor for the missing coefficient
    theorem: the unique primitive character and the unique translation both reduce
    to the identity.  Keeping this pointwise statement separate avoids assuming any
