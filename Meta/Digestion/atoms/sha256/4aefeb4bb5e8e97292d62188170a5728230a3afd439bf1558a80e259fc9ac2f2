@@ -1,0 +1,19 @@
+**定义 139.1（固定控制字母表与一个旧事件）。** 只取已有前读地址中的
+
+$$
+\mathsf D=\{0,1,\ldots,8\}^{<\infty},\qquad
+A=\{w\in\Omega_{10}:b_1=1\},\qquad Q=N_A.
+\tag{139.1}
+$$
+
+$A$ 是原十位结果的一次固定经典归组，不是新增测量。$Q$ 是 II (126.4) 的 $\mathcal P_0=n_{b_1}$。每个 $K_j$、$0\le j\le8$ 只改变中心 $b_j$，不改变 $b_9$，故在整个载体上与 $M_i$ 交换。尤其 $K_8$ 可以依赖右邻 $b_9$ 而作用于旧位 $b_8$；“不改变记录位”不等于“在两个记录扇区作用相同”。令
+
+$$
+\mathcal K_i=M_i\mathcal K,\qquad
+q_g(u_i)=\langle K_gu_i,QK_gu_i\rangle
+\quad(u_i\in S(\mathcal K_i),\ g\in\mathsf D).
+\tag{139.2}
+$$
+
+这些是已知矩阵的二次型，不先将它们当作未知记录概率。
+

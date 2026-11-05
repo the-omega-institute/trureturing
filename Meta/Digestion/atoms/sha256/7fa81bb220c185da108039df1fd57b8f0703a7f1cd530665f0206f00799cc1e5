@@ -1,0 +1,11 @@
+**引理 19.2（一个有界上下文轨道迫出零漂移）。**若存在一个 $\mathcal O_z$，使 $c$ 在该轨道上有有限统一上界，则 $c(p_i,p_j)=0$ 对全部 $i,j$ 成立，因而 $\Omega(1)=0$。
+
+**证明。**将 $c((x,y))$ 简写为 $c(x,y)$。原 (R) 给
+
+$$
+\sum_{k=0}^2c(A_{i+k,j+k}w)=3c(w)+3c(p_i,p_j).
+\tag{19.1}
+$$
+
+令 $C=\sup_{w\in\mathcal O_z}c(w)<\infty$。给定 $\varepsilon>0$，取 $c(w)>C-\varepsilon$。三个后继都在同一轨道，故 $3c(w)+3c(p_i,p_j)\le3C$。于是 $0\le c(p_i,p_j)<\varepsilon$；任意 $\varepsilon$ 给所需结论。
+
