@@ -1,0 +1,72 @@
+**定理 2.3（原有限自身样本控制全局对称缺陷）。** 在定义 2.1 下，给任意已经证成的数 $\mu$ 满足 $0<\mu\le|\kappa|$。它可以是 (2.10)，也可以来自其他独立的系数条件。令
+
+$$
+d_0=\sqrt{\frac{\overline\varepsilon_{\rm self}}{\mu r}},
+\qquad \Delta=(2n-1)d_0.
+\tag{2.13}
+$$
+
+则对全部 $x,a,c\in J$，
+
+$$
+\boxed{\|D_xx\|\le\Delta\|x\|^2,\qquad
+\|B(a,c)+B(c,a)\|\le2\Delta\|a\|\|c\|.}
+\tag{2.14}
+$$
+
+特别地，$\sup_{\|x\|=1}\|D_xx\|\le\Delta$，并有 $\|D_1\|_{\rm op}\le2u\Delta$。若使用混合报告阈值 $\overline m<rA$，这些结论可直接取
+
+$$
+\boxed{\Delta=(2n-1)
+\sqrt{\frac{\overline\varepsilon_{\rm self}Q}
+{r(rA-\overline m)}}.}
+\tag{2.15}
+$$
+
+这里 $\overline\varepsilon_{\rm self}$ 是残差范数的上界，不是残差范数平方。若只给 C98 的总平方和上界 $\Theta(M,T)\le\theta$，则 $m\le\sqrt\theta$、$\varepsilon_{\rm self}\le\sqrt\theta$；在另已证 $0<\mu\le|\kappa|$ 时，可取 $\Delta=(2n-1)\theta^{1/4}/\sqrt{\mu r}$。两方各自满足所需条件时，分别以其自身的维数和伙伴活动量应用本定理。
+
+证明。令 $q(x)=B(x,x)$。原卷式 (16.6) 由立方零矩消去 $\beta$，在残差不为零时仍给
+
+$$
+(g_J(p,\cdot)\otimes I)S_p
+=\kappa\|q(p)\|^2v.
+$$
+
+每个规定的 $p\in\mathcal P_J$ 都是单位向量，故收缩算子范数为一，并有
+
+$$
+|\kappa|r\|q(p)\|^2\le\|S_p\|
+\le\overline\varepsilon_{\rm self},
+\qquad \|q(p)\|\le d_0.
+\tag{2.16}
+$$
+
+这只是原卷定理 17.2 的逐点估计；全局结论还需使用原有限族的极化信息。对 $p_{ij}=(e_i+e_j)/\sqrt2$，双线性给
+
+$$
+B(e_i,e_j)+B(e_j,e_i)=2q(p_{ij})-q(e_i)-q(e_j),
+$$
+
+所以其范数至多为 $4d_0$。写 $x=\sum_i x_ie_i$，逐项展开而不假设交替，得到
+
+$$
+\begin{aligned}
+\|q(x)\|
+&\le d_0\sum_i x_i^2+4d_0\sum_{i<j}|x_ix_j|\\
+&\le d_0\bigl(1+2(n-1)\bigr)\sum_i x_i^2
+=\Delta\|x\|^2.
+\end{aligned}
+$$
+
+第二个不等式由 $2|x_ix_j|\le x_i^2+x_j^2$ 对全部无序对求和得到。对单位向量 $a,c$，精确极化式及平行四边形恒等式给
+
+$$
+\begin{aligned}
+\|B(a,c)+B(c,a)\|
+&=\tfrac12\|q(a+c)-q(a-c)\|\\
+&\le\tfrac\Delta2(\|a+c\|^2+\|a-c\|^2)=2\Delta.
+\end{aligned}
+$$
+
+对非零 $a,c$ 分别归一化，再用双线性得到 (2.14)；任一为零时结论也成立。最后 $B(a,1)=0$ 是原单位导子律，因此 $D_1a=B(1,a)+B(a,1)$，取 $a$ 为单位向量得 $\|D_1\|_{\rm op}\le2u\Delta$。代入 (2.10) 得 (2.15)。总平方和界对其每个子族和每个分量给上述上界，完成证明。这里不主张常数 $2n-1$ 的最优性。∎
+

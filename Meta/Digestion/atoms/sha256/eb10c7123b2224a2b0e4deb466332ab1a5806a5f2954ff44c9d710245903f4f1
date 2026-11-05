@@ -1,0 +1,45 @@
+**Proposition 5.2 (Relation to the prescribed-budget realization
+problem).** In the domain (1.1), the optimizing laws in Growing
+Open problem 7.3 are realized as limits of connected graphs with
+every sufficiently large integer source budget $N$, and their
+unavoidable first connection cost is (1.8). The common-law
+equality law itself is disconnected as an incidence support,
+and no finite connected graph has that exact law. The graph
+conclusion concerns precisely the prescribed sink count and
+orientation in Growing Definition 9.1.
+
+**Proof.** In (1.7) the core and the $n\ge1$ individual tail
+labels are different incidence components. A graph with exactly
+that law has no source meeting two such components, hence is
+disconnected. Nevertheless Lemma 4.2 gives convergent connected
+realizations at every large $N$. Lemma 4.1 proves that at least
+$n$ connections, and then the residue repair, are paid in the
+first variation; Lemmas 3.1--3.2 prove that these local prices
+govern the global actual graph problem, with the controlled
+error in Theorem 1.3. Existing Growing Sections 9 and 11 give
+connected integer-budget suppliers and other bounds; the
+all-type price exclusion and periodic coefficient proved here
+are the additional relations. The finite-capacity graph results
+in *CDSO incidence moments and capacity phases*, Sections 5--7
+and 11, and in the sink-incidence and higher-capacity volumes
+have different budget domains and do not determine this
+connection cost for the cap's singleton components.
+
+These are repo-derived deductions from the cited common-law
+theorem and actual graph interface. The original graph-index
+paper cited in Definition 1.1, §4, supplies the fixed-order,
+fixed-cyclomatic motivation, rather than a theorem identifying
+this restricted class's minimum. The possible full-text
+overlap with Zhao--Zhao, *Extremal values with respect to
+vertex-degree-based topological indices in unicyclic and
+bicyclic graphs*, DOI
+[10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26),
+remains unassessed; that text is not a premise for any proof
+above. No worldwide priority assertion is made.
+
+The constants here depend on fixed $a,h$. The theorem therefore
+does not settle growing $R(a)$, a least joint-growth source
+budget, transition-scale costs, an exact finite formula for
+$V_N$, or an extremum with a variable number of sinks. None
+of these follows by exchanging the quantifiers in (1.10). ∎
+

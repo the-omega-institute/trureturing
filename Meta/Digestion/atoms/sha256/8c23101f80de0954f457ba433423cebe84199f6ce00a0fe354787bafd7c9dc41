@@ -1,0 +1,13 @@
+### [1]
+
+The Omega Institute, *AURIC Internal Balanced Calibration and Filter Composition Geometry C113*，
+§§15–22，特别是本轮新增 §§20–22。
+固定提交 `5ccf20964da0a6695170f80f89e8383c92913a6c`，
+2026-11-03 16:57:05 UTC，合并 PR
+#26143。
+[不可变理论源码](https://github.com/the-omega-institute/trureturing/blob/5ccf20964da0a6695170f80f89e8383c92913a6c/docs/develop/theory/AURIC_INTERNAL_BALANCED_CALIBRATION_AND_FILTER_COMPOSITION_GEOMETRY_C113.md)。
+核读重点为同一正分支、精确有限设计、正确效果、目标支持泄漏、无谱底近饱和界与非 CP 反例。
+本轮新增为理论文稿；本报告中的普通数学证明不冒充已完成的 Lean 形式核验，也未重新运行项目全量构建。
+
+<a id="ref-petz1986"></a>
+

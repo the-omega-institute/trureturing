@@ -1,0 +1,25 @@
+## 4. 加权平方为什么收缩：两个端点与完整插值证明
+
+<a id="sec-c90-interpolation"></a>
+
+先证明一个一般工具，再把参考态限定为定义 [2.4](#def-c90) 中由两端自身决定的中点。
+固定 CPTP 映射 $\mathcal N:M_d\to M_k$，以及
+
+$$
+\sigma>0,\qquad \operatorname{Tr}\sigma=1,\qquad
+ \tau=\mathcal N(\sigma)>0.
+$$
+
+待比较的 $\rho$ 只需是密度矩阵，不要求严格正。
+采用前文的对称加权平方，并明确记号
+
+$$
+W_\sigma(Z)=\sigma^{-1/4}Z\sigma^{-1/4},\qquad
+ \left\lVert Z\right\rVert_{2,\sigma^{-1}}=\left\lVert W_\sigma(Z)\right\rVert_2,
+ \qquad Q_\sigma(\rho)=\left\lVert \rho-\sigma\right\rVert_{2,\sigma^{-1}}^2.
+$$
+
+这个范数一般不同于 $\sqrt{\operatorname{Tr}(Z^\dagger\sigma^{-1}Z)}$。
+以下沿复插值与恢复映射的标准思路展开 [12](#ref-beigi)、[10](#ref-gaorecovery)，
+将本轮需要的有限维证明列全，不把数据处理不等式作为黑箱。
+

@@ -1,0 +1,72 @@
+**定理 11.1 切向 Gram 相容。**
+
+```math
+\boxed{
+(\Delta A)^2(\Delta B)^2
+\ge
+\operatorname{Cov}(A,B)^2+
+\frac14|\langle[A,B]\rangle|^2.
+}
+```
+
+其中协方差为中心化反交换子的期望之一半。
+
+\*\*证明。\*\*二元 Gram 正性给
+
+```math
+\|u\|^2\|w\|^2\ge|\langle u,w\rangle|^2.
+```
+
+又
+
+```math
+\|u\|^2=(\Delta A)^2,\quad
+\|w\|^2=(\Delta B)^2,
+```
+
+```math
+\operatorname{Re}\langle u,w\rangle
+=\frac12\langle AB+BA\rangle-ab,
+\qquad
+\operatorname{Im}\langle u,w\rangle
+=\frac{\langle[A,B]\rangle}{2i}.
+```
+
+取复数模平方即得。证毕。
+
+## 量纲一致的三维提升
+
+A 与 B 可能具有不同单位。先用内部声明的正尺度 a₀,b₀ 无量纲化：
+
+```math
+\widetilde u=\frac{u}{a_0},\qquad
+\widetilde w=\frac{w}{b_0},\qquad
+U=\|\widetilde u\|^2,\quad W=\|\widetilde w\|^2,\quad
+z=\langle\widetilde u,\widetilde w\rangle,\quad s=U+W.
+```
+
+当 s>0，定义
+
+```math
+\boxed{
+\mathbf r=
+\left(
+\frac{2\operatorname{Re}z}{s},
+\frac{2\operatorname{Im}z}{s},
+\frac{U-W}{s}
+\right).
+}
+```
+
+则
+
+```math
+1-\|\mathbf r\|^2=\frac{4(UW-|z|^2)}{s^2}\ge0.
+```
+
+乘回单位尺度，恰好恢复上述不确定性不等式。球坐标依赖内部标定，物理不等式不依赖标度选择。若 s=0，两切向都为零，不定义归一球点。
+
+这个标准不确定性关系允许某个读口在其本征态上具有零方差；它约束两个读口的联合切向关系，不推出“每一种量在每个态上都必须测不准”。
+
+\*\*白话图景。\*\*两个读口在当前内容上各有一个变化方向。方向的长度、夹角和相位，必须能组成同一个正的二元关系。归一后三维球容不下的组合，就是不确定性所排除的组合；不需要另加一条禁止精确值的规则。
+

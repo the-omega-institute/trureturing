@@ -1,0 +1,18 @@
+One original $U$ cannot satisfy (9.23) for nonzero columns on both rays, because
+
+$$
+U_+^\dagger U_-
+ =\operatorname{diag}(1,-1,-i,i)
+\tag{9.24}
+$$
+
+is not scalar. At least one column is nonzero since $\operatorname{Tr}E=1$. All nonzero columns must therefore belong to the same ray. Equation (9.17) and the trace-one normalization imply
+
+$$
+E^{\mathsf T}
+ =\left(\sum_\ell|z_\ell|^2\right)b_\sigma b_\sigma^\dagger
+ =b_\sigma b_\sigma^\dagger,
+\qquad E=\bar b_\sigma\bar b_\sigma^\dagger=E_\sigma.
+\tag{9.25}
+$$
+

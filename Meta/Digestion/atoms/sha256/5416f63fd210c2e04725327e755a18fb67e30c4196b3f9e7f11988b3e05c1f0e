@@ -1,0 +1,17 @@
+**定义 8.2（未校准联合运算）。** 对两个定义 8.1 的场 $A,B$，在实张量空间上使用
+
+$$
+M_\lambda=S_A\otimes S_B-\lambda B_A\otimes B_B,
+\qquad
+T=B_A\otimes S_B+S_A\otimes B_B,
+$$
+
+其中 $\lambda$ 先仅为实代数变量。定义联合导子残差
+
+$$
+R_\lambda(H,X,Y)=T(H,M_\lambda(X,Y))
+-M_\lambda(T(H,X),Y)-M_\lambda(X,T(H,Y)).\tag{8.1}
+$$
+
+此时不预设 $M_\lambda$ 对称或 $T$ 交替；它们是由局部定义给出的待检验运算。实张量空间及这两个联合模板仍为明确前件。
+

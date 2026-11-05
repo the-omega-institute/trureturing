@@ -1,0 +1,20 @@
+**Definition 13.1 (blocks on the actual left beta spine).** Retain the
+entire domain and head-observation contract of Definition 9.1. With
+$C_j(x)$ as in (IV.16), for $d\ge1$ put
+
+$$
+\begin{aligned}
+D_d(x)&=\langle C_{d-1}(x),\beta\rangle,\\
+q_0&=0,\qquad q_i=\sum_{j=1}^i d_j,\\
+t_0&=\beta,\qquad
+t_i=D_{d_1}(D_{d_2}(\cdots D_{d_i}(\beta)\cdots))
+\quad(1\le i\le r),
+\end{aligned}
+\tag{IV.26}
+$$
+
+where $r\ge1$ and $d_1,\ldots,d_r$ are positive integers. These $d_i$
+count splits, not ordinal-code widths. The deepest left beta of $t_i$
+is at $L^{q_i}$. Each expression specifies an endpoint term; $D_d$ is
+not an added graft operation. All constructions below use only (IV.1).
+

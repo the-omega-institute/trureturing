@@ -44,11 +44,11 @@ private theorem expect_sub (ρ : DensityState n) (A B : Matrix n n ℂ) :
     expectation ρ (A - B) = expectation ρ A - expectation ρ B := by
   simp [expectation, mul_sub]
 
-private theorem expect_smul (ρ : DensityState n) (t : ℝ) (A : Matrix n n ℂ) :
+theorem expect_smul (ρ : DensityState n) (t : ℝ) (A : Matrix n n ℂ) :
     expectation ρ (t • A) = t * expectation ρ A := by
   simp [expectation, Complex.real_smul, Complex.mul_re]
 
-private theorem expect_one (ρ : DensityState n) : expectation ρ 1 = 1 := by
+theorem expect_one (ρ : DensityState n) : expectation ρ 1 = 1 := by
   have h : trace (CStarMatrix.ofMatrix.symm ρ.1) = 1 := ρ.2.2
   simpa [expectation] using congrArg Complex.re h
 

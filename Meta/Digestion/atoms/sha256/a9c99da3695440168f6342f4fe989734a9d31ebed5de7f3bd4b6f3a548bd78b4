@@ -1,0 +1,28 @@
+**定义 2.1（Threshold target with a blind band）。** Assume
+
+$$
+3\le a<m,\qquad I=\{1,\ldots,a-1\}.
+\tag{2.1}
+$$
+
+Let $\lambda:I\to Y$ have $N=|\lambda[I]|\ge2$ distinct labels. Choose a low-tail outside label $A$; it may also occur in $\lambda[I]$. Choose $R$ different from $A$ and every label in $\lambda[I]$. On both free-value fibres prescribe
+
+$$
+f(v,-j,s)=
+\begin{cases}
+R,&s\ge k-a,\\
+\lambda(j),&s<k-a,\ j\in I,\\
+A,&s<k-a,\ j\notin I.
+\end{cases}
+\tag{2.2}
+$$
+
+A band source means a legal INITIAL record with $j\in I$ and $s<k-a$; an outside source means one with $j\notin I$ and $s<k-a$. Sources with higher INITIAL tails are called high-tail sources, including those whose phases lie in $I$. The INITIAL $\bot$ label is separately fixed and known. Put $L=\lceil\log_2N\rceil$. The guard used for the exact cost theorem is
+
+$$
+L\le m-a+1.
+\tag{2.3}
+$$
+
+There is no assertion here for $a=m$.
+

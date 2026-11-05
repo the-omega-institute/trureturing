@@ -1,0 +1,64 @@
+**定理 72.2（C107 的全族必要充分性）。** 对任何定义 70.1–70.2 的比较类，C107 当且仅当
+
+$$
+\lim_{\varepsilon\downarrow0}\mathfrak Q_{\mathscr C}(\varepsilon)=0.
+\tag{72.2}
+$$
+
+定量地，令 $b_\varepsilon=b(\varepsilon)$、$f_\varepsilon=\varepsilon+\sqrt3b_\varepsilon$，则
+
+$$
+\chi(r,\varepsilon)\le\frac r2+
+ \frac12\mathfrak Q_{\mathscr C}(\varepsilon).
+\tag{72.3}
+$$
+
+反向，取式 (59.2) 的同一整数标定表、覆盖半径 $u=r_N(R)$，对任意 $R>0$、整数 $N\ge0$，有
+
+$$
+\boxed{
+\mathfrak Q_{\mathscr C}(\varepsilon)\le
+\min\left\{2,\ b_\varepsilon+2f_\varepsilon+
+\max\left[
+4e^{u/4}\sqrt{\chi(u,\varepsilon)+b_\varepsilon}
+ +2N\sqrt{2f_\varepsilon},\quad4e^{-R/2}
+\right]\right\}.
+}
+\tag{72.4}
+$$
+
+所有参数共同作用于实际对象、效果和框架，没有块阶、秩或最小正谱值因子。
+
+证明。必要方向不依赖修复。$T_{1,F_*}$ 保迹，故 $p_M(0)\le1$；$\mathcal L_{H_h}$ 的同一返回概率为 $p^*(h)=(1+e^{-h/2})^2/4$。它与实际分支有相同成功效果，所以
+
+$$
+\kappa_M(h)\le1-p^*(h)+p^*(h)-p_M(h)
+ \le\frac h2+\frac12\mathfrak D(M).
+\tag{72.5}
+$$
+
+右侧非负，故正部也受此界。取相同预算下的上确界即得 (72.3)，从而 (72.2) 蕴含 C107。
+
+充分方向中，同一个 $\eta_M\le\varepsilon$ 给 $\lambda_M,\delta_M\le\varepsilon$。定理 71.1–71.2 因而给
+
+$$
+\Delta_R\le f_\varepsilon,\qquad
+\kappa_R(h)\le\chi(u,\varepsilon)+b_\varepsilon
+ \quad(0\le h\le u).
+\tag{72.6}
+$$
+
+在修复族的同一有限 Gram 表示中，定理 65.1 把后一界变为局部距离界；定理 58.1 的三点三角不等式及两条标定边再给
+
+$$
+d_\phi(s)\le
+2e^{u/4}\sqrt{\chi(u,\varepsilon)+b_\varepsilon}
+ +N\sqrt{2f_\varepsilon}
+ \quad(-R\le s\le0).
+\tag{72.7}
+$$
+
+完全复用定理 60.1 的有限共同 Stinespring 比较、小权重尾界及中心直和论证，得到 $R$ 与平方根参照的误差界，即式 (72.4) 中去掉首项 $b_\varepsilon$ 的部分。这里不将 $\eta\le\varepsilon$ 子类偷换成全部 $\Delta_R\le f_\varepsilon$ 的模型：局部上界只对同一个原模型所得的修复族使用。再以定理 71.1 加上实际族到其修复族的误差，得 (72.4)。
+
+若 C107 成立，先取有限 $R$ 控制尾项，再由联合边界关系取足够小的局部高度预算及 $r_0\le1$，再取有限 $N$ 使 $u\le r_0$。最后缩小 $\varepsilon$，同时控制 $b_\varepsilon$、$f_\varepsilon$ 及 $N\sqrt{2f_\varepsilon}$，并保持在所选联合边界预算内。因为 $b_\varepsilon,f_\varepsilon\to0$，全部项都可共同趋零。这给 (72.2)，没有预定收敛速度。∎
+

@@ -75,7 +75,7 @@ theorem occupationCutoff_tendsto (A B : Data I) :
       dsimp [f]
       split_ifs <;> simp)
 
-private def occupationEquiv (F : Finset I) :
+def occupationEquiv (F : Finset I) :
     {d : Occupation I // d.support ⊆ F} ≃ Occupation F where
   toFun d := restrictOccupation F d.val
   invFun d := ⟨d.mapDomain (fun i : F => i.val), by
@@ -157,14 +157,14 @@ def coordinateProjection (F : Finset I) : ℓ²(I, ℂ) →L[ℂ] ℓ²(I, ℂ) 
   (Data.finiteInclusion F).toContinuousLinearMap.comp
     (ContinuousLinearMap.adjoint (Data.finiteInclusion F).toContinuousLinearMap)
 
-private theorem projection_apply (F : Finset I) (x : ℓ²(I, ℂ)) (i : I) :
+theorem projection_apply (F : Finset I) (x : ℓ²(I, ℂ)) (i : I) :
     coordinateProjection F x i = if i ∈ F then x i else 0 := by
   change Data.finiteInclusion F
     (ContinuousLinearMap.adjoint (Data.finiteInclusion F).toContinuousLinearMap x) i = _
   rw [inclusion_apply]
   split_ifs <;> simp [Data.finiteInclusion_adjoint_apply]
 
-private theorem projection_norm_le (F : Finset I) : ‖coordinateProjection F‖ ≤ 1 := by
+theorem projection_norm_le (F : Finset I) : ‖coordinateProjection F‖ ≤ 1 := by
   have hJ := (Data.finiteInclusion F).norm_toContinuousLinearMap_le
   have hP : ‖ContinuousLinearMap.adjoint (Data.finiteInclusion F).toContinuousLinearMap‖ ≤ 1 := by
     simpa only [ContinuousLinearMap.adjoint.norm_map] using hJ
@@ -201,7 +201,7 @@ private theorem column_square (T : ℓ²(I, ℂ) →L[ℂ] ℓ²(I, ℂ)) (j : I
     (lp.hasSum_norm (p := (2 : ℝ≥0∞)) (by norm_num)
       (T (lp.single 2 j (1 : ℂ)))).tsum_eq
 
-private theorem matrix_columns (T : ℓ²(I, ℂ) →L[ℂ] ℓ²(I, ℂ))
+theorem matrix_columns (T : ℓ²(I, ℂ) →L[ℂ] ℓ²(I, ℂ))
     (hT : Summable (fun ij : I × I => ‖T (lp.single 2 ij.2 (1 : ℂ)) ij.1‖ ^ 2)) :
     Summable (fun j => ‖T (lp.single 2 j (1 : ℂ))‖ ^ 2) ∧
       (∑' j, ‖T (lp.single 2 j (1 : ℂ))‖ ^ 2) =
@@ -235,7 +235,7 @@ private theorem matrix_isHilbertSchmidt (T : ℓ²(I, ℂ) →L[ℂ] ℓ²(I, �
 def hsSize (T : ℓ²(I, ℂ) →L[ℂ] ℓ²(I, ℂ)) : ℝ :=
   Real.sqrt (∑' ij : I × I, ‖T (lp.single 2 ij.2 (1 : ℂ)) ij.1‖ ^ 2)
 
-private theorem hs_basis_square (T : ℓ²(I, ℂ) →L[ℂ] ℓ²(I, ℂ))
+theorem hs_basis_square (T : ℓ²(I, ℂ) →L[ℂ] ℓ²(I, ℂ))
     (hT : Summable (fun ij : I × I => ‖T (lp.single 2 ij.2 (1 : ℂ)) ij.1‖ ^ 2)) :
     (∑' i, ‖T (TraceClassFiniteBlocks.setBasis (coordinateBasis I) i)‖ ^ 2) =
       ∑' ij : I × I, ‖T (lp.single 2 ij.2 (1 : ℂ)) ij.1‖ ^ 2 := by
@@ -259,7 +259,7 @@ private theorem error_entry (D : Data I) (F : Finset I) (i j : I) :
   simp only [ContinuousLinearMap.sub_apply, lp.coeFn_sub, Pi.sub_apply, compressed_entry]
   split_ifs <;> simp [Data.kernel]
 
-private theorem error_summable (D : Data I) (F : Finset I) :
+theorem error_summable (D : Data I) (F : Finset I) :
     Summable (fun ij : I × I =>
       ‖(D.oneParticle - compressed D F) (lp.single 2 ij.2 (1 : ℂ)) ij.1‖ ^ 2) := by
   simpa only [error_entry] using matrix_tail_summable D F
@@ -362,7 +362,7 @@ theorem cutoffProduct_tendsto (A B : Data I) :
   rw [tendsto_iff_norm_sub_tendsto_zero]
   simpa only [norm_sub_rev] using h
 
-private theorem compressed_norm_le (D : Data I) (F : Finset I) :
+theorem compressed_norm_le (D : Data I) (F : Finset I) :
     ‖compressed D F‖ ≤ D.q := by
   have hq := D.q_nonneg
   calc
@@ -413,18 +413,18 @@ theorem traceLog_cutoff_tendsto (A B : Data I) :
   rw [tendsto_iff_norm_sub_tendsto_zero]
   simpa only [norm_sub_rev] using h
 
-private def embedded (F : Finset I) (M : Matrix F F ℂ) : ℓ²(I, ℂ) →L[ℂ] ℓ²(I, ℂ) :=
+def embedded (F : Finset I) (M : Matrix F F ℂ) : ℓ²(I, ℂ) →L[ℂ] ℓ²(I, ℂ) :=
   (Data.finiteInclusion F).toContinuousLinearMap.comp
     ((Matrix.toEuclideanCLM (𝕜 := ℂ) M).comp
       (ContinuousLinearMap.adjoint (Data.finiteInclusion F).toContinuousLinearMap))
 
-private theorem compressed_embedded (D : Data I) (F : Finset I) :
+theorem compressed_embedded (D : Data I) (F : Finset I) :
     compressed D F = embedded F (D.block F) := by
   rw [embedded, ← D.compression_eq_matrix F]
   simp only [compressed, coordinateProjection, Data.compression,
     ContinuousLinearMap.mul_def, ContinuousLinearMap.comp_assoc]
 
-private theorem embedded_mul (F : Finset I) (M N : Matrix F F ℂ) :
+theorem embedded_mul (F : Finset I) (M N : Matrix F F ℂ) :
     embedded F (M * N) = embedded F M * embedded F N := by
   rw [embedded, map_mul]
   simp only [embedded, ContinuousLinearMap.mul_def, ContinuousLinearMap.comp_assoc]

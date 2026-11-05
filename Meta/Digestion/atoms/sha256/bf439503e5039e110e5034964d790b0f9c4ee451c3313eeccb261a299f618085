@@ -1,0 +1,44 @@
+### 定义 3.1（完整线性化零关系）
+
+对 $A\ne0$、$x\ne0$、$Ax=0$，定义
+
+$$
+\boxed{\mathcal T_{A,x}
+=\{([K],[y])\in(\mathfrak g/\mathbb R A)\times(W/\mathbb R x):Kx+Ay=0\}.}
+\tag{Q8.0}
+$$
+
+用 $K+sA$ 或 $y+tx$ 替换代表元都不改变等式，所以定义良定。
+
+它来自同一二元关系的展开：
+
+$$
+(A+\varepsilon K)(x+\varepsilon y)
+=\varepsilon(Kx+Ay)+\varepsilon^2Ky.
+$$
+
+此时只称“线性化零关系”，尚未把全部一阶方向当作已存在的准确曲线。后面将证明本候选下确实可以局部积分。
+
+**候选 $\Omega Q$-008。**
+
+$$
+\boxed{
+\exists A\ne0,\ x\ne0,\ Ax=0:\quad
+\pi_{\mathfrak g}:\mathcal T_{A,x}\to\mathfrak g/\mathbb R A,\quad
+\pi_W:\mathcal T_{A,x}\to W/\mathbb R x
+\text{ 均为双射}.}
+\tag{Q8}
+$$
+
+也就是：在这一原停住对上，任意一边的横向微变，另一边都能且只能补偿一次。
+
+$\mathcal T_{A,x}$ 是线性子空间，所以两侧双射自动把它变成一个线性同构的图；没有另输入一张线性对应表。必须使用*全部*满足等式的对，而不是从多值关系中挑一条好看的分支。
+
+商空间只去掉此方程必然看不见的轴向重标。它没有删除原 $x,-x$ 的区别，也没有删除 $A,-A$ 的方向、大小与时钟信息。严格说，
+
+$$
+T_{[x]}\mathbb P(W)\cong\operatorname{Hom}(\mathbb R x,W/\mathbb R x);
+$$
+
+选定代表 $x$ 后，才识别为 $W/\mathbb R x$。将 $A\mapsto aA$、$x\mapsto bx$，其中 $ab\ne0$，会把补偿映射的坐标斜率乘以 $b/a$，而互定性质不变。
+

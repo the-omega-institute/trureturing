@@ -1,0 +1,20 @@
+**定理 86.1（对称耗散的无维数局部界）。** 在定理 85.1 的全部范围内，包括允许中心间转移的有限直和，有
+
+$$
+d(E,F)\le\min\{2,10\beta(E,F)\},\qquad
+D\le\min\{2,10\beta_*\}.
+\tag{86.1}
+$$
+
+这里结论的 diamond 范数包含全部数学矩阵参考，前提的 $\beta$ 仍只比较不带参考的正输入；常数不含维数、秩或 $q_E^{-1}$，不宣称常数十最优。
+
+证明。写 $\Phi=\Phi_E$、$\Psi=\Phi_{E^\vee}$、$\delta=\beta(E,F)$。由正、负部分解，$\|\Psi\Phi(X)-X\|_1\le\delta\|X\|_1$ 对全部自伴 $X\in\mathcal C$ 成立。若 $\Phi(X)=\lambda X$、$X=X^*\ne0$，则 $0\le\lambda\le1$，且 $\Psi$ 的迹范数收缩性给
+
+$$
+\delta\|X\|_1\ge\|X-\lambda\Psi(X)\|_1
+ \ge(1-\lambda)\|X\|_1.
+\tag{86.2}
+$$
+
+$\Phi$ 保星且自伴，每个特征空间都有自伴实基，所以 $\Phi\ge(1-\delta)\operatorname{id}$ 在 Hilbert--Schmidt 算子序中成立。以下把这个特殊谱下界转成 diamond 界，不使用一般维数相关的范数换算。
+

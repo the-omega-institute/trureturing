@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:6af3d23971e508fcac70e49903cc4655f7f9769bf3c3a0fa838af8ce5def1e99
+  normalized_sha256: sha256:6af3d23971e508fcac70e49903cc4655f7f9769bf3c3a0fa838af8ce5def1e99
+cas_ref: sha256:6af3d23971e508fcac70e49903cc4655f7f9769bf3c3a0fa838af8ce5def1e99
+coverage_gids:
+  - gid: D5/S3/StatisticalMechanics/NoisyVoter/ConditionalRepetitionMoments.conditional_repetition_moments
+    target_statement_id: sha256:18e67c78fa98278cc5d9d3fdda0bcd4ae793c722c68f7130856bb397550486d1
+receipts:
+  unresolved_subitems: []

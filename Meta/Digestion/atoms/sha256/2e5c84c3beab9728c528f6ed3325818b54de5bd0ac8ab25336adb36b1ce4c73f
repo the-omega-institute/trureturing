@@ -1,0 +1,40 @@
+# AURIC Convergent Residual Certificates, Unitary Error Recursion, and Tolerant Robin Criterion
+
+> **Reader-visible source and scope note.** The manuscript body below is the complete user-supplied source, retained in its original order, including all opening prose, eight ordered numbered sections, the final section, every proof and derivation, all 35 original equation tags, and all six literal URL targets. The body adaptations are conversion of the supplied backslash math delimiters to portable dollar delimiters and relocation of each original equation number into its immediately following ordinary-flow caption. Mathematical expressions, the two internal row-spacing commands, and author sentences are preserved; necessary qualifications are separate adjacent editorial notes.
+>
+> **Source and provenance.** The input is an AI/user-supplied continuation manuscript. The title above is descriptive editorial metadata; no author, version, or date is invented. Source SHA-256: <code style="overflow-wrap:anywhere">2de87858a3a093afd9abecdb49ece42789610e0eebb9b7683663e79b49cb7a5a</code>; source size 23,219 bytes and 1,350 logical lines. Inventory: 210 math regions (84 inline, 126 display), 35 numbered displays, and nine main units (eight numbered sections plus the final section).
+>
+> **Navigation.** [Section I](#section-1-fixed-arithmetic-object) · [Section II](#section-2-strict-detail-positivity) · [Section III](#section-3-residual-error-theorem) · [Section IV](#section-4-finite-frequency-envelope) · [Section V](#section-5-unitary-error-conservation) · [Section VI](#section-6-relative-tolerance) · [Section VII](#section-7-robin-transfer) · [Section VIII](#section-8-zeckendorf-ordering) · [Final position](#section-final-position)
+>
+> **Bounded whole-paper review.** `CHECKED` below means that the supplied local algebra, stated convention, or source correspondence was read and is internally aligned at the displayed level. `ASSUMED-UNVERIFIED` names a premise or bridge that the supplied text does not itself establish. No fresh Lean/kernel build, mathematical program, numerical computation, CAS, simulation, gate search, or native physical-access test is claimed.
+>
+> - `CHECKED — inventory and source fidelity:` the exact source hash, 210-region inventory, 35 tags, six URLs, opening, all sections, proofs, and ending were read; the six URL targets and query strings remain byte-for-byte present.
+> - `CHECKED — kernel and Fourier interface:` the definitions of $K$, $P$, $S$, $p_0$, the finite atomic quadratic forms, the window, the Fourier weight $m$, and the stated logarithmic scale are retained with their signs and conjugation.
+> - `ASSUMED-UNVERIFIED — coercive detail space:` (3)–(5) require the completed Hilbert/energy space, the exact Fourier normalization, a self-adjoint bounded remainder realization, and the stated operator constants.
+> - `ASSUMED-UNVERIFIED — nested variational spaces:` residual convergence requires nested finite spaces containing the fixed coarse grid and dense in the full completed $Z$; mere node-density prose does not supply that inclusion or the normal/derivative domain.
+> - `ASSUMED-UNVERIFIED — variational existence and convergence:` uniqueness of each constrained minimizer, continuity on the moving-atom fibers, and operator-norm convergence of the finite cores are retained claims whose common completed-space proof is not reproduced here.
+> - `ASSUMED-UNVERIFIED — residual identity:` the sign and conjugation in the derivative residual, endpoint/distribution terms, Schur identity (10), and the Loewner constant require one common completed-space derivation.
+> - `ASSUMED-UNVERIFIED — weighted residual decay:` (11) needs an explicit $A_2$ verification for $W$, the interval-truncation plus cell-mean operator composition, duality, and a diagonal density argument with a fixed smooth target. The cited weighted Hilbert theorem is not itself that composition proof.
+> - `ASSUMED-UNVERIFIED — finite envelope:` (12)–(16) need the full denominator/tail Loewner estimates and a diagonal choice despite possible growth of $\mathcal E_k^{(0)}$. Finite integrals are not finite certified arithmetic.
+> - `CHECKED — abstract unitary algebra:` assuming the stated self-adjoint operator hypotheses, (17)–(22) give the positive contraction, Neumann expansion, two-output norm split, block Gram positivity, and geometric remainder.
+> - `CHECKED WITH SCOPE — AURIC convention:` v37 uses $\rho=\begin{pmatrix}A&C^*\\C&B\end{pmatrix}$, so $C$ is lower-left; the corresponding choice for $\mathbb G_j$ is recorded locally below. This abstract unitary grants no native/free physical control.
+> - `ASSUMED-UNVERIFIED — finite RKHS certificate:` (24)–(26) require the endpoint exponential extension, Fourier/RKHS identification, and positive-definiteness of $M$ on the stated completion.
+> - `CHECKED WITH SCOPE — tolerance:` (23), (27), and eventual strict passage are for $\varepsilon\ge0$, fixed $D$, and fixed $\varepsilon>0$ in the strict step; they do not yield a uniform expanding-window certificate.
+> - `ASSUMED-UNVERIFIED — inherited Robin premises:` the same-n decomposition (28), $\mathcal D(n)\ge0$, strict optimizer/equality-layer and 5040 boundary bridge, complete $\mathcal B(T)$, and weighted root-correction passage (32) remain open as recorded by the merged predecessor.
+> - `CHECKED WITH SCOPE — PNT tail and margin:` the cited Kedlaya chapter is an unconditional PNT-error source, while the rational inequalities for $\varepsilon_*=1/8$ are a separate paper calculation; neither discharges the inherited Robin bridge.
+> - `CHECKED WITH SCOPE — Zeckendorf:` the exact pin is <code style="overflow-wrap:anywhere">9ceb721e13c64eb4b1c71a43238a2b2fc4770093</code>; it supplies ordering/permutation only. Density, node skipping, nested inclusion, and window-uniform bounds remain separate obligations.
+> - `ASSUMED-UNVERIFIED — RH forward and reverse bridges:` (35) requires an actual-zero expansion and its normal convergence that imply global positivity of $K$ under RH and hence $\mathcal S_D\succeq0$; separately, its reverse direction needs meromorphic Laplace continuation, multiplicity/noncancellation, and identity-theorem steps. No RH proof or global all-window inequality is claimed.
+>
+> **External-source scope.** The Lacey–Petermichl–Reguera paper was read as the cited $A_2$ Hilbert-transform theorem; the Kedlaya page was read for the unconditional PNT-error setting; the Ramanujan–Robin paper was read as historical/criterion context. These reads establish source scope, not the missing manuscript-specific compositions.
+
+/sshx 继续。这一轮可以补上前面一个真正缺失的环节：
+
+> **不仅证明递归误差可和，还构造一个确实趋于零的误差读数，并用它给每一步有限核心附上严格下界。这个下界允许直接接入 AURIC 的酉守恒结构和 Robin 不等式。**
+
+下面给出定义、定理和证明。**这些结论仍未完成黎曼猜想的证明；尚待证明的是，实际算术核心在窗口不断扩大时，始终满足最后给出的统一不等式。** 但现在，“继续递归”已经有了明确的误差控制和停止条件。
+
+项目依据仍取已经核对过的 [AURIC v37](https://github.com/the-omega-institute/trureturing/blob/18ab178472d8c29eb90d5e5f4e6c8b4c89038e84/docs/develop/theory/AURIC_BINARY_RELATIONS_UNITARY_REPRESENTATION_AND_GOLDEN_GATE_UNIVERSALITY_V37.md)：其第 6 节允许用保留上下文的算子值三轴递归表示完整关系，第 9 节给出酉误差的可和控制。下文的残差定理、有限积分下界和 Robin 接入，是在这个接口上继续作出的纸面推导。
+
+---
+
+<a id="section-1-fixed-arithmetic-object"></a>

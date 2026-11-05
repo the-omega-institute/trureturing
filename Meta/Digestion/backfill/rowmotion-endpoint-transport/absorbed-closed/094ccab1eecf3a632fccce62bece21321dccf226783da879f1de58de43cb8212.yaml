@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:094ccab1eecf3a632fccce62bece21321dccf226783da879f1de58de43cb8212
+  normalized_sha256: sha256:094ccab1eecf3a632fccce62bece21321dccf226783da879f1de58de43cb8212
+cas_ref: sha256:094ccab1eecf3a632fccce62bece21321dccf226783da879f1de58de43cb8212
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Geometry/RowmotionExceptionalGeometry.exceptional_geometry_bound
+    target_statement_id: sha256:84b7ddb71f570b3a416057b3f6311f46ef4368c8edd4a626ed2fe99a51977698
+receipts:
+  unresolved_subitems: []

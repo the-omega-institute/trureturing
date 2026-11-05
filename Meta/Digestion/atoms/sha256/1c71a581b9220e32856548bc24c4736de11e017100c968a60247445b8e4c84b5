@@ -1,0 +1,64 @@
+**Proposition 36.2 (the actual seven-request criterion).** For two actually
+attained MarkedReady cuts of this fixed installation, with semantic data
+$(t,\nu,q)$ and $(u,\xi,r)$, equality of all legal future $Q_C$ behavior
+is equivalent to
+
+$$
+t=u,\qquad \nu=\xi,\qquad q\equiv_t r.
+\tag{AA.112}
+$$
+
+Here behavior retains legality, every complete literal reply, and the
+related settled successor at every step. In particular NextSelected
+retains its old-event identity, its actual new growth identity and its
+operation on the current bound source. Raw $q$ is not an extra public
+readout of this task.
+
+Proof. The source and selected-word necessities are the actual Tag and
+FetchSelected separations already proved in Theorem 33.2. Suppose they
+are equal but (AA.110) fails. Choose a legal finite event word witnessing
+failure and stop at its first unequal selection bit. Supply exactly its
+addressed $P/S$ frames to the two installations. They execute the same
+actual source edits and have equal selected words until that last event.
+At that event one appends its literal identity and the other does not.
+If the previously common word has length $m$, a subsequent
+FetchSelected$(m+1)$ returns that identity in one run and OutOfRange
+in the other. Thus it is a difference in the declared complete task,
+although the preceding ordinary Growth replies need not reveal the bit.
+All supplied frames are legal on the common source. The maintained marks
+and tapes represent the respective new words by Theorem 32.3.
+
+Conversely suppose (AA.112). Tag, HasPromotion, HasSplit and the guards
+for addressed growth see the same source. Refusals, ordinary queries,
+BadFrame and out-of-range selected calls leave the semantic data
+unchanged and give the same replies. An enabled addressed growth uses
+the same identity $e$ in both runs. Equation (AA.111) gives equal new
+membership bits and related new controls on $t\cdot e$. Appending that
+same literal identity when selected gives equal new selected words;
+Theorem 31.2 gives their equal mark/tape contents.
+
+FetchSelected reads the same literal identity from those actual records.
+At an in-range NextSelected call, its retained old identity therefore has
+the same address in both runs. The current sources are equal; navigation
+and current left descent consequently reach the same current leaf and
+execute the same genuinely enabled $P/S$ event $e$. Apply (AA.111) to
+this actual event, not to the recalled old event. Its membership, complete
+two-identity reply and successor again agree. The two executions keep
+their actual source bindings and grants. These cases exhaust the seven
+requests and the unused tag. Induction on the finite request sequence
+proves full behavior equality with related successors. The same induction
+applies to adaptive requests whenever their next frame is a deterministic
+function of the already equal replies.
+
+The finite-return and framing assertions used here are those of §§20
+and 32 under their stated material, acknowledgement and authority
+premises. A missing input suffix is not treated as a completed request,
+and no equality of primitive durations or intermediate pending fields
+is inferred. $\square$
+
+Equation (AA.112) is an exact source-relative interpretation of the
+unsettled raw-control coordinate in Theorem 33.2. By itself (AA.110)
+is only a semantic condition. It gives no terminating equality test.
+The next section supplies finite data and an algorithm that decide it;
+they do not follow from the fact that $Q$ alone is finite.
+

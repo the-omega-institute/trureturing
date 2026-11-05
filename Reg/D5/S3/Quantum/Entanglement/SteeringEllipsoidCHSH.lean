@@ -1,3 +1,4 @@
+import Reg.D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH.PublishedFacts
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Entanglement.SteeringEllipsoidCHSH
 import Reg.Support.SingleDependentReadout

@@ -501,7 +501,7 @@ theorem context_run (J : OutputContext) {t u : Source} {w : List Call}
             simpa [Call.shift, run, context_subtree, hsub,
               ActualImageAlphaSeparation.path_replace] using ih h
 
-private theorem D_mul (l r : Source) :
+theorem D_mul (l r : Source) :
     D (.mul l r) ↔ D l ∧ D r ∧ readout [] l ≠ .alpha := by
   constructor
   · intro h

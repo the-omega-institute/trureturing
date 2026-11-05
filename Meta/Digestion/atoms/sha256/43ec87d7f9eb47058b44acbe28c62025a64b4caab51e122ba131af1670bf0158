@@ -1,0 +1,17 @@
+### 定义 2.1（球面切向层）
+
+设 $I\subset\mathbb R$ 为区间，$n_0:I\to S^2\subset\mathbb R^3$ 为 $C^\infty$ 曲线，且 $v_0(t)=|\dot n_0(t)|>0$。递归定义
+
+$$
+ v_k=|\dot n_k|,\qquad n_{k+1}=\frac{\dot n_k}{v_k}.
+$$
+
+在已定义的层上，记
+
+$$
+ N_k=n_k\times n_{k+1},\qquad
+ \kappa_k=\frac{\dot n_{k+1}\cdot N_k}{v_k}.
+$$
+
+$\kappa_k$ 是单位球面上的带向测地曲率。在移动锚中，可以把点导数统一替换为同一 $SO(3)$ 参照连接的协变导数 $D_t$；该连接保持内积与叉乘，v87 的内部展开把沿同一路径的计算化为上述形式。球面半径取 $1$，相应 Fubini–Study 速度为 $v_k/2$。
+

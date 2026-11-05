@@ -4,9 +4,10 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A free finite-group orbit has a one-dimensional fixed line, without a quotient-dimension claim. -/
+   digest: Independent finite-group orbit sums span the fixed space, with rank equal to orbit count. -/
 
 import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
 import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 import Mathlib.LinearAlgebra.LinearIndependent.Basic
 
@@ -109,5 +110,123 @@ theorem fixedOrbit_eq_span_orbitSum
       simp_rw [hperm]
       exact Function.Bijective.sum_comp (Group.mulLeft_bijective h)
         (fun g => b g)
+
+variable {I : Type*} [Fintype I]
+
+def multiOrbitSpan (b : I → G → V) : Submodule K V :=
+  Submodule.span K (Set.range (fun p : I × G => b p.1 p.2))
+
+def multiOrbitFixedSubmodule (rho : G →* (V ≃ₗ[K] V)) (b : I → G → V) :
+    Submodule K V :=
+  multiOrbitSpan b ⊓ fixedSubmodule rho
+
+def multiOrbitSum (b : I → G → V) (i : I) : V :=
+  ∑ g : G, b i g
+
+theorem multiOrbitFixed_eq_span_sums
+    (rho : G →* (V ≃ₗ[K] V)) (b : I → G → V)
+    (hperm : ∀ h i g, rho h (b i g) = b i (h * g))
+    (hind : LinearIndependent K (fun p : I × G => b p.1 p.2)) :
+    multiOrbitFixedSubmodule rho b =
+      Submodule.span K (Set.range (multiOrbitSum b)) := by
+  classical
+  apply le_antisymm
+  · intro x hx
+    rcases (Submodule.mem_span_range_iff_exists_fun K).mp hx.1 with ⟨c, hc⟩
+    have hright :
+        (∑ p : I × G, c p • b p.1 p.2) =
+          ∑ i : I, ∑ g : G, c (i, g) • b i g := by
+      rw [← Finset.sum_product (Finset.univ : Finset I) (Finset.univ : Finset G)
+        (fun p : I × G => c p • b p.1 p.2)]
+      simp
+    change (∑ p : I × G, c p • b p.1 p.2) = x at hc
+    rw [hright] at hc
+    have hcoeff (h : G) : (fun p : I × G => c (p.1, h⁻¹ * p.2)) = c := by
+      apply hind.fintypeLinearCombination_injective
+      rw [Fintype.linearCombination_apply, Fintype.linearCombination_apply]
+      have hleft :
+          (∑ p : I × G, c (p.1, h⁻¹ * p.2) • b p.1 p.2) =
+            ∑ i : I, ∑ g : G, c (i, h⁻¹ * g) • b i g := by
+        rw [← Finset.sum_product (Finset.univ : Finset I) (Finset.univ : Finset G)
+          (fun p : I × G => c (p.1, h⁻¹ * p.2) • b p.1 p.2)]
+        simp
+      have hshift :
+          (∑ i : I, ∑ g : G, c (i, h⁻¹ * g) • b i g) =
+            rho h (∑ i : I, ∑ g : G, c (i, g) • b i g) := by
+        rw [map_sum]
+        apply Finset.sum_congr rfl
+        intro i hi
+        exact orbitCombination_shift rho (fun g => b i g)
+          (fun h g => hperm h i g) h (fun g => c (i, g))
+      calc
+        (∑ p : I × G, c (p.1, h⁻¹ * p.2) • b p.1 p.2) =
+            ∑ i : I, ∑ g : G, c (i, h⁻¹ * g) • b i g := hleft
+        _ = rho h (∑ i : I, ∑ g : G, c (i, g) • b i g) := hshift
+        _ = rho h x := by rw [hc]
+        _ = x := hx.2 h
+        _ = ∑ p : I × G, c p • b p.1 p.2 := hc.symm.trans hright.symm
+    have hconst (i : I) (g : G) : c (i, g) = c (i, 1) := by
+      have hcg := congrFun (hcoeff g) (i, g)
+      simpa using hcg.symm
+    have hlin : (∑ i : I, ∑ g : G, c (i, g) • b i g) =
+        ∑ i : I, c (i, 1) • multiOrbitSum b i := by
+      simp_rw [hconst, multiOrbitSum]
+      simp_rw [Finset.smul_sum]
+    rw [← hc, hlin]
+    apply Submodule.sum_mem
+    intro i hi
+    exact Submodule.smul_mem _ (c (i, 1))
+      (Submodule.subset_span (Set.mem_range.mpr ⟨i, rfl⟩))
+  · refine Submodule.span_le.2 ?_
+    intro x hx
+    have hx' : ∃ i : I, multiOrbitSum b i = x := by simpa using hx
+    rcases hx' with ⟨i, rfl⟩
+    refine ⟨?_, ?_⟩
+    · apply Submodule.sum_mem
+      intro g hg
+      exact Submodule.subset_span (Set.mem_range.mpr ⟨(i, g), rfl⟩)
+    · intro h
+      change rho h (∑ g : G, b i g) = ∑ g : G, b i g
+      simp only [map_sum]
+      simp_rw [hperm]
+      exact Function.Bijective.sum_comp (Group.mulLeft_bijective h)
+        (fun g => b i g)
+
+private lemma multiOrbitSum_linearIndependent
+    (b : I → G → V)
+    (hind : LinearIndependent K (fun p : I × G => b p.1 p.2)) :
+    LinearIndependent K (multiOrbitSum b) := by
+  classical
+  rw [linearIndependent_iff_injective_fintypeLinearCombination]
+  intro c d h
+  have h' : (∑ i : I, c i • multiOrbitSum b i) =
+      ∑ i : I, d i • multiOrbitSum b i := by
+    simpa only [Fintype.linearCombination_apply] using h
+  have hprod (e : I → K) :
+      (∑ p : I × G, e p.1 • b p.1 p.2) =
+        ∑ i : I, e i • multiOrbitSum b i := by
+    simp only [multiOrbitSum]
+    simp_rw [Finset.smul_sum]
+    rw [← Finset.sum_product (Finset.univ : Finset I) (Finset.univ : Finset G)
+      (fun p : I × G => e p.1 • b p.1 p.2)]
+    simp
+  have hcoeff : (fun p : I × G => c p.1) = fun p => d p.1 := by
+    apply hind.fintypeLinearCombination_injective
+    rw [Fintype.linearCombination_apply, Fintype.linearCombination_apply]
+    calc
+      (∑ p : I × G, c p.1 • b p.1 p.2) =
+          ∑ i : I, c i • multiOrbitSum b i := hprod c
+      _ = ∑ i : I, d i • multiOrbitSum b i := h'
+      _ = ∑ p : I × G, d p.1 • b p.1 p.2 := (hprod d).symm
+  funext i
+  exact congrFun hcoeff (i, 1)
+
+theorem multiOrbitFixed_finrank_eq_card
+    (rho : G →* (V ≃ₗ[K] V)) (b : I → G → V)
+    (hperm : ∀ h i g, rho h (b i g) = b i (h * g))
+    (hind : LinearIndependent K (fun p : I × G => b p.1 p.2)) :
+    Module.finrank K (multiOrbitFixedSubmodule rho b) = Fintype.card I := by
+  rw [multiOrbitFixed_eq_span_sums rho b hperm hind]
+  exact finrank_span_eq_card (multiOrbitSum_linearIndependent b hind)
 
 end D5.S3.VertexAlgebra.Lattice.FiniteGroupOrbitFixedLine

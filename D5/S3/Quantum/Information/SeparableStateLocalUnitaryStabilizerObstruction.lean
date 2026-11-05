@@ -62,6 +62,7 @@ import D5.S3.Quantum.Measurement.OccupationPartialTransposeSpectral
 import D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.PureState.PureStateHandshake
+import D5.S3.Quantum.QuantumChannels.EntanglementBreakingOverlapPurity
 import D5.S3.Quantum.Information.SignedPauliSumNormRefutation
 import D5.S3.Quantum.Magic.WignerDistanceMinimum
 import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
@@ -352,13 +353,6 @@ private theorem pauli_overlap_spectrum (p q : Pauli) (hp : p ≠ .I) (hq : q ≠
 private theorem projector_tensor (a b : (Fin 2 → ℂ)) : rankOneDensity (productVector a b)=rankOneDensity a ⊗ₖ rankOneDensity b := by
   ext ⟨i,j⟩ ⟨k,l⟩
   simp [rankOneDensity,Matrix.vecMulVec_apply,productVector,star_mul,Matrix.kroneckerMap_apply,Function.uncurry_apply_pair,Matrix.vecMulVec_apply];ring
-private theorem unitVector_smul {n : Type*} [Fintype n] (z : ℂ) (ψ : n → ℂ) : star (z • ψ) ⬝ᵥ (z • ψ) = (Complex.normSq z : ℂ)*(star ψ ⬝ᵥ ψ) := by
-  simp only [dotProduct,Pi.star_apply,Pi.smul_apply,smul_eq_mul,star_mul]
-  rw [Finset.mul_sum]
-  apply Finset.sum_congr rfl
-  intro i hi
-  rw [Complex.normSq_eq_conj_mul_self]
-  simp only [← Complex.star_def];ring
 private theorem equal_projectors_ray {ψ χ : (Fin 2 × Fin 2 → ℂ)} (hn : unitVector ψ) (he : rankOneDensity ψ=rankOneDensity χ) : ∃ z : ℂ,ψ=z • χ := by
   refine ⟨star χ ⬝ᵥ ψ,?_⟩
   have hψ : rankOneDensity ψ *ᵥ ψ=ψ := by
@@ -494,17 +488,6 @@ private theorem ensemble_no_entangled_coefficients {ι : Type*} [Fintype ι] (α
   · exact Or.inl hα
   · exact Or.inr hβ
   · exact Or.inr (cross_zero_excludes_maxent hz0 hent)
-private theorem projector_smul {n : Type*} (z : ℂ) (a : n → ℂ) : rankOneDensity (z • a) = (Complex.normSq z : ℂ) • rankOneDensity a := by
-  rw [Complex.normSq_eq_conj_mul_self]
-  ext i j
-  simp only [rankOneDensity,Matrix.vecMulVec_apply,Pi.star_apply,Pi.smul_apply,
-    smul_eq_mul,star_mul,Matrix.smul_apply,← Complex.star_def]
-  ring
-private theorem unit_projector_ray {n : Type*} [Fintype n] {ψ χ : n → ℂ} (hψ : unitVector ψ) (hχ : unitVector χ) (z : ℂ) (hz : ψ=z • χ) : rankOneDensity ψ=rankOneDensity χ := by
-  have hn : (Complex.normSq z : ℂ)=1 := by
-    rw [hz,unitVector,unitVector_smul,hχ,mul_one] at hψ
-    exact hψ
-  rw [hz,projector_smul,hn,one_smul]
 theorem pauli_projector_trace (p : Pauli) (hp : p ≠ .I) (ep : Bool) : (spectral p (if ep then 1 else 0)).trace=1 := by
   cases p <;> cases ep <;>
     norm_num [spectral,pauliMatrix,qubitX,qubitZ,Matrix.trace,Matrix.diag,
@@ -940,10 +923,12 @@ private theorem family_nonmembership {p c s : ℝ} (hpar : FamilyParameters p c 
     intro i hi
     rcases hproductcoeff i hi with hα|hβ
     · right
-      apply unit_projector_ray (hχunit i) (unit_tensor (unit_b hcs) (unit_b hcs)) (β i)
+      apply D5.S3.Quantum.QuantumChannels.EntanglementBreakingOverlapPurity.vecMulVec_eq_of_unit_ray
+        (hχunit i) (unit_tensor (unit_b hcs) (unit_b hcs)) (β i)
       simp [hab i hi,hα,supportVector]
     · left
-      apply unit_projector_ray (hχunit i) (unit_tensor unit_e0 unit_e0) (α i)
+      apply D5.S3.Quantum.QuantumChannels.EntanglementBreakingOverlapPurity.vecMulVec_eq_of_unit_ray
+        (hχunit i) (unit_tensor unit_e0 unit_e0) (α i)
       simp [hab i hi,hβ,supportVector]
   obtain ⟨⟨i,hi,hiu⟩,⟨j,hj,hjv⟩⟩ := ensemble_both_rays hp hp1 hs χ w hw hwsum hχE hrays
   have hPPP : ∀ k,0 < w k → PauliProductProjector (localAction UA UB (rankOneDensity (χ k))) := by

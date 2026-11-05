@@ -1,0 +1,72 @@
+**Lemma 45.3 (no low-defect mixed arc minimum).** For any actual $U$,
+any $0<\xi\le R$, and any admissible sign $\sigma$, every mixed effect
+minimizing $g(E,U)$ on $\mathfrak E_\sigma(U,\xi)$ has $g(E,U)>c_0$.
+
+*Proof.* Apply the exact arc minimum and phase-equality formulas
+(36.5)--(36.7), whose derivation minimizes each individual arc before
+taking the minimum over signs. Write $t=t_\sigma$, $b=b_\sigma$,
+$\omega=uv$ and $\Lambda=\sqrt{b^2+4\omega^2}$; thus $\Lambda$ is
+$R_\sigma$ of (36.4). Suppose a minimizing effect is mixed, so
+$0<t<q<1$. It has $q<J_\sigma$: equality would make both original
+signs minimizing by (36.11), contrary to Theorem 42.3. That theorem
+applies to every point here since its actual original level is
+$0<\xi\le R$; equivalently, its proof uses
+$\xi+\epsilon\le15/4<\zeta$ and (42.20), including mixed effects.
+
+If $\Lambda=0$, then $b=0$ and $uv=0$. Since $d^2>e^2$,
+
+$$
+ u^2-v^2=d^2-e^2>0,
+ \qquad v=0,
+ \qquad u^2=d^2-e^2,
+ \qquad \Delta_+=\Delta_-=e^2.
+\tag{45.10}
+$$
+
+The exact identity (36.14) is consequently constant with value
+$e^2>c_0$ throughout the arc, including every coherence phase.
+
+Suppose $\Lambda>0$. Formula (36.5) gives
+
+$$
+ q=\min\{Q_\sigma,\max\{t,q^\circ\}\},\qquad
+ q^\circ=\frac{\sqrt t\,(-b)_+}{\Lambda}\le\sqrt t.
+\tag{45.11}
+$$
+
+Since $q>t$, one has $q^\circ>t$, and hence $b<0$.
+The truncation at $J_\sigma$ cannot be active because $q<J_\sigma$;
+the other upper endpoint $\sqrt t$ cannot cut off $q^\circ$.
+Therefore $q=q^\circ$. The aligning-phase equality in (36.7) and
+the nonnegative square roots give, without dividing by $u$ or $v$,
+
+$$
+\begin{aligned}
+ q&=\frac{\sqrt t(-b)}{\Lambda},&
+ |z|=\sqrt{t-q^2}&=\frac{2\omega\sqrt t}{\Lambda},\\
+ g(E,U)&=\Delta_\sigma+bq-2\omega\sqrt{t-q^2}
+              =\Delta_\sigma-\Lambda\sqrt t.
+\end{aligned}
+\tag{45.12}
+$$
+
+Because $q>t$ and $t>0$, one has $-b>\Lambda\sqrt t$.
+Lemma 45.2 now yields
+
+$$
+ g(E,U)>\Delta_\sigma+b=\Delta_{-\sigma}>c_0.
+\tag{45.13}
+$$
+
+If $P=0$ or $Q=0$ and $\Lambda>0$, the same argument is exactly
+the affine case of (36.5): a mixed minimum requires $b<0$ and
+$q=\sqrt t<J_\sigma$, with $z=0$. Equations (45.12)--(45.13)
+still hold. When $\omega>0$ the minimizing phase is the one in
+(36.7); if $\omega|z|=0$ its phase condition is vacuous. Thus no
+zero-coherence endpoint is lost. An arc with $t=0$ or $t=1$ is a
+pure singleton; any other singleton has $Q_\sigma=t$ and is also
+pure. The lower endpoint $q=t$ is pure, the possible mixed endpoint
+$q=\sqrt t$ has been included, and a sign-truncation endpoint at
+$q=J_\sigma$ is excluded by the proved sign separation. This
+exhausts all degenerate and truncated arcs. $\square$
+

@@ -1,0 +1,11 @@
+### 定义 24.2（本增补所消费的成熟结果及条件范围）
+
+| 来源 | 在本增补中的准确用途 | 没有借入的前件或结论 |
+|---|---|---|
+| Caves–Fuchs–Manne–Renes，[quant-ph/0306179v1](https://arxiv.org/html/quant-ph/0306179v1)，§IV.1 式 (11)–(20)，§IV.2.1 式 (22) | 连续球面函数的调和分解、旋转不可约模及正交性；定理 21.2 用它们计算黄金残差平方算子的乘子，并用二次平滑得到一致范数估计 | 文献的 trine/POVM 规则不是原生前件，其准确刚性不直接提供 (21.6) 的定量结论 |
+| Yu–Liu–Li–Oh，[0805.1538v2](https://arxiv.org/html/0805.1538v2)，式 (1)–(5)、Theorem 1 | 对给定正 qubit 效果及给定共同父菜单的联合可测性；其无偏正交情形与 (23.4) 的锐度阈值一致 | 命题 23.1 在实仿射正锥中直接证明所需不等式；没有将论文的 POVM 起点、原生共同父菜单或可任取测量借入 AURIC |
+| 本卷定理 17.4–17.5、定义 18.2、20.2；相干重建续卷 II §§83.1–83.3 | 准确核、局部旋转的同源位置、全部原记录供应与程序档案的区别 | 稳定性不消除方向充分性的原生供应义务，不把条件索引当作已删除的可访问档案 |
+| `StaticEffectSequentialSeparation.same_effects_different_two_step_joint_law`；`ContinuationEffectClosure.continuationSpace_closure`；`PredictionClosureDynamicalRepair.prediction_closure_minimal_dynamical_repair` | 已有静态效果与顺序更新的区别，以及给定有限载体、Kraus 或线性动力学后的闭合结果所限定的问题范围 | 这些结论不供应当前原生模型缺失的有限载体、读后准备闭合或更新关系，未用它们替代 (22.3) 的共同正性义务 |
+
+定理 21.2 的黄金多项式一致估计、定理 22.2 与原图距离的组合及命题 23.1 的细标签图构造均按 repo-derived 条件推导使用。调和分析、紧性与联合正效果几何是成熟中间工具；这里不提出其原创权，也不以这项有限条件结果宣告完整量子起源目标完成。
+

@@ -18,7 +18,21 @@ Lean statement: `D5/S3/Combinatorics/MetallicHankel/MetallicHankelTransfer.topWo
 
 At n = 2 the word of pairs (d,b) is (2,-1),(0,1),(0,-1),(1,-1),(0,-1),(0,-1),(2,1),(-1,-1). For every other nonnegative n it starts with (2,-1),(0,1), contains n-2 copies of the triple (1,-1),(1,-1),(-1,-1), then (0,-1),(1,-1),(0,-1),(-1,-1), then n-3 copies of the same triple, and ends with (1,-1),(1,-1),(0,-1),(2,1),(-1,-1). Repetition counts use natural subtraction truncated at zero.
 
-**Theorem 1.2 (Periodicity and bounds of the transfer coordinates).**
+**Theorem 1.2 (The entire constant monodromy is the identity).**
+
+Lean statement: `D5/S3/Combinatorics/MetallicHankel/MetallicHankelTransfer.top_word_identity`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/MetallicHankel/MetallicHankelTransfer.top_word_identity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Guo-Niu Han, Emmanuel Pedon (2025). *Hankel continued fractions and Hankel determinants for q-deformed metallic numbers*. DOI: [10.48550/arXiv.2502.05993](https://doi.org/10.48550/arXiv.2502.05993). URL: <https://arxiv.org/abs/2502.05993v2>.
+
+*Commentary.*
+
+For every n>=2 and every integer pair z, folding the full topWord n with the transition (x,y),(d,b) -> (d x-b y,x) returns z. Thus the result holds for both basis vectors and yields a matrix identity. It supplies the arbitrary-state part of block_transfer and the constant term of the reversed continuant transfer.
+
+**Theorem 1.3 (Periodicity and bounds of the transfer coordinates).**
 
 Lean statement: `D5/S3/Combinatorics/MetallicHankel/MetallicHankelTransfer.block_transfer`
 
@@ -36,4 +50,5 @@ Let n be at least two, let W be its transfer word of length L, and let z_p be a 
 
 - Truth anchor: `D5/S3/Combinatorics/MetallicHankel/MetallicHankelTransfer.block_transfer`
 - Truth anchor: `D5/S3/Combinatorics/MetallicHankel/MetallicHankelTransfer.topWord`
+- Truth anchor: `D5/S3/Combinatorics/MetallicHankel/MetallicHankelTransfer.top_word_identity`
 - Dependency: [D5/S3/Combinatorics/MetallicHankel/MetallicHankelDefs](MetallicHankelDefs.md)

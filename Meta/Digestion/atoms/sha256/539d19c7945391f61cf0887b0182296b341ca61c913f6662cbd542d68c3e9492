@@ -1,0 +1,31 @@
+**定理 146.1（逐回路读数界与固定中点）。** 保留精确的已实现 $L,W_g,p_j$ 与校准合同。对一个给定回路，若全部字典项另满足已给定的 $s_g\ge s_0>\varepsilon_s\ge0$，并有读数
+
+$$
+|\widehat r_{gj}-r_{gj}|\le\varepsilon,\qquad
+|\widehat s_g-s_g|\le\varepsilon_s,\qquad\varepsilon\ge0,
+\tag{146.1}
+$$
+
+则以 $\widehat{\operatorname{score}}_g=\sum_j\widehat r_{gj}/\widehat s_g$ 定义的读数分数满足
+
+$$
+\left|\widehat{\operatorname{score}}_g-
+\operatorname{score}_g\right|
+\le\delta:=\frac{3\varepsilon+3\varepsilon_s}{s_0-\varepsilon_s}.
+\tag{146.2}
+$$
+
+若 $\delta<(\mu-2)/2$，固定阈值 $h=(\mu+2)/2$ 严格分离两种精确实现：proper 回路的读数最大值大于 $h$，improper 回路的小于 $h$。
+
+**证明。** 精确实现给 $0\le r_{gj}\le s_g$，所以 $R_g:=\sum_jr_{gj}\le3s_g$。又 $\widehat s_g\ge s_0-\varepsilon_s>0$，故
+
+$$
+\left|\frac{\widehat R_g}{\widehat s_g}-\frac{R_g}{s_g}\right|
+\le\frac{|\widehat R_g-R_g|+(R_g/s_g)|\widehat s_g-s_g|}
+{\widehat s_g}
+\le\frac{3\varepsilon+3\varepsilon_s}{s_0-\varepsilon_s}.
+\tag{146.3}
+$$
+
+有限最大值在一致加性误差下也相差至多 $\delta$。定理 142.2 因而给 proper 读数至少 $\mu-\delta>h$、improper 读数至多 $2+\delta<h$。∎
+

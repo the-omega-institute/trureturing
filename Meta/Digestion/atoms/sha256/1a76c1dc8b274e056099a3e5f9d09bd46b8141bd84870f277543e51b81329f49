@@ -1,0 +1,25 @@
+以下条件等价：
+
+1. 对每个有限 $\mathcal F_0\subseteq\mathcal F$，该有限边际资料满足 C92；
+
+2. 存在一套相容的前缀密度态 $(\widehat\rho_n)_{n\ge1}$，使
+
+
+   $$
+   \operatorname{Tr}_{n+1}\widehat\rho_{n+1}=\widehat\rho_n,
+   $$
+
+
+    且其局部边际实现全部 $\rho_S$；
+
+3. 拟局域 $C^*$ 代数
+
+
+   $$
+   \mathfrak A
+     =\overline{\bigcup_n\mathfrak A_n}^{\|\cdot\|}
+   $$
+
+
+    上存在实现全部资料的正归一线性泛函 $\omega$。
+

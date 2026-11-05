@@ -1,0 +1,21 @@
+对式 [(8.1)](#eq-c94-finite-blocks) 的可见代数与忠实 $\tau$，
+以下条件等价：
+
+1. $\tau^{it}\mathcal A\tau^{-it}=\mathcal A$ 对全部 $t\in\mathbb R$ 成立；
+
+2. $\log\tau$ 对中央块为块对角，且每块满足
+
+
+   <a id="eq-c94-modular-generator"></a>
+
+   $$
+   (\log\tau)|_{P_kH}
+     =h_{L,k}\otimes I_{R,k}+I_{L,k}\otimes h_{R,k}
+   \tag{10.1}
+   $$
+
+
+    对某些自伴 $h_{L,k},h_{R,k}$ 成立；
+
+3. $\tau$ 具有式 [(9.1)](#eq-c94-reference-product) 的块乘积形式。
+

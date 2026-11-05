@@ -1,0 +1,26 @@
+### 定义 10.3（用于反例的 RLD 平方）
+
+在同一个中点与半差上，另定义
+
+$$
+J_{\mathrm{RLD}}(\rho_0,\rho_1)
+ =\operatorname{Tr}(d\sigma^{-1}d).
+$$
+
+本节简记 $J:=\mathcal I(\rho_0,\rho_1)=\operatorname{Tr}(d\sigma^{-1/2}d\sigma^{-1/2})$。二者满足
+
+<a id="eq-c90-rld-difference"></a>
+
+$$
+J_{\mathrm{RLD}}-J
+ =\frac12\left\lVert [\sigma^{-1/2},d]\right\rVert_2^2\ge0.
+\tag{10.1}
+$$
+
+这由展开交换子的 Hilbert–Schmidt 平方并使用迹的循环性得到。
+两种加权平方不能在恢复定理中直接互换。
+
+量子 $\chi^2$ 的恢复性质确实依赖所选权重；
+对称 $1/2$ 权重与 RLD 的区别已有明确研究 [10](#ref-gaorecovery)。
+下面给出本轮中点约定下可逐项核算的例子。
+
