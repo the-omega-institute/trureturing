@@ -91,6 +91,8 @@ Utility none: uniform operator and real-parameter constructions, not finite enum
 -/
 
 import D5.S3.Quantum.FiniteDimensional
+import Mathlib.Analysis.Matrix.Order
+import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
 
 noncomputable section
 open scoped BigOperators Matrix MatrixOrder ComplexOrder Matrix.Norms.L2Operator

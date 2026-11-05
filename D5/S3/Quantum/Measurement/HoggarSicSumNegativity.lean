@@ -26,6 +26,7 @@ Utility: the result is universal over all density matrices. The finite Gaussian-
 import D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
 import D5.S3.Weil.ZetaLinear.RankTrace
 import D5.S3.Observer.BornReduction
+import Mathlib.NumberTheory.Zsqrtd.GaussianInt
 
 open scoped BigOperators ComplexOrder
 open Matrix

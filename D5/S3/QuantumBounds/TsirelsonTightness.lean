@@ -8,6 +8,7 @@
 import D5.S3.QuantumBounds.CHSHWitness
 import D5.S3.Weil.ZetaLinear.RankTrace
 import Mathlib.Algebra.Star.CHSH
+import Mathlib.Analysis.Matrix.Order
 
 /-!
 # Tightness of the fixed CHSH witness

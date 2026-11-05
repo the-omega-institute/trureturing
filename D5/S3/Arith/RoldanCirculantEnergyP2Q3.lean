@@ -81,6 +81,7 @@ import D5.S3.Quantum.Matrix.CirculantCharpoly
 import D5.S3.Analytic.Certified.FiniteRamanujanDivisorIdentity
 import D5.S3.Arith.RoldanCirculantEnergyP2Q3Certificate
 import D5.S3.ConceptDynamics.Coding.CountedOriginalOrbitGyration
+import Mathlib.Data.Finset.NatDivisors
 
 open D5.S3.Arith.RoldanCirculantEnergyP2Q3Certificate
 set_option maxHeartbeats 0

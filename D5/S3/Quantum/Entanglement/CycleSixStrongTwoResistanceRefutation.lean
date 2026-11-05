@@ -20,6 +20,7 @@ Direct frozen dependencies:
 
 import D5.S3.Quantum.Foundation.FiniteStateChannel
 import D5.S3.Quantum.Entanglement.LocalObservationPartialTraceEquivalence
+import Mathlib.Tactic.NormNum.RealSqrt
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

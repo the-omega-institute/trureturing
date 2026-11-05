@@ -8,6 +8,7 @@
 
 import D5.S3.Observer.Budget.DyadicForwardWaitingOptimality
 import Mathlib.Data.Nat.BitIndices
+import Mathlib.Tactic.NormNum
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

@@ -6,6 +6,7 @@
    digest: Derive the universal cloning machine's reduced spectrum and entropy. -/
 
 import D5.S3.Quantum.QubitWitnesses
+import Mathlib.Analysis.SpecialFunctions.Log.Base
 
 namespace D5.S3.Quantum.CloningMachine
 

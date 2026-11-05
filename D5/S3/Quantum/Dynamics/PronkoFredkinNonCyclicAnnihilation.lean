@@ -14,6 +14,7 @@ Direct frozen dependencies: D5/S3/Quantum/FiniteDimensional.qubitZ (statement_id
 -/
 
 import D5.S3.Quantum.FiniteDimensional
+import Mathlib.LinearAlgebra.Matrix.Permutation
 
 open scoped BigOperators Matrix
 open D5.S3.Quantum.FiniteDimensional
