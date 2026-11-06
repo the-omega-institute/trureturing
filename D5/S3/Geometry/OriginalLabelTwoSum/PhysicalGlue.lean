@@ -12,6 +12,9 @@ import D5.S3.Geometry.OriginalLabelTwoSum.InterfaceNormalization
 assumed. The parent graph, its tree, labels, chord soundness/coverage and rows
 are constructed below. The actual tree theorem is the released CutTree theorem;
 the row theorem consumes its actual oriented path substitution. -/
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 noncomputable section
 open Set Finset SimpleGraph
 namespace D5.S3.Geometry.OriginalLabelTwoSum
@@ -69,11 +72,13 @@ theorem graph_adjacency (w z : g.Carrier) : g.graph.Adj w z ↔
     (∃ x y, g.leftKept.Adj x y ∧ g.qL x = w ∧ g.qL y = z) ∨
     (∃ x y, g.rightKept.Adj x y ∧ g.qR x = w ∧ g.qR y = z) := by
   simp only [graph, SimpleGraph.sup_adj, SimpleGraph.map_adj]
+  rfl
 
 theorem graph_edgeSet : g.graph.edgeSet =
     Sym2.map g.qL '' g.leftKept.edgeSet ∪
       Sym2.map g.qR '' g.rightKept.edgeSet := by
-  simpa only [graph, SimpleGraph.edgeSet_sup, SimpleGraph.edgeSet_map]
+  simp only [graph, SimpleGraph.edgeSet_sup, SimpleGraph.edgeSet_map]
+  rfl
 
 private theorem adj_of_pair_eq {V : Type*} (G : SimpleGraph V)
     {x y a b : V} (h : G.Adj x y) (he : s(x,y) = s(a,b)) : G.Adj a b := by
@@ -114,7 +119,7 @@ theorem graph_images_disjoint :
     | h u v =>
       have hl := SimpleGraph.deleteEdges_adj.mp hd
       have hc := g.cross_pair hl.1.ne he.symm
-      exact hl.2 (by simpa [g.edge_e] using hc.1)
+      exact hl.2 (by simpa [input,source,GraphSource.input,g.edge_e] using hc.1)
 
 theorem graph_left (x y : VL) :
     g.graph.Adj (g.qL x) (g.qL y) ↔ g.leftKept.Adj x y := by
@@ -144,7 +149,7 @@ theorem graph_right (x y : VR) :
     · have hl := SimpleGraph.deleteEdges_adj.mp h
       have he : Sym2.map g.qL s(u,v) = Sym2.map g.qR s(x,y) := by
         simp only [Sym2.map_mk,hu,hv]
-      exact False.elim (hl.2 (by simpa [g.edge_e] using (g.cross_pair hl.1.ne he).1))
+      exact False.elim (hl.2 (by simpa [input,source,GraphSource.input,g.edge_e] using (g.cross_pair hl.1.ne he).1))
     · have hux := g.input.qR_injective hu
       have hvy := g.input.qR_injective hv
       simpa only [hux,hvy] using h
@@ -163,7 +168,7 @@ theorem tree_le : g.input.tree ≤ g.graph := by
   · apply (g.graph_left x y).mpr
     have hd := SimpleGraph.deleteEdges_adj.mp hl
     apply SimpleGraph.deleteEdges_adj.mpr
-    exact ⟨g.left.tree_le hd.1,by simpa [g.edge_e] using hd.2⟩
+    exact ⟨g.left.tree_le hd.1,by simpa [input,source,GraphSource.input,g.edge_e] using hd.2⟩
   · apply (g.graph_right x y).mpr
     apply SimpleGraph.deleteEdges_adj.mpr
     refine ⟨g.right.tree_le hr,?_⟩
@@ -199,7 +204,7 @@ theorem retained_label_mem {i : Label} (hi : i ∈ g.X) :
   rw [SimpleGraph.edgeSet_deleteEdges]
   refine ⟨labelled_mem g.left hgi,?_⟩
   intro he
-  have he' : g.left.edge i = g.left.edge g.e := by simpa [g.edge_e] using he
+  have he' : g.left.edge i = g.left.edge g.e := by simpa [input,source,GraphSource.input,g.edge_e] using he
   have hie := g.left.labels_injective i hgi g.e g.selected_mem he'
   exact g.e_not_X (hie ▸ hi)
 
@@ -222,7 +227,7 @@ theorem tree_edges (w z : g.Carrier) :
       have hne : i ≠ g.e := by
         intro he
         subst i
-        exact hd.2 (by simp only [← hei,g.edge_e,Set.mem_singleton_iff])
+        exact hd.2 (by simp only [← hei,g.edge_e,Set.mem_singleton_iff,input,source,GraphSource.input])
       have hx : i ∈ g.X := by
         rw [g.left_ground] at hi
         exact (Finset.mem_insert.mp hi).resolve_left hne
@@ -281,7 +286,7 @@ theorem chord_adj (c : g.Chords) : g.graph.Adj (g.start c) (g.finish c) := by
       (g.edge_e.symm.trans hp.symm))
   | inr d =>
     apply (g.graph_right _ _).mpr
-    exact SimpleGraph.deleteEdges_adj.mpr ⟨g.right.chord_adj d.1,by simpa using d.2⟩
+    exact SimpleGraph.deleteEdges_adj.mpr ⟨g.right.chord_adj d.1,by simpa only [GraphData.kappa] using d.2⟩
 
 theorem chord_not_tree (c : g.Chords) :
     ¬g.input.tree.Adj (g.start c) (g.finish c) := by
@@ -303,7 +308,7 @@ theorem chord_cover (w z : g.Carrier) (h : g.graph.Adj w z)
       apply hn
       apply (g.tree_left x y).mpr
       apply SimpleGraph.deleteEdges_adj.mpr
-      exact ⟨ht,by simpa [g.edge_e] using hd.2⟩
+      exact ⟨ht,by simpa [input,source,GraphSource.input,g.edge_e] using hd.2⟩
     obtain ⟨c,hc⟩ := g.left.chord_cover x y hd.1 hnt
     exact ⟨.inl c,congrArg (Sym2.map g.qL) hc⟩
   · have hd := SimpleGraph.deleteEdges_adj.mp hr
@@ -345,10 +350,9 @@ private theorem tagged_left (c : g.left.chords) :
     g.data.rows.row (.inl c) = (g.source.actualLeftRow c).image forgetTag := by
   classical
   ext i
-  simp only [Finset.mem_image]
-  change (i ∈ (g.X ∪ g.Y).filter (fun j => g.labelEdge j ∈
-      (g.input.path (g.qL (g.left.start c)) (g.qL (g.left.finish c))).edges)) ↔ _
-  simp only [Finset.mem_filter]
+  simp only [GraphData.rows, Finset.mem_image, Finset.mem_filter]
+  change (i ∈ g.X ∪ g.Y ∧ g.labelEdge i ∈
+      (g.input.path (g.qL (g.left.start c)) (g.qL (g.left.finish c))).edges) ↔ _
   constructor
   · rintro ⟨hi,hp⟩
     rcases Finset.mem_union.mp hi with hx | hy
@@ -389,10 +393,9 @@ private theorem tagged_right (d : g.right.PhysicalSurvivor g.selected) :
     g.data.rows.row (.inr d) = (g.source.actualRightRow d.1).image forgetTag := by
   classical
   ext i
-  simp only [Finset.mem_image]
-  change (i ∈ (g.X ∪ g.Y).filter (fun j => g.labelEdge j ∈
-      (g.input.path (g.qR (g.right.start d.1)) (g.qR (g.right.finish d.1))).edges)) ↔ _
-  simp only [Finset.mem_filter]
+  simp only [GraphData.rows, Finset.mem_image, Finset.mem_filter]
+  change (i ∈ g.X ∪ g.Y ∧ g.labelEdge i ∈
+      (g.input.path (g.qR (g.right.start d.1)) (g.qR (g.right.finish d.1))).edges) ↔ _
   constructor
   · rintro ⟨hi,hp⟩
     rcases Finset.mem_union.mp hi with hx | hy
@@ -436,8 +439,8 @@ theorem left_row (c : g.left.chords) :
   classical
   rw [g.tagged_left, g.source.left_row_of_interface c g.selected rfl]
   by_cases he : g.e ∈ g.left.rows.row c
-  · simp [substitute,he,forgetTag,Finset.image_image]
-  · simp [substitute,he,forgetTag,Finset.image_image,Finset.erase_eq_of_not_mem he]
+  · simp [substitute,source,he,forgetTag,Finset.image_image]
+  · simp [substitute,source,he,forgetTag,Finset.image_image,Finset.erase_eq_of_notMem he]
 
 theorem right_row (d : g.right.PhysicalSurvivor g.selected) :
     g.data.rows.row (.inr d) = g.right.rows.row d.1 := by

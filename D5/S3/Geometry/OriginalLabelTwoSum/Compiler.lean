@@ -124,6 +124,7 @@ def finishCore {X Y Z R : Finset V} {e p : V} {E : Family V}
       · exact Or.inr ⟨insert p a,Finset.insert_subset_iff.mpr ⟨hpX,ha⟩,
           b,hb,by simp⟩
     have hB : Supported (X ∪ Y) B := by
+      dsimp only [B]
       rw [← singleton_parent_other X Y Z e p E heX hpX hpe]
       exact parent_support X Y Z e E _ hZ hE
     exact ⟨⟨p,Finset.mem_union_left _ hpX⟩,
@@ -336,13 +337,16 @@ theorem finishCore_orderedPairs {X Y Z R : Finset V} {e p : V} {E : Family V}
   classical
   by_cases hpe : p = e
   · subst p
+    unfold finishCore
+    erw [dif_pos (rfl : e = e)]
     by_cases hX : X.Nonempty
-    · simp [finishCore, finishPairSchedule, terminalAtInterface, hX, orderedPairs_cast,
+    · simp [finishPairSchedule, terminalAtInterface, hX, orderedPairs_cast,
         orderedPairs_append, terminalGamma_orderedPairs, collapseCone_orderedPairs, orderedPairs, orderedPair]
-    · simp [finishCore, finishPairSchedule, terminalAtInterface, hX, orderedPairs_cast,
+    · simp [finishPairSchedule, terminalAtInterface, hX, orderedPairs_cast,
         collapseCone_orderedPairs]
-  · simp [finishCore, finishPairSchedule, hpe, orderedPairs_cast,
-      collapseCone_orderedPairs]
+  · unfold finishCore
+    erw [dif_neg hpe]
+    simp [finishPairSchedule, hpe, orderedPairs_cast, collapseCone_orderedPairs]
 
 private theorem finishCore_vertex {X Y Z R : Finset V} {e p : V} {E : Family V}
     (heX : e ∉ X) (hXY : Disjoint X Y) (hZ : Z ⊆ Y)
