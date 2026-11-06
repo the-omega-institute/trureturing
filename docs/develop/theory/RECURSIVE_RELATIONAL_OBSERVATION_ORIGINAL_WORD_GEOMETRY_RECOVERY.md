@@ -768,7 +768,10 @@ K'=\kappa\mathcal W_sK\mathcal W_s^{-1},\qquad
 \operatorname{tr}'(\mathcal W_sv)=\operatorname{tr}v,\\
 g_t'=\mathcal W_sg_{\kappa t},\qquad
 g_{d'}'=\mathcal W_sg_d,\qquad c'=c,\qquad
-f_y'=\mathcal W_sf_y\text{ as classes},\qquad p'=p.
+f_y'=\mathcal W_sf_y\text{ as classes},\qquad p'=p,\\
+d_q'=d_{q/\kappa},\qquad
+\operatorname{Cap}'_q(\{e\})
+       =\kappa\operatorname{Cap}_{q/\kappa}(\{e\})\quad(q>0).
 \end{gathered}
 \tag{5.3}
 $$
@@ -863,7 +866,12 @@ chronological word. Borel repairs have no effect because each
 positive-time state law is absolutely continuous with respect to
 its own $m$. The time change maps the first epoch $2d'$ to
 $2d$ and every gap $d'$ to $d$; conditional fresh-noise reading
-and nondisturbance are preserved. $\square$
+and nondisturbance are preserved. Finally the full Friedrichs
+correspondence gives
+$I-q(F'+q)^{-1}=\mathcal U_s[I-(q/\kappa)(F+q/\kappa)^{-1}]
+\mathcal U_s^{-1}$. Pairing with $h'=\mathcal U_sh$ proves
+the defect transformation, and $\operatorname{Cap}_q=q d_q$
+proves the capacity transformation. $\square$
 
 **Theorem 5.3 (complete classification inside this source family).**
 For any two finite positive triples in the family of Assumptions
