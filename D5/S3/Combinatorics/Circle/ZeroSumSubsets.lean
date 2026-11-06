@@ -10,6 +10,7 @@ public import D5.S3.Combinatorics.Circle.SourceWidth
 public import Mathlib.Combinatorics.Colex
 public import Mathlib.Data.Nat.GCD.Basic
 public import Mathlib.Data.Finset.Powerset
+public import Mathlib.Data.Fintype.Powerset
 public import Mathlib.Data.Set.Pairwise.Lattice
 public import Mathlib.Logic.Equiv.Fin.Rotate
 public import Mathlib.Algebra.Ring.GeomSum
@@ -95,6 +96,84 @@ theorem quotient_dvd {N t m : ℕ} (hN : 0 < N) (h : N ∣ t * m) :
       Nat.mul_div_cancel' (Nat.gcd_dvd_left t N)] using h
   exact (Nat.coprime_div_gcd_div_gcd hg).symm.dvd_mul_left.mp
     (Nat.dvd_of_mul_dvd_mul_left hg hc)
+
+/-- Surjectivity uses the already proved mask injection and the two equal finite
+cardinalities. In particular both endpoints 0 and 2^r-1 remain represented. -/
+private theorem mask_surjective (r : ℕ) (n : ℕ) (hn : n < 2 ^ r) :
+    ∃ A : Finset (Fin r), mask A = n := by
+  classical
+  let f : Finset (Fin r) → Fin (2 ^ r) := fun A =>
+    ⟨mask A, by
+      have hb := mask_bound A
+      have hp : 1 ≤ (2 : ℕ) ^ r := Nat.one_le_two_pow
+      omega⟩
+  have hi : Function.Injective f := by
+    intro A B he
+    exact mask_injective r (congrArg Fin.val he)
+  have hb : Function.Bijective f :=
+    (Fintype.bijective_iff_injective_and_card f).mpr ⟨hi, by simp⟩
+  obtain ⟨A, hA⟩ := hb.2 ⟨n, hn⟩
+  exact ⟨A, congrArg Fin.val hA⟩
+
+/-- Count divisible physical binary masks, including both endpoint masks.
+This is the counting bijection extracted from TwoBitZeroSubsets. Its two
+consumers supply their separate exact-integer-zero equivalences. -/
+private theorem divisible_mask_card (r t : ℕ) (hr : 0 < r) :
+    (Finset.univ.filter (fun A : Finset (Fin r) =>
+      (2 ^ r - 1) / Nat.gcd t (2 ^ r - 1) ∣ mask A)).card =
+      Nat.gcd t (2 ^ r - 1) + 1 := by
+  classical
+  let N := 2 ^ r - 1
+  let d := Nat.gcd t N
+  let Q := N / d
+  let S := Finset.univ.filter (fun A : Finset (Fin r) => Q ∣ mask A)
+  have hN : 0 < N := by
+    have hp := Nat.one_lt_two_pow (ne_of_gt hr)
+    dsimp [N]
+    omega
+  have hQ : 0 < Q := Nat.div_gcd_pos_of_pos_right t hN
+  have hQd : Q * d = N := Nat.div_mul_cancel (Nat.gcd_dvd_right t N)
+  have hd (A : Finset (Fin r)) (hA : A ∈ S) : Q ∣ mask A :=
+    (Finset.mem_filter.mp hA).2
+  have hbound (A : Finset (Fin r)) : mask A / Q < d + 1 := by
+    have hb : mask A ≤ N := mask_bound A
+    have hle := Nat.div_le_div_right hb (c := Q)
+    rw [← hQd, Nat.mul_div_cancel_left d hQ] at hle
+    omega
+  have hcount : S.card = (Finset.range (d + 1)).card := by
+    apply Finset.card_nbij (fun A : Finset (Fin r) => mask A / Q)
+    · intro A hA
+      exact Finset.mem_range.mpr (hbound A)
+    · intro A hA B hB he
+      change mask A / Q = mask B / Q at he
+      apply mask_injective r
+      calc
+        mask A = mask A / Q * Q := (Nat.div_mul_cancel (hd A hA)).symm
+        _ = mask B / Q * Q := by rw [he]
+        _ = mask B := Nat.div_mul_cancel (hd B hB)
+    · intro n hn
+      have hnle : n ≤ d := by
+        have := Finset.mem_range.mp hn
+        omega
+      have hmul : Q * n ≤ N := by
+        calc
+          Q * n ≤ Q * d := Nat.mul_le_mul_left Q hnle
+          _ = N := hQd
+      have hsmall : Q * n < 2 ^ r := by
+        dsimp [N] at hmul
+        have hp : 1 ≤ (2 : ℕ) ^ r := Nat.one_le_two_pow
+        omega
+      obtain ⟨A, hmask⟩ := mask_surjective r (Q * n) hsmall
+      have hA : A ∈ S := by
+        apply Finset.mem_filter.mpr
+        refine ⟨Finset.mem_univ _, ?_⟩
+        change Q ∣ mask A
+        rw [hmask]
+        exact ⟨n, rfl⟩
+      refine ⟨A, hA, ?_⟩
+      change mask A / Q = n
+      rw [hmask, Nat.mul_div_cancel_left n hQ]
+  simpa only [S, Finset.card_range] using hcount
 
 private theorem carry_exists (k : ℕ) (n : Fin k → ℕ) (hne : n ≠ 0) :
     ∃ A : Finset (Fin k), A.Nonempty ∧ ∃ m : Fin k → ℕ,

@@ -1,0 +1,2 @@
+module
+public import D5.S3.Combinatorics.Circle.MersenneExceptional19Stabilizer
