@@ -12,6 +12,8 @@ import D5.S3.Geometry.OriginalLabelTwoSum.GraphDataCore
 This module proves path-derived row substitution, not a parent GraphData root,
 chord-index deletion, graph history, or native certificate. -/
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open SimpleGraph Finset
 namespace D5.S3.Geometry.OriginalLabelTwoSum
 universe uLeftChord uRightChord
@@ -164,31 +166,37 @@ theorem left_row_substitution (c : source.left.chords) :
         source.terminalRow.image Sum.inr else ∅) := by
   classical
   ext i
+  simp only [actualLeftRow, Finset.mem_filter]
   cases i with
   | inl i =>
     have hrow := source.left.rows.row_supported c
     by_cases hi : i ∈ source.left.ground
     · by_cases hne : i ≠ source.e
       · have hp := source.left_label_mem c hi hne
-        simpa [actualLeftRow,ground,labelEdge,hi,hne,Finset.mem_image] using hp
+        by_cases he : source.e ∈ source.left.rows.row c <;>
+          simpa [ground,labelEdge,hi,hne,Finset.mem_image,he] using hp
       · have he : i = source.e := not_ne_iff.mp hne
         subst i
-        simp [actualLeftRow,ground,Finset.mem_image]
+        by_cases he : source.e ∈ source.left.rows.row c <;>
+          simp [ground,Finset.mem_image,he]
     · have hn : i ∉ source.left.rows.row c := fun h => hi (hrow h)
-      simp [actualLeftRow,ground,hi,hn,Finset.mem_image]
+      by_cases he : source.e ∈ source.left.rows.row c <;>
+        simp [ground,hi,hn,Finset.mem_image,he]
   | inr j =>
     by_cases hj : j ∈ source.right.ground
     · have hp := source.right_label_in_left c hj
       by_cases he : source.e ∈ source.left.rows.row c <;>
         simpa [actualLeftRow,ground,labelEdge,hj,he,Finset.mem_image] using hp
     · have ht : j ∉ source.terminalRow := by simp [terminalRow,hj]
-      simp [actualLeftRow,ground,hj,ht,Finset.mem_image]
+      by_cases he : source.e ∈ source.left.rows.row c <;>
+        simp [ground,hj,ht,Finset.mem_image,he]
 
 /-- Every right original row is inherited unchanged, with its summand tag. -/
 theorem right_row_inheritance (c : source.right.chords) :
     source.actualRightRow c = (source.right.rows.row c).image Sum.inr := by
   classical
   ext i
+  simp only [actualRightRow, Finset.mem_filter]
   cases i with
   | inl i =>
     by_cases hi : i ∈ source.left.ground ∧ i ≠ source.e

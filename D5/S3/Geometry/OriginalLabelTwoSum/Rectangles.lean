@@ -107,10 +107,13 @@ def deletionRectangle (X Y Z : Finset V) (D L E : Family V)
   rcases he with he | he
   · exact Or.inl ((split_recover hh.1).trans (congrArg (fun a => a ∪ (s ∩ Y)) he))
   · right
-    rw [split_recover hh.1,he]
-    ext v
-    simp only [CollapsePair.upper,Finset.mem_union,Finset.mem_insert]
-    tauto
+    calc
+      s = (s ∩ X) ∪ (s ∩ Y) := split_recover hh.1
+      _ = insert P.apex (P.lower ∪ (s ∩ Y)) := by
+        rw [he]
+        ext v
+        simp only [CollapsePair.upper,Finset.mem_union,Finset.mem_insert]
+        tauto
 
 open Classical in
 /-- A link projection can have an empty alpha. Its raw coface condition is
@@ -135,8 +138,8 @@ def linkRectangle (X Y Z a : Finset V) (u : V) (D L E : Family V)
     · exact Or.inl (Or.inr ⟨a,ha,t,((hF t).mp ht).1,rfl⟩)
     · refine Or.inl (Or.inr ⟨insert u a,hb,t,((hF t).mp ht).1,?_⟩)
       ext v; simp only [Finset.mem_insert,Finset.mem_union]; tauto
-  apply rectangle X Y a u hd haX huX hua F (phi X Y Z D L E)
-    (fun t ht => ((hF t).mp ht).1) ?_ hm
+  refine rectangle X Y a u hd haX huX hua F (phi X Y Z D L E)
+    (fun t ht => ((hF t).mp ht).1) ?_ hm ?_
   · intro t ht
     have htne : t.Nonempty := by
       by_contra h
@@ -157,7 +160,12 @@ def linkRectangle (X Y Z a : Finset V) (u : V) (D L E : Family V)
     rcases hfree _ hlink hax with he | he
     · exact Or.inl ((split_recover hh.1).trans (congrArg (fun a => a ∪ (s ∩ Y)) he))
     · right
-      rw [split_recover hh.1,he]
-      ext v; simp only [Finset.mem_union,Finset.mem_insert]; tauto
+      calc
+        s = (s ∩ X) ∪ (s ∩ Y) := split_recover hh.1
+        _ = insert u (a ∪ (s ∩ Y)) := by
+          rw [he]
+          ext v
+          simp only [Finset.mem_union,Finset.mem_insert]
+          tauto
 
 end D5.S3.Geometry.OriginalLabelTwoSum

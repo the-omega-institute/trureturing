@@ -60,10 +60,10 @@ def emittedFaces (H : Finset (Finset V)) : List (Symbol V) → Finset (Finset V)
 The table tests raw K, so VOID and UNIT give different answers. -/
 def rawDual (W : Finset V) (K : Family V) : Family V := by
   classical
-  refine { carrier := {s | s ∈ FiniteAlexanderDualCollapse.dualTable W
-    (W.powerset.filter (fun T => T ∈ K))}, lower' := ?_ }
+  refine { carrier := {s | s ∈ (FiniteAlexanderDualCollapse.dualTable W
+    (W.powerset.filter (fun T => T ∈ K)))}, lower' := ?_ }
   ·
-    intro t s hts hs
+    intro s t hts hs
     have hm : ∀ q : Finset V,
         q ∈ FiniteAlexanderDualCollapse.dualTable W
           (W.powerset.filter (fun T => T ∈ K)) ↔
@@ -99,7 +99,7 @@ def rawEndpoint (W : Finset V) (K : Family V) (H : Finset (Finset V))
   carrier := {s | s ⊆ W ∧ (W \ s ∉ K ∨ W \ s ∈ H)}
   lower' := by
     classical
-    rintro t s hts ⟨hsW, hs⟩
+    rintro s t hts ⟨hsW, hs⟩
     refine ⟨hts.trans hsW, ?_⟩
     have hc : W \ s ⊆ W \ t := Finset.sdiff_subset_sdiff_right W hts
     rcases hs with hs | hs
@@ -124,12 +124,12 @@ structure Word (W : Finset V) (K : Family V) where
   critical_data : ∀ S, Symbol.critical S ∈ word → S ∈ K
   partition : word.Pairwise (fun σ τ => Disjoint σ.faces τ.faces)
   covers : ∀ s, s ∈ K ↔ ∃ i : Fin word.length, s ∈ (word.get i).faces
-  pair_dependency : ∀ (prefix suffix : List (Symbol V)) L v,
-    word = prefix ++ Symbol.pair L v :: suffix →
-    ∀ T, T ⊂ insert v L → T ≠ L → ∃ σ ∈ prefix, T ∈ σ.faces
-  critical_dependency : ∀ (prefix suffix : List (Symbol V)) S,
-    word = prefix ++ Symbol.critical S :: suffix →
-    ∀ T, T ⊂ S → ∃ σ ∈ prefix, T ∈ σ.faces
+  pair_dependency : ∀ («prefix» suffix : List (Symbol V)) L v,
+    word = «prefix» ++ Symbol.pair L v :: suffix →
+    ∀ T, T ⊂ insert v L → T ≠ L → ∃ σ ∈ «prefix», T ∈ σ.faces
+  critical_dependency : ∀ («prefix» suffix : List (Symbol V)) S,
+    word = «prefix» ++ Symbol.critical S :: suffix →
+    ∀ T, T ⊂ S → ∃ σ ∈ «prefix», T ∈ σ.faces
 
 /-- Protection adds no native output hypothesis. Whole-symbol protection for
 pairs is the equivalence below; singleton critical symbols need no duplicate
@@ -156,22 +156,22 @@ private theorem split_mem {α : Type*} {x : α} {xs : List α} (hx : x ∈ xs) :
       · obtain ⟨left, right, h⟩ := ih hx
         exact ⟨y :: left, right, by simp only [h, List.cons_append]⟩
 
-private theorem prefix_subset {α : Type*} {word prefix suffix : List α}
-    (h : word = prefix ++ suffix) {σ : α} (hσ : σ ∈ prefix) : σ ∈ word := by
+private theorem prefix_subset {α : Type*} {word «prefix» suffix : List α}
+    (h : word = «prefix» ++ suffix) {σ : α} (hσ : σ ∈ «prefix») : σ ∈ word := by
   rw [h]
   exact List.mem_append.mpr (Or.inl hσ)
 
-private theorem suffix_subset {α : Type*} {word prefix suffix : List α}
-    (h : word = prefix ++ suffix) {σ : α} (hσ : σ ∈ suffix) : σ ∈ word := by
+private theorem suffix_subset {α : Type*} {word «prefix» suffix : List α}
+    (h : word = «prefix» ++ suffix) {σ : α} (hσ : σ ∈ suffix) : σ ∈ word := by
   rw [h]
   exact List.mem_append.mpr (Or.inr hσ)
 
-private theorem separated {prefix suffix : List (Symbol V)}
-    (h : (prefix ++ suffix).Pairwise (fun σ τ => Disjoint σ.faces τ.faces))
-    {σ τ : Symbol V} (hσ : σ ∈ prefix) (hτ : τ ∈ suffix) :
+private theorem separated {«prefix» suffix : List (Symbol V)}
+    (h : («prefix» ++ suffix).Pairwise (fun σ τ => Disjoint σ.faces τ.faces))
+    {σ τ : Symbol V} (hσ : σ ∈ «prefix») (hτ : τ ∈ suffix) :
     Disjoint σ.faces τ.faces := by
   revert h hσ
-  induction prefix with
+  induction «prefix» with
   | nil => intro h hσ; simp at hσ
   | cons a xs ih =>
       intro h hσ
@@ -274,9 +274,9 @@ private theorem face_valid {σ : Symbol V} (hσ : σ ∈ d.word)
       · exact hd.1
       · exact hd.2.1
 
-private theorem emitted_valid (prefix : List (Symbol V))
-    (hp : ∀ σ ∈ prefix, σ ∈ d.word) {r : Finset V}
-    (hr : r ∈ emittedFaces d.protected prefix) : r ∈ K ∧ r ∉ d.protected := by
+private theorem emitted_valid («prefix» : List (Symbol V))
+    (hp : ∀ σ ∈ «prefix», σ ∈ d.word) {r : Finset V}
+    (hr : r ∈ emittedFaces d.protected «prefix») : r ∈ K ∧ r ∉ d.protected := by
   obtain ⟨σ, hσ, hr⟩ := (mem_emitted _ _ _).mp hr
   have hσword := hp σ hσ
   refine ⟨d.face_valid hσword (emittedOne_subset _ _ hr), ?_⟩
@@ -290,10 +290,10 @@ private theorem emitted_valid (prefix : List (Symbol V))
         · exact hL
         · exact fun hU => hL ((d.protected_pair L v hσword).mpr hU)
 
-private theorem face_emitted (prefix : List (Symbol V))
-    (hp : ∀ σ ∈ prefix, σ ∈ d.word) {σ : Symbol V} (hσ : σ ∈ prefix)
+private theorem face_emitted («prefix» : List (Symbol V))
+    (hp : ∀ σ ∈ «prefix», σ ∈ d.word) {σ : Symbol V} (hσ : σ ∈ «prefix»)
     {T : Finset V} (hT : T ∈ σ.faces) (hn : T ∉ d.protected) :
-    T ∈ emittedFaces d.protected prefix := by
+    T ∈ emittedFaces d.protected «prefix» := by
   apply (mem_emitted _ _ _).mpr
   refine ⟨σ, hσ, ?_⟩
   cases σ with
@@ -310,13 +310,13 @@ private theorem face_emitted (prefix : List (Symbol V))
       simpa only [emittedOne, if_neg hL, Symbol.faces] using hT
 
 /-- This is the order-sensitive argument. Split the witnessed emitted symbol
-INSIDE prefix, and apply its dependency at that very occurrence in the full word. -/
-private theorem emitted_downward (prefix suffix : List (Symbol V))
-    (hword : d.word = prefix ++ suffix) {r T : Finset V}
-    (hr : r ∈ emittedFaces d.protected prefix) (hTr : T ⊆ r) :
-    T ∈ emittedFaces d.protected prefix := by
-  have hp : ∀ σ ∈ prefix, σ ∈ d.word := fun _ h => prefix_subset hword h
-  have hv := d.emitted_valid prefix hp hr
+INSIDE «prefix», and apply its dependency at that very occurrence in the full word. -/
+private theorem emitted_downward («prefix» suffix : List (Symbol V))
+    (hword : d.word = «prefix» ++ suffix) {r T : Finset V}
+    (hr : r ∈ emittedFaces d.protected «prefix») (hTr : T ⊆ r) :
+    T ∈ emittedFaces d.protected «prefix» := by
+  have hp : ∀ σ ∈ «prefix», σ ∈ d.word := fun _ h => prefix_subset hword h
+  have hv := d.emitted_valid «prefix» hp hr
   have hTn : T ∉ d.protected := fun h => hv.2 (d.protected_upward h hv.1 hTr)
   obtain ⟨σ, hσ, hrσ⟩ := (mem_emitted _ _ _).mp hr
   cases σ with
@@ -328,52 +328,52 @@ private theorem emitted_downward (prefix suffix : List (Symbol V))
         · exact hTr.trans (Finset.subset_insert v L)
         · exact hTr
       by_cases hTUeq : T = insert v L
-      · exact d.face_emitted prefix hp hσ (by simp [hTUeq, Symbol.faces]) hTn
+      · exact d.face_emitted «prefix» hp hσ (by simp [hTUeq, Symbol.faces]) hTn
       by_cases hTLeq : T = L
-      · exact d.face_emitted prefix hp hσ (by simp [hTLeq, Symbol.faces]) hTn
+      · exact d.face_emitted «prefix» hp hσ (by simp [hTLeq, Symbol.faces]) hTn
       obtain ⟨left, right, hprefix⟩ := split_mem hσ
       have hsplit : d.word = left ++ Symbol.pair L v :: (right ++ suffix) := by
         rw [hword, hprefix]
         simp only [List.append_assoc, List.cons_append]
       obtain ⟨τ, hτ, hTτ⟩ := d.pair_dependency left (right ++ suffix) L v hsplit T
         (Finset.ssubset_iff_subset_ne.mpr ⟨hTU, hTUeq⟩) hTLeq
-      have hτprefix : τ ∈ prefix := by
+      have hτprefix : τ ∈ «prefix» := by
         rw [hprefix]
         exact List.mem_append.mpr (Or.inl hτ)
-      exact d.face_emitted prefix hp hτprefix hTτ hTn
+      exact d.face_emitted «prefix» hp hτprefix hTτ hTn
 
-private theorem current_downward (prefix suffix : List (Symbol V))
-    (hword : d.word = prefix ++ suffix) {s t : Finset V}
-    (hs : RawFaces W K (emittedFaces d.protected prefix) s)
+private theorem current_downward («prefix» suffix : List (Symbol V))
+    (hword : d.word = «prefix» ++ suffix) {s t : Finset V}
+    (hs : RawFaces W K (emittedFaces d.protected «prefix») s)
     (hts : t ⊆ s) (ht : t.Nonempty) :
-    RawFaces W K (emittedFaces d.protected prefix) t := by
+    RawFaces W K (emittedFaces d.protected «prefix») t := by
   refine ⟨ht, hts.trans hs.2.1, ?_⟩
-  by_cases hr : W \ t ∈ emittedFaces d.protected prefix
+  by_cases hr : W \ t ∈ emittedFaces d.protected «prefix»
   · have hc := Finset.sdiff_subset_sdiff_right W hts
-    have he := d.emitted_downward prefix suffix hword hr hc
-    have hv := d.emitted_valid prefix (fun _ h => prefix_subset hword h) hr
+    have he := d.emitted_downward «prefix» suffix hword hr hc
+    have hv := d.emitted_valid «prefix» (fun _ h => prefix_subset hword h) hr
     have hK : W \ s ∈ K := K.lower hc hv.1
     exact (hs.2.2.elim (fun h => h hK) (fun h => h he)).elim
   · exact Or.inr hr
 
 /-- Current carries the actual ordered decomposition, not a membership-only
 subword certificate. Its downward-closure field is proved from dependencies. -/
-def current (prefix suffix : List (Symbol V))
-    (hword : d.word = prefix ++ suffix) : PreAbstractSimplicialComplex V where
-  faces := RawFaces W K (emittedFaces d.protected prefix)
+def current («prefix» suffix : List (Symbol V))
+    (hword : d.word = «prefix» ++ suffix) : PreAbstractSimplicialComplex V where
+  faces := RawFaces W K (emittedFaces d.protected «prefix»)
   isRelLowerSet_faces := by
     intro s hs
-    exact ⟨hs.1, fun t hts ht => d.current_downward prefix suffix hword hs hts ht⟩
+    exact ⟨hs.1, fun t hts ht => d.current_downward «prefix» suffix hword hs hts ht⟩
 
-private theorem current_mem (prefix suffix : List (Symbol V))
-    (hword : d.word = prefix ++ suffix) (s : Finset V) :
-    s ∈ d.current prefix suffix hword ↔
-      s.Nonempty ∧ s ⊆ W ∧ W \ s ∉ emittedFaces d.protected prefix := by
-  change RawFaces W K (emittedFaces d.protected prefix) s ↔ _
+private theorem current_mem («prefix» suffix : List (Symbol V))
+    (hword : d.word = «prefix» ++ suffix) (s : Finset V) :
+    s ∈ d.current «prefix» suffix hword ↔
+      s.Nonempty ∧ s ⊆ W ∧ W \ s ∉ emittedFaces d.protected «prefix» := by
+  change RawFaces W K (emittedFaces d.protected «prefix») s ↔ _
   constructor
   · rintro ⟨hs, hsW, hn | hn⟩
     · exact ⟨hs, hsW, fun h => hn
-        (d.emitted_valid prefix (fun _ h => prefix_subset hword h) h).1⟩
+        (d.emitted_valid «prefix» (fun _ h => prefix_subset hword h) h).1⟩
     · exact ⟨hs, hsW, hn⟩
   · rintro ⟨hs, hsW, hn⟩
     exact ⟨hs, hsW, Or.inr hn⟩
@@ -390,25 +390,25 @@ private theorem current_emitted_eq (p q p' q' : List (Symbol V))
 
 /-- A suffix face is present only when its complement is nonempty. In particular
 this lemma deliberately excludes a critical S=W. -/
-private theorem current_complement_mem (prefix suffix : List (Symbol V))
-    (hword : d.word = prefix ++ suffix) {σ : Symbol V} (hσ : σ ∈ suffix)
+private theorem current_complement_mem («prefix» suffix : List (Symbol V))
+    (hword : d.word = «prefix» ++ suffix) {σ : Symbol V} (hσ : σ ∈ suffix)
     {a : Finset V} (ha : a ∈ σ.faces) (hap : a ⊂ W) :
-    W \ a ∈ d.current prefix suffix hword := by
-  have hn : a ∉ emittedFaces d.protected prefix := by
+    W \ a ∈ d.current «prefix» suffix hword := by
+  have hn : a ∉ emittedFaces d.protected «prefix» := by
     intro hr
     obtain ⟨τ, hτ, haτ⟩ := (mem_emitted _ _ _).mp hr
     have hd := separated (hword ▸ d.partition) hτ hσ
     exact Finset.disjoint_left.mp hd (emittedOne_subset _ _ haτ) ha
-  apply (d.current_mem prefix suffix hword _).mpr
+  apply (d.current_mem «prefix» suffix hword _).mpr
   refine ⟨?_, Finset.sdiff_subset, ?_⟩
   · rw [Finset.sdiff_nonempty]
     intro h
     exact hap.ne (Finset.Subset.antisymm hap.subset h)
   · simpa only [Finset.sdiff_sdiff_eq_self hap.subset] using hn
 
-private theorem current_free (prefix suffix : List (Symbol V)) L v
-    (hword : d.word = prefix ++ Symbol.pair L v :: suffix) (hL : L ∉ d.protected)
-    (s : Finset V) (hs : s ∈ d.current prefix (Symbol.pair L v :: suffix) hword)
+private theorem current_free («prefix» suffix : List (Symbol V)) L v
+    (hword : d.word = «prefix» ++ Symbol.pair L v :: suffix) (hL : L ∉ d.protected)
+    (s : Finset V) (hs : s ∈ d.current «prefix» (Symbol.pair L v :: suffix) hword)
     (hls : W \ insert v L ⊂ s) : s = W \ L := by
   have hpair : Symbol.pair L v ∈ d.word := suffix_subset hword (by simp)
   have hd := d.pair_data L v hpair
@@ -431,20 +431,20 @@ private theorem current_free (prefix suffix : List (Symbol V)) L v
     intro h
     have hU := d.protected_upward h hd.2.1 hcU
     exact hL ((d.protected_pair L v hpair).mpr hU)
-  obtain ⟨σ, hσ, hcσ⟩ := d.pair_dependency prefix suffix L v hword (W \ s)
+  obtain ⟨σ, hσ, hcσ⟩ := d.pair_dependency «prefix» suffix L v hword (W \ s)
     (Finset.ssubset_iff_subset_ne.mpr ⟨hcU, hcUne⟩) hcL
-  have he := d.face_emitted prefix (fun _ h => prefix_subset hword h) hσ hcσ hcnot
+  have he := d.face_emitted «prefix» (fun _ h => prefix_subset hword h) hσ hcσ hcnot
   exact (hs'.2.2 he).elim
 
 /-- Actual native pair: lower W\\U, unchanged apex v, upper W\\L. -/
-def nativePair (prefix suffix : List (Symbol V)) (L : Finset V) (v : V)
-    (hword : d.word = prefix ++ Symbol.pair L v :: suffix) (hL : L ∉ d.protected) :
+def nativePair («prefix» suffix : List (Symbol V)) (L : Finset V) (v : V)
+    (hword : d.word = «prefix» ++ Symbol.pair L v :: suffix) (hL : L ∉ d.protected) :
     CollapsePair V := by
   have hpair : Symbol.pair L v ∈ d.word := suffix_subset hword (by simp)
   have hd := d.pair_data L v hpair
   have hproper := d.emitted_proper L v hpair hL
   have hu := complement_upper hproper.subset hd.2.2
-  refine { ambient := d.current prefix (Symbol.pair L v :: suffix) hword,
+  refine { ambient := d.current «prefix» (Symbol.pair L v :: suffix) hword,
     lower := W \ insert v L, apex := v, lower_nonempty := ?_,
     apex_notMem := ?_, upper_mem := ?_, free := ?_ }
   · rw [Finset.sdiff_nonempty]
@@ -453,19 +453,19 @@ def nativePair (prefix suffix : List (Symbol V)) (L : Finset V) (v : V)
   · simp only [Finset.mem_sdiff, Finset.mem_insert_self, not_true_eq_false, and_false,
       not_false_eq_true]
   · rw [hu]
-    exact d.current_complement_mem prefix (Symbol.pair L v :: suffix) hword
+    exact d.current_complement_mem «prefix» (Symbol.pair L v :: suffix) hword
       (σ := Symbol.pair L v) (a := L)
       (by simp) (by simp [Symbol.faces])
       (lt_of_le_of_lt (Finset.subset_insert v L) hproper)
   · intro s hs hls
     rw [hu]
-    exact d.current_free prefix suffix L v hword hL s hs hls
+    exact d.current_free «prefix» suffix L v hword hL s hs hls
 
-private theorem nativePair_retained (prefix suffix : List (Symbol V)) L v
-    (hword : d.word = prefix ++ Symbol.pair L v :: suffix) (hL : L ∉ d.protected)
-    (hnext : d.word = (prefix ++ [Symbol.pair L v]) ++ suffix) :
-    (d.nativePair prefix suffix L v hword hL).retained =
-      d.current (prefix ++ [Symbol.pair L v]) suffix hnext := by
+private theorem nativePair_retained («prefix» suffix : List (Symbol V)) L v
+    (hword : d.word = «prefix» ++ Symbol.pair L v :: suffix) (hL : L ∉ d.protected)
+    (hnext : d.word = («prefix» ++ [Symbol.pair L v]) ++ suffix) :
+    (d.nativePair «prefix» suffix L v hword hL).retained =
+      d.current («prefix» ++ [Symbol.pair L v]) suffix hnext := by
   have hpair : Symbol.pair L v ∈ d.word := suffix_subset hword (by simp)
   have hd := d.pair_data L v hpair
   have hUW := d.supported _ hd.2.1
@@ -473,8 +473,8 @@ private theorem nativePair_retained (prefix suffix : List (Symbol V)) L v
   have hu := complement_upper hUW hd.2.2
   apply SetLike.coe_injective
   ext s
-  rw [(d.nativePair prefix suffix L v hword hL).mem_retained_iff]
-  change (s ∈ d.current prefix (Symbol.pair L v :: suffix) hword ∧
+  rw [(d.nativePair «prefix» suffix L v hword hL).mem_retained_iff]
+  change (s ∈ d.current «prefix» (Symbol.pair L v :: suffix) hword ∧
     s ≠ W \ insert v L ∧ s ≠ insert v (W \ insert v L)) ↔ _
   rw [hu, d.current_mem, d.current_mem, emitted_pair_append _ _ _ _ hL]
   constructor
@@ -532,15 +532,15 @@ private theorem emitted_terminal {T : Finset V} (hT : T ∈ K) :
     have hm : d.word.get i ∈ d.word := List.mem_iff_get.mpr ⟨i, rfl⟩
     exact d.face_emitted d.word (fun _ h => h) hm hi hn
 
-private theorem current_terminal (prefix : List (Symbol V))
-    (hword : d.word = prefix ++ []) :
-    d.current prefix [] hword = protectedEndpoint W K d.protected d.protected_upward := by
+private theorem current_terminal («prefix» : List (Symbol V))
+    (hword : d.word = «prefix» ++ []) :
+    d.current «prefix» [] hword = protectedEndpoint W K d.protected d.protected_upward := by
   classical
-  have hp : prefix = d.word := by simpa only [List.append_nil] using hword.symm
+  have hp : «prefix» = d.word := by simpa only [List.append_nil] using hword.symm
   apply SetLike.coe_injective
   ext s
   rw [d.current_mem]
-  change (s.Nonempty ∧ s ⊆ W ∧ W \ s ∉ emittedFaces d.protected prefix) ↔
+  change (s.Nonempty ∧ s ⊆ W ∧ W \ s ∉ emittedFaces d.protected «prefix») ↔
     (s.Nonempty ∧ s ⊆ W ∧ (W \ s ∉ K ∨ W \ s ∈ d.protected))
   rw [hp]
   constructor
@@ -568,31 +568,31 @@ private theorem current_terminal (prefix : List (Symbol V))
       have hTc : T = W \ s := complement_injective hTW Finset.sdiff_subset hc
       exact hv.2 (hTc ▸ hT)
 
-private def suffixSequence : (suffix prefix : List (Symbol V)) →
-    (hword : d.word = prefix ++ suffix) →
-    Sequence (d.current prefix suffix hword)
+private def suffixSequence : (suffix «prefix» : List (Symbol V)) →
+    (hword : d.word = «prefix» ++ suffix) →
+    Sequence (d.current «prefix» suffix hword)
       (protectedEndpoint W K d.protected d.protected_upward)
-  | [], prefix, hword =>
-      (Sequence.refl _).cast rfl (d.current_terminal prefix hword)
-  | Symbol.critical S :: tail, prefix, hword => by
-      have hnext : d.word = (prefix ++ [Symbol.critical S]) ++ tail := by
+  | [], «prefix», hword =>
+      (Sequence.refl _).cast rfl (d.current_terminal «prefix» hword)
+  | Symbol.critical S :: tail, «prefix», hword => by
+      have hnext : d.word = («prefix» ++ [Symbol.critical S]) ++ tail := by
         simpa only [List.append_assoc, List.cons_append, List.nil_append] using hword
-      have T := d.suffixSequence tail (prefix ++ [Symbol.critical S]) hnext
-      have he := d.current_emitted_eq prefix (Symbol.critical S :: tail)
-        (prefix ++ [Symbol.critical S]) tail hword hnext
-        (emitted_critical_append d.protected prefix S).symm
+      have T := d.suffixSequence tail («prefix» ++ [Symbol.critical S]) hnext
+      have he := d.current_emitted_eq «prefix» (Symbol.critical S :: tail)
+        («prefix» ++ [Symbol.critical S]) tail hword hnext
+        (emitted_critical_append d.protected «prefix» S).symm
       exact T.cast he.symm rfl
-  | Symbol.pair L v :: tail, prefix, hword => by
-      have hnext : d.word = (prefix ++ [Symbol.pair L v]) ++ tail := by
+  | Symbol.pair L v :: tail, «prefix», hword => by
+      have hnext : d.word = («prefix» ++ [Symbol.pair L v]) ++ tail := by
         simpa only [List.append_assoc, List.cons_append, List.nil_append] using hword
-      have T := d.suffixSequence tail (prefix ++ [Symbol.pair L v]) hnext
+      have T := d.suffixSequence tail («prefix» ++ [Symbol.pair L v]) hnext
       by_cases hL : L ∈ d.protected
-      · have he := d.current_emitted_eq prefix (Symbol.pair L v :: tail)
-          (prefix ++ [Symbol.pair L v]) tail hword hnext
-          (emitted_protected_append d.protected prefix L v hL).symm
+      · have he := d.current_emitted_eq «prefix» (Symbol.pair L v :: tail)
+          («prefix» ++ [Symbol.pair L v]) tail hword hnext
+          (emitted_protected_append d.protected «prefix» L v hL).symm
         exact T.cast he.symm rfl
-      · exact Sequence.step (d.nativePair prefix tail L v hword hL)
-          (T.cast (d.nativePair_retained prefix tail L v hword hL hnext).symm rfl)
+      · exact Sequence.step (d.nativePair «prefix» tail L v hword hL)
+          (T.cast (d.nativePair_retained «prefix» tail L v hword hL hnext).symm rfl)
 
 /-- Universal corrected P02. No critical nonemptiness, nonvoid assumption,
 no-ghost assumption, or properness of protected uppers occurs in this telescope. -/

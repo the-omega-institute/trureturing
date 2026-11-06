@@ -309,11 +309,9 @@ theorem protectedReplay_pairs {K L} (S : Sequence K L) (H) :
   | refl K => simp [protectedReplay,emitted,Sequence.pairs,Sequence.pairs_cast]
   | step P T ih =>
     by_cases hb : blocked H P
-    · simp only [protectedReplay,if_pos hb,Sequence.pairs_cast,Sequence.pairs,emitted]
-      simp only [if_pos hb]
+    · simp only [protectedReplay,dif_pos hb,Sequence.pairs_cast,Sequence.pairs,emitted,if_pos hb]
       exact ih (insert P.upper H)
-    · simp only [protectedReplay,if_neg hb,Sequence.pairs_cast,Sequence.pairs,emitted]
-      simp only [if_neg hb,List.map_cons]
+    · simp only [protectedReplay,dif_neg hb,Sequence.pairs_cast,Sequence.pairs,emitted,if_neg hb,List.map_cons]
       exact congrArg (List.cons (P.lower,P.upper)) (ih H)
 
 private theorem restricted_retained (P : CollapsePair V) {L}
@@ -359,11 +357,9 @@ theorem standaloneReplay_pairs {K L} (S : Sequence K L) (H) :
   | refl K => simp [standaloneReplay,skipped,Sequence.pairs,Sequence.pairs_cast]
   | step P T ih =>
     by_cases hb : blocked H P
-    · simp only [standaloneReplay,if_pos hb,Sequence.pairs_cast,Sequence.pairs,skipped]
-      simp only [if_pos hb,List.map_cons]
+    · simp only [standaloneReplay,dif_pos hb,Sequence.pairs_cast,Sequence.pairs,skipped,if_pos hb,List.map_cons]
       exact congrArg (List.cons (P.lower,P.upper)) (ih (insert P.upper H))
-    · simp only [standaloneReplay,if_neg hb,Sequence.pairs_cast,Sequence.pairs,skipped]
-      simp only [if_neg hb]
+    · simp only [standaloneReplay,dif_neg hb,Sequence.pairs_cast,Sequence.pairs,skipped,if_neg hb]
       exact ih H
 
 /-- A separately established terminal tail can now be appended on the core. -/

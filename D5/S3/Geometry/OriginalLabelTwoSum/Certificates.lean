@@ -61,8 +61,7 @@ structure Certificate (W : Finset V) (K : Family V) where
 theorem critical_intersection (B : Family V) (C : Finset (Finset V))
     (h : CriticalData B C) {s : Finset V} (hs : s ∈ C) :
     delta s ⊓ B =
-      (⟨{t | t ⊂ s}, by intro a b hba has
-                         exact lt_of_le_of_lt hba has⟩ : Family V) := by
+      (⟨{t | t ⊂ s}, fun a b hba has => lt_of_le_of_lt hba has⟩ : Family V) := by
   apply SetLike.ext
   intro t
   change t ⊆ s ∧ t ∈ B ↔ t ⊂ s

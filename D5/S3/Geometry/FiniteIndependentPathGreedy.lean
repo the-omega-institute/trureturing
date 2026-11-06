@@ -81,14 +81,14 @@ theorem remaining_paths_three (v w z : V) (vs : List V)
       · exfalso
         apply hn
         have hva := hvT a ha
-        simp only [flip, if_neg hva]
+        simp only [FiniteGreedyFamilyTransport.flip, if_neg hva]
         exact Finset.mem_union_right _ (Finset.mem_image.mpr ⟨a, ha, rfl⟩)
       · exact ha
     · obtain ⟨b, hb, rfl⟩ := Finset.mem_image.mp ha
       exfalso
       apply hn
       have hvb := hvT b hb
-      have he : flip v (insert v b) = b := by simp [flip, hvb]
+      have he : FiniteGreedyFamilyTransport.flip v (insert v b) = b := by simp [FiniteGreedyFamilyTransport.flip, hvb]
       rw [he]
       exact Finset.mem_union_left _ (Finset.mem_union_left _ hb)
   · intro ha
@@ -97,7 +97,7 @@ theorem remaining_paths_three (v w z : V) (vs : List V)
     have hvb := hvU b hb
     have hwb := hwU b hb
     have hvwb : v ∉ insert w b := by simp [hvw, hvb]
-    rw [flip, if_neg hvwb]
+    rw [FiniteGreedyFamilyTransport.flip, if_neg hvwb]
     intro ht
     rcases Finset.mem_union.mp ht with ht | ht
     · rcases Finset.mem_union.mp ht with ht | ht
@@ -121,18 +121,18 @@ theorem remaining_paths_two (v w : V) (hvw : v ≠ w) :
   · rintro ⟨ha, hn⟩
     simp only [Finset.mem_insert, Finset.mem_singleton] at ha
     rcases ha with rfl | rfl | rfl
-    · exact (hn (by simp [flip])).elim
+    · exact (hn (by simp [FiniteGreedyFamilyTransport.flip])).elim
     · rfl
-    · exact (hn (by simp [flip])).elim
+    · exact (hn (by simp [FiniteGreedyFamilyTransport.flip])).elim
   · rintro rfl
     refine ⟨by simp, ?_⟩
     have hvw' : v ∉ ({w} : Finset V) := by simpa using hvw
-    have hvf : v ∈ flip v ({w} : Finset V) := by simp [hvw']
-    have hwf : w ∈ flip v ({w} : Finset V) := by simp [Ne.symm hvw]
+    have hvf : v ∈ FiniteGreedyFamilyTransport.flip v ({w} : Finset V) := by simp [hvw']
+    have hwf : w ∈ FiniteGreedyFamilyTransport.flip v ({w} : Finset V) := by simp [Ne.symm hvw]
     intro hm
     simp only [Finset.mem_insert, Finset.mem_singleton] at hm
     rcases hm with hm | hm | hm
-    · exact (by simpa only [hm, Finset.not_mem_empty] using hvf)
+    · exact (by simpa only [hm, Finset.notMem_empty] using hvf)
     · have he : v = w := Finset.mem_singleton.mp (hm ▸ hvf)
       exact hvw he
     · have he : w = v := Finset.mem_singleton.mp (hm ▸ hwf)
@@ -140,12 +140,12 @@ theorem remaining_paths_two (v w : V) (hvw : v ≠ w) :
 
 theorem remaining_paths_one (v : V) : remaining (paths [v]) v = ∅ := by
   ext a
-  simp only [mem_remaining, Finset.not_mem_empty, iff_false]
+  simp only [mem_remaining, Finset.notMem_empty, iff_false]
   rintro ⟨ha, hn⟩
   simp only [paths, Finset.mem_insert, Finset.mem_singleton] at ha
   rcases ha with rfl | rfl
-  · exact hn (by simp [flip, paths])
-  · exact hn (by simp [flip, paths])
+  · exact hn (by simp [FiniteGreedyFamilyTransport.flip, paths])
+  · exact hn (by simp [FiniteGreedyFamilyTransport.flip, paths])
 
 /-- Recursive answer, with the three actual augmented bases distinguished.
 This is a result computed from the path, not a supplied survivor certificate. -/
@@ -167,6 +167,7 @@ theorem survivors_paths (vs : List V) (hd : vs.Nodup) :
     have hvw : v ≠ w := by simpa using (List.nodup_cons.mp hd).1
     simp only [survivors, remaining_paths_two v w hvw]
     rw [remaining_of_fixed _ w (Or.inl (by simp))]
+    rfl
   | case4 v w z vs ih =>
     have htail : (w :: z :: vs).Nodup := (List.nodup_cons.mp hd).2
     have hw : w ∉ z :: vs := (List.nodup_cons.mp htail).1
@@ -187,6 +188,7 @@ theorem survivors_paths (vs : List V) (hd : vs.Nodup) :
       simp))]
     rw [remaining_of_fixed _ z (Or.inr hzF)]
     rw [survivors_insert (paths vs) vs w (paths_avoid vs w hwvs) hwvs, ih hvs]
+    rfl
 
 /-- The selected second vertex of each consecutive triple, including the
 second vertex of a final two-vertex block. -/
