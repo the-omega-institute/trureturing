@@ -113,9 +113,9 @@ theorem result : claim := by
     field_simp [hk, hp, hs]
     <;> ring
   have tr_brec (n : ℕ) : tr (fun k => b (k + 1)) n = 2 * wt b n + tr b n := by
-    unfold tr wt
+    unfold wt tr
     simp_rw [b_rec]
-    rw [← mul_sum, ← sum_add_distrib]
+    rw [mul_sum, ← sum_add_distrib]
     apply sum_congr rfl
     intro k hk
     ring
@@ -129,7 +129,7 @@ theorem result : claim := by
     have h3 := tr_brec (n + 1)
     have h4 := tr_weight b n
     simp only [Nat.add_assoc, Nat.reduceAdd] at h1
-    linear_combination 2 * h1 - h0 + 2 * h3 - h2 + 2 * h4
+    linear_combination 2 * h1 - h0 + 2 * h3 - h2 - 2 * h4
   have tr_eq_a (n : ℕ) : tr b n = a n := by
     unfold tr a
     simp only [mul_div_assoc]
