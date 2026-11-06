@@ -574,7 +574,7 @@ The angular profile satisfies $e_0\ge\sqrt3/\pi^2>1/16$.
 If $\tau\ge2(R_\rho+1)$, then $|\log l|<1$ and the affine term
 in (SRO.35) is at least $c_-\tau/40$ everywhere on $D$.
 Put $k=c_-\tau/128$. The positive part
-$W_r=(k-r f_h(r\,\cdot))_+$ has $L^2(D)$ norm at most
+$w_{r,k}=(k-r f_h(r\,\cdot))_+$ has $L^2(D)$ norm at most
 $2B_he^{-\tau/8}$. Crucially it is a stationary subsolution for
 the same operator: before truncation,
 
@@ -600,7 +600,7 @@ of error at most $2^{-n}$ at the candidate integer $n$.
 Testing successive sufficiently large integers terminates because
 $(e^{-n/8}+2^{-n})/n\to0$. The same inequality holds for every
 $\tau\ge\tau_0$, since $e^{-\tau/8}/\tau$ decreases.
-Then $W_r(\omega)<c_-\tau/256=k/2$, so
+Then $w_{r,k}(\omega)<c_-\tau/256=k/2$, so
 $r f_h(r\omega)\ge c_-\tau/256$. This proves (SRO.20) with
 $L_h=c_-/256$, uniformly over every radius and angle. $\square$
 
@@ -940,7 +940,7 @@ smoothing and power iteration are mature intermediate tools.
 | [E, §§109–112](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX.md) | Entire complex maximal expansion, Green pairing, original selector and forcing factor $a^{-1}R^3f_f$. Qualitative membership supplies the legal domain for the fixed-level numerical inverse, not a numerical remainder size. |
 | [S, §§115–117, 130–133](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md) | Positive normalized $h$, full conservative form, actual nonpolar trace and source-start law. The exact annular marginal and Stummel modulus of §130 supply (SRO.23); its existential Harnack constant is not an input. No auxiliary extended weight replaces $m$. |
 | M. Shubin, [Essential self-adjointness for semi-bounded magnetic Schrödinger operators on non-compact manifolds](https://arxiv.org/html/math/0007019v1), Lemma 5.1 and (5.3) | Inhomogeneous local regularity and cutoff identity on punctured collars, with zero magnetic form, the actual smooth elliptic symbol and raw smooth measure. Its complete-manifold essential self-adjointness theorem is not applied across $e$. |
-| D. G. Aronson, [Harnack, Hölder, Gauss and Widder: Serrin's parabolic legacy](https://arxiv.org/html/1611.09417v1), weak equation and fundamental power inequality (7), and D. G. Aronson, Non-negative solutions of linear parabolic equations, Ann. Scuola Norm. Sup. Pisa 22 (1968), 607–694 | Established local power-test and iteration method. The equation here has time coefficient one only in the unitary raw annular chart and proof time (SRO.47). No unspecified structural constant or weighted-time theorem is imported; (SRO.25)–(SRO.34) provide the finite bounds used here. |
+| D. G. Aronson, [Harnack, Hölder, Gauss and Widder: Serrin's parabolic legacy](https://arxiv.org/html/1611.09417v1), weak equation and fundamental power inequality (7), and [Non-negative solutions of linear parabolic equations](https://www.numdam.org/item/ASNSP_1968_3_22_4_607_0.pdf), Ann. Scuola Norm. Sup. Pisa 22 (1968), 607–694, Theorem B | Established local power-test and iteration method. The equation here has time coefficient one only in the unitary raw annular chart and proof time (SRO.47). No unspecified structural constant or weighted-time theorem is imported; (SRO.25)–(SRO.34) provide the finite bounds used here. |
 | [D, §14](RECURSIVE_RELATIONAL_OBSERVATION_DIFFUSION_PHASE_COVER_RIGIDITY.md) | Computed norm tail and qualitative exterior/compact results, with their explicit numerical boundary unchanged. They do not provide a numerical all-source order modulus. |
 
 The existing D5 `DysonPhillipsPerturbation` result, including its private
