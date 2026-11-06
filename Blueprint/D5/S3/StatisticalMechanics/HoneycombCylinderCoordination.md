@@ -116,7 +116,7 @@ $$\forall n: \mathbb{N}, ((1 \leq n) \to ((1 - \operatorname{PowerSeries.X})^{2}
 
 *Commentary.*
 
-Write s=i+j. On A vertices the plane distance is twice the maximum of 0, i, j, s, −i, −j and −s. On B vertices it is one plus twice the maximum of 0, i, j, s, −i−1, −j−1 and −s−1. Each edge changes this nonnegative potential by at most one. An explicit adjacent vertex decreases every positive potential by one; strong induction constructs a walk attaining the bound. The generic potential bound supplies the opposite inequality, so these are genuine graph distances.
+Write s=i+j. The horizontal radii are TeaCoordinationSequence.residual(i,j,0,0) on A vertices and TeaCoordinationSequence.residual(i,j,0,1) on B vertices. On A vertices the plane distance is twice the maximum of 0, i, j, s, −i, −j and −s. On B vertices it is one plus twice the maximum of 0, i, j, s, −i−1, −j−1 and −s−1. Each edge changes this nonnegative potential by at most one. An explicit adjacent vertex decreases every positive potential by one; strong induction constructs a walk attaining the bound. The generic potential bound supplies the opposite inequality, so these are genuine graph distances.
 
 Every quotient walk lifts from any chosen initial representative, with its length preserved. Thus quotient distance is the minimum of the plane distances of representatives. Every A class has a unique representative with −n<s≤n; every B class has a unique representative with −n≤s<n. Euclidean division constructs these representatives. The six inequalities in the potential prove that each is minimizing. Integer division uses a nonnegative remainder modulo the positive integer 2n.
 
@@ -134,4 +134,4 @@ PowerSeries.mk assigns the integer-cast shell count to each coefficient. Compari
 - Truth anchor: `D5/S3/StatisticalMechanics/HoneycombCylinderCoordination.origin`
 - Truth anchor: `D5/S3/StatisticalMechanics/HoneycombCylinderCoordination.result`
 - Truth anchor: `D5/S3/StatisticalMechanics/HoneycombCylinderCoordination.translationSetoid`
-- Dependency: [D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation](../Combinatorics/PositionSets/VertexPositionRatioRefutation.md)
+- Dependency: [D5/S3/StatisticalMechanics/TeaCoordinationSequence](TeaCoordinationSequence.md)

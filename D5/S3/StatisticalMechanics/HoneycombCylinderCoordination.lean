@@ -14,9 +14,10 @@ Direct frozen dependencies:
 D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation.potential_dist
 (module statement_id sha256:f8b677ea402e38581fbfa04887d18040684e7baa21f05cad6421d45525c0cd21).
 D5/S3/StatisticalMechanics/TeaCoordinationSequence.residual
-(module statement_id sha256:c433a7a18cbc0229ebbfe6ee969f099f01f4c95aef462bf2421a89b8b3f53885);
-consumers=potential, AFiber, BFiber, finiteAFiber, finiteBFiber, evenShellEquiv, oddShellEquiv,
-a_fiber_card, b_fiber_card; the A and B parameters are (0,0) and (0,1).
+(module statement_id sha256:39388ebec954891d46f7cc5672ca48cf1a1d6ded633cb8d8c0e28efbc0c5894d);
+consumers=potential, potential_step, potential_zero, potential_descent, plane_distance, band_minimum,
+AFiber, BFiber, finiteAFiber, finiteBFiber, evenShellEquiv, oddShellEquiv, a_fiber_card, b_fiber_card;
+the A and B parameters are (0,0) and (0,1).
 Proof shapes inline the new helpers. The distance and counting conclusions retain the
 inductive constructions; coordinate normalisations are bind-only with the consumers below.
 Vertex: proof_shape=bind-only; consumers=honeycombGraph, translationSetoid
@@ -81,8 +82,6 @@ open scoped BigOperators
 
 namespace D5.S3.StatisticalMechanics.HoneycombCylinderCoordination
 
-open TeaCoordinationSequence (residual)
-
 /-- False denotes A and true denotes B; the two remaining coordinates are integers. -/
 abbrev Vertex := Bool × ℤ × ℤ
 
@@ -98,8 +97,8 @@ def honeycombGraph : SimpleGraph Vertex where
   loopless := ⟨by rintro ⟨b, i, j⟩ h; cases b <;> simp_all⟩
 
 private def potential (v : Vertex) : ℕ :=
-  if v.1 then 2 * (residual v.2.1 v.2.2 0 1).toNat + 1
-  else 2 * (residual v.2.1 v.2.2 0 0).toNat
+  if v.1 then 2 * (TeaCoordinationSequence.residual v.2.1 v.2.2 0 1).toNat + 1
+  else 2 * (TeaCoordinationSequence.residual v.2.1 v.2.2 0 0).toNat
 
 private lemma potential_step (u v : Vertex) (h : honeycombGraph.Adj u v) :
     potential u ≤ potential v + 1 := by
@@ -110,13 +109,13 @@ private lemma potential_step (u v : Vertex) (h : honeycombGraph.Adj u v) :
     false_and, and_false, or_false, false_or, true_and] at h
   all_goals rcases h with h | h | h
   all_goals rcases h with ⟨h₁, h₂⟩
-  all_goals dsimp [potential, residual]; omega
+  all_goals dsimp [potential, TeaCoordinationSequence.residual]; omega
 
 private lemma potential_zero (v : Vertex) (h : potential v = 0) :
     v = (false, 0, 0) := by
   rcases v with ⟨c, i, j⟩
   cases c
-  · have hi : i = 0 ∧ j = 0 := by dsimp [potential, residual] at h; omega
+  · have hi : i = 0 ∧ j = 0 := by dsimp [potential, TeaCoordinationSequence.residual] at h; omega
     rcases hi with ⟨rfl, rfl⟩; rfl
   · dsimp [potential] at h; omega
 
@@ -129,35 +128,35 @@ private lemma potential_descent (v : Vertex) (h : 0 < potential v) :
       · by_cases hi' : 0 < i
         · refine ⟨(true, i-1, j),
             Or.inr ⟨rfl, rfl, Or.inr (Or.inl ⟨by dsimp; omega, rfl⟩)⟩, ?_⟩
-          dsimp [potential, residual]; omega
+          dsimp [potential, TeaCoordinationSequence.residual]; omega
         · refine ⟨(true, i, j-1),
             Or.inr ⟨rfl, rfl, Or.inr (Or.inr ⟨rfl, by dsimp; omega⟩)⟩, ?_⟩
-          dsimp [potential, residual] at h ⊢; omega
+          dsimp [potential, TeaCoordinationSequence.residual] at h ⊢; omega
       · by_cases hs : 0 ≤ i+j
         · refine ⟨(true, i-1, j),
             Or.inr ⟨rfl, rfl, Or.inr (Or.inl ⟨by dsimp; omega, rfl⟩)⟩, ?_⟩
-          dsimp [potential, residual]; omega
+          dsimp [potential, TeaCoordinationSequence.residual]; omega
         · refine ⟨(true, i, j), Or.inr ⟨rfl, rfl, Or.inl ⟨rfl, rfl⟩⟩, ?_⟩
-          dsimp [potential, residual]; omega
+          dsimp [potential, TeaCoordinationSequence.residual]; omega
     · by_cases hj : 0 ≤ j
       · by_cases hs : 0 ≤ i+j
         · refine ⟨(true, i, j-1),
             Or.inr ⟨rfl, rfl, Or.inr (Or.inr ⟨rfl, by dsimp; omega⟩)⟩, ?_⟩
-          dsimp [potential, residual]; omega
+          dsimp [potential, TeaCoordinationSequence.residual]; omega
         · refine ⟨(true, i, j), Or.inr ⟨rfl, rfl, Or.inl ⟨rfl, rfl⟩⟩, ?_⟩
-          dsimp [potential, residual]; omega
+          dsimp [potential, TeaCoordinationSequence.residual]; omega
       · refine ⟨(true, i, j), Or.inr ⟨rfl, rfl, Or.inl ⟨rfl, rfl⟩⟩, ?_⟩
-        dsimp [potential, residual]; omega
+        dsimp [potential, TeaCoordinationSequence.residual]; omega
   · by_cases hi : 0 ≤ i
     · by_cases hj : 0 ≤ j
       · refine ⟨(false, i, j), Or.inl ⟨rfl, rfl, Or.inl ⟨rfl, rfl⟩⟩, ?_⟩
-        dsimp [potential, residual]; omega
+        dsimp [potential, TeaCoordinationSequence.residual]; omega
       · refine ⟨(false, i, j+1),
           Or.inl ⟨rfl, rfl, Or.inr (Or.inr ⟨rfl, rfl⟩)⟩, ?_⟩
-        dsimp [potential, residual]; omega
+        dsimp [potential, TeaCoordinationSequence.residual]; omega
     · refine ⟨(false, i+1, j),
         Or.inl ⟨rfl, rfl, Or.inr (Or.inl ⟨rfl, rfl⟩)⟩, ?_⟩
-      dsimp [potential, residual]; omega
+      dsimp [potential, TeaCoordinationSequence.residual]; omega
 
 private lemma geodesic (v : Vertex) :
     ∃ p : honeycombGraph.Walk (false, 0, 0) v, p.length = potential v := by
@@ -181,7 +180,7 @@ private lemma plane_distance (v : Vertex) :
   · have hl :=
       D5.S3.Combinatorics.PositionSets.VertexPositionRatioRefutation.potential_dist
         honeycombGraph potential potential_step (SimpleGraph.Reachable.symm ⟨p⟩)
-    simpa only [potential, residual, Bool.false_eq_true, ↓reduceIte,
+    simpa only [potential, TeaCoordinationSequence.residual, Bool.false_eq_true, ↓reduceIte,
       max_self, neg_zero, sub_zero, zero_add, Int.toNat_zero,
       mul_zero, SimpleGraph.dist_comm] using hl
 
@@ -334,11 +333,11 @@ private lemma band_minimum {n : ℕ} (hn : 0 < n) (v : Vertex) (hv : InBand n v)
   by_cases hk' : 0 < k
   · have hd : (n : ℤ) ≤ n*k := by nlinarith
     cases b <;> dsimp [InBand, lower] at hv <;>
-      dsimp [potential, shift, residual] <;> omega
+      dsimp [potential, shift, TeaCoordinationSequence.residual] <;> omega
   · have hkneg : k ≤ -1 := by omega
     have hd : (n : ℤ)*k ≤ -n := by nlinarith
     cases b <;> dsimp [InBand, lower] at hv <;>
-      dsimp [potential, shift, residual] <;> omega
+      dsimp [potential, shift, TeaCoordinationSequence.residual] <;> omega
 
 private abbrev Rep (n : ℕ) := {v : Vertex // InBand n v}
 
@@ -369,18 +368,20 @@ private def shellEquiv {n : ℕ} (hn : 0 < n) (m : ℕ) :
     change potential v.1 = m ↔ (cylinderGraph n).dist (origin n) (Quotient.mk _ v.1) = m
     rw [rep_distance hn])).symm
 
-private abbrev AFiber (s : ℤ) (k : ℕ) := {i : ℤ // (residual i (s-i) 0 0) = k}
-private abbrev BFiber (s : ℤ) (k : ℕ) := {i : ℤ // (residual i (s-i) 0 1) = k}
+private abbrev AFiber (s : ℤ) (k : ℕ) :=
+  {i : ℤ // (TeaCoordinationSequence.residual i (s-i) 0 0) = k}
+private abbrev BFiber (s : ℤ) (k : ℕ) :=
+  {i : ℤ // (TeaCoordinationSequence.residual i (s-i) 0 1) = k}
 
 private instance finiteAFiber (s : ℤ) (k : ℕ) : Finite (AFiber s k) := by
   let f (i : AFiber s k) : Set.Icc (-(k : ℤ)) k :=
-    ⟨i.1, by have h := i.2; dsimp [residual] at h; constructor <;> omega⟩
+    ⟨i.1, by have h := i.2; dsimp [TeaCoordinationSequence.residual] at h; constructor <;> omega⟩
   exact Finite.of_injective f (fun i j h => Subtype.ext
     (congrArg (fun z : Set.Icc (-(k : ℤ)) k => z.1) h))
 
 private instance finiteBFiber (s : ℤ) (k : ℕ) : Finite (BFiber s k) := by
   let f (i : BFiber s k) : Set.Icc (-(k : ℤ)-1) k :=
-    ⟨i.1, by have h := i.2; dsimp [residual] at h; constructor <;> omega⟩
+    ⟨i.1, by have h := i.2; dsimp [TeaCoordinationSequence.residual] at h; constructor <;> omega⟩
   exact Finite.of_injective f (fun i j h => Subtype.ext
     (congrArg (fun z : Set.Icc (-(k : ℤ)-1) k => z.1) h))
 
@@ -398,7 +399,7 @@ private def evenShellEquiv (n k : ℕ) :
       simp only [Bool.false_eq_true, ↓reduceIte] at h
       constructor <;> omega
     · have h := v.2
-      have hr : 0 ≤ (residual v.1.1.2.1 v.1.1.2.2 0 0) := le_max_left _ _
+      have hr : 0 ≤ (TeaCoordinationSequence.residual v.1.1.2.1 v.1.1.2.2 0 0) := le_max_left _ _
       dsimp only [potential] at h
       rw [hc] at h
       simp only [Bool.false_eq_true, ↓reduceIte] at h
@@ -442,7 +443,7 @@ private def oddShellEquiv (n k : ℕ) :
       simp only [↓reduceIte] at h
       constructor <;> omega
     · have h := v.2
-      have hr : 0 ≤ (residual v.1.1.2.1 v.1.1.2.2 0 1) := le_max_left _ _
+      have hr : 0 ≤ (TeaCoordinationSequence.residual v.1.1.2.1 v.1.1.2.2 0 1) := le_max_left _ _
       dsimp only [potential] at h
       rw [hc] at h
       simp only [↓reduceIte] at h
@@ -491,35 +492,39 @@ private lemma a_fiber_card (s : ℤ) (k : ℕ) (hk : 0 < k) :
   · have hp : s ≠ k := by omega
     have hm : s ≠ -(k : ℤ) := by omega
     simp only [ite_eq_left hs, ite_eq_right hp, ite_eq_right hm, add_zero]
-    change Set.ncard {i : ℤ | (residual i (s-i) 0 0) = k} = 2
+    change Set.ncard {i : ℤ | (TeaCoordinationSequence.residual i (s-i) 0 0) = k} = 2
     by_cases hz : 0 ≤ s
-    · have he : {i : ℤ | (residual i (s-i) 0 0) = k} = {s-k, (k : ℤ)} := by
+    · have he : {i : ℤ | (TeaCoordinationSequence.residual i (s-i) 0 0) = k} = {s-k, (k : ℤ)} := by
         ext i
         simp only [Set.mem_ofPred_eq, Set.mem_insert_iff, Set.mem_singleton_iff]
-        dsimp [residual]; omega
+        dsimp [TeaCoordinationSequence.residual]; omega
       rw [he]; exact Set.ncard_pair (by omega)
-    · have he : {i : ℤ | (residual i (s-i) 0 0) = k} = {-(k : ℤ), s+k} := by
+    · have he : {i : ℤ | (TeaCoordinationSequence.residual i (s-i) 0 0) = k} = {-(k : ℤ), s+k} := by
         ext i
         simp only [Set.mem_ofPred_eq, Set.mem_insert_iff, Set.mem_singleton_iff]
-        dsimp [residual]; omega
+        dsimp [TeaCoordinationSequence.residual]; omega
       rw [he]; exact Set.ncard_pair (by omega)
   · by_cases hp : s = k
     · subst s
       have hm : (k : ℤ) ≠ -k := by omega
       simp only [ite_eq_right hs, ite_eq_right hm, zero_add, add_zero]
-      have he : {i : ℤ | (residual i (k-i) 0 0) = k} = Set.Icc 0 (k : ℤ) := by
-        ext i; simp only [Set.mem_ofPred_eq, Set.mem_Icc]; dsimp [residual]; omega
-      change Nat.card ↑{i : ℤ | (residual i (k-i) 0 0) = k} = _
+      have he : {i : ℤ | (TeaCoordinationSequence.residual i (k-i) 0 0) = k}
+          = Set.Icc 0 (k : ℤ) := by
+        ext i; simp only [Set.mem_ofPred_eq, Set.mem_Icc]
+        dsimp [TeaCoordinationSequence.residual]; omega
+      change Nat.card ↑{i : ℤ | (TeaCoordinationSequence.residual i (k-i) 0 0) = k} = _
       rw [he]; simp [Nat.card_eq_fintype_card]
     · by_cases hm : s = -(k : ℤ)
       · subst s
         simp only [ite_eq_right hs, ite_eq_right hp, zero_add]
-        have he : {i : ℤ | (residual i (-k-i) 0 0) = k} = Set.Icc (-(k : ℤ)) 0 := by
-          ext i; simp only [Set.mem_ofPred_eq, Set.mem_Icc]; dsimp [residual]; omega
-        change Nat.card ↑{i : ℤ | (residual i (-k-i) 0 0) = k} = _
+        have he : {i : ℤ | (TeaCoordinationSequence.residual i (-k-i) 0 0) = k}
+            = Set.Icc (-(k : ℤ)) 0 := by
+          ext i; simp only [Set.mem_ofPred_eq, Set.mem_Icc]
+          dsimp [TeaCoordinationSequence.residual]; omega
+        change Nat.card ↑{i : ℤ | (TeaCoordinationSequence.residual i (-k-i) 0 0) = k} = _
         rw [he]; simp [Nat.card_eq_fintype_card, add_comm]
       · let : IsEmpty (AFiber s k) := ⟨by
-          rintro ⟨i, hi⟩; dsimp [residual] at hi; omega⟩
+          rintro ⟨i, hi⟩; dsimp [TeaCoordinationSequence.residual] at hi; omega⟩
         simp [hs, hp, hm]
 
 private lemma b_fiber_card (s : ℤ) (k : ℕ) :
@@ -531,35 +536,40 @@ private lemma b_fiber_card (s : ℤ) (k : ℕ) :
   · have hp : s ≠ k := by omega
     have hm : s ≠ -(k : ℤ)-1 := by omega
     simp only [ite_eq_left hs, ite_eq_right hp, ite_eq_right hm, add_zero]
-    change Set.ncard {i : ℤ | (residual i (s-i) 0 1) = k} = 2
+    change Set.ncard {i : ℤ | (TeaCoordinationSequence.residual i (s-i) 0 1) = k} = 2
     by_cases hz : 0 ≤ s
-    · have he : {i : ℤ | (residual i (s-i) 0 1) = k} = {s-k, (k : ℤ)} := by
+    · have he : {i : ℤ | (TeaCoordinationSequence.residual i (s-i) 0 1) = k} = {s-k, (k : ℤ)} := by
         ext i
         simp only [Set.mem_ofPred_eq, Set.mem_insert_iff, Set.mem_singleton_iff]
-        dsimp [residual]; omega
+        dsimp [TeaCoordinationSequence.residual]; omega
       rw [he]; exact Set.ncard_pair (by omega)
-    · have he : {i : ℤ | (residual i (s-i) 0 1) = k} = {-(k : ℤ)-1, s+k+1} := by
+    · have he : {i : ℤ | (TeaCoordinationSequence.residual i (s-i) 0 1) = k}
+        = {-(k : ℤ)-1, s+k+1} := by
         ext i
         simp only [Set.mem_ofPred_eq, Set.mem_insert_iff, Set.mem_singleton_iff]
-        dsimp [residual]; omega
+        dsimp [TeaCoordinationSequence.residual]; omega
       rw [he]; exact Set.ncard_pair (by omega)
   · by_cases hp : s = k
     · subst s
       have hm : (k : ℤ) ≠ -k-1 := by omega
       simp only [ite_eq_right hs, ite_eq_right hm, zero_add, add_zero]
-      have he : {i : ℤ | (residual i (k-i) 0 1) = k} = Set.Icc 0 (k : ℤ) := by
-        ext i; simp only [Set.mem_ofPred_eq, Set.mem_Icc]; dsimp [residual]; omega
-      change Nat.card ↑{i : ℤ | (residual i (k-i) 0 1) = k} = _
+      have he : {i : ℤ | (TeaCoordinationSequence.residual i (k-i) 0 1) = k}
+          = Set.Icc 0 (k : ℤ) := by
+        ext i; simp only [Set.mem_ofPred_eq, Set.mem_Icc]
+        dsimp [TeaCoordinationSequence.residual]; omega
+      change Nat.card ↑{i : ℤ | (TeaCoordinationSequence.residual i (k-i) 0 1) = k} = _
       rw [he]; simp [Nat.card_eq_fintype_card]
     · by_cases hm : s = -(k : ℤ)-1
       · subst s
         simp only [ite_eq_right hs, ite_eq_right hp, zero_add]
-        have he : {i : ℤ | (residual i (-k-1-i) 0 1) = k} = Set.Icc (-(k : ℤ)-1) 0 := by
-          ext i; simp only [Set.mem_ofPred_eq, Set.mem_Icc]; dsimp [residual]; omega
-        change Nat.card ↑{i : ℤ | (residual i (-k-1-i) 0 1) = k} = _
+        have he : {i : ℤ | (TeaCoordinationSequence.residual i (-k-1-i) 0 1) = k}
+            = Set.Icc (-(k : ℤ)-1) 0 := by
+          ext i; simp only [Set.mem_ofPred_eq, Set.mem_Icc]
+          dsimp [TeaCoordinationSequence.residual]; omega
+        change Nat.card ↑{i : ℤ | (TeaCoordinationSequence.residual i (-k-1-i) 0 1) = k} = _
         rw [he]; simp [Nat.card_eq_fintype_card]; omega
       · let : IsEmpty (BFiber s k) := ⟨by
-          rintro ⟨i, hi⟩; dsimp [residual] at hi; omega⟩
+          rintro ⟨i, hi⟩; dsimp [TeaCoordinationSequence.residual] at hi; omega⟩
         simp [hs, hp, hm]
 
 private lemma interval_sum (L U a b : ℤ) :
