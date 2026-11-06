@@ -33,6 +33,14 @@ internal sealed class LineFourierDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("The angular Fourier transform is the raw Fourier transform evaluated at z/(2*pi). The integral equality angularFourier_eq_integral identifies the kernel exp(-i*z*x), fixing the sign and angular normalization for arbitrary complex inputs. The finite-cell coercivity proof consumes this original equality together with angular_extended_plancherel to identify the mass of the actual rho density."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("gamma-form-core-linefourier-angularfourier-eq-integral"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/FormCore/LineFourier.angularFourier_eq_integral"),
+                H("Angular Fourier integral formula"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every complex function on the real line and every real angular frequency z, angularFourier equals the whole-line integral with kernel exp(-i*z*x). The identity follows by substituting z/(2*pi) into the raw Fourier integral and needs no integrability, reality or parity hypothesis. It identifies the angular transform with Ahat for finite atomic prefixes, allowing angular Plancherel to determine their spectral mass."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("gamma-form-core-linefourier-angular-extended-plancherel"),
                 DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/FormCore/LineFourier.angular_extended_plancherel"),
                 H("angular extended plancherel"),
