@@ -9,7 +9,22 @@ internal sealed class CountableResolventDocument : IScribeDocumentDefinition
         H("Countable W-weighted spectral resolvents"),
         Blocks(
             Paragraph(Text("CountableSpectrum carries zero and coefficient sequences indexed by all natural numbers. Each zero satisfies 0<Re(z)<1 and abs(Im(z))>10. The coefficient norms are summable and their total is at most 2. No beta cap below 1, symmetry quotient, finite truncation, integral budget or signed-tail hypothesis is included.")),
-            Paragraph(Text("The literal spectral tail is the integral over v>y of W(v) times the complete sum of c_k*exp((z_k-1)*v), where W(v)=(v+2)/v^3. The resolvent denominator is s+1-z, its numerator is s*(1+s), and each mode integrates the resolvent kernel over s>0. A private R(v)=(v+1)/v^2 supplies integrability of W through its derivative and its limit at infinity.")),
+            Paragraph(Text("The literal spectral tail is the integral over v>y of W(v) times the complete sum of c_k*exp((z_k-1)*v), where W(v)=(v+2)/v^3. The resolvent denominator is s+1-z, its numerator is s*(1+s), and each mode integrates the resolvent kernel over s>0. R(v)=(v+1)/v^2 supplies integrability of W through its derivative and its limit at infinity.")),
+            Paragraph(Text("The same owner now exposes the consumed R weight, spectral series and W-tail integrability. W_tail proves its exact mass R(y), and spectral_weighted_integrable proves W times the full series is L1 by uniform convergence and coefficient-norm domination. These consumed support facts serve SignedGaussianEndpoint; no second spectrum or resolvent is introduced.")),
+            Describe.Lean(
+                DescribeId.Create("countableresolvent-spectral-weighted-integrable"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.spectral_weighted_integrable"),
+                H("The complete weighted series is integrable"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every complete CountableSpectrum and y>0, W(v)*spectralSeries(S,v) is L1 on (y,infinity). Coefficient-norm domination and uniform convergence justify the complete series, and the W-tail majorant pays the integral. This consumed support is owned here and used by the signed correction."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("countableresolvent-w-tail"),
+                DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.W_tail"),
+                H("The exact positive weight mass"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every y>0, integral_(y,infinity) W(v)=R(y). The existing derivative R'=-W and R(infinity)=0 pay the exact improper endpoint. The signed correction uses this mass."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("countableresolvent-countable-resolvent-identity"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.countable_resolvent_identity"),
