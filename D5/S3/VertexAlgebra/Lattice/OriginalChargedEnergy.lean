@@ -10,13 +10,13 @@ import D5.S3.VertexAlgebra.SourceBPZ.TransverseHermitian
 import D5.S3.VertexAlgebra.SourceBPZ.ChargedRawTranspose
 import D5.S3.VertexAlgebra.LatticeActualStateFieldCalculus
 import D5.S3.VertexAlgebra.LatticeActualLZeroGrading
+import D5.S3.VertexAlgebra.Lattice.LatticeLightConeCoordinates
 
 /-! Canonical integer-frequency prerequisites for the original charged fields. -/
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option maxRecDepth 4096
-set_option maxHeartbeats 4000000
 
 noncomputable section
 open scoped BigOperators VertexOperator Matrix
@@ -29,7 +29,7 @@ open SourceBPZ.OriginalMatterHermitian SourceBPZ.OriginalSourcePairing
 open SourceBPZ.TransverseHermitian OriginalGram
 open LatticeSugawaraCurrents LatticeAllStateField LatticeAllStateReconstruction
 open LatticeActualGeneratorLocality
-open private Hm_finsum_right from
+open private Hm_finsum_right Hm_finset_sum_left Hm_finset_sum_right from
   D5.S3.VertexAlgebra.SourceBPZ.OriginalMatterHermitian
 
 variable {D : LatticeData}
@@ -459,7 +459,7 @@ private theorem frequency_occupation_le {t : ℕ} (r : ℕ) (e : Occupation t) :
   let s : Finset (Fin t × ℕ) := Finset.univ ×ˢ {r}
   let f : Fin t × ℕ → ℕ := fun x => e x * (x.2+1)
   have hs : (∑ x ∈ s, f x) = ∑ i : Fin t, e (i,r) * (r+1) := by
-    simp [s, f, Finset.sum_product]
+    simp [s, f]
   have he : (∑ x ∈ e.support ∪ s, f x) =
       Finsupp.weight (fun x : Fin t × ℕ => x.2+1) e := by
     rw [Finsupp.weight_apply]
@@ -467,7 +467,7 @@ private theorem frequency_occupation_le {t : ℕ} (r : ℕ) (e : Occupation t) :
     symm
     apply Finset.sum_subset (Finset.subset_union_left)
     intro x hx hxe
-    simp [f, Finsupp.notMem_support_iff.mp hxe]
+    simp [Finsupp.notMem_support_iff.mp hxe]
   rw [← hs, ← he]
   exact Finset.sum_le_sum_of_subset_of_nonneg Finset.subset_union_right (by
     intro x _ _; exact Nat.zero_le _)
@@ -539,6 +539,8 @@ private theorem fockD_apply {t : ℕ} (a : Fin t → ℂ) (r : ℕ) (P : Polynom
   simp only [Finset.sum_apply, Derivation.coeFnAddMonoidHom_apply,
     Derivation.coe_smul, Pi.smul_apply]
 
+set_option maxHeartbeats 4000000 in
+-- Elaborating the finite Hilbert-space Cauchy--Schwarz application unfolds two linear maps.
 private theorem fock_directional_annihilate_le {t : ℕ} (a : Fin t → ℂ)
     (r F : ℕ) (P : Polynomial t)
     (hP : ∀ e ∈ P.support, Finsupp.weight (fun x : Fin t × ℕ => x.2+1) e ≤ F) :
@@ -590,7 +592,7 @@ private theorem fockD_variable {t : ℕ} (a : Fin t → ℂ) (r : ℕ) :
   have hd (i : Fin t) : MvPolynomial.pderiv (i,r) (fockVariable a r) =
       a i • (1 : Polynomial t) := by
     simp [fockVariable, MvPolynomial.pderiv_X, Pi.single_apply, Prod.mk.injEq,
-      ite_smul, eq_comm]
+      eq_comm]
   simp_rw [hd, smul_smul]
   rw [← Finset.sum_smul]
   congr 1
@@ -612,7 +614,7 @@ private theorem fock_creation_square {t : ℕ} (a : Fin t → ℂ) (r : ℕ) (P 
       (((((r : ℂ)+1) * ((∑ i : Fin t, Complex.normSq (a i) : ℝ) : ℂ))) •
         (1 : Polynomial t)) =
       (((r : ℂ)+1) * ((∑ i : Fin t, Complex.normSq (a i) : ℝ) : ℂ)) • P := by
-    simp [smul_eq_mul, mul_comm]
+    simp [smul_eq_mul]
   rw [hm]
   have he : fockInner P
       (fockVariable a r • fockD a r P +
@@ -634,6 +636,211 @@ private theorem fock_directional_create_le {t : ℕ} (a : Fin t → ℂ)
   rw [fock_creation_square]
   have h := fock_directional_annihilate_le a r F P hP
   nlinarith
+
+private def fullU (hD : (gramReal D).PosDef) : Oscillator D ≃ₐ[ℂ] Oscillator D :=
+  (fullOscillatorEquiv hD).symm
+
+private theorem fullU_X (hD : (gramReal D).PosDef) (x : Index D) :
+    fullU hD (MvPolynomial.X x) =
+      OriginalCurrentMetric.variableImage (fun _ => SC D hD) x :=
+  OriginalCurrentMetric.substitution_X (fun _ => SC D hD) x
+
+private theorem fullU_positive (hD : (gramReal D).PosDef) (i : Fin D.rank)
+    (b : Charge D) (r : ℕ) (p : Oscillator D) :
+    fullU hD (LatticeFiniteNegativeGeneration.neutralPolynomialMode D i b ((r : ℤ)+1) p) =
+      fockD (fun j => SC D hD j i) r (fullU hD p) := by
+  classical
+  let d : Derivation ℂ (Oscillator D) (Oscillator D) :=
+    ((r : ℂ)+1) • LatticeActualAnnihilation.annihilationDerivation D i r
+  have hd (q : Oscillator D) : fockD (fun j => SC D hD j i) r q =
+      ((r : ℂ)+1) • OriginalCurrentMetric.lowering (fun _ => SC D hD) i r q := by
+    rw [fockD_apply, OriginalCurrentMetric.lowering_apply, Finset.smul_sum]
+    apply Finset.sum_congr rfl
+    intro j _
+    have hr : conj (SC D hD j i) = SC D hD j i := by simp [SC]
+    rw [hr, smul_smul, smul_smul]
+    congr 1
+    ring
+  have hx (x : Index D) :
+      fullU hD (d (MvPolynomial.X x)) =
+        fockD (fun j => SC D hD j i) r (fullU hD (MvPolynomial.X x)) := by
+    rcases x with ⟨j,s⟩
+    rw [fullU_X, hd, OriginalCurrentMetric.lowering_variableImage, SC_gram]
+    simp only [d, Derivation.coe_smul, Pi.smul_apply,
+      LatticeActualAnnihilation.annihilation_apply, LatticeActualAnnihilation.annihilate_X]
+    split_ifs <;> simp
+  have hp : fullU hD (d p) = fockD (fun j => SC D hD j i) r (fullU hD p) := by
+    induction p using MvPolynomial.induction_on with
+    | C c =>
+      rw [MvPolynomial.derivation_C, map_zero,
+        show fullU hD (MvPolynomial.C c) = MvPolynomial.C c from (fullU hD).commutes c,
+        MvPolynomial.derivation_C]
+    | add p q hp hq => simp only [map_add, hp, hq]
+    | mul_X p x hp =>
+      rw [d.leibniz]
+      simp only [smul_eq_mul, map_add, map_mul]
+      rw [hp, hx, (fockD (fun j => SC D hD j i) r).leibniz]
+      simp only [smul_eq_mul]
+  rw [neutralPolynomialMode_positive]
+  simpa only [d, Derivation.coe_smul, Pi.smul_apply,
+    LatticeActualAnnihilation.annihilation_apply, LinearMap.smul_apply] using hp
+
+private theorem fullU_negative (hD : (gramReal D).PosDef) (i : Fin D.rank)
+    (b : Charge D) (r : ℕ) (p : Oscillator D) :
+    fullU hD (LatticeFiniteNegativeGeneration.neutralPolynomialMode D i b (-(r : ℤ)-1) p) =
+      fockVariable (fun j => SC D hD j i) r * fullU hD p := by
+  rw [neutralPolynomialMode_negative, LinearMap.mulLeft_apply, map_mul, fullU_X]
+  rfl
+
+private theorem fullU_direction_norm (hD : (gramReal D).PosDef) (i : Fin D.rank) :
+    (∑ j : Fin D.rank, Complex.normSq (SC D hD j i)) = (D.G i i : ℝ) := by
+  have h := congrFun (congrFun (S_transpose_mul D hD) i) i
+  change (∑ j : Fin D.rank, S D hD j i * S D hD j i) = (D.G i i : ℝ) at h
+  simpa [SC, Complex.normSq_apply, pow_two] using h
+
+private theorem Hm_single_coordinates (hD : (gramReal D).PosDef)
+    (a b : Charge D) (p q : Oscillator D) :
+    Hm (D := D) (Finsupp.single a p) (Finsupp.single b q) =
+      if a = b then fockInner (fullU hD p) (fullU hD q) else 0 := by
+  have hs (p : Oscillator D) : phi (fullFrame hD) (fullU hD p) = p := by
+    rw [fullFrame_phi]
+    exact (fullOscillatorEquiv hD).apply_symm_apply p
+  have h := source_delta_delta_eq_factorial (fullFrame hD) a b (fullU hD p) (fullU hD q)
+  simpa only [delta, hs, fockInner] using h
+
+open private homogeneous_substitution from
+  D5.S3.VertexAlgebra.Lattice.LatticeLightConeCoordinates
+
+private theorem fullU_homogeneous (hD : (gramReal D).PosDef) (p : Oscillator D) (n : ℕ)
+    (hp : MvPolynomial.IsWeightedHomogeneous (fun x : Index D => x.2+1) p n) :
+    MvPolynomial.IsWeightedHomogeneous (fun x : Index D => x.2+1) (fullU hD p) n := by
+  apply homogeneous_substitution (fun x : Index D => x.2+1) (fun x : Index D => x.2+1)
+    (OriginalCurrentMetric.variableImage (fun _ => SC D hD)) _ hp
+  intro x
+  unfold OriginalCurrentMetric.variableImage
+  apply MvPolynomial.IsWeightedHomogeneous.sum
+  intro i _
+  exact (MvPolynomial.weightedHomogeneousSubmodule ℂ (fun x : Index D => x.2+1)
+    (x.2+1)).smul_mem _ (MvPolynomial.isWeightedHomogeneous_X ℂ _ (i,x.2))
+
+private theorem fullU_grade_support (hD : (gramReal D).PosDef) (E : ℕ)
+    (v : Carrier D) (hv : v ∈ grade D (E : ℤ)) (b : Charge D)
+    (e : Occupation D.rank) (he : e ∈ (fullU hD (v b)).support) :
+    Finsupp.weight (fun x : Index D => x.2+1) e ≤ E := by
+  have hp : MvPolynomial.IsWeightedHomogeneous (fun x : Index D => x.2+1)
+      (v b) ((E : ℤ)-chargeEnergy D b).toNat := by
+    intro f hf
+    have hg : energy D (b,f) = E := by
+      by_contra hn
+      exact hf ((mem_grade_iff D (E : ℤ) v).mp hv (b,f) hn)
+    dsimp [energy, oscillatorEnergy] at hg
+    omega
+  have hu := fullU_homogeneous hD (v b) _ hp
+  have hw := hu (MvPolynomial.mem_support_iff.mp he)
+  have hq := chargeEnergy_nonneg D hD b
+  omega
+
+private theorem original_positive_current_sector_le (hD : (gramReal D).PosDef)
+    (i : Fin D.rank) (r E : ℕ) (v : Carrier D) (hv : v ∈ grade D (E : ℤ))
+    (b : Charge D) :
+    (Hm (D := D)
+      (LatticeFiniteNegativeGeneration.neutralMode D i ((r : ℤ)+1) (Finsupp.single b (v b)))
+      (LatticeFiniteNegativeGeneration.neutralMode D i ((r : ℤ)+1) (Finsupp.single b (v b)))).re ≤
+      (D.G i i : ℝ) * E * (Hm (D := D) (Finsupp.single b (v b)) (Finsupp.single b (v b))).re := by
+  simp only [neutralMode_single, Hm_single_coordinates hD, ite_true]
+  change fockQ (fullU hD (LatticeFiniteNegativeGeneration.neutralPolynomialMode
+    D i b ((r : ℤ)+1) (v b))) ≤ (D.G i i : ℝ) * E * fockQ (fullU hD (v b))
+  rw [fullU_positive]
+  have h := fock_directional_annihilate_le (fun j => SC D hD j i) r E (fullU hD (v b))
+    (fullU_grade_support hD E v hv b)
+  rw [fullU_direction_norm] at h
+  exact h
+
+private theorem original_negative_current_sector_le (hD : (gramReal D).PosDef)
+    (i : Fin D.rank) (r E : ℕ) (v : Carrier D) (hv : v ∈ grade D (E : ℤ))
+    (b : Charge D) :
+    (Hm (D := D)
+      (LatticeFiniteNegativeGeneration.neutralMode D i (-(r : ℤ)-1) (Finsupp.single b (v b)))
+      (LatticeFiniteNegativeGeneration.neutralMode D i (-(r : ℤ)-1) (Finsupp.single b (v b)))).re ≤
+      (D.G i i : ℝ) * ((E : ℝ)+r+1) *
+        (Hm (D := D) (Finsupp.single b (v b)) (Finsupp.single b (v b))).re := by
+  simp only [neutralMode_single, Hm_single_coordinates hD, ite_true]
+  change fockQ (fullU hD (LatticeFiniteNegativeGeneration.neutralPolynomialMode
+    D i b (-(r : ℤ)-1) (v b))) ≤
+      (D.G i i : ℝ) * ((E : ℝ)+r+1) * fockQ (fullU hD (v b))
+  rw [fullU_negative]
+  have h := fock_directional_create_le (fun j => SC D hD j i) r E (fullU hD (v b))
+    (fullU_grade_support hD E v hv b)
+  rw [fullU_direction_norm] at h
+  exact h
+
+private theorem normD_sector_sum (hD : (gramReal D).PosDef) (s : Finset (Charge D))
+    (f : Charge D → Oscillator D) :
+    normD (∑ b ∈ s, Finsupp.single b (f b)) ^ 2 =
+      ∑ b ∈ s, normD (Finsupp.single b (f b)) ^ 2 := by
+  classical
+  rw [normD_sq hD, Hm_finset_sum_left, Complex.re_sum]
+  apply Finset.sum_congr rfl
+  intro b hb
+  rw [Hm_finset_sum_right, normD_sq hD]
+  congr 1
+  apply Finset.sum_eq_single b
+  · intro c hc hcb
+    rw [Hm_single_coordinates hD, if_neg (Ne.symm hcb)]
+  · exact fun h => (h hb).elim
+
+private theorem current_norm_sector_sum (hD : (gramReal D).PosDef)
+    (i : Fin D.rank) (m : ℤ) (v : Carrier D) :
+    normD (LatticeFiniteNegativeGeneration.neutralMode D i m v) ^ 2 =
+      ∑ b ∈ v.support,
+        normD (LatticeFiniteNegativeGeneration.neutralMode D i m (Finsupp.single b (v b))) ^ 2 := by
+  classical
+  have he : (∑ b ∈ v.support, Finsupp.single b (v b)) = v := v.sum_single
+  have hmode : LatticeFiniteNegativeGeneration.neutralMode D i m v =
+      ∑ b ∈ v.support, Finsupp.single b
+        (LatticeFiniteNegativeGeneration.neutralPolynomialMode D i b m (v b)) := by
+    conv_lhs => rw [← he, map_sum]
+    simp only [neutralMode_single]
+  rw [hmode, normD_sector_sum hD]
+  simp only [neutralMode_single]
+
+private theorem original_positive_current_le (hD : (gramReal D).PosDef)
+    (i : Fin D.rank) (r E : ℕ) (v : Carrier D) (hv : v ∈ grade D (E : ℤ)) :
+    normD (LatticeFiniteNegativeGeneration.neutralMode D i ((r : ℤ)+1) v) ^ 2 ≤
+      (D.G i i : ℝ) * E * normD v ^ 2 := by
+  classical
+  rw [current_norm_sector_sum hD]
+  have hn : normD v ^ 2 = ∑ b ∈ v.support, normD (Finsupp.single b (v b)) ^ 2 := by
+    rw [← normD_sector_sum hD]
+    exact congrArg (fun z => normD z ^ 2) v.sum_single.symm
+  rw [hn, Finset.mul_sum]
+  apply Finset.sum_le_sum
+  intro b hb
+  simpa only [normD_sq hD] using original_positive_current_sector_le hD i r E v hv b
+
+private theorem original_negative_current_le (hD : (gramReal D).PosDef)
+    (i : Fin D.rank) (r E : ℕ) (v : Carrier D) (hv : v ∈ grade D (E : ℤ)) :
+    normD (LatticeFiniteNegativeGeneration.neutralMode D i (-(r : ℤ)-1) v) ^ 2 ≤
+      (D.G i i : ℝ) * ((E : ℝ)+r+1) * normD v ^ 2 := by
+  classical
+  rw [current_norm_sector_sum hD]
+  have hn : normD v ^ 2 = ∑ b ∈ v.support, normD (Finsupp.single b (v b)) ^ 2 := by
+    rw [← normD_sector_sum hD]
+    exact congrArg (fun z => normD z ^ 2) v.sum_single.symm
+  rw [hn, Finset.mul_sum]
+  apply Finset.sum_le_sum
+  intro b hb
+  simpa only [normD_sq hD] using original_negative_current_sector_le hD i r E v hv b
+
+#check @original_positive_current_le
+#check @original_negative_current_le
+#print axioms original_positive_current_le
+#print axioms original_negative_current_le
+
+#check @original_positive_current_sector_le
+#check @original_negative_current_sector_le
+#print axioms original_positive_current_sector_le
+#print axioms original_negative_current_sector_le
 
 #check @fock_directional_annihilate_le
 #check @fock_directional_create_le
