@@ -1,3 +1,4 @@
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Circle.NarrowDoublingOrbit
 
 /-! Candidate only: not elaborated or kernel checked.
@@ -151,6 +152,7 @@ theorem actual_period (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
       change residue M Q h < 2 ^ (a + b - 1) at hlo
       rw [he] at hlo
       dsimp [Q] at hlo
+      have hp : 0 < (2 : ℕ) ^ (b - 1) := Nat.pow_pos (by omega)
       omega
     subst h
     have he' : 2 ^ (a + b - 1) + 2 ^ (a - 1) =
