@@ -13,6 +13,9 @@ public sealed partial class WorktreeCommandTests
         foreach (var consumer in new[] { "remove", "explicit", "expired_cleanup" })
             yield return [consumer, "refused"];
         yield return ["pool", "inventory"];
+        yield return ["pool", "pressure"];
+        foreach (var consumer in new[] { "pool", "remove", "explicit" })
+            yield return [consumer, "multiple"];
     }
 
     [Theory]

@@ -23,7 +23,7 @@ class RemovalDiagnostics(MaintenanceLogTests):
         pool = CONSUMER in ("pool", "idle_cleanup")
         head = self.git("rev-parse", "HEAD").decode()
         paths = []
-        for index in range(5 if pool else 1):
+        for index in range(5 if pool else 3 if FAULT == "multiple" else 1):
             path = self.root / ("victim-" + str(index))
             if pool:
                 token = uuid.uuid4().hex
@@ -50,6 +50,7 @@ class RemovalDiagnostics(MaintenanceLogTests):
         marker = self.root / "fault-triggered"
         ancestry = self.root / "ancestry-count"
         record = metadata / "worktree-removal"
+        records = [str(identity(self.main, path)[1] / "worktree-removal") for path in paths]
         real_git = shutil.which("git")
         shim = binary / "git"
         shim.write_text(f'''#!/usr/bin/env python3
@@ -60,7 +61,20 @@ record = pathlib.Path({str(record)!r})
 ancestry = pathlib.Path({str(ancestry)!r})
 victim = {str(victim)!r}
 fault = {FAULT!r}
-if not marker.exists():
+if fault == "multiple":
+    paths = {list(map(str, paths))!r}
+    records = {records!r}
+    for index, native_fault in enumerate(("qualification_failed", "checkpoint_failed", "partial_or_indeterminate")):
+        trigger = (index == 0 and pathlib.Path(records[index]).exists() and "list" in args
+            or index == 1 and "add" in args and paths[index] in args
+            or index == 2 and "worktree" in args and "remove" in args and paths[index] in args)
+        once = marker.with_name("trigger-" + str(index))
+        if trigger and not once.exists():
+            once.touch()
+            marker.touch()
+            print("private removal diagnostic " + paths[index], file=sys.stderr)
+            sys.exit(1)
+if fault != "multiple" and not marker.exists():
     count = int(ancestry.read_text()) if ancestry.exists() else 0
     is_ancestry = "merge-base" in args and "--is-ancestor" in args and victim in args
     if is_ancestry:
@@ -87,13 +101,26 @@ os.execv({real_git!r}, [{real_git!r}, *args])
         native = [sys.executable, "-B", str(SOURCE / "tools/scripts/worktree/worktree_protocol.py"),
                   "--source", str(self.main)]
         command = (native + ["pool", "--dev", head, "--force"] if CONSUMER == "pool" else
-                   native + ["remove", "--path", str(victim)] if CONSUMER == "remove" else
-                   cli + ["worktree", "remove", "--names", victim.name] if CONSUMER == "explicit" else
+                   native + ["remove", *[arg for path in paths for arg in ("--path", str(path))]] if CONSUMER == "remove" else
+                   cli + ["worktree", "remove", "--names", " ".join(path.name for path in paths)] if CONSUMER == "explicit" else
                    cli + ["clean-lanes", "--lanes-only", "--force"])
-        result = subprocess.run(command, cwd=self.main, env=dict(self.environment,
-            PATH=str(binary) + os.pathsep + self.environment["PATH"]),
-            capture_output=True, text=True, timeout=45)
-        self.assertTrue(marker.exists(), result.stdout + result.stderr)
+        if FAULT != "pressure":
+            result = subprocess.run(command, cwd=self.main, env=dict(self.environment,
+                PATH=str(binary) + os.pathsep + self.environment["PATH"]),
+                capture_output=True, text=True, timeout=45)
+        if FAULT == "pressure":
+            import io
+            from contextlib import redirect_stdout
+            from unittest.mock import patch
+            import worktree_pool as owner
+            import worktree_protocol as protocol
+            output = io.StringIO()
+            with patch.dict(os.environ, self.environment), redirect_stdout(output), patch.object(owner, "available_fraction",
+                    side_effect=OSError("private removal diagnostic " + str(victim))):
+                code = protocol.main(["--source", str(self.main), "pool", "--dev", head, "--force"])
+            result = subprocess.CompletedProcess(command, code, output.getvalue(), "")
+        else:
+            self.assertTrue(marker.exists(), result.stdout + result.stderr)
         inspect_retention = FAULT == "inspect_refused"
         refused = FAULT == "refused" and not pool
         native_exit = 0 if inspect_retention else 68 if refused else 74
@@ -120,14 +147,39 @@ os.execv({real_git!r}, [{real_git!r}, *args])
             self.assertEqual(("clean_lanes_summary", "succeeded", "lanes_only"),
                              (summary["event"], summary["status"], summary["scope"]))
             item = self.assert_single([row for row in output if row.get("path") == str(victim)])
-            self.assertEqual("idle_worktree" if pool else "worktree", item["kind"])
+            self.assertEqual("idle_worktree" if pool else "lane_worktree" if refused else "stale_worktree", item["kind"])
             if not pool:
-                self.assertEqual("last_commit_age", item["selection_reason"])
+                self.assertEqual("head_commit_age", item["selection_reason"])
             if not inspect_retention:
                 self.assertIn(str(victim), result.stderr)
         if CONSUMER == "explicit":
             self.assertIn("WORKTREE_REMOVE_RESULT exit=" + str(native_exit), result.stdout)
+        if FAULT == "multiple":
+            expected_outcomes = ["qualification_failed", "checkpoint_failed", "partial_or_indeterminate"]
+            operations = [row for row in rows if row["event"] == "operation_finished"]
+            self.assertEqual(expected_outcomes + ["failed"], [row["outcome"] for row in operations])
+            self.assertEqual(expected_outcomes, [row["reason_code"] for row in operations[:-1]])
+            self.assertEqual(["remove"] * 3, [row["stage"] for row in operations[:-1]])
+            self.assertEqual(("failed", 3, "pool" if pool else "remove"),
+                             (final["status"], final["failed_item_count"], final["stage"]))
+            if receipt is not None:
+                self.assertEqual(expected_outcomes, [item["outcome"] for item in receipt["items"][:3]])
+            for index, path in enumerate(paths[:3]):
+                self.assertTrue(path.is_dir())
+                self.assertTrue((self.root / ("trigger-" + str(index))).exists())
+                self.assertEqual(index != 1, Path(records[index]).exists())
+                if index != 1:
+                    recovery = json.loads(Path(records[index]).read_text())
+                    self.assertEqual(recovery["commit"], self.git("rev-parse", recovery["recovery_branch"]).decode())
+            if pool:
+                self.assertFalse(paths[3].exists())
+                self.assertTrue(paths[4].is_dir())
+                self.assertEqual(["removed", "retained"], [item["outcome"] for item in receipt["items"][3:]])
+            for path in paths:
+                self.assertNotIn(str(path), json.dumps(rows))
+            return
         if FAULT in ("qualification_failed", "checkpoint_failed", "partial_or_indeterminate"):
+            self.assertIn("private removal diagnostic", result.stdout + result.stderr)
             failures = [row for row in rows if row["event"] == "operation_finished"]
             failure = self.assert_single(failures)
             keys = ("status", "outcome", "stage", "reason_code", "error_type")
@@ -136,8 +188,9 @@ os.execv({real_git!r}, [{real_git!r}, *args])
             self.assertEqual(expected, tuple(final[key] for key in keys))
             if pool:
                 self.assertEqual("failed", failure["pool_status"])
-                self.assertEqual("idle_capacity", self.assert_single([item for item in receipt["items"]
-                    if item["path"] == str(victim)])["reason"] if receipt is not None and FAULT != "qualification_failed" else "idle_capacity")
+                if receipt is not None and FAULT != "qualification_failed":
+                    self.assertEqual("idle_capacity", self.assert_single([item for item in receipt["items"]
+                        if item["path"] == str(victim)])["reason"])
             if receipt is not None:
                 item = self.assert_single([item for item in receipt["items"] if item["path"] == str(victim)])
                 self.assertEqual(FAULT, item["outcome"])
@@ -164,13 +217,13 @@ os.execv({real_git!r}, [{real_git!r}, *args])
             self.assertFalse(any(row.get("status") == "failed" for row in rows))
             self.assertFalse(record.exists())
         elif refused:
-            self.assertEqual(("refused", "refused", "Refused", "locked_grace"),
+            self.assertEqual(("refused", "refused", "Refused", "locked_recent"),
                              tuple(final[key] for key in ("status", "outcome", "error_type", "reason_code")))
             self.assertTrue(record.exists())
         else:
-            stage = "remove" if FAULT == "refused" else "revalidate" if FAULT == "revalidate" else FAULT
-            outcome = "retained" if FAULT in ("refused", "revalidate") else "failed" if FAULT == "inventory" else "sweep_failed"
-            error_type = "Refused" if FAULT in ("refused", "revalidate") else "GitFailure"
+            stage = "remove" if FAULT == "refused" else "revalidate" if FAULT == "revalidate" else "disk_pressure" if FAULT == "pressure" else FAULT
+            outcome = "retained" if FAULT in ("refused", "revalidate") else "failed" if FAULT in ("inventory", "pressure") else "sweep_failed"
+            error_type = "Refused" if FAULT in ("refused", "revalidate") else "OSError" if FAULT == "pressure" else "GitFailure"
             self.assertEqual(("failed", stage, outcome, error_type),
                              tuple(final[key] for key in ("status", "stage", "outcome", "error_type")))
         persisted = json.dumps(rows)
