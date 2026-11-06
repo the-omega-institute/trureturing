@@ -84,3 +84,4 @@ For M and y at least one and positive gamma, the absolute integral over v at lea
 - Truth anchor: `D5/S3/Analytic/Fourier/GaussianKernel.q_bromwich_integrable`
 - Truth anchor: `D5/S3/Analytic/Fourier/GaussianKernel.q_cos_convolution`
 - Truth anchor: `D5/S3/Analytic/Fourier/GaussianKernel.q_laws`
+- Dependency: [D5/S3/Analytic/Fourier/AngularFejerKernel](AngularFejerKernel.md)

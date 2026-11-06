@@ -11,6 +11,14 @@ internal sealed class GaussianKernelDocument : IScribeDocumentDefinition
         H("Gaussian kernels"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("bromwich-exponent"),
+                DeclarationHandle.Create(Prefix + "bromwich_exponent"),
+                H("Expanding the vertical Gaussian exponent"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For arbitrary real M, c, v, and t, the vertical Gaussian exponent expands into its quadratic, linear, and constant terms in t."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("q-laws"),
                 DeclarationHandle.Create(Prefix + "q_laws"),
                 H("Gaussian probability densities"),

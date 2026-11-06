@@ -61,14 +61,9 @@ theorem q_laws {M : ℝ} (hM : 0 < M) :
 
 private lemma complex_gaussian_factor {b : ℝ} (hb : 0 < b) :
     ((Real.pi : ℂ) / (b : ℂ)) ^ (1 / 2 : ℂ) = (Real.sqrt (Real.pi / b) : ℂ) := by
-  rw [← integral_gaussian_complex (show 0 < (b : ℂ).re by simpa)]
-  rw [← integral_gaussian]
-  calc
-    _ = ∫ x : ℝ, (Real.exp (-b * x ^ 2) : ℂ) := by
-      apply integral_congr_ae
-      filter_upwards with x
-      simp
-    _ = _ := Complex.ofRealCLM.integral_comp_comm (integrable_exp_neg_mul_sq hb)
+  rw [Real.sqrt_eq_rpow]
+  simpa only [Complex.ofReal_div, Complex.ofReal_ofNat, Complex.ofReal_one] using
+    (Complex.ofReal_cpow (show 0 ≤ Real.pi / b by positivity) (1 / 2 : ℝ)).symm
 
 private lemma complex_gaussian_transform {b : ℝ} (hb : 0 < b) (t : ℝ) :
     (∫ x : ℝ, (Real.exp (-b * x ^ 2) : ℂ) *
@@ -125,7 +120,7 @@ theorem q_aft {M : ℝ} (hM : 0 < M) (t : ℝ) :
   · simp [Complex.mul_im, Complex.exp_im, mul_assoc, Complex.mul_re] at him
     simpa only [integral_neg, neg_eq_zero] using him
 
-private lemma bromwich_exponent (M c v t : ℝ) :
+lemma bromwich_exponent (M c v t : ℝ) :
     ((c : ℂ) + t * Complex.I) * v + ((c : ℂ) + t * Complex.I) ^ 2 / (2 * M ^ 2) =
       -(1 / (2 * (M : ℂ) ^ 2)) * (t : ℂ) ^ 2 +
         (Complex.I * ((v : ℂ) + c / M ^ 2)) * t +
@@ -194,22 +189,7 @@ theorem q_cos_convolution {M : ℝ} (hM : 0 < M) (γ y : ℝ) :
       Real.exp (-γ ^ 2 / (2 * M ^ 2)) * Real.cos (γ * y) := by
   apply AngularFejerKernel.cosine_convolution (q_integrable hM)
     (w := fun t => Real.exp (-t ^ 2 / (2 * M ^ 2))) _ γ y
-  intro t
-  have hi : Integrable (fun v : ℝ =>
-      (q M v : ℂ) * Complex.exp (-Complex.I * (t : ℂ) * v)) := by
-    apply (q_integrable hM).ofReal.mul_bdd (by fun_prop) (c := 1)
-    filter_upwards with v
-    rw [Complex.norm_exp]
-    simp
-  unfold AngularFejerKernel.aft
-  apply Complex.ext
-  · change Complex.reCLM _ = Real.exp (-t ^ 2 / (2 * M ^ 2))
-    rw [← Complex.reCLM.integral_comp_comm hi]
-    simpa [Complex.mul_re, Complex.exp_re, mul_assoc, Complex.mul_im] using (q_aft hM t).1
-  · change Complex.imCLM _ = (0 : ℝ)
-    rw [← Complex.imCLM.integral_comp_comm hi]
-    simpa [Complex.mul_im, Complex.exp_im, mul_assoc, Complex.mul_re, integral_neg] using
-      congrArg Neg.neg (q_aft hM t).2
+  exact q_complex_transform hM
 
 private noncomputable def qd (M w : ℝ) : ℝ := -M ^ 2 * w * q M w
 
@@ -269,13 +249,6 @@ private lemma qd_tendsto {M : ℝ} (hM : 0 < M) : Tendsto (qd M) atTop (𝓝 0) 
     ring
   · simp
 
-private lemma bounded_mul_tendsto_zero {f g : ℝ → ℝ}
-    (hf : Tendsto f atTop (𝓝 0)) (hg : ∀ v, |g v| ≤ 1) :
-    Tendsto (fun v => g v * f v) atTop (𝓝 0) := by
-  apply squeeze_zero_norm (fun v => ?_) (by simpa using hf.norm)
-  simpa only [Real.norm_eq_abs, abs_mul, one_mul] using
-    mul_le_mul_of_nonneg_right (hg v) (abs_nonneg (f v))
-
 private lemma qdd_nonneg {M w : ℝ} (hM : 1 ≤ M) (hw : 1 ≤ w) : 0 ≤ qdd M w := by
   have hM0 : 0 < M := by linarith
   have hMs : 1 ≤ M ^ 2 := by nlinarith
@@ -322,7 +295,7 @@ theorem gaussian_halfline_correction {M y γ : ℝ}
       · simp only [id_eq, mul_one]; ring
     have h := integral_Ioi_of_hasDerivAt_of_tendsto' (fun v _ => hder v)
       ((hB.const_mul γ).add hJ)
-      (bounded_mul_tendsto_zero hl0 (fun v => Real.abs_sin_le_one (γ * v)))
+      (bdd_le_mul_tendsto_zero' 1 (Eventually.of_forall (fun v => Real.abs_sin_le_one (γ * v))) hl0)
     simpa [integral_add (hB.const_mul γ) hJ, integral_const_mul] using h
   have hsecond : -γ * (∫ v in Ioi (0 : ℝ), Real.sin (γ * v) * qd M (y + v)) +
       (∫ v in Ioi (0 : ℝ), Real.cos (γ * v) * qdd M (y + v)) = -qd M y := by
@@ -334,7 +307,7 @@ theorem gaussian_halfline_correction {M y γ : ℝ}
       · simp only [id_eq, mul_one]; ring
     have h := integral_Ioi_of_hasDerivAt_of_tendsto' (fun v _ => hder v)
       ((hJ.const_mul (-γ)).add hK)
-      (bounded_mul_tendsto_zero hl1 (fun v => Real.abs_cos_le_one (γ * v)))
+      (bdd_le_mul_tendsto_zero' 1 (Eventually.of_forall (fun v => Real.abs_cos_le_one (γ * v))) hl1)
     rw [integral_add (hJ.const_mul (-γ)) hK, integral_const_mul] at h
     simpa using h
   have hmass : (∫ v in Ioi (0 : ℝ), qdd M (y + v)) = -qd M y := by

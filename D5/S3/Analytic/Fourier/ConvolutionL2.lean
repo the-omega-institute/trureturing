@@ -225,7 +225,7 @@ private lemma complex_l2_integral {f : ℝ → ℂ} (hf : MemLp f 2) :
   filter_upwards with y
   rw [ENNReal.ofReal_pow (norm_nonneg _), ofReal_norm]
 
-private lemma real_convolution_identity (k f : ℝ → ℝ) (y : ℝ) :
+lemma real_convolution_identity (k f : ℝ → ℝ) (y : ℝ) :
     conv (fun v => (k v : ℂ)) (fun v => (f v : ℂ)) y =
       ((∫ v, k v * f (y - v) : ℝ) : ℂ) := by
   simp only [conv, convolution_def, ContinuousLinearMap.mul_apply', ← Complex.ofReal_mul]

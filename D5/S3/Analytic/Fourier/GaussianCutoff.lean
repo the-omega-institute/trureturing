@@ -6,6 +6,7 @@
    utility: none
    digest: Smooth even frequency cutoffs yield real Schwartz kernels with bounded multipliers. -/
 
+import D5.S3.Analytic.Fourier.AngularFejerKernel
 import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier
 import Mathlib.Analysis.SpecialFunctions.SmoothTransition
 import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
@@ -198,40 +199,25 @@ private lemma angular_kernel_transform {M : ℝ} (hM : 0 < M) (γ : ℝ) :
 theorem cutoff_kernel_cos {M : ℝ} (hM : 1 ≤ M) (γ y : ℝ) :
     (∫ v : ℝ, cutoffKernel M v * Real.cos (γ * (y - v))) =
       Real.exp (γ ^ 2 / (2 * M ^ 2)) * χ M γ * Real.cos (γ * y) := by
-  let e : ℝ → ℂ := fun v => Complex.exp ((↑(-γ * v) : ℂ) * Complex.I)
-  have hi : Integrable (fun v => e v * (cutoffKernel M v : ℂ)) := by
-    refine (cutoffKernelSchwartz M).integrable.congr ?_ |>.bdd_mul
-      (f := e) (c := 1) (by fun_prop) ?_
-    · exact Filter.Eventually.of_forall (cutoff_kernelSchwartz_coe M)
-    · exact Filter.Eventually.of_forall (fun v => (Complex.norm_exp_ofReal_mul_I _).le)
-  have he (v : ℝ) :
-      (Complex.exp ((↑(γ * y) : ℂ) * Complex.I) * (e v * (cutoffKernel M v : ℂ))).re =
-        cutoffKernel M v * Real.cos (γ * (y - v)) := by
-    have ha : Complex.exp ((↑(γ * y) : ℂ) * Complex.I) *
-        (e v * (cutoffKernel M v : ℂ)) =
-        Complex.exp ((↑(γ * (y - v)) : ℂ) * Complex.I) * (cutoffKernel M v : ℂ) := by
-      dsimp [e]
-      rw [← mul_assoc, ← Complex.exp_add]
-      congr 2
-      push_cast
-      ring
-    rw [ha]
-    simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
-      mul_zero, sub_zero, Complex.exp_ofReal_mul_I_re]
-    ring
-  have h := congrArg Complex.re (integral_const_mul (μ := volume)
-    (Complex.exp ((↑(γ * y) : ℂ) * Complex.I)) (fun v => e v * (cutoffKernel M v : ℂ)))
-  have hr : (∫ v, (Complex.exp ((↑(γ * y) : ℂ) * Complex.I) *
-      (e v * (cutoffKernel M v : ℂ))).re) =
-      (∫ v, Complex.exp ((↑(γ * y) : ℂ) * Complex.I) *
-        (e v * (cutoffKernel M v : ℂ))).re := integral_re (hi.const_mul _)
-  rw [← hr] at h
-  simp only [he] at h
-  rw [show (∫ v, e v * (cutoffKernel M v : ℂ)) = (cutoffMultiplier M γ : ℂ) from
-    angular_kernel_transform (by linarith : 0 < M) γ] at h
-  simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero,
-    Complex.exp_ofReal_mul_I_re, cutoffMultiplier] at h
-  simpa only [mul_comm (Real.cos (γ * y))] using h
+  have hft (t : ℝ) : AngularFejerKernel.aft (cutoffKernel M) t =
+      (cutoffMultiplier M t : ℂ) := by
+    unfold AngularFejerKernel.aft
+    calc
+      _ = ∫ v : ℝ, Complex.exp ((↑(-t * v) : ℂ) * Complex.I) *
+          (cutoffKernel M v : ℂ) := by
+        apply integral_congr_ae
+        filter_upwards with v
+        have hex : -Complex.I * (t : ℂ) * v = ((-t * v : ℝ) : ℂ) * Complex.I := by
+          push_cast
+          ring
+        rw [hex, mul_comm]
+      _ = _ := angular_kernel_transform (by linarith : 0 < M) t
+  have hc := AngularFejerKernel.cosine_convolution (cutoff_kernel_integrable M) hft γ y
+  calc
+    _ = ∫ u : ℝ, cutoffKernel M (y - u) * Real.cos (γ * (y - (y - u))) :=
+      (integral_sub_left_eq_self
+        (fun v : ℝ => cutoffKernel M v * Real.cos (γ * (y - v))) volume y).symm
+    _ = _ := by simpa only [sub_sub_cancel, mul_comm, cutoffMultiplier] using hc
 
 theorem cutoff_multiplier_bound {M : ℝ} (hM : 1 ≤ M) (ξ : ℝ) :
     ‖𝓕 (fun v => (cutoffKernel M v : ℂ)) ξ‖ ≤ Real.exp 2 := by

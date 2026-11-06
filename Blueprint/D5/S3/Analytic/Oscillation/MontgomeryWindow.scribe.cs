@@ -11,6 +11,14 @@ internal sealed class MontgomeryWindowDocument : IScribeDocumentDefinition
         H("Montgomery windows for finite cosine sums"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("hard-cos-continuous"),
+                DeclarationHandle.Create(Prefix + "hardCos_continuous"),
+                H("Continuity of finite cosine sums"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every spectrum and cutoff M, the multiplicity-weighted finite cosine sum is continuous."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("hard-window-lower"),
                 DeclarationHandle.Create(Prefix + "hard_window_lower"),
                 H("Mean-square mass in the hard cosine window"),

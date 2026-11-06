@@ -280,10 +280,7 @@ private lemma hard_square_integral_le (S : Spectrum) (hN : CountAsymptotic S)
   have hL : 0 ≤ Real.log M := Real.log_nonneg hM
   have hab : 16 * Real.log M ≤ 20 * Real.log M := by nlinarith
   have hab' : 16 * Real.log M - 1 ≤ 20 * Real.log M + 1 := by nlinarith
-  have hhard : Continuous (hardCos S M) := by
-    apply continuous_finsetSum
-    intro j _
-    exact continuous_const.mul (Real.continuous_cos.comp (continuous_const.mul continuous_id))
+  have hhard := hardCos_continuous S M
   obtain ⟨hi, hb⟩ := localized_square_bound S hN hM
   have hpoint (y : ℝ) (hy : y ∈ Icc (16 * Real.log M) (20 * Real.log M)) :
       hardCos S M y ^ 2 ≤ 2 * localizedCos S M y ^ 2 + 2 * C ^ 2 := by

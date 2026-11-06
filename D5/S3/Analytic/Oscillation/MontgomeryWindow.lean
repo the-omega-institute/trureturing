@@ -6,6 +6,8 @@
    utility: none
    digest: Averaged Montgomery lower bounds give mean-square mass in logarithmic cosine windows. -/
 
+import D5.S3.Analytic.Fourier.AngularFejerKernel
+import D5.S3.Analytic.Laplace.QuantitativeFejerBoundary.DampedIdentity
 import D5.S3.Analytic.Oscillation.OrdinateCounting
 import D5.S3.Weil.ZetaCore.ExplicitFormula
 
@@ -72,56 +74,33 @@ private lemma h_transform (t : ℝ) :
     exact_mod_cast (show (4 : ℝ) + t ^ 2 ≠ 0 by positivity)
   field_simp
 
-private lemma h_oscillatory_integrable (t : ℝ) :
-    Integrable (fun v : ℝ => (h v : ℂ) * Complex.exp (-Complex.I * t * v)) := by
-  exact h_integrable.ofReal.mul_bdd (c := 1) (by fun_prop)
-    (Eventually.of_forall fun v => by simp [Complex.norm_exp])
-
 private lemma h_cosine (t y : ℝ) :
     (∫ v : ℝ, h v * Real.cos (t * (y - v))) =
       (4 / (4 + t ^ 2)) * Real.cos (t * y) := by
-  let E : ℝ → ℂ := fun v => (h v : ℂ) * Complex.exp (-Complex.I * t * v)
-  have hi : Integrable E := h_oscillatory_integrable t
-  have he (v : ℝ) :
-      (Complex.exp (Complex.I * t * y) * E v).re = h v * Real.cos (t * (y - v)) := by
-    dsimp only [E]
-    rw [mul_left_comm, mul_assoc, ← Complex.exp_add]
-    have hh : Complex.I * ((t : ℂ) * y) + -Complex.I * t * v =
-        ((t * (y - v) : ℝ) : ℂ) * Complex.I := by push_cast; ring
-    rw [hh]
-    simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero,
-      Complex.exp_ofReal_mul_I_re]
+  have hc := D5.S3.Analytic.Fourier.AngularFejerKernel.cosine_convolution
+    h_integrable h_transform t y
   calc
-    _ = ∫ v : ℝ, (Complex.exp (Complex.I * t * y) * E v).re := by simp_rw [he]
-    _ = (Complex.exp (Complex.I * t * y) * ∫ v : ℝ, E v).re := by
-      calc
-        _ = (∫ v : ℝ, Complex.exp (Complex.I * t * y) * E v).re :=
-          Complex.reCLM.integral_comp_comm (hi.const_mul _)
-        _ = _ := by rw [integral_const_mul]
-    _ = _ := by
-      rw [show (∫ v : ℝ, E v) = ((4 / (4 + t ^ 2) : ℝ) : ℂ) from h_transform t]
-      have hh : Complex.I * (t : ℂ) * y = ((t * y : ℝ) : ℂ) * Complex.I := by
-        push_cast; ring
-      rw [hh]
-      simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, mul_zero,
-        sub_zero, Complex.exp_ofReal_mul_I_re]
-      ring
+    _ = ∫ u : ℝ, h (y - u) * Real.cos (t * (y - (y - u))) :=
+      (integral_sub_left_eq_self
+        (fun v : ℝ => h v * Real.cos (t * (y - v))) volume y).symm
+    _ = _ := by simpa only [sub_sub_cancel, mul_comm] using hc
 
 private lemma h_mass : (∫ v : ℝ, h v) = 1 := by
   simpa using h_cosine 0 0
 
-private lemma hardCos_continuous (S : Spectrum) (M : ℝ) : Continuous (hardCos S M) := by
-  classical
-  unfold hardCos
-  fun_prop
+lemma hardCos_continuous (S : Spectrum) (M : ℝ) : Continuous (hardCos S M) := by
+  have he : hardCos S M = fun y =>
+      -D5.S3.Analytic.Laplace.QuantitativeFejerBoundary.polePolynomial S (M / 2) y := by
+    funext y
+    simp only [D5.S3.Analytic.Laplace.QuantitativeFejerBoundary.polePolynomial,
+      show 2 * (M / 2) = M by ring, neg_neg, hardCos]
+  rw [he]
+  exact (D5.S3.Analytic.Laplace.QuantitativeFejerBoundary.polePolynomial_continuous S (M / 2)).neg
 
 private lemma hardCos_bound (S : Spectrum) (M y : ℝ) : |hardCos S M y| ≤ S.N M := by
-  classical
-  unfold hardCos Spectrum.N
-  push_cast
-  exact (Finset.abs_sum_le_sum_abs _ _).trans (Finset.sum_le_sum fun j _ => by
-    rw [abs_mul, abs_of_nonneg (Nat.cast_nonneg _)]
-    exact mul_le_of_le_one_right (Nat.cast_nonneg _) (Real.abs_cos_le_one _))
+  simpa only [D5.S3.Analytic.Laplace.QuantitativeFejerBoundary.polePolynomial,
+    show 2 * (M / 2) = M by ring, abs_neg, hardCos] using
+    D5.S3.Analytic.Laplace.QuantitativeFejerBoundary.polePolynomial_bound S (M / 2) y
 
 private lemma h_mul_cos_integrable (t y : ℝ) :
     Integrable (fun v : ℝ => h v * Real.cos (t * (y - v))) :=
@@ -309,19 +288,10 @@ private lemma crossBudget_split (S : Spectrum) {M R : ℝ} (hRM : R ≤ M)
       ring
     _ ≤ _ := by gcongr
 
-private lemma count_eventual_bound (S : Spectrum) (hN : CountAsymptotic S) :
-    ∃ B : ℝ, 0 < B ∧ ∀ᶠ M : ℝ in atTop,
-      (S.N M : ℝ) ≤ B * (M * Real.log M) := by
-  refine ⟨1 / (2 * Real.pi) + 1, by positivity, ?_⟩
-  have hh := hN.eventually (gt_mem_nhds
-    (show 1 / (2 * Real.pi) < 1 / (2 * Real.pi) + 1 by linarith))
-  filter_upwards [hh, eventually_gt_atTop (1 : ℝ)] with M hM hM1
-  exact (div_le_iff₀ (mul_pos (by linarith) (Real.log_pos hM1))).mp hM.le
-
 private lemma crossBudget_small (S : Spectrum) (hN : CountAsymptotic S)
     {ε : ℝ} (hε : 0 < ε) :
     ∀ᶠ M : ℝ in atTop, crossBudget S M ≤ ε * (M * Real.log M) := by
-  obtain ⟨B, hB, hcount⟩ := count_eventual_bound S hN
+  obtain ⟨B, hB, hcount⟩ := count_upper S hN
   obtain ⟨C, hC, htail⟩ := inverse_square_tail S hN
   have hlim : Tendsto (fun R : ℝ => 8 * B * C * (Real.log R / R)) atTop (nhds 0) := by
     simpa only [mul_zero, pow_one, one_mul, add_zero] using
@@ -475,7 +445,7 @@ private lemma leakage_small (S : Spectrum) (hN : CountAsymptotic S)
     ∀ᶠ M : ℝ in atTop,
       2 * Real.log M * (S.N M : ℝ) ^ 2 * Real.exp (-2 * Real.log M) ≤
         ε * M * Real.log M ^ 2 := by
-  obtain ⟨B, hB, hcount⟩ := count_eventual_bound S hN
+  obtain ⟨B, hB, hcount⟩ := count_upper S hN
   have hlim : Tendsto (fun M : ℝ => (2 * B ^ 2) * (Real.log M / M)) atTop (nhds 0) := by
     simpa only [mul_zero, pow_one, one_mul, add_zero] using
       (Real.tendsto_pow_log_div_mul_add_atTop 1 0 1 one_ne_zero).const_mul (2 * B ^ 2)

@@ -6,6 +6,7 @@
    utility: none
    digest: An inverse-square majorant permits Gaussian integration of paired pole series. -/
 
+import D5.S3.Analytic.Laplace.GaussianBoundaryContour
 import D5.S3.Analytic.Laplace.PairedPoleRegularity
 import D5.S3.Analytic.Oscillation.GaussianSpectrum
 import D5.S3.Analytic.Fourier.GaussianKernel
@@ -76,34 +77,24 @@ private lemma gaussian_exp_norm (M y t : ℝ) :
       ((3 / 4 : ℂ) + t * Complex.I) ^ 2 / (2 * M ^ 2))‖ =
       Real.exp ((3 / 4 : ℝ) * y + (3 / 4 : ℝ) ^ 2 / (2 * M ^ 2)) *
         Real.exp (-(1 / (2 * M ^ 2)) * t ^ 2) := by
-  rw [Complex.norm_exp, ← Real.exp_add]
+  have he := gaussian_exponent_re M (3 / 4) y t
+  simp only [Complex.ofReal_div, Complex.ofReal_ofNat] at he
+  rw [Complex.norm_exp, he, ← Real.exp_add]
   congr 1
-  have hden : 2 * (M : ℂ) ^ 2 = ((2 * M ^ 2 : ℝ) : ℂ) := by push_cast; rfl
-  rw [hden]
-  rw [Complex.add_re, Complex.div_ofReal_re]
-  simp [pow_two, Complex.mul_re, Complex.mul_im]
   ring
 
 
-private lemma gaussian_polynomial_integrable {M : ℝ} (hM : 0 < M) (y : ℝ) :
+private lemma pole_gaussian_polynomial_integrable {M : ℝ} (hM : 0 < M) (y : ℝ) :
     Integrable (fun t : ℝ => 32 * (1 + |t|) ^ 2 *
       ‖Complex.exp (((3 / 4 : ℂ) + t * Complex.I) * y +
         ((3 / 4 : ℂ) + t * Complex.I) ^ 2 / (2 * M ^ 2))‖) := by
-  have hb : 0 < 1 / (2 * M ^ 2) := by positivity
-  have hi0 := integrable_exp_neg_mul_sq hb
-  have hi2 := integrable_rpow_mul_exp_neg_mul_sq hb (s := 2) (by norm_num)
-  simp only [Real.rpow_two] at hi2
-  have hi := (hi0.add hi2).const_mul
-    (64 * Real.exp ((3 / 4 : ℝ) * y + (3 / 4 : ℝ) ^ 2 / (2 * M ^ 2)))
-  apply hi.mono' (by fun_prop)
-  filter_upwards with t
-  rw [gaussian_exp_norm, Real.norm_eq_abs, abs_of_nonneg (by positivity)]
-  have ht : (1 + |t|) ^ 2 ≤ 2 * (1 + t ^ 2) := by
-    nlinarith [sq_nonneg (|t| - 1), sq_abs t]
-  have he : 0 ≤ Real.exp ((3 / 4 : ℝ) * y + (3 / 4 : ℝ) ^ 2 / (2 * M ^ 2)) *
-      Real.exp (-(1 / (2 * M ^ 2)) * t ^ 2) := by positivity
-  dsimp
-  nlinarith [mul_le_mul_of_nonneg_right ht he]
+  have hi := (gaussian_polynomial_integrable
+    (show 0 < 1 / (2 * M ^ 2) by positivity)).const_mul
+      (32 * Real.exp ((3 / 4 : ℝ) * y + (3 / 4 : ℝ) ^ 2 / (2 * M ^ 2)))
+  convert hi using 1
+  funext t
+  rw [gaussian_exp_norm]
+  ring
 
 private lemma pole_gaussian_measurable (S : Spectrum) (j : S.index) (M y : ℝ) :
     AEStronglyMeasurable (fun t : ℝ =>
@@ -119,7 +110,7 @@ private lemma pole_gaussian_integrable (S : Spectrum) (j : S.index) {M : ℝ}
     Integrable (fun t : ℝ => poleTerm S j ((3 / 4 : ℂ) + t * Complex.I) *
       Complex.exp (((3 / 4 : ℂ) + t * Complex.I) * y +
         ((3 / 4 : ℂ) + t * Complex.I) ^ 2 / (2 * M ^ 2))) := by
-  apply ((gaussian_polynomial_integrable hM y).mul_const
+  apply ((pole_gaussian_polynomial_integrable hM y).mul_const
     ((S.mult j : ℝ) / S.gamma j ^ 2)).mono' (pole_gaussian_measurable S j M y)
   filter_upwards with t
   rw [norm_mul]
@@ -141,7 +132,7 @@ theorem pole_gaussian_tsum_integrable (S : Spectrum) (hN : CountAsymptotic S)
   have hm : Measurable (fun t : ℝ => ∑' j : S.index,
       poleTerm S j ((3 / 4 : ℂ) + t * Complex.I)) :=
     Measurable.tsum (fun j => by unfold poleTerm; fun_prop)
-  apply ((gaussian_polynomial_integrable hM y).mul_const W).mono'
+  apply ((pole_gaussian_polynomial_integrable hM y).mul_const W).mono'
     (hm.mul (by fun_prop)).aestronglyMeasurable
   filter_upwards with t
   have hw := (inverse_square_summable S hN).mul_left (32 * (1 + |t|) ^ 2)
@@ -169,7 +160,7 @@ private lemma pole_gaussian_integral_norm_summable (S : Spectrum) (hN : CountAsy
   let B : ℝ → ℝ := fun t => 32 * (1 + |t|) ^ 2 *
     ‖Complex.exp (((3 / 4 : ℂ) + t * Complex.I) * y +
       ((3 / 4 : ℂ) + t * Complex.I) ^ 2 / (2 * M ^ 2))‖
-  have hiB : Integrable B := gaussian_polynomial_integrable hM y
+  have hiB : Integrable B := pole_gaussian_polynomial_integrable hM y
   apply ((inverse_square_summable S hN).mul_left (∫ t, B t)).of_nonneg_of_le
   · intro j
     exact integral_nonneg (fun t => norm_nonneg _)

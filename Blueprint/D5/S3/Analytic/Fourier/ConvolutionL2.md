@@ -40,19 +40,7 @@ Lean statement: `D5/S3/Analytic/Fourier/ConvolutionL2.real_convolution_l2_young`
 
 Let k be a real integrable kernel with integral of its absolute value at most B, where B is nonnegative. For every measurable real f with integrable square, the integral of (k*f)² is at most B² times the integral of f². In particular, the input hypotheses hold for bounded measurable functions supported in a compact interval.
 
-**Theorem 1.4 (A real squared multiplier bound).**
-
-Lean statement: `D5/S3/Analytic/Fourier/ConvolutionL2.real_schwartz_convolution_l2_multiplier`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Fourier/ConvolutionL2.real_schwartz_convolution_l2_multiplier` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Let k be a real Schwartz kernel whose complex Fourier transform has norm at most B, with B nonnegative. If f is real and measurable with integrable square, then the integral of (k*f)² is at most B² times the integral of f². The kernel is integrable, and compactly supported bounded measurable inputs satisfy the stated hypotheses. Complexification preserves the integrals and the norms.
-
-**Theorem 1.5 (Real-valued complex Schwartz kernels).**
+**Theorem 1.4 (Real-valued complex Schwartz kernels).**
 
 Lean statement: `D5/S3/Analytic/Fourier/ConvolutionL2.real_schwartz_convolution_l2_multiplier_of_complex`
 
@@ -68,6 +56,5 @@ Suppose a complex Schwartz kernel k is the complexification of a real function r
 
 - Truth anchor: `D5/S3/Analytic/Fourier/ConvolutionL2.convolution_memLp_two`
 - Truth anchor: `D5/S3/Analytic/Fourier/ConvolutionL2.real_convolution_l2_young`
-- Truth anchor: `D5/S3/Analytic/Fourier/ConvolutionL2.real_schwartz_convolution_l2_multiplier`
 - Truth anchor: `D5/S3/Analytic/Fourier/ConvolutionL2.real_schwartz_convolution_l2_multiplier_of_complex`
 - Truth anchor: `D5/S3/Analytic/Fourier/ConvolutionL2.schwartz_convolution_l2_multiplier`

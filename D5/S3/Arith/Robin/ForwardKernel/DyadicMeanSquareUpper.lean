@@ -8,6 +8,7 @@
 
 import D5.S3.Arith.Robin.ForwardKernel.MellinConvergence
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
+import Mathlib.MeasureTheory.Function.L2Space
 
 /-! Weighted averaging transports the short-interval variance estimate to the forward response. -/
 
@@ -57,18 +58,25 @@ private lemma interval_cauchy_schwarz {f : ℝ → ℝ} {b : ℝ} (hb : 0 < b)
     (hf : IntervalIntegrable f volume 0 b)
     (hf2 : IntervalIntegrable (fun t => f t ^ 2) volume 0 b) :
     (∫ t in (0 : ℝ)..b, f t) ^ 2 ≤ b * ∫ t in (0 : ℝ)..b, f t ^ 2 := by
-  let m := (∫ t in (0 : ℝ)..b, f t) / b
-  have hi : IntervalIntegrable (fun t => f t ^ 2 - 2 * m * f t + m ^ 2) volume 0 b :=
-    (hf2.sub (hf.const_mul (2 * m))).add intervalIntegrable_const
-  have hn : 0 ≤ ∫ t in (0 : ℝ)..b, f t ^ 2 - 2 * m * f t + m ^ 2 :=
-    intervalIntegral.integral_nonneg_of_forall hb.le (fun t => by nlinarith [sq_nonneg (f t - m)])
-  rw [intervalIntegral.integral_add (hf2.sub (hf.const_mul (2 * m)))
-      intervalIntegrable_const, intervalIntegral.integral_sub hf2 (hf.const_mul (2 * m)),
-    intervalIntegral.integral_const_mul, intervalIntegral.integral_const,
-    sub_zero, smul_eq_mul] at hn
-  dsimp [m] at hn
-  field_simp at hn
-  nlinarith
+  let μ := volume.restrict (Ioc (0 : ℝ) b)
+  have hfi : Integrable f μ :=
+    (intervalIntegrable_iff_integrableOn_Ioc_of_le hb.le).mp hf
+  have hf2i : Integrable (fun t => f t ^ 2) μ :=
+    (intervalIntegrable_iff_integrableOn_Ioc_of_le hb.le).mp hf2
+  have hmem : MemLp f (ENNReal.ofReal 2) μ := by
+    norm_num only [ENNReal.ofReal_ofNat]
+    exact (memLp_two_iff_integrable_sq hfi.aestronglyMeasurable).mpr hf2i
+  have hh := integral_mul_norm_le_Lp_mul_Lq Real.HolderConjugate.two_two hmem
+    (memLp_const (1 : ℝ) : MemLp (fun _ : ℝ => (1 : ℝ)) (ENNReal.ofReal 2) μ)
+  have hμ : μ.real Set.univ = b := by simp [μ, Real.volume_Ioc, hb.le]
+  simp only [Real.norm_eq_abs, abs_one, mul_one, Real.rpow_two, sq_abs,
+    one_pow, integral_const, smul_eq_mul, mul_one, hμ, ← Real.sqrt_eq_rpow] at hh
+  have hnorm : |∫ t, f t ∂μ| ≤ Real.sqrt (∫ t, f t ^ 2 ∂μ) * Real.sqrt b :=
+    (norm_integral_le_integral_norm f).trans hh
+  have hs := (sq_le_sq₀ (abs_nonneg _) (by positivity)).mpr hnorm
+  rw [sq_abs, mul_pow, Real.sq_sqrt (integral_nonneg (fun _ => sq_nonneg _)),
+    Real.sq_sqrt hb.le] at hs
+  simpa only [intervalIntegral.integral_of_le hb.le, μ, mul_comm] using hs
 
 private lemma increment_square_integrable {X a : ℝ} (hX : 0 < X)
     (_ha : 0 ≤ a) (ha1 : a ≤ 1) :

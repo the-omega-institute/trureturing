@@ -20,7 +20,7 @@ open scoped Topology
 
 noncomputable section
 
-private lemma gaussian_polynomial_integrable {b : ℝ} (hb : 0 < b) :
+lemma gaussian_polynomial_integrable {b : ℝ} (hb : 0 < b) :
     Integrable (fun t : ℝ => (1 + |t|) ^ 2 * Real.exp (-b * t ^ 2)) := by
   have hi := integrable_rpow_mul_exp_neg_mul_sq hb (show (-1 : ℝ) < 2 by norm_num)
   simp only [Real.rpow_two] at hi
@@ -37,13 +37,24 @@ private lemma gaussian_polynomial_integrable {b : ℝ} (hb : 0 < b) :
       mul_le_mul_of_nonneg_right hp (Real.exp_nonneg _)
     _ = _ := by ring
 
-private lemma gaussian_exponent_re (M c y t : ℝ) :
+lemma gaussian_exponent_re (M c y t : ℝ) :
     ((((c : ℂ) + t * Complex.I) * y +
       ((c : ℂ) + t * Complex.I) ^ 2 / (2 * M ^ 2)).re) =
         c * y + (c ^ 2 - t ^ 2) / (2 * M ^ 2) := by
-  have he : (2 * (M : ℂ) ^ 2) = ((2 * M ^ 2 : ℝ) : ℂ) := by push_cast; rfl
-  rw [he, Complex.add_re, Complex.div_ofReal_re]
-  simp [pow_two, Complex.mul_re, Complex.mul_im]
+  rw [D5.S3.Analytic.Fourier.GaussianKernel.bromwich_exponent]
+  have hcoeff : -(1 / (2 * (M : ℂ) ^ 2)) = ((-(1 / (2 * M ^ 2)) : ℝ) : ℂ) := by
+    push_cast <;> rfl
+  have hlinear : (y : ℂ) + c / M ^ 2 = ((y + c / M ^ 2 : ℝ) : ℂ) := by
+    push_cast <;> rfl
+  have hconst : (c : ℂ) * y + c ^ 2 / (2 * M ^ 2) =
+      ((c * y + c ^ 2 / (2 * M ^ 2) : ℝ) : ℂ) := by
+    push_cast <;> rfl
+  rw [hcoeff, hlinear, hconst]
+  simp only [← Complex.ofReal_pow, ← Complex.ofReal_mul]
+  simp only [Complex.add_re, Complex.mul_re, Complex.mul_im, Complex.I_re,
+    Complex.I_im, Complex.ofReal_re, Complex.ofReal_im, zero_mul, mul_zero,
+    zero_add, add_zero, sub_zero]
+  ring
 
 /-- The Gaussian damps every quadratically bounded holomorphic function on a vertical line. -/
 theorem regular_vertical_integrable {J : ℂ → ℂ} (hstrip : GaussianStripControl J)

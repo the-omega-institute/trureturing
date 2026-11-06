@@ -11,6 +11,28 @@ internal sealed class GaussianBoundaryContourDocument : IScribeDocumentDefinitio
         H("Shifting the regular Gaussian integral"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("gaussian-exponent-re"),
+                DeclarationHandle.Create(Prefix + "gaussian_exponent_re"),
+                H("Real part of the vertical Gaussian exponent"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For real M, c, y, and t, the real part of (c+it)y+(c+it)^2/(2M^2) "
+                    + "is cy+(c^2-t^2)/(2M^2). This is the real projection of the "
+                    + "expanded Bromwich exponent."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("gaussian-polynomial-integrable"),
+                DeclarationHandle.Create(Prefix + "gaussian_polynomial_integrable"),
+                H("Integrable quadratic Gaussian majorant"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every positive b, the function (1+|t|)^2 exp(-b t^2) is "
+                    + "integrable on the real line. Gaussian moments of orders zero "
+                    + "and two dominate the quadratic factor."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("regular-vertical-integrable"),
                 DeclarationHandle.Create(Prefix + "regular_vertical_integrable"),
                 H("Absolute convergence on vertical lines"),

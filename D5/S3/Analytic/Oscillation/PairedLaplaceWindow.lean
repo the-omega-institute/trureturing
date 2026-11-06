@@ -155,9 +155,7 @@ private lemma localized_square_bound {S : Spectrum} {f : ℝ → ℝ}
   have hc (y : ℝ) :
       conv (fun v => (q M v : ℂ)) (fun u => (clipped f M u : ℂ)) y =
         (localized f M y : ℂ) := by
-    simp only [conv, convolution_def, ContinuousLinearMap.mul_apply', localized,
-      ← Complex.ofReal_mul]
-    exact integral_complex_ofReal
+    simpa only [localized] using real_convolution_identity (q M) (clipped f M) y
   have hi : Integrable (fun y => localized f M y ^ 2) := by
     convert (memLp_two_iff_integrable_sq_norm hmem.aestronglyMeasurable).mp hmem using 1
     ext y

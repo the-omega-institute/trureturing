@@ -11,6 +11,14 @@ internal sealed class ConvolutionL2Document : IScribeDocumentDefinition
         H("Convolution in L²"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("real-convolution-identity"),
+                DeclarationHandle.Create(Prefix + "real_convolution_identity"),
+                H("Complexification of real convolution"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Convolving the complexifications of two real functions agrees with the complexification of their real convolution integral."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("convolution-memlp-two"),
                 DeclarationHandle.Create(Prefix + "convolution_memLp_two"),
                 H("Young’s inequality in L²"),
