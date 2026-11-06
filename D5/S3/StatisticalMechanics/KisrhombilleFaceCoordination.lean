@@ -201,7 +201,7 @@ private lemma score_descent (s : Simplex) (hs : 0 < score s) :
     generalize hn : score (0, i, j) = n at hs ⊢
     have hb : score (0, i, j) ≤ n := hn.le
     dsimp only [score] at hb
-    simp only [hex_le, ← le_sub_iff_add_le', twice_le_iff,
+    simp only [← le_sub_iff_add_le', twice_le_iff,
       TeaCoordinationSequence.residual_le_iff] at hb
     have he : score (4, i, j) ≤ n - 1 ∨
         score (4, i - 1, j) ≤ n - 1 ∨
@@ -210,7 +210,7 @@ private lemma score_descent (s : Simplex) (hs : 0 < score s) :
         score (5, i - 1, j) ≤ n - 1 ∨
         score (5, i, j - 1) ≤ n - 1 := by
       clear hn
-      simp only [score, hex_le, ← le_sub_iff_add_le', twice_le_iff,
+      simp only [score, ← le_sub_iff_add_le', twice_le_iff,
       TeaCoordinationSequence.residual_le_iff]
       omega (config := {splitMinMax := false})
     rcases he with h0 | h1 | h2 | h3 | h4 | h5
@@ -262,7 +262,7 @@ private lemma score_descent (s : Simplex) (hs : 0 < score s) :
         score (4, i, j) ≤ n - 1 ∨
         score (5, i, j - 1) ≤ n - 1 := by
       clear hn
-      simp only [score, hex_le, ← le_sub_iff_add_le', twice_le_iff,
+      simp only [score, ← le_sub_iff_add_le', twice_le_iff,
       TeaCoordinationSequence.residual_le_iff]
       omega (config := {splitMinMax := false})
     rcases he with h0 | h1 | h2 | h3
@@ -302,7 +302,7 @@ private lemma score_descent (s : Simplex) (hs : 0 < score s) :
         score (4, i, j) ≤ n - 1 ∨
         score (5, i - 1, j) ≤ n - 1 := by
       clear hn
-      simp only [score, hex_le, ← le_sub_iff_add_le', twice_le_iff,
+      simp only [score, ← le_sub_iff_add_le', twice_le_iff,
       TeaCoordinationSequence.residual_le_iff]
       omega (config := {splitMinMax := false})
     rcases he with h0 | h1 | h2 | h3
@@ -342,7 +342,7 @@ private lemma score_descent (s : Simplex) (hs : 0 < score s) :
         score (4, i, j) ≤ n - 1 ∨
         score (5, i, j) ≤ n - 1 := by
       clear hn
-      simp only [score, hex_le, ← le_sub_iff_add_le', twice_le_iff,
+      simp only [score, ← le_sub_iff_add_le', twice_le_iff,
       TeaCoordinationSequence.residual_le_iff]
       omega (config := {splitMinMax := false})
     rcases he with h0 | h1 | h2 | h3
@@ -375,7 +375,7 @@ private lemma score_descent (s : Simplex) (hs : 0 < score s) :
     generalize hn : score (4, i, j) = n at hs ⊢
     have hb : score (4, i, j) ≤ n := hn.le
     dsimp only [score] at hb
-    simp only [hex_le, ← le_sub_iff_add_le', twice_le_iff,
+    simp only [← le_sub_iff_add_le', twice_le_iff,
       TeaCoordinationSequence.residual_le_iff] at hb
     have hn2 : 2 ≤ n := by
       by_contra h
@@ -389,7 +389,7 @@ private lemma score_descent (s : Simplex) (hs : 0 < score s) :
         score (0, i + 1, j) ≤ n - 1 ∨
         score (0, i, j + 1) ≤ n - 1 := by
       clear hn
-      simp only [score, hex_le, ← le_sub_iff_add_le', twice_le_iff,
+      simp only [score, ← le_sub_iff_add_le', twice_le_iff,
       TeaCoordinationSequence.residual_le_iff]
       omega (config := {splitMinMax := false})
     rcases he with h0 | h1 | h2
@@ -416,13 +416,13 @@ private lemma score_descent (s : Simplex) (hs : 0 < score s) :
     generalize hn : score (5, i, j) = n at hs ⊢
     have hb : score (5, i, j) ≤ n := hn.le
     dsimp only [score] at hb
-    simp only [hex_le, ← le_sub_iff_add_le', twice_le_iff,
+    simp only [← le_sub_iff_add_le', twice_le_iff,
       TeaCoordinationSequence.residual_le_iff] at hb
     have he : score (0, i + 1, j) ≤ n - 1 ∨
         score (0, i, j + 1) ≤ n - 1 ∨
         score (0, i + 1, j + 1) ≤ n - 1 := by
       clear hn
-      simp only [score, hex_le, ← le_sub_iff_add_le', twice_le_iff,
+      simp only [score, ← le_sub_iff_add_le', twice_le_iff,
       TeaCoordinationSequence.residual_le_iff]
       omega (config := {splitMinMax := false})
     rcases he with h0 | h1 | h2
@@ -481,18 +481,18 @@ private lemma distance_formula (s : Simplex) : distance s = (score s).toNat := b
   simpa only [hz, zero_add, SimpleGraph.dist_comm, distance] using hl
 
 private def triangle (n : ℕ) : Finset (ℕ × ℕ) :=
-  (Finset.range n).biUnion Finset.antidiagonal
+  (Finset.range n).biUnion Finset.HasAntidiagonal.antidiagonal
 
 private lemma triangle_mem (n : ℕ) (p : ℕ × ℕ) :
     p ∈ triangle n ↔ p.1 + p.2 < n := by
-  simp [triangle, Finset.mem_antidiagonal]
+  simp [triangle, Finset.HasAntidiagonal.mem_antidiagonal]
 
 private lemma triangle_card (n : ℕ) : 2 * (triangle n).card = n * (n + 1) := by
-  have hd : (↑(Finset.range n) : Set ℕ).PairwiseDisjoint Finset.antidiagonal := by
+  have hd : (↑(Finset.range n) : Set ℕ).PairwiseDisjoint Finset.HasAntidiagonal.antidiagonal := by
     rw [← Finset.pairwiseDisjoint_coe]
     exact (Set.pairwiseDisjoint_fiber (fun p : ℕ × ℕ => p.1 + p.2) _).mono
-      (fun i p hp => Finset.mem_antidiagonal.mp hp)
-  change 2 * ((Finset.range n).biUnion Finset.antidiagonal).card = _
+      (fun i p hp => Finset.HasAntidiagonal.mem_antidiagonal.mp hp)
+  change 2 * ((Finset.range n).biUnion Finset.HasAntidiagonal.antidiagonal).card = _
   rw [Finset.card_biUnion hd]
   simp only [Finset.Nat.card_antidiagonal]
   have hs : (∑ i ∈ Finset.range n, (i + 1)) = ∑ i ∈ Finset.range (n + 1), i := by
@@ -637,7 +637,7 @@ private lemma slice_even_0 (k : ℕ) :
   have h := slice_card_from_polygon 0 (2 * (k + 1)) (2 * k + 1) (2 * k + 1) (k) (k + 1)
     (-(k : ℤ)) (-(k : ℤ)) (by omega) (by omega) (by omega) (by omega) (by omega) (by
       rintro ⟨i, j⟩
-      simp only [score, hex_le, ← le_sub_iff_add_le', twice_le_iff,
+      simp only [score, ← le_sub_iff_add_le', twice_le_iff,
       TeaCoordinationSequence.residual_le_iff]
       push_cast
       omega)
@@ -685,7 +685,7 @@ private lemma slice_even_4 (k : ℕ) :
   have h := slice_card_from_polygon 4 (2 * (k + 1)) (2 * k + 2) (2 * k + 2) (k + 1) (k + 1)
     (-(k : ℤ) - 1) (-(k : ℤ) - 1) (by omega) (by omega) (by omega) (by omega) (by omega) (by
       rintro ⟨i, j⟩
-      simp only [score, hex_le, ← le_sub_iff_add_le', twice_le_iff,
+      simp only [score, ← le_sub_iff_add_le', twice_le_iff,
       TeaCoordinationSequence.residual_le_iff]
       push_cast
       omega)
@@ -697,7 +697,7 @@ private lemma slice_even_5 (k : ℕ) :
   have h := slice_card_from_polygon 5 (2 * (k + 1)) (2 * k + 2) (2 * k + 2) (k) (k + 2)
     (-(k : ℤ) - 1) (-(k : ℤ) - 1) (by omega) (by omega) (by omega) (by omega) (by omega) (by
       rintro ⟨i, j⟩
-      simp only [score, hex_le, ← le_sub_iff_add_le', twice_le_iff,
+      simp only [score, ← le_sub_iff_add_le', twice_le_iff,
       TeaCoordinationSequence.residual_le_iff]
       push_cast
       omega)
@@ -709,7 +709,7 @@ private lemma slice_odd_0 (k : ℕ) :
   have h := slice_card_from_polygon 0 (2 * (k + 1) + 1) (2 * k + 3) (2 * k + 3) (k + 1) (k + 2)
     (-(k : ℤ) - 1) (-(k : ℤ) - 1) (by omega) (by omega) (by omega) (by omega) (by omega) (by
       rintro ⟨i, j⟩
-      simp only [score, hex_le, ← le_sub_iff_add_le', twice_le_iff,
+      simp only [score, ← le_sub_iff_add_le', twice_le_iff,
       TeaCoordinationSequence.residual_le_iff]
       push_cast
       omega)
@@ -757,7 +757,7 @@ private lemma slice_odd_4 (k : ℕ) :
   have h := slice_card_from_polygon 4 (2 * (k + 1) + 1) (2 * k + 2) (2 * k + 2) (k + 1) (k + 1)
     (-(k : ℤ) - 1) (-(k : ℤ) - 1) (by omega) (by omega) (by omega) (by omega) (by omega) (by
       rintro ⟨i, j⟩
-      simp only [score, hex_le, ← le_sub_iff_add_le', twice_le_iff,
+      simp only [score, ← le_sub_iff_add_le', twice_le_iff,
       TeaCoordinationSequence.residual_le_iff]
       push_cast
       omega)
@@ -769,7 +769,7 @@ private lemma slice_odd_5 (k : ℕ) :
   have h := slice_card_from_polygon 5 (2 * (k + 1) + 1) (2 * k + 2) (2 * k + 2) (k) (k + 2)
     (-(k : ℤ) - 1) (-(k : ℤ) - 1) (by omega) (by omega) (by omega) (by omega) (by omega) (by
       rintro ⟨i, j⟩
-      simp only [score, hex_le, ← le_sub_iff_add_le', twice_le_iff,
+      simp only [score, ← le_sub_iff_add_le', twice_le_iff,
       TeaCoordinationSequence.residual_le_iff]
       push_cast
       omega)
@@ -818,7 +818,7 @@ private lemma ball_zero : ball 0 = {root} := by
 private lemma ball_one : (ball 1).card = 7 := by
   have h0 : slice 0 1 = {(0, 0), (1, 0), (0, 1)} := by
     ext ⟨i, j⟩
-    simp only [slice_mem, score, hex_le, ← le_sub_iff_add_le', twice_le_iff,
+    simp only [slice_mem, score, ← le_sub_iff_add_le', twice_le_iff,
       TeaCoordinationSequence.residual_le_iff, Finset.mem_insert, Finset.mem_singleton,
       Prod.mk.injEq]
     omega
@@ -832,7 +832,7 @@ private lemma ball_one : (ball 1).card = 7 := by
       omega
   have h5 : slice 5 1 = ∅ := by
     ext ⟨i, j⟩
-    simp only [slice_mem, score, hex_le, ← le_sub_iff_add_le', twice_le_iff,
+    simp only [slice_mem, score, ← le_sub_iff_add_le', twice_le_iff,
       TeaCoordinationSequence.residual_le_iff, Finset.notMem_empty, iff_false]
     omega
   rw [ball_card_sum]
