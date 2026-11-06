@@ -123,8 +123,12 @@ private theorem next_spec (s : (Fin 68)) (c : (Fin 32)) (h : valid s c) :
 private theorem transfer_spec (s t : (Fin 68)) :
     T t s = if valid s (stateRow t) ∧ (fun s c => stateOf (stateRow s) c) s (stateRow t) = t then 1 else 0 := by
   revert s t
-  simp only [valid, delta, minor, Matrix.det_fin_two]
-  decide
+  intro s
+  refine Fin.addCases (m := 34) (n := 34) (fun i => ?_) (fun i => ?_) s
+  all_goals
+    revert i
+    simp only [valid, delta, minor, Matrix.det_fin_two]
+    decide +kernel
 
 private theorem initial_spec (t : (Fin 68)) : initial t =
     ∑ a : (Fin 32), if delta a (stateRow t) = stateDet t then (1 : ℤ) else 0 := by
