@@ -25,8 +25,7 @@ namespace D5.S3.Combinatorics.Circle.TwoBitZeroSubsets
 open SourceWidth ZeroSumSubsets
 open scoped BigOperators
 
-open private mask_as_geom mask_injective mask_bound mask_pos mask_full
-  zero_mask_dvd quotient_dvd
+open private mask_as_geom mask_pos
   from D5.S3.Combinatorics.Circle.ZeroSumSubsets
 
 private theorem modulus_nat (r : ℕ) :
