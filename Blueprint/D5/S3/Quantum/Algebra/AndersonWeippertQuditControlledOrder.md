@@ -34,6 +34,10 @@ $$\forall p: \mathbb{N}, (\operatorname{Nat}.\operatorname{Prime}(p)) \Rightarro
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/AndersonWeippertQuditControlledOrder.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/anderson-weippert-2024-qudit-controlled-order` (proved) by `D5/S3/Quantum/Algebra/AndersonWeippertQuditControlledOrder.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"anderson-weippert-2024-qudit-controlled-order","declaration_gid":"D5/S3/Quantum/Algebra/AndersonWeippertQuditControlledOrder.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* J. T. Anderson and M. Weippert (2024). *Controlled Gates in the Clifford Hierarchy*. DOI: [10.48550/arXiv.2410.04711](https://doi.org/10.48550/arXiv.2410.04711). URL: <https://arxiv.org/abs/2410.04711v3>.

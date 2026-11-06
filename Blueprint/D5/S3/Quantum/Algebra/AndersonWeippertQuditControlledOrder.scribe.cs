@@ -15,7 +15,8 @@ internal sealed class AndersonWeippertQuditControlledOrderDocument : IScribeDocu
             Node("controlled-order-claim", "The controlled-qudit order conjecture", "claim", ClaimFormula(),
                 "Section 4, p. 7: \"It is tempting to conjecture for the qudit case that C(U) is in the Clifford Hierarchy only if U is order d^m where d is the local qudit dimension and m is a non-negative integer. We leave this as an open problem.\" Here d is the prime p, basis indices are functions from Fin n to ZMod p, and n ranges over all natural numbers, including zero. The phase group of the Pauli operators is the unit circle. The primality hypothesis supplies NeZero p. The existential hierarchy index is finite, and orderOf is the exact multiplicative matrix order.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("controlled-order-result", "The exact target order is a power of the local prime", "result", Disp(ClaimBody()),
-                "Repeated commutators with the control shift reach the identity. On the controlled blocks, each commutator takes a cyclic difference of the integer power exponents. Their positive content is a power of p, and the exact order of U divides that content. Thus the conclusion includes the global phase. The converse and the least hierarchy level are not asserted.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                "Repeated commutators with the control shift reach the identity. On the controlled blocks, each commutator takes a cyclic difference of the integer power exponents. Their positive content is a power of p, and the exact order of U divides that content. Thus the conclusion includes the global phase. The converse and the least hierarchy level are not asserted.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("anderson-weippert-2024-qudit-controlled-order"), ResolutionKind.Proved)))));
 
     private static Formula V(string name) => F.Id(name);
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
@@ -49,9 +50,9 @@ internal sealed class AndersonWeippertQuditControlledOrderDocument : IScribeDocu
     private static Formula Bracket(Formula instance) => Seq(OpenBracket, instance, CloseBracket);
     private static Formula Instance(Formula instance, Formula body) => Seq(Bracket(instance), Comma, Sp, body);
     private static Formula Sizes(Formula body) => All("p", N(), Instance(Call("NeZero", V("p")), All("n", N(), body)));
-    private static DocumentBlock Node(string id, string title, string name, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance) =>
+    private static DocumentBlock Node(string id, string title, string name, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
             Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-                StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+                StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula ControlledFormula()
     {
