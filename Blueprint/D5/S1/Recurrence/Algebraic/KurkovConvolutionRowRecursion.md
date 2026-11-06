@@ -86,6 +86,10 @@ $$\forall (K: \operatorname{Type}), [\operatorname{CommSemiring}\left(K\right)] 
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/KurkovConvolutionRowRecursion.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kurkov-a340991-convolution-row-recursion` (proved) by `D5/S1/Recurrence/Algebraic/KurkovConvolutionRowRecursion.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kurkov-a340991-convolution-row-recursion","declaration_gid":"D5/S1/Recurrence/Algebraic/KurkovConvolutionRowRecursion.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Alois P. Heinz; Mikhail Kurkov (2025). *OEIS A340991: self-convolution triangle and Kurkov's row recursion*. URL: <https://oeis.org/A340991>.

@@ -63,14 +63,18 @@ internal sealed class KurkovConvolutionRowRecursionDocument : IScribeDocumentDef
                 + "that tail. Coefficients below the power vanish, giving the "
                 + "finite row polynomial. No positivity, nonzero coefficient, "
                 + "division, or characteristic assumption is required.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kurkov-a340991-convolution-row-recursion"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("a340991-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(string owner, string name) =>
