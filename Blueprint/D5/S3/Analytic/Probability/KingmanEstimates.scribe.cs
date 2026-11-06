@@ -74,7 +74,7 @@ internal sealed class KingmanEstimatesDocument : IScribeDocumentDefinition
         All("phi", Fn(V("alpha"), Real)),
         Call("Measurable", V("phi")), Sp, Rightarrow,
         Call("Integrable", V("phi"), V("mu")), Sp, Rightarrow,
-        Par(Seq(All("x", V("alpha")), D(0), Leq, App(V("phi"), V("x")))),
+        Par(Seq(All("x", V("alpha")), D(0), Sp, Leq, Sp, App(V("phi"), V("x")))),
         Sp, Rightarrow);
 
     private static Formula StationaryTailStatement() => Disp(new Formula.Aligned([
@@ -89,29 +89,29 @@ internal sealed class KingmanEstimatesDocument : IScribeDocumentDefinition
         Call("sum", Call("range", V("M")), Lam("k", Nat, summand));
     private static Formula GreedyStatement() => Disp(new Formula.Aligned([
         Seq(All("F", Fn(Nat, Fn(Nat, Real))),
-            Par(Seq(All("k", Nat), All("n", Nat), D(0), Leq, Cost(V("k"), V("n")))),
+            Par(Seq(All("k", Nat), All("n", Nat), D(0), Sp, Leq, Sp, Cost(V("k"), V("n")))),
             Sp, Rightarrow),
         Seq(Par(Seq(All("k", Nat), Cost(V("k"), D(0)), Eq, D(0))), Sp, Rightarrow),
         Seq(Par(Seq(All("k", Nat), All("m", Nat), All("n", Nat),
-            Cost(V("k"), Seq(V("m"), Plus, V("n"))), Leq,
+            Cost(V("k"), Seq(V("m"), Plus, V("n"))), Sp, Leq, Sp,
             Cost(V("k"), V("m")), Plus, Cost(Seq(V("k"), Plus, V("m")), V("n")))),
             Sp, Rightarrow),
         Seq(All("B", Fn(Nat, Call("Prop"))), Instance(Call("DecidablePred", V("B"))),
-            All("c", Real), D(0), Leq, V("c"), Sp, Rightarrow, All("N", Nat)),
-        Seq(Par(Seq(All("k", Nat), Neg, App(V("B"), V("k")), Sp, Rightarrow,
+            All("c", Real), D(0), Sp, Leq, Sp, V("c"), Sp, Rightarrow, All("N", Nat)),
+        Seq(Par(Seq(All("k", Nat), Sp, Neg, Sp, App(V("B"), V("k")), Sp, Rightarrow,
             Exists, Sp, V("n"), Colon, Nat, Comma, Sp,
-            D(1), Leq, V("n"), Land, V("n"), Leq, V("N"), Land,
-            Cost(V("k"), V("n")), Leq, V("n"), Cdot, V("c"))), Sp, Rightarrow),
-        Seq(All("M", Nat), Cost(D(0), V("M")), Leq, V("M"), Cdot, V("c"), Plus,
+            D(1), Sp, Leq, Sp, V("n"), Sp, Land, Sp, V("n"), Sp, Leq, Sp, V("N"), Sp, Land, Sp,
+            Cost(V("k"), V("n")), Sp, Leq, Sp, V("n"), Sp, Cdot, Sp, V("c"))), Sp, Rightarrow),
+        Seq(All("M", Nat), Cost(D(0), V("M")), Sp, Leq, Sp, V("M"), Sp, Cdot, Sp, V("c"), Plus,
             SumBefore(Call("ite", App(V("B"), V("k")), Cost(V("k"), D(1)), D(0))), Plus),
-        SumBefore(Call("ite", Seq(V("M"), Leq, V("k"), Plus, V("N")),
+        SumBefore(Call("ite", Seq(V("M"), Sp, Leq, Sp, V("k"), Plus, V("N")),
             Cost(V("k"), D(1)), D(0)))
     ]));
 
     private static Formula WeakMaximalStatement() => Disp(new Formula.Aligned([
         Space(), Observable(),
-        Seq(All("c", Real), D(0), Lt, V("c"), Sp, Rightarrow,
-            App(V("mu"), Call("DickSet", V("T"), V("phi"), V("c"))), Leq,
+        Seq(All("c", Real), D(0), Sp, Lt, Sp, V("c"), Sp, Rightarrow,
+            App(V("mu"), Call("DickSet", V("T"), V("phi"), V("c"))), Sp, Leq, Sp,
             Call("ofReal", Seq(Frac, Grp(Call("integral", V("mu"), V("phi"))), Grp(V("c")))))
     ]));
 }
