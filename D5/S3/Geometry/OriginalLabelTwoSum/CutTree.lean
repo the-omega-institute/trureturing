@@ -165,13 +165,13 @@ theorem connected : g.tree.Connected := by
   refine ⟨g.qL g.aL,?_⟩
   intro w
   have hab : g.tree.Reachable (g.qL g.aL) (g.qL g.bL) := by
-    simpa only [rightHom,SimpleGraph.Hom.coe_mk,g.qR_a,g.qR_b] using
+    simpa only [rightHom,RelHom.coeFn_mk,g.qR_a,g.qR_b] using
       (g.rightTree.connected g.aR g.bR).map g.rightHom
   rcases g.cover w with ⟨x,rfl⟩ | ⟨y,rfl⟩
   · rcases g.cut_cover x with hx | hx
     · exact hx.map g.leftHom
     · exact hab.trans (hx.map g.leftHom)
-  · simpa only [rightHom,SimpleGraph.Hom.coe_mk,g.qR_a] using
+  · simpa only [rightHom,RelHom.coeFn_mk,g.qR_a] using
       (g.rightTree.connected g.aR y).map g.rightHom
 
 /-- Each retained left edge is still a bridge. Its original cut predicate is

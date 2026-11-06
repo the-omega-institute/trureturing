@@ -157,7 +157,7 @@ private theorem endpoint_probability {x : V → ℝ} (hx : Probability x) :
   · intro v
     by_cases hv : v = P.apex
     · subst v
-      simpa only [endpoint, if_pos rfl, if_neg P.apex_notMem, sub_zero] using
+      simpa only [endpoint, if_pos rfl, if_neg P.apex_notMem, sub_zero, ite_true] using
         add_nonneg (hx.1 P.apex)
           (mul_nonneg (Nat.cast_nonneg P.lower.card) (P.minimum_nonneg hx))
     · by_cases hvl : v ∈ P.lower
