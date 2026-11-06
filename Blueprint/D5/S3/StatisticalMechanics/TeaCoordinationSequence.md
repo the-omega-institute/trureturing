@@ -42,7 +42,21 @@ $$(\operatorname{D5.S3.StatisticalMechanics.TeaCoordinationSequence.claim}) \Lef
 
 The OEIS entry marks Barker's generating function and recurrence as conjectural and gives Spezia's closed form conditionally on them. Here that closed form is the proposition for the specified graph and origin: at every positive natural radius, eight times the coordination number is 63 times the squared radius plus the constant selected by its remainder modulo four. All four equalities are in the natural numbers. The generating function, recurrence and partial sums are not additional conjuncts.
 
-**Theorem 1.4 (The coordination formulas hold at every positive radius).**
+**Definition 1.4 (Horizontal excess beyond a hexagonal region).**
+
+$$\forall (i: \mathbb{Z}), (\forall (j: \mathbb{Z}), (\forall (p: \mathbb{Z}), (\forall (q: \mathbb{Z}), (\operatorname{D5.S3.StatisticalMechanics.TeaCoordinationSequence.residual}\left(i, j, p, q\right) = \operatorname{max}\left(0, \operatorname{max}\left(i - p, \operatorname{max}\left(j - p, \operatorname{max}\left(i + j - p, \operatorname{max}\left(-q - i, \operatorname{max}\left(-q - j, -q - i - j\right)\right)\right)\right)\right)\right)))))$$
+
+*Formalization.* `D5/S3/StatisticalMechanics/TeaCoordinationSequence.residual` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* N. J. A. Sloane, Colin Barker, Stefano Spezia (2018). *OEIS A299285, coordination sequence for the tea 3D uniform tiling*. URL: <https://oeis.org/A299285>.
+
+*Commentary.*
+
+All four parameters are integers. The maximum measures the violations of the six bounds −q ≤ i,j,i+j ≤ p, together with zero. At p=q=0 it is the triangular lattice radius; at p=0 and q=1 its three negative coordinate bounds are shifted by one.
+
+**Theorem 1.5 (The coordination formulas hold at every positive radius).**
 
 $$\forall (n: \mathbb{N}), ((0 < n) \to (((\operatorname{Nat.mod}\left(n, 4\right) = 0) \to (8 \cdot \operatorname{D5.S3.StatisticalMechanics.TeaCoordinationSequence.shell}\left(n\right) = 63 \cdot n^{2} + 16)) \land (((\operatorname{Nat.mod}\left(n, 4\right) = 1) \to (8 \cdot \operatorname{D5.S3.StatisticalMechanics.TeaCoordinationSequence.shell}\left(n\right) = 63 \cdot n^{2} + 17)) \land (((\operatorname{Nat.mod}\left(n, 4\right) = 2) \to (8 \cdot \operatorname{D5.S3.StatisticalMechanics.TeaCoordinationSequence.shell}\left(n\right) = 63 \cdot n^{2} + 12)) \land ((\operatorname{Nat.mod}\left(n, 4\right) = 3) \to (8 \cdot \operatorname{D5.S3.StatisticalMechanics.TeaCoordinationSequence.shell}\left(n\right) = 63 \cdot n^{2} + 17))))))$$
 
@@ -85,6 +99,7 @@ Finally split n into its four remainders modulo four and use the integer quotien
 ## References
 
 - Truth anchor: `D5/S3/StatisticalMechanics/TeaCoordinationSequence.claim`
+- Truth anchor: `D5/S3/StatisticalMechanics/TeaCoordinationSequence.residual`
 - Truth anchor: `D5/S3/StatisticalMechanics/TeaCoordinationSequence.result`
 - Truth anchor: `D5/S3/StatisticalMechanics/TeaCoordinationSequence.shell`
 - Truth anchor: `D5/S3/StatisticalMechanics/TeaCoordinationSequence.teaGraph`
