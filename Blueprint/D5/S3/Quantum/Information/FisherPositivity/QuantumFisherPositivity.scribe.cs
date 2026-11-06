@@ -2,12 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Information;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Information.FisherPositivity;
 
-// Escape registrations for both public declarations remain open in issue #27072.
 internal sealed class QuantumFisherPositivityDocument : IScribeDocumentDefinition
 {
-    private const string Module = "D5/S3/Quantum/Information/QuantumFisherPositivity.";
+    private const string Module = "D5/S3/Quantum/Information/FisherPositivity/QuantumFisherPositivity.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite-dimensional Hermitian Fisher-form quadratic forms are nonnegative.",

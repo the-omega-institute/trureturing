@@ -1,12 +1,11 @@
-/- GID: D5/S3/Quantum/Information/QuantumFisherPositivity
+/- GID: D5/S3/Quantum/Information/FisherPositivity/QuantumFisherPositivity
    generality: G
-   mirror-B: D5/B/S3/Quantum/Information/QuantumFisherPositivity
+   mirror-B: D5/B/S3/Quantum/Information/FisherPositivity/QuantumFisherPositivity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Finite-dimensional Hermitian Fisher matrices have nonnegative real quadratic forms. -/
 
-/- The escape registrations for both public declarations remain open in issue #27072. -/
 
 import D5.S3.Quantum.Matrix.MatrixSelfPairing
 import D5.S3.Weil.ZetaLinear.RankTrace
@@ -15,7 +14,7 @@ noncomputable section
 open Matrix Finset
 open scoped BigOperators ComplexOrder MatrixOrder Matrix.Norms.Frobenius
 
-namespace D5.S3.Quantum.Information.QuantumFisherPositivity
+namespace D5.S3.Quantum.Information.FisherPositivity.QuantumFisherPositivity
 
 private def sldCombination {ι d : Type*} [Fintype ι]
     (a : ι → ℝ) (L : ι → Matrix d d ℂ) : Matrix d d ℂ :=
@@ -119,4 +118,4 @@ theorem quantum_fisher_congruence_quadratic_nonneg {ι d κ : Type*}
   rw [hExpand]
   exact hBase
 
-end D5.S3.Quantum.Information.QuantumFisherPositivity
+end D5.S3.Quantum.Information.FisherPositivity.QuantumFisherPositivity
