@@ -6,6 +6,9 @@
    utility: none
    digest: Collective insertion restrictions at the same original Robin minimum. -/
 
+/- Escape audit unfinished for the six public theorem targets:
+   https://github.com/the-omega-institute/trureturing/issues/27334. -/
+
 import D5.S3.Arith.Robin.PriceRecord.NonlinearPrimeExclusion
 import Mathlib.Analysis.Convex.Jensen
 import Mathlib.Analysis.Convex.Deriv
