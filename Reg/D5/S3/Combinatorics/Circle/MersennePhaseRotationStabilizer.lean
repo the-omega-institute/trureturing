@@ -16,7 +16,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
 abbrev signature : Signature where
-  Params := ℕ × ℕ
+  Params := Sigma ℕ (fun _ => ℕ)
   State p := Finset (Fin (3 * p.1))
   Role := Bool
   finiteRole := inferInstance
@@ -41,7 +41,7 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ (d h : ℕ) (_hd : 3 ≤ d) (_h19 : ¬19 ∣ (2 ^ (d + 1) - 3)),
     (∀ A : Finset (Fin (3 * d)),
-      R.readout false (d, h) A = 0 ↔ R.readout true (d, h) A = 0) ↔
+      R.readout false ⟨d, h⟩ A = 0 ↔ R.readout true ⟨d, h⟩ A = 0) ↔
       (if d = 4 then 2 else d) ∣ h
 
 private theorem rejected_law (role : Bool) : ¬ arena.Law (rejected role) := by
@@ -52,7 +52,7 @@ private theorem rejected_law (role : Bool) : ¬ arena.Law (rejected role) := by
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(3, 0), ∅, {⟨0, by decide⟩}, ?_⟩
+  refine ⟨⟨3, 0⟩, ∅, {⟨0, by decide⟩}, ?_⟩
   cases i <;> simp [actual, realize] <;> norm_num [actualSource, centered, modulus]
 
 def family : Registration arena (type_of% (@actual_zero_family_rotation_iff)) where
@@ -99,12 +99,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0, 1]
     readouts := #[{
-      path := #["body", "body", "body", "body", "fn", "arg", "body", "fn", "arg", "fn", "arg"]
+      path := #["body", "body", "body", "body", "fn", "arg", "body", "arg", "fn", "arg"]
       stateBinder := 4
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "fn", "arg", "body", "arg", "fn", "arg"]
+      path := #["body", "body", "body", "body", "fn", "arg", "body", "fn", "arg", "fn", "arg"]
       stateBinder := 4
       functionOperand := false
       stateOperand := none
