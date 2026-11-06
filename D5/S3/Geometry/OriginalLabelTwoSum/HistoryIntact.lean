@@ -1623,7 +1623,7 @@ theorem zeroIntact_core_original (m : Nat) (hm : 3 ≤ m) (h0 : m % 3 = 0)
     (zeroMarkerOutput_lists m hm X e J f heX hXY hJ oJ).2,
     zeroMarkerOutput_pointFaces, List.map_map, Function.comp_def, List.append_assoc]
   simp only [pointFaces, id_eq]
-  all_goals rfl
+  congr 10
 
 /-- The intended nonempty-X local terminal at EVERY m>=3, on actual original
 coordinates. oJ and oL are the exact strictly-earlier predecessor factors;
@@ -1759,6 +1759,7 @@ theorem intactOutput_core_faces (m : Nat) (hm : 3 ≤ m) (X : Finset V) (e : V)
   · simp only [intactOutput, dif_neg h0, dif_pos h2, corePairsOf]
     rw [twoIntact_core_faces, two_layer_core_readback]
     simp only [corePairsOf, pointFaces, id_eq, List.append_assoc]
+    congr 10
   · have hg : goodResidue m := ⟨m / 3, by omega⟩
     cases oJ with
     | void hv =>
