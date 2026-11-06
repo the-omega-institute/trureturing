@@ -44,6 +44,6 @@ The formally negated claim quantifies over the complete own-clock bundle and eve
 
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualInventoryCollectiveSeparation.actual_witness`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualInventoryCollectiveSeparation.result`
-- Dependency: [D5/S3/Arith/GoldenResource/RobinRationalBasis](../../GoldenResource/RobinRationalBasis.md)
 - Dependency: [D5/S3/Arith/GoldenResource5040PriceInterval](../../GoldenResource5040PriceInterval.md)
+- Dependency: [D5/S3/Arith/Robin/PriceRecord/ActualInventoryTailBounds](ActualInventoryTailBounds.md)
 - Dependency: [D5/S3/Arith/Robin/PriceRecord/NonlinearPrimeExclusion](NonlinearPrimeExclusion.md)
