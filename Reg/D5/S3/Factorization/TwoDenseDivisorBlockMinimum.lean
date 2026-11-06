@@ -65,7 +65,8 @@ def family : DependentFamily.Registration arena sourceScope where
       exact nomatch e
   dependence := actual_dependence
 
-noncomputable def registration : Contract.Registration
+noncomputable def registration :
+    Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@_root_.D5.S3.Factorization.TwoDenseDivisorBlockMinimum.block_card_ge_of_dense_factor)
     (DependentFamily.Realization signature) (Type) Unit where
   unitName := `D5.S3.Factorization.TwoDenseDivisorBlockMinimum.block_card_ge_of_dense_factor.__information_unit
@@ -141,7 +142,8 @@ def family : DependentFamily.Registration arena sourceScope where
       exact nomatch e
   dependence := actual_dependence
 
-noncomputable def registration : Contract.Registration
+noncomputable def registration :
+    Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@_root_.D5.S3.Factorization.TwoDenseDivisorBlockMinimum.first_block_min_of_dense_factor)
     (DependentFamily.Realization signature) (Type) Unit where
   unitName := `D5.S3.Factorization.TwoDenseDivisorBlockMinimum.first_block_min_of_dense_factor.__information_unit
@@ -209,7 +211,8 @@ def family : DependentFamily.Registration arena sourceScope where
       exact nomatch e
   dependence := actual_dependence
 
-noncomputable def registration : Contract.Registration
+noncomputable def registration :
+    Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@_root_.D5.S3.Factorization.TwoDenseDivisorBlockMinimum.result)
     (DependentFamily.Realization signature) (Type) Unit where
   unitName := `D5.S3.Factorization.TwoDenseDivisorBlockMinimum.result.__information_unit
