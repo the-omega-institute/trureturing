@@ -3433,9 +3433,9 @@ $F$ and $H$ remain different operators. Section 133 of [S] supplies
 the finiteness of $N_d$, without supplying a numerical name for it.
 
 **Theorem 12.2 (a computed resolvent of the full original endpoint).**
-From the $a,\eta$ names, §11 constructs the action of
-$R=(H+1)^{-1}$ on every supplied global raw $L^2$ name, at every
-rational absolute error. The output is a global name with a finite
+From the $a,\eta$ names and the constructed services of §11,
+the action of $R=(H+1)^{-1}$ on every supplied global raw $L^2$
+name is computable at every rational absolute error. The output is a global name with a finite
 error certificate. The auxiliary discount $1$ is in the original
 units and does not change the physical clock. Explicitly set
 
@@ -3640,7 +3640,7 @@ $$
 $$
 
 For any desired rational $\delta>0$, choosing
-$N>(3L_f/(2\delta))^2$,
+$N>(3L_f/(2\delta))^2$, with $N$ a perfect square,
 $e_t<\delta/[3(C_f+1)]$ and $\kappa<\delta/3$
 makes $\Delta<\delta$. Elementary exponential evaluation at
 the finitely many positive rational nodes is total. No unknown
@@ -3649,8 +3649,10 @@ modulus or approximation constant has been supplied.
 To include every vector error, expand (12.14) by exact rational
 arithmetic as $P(x)=\sum_{j=0}^Na_jx^j$. Put
 $A_P=\sum_j|a_j|$ and $B_P=\sum_jj|a_j|$.
-For an exact input $u$ with known rational $Q\ge\|u\|_2$,
-start with a finite $U_0$ of error $\alpha$, and compute
+For an exact named input $u$, first compute a rational
+$Q\ge\|u\|_2$ from the norm of any finite approximation plus
+its certified error; this is not an additional input. Start
+with a finite $U_0$ of error $\alpha$, and compute
 $U_j$ with $\|U_j-RU_{j-1}\|_2\le\beta_j$ using
 Theorem 12.2. Contractivity gives inductively
 
