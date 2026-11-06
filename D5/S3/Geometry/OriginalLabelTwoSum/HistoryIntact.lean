@@ -515,7 +515,7 @@ theorem unitIntact_main_faces (m : Nat) (hm : 3 ≤ m) (hr : m % 3 ≠ 2)
     Finset.filter_eq_self.mpr (by intro x hx; exact Finset.mem_singleton.mp hx)
   simp only [hF, Finset.toList_singleton, List.mergeSort_singleton,
     List.map_cons, List.map_nil, Finset.union_empty, ← List.map_eq_flatMap]
-  simpa only [Pair.upper, Finset.image_insert] using
+  simpa only [CollapsePair.upper, Finset.image_insert] using
     renameSequence_pairs f (fill0 m hm).main
 
 /-- UNIT separate execution starts at B alone and is the actual common cone. -/
@@ -1623,6 +1623,7 @@ theorem zeroIntact_core_original (m : Nat) (hm : 3 ≤ m) (h0 : m % 3 = 0)
     (zeroMarkerOutput_lists m hm X e J f heX hXY hJ oJ).2,
     zeroMarkerOutput_pointFaces, List.map_map, Function.comp_def, List.append_assoc]
   simp only [pointFaces, id_eq]
+  all_goals rfl
 
 /-- The intended nonempty-X local terminal at EVERY m>=3, on actual original
 coordinates. oJ and oL are the exact strictly-earlier predecessor factors;
@@ -1757,7 +1758,7 @@ theorem intactOutput_core_faces (m : Nat) (hm : 3 ≤ m) (X : Finset V) (e : V)
       zeroIntact_core_original m hm h0 X e J f heX hX hXY hJ oJ oL
   · simp only [intactOutput, dif_neg h0, dif_pos h2, corePairsOf]
     rw [twoIntact_core_faces, two_layer_core_readback]
-    all_goals rfl
+    simp only [corePairsOf, pointFaces, id_eq, List.append_assoc]
   · have hg : goodResidue m := ⟨m / 3, by omega⟩
     cases oJ with
     | void hv =>

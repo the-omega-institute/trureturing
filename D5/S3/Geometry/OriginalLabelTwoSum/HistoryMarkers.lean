@@ -49,7 +49,7 @@ private theorem marker_image (X : Finset V) (e r : V)
   · intro hx
     exact Finset.mem_image.mpr ⟨x, hx, markerMap_fixed X e r he hr (ht hx)⟩
 
-private theorem marker_ground (X : Finset V) (e r : V)
+theorem marker_ground (X : Finset V) (e r : V)
     (he : e ∉ X) (hr : r ∉ X) :
     (insert e X).image (markerMap e r) = insert r X := by
   rw [Finset.image_insert, markerMap_left, marker_image X e r he hr le_rfl]
