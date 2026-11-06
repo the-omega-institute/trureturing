@@ -336,16 +336,16 @@ private theorem firstThree_seed (n : ℕ) (hn : 3 ≤ n) :
     radixSeed (firstThree n hn) = 21 := by
   have h01 : (⟨0, by omega⟩ : Fin n) ≠ ⟨1, by omega⟩ := by
     intro h
-    have := congrArg Fin.val h
-    omega
+    have he := congrArg (fun i : Fin n => i.val) h
+    norm_num only [Fin.val_mk] at he
   have h02 : (⟨0, by omega⟩ : Fin n) ≠ ⟨2, by omega⟩ := by
     intro h
-    have := congrArg Fin.val h
-    omega
+    have he := congrArg (fun i : Fin n => i.val) h
+    norm_num only [Fin.val_mk] at he
   have h12 : (⟨1, by omega⟩ : Fin n) ≠ ⟨2, by omega⟩ := by
     intro h
-    have := congrArg Fin.val h
-    omega
+    have he := congrArg (fun i : Fin n => i.val) h
+    norm_num only [Fin.val_mk] at he
   norm_num [radixSeed, firstThree, h01, h02, h12]
 
 /-- An infinite parameter family with the same exact gcd and actual modular seed
@@ -380,16 +380,16 @@ theorem seed21_separation (n : ℕ) (hn : 3 ≤ n) (h3 : ¬3 ∣ n) :
   have hcB : B.card = 3 := by
     have h01 : (⟨0, by omega⟩ : Fin n) ≠ ⟨1, by omega⟩ := by
       intro h
-      have := congrArg Fin.val h
-      omega
+      have he := congrArg (fun i : Fin n => i.val) h
+      norm_num only [Fin.val_mk] at he
     have h02 : (⟨0, by omega⟩ : Fin n) ≠ ⟨2, by omega⟩ := by
       intro h
-      have := congrArg Fin.val h
-      omega
+      have he := congrArg (fun i : Fin n => i.val) h
+      norm_num only [Fin.val_mk] at he
     have h12 : (⟨1, by omega⟩ : Fin n) ≠ ⟨2, by omega⟩ := by
       intro h
-      have := congrArg Fin.val h
-      omega
+      have he := congrArg (fun i : Fin n => i.val) h
+      norm_num only [Fin.val_mk] at he
     simp [B, firstThree, h01, h02, h12]
   have hN : 0 < (2 : ℕ) ^ (2 * n) - 1 := by
     have hp := digitSum_pos (by omega : 0 < n)
