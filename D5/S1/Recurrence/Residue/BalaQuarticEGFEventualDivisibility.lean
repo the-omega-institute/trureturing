@@ -14,43 +14,43 @@ The source integral expression is inlined literally in IsSourceSeries; primitive
 Hyperbolic cosine and sine expressions are inlined; no forwarding series definition is introduced.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/25663
 proof_shape and consumers (names relative to this module):
-IsSourceSeries: proof_shape: bind-only; escape_witness: none; consumers: claim, source_exists_unique, source_system, source_invariant, source_integral, sourceU_identities, source_cubic, sourceU_coeff_mem, source_coeff_mem, source_den_coprime, result; Direct frozen dependencies: none.
-claim: proof_shape: bind-only; escape_witness: none; consumers: result (statement); Direct frozen dependencies: none.
-primitive_literal: proof_shape: bind-only; escape_witness: none; consumers: source_exists_unique, source_system, source_invariant, source_integral, sourceU_identities, source_cubic, sourceU_coeff_mem, source_coeff_mem, source_den_coprime, result; Direct frozen dependencies: F8.
-integral_succ: proof_shape: bind-only; escape_witness: none; consumers: integral_agree, source_exists_unique, result; Direct frozen dependencies: F8, F7.
-integral_agree: proof_shape: bind-only; escape_witness: none; consumers: source_exists_unique, result; Direct frozen dependencies: F9, F8, F7, F11.
-cosh_constant: proof_shape: bind-only; escape_witness: none; consumers: source_exists_unique, result; Direct frozen dependencies: F19.
-cosh_agree: proof_shape: bind-only; escape_witness: none; consumers: source_exists_unique, result; Direct frozen dependencies: F13, F11.
-source_exists_unique: proof_shape: bind-only; escape_witness: none; consumers: result; Direct frozen dependencies: F9, F8, F19, F7, F10, F12, F13, F11.
-sourceSinh_constant: proof_shape: bind-only; escape_witness: none; consumers: source_invariant, source_integral, sourceU_constant, sourceU_identities, source_cubic, sourceU_coeff_mem, source_coeff_mem, source_den_coprime, result; Direct frozen dependencies: F9, F8, F19.
-source_system: proof_shape: bind-only; escape_witness: none; consumers: source_invariant, source_integral, sourceU_identities, source_cubic, sourceU_coeff_mem, source_coeff_mem, source_den_coprime, result; Direct frozen dependencies: F9, F8, F7, F6.
-source_invariant: proof_shape: bind-only; escape_witness: none; consumers: sourceU_identities, source_cubic, sourceU_coeff_mem, source_coeff_mem, source_den_coprime, result; Direct frozen dependencies: F9, F8, F19, F7, F6.
-eCoeff_mul_mem: proof_shape: bind-only; escape_witness: none; consumers: eCoeff_pow_mem, source_integral, result; Direct frozen dependencies: F15, F17.
-eCoeff_pow_mem: proof_shape: bind-only; escape_witness: none; consumers: source_integral, result; Direct frozen dependencies: F18, F15, F17.
-source_integral: proof_shape: content; escape_witness: none; consumers: result; Direct frozen dependencies: F18, F15, F17, F9, F16, F8, F19, F7, F6.
-sourceU: proof_shape: bind-only; escape_witness: none; consumers: sourceU_constant, sourceU_identities, source_cubic, sourceU_coeff_mem, source_coeff_mem, source_den_coprime, result; Direct frozen dependencies: F8.
-sourceU_constant: proof_shape: bind-only; escape_witness: none; consumers: source_cubic, sourceU_coeff_mem, source_coeff_mem, source_den_coprime, result; Direct frozen dependencies: F9, F8, F19.
-sourceU_identities: proof_shape: bind-only; escape_witness: none; consumers: source_cubic, sourceU_coeff_mem, source_coeff_mem, source_den_coprime, result; Direct frozen dependencies: F9, F8, F19, F7, F6.
-source_cubic: proof_shape: bind-only; escape_witness: none; consumers: sourceU_coeff_mem, source_coeff_mem, source_den_coprime, result; Direct frozen dependencies: F9, F8, F19, F7, F6.
-coeff_mul_mem: proof_shape: bind-only; escape_witness: none; consumers: coeff_pow_mem, sourceU_coeff_mem, source_coeff_mem, source_den_coprime, result; Direct frozen dependencies: none.
-coeff_pow_mem: proof_shape: bind-only; escape_witness: none; consumers: sourceU_coeff_mem, source_coeff_mem, source_den_coprime, result; Direct frozen dependencies: none.
-coeff_mul_mem_low: proof_shape: bind-only; escape_witness: none; consumers: sourceU_coeff_mem, source_coeff_mem, source_den_coprime, result; Direct frozen dependencies: none.
-sourceU_coeff_mem: proof_shape: content; escape_witness: none; consumers: source_coeff_mem, source_den_coprime, result; Direct frozen dependencies: F9, F8, F19, F7, F6.
-source_coeff_mem: proof_shape: content; escape_witness: none; consumers: source_den_coprime, result; Direct frozen dependencies: F9, F8, F19, F7, F6, F14.
-localRing: proof_shape: bind-only; escape_witness: none; consumers: source_den_coprime, result; Direct frozen dependencies: F4, F3, F5, F1, F2, F0.
-source_den_coprime: proof_shape: content; escape_witness: none; consumers: result; Direct frozen dependencies: F4, F3, F9, F5, F8, F19, F7, F1, F6, F14, F2, F0.
-result: proof_shape: content; escape_witness: none; consumers: settlement of #22065; Direct frozen dependencies: F4, F18, F15, F17, F3, F9, F5, F16, F8, F19, F7, F10, F1, F6, F14, F12, F13, F2, F0, F11.
-Direct frozen dependencies (declaration identities):
-F0: D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.IsRIntegralRat @ ASSUMED-UNVERIFIED (declaration identity unavailable in the cached report; scoped report deferred to Stage B).
-F1: D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.add @ ASSUMED-UNVERIFIED (declaration identity unavailable in the cached report; scoped report deferred to Stage B).
-F2: D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.mul_coprime @ ASSUMED-UNVERIFIED (declaration identity unavailable in the cached report; scoped report deferred to Stage B).
-F3: D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.neg @ ASSUMED-UNVERIFIED (declaration identity unavailable in the cached report; scoped report deferred to Stage B).
-F4: D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.one_coprime @ ASSUMED-UNVERIFIED (declaration identity unavailable in the cached report; scoped report deferred to Stage B).
-F5: D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.zero @ ASSUMED-UNVERIFIED (declaration identity unavailable in the cached report; scoped report deferred to Stage B).
-F6: D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.expSeries_derivative @ ASSUMED-UNVERIFIED (declaration identity unavailable in the cached report; scoped report deferred to Stage B).
-F7: D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.derivative_primitive @ ASSUMED-UNVERIFIED (declaration identity unavailable in the cached report; scoped report deferred to Stage B).
-F8: D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.primitive @ ASSUMED-UNVERIFIED (declaration identity unavailable in the cached report; scoped report deferred to Stage B).
-F9: D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.primitive_zero @ ASSUMED-UNVERIFIED (declaration identity unavailable in the cached report; scoped report deferred to Stage B).
+IsSourceSeries: proof_shape: bind-only; escape_witness: none; consumers: claim, source_exists_unique, source_system, source_invariant, source_integral, sourceU_identities, source_cubic, sourceU_coeff_mem, source_coeff_mem, source_den_coprime, result; Reused dependency declarations: none.
+claim: proof_shape: bind-only; escape_witness: none; consumers: result (statement); Reused dependency declarations: none.
+primitive_literal: proof_shape: bind-only; escape_witness: none; consumers: source_exists_unique, source_system, source_invariant, source_integral, sourceU_identities, source_cubic, sourceU_coeff_mem, source_coeff_mem, source_den_coprime, result; Reused dependency declarations: F8.
+integral_succ: proof_shape: bind-only; escape_witness: none; consumers: integral_agree, source_exists_unique, result; Reused dependency declarations: F8, F7.
+integral_agree: proof_shape: bind-only; escape_witness: none; consumers: source_exists_unique, result; Reused dependency declarations: F9, F8, F7, F11.
+cosh_constant: proof_shape: bind-only; escape_witness: none; consumers: source_exists_unique, result; Reused dependency declarations: F19.
+cosh_agree: proof_shape: bind-only; escape_witness: none; consumers: source_exists_unique, result; Reused dependency declarations: F13, F11.
+source_exists_unique: proof_shape: bind-only; escape_witness: none; consumers: result; Reused dependency declarations: F9, F8, F19, F7, F10, F12, F13, F11.
+sourceSinh_constant: proof_shape: bind-only; escape_witness: none; consumers: source_invariant, source_integral, sourceU_constant, sourceU_identities, source_cubic, sourceU_coeff_mem, source_coeff_mem, source_den_coprime, result; Reused dependency declarations: F9, F8, F19.
+source_system: proof_shape: bind-only; escape_witness: none; consumers: source_invariant, source_integral, sourceU_identities, source_cubic, sourceU_coeff_mem, source_coeff_mem, source_den_coprime, result; Reused dependency declarations: F9, F8, F7, F6.
+source_invariant: proof_shape: bind-only; escape_witness: none; consumers: sourceU_identities, source_cubic, sourceU_coeff_mem, source_coeff_mem, source_den_coprime, result; Reused dependency declarations: F9, F8, F19, F7, F6.
+eCoeff_mul_mem: proof_shape: bind-only; escape_witness: none; consumers: eCoeff_pow_mem, source_integral, result; Reused dependency declarations: F15, F17.
+eCoeff_pow_mem: proof_shape: bind-only; escape_witness: none; consumers: source_integral, result; Reused dependency declarations: F18, F15, F17.
+source_integral: proof_shape: content; escape_witness: none; consumers: result; Reused dependency declarations: F18, F15, F17, F9, F16, F8, F19, F7, F6.
+sourceU: proof_shape: bind-only; escape_witness: none; consumers: sourceU_constant, sourceU_identities, source_cubic, sourceU_coeff_mem, source_coeff_mem, source_den_coprime, result; Reused dependency declarations: F8.
+sourceU_constant: proof_shape: bind-only; escape_witness: none; consumers: source_cubic, sourceU_coeff_mem, source_coeff_mem, source_den_coprime, result; Reused dependency declarations: F9, F8, F19.
+sourceU_identities: proof_shape: bind-only; escape_witness: none; consumers: source_cubic, sourceU_coeff_mem, source_coeff_mem, source_den_coprime, result; Reused dependency declarations: F9, F8, F19, F7, F6.
+source_cubic: proof_shape: bind-only; escape_witness: none; consumers: sourceU_coeff_mem, source_coeff_mem, source_den_coprime, result; Reused dependency declarations: F9, F8, F19, F7, F6.
+coeff_mul_mem: proof_shape: bind-only; escape_witness: none; consumers: coeff_pow_mem, sourceU_coeff_mem, source_coeff_mem, source_den_coprime, result; Reused dependency declarations: none.
+coeff_pow_mem: proof_shape: bind-only; escape_witness: none; consumers: sourceU_coeff_mem, source_coeff_mem, source_den_coprime, result; Reused dependency declarations: none.
+coeff_mul_mem_low: proof_shape: bind-only; escape_witness: none; consumers: sourceU_coeff_mem, source_coeff_mem, source_den_coprime, result; Reused dependency declarations: none.
+sourceU_coeff_mem: proof_shape: content; escape_witness: none; consumers: source_coeff_mem, source_den_coprime, result; Reused dependency declarations: F9, F8, F19, F7, F6.
+source_coeff_mem: proof_shape: content; escape_witness: none; consumers: source_den_coprime, result; Reused dependency declarations: F9, F8, F19, F7, F6, F14.
+localRing: proof_shape: bind-only; escape_witness: none; consumers: source_den_coprime, result; Reused dependency declarations: F4, F3, F5, F1, F2, F0.
+source_den_coprime: proof_shape: content; escape_witness: none; consumers: result; Reused dependency declarations: F4, F3, F9, F5, F8, F19, F7, F1, F6, F14, F2, F0.
+result: proof_shape: content; escape_witness: none; consumers: settlement of #22065; Reused dependency declarations: F4, F18, F15, F17, F3, F9, F5, F16, F8, F19, F7, F10, F1, F6, F14, F12, F13, F2, F0, F11.
+Reused dependency declarations (declaration identities):
+F0: D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.IsRIntegralRat @ sha256:53246f9f06573c4281b2b5f6125688d166229f662aea17c390eb7f72caae7aa3.
+F1: D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.add @ sha256:1882395664a775cb4ead214bfeb4e2c0808db0c7923a6c1499295cdddf3145d2.
+F2: D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.mul_coprime @ sha256:23a5443829d844a130c8d3d27a4e260f5c56c5a3509b6556bc21052ade230a04.
+F3: D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.neg @ sha256:ec9ae897a808106aa992b0ef1fc277b3b9b9c7dedb8537e67f67509cfefb1d16.
+F4: D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.one_coprime @ sha256:b23482ecf2a360a6196a6ca30691e5da0cbd8ab115d97690e46489c324704b6f.
+F5: D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.zero @ sha256:db656319e98a91ac820bddd5440d10c62dfa6b46a47c8cb90740fefb942f7127.
+F6: D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.expSeries_derivative @ sha256:dd599a572ebd0fb14575367018d7b6dd630d4a768f1185fd2d1d6ff14723a5f9.
+F7: D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.derivative_primitive @ sha256:dd4fef6f5a6198bfd4fd11c3d839a9e5dd91934c5b17d1d88709d9f9cb4d43b0.
+F8: D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.primitive @ sha256:9a202b448c9ba839cdb86afdcf927b386aade2abc35553fe439fb9510865201f.
+F9: D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.primitive_zero @ sha256:da6e329d06a8c37efca36a926109af80688ebb744f176be8bef89ce2b14f0c09.
 F10: D5/S1/Recurrence/Invariants/PowerSeriesNormalizedContraction.exists_unique_fixed @ sha256:bd62df5aa141eaff1ceec9e8af00309b4a8e194b4354ad180a51862599cef981.
 F11: D5/S1/Recurrence/Invariants/UnitReversionSquareParity.Agree @ sha256:76d7ce5ef0f66968d4516f93f05e27e9125f8f29944ffacca0d95b580f786d34.
 F12: D5/S1/Recurrence/Invariants/UnitReversionSquareParity.agree_pow @ sha256:0c9456bb3300b1f38308df2b3a2abc2d51d68b3b05356990e7bc5cfc4bfb0dbb.
@@ -60,7 +60,7 @@ F15: D5/S1/Recurrence/Residue/IntegralEGFComposition.eCoeff @ sha256:4352a2872dd
 F16: D5/S1/Recurrence/Residue/IntegralEGFComposition.eCoeff_derivative @ sha256:d8c528ef732aa837c3d79d7314200e072b40f5bcdc873683da352f1acf37c5c8.
 F17: D5/S1/Recurrence/Residue/IntegralEGFComposition.eCoeff_mul @ sha256:d77958a970452d82e689ee9878ff79fda28b9bc1537bf45041f667d5e694a1f5.
 F18: D5/S1/Recurrence/Residue/IntegralEGFComposition.eCoeff_zero @ sha256:69e1d2e22802c66151c2c3239fdceab9ab8a796d9f10d82c7366e4d57e790054.
-F19: D5/S1/Recurrence/Residue/ParametricExponentialSquareCongruence.exp_subst_zero @ ASSUMED-UNVERIFIED (declaration identity unavailable in the cached report; scoped report deferred to Stage B).
+F19: D5/S1/Recurrence/Residue/ParametricExponentialSquareCongruence.exp_subst_zero @ sha256:2202c3b422f53dfc68613206e80abf6bf114bea23f688a6cb3e9077e1efc094d.
 The new degree inductions prove joint integer EGF coefficients and subring membership for the inverse cubic and C.
 Definitions and the remaining coefficient, differentiation and divisibility adapters are bind-only.
 -/
