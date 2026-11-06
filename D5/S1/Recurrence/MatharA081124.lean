@@ -9,6 +9,8 @@ import Mathlib.Data.Nat.Choose.Sum
 import Mathlib.Data.Nat.Factorial.Basic
 import Mathlib.Tactic
 
+/-! The literal inclusive binomial transform of the half-index factorial. -/
+
 namespace D5.S1.Recurrence.MatharA081124
 open Finset
 
@@ -22,7 +24,7 @@ theorem result : claim := by
   let b (k : ℕ) : ℤ := ((k/2).factorial : ℤ)
   let tr (c : ℕ → ℤ) (n : ℕ) : ℤ := ∑ k ∈ range (n+1), (n.choose k : ℤ)*c k
   have pas (c : ℕ → ℤ) (n : ℕ) : tr c (n+1) = tr c n + tr (fun k => c (k+1)) n := by
-    exact Nat.sum_choose_succ_mul (fun i _ => c i) n
+    exact Finset.sum_choose_succ_mul (fun i _ => c i) n
   have brec (k : ℕ) :
       2*b (k+3)+2*b (k+2)-3*b (k+1)-b k = (k:ℤ)*b (k+1)+(k:ℤ)*b k := by
     rcases Nat.even_or_odd' k with ⟨m, rfl | rfl⟩
@@ -44,29 +46,40 @@ theorem result : claim := by
     let f (k : ℕ) : ℤ := (n.choose k:ℤ)*((k:ℤ)*b k)
     have shift : (∑ k ∈ range (n+1), f (k+1)) = ∑ k ∈ range (n+1), f k := by
       calc
-        _ = ∑ k ∈ range (n+2), f k := by rw [sum_range_succ']; simp [f]
+        _ = ∑ k ∈ range (n+2), f k := by
+          have h := sum_range_succ' f (n+1)
+          simpa only [f, Nat.cast_zero, zero_mul, mul_zero, add_zero] using h.symm
         _ = _ := by rw [show n+2=(n+1)+1 by omega, sum_range_succ]; simp [f]
     have hp : ∀ k ∈ range (n+1), (n:ℤ)*((n.choose k:ℤ)*b (k+1)) =
         (n.choose k:ℤ)*((k:ℤ)*b (k+1))+f (k+1) := by
       intro k hk
       have hk' : k ≤ n := by simpa using mem_range.mp hk
       have h : (n.choose (k+1):ℤ)*(k+1:ℤ) = (n.choose k:ℤ)*((n:ℤ)-k) := by
-        exact_mod_cast Nat.choose_succ_right_eq n k
+        have hh := Nat.choose_succ_right_eq n k
+        have hh' : (n.choose (k+1):ℤ)*((k+1:ℕ):ℤ) = (n.choose k:ℤ)*((n-k:ℕ):ℤ) := by exact_mod_cast hh
+        simpa only [Nat.cast_add, Nat.cast_one, Nat.cast_sub hk'] using hh'
       dsimp [f]
       push_cast
-      linear_combination b (k+1)*h
+      linear_combination -b (k+1)*h
     have hs := sum_congr rfl hp
     rw [sum_add_distrib, shift] at hs
     simpa only [tr, mul_sum] using hs
   have elim (n : ℕ) :
       2*tr (fun k => b (k+3)) n + 2*tr (fun k => b (k+2)) n -
         3*tr (fun k => b (k+1)) n-tr b n = (n:ℤ)*tr (fun k => b (k+1)) n := by
-    have hs := sum_congr rfl (fun k (_ : k ∈ range (n+1)) => congrArg ((n.choose k:ℤ) * ·) (brec k))
-    simp only [mul_add,mul_sub,mul_assoc,sum_add_distrib,sum_sub_distrib,←mul_sum] at hs
+    have hs : (∑ k ∈ range (n+1),
+        (2*((n.choose k:ℤ)*b (k+3))+2*((n.choose k:ℤ)*b (k+2))-
+          3*((n.choose k:ℤ)*b (k+1))-(n.choose k:ℤ)*b k)) =
+        ∑ k ∈ range (n+1), ((n.choose k:ℤ)*((k:ℤ)*b (k+1))+
+          (n.choose k:ℤ)*((k:ℤ)*b k)) := by
+      apply sum_congr rfl
+      intro k hk
+      linear_combination (n.choose k:ℤ) * brec k
+    simp only [sum_add_distrib, sum_sub_distrib, ← mul_sum] at hs
     have hw := weighted n
     dsimp [tr] at hw ⊢
     linear_combination hs - hw
-  have rec (n : ℕ) : 2*tr b (n+3)-4*tr b (n+2)-((n:ℤ)+1)*tr b (n+1)+((n:ℤ)+2)*tr b n=0 := by
+  have recurrence (n : ℕ) : 2*tr b (n+3)-4*tr b (n+2)-((n:ℤ)+1)*tr b (n+1)+((n:ℤ)+2)*tr b n=0 := by
     have h2 := pas b (n+2)
     have h1 := pas b (n+1)
     have h0 := pas b n
@@ -78,7 +91,7 @@ theorem result : claim := by
   have eq_a (n : ℕ) : tr b n = (a n : ℤ) := by simp [tr,b,a]
   intro n hn
   obtain ⟨m,rfl⟩ : ∃ m, n=m+3 := ⟨n-3,by omega⟩
-  have h := rec m
+  have h := recurrence m
   simp_rw [eq_a] at h
   rw [show m+3-1=m+2 by omega, show m+3-2=m+1 by omega,show m+3-3=m by omega]
   push_cast
