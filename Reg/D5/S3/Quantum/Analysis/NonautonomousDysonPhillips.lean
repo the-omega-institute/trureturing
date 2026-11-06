@@ -238,11 +238,10 @@ def arena : Arena where
   Law R := ∀ {F : Type u} (f : ℝ → F) {r T : ℝ} (h : r ≤ T)
       {s : ℝ} (_hs : s ∈ Set.Icc r T),
     R.readout () F (extend f h s) (f s)
-private theorem actual_law : arena.{u}.Law equalityActual := @extend_eq.{u}
+private theorem actual_law : arena.{u}.Law equalityActual := @_root_.D5.S3.Quantum.Analysis.NonautonomousDysonPhillips.extend_eq.{u}
 private theorem rejected_law : ¬ arena.{u}.Law equalityRejected := by
-  intro h
-  exact h (fun _ : ℝ => PUnit.unit) (r := 0) (T := 0) le_rfl ⟨le_rfl,le_rfl⟩
-def family : Registration arena.{u} (type_of% (@extend_eq.{u})) where
+  exact fun h => h (fun _ : ℝ => PUnit.unit) (r := 0) (T := 0) le_rfl ⟨le_rfl,le_rfl⟩
+def family : Registration arena.{u} (type_of% (@_root_.D5.S3.Quantum.Analysis.NonautonomousDysonPhillips.extend_eq.{u})) where
   actual := equalityActual
   bridge := Iff.rfl
   variation := ⟨actual_law, equalityRejected, rejected_law⟩
@@ -250,12 +249,11 @@ def family : Registration arena.{u} (type_of% (@extend_eq.{u})) where
     constructor
     · intro i
       refine ⟨equalityRejected, ?_, rfl, rejected_law⟩
-      intro j hji
-      exact (hji (Subsingleton.elim _ _)).elim
+      exact fun j hji => (hji (show j = i from @Subsingleton.elim Unit _ j i)).elim
     · intro e; exact nomatch e
   dependence := equality_dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@extend_eq.{u}) (Realization equalitySignature.{u}) Unit Unit where
+    (@_root_.D5.S3.Quantum.Analysis.NonautonomousDysonPhillips.extend_eq.{u}) (Realization equalitySignature.{u}) Unit Unit where
   unitName := `D5.S3.Quantum.Analysis.NonautonomousDysonPhillips.ExtendEqUnit
   realizationName := `Reg.D5.S3.Quantum.Analysis.NonautonomousDysonPhillips.ExtendEq.family
   realizationSource := none
@@ -276,10 +274,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Analysis.NonautonomousDysonPhillips
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -292,8 +291,7 @@ def arena : Arena where
     R.readout () E (term S B 0 t r x) (S.action (t-r) x)
 private theorem actual_law : arena.{u}.Law equalityActual := @term_zero.{u}
 private theorem rejected_law : ¬ arena.{u}.Law equalityRejected := by
-  intro h
-  exact h zeroSemigroup (fun _ => 0) 0 0 0
+  exact fun h => h zeroSemigroup (fun _ => 0) 0 0 0
 def family : Registration arena.{u} (type_of% (@term_zero.{u})) where
   actual := equalityActual
   bridge := Iff.rfl
@@ -302,8 +300,7 @@ def family : Registration arena.{u} (type_of% (@term_zero.{u})) where
     constructor
     · intro i
       refine ⟨equalityRejected, ?_, rfl, rejected_law⟩
-      intro j hji
-      exact (hji (Subsingleton.elim _ _)).elim
+      exact fun j hji => (hji (show j = i from @Subsingleton.elim Unit _ j i)).elim
     · intro e; exact nomatch e
   dependence := equality_dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -328,10 +325,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Analysis.NonautonomousDysonPhillips
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -345,8 +343,7 @@ def arena : Arena where
       (∫ s in r..t, S.action (t-s) (B s (term S B n s r x)))
 private theorem actual_law : arena.{u}.Law equalityActual := @term_succ.{u}
 private theorem rejected_law : ¬ arena.{u}.Law equalityRejected := by
-  intro h
-  exact h zeroSemigroup (fun _ => 0) 0 0 0 0
+  exact fun h => h zeroSemigroup (fun _ => 0) 0 0 0 0
 def family : Registration arena.{u} (type_of% (@term_succ.{u})) where
   actual := equalityActual
   bridge := Iff.rfl
@@ -355,8 +352,7 @@ def family : Registration arena.{u} (type_of% (@term_succ.{u})) where
     constructor
     · intro i
       refine ⟨equalityRejected, ?_, rfl, rejected_law⟩
-      intro j hji
-      exact (hji (Subsingleton.elim _ _)).elim
+      exact fun j hji => (hji (show j = i from @Subsingleton.elim Unit _ j i)).elim
     · intro e; exact nomatch e
   dependence := equality_dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -381,10 +377,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Analysis.NonautonomousDysonPhillips
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -397,8 +394,7 @@ def arena : Arena where
     R.readout () E (term S B n t r (c • x)) (c • term S B n t r x)
 private theorem actual_law : arena.{u}.Law equalityActual := @term_smul.{u}
 private theorem rejected_law : ¬ arena.{u}.Law equalityRejected := by
-  intro h
-  exact h zeroSemigroup (fun _ => 0) 0 0 0 0 0
+  exact fun h => h zeroSemigroup (fun _ => 0) 0 0 0 0 0
 def family : Registration arena.{u} (type_of% (@term_smul.{u})) where
   actual := equalityActual
   bridge := Iff.rfl
@@ -407,8 +403,7 @@ def family : Registration arena.{u} (type_of% (@term_smul.{u})) where
     constructor
     · intro i
       refine ⟨equalityRejected, ?_, rfl, rejected_law⟩
-      intro j hji
-      exact (hji (Subsingleton.elim _ _)).elim
+      exact fun j hji => (hji (show j = i from @Subsingleton.elim Unit _ j i)).elim
     · intro e; exact nomatch e
   dependence := equality_dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -433,10 +428,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Analysis.NonautonomousDysonPhillips
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -450,8 +446,7 @@ def arena : Arena where
     R.readout () E (term S B n t r x) (term S B' n t r x)
 private theorem actual_law : arena.{u}.Law equalityActual := @term_locality.{u}
 private theorem rejected_law : ¬ arena.{u}.Law equalityRejected := by
-  intro h
-  exact h zeroSemigroup (fun _ => 0) (B' := fun _ => 0) (r := 0) (T := 0)
+  exact fun h => h zeroSemigroup (fun _ => 0) (B' := fun _ => 0) (r := 0) (T := 0)
     (fun _ _ => rfl) 0 ⟨le_rfl,le_rfl⟩ 0
 def family : Registration arena.{u} (type_of% (@term_locality.{u})) where
   actual := equalityActual
@@ -461,8 +456,7 @@ def family : Registration arena.{u} (type_of% (@term_locality.{u})) where
     constructor
     · intro i
       refine ⟨equalityRejected, ?_, rfl, rejected_law⟩
-      intro j hji
-      exact (hji (Subsingleton.elim _ _)).elim
+      exact fun j hji => (hji (show j = i from @Subsingleton.elim Unit _ j i)).elim
     · intro e; exact nomatch e
   dependence := equality_dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -487,10 +481,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Analysis.NonautonomousDysonPhillips
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -503,8 +498,7 @@ def arena : Arena where
     R.readout () E (sum S B r r x) x
 private theorem actual_law : arena.{u}.Law equalityActual := @sum_diagonal.{u}
 private theorem rejected_law : ¬ arena.{u}.Law equalityRejected := by
-  intro h
-  exact h zeroSemigroup (fun _ => 0) 0 0
+  exact fun h => h zeroSemigroup (fun _ => 0) 0 0
 def family : Registration arena.{u} (type_of% (@sum_diagonal.{u})) where
   actual := equalityActual
   bridge := Iff.rfl
@@ -513,8 +507,7 @@ def family : Registration arena.{u} (type_of% (@sum_diagonal.{u})) where
     constructor
     · intro i
       refine ⟨equalityRejected, ?_, rfl, rejected_law⟩
-      intro j hji
-      exact (hji (Subsingleton.elim _ _)).elim
+      exact fun j hji => (hji (show j = i from @Subsingleton.elim Unit _ j i)).elim
     · intro e; exact nomatch e
   dependence := equality_dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -539,10 +532,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Analysis.NonautonomousDysonPhillips
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -556,8 +550,7 @@ def arena : Arena where
       (DysonPhillipsPerturbation.dysonTerm S.action Bzero n (t-r) x)
 private theorem actual_law : arena.{u}.Law equalityActual := @term_constant.{u}
 private theorem rejected_law : ¬ arena.{u}.Law equalityRejected := by
-  intro h
-  exact h zeroSemigroup 0 0 0 0 0
+  exact fun h => h zeroSemigroup 0 0 0 0 0
 def family : Registration arena.{u} (type_of% (@term_constant.{u})) where
   actual := equalityActual
   bridge := Iff.rfl
@@ -566,8 +559,7 @@ def family : Registration arena.{u} (type_of% (@term_constant.{u})) where
     constructor
     · intro i
       refine ⟨equalityRejected, ?_, rfl, rejected_law⟩
-      intro j hji
-      exact (hji (Subsingleton.elim _ _)).elim
+      exact fun j hji => (hji (show j = i from @Subsingleton.elim Unit _ j i)).elim
     · intro e; exact nomatch e
   dependence := equality_dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -592,10 +584,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Analysis.NonautonomousDysonPhillips
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -608,8 +601,7 @@ def arena : Arena where
     R.readout () E (sum S (fun _ => 0) t r x) (S.action (t-r) x)
 private theorem actual_law : arena.{u}.Law equalityActual := @sum_zero_coefficient.{u}
 private theorem rejected_law : ¬ arena.{u}.Law equalityRejected := by
-  intro h
-  exact h zeroSemigroup 0 0 0
+  exact fun h => h zeroSemigroup 0 0 0
 def family : Registration arena.{u} (type_of% (@sum_zero_coefficient.{u})) where
   actual := equalityActual
   bridge := Iff.rfl
@@ -618,8 +610,7 @@ def family : Registration arena.{u} (type_of% (@sum_zero_coefficient.{u})) where
     constructor
     · intro i
       refine ⟨equalityRejected, ?_, rfl, rejected_law⟩
-      intro j hji
-      exact (hji (Subsingleton.elim _ _)).elim
+      exact fun j hji => (hji (show j = i from @Subsingleton.elim Unit _ j i)).elim
     · intro e; exact nomatch e
   dependence := equality_dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -644,10 +635,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Analysis.NonautonomousDysonPhillips
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -661,8 +653,7 @@ def arena : Arena where
     R.readout () () ‖S.action t x‖ ‖x‖
 private theorem actual_law : arena.{u}.Law actual := @Contraction.action_bound.{u}
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
-  intro h
-  exact h zeroSemigroup 0 0
+  exact fun h => h zeroSemigroup 0 0
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), (0 : ℝ), (1 : ℝ), ?_⟩
@@ -677,8 +668,7 @@ def family : Registration arena.{u} (type_of% (@Contraction.action_bound.{u})) w
     constructor
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_law⟩
-      intro j hji
-      exact (hji (Subsingleton.elim _ _)).elim
+      exact fun j hji => (hji (show j = i from @Subsingleton.elim Unit _ j i)).elim
     · intro e; exact nomatch e
   dependence := dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -703,10 +693,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Analysis.NonautonomousDysonPhillips
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -757,15 +748,16 @@ private theorem curve_dependence : ObservationalDependence curveSignature.{u} cu
   classical
   intro i
   refine ⟨⟨ULift.{u} Bool, inferInstance⟩, (fun _ => ⟨false⟩), jump, ?_⟩
-  simp [curveActual, realize, jump_not_continuous]
+  simp [curveActual, realize, jump_not_continuous, continuous_const]
 private theorem joint_dependence : ObservationalDependence jointSignature.{u} jointActual := by
   classical
   intro i
   refine ⟨⟨ULift.{u} Bool, inferInstance⟩, (fun _ => ⟨false⟩), (fun p => jump p.1), ?_⟩
-  have hn : ¬ Continuous (fun p : ℝ × ULift.{u} Bool => jump p.1) := by
+  have hn : ¬ Continuous (fun p : ℝ × ULift.{u} Bool => jump.{u} p.1) := by
     intro h
-    exact jump_not_continuous (h.comp (continuous_id.prodMk continuous_const))
-  simp [jointActual, realize, hn]
+    exact jump_not_continuous (h.comp (continuous_id.prodMk
+      (continuous_const (y := (ULift.up false : ULift.{u} Bool)))))
+  simp [jointActual, realize, hn, continuous_const]
 namespace ActionContinuous
 def arena : Arena where
   signature := jointSignature.{u}
@@ -774,8 +766,7 @@ def arena : Arena where
 private theorem actual_law : arena.{u}.Law jointActual := by
   simpa only [arena, jointActual, realize, decide_eq_true_eq] using @Contraction.action_continuous.{u}
 private theorem rejected_law : ¬ arena.{u}.Law jointRejected := by
-  intro h
-  exact Bool.noConfusion (h zeroSemigroup)
+  exact fun h => Bool.noConfusion (h zeroSemigroup)
 def family : Registration arena.{u} (type_of% (@Contraction.action_continuous.{u})) where
   actual := jointActual
   bridge := by simp only [arena, jointActual, realize, decide_eq_true_eq]
@@ -784,8 +775,7 @@ def family : Registration arena.{u} (type_of% (@Contraction.action_continuous.{u
     constructor
     · intro i
       refine ⟨jointRejected, ?_, rfl, rejected_law⟩
-      intro j hji
-      exact (hji (Subsingleton.elim _ _)).elim
+      exact fun j hji => (hji (show j = i from @Subsingleton.elim Unit _ j i)).elim
     · intro e; exact nomatch e
   dependence := joint_dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -810,10 +800,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Analysis.NonautonomousDysonPhillips
     definition := none
     coordinates := #[0, 1, 2]
-    readouts := #[{ path := #["body", "body", "body", "body"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
+    readouts := #[{
+      path := #["body", "body", "body", "body"],
+      stateBinder := 0,
+      functionOperand := false,
+      stateOperand := some #["arg"],
       booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
@@ -828,8 +819,7 @@ def arena : Arena where
 private theorem actual_law : arena.{u}.Law curveActual := by
   simpa only [arena, curveActual, realize, decide_eq_true_eq] using @continuous_extend.{u}
 private theorem rejected_law : ¬ arena.{u}.Law curveRejected := by
-  intro h
-  exact Bool.noConfusion (h (F := PUnit.{u+1}) (f := fun _ => PUnit.unit)
+  exact fun h => Bool.noConfusion (h (F := PUnit.{u+1}) (f := fun _ => PUnit.unit)
     (r := 0) (T := 0) le_rfl continuous_const.continuousOn)
 def family : Registration arena.{u} (type_of% (@continuous_extend.{u})) where
   actual := curveActual
@@ -839,8 +829,7 @@ def family : Registration arena.{u} (type_of% (@continuous_extend.{u})) where
     constructor
     · intro i
       refine ⟨curveRejected, ?_, rfl, rejected_law⟩
-      intro j hji
-      exact (hji (Subsingleton.elim _ _)).elim
+      exact fun j hji => (hji (show j = i from @Subsingleton.elim Unit _ j i)).elim
     · intro e; exact nomatch e
   dependence := curve_dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -865,10 +854,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Analysis.NonautonomousDysonPhillips
     definition := none
     coordinates := #[0, 1]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body"],
+      stateBinder := 0,
+      functionOperand := false,
+      stateOperand := some #["arg"],
       booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
@@ -883,8 +873,7 @@ def arena : Arena where
 private theorem actual_law : arena.{u}.Law curveActual := by
   simpa only [arena, curveActual, realize, decide_eq_true_eq] using @orbit_continuous.{u}
 private theorem rejected_law : ¬ arena.{u}.Law curveRejected := by
-  intro h
-  exact Bool.noConfusion (h zeroSemigroup 0 0)
+  exact fun h => Bool.noConfusion (h zeroSemigroup 0 0)
 def family : Registration arena.{u} (type_of% (@orbit_continuous.{u})) where
   actual := curveActual
   bridge := by simp only [arena, curveActual, realize, decide_eq_true_eq]
@@ -893,8 +882,7 @@ def family : Registration arena.{u} (type_of% (@orbit_continuous.{u})) where
     constructor
     · intro i
       refine ⟨curveRejected, ?_, rfl, rejected_law⟩
-      intro j hji
-      exact (hji (Subsingleton.elim _ _)).elim
+      exact fun j hji => (hji (show j = i from @Subsingleton.elim Unit _ j i)).elim
     · intro e; exact nomatch e
   dependence := curve_dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -919,10 +907,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Analysis.NonautonomousDysonPhillips
     definition := none
     coordinates := #[0, 1, 2]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := some #["arg"]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body"],
+      stateBinder := 0,
+      functionOperand := false,
+      stateOperand := some #["arg"],
       booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
@@ -954,16 +943,15 @@ def arena : Arena where
     R.readout () ⟨E⟩ (S.action (a+b)) ((S.action a).comp (S.action b))
 private theorem actual_law : arena.{u}.Law operatorActual := @action_add.{u}
 private theorem rejected_law : ¬ arena.{u}.Law operatorRejected := by
-  intro h
-  exact h zeroSemigroup (a := 0) (b := 0) le_rfl le_rfl
+  exact fun h => h zeroSemigroup (a := 0) (b := 0) le_rfl le_rfl
 private theorem dependence : ObservationalDependence operatorSignature.{u} operatorActual := by
-  intro i
-  let K := ULift.{u} Unit → ℂ
+  intro i; let K := ULift.{u} Unit → ℂ
   refine ⟨⟨K⟩, 0, 1, ?_⟩
   intro h
-  have he : (0 : K →L[ℂ] K) = 1 := Eq.mp (congrFun h 0) rfl
+  have he : (1 : K →L[ℂ] K) = 0 := Eq.mp (congrFun h 0) rfl
   have hv := congrArg (fun A : K →L[ℂ] K => A (fun _ => 1) (ULift.up ())) he
-  norm_num at hv
+  change (1 : ℂ) = 0 at hv
+  exact one_ne_zero hv
 def family : Registration arena.{u} (type_of% (@action_add.{u})) where
   actual := operatorActual
   bridge := Iff.rfl
@@ -972,8 +960,7 @@ def family : Registration arena.{u} (type_of% (@action_add.{u})) where
     constructor
     · intro i
       refine ⟨operatorRejected, ?_, rfl, rejected_law⟩
-      intro j hji
-      exact (hji (Subsingleton.elim _ _)).elim
+      exact fun j hji => (hji (show j = i from @Subsingleton.elim Unit _ j i)).elim
     · intro e; exact nomatch e
   dependence := dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -998,10 +985,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Analysis.NonautonomousDysonPhillips
     definition := none
     coordinates := #[0, 1, 2]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := none,
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
