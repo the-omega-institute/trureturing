@@ -5,6 +5,7 @@
    anchors: [mathlib/module/Mathlib.Dynamics.PeriodicPts.Defs, mathlib/module/Mathlib.GroupTheory.OrderOfElement]
    utility: none
    digest: Exact unit-shift numerators classify actual anchored narrow doubling orbits. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Words.AssociatedMersenne.CircularWords
 import Mathlib.Data.Int.ModEq
 import Mathlib.Data.ZMod.Basic
@@ -45,6 +46,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.NarrowDoublingOrbit
 
 open D5.S1.Words.AssociatedMersenne.CircularWords
+open private cycAdd_index_add from D5.S1.Words.AssociatedMersenne.CircularWords
 
 /-- Standard representatives, including nonunit seeds. -/
 def residue (X Q n : ℕ) : ℕ := (2 ^ n * Q) % X
