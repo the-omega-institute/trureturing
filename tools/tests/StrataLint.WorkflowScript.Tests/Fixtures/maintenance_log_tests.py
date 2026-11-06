@@ -411,6 +411,78 @@ class MaintenanceLogTests(unittest.TestCase):
         self.assertNotIn(str(tree), persisted)
         self.assertTrue(tree.is_dir())
 
+    def test_native_return_pool_failure(self):
+        sys.path.insert(0, str(SOURCE / "tools/scripts/worktree"))
+        from worktree_pool import allocation_record
+        from worktree_protocol import identity
+        for name, value in (("lean-toolchain", "leanprover/lean4:v4.34.1\n"),
+                            ("lake-manifest.json", '{"packages":[]}\n')):
+            (self.main / name).write_text(value)
+        self.git("add", ".")
+        self.git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+                 "commit", "-m", "pins")
+        remote = self.root / "remote.git"
+        subprocess.run(["git", "init", "--bare", str(remote)], check=True, capture_output=True)
+        self.git("remote", "add", "origin", remote)
+        self.git("push", "origin", "dev")
+        self.git("config", "user.name", "Fixture")
+        self.git("config", "user.email", "fixture@example.invalid")
+        real_git = shutil.which("git")
+        binary = self.root / "bin"
+        binary.mkdir()
+        marker = self.root / "fault-phase"
+        shim = binary / "git"
+        shim.write_text(f'''#!/usr/bin/env python3
+import os, pathlib, sys
+args = sys.argv[1:]
+marker = pathlib.Path({str(marker)!r})
+phase = marker.read_text() if marker.exists() else ""
+if phase == "ready":
+    inventory = "worktree" in args and "list" in args
+    inspect = "status" in args
+    if (os.environ["POOL_FAULT"] == "inventory" and inventory or
+            os.environ["POOL_FAULT"] == "inspect" and inspect):
+        print("private pool diagnostic", file=sys.stderr)
+        sys.exit(1)
+if any(arg.startswith("worktree-idle:") for arg in args):
+    marker.write_text("switched")
+elif phase == "switched" and "merge-base" in args and "--is-ancestor" in args:
+    marker.write_text("ready")
+os.execv({real_git!r}, [{real_git!r}, *args])
+''')
+        shim.chmod(0o755)
+        for stage in ("inventory", "inspect"):
+            with self.subTest(stage=stage):
+                marker.unlink(missing_ok=True)
+                tree = self.root / ("return-" + stage)
+                self.git("worktree", "add", "-b", "lane/governance/" + stage, tree)
+                _, metadata = identity(self.main, tree)
+                allocation_record(tree, metadata, self.git("rev-parse", "HEAD").decode())
+                result = subprocess.run(["dotnet", str(SOURCE / "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"),
+                    "worktree", "return", "--path", str(tree), "--writers-joined"], cwd=self.main,
+                    env=dict(self.environment, PATH=str(binary) + os.pathsep + self.environment["PATH"],
+                             POOL_FAULT=stage), capture_output=True, text=True, timeout=45)
+                self.assertEqual(74, result.returncode, result.stdout + result.stderr)
+                receipt = json.loads(result.stdout)
+                self.assertEqual("returned", receipt["status"])
+                self.assertEqual("failed", receipt["pool"]["status"])
+                self.assertTrue(tree.is_dir())
+                self.assertEqual(receipt["idle_branch"],
+                                 self.git("-C", str(tree), "symbolic-ref", "HEAD").decode())
+                self.assertEqual(receipt["checkpoint"]["commit"], self.git("rev-parse", "HEAD").decode())
+                run_rows = self.rows("worktree-protocol")
+                run = run_rows[-1]["run_id"]
+                rows = [row for row in run_rows if row["run_id"] == run]
+                self.assertEqual("returned", next(row for row in rows
+                    if row["event"] == "operation_finished")["status"])
+                failure = next(row for row in rows if row.get("pool_status") == "failed")
+                self.assertEqual(("failed", "returned", stage, "GitFailure", "idle_sweep_failed"),
+                    tuple(failure[key] for key in ("status", "return_status", "stage", "error_type", "reason_code")))
+                self.assertEqual((74, "failed", "returned"),
+                    tuple(rows[-1][key] for key in ("exit_code", "status", "return_status")))
+                self.assertNotIn("private pool diagnostic", json.dumps(rows))
+                self.assertIn("private pool diagnostic", json.dumps(receipt))
+
     def test_python_owner_children_have_immediate_parent(self):
         import importlib.util
         sys.path.insert(0, str(SOURCE / 'tools/scripts'))

@@ -473,6 +473,19 @@ def _log_result(action, result):
                    error_type=("Refused" if status == "refused" else "CommandResult" if status == "failed" else None),
                    stage=result.get("stage") or (failure or {}).get("stage")
                    if isinstance(failure, dict) else result.get("stage"))
+    pool = result.get("pool")
+    if isinstance(pool, dict) and pool.get("status") == "failed":
+        # The return effect is complete even when its automatic sweep fails.
+        # Observe the consumed pool failure separately, retaining both effects.
+        failures = [pool["failure"]] if isinstance(pool.get("failure"), dict) else []
+        failures.extend(item for item in pool.get("items", [])
+                        if isinstance(item, dict) and item.get("error_type"))
+        for item in failures:
+            _log_operation(action, status="failed", outcome="failed",
+                           stage=_reason_code(item.get("stage")),
+                           reason=item.get("reason") or "idle_sweep_failed",
+                           error_type=_reason_code(item.get("error_type")),
+                           return_status=status, pool_status="failed")
 
 
 def with_command(options):
@@ -715,7 +728,9 @@ def main(argv=None):
                              outcome=LOG_LAST.get("outcome"),
                              stage=LOG_LAST.get("stage"),
                              reason_code=LOG_LAST.get("reason_code"),
-                             error_type=LOG_LAST.get("error_type"))
+                             error_type=LOG_LAST.get("error_type"),
+                             return_status=LOG_LAST.get("return_status"),
+                             pool_status=LOG_LAST.get("pool_status"))
         LOG.finish(exit_code, **{key: value for key, value in finish_fields.items()
                                  if value is not None})
     return exit_code

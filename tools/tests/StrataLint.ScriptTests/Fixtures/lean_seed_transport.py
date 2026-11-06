@@ -149,6 +149,43 @@ tempfile.TemporaryDirectory.cleanup = cleanup
 """)
         return dict(PYTHONPATH=str(self.bin), FAKE_CLEANUP_ROOT=str(self.root))
 
+    def backup_cleanup_fault_environment(self):
+        write(self.bin / "sitecustomize.py", """
+import os, pathlib, shutil
+original = shutil.rmtree
+def cleanup(path, *args, **kwargs):
+    if pathlib.Path(path).name.startswith(".release-backup-"):
+        root = pathlib.Path(os.environ["FAKE_CLEANUP_ROOT"])
+        assert (root / ".lake/build/lib/lean/D5/A.olean").read_text() == "locally-produced-olean"
+        (root / "cleanup-fault").write_text("backup cleanup OSError")
+        raise OSError("private backup cleanup diagnostic")
+    return original(path, *args, **kwargs)
+shutil.rmtree = cleanup
+""")
+        return dict(PYTHONPATH=str(self.bin), FAKE_CLEANUP_ROOT=str(self.root))
+
+    def test_committed_backup_cleanup_keeps_fetch_result(self):
+        self.assertEqual(0, self.transport("publish").returncode)
+        shutil.copy2(ROOT / "tools/scripts/maintenance_log.py", self.root / "tools/scripts/maintenance_log.py")
+        result = self.transport("fetch", arguments=("--refresh-stale",),
+            **self.backup_cleanup_fault_environment(),
+            TRURETURING_MAINTENANCE_LOG_DIR=str(self.root / "logs"))
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        receipts = [json.loads(line.partition(" ")[2]) for line in result.stdout.splitlines()
+                    if line.startswith("LEAN_CACHE_FETCH ")]
+        self.assertEqual(1, len(receipts))
+        self.assertEqual("unpacked", receipts[0]["status"])
+        self.assertEqual("private backup cleanup diagnostic", receipts[0]["cleanup_error"])
+        self.assertTrue(pathlib.Path(receipts[0]["retained_backup"]).is_dir())
+        self.assertNotIn("LEAN_CACHE_FETCH_WARNING", result.stdout)
+        rows = [json.loads(line) for file in (self.root / "logs").glob("*.jsonl") for line in file.read_text().splitlines()]
+        warning = next(row for row in rows if row.get("status") == "cleanup-deferred")
+        self.assertEqual(("cleanup", "OSError", "OSError"),
+                         tuple(warning[key] for key in ("phase", "error_type", "reason_code")))
+        self.assertEqual((0, "unpacked"), (rows[-1]["exit_code"], rows[-1]["status"]))
+        self.assertNotIn("private backup cleanup diagnostic", json.dumps(rows))
+        self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+
     def test_post_install_cleanup_warning_keeps_fetch_result(self):
         self.assertEqual(0, self.transport("publish").returncode)
         shutil.rmtree(self.root / ".lake/build")
@@ -174,7 +211,8 @@ tempfile.TemporaryDirectory.cleanup = cleanup
             write(self.root / ".lake/build/.release-refreshed-at", "2000-01-01T00:00:00+00:00")
         else:
             shutil.rmtree(self.root / ".lake/build")
-        environment = self.transport_environment(**self.local_environment(), **self.cleanup_fault_environment(),
+        fault = self.backup_cleanup_fault_environment() if self.backup_cleanup else self.cleanup_fault_environment()
+        environment = self.transport_environment(**self.local_environment(), **fault,
             TRURETURING_MAINTENANCE_SCRIPT="ensure-cache", TRURETURING_MAINTENANCE_REPOSITORY=str(self.root),
             TRURETURING_MAINTENANCE_LOG_DIR=str(self.root / "logs"))
         environment.pop("TRURETURING_MAINTENANCE_RUN_ID", None)
@@ -194,6 +232,7 @@ tempfile.TemporaryDirectory.cleanup = cleanup
             tuple(final[key] for key in ("exit_code", "archive_status", "degraded", "cache_fallback")))
         warning = next(row for row in rows if row.get("status") == "cleanup-deferred")
         self.assertEqual(("cleanup", "OSError"), (warning["phase"], warning["error_type"]))
+        self.assertNotIn("private backup cleanup diagnostic", json.dumps(rows))
         fetched = next(row for row in rows if row["event"] == "run_finished" and row.get("operation") == "fetch")
         self.assertEqual((0, "unpacked"), (fetched["exit_code"], fetched["status"]))
 

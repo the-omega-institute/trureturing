@@ -153,7 +153,7 @@ def _error_category(status, reason, explicit=None):
 
 
 def _observe(verb, status, *, phase=None, reason=None, error=None, mode=None,
-             expected_bytes=None, transferred_bytes=None, validated_bytes=None):
+             expected_bytes=None, transferred_bytes=None, validated_bytes=None, attempt_only=False):
     global LOG_LAST
     payload = dict(action=verb, operation=verb, transport=verb, mode=CURRENT_MODE,
                    phase=phase or CURRENT_PHASE, status=status, outcome=status,
@@ -162,15 +162,14 @@ def _observe(verb, status, *, phase=None, reason=None, error=None, mode=None,
                    expected_bytes=expected_bytes, transferred_bytes=transferred_bytes,
                    validated_bytes=validated_bytes)
     payload = {key: value for key, value in payload.items() if value is not None}
-    LOG_LAST = payload
+    if not attempt_only:
+        LOG_LAST = payload
     if LOG is not None:
         LOG.emit("operation_finished", **payload)
 
 
 def receipt(verb, status, **fields):
-    global LOG_LAST
     attempt_only = fields.pop("_attempt_only", False)
-    previous = LOG_LAST
     phase = fields.pop("_phase", None)
     error = fields.pop("_error", None)
     expected_bytes = fields.pop("_expected_bytes", None)
@@ -179,9 +178,8 @@ def receipt(verb, status, **fields):
     mode = fields.get("mode")
     _observe(verb, status, phase=phase, reason=fields.get("reason"),
              error=error, mode=mode, expected_bytes=expected_bytes,
-             transferred_bytes=transferred_bytes, validated_bytes=validated_bytes)
-    if attempt_only:
-        LOG_LAST = previous
+             transferred_bytes=transferred_bytes, validated_bytes=validated_bytes,
+             attempt_only=attempt_only)
     prefix = "LEAN_CACHE_" + verb.upper() + ("_WARNING" if attempt_only else "")
     print(prefix + " " + json.dumps({"status": status, **fields}, separators=(",", ":")))
 
@@ -846,6 +844,8 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
         except OSError as error:
             # Installation committed; failed housekeeping is not a failed fetch.
             cleanup = dict(cleanup_error=str(error), retained_backup=str(backup))
+            _observe("fetch", "cleanup-deferred", phase="cleanup", error=error,
+                     attempt_only=True)
     receipt("fetch", "unpacked" if installed else "skipped",
             mode="verification" if verification is not None else "partition", resolved=tag,
             installed=installed,

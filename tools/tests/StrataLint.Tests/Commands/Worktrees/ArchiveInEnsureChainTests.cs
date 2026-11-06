@@ -13,6 +13,15 @@ public sealed partial class LeanCacheEnsureCommandTests
     [InlineData(false)]
     [InlineData(true)]
     public void ProductionCleanupWarningPreservesInstalledArchiveThroughEnsure(bool warm)
+        => AssertProductionCleanupWarning(warm, backup: false);
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ProductionBackupCleanupWarningPreservesInstalledArchiveThroughEnsure(bool warm)
+        => AssertProductionCleanupWarning(warm, backup: true);
+
+    private static void AssertProductionCleanupWarning(bool warm, bool backup)
     {
         if (OperatingSystem.IsWindows()) return;
         using var setup = new TemporaryDirectory();
@@ -31,7 +40,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         var root = TestRepositoryLayout.FindRoot();
         var result = TestProcessRunner.Run("python3", ["-B",
             Path.Combine(root, "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py"),
-            "--ensure-cleanup", Path.Combine(root, "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"),
+            backup ? "--ensure-backup-cleanup" : "--ensure-cleanup", Path.Combine(root, "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"),
             request, warm ? "warm" : "cold"], root, TimeSpan.FromSeconds(90), 1024 * 1024);
         Assert.True(result.ExitCode == 0, System.Text.Encoding.UTF8.GetString(result.StandardOutput)
             + System.Text.Encoding.UTF8.GetString(result.StandardError));

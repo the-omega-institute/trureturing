@@ -771,8 +771,9 @@ def _all_test_cases():
 
 
 if __name__ == "__main__":
-    if len(sys.argv) == 5 and sys.argv[1] == "--ensure-cleanup":
+    if len(sys.argv) == 5 and sys.argv[1] in ("--ensure-cleanup", "--ensure-backup-cleanup"):
         fixture = TransportTests("ensure_post_install_cleanup_consumer")
+        fixture.backup_cleanup = sys.argv[1] == "--ensure-backup-cleanup"
         fixture.native_cli, setup, warm = sys.argv[2:]
         fixture.native_setup = pathlib.Path(setup)
         fixture.initially_warm = warm == "warm"
