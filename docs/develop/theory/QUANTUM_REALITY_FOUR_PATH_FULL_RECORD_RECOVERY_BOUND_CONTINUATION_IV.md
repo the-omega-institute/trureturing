@@ -3641,7 +3641,8 @@ $qin[0,1]$ 和任意 $(X,Y)inmathcal T_x$，有
 $$
 G_-(q,X,Y)>
 -rac{333}{50}+rac{29}{5}q
-+rac{1651}{1000}left(rac{19}{16}+rac q2ight)^2.
++rac{1651}{1000}left(rac{19}{16}+rac q2
+ight)^2.
 \tag{58.1}
 $$
 
@@ -3661,8 +3662,10 @@ $$
 
 $$
 S=c^2+h^2=1+rac h2,qquad
-H=hleft(rac12-sight),qquad
-K^2=left(rac h2ight)^2+(ch)^2=rac38+rac h4.
+H=hleft(rac12-s
+ight),qquad
+K^2=left(rac h2
+ight)^2+(ch)^2=rac38+rac h4.
 $$
 
 由 $|Z|le1$、$0le X,Yle1$ 及
@@ -3676,7 +3679,8 @@ $$
 将定义 57.1 中的两个平方相加并保留 $t$ 的符号，得到
 
 $$
-R^2+C^2=sh,a+S-left(rac h2+shight)u
+R^2+C^2=sh,a+S-left(rac h2+sh
+ight)u
 +rac h2t+2chF.
 \tag{58.4}
 $$
@@ -3713,7 +3717,8 @@ $G_-=e^2(1-q)+d^2q-4Gamma_-^2$，即得 (58.1)。
 右端函数的导数为
 
 $$
-rac{29}{5}+rac{1651}{1000}left(rac{19}{16}+rac q2ight)>0.
+rac{29}{5}+rac{1651}{1000}left(rac{19}{16}+rac q2
+ight)>0.
 $$
 
 在 $q=3/5$ 处它的值为 $3027811/6400000$，并且该数超过
@@ -3731,7 +3736,9 @@ $$
 $Lge19/16$，有
 
 $$
-C^2<Sleft(2-rac{L^2}{2}ight)<rac{7293}{4096}<left(rac{67}{50}ight)^2.
+C^2<Sleft(2-rac{L^2}{2}
+ight)<rac{7293}{4096}<left(rac{67}{50}
+ight)^2.
 \tag{58.9}
 $$
 
