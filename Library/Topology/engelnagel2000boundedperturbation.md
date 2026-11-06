@@ -52,7 +52,10 @@ The donor uses Lean 4.34.0 and Mathlib
 Retire the adaptation when the repository's actually adopted Mathlib pin
 supplies equivalent directly applicable Banach bounded-perturbation results.
 
-## Verified locators
+## Verified locator
+
+- DOI: 10.1007/b97696
+- URL: https://doi.org/10.1007/b97696
 
 https://github.com/zblore/csd-lean4/blob/ca3edfd7a5576d6c4e188501f9abb7c3f38ccd7f/CsdLean4/Mathlib/Analysis/Semigroup/BoundedPerturbation.lean
 
