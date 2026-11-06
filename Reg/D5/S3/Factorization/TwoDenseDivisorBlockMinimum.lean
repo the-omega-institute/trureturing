@@ -68,7 +68,7 @@ def family : DependentFamily.Registration arena sourceScope where
 noncomputable def registration :
     Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@_root_.D5.S3.Factorization.TwoDenseDivisorBlockMinimum.block_card_ge_of_dense_factor)
-    (DependentFamily.Realization signature) (Type) Unit where
+    (DependentFamily.Realization signature) Unit Unit where
   unitName := `D5.S3.Factorization.TwoDenseDivisorBlockMinimum.block_card_ge_of_dense_factor.__information_unit
   realizationName := `Reg.D5.S3.Factorization.TwoDenseDivisorBlockMinimum.DenseCopy.family
   realizationSource := none
@@ -85,7 +85,7 @@ noncomputable def registration :
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (List ℕ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Factorization.TwoDenseDivisorBlockMinimum
     definition := none
@@ -145,7 +145,7 @@ def family : DependentFamily.Registration arena sourceScope where
 noncomputable def registration :
     Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@_root_.D5.S3.Factorization.TwoDenseDivisorBlockMinimum.first_block_min_of_dense_factor)
-    (DependentFamily.Realization signature) (Type) Unit where
+    (DependentFamily.Realization signature) Unit Unit where
   unitName := `D5.S3.Factorization.TwoDenseDivisorBlockMinimum.first_block_min_of_dense_factor.__information_unit
   realizationName := `Reg.D5.S3.Factorization.TwoDenseDivisorBlockMinimum.FirstFactor.family
   realizationSource := none
@@ -162,7 +162,7 @@ noncomputable def registration :
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (List ℕ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Factorization.TwoDenseDivisorBlockMinimum
     definition := none
@@ -214,7 +214,7 @@ def family : DependentFamily.Registration arena sourceScope where
 noncomputable def registration :
     Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@_root_.D5.S3.Factorization.TwoDenseDivisorBlockMinimum.result)
-    (DependentFamily.Realization signature) (Type) Unit where
+    (DependentFamily.Realization signature) Unit Unit where
   unitName := `D5.S3.Factorization.TwoDenseDivisorBlockMinimum.result.__information_unit
   realizationName := `Reg.D5.S3.Factorization.TwoDenseDivisorBlockMinimum.WholeEvent.family
   realizationSource := none
@@ -231,7 +231,7 @@ noncomputable def registration :
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (List ℕ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Factorization.TwoDenseDivisorBlockMinimum
     definition := some {
