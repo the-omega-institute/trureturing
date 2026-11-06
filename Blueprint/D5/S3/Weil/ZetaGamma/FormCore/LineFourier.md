@@ -40,7 +40,19 @@ Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.angularFourier`
 
 The angular Fourier transform is the raw Fourier transform evaluated at z/(2*pi). The integral equality angularFourier_eq_integral identifies the kernel exp(-i*z*x), fixing the sign and angular normalization for arbitrary complex inputs. The finite-cell coercivity proof consumes this original equality together with angular_extended_plancherel to identify the mass of the actual rho density.
 
-**Theorem 1.4 (angular extended plancherel).**
+**Theorem 1.4 (Angular Fourier integral formula).**
+
+Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.angularFourier_eq_integral`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.angularFourier_eq_integral` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every complex function on the real line and every real angular frequency z, angularFourier equals the whole-line integral with kernel exp(-i*z*x). The identity follows by substituting z/(2*pi) into the raw Fourier integral and needs no integrability, reality or parity hypothesis. It identifies the angular transform with Ahat for finite atomic prefixes, allowing angular Plancherel to determine their spectral mass.
+
+**Theorem 1.5 (angular extended plancherel).**
 
 Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.angular_extended_plancherel`
 
@@ -52,7 +64,7 @@ Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.angular_extended_plan
 
 For every complex L1 and L2 input, extended spatial squared mass equals 1/(2*pi) times extended angular Fourier squared mass. The proof identifies the raw transform with the L2 transform almost everywhere and changes frequency variables by exactly 2*pi.
 
-**Theorem 1.5 (raw fourier sub).**
+**Theorem 1.6 (raw fourier sub).**
 
 Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.raw_fourier_sub`
 
@@ -64,7 +76,7 @@ Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.raw_fourier_sub`
 
 The raw transform of f-g is the pointwise difference of transforms when f and g are integrable complex functions. The integral_sub identity is used in the translation-gap calculation.
 
-**Definition 1.6 (lineGapMass).**
+**Definition 1.7 (lineGapMass).**
 
 Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.lineGapMass`
 
@@ -76,7 +88,7 @@ Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.lineGapMass`
 
 The ordinary squared translation-gap mass is the whole-line integral of norm(f(x)-f(x-s)) squared. In the energy proof each such integral is justified by the L2 hypothesis; finiteness of the subsequent Gamma-energy integral is not assumed.
 
-**Definition 1.7 (actualDensity).**
+**Definition 1.8 (actualDensity).**
 
 Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.actualDensity`
 
@@ -88,7 +100,7 @@ Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.actualDensity`
 
 The density is exp(-s/2)/(1-exp(-2*s)), selected from ArchimedeanJumpDecomposition.archimedeanJumpDensity. Its nonnegativity on positive rates, Levy kernel integrability and digamma evaluation supply the spectral weight identity.
 
-**Definition 1.8 (actualIncrement).**
+**Definition 1.9 (actualIncrement).**
 
 Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.actualIncrement`
 
@@ -100,7 +112,7 @@ Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.actualIncrement`
 
 The actual increment at real z is Re digamma(1/4+i*z/2)-Re digamma(1/4), with the displayed real-to-complex coercion and no clipping inside this real-valued definition.
 
-**Definition 1.9 (cyclicGap).**
+**Definition 1.10 (cyclicGap).**
 
 Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.cyclicGap`
 
@@ -112,7 +124,7 @@ Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.cyclicGap`
 
 The line phase-gap multiplier is 2*(1-cos((2*pi*xi)*s)). It retains both signs of xi and is used in the extended nonnegative frequency integral.
 
-**Theorem 1.10 (actual line spectralWeight).**
+**Theorem 1.11 (actual line spectralWeight).**
 
 Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.actual_line_spectralWeight`
 
@@ -124,7 +136,7 @@ Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.actual_line_spectralW
 
 For every real raw frequency xi, the nonnegative density-weighted phase-gap lintegral equals ofReal(actualIncrement(2*pi*xi)). Levy kernel integrability and nonnegativity convert the integral to a lintegral, and ArchimedeanJumpDecomposition.levy_integral_eq_digamma_increment evaluates it.
 
-**Theorem 1.11 (actual gamma whole line energy eq angular integral).**
+**Theorem 1.12 (actual gamma whole line energy eq angular integral).**
 
 Lean statement: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.actual_gamma_whole_line_energy_eq_angular_integral`
 
@@ -143,6 +155,7 @@ For every complex whole-line L1 and L2 input, the density-weighted translation-g
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.actual_gamma_whole_line_energy_eq_angular_integral`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.actual_line_spectralWeight`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.angularFourier`
+- Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.angularFourier_eq_integral`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.angular_extended_plancherel`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.continuous_raw_fourier`
 - Truth anchor: `D5/S3/Weil/ZetaGamma/FormCore/LineFourier.cyclicGap`
