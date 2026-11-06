@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/Representation/PrimitiveGeneratorComparisonArithmetic
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Rational arithmetic core of the primitive-generator versus double-anchor count comparison. -/
 
 import Mathlib
