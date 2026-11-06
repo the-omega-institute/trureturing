@@ -1,0 +1,17 @@
+**Definition 162.1 (a finite observation augmentation of the exact kernel).** Retain the complete telescope of Appendix III §§134–161. In particular, let
+
+$$
+V=\ker\Lambda_{134}\subset L^\infty(G,m;\mathbb R),
+\qquad
+q(v)=c\langle gv,P(gv)\rangle_m,
+$$
+
+and let $\mathscr R:L^\infty(G,m;\mathbb R)\to\mathbb R^r$ be any finite-dimensional real-linear observation map, with $r\ge0$. Define
+
+$$
+W_{\mathscr R}=V\cap\ker\mathscr R.
+\tag{162.1}
+$$
+
+No continuity, $L^1$ representation or positivity is assumed for $\mathscr R$; it is only a finite list of linear constraints on the same $L^\infty$ classes. The original 64 first-order coordinates are already included in $V$.
+
