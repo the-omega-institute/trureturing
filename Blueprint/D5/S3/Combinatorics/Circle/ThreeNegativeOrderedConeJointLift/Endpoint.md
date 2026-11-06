@@ -6,9 +6,9 @@ A physical floor-mask joint order for ordered cone gaps
 
 **Theorem 1.1 (One complete physical permutation and one literal ear cut).**
 
-Lean statement: `D5/S3/Combinatorics/Circle/ThreeNegativeOrderedConeJointLift.actualSource_three_negative_ordered_cone_joint_lift`
+Lean statement: `D5/S3/Combinatorics/Circle/ThreeNegativeOrderedConeJointLift/Endpoint.actualSource_three_negative_ordered_cone_joint_lift`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/ThreeNegativeOrderedConeJointLift.actualSource_three_negative_ordered_cone_joint_lift` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/ThreeNegativeOrderedConeJointLift/Endpoint.actualSource_three_negative_ordered_cone_joint_lift` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -30,7 +30,7 @@ The retained theorem targets the complete ordered cone 2<=a<b<=c of the joint-or
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Circle/ThreeNegativeOrderedConeJointLift.actualSource_three_negative_ordered_cone_joint_lift`
-- Dependency: [D5/S3/Combinatorics/Circle/ThreeBitSource](ThreeBitSource.md)
-- Dependency: [D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterJointLift](ThreeNegativeEqualOuterJointLift.md)
-- Dependency: [D5/S3/Combinatorics/Circle/ThreeNegativeMinimumTwoJointLift](ThreeNegativeMinimumTwoJointLift.md)
+- Truth anchor: `D5/S3/Combinatorics/Circle/ThreeNegativeOrderedConeJointLift/Endpoint.actualSource_three_negative_ordered_cone_joint_lift`
+- Dependency: [D5/S3/Combinatorics/Circle/ThreeBitSource](../ThreeBitSource.md)
+- Dependency: [D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterJointLift](../ThreeNegativeEqualOuterJointLift.md)
+- Dependency: [D5/S3/Combinatorics/Circle/ThreeNegativeMinimumTwoJointLift](../ThreeNegativeMinimumTwoJointLift.md)
