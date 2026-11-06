@@ -1,4 +1,4 @@
-/-! SOURCE PREPARATION / UNCOMPILED. Explicit physical-label alternative.
+/- SOURCE PREPARATION / UNCOMPILED. Explicit physical-label alternative.
 Fixed library pin: 1d7563a7afc3c179b50e46b14c30e3d8338e5aa5.
 No elaboration, kernel, official acceptance, or independent review is claimed.
 The centered-value setup is adapted from the authorized pre-dispatch candidate;
@@ -6,6 +6,8 @@ the selection layer below follows the four cases of the advisory Pro conclusion.
 
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Circle.TwoNegativeJointLift
+
+/-! Explicit physical-label below-half boundary and uniform common-cut transport. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -189,16 +191,15 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
         else if i.val < a + 1 then (4 * p + 1) * 2 ^ (i.val - 2)
         else if i.val = a + 1 then -E else (2 * L + 1) * 2 ^ (i.val - a - 2)) := by
     by_cases h0 : i.val = 0
-    · have hi0 : i = ⟨0, by dsimp [r]; omega⟩ := Fin.ext h0
-      subst i
-      simp only [Fin.val_mk, if_pos]
+    · simp only [h0, ite_true]
       constructor
-      · apply old_value _ _ 0 (by rw [hNH, hq]; dsimp [H]; constructor <;> nlinarith)
-        simp [q]
-      · apply new_value _ _ 0 (by dsimp [N, D, E, B, C]; constructor <;> nlinarith)
-        simp [q, hM]
+      · apply old_value i _ 0 (by rw [hNH, hq]; dsimp [H]; constructor <;> nlinarith)
+        simp [h0]
+      · apply new_value i.castSucc _ 0 (by rw [hq]; dsimp only [N];
+          constructor <;> nlinarith only [hp, hprodp, hpHalf])
+        simp [h0]
     by_cases h1 : i.val = 1
-    · simp only [h0, if_false, h1, if_pos]
+    · simp only [h0, ite_false, h1, ite_true]
       constructor
       · apply old_value i _ 1 (by rw [hNH]; dsimp [H, B, C]; constructor <;> nlinarith)
         rw [show (2 : ℤ) ^ i.val = 2 by simp [h1], hq, hN]
@@ -211,7 +212,7 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
         linear_combination 2 * hpHalf
     by_cases hlt : i.val < a + 1
     · have hi2 : 2 ≤ i.val := by omega
-      simp only [h0, h1, if_false, hlt, if_pos]
+      simp only [h0, h1, ite_false, hlt, ite_true]
       let z : ℤ := 2 ^ (i.val - 2)
       have hz : 0 < z := by dsimp [z]; positivity
       have hiE : (2 : ℤ) ^ i.val = 4 * z := by
@@ -241,7 +242,8 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
         rw [hiE, hq, hM]
         linear_combination 4 * z * hpHalf
     by_cases ha1 : i.val = a + 1
-    · simp only [h0, h1, hlt, if_false, ha1, if_pos]
+    · simp only [ha1, show a + 1 ≠ 0 by omega, show a + 1 ≠ 1 by omega,
+        Nat.lt_irrefl, ite_false, ite_true]
       constructor
       · apply old_value i _ (L + 1) (by
           rw [hNH]; dsimp [H, C]; constructor <;> nlinarith)
@@ -254,7 +256,7 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
         rw [ha1, pow_succ, haE, hq, hM]
         dsimp [E]
         linear_combination 4 * L * hpHalf
-    · simp only [h0, h1, hlt, if_false, ha1, if_false]
+    · simp only [h0, h1, hlt, ite_false, ha1, ite_false]
       let z : ℤ := 2 ^ (i.val - a - 2)
       have hz : 0 < z := by dsimp [z]; positivity
       have hiE : (2 : ℤ) ^ i.val = 8 * L * z := by
@@ -293,7 +295,7 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
         linear_combination 8 * L * z * hpHalf
   have hFresh : gn fresh = q := by
     apply new_value fresh q q (by rw [hq]; dsimp [N]; constructor <;> nlinarith)
-    simp only [Fin.val_last]
+    change (2 : ℤ) ^ r * (2 * q) = q + q * modulus (r + 1)
     rw [show (2 : ℤ) ^ r = 4 * p * L by exact hrpow, hq, hM]
     ring
 
@@ -305,21 +307,26 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
     have h1 := hvalues one
     have hA := hvalues atA
     simp [one] at h1
-    simp [atA, show a + 1 ≠ 0 by omega, show a + 1 ≠ 1 by omega] at hA
+    simp [atA, show a ≠ 0 by omega] at hA
     exact ⟨h1.1, h1.2, hA.1, hA.2⟩
   have hzero : f zero = q ∧ g zero = 2 * q := by simpa [zero] using hvalues zero
   have hmag : (0 ≤ B ∧ B ≤ H) ∧ (0 ≤ C ∧ C ≤ H) ∧
       (0 ≤ D ∧ D ≤ N) ∧ (0 ≤ E ∧ E ≤ N) := by
     have hPL := mul_le_mul_of_nonneg_right hp (show 0 ≤ L by omega)
     have hLP := mul_le_mul_of_nonneg_left hL (show 0 ≤ p by omega)
-    dsimp [B, C, D, E, H, N]
-    repeat' constructor <;> nlinarith
+    dsimp only [B, C, D, E, H, N]
+    refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩⟩ <;>
+      nlinarith only [hL, hp, hPL, hLP]
+  have hBdef : B = H - p := by dsimp only [B, H]; ring
+  have hCdef : C = H - L := by dsimp only [C, H]; ring
+  have hDdef : D = N - 2 * p := by dsimp only [D, N]; ring
+  have hEdef : E = N - L := by dsimp only [E, N]; ring
   have pos (i : Fin r) (hi : i ≠ one ∧ i ≠ atA) : 0 ≤ f i ∧ 0 ≤ g i := by
     have h1 : i.val ≠ 1 := fun h => hi.1 (Fin.ext h)
     have hA : i.val ≠ a + 1 := fun h => hi.2 (Fin.ext h)
     rw [(hvalues i).1, (hvalues i).2]
-    simp only [h1, hA, if_false]
-    split_ifs <;> constructor <;> dsimp [q] <;> positivity
+    simp only [h1, hA, ite_false]
+    split_ifs <;> constructor <;> positivity
 
   /- All interior-prefix and zero-total arguments are supplied by the pinned
      library. The only input specific to a case is its physical S and two seams. -/
@@ -360,7 +367,7 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
     have hFa : ∀ i ∈ F0, 0 ≤ f i ∧ 0 ≤ g i := by
       intro i hi
       have hh : i ∉ S ∧ i ≠ alpha ∧ i ≠ beta := by
-        simpa [F0, ascending, FS] using hi
+        simpa [F0, ascending, FS, and_assoc, and_comm, and_left_comm] using hi
       apply pos i
       cases rev <;> simpa [alpha, beta, and_comm] using hh.2
     have hENpos : ∀ i ∈ EN, 0 ≤ gn i := by
@@ -410,7 +417,8 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
       omega
     have freshPos : 0 ≤ gn fresh := by rw [hFresh]; dsimp [q]; positivity
     cases before
-    · have hear : earWord r sigma (E0.length + 1) =
+    · simp at hG
+      have hear : earWord r sigma (E0.length + 1) =
           EN ++ [alpha.castSucc] ++ ([fresh] ++ FN) ++ [beta.castSucc] := by
         rw [show sigma = (E0 ++ [alpha]) ++ (F0 ++ [beta]) by
           simp [sigma, List.append_assoc],
@@ -433,7 +441,8 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
         rw [hEN, hv.2.2.1]; simpa [sub_eq_add_neg] using (sub_nonneg.mpr hG.1)
       · change 0 ≤ -g beta ∧ -g beta ≤ N
         rw [hv.2.2.2, neg_neg]; exact hm.2.2.2
-    · have hear : earWord r sigma E0.length =
+    · simp at hG
+      have hear : earWord r sigma E0.length =
           (EN ++ [fresh]) ++ [alpha.castSucc] ++ FN ++ [beta.castSucc] := by
         rw [show sigma = E0 ++ ([alpha] ++ F0 ++ [beta]) by
           simp [sigma, List.append_assoc]]
@@ -456,7 +465,7 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
       · change 0 ≤ ((EN ++ [fresh]).map gn).sum + g alpha
         simp only [List.map_append, List.sum_append, List.map_singleton,
           List.sum_singleton, hEN, hFresh, hv.2.2.1]
-        linarith [hG.1]
+        linarith only [hG.1]
       · change 0 ≤ -g beta ∧ -g beta ≤ N
         rw [hv.2.2.2, neg_neg]; exact hm.2.2.2
 
@@ -513,7 +522,7 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
       rw [show b - 2 = (a - 1) + (b - a - 1) by omega, pow_add]
     have hspecial : f special = (2 * L + 1) * t ∧
         g special = (2 * L + 1) * t := by
-      simpa [special, t, show b + 1 ≠ 0 by omega, show b + 1 ≠ 1 by omega,
+      simpa [special, t, show b ≠ 0 by omega, show b ≠ a by omega,
         show ¬b + 1 < a + 1 by omega, show b + 1 ≠ a + 1 by omega,
         show b + 1 - a - 2 = b - a - 1 by omega] using hvalues special
     have hsW : special ∉ W := by simp [W, window, special] <;> omega
@@ -540,10 +549,12 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
     have hGdef : N - (∑ i ∈ S, g i) = 4 * d - l - t := by
       dsimp only [N]; rw [hGS, hqd]; simp only [hp2, hdt, hL2]; ring
     apply build S false false hS
-    · change H - p ≤ (∑ i ∈ S, f i) ∧ (∑ i ∈ S, f i) ≤ H
-      constructor <;> linarith [hp2]
-    · change N - 2 * p ≤ (∑ i ∈ S, g i) + 0 ∧ (∑ i ∈ S, g i) + 0 ≤ N
-      constructor <;> linarith [hp2]
+    · change B ≤ (∑ i ∈ S, f i) ∧ (∑ i ∈ S, f i) ≤ H
+      rw [hBdef]
+      constructor <;> linarith only [hFdef, hu, hp2, hd, hl, ht]
+    · change D ≤ (∑ i ∈ S, g i) + 0 ∧ (∑ i ∈ S, g i) + 0 ≤ N
+      rw [hDdef]
+      constructor <;> linarith only [hGdef, hu, hp2, hd, hl, ht]
   · by_cases heq : a = b
     · let S := insert top T
       have htT : top ∉ T := by simp [T, window, top] <;> omega
@@ -561,10 +572,12 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
       have hGdef : N - ((∑ i ∈ S, g i) + q) = l := by
         dsimp only [N]; rw [hGS, hqd]; simp only [hpl, hdl, hL2]; ring
       apply build S true true hS
-      · change H - L ≤ (∑ i ∈ S, f i) ∧ (∑ i ∈ S, f i) ≤ H
-        constructor <;> linarith
-      · change N - L ≤ (∑ i ∈ S, g i) + q ∧ (∑ i ∈ S, g i) + q ≤ N
-        constructor <;> linarith
+      · change C ≤ (∑ i ∈ S, f i) ∧ (∑ i ∈ S, f i) ≤ H
+        rw [hCdef]
+        constructor <;> linarith only [hFdef, hL]
+      · change E ≤ (∑ i ∈ S, g i) + q ∧ (∑ i ∈ S, g i) + q ≤ N
+        rw [hEdef]
+        constructor <;> linarith only [hGdef, hl, hL2]
     · by_cases hadj : a = b + 1
       · let S := window r 2 (a - 1)
         have hS : ∀ i ∈ S, i ≠ one ∧ i ≠ atA := by
@@ -582,10 +595,12 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
           dsimp only [S]; rw [hGS]; change 4 * p * L - 1 - (4 * p + 1) * (L - 1) = L
           rw [hLp]; ring
         apply build S true false hS
-        · change H - L ≤ (∑ i ∈ S, f i) ∧ (∑ i ∈ S, f i) ≤ H
-          constructor <;> linarith
-        · change N - L ≤ (∑ i ∈ S, g i) + 0 ∧ (∑ i ∈ S, g i) + 0 ≤ N
-          constructor <;> linarith
+        · change C ≤ (∑ i ∈ S, f i) ∧ (∑ i ∈ S, f i) ≤ H
+          rw [hCdef]
+          constructor <;> linarith only [hFdef, hL]
+        · change E ≤ (∑ i ∈ S, g i) + 0 ∧ (∑ i ∈ S, g i) + 0 ≤ N
+          rw [hEdef]
+          constructor <;> linarith only [hGdef, hL]
       · have hab2 : b + 2 ≤ a := by omega
         let h : ℤ := 2 ^ (a - b - 2)
         let low : Fin r := ⟨a - b, by dsimp [r]; omega⟩
@@ -618,12 +633,14 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
         have hbase : p + h ≤ l := by
           have h1 := mul_le_mul_of_nonneg_left hh (show 0 ≤ p by omega)
           have h2 := mul_le_mul_of_nonneg_right hp (show 0 ≤ h by omega)
-          nlinarith [hlp]
+          nlinarith only [h1, h2, hlp, hh]
         apply build S true true hS
-        · change H - L ≤ (∑ i ∈ S, f i) ∧ (∑ i ∈ S, f i) ≤ H
-          constructor <;> linarith [hL2, hp2]
-        · change N - L ≤ (∑ i ∈ S, g i) + q ∧ (∑ i ∈ S, g i) + q ≤ N
-          constructor <;> linarith [hL2]
+        · change C ≤ (∑ i ∈ S, f i) ∧ (∑ i ∈ S, f i) ≤ H
+          rw [hCdef]
+          constructor <;> linarith only [hFdef, hL2, hp2, hbase, hd, hh]
+        · change E ≤ (∑ i ∈ S, g i) + q ∧ (∑ i ∈ S, g i) + q ≤ N
+          rw [hEdef]
+          constructor <;> linarith only [hGdef, hbase, hL2, hl, hp, hh]
 
 theorem actualSource_below_half_two_bit_uniform_cut (a b : ℕ)
     (ha : 2 ≤ a) (hb : 2 ≤ b) :
