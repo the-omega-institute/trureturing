@@ -96,9 +96,9 @@ claim, all integer casts, and the `Proved` resolution claim.
 
 ## Triage
 
-Tier 1 named external conjecture. Intended admission is
-`open-problem-resolution` under CLAUDE 3.2(a)-(d), with independent assessment
-pending. Provisional proof shape is `bind-only`: the argument composes pinned
+Tier 1 named external conjecture. Admission basis is
+`open-problem-resolution` under CLAUDE 3.2(a)-(d).
+The independently assessed proof shape is `bind-only`: the argument composes pinned
 binomial/factorial identities with parity decomposition, finite-sum shifts,
 and algebraic normalization. It claims no independent escape witness.
 Utility is `none`: this is an unbounded symbolic recurrence proof, not a
@@ -110,11 +110,6 @@ from the recurrence to them is asserted. An extension below index three
 requires a convention for negative sequence indices and is not proved.
 The parity and weighted-transform relations describe the mechanism of this
 proof; no additional exported theorem or neighboring conjecture is claimed.
-
-The previous probe #27161 remains unresolved under its original controls;
-this fresh formal continuation does not alter that timed outcome.
-Independent assessment, freeze, required CI and integration remain separate
-from the mathematical proof.
 
 ## ASSUMED-UNVERIFIED
 
