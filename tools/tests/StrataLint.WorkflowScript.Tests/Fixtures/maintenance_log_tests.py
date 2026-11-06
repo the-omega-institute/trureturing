@@ -108,10 +108,12 @@ class MaintenanceLogTests(unittest.TestCase):
         marker = self.root / "group-count"
         child = ("import signal,time; from pathlib import Path; count=[0]; "
                  f"signal.signal(signal.SIGTERM, lambda *_: (count.__setitem__(0,count[0]+1), "
-                 f"Path({str(marker)!r}).write_text(str(count[0])), exit(0))); time.sleep(60)")
+                 f"Path({str(marker)!r}).write_text(str(count[0])), exit(0))); "
+                 "print('ready',flush=True); time.sleep(60)")
         parent = ("import os,signal,subprocess,sys,time; "
-                  f"child=subprocess.Popen([sys.executable,'-c',{child!r}]); "
+                  f"child=subprocess.Popen([sys.executable,'-c',{child!r}], stdout=subprocess.PIPE, text=True); "
                   "signal.signal(signal.SIGTERM, lambda *_: (child.wait(), exit(0))); "
+                  "assert child.stdout.readline().strip() == 'ready'; "
                   "print(child.pid,flush=True); time.sleep(60)")
         for logged in (False, True):
             marker.unlink(missing_ok=True)
@@ -119,8 +121,7 @@ class MaintenanceLogTests(unittest.TestCase):
             with subprocess.Popen([sys.executable, "-c", command], cwd=self.main,
                                   env=self.environment, start_new_session=True,
                                   stdout=subprocess.PIPE, text=True) as job:
-                job.stdout.readline()
-                time.sleep(0.2)
+                self.assertGreater(int(job.stdout.readline()), 0)
                 os.killpg(job.pid, signal.SIGTERM)
                 self.assertEqual(0, job.wait(timeout=5))
             self.assertEqual("1", marker.read_text())
@@ -256,7 +257,10 @@ class MaintenanceLogTests(unittest.TestCase):
             escape(str(adapter)) + '" /></ItemGroup></Project>')
         (project / "Program.cs").write_text(
             'using StrataLint.Engine; Directory.SetCurrentDirectory(args[0]); '
-            'MaintenanceLogAdapter.Start(); using var data = new MemoryStream(); '
+            'MaintenanceLogAdapter.Start(); '
+            'MaintenanceLogAdapter.Record("fetch", "failed", "transfer", "timeout", "TimeoutError"); '
+            'MaintenanceLogAdapter.Record("ensure-cache", "present", "complete", null, null); '
+            'using var data = new MemoryStream(); '
             'Console.OpenStandardInput().CopyTo(data); '
             'Console.OpenStandardOutput().Write(data.ToArray()); '
             'Console.OpenStandardError().Write(data.ToArray()); '
@@ -277,8 +281,347 @@ class MaintenanceLogTests(unittest.TestCase):
         self.assertEqual(19, result.returncode)
         self.assertEqual(payload, result.stdout)
         self.assertEqual(payload, result.stderr)
-        self.assert_finished(19, owner_pid=self.rows()[0]['pid'])
-        self.assertGreaterEqual(self.rows()[-1]['duration_seconds'], 0.25)
+        rows = self.rows()
+        self.assertEqual(['run_started', 'operation_finished', 'operation_finished', 'run_finished'],
+                         [row['event'] for row in rows])
+        self.assertEqual(19, rows[-1]['exit_code'])
+        self.assertEqual('ensure-cache', rows[-1]['operation'])
+        self.assertEqual('present', rows[-1]['status'])
+        self.assertIsNone(rows[-1]['error_type'])
+        self.assertGreaterEqual(rows[-1]['duration_seconds'], 0.25)
+
+    def test_release_local_deadlines_and_final_diagnostics(self):
+        import io
+        from unittest.mock import patch
+        sys.path.insert(0, str(SOURCE / "tools/scripts/worktree"))
+        import lean_cache_release as release
+        import lean_cache_release_io as bounded
+        from maintenance_log import MaintenanceLog
+        material = self.root / "material"
+        material.write_bytes(b"x" * (2 * 1024 * 1024))
+        with patch.object(bounded.time, "monotonic", side_effect=[0, 0, 2]):
+            with self.assertRaises(TimeoutError):
+                bounded.archive_sha(material, 1)
+        class Input(io.BytesIO):
+            reads = 0
+            def read(self, size=-1):
+                self.reads += 1
+                return super().read(size)
+        source, output = Input(material.read_bytes()), io.BytesIO()
+        with patch.object(bounded.time, "monotonic", side_effect=[0, 2]):
+            with self.assertRaises(TimeoutError):
+                bounded.copy_chunks(source, output, 1)
+        self.assertEqual(1, source.reads)
+        self.assertEqual(1024 * 1024, len(output.getvalue()))
+        source = Input(b"compressed")
+        with patch.object(bounded.time, "monotonic", side_effect=[0, 2]):
+            with self.assertRaises(TimeoutError):
+                bounded.ArchiveInput(source, 1).read(4)
+        self.assertEqual(1, source.reads)
+        env = dict(self.environment, TRURETURING_MAINTENANCE_SCRIPT="fixture",
+                   TRURETURING_MAINTENANCE_REPOSITORY=str(self.main))
+        def completed():
+            release.CURRENT_OPERATION = "fetch"
+            release.CURRENT_MODE = "production"
+            release._observe("fetch", "miss", phase="transfer", error=TimeoutError("PRIVATE"))
+            release._observe("fetch", "unpacked", phase="install", validated_bytes=7)
+            return 0
+        with patch.dict(os.environ, env, clear=True), patch.object(release, "_main", side_effect=completed):
+            self.assertEqual(0, release.main())
+        rows = self.rows()
+        self.assertEqual("timeout", rows[1]["error_type"])
+        self.assertEqual("unpacked", rows[-1]["status"])
+        self.assertEqual("install", rows[-1]["stage"])
+        self.assertIsNone(rows[-1]["error_type"])
+        self.assertNotIn("PRIVATE", json.dumps(rows))
+        from contextlib import redirect_stdout
+        release.LOG = None
+        class DeferredCleanup:
+            name = str(self.root / "private-stage")
+            def cleanup(self):
+                raise OSError("private cleanup diagnostic")
+        def installed(*args, **kwargs):
+            release.receipt("fetch", "unpacked", _phase="install")
+        business = io.StringIO()
+        with patch.object(release, "release_key", return_value={}), \
+             patch.object(release, "snapshot_candidates", return_value=[("partition", "tag")]), \
+             patch.object(release, "fetch_staging_cleanup"), \
+             patch.object(release, "restore_snapshot", side_effect=installed), \
+             patch.object(release.tempfile, "TemporaryDirectory", return_value=DeferredCleanup()), \
+             redirect_stdout(business):
+            self.assertEqual(0, release.fetch_locked(self.main, "partition", time.monotonic() + 10))
+        self.assertIn('"status":"cleanup-deferred"', business.getvalue())
+        self.assertIn("private cleanup diagnostic", business.getvalue())
+        self.assertEqual("unpacked", release.LOG_LAST["status"])
+        self.assertNotIn("error_type", release.LOG_LAST)
+
+    def test_protocol_refusal_records_action_and_bounded_reason(self):
+        command = [sys.executable, "-B", str(SOURCE / "tools/scripts/worktree/worktree_protocol.py"),
+                   "--source", str(self.main), "with", "--path", str(self.main)]
+        result = subprocess.run(command, env=self.environment, capture_output=True, timeout=15)
+        self.assertEqual(73, result.returncode)
+        row = self.rows("worktree-protocol")[-1]
+        self.assertEqual("with", row["action"])
+        self.assertEqual("missing_command", row["reason_code"])
+        self.assertEqual("Refused", row["error_type"])
+
+    def test_streamed_qualification_records_refusals_and_consumed_failures(self):
+        tree = self.root / "locked-tree"
+        self.git("worktree", "add", "-b", "locked-lane", tree)
+        self.git("worktree", "lock", "--reason", "intentional", tree)
+        command = [sys.executable, "-B", str(SOURCE / "tools/scripts/worktree/worktree_protocol.py"),
+                   "--source", str(self.main), "qualify", "--path", str(tree), "--stream"]
+        refused = subprocess.run(command, env=self.environment, capture_output=True, timeout=30)
+        self.assertEqual(0, refused.returncode, refused.stderr)
+        output = [json.loads(line) for line in refused.stdout.splitlines()]
+        item = next(row for row in output if row["event"] == "worktree_qualification_item")
+        self.assertEqual(("refused", "locked_recent"), (item["outcome"], item["reason"]))
+        self.assertEqual(dict(event="worktree_qualification", status="succeeded", item_count=1), output[-1])
+        rows = self.rows("worktree-protocol")
+        observed = next(row for row in rows if row["event"] == "qualification_item")
+        self.assertEqual(("refused", "locked_recent", "Refused"),
+                         (observed["outcome"], observed["reason_code"], observed["error_type"]))
+        summary = next(row for row in rows if row["event"] == "operation_finished")
+        self.assertEqual((1, 1, 0, 0, 0), tuple(summary[key] for key in
+            ("item_count", "refused_count", "qualified_count", "failed_count", "deferred_count")))
+        self.assertEqual(0, rows[-1]["exit_code"])
+        # Fail the ordinary initial Git inventory; qualify_batch consumes the failure.
+        binary = self.root / "bin"
+        binary.mkdir()
+        git = binary / "git"
+        git.write_text("#!/bin/sh\necho 'private Git diagnostic' >&2\nexit 1\n")
+        git.chmod(0o755)
+        failed = subprocess.run(command, env=dict(self.environment,
+            PATH=str(binary) + os.pathsep + self.environment["PATH"]), capture_output=True, timeout=30)
+        self.assertEqual(74, failed.returncode, failed.stderr)
+        output = [json.loads(line) for line in failed.stdout.splitlines()]
+        self.assertEqual("failed", output[-1]["status"])
+        rows = self.rows("worktree-protocol")
+        run = rows[-1]["run_id"]
+        rows = [row for row in rows if row["run_id"] == run]
+        observed = next(row for row in rows if row["event"] == "qualification_item")
+        self.assertEqual(("failed", "qualification_failed", "unavailable", "GitFailure"),
+            tuple(observed[key] for key in ("outcome", "reason_code", "failure_kind", "error_type")))
+        summary = next(row for row in rows if row["event"] == "operation_finished")
+        self.assertEqual((1, 0, 0, 1, 0), tuple(summary[key] for key in
+            ("item_count", "refused_count", "qualified_count", "failed_count", "deferred_count")))
+        self.assertEqual(74, rows[-1]["exit_code"])
+        persisted = json.dumps(self.rows("worktree-protocol"))
+        self.assertNotIn("private Git diagnostic", persisted)
+        self.assertNotIn(str(tree), persisted)
+        self.assertTrue(tree.is_dir())
+
+    def prepare_return_repository(self):
+        sys.path.insert(0, str(SOURCE / "tools/scripts/worktree"))
+        for name, value in (("lean-toolchain", "leanprover/lean4:v4.34.1\n"),
+                            ("lake-manifest.json", '{"packages":[]}\n')):
+            (self.main / name).write_text(value)
+        self.git("add", ".")
+        self.git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+                 "commit", "-m", "pins")
+        remote = self.root / "remote.git"
+        subprocess.run(["git", "init", "--bare", str(remote)], check=True, capture_output=True)
+        self.git("remote", "add", "origin", remote)
+        self.git("push", "origin", "dev")
+        self.git("config", "user.name", "Fixture")
+        self.git("config", "user.email", "fixture@example.invalid")
+
+    def test_native_return_pool_failure(self):
+        self.prepare_return_repository()
+        from worktree_pool import allocation_record
+        from worktree_protocol import identity
+        real_git = shutil.which("git")
+        binary = self.root / "bin"
+        binary.mkdir()
+        marker = self.root / "fault-phase"
+        shim = binary / "git"
+        shim.write_text(f'''#!/usr/bin/env python3
+import os, pathlib, sys
+args = sys.argv[1:]
+marker = pathlib.Path({str(marker)!r})
+phase = marker.read_text() if marker.exists() else ""
+if phase == "ready":
+    inventory = "worktree" in args and "list" in args
+    inspect = "status" in args
+    if (os.environ["POOL_FAULT"] == "inventory" and inventory or
+            os.environ["POOL_FAULT"] == "inspect" and inspect):
+        print("private pool diagnostic", file=sys.stderr)
+        sys.exit(1)
+if any(arg.startswith("worktree-idle:") for arg in args):
+    marker.write_text("switched")
+elif phase == "switched" and "merge-base" in args and "--is-ancestor" in args:
+    marker.write_text("ready")
+os.execv({real_git!r}, [{real_git!r}, *args])
+''')
+        shim.chmod(0o755)
+        for stage in ("inventory", "inspect"):
+            with self.subTest(stage=stage):
+                marker.unlink(missing_ok=True)
+                tree = self.root / ("return-" + stage)
+                self.git("worktree", "add", "-b", "lane/governance/" + stage, tree)
+                _, metadata = identity(self.main, tree)
+                allocation_record(tree, metadata, self.git("rev-parse", "HEAD").decode())
+                result = subprocess.run(["dotnet", str(SOURCE / "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"),
+                    "worktree", "return", "--path", str(tree), "--writers-joined"], cwd=self.main,
+                    env=dict(self.environment, PATH=str(binary) + os.pathsep + self.environment["PATH"],
+                             POOL_FAULT=stage), capture_output=True, text=True, timeout=45)
+                self.assertEqual(74, result.returncode, result.stdout + result.stderr)
+                receipt = json.loads(result.stdout)
+                self.assertEqual("returned", receipt["status"])
+                self.assertEqual("failed", receipt["pool"]["status"])
+                self.assertTrue(tree.is_dir())
+                self.assertEqual(receipt["idle_branch"],
+                                 self.git("-C", str(tree), "symbolic-ref", "HEAD").decode())
+                self.assertEqual(receipt["checkpoint"]["commit"], self.git("rev-parse", "HEAD").decode())
+                run_rows = self.rows("worktree-protocol")
+                run = run_rows[-1]["run_id"]
+                rows = [row for row in run_rows if row["run_id"] == run]
+                self.assertEqual("returned", next(row for row in rows
+                    if row["event"] == "operation_finished")["status"])
+                failure = next(row for row in rows if row.get("pool_status") == "failed")
+                self.assertEqual(("failed", "returned", stage, "GitFailure", "idle_sweep_failed"),
+                    tuple(failure[key] for key in ("status", "return_status", "stage", "error_type", "reason_code")))
+                self.assertEqual((74, "failed", "returned"),
+                    tuple(rows[-1][key] for key in ("exit_code", "status", "return_status")))
+                self.assertNotIn("private pool diagnostic", json.dumps(rows))
+                self.assertIn("private pool diagnostic", json.dumps(receipt))
+
+    def test_native_return_removal_failures(self):
+        import uuid
+        sys.path.insert(0, str(SOURCE / "tools/scripts/worktree"))
+        from worktree_pool import allocation_record
+        from worktree_protocol import identity
+        real_git = shutil.which("git")
+        cli = SOURCE / "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"
+        for outcome in ("qualification_failed", "checkpoint_failed", "partial_or_indeterminate",
+                        "refused", "revalidate", "inspect_refused"):
+            with self.subTest(outcome=outcome):
+                case = self.root / outcome
+                case.mkdir()
+                self.main = case / "main"
+                self.main.mkdir()
+                self.git("init", "--initial-branch=dev")
+                self.git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+                         "commit", "--allow-empty", "-m", "fixture")
+                # Each scenario owns its remote and log destination.
+                self.environment[LOG_ENV] = str(case / "logs")
+                original_root = self.root
+                self.root = case
+                try:
+                    self.prepare_return_repository()
+                    head = self.git("rev-parse", "HEAD").decode()
+                    idle = []
+                    for index in range(4):
+                        token = uuid.uuid4().hex
+                        branch = "lane/governance/idle-" + token
+                        self.git("update-ref", "--create-reflog", "-m", "worktree-idle:" + token,
+                                 "refs/heads/" + branch, head, "0" * len(head))
+                        path = case / ("idle-" + str(index))
+                        self.git("worktree", "add", path, branch)
+                        idle.append(path)
+                    victim = idle[0]
+                    _, metadata = identity(self.main, victim)
+                    tree = case / "return-task"
+                    self.git("worktree", "add", "-b", "lane/governance/task", tree)
+                    _, task_metadata = identity(self.main, tree)
+                    allocation_record(tree, task_metadata, head)
+                    binary = case / "bin"
+                    binary.mkdir()
+                    marker = case / "fault-triggered"
+                    ready = case / "return-completed"
+                    shim = binary / "git"
+                    shim.write_text(f'''#!/usr/bin/env python3
+import os, pathlib, sys
+args = sys.argv[1:]
+ready = pathlib.Path({str(ready)!r})
+triggered = pathlib.Path({str(marker)!r})
+record = pathlib.Path({str(metadata / 'worktree-removal')!r})
+fault = {outcome!r}
+victim = {str(victim)!r}
+if any(arg.startswith("worktree-idle:") for arg in args):
+    ready.write_text("switched")
+elif ready.exists() and ready.read_text() == "switched" and "merge-base" in args:
+    ready.write_text("ready")
+elif ready.exists() and ready.read_text() == "ready" and not triggered.exists():
+    ancestry = "merge-base" in args and victim in args
+    count_file = ready.with_name("ancestry-count")
+    count = int(count_file.read_text()) + 1 if ancestry and count_file.exists() else 1
+    if ancestry:
+        count_file.write_text(str(count))
+    revalidate = ancestry and ((fault == "revalidate" and count == 2) or fault == "inspect_refused")
+    checkpoint = fault == "checkpoint_failed" and "add" in args and victim in args
+    qualification = fault in ("qualification_failed", "refused") and record.exists() and "list" in args
+    removal = fault == "partial_or_indeterminate" and "worktree" in args and "remove" in args and victim in args
+    if revalidate or checkpoint or qualification or removal:
+        triggered.touch()
+        if fault == "refused":
+            import subprocess
+            subprocess.run([{real_git!r}, "-C", {str(self.main)!r}, "worktree", "lock", "--reason", "private removal lock", victim], check=True)
+        else:
+            print("private removal diagnostic " + victim, file=sys.stderr)
+            sys.exit(2 if revalidate else 1)
+os.execv({real_git!r}, [{real_git!r}, *args])
+''')
+                    shim.chmod(0o755)
+                    result = subprocess.run(["dotnet", str(cli), "worktree", "return", "--path", str(tree),
+                        "--writers-joined"], cwd=self.main, env=dict(self.environment,
+                        PATH=str(binary) + os.pathsep + self.environment["PATH"]),
+                        capture_output=True, text=True, timeout=45)
+                    self.assertTrue(marker.exists(), result.stdout + result.stderr)
+                    expected_exit = 0 if outcome == "inspect_refused" else 74
+                    self.assertEqual(expected_exit, result.returncode, result.stdout + result.stderr)
+                    receipt = json.loads(result.stdout)
+                    self.assertEqual("returned", receipt["status"])
+                    self.assertEqual("succeeded" if outcome == "inspect_refused" else "failed", receipt["pool"]["status"])
+                    self.assertEqual(head, receipt["checkpoint"]["commit"])
+                    self.assertEqual("unchanged", receipt["checkpoint"]["status"])
+                    self.assertEqual(receipt["idle_branch"], self.git("-C", tree, "symbolic-ref", "HEAD").decode())
+                    self.assertEqual(head, self.git("rev-parse", receipt["task_branch"]).decode())
+                    item = next(item for item in receipt["pool"]["items"] if item["path"] == str(victim))
+                    if outcome == "inspect_refused":
+                        self.assertEqual("retained", item["outcome"])
+                        self.assertNotIn("stage", item)
+                        rows = self.rows("worktree-protocol")
+                        self.assertEqual((0, "returned"), (rows[-1]["exit_code"], rows[-1]["status"]))
+                        self.assertFalse(any(row.get("pool_status") == "failed" for row in rows))
+                        continue
+                    retained = outcome in ("refused", "revalidate")
+                    self.assertEqual("retained" if retained else outcome, item["outcome"])
+                    self.assertEqual("revalidate" if outcome == "revalidate" else "remove", item["stage"])
+                    self.assertTrue(victim.is_dir())
+                    if retained:
+                        self.assertEqual("Refused", item["error_type"])
+                    else:
+                        self.assertNotIn("error_type", item)
+                        self.assertIn("private removal diagnostic", item["error"])
+                    if outcome == "checkpoint_failed":
+                        self.assertIsNone(item["checkpoint"])
+                        self.assertFalse((metadata / "worktree-removal").exists())
+                    elif outcome != "revalidate":
+                        self.assertTrue((metadata / "worktree-removal").is_file())
+                        self.assertEqual(head, self.git("rev-parse", receipt["pool"]["items"][0]["branch"]).decode())
+                    rows = self.rows("worktree-protocol")
+                    completed = next(row for row in rows if row["event"] == "operation_finished")
+                    self.assertEqual("returned", completed["status"])
+                    failures = [row for row in rows if row["event"] == "operation_finished" and row.get("pool_status") == "failed"]
+                    failure = self.assert_single(failures)
+                    expected = ("failed", "returned", "failed", item["stage"],
+                                "Refused" if retained else "CommandResult",
+                                "idle_sweep_refused" if retained else outcome,
+                                item["outcome"])
+                    keys = ("status", "return_status", "pool_status", "stage", "error_type", "reason_code", "outcome")
+                    self.assertEqual(expected, tuple(failure[key] for key in keys))
+                    self.assertEqual(expected, tuple(rows[-1][key] for key in keys))
+                    self.assertEqual(74, rows[-1]["exit_code"])
+                    persisted = json.dumps(rows)
+                    for private in ("private removal diagnostic", "private removal lock", str(victim), str(tree)):
+                        self.assertNotIn(private, persisted)
+                finally:
+                    self.root = original_root
+
+    def assert_single(self, items):
+        self.assertEqual(1, len(items), items)
+        return items[0]
 
     def test_python_owner_children_have_immediate_parent(self):
         import importlib.util

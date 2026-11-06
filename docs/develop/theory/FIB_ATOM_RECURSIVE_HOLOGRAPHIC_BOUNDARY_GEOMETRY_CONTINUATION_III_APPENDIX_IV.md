@@ -535,3 +535,222 @@ If the readout coordinates are initially given only as real-linear maps on $L^\i
 The statements (165.1)--(165.5) are an exact functional-analytic boundary for the countable successor question. They do not establish orbit density, a nonzero orbit complement, a physical successor, a nonlinear residual-zero tuple, a legal simplex family, an exact H43 partition, a terminal compensator, an SRS-20 or $F_{64}$ witness, or a Lean/kernel theorem.
 
 ## 追加锚（本行以下为增补区）
+
+## 166. The finite $L^2$ representer bridge for the calibrated kernel
+
+Section 165 treats the original first-order kernel $V$ as a bounded-function constraint while the successor orbit is described in $L^2(m)$. For the actual equal-gap readout of Appendix III, the first-order constraints have explicit $L^2(m)$ representers. This identifies the finite calibration plane that must be added to any later successor orbit, without asserting that the orbit preserves $V$ or that a physical successor exists.
+
+**Definition 166.1 (the first-order representer plane).** Retain the complete telescope of Appendix III Definition 134.1 and the real labels $\mathcal L=\{0,1,3,B\}$. Write $H=L^2(G,m;\mathbb R)$, $P=T_d$, and use pointwise multiplication for products of functions. For $\alpha=(y,z,w)\in\mathcal L^3$, define
+
+$$
+\begin{aligned}
+A_{yzw}&=g\,P(f_z\,P f_w),\\
+B_{yzw}&=P(g f_y)\,P f_w,\\
+C_{yzw}&=P\!\bigl(f_z\,P(g f_y)\bigr),\\
+\psi_{yzw}&=\sigma_y A_{yzw}+\sigma_z B_{yzw}+\sigma_w C_{yzw}.
+\end{aligned}
+\tag{166.1}
+$$
+
+Let
+
+$$
+W=\operatorname{span}_{\mathbb R}
+\{\psi_{yzw}: (y,z,w)\in\mathcal L^3\}\subset H.
+\tag{166.2}
+$$
+
+The span is finite-dimensional, with dimension at most $64$. Orthogonal complements below are taken in $H$, while bounded functions are understood as their $m$-classes.
+
+**Proposition 166.2 (explicit representers for all first-order constraints).** For every $\alpha=(y,z,w)\in\mathcal L^3$, the function $\psi_{yzw}$ has a bounded Borel representative and belongs to $H$. For every bounded real Borel $v$,
+
+$$
+\ell_{yzw}(v)=\langle v,\psi_{yzw}\rangle_H.
+\tag{166.3}
+$$
+
+Consequently, with $V=\ker\Lambda$ as in Appendix III Definition 134.1,
+
+$$
+V=L^\infty(G,m;\mathbb R)\cap W^\perp.
+\tag{166.4}
+$$
+
+*Proof.* The inherited source estimate in Appendix III (134.4) gives $g=P g_d$, while Theorem 133.2 gives $g_d\in L^\infty(m)$. The Markov $L^\infty$-contraction of $P$ therefore gives $g\in L^\infty(m)$. Equation (134.8) gives $f_y\in L^\infty(m)$ for every label. Applying the same contraction to the products in (166.1) shows that $A_{yzw}$, $B_{yzw}$, and $C_{yzw}$ are bounded Borel $m$-classes, hence belong to $H$. Their displayed Borel representatives may be chosen simultaneously for the finite set of labels.
+
+For the first term of (134.11), self-adjointness of $P$ gives
+
+$$
+\mathcal C(v,f_z,f_w)
+ =\langle g v,P(f_z P f_w)\rangle_H
+ =\langle v,A_{yzw}\rangle_H.
+\tag{166.5}
+$$
+
+For the second term, move $P$ across the pairing once:
+
+$$
+\mathcal C(f_y,v,f_w)
+ =\langle g f_y,P(v P f_w)\rangle_H
+ =\langle P(g f_y),v P f_w\rangle_H
+ =\langle v,B_{yzw}\rangle_H.
+\tag{166.6}
+$$
+
+For the third term, move $P$ across the pairing twice:
+
+$$
+\begin{aligned}
+\mathcal C(f_y,f_z,v)
+ &=\langle g f_y,P(f_z P v)\rangle_H\\
+ &=\langle P(g f_y),f_z P v\rangle_H\\
+ &=\langle P(f_z P(g f_y)),v\rangle_H
+ =\langle v,C_{yzw}\rangle_H.
+\end{aligned}
+\tag{166.7}
+$$
+
+Substitution of (166.5)--(166.7) into the definition of $\ell_{yzw}$ in (134.11) proves (166.3). All pairings are legitimate because $m$ is a probability and every displayed factor is bounded. The simultaneous vanishing of the $64$ coordinates is therefore exactly orthogonality to $W$, which proves (166.4). $\square$
+
+**Corollary 166.3 (the calibrated plane and a successor orbit).** Let
+
+$$
+H_{\mathrm{cal}}=\overline{\operatorname{span}_{\mathbb R}V}^{\,H}.
+\tag{166.8}
+$$
+
+Then $H_{\mathrm{cal}}\subseteq W^\perp$. Equality requires an additional density statement and is not supplied by the finite representer calculation. If a finite $L^2(m)$-representable readout has representers $\psi_1,\ldots,\psi_r$ and its specified successor stack is $R_j=R\circ P^j$, put
+
+$$
+\mathcal C_R=\overline{\operatorname{span}_{\mathbb R}
+\{P^j\psi_k:j\ge0, 1\le k\le r\}}^{\,H}.
+\tag{166.9}
+$$
+
+Then the exact common kernel from Section 165 can be written as
+
+$$
+W_\infty
+ =L^\infty(G,m;\mathbb R)\cap
+ \overline{W+\mathcal C_R}^{\,H\,\perp}.
+\tag{166.10}
+$$
+
+Indeed, (166.4) supplies the condition $v\perp W$, while Proposition 165.2 supplies $v\perp\mathcal C_R$; orthogonality to both closed subspaces is equivalent to orthogonality to the closure of their algebraic sum. Formula (166.10) is an interface identity only. It does not prove that $\mathcal C_R$ is dense in $H_{\mathrm{cal}}$, that $\mathcal C_R$ has a nonzero bounded localized complement, or that the successor action maps $V$ into $V$. It also does not construct a physical successor, a nonlinear residual-zero family, a legal simplex partition, an exact $H43$ partition, a terminal compensator, an $SRS\text{-}20$ or $F_{64}$ witness, or a Lean/kernel theorem.
+
+The deductions (166.1)--(166.10) are source-specific consequences of the original bounded equal-gap readout and the self-adjoint heat contraction. They are not a claim that the representer bridge, the successor orbit, or its physical realization is present in the original model beyond the hypotheses displayed here.
+
+## 追加锚（本行以下为增补区）
+
+## 167. Bounded calibration closure and the finite residual test
+
+Section 166 identifies the first-order calibration plane through bounded $L^2(m)$ representers, but leaves two different questions separate: whether bounded calibrated classes are dense in the Hilbert orthogonal complement, and whether the heat operator preserves that bounded calibrated class. The next propositions close the first logical bridge and reduce the second to a finite residual Gram matrix. They do not evaluate that matrix for the actual 64 representers.
+
+**Definition 167.1 (the bounded calibration space).** Retain all hypotheses and notation of Section 166. Thus $H=L^2(G,m;\mathbb R)$, $W\subset H$ is the finite span of the bounded representers from (166.1), and put
+
+$$
+V_\infty=L^\infty(G,m;\mathbb R)\cap W^\perp.
+\tag{167.1}
+$$
+
+All functions and orthogonality relations are understood as $m$-classes. The finite-dimensionality of $W$ implies that it has a bounded $m$-class basis after removing linear dependencies from the at most $64$ generators.
+
+**Proposition 167.2 (bounded calibrated classes are Hilbert-dense).** With the notation of Definition 167.1,
+
+$$
+\overline{V_\infty}^{\,H}=W^\perp.
+\tag{167.2}
+$$
+
+*Proof.* Let $x\in W^\perp$. Since $m(G)=1$, bounded truncations
+
+$$
+x_n=\max(-n,\min(x,n))
+$$
+
+belong to $L^\infty(G,m;\mathbb R)$ and converge to $x$ in $H$. Let $\Pi_W$ be the orthogonal projection onto $W$. Choose a bounded basis $w_1,\ldots,w_r$ of $W$. The coefficients of $\Pi_Wx_n$ are finite linear combinations of the pairings $\langle x_n,w_i\rangle_H$, so $\Pi_Wx_n\in W\subset L^\infty$. Hence
+
+$$
+v_n=x_n-\Pi_Wx_n\in V_\infty.
+$$
+
+Because $\Pi_Wx=0$ and $\Pi_W$ is a contraction,
+
+$$
+\|v_n-x\|_H
+\le \|x_n-x\|_H+\|\Pi_W(x_n-x)\|_H
+\le 2\|x_n-x\|_H\longrightarrow0.
+$$
+
+Thus $W^\perp\subseteq\overline{V_\infty}^{\,H}$; the reverse inclusion follows from $V_\infty\subseteq W^\perp$. $\square$
+
+**Proposition 167.3 (successor preservation and calibration-plane invariance).** Let $P:H\to H$ be bounded and self-adjoint, and suppose $P(L^\infty(G,m;\mathbb R))\subseteq L^\infty(G,m;\mathbb R)$. Then
+
+$$
+P(V_\infty)\subseteq V_\infty
+\quad\Longleftrightarrow\quad
+P(W)\subseteq W.
+\tag{167.3}
+$$
+
+*Proof.* Assume first that $P(V_\infty)\subseteq V_\infty$. Proposition 167.2 and boundedness of $P$ give $P(W^\perp)\subseteq W^\perp$. If $w\in W$ and $u\in W^\perp$, then self-adjointness gives
+
+$$
+\langle Pw,u\rangle_H=\langle w,Pu\rangle_H=0.
+$$
+
+Therefore $Pw\in(W^\perp)^\perp=W$, proving $P(W)\subseteq W$.
+
+Conversely, let $v\in V_\infty$. The $L^\infty$-preservation hypothesis gives $Pv\in L^\infty$. For $w\in W$, self-adjointness and $P(W)\subseteq W$ give
+
+$$
+\langle Pv,w\rangle_H=\langle v,Pw\rangle_H=0.
+$$
+
+Thus $Pv\in W^\perp$, and hence $Pv\in V_\infty$. $\square$
+
+For the original heat operator, the hypotheses of Proposition 167.3 are inherited: $P=T_d=e^{-dK}$ is bounded self-adjoint on $H$, and the Markov semigroup preserves bounded real functions. Proposition 167.3 is therefore a conditional closure equivalence, not a claim that the actual Section 166 plane is already $P$-invariant.
+
+**Proposition 167.4 (finite residual Gram criterion).** Let $w_1,\ldots,w_r$ be an $H$-independent bounded basis of $W$, and define
+
+$$
+G_{ij}=\langle w_i,w_j\rangle_H,qquad
+K_{ij}=\langle w_i,Pw_j\rangle_H,qquad
+D_{ij}=\langle Pw_i,Pw_j\rangle_H.
+\tag{167.4}
+$$
+
+Then $G$ is positive definite and
+
+$$
+P(W)\subseteq W
+\quad\Longleftrightarrow\quad
+D-K^{\mathsf T}G^{-1}K=0.
+\tag{167.5}
+$$
+
+*Proof.* Let $S:\mathbb R^r\to H$ be the synthesis map $Se_j=w_j$. Then $G=S^*S$, $K=S^*PS$, and $D=(PS)^*PS$. Self-adjointness of $P$ makes $K$ symmetric. The orthogonal projection onto $W$ is
+
+$$
+\Pi_W=SG^{-1}S^*.
+$$
+
+Consequently the matrix on the right of (167.5) is the Gram matrix of the projection residuals:
+
+$$
+D-K^{\mathsf T}G^{-1}K
+ =(PS)^*(I-\Pi_W)PS.
+\tag{167.6}
+$$
+
+It vanishes exactly when every $(I-\Pi_W)Pw_j$ vanishes, which is equivalent to $P w_j\in W$ for each basis vector and hence to $P(W)\subseteq W$. For the original 64 generators one must first pass to an $H$-independent basis (or use the corresponding Moore--Penrose projection); the possibly singular raw 64-by-64 Gram matrix cannot be inverted. $\square$
+
+## 168. Closure boundary and applicability
+
+The density and residual statements above are ordinary Hilbert-space consequences of the inherited probability, bounded representers, self-adjoint heat operator and Markov boundedness. The residual matrix uses exact $m$-pairings; a numerical approximation, the compressed matrix $K$ alone, or the existence of the representer formula does not establish its vanishing.
+
+The current result does not assert $P(W)\subseteq W$ for the concrete Section 166 plane, $P(V_\infty)=V_\infty$, orbit density, a nonzero bounded common-kernel sequence, a physical successor, a nonlinear residual-zero family, a legal simplex or $H43$ partition, a terminal compensator, $SRS\text{-}20$, $F_{64}$, or a Lean/kernel theorem. Those questions require their own exact calculations and realization bridges.
+
+
+
+## 追加锚（本行以下为增补区）
