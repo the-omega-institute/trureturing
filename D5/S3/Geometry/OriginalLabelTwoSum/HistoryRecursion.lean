@@ -1714,6 +1714,7 @@ theorem stepIntactOutput_main_faces (h : MixedHistory n G g) (i : WheelInput g)
     (changeOutput (linkedOutput h i A B hA hB hAB old) r.linked_readback)
   simp only [HistoryIntact.changeOutput_mainPairsOf, X, J] at hf
   convert hf using 1
+  split_ifs <;> congr 12
 
 /-- Literal core list at the actual physical intact terminal.
 The residue-zero expansion consumes the completed ORIGINAL marker readback. -/
@@ -1787,6 +1788,7 @@ theorem stepIntactOutput_core_faces (h : MixedHistory n G g) (i : WheelInput g)
     (changeOutput (linkedOutput h i A B hA hB hAB old) r.linked_readback)
   simp only [HistoryIntact.changeOutput_corePairsOf, X, J] at hf
   convert hf using 1
+  split_ifs <;> congr 12
 
 end IntactOriginalLists
 
@@ -2142,11 +2144,10 @@ def stepOutput (h : MixedHistory n G g) (i : WheelInput g)
                       (HistoryFactors.localResidual g i A B).card := by
                     rw [localResidual_update]
                     rw [residual_pair_erase]
-                    have hbE : b ∈ (HistoryFactors.localResidual g i A B).erase a :=
-                      Finset.mem_erase.mpr ⟨hab.symm,hb⟩
-                    have hca := Finset.card_erase_add_one haV
-                    have hcb := Finset.card_erase_add_one hbE
-                    omega
+                    exact lt_of_le_of_lt
+                      (Finset.card_le_card (Finset.erase_subset _ _))
+                      (Finset.card_erase_lt_of_mem
+                        (show a ∈ HistoryFactors.localResidual g i A B from haV))
                   exact stepOneLeafFrom i A B hA a b haV hb hab d hd leaf
                     (stepOutput h i (A ∪ {a}) (B ∪ {b}) hm.1 hm.2.1 hm.2.2 old)
                 · have second := cases.resolve_left one
