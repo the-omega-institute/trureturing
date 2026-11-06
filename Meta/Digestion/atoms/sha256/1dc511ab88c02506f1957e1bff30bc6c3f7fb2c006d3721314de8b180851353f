@@ -1,0 +1,74 @@
+**Lemma 57.1 (uniform low-energy counting and boundary spectral tails).**
+Decrease $\epsilon_0$ in Lemma 56.2 if necessary. With
+$r_{\kappa,N}=(\Lambda_{\sigma,N}-\xi_\kappa)/h$, one has
+
+$$
+\#\{N:r_{\kappa,N}\le E\}\le C(E+2)
+ \quad(-1\le E\le\epsilon_0/h).
+\tag{57.1}
+$$
+
+If $0<z_0\le z\le z_1<\infty$, the part of the normalized compressed
+spectral sum with $N\ge N_0$ and
+$\Lambda_{\sigma,N}-\xi_\kappa\le\epsilon_0/2$ is bounded by
+
+$$
+\left\|\frac1w\sum_{\substack{N\ge N_0\\
+                  \Lambda_{\sigma,N}-\xi_\kappa\le\epsilon_0/2}}
+ a_{\kappa,N}e^{-zr_{\kappa,N}}J^*P_{\sigma,\kappa,N}J\right\|
+ \le C_{z_0,z_1}e^{-c_{z_0}N_0},\qquad 0\le a_{\kappa,N}\le1.
+\tag{57.2}
+$$
+
+In (57.2) and subsequent spectral sums, $P_{\sigma,\kappa,N}$
+means the rank-one eigenvector projection in an orthonormal full
+eigenbasis, with each basis vector counted once. At every fixed index
+these are the full rank-one spectral projections of Theorem 56.3 for
+small parameters; at a multiple eigenvalue their sum is its full
+spectral projection.
+
+Proof. First use the averaged operator on its exact Fourier sum.
+By (41.6), every nonzero visible pair lies above
+$\xi_\kappa+2\epsilon_0$ for small parameters. In its zero-visible
+block, (56.5) and $b_\kappa\ge m_b>0$ give the comparison, in the
+$y$ chart,
+
+$$
+\frac{\widehat{\mathcal H}-\xi_\kappa}{h}
+ \ge\frac{K_\kappa}{2h}\otimes1
+       +1\otimes\left(-m_b^2\partial_y^2+cm_h(y)\right).
+\tag{57.3}
+$$
+
+The scalar hidden operator has the actual periodic ends. This
+comparison retains the height gap; below $\epsilon_0/h+1$, only the
+height ground can occur on its right side if
+$\epsilon_0<\gamma_*/4$ and $h$ is small. To count the hidden
+operator below $E\ge0$, split its circle at
+$|y|=R=[2(E+1)/c]^{1/2}$ and impose Neumann conditions at the two
+cuts. Decrease $\epsilon_0$ so that $R^2<1/h$ and $R<\pi/\ell$
+for $E\le\epsilon_0/h+1$. On the outer interval
+$cm_h\ge2(E+1)$, so it contributes no such eigenvalue. On the
+inner interval, dropping the nonnegative potential gives the
+Neumann Laplacian on length $2R$, with at most
+$1+2R\sqrt E/(\pi m_b)\le C(E+1)$ eigenvalues below $E$.
+Neumann bracketing and min-max prove the count for the entire
+averaged operator in this range. All frequencies, including arbitrary
+compensating hidden frequencies in nonzero visible pairs, were
+excluded by (41.6), not by a finite Fourier truncation.
+
+The bounded full-form comparison
+$|\Lambda_{\sigma,N}-\widehat\Lambda_{\kappa,N}|\le\delta_\kappa$
+holds at every ordered index. Since $\delta_\kappa/h=o(1)$, the
+same count, with enlarged constants and the indicated small energy
+margin, gives (57.1) for the actual operator. Thus in the range of
+(57.2), $r_{\kappa,N}\ge N/C-2$. Lemma 56.2 bounds the norm of
+each compressed eigenvector outer product divided by $w$ by
+$C\sqrt{r_{\kappa,N}+2}$. Since $r_{\kappa,N}\ge-1$ and
+$\sqrt{r+2}e^{-z r}\le C_{z_0}e^{-z_0r/2}$ for $r\ge0$,
+summing the resulting geometric upper bound, with the finitely many
+negative $r$ values bounded on $[z_0,z_1]$, proves (57.2).
+This is a uniform count and amplitude estimate below a fixed physical
+energy cutoff, not a growing-index conclusion drawn from (41.1).
+$\square$
+

@@ -276,7 +276,7 @@ private theorem support_cofactor_domain {N p : ℕ} (hN : 55440 < N)
     have := Nat.le_of_dvd hpos hb
     omega
 
-private theorem W_first_delta {n p : ℕ} (hn : 1 ≤ n) (hp : p.Prime)
+theorem W_first_delta {n p : ℕ} (hn : 1 ≤ n) (hp : p.Prime)
     (hf : n.factorization p = 0) :
     W (n * p) - W n = Real.log (1 + 1 / (p : ℝ)) := by
   have hd := golden_resource_objective_single_layer_delta 0 hn hp
