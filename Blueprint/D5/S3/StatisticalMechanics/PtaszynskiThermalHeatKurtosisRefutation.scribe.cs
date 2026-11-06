@@ -35,7 +35,9 @@ internal sealed class PtaszynskiThermalHeatKurtosisRefutationDocument : IScribeD
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "Take six alternating energy levels (0, 1, 0, 1, 0, 1), with inverse temperatures log 2 and log 8. The first bath joins each consecutive low–high pair with forward rates (1, 6, 6) and reverse rates (2, 12, 12). The second bath joins each high level to the next low level cyclically with downhill rate 8 and reverse rate 1. Counting the second bath gives det(z I − W(t)) = 63504 z + 50202 z² + 13968 z³ + 1507 z⁴ + 66 z⁵ + z⁶ − 18432(exp(3t) − 1) − 288(exp(−3t) − 1). Every branch supplied by the assertion has second derivative 3581/2401 and fourth derivative −113056891/1129900996 at zero. Their ratio is −113056891/1685204276, contradicting nonnegativity. The proof uses the asserted existence of a branch and its characteristic-root equation; it does not separately establish existence or identify a Perron eigenvalue."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ptkurt2204"), ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         AssessedProvenance provenance) => Describe.Lean(

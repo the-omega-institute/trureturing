@@ -70,6 +70,10 @@ $$\neg (\forall N \in \mathbb{N},\; (\forall L \in \mathbb{N},\; (\forall E \in 
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/PtaszynskiThermalHeatKurtosisRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ptkurt2204` (refuted) by `D5/S3/StatisticalMechanics/PtaszynskiThermalHeatKurtosisRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ptkurt2204","declaration_gid":"D5/S3/StatisticalMechanics/PtaszynskiThermalHeatKurtosisRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Krzysztof Ptaszyński (2022). *Bounds on skewness and kurtosis of steady state currents*. DOI: [10.48550/arXiv.2204.08421](https://doi.org/10.48550/arXiv.2204.08421). URL: <https://arxiv.org/abs/2204.08421v4>.
