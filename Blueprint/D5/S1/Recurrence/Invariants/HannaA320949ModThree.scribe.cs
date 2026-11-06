@@ -8,7 +8,7 @@ internal sealed class HannaA320949ModThreeDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Recurrence/Invariants/HannaA320949ModThree.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/IntegerSequences/hanna2018a320949");
+        LibraryNoteRef.Create("D5/L/ArithUnits/hanna2018a320949");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The OEIS A320949 coefficientwise generating equation has a rational solution whose positive coefficients are all divisible by three.",
