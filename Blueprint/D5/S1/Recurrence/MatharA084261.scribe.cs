@@ -9,7 +9,7 @@ internal sealed class MatharA084261Document : IScribeDocumentDefinition
     private const string Prefix =
         "D5/S1/Recurrence/MatharA084261.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/RecurrenceComposition/mathar2012a084261");
+        LibraryNoteRef.Create("D5/L/Factorization/mathar2012a084261");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The literal even-index binomial-factorial sum satisfies Mathar's recurrence at every natural index at least three.",

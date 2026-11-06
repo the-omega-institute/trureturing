@@ -77,6 +77,7 @@ recurrence residual would contradict `D5/S1/Recurrence/MatharA084261.result`.
 
 The mathematical source is `D5/S1/Recurrence/MatharA084261.lean`; its included
 surface is exactly `a : Nat -> Nat`, `claim : Prop`, and `result : claim`.
+The literature source note is `Library/Factorization/mathar2012a084261.md`.
 The canonical frozen member is
 `Golden/Frozen/state/D5/S1/Recurrence/MatharA084261.lean.json`, with module
 `statement_id`
