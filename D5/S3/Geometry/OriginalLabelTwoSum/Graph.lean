@@ -13,6 +13,8 @@ import Mathlib.Combinatorics.SimpleGraph.Star
 chord coverage. Its rows are COMPUTED from unique paths. The general edge-2-sum
 spanning-tree/path-substitution theorem is NOT asserted in this module. -/
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Set Finset SimpleGraph
 namespace D5.S3.Geometry.OriginalLabelTwoSum
 
@@ -22,16 +24,16 @@ private def rimEnds (i : Fin 4) : Label × Label :=
   ![(1,2),(2,3),(3,4),(4,1)] i
 private def rim : SimpleGraph Label where
   Adj x y := ∃ i : Fin 4, s(x,y) = s((rimEnds i).1,(rimEnds i).2)
-  symm := by
+  symm := ⟨by
     intro x y h
     obtain ⟨i,hi⟩ := h
-    exact ⟨i,Sym2.eq_swap.trans hi⟩
-  loopless := by
+    exact ⟨i,Sym2.eq_swap.trans hi⟩⟩
+  loopless := ⟨by
     intro x hx
     obtain ⟨i,hi⟩ := hx
     have : ∀ x : Label, ∀ i : Fin 4,
         s(x,x) ≠ s((rimEnds i).1,(rimEnds i).2) := by decide
-    exact this x i hi
+    exact this x i hi⟩
 
 /-- Actual hub-star/rim-interface wheel. The marked e is rim edge 1--2, not a
 spoke or a coordinate of this right tree. -/
@@ -73,16 +75,17 @@ private def rimPath (i : Fin 4) :
       exact (by decide : ∀ i : Fin 4, (0 : Label) ≠ (rimEnds i).2) i)) .nil)
 
 private theorem rimPath_isPath (i : Fin 4) : (rimPath i).IsPath := by
-  fin_cases i <;> simp [rimPath,rimEnds,SimpleGraph.Walk.cons_isPath_iff]
+  fin_cases i <;> simp [rimPath,rimEnds,SimpleGraph.Walk.isPath_def]
 
 /-- These are path-derived rows, not an input equation. -/
 theorem fundamental_rows : ∀ i : Fin 4,
     wheelGraphData.rows.row i = ![{1,2},{2,3},{3,4},{4,1}] i := by
   intro i
   have hp := wheelGraphData.path_eq i (rimPath i) (rimPath_isPath i)
-  change Y.filter (fun k => s(0,k) ∈ (wheelGraphData.path i).edges) = _
+  ext k
+  simp only [GraphData.rows, Finset.mem_filter]
   rw [hp]
-  fin_cases i <;> decide
+  fin_cases i <;> fin_cases k <;> decide
 
 /-- Deleting the ACTUAL interface chord row gives E; the full root is A1. -/
 theorem wheelOriginalRoot :
@@ -93,13 +96,19 @@ theorem wheelOriginalRoot :
     intro s
     change (∃ i : Fin 4, s ⊆ Y \ wheelGraphData.rows.row i) ↔ s ∈ A1
     simp_rw [hr]
-    exact (by decide : ∀ s : Finset Label,
+    exact (by
+      simp only [A1, E, Z, Y, delta, facets, LowerSet.mem_mk,
+        LowerSet.mem_sup_iff, Set.mem_setOf_eq]
+      decide : ∀ s : Finset Label,
       (∃ i : Fin 4, s ⊆ Y \ (![{1,2},{2,3},{3,4},{4,1}] i)) ↔ s ∈ A1) s
   · apply SetLike.ext
     intro s
     change (∃ i : {i : Fin 4 // i ≠ 0}, s ⊆ Y \ wheelGraphData.rows.row i.1) ↔ s ∈ E
     simp_rw [hr]
-    exact (by decide : ∀ s : Finset Label,
+    exact (by
+      simp only [A1, E, Z, Y, delta, facets, LowerSet.mem_mk,
+        LowerSet.mem_sup_iff, Set.mem_setOf_eq]
+      decide : ∀ s : Finset Label,
       (∃ i : {i : Fin 4 // i ≠ 0},
         s ⊆ Y \ (![{1,2},{2,3},{3,4},{4,1}] i.1)) ↔ s ∈ E) s
 
@@ -166,16 +175,19 @@ theorem seedOriginalRoot : seedGraphData.rows.root = root := by
   have hr : ∀ i : Fin 3, seedGraphData.rows.row i = ![{0,1},{1,2},{0,2}] i := by
     intro i
     have hpath : (chordPath i).IsPath := by
-      fin_cases i <;> simp [chordPath,ends,SimpleGraph.Walk.cons_isPath_iff]
+      fin_cases i <;> simp [chordPath,ends,SimpleGraph.Walk.isPath_def]
     have hp := seedGraphData.path_eq i (chordPath i) hpath
-    change Finset.univ.filter (fun k => s(0,spoke k) ∈ (seedGraphData.path i).edges) = _
+    ext k
+    simp only [GraphData.rows, Finset.mem_filter]
     rw [hp]
-    fin_cases i <;> decide
+    fin_cases i <;> fin_cases k <;> decide
   apply SetLike.ext
   intro s
   change (∃ i : Fin 3, s ⊆ Finset.univ \ seedGraphData.rows.row i) ↔ s ∈ root
   simp_rw [hr]
-  exact (by decide : ∀ s : Finset SeedLabel,
+  exact (by
+    simp only [root, facets, LowerSet.mem_mk, Set.mem_setOf_eq]
+    decide : ∀ s : Finset SeedLabel,
     (∃ i : Fin 3, s ⊆ Finset.univ \ (![{0,1},{1,2},{0,2}] i)) ↔ s ∈ root) s
 
 def seedGraphCertificate : Certificate seedGraphData.rows.ground seedGraphData.rows.root where

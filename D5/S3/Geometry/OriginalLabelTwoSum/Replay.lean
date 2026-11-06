@@ -361,6 +361,7 @@ private theorem replayBranchPairs_faces
         dif_neg (not_not.mpr heU), dif_neg heL, dif_pos heA]
       rw [← hgamma heA]
       simp only [orderedPairs, orderedPair, List.map_map]
+      rfl
   · simp only [replayBranchPairs, replayFacePairs, orderedPair, heU,
       not_false_eq_true, if_true, dite_true]
     apply congrArg (fun f => List.map f _)
