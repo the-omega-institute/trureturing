@@ -6,6 +6,8 @@ Closed-window complex Gaussian cancellation with explicit lower and upper tails.
 
 For w>0 the Gaussian measure has mean 2*w^2 and variance w^2/2. In this unit w=H+20. The complex frequency is -a+i*gamma. Every interval below is closed at both window endpoints.
 
+The existing lower_tail, upper_tail and integral_three_intervals helpers are now public for direct reuse by SignedGaussianEndpoint.window_mass. Their proof bodies and hypotheses are unchanged; this visibility change adds no new Gaussian cancellation mathematics.
+
 **Theorem 1.1 (The full transform and both discarded tails).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/GaussianWindow.truncated_gaussian_cancellation`
