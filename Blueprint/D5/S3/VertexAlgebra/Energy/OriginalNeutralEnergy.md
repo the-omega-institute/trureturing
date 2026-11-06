@@ -10,7 +10,7 @@ The private original_word_energy_le is the complete induction on literal origina
 
 The polynomial constant is 1+sum_e |coeff(p,e)|*K(occurrences(e)), positive also when p=0. Weighted homogeneity and the literal polynomial field expansion give the fixed-grade neutral bound. The private energy_bound_of_grades uses exact Hm orthogonality of distinct actual Sugawara grades and finite grade projections. Distinct shifted output energies remain orthogonal, so the full finite mixed-state estimate has no input-support multiplier. OriginalNeutralEnergy retains the unchanged private original_neutral_energy_le; OriginalChargedEnergy consumes it to prove its existing public neutral bound and consumes the grade estimate and recombination in the charged bound.
 
-All declarations here are moved consumed private proof components, without public wrappers, standalone novelty or a new public-theorem registration target. The existing typed Reg mirror remains at Lattice/OriginalChargedEnergy: charged is declared_validated; the neutral IE-C050 incomplete_closure at E8.serialization of DependentFamily.Arena.mk remains disclosed under issue #27260. Existing source suppliers retain their Bakalov-Kac, Matsuo-Nagatomo, Carnahan and Mathlib attributions. Smeared fields, closability, strong locality, full string theory and AdS/CFT remain separate obligations.
+All declarations here are moved consumed private proof components, without public wrappers, standalone novelty or a new public-theorem registration target. Existing source suppliers retain their Bakalov-Kac, Matsuo-Nagatomo, Carnahan and Mathlib attributions. Smeared fields, closability, strong locality, full string theory and AdS/CFT remain separate obligations.
 
 ## References
 
