@@ -696,9 +696,11 @@ private theorem block_floors (r j : ℕ) (hj : j < degree r) :
       have hn3 : j = degree r-3 := by dsimp [degree] at *; omega
       have hn1 : j ≠ degree r-1 := by dsimp [degree] at *; omega
       simp only [hs,hz] at hL hM ⊢
-      norm_num [hn1,hn2,hn3] at he ⊢
+      simp only [if_neg hn1,if_neg hn2,if_pos hn3]
+      norm_num at he ⊢
       refine ⟨?_,?_,?_,?_,?_,?_⟩ <;>
-        apply floor_unique (by omega) <;> nlinarith only [hL,hM,he,hb]
+        apply floor_unique (lt_of_lt_of_le (by norm_num : (0 : ℤ) < 4096) hb) <;>
+          linarith only [hL,hM,he,hb]
     · have he := hshift 2 (by omega)
       have hjm : j%18=10 := by dsimp [degree] at hj2; omega
       have hs : s19 j=17 := by norm_num [s19,hjm]
@@ -707,9 +709,11 @@ private theorem block_floors (r j : ℕ) (hj : j < degree r) :
       have hn3 : j ≠ degree r-3 := by dsimp [degree] at *; omega
       have hn1 : j ≠ degree r-1 := by dsimp [degree] at *; omega
       simp only [hs,hz] at hL hM ⊢
-      norm_num [hn1,hn2,hn3] at he ⊢
+      simp only [if_neg hn1,if_pos hn2,if_neg hn3]
+      norm_num at he ⊢
       refine ⟨?_,?_,?_,?_,?_,?_⟩ <;>
-        apply floor_unique (by omega) <;> nlinarith only [hL,hM,he,hb]
+        apply floor_unique (lt_of_lt_of_le (by norm_num : (0 : ℤ) < 4096) hb) <;>
+          linarith only [hL,hM,he,hb]
     · have he := hshift 1 (by omega)
       have hjm : j%18=11 := by dsimp [degree] at hj1; omega
       have hs : s19 j=15 := by norm_num [s19,hjm]
@@ -718,9 +722,11 @@ private theorem block_floors (r j : ℕ) (hj : j < degree r) :
       have hn3 : j ≠ degree r-3 := by dsimp [degree] at *; omega
       have hn1 : j = degree r-1 := by dsimp [degree] at *; omega
       simp only [hs,hz] at hL hM ⊢
-      norm_num [hn1,hn2,hn3] at he ⊢
+      simp only [if_pos hn1,if_neg hn2,if_neg hn3]
+      norm_num at he ⊢
       refine ⟨?_,?_,?_,?_,?_,?_⟩ <;>
-        apply floor_unique (by omega) <;> nlinarith only [hL,hM,he,hb]
+        apply floor_unique (lt_of_lt_of_le (by norm_num : (0 : ℤ) < 4096) hb) <;>
+          linarith only [hL,hM,he,hb]
 
 private theorem mask_turn_mod {k : ℕ} (hk : 2 ≤ k) (a : ℕ) (ha : a < k)
     (A : Finset (Fin k)) :
@@ -990,17 +996,17 @@ private theorem actual_profile (r h : ℕ) (hh : h<3*degree r) :
 
 /-- The zero locations of the proved profile. The endpoint clauses include r=0. -/
 private def zeroAt (r h : ℕ) : Prop :=
-  (h<degree r ∧ h%18≠4 ∧ h%18≠13 ∧ h≠degree r-1) ∨
-  (degree r≤h ∧ h<2*degree r ∧
+  if h<degree r then h%18≠4 ∧ h%18≠13 ∧ h≠degree r-1
+  else if h<2*degree r then
     ((h-degree r)%18=0 ∨ (h-degree r)%18=1 ∨ (h-degree r)%18=2 ∨
      (h-degree r)%18=3 ∨ (h-degree r)%18=5 ∨ (h-degree r)%18=6 ∨
      (h-degree r)%18=8 ∨ (h-degree r)%18=13 ∨ (h-degree r)%18=16 ∨
-     h=2*degree r-3)) ∨
-  (2*degree r≤h ∧ h<3*degree r ∧
+     h=2*degree r-3)
+  else h<3*degree r ∧
     ((h-2*degree r)%18=0 ∨ (h-2*degree r)%18=1 ∨ (h-2*degree r)%18=2 ∨
      (h-2*degree r)%18=7 ∨ (h-2*degree r)%18=12 ∨ (h-2*degree r)%18=13 ∨
      (h-2*degree r)%18=14 ∨ (h-2*degree r)%18=15 ∨ (h-2*degree r)%18=17 ∨
-     h=3*degree r-2 ∨ h=3*degree r-1))
+     h=3*degree r-2 ∨ h=3*degree r-1)
 
 private theorem phase0_zero (r j : ℕ) (hj : j<degree r) :
     F0 j-(if j=degree r-1 then 1 else 0)=0 ↔
@@ -1009,7 +1015,7 @@ private theorem phase0_zero (r j : ℕ) (hj : j<degree r) :
   rw [h0]
   have hq : j%18<18 := Nat.mod_lt _ (by norm_num)
   dsimp [degree] at *
-  interval_cases hqeq : j % 18 <;> norm_num [P0,hqeq] <;> split_ifs <;> omega
+  interval_cases hqeq : j % 18 <;> norm_num [P0,hqeq] <;> (try split_ifs) <;> norm_num <;> omega
 
 private theorem phase1_zero (r j : ℕ) (hj : j<degree r) :
     F1 j+(if j=degree r-3 then 1 else 0)=0 ↔
@@ -1019,7 +1025,7 @@ private theorem phase1_zero (r j : ℕ) (hj : j<degree r) :
   rw [h1]
   have hq : j%18<18 := Nat.mod_lt _ (by norm_num)
   dsimp [degree] at *
-  interval_cases hqeq : j % 18 <;> norm_num [P1,hqeq] <;> split_ifs <;> omega
+  interval_cases hqeq : j % 18 <;> norm_num [P1,hqeq] <;> (try split_ifs) <;> norm_num <;> omega
 
 private theorem phase2_zero (r j : ℕ) (hj : j<degree r) :
     F2 j-(if j=degree r-2 then 1 else 0)-(if j=degree r-1 then 1 else 0)=0 ↔
@@ -1029,20 +1035,20 @@ private theorem phase2_zero (r j : ℕ) (hj : j<degree r) :
   rw [h2]
   have hq : j%18<18 := Nat.mod_lt _ (by norm_num)
   dsimp [degree] at *
-  interval_cases hqeq : j % 18 <;> norm_num [P2,hqeq] <;> split_ifs <;> omega
+  interval_cases hqeq : j % 18 <;> norm_num [P2,hqeq] <;> (try split_ifs) <;> norm_num <;> omega
 
 private theorem profile_zero (r h : ℕ) (hh : h<3*degree r) :
     profile r h=0 ↔ zeroAt r h := by
   by_cases h0 : h<degree r
-  · rw [profile,if_pos h0,phase0_zero r h h0]
-    dsimp [zeroAt,degree] at *
-    omega
+  · rw [profile,if_pos h0,zeroAt,if_pos h0,phase0_zero r h h0]
   · by_cases h1 : h<2*degree r
-    · rw [profile,if_neg h0,if_pos h1,phase1_zero r (h-degree r) (by omega)]
-      dsimp [zeroAt,degree] at *
+    · rw [profile,if_neg h0,if_pos h1,zeroAt,if_neg h0,if_pos h1,
+        phase1_zero r (h-degree r) (by omega)]
+      dsimp [degree] at *
       omega
-    · rw [profile,if_neg h0,if_neg h1,phase2_zero r (h-2*degree r) (by omega)]
-      dsimp [zeroAt,degree] at *
+    · rw [profile,if_neg h0,if_neg h1,zeroAt,if_neg h0,if_neg h1,
+        phase2_zero r (h-2*degree r) (by omega)]
+      dsimp [degree] at *
       omega
 
 private theorem actual_zero_profile (r h : ℕ) :
@@ -1122,9 +1128,12 @@ theorem actual_zero_family_rotation_iff (r a : ℕ) :
       have h1 := hz (h+1)
       have h2 := hz (h+2)
       have h3 := hz (h+3)
-      dsimp [marker]
-      simp only [Nat.add_assoc,Nat.add_comm,Nat.add_left_comm] at hp h0 h1 h2 h3 ⊢
-      tauto
+      unfold marker
+      refine and_congr ?_ (and_congr h0 (and_congr ?_ (and_congr ?_ ?_)))
+      · exact not_congr (by simpa only [Nat.add_right_comm] using hp)
+      · simpa only [Nat.add_right_comm] using h1
+      · simpa only [Nat.add_right_comm] using h2
+      · exact not_congr (by simpa only [Nat.add_right_comm] using h3)
     have hm0 : marker r (2*degree r) :=
       (unique_marker r _ (by omega)).mpr rfl
     have hm1 := (hmarker (2*degree r)).mpr hm0
