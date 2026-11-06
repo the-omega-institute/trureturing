@@ -31,7 +31,6 @@ import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 import Mathlib.Topology.Separation.CompletelyRegular
-import MathlibExt.Dynamics.Ergodic.Birkhoff
 import D5.S3.Analytic.Probability.BirkhoffPointwise
 
 set_option autoImplicit false
