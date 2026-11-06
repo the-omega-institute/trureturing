@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA228502Kings
    generality: I
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA228502Kings
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA228502Kings.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA228502Kings.finite_certificate
    digest: Four-column king configurations satisfy the Hardin-Barker formulas. -/
@@ -29,10 +29,10 @@ count_eq_v: proof_shape=content; consumers=counting_bridge
 total: proof_shape=bind-only; consumers=counting_bridge, total_recurrence, initial
 board_iff: proof_shape=bind-only; consumers=counting_bridge
 counting_bridge: proof_shape=content; consumers=initial, recurrence
-finite_certificate: proof_shape=content; consumers=vector_recurrence
-vector_recurrence: proof_shape=content; consumers=total_recurrence
-total_recurrence: proof_shape=content; consumers=recurrence
-initial: proof_shape=content; consumers=generating_function
+finite_certificate: proof_shape=bind-only; consumers=vector_recurrence
+vector_recurrence: proof_shape=bind-only; consumers=total_recurrence
+total_recurrence: proof_shape=bind-only; consumers=recurrence
+initial: proof_shape=bind-only; consumers=generating_function
 recurrence: proof_shape=content; consumers=generating_function, result
 generating_function: proof_shape=content; consumers=result
 result: proof_shape=content; consumers=terminal result
