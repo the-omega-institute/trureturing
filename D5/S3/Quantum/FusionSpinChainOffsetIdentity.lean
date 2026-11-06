@@ -6,6 +6,10 @@
    utility: none
    digest: The Fibonacci fusion-chain dimension has an exact integer offset identity. -/
 
+/- Escape audit unfinished under https://github.com/the-omega-institute/trureturing/issues/27348:
+   the delivered head has DTR-Unregistered/DTR-Undeclared readings and makes no
+   declared_validated claim. -/
+
 import Mathlib
 
 set_option autoImplicit false
