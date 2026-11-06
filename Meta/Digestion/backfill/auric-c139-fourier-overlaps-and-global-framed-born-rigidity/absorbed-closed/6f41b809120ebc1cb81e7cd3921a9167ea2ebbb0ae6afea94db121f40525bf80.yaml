@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:6f41b809120ebc1cb81e7cd3921a9167ea2ebbb0ae6afea94db121f40525bf80
   normalized_sha256: sha256:6f41b809120ebc1cb81e7cd3921a9167ea2ebbb0ae6afea94db121f40525bf80
 cas_ref: sha256:6f41b809120ebc1cb81e7cd3921a9167ea2ebbb0ae6afea94db121f40525bf80
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Tomography/C139FourierOverlapRigidity.nine_phase_probes_recover_cross_term
+    target_statement_id: sha256:2943225a39bbfb6c1b66d0f01e77f199f271a1ffad275335837233a89ccab9d4
 receipts:
   unresolved_subitems: []
