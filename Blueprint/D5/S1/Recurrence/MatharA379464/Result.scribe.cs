@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence.MatharA379464;
 internal sealed class MatharA379464ResultDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Recurrence/MatharA379464/Result.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/RecurrenceComposition/mathar2025a379464");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/FiniteGeometry/mathar2025a379464");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The literal OEIS A379464 path count satisfies the eight-term recurrence.", H("The A379464 recurrence"),

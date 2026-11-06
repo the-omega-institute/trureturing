@@ -8,7 +8,7 @@ internal sealed class MatharA379464CountingDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Words/LatticePaths/MatharA379464Counting.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/RecurrenceComposition/mathar2025a379464");
+        LibraryNoteRef.Create("D5/L/FiniteGeometry/mathar2025a379464");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Literal path counting and optional-letter insertion for OEIS A379464.",
