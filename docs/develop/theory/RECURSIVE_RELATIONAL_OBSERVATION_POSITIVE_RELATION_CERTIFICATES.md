@@ -3048,13 +3048,23 @@ were physically read.  A dictionary is a set of acquired words; it is not
 an inferred mask and does not replace any $m_j$.  We call $K$
 
 * **support-exhausting** when $|X(K)|=72$ and $|Y(K)|=243$;
-* **field-singleton** when, for every $j$,
+* **native-singleton** when, after support exhaustion, set
 
   $$
-  C_j(K)=\{(x,y)\in X(K)\times Y(K):
+  \mathcal V(K)=\{g'\in\mathcal G_\theta:
+      \text{the indexed rectangles of }g'\text{ contain }K\},
+  \tag{PCR.2502}
+  $$
+
+  and require, for every $j$,
+
+  $$
+  C_j^{\mathrm{nat}}(K)=\{(x,y)\in X(K)\times Y(K):
+       \exists g'\in\mathcal V(K),
+       (x,y)\in\mathcal E_{g'},
        x|_{m_j\cap L}=d_j|_{m_j\cap L},
        y|_{m_j\cap R}=d_j|_{m_j\cap R}\}
-  \tag{PCR.2502}
+  \tag{PCR.2503}
   $$
 
   is a singleton.
@@ -3064,7 +3074,7 @@ $\delta_j(K)=(x_j,y_j)$, and put
 
 $$
 D(K)=\{\delta_j(K):1\le j\le q\},
-\tag{PCR.2503}
+\tag{PCR.2504}
 $$
 
 with multiplicity removed only for the positive-certificate test.  The
@@ -3078,7 +3088,7 @@ same acquired records.  Then
 $$
 \lambda'(A)=X(K)=\lambda(A),\qquad
 \varrho'(T)=Y(K)=\varrho(T).
-\tag{PCR.2504}
+\tag{PCR.2505}
 $$
 
 Proof.  If $x\in X(K)$, it is the completely read left field of one
@@ -3090,31 +3100,31 @@ has been supplied; the conclusion uses only the full words already
 present in the two dictionaries and the declared injectivity. $\square$
 
 **Lemma 25.3 (the indexed erasure bridge).** Let $K$ be attained by a
-generator $g$, support-exhausting and field-singleton.  Then every
+generator $g$, support-exhausting and native-singleton.  Then every
 generator $g'$ compatible with $K$ contains every decoded pair in
 $D(K)$:
 
 $$
 D(K)\subseteq\mathcal E_{g'}.
-\tag{PCR.2505}
+\tag{PCR.2506}
 $$
 
 In particular, if the full positive recognizer of Definition 1.2 accepts
 $D(K)$, all compatible generators have the same $1944$-edge target.
 
 Proof.  The actual pair at index $j$ belongs to $X(K)\times Y(K)$ and
-has the acquired restrictions, so it lies in $C_j(K)$.  By the
-singleton condition it is $\delta_j(K)$.  A compatible $g'$ also has
-the same restrictions; Lemma 25.2 gives the same two label images, and
-the singleton condition again puts its positive pair at the same
-$\delta_j(K)$.  Hence (PCR.2505).  Definition 1.2 enumerates every
+has the acquired restrictions, so it lies in $C_j^{\mathrm{nat}}(K)$.
+By the singleton condition it is $\delta_j(K)$.  A compatible $g'$ is
+one of the generators quantified in (PCR.2502), so its positive pair at
+index $j$ also lies in the same singleton.  Hence (PCR.2506).
+Definition 1.2 enumerates every
 full injection on these two images on both supported branches and tests
 target equality.  Its acceptance therefore applies to all of
 $\mathcal G_\theta$, not merely to the coding class used to attain the
 cache. $\square$
 
 The lemma is deliberately weaker than completing a mask.  A missing bit
-may be logically forced by (PCR.2502), while the original $m_j$, the
+may be logically forced by (PCR.2503), while the original $m_j$, the
 unread value, and its indexed position stay unchanged.  If a cylinder is
 not a singleton, the record remains a proper partial record and no
 decoded pair is entered in $D(K)$.  Thus the construction does not
@@ -3148,7 +3158,7 @@ choice of mask and not a random seed.
 For a fixed branch $i$, call an actual full injection **dictionary-$q$
 attaining** when there is an ordered positive event of $q$ original
 samples such that the resulting cache is support-exhausting and
-field-singleton, and the decoded set $D(K)$ is accepted by the exact
+native-singleton, and the decoded set $D(K)$ is accepted by the exact
 full positive recognizer against all supported competitors.  Denote the
 two classes by $\mathfrak C_0^{417}$ and $\mathfrak C_1^{332}$.  This
 is an observable finite condition on acquired words and the public source
@@ -3169,7 +3179,7 @@ connected spanning component witnesses of §3, then use eight separately
 indexed repeats.  In the $G_0$ realization, order the $417$ chosen
 incidences by the four affine direction classes and then by their literal
 lifts.  The type-level incidence table has respectively $72$ and
-$243$ distinct acquired words; applying (PCR.2502) to that table gives
+$243$ distinct acquired words; applying (PCR.2503) to that table gives
 singleton cylinders at every displayed index, and the decoded pairs pass
 Definition 1.2.  This is a finite check on $36+27$ or $9$ quotient
 types and their capacities, not an enumeration of the factorial family
@@ -3188,7 +3198,7 @@ class and require the first $q_i$ iid prepared slots to equal it.  Each
 specified slot has probability $1/1944$, so the event has probability
 $1944^{-q_i}$; all later slots are unrestricted.  The acquired
 dictionary is computed from the records with the indicated full field,
-and field-singleton decoding gives (PCR.2503).  Lemma 25.3 and the exact
+and native-singleton decoding gives (PCR.2504).  Lemma 25.3 and the exact
 recognizer then force the common target.  The controller does not inspect
 the hidden source, choose an edge, or request a new sample.  A positive
 event is not a guaranteed finite success of the random preparation. $\square$
@@ -3207,7 +3217,7 @@ unrestricted optimum over arbitrary partial caches.
 
 **Definition 27.1 (full-field dictionary/$K_{3,10}$ class).** A
 $G_1$ cache belongs to $\mathfrak K_{3,10}^{332}$ when it has the
-support-exhausting and field-singleton properties of §25, its decoded
+support-exhausting and native-singleton properties of §25, its decoded
 positive pairs contain a $K_{3,10}$ in one component, and its distinct
 distinct decoded pairs contain a connected spanning subgraph on all eight left
 and twenty-seven right labels in each of the nine components.  The
@@ -3251,7 +3261,7 @@ eight required tail occurrences.  The indexed-tail requirement costs at
 least eight additional records, even when their decoded pair is a
 repeat.  Hence $q\ge324+8=332$.  The construction in §26 has exactly
 the $324$ distinct pairs and exactly those eight indexed repeats; its
-field-singleton check and Lemma 25.3 give the matching upper bound.  No
+native-singleton check and Lemma 25.3 give the matching upper bound.  No
 claim follows for a cache that drops the full-field dictionary, omits the
 $K_{3,10}$ source separation, or forgets original indices. $\square$
 
