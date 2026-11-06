@@ -1,0 +1,46 @@
+**Theorem 6.1 (every actual choice has zero microscopic profile).** Suppose an actually admitted fixed datum satisfying the stated antecedents has $C_{\rm resp}>0$. For every prescribed sequence $s_n\downarrow0$ and every actual normalized complex ground-state choice in $D(S)$, the zero-extended vectors $F_s=\mathcal U_s\psi_s$ and $f_s=\mathcal T_sF_s$ satisfy
+
+$$
+\begin{aligned}
+F_s&\rightharpoonup0&&\text{globally in }L^2,\qquad
+&F_s&\to0&&\text{in }L^2(K)\text{ for every compact }K,\\
+f_s&\rightharpoonup0&&\text{globally in }L^2,
+&f_s&\to0&&\text{in }L^2(K)\text{ for every compact }K,\\
+\int U_s|F_s|^2&\to0,&\int V|F_s|^2&\to0,\\
+\|XF_s\|_2^2&\to0,&\|Y_sF_s\|_2^2&\to0,&b[f_s]&\to0,\\
+\operatorname{dist}_{L^2}(F_s,\mathcal O_c)&\to\sqrt2,&
+\operatorname{dist}_{L^2}(f_s,\mathcal O_c)&\to\sqrt2,&
+\mathcal O_c&=\{e^{i\theta}p:\theta\in\mathbb R\}.
+\end{aligned}
+\tag{6.1}
+$$
+
+Every vector still has norm one. In native variables the exact consequences include
+
+$$
+\begin{aligned}
+\int_{\Xi_s(K)\cap\mathcal C}|\psi_s|^2dY&\to0
+       &&\text{for every fixed compact }K\subset\mathbb R^4,\\
+s^5\int W_{s^2}|\psi_s|^2dY&\to0,&
+s^2\bigl(\|S^{1/2}\psi_s\|_2^2+\lambda\bigr)&\to0.
+\end{aligned}
+\tag{6.2}
+$$
+
+The limits hold for every chosen actual family as $s\downarrow0$, in the sequencewise sense just stated. They assert no replacement mass-carrying scale or normalized replacement profile.
+
+Proof. Every weak actual cluster has the form $cp$. Pass further to a convergent energy subsequence by Lemma 4.2. The limit $L$ is nonpositive. Theorem 5.1 and $C_{\rm resp}>0$ force $c=0$. If a fixed global $L^2$ pairing did not tend to zero, a witnessing subsequence would have a weakly convergent further subsequence with a nonzero pairing, a contradiction. The inherited native local compactness gives the same argument for every compact local $L^2$ norm. Hence the global weak and local strong assertions hold for the entire prescribed actual sequence.
+
+For the potential, (2.9) and the unit norm reduce the problem to $V$. On a fixed compact set use local strong convergence. On its complement use the decaying supremum of $V$ from (2.8) and $\|F_s\|_2=1$. Take $s\to0$ first, then exhaust by compacts. This proves both potential limits in (6.1), equivalently $\|U_s^{1/2}F_s\|_2\to0$ and $\|V^{1/2}F_s\|_2\to0$. Equation (4.9), bounded $E_s$ and these limits imply $b_s[F_s]\to0$. Its two terms are nonnegative, so they vanish separately. Equation (4.11) gives $b[f_s]\to0$.
+
+For unit vectors, the exact identity
+
+$$
+\operatorname{dist}(F_s,\mathcal O_c)^2=2-2|\langle p,F_s\rangle|
+\tag{6.3}
+$$
+
+and the weak limit give distance $\sqrt2$. Strong convergence of $\mathcal T_s^*$ gives the sheared weak limit. For each compact $K$, the images $\mathscr L_s(K)$ lie in one fixed larger compact for small $s$; the determinant-one change of variables bounds the local norm of $f_s$ by that of $F_s$ there. This proves its local strong limit, and (6.3) applies to $f_s$ as well.
+
+Finally unitarity, (2.1) and (2.2) give (6.2) exactly. A failure for any chosen family at small $s$ would supply a prescribed sequence contradicting the statements proved above. Since all norms remain one, the weak/local limit zero is not global strong convergence to zero. Nor does division of $b_s[F_s]=o(1)$ by $s^2$ prove vanishing unscaled native kinetic energy. The local disappearance refers to fixed microscopic compacts, not every fixed unscaled source neighbourhood. $\square$
+

@@ -1,0 +1,53 @@
+The classical overlap and its applicability boundaries are as follows.
+
+- G. Teschl, *Mathematical Methods in Quantum Mechanics*, GSM 99,
+  [author text](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf),
+  Theorems 4.10, 5.11 and 6.24 supply respectively form-domain
+  min-max, the semibounded selfadjoint Trotter formula and closed
+  bounded-multiplier perturbations. All perturbations used here are
+  bounded at each fixed parameter, with relative form bound zero.
+  Compact resolvent and the domains are explicitly supplied above
+  before min-max is applied. The one-dimensional oscillator in
+  §8.3, (8.35)--(8.41), supplies its Hermite eigenvalues and normalized
+  Gaussian; the new task is its earned native correspondence.
+- B. Simon, *Semiclassical Analysis of Low Lying Eigenvalues. I.
+  Non-degenerate Minima: Asymptotic Expansions*, Ann. Inst. H.
+  Poincaré A 38 (1983), 295--308,
+  [§1, (A1)--(A4), Theorem 1.1](https://www.numdam.org/item/AIHPA_1983__38_3_295_0.pdf),
+  gives the classical fixed-index harmonic approximation for fixed
+  smooth scalar potentials with finitely many nondegenerate minima
+  and its exterior assumptions. Here only the hidden kinetic scale
+  vanishes, $\varepsilon$ is fixed, the raw field narrows, and the
+  original full square has compensating frequencies. Thus that theorem
+  is not invoked as a direct full-form theorem. Lemma 40.2 and
+  (41.6) supply the required native lower limit and exclusion.
+  The [1984 erratum, p.224](https://www.numdam.org/item/AIHPA_1984__40_2_224_0.pdf)
+  corrects Theorem 5.1's higher-order expansion in a degenerate
+  oscillator level without an additional parity condition. No
+  higher-order or degenerate-level expansion is claimed here.
+- A. Martinez, *Développements asymptotiques dans l'approximation de
+  Born-Oppenheimer*, Journées Équations aux dérivées partielles
+  (1988), article X,
+  [§2, (H1)--(H4) and stated theorem](https://proceedings.centre-mersenne.org/item/10.5802/jedp.354.pdf),
+  considers $-h^2\Delta_x-\Delta_y+V$ on Euclidean product spaces.
+  Its smooth lower-bounded potential, derivative/common-domain
+  conditions, unique nondegenerate lowest-band minimum and exterior
+  and discrete-fibre assumptions are material hypotheses. They do
+  not automatically cover the original completed degenerate form,
+  its Dirichlet cylinder or its moving raw field. The article refers
+  elsewhere for its theorem's proof; it is a comparison of methods,
+  not a proof supplier used to bypass (39.3) or (40.4).
+- J. Lampart and S. Teufel, *The adiabatic limit of Schrödinger
+  operators on fibre bundles*,
+  [arXiv:1402.0382v2, Conditions 1--3, Proposition 2.5 and §4.2](https://arxiv.org/pdf/1402.0382v2),
+  treat Riemannian fibre bundles with compact fibres, allowed
+  Dirichlet fibre boundary, complete base, bounded geometry, a
+  uniformly isolated eigenband and uniform coefficient bounds.
+  Proposition 2.5's exclusion of other bands also uses the stated
+  lower bound on the horizontal perturbation. The original full
+  rank-two principal form is not a Riemannian Laplacian on its
+  four-coordinate state space. No direct application of that theorem
+  or general adiabatic norm-resolvent estimate is asserted. The
+  native full-frequency exclusion and centered compactness needed
+  here have instead been proved in (41.6) and Lemma 40.2.
+

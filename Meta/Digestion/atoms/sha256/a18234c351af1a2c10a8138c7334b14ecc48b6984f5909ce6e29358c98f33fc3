@@ -1,0 +1,197 @@
+**Theorem 46.1 (raw expansion with all native cross terms).**
+The raw assertions of (44.5)--(44.7) hold with the coefficients
+(44.3).
+
+Proof. First, the free base difference is smaller than the proposed
+scale:
+
+$$
+\|\overline S_\kappa(t)-S_t\|=O_t(a)=o(r_s).
+\tag{46.1}
+$$
+
+To see the operator-norm estimate, use the exact complete Fourier
+sum on the base. In its $(n,m)$ block the two scalar operators
+have the same domain $H^2(I)\cap H_0^1(I)$ and their bounded
+potentials differ by at most $Ca(n^2+m^2)$. The coefficient
+functions converge in supremum norm at rate $O(a)$ by (25.4).
+Both scalar bottoms are at least
+$\lambda+c\Psi(\sqrt{n^2+m^2})$ by [G, (26.6)] with $j=0$,
+including $\kappa=0$ as in §36. Scalar Duhamel estimates therefore
+give a block difference at most
+
+$$
+Ca t(n^2+m^2)e^{-t[\lambda+c\Psi(\sqrt{n^2+m^2})]}.
+\tag{46.2}
+$$
+
+Its supremum over the lattice is $O_t(a)$. The zero block agrees
+exactly. This proves (46.1) on the complete base, without promoting
+an interior form core to an operator core.
+
+For the auxiliary field (45.1) we now compute its compressed
+response. The following representation uses precisely the native
+killed law [G, (16.4), (25.4)] from a starting point $q=(k,\theta,v)$:
+
+$$
+\begin{aligned}
+K_u&=k+\sqrt2\varepsilon B_u^1,\qquad
+ \zeta=\inf\{u:K_u\notin I\},\\
+q_{\kappa,u}
+ &=\left(K_u,\theta+\sqrt2\int_0^u A_\kappa(K_w)dB_w^2,
+                    v+\sqrt2\int_0^u B_\kappa(K_w)dB_w^2\right),\\
+Y_{\kappa,u}&=\sqrt2\int_0^u b_\kappa(K_w)dB_w^2,\qquad
+D_u=D+\kappa Y_{\kappa,u}\pmod {2\pi}.
+\end{aligned}
+\tag{46.3}
+$$
+
+The phase integrals are stopped at $\zeta$ when necessary. The weights
+$R_\kappa$ and $R_0$ below are defined on $\{t<\zeta\}$ by their
+displayed formulas and set to zero on $\{\zeta\le t\}$. Both visible
+phase entries are read modulo $2\pi$. The two
+original Brownian motions are used throughout, and the same $B^2$
+drives all three angular increments. Thus (46.3) retains every
+cross term in the original square $|Q_\kappa f|^2$.
+The free-law/Friedrichs correspondence and its marginal are those
+of [G, §23]. The bounded-potential path formula used here follows
+by applying the Trotter product formula to this killed free law:
+the product weights are exponentials of time Riemann sums, which
+converge along continuous surviving paths. Their absolute values
+are bounded by $e^{gMt}$, so bounded convergence identifies the
+formula first on bounded continuous inputs and then on $L^2$.
+Only bounded continuous potentials are needed below.
+
+Let $L=2\pi/r_s$, let $F_L$ denote the periodic function equal to
+$F$ on $[-L/2,L/2]$, and put
+$\eta_\kappa=\kappa/r_s$, so $|\eta_\kappa|=\tau_s^{-1/2}\to0$.
+Integrating the initial $D$ in (44.1), then changing variables
+$D=r_sx$, gives exactly
+
+$$
+\begin{aligned}
+\frac{[C^P_\kappa(t)-\overline S_\kappa(t)]h(q)}{r_s}
+ &=\mathbb E_q\left[
+       R_\kappa h(q_{\kappa,t});\ t<\zeta\right],\\
+R_\kappa
+ &=\frac1{2\pi}\int_{-L/2}^{L/2}
+ \left\{\exp\left(gc_s\int_0^t
+       \phi(K_u)F_L(x+\eta_\kappa Y_{\kappa,u})du\right)-1\right\}dx.
+\end{aligned}
+\tag{46.4}
+$$
+
+This exact formula has already integrated the entire hidden circle;
+no spectral-index expansion or oscillator approximation is involved.
+If $M_0=gc_s\|\phi\|_\infty$, the inequality
+$e^z-1\le e^{M_0t}z$ for $0\le z\le M_0t$ and translation
+invariance on that circle give the deterministic bound
+
+$$
+0\le R_\kappa\le
+ \frac{gc_s t\|\phi\|_\infty e^{M_0t}}{2\pi}
+                     \int_{\mathbb R}F(x)dx=:K_t.
+\tag{46.5}
+$$
+
+Consequently the operators on the first line of (46.4) have norm
+at most $K_t$, since the right side is dominated by
+$K_t\overline S_\kappa(t)|h|$.
+
+Define, on the same killed height paths,
+
+$$
+R_0=\frac1{2\pi}\int_{\mathbb R}
+ \left\{\exp\left(gc_sF(x)\int_0^t\phi(K_u)du\right)-1\right\}dx.
+\tag{46.6}
+$$
+
+Then $\mathbb E_q|R_\kappa-R_0|\to0$, uniformly in the starting
+point. Here are bounds that justify both the expanding circle and
+the moving hidden phase. The total variation of $F_L$ on its
+circle is at most $\|F'\|_{L^1(\mathbb R)}$. Hence
+
+$$
+\int_{-L/2}^{L/2}|F_L(x+z)-F_L(x)|dx
+ \le |z|\|F'\|_1.
+\tag{46.7}
+$$
+
+The stopped stochastic integral in (46.3) satisfies
+$\mathbb E_q|Y_{\kappa,u}|\le C\sqrt u$, uniformly for $u\le t$,
+by its isometry and the uniform bound on $b_\kappa$. The exponential
+is Lipschitz on $[0,M_0t]$. Replacing each shifted $F_L$ in
+(46.4) by the unshifted one therefore changes $R_\kappa$ in
+expected absolute value by at most $C_t|\eta_\kappa|$.
+Extending the remaining unshifted integral from $[-L/2,L/2]$ to
+$\mathbb R$ costs at most
+$C_t\int_{|x|>L/2}F(x)dx\to0$. This proves the assertion.
+In particular these errors are errors of the already divided
+response in (46.4), rather than an unscaled error divided later.
+
+The base angular increments in $q_{\kappa,t}$ converge to those
+in $q_{0,t}$ in mean square, uniformly in the starting point,
+because $A_\kappa-A_0$ and $B_\kappa-B_0$ are $O(a)$ uniformly.
+The height path and its two-sided killing time agree exactly.
+For bounded smooth base inputs, (46.5)--(46.7) therefore show
+uniform, hence base $L^2$, convergence of (46.4) to
+
+$$
+\mathbb E_q[R_0h(q_{0,t});\ t<\zeta]
+ =\frac1{2\pi}\int_{\mathbb R}
+       [T_{gc_sF(x)}(t)-S_t]h(q)dx=A_s(t)h(q).
+\tag{46.8}
+$$
+
+The equality uses the same bounded-potential path formula on the
+actual base operator $\mathcal K_c$ of §36. Bounded smooth inputs
+with compact height support are dense in $\mathscr H_B$.
+The uniform operator bound (46.5) and boundedness of $A_s(t)$
+extend (46.8) to every fixed base $L^2$ input. Combining it with
+(45.3) and (46.1) proves the raw response expansion in (44.5),
+including its uniform scaled bound and both signs.
+
+Write $\Delta_x(t)=T_{gc_sF(x)}(t)-S_t$. Strong expansion of the
+bounded products, using the uniform scaled bound just proved, gives
+
+$$
+\begin{aligned}
+\frac{\mathcal D_{{\rm raw},\kappa}(t)}{r_s}
+ &\longrightarrow A_s(2t)-S_tA_s(t)-A_s(t)S_t\\
+ &=\frac1{2\pi}\int_{\mathbb R}\Delta_x(t)^2dx=D_s(t).
+\end{aligned}
+\tag{46.9}
+$$
+
+The second identity follows from the semigroup law of each fixed
+$T_c$ and $S$: the integrand before simplification is
+$T_c(t)^2-S_t^2-S_t(T_c(t)-S_t)-(T_c(t)-S_t)S_t
+ =(T_c(t)-S_t)^2$. No commutation of $T_c(t)$ with $S_t$
+is assumed. Their norm integrability follows from (44.4).
+
+Finally, on the angular-constant vector $h_*$, the killed height
+path formula reads
+
+$$
+T_c(t)h_*(q)=\frac1{2\pi}\mathbb E_k\left[
+ e^{c\int_0^t\phi(K_u)du}\phi(K_t);\ t<\zeta\right].
+\tag{46.10}
+$$
+
+For $c>0$ this is strictly larger than $S_th_*(q)$ at every
+interior height: survival has positive probability and $\phi$ is
+positive throughout $I$. Thus
+$\langle A_s(t)h_*,h_*\rangle>0$ and
+
+$$
+\langle D_s(t)h_*,h_*\rangle
+ =\frac1{2\pi}\int_{\mathbb R}\|\Delta_x(t)h_*\|_2^2dx>0.
+\tag{46.11}
+$$
+
+Together with (44.5), these strict inequalities prove that neither
+raw leading coefficient disappears on this fixed nonzero test.
+The field width $r_s$ differs from both the ground width
+$a\tau_s^{1/4}$ and the spacing scale $\tau_s^{-1/2}$ of §38.
+Their ratios are not used as error estimates. $\square$
+
