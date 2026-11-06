@@ -30,51 +30,29 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {a : Type u} {b : Type v} {c : Type w}
-    [Fintype a] [DecidableEq a] [Nonempty a]
-    [Fintype b] [DecidableEq b] [Nonempty b]
-    [Fintype c] [DecidableEq c] [Nonempty c]
-    (second : QuantumChannel b c) (first : QuantumChannel a b)
-    (rho sigma : DensityState a),
-    R.readout ()
-      (extendedQuantumRelativeEntropy ((second.comp first).mapState rho)
-          ((second.comp first).mapState sigma),
-        extendedQuantumRelativeEntropy rho sigma) true
-
-private noncomputable def unitChannel {α β : Type*}
-    [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β]
-    [Unique α] [Unique β] : QuantumChannel α β :=
-  Classical.choose (D5.S3.Quantum.Foundation.FiniteKrausChannel.finite_kraus_quantum_channel
-    (fun _ : Unit => (fun _ _ => (1 : ℂ))) (by
-      ext i j
-      have hij : i = j := Subsingleton.elim _ _
-      subst j
-      simp only [Matrix.sum_apply]
-      simp only [Matrix.mul_apply, Matrix.conjTranspose_apply]
-      simp [Fintype.sum_unique]))
-
-private noncomputable def unitState {α : Type*}
-    [Fintype α] [DecidableEq α] [Unique α] : DensityState α := by
-  refine ⟨CStarMatrix.ofMatrix (1 : Matrix α α ℂ), ?_, ?_⟩
-  · exact (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
-      ((Matrix.PosSemidef.one : (1 : Matrix α α ℂ).PosSemidef).nonneg))
-  · change Matrix.trace (1 : Matrix α α ℂ) = 1
-    simp [Matrix.trace, Fintype.sum_unique]
+  Law R :=
+    (∀ {a : Type u} {b : Type v} {c : Type w}
+      [Fintype a] [DecidableEq a] [Nonempty a]
+      [Fintype b] [DecidableEq b] [Nonempty b]
+      [Fintype c] [DecidableEq c] [Nonempty c]
+      (second : QuantumChannel b c) (first : QuantumChannel a b)
+      (rho sigma : DensityState a),
+      R.readout ()
+        (extendedQuantumRelativeEntropy ((second.comp first).mapState rho)
+            ((second.comp first).mapState sigma),
+          extendedQuantumRelativeEntropy rho sigma) true) ∧
+    R.readout () (0, 1) true
 
 theorem actual_law : arena.{u,v,w}.Law actual := by
-  intro a b c ia da na ib db nb ic dc nc second first rho sigma
-  simpa [actual, realize] using
-    (extended_quantum_relative_entropy_comp_dpi second first rho sigma)
+  constructor
+  · intro a b c ia da na ib db nb ic dc nc second first rho sigma
+    simpa [actual, realize] using
+      (extended_quantum_relative_entropy_comp_dpi second first rho sigma)
+  · simp [actual, realize]
 
 theorem rejected_law : ¬ arena.{u,v,w}.Law rejected := by
   intro h
-  let a := ULift.{u} Unit
-  let b := ULift.{v} Unit
-  let c := ULift.{w} Unit
-  have hf := h (a := a) (b := b) (c := c)
-    (unitChannel (α := b) (β := c)) (unitChannel (α := a) (β := b))
-      (unitState (α := a)) (unitState (α := a))
-  exact hf
+  simpa [rejected, realize] using h.2
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -90,7 +68,7 @@ def family : Registration arena.{u,v,w}
       exact actual_law
     · intro h
       intro a b c ia da na ib db nb ic dc nc second first rho sigma
-      have hh := h (a := a) (b := b) (c := c) second first rho sigma
+      have hh := (And.left h) second first rho sigma
       simpa [actual, realize] using hh
   variation := ⟨actual_law, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
