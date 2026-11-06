@@ -8,9 +8,9 @@ Retain the existing original margin S(n)=gamma+log(log(log(n)))-log(sigma(n)/n),
 
 **Theorem 1.1 (The same attained failure uniquely optimizes over all positive integers).**
 
-Lean statement: `D5/S3/Arith/Robin/ActualBalancedExtremizer.failure_has_unique_internal_optimizer`
+Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualBalancedExtremizer.failure_has_unique_internal_optimizer`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ActualBalancedExtremizer.failure_has_unique_internal_optimizer` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/ActualBalancedExtremizer.failure_has_unique_internal_optimizer` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -28,6 +28,6 @@ The classical minimum-to-CA mechanism overlaps Caveney--Nicolas--Sondow, On SA, 
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/Robin/ActualBalancedExtremizer.failure_has_unique_internal_optimizer`
-- Dependency: [D5/S3/Arith/Robin/ActualRobinInterval](ActualRobinInterval.md)
-- Dependency: [D5/S3/Arith/Robin/LogarithmBounds](LogarithmBounds.md)
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualBalancedExtremizer.failure_has_unique_internal_optimizer`
+- Dependency: [D5/S3/Arith/Robin/ActualRobinInterval](../ActualRobinInterval.md)
+- Dependency: [D5/S3/Arith/Robin/LogarithmBounds](../LogarithmBounds.md)
