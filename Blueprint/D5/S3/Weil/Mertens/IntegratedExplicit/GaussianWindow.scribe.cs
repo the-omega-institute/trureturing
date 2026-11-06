@@ -9,6 +9,7 @@ internal sealed class GaussianWindowDocument : IScribeDocumentDefinition
         H("Gaussian cancellation on a closed logarithmic window"),
         Blocks(
             Paragraph(Text("For w>0 the Gaussian measure has mean 2*w^2 and variance w^2/2. In this unit w=H+20. The complex frequency is -a+i*gamma. Every interval below is closed at both window endpoints.")),
+            Paragraph(Text("The existing lower_tail, upper_tail and integral_three_intervals helpers are now public for direct reuse by SignedGaussianEndpoint.window_mass. Their proof bodies and hypotheses are unchanged; this visibility change adds no new Gaussian cancellation mathematics.")),
             Describe.Lean(
                 DescribeId.Create("gaussianwindow-truncated-gaussian-cancellation"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/GaussianWindow.truncated_gaussian_cancellation"),
