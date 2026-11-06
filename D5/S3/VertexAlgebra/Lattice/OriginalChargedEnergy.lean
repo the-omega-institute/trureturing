@@ -832,6 +832,130 @@ private theorem original_negative_current_le (hD : (gramReal D).PosDef)
   intro b hb
   simpa only [normD_sq hD] using original_negative_current_sector_le hD i r E v hv b
 
+open private Matrix.PosSemidef.preInnerProductSpace from Mathlib.Analysis.Matrix.PosDef
+
+private theorem original_gram_charge_square_le (hD : (gramReal D).PosDef)
+    (i : Fin D.rank) (b : Charge D) :
+    (bilinear D (unitCharge D i) b : ℝ) ^ 2 ≤
+      2 * (D.G i i : ℝ) * (chargeEnergy D b : ℝ) := by
+  classical
+  let c : PreInnerProductSpace.Core ℝ (Fin D.rank → ℝ) :=
+    hD.posSemidef.preInnerProductSpace
+  let u : Fin D.rank → ℝ := fun j => (unitCharge D i j : ℝ)
+  let q : Fin D.rank → ℝ := fun j => (b j : ℝ)
+  have hb (a b : Charge D) :
+      ((gramReal D) *ᵥ (fun j => (b j : ℝ))) ⬝ᵥ (fun j => (a j : ℝ)) =
+        (bilinear D a b : ℝ) := by
+    simp only [gramReal, Matrix.mulVec, dotProduct, Matrix.map_apply,
+      bilinear, Int.cast_sum, Int.cast_mul, Finset.sum_mul]
+    apply Finset.sum_congr rfl
+    intro j _
+    apply Finset.sum_congr rfl
+    intro k _
+    ring
+  have hc := @InnerProductSpace.Core.inner_mul_inner_self_le ℝ (Fin D.rank → ℝ) _ _ _ c u q
+  change ‖((gramReal D) *ᵥ q) ⬝ᵥ u‖ * ‖((gramReal D) *ᵥ u) ⬝ᵥ q‖ ≤
+    (((gramReal D) *ᵥ u) ⬝ᵥ u) * (((gramReal D) *ᵥ q) ⬝ᵥ q) at hc
+  dsimp only [u, q] at hc
+  rw [hb, hb, hb, hb, LatticeFiniteNegativeGeneration.bilinear_symmetric D b (unitCharge D i)] at hc
+  have hu : bilinear D (unitCharge D i) (unitCharge D i) = D.G i i := by
+    simp [bilinear, unitCharge]
+  have he : (bilinear D b b : ℝ) = 2 * (chargeEnergy D b : ℝ) := by
+    exact_mod_cast (two_chargeEnergy D b).symm
+  rw [hu, he, Real.norm_eq_abs, ← sq, sq_abs] at hc
+  nlinarith only [hc]
+
+private theorem chargeEnergy_le_grade (E : ℕ) (v : Carrier D)
+    (hv : v ∈ grade D (E : ℤ)) (b : Charge D) (hb : v b ≠ 0) :
+    chargeEnergy D b ≤ E := by
+  obtain ⟨e, he⟩ := MvPolynomial.exists_coeff_ne_zero hb
+  have hg : energy D (b,e) = E := by
+    by_contra hn
+    exact he ((mem_grade_iff D (E : ℤ) v).mp hv (b,e) hn)
+  dsimp [energy] at hg
+  omega
+
+private theorem normD_real_smul_sq (hD : (gramReal D).PosDef) (c : ℝ) (v : Carrier D) :
+    normD ((c : ℂ) • v) ^ 2 = c ^ 2 * normD v ^ 2 := by
+  rw [normD_sq hD, normD_sq hD, Hm_smul_left, Hm_smul_right]
+  simp [Complex.mul_re, Complex.mul_im, pow_two, mul_assoc]
+
+private theorem original_zero_current_le (hD : (gramReal D).PosDef)
+    (i : Fin D.rank) (E : ℕ) (v : Carrier D) (hv : v ∈ grade D (E : ℤ)) :
+    normD (LatticeFiniteNegativeGeneration.neutralMode D i 0 v) ^ 2 ≤
+      (2 * (D.G i i : ℝ) * E) * normD v ^ 2 := by
+  classical
+  rw [current_norm_sector_sum hD]
+  have hn : normD v ^ 2 = ∑ b ∈ v.support, normD (Finsupp.single b (v b)) ^ 2 := by
+    rw [← normD_sector_sum hD]
+    exact congrArg (fun z => normD z ^ 2) v.sum_single.symm
+  rw [hn, Finset.mul_sum]
+  apply Finset.sum_le_sum
+  intro b hb
+  have hz : LatticeFiniteNegativeGeneration.neutralMode D i 0 (Finsupp.single b (v b)) =
+      (((bilinear D (unitCharge D i) b : ℝ) : ℂ)) • Finsupp.single b (v b) := by
+    rw [neutralMode_single]
+    simp [LatticeFiniteNegativeGeneration.neutralPolynomialMode, Finsupp.smul_single]
+  rw [hz, normD_real_smul_sq hD]
+  apply mul_le_mul_of_nonneg_right _ (sq_nonneg _)
+  have hc := original_gram_charge_square_le hD i b
+  have he : (chargeEnergy D b : ℝ) ≤ E := by
+    exact_mod_cast chargeEnergy_le_grade E v hv b (Finsupp.mem_support_iff.mp hb)
+  have hg : 0 ≤ (D.G i i : ℝ) := hD.posSemidef.diag_nonneg
+  exact hc.trans (mul_le_mul_of_nonneg_left he (by positivity))
+
+private theorem original_current_energy_le (hD : (gramReal D).PosDef)
+    (i : Fin D.rank) (m : ℤ) (E F M : ℕ) (hEF : (E : ℤ)-m=F)
+    (hE : E ≤ M) (hF : F ≤ M) (v : Carrier D) (hv : v ∈ grade D (E : ℤ)) :
+    normD (LatticeFiniteNegativeGeneration.neutralMode D i m v) ≤
+      Real.sqrt (3 * (D.G i i : ℝ)) * ((M : ℝ)+1) * normD v := by
+  have hg : 0 ≤ (D.G i i : ℝ) := hD.posSemidef.diag_nonneg
+  have hEM : (E : ℝ) ≤ M := by exact_mod_cast hE
+  have hFM : (F : ℝ) ≤ M := by exact_mod_cast hF
+  have hM : 0 ≤ (M : ℝ) := Nat.cast_nonneg M
+  have hs : normD (LatticeFiniteNegativeGeneration.neutralMode D i m v) ^ 2 ≤
+      (3 * (D.G i i : ℝ) * ((M : ℝ)+1)^2) * normD v ^ 2 := by
+    cases m with
+    | ofNat k =>
+      cases k with
+      | zero =>
+        have h := original_zero_current_le hD i E v hv
+        apply h.trans
+        apply mul_le_mul_of_nonneg_right _ (sq_nonneg _)
+        have hh : 2*(E : ℝ) ≤ 3*((M : ℝ)+1)^2 := by nlinarith
+        nlinarith only [mul_nonneg hg (sub_nonneg.mpr hh)]
+      | succ r =>
+        have h := original_positive_current_le hD i r E v hv
+        rw [show Int.ofNat (Nat.succ r) = (r : ℤ)+1 from rfl]
+        apply h.trans
+        apply mul_le_mul_of_nonneg_right _ (sq_nonneg _)
+        have hh : (E : ℝ) ≤ 3*((M : ℝ)+1)^2 := by nlinarith
+        nlinarith only [mul_nonneg hg (sub_nonneg.mpr hh)]
+    | negSucc r =>
+      have h := original_negative_current_le hD i r E v hv
+      rw [show Int.negSucc r = -(r : ℤ)-1 by omega]
+      apply h.trans
+      apply mul_le_mul_of_nonneg_right _ (sq_nonneg _)
+      have he : (E : ℝ)+r+1 = F := by exact_mod_cast (show E+r+1=F by omega)
+      rw [he]
+      have hh : (F : ℝ) ≤ 3*((M : ℝ)+1)^2 := by nlinarith
+      nlinarith only [mul_nonneg hg (sub_nonneg.mpr hh)]
+  have hr : (Real.sqrt (3 * (D.G i i : ℝ)) * ((M : ℝ)+1) * normD v)^2 =
+      (3 * (D.G i i : ℝ) * ((M : ℝ)+1)^2) * normD v ^ 2 := by
+    rw [mul_pow, mul_pow, Real.sq_sqrt (by positivity)]
+  have hx : 0 ≤ normD (LatticeFiniteNegativeGeneration.neutralMode D i m v) :=
+    Real.sqrt_nonneg _
+  have hy : 0 ≤ Real.sqrt (3 * (D.G i i : ℝ)) * ((M : ℝ)+1) * normD v :=
+    mul_nonneg (mul_nonneg (Real.sqrt_nonneg _) (by positivity)) (Real.sqrt_nonneg _)
+  exact (sq_le_sq₀ hx hy).mp (hs.trans_eq hr.symm)
+
+#check @original_gram_charge_square_le
+#check @original_zero_current_le
+#check @original_current_energy_le
+#print axioms original_gram_charge_square_le
+#print axioms original_zero_current_le
+#print axioms original_current_energy_le
+
 #check @original_positive_current_le
 #check @original_negative_current_le
 #print axioms original_positive_current_le
