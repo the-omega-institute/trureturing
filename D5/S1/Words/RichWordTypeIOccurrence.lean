@@ -76,10 +76,6 @@ private theorem word_eq_iterate (k n : ℕ) (hn : n < (image phi k 0).length) :
   exact (hn'.getElem (by have := iterate_growth (n+1); omega)).trans
     (hk.getElem hn).symm
 
-private theorem factor_take (x : ℕ → Letter) (i n t : ℕ) (h : t ≤ n) :
-    (factor x i n).take t = factor x i t := by
-  simp [factor, ← List.map_take, List.take_range, Nat.min_eq_left h]
-
 private theorem iterate_factor (k : ℕ) :
     factor word 0 (image phi k 0).length = image phi k 0 := by
   apply List.ext_getElem
@@ -93,8 +89,7 @@ private theorem factor_of_prefix {s : Word} {k : ℕ} (h : s <+: image phi k 0) 
   have hlen := h.length_le
   rw [← iterate_factor k] at h
   have ht := List.prefix_iff_eq_take.mp h
-  rw [factor_take _ _ _ _ hlen] at ht
-  exact ht.symm
+  simpa [factor, ← List.map_take, List.take_range, Nat.min_eq_left hlen] using ht.symm
 
 /-- Boundary after the first i source letters, rather than an arbitrary coding. -/
 def boundary (i : ℕ) : ℕ := (subst phi (factor word 0 i)).length
@@ -103,8 +98,9 @@ private theorem substituted_prefix (i : ℕ) :
     factor word 0 (boundary i) = subst phi (factor word 0 i) := by
   have hg : i ≤ (image phi (i+1) 0).length := by have := iterate_growth (i+1); omega
   have hp : factor word 0 i <+: image phi (i+1) 0 := by
-    rw [← iterate_factor (i+1), ← factor_take _ _ _ _ hg]
-    exact List.take_prefix _ _
+    rw [← iterate_factor (i+1)]
+    apply List.prefix_iff_eq_take.mpr
+    simp [factor, ← List.map_take, List.take_range, Nat.min_eq_left hg]
   exact factor_of_prefix (show subst phi (factor word 0 i) <+: image phi (i+2) 0 from
     hp.flatMap phi)
 
@@ -316,7 +312,9 @@ private theorem sentinel_head (s : Word) : ∃ v, sentinel s = 0::v := by
 private theorem occ_prefix {s t : Word} {q : ℕ} (hp : s <+: t) (ho : Occ t q) :
     Occ s q := by
   have ht := congrArg (List.take s.length) ho
-  rw [factor_take _ _ _ _ hp.length_le, ← List.prefix_iff_eq_take.mp hp] at ht
+  have he : (factor word q t.length).take s.length = factor word q s.length := by
+    simp [factor, ← List.map_take, List.take_range, Nat.min_eq_left hp.length_le]
+  rw [he, ← List.prefix_iff_eq_take.mp hp] at ht
   exact ht
 
 private theorem boundary_occ {s : Word} {a : ℕ} (h : Occ s a) :
@@ -888,7 +886,7 @@ theorem typeI_extensions (n : ℕ) :
         omega
       rw [he,sentinel_lext,sentinel_rext,ih.1,ih.2]
       simp only [Set.image_insert_eq,Set.image_singleton,hp,show next 6 = 6 by decide]
-      exact ⟨rfl,rfl⟩
+      exact ⟨True.intro,True.intro⟩
 
 /-- The source position map includes the terminal left shift. -/
 def occurrenceMap (n a : ℕ) : ℕ :=
@@ -976,6 +974,7 @@ theorem typeI_return_parikh (n a b : ℕ) (h : Consecutive (typeI n) a b) :
 private theorem mulVec_mono {v w : Letter → ℕ} (h : v ≤ w) :
     M.mulVec v ≤ M.mulVec w := by
   intro a
+  change (∑ c : Letter, M a c * v c) ≤ ∑ c : Letter, M a c * w c
   exact Finset.sum_le_sum (fun c _ => Nat.mul_le_mul_left (M a c) (h c))
 
 /-- At every index an ACTUAL consecutive return attains M^n e6, and EVERY
