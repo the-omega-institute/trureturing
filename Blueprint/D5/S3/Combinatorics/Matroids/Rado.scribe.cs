@@ -31,7 +31,7 @@ internal sealed class RadoDocument : IScribeDocumentDefinition
             And(A(Q("Function", "Injective"), V("f")),
                 And(membership, A(Q("Matroid", "Indep"), V("M"), range))));
         var union = A(Q("Set", "iUnion"), Lam("i", V("I"),
-            A(Q("Set", "iUnion"), Lam("h", Member(V("i"), V("J")), A(V("A"), V("i")))));
+            A(Q("Set", "iUnion"), Lam("h", Member(V("i"), V("J")), A(V("A"), V("i"))))));
         var castCard = A(Q("Nat", "cast"), A(Q("Finset", "card"), V("J")));
         var inequalities = All("J", A(V("Finset"), V("I")),
             new Formula.Relation(castCard, FormulaRelationOperator.LessThanOrEqual,
