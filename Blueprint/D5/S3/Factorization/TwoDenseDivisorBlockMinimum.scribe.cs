@@ -97,13 +97,13 @@ internal sealed class TwoDenseDivisorBlockMinimumDocument : IScribeDocumentDefin
         var v = F.Id("v");
         var uv = Seq(u, Cdot, Sp, v);
         var positive = Seq(D(0), Lt, u, Sp, Land, Sp, D(0), Lt, v);
-        var dense = Call("IsChain", Call("map", Named("fst"),
-            Call("divisorsAntidiagonalList", u)), DenseRelation());
+        var dense = Call("IsChain", DenseRelation(), Call("map", Named("fst"),
+            Call("divisorsAntidiagonalList", u)));
         var premise = Seq(positive, Sp, Land, Sp, Call("Coprime", u, v), Sp, Land, Sp, dense);
         if (first)
         {
             var p = F.Id("p");
-            premise = Seq(premise, Sp, Land, Sp, Open, Forall, Sp, p, Comma, Sp,
+            premise = Seq(premise, Sp, Land, Sp, Open, Forall, Sp, p, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp,
                 Call("Prime", p), Sp, Land, Sp, Call("dvd", p, v), Sp, Implies, Sp,
                 D(2), Cdot, Sp, u, Sp, Lt, Sp, p, Close);
         }

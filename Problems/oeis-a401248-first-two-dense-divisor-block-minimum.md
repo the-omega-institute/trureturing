@@ -75,9 +75,12 @@ the universal assertion.
 constructs the dense factor internally. The claim uses the complete
 Mathlib sorted divisor list and its actual splitBy partition; its
 first length is the existing palindrome module's row head.
-The canonical scoped Lean build succeeds. Exact statement and axiom
-reporting, escape registration, independent review, canonical freezing
-and required delivery checks are separate requirements.
+The canonical scoped Lean build and axiom report succeed. The axiom
+closure is contained in {propext, Classical.choice, Quot.sound}.
+The three public theorems have compiled source-equivalence escape
+registrations through the enrolled dependent-family template, with
+explicit unknown residuals. Independent review, canonical freezing
+and required delivery checks remain separate requirements.
 
 The mathematical argument is unbounded and symbolic, so utility is
 `none`, rather than finite enumeration, a checker, numeric reduction
@@ -87,8 +90,11 @@ The matching Scribe attaches one Proved resolution to `result`.
 
 ## Triage
 
-The whole positive-integer conclusion has a successful scoped Lean
-build. It has not yet passed independent pre-freeze review or freezing.
+The whole positive-integer conclusion and its three source-bound
+audit records have successful scoped kernel evidence. A transient
+application also establishes that the first value is a member and
+a lower bound of the whole row, hence its least element. Independent
+pre-freeze review and freezing remain pending.
 
 The decisive structure is the dense coprime divisor copy contained
 in every actual maximal block. The first block attains the common
