@@ -16,8 +16,8 @@ open OriginalLabelTwoSum
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
 abbrev Symbol := FiniteProtectedDualWord.Symbol
-abbrev Word := FiniteProtectedDualWord.Word
-abbrev Contract := FiniteProtectedDualWord.Contract
+abbrev Word (W : Finset V) (K : Family V) := FiniteProtectedDualWord.Word W K
+abbrev Contract (W : Finset V) (K : Family V) := FiniteProtectedDualWord.Contract W K
 
 /- Literal edges, including repeated-label inputs. Distinctness is imposed on
    the Word theorem, not smuggled into the definition of independence. -/
@@ -62,7 +62,7 @@ private theorem edges_independent (vertices : List V) (s : Finset V) :
   | case3 a b rest ih =>
       simp only [pathEdges, Finset.mem_insert, forall_eq_or_imp,
         FiniteIndependentPathGreedy.IndependentAlong, ← ih]
-      have hpair : ({a, b} : Finset V) ⊆ s ↔ a ∈ s ∧ b ∈ s := by simp
+      have hpair : ({a, b} : Finset V) ⊆ s ↔ a ∈ s ∧ b ∈ s := by simp only [Finset.insert_subset_iff, Finset.singleton_subset_iff]
       rw [hpair]
       tauto
 
@@ -99,6 +99,7 @@ private theorem independent_tail_subset (rest : List V) (hd : rest.Nodup) :
   cases rest with
   | nil => exact Finset.Subset.refl _
   | cons c tail =>
+      change pathIndependentOn tail ⊆ pathIndependentOn (c :: tail)
       rw [pathIndependentOn_eq_paths _ hd,
         pathIndependentOn_eq_paths _ (List.nodup_cons.mp hd).2, paths_cons]
       exact Finset.subset_union_left
@@ -106,14 +107,14 @@ private theorem independent_tail_subset (rest : List V) (hd : rest.Nodup) :
 private theorem avoids {vertices : List V} {s : Finset V} {x : V}
     (hs : s ∈ pathIndependentOn vertices) (hx : x ∉ vertices) : x ∉ s := by
   intro h
-  exact hx (List.mem_toFinset.mp ((mem_pathIndependentOn _ _).mp hs).1 h)
+  exact hx (List.mem_toFinset.mp (((mem_pathIndependentOn _ _).mp hs).1 h))
 
 /- Cardinality is the primary key. The finite tie key is used only to make a
    total order; no later proof mistakes an arbitrary toList for sorted labels. -/
 def faceBefore (a b : Finset V) : Prop :=
   a.card < b.card ∨ a.card = b.card ∧
     (Fintype.equivFin (Finset V) a).val ≤ (Fintype.equivFin (Finset V) b).val
-private instance faceBeforeTotal : Std.Total (@faceBefore V _ _) :=
+private instance faceBeforeTotal : Std.Total (faceBefore (V := V)) :=
   ⟨by
     intro a b
     unfold faceBefore
@@ -126,7 +127,7 @@ private instance faceBeforeTotal : Std.Total (@faceBefore V _ _) :=
       (Fintype.equivFin (Finset V) b).val with hab | hba
     · exact Or.inl (Or.inr ⟨hc, hab⟩)
     · exact Or.inr (Or.inr ⟨hc.symm, hba⟩)⟩
-private instance faceBeforeTrans : IsTrans (Finset V) (@faceBefore V _ _) :=
+private instance faceBeforeTrans : IsTrans (Finset V) (faceBefore (V := V)) :=
   ⟨by
     intro a b c hab hbc
     unfold faceBefore at hab hbc ⊢
@@ -138,16 +139,18 @@ private instance faceBeforeTrans : IsTrans (Finset V) (@faceBefore V _ _) :=
     · exact Or.inr ⟨by omega, le_trans hab' hbc'⟩⟩
 
 def orderedFaces (F : Finset (Finset V)) : List (Finset V) :=
-  F.toList.mergeSort (@faceBefore V _ _)
+  by
+    classical
+    exact F.toList.mergeSort (fun a b => faceBefore a b)
 theorem orderedFaces_spec (F : Finset (Finset V)) :
     (orderedFaces F).Nodup ∧ (orderedFaces F).toFinset = F ∧
       (orderedFaces F).Pairwise (fun a b => a.card ≤ b.card) := by
   classical
-  have hp : orderedFaces F ~ F.toList := List.mergeSort_perm _ _
+  have hp : List.Perm (orderedFaces F) F.toList := List.mergeSort_perm _ _
   refine ⟨hp.nodup_iff.mpr F.nodup_toList, ?_, ?_⟩
   · ext s
     simpa only [List.mem_toFinset, Finset.mem_toList] using hp.mem_iff
-  · exact (List.pairwise_mergeSort' (@faceBefore V _ _) F.toList).imp
+  · exact (List.pairwise_mergeSort' (faceBefore (V := V)) F.toList).imp
       (by intro a b h; unfold faceBefore at h; rcases h with h | ⟨h, _⟩ <;> omega)
 
 @[simp] theorem mem_orderedFaces (F : Finset (Finset V)) (s : Finset V) :
@@ -237,11 +240,11 @@ private theorem split_map {α β : Type*} (f : α → β) (xs : List α)
 private theorem singleton_split {α : Type*} (x z : α) (p s : List α)
     (h : [x] = p ++ z :: s) : p = [] ∧ z = x ∧ s = [] := by
   have hl := congrArg List.length h
-  simp only [List.length_singleton, List.length_append, List.length_cons] at hl
+  simp only [List.length_singleton, List.length_append, List.length_cons, List.length_nil] at hl
   have hp : p.length = 0 := by omega
   have hs : s.length = 0 := by omega
-  have hp' := List.length_eq_zero.mp hp
-  have hs' := List.length_eq_zero.mp hs
+  have hp' := List.length_eq_zero_iff.mp hp
+  have hs' := List.length_eq_zero_iff.mp hs
   subst p; subst s
   exact ⟨rfl, (List.cons.inj h).1.symm, rfl⟩
 
@@ -290,7 +293,7 @@ private theorem word_face {W : Finset V} {K : Family V} (d : Word W K)
   | pair L a =>
       rcases (show s = L ∨ s = insert a L by
         simpa [FiniteProtectedDualWord.Symbol.faces] using hs) with rfl | rfl
-      · exact (d.pair_data L a hq).1
+      · exact (d.pair_data s a hq).1
       · exact (d.pair_data L a hq).2.1
 
 private theorem insert_injective_on {b : V} {A B : Finset V}
@@ -302,7 +305,7 @@ private theorem pair_face_erase {a : V} {A S : Finset V} (ha : a ∉ A)
     (hS : S ∈ (Symbol.pair A a).faces) : S.erase a = A := by
   rcases (show S = A ∨ S = insert a A by
     simpa [FiniteProtectedDualWord.Symbol.faces] using hS) with rfl | rfl
-  · exact Finset.erase_eq_of_not_mem ha
+  · exact Finset.erase_eq_of_notMem ha
   · exact Finset.erase_insert ha
 
 private theorem first_disjoint {a : V} {A B : Finset V}
@@ -339,7 +342,7 @@ private theorem erase_dependency {a : V} {A T : Finset V}
   by_cases hat : a ∈ T
   · have ht : T = insert a A := by rw [← he, Finset.insert_erase hat]
     exact hT.ne ht
-  · exact hne ((Finset.erase_eq_of_not_mem hat).symm.trans he)
+  · exact hne ((Finset.erase_eq_of_notMem hat).symm.trans he)
 
 private theorem erase_lift_dependency {b : V} {U T : Finset V}
     (hT : T ⊂ insert b U) (hbT : b ∈ T) : T.erase b ⊂ U := by
@@ -376,7 +379,7 @@ private def emptyPathWord : Word (∅ : Finset V) (pathFamily []) where
     injection hh with hS
     subst S
     exact (hT.ne (Finset.eq_empty_iff_forall_notMem.mpr
-      (fun x hx => Finset.not_mem_empty x (hT.subset hx)))).elim
+      (fun x hx => Finset.notMem_empty x (hT.subset hx)))).elim
 
 private def singlePathWord (a : V) : Word ({a} : Finset V) (pathFamily [a]) where
   word := [.pair ∅ a]
@@ -461,7 +464,7 @@ private def pathWordStep (a b : V) (rest : List V)
         ∃ T ∈ pathIndependentOn rest.tail, insert b T = s := by
     intro s
     rw [pathIndependentOn_step a b rest hd]
-    simp only [Finset.mem_union, Finset.mem_image]
+    simpa only [F, Finset.mem_union, Finset.mem_image]
   have hfirstvalid : ∀ T ∈ F,
       T ∈ pathFamily (a :: b :: rest) ∧ insert a T ∈ pathFamily (a :: b :: rest) := by
     intro T hT
@@ -575,9 +578,10 @@ private def pathWordStep (a b : V) (rest : List V)
           simpa [FiniteProtectedDualWord.Symbol.faces] using hs) with rfl | rfl
         · exact Or.inl (Or.inl hAF)
         · exact Or.inl (Or.inr ⟨A, hAF, rfl⟩)
-      · obtain ⟨q, hq, rfl⟩ := List.mem_map.mp hq
-        obtain ⟨A, hA, rfl⟩ := (mem_adjoinSymbol_faces b q s).mp hs
-        exact Or.inr ⟨A, hfaceG q hq A hA, rfl⟩
+      · change q ∈ d.word.map (adjoinSymbol b) at hq
+        obtain ⟨q₀, hq₀, rfl⟩ := List.mem_map.mp hq
+        obtain ⟨A, hA, rfl⟩ := (mem_adjoinSymbol_faces b q₀ s).mp hs
+        exact Or.inr ⟨A, hfaceG q₀ hq₀ A hA, rfl⟩
   · intro p s L v hword T hT hne
     rcases split_append first second p (Symbol.pair L v) s hword with
       ⟨p₁, s₁, h₁, hp, _⟩ | ⟨p₂, s₂, h₂, hp, _⟩
@@ -600,7 +604,7 @@ private def pathWordStep (a b : V) (rest : List V)
       · by_cases hat : a ∈ T
         · have heT := Finset.insert_erase hat
           simp [FiniteProtectedDualWord.Symbol.faces, heT]
-        · simp [FiniteProtectedDualWord.Symbol.faces, Finset.erase_eq_of_not_mem hat]
+        · simp [FiniteProtectedDualWord.Symbol.faces, Finset.erase_eq_of_notMem hat]
     · obtain ⟨p₀, q, s₀, hx, hpp, he, _⟩ := split_map (adjoinSymbol b)
         d.word p₂ (Symbol.pair L v) s₂ h₂
       have hq : q ∈ d.word := by rw [hx]; simp
@@ -684,7 +688,7 @@ decreasing_by
     matching construction. This equality is consumed by the cycle blocks. -/
 @[simp] theorem pathWordData_word (vertices : List V) (hd : vertices.Nodup) :
     (pathWordData vertices hd).word = pathWord vertices := by
-  induction vertices using pathWord.induct generalizing hd with
+  induction vertices using pathWord.induct with
   | case1 => simp only [pathWordData, emptyPathWord, pathWord_nil]
   | case2 a => simp only [pathWordData, singlePathWord, pathWord_single]
   | case3 a b rest ih =>
@@ -735,7 +739,7 @@ private theorem criticalFaces_adjoin (a : V) (xs : List (Symbol V)) :
 theorem pathWord_critical_eq_selected (vertices : List V) :
     criticalFaces (pathWord vertices) = FiniteIndependentPathGreedy.pathCritical vertices := by
   induction vertices using FiniteIndependentPathGreedy.pathCritical.induct with
-  | case1 => simp only [pathWord_nil, criticalFaces, FiniteIndependentPathGreedy.pathCritical]
+  | case1 => simp only [pathWord_nil, criticalFaces, FiniteIndependentPathGreedy.pathCritical, Finset.insert_empty]
   | case2 a => simp only [pathWord_single, criticalFaces, FiniteIndependentPathGreedy.pathCritical]
   | case3 a b =>
       simp only [pathWord, List.tail_nil, criticalFaces_append, criticalFaces_first,

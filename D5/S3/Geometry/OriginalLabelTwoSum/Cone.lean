@@ -49,7 +49,7 @@ def collapseCone (W : Finset V) (K : Family V) (p : V)
       exact Finset.mem_erase.mpr ⟨fun he => htp (he ▸ hv),hts' hv⟩
     · by_cases hps : p ∈ s
       · right; simpa using (Finset.insert_erase hps).symm
-      · left; simp [Finset.erase_eq_of_not_mem hps]
+      · left; simp [Finset.erase_eq_of_notMem hps]
   let S := rectangle {p} (W.erase p) ∅ p hdisj (Finset.empty_subset _) (by simp)
     (by simp) F K (fun t ht => ((hF t).mp ht).1)
     (by intro t ht; simpa using ((hF t).mp ht).2.1) hmem hc
@@ -62,9 +62,9 @@ def collapseCone (W : Finset V) (K : Family V) (p : V)
     intro v hv
     by_contra hvp
     have hsingle : {v} ∈ F := (hF _).mpr ⟨by
-      simpa using Finset.mem_erase.mpr ⟨hvp,hs s hK hv⟩,
+      simpa using Finset.mem_erase.mpr ⟨(by simpa only [Finset.mem_singleton] using hvp),hs s hK hv⟩,
       by simp,K.lower (Finset.singleton_subset_iff.mpr hv) hK⟩
-    apply hnot {v} (by simpa using Finset.mem_image.mpr ⟨{v},hsingle,rfl⟩)
+    apply hnot {v} (Finset.mem_image.mpr ⟨{v},hsingle,by simp only [Finset.empty_union]⟩)
     simpa using Finset.singleton_subset_iff.mpr hv
   · intro hsub
     refine ⟨K.lower hsub hp,?_⟩
@@ -92,12 +92,12 @@ def terminalGamma (X Y : Finset V) (E : Family V)
   have hbase : ∀ t ⊆ Y, ∅ ∪ t ∈ B → t ∈ E := by
     rintro t ht ⟨a,ha,b,hb,he⟩
     apply E.lower ?_ hb
-    intro v hv
-    have hab : v ∈ a ∪ b := by rw [← he]; simpa using hv
-    rcases Finset.mem_union.mp hab with hv | hv
-    · exact False.elim (Finset.disjoint_left.mp hXY (ha hv) (ht hv))
-    · exact hv
-  let S := liftFibre (delta Y) E B ∅ Y (by simp [delta]) h0 G (by simp)
+    intro v hvT
+    have hab : v ∈ a ∪ b := by rw [← he]; simpa using hvT
+    rcases Finset.mem_union.mp hab with hva | hvb
+    · exact False.elim (Finset.disjoint_left.mp hXY (ha hva) (ht hvT))
+    · exact hvb
+  let S := liftFibre (delta Y) E B ∅ Y (by change (∅ : Finset V) ⊆ Y; exact Finset.empty_subset _) h0 G (by simp)
     (fun _ hs => hs) (by intro x hx; exact False.elim (Finset.not_ssubset_empty x hx)) hbase
   refine S.cast ?_ ?_
   · congr 1

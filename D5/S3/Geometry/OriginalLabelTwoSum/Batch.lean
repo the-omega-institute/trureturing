@@ -54,7 +54,7 @@ def batchFibre (is : List I) (hn : is.Nodup) (B : Family V)
   classical
   cases is with
   | nil =>
-    exact ⟨(Sequence.refl _).cast rfl rfl,by simp [Sequence.pairs_cast,Sequence.pairs]⟩
+    exact ⟨(Sequence.refl _).cast rfl rfl,by rw [Sequence.pairs_cast]; rfl⟩
   | cons i is =>
     have hni := List.nodup_cons.mp hn
     let B' := B ⊔ fibreLayers a M is
@@ -101,7 +101,9 @@ def batchFibre (is : List I) (hn : is.Nodup) (B : Family V)
     refine ⟨((P.cast (congrArg project sourceEq) (congrArg project middleEq)).append
       Q.1).cast rfl (congrArg project targetEq),?_⟩
     rw [Sequence.pairs_cast,Sequence.pairs_append,List.map_append,
-      Sequence.pairs_cast,liftFibre_pairs,Q.2]
+      Sequence.pairs_cast]
+    dsimp only [P]
+    rw [liftFibre_pairs,Q.2]
     simp only [List.flatMap_cons]
     rfl
 

@@ -40,7 +40,7 @@ def verticalGamma (X Y Z a : Finset V) (D L E : Family V)
       intro z hz
       have he : z = a := by simpa using hz
       subst z
-      exact fun hh => (Finset.ne_of_ssubset hx) (Finset.Subset.antisymm hx.1 hh)⟩
+      exact fun hh => hx.ne (Finset.Subset.antisymm hx.1 hh)⟩
     exact Or.inl (Or.inr ⟨x,hxL,t,ht,rfl⟩)
   have hbase : ∀ t ⊆ Y, a ∪ t ∈ B → t ∈ E := by
     intro t ht hs
@@ -77,19 +77,19 @@ def verticalGamma (X Y Z a : Finset V) (D L E : Family V)
       · by_cases hax : a ⊆ x
         · have he := hmaxD x hx hax
           subst x
-          exact Or.inr ⟨a,le_rfl,t,ht.trans hz,rfl⟩
+          exact Or.inr ⟨a,(by change a ⊆ a; exact le_rfl),t,ht.trans hz,rfl⟩
         · exact Or.inl (Or.inl (Or.inl ⟨x,⟨hx,by simpa using hax⟩,t,ht,rfl⟩))
       · by_cases hax : a ⊆ x
         · have he := hmaxL x hx hax
           subst x
-          exact Or.inr ⟨a,le_rfl,t,ht,rfl⟩
+          exact Or.inr ⟨a,(by change a ⊆ a; exact le_rfl),t,ht,rfl⟩
         · exact Or.inl (Or.inl (Or.inr ⟨x,⟨hx,by simpa using hax⟩,t,ht,rfl⟩))
       · exact Or.inl (Or.inr hE')
   have hend : B ⊔ rawJoin (delta a) E = B := by
     apply sup_eq_left.mpr
     rintro s ⟨x,hx,t,ht,rfl⟩
     exact Or.inr ⟨x,hx.trans haX,t,ht,rfl⟩
-  exact (liftFibre (delta Y) E B a Y (by simp [delta]) hE0 G hda
+  exact (liftFibre (delta Y) E B a Y (by change (∅ : Finset V) ⊆ Y; exact Finset.empty_subset _) hE0 G hda
     (fun _ hs => hs) hproper hbase).cast (congrArg project hsource)
       (congrArg project hend)
 
@@ -158,7 +158,7 @@ def verticalVoid (X Y Z R a : Finset V) (D L : Family V)
         rw [heq,← Finset.insert_erase hrs]
         ext v; simp only [u,Finset.mem_union,Finset.mem_insert]; tauto
       · left
-        simpa [u,Finset.erase_eq_of_not_mem hrs] using heq
+        simpa [u,Finset.erase_eq_of_notMem hrs] using heq
   let S := rectangle (insert r a) (Y.erase r) a r hdisj (Finset.subset_insert _ _)
     (by simp) hra F Q (fun t ht => (hF t).mp ht)
     (fun t ht => hne.mono Finset.subset_union_left) hm hc
