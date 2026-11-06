@@ -1,7 +1,7 @@
 /- GID: D5/S3/Quantum/SpinChains/BooleanCollectiveLadders
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/SpinChains/BooleanCollectiveLadders
-   mirror-E: none
+   mirror-E: none(waiver:kernel-checked-operator-identities)
    anchors: []
    utility: none
    digest: Collective Boolean ladders on the full complex configuration carrier. -/
