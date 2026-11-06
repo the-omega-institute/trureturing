@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Analysis;
 internal sealed class DysonPhillipsPerturbationDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The Dyson–Phillips series constructs the unique strongly continuous bounded-perturbation evolution on every complex Banach space.",
+        "For every strongly continuous contraction family on a complex Banach space, the Dyson–Phillips series constructs its unique strongly continuous evolution under any bounded complex-linear perturbation.",
         H("Dyson–Phillips bounded perturbation"), Blocks(
             Paragraph(Text("Fix any universe u, a type E in Type u, a normed additive commutative group structure on E, a complex normed-space structure and completeness. All integrals are E-valued Bochner interval integrals with real Lebesgue measure volume. Let S be a family of continuous complex linear endomorphisms indexed by all real times, equal to the identity at nonpositive times, multiplicative at nonnegative times, of operator norm at most one at every real time, and with continuous vector orbits. Let B be any continuous complex linear endomorphism. There is no nontriviality assumption on E.")),
             Paragraph(Text("The public dysonTerm definition is the following actual ordered recurrence. The order of S and B is retained; no commutativity is assumed. The public dysonSum is the sum of these terms at the clamped time max(t,0).")),
