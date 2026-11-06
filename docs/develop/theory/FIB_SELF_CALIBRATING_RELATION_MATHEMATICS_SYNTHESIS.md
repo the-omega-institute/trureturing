@@ -2701,6 +2701,152 @@ $$
 仍是开放义务；这些结果保留为互补的静态容量、取得可达性、动态轨道和
 固定来源响应边界。
 
+## 25.33 原生有限速率的偏交换边界
+
+本节只综合 [Recursive Relational Observation: Native Finite-Rate Continuation](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_RATE_CONTINUATION.md)
+的来源特定结果。这里的“偏交换”只指有限调用串中 cap 与读切的两种有条件
+排列：读前 cap 只能在精确承认域内接上原读与纯更新；若先执行原始前缀、原始
+读和原始更新，再从该实际切点对未来后缀加 cap，则对任意原始前缀都成立。它
+不把两种排列推广成无条件的 cap/读交换，也不引入另一来源的接口。
+
+### 25.33.1 支持递推与 cap 无关的承认域
+
+对有限前缀 $a=(j_1,\ldots,j_p)$，令 $S_0=\{\{3,7\}\}$，并按来源式
+(2.2) 递推
+
+$$
+S_k=S_{k-1}\cup\{q:\exists r\in S_{k-1},\ \{q,r\}\text{ 对 }j_k
+\text{ 为 active pair},\ \exists s\in(0,1):J_k(q,r;s)>0\}.
+$$
+
+则对每个有限 $L>0$，$S_p$ 恰为 capped pre-read endpoint configuration
+distribution 的 support。若 $E_i=\{q:b_9(q)=i\}$ 且
+$\tau_i(a)=\lVert M_iK_ae_{\rm r}\rVert^2$，原读可接上的精确条件为
+
+$$
+\mathsf{Adm}(a):\qquad
+S_p\cap E_i\ne\varnothing\ \Longrightarrow\ \tau_i(a)>0
+\qquad(i=0,1).
+$$
+
+这个条件对所有有限正 cap 都相同；它是原始有限前缀的有限精确识别条件，
+不是新增 reader。于是，若 $\mathsf{Adm}(a)$ 成立，任意有限原始后缀 $f$
+都可在保持规定读、保留 $Q$ 和原 pure update 的条件下接续；若不成立，
+则某个正质量报告要求 $0/0$ 的 successor，所需 capped $\mathsf R(a,f)$
+不在该合同的定义域内。[来源 Theorem 2.2–2.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_RATE_CONTINUATION.md#2-bounded-node-extension-and-exact-read-admission)
+还给出 $a=\epsilon$ 与 $a=(9)$ admitted，以及省略地址 $9$ 的每个前缀
+仍 admitted；这些例子不改变上述量词。
+
+### 25.33.2 admitted 前缀的有限 $N$ 总变差账
+
+令 $P=\mathsf T(a)$ 时 $n=|a|$；令 $P=\mathsf R(a,f)$ 时要求
+$\mathsf{Adm}(a)$ 并取 $n=|a|+|f|$。设
+
+$$
+\vartheta_L=\frac{(2\alpha c)^2}{L^2+(2\alpha c)^2}.
+$$
+
+对每个这样的有限 $P$，来源 Theorem 4.2 的 complete-history 比较为
+
+$$
+\operatorname{TV}(\mu^P,\mu_L^P)
+\le \min\{1,\mathcal E_L(P)\}
+\le \min\{1,2n\vartheta_L\}
+\le \min\{1,8\alpha^2c^2n/L^2\}.
+$$
+
+因此对任意固定 $N\ge1$，在上述 admitted programme 族中统一取 $n\le N$
+时有 $\operatorname{TV}\le\min\{1,2N\vartheta_L\}$；给定
+$0<\varepsilon<1$，取
+
+$$
+L\ge2\alpha c\sqrt{2N/\varepsilon}
+$$
+
+即可得到 complete-history TV 不超过 $\varepsilon$（来源 Theorem 6.1）。
+这里的 $L$ 是比较过程的 cap，proposal count 对一个 $n$-call programme
+服从均值 $nL$ 的 Poisson 分布，因而只是数学比较资源；Poisson 计数虽几乎
+处处有限却无有界支撑，也没有由此得到有限位计算、硬超时或物理实现定理。
+
+### 25.33.3 任意前缀的 post-read-only cap
+
+对每一个原始有限 $\mathsf R(a,f)$，先保留原始 prefix、实际 report/read、
+pure update、已经发生的 configuration 和 archive，然后只从该实际 read cut
+对 $f$ 使用 capped continuation。这个 law 对所有前缀 $a$ 存在，不要求
+$\mathsf{Adm}(a)$；其来源式 (4.11) 为
+
+$$
+\operatorname{TV}\!\left(\mu^{\mathsf R(a,f)},
+\mu_{L,\mathrm{post}}^{a,f}\right)
+\le \min\left\{1,\sum_{i,\ell}C_L(w_{i,\ell},h_\ell)\right\}
+\le \min\{1,2|f|\vartheta_L\}.
+$$
+
+误差只支付后缀 $|f|$；原始前缀、read 和其取得成本完整保留。这个结论不
+声称对每个隐藏过去条件化后仍有同一 bound，也不把 post-read-only law 当作
+读前 capped law。[来源 Theorem 4.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_RATE_CONTINUATION.md#4-native-excess-current-bound-and-full-history-composition)
+
+### 25.33.4 $9^{10}$ 的零投影与受限 bounded-rate 下界
+
+对任意有限 $L>0$，读前 cap 的 $a=9^{10}$ 有
+$\tau_1(a)=0$，但 literal report $1$ 的 capped probability 严格为正；
+因此保持原 literal report、保留 $Q$、使用 unchanged pure update 的完整
+$\mathsf R(9^{10},f)$ law 对任意原始有限 $f$（包括 $\epsilon$ 与 $(1)$）
+都不存在。该非存在来自正质量的 $0/0$ successor，不是删去路径或把它改记为
+failure（来源 Theorem 3.1）。
+
+对任一固定原始有限后缀 $f$，令 $P=\mathsf R(9^{10},f)$；同一来源的下界
+只对以下明确受限的 comparison class 成立：
+law 有 exact original pre-read vector、literal report、read 时保留 $Q$ 和
+unchanged original pure update；configuration 是整个 $E$ 上的 causal pure-jump
+process，predictable total exit intensity 被某个有限 $L$ 统一有界；没有 forced
+或 deterministic configuration changes、killing 或 censored paths。对该类任一
+law $\eta$，
+
+$$
+\operatorname{TV}(\eta,\mu^P)\ge A=4c^2.
+$$
+
+这不是对所有 finite-resource model 的下界；unbounded integrated risk、改变
+vector history、额外 deterministic configuration changes 或改变 update 均在
+该定理范围之外，并须另行给出来源和对应关系。[来源 Theorems 3.1–3.2](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_RATE_CONTINUATION.md#3-actual-zero-projection-obstruction-and-its-bounded-rate-class)
+
+### 25.33.5 有限 $N$ 与无界长度的次序
+
+对 finite no-read words 定义
+
+$$
+B_N(L)=\sup_{|a|\le N}\operatorname{TV}(\mu^{\mathsf T(a)},
+\mu_L^{\mathsf T(a)}).
+$$
+
+当 $N\ge10$ 且 $L\ge L_{\rm f}$，来源 Theorem 5.1 给出
+
+$$
+1-(1-F_L)^{3\lfloor N/10\rfloor}
+\le B_N(L)\le\min\{1,2N\vartheta_L\},
+$$
+
+其中
+
+$$
+L_{\rm f}=\frac{A\alpha}{2d},\qquad
+r_L=\frac{A\alpha^2}{L^2+\alpha^2},\qquad
+F_L=r_L\exp\!\left[-\frac{2L}{\alpha}\arctan(\alpha/L)\right].
+$$
+
+当 $N\ge10$ 且 $L\ge\max\{L_{\rm f},\alpha\}$ 时，上下界具有只依赖该
+native source 的常数下的 $\min\{1,N/L^2\}$ 阶。可是对每个固定有限
+$L>0$，所有有限 no-read words 的 complete-history TV 上确界为 $1$；在
+$\mathsf T(1^{10m})$ 上，terminal TV 可对 $m$ 保持 $O(L^{-2})$，而
+complete-history TV 随 $m\to\infty$ 趋于 $1$。所以固定有限 $N$ 的 cap
+选择不能外推成对无界 word length 的统一小误差。[来源 Theorem 5.1]
+
+这里的有限长度结论只涉及同一 native source 中已声明的 finite words、exact
+history 与指定 terminal projection。它没有把有限 $N$ bound 变成所有长度的
+uniform bound，也没有把 almost-sure finite Poisson proposal count 变成确定的
+finite budget；这些边界与 source 的 Definition 6.2 一致。
+
 ## 追加锚（本行以下为增补区）
 
 ## 25.34 条件续接行的精度、同切口组合与边缘盲区
