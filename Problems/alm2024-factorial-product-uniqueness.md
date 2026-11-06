@@ -52,8 +52,7 @@ The proof evaluates these two rational products directly and applies the univers
 
 The adjacent ratio identity is
 
-$$\frac{f(n+1)}{f(n)}=\left(\frac{n}{n+1}
-ight)^n.$$
+$$\frac{f(n+1)}{f(n)}=\left(\frac{n}{n+1}\right)^n.$$
 
 The starting sets U={16,20,22,26,44,64,76,94,140} and V={10,24,38,46,48,56,68,80,84} have equal products of these ratios. All starts are even and distinct, so the corresponding adjacent pairs have no common endpoint. Crossing the ratios gives A and B above. The formal proof verifies the factorial products themselves, so this explanation introduces no unproved analytic supplier.
 

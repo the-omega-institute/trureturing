@@ -28,7 +28,19 @@ $$\forall G \in Type,\; [Group\left(G\right)] [Finite\left(G\right)] \forall H \
 
 Definition 3.1(ii), printed p. 8: “We let P_G(H,K) ≔ |DT_G(H, K)|/|H|ⁿ, so that P_G(H, K) is the (Laplacian) probability that a left transversal for H in G is also a right transversal for K in G.” Here n = H.index = K.index. Nat.card counts subsets, and the quotient is rational.
 
-**Definition 1.3 (The probability for one specified subgroup).**
+**Definition 1.3 (The arithmetic orbit factor).**
+
+$$\forall n \in \mathbb{N},\; orbitWeight\left(n\right) = \frac{(n! : \mathbb{Q})}{(n : \mathbb{Q})^{n}}$$
+
+*Formalization.* `D5/S3/FiniteGroups/TransversalProbabilityMonotone.orbitWeight` (`✓ std3`).
+
+*Citation.* S. Aivazidis; M. Loukaki; T. W. Müller (2023). *On the common transversal probability in finite groups*. DOI: [10.48550/arXiv.2209.00986](https://doi.org/10.48550/arXiv.2209.00986). URL: <https://arxiv.org/abs/2209.00986v2>.
+
+*Commentary.*
+
+For every natural number n, orbitWeight n is the rational number n!/n^n. For positive n this is the factor f(n) appearing in Proposition 3.2 and Problem 5.6. The definition also fixes a total value at zero.
+
+**Definition 1.4 (The probability for one specified subgroup).**
 
 $$\forall G \in Type,\; [Group\left(G\right)] [Finite\left(G\right)] \forall H \in Subgroup\left(G\right),\; P\left(H\right) = commonTransversalProbability\left(H, H, rfl\right)$$
 
@@ -40,7 +52,7 @@ $$\forall G \in Type,\; [Group\left(G\right)] [Finite\left(G\right)] \forall H \
 
 Definition 3.1(ii), printed p. 8: “If H = K, we let P_G(H) ≔ P_G(H, H) be the probability that a left transversal for H in G is a two-sided one.” This quantity belongs to H; it is not the minimum over all subgroups.
 
-**Definition 1.4 (Problem 5.2).**
+**Definition 1.5 (Problem 5.2).**
 
 $$claim = \left(\forall G \in Type,\; [Group\left(G\right)] [Finite\left(G\right)] \forall H \in Subgroup\left(G\right),\; \forall N \in Subgroup\left(G\right),\; \operatorname{N.Normal} \Rightarrow P\left(H\right) \le P\left(\operatorname{Max.max}\left(H, N\right)\right)\right)$$
 
@@ -52,7 +64,7 @@ $$claim = \left(\forall G \in Type,\; [Group\left(G\right)] [Finite\left(G\right
 
 Problem 5.2, printed p. 37: “Suppose that H ≤ G and N ⊴ G, where G is finite. Is it then always true that P_G(H) ≤ P_G(HN) (GAP computations confirm this up to |G| = 200)?” The group G is arbitrary and finite. The product HN is H ⊔ N because N is normal. The equality question and the homomorphism consequence are separate from this inequality.
 
-**Theorem 1.5 (The normal-extension inequality).**
+**Theorem 1.6 (The normal-extension inequality).**
 
 $$\forall G \in Type,\; [Group\left(G\right)] [Finite\left(G\right)] \forall H \in Subgroup\left(G\right),\; \forall N \in Subgroup\left(G\right),\; \operatorname{N.Normal} \Rightarrow P\left(H\right) \le P\left(\operatorname{Max.max}\left(H, N\right)\right)$$
 
@@ -76,4 +88,5 @@ For each double coset, let t be its number of left H-cosets. Its contribution to
 - Truth anchor: `D5/S3/FiniteGroups/TransversalProbabilityMonotone.P`
 - Truth anchor: `D5/S3/FiniteGroups/TransversalProbabilityMonotone.claim`
 - Truth anchor: `D5/S3/FiniteGroups/TransversalProbabilityMonotone.commonTransversalProbability`
+- Truth anchor: `D5/S3/FiniteGroups/TransversalProbabilityMonotone.orbitWeight`
 - Truth anchor: `D5/S3/FiniteGroups/TransversalProbabilityMonotone.result`
