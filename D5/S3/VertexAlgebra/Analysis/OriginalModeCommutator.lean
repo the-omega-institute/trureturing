@@ -21,6 +21,7 @@ import Mathlib.Analysis.Normed.Ring.InfiniteSum
    their Apache 2.0 license. -/
 
 set_option autoImplicit false
+set_option maxHeartbeats 1000000
 set_option backward.isDefEq.respectTransparency false
 noncomputable section
 open scoped BigOperators Topology VertexOperator
@@ -363,7 +364,7 @@ private theorem modeProductTerm_cast (a b : Charge M.D) (f g : Test)
           (M.operatorTerm b g (M.order a + k) p.2)) := by
   simp only [Model.modeProductTerm, Model.modeProduct, Model.operatorTerm,
     ContinuousLinearMap.smul_comp, ContinuousLinearMap.comp_smul,
-    smul_smul, castSource_smul]
+    smul_smul, castSource_smul, mul_comm]
 
 private theorem reverseModeProductTerm_cast (a b : Charge M.D) (f g : Test)
     (k : ℕ) (p : ℤ × ℤ) :
@@ -375,7 +376,6 @@ private theorem reverseModeProductTerm_cast (a b : Charge M.D) (f g : Test)
   simp only [Model.reverseModeProductTerm, Model.reverseModeProduct, Model.operatorTerm,
     ContinuousLinearMap.smul_comp, ContinuousLinearMap.comp_smul,
     smul_smul, castSource_smul]
-  rw [mul_comm]
 
 /-- Expand AB by continuity of composition, after proving the joint norm sum. -/
 theorem smearComposition_eq_tsum (a b : Charge M.D) (f g : Test) (k : ℕ) :
