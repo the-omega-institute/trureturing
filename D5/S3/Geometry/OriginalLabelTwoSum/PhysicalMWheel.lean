@@ -128,7 +128,7 @@ theorem fundamental_rows (m : Nat) (hm : 3 ≤ m) (i : Fin m) :
   have hswap : s(AllMWheel.label m i,(0 : AllMWheel.Label m)) = s(0,AllMWheel.label m i) :=
     Sym2.eq_swap
   change (k ∈ AllMWheel.ground m ∧ s(0,k) ∈ (rimPath m hm i).edges) ↔ _
-  simp only [rimPath,SimpleGraph.Walk.edges_cons,
+  simp only [rimPath,data,SimpleGraph.Walk.edges_cons,
     SimpleGraph.Walk.edges_nil,List.mem_cons,List.not_mem_nil,or_false,hswap,
     spoke_eq,AllMWheel.rimEdge,Finset.mem_insert,Finset.mem_singleton]
   constructor

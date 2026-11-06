@@ -5,7 +5,11 @@
    SOURCE_ONLY_UNCOMPILED: no elaboration or acceptance receipt. -/
 import D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.CycleWord
 
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 noncomputable section
+local instance : (p : Prop) → Decidable p := Classical.propDecidable
 open Set Finset
 namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel
 open FiniteProtectedDualWord OriginalLabelTwoSum
@@ -31,12 +35,16 @@ private theorem word_owner {xs : List (Symbol V)}
   | cons c xs ih =>
       intro hp ha hb
       obtain ⟨hc, ht⟩ := List.pairwise_cons.mp hp
-      rcases List.mem_cons.mp ha with rfl | ha
-      · rcases List.mem_cons.mp hb with rfl | hb
-        · rfl
-        · exact (Finset.disjoint_left.mp (hc _ hb) hsa hsb).elim
-      · rcases List.mem_cons.mp hb with rfl | hb
-        · exact (Finset.disjoint_left.mp (hc _ ha) hsb hsa).elim
+      rcases List.mem_cons.mp ha with hac | ha
+      · rcases List.mem_cons.mp hb with hbc | hb
+        · exact hac.trans hbc.symm
+        · have hd := hc _ hb
+          rw [← hac] at hd
+          exact (Finset.disjoint_left.mp hd hsa hsb).elim
+      · rcases List.mem_cons.mp hb with hbc | hb
+        · have hd := hc _ ha
+          rw [← hbc] at hd
+          exact (Finset.disjoint_left.mp hd hsb hsa).elim
         · exact ih ht ha hb
 
 /- This is a constructor of the EXISTING P02 Contract, not another word or
@@ -45,7 +53,7 @@ private def maximalContract {W : Finset V} {K : Family V} (d : Word W K)
     (hm : ∀ S, Symbol.critical S ∈ d.word → ∀ U ∈ K, S ⊆ U → U = S)
     (hp : ∀ L v, Symbol.pair L v ∈ d.word → insert v L ⊂ W) : Contract W K where
   toWord := d
-  protected := criticalFaces d.word
+  «protected» := criticalFaces d.word
   protected_subset := by
     intro S hS
     exact d.critical_data S ((criticalFaces_mem _ S).mp hS)
@@ -184,7 +192,7 @@ private theorem tail_mem (m : Nat) (hm : 3 ≤ m) (x : Label m) :
     x ∈ tailGround m hm ↔ 3 ≤ x.val := by
   simp only [tailGround, ground, rim, Finset.mem_sdiff, Finset.mem_erase,
     Finset.mem_univ, and_true, Finset.mem_insert, Finset.mem_singleton,
-    Fin.ext_iff, firstLabel, secondLabel]
+    ne_eq, Fin.ext_iff, firstLabel, secondLabel, Fin.val_zero, Fin.val_mk]
   omega
 
 private theorem interval_independent (m lo n : Nat) (h : lo + n ≤ m + 1)
@@ -201,7 +209,7 @@ private theorem interval_independent (m lo n : Nat) (h : lo + n ≤ m + 1)
     have hxl := (mem_labelInterval _ _ _ _ x).mp (List.mem_toFinset.mp (hs hx))
     have hyl := (mem_labelInterval _ _ _ _ y).mp (List.mem_toFinset.mp (hs hy))
     exact he {x, y} ((labelInterval_edges _ _ _ _ _).mpr
-      ⟨x, y, hxl.1, heq, hyl.2, rfl⟩) (by simp [hx, hy])
+      ⟨x, y, hxl.1, heq, hyl.2, rfl⟩) (Finset.insert_subset_iff.mpr ⟨hx, Finset.singleton_subset_iff.mpr hy⟩)
   · rintro ⟨hs, he⟩
     refine ⟨fun x hx => List.mem_toFinset.mpr
       ((mem_labelInterval _ _ _ _ x).mpr (hs x hx)), ?_⟩
@@ -219,11 +227,11 @@ private theorem root_independent (m : Nat) (hm : 3 ≤ m) (s : Finset (Label m))
     refine ⟨hs, ?_, ?_⟩
     · intro x hx y hy hx2 hxy
       exact he {x, y} ((pathRootPath_edges m hm _).mpr (Or.inl
-        ⟨x, y, hx2, hxy, by have := y.isLt; omega, rfl⟩)) (by simp [hx, hy])
+        ⟨x, y, hx2, hxy, by have := y.isLt; omega, rfl⟩)) (Finset.insert_subset_iff.mpr ⟨hx, Finset.singleton_subset_iff.mpr hy⟩)
     · by_contra hn
       push_neg at hn
       exact he {lastLabel m, firstLabel m hm}
-        ((pathRootPath_edges m hm _).mpr (Or.inr rfl)) (by simp [hn])
+        ((pathRootPath_edges m hm _).mpr (Or.inr rfl)) (Finset.insert_subset_iff.mpr ⟨hn.1, Finset.singleton_subset_iff.mpr hn.2⟩)
   · rintro ⟨hs, he, hw⟩
     refine ⟨hs, ?_⟩
     intro e he' hsub
@@ -278,7 +286,7 @@ private theorem adjoin_rim_independent (m : Nat) (hm : 3 ≤ m)
       intro he
       exact ha (secondLabel m hm) h2 x (Finset.mem_union_right _ hx)
         (by simp [secondLabel]) (by simp [secondLabel, he])
-    have hxm : x.val ≠ m := fun he => hmT (Fin.ext he ▸ hx)
+    have hxm : x.val ≠ m := fun he => hmT ((show x = lastLabel m from Fin.ext he) ▸ hx)
     have hxl := ht x hx
     have hxu := x.isLt
     constructor <;> omega
@@ -568,6 +576,7 @@ private theorem ground_positive (m : Nat) {x : Label m} (hx : x ∈ ground m) :
     1 ≤ x.val := by
   have hn : x ≠ 0 := (Finset.mem_erase.mp hx).1
   have hz : x = 0 ↔ x.val = 0 := Fin.ext_iff
+  have hnval := (not_congr hz).mp hn
   omega
 
 private theorem dominate_two (m : Nat) (hm : 3 ≤ m) (h0 : m % 3 = 0)
@@ -679,7 +688,7 @@ private theorem cycle_critical_maximal (m : Nat) (hm : 3 ≤ m) (hr : m % 3 ≠ 
   intro x hx
   rcases hd x (hu.1 hx) with h | ⟨y, hy, he⟩
   · exact h
-  · exact (hu.2 {x, y} he (by simp [hx, hSU hy])).elim
+  · exact (hu.2 {x, y} he (Finset.insert_subset_iff.mpr ⟨hx, Finset.singleton_subset_iff.mpr (hSU hy)⟩)).elim
 
 private theorem cycle_face_proper (m : Nat) (hm : 3 ≤ m)
     (U : Finset (Label m)) (hU : U ∈ facets (cycleIndependentOn m hm)) :
@@ -692,7 +701,8 @@ private theorem cycle_face_proper (m : Nat) (hm : 3 ≤ m)
   apply hu.2 {x, y} (cycle_edge_linear m hm x y (by simp [x, firstLabel])
     (by simp [x, y, firstLabel, secondLabel]))
   rw [he]
-  simp [x, y, ground, firstLabel, secondLabel]
+  exact Finset.insert_subset_iff.mpr ⟨by simp [x, ground, firstLabel],
+    Finset.singleton_subset_iff.mpr (by simp [y, ground, secondLabel])⟩
 
 /-- Both excluded residues use actual maximal critical protection; no good
     residue is incorrectly fed to this constructor. -/
@@ -761,13 +771,13 @@ private theorem switch_pair (m lo k j : Nat) (hk : 1 ≤ k) (hj : j < k)
         have he : switchBase m lo 1 0 = ∅ := by
           ext x
           simp only [switchBase, Finset.mem_filter, Finset.mem_univ, true_and,
-            Finset.not_mem_empty]
+            Finset.notMem_empty]
           omega
         simpa [labelInterval, he] using
           (show Symbol.pair ∅ (⟨lo, by omega⟩ : Label m) ∈
             pathWord [⟨lo, by omega⟩] by simp)
       · have hn : 3*k - 2 = (3*k - 4) + 2 := by omega
-        rw [hn]
+        simp only [hn]
         change _ ∈ pathWord (⟨lo, by omega⟩ :: ⟨lo+1, by omega⟩ ::
           labelInterval m (lo+2) (3*k-4) (by omega))
         rw [pathWord_cons_cons]
@@ -793,11 +803,13 @@ private theorem switch_pair (m lo k j : Nat) (hk : 1 ≤ k) (hj : j < k)
         ext x
         simp only [switchBase, Finset.mem_filter, Finset.mem_univ, true_and,
           Finset.mem_insert, Fin.ext_iff]
-        dsimp
         omega
       have hp : (⟨lo+3*(j+1), by omega⟩ : Label m) =
-          (⟨(lo+3)+3*j, by omega⟩ : Label m) := Fin.ext (by omega)
-      rw [hn]
+          (⟨(lo+3)+3*j, by omega⟩ : Label m) := by
+        apply Fin.ext
+        change lo + 3 * (j + 1) = (lo + 3) + 3 * j
+        omega
+      simp only [hn]
       change _ ∈ pathWord (⟨lo, by omega⟩ :: ⟨lo+1, by omega⟩ ::
         ⟨lo+2, by omega⟩ :: labelInterval m (lo+3) (3*(k-1)-2) (by omega))
       rw [pathWord_cons_cons]
@@ -841,8 +853,6 @@ private theorem collar_pair_in_word (m : Nat) (hm : 3 ≤ m) (h1 : m % 3 = 1)
   rw [cycleWord_eq]
   apply List.mem_append.mpr
   right
-  apply List.mem_append.mpr
-  right
   exact List.mem_map.mpr ⟨_, ht, rfl⟩
 
 private theorem collar_pair_data (m : Nat) (hm : 3 ≤ m) (h1 : m % 3 = 1)
@@ -861,7 +871,7 @@ private theorem cycle_no_adj (m : Nat) (hm : 3 ≤ m) {U : Finset (Label m)}
     (hU : U ∈ facets (cycleIndependentOn m hm)) {x y : Label m}
     (hx : x ∈ U) (hy : y ∈ U) (he : {x, y} ∈ cycleEdges m hm) : False := by
   have h := (mem_cycleIndependentOn m hm U).mp ((mem_cycleFamily m hm U).mp hU)
-  exact h.2 {x, y} he (by simp [hx, hy])
+  exact h.2 {x, y} he (Finset.insert_subset_iff.mpr ⟨hx, Finset.singleton_subset_iff.mpr hy⟩)
 
 /- Only the two adjacent holes 3j+2,3j+3 can extend a_j. This is the
    domination calculation, not an assumption about the wanted endpoint. -/
@@ -914,7 +924,6 @@ private theorem collar_next (m : Nat) (hm : 3 ≤ m) (h1 : m % 3 = 1)
   ext x
   simp only [collarB, Finset.mem_insert, Fin.ext_iff, collarPivot,
     collarA_mem m h1]
-  dsimp
   have hx := x.isLt
   have hmk := good_width m h1
   omega
@@ -941,7 +950,7 @@ private theorem collar_supersets (m : Nat) (hm : 3 ≤ m) (h1 : m % 3 = 1)
   have hadj : ¬ (p ∈ U ∧ q ∈ U) := by
     rintro ⟨hp, hq⟩
     exact cycle_no_adj m hm hU hp hq (cycle_edge_linear m hm p q
-      (by dsimp [p, collarPivot]; omega) (by dsimp [p, q, collarPivot]; omega))
+      (by dsimp [p, collarPivot]; omega) (by dsimp [p, q, collarPivot] <;> omega))
   by_cases hp : p ∈ U
   · right; left
     apply Finset.Subset.antisymm
@@ -1008,8 +1017,7 @@ private theorem critical_supersets (m : Nat) (hm : 3 ≤ m) (h1 : m % 3 = 1)
     ext x
     simp only [collarB, Finset.mem_insert, collarA_mem m h1, Fin.ext_iff,
       collarPivot, labelsCongruent, Finset.mem_filter, Finset.mem_univ, true_and, lastLabel]
-    dsimp
-    have hx := x.isLt
+      have hx := x.isLt
     omega
   by_cases hl : lastLabel m ∈ U
   · right
@@ -1036,7 +1044,7 @@ private theorem mem_goodH (m : Nat) (T : Finset (Label m)) :
 def goodCycleContract (m : Nat) (hm : 3 ≤ m) (h1 : m % 3 = 1) :
     Contract (ground m) (facets (cycleIndependentOn m hm)) where
   toWord := cycleWordData m hm
-  protected := goodH m
+  «protected» := goodH m
   protected_subset := by
     intro T hT
     rcases (mem_goodH m T).mp hT with rfl | ⟨j, rfl | rfl⟩
@@ -1133,7 +1141,7 @@ private theorem eta_good_cells (m : Nat) (hm : 3 ≤ m) (h1 : m % 3 = 1) :
   have hSW := (cycleWordData m hm).supported _ hS
   have hmS : lastLabel m ∉ labelsCongruent m 2 2 := by
     simp [labelsCongruent, lastLabel, h1]
-  have hmEta : lastLabel m ∈ eta1 m hm := by simp [eta1, ground, lastLabel, hmS]; omega
+  have hmEta : lastLabel m ∈ eta1 m hm := by simp [eta1, ground, lastLabel, hmS, ne_eq, Fin.ext_iff] <;> omega
   have hEtaAbsent : eta1 m hm ∉ A1 m hm := by
     rw [← good_dual m hm, dual_mem]
     rintro ⟨_, hn⟩
@@ -1355,19 +1363,24 @@ private theorem collarState_start (m : Nat) (hm : 3 ≤ m) (h1 : m % 3 = 1) :
   intro s
   constructor
   · rintro ⟨hsW, hn | hH⟩
-    · left; rw [← good_dual m hm, dual_mem]; exact ⟨hsW, hn⟩
+    · left
+      change s ∈ A1 m hm
+      rw [← good_dual m hm, dual_mem]
+      exact ⟨hsW, hn⟩
     · obtain ⟨i, _, he⟩ := (mem_collarRest m 0 _).mp hH
       right
       refine ⟨collarUpper m i, Finset.mem_image.mpr ⟨i, Finset.mem_univ _, rfl⟩, ?_⟩
       have hsub : collarA m i ⊆ ground m \ s := by
-        rcases he with he | he <;> rw [he]
-        · exact le_rfl
-        · exact Finset.subset_insert _ _
+        rcases he with he | he
+        · rw [he]
+        · rw [he]
+          exact Finset.subset_insert _ _
       intro x hx
       exact Finset.mem_sdiff.mpr ⟨hsW hx, fun hxa =>
         (Finset.mem_sdiff.mp (hsub hxa)).2 hx⟩
   · rintro (hs | ⟨t, ht, hst⟩)
-    · rw [← good_dual m hm, dual_mem] at hs
+    · change s ∈ A1 m hm at hs
+      rw [← good_dual m hm, dual_mem] at hs
       exact ⟨hs.1, Or.inl hs.2⟩
     · obtain ⟨i, _, rfl⟩ := Finset.mem_image.mp ht
       have hsW : s ⊆ ground m := hst.trans Finset.sdiff_subset
@@ -1496,7 +1509,7 @@ private theorem pair_euler (P : CollapsePair V) : nativeEuler P.ambient = native
   unfold nativeEuler
   rw [ht, Finset.sum_insert (by simp [hlt, hlu]), Finset.sum_insert hut]
   have hc : P.upper.card = P.lower.card+1 := by
-    exact Finset.card_insert_of_not_mem P.apex_notMem
+    exact Finset.card_insert_of_notMem P.apex_notMem
   rw [hc, pow_succ]
   ring
 
@@ -1524,8 +1537,9 @@ private theorem cell_euler (B : Family V) (d : Finset V)
         · exact Or.inl hs
         · exact Or.inr ⟨hsn, hc.boundary d (by simp) s
             (Finset.ssubset_iff_subset_ne.mpr ⟨hst, hs⟩)⟩
-    · rintro (rfl | ⟨hsn, hs⟩)
-      · exact ⟨hn, Or.inr ⟨d, by simp, le_rfl⟩⟩
+    · rintro (he | ⟨hsn, hs⟩)
+      · rw [he]
+        exact ⟨hn, Or.inr ⟨d, by simp, le_rfl⟩⟩
       · exact ⟨hsn, Or.inl hs⟩
   unfold nativeEuler
   rw [ht, Finset.sum_insert]
