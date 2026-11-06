@@ -26,7 +26,12 @@ internal sealed class BirkhoffSharpContractionDocument : IScribeDocumentDefiniti
     private static Formula C => Call("coefficients", V("A"));
     private static Formula Vec(string type) => Arr(V(type), R);
     private static Formula Entry(Formula i, Formula j) => Call("entry", V("A"), i, j);
-    private static Formula Context(Formula body) =>
+    private static Formula DefinitionContext(Formula body) =>
+        All("I", Call("Type"), All("J", Call("Type"),
+            Seq(OpenBracket, Call("Fintype", V("I")), CloseBracket, Sp,
+                OpenBracket, Call("Fintype", V("J")), CloseBracket, Sp,
+                All("A", Call("Matrix", V("I"), V("J"), R), body))));
+    private static Formula TheoremContext(Formula body) =>
         All("I", Call("Type"), All("J", Call("Type"),
             Seq(OpenBracket, Call("Fintype", V("I")), CloseBracket, Sp,
                 OpenBracket, Call("Fintype", V("J")), CloseBracket, Sp,
@@ -46,28 +51,30 @@ internal sealed class BirkhoffSharpContractionDocument : IScribeDocumentDefiniti
     private static Formula Member(Formula value, Formula set) => Seq(value, Sp, InMacro, Sp, set);
     private static Formula DistanceDefinition =>
         All("K", Call("Type"), Seq(OpenBracket, Call("Fintype", V("K")), CloseBracket, Sp,
-            OpenBracket, Call("Nonempty", V("K")), CloseBracket, Sp,
             All("x", Vec("K"), All("y", Vec("K"), Equal(Dst(V("x"), V("y")),
                 Call("log", Fraction(
-                    Indexed(Max, Member(V("k"), V("K")), Fraction(Call("x", V("k")), Call("y", V("k")))),
-                    Indexed(Min, Member(V("k"), V("K")), Fraction(Call("x", V("k")), Call("y", V("k")))))))))));
-    private static Formula ThetaDefinition => Context(Equal(Th,
-        Indexed(Max, Seq(V("i"), Comma, V("k"), Sp, InMacro, Sp, V("I"), Semi,
-                V("j"), Comma, V("l"), Sp, InMacro, Sp, V("J")),
+                    Indexed(Seq(Operatorname, Grp(V("iSup"))), Seq(V("k"), Sp, Colon, Sp, V("K")),
+                        Fraction(Call("x", V("k")), Call("y", V("k")))),
+                    Indexed(Seq(Operatorname, Grp(V("iInf"))), Seq(V("k"), Sp, Colon, Sp, V("K")),
+                        Fraction(Call("x", V("k")), Call("y", V("k")))))))))));
+    private static Formula ThetaDefinition => DefinitionContext(Equal(Th,
+        Indexed(Seq(Operatorname, Grp(V("iSup"))),
+            Seq(Open, V("i"), Comma, V("k"), Comma, V("j"), Comma, V("l"), Close, Sp, Colon, Sp,
+                V("I"), Sp, Times, Sp, V("I"), Sp, Times, Sp, V("J"), Sp, Times, Sp, V("J")),
             Fraction(Product(Entry(V("i"), V("j")), Entry(V("k"), V("l"))),
                 Product(Entry(V("i"), V("l")), Entry(V("k"), V("j")))))));
-    private static Formula KappaDefinition => Context(Equal(K,
+    private static Formula KappaDefinition => DefinitionContext(Equal(K,
         Fraction(Seq(Root(Th), Minus, D(1)), Seq(Root(Th), Plus, D(1)))));
-    private static Formula ImageDefinition => Context(All("r", R,
+    private static Formula ImageDefinition => DefinitionContext(All("r", R,
         Seq(Member(V("r"), S), Sp, Iff, Sp,
             ExistsIn("x", Vec("J"), ExistsIn("y", Vec("J"),
                 Both(P(V("x")), Both(P(V("y")), Equal(Dst(Act(V("x")), Act(V("y"))), V("r")))))))));
-    private static Formula CoefficientDefinition => Context(All("c", R,
+    private static Formula CoefficientDefinition => DefinitionContext(All("c", R,
         Seq(Member(V("c"), C), Sp, Iff, Sp, Both(AtMost(D(0), V("c")),
             All("x", Vec("J"), All("y", Vec("J"),
                 Imp(P(V("x")), Imp(P(V("y")), AtMost(Dst(Act(V("x")), Act(V("y"))),
                     Product(V("c"), Dst(V("x"), V("y"))))))))))));
-    private static Formula Contract => Context(Imp(PositiveMatrix,
+    private static Formula Contract => TheoremContext(Imp(PositiveMatrix,
         Both(All("x", Vec("J"), Imp(P(V("x")), P(Act(V("x"))))),
             Both(Call("IsLUB", S, Call("log", Th)),
                 Both(Equal(Call("sSup", S), Call("log", Th)),
@@ -79,14 +86,20 @@ internal sealed class BirkhoffSharpContractionDocument : IScribeDocumentDefiniti
             + "and least nonnegative contraction coefficient (sqrt Theta-1)/(sqrt Theta+1).",
         H("Sharp rectangular Birkhoff contraction"),
         Blocks(
-            Paragraph(Text("The row and column types are finite and nonempty and live in independent universes. "
+            Paragraph(Text("The row and column types are finite, may be empty, and live in independent universes. "
                 + "The notation entry(A,i,j) means the real matrix entry A(i,j), and mulVec is the finite matrix-vector sum. "
-                + "Positive means strict positivity in every coordinate. All inputs below belong to this intrinsic positive domain.")),
+                + "Positive means strict positivity in every coordinate and is defined for any coordinate type. "
+                + "The definitions below impose no positivity assumption on their vector or matrix arguments. "
+                + "The contraction theorem assumes nonempty row and column types, strictly positive matrix entries, and strictly positive input vectors.")),
             Paragraph(Math(Disp(All("K", Call("Type"), All("x", Arr(V("K"), R),
                 Seq(P(V("x")), Sp, Iff, Sp, All("k", V("K"), Less(D(0), Call("x", V("k")))))))))),
-            Paragraph(Text("For a finite nonempty coordinate type, distance is log of the maximum coordinate ratio divided by the minimum. "
-                + "Theta is the maximum over all two rows and two columns of A(i,j) A(k,l)/(A(i,l) A(k,j)). "
-                + "The diagonal minors show Theta is at least one. Kappa is (sqrt Theta-1)/(sqrt Theta+1).")),
+            Paragraph(Text("The operators iSup and iInf denote the total real indexed supremum and infimum of the displayed families. "
+                + "Both are zero for an empty index type; for a finite nonempty index type they are the maximum and minimum. "
+                + "The index in theta is a single quadruple in the product of two row types and two column types. "
+                + "Real division and logarithm use the total conventions a/0=0, log(0)=0, and log(a)=log(abs(a)). "
+                + "For a finite nonempty coordinate type, distance is log of the maximum coordinate ratio divided by the minimum. "
+                + "For a strictly positive matrix with nonempty row and column types, diagonal cross ratios show Theta is at least one. "
+                + "Kappa is (sqrt Theta-1)/(sqrt Theta+1).")),
             Paragraph(Math(Disp(DistanceDefinition))),
             Paragraph(Math(Disp(ThetaDefinition))),
             Paragraph(Math(Disp(KappaDefinition))),
@@ -119,11 +132,10 @@ internal sealed class BirkhoffSharpContractionDocument : IScribeDocumentDefiniti
                     Paragraph(Text("Singleton types, rank-one matrices, Theta equal to one, and proportional input pairs are included. "
                         + "The diameter and coefficient are supremal and leastness statements; they need not be attained by a distinct positive pair. "
                         + "No square shape, common universe, rank, invertibility, stochasticity or normalization assumption is used. "
-                        + "Empty coordinate types and zero input coordinates are outside the asserted domain.")),
+                        + "Empty coordinate types and zero input coordinates are outside the theorem's asserted domain.")),
                     Paragraph(Text("The result is classical. Eveson and Nussbaum give the scalar sharpness and rectangular diameter formulas. "
                         + "The consumed upper estimates adapt TauCetiProject/TauCeti revision afa08a3ed16fb167e35de371afb1eb03fbc5913a under Apache-2.0; "
                         + "the complete license is docs/reports/licenses/tauceti-birkhoff/LICENSE.txt. "
-                        + "The adaptation uses finite max/min distance and the direct square-root coefficient. "
-                        + "Replace these adapted estimates by direct applications when equivalent declarations are supplied by the host's pinned library."))),
+                        + "The adaptation uses finite max/min distance and the direct square-root coefficient."))),
                 DescribeRole.Theorem))));
 }
