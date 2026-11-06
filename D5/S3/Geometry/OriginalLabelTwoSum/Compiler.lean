@@ -339,12 +339,17 @@ theorem finishCore_orderedPairs {X Y Z R : Finset V} {e p : V} {E : Family V}
   · subst p
     unfold finishCore
     erw [dif_pos (rfl : e = e)]
+    dsimp only
     by_cases hX : X.Nonempty
     · unfold terminalAtInterface
+      dsimp only
+      simp only [Finset.Nonempty] at *
       erw [dif_pos hX]
       simp [finishPairSchedule, hX, orderedPairs_cast,
         orderedPairs_append, terminalGamma_orderedPairs, collapseCone_orderedPairs, orderedPairs, orderedPair]
     · unfold terminalAtInterface
+      dsimp only
+      simp only [Finset.Nonempty] at *
       erw [dif_neg hX]
       simp [finishPairSchedule, hX, orderedPairs_cast,
         collapseCone_orderedPairs]

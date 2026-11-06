@@ -11,6 +11,9 @@ import D5.S3.Geometry.OriginalLabelTwoSum.Rename
 /-! SOURCE ONLY, UNCOMPILED. This installs the released actual W4 graph on
 the caller's original label type. It does not assert a native certificate,
 history, arbitrary marked wheel or universal structural supplier. -/
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 noncomputable section
 open Set Finset SimpleGraph
 namespace D5.S3.Geometry.OriginalLabelTwoSum.Wheel
@@ -58,22 +61,23 @@ def ambientGraph (f : Label ↪ Ambient) : GraphData Label Ambient where
   chord_not_tree := wheelGraphData.chord_not_tree
   chord_cover := wheelGraphData.chord_cover
 
+local instance : OfNat wheelGraphData.chords 0 :=
+  inferInstanceAs (OfNat (Fin 4) 0)
+
+local instance (f : Label ↪ Ambient) : OfNat (ambientGraph f).chords 0 :=
+  inferInstanceAs (OfNat (Fin 4) 0)
+
 theorem ambient_row (f : Label ↪ Ambient) (c : Fin 4) :
     (ambientGraph f).rows.row c = (wheelGraphData.rows.row c).image f := by
   classical
   ext i
-  change (i ∈ (Y.image f).filter (fun j => ambientEdge f j ∈
-    (wheelGraphData.path c).edges)) ↔ _
-  simp only [Finset.mem_filter,Finset.mem_image]
+  simp only [GraphData.rows,Finset.mem_filter,Finset.mem_image]
+  change ((∃ j, j ∈ Y ∧ f j = i) ∧ ambientEdge f i ∈
+    (wheelGraphData.path c).edges) ↔ _
   constructor
   · rintro ⟨⟨j,hj,rfl⟩,hp⟩
-    refine ⟨j,?_,rfl⟩
-    change j ∈ Y.filter _
-    simp only [Finset.mem_filter]
-    exact ⟨hj,by rwa [ambientEdge_image] at hp⟩
+    exact ⟨j,⟨hj,by rwa [ambientEdge_image] at hp⟩,rfl⟩
   · rintro ⟨j,hj,rfl⟩
-    change j ∈ Y.filter _ at hj
-    simp only [Finset.mem_filter] at hj
     exact ⟨⟨j,hj.1,rfl⟩,by rw [ambientEdge_image]; exact hj.2⟩
 
 theorem ambient_uniqueInterface (f : Label ↪ Ambient) :
