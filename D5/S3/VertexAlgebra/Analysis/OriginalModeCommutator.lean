@@ -246,14 +246,6 @@ private theorem weight_product_summable (f g : Test) (p q : ℕ) :
   (weighted_summable f p).mul_of_nonneg (weighted_summable g q)
     (weight_nonneg f p) (weight_nonneg g q)
 
-private theorem weight_product_tsum (f g : Test) (p q : ℕ) (c : ℝ) :
-    (∑' z : ℤ × ℤ, c * f.weight p z.1 * g.weight q z.2) =
-      c * f.W p * g.W q := by
-  simp_rw [mul_assoc]
-  rw [tsum_mul_left, (weight_product_summable f g p q).tsum_prod]
-  simp_rw [tsum_mul_left]
-  rw [tsum_mul_right] <;> rfl
-
 theorem modeProductTerm_le (a b : Charge M.D) (f g : Test) (k : ℕ) (p : ℤ × ℤ) :
     ‖M.modeProductTerm a b f g k p‖ ≤
       M.modeConstant a * M.modeConstant b *
@@ -302,36 +294,6 @@ theorem reverseModeProduct_absolute (a b : Charge M.D) (f g : Test) (k : ℕ) :
   simpa only [mul_assoc] using
     (weight_product_summable f g (M.order a + M.order b + k)
       (M.order b + k)).mul_left (M.modeConstant a * M.modeConstant b)
-
-theorem modeProduct_absolute_bound (a b : Charge M.D) (f g : Test) (k : ℕ) :
-    (∑' p : ℤ × ℤ, ‖M.modeProductTerm a b f g k p‖) ≤
-      M.modeConstant a * M.modeConstant b *
-        f.W (M.order a + k) * g.W (M.order a + M.order b + k) := by
-  have hmajorant : Summable (fun p : ℤ × ℤ =>
-      M.modeConstant a * M.modeConstant b *
-        f.weight (M.order a + k) p.1 *
-        g.weight (M.order a + M.order b + k) p.2) := by
-    simpa only [mul_assoc] using
-      (weight_product_summable f g (M.order a + k)
-        (M.order a + M.order b + k)).mul_left (M.modeConstant a * M.modeConstant b)
-  exact ((modeProduct_absolute M a b f g k).tsum_le_tsum
-    (modeProductTerm_le M a b f g k) hmajorant).trans_eq
-      (weight_product_tsum f g _ _ _)
-
-theorem reverseModeProduct_absolute_bound (a b : Charge M.D) (f g : Test) (k : ℕ) :
-    (∑' p : ℤ × ℤ, ‖M.reverseModeProductTerm a b f g k p‖) ≤
-      M.modeConstant a * M.modeConstant b *
-        f.W (M.order a + M.order b + k) * g.W (M.order b + k) := by
-  have hmajorant : Summable (fun p : ℤ × ℤ =>
-      M.modeConstant a * M.modeConstant b *
-        f.weight (M.order a + M.order b + k) p.1 *
-        g.weight (M.order b + k) p.2) := by
-    simpa only [mul_assoc] using
-      (weight_product_summable f g (M.order a + M.order b + k)
-        (M.order b + k)).mul_left (M.modeConstant a * M.modeConstant b)
-  exact ((reverseModeProduct_absolute M a b f g k).tsum_le_tsum
-    (reverseModeProductTerm_le M a b f g k) hmajorant).trans_eq
-      (weight_product_tsum f g _ _ _)
 
 theorem modeCommutator_absolute (a b : Charge M.D) (f g : Test) (k : ℕ) :
     Summable (fun p : ℤ × ℤ => ‖M.modeCommutatorTerm a b f g k p‖) := by
@@ -489,7 +451,14 @@ theorem smear_comp_eq_double_tsum (a b : Charge M.D) (f g : Test) (k : ℕ) :
     (reverseModeProduct_absolute M a b f g k).of_norm_bounded (fun _ => le_rfl)
   change M.smearComposition a b f g k - M.reverseSmearComposition a b f g k =
     ∑' p : ℤ × ℤ, M.modeCommutatorTerm a b f g k p
-  rw [smearComposition_eq_tsum, reverseSmearComposition_eq_tsum, ← hAB.tsum_sub hBA]
-  exact tsum_congr (fun p => (modeCommutatorTerm_eq_sub M a b f g k p).symm)
+  have hC : Summable (M.modeCommutatorTerm a b f g k) :=
+    (modeCommutator_absolute M a b f g k).of_norm_bounded (fun _ => le_rfl)
+  have hsum : HasSum (M.modeCommutatorTerm a b f g k)
+      (M.smearComposition a b f g k - M.reverseSmearComposition a b f g k) := by
+    rw [smearComposition_eq_tsum, reverseSmearComposition_eq_tsum]
+    convert hAB.hasSum.sub hBA.hasSum using 1
+    funext p
+    exact modeCommutatorTerm_eq_sub M a b f g k p
+  exact hsum.unique hC.hasSum
 
 end D5.S3.VertexAlgebra.Analysis.OriginalSmearing
