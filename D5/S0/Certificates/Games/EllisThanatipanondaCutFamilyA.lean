@@ -12,7 +12,7 @@
      result use GID D5/S0/Certificates/Games/AbukuEnforceNimberDomination.mex;
      declaration statement_id sha256:a5428f0bcf5c5073cd7c6a65f7783e70f736c5a73a3ab996fabd6f18423d8acc.
    All other source declarations have no direct frozen dependencies.
-   Definitions: G, claim; private definitions: F, xs, V (non-Prop types).
+   Definitions: G, claim; private definitions: F, V; public definition: xs (non-Prop types).
    Private content witnesses: xor_le_add -> xor_le_add;
      xs_le_sum -> xor_le_add; large_exclusion -> xs_le_sum;
      reachability -> reachability; exclusion -> large_exclusion;
@@ -91,7 +91,7 @@ open scoped BigOperators
 
 private def F (b n : ℕ) : ℕ := 2 * ((n - 1) / b) + (n - 1) % 2
 
-private def xs (l : List ℕ) : ℕ := l.foldr (· ^^^ ·) 0
+def xs (l : List ℕ) : ℕ := l.foldr (· ^^^ ·) 0
 
 private theorem xor_le_add (a b : ℕ) : a ^^^ b ≤ a + b := by
   induction a using Nat.strong_induction_on generalizing b with
