@@ -51,6 +51,7 @@ def evidence : Registration arena (type_of% (@result)) where
       (∑ k ∈ Finset.Icc 1 2, (catalan k : ℚ) / (4 : ℚ)^(k-1)).den
     rw [result 1 (by omega), result 2 (by omega)]
     norm_num [catalan_one, catalan_two]
+    decide +kernel
 
 def registration_result : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@result) (Realization signature) Unit Unit := {
