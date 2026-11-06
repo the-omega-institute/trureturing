@@ -482,7 +482,7 @@ def _log_result(action, result):
         failures.extend(item for item in pool.get("items", [])
                         if isinstance(item, dict) and
                         (item.get("outcome") in removal_failures | {"sweep_failed", "refused"}
-                         or item.get("outcome") == "retained" and item.get("stage") in {"revalidate", "remove"}))
+                         or item.get("outcome") == "retained" and item.get("stage") in {"revalidate", "remove", "release"}))
         # Pool status is authoritative even when no item carries a diagnostic.
         for item in failures or [{}]:
             outcome = item.get("outcome")

@@ -413,8 +413,6 @@ class MaintenanceLogTests(unittest.TestCase):
 
     def prepare_return_repository(self):
         sys.path.insert(0, str(SOURCE / "tools/scripts/worktree"))
-        from worktree_pool import allocation_record
-        from worktree_protocol import identity
         for name, value in (("lean-toolchain", "leanprover/lean4:v4.34.1\n"),
                             ("lake-manifest.json", '{"packages":[]}\n')):
             (self.main / name).write_text(value)
@@ -496,7 +494,7 @@ os.execv({real_git!r}, [{real_git!r}, *args])
         real_git = shutil.which("git")
         cli = SOURCE / "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"
         for outcome in ("qualification_failed", "checkpoint_failed", "partial_or_indeterminate",
-                        "refused", "revalidate"):
+                        "refused", "revalidate", "inspect_refused"):
             with self.subTest(outcome=outcome):
                 case = self.root / outcome
                 case.mkdir()
@@ -545,7 +543,12 @@ if any(arg.startswith("worktree-idle:") for arg in args):
 elif ready.exists() and ready.read_text() == "switched" and "merge-base" in args:
     ready.write_text("ready")
 elif ready.exists() and ready.read_text() == "ready" and not triggered.exists():
-    revalidate = fault == "revalidate" and "merge-base" in args and victim in args
+    ancestry = "merge-base" in args and victim in args
+    count_file = ready.with_name("ancestry-count")
+    count = int(count_file.read_text()) + 1 if ancestry and count_file.exists() else 1
+    if ancestry:
+        count_file.write_text(str(count))
+    revalidate = ancestry and ((fault == "revalidate" and count == 2) or fault == "inspect_refused")
     checkpoint = fault == "checkpoint_failed" and "add" in args and victim in args
     qualification = fault in ("qualification_failed", "refused") and record.exists() and "list" in args
     removal = fault == "partial_or_indeterminate" and "worktree" in args and "remove" in args and victim in args
@@ -565,15 +568,23 @@ os.execv({real_git!r}, [{real_git!r}, *args])
                         PATH=str(binary) + os.pathsep + self.environment["PATH"]),
                         capture_output=True, text=True, timeout=45)
                     self.assertTrue(marker.exists(), result.stdout + result.stderr)
-                    self.assertEqual(74, result.returncode, result.stdout + result.stderr)
+                    expected_exit = 0 if outcome == "inspect_refused" else 74
+                    self.assertEqual(expected_exit, result.returncode, result.stdout + result.stderr)
                     receipt = json.loads(result.stdout)
                     self.assertEqual("returned", receipt["status"])
-                    self.assertEqual("failed", receipt["pool"]["status"])
+                    self.assertEqual("succeeded" if outcome == "inspect_refused" else "failed", receipt["pool"]["status"])
                     self.assertEqual(head, receipt["checkpoint"]["commit"])
                     self.assertEqual("unchanged", receipt["checkpoint"]["status"])
                     self.assertEqual(receipt["idle_branch"], self.git("-C", tree, "symbolic-ref", "HEAD").decode())
                     self.assertEqual(head, self.git("rev-parse", receipt["task_branch"]).decode())
                     item = next(item for item in receipt["pool"]["items"] if item["path"] == str(victim))
+                    if outcome == "inspect_refused":
+                        self.assertEqual("retained", item["outcome"])
+                        self.assertNotIn("stage", item)
+                        rows = self.rows("worktree-protocol")
+                        self.assertEqual((0, "returned"), (rows[-1]["exit_code"], rows[-1]["status"]))
+                        self.assertFalse(any(row.get("pool_status") == "failed" for row in rows))
+                        continue
                     retained = outcome in ("refused", "revalidate")
                     self.assertEqual("retained" if retained else outcome, item["outcome"])
                     self.assertEqual("revalidate" if outcome == "revalidate" else "remove", item["stage"])
