@@ -1,3 +1,11 @@
+/- GID: D5/S3/Arith/Congruence/PowerQuotientOrder
+   generality: G
+   mirror-B: D5/B/S3/Arith/Congruence/PowerQuotientOrder
+   mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
+   anchors: [mathlib/module/Mathlib.Algebra.Ring.GeomSum, mathlib/module/Mathlib.Data.ZMod.Basic]
+   utility: none
+   digest: Exact multiplicative order modulo a natural power quotient, including the modulus-one boundary. -/
+
 import Mathlib.Algebra.Ring.GeomSum
 import Mathlib.Data.ZMod.Basic
 import Lean.Elab.Tactic.Omega
@@ -5,8 +13,7 @@ import Lean.Elab.Tactic.Omega
 /-!
 # Actual multiplicative order modulo a power quotient
 
-Source preparation only: this candidate has not been elaborated or kernel checked.
-The target is the actual multiplicative group order, represented by `orderOf` in
+The target is the actual multiplicative order, represented by `orderOf` in
 `ZMod`'s multiplicative monoid; the modulus-one case is included. Quotient
 divisibility supplies the return exponent. A size bound excludes returns at
 prime-divided exponents when `k >= 2`. At the equal-gap boundary `k = 1`, the
@@ -16,6 +23,9 @@ An application to a full-period nonunit implication requires a separately proved
 action and seed/divisibility bridge. No such dynamics or physical theorem is
 asserted here.
 -/
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
 
 namespace D5.S3.Arith.Congruence.PowerQuotientOrder
 
@@ -44,13 +54,14 @@ private theorem denominator_dvd (u a k : ℕ) (hu : 0 < u) :
   have hpow : (u ^ a) ^ 2 - 1 ∣ (u ^ a) ^ (2 * k) - 1 :=
     Nat.pow_sub_one_dvd_pow_sub_one (u ^ a) ⟨k, rfl⟩
   have he : a * (2 * k) = 2 * a * k := by
-    simp only [Nat.mul_assoc, Nat.mul_comm, Nat.mul_left_comm]
+    simp only [Nat.mul_comm, Nat.mul_left_comm]
   simpa only [← pow_mul, he] using hbase.trans hpow
 
 private theorem quotient_at_one (u a : ℕ) (hu : 0 < u) :
     (u ^ (2 * a * 1) - 1) / (u ^ a + 1) = u ^ a - 1 := by
   have he : 2 * a * 1 = a * 2 := by
-    simp only [Nat.mul_one, Nat.mul_comm]
+    simp only [Nat.mul_one]
+    exact Nat.mul_comm 2 a
   rw [he, pow_mul, ← square_sub_one_factor (u ^ a) (Nat.one_le_pow a u hu)]
   exact Nat.mul_div_cancel_left _ (by omega)
 
@@ -96,9 +107,9 @@ theorem power_quotient_order (u a k : ℕ) (hu : 2 ≤ u) (ha : 0 < a) (hk : 0 <
   have hu0 : 0 < u := by omega
   by_cases hk1 : k = 1
   · subst k
-    rw [if_pos rfl, quotient_at_one u a hu0]
+    rw [ite_eq_left rfl, quotient_at_one u a hu0]
     exact power_sub_one_order u a hu ha
-  · rw [if_neg hk1]
+  · rw [ite_eq_right hk1]
     have hk2 : 2 ≤ k := by omega
     have hr : 0 < 2 * a * k := Nat.mul_pos (Nat.mul_pos (by omega) ha) hk
     have hNdiv : (u ^ (2 * a * k) - 1) / (u ^ a + 1) ∣ u ^ (2 * a * k) - 1 :=
