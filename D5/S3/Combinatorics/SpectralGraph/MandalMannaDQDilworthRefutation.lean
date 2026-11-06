@@ -396,6 +396,7 @@ private theorem shift8_model (i j : Fin 8) :
   rw [← e8.sum_comp]
   simp only [e8.injective.eq_iff]
   simp_rw [distance8_table]
+  dsimp only [l8, Equiv.ofBijective]
   fin_cases i <;> fin_cases j <;>
     norm_num [distanceTable8, label8, familyShift, Fin.sum_univ_succ]
 
