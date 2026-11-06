@@ -3350,3 +3350,814 @@ such relation, impossibility or noncomputability. Mutual recovery of
 space, time, boundary and memory retains its full original scope.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. The original heat and source names, and the exact calibration needed by passive words
+
+**Definition 12.1 (source, numerical inputs and unchanged consumer).**
+Retain the analytic suppliers [E, §§109–112] and [S, §§115–117, 133],
+with all their hypotheses, and the coefficient constructions of §11.
+The group, product and raw Haar measure are
+
+$$
+\begin{gathered}
+G=H^1\times\mathbb R,\quad e=(0,0,0,0),\quad
+pp'=(x+x',y+y',z+z',w+w'+xy'),\quad
+d\mu=dx\,dy\,dz\,dw,\\
+X_1=\partial_x,\quad X_2=\partial_y+x\partial_w,\quad
+X_3=\partial_z,\quad L=-\sum_{j=1}^3X_j^2,\quad L\Gamma=\delta_e,\\
+S_{\min}=(aL-\eta\partial_w^2-16\sqrt{a\eta}\,\Gamma)
+             |_{C_c^\infty(G\setminus\{e\};\mathbb C)}.
+\end{gathered}
+\tag{12.1}
+$$
+
+The field $\Gamma$ has its original unit-source normalization. Fix
+arbitrary finite $a,\eta,d>0$, supplied by total rational interval
+names, and rational requested absolute errors. A separately requested
+time $t>0$ also has a total interval name; the times $d,2d,3d/2$
+below are computed from the same $d$ name. Retain exactly
+
+$$
+\begin{gathered}
+C(w_*)=1,\quad h=w_*/\|w_*\|_{L^2(\mu)},\quad
+c_h=C(h)>0,\quad \rho=A(h)/C(h),\\
+D(H)=\{u\in D(S_{\min}^*):A(u)=\rho C(u)\},\quad
+H=H_{\rm end}\ge0,\quad \ker H=\mathbb Ch,\\
+D(F)=\{u\in D(S_{\min}^*):C(u)=0\},\quad F\ge0,\quad
+\ker F=\{0\},\\
+m=h^2\mu,\quad m(G)=1,\quad J_hv=hv,\quad
+K=J_h^{-1}HJ_h,\quad T_t=e^{-tK},\quad S_t=e^{-tH}.
+\end{gathered}
+\tag{12.2}
+$$
+
+All raw-space pairings are in $\mathcal H=L^2(G,\mu;\mathbb C)$,
+antilinear in the first slot; a subscript $m$ denotes $L^2(m)$.
+The coefficient-positive $h$ is strictly positive $\mu$-almost
+everywhere and has norm one. The source trace is the continuous
+functional on the full form domain
+$\mathscr V=\mathscr V_0\dotplus\mathbb C1$ of [S, (116.1)–(116.4)].
+It is quasi-continuous evaluation at the original nonpolar $e$.
+It is not a value assigned to an arbitrary measurable representative.
+
+A global raw $L^2$ name has exactly the meaning of Definition 11.1:
+finite rational complex step functions on bounded rational boxes in
+the original coordinates, with certified global norm errors at each
+requested precision. A weighted name of $v\in L^2(m)$ may be given
+by a raw name of $J_hv$. Ordinary box-step approximations in the
+weighted norm will also be constructed below. A real scalar name
+returns certified rational intervals of arbitrarily small width.
+No heat, pointwise value, modulus, tail, supremum, word probability
+or full-law service is among the numerical inputs.
+
+The actual process starts at $e$ at time zero. Its positive-time
+density is the original $g_t$ of [S, Theorem 117.2]. Put
+
+$$
+\begin{gathered}
+v_t=J_hg_t=hg_t,\qquad N_d=\|g_d\|_{L^\infty(m)},\qquad
+M=1+N_d,\qquad c=\frac1{4M},\\
+\mathcal L=\{0,1,3,B\},\qquad
+f_3=cg_d,\quad f_B=\frac14,\quad
+f_0=f_1=\frac38-\frac12f_3,\qquad P=T_d.
+\end{gathered}
+\tag{12.3}
+$$
+
+The emissions in (12.3) are classes with any permitted repaired
+Borel representatives of Definition 8.1. The first read is at $2d$,
+and subsequent gaps are $d$. Read noise is fresh and independent
+conditional on the same undisturbed path. These definitions retain
+every original label, history and elapsed interval. In particular
+$F$ and $H$ remain different operators. Section 133 of [S] supplies
+the finiteness of $N_d$, without supplying a numerical name for it.
+
+**Theorem 12.2 (a computed resolvent of the full original endpoint).**
+From the $a,\eta$ names and the constructed services of §11,
+the action of $R=(H+1)^{-1}$ on every supplied global raw $L^2$
+name is computable at every rational absolute error. The output is a global name with a finite
+error certificate. The auxiliary discount $1$ is in the original
+units and does not change the physical clock. Explicitly set
+
+$$
+G_1=(F+1)^{-1},\quad n=h-G_1h,\quad
+D=\langle h,n\rangle=d_1,\quad z=n/D.
+\tag{12.4}
+$$
+
+Then the computed action is that of
+
+$$
+R=G_1+\frac{|n\rangle\langle n|}{D},\qquad
+0<D<1,\quad \|n\|_2\le1,\quad 0\le R\le I.
+\tag{12.5}
+$$
+
+Proof. Theorems 11.3–11.4 compute $G_1$ on all global inputs,
+$h,n$ and $D$. The full-complex-domain identity [S, (115.5)],
+at $r=1$, is precisely (12.5). Its original boundary-pairing
+calculation imposes $A=\rho C$; it does not identify $H$ with $F$.
+The bounds for $D,n$ follow from [S, (115.11), (116.17)] and the
+nonnegative spectral calculus of $F$. The bound for $R$ follows
+from the nonnegativity of the same $H$.
+
+Refine the $D$ intervals until their lower endpoint is positive.
+Fix rational $\ell>0$ smaller than that endpoint, so $D>\ell$.
+Positivity proves termination. All later center approximations
+$\widehat D$ can be chosen at least $\ell$. Suppose
+$\|\widehat n-n\|_2\le\alpha$ and
+$|\widehat D-D|\le\beta$. The rank-one operator error is at most
+
+$$
+\left\|\frac{|n\rangle\langle n|}{D}
+       -\frac{|\widehat n\rangle\langle\widehat n|}{\widehat D}
+\right\|
+\le \frac{(2+\alpha)\alpha}{\ell}
+       +\frac{(1+\alpha)^2\beta}{\ell^2}.
+\tag{12.6}
+$$
+
+Indeed split first the numerators at denominator $D$, then the
+denominators with numerator
+$|\widehat n\rangle\langle\widehat n|$. Use
+$\|n\|\le1$, $\|\widehat n\|\le1+\alpha$ and
+$D,\widehat D\ge\ell$. For a finite forcing of norm at most
+$Q$, multiply (12.6) by $Q$, add the requested $G_1$ action
+error and finite arithmetic error, and obtain an explicit output
+certificate. Inner products of finite box steps are finite sums
+over their common rational partition, so their rounding can be
+bounded by rational interval arithmetic. Approximating an arbitrary
+forcing by a finite one adds at most its input error, since
+$\|R\|\le1$. Every term can therefore be made smaller than an
+allocated fraction of the requested error.
+
+The same data compute $z$; for
+$Z=\widehat n/\widehat D$, before final rounding,
+
+$$
+\|Z-z\|_2\le
+ \frac{\alpha}{\ell}
+ +\frac{(1+\alpha)\beta}{\ell^2},\qquad \|z\|_2\le1/\ell.
+\tag{12.7}
+$$
+
+No inverse at spectral value zero is applied to a general forcing.
+In particular $n$ is a full form vector but need not lie in $D(H)$;
+its boundary defect in [S, (116.5)] is retained. $\square$
+
+**Theorem 12.3 (the exact source vector at each deterministic time).**
+Under Definition 12.1 and (12.4), for every $t>0$,
+
+$$
+v_t=(H+1)S_tz.
+\tag{12.8}
+$$
+
+This is the vector representing the original source-start law at
+that very time, with its original normalization, rather than just
+a density for almost every time or a discounted occupation law.
+
+Proof. The trace of the full resolvent in [S, (116.13)] gives,
+for every $\phi\in\mathcal H$,
+
+$$
+\operatorname{tr}(J_h^{-1}R\phi)=\langle z,\phi\rangle_\mu.
+\tag{12.9}
+$$
+
+Fix $t>0$. Spectral smoothing puts $S_t\phi$ in $D(H)$,
+and $(H+1)S_t$ is bounded and self-adjoint. Apply (12.9) to
+$(H+1)S_t\phi$. Using $R(H+1)S_t\phi=S_t\phi$ gives
+
+$$
+\begin{aligned}
+\operatorname{tr}(T_tJ_h^{-1}\phi)
+ &=\langle z,(H+1)S_t\phi\rangle_\mu\\
+ &=\langle(H+1)S_tz,\phi\rangle_\mu.
+\end{aligned}
+\tag{12.10}
+$$
+
+The all-input, deterministic-time Riesz identity [S, (117.2),
+(117.5)] identifies the left side with
+$\langle J_hg_t,\phi\rangle_\mu$. Riesz uniqueness proves
+(12.8), including its complex pairing convention. The source
+normalization in (12.9) is fixed by the equilibrium identity
+$\mathscr E_1[b_1,u]=D\operatorname{tr}u$,
+$J_hb_1=n$, of [S, (116.4)]. Thus there is no missing source
+factor, no division by $h(e)$ and no insertion of a Dirac mass as
+an $L^2$ vector. Smoothing precedes the unbounded operator in
+(12.8); no assertion $z\in D(H)$ is needed. $\square$
+
+**Theorem 12.4 (certified global heat and source computation).**
+From only the numerical inputs in Definition 12.1 and the
+constructed services of §11, one can compute $S_tu$ for every
+global raw name of $u$ and every named $t>0$, and the same $v_t$
+of (12.8), with any prescribed global $L^2(\mu)$ error. One can
+also produce finite box-step approximations to $g_t$ in global
+$L^2(m)$ and to the actual raw-Haar density $h v_t$ in global
+$L^1(\mu)$. These are numerical names of mathematical objects.
+
+Proof. Use the computed positive self-adjoint contraction $R$.
+On its compact spectral interval $[0,1]$ set
+
+$$
+\begin{gathered}
+\chi_t(x)=e^{-t(x^{-1}-1)},\qquad
+\psi_t(x)=x^{-1}e^{-t(x^{-1}-1)}\quad(0<x\le1),\\
+\chi_t(0)=\psi_t(0)=0,\qquad
+S_t=\chi_t(R),\qquad v_t=\psi_t(R)z.
+\end{gathered}
+\tag{12.11}
+$$
+
+The limits at zero are zero. The spectral substitution
+$x=(1+\lambda)^{-1}$ proves the operator identities, using
+(12.8). The endpoint $x=0$ controls the entire unbounded
+$\lambda$ tail; it is not a spatial or spectral cutoff.
+
+For complete finite certificates find rational
+$0<t_-\le t\le t_+$ from the time name, and rational
+$E>e^{t_+}$. Computable rational bounds are
+
+$$
+\begin{gathered}
+L_\chi=4Et_+/t_-^2,\qquad
+L_\psi=E(4/t_-^2+27t_+/t_-^3),\\
+C_\chi=1/t_-,\qquad C_\psi=1/t_-+4/t_-^2,\\
+\|\chi_t\|_\infty\le1,\qquad
+\|\psi_t\|_\infty\le1+1/t_-.
+\end{gathered}
+\tag{12.12}
+$$
+
+Here $L$ bounds the Lipschitz constant in $x$ on $[0,1]$;
+$C$ bounds variation per unit change of time within
+$[t_-,t_+]$. To check them, write $y=1/x$. Then
+
+$$
+\partial_x\chi_t=t y^2e^t e^{-ty},\qquad
+|\partial_x\psi_t|
+ \le e^t(y^2+t y^3)e^{-ty}.
+\tag{12.13}
+$$
+
+The maxima over $y\ge0$ of $y^j e^{-t_-y}$ are
+$(j/(\mathrm e t_-))^j$, bounded by $j^j/t_-^j$.
+This proves the displayed $L$ bounds, including their continuous
+extension at zero. With $\lambda=x^{-1}-1\ge0$,
+$|\partial_t\chi_t|=\lambda e^{-t\lambda}$ and
+$|\partial_t\psi_t|=(\lambda^2+\lambda)e^{-t\lambda}$.
+The same maxima give the $C$ bounds. Finally
+$(1+\lambda)e^{-t\lambda}\le1+1/t_-$ proves the last
+bound. Every constant in (12.12) is computed from the time bracket.
+
+The following polynomial approximation is a reused intermediate
+method, applied to these specific scalar functions. Let
+$f$ denote either $\chi$ or $\psi$. Choose rational
+$\tau\in[t_-,t_+]$ with $|t-\tau|\le e_t$, and compute
+each $f_\tau(j/N)$ to rational error at most $\kappa$, with
+the value at $j=0$ set to zero. For $N\ge1$ form the rational
+Bernstein polynomial
+
+$$
+P(x)=\sum_{j=0}^N\widehat f_j{N\choose j}
+                    x^j(1-x)^{N-j}.
+\tag{12.14}
+$$
+
+For a binomial random variable $J$ with parameters $(N,x)$,
+$\mathbb E|J/N-x|\le\sqrt{x(1-x)/N}\le1/(2\sqrt N)$.
+Consequently the exact Bernstein polynomial differs from
+$f_\tau$ by at most $L_f/(2\sqrt N)$. Its nonnegative
+weights sum to one, so coefficient rounding adds at most
+$\kappa$. Time uncertainty adds at most $C_f e_t$. Hence
+
+$$
+\|P-f_t\|_{C([0,1])}
+ \le\Delta:=\frac{L_f}{2\sqrt N}+C_f e_t+\kappa.
+\tag{12.15}
+$$
+
+For any desired rational $\delta>0$, choosing
+$N>(3L_f/(2\delta))^2$, with $N$ a perfect square,
+$e_t<\delta/[3(C_f+1)]$ and $\kappa<\delta/3$
+makes $\Delta<\delta$. Elementary exponential evaluation at
+the finitely many positive rational nodes is total. No unknown
+modulus or approximation constant has been supplied.
+
+To include every vector error, expand (12.14) by exact rational
+arithmetic as $P(x)=\sum_{j=0}^Na_jx^j$. Put
+$A_P=\sum_j|a_j|$ and $B_P=\sum_jj|a_j|$.
+For an exact named input $u$, first compute a rational
+$Q\ge\|u\|_2$ from the norm of any finite approximation plus
+its certified error; this is not an additional input. Start
+with a finite $U_0$ of error $\alpha$, and compute
+$U_j$ with $\|U_j-RU_{j-1}\|_2\le\beta_j$ using
+Theorem 12.2. Contractivity gives inductively
+
+$$
+\|U_j-R^ju\|_2\le\alpha+\sum_{i=1}^j\beta_i.
+\tag{12.16}
+$$
+
+If the finite linear combination $\widehat V$ of the $U_j$
+has arithmetic error at most $\sigma$, then continuous spectral
+calculus and (12.15) give the global certificate
+
+$$
+\|\widehat V-f_t(R)u\|_2
+ \le\Delta Q+
+    \sum_{j=0}^N|a_j|\left(\alpha+\sum_{i=1}^j\beta_i\right)
+       +\sigma.
+\tag{12.17}
+$$
+
+For a vector target $\varepsilon>0$, take
+$\Delta<\varepsilon/[4(Q+1)]$,
+$\alpha<\varepsilon/[4(A_P+1)]$,
+every $\beta_i<\varepsilon/[4(B_P+1)]$ and
+$\sigma<\varepsilon/4$. The right side is strictly less
+than $\varepsilon$. First choose the scalar polynomial; its
+finite rational coefficients then determine the vector precisions.
+For heat use the input name of $u$; for the source use $z$,
+$Q=1/\ell$ and the approximation (12.7). Each resolvent call
+uses a finite raw input. Even large coefficients are included
+in $A_P,B_P$; cancellation is not treated as exact numerical
+stability. This proves finite error control and termination.
+
+Useful additional global norm bounds come directly from the
+original source trace bound [S, (117.3)]:
+
+$$
+\|v_t\|_2^2=\|g_t\|_{L^2(m)}^2
+ \le \frac{1+1/(2t_-)}{\ell}.
+\tag{12.18}
+$$
+
+Indeed $\sup_{\lambda\ge0}(\lambda+1)e^{-2t\lambda}
+\le1+(2\mathrm e t)^{-1}\le1+(2t_-)^{-1}$.
+A rational upper bound $Q_t$ for the square root in (12.18)
+is computable; it is independent of any spatial truncation.
+
+For ordinary weighted representatives enumerate all finite rational
+complex box-step functions $s$. Each $hs$ has a computable global
+raw name: multiplication by the fixed bounded $s$ increases the
+$h$ error by at most $\|s\|_\infty$. Norms of differences
+with $v_t$ are computable from global names. Dovetail candidates
+and precisions until a strict upper test certifies
+
+$$
+\|hs-v_t\|_{L^2(\mu)}<\varepsilon.
+\tag{12.19}
+$$
+
+The box steps are dense in $L^2(m)$: $m$ is a finite Radon
+measure on the original coordinate space and rational boxes
+generate its Borel sets. As $h>0$ almost everywhere, $J_h$ is
+onto and $\{hs\}$ is dense in raw $L^2$. Some candidate has
+error less than $\varepsilon/2$, and its strict upper test
+eventually succeeds. This proves termination and exactly
+$\|s-g_t\|_{L^2(m)}<\varepsilon$. No algorithm for a
+pointwise reciprocal of $h$ is used.
+
+Finally the actual positive-time law has raw density $hv_t$.
+For finite names $H_0,V_0$ of $h,v_t$ with errors
+$\alpha,\beta$, respectively, Cauchy–Schwarz gives
+
+$$
+\|H_0V_0-hv_t\|_{L^1(\mu)}
+ \le \alpha Q_t+(1+\alpha)\beta.
+\tag{12.20}
+$$
+
+Thus finite products on their common box partition supply a
+global $L^1$ name as well. Every norm and error above is on all
+of $G$; none omits an unmeasured source or exterior region.
+$\square$
+
+**Theorem 12.5 (original bounded multiplication conditional on
+exact calibration).** Suppose a scalar name of the exact $M$
+in (12.3) has been computed. Then, using the preceding constructed
+services, multiplication by each original $f_y$ is computable on
+every global raw $L^2$ input, with arbitrary certified absolute
+error. This is a reduction conditional on deriving that scalar;
+it does not add $M$ to the inputs of Definition 12.1.
+
+Proof. The exact class bounds are
+$0\le f_3\le1/4$, $f_B=1/4$ and
+$1/4\le f_0=f_1\le3/8$. Thus each multiplication operator
+$D_y$ has norm at most $L_0=3/8$. Compute $c=1/(4M)$ and
+the global vectors
+
+$$
+k_3=hf_3=cv_d,\qquad k_B=h/4,\qquad
+k_0=k_1=3h/8-cv_d/2.
+\tag{12.21}
+$$
+
+For example a rational $\widehat c$ and finite $V$ give
+$\|\widehat cV-cv_d\|_2
+\le|\widehat c|\|V-v_d\|_2
+       +|\widehat c-c|Q_d$.
+The $Q_d$ of (12.18) is computed, so this and the affine
+formulas give all $k_y$ names with finite error budgets.
+
+Given raw $u$ and a target $\varepsilon>0$, use the same
+dense search as (12.19) to find a bounded finite box step $s$
+with a strictly certified
+$\|u-hs\|_2<\varepsilon/(2L_0)$.
+Then compute $s k_y$ to error less than $\varepsilon/2$.
+This is possible by requesting the $k_y$ error less than
+$\varepsilon/[2(1+\|s\|_\infty)]$.
+The exact correspondence on the dense vectors is
+$D_y(hs)=s k_y$, and therefore the output error is at most
+
+$$
+L_0\|u-hs\|_2+\|\widehat{k_ys}-k_ys\|_2
+ <\varepsilon.
+\tag{12.22}
+$$
+
+Density and the strict residual test prove termination. The search
+needs neither a lower pointwise bound for $h$ nor local division,
+and no supremum of an approximate $g_d$ is computed. The output
+is an approximation to the original multiplier, not a new emission.
+$\square$
+
+**Theorem 12.6 (exact calibration, first-read probability and
+finite words have the same numerical obligation).** Relative to
+the constructed services of §11 and Theorems 12.2–12.4, the
+following services on the original parameter-name class are
+uniformly mutually computable: a scalar name of $N_d$, a scalar
+name of $M$, a scalar name of the actual $p(3)$ at the first
+read $2d$, and an absolute-error evaluator for $p(w)$ for every
+supplied finite chronological $w\in\mathcal L^*$. No one of
+these four services is asserted to have been constructed from
+the coefficients by this equivalence.
+
+Proof. The passage $N_d\leftrightarrow M$ is addition or
+subtraction of one. Given $M$, use Theorem 12.5 and the already
+constructed heat action. Reuse exactly the cylinder recursion
+(8.4), also [Original Passive Predictive Memory, (1.3)](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_PASSIVE_PREDICTIVE_MEMORY.md):
+
+$$
+\begin{gathered}
+W_\varnothing=h,\qquad W_{yu}=D_yS_dW_u,\qquad
+W_w=hF_w,\\
+F_\varnothing=1,\qquad F_{yu}=f_yT_dF_u,\qquad
+p(w)=\langle v_{2d},W_w\rangle_\mu.
+\end{gathered}
+\tag{12.23}
+$$
+
+Induction proves $W_w=hF_w$ by unitary conjugation. Conditional
+independence and the Markov property give the cylinder law with
+the original first-read density $g_{2d}$ and every gap $d$.
+Computing from the last letter to the first is just an order of
+evaluation. The transition after the final letter in (12.23)
+acts on $1$, since $T_d1=1$, and adds no observation. Positive-time
+absolute continuity in [S, (117.2)] ensures that every allowed
+Borel repair gives the same finite-word probabilities.
+
+Here is a finite budget. All exact heat and emission operators
+are contractions and $\|W_w\|_2\le1$. If the initial $h$
+error is $E_0$ and at stage $j$ the heat-action and multiplication
+errors on the actually supplied intermediate vectors are
+$s_j,b_j$, the accumulated error satisfies
+
+$$
+E_W\le E_0+\sum_{j=1}^{|w|}(s_j+b_j).
+\tag{12.24}
+$$
+
+This follows at each stage by contractivity for propagation of
+the previous error, then the triangle inequality for the two
+new errors. With $\|V-v_{2d}\|_2\le E_v$,
+$Q\ge\|v_{2d}\|_2$ computed by (12.18), and scalar rounding
+error $\sigma$, the final pairing obeys
+
+$$
+|\widehat p(w)-p(w)|
+ \le E_v+(Q+E_v)E_W+\sigma.
+\tag{12.25}
+$$
+
+For $0<\varepsilon\le1$, set
+$E=\varepsilon/[8(Q+1)]$, take
+$E_v\le\varepsilon/8$, $E_0\le E/2$,
+$s_j,b_j\le E/[4(|w|+1)]$ and
+$\sigma\le\varepsilon/4$. Then $E_W<E$ and (12.25)
+is less than $\varepsilon$. For larger requested errors use
+$\min(\varepsilon,1)$; return $p(\varnothing)=1$ directly.
+Every nonempty word requires finitely many terminating heat and
+multiplier calls. This proves sufficiency of exact $M$.
+
+For necessity no asymptotic word or stationary preparation is
+needed. The already computed source names give the scalar
+
+$$
+\begin{aligned}
+I_d&=\langle v_{2d},v_d\rangle_\mu
+     =\langle T_dg_d,g_d\rangle_m
+     =\|g_{3d/2}\|_{L^2(m)}^2
+     =\|v_{3d/2}\|_2^2\ge1,\\
+p(3)&=cI_d=\frac{I_d}{4M}>0,\qquad
+M=\frac{I_d}{4p(3)}.
+\end{aligned}
+\tag{12.26}
+$$
+
+Self-adjointness and $g_{t+s}=T_sg_t$ prove the norm equality.
+Mass one and $\|h\|_2=1$ give
+$1=|\langle h,v_{3d/2}\rangle|\le\|v_{3d/2}\|_2$.
+The formula for $p(3)$ integrates the same original $f_3=cg_d$
+against the actual first-read density $g_{2d}$. Thus any name
+of just that first marginal computes $M$. Refine its intervals
+until a rational $q_->0$ lower-bounds both $p(3)$ and its
+chosen approximation $\widehat p$. Positivity proves finite
+termination of this search. If $|I_d-\widehat I|\le e_I$
+and $|p(3)-\widehat p|\le e_p$, then
+
+$$
+\left|\frac{I_d}{4p(3)}-
+             \frac{\widehat I}{4\widehat p}\right|
+ \le \frac{e_I}{4q_-}
+           +\frac{|\widehat I|e_p}{4q_-^2}.
+\tag{12.27}
+$$
+
+Interval division, with these errors and arithmetic rounding,
+therefore yields any requested $M$ precision. Finally an
+all-word evaluator includes the single word $3$. These
+implications prove the equivalence on the same source class.
+They compute no unknown probability by requesting it as an
+additional original input. $\square$
+
+**Proposition 12.7 (computed lower information and the source
+trace).** The original coefficients and positive clock names
+compute the lower cut of $N_d$. More precisely, for every
+rational $q\ge0$ the real number
+
+$$
+E(q)=\|(v_d-qh)_+\|_{L^2(\mu)}
+\tag{12.28}
+$$
+
+has a scalar name, and $E(q)>0$ if and only if $q<N_d$.
+They also compute, for every named $t>0$,
+
+$$
+\operatorname{tr}g_t=\|v_{t/2}\|_2^2
+       \le\|g_t\|_{L^\infty(m)}.
+\tag{12.29}
+$$
+
+No equality with the essential supremum is asserted in (12.29).
+
+Proof. Real-part projection and positive part are contractions
+on real $L^2$. Thus finite real approximations to $v_d,h$
+with errors $e_v,e_h$ give an approximation to $E(q)$ with
+error at most $e_v+q e_h$, plus the finite norm rounding.
+For box steps the positive part and its norm are explicitly
+computable. Since $h>0$ almost everywhere, and $m$ and $\mu$
+have the same null sets,
+
+$$
+(v_d-qh)_+=h(g_d-q)_+,\qquad
+E(q)>0\ \Longleftrightarrow\ m\{g_d>q\}>0
+             \ \Longleftrightarrow\ q<N_d.
+\tag{12.30}
+$$
+
+Strict positivity of a named real is semidecidable by interval
+refinement. Dovetail all rational $q\ge0$ and all precisions;
+enumerate a $q$ only when a strictly positive lower endpoint
+for $E(q)$ is certified. This enumerates exactly the nonnegative
+rationals below $N_d$. Taking successive maxima, starting at
+zero, gives rational lower bounds converging to $N_d$.
+Every rational below $N_d$ is eventually found. Boundedness
+comes from [S, Theorem 133.2], and $N_d\ge1$ follows from
+mass one; no upper numerical input is used by this enumeration.
+
+For (12.29), propagation gives
+$g_t=T_{t/2}g_{t/2}\in D(K)\subset\mathscr V$.
+Apply the original trace identity at $t/2$ to $g_{t/2}$:
+$\operatorname{tr}g_t=\langle g_{t/2},g_{t/2}\rangle_m$.
+This norm is computable by Theorem 12.4. For
+$N_t=\|g_t\|_\infty<\infty$, the form vector
+$(g_t-N_t)_+$ is zero almost everywhere and hence is the zero
+form vector. Its quasi-continuous value at the nonpolar $e$
+is zero. The normal-contraction rule for the form and the
+source trace then give $\operatorname{tr}g_t\le N_t$.
+One cannot infer the reverse inequality from this argument.
+$\square$
+
+**Definition 12.8 (the remaining original upper-certificate
+obligation and its exact sufficiency).** The unpaid source-side
+obligation is to construct, from the same $a,\eta,d$ names,
+an enumeration of finite certificates with rational conclusions
+$U_j$ such that
+
+$$
+v_d\le U_jh\quad\mu\text{-a.e. on all }G,
+\qquad \inf_jU_j=N_d.
+\tag{12.31}
+$$
+
+Each accepted certificate must have proved soundness for the
+original full endpoint and normalization. The enumeration must
+be effective from the stated names and cofinal at $N_d$.
+No acceptance criterion, cofinality theorem or certificate
+producer for (12.31) is assumed here.
+
+If such a producer is derived, it suffices: dovetail it with
+the lower enumeration in Proposition 12.7, retain finite minima
+of upper conclusions and finite maxima of lower conclusions,
+and stop when their gap is less than a requested error.
+Soundness encloses $N_d$ and cofinality of both sides proves
+termination. Conversely a scalar interval name of $N_d$
+supplies cofinal rational upper enclosures, whose a.e. order
+conclusions follow from the definition of essential supremum.
+Thus at the level of effective numerical information (12.31)
+is exactly the missing upper side of the calibration, not an
+extra spatial observation. A particular finite certificate
+language would additionally require its own proved adequacy.
+
+In the original source notation the same obligation can be
+expressed without a pointwise kernel. Define on $L^1(m)\cap L^2(m)$
+$\ell_d(u)=\operatorname{tr}(T_du)$.
+The original Riesz identity is
+$\ell_d(u)=\int g_du\,dm$. Since $g_d\ge0$ is bounded,
+
+$$
+\|\ell_d\|_{L^1(m)\to\mathbb C}=N_d.
+\tag{12.32}
+$$
+
+For proof, the upper estimate is Hölder. For every $q<N_d$,
+the indicator of $\{g_d>q\}$ belongs to $L^1\cap L^2$
+because $m(G)=1$, and its normalized integral gives an operator
+norm at least $q$. Taking $q\uparrow N_d$ proves (12.32).
+Consequently cofinal certified bounds for this full source-trace
+functional would pay (12.31), while avoiding a full pointwise
+heat-kernel construction. They still require arbitrarily sharp
+global bounds, not just a boundedness theorem.
+
+In particular [S, (133.10)–(133.16)] proves finiteness by a
+source-neighborhood estimate on heat orbits of globally supported
+inputs, followed by $L^1/L^\infty$ duality. It supplies no
+cofinal numerical upper enumeration. Even computing a single
+finite bound for its local comparison, radius, weighted Sobolev
+and parabolic constants would give only a majorant. Such a
+majorant does not determine the original exact $M$, and replacing
+$M$ by it in (12.3) changes the emissions.
+
+The lower test (12.28) cannot certify (12.31): a small positive
+residual is compatible with exceeding $U_j$ on a small set,
+whereas the required certificate asserts zero residual. This
+observation identifies a missing proof step and is not a
+counterexample within the original coefficient family. Another
+sufficient, stronger route would construct computable bounded
+approximants $s_j$ with computable essential norms and prove
+$|v_d-hs_j|\le2^{-j}h$ globally almost everywhere. Then
+$|N_d-\|s_j\|_\infty|\le2^{-j}$ by the norm triangle
+inequality. Such uniform relative approximation is also unpaid;
+the weighted $L^2$ approximation (12.19) is weaker.
+
+Any regional proof of (12.31) must derive its quantitative
+source-neighborhood control, punctured compact evaluation and
+oscillation bounds, and exterior order bounds from the original
+coefficients and the same full trace. Global $L^2$ tails are
+not exterior supremum bounds. Alternatively a proved sharp
+source maximum principle could identify the norm with a
+computed quantity such as (12.29); no maximum-at-source theorem
+is used here. No noncomputability or original-family
+impossibility conclusion follows from the unpaid obligation.
+
+**Definition 12.9 (mathematical correspondence, economy and
+remaining recovery scope).** The source-specific construction
+in Theorems 12.2–12.4 is the composition of the actual
+$A=\rho C$ resolvent [S, (115.5)], its correctly normalized
+trace [S, (116.4), (116.13)], the deterministic entrance
+[S, (117.2)–(117.6)] and the computed coefficient services
+of §11. The new numerical correspondence is to these very
+source vectors and global norms. Theorems 12.5–12.6 then
+identify exactly the scalar obligation consumed by the unchanged
+finite passive likelihoods. These are repository-derived
+applications and deductions relative to the cited analytic
+suppliers, not new generic spectral calculus or general
+approximation theorems.
+
+The mature resolvent-to-semigroup method is literature-attested
+in Colbrook, [*Computing semigroups with error control*,
+arXiv:2110.06350v1, §3, Theorem 7, and §4, Theorem 8](https://arxiv.org/html/2110.06350v1),
+[DOI 10.1137/21M1398616](https://doi.org/10.1137/21M1398616).
+Theorem 7 uses a common core for generator and adjoint, graph
+Gram and input norm/coefficient evaluations, and semigroup
+growth bounds. The PDE route of Theorem 8 additionally uses
+the stated smooth-core, coefficient growth/variation and
+input-tail access. Those hypotheses are not a construction
+of this singular endpoint. Here (12.5) supplies the actual
+resolvent, and (12.12)–(12.17) use its positive self-adjoint
+structure to give a sufficient elementary scalar approximation
+with explicit errors. No contour efficiency estimate is
+transferred. Likewise Colbrook–Horning–Townsend
+[EXT-SPECTRAL, §6.1, (26)] treats regular line or half-line
+differential realizations, smooth coefficients, nonvanishing
+leading coefficient and a separately verified self-adjoint
+realization. Its shifted-solve method does not supply this
+four-coordinate source trace or exact essential supremum.
+
+The domain formulas of Ashbaugh et al., [*A Survey on the
+Krein–von Neumann Extension*, arXiv:1203.5713v1, Theorem 2.1,
+(2.9)–(2.11)](https://arxiv.org/html/1203.5713v1), require
+$S\ge\epsilon I$ for $\epsilon>0$. No such positive lower
+bound is imported at this threshold endpoint; the original
+boundary calculation supplies (12.5). The equilibrium/trace
+correspondence retains the mapping to Chen–Fukushima–Ying
+specified in [S, §116], rather than applying transient
+zero-order formulas to this recurrent conservative source.
+
+The existing D5 Dyson–Phillips result,
+[DysonPhillipsPerturbation](../../../D5/S3/Quantum/Analysis/DysonPhillipsPerturbation.lean),
+including its private input and native-semigroup helpers,
+assumes a supplied strongly continuous contraction semigroup
+and a bounded perturbing operator. It is not a supplier of
+the singular endpoint or entrance in (12.2). The pinned
+mathlib at `56a005855ea17e0b0958f73ec801ae140b0a1679`,
+`Analysis/CStarAlgebra/ContinuousFunctionalCalculus/Isometric.lean`
+(`norm_cfcHom`, `norm_cfc_le`) and
+`Analysis/SpecialFunctions/Bernstein.lean`
+(`bernstein.probability`, `bernstein.variance`,
+`bernsteinApproximation_uniform`) supply generic norm and
+approximation results. They are reused mathematical
+intermediates; none names the original source or calibration.
+The Bernstein variance estimate is included in (12.15) only
+to quantify its use in this source construction. No worldwide
+priority or kernel-verification claim is attached to these
+ordinary mathematical deductions.
+
+The dense multiplication in Theorem 12.5 uses less numerical
+information than a full pointwise interacting heat kernel or
+uniform division by $h$. Rebuilding the §11 source graphs or
+substituting the killed $F$ heat would not supply the missing
+calibration. The converse (12.26) proves that a direct evaluator
+for original words, even just the first label $3$, cannot
+leave exact $M$ unpaid as a computational obligation. It
+does not prove that paying it is impossible.
+
+The immediate consumers are original finite chronological
+likelihoods and finite predictive profiles
+$R_u(v)=p(uv)/p(u)$ of [Original Passive Predictive Memory,
+Theorem 2.1 and §5](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_PASSIVE_PREDICTIVE_MEMORY.md).
+Once exact calibration is supplied, each original $p(u)>0$
+permits certified division by refinement to a positive lower
+bound, just as in (12.27). This is compatible with infinite
+exact Hankel rank: each requested finite computation uses
+finitely many contractions, while a uniform finite-dimensional
+realization is a different assertion. The generic algebraic
+and private factorization helpers in
+[WordHankelRealization](../../../D5/S3/Observer/Hankel/WordHankelRealization.lean)
+retain their own finite-dimensional hypotheses.
+
+The [original-word geometry, Theorems 3.1–3.3, 4.1–4.5
+and §7](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_WORD_GEOMETRY_RECOVERY.md)
+uses exact full-law information to identify the observable
+equivalence class, sample-time continuation and the normalized
+source boundary. Its unbounded spectral inverses, limiting
+projections and improper integrals retain their own domains
+and lack numerical rates under that premise. A finite-word
+evaluator is not an automatic effective inverse for all those
+operations, a decision procedure for equality of whole
+predictive states or a recovery of the full spatial algebra.
+The parameter-fibre classification and invisible-direction
+obstructions there are unchanged.
+
+For resource accounting, each polynomial action uses $N$
+sequential calls to the actual resolvent and a finite rational
+linear combination, with degree, coefficient sizes and requested
+precision given by (12.12)–(12.17). Each conditional word uses
+at most $|w|$ heat and $|w|$ multiplication calls. The costs
+also include parameter/clock-name answers, inherited §11 graph
+and residual searches, the positive-$D$ refinement, dense
+step searches and any positive-probability divisions. The
+successful dictionary indices and input-name answer costs
+have no bound asserted here; small $t,D$ or $p(u)$ can require
+high precision. Termination is proved for the stated services,
+but no parameter-uniform, polynomial or practical runtime is
+deduced. No numerical PDE execution is part of these theorems.
+
+Coefficient access remains mathematical model access. It is
+not evidence that a passive observer has acquired $a,\eta,d$
+or an exact probability from one physical record. There is
+no hidden-coordinate probe, reset, extra label, stationary
+preparation, disturbance or timed release. Finite-record
+confidence, physical realization, arbitrary $\alpha,\beta$
+operational meanings and full mutual recovery of space, time,
+boundary and memory retain their separate obligations. The
+coefficient-to-exact-word objective remains unresolved at
+(12.31); the strict heat/source construction and conditional
+reductions do not complete the continuing recovery programme.
+
+## 追加锚（本行以下为增补区）
