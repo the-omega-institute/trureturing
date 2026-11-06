@@ -841,4 +841,84 @@ Indeed, (169.9) is the contrapositive of the exact residual criterion (167.5), w
 
 The proof uses only the original source-start density and path law, the injective self-adjoint heat semigroup, the fixed Section 166 readout identities and finite-dimensionality of $W$. It resolves the actual closure boundary left open in Section 168 without a numerical approximation.
 
+## 170. A rotation-odd exact common kernel for the full successor stack
+
+Section 169 rules out finite-dimensional closure of the concrete representer plane, but it does not by itself produce a nonzero bounded class satisfying every successor readout. The original half-turn symmetry supplies such a class family. It acts on the actual source, measure and heat operator, so the construction remains inside the retained model.
+
+**Proposition 170.1 (rotation-odd classes annihilate the full linear successor stack).** Let $J=R_\pi$ be the half-turn in the $(x,y)$ coordinates, and let $J^*$ denote pullback on functions. Use the pointwise rotation-invariant representative $\beta$ of $g_d$ supplied by Appendix III Proposition 136.2 in the formulas (134.7). Since $[\beta]=[b]$, this replacement leaves the $L^2(m)$ classes of all $f_y$, and hence the plane $W$ of (166.2), unchanged. Define
+
+$$
+V_-:=\{v\in L^\infty(G,m;\mathbb R):J^*v=-v\ \text{$m$-a.e.}\}.
+\tag{170.1}
+$$
+
+Then
+
+$$
+V_-\subseteq W_\infty
+ =L^\infty(G,m;\mathbb R)\cap
+ \overline{W+\mathcal C_R}^{\,H\,\perp},
+\qquad
+\mathcal C_R=\overline{\operatorname{span}_{\mathbb R}
+ \{P^j\psi_{yzw}:j\ge0,\ (y,z,w)\in\mathcal L^3\}}^{\,H}.
+\tag{170.2}
+$$
+
+In particular, every rotation-odd class satisfies all first-order constraints and all their specified heat-successor constraints.
+
+*Proof.* Appendix III §136 gives that $m$, $g_s$ and $T_s$ are invariant under the circle action and that $T_s$ commutes with its pullbacks. With the invariant representative $\beta$, the functions $g$ and $f_y$ are $J^*$-invariant. Each representer in (166.1) is obtained from these functions by multiplication and by $P=T_d$, so
+
+$$
+J^*\psi_{yzw}=\psi_{yzw}.
+\tag{170.3}
+$$
+
+Commutation gives $J^*P^j\psi_{yzw}=P^j\psi_{yzw}$ for every $j$. If $v\in V_-$ and $\psi$ is any one of these invariant classes, invariance of $m$ and the change of variables $x\mapsto Jx$ give
+
+$$
+\langle v,\psi\rangle_H
+ =\langle J^*v,J^*\psi\rangle_H
+ =-\langle v,\psi\rangle_H,
+$$
+
+so the pairing is zero. Thus $v$ is orthogonal to $W$ and to $\mathcal C_R$, hence to their closed sum, proving (170.2). The identity (166.4) and the successor-kernel formula (166.10) give the stated interpretation. $\square$
+
+**Corollary 170.2 (an infinite-dimensional common kernel with collapsing heat energy).** The space $V_-$, and therefore $W_\infty$, is infinite-dimensional. More explicitly, there are linearly independent bounded real Borel functions $v_n$ such that
+
+$$
+v_n\in W_\infty,\qquad \|v_n\|_\infty=1,
+\qquad 0<q_{003}(v_n)
+ \le c\int_{B_n}g^2\,dm\longrightarrow0,
+\tag{170.4}
+$$
+
+where each $B_n$ is the support of $v_n$ up to an $m$-null set.
+
+*Proof.* Choose a Borel set $U\subset G\setminus N$ with $m(U)>0$ and $U\cap J U=\varnothing$; such a set exists in a sufficiently small neighborhood of any point off the rotation axis, using the full local support of $m$ from Appendix III §136. Choose pairwise disjoint Borel subsets $A_n\subset U$ with $m(A_n)>0$ and $m(A_n)\to0$, and put
+
+$$
+B_n=A_n\cup J A_n,
+\qquad v_n=\mathbf1_{A_n}-\mathbf1_{J A_n}.
+\tag{170.5}
+$$
+
+The sets in (170.5) are disjoint in each pair, $J^*v_n=-v_n$, and $\|v_n\|_\infty=1$. The pairwise disjointness of the $A_n$ and of their images makes the $v_n$ linearly independent. Since $m$ is $J$-invariant, $m(B_n)\to0$; since $g\in L^2(m)$, absolute continuity gives $\int_{B_n}g^2\,dm\to0$. Proposition 170.1 puts every $v_n$ in $W_\infty$. Finally Proposition 134.2 and the $L^2$ contraction of $T_{d/2}$ give
+
+$$
+0<q_{003}(v_n)=c\|T_{d/2}(gv_n)\|_2^2
+\le c\|gv_n\|_2^2
+ =c\int_{B_n}g^2\,dm\longrightarrow0.
+$$
+
+Thus the full infinite-horizon common kernel contains nonzero bounded directions of unit sup norm with vanishing heat-energy infimum. This does not construct a physical successor, prove density of the successor orbit, produce a nonlinear residual-zero family, a legal simplex or $H43$ partition, or settle $SRS\text{-}20$, $F_{64}$ or a Lean/kernel theorem. $\square$
+
+By Proposition 167.2, $H_{\mathrm{cal}}=W^\perp$ for the concrete first-order kernel. The functions above lie in $W^\perp\cap\mathcal C_R^\perp$ and are nonzero, so
+
+$$
+\overline{\mathcal C_R}^{\,H}\ne H_{\mathrm{cal}}.
+\tag{170.6}
+$$
+
+Thus the concrete rotation-invariant successor stack is not dense in the calibrated Hilbert space; this conclusion is specific to the stated Section 166 readout and does not extend to an arbitrary successor or a physical realization.
+
 ## 追加锚（本行以下为增补区）
