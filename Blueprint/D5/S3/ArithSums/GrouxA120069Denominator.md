@@ -8,11 +8,13 @@ Here catalan(k) is Mathlib's ordinary natural Catalan number, characterized by (
 
 **Theorem 1.1 (The complete positive-index equality).**
 
-$$\forall n \in \mathbb{N},\; 0 < n \Rightarrow \operatorname{den}\left(\sum_{1 \leq k \leq n} \frac{\operatorname{catalan}\left(k\right)}{4^{k - 1}}\right) = \operatorname{den}\left(\frac{\operatorname{catalan}\left(n\right)}{4^{n - 1}}\right)$$
+$$\forall n \in \mathbb{N},\; 0 < n \Rightarrow \operatorname{den}\left(\sum_{1 \leq k \leq n} \frac{(\operatorname{catalan}\left(k\right): \mathbb{Q})}{(4: \mathbb{Q})^{k - 1}}\right) = \operatorname{den}\left(\frac{(\operatorname{catalan}\left(n\right): \mathbb{Q})}{(4: \mathbb{Q})^{n - 1}}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/GrouxA120069Denominator.result` (`✓ std3`). ∎
 
-*Citation.* Groux Roland; Pieter Mostert; OEIS Foundation (2010). *OEIS A120069: Catalan partial-sum denominators*. URL: <https://oeis.org/A120069>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Groux Roland; Pieter Mostert; OEIS Foundation (2010). *OEIS A120069: Catalan partial-sum denominators*. URL: <https://oeis.org/A120069>.
 
 *Commentary.*
 
@@ -21,7 +23,7 @@ Every positive integer source index corresponds uniquely to a natural n with 0<n
 The proof uses the following Catalan form of Pieter Mostert's finite-sum identity from A119951. It is an attributed supplier, proved here by induction from the pinned Catalan/central-binomial relations; it is retained only as a private consumed helper.
 
 $$
-\forall n \in \mathbb{N},\; 0 < n \Rightarrow \sum_{1 \leq k \leq n} \frac{\operatorname{catalan}\left(k\right)}{4^{k - 1}} = 4 - \left(2 \cdot n + 1\right) \cdot \frac{\operatorname{catalan}\left(n\right)}{4^{n - 1}}
+\forall n \in \mathbb{N},\; 0 < n \Rightarrow \sum_{1 \leq k \leq n} \frac{(\operatorname{catalan}\left(k\right): \mathbb{Q})}{(4: \mathbb{Q})^{k - 1}} = 4 - \left(2 \cdot n + 1\right) \cdot \frac{(\operatorname{catalan}\left(n\right): \mathbb{Q})}{(4: \mathbb{Q})^{n - 1}}
 $$
 
 Put q=catalan(n)/4^(n-1). Its reduced denominator divides 4^(n-1). Since 2n+1 is odd, it is coprime to that denominator. Mathlib's rational multiplication denominator formula therefore gives den((2n+1)q)=den(q). Subtracting from the integer four preserves the denominator, proving the exact equality. The initial index n=1 is included. The argument uses no binary valuation formula for Catalan numbers.
