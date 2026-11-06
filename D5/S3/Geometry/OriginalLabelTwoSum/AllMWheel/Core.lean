@@ -5,12 +5,16 @@
    SOURCE_ONLY_UNCOMPILED. -/
 import D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.Protected
 
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 noncomputable section
 open Set Finset
 namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel
 open OriginalLabelTwoSum FiniteProtectedDualWord
 open FiniteElementaryCollapse FiniteRelativeSimplicialCollapse
 variable {V : Type*} [Fintype V] [DecidableEq V]
+local instance : (p : Prop) → Decidable p := Classical.propDecidable
 
 private theorem edge_support (vs : List V) (e : Finset V) (he : e ∈ pathEdges vs) :
     e ⊆ vs.toFinset := by
@@ -56,7 +60,7 @@ private def delete_cone_link (W : Finset V) (K : Family V) (a b : V)
   let F := Y.powerset.filter (fun t => insert b t ∈ K)
   have hF : ∀ t, t ∈ F ↔ t ⊆ Y ∧ insert b t ∈ K := by intro t; simp [F]
   have disj : Disjoint ({a,b} : Finset V) Y := by simp [Y, Finset.disjoint_left]
-  have hdecomp : ∀ s, b ∈ s →
+  have hdecomp : ∀ (s : Finset V), b ∈ s →
       s = ({b} ∪ ((s.erase a).erase b)) ∨
         s = insert a ({b} ∪ ((s.erase a).erase b)) := by
     intro s hbs
@@ -133,7 +137,10 @@ private theorem join_simplex (a : V) (T : Finset V) :
   intro s
   constructor
   · rintro ⟨u, hu, v, hv, rfl⟩
-    exact Finset.union_subset (hu.trans (by simp)) (hv.trans (Finset.subset_insert _ _))
+    exact Finset.union_subset (hu.trans (by
+          intro x hx
+          simp only [List.toFinset_cons, Finset.mem_insert, Finset.mem_singleton] at hx ⊢
+          aesop)) (hv.trans (Finset.subset_insert _ _))
   · intro hs
     refine ⟨s ∩ {a}, Finset.inter_subset_right, s.erase a, ?_, ?_⟩
     · intro x hx
@@ -201,21 +208,24 @@ private theorem path_delete_formula (a b c : V) (vs : List V)
               Finset.disjoint_left.mp hdis hx (Finset.mem_inter.mp hxs).1)⟩, ?_⟩
         ext x
         constructor
-        · intro hx; exact (Finset.mem_union.mp hx).elim
-            (fun h => (Finset.mem_inter.mp h).1) (fun h => (Finset.mem_inter.mp h).1)
         · intro hx
           rcases Finset.mem_insert.mp (hsupport hx) with h | h
           · exact Finset.mem_union_left _ (Finset.mem_inter.mpr ⟨hx, by simp [h]⟩)
           · rcases Finset.mem_insert.mp h with h | h
             · exact Finset.mem_union_left _ (Finset.mem_inter.mpr ⟨hx, by simp [h]⟩)
             · exact Finset.mem_union_right _ (Finset.mem_inter.mpr ⟨hx, h⟩)
+        · intro hx; exact (Finset.mem_union.mp hx).elim
+            (fun h => (Finset.mem_inter.mp h).1) (fun h => (Finset.mem_inter.mp h).1)
   · rintro ((hs | hs) | ⟨u, hu, t, ht, rfl⟩)
     · have hbs : b ∉ s := by
         intro h
         have := hs h
         simp only [Finset.mem_insert, List.mem_toFinset] at this
         exact this.elim (fun h => hab h.symm) (fun h => hb (by simp [h]))
-      refine ⟨(noncover_mem _ _).mpr ⟨hs.trans (by simp), {b,c}, by simp [pathEdges], ?_⟩, ?_⟩
+      refine ⟨(noncover_mem _ _).mpr ⟨hs.trans (by
+          intro x hx
+          simp only [List.toFinset_cons, Finset.mem_insert, Finset.mem_singleton] at hx ⊢
+          aesop), {b,c}, by simp [pathEdges], ?_⟩, ?_⟩
       · apply Finset.disjoint_left.mpr
         intro x hx hxs
         rcases (show x = b ∨ x = c by simpa using hx) with rfl | rfl
@@ -223,7 +233,10 @@ private theorem path_delete_formula (a b c : V) (vs : List V)
         · have := hs hxs
           simp only [Finset.mem_insert, List.mem_toFinset] at this
           exact this.elim (fun h => hac h.symm) hc
-      · exact Finset.subset_erase.mpr ⟨hs.trans (by simp), hbs⟩
+      · exact Finset.subset_erase.mpr ⟨hs.trans (by
+          intro x hx
+          simp only [List.toFinset_cons, Finset.mem_insert, Finset.mem_singleton] at hx ⊢
+          aesop), hbs⟩
     · have has : a ∉ s := by
         intro h
         have := hs h
@@ -234,12 +247,24 @@ private theorem path_delete_formula (a b c : V) (vs : List V)
         have := hs h
         simp only [Finset.mem_insert, List.mem_toFinset] at this
         exact this.elim hbc (fun h => hb (by simp [h]))
-      refine ⟨(noncover_mem _ _).mpr ⟨hs.trans (by simp), {a,b}, by simp [pathEdges], ?_⟩,
-        Finset.subset_erase.mpr ⟨hs.trans (by simp), hbs⟩⟩
+      refine ⟨(noncover_mem _ _).mpr ⟨hs.trans (by
+          intro x hx
+          simp only [List.toFinset_cons, Finset.mem_insert, Finset.mem_singleton] at hx ⊢
+          aesop), {a,b}, by simp [pathEdges], ?_⟩,
+        Finset.subset_erase.mpr ⟨hs.trans (by
+          intro x hx
+          simp only [List.toFinset_cons, Finset.mem_insert, Finset.mem_singleton] at hx ⊢
+          aesop), hbs⟩⟩
       simp [Finset.disjoint_left, has, hbs]
     · obtain ⟨htW, e, he, hdis⟩ := (noncover_mem vs t).mp ht
       have hsW : u ∪ t ⊆ (a::b::c::vs).toFinset :=
-        Finset.union_subset (hu.trans (by simp)) (htW.trans (by simp))
+        Finset.union_subset (hu.trans (by
+          intro x hx
+          simp only [List.toFinset_cons, Finset.mem_insert, Finset.mem_singleton] at hx ⊢
+          aesop)) (htW.trans (by
+          intro x hx
+          simp only [List.toFinset_cons, Finset.mem_insert, Finset.mem_singleton] at hx ⊢
+          aesop))
       have hbs : b ∉ u ∪ t := by
         intro h
         rcases Finset.mem_union.mp h with h | h
@@ -255,7 +280,7 @@ private theorem path_delete_formula (a b c : V) (vs : List V)
         · have hxl := List.mem_toFinset.mp (edge_support vs e he hx)
           have hxa := hu hxu
           simp only [Finset.mem_insert, Finset.mem_singleton] at hxa
-          exact hxa.elim (fun h => ha (by simp [h, hxl])) (fun h => hc (h ▸ hxl))
+          exact hxa.elim (fun h => ha (by simp only [List.mem_cons]; exact Or.inr (Or.inr (h ▸ hxl)))) (fun h => hc (h ▸ hxl))
         · exact Finset.disjoint_left.mp hdis hx hxt
 
 /- The all-length tail Gamma used below is the immutable path Word with
@@ -270,7 +295,7 @@ private def tailGamma (vs : List V) (hd : vs.Nodup) (h2 : 2 ≤ vs.length)
     | critical S =>
         have hs := (criticalFaces_mem _ S).mpr (by simpa only [pathWordData_word] using hq)
         rw [pathWord_critical_formula vs hd, if_pos h1] at hs
-        exact Finset.not_mem_empty _ hs
+        exact Finset.notMem_empty _ hs
   exact (pathWordData vs hd).noCritical_unprotected hcrit (by
     intro L v hp
     have hd' := (pathWordData vs hd).pair_data L v hp
@@ -298,17 +323,20 @@ private def coreFinish (a b c : V) (vs : List V) (hd : (a::b::c::vs).Nodup)
   have has : a ∉ vs.toFinset := fun h => ha (by simp [List.mem_toFinset.mp h])
   have hcs : c ∉ vs.toFinset := fun h => hct (List.mem_toFinset.mp h)
   by_cases hsingle : vs.length = 1
-  · obtain ⟨d, rfl⟩ : ∃ d, vs = [d] := by
+  · have hex : ∃ d, vs = [d] := by
       cases vs with
       | nil => simp at hsingle
       | cons d vs =>
           have he : vs = [] := List.length_eq_zero_iff.mp (by simpa using hsingle)
           subst vs
           exact ⟨d, rfl⟩
+    let d := Classical.choose hex
+    have he : vs = [d] := Classical.choose_spec hex
+    subst vs
     have hN : rawDual ([d] : List V).toFinset (pathFamily [d]) = ⊥ := by
       apply SetLike.ext
       intro s
-      simp only [noncover_mem, pathEdges, Finset.not_mem_empty, exists_prop,
+      simp only [noncover_mem, pathEdges, Finset.notMem_empty, exists_prop,
         false_and, exists_false, and_false]
       rfl
     let D : Family V := delta {a,d} ⊔ delta {c,d}
@@ -319,7 +347,10 @@ private def coreFinish (a b c : V) (vs : List V) (hd : (a::b::c::vs).Nodup)
       rfl
     have hs : Supported (a::b::c::[d]).toFinset D := by
       intro s h
-      rcases h with h | h <;> exact h.trans (by simp)
+      rcases h with h | h <;> exact h.trans (by
+          intro x hx
+          simp only [List.toFinset_cons, Finset.mem_insert, Finset.mem_singleton] at hx ⊢
+          aesop)
     have hp : ({d} : Finset V) ∈ D := Or.inl (by simp)
     have hcone : ∀ s ∈ D, insert d s ∈ D := by
       intro s h
@@ -344,7 +375,7 @@ private def coreFinish (a b c : V) (vs : List V) (hd : (a::b::c::vs).Nodup)
     have hboundary : ∀ x ⊂ ({a} : Finset V), ∀ t ∈ delta vs.toFinset, x ∪ t ∈ C := by
       intro x hx t ht
       have he : x = ∅ := by
-        apply Finset.eq_empty_iff_forall_not_mem.mpr
+        apply Finset.eq_empty_iff_forall_notMem.mpr
         intro y hy
         have hya : y = a := Finset.mem_singleton.mp (hx.subset hy)
         have hax : a ∈ x := hya ▸ hy
@@ -376,13 +407,25 @@ private def coreFinish (a b c : V) (vs : List V) (hd : (a::b::c::vs).Nodup)
     have hend : C ⊔ rawJoin (delta {a}) N = C := by
       apply sup_eq_left.mpr
       rintro s ⟨u, hu, v, hv, rfl⟩
-      exact Or.inr ⟨u, hu.trans (by simp), v, hv, rfl⟩
+      exact Or.inr ⟨u, hu.trans (by
+          intro x hx
+          simp only [List.toFinset_cons, Finset.mem_insert, Finset.mem_singleton] at hx ⊢
+          aesop), v, hv, rfl⟩
     have hC : Supported (a::b::c::vs).toFinset C := by
       intro s h
       rcases h with h | ⟨u, hu, v, hv, rfl⟩
-      · exact h.trans (by simp)
-      · exact Finset.union_subset (hu.trans (by simp))
-          (((noncover_mem vs v).mp hv).1.trans (by simp))
+      · exact h.trans (by
+          intro x hx
+          simp only [List.toFinset_cons, Finset.mem_insert, Finset.mem_singleton] at hx ⊢
+          aesop)
+      · exact Finset.union_subset (hu.trans (by
+          intro x hx
+          simp only [List.toFinset_cons, Finset.mem_insert, Finset.mem_singleton] at hx ⊢
+          aesop))
+          (((noncover_mem vs v).mp hv).1.trans (by
+          intro x hx
+          simp only [List.toFinset_cons, Finset.mem_insert, Finset.mem_singleton] at hx ⊢
+          aesop))
     have hp : ({c} : Finset V) ∈ C := Or.inl (by simp)
     have hcone : ∀ s ∈ C, insert c s ∈ C := by
       intro s h
@@ -423,7 +466,8 @@ def pathGoodCore (vs : List V) (hd : vs.Nodup) (h4 : 4 ≤ vs.length)
 def pathRootCore (m : Nat) (hm : 3 ≤ m) (hg : goodResidue m) :
     Σ p : {p : Label m // p ∈ ground m},
       Sequence (project (pathRoot m hm)) (project (delta {p.val})) := by
-  obtain ⟨k, hk⟩ := hg
+  let k := Classical.choose hg
+  have hk := Classical.choose_spec hg
   have h4 : 4 ≤ m := by omega
   have hmod : m % 3 = 1 := by omega
   let S := pathGoodCore (pathRootPath m hm) (pathRootPath_nodup m hm)
@@ -521,14 +565,14 @@ private theorem two_ghost_dual (a c : V) (T : Finset V) (K : Family V)
         ext x
         constructor
         · intro hx
-          exact (Finset.mem_union.mp hx).elim (fun h => (Finset.mem_inter.mp h).1)
-            (fun h => (Finset.mem_inter.mp h).1)
-        · intro hx
           rcases Finset.mem_insert.mp (hsW hx) with hxa | hx'
           · exact Finset.mem_union_left _ (Finset.mem_inter.mpr ⟨hx, by simp [hxa]⟩)
           · rcases Finset.mem_insert.mp hx' with hxc | hxt
             · exact Finset.mem_union_left _ (Finset.mem_inter.mpr ⟨hx, by simp [hxc]⟩)
             · exact Finset.mem_union_right _ (Finset.mem_inter.mpr ⟨hx, hxt⟩)
+        · intro hx
+          exact (Finset.mem_union.mp hx).elim (fun h => (Finset.mem_inter.mp h).1)
+            (fun h => (Finset.mem_inter.mp h).1)
       · left; left
         intro x hx
         rcases Finset.mem_insert.mp (hsW hx) with hxa | hx'
@@ -539,20 +583,29 @@ private theorem two_ghost_dual (a c : V) (T : Finset V) (K : Family V)
       intro x hx
       exact (Finset.mem_insert.mp (hsW hx)).resolve_left (fun hxa => has (hxa ▸ hx))
   · rintro ((hs | hs) | ⟨u, hu, t, ht, rfl⟩)
-    · refine ⟨hs.trans (by simp), ?_⟩
+    · refine ⟨hs.trans (by
+          intro x hx
+          simp only [List.toFinset_cons, Finset.mem_insert, Finset.mem_singleton] at hx ⊢
+          aesop), ?_⟩
       intro h
       have hcs : c ∉ s := by
         intro hcs
         exact (Finset.mem_insert.mp (hs hcs)).elim (fun he => hac he.symm) hc
       exact hc (hK _ h (Finset.mem_sdiff.mpr ⟨by simp, hcs⟩))
-    · refine ⟨hs.trans (by simp), ?_⟩
+    · refine ⟨hs.trans (by
+          intro x hx
+          simp only [List.toFinset_cons, Finset.mem_insert, Finset.mem_singleton] at hx ⊢
+          aesop), ?_⟩
       intro h
       have has : a ∉ s := by
         intro has
         exact (Finset.mem_insert.mp (hs has)).elim hac ha
       exact ha (hK _ h (Finset.mem_sdiff.mpr ⟨by simp, has⟩))
     · obtain ⟨htT, hn⟩ := (raw_dual_mem T K t).mp ht
-      refine ⟨Finset.union_subset (hu.trans (by simp)) (htT.trans (by simp)), ?_⟩
+      refine ⟨Finset.union_subset (hu.trans (by
+          intro x hx
+          simp only [List.toFinset_cons, Finset.mem_insert, Finset.mem_singleton] at hx ⊢
+          aesop)) (htT.trans (by simp)), ?_⟩
       intro h
       apply hn
       apply K.lower _ h
@@ -603,7 +656,8 @@ def zeroCore (m : Nat) (hm : 3 ≤ m) (h2 : m % 3 = 2) :
     ext x
     simp only [tailGround, ground, rim, Finset.mem_sdiff, Finset.mem_erase,
       Finset.mem_univ, and_true, Finset.mem_insert, Finset.mem_singleton,
-      cyclePathTail_vertices, Fin.ext_iff, a, c, firstLabel, secondLabel, lastLabel]
+      cyclePathTail_vertices, Fin.ext_iff, a, c, firstLabel, secondLabel, lastLabel,
+      vs, ne_eq, Fin.val_zero, Fin.val_mk]
     have := x.isLt
     omega
   have hK : Supported vs.toFinset (pathFamily vs) := by
@@ -620,7 +674,9 @@ def zeroCore (m : Nat) (hm : 3 ≤ m) (h2 : m % 3 = 2) :
     (by simp only [vs, cyclePathTail_length]; omega)
   let G := S.2.cast (congrArg project hD) rfl
   have hp : S.1.val ∈ tailGround m hm := by
-    have hs := (G.monotone ⟨by simp, by simp⟩).2
+    have hpoint : ({S.1.val} : Finset (Label m)) ∈ project (delta {S.1.val}) :=
+      ⟨by simp, Finset.Subset.refl _⟩
+    have hs := (G.monotone hpoint).2
     exact hs.2 (by simp)
   exact ⟨⟨S.1.val, hp⟩, G⟩
 

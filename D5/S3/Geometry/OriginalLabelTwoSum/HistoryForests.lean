@@ -835,7 +835,7 @@ theorem decorated_readback {V : Type*} [Fintype V] [DecidableEq V]
       simp only [decorated, markerNormalForm, if_pos h, hE]
   | intact ha hb hf full sole labels root =>
       have hg : (localRows m hm A B).ground = ground m := by
-        simp [localRows, cornerRows, HistoryCorners.residual, ha, hb]
+        simp [localRows, cornerRows, HistoryCorners.residual, ha, hb, Rows.without, rimRows]
       have hAR : Disjoint A (rim m hm) := by simp [ha]
       simp only [decorated, markerNormalForm, if_pos hAR, root, hg, tailGround]
 end Markers
@@ -863,9 +863,10 @@ theorem corner_rows_transport (f : U ↪ V) (r : Rows U) (A B : Finset U) :
   constructor
   · rintro ⟨c, hc⟩
     obtain ⟨t, ht, rfl⟩ := Finset.subset_image_iff.mp hc
-    exact ⟨t, ⟨c, ht⟩, rfl⟩
+    exact ⟨t, ⟨⟨c.1, (Finset.disjoint_image f.injective).mp c.2⟩, ht⟩, rfl⟩
   · rintro ⟨t, ⟨c, hc⟩, rfl⟩
-    exact ⟨c, Finset.image_subset_image hc⟩
+    exact ⟨⟨c.1, (Finset.disjoint_image f.injective).mpr c.2⟩,
+      Finset.image_subset_image hc⟩
 
 /-- This is the actual physical wheel consumer: the source is its real path-row
 root with precisely the interface rim row removed, not a supplied row model. -/

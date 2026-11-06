@@ -333,7 +333,11 @@ theorem step_rows {A : Type*} (g : GraphData A V) (i : Input g) :
   · exact (PhysicalCertificate.attachment_rows g i.e i.retained i.a i.b i.edge
       i.labels i.zero i.fresh).1
   · intro d
-    rw [(step g i).right_row,Wheel.ambient_row,Wheel.fundamental_rows]
+    exact ((PhysicalCertificate.attachment_rows g i.e i.retained i.a i.b
+      i.edge i.labels i.zero i.fresh).2 d).trans
+      ((Wheel.ambient_row i.labels d.1).trans
+        (congrArg (fun t : Finset Wheel.Label => t.image i.labels)
+          (Wheel.fundamental_rows d.1)))
 
 inductive History : Nat → (A : Type) → GraphData A V → Type _
   | seed (f : K4.SeedLabel ↪ V) : History 0 (Fin 4) (seedGraph f)
@@ -612,8 +616,7 @@ def handoff {n : Nat} {A : Type} {g : GraphData A V} (h : History n A g) :
       | inr d =>
         change (step g i).data.rows.row (.inr d) =
           (Wheel.wheelGraphData.rows.row d.1).image i.labels
-        rw [(PhysicalCertificate.attachment_rows g i.e i.retained i.a i.b
-          i.edge i.labels i.zero i.fresh).2 d,Wheel.ambient_row]
+        exact ((step g i).right_row d).trans (Wheel.ambient_row i.labels d.1)
 
 /-- Raw equality before nonempty projection; the inverse index equivalence
 proves the reverse inclusion, so no duplicate row index is silently omitted. -/

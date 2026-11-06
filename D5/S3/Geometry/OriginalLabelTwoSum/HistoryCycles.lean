@@ -17,6 +17,9 @@ separate list is the ORIGINAL skipped subsequence, then the path core list.
 The frozen Protected owner is an unreviewed source dependency; independent
 source review and actual kernel/native checks remain necessary.
 -/
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 noncomputable section
 open Set Finset
 namespace D5.S3.Geometry.OriginalLabelTwoSum.HistoryCycles
@@ -31,7 +34,10 @@ private theorem chosen_supported {V : Type*} [DecidableEq V] (vs : List V) :
   | [a] => simp [FiniteIndependentPathGreedy.pathChosen]
   | [a,b] => simp [FiniteIndependentPathGreedy.pathChosen]
   | a::b::c::vs =>
-      exact Finset.insert_subset (by simp) ((chosen_supported vs).trans (by simp))
+      exact Finset.insert_subset (by simp) ((chosen_supported vs).trans (by
+        intro x hx
+        simp only [List.toFinset_cons, Finset.mem_insert]
+        exact Or.inr (Or.inr (Or.inr hx))))
 termination_by vs.length
 
 private theorem chosen_card {V : Type*} [DecidableEq V] (vs : List V) (hd : vs.Nodup) :
@@ -46,7 +52,7 @@ private theorem chosen_card {V : Type*} [DecidableEq V] (vs : List V) (hd : vs.N
         intro h
         have hv := List.mem_toFinset.mp (chosen_supported vs h)
         exact (List.nodup_cons.mp (List.nodup_cons.mp hd).2).1 (by simp [hv])
-      rw [FiniteIndependentPathGreedy.pathChosen, Finset.card_insert_of_not_mem hb,
+      rw [FiniteIndependentPathGreedy.pathChosen, Finset.card_insert_of_notMem hb,
         chosen_card vs hdT]
       simp only [List.length_cons]
       omega
@@ -57,7 +63,7 @@ private theorem tail_ground_interval (m : Nat) (hm : 3 ≤ m) :
   ext x
   simp only [tailGround, ground, rim, Finset.mem_sdiff, Finset.mem_erase,
     Finset.mem_univ, and_true, Finset.mem_insert, Finset.mem_singleton,
-    List.mem_toFinset, mem_labelInterval, Fin.ext_iff, firstLabel, secondLabel]
+    List.mem_toFinset, mem_labelInterval, Fin.ext_iff, firstLabel, secondLabel, ne_eq, Fin.val_zero, Fin.val_mk]
   have hx := x.isLt
   omega
 
@@ -163,7 +169,7 @@ private theorem old_size (m : Nat) (hm : 3 ≤ m) :
     simp only [attachmentSize, if_pos h0, he, hc, le_refl]
   · by_cases h1 : m % 3 = 1
     · rw [hp.1 h1] at hq
-      exact (Finset.not_mem_empty q hq).elim
+      exact (Finset.notMem_empty q hq).elim
     · have h2 : m % 3 = 2 := by omega
       obtain ⟨r, hr, hc⟩ := hp.2.2 h2
       have he : q = r := by simpa only [hr, Finset.mem_singleton] using hq
