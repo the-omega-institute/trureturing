@@ -2,9 +2,9 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/TwoBitZeroSubsets
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Data.Nat.GCD.Basic, mathlib/module/Mathlib.Data.Fintype.Powerset, mathlib/module/Mathlib.Logic.Equiv.Fin.Rotate]
+   anchors: [mathlib/module/Mathlib.Data.Nat.GCD.Basic]
    utility: none
-   digest: Complement rotation classifies every integer-zero subset of the physical two-bit source and gives its exact parity-dependent count. -/
+   digest: Complement rotation classifies and counts physical two-bit integer-zero subsets. -/
 module
 
 public import D5.S3.Combinatorics.Circle.ZeroSumSubsets
@@ -52,7 +52,7 @@ private theorem rotate_val {r a : ℕ} (hr : 0 < r) (ha : a < r) (i : Fin r) :
   let : NeZero r := ⟨ne_of_gt hr⟩
   have he : (finRotate r : Fin r → Fin r)^[a] = finCycle (⟨a, ha⟩ : Fin r) :=
     (finCycle_eq_finRotate_iterate (k := (⟨a, ha⟩ : Fin r))).symm
-  simp only [Equiv.Perm.coe_pow, he, finCycle_apply, Fin.val_add, Fin.val_mk]
+  simp only [Equiv.Perm.coe_pow, he, finCycle_apply, Fin.val_add]
 
 private theorem rotate_ne {r a : ℕ} (hr : 2 ≤ r) (ha : 0 < a) (har : a < r)
     (i : Fin r) : i ≠ ((finRotate r : Equiv.Perm (Fin r)) ^ a) i := by
@@ -150,7 +150,7 @@ private theorem pair_centered {r : ℕ} (hr : 2 ≤ r) (i j : Fin r) (hij : i �
       exact_mod_cast mask_bound T
     have hp : 0 < (2 : ℤ) ^ (r - 1) := by positivity
     by_cases ht : t ∈ T
-    · rw [if_pos ht]
+    · rw [ite_eq_left ht]
       have hlo : (2 : ℤ) ^ (r - 1) ≤ (mask T : ℤ) := by
         have hh := Finset.single_le_sum (f := fun p : Fin r => (2 : ℕ) ^ p.val)
           (fun _ _ => Nat.zero_le _) ht
@@ -160,7 +160,7 @@ private theorem pair_centered {r : ℕ} (hr : 2 ≤ r) (i j : Fin r) (hij : i �
         omega
       rw [hhalf]
       constructor <;> nlinarith
-    · rw [if_neg ht, mul_zero, sub_zero, hhalf]
+    · rw [ite_eq_right ht, mul_zero, sub_zero, hhalf]
       have hlow : mask T < (2 : ℕ) ^ (r - 1) := by
         rw [mask_as_geom]
         apply Nat.geomSum_lt (by decide)
@@ -195,7 +195,9 @@ private theorem actual_two_bit {r a : ℕ} (hr : 2 ≤ r) (ha : 0 < a) (har : a 
         [ZMOD modulus r] := by
     have h := (Int.ModEq.refl (n := modulus r) ((2 : ℤ) ^ i.val)).add
       (pow_rotate_mod hr har i).symm
-    convert h using 1 <;> push_cast <;> ring
+    convert h using 1
+    push_cast
+    ring
   rw [centered_congr hc]
   exact pair_centered hr i _ (rotate_ne hr ha har i)
 
@@ -312,9 +314,10 @@ private theorem rotate_mask_dvd {r a : ℕ} (hr : 2 ≤ r) (har : a < r)
     exact Int.modEq_iff_dvd.mp (pow_rotate_mod hr har i)
   rw [Finset.sum_sub_distrib, ← Finset.mul_sum,
     ← mask_image_cast ((finRotate r : Equiv.Perm (Fin r)) ^ a) A] at hd
-  convert hd using 1 <;>
-    simp only [mask, Nat.cast_sum, Nat.cast_mul, Nat.cast_add, Nat.cast_one,
-      Nat.cast_pow, Nat.cast_ofNat] <;> ring
+  convert hd using 1
+  simp only [mask, Nat.cast_sum, Nat.cast_mul, Nat.cast_add, Nat.cast_one,
+    Nat.cast_pow, Nat.cast_ofNat]
+  ring
 
 /-- For two-bit sources modular zero is sufficient for exact integer zero, on the
 entire parameter range; no physical ordering certificate is assumed. -/
@@ -338,7 +341,8 @@ theorem actual_zero_iff_dvd (r a : ℕ) (hr : 2 ≤ r) (ha : 0 < a) (har : a < r
     have hdI : modulus r ∣ (((1 + 2 ^ a) * mask A : ℕ) : ℤ) := by
       rw [modulus_nat]; exact_mod_cast hd
     have hs := dvd_sub hdI (rotate_mask_dvd hr har A)
-    convert hs using 1 <;> ring
+    convert hs using 1
+    ring
 
 /-- The exact divisibility parameter is the modulus divided by the actual gcd. -/
 private theorem actual_zero_iff_reduced_dvd (r a : ℕ) (hr : 2 ≤ r) (ha : 0 < a)
@@ -497,7 +501,8 @@ private theorem binary_gcd (r a : ℕ) (hr : 0 < r) (ha : 0 < a) :
       simpa only [Nat.cast_sub hp, Nat.cast_pow, Nat.cast_ofNat, Nat.cast_one]
         using hcast
     have hci : (c : ℤ) ∣ (2 : ℤ) := by
-      convert dvd_sub hci1 hci2 using 1 <;> ring
+      convert dvd_sub hci1 hci2 using 1
+      ring
     have hc2 : c ∣ 2 := by exact_mod_cast hci
     have hc1 : c = 1 := Nat.eq_one_of_dvd_coprimes
       (Nat.coprime_two_left.mpr hodd) hc2 hcplus
@@ -521,7 +526,7 @@ private theorem binary_gcd (r a : ℕ) (hr : 0 < r) (ha : 0 < a) :
         rw [Nat.Coprime.gcd_mul_left_cancel 2 hcop]
   change d = if Even v then 2 ^ g + 1 else 1
   by_cases hv : Even v
-  · rw [if_pos hv]
+  · rw [ite_eq_left hv]
     have h2v : 2 ∣ v := even_iff_two_dvd.mp hv
     have hg2 : Nat.gcd 2 v = 2 := Nat.gcd_eq_left_iff_dvd.mpr h2v
     have hdf : d ∣ (2 ^ g - 1) * (2 ^ g + 1) := by
@@ -547,7 +552,7 @@ private theorem binary_gcd (r a : ℕ) (hr : 0 < r) (ha : 0 < a) :
     have hrightr : 2 ^ g + 1 ∣ 2 ^ r - 1 := hright2g.trans
       (Nat.pow_sub_one_dvd_pow_sub_one 2 htwog)
     exact Nat.dvd_antisymm hdright (Nat.dvd_gcd hrighta hrightr)
-  · rw [if_neg hv]
+  · rw [ite_eq_right hv]
     have hg1 : Nat.gcd 2 v = 1 :=
       (Nat.coprime_two_left.mpr (Nat.not_even_iff_odd.mp hv)).gcd_eq_one
     rw [hperiod, hg1, mul_one] at hdg
@@ -565,12 +570,3 @@ theorem actual_zero_subsets_card (r a : ℕ) (hr : 2 ≤ r) (ha : 0 < a) (har : 
   split_ifs <;> omega
 
 end D5.S3.Combinatorics.Circle.TwoBitZeroSubsets
-
-#check @D5.S3.Combinatorics.Circle.TwoBitZeroSubsets.actual_zero_iff
-#print axioms D5.S3.Combinatorics.Circle.TwoBitZeroSubsets.actual_zero_iff
-
-#check @D5.S3.Combinatorics.Circle.TwoBitZeroSubsets.actual_zero_iff_dvd
-#print axioms D5.S3.Combinatorics.Circle.TwoBitZeroSubsets.actual_zero_iff_dvd
-
-#check @D5.S3.Combinatorics.Circle.TwoBitZeroSubsets.actual_zero_subsets_card
-#print axioms D5.S3.Combinatorics.Circle.TwoBitZeroSubsets.actual_zero_subsets_card
