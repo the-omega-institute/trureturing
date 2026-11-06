@@ -33,6 +33,7 @@ internal sealed class KingmanPointwiseDocument : IScribeDocumentDefinition
         "mu" => Mu,
         _ => F.Id(name)
     };
+    private static Formula Named(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
     private static Formula Real => Seq(Mathbb, Grp(V("R")));
     private static Formula Fn(Formula a, Formula b) => new Formula.TypeArrow(a, b);
@@ -47,7 +48,7 @@ internal sealed class KingmanPointwiseDocument : IScribeDocumentDefinition
         Call("Eventually", Lam("x", V("alpha"), body), Call("ae", V("mu")));
     private static Formula Term(Formula n, Formula x) => App(V("X"), n, x);
     private static Formula Statement() => Disp(new Formula.Aligned([
-        Seq(All("alpha", Seq(Call("Type"), Sp, V("u"))),
+        Seq(All("alpha", Seq(Named("Type"), Sp, V("u"))),
             Instance(Call("MeasurableSpace", V("alpha"))),
             All("mu", Call("Measure", V("alpha"))),
             Instance(Call("IsFiniteMeasure", V("mu")))),
@@ -68,6 +69,6 @@ internal sealed class KingmanPointwiseDocument : IScribeDocumentDefinition
             Ae(Seq(App(V("g"), App(V("T"), V("x"))), Eq, App(V("g"), V("x")))), Land),
         Ae(Call("Tendsto", Lam("n", Nat,
                 Seq(Frac, Grp(Term(V("n"), V("x"))), Grp(V("n")))),
-            Call("atTop"), Call("nhds", App(V("g"), V("x")))))
+            Named("atTop"), Call("nhds", App(V("g"), V("x")))))
     ]));
 }

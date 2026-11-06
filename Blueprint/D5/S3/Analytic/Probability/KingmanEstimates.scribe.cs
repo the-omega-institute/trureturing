@@ -50,6 +50,7 @@ internal sealed class KingmanEstimatesDocument : IScribeDocumentDefinition
         "phi" => Phi,
         _ => F.Id(name)
     };
+    private static Formula Named(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
     private static Formula Real => Seq(Mathbb, Grp(V("R")));
     private static Formula Fn(Formula a, Formula b) => new Formula.TypeArrow(a, b);
@@ -64,7 +65,7 @@ internal sealed class KingmanEstimatesDocument : IScribeDocumentDefinition
         Call("Eventually", Lam("x", V("alpha"), body), Call("ae", V("mu")));
     private static Formula Orbit(Formula n) => App(Call("iterate", V("T"), n), V("x"));
     private static Formula Space() => Seq(
-        All("alpha", Seq(Call("Type"), Sp, V("u"))),
+        All("alpha", Seq(Named("Type"), Sp, V("u"))),
         Instance(Call("MeasurableSpace", V("alpha"))),
         All("mu", Call("Measure", V("alpha"))),
         Instance(Call("IsProbabilityMeasure", V("mu"))),
@@ -81,7 +82,7 @@ internal sealed class KingmanEstimatesDocument : IScribeDocumentDefinition
         Space(), Observable(),
         Ae(Call("Tendsto", Lam("m", Nat,
                 Seq(Frac, Grp(App(V("phi"), Orbit(V("m")))), Grp(V("m")))),
-            Call("atTop"), Call("nhds", D(0))))
+            Named("atTop"), Call("nhds", D(0))))
     ]));
 
     private static Formula Cost(Formula k, Formula n) => App(V("F"), k, n);
@@ -96,7 +97,7 @@ internal sealed class KingmanEstimatesDocument : IScribeDocumentDefinition
             Cost(V("k"), Seq(V("m"), Plus, V("n"))), Sp, Leq, Sp,
             Cost(V("k"), V("m")), Plus, Cost(Seq(V("k"), Plus, V("m")), V("n")))),
             Sp, Rightarrow),
-        Seq(All("B", Fn(Nat, Call("Prop"))), Instance(Call("DecidablePred", V("B"))),
+        Seq(All("B", Fn(Nat, Named("Prop"))), Instance(Call("DecidablePred", V("B"))),
             All("c", Real), D(0), Sp, Leq, Sp, V("c"), Sp, Rightarrow, All("N", Nat)),
         Seq(Par(Seq(All("k", Nat), Sp, Neg, Sp, App(V("B"), V("k")), Sp, Rightarrow,
             Exists, Sp, V("n"), Colon, Nat, Comma, Sp,
