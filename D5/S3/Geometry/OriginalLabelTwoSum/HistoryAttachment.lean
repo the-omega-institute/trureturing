@@ -33,11 +33,9 @@ upper. Each step has its exact intersected current domain. -/
 def restrictSequence {K L : PreAbstractSimplicialComplex V} (S : Sequence K L)
     (A : PreAbstractSimplicialComplex V)
     (hu : ∀ P ∈ S.pairs, P.upper ∈ A) : Sequence (K ⊓ A) (L ⊓ A) := by
-  revert hu
-  induction S with
-  | refl K => intro hu; exact Sequence.refl _
-  | step P T ih =>
-      intro hu
+  match S with
+  | .refl K => exact Sequence.refl _
+  | .step P T =>
       let Q := restrictPair P (P.ambient ⊓ A) inf_le_left
         ⟨P.upper_mem, hu P (by simp [Sequence.pairs])⟩
       have hret : Q.retained = P.retained ⊓ A := by
@@ -45,9 +43,10 @@ def restrictSequence {K L : PreAbstractSimplicialComplex V} (S : Sequence K L)
         change ((s ∈ P.ambient ∧ s ∈ A) ∧ ¬ P.lower ⊆ s) ↔
           ((s ∈ P.ambient ∧ ¬ P.lower ⊆ s) ∧ s ∈ A)
         tauto
-      exact Sequence.step Q ((ih (fun R hR =>
+      exact Sequence.step Q ((restrictSequence T A (fun R hR =>
         hu R (by simp only [Sequence.pairs, List.mem_cons]; exact Or.inr hR))).cast
           hret.symm rfl)
+termination_by structural S
 
 /-- Restriction changes current domains, never the source pair order or labels. -/
 theorem restrictSequence_pairs {K L : PreAbstractSimplicialComplex V}

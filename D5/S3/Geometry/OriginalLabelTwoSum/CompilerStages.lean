@@ -23,8 +23,28 @@ def selectFilling {Y Z : Finset V} {E : Family V} (e : V)
     (f0 : Filling Z (E ⊓ delta Z)) (f1 : Filling Y (E ⊔ delta Z))
     (q : Finset V) : Filling (localWindow e Y Z q) (localBase e Z q E) := by
   by_cases he : e ∈ q
-  · simpa only [localWindow,localBase,if_pos he] using f1
-  · simpa only [localWindow,localBase,if_neg he] using f0
+  · exact {
+      collar := f1.collar
+      critical := f1.critical
+      cells := f1.cells
+      empty_mem := by simpa only [localWindow,localBase,if_pos he] using f1.empty_mem
+      contains := by simpa only [localWindow,localBase,if_pos he] using f1.contains
+      supported := by simpa only [localWindow,localBase,if_pos he] using f1.supported
+      critical_supported := by simpa only [localWindow,localBase,if_pos he] using f1.critical_supported
+      main := by simpa only [localWindow,localBase,if_pos he] using f1.main
+      separate := by simpa only [localWindow,localBase,if_pos he] using f1.separate
+    }
+  · exact {
+      collar := f0.collar
+      critical := f0.critical
+      cells := f0.cells
+      empty_mem := by simpa only [localWindow,localBase,if_neg he] using f0.empty_mem
+      contains := by simpa only [localWindow,localBase,if_neg he] using f0.contains
+      supported := by simpa only [localWindow,localBase,if_neg he] using f0.supported
+      critical_supported := by simpa only [localWindow,localBase,if_neg he] using f0.critical_supported
+      main := by simpa only [localWindow,localBase,if_neg he] using f0.main
+      separate := by simpa only [localWindow,localBase,if_neg he] using f0.separate
+    }
 
 private theorem filling_endpoint_supported {W : Finset V} {A : Family V}
     (f : Filling W A) : Supported W (endpoint f.collar f.critical) := by

@@ -22,14 +22,16 @@ structure PhysicalGlue (VL VR Label : Type*) [Fintype Label] [DecidableEq Label]
   left : GraphData VL Label
   right : GraphData VR Label
   selected : right.chords
-  X Y : Finset Label
+  X : Finset Label
+  Y : Finset Label
   e : Label
   left_ground : left.ground = insert e X
   right_ground : right.ground = Y
   e_not_X : e ∉ X
   e_not_Y : e ∉ Y
   disjoint : Disjoint X Y
-  aL bL : VL
+  aL : VL
+  bL : VL
   edge_e : left.edge e = s(aL,bL)
 
 namespace PhysicalGlue

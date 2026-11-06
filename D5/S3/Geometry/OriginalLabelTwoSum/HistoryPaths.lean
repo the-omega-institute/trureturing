@@ -228,37 +228,39 @@ private def pathState (vs : List V) : CriticalState V :=
 
 private theorem pathOutput_state (vs : List V) (hd : vs.Nodup) :
     (pathOutput vs hd).criticalState = pathState vs := by
-  match vs with
-  | [] => simp only [pathOutput, pathState, Output.criticalState]
-  | [a] => simp only [pathOutput, pathState, Output.criticalState]
-  | [a,b] => simp only [pathOutput, pathState, Output.criticalState]
-  | a::b::c::vs =>
-      have hdT : (c::vs).Nodup := (List.nodup_cons.mp (List.nodup_cons.mp hd).2).2
-      have hdU : vs.Nodup := (List.nodup_cons.mp hdT).2
-      have ha : a ∉ insert b (insert c vs.toFinset) := by
-        simpa using (List.nodup_cons.mp hd).1
-      have hb : b ∉ insert c vs.toFinset := by
-        simpa using (List.nodup_cons.mp (List.nodup_cons.mp hd).2).1
-      have hc : c ∉ vs.toFinset := by simpa using (List.nodup_cons.mp hdT).1
-      rw [pathOutput, widenOutput_criticalState, changeOutput_criticalState]
-      cases vs with
-      | nil =>
-          rw [twoLeafOutput_empty_criticalState (V := V)]
-          have h0 : (∅ : Finset V) ∉ rawLink ∅ c (noncover [c]) := by
-            rw [path_link c [] hdT]
-            simp [noncover, pathEdges]
-          simp [h0, pathState, pathCriticalTops]
-      | cons d vs =>
-          rw [twoLeafOutput_criticalState _ _ _ _ _ _ _ _ _ _ (show (d::vs).toFinset.Nonempty from ⟨d, by simp⟩),
-            changeOutput_criticalState, pathOutput_state (d::vs) hdU]
+  revert hd
+  induction vs using List.length_induction with
+  | _ vs ih =>
+      intro hd
+      match vs with
+      | [] => simp only [pathOutput, pathState, Output.criticalState]
+      | [a] => simp only [pathOutput, pathState, Output.criticalState]
+      | [a,b] => simp only [pathOutput, pathState, Output.criticalState]
+      | a::b::c::vs =>
+          have hdT : (c::vs).Nodup := (List.nodup_cons.mp (List.nodup_cons.mp hd).2).2
+          have hdU : vs.Nodup := (List.nodup_cons.mp hdT).2
+          have ha : a ∉ insert b (insert c vs.toFinset) := by
+            simpa using (List.nodup_cons.mp hd).1
+          have hb : b ∉ insert c vs.toFinset := by
+            simpa using (List.nodup_cons.mp (List.nodup_cons.mp hd).2).1
+          have hc : c ∉ vs.toFinset := by simpa using (List.nodup_cons.mp hdT).1
+          rw [pathOutput, widenOutput_criticalState, changeOutput_criticalState]
           cases vs with
-          | nil => rfl
-          | cons e vs =>
+          | nil =>
+              erw [twoLeafOutput_empty_criticalState (V := V)]
+              have h0 : (∅ : Finset V) ∉ rawLink ∅ c (noncover [c]) := by
+                rw [path_link c [] hdT]
+                simp [noncover, pathEdges]
+              simp [h0, pathState, pathCriticalTops]
+          | cons d vs =>
+              erw [twoLeafOutput_criticalState _ _ _ _ _ _ _ _ _ _ (show (d::vs).toFinset.Nonempty from ⟨d, by simp⟩),
+                changeOutput_criticalState, ih (d::vs) (by simp only [List.length_cons]; omega) hdU]
               cases vs with
               | nil => rfl
-              | cons f vs => rfl
-termination_by vs.length
-decreasing_by simp only [List.length_cons]; omega
+              | cons e vs =>
+                  cases vs with
+                  | nil => rfl
+                  | cons f vs => rfl
 
 private theorem pathCriticalTops_supported (vs : List V) :
     ∀ q ∈ pathCriticalTops vs, q ⊆ vs.toFinset := by
