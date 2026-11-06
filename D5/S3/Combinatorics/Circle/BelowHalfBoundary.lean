@@ -61,7 +61,7 @@ private theorem window_sum (r lo n : ℕ) (h : lo + n ≤ r)
       · intro j hj
         have hj' := Finset.mem_range.mp hj
         refine ⟨⟨lo + j, by omega⟩, ?_, ?_⟩
-        · simp [window]
+        · simpa [window] using hj'
         · simp
       · intro i hi; exact hf i hi
     _ = c * (2 ^ n - 1) := by rw [← Finset.mul_sum, pow_sum]
@@ -93,6 +93,7 @@ private theorem half_pow_facts (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
   refine ⟨by simpa using hL, by simpa using hp, haE, hbE, ha2, hb2⟩
 
 set_option maxHeartbeats 2000000 in
+-- The complete centered-representative and four-case construction shares this budget.
 private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
     ∃ sigma : List (Fin (a + b)), ∃ cut : ℕ, cut ≤ a + b ∧
       OriginalOrder (a + b) (2 ^ (a + b - 2) + 2 ^ (b - 2)) sigma ∧
