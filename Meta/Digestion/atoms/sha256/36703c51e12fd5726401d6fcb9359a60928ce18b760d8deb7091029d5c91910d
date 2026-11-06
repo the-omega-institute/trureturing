@@ -1,0 +1,68 @@
+**定理 345.1（中心候选的恒等重构）。** 固定同一原菜单、$t_0$、$D$ 及原 $\sigma_{t_0}$，分别在完整 $B$ 与完整 $\mathsf B_{\rm cl}$ 中有
+
+$$
+\mathsf C_{\rm cen}(B_*)\Longleftrightarrow
+\mathsf C_{\rm bal}(B_*)\Longleftrightarrow
+\mathsf C_{\rm fin}(B_*)\Longleftrightarrow
+\mathsf C_Z(B_*)\Longleftrightarrow
+\mathsf C_{\rm support}(B_*).
+\tag{345.1}
+$$
+
+这些对应对全部原对象、准备、实际联合、设备／记录／失败及原合法有限历史都是恒等。由同一原 $D$ 定向的复代数满足
+
+$$
+\begin{gathered}
+\mathcal A_A=\bigoplus_sB(H_{A,s}),\quad
+E_A=(\mathcal A_A)_{\rm sa},\quad C_A=(\mathcal A_A)_+,\\
+a\cdot b=a\circ b-\mathrm iD_ab,\qquad
+D_ab=\tfrac{\mathrm i}{2}[a,b],\qquad
+[D_a,D_b]=-[L_a,L_b],\quad D_c^2=-P_c/4\quad(c^2=c).
+\end{gathered}
+\tag{345.2}
+$$
+
+原双概率运输及原事件的对应为
+
+$$
+\begin{aligned}
+g_A^0(x,y)&=\tau_A((B_Ax)y),&
+q_A(x,y)&=\tau_A((\mathcal W_Ax)y),\\
+\rho_\alpha&=B_Ax_\alpha,&
+\widehat x_\alpha&=\mathcal W_A^{-1}\rho_\alpha,\\
+\alpha(y)&=\tau_A(\rho_\alpha y),&
+\alpha(D_ab)&=q_A(\widehat x_\alpha,D_ab),\\
+\Phi_f&=B_BT_f^{\dagger_0}B_A^{-1}&&(f:A\to B).
+\end{aligned}
+\tag{345.3}
+$$
+
+全部原实际联合是同一取向的普通复张量；每个联合使用自己的 $B_A,\mathcal W_A$，一般 $x_\alpha\ne\widehat x_\alpha$。所有原正权、经典中心、不等块、零／奇异／次归一准备及全部相关准备保持。原旧事件为 CP/TNI，原完整设备事件和为 TP。每个原所选精确有限平方根词及其原相关执行给 $\rho\mapsto\sqrt e\rho\sqrt e$ 与 $X\mapsto(\sqrt e\otimes I)X(\sqrt e\otimes I)$。每个原占用指针方向 $p_1$ 的原失败 $\Psi_\ell$ 保持完整输出 $\sqrt{I-e}\rho\sqrt{I-e}\otimes\Psi_\ell(p_1)$；其他原方向和中心保留其原映射，不把失败只换成概率质量。
+
+原 F 给同一实现的实际细口和原分组／遗忘；每个非零细支的具名原资料仍满足
+
+$$
+\begin{gathered}
+S_\ell=\operatorname{Ad}_{K_\ell},\qquad
+\Phi_f=\sum_\ell S_\ell,\qquad
+U_\ell=q_\ell\operatorname{Ad}_{K_\ell^+},\quad q_\ell>0,\\
+e_\ell=\operatorname{supp}(K_\ell^*K_\ell),\quad
+h_\ell=\operatorname{supp}(K_\ell K_\ell^*),\quad
+\mathsf C_e(X)=eXe,\\
+U_\ell=\mathsf C_{e_\ell}U_\ell\mathsf C_{h_\ell},\qquad
+U_\ell S_\ell=q_\ell\mathsf C_{e_\ell},\qquad
+S_\ell U_\ell=q_\ell\mathsf C_{h_\ell}.
+\end{gathered}
+\tag{345.4}
+$$
+
+保留原 $q_\ell$ 及同数反向资料，不将成功数归一成一。对原准备、原末端效果 $w$ 和每条原合法有限历史 $(f_1,\ldots,f_r)$，
+
+$$
+\alpha(T_{f_1}\cdots T_{f_r}w)
+=\tau_{A_r}\!\left(w\,\Phi_{f_r}\cdots\Phi_{f_1}(\rho_\alpha)\right).
+\tag{345.5}
+$$
+
+证明。344.2 先恢复全域 I+SC，然后沿 338.1 的同一推导取得含零分支的共同曲率 $\kappa\ge0$。只在这时消费原 $\sigma_{t_0}$：原正 $w_0$ 给 $(1-\kappa)w_0/4=0$，故 $\kappa=1$。338.1 的全部入口至此逐项成立，直接复用其完整消费者，得到 (345.1)–(345.5)。全事件 R 针对所有相关准备，闭背景只在同一原执行上作连续正延拓；整个 AC、精确 $N_u$ 与 Xs 给原所选词和其完整失败，实 Jordan F 及具名同数两侧资料给原细记录与返回。逐原箭头的双对偶迭代涵盖顺序、原实际记录的自适应分支、实际并行联合及相关输入、细化、分组、实际遗忘、零／失败／返回／停止；只有原分母正时才取条件概率。此复用不供应任意新的仪器或连线。324.3 的连续器件／物理时钟／Hamiltonian／作用量、独立成功支的共同完整仪器及旧同效果设备的完整输出校准仍各需原来源。∎
+
