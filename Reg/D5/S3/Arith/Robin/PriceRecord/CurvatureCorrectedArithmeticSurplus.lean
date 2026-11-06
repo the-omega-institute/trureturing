@@ -59,7 +59,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     rw [Nat.primeFactors_mul (by norm_num : (30 : ℕ) ≠ 0) (by norm_num : (7 : ℕ) ≠ 0)]
     rw [Nat.primeFactors_mul (by norm_num : (6 : ℕ) ≠ 0) (by norm_num : (5 : ℕ) ≠ 0)]
     rw [Nat.primeFactors_mul (by norm_num : (2 : ℕ) ≠ 0) (by norm_num : (3 : ℕ) ≠ 0)]
-    norm_num [Nat.primesLE, Nat.primesBelow, Finset.range_succ, (by norm_num : Nat.Prime 2).primeFactors, (by norm_num : Nat.Prime 3).primeFactors, (by norm_num : Nat.Prime 5).primeFactors, (by norm_num : Nat.Prime 7).primeFactors, (by norm_num : Nat.Prime 11).primeFactors]
+    norm_num [Nat.primesLE, Nat.primesBelow, Finset.range_add_one, (by norm_num : Nat.Prime 2).primeFactors, (by norm_num : Nat.Prime 3).primeFactors, (by norm_num : Nat.Prime 5).primeFactors, (by norm_num : Nat.Prime 7).primeFactors, (by norm_num : Nat.Prime 11).primeFactors] <;> decide
   have hb := (h (z := 12) (M := 1/4) (by norm_num) (by norm_num)
     (by norm_num) (n := 2310) (by norm_num) hs).2.2
   dsimp only [rejected, realize, Realization.readout] at hb

@@ -50,7 +50,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hs : (6 : ℕ).primeFactors = Nat.primesLE ⌊(4 : ℝ)⌋₊ := by
     rw [Nat.primeFactors_mul (by norm_num : (2 : ℕ) ≠ 0) (by norm_num : (3 : ℕ) ≠ 0)]
-    norm_num [Nat.primesLE, Nat.primesBelow, Finset.range_succ, (by norm_num : Nat.Prime 2).primeFactors, (by norm_num : Nat.Prime 3).primeFactors]
+    norm_num [Nat.primesLE, Nat.primesBelow, Finset.range_add_one, (by norm_num : Nat.Prime 2).primeFactors, (by norm_num : Nat.Prime 3).primeFactors] <;> decide
   have hb := h (z := 4) (by norm_num) (n := 6) (by norm_num) hs
   change Real.log 2 / (6 * 4 * Real.log 4) <
     (fullPrimePowerResidual 4 - (Real.log (6 : ℝ) - Chebyshev.psi 4) /
