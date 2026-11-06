@@ -34,8 +34,7 @@ def actual : Realization signature :=
     (fun e => nomatch e)
 
 def rejected (role : Bool) : Realization signature :=
-  realize signature (fun j p r => if j=role then actual.readout j p r+1
-    else actual.readout j p r) (fun e => nomatch e)
+  realize signature (fun j _ r => rhs r + (if j=role then 1 else 0)) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
@@ -43,20 +42,31 @@ abbrev arena : Arena where
 
 private theorem actual_eq (r : ℕ) : lhs r=rhs r := actual_zero_subsets_card r
 
+#check @actual_eq
+
+private theorem actual_readout_rhs (j : Bool) (p : Unit) (r : ℕ) :
+    actual.readout j p r = rhs r := by
+  cases p
+  cases j
+  · rfl
+  · exact actual_eq r
+
+#check @actual_readout_rhs
+
 private theorem rejected_law (role : Bool) : ¬ arena.Law (rejected role) := by
   intro h
   have h0 := h 0
-  have he := actual_eq 0
-  cases role <;> simp [rejected,actual,realize] at h0 <;> omega
+  cases role <;> norm_num [rejected,realize,rhs] at h0
+
+#check @rejected_law
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(),0,1,?_⟩
-  cases i
-  · norm_num [actual,realize,rhs]
-  · change lhs 0 ≠ lhs 1
-    rw [actual_eq 0,actual_eq 1]
-    norm_num [rhs]
+  rw [actual_readout_rhs,actual_readout_rhs]
+  norm_num [rhs]
+
+#check @actual_dependence
 
 def family : Registration arena (type_of% (@actual_zero_subsets_card)) where
   actual := actual
@@ -67,10 +77,13 @@ def family : Registration arena (type_of% (@actual_zero_subsets_card)) where
     · intro i
       refine ⟨rejected i,?_,rfl,rejected_law i⟩
       intro j hji
-      simp only [rejected,realize,ite_eq_right hji]
+      funext p r
+      simp only [rejected,realize,if_neg hji,add_zero,actual_readout_rhs]
     · intro e
       exact nomatch e
   dependence := actual_dependence
+
+#check @family
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@actual_zero_subsets_card) (Realization signature) Nat Bool where
@@ -109,4 +122,6 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   continuation := .unknown
   familyRecord := none
   options := #[]
+#print axioms family
+#print axioms audit
 end Reg.D5.S3.Combinatorics.Circle.MersenneExceptional19ZeroCount
