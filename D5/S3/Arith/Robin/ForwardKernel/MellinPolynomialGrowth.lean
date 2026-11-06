@@ -26,7 +26,7 @@ def VonKochBound : Prop :=
   ∃ C t0 : ℝ, 0 ≤ C ∧ 3 ≤ t0 ∧ ∀ t : ℝ, t0 ≤ t →
     |Chebyshev.psi t - t| ≤ C * Real.sqrt t * (Real.log t) ^ 2
 
-private lemma vonKoch_power_bound (hVK : VonKochBound) {ε : ℝ} (hε : 0 < ε) :
+lemma vonKoch_power_bound (hVK : VonKochBound) {ε : ℝ} (hε : 0 < ε) :
     ∃ C t0 : ℝ, ∀ t : ℝ, t0 ≤ t →
       |Chebyshev.psi t - t| ≤ C * t ^ (1 / 2 + ε) := by
   obtain ⟨C, t0, hC, ht0, hVK⟩ := hVK
