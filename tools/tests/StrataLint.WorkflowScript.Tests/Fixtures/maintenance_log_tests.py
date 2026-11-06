@@ -411,7 +411,7 @@ class MaintenanceLogTests(unittest.TestCase):
         self.assertNotIn(str(tree), persisted)
         self.assertTrue(tree.is_dir())
 
-    def test_native_return_pool_failure(self):
+    def prepare_return_repository(self):
         sys.path.insert(0, str(SOURCE / "tools/scripts/worktree"))
         from worktree_pool import allocation_record
         from worktree_protocol import identity
@@ -427,6 +427,11 @@ class MaintenanceLogTests(unittest.TestCase):
         self.git("push", "origin", "dev")
         self.git("config", "user.name", "Fixture")
         self.git("config", "user.email", "fixture@example.invalid")
+
+    def test_native_return_pool_failure(self):
+        self.prepare_return_repository()
+        from worktree_pool import allocation_record
+        from worktree_protocol import identity
         real_git = shutil.which("git")
         binary = self.root / "bin"
         binary.mkdir()
@@ -482,6 +487,130 @@ os.execv({real_git!r}, [{real_git!r}, *args])
                     tuple(rows[-1][key] for key in ("exit_code", "status", "return_status")))
                 self.assertNotIn("private pool diagnostic", json.dumps(rows))
                 self.assertIn("private pool diagnostic", json.dumps(receipt))
+
+    def test_native_return_removal_failures(self):
+        import uuid
+        sys.path.insert(0, str(SOURCE / "tools/scripts/worktree"))
+        from worktree_pool import allocation_record
+        from worktree_protocol import identity
+        real_git = shutil.which("git")
+        cli = SOURCE / "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"
+        for outcome in ("qualification_failed", "checkpoint_failed", "partial_or_indeterminate",
+                        "refused", "revalidate"):
+            with self.subTest(outcome=outcome):
+                case = self.root / outcome
+                case.mkdir()
+                self.main = case / "main"
+                self.main.mkdir()
+                self.git("init", "--initial-branch=dev")
+                self.git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+                         "commit", "--allow-empty", "-m", "fixture")
+                # Each scenario owns its remote and log destination.
+                self.environment[LOG_ENV] = str(case / "logs")
+                original_root = self.root
+                self.root = case
+                try:
+                    self.prepare_return_repository()
+                    head = self.git("rev-parse", "HEAD").decode()
+                    idle = []
+                    for index in range(4):
+                        token = uuid.uuid4().hex
+                        branch = "lane/governance/idle-" + token
+                        self.git("update-ref", "--create-reflog", "-m", "worktree-idle:" + token,
+                                 "refs/heads/" + branch, head, "0" * len(head))
+                        path = case / ("idle-" + str(index))
+                        self.git("worktree", "add", path, branch)
+                        idle.append(path)
+                    victim = idle[0]
+                    _, metadata = identity(self.main, victim)
+                    tree = case / "return-task"
+                    self.git("worktree", "add", "-b", "lane/governance/task", tree)
+                    _, task_metadata = identity(self.main, tree)
+                    allocation_record(tree, task_metadata, head)
+                    binary = case / "bin"
+                    binary.mkdir()
+                    marker = case / "fault-triggered"
+                    ready = case / "return-completed"
+                    shim = binary / "git"
+                    shim.write_text(f'''#!/usr/bin/env python3
+import os, pathlib, sys
+args = sys.argv[1:]
+ready = pathlib.Path({str(ready)!r})
+triggered = pathlib.Path({str(marker)!r})
+record = pathlib.Path({str(metadata / 'worktree-removal')!r})
+fault = {outcome!r}
+victim = {str(victim)!r}
+if any(arg.startswith("worktree-idle:") for arg in args):
+    ready.write_text("switched")
+elif ready.exists() and ready.read_text() == "switched" and "merge-base" in args:
+    ready.write_text("ready")
+elif ready.exists() and ready.read_text() == "ready" and not triggered.exists():
+    revalidate = fault == "revalidate" and "merge-base" in args and victim in args
+    checkpoint = fault == "checkpoint_failed" and "add" in args and victim in args
+    qualification = fault in ("qualification_failed", "refused") and record.exists() and "list" in args
+    removal = fault == "partial_or_indeterminate" and "worktree" in args and "remove" in args and victim in args
+    if revalidate or checkpoint or qualification or removal:
+        triggered.touch()
+        if fault == "refused":
+            import subprocess
+            subprocess.run([{real_git!r}, "-C", {str(self.main)!r}, "worktree", "lock", "--reason", "private removal lock", victim], check=True)
+        else:
+            print("private removal diagnostic " + victim, file=sys.stderr)
+            sys.exit(2 if revalidate else 1)
+os.execv({real_git!r}, [{real_git!r}, *args])
+''')
+                    shim.chmod(0o755)
+                    result = subprocess.run(["dotnet", str(cli), "worktree", "return", "--path", str(tree),
+                        "--writers-joined"], cwd=self.main, env=dict(self.environment,
+                        PATH=str(binary) + os.pathsep + self.environment["PATH"]),
+                        capture_output=True, text=True, timeout=45)
+                    self.assertTrue(marker.exists(), result.stdout + result.stderr)
+                    self.assertEqual(74, result.returncode, result.stdout + result.stderr)
+                    receipt = json.loads(result.stdout)
+                    self.assertEqual("returned", receipt["status"])
+                    self.assertEqual("failed", receipt["pool"]["status"])
+                    self.assertEqual(head, receipt["checkpoint"]["commit"])
+                    self.assertEqual("unchanged", receipt["checkpoint"]["status"])
+                    self.assertEqual(receipt["idle_branch"], self.git("-C", tree, "symbolic-ref", "HEAD").decode())
+                    self.assertEqual(head, self.git("rev-parse", receipt["task_branch"]).decode())
+                    item = next(item for item in receipt["pool"]["items"] if item["path"] == str(victim))
+                    retained = outcome in ("refused", "revalidate")
+                    self.assertEqual("retained" if retained else outcome, item["outcome"])
+                    self.assertEqual("revalidate" if outcome == "revalidate" else "remove", item["stage"])
+                    self.assertTrue(victim.is_dir())
+                    if retained:
+                        self.assertEqual("Refused", item["error_type"])
+                    else:
+                        self.assertNotIn("error_type", item)
+                        self.assertIn("private removal diagnostic", item["error"])
+                    if outcome == "checkpoint_failed":
+                        self.assertIsNone(item["checkpoint"])
+                        self.assertFalse((metadata / "worktree-removal").exists())
+                    elif outcome != "revalidate":
+                        self.assertTrue((metadata / "worktree-removal").is_file())
+                        self.assertEqual(head, self.git("rev-parse", receipt["pool"]["items"][0]["branch"]).decode())
+                    rows = self.rows("worktree-protocol")
+                    completed = next(row for row in rows if row["event"] == "operation_finished")
+                    self.assertEqual("returned", completed["status"])
+                    failures = [row for row in rows if row["event"] == "operation_finished" and row.get("pool_status") == "failed"]
+                    failure = self.assert_single(failures)
+                    expected = ("failed", "returned", "failed", item["stage"],
+                                "Refused" if retained else "CommandResult",
+                                "idle_sweep_refused" if retained else outcome,
+                                item["outcome"])
+                    keys = ("status", "return_status", "pool_status", "stage", "error_type", "reason_code", "outcome")
+                    self.assertEqual(expected, tuple(failure[key] for key in keys))
+                    self.assertEqual(expected, tuple(rows[-1][key] for key in keys))
+                    self.assertEqual(74, rows[-1]["exit_code"])
+                    persisted = json.dumps(rows)
+                    for private in ("private removal diagnostic", "private removal lock", str(victim), str(tree)):
+                        self.assertNotIn(private, persisted)
+                finally:
+                    self.root = original_root
+
+    def assert_single(self, items):
+        self.assertEqual(1, len(items), items)
+        return items[0]
 
     def test_python_owner_children_have_immediate_parent(self):
         import importlib.util

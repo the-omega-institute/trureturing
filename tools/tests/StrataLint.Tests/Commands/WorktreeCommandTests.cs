@@ -557,7 +557,7 @@ public sealed partial class WorktreeCommandTests
             var lines = new List<string>();
             var result = WorktreeProtocolCommand.RunLines(repository.Path,
                 ["qualify", "--path", tree, "--stream"], new ProductionWorktreeProcessRunner(),
-                TimeSpan.FromSeconds(30), lines.Add);
+                TestBudgets.ScriptProcessHangGuard, lines.Add);
             Assert.Equal(failInventory ? 74 : 0, result.ExitCode);
             using var receipt = JsonDocument.Parse(lines[^1]);
             Assert.Equal("worktree_qualification", receipt.RootElement.GetProperty("event").GetString());
@@ -600,6 +600,18 @@ public sealed partial class WorktreeCommandTests
         var result = TestProcessRunner.Run("python3", ["-B",
             Path.Combine(root, "tools/tests/StrataLint.WorkflowScript.Tests/Fixtures/maintenance_log_tests.py"),
             root, "MaintenanceLogTests.test_native_return_pool_failure"], root, TimeSpan.FromSeconds(90), 1024 * 1024);
+        Assert.True(result.ExitCode == 0, System.Text.Encoding.UTF8.GetString(result.StandardOutput)
+            + System.Text.Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Fact]
+    public void NativeReturnObservesUntypedAutomaticRemovalFailures()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("python3", ["-B",
+            Path.Combine(root, "tools/tests/StrataLint.WorkflowScript.Tests/Fixtures/maintenance_log_tests.py"),
+            root, "MaintenanceLogTests.test_native_return_removal_failures"], root, TestBudgets.ProtocolProbeHangGuard, 1024 * 1024);
         Assert.True(result.ExitCode == 0, System.Text.Encoding.UTF8.GetString(result.StandardOutput)
             + System.Text.Encoding.UTF8.GetString(result.StandardError));
     }

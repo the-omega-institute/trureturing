@@ -478,13 +478,21 @@ def _log_result(action, result):
         # The return effect is complete even when its automatic sweep fails.
         # Observe the consumed pool failure separately, retaining both effects.
         failures = [pool["failure"]] if isinstance(pool.get("failure"), dict) else []
+        removal_failures = {"qualification_failed", "checkpoint_failed", "partial_or_indeterminate"}
         failures.extend(item for item in pool.get("items", [])
-                        if isinstance(item, dict) and item.get("error_type"))
-        for item in failures:
-            _log_operation(action, status="failed", outcome="failed",
-                           stage=_reason_code(item.get("stage")),
-                           reason=item.get("reason") or "idle_sweep_failed",
-                           error_type=_reason_code(item.get("error_type")),
+                        if isinstance(item, dict) and
+                        (item.get("outcome") in removal_failures | {"sweep_failed", "refused"}
+                         or item.get("outcome") == "retained" and item.get("stage") in {"revalidate", "remove"}))
+        # Pool status is authoritative even when no item carries a diagnostic.
+        for item in failures or [{}]:
+            outcome = item.get("outcome")
+            stage = item.get("stage")
+            _log_operation(action, status="failed",
+                           outcome=outcome if outcome in removal_failures | {"sweep_failed", "retained", "refused"} else "failed",
+                           stage=stage if stage in {"inventory", "inspect", "disk_pressure", "revalidate", "remove", "release", "pool_scope"} else "pool",
+                           reason=outcome if outcome in removal_failures else
+                                  "idle_sweep_refused" if outcome in {"retained", "refused"} else "idle_sweep_failed",
+                           error_type=_reason_code(item.get("error_type")) or "CommandResult",
                            return_status=status, pool_status="failed")
 
 
