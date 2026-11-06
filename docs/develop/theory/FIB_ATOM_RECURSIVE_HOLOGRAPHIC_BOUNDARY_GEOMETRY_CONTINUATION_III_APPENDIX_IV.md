@@ -1933,3 +1933,138 @@ If $[v]\ne0$, the corresponding right-hand side is strictly positive.
 *Proof.* For $v\ge0$, equation (181.4) writes $R_{000}$ as the sum of seven nonnegative terms. Retaining its first term gives (182.1), and self-adjointness of $P$ in the definition of $\mathcal C$ gives the displayed integral. For $v\le0$, write $h=-v\ge0$. Expanding $\mathcal C(q+2h,q+2h,q+2h)-\mathcal C(q,q,q)$, every term is nonnegative and the term with exactly one $h$ in the first slot is $2\mathcal C(h,q,q)$, which gives (182.2). The strict positivity follows from (181.3), applied with $(a,b)=(F,F)$ or $(q,q)$. $\square$
 
 These bounds quantify the distance from the full-zero fibre for every one-sided displacement. They leave the genuinely sign-changing seven-equation system, the radical-triviality implication in Corollary 179.3, arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization open.
+
+## 183. Two-sided balance required by common-first full zeros
+
+A sign-changing candidate has two nonnegative parts whose effects can be separated using the two diagonal coordinates. Pointwise legality makes the relevant bases nonnegative, so positivity of the trilinear form gives exact compensation inequalities.
+
+**Proposition 183.1 (positive-negative balance inequalities).** Retain the common-first tuple of Proposition 181.1. Write
+
+$$
+ h=v^+=\max\{v,0\},
+ \qquad
+ k=v^- =\max\{-v,0\},
+ \qquad
+ D(a)=\mathcal C(a,a,a).
+$$
+
+Then $hk=0$ pointwise, and legality implies
+
+$$
+F-k\ge0,
+\qquad
+q-2h\ge0.
+\tag{183.1}
+$$
+
+If $R_{000}=R_{333}=0$, the positive and negative parts satisfy
+
+$$
+D(F)-D(F-k)
+ =D(F-k+h)-D(F-k)
+ \ge \mathcal C(h,F-k,F-k),
+\tag{183.2}
+$$
+
+and
+
+$$
+D(q)-D(q-2h)
+ =D(q-2h+2k)-D(q-2h)
+ \ge 2\mathcal C(k,q-2h,q-2h).
+\tag{183.3}
+$$
+
+*Proof.* Since $h$ and $k$ have disjoint supports, on the support of $k$ one has $h=0$ and the legality of $u_0=F+h-k$ gives $F-k\ge0$; off that support $F-k=F\ge0$. The same argument with $u_3=q-2h+2k$ gives $q-2h\ge0$, proving (183.1).
+
+For nonnegative $a,r$, trilinearity and positivity preservation give
+
+$$
+D(a+r)-D(a)
+=\mathcal C(r,a,a)+\mathcal C(a,r,a)+\mathcal C(a,a,r)
+ +\mathcal C(r,r,a)+\mathcal C(r,a,r)
+ +\mathcal C(a,r,r)+\mathcal C(r,r,r)\ge \mathcal C(r,a,a).
+\tag{183.4}
+$$
+
+The first diagonal residual being zero is
+
+$$
+D(F-k+h)=D(F),
+$$
+so applying (183.4) with $(a,r)=(F-k,h)$ yields (183.2). The third diagonal residual being zero is
+
+$$
+D(q-2h+2k)=D(q).
+$$
+
+Applying (183.4) with $(a,r)=(q-2h,2k)$ gives (183.3), since the first term is $2\mathcal C(k,q-2h,q-2h)$. $\square$
+
+These are necessary balance conditions for a common-first full zero. Together with Section 181 they require both sign parts as measured classes; the inequalities do not assert that a sign-changing pair is sufficient, and the remaining five equations, the radical alternative, arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization remain open.
+
+## 184. Tensor-lift criterion for the common-first slice
+
+The remaining common-first equations can be expressed without choosing a preferred list of coordinates. The four labels are images of a two-dimensional coefficient space, and a full zero is exactly preservation of the induced trilinear tensor.
+
+**Proposition 184.1 (coefficient-space tensor equivalence).** Let $A=\mathbb R^2$, and for $(a,b)\in A$ define
+
+$$
+\Phi_f(a,b)=ap+bF,
+\qquad
+\Phi_v(a,b)=ap+b(F+v).
+$$
+
+Set
+
+$$
+\mathfrak T_f(r,s,t)=\mathcal C(\Phi_f(r),\Phi_f(s),\Phi_f(t)),
+\qquad
+\mathfrak T_v(r,s,t)=\mathcal C(\Phi_v(r),\Phi_v(s),\Phi_v(t)).
+$$
+
+For the coefficient vectors
+
+$$
+ c_B=(1,0),
+ \qquad c_0=c_1=(0,1),
+ \qquad c_3=(3,-2),
+\tag{184.1}
+$$
+
+one has $f_y=\Phi_f(c_y)$ and $u_y=\Phi_v(c_y)$ for every $y\in\{0,1,3,B\}$. Consequently,
+
+$$
+\Delta(u)_{yzk}=0\ \text{for all }y,z,k
+\quad\Longleftrightarrow\quad
+\mathfrak T_v=\mathfrak T_f\ \text{on }A^3.
+\tag{184.2}
+$$
+
+*Proof.* The identities for $c_B,c_0,c_1$ are immediate. Since $2F+q=3p$ and $2(F+v)+(q-2v)=3p$, one has $q=3p-2F$ and $q-2v=3p-2(F+v)$, giving the identity for $c_3$.
+
+For every label triple $(y,z,k)$, the residual is
+
+$$
+\Delta(u)_{yzk}
+ =\mathfrak T_v(c_y,c_z,c_k)-\mathfrak T_f(c_y,c_z,c_k).
+$$
+
+If all residuals vanish, the two trilinear forms agree on the four displayed coefficient vectors. The vectors $c_B$ and $c_0$ form a basis of $A$, so trilinearity extends this equality to every $(r,s,t)\in A^3$. The converse follows by evaluating (184.2) at the coefficient vectors of every label triple. $\square$
+
+**Corollary 184.2 (the common-first problem as a tensor-preserving lift).** If $p$ and $F$ are linearly independent as $m$-classes, let $E=\operatorname{span}_{\mathbb R}\{p,F\}$ and define
+
+$$
+S_v(ap+bF)=ap+b(F+v).
+$$
+
+Then a legal common-first tuple has all residuals zero if and only if
+
+$$
+\mathcal C(S_vx,S_vy,S_vz)=\mathcal C(x,y,z)
+\qquad(x,y,z\in E).
+\tag{184.3}
+$$
+
+Thus the only remaining exact-zero route in this slice is a tensor-preserving lift of the two-dimensional baseline span. The coefficient-space statement (184.2) remains valid without the independence assumption; no rigidity or positivity of such a lift is asserted here.
+
+This criterion is equivalent to the seven-coordinate reduction of Section 180, while making the remaining algebraic target explicit. It does not solve the tensor-stabilizer problem, the radical alternative, arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession or Lean/kernel formalization.
