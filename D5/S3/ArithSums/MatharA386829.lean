@@ -10,7 +10,11 @@ import Mathlib.Data.Nat.Choose.Sum
 import Mathlib.Data.Nat.Choose.Central
 import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.RingTheory.PowerSeries.Derivative
-import Mathlib.Tactic
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.LinearCombination
+
+/-! Inclusive binomial transformation, telescoping recurrence, and formal differential equation. -/
 
 namespace D5.S3.ArithSums.MatharA386829
 open scoped BigOperators
@@ -111,18 +115,19 @@ private theorem auxiliary_step (n : ℕ) :
     cases k with
     | zero => simp [U, pow_succ]; ring
     | succ k =>
-      rw [if_neg (by omega)]
-      simp only [U, Nat.add_sub_cancel, Nat.succ_sub_one]
+      rw [ite_eq_right (by omega)]
+      simp only [U, Nat.succ_sub_one]
       rw [show n+1-(k+1+1) = n-k-1 by omega,
         show n+1-(k+1) = n-k by omega]
       have hp : (3 : ℤ)^(n-k) = 3 * 3^(n-k-1) := by
         rw [← pow_succ']; congr 1; omega
-      have hp' : (3 : ℤ)^(n-(k+1)) = 3^(n-k-1) := by congr 1; omega
+      have hp' : (3 : ℤ)^(n-(k+1)) = 3^(n-k-1) := by congr 1
       rw [hp', hp]
       have hpas := Nat.choose_succ_succ (n+k+1) k
       have hpas' : ((n+1+(k+1)).choose (k+1) : ℤ) =
           ((n+(k+1)).choose k : ℤ) + ((n+(k+1)).choose (k+1) : ℤ) := by
         exact_mod_cast (by simpa [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using hpas)
+      simp only [Nat.add_left_comm, Nat.add_comm] at hpas' ⊢
       rw [hpas']
       simp only [pow_succ]
       ring
@@ -130,7 +135,7 @@ private theorem auxiliary_step (n : ℕ) :
   have htel : (∑ k ∈ range (n+1), if k = 0 then U (k+1) else U (k+1)-U k) = U (n+1) := by
     rw [sum_range_succ']
     simp only [Nat.add_eq_zero_iff, Nat.one_ne_zero, and_false, ↓reduceIte]
-    rw [sum_range_sub']
+    rw [sum_range_sub (fun i => U (i+1)) n]
     ring
   rw [htel, sum_add_distrib, ← mul_sum, ← mul_sum] at hs
   have hc : U (n+1) = 3*c (n+1) := by
@@ -138,13 +143,17 @@ private theorem auxiliary_step (n : ℕ) :
       rw [show 2*(n+1) = (2*n+1)+1 by omega, Nat.choose_succ_succ,
         Nat.choose_symm_half]
       omega
-    simp only [U, c, Nat.add_sub_cancel, pow_zero, mul_one]
+    simp only [U, c, Nat.add_sub_cancel, Nat.sub_self, pow_zero, mul_one]
     rw [show n+(n+1) = 2*n+1 by omega, hchoose, Nat.cast_mul, Nat.cast_ofNat]
     ring
   have hb : b (n+1) = (∑ k ∈ range (n+1),
       (5 : ℤ)^k * 3^(n+1-k) * ((n+1+k).choose k : ℤ)) + c (n+1) := by
-    simp [b, c, sum_range_succ, Nat.add_comm, Nat.two_mul]
-  unfold b at hs
+    unfold b c
+    rw [sum_range_succ]
+    simp only [Nat.sub_self, pow_zero, mul_one]
+    rw [show n+1+(n+1) = 2*(n+1) by omega]
+  change U (n+1) = 4*(∑ k ∈ range (n+1),
+    (5 : ℤ)^k * 3^(n+1-k) * ((n+1+k).choose k : ℤ)) + 18*b n at hs
   rw [hc] at hs
   linarith
 
@@ -165,42 +174,59 @@ private theorem recurrence (n : ℕ) :
   have h1 := auxiliary_step (n+1)
   have h0 := auxiliary_step n
   have hc := central_step (n+1)
+  simp only [Nat.add_assoc] at h1 hc
   push_cast at h1 hc
-  linear_combination ((n+2 : ℤ)*h1 - 10*(2*n+3 : ℤ)*h0 + 7*hc) / 2
+  have htwice : 2*(2*(n+2 : ℤ)*b (n+2) + (20-31*(n+2 : ℤ))*b (n+1) +
+      90*(1-2*(n+2 : ℤ))*b n) = 0 := by
+    linear_combination (n+2 : ℤ)*h1 - 10*(2*n+3 : ℤ)*h0 + 7*hc
+  omega
 
 /-- The entire ordinary formal generating series over the rationals. -/
 noncomputable def series : PowerSeries ℚ := PowerSeries.mk fun n => (a n : ℚ)
 
 private theorem formal_equation :
     (2 - 31*PowerSeries.X - 180*PowerSeries.X^2) *
-        PowerSeries.derivative series - (11 + 270*PowerSeries.X)*series = 15 := by
+        PowerSeries.derivative series - (11 + 270*PowerSeries.X)*series = PowerSeries.C 15 := by
   open PowerSeries in
   ext n
   cases n with
-  | zero => norm_num [series, a, Finset.sum_range_succ, sub_mul, add_mul, pow_two, mul_assoc]
+  | zero =>
+    simp only [sub_mul, add_mul, pow_two, mul_assoc, map_sub, map_add,
+      coeff_ofNat_mul, coeff_zero_X_mul, coeff_derivative, series, coeff_mk,
+      coeff_C, ite_true]
+    norm_num [a, Finset.sum_range_succ, Nat.choose]
   | succ n =>
     cases n with
-    | zero => norm_num [series, a, Finset.sum_range_succ, sub_mul, add_mul, pow_two, mul_assoc,
-        coeff_derivative]
+    | zero =>
+      simp only [sub_mul, add_mul, pow_two, mul_assoc, map_sub, map_add,
+        coeff_ofNat_mul, coeff_succ_X_mul, coeff_zero_X_mul, coeff_derivative,
+        series, coeff_mk, coeff_C, Nat.succ_ne_zero, ite_false]
+      norm_num [a, Finset.sum_range_succ, Nat.choose]
     | succ n =>
-      have h := recurrence n
-      have hq : 2*(n+2 : ℚ)*(a (n+2) : ℚ) +
-          (20-31*(n+2 : ℚ))*(a (n+1) : ℚ) +
-          90*(1-2*(n+2 : ℚ))*(a n : ℚ) = 0 := by exact_mod_cast h
+      have h := recurrence (n+1)
+      have hq : 2*(n+1+2 : ℚ)*(a (n+1+2) : ℚ) +
+          (20-31*(n+1+2 : ℚ))*(a (n+1+1) : ℚ) +
+          90*(1-2*(n+1+2 : ℚ))*(a (n+1) : ℚ) = 0 := by exact_mod_cast h
       simp only [sub_mul, add_mul, pow_two, mul_assoc, map_sub, map_add,
         coeff_succ_X_mul, coeff_ofNat_mul, coeff_derivative, series, coeff_mk,
-        coeff_ofNat, Nat.succ_ne_zero, ite_false]
-      push_cast
+        coeff_C, Nat.succ_ne_zero, ite_false]
+      simp only [Nat.add_assoc] at hq ⊢
+      push_cast at hq ⊢
       linear_combination hq
 
 private theorem homogeneous_equation :
     (2 - 31*PowerSeries.X - 180*PowerSeries.X^2) *
         PowerSeries.derivative (PowerSeries.derivative series) -
       (42 + 630*PowerSeries.X) * PowerSeries.derivative series - 270*series = 0 := by
+  have h2 : PowerSeries.derivative (2 : PowerSeries ℚ) = 0 := PowerSeries.derivative_C
+  have h31 : PowerSeries.derivative (31 : PowerSeries ℚ) = 0 := PowerSeries.derivative_C
+  have h180 : PowerSeries.derivative (180 : PowerSeries ℚ) = 0 := PowerSeries.derivative_C
+  have h11 : PowerSeries.derivative (11 : PowerSeries ℚ) = 0 := PowerSeries.derivative_C
+  have h270 : PowerSeries.derivative (270 : PowerSeries ℚ) = 0 := PowerSeries.derivative_C
   have h := congrArg (PowerSeries.derivative (R := ℚ)) formal_equation
   simp only [map_sub, map_add, Derivation.leibniz, PowerSeries.derivative_X,
-    PowerSeries.derivative_pow, PowerSeries.derivative_ofNat, smul_eq_mul,
-    mul_one, one_mul, pow_one] at h
+    PowerSeries.derivative_pow, h2, h31, h180, h11, h270, PowerSeries.derivative_C, smul_eq_mul,
+    mul_one] at h
   linear_combination h
 
 /-- The full literal recurrence and a nonzero homogeneous polynomial differential equation. -/
@@ -221,9 +247,15 @@ theorem result :
       else 2-31*Polynomial.X-180*Polynomial.X^2
     refine ⟨2, p, ⟨2, by decide, ?_⟩, ?_⟩
     · intro h
-      have hc := congrArg (Polynomial.coeff (n := 0)) h
+      have hc := congrArg (fun q : Polynomial ℚ => q.coeff 0) h
       norm_num [p] at hc
-    · simpa [p, Finset.sum_range_succ, Function.iterate_succ_apply',
-        sub_mul, add_mul, mul_add, mul_sub] using homogeneous_equation
+    · simp only [p, Finset.sum_range_succ, Finset.sum_range_zero, zero_add,
+        Function.iterate_zero_apply, Function.iterate_succ_apply']
+      simp only [show ¬(2 : ℕ) = 0 by decide, show ¬(2 : ℕ) = 1 by decide,
+        show ¬(1 : ℕ) = 0 by decide, ite_true, ite_false,
+        ← Polynomial.coeToPowerSeries.ringHom_apply, map_neg, map_sub, map_add,
+        map_mul, map_pow, map_ofNat]
+      simp only [Polynomial.coeToPowerSeries.ringHom_apply, Polynomial.coe_X]
+      linear_combination homogeneous_equation
 
 end D5.S3.ArithSums.MatharA386829

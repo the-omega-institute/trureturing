@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ArithSums;
 internal sealed class MatharA386829Document : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/ArithSums/MatharA386829.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/ArithSums/mathar2026a386829");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/RecurrenceComposition/mathar2026a386829");
     private static Formula Call(string name, params Formula[] args) => new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
@@ -31,16 +31,16 @@ internal sealed class MatharA386829Document : IScribeDocumentDefinition
     {
         var literal = Mul(Mul(Mul(Pow(D(3), k), Pow(D(2), Sub(n, k))),
             Call("choose", Add(Mul(D(2), n), D(1)), k)), Call("choose", Sub(Mul(D(2), n), k), Sub(n, k)));
-        var recurrence = All("n", Nat, Seq(D(2), Le, n, Implies, Sp,
-            Add(Add(Mul(Mul(D(2), n), A(n)), Mul(Sub(D(20), Mul(D(31), n)), A(Sub(n, D(1))))),
-                Mul(Mul(D(90), Sub(D(1), Mul(D(2), n))), A(Sub(n, D(2))))), Eq, D(0)));
+        var recurrence = All("n", Nat, Seq(D(2), Sp, Le, Sp, n, Sp, Implies, Sp,
+            Add(Add(Mul(Mul(D(2), n), A(n)), Mul(Sub(D(2, 0), Mul(D(3, 1), n)), A(Sub(n, D(1))))),
+                Mul(Mul(D(9, 0), Sub(D(1), Mul(D(2), n))), A(Sub(n, D(2))))), Eq, D(0)));
         var r = F.Id("r");
         var j = F.Id("j");
         var p = F.Id("p");
         var dfinite = Seq(Exists, Sp, r, Colon, Nat, Comma, Sp, Exists, Sp, p, Colon,
-            Call("PolynomialFamily", Q), Comma, Sp,
-            Seq(Open, Exists, Sp, j, Comma, Sp, D(0), Le, j, Le, r, Land, Sp, Call("p", j), Neq, D(0), Close),
-            Land, Sp, Sum(j, r, Mul(Call("p", j), Call("iterateDerivative", j, F.Id("series")))), Eq, D(0));
+            Seq(Nat, Sp, To, Sp, Q, OpenBracket, z, CloseBracket), Comma, Sp,
+            Seq(Open, Exists, Sp, j, Colon, Nat, Comma, Sp, D(0), Sp, Le, Sp, j, Sp, Le, Sp, r, Sp, Land, Sp, Call("p", j), Sp, Neq, Sp, D(0), Close),
+            Land, Sp, Sum(j, r, Mul(Call("p", j), Pow(F.Id("series"), Seq(Open, j, Close)))), Eq, D(0));
         return DocumentDefinition.Create(ScribeNode.Create(
             "The inclusive binomial sum A386829 satisfies Mathar's complete recurrence and a nonzero homogeneous formal differential equation.",
             H("Mathar's A386829 recurrence and D-finiteness"), Blocks(
@@ -50,8 +50,8 @@ internal sealed class MatharA386829Document : IScribeDocumentDefinition
             Node("series", "Entire formal generating series", Seq(F.Id("series"), Eq,
                 Seq(F.Sum, Underscore, Grp(Seq(n, Eq, D(0))), Caret, Grp(Infty), Sp, Mul(A(n), Pow(z, n)))),
                 "series is the power series with coefficient a(n), cast into the rationals, at every natural index. It belongs to Q[[z]]; no analytic convergence is required.", DescribeRole.Definition, true),
-            Node("result", "Full recurrence and homogeneous differential equation", Seq(recurrence, Land, Sp, dfinite),
-                "The first conjunct quantifies over every n>=2. The second provides a finite polynomial family with at least one nonzero member whose weighted formal derivatives sum to zero. A witness has order two: p0=-270, p1=-(42+630z), and p2=2-31z-180z squared. The constant coefficient of p2 is 2, proving that the equation is nonzero.", DescribeRole.Theorem, true),
+            Node("result", "Full recurrence and homogeneous differential equation", Seq(Open, recurrence, Close, Sp, Land, Sp, Open, dfinite, Close),
+                "The first conjunct quantifies over every n>=2. The second provides a natural r and a function p from the naturals to Q[z], with at least one nonzero member among indices 0 through r whose weighted formal derivatives sum to zero. The notation series superscript (j) means its j-fold formal derivative, with the zero-fold derivative equal to series; each polynomial coefficient is embedded in Q[[z]]. A witness has order two: p0=-270, p1=-(42+630z), and p2=2-31z-180z squared. The constant coefficient of p2 is 2, proving that the equation is nonzero.", DescribeRole.Theorem, true),
             Paragraph(Text("Expanding the auxiliary sum b(n)=sum over j=0 through n of 5 to the j times 3 to the (n-j) times choose(n+j,j), interchanging finite triangular sums, and applying the hockey-stick identity proves a(n)=b(n). The binomial product identity and the reflection of the inclusive index range account for every endpoint.")),
             Paragraph(Text("A weighted telescoping identity gives 4b(n+1)+18b(n)=7c(n+1), where c(n)=5 to the n times choose(2n,n). The central-binomial identity (n+1)c(n+1)=10(2n+1)c(n) eliminates c and yields the recurrence. Initial values a(0)=1 and a(1)=13 determine the constant term in the first-order inhomogeneous equation. Formal differentiation produces the displayed homogeneous equation.")))));
     }
