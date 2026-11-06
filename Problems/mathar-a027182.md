@@ -15,7 +15,7 @@ motivation_gids:
 OEIS A027182 revision 8 states Mathar's FORMULA conjecture for the
 self-convolution of the rows of Kimberling's A027170 revision 32.
 The verbatim source is in
-[the source note](../Library/RecurrenceComposition/matharkimberling2026a027182.md),
+[the source note](../Library/Recurrence/matharkimberling2026a027182.md),
 and the quantified statement is preregistered in
 [#23023](https://github.com/the-omega-institute/trureturing/issues/23023).
 
