@@ -464,7 +464,6 @@ private theorem candidate_normalized (r u v : ℕ) :
     congr 1
     linear_combination 4*(19*(u:ℤ)+v)*hq
   dsimp [f,carryCorrection,normalizedRow]
-  push_cast
   change t*(19*(u:ℤ)+v) -
     (2*((19*(u:ℤ)+v)*q)/b-8*((19*(u:ℤ)+v)*q)/b^2+
       4*((19*(u:ℤ)+v)*q)/b^2-((19*(u:ℤ)+v)*q)/b^2+
@@ -572,7 +571,7 @@ private theorem affine_total (r : ℕ) :
   have := m_lower r
   omega
 
-private theorem card_filter_product (a b : Finset ℕ) (P : ℕ×ℕ → Prop)
+private theorem card_filter_product (a b : Finset ℕ) (P : ℕ × ℕ → Prop)
     [DecidablePred P] :
     ((a ×ˢ b).filter P).card = ∑ y ∈ b, (a.filter (fun x => P (x,y))).card := by
   simp only [Finset.card_filter,Finset.sum_product]
@@ -585,7 +584,7 @@ private theorem physical_zero_card_reduction (r : ℕ) :
   classical
   let s : Finset ℕ := (Finset.range (K r)).filter
     (fun k => sumAtMask r (k*Q r)=0)
-  let t : Finset (ℕ×ℕ) := ((Finset.range (B r-1)) ×ˢ (Finset.range 19)).filter
+  let t : Finset (ℕ × ℕ) := ((Finset.range (B r-1)) ×ˢ (Finset.range 19)).filter
     (fun p => rowValue (M r) p.2 p.1=0)
   have hzero (k : ℕ) (hk : k ≤ K r) :
       sumAtMask r (k*Q r)=0 ↔ f r k=0 := by
@@ -651,7 +650,6 @@ private theorem physical_zero_card_reduction (r : ℕ) :
     rw [hL]
     rfl
   rw [physical_candidate_card,hc,Finset.card_insert_of_notMem hknot,hcard,htcard]
-  omega
 
 /-- Exact cardinality of all physical integer-zero subsets, for every r. -/
 theorem actual_zero_subsets_card (r : ℕ) :
@@ -673,5 +671,6 @@ theorem actual_zero_subsets_card (r : ℕ) :
   rw [hadd]
   exact affine_total r
 
+#check @actual_zero_subsets_card
 #print axioms actual_zero_subsets_card
 end D5.S3.Combinatorics.Circle.MersenneExceptional19ZeroCount
