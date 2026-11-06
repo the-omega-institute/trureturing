@@ -439,10 +439,43 @@ def _log_operation(action, *, status=None, outcome=None, reason=None, error=None
         LOG.emit("operation_finished", **payload)
 
 
+def _log_removal_failures(action, receipt, return_status=None):
+    if (not isinstance(receipt, dict) or receipt.get("status") != "failed"
+            or receipt.get("event") not in {"worktree_pool", "worktree_removal"}):
+        return False
+    pool = receipt["event"] == "worktree_pool"
+    removal_failures = {"qualification_failed", "checkpoint_failed", "partial_or_indeterminate"}
+    failures = [receipt["failure"]] if isinstance(receipt.get("failure"), dict) else []
+    failures.extend(item for item in receipt.get("items", [])
+                    if isinstance(item, dict) and
+                    (item.get("outcome") in removal_failures | {"sweep_failed", "refused"}
+                     or item.get("outcome") == "retained" and item.get("stage") in {"revalidate", "remove", "release"}))
+    fields = dict(return_status=return_status, pool_status="failed" if pool else None)
+    # A failed receipt remains authoritative even without an item diagnostic.
+    for item in failures or [{}]:
+        outcome = item.get("outcome")
+        stage = item.get("stage")
+        _log_operation(action, status="failed",
+                       outcome=outcome if outcome in removal_failures | {"sweep_failed", "retained", "refused"} else "failed",
+                       stage=(stage if stage in {"inventory", "inspect", "disk_pressure", "revalidate", "remove", "release", "pool_scope"}
+                              else "pool") if pool else "remove",
+                       reason=outcome if outcome in removal_failures else
+                              "idle_sweep_refused" if pool and outcome in {"retained", "refused"} else
+                              "idle_sweep_failed" if pool else "removal_failed",
+                       error_type=_reason_code(item.get("error_type")) or "CommandResult", **fields)
+    if len(failures) > 1:
+        _log_operation(action, status="failed", outcome="failed", stage="pool" if pool else "remove",
+                       reason="idle_sweep_failed" if pool else "removal_failed",
+                       error_type="CommandResult", failed_item_count=len(failures), **fields)
+    return True
+
+
 def _log_result(action, result):
     if not isinstance(result, dict):
         _log_operation(action, status="failed", outcome="invalid_result",
                         reason="invalid_structured_result", error=ValueError())
+        return
+    if _log_removal_failures(action, result):
         return
     failure = result.get("failure")
     reason = result.get("reason")
@@ -473,27 +506,9 @@ def _log_result(action, result):
                    error_type=("Refused" if status == "refused" else "CommandResult" if status == "failed" else None),
                    stage=result.get("stage") or (failure or {}).get("stage")
                    if isinstance(failure, dict) else result.get("stage"))
-    pool = result.get("pool")
-    if isinstance(pool, dict) and pool.get("status") == "failed":
-        # The return effect is complete even when its automatic sweep fails.
-        # Observe the consumed pool failure separately, retaining both effects.
-        failures = [pool["failure"]] if isinstance(pool.get("failure"), dict) else []
-        removal_failures = {"qualification_failed", "checkpoint_failed", "partial_or_indeterminate"}
-        failures.extend(item for item in pool.get("items", [])
-                        if isinstance(item, dict) and
-                        (item.get("outcome") in removal_failures | {"sweep_failed", "refused"}
-                         or item.get("outcome") == "retained" and item.get("stage") in {"revalidate", "remove", "release"}))
-        # Pool status is authoritative even when no item carries a diagnostic.
-        for item in failures or [{}]:
-            outcome = item.get("outcome")
-            stage = item.get("stage")
-            _log_operation(action, status="failed",
-                           outcome=outcome if outcome in removal_failures | {"sweep_failed", "retained", "refused"} else "failed",
-                           stage=stage if stage in {"inventory", "inspect", "disk_pressure", "revalidate", "remove", "release", "pool_scope"} else "pool",
-                           reason=outcome if outcome in removal_failures else
-                                  "idle_sweep_refused" if outcome in {"retained", "refused"} else "idle_sweep_failed",
-                           error_type=_reason_code(item.get("error_type")) or "CommandResult",
-                           return_status=status, pool_status="failed")
+    # A return can complete before its automatic sweep fails.
+    if action == "return" and result.get("event") == "worktree_return":
+        _log_removal_failures(action, result.get("pool"), return_status=status)
 
 
 def with_command(options):
@@ -738,7 +753,8 @@ def main(argv=None):
                              reason_code=LOG_LAST.get("reason_code"),
                              error_type=LOG_LAST.get("error_type"),
                              return_status=LOG_LAST.get("return_status"),
-                             pool_status=LOG_LAST.get("pool_status"))
+                             pool_status=LOG_LAST.get("pool_status"),
+                             failed_item_count=LOG_LAST.get("failed_item_count"))
         LOG.finish(exit_code, **{key: value for key, value in finish_fields.items()
                                  if value is not None})
     return exit_code
