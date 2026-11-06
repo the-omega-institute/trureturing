@@ -481,6 +481,7 @@ theorem physicalWheelStep_factorization (A B : Finset V)
       exact hd.trans Finset.sdiff_subset
     · intro hs
       refine ⟨c,?_⟩
+      change s ⊆ localResidual g i A B at hs
       simpa only [hc,Finset.sdiff_empty,hground] using hs
   · intro c a hc
     have ha : a ∈ (projectedRimRows g i A B).ground :=
