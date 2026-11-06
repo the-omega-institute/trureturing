@@ -1,0 +1,56 @@
+**定义 16.1（The original spin-one wheel carrier）。** For every integer
+$r\geq3$, put $n=2r+1$, $m=n+1$, and let $H=K_1\vee C_n$ have hub
+$h$ and rim $\mathbb Z/n\mathbb Z$, with just the spokes and rim edges.
+Use the original equal Boolean fibres $B_i=\{i\}\times[2]$,
+$\Omega=\bigsqcup_iB_i$, and the entire complex $m$-particle space
+$\mathcal H_m$ of Definitions 1.1–1.2. Thus $s=2$, $|\Omega|=2m$,
+$K=K_m$ is positive ordinary token adjacency, and $P_{\mathrm{sym}}$
+is the original within-fibre projection. Set
+
+$$
+E=\min\operatorname{spec}K,\qquad
+\mathcal N=\ker P_{\mathrm{sym}},\qquad
+c_n=\cos(\pi/n),\qquad t_n=\frac{49}{50}c_n+\frac7{100}.
+\tag{16.1}
+$$
+
+The minimum defining $E$ is over all of $\mathcal H_m$.
+The sector decomposition (13.4)–(13.5) applies to this carrier
+independently of the graph-block hypotheses of Theorem 13.2:
+
+$$
+\mathcal H_m\cong\bigoplus_{\boldsymbol J\in\{0,1\}^m}
+ \left(\bigotimes_i V_{J_i}\right)_{\sum_i Z_i=0},\qquad
+K=\sum_{\{i,j\}\in E(H)}(J_i^+J_j^-+J_i^-J_j^+).
+\tag{16.2}
+$$
+
+Each original fibre has the unique spin-zero vector
+$\chi=(|\{1\}\rangle-|\{2\}\rangle)/\sqrt2$ and the three spin-one
+vectors in (13.4). Both multiplicities are one, $n_i=I+Z_i$,
+and $P_{\mathrm{sym}}$ selects precisely $\boldsymbol J=(1,\ldots,1)$.
+Every sector in (16.2) includes all its globally feasible weights
+$|x_i|\leq J_i$, $\sum_i x_i=0$, including the endpoints. No restriction
+on complex superpositions or entanglement is imposed.
+
+The representation suppliers in (6.6)–(6.12) specialize as follows:
+Srinivasan, [Theorem 1.2 and pp. 3–5](https://arxiv.org/pdf/1001.0280v2),
+has Boolean rank $2$, starting rank $1-J_i$ and up operator $L_i^*$;
+Feinsilver, [§§3–4, Proposition 4.3 and §4.2.2](https://arxiv.org/pdf/1102.0368v2),
+has principal number $2J_i$, $T=L_i^*$ and $T^*=L_i$.
+The complete word counts and Gram formulas, with their counting
+recurrences, in [OccupancyWordSectors](../../../D5/S3/Quantum/Entanglement/OccupancyWordSectors.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Quantum/Entanglement/OccupancyWordSectors.scribe.cs)
+normalize the triplet with two-letter counts $(2-n_i,n_i)$.
+For [the collective-oscillator supplier](AURIC_COLLECTIVE_OSCILLATORS_AND_RECORD_CAPACITY.md)
+the exact algebraic map is $d=m$, $N=2$, $g=0$, $e=1$,
+$B=A(H)$, $a_i=L_i/\sqrt2$, $H_2=\hbar K/2$;
+no low-excitation approximation is used.
+The singleton-difference definition in
+[TokenGraphLaplacianRadiusRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.scribe.cs)
+gives exactly the coefficient-one moves of (2.4).
+These conventions agree with Apte–Parekh–Sud,
+[v3, Definition 1 and Fact 2](https://arxiv.org/pdf/2506.03441v3);
+the shifted operator $WI/2-K$ in that Fact is a different operator.
+

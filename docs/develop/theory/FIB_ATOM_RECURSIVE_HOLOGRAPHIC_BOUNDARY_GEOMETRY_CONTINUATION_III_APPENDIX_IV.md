@@ -753,4 +753,172 @@ The current result does not assert $P(W)\subseteq W$ for the concrete Section 16
 
 
 
+## 169. The concrete representer plane is not heat-invariant
+
+Section 168 reduces the actual closure question to a finite residual Gram matrix. The source-start law supplies an exact obstruction to that closure: the first-order representer plane already contains a positive-time source density, and no such density can have a finite-dimensional heat orbit.
+
+**Lemma 169.1 (a positive-time source density has no polynomial relation).** Let $t,d>0$ and let $g_t$ be the source-start density of Appendix III Theorem 117.2. There is no nonzero real polynomial $q$ such that
+
+$$
+q(T_d)g_t=0\quad\text{in }L^2(G,m).
+\tag{169.1}
+$$
+
+*Proof.* Write $T_s=e^{-sK}$ and let $E_K$ be the spectral resolution of the nonnegative self-adjoint $K$. If (169.1) held, then the spectral measure of $g_t$ would be supported on
+
+$$
+\Lambda=\{\lambda\ge0:q(e^{-d\lambda})=0\}.
+\tag{169.2}
+$$
+
+This set is finite: the nonzero polynomial $q$ has finitely many roots, and $\lambda\mapsto e^{-d\lambda}$ is one-to-one; a possible root at zero is not attained at a finite $\lambda$. Thus
+
+$$
+g_t=\sum_{\lambda\in\Lambda}g_{t,\lambda},
+\qquad g_{t,\lambda}=E_K(\{\lambda\})g_t.
+\tag{169.3}
+$$
+
+For $0<s<t$, the source propagation identity gives $g_t=T_{t-s}g_s$. Since $T_{t-s}$ is injective and commutes with $q(T_d)$,
+
+$$
+0=q(T_d)g_t=T_{t-s}q(T_d)g_s
+\quad\Longrightarrow\quad q(T_d)g_s=0.
+\tag{169.4}
+$$
+
+The same finite spectral decomposition therefore holds for every $g_s$. On the $\lambda$-eigenspace, $T_{t-s}$ is multiplication by $e^{-(t-s)\lambda}$, so
+
+$$
+g_s=\sum_{\lambda\in\Lambda}e^{(t-s)\lambda}g_{t,\lambda}
+\longrightarrow
+r:=\sum_{\lambda\in\Lambda}e^{t\lambda}g_{t,\lambda}
+\quad\text{in }L^2(m)\quad(s\downarrow0).
+\tag{169.5}
+$$
+
+For every $\psi\in C_c(G)$, the $L^2$ convergence and $m(G)=1$ give
+
+$$
+\int_G\psi r\,dm
+=\lim_{s\downarrow0}\int_G\psi g_s\,dm.
+\tag{169.6}
+$$
+
+The right side is $\lim_{s\downarrow0}\mathbb E_e[\psi(Z_s)]=\psi(e)$, because the retained diffusion starts at $e$ and has continuous paths. Hence the finite measure $r\,m$ equals $\delta_e$ on $C_c(G)$. This is impossible: $r\in L^2(m)\subset L^1(m)$ while $m(\{e\})=0$, so $r\,m$ is absolutely continuous with respect to $m$ and cannot be the point mass $\delta_e$. $\square$
+
+**Proposition 169.2 (the actual Section 166 plane is not $P$-invariant).** For every original finite $a,\eta,d>0$, with $P=T_d$, $g=g_{2d}$ and $W$ the concrete representer span of Section 166,
+
+$$
+P(W)\not\subseteq W.
+\tag{169.7}
+$$
+
+*Proof.* In the fixed readout of Appendix III Definition 134.1, $f_B=1/4$, $P1=1$, $\sigma_0=1$ and $\sigma_B=0$. Therefore the representer formula (166.1) gives the exact identity
+
+$$
+\psi_{0BB}=g\,P(f_B P f_B)=\frac{g}{16}.
+\tag{169.8}
+$$
+
+In particular $g/16\in W$. If $P(W)\subseteq W$, finite-dimensionality of $W$ would make the orbit $(P^ng)_{n\ge0}$ linearly dependent. Equivalently, some nonzero polynomial $q$ would satisfy $q(P)g=0$, contradicting Lemma 169.1 with $t=2d$. Thus (169.7) holds. $\square$
+
+**Corollary 169.3 (nonzero actual residual and failure of bounded calibrated closure).** Let $w_1,\ldots,w_r$ be any $L^2(m)$-independent bounded basis of the concrete Section 166 plane, and let $G,K,D$ be the exact matrices of (167.4). Then
+
+$$
+D-K^{\mathsf T}G^{-1}K\ne0,
+\tag{169.9}
+$$
+
+and, for $V_\infty=L^\infty(G,m;\mathbb R)\cap W^\perp$,
+
+$$
+P(V_\infty)\not\subseteq V_\infty.
+\tag{169.10}
+$$
+
+Indeed, (169.9) is the contrapositive of the exact residual criterion (167.5), while (169.10) follows from the closure equivalence (167.3). The conclusion is an exact non-invariance statement for the concrete calibration plane; it does not evaluate individual residual entries, construct a physical successor, prove orbit density, or supply a nonlinear residual-zero family, a legal simplex or $H43$ partition, a terminal compensator, $SRS\text{-}20$, $F_{64}$, or a Lean/kernel theorem.
+
+The proof uses only the original source-start density and path law, the injective self-adjoint heat semigroup, the fixed Section 166 readout identities and finite-dimensionality of $W$. It resolves the actual closure boundary left open in Section 168 without a numerical approximation.
+
+## 170. A rotation-odd exact common kernel for the full successor stack
+
+Section 169 rules out finite-dimensional closure of the concrete representer plane, but it does not by itself produce a nonzero bounded class satisfying every successor readout. The original half-turn symmetry supplies such a class family. It acts on the actual source, measure and heat operator, so the construction remains inside the retained model.
+
+**Proposition 170.1 (rotation-odd classes annihilate the full linear successor stack).** Let $J=R_\pi$ be the half-turn in the $(x,y)$ coordinates, and let $J^*$ denote pullback on functions. Use the pointwise rotation-invariant representative $\beta$ of $g_d$ supplied by Appendix III Proposition 136.2 in the formulas (134.7). Since $[\beta]=[b]$, this replacement leaves the $L^2(m)$ classes of all $f_y$, and hence the plane $W$ of (166.2), unchanged. Define
+
+$$
+V_-:=\{v\in L^\infty(G,m;\mathbb R):J^*v=-v\ \text{$m$-a.e.}\}.
+\tag{170.1}
+$$
+
+Then
+
+$$
+V_-\subseteq W_\infty
+ =L^\infty(G,m;\mathbb R)\cap
+ \overline{W+\mathcal C_R}^{\,H\,\perp},
+\qquad
+\mathcal C_R=\overline{\operatorname{span}_{\mathbb R}
+ \{P^j\psi_{yzw}:j\ge0,\ (y,z,w)\in\mathcal L^3\}}^{\,H}.
+\tag{170.2}
+$$
+
+In particular, every rotation-odd class satisfies all first-order constraints and all their specified heat-successor constraints.
+
+*Proof.* Appendix III §136 gives that $m$, $g_s$ and $T_s$ are invariant under the circle action and that $T_s$ commutes with its pullbacks. With the invariant representative $\beta$, the functions $g$ and $f_y$ are $J^*$-invariant. Each representer in (166.1) is obtained from these functions by multiplication and by $P=T_d$, so
+
+$$
+J^*\psi_{yzw}=\psi_{yzw}.
+\tag{170.3}
+$$
+
+Commutation gives $J^*P^j\psi_{yzw}=P^j\psi_{yzw}$ for every $j$. If $v\in V_-$ and $\psi$ is any one of these invariant classes, invariance of $m$ and the change of variables $x\mapsto Jx$ give
+
+$$
+\langle v,\psi\rangle_H
+ =\langle J^*v,J^*\psi\rangle_H
+ =-\langle v,\psi\rangle_H,
+$$
+
+so the pairing is zero. Thus $v$ is orthogonal to $W$ and to $\mathcal C_R$, hence to their closed sum, proving (170.2). The identity (166.4) and the successor-kernel formula (166.10) give the stated interpretation. $\square$
+
+**Corollary 170.2 (an infinite-dimensional common kernel with collapsing heat energy).** The space $V_-$, and therefore $W_\infty$, is infinite-dimensional. More explicitly, there are linearly independent bounded real Borel functions $v_n$ such that
+
+$$
+v_n\in W_\infty,\qquad \|v_n\|_\infty=1,
+\qquad 0<q_{003}(v_n)
+ \le c\int_{B_n}g^2\,dm\longrightarrow0,
+\tag{170.4}
+$$
+
+where each $B_n$ is the support of $v_n$ up to an $m$-null set.
+
+*Proof.* Choose a Borel set $U\subset G\setminus N$ with $m(U)>0$ and $U\cap J U=\varnothing$; such a set exists in a sufficiently small neighborhood of any point off the rotation axis, using the full local support of $m$ from Appendix III §136. Choose pairwise disjoint Borel subsets $A_n\subset U$ with $m(A_n)>0$ and $m(A_n)\to0$, and put
+
+$$
+B_n=A_n\cup J A_n,
+\qquad v_n=\mathbf1_{A_n}-\mathbf1_{J A_n}.
+\tag{170.5}
+$$
+
+The sets in (170.5) are disjoint in each pair, $J^*v_n=-v_n$, and $\|v_n\|_\infty=1$. The pairwise disjointness of the $A_n$ and of their images makes the $v_n$ linearly independent. Since $m$ is $J$-invariant, $m(B_n)\to0$; since $g\in L^2(m)$, absolute continuity gives $\int_{B_n}g^2\,dm\to0$. Proposition 170.1 puts every $v_n$ in $W_\infty$. Finally Proposition 134.2 and the $L^2$ contraction of $T_{d/2}$ give
+
+$$
+0<q_{003}(v_n)=c\|T_{d/2}(gv_n)\|_2^2
+\le c\|gv_n\|_2^2
+ =c\int_{B_n}g^2\,dm\longrightarrow0.
+$$
+
+Thus the full infinite-horizon common kernel contains nonzero bounded directions of unit sup norm with vanishing heat-energy infimum. This does not construct a physical successor, prove density of the successor orbit, produce a nonlinear residual-zero family, a legal simplex or $H43$ partition, or settle $SRS\text{-}20$, $F_{64}$ or a Lean/kernel theorem. $\square$
+
+By Proposition 167.2, $H_{\mathrm{cal}}=W^\perp$ for the concrete first-order kernel. The functions above lie in $W^\perp\cap\mathcal C_R^\perp$ and are nonzero, so
+
+$$
+\overline{\mathcal C_R}^{\,H}\ne H_{\mathrm{cal}}.
+\tag{170.6}
+$$
+
+Thus the concrete rotation-invariant successor stack is not dense in the calibrated Hilbert space; this conclusion is specific to the stated Section 166 readout and does not extend to an arbitrary successor or a physical realization.
+
 ## 追加锚（本行以下为增补区）
