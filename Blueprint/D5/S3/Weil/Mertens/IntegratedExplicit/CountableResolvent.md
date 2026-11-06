@@ -6,9 +6,35 @@ A dominated complete-series exchange through the positive W-weighted Laplace res
 
 CountableSpectrum carries zero and coefficient sequences indexed by all natural numbers. Each zero satisfies 0<Re(z)<1 and abs(Im(z))>10. The coefficient norms are summable and their total is at most 2. No beta cap below 1, symmetry quotient, finite truncation, integral budget or signed-tail hypothesis is included.
 
-The literal spectral tail is the integral over v>y of W(v) times the complete sum of c_k*exp((z_k-1)*v), where W(v)=(v+2)/v^3. The resolvent denominator is s+1-z, its numerator is s*(1+s), and each mode integrates the resolvent kernel over s>0. A private R(v)=(v+1)/v^2 supplies integrability of W through its derivative and its limit at infinity.
+The literal spectral tail is the integral over v>y of W(v) times the complete sum of c_k*exp((z_k-1)*v), where W(v)=(v+2)/v^3. The resolvent denominator is s+1-z, its numerator is s*(1+s), and each mode integrates the resolvent kernel over s>0. R(v)=(v+1)/v^2 supplies integrability of W through its derivative and its limit at infinity.
 
-**Theorem 1.1 (The complete countable resolvent identity).**
+The same owner now exposes the consumed R weight, spectral series and W-tail integrability. W_tail proves its exact mass R(y), and spectral_weighted_integrable proves W times the full series is L1 by uniform convergence and coefficient-norm domination. These consumed support facts serve SignedGaussianEndpoint; no second spectrum or resolvent is introduced.
+
+**Theorem 1.1 (The complete weighted series is integrable).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.spectral_weighted_integrable`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.spectral_weighted_integrable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every complete CountableSpectrum and y>0, W(v)*spectralSeries(S,v) is L1 on (y,infinity). Coefficient-norm domination and uniform convergence justify the complete series, and the W-tail majorant pays the integral. This consumed support is owned here and used by the signed correction.
+
+**Theorem 1.2 (The exact positive weight mass).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.W_tail`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.W_tail` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every y>0, integral_(y,infinity) W(v)=R(y). The existing derivative R'=-W and R(infinity)=0 pay the exact improper endpoint. The signed correction uses this mass.
+
+**Theorem 1.3 (The complete countable resolvent identity).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.countable_resolvent_identity`
 
@@ -20,7 +46,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.counta
 
 For every positive y, spectralTail(S,y) equals the complete sum of c_k*resolventMode(z_k,y). The common positive s,v kernel is proved product integrable before Fubini. Per-mode integration then gives the literal resolvent, and dominated convergence with bound norm(c_k)*W(v) exchanges the whole series with the weighted tail. SpectralAverage.spectral_average_bound uses the identity to obtain its pointwise HasSum; the identity is on the active average proof path.
 
-**Lemma 1.2 (Integrable positive Laplace weight).**
+**Lemma 1.4 (Integrable positive Laplace weight).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.laplace_weight_integrable`
 
@@ -32,7 +58,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.laplac
 
 For every y>0, s*(1+s)*exp(-s*y) is integrable on s>0. The proof directly reuses TwoScaleEndpointMoments.exponential_moment at rate y for n=1,2. Its integrability and equality components supply the private real moments and exact W moment. SpectralAverage.window_kernel_integrable and high_tail_integrable require this fact.
 
-**Lemma 1.3 (Nonnegative Laplace polynomial).**
+**Lemma 1.5 (Nonnegative Laplace polynomial).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.laplacePolynomial_nonneg`
 
@@ -44,7 +70,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.laplac
 
 The polynomial s*(1+s) is nonnegative for s>=0. This consumed algebraic helper is used by the product majorants and the low and high frequency bounds in SpectralAverage.
 
-**Lemma 1.4 (The W weight decreases on the positive axis).**
+**Lemma 1.6 (The W weight decreases on the positive axis).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.W_antitone`
 
@@ -56,7 +82,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.W_anti
 
 For 0<x<=y, W(y)<=W(x). Its reciprocal-power proof supplies the uniform window majorant in spectral_average_bound.
 
-**Lemma 1.5 (Ordinate separation controls every denominator).**
+**Lemma 1.7 (Ordinate separation controls every denominator).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.denominator_norm`
 
@@ -68,7 +94,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.denomi
 
 If abs(Im(z))>=10 then norm(s+1-z)>=10 for every real s. The low-frequency averaged kernel uses the imaginary-part bound without an inverse distance to Re(z)=1.
 
-**Lemma 1.6 (Nonvanishing denominator).**
+**Lemma 1.8 (Nonvanishing denominator).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.denominator_ne`
 
@@ -80,7 +106,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.denomi
 
 The same height condition makes s+1-z nonzero for every real s. SpectralAverage.window_kernel_integrable uses this fact in the continuity proof for the product kernel.
 
-**Lemma 1.7 (The pointwise positive resolvent majorant).**
+**Lemma 1.9 (The pointwise positive resolvent majorant).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.resolventKernel_norm_bound`
 
@@ -92,7 +118,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.resolv
 
 For Re(z)<=1, abs(Im(z))>=10, s>=0 and y>=0, the kernel norm is at most s*(1+s)*exp(-s*y)/10. SpectralAverage uses it to prove window product integrability and window_kernel_bound.
 
-**Lemma 1.8 (Uniform modulus of a complete mode).**
+**Lemma 1.10 (Uniform modulus of a complete mode).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.resolventMode_bound`
 
@@ -104,7 +130,7 @@ Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.resolv
 
 For y>0 under the same strip and height bounds, the full mode norm is at most W(y)/10. Together with W_antitone it gives the coefficient-summable window majorant used in spectral_average_bound.
 
-**Lemma 1.9 (Mode continuity on a positive half-axis).**
+**Lemma 1.11 (Mode continuity on a positive half-axis).**
 
 Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.resolventMode_continuousOn`
 
@@ -121,6 +147,7 @@ The existing CompleteCoefficientLaplace.complete_coefficient_laplace concerns th
 ## References
 
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.W_antitone`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.W_tail`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.countable_resolvent_identity`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.denominator_ne`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.denominator_norm`
@@ -129,4 +156,5 @@ The existing CompleteCoefficientLaplace.complete_coefficient_laplace concerns th
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.resolventKernel_norm_bound`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.resolventMode_bound`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.resolventMode_continuousOn`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/CountableResolvent.spectral_weighted_integrable`
 - Dependency: [D5/S3/Analytic/ExponentialSum/TwoScaleEndpointMoments](../../../Analytic/ExponentialSum/TwoScaleEndpointMoments.md)

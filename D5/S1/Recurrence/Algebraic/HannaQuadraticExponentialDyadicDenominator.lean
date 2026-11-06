@@ -63,8 +63,9 @@ namespace D5.S1.Recurrence.Algebraic.HannaQuadraticExponentialDyadicDenominator
 
 open PowerSeries
 
-open private expSeries_constant expSeries_derivative from
+open private expSeries_constant from
   D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality
+open D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality (expSeries_derivative)
 
 /-- The sum over m ≥ 1 in OEIS A174491, with zero constant coefficient. -/
 noncomputable def logarithmInput : PowerSeries ℚ :=
@@ -245,8 +246,9 @@ private lemma source_coeff_val : ∀ n : ℕ,
             rw [hleft] at hright
             linarith
 
-open private IsRIntegralRat IsRIntegralRat.zero IsRIntegralPS localRat_iff_val_nonneg
-  local_exp_of_log_difference from D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality
+open D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality (IsRIntegralRat)
+open private IsRIntegralPS localRat_iff_val_nonneg local_exp_of_log_difference from
+  D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality
 
 private lemma odd_prime_not_dvd_two (p : ℕ) (hp : p.Prime) (hodd : Odd p) : ¬ p ∣ 2 := by
   exact hp.coprime_iff_not_dvd.mp hodd.coprime_two_right
