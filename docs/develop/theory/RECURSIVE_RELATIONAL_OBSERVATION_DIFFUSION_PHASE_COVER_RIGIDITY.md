@@ -2113,18 +2113,18 @@ c_1=g_cB\sqrt{5v_0}+Wj_0,\qquad c_2=Wj_1.
 \tag{10.3}
 $$
 
-For a rational support radius $L\ge1$, define
+For a rational support radius $\Lambda\ge1$, define
 
 $$
 \begin{gathered}
-c_3=\sqrt{v_0L^5},\qquad R_{\min}=4\max\{2,L\},\\
+c_3=\sqrt{v_0\Lambda^5},\qquad R_{\min}=4\max\{2,\Lambda\},\\
 R_* =\max\{R_{\min},(8Tc_1)^2,8D_1\},\qquad
 A_* =\sqrt{\ell R_*},\qquad
 B_* =Tc_2/\sqrt{R_*},\qquad C_* =Tc_3/\sqrt{R_*},\\
-C_L=\max\{1,(4A_*)^4,(4B_*)^2,4C_*\},\\
-A_L=T(c_1C_L+c_2\sqrt{C_L}+c_3),\qquad B_L=D_1C_L,\\
-\tau_L(R)=A_LR^{-1/2}+B_LR^{-1},\qquad
-D_L=\sqrt{\ell C_L^2/2+8A_L^2+8B_L^2}.
+C_{\Lambda}=\max\{1,(4A_*)^4,(4B_*)^2,4C_*\},\\
+A_{\Lambda}=T(c_1C_{\Lambda}+c_2\sqrt{C_{\Lambda}}+c_3),\qquad B_{\Lambda}=D_1C_{\Lambda},\\
+\tau_{\Lambda}(R)=A_{\Lambda}R^{-1/2}+B_{\Lambda}R^{-1},\qquad
+D_{\Lambda}=\sqrt{\ell C_{\Lambda}^2/2+8A_{\Lambda}^2+8B_{\Lambda}^2}.
 \end{gathered}
 \tag{10.4}
 $$
@@ -2136,7 +2136,7 @@ $\Gamma$; it does not define a different potential or replace $g_c$.
 
 **Theorem 10.3 (source-specific exterior and low-energy bounds).**
 Let $f\in L^2(G,d\mu;\mathbb C)$ have support in
-$\{\varrho\le L\}$, put $t_f=\|f\|_2$, and retain the original
+$\{\varrho\le\Lambda\}$, put $t_f=\|f\|_2$, and retain the original
 $C=0$ boundary for
 
 $$
@@ -2148,12 +2148,12 @@ For every $r>0$ and every $R\ge R_{\min}$,
 
 $$
 \begin{gathered}
-\|u_r\|_2,\ \|y\|_2\le C_Lt_f,\\
+\|u_r\|_2,\ \|y\|_2\le C_{\Lambda}t_f,\\
 \|\mathbf1_{\{\varrho>R\}}u_r\|_2,
-\ \|\mathbf1_{\{\varrho>R\}}y\|_2\le t_f\tau_L(R),\\
+\ \|\mathbf1_{\{\varrho>R\}}y\|_2\le t_f\tau_{\Lambda}(R),\\
 \|y-u_r\|_2^2
- \le t_f^2\left(\frac{\ell R C_L^2\sqrt r}{2}
-                         +4\tau_L(R)^2\right).
+ \le t_f^2\left(\frac{\ell R C_{\Lambda}^2\sqrt r}{2}
+                         +4\tau_{\Lambda}(R)^2\right).
 \end{gathered}
 \tag{10.5}
 $$
@@ -2161,7 +2161,7 @@ $$
 Consequently
 
 $$
-\|F^{-1}f-(F+r)^{-1}f\|_2\le t_fD_Lr^{1/8}
+\|F^{-1}f-(F+r)^{-1}f\|_2\le t_fD_{\Lambda}r^{1/8}
 \quad\left(0<r\le\min\{1,R_{\min}^{-4}\}\right).
 \tag{10.6}
 $$
@@ -2185,16 +2185,16 @@ m\{\varrho>R\}
 \tag{10.8}
 $$
 
-For the particular pair in (10.2), choose $L\ge1$ containing both
-supports, and use the constants for that $L$. Put
+For the particular pair in (10.2), choose $\Lambda\ge1$ containing both
+supports, and use the constants for that $\Lambda$. Put
 $w_r=\gamma_{\log}-(F+r)^{-1}f_{\log}$ and
 $I_R=\int_{\{\varrho\le R\}}|w_*|^2d\mu$. Then
 
 $$
 \begin{gathered}
 I_R\le\|w_*\|_2^2
- \le I_R+\|f_{\log}\|_2^2\tau_L(R)^2\quad(R\ge R_{\min}),\\
-\|w_*-w_r\|_2\le\|f_{\log}\|_2D_Lr^{1/8}
+ \le I_R+\|f_{\log}\|_2^2\tau_{\Lambda}(R)^2\quad(R\ge R_{\min}),\\
+\|w_*-w_r\|_2\le\|f_{\log}\|_2D_{\Lambda}r^{1/8}
  \quad\left(0<r\le\min\{1,R_{\min}^{-4}\}\right).
 \end{gathered}
 \tag{10.9}
@@ -2220,7 +2220,7 @@ $$
 \tag{10.10}
 $$
 
-The original free heat formula [E's source, (85.12)], including its
+The original free heat formula [Continuation III, (85.12)](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md), including its
 $1/(2\pi)$ inverse central Fourier factor and the independent $z$
 Gaussian, is
 
@@ -2461,8 +2461,8 @@ $$
 \tag{10.21}
 $$
 
-For $x>C_L$, each term on the right is strictly less than $x/4$,
-a contradiction. Thus $N\le C_Lt_f$; if $t_f=0$ the resolvent
+For $x>C_{\Lambda}$, each term on the right is strictly less than $x/4$,
+a contradiction. Thus $N\le C_{\Lambda}t_f$; if $t_f=0$ the resolvent
 vector is zero. Substitution in (10.19) proves the uniform tail in
 (10.5). The existing strong limit $u_r\to y$ as $r\downarrow0$
 [E, (110.15)] passes both bounds to $y$.
@@ -2470,18 +2470,18 @@ vector is zero. Substitution in (10.19) proves the uniform tail in
 Set $e_r=y-u_r=r(F+r)^{-1}y\in D(F)$. The spectral theorem gives
 
 $$
-\|e_r\|_2\le C_Lt_f,\qquad
-\overline q_c[e_r]\le\frac r4C_L^2t_f^2,
+\|e_r\|_2\le C_{\Lambda}t_f,\qquad
+\overline q_c[e_r]\le\frac r4C_{\Lambda}^2t_f^2,
 \tag{10.22}
 $$
 
 because $\sup_{\lambda\ge0}\lambda r^2/(\lambda+r)^2=r/4$.
 Equation (10.20) bounds its squared inside mass by
-$\ell RC_L^2t_f^2\sqrt r/2$.
-The two exterior bounds give exterior norm at most $2t_f\tau_L(R)$.
+$\ell RC_{\Lambda}^2t_f^2\sqrt r/2$.
+The two exterior bounds give exterior norm at most $2t_f\tau_{\Lambda}(R)$.
 This proves the last line of (10.5). Set $R=r^{-1/4}$ in the stated
 range of $r$. Then
-$\tau_L(R)^2\le2A_L^2r^{1/4}+2B_L^2r^{1/2}$;
+$\tau_{\Lambda}(R)^2\le2A_{\Lambda}^2r^{1/4}+2B_{\Lambda}^2r^{1/2}$;
 since $r\le1$, (10.4) proves (10.6).
 Finally, outside the support of $\gamma_{\log}$ one has
 $w_*=-F^{-1}f_{\log}$. Splitting its total squared norm at $R$
@@ -2517,22 +2517,22 @@ normalized state even though the packet contains no state name, local
 mass, boundary coefficient, tail oracle or norm of $w_*$.
 
 For a general forcing in Theorem 10.3, a further conditional input is
-a rational $L\ge1$ with the stated support promise and a global $L^2$
+a rational $\Lambda\ge1$ with the stated support promise and a global $L^2$
 name of that exact $f$. One concrete encoding returns rational complex
 step functions on finite rational boxes in the original coordinates,
 with certified $L^2(d\mu)$ error at most $2^{-j}$.
 Their norms are enclosed by finite rational arithmetic and square-root
 bounds. Thus a positive rational $\bar t\ge\|f\|_2$ is obtainable
 without deciding whether $f=0$. For positive rational $\varepsilon$,
-outward upper bounds for $A_L,B_L,D_L$ allow finite dyadic choices
+outward upper bounds for $A_{\Lambda},B_{\Lambda},D_{\Lambda}$ allow finite dyadic choices
 satisfying
 
 $$
 \begin{gathered}
-R\ge\max\{R_{\min},(2\bar t A_L/\varepsilon)^2,
-                               2\bar t B_L/\varepsilon\},\\
+R\ge\max\{R_{\min},(2\bar t A_{\Lambda}/\varepsilon)^2,
+                               2\bar t B_{\Lambda}/\varepsilon\},\\
 0<r\le\min\{1,R_{\min}^{-4},
-                         (\varepsilon/(\bar t D_L))^8\}.
+                         (\varepsilon/(\bar t D_{\Lambda}))^8\}.
 \end{gathered}
 \tag{10.24}
 $$
@@ -2558,7 +2558,7 @@ coefficient field does not establish that correspondence. If the
 actual local integral has been enclosed by
 $I_R^-\le I_R\le I_R^+$ and the actual forcing norm by $\bar t$,
 the new global remainder makes
-$[I_R^-,I_R^++\bar t^2\tau_L(R)^2]$ a norm-squared enclosure.
+$[I_R^-,I_R^++\bar t^2\tau_{\Lambda}(R)^2]$ a norm-squared enclosure.
 No numerical procedure for the local interval is supplied here; it
 must include the region meeting $e$. In particular (10.8) is a
 normalized-state exterior certificate, not an evaluation of the
