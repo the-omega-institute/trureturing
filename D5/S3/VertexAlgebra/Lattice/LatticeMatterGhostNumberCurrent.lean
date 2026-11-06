@@ -9,6 +9,16 @@
 import D5.S3.VertexAlgebra.Lattice.LatticeMatterGhostDegree
 import D5.S3.VertexAlgebra.Lattice.LatticeMatterGhostStateFieldIterate
 
+/-
+proof_shape: number_current_zero_mode, tensorNumber_stateField: content
+admission_basis: escape-witness
+escape_witness: The explicit creator word and the two exact normal-order
+branches identify the negative two-site state's zero mode with ghostNumber
+on every original Fock state. This identification is used on the live proof
+path of both public theorems. number_current_even is a consumed bind-only
+helper for tensorNumber_stateField.
+-/
+
 /-! The number current is the matter vacuum tensored with the negative two-site
 ghost occupation state. All sums are taken after application to an original
 finite-excitation state. No rank or parity restriction is imposed on the states
@@ -33,7 +43,7 @@ namespace D5.S3.VertexAlgebra.LatticeMatterGhostNumberCurrent
 
 open LatticeGeneratingFieldLocality LatticeMatterGhostCoupling
 open LatticeMatterGhostStateField LatticeMatterGhostDegree
-open D5.S3.Quantum.Fermionic (BcGhostStateField BcGhostChargeTensor)
+open D5.S3.Quantum.Fermionic
 
 private theorem ghost_current_zero_mode :
     ((BcGhostStateField.Y (-ket {0, 1})) [[0]]) = ghostNumber := by
@@ -43,9 +53,8 @@ private theorem ghost_current_zero_mode :
   have product := normal_product (ket {0}) (ket {1}) 1 1
     (by simp [parity_ket]) (by simp [parity_ket])
   rw [b_modes] at product
-  norm_num only [show (-1 : ℤ) - 1 = -2 by omega,
-    show (-1 : ℂ) ^ (1 * 1 : ℕ) = -1 by norm_num] at product
-  rw [word] at product
+  norm_num at product
+  rw [word, show (-1 : ℂ) ^ (1 * 1 : ℕ) = -1 by norm_num] at product
   apply LinearMap.ext
   intro x
   rw [ghost_number_normal_sum, integer_split _ (normal_term_finite_support x) 2]
@@ -54,14 +63,16 @@ private theorem ghost_current_zero_mode :
   simp only [b_modes, c_modes, neg_one_smul]
   have lower (i : ℕ) : normalTerm (2 - i - 1) x =
       c (0 - (i : ℤ) - 1 + 2) (b ((i : ℤ) - 1) x) := by
-    rw [normalTerm, if_pos (by omega)]
+    rw [normalTerm, ite_eq_left (by omega)]
     simp only [Module.End.mul_apply]
-    congr 1 <;> congr 1 <;> omega
+    rw [show -(2 - (i : ℤ) - 1) = (i : ℤ) - 1 by omega,
+      show (2 : ℤ) - i - 1 = 0 - (i : ℤ) - 1 + 2 by omega]
   have upper (i : ℕ) : normalTerm (2 + i) x =
       -(b (-(i : ℤ) - 1 - 1) (c (0 + (i : ℤ) + 2) x)) := by
-    rw [normalTerm, if_neg (by omega)]
+    rw [normalTerm, ite_eq_right (by omega)]
     simp only [LinearMap.neg_apply, Module.End.mul_apply]
-    congr 1 <;> congr 1 <;> congr 1 <;> omega
+    rw [show -(2 + (i : ℤ)) = -(i : ℤ) - 1 - 1 by omega,
+      show (2 : ℤ) + i = 0 + (i : ℤ) + 2 by omega]
   simp only [lower, upper, finsum_neg_distrib]
   abel
 
@@ -71,7 +82,7 @@ def numberCurrent (D : LatticeData) : State D :=
 
 private theorem number_current_even (D : LatticeData) :
     parity D (numberCurrent D) = numberCurrent D := by
-  simp [numberCurrent, parity, TensorProduct.map_tmul, parity_ket]
+  simp [numberCurrent, LatticeMatterGhostStateField.parity, parity_ket]
 
 /-- Its literal zero mode is the original tensor number operator. -/
 theorem number_current_zero_mode (D : LatticeData) :
