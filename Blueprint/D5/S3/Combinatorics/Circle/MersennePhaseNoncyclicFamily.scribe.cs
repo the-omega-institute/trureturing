@@ -1,5 +1,4 @@
 using static StrataLint.Scribe.DefinitionDsl;
-using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle;
 
@@ -14,7 +13,7 @@ internal sealed class MersennePhaseNoncyclicFamilyDocument : IScribeDocumentDefi
             Paragraph(Text("Fix any natural d at least three, put g=2^d-1, m=2^(d+1)-3 and N=2^(3d)-1, and assume 19 does not divide m. The physical source is SourceWidth.actualSource(3d,g*m). Every subset of Fin(3d) is in the domain. For B in Finset(Fin(d)), phaseLift(d,B) consists of every original label i with i.val modulo d in B: a selected phase retains the three distinct labels j, j+d and j+2d, even when source values repeat. The pair condition means that d-3 belongs to B exactly when d-1 belongs to B.")),
             Describe.Lean(DescribeId.Create("actual-zero-iff-phase-pair"),
                 DeclarationHandle.Create(Prefix + "actual_zero_iff_phase_pair"),
-                H("Unique physical zero-subset classification"), StatementSource.FromLean(),
+                H("Unique physical zero-subset classification"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("The gcd identity gcd(g*m,N)=g*gcd(m,19) follows from N=g*(2^(2d)+2^d+1), oddness of m and 4*(2^(2d)+2^d+1)=m^2+8*m+19. The domain condition makes this gcd equal to g. A literal integer-zero sum therefore forces N/g to divide the existing binary mask. The already proved minus-seed reduced-divisibility bridge and actual_zero_iff_rotation force invariance under rotation by d. No modular-zero condition is used as an assumed equivalence to the physical sum.")),
@@ -22,7 +21,7 @@ internal sealed class MersennePhaseNoncyclicFamilyDocument : IScribeDocumentDefi
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("actual-zero-subsets-card"),
                 DeclarationHandle.Create(Prefix + "actual_zero_subsets_card"),
-                H("Exactly 2^(d-1) physical subsets"), StatementSource.FromLean(),
+                H("Exactly 2^(d-1) physical subsets"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("The physical phaseLift and first-representative maps are mutual inverses on their exact zero filters. Finset.card_nbij' transports the cardinality without identifying equal-valued labels. Apply TernaryPhaseZeroCount.zero_subsets_card to the literal phase weights: one +1, one -1 and d-2 zero labels give 2^(d-2)*choose(2,1)=2^(d-1). No generic counting or Boolean framework is added.")),
