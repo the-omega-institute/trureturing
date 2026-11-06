@@ -40,8 +40,21 @@ Lean statement: `D5/S3/ArithUnits/FiniteAddActionCardinality.card_addGroup_dvd_o
 
 If a finite support is invariant under a free additive action, the action restricts to its subtype. Applying the orbit count there proves that the group cardinality divides the support cardinality. In the affine commutator setting, a nonzero prime-field translation supplies exactly this free action, turning the commutator into a numerical obstruction on the support.
 
+**Theorem 1.4 (A free invariant relation inherits group-order divisibility).**
+
+Lean statement: `D5/S3/ArithUnits/FiniteAddActionCardinality.card_addGroup_dvd_of_invariant_relation_of_free_action`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ArithUnits/FiniteAddActionCardinality.card_addGroup_dvd_of_invariant_relation_of_free_action` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A finite relation on X × X carries the diagonal additive action. If the relation is invariant and the action on X is free, the diagonal action is free because a fixed pair would give a fixed first coordinate. The orbit count therefore forces the group cardinality to divide the number of ordered pairs in the relation. This applies directly to invariant directed graphs and pair constraints.
+
 ## References
 
 - Truth anchor: `D5/S3/ArithUnits/FiniteAddActionCardinality.card_addGroup_dvd_of_free_finite_action`
 - Truth anchor: `D5/S3/ArithUnits/FiniteAddActionCardinality.card_addGroup_dvd_of_invariant_finset_of_free_action`
+- Truth anchor: `D5/S3/ArithUnits/FiniteAddActionCardinality.card_addGroup_dvd_of_invariant_relation_of_free_action`
 - Truth anchor: `D5/S3/ArithUnits/FiniteAddActionCardinality.invariant_finset_empty_or_univ_of_pretransitive`
