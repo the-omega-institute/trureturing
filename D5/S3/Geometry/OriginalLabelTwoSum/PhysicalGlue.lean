@@ -15,12 +15,13 @@ the row theorem consumes its actual oriented path substitution. -/
 noncomputable section
 open Set Finset SimpleGraph
 namespace D5.S3.Geometry.OriginalLabelTwoSum
+universe uLeftChord uRightChord
 
 /-- A retained left tree edge and an actual right chord in the SAME ambient
 label type. No parent graph, path, row or root is a field. -/
 structure PhysicalGlue (VL VR Label : Type*) [Fintype Label] [DecidableEq Label] where
-  left : GraphData VL Label
-  right : GraphData VR Label
+  left : GraphData.{_, _, uLeftChord} VL Label
+  right : GraphData.{_, _, uRightChord} VR Label
   selected : right.chords
   X : Finset Label
   Y : Finset Label

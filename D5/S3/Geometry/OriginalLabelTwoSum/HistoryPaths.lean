@@ -229,8 +229,8 @@ private def pathState (vs : List V) : CriticalState V :=
 private theorem pathOutput_state (vs : List V) (hd : vs.Nodup) :
     (pathOutput vs hd).criticalState = pathState vs := by
   revert hd
-  induction vs using List.length_induction with
-  | _ vs ih =>
+  induction vs using (measure_wf (fun l : List V => l.length)).induction with
+  | h vs ih =>
       intro hd
       match vs with
       | [] => simp only [pathOutput, pathState, Output.criticalState]

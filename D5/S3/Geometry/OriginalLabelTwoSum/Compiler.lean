@@ -12,6 +12,9 @@ import D5.S3.Geometry.OriginalLabelTwoSum.Cone
 algebraic original-label parent constructor. A general actual graph edge-2-sum
 binding is still a separate missing obligation. No Cout, parent collapse,
 critical equality, collar collapse or sphere equivalence is an input. -/
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 noncomputable section
 open Set Finset
 open scoped unitInterval ContinuousMap
@@ -61,7 +64,8 @@ private theorem singleton_parent_other (X Y Z : Finset V) (e p : V) (E : Family 
     intro s
     constructor
     · intro h
-      exact False.elim (hpe (by simpa using h.2 (Finset.mem_insert_self e s)).symm)
+      have he : e = p := Finset.mem_singleton.mp (h.2 (Finset.mem_insert_self e s))
+      exact False.elim (hpe he.symm)
     · intro h; exact False.elim h
   simp only [parentOf,phi,hd,hl,rawJoin_void,bot_sup_eq,sup_bot_eq]
 
@@ -112,7 +116,7 @@ def finishCore {X Y Z R : Finset V} {e p : V} {E : Family V}
   · have hpX : p ∈ X := (Finset.mem_insert.mp hp).resolve_left hpe
     let B := rawJoin (delta {p}) (delta Z) ⊔ rawJoin (delta X) E
     have hpB : ({p} : Finset V) ∈ B :=
-      Or.inl ⟨{p},le_rfl,∅,Finset.empty_subset _,by simp⟩
+      Or.inl ⟨{p},(show ({p} : Finset V) ⊆ {p} from le_rfl),∅,Finset.empty_subset _,by simp⟩
     have hcone : ∀ s ∈ B, insert p s ∈ B := by
       rintro s (⟨a,ha,b,hb,rfl⟩ | ⟨a,ha,b,hb,rfl⟩)
       · exact Or.inl ⟨insert p a,Finset.insert_subset_iff.mpr ⟨by simp,ha⟩,
@@ -230,7 +234,8 @@ theorem collapseCone_orderedPairs (W : Finset V) (K : Family V) (p : V)
         (fun s => s.Nonempty ∧ s ∈ K))).map
         (fun t => (t, insert p t)) := by
   classical
-  simp only [collapseCone, orderedPairs, orderedPair, Sequence.pairs_cast,
+  unfold orderedPairs orderedPair
+  simp only [collapseCone, Sequence.pairs_cast,
     rectangle_order, Finset.empty_union]
 
 private theorem terminalGamma_orderedPairs (X Y : Finset V) (E : Family V)
@@ -238,7 +243,8 @@ private theorem terminalGamma_orderedPairs (X Y : Finset V) (E : Family V)
     (h0 : (∅ : Finset V) ∈ E)
     (G : Sequence (project (delta Y)) (project E)) :
     orderedPairs (terminalGamma X Y E hXY hE h0 G) = orderedPairs G := by
-  simp only [terminalGamma, orderedPairs, orderedPair, Sequence.pairs_cast,
+  unfold orderedPairs orderedPair
+  simp only [terminalGamma, Sequence.pairs_cast,
     liftFibre_pairs, Finset.empty_union]
 
 /-- The actual original terminal vertex, specified independently of any
@@ -310,7 +316,9 @@ theorem finishPairSchedule_faces (X Y Z R : Finset V) (e p : V) (E : Family V)
   · have hg := permission hpe
     by_cases hX : X.Nonempty
     · simp only [finishPairSchedule, finishFacePairs, dif_pos hpe,
-        if_pos hpe, dif_pos hX, rightGammaPairs, dif_pos hg, orderedPairs, orderedPair]
+        if_pos hpe, dif_pos hX, rightGammaPairs, dif_pos hg, orderedPairs]
+      unfold orderedPair
+      rfl
     · simp only [finishPairSchedule, finishFacePairs, dif_pos hpe,
         if_pos hpe, dif_neg hX]
   · simp only [finishPairSchedule, finishFacePairs, dif_neg hpe, if_neg hpe]
@@ -328,13 +336,12 @@ theorem finishCore_orderedPairs {X Y Z R : Finset V} {e p : V} {E : Family V}
   classical
   by_cases hpe : p = e
   · subst p
-    simp only [finishCore, finishPairSchedule, dif_pos rfl]
     by_cases hX : X.Nonempty
-    · simp only [terminalAtInterface, dif_pos hX, orderedPairs_cast,
-        orderedPairs_append, terminalGamma_orderedPairs, collapseCone_orderedPairs]
-    · simp only [terminalAtInterface, dif_neg hX, orderedPairs_cast,
+    · simp [finishCore, finishPairSchedule, terminalAtInterface, hX, orderedPairs_cast,
+        orderedPairs_append, terminalGamma_orderedPairs, collapseCone_orderedPairs, orderedPairs, orderedPair]
+    · simp [finishCore, finishPairSchedule, terminalAtInterface, hX, orderedPairs_cast,
         collapseCone_orderedPairs]
-  · simp only [finishCore, finishPairSchedule, dif_neg hpe, orderedPairs_cast,
+  · simp [finishCore, finishPairSchedule, hpe, orderedPairs_cast,
       collapseCone_orderedPairs]
 
 private theorem finishCore_vertex {X Y Z R : Finset V} {e p : V} {E : Family V}
@@ -348,11 +355,9 @@ private theorem finishCore_vertex {X Y Z R : Finset V} {e p : V} {E : Family V}
   by_cases hpe : p = e
   · subst p
     by_cases hX : X.Nonempty
-    · simp only [finishCore, terminalAtInterface, finishVertex, dif_pos rfl,
-        if_pos rfl, dif_pos hX]
-    · simp only [finishCore, terminalAtInterface, finishVertex, dif_pos rfl,
-        if_pos rfl, dif_neg hX]
-  · simp only [finishCore, finishVertex, dif_neg hpe, if_neg hpe]
+    · simp [finishCore, terminalAtInterface, finishVertex, hX]
+    · simp [finishCore, terminalAtInterface, finishVertex, hX]
+  · simp [finishCore, finishVertex, hpe]
 
 /-- Computed parent vertex is consumed by the independent row seed recursion. -/
 theorem compileParent_vertex
