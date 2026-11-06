@@ -196,7 +196,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@full_prime_power_arithmetic_surplus_root_scale)
     (type_of% (realize signature (fun _ _ n => tail n) (fun e => nomatch e))) Type Unit where
   unitName := `D5.S3.Arith.Robin.PriceRecord.FullPrimePowerArithmeticSurplus.full_prime_power_arithmetic_surplus_root_scale.audit
-  realizationName := `Reg.D5.S3.Arith.Robin.PriceRecord.FullPrimePowerArithmeticSurplus.family
+  realizationName := `Reg.D5.S3.Arith.Robin.PriceRecord.FullPrimePowerArithmeticSurplus.RootScale.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩

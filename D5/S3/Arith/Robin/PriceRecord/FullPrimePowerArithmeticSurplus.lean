@@ -876,7 +876,6 @@ private theorem prime_prefix_add_residual {z : ℝ} (hz : 4 ≤ z) {p : ℕ}
   have hprefix : (∑ k ∈ Icc 1 b, (p : ℝ)⁻¹ ^ k / (k : ℝ)) =
       ∑ r ∈ range b, G r := by
     rw [← Ico_succ_right_eq_Icc, sum_Ico_eq_sum_range]
-    simp only [Nat.succ_eq_add_one, Nat.add_sub_cancel]
     apply sum_congr rfl
     intro r hr
     simp only [G, Nat.add_comm]
