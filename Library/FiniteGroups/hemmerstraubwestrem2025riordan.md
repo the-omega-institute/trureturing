@@ -5,9 +5,10 @@ year: 2025
 title: New identities in the character table of symmetric groups involving Riordan numbers
 doi: 10.37236/14401
 url: https://arxiv.org/abs/2509.02796v1
-claim: Conjecture 2.3 equates the alternating Ev sum over even three-row characters with the Ev sum of the two-row character; Lemma 3.1 supplies the Frobenius character interpretation.
+claim: Conjecture 2.3 equates the alternating Ev sum over even three-row characters with the Ev sum of the two-row character; Lemma 3.1 supplies the Frobenius character interpretation; Conjecture 6.1, equation (6.1), gives their centralizer-weighted averages and the even binomial closed form.
 strata_touched:
   - D5/S3/Combinatorics/Partitions/HemmerStraubWestrem
+  - D5/S3/Combinatorics/Partitions/HemmerStraubWestremWeightedAverage
 license: citation-only
 triage: anchor
 ---
@@ -47,6 +48,27 @@ Section 6, page 12, states:
 
 > We have proved Conjecture 2.3 for all partitions with a single part size, thus affirmatively answering Question 2.2 for those partitions and N = 1. It is a natural question to pursue whether the present techniques can be extended to prove identity (2.4) of Conjecture 2.3 for all partitions.
 
+Conjecture 6.1, equation (6.1), page 12 of arXiv v1 (journal Conjecture 17,
+page 15), states, for every integer $n \ge 1$:
+
+> $$
+> \sum_{\lambda \vdash n} \frac{1}{z_\lambda}
+>   \sum_{\tilde\lambda \in \operatorname{Ev}(\lambda)}
+>   \sum_{\mu \in \mathcal R_3(2n)}
+>     (-1)^{\ell(\tilde\lambda)}\chi^\mu_{\tilde\lambda}
+> = \sum_{\lambda \vdash n} \frac{1}{z_\lambda}
+>   \sum_{\tilde\lambda \in \operatorname{Ev}(\lambda)}
+>     \chi^{(n,n)}_{\tilde\lambda}
+> = \begin{cases}
+>     \binom{n/2+2}{2}, & n \text{ even},\\
+>     0, & n \text{ odd}.
+>   \end{cases}
+> \tag{6.1}
+> $$
+
+Here $z_\lambda = \prod_{j=1}^n j^{m_j}m_j!$, where $m_j$ is the
+multiplicity of the part $j$ in $\lambda$.
+
 The Lean definitions use the three-variable power-sum product and the
 Vandermonde coefficient at µ + (2,1,0). Its identification with the ordinary
 irreducible character is the classical Frobenius formula, as expressed through
@@ -61,8 +83,9 @@ Both sums reduce to the same difference of adjacent coefficients of
 ∏ᵢ(X^{2aᵢ} + X^{aᵢ} + 1), multiplied by 2 to the number of parts.
 The proof applies to every ordered list of positive parts with positive sum,
 so mixed part sizes require no additional hypothesis.
-The identities for N ≥ 2, the closed form of Conjecture 6.1, and explicit
-bijective proofs remain separate questions.
+The weighted module proves the closed form of Conjecture 6.1 in the same
+Frobenius coefficient model. The identities for N ≥ 2, explicit bijective
+proofs, and the internal Specht-module interpretation remain separate questions.
 
 Literature completeness is ASSUMED-UNVERIFIED. Westrem's dissertation
 (DOI 10.37099/mtu.dc.etdr/1892) was not read in full. Its landing-page abstract
