@@ -4,8 +4,8 @@
    mirror-E: none (source-only implementation)
    anchors: [D5/S3/Geometry/OriginalLabelTwoSum/Raw,
              D5/S3/Geometry/FiniteAlexanderDualCollapse]
-   utility: protected dual-word native sequence
-   digest: Ordered raw face partitions produce protected native collapses on
+   utility: «protected» dual-word native sequence
+   digest: Ordered raw face partitions produce «protected» native collapses on
            the unchanged ground, including ghosts, VOID and UNIT. -/
 import D5.S3.Geometry.OriginalLabelTwoSum.Raw
 import D5.S3.Geometry.FiniteAlexanderDualCollapse
@@ -13,7 +13,7 @@ import D5.S3.Geometry.FiniteAlexanderDualCollapse
 /-! SOURCE_ONLY_UNCOMPILED. Raw membership is membership of the existing
 LowerSet Family, never AugmentedFace. Only projection discards empty faces.
 The only free-pair/sequence authorities are the imported native owners.
-Critical symbols (including the empty face) and protected pairs are skipped.
+Critical symbols (including the empty face) and «protected» pairs are skipped.
 No properness condition is imposed on a skipped pair. -/
 noncomputable section
 open Set Finset
@@ -135,13 +135,13 @@ structure Word (W : Finset V) (K : Family V) where
 pairs is the equivalence below; singleton critical symbols need no duplicate
 whole-symbol premise. Properness is conditional on the pair being emitted. -/
 structure Contract (W : Finset V) (K : Family V) extends Word W K where
-  protected : Finset (Finset V)
-  protected_subset : ∀ T ∈ protected, T ∈ K
-  protected_upward : ∀ {T U}, T ∈ protected → U ∈ K → T ⊆ U → U ∈ protected
+  «protected» : Finset (Finset V)
+  protected_subset : ∀ T ∈ «protected», T ∈ K
+  protected_upward : ∀ {T U}, T ∈ «protected» → U ∈ K → T ⊆ U → U ∈ «protected»
   protected_pair : ∀ L v, Symbol.pair L v ∈ word →
-    (L ∈ protected ↔ insert v L ∈ protected)
-  critical_protected : ∀ S, Symbol.critical S ∈ word → S ∈ protected
-  emitted_proper : ∀ L v, Symbol.pair L v ∈ word → L ∉ protected → insert v L ⊂ W
+    (L ∈ «protected» ↔ insert v L ∈ «protected»)
+  critical_protected : ∀ S, Symbol.critical S ∈ word → S ∈ «protected»
+  emitted_proper : ∀ L v, Symbol.pair L v ∈ word → L ∉ «protected» → insert v L ⊂ W
 
 private theorem split_mem {α : Type*} {x : α} {xs : List α} (hx : x ∈ xs) :
     ∃ left right, xs = left ++ x :: right := by
@@ -276,14 +276,14 @@ private theorem face_valid {σ : Symbol V} (hσ : σ ∈ d.word)
 
 private theorem emitted_valid («prefix» : List (Symbol V))
     (hp : ∀ σ ∈ «prefix», σ ∈ d.word) {r : Finset V}
-    (hr : r ∈ emittedFaces d.protected «prefix») : r ∈ K ∧ r ∉ d.protected := by
+    (hr : r ∈ emittedFaces d.«protected» «prefix») : r ∈ K ∧ r ∉ d.«protected» := by
   obtain ⟨σ, hσ, hr⟩ := (mem_emitted _ _ _).mp hr
   have hσword := hp σ hσ
   refine ⟨d.face_valid hσword (emittedOne_subset _ _ hr), ?_⟩
   cases σ with
   | critical S => simp [emittedOne] at hr
   | pair L v =>
-      by_cases hL : L ∈ d.protected
+      by_cases hL : L ∈ d.«protected»
       · simp [emittedOne, hL] at hr
       · have hf : r = L ∨ r = insert v L := by simpa [emittedOne, hL] using hr
         rcases hf with rfl | rfl
@@ -292,8 +292,8 @@ private theorem emitted_valid («prefix» : List (Symbol V))
 
 private theorem face_emitted («prefix» : List (Symbol V))
     (hp : ∀ σ ∈ «prefix», σ ∈ d.word) {σ : Symbol V} (hσ : σ ∈ «prefix»)
-    {T : Finset V} (hT : T ∈ σ.faces) (hn : T ∉ d.protected) :
-    T ∈ emittedFaces d.protected «prefix» := by
+    {T : Finset V} (hT : T ∈ σ.faces) (hn : T ∉ d.«protected») :
+    T ∈ emittedFaces d.«protected» «prefix» := by
   apply (mem_emitted _ _ _).mpr
   refine ⟨σ, hσ, ?_⟩
   cases σ with
@@ -302,7 +302,7 @@ private theorem face_emitted («prefix» : List (Symbol V))
       subst T
       exact (hn (d.critical_protected S (hp _ hσ))).elim
   | pair L v =>
-      have hL : L ∉ d.protected := by
+      have hL : L ∉ d.«protected» := by
         intro hL
         rcases (show T = L ∨ T = insert v L by simpa [Symbol.faces] using hT) with rfl | rfl
         · exact hn hL
@@ -313,11 +313,11 @@ private theorem face_emitted («prefix» : List (Symbol V))
 INSIDE «prefix», and apply its dependency at that very occurrence in the full word. -/
 private theorem emitted_downward («prefix» suffix : List (Symbol V))
     (hword : d.word = «prefix» ++ suffix) {r T : Finset V}
-    (hr : r ∈ emittedFaces d.protected «prefix») (hTr : T ⊆ r) :
-    T ∈ emittedFaces d.protected «prefix» := by
+    (hr : r ∈ emittedFaces d.«protected» «prefix») (hTr : T ⊆ r) :
+    T ∈ emittedFaces d.«protected» «prefix» := by
   have hp : ∀ σ ∈ «prefix», σ ∈ d.word := fun _ h => prefix_subset hword h
   have hv := d.emitted_valid «prefix» hp hr
-  have hTn : T ∉ d.protected := fun h => hv.2 (d.protected_upward h hv.1 hTr)
+  have hTn : T ∉ d.«protected» := fun h => hv.2 (d.protected_upward h hv.1 hTr)
   obtain ⟨σ, hσ, hrσ⟩ := (mem_emitted _ _ _).mp hr
   cases σ with
   | critical S => simp [emittedOne] at hrσ
@@ -344,11 +344,11 @@ private theorem emitted_downward («prefix» suffix : List (Symbol V))
 
 private theorem current_downward («prefix» suffix : List (Symbol V))
     (hword : d.word = «prefix» ++ suffix) {s t : Finset V}
-    (hs : RawFaces W K (emittedFaces d.protected «prefix») s)
+    (hs : RawFaces W K (emittedFaces d.«protected» «prefix») s)
     (hts : t ⊆ s) (ht : t.Nonempty) :
-    RawFaces W K (emittedFaces d.protected «prefix») t := by
+    RawFaces W K (emittedFaces d.«protected» «prefix») t := by
   refine ⟨ht, hts.trans hs.2.1, ?_⟩
-  by_cases hr : W \ t ∈ emittedFaces d.protected «prefix»
+  by_cases hr : W \ t ∈ emittedFaces d.«protected» «prefix»
   · have hc := Finset.sdiff_subset_sdiff_right W hts
     have he := d.emitted_downward «prefix» suffix hword hr hc
     have hv := d.emitted_valid «prefix» (fun _ h => prefix_subset hword h) hr
@@ -360,7 +360,7 @@ private theorem current_downward («prefix» suffix : List (Symbol V))
 subword certificate. Its downward-closure field is proved from dependencies. -/
 def current («prefix» suffix : List (Symbol V))
     (hword : d.word = «prefix» ++ suffix) : PreAbstractSimplicialComplex V where
-  faces := RawFaces W K (emittedFaces d.protected «prefix»)
+  faces := RawFaces W K (emittedFaces d.«protected» «prefix»)
   isRelLowerSet_faces := by
     intro s hs
     exact ⟨hs.1, fun t hts ht => d.current_downward «prefix» suffix hword hs hts ht⟩
@@ -368,8 +368,8 @@ def current («prefix» suffix : List (Symbol V))
 private theorem current_mem («prefix» suffix : List (Symbol V))
     (hword : d.word = «prefix» ++ suffix) (s : Finset V) :
     s ∈ d.current «prefix» suffix hword ↔
-      s.Nonempty ∧ s ⊆ W ∧ W \ s ∉ emittedFaces d.protected «prefix» := by
-  change RawFaces W K (emittedFaces d.protected «prefix») s ↔ _
+      s.Nonempty ∧ s ⊆ W ∧ W \ s ∉ emittedFaces d.«protected» «prefix» := by
+  change RawFaces W K (emittedFaces d.«protected» «prefix») s ↔ _
   constructor
   · rintro ⟨hs, hsW, hn | hn⟩
     · exact ⟨hs, hsW, fun h => hn
@@ -380,12 +380,12 @@ private theorem current_mem («prefix» suffix : List (Symbol V))
 
 private theorem current_emitted_eq (p q p' q' : List (Symbol V))
     (h : d.word = p ++ q) (h' : d.word = p' ++ q')
-    (he : emittedFaces d.protected p = emittedFaces d.protected p') :
+    (he : emittedFaces d.«protected» p = emittedFaces d.«protected» p') :
     d.current p q h = d.current p' q' h' := by
   apply SetLike.coe_injective
   ext s
-  change RawFaces W K (emittedFaces d.protected p) s ↔
-    RawFaces W K (emittedFaces d.protected p') s
+  change RawFaces W K (emittedFaces d.«protected» p) s ↔
+    RawFaces W K (emittedFaces d.«protected» p') s
   rw [he]
 
 /-- A suffix face is present only when its complement is nonempty. In particular
@@ -394,7 +394,7 @@ private theorem current_complement_mem («prefix» suffix : List (Symbol V))
     (hword : d.word = «prefix» ++ suffix) {σ : Symbol V} (hσ : σ ∈ suffix)
     {a : Finset V} (ha : a ∈ σ.faces) (hap : a ⊂ W) :
     W \ a ∈ d.current «prefix» suffix hword := by
-  have hn : a ∉ emittedFaces d.protected «prefix» := by
+  have hn : a ∉ emittedFaces d.«protected» «prefix» := by
     intro hr
     obtain ⟨τ, hτ, haτ⟩ := (mem_emitted _ _ _).mp hr
     have hd := separated (hword ▸ d.partition) hτ hσ
@@ -407,7 +407,7 @@ private theorem current_complement_mem («prefix» suffix : List (Symbol V))
   · simpa only [Finset.sdiff_sdiff_eq_self hap.subset] using hn
 
 private theorem current_free («prefix» suffix : List (Symbol V)) L v
-    (hword : d.word = «prefix» ++ Symbol.pair L v :: suffix) (hL : L ∉ d.protected)
+    (hword : d.word = «prefix» ++ Symbol.pair L v :: suffix) (hL : L ∉ d.«protected»)
     (s : Finset V) (hs : s ∈ d.current «prefix» (Symbol.pair L v :: suffix) hword)
     (hls : W \ insert v L ⊂ s) : s = W \ L := by
   have hpair : Symbol.pair L v ∈ d.word := suffix_subset hword (by simp)
@@ -427,7 +427,7 @@ private theorem current_free («prefix» suffix : List (Symbol V)) L v
   by_cases hcL : W \ s = L
   · have hh := congrArg (fun q : Finset V => W \ q) hcL
     simpa only [Finset.sdiff_sdiff_eq_self hs'.2.1] using hh
-  have hcnot : W \ s ∉ d.protected := by
+  have hcnot : W \ s ∉ d.«protected» := by
     intro h
     have hU := d.protected_upward h hd.2.1 hcU
     exact hL ((d.protected_pair L v hpair).mpr hU)
@@ -438,15 +438,20 @@ private theorem current_free («prefix» suffix : List (Symbol V)) L v
 
 /-- Actual native pair: lower W\\U, unchanged apex v, upper W\\L. -/
 def nativePair («prefix» suffix : List (Symbol V)) (L : Finset V) (v : V)
-    (hword : d.word = «prefix» ++ Symbol.pair L v :: suffix) (hL : L ∉ d.protected) :
+    (hword : d.word = «prefix» ++ Symbol.pair L v :: suffix) (hL : L ∉ d.«protected») :
     CollapsePair V := by
   have hpair : Symbol.pair L v ∈ d.word := suffix_subset hword (by simp)
   have hd := d.pair_data L v hpair
   have hproper := d.emitted_proper L v hpair hL
   have hu := complement_upper hproper.subset hd.2.2
-  refine { ambient := d.current «prefix» (Symbol.pair L v :: suffix) hword,
-    lower := W \ insert v L, apex := v, lower_nonempty := ?_,
-    apex_notMem := ?_, upper_mem := ?_, free := ?_ }
+  refine {
+    ambient := d.current «prefix» (Symbol.pair L v :: suffix) hword
+    lower := W \ insert v L
+    apex := v
+    lower_nonempty := ?_
+    apex_notMem := ?_
+    upper_mem := ?_
+    free := ?_ }
   · rw [Finset.sdiff_nonempty]
     intro h
     exact hproper.ne (Finset.Subset.antisymm hproper.subset h)
@@ -462,7 +467,7 @@ def nativePair («prefix» suffix : List (Symbol V)) (L : Finset V) (v : V)
     exact d.current_free «prefix» suffix L v hword hL s hs hls
 
 private theorem nativePair_retained («prefix» suffix : List (Symbol V)) L v
-    (hword : d.word = «prefix» ++ Symbol.pair L v :: suffix) (hL : L ∉ d.protected)
+    (hword : d.word = «prefix» ++ Symbol.pair L v :: suffix) (hL : L ∉ d.«protected»)
     (hnext : d.word = («prefix» ++ [Symbol.pair L v]) ++ suffix) :
     (d.nativePair «prefix» suffix L v hword hL).retained =
       d.current («prefix» ++ [Symbol.pair L v]) suffix hnext := by
@@ -508,10 +513,10 @@ private theorem nativePair_retained («prefix» suffix : List (Symbol V)) L v
 /-- The exact nonempty endpoint is the finite raw dual union the nonempty
 complements of H. Both complement involutions use explicit support witnesses. -/
 theorem protectedEndpoint_mem (s : Finset V) :
-    s ∈ protectedEndpoint W K d.protected d.protected_upward ↔
+    s ∈ protectedEndpoint W K d.«protected» d.protected_upward ↔
       s ∈ project (rawDual W K) ∨
-        (s.Nonempty ∧ ∃ T ∈ d.protected, s = W \ T) := by
-  change (s.Nonempty ∧ s ⊆ W ∧ (W \ s ∉ K ∨ W \ s ∈ d.protected)) ↔ _
+        (s.Nonempty ∧ ∃ T ∈ d.«protected», s = W \ T) := by
+  change (s.Nonempty ∧ s ⊆ W ∧ (W \ s ∉ K ∨ W \ s ∈ d.«protected»)) ↔ _
   constructor
   · rintro ⟨hs, hsW, hn | hh⟩
     · exact Or.inl ⟨hs, (mem_rawDual W K s).mpr ⟨hsW, hn⟩⟩
@@ -524,7 +529,7 @@ theorem protectedEndpoint_mem (s : Finset V) :
         Or.inr (by simpa only [Finset.sdiff_sdiff_eq_self hTW] using hT)⟩
 
 private theorem emitted_terminal {T : Finset V} (hT : T ∈ K) :
-    T ∈ emittedFaces d.protected d.word ↔ T ∉ d.protected := by
+    T ∈ emittedFaces d.«protected» d.word ↔ T ∉ d.«protected» := by
   constructor
   · exact fun h => (d.emitted_valid d.word (fun _ h => h) h).2
   · intro hn
@@ -534,14 +539,14 @@ private theorem emitted_terminal {T : Finset V} (hT : T ∈ K) :
 
 private theorem current_terminal («prefix» : List (Symbol V))
     (hword : d.word = «prefix» ++ []) :
-    d.current «prefix» [] hword = protectedEndpoint W K d.protected d.protected_upward := by
+    d.current «prefix» [] hword = protectedEndpoint W K d.«protected» d.protected_upward := by
   classical
   have hp : «prefix» = d.word := by simpa only [List.append_nil] using hword.symm
   apply SetLike.coe_injective
   ext s
   rw [d.current_mem]
-  change (s.Nonempty ∧ s ⊆ W ∧ W \ s ∉ emittedFaces d.protected «prefix») ↔
-    (s.Nonempty ∧ s ⊆ W ∧ (W \ s ∉ K ∨ W \ s ∈ d.protected))
+  change (s.Nonempty ∧ s ⊆ W ∧ W \ s ∉ emittedFaces d.«protected» «prefix») ↔
+    (s.Nonempty ∧ s ⊆ W ∧ (W \ s ∉ K ∨ W \ s ∈ d.«protected»))
   rw [hp]
   constructor
   · rintro ⟨hs, hsW, hn⟩
@@ -552,7 +557,7 @@ private theorem current_terminal («prefix» : List (Symbol V))
       exact hn ((d.emitted_terminal hc).mpr hh)
     · exact Or.inl hc
   · intro hs
-    have hsEndpoint : s ∈ protectedEndpoint W K d.protected d.protected_upward := hs
+    have hsEndpoint : s ∈ protectedEndpoint W K d.«protected» d.protected_upward := hs
     rcases (d.protectedEndpoint_mem s).mp hsEndpoint with hd | ⟨hsn, T, hT, heq⟩
     · obtain ⟨hsn, hd⟩ := hd
       obtain ⟨hsW, hn⟩ := (mem_rawDual W K s).mp hd
@@ -571,7 +576,7 @@ private theorem current_terminal («prefix» : List (Symbol V))
 private def suffixSequence : (suffix «prefix» : List (Symbol V)) →
     (hword : d.word = «prefix» ++ suffix) →
     Sequence (d.current «prefix» suffix hword)
-      (protectedEndpoint W K d.protected d.protected_upward)
+      (protectedEndpoint W K d.«protected» d.protected_upward)
   | [], «prefix», hword =>
       (Sequence.refl _).cast rfl (d.current_terminal «prefix» hword)
   | Symbol.critical S :: tail, «prefix», hword => by
@@ -580,24 +585,24 @@ private def suffixSequence : (suffix «prefix» : List (Symbol V)) →
       have T := d.suffixSequence tail («prefix» ++ [Symbol.critical S]) hnext
       have he := d.current_emitted_eq «prefix» (Symbol.critical S :: tail)
         («prefix» ++ [Symbol.critical S]) tail hword hnext
-        (emitted_critical_append d.protected «prefix» S).symm
+        (emitted_critical_append d.«protected» «prefix» S).symm
       exact T.cast he.symm rfl
   | Symbol.pair L v :: tail, «prefix», hword => by
       have hnext : d.word = («prefix» ++ [Symbol.pair L v]) ++ tail := by
         simpa only [List.append_assoc, List.cons_append, List.nil_append] using hword
       have T := d.suffixSequence tail («prefix» ++ [Symbol.pair L v]) hnext
-      by_cases hL : L ∈ d.protected
+      by_cases hL : L ∈ d.«protected»
       · have he := d.current_emitted_eq «prefix» (Symbol.pair L v :: tail)
           («prefix» ++ [Symbol.pair L v]) tail hword hnext
-          (emitted_protected_append d.protected «prefix» L v hL).symm
+          (emitted_protected_append d.«protected» «prefix» L v hL).symm
         exact T.cast he.symm rfl
       · exact Sequence.step (d.nativePair «prefix» tail L v hword hL)
           (T.cast (d.nativePair_retained «prefix» tail L v hword hL hnext).symm rfl)
 
 /-- Universal corrected P02. No critical nonemptiness, nonvoid assumption,
-no-ghost assumption, or properness of protected uppers occurs in this telescope. -/
+no-ghost assumption, or properness of «protected» uppers occurs in this telescope. -/
 def protectedDualWordSequence :
-    Sequence (simplex W) (protectedEndpoint W K d.protected d.protected_upward) := by
+    Sequence (simplex W) (protectedEndpoint W K d.«protected» d.protected_upward) := by
   have hword : d.word = [] ++ d.word := rfl
   have S := d.suffixSequence d.word [] hword
   have hstart : d.current [] d.word hword = simplex W := by
@@ -635,7 +640,7 @@ def noCritical_unprotected
     Sequence (simplex W) (project (rawDual W K)) := by
   let c : Contract W K := {
     toWord := d
-    protected := ∅
+    «protected» := ∅
     protected_subset := by simp
     protected_upward := by intro T U h; exact (Finset.not_mem_empty T h).elim
     protected_pair := by intro L v h; simp
@@ -643,7 +648,7 @@ def noCritical_unprotected
       intro S hS
       exact (hcrit _ hS (by trivial)).elim
     emitted_proper := by intro L v h _; exact hproper L v h }
-  have he : protectedEndpoint W K c.protected c.protected_upward = project (rawDual W K) := by
+  have he : protectedEndpoint W K c.«protected» c.protected_upward = project (rawDual W K) := by
     apply SetLike.coe_injective
     ext s
     simpa only [c, Finset.not_mem_empty, false_and, exists_false, and_false, or_false]
@@ -652,7 +657,7 @@ def noCritical_unprotected
 
 /-- Maximal critical faces make their own protection upward in K. Disjoint
 partition ownership shows no pair face belongs to this protection, so whole
-symbols are protected. All emitted-pair properness remains explicit. -/
+symbols are «protected». All emitted-pair properness remains explicit. -/
 def maximalCritical_protected
     (hmax : ∀ S, Symbol.critical S ∈ d.word → ∀ T ∈ K, S ⊆ T → T = S)
     (hproper : ∀ L v, Symbol.pair L v ∈ d.word → insert v L ⊂ W) :
@@ -686,7 +691,7 @@ def maximalCritical_protected
       cases he
   let c : Contract W K := {
     toWord := d
-    protected := criticalFaces d.word
+    «protected» := criticalFaces d.word
     protected_subset := by
       intro T hT
       exact d.critical_data T ((mem_criticalFaces d.word T).mp hT)

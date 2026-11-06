@@ -208,7 +208,8 @@ theorem right_row_inheritance (c : source.right.chords) :
         exact source.cross_ne (source.retained_edge hi.1 hi.2)
           ((source.input.rightPath _ _).edges_subset_edgeSet hd) he.symm
       simp [actualRightRow,ground,labelEdge,hn,Finset.mem_image]
-    · simp [actualRightRow,ground,Finset.mem_image,Finset.mem_erase,hi,and_comm]
+    · simp only [ground,Finset.mem_union,Finset.mem_image,Finset.mem_erase]
+      aesop
   | inr j =>
     have hp : Sym2.map source.input.qR (source.right.edge j) ∈
         (source.input.path (source.input.qR (source.right.start c))

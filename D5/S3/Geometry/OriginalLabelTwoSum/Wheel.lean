@@ -11,6 +11,8 @@ import D5.S3.Geometry.OriginalLabelTwoSum.Certificates
 0 is outside the ground; it is never silently inserted into any face. Finite
 proofs use kernel `decide`, never `native_decide` or a Python theorem oracle. -/
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Set Finset
 namespace D5.S3.Geometry.OriginalLabelTwoSum.Wheel
 open FiniteElementaryCollapse FiniteRelativeSimplicialCollapse
@@ -28,10 +30,13 @@ private def lowers : List (Finset Label) :=
   [{1,2,4},{2,4},{3,4},{1,3}]
 private def apices : List Label := [3,3,1,2]
 private def lower (i : Fin 4) : Finset Label := lowers[i.val]'(by
-  simp [lowers]; exact i.isLt)
+  simp [lowers])
 private def apex (i : Fin 4) : Label := apices[i.val]'(by
-  simp [apices]; exact i.isLt)
+  simp [apices])
 private def state (n : Nat) : Family Label := cut (delta Y) ((lowers.take n).toFinset)
+attribute [local reducible] Y R Z E A0 A1 B1 lowers apices lower apex state
+attribute [local reducible] OriginalLabelTwoSum.cut OriginalLabelTwoSum.delta
+  OriginalLabelTwoSum.facets OriginalLabelTwoSum.endpoint OriginalLabelTwoSum.Supported
 
 private theorem pairFacts : ∀ i : Fin 4,
     (lower i).Nonempty ∧ apex i ∉ lower i ∧
@@ -50,7 +55,7 @@ private theorem next : ∀ i : Fin 4,
   rw [pair,emitPair_retained]
   congr 1
   fin_cases i <;> apply SetLike.ext <;> intro s <;>
-    simp [state,lowers,lower,cut,Finset.mem_insert,Finset.mem_union]
+    simp [state,lowers,lower,cut,Finset.mem_insert,Finset.mem_union,and_assoc]
 
 private def step (i : Fin 4) :
     Sequence (project (state i.val)) (project (state (i.val+1))) :=
@@ -132,8 +137,9 @@ theorem collar_not_free_in_main :
 private def coreLowers : List (Finset Label) := [{3},{2},{4}]
 private def coreApices : List Label := [2,1,1]
 private def coreState (n : Nat) : Family Label := cut E (coreLowers.take n).toFinset
-private def coreLower (i : Fin 3) := coreLowers[i.val]'(by simp [coreLowers]; exact i.isLt)
-private def coreApex (i : Fin 3) := coreApices[i.val]'(by simp [coreApices]; exact i.isLt)
+private def coreLower (i : Fin 3) := coreLowers[i.val]'(by simp [coreLowers])
+private def coreApex (i : Fin 3) := coreApices[i.val]'(by simp [coreApices])
+attribute [local reducible] coreLowers coreApices coreState coreLower coreApex
 private theorem coreFacts : ∀ i : Fin 3,
     (coreLower i).Nonempty ∧ coreApex i ∉ coreLower i ∧
       insert (coreApex i) (coreLower i) ∈ coreState i.val ∧
@@ -148,7 +154,7 @@ private theorem coreNext : ∀ i : Fin 3,
   rw [corePair,emitPair_retained]
   congr 1
   fin_cases i <;> apply SetLike.ext <;> intro s <;>
-    simp [coreState,coreLowers,coreLower,cut]
+    simp [coreState,coreLowers,coreLower,cut,and_assoc]
 private def coreStep (i : Fin 3) :
     Sequence (project (coreState i.val)) (project (coreState (i.val+1))) :=
   (Sequence.step (corePair i) (Sequence.refl _)).cast rfl (coreNext i)
@@ -178,6 +184,7 @@ open FiniteRelativeSimplicialCollapse
 abbrev SeedLabel := Fin 3
 /-- p=0,u=1,v=2; no label is globally removed as a ghost. -/
 def root : Family SeedLabel := facets {{0},{1},{2}}
+attribute [local reducible] root
 def seed : Certificate (Finset.univ : Finset SeedLabel) root where
   supported := by decide
   core := delta {0}

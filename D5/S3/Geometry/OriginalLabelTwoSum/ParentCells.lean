@@ -70,7 +70,7 @@ private theorem split_parts (hd : Disjoint X Y) {a b : Finset V}
     (a ∪ b) ∩ X = a ∧ (a ∪ b) ∩ Y = b := by
   have h := join_split hd (K := delta a) (L := delta b)
     (fun _ h => h.trans ha) (fun _ h => h.trans hb) (a ∪ b)
-  have hj : a ∪ b ∈ rawJoin (delta a) (delta b) := ⟨a,le_rfl,b,le_rfl,rfl⟩
+  have hj : a ∪ b ∈ rawJoin (delta a) (delta b) := ⟨a,(by change a ⊆ a; exact le_rfl),b,(by change b ⊆ b; exact le_rfl),rfl⟩
   have hh := h.mp hj
   constructor
   · exact Finset.Subset.antisymm hh.2.1
@@ -104,7 +104,7 @@ private theorem proper_factors {s a b : Finset V} (hs : s ⊂ a ∪ b) :
     refine Finset.ssubset_iff_subset_ne.mpr ⟨Finset.inter_subset_right,?_⟩
     intro hb
     rw [ha,hb] at he
-    exact (Finset.ne_of_ssubset hs) he
+    exact hs.ne he
   · exact Or.inl (Finset.ssubset_iff_subset_ne.mpr ⟨Finset.inter_subset_right,ha⟩)
 
 /-- Complete critical-face proof for the COMPUTED Cout. Compiler constructs the
@@ -143,12 +143,12 @@ def parentCellData (c : Certificate (insert e X) K)
         · exact c.cells.absent q hq hh.1.1
         · exact c.cells.absent q hq (c.core.lower (Finset.subset_insert e q) hh.2)
         · exact f0.cells.absent t ht (f0.contains ⟨hh,htZ⟩)
-      · have hj := (join_split hXY (fun s hs => hs.trans (avoidX hq' h0.1))
+      · have hj := (join_split hXY (K := delta q') (L := f0.collar) (fun s hs => hs.trans (avoidX hq' h0.1))
           (fun s hs => (f0.supported s hs).trans hZ) _).mp h0.2
         rw [parts.1,parts.2] at hj
         have hqq := c.cells.antichain q hq q' hq' hj.2.1
         exact f0.cells.absent t ht hj.2.2
-      · have hj := (join_split hXY (fun s hs => hs.trans (containX hq'))
+      · have hj := (join_split hXY (K := delta (q'.erase e)) (L := f1.collar) (fun s hs => hs.trans (containX hq'))
           f1.supported _).mp h1.2
         rw [parts.1,parts.2] at hj
         have hqq := c.cells.antichain q hq q' hq'
@@ -165,11 +165,11 @@ def parentCellData (c : Certificate (insert e X) K)
         · exact theta_not_Z ht hh.2
         · exact c.cells.absent q hq ((Finset.insert_erase he) ▸ hh.2)
         · exact f1.cells.absent t ht (f1.contains (Or.inl hh))
-      · have hj := (join_split hXY (fun s hs => hs.trans (avoidX hq' h0.1))
+      · have hj := (join_split hXY (K := delta q') (L := f0.collar) (fun s hs => hs.trans (avoidX hq' h0.1))
           (fun s hs => (f0.supported s hs).trans hZ) _).mp h0.2
         rw [parts.1,parts.2] at hj
         exact theta_not_Z ht (f0.supported t hj.2.2)
-      · have hj := (join_split hXY (fun s hs => hs.trans (containX hq'))
+      · have hj := (join_split hXY (K := delta (q'.erase e)) (L := f1.collar) (fun s hs => hs.trans (containX hq'))
           f1.supported _).mp h1.2
         rw [parts.1,parts.2] at hj
         exact f1.cells.absent t ht hj.2.2
@@ -193,7 +193,7 @@ def parentCellData (c : Certificate (insert e X) K)
           have hh := congrArg (fun z : Finset V => z.erase e) heq
           have hnot : e ∉ w ∩ q.erase e := by simp
           rw [Finset.erase_insert hnot] at hh
-          exact (Finset.ne_of_ssubset hx) hh
+          exact hx.ne hh
         left
         exact Or.inl (Or.inr ⟨w ∩ q.erase e,
           ⟨Finset.inter_subset_right.trans (containX hq),

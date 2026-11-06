@@ -11,6 +11,8 @@ import D5.S3.Geometry.OriginalLabelTwoSum.Certificates
 AugmentedFace predicate reconstructs a raw family. This file never reconstructs
 VOID by adjoining empty. All moves remain the existing ordinary native pairs. -/
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Set Finset
 namespace D5.S3.Geometry.OriginalLabelTwoSum
 open FiniteElementaryCollapse FiniteRelativeSimplicialCollapse
@@ -60,7 +62,7 @@ private def fibrePair (P : CollapsePair V) (B A : Family V) (a Y : Finset V)
     exact ⟨fun hv => Finset.disjoint_left.mp hdisj hv
       (huY (Finset.mem_insert_self _ _)),P.apex_notMem⟩
   · right
-    refine ⟨a,le_rfl,P.upper,Or.inr P.upper_mem,?_⟩
+    refine ⟨a,(by change a ⊆ a; exact le_rfl),P.upper,Or.inr P.upper_mem,?_⟩
     ext v
     simp only [Finset.mem_insert,Finset.mem_union]
     tauto
@@ -93,9 +95,10 @@ private theorem fibrePair_retained (P : CollapsePair V) (B A : Family V)
     (fibrePair P B A a Y hd hY hb hbase hA).retained = fibreFrame B a P.retained := by
   rw [fibrePair,emitPair_retained]
   ext s
-  change (s.Nonempty ∧ (s ∈ B ∨ s ∈ rawJoin (delta a) (nativeAug P.ambient)) ∧
+  change ((s.Nonempty ∧ (s ∈ B ∨ s ∈ rawJoin (delta a) (nativeAug P.ambient))) ∧
     ¬ a ∪ P.lower ⊆ s) ↔
       s.Nonempty ∧ (s ∈ B ∨ s ∈ rawJoin (delta a) (nativeAug P.retained))
+  simp only [and_assoc]
   have hlow : P.lower ∉ A := by
     intro hl
     exact (hA ⟨P.lower_nonempty,hl⟩).2 le_rfl
@@ -104,7 +107,7 @@ private theorem fibrePair_retained (P : CollapsePair V) (B A : Family V)
     · exact ⟨hn,Or.inl hB⟩
     · by_cases hxa : x = a
       · subst x
-        refine ⟨hn,Or.inr ⟨a,le_rfl,t,?_,rfl⟩⟩
+        refine ⟨hn,Or.inr ⟨a,(by change a ⊆ a; exact le_rfl),t,?_,rfl⟩⟩
         rcases ht with rfl | ht
         · exact Or.inl rfl
         · right
@@ -139,7 +142,7 @@ private def fibreSequence {M N : PreAbstractSimplicialComplex V} (S : Sequence M
     have htY : ∀ s ∈ P.retained, s ⊆ Y := fun s hs => hY s hs.1
     have htb : ∀ x ⊂ a, ∀ t ∈ nativeAug P.retained, x ∪ t ∈ B :=
       fun x hx t ht => hb x hx t (aug_mono P.retained_le ht)
-    exact Sequence.step Q ((ih htY htb).cast
+    exact Sequence.step Q ((ih htY htb hA).cast
       (fibrePair_retained P B A a Y hd hY hb hbase
         (hA.trans T.monotone)).symm rfl)
 
@@ -161,7 +164,7 @@ private theorem fibreSequence_pairs {M N : PreAbstractSimplicialComplex V}
       ext v; simp only [Finset.mem_insert,Finset.mem_union]; tauto
     simpa only [fibreSequence,Sequence.pairs,Sequence.pairs_cast,List.map_cons,
       fibrePair,emitPair,CollapsePair.upper,hupper] using
-        congrArg (List.cons (a ∪ P.lower,a ∪ P.upper)) (ih htY htb)
+        congrArg (List.cons (a ∪ P.lower,a ∪ P.upper)) (ih htY htb hA)
 
 /-- Non-VOID local sequences lift over a literal fibre. This is used for Gamma
 and filling/collar schedules; all ordinary lower faces are still nonempty even

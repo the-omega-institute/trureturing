@@ -69,16 +69,15 @@ theorem wheelCell_card (W s : Finset V) (e a c d : V)
     · exact hc (hs hv)
     · exact hd (hs hv)
   by_cases he : e ∈ s
-  · simp only [wheelCell,he,if_pos]
+  · simp only [wheelCell,if_pos he]
     rw [Finset.card_union_of_disjoint (hdisj.mono_left (Finset.erase_subset _ _)),
       Finset.card_erase_of_mem he]
     have hthree : ({a,c,d} : Finset V).card = 3 := by simp [hac,had,hcd]
     rw [hthree]
     have : 0 < s.card := Finset.card_pos.mpr ⟨e,he⟩
     omega
-  · simp only [wheelCell,he,if_neg]
-    rw [Finset.card_union_of_disjoint (hdisj.mono_right (by
-      intro v hv; simp only [Finset.mem_insert,Finset.mem_singleton] at hv ⊢; tauto))]
+  · simp only [wheelCell,if_neg he]
+    rw [Finset.card_union_of_disjoint (hdisj.mono_right (Finset.subset_insert a {c,d}))]
     simp [hcd]
 
 /-- No critical-face count is lost to image collisions. This is a consequence
@@ -140,13 +139,18 @@ theorem critical_recurrence (n : Nat) :
   have hev : interface n ≠ v := by
     by_cases hn : n = 0 <;> simp [interface,hn,u,v,r]
   constructor
-  · simp only [first,wheelCell,Finset.mem_insert_self,if_pos,
-      Finset.erase_insert heS,S_succ,interface,Nat.add_sub_cancel,show n+1 ≠ 0 by omega,if_neg]
+  · change wheelCell (interface n) (r n 0) (r n 2) (r n 3)
+      (insert (interface n) (S n)) = insert (interface (n+1)) (S (n+1))
+    rw [wheelCell, if_pos (Finset.mem_insert_self _ _), Finset.erase_insert heS, S_succ]
+    have hint : interface (n+1) = r n 0 := by simp [interface]
+    rw [hint]
     ext x
     simp only [Finset.mem_insert,Finset.mem_union,Finset.mem_singleton]
     tauto
-  · have hn : interface n ∉ second n := by simp [second,hev,heS]
-    simp only [wheelCell,hn,if_neg,second,S_succ]
+  · have hn : interface n ∉ insert v (S n) := by simp [hev,heS]
+    change wheelCell (interface n) (r n 0) (r n 2) (r n 3)
+      (insert v (S n)) = insert v (S (n+1))
+    rw [wheelCell, if_neg hn, S_succ]
     ext x
     simp only [Finset.mem_insert,Finset.mem_union,Finset.mem_singleton]
     tauto

@@ -53,7 +53,7 @@ def renamePair (f : U ↪ V) (P : CollapsePair U) : CollapsePair V where
     rintro s ⟨t,ht,rfl⟩ hsub
     have hlt : P.lower ⊂ t := Finset.ssubset_iff_subset_ne.mpr
       ⟨(Finset.image_subset_image_iff f.injective).mp hsub.1,fun h =>
-        (Finset.ne_of_ssubset hsub) (congrArg (fun z : Finset U => z.image f) h)⟩
+        hsub.ne (congrArg (fun z : Finset U => z.image f) h)⟩
     rw [P.free t ht hlt]
     simp [CollapsePair.upper]
 
@@ -145,7 +145,7 @@ private theorem critical_rename (f : U ↪ V) {B : Family U} {C : Finset (Finset
     obtain ⟨u,hu,rfl⟩ := Finset.subset_image_iff.mp hts.1
     refine ⟨u,h.boundary q hq u (Finset.ssubset_iff_subset_ne.mpr ⟨hu,?_⟩),rfl⟩
     intro he
-    exact (Finset.ne_of_ssubset hts) (congrArg (fun s : Finset U => s.image f) he)
+    exact hts.ne (congrArg (fun s : Finset U => s.image f) he)
   · intro s hs t ht hst
     obtain ⟨q,hq,rfl⟩ := Finset.mem_image.mp hs
     obtain ⟨q',hq',rfl⟩ := Finset.mem_image.mp ht
