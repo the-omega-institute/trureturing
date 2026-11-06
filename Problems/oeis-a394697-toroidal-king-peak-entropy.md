@@ -20,7 +20,7 @@ a(n)^(1/n²) tends to the literal A247413 constant through all integers.
 A247413 is identified with the limit of A063443(m)^(1/m²), where
 A063443 counts square tilings by unit and two-by-two squares.
 
-## Qualification
+## Motivation
 
 This is a tier-one separately stated external conjecture. The exact
 event and source qualification are preregistered in
@@ -34,7 +34,14 @@ The bounded source check does not establish worldwide openness or
 priority. No matching Lean result was identified in the inspected
 repository, pinned Mathlib, Loogle and bounded GitHub code searches.
 
-## Mathematical route
+## Gap
+
+The formal tiling object is the disjoint-large-tile placement encoding
+with canonical unit completion. A separate partition-type tiling object
+and a bijection theorem for `tilingBlocks` are not provided;
+`tilingBlocks` is not on the limit theorem's dependency path.
+
+## Route
 
 Write F(n) for the free square count and T(n) for the toroidal total.
 Leaving the last row and column empty gives F(n-1)≤T(n). Forgetting
@@ -62,7 +69,14 @@ The shifted free logarithmic limit and
 log(n²+1)/n²→0 squeeze log(a(n))/n² to the same entropy. Exponentiation
 identifies its root limit with the independently defined tiling limit.
 
-## Formal statement and boundary
+## Falsifier
+
+A positive real epsilon and arbitrarily large integers n at least three
+whose root error from the independently defined A247413 constant is at
+least epsilon would refute the limit. Agreement on a finite prefix or
+only even side lengths does not establish the full conjecture.
+
+## Evidence
 
 `ToroidalKingsEmptySeam` defines the actual bounded vertex sets,
 adjacencies, all independent subsets, every cardinality coefficient,
@@ -74,11 +88,6 @@ independently of toroidal counts. Its `result` states that for every
 positive real epsilon there is N≥3 such that every integer n≥N has
 absolute root error less than epsilon. No even-only or total-count
 replacement occurs.
-
-The formal tiling object is the disjoint-large-tile placement encoding
-with canonical unit completion. A separate partition-type tiling object
-and a bijection theorem for `tilingBlocks` are not provided;
-`tilingBlocks` is not on the limit theorem's dependency path.
 
 
 ## Triage
@@ -103,7 +112,7 @@ correspondence retain their cited prior-literature credit. The formal
 conclusion supplies the exact all-square toroidal assertion within
 the stated placement encoding.
 
-## Escape audit
+## ASSUMED-UNVERIFIED
 
 The four-slot escape audit for the three source modules is unfinished
 under the [linked issue](https://github.com/the-omega-institute/trureturing/issues/27011#issuecomment-6671075953).
