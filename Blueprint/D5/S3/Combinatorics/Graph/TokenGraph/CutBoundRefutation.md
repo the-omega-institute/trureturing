@@ -64,7 +64,19 @@ $$(claim) \Leftrightarrow (\forall (n: \mathbb{N}), \forall (G: \operatorname{Si
 
 Appendix D.2, page 39: "In contrast, the following bound was shown to hold on our dataset"; "Conjecture 7. For all G and for all 1 ≤ k ≤ ⌊n/2⌋" followed by "λ_min(A(F_k(G))) ≥ −(C(G)+M_k(G))/2." The formula quantifies all finite simple graphs with decidable adjacency, with unit edge weights. This is a specialization of the source's all-graphs assertion. Fin n labels the n vertices; Nat.div n 2 is floor(n/2). The tokenGraph is the existing finite-subset graph: two equally sized subsets differ by one token moved along an edge. The natural cut and matching cardinalities are coerced to real numbers before division by two. No connectedness or bipartiteness hypothesis is imposed.
 
-**Lemma 1.6 (Real and complex adjacency matrices).**
+**Lemma 1.6 (Count crossing edges from their selected endpoint).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.cut_card_eq_sum`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.cut_card_eq_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every n, every simple graph G on Fin n with decidable adjacency, and every finite subset S, the number of unordered graph edges crossing S equals the sum over all ordered pairs u,v of the indicator that G.Adj u v, u belongs to S and v does not belong to S. Each crossing edge has a unique such orientation. The map from these oriented crossing pairs to unordered edges is bijective; a swapped pair cannot also start inside S. The general blow-up maximum-cut proof uses this counting identity.
+
+**Lemma 1.7 (Real and complex adjacency matrices).**
 
 $$\forall (n: Type), [\operatorname{Fintype}\left(n\right)], [\operatorname{DecidableEq}\left(n\right)], \forall (G: \operatorname{SimpleGraph}\left(n\right)), [\operatorname{DecidableRel}\left(\operatorname{SimpleGraph}.\operatorname{Adj}\left(G\right)\right)], \operatorname{Matrix}.\operatorname{map}\left(\operatorname{SimpleGraph}.\operatorname{adjMatrix}\left(\mathbb{R}, G\right), \operatorname{Complex}.\operatorname{ofReal}\right) = \operatorname{SimpleGraph}.\operatorname{adjMatrix}\left(\mathbb{C}, G\right)$$
 
@@ -78,7 +90,7 @@ $$\forall (n: Type), [\operatorname{Fintype}\left(n\right)], [\operatorname{Deci
 
 Mapping the real zero-one adjacency matrix entrywise by Complex.ofReal gives the complex adjacency matrix. This identity lets lambdaMin40 apply the complex Rayleigh estimate to the real adjacency matrix.
 
-**Theorem 1.7 (A phase test contradicts the bound).**
+**Theorem 1.8 (A phase test contradicts the bound).**
 
 $$\neg claim$$
 
@@ -101,6 +113,7 @@ Take the five-cycle blow-up with five independent blocks of size 40 and complete
 - Truth anchor: `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.adjMatrix_complex_map`
 - Truth anchor: `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.claim`
 - Truth anchor: `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.crosses`
+- Truth anchor: `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.cut_card_eq_sum`
 - Truth anchor: `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.lambdaMin`
 - Truth anchor: `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.maxCut`
 - Truth anchor: `D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.maxMatchingLe`
