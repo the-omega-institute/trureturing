@@ -22,7 +22,7 @@ noncomputable section
 open Set Finset SimpleGraph
 open scoped unitInterval ContinuousMap
 namespace D5.S3.Geometry.OriginalLabelTwoSum.PhysicalCertificate
-open FiniteElementaryCollapse FiniteRelativeSimplicialCollapse FiniteSimplicialJoin
+open FiniteElementaryCollapse FiniteRelativeSimplicialCollapse FiniteSimplicialJoin FiniteConeCollapse
 variable {VL V : Type*} [Fintype V] [DecidableEq V]
 
 section Step
@@ -85,17 +85,23 @@ private def child (c : Certificate left.ground left.rows.root) :
     Certificate (insert e X) left.rows.root where
   supported := by
     intro s hs
-    simpa only [Finset.insert_erase he] using c.supported s hs
+    change s ⊆ insert e (left.ground.erase e)
+    rw [Finset.insert_erase he]
+    exact c.supported s hs
   core := c.core
   critical := c.critical
   vertex := c.vertex
   vertex_mem := c.vertex_mem
   core_supported := by
     intro s hs
-    simpa only [Finset.insert_erase he] using c.core_supported s hs
+    change s ⊆ insert e (left.ground.erase e)
+    rw [Finset.insert_erase he]
+    exact c.core_supported s hs
   critical_supported := by
     intro s hs
-    simpa only [Finset.insert_erase he] using c.critical_supported s hs
+    change s ⊆ insert e (left.ground.erase e)
+    rw [Finset.insert_erase he]
+    exact c.critical_supported s hs
   cells := c.cells
   main := c.main
   separate := c.separate
@@ -183,7 +189,7 @@ theorem certificate_at_core (hp : c.vertex = e) :
     exact hX.choose_spec
   · intro hX
     simp only [finishVertex,if_pos hp,dif_neg hX]
-    exact (show Rf.Nonempty from
+    exact (show (Rf).Nonempty from
       Finset.image_nonempty.mpr (by decide : Wheel.R.Nonempty)).choose_spec
 
 /-- Away from the selected edge the actual existing endpoint is retained. -/

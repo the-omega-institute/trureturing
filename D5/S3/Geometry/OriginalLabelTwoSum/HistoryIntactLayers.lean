@@ -166,9 +166,11 @@ private def strongRelative (U d : Finset V) (B M : Family V)
     c.core_supported (fun z hz t ht => hboundary z hz t (c.core_supported t ht))
     (noBase (delta {c.vertex}))
   let H := B ⊔ rawJoin (delta d) (delta {c.vertex})
-  have hUpper : insert c.vertex d ∈ H := Or.inr
-    ⟨d, (show d ⊆ d from le_rfl), {c.vertex}, (show ({c.vertex} : Finset V) ⊆ {c.vertex} from le_rfl), by ext v; simp only [Finset.mem_insert,
-      Finset.mem_union, Finset.mem_singleton]; tauto⟩
+  have hUpper : insert c.vertex d ∈ H := by
+    refine Or.inr ⟨d, le_rfl, {c.vertex}, le_rfl, ?_⟩
+    ext v
+    simp only [Finset.mem_insert, Finset.mem_union, Finset.mem_singleton]
+    tauto
   have hFree : ∀ s ∈ H, d ⊆ s → s = d ∨ s = insert c.vertex d := by
     intro s hs hds
     rcases hs with hs | ⟨a, ha, t, ht, rfl⟩
@@ -275,7 +277,10 @@ def relativeLayer (U d : Finset V) (B M : Family V) (o : Output U M)
             intro s hs t ht
             have he := Finset.mem_singleton.mp hs
             subst s
-            exact Or.inl (by simpa only [Finset.union_empty] using (hboundary t ht ∅ (Finset.empty_subset U)))
+            change t ∈ B ⊔ (⊥ : Family V)
+            rw [sup_bot_eq]
+            simpa only [Finset.union_empty] using
+              (hboundary t ht ∅ (Finset.empty_subset U))
           antichain := by
             intro s hs t ht _
             exact (Finset.mem_singleton.mp hs).trans (Finset.mem_singleton.mp ht).symm }

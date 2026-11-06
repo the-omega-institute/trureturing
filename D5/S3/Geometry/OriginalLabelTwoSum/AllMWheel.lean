@@ -96,6 +96,7 @@ theorem labelInterval_nodup (m lo n : Nat) (h : lo + n ≤ m + 1) :
 
 /-- Every edge and both of its actual endpoints are identified. The statement
     includes empty and singleton segments, with no fabricated endpoint. -/
+set_option maxHeartbeats 1600000 in
 theorem labelInterval_edges (m lo n : Nat) (h : lo + n ≤ m + 1)
     (e : Finset (Label m)) :
     e ∈ pathEdges (labelInterval m lo n h) ↔
@@ -103,13 +104,13 @@ theorem labelInterval_edges (m lo n : Nat) (h : lo + n ≤ m + 1)
         y.val < lo + n ∧ e = {x, y} := by
   induction n generalizing lo with
   | zero =>
-      simp only [labelInterval, pathEdges, Finset.not_mem_empty, false_iff]
+      simp only [labelInterval, pathEdges, Finset.notMem_empty, false_iff]
       rintro ⟨x, y, hx, hy, hu, _⟩
       omega
   | succ n ih =>
       cases n with
       | zero =>
-          simp only [labelInterval, pathEdges, Finset.not_mem_empty, false_iff]
+          simp only [labelInterval, pathEdges, Finset.notMem_empty, false_iff]
           rintro ⟨x, y, hx, hy, hu, _⟩
           omega
       | succ n =>
@@ -200,7 +201,7 @@ theorem cyclePathLast_nodup (m : Nat) (hm : 3 ≤ m) : (cyclePathLast m hm).Nodu
   have hx := x.isLt
   have hz : x = 0 ↔ x.val = 0 := Fin.ext_iff
   have hf : x = firstLabel m hm ↔ x.val = 1 := Fin.ext_iff
-  rw [hz, hf]
+  simp only [ne_eq, hz, hf]
   omega
 
 @[simp] theorem cyclePath_vertices (m : Nat) (hm : 3 ≤ m) (x : Label m) :
@@ -424,7 +425,7 @@ theorem pathRootPath_noCritical (m : Nat) (hm : 3 ≤ m) (hg : goodResidue m) :
   | critical S =>
       have hs := (criticalFaces_mem _ S).mpr hq
       rw [hc] at hs
-      exact Finset.not_mem_empty S hs
+      exact Finset.notMem_empty S hs
 
 /- Pending substantive theorem: cycleWordData : Word (ground m)
    (facets (cycleIndependentOn m hm)) with word=cycleWord m hm.
