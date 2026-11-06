@@ -5,3 +5,7 @@ cas_ref: sha256:c806850ec02d4a88909e477e9e7b636104dc03693786f7333f014cc25ba508b9
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Section heading only; it contains no mathematical proposition or formal claim.
+    previous_atom_id: acfcfc07fe1e777c32123381853546d4bff848daa59bcaaa6e3655fa262024f1
+    next_atom_id: f28de9b24594b8749886551dab093bd7e6aa9dab9e1433a184acb0ee93de4eb8
