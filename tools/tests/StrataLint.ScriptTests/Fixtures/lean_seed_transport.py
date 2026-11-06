@@ -388,7 +388,23 @@ def run(args, *rest, **kwargs):
     # Infrastructure hang guard for the pre-fix unbounded call. Whether the
     # production owner supplied a timeout, not elapsed time, decides the test.
     kwargs.setdefault("timeout", 1)
-    try: return original(args, *rest, **kwargs)
+    try:
+        if "FAKE_PREPARATION_PHASE" in os.environ or "FAKE_FETCH_PHASE" in os.environ:
+            # Local I/O probes run the exact nonblocking transport fake inline;
+            # their injected clock advances at reads, independent of startup.
+            import contextlib, io, runpy, shutil, sys
+            from unittest.mock import patch
+            stdout, stderr, status = io.StringIO(), io.StringIO(), 0
+            with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr), patch.object(sys, "argv", args):
+                try:
+                    runpy.run_path(shutil.which(args[0]), run_name="__main__")
+                except SystemExit as error:
+                    status = error.code or 0
+            result = subprocess.CompletedProcess(args, status, stdout.getvalue(), stderr.getvalue())
+            if kwargs.get("check"):
+                result.check_returncode()
+            return result
+        return original(args, *rest, **kwargs)
     finally:
         # Protected-content queries are instantaneous in this transport-clock fixture.
         if args[1] != "api" or "/releases/" in args[2]:
