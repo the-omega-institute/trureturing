@@ -38,7 +38,9 @@ internal sealed class C139FourierOverlapRigidityDocument : IScribeDocumentDefini
                             + "not add any new physical readout, continuity assumption, or "
                             + "unframed projection domain."))),
                 DescribeRole.Theorem),
-            H("Three-phase rigidity for arbitrary actual input labels"),
+            new DocumentBlock.Section(
+                H("Three-phase rigidity for arbitrary actual input labels"),
+                Blocks(
             Paragraph(Text(
                 "The scalar declaration phase_zero also supplies the phase-separation step "
                     + "in the complete application of R5-011, Theorem 5.1. Here X is any type "
@@ -113,7 +115,7 @@ internal sealed class C139FourierOverlapRigidityDocument : IScribeDocumentDefini
                     + "unprepared inputs, Kraus instruments or physical time. The 3d "
                     + "reference layout is a calibration compression, with no claim of "
                     + "strictly weaker physical laws, native experimental cost or literature "
-                    + "priority.")))));
+                    + "priority.")))))));
 
     private static Formula Apply(string name, params Formula[] arguments)
     {
