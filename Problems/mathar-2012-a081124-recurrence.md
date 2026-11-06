@@ -119,6 +119,10 @@ from the mathematical proof.
 ## ASSUMED-UNVERIFIED
 
 Worldwide novelty, priority and absence of a settlement outside the bounded
-source searches are unverified. The information-escape registration requires
-its own source-bound validation and is not certified by mathematical
-compilation alone.
+source searches are unverified. The information-escape audit is unfinished under
+[the concrete source-role gap](https://github.com/the-omega-institute/trureturing/issues/27174#issuecomment-6676692678).
+The compiled Reg client has a `declared_unresolved` record with
+`IE-C050`, `unclassified_form`, `source.roles`: four selected occurrences
+require a compatible role mapping and full source-binding certificate.
+No `declared_validated` audit is claimed; mathematical compilation alone
+does not certify this separate audit.
