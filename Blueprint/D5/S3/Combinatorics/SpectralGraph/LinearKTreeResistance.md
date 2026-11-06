@@ -46,6 +46,10 @@ $$\forall k \in \operatorname{Nat},\; (1 \le k) \Rightarrow ((\exists R \in \ope
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/LinearKTreeResistance.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/linear-k-tree-resistance` (proved) by `D5/S3/Combinatorics/SpectralGraph/LinearKTreeResistance.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"linear-k-tree-resistance","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/LinearKTreeResistance.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Wayne Barrett; Emily J. Evans; Amanda E. Francis (2017). *Resistance distance in straight linear 2-trees*. DOI: [10.1016/j.dam.2018.10.043](https://doi.org/10.1016/j.dam.2018.10.043). URL: <https://arxiv.org/abs/1712.05883v1>.

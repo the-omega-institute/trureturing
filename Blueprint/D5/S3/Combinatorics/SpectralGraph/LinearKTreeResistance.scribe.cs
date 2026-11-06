@@ -25,7 +25,7 @@ internal sealed class LinearKTreeResistanceDocument : IScribeDocumentDefinition
                 Node("claim","Conjecture 44","claim",Eqn(Call("claim"),ClaimBody()),
                     "Conjecture 44 (arXiv:1712.05883v1, p. 20): Let G be the straight linear k-tree, k ≥ 1, with n vertices and H be the straight linear k-tree with n+1 vertices. Then limₙ→∞ r_H(1,n+1) − r_G(1,n) = 6/(k(k+1)(2k+1)). Evans and Francis restate this as Conjecture 4.5 in arXiv:2108.07942v2. Each k is fixed before the size tends to infinity. Existence is included, and every solution of the Kirchhoff equation has the asserted increment limit.",DescribeRole.Definition,AssessedProvenance.FromLiterature(Source())),
                 Node("result","The increment limit for every positive k","result",ClaimBody(),
-                    "The interval Gram matrix Q satisfies I ≤ Q ≤ D I, where D is the sum of the first k squares. Its defect c = D 1 - Q 1 is supported at the two endpoints. Finite propagation stabilizes every polynomial endpoint moment, and geometric approximation to the inverse makes the inverse quadratic correction converge. The identity R = N/D + (1ᵀc + cᵀQ⁻¹c)/D² then yields the increment limit. The sum-of-squares identity gives the displayed slope, including k=1.",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source())))));
+                    "The interval Gram matrix Q satisfies I ≤ Q ≤ D I, where D is the sum of the first k squares. Its defect c = D 1 - Q 1 is supported at the two endpoints. Finite propagation stabilizes every polynomial endpoint moment, and geometric approximation to the inverse makes the inverse quadratic correction converge. The identity R = N/D + (1ᵀc + cᵀQ⁻¹c)/D² then yields the increment limit. The sum-of-squares identity gives the displayed slope, including k=1.",DescribeRole.Theorem,AssessedProvenance.FromRepo(Source()),new OpenProblemResolutionClaim(ProblemSlugRef.Create("linear-k-tree-resistance"),ResolutionKind.Proved)))));
     }
     private static Formula SequenceBody()
     {
@@ -46,9 +46,9 @@ internal sealed class LinearKTreeResistanceDocument : IScribeDocumentDefinition
                 App(Q("Filter","Tendsto"),Lam("t",Nat(),Sub(App(r,Add(t,D(1))),App(r,t))),
                     Q("Filter","atTop"),Call("nhds",slope)))))));
     }
-    private static DocumentBlock Node(string id,string title,string name,Formula formula,string prose,DescribeRole role,AssessedProvenance provenance) =>
+    private static DocumentBlock Node(string id,string title,string name,Formula formula,string prose,DescribeRole role,AssessedProvenance provenance,OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("linear-k-tree-resistance-"+id),DeclarationHandle.Create(Prefix+name),H(title),
-            StatementSource.FromAuthor(Disp(formula)),provenance,Blocks(Paragraph(Text(prose))),role);
+            StatementSource.FromAuthor(Disp(formula)),provenance,Blocks(Paragraph(Text(prose))),role,openProblemResolutionClaim: resolution);
     private static Formula Parenthesized(Formula f) => Seq(Open,f,Close);
     private static Formula V(string s) => F.Id(s);
     private static Formula C(string s) => Seq(Operatorname,Grp(V(s)));
