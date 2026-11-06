@@ -82,6 +82,10 @@ $$\neg (\forall n \in \mathbb{N},\; 0 < n \Rightarrow \left(\forall F \in \opera
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/LarotondaPrincipalLogDistanceRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/larotonda-principal-log-distance` (refuted) by `D5/S3/QuadraticForms/LarotondaPrincipalLogDistanceRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"larotonda-principal-log-distance","declaration_gid":"D5/S3/QuadraticForms/LarotondaPrincipalLogDistanceRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Gabriel Larotonda (2026). *Short curves in homogeneous spaces of the unitary group for unitarily invariant norms*. DOI: [10.48550/arXiv.2610.31535](https://doi.org/10.48550/arXiv.2610.31535). URL: <https://arxiv.org/abs/2610.31535v1>.

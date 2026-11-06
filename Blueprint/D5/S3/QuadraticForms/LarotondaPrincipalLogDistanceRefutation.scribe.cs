@@ -74,16 +74,19 @@ internal sealed class LarotondaPrincipalLogDistanceRefutationDocument : IScribeD
                 Item("claim","The conjectured principal-log formula",IffF(F.Id("claim"),ClaimBody()),
                     "After Proposition 4.3, p. 7: “It would be natural to conjecture that d(1,eᶻ)=‖z‖ whenever ‖z‖∞≤π.” Here n ranges over positive natural numbers, F over all normalized Ad-invariant Finsler norms, and z over skewAdjoint matrices. No symmetry, trace-zero condition, or singular-value invariance is imposed.",true),
                 Item("result","The universal equality is false",Seq(Neg,Sp,Parenthesized(ClaimBody())),
-                    "For F(z)²=Σᵢⱼ‖zᵢⱼ‖²+4‖Matrix.trace z‖², use diagonal angles (4π/5,π/2) and (−6π/5,π/2). Their exponentials agree. The smooth exponential curve for the second vector has constant left logarithmic derivative and strictly smaller length, so the infimum is strictly below F at the first vector.",false))));
+                    "For F(z)²=Σᵢⱼ‖zᵢⱼ‖²+4‖Matrix.trace z‖², use diagonal angles (4π/5,π/2) and (−6π/5,π/2). Their exponentials agree. The smooth exponential curve for the second vector has constant left logarithmic derivative and strictly smaller length, so the infimum is strictly below F at the first vector.",false,
+                    new OpenProblemResolutionClaim(ProblemSlugRef.Create("larotonda-principal-log-distance"), ResolutionKind.Refuted)))));
     }
 
     private static Formula ClaimBody() => All("n",N,Imp(new Formula.Relation(Num(0),FormulaRelationOperator.LessThan,n),
         All("F",Func(Mat,R),Imp(Call("IsAdInvariantFinsler",f),All("z",Mat,
             Imp(Skew(z),Imp(Le(Norm(App(Q("Matrix","toEuclideanCLM"),z)),Q("Real","pi")),
                 Eq(Call("rectifiableDistance",f,Num(1),ExpF(z)),OfReal(App(f,z))))))))));
-    private static DocumentBlock Item(string name,string title,Formula formula,string prose,bool literature) =>
+    private static DocumentBlock Item(string name,string title,Formula formula,string prose,bool literature,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(name.ToLowerInvariant()),DeclarationHandle.Create(Owner+name),H(title),
             StatementSource.FromAuthor(Disp(formula)),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))),literature ? DescribeRole.Definition : DescribeRole.Theorem);
+            Blocks(Paragraph(Text(prose))),literature ? DescribeRole.Definition : DescribeRole.Theorem,
+            resolution);
 }
