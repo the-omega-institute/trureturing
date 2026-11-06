@@ -6,6 +6,15 @@
    utility: none
    digest: Ordered nonautonomous Bochner iterates on complex Banach spaces. -/
 
+/-
+The Bochner series and compact-residual method follows the selected Apache-2.0
+Dyson–Phillips source by Zayn Blore in DysonPhillipsPerturbation.lean.
+Source: zblore/csd-lean4 at ca3edfd7a5576d6c4e188501f9abb7c3f38ccd7f,
+CsdLean4/Mathlib/Analysis/Semigroup/BoundedPerturbation.lean.
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0; see docs/reports/qmutualinfo/csd-lean4-LICENSE.txt.
+The present integrals have time-dependent coefficients and arbitrary initial time.
+-/
 import D5.S3.Quantum.Analysis.DysonPhillipsPerturbation
 import Mathlib.Topology.Order.ProjIcc
 
@@ -433,6 +442,7 @@ private theorem sum_unique {T M r : ℝ} (hT : 0 ≤ T)
   have hz : Y t = 0 := norm_le_zero_iff.mp (ge_of_tendsto' hlim hb)
   exact sub_eq_zero.mp hz
 
+omit [CompleteSpace E] in
 private theorem action_add {a b : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b) :
     S.action (a + b) = (S.action a).comp (S.action b) := by
   simp only [Contraction.action, Real.toNNReal_add ha hb, S.add]
@@ -453,9 +463,11 @@ private theorem sum_restart {T M r s : ℝ} (hT : 0 ≤ T)
       (fun q => S.action (u - q) (B q (sum S B q r x))) volume r u :=
     fun u hu => (causal_integrand_continuous S B hBr hSc hu).intervalIntegrable_of_Icc hu.1
   have hsplit := intervalIntegral.integral_add_adjacent_intervals
-    ((hi t htr).mono_set (by rw [Set.uIcc_of_le hrs, Set.uIcc_of_le htr.1];
+    ((hi t htr).mono_set (by
+      rw [Set.uIcc_of_le hrs, Set.uIcc_of_le htr.1]
       exact Set.Icc_subset_Icc le_rfl ht.1))
-    ((hi t htr).mono_set (by rw [Set.uIcc_of_le ht.1, Set.uIcc_of_le htr.1];
+    ((hi t htr).mono_set (by
+      rw [Set.uIcc_of_le ht.1, Set.uIcc_of_le htr.1]
       exact Set.Icc_subset_Icc hrs le_rfl))
   have hfirst : (∫ q in r..s, S.action (t - q) (B q (sum S B q r x))) =
       S.action (t - s) (∫ q in r..s, S.action (s - q) (B q (sum S B q r x))) := by
@@ -471,7 +483,7 @@ private theorem sum_restart {T M r s : ℝ} (hT : 0 ≤ T)
     sum_mild S B (hrs.trans hsT) hBr hM hBMr hsr x, map_add]
   rw [show t - r = (t - s) + (s - r) by ring,
     action_add S (sub_nonneg.mpr ht.1) (sub_nonneg.mpr hrs)]
-  rfl
+  simp only [ContinuousLinearMap.comp_apply, add_assoc]
 
 private theorem sum_cocycle {T M r s t : ℝ} (hT : 0 ≤ T)
     (hB : ContinuousOn B (Set.Icc 0 T)) (hM : 0 ≤ M)
@@ -491,6 +503,7 @@ private theorem evolution_locality {B' : ℝ → E →L[ℂ] E} {r t : ℝ}
   rw [evolution_apply S B ⟨hrt, hB⟩, evolution_apply S B' ⟨hrt, hB'⟩]
   exact tsum_congr fun n => term_locality S B hBB n ⟨hrt, le_rfl⟩ x
 
+omit [CompleteSpace E] in
 private theorem term_constant (Bzero : E →L[ℂ] E) (n : ℕ) (t r : ℝ) (x : E) :
     term S (fun _ => Bzero) n t r x =
       DysonPhillipsPerturbation.dysonTerm S.action Bzero n (t - r) x := by
@@ -512,6 +525,18 @@ private theorem term_constant (Bzero : E →L[ℂ] E) (n : ℕ) (t r : ℝ) (x :
     rw [ih, add_sub_cancel_right]
     congr 2
     ring
+
+omit [CompleteSpace E] in
+private theorem sum_zero_coefficient (t r : ℝ) (x : E) :
+    sum S (fun _ => 0) t r x = S.action (t - r) x := by
+  have h : ∀ n, term S (fun _ => 0) n t r x =
+      if n = 0 then S.action (t - r) x else 0 := by
+    intro n
+    cases n with
+    | zero => rfl
+    | succ n => simp [term_succ]
+  simp only [sum, h]
+  exact tsum_ite_eq 0 (fun _ => S.action (t - r) x)
 
 /-- The full finite-horizon evolution, with a single horizon-independent operator family. -/
 theorem nonautonomous_bounded_perturbation {T M : ℝ} (hT : 0 ≤ T)
@@ -538,7 +563,9 @@ theorem nonautonomous_bounded_perturbation {T M : ℝ} (hT : 0 ≤ T)
       Set.EqOn B B' (Set.Icc r t) → evolution S B t r = evolution S B' t r) ∧
     (∀ (Bzero : E →L[ℂ] E), Set.EqOn B (fun _ => Bzero) (Set.Icc 0 T) →
       ∀ t r, (t, r) ∈ triangle T → ∀ x : E, evolution S B t r x =
-        DysonPhillipsPerturbation.dysonSum S.action Bzero (t - r) x) := by
+        DysonPhillipsPerturbation.dysonSum S.action Bzero (t - r) x) ∧
+    (Set.EqOn B (fun _ => 0) (Set.Icc 0 T) → ∀ t r, (t, r) ∈ triangle T →
+      evolution S B t r = S.action (t - r)) := by
   have hlocal : ∀ t r, (t, r) ∈ triangle T →
       r ≤ t ∧ ContinuousOn B (Set.Icc r t) := by
     intro t r h
@@ -546,7 +573,7 @@ theorem nonautonomous_bounded_perturbation {T M : ℝ} (hT : 0 ≤ T)
   have happly : ∀ t r, (t, r) ∈ triangle T → ∀ x : E,
       evolution S B t r x = sum S B t r x :=
     fun t r h x => evolution_apply S B (hlocal t r h) x
-  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro n t r h x
     simpa only [mul_pow] using term_bound S B (h.2.1.trans h.2.2)
       (hB.mono (Set.Icc_subset_Icc h.1 le_rfl)) hM
@@ -599,6 +626,15 @@ theorem nonautonomous_bounded_perturbation {T M : ℝ} (hT : 0 ≤ T)
     simp only [sum, DysonPhillipsPerturbation.dysonSum, max_eq_left (sub_nonneg.mpr h.2.1)]
     apply tsum_congr
     intro n
-    exact (term_locality S B heq n ⟨h.2.1, h.2.2⟩ x).trans (term_constant S Bzero n t r x)
+    exact (term_locality S B (heq.mono (Set.Icc_subset_Icc h.1 le_rfl))
+      n ⟨h.2.1, h.2.2⟩ x).trans (term_constant S Bzero n t r x)
+
+  · intro heq t r h
+    ext x
+    rw [happly t r h x]
+    calc
+      _ = sum S (fun _ => 0) t r x := tsum_congr fun n =>
+        term_locality S B (heq.mono (Set.Icc_subset_Icc h.1 le_rfl)) n ⟨h.2.1, h.2.2⟩ x
+      _ = _ := sum_zero_coefficient S t r x
 
 end D5.S3.Quantum.Analysis.NonautonomousDysonPhillips
