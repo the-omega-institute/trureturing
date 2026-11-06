@@ -67,7 +67,7 @@ theorem quadraticRootPhase_eq_zero_of_not_isSquare
     · intro hy
       exact False.elim (h ((isSquare_iff_exists_sq _).mpr ⟨y, hy.symm⟩))
     · intro hy
-      exact False.elim (by simpa using hy)
+      simp at hy
   simp [quadraticRootPhase, hempty]
 
 theorem quadraticPhase_sum_eq (hF : ringChar F ≠ 2) (ψ : AddChar F ℂ)
@@ -89,7 +89,7 @@ theorem quadraticPhase_sum_eq (hF : ringChar F ≠ 2) (ψ : AddChar F ℂ)
       intro z hz
       have hcardN : Fintype.card {x : F // x ^ 2 = z} =
           ({x : F | x ^ 2 = z}.toFinset).card := by
-        simpa only [Fintype.card_subtype, Set.toFinset_ofPred]
+        simp only [Fintype.card_subtype, Set.toFinset_ofPred]
       have hcardZ : (Fintype.card {x : F // x ^ 2 = z} : ℤ) =
           quadraticChar F z + 1 := by
         rw [hcardN]
@@ -131,7 +131,7 @@ private theorem quadraticCharacterComplex_sq {x : F} (hx : x ≠ 0) :
   simpa using congrArg (Int.castRingHom ℂ) (quadraticChar_sq_one hx)
 
 /-- Completing the square evaluates a quadratic phase with linear coefficient one. -/
-theorem quadraticLinearPhase_sum_eq (hF : ringChar F ≠ 2) (ψ : AddChar F ℂ)
+private theorem quadraticLinearPhase_sum_eq (hF : ringChar F ≠ 2) (ψ : AddChar F ℂ)
     (hψ : ψ ≠ 1) (t : Fˣ) :
     (∑ y : F, ψ ((t : F) * y ^ 2 + y)) =
       (quadraticCharacterComplex (t : F))⁻¹ * quadraticGaussSum ψ *
@@ -143,7 +143,7 @@ theorem quadraticLinearPhase_sum_eq (hF : ringChar F ≠ 2) (ψ : AddChar F ℂ)
       (t : F) * y ^ 2 + y =
         (t : F) * (y + (2 * (t : F))⁻¹) ^ 2 + -(4 * (t : F))⁻¹ := by
     field_simp [htwo, hfour, t.ne_zero]
-    <;> ring
+    ring
   calc
     _ = ∑ y : F, ψ ((t : F) * (y + (2 * (t : F))⁻¹) ^ 2) *
         ψ (-(4 * (t : F))⁻¹) := by
@@ -156,7 +156,7 @@ theorem quadraticLinearPhase_sum_eq (hF : ringChar F ≠ 2) (ψ : AddChar F ℂ)
     _ = _ := by rw [quadraticPhase_sum_eq hF ψ hψ t]
 
 /-- Additive orthogonality expresses the stationary root fiber as a quadratic Fourier sum. -/
-theorem quadraticRootPhase_fourier (ψ : AddChar F ℂ) (hψ : ψ ≠ 1) (a b : F) :
+private theorem quadraticRootPhase_fourier (ψ : AddChar F ℂ) (hψ : ψ ≠ 1) (a b : F) :
     (Fintype.card F : ℂ) * quadraticRootPhase ψ a b =
       ∑ t : F, ψ (-(4 * a * b) * t) * (∑ y : F, ψ (t * y ^ 2 + y)) := by
   classical
@@ -190,11 +190,11 @@ theorem salieSum_zero_right (hF : ringChar F ≠ 2) (ψ : AddChar F ℂ) (a : F)
         quadraticCharacterComplex a * quadraticGaussSum ψ := by
   classical
   by_cases ha : a = 0
-  · rw [if_pos ha]
+  · rw [ite_eq_left ha]
     simp only [salieSum, ha, zero_mul, zero_add, AddChar.map_zero_eq_one, mul_one]
     exact MulChar.sum_eq_zero_of_ne_one (quadraticCharacterComplex_ne_one hF)
   · let u : Fˣ := Units.mk0 a ha
-    rw [if_neg ha]
+    rw [ite_eq_right ha]
     have hsum : salieSum ψ a 0 = gaussSum quadraticCharacterComplex (ψ.mulShift u) := by
       unfold salieSum gaussSum
       apply Finset.sum_congr rfl
@@ -208,6 +208,161 @@ theorem salieSum_zero_right (hF : ringChar F ≠ 2) (ψ : AddChar F ℂ) (a : F)
       congr 1
     rw [hu, quadraticCharacterComplex_inv]
     rfl
+
+private theorem salieSum_fourier (hF : ringChar F ≠ 2) (ψ : AddChar F ℂ)
+    (hψ : ψ ≠ 1) (a b : F) (hb : b ≠ 0) :
+    (Fintype.card F : ℂ) * quadraticRootPhase ψ a b =
+      quadraticCharacterComplex (-b) * quadraticGaussSum ψ * salieSum ψ a b := by
+  have htwo : (2 : F) ≠ 0 := Ring.two_ne_zero hF
+  have hfour : (4 : F) ≠ 0 := by
+    simpa only [show (4 : F) = 2 * 2 by ring] using mul_ne_zero htwo htwo
+  have hχfour : quadraticCharacterComplex (4 : F) = 1 := by
+    rw [quadraticCharacterComplex_apply, show (4 : F) = 2 ^ 2 by ring,
+      quadraticChar_sq_one' htwo, Int.cast_one]
+  have hχshift (t : F) :
+      quadraticCharacterComplex (-(4 * b) * t) =
+        quadraticCharacterComplex (-b) * quadraticCharacterComplex t := by
+    rw [show -(4 * b) * t = 4 * ((-b) * t) by ring, map_mul, hχfour, one_mul,
+      map_mul]
+  have hcoef (t : F) :
+      quadraticCharacterComplex (-b) * quadraticCharacterComplex (-(4 * b) * t) =
+        quadraticCharacterComplex t := by
+    rw [hχshift, ← mul_assoc, ← pow_two,
+      quadraticCharacterComplex_sq (neg_ne_zero.mpr hb), one_mul]
+  have hterm (t : F) :
+      ψ (-(4 * a * b) * t) * (∑ y : F, ψ (t * y ^ 2 + y)) =
+        quadraticCharacterComplex (-b) * quadraticGaussSum ψ *
+          (quadraticCharacterComplex (-(4 * b) * t) *
+            ψ (a * (-(4 * b) * t) + b * (-(4 * b) * t)⁻¹)) := by
+    by_cases ht : t = 0
+    · subst t
+      simp [AddChar.sum_eq_zero_of_ne_one hψ, MulChar.map_zero]
+    · have hphase : -(4 * a * b) * t + -(4 * t)⁻¹ =
+          a * (-(4 * b) * t) + b * (-(4 * b) * t)⁻¹ := by
+        field_simp [hfour, hb, ht]
+      have hQ := quadraticLinearPhase_sum_eq hF ψ hψ (Units.mk0 t ht)
+      simp only [Units.val_mk0] at hQ
+      rw [hQ, quadraticCharacterComplex_inv]
+      calc
+        _ = quadraticCharacterComplex t * quadraticGaussSum ψ *
+            ψ (-(4 * a * b) * t + -(4 * t)⁻¹) := by
+          rw [AddChar.map_add_eq_mul]
+          ring
+        _ = _ := by
+          rw [hphase, ← hcoef t]
+          ring
+  rw [quadraticRootPhase_fourier ψ hψ, salieSum, Finset.mul_sum]
+  simp_rw [hterm]
+  exact Fintype.sum_bijective (fun t : F ↦ -(4 * b) * t)
+    (Units.mk0 (-(4 * b)) (neg_ne_zero.mpr (mul_ne_zero hfour hb))).mulLeft_bijective
+    _ _ (fun _ ↦ rfl)
+
+private theorem quadraticGaussSum_sq (hF : ringChar F ≠ 2) (ψ : AddChar F ℂ)
+    (hψ : ψ ≠ 1) :
+    quadraticGaussSum ψ ^ 2 = quadraticCharacterComplex (-1 : F) * Fintype.card F :=
+  gaussSum_sq (quadraticCharacterComplex_ne_one hF)
+    quadraticCharacterComplex_isQuadratic (AddChar.IsPrimitive.of_ne_one hψ)
+
+/-- Exact Salié evaluation, including `a = 0`, over every odd finite field. -/
+theorem salieSum_eq (hF : ringChar F ≠ 2) (ψ : AddChar F ℂ)
+    (hψ : ψ ≠ 1) (a b : F) (hb : b ≠ 0) :
+    salieSum ψ a b =
+      quadraticCharacterComplex b * quadraticGaussSum ψ * quadraticRootPhase ψ a b := by
+  have hG : quadraticGaussSum ψ ≠ 0 :=
+    gaussSum_ne_zero_of_nontrivial
+      (Nat.cast_ne_zero.mpr Fintype.card_ne_zero)
+      (quadraticCharacterComplex_ne_one hF) (AddChar.IsPrimitive.of_ne_one hψ)
+  have hχb : quadraticCharacterComplex (-b) ≠ 0 :=
+    MulChar.apply_ne_zero_iff.mpr (isUnit_iff_ne_zero.mpr (neg_ne_zero.mpr hb))
+  apply mul_left_cancel₀ (mul_ne_zero hχb hG)
+  calc
+    _ = (Fintype.card F : ℂ) * quadraticRootPhase ψ a b :=
+      (salieSum_fourier hF ψ hψ a b hb).symm
+    _ = _ := by
+      rw [show -b = (-1 : F) * b by ring, map_mul]
+      symm
+      calc
+        _ = quadraticCharacterComplex b ^ 2 *
+            (quadraticCharacterComplex (-1 : F) * quadraticGaussSum ψ ^ 2) *
+              quadraticRootPhase ψ a b := by ring
+        _ = quadraticCharacterComplex b ^ 2 * quadraticCharacterComplex (-1 : F) ^ 2 *
+            (Fintype.card F : ℂ) * quadraticRootPhase ψ a b := by
+          rw [quadraticGaussSum_sq hF ψ hψ]
+          ring
+        _ = _ := by
+          rw [quadraticCharacterComplex_sq (x := (-1 : F)) (neg_ne_zero.mpr one_ne_zero),
+            quadraticCharacterComplex_sq hb]
+          ring
+
+/-- A nonsquare product has no stationary root, so all reciprocal phases cancel. -/
+theorem salieSum_eq_zero_of_not_isSquare (hF : ringChar F ≠ 2) (ψ : AddChar F ℂ)
+    (hψ : ψ ≠ 1) (a b : F) (hb : b ≠ 0) (hab : ¬IsSquare (a * b)) :
+    salieSum ψ a b = 0 := by
+  have hroot : ¬IsSquare (4 * a * b) := by
+    intro h
+    obtain ⟨y, hy⟩ := (isSquare_iff_exists_sq _).mp h
+    apply hab
+    refine (isSquare_iff_exists_sq _).mpr ⟨y / 2, ?_⟩
+    field_simp [Ring.two_ne_zero hF]
+    calc
+      a * b * 2 ^ 2 = 4 * a * b := by ring
+      _ = y ^ 2 := hy
+  rw [salieSum_eq hF ψ hψ a b hb,
+    quadraticRootPhase_eq_zero_of_not_isSquare ψ a b hroot, mul_zero]
+
+private theorem quadraticCharacterComplex_norm {x : F} (hx : x ≠ 0) :
+    ‖quadraticCharacterComplex x‖ = 1 := by
+  have h := congrArg norm (quadraticCharacterComplex_sq hx)
+  simp only [norm_pow, norm_one] at h
+  have hn := norm_nonneg (quadraticCharacterComplex x)
+  nlinarith
+
+private theorem quadraticGaussSum_norm (hF : ringChar F ≠ 2) (ψ : AddChar F ℂ)
+    (hψ : ψ ≠ 1) :
+    ‖quadraticGaussSum ψ‖ = Real.sqrt (Fintype.card F) := by
+  have hg : ‖quadraticGaussSum ψ‖ ^ 2 = (Fintype.card F : ℝ) := by
+    have h := congrArg norm (quadraticGaussSum_sq hF ψ hψ)
+    simpa only [norm_pow, norm_mul,
+      quadraticCharacterComplex_norm (F := F) (neg_ne_zero.mpr one_ne_zero), one_mul,
+      Complex.norm_natCast] using h
+  exact ((Real.sqrt_eq_iff_eq_sq (Nat.cast_nonneg _) (norm_nonneg _)).mpr hg.symm).symm
+
+private theorem quadraticRootPhase_norm_le (hF : ringChar F ≠ 2)
+    (ψ : AddChar F ℂ) (a b : F) : ‖quadraticRootPhase ψ a b‖ ≤ 2 := by
+  have hχ : quadraticChar F (4 * a * b) ≤ 1 := by
+    rcases (quadraticChar_isQuadratic F) (4 * a * b) with h | h | h <;> omega
+  have hc : ({y : F | y ^ 2 = 4 * a * b}.toFinset).card ≤ 2 := by
+    have h := quadraticRootFiber_card hF a b
+    omega
+  calc
+    _ ≤ ∑ y ∈ ({y : F | y ^ 2 = 4 * a * b}.toFinset), ‖ψ y‖ := norm_sum_le _ _
+    _ = (({y : F | y ^ 2 = 4 * a * b}.toFinset).card : ℝ) := by simp
+    _ ≤ 2 := by exact_mod_cast hc
+
+/-- Uniform square-root cancellation, also including the boundary `b = 0`. -/
+theorem salieSum_norm_le (hF : ringChar F ≠ 2) (ψ : AddChar F ℂ)
+    (hψ : ψ ≠ 1) (a b : F) :
+    ‖salieSum ψ a b‖ ≤ 2 * Real.sqrt (Fintype.card F) := by
+  by_cases hb : b = 0
+  · subst b
+    rw [salieSum_zero_right hF ψ a]
+    split_ifs with ha
+    · simp only [norm_zero]
+      positivity
+    · rw [norm_mul, quadraticCharacterComplex_norm ha, one_mul,
+        quadraticGaussSum_norm hF ψ hψ]
+      have h := Real.sqrt_nonneg (Fintype.card F : ℝ)
+      linarith
+  · by_cases hab : IsSquare (a * b)
+    · rw [salieSum_eq hF ψ hψ a b hb, norm_mul, norm_mul,
+        quadraticCharacterComplex_norm hb, one_mul, quadraticGaussSum_norm hF ψ hψ]
+      calc
+        _ ≤ Real.sqrt (Fintype.card F) * 2 :=
+          mul_le_mul_of_nonneg_left (quadraticRootPhase_norm_le hF ψ a b)
+            (Real.sqrt_nonneg _)
+        _ = _ := by ring
+    · rw [salieSum_eq_zero_of_not_isSquare hF ψ hψ a b hb hab, norm_zero]
+      positivity
 
 end
 end D5.S3.Arith.CharacterSums.SalieSum
