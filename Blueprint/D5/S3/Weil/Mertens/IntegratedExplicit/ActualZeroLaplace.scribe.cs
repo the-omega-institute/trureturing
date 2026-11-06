@@ -21,7 +21,7 @@ internal sealed class ActualZeroLaplaceDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("actual-coeff-has-sum"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actualCoeff_hasSum"),
-                H("actualCoeff hasSum"), StatementSource.FromLean(),
+                H("actualCoeff hasSum"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The exact hypotheses, occurrence indices and endpoint quantifiers are given by the Lean declaration."))),
                 DescribeRole.Theorem),
