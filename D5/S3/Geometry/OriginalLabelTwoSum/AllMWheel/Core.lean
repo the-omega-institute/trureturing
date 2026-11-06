@@ -39,14 +39,14 @@ private theorem noncover_mem (vs : List V) (s : Finset V) :
   · rintro ⟨hs, hn⟩
     have hn' : ¬ ∀ e ∈ pathEdges vs, ¬ e ⊆ vs.toFinset \ s := by
       intro h
-      exact hn ⟨Finset.sdiff_subset, h⟩
+      exact hn h
     push_neg at hn'
     obtain ⟨e, he, hsub⟩ := hn'
     exact ⟨hs, e, he, Finset.disjoint_left.mpr (fun x hx hxs =>
       (Finset.mem_sdiff.mp (hsub hx)).2 hxs)⟩
   · rintro ⟨hs, e, he, hd⟩
     refine ⟨hs, ?_⟩
-    rintro ⟨_, hall⟩
+    intro hall
     exact hall e he (fun x hx => Finset.mem_sdiff.mpr
       ⟨edge_support vs e he hx, fun hxs => Finset.disjoint_left.mp hd hx hxs⟩)
 
@@ -332,7 +332,7 @@ private def coreFinish (a b c : V) (vs : List V) (hd : (a::b::c::vs).Nodup)
           exact ⟨d, rfl⟩
     let d := Classical.choose hex
     have he : vs = [d] := Classical.choose_spec hex
-    subst vs
+    rw [he]
     have hN : rawDual ([d] : List V).toFinset (pathFamily [d]) = ⊥ := by
       apply SetLike.ext
       intro s
@@ -407,10 +407,9 @@ private def coreFinish (a b c : V) (vs : List V) (hd : (a::b::c::vs).Nodup)
     have hend : C ⊔ rawJoin (delta {a}) N = C := by
       apply sup_eq_left.mpr
       rintro s ⟨u, hu, v, hv, rfl⟩
-      exact Or.inr ⟨u, hu.trans (by
-          intro x hx
-          simp only [List.toFinset_cons, Finset.mem_insert, Finset.mem_singleton] at hx ⊢
-          aesop), v, hv, rfl⟩
+      exact Or.inr ⟨u, (show u ⊆ ({a,c} : Finset V) from
+        (show u ⊆ {a} from hu).trans (Finset.singleton_subset_iff.mpr (by simp))),
+        v, hv, rfl⟩
     have hC : Supported (a::b::c::vs).toFinset C := by
       intro s h
       rcases h with h | ⟨u, hu, v, hv, rfl⟩
@@ -605,7 +604,7 @@ private theorem two_ghost_dual (a c : V) (T : Finset V) (K : Family V)
       refine ⟨Finset.union_subset (hu.trans (by
           intro x hx
           simp only [List.toFinset_cons, Finset.mem_insert, Finset.mem_singleton] at hx ⊢
-          aesop)) (htT.trans (by simp)), ?_⟩
+          aesop)) (htT.trans ((Finset.subset_insert c T).trans (Finset.subset_insert a _))), ?_⟩
       intro h
       apply hn
       apply K.lower _ h
