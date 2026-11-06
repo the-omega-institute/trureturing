@@ -17,7 +17,9 @@ private def lhs (r : ℕ) : ℕ :=
   let d := 18*r+12
   76*(Finset.univ.filter (fun A : Finset (Fin (3*d)) =>
     (∑ i ∈ A, actualSource (3*d) ((2^d-1)*(2^(d+1)-3)) i)=0)).card
-private def rhs (r : ℕ) : ℕ := 941*2^(18*r+12)+536
+private def rhs (r : ℕ) : ℕ :=
+  let d := 18*r+12
+  941*2^d+536
 
 abbrev signature : Signature where
   Params := Unit
@@ -38,7 +40,9 @@ def rejected (role : Bool) : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ r : ℕ, R.readout true () r = R.readout false () r
+  Law R := ∀ r : ℕ,
+    let d := 18*r+12
+    R.readout true () r = R.readout false () r
 
 private theorem actual_eq (r : ℕ) : lhs r=rhs r := actual_zero_subsets_card r
 
