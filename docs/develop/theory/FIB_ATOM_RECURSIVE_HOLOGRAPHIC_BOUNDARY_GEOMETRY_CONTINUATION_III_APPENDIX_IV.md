@@ -1522,4 +1522,71 @@ Thus a prospective full-law escape outside $V$ must carry nonzero first-order le
 
 This result narrows the remaining multi-direction and non-kernel routes to a coupled first-order leakage problem. It does not prove that the tuned scalar relation is sufficient, that the resulting tuple is legal for any prescribed $\theta$, or that the other $63$ coordinates can vanish. Arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization remain open.
 
+## 177. The paired preserved channels close the symmetric escape
+
+The scalar condition in Corollary 176.3 comes from the $00$ first-label pair. The same terminal combination is preserved for the $11$ pair, and its first-order leakage has the opposite sign. The two channels therefore eliminate the apparent tuning route before any of the remaining coordinates are considered.
+
+**Proposition 177.1 (paired-channel identity and uniform two-sided bound).** Retain the original telescope and the legal family (175.1)--(175.3), with bounded real Borel $v,w$ and $t\ne0$. Define
+
+$$
+\begin{aligned}
+S_0&=\frac34\bigl(\Delta(u)_{003}+\Delta(u)_{00B}\bigr)
+ -\frac14\bigl(\Delta(u)_{000}+\Delta(u)_{001}\bigr),\\
+S_1&=\frac34\bigl(\Delta(u)_{113}+\Delta(u)_{11B}\bigr)
+ -\frac14\bigl(\Delta(u)_{110}+\Delta(u)_{111}\bigr).
+\end{aligned}
+$$
+
+Then
+
+$$
+S_0=t\,\ell_{003}(v)+t^2A_\theta(v),
+\qquad
+S_1=-t\,\ell_{003}(v)+t^2A_\theta(v).
+\tag{177.1}
+$$
+
+Consequently,
+
+$$
+\|\Delta(u)\|_{\max}
+\ge \frac{t^2}{2}A_\theta(v)
+ =\frac{t^2}{2}q_{003}(v).
+\tag{177.2}
+$$
+
+If $[v]\ne0$, the right side is strictly positive. Hence no nonzero legal member of the entire symmetric family (175.2) can have all sixty-four residuals equal to zero, whether or not $v$ belongs to the first-order kernel and regardless of the terminal compensator.
+
+*Proof.* The affine terminal combination used in (175.7) is also $q$ for the $11$ pair. Applying joint-law multilinearity gives
+
+$$
+\begin{aligned}
+S_0
+ &=\mathcal C(F+tv,F+tv,q)-\mathcal C(F,F,q),\\
+S_1
+ &=\mathcal C(F-tv,F-tv,q)-\mathcal C(F,F,q).
+\end{aligned}
+$$
+
+Expanding the two expressions and using Definition 176.1 yields (177.1). Each $S_i$ is a linear combination of four residuals whose coefficient absolute values sum to $2$, so
+
+$$
+2\|\Delta(u)\|_{\max}\ge\max\{|S_0|,|S_1|\}.
+$$
+
+For real $x,y$, $\max\{|x+y|,|-x+y|\}\ge|y|$. Taking $x=t\ell_{003}(v)$ and $y=t^2A_\theta(v)$ proves (177.2). Strictness for a nonzero $m$-class is the positivity of $A_\theta(v)$ from Appendix III Proposition 134.2. The computation does not use any property of $w$ beyond legality. $\square$
+
+**Corollary 177.2 (closure of the symmetric family).** For every sequence of legal tuples of the form (175.2) with $t_n\ne0$ and $\|\Delta(u^{(n)})\|_{\max}\to0$,
+
+$$
+t_n^2q_{003}(v_n)\longrightarrow0.
+\tag{177.3}
+$$
+
+Thus the non-kernel leakage tuning suggested by (176.4) cannot produce an exact full-law zero. For any fixed nonzero direction and nonzero amplitude, (177.2) supplies a positive residual bound. Any remaining escape must leave the symmetric first-label family itself; the bound says nothing about arbitrary partitions, independently normalized first labels, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession or Lean/kernel formalization.
+
+*Proof.* Apply (177.2) to each tuple. $\square$
+
+The new conclusion is a paired-channel consequence for the original source family. It uses the existing affine readout, positivity identity and joint-law multilinearity; it adds no native AURIC realization or physical transport and makes no Lean/kernel certification claim.
+
 ## 追加锚（本行以下为增补区）
