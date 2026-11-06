@@ -29,6 +29,12 @@ internal sealed class TwoDenseDivisorBlocksPalindromeDocument : IScribeDocumentD
                 "Apply the block-length function to the increasing divisor list. "
                 + "Mathlib uses an empty divisor list at n=0.",
                 DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("divisor_list_finset", "The divisor list has the divisor finset",
+                DivisorListFinsetFormula(),
+                "The first coordinates of the antidiagonal divisor list are exactly "
+                + "the positive divisors, with no positivity hypothesis needed for "
+                + "the natural divisor finset.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("row_sum", "The sum is the divisor count", SumFormula(),
                 "Flattening splitBy restores the original list. Its distinct entries "
                 + "are exactly the positive divisors, so the sum of the block lengths "
@@ -74,6 +80,11 @@ internal sealed class TwoDenseDivisorBlocksPalindromeDocument : IScribeDocumentD
     private static Formula Positive(Formula body) => Universal(Seq(
         D(0), Sp, Lt, Sp, N(), Sp, Implies, Sp, body));
     private static Formula Row() => Call("row", N());
+
+    private static Formula DivisorListFinsetFormula() => Universal(Seq(
+        Call("toFinset", Call("map", Named("fst"),
+            Call("divisorsAntidiagonalList", N()))), Sp, Eq, Sp,
+        Call("divisors", N())));
 
     private static Formula BlocksFormula() => Disp(Seq(
         Forall, Sp, F.Id("l"), Colon, Sp, Call("List", Nat()), Comma, Sp,
