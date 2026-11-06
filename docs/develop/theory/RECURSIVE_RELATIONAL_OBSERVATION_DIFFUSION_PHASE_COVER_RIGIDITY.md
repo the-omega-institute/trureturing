@@ -819,3 +819,326 @@ coordinate. No response bound from that public supplier is used as a
 conditional law or as evidence for a finite-cover recovery route.
 
 ## 追加锚（本行以下为增补区）
+
+## 7. The original finite first-order calibration cannot close under heat
+
+**Definition 7.1 (the original source and its three-read calibration).**
+Retain the entire endpoint, source and time domains of Definition 1.1,
+with arbitrary finite $a,\eta>0$. In particular $H=H_{\rm end}$,
+$h=w_*/\|w_*\|_{L^2(\mu)}$, $m=h^2\mu$ and $K=J_h^{-1}HJ_h$ are
+unchanged; $A=\rho C$ is the original maximal-domain selector, not
+an additional boundary condition. The following results are conditional
+on those owning endpoint statements and on
+[Appendix II, Theorems 115.3, 117.2 and 133.2][HC-S]. The actual
+conservative continuous-path process starts at $Z_0=e$ in the original
+clock, and its positive-time laws satisfy
+
+$$
+\begin{gathered}
+m(G)=1,\qquad m(\{e\})=0,\qquad
+\mathbb P_e(Z_s\in dx)=g_s(x)m(dx),\\
+g_s\in L^2(m;\mathbb R),\quad g_s\ge0,\quad
+\int_Gg_s\,dm=1\quad(s>0),\qquad
+g_{s+t}=T_tg_s\quad(s>0,\ t\ge0),\\
+T_t=e^{-tK},\qquad K\ge0,\qquad T_t1=1.
+\end{gathered}
+\tag{7.1}
+$$
+
+The full complex self-adjoint domain is retained, while calibration
+uses its real classes. $T_t$ preserves real bounded classes and is a
+Markov contraction on them. Only positive-time laws have the densities
+in (7.1); the law at zero is the measure $\delta_e$.
+
+Fix any finite $d>0$ and every permitted Borel representative $b$ from
+[Appendix III, Definition 134.1][HC-C]. Keep its precise readout:
+
+$$
+\begin{gathered}
+P=T_d,\qquad g=g_{2d},\qquad
+M=1+\|g_d\|_\infty,\qquad c=\frac1{4M},\qquad
+[b]=g_d,\quad 0<b\le M,\\
+\mathcal L=\{0,1,3,B\},\qquad f_3=cb,\quad f_B=\frac14,\quad
+f_0=f_1=\frac{3/4-f_3}{2},\qquad
+(\sigma_0,\sigma_1,\sigma_3,\sigma_B)=(1,-1,0,0).
+\end{gathered}
+\tag{7.2}
+$$
+
+The three epochs are exactly $2d,3d,4d$. Conditional on the source
+path, reads use the same $f$ and independent fresh read noise; each
+read leaves the source evolution unchanged. This is the equal-gap
+passive read contract of [HC-S, Definition 117.3] and [HC-C,
+Definition 134.1], separate from the native phase display of Definition
+1.2. No stationary initialization or additional source access is used.
+Theorem 133.2 supplies the boundedness of $g_d$, hence of $g=Pg_d$.
+
+Let $\mathcal H_{\mathbb R}=L^2(G,m;\mathbb R)$ and
+$X=L^\infty(G,m;\mathbb R)\subset\mathcal H_{\mathbb R}$.
+For $\alpha=(y,z,w)\in\mathcal L^3$ use precisely the bounded
+representers of [Appendix IV, Definition 166.1 and Proposition
+166.2][HC-R]:
+
+$$
+\begin{aligned}
+\psi_{yzw}={}&\sigma_y gP(f_zPf_w)
+ +\sigma_zP(gf_y)Pf_w
+ +\sigma_wP\bigl(f_zP(gf_y)\bigr),\\
+\ell_\alpha(v)={}&\langle v,\psi_\alpha\rangle_m,\qquad
+\Lambda(v)=(\ell_\alpha(v))_{\alpha\in\mathcal L^3},\\
+W={}&\operatorname{span}_{\mathbb R}\{\psi_\alpha:\alpha\in\mathcal L^3\},
+\qquad r=\dim W\le64,\qquad
+V=\ker\Lambda=X\cap W^\perp.
+\end{aligned}
+\tag{7.3}
+$$
+
+All function equalities are $m$-class equalities. The real pairings in
+(7.3) are those of $\mathcal H_{\mathbb R}$. In particular, a singular
+raw Gram matrix of the 64 generators is allowed.
+
+**Theorem 7.2 (actual-source nonclosure and a bounded original-coordinate
+witness).** For every parameter tuple and representative in Definition
+7.1, the vectors $g,Pg,\ldots,P^Ng$ are linearly independent for every
+integer $N\ge0$. Moreover
+
+$$
+P(W)\not\subseteq W,\qquad P(V)\not\subseteq V.
+\tag{7.4}
+$$
+
+If $\Pi_W$ is orthogonal projection onto $W$, at least one of the
+original label triples $\alpha$ has
+
+$$
+v=(I-\Pi_W)P\psi_\alpha\ne0,\qquad
+v\in V,\qquad
+\ell_\alpha(Pv)=\|v\|_2^2>0.
+\tag{7.5}
+$$
+
+For every independent bounded basis of $W$, the exact residual Gram
+matrix of [HC-R, Proposition 167.4] is positive semidefinite and
+nonzero.
+
+*Proof.* First extend the degree-two source argument of [HC-C, Lemma
+147.2] to arbitrary finite degree. Work in the supplied full complex
+$L^2(m)$ for spectral calculus, and let $E_K$ be the spectral resolution
+of the actual $K$. For any vector $u$, write
+$\nu_u(A)=\|E_K(A)u\|_2^2$. For $t>0$,
+
+$$
+\|T_tu\|_2^2
+ =\int_{[0,\infty)}e^{-2t\lambda}\,d\nu_u(\lambda).
+\tag{7.6}
+$$
+
+The multiplier is strictly positive at every finite spectral
+parameter, so $T_t$ is injective. This standard spectral-calculus
+step is also the heat injectivity used in [HC-S, Proposition 124.1].
+For the norm identity and commuting spectral projections one may use
+Teschl, [*Mathematical Methods in Quantum Mechanics*, §3.1, Theorems
+3.1 and 3.7, (3.18)–(3.21)][HC-T], with his self-adjoint operator
+$A=K$ and bounded multiplier $e^{-t\lambda}$ on its nonnegative
+spectrum. No assumption about compact resolvent or pure point spectrum
+is needed.
+
+Suppose that a nonzero real polynomial $p$ satisfies $p(P)g=0$.
+The same calculus gives
+
+$$
+0=\|p(P)g\|_2^2
+ =\int_{[0,\infty)}|p(e^{-d\lambda})|^2\,d\nu_g(\lambda).
+\tag{7.7}
+$$
+
+Because $d>0$, the function $\lambda\mapsto e^{-d\lambda}$ is
+injective on $[0,\infty)$. The set
+$E=\{\lambda\ge0:p(e^{-d\lambda})=0\}$ is therefore finite.
+A root of $p$ at zero creates no finite spectral point. Equation
+(7.7) implies $E_K(E)g=g$. If $E$ is empty, this already contradicts
+$\int g\,dm=1$. Otherwise put $v_\lambda=E_K(\{\lambda\})g$;
+then $g=\sum_{\lambda\in E}v_\lambda$.
+
+For every $0<s<2d$, the original propagation identity in (7.1) gives
+$g=T_{2d-s}g_s$. Spectral projections commute with this heat operator.
+Projecting outside $E$ and using injectivity gives
+$E_K([0,\infty)\setminus E)g_s=0$. Projection onto each member of
+$E$ now yields
+
+$$
+g_s=\sum_{\lambda\in E}e^{(2d-s)\lambda}v_\lambda
+ \longrightarrow R_0:=\sum_{\lambda\in E}e^{2d\lambda}v_\lambda
+ \quad\hbox{in }L^2(m)\quad(s\downarrow0).
+\tag{7.8}
+$$
+
+Only the finitely many scalar multipliers on $E$ have been inverted;
+no bounded inverse or surjectivity of the full heat operator is used.
+Since the $g_s$ are real, so is their $L^2$ limit. Since $m$ is a
+probability, $R_0\in L^1(m)$ and the convergence also holds in $L^1$.
+For every $\phi\in C_c(G)$, the source-start law and continuity at
+zero give
+
+$$
+\int_G\phi R_0\,dm
+ =\lim_{s\downarrow0}\int_G\phi g_s\,dm
+ =\lim_{s\downarrow0}\mathbb E_e\phi(Z_s)=\phi(e).
+\tag{7.9}
+$$
+
+The first limit follows from (7.8), and the last from bounded
+convergence on the original continuous paths with $Z_0=e$.
+Compactly supported continuous tests determine finite signed Borel
+measures on this locally compact metrizable $G$. Thus
+$R_0m=\delta_e$, contradicting $m(\{e\})=0$. The time-zero measure
+has not been treated as an $L^2$ vector. Hence no such nonzero $p$
+exists, proving independence at every finite degree, rather than
+inferring it from the three-vector statement alone.
+
+The constant label $B$ now connects this result to the actual
+calibration. Substituting $f_B=1/4$, $\sigma_B=0$ and
+$\sigma_0=1$ into (7.3), and using $P1=1$, gives
+
+$$
+\psi_{0BB}=\frac{g}{16},\qquad
+\psi_{B0B}=\frac{Pg}{16},\qquad
+\psi_{BB0}=\frac{P^2g}{16}.
+\tag{7.10}
+$$
+
+In particular $g\in W$ and $3\le r\le64$. If $P(W)\subseteq W$,
+the $r+1$ independent vectors $g,Pg,\ldots,P^rg$ would all lie in
+the $r$-dimensional $W$, a contradiction.
+
+Since the original $\psi_\alpha$ span $W$, some
+$(I-\Pi_W)P\psi_\alpha$ is nonzero. Fix such an $\alpha$.
+Both $P\psi_\alpha$ and $\Pi_WP\psi_\alpha$ are bounded: the first
+by the Markov contraction, the second because $W$ has a finite bounded
+basis. Thus their difference $v$ is bounded and orthogonal to $W$,
+so $v\in V$. Self-adjointness gives the exact positive witness
+
+$$
+\ell_\alpha(Pv)
+ =\langle Pv,\psi_\alpha\rangle_m
+ =\langle v,P\psi_\alpha\rangle_m
+ =\langle v,v+\Pi_WP\psi_\alpha\rangle_m
+ =\|v\|_2^2>0.
+\tag{7.11}
+$$
+
+This directly proves $Pv\notin V$ and agrees with the already supplied
+invariance equivalence [HC-R, Proposition 167.3]. It selects an actual
+coordinate by existence, without asserting a named numerical index or
+residual magnitude.
+
+Finally use [HC-R, (167.6)]: for any independent bounded basis of $W$,
+its residual matrix is the Gram matrix of $(I-\Pi_W)Pw_j$. It is
+positive semidefinite and cannot vanish, since vanishing would give
+$P(W)\subseteq W$. This uses the Gram inverse only for an independent
+basis, and gives neither positive definiteness nor a parameter-uniform
+positive lower bound. $\square$
+
+**Corollary 7.3 (finite linear boundary records do not determine their
+own heat continuation).** Put $\mathcal B_{\rm cal}=\Lambda(X)$.
+There is no map $F:\mathcal B_{\rm cal}\to\mathcal B_{\rm cal}$,
+even an unrestricted set map, such that
+$\Lambda(Px)=F(\Lambda(x))$ for every $x\in X$.
+No finite-dimensional linear subspace of $\mathcal H_{\mathbb R}$
+containing $W$ is $P$-invariant. In particular no addition of finitely
+many bounded $L^2(m)$ representers can make the entire augmented
+bounded calibration kernel $P$-invariant. The finite stages
+
+$$
+W_n=\operatorname{span}_{\mathbb R}
+ \{P^jw:w\in W,\ 0\le j\le n\}
+\quad\hbox{satisfy}\quad W_n\subsetneq W_{n+1}
+\quad(n\ge0).
+\tag{7.12}
+$$
+
+*Proof.* The pair $0,v$ in (7.5) has equal present records and different
+successor records. Apply the existing fibre criterion of [HC-R,
+Proposition 163.4] to $X$, its surjective record map
+$\Lambda:X\to\mathcal B_{\rm cal}$ and the update $P:X\to X$;
+that pair violates its necessary fibre preservation.
+
+Any invariant finite-dimensional space containing $W$ would contain
+every $P^jg$, contradicting Theorem 7.2. For finitely many extra
+bounded representers, their joint span $\widetilde W$ with $W$ is
+finite-dimensional and bounded. The bounded-kernel equivalence of
+[HC-R, Proposition 167.3] applies to this span too, so invariance of
+$X\cap\widetilde W^\perp$ would imply the excluded invariance of
+$\widetilde W$. If $W_n=W_{n+1}$ for some $n$, then
+$P(W_n)\subseteq W_{n+1}=W_n$, also contradicting that exclusion.
+This proves (7.12). $\square$
+
+The closed linear orbit generated by $W$ is therefore infinite
+dimensional. This conclusion establishes neither its density in
+$\mathcal H_{\mathbb R}$ nor the existence or description of a
+nonzero bounded vector in its orthogonal complement. The finite-prefix
+and limiting-kernel distinctions of [HC-R, §§165–166] remain in force.
+The assertion concerns exact global continuation of these linear
+records on all of $X$; it is not an obstruction to arbitrary nonlinear
+records, restricted input families, approximate recovery or a fixed
+finite prediction horizon.
+
+**Proposition 7.4 (simplex legality and the nonlinear-law boundary).**
+For the witness $v$ in (7.5) put $u=v/\|v\|_\infty$. Bounded Borel
+representatives can be chosen so that, for every $|s|\le1/4$, both
+$f+s\sigma u$ and $f+s\sigma Pu$ are pointwise simplex-valued common
+readouts. The first is calibrated to first order, but for every
+$0<|s|\le1/4$ its complete three-read law differs from that of $f$.
+More precisely, with the original coefficients of [HC-C, (134.10)–
+(134.13)],
+
+$$
+\nu^{(3)}_{f+s\sigma u}(0,0,3)-\nu^{(3)}_f(0,0,3)
+ =s^2q_{003}(u)
+ =s^2c\|T_{d/2}(gu)\|_2^2>0.
+\tag{7.13}
+$$
+
+*Proof.* The normalization gives $\|u\|_\infty=1$, and the Markov
+contraction gives $\|Pu\|_\infty\le1$. Choose Borel representatives
+bounded pointwise by one by repairing their null sets. The fixed
+$f_0=f_1\ge1/4$ margin then makes both perturbed 0 and 1 entries
+nonnegative for every indicated $s$; their sum is unchanged, and the
+3 and $B$ entries are unchanged. Hence all four entries are in $[0,1]$
+and sum to one. These repairs do not affect any of the three
+positive-time laws in (7.1).
+
+Since $u\in V$, all first-order coefficients vanish. The exact common
+readout expansion [HC-S, Proposition 125.2] still contains
+$s^2q_{yzw}(u)+s^3\sigma_y\sigma_z\sigma_w\mathcal C(u,u,u)$,
+where $\mathcal C(a,b,c)=\int gaP(bPc)\,dm$. At the original coordinate
+$(0,0,3)$ the cubic coefficient vanishes because $\sigma_3=0$;
+[HC-C, Proposition 134.2] supplies the strict positivity of $q_{003}$
+on every nonzero bounded direction. This proves (7.13). $\square$
+
+The map $u\mapsto Pu$ here is a map of perturbation classes. The
+passive source/read contract supplies no operation implementing this
+map from acquired records, and the projection witness supplies no
+acquisition map for $u$ or its index. All source-start, original-time
+and fresh-read hypotheses remain separate from such an operation.
+Failure to preserve the whole $V$ does not say every vector leaves
+$V$, nor exclude a proper invariant calibrated subspace. Neither
+(7.4) nor simplex legality supplies a full-law-calibrated nonlinear
+family, a physical successor, or mutual recovery of the source,
+spatial geometry, chronology and retained usable memory.
+
+The source-specific consequence is `repo-derived`: (7.10) connects the
+original readout to the arbitrary-degree source argument, and (7.5)
+turns it into failure of the actual calibration closure left unevaluated
+in [HC-R, §168]. The endpoint, density and bounded-representer
+suppliers, the degree-two argument of Lemma 147.2, the residual and
+fibre criteria, and Teschl's spectral calculus are reused with their
+stated scopes. No general spectral theorem or general quotient
+criterion is introduced, and no external priority is asserted.
+
+[HC-S]: FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md
+[HC-C]: FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_III.md
+[HC-R]: FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_IV.md
+[HC-T]: https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf
+
+## 追加锚（本行以下为增补区）
