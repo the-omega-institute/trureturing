@@ -72,6 +72,8 @@ Admission basis: `open-problem-resolution`, preregistration [#27274](https://git
 
 ## Triage
 
+### What the settlement shows
+
 The exact finite counterexample refutes the unrestricted assertion through a ternary-coefficient multiplicative relation among adjacent ratios, which yields parameters without repetition. The prime-only theorem survives. Minimum cardinality, minimum maximum parameter and an all-composite restriction remain unresolved here. The asymptotic smooth-pair route is unnecessary for this finite refutation and is not asserted as a formal theorem.
 
 ## ASSUMED-UNVERIFIED
