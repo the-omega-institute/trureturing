@@ -70,10 +70,14 @@ local instance (f : Label ↪ Ambient) : OfNat (ambientGraph f).chords 0 :=
 theorem ambient_row (f : Label ↪ Ambient) (c : Fin 4) :
     (ambientGraph f).rows.row c = (wheelGraphData.rows.row c).image f := by
   classical
+  have hp : (ambientGraph f).path c = wheelGraphData.path c :=
+    (ambientGraph f).path_eq c _
+      (Classical.choose_spec (wheelGraphData.isTree.existsUnique_path _ _)).1
   ext i
   simp only [GraphData.rows,Finset.mem_filter,Finset.mem_image]
-  change ((∃ j, j ∈ Y ∧ f j = i) ∧ ambientEdge f i ∈
-    (wheelGraphData.path c).edges) ↔ _
+  rw [hp]
+  change (i ∈ Y.image f ∧ ambientEdge f i ∈ (wheelGraphData.path c).edges) ↔ _
+  simp only [Finset.mem_image]
   constructor
   · rintro ⟨⟨j,hj,rfl⟩,hp⟩
     exact ⟨j,⟨hj,by rwa [ambientEdge_image] at hp⟩,rfl⟩
