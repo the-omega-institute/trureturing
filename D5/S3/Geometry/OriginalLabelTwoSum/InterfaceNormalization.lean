@@ -12,6 +12,9 @@ mathematical specification. No finite vertex or chord-index assumption is used.
 `labels_injective` is never used as chord-index injectivity. The actual glued
 graph and its path substitution theorem (G1A) are separate pending inputs to a
 later graph-bound consumer, not hypotheses of the raw formula proved here. -/
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 noncomputable section
 open Set Finset SimpleGraph
 namespace D5.S3.Geometry.OriginalLabelTwoSum
@@ -372,7 +375,11 @@ theorem wheel_physical_row_transport (X : Finset Wheel.Label) (e : Wheel.Label)
     hleft rfl heX heY hXY
   have hr : wheelGraphData.rows.row (0 : Fin 4) = R := fundamental_rows 0
   have hz : Y \ R = Z := by decide
-  simpa only [hr,hz,wheel_E_edge] using ht
+  change (physicalTransportedRows X Y e left wheelGraphData (0 : Fin 4) hleft rfl heX heY).root =
+    phi X Y (Y \ wheelGraphData.rows.row (0 : Fin 4)) (restrict X left.root)
+      (rawLink X e left.root) (wheelGraphData.E_edge (0 : Fin 4)) at ht
+  rw [hr, hz, wheel_E_edge] at ht
+  exact ht
 
 end Wheel
 end D5.S3.Geometry.OriginalLabelTwoSum

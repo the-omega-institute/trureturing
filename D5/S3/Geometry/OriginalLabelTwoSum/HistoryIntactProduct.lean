@@ -11,7 +11,11 @@ import D5.S3.Geometry.OriginalLabelTwoSum.HistoryLeafCap
 families. A is the old subfamily already absorbed by B. Every local pair runs
 over D minus A in descending old-face order. Neither a desired product list
 nor a product endpoint certificate is a premise. -/
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 noncomputable section
+local instance : (p : Prop) → Decidable p := Classical.propDecidable
 open Set Finset
 namespace D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntactProduct
 open OriginalLabelTwoSum FiniteElementaryCollapse FiniteRelativeSimplicialCollapse
@@ -62,7 +66,7 @@ private def productSequence (X Y : Finset V) (D A B : Family V)
   revert hs hb
   induction S with
   | refl K => intro hs hb; exact ⟨Sequence.refl _, rfl⟩
-  | step P S ih =>
+  | @step P Lnext S ih =>
       intro hs hb
       let F := X.powerset.filter (fun a => a ∈ D ∧ a ∉ A)
       let H := B ⊔ rawJoin D (nativeAug P.ambient)
@@ -75,9 +79,9 @@ private def productSequence (X Y : Finset V) (D A B : Family V)
       have hlY : P.lower ⊆ Y := hs _ (Or.inr hl)
       have huY : P.upper ⊆ Y := hs _ (Or.inr P.upper_mem)
       have hvY : P.apex ∈ Y := huY (Finset.mem_insert_self _ _)
-      have hnot : P.lower ∉ nativeAug L := by
+      have hnot : P.lower ∉ nativeAug Lnext := by
         intro h
-        have hm : P.lower ∈ L := h.elim
+        have hm : P.lower ∈ Lnext := h.elim
           (fun he => False.elim (Finset.not_nonempty_empty (he ▸ P.lower_nonempty))) id
         exact (S.monotone hm).2 le_rfl
       have baseAvoid (a : Finset V) (ha : a ∈ F) : P.lower ∪ a ∉ B := by

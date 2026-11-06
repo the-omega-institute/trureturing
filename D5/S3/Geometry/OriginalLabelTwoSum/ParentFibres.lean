@@ -72,7 +72,7 @@ theorem parent_fibre_base {X Y Z : Finset V} {e : V} {K E : Family V}
         have hex : e ∉ x := fun h => heX (ha (hx.1 h))
         have hh := congrArg (fun s : Finset V => s.erase e) heq
         rw [Finset.erase_insert hex] at hh
-        exact (Finset.ne_of_ssubset hx) (by simpa [criticalPart,he] using hh)
+        exact (hx.ne) (by simpa [criticalPart,he] using hh)
       exact Or.inl (Or.inr ⟨x,⟨hx.1.trans ha,c.cells.boundary q hq _ hproper⟩,
         t,by simpa [localWindow,he] using ht,rfl⟩)
     · have hxq : x ⊂ q := by simpa [criticalPart,he] using hx

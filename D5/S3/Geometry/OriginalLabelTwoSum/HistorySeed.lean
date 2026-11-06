@@ -13,6 +13,9 @@ import D5.S3.Geometry.OriginalLabelTwoSum.Rename
 D14, with arbitrary original coordinate embedding and arbitrary masks. It is
 not a replacement for the strictly earlier-history induction step.
 -/
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 noncomputable section
 open Set Finset
 namespace D5.S3.Geometry.OriginalLabelTwoSum.HistorySeed
@@ -34,14 +37,14 @@ private theorem small_face (s : Finset V) (h : s.card ≤ 1) :
     intro b hb
     by_cases he : b = a
     · exact Finset.mem_singleton.mpr he
-    · have hp : ({b,a} : Finset V) ⊆ s := by simp [ha, hb]
+    · have hp : ({b,a} : Finset V) ⊆ s := Finset.insert_subset_iff.mpr ⟨hb, Finset.singleton_subset_iff.mpr ha⟩
       have hc := (Finset.card_le_card hp).trans h
       have hc2 : ({b,a} : Finset V).card = 2 := by simp [he]
       omega
   · exact Or.inl (Finset.not_nonempty_iff_eq_empty.mp hn)
 
 private theorem proper_singleton_empty {a : V} {s : Finset V} (h : s ⊂ {a}) : s = ∅ := by
-  apply Finset.eq_empty_iff_forall_not_mem.mpr
+  apply Finset.eq_empty_iff_forall_notMem.mpr
   intro v hv
   have he : v = a := Finset.mem_singleton.mp (h.subset hv)
   exact h.ne (Finset.Subset.antisymm h.subset (Finset.singleton_subset_iff.mpr (he ▸ hv)))
@@ -58,7 +61,7 @@ private def discreteCertificate (W : Finset V) (p : V) (hp : p ∈ W) :
       rcases small_face s hc with rfl | ⟨a, rfl⟩
       · exact Or.inl (Finset.empty_subset _)
       · by_cases he : a = p
-        · subst a; exact Or.inl le_rfl
+        · subst a; exact Or.inl (show ({p} : Finset V) ⊆ {p} from le_rfl)
         · exact Or.inr ⟨{a}, Finset.mem_image.mpr ⟨a,
             Finset.mem_erase.mpr ⟨he, hs (by simp)⟩, rfl⟩, le_rfl⟩
     · rintro (hs | ⟨q, hq, hs⟩)
@@ -72,7 +75,7 @@ private def discreteCertificate (W : Finset V) (p : V) (hp : p ∈ W) :
     core := delta {p}
     critical := Q
     vertex := p
-    vertex_mem := le_rfl
+    vertex_mem := (show ({p} : Finset V) ⊆ {p} from le_rfl)
     core_supported := fun _ h => h.trans (Finset.singleton_subset_iff.mpr hp)
     critical_supported := ?_
     cells := ?_
@@ -136,7 +139,7 @@ def discreteCornerOutput (W A B : Finset V) (hA : A ⊆ W) :
         constructor
         · rintro ⟨hs, hW, hc⟩
           have hs0 : s = ∅ := by
-            apply Finset.eq_empty_iff_forall_not_mem.mpr
+            apply Finset.eq_empty_iff_forall_notMem.mpr
             intro v hv
             rcases small_face (s ∪ A) hc with he | ⟨q, he⟩
             · have hmem : a ∈ s ∪ A := Finset.mem_union_right _ ha
@@ -169,7 +172,7 @@ private theorem rename_discrete {U : Type*} [Fintype U] [DecidableEq U]
   · rintro ⟨hs, hc⟩
     rcases small_face s hc with rfl | ⟨v, rfl⟩
     · exact ⟨∅, ⟨Finset.empty_subset _, by simp⟩, by simp⟩
-    · obtain ⟨a, ha, he⟩ := Finset.mem_image.mp (hs (by simp))
+    · obtain ⟨a, ha, he⟩ := Finset.mem_image.mp (hs (Finset.mem_singleton_self v))
       exact ⟨{a}, ⟨Finset.singleton_subset_iff.mpr ha, by simp⟩, by simp [he]⟩
 
 /-- The actual K4 marked star and its actual computed chord paths, transported
@@ -182,8 +185,10 @@ def seedCornerOutput (f : K4.SeedLabel ↪ V) (A B : Finset V)
         (renameFamily f K4.seedGraphData.rows.root)) := by
   have hseed : K4.root = discrete (Finset.univ : Finset K4.SeedLabel) := by
     apply SetLike.ext
-    exact (by decide : ∀ s : Finset K4.SeedLabel,
-      s ∈ K4.root ↔ s ∈ discrete (Finset.univ : Finset K4.SeedLabel))
+    intro s
+    simp only [K4.root, discrete, facets, LowerSet.mem_mk, Set.mem_setOf_eq]
+    revert s
+    decide
   rw [K4.seedOriginalRoot, hseed, rename_discrete]
   exact discreteCornerOutput _ A B hA
 

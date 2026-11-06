@@ -12,6 +12,9 @@ the smaller ONE-marker output as a local induction input; no universal
 physical-history theorem is asserted with such outputs as supplied fields.
 The discarded twin stays on the declared outer ground as a ghost.
 -/
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 noncomputable section
 open Set Finset
 namespace D5.S3.Geometry.OriginalLabelTwoSum.HistoryIsolated
@@ -41,6 +44,7 @@ def emptyRowOutput (r : Rows V) (c : r.chords) (hc : r.row c = ∅) :
     · rintro ⟨d, hd⟩
       exact hd.trans Finset.sdiff_subset
     · intro hs
+      change s ⊆ r.ground at hs
       exact ⟨c, by simpa only [hc, Finset.sdiff_empty] using hs⟩
   exact changeOutput (simplexOutput r.ground) he.symm
 
@@ -94,7 +98,7 @@ private theorem twin_deletion (X : Finset V) (D L : Family V) (r s : V)
         hst (he ▸ Finset.mem_union_left b hv)))
   · rintro ⟨hn, ht | ⟨a, ha, b, hb, rfl⟩⟩
     · exact ⟨⟨hn, Or.inl ht⟩, fun h => hsX (hD t ht h)⟩
-    · refine ⟨⟨hn, Or.inr ⟨a, ha.trans (by simp), b, hb, rfl⟩⟩, ?_⟩
+    · refine ⟨⟨hn, Or.inr ⟨a, ha.trans (Finset.singleton_subset_iff.mpr (Finset.mem_insert_self _ _)), b, hb, rfl⟩⟩, ?_⟩
       intro hst
       exact (Finset.mem_union.mp hst).elim
         (fun h => hsr (Finset.mem_singleton.mp (ha h))) (fun h => hsX (hL b hb h))
@@ -126,8 +130,8 @@ def twinOutput (X : Finset V) (D L : Family V) (r s : V)
     Output (insert s (insert r X)) (twinFamily D L r s) := by
   have hsupport : Supported (insert s (insert r X)) (twinFamily D L r s) := by
     rintro t (ht | ⟨a, ha, b, hb, rfl⟩)
-    · exact (hD t ht).trans (by simp)
-    · exact Finset.union_subset (ha.trans (by simp)) ((hL b hb).trans (by simp))
+    · exact (hD t ht).trans ((Finset.subset_insert r X).trans (Finset.subset_insert s _))
+    · exact Finset.union_subset (ha.trans (by intro v hv; rcases Finset.mem_insert.mp hv with rfl | hv; exact Finset.mem_insert_of_mem (Finset.mem_insert_self _ _); exact Finset.mem_insert.mpr (Or.inl (Finset.mem_singleton.mp hv)))) ((hL b hb).trans ((Finset.subset_insert r X).trans (Finset.subset_insert s _)))
   have h0 : (∅ : Finset V) ∈ twinFamily D L r s ↔ ∅ ∈ singleFamily D L r := by
     constructor
     · rintro (h | ⟨a, ha, b, hb, he⟩)

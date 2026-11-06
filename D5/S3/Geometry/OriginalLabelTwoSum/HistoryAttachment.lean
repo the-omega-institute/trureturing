@@ -17,6 +17,9 @@ The size hypothesis is a sufficient attachment condition. It is not a claim
 that every attachment or every strong certificate must satisfy this bound.
 This local constructor does not close the physical-history induction.
 -/
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 noncomputable section
 open Set Finset
 namespace D5.S3.Geometry.OriginalLabelTwoSum.HistoryAttachment
@@ -57,8 +60,11 @@ theorem restrictSequence_pairs {K L : PreAbstractSimplicialComplex V}
   | refl K => intro hu; rfl
   | step P T ih =>
       intro hu
-      simp [restrictSequence, Sequence.pairs, Sequence.pairs_cast,
-        restrictPair, CollapsePair.upper, ih]
+      simp only [restrictSequence, Sequence.pairs]
+      erw [Sequence.pairs_cast]
+      simpa only [List.map_cons, restrictPair, CollapsePair.upper] using
+        congrArg (List.cons (P.lower, P.upper)) (ih (fun R hR =>
+          hu R (by simp only [Sequence.pairs, List.mem_cons]; exact Or.inr hR)))
 
 private theorem skipped_mem (ps : List (CollapsePair V)) (H : Finset (Finset V))
     {P : CollapsePair V} (hP : P ∈ skipped ps H) : P ∈ ps := by
