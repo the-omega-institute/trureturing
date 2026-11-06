@@ -342,13 +342,14 @@ theorem finishCore_orderedPairs {X Y Z R : Finset V} {e p : V} {E : Family V}
     dsimp only
     erw [orderedPairs_cast]
     by_cases hX : X.Nonempty
-    · simp only [terminalAtInterface, dif_pos hX, orderedPairs_append,
-        terminalGamma_orderedPairs, collapseCone_orderedPairs,
-        finishPairSchedule, dif_pos (rfl : e = e)]
+    · unfold terminalAtInterface
+      erw [dif_pos hX]
+      simp only [orderedPairs_append, terminalGamma_orderedPairs, collapseCone_orderedPairs]
       unfold orderedPairs orderedPair
-      rfl
-    · simp only [terminalAtInterface, dif_neg hX, orderedPairs_cast,
-        collapseCone_orderedPairs, finishPairSchedule, dif_pos (rfl : e = e)]
+      simp [finishPairSchedule,hX]
+    · unfold terminalAtInterface
+      erw [dif_neg hX]
+      simp [finishPairSchedule,hX,orderedPairs_cast,collapseCone_orderedPairs]
   · unfold finishCore
     erw [dif_neg hpe]
     simp [finishPairSchedule, hpe, orderedPairs_cast, collapseCone_orderedPairs]
