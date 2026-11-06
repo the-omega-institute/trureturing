@@ -6,6 +6,9 @@ set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
 open LeanInformationAudit
+open _root_.D5.S3.VertexAlgebra
+open _root_.D5.S3.VertexAlgebra.SourceBPZ.TransverseHermitian
+open _root_.D5.S3.VertexAlgebra.SourceBPZ.OriginalMatterHermitian
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality
 open _root_.D5.S3.VertexAlgebra.LatticePositiveEnergy
@@ -13,7 +16,7 @@ open _root_.D5.S3.VertexAlgebra.OriginalGram
 open _root_.D5.S3.VertexAlgebra.LatticeAllStateField
 open _root_.D5.S3.VertexAlgebra.LatticeSugawaraCurrents
 open _root_.D5.S3.VertexAlgebra.Lattice.OriginalChargedEnergy
-open private original_ground_pairing from D5.S3.VertexAlgebra.Lattice.OriginalChargedEnergy
+open private fullFrame from D5.S3.VertexAlgebra.Lattice.OriginalChargedEnergy
 open scoped VertexOperator Matrix
 
 noncomputable section
@@ -87,7 +90,16 @@ private theorem charged_rejected : ¬ chargedArena.Law rejected := by
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨testLattice, 0, vacuum testLattice, ?_⟩
-  have hg := original_ground_pairing test_positive 0 0
+  have he := source_delta_delta_eq_factorial (fullFrame test_positive) 0 0
+    (1 : SourceBPZ.TransverseHermitian.Polynomial testLattice.rank) 1
+  have hi : FactorialFockMetric.inner
+      (1 : SourceBPZ.TransverseHermitian.Polynomial testLattice.rank) 1 = 1 := by
+    have h := FactorialFockMetric.inner_monomial_left
+      (0 : Occupation testLattice.rank) (1 : ℂ)
+      (1 : SourceBPZ.TransverseHermitian.Polynomial testLattice.rank)
+    simpa [FactorialFockMetric.weight] using h
+  have hg : Hm (Finsupp.single (0 : Charge testLattice) 1) (Finsupp.single 0 1)=1 := by
+    simpa only [delta, map_one, hi, ite_true] using he
   have hv : normD (vacuum testLattice)=1 := by
     simp only [normD, vacuum, hg, ite_true, Complex.one_re, Real.sqrt_one]
   change normD (0 : Carrier testLattice) ≠ normD (vacuum testLattice)

@@ -116,17 +116,6 @@ private theorem original_nonnegative (hD : (gramReal D).PosDef) (v : Carrier D) 
     simp [Hm]
   · exact (original_positive hD hv).2.le
 
-private theorem original_ground_pairing (hD : (gramReal D).PosDef) (a b : Charge D) :
-    Hm (D := D) (Finsupp.single a 1) (Finsupp.single b 1) =
-      if a = b then 1 else 0 := by
-  have he := source_delta_delta_eq_factorial (fullFrame hD) a b
-    (1 : Polynomial D.rank) 1
-  have hi : FactorialFockMetric.inner (1 : Polynomial D.rank) 1 = 1 := by
-    have h := FactorialFockMetric.inner_monomial_left
-      (0 : Occupation D.rank) (1 : ℂ) (1 : Polynomial D.rank)
-    simpa [FactorialFockMetric.weight] using h
-  simpa only [delta, map_one, hi] using he
-
 def normD (v : Carrier D) : ℝ := Real.sqrt (Hm (D := D) v v).re
 
 private theorem normD_sq (hD : (gramReal D).PosDef) (v : Carrier D) :
@@ -1797,7 +1786,6 @@ theorem charged_energy_bound (hD : (gramReal D).PosDef)
 #print axioms fock_derivative_sum_le
 
 #check @original_positive
-#check @original_ground_pairing
 #check @charged_weight
 #check @Hm_charged_circle
 #check @actual_phase
@@ -1807,7 +1795,6 @@ theorem charged_energy_bound (hD : (gramReal D).PosDef)
 
 #print axioms fullFrame_surjective
 #print axioms original_positive
-#print axioms original_ground_pairing
 #print axioms charged_weight
 #print axioms Hm_charged_circle
 #print axioms actual_phase
