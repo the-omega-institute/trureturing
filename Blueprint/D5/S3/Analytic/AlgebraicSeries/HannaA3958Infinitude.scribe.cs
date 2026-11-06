@@ -41,7 +41,10 @@ internal sealed class HannaA3958InfinitudeDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("hanna-" + name.Replace('.', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name[(name.LastIndexOf('.') + 1)..]), H(title), StatementSource.FromAuthor(formula),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), literature ? DescribeRole.Definition : DescribeRole.Theorem);
+            Blocks(Paragraph(Text(prose))), literature ? DescribeRole.Definition : DescribeRole.Theorem,
+            name == "A395835.result"
+                ? new OpenProblemResolutionClaim(ProblemSlugRef.Create("h3958-negcoef"), ResolutionKind.Proved)
+                : null);
 
     private static string Leaf(int number, string name) =>
         number == 395835 && name != "Term" ? name : name + (number - 395000);

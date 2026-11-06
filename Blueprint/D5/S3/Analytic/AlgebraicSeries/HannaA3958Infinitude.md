@@ -58,6 +58,10 @@ $$\operatorname{Set.Infinite}\left(\{n: \mathbb{N} \mid \exists a \in \mathbb{Z}
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/AlgebraicSeries/HannaA3958Infinitude.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/h3958-negcoef` (proved) by `D5/S3/Analytic/AlgebraicSeries/HannaA3958Infinitude.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"h3958-negcoef","declaration_gid":"D5/S3/Analytic/AlgebraicSeries/HannaA3958Infinitude.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2026). *OEIS A395835–A395838: first negative coefficients of an algebraic power series*. URL: <https://oeis.org/A395835>.
