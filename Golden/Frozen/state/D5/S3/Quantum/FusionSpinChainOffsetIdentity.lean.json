@@ -1,0 +1,1 @@
+{"statement_id":"sha256:9b5c32c4188ce27910abccacaa3e7d3a2984bb80616f3c6e3917cc154cf50e07","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),29:FusionSpinChainOffsetIdentity),21:exact_offset_identity)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),29:FusionSpinChainOffsetIdentity),9:fusionDim)","kind":"def"}]}
