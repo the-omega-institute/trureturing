@@ -102,6 +102,8 @@ $$(1 - (\operatorname{PowerSeries.X}: \operatorname{PowerSeries}\left(\mathbb{Z}
 
 *Commentary.*
 
+Write R(i,j,p,q) for TeaCoordinationSequence.residual, the nonnegative horizontal excess beyond −q≤i,j,i+j≤p. The potential at V(i,j) is 1+2R(i,j,1,0), at U(i,j) it is 2R(i,j,0,0), and at W(i,j) it is 2R(i+1,j+1,1,−1). The bound residual_le_iff gives the six coordinate inequalities for each of these three cases.
+
 For each simplex type the proof takes the maximum of six affine functions of i and j and a baseline zero or one. The affine functions measure violations of the bounding lattice-polygon inequalities. Every simplex inclusion changes this integer potential by at most one. The potential is nonnegative and vanishes exactly at the root. At any other simplex, an incident simplex has potential smaller by one. For a vertex one can choose a containing face; for a face one can choose one of its vertices; for an edge one can choose an endpoint or a containing face. Strong induction constructs a walk attaining the potential. The lower bound for every walk then identifies it with graph distance.
 
 A coordinate slice of a ball is a rectangle cut by two diagonal inequalities. Translate it to natural coordinates 0≤u≤A, 0≤v≤B, l≤u+v and u+v+r≤A+B. The excluded corners contain l(l+1)/2 and r(r+1)/2 points. They are disjoint under l+r≤A+B+1, and both fit in the rectangle under l,r≤min(A+1,B+1). Counting the antidiagonals proves these triangular counts. The sum over all six simplex types gives 18k²+12k+1 points at distance at most 2k, and 18k²+24k+7 points at distance at most 2k+1, for every natural k.
@@ -118,3 +120,4 @@ Successive ball differences give a(0)=1, a(2k+1)=12k+6 and a(2k+2)=24(k+1). Comp
 - Truth anchor: `D5/S3/StatisticalMechanics/KisrhombilleFaceCoordination.root`
 - Truth anchor: `D5/S3/StatisticalMechanics/KisrhombilleFaceCoordination.support`
 - Dependency: [D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation](../Combinatorics/PositionSets/VertexPositionRatioRefutation.md)
+- Dependency: [D5/S3/StatisticalMechanics/TeaCoordinationSequence](TeaCoordinationSequence.md)

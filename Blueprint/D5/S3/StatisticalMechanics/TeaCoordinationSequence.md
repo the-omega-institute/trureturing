@@ -56,7 +56,21 @@ $$\forall (i: \mathbb{Z}), (\forall (j: \mathbb{Z}), (\forall (p: \mathbb{Z}), (
 
 All four parameters are integers. The maximum measures the violations of the six bounds −q ≤ i,j,i+j ≤ p, together with zero. At p=q=0 it is the triangular lattice radius; at p=0 and q=1 its three negative coordinate bounds are shifted by one.
 
-**Theorem 1.5 (The coordination formulas hold at every positive radius).**
+**Theorem 1.5 (The six bounds for the horizontal excess).**
+
+$$\forall (i: \mathbb{Z}), (\forall (j: \mathbb{Z}), (\forall (p: \mathbb{Z}), (\forall (q: \mathbb{Z}), (\forall (d: \mathbb{Z}), ((\operatorname{D5.S3.StatisticalMechanics.TeaCoordinationSequence.residual}\left(i, j, p, q\right) \le d) \Leftrightarrow ((0 \le d) \land ((i \le p + d) \land ((j \le p + d) \land ((i + j \le p + d) \land ((-q - d \le i) \land ((-q - d \le j) \land (-q - d \le i + j))))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/TeaCoordinationSequence.residual_le_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* N. J. A. Sloane, Colin Barker, Stefano Spezia (2018). *OEIS A299285, coordination sequence for the tea 3D uniform tiling*. URL: <https://oeis.org/A299285>.
+
+*Commentary.*
+
+For arbitrary integers i, j, p, q and d, the horizontal excess is at most d exactly when d is nonnegative and each of i, j and i+j lies between −q−d and p+d. No sign assumptions on p or q are needed.
+
+**Theorem 1.6 (The coordination formulas hold at every positive radius).**
 
 $$\forall (n: \mathbb{N}), ((0 < n) \to (((\operatorname{Nat.mod}\left(n, 4\right) = 0) \to (8 \cdot \operatorname{D5.S3.StatisticalMechanics.TeaCoordinationSequence.shell}\left(n\right) = 63 \cdot n^{2} + 16)) \land (((\operatorname{Nat.mod}\left(n, 4\right) = 1) \to (8 \cdot \operatorname{D5.S3.StatisticalMechanics.TeaCoordinationSequence.shell}\left(n\right) = 63 \cdot n^{2} + 17)) \land (((\operatorname{Nat.mod}\left(n, 4\right) = 2) \to (8 \cdot \operatorname{D5.S3.StatisticalMechanics.TeaCoordinationSequence.shell}\left(n\right) = 63 \cdot n^{2} + 12)) \land ((\operatorname{Nat.mod}\left(n, 4\right) = 3) \to (8 \cdot \operatorname{D5.S3.StatisticalMechanics.TeaCoordinationSequence.shell}\left(n\right) = 63 \cdot n^{2} + 17))))))$$
 
@@ -100,6 +114,7 @@ Finally split n into its four remainders modulo four and use the integer quotien
 
 - Truth anchor: `D5/S3/StatisticalMechanics/TeaCoordinationSequence.claim`
 - Truth anchor: `D5/S3/StatisticalMechanics/TeaCoordinationSequence.residual`
+- Truth anchor: `D5/S3/StatisticalMechanics/TeaCoordinationSequence.residual_le_iff`
 - Truth anchor: `D5/S3/StatisticalMechanics/TeaCoordinationSequence.result`
 - Truth anchor: `D5/S3/StatisticalMechanics/TeaCoordinationSequence.shell`
 - Truth anchor: `D5/S3/StatisticalMechanics/TeaCoordinationSequence.teaGraph`
