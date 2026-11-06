@@ -6,9 +6,13 @@ The supplied Pro proof is mathematical input, not kernel evidence.
 -/
 module
 public import D5.S3.Combinatorics.Circle.ZeroSumSubsets
+import all D5.S3.Combinatorics.Circle.ZeroSumSubsets
 public import D5.S3.Combinatorics.Circle.TwoBitZeroSubsets
+import all D5.S3.Combinatorics.Circle.TwoBitZeroSubsets
 public import D5.S3.Combinatorics.Circle.MersennePhaseRotationStabilizer
+import all D5.S3.Combinatorics.Circle.MersennePhaseRotationStabilizer
 public import D5.S3.Combinatorics.Circle.MersennePhaseThreeTrace
+import all D5.S3.Combinatorics.Circle.MersennePhaseThreeTrace
 public import Mathlib.Algebra.BigOperators.ModEq
 public import Mathlib.Tactic
 
@@ -26,9 +30,9 @@ open private centered_scaled from D5.S3.Combinatorics.Circle.MersennePhaseThreeT
 open private mask_surjective mask_as_geom from D5.S3.Combinatorics.Circle.ZeroSumSubsets
 open private pow_rotate_mod image_proper mask_lt_of_ne_univ from D5.S3.Combinatorics.Circle.TwoBitZeroSubsets
 
-private abbrev degree (r : ℕ) : ℕ := 18 * r + 12
-private abbrev base (r : ℕ) : ℕ := 2 ^ degree r
-private abbrev seed (r : ℕ) : ℕ :=
+private def degree (r : ℕ) : ℕ := 18 * r + 12
+private def base (r : ℕ) : ℕ := 2 ^ degree r
+private def seed (r : ℕ) : ℕ :=
   (2 ^ degree r - 1) * (2 ^ (degree r + 1) - 3)
 private abbrev rot (k a : ℕ) : Equiv.Perm (Fin k) := (finRotate k) ^ a
 private def turn {k : ℕ} (a : ℕ) (A : Finset (Fin k)) : Finset (Fin k) :=
@@ -51,7 +55,8 @@ private theorem rot_val {k : ℕ} (hk : 0 < k) (a : ℕ) (i : Fin k) :
   · exact rotate_pow_val (by omega) a i
 
 private theorem rot_period {k : ℕ} (hk : 0 < k) : rot k k = 1 := by
-  ext i
+  apply Equiv.ext
+  intro i
   apply Fin.ext
   simp only [rot_val hk, Equiv.Perm.one_apply, Nat.add_mod_right,
     Nat.mod_eq_of_lt i.isLt]
@@ -60,7 +65,8 @@ private theorem turn_period {k : ℕ} (hk : 0 < k) (a : ℕ) (A : Finset (Fin k)
     turn (a % k) A = turn a A := by
   classical
   have he : rot k (a%k)=rot k a := by
-    ext i
+    apply Equiv.ext
+    intro i
     apply Fin.ext
     simp only [rot_val hk,Nat.add_mod,Nat.mod_mod]
   simp only [turn,he]
@@ -102,8 +108,7 @@ private theorem seed_cast (r : ℕ) :
     (seed r : ℤ) = ((base r : ℤ) - 1) * (2 * (base r : ℤ) - 3) := by
   have hb := (base_facts r).1
   have hnext : (2 : ℕ) ^ (degree r + 1) = 2 * base r := by
-    simp only [pow_succ,base]
-    omega
+    simp [pow_succ, base, Nat.mul_comm]
   unfold seed
   rw [hnext, Nat.cast_mul, Nat.cast_sub (by omega : 1 ≤ base r),
     Nat.cast_sub (by omega : 3 ≤ 2 * base r)]
@@ -163,7 +168,7 @@ private theorem phase_bounds (r j : ℕ) (hj : j < degree r) :
       calc
         16 * (2 : ℤ) ^ j = 2 ^ (j + 4) := by norm_num [pow_add]; ring
         _ ≤ 2 ^ degree r := pow_le_pow_right₀ (by norm_num) hlow
-        _ = base r := by norm_cast
+        _ = base r := by simp [base]
     have h0 : j ≠ degree r - 1 := by omega
     have h1 : j ≠ degree r - 2 := by omega
     have h2 : j ≠ degree r - 3 := by omega
@@ -228,7 +233,7 @@ private theorem source_phases (r : ℕ) (j : Fin (degree r)) :
   dsimp
   obtain ⟨hg, hH, hodd⟩ := centered_parameters r
   obtain ⟨h0, h1, h2⟩ := phase_bounds r j.val j.isLt
-  have hp : (2 : ℤ) ^ degree r = base r := by norm_cast
+  have hp : (2 : ℤ) ^ degree r = base r := by simp [base]
   have hp2 : (2 : ℤ) ^ (2 * degree r) = (base r : ℤ) ^ 2 := by
     rw [show 2 * degree r = degree r * 2 by omega, pow_mul, hp]
   simp only [actualSource, modulus_factor, seed_cast, pow_add, hp, hp2]
@@ -279,7 +284,8 @@ private theorem sum_slices {d : ℕ} (hd : 0 < d) (A : Finset (Fin (3 * d)))
       left_inv := by
         rintro ⟨i,j⟩
         apply Prod.ext <;> apply Fin.ext
-        · simp [place, Nat.add_div, Nat.div_eq_of_lt j.isLt, Nat.mul_div_cancel _ hd]
+        · dsimp [place]
+          rw [Nat.mul_add_div hd, Nat.div_eq_of_lt j.isLt, Nat.add_zero]
         · simp [place, Nat.add_mod, Nat.mod_eq_of_lt j.isLt]
       right_inv := by
         intro i
@@ -295,7 +301,9 @@ private theorem mask_slices {d : ℕ} (hd : 0 < d) (A : Finset (Fin (3 * d))) :
       (2 : ℤ) ^ d * mask (slice 1 A) + (2 : ℤ) ^ (2 * d) * mask (slice 2 A) := by
   have h := sum_slices hd A (fun i => (2 : ℤ) ^ i.val)
   simp only [place, Fin.val_mk, zero_mul, zero_add, one_mul,
-    pow_add, ← Finset.mul_sum] at h
+    show (0 : Fin 3).val = 0 from rfl,
+    show (1 : Fin 3).val = 1 from rfl, show (2 : Fin 3).val = 2 from rfl,
+    pow_zero, one_mul, pow_add, ← Finset.mul_sum] at h
   simpa only [mask, Nat.cast_sum, Nat.cast_pow, Nat.cast_ofNat] using h
 
 private theorem floor_unique {B x q : ℤ} (hB : 0 < B)
@@ -355,7 +363,7 @@ private theorem top_floors {d : ℕ} (hd : 3 ≤ d) (A : Finset (Fin d)) :
   have hi12 : i1 ≠ i2 := by intro h; have := congrArg Fin.val h; dsimp [i1,i2] at this; omega
   have hi13 : i1 ≠ i3 := by intro h; have := congrArg Fin.val h; dsimp [i1,i3] at this; omega
   have hi23 : i2 ≠ i3 := by intro h; have := congrArg Fin.val h; dsimp [i2,i3] at this; omega
-  have set1 : A.filter (fun j => d-1 ≤ j.val) = {i1}.filter (fun j => j ∈ A) := by
+  have set1 : A.filter (fun j => d-1 ≤ j.val) = ({i1} : Finset (Fin d)).filter (fun j => j ∈ A) := by
     ext j
     simp only [Finset.mem_filter, Finset.mem_singleton]
     have hj := j.isLt
@@ -364,7 +372,7 @@ private theorem top_floors {d : ℕ} (hd : 3 ≤ d) (A : Finset (Fin d)) :
       exact ⟨Fin.ext (by dsimp [i1]; omega),hA⟩
     · rintro ⟨rfl,hA⟩
       exact ⟨hA,by dsimp [i1]⟩
-  have set2 : A.filter (fun j => d-2 ≤ j.val) = {i2,i1}.filter (fun j => j ∈ A) := by
+  have set2 : A.filter (fun j => d-2 ≤ j.val) = ({i2,i1} : Finset (Fin d)).filter (fun j => j ∈ A) := by
     ext j
     simp only [Finset.mem_filter, Finset.mem_insert, Finset.mem_singleton]
     have hj := j.isLt
@@ -377,7 +385,7 @@ private theorem top_floors {d : ℕ} (hd : 3 ≤ d) (A : Finset (Fin d)) :
       · exact Or.inr (Fin.ext h)
     · rintro ⟨h,hA⟩
       rcases h with rfl | rfl <;> exact ⟨hA,by dsimp [i1,i2]; omega⟩
-  have set3 : A.filter (fun j => d-3 ≤ j.val) = {i3,i2,i1}.filter (fun j => j ∈ A) := by
+  have set3 : A.filter (fun j => d-3 ≤ j.val) = ({i3,i2,i1} : Finset (Fin d)).filter (fun j => j ∈ A) := by
     ext j
     simp only [Finset.mem_filter, Finset.mem_insert, Finset.mem_singleton]
     have hj := j.isLt
@@ -435,7 +443,7 @@ private theorem actual_sum_blocks (r : ℕ) (A : Finset (Fin (3 * degree r))) :
   have htop0 := top_floors hd (slice 0 A)
   have htop1 := top_floors hd (slice 1 A)
   have htop2 := top_floors hd (slice 2 A)
-  have hp : (2 : ℤ) ^ degree r = base r := by norm_cast
+  have hp : (2 : ℤ) ^ degree r = base r := by simp [base]
   rw [hp] at htop0 htop1 htop2
   have hs := sum_slices (d := degree r) (by omega) A
     (actualSource (3 * degree r) (seed r))
@@ -444,7 +452,9 @@ private theorem actual_sum_blocks (r : ℕ) (A : Finset (Fin (3 * degree r))) :
   have hs0 := fun j : Fin (degree r) => (source_phases r j).1
   have hs1 := fun j : Fin (degree r) => (source_phases r j).2.1
   have hs2 := fun j : Fin (degree r) => (source_phases r j).2.2
-  simp only [place, Fin.val_mk, zero_mul, zero_add, one_mul] at *
+  simp only [place, Fin.val_mk, show (0 : Fin 3).val = 0 from rfl,
+    show (1 : Fin 3).val = 1 from rfl, show (2 : Fin 3).val = 2 from rfl,
+    zero_mul, zero_add, one_mul] at hs0 hs1 hs2 ⊢
   simp_rw [hs0, hs1, hs2]
   simp only [← Finset.mul_sum]
   simp only [v0,v1,v2,Finset.sum_add_distrib,Finset.sum_sub_distrib,← Finset.mul_sum]
@@ -479,12 +489,16 @@ private def F0 (j : ℕ) : ℤ := W0 j - 2*z19 j/19 + 8*s19 j/19 - 4*s19 j/19
 private def F1 (j : ℕ) : ℤ := W1 j + 8*z19 j/19 - 4*z19 j/19 - 4*s19 j/19
 private def F2 (j : ℕ) : ℤ := W2 j - 2*s19 j/19 - 4*z19 j/19
 
-private def P0 : Fin 18 → ℤ :=
-  ![0,0,0,0,-1,0,0,0,0,0,0,0,0,1,0,0,0,0]
-private def P1 : Fin 18 → ℤ :=
-  ![0,0,0,0,-1,0,0,-1,0,-1,-1,-1,-1,0,-1,-1,0,-1]
-private def P2 : Fin 18 → ℤ :=
-  ![0,0,0,1,1,1,1,0,1,1,1,1,0,0,0,0,1,0]
+private def P0 : ℕ → ℤ
+  | 4 => -1
+  | 13 => 1
+  | _ => 0
+private def P1 : ℕ → ℤ
+  | 4 | 7 | 9 | 10 | 11 | 12 | 14 | 15 | 17 => -1
+  | _ => 0
+private def P2 : ℕ → ℤ
+  | 3 | 4 | 5 | 6 | 8 | 9 | 10 | 11 | 16 => 1
+  | _ => 0
 
 private theorem residue_data (j : ℕ) :
     1 ≤ s19 j ∧ s19 j ≤ 18 ∧ 1 ≤ z19 j ∧ z19 j ≤ 18 ∧
@@ -495,13 +509,12 @@ private theorem residue_data (j : ℕ) :
     (∀ ell : ℤ, ell=2 ∨ ell=4 ∨ ell=8 →
       1 ≤ ell*s19 j%19 ∧ ell*s19 j%19 ≤ 18 ∧
       1 ≤ ell*z19 j%19 ∧ ell*z19 j%19 ≤ 18) ∧
-    F0 j=P0 ⟨j%18,Nat.mod_lt _ (by norm_num)⟩ ∧
-    F1 j=P1 ⟨j%18,Nat.mod_lt _ (by norm_num)⟩ ∧
-    F2 j=P2 ⟨j%18,Nat.mod_lt _ (by norm_num)⟩ := by
+    F0 j=P0 (j % 18) ∧
+    F1 j=P1 (j % 18) ∧
+    F2 j=P2 (j % 18) := by
   have hj : j%18 < 18 := Nat.mod_lt _ (by norm_num)
-  simp only [s19,z19,W0,W1,W2,F0,F1,F2]
-  generalize hqeq : j%18=q at *
-  interval_cases q <;> norm_num [P0,P1,P2]
+  interval_cases hqeq : j % 18 <;>
+    norm_num [s19,z19,W0,W1,W2,F0,F1,F2,P0,P1,P2,hqeq]
   all_goals intro ell he; rcases he with rfl | rfl | rfl <;> norm_num
 
 private def Lblock (r j : ℕ) : ℤ := (z19 j * base r + (2 : ℤ)^j)/19
@@ -534,22 +547,24 @@ private theorem blocks_arithmetic (r j : ℕ) (hj : j < degree r) :
   have hb : (4096 : ℤ) ≤ base r := by exact_mod_cast (base_facts r).1
   have hbm : (base r : ℤ)%19=11 := by exact_mod_cast (base_facts r).2.1
   have hnm : (2 : ℤ)^j%19=s19 j := by
-    exact_mod_cast pow_mod19 j
+    have h := congrArg (fun n : ℕ => (n : ℤ)) (pow_mod19 j)
+    simpa only [s19, Nat.cast_mod, Nat.cast_pow, Nat.cast_ofNat] using h
   have hn : (1 : ℤ) ≤ 2^j := one_le_pow₀ (by norm_num)
   have hncap : 2*(2 : ℤ)^j ≤ base r := by
     calc
       2*(2 : ℤ)^j = 2^(j+1) := by rw [pow_succ]; ring
       _ ≤ 2^degree r := pow_le_pow_right₀ (by norm_num) (by omega)
-      _ = base r := by norm_cast
+      _ = base r := by simp [base]
   have hmods :
       (z19 j*(base r : ℤ)+2^j)%19=0 ∧
       (s19 j*(base r : ℤ)+2^j-z19 j)%19=0 ∧
       ((2 : ℤ)^j-s19 j)%19=0 := by
-    have hnmod := hnm
-    have hq : j%18<18 := Nat.mod_lt _ (by norm_num)
-    simp only [z19,s19] at hnmod ⊢
-    generalize hqeq : j%18=q at hq hnmod ⊢
-    interval_cases q <;> norm_num at hnmod ⊢ <;> omega
+    have hsmod : s19 j % 19 = s19 j := Int.emod_eq_of_lt (by omega) (by omega)
+    have hzmod : z19 j % 19 = z19 j := Int.emod_eq_of_lt (by omega) (by omega)
+    simp only [Int.sub_emod, Int.add_emod, Int.mul_emod, hbm, hnm, hsmod, hzmod]
+    norm_num
+    omega
+
   obtain ⟨hLm,hMm,hUm⟩ := hmods
   have hL : 19*Lblock r j=z19 j*(base r : ℤ)+2^j := by
     have h := Int.emod_add_mul_ediv (z19 j*(base r : ℤ)+2^j) 19
@@ -625,7 +640,7 @@ private theorem block_floors (r j : ℕ) (hj : j < degree r) :
       calc
         16*(2 : ℤ)^j = 2^(j+4) := by norm_num [pow_add]; ring
         _ ≤ 2^degree r := pow_le_pow_right₀ (by norm_num) hi
-        _ = base r := by norm_cast
+        _ = base r := by simp [base]
     have h2 := interior_floors (base r) (2^j) (s19 j) (z19 j)
       (Lblock r j) (Mblock r j) 2 hb hn hcap ⟨hz0,hz1⟩ (by tauto) hL hM
       ⟨(hres 2 (by tauto)).1,(hres 2 (by tauto)).2.1⟩
@@ -742,7 +757,7 @@ private theorem shifted_witness_mask (r j : ℕ) (hj : j < degree r) :
     calc
       2*(2 : ℤ)^j = 2^(j+1) := by rw [pow_succ]; ring
       _ ≤ 2^degree r := pow_le_pow_right₀ (by norm_num) (by omega)
-      _ = base r := by norm_cast
+      _ = base r := by simp [base]
   have hb : (4096 : ℤ) ≤ base r := by exact_mod_cast (base_facts r).1
   have hq : (0 : ℤ) < Qmask r := by exact_mod_cast (Q_bounds r).1
   have hsmall : (2 : ℤ)^j * Qmask r < modulus (3*degree r) := by
@@ -795,7 +810,7 @@ private theorem witness_blocks (r j : ℕ) (hj : j < degree r) :
   obtain ⟨hL,hM,hU,hL0,hL1,hM0,hM1,hU0,hU1,he⟩ := blocks_arithmetic r j hj
   have hs := mask_slices hd (turn j (witness r))
   rw [shifted_witness_mask r j hj] at hs
-  have hp : (2 : ℤ)^degree r=base r := by norm_cast
+  have hp : (2 : ℤ)^degree r=base r := by simp [base]
   have hp2 : (2 : ℤ)^(2*degree r)=(base r : ℤ)^2 := by
     rw [show 2*degree r=degree r*2 by omega,pow_mul,hp]
   rw [hp,hp2] at hs
@@ -969,8 +984,7 @@ private theorem phase0_zero (r j : ℕ) (hj : j<degree r) :
   rw [h0]
   have hq : j%18<18 := Nat.mod_lt _ (by norm_num)
   dsimp [degree] at *
-  generalize hqeq : j%18=q at *
-  interval_cases q <;> norm_num [P0] <;> split_ifs <;> omega
+  interval_cases hqeq : j % 18 <;> norm_num [P0,hqeq] <;> split_ifs <;> omega
 
 private theorem phase1_zero (r j : ℕ) (hj : j<degree r) :
     F1 j+(if j=degree r-3 then 1 else 0)=0 ↔
@@ -980,8 +994,7 @@ private theorem phase1_zero (r j : ℕ) (hj : j<degree r) :
   rw [h1]
   have hq : j%18<18 := Nat.mod_lt _ (by norm_num)
   dsimp [degree] at *
-  generalize hqeq : j%18=q at *
-  interval_cases q <;> norm_num [P1] <;> split_ifs <;> omega
+  interval_cases hqeq : j % 18 <;> norm_num [P1,hqeq] <;> split_ifs <;> omega
 
 private theorem phase2_zero (r j : ℕ) (hj : j<degree r) :
     F2 j-(if j=degree r-2 then 1 else 0)-(if j=degree r-1 then 1 else 0)=0 ↔
@@ -991,21 +1004,20 @@ private theorem phase2_zero (r j : ℕ) (hj : j<degree r) :
   rw [h2]
   have hq : j%18<18 := Nat.mod_lt _ (by norm_num)
   dsimp [degree] at *
-  generalize hqeq : j%18=q at *
-  interval_cases q <;> norm_num [P2] <;> split_ifs <;> omega
+  interval_cases hqeq : j % 18 <;> norm_num [P2,hqeq] <;> split_ifs <;> omega
 
 private theorem profile_zero (r h : ℕ) (hh : h<3*degree r) :
     profile r h=0 ↔ zeroAt r h := by
   by_cases h0 : h<degree r
   · rw [profile,if_pos h0,phase0_zero r h h0]
-    dsimp [zeroAt,degree]
+    dsimp [zeroAt,degree] at *
     omega
   · by_cases h1 : h<2*degree r
     · rw [profile,if_neg h0,if_pos h1,phase1_zero r (h-degree r) (by omega)]
-      dsimp [zeroAt,degree]
+      dsimp [zeroAt,degree] at *
       omega
     · rw [profile,if_neg h0,if_neg h1,phase2_zero r (h-2*degree r) (by omega)]
-      dsimp [zeroAt,degree]
+      dsimp [zeroAt,degree] at *
       omega
 
 private theorem actual_zero_profile (r h : ℕ) :
@@ -1049,7 +1061,7 @@ private theorem unique_marker (r h : ℕ) (hh : h<3*degree r) :
     · rw [if_neg he,Nat.mod_eq_sub_mod (by omega),Nat.mod_eq_of_lt (by
         dsimp [degree] at *; omega)]
   rw [marker,hprev,Nat.mod_eq_of_lt hh,hn 1 (by omega),hn 2 (by omega),hn 3 (by omega)]
-  dsimp [zeroAt,degree]
+  dsimp [zeroAt,degree] at *
   have hres : h%18<18 := Nat.mod_lt _ (by norm_num)
   generalize hqeq : h%18=q at *
   interval_cases q <;> split_ifs <;> omega
