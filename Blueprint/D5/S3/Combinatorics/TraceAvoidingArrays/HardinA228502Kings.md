@@ -108,6 +108,10 @@ $$(\forall n: Nat, ((5 \leq n) \implies ((\operatorname{a}\left(n\right): Int) =
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA228502Kings.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin228502` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA228502Kings.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin228502","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA228502Kings.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A228502: corner-occupied non-attacking kings on four-column strips*. URL: <https://oeis.org/A228502>.

@@ -62,7 +62,7 @@ internal sealed class HardinA228502KingsDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
                 Blocks(Paragraph(Text("OEIS A228502, revision 12, first FORMULA: \"Empirical: a(n) = 2*a(n-1) + 7*a(n-2) - 2*a(n-3) - 3*a(n-4).\" Its second FORMULA is \"Empirical g.f.: x*(1 - x)*(3 + 2*x) / (1 - 2*x - 7*x^2 + 2*x^3 + 3*x^4).\" The generating function is attributed to Colin Barker. The recurrence holds at every height n at least five. PowerSeries.mk assigns the integer count a n to coefficient n; since a 0 = 0, this series begins at degree one. The formal product identity clears a denominator with constant coefficient one and needs no convergence hypothesis.")),
                     Paragraph(Text("Splitting a board into its first row and its remaining rows preserves the literal king-adjacency predicate: only the first two rows can interact across the split. The equivalence between functions on the cell product and functions of rows, followed by the first-row decomposition of finite function spaces, expresses the count as the sum of v k r over rows r with r 0 = true, at height k + 1. Induction on k proves this equality for every height, including height one. The finite four-step identity and linearity yield the recurrence. The initial counts at heights zero through four are 0, 3, 5, 29 and 87; coefficient comparison with these initial values proves the formal product identity."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin228502"), ResolutionKind.Proved)))));
 
     private static Formula CountFormula()
     {
