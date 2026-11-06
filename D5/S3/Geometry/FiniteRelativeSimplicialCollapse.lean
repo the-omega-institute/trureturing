@@ -180,9 +180,7 @@ theorem frames_source_zero {K L : PreAbstractSimplicialComplex V}
     {K L M : PreAbstractSimplicialComplex V}
     (S : Sequence K L) (T : Sequence L M) :
     (S.append T).pairs.length = S.pairs.length + T.pairs.length := by
-  induction S with
-  | refl K => simp [Sequence.append, Sequence.pairs]
-  | step P S ih => simp [Sequence.append, Sequence.pairs, ih, Nat.add_assoc, Nat.add_comm]
+  simp only [pairs_append, List.length_append]
 
 end Sequence
 
@@ -510,7 +508,7 @@ def liftPairOver (P : CollapsePair V) (D : PreAbstractSimplicialComplex V) (v : 
       s = insert v (s.erase v) := (Finset.insert_erase hvs).symm
       _ = insert v P.upper := congrArg (insert v) hup
       _ = insert P.apex (insert v P.lower) := by
-        exact Finset.insert_comm _ _ _
+        exact Finset.insert_comm v w ∅
 
 theorem liftOver_retained (P : CollapsePair V) (D : PreAbstractSimplicialComplex V)
     (v : V) (hPD : P.ambient ≤ D) (hvD : Fresh v D) :
@@ -668,7 +666,7 @@ def terminalPair (D : PreAbstractSimplicialComplex V) (v w : V)
       exact (hstrict.ne hs'.symm).elim
     · change s.erase v = {w} at he
       rw [← Finset.insert_erase hvs, he]
-      exact Finset.insert_comm _ _ _
+      exact Finset.insert_comm v w ∅
 
 theorem terminalPair_retained (D : PreAbstractSimplicialComplex V) (v w : V)
     (hvD : Fresh v D) (hvw : v ≠ w) (hwD : ({w} : Finset V) ∈ D) :
@@ -810,8 +808,9 @@ def coneContraction (v : V) (L : PreAbstractSimplicialComplex V) :
   toHomotopy := straight _ _ (by
     intro t x
     change mix (t : ℝ) x.val (conePoint v L).val ∈ realization (cone v L)
-    simpa only [mix, conePoint, selfConePair] using
-      ((selfConePair v L).cone_segment x x.property (t : ℝ) t.2.1 t.2.2))
+    change (fun a => (1 - (t : ℝ)) * x.val a + (t : ℝ) *
+      (selfConePair v L).apexPoint.val a) ∈ realization (selfConePair v L).cone
+    exact (selfConePair v L).cone_segment x x.property (t : ℝ) t.2.1 t.2.2)
   prop' := by
     intro t x hx
     have he : x = conePoint v L := Set.mem_singleton_iff.mp hx

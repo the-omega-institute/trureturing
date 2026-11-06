@@ -136,7 +136,7 @@ theorem spliceAB_isPath {x y : VL} (p₀ : g.cut.Walk x g.aL)
   intro z hz hz₁
   simp only [leftHom,RelHom.coeFn_mk,SimpleGraph.Walk.support_map,List.mem_map] at hz₁
   obtain ⟨l,hl,rfl⟩ := hz₁
-  rcases SimpleGraph.Walk.mem_support_append_iff.mp hz with hz₀ | ht
+  rcases (SimpleGraph.Walk.mem_support_append_iff _ _).mp hz with hz₀ | ht
   · simp only [leftHom,RelHom.coeFn_mk,SimpleGraph.Walk.support_map,List.mem_map] at hz₀
     obtain ⟨k,hk,he⟩ := hz₀
     have hkl : k = l := g.qL_injective he
@@ -254,6 +254,11 @@ theorem left_path_edgeSet (x y : VL) :
   rw [SimpleGraph.Walk.mem_edgeSet,g.left_path_edge_mem _ (treePath_isPath g.leftTree x y)]
   by_cases h : s(g.aL,g.bL) ∈ (g.leftPath x y).edges <;>
     simp [h,Set.mem_image,SimpleGraph.Walk.mem_edgeSet,and_assoc]
+  constructor
+  · rintro ⟨d,hd,_,he⟩
+    exact ⟨d,hd,he⟩
+  · rintro ⟨d,hd,he⟩
+    exact ⟨d,hd,fun heq => h (heq ▸ hd),he⟩
 
 theorem right_path_edgeSet (x y : VR) :
     (g.path (g.qR x) (g.qR y)).edgeSet =
