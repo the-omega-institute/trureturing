@@ -46,6 +46,10 @@ $$\forall (n : \mathbb{N}), \exists (m : \mathbb{N}), (\operatorname{IsLeastEnde
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Additive/GreathouseA359506XorBound.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/greathouse-a359506` (proved) by `D5/S3/Arith/Additive/GreathouseA359506XorBound.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"greathouse-a359506","declaration_gid":"D5/S3/Arith/Additive/GreathouseA359506XorBound.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Kagey; Charles R. Greathouse IV (2023). *OEIS A359506: least enders of increasing zero-XOR sequences*. URL: <https://oeis.org/A359506/internal>.

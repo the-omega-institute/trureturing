@@ -29,7 +29,9 @@ internal sealed class GreathouseA359506XorBoundDocument : IScribeDocumentDefinit
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The five-thirds bound", Disp(ClaimBody()),
                 "Write n+1 as a power of two times an odd number. An odd factor at least three gives a four-term zero-XOR sequence. A power of two gives a three-term sequence. Projecting XOR to the high binary blocks excludes every smaller ender. The singleton list containing zero handles n=0. The two resulting exact minimum formulas imply the bound; n=3·2^s−1 attains equality.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("greathouse-a359506"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
