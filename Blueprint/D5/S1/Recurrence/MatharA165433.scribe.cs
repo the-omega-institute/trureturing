@@ -8,7 +8,7 @@ internal sealed class MatharA165433Document : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Recurrence/MatharA165433.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/ArithSums/mathar2011a165433");
+        LibraryNoteRef.Create("D5/L/Factorization/mathar2011a165433");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The literal rational factorial sum defining OEIS A165433 satisfies Mathar's recurrence at every natural index at least three.",
