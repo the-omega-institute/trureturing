@@ -123,7 +123,7 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
   have hprodL : 2 * L ≤ p * L :=
     mul_le_mul_of_nonneg_right hp (show 0 ≤ L by omega)
   have hprodp : 2 * p ≤ p * L := by
-    nlinarith [mul_le_mul_of_nonneg_left hL (show 0 ≤ p by omega)]
+    simpa only [mul_comm] using mul_le_mul_of_nonneg_left hL (show 0 ≤ p by omega)
   have hpow : (2 : ℤ) ^ (r - 2) = p * L := by
     have he : r - 2 = (a - 1) + (b - 1) := by dsimp [r]; omega
     dsimp [p, L]
@@ -193,21 +193,29 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
     by_cases h0 : i.val = 0
     · simp only [h0, ite_true]
       constructor
-      · apply old_value i _ 0 (by rw [hNH, hq]; dsimp [H]; constructor <;> nlinarith)
+      · apply old_value i _ 0 (by
+          rw [hNH, hq]
+          dsimp only [H]
+          constructor <;> linarith only [hp, hprodp, hpHalf])
         simp [h0]
       · apply new_value i.castSucc _ 0 (by
           rw [hq]
           dsimp only [N]
-          constructor <;> nlinarith only [hp, hprodp, hpHalf])
+          constructor <;> linarith only [hp, hprodp, hpHalf])
         simp [h0]
     by_cases h1 : i.val = 1
     · simp only [h0, ite_false, h1, ite_true]
       constructor
-      · apply old_value i _ 1 (by rw [hNH]; dsimp [H, B, C]; constructor <;> nlinarith)
+      · apply old_value i _ 1 (by
+          rw [hNH]
+          dsimp only [H, B]
+          constructor <;> linarith only [hp, hprodp])
         rw [show (2 : ℤ) ^ i.val = 2 by simp [h1], hq, hN]
         dsimp [B]
         linear_combination hpHalf
-      · apply new_value i.castSucc _ 1 (by dsimp [N, D, E, B, C]; constructor <;> nlinarith)
+      · apply new_value i.castSucc _ 1 (by
+          dsimp only [N, D]
+          constructor <;> linarith only [hp, hprodp])
         simp only [Fin.val_castSucc]
         rw [show (2 : ℤ) ^ i.val = 2 by simp [h1], hq, hM]
         dsimp [D]
@@ -226,15 +234,17 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
           (show (i.val - 2) + 1 ≤ a - 1 by omega)
         simpa only [pow_succ, z, L, mul_comm] using hh
       have hpz : 2 * p * z ≤ p * L := by
-        nlinarith [mul_le_mul_of_nonneg_left hzL (show 0 ≤ p by omega)]
+        calc
+          2 * p * z = p * (2 * z) := by ring
+          _ ≤ p * L := mul_le_mul_of_nonneg_left hzL (show 0 ≤ p by omega)
       have hpL : 2 * L ≤ p * L :=
         mul_le_mul_of_nonneg_right hp (show 0 ≤ L by omega)
       have hOldBank : -H ≤ (2 * p + 1) * z ∧ (2 * p + 1) * z ≤ H := by
         have ht : 0 ≤ (2 * p + 1) * z := by positivity
-        dsimp [H]; constructor <;> nlinarith [hpz, hpL]
+        dsimp only [H]; constructor <;> linarith only [ht, hpz, hzL, hpL, hL]
       have hNewBank : -N ≤ (4 * p + 1) * z ∧ (4 * p + 1) * z ≤ N := by
         have ht : 0 ≤ (4 * p + 1) * z := by positivity
-        dsimp [N]; constructor <;> nlinarith [hpz, hpL]
+        dsimp only [N]; constructor <;> linarith only [ht, hpz, hzL, hpL, hL]
       constructor
       · apply old_value i _ z (by simpa only [hNH] using hOldBank)
         rw [hiE, hq, hN]
@@ -248,12 +258,15 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
         Nat.lt_irrefl, ite_false, ite_true]
       constructor
       · apply old_value i _ (L + 1) (by
-          rw [hNH]; dsimp [H, C]; constructor <;> nlinarith)
+          rw [hNH]
+          dsimp only [H, C]
+          constructor <;> linarith only [hL, hprodL])
         rw [ha1, pow_succ, haE, hq, hN]
         dsimp [C]
         linear_combination 2 * L * hpHalf
       · apply new_value i.castSucc _ (L + 1) (by
-          dsimp [N, E]; constructor <;> nlinarith)
+          dsimp only [N, E]
+          constructor <;> linarith only [hL, hprodL])
         simp only [Fin.val_castSucc]
         rw [ha1, pow_succ, haE, hq, hM]
         dsimp [E]
@@ -284,19 +297,22 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
         dsimp [H]
         constructor
         · positivity
-        · nlinarith [mul_nonneg (show 0 ≤ L by omega) (show 0 ≤ p / 2 by omega)]
+        · linarith only [hh, hhalfProduct, hpHalf, hprodp, hL, hp]
       constructor
-      · apply old_value i _ ((2 * L + 1) * z) (by rw [hNH]; constructor <;> linarith [hbank.1, hbank.2])
+      · apply old_value i _ ((2 * L + 1) * z) (by rw [hNH]; constructor <;> linarith only [hbank.1, hbank.2])
         rw [hiE, hq, hN]
         linear_combination 4 * L * z * hpHalf
       · apply new_value i.castSucc _ ((2 * L + 1) * z) (by
-          have hHN : H ≤ N := by dsimp only [H, N]; nlinarith
-          constructor <;> linarith [hbank.1, hbank.2])
+          have hHN : H ≤ N := by dsimp only [H, N]; linarith only [hprodL, hL]
+          constructor <;> linarith only [hHN, hbank.1, hbank.2])
         simp only [Fin.val_castSucc]
         rw [hiE, hq, hM]
         linear_combination 8 * L * z * hpHalf
   have hFresh : gn fresh = q := by
-    apply new_value fresh q q (by rw [hq]; dsimp [N]; constructor <;> nlinarith)
+    apply new_value fresh q q (by
+      rw [hq]
+      dsimp only [N]
+      constructor <;> linarith only [hp, hprodp, hpHalf])
     change (2 : ℤ) ^ r * (2 * q) = q + q * modulus (r + 1)
     rw [show (2 : ℤ) ^ r = 4 * p * L by exact hrpow, hq, hM]
     ring
@@ -318,7 +334,7 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
     have hLP := mul_le_mul_of_nonneg_left hL (show 0 ≤ p by omega)
     dsimp only [B, C, D, E, H, N]
     refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩⟩ <;>
-      nlinarith only [hL, hp, hPL, hLP]
+      linarith only [hL, hp, hPL, hLP]
   have hBdef : B = H - p := by dsimp only [B, H]; ring
   have hCdef : C = H - L := by dsimp only [C, H]; ring
   have hDdef : D = N - 2 * p := by dsimp only [D, N]; ring
@@ -398,7 +414,7 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
       · rw [show (E0.map f).sum = ∑ i ∈ S, f i from ascending_sum S f]
         exact ⟨le_trans hm.1 hF.1, hF.2⟩
       · rw [show (E0.map f).sum = ∑ i ∈ S, f i from ascending_sum S f, hv.1]
-        linarith [hF.1]
+        linarith only [hF.1]
       · rw [hv.2.1, neg_neg]; exact hm.2.1
     have finish (cut : ℕ) (hc : cut ≤ r)
         (hn : InStrip gn N 0 (earWord r sigma cut)) :
@@ -479,8 +495,8 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
   have hd : 1 ≤ d := by
     have h : 0 < d := by dsimp [d]; positivity
     omega
-  have hL2 : L = 2 * l := by change L = 2 * (2 : ℤ) ^ (a - 2); linarith [ha2]
-  have hp2 : p = 2 * d := by change p = 2 * (2 : ℤ) ^ (b - 2); linarith [hb2]
+  have hL2 : L = 2 * l := by change L = 2 * (2 : ℤ) ^ (a - 2); linarith only [ha2]
+  have hp2 : p = 2 * d := by change p = 2 * (2 : ℤ) ^ (b - 2); linarith only [hb2]
   have hqd : q = p * L + d := hqv
   have bank (n : ℕ) (hn : n ≤ a - 1) :
       (∑ i ∈ window r 2 n, f i) = (2 * p + 1) * (2 ^ n - 1) ∧
@@ -544,7 +560,7 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
       all_goals (simp [S, W, window, one, atA, zero, special, Fin.ext_iff] at hi <;> omega)
     have hu : 0 ≤ d - l - t := by
       rw [hdt, hL2]
-      nlinarith [mul_nonneg (show 0 ≤ l by omega) (show 0 ≤ t - 1 by omega),
+      linarith only [mul_nonneg (show 0 ≤ l by omega) (show 0 ≤ t - 1 by omega),
         mul_nonneg (show 0 ≤ t by omega) (show 0 ≤ l - 1 by omega)]
     have hFdef : H - (∑ i ∈ S, f i) = d - l - t := by
       dsimp only [H]; rw [hFS, hqd]; simp only [hp2, hdt, hL2]; ring
@@ -635,7 +651,7 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
         have hbase : p + h ≤ l := by
           have h1 := mul_le_mul_of_nonneg_left hh (show 0 ≤ p by omega)
           have h2 := mul_le_mul_of_nonneg_right hp (show 0 ≤ h by omega)
-          nlinarith only [h1, h2, hlp, hh]
+          linarith only [h1, h2, hlp, hh]
         apply build S true true hS
         · change C ≤ (∑ i ∈ S, f i) ∧ (∑ i ∈ S, f i) ≤ H
           rw [hCdef]
