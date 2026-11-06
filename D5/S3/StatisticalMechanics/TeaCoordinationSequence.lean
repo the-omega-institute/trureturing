@@ -94,7 +94,7 @@ def residual (i j p q : ℤ) : ℤ :=
 private def potential (v : ℤ × ℤ × ℤ) : ℕ :=
   v.2.2.natAbs + (residual v.1 v.2.1 (plusSlabs v.2.2) (minusSlabs v.2.2)).toNat
 
-private lemma residual_le_iff (i j p q d : ℤ) :
+lemma residual_le_iff (i j p q d : ℤ) :
     residual i j p q ≤ d ↔
       0 ≤ d ∧ i ≤ p + d ∧ j ≤ p + d ∧ i + j ≤ p + d ∧
         -q - d ≤ i ∧ -q - d ≤ j ∧ -q - d ≤ i + j := by

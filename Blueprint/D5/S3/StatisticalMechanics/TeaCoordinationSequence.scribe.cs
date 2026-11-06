@@ -77,6 +77,17 @@ internal sealed class TeaCoordinationSequenceDocument : IScribeDocumentDefinitio
                         + "coordinate bounds are shifted by one."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("residualbound"),
+                DeclarationHandle.Create(Module + ".residual_le_iff"),
+                H("The six bounds for the horizontal excess"),
+                StatementSource.FromAuthor(Disp(ResidualBoundFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For arbitrary integers i, j, p, q and d, the horizontal excess is at most d "
+                        + "exactly when d is nonnegative and each of i, j and i+j lies between "
+                        + "−q−d and p+d. No sign assumptions on p or q are needed."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("result"),
                 DeclarationHandle.Create(Module + ".result"),
                 H("The coordination formulas hold at every positive radius"),
@@ -214,6 +225,24 @@ internal sealed class TeaCoordinationSequenceDocument : IScribeDocumentDefinitio
         Arrow(Equal(At(Qualified("Nat", "mod"), X("n"), D(4)), residue),
             Equal(Multiply(D(8), LocalCall("shell", X("n"))),
                 Add(Multiply(D(6, 3), new Formula.Power(X("n"), D(2))), constant)));
+
+    private static Formula ResidualBoundFormula()
+    {
+        var i = X("i");
+        var j = X("j");
+        var p = X("p");
+        var q = X("q");
+        var d = X("d");
+        var upper = Add(p, d);
+        var lower = Subtract(new Formula.Negate(q), d);
+        return All("i", Integers(), All("j", Integers(), All("p", Integers(),
+            All("q", Integers(), All("d", Integers(), Equivalence(
+                LessEqual(LocalCall("residual", i, j, p, q), d),
+                And(LessEqual(D(0), d), And(LessEqual(i, upper),
+                    And(LessEqual(j, upper), And(LessEqual(Add(i, j), upper),
+                        And(LessEqual(lower, i),
+                            And(LessEqual(lower, j), LessEqual(lower, Add(i, j)))))))))))));
+    }
 
     private static Formula MetricFormula() =>
         All("i", Integers(), All("j", Integers(), All("k", Integers(),

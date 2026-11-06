@@ -8,41 +8,41 @@
 
 /-
 admission_basis: open-problem-resolution (#27077; Proved)
-escape_witness: geodesic (descent paths attaining the explicit potential).
-Direct frozen dependency:
+escape_witness: none (open-problem-resolution; the settlement itself is the new content)
+Direct frozen dependencies:
 D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation.potential_dist
 statement_id: sha256:2360c26ddcdab5109d1906cf2b6884cebb254549f8cf9a5078002397a1098f09
 frozen_module_statement_id: sha256:f8b677ea402e38581fbfa04887d18040684e7baa21f05cad6421d45525c0cd21
-Simplex: proof_shape=definition; consumers=graph
-support: proof_shape=definition; consumers=graph
-graph: proof_shape=definition; consumers=distance
-root: proof_shape=definition; consumers=distance
-distance: proof_shape=definition; consumers=a
-a: proof_shape=definition; consumers=result
-hex: proof_shape=definition; consumers=score
-score: proof_shape=definition; consumers=geodesic
+Simplex: proof_shape=bind-only; consumers=graph
+support: proof_shape=bind-only; consumers=graph
+graph: proof_shape=bind-only; consumers=distance
+root: proof_shape=bind-only; consumers=distance
+distance: proof_shape=bind-only; consumers=a
+a: proof_shape=bind-only; consumers=result
+hex: proof_shape=bind-only; consumers=score
+score: proof_shape=bind-only; consumers=geodesic
 hex_le: proof_shape=bind-only; consumers=score_step
 score_nonneg: proof_shape=bind-only; consumers=geodesic
 support_injective: proof_shape=bind-only; consumers=score_zero
 score_zero: proof_shape=bind-only; consumers=geodesic
-score_step: proof_shape=bind-only; consumers=distance_formula
+score_step: proof_shape=bind-only; consumers=score_descent, distance_formula
 score_descent: proof_shape=bind-only; consumers=geodesic
-geodesic: proof_shape=content; consumers=distance_formula
-distance_formula: proof_shape=content; consumers=ball_mem
-triangle: proof_shape=definition; consumers=triangle_card
+geodesic: proof_shape=bind-only; consumers=distance_formula
+distance_formula: proof_shape=bind-only; consumers=ball_mem
+triangle: proof_shape=bind-only; consumers=triangle_card
 triangle_mem: proof_shape=bind-only; consumers=corner_mem
 triangle_card: proof_shape=bind-only; consumers=cut_card
-rectangle: proof_shape=definition; consumers=cut_card
-corner: proof_shape=definition; consumers=cut_card
+rectangle: proof_shape=bind-only; consumers=cut_card
+corner: proof_shape=bind-only; consumers=cut_card
 corner_mem: proof_shape=bind-only; consumers=cut_mem
 corner_card: proof_shape=bind-only; consumers=cut_card
-cutRectangle: proof_shape=definition; consumers=polygon
+cutRectangle: proof_shape=bind-only; consumers=polygon
 cut_mem: proof_shape=bind-only; consumers=polygon_mem
 cut_card: proof_shape=bind-only; consumers=polygon_card
-polygon: proof_shape=definition; consumers=polygon_card
+polygon: proof_shape=bind-only; consumers=polygon_card
 polygon_mem: proof_shape=bind-only; consumers=slice_card_from_polygon
 polygon_card: proof_shape=bind-only; consumers=slice_card_from_polygon
-slice: proof_shape=definition; consumers=ball
+slice: proof_shape=bind-only; consumers=ball
 slice_mem: proof_shape=bind-only; consumers=ball_mem
 slice_card_from_polygon: proof_shape=bind-only; consumers=slice_even_0
 slice_even_0: proof_shape=bind-only; consumers=ball_even
@@ -57,20 +57,20 @@ slice_odd_2: proof_shape=bind-only; consumers=ball_odd
 slice_odd_3: proof_shape=bind-only; consumers=ball_odd
 slice_odd_4: proof_shape=bind-only; consumers=ball_odd
 slice_odd_5: proof_shape=bind-only; consumers=ball_odd
-ball: proof_shape=definition; consumers=ball_mem
-ball_mem: proof_shape=content; consumers=shell_finite
-shell_finite: proof_shape=content; consumers=shell_succ
+ball: proof_shape=bind-only; consumers=ball_mem
+ball_mem: proof_shape=bind-only; consumers=shell_finite
+shell_finite: proof_shape=bind-only; consumers=shell_succ
 ball_card_sum: proof_shape=bind-only; consumers=ball_even
-ball_zero: proof_shape=content; consumers=ball_even
+ball_zero: proof_shape=bind-only; consumers=ball_even
 ball_one: proof_shape=bind-only; consumers=ball_odd
-ball_even: proof_shape=content; consumers=shell_even
+ball_even: proof_shape=bind-only; consumers=shell_even
 ball_odd: proof_shape=bind-only; consumers=shell_odd
-shell_succ: proof_shape=content; consumers=shell_even
-shell_zero: proof_shape=content; consumers=shell_formula
-shell_odd: proof_shape=content; consumers=shell_formula
-shell_even: proof_shape=content; consumers=shell_formula
-shell_formula: proof_shape=content; consumers=result
-result: proof_shape=content; consumers=Reg.family
+shell_succ: proof_shape=bind-only; consumers=shell_even
+shell_zero: proof_shape=bind-only; consumers=shell_formula
+shell_odd: proof_shape=bind-only; consumers=shell_formula
+shell_even: proof_shape=bind-only; consumers=shell_formula
+shell_formula: proof_shape=bind-only; consumers=result
+result: proof_shape=bind-only; consumers=Reg.family
 -/
 
 import D5.S3.Combinatorics.PositionSets.VertexPositionRatioRefutation
