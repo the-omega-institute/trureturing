@@ -69,9 +69,13 @@ internal sealed class GenericMatrixIrreducibilityDocument : IScribeDocumentDefin
                 "minor00_vars and rest_vars feed irreducible_mul_X_add. vars_subset_vars_mul_left is used by rename_irreducible " +
                 "and the association contradiction; rename_irreducible is used twice by minor00_isRelPrime. " +
                 "No private helper is retained only for a promised future consumer.")),
-            Paragraph(Text("The source-volume route is 389.1 and 389.2 in AURIC_C128_ORTHOGONAL_TRACE_AND_CORNER_RELATIONS_CONTINUATION. " +
-                "These are prerequisites for the closed Lemma 2.1 to Lemma 3.2 route used at equation 320.6 inside that volume's " +
-                "theorem 320.1. They do not close the full commuting quadratic trace normal form. The generic centralizer, global " +
+            Paragraph(Text("The closed mathematical sources are the clean-release determinant theorem " +
+                "det_auxiliaryMatrix_irreducible_of_pos cited above and Brešar–Špenko, Functional identities of one variable, " +
+                "arXiv:1307.2260v1, Lemma 2.1. The determinant supplies the irreducibility input to the generic " +
+                "characteristic-polynomial proof; that result is a necessary prerequisite for the sections 2–3 route to Lemma 3.2 " +
+                "invoked at equation (320.6) inside theorem 320.1 of " +
+                "AURIC_C128_ORTHOGONAL_TRACE_AND_CORNER_RELATIONS_CONTINUATION. " +
+                "These prerequisites do not close the full commuting quadratic trace normal form. The generic centralizer, global " +
                 "quadratic reconstruction for all complex bilinear B, Hermitian complexification, real descent, 273/274, direct sums, " +
                 "classical sources and complete 320/343/359/361/388 consumers remain unproved here. " +
                 "Utility is none: this is uniform ring theory, not a finite checker, numeric reduction or certified instance.")))));
