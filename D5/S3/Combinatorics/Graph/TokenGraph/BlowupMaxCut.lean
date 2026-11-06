@@ -10,7 +10,7 @@ import D5.S3.Combinatorics.Graph.TokenGraph.CutBoundRefutation
 
 /-! Exact ordinary cut scaling via finite coordinate rounding. -/
 
-open Finset Classical
+open Finset
 open scoped BigOperators
 set_option autoImplicit false
 namespace D5.S3.Combinatorics.Graph.TokenGraph.BlowupMaxCut
@@ -48,7 +48,7 @@ private lemma score_interpolate {n : ℕ} (H : SimpleGraph (Fin n)) (s : ℤ)
   · have huv : u ≠ v := H.ne_of_adj h
     by_cases hu : u = i <;> by_cases hv : v = i
     · exact False.elim (huv (hu.trans hv.symm))
-    all_goals simp [h, Function.update, hu, hv]; ring
+    all_goals simp [h, Function.update, hu, hv] <;> ring
   · simp [h]
 
 private lemma score_endpoint {n : ℕ} (H : SimpleGraph (Fin n)) (s : ℤ)
@@ -112,6 +112,7 @@ private lemma occupancy_le {n s : ℕ} (S : Finset (Fin (n * s))) (i : Fin n) :
   simpa [occupancy] using Finset.card_filter_le (Finset.univ : Finset (Fin s))
     (fun a => finProdFinEquiv (i,a) ∈ S)
 
+open Classical in
 private lemma cut_eq_score {n s : ℕ} (H : SimpleGraph (Fin n))
     [DecidableRel H.Adj] (S : Finset (Fin (n * s))) :
     (((blowup H s).edgeFinset.filter (CutBoundRefutation.crosses S)).card : ℤ) =
@@ -193,6 +194,7 @@ private lemma occupancy_lift {n s : ℕ} (T : Finset (Fin n)) (i : Fin n) :
   simp only [occupancy, hp]
   by_cases hi : i ∈ T <;> simp [hi]
 
+open Classical in
 private lemma lift_count {n s : ℕ} (H : SimpleGraph (Fin n)) [DecidableRel H.Adj]
     (T : Finset (Fin n)) :
     ((blowup H s).edgeFinset.filter (CutBoundRefutation.crosses (liftCut s T))).card =
@@ -215,6 +217,7 @@ private lemma lift_count {n s : ℕ} (H : SimpleGraph (Fin n)) [DecidableRel H.A
   exact_mod_cast he
 
 /-- Any cut is dominated by a cut consisting of whole blocks. -/
+open Classical in
 theorem exists_block_cut {n s : ℕ} (H : SimpleGraph (Fin n)) [DecidableRel H.Adj]
     (hs : 1 ≤ s) (S : Finset (Fin (n * s))) :
     ∃ T : Finset (Fin n),
@@ -232,7 +235,7 @@ theorem exists_block_cut {n s : ℕ} (H : SimpleGraph (Fin n)) [DecidableRel H.A
     · have hz : y i = 0 := (hy i).resolve_right hi
       have hit : i ∉ T := by
         simpa only [T, Finset.mem_filter, Finset.mem_univ, true_and] using hi
-      simp only [if_neg hit, Nat.cast_zero, hz]
+      simp [hit, hz]
   refine ⟨T, ?_⟩
   have hc : (((blowup H s).edgeFinset.filter (CutBoundRefutation.crosses S)).card : ℤ) ≤
       ((blowup H s).edgeFinset.filter (CutBoundRefutation.crosses (liftCut s T))).card := by
@@ -250,13 +253,17 @@ theorem maxCut_blowup {n s : ℕ} (H : SimpleGraph (Fin n)) [DecidableRel H.Adj]
     intro S _
     obtain ⟨T, hT⟩ := exists_block_cut H hs S
     rw [lift_count] at hT
-    exact hT.trans (Nat.mul_le_mul_left _ (Finset.le_sup (Finset.mem_univ T)))
+    exact hT.trans (Nat.mul_le_mul_left _ (Finset.le_sup
+      (f := fun U => (H.edgeFinset.filter (CutBoundRefutation.crosses U)).card)
+      (Finset.mem_univ T)))
   · obtain ⟨T, _, hT⟩ := Finset.exists_mem_eq_sup
       (Finset.univ : Finset (Finset (Fin n))) ⟨∅, Finset.mem_univ _⟩
       (fun T => (H.edgeFinset.filter (CutBoundRefutation.crosses T)).card)
     change CutBoundRefutation.maxCut H = _ at hT
     rw [hT, ← lift_count H T]
-    exact Finset.le_sup (Finset.mem_univ (liftCut s T))
+    exact Finset.le_sup
+      (f := fun U => ((blowup H s).edgeFinset.filter (CutBoundRefutation.crosses U)).card)
+      (Finset.mem_univ (liftCut s T))
 
 #print axioms exists_block_cut
 #print axioms maxCut_blowup
