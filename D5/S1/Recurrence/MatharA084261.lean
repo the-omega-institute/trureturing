@@ -5,6 +5,14 @@
    anchors: []
    utility: none
    digest: The literal even-binomial-factorial recurrence. -/
+/-
+proof_shape: result: bind-only
+admission_basis: open-problem-resolution (issue #27208)
+Direct frozen project dependencies: none; pinned Mathlib identities and normalization.
+The sum and universal integer recurrence are the exact designated external event.
+The source gives no onset; n >= 3 keeps all predecessor indices nonnegative.
+The Reg mirror is an audit attempt, not a declared_validated or publication claim.
+-/
 import Mathlib.Data.Nat.Choose.Sum
 import Mathlib.Data.Nat.Factorial.Basic
 import Mathlib.Tactic
