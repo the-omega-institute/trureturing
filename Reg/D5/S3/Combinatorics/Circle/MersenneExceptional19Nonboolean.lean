@@ -115,8 +115,9 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "arg"],
-      stateBinder := 3,
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "fn", "arg", "fn", "arg", "arg", "body"],
+      stateBinder := 8,
       functionOperand := false,
       stateOperand := none,
       booleanPredicate := false }] }
