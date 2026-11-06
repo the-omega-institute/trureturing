@@ -6,6 +6,17 @@
    utility: none
    digest: The reduced denominator equality for the original Groux A120069 Catalan partial sums. -/
 
+
+
+import Mathlib.Combinatorics.Enumerative.Catalan.Basic
+import Mathlib.Data.Rat.Lemmas
+import Mathlib.Order.Interval.Finset.Nat
+import Mathlib.Algebra.BigOperators.Intervals
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.Push
 /-!
 The finite-sum identity is the Catalan form of Mostert's identity in A119951.
 The only public result is the original positive-index A120069 conjecture.
@@ -14,20 +25,11 @@ result respectively. No escape witness is asserted. Admission is intended via
 open-problem-resolution, prospectively registered in issue #27467.
 -/
 
-import Mathlib.Combinatorics.Enumerative.Catalan.Basic
-import Mathlib.Data.Rat.Lemmas
-import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Push
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 open scoped BigOperators
 namespace D5.S3.ArithSums.GrouxA120069Denominator
-set_option maxHeartbeats 1000000
 private theorem balance (n : ℕ) :
     ((n : ℚ) + 2) * (catalan (n+1) : ℚ) = 2 * (2*n+1) * (catalan n : ℚ) := by
   have h := Nat.succ_mul_centralBinom_succ n
@@ -37,6 +39,7 @@ private theorem balance (n : ℕ) :
   have hn : (n : ℚ)+1 ≠ 0 := by positivity
   apply (mul_left_cancel₀ hn)
   nlinarith [hq]
+set_option maxHeartbeats 1000000 in
 private theorem sum_formula (n : ℕ) (hn : 0 < n) :
     (∑ k ∈ Finset.Icc 1 n, (catalan k : ℚ) / (4 : ℚ)^(k-1)) =
       4 - (2*n+1) * (catalan n : ℚ) / (4 : ℚ)^(n-1) := by
