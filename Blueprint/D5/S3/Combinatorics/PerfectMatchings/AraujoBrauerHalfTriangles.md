@@ -38,7 +38,7 @@ $$\forall (n r : \mathbb{N}) , ThroughSets n r = (\{T : Finset (Fin n) \mid T . 
 
 *Commentary.*
 
-The formula gives the quantified defining expression.
+ThroughSets is the consumed domain view of D5.S3.Combinatorics.Geometry.CrownOrderPolytopeEnumeration.PositionSet. The displayed subtype is its defining carrier; its values and cardinality proofs also index the dependent complement and ordered through labels.
 
 **Definition 1.4 (HalfDiagram).**
 
@@ -162,6 +162,7 @@ The formula gives the quantified statement.
 - Truth anchor: `D5/S3/Combinatorics/PerfectMatchings/AraujoBrauerHalfTriangles.half_diagram_supported_triangle_structure`
 - Truth anchor: `D5/S3/Combinatorics/PerfectMatchings/AraujoBrauerHalfTriangles.triangle_image_adjacent`
 - Truth anchor: `D5/S3/Combinatorics/PerfectMatchings/AraujoBrauerHalfTriangles.triangle_image_card_rank`
+- Dependency: [D5/S3/Combinatorics/Geometry/CrownOrderPolytopeEnumeration](../Geometry/CrownOrderPolytopeEnumeration.md)
 - Dependency: [D5/S3/Combinatorics/PerfectMatchings/AraujoBrauerSourceMonoids](AraujoBrauerSourceMonoids.md)
 - Dependency: [D5/S3/Combinatorics/PerfectMatchings/AraujoBrauerSubsetPairing](AraujoBrauerSubsetPairing.md)
 - Dependency: [D5/S3/Zeros/Convolution/PerfectMatchingCount](../../Zeros/Convolution/PerfectMatchingCount.md)
