@@ -996,17 +996,17 @@ private theorem actual_profile (r h : ℕ) (hh : h<3*degree r) :
 
 /-- The zero locations of the proved profile. The endpoint clauses include r=0. -/
 private def zeroAt (r h : ℕ) : Prop :=
-  if h<degree r then h%18≠4 ∧ h%18≠13 ∧ h≠degree r-1
-  else if h<2*degree r then
+  (h<degree r ∧ h%18≠4 ∧ h%18≠13 ∧ h≠degree r-1) ∨
+  (degree r≤h ∧ h<2*degree r ∧
     ((h-degree r)%18=0 ∨ (h-degree r)%18=1 ∨ (h-degree r)%18=2 ∨
      (h-degree r)%18=3 ∨ (h-degree r)%18=5 ∨ (h-degree r)%18=6 ∨
      (h-degree r)%18=8 ∨ (h-degree r)%18=13 ∨ (h-degree r)%18=16 ∨
-     h=2*degree r-3)
-  else h<3*degree r ∧
+     h=2*degree r-3)) ∨
+  (2*degree r≤h ∧ h<3*degree r ∧
     ((h-2*degree r)%18=0 ∨ (h-2*degree r)%18=1 ∨ (h-2*degree r)%18=2 ∨
      (h-2*degree r)%18=7 ∨ (h-2*degree r)%18=12 ∨ (h-2*degree r)%18=13 ∨
      (h-2*degree r)%18=14 ∨ (h-2*degree r)%18=15 ∨ (h-2*degree r)%18=17 ∨
-     h=3*degree r-2 ∨ h=3*degree r-1)
+     h=3*degree r-2 ∨ h=3*degree r-1))
 
 private theorem phase0_zero (r j : ℕ) (hj : j<degree r) :
     F0 j-(if j=degree r-1 then 1 else 0)=0 ↔
@@ -1040,15 +1040,15 @@ private theorem phase2_zero (r j : ℕ) (hj : j<degree r) :
 private theorem profile_zero (r h : ℕ) (hh : h<3*degree r) :
     profile r h=0 ↔ zeroAt r h := by
   by_cases h0 : h<degree r
-  · rw [profile,if_pos h0,zeroAt,if_pos h0,phase0_zero r h h0]
+  · rw [profile,if_pos h0,phase0_zero r h h0]
+    dsimp [zeroAt,degree] at *
+    omega
   · by_cases h1 : h<2*degree r
-    · rw [profile,if_neg h0,if_pos h1,zeroAt,if_neg h0,if_pos h1,
-        phase1_zero r (h-degree r) (by omega)]
-      dsimp [degree] at *
+    · rw [profile,if_neg h0,if_pos h1,phase1_zero r (h-degree r) (by omega)]
+      dsimp [zeroAt,degree] at *
       omega
-    · rw [profile,if_neg h0,if_neg h1,zeroAt,if_neg h0,if_neg h1,
-        phase2_zero r (h-2*degree r) (by omega)]
-      dsimp [degree] at *
+    · rw [profile,if_neg h0,if_neg h1,phase2_zero r (h-2*degree r) (by omega)]
+      dsimp [zeroAt,degree] at *
       omega
 
 private theorem actual_zero_profile (r h : ℕ) :
@@ -1078,25 +1078,46 @@ predicate, including the predecessor and successor, for every r. No counts
 of runs, finite r controls, or marker uniqueness assumptions are used. -/
 private theorem unique_marker (r h : ℕ) (hh : h<3*degree r) :
     marker r h ↔ h=2*degree r := by
-  have hk : 0<3*degree r := by dsimp [degree] <;> omega
-  have hprev : (h+(3*degree r-1))%(3*degree r) =
-      if h=0 then 3*degree r-1 else h-1 := by
-    by_cases he : h=0
-    · simp only [he,zero_add,if_pos rfl]
-      exact Nat.mod_eq_of_lt (by omega)
-    · rw [if_neg he,show h+(3*degree r-1)=(h-1)+3*degree r by omega,
-        Nat.add_mod_right,Nat.mod_eq_of_lt (by omega)]
-  have hn (q : ℕ) (hq : q≤3) : (h+q)%(3*degree r) =
-      if h+q<3*degree r then h+q else h+q-3*degree r := by
-    by_cases he : h+q<3*degree r
-    · simp only [if_pos he,Nat.mod_eq_of_lt he]
-    · rw [if_neg he,Nat.mod_eq_sub_mod (by omega),Nat.mod_eq_of_lt (by
-        dsimp [degree] at *; omega)]
-  rw [marker,hprev,Nat.mod_eq_of_lt hh,hn 1 (by omega),hn 2 (by omega),hn 3 (by omega)]
-  dsimp [zeroAt,degree] at *
-  have hres : h%18<18 := Nat.mod_lt _ (by norm_num)
-  generalize hqeq : h%18=q at *
-  interval_cases q <;> split_ifs <;> omega
+  have hk : 0<3*degree r := by dsimp [degree]; omega
+  have hsmall (q : ℕ) (hq : q≤3) : zeroAt r q := by
+    have hqmod : q%18=q := Nat.mod_eq_of_lt (by omega)
+    unfold zeroAt
+    left
+    dsimp [degree]
+    rw [hqmod]
+    omega
+  by_cases he : h=0
+  · subst h
+    have hz : zeroAt r ((0+3)%(3*degree r)) := by
+      rw [Nat.mod_eq_of_lt (by dsimp [degree]; omega)]
+      exact hsmall 3 (by omega)
+    apply iff_of_false
+    · intro hm
+      exact hm.2.2.2.2 hz
+    · dsimp [degree]
+      omega
+  · by_cases hn : h+3<3*degree r
+    · have hprev : (h+(3*degree r-1))%(3*degree r)=h-1 := by
+        rw [show h+(3*degree r-1)=(h-1)+3*degree r by omega,
+          Nat.add_mod_right,Nat.mod_eq_of_lt (by omega)]
+      have hnext (q : ℕ) (hq : q≤3) : (h+q)%(3*degree r)=h+q :=
+        Nat.mod_eq_of_lt (by omega)
+      rw [marker,hprev,Nat.mod_eq_of_lt hh,hnext 1 (by omega),
+        hnext 2 (by omega),hnext 3 (by omega)]
+      clear hprev hnext hsmall
+      dsimp [zeroAt,degree] at *
+      have hres : h%18<18 := Nat.mod_lt _ (by norm_num)
+      interval_cases hqeq : h%18 <;> omega
+    · have hm : (h+3)%(3*degree r)=h+3-3*degree r := by
+        rw [Nat.mod_eq_sub_mod (by omega),Nat.mod_eq_of_lt (by omega)]
+      have hz : zeroAt r ((h+3)%(3*degree r)) := by
+        rw [hm]
+        exact hsmall _ (by omega)
+      apply iff_of_false
+      · intro hmark
+        exact hmark.2.2.2.2 hz
+      · dsimp [degree] at *
+        omega
 
 private theorem marker_mod (r h : ℕ) :
     marker r (h%(3*degree r)) ↔ marker r h := by
