@@ -67,8 +67,8 @@ private theorem empty_corner {G : Type} (g : GraphData G V) :
     corner g.ground ∅ ∅ g.rows.root = g.rows.root := by
   apply SetLike.ext
   intro s
-  change (s ⊆ residual g.ground ∅ ∅ ∧ s ∪ ∅ ∈ g.rows.root) ↔ s ∈ g.rows.root
-  simp only [residual, Finset.union_empty, Finset.sdiff_empty]
+  change (s ⊆ HistoryCorners.residual g.ground ∅ ∅ ∧ s ∪ ∅ ∈ g.rows.root) ↔ s ∈ g.rows.root
+  simp only [HistoryCorners.residual, Finset.union_empty, Finset.sdiff_empty]
   exact ⟨fun hs => hs.2, fun hs => ⟨g.rows.root_supported s hs, hs⟩⟩
 
 private def strongOfSingleton {W : Finset V} {K : Family V}
@@ -96,8 +96,8 @@ def certificate {n : Nat} {G : Type} {g : GraphData G V}
     (h : MixedHistory n G g) : Certificate g.ground g.rows.root := by
   have o := HistoryRecursion.allCornersOutput h ∅ ∅
     (Finset.empty_subset _) (Finset.empty_subset _) (by simp)
-  have hground : residual g.ground ∅ ∅ = g.ground := by
-    simp only [residual, Finset.union_empty, Finset.sdiff_empty]
+  have hground : HistoryCorners.residual g.ground ∅ ∅ = g.ground := by
+    simp only [HistoryCorners.residual, Finset.union_empty, Finset.sdiff_empty]
   rw [hground, empty_corner g] at o
   exact strongOfSingleton o (root_has_singleton h)
 
