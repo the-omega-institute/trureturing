@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.OffLinePeak;
 
 internal sealed class OriginalLocalADocument : IScribeDocumentDefinition
 {
@@ -15,7 +15,7 @@ internal sealed class OriginalLocalADocument : IScribeDocumentDefinition
             Paragraph(Text("The substantive addition is the signed endpoint-to-finite-arithmetic chain and this original parameter conclusion. Standard Fubini and Gaussian analysis and previously merged zeta suppliers are reused. No RH proof, unconditional Robin counterexample, official Comparator acceptance, full first-pairing P^(1/12) saving or literature-priority claim follows. All results are analytic implications, not finite numerical certificates.")),
             Describe.Lean(
                 DescribeId.Create("originallocala-original-zero-robin5040-locala"),
-                DeclarationHandle.Create("D5/S3/Arith/Robin/OriginalLocalA.original_zero_robin5040_localA"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/OffLinePeak/OriginalLocalA.original_zero_robin5040_localA"),
                 H("The exact original local-A Robin5040 implication"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The exact original four-binder implication with its strict peak, strict 5040 cutoff, strict Robin violation, original local t interval and global N bound."))),
