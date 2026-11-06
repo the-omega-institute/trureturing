@@ -33,13 +33,10 @@ internal sealed class MatharA084261Document : IScribeDocumentDefinition
                     + "The weighted binomial identity, with its vanishing boundary terms and justified subtraction cast, "
                     + "then eliminates the shifted transforms. A nonzero-summand bijection k -> k/2 identifies T(b,n) "
                     + "with the literal finite sum, including odd-term vanishing and both endpoints. Substituting n=m+3 covers every n>=3. "
-                    + "The proof is bind-only after inlining normalization and upstream identities; the intended admission basis is "
-                    + "open-problem-resolution under issue #27208, with utility none. No escape witness or worldwide novelty is claimed. "
                     + "The domain is inhabited (n=3); a(0)=1 and a(2)=2 distinguish actual observations, and the constant-one "
-                    + "sequence fails the same law at n=3. The typed Reg mirror attempts source reconstruction, variation and sensitivity. "
-                    + "The audit remains declared_unresolved with IE-C050 ClosedTruthReadout, unclassified_form, source.roles; "
-                    + "issue #27208 discloses the missing classified source-role binding and certificate. "
-                    + "The resolution claim concerns the frozen mathematical result and does not assert declared_validated.",
+                    + "sequence fails the same law at n=3. The conclusion concerns only the displayed finite sum and recurrence "
+                    + "for natural n>=3; it gives no negative-index extension, generating-function identity, asymptotic estimate "
+                    + "or recurrence for another sequence.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("mathar-2012-a084261-recurrence"),
