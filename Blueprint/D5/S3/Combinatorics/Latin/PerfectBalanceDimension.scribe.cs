@@ -23,16 +23,17 @@ internal sealed class PerfectBalanceDimensionDocument : IScribeDocumentDefinitio
             Node("imbalance", "Total imbalance", "imbalance", ImbalanceFormula(),
                 "The double sum keeps only u less than v, so each unordered pair contributes exactly once. Every contribution is nonnegative; zero imbalance therefore gives the same distance k(n+1)/3 for every distinct pair.", true, DescribeRole.Definition),
             Node("result", "The full dimension bound", "result", ResultFormula(),
-                "This is the direct implication in Li–Ganesh, Section 10 open problem (5), for every positive 1 ≤ k ≤ n. The n = 1 case is explicit. For n ≥ 2 choose a first row permutation p and weights a(u)=2 val(p(u))+1−n. Bijection reindexing gives sum a=0 and N=sum a²=n(n²−1)/3. For any coordinate q, the finite-cut identity gives E(q)=−sum over ordered u,v of a(u)a(v)|q(u)−q(v)|=2 sum over cuts of the squared partial weight sum, hence E(q)≥0. In the first row the cut sums are −(j+1)(j+1−n), and Mathlib's rational Faulhaber theorem gives E(p)=n(n⁴−1)/15. Equal pair distances give sum E(q)=k(n+1)N/3. Keeping the first nonnegative row energy yields k(n+1)/3≥(n²+1)/5. For the integer n≥2, (n−2)(n−3)≥0, including the separate n=2 and n=3 cases, yields n≤2k. Column injectivity remains in the original carrier, although the estimate needs only the row bijections. This does not settle the general ℓ1 Kusner conjecture or nonsquare impossibility.", false, DescribeRole.Theorem)),
+                "This is the direct implication in Li–Ganesh, Section 10 open problem (5), for every positive 1 ≤ k ≤ n. The n = 1 case is explicit. For n ≥ 2 choose a first row permutation p and weights a(u)=2 val(p(u))+1−n. Bijection reindexing gives sum a=0 and N=sum a²=n(n²−1)/3. For any coordinate q, the finite-cut identity gives E(q)=−sum over ordered u,v of a(u)a(v)|q(u)−q(v)|=2 sum over cuts of the squared partial weight sum, hence E(q)≥0. In the first row the cut sums are −(j+1)(j+1−n), and Mathlib's rational Faulhaber theorem gives E(p)=n(n⁴−1)/15. Equal pair distances give sum E(q)=k(n+1)N/3. Keeping the first nonnegative row energy yields k(n+1)/3≥(n²+1)/5. For the integer n≥2, (n−2)(n−3)≥0, including the separate n=2 and n=3 cases, yields n≤2k. Column injectivity remains in the original carrier, although the estimate needs only the row bijections. This does not settle the general ℓ1 Kusner conjecture or nonsquare impossibility.", false, DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("li-ganesh-perfect-latin-dimension"), ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration,
-        Formula formula, string prose, bool literature, DescribeRole role) =>
+        Formula formula, string prose, bool literature, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("perfect-balance-dimension-" + id),
             DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(formula),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
