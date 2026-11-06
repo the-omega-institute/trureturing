@@ -1,0 +1,127 @@
+**Theorem 42.1 (original-coordinate ground law with exact normalization).**
+Choose any normalized actual full ground $f_\kappa$ of (35.1) in either
+critical family. Set $c=c_\sigma$, $\ell=\ell_{\sigma,\kappa}$ and
+$w=w_{\sigma,\kappa}$ from (38.2)--(38.4). With the actual representative
+$D\in[-\pi,\pi]$, the rescaled probability densities, extended by zero
+outside their displayed charts, satisfy
+
+$$
+\left\|
+ \ell\,|f_\kappa(k,\theta,v,\ell y)|^2
+          1_{\{|y|<\pi/\ell\}}
+ -\frac{u_c(k)^2}{(2\pi)^2}
+           \sqrt{\frac{\gamma_\sigma}{\pi}}e^{-\gamma_\sigma y^2}
+\right\|_{L^1(dk\,d\theta\,dv\,dy)}\longrightarrow0.
+\tag{42.1}
+$$
+
+Equivalently, in the independent length $w$ the law is
+
+$$
+\left\|
+ w\,|f_\kappa(k,\theta,v,wz)|^2
+          1_{\{|z|<\pi/w\}}
+ -\frac{u_c(k)^2}{(2\pi)^2}\frac{e^{-z^2}}{\sqrt\pi}
+\right\|_{L^1(dk\,d\theta\,dv\,dz)}\longrightarrow0.
+\tag{42.2}
+$$
+
+These are laws of the entire normalized ground state on the original
+completed domain, not of a prescribed ansatz. They hold for every
+fixed original $s\in\mathbb R$, $b>0$, $g>0$ through both signs.
+They include tightness on the shrinking scale and independence of the
+limiting hidden fluctuation from the normalized height and visible
+laws. They assert no such independence of the native processes at
+finite parameter.
+
+In particular, for every $R\ge0$,
+
+$$
+\mathbb P_{|f_\kappa|^2d\mu}\{\rho(D)\le Rw\}
+ \longrightarrow\operatorname{erf}(R)
+ :=\frac1{\sqrt\pi}\int_{-R}^{R}e^{-z^2}\,dz.
+\tag{42.3}
+$$
+
+For $0<p<1$, let $q_\kappa(p)$ be the least radius containing ground
+probability $p$. Then
+
+$$
+\frac{q_\kappa(p)}{w_{\sigma,\kappa}}
+       \longrightarrow\operatorname{erf}^{-1}(p).
+\tag{42.4}
+$$
+
+Thus $w$ specifies an actual ground fluctuation width, including the
+leading coefficient of every fixed probability radius, without being
+defined by such a radius. No convergence of unbounded moments is
+needed for (42.1)--(42.4).
+
+Proof. Let $\widehat f_\kappa$ be the normalized positive ground of
+$\widehat{\mathscr H}_\kappa=L_\kappa-gU_\kappa$.
+For small parameters, (41.6)--(41.7) identify it with
+$(2\pi)^{-1}f_\kappa^{\rm bl}$. Theorem 40.3 and the same exclusion
+of nonzero visible pairs give its actual full gap
+
+$$
+\widehat\Delta_\kappa
+ =2\omega_\sigma h+o(h).
+\tag{42.5}
+$$
+
+Put $\delta_\kappa=\|W_\kappa-U_\kappa\|_\infty=o(h)$.
+For the original normalized ground, bounded perturbation comparison
+gives
+
+$$
+\widehat{\mathfrak q}_\kappa[f_\kappa]
+ \le\Lambda_{\sigma,1}+g\delta_\kappa
+ \le\widehat\Lambda_{\kappa,1}+2g\delta_\kappa.
+\tag{42.6}
+$$
+
+The spectral theorem and (42.5) therefore imply
+
+$$
+\|(1-|\widehat f_\kappa\rangle
+                  \langle\widehat f_\kappa|)f_\kappa\|_2^2
+ \le\frac{2g\delta_\kappa}{\widehat\Delta_\kappa}
+ \longrightarrow0.
+\tag{42.7}
+$$
+
+Consequently, after constant phases,
+$\|f_\kappa-\widehat f_\kappa\|_2\to0$.
+This step uses the attained actual eigenstate, its full Rayleigh
+quotient and the proved auxiliary full gap. It does not infer an
+eigenstate law from upper-bound trials.
+
+The change of variables $D=\ell y$ is unitary after multiplying
+amplitudes by $\sqrt\ell$. Equation (40.11) now gives, with zero
+extension outside the chart,
+
+$$
+\sqrt\ell\,f_\kappa(k,\theta,v,\ell y)
+ \longrightarrow\frac{u_c(k)}{2\pi}\psi_\sigma(y)
+ \quad\hbox{strongly in }L^2(dk\,d\theta\,dv\,dy),
+\tag{42.8}
+$$
+
+up to constant phases. The elementary bound
+$\||F|^2-|G|^2\|_1\le(\|F\|_2+\|G\|_2)\|F-G\|_2$
+proves (42.1) without any phase convention on probabilities.
+The further fixed rescaling $y=z/\sqrt{\gamma_\sigma}$ gives
+(42.2). Its normalization is exact:
+$\int_Iu_c^2dk=1$, the raw visible volume is $(2\pi)^2$, and
+$\int_{\mathbb R}e^{-z^2}dz=\sqrt\pi$.
+Thus neither the hidden Jacobian nor a circle-volume factor has
+been absorbed into an unspecified constant.
+
+Integrating (42.2) over $k,\theta,v$ and $|z|\le R$ proves (42.3).
+For any fixed $0<p<1$, strict continuity and monotonicity of
+$\operatorname{erf}$, tested at radii on either side of
+$\operatorname{erf}^{-1}(p)$, squeeze $q_\kappa(p)/w$ to (42.4).
+Tightness and uniqueness of the ground limit were supplied by
+Lemma 40.2 and the simple oscillator bottom; (42.7) transfers both
+to every original normalized full ground family. $\square$
+

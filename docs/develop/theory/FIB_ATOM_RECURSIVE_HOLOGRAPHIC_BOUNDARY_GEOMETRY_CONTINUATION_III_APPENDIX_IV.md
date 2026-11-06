@@ -1057,11 +1057,11 @@ $$
 
 Equation (171.8) gives the first equality in (171.11), and the legality argument of Proposition 171.1 applies uniformly.
 
-It remains to bound the other coordinates. Every linear term vanishes because $v_n\in V$. Every cubic term in $v_n$ vanishes by half-turn parity: $g$, $f_y$ and $P$ are $J$-even, while $v_n$ is $J$-odd. Each of the three quadratic terms has absolute value at most $G_0F,m(B_n)$. For the term with the last occurrence of $v_n$, move $P$ across the pairing once; the remaining factor $v_n$ is then supported in $B_n$. Consequently
+It remains to bound the other coordinates. Every linear term vanishes because $v_n\in V$. Every cubic term in $v_n$ vanishes by half-turn parity: $g$, $f_y$ and $P$ are $J$-even, while $v_n$ is $J$-odd. Each of the three quadratic terms has absolute value at most $G_0F\,m(B_n). For the term with the last occurrence of $v_n$, move $P$ across the pairing once; the remaining factor $v_n$ is then supported in $B_n$. Consequently
 
 $$
 \bigl\|\Delta(f+t\sigma v_n)-\Delta(f)\bigr\|_{\max}
-\le 3G_0F,t^2m(B_n).
+\le 3G_0F\,t^2m(B_n).
 \tag{171.15}
 $$
 
@@ -1076,3 +1076,151 @@ $$
 Since $r_n=t^2s_n\to0$, (171.15)–(171.16) prove the second limit in (171.11); the third is already $s_n\to0$. The construction keeps $\Lambda_{134}(P^jv_n)=0$ for every $j\ge0$ by Corollary 170.2. The result leaves exact full-law attainment, deterministic partition realization, $H43$, SRS$\text{-}20$, $F_{64}$, physical succession and Lean/kernel formalization open. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+
+## 172. A paired-coordinate boundary for the invariant terminal family
+
+The compensator in Section 171 is chosen to cancel one coordinate. On the rotation-odd directions from Section 170, half-turn parity fixes the companion coordinates as well, so the same one-dimensional terminal family cannot cancel the off-diagonal pair at the same time.
+
+**Proposition 172.1 (exact paired-coordinate obstruction).** Let $v\in V_-$ be nonzero, let $E$ and $s_t>0$ be supplied by Proposition 171.1, and put
+
+$$
+F=f_0=f_1,
+\qquad q=f_3,
+\qquad w_t=-s_t\mathbf 1_E,
+\qquad B_E=\mathcal C(F,F,\mathbf 1_E)>0.
+\tag{172.1}
+$$
+
+For the legal tuple $u^{(t;v,w_t)}$ of (158.1), write
+
+$$
+A=\mathcal C(v,v,q)=q_{003}(v)>0,
+\qquad C_E=\mathcal C(v,v,\mathbf 1_E).
+\tag{172.2}
+$$
+
+Then, for every sufficiently small nonzero $t$,
+
+$$
+\begin{aligned}
+\Delta(u^{(t;v,w_t)})_{003}
+ &=t^2(A-s_tB_E)-t^4s_tC_E,\\
+\Delta(u^{(t;v,w_t)})_{013}
+ =\Delta(u^{(t;v,w_t)})_{103}
+ &=-t^2(A+s_tB_E)+t^4s_tC_E,\\
+\Delta(u^{(t;v,w_t)})_{113}
+ &=\Delta(u^{(t;v,w_t)})_{003}.
+\end{aligned}
+\tag{172.3}
+$$
+
+Consequently,
+
+$$
+\Delta(u^{(t;v,w_t)})_{013}
+ =\Delta(u^{(t;v,w_t)})_{103}
+ =-2t^2s_tB_E-\Delta(u^{(t;v,w_t)})_{003}.
+\tag{172.4}
+$$
+
+In particular, the exact compensation from Proposition 171.1 satisfies
+
+$$
+\Delta(u^{(t;v,w_t)})_{003}=0
+\quad\Longrightarrow\quad
+\Delta(u^{(t;v,w_t)})_{013}
+ =\Delta(u^{(t;v,w_t)})_{103}
+ =-2t^2s_tB_E<0.
+\tag{172.5}
+$$
+
+*Proof.* The half-turn $J$ preserves $P$, $g$, $F$, $q$ and the invariant set $E$, while $J^*v=-v$. Hence every trilinear term with exactly one occurrence of $v$ vanishes. Expanding (158.1) in the $003$ coordinate gives
+
+$$
+\Delta_{003}
+ =t^2\bigl[\mathcal C(v,v,q)+\mathcal C(F,F,w_t)\bigr]
+   +t^4\mathcal C(v,v,w_t),
+\tag{172.6}
+$$
+
+and expanding the $013$ coordinate gives
+
+$$
+\Delta_{013}
+ =t^2\bigl[-\mathcal C(v,v,q)+\mathcal C(F,F,w_t)\bigr]
+   -t^4\mathcal C(v,v,w_t).
+\tag{172.7}
+$$
+
+The same-sign pair $(1,1)$ has the even quadratic terms of $(0,0)$, while the mixed pairs $(0,1)$ and $(1,0)$ have the expression (172.7). Substituting $w_t=-s_t\mathbf1_E$ yields (172.3), and adding the first two displayed expressions gives (172.4). Proposition 171.1 gives $B_E>0$, $s_t>0$, and the exact $003$ cancellation, so (172.5) follows. $\square$
+
+Thus the Section 171 family has an exact one-coordinate zero but no simultaneous zero of the three coordinates $003$, $013$ and $103$ at nonzero amplitude. The obstruction is specific to a rotation-odd first-order direction and a single rotation-invariant terminal compensator; multi-direction corrections, non-invariant compensators, and the remaining full-law, partition, $H43$, $SRS\text{-}20$, $F_{64}$, physical-succession and Lean/kernel questions remain open.
+
+## 173. Positive B-companion residuals on the invariant terminal family
+
+The paired-coordinate obstruction of Section 172 already prevents the single invariant compensator from cancelling the mixed $0$--$1$ coordinates. The same family has an independent sign obstruction on the coordinates whose two terminal labels are $B$.
+
+**Proposition 173.1 (strict positive $0BB$ and $1BB$ residuals).** Let $v\in V_-$ be nonzero, let $E$ and $s_t>0$ be supplied by Proposition 171.1, and put
+
+$$
+F=f_0=f_1,
+\qquad p=f_B=\frac14,
+\qquad e=\mathbf1_E,
+\qquad w_t=-s_t e.
+\tag{173.1}
+$$
+
+Define
+
+$$
+H_E=\mathcal C(F,e,p)+\mathcal C(F,p,e),
+\qquad
+J_E=\mathcal C(F,e,e).
+\tag{173.2}
+$$
+
+Then
+
+$$
+H_E
+=p\int_G gF\bigl(Pe+P^2e\bigr)\,dm>0,
+\qquad
+J_E=\int_G gF\,P(ePe)\,dm\ge0.
+\tag{173.3}
+$$
+
+For every sufficiently small nonzero $t$ for which the tuple $u^{(t;v,w_t)}$ is legal,
+
+$$
+\Delta\bigl(u^{(t;v,w_t)}\bigr)_{0BB}
+ =\Delta\bigl(u^{(t;v,w_t)}\bigr)_{1BB}
+ =t^2s_tH_E+t^4s_t^2J_E>0.
+\tag{173.4}
+$$
+
+*Proof.* Put $r=t^2s_t$, so that the two $B$ coordinates in (158.1) equal $p+re$. Expanding the $0BB$ coefficient around $(F,p,p)$ gives
+
+$$
+\begin{aligned}
+\Delta_{0BB}
+={}&t\mathcal C(v,p,p)
++r\bigl[\mathcal C(F,e,p)+\mathcal C(F,p,e)\bigr]\\
+&+tr\bigl[\mathcal C(v,e,p)+\mathcal C(v,p,e)\bigr]
++r^2\mathcal C(F,e,e)
++tr^2\mathcal C(v,e,e).
+\end{aligned}
+\tag{173.5}
+$$
+
+The half-turn preserves $P$, $g$, $F$, $p$ and $e$, while $J^*v=-v$. Every term in (173.5) containing exactly one $v$ therefore vanishes. The remaining terms give the first equality in (173.4). Replacing $u_0=F+tv$ by $u_1=F-tv$ changes only the terms containing one $v$, so the same formula holds for $1BB$.
+
+For (173.3), positivity preservation, self-adjointness and $P1=1$ give $Pe,P^2e\ge0$ and
+
+$$
+\int_G Pe\,dm=\int_G P^2e\,dm=\int_G e\,dm>0.
+$$
+
+Since $gF>0$ almost everywhere, the first integral in (173.3) is strictly positive. Also $ePe\ge0$ and positivity preservation gives $P(ePe)\ge0$, proving $J_E\ge0$. Finally $t\ne0$ and $s_t>0$ imply $t^2s_tH_E>0$, so (173.4) is strict. $\square$
+
+Thus the invariant single-compensator family carries simultaneous strict signs: Section 172 gives negative $013$ and $103$ after exact $003$ cancellation, while (173.4) gives positive $0BB$ and $1BB$ for every nonzero amplitude. These are pointwise obstructions for this ansatz, not a uniform positive lower bound: the displayed quantities can tend to zero under the shrinking variable-ray constructions of Section 171. Multi-direction or non-invariant corrections, full-law partition realization, $H43$, $SRS\text{-}20$, $F_{64}$, physical succession and Lean/kernel formalization remain open.
