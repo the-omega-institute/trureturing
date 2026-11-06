@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.PriceRecord;
 
 internal sealed class ActualBalancedExtremizerDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Arith/Robin/ActualBalancedExtremizer.";
+    private const string Prefix = "D5/S3/Arith/Robin/PriceRecord/ActualBalancedExtremizer.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An original Robin failure yields an attained minimum and a unique optimizer at the same integer's internal price.",

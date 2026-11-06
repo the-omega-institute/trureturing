@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/Robin/ActualBalancedExtremizer
+/- GID: D5/S3/Arith/Robin/PriceRecord/ActualBalancedExtremizer
    generality: I
-   mirror-B: D5/B/S3/Arith/Robin/ActualBalancedExtremizer
+   mirror-B: D5/B/S3/Arith/Robin/PriceRecord/ActualBalancedExtremizer
    mirror-E: none(waiver:qualitative-all-integer-reduction)
    anchors: []
    utility: none

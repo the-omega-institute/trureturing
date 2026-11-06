@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Robin.PriceRecord.CurvatureCorrectedArithmeticSurplus
-import D5.S3.Arith.Robin.ActualBalancedExtremizer
+import D5.S3.Arith.Robin.PriceRecord.ActualBalancedExtremizer
 import D5.S3.Arith.Robin.PriceRecord.FullPrimePowerArithmeticSurplus
 import Reg.Support.DependentFamily
 
