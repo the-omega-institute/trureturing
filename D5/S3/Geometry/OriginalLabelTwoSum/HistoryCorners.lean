@@ -139,7 +139,7 @@ theorem singleton_cap (r : Rows V) (a : V) (ha : a ∈ r.ground)
     by_cases has : a ∈ s
     · right
       have had : a ∉ r.row d := (Finset.mem_sdiff.mp (hd has)).2
-      refine ⟨{a}, le_rfl, s.erase a, ⟨⟨d, had⟩, ?_⟩, ?_⟩
+      refine ⟨{a}, (by change ({a} : Finset V) ⊆ {a}; exact le_rfl), s.erase a, ⟨⟨d, had⟩, ?_⟩, ?_⟩
       · intro x hx
         obtain ⟨hxa, hxs⟩ := Finset.mem_erase.mp hx
         obtain ⟨hxW, hxq⟩ := Finset.mem_sdiff.mp (hd hxs)

@@ -151,7 +151,10 @@ theorem source_lower (hacyc : M.IsAcyclic)
   have haT : a ∉ T := (Finset.mem_filter.mp ha).2
   have hmatched : ¬ M.Unmatched a := fun hu => haT (hcrit a haL hu)
   obtain ⟨e, he, hae⟩ : ∃ e ∈ M.pairs, Incident a e := by
-    simpa only [Unmatched, not_forall, not_imp, not_not] using hmatched
+    by_contra hnone
+    apply hmatched
+    intro e he hi
+    exact hnone ⟨e,he,hi⟩
   rcases hae with rfl | rfl
   · exact ⟨e, he, haL, haT, fun s hs hn =>
       hsource s (Finset.mem_filter.mpr ⟨(mem_faceSet L s).mpr hs, hn⟩)⟩

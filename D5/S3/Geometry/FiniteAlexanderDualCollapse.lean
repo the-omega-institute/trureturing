@@ -93,7 +93,7 @@ theorem dual_augmented (W : Finset V) (K : PreAbstractSimplicialComplex V)
     AugmentedFace (dual W K) s ↔ s ⊆ W ∧ ¬ AugmentedFace K (W \ s) := by
   constructor
   · rintro (rfl | hs)
-    · exact ⟨empty_subset _, by simpa only [Finset.sdiff_empty] using hp⟩
+    · exact ⟨empty_subset _, by simpa only [Proper, Finset.sdiff_empty] using hp⟩
     · exact hs.2
   · rintro ⟨hsW, hn⟩
     by_cases hs : s = ∅
@@ -335,7 +335,11 @@ theorem reverseSequence_frames (W : Finset V) (D : PreAbstractSimplicialComplex 
       change ((reverseSequence W D hW hp T (P.retained_le.trans hK)).append
         (reverseOne W D hW hp P hK)).frames = _
       unfold reverseOne
-      rw [append_cast_right, Sequence.frames_cast, frames_append_one]
+      rw [append_cast_right, Sequence.frames_cast]
+      change ((reverseSequence W D hW hp T (P.retained_le.trans hK) :
+        Sequence (dual W L) (reversePair W D hW hp P hK).ambient).append
+        (Sequence.step (reversePair W D hW hp P hK) (Sequence.refl _))).frames = _
+      rw [frames_append_one]
       rw [reversePair_retained, ih (P.retained_le.trans hK)]
       simp [Sequence.frames, List.reverse_cons, List.map_append]
 
@@ -566,6 +570,7 @@ theorem arithmetic :
     intro h
     exact c.proper_D (augmented_downward (Or.inr (c.Q_le_D c.sigma_mem)) h)
   have hc := Finset.card_sdiff_add_card_eq_card hsW
+  have hcLambda : c.lambda.card + c.sigma.card = c.W.card := hc
   have hsc : 0 < c.sigma.card := Finset.card_pos.mpr c.sigma_nonempty
   have hlc : 0 < c.lambda.card := Finset.card_pos.mpr hl
   refine ⟨hl, Finset.disjoint_sdiff, ?_, ?_, ?_, ?_, ?_⟩
@@ -646,7 +651,7 @@ theorem pContraction_fixed_apex (t : I) :
         (conePoint c.a c.Dstar)) =
       realizationInclusion (show c.C ≤ c.P from le_sup_right)
         (conePoint c.a c.Dstar) :=
-  c.pContraction.eq_fst t (Set.mem_singleton_self _)
+  c.pContraction.eq_fst t (by simp)
 
 /-- Exact cell union after the first relative reduction. -/
 theorem cell_decomposition : c.X = c.P ⊔ simplex c.lambda := by

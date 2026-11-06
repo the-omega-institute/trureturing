@@ -22,7 +22,7 @@ open Finset
 namespace D5.S3.Geometry.FinitePrescribedPairProtection
 open FiniteElementaryCollapse FiniteRelativeSimplicialCollapse
 variable {V : Type*} [Fintype V] [DecidableEq V]
-variable {K L : PreAbstractSimplicialComplex V} (H : Finset (Finset V))
+local notation "Sequence" => FiniteRelativeSimplicialCollapse.Sequence (V := V)
 
 /-- Native nonempty faces of a finite union of full simplices. -/
 def simplices (H : Finset (Finset V)) : PreAbstractSimplicialComplex V where
@@ -222,8 +222,9 @@ theorem core_exact {K L} (S : Sequence K L) (H) (s : Finset V) :
             · exact Or.inr ⟨Q,Or.inr hQ,he⟩
       · rintro (hs | ⟨Q,hQ,he⟩)
         · exact Or.inl ((ih _).mpr (Or.inl hs))
-        · rcases hQ with rfl | hQ
-          · right
+        · rcases hQ with hQP | hQ
+          · subst Q
+            right
             rcases he with rfl | rfl
             · exact ⟨P.lower_nonempty,P.upper,by simp,Finset.subset_insert P.apex P.lower⟩
             · exact ⟨P.lower_nonempty.mono (Finset.subset_insert P.apex P.lower),P.upper,by simp,le_rfl⟩
@@ -398,7 +399,7 @@ theorem critical_boundary {K L} (S : Sequence K L) (H)
     exact core_preserves S H (hbd q hq s hn hs) ⟨q,hq,hs.1⟩
 
 /-- The ordinary outside/full-boundary assumptions already force incomparability. -/
-theorem critical_antichain (K : PreAbstractSimplicialComplex V) (H)
+theorem critical_antichain (K : PreAbstractSimplicialComplex V) (H : Finset (Finset V))
     (hne : ∀ q ∈ H, q.Nonempty) (hout : ∀ q ∈ H, q ∉ K)
     (hbd : ∀ q ∈ H, ∀ s, s.Nonempty → s ⊂ q → s ∈ K) :
     ∀ q ∈ H, ∀ r ∈ H, q ⊆ r → q = r := by
@@ -512,7 +513,7 @@ theorem indexed_bounds (ps : List (CollapsePair V)) (H) (n : Nat) :
       constructor
       · intro z hz
         rcases hz with rfl | hz
-        · simp; omega
+        · simp
         · have hh := (ih (insert P.upper H) (n+1)).1 z hz
           constructor <;> omega
       · intro z hz
@@ -525,7 +526,7 @@ theorem indexed_bounds (ps : List (CollapsePair V)) (H) (n : Nat) :
         constructor <;> omega
       · intro z hz
         rcases hz with rfl | hz
-        · simp; omega
+        · simp
         · have hh := (ih H (n+1)).2 z hz
           constructor <;> omega
 

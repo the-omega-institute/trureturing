@@ -19,8 +19,10 @@ structure GraphSource (VL VR LL LR : Type*) [Fintype LL] [DecidableEq LL]
     [Fintype LR] [DecidableEq LR] where
   left : GraphData VL LL
   right : GraphData VR LR
-  aL bL : VL
-  aR bR : VR
+  aL : VL
+  bL : VL
+  aR : VR
+  bR : VR
   htermR : aR ≠ bR
   e : LL
   he : e ∈ left.ground

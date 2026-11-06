@@ -11,6 +11,9 @@ import Mathlib.Data.List.Sort
 /-! UNCOMPILED. All collapse data below are the existing CollapsePair/Sequence.
 There is no simulated homotopy, matching theorem, or second pair datatype. -/
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+attribute [local instance] Classical.propDecidable
 open Set Finset
 open scoped unitInterval ContinuousMap
 namespace D5.S3.Geometry.OriginalLabelTwoSum
@@ -31,7 +34,12 @@ def cut (K : Family V) (lowers : Finset (Finset V)) : Family V where
 
 @[simp] theorem cut_cut (K : Family V) (a b : Finset (Finset V)) :
     cut (cut K a) b = cut K (a ∪ b) := by
-  apply SetLike.ext; intro s; simp [cut]; tauto
+  apply SetLike.ext
+  intro s
+  change ((s ∈ K ∧ ∀ q ∈ a, ¬q ⊆ s) ∧ ∀ q ∈ b, ¬q ⊆ s) ↔
+    s ∈ K ∧ ∀ q ∈ a ∪ b, ¬q ⊆ s
+  simp only [Finset.mem_union]
+  aesop
 
 /-- Populate the actual native pair, using the whole current raw family. -/
 def emitPair (K : Family V) (a : Finset V) (v : V) (ha : a.Nonempty)
@@ -46,7 +54,7 @@ def emitPair (K : Family V) (a : Finset V) (v : V) (ha : a.Nonempty)
   free := by
     intro s hs hsub
     exact (hf s hs.2 hsub.1).resolve_left
-      (fun he => (Finset.ne_of_ssubset hsub) he.symm)
+      (fun he => hsub.ne he.symm)
 
 /-- The equality is literal deletion of the upper ideal of the lower face. -/
 theorem emitPair_retained (K : Family V) (a : Finset V) (v : V)
@@ -65,9 +73,9 @@ def fibreBefore (a b : Finset V) : Prop :=
   b.card < a.card ∨ a.card = b.card ∧
     (Fintype.equivFin (Finset V) a).val ≤ (Fintype.equivFin (Finset V) b).val
 
-private instance fibreBeforeTotal : Std.Total (@fibreBefore V _ _) :=
+private instance fibreBeforeTotal : Std.Total (fibreBefore (V := V)) :=
   ⟨by intro a b; unfold fibreBefore; omega⟩
-private instance fibreBeforeTrans : IsTrans (Finset V) (@fibreBefore V _ _) :=
+private instance fibreBeforeTrans : IsTrans (Finset V) (fibreBefore (V := V)) :=
   ⟨by intro a b c; unfold fibreBefore; omega⟩
 
 /-- Actual terminating merge-sort, not an assumed fibre schedule. -/
@@ -79,11 +87,11 @@ theorem fibres_spec (F : Finset (Finset V)) :
     (fibres F).Nodup ∧ (fibres F).toFinset = F ∧
       (fibres F).Pairwise (fun a b => b.card ≤ a.card) := by
   classical
-  have hp : fibres F ~ F.toList := List.mergeSort_perm _ _
+  have hp : List.Perm (fibres F) F.toList := List.mergeSort_perm _ _
   refine ⟨hp.nodup_iff.mpr F.nodup_toList, ?_, ?_⟩
   · ext s
     simpa only [List.mem_toFinset, Finset.mem_toList] using hp.mem_iff
-  · exact (List.pairwise_mergeSort' (@fibreBefore V _ _) F.toList).imp
+  · exact (List.pairwise_mergeSort' (fibreBefore (V := V)) F.toList).imp
       (by intro a b h; unfold fibreBefore at h; omega)
 
 /-- The empty projected lower is permitted only when the right fibre supplies
@@ -160,11 +168,12 @@ private def rectangleAux (X Y a : Finset V) (v : V)
         ∃ w ∈ ts, u ⊆ w ∧ (s = a ∪ w ∨ s = insert v (a ∪ w)) := by
       intro u hu s hs has
       obtain ⟨w,hw,huw,he⟩ := hcoface u (by simp [hu]) s hs.1 has
-      rcases List.mem_cons.mp hw with rfl | hw
+      rcases List.mem_cons.mp hw with hwt | hw
       · have hab : a ∪ t ⊆ s := by
-          rcases he with rfl | rfl
-          · exact le_rfl
-          · exact Finset.subset_insert _ _
+          rcases he with hes | hes
+          · rw [hes, hwt]
+          · rw [hes, hwt]
+            exact Finset.subset_insert _ _
         exact False.elim (hs.2 _ (by simp) hab)
       · exact ⟨w,hw,huw,he⟩
     let T := rectangleAux X Y a v hXY haX hvX hva ts hn.2 hord.2
@@ -175,10 +184,7 @@ private def rectangleAux (X Y a : Finset V) (v : V)
         (hmem t (by simp)).2 hf).symm rfl)).cast rfl (by
           simp only [List.map_cons, List.toFinset_cons]
           rw [cut_cut]
-          congr 2
-          ext w
-          simp only [Finset.mem_union, Finset.mem_singleton, Finset.mem_insert]
-          tauto), ?_⟩
+          congr 2), ?_⟩
     simpa only [Sequence.pairs_cast,Sequence.pairs,List.map_cons,emitPair,CollapsePair.upper]
       using congrArg (List.cons (a ∪ t,insert v (a ∪ t))) T.2
 termination_by todo.length
