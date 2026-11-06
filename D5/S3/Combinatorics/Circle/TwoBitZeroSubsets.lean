@@ -8,9 +8,12 @@
 module
 
 public import D5.S3.Combinatorics.Circle.ZeroSumSubsets
+import all D5.S3.Combinatorics.Circle.ZeroSumSubsets
 public import Batteries.Tactic.OpenPrivate
 public import Mathlib.Data.Fintype.Powerset
 public import Mathlib.Data.Nat.Prime.Basic
+
+/-! # Integer-zero subsets of the labelled two-bit centered source -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -46,9 +49,9 @@ private theorem modulus_half {r : ℕ} (hr : 2 ≤ r) :
 
 private theorem rotate_val {r a : ℕ} (hr : 0 < r) (ha : a < r) (i : Fin r) :
     (((finRotate r : Equiv.Perm (Fin r)) ^ a) i).val = (i.val + a) % r := by
-  letI : NeZero r := ⟨ne_of_gt hr⟩
+  let : NeZero r := ⟨ne_of_gt hr⟩
   have he : (finRotate r : Fin r → Fin r)^[a] = finCycle (⟨a, ha⟩ : Fin r) :=
-    finCycle_eq_finRotate_iterate.symm
+    (finCycle_eq_finRotate_iterate (k := (⟨a, ha⟩ : Fin r))).symm
   simp only [Equiv.Perm.coe_pow, he, finCycle_apply, Fin.val_add, Fin.val_mk]
 
 private theorem rotate_ne {r a : ℕ} (hr : 2 ≤ r) (ha : 0 < a) (har : a < r)
@@ -137,7 +140,7 @@ private theorem pair_centered {r : ℕ} (hr : 2 ≤ r) (i j : Fin r) (hij : i �
   have hind : ((if i.val = r - 1 then (1 : ℤ) else 0) +
       (if j.val = r - 1 then (1 : ℤ) else 0)) =
       if t ∈ T then (1 : ℤ) else 0 := by
-    rw [hit, hjt]
+    simp only [hit, hjt]
     by_cases hi : i = t <;> by_cases hj : j = t <;> simp_all [T, eq_comm]
   rw [← hbit, hind]
   obtain ⟨hN, hodd, hhalf⟩ := modulus_half hr
@@ -210,7 +213,7 @@ private theorem actual_sum_formula {r a : ℕ} (hr : 2 ≤ r) (ha : 0 < a) (har 
   let t : Fin r := ⟨r - 1, by omega⟩
   have hval (i : Fin r) : i.val = r - 1 ↔ i = t := by
     constructor
-    · exact Fin.ext
+    · intro he; exact Fin.ext he
     · rintro rfl; rfl
   have hiA : (∑ i ∈ A, if i.val = r - 1 then (1 : ℤ) else 0) =
       if t ∈ A then (1 : ℤ) else 0 := by simp [hval]
@@ -227,6 +230,7 @@ private theorem actual_sum_formula {r a : ℕ} (hr : 2 ≤ r) (ha : 0 < a) (har 
     Finset.sum_add_distrib, hiA, hiB]
   rw [mask_image_cast ρ A]
   simp only [mask, Nat.cast_sum, Nat.cast_pow, Nat.cast_ofNat]
+  rfl
 
 private theorem masks_eq_modulus {r : ℕ} (hr : 2 ≤ r) (ρ : Equiv.Perm (Fin r))
     (A : Finset (Fin r)) (hne : A.Nonempty) (hproper : A ≠ Finset.univ)
@@ -561,3 +565,12 @@ theorem actual_zero_subsets_card (r a : ℕ) (hr : 2 ≤ r) (ha : 0 < a) (har : 
   split_ifs <;> omega
 
 end D5.S3.Combinatorics.Circle.TwoBitZeroSubsets
+
+#check @D5.S3.Combinatorics.Circle.TwoBitZeroSubsets.actual_zero_iff
+#print axioms D5.S3.Combinatorics.Circle.TwoBitZeroSubsets.actual_zero_iff
+
+#check @D5.S3.Combinatorics.Circle.TwoBitZeroSubsets.actual_zero_iff_dvd
+#print axioms D5.S3.Combinatorics.Circle.TwoBitZeroSubsets.actual_zero_iff_dvd
+
+#check @D5.S3.Combinatorics.Circle.TwoBitZeroSubsets.actual_zero_subsets_card
+#print axioms D5.S3.Combinatorics.Circle.TwoBitZeroSubsets.actual_zero_subsets_card
