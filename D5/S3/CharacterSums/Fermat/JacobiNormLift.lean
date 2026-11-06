@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Negative Jacobi sums lift by finite-field norm and trace pullback.
--/
+   digest: Negative Jacobi sums lift by finite-field norm and trace pullback. -/
 
 import D5.S3.Arith.CharacterSums.LanglandsFirstMainLemma.FiniteField.HasseDavenportLift
 import Mathlib.NumberTheory.JacobiSum.Basic
