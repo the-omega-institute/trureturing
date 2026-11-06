@@ -46,6 +46,10 @@ $$(\exists F: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{I
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/HannaQuadraticExponentialDyadicDenominator.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanna-a174491` (proved) by `D5/S1/Recurrence/Algebraic/HannaQuadraticExponentialDyadicDenominator.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna-a174491","declaration_gid":"D5/S1/Recurrence/Algebraic/HannaQuadraticExponentialDyadicDenominator.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2010). *OEIS A174491 and A174490: denominators of the quadratic-exponent formal exponential*. URL: <https://oeis.org/A174491>.

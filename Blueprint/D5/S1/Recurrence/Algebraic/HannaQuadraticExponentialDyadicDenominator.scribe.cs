@@ -36,7 +36,8 @@ internal sealed class HannaQuadraticExponentialDyadicDenominatorDocument : IScri
                     + "For every odd prime, Fermat's identity and lifting the exponent make the logarithmic difference locally integral; "
                     + "the Dieudonne-Dwork criterion then excludes that prime from each reduced denominator. "
                     + "Prime valuations determine the denominator exactly. The same denominator assertion occurs in A174490.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hanna-a174491"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
