@@ -24,7 +24,7 @@ Formula (2) is:
 
 The source's comment says each summand is invariant under sign reversal of
 its integer index. The zero summand is one. The citation is
-[the Library note](../Library/RecurrenceComposition/hanna2025a380680.md).
+[the Library note](../Library/Certificates/hanna2025a380680.md).
 Preregistration [#18667](https://github.com/the-omega-institute/trureturing/issues/18667)
 classifies this explicitly published conjecture as tier 1.
 
