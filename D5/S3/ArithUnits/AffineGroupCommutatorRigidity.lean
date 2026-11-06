@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Distinct fixed centers in a prime-field affine action produce a
-   translation commutator and cardinality rigidity. -/
+   digest: Distinct fixed centers in a prime-field affine action produce a translation commutator and cardinality rigidity. -/
 
 import D5.S3.ArithUnits.TranslationInvariantLowMoments
 
