@@ -1,0 +1,47 @@
+## 九、现在剩余的 RH 目标可以精确写出来
+
+前面的推导已经建立：
+
+$$
+\boxed{
+\begin{aligned}
+\text{若 Robin 存在反例}
+\quad\Longrightarrow\quad
+\text{存在反例终点 }N,
+\end{aligned}
+}
+$$
+
+其中这个终点同时满足：
+
+- 所有单素数乘除都不能增加 $R$；
+- 在自身价格 $1/(\log N\log\log N)$ 下具有唯一整数最优性；
+- 严格曲率间隔；
+- $\operatorname{lcm}(1,\ldots,\lfloor\log N\rfloor)\mid N$；
+- 平方层质量约束与素数间隙约束。
+
+把终点完全写成一个尺度变量，定义
+
+$$
+a_p(T)
+=
+\#\left\{
+j\ge1:
+\log\left(1+\frac1{p+\cdots+p^j}\right)
+>
+\frac{\log p}{T\log T}
+\right\}.
+$$
+
+它必须满足自洽方程
+
+<a id="eq-37"></a>
+
+$$
+\boxed{
+T=\sum_p a_p(T)\log p.
+}
+\tag{37}
+$$
+
+<!-- editorial-note:start self-consistency-necessary -->

@@ -368,3 +368,307 @@ The result supplies no continuous-history matching algorithm, acquisition of act
 [ZBB]: https://arxiv.org/html/2412.12812v2 "Magdalini Zonnios, Alec Boyd and Felix C. Binder, Quantum generation of stochastic processes: spectral invariants and memory bounds"
 
 ## 追加锚（本行以下为增补区）
+
+## 5. Fixed native logarithms and polynomial phase separation
+
+**Definition 5.1 (native logarithmic constants).** Retain exactly Definitions 1.1–1.4, including the $89$-configuration source, the alternating positive word $g^n=(0^5 1^5)^n$ and the unconditional terminal event $W=w_*$. All logarithms below are natural. Let $R>1$ be the expanding real conjugate in (2.5), and put
+
+$$
+\begin{aligned}
+\phi&=2\theta-2\pi\in(-\pi,0),&
+\ell_z&=i\phi,&\ell_{-1}&=i\pi,\\
+\chi&=\max\{\log R,|\phi|,1\},&
+C_0&=18\cdot3!\cdot2^3\cdot128^4\log16
+     =864\cdot128^4\log16,\\
+\kappa&=\frac{C_0\pi\chi}{16},&
+K_0&=2^{40}=1099511627776.
+\end{aligned}
+\tag{5.1}
+$$
+
+Here $d=\sqrt5-2>0$ in (1.3), so $\pi/2<\theta<\pi$ and the displayed interval for $\phi$ follows. The values $\ell_z$ and $\ell_{-1}$ are fixed determinations of the logarithms of $z$ and $-1$. They are arithmetic proof data and change neither the word nor its physical calls.
+
+**Theorem 5.2 (polynomial separation for the original phase).** With the constants (5.1), one has $0<\kappa<K_0$, and for every integer $r\ge1$,
+
+$$
+|1-z^r|>\frac2\pi r^{-\kappa}
+            >\frac1{2r^{K_0}}.
+\tag{5.2}
+$$
+
+Consequently, for every integer $M\ge1$,
+
+$$
+\delta_M(z)>\frac2\pi M^{-\kappa}
+                 >\frac1{2M^{K_0}},\qquad
+\delta_M(z)^2>\max\left\{70^{-M},\frac1{4M^{2K_0}}\right\}.
+\tag{5.3}
+$$
+
+The source-specific application (5.2)–(5.3) is `repo-derived`. Its logarithmic-form supplier is the `literature-attested` main theorem of Baker–Wüstholz [BW93, printed pp.19–20 and §2][BW93] ([primary scan](https://gdz.sub.uni-goettingen.de/download/pdf/PPN243919689_0442/LOG_0005.pdf)); that general theorem is used inside the proof.
+
+**Proof.** Reuse the degree-four minimal polynomial (2.5), its conjugates $z,z^{-1},R,R^{-1}$, the inequality $R<70$, and the non-root-of-unity conclusion in Theorem 2.1. Thus
+
+$$
+K=\mathbb Q(z,-1)=\mathbb Q(z),\qquad [K:\mathbb Q]=4,
+\qquad z^r\ne1\quad(r\ge1).
+\tag{5.4}
+$$
+
+For clarity about normalization, [BW93, pp.21–22][BW93] uses the relative projective height
+$h_K(a_0:\cdots:a_t)=\sum_v\log\max_j|a_j|_v$, with local-degree powers in the absolute values. Its absolute logarithmic height is $h_K/4$ here. Since $z$ is an algebraic integer, finite places contribute zero to $h_K(1:z)$. Of the four archimedean conjugates, only $R$ has positive logarithm of its modulus; the conjugate pair on the unit circle has modulus one. Therefore
+
+$$
+h_K(z)=\log R,\qquad h_K(-1)=0,\qquad
+h'_K(z)=\frac14\max\{h_K(z),|\ell_z|,1\}=\frac\chi4,
+\qquad h'_K(-1)=\frac\pi4.
+\tag{5.5}
+$$
+
+These are the modified heights used in the cited main theorem. In particular $\log R/4$ is the absolute height of $z$, and must not be substituted for $h_K(z)$ in (5.5).
+
+For an integer $r\ge2$, put
+
+$$
+s_r=-\frac{r\phi}{2\pi}\in(0,r/2),\qquad
+j_r=\left\lfloor s_r+\frac12\right\rfloor,\qquad
+\Lambda_r=r\ell_z+2j_r\ell_{-1}=i u_r.
+\tag{5.6}
+$$
+
+Then $|j_r-s_r|\le1/2$, so $|u_r|\le\pi$. Also $j_r\ge0$ and $2j_r\le r$: if $r=2a$, then $s_r<a$ gives $j_r\le a$; if $r=2a+1$, then $s_r<a+1/2$ again gives $j_r\le a$. Exponentiation gives $e^{\Lambda_r}=z^r$. Hence $\Lambda_r\ne0$ by (5.4).
+
+The integer form $\mathcal L_r(X,Y)=rX+2j_rY$ is nonzero. With $g_r=\gcd(r,2j_r)>0$, its primitive integer coefficient pair has maximum absolute value $r/g_r$. The relative projective height is consequently
+
+$$
+h_K(\mathcal L_r)=4\log(r/g_r),\qquad
+h'_K(\mathcal L_r)=\frac14\max\{h_K(\mathcal L_r),1\}
+ =\max\{\log(r/g_r),1/4\}\le\log r.
+\tag{5.7}
+$$
+
+Indeed primitive integer coordinates have maximum local norm one at every finite place, while the sum of the archimedean local degrees is four. The last inequality uses $r\ge2$ and $\log2>1/4$, and includes $j_r=0$.
+
+The cited Baker–Wüstholz main theorem permits algebraic numbers different from $0,1$, fixed complex logarithms and an integer linear form whose value is nonzero. For $n$ logarithms in degree $D$ its constant is
+$18(n+1)!n^{n+1}(32D)^{n+2}\log(2nD)$, with modified algebraic heights $D^{-1}\max\{h_K(\alpha),|\log\alpha|,1\}$ and form height $D^{-1}\max\{h_K(\mathcal L),1\}$. Apply it with $n=2$, $D=4$, $(\alpha_1,\alpha_2)=(z,-1)$, the fixed values $(\ell_z,\ell_{-1})$, and $\mathcal L_r$. All its exclusions and the nonzero-value hypothesis have been checked in (5.4)–(5.7). It gives
+
+$$
+\log|\Lambda_r|>
+ -C_0\frac\chi4\frac\pi4\,h'_K(\mathcal L_r)
+ \ge-\kappa\log r,\qquad
+|\Lambda_r|>r^{-\kappa}.
+\tag{5.8}
+$$
+
+This is the main fixed-logarithm theorem, rather than its separate crude principal-logarithm consequence with coefficient bounds at least $e$. No real-log specialization or additional independence hypothesis is inserted.
+
+On $|u_r|\le\pi$, concavity of sine on $[0,\pi/2]$ gives
+
+$$
+|1-z^r|=2\sin(|u_r|/2)
+ \ge\frac2\pi |u_r|=\frac2\pi|\Lambda_r|
+ >\frac2\pi r^{-\kappa}.
+\tag{5.9}
+$$
+
+The omitted exponent $r=1$ is elementary: by (2.5),
+
+$$
+|1-z|^2=2-(34-16\sqrt5)=16(\sqrt5-2)>1,
+\tag{5.10}
+$$
+
+where $\sqrt5>33/16$ follows by squaring. Since $2/\pi<1$, this proves (5.2)'s first inequality also at $r=1$, with no logarithmic coefficient estimate at $\log1=0$.
+
+For the integer enlargement, $\log R<\log70<5$, $|\phi|<\pi<4$ and $\log16<3$ imply $\chi<5$ and
+
+$$
+0<\kappa<3240\cdot128^4=869730877440
+                <1099511627776=K_0.
+\tag{5.11}
+$$
+
+The logarithmic inequalities can, for example, be obtained from the positive exponential series $e>8/3$, giving $e^3>16$ and $e^5>70$. Since $2/\pi>1/2$, (5.11) proves the second strict inequality in (5.2), including $r=1$. Taking the minimum over $1\le r\le M$ proves the first two bounds in (5.3); combining their squares with the original strict norm bound (2.6) proves its last bound. $\square$
+
+## 6. Hybrid original-call exposure and polynomial capacity
+
+**Definition 6.1 (two-gap arithmetic cutoff).** For every $S\ge1$ and $0\le\varepsilon<1/2$, choose any admissible $k,c_k,r_k,a_k,L$ from (1.6), and write $J=2k+2$. Define
+
+$$
+\begin{aligned}
+D_{\rm BW}
+ &=4\pi^2 S(LS)^{2\kappa}+\pi(1+\varepsilon)J^{\kappa},\\
+D_{\rm int}
+ &=64S(LS)^{2K_0}+4(1+\varepsilon)J^{K_0},\\
+D_{\rm hyb}
+ &=16S\min\{70^{LS},\,4(LS)^{2K_0}\}
+   +2(1+\varepsilon)\min\{70^{k+1},\,2J^{K_0}\},\\
+N_{\rm hyb}
+ &=1+\left\lfloor D_{\rm hyb}/a_k\right\rfloor.
+\end{aligned}
+\tag{6.1}
+$$
+
+All these quantities depend on $(S,\varepsilon,k)$ and the fixed native phase; no comparator coefficient is an input. For rational $\varepsilon$, the definite choice $k=\lfloor(2-4\varepsilon)^{-1}\rfloor$ makes $N_{\rm hyb}$ an integer/rational arithmetic formula. The real exponent $\kappa$ is unnecessary for evaluating that formula. Effectivity here does not assert a useful computation cost for its very large integer powers.
+
+**Theorem 6.2 (uniform hybrid window with the original consumer).** For every integer $S\ge1$, every $0\le\varepsilon<1/2$, every comparator $q_n=\alpha P^n b$ in exactly the complete class (1.4), every admissible $k$, and every integer $m\ge0$, there exists
+
+$$
+n\in\{m,\ldots,m+N_{\rm hyb}-1\}
+\quad\text{such that}\quad |p_n-\alpha P^n b|>\varepsilon.
+\tag{6.2}
+$$
+
+The arithmetic cutoff retains the pointwise comparisons
+
+$$
+N_{\rm ph}(S,\varepsilon,z)\le N_{\rm hyb}
+                 \le N_{\rm nat}(S,\varepsilon).
+\tag{6.3}
+$$
+
+The witness is an original $\mathsf T(g^n)$ or $\mathsf R(\emptyset,g^n)$ with $g^n=(0^5 1^5)^n$. It uses exactly $10n$ positive gate calls, hence at most $10(m+N_{\rm hyb}-1)$, including its actual $g^m$ prefix. Each requested programme has one original terminal; $\mathsf R$ additionally has its one original initial read. For any specified readable joint laws containing that terminal event, the same witness has total variation distance greater than $\varepsilon$.
+
+**Proof.** Under agreement at every index of a window of length $N$, the already established stochastic inequality (2.14) gives $Na_k\le D_{\rm ph}$, uniformly in $\alpha,P,b,m$. No stochastic resolvent or weighted-moment argument is changed. Apply (5.3) separately at $M=LS$ and $M=J$. The first supplies the squared gap in $16S/\delta_{LS}^2$; the second supplies the unsquared gap in $2(1+\varepsilon)/\delta_J$. The original bound at the even index $J$ gives $\delta_J>70^{-J/2}=70^{-(k+1)}$. Therefore
+
+$$
+D_{\rm ph}<D_{\rm hyb}\le D_{\rm nat},\qquad
+D_{\rm ph}<D_{\rm BW},\qquad
+D_{\rm hyb}\le D_{\rm int}.
+\tag{6.4}
+$$
+
+Since $N_{\rm hyb}a_k>D_{\rm hyb}$, agreement on the entire asserted window contradicts (2.14). Monotonicity of the floor function proves (6.3). Theorem 2.1 supplies the unchanged event probability for both original programmes, the $10n$ call identity and the total-variation projection (2.2). The failure index can depend on the comparator: the quantifier is $\forall(\alpha,P,b)\,\exists n$, with the stated uniform window, rather than a common failing index.
+
+In particular the result still includes arbitrary fixed real stochastic coefficients, reducible, periodic and non-normal matrices. All retained controller, programme-position, counter, clock, seed, phase and rereadable-archive information is charged exactly as in Definition 1.3. There is no mixing, irreducibility or edge-probability premise, no deterministic-comparator restriction, and no extra time index supplied to the observer. The original initial read in $\mathsf R$ remains covered by the arbitrary initial row $\alpha$. $\square$
+
+**Corollary 6.3 (necessary states and persistent register bits).** If a comparator in (1.4) agrees within $\varepsilon$ on $H\ge1$ consecutive native indices beginning at any $m\ge0$, then
+
+$$
+Ha_k\le D_{\rm ph}<D_{\rm BW},\qquad
+Ha_k<D_{\rm hyb}\le A_\varepsilon S^{\nu_0}+E_\varepsilon,
+\tag{6.5}
+$$
+
+where
+
+$$
+\nu_0=2K_0+1,\qquad
+A_\varepsilon=64L^{2K_0},\qquad
+E_\varepsilon=4(1+\varepsilon)J^{K_0},\qquad
+C_\varepsilon^{\rm pol}=\frac{A_\varepsilon+E_\varepsilon}{a_k}.
+\tag{6.6}
+$$
+
+Thus
+
+$$
+H<C_\varepsilon^{\rm pol}S^{\nu_0},\qquad
+S>\left(H/C_\varepsilon^{\rm pol}\right)^{1/\nu_0}.
+\tag{6.7}
+$$
+
+More precisely, when $Ha_k>E_\varepsilon$, put
+$X=(Ha_k-E_\varepsilon)/A_\varepsilon>0$. Then
+
+$$
+S>X^{1/\nu_0},\qquad
+S\ge\max\{1,\lfloor X^{1/\nu_0}\rfloor+1\}.
+\tag{6.8}
+$$
+
+If all complete persistent information fits in an integer $B\ge0$ of classical bits, so that $S\le2^B$, one has
+
+$$
+B>\frac{\log_2(H/C_\varepsilon^{\rm pol})}{\nu_0},
+\qquad
+B>\frac{\log_2 X}{\nu_0}\quad(Ha_k>E_\varepsilon).
+\tag{6.9}
+$$
+
+For the latter inequality the integral version is
+$B\ge\max\{0,\lfloor\log_2 X/\nu_0\rfloor+1\}$. These bounds retain the elementary necessary inequalities (3.1)–(3.3) as well; either bound can be stronger at finite parameters.
+
+**Proof.** Use (2.14) with $N=H$ and (6.4). Formula (6.1) gives
+$D_{\rm int}=A_\varepsilon S^{\nu_0}+E_\varepsilon$. Since $S\ge1$, this is at most $(A_\varepsilon+E_\varepsilon)S^{\nu_0}$, proving (6.5)–(6.7). Subtract $E_\varepsilon$ when the stated difference is positive, and use integrality for (6.8). Substituting $S\le2^B$ gives both logarithmic inequalities and their strict integer rounding.
+
+The sharper real-exponent version follows from the first inequality in (6.5): replace $\nu_0,A_\varepsilon,E_\varepsilon$ respectively by
+
+$$
+2\kappa+1,\qquad
+4\pi^2L^{2\kappa},\qquad
+\pi(1+\varepsilon)J^\kappa,
+\tag{6.10}
+$$
+
+and define its corresponding $C$ by the same sum divided by $a_k$. The integer version is a convenient explicit certificate rather than an optimal exponent. If an original gate budget $G\ge10m$ covers every requested index from $m$ to $\lfloor G/10\rfloor$, the same inequalities apply with $H=1+\lfloor G/10\rfloor-m$; the initial read and terminal remain separately counted as above. $\square$
+
+**Proposition 6.4 (pointwise protection and asymptotic order).** For each fixed $\varepsilon$ and fixed admissible $k$, the hybrid cutoff satisfies
+
+$$
+N_{\rm hyb}=O_{\varepsilon,k}(S^{2K_0+1}),
+\qquad
+N_{\rm hyb}\le N_{\rm nat}\quad(S\ge1).
+\tag{6.11}
+$$
+
+A sufficient, deliberately conservative condition for strict improvement after integer rounding is
+
+$$
+LS\ge16K_0^2\quad\Longrightarrow\quad
+N_{\rm hyb}<N_{\rm nat}.
+\tag{6.12}
+$$
+
+This condition is not a least crossover or a useful practical exposure bound.
+
+**Proof.** The polynomial bound follows from $D_{\rm hyb}\le D_{\rm int}$ and $a_k>0$; the pointwise bound is (6.3). To certify (6.12), set $M=LS\ge16K_0^2$. The elementary bound $\log M\le\sqrt M$ follows by minimizing $\sqrt t-\log t$ for $t\ge1$. Hence
+
+$$
+\log(4M^{2K_0})
+ \le\log4+2K_0\sqrt M
+ \le\log4+M/2<M\log70.
+\tag{6.13}
+$$
+
+Here $M\ge16$ and $\log4<2< M/2$, while $\log70>1$. Thus $4M^{2K_0}<70^M$. Both sides are integers, so their difference is at least one. The first minimum in (6.1) consequently decreases $D_{\rm nat}$ by at least $16S$, and the second cannot increase it. Since $0<a_k\le1/2$, division by $a_k$ decreases the value inside the floor by more than one; (6.12) follows. The large certified exponent supplies an asymptotic order improvement over the exponential elementary cutoff, while the minimum retains its finite-parameter advantages. $\square$
+
+## 7. The exact terminal-register comparison and its recovery boundary
+
+**Definition 7.1 (terminal-curve state-register cost).** For an integer $H\ge1$ and fixed $0\le\varepsilon<1/2$, let
+
+$$
+\begin{aligned}
+S^*_\varepsilon(H)
+ &=\min\left\{S\in\mathbb N_{\ge1}:\ \exists(\alpha,P,b)\text{ as in (1.4)},\quad \max_{0\le n<H}|\alpha P^n b-p_n|\le\varepsilon\right\},\\
+B^*_\varepsilon(H)&=\left\lceil\log_2 S^*_\varepsilon(H)\right\rceil.
+\end{aligned}
+\tag{7.1}
+$$
+
+The minimum is over the same block-response comparator and the same unconditional terminal event as Definitions 1.2–1.3. Its nonempty feasible set is supplied by the finite counter in Corollary 3.1. The full persistent state register is charged; fixed exact-real coefficients in the transition and terminal tables have the same convention as (1.4). Table description length and coefficient precision, their acquisition, computation and physical realization are additional resources not assigned a cost by (7.1). A retained archive, seed or clock that affects future kernels or reports remains part of the charged persistent state.
+
+**Theorem 7.2 (logarithmic terminal-register bit order).** For the cost (7.1), each fixed $0\le\varepsilon<1/2$ and any fixed admissible $k$ satisfy
+
+$$
+\frac{\log_2(H/C_\varepsilon^{\rm pol})}{\nu_0}
+ <B^*_\varepsilon(H)\le\lceil\log_2 H\rceil,
+\qquad
+B^*_\varepsilon(H)=\Theta_\varepsilon(\log H)
+\quad(H\longrightarrow\infty).
+\tag{7.2}
+$$
+
+For the asymptotic notation one may fix the definite $k$ in Definition 1.4 as a function of $\varepsilon$. This determines the bit order for precisely the terminal-curve contract (7.1); it does not determine a matching exponent for the necessary state count in (6.8).
+
+**Proof.** Apply (6.7) to a minimizing comparator and set $B=B^*_\varepsilon(H)$, so $S^*_\varepsilon(H)\le2^B$. This gives the strict lower inequality. For the upper inequality reuse the original finite counter of Corollary 3.1 and [PhaseBoundary350.9][PB]: take states $0,\ldots,H-1$, initial state zero, transition $j\mapsto\min(j+1,H-1)$ and the fixed table $b_j=p_j$. Then $\alpha P^n b=p_n$ for $0\le n<H$, so $S^*_\varepsilon(H)\le H$. Its index is carried by its counted register, without an external free input $n$. This construction includes $H=1$ and $\varepsilon=0$.
+
+For sufficiently large $H$, $\log_2(H/C_\varepsilon^{\rm pol})\ge\tfrac12\log_2 H$, while $\lceil\log_2 H\rceil\le2\log_2 H$ for $H\ge2$. These inequalities prove the stated order. The upper comparison is this same original terminal counter with a fixed horizon-dependent table. It supplies no per-address realization for every allowed stochastic $P$, full readable-joint approximation or conditional-history matching. In particular a sufficient workspace bound for a different recurrent approximation of a full joint law is not an upper bound used in this proof. The $H$ table entries and their description precision remain outside the cost (7.1). $\square$
+
+**Definition 7.3 (reconstruction data beyond the terminal relation).** A reconstruction target specifies an admissible class $\mathcal X$ of actual source realizations with their permitted operations, an accessible observation map $O:\mathcal X\to\mathcal Y$, and a target relation $T:\mathcal X\to\mathcal Z$. Exact recovery requires a map $D$ satisfying $T=D\circ O$ on that class; usable recovery additionally requires an allowed acquisition and decoding realization with its stated resources. Mutual recovery of spatial, continuation, boundary and memory relations requires the corresponding maps in each asserted direction, with common source identity, operation domains and resource accounts.
+
+Theorems 5.2–7.2 concern the fixed source of Definition 1.1 and the single terminal projection $p_n$ along its original positive words. Their lower-bound consumer is that projection; their upper-bound consumer is exactly (7.1). They do not specify reconstruction maps on a class of unknown actual sources, acquired cut laws or archives. Original ideal coherence, zero failure, Born readout, read/update and archive sufficiency remain the stated source assumptions. Agreement on this projection is not an asserted inverse of the full readable-joint projection. A sufficient joint-history construction, lawful acquisition of the required boundary data and source-preserving recovery maps remain additional mathematical requirements for the mutual-recovery target.
+
+[BW93]: https://doi.org/10.1515/crll.1993.442.19 "A. Baker and G. Wüstholz, Logarithmic forms and group varieties, J. reine angew. Math. 442 (1993), 19–62; main theorem pp.19–20, heights pp.21–22; primary scan https://gdz.sub.uni-goettingen.de/download/pdf/PPN243919689_0442/LOG_0005.pdf"
+
+## 追加锚（本行以下为增补区）

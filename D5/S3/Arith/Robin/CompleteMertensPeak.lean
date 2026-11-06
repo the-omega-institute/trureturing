@@ -8,6 +8,7 @@
 
 import D5.S3.Weil.Mertens.Gamma
 import D5.S3.Weil.Mertens.WeightedPrimeLimit
+import D5.S3.Weil.Mertens.WeightedTailTransport
 import D5.S3.Weil.Mertens.IntegratedExplicit.TrivialZeroLaplace
 import D5.S3.Arith.Robin.QuotientIntegralBudget
 import D5.S3.Arith.Robin.OriginalMovingWindowMoment
@@ -195,14 +196,20 @@ private lemma tail_log_integral {t : ℝ} (ht : 2 ≤ t)
   rfl
 
 /-- Actual absolute integrability and the complete identity give the weighted Mertens ledger. -/
-private theorem complete_mertens_ledger
-    (hLay : ∀ t : ℝ, 2 ≤ t → Q t = Chebyshev.psi t / t -
-      (∑ n ∈ Finset.Ioc 0 ⌊t⌋₊, ArithmeticFunction.vonMangoldt n / (n : ℝ)) +
-        log t - 1 - eulerMascheroniConstant)
-    {t : ℝ} (ht : 2 ≤ t) :
+theorem complete_mertens_ledger {t : ℝ} (ht : 2 ≤ t) :
     IntegrableOn psiErrorKernel (Ioi t) ∧
-      IntegrableOn (fun u => psiErrorKernel u * r u) (Ioi t) ∧
-        Mertens.E₂Λ t = (Chebyshev.psi t - t) / (t * log t) - I t := by
+      IntegrableOn (fun u => psiErrorKernel u *
+        D5.S3.Weil.Mertens.WeightedTailTransport.r u) (Ioi t) ∧
+        Mertens.E₂Λ t = (Chebyshev.psi t - t) / (t * log t) -
+          D5.S3.Weil.Mertens.WeightedTailTransport.weightedTail psiErrorKernel t := by
+  change IntegrableOn psiErrorKernel (Ioi t) ∧
+    IntegrableOn (fun u => psiErrorKernel u * r u) (Ioi t) ∧
+      Mertens.E₂Λ t = (Chebyshev.psi t - t) / (t * log t) - I t
+  have hLay (u : ℝ) (hu : 2 ≤ u) : Q u = Chebyshev.psi u / u -
+      (∑ n ∈ Finset.Ioc 0 ⌊u⌋₊, ArithmeticFunction.vonMangoldt n / (n : ℝ)) +
+        log u - 1 - eulerMascheroniConstant :=
+    D5.S3.Weil.Mertens.CompleteChebyshevTailIdentity.complete_chebyshev_tail_identity
+      D5.S3.Weil.Mertens.WeightedPrimeLimit.chebyshev_error_kernel_integrable hu
   have hf : IntegrableOn psiErrorKernel (Ioi t) :=
     D5.S3.Weil.Mertens.WeightedPrimeLimit.chebyshev_error_kernel_integrable.mono_set
       (Ioi_subset_Ioi (by linarith : (1 : ℝ) ≤ t))
@@ -711,7 +718,11 @@ theorem finite_mertens_peak_of_signed_endpoint
   have hA2 : 2 ≤ A := by linarith
   have hA0 : 0 < A := by linarith
   have hsA : 0 < sqrt A := sqrt_pos.2 hA0
-  have hledger (t : ℝ) (ht : 2 ≤ t) := complete_mertens_ledger hLay ht
+  have hledger (t : ℝ) (ht : 2 ≤ t) :
+      IntegrableOn psiErrorKernel (Ioi t) ∧
+      IntegrableOn (fun u => psiErrorKernel u * r u) (Ioi t) ∧
+        Mertens.E₂Λ t = (Chebyshev.psi t - t) / (t * log t) - I t :=
+    complete_mertens_ledger ht
   have hex : ∃ t ∈ Icc A B, Mertens.E₃ t <
       -4 / sqrt t - (Chebyshev.psi t - t) / (t * log t) := by
     by_contra hnone
@@ -786,7 +797,11 @@ private theorem finite_mertens_peak
   have hA0 : 0 < A := by linarith
   have hsA : 0 < sqrt A := sqrt_pos.2 hA0
   have hB2 : 2 ≤ B := hA2.trans hAB
-  have hledger (t : ℝ) (ht : 2 ≤ t) := complete_mertens_ledger hLay ht
+  have hledger (t : ℝ) (ht : 2 ≤ t) :
+      IntegrableOn psiErrorKernel (Ioi t) ∧
+      IntegrableOn (fun u => psiErrorKernel u * r u) (Ioi t) ∧
+        Mertens.E₂Λ t = (Chebyshev.psi t - t) / (t * log t) - I t :=
+    complete_mertens_ledger ht
   have hex : ∃ t ∈ Icc A B, Mertens.E₃ t <
       -4 / sqrt t - (Chebyshev.psi t - t) / (t * log t) := by
     by_contra hnone
