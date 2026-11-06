@@ -1,0 +1,55 @@
+**定理 369.1（局部高简单块的准确首槽数）。** 固定单块 $H_n(\mathbb C)$、$n\ge3$，以及右单位和整个 $\mathsf G_{0h}$ 的实双线性 $D$。任取先于 $D$ 固定的两颗不同 primitive $e,f$，无需正交。存在只以 $e,f$ 为第一输入、第二输入张成整个 $H_n$ 的有限半角族，可取 $n^2$ 个有序对。其迹零迫使 (320.2) 的整个径向泛函为零，因而局部 $D(a,b)=\alpha\,\mathrm i[a,b]$。
+
+若只允许一颗固定首原子 $e$，即使测试它的全部半角第二输入，也不能取得该结论；正常形中的精确径向盲族为
+
+$$
+D_\lambda(a,b)=\lambda\{\operatorname{Tr}(eb)a-a\circ b\},
+\qquad \lambda\in\mathbb R.
+\tag{369.1}
+$$
+
+可另加任意交换子项。这里“两颗足够、一颗不足”仅针对这个单块半角首槽采样类型；不改动候选另行全量保留的 $\mathsf X_{\rm HQ}$，不与 ZERO 的正交首槽下界混算，也不是完整原网络的最低公理数或最低样本数。公开 §§334–341 的单匹配原子检验来源配平，只需清掉 $F_U\circ h_A$，并使用完整实际来源；本定理则在没有这些来源关系的单块上清掉整个径向泛函。两首锚点因此不改进或否定该单匹配原子的完整世界结果。公开 §§342–349 又用原中心迹中性删除候选资料中的辅助匹配选择：不再选匹配原子、补偿映射、来源基或参考剖面。本条的两首锚是单块半角采样的数学选择，不是对该内在中心候选的进一步全局简化。公开 §§350–357 的自比较候选在公理表达中不点名中心、规范迹或辅助选择，只用原 $q_X(a,D^X(a,a))=0$，其量词仍是选中域的全部原数学效果。公开 351.1–352.1 在完整来源正常形中消去全部中心及来源的径向场；本条的单块两首锚数不替换这些完整前件，也不计作对自比较候选的全局改进。公开 §§358–365 的 $\mathsf C_{\rm uneq}$ 又把该自比较标量测试限于全部有序正交 primitive 对的 $e+\tfrac12p$；这里的半权是正交谱权重，不是 HALF 的半重叠。该候选借同一完整来源正常形及整框架右单位相容恢复全部效果，360.1、361.1 已供应其完整等价与消费者。本条仍只计算单块半角采样的首槽数，不减少这个两原子候选的全网前件、关系数或认证成本。
+
+证明。使用 Hermitian 迹对偶和算子 frame 的标准张成／消去子方法（Scott，*Tight informationally complete quantum measurements*，§III、式 (34)–(35)，[arXiv:quant-ph/0604049v2](https://arxiv.org/html/quant-ph/0604049v2)）作如下固定角计算；这些线性代数是中间工具，不是另立的几何分类。
+
+记 $\mathcal S_e=\{p\in\operatorname{Prim}(H_n):\operatorname{Tr}(ep)=1/2\}$。写 $e=[v]$，$[v]=vv^*$；其全部元素可写成
+
+$$
+p_{w,\theta}=\tfrac12
+\{e+[w]+\exp(-\mathrm i\theta)vw^*+
+\exp(\mathrm i\theta)wv^*\},
+\quad w\perp v,\quad \|w\|=1.
+\tag{369.2}
+$$
+
+若 Hermitian $H$ 满足 $\operatorname{Tr}(Hp)=0$ 对全部 $p\in\mathcal S_e$，改变 $\theta$ 得 $v^*Hw=0$，再得 $w^*Hw=-v^*Hv$ 对所有单位 $w\perp v$ 成立。Hermitian 极化遂给 $H|_{v^\perp}=-hI$、$h=v^*Hv$，即 $H=h(2e-I)$；反向直接代入。因此在普通迹内积下
+
+$$
+(\operatorname{span}_{\mathbb R}\mathcal S_e)^\perp
+=\mathbb R(I-2e),\qquad
+\operatorname{span}_{\mathbb R}\mathcal S_e
+=\{b:\operatorname{Tr}((I-2e)b)=0\}.
+\tag{369.3}
+$$
+
+这是一份余维一的第二槽盲面，不是整个理想。对不同 $e,f$，$I-2e$ 与 $I-2f$ 不成比例：两者迹均为 $n-2\ne0$，比例必须为一，继而会有 $e=f$。所以 $\mathcal S_e\cup\mathcal S_f$ 的张成为整个 $H_n$。有限维基抽取给 $n^2$ 颗独立第二输入，每颗配上其所属的首锚，得到所需有限族；单一 $\mathcal S_e$ 只有维数 $n^2-1$，所以两颗首锚实际都会出现。选择全过程只依静态 $e,f$，不读取 $D$。
+
+局部 (320.2) 写为
+
+$$
+D(a,b)=\alpha\,\mathrm i[a,b]+f_0(b)a-f_0(I)a\circ b.
+\tag{369.4}
+$$
+
+令 $f_0(b)=\operatorname{Tr}(Hb)$。半角测试读取的不是任意双线性系数，而是同一个
+
+$$
+g_0(b)=f_0(b)-\tfrac12f_0(I)\operatorname{Tr}b
+=\operatorname{Tr}\bigl((H-\tfrac12\operatorname{Tr}(H)I)b\bigr).
+\tag{369.5}
+$$
+
+两首槽有限族使 $g_0=0$，取单位后因 $n\ne2$ 得 $f_0=0$，与 (367.4) 的径向消去一致。
+
+若只取首锚 $e$，(369.3) 说全体许可测试恰使 $H-\tfrac12\operatorname{Tr}(H)I\in\mathbb R(I-2e)$。取迹并代回，等价于 $H\in\mathbb Re$，故留下的径向自由恰为 (369.1)。它满足右单位，且对任意 primitive 输入两项都支撑在其共同角内，故满足整个 $\mathsf G_{0h}$；首锚 $e$ 的每个半角迹为 $\lambda(1/2-1/2)=0$。为看见其非零盲值，在 $e^\perp$ 内取正交 primitive $r,s$，令 $p=[(v_r+v_s)/\sqrt2]$。则 $\operatorname{Tr}(rp)=1/2$、$\operatorname{Tr}(ep)=0$，从而 $\tau(D_\lambda(r,p))=-\lambda/2$。$\lambda\ne0$ 时原全半角迹已失败，不能把单锚通过读成全部半角通过。这是单块诊断，不声称它能扩成满足完整 $B_*$、实际联合和同一 sigma 的原世界。∎
+

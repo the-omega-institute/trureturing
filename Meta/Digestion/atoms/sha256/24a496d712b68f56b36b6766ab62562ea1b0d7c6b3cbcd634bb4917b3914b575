@@ -1,0 +1,100 @@
+**定理 320.1（单块径向项与全部来源）。** 设
+
+$$
+E=\bigoplus_{s\in S}H_{n_s}(\mathbb C),\qquad u=(I_{n_s})_s,
+$$
+
+$D:E\times E\to E$ 实双线性，满足右单位 $D(a,u)=0$ 和 $\mathsf G_{0h}$。本定理不假设 $\mathsf Z_0$。记数学理想包含与投影为 $j_s,\pi_s$，全部经典源为 $\mathcal C=\{s:n_s=1\}$。对每个 $n_t\ge3$ 的目标，存在实数 $\alpha_t,\eta_t,\ell_{ts}$ 和实线性泛函 $F_t:E\to\mathbb R$，使对所有完整输入
+
+$$
+\boxed{\displaystyle
+\pi_tD(a,b)=\alpha_t\,\mathrm i[a_t,b_t]
++\eta_t a_t\circ b_t+a_tF_t(b)
++\sum_{s\in\mathcal C}\ell_{ts}a_s(b_t-b_sI_t),
+\qquad \eta_t+F_t(u)=0.}
+\tag{320.1}
+$$
+
+这包含全部源对，不仅是 $t\times t$ 限制。对单独 $H_n(\mathbb C)$、$n\ge3$，条件等价于
+
+$$
+D(a,b)=\alpha\,\mathrm i[a,b]+f(b)a-f(I)a\circ b
+\tag{320.2}
+$$
+
+其中 $f$ 是任意实线性泛函、$\alpha\in\mathbb R$。不在此分类秩二目标的全部内部自由。
+
+证明。先固定任一非经典源 $s$ 的 primitive $e$。对同块 $f\perp e$，取正交单位向量 $v,w$ 表示它们，置
+
+$$
+y=|v\rangle\langle w|+|w\rangle\langle v|,\qquad
+p_\pm=(e+f\pm y)/2.
+$$
+
+两个 $p_\pm$ 均与 $e$ 半重叠。由双线性和三份整支持，
+
+$$
+D(e,e)=D(e,p_+)+D(e,p_-)-D(e,f)\in E_1(e+f).
+\tag{320.3}
+$$
+
+故即使 $n_s=2$，自输入的整份输出也在源 $s$。若 $n_s\ge3$，两个相互正交的 $f$ 给两个角的交集 $\mathbb Re$，所以 $D(e,e)=k(e)e$；尚未断言 $k(e)=0$。此外，$D(e,f)$ 和 $D(e,y)=D(e,p_+)-D(e,p_-)$ 都在源 $s$。让 $w$ 及其相位遍历 $v^\perp$，连同下方 Hermitian 块与 $e$，这些第二输入张成 $H_{n_s}$。第一输入的 primitive 再张成，故同源 $s,s$ 的整个输出在 $s$，包括秩二源。
+
+把 $e$ 补为整个直和的框架。在 $0=D(e,u)$ 中，对另一源 $r$ 的框架元 $p$，只有 $D(e,p)$ 能有沿 $p$ 的分量；零角支持把该项限制在 $\mathbb Re\oplus\mathbb Rp$，而刚证的自输入与同源项均不向 $r$ 输出。故 $D(e,p)\in\mathbb Re$。对固定 $p$，线性映射 $a\mapsto D(j_sa,j_rp)$ 的每颗 rank-one 投影都沿自身。它在任意框架上的单位像都对角，因而单位像为一个标量单位；再逐框架比较给该映射为相同标量倍的恒等。第二槽线性化便给实线性泛函 $\lambda_{sr}$，使
+
+$$
+D(j_sa,j_rb)=\lambda_{sr}(b)j_sa
+\qquad(n_s\ge2,\ r\ne s).
+\tag{320.4}
+$$
+
+这里没有交换输入，也没有令右端归零。
+
+下面证明 (320.2)。在单块右单位的情形，(320.3) 给 $D(e,e)=k(e)e$。框架单位式中不同 Peirce 非对角分量及每个伙伴投影分量互不重叠，故
+
+$$
+D(e,p)=c(e,p)e\qquad(e\perp p).
+\tag{320.5}
+$$
+
+任意 $a$ 的谱展开遂使 $Q(a)=D(a,a)$ 在该谱基中对角，故 $[Q(a),a]=0$ 对全部 Hermitian $a$ 成立。先将这条实多项式恒等式复化到 $M_n(\mathbb C)$，再应用 Brešar–Špenko，*Functional identities of one variable*，[arXiv:1307.2260v1，Lemma 3.2](https://arxiv.org/html/1307.2260v1#S3.Thmtheorem2) 的交换二次迹标准形，得到
+
+$$
+Q(a)=A a^2+f(a)a+g(a)I.
+\tag{320.6}
+$$
+
+此处“二次迹”指双线性映射的对角化，不是谱迹；$f$ 线性、$g$ 二次齐次。具有三个不同谱值的 Hermitian 元构成开稠密集，$I,a,a^2$ 在其上独立，故由 Hermitian 性和多项式延拓，$A,f,g$ 在实域取实。复化消费的是已证多项式恒等式，不把 primitive 条件直接扩张到任意复矩阵对。
+
+由 $Q(e)\in\mathbb Re$ 得 $g(e)=0$。以 $g(a,b)$ 表示 $g$ 的对称极化。对正交 primitive $e,p$，(320.5) 使 $D(e,p)+D(p,e)$ 只沿 $e,p$，而 (320.6) 的极化给
+
+$$
+D(e,p)+D(p,e)=f(p)e+f(e)p+2g(e,p)I.
+$$
+
+$n\ge3$ 时角外还有一个非零方向，故 $g(e,p)=0$，并比较 $e,p$ 系数得 $c(e,p)=f(p)$。对任意谱展开，$g$ 的全部同框项现在为零，所以 $g(a)=0$ 对全部 $a$ 成立。右单位取框架和给
+
+$$
+0=D(e,I)=\{A+f(I)\}e,
+$$
+
+即 $A=-f(I)$。令 $D^0(a,b)=Aa\circ b+f(b)a$；它与 $D$ 在每颗 primitive 对角和每对正交 primitive 上相同，且自身满足右单位和半角整支持。其差 $\delta=D-D^0$ 满足完整 O、H 与右单位，故现在才应用前卷单载体定理 274.1，得 $\delta(a,b)=\alpha\,\mathrm i[a,b]$。这就证明 (320.2)。反向各项均支撑在输入支持内，右单位由直接代入成立。
+
+回到直和，固定 $n_t\ge3$。由 (320.4) 和原右单位，内部限制满足
+
+$$
+D(j_ta,j_tI_t)=-\gamma_t j_ta,\qquad
+\gamma_t=\sum_{r\ne t}\lambda_{tr}(I_r).
+$$
+
+给内部映射加上 $\gamma_t\operatorname{Tr}(b)a/n_t$ 即取得内部右单位；它仍有 $\mathsf G_{0h}$。应用刚证单块式再减回该项，内部形式为交换子、$\eta_ta\circ b$ 和一个第二槽线性泛函乘 $a$。把这个泛函与所有 $\lambda_{tr}$ 合为整个 $E$ 上的 $F_t$，右单位恰给 $\eta_t+F_t(u)=0$。
+
+第一源为另一非经典块时，同源局部性及 (320.4) 均使其输出不向 $t$。两个不同源均非 $t$ 时，零角整支持及双线性也使目标投影为零，包含两个不同经典源。对经典首源 $e_s=j_s1$，零角支持使线性映射 $b\mapsto\pi_tD(e_s,j_tb)$ 把每颗 primitive $p$ 送入 $\mathbb Rp$；上述单位逐框架论证给它为 $\ell_{ts}b$。最后将 $D(e_s,u)=0$ 投影到 $t$，唯一其余来源是经典自输入，故
+
+$$
+\pi_tD(e_s,e_s)=-\ell_{ts}I_t.
+\tag{320.7}
+$$
+
+逐源双线性展开现在穷尽全部来源，得到 (320.1)。其他经典坐标的输出从未被当作零；定理只陈述固定高秩目标的全部来源。∎
+
