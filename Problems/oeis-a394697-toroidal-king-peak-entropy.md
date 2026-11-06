@@ -102,3 +102,12 @@ The free-board entropy, maximum-versus-total comparison and tiling
 correspondence retain their cited prior-literature credit. The formal
 conclusion supplies the exact all-square toroidal assertion within
 the stated placement encoding.
+
+## Escape audit
+
+The four-slot escape audit for the three source modules is unfinished
+under the [linked issue](https://github.com/the-omega-institute/trureturing/issues/27011#issuecomment-6671075953).
+The native registration assessment fails with
+`contract.decode_failed` / `contract.discovery:rigid_universes`. No Reg
+client or current validated binding is delivered, and no
+`declared_validated` registration is claimed.
