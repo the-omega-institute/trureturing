@@ -3669,7 +3669,7 @@ $$
 
 | 同一原接口 | 对应的完整量子结论 |
 | --- | --- |
-| 原 Jordan、原 I+SC 与同一 sigma | $\mathcal A_A=\bigoplus_sB(H_{A,s})$，$E_A=(\mathcal A_A)_{\rm sa}$，原正锥为 $(\mathcal A_A)_+$；$a\cdot b=a\circ b-\mathrm iD(a,b)$、$D(a,b)=\mathrm i[a,b]/2$、$[D_a,D_b]=-[L_a,L_b]$、$D_c^2=-P_c/4$。 |
+| 原 Jordan、原 I+SC 与同一 sigma | $\mathcal A_A=\bigoplus_sB(H_{A,s})$，$E_A=(\mathcal A_A)_{\rm sa}$，原正锥为 $(\mathcal A_A)_+$；$a\cdot b=a\circ b-\mathrm iD(a,b)$、$D(a,b)=\mathrm i[a,b]/2$、$[D_a,D_b]=-[L_a,L_b]$，每个幂等元 $c$ 有 $D_c^2=-P_c/4$。 |
 | 全部原准备、原质量及分别保留的 $g^0,q$ | $\rho_\alpha=B_Ax_\alpha$、$\widehat x_\alpha=\mathcal W_A^{-1}\rho_\alpha$，$\alpha(y)=g_A^0(x_\alpha,y)=\tau_A(\rho_\alpha y)=q_A(\widehat x_\alpha,y)$，$\tau_A(\rho_\alpha)=\alpha(u_A)$；零和次归一质量不归一化抹去。 |
 | 原有序 X、实际乘积及全部相关输入 | 全部中心对的同取向普通复张量；不要求联合 $q$ 或比较运输因子化，不增加实际纠缠准备。 |
 | 每个旧事件自己的全事件 R、同实现同记录旁接及完整相关正锥 | $\Phi_f=B_BT_f^{\dagger_0}B_A^{-1}$ 为 CP/TNI；原完整设备事件和 TP，$\dagger_0$ 仍为原 $g^0$ 伴随。 |
