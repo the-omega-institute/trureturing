@@ -1,6 +1,6 @@
 # Four-path full-record recovery: central negative-floor continuation V
 
-This volume continues [Continuation IV](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_IV.md), retaining its Section 57 definitions, source conventions, exact attained triangle, fixed labels, one shared feedback, ordinary transpose and nonnegative root branches. Sections 65--69 below are the next exact full-triangle certificates for the same negative-floor comparison. They remain conditional paper deductions and do not claim a physical realization or settle the full endpoint comparison.
+This volume continues [Continuation IV](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_IV.md), retaining its Section 57 definitions, source conventions, exact attained triangle, fixed labels, one shared feedback, ordinary transpose and nonnegative root branches. Sections 65--70 below are the next exact full-triangle certificates for the same negative-floor comparison. They remain conditional paper deductions and do not claim a physical realization or settle the full endpoint comparison.
 
 ## 65. 高端入口的 $z=3/2$ 椭圆地板
 
@@ -783,3 +783,169 @@ $\mathcal H(u)<13/10+1/2=9/5$。因此
 端点 $q=1/10$ 与 $q=1/2$ 均属于已证明区间；未决区间不是反例，也没有改变原注册事件的全称量词。
 
 ## 追加锚（本行以下为增补区）
+
+## 70. 低端中央残差的首段闭合
+
+**定理 70.1（低端中央残差的全三角域地板）。** 保持定义 57.1 的负号行、固定标签、同一反馈、普通转置、非负根支及完整三角域。对
+\[
+ q\in\left[\frac1{10},\frac{11}{100}\right]
+ \quad\text{及全部 }(X,Y)\in\mathcal T_x
+\]
+都有
+\[
+ \boxed{G_-(q,X,Y)>\frac{23}{50}.}
+ \tag{70.1}
+\]
+
+*证明。* 在 Corollary 56.3 的辅助有序坐标中置
+\[
+ p=1-q,\qquad L=\frac{19}{16}+\frac q2,
+ \qquad a=L^2,\qquad u=X+Y.
+\]
+交换 $X,Y$ 只用于上界证明；由
+$h^2-s^2=c^2-h^2=h/2>0$，交换弱增 $R,C$，再由 Lemma 46.2 的原始重构桥接回固定标签结论。当前区间给出
+\[
+ \frac3{10}\le\sqrt{pq}<\frac{313}{1000},
+ \qquad \frac32<a<\frac{31}{20},
+ \qquad \frac a2\le u\le2.
+ \tag{70.2}
+\]
+取 $z=13/10$，并令
+\[
+ \alpha=p+\frac{13}{10}\sqrt{pq},
+ \qquad
+ \beta=q+\frac{10}{13}\sqrt{pq}.
+\]
+在本区间上
+\[
+ \alpha<\frac{13}{10},\qquad
+ \beta<\frac9{25},\qquad
+ \alpha+\beta<\frac{17}{10},\qquad
+ \beta\ge\frac{43}{130}.
+ \tag{70.3}
+\]
+其中 $\sqrt{pq}$ 的上界来自 $q(1-q)\le979/10000<(313/1000)^2$。函数
+$q\mapsto1-q+(13/10)\sqrt{q(1-q)}$ 在 $[1/10,11/100]$ 上严格递增，因为
+$(13/20)(1-2q)>(13/20)(39/50)=507/1000>313/1000$；在 $q=11/100$ 处再用
+$(410/13)^2>979$ 得到第一式。其余三式由 $q$ 与根式的单调性及正有理交叉相乘得到。
+
+记
+\[
+ sh<\frac{271}{1000},\qquad
+ k^2:=(h-s)^2<\frac{27}{256},\qquad
+ S:=c^2+h^2<\frac{677}{500},\qquad
+ c^2h^2<\frac{427}{1000}.
+ \tag{70.4}
+\]
+令
+\[
+ B=(2-u)^2,\qquad D=a(2u-a),\qquad
+ W=\frac{BD}{u^2},\qquad T=\min\{B,D\}
+\]
+在 $u\le1$ 时将 $T$ 改作 Corollary 56.2 的椭圆支撑量 $W/\kappa$。Corollary 56.3 给出
+\[
+ \Gamma_-^2\le\mathcal H(u):=
+ \alpha\left(sh\,a+\frac{k^2u}{2}\right)
+ +\beta S\left(1-\frac u2\right)
+ +\sqrt{\frac{(\alpha+\beta)^2T}{32}
+              +\frac{427}{1000}\beta^2W}.
+ \tag{70.5}
+\]
+
+写非根部分为
+\[
+ N(u)=\alpha\left(sh\,a+\frac{k^2u}{2}\right)
+      +\beta S\left(1-\frac u2\right).
+\]
+由 (70.3)--(70.4) 及 $S>1$，
+\[
+ \alpha k^2<\frac{351}{2560}<\frac{43}{130}\le\beta S,
+ \tag{70.6}
+\]
+故 $N(u)$ 随 $u$ 严格递减。
+
+需要的支撑量上界为
+\[
+\begin{array}{c|c|c}
+ u\text{ 的区间}&T&W\\
+ \hline
+ [a/2,4/5]&1/4&1/4\\
+ [4/5,9/10]&2/3&2/3\\
+ [9/10,1]&3/4&3/4\\
+ [1,11/10]&91/100&4/5\\
+ [11/10,6/5]&9/10&7/10\\
+ [6/5,13/10]&13/20&3/5\\
+ [13/10,2]&1/2&1/2
+\end{array}
+ \tag{70.7}
+\]
+表中的界均可取严格形式。为核对它们，$u\le1$ 时 $a>u$，且 $W$ 随 $u$ 增、随 $a$ 减；在 $a_0=9801/6400$ 处
+\[
+ W(a_0,4/5)=\frac{38723751}{163840000}<\frac14,\quad
+ W(a_0,9/10)=\frac{25167879}{40960000}<\frac23,\quad
+ W(a_0,1)=\frac{29393199}{40960000}<\frac34.
+\]
+又 $T=W/\kappa\le W$。当 $u\ge1$ 时，直接微分
+$W=a(2-u)^2(2u-a)/u^2$；其内部临界值满足
+$W(u_*)\le a/2<31/40<4/5$，端点及 $u\ge a$ 时用 $W\le B$，故全段 $W<4/5$。在 $[1,11/10]$，若 $u\le21/20$ 则
+$D<(3/2)(2u-3/2)\le9/10$，若 $u\ge21/20$ 则
+$B\le361/400<91/100$。后面三段的 $T$ 界由 $T\le B$ 得到；对 $W$ 在相应区间的最大值分别为
+\[
+ W(a_0,11/10)=\frac{28074519}{40960000}<\frac7{10},\quad
+ W(a_0,6/5)=\frac{6053751}{10240000}<\frac35,\quad
+ W(a_0,13/10)=\frac{3284422911}{6922240000}<\frac12,
+\]
+并在 $u\ge a$ 时使用 $W\le B$。这证明了 (70.7)。
+
+将 (70.3)--(70.7) 代入 (70.5)，各段的非根上界及根式平方上界可统一列为
+\[
+\begin{array}{c|c|c|c}
+u\text{ 的区间}&N\text{ 的上界}&\text{根式平方上界}&\text{根式上界}\\
+\hline
+[a/2,4/5]&23138429/25600000&1456517/40000000&1/5\\
+[4/5,9/10]&3573491/4000000&1456517/15000000&5/16\\
+[9/10,1]&28027399/32000000&4369551/40000000&1/3\\
+[1,11/10]&2746687/3200000&25291147/200000000&9/25\\
+[11/10,6/5]&26906341/32000000&12001869/100000000&7/20\\
+[6/5,13/10]&6586453/8000000&18381329/200000000&31/100\\
+[13/10,2]&25785283/32000000&1456517/20000000&27/100
+\end{array}
+ \tag{70.8}
+\]
+例如第一行的 $N$ 在 $u=a/2$ 处估计为
+\[
+ \frac{13}{10}\frac{31}{20}
+ \left(\frac{271}{1000}+\frac{27}{1024}\right)
+ +\frac9{25}\frac{677}{500}\left(1-\frac{3}{8}\right)
+ =\frac{23138429}{25600000},
+\]
+其余各行只用 $N$ 的严格递减性和对应行的左端点。根式平方的各项是
+$(\alpha+\beta)^2T/32+(427/1000)\beta^2W$ 的直接正有理代入；逐项平方比较给出最后一列。
+因此七行的 $\mathcal H$ 上界分别小于
+\[
+ \frac{28258429}{25600000},\quad
+ \frac{4823491}{4000000},\quad
+ \frac{116082197}{96000000},\quad
+ \frac{3898687}{3200000},\quad
+ \frac{77413211}{64000000},\quad
+ \frac{38106341}{32000000},\quad
+ \frac{34425283}{32000000},
+\]
+且每一个都严格小于
+\[
+ \frac{4877}{4000}
+ \le \frac{E(q)-23/50}{4},
+\]
+其中最后一个不等式来自 (57.9) 及 $e=2(h+s)$、$d=2(h+c)$。结合 (70.5) 得
+$4\Gamma_-^2<E(q)-23/50$，故 (70.1) 成立。全部椭圆退化端点和三角域边界按 Corollary 56.3 的连续性约定包含。\hfill$\square$
+
+**定义 70.2（中央残差的当前边界）。** 定理 61.1--70.1 合并后，完整原始三角域上已严格排除
+\[
+ q\in\left[\frac1{25},\frac{11}{100}\right]
+ \cup\left[\frac12,\frac35\right].
+\]
+因此 #27057 的剩余未决区间缩小为
+\[
+ \left(\frac{11}{100},\frac12\right).
+\]
+端点 $q=11/100$ 与 $q=1/2$ 均属于已证明区间；未决边界不是反例，也没有改变原注册事件的全称量词。
