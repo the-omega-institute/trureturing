@@ -1,0 +1,13 @@
+**各向同性的系数。** 单位部分不参与作用，故 $D$ 只需在三维无迹部分上确定。反对称双线性映射唯一写成
+
+$$
+D(\mathbf a\cdot\boldsymbol\sigma,\mathbf b\cdot\boldsymbol\sigma)
+=F(\mathbf a\times\mathbf b),
+$$
+
+其中 $F:\mathbb R^3\to\operatorname{Herm}_2(\mathbb C)$ 线性。单位律还给 $D(e_{\mathbf r},e_{\mathbf s})=F(\mathbf r\times\mathbf s)/4$。对任意单位 $\mathbf n$，取正交单位 $\mathbf r,\mathbf s$ 使 $\mathbf r\times\mathbf s=\mathbf n$。由 (T)，$D(e_{\mathbf r},e_{\mathbf s})$ 在第一切面；交换顺序并用交替性，又在第二切面。所以 $F(\mathbf n)$ 无迹且向量部分平行于 $\mathbf n$。
+
+于是 $F(\mathbf v)=A\mathbf v\cdot\boldsymbol\sigma$，且线性 $A$ 保每一条实直线。取基向量知 $Ae_i=c_i e_i$，再取 $e_i+e_j$ 迫使 $c_i=c_j$，故 $A=cI$。利用 $i[\mathbf a\cdot\boldsymbol\sigma,\mathbf b\cdot\boldsymbol\sigma]=-2(\mathbf a\times\mathbf b)\cdot\boldsymbol\sigma$，得到式(8)，$\gamma=-c/2$。反过来，交换子显然留在共同支持内，并满足 $e\,i[e,p]+i[e,p]\,e=i[e,p]$。
+
+$\square$
+
