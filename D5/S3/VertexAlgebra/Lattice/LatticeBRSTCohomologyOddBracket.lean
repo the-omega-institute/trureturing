@@ -332,13 +332,15 @@ theorem cohomologyCurrent_delta (a b : Cohomology D H h26 hHG hGH) :
   have hpa : Delta D H h26 hHG hGH (parity D H h26 hHG hGH a) =
       -parity D H h26 hHG hGH (Delta D H h26 hHG hGH a) := by
     have h := Delta_parity D H h26 hHG hGH a
-    calc
-      Delta D H h26 hHG hGH (parity D H h26 hHG hGH a) =
-          -(-Delta D H h26 hHG hGH (parity D H h26 hHG hGH a)) :=
-            (neg_neg _).symm
-      _ = -parity D H h26 hHG hGH (Delta D H h26 hHG hGH a) :=
-        congrArg (fun z => -z) h.symm
-  rw [← h0, h1', h2', hpa, parity_involution]
+    have h' := congrArg
+      (fun z : Cohomology D H h26 hHG hGH => -z) h
+    simpa only [neg_neg] using h'.symm
+  rw [← h0]
+  simp only [map_sub, LinearMap.sub_apply]
+  rw [Delta_square D H h26 hHG hGH (product D H h26 hHG hGH a b), h1', h2', hpa,
+    parity_involution]
+  simp only [map_zero, LinearMap.zero_apply, map_neg, LinearMap.neg_apply,
+    neg_neg]
   abel
 
 end
