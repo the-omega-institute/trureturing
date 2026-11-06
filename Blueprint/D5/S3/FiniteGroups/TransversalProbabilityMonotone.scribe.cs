@@ -31,6 +31,11 @@ internal sealed class TransversalProbabilityMonotoneDocument : IScribeDocumentDe
                 + "P_G(H, K) is the (Laplacian) probability that a left transversal for H "
                 + "in G is also a right transversal for K in G." + "” "
                 + "Here n = H.index = K.index. Nat.card counts subsets, and the quotient is rational."),
+            Node("orbitWeight", "The arithmetic orbit factor", WeightFormula(),
+                AssessedProvenance.FromLiterature(Source),
+                "For every natural number n, orbitWeight n is the rational number n!/n^n. "
+                + "For positive n this is the factor f(n) appearing in Proposition 3.2 "
+                + "and Problem 5.6. The definition also fixes a total value at zero."),
             Node("P", "The probability for one specified subgroup", PFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 "Definition 3.1(ii), printed p. 8: “If H = K, we let P_G(H) ≔ "
@@ -63,6 +68,7 @@ internal sealed class TransversalProbabilityMonotoneDocument : IScribeDocumentDe
         AssessedProvenance provenance, string prose) => Describe.Lean(
             DescribeId.Create(name == "DT" ? "common-transversal-subsets"
                 : name == "P" ? "common-transversal-single-probability"
+                : name == "orbitWeight" ? "common-transversal-orbit-weight"
                 : name == "claim" ? "common-transversal-normal-extension-claim"
                 : "common-transversal-pair-probability"),
             DeclarationHandle.Create("D5/S3/FiniteGroups/TransversalProbabilityMonotone." + name),
@@ -124,6 +130,15 @@ internal sealed class TransversalProbabilityMonotoneDocument : IScribeDocumentDe
             new Formula.Fraction(numerator, denominator));
         return Disp(GroupBinders(true, All("H", SubgroupType(), All("K", SubgroupType(),
             All("sameIndex", Equal(Qualified("H", "index"), Qualified("K", "index")), equality)))));
+    }
+
+    private static Formula WeightFormula()
+    {
+        var n = F.Id("n");
+        var q = Seq(Mathbb, Grp(F.Id("Q")));
+        return Disp(All("n", Seq(Mathbb, Grp(F.Id("N"))),
+            Equal(Call("orbitWeight", n), new Formula.Fraction(
+                Cast(Seq(n, Bang), q), new Formula.Power(Cast(n, q), n)))));
     }
 
     private static Formula PFormula() => Disp(GroupBinders(true,
