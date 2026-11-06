@@ -38,7 +38,6 @@ A proof of the original universal claim would contradict `D5/S3/Combinatorics/Sp
 
 - Kernel-checked declaration: `D5/S3/Combinatorics/SpectralGraph/MandalMannaDQDilworthRefutation.result : ¬ claim`.
 - Frozen state: `Golden/Frozen/state/D5/S3/Combinatorics/SpectralGraph/MandalMannaDQDilworthRefutation.lean.json`.
-- The module statement_id is `sha256:4638797b175747fabf0989ad87825484fac66b452c052fbff125f7ac8df7a8af`.
 - The targeted Lean build and scoped report both exit 0; the axiom closure of every public declaration is contained in `{propext, Classical.choice, Quot.sound}`.
 - The exact checker is pinned at [`the-omega-institute/trureturing-experiments@daff737da5c5f9b6946de114e69753ecde01e652`](https://github.com/the-omega-institute/trureturing-experiments/tree/daff737da5c5f9b6946de114e69753ecde01e652/docs/reports/mandal-manna-dq-dilworth), path `docs/reports/mandal-manna-dq-dilworth/check.py`. Running `python3 .lake/scratch/mandal-manna-check.py` on the immutable file exits 0 with `ALL_CHECKS_OK`; its SHA-256 is `413df9e09713c58a2de0802c3dbe4c372a66cc4caa82c9b0a0c3430395225d9e`.
 
