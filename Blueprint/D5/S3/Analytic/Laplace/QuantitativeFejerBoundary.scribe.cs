@@ -7,7 +7,7 @@ internal sealed class QuantitativeFejerBoundaryDocument : IScribeDocumentDefinit
     private const string Prefix = "D5/S3/Analytic/Laplace/QuantitativeFejerBoundary.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A one-sided logarithmic envelope forces absolute Laplace convergence at every positive real parameter.",
+        "A one-sided logarithmic envelope gives absolute Laplace convergence and a uniform quantitative Fejer boundary formula.",
         H("Laplace convergence from a logarithmic envelope"),
         Blocks(
             Describe.Lean(
@@ -30,5 +30,30 @@ internal sealed class QuantitativeFejerBoundaryDocument : IScribeDocumentDefinit
                     + "positive real axis. Landau's singularity theorem excludes a positive "
                     + "convergence boundary; subtracting the majorant recovers absolute convergence "
                     + "of the original function."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("quantitative-boundary-formula"),
+                DeclarationHandle.Create(Prefix + "quantitative_boundary_formula"),
+                H("The quantitative Fejer boundary formula"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Under the same spectral and Laplace hypotheses, there is a positive constant "
+                    + "depending only on the given spectrum and Laplace data. For every Fejer kernel "
+                    + "or notched Fejer kernel of positive bandwidth b whose Fourier transform is "
+                    + "supported in the interval from minus M to M, with M at least four and y at "
+                    + "least one, the convolution of f with the kernel over the nonnegative ray is "
+                    + "absolutely integrable whenever f has a one-sided logarithmic envelope. Its "
+                    + "difference from minus the finite cosine sum over ordinates at most twice M, "
+                    + "weighted by their multiplicities and the kernel's Fourier transform, is "
+                    + "bounded by that constant times the sum of (1+b) times M to the maximum of "
+                    + "k and one, divided by y, and N(2M) divided by the product of b and y. The constant is uniform in "
+                    + "the kernel, b, M, y, and the logarithmic envelope. The proof first continues "
+                    + "the transform throughout the positive strip and applies absolute Fubini "
+                    + "with exponential damping. Monotone convergence of the nonnegative "
+                    + "difference between the envelope and the signed function establishes "
+                    + "integrability before damping is removed. The negative-ray kernel tail "
+                    + "bounds the truncation error, and integration by parts on the linear pieces "
+                    + "of the Fourier weight bounds the regular part."))),
                 DescribeRole.Theorem))));
 }
