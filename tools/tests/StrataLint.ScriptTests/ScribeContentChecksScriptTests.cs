@@ -83,6 +83,9 @@ public sealed class ScribeContentChecksScriptTests
                 Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean_cache_release.py"),
                 Path.Combine(repository, "tools/scripts/worktree/lean_cache_release.py"));
             ScriptHarnessScratch.CopyScriptInto(
+                Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean_cache_release_io.py"),
+                Path.Combine(repository, "tools/scripts/worktree/lean_cache_release_io.py"));
+            ScriptHarnessScratch.CopyScriptInto(
                 Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean_cache_topology.py"),
                 Path.Combine(repository, "tools/scripts/worktree/lean_cache_topology.py"));
             Write("tools/lean-inspector/inspect.sh", "#!/bin/bash\n");

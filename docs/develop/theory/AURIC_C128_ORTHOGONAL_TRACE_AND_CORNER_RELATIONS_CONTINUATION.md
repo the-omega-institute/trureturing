@@ -635,3 +635,645 @@ Brešar–Špenko，*Functional identities of one variable*，[arXiv:1307.2260v1
 **定义 333.3（三扇固定窗就能查清伸缩余量）。** 白话说，原来的整座世界仍在：大小不同的量子街区、经典房间、真实联合和纠缠准备、比较尺、每台设备与细记录、完整失败出口、原分组和遗忘、带原成功数的双返回，以及每条合法有限历史，全部照原样保留。新候选仍要求两颗原子完全错开或恰好重叠一半时，整份推动留在它们共同的小屋里；但总增减这笔账不再逐对检查，而是在每个至少有三个坐标位置的街区，先固定三扇互相错开的窗，再用有限组能拼出整个载体的第二输入查账。每个两坐标片总有第三扇窗站在外面；两扇会漏掉的一条虚交叉方向，第三扇恰能看到。上一轮的正常形说明，这些账值直接读出那种“看第二输入、沿第一输入伸缩”的余量，所以有限组全为零便把它彻底清掉。经典首源的补偿行仍原样保留到真实参考联合，再由逐中心交叉零清除；共同看得见原对象全部区别的高秩目标于是把导子、自守恒、左单位和所有原子对的无迹性带回整个原网。沿用同一张事先选好的刻度单后，复乘法、Born 概率的两套原运输、实际张量和相关输入、全部旧事件、所选平方根词及完整失败、原细口与同数双返回、所有合法有限历史一并接回。这里三扇窗是复坐标中的拼接位置；小屋内另有三实维球截面，两者都不自行变成物理空间、时钟或作用量。原关系从具体世界怎样内生供应，仍按各自缺口继续证明。
 
 ## 追加锚 C128333（本行以下为增补区）
+
+## 334. 原实际参考中的单原子匹配几何
+
+**定义 334.1（同一原来源与匹配资料）。** 续接 §§319–333；前卷与母卷仍指 319.1 的两卷。分别固定完整 $B$ 和完整 $\mathsf B_{\rm cl}$，任一记为 $B_*$，同一原 $\Omega,q,D,L,\circ$ 和规范谱迹 $\tau$ 保持。固定 $N\ge\max\{3,p_*\}$，$p_*=\operatorname{rank}E_P\ge2$。对每个非零原对象 $A$，先于原 $D$ 的输出选择前卷 202.1 所供应的同一个实际 $J_A$、原含幺 Jordan/$D$ 单射 $i_A:E_A\to E_{J_A}$ 及有限非空高简单块族 $\mathcal V_A$，满足
+
+$$
+n_T>N\quad(T\in\mathcal V_A),\qquad
+\bigcap_{T\in\mathcal V_A}\ker(\pi_Ti_A)=\{0\}.
+\tag{334.1}
+$$
+
+再以 $J_A$ 自己的原身份事件及完整全事件 R，选择一份实际
+
+$$
+K_A=J_AR_A,\qquad R_A=P^{\otimes k_A},\quad k_A\ge1,
+\qquad n_{V_A}\ge\max_{T\in\mathcal V_A}n_T
+\tag{334.2}
+$$
+
+及其中一个非经典参考块 $V_A$。记原有序嵌入为 $k:E_{J_A}\to E_{K_A}$、$l:E_{R_A}\to E_{K_A}$，$h_A=ki_A$。每个目标 $U=U_{A,T}=(T,V_A)$ 共用这同一份 $K_A,R_A$。后述静态坐标、原子、线性补偿和基均在考察 $D$ 的值前固定；它们是数学标签，不是新原事件或准备。
+
+**定理 334.2（全部来源的匹配角供应）。** 两份完整背景分别供应定义 334.1 的资料。对每个 $A,T$，可以在 $U$ 内选一颗 primitive $e=e_{A,T}$ 和一个实线性数学映射 $\beta_{A,T}:E_A\to E_{R_A}$，使
+
+$$
+z_{A,T}(a):=h_A(a)-l\beta_{A,T}(a)\in W_{A,T}:=\ker L_e
+\qquad(a\in E_A).
+\tag{334.3}
+$$
+
+核取在整个 $E_{K_A}$ 上，所有其他中心的分量保留。更强地，该构造给出 $k(E_{J_A})\subseteq W_{A,T}+l(E_{R_A})$。
+
+证明。前卷 202.1 给 (334.1)。母卷假设 2.5 的全事件 R 明确允许参考矩阵块达到稍后选出的任意有限输入块大小；经定义 10.2，参考取整个原 $P$ 的实际幂。将其用于 $J_A$ 的身份事件，并取有限最大值 $\max_Tn_T$，即得同一份 (334.2)。母卷 30.1 的证明已消费这项充分大实际身份参考；闭背景的 67.1–67.3 保留它。这一步使用完整 R，不把仅有某个参考的 $R_0$ 扩强，也不要求每个指定指数都获许可。
+
+前卷 246.1 在尚未识别原 $D$ 时给全部实际中心对及静态普通／相反表示。对固定 $U$，置 $m=n_T,n=n_{V_A}\ge m$；允许目标相关的转置 $\rho_U,\delta_U$，有
+
+$$
+\pi_Uk(x)=\rho_U(x_T)\otimes I_n,
+\qquad \pi_Ul(y)=I_m\otimes\delta_U(y_{V_A}).
+\tag{334.4}
+$$
+
+在所选正交坐标中取
+
+$$
+\xi_U=\frac1{\sqrt m}\sum_{r=1}^m v_r\otimes w_r,
+\qquad e=j_U|\xi_U\rangle\langle\xi_U|.
+\tag{334.5}
+$$
+
+$e$ 是整个 $E_{K_A}$ 的 primitive。对每个完整 $x\in E_{J_A}$，令 $y_U(x)$ 仅支撑 $V_A$，且
+
+$$
+\delta_U\bigl((y_U(x))_{V_A}\bigr)
+=\rho_U(x_T)^{\mathsf T}\oplus0_{n-m}.
+\tag{334.6}
+$$
+
+转置及上述角包含保持 Hermitian，故 $y_U$ 实线性。最大纠缠向量化的成熟恒等式逐指标给
+
+$$
+(\rho_U(x_T)\otimes I_n)\xi_U
+=\{I_m\otimes(\rho_U(x_T)^{\mathsf T}\oplus0)}\xi_U.
+\tag{334.7}
+$$
+
+因此 $k(x)-l(y_U(x))$ 的 $U$ 分量消去 $\xi_U$；它 Hermitian，左右乘 $e$ 均为零，其他中心又与 $e$ 正交，故整个差属于 $\ker L_e$。取 $\beta_{A,T}=y_Ui_A$ 即得 (334.3)。这是原 Jordan 结构和嵌入的匹配关系，没有消费原 $D$ 的交替、导子或左单位。
+
+这里的全 Hermitian 两侧匹配不能仅由满 Schmidt 秩推出。取 $0<\lambda<1$、$\lambda\ne1/2$ 和 $\xi=\sqrt\lambda\,|00\rangle+\sqrt{1-\lambda}\,|11\rangle$。令第一侧输入为 $\sigma_x$。写 $C=\operatorname{diag}(\sqrt\lambda,\sqrt{1-\lambda})$；若存在 Hermitian $b$ 使 $(\sigma_x\otimes I)\xi=(I\otimes b)\xi$，则向量化给
+
+$$
+b^{\mathsf T}=C^{-1}\sigma_x C
+=\begin{pmatrix}
+0&\sqrt{(1-\lambda)/\lambda}\\
+\sqrt{\lambda/(1-\lambda)}&0
+\end{pmatrix}.
+\tag{334.8}
+$$
+
+此矩阵不 Hermitian，矛盾。该成熟有限矩阵计算只说明选择匹配锚点的必要区别：上述等 Schmidt 系数构造由原充分参考直接供应，不把一般可逆向量化或通道忠实性改称本题的 Hermitian 正交补偿。∎
+
+## 335. 单原子来源配平的唯一完整候选
+
+**定义 335.1（只在匹配差上要求谱迹配平）。** 固定一套定义 334.1 的先定资料。原整个选中域仍为 $\operatorname{rank}E_X>p_*$，在其中保留
+
+$$
+\mathsf G_{0h}:\quad
+D^X(e,p)=Q_cD^X(e,p),\qquad
+c=\operatorname{supp}(e+p),\quad Q_c=2L_c^2-L_c,
+\qquad \tau_X(e\circ p)\in\{0,\tfrac12\}
+\tag{335.1}
+$$
+
+的全部有序 primitive 对及整个输出。唯一新的迹关系是
+
+$$
+\boxed{\mathsf Z_{\rm bal}:\quad
+\tau_{K_A}\!\left(D^{K_A}(e_{A,T},z_{A,T}(a))\right)=0
+\qquad(A\ne0,\ T\in\mathcal V_A,\ a\in E_A).}
+\tag{335.2}
+$$
+
+每个目标只有一颗首原子；不同中心对不合并成一颗原子。补偿差及迹均作用在整个实际 $K_A$，不只取目标压缩。令 $m_A=\dim_{\mathbb R}E_A$；336.1 将证明每个所需目标只需至多 $m_A-1$ 条非平凡标量配平。
+
+原菜单、$\mathcal K$、实际 $J_0=P^{\otimes2}$ 和先于 $D$ 固定的同一 $t_0=(e_0,p_0,r_0)\in\mathcal K_{J_0}$ 仍逐字沿用 319.1。保留同一
+
+$$
+\sigma_{t_0}:\quad
+W_{e_0}(p_0)=2q_{J_0}(D_{p_0}e_0,r_0)+W_{e_0}(2D_{e_0}p_0),
+\qquad
+\mathsf C_{\rm bal}(B_*)=B_*+\mathsf G_{0h}+\mathsf Z_{\rm bal}+\sigma_{t_0}.
+\tag{335.3}
+$$
+
+**定义 335.2（完整原范围与约束形式）。** 完整原 $\Omega$、全部原对象、实际有序联合、旧输出、经典中心、不等量子块大小和原正块权保留；原准备、零／次归一质量、实际乘积和全部相关准备保留。设备、端口、细记录、失败身份、整个 AC、精确 $N_u$、X/Xs、全事件 R、实 Jordan F、实际细化／分组／遗忘、零／失败／返回／停止、具名原同标量两侧支持返回及同数反向资料、每条原合法有限顺序、自适应和并行历史全部保留。$B$ 的精确有限正生成与 $\mathsf B_{\rm cl}$ 的闭正生成分别保持。
+
+(335.2) 是原嵌入、原 Jordan 匹配角及原双线性 $D$ 之间的兼容约束。它允许谱原子的迹贡献抵消，不等同于逐原子迹零的字面子集。其有限方程数不是实际读数或认证成本；原对象集合也无需有限。LU、SC、交替、导子、斜伴随、原 $D$ 的理想保持均留作结论；不添加模身份、primitive／等距嵌入、直接 $AP$、共同指数、实际 $M_2$、任意仪器、时钟或 $\hbar$，全部原已供应的标量两侧有序接口保持。
+
+## 336. 一颗首原子的迹只需控制原来源限制
+
+**定理 336.1（匹配差的有限表示与补偿独立性）。** 在 $B_*+\mathsf G_{0h}$ 中，对定义 334.1 的每个目标 $U$，存在实线性 $F_U:E_{K_A}\to\mathbb R$，使对全部完整输入
+
+$$
+\pi_UD(x,y)=\alpha_U\,\mathrm i[x_U,y_U]+x_UF_U(y),
+\qquad F_U\circ l=0,\quad F_U(u_{K_A})=0.
+\tag{336.1}
+$$
+
+并且对所有 $b\in E_{K_A}$，
+
+$$
+D(e,b)=j_U\pi_UD(e,b),\qquad
+\tau_{K_A}(D(e,b))=F_U(b),\qquad
+\tau_{K_A}(D(e,z_{A,T}(a)))=F_U(h_A(a)).
+\tag{336.2}
+$$
+
+因此 (335.2) 恰为 $F_U\circ h_A=0$；它不先要求 $F_U$ 在整个 $E_{K_A}$ 消失。配平值不依赖哪一个匹配补偿，也不依赖原对象基的选择。
+
+证明。原右单位由母卷 30.1／67.3 独立供应。$n_U=n_Tn_{V_A}\ge4$ 且整个 $K_A$ 总秩大于 $p_*$，所以无迹前件缺席的完整来源定理 320.1 适用。先保留其中 $\eta_U$、所有经典首源 $\ell_{Us}$ 及经典自输入补偿，再按 321.1 使用同一实际有序交叉零：非经典因子的无迹输入消去 $\eta_U$，各实际经典中心对逐项消去 $\ell_{Us}$，并给 $F_U\circ l=0$。这正给 (336.1)，没有加入反向交叉零。
+
+320.1 证明中的非经典首源整输出局部性仅使用右单位及整支持：同源的全部输出在首源，异源的非经典首源输出也在首源。第二输入逐源展开，所以固定 $e\in U$ 的整个输出在 $U$；这里不调用含额外迹前件的 312.1 陈述。现在对 (336.1) 取整个规范谱迹，交换子迹为零且 $\operatorname{Tr}(e)=1$，给 (336.2) 前两式。再用 $F_U\circ l=0$ 即给最后一式。不同补偿的差仍来自 $l(E_{R_A})$，故同一配平值不变。
+
+固定先定实基 $u_A,a_1,\ldots,a_{m_A-1}$。含幺性给 $h_A(u_A)=u_{K_A}=l(u_{R_A})$，故单位方向的配平已为零；线性性遂使 (335.2) 等价于该基其余 $m_A-1$ 条。每个 $z_j=z_{A,T}(a_j)\in\ker L_e$ 都在整个 Jordan 正交角内有有限谱分解
+
+$$
+z_j=\sum_\nu c_{j\nu}p_{j\nu},\qquad p_{j\nu}\perp e,
+\qquad
+\sum_\nu c_{j\nu}\tau_{K_A}(D(e,p_{j\nu}))=0.
+\tag{336.3}
+$$
+
+Hermitian 块中 $\ker L_e$ 正是消去 $\xi_U$ 的整个 Hermitian 正交角，其他中心完整包含其中，故谱原子确实都是整个 $K_A$ 的 primitive 并与 $e$ 正交。谱选择及系数仅由静态 $z_j$ 决定，和 $D$ 无关。不同谱表示给同一线性配平；每项分别为零是额外条件。∎
+
+## 337. 有限源像配平返回全部原对象
+
+**定理 337.1（两份完整背景各自的无标定等价）。** 对任意一套先定匹配资料，分别有
+
+$$
+\begin{aligned}
+B+\mathsf G_{0h}+\mathsf Z_{\rm bal}
+&\Longleftrightarrow B+\mathrm I+\mathrm{SC}
+\Longleftrightarrow B+\mathsf G_{0h}+\mathsf Z_0,\\
+\mathsf B_{\rm cl}+\mathsf G_{0h}+\mathsf Z_{\rm bal}
+&\Longleftrightarrow\mathsf B_{\rm cl}+\mathrm I+\mathrm{SC}
+\Longleftrightarrow\mathsf B_{\rm cl}+\mathsf G_{0h}+\mathsf Z_0.
+\end{aligned}
+\tag{337.1}
+$$
+
+原导子律、SC、LU、交替、原 $q$ 斜伴随及全部原零／半角无迹覆盖整个原范围。
+
+证明。固定任意原非零 $A$。336.1 先由该对象自己的配平给每个所需 $F_U\circ h_A=0$，所以只对原源像已有
+
+$$
+\pi_UD^{K_A}(h_A(a),h_A(b))
+=\alpha_U\,\mathrm i[(h_A(a))_U,(h_A(b))_U]
+\qquad(a,b\in E_A).
+\tag{337.2}
+$$
+
+并未先把右式推广成整个 $E_{K_A}\times E_{K_A}$ 的纯交换子。
+
+对原任意 $a,b,c$，将导子缺陷
+
+$$
+r_A=D^A_a(b\circ c)-(D^A_ab)\circ c-b\circ(D^A_ac)
+\tag{337.3}
+$$
+
+及 $D^A_aa$ 沿同一原含幺 Jordan/$D$ 嵌入 $h_A$ 运输。(337.2) 对源输入、源乘积及源 $D$ 输出均成立，因此交换子的 Leibniz 律逐目标给
+
+$$
+\pi_Uh_A(r_A)=0,\qquad \pi_Uh_A(D^A_aa)=0.
+\tag{337.4}
+$$
+
+静态 (334.4) 的 $x_T\mapsto\rho_U(x_T)\otimes I_{V_A}$ 单射，(334.1) 的同一目标族遂共同分离整个原 $E_A$，得 $r_A=0,D^A_aa=0$。有限 EJA 导子内性给原 I，原 Frobenius $q_A$ 给原斜伴随；SC 极化及右单位再给交替与 LU。零对象平凡，$A$ 任意，所以全部原对象及实际联合均恢复。对某个 $A$ 的证明只使用 $K_A$ 的原支持分类与该源的配平，不以 $K_A$ 已恢复 SC 为前件，因此没有向更大对象递归假设结论。
+
+反向在各自完整背景上复用 323.1、329.1：I+SC 给全部原交换子形式和含零分支的共同曲率，所以整个 $\mathsf G_{0h}$、全部 $\mathsf Z_0$ 成立。每条 (336.3) 随即成立，故 $\mathsf Z_{\rm bal}$ 成立。两份准备背景各用自己的入口；不把数学闭包变成原实际准备。这个等价也表明，完整背景中的候选结论不依赖哪套先定匹配资料。∎
+
+## 338. 同一刻度下的完整量子与过程理论
+
+**定理 338.1（完整候选的恒等重构）。** 对同一原菜单、$t_0$ 及 $\sigma_{t_0}$，分别在完整 $B$ 与完整 $\mathsf B_{\rm cl}$ 中有
+
+$$
+\mathsf C_{\rm bal}(B_*)\Longleftrightarrow
+\mathsf C_{\rm fin}(B_*)\Longleftrightarrow
+\mathsf C_Z(B_*)\Longleftrightarrow\mathsf C_{\rm support}(B_*).
+\tag{338.1}
+$$
+
+全部对应对原对象、原准备、设备／记录／失败及每条原合法有限历史都是恒等。由同一原 $D$ 定向的复表示满足
+
+$$
+\begin{gathered}
+\mathcal A_A=\bigoplus_s B(H_{A,s}),\quad
+E_A=(\mathcal A_A)_{\rm sa},\quad C_A=(\mathcal A_A)_+,\\
+a\cdot b=a\circ b-\mathrm iD_ab,\qquad D_ab=\tfrac{\mathrm i}{2}[a,b],\\
+D_aa=D_au=D_ua=0,\qquad D_ab=-D_ba,\qquad
+[D_a,D_b]=-[L_a,L_b],\quad D_c^2=-P_c/4\quad(c^2=c).
+\end{gathered}
+\tag{338.2}
+$$
+
+全部原实际联合具有同一取向的普通复张量，全部原经典中心及相关输入保持。原比较 $g_A^0$ 和原 $q_A$ 的两套运输保持区分：
+
+$$
+\begin{aligned}
+g_A^0(x,y)&=\tau_A((B_Ax)y),&q_A(x,y)&=\tau_A((\mathcal W_Ax)y),\\
+\rho_\alpha&=B_Ax_\alpha,&\widehat x_\alpha&=\mathcal W_A^{-1}\rho_\alpha,\\
+\alpha(y)&=\tau_A(\rho_\alpha y),&\alpha(D_ab)&=q_A(\widehat x_\alpha,D_ab),\\
+\Phi_f&=B_BT_f^{\dagger_0}B_A^{-1}&&(f:A\to B).
+\end{aligned}
+\tag{338.3}
+$$
+
+一般 $x_\alpha\ne\widehat x_\alpha$；各联合各取自己的 $B_A,\mathcal W_A$，不等正权和非因子化比较均保留。原准备含零、奇异和次归一质量；全部旧事件 $\Phi_f$ 为 CP/TNI，原完整设备的事件和为 TP。对每个数学效果 $0\le e\le u_A$，原所选精确有限平方根词和原许可相关执行满足
+
+$$
+\Phi_{W_e}(\rho)=\sqrt e\rho\sqrt e,\qquad
+\Phi_{W_e\mid R}(X)=(\sqrt e\otimes I_R)X(\sqrt e\otimes I_R).
+\tag{338.4}
+$$
+
+原占用失败方向 $p_1$ 的每个原失败 $\Psi_\ell:P\to B_\ell$ 保持完整输出 $\sqrt{I-e}\rho\sqrt{I-e}\otimes\Psi_\ell(p_1)$；其他原方向和中心取原映射。原 F 供应同一实现的实际细口及原分组／遗忘；非零细支的具名原资料仍满足
+
+$$
+\begin{gathered}
+S_\ell=\operatorname{Ad}_{K_\ell},\quad \Phi_f=\sum_\ell S_\ell,
+\quad U_\ell=q_\ell\operatorname{Ad}_{K_\ell^+},\quad q_\ell>0,\\
+e_\ell=\operatorname{supp}(K_\ell^*K_\ell),\quad
+h_\ell=\operatorname{supp}(K_\ell K_\ell^*),\quad \mathsf C_e(X)=eXe,\\
+U_\ell=\mathsf C_{e_\ell}U_\ell\mathsf C_{h_\ell},\quad
+U_\ell S_\ell=q_\ell\mathsf C_{e_\ell},\quad
+S_\ell U_\ell=q_\ell\mathsf C_{h_\ell}.
+\end{gathered}
+\tag{338.5}
+$$
+
+原 $q_\ell$ 与同数反向资料不归一掉。每份原准备、每条原合法有限历史 $(f_1,\ldots,f_r)$ 及原末端效果 $w$ 都有
+
+$$
+\alpha(T_{f_1}\cdots T_{f_r}w)
+=\tau_{A_r}\!\left(w\,\Phi_{f_r}\cdots\Phi_{f_1}(\rho_\alpha)\right).
+\tag{338.6}
+$$
+
+原顺序、自适应记录分支、实际并行联合与完整相关输入、细化、分组、实际遗忘、零／失败／返回／停止逐项保持；条件概率仅在原分母正时取比值。
+
+证明。337.1 先恢复全域 I+SC，前卷 275–276 和本卷 324.1、330.1 再给含零分支的共同曲率 $\kappa\ge0$。现在才使用同一预选 $\sigma_{t_0}$，由原正 $w_0$ 的 $(1-\kappa)w_0/4=0$ 得 $\kappa=1$。不重标 $D$，不重选标签。此后 330.1 的全部原入口成立，逐项复用其概率双运输、原实际张量、全事件 R、整个 AC、精确 $N_u$、Xs、实 Jordan F 和逐原箭头迭代，得到 (338.2)–(338.6)。没有由单支的数学表示补造共同仪器或新细记录。
+
+324.3 的三类物理来源继续分别保留：连续可逆器件及物理时钟／Hamiltonian／共同作用量标定；独立成功支的共同完整仪器；旧同效果设备自己的理想完整输出校准。∎
+
+## 339. 原来源已恢复不等于局部联合余量已消失
+
+**定理 339.1（非空满足族与单联合的隐藏方向）。** 325.1 的完整 tagged-CP 满足族分别满足 $\mathsf C_{\rm bal}(B)$ 与 $\mathsf C_{\rm bal}(\mathsf B_{\rm cl})$，包括无实际 $M_2$ 对象或简单块的子族。同时存在一个单联合数学片段，满足右单位、整个 $\mathsf G_{0h}$、两个因子的 $D$ 保持、有序交叉零，以及一颗匹配原子的全部正交迹零，却有非零联合径向项。
+
+证明。完整满足族的标准 $D=\mathrm i[a,b]/2$ 在任意第二输入上迹零，故每套匹配资料的全部 (335.2) 成立；原全部背景、同一 sigma、实际过程及历史沿 325.1 保持。
+
+局部片段取两个 $H_m(\mathbb C)$ 因子及 $E=H_{m^2}(\mathbb C)$，$m\ge2$；两因子 $D$ 均取零。取最大纠缠 $e=|\xi\rangle\langle\xi|$、非零无迹 Hermitian $A_0$，令
+
+$$
+H=\mathrm i[A_0\otimes I_m,e],\qquad
+F(b)=\operatorname{Tr}(Hb),\qquad D(a,b)=F(b)a.
+\tag{339.1}
+$$
+
+$H$ Hermitian 且迹零。若 $H=0$，则 $(A_0\otimes I)\xi$ 沿 $\xi$；向量化使 $A_0$ 为标量，与无迹非零矛盾。因此 $H\ne0$。交换子是相对于 $e$ 的交叉块，故其 $e^\perp$ 压缩为零；两个数学部分迹均为零：第一因子上的迹循环消去一个，另一个是 $\mathrm i[A_0,I_m/m]=0$。所以
+
+$$
+F|_{\ker L_e}=0,
+\qquad F(x\otimes I_m)=F(I_m\otimes y)=0,
+\qquad F\ne0.
+\tag{339.2}
+$$
+
+$F(u)=0$ 给右单位；primitive 首输入的输出沿自身，所以整个支持条件成立。两因子范围上的 $F$ 为零，使两个零 $D$ 都被标准因子嵌入保持，原有序交叉零也成立。所有 $p\perp e$ 都有 $\tau(D(e,p))=0$，因而该锚点上的全部正交配平成立。但是取 $H$ 的非零本征值对应 primitive $p$，再取另一 primitive $f\perp p$，则 $\tau(D(f,p))=F(p)\ne0$。
+
+这只说明该单联合片段仍能隐藏相关方向；它未供应完整 $B_*$ 的全部参考、事件、sigma 和各原对象自己的配平资料，不是完整候选的反模型。337.1 只在每个 $A$ 的回传阶段要求 $F_U\circ h_A=0$；全域 I+SC 取得以后，全部联合余量才被原全域结论消去。331.2–331.3 的局部原始测试下界保持：这里同时改变了来源条件、配平形式及局部恢复目标。∎
+
+## 340. 一个共同原子上的两侧作用与更大结构
+
+**定义 340.1（匹配差的几何）。** (334.7) 将第一侧作用沿同一向量转置搬到第二侧。等维部分可辨认为矩阵空间上的左右作用：$\xi_U$ 对应归一的单位矩阵，$(M\otimes I-I\otimes M^{\mathsf T})\xi_U=0$。新关系检验的是这两侧作用相抵后落入 $\ker L_e$ 的来源方向；$F_U$ 对第二侧已经为零，因此配平恰读取原来源在商 $E_{K_A}/l(E_{R_A})$ 中的像。该商是证明工具，不是原过程对象。原单位在此商中为零，对应每目标至多 $m_A-1$ 条方程。每个目标的一颗原子只是同一内在约束的坐标，补偿和基不改变 336.2 的值。
+
+同块两原子的支持角仍为实四维 $H_2(\mathbb C)$，其无迹部分为三实维球空间；原 325.2 的横向复结构不变。更大的结构包含原复射影角网与实际张量中两侧共享的向量化关系。跨中心的角仍只有 $\mathbb Re\oplus\mathbb Rp$ 及一维无迹线；单联合锚点不合并这些中心，也不把复坐标维数或球截面解释成物理空间维数。
+
+
+## 341. 来源、内生边界与完整白话
+
+**定义 341.1（承重来源与新增综合）。** 仓内来源固定于 [`a36e4c0700e7cfa4c51e676356af67156c416d02`](https://github.com/the-omega-institute/trureturing/tree/a36e4c0700e7cfa4c51e676356af67156c416d02)。母卷 2.5、10.2、30.1、67.1–67.3 供应同一原全事件的充分大实际参考；前卷 202.1、246.1 供应整个原对象的高秩分离和全部静态中心对。本卷 320.1 的无迹前件缺席证明供应整输出局部性，321.1 供应完整来源的径向残余及 $F_U\circ l=0$，323–330 供应全域尺度、同一 sigma 及完整消费者。新推导不把含额外迹前件的旧局部性陈述用作无迹删除的入口。
+
+D’Ariano–Lo Presti，*Imprinting Complete Information about a Quantum Channel on Its Output State*，DOI [10.1103/PhysRevLett.91.047902](https://doi.org/10.1103/PhysRevLett.91.047902)，[作者原文第 1 页 (2)–(5)](https://www.qubit.it/~lopresti/PRLfaith.pdf)，使用最大纠缠向量化和同基转置。这里只消费这些 $\texttt{literature-attested}$ 矩阵工具；334.2 证明中的指标恒等式与有限矩阵检验是成熟中间步骤，不单独取得原创地位。原文的通道忠实性、反演及层析资源不作为本题的原实际供应。Brešar–Špenko [arXiv:1307.2260v1，Lemma 3.2](https://arxiv.org/html/1307.2260v1#S3.Thmtheorem2) 仍只作为既有 320.1 的交换多线性迹中间来源，不把 primitive 条件未经证明地复化。
+
+新增承重综合是：用原充分参考构成完整来源的匹配差，识别只须消去 $F_U\circ h_A$，以单目标一颗原子的至多 $m_A-1$ 条来源配平返回整个原 $A$，再对全部原对象恢复两份完整量子与过程理论。其地位是 $\texttt{repo-derived}$，不据文献检索未命中主张优先权。配平值的补偿／基独立性和 339.1 的局部隐藏方向给出该综合的准确范围。
+
+**定义 341.2（仍需内生的部分）。** 匹配角及补偿由所声明的完整原背景供应；新增配平仍需从具体原 $\Omega$ 的实际关系证明，并未从 $B_*+\mathsf G_{0h}$ 无条件推出。将它写成既有定义间的约束，不自动证明原世界满足它。全删迹的 321.2 残余、前卷既定原来源边界、普遍第二槽来源及 324.3 的各物理来源义务保持。本轮简化指单目标首原子数及来源配平的有限维上界，未主张全部原始迹值逐项为零、实际认证更便宜、原全网公理最小性或经验起源。本文为纸笔条件理论，未取得 Lean/kernel 或经验验证。
+
+**定义 341.3（一颗共同珠子上的两边相抵）。** 白话说，整座原世界照样保留：量子街区、经典房间、大小不同的中心、真实联合和纠缠准备、比较尺、每台设备与细记录、完整失败出口、原分组和遗忘、带原成功数的两侧返回，以及全部合法有限历史。新候选仍让零角和半角的整份推动留在共同小屋里；查总账时，每个需要的分离目标只用一颗由原充分参考容纳的共同珠子。左边怎样作用，就在右边选一个转置补偿；二者之差碰不到这颗珠子，于是落进它的正交角。把原对象的有限组方向这样配好，只要求每个差的谱原子贡献合起来为零，允许各项相抵。原交叉零早已查清右边的账，所以这些有限配平只清掉原对象像里的径向伸缩，不必先看清整个大联合。高秩目标共同看得见原对象的每个区别，便把导子律、自守恒和左单位带回；每个原对象都这样完成以后，再沿用同一张刻度单，复乘法、Born 概率的两套原运输、实际张量、全部旧事件、平方根词及完整失败、原细口与同数双返回、全部合法有限历史一并接回。共同珠子和两侧匹配属于更大的张量与射影角网；三实维球截面仍是其中的小屋结构，不能自行变成物理空间、时钟或作用量。这些来源配平如何由具体原世界内生满足，仍是下一层的证明义务。
+
+## 追加锚 C128341（本行以下为增补区）
+
+## 342. 用原中心的迹中性替代所选匹配资料
+
+**定义 342.1（唯一新增候选与原选中域）。** 沿用 319.1、335.2 的完整原签名、原菜单及同一预选 $t_0$。分别取完整 $B$ 与完整 $\mathsf B_{\rm cl}$，任一记为 $B_*$；静态复直和只由前卷 246.1 与母卷 85.2 取得。令 $Z(E_X)$ 为原 Jordan 代数的中心；在任一静态坐标中，它是各简单块的标量单位之直和。规范谱迹仍为 $\tau_X=\sum_s\operatorname{Tr}_{n_s}$，不换成原加权比较 $q_X$。保留整个 $\mathsf G_{0h}$，只在原选中域增加
+
+$$
+\boxed{\mathsf Z_{\rm cen}^{>}:
+\quad\tau_X\!\left(D^X(z,b)\right)=0
+\quad\left(\operatorname{rank}E_X>p_*,\ z\in Z(E_X),\ b\in E_X\right).}
+\tag{342.1}
+$$
+
+唯一完整候选为
+
+$$
+\mathsf C_{\rm cen}(B_*)
+:=B_*+\mathsf G_{0h}+\mathsf Z_{\rm cen}^{>}+\sigma_{t_0}.
+\tag{342.2}
+$$
+
+这里不再选匹配原子、补偿映射、来源基或参考剖面作为公理资料。证明可以使用原背景已经供应的实际参考，候选本身只读取原中心、原 $D$ 和规范迹。$\mathsf G_{0h}$ 的零／半角、两个输入次序及整个输出支持仍逐字沿用 (319.1)；$\sigma_{t_0}$ 仍是 (319.2) 的同一原等式，不重标 $D$，不重选刻度。
+
+**定义 342.2（完整量词及简化口径）。** 原全部对象、实际有序联合、旧输出、经典中心、不等块大小、原正权、全部原准备与相关准备、零／次归一质量均保留。整个 AC、精确 $N_u$、X/Xs、全事件 R、实 Jordan F、原设备／端口／细记录／失败身份、完整失败输出、实际细化／分组／遗忘、具名原同数两侧支持返回及同数反向资料、每条原合法有限顺序、自适应和并行历史均沿 335.2 保留。两份准备背景分别使用各自的精确有限正生成与闭正生成。
+
+LU、SC、交替、导子、斜伴随、理想保持均不是输入；也不增加模身份、primitive／等距嵌入、直接 $AP$、共同参考指数、实际 $M_2$、任意仪器、时钟或 $\hbar$。本处简化精确指删除公理中的辅助匹配选择，改用中心的内在标量约束；不声称标量方程数少于所有旧候选，或原实际取得、认证成本下降。
+
+## 343. 两次实际身份参考给每个原对象的完整正常形
+
+**定理 343.1（无迹前件的全对象径向正常形）。** 分别在 $B_*+\mathsf G_{0h}$ 中，每个原非零对象 $A$ 都有
+
+$$
+E_A=\bigoplus_{s\in S_A}H_{n_s}(\mathbb C),\qquad
+\pi_sD^A(a,b)=\gamma_s\,\mathrm i[a_s,b_s]+a_sF_s(b),
+\qquad F_s(u_A)=0
+\tag{343.1}
+$$
+
+对全部完整输入 $a,b\in E_A$ 成立。其中 $F_s:E_A\to\mathbb R$ 实线性，$\gamma_s$ 实数；经典块约定 $\gamma_s=0$。原对象的经典块、二阶块、跨中心第二输入均包括在内，没有先假设原 $D$ 理想保持。
+
+证明。原右单位只用母卷 30.1／67.3。固定原 $A$ 的身份事件。母卷 2.5 的完整 R 经 10.2 允许充分大的实际参考，故可选原实际
+
+$$
+J=AR^{(0)},\qquad R^{(0)}=P^{\otimes k_0},
+\qquad V_0\subset E_{R^{(0)}},\quad d_0=n_{V_0}>p_*.
+\tag{343.2}
+$$
+
+$p_*\ge2$，故 $d_0\ge3$。这只选实际许可的某个指数；不是由弱 $R_0$ 推出任意指数。两份背景分别保留这项完整 R。
+
+记原第一槽嵌入为 $i:E_A\to E_J$。前卷 246.1 的全部中心对给每个原 $s$ 一个目标 $T_s=(s,V_0)$，大小 $n_sd_0$；在目标自己的静态坐标中，$\pi_{T_s}i(a)$ 是 $a_s\otimes I_{d_0}$ 的普通或转置表示。其他原中心的输入在该目标投影为零。因此这些目标共同分离整个 $E_A$，包括原经典源，并非只分离原量子块。
+
+再对 $J$ 自己的原身份事件使用同一完整 R，选择实际
+
+$$
+K=JR^{(1)},\qquad R^{(1)}=P^{\otimes k_1},
+\qquad V_1\subset E_{R^{(1)}},\quad d_1=n_{V_1}\ge2.
+\tag{343.3}
+$$
+
+原嵌入记为 $k,l$，$h=ki$。每个 $U_s=(T_s,V_1)$ 大小 $n_sd_0d_1>p_*$，整个 $K$ 遂在原选中域；$T_s,V_1$ 均非经典。于是 321.1 对整个 $E_K\times E_K$ 给
+
+$$
+\pi_{U_s}D^K(x,y)
+=\alpha_{U_s}\,\mathrm i[x_{U_s},y_{U_s}]
++x_{U_s}F_{U_s}(y),\qquad
+F_{U_s}(u_K)=0,\quad F_{U_s}\circ l=0.
+\tag{343.4}
+$$
+
+此处消费 320.1、321.1 的完整来源证明：先保留 $\eta$、所有经典首源项及经典自输入补偿，再由原有序交叉零逐项消去。没有先丢经典项，也没有加入反向交叉零或迹前件。
+
+两次静态坐标组合后，可在 $U_s$ 上写
+
+$$
+\pi_{U_s}h(a)=\varphi_s(a_s),\qquad
+\varphi_s(x)=W_s\bigl(x^{\mathsf T^{\varepsilon_s}}\otimes I_{d_0d_1}\bigr)W_s^*,
+\quad\varepsilon_s\in\{0,1\}.
+\tag{343.5}
+$$
+
+这里的幺正坐标 $W_s$、逐目标取向和放大均只属于该数学表示，不要求全网已有共同取向。$\varphi_s$ 单射、含幺且保持 Jordan 乘法；对 Hermitian 输入满足
+
+$$
+\mathrm i[\varphi_s(x),\varphi_s(y)]
+=(-1)^{\varepsilon_s}\varphi_s(\mathrm i[x,y]).
+\tag{343.6}
+$$
+
+原 $D$ 保持将 (343.4) 限制到 $h(a),h(b)$。其左端等于 $\varphi_s(\pi_sD^A(a,b))$。令 $F_s=F_{U_s}\circ h$，取 $\gamma_s=(-1)^{\varepsilon_s}\alpha_{U_s}$；当 $n_s=1$ 时取零。由 (343.6) 并消去单射 $\varphi_s$，便得 (343.1)。含幺性给 $F_s(u_A)=0$。这对每个 $s$、全部源输入成立，故穷尽整个原输出；无需先在 $J$ 或 $K$ 上取得 SC，也无需递归假设更大对象已经恢复。∎
+
+**定理 343.2（内在中心读数及选择独立性）。** 记原最小中心单位为 $z_s=j_s(I_{n_s})$。在 343.1 的同一背景中，整个原输出满足
+
+$$
+\begin{aligned}
+D^A(z_s,b)&=F_s(b)z_s,&
+F_s(b)&=\frac{\tau_A(D^A(z_s,b))}{n_s},\\
+\mathcal R_A(b)&:=\sum_s\frac{\tau_A(D^A(z_s,b))}{n_s}z_s,&
+D^A(a,b)&=\bigoplus_s\gamma_s\,\mathrm i[a_s,b_s]+a\circ\mathcal R_A(b),\\
+\mathcal R_A(u_A)&=0,&D^A(u_A,b)&=\mathcal R_A(b)\in Z(E_A).
+\end{aligned}
+\tag{343.7}
+$$
+
+$F_s$ 和 $\mathcal R_A$ 不依赖证明中选择的参考、目标或转置坐标；$n_s\ge2$ 时 $\gamma_s$ 在固定原块坐标中也唯一。
+
+证明。将 $a=z_s$ 代入 (343.1)：该中心的交换子为零，其他每个中心的第一坐标为零，故整输出恰为 $F_s(b)z_s$。其规范迹为 $n_sF_s(b)$，给出选择无关的读数。对所有 $s$ 求和即得其余式。固定这些 $F_s$ 后，两个正常形之差为 $(\gamma_s-\gamma'_s)\mathrm i[x,y]$；每个 $n_s\ge2$ 块都有不交换的 Hermitian $x,y$，故系数相等。中心单位的置换和 Jordan 坐标变换保留迹及上述中心元。∎
+
+## 344. 只在原高秩域查中心便足以回传全域
+
+**定理 344.1（选中域中心迹的全域下降）。** 在两份完整 $B_*$ 中，$\mathsf Z_{\rm cen}^{>}$ 等价于对全部原对象要求的
+
+$$
+\mathsf Z_{\rm cen}:\qquad
+\tau_A(D^A(z,b))=0\quad(z\in Z(E_A),\ b\in E_A).
+\tag{344.1}
+$$
+
+本结论不消费 $\mathsf G_{0h}$、LU、SC 或 $q$ 的因子化。
+
+证明。全域蕴含选中域是限制。反向固定任意非零原 $A$，用其原身份事件的完整 R 选足够大的实际 $J=AR$，使 $\operatorname{rank}E_J>p_*$。写 $E_R=\bigoplus_tH_{m_t}(\mathbb C)$。全部静态中心对使
+
+$$
+i(z_s)=\sum_tz_{(s,t)}\in Z(E_J),\qquad
+\tau_J(i(x))=\sum_{s,t}m_t\operatorname{Tr}_{n_s}(x_s)
+=\tau_R(u_R)\tau_A(x).
+\tag{344.2}
+$$
+
+逐对转置及幺正坐标不改变该式，$\tau_R(u_R)=\sum_tm_t>0$。中心线性组合也被 $i$ 送入中心。原 $D$ 保持及选中域中性于是给
+
+$$
+0=\tau_J(D^J(i(z),i(b)))
+=\tau_J(i(D^A(z,b)))
+=\tau_R(u_R)\tau_A(D^A(z,b)).
+\tag{344.3}
+$$
+
+消去正因子即得全域中性。这里只计算规范矩阵谱迹，没有把它当作实际丢弃，也没有使用 $g^0$ 或 $q$ 的张量因子化。零对象结论平凡。∎
+
+**定理 344.2（两份背景各自的无标定等价）。** 分别有
+
+$$
+B_*+\mathsf G_{0h}+\mathsf Z_{\rm cen}^{>}
+\Longleftrightarrow B_*+\mathrm I+\mathrm{SC}
+\Longleftrightarrow B_*+\mathsf G_{0h}+\mathsf Z_{\rm bal}.
+\tag{344.4}
+$$
+
+任一套 334.1 的旧先定匹配资料均可用于最右式。左式恢复原全域的 LU、交替、导子、SC、原 $q$ 斜伴随及全部原零／半角无迹。
+
+证明。先用 344.1 取得每个原对象的中心中性，再用 343.1–343.2。所有 $F_s$ 为零，故整个原 $D$ 是逐块交换子。对固定第一输入，它满足 Jordan Leibniz 律，且 $D^A(a,a)=0$；有限 EJA 导子内性给原 I，或直接将这些交换子视为各块的内导子。极化给交替，右单位给 LU；原 $q$ 是各块的正权 Frobenius 型，逐块迹循环给斜伴随。经典块上的 $D$ 及全部跨中心输出也为零，而非留作另一个前件。
+
+反向在完整 $B_*+\mathrm I+\mathrm{SC}$ 上，323.1、329.1 的同一全域共同曲率结论包括零分支，并给整个 $\mathsf G_{0h}$ 和全部输入的交换子迹零，故特别给 (342.1)。与 $\mathsf Z_{\rm bal}$ 的等价直接复用 337.1，不重证原匹配候选。两份准备背景各用其自身静态入口和保单位供应，不将闭包中的数学准备补成实际准备。∎
+
+## 345. 同一原刻度下的完整量子与过程理论
+
+**定理 345.1（中心候选的恒等重构）。** 固定同一原菜单、$t_0$、$D$ 及原 $\sigma_{t_0}$，分别在完整 $B$ 与完整 $\mathsf B_{\rm cl}$ 中有
+
+$$
+\mathsf C_{\rm cen}(B_*)\Longleftrightarrow
+\mathsf C_{\rm bal}(B_*)\Longleftrightarrow
+\mathsf C_{\rm fin}(B_*)\Longleftrightarrow
+\mathsf C_Z(B_*)\Longleftrightarrow
+\mathsf C_{\rm support}(B_*).
+\tag{345.1}
+$$
+
+这些对应对全部原对象、准备、实际联合、设备／记录／失败及原合法有限历史都是恒等。由同一原 $D$ 定向的复代数满足
+
+$$
+\begin{gathered}
+\mathcal A_A=\bigoplus_sB(H_{A,s}),\quad
+E_A=(\mathcal A_A)_{\rm sa},\quad C_A=(\mathcal A_A)_+,\\
+a\cdot b=a\circ b-\mathrm iD_ab,\qquad
+D_ab=\tfrac{\mathrm i}{2}[a,b],\qquad
+[D_a,D_b]=-[L_a,L_b],\quad D_c^2=-P_c/4\quad(c^2=c).
+\end{gathered}
+\tag{345.2}
+$$
+
+原双概率运输及原事件的对应为
+
+$$
+\begin{aligned}
+g_A^0(x,y)&=\tau_A((B_Ax)y),&
+q_A(x,y)&=\tau_A((\mathcal W_Ax)y),\\
+\rho_\alpha&=B_Ax_\alpha,&
+\widehat x_\alpha&=\mathcal W_A^{-1}\rho_\alpha,\\
+\alpha(y)&=\tau_A(\rho_\alpha y),&
+\alpha(D_ab)&=q_A(\widehat x_\alpha,D_ab),\\
+\Phi_f&=B_BT_f^{\dagger_0}B_A^{-1}&&(f:A\to B).
+\end{aligned}
+\tag{345.3}
+$$
+
+全部原实际联合是同一取向的普通复张量；每个联合使用自己的 $B_A,\mathcal W_A$，一般 $x_\alpha\ne\widehat x_\alpha$。所有原正权、经典中心、不等块、零／奇异／次归一准备及全部相关准备保持。原旧事件为 CP/TNI，原完整设备事件和为 TP。每个原所选精确有限平方根词及其原相关执行给 $\rho\mapsto\sqrt e\rho\sqrt e$ 与 $X\mapsto(\sqrt e\otimes I)X(\sqrt e\otimes I)$。每个原占用指针方向 $p_1$ 的原失败 $\Psi_\ell$ 保持完整输出 $\sqrt{I-e}\rho\sqrt{I-e}\otimes\Psi_\ell(p_1)$；其他原方向和中心保留其原映射，不把失败只换成概率质量。
+
+原 F 给同一实现的实际细口和原分组／遗忘；每个非零细支的具名原资料仍满足
+
+$$
+\begin{gathered}
+S_\ell=\operatorname{Ad}_{K_\ell},\qquad
+\Phi_f=\sum_\ell S_\ell,\qquad
+U_\ell=q_\ell\operatorname{Ad}_{K_\ell^+},\quad q_\ell>0,\\
+e_\ell=\operatorname{supp}(K_\ell^*K_\ell),\quad
+h_\ell=\operatorname{supp}(K_\ell K_\ell^*),\quad
+\mathsf C_e(X)=eXe,\\
+U_\ell=\mathsf C_{e_\ell}U_\ell\mathsf C_{h_\ell},\qquad
+U_\ell S_\ell=q_\ell\mathsf C_{e_\ell},\qquad
+S_\ell U_\ell=q_\ell\mathsf C_{h_\ell}.
+\end{gathered}
+\tag{345.4}
+$$
+
+保留原 $q_\ell$ 及同数反向资料，不将成功数归一成一。对原准备、原末端效果 $w$ 和每条原合法有限历史 $(f_1,\ldots,f_r)$，
+
+$$
+\alpha(T_{f_1}\cdots T_{f_r}w)
+=\tau_{A_r}\!\left(w\,\Phi_{f_r}\cdots\Phi_{f_1}(\rho_\alpha)\right).
+\tag{345.5}
+$$
+
+证明。344.2 先恢复全域 I+SC，然后沿 338.1 的同一推导取得含零分支的共同曲率 $\kappa\ge0$。只在这时消费原 $\sigma_{t_0}$：原正 $w_0$ 给 $(1-\kappa)w_0/4=0$，故 $\kappa=1$。338.1 的全部入口至此逐项成立，直接复用其完整消费者，得到 (345.1)–(345.5)。全事件 R 针对所有相关准备，闭背景只在同一原执行上作连续正延拓；整个 AC、精确 $N_u$ 与 Xs 给原所选词和其完整失败，实 Jordan F 及具名同数两侧资料给原细记录与返回。逐原箭头的双对偶迭代涵盖顺序、原实际记录的自适应分支、实际并行联合及相关输入、细化、分组、实际遗忘、零／失败／返回／停止；只有原分母正时才取条件概率。此复用不供应任意新的仪器或连线。324.3 的连续器件／物理时钟／Hamiltonian／作用量、独立成功支的共同完整仪器及旧同效果设备的完整输出校准仍各需原来源。∎
+
+## 346. 旧匹配迹其实读取一个原中心的径向电荷
+
+**定理 346.1（源像匹配与中心读数的精确对应）。** 对 343.1 的两次实际参考，可将第二参考选到 $d_1\ge\max_sn_s$。每个原中心 $s$ 都能在 $U_s$ 中选 primitive $e_s$ 及实线性数学补偿 $\beta_s:E_A\to E_{R^{(1)}}$，使在整个 $E_K$ 上
+
+$$
+z_s^{\rm match}(a):=h(a)-l\beta_s(a)\in\ker L_{e_s},\qquad
+\tau_KD^K(e_s,z_s^{\rm match}(b))
+=\frac{\tau_AD^A(z_s,b)}{n_s}.
+\tag{346.1}
+$$
+
+这里 $e_s$ 对第二参考的 Schmidt 秩仅为 $n_s$；原经典源可用乘积原子。对这样的 Hermitian 全源像匹配，$n_s$ 是该方法的最小 Schmidt 秩，不是公理数、原实际测试或全网认证的下界。
+
+证明。在允许转置的目标坐标中吸收 (343.5) 的坐标变换，源像为 $a_s\otimes I_{d_0}\otimes I_{d_1}$。取放大因子中的单位向量 $\chi$、原源的正交基 $v_r$、第二参考中 $n_s$ 个正交向量 $w_r$，置
+
+$$
+\xi_s=\frac1{\sqrt{n_s}}\sum_{r=1}^{n_s}v_r\otimes\chi\otimes w_r,
+\qquad e_s=|\xi_s\rangle\langle\xi_s|.
+\tag{346.2}
+$$
+
+在第二参考所选角中取与原 $a_s$ 相应的转置矩阵，在其余坐标取零，并补偿静态坐标中的转置，得到 Hermitian 线性 $\beta_s(a)$。两侧在 $\xi_s$ 上作用相同，故 Hermitian 差消去 $\xi_s$；这等价于其在目标 $U_s$ 中属于 $\ker L_{e_s}$。其他中心与 $e_s$ Jordan 正交，故整个差均在同一核，不删除其他中心。
+
+320.1 证明的非经典首源整输出局部性及 (343.4) 给
+
+$$
+\tau_KD^K(e_s,y)=F_{U_s}(y).
+\tag{346.3}
+$$
+
+这里不调用含额外迹前件的 312.1 陈述。由 $F_{U_s}\circ l=0$，左边在匹配差上等于 $F_{U_s}(h(b))=F_s(b)$；343.2 遂给 (346.1)。因此旧式来源配平的值可直接用原中心读数表达，不需把所选原子和补偿提升为新候选的资料。
+
+本证明内部的最小秩判据是成熟 Hermitian twin-observable 工具的有限矩阵形式。将任意归一匹配向量写成系数矩阵 $C$，源矩阵 $M$ 有 Hermitian 补偿 $N$ 当且仅当 $MC=CN^{\mathsf T}$ 可解；必要性由该式及其伴随给 $[M,CC^*]=0$。反向令 $R=CC^*$，在其支持上写 $C=\sqrt R\,W$，其中 $WW^*=\operatorname{supp}R$。若 $[M,R]=0$，取 $N^{\mathsf T}=W^*MW$ 并在核中取零，则 $N$ Hermitian 且 $CN^{\mathsf T}=MC$。对所有源矩阵 $M=a_s\otimes I_{d_0}$ 同时成立的条件恰为
+
+$$
+R\in(M_{n_s}\otimes I_{d_0})',\qquad
+R=\frac{I_{n_s}}{n_s}\otimes Q,\quad
+Q\ge0,\quad\operatorname{Tr}Q=1.
+\tag{346.4}
+$$
+
+所以 $\operatorname{rank}R=n_s\operatorname{rank}Q\ge n_s$；(346.2) 以 $Q=|\chi\rangle\langle\chi|$ 取等号。若要求匹配整个 $H_{n_sd_0}$ 而非原源像，则才迫使 $R=I_{n_sd_0}/(n_sd_0)$。这些已知矩阵工具仅是本条原参考—原中心对应的中间步骤，不单独作为新增分类。∎
+
+## 347. 不守中心账会留下什么与候选的非空性
+
+**定理 347.1（两个局部边界及完整满足族）。** 中心迹中性在裸载体上不等同于左单位；只查总单位的单条标量迹也不足以区分不同中心的径向抵消。另一方面，325.1 的完整 tagged-CP 族分别满足 $\mathsf C_{\rm cen}(B)$ 与 $\mathsf C_{\rm cen}(\mathsf B_{\rm cl})$，包括没有实际 $M_2$ 对象或简单块的子族。
+
+证明。第一边界取 $H_n(\mathbb C)$、$n\ge3$，非零无迹 Hermitian $H,M$，令
+
+$$
+D(a,b)=\operatorname{Tr}(a)\operatorname{Tr}(Hb)M.
+\tag{347.1}
+$$
+
+$D(a,I)=0$；任意中心输入 $z=tI$ 的输出迹仍为零。但是 $D(I,H)=n\operatorname{Tr}(H^2)M\ne0$，所以 LU 失败。此例一般不满足整个 $\mathsf G_{0h}$，只区分两条裸关系；344.2 在完整背景中导出 LU 并无矛盾。
+
+第二边界取 $E=\mathbb R^3$、$u=(1,1,1)$，
+
+$$
+K=\begin{pmatrix}0&1&-1\\-1&0&1\\1&-1&0\end{pmatrix},\qquad
+D(a,b)_s=a_s(Kb)_s.
+\tag{347.2}
+$$
+
+$Ku=0$ 给右单位；primitive 首输入的输出沿自身，故整支持条件成立。$\tau D(u,b)=\boldsymbol1^{\mathsf T}Kb=0$ 对全部 $b$ 成立，但 $\tau D(z_1,z_2)=1$，而取 $a=(1,1,0)$ 得 $D(a,a)=(1,-1,0)\ne0$。因此全局一笔迹账可掩盖中心之间相抵。本例只是 (343.1) 型局部代数片段，不供应完整 $B_*$ 的实际参考、全部过程或同一 sigma；不据它主张完整背景中中心测试不可再减。
+
+对完整满足族，标准原 $D=\mathrm i[a,b]/2$ 的每个中心输入都给零向量，故满足 (342.1)。其原正权、准备、联合、设备、细记录、完整失败、具名同数双返回、同一 sigma 和全部合法有限历史均直接沿 325.1 保留。∎
+
+## 348. 中心径向场、三维角与更大的关系结构
+
+**定义 348.1（候选的几何内容与有限提升）。** 在 $B_*+\mathsf G_{0h}$ 已取得的正常形中，$\mathcal R_A:E_A\to Z(E_A)$ 是由二元关系 $D$ 读出的中心值径向场，且 $\mathcal R_A(u_A)=0$。它让第二输入控制第一输入在每个中心的伸缩；(342.1) 经实际参考回传后恰令这整个场为零。这里的消除是 343–344 的条件推论，不是把零场写进 $D$ 的定义。
+
+对一个原对象，若中心数为 $c_A$、$m_A=\dim_{\mathbb R}E_A$，则中心单位与任一含 $u_A$ 的实基把全域中心中性写成至多 $c_A(m_A-1)$ 条标量关系。它是同一内在关系的有限表达，不要求在候选资料里选基；也不比较不同候选的实际认证成本。$\mathcal R_A=0$ 后，全部推动只剩逐块交换子；共同曲率及同一 sigma 再将这些角的转动接成同一原尺度。
+
+对同块正交 $e,f$，令 $c=e+f$，取 $y\in V_{ef}$、$y^2=c$，置 $h=e-f$、$z=2D_ey$。345.1 与既有 (325.2) 给
+
+$$
+h^2=y^2=z^2=c,\qquad
+h\circ y=h\circ z=y\circ z=0,\qquad
+D_ey=z/2,\quad D_ez=-y/2.
+\tag{348.1}
+$$
+
+这是四实维 $H_2(\mathbb C)$ 小屋内的三实维无迹球截面。把支持放进第三个复向量位置，可连接相交的二原子角；320.1 的高秩证明消费的正是这些可比较支持及其交集。第三个复向量位置、三实维无迹截面和物理三维空间是不同对象。跨中心只有 $\mathbb Re\oplus\mathbb Rf$，没有跨中心 Peirce 横向；中心迹条件恰清除逐中心伸缩，不生成跨中心相干。更大的结构是带经典中心的复 Jordan—Lie 关系网、各块的复射影角及原实际联合中的张量匹配；同一原 $D$ 把这些局部角与原过程共同连接。
+
+**定义 348.2（仍需内生的部分）。** 具体原 $\Omega$ 是否满足完整背景、整支持、中心迹中性及同一 sigma，仍须从其实际来源证明。343.7 已把原残余锁定为内在中心读数，却没有从 $B_*+\mathsf G_{0h}$ 无条件推出该读数为零；定义间兼容不自动成为原世界的实现定理。既有实际来源量词和 324.3 的各物理来源义务均保留。局部边界不是完整背景反模型，条件重构不是经验起源，也未取得全网最小性、含噪稳定性或物理空间维数结论。本文为纸笔条件理论，未取得 Lean/kernel 或经验验证。
+
+## 349. 承重来源与完整白话
+
+**定义 349.1（来源与新增综合的边界）。** 仓内来源固定于 [`8bcd9134655d4c88a93778604e49583d6d9cf736`](https://github.com/the-omega-institute/trureturing/tree/8bcd9134655d4c88a93778604e49583d6d9cf736)。母卷指 [C123 原生互易比较母卷](AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md)：2.5、10.2、30.1、67.1–67.3 供应完整 R 与右单位；85.2 供应全部静态中心对及逐对普通／相反表示。前卷指 [C128 框架与角关系续卷](AURIC_C128_FRAME_CORNER_RELATIONS_CONTINUATION.md)：246.1 将同一静态消费者分别接到闭准备背景。本卷 320.1 的无迹前件缺席证明及 321.1 供应完整来源正常形和整输出局部性；337–338 供应旧匹配等价、共同尺度、同一 sigma 和全部原消费者。
+
+Herbut–Damnjanović，*Mixed-state twin observables*，J. Phys. A 33 (2000) 6023，DOI [10.1088/0305-4470/33/34/308](https://doi.org/10.1088/0305-4470/33/34/308)，[quant-ph/0004085v1 原文](https://arxiv.org/html/quant-ph/0004085v1)，Introduction、§4 的 (8)–(10)、§6 的 (12sa)–(12sb)，给 Hermitian twins 与约化态交换、支持／核分解及纯态 Schmidt 对应。D’Ariano–Lo Presti 的向量化来源沿 341.1。346.1 证明中的交换子、极分解与矩阵交换子代数只作为这些 $\texttt{literature-attested}$ 有限矩阵工具的应用，不借入远程实际测量、通道层析、原状态供应或实际资源结论。320.1 所需交换二次迹与有限 EJA 导子来源仍沿 326.1，不重复作为新增定理。
+
+新增 $\texttt{repo-derived}$ 综合是：由两次原实际身份参考直接取得每个原对象、含经典和秩二源的完整径向正常形；用原中心迹唯一识别全部径向场；以全部静态中心对把原高秩域的中性下降到全域；由此删除公理中的匹配选择并保留同一刻度的完整理论。346.1 还把源像匹配的迹值等同于原中心读数，并区分源匹配和全目标匹配的 Schmidt 要求。这些结论不以检索未命中主张历史优先权。
+
+**定义 349.2（每间房的总账都不凭空伸缩）。** 白话说，整座原世界完整留下：量子街区和经典房间、大小不同的中心、真实联合和纠缠准备、原比较尺、每台设备与细记录、完整失败出口、原分组和遗忘、带原成功数的双返回，以及全部合法有限历史。新候选仍要求两颗原子完全错开或重叠一半时，整份推动留在共同小屋里；但总账不再靠另选珠子、配补偿或列来源剖面来查，而直接查原来就有的每个中心：这间房作为一个整体，与任何输入发生关系，都不能凭空增加或减少总迹。为什么这够用，要把原对象真正带进两次已有的参考联合：第一层把每间房照进足够大的街区，第二层用原有的两侧交叉零排除混合补偿，于是带回的推动只剩转动和沿自身伸缩。每间房的中心迹恰好量出后者，逐间清零便只剩转动；在大联合查过的账又能沿实际嵌入返回小对象，所以经典房间和二阶角都没有漏下。最后仍用同一张刻度单，把各角的转动钉到共同尺度，接回复乘法、Born 概率的两套原运输、实际张量、全部旧事件、平方根词及完整失败、原细口与同数双返回和全部有限合法历史。小屋内是三实维球截面，相交小屋织成更大的复射影关系网；两侧共享珠子的旧图景只是这笔中心账的一种坐标。新关系怎样由具体原世界实际满足，仍要继续向内证明，不能靠改名或定义宣布已经发生。
+
+## 追加锚 C128349（本行以下为增补区）

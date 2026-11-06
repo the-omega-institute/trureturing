@@ -127,7 +127,12 @@ internal static class WorktreeCommand
             else
             {
                 var claimed = WorktreePoolCommand.TryClaim(options, runner, out idleClaimFallback, out idleClaimRefusals);
-                if (claimed is not null) return claimed;
+                if (claimed is not null)
+                {
+                    MaintenanceLogAdapter.Record("worktree-init", claimed.Success ? "succeeded" : "failed",
+                        "claim", claimed.Success ? null : "claim_failed", claimed.Success ? null : "CommandResult");
+                    return claimed;
+                }
             }
             if (Directory.Exists(options.Path) || RunProcess(runner, "git",
                 ["show-ref", "--verify", "--quiet", $"refs/heads/{options.Branch}"], options.Source,
@@ -142,6 +147,7 @@ internal static class WorktreeCommand
                 }
                 if (LeanPinSet.TryReadWorktree(options.Path, out var reason) is null)
                     throw new InvalidOperationException(reason);
+                MaintenanceLogAdapter.Record("worktree-init", "succeeded", "recovery", null, null);
                 return WithIdleClaimEvidence(reused);
             }
             if (Environment.GetEnvironmentVariable("WORKTREE_REQUIRE_DISK_CHECK") == "1")
@@ -149,8 +155,11 @@ internal static class WorktreeCommand
                 stage = "disk";
                 var disk = WorktreeProtocolCommand.CheckCreationDisk(options.Source, options.Path, runner);
                 if (!disk.Success)
+                {
+                    MaintenanceLogAdapter.Record("worktree-init", "failed", stage, "disk_refused", "CommandResult");
                     return idleClaimFallback is null && idleClaimRefusals.Length == 0 ? disk
                         : disk with { Error = disk.Error + FailureReceipt(disk.Error) };
+                }
                 stage = "preflight";
             }
             initializationScope = WorktreeInitializationScope.Acquire(options.Source, options.Path, options.Branch);
@@ -222,10 +231,13 @@ internal static class WorktreeCommand
                 idle_claim_fallback = idleClaimFallback,
                 idle_claim_refusals = idleClaimRefusals,
             }) + "\n";
+            MaintenanceLogAdapter.Record("worktree-init", "succeeded", "complete", null, null);
             return new CommandResult(true, summary, RenderDonorWarning(options, donor));
         }
         catch (Exception exception)
         {
+            MaintenanceLogAdapter.Record("worktree-init", "failed", stage, "initialization_failed",
+                exception.GetType().Name);
             var cleanup = string.Empty;
             string? recoveryResult = null;
             try
