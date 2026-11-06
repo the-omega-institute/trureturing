@@ -264,8 +264,7 @@ theorem cyclePathLast_edges (m : Nat) (hm : 3 ≤ m) (e : Finset (Label m)) :
 /-- All canonical distinctness premises are derived from m>=3. -/
 def pathRootWordData (m : Nat) (hm : 3 ≤ m) :
     Word (ground m) (pathFamily (pathRootPath m hm)) := by
-  rw [← pathRootPath_vertices m hm]
-  exact pathWordData _ (pathRootPath_nodup m hm)
+  exact (pathRootPath_vertices m hm) ▸ pathWordData _ (pathRootPath_nodup m hm)
 
 def cycleTailWordData (m : Nat) (hm : 3 ≤ m) :
     Word (cyclePathTail m hm).toFinset (pathFamily (cyclePathTail m hm)) :=

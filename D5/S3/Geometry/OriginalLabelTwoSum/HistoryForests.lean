@@ -12,7 +12,11 @@ import D5.S3.Geometry.OriginalLabelTwoSum.HistoryMarkers
 import D5.S3.Geometry.OriginalLabelTwoSum.PhysicalMWheel
 import Mathlib.Combinatorics.SimpleGraph.Paths
 
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 noncomputable section
+local instance : (p : Prop) → Decidable p := Classical.propDecidable
 open Set Finset SimpleGraph
 namespace D5.S3.Geometry.OriginalLabelTwoSum.HistoryForests
 open OriginalLabelTwoSum HistoryCorners AllMWheel
@@ -56,7 +60,9 @@ theorem prune_root (r : Rows V) : (prune r).root = r.root := by
       obtain ⟨hyW, hyq⟩ := Finset.mem_sdiff.mp (hc hy)
       refine Finset.mem_sdiff.mpr ⟨hyW, ?_⟩
       intro hyd
-      have hyx : y = x := by simpa [hd] using hyd
+      have hyx : y = x := by
+        change y ∈ r.row d at hyd
+        simpa only [hd, Finset.mem_singleton] using hyd
       exact hyq (hyx.symm ▸ hxq)
 
 /-- An existing empty ROW yields a simplex, even on zero ground (UNIT). -/
@@ -78,49 +84,53 @@ def localRows (m : Nat) (hm : 3 ≤ m) (A B : Finset (Label m)) : Rows (Label m)
   cornerRows ((rimRows m (by omega)).without (interfaceRow m hm)) A B
 
 /-- The path coordinate is 2,3,...,m,1. Coordinate zero is not the hub. -/
-def at (m : Nat) (hm : 3 ≤ m) (i : Fin m) : Label m :=
+def «at» (m : Nat) (hm : 3 ≤ m) (i : Fin m) : Label m :=
   if h : i.val + 1 = m then firstLabel m hm else ⟨i.val + 2, by omega⟩
 
 def position (m : Nat) (x : Label m) : Nat :=
   if x.val = 1 then m - 1 else x.val - 2
 
 private theorem at_ground (m : Nat) (hm : 3 ≤ m) (i : Fin m) :
-    at m hm i ∈ ground m := by
-  unfold at
+    «at» m hm i ∈ ground m := by
+  unfold «at»
   split_ifs <;> simp [ground, firstLabel, Fin.ext_iff] <;> omega
 
 private theorem position_at (m : Nat) (hm : 3 ≤ m) (i : Fin m) :
-    position m (at m hm i) = i.val := by
-  unfold at position
+    position m («at» m hm i) = i.val := by
+  unfold «at» position
   split_ifs <;> simp_all [firstLabel] <;> omega
 
 private theorem position_lt (m : Nat) (hm : 3 ≤ m) (x : Label m)
     (hx : x ∈ ground m) : position m x < m := by
-  have hx0 : x.val ≠ 0 := by simpa [ground, Fin.ext_iff] using hx
+  have hx0 : x.val ≠ 0 := by
+    have hn := (Finset.mem_erase.mp hx).1
+    exact (not_congr (Fin.ext_iff (a := x) (b := 0))).mp hn
   have := x.isLt
   unfold position
   split_ifs <;> omega
 
 private theorem at_position (m : Nat) (hm : 3 ≤ m) (x : Label m)
-    (hx : x ∈ ground m) : at m hm ⟨position m x, position_lt m hm x hx⟩ = x := by
-  have hx0 : x.val ≠ 0 := by simpa [ground, Fin.ext_iff] using hx
+    (hx : x ∈ ground m) : «at» m hm ⟨position m x, position_lt m hm x hx⟩ = x := by
+  have hx0 : x.val ≠ 0 := by
+    have hn := (Finset.mem_erase.mp hx).1
+    exact (not_congr (Fin.ext_iff (a := x) (b := 0))).mp hn
   have := x.isLt
   apply Fin.ext
-  unfold at position
+  unfold «at» position
   split_ifs <;> simp_all [firstLabel] <;> omega
 
-private theorem at_injective (m : Nat) (hm : 3 ≤ m) : Function.Injective (at m hm) := by
+private theorem at_injective (m : Nat) (hm : 3 ≤ m) : Function.Injective («at» m hm) := by
   intro i j h
   apply Fin.ext
   simpa only [position_at] using congrArg (position m) h
 
 /-- One original cut, with its two ORIGINAL coordinate labels. -/
 def cutRow (m : Nat) (hm : 3 ≤ m) (k : Fin (m - 1)) : Finset (Label m) :=
-  {at m hm ⟨k.val, by omega⟩, at m hm ⟨k.val + 1, by omega⟩}
+  {«at» m hm ⟨k.val, by omega⟩, «at» m hm ⟨k.val + 1, by omega⟩}
 
 private theorem cutRow_card (m : Nat) (hm : 3 ≤ m) (k : Fin (m - 1)) :
     (cutRow m hm k).card = 2 := by
-  have hn : at m hm ⟨k.val, by omega⟩ ≠ at m hm ⟨k.val + 1, by omega⟩ := by
+  have hn : «at» m hm ⟨k.val, by omega⟩ ≠ «at» m hm ⟨k.val + 1, by omega⟩ := by
     intro h
     have := congrArg Fin.val (at_injective m hm h)
     omega
@@ -136,16 +146,16 @@ private theorem original_row (m : Nat) (hm : 3 ≤ m)
       omega⟩ := by
   have h0 : i.1.val ≠ 0 := fun h => i.2 (Fin.ext h)
   have hi := i.1.isLt
-  have ha : at m hm (⟨i.1.val - 1, by omega⟩ : Fin m) = label m i.1 := by
+  have ha : «at» m hm (⟨i.1.val - 1, by omega⟩ : Fin m) = label m i.1 := by
     apply Fin.ext
-    dsimp [at, label]
+    dsimp [«at», label]
     split_ifs with h
     · dsimp [firstLabel]; omega
     · dsimp; omega
-  have hb : at m hm (⟨i.1.val - 1 + 1, by omega⟩ : Fin m) =
+  have hb : «at» m hm (⟨i.1.val - 1 + 1, by omega⟩ : Fin m) =
       label m (rimIndex m (by omega) i.1) := by
     apply Fin.ext
-    dsimp [at, label, rimIndex]
+    dsimp [«at», label, rimIndex]
     split_ifs with h
     · have hlast : i.1.val + 1 = m := by omega
       simp [firstLabel, hlast]
@@ -154,8 +164,8 @@ private theorem original_row (m : Nat) (hm : 3 ≤ m)
       dsimp
       omega
   change {label m i.1, label m (rimIndex m (by omega) i.1)} =
-    {at m hm (⟨i.1.val - 1, by omega⟩ : Fin m),
-      at m hm (⟨i.1.val - 1 + 1, by omega⟩ : Fin m)}
+    {«at» m hm (⟨i.1.val - 1, by omega⟩ : Fin m),
+      «at» m hm (⟨i.1.val - 1 + 1, by omega⟩ : Fin m)}
   rw [ha, hb]
 
 /-- Exhaustive literal indexed projection, INCLUDING which original endpoint was deleted.
@@ -164,7 +174,7 @@ theorem projected_row_cases (m : Nat) (hm : 3 ≤ m) (A B : Finset (Label m))
     (c : (localRows m hm A B).chords) :
     ∃ k : Fin (m - 1),
       Disjoint (cutRow m hm k) A ∧
-      (localRows m hm A B).row c = cutRow m hm k ∖ B ∧
+      (localRows m hm A B).row c = cutRow m hm k \ B ∧
       ((localRows m hm A B).row c = ∅ ∨
        (∃ x ∈ cutRow m hm k, (localRows m hm A B).row c = {x}) ∨
        (localRows m hm A B).row c = cutRow m hm k) := by
@@ -173,13 +183,13 @@ theorem projected_row_cases (m : Nat) (hm : 3 ≤ m) (A B : Finset (Label m))
     have := c.1.1.isLt
     omega⟩
   have he := original_row m hm c.1
-  have hr : (localRows m hm A B).row c = cutRow m hm k ∖ B := by
-    change rimEdge m (by omega) c.1.1 ∖ B = _
+  have hr : (localRows m hm A B).row c = cutRow m hm k \ B := by
+    change rimEdge m (by omega) c.1.1 \ B = _
     rw [he]
   refine ⟨k, by simpa only [Rows.without, rimRows, he] using c.2, hr, ?_⟩
   rw [hr]
-  let a := at m hm (⟨k.val, by omega⟩ : Fin m)
-  let b := at m hm (⟨k.val + 1, by omega⟩ : Fin m)
+  let a := «at» m hm (⟨k.val, by omega⟩ : Fin m)
+  let b := «at» m hm (⟨k.val + 1, by omega⟩ : Fin m)
   by_cases ha : a ∈ B <;> by_cases hb : b ∈ B
   · left; ext x; simp [cutRow, a, b, Finset.mem_sdiff, ha, hb]; aesop
   · right; left; refine ⟨b, by simp [cutRow, b], ?_⟩
@@ -213,8 +223,8 @@ def reducedGraph : SimpleGraph (Fin m) where
   Adj a b := ∃ k : Fin (m - 1), alive m hm A B k ∧
     ((a.val = k.val ∧ b.val = k.val + 1) ∨
      (b.val = k.val ∧ a.val = k.val + 1))
-  symm := by rintro a b ⟨k, hk, h⟩; exact ⟨k, hk, h.symm⟩
-  loopless := by rintro a ⟨k, hk, h | h⟩ <;> omega
+  symm := ⟨by rintro a b ⟨k, hk, h⟩; exact ⟨k, hk, h.symm⟩⟩
+  loopless := ⟨by rintro a ⟨k, hk, h | h⟩ <;> omega⟩
 
 /-- Exact interval of intact cuts; used only AFTER its equivalence to walks. -/
 def interval (a b : Fin m) : Prop := ∀ k : Fin (m - 1),
@@ -235,7 +245,7 @@ private theorem interval_trans {a b c : Fin m}
   intro k hl hu
   by_cases h1 : min a.val b.val ≤ k.val ∧ k.val < max a.val b.val
   · exact h k h1.1 h1.2
-  · apply g k <;> dsimp at * <;> omega
+  · apply g k <;> try dsimp at * <;> omega
 
 /-- A walk crossing an original path cut must use THAT surviving cut.
 Induction is on a genuine mathlib Walk, not a bounded mask control. -/
@@ -247,10 +257,10 @@ private theorem walk_interval {a b : Fin m} (p : (reducedGraph m hm A B).Walk a 
       apply interval_trans m hm A B (b := b) ?_ ih
       obtain ⟨j, hj, h | h⟩ := hab
       · intro k hl hu
-        have he : k = j := Fin.ext (by dsimp at *; omega)
+        have he : k = j := Fin.ext (by try dsimp at *; omega)
         exact he.symm ▸ hj
       · intro k hl hu
-        have he : k = j := Fin.ext (by dsimp at *; omega)
+        have he : k = j := Fin.ext (by try dsimp at *; omega)
         exact he.symm ▸ hj
 
 private def ascend (a b : Fin m) (hab : a.val ≤ b.val)
@@ -262,14 +272,14 @@ private def ascend (a b : Fin m) (hab : a.val ≤ b.val)
       omega
     let next : Fin m := ⟨a.val + 1, by omega⟩
     let k : Fin (m - 1) := ⟨a.val, by omega⟩
-    have hk : alive m hm A B k := h k (by simp [k]; omega) (by simp [k]; omega)
+    have hk : alive m hm A B k := h k (by simp [k] <;> omega) (by simp [k] <;> omega)
     have ht : interval m hm A B next b := by
       intro j hl hu
-      apply h j <;> dsimp [next] at * <;> omega
+      apply h j <;> try dsimp [next] at * <;> omega
     exact .cons ⟨k, hk, Or.inl ⟨rfl, rfl⟩⟩
-      (ascend next b (by dsimp [next]; omega) ht)
+      (ascend next b (by try dsimp [next]; omega) ht)
 termination_by b.val - a.val
- decreasing_by dsimp [next]; omega
+ decreasing_by try dsimp [next]; omega
 
 /-- Exact graph connectivity, with neither direction supplied as input data. -/
 theorem connected_iff_interval (a b : Fin m) :
@@ -289,7 +299,7 @@ private theorem alive_supported (k : Fin (m - 1)) (h : alive m hm A B k) :
 
 /-- Original surviving positions, including every isolated/forced ghost label. -/
 def live : Finset (Fin m) := Finset.univ.filter
-  (fun a => at m hm a ∈ (localRows m hm A B).ground)
+  (fun a => «at» m hm a ∈ (localRows m hm A B).ground)
 
 /-- Actual graph components, represented on the original finite coordinate order. -/
 def component (a : Fin m) : Finset (Fin m) :=
@@ -299,7 +309,7 @@ def components : Finset (Finset (Fin m)) :=
   (live m hm A B).image (component m hm A B)
 
 def block (a : Fin m) : Finset (Label m) :=
-  (component m hm A B a).image (at m hm)
+  (component m hm A B a).image («at» m hm)
 
 private theorem mem_component (a b : Fin m) :
     b ∈ component m hm A B a ↔ b ∈ live m hm A B ∧ interval m hm A B a b := by
@@ -353,10 +363,10 @@ theorem component_consecutive (a x y z : Fin m)
     apply (mem_component m hm A B a z).mpr
     refine ⟨hzL, interval_trans m hm A B hax ?_⟩
     intro j hl hu
-    apply hxy j <;> dsimp at * <;> omega
+    apply hxy j <;> try dsimp at * <;> omega
 
 /-- Component membership is exactly the original surviving graph relation. -/
-theorem block_mem (a b : Fin m) : at m hm b ∈ block m hm A B a ↔
+theorem block_mem (a b : Fin m) : «at» m hm b ∈ block m hm A B a ↔
     b ∈ live m hm A B ∧ Nonempty ((reducedGraph m hm A B).Walk a b) := by
   rw [block, Finset.mem_image]
   constructor
@@ -383,8 +393,8 @@ whereas only the redundant size-two rows have been removed. -/
 theorem reduced_row_cases (c : (prune (localRows m hm A B)).chords) :
     (prune (localRows m hm A B)).row c = ∅ ∨
     (∃ a ∈ live m hm A B,
-      (prune (localRows m hm A B)).row c = {at m hm a} ∧
-        at m hm a ∈ forced (localRows m hm A B)) ∨
+      (prune (localRows m hm A B)).row c = {«at» m hm a} ∧
+        «at» m hm a ∈ forced (localRows m hm A B)) ∨
     (∃ k : Fin (m - 1), alive m hm A B k ∧
       (prune (localRows m hm A B)).row c = cutRow m hm k) := by
   obtain ⟨k, hkA, hr, h0 | h1 | h2⟩ := projected_row_cases m hm A B c.1
@@ -394,7 +404,7 @@ theorem reduced_row_cases (c : (prune (localRows m hm A B)).chords) :
       (localRows m hm A B).row_supported c.1 (by simp [he])
     have hxG : x ∈ ground m := (Finset.mem_sdiff.mp hxU).1
     let a : Fin m := ⟨position m x, position_lt m hm x hxG⟩
-    have hat : at m hm a = x := at_position m hm x hxG
+    have hat : «at» m hm a = x := at_position m hm x hxG
     exact Or.inr (Or.inl ⟨a, by simp [live, hat, hxU], by simpa [prune, hat] using he,
       by rw [hat, mem_forced]; exact ⟨c.1, he⟩⟩)
   · have hd : Disjoint (cutRow m hm k) (forced (localRows m hm A B)) := by
@@ -404,16 +414,16 @@ theorem reduced_row_cases (c : (prune (localRows m hm A B)).chords) :
     exact Or.inr (Or.inr ⟨k, ⟨c.1, h2, hd⟩, h2⟩)
 
 private theorem adj_unforced {a b : Fin m} (h : (reducedGraph m hm A B).Adj a b) :
-    at m hm a ∉ forced (localRows m hm A B) ∧
-    at m hm b ∉ forced (localRows m hm A B) := by
+    «at» m hm a ∉ forced (localRows m hm A B) ∧
+    «at» m hm b ∉ forced (localRows m hm A B) := by
   obtain ⟨k, ⟨c, hc, hd⟩, hor⟩ := h
-  have ha : at m hm a ∈ cutRow m hm k := by
+  have ha : «at» m hm a ∈ cutRow m hm k := by
     rcases hor with h | h
     · have he : a = (⟨k.val, by omega⟩ : Fin m) := Fin.ext h.1
       simp [cutRow, he]
     · have he : a = (⟨k.val + 1, by omega⟩ : Fin m) := Fin.ext h.2
       simp [cutRow, he]
-  have hb : at m hm b ∈ cutRow m hm k := by
+  have hb : «at» m hm b ∈ cutRow m hm k := by
     rcases hor with h | h
     · have he : b = (⟨k.val + 1, by omega⟩ : Fin m) := Fin.ext h.2
       simp [cutRow, he]
@@ -424,7 +434,7 @@ private theorem adj_unforced {a b : Fin m} (h : (reducedGraph m hm A B).Adj a b)
 
 /-- Forced labels are actual one-vertex graph components, not deleted vertices. -/
 theorem forced_component (a : Fin m) (ha : a ∈ live m hm A B)
-    (hf : at m hm a ∈ forced (localRows m hm A B)) :
+    (hf : «at» m hm a ∈ forced (localRows m hm A B)) :
     component m hm A B a = {a} := by
   ext b
   constructor
@@ -463,7 +473,7 @@ private theorem row_block (c : (prune (localRows m hm A B)).chords)
     refine ⟨a, ha, ?_⟩
     rw [he]
     intro x hx
-    rcases (show x = at m hm a ∨ x = at m hm b by simpa [cutRow, a, b] using hx) with rfl | rfl
+    rcases (show x = «at» m hm a ∨ x = «at» m hm b by simpa [cutRow, a, b] using hx) with rfl | rfl
     · exact (block_mem m hm A B a a).mpr ⟨ha, ⟨.nil⟩⟩
     · exact (block_mem m hm A B a b).mpr
         ⟨hb, ⟨.cons ⟨k, hk, Or.inl ⟨rfl, rfl⟩⟩ .nil⟩⟩
@@ -481,11 +491,11 @@ The existential over starts merely repeats equal components, without altering ro
 def componentUnion : Family (Label m) where
   carrier := {s | ∃ a ∈ live m hm A B,
     s ∈ rawJoin (componentRows m hm A B a).root
-      (delta ((localRows m hm A B).ground ∖ block m hm A B a))}
+      (delta ((localRows m hm A B).ground \ block m hm A B a))}
   lower' := by
     rintro s t h ⟨a, ha, hs⟩
     exact ⟨a, ha, (rawJoin (componentRows m hm A B a).root
-      (delta ((localRows m hm A B).ground ∖ block m hm A B a))).lower h hs⟩
+      (delta ((localRows m hm A B).ground \ block m hm A B a))).lower h hs⟩
 
 /-- Exact finite linear-forest decomposition, consumed by the parent readback.
 No component, forest or equality is an input; only the separate empty-row branch
@@ -500,7 +510,7 @@ theorem component_root (h0 : ∀ c : (localRows m hm A B).chords,
   · rintro ⟨c, hc⟩
     obtain ⟨a, ha, hrow⟩ := row_block m hm A B c (h0 c.1)
     refine ⟨a, ha, s ∩ block m hm A B a, ⟨⟨c, hrow⟩, ?_⟩,
-      s ∖ block m hm A B a, ?_, ?_⟩
+      s \ block m hm A B a, ?_, ?_⟩
     · intro x hx
       exact Finset.mem_sdiff.mpr ⟨(Finset.mem_inter.mp hx).2,
         (Finset.mem_sdiff.mp (hc (Finset.mem_inter.mp hx).1)).2⟩
@@ -545,10 +555,10 @@ variable (m : Nat) (hm : 3 ≤ m)
 def leftEnd : Fin m := ⟨0, by omega⟩
 def rightEnd : Fin m := ⟨m - 1, by omega⟩
 
-private theorem at_leftEnd : at m hm (leftEnd m hm) = secondLabel m hm := by
-  simp [at, leftEnd, secondLabel, show 0 + 1 ≠ m by omega]
-private theorem at_rightEnd : at m hm (rightEnd m hm) = firstLabel m hm := by
-  simp [at, rightEnd, firstLabel, show m - 1 + 1 = m by omega]
+private theorem at_leftEnd : «at» m hm (leftEnd m hm) = secondLabel m hm := by
+  simp [«at», leftEnd, secondLabel, show 0 + 1 ≠ m by omega]
+private theorem at_rightEnd : «at» m hm (rightEnd m hm) = firstLabel m hm := by
+  simp [«at», rightEnd, firstLabel, show m - 1 + 1 = m by omega]
 
 private theorem unmasked_forced : forced (localRows m hm ∅ ∅) = ∅ := by
   apply Finset.eq_empty_iff_forall_not_mem.mpr
@@ -556,7 +566,7 @@ private theorem unmasked_forced : forced (localRows m hm ∅ ∅) = ∅ := by
   obtain ⟨c, hc⟩ := (mem_forced _ x).mp hx
   have ho := original_row m hm c.1
   have hcard : ((localRows m hm ∅ ∅).row c).card = 2 := by
-    change (rimEdge m (by omega) c.1.1 ∖ ∅).card = 2
+    change (rimEdge m (by omega) c.1.1 \ ∅).card = 2
     rw [Finset.sdiff_empty, ho]
     exact cutRow_card m hm _
   rw [hc, Finset.card_singleton] at hcard
@@ -587,7 +597,7 @@ theorem endpoints_connected_untouched (A B : Finset (Label m))
     intro k
     apply (connected_iff_interval m hm A B _ _).mp h k <;>
       dsimp [leftEnd, rightEnd] <;> omega
-  have hall : ∀ a : Fin m, at m hm a ∈ (localRows m hm A B).ground := by
+  have hall : ∀ a : Fin m, «at» m hm a ∈ (localRows m hm A B).ground := by
     intro a
     by_cases ha : a.val < m - 1
     · let k : Fin (m - 1) := ⟨a.val, ha⟩
@@ -633,8 +643,8 @@ variable (m : Nat) (hm : 3 ≤ m) (A B : Finset (Label m))
 def markers : Finset (Label m) := rim m hm ∩ (localRows m hm A B).ground
 
 private theorem residual_without_markers :
-    (localRows m hm A B).ground ∖ markers m hm A B =
-      (localRows m hm A B).ground ∖ rim m hm := by
+    (localRows m hm A B).ground \ markers m hm A B =
+      (localRows m hm A B).ground \ rim m hm := by
   ext x
   simp only [markers, Finset.mem_sdiff, Finset.mem_inter]
   tauto
@@ -650,8 +660,8 @@ inductive MarkerCase : Type
       (hR : markers m hm A B = ∅)
   | oneMarker (h : Disjoint A (rim m hm))
       (a : Fin m) (ha : a ∈ live m hm A B)
-      (hF : at m hm a ∉ forced (localRows m hm A B))
-      (hR : markers m hm A B = {at m hm a})
+      (hF : «at» m hm a ∉ forced (localRows m hm A B))
+      (hR : markers m hm A B = {«at» m hm a})
   | separated (h : Disjoint A (rim m hm))
       (hF : Disjoint (forced (localRows m hm A B)) (markers m hm A B))
       (hR : markers m hm A B = rim m hm)
@@ -683,7 +693,7 @@ def classifyMarkers (hA : A ⊆ ground m) (hB : B ⊆ ground m) :
               endpoints_connected_untouched m hm A B hA hB hc
             exact .intact hAe hBe hFe full sole labels root
           · exact .separated h hF hR hc
-        · have hR : markers m hm A B = {at m hm (rightEnd m hm)} := by
+        · have hR : markers m hm A B = {«at» m hm (rightEnd m hm)} := by
             rw [at_rightEnd]
             ext x
             simp only [markers, rim, Finset.mem_inter, Finset.mem_insert, Finset.mem_singleton]
@@ -693,7 +703,7 @@ def classifyMarkers (hA : A ⊆ ground m) (hB : B ⊆ ground m) :
           exact .oneMarker h (rightEnd m hm) (by simp [live, at_rightEnd, hf])
             (fun hff => Finset.disjoint_left.mp hF hff (by simp [hR])) hR
       · by_cases hs : secondLabel m hm ∈ (localRows m hm A B).ground
-        · have hR : markers m hm A B = {at m hm (leftEnd m hm)} := by
+        · have hR : markers m hm A B = {«at» m hm (leftEnd m hm)} := by
             rw [at_leftEnd]
             ext x
             simp only [markers, rim, Finset.mem_inter, Finset.mem_insert, Finset.mem_singleton]
@@ -734,14 +744,14 @@ def decorated {V : Type*} [Fintype V] [DecidableEq V] (f : Label m ↪ V)
   (rawJoin (delta X) (renameFamily f (localRows m hm A B).root) ⊔
     rawJoin L (delta ((localRows m hm A B).ground.image f))) ⊔
     if Disjoint A (rim m hm) then
-      rawJoin D (delta (((localRows m hm A B).ground ∖ rim m hm).image f)) else ⊥
+      rawJoin D (delta (((localRows m hm A B).ground \ rim m hm).image f)) else ⊥
 
 /-- A singleton at an actual surviving interface marker absorbs the D fibre.
 No old label or residual local ghost is removed by this family equality. -/
 theorem forced_marker_absorbs {V : Type*} [Fintype V] [DecidableEq V]
     (f : Label m ↪ V) (X : Finset V) (D : Family V) (hD : Supported X D)
     (hF : (forced (localRows m hm A B) ∩ markers m hm A B).Nonempty) :
-    rawJoin D (delta (((localRows m hm A B).ground ∖ rim m hm).image f)) ≤
+    rawJoin D (delta (((localRows m hm A B).ground \ rim m hm).image f)) ≤
       rawJoin (delta X) (renameFamily f (localRows m hm A B).root) := by
   obtain ⟨z, hz⟩ := hF
   obtain ⟨hzF, hzR⟩ := Finset.mem_inter.mp hz
@@ -769,11 +779,11 @@ def markerNormalForm {V : Type*} [Fintype V] [DecidableEq V] (f : Label m ↪ V)
   | .oneMarker _ a _ _ _ =>
       (rawJoin (delta X) (renameFamily f (componentUnion m hm A B)) ⊔
         rawJoin L (delta ((localRows m hm A B).ground.image f))) ⊔
-      rawJoin D (delta (((localRows m hm A B).ground ∖ {at m hm a}).image f))
+      rawJoin D (delta (((localRows m hm A B).ground \ {«at» m hm a}).image f))
   | .separated _ _ _ _ =>
       (rawJoin (delta X) (renameFamily f (componentUnion m hm A B)) ⊔
         rawJoin L (delta ((localRows m hm A B).ground.image f))) ⊔
-      rawJoin D (delta (((localRows m hm A B).ground ∖ rim m hm).image f))
+      rawJoin D (delta (((localRows m hm A B).ground \ rim m hm).image f))
   | .intact _ _ _ _ _ _ _ =>
       (rawJoin (delta X) (renameFamily f (pathRoot m hm)) ⊔ rawJoin L (delta ((ground m).image f))) ⊔
       rawJoin D (delta ((tailGround m hm).image f))
@@ -796,7 +806,7 @@ theorem decorated_readback {V : Type*} [Fintype V] [DecidableEq V]
       rw [decorated, if_pos h, sup_eq_left.mpr (hle.trans le_sup_left)]
       simp only [markerNormalForm, hE]
   | noMarker h hf hr =>
-      have hg : (localRows m hm A B).ground ∖ rim m hm = (localRows m hm A B).ground := by
+      have hg : (localRows m hm A B).ground \ rim m hm = (localRows m hm A B).ground := by
         rw [← residual_without_markers m hm A B, hr, Finset.sdiff_empty]
       have hle : rawJoin L (delta ((localRows m hm A B).ground.image f)) ≤
           rawJoin D (delta ((localRows m hm A B).ground.image f)) := by
@@ -805,8 +815,8 @@ theorem decorated_readback {V : Type*} [Fintype V] [DecidableEq V]
       simp only [decorated, markerNormalForm, if_pos h, hg, hE]
       rw [sup_assoc, sup_eq_right.mpr hle]
   | oneMarker h a ha hf hr =>
-      have hg : (localRows m hm A B).ground ∖ rim m hm =
-          (localRows m hm A B).ground ∖ {at m hm a} := by
+      have hg : (localRows m hm A B).ground \ rim m hm =
+          (localRows m hm A B).ground \ {«at» m hm a} := by
         rw [← residual_without_markers m hm A B, hr]
       simp only [decorated, markerNormalForm, if_pos h, hg, hE]
   | separated h hf hr apart =>
@@ -828,14 +838,14 @@ theorem corner_rows_transport (f : U ↪ V) (r : Rows U) (A B : Finset U) :
       renameFamily f (cornerRows r A B).root := by
   have hg : residual (r.ground.image f) (A.image f) (B.image f) =
       (residual r.ground A B).image f := by
-    rw [residual, residual, Finset.image_sdiff _ _ f.injective, Finset.image_union]
+    rw [HistoryCorners.residual, HistoryCorners.residual, Finset.image_sdiff _ _ f.injective, Finset.image_union]
   apply SetLike.ext
   intro s
   change (∃ c : {c : r.chords // Disjoint ((r.row c).image f) (A.image f)},
-    s ⊆ residual (r.ground.image f) (A.image f) (B.image f) ∖
-      ((r.row c.1).image f ∖ B.image f)) ↔
+    s ⊆ residual (r.ground.image f) (A.image f) (B.image f) \
+      ((r.row c.1).image f \ B.image f)) ↔
     ∃ t, (∃ c : {c : r.chords // Disjoint (r.row c) A},
-      t ⊆ residual r.ground A B ∖ (r.row c.1 ∖ B)) ∧ t.image f = s
+      t ⊆ residual r.ground A B \ (r.row c.1 \ B)) ∧ t.image f = s
   simp_rw [Finset.disjoint_image f.injective, hg,
     ← Finset.image_sdiff _ _ f.injective]
   constructor
@@ -928,7 +938,7 @@ No graph connectivity or desired edge relation is assumed. -/
 theorem graph_actual_rows (a b : Fin m) :
     (reducedGraph m hm A B).Adj a b ↔ a ≠ b ∧
       ∃ c : (prune (localRows m hm A B)).chords,
-        (prune (localRows m hm A B)).row c = {at m hm a, at m hm b} := by
+        (prune (localRows m hm A B)).row c = {«at» m hm a, «at» m hm b} := by
   constructor
   · rintro ⟨k, ⟨c, hc, hd⟩, hor⟩
     have hn : a ≠ b := by intro he; subst b; rcases hor with h | h <;> omega
@@ -943,24 +953,24 @@ theorem graph_actual_rows (a b : Fin m) :
       have ha : a = (⟨k.val + 1, by omega⟩ : Fin m) := Fin.ext h.2
       simp [cutRow, ha, hb, Finset.pair_comm]
   · rintro ⟨hab, c, hc⟩
-    have hne : at m hm a ≠ at m hm b := fun h => hab (at_injective m hm h)
+    have hne : «at» m hm a ≠ «at» m hm b := fun h => hab (at_injective m hm h)
     have hcard : ((prune (localRows m hm A B)).row c).card = 2 := by simp [hc, hne]
     rcases reduced_row_cases m hm A B c with h0 | h1 | h2
     · rw [h0, Finset.card_empty] at hcard; omega
     · obtain ⟨i, hi, he, hf⟩ := h1
       rw [he, Finset.card_singleton] at hcard; omega
     · obtain ⟨k, hk, he⟩ := h2
-      have hea : at m hm a ∈ cutRow m hm k := by rw [← he, hc]; simp
-      have heb : at m hm b ∈ cutRow m hm k := by rw [← he, hc]; simp
+      have hea : «at» m hm a ∈ cutRow m hm k := by rw [← he, hc]; simp
+      have heb : «at» m hm b ∈ cutRow m hm k := by rw [← he, hc]; simp
       have ha : a.val = k.val ∨ a.val = k.val + 1 := by
-        rcases (show at m hm a = at m hm (⟨k.val, by omega⟩ : Fin m) ∨
-          at m hm a = at m hm (⟨k.val + 1, by omega⟩ : Fin m) by
+        rcases (show «at» m hm a = «at» m hm (⟨k.val, by omega⟩ : Fin m) ∨
+          «at» m hm a = «at» m hm (⟨k.val + 1, by omega⟩ : Fin m) by
             simpa only [cutRow, Finset.mem_insert, Finset.mem_singleton] using hea) with h | h
         · exact Or.inl (congrArg Fin.val (at_injective m hm h))
         · exact Or.inr (congrArg Fin.val (at_injective m hm h))
       have hb : b.val = k.val ∨ b.val = k.val + 1 := by
-        rcases (show at m hm b = at m hm (⟨k.val, by omega⟩ : Fin m) ∨
-          at m hm b = at m hm (⟨k.val + 1, by omega⟩ : Fin m) by
+        rcases (show «at» m hm b = «at» m hm (⟨k.val, by omega⟩ : Fin m) ∨
+          «at» m hm b = «at» m hm (⟨k.val + 1, by omega⟩ : Fin m) by
             simpa only [cutRow, Finset.mem_insert, Finset.mem_singleton] using heb) with h | h
         · exact Or.inl (congrArg Fin.val (at_injective m hm h))
         · exact Or.inr (congrArg Fin.val (at_injective m hm h))
@@ -984,7 +994,7 @@ theorem original_labels (x : Label m) : x ∈ (localRows m hm A B).ground ↔
   · intro hx
     have hxG : x ∈ ground m := (Finset.mem_sdiff.mp hx).1
     let a : Fin m := ⟨position m x, position_lt m hm x hxG⟩
-    have he : at m hm a = x := at_position m hm x hxG
+    have he : «at» m hm a = x := at_position m hm x hxG
     have ha : a ∈ live m hm A B := by simp [live, he, hx]
     exact ⟨a, ha, he ▸ (block_mem m hm A B a a).mpr ⟨ha, ⟨.nil⟩⟩⟩
   · rintro ⟨a, ha, hx⟩
@@ -992,7 +1002,7 @@ theorem original_labels (x : Label m) : x ∈ (localRows m hm A B).ground ↔
 
 /-- Both original surviving markers occupy extreme positions in their blocks. -/
 theorem marker_positions : markers m hm A B ⊆
-    {at m hm (leftEnd m hm), at m hm (rightEnd m hm)} := by
+    {«at» m hm (leftEnd m hm), «at» m hm (rightEnd m hm)} := by
   intro x hx
   have hr := (Finset.mem_inter.mp hx).1
   simpa only [at_leftEnd, at_rightEnd, rim, Finset.mem_insert, Finset.mem_singleton,
@@ -1045,7 +1055,7 @@ private theorem decorated_simplex {V : Type*} [Fintype V] [DecidableEq V]
       delta ((localRows m hm A B).ground.image f) := by
     rw [empty_row_root _ c hc]
     exact (rename_operations f (localRows m hm A B).ground (delta ∅) (delta ∅) ∅).1
-  have hDU : (((localRows m hm A B).ground ∖ rim m hm).image f) ⊆
+  have hDU : (((localRows m hm A B).ground \ rim m hm).image f) ⊆
       (localRows m hm A B).ground.image f := Finset.image_subset_image Finset.sdiff_subset
   apply SetLike.ext
   intro s
@@ -1054,7 +1064,7 @@ private theorem decorated_simplex {V : Type*} [Fintype V] [DecidableEq V]
     change s ∈ (rawJoin (delta X) (renameFamily f (localRows m hm A B).root) ⊔
       rawJoin L (delta ((localRows m hm A B).ground.image f))) ⊔
       (if Disjoint A (rim m hm) then rawJoin D
-        (delta (((localRows m hm A B).ground ∖ rim m hm).image f)) else ⊥) at hs
+        (delta (((localRows m hm A B).ground \ rim m hm).image f)) else ⊥) at hs
     rw [hE] at hs
     rcases hs with (⟨u, hu, v, hv, rfl⟩ | ⟨u, hu, v, hv, rfl⟩) | hs
     · exact Finset.union_subset_union hu hv
@@ -1114,10 +1124,10 @@ structure ParentStructure {V : Type*} [Fintype V] [DecidableEq V]
   cover : ∀ a : Fin m, a ∈ live m hm A B ↔ ∃ C ∈ components m hm A B, a ∈ C
   originalGround : ∀ x : Label m, x ∈ (localRows m hm A B).ground ↔
     ∃ a ∈ live m hm A B, x ∈ block m hm A B a
-  originalMarkers : markers m hm A B ⊆ {at m hm (leftEnd m hm), at m hm (rightEnd m hm)}
+  originalMarkers : markers m hm A B ⊆ {«at» m hm (leftEnd m hm), «at» m hm (rightEnd m hm)}
   graphRows : ∀ a b : Fin m, (reducedGraph m hm A B).Adj a b ↔ a ≠ b ∧
     ∃ c : (prune (localRows m hm A B)).chords,
-      (prune (localRows m hm A B)).row c = {at m hm a, at m hm b}
+      (prune (localRows m hm A B)).row c = {«at» m hm a, «at» m hm b}
   partition : ∀ a b : Fin m, a ∈ live m hm A B → b ∈ live m hm A B →
     component m hm A B a = component m hm A B b ∨
       Disjoint (component m hm A B a) (component m hm A B b)
@@ -1126,7 +1136,7 @@ structure ParentStructure {V : Type*} [Fintype V] [DecidableEq V]
   componentPaths : ∀ a x y : Fin m, x ∈ component m hm A B a → y ∈ component m hm A B a →
     ((reducedGraph m hm A B).Adj x y ↔ x.val + 1 = y.val ∨ y.val + 1 = x.val)
   forcedSingletons : ∀ a : Fin m, a ∈ live m hm A B →
-    at m hm a ∈ forced (localRows m hm A B) → component m hm A B a = {a}
+    «at» m hm a ∈ forced (localRows m hm A B) → component m hm A B a = {a}
   isolatedGhosts : ∀ a : Fin m, a ∈ live m hm A B →
     (∀ b, ¬ (reducedGraph m hm A B).Adj a b) → component m hm A B a = {a}
   separatedEnds : leftEnd m hm ∈ live m hm A B → rightEnd m hm ∈ live m hm A B →
@@ -1166,7 +1176,7 @@ def physicalDecorated (m : Nat) (hm : 3 ≤ m) (f : Label m ↪ V)
   (rawJoin (delta X) (corner ((ground m).image f) A B
     (((PhysicalMWheel.ambientGraph m hm f).rows.without (interfaceRow m hm)).root)) ⊔
     rawJoin L (delta U)) ⊔
-    if Disjoint A ((rim m hm).image f) then rawJoin D (delta (U ∖ (rim m hm).image f)) else ⊥
+    if Disjoint A ((rim m hm).image f) then rawJoin D (delta (U \ (rim m hm).image f)) else ⊥
 
 /-- Final total physical consumer: masks are pulled back from the REAL ambient
 wheel ground, the literal physical corner is identified, and its exact parent
@@ -1188,7 +1198,7 @@ theorem physical_parent_readback (m : Nat) (hm : 3 ≤ m) (f : Label m ↪ V)
       (localRows m hm A B).ground.image f := by
     rw [← hAi, ← hBi]
     change residual ((ground m).image f) (A.image f) (B.image f) = (residual (ground m) A B).image f
-    rw [residual, residual, Finset.image_sdiff _ _ f.injective, Finset.image_union]
+    rw [HistoryCorners.residual, HistoryCorners.residual, Finset.image_sdiff _ _ f.injective, Finset.image_union]
   have hswitch : Disjoint A' ((rim m hm).image f) ↔ Disjoint A (rim m hm) := by
     rw [← hAi]
     exact Finset.disjoint_image f.injective

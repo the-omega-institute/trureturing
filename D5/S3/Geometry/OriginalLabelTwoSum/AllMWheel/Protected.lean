@@ -772,6 +772,7 @@ private theorem switch_pair (m lo k j : Nat) (hk : 1 ≤ k) (hj : j < k)
           ext x
           simp only [switchBase, Finset.mem_filter, Finset.mem_univ, true_and,
             Finset.notMem_empty]
+          have hx := x.isLt
           omega
         simpa [labelInterval, he] using
           (show Symbol.pair ∅ (⟨lo, by omega⟩ : Label m) ∈
@@ -864,7 +865,7 @@ private theorem collar_pair_data (m : Nat) (hm : 3 ≤ m) (h1 : m % 3 = 1)
 private theorem good_critical (m : Nat) (hm : 3 ≤ m) (h1 : m % 3 = 1) :
     Symbol.critical (labelsCongruent m 2 2) ∈ cycleWord m hm := by
   apply (criticalFaces_mem _ _).mp
-  rw [cycleWord_critical_formula, if_neg (by omega : m % 3 ≠ 0), if_pos h1]
+  rw [cycleWordData_word, cycleWord_critical_formula, if_neg (by omega : m % 3 ≠ 0), if_pos h1]
   simp
 
 private theorem cycle_no_adj (m : Nat) (hm : 3 ≤ m) {U : Finset (Label m)}
@@ -1017,7 +1018,7 @@ private theorem critical_supersets (m : Nat) (hm : 3 ≤ m) (h1 : m % 3 = 1)
     ext x
     simp only [collarB, Finset.mem_insert, collarA_mem m h1, Fin.ext_iff,
       collarPivot, labelsCongruent, Finset.mem_filter, Finset.mem_univ, true_and, lastLabel]
-      have hx := x.isLt
+    have hx := x.isLt
     omega
   by_cases hl : lastLabel m ∈ U
   · right
@@ -1090,7 +1091,7 @@ def goodCycleContract (m : Nat) (hm : 3 ≤ m) (h1 : m % 3 = 1) :
   critical_protected := by
     intro S hS
     have hc := (criticalFaces_mem _ S).mpr hS
-    rw [cycleWord_critical_formula, if_neg (by omega : m % 3 ≠ 0), if_pos h1] at hc
+    rw [cycleWordData_word, cycleWord_critical_formula, if_neg (by omega : m % 3 ≠ 0), if_pos h1] at hc
     exact (mem_goodH m S).mpr (Or.inl (Finset.mem_singleton.mp hc))
   emitted_proper := by
     intro L v hp _
@@ -1141,7 +1142,8 @@ private theorem eta_good_cells (m : Nat) (hm : 3 ≤ m) (h1 : m % 3 = 1) :
   have hSW := (cycleWordData m hm).supported _ hS
   have hmS : lastLabel m ∉ labelsCongruent m 2 2 := by
     simp [labelsCongruent, lastLabel, h1]
-  have hmEta : lastLabel m ∈ eta1 m hm := by simp [eta1, ground, lastLabel, hmS, ne_eq, Fin.ext_iff] <;> omega
+  have hmEta : lastLabel m ∈ eta1 m hm := by
+    exact Finset.mem_sdiff.mpr ⟨by simp [ground, lastLabel, ne_eq, Fin.ext_iff] <;> omega, hmS⟩
   have hEtaAbsent : eta1 m hm ∉ A1 m hm := by
     rw [← good_dual m hm, dual_mem]
     rintro ⟨_, hn⟩
@@ -1211,7 +1213,7 @@ private theorem collarRest_up (m : Nat) (hm : 3 ≤ m) (h1 : m % 3 = 1) (j : Nat
   rcases collar_supersets m hm h1 i U hU haU with he | he | ⟨hn, he⟩
   · exact ⟨i, hi, Or.inl he⟩
   · exact ⟨i, hi, Or.inr he⟩
-  · exact ⟨⟨i.val+1, hn⟩, by omega, Or.inr he⟩
+  · exact ⟨⟨i.val+1, hn⟩, by change j ≤ i.val + 1; omega, Or.inr he⟩
 
 private def collarState (m : Nat) (hm : 3 ≤ m) (h1 : m % 3 = 1) (j : Nat) :
     Family (Label m) := rawEndpoint (ground m) (facets (cycleIndependentOn m hm))

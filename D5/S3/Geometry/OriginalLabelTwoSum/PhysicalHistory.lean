@@ -21,6 +21,9 @@ certificate induction is NOT asserted here. The fixed-W4 History at the end
 retains the genuine PhysicalCertificate interface for existing consumers;
 the appended canonical handoff/count/list proofs are SOURCE_ONLY_UNCOMPILED.
 They do not supply the universal mixed-width all-corner constructor. -/
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 noncomputable section
 open Set Finset SimpleGraph
 namespace D5.S3.Geometry.OriginalLabelTwoSum.PhysicalHistory
@@ -34,7 +37,8 @@ structure WheelInput {A : Type*} (g : GraphData A V) where
   atLeastThree : 3 ≤ width
   e : V
   retained : e ∈ g.ground
-  a b : A
+  a : A
+  b : A
   edge : g.edge e = s(a,b)
   labels : AllMWheel.Label width ↪ V
   zero : labels 0 = e
@@ -75,7 +79,7 @@ def physicalWheelStep {A : Type*} (g : GraphData A V) (i : WheelInput g) :
   e := i.e
   left_ground := (Finset.insert_erase i.retained).symm
   right_ground := rfl
-  e_not_X := Finset.not_mem_erase _ _
+  e_not_X := Finset.notMem_erase _ _
   e_not_Y := i.zero ▸ PhysicalMWheel.zero_outside_ground i.width i.labels
   disjoint := i.fresh.mono_left (Finset.erase_subset _ _)
   aL := i.a
@@ -211,7 +215,7 @@ theorem physicalWheelStep_ground {A : Type*} (g : GraphData A V) (i : WheelInput
   refine ⟨rfl,?_⟩
   intro h
   rcases Finset.mem_union.mp h with ho | hn
-  · exact Finset.not_mem_erase _ _ ho
+  · exact Finset.notMem_erase _ _ ho
   · exact PhysicalMWheel.zero_outside_ground i.width i.labels (i.zero.symm ▸ hn)
 
 def seedGraph (f : K4.SeedLabel ↪ V) : GraphData (Fin 4) V :=
@@ -258,7 +262,8 @@ abbrev Ambient (n ghosts : Nat) := Fin (3 + 4*n + ghosts)
 structure Input {A : Type*} (g : GraphData A V) where
   e : V
   retained : e ∈ g.ground
-  a b : A
+  a : A
+  b : A
   edge : g.edge e = s(a,b)
   labels : Wheel.Label ↪ V
   zero : labels 0 = e
@@ -371,7 +376,6 @@ theorem statistics {n : Nat} {A : Type} {g : GraphData A V} (h : History n A g) 
         have hh : t = {1} ∨ t = {2} := by simpa [K4.seed] using ht
         rcases hh with rfl | rfl <;> simp
       rw [Finset.card_image_of_injective _ f.injective,htcard]
-      rfl
   | @attach n A g old i ih =>
     let c := certificate old
     let out := PhysicalCertificate.certificate g i.e i.retained i.a i.b i.edge
@@ -420,7 +424,7 @@ The two terminals are identified with old vertices, so only three are new. -/
 theorem vertex_card {n : Nat} {A : Type} {g : GraphData A V}
     (h : History n A g) : Nat.card A = 4 + 3*n := by
   induction h with
-  | seed f => simp only [Nat.card_eq_fintype_card,Fintype.card_fin]; omega
+  | seed f => simp only [Nat.card_eq_fintype_card,Fintype.card_fin] <;> omega
   | @attach n A g old i ih =>
     letI : Finite A := finite_carrier old
     change Nat.card (A ⊕ {z : Wheel.Label // z ≠ 1 ∧ z ≠ 2}) = _
@@ -485,7 +489,7 @@ def physicalEdgeEquiv {A B : Type*} (s : PhysicalGlue A B V) :
       {d : Sym2 A // d ∈ s.leftKept.edgeSet} ⊕
         {d : Sym2 B // d ∈ s.rightKept.edgeSet} := by
   classical
-  exact ((Equiv.setCongr s.graph_edgeSet).trans
+  exact ((Set.equivOfEq s.graph_edgeSet).trans
     (Equiv.Set.union s.graph_images_disjoint)).trans
       (Equiv.sumCongr
         (Equiv.Set.image (Sym2.map s.qL) s.leftKept.edgeSet
@@ -511,7 +515,7 @@ private theorem deleted_card {A : Type*} [Finite A] (G : SimpleGraph A)
       · exact Or.inl ⟨hz,he⟩
   have hdj : Disjoint (G.edgeSet \ {d}) ({d} : Set (Sym2 A)) :=
     Set.disjoint_left.mpr (fun _ hz hs => hz.2 hs)
-  have hc := Nat.card_congr ((Equiv.setCongr hu).symm.trans (Equiv.Set.union hdj))
+  have hc := Nat.card_congr ((Set.equivOfEq hu).symm.trans (Equiv.Set.union hdj))
   rw [Nat.card_sum] at hc
   have hone : Nat.card ({d} : Set (Sym2 A)) = 1 := by
     rw [Nat.card_eq_fintype_card]
@@ -616,9 +620,11 @@ theorem root_handoff {n : Nat} {A : Type} {g : GraphData A V} (h : History n A g
   constructor
   · rintro ⟨c,hc⟩
     refine ⟨(handoff h).2.2.index c,?_⟩
+    change s ⊆ g.ground \ g.rows.row c at hc
     simpa only [(handoff h).2.2.ground,(handoff h).2.2.row c] using hc
   · rintro ⟨c,hc⟩
     refine ⟨(handoff h).2.2.index.symm c,?_⟩
+    change s ⊆ g.ground \ g.rows.row ((handoff h).2.2.index.symm c)
     simpa only [(handoff h).2.2.ground,(handoff h).2.2.row,
       Equiv.apply_symm_apply] using hc
 
@@ -651,8 +657,9 @@ theorem main_order {n : Nat} {A : Type} {g : GraphData A V} (h : History n A g) 
   induction h with
   | seed f =>
     change orderedPairs (certificate (History.seed f)).main = []
-    simpa only [certificate,renameCertificate,orderedPairs_cast,orderedPairs,
-      orderedPair,K4.seedGraphCertificate,K4.seed,
+    simp only [certificate, renameCertificate, orderedPairs_cast]
+    unfold orderedPairs orderedPair
+    simpa only [K4.seedGraphCertificate,K4.seed,
       FiniteRelativeSimplicialCollapse.Sequence.pairs_cast,
       FiniteRelativeSimplicialCollapse.Sequence.pairs,List.map_nil] using
       renameSequence_pairs f K4.seedGraphCertificate.main
@@ -672,8 +679,9 @@ theorem separate_order {n : Nat} {A : Type} {g : GraphData A V} (h : History n A
   induction h with
   | seed f =>
     change orderedPairs (certificate (History.seed f)).separate = []
-    simpa only [certificate,renameCertificate,orderedPairs_cast,orderedPairs,
-      orderedPair,K4.seedGraphCertificate,K4.seed,
+    simp only [certificate, renameCertificate, orderedPairs_cast]
+    unfold orderedPairs orderedPair
+    simpa only [K4.seedGraphCertificate,K4.seed,
       FiniteRelativeSimplicialCollapse.Sequence.pairs_cast,
       FiniteRelativeSimplicialCollapse.Sequence.pairs,List.map_nil] using
       renameSequence_pairs f K4.seedGraphCertificate.separate
