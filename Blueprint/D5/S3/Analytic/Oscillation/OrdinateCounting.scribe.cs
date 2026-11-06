@@ -11,6 +11,15 @@ internal sealed class OrdinateCountingDocument : IScribeDocumentDefinition
         H("Counting positive ordinates"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("count-mono"),
+                DeclarationHandle.Create(Prefix + "count_mono"),
+                H("Monotonicity of weighted counts"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The multiplicity-weighted counting function of a positive locally finite spectrum is monotone in the real cutoff. Increasing the cutoff enlarges the finite sum of nonnegative multiplicities."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("positive-gap"),
                 DeclarationHandle.Create(Prefix + "positive_gap"),
                 H("Separation from zero"),

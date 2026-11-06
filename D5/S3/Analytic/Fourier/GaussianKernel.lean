@@ -6,6 +6,7 @@
    utility: none
    digest: Gaussian kernels have explicit transforms and controlled half-line corrections. -/
 
+import D5.S3.Analytic.Fourier.AngularFejerKernel
 import Mathlib.Analysis.SpecialFunctions.Gaussian.FourierTransform
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.MeasureTheory.Integral.IntegralEqImproper
@@ -103,15 +104,6 @@ private lemma q_complex_transform {M : ℝ} (hM : 0 < M) (t : ℝ) :
   field_simp
   ring
 
-private lemma q_trig_integrable {M : ℝ} (hM : 0 < M) (t : ℝ) :
-    Integrable (fun v => q M v * Real.cos (t * v)) ∧
-      Integrable (fun v => q M v * Real.sin (t * v)) := by
-  constructor
-  · exact (q_integrable hM).mul_bdd (by fun_prop)
-      (ae_of_all _ (by intro v; simpa using Real.abs_cos_le_one (t * v)))
-  · exact (q_integrable hM).mul_bdd (by fun_prop)
-      (ae_of_all _ (by intro v; simpa using Real.abs_sin_le_one (t * v)))
-
 /-- The angular cosine transform of the Gaussian is a Gaussian. -/
 theorem q_aft {M : ℝ} (hM : 0 < M) (t : ℝ) :
     (∫ v, q M v * Real.cos (t * v)) = Real.exp (-t ^ 2 / (2 * M ^ 2)) ∧
@@ -200,22 +192,24 @@ theorem q_bromwich {M : ℝ} (hM : 0 < M) (c v : ℝ) :
 theorem q_cos_convolution {M : ℝ} (hM : 0 < M) (γ y : ℝ) :
     (∫ u, Real.cos (γ * u) * q M (y - u)) =
       Real.exp (-γ ^ 2 / (2 * M ^ 2)) * Real.cos (γ * y) := by
-  have hc := (q_trig_integrable hM γ).1
-  have hs := (q_trig_integrable hM γ).2
-  calc
-    _ = ∫ v, Real.cos (γ * (y - v)) * q M v := by
-      simpa using (integral_sub_left_eq_self
-        (fun v => Real.cos (γ * (y - v)) * q M v) volume y)
-    _ = Real.cos (γ * y) * (∫ v, q M v * Real.cos (γ * v)) +
-        Real.sin (γ * y) * (∫ v, q M v * Real.sin (γ * v)) := by
-      simp_rw [mul_sub, Real.cos_sub]
-      have he (v : ℝ) :
-          (Real.cos (γ * y) * Real.cos (γ * v) + Real.sin (γ * y) * Real.sin (γ * v)) * q M v =
-            Real.cos (γ * y) * (q M v * Real.cos (γ * v)) +
-              Real.sin (γ * y) * (q M v * Real.sin (γ * v)) := by ring
-      simp_rw [he]
-      rw [integral_add (hc.const_mul _) (hs.const_mul _), integral_const_mul, integral_const_mul]
-    _ = _ := by rw [(q_aft hM γ).1, (q_aft hM γ).2]; ring
+  apply AngularFejerKernel.cosine_convolution (q_integrable hM)
+    (w := fun t => Real.exp (-t ^ 2 / (2 * M ^ 2))) _ γ y
+  intro t
+  have hi : Integrable (fun v : ℝ =>
+      (q M v : ℂ) * Complex.exp (-Complex.I * (t : ℂ) * v)) := by
+    apply (q_integrable hM).ofReal.mul_bdd (by fun_prop) (c := 1)
+    filter_upwards with v
+    rw [Complex.norm_exp]
+    simp
+  unfold AngularFejerKernel.aft
+  apply Complex.ext
+  · change Complex.reCLM _ = Real.exp (-t ^ 2 / (2 * M ^ 2))
+    rw [← Complex.reCLM.integral_comp_comm hi]
+    simpa [Complex.mul_re, Complex.exp_re, mul_assoc, Complex.mul_im] using (q_aft hM t).1
+  · change Complex.imCLM _ = (0 : ℝ)
+    rw [← Complex.imCLM.integral_comp_comm hi]
+    simpa [Complex.mul_im, Complex.exp_im, mul_assoc, Complex.mul_re, integral_neg] using
+      congrArg Neg.neg (q_aft hM t).2
 
 private noncomputable def qd (M w : ℝ) : ℝ := -M ^ 2 * w * q M w
 

@@ -25,14 +25,6 @@ open scoped Topology BigOperators FourierTransform
 
 noncomputable section
 
-private lemma spectrum_countable (S : Spectrum) : Countable S.index := by
-  apply Set.countable_univ_iff.mp
-  have h := Set.countable_iUnion (fun n : ℕ => (S.finite_le (n : ℝ)).countable)
-  apply h.mono
-  intro j _
-  obtain ⟨n, hn⟩ := exists_nat_ge (S.gamma j)
-  exact Set.mem_iUnion.mpr ⟨n, hn⟩
-
 private def smoothCos (S : Spectrum) (M y : ℝ) : ℝ :=
   ∑ j ∈ S.cut (M + cutoffWidth M),
     (S.mult j : ℝ) * χ M (S.gamma j) * Real.cos (S.gamma j * y)

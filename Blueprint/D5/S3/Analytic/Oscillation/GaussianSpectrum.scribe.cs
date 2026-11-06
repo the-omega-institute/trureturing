@@ -11,6 +11,15 @@ internal sealed class GaussianSpectrumDocument : IScribeDocumentDefinition
         H("Gaussian spectral sums"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("spectrum-countable"),
+                DeclarationHandle.Create(Prefix + "spectrum_countable"),
+                H("Countability of the spectrum"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The index type of a locally finite positive spectrum is countable: the finite sets of ordinates at most each natural number exhaust it."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("count-bound"),
                 DeclarationHandle.Create(Prefix + "count_bound"),
                 H("Logarithmic counting growth"),

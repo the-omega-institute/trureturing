@@ -30,6 +30,48 @@ noncomputable def psi (b U t : ℝ) : ℝ := phi b t - phi b (t - U) / 2 - phi b
 noncomputable def aft (g : ℝ → ℝ) (t : ℝ) : ℂ :=
   ∫ v : ℝ, (g v : ℂ) * Complex.exp (-Complex.I * (t : ℂ) * (v : ℂ))
 
+lemma cosine_convolution {g w : ℝ → ℝ} (hgi : Integrable g)
+    (hft : ∀ t : ℝ, aft g t = (w t : ℂ)) (γ y : ℝ) :
+    (∫ u : ℝ, Real.cos (γ*u)*g (y-u)) = w γ * Real.cos (γ*y) := by
+  let E : ℝ → ℂ := fun u => (g (y-u) : ℂ)*Complex.exp (Complex.I*(γ : ℂ)*(u : ℂ))
+  have hi : Integrable E := by
+    apply (hgi.comp_sub_left y).ofReal.mul_bdd (c := 1) (by fun_prop)
+    filter_upwards [] with u
+    simp [Complex.norm_exp, Complex.mul_re, Complex.mul_im]
+  have he (u : ℝ) : E u = Complex.exp (Complex.I*(γ : ℂ)*(y : ℂ)) *
+      ((g (y-u) : ℂ)*Complex.exp (-Complex.I*(γ : ℂ)*((y-u : ℝ) : ℂ))) := by
+    dsimp [E]
+    rw [mul_left_comm, mul_assoc, ← Complex.exp_add]
+    congr 2
+    push_cast; ring
+  have hf : (∫ u, E u) = Complex.exp (Complex.I*(γ : ℂ)*(y : ℂ)) * (w γ : ℂ) := by
+    simp_rw [he]
+    rw [integral_const_mul]
+    congr 1
+    calc
+      _ = ∫ u : ℝ, (g u : ℂ)*Complex.exp (-Complex.I*(γ : ℂ)*(u : ℂ)) :=
+        integral_sub_left_eq_self
+          (fun u : ℝ => (g u : ℂ)*Complex.exp (-Complex.I*(γ : ℂ)*(u : ℂ))) volume y
+      _ = _ := hft γ
+  have hre (u : ℝ) : (E u).re = Real.cos (γ*u)*g (y-u) := by
+    dsimp [E]
+    have hex : Complex.I*(γ : ℂ)*(u : ℂ) = ((γ*u : ℝ) : ℂ)*Complex.I := by
+      push_cast; ring
+    rw [hex]
+    simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
+      zero_mul, mul_zero, sub_zero, Complex.exp_ofReal_mul_I_re]
+    ring
+  have hex : Complex.I*(γ : ℂ)*(y : ℂ) = ((γ*y : ℝ) : ℂ)*Complex.I := by
+    push_cast; ring
+  calc
+    _ = ∫ u : ℝ, (E u).re := by simp_rw [hre]
+    _ = (∫ u : ℝ, E u).re := integral_re hi
+    _ = _ := by
+      rw [hf, hex]
+      simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, mul_zero,
+        sub_zero, Complex.exp_ofReal_mul_I_re]
+      ring
+
 noncomputable def ell (u : ℝ) : ℝ := Real.log (Real.exp 1 + u)
 
 open StatLean.HypothesisTesting

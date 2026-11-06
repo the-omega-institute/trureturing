@@ -69,7 +69,7 @@ theorem positive_gap (S : Spectrum) : ∃ b : ℝ, 0 < b ∧ ∀ j, b < S.gamma 
   · exact (min_le_left _ _).trans_lt (hbs j (by simpa [Spectrum.cut] using hj))
   · exact (min_le_right _ _).trans_lt (by linarith)
 
-private lemma count_mono (S : Spectrum) : Monotone (fun t => (S.N t : ℝ)) := by
+lemma count_mono (S : Spectrum) : Monotone (fun t => (S.N t : ℝ)) := by
   classical
   intro u v huv
   change (S.N u : ℝ) ≤ (S.N v : ℝ)

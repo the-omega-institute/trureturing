@@ -18,9 +18,14 @@ internal sealed class GaussianBoundaryDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Let a positive locally finite spectrum have counting function "
-                    + "asymptotic to T log(T)/(2 pi). Suppose the Laplace transform of f "
-                    + "equals minus one half of the multiplicity-weighted paired pole "
-                    + "series plus J. Assume J is holomorphic for -1/5<Re(s)<1 and "
+                    + "asymptotic to T log(T)/(2 pi). Let f be measurable and bounded "
+                    + "on every interval [0,A] with A>=0. Assume its Laplace integral "
+                    + "converges absolutely for every Re(s)>1/2, and, on the strip "
+                    + "1/2<Re(s)<1, equals minus one half of the multiplicity-weighted "
+                    + "paired pole series plus J. Assume there is 0<eta<1/5 such "
+                    + "that J is holomorphic for -eta<Re(s)<1 and has quadratic "
+                    + "growth for abs(Re(s))<=eta/2. In addition, assume J is "
+                    + "holomorphic for -1/5<Re(s)<1 and "
                     + "has quadratic growth in the imaginary direction on the closed "
                     + "strip from -1/6 to 3/4. There is a positive constant C such "
                     + "that, for M and y at least one, the positive-ray Gaussian "

@@ -19,6 +19,14 @@ open scoped Topology BigOperators
 
 noncomputable section
 
+lemma spectrum_countable (S : Spectrum) : Countable S.index := by
+  apply Set.countable_univ_iff.mp
+  have h := Set.countable_iUnion (fun n : ℕ => (S.finite_le (n : ℝ)).countable)
+  apply h.mono
+  intro j _
+  obtain ⟨n, hn⟩ := exists_nat_ge (S.gamma j)
+  exact Set.mem_iUnion.mpr ⟨n, hn⟩
+
 def LocalCount (S : Spectrum) : Prop :=
   ∃ A : ℝ, 1 ≤ A ∧ ∀ t : ℝ, 0 ≤ t →
     (S.N (t + 1) : ℝ) - (S.N t : ℝ) ≤ A * Real.log (t + 3)
@@ -29,17 +37,6 @@ noncomputable def gaussianMass (S : Spectrum) (M : ℝ) : ℝ :=
 noncomputable def gaussianCos (S : Spectrum) (M y : ℝ) : ℝ :=
   ∑' j : S.index, (S.mult j : ℝ) * Real.exp (-S.gamma j ^ 2 / (2 * M ^ 2)) *
     Real.cos (S.gamma j * y)
-
-private lemma cut_mono (S : Spectrum) {u v : ℝ} (h : u ≤ v) :
-    S.cut u ⊆ S.cut v := by
-  intro j hj
-  simpa only [Spectrum.cut, Set.Finite.mem_toFinset, Set.mem_ofPred_eq] using
-    (show S.gamma j ≤ u from by simpa [Spectrum.cut] using hj).trans h
-
-private lemma count_mono (S : Spectrum) : Monotone (fun t => (S.N t : ℝ)) := by
-  intro u v huv
-  apply Nat.cast_le.mpr
-  exact Finset.sum_le_sum_of_subset (f := S.mult) (cut_mono S huv)
 
 /-- The asymptotic count gives a uniform logarithmic counting bound. -/
 theorem count_bound (S : Spectrum) (hN : CountAsymptotic S) :

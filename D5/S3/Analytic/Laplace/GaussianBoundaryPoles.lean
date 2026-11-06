@@ -21,15 +21,6 @@ open scoped Topology BigOperators
 
 noncomputable section
 
-private lemma spectrum_countable (S : Spectrum) : Countable S.index := by
-  apply Set.countable_univ_iff.mp
-  have h : (⋃ n : ℕ, {j : S.index | S.gamma j ≤ n}).Countable :=
-    Set.countable_iUnion (fun n => (S.finite_le n).countable)
-  apply h.mono
-  intro j _
-  obtain ⟨n, hn⟩ := exists_nat_ge (S.gamma j)
-  exact Set.mem_iUnion.mpr ⟨n, hn⟩
-
 private lemma pole_vertical_crude (S : Spectrum) (j : S.index) (t : ℝ) :
     ‖poleTerm S j ((3 / 4 : ℂ) + t * Complex.I)‖ ≤ 4 * (S.mult j : ℝ) := by
   let s : ℂ := (3 / 4 : ℂ) + t * Complex.I

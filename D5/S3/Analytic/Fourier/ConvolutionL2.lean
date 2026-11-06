@@ -259,23 +259,6 @@ theorem real_convolution_l2_young {k f : ℝ → ℝ}
   exact mul_le_mul' (ENNReal.ofReal_le_ofReal (by
     simpa using hkB)) le_rfl
 
-/-- A real Schwartz kernel with Fourier bound B has squared convolution bound B². -/
-theorem real_schwartz_convolution_l2_multiplier
-    (k : SchwartzMap ℝ ℝ) {f : ℝ → ℝ}
-    (hf : AEStronglyMeasurable f volume) (hf2 : Integrable (fun y => f y ^ 2))
-    {B : ℝ} (hB : 0 ≤ B)
-    (hbound : ∀ ξ : ℝ, ‖𝓕 (fun v : ℝ => (k v : ℂ)) ξ‖ ≤ B) :
-    (∫ y, (∫ v, k v * f (y - v)) ^ 2) ≤ B ^ 2 * ∫ y, f y ^ 2 := by
-  let K : SchwartzMap ℝ ℂ := k.postcompCLM Complex.ofRealCLM
-  have hK : (K : ℝ → ℂ) = fun v => (k v : ℂ) := rfl
-  have hfL : MemLp f 2 := (memLp_two_iff_integrable_sq hf).mpr hf2
-  have hKb : ∀ ξ : ℝ, ‖𝓕 K ξ‖ ≤ B := by
-    intro ξ
-    simpa only [SchwartzMap.fourier_coe, hK] using hbound ξ
-  have h := schwartz_convolution_l2_multiplier K (hfL.ofReal (K := ℂ)) hB hKb
-  rw [hK] at h
-  exact real_integral_bound hfL hB h.1 h.2
-
 /-- A real-valued complex Schwartz kernel gives an integrable square
 and the real multiplier bound. -/
 theorem real_schwartz_convolution_l2_multiplier_of_complex
