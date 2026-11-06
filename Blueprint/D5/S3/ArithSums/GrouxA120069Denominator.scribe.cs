@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ArithSums;
 internal sealed class GrouxA120069DenominatorDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/ArithSums/oeis2010a120069");
+        LibraryNoteRef.Create("D5/L/ArithUnits/oeis2010a120069");
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
