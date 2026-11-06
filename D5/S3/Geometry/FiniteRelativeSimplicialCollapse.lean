@@ -508,7 +508,7 @@ def liftPairOver (P : CollapsePair V) (D : PreAbstractSimplicialComplex V) (v : 
       s = insert v (s.erase v) := (Finset.insert_erase hvs).symm
       _ = insert v P.upper := congrArg (insert v) hup
       _ = insert P.apex (insert v P.lower) := by
-        exact Finset.insert_comm v w ∅
+        exact Finset.insert_comm v P.apex P.lower
 
 theorem liftOver_retained (P : CollapsePair V) (D : PreAbstractSimplicialComplex V)
     (v : V) (hPD : P.ambient ≤ D) (hvD : Fresh v D) :

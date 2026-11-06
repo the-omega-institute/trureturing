@@ -122,13 +122,17 @@ theorem spliceAB_isPath {x y : VL} (p₀ : g.cut.Walk x g.aL)
   classical
   have hm₀ : (p₀.map g.leftHom).IsPath := h₀.map g.qL_injective
   have hm₁ : (p₁.map g.leftHom).IsPath := h₁.map g.qL_injective
+  have htSupport : g.terminalPath.support =
+      (g.rightPath g.aR g.bR).support.map g.qR := by
+    unfold terminalPath
+    rw [SimpleGraph.Walk.support_copy, SimpleGraph.Walk.support_map]
+    rfl
   have hi₀ : ∀ z, z ∈ (p₀.map g.leftHom).support →
       z ∈ g.terminalPath.support → z = g.qL g.aL := by
     intro z hz ht
     simp only [leftHom,RelHom.coeFn_mk,SimpleGraph.Walk.support_map,List.mem_map] at hz
     obtain ⟨l,hl,rfl⟩ := hz
-    simp only [terminalPath,rightHom,RelHom.coeFn_mk,SimpleGraph.Walk.support_copy,
-      SimpleGraph.Walk.support_map,List.mem_map] at ht
+    rw [htSupport, List.mem_map] at ht
     obtain ⟨r,hr,he⟩ := ht
     exact congrArg g.qL (g.support_overlap_a p₀ hl he.symm)
   have hfirst := CutWalk.append_path hm₀ g.terminalPath_isPath hi₀
@@ -141,8 +145,7 @@ theorem spliceAB_isPath {x y : VL} (p₀ : g.cut.Walk x g.aL)
     obtain ⟨k,hk,he⟩ := hz₀
     have hkl : k = l := g.qL_injective he
     exact False.elim (g.segments_disjoint p₀ p₁ (hkl ▸ hk) hl)
-  · simp only [terminalPath,rightHom,RelHom.coeFn_mk,SimpleGraph.Walk.support_copy,
-      SimpleGraph.Walk.support_map,List.mem_map] at ht
+  · rw [htSupport, List.mem_map] at ht
     obtain ⟨r,hr,he⟩ := ht
     exact congrArg g.qL (g.support_overlap_b p₁ hl he.symm)
 
