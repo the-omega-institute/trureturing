@@ -32,9 +32,41 @@ internal sealed class BirkhoffSharpContractionDocument : IScribeDocumentDefiniti
                 OpenBracket, Call("Fintype", V("J")), CloseBracket, Sp,
                 OpenBracket, Call("Nonempty", V("I")), CloseBracket, Sp,
                 OpenBracket, Call("Nonempty", V("J")), CloseBracket, Sp,
-                All("A", Call("Matrix", V("I"), V("J"), R), body)));
+                All("A", Call("Matrix", V("I"), V("J"), R), body))));
     private static Formula PositiveMatrix => All("i", V("I"), All("j", V("J"),
         Less(D(0), Entry(V("i"), V("j")))));
+    private static Formula ExistsIn(string name, Formula type, Formula body) =>
+        Seq(Exists, Sp, Open, V(name), Sp, Colon, Sp, type, Close, Comma, Sp, body);
+    private static Formula Fraction(Formula numerator, Formula denominator) =>
+        Seq(Frac, Grp(numerator), Grp(denominator));
+    private static Formula Product(Formula a, Formula b) => Seq(a, Sp, Cdot, Sp, b);
+    private static Formula Root(Formula x) => Seq(Sqrt, Grp(x));
+    private static Formula Indexed(Formula op, Formula bound, Formula value) =>
+        Seq(op, Underscore, Grp(bound), Sp, value);
+    private static Formula Member(Formula value, Formula set) => Seq(value, Sp, InMacro, Sp, set);
+    private static Formula DistanceDefinition =>
+        All("K", Call("Type"), Seq(OpenBracket, Call("Fintype", V("K")), CloseBracket, Sp,
+            OpenBracket, Call("Nonempty", V("K")), CloseBracket, Sp,
+            All("x", Vec("K"), All("y", Vec("K"), Equal(Dst(V("x"), V("y")),
+                Call("log", Fraction(
+                    Indexed(Max, Member(V("k"), V("K")), Fraction(Call("x", V("k")), Call("y", V("k")))),
+                    Indexed(Min, Member(V("k"), V("K")), Fraction(Call("x", V("k")), Call("y", V("k")))))))))));
+    private static Formula ThetaDefinition => Context(Equal(Th,
+        Indexed(Max, Seq(V("i"), Comma, V("k"), InMacro, V("I"), Semi,
+                V("j"), Comma, V("l"), InMacro, V("J")),
+            Fraction(Product(Entry(V("i"), V("j")), Entry(V("k"), V("l"))),
+                Product(Entry(V("i"), V("l")), Entry(V("k"), V("j")))))));
+    private static Formula KappaDefinition => Context(Equal(K,
+        Fraction(Seq(Root(Th), Minus, D(1)), Seq(Root(Th), Plus, D(1)))));
+    private static Formula ImageDefinition => Context(All("r", R,
+        Seq(Member(V("r"), S), Sp, Iff, Sp,
+            ExistsIn("x", Vec("J"), ExistsIn("y", Vec("J"),
+                Both(P(V("x")), Both(P(V("y")), Equal(Dst(Act(V("x")), Act(V("y"))), V("r")))))))));
+    private static Formula CoefficientDefinition => Context(All("c", R,
+        Seq(Member(V("c"), C), Sp, Iff, Sp, Both(AtMost(D(0), V("c")),
+            All("x", Vec("J"), All("y", Vec("J"),
+                Imp(P(V("x")), Imp(P(V("y")), AtMost(Dst(Act(V("x")), Act(V("y"))),
+                    Product(V("c"), Dst(V("x"), V("y"))))))))))));
     private static Formula Contract => Context(Imp(PositiveMatrix,
         Both(All("x", Vec("J"), Imp(P(V("x")), P(Act(V("x"))))),
             Both(Call("IsLUB", S, Call("log", Th)),
@@ -55,9 +87,14 @@ internal sealed class BirkhoffSharpContractionDocument : IScribeDocumentDefiniti
             Paragraph(Text("For a finite nonempty coordinate type, distance is log of the maximum coordinate ratio divided by the minimum. "
                 + "Theta is the maximum over all two rows and two columns of A(i,j) A(k,l)/(A(i,l) A(k,j)). "
                 + "The diagonal minors show Theta is at least one. Kappa is (sqrt Theta-1)/(sqrt Theta+1).")),
+            Paragraph(Math(Disp(DistanceDefinition))),
+            Paragraph(Math(Disp(ThetaDefinition))),
+            Paragraph(Math(Disp(KappaDefinition))),
             Paragraph(Text("imageDistances(A) consists of distance(Ax,Ay) for all strictly positive x and y. "
                 + "coefficients(A) consists of all real c at least zero such that distance(Ax,Ay) is at most c times distance(x,y) "
                 + "for every such pair. IsLUB asserts both the upper bound and its leastness; IsLeast asserts membership and minimality.")),
+            Paragraph(Math(Disp(ImageDefinition))),
+            Paragraph(Math(Disp(CoefficientDefinition))),
             Describe.Lean(DescribeId.Create("sharp-rectangular-contraction"),
                 DeclarationHandle.Create("D5/S3/Analytic/Convexity/BirkhoffSharpContraction.sharp_contraction"),
                 H("Exact image diameter and least contraction coefficient"),
