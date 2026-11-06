@@ -11,6 +11,15 @@ internal sealed class AngularFejerKernelDocument : IScribeDocumentDefinition
         H("Angular Fejer kernels"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("cosine-convolution"),
+                DeclarationHandle.Create(Prefix + "cosine_convolution"),
+                H("Convolution with a cosine"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "If g is integrable and its angular Fourier transform is the real-valued function w, then convolution of g with cos(gamma u) equals w(gamma) cos(gamma y). Translation of the complex exponential integral gives the identity after taking real parts."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("phi-continuous"),
                 DeclarationHandle.Create(Prefix + "phi_continuous"),
                 H("Continuity of the tent weight"),

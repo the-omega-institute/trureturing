@@ -1,0 +1,20 @@
+### 10.5　可逆与时间
+
+若完整单结果过程具有实际双侧逆，或输入与完整输出同维且为等距，$V$ 为酉。若来源另有连续的内部参数群 $U(t+s)=U(t)U(s)$、$U(0)=I$，有限维连续酉群有自伴生成元 $H$，
+
+$$
+U(t)=e^{-itH/\hbar},\qquad
+i\hbar\frac{d\psi}{dt}=H\psi,
+\qquad \dot\rho=-\frac{i}{\hbar}[H,\rho].
+$$
+
+可用连续群的同时对角化与连续字符 $e^{-it\omega}$ 证明。时间参数的物理单位、$H$ 的具体形式以及 $\hbar$ 的标定不是“存在”或三相条件的数值推论。
+
+最后，在纯态上对 $(A-\langle A\rangle)\psi$ 和 $(B-\langle B\rangle)\psi$ 用 Cauchy–Schwarz，取内积虚部得到
+
+$$
+\Delta A\,\Delta B\ge\tfrac12|\langle[A,B]\rangle|.
+$$
+
+这把不确定性落实为同一正几何内非交换关系的约束；静态记录扩展、Gödel 不完备与物理测不准并非仅凭相似语言就等价。
+
