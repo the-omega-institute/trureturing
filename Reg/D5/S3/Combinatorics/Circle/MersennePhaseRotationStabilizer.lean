@@ -53,7 +53,7 @@ private theorem rejected_law (role : Bool) : ¬ arena.Law (rejected role) := by
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(3, 0), ∅, {⟨0, by decide⟩}, ?_⟩
-  cases i <;> norm_num [actual, realize, actualSource, centered, modulus]
+  cases i <;> simp [actual, realize] <;> norm_num [actualSource, centered, modulus]
 
 def family : Registration arena (type_of% (@actual_zero_family_rotation_iff)) where
   actual := actual
@@ -64,14 +64,16 @@ def family : Registration arena (type_of% (@actual_zero_family_rotation_iff)) wh
     · intro i
       refine ⟨rejected i, ?_, rfl, rejected_law i⟩
       intro j hji
-      simp only [rejected, realize, if_neg hji]
+      simp only [rejected, realize, ite_eq_right hji]
     · intro e
       exact nomatch e
   dependence := actual_dependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@actual_zero_family_rotation_iff) (Realization signature) Nat Bool where
-  unitName := `D5.S3.Combinatorics.Circle.MersennePhaseRotationStabilizer.actual_zero_family_rotation_iff.__information_unit
+  unitName := Lean.Name.str
+    `D5.S3.Combinatorics.Circle.MersennePhaseRotationStabilizer.actual_zero_family_rotation_iff
+    "__information_unit"
   realizationName := `Reg.D5.S3.Combinatorics.Circle.MersennePhaseRotationStabilizer.family
   realizationSource := none
   generated := false
