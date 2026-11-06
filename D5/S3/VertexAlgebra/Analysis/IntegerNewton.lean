@@ -85,9 +85,6 @@ theorem int_newton_of_fwdDiff_iter_eq_zero (q : ℤ → V) (N : ℕ)
         rw [sum_range_succ']
         simp only [Ring.choose_zero_right, one_smul, Function.iterate_zero, id_eq]
         congr 1
-        apply sum_congr rfl
-        intro j hj
-        rw [Function.iterate_succ_apply]
 
 private theorem diagonal_difference (C : ℤ → ℤ → V) (t m : ℤ) (j : ℕ) :
     ((fwdDiff (1 : ℤ))^[j] (fun x => C x (t-x))) m =
@@ -137,7 +134,7 @@ section ChooseBound
 theorem choose_succ_mul {𝕜 : Type*} [Field 𝕜] [CharZero 𝕜] (x : 𝕜) (j : ℕ) :
     (j+1 : 𝕜) * Ring.choose x (j+1) = (x-j) * Ring.choose x j := by
   have h := Ring.descPochhammer_eq_factorial_smul_choose x (j+1)
-  rw [Polynomial.descPochhammer_succ_right, Polynomial.smeval_mul,
+  rw [descPochhammer_succ_right, Polynomial.smeval_mul,
     Ring.descPochhammer_eq_factorial_smul_choose] at h
   simp only [Polynomial.smeval_sub, Polynomial.smeval_X, Polynomial.smeval_natCast,
     pow_one, pow_zero, nsmul_eq_mul, Nat.factorial_succ, Nat.cast_mul,
@@ -162,7 +159,8 @@ theorem norm_int_choose_le_pow (m : ℤ) (j : ℕ) :
       have hstep := congrArg abs (choose_succ_mul (m : ℝ) k)
       rw [abs_mul, abs_mul, abs_of_pos (by positivity : (0 : ℝ) < k+1)] at hstep
       have hfactor : |(m : ℝ)-k| ≤ (1+|(m : ℝ)|) * (k+1) := by
-        have htri := abs_sub (m : ℝ) (k : ℝ)
+        have htri := abs_sub_le (m : ℝ) (k : ℝ) 0
+        simp only [sub_zero, zero_sub, abs_neg] at htri
         rw [abs_of_nonneg (Nat.cast_nonneg k)] at htri
         nlinarith [abs_nonneg (m : ℝ)]
       have hmul := mul_le_mul hfactor ih (abs_nonneg _) (by positivity)
@@ -172,7 +170,7 @@ theorem norm_int_choose_le_pow (m : ℤ) (j : ℕ) :
           _ = |(m : ℝ)-k| * |Ring.choose (m : ℝ) k| := hstep
           _ ≤ ((1+|(m : ℝ)|) * (k+1)) * (1+|(m : ℝ)|)^k := hmul
           _ = _ := by rw [pow_succ]; ring
-      exact (mul_le_mul_left (show (0 : ℝ) < k+1 by positivity)).mp hscaled
+      exact le_of_mul_le_mul_left hscaled (by positivity)
   simpa only [Complex.norm_intCast, ← hcast j] using hb j
 
 end ChooseBound

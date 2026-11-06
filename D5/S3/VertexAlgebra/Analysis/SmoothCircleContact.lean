@@ -297,7 +297,16 @@ theorem fourierCoeff_mul_hasSum (F G : C(AddCircle T, ℂ))
   have hsum : HasSum (fun m : ℤ => fourierCoeff F m * fourierCoeff G (t-m))
       (fourierCoeff (F*G) t) := by
     simpa only [map_smul, productCoefficientCLM_fourier, smul_eq_mul] using h
-  exact ⟨hsum, hsum.summable.norm⟩
+  have habs : Summable (fun m : ℤ => ‖fourierCoeff F m * fourierCoeff G (t-m)‖) := by
+    apply Summable.of_nonneg_of_le (fun _ => norm_nonneg _) _
+      (hF.mul_right ‖productCoefficientCLM G t‖)
+    intro m
+    rw [norm_mul]
+    apply mul_le_mul_of_nonneg_left _ (norm_nonneg _)
+    rw [← productCoefficientCLM_fourier G t m]
+    simpa only [fourier_norm, mul_one] using
+      (productCoefficientCLM G t).le_opNorm (fourier m)
+  exact ⟨hsum, habs⟩
 
 end FourierProduct
 
