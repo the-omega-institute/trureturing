@@ -1717,7 +1717,7 @@ theorem stepIntactOutput_main_faces (h : MixedHistory n G g) (i : WheelInput g)
   split_ifs <;> congr 12
   all_goals first
     | (cases priorOutput h i A B hA hB hAB old <;> rfl)
-    | (cases linkedOutput h i A B hA hB hAB old <;> rfl)
+    | (cases changeOutput (linkedOutput h i A B hA hB hAB old) r.linked_readback <;> rfl)
 
 /-- Literal core list at the actual physical intact terminal.
 The residue-zero expansion consumes the completed ORIGINAL marker readback. -/
@@ -1794,7 +1794,7 @@ theorem stepIntactOutput_core_faces (h : MixedHistory n G g) (i : WheelInput g)
   split_ifs <;> congr 12
   all_goals first
     | (cases priorOutput h i A B hA hB hAB old <;> rfl)
-    | (cases linkedOutput h i A B hA hB hAB old <;> rfl)
+    | (cases changeOutput (linkedOutput h i A B hA hB hAB old) r.linked_readback <;> rfl)
 
 end IntactOriginalLists
 
