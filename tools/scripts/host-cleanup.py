@@ -1016,11 +1016,12 @@ def remnant_candidates(repository, inventory):
     if not siblings:
         return
     preservation, _ = worktree_modules()
+    from worktree_protocol import common as git_common
     try:
         top = preservation.git(main, "rev-parse", "--show-toplevel").stdout.removesuffix(b"\n")
         if (Path(os.fsdecode(top)).resolve() != main or not (main / ".git").is_dir()
-                or preservation.common(main) != (main / ".git").resolve()
-                or preservation.common(repository) != preservation.common(main)):
+                or git_common(main) != (main / ".git").resolve()
+                or git_common(repository) != git_common(main)):
             raise OSError("main_checkout_unverifiable")
     except (OSError, RuntimeError, ValueError, subprocess.SubprocessError) as error:
         raise OSError("main_checkout_unverifiable: " + str(error)) from error
