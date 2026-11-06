@@ -249,12 +249,14 @@ private theorem pathOutput_state (vs : List V) (hd : vs.Nodup) :
           | nil =>
               erw [twoLeafOutput_empty_criticalState (V := V)]
               have h0 : (∅ : Finset V) ∉ rawLink ∅ c (noncover [c]) := by
-                rw [path_link c [] hdT]
+                have hlink := path_link c [] hdT
+                simp only [List.toFinset_nil] at hlink
+                rw [hlink]
                 simp [noncover, pathEdges]
               simp [h0, pathState, pathCriticalTops]
           | cons d vs =>
               erw [twoLeafOutput_criticalState _ _ _ _ _ _ _ _ _ _ (show (d::vs).toFinset.Nonempty from ⟨d, by simp⟩),
-                changeOutput_criticalState, ih (d::vs) (by simp only [List.length_cons]; omega) hdU]
+                changeOutput_criticalState, ih (d::vs) (by change (d::vs).length < (a::b::c::d::vs).length; simp only [List.length_cons]; omega) hdU]
               cases vs with
               | nil => rfl
               | cons e vs =>

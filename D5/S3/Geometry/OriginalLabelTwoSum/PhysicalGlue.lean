@@ -286,7 +286,7 @@ theorem chord_adj (c : g.Chords) : g.graph.Adj (g.start c) (g.finish c) := by
       (g.edge_e.symm.trans hp.symm))
   | inr d =>
     apply (g.graph_right _ _).mpr
-    exact SimpleGraph.deleteEdges_adj.mpr ⟨g.right.chord_adj d.1,by simpa only [GraphData.kappa] using d.2⟩
+    exact SimpleGraph.deleteEdges_adj.mpr ⟨g.right.chord_adj d.1,by simpa only [GraphData.kappa, Set.mem_singleton_iff] using d.2⟩
 
 theorem chord_not_tree (c : g.Chords) :
     ¬g.input.tree.Adj (g.start c) (g.finish c) := by
@@ -360,14 +360,14 @@ private theorem tagged_left (c : g.left.chords) :
       change Sum.inl i ∈ g.source.ground.filter _
       simp only [Finset.mem_filter]
       refine ⟨?_,?_⟩
-      · simp [GraphSource.ground,g.erase_ground,Finset.mem_image,hx]
+      · simp [GraphSource.ground,source,g.erase_ground,Finset.mem_image,hx]
       · change Sym2.map g.qL (g.left.edge i) ∈ _
         rwa [g.label_left hx] at hp
     · refine ⟨.inr i,?_,rfl⟩
       change Sum.inr i ∈ g.source.ground.filter _
       simp only [Finset.mem_filter]
       refine ⟨?_,?_⟩
-      · simp [GraphSource.ground,g.right_ground,Finset.mem_image,hy]
+      · simp [GraphSource.ground,source,g.right_ground,Finset.mem_image,hy]
       · change Sym2.map g.qR (g.right.edge i) ∈ _
         rwa [g.label_right hy] at hp
   · rintro ⟨j,hj,he⟩
@@ -378,7 +378,7 @@ private theorem tagged_left (c : g.left.chords) :
       change Sum.inl i ∈ g.source.ground.filter _ at hj
       simp only [Finset.mem_filter] at hj
       have hx : i ∈ g.X := by
-        simpa [GraphSource.ground,g.erase_ground,Finset.mem_image] using hj.1
+        simpa [GraphSource.ground,source,g.erase_ground,Finset.mem_image] using hj.1
       exact ⟨Finset.mem_union_left _ hx,by rw [g.label_left hx]; exact hj.2⟩
     | inr j =>
       change j = i at he
@@ -386,7 +386,7 @@ private theorem tagged_left (c : g.left.chords) :
       change Sum.inr i ∈ g.source.ground.filter _ at hj
       simp only [Finset.mem_filter] at hj
       have hy : i ∈ g.Y := by
-        simpa [GraphSource.ground,g.right_ground,Finset.mem_image] using hj.1
+        simpa [GraphSource.ground,source,g.right_ground,Finset.mem_image] using hj.1
       exact ⟨Finset.mem_union_right _ hy,by rw [g.label_right hy]; exact hj.2⟩
 
 private theorem tagged_right (d : g.right.PhysicalSurvivor g.selected) :
@@ -403,14 +403,14 @@ private theorem tagged_right (d : g.right.PhysicalSurvivor g.selected) :
       change Sum.inl i ∈ g.source.ground.filter _
       simp only [Finset.mem_filter]
       refine ⟨?_,?_⟩
-      · simp [GraphSource.ground,g.erase_ground,Finset.mem_image,hx]
+      · simp [GraphSource.ground,source,g.erase_ground,Finset.mem_image,hx]
       · change Sym2.map g.qL (g.left.edge i) ∈ _
         rwa [g.label_left hx] at hp
     · refine ⟨.inr i,?_,rfl⟩
       change Sum.inr i ∈ g.source.ground.filter _
       simp only [Finset.mem_filter]
       refine ⟨?_,?_⟩
-      · simp [GraphSource.ground,g.right_ground,Finset.mem_image,hy]
+      · simp [GraphSource.ground,source,g.right_ground,Finset.mem_image,hy]
       · change Sym2.map g.qR (g.right.edge i) ∈ _
         rwa [g.label_right hy] at hp
   · rintro ⟨j,hj,he⟩
@@ -421,7 +421,7 @@ private theorem tagged_right (d : g.right.PhysicalSurvivor g.selected) :
       change Sum.inl i ∈ g.source.ground.filter _ at hj
       simp only [Finset.mem_filter] at hj
       have hx : i ∈ g.X := by
-        simpa [GraphSource.ground,g.erase_ground,Finset.mem_image] using hj.1
+        simpa [GraphSource.ground,source,g.erase_ground,Finset.mem_image] using hj.1
       exact ⟨Finset.mem_union_left _ hx,by rw [g.label_left hx]; exact hj.2⟩
     | inr j =>
       change j = i at he
@@ -429,7 +429,7 @@ private theorem tagged_right (d : g.right.PhysicalSurvivor g.selected) :
       change Sum.inr i ∈ g.source.ground.filter _ at hj
       simp only [Finset.mem_filter] at hj
       have hy : i ∈ g.Y := by
-        simpa [GraphSource.ground,g.right_ground,Finset.mem_image] using hj.1
+        simpa [GraphSource.ground,source,g.right_ground,Finset.mem_image] using hj.1
       exact ⟨Finset.mem_union_right _ hy,by rw [g.label_right hy]; exact hj.2⟩
 
 /-- Actual path-derived left rows, on the SAME ambient labels. G1A handles
@@ -439,8 +439,8 @@ theorem left_row (c : g.left.chords) :
   classical
   rw [g.tagged_left, g.source.left_row_of_interface c g.selected rfl]
   by_cases he : g.e ∈ g.left.rows.row c
-  · simp [substitute,source,he,forgetTag,Finset.image_image]
-  · simp [substitute,source,he,forgetTag,Finset.image_image,Finset.erase_eq_of_notMem he]
+  · simp [substitute,source,he,forgetTag,Finset.image_union,Finset.image_image]
+  · simp [substitute,source,he,forgetTag,Finset.image_union,Finset.image_image,Finset.erase_eq_of_notMem he]
 
 theorem right_row (d : g.right.PhysicalSurvivor g.selected) :
     g.data.rows.row (.inr d) = g.right.rows.row d.1 := by
