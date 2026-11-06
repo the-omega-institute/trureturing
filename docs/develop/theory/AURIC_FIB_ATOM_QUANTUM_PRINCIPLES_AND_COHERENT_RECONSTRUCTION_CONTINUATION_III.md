@@ -4973,3 +4973,129 @@ $$
 本定理只分类单个全局有限 $\mathscr Q_3$ 密度；它不证明实际 $\Pi$ 在 $D_{\rm act}$ 上有一个这样的全域延拓，不加入连续性、光滑性、无限记忆的排除，也不供应实际 $Q_3$ 成员资格、准备／响应／档案合同或原 $D$ 的来源绑定。其它有限维表示选择与实际完整计数商属于另一载体和另一前件，不能替代这里的原生 89 坐标分类；同样不推出 $k\ge4$、一般连续或光滑唯一性、物理 Born 选择或量子起源完成。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 197. 完整光滑原生密度的地址九联合四时诊断
+
+**命题 197.1（同边缘下的有限原前缀联合时间缺陷）。** 保留定义 157.1 的整个 $\mathscr C_{\rm nat}$，取定理 165.2 的同一个全域密度
+
+$$
+\Pi_q(z)=b_q(z)+\varepsilon c_qH(z),\qquad
+H=h_{\rm sm},\quad 0<\varepsilon<1,\quad
+H(z)=\frac12\prod_{s\subseteq O}\eta(u_s(z)),\qquad
+u_s(z)=\frac{\kappa_s^2|a_s(z)|^2-\|v_s(z)\|^2}{\|z\|^2}.
+\tag{197.1}
+$$
+
+这里 $O=\{1,3,5,7,9\}$，$a_s,v_s,\kappa_s,c_q,\eta$ 均为 (164.3)、(164.7)、(164.10)、(165.1) 的原定义。其可容许性直接复用定理 165.2：全部 $89$ 个复坐标、十一组原 Hamiltonian、每个单点及二维支撑分量、每个非零复输入、全部非零复缩放和内部 $t\in[0,1]$ 的分量方程同时保留；未把密度换成有限次、径向或仅代码上的函数。
+
+存在同一个有限正向原字 $a\in\mathsf W_{11}$，不依赖 $\varepsilon$，使
+$H(\chi_a)>0$ 而 $H(K_9^k\chi_a)=0$ 对 $k=1,2,3$ 同时成立。对四个合法程序 $\mathsf R(a\,9^k,\emptyset)$（$k=0,1,2,3$），$\emptyset$ 表示空后读字，令 $J_k$ 为另供读取前条件律 (174.1) 并按原不变配置字面报告所定义的直接联合描述 (175.7)。对于原已读事件
+
+$$
+\mathcal E_*=\{I=0,\ W=1000000000\},
+\qquad
+J_k(\mathcal E_*)=\Pi_{\varnothing}(K_9^k\chi_a),
+\tag{197.2}
+$$
+
+有严格残差
+
+$$
+\begin{aligned}
+J_3(\mathcal E_*)+x^2J_1(\mathcal E_*)
+ -J_0(\mathcal E_*)-x^2J_2(\mathcal E_*)
+ &=-\varepsilon H(\chi_a)<0,\\
+\frac{J_3(\mathcal E_*)+x^2J_1(\mathcal E_*)}{1+x^2}
+-\frac{J_0(\mathcal E_*)+x^2J_2(\mathcal E_*)}{1+x^2}
+ &=-\frac{\varepsilon H(\chi_a)}{1+x^2}.
+\end{aligned}
+\tag{197.3}
+$$
+
+同一四个联合描述的 $I$、$W$ 两个边缘却分别等于参考平方边缘，均满足相应四时恒等式。这里的读取前律及报告绑定是明确的附加条件，其对同一实际 $\Omega$ 的采用仍为 **ASSUMED-UNVERIFIED**；本命题仅陈述该绑定下的条件结论。
+
+证明。直接使用 (164.17) 的 $z_*=\sum_{s\subseteq O}w_s/\sqrt{32}$。式 (164.4)–(164.5) 已给互不相交的 $32$ 个扇区覆盖全部 $89$ 坐标、$\|z_*\|=1$ 且每个坐标非零；式 (165.6) 给 $H(z_*)>0$。只为计算原地址九的作用，在同一载体内置
+
+$$
+g_d=\sum_{r\subseteq\{2,4,6\}}
+ x^{3-|r|}(-y)^{|r|}|r\cup d\rangle
+\quad(d=\varnothing,\{8\},\{9\}),\qquad
+g_0:=g_{\varnothing},\quad g_8:=g_{\{8\}},\quad g_9:=g_{\{9\}}.
+\tag{197.4}
+$$
+
+这三个向量支撑不交，由 $x^2+y^2=1$ 正交归一。于是
+$w_{\varnothing}=xg_0-yg_8$、$w_{\{9\}}=g_9$，而
+$w_\perp=yg_0+xg_8$ 是空奇位扇区中与 $w_{\varnothing}$ 正交的单位向量。这些坐标乘积不引入物理张量因子。
+
+原 $\mathcal P_9$ 在 $(g_0,g_9)$ 上恰为 (138.2a) 的
+$\left(\begin{smallmatrix}x&xy\\xy&x^2\end{smallmatrix}\right)$；
+由于 $b_8=1,b_{10}=0$，$\mathcal P_9g_8=0$。地址九不改变其余奇位，故 $z_*$ 中只有 $s=\varnothing,\{9\}$ 两项能在作用后进入 $R_{\varnothing}$。记
+
+$$
+\delta_k=\zeta^k-1,\qquad
+D=x^2+xy=x(x+y),\quad L=xD,\quad V=yD.
+$$
+
+将这两项和阻塞的 $g_8$ 一起代入原
+$K_9^k=\zeta^k[I+\delta_k\mathcal P_9]$，精确得到
+
+$$
+R_{\varnothing}K_9^kz_*
+=\frac{\zeta^k}{\sqrt{32}}
+ \bigl[(1+\delta_kL)w_{\varnothing}
+       +\delta_kVw_\perp\bigr].
+\tag{197.5}
+$$
+
+$xy<x$ 和 $x^2+x=1$ 给 $0<D<1$、$0<L<x<1$，所以
+
+$$
+|a_{\varnothing}(K_9^kz_*)|
+=\frac{|1-L+L\zeta^k|}{\sqrt{32}}\le\frac1{\sqrt{32}},
+\qquad
+\|v_{\varnothing}(K_9^kz_*)\|
+=\frac{|\delta_k|xy(x+y)}{\sqrt{32}}.
+\tag{197.6}
+$$
+
+对 $k=1,2,3$，$|\delta_k|^2$ 分别为 $2+x,3+x,x^2$，故 $|\delta_k|\ge x$。由 $y(x+y)=xy+x>x^2$ 及 $\kappa_{\varnothing}=x^4$，
+
+$$
+\|v_{\varnothing}(K_9^kz_*)\|
+\ge\frac{x^2y(x+y)}{\sqrt{32}}
+>\frac{x^4}{\sqrt{32}}
+\ge\kappa_{\varnothing}|a_{\varnothing}(K_9^kz_*)|.
+\tag{197.7}
+$$
+
+因此三个 $u_{\varnothing}(K_9^kz_*)$ 都严格为负，令乘积 $H$ 为零。另一方面，(165.6) 给每个 $u_s(z_*)=x^{2m_s}/32>0$。连续性及非零复缩放不变性使
+
+$$
+\mathcal U=\{[z]:H(z)>0\}
+ \cap\bigcap_{k=1}^3\{[z]:u_{\varnothing}(K_9^kz)<0\}
+\tag{197.8}
+$$
+
+成为包含 $[z_*]$ 的非空射影开集。复用 (144.12) 的唯一 ready 原轨道稠密性，存在实际有限正向字 $a$ 满足 $[\chi_a]\in\mathcal U$。这个同一 $a$ 适用于每个 $0<\varepsilon<1$；不要求精确制备 $z_*$。$R_{\varnothing}$ 只是验证全域函数取值的数学投影，没有将实际载体限制为空奇位扇区。
+
+事件 $\mathcal E_*$ 的十位 $W$ 依原顺序是 $(b_{-1},\ldots,b_8)$，再与 $I=b_9=0$ 合起来，恰指定原配置 $q=\varnothing$。在读取前律、$Q_+=Q_-$ 和立即调用旧字面终端的绑定下，普通推前给 (197.2)，不需要新读口或隐藏轨迹观察。
+
+最后仅消费 [II](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md) (86.6)、命题 88.1 的两谱多项式计算：原全载体上的 $\mathcal P_9$ 是投影，故
+$K_9=\zeta[(I-\mathcal P_9)+\zeta\mathcal P_9]$，每个参考平方坐标沿整数次幂只有 $1,\zeta^k,\zeta^{-k}$ 三种频率。已有多项式
+
+$$
+R(s)=(s-1)(s-\zeta)(s-\zeta^{-1})
+=s^3-x^2s^2+x^2s-1
+$$
+
+消去这三种频率，所以 $B_k:=b_{\varnothing}(K_9^k\chi_a)$ 满足
+$B_3+x^2B_1-B_0-x^2B_2=0$。这是对已核对原 $\mathcal P_9$ 的代入，不把 II 定理 86.1 的十三维全上下文重建结论搬到另一作用域。因 $c_{\varnothing}=1$ 且后三个 $H$ 为零，(197.3) 随即成立。式 (175.8) 同时给每个 $k$ 的两个边缘等于 $t_i(K_9^k\chi_a)$ 与 $\|N_wK_9^k\chi_a\|^2$；它们各为二次型，故仍被同一个 $R$ 消去。∎
+
+**说明 197.2（实际来源、资源与完整目标的边界）。** 本应用为 repo-derived 的原生联合时间诊断：完整分量守恒、光滑性、节点和归一化本身未迫使 (197.3) 的联合残差为零，两个分别正确的边缘亦未供应该关系。复用的数学内容归属于 II (86.6)、88.1，本卷 (144.12)、(164.3)–(164.7)、定理 165.2、(165.6) 及 §175；没有新增一般调和重建、选择机制或全球文献优先权主张。
+
+原实际过程另有更强的既定前件。III145 和 [IV](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_IV.md) §275 已指定平方电流最小率；保留 IV (276.1) 的整个原生补偿子、路径和档案合同时，IV279.1–281.1 已固定完整原生律，排除这里正 $H$ 前缀上的改变密度。这里没有从无平方前提推出该补偿子。另在 $k=0$，若同时保留 III138.2(2) 的旧终端条件律及原纯投影后继，(175.7) 强制 $J_{\rm proj}(\mathcal E_*)=b_{\varnothing}(\chi_a)$，而本读取前律与不变配置字面报告给 $J_H(\mathcal E_*)=b_{\varnothing}(\chi_a)+\varepsilon H(\chi_a)$；两项冲突合同不能同时实现。定义 166.3、命题 175.2 的共同过程与更细可读历史边界仍在；[XI](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_XI.md) 定义 23.1、定理 37.1 的完整 $\mathsf A_R$ 消费者及其全部 R 前件亦未因此减弱。尚缺的是在同一原实际 $\Omega$ 上独立说明为何应满足所需联合时间关系，并接到实际报告／过程的来源桥梁。
+
+$a$ 是存在性的有限前缀，未合成见证字，未给有效字长界、统一正间隙、噪声保证、独立重复／IID／采样合同或有限样本证书。四个程序各只在 $a$ 后增加至多三次完整九号脉冲，随后作原保留读和空后字终端；它们的调用档案不同。(197.3) 的正权平均只是单个报告事件的数值关系，不取得免费随机选程序，也不等同完整历史或档案。全部 $89$ 配置与 $26+63$ 扇区、唯一 ready、十一前／七后地址、两个原切口、全细标签及零质量、失败／拒绝／停止／告警／返回、参考／联合／档案和原取得成本均保留；不加入分数脉冲、反馈、复位、后选择或 $610$ 维读器。四个确定性程序仅是完整目标内的一个合法子族，不替代全部合法有限顺序、自适应和并行历史的来源义务。基本关系定义、简单几何、复结构、组合、动力学及量子公理在整个原实际来源上的推导仍须各自取得；本应用未减少这些原始前提，不供应未改实际来源的反模型，不作 Lean 内核验证或完整量子起源完成声明。
+
+## 追加锚（本行以下为增补区）
