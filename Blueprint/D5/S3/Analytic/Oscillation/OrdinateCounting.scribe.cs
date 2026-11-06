@@ -24,6 +24,21 @@ internal sealed class OrdinateCountingDocument : IScribeDocumentDefinition
                     + "gives the gap."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("inverse-square-tail"),
+                DeclarationHandle.Create(Prefix + "inverse_square_tail"),
+                H("Inverse-square tails"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "If N(T)/(T log T) tends to 1/(2 pi), there is a nonnegative "
+                    + "constant C such that, for every T at least four, the sum of "
+                    + "multiplicity divided by the square of the ordinate over all "
+                    + "ordinates greater than T converges and is at most C log(T)/T. "
+                    + "Monotonicity extends an eventual logarithmic counting bound "
+                    + "to all cutoffs at least four. Integrating that bound controls "
+                    + "every finite subset of the tail and hence the infinite sum."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("lower-triangular-mass"),
                 DeclarationHandle.Create(Prefix + "lower_triangular_mass"),
                 H("Triangular lower mass"),

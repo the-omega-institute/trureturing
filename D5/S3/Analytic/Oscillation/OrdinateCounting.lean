@@ -7,6 +7,7 @@
    digest: Logarithmic counting growth controls triangular mass and selects substantial upper bands. -/
 
 import D5.S3.Analytic.Fourier.AngularFejerKernel
+import D5.S3.Analytic.Asymptotics.LogarithmicPhaseStiffness
 
 /-! Weighted counting and triangular localization of a locally finite positive spectrum. -/
 
@@ -77,6 +78,82 @@ private lemma count_mono (S : Spectrum) : Monotone (fun t => (S.N t : ℝ)) := b
     intro j hj
     simpa only [Spectrum.cut, Set.Finite.mem_toFinset, Set.mem_ofPred_eq] using
       (show S.gamma j ≤ u from by simpa [Spectrum.cut] using hj).trans huv)
+
+/-- Logarithmic counting growth gives a uniform inverse-square tail bound. -/
+theorem inverse_square_tail (S : Spectrum) (hN : CountAsymptotic S) :
+    ∃ C : ℝ, 0 ≤ C ∧ ∀ T : ℝ, 4 ≤ T →
+      Summable (fun j : {j : S.index // T < S.gamma j} => (S.mult j.val : ℝ) / (S.gamma j.val) ^ 2) ∧
+      (∑' j : {j : S.index // T < S.gamma j}, (S.mult j.val : ℝ) / (S.gamma j.val) ^ 2)
+        ≤ C * Real.log T / T := by
+  classical
+  let c : ℝ := 1 / (2 * Real.pi) + 1
+  have hc : 0 ≤ c := by dsimp [c]; positivity
+  have hevent : ∀ᶠ u : ℝ in atTop,
+      (S.N u : ℝ) / (u * Real.log u) < c :=
+    hN.eventually (gt_mem_nhds (by dsimp [c]; linarith))
+  obtain ⟨A, hA⟩ := eventually_atTop.1 hevent
+  let L : ℝ := max A 4
+  let B : ℝ := S.N L
+  have hB : 0 ≤ B := Nat.cast_nonneg _
+  have hcount (u : ℝ) (hu : 4 ≤ u) :
+      (S.N u : ℝ) ≤ c * u * Real.log u + B * u := by
+    have hu0 : 0 < u := by linarith
+    have hlog : 0 ≤ Real.log u := (Real.log_pos (by linarith)).le
+    by_cases hLu : L ≤ u
+    · have hb := (div_lt_iff₀ (mul_pos hu0 (Real.log_pos (by linarith)))).mp
+        (hA u ((le_max_left A 4).trans hLu))
+      have : 0 ≤ B * u := mul_nonneg hB hu0.le
+      nlinarith [hb]
+    · have hb : (S.N u : ℝ) ≤ B := count_mono S (le_of_not_ge hLu)
+      have hb' : B ≤ B * u := le_mul_of_one_le_right hB (by linarith)
+      have : 0 ≤ c * u * Real.log u := mul_nonneg (mul_nonneg hc hu0.le) hlog
+      linarith
+  let hfinite : ∀ u : ℝ, Set.Finite {j | S.gamma j < u} :=
+    fun u => (S.finite_le u).subset (fun j (hj : S.gamma j < u) =>
+      show S.gamma j ≤ u from hj.le)
+  have hstrict (u : ℝ) :
+      D5.S3.Analytic.Asymptotics.LogarithmicPhaseStiffness.strictCount
+        S.gamma (fun j => (S.mult j : ℝ)) hfinite u ≤ (S.N u : ℝ) := by
+    unfold D5.S3.Analytic.Asymptotics.LogarithmicPhaseStiffness.strictCount
+    rw [Spectrum.N, Nat.cast_sum]
+    apply Finset.sum_le_sum_of_subset_of_nonneg
+    · intro j hj
+      simp only [D5.S3.Analytic.Asymptotics.LogarithmicPhaseStiffness.realCutoff,
+        Set.Finite.mem_toFinset, Set.mem_ofPred_eq] at hj
+      simpa only [Spectrum.cut, Set.Finite.mem_toFinset, Set.mem_ofPred_eq] using hj.le
+    · intro j _ _
+      exact Nat.cast_nonneg _
+  have hlog4 : 0 < Real.log (4 : ℝ) := Real.log_pos (by norm_num)
+  let K : ℝ := 2 * (c + (c + B) / Real.log 4)
+  refine ⟨K, by dsimp [K]; positivity, ?_⟩
+  intro T hT
+  have hT0 : 0 < T := by linarith
+  have hfinitebound (s : Finset {j : S.index // T < S.gamma j}) :
+      ∑ j ∈ s, (S.mult j.val : ℝ) / (S.gamma j.val)^2 ≤
+        2 * (c * (Real.log T + 1) + B) / T := by
+    have h := D5.S3.Analytic.Asymptotics.LogarithmicPhaseStiffness.finite_high_inverse_square_bound
+      (s.image Subtype.val) S.gamma (fun j => (S.mult j : ℝ)) hfinite
+      (L := 4) (by norm_num) hT (fun _ => Nat.cast_nonneg _) hc hB
+      (by
+        intro j hj
+        obtain ⟨k, _, rfl⟩ := Finset.mem_image.mp hj
+        exact k.property.le)
+      (fun u hu => (hstrict u).trans (hcount u hu))
+    rw [Finset.sum_image (fun _ _ _ _ h => Subtype.ext h)] at h
+    exact h
+  have hnonneg (j : {j : S.index // T < S.gamma j}) :
+      0 ≤ (S.mult j.val : ℝ) / (S.gamma j.val)^2 := by positivity
+  refine ⟨summable_of_sum_le hnonneg hfinitebound,
+    (Real.tsum_le_of_sum_le hnonneg hfinitebound).trans ?_⟩
+  apply (div_le_div_iff_of_pos_right hT0).mpr
+  have hlog : Real.log 4 ≤ Real.log T := Real.log_le_log (by norm_num) hT
+  have hb : c + B ≤ (c + B) / Real.log 4 * Real.log T := by
+    calc
+      c + B = (c + B) / Real.log 4 * Real.log 4 := by field_simp
+      _ ≤ (c + B) / Real.log 4 * Real.log T :=
+        mul_le_mul_of_nonneg_left hlog (by positivity)
+  dsimp [K]
+  nlinarith
 
 private lemma triangular_integral (S : Spectrum) {M : ℝ} (hM : 0 < M) :
     Wminus S M = ∫ u in Ioc (0 : ℝ) 1, (S.N (M * u) : ℝ) := by
