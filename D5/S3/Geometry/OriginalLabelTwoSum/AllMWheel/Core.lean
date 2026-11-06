@@ -349,7 +349,7 @@ private def coreFinish (a b c : V) (vs : List V) (hd : (a::b::c::vs).Nodup)
       intro s h
       rcases h with h | h <;> exact h.trans (by
           intro x hx
-          simp only [List.toFinset_cons, List.toFinset_nil, Finset.mem_empty,
+          simp only [List.toFinset_cons, List.toFinset_nil, Finset.notMem_empty,
             Finset.mem_insert, Finset.mem_singleton] at hx ⊢
           tauto)
     have hp : ({d} : Finset V) ∈ D := Or.inl (by simp)
