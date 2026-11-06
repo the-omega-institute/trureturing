@@ -13,6 +13,9 @@ construction. Its right and seed rows come from the proved fixed graph inputs.
 The missing general graph-path substitution theorem is required to identify an
 arbitrary RowHistory with the actual graphs in the requested supplier. Nothing
 here assumes that graph binding or calls it proved. -/
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 noncomputable section
 open Set Finset
 namespace D5.S3.Geometry.OriginalLabelTwoSum
@@ -81,7 +84,7 @@ private theorem appended_root (r : Rows V) (e : V) (he : e ∈ r.ground)
     rw [renameRows_root,Wheel.wheelOriginalRoot.2]
   have hz : Wheel.Z.image f = Wheel.Y.image f \ Wheel.R.image f := by
     rw [Wheel.interface_equations.1,Finset.image_sdiff _ _ f.injective]
-  rw [appendWheelRows,row_transport _ _ _ _ _ _ _
+  erw [appendWheelRows,row_transport _ _ _ _ _ _ _
     (Finset.insert_erase he).symm rfl (by simp) (fresh_interface f hf0) hd
     (Finset.image_subset_image (by decide : Wheel.R ⊆ Wheel.Y)) hc,hroot,← hz]
   rfl
@@ -156,7 +159,6 @@ theorem rowHistory_statistics {n : Nat} {r : Rows V} (h : RowHistory n r) :
         have hh : t = {1} ∨ t = {2} := by simpa [K4.seed] using ht
         rcases hh with rfl | rfl <;> simp
       rw [Finset.card_image_of_injective _ f.injective,htcard]
-      rfl
   | @attach n r old e he f hf0 hnew ih =>
     let c := changeGround (rowHistoryCertificate old) (Finset.insert_erase he).symm
     let hd := hnew.mono_left (Finset.erase_subset e r.ground)
@@ -244,7 +246,8 @@ theorem rowHistoryCertificate_main_orderedPairs {n : Nat} {r : Rows V}
   | seed f =>
       change orderedPairs (changeSource (renameCertificate f K4.seedGraphCertificate)
         (renameRows_root f K4.seedGraphData.rows).symm).main = []
-      simpa only [changeSource, renameCertificate, orderedPairs_cast,
+      unfold orderedPairs orderedPair
+      simpa only [changeSource, renameCertificate, Sequence.pairs_cast,
         orderedPairs, orderedPair, K4.seedGraphCertificate, K4.seed,
         Sequence.pairs_cast, Sequence.pairs, List.map_nil] using
         renameSequence_pairs f K4.seedGraphCertificate.main
@@ -268,7 +271,8 @@ theorem rowHistoryCertificate_separate_orderedPairs {n : Nat} {r : Rows V}
   | seed f =>
       change orderedPairs (changeSource (renameCertificate f K4.seedGraphCertificate)
         (renameRows_root f K4.seedGraphData.rows).symm).separate = []
-      simpa only [changeSource, renameCertificate, orderedPairs_cast,
+      unfold orderedPairs orderedPair
+      simpa only [changeSource, renameCertificate, Sequence.pairs_cast,
         orderedPairs, orderedPair, K4.seedGraphCertificate, K4.seed,
         Sequence.pairs_cast, Sequence.pairs, List.map_nil] using
         renameSequence_pairs f K4.seedGraphCertificate.separate

@@ -126,9 +126,9 @@ private def strongRelative (U d : Finset V) (B M : Family V)
       obtain ⟨q, hqSource, rfl⟩ := Finset.mem_image.mp hq
       rcases hC with hBq | ⟨a, ha, t, ht, he⟩
       · exact hmissing _ hBq Finset.subset_union_left
-      · have hqt : q ⊆ t := right_part hdu ha (c.critical_supported q hq)
+      · have hqt : q ⊆ t := right_part hdu ha (c.critical_supported q hqSource)
           (by rw [← he]; exact Finset.subset_union_right)
-        exact c.cells.absent q hq (c.core.lower hqt ht)
+        exact c.cells.absent q hqSource (c.core.lower hqt ht)
     · intro q hq s hs
       obtain ⟨q, hqSource, rfl⟩ := Finset.mem_image.mp hq
       have hqU := c.critical_supported q hqSource
@@ -145,7 +145,7 @@ private def strongRelative (U d : Finset V) (B M : Family V)
           have hqs : q ⊆ s := by rw [← he]; exact Finset.inter_subset_left
           exact hs.ne (Finset.Subset.antisymm hs.subset (Finset.union_subset hdS hqs))
         exact ⟨s ∩ d, Finset.inter_subset_right, s ∩ U,
-          c.cells.boundary q hq _ hproper, hsplit⟩
+          c.cells.boundary q hqSource _ hproper, hsplit⟩
       · left
         have hproper : s ∩ d ⊂ d := by
           apply Finset.ssubset_iff_subset_ne.mpr
@@ -167,7 +167,7 @@ private def strongRelative (U d : Finset V) (B M : Family V)
     (noBase (delta {c.vertex}))
   let H := B ⊔ rawJoin (delta d) (delta {c.vertex})
   have hUpper : insert c.vertex d ∈ H := Or.inr
-    ⟨d, le_rfl, {c.vertex}, le_rfl, by ext v; simp only [Finset.mem_insert,
+    ⟨d, (show d ⊆ d from le_rfl), {c.vertex}, (show ({c.vertex} : Finset V) ⊆ {c.vertex} from le_rfl), by ext v; simp only [Finset.mem_insert,
       Finset.mem_union, Finset.mem_singleton]; tauto⟩
   have hFree : ∀ s ∈ H, d ⊆ s → s = d ∨ s = insert c.vertex d := by
     intro s hs hds
@@ -275,8 +275,7 @@ def relativeLayer (U d : Finset V) (B M : Family V) (o : Output U M)
             intro s hs t ht
             have he := Finset.mem_singleton.mp hs
             subst s
-            exact Or.inl (by simpa only [Finset.union_empty] using
-              hboundary t ht ∅ (Finset.empty_subset U))
+            exact Or.inl (by simpa only [Finset.union_empty] using (hboundary t ht ∅ (Finset.empty_subset U)))
           antichain := by
             intro s hs t ht _
             exact (Finset.mem_singleton.mp hs).trans (Finset.mem_singleton.mp ht).symm }
