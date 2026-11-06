@@ -2795,7 +2795,8 @@ $\mathsf R(9^{10},f)$ law 对任意原始有限 $f$（包括 $\epsilon$ 与 $(1)
 都不存在。该非存在来自正质量的 $0/0$ successor，不是删去路径或把它改记为
 failure（来源 Theorem 3.1）。
 
-同一来源的下界只对以下明确受限的 comparison class 成立：$P=\mathsf R(9^{10},f)$；
+对任一固定原始有限后缀 $f$，令 $P=\mathsf R(9^{10},f)$；同一来源的下界
+只对以下明确受限的 comparison class 成立：
 law 有 exact original pre-read vector、literal report、read 时保留 $Q$ 和
 unchanged original pure update；configuration 是整个 $E$ 上的 causal pure-jump
 process，predictable total exit intensity 被某个有限 $L$ 统一有界；没有 forced
@@ -2812,9 +2813,14 @@ vector history、额外 deterministic configuration changes 或改变 update 均
 
 ### 25.33.5 有限 $N$ 与无界长度的次序
 
-对 $B_N(L)=\sup_{|a|\le N}\operatorname{TV}(\mu^{\mathsf T(a)},
-\mu_L^{\mathsf T(a)})$，当 $N\ge10$ 且 $L\ge L_{\rm f}$，来源 Theorem 5.1
-给出
+对 finite no-read words 定义
+
+$$
+B_N(L)=\sup_{|a|\le N}\operatorname{TV}(\mu^{\mathsf T(a)},
+\mu_L^{\mathsf T(a)}).
+$$
+
+当 $N\ge10$ 且 $L\ge L_{\rm f}$，来源 Theorem 5.1 给出
 
 $$
 1-(1-F_L)^{3\lfloor N/10\rfloor}
