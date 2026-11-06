@@ -4,13 +4,15 @@ internal sealed class CompleteSignedLedgerDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The exact full signed ledger at the same integer and cutoff.",
-        Blocks(Describe.Lean(
+        H("The complete signed Robin ledger"),
+        Blocks(
+            Describe.Lean(
             DescribeId.Create("original-failure-full-weighted-tail-negative"),
             DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/CompleteSignedLedger.failure_has_negative_complete_weighted_tail"),
             H("The full quantitative necessary bound from original failure"),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("For the SOLE hypothesis that some integer m>5040 has robinLogMargin(m)<=0, including equality failures, the theorem retains the SAME attained global-minimum N>55440 and real cutoff z>11. It preserves the global minimum property; positive own price below boundaryPrice; resource optimality and the strict objective comparison against every other positive integer; strictInteger and maximalInteger identities; absence of all prime-layer ties; positive half-shift log(N)-z<1/2; the exact first-layer root equation and uniqueness on t>1; exact initial prime support; and the unique nonlinear deletion/insertion roots and their entire open prime-gap property. At these same N,z the literal full WeightedTailTransport.weightedTail(CompleteMertensPeak.psiErrorKernel,z) is strictly less than -1/(4000*sqrt(z)*log(z)). The proof consumes the exact signed margin identity and the all-z finite root-scale surplus after K<Delta/2. It adds no hLay, integrability, support, exponent, cofactor, eventual threshold or desired sign hypothesis. It proves a necessary negative bound from original failure; the opposite full-tail lower bound and RH remain open."))), DescribeRole.Theorem)),
-        Blocks(Describe.Lean(
+            Blocks(Paragraph(Text("For the SOLE hypothesis that some integer m>5040 has robinLogMargin(m)<=0, including equality failures, the theorem retains the SAME attained global-minimum N>55440 and real cutoff z>11. It preserves the global minimum property; positive own price below boundaryPrice; resource optimality and the strict objective comparison against every other positive integer; strictInteger and maximalInteger identities; absence of all prime-layer ties; positive half-shift log(N)-z<1/2; the exact first-layer root equation and uniqueness on t>1; exact initial prime support; and the unique nonlinear deletion/insertion roots and their entire open prime-gap property. At these same N,z the literal full WeightedTailTransport.weightedTail(CompleteMertensPeak.psiErrorKernel,z) is strictly less than -1/(4000*sqrt(z)*log(z)). The proof consumes the exact signed margin identity and the all-z finite root-scale surplus after K<Delta/2. It adds no hLay, integrability, support, exponent, cofactor, eventual threshold or desired sign hypothesis. It proves a necessary negative bound from original failure; the opposite full-tail lower bound and RH remain open."))), DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("same-integer-complete-signed-margin"),
             DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/CompleteSignedLedger.robin_margin_eq_complete_signed_ledger"),
             H("The literal Robin margin identity"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

@@ -6,18 +6,19 @@ internal sealed class FullPrimePowerArithmeticSurplusDocument : IScribeDocumentD
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Full prime-power compensation for arbitrary positive valuations on the exact initial prime support.",
-        Blocks(Describe.Lean(
+        H("The full arithmetic surplus"),
+        Blocks(
+            Describe.Lean(
             DescribeId.Create("full-prime-power-root-scale"),
             DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/FullPrimePowerArithmeticSurplus.full_prime_power_arithmetic_surplus_root_scale"),
             H("An explicit bound for every real cutoff at least four"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("For EVERY real z>=4 and positive integer n with primeFactors(n)=primesLE(floor(z)), the unchanged full signed arithmetic surplus exceeds 1/(2000*sqrt(z)*log(z)). No optimizer, eventual threshold, containment of powers, exponent-one, or desired sign premise is imposed. Mathlib theta_ge supplies the explicit theta(x)>x/4 estimate for x>=4096. For z>=16384 the actual strict/inclusive band 2*sqrt(z)<p<=32*sqrt(z) has logarithmic mass greater than 4*sqrt(z). Each positive actual valuation pays more than p^(-2)/3, using the actual logarithmic price when its exponent is at least two. Outside the band the signed-inventory positivity proof is reused. The previously proved log(2) bound covers 4<=z<=16384. These classical square-root correction estimates carry no novelty or RH claim."))), DescribeRole.Theorem)),
-        Blocks(Describe.Lean(
+            Blocks(Paragraph(Text("For EVERY real z>=4 and positive integer n with primeFactors(n)=primesLE(floor(z)), the unchanged full signed arithmetic surplus exceeds 1/(2000*sqrt(z)*log(z)). No optimizer, eventual threshold, containment of powers, exponent-one, or desired sign premise is imposed. Mathlib theta_ge supplies the explicit theta(x)>x/4 estimate for x>=4096. For z>=16384 the actual strict/inclusive band 2*sqrt(z)<p<=32*sqrt(z) has logarithmic mass greater than 4*sqrt(z). Each positive actual valuation pays more than p^(-2)/3, using the actual logarithmic price when its exponent is at least two. Outside the band the signed-inventory positivity proof is reused. The previously proved log(2) bound covers 4<=z<=16384. These classical square-root correction estimates carry no novelty or RH claim."))), DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("complete-mangoldt-residual-equality"),
             DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/FullPrimePowerArithmeticSurplus.complete_mangoldt_add_E3_eq_neg_residual"),
             H("The exact complete Mangoldt and Euler ledger"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("For every real z>=4, Mertens.E2Lambda(z)+Mertens.E3(z)=-fullPrimePowerResidual(z). The generic finite prime-power reindex is converted to the exact cutoff-filtered prime prefix without enlarging a sum by an inequality. The genuinely summable complete Euler logarithm is split at its exact cutoff exponent, and the whole shifted remainder is identified with the existing strict z<p^k residual. Equality p^k=z remains in the prefix. The actual Mertens gamma normalization is used; no convergence, normalization, or residual identity is assumed."))), DescribeRole.Theorem)),
-        H("The full arithmetic surplus"),
-        Blocks(Describe.Lean(
+            Blocks(Paragraph(Text("For every real z>=4, Mertens.E2Lambda(z)+Mertens.E3(z)=-fullPrimePowerResidual(z). The generic finite prime-power reindex is converted to the exact cutoff-filtered prime prefix without enlarging a sum by an inequality. The genuinely summable complete Euler logarithm is split at its exact cutoff exponent, and the whole shifted remainder is identified with the existing strict z<p^k residual. Equality p^k=z remains in the prefix. The actual Mertens gamma normalization is used; no convergence, normalization, or residual identity is assumed."))), DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("full-prime-power-arbitrary-valuation-surplus"),
             DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/FullPrimePowerArithmeticSurplus.full_prime_power_arithmetic_surplus"),
             H("A strict lower bound without a containment hypothesis"),

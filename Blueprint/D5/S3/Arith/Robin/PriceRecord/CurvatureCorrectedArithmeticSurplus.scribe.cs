@@ -6,13 +6,14 @@ internal sealed class CurvatureCorrectedArithmeticSurplusDocument : IScribeDocum
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The full prime-power arithmetic surplus pays the literal log-log curvature loss.",
-        Blocks(Describe.Lean(
+        H("Arithmetic surplus after curvature"),
+        Blocks(
+            Describe.Lean(
             DescribeId.Create("root-scale-surplus-after-curvature"),
             DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/CurvatureCorrectedArithmeticSurplus.arithmetic_surplus_sub_curvature_root_scale"),
             H("The quantitative root-scale remainder"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("For z>11, 0<M<1/2 and every positive integer n on the exact initial prime support, the full signed surplus minus K exceeds 1/(4000*sqrt(z)*log(z)), where K=log(log(z))+M/(z*log(z))-log(log(z+M)). The existing curvature bound and old arithmetic estimate prove K<Delta/2. The all-z root-scale theorem supplies Delta>1/(2000*sqrt(z)*log(z)); thus half of the actual surplus remains. No exponent, containment, signed-integral or extremality premise is added."))), DescribeRole.Theorem)),
-        H("Arithmetic surplus after curvature"),
-        Blocks(Describe.Lean(
+            Blocks(Paragraph(Text("For z>11, 0<M<1/2 and every positive integer n on the exact initial prime support, the full signed surplus minus K exceeds 1/(4000*sqrt(z)*log(z)), where K=log(log(z))+M/(z*log(z))-log(log(z+M)). The existing curvature bound and old arithmetic estimate prove K<Delta/2. The all-z root-scale theorem supplies Delta>1/(2000*sqrt(z)*log(z)); thus half of the actual surplus remains. No exponent, containment, signed-integral or extremality premise is added."))), DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("full-prime-power-surplus-after-curvature"),
             DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/CurvatureCorrectedArithmeticSurplus.arithmetic_surplus_dominates_loglog_curvature"),
             H("A strict positive remainder for the actual finite state"),
