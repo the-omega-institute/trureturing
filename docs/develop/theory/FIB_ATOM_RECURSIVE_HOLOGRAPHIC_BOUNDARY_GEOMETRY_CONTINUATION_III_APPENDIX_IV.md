@@ -1323,3 +1323,203 @@ $$
 when $h\ge0$ is nonzero. Thus (174.6) is strict. The final sign-changing conclusion follows from (174.4)--(174.5). $\square$
 
 The result turns the next exact-cancellation route into a structural requirement: an invariant terminal correction that cancels both mixed coordinates must change sign. The one-sided families of Sections 171--173 are therefore exhausted by a sign obstruction, while sign-changing corrections, multiple first-order directions, full-law partition realization, $H43$, $SRS\text{-}20$, $F_{64}$, physical succession and Lean/kernel formalization remain open.
+
+
+## 175. A compensator-independent obstruction for the complete two-label family
+
+**Definition 175.1 (the original family and a preserved terminal channel).** Retain the entire original telescope of [Appendix III Definition 155.1](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_III.md#155-positive-bb3-inputs-finite-coupled-improvement-and-source-ratio-selection), including Definitions 134.1, 135.1 and 154.1 and all their endpoint, source and analytic suppliers. Thus $\theta=(a,\eta,d,b)$ ranges over every original finite $a,\eta,d>0$ and every permitted everywhere Borel representative $b$ of $g_d$ with $0<b\le M$. The group $G=H^1\times\mathbb R$, its product and raw Haar measure $\mu$, source $e$, unit-source field $\Gamma$, coefficient-one $w_*$, coefficient-positive normalized $h$, actual selector $A_{\rm src}=\rho C_{\rm src}$, full conservative source-inclusive $K$, original units and clock are unchanged. Keep
+
+$$
+\begin{gathered}
+m=h^2\mu,\qquad T_s=e^{-sK},\qquad P=T_d,\qquad g=g_{2d},\\
+M=1+\|g_d\|_\infty,\qquad c=(4M)^{-1},\\
+q=f_3=cb,\qquad p=f_B=\tfrac14,\qquad
+F=f_0=f_1=(\tfrac34-q)/2,\\
+\mathcal C(a_0,a_1,a_2)=\int_Gg\,a_0P(a_1Pa_2)\,dm,\qquad
+\Delta(u)_{yzk}=\mathcal C(u_y,u_z,u_k)-\mathcal C(f_y,f_z,f_k),
+\quad \mathcal L=\{0,1,3,B\}.
+\end{gathered}
+\tag{175.1}
+$$
+
+The original source-start law and the three observation epochs $2d,3d,4d$ are retained, with the same readout at each epoch and the original conditionally independent fresh read noises. Here $q$ denotes the scalar function $f_3$. Let $V=\ker\Lambda_{134}$ be the full first-order kernel in Appendix III (134.11)–(134.12), with all sixty-four constraints and signs $\sigma=(1,-1,0,0)$.
+
+For bounded real Borel representatives $v,w$ and $t\in\mathbb R\setminus\{0\}$, use precisely (158.1):
+
+$$
+u_0=F+tv,\qquad u_1=F-tv,\qquad
+u_3=q+t^2w,\qquad u_B=p-t^2w.
+\tag{175.2}
+$$
+
+Legality means that this tuple belongs to the pointwise simplex at every $x\in G$; equivalently,
+
+$$
+|t v(x)|\le F(x),\qquad
+-q(x)\le t^2w(x)\le p\qquad(x\in G).
+\tag{175.3}
+$$
+
+Indeed, these are exactly the four nonnegativity inequalities, and the four coordinates sum to one. No rotation condition or sign condition is imposed on either function, and $w$ may depend on $t$, $v$ and $\theta$. Every coordinate of $\Delta(u)$ uses this tuple's own terminal $Pu_k$. Put
+
+$$
+\begin{gathered}
+\alpha=(-p,-p,1-p,1-p)
+       =(-\tfrac14,-\tfrac14,\tfrac34,\tfrac34)
+       \quad\text{in the order }(0,1,3,B),\\
+A_\theta(v)=q_{003}(v)
+          =\mathcal C(v,v,q)
+          =c\|T_{d/2}(gv)\|_2^2,\qquad
+\|\Delta(u)\|_{\max}=\max_{y,z,k\in\mathcal L}|\Delta(u)_{yzk}|.
+\end{gathered}
+\tag{175.4}
+$$
+
+The equality defining $A_\theta$ is the existing source-specific identity (134.13)–(134.16), including $Pq=cg$.
+
+**Theorem 175.2 (full-family exclusion and a directional residual bound).** For every original $\theta$, every bounded real Borel $v$ with $[v]\in V\setminus\{0\}$, every real $t\ne0$, and every bounded real Borel $w$ for which (175.2) is legal on the whole $G$, the exact identity and bound are
+
+$$
+\frac34\bigl(\Delta(u)_{003}+\Delta(u)_{00B}\bigr)
+-\frac14\bigl(\Delta(u)_{000}+\Delta(u)_{001}\bigr)
+=t^2 A_\theta(v),
+\tag{175.5}
+$$
+
+$$
+\|\Delta(u)\|_{\max}
+\ge \frac{t^2}{2}q_{003}(v)
+=\frac{t^2c}{2}\|T_{d/2}(gv)\|_2^2>0.
+\tag{175.6}
+$$
+
+Consequently all sixty-four original residuals cannot vanish simultaneously anywhere in this nonzero family. The quantifiers include every legal real amplitude and all legal compensators, including sign-changing, non-invariant and amplitude-dependent ones.
+
+*Proof.* The prescribed affine readout and the exact cancellations in (175.2) give, pointwise on the original whole $G$,
+
+$$
+\begin{aligned}
+\sum_{k\in\mathcal L}\alpha_k u_k
+&=u_3+u_B-p\sum_{k\in\mathcal L}u_k
+=q+p-p=q,\\
+\sum_{k\in\mathcal L}\alpha_k f_k&=q.
+\end{aligned}
+\tag{175.7}
+$$
+
+Apply the existing joint-law multilinearity (134.10), (155.1) to these finite linear combinations of terminal labels:
+
+$$
+\begin{aligned}
+\sum_{k\in\mathcal L}\alpha_k\Delta(u)_{00k}
+&=\mathcal C(F+tv,F+tv,q)-\mathcal C(F,F,q)\\
+&=t\bigl[\mathcal C(v,F,q)+\mathcal C(F,v,q)\bigr]
+  +t^2\mathcal C(v,v,q)\\
+&=t\ell_{003}(v)+t^2q_{003}(v)
+=t^2A_\theta(v).
+\end{aligned}
+\tag{175.8}
+$$
+
+The identification of the linear term is exactly (134.11), since $\sigma_3=0$, and it vanishes because $[v]\in V$. The quadratic term is exactly the already supplied positive energy (134.13); its strictness requires $[v]\ne0$, $g>0$ almost everywhere, and the original full heat operator. No new spectral assertion is needed.
+
+In the first line of (175.8), the sum on the left contains the four actual factors $Pu_k$. Only their linear combination is simplified: $\sum_k\alpha_kPu_k=Pq=cg$. No individual perturbed terminal is identified with $cg$, and the first observation density remains $g=g_{2d}$. Thus the calculation retains each tuple's own terminal in every residual.
+
+Writing out the four coefficients yields (175.5). Finally,
+
+$$
+t^2A_\theta(v)
+\le\sum_{k\in\mathcal L}|\alpha_k|\,|\Delta(u)_{00k}|
+\le\bigl(2p+2(1-p)\bigr)\|\Delta(u)\|_{\max}
+=2\|\Delta(u)\|_{\max}.
+\tag{175.9}
+$$
+
+This proves (175.6). The proof uses no small-amplitude expansion with a remainder, parity restriction, invariant representative replacement, or restriction on $w$ beyond the stated boundedness and whole-$G$ legality. $\square$
+
+**Corollary 175.3 (exact compensation, degeneracies and the remaining target).** Inside the unchanged family (158.1), with $[v]\in V\setminus\{0\}$ and $t\ne0$, varying the terminal compensator cannot attain the full law. For fixed $\theta,t,v$ the positive lower bound (175.6) is independent of $w$. For fixed $\theta$, every sequence of such legal tuples with $\|\Delta(u^{(n)})\|_{\max}\to0$ necessarily satisfies
+
+$$
+t_n^2q_{003}(v_n)\longrightarrow0.
+\tag{175.10}
+$$
+
+Exact cancellation of $003$ alone, including Proposition 171.1, remains compatible with this obstruction. The selected-coordinate sign-changing necessities of Proposition 174.1 remain necessary in their stated invariant domain; satisfying them does not give a full-law zero. The variable-direction approximation in Corollary 171.2 remains compatible with (175.6), and the bound is not coercive over varying directions.
+
+*Proof.* The exclusion and (175.10) follow directly from (175.6). If $003$ vanishes, (175.5) still has the strictly positive right side, so its other three residual coordinates cannot all vanish. This leaves the one-coordinate conclusion of Proposition 171.1 intact, independently of the additional parity calculations in Sections 172–174. Corollary 170.2 supplies directions of unit essential-supremum norm with $q_{003}(v_n)\to0$, and Corollary 171.2 supplies legal compensated tuples with full residual tending to zero. Thus these existing approximations do not contradict the pointwise bound.
+
+At $t=0$, (175.2) reduces to $u=f$, so every residual is zero. If $[v]=0$, then $A_\theta(v)=0$ and there is no strict conclusion from (175.6); in particular $w=0$ gives $[u_y]=[f_y]$ and every residual zero whenever the representatives are pointwise legal. A function nonzero only on an $m$-null set is not a nonzero direction in the theorem. The original positive-time slot laws are absolutely continuous with respect to $m$, so their joint coefficients depend only on these classes, while legality is still imposed at every point of $G$. $\square$
+
+The source-specific application is repo-derived: (175.7)–(175.8) use the original affine readout (134.7), the full first-order kernel (134.11)–(134.12), the existing positive source energy (134.13)–(134.16), and the joint-law and residual definitions (155.1) on exactly the family (158.1). Multilinearity and the finite coefficient estimate in (175.9) are standard intermediates; no historical novelty is claimed for them or for heat positivity. The additional conclusion is the all-compensator exclusion and its explicit directional bound for this original source family, rather than a new generic positivity theorem.
+
+The universal partition target (155.3) retains all original $\theta$ and all whole-$G$ pointwise Borel partitions. This theorem excludes only the nonzero family (158.1); it neither excludes arbitrary partitions or other families nor settles $F_{64}$, $H43$ or SRS$\text{-}20$. It supplies no native AURIC realization, physical successor, common reference or joint-operation transport, or correspondence for all legal futures. Complete quantum origin remains unresolved. These are paper deductions conditional on the retained suppliers, with no Lean/kernel certification asserted.
+
+## 176. First-order leakage required outside the calibrated kernel
+
+Section 175 used the full first-order kernel to turn the preserved terminal channel into a strict quadratic obstruction. Removing that kernel assumption leaves an exact scalar compatibility condition rather than an unrestricted escape.
+
+**Definition 176.1 (the $003$ leakage functional).** Retain the complete telescope and the legal family (175.1)--(175.3). For a bounded real Borel function $v$, define
+
+$$
+\ell_{003}(v)
+=\mathcal C(v,F,q)+\mathcal C(F,v,q),
+\qquad
+A_\theta(v)=\mathcal C(v,v,q).
+\tag{176.1}
+$$
+
+The first quantity is the $003$ component of the original first-order map, and $A_\theta(v)>0$ for every nonzero $m$-class by Appendix III Proposition 134.2.
+
+**Proposition 176.2 (exact leakage identity for arbitrary directions).** For every original $\theta$, every bounded real Borel $v,w$, and every nonzero real $t$ for which (175.2) is legal, one has
+
+$$
+\frac34\bigl(\Delta(u)_{003}+\Delta(u)_{00B}\bigr)
+-\frac14\bigl(\Delta(u)_{000}+\Delta(u)_{001}\bigr)
+=t\,\ell_{003}(v)+t^2A_\theta(v).
+\tag{176.2}
+$$
+
+Consequently,
+
+$$
+\|\Delta(u)\|_{\max}
+\ge
+\frac{|t|}{2}\,\bigl|\ell_{003}(v)+tA_\theta(v)\bigr|.
+\tag{176.3}
+$$
+
+*Proof.* The affine terminal combination in (175.7) remains $q$ for every $v$ and $w$. The same multilinearity calculation as (175.8), without setting the first-order term to zero, gives
+
+$$
+\sum_{k\in\mathcal L}\alpha_k\Delta(u)_{00k}
+=t\bigl[\mathcal C(v,F,q)+\mathcal C(F,v,q)\bigr]
+ +t^2\mathcal C(v,v,q),
+$$
+
+which is (176.2). The sum of absolute coefficients is $2p+2(1-p)=2$, so the triangle inequality gives (176.3). The calculation never uses a sign, rotation, or invariance condition on $w$. $\square$
+
+**Corollary 176.3 (the only scalar escape from the preserved channel).** Let $v$ be nonzero as an $m$-class. If a legal tuple of the family (175.2) has all sixty-four residuals equal to zero, then
+
+$$
+\ell_{003}(v)+tA_\theta(v)=0,
+\qquad
+t=-\frac{\ell_{003}(v)}{A_\theta(v)}.
+\tag{176.4}
+$$
+
+In particular, $\ell_{003}(v)\ne0$; every nonzero direction in the $003$ kernel, including every nonzero $v\in V$, is excluded by Proposition 176.2. The terminal compensator cannot alter either side of (176.4).
+
+For any sequence of legal tuples in this family with $t_n\ne0$ and $\|\Delta(u^{(n)})\|_{\max}\to0$,
+
+$$
+\ell_{003}(v_n)+t_nA_{\theta_n}(v_n)\longrightarrow0.
+\tag{176.5}
+$$
+
+Thus a prospective full-law escape outside $V$ must carry nonzero first-order leakage and tune its amplitude against the positive quadratic energy; changing only the terminal correction cannot supply that tuning.
+
+*Proof.* If every residual is zero, the left side of (176.2) is zero. For nonzero $v$, Proposition 134.2 gives $A_\theta(v)>0$, yielding (176.4). If $\ell_{003}(v)=0$, then (176.4) would give $tA_\theta(v)=0$, contradicting $t\ne0$. The sequence statement follows from (176.3). $\square$
+
+This result narrows the remaining multi-direction and non-kernel routes to a coupled first-order leakage problem. It does not prove that the tuned scalar relation is sufficient, that the resulting tuple is legal for any prescribed $\theta$, or that the other $63$ coordinates can vanish. Arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization remain open.
+
+## 追加锚（本行以下为增补区）
