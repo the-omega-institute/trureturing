@@ -296,5 +296,48 @@ theorem oddBracket_leibniz (a b c : Cohomology D H h26 hHG hGH) (p q : ℕ)
     quotient_current_leibniz D H h26 hHG hGH
       (parity D H h26 hHG hGH a) b c p q hpa hb
 
+theorem cohomologyCurrent_delta (a b : Cohomology D H h26 hHG hGH) :
+    Delta D H h26 hHG hGH (cohomologyCurrent D H h26 hHG hGH a b) =
+      -cohomologyCurrent D H h26 hHG hGH
+          (Delta D H h26 hHG hGH a) b -
+        cohomologyCurrent D H h26 hHG hGH
+          (parity D H h26 hHG hGH a) (Delta D H h26 hHG hGH b) := by
+  have h0 := Delta_product_defect D H h26 hHG hGH a b
+  have h1 := Delta_product_defect D H h26 hHG hGH
+    (Delta D H h26 hHG hGH a) b
+  have h2 := Delta_product_defect D H h26 hHG hGH
+    (parity D H h26 hHG hGH a) (Delta D H h26 hHG hGH b)
+  rw [Delta_square D H h26 hHG hGH a] at h1
+  rw [Delta_square D H h26 hHG hGH b] at h2
+  have h1' : Delta D H h26 hHG hGH
+        (product D H h26 hHG hGH (Delta D H h26 hHG hGH a) b) =
+      cohomologyCurrent D H h26 hHG hGH (Delta D H h26 hHG hGH a) b +
+        product D H h26 hHG hGH
+          (parity D H h26 hHG hGH (Delta D H h26 hHG hGH a))
+          (Delta D H h26 hHG hGH b) := by
+    rw [map_zero, map_zero, zero_sub] at h1
+    exact sub_eq_iff_eq_add.mp h1
+  have h2' : Delta D H h26 hHG hGH
+        (product D H h26 hHG hGH (parity D H h26 hHG hGH a)
+          (Delta D H h26 hHG hGH b)) =
+      cohomologyCurrent D H h26 hHG hGH
+          (parity D H h26 hHG hGH a) (Delta D H h26 hHG hGH b) +
+        product D H h26 hHG hGH
+          (Delta D H h26 hHG hGH (parity D H h26 hHG hGH a))
+          (Delta D H h26 hHG hGH b) := by
+    rw [map_zero, map_zero, sub_zero] at h2
+    exact sub_eq_iff_eq_add.mp h2
+  have hpa : Delta D H h26 hHG hGH (parity D H h26 hHG hGH a) =
+      -parity D H h26 hHG hGH (Delta D H h26 hHG hGH a) := by
+    have h := Delta_parity D H h26 hHG hGH a
+    calc
+      Delta D H h26 hHG hGH (parity D H h26 hHG hGH a) =
+          -(-Delta D H h26 hHG hGH (parity D H h26 hHG hGH a)) :=
+            (neg_neg _).symm
+      _ = -parity D H h26 hHG hGH (Delta D H h26 hHG hGH a) :=
+        congrArg (fun z => -z) h.symm
+  rw [← h0, h1', h2', hpa, parity_involution]
+  abel
+
 end
 end D5.S3.VertexAlgebra.LatticeBRSTCohomologyOddBracket
