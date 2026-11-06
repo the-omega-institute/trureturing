@@ -159,9 +159,10 @@ theorem norm_int_choose_le_pow (m : ℤ) (j : ℕ) :
       have hstep := congrArg abs (choose_succ_mul (m : ℝ) k)
       rw [abs_mul, abs_mul, abs_of_pos (by positivity : (0 : ℝ) < k+1)] at hstep
       have hfactor : |(m : ℝ)-k| ≤ (1+|(m : ℝ)|) * (k+1) := by
-        have htri := abs_sub_le (m : ℝ) (k : ℝ) 0
-        simp only [sub_zero, zero_sub, abs_neg] at htri
-        rw [abs_of_nonneg (Nat.cast_nonneg k)] at htri
+        have htri : |(m : ℝ)-k| ≤ |(m : ℝ)| + k := by
+          simpa only [sub_zero, zero_sub, abs_neg,
+            abs_of_nonneg (Nat.cast_nonneg k : (0 : ℝ) ≤ (k : ℝ))] using
+            (abs_sub_le (m : ℝ) 0 (k : ℝ))
         nlinarith [abs_nonneg (m : ℝ)]
       have hmul := mul_le_mul hfactor ih (abs_nonneg _) (by positivity)
       have hscaled : (k+1 : ℝ) * |Ring.choose (m : ℝ) (k+1)| ≤
