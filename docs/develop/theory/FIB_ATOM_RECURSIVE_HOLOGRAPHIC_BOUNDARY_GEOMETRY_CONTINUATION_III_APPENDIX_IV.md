@@ -1689,4 +1689,88 @@ so $u_0=u_1=F$. Substitution into the second relation and $u_3+u_B=q+p$ gives $u
 
 This closes the exact-zero question on the preserved terminal-pair slice, including arbitrary first-label partitions and arbitrary pointwise representatives. It does not prove that a full zero outside the symmetric family must preserve $u_3+u_B=q+p$; establishing or refuting that implication is the next arbitrary-partition gap. The result also leaves $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization open.
 
+## 179. Radical boundary for arbitrary full-zero partitions
+
+The terminal-pair hypothesis in Section 178 is a direct positive witness. Without it, the exact tensor equations still force every baseline linear relation into the three-slot radical of the candidate partition's function span.
+
+**Definition 179.1 (the three slot radicals).** For a bounded partition $u$, let
+
+$$
+\mathcal W_u=\operatorname{span}_{\mathbb R}\{u_y:y\in\mathcal L\}\subset L^\infty(m;\mathbb R)
+$$
+
+and define
+
+$$
+\begin{aligned}
+\operatorname{Rad}_1(\mathcal W_u)
+ &=\{h:\mathcal C(h,x,y)=0\ \text{for all }x,y\in\mathcal W_u\},\\
+\operatorname{Rad}_2(\mathcal W_u)
+ &=\{h:\mathcal C(x,h,y)=0\ \text{for all }x,y\in\mathcal W_u\},\\
+\operatorname{Rad}_3(\mathcal W_u)
+ &=\{h:\mathcal C(x,y,h)=0\ \text{for all }x,y\in\mathcal W_u\}.
+\end{aligned}
+$$
+
+**Proposition 179.2 (full-zero radical containment).** Suppose a bounded pointwise partition $u$ has all sixty-four residuals equal to zero. If a real label vector $a$ satisfies
+
+$$
+F_a=\sum_{y\in\mathcal L}a_yf_y=0,
+$$
+
+then its candidate combination
+
+$$
+H_a=\sum_{y\in\mathcal L}a_yu_y
+$$
+
+belongs to
+
+$$
+\operatorname{Rad}_1(\mathcal W_u)
+\cap\operatorname{Rad}_2(\mathcal W_u)
+\cap\operatorname{Rad}_3(\mathcal W_u).
+\tag{179.1}
+$$
+
+*Proof.* Let $b,c$ be arbitrary real label vectors and put $U_b=\sum_yb_yu_y$ and $U_c=\sum_kc_ku_k$, with the analogous baseline combination $F_b,F_c$. Contracting the zero residual tensor with $a_yb_zc_k$ gives
+
+$$
+\mathcal C(H_a,U_b,U_c)=\mathcal C(F_a,F_b,F_c)=0.
+$$
+
+As $b,c$ range over all label vectors, $U_b,U_c$ range over $\mathcal W_u$, which proves the first radical inclusion. Placing $a$ in the middle or terminal label contracts the same zero tensor to the other two inclusions. $\square$
+
+**Corollary 179.3 (conditional reduction to a common-first slice).** Under the hypotheses of Proposition 179.2, assume additionally that the common intersection in (179.1) contains no nonzero element. Then every full-zero partition has
+
+$$
+u_0=u_1=F+v,
+\qquad
+u_3=q-2v,
+\qquad
+u_B=p
+$$
+
+for one bounded real Borel $m$-class $v$ for which the pointwise simplex inequalities hold.
+
+*Proof.* Apply the radical hypothesis to the two baseline relations
+
+$$
+a^{(01)}=(1,-1,0,0),
+\qquad
+a^{(3B)}=(2,0,1,-3),
+$$
+
+which satisfy $f_0-f_1=0$ and $2f_0+f_3-3f_B=0$. Equation (179.1) forces
+
+$$
+u_0-u_1=0,
+\qquad
+2u_0+u_3-3u_B=0
+$$
+
+as $m$-classes. Together with $u_0+u_1+u_3+u_B=1$, subtraction gives $u_B=1/4=p$. Writing $u_0=u_1=F+v$ then gives $u_3=3/4-2(F+v)=q-2v$. $\square$
+
+This isolates the unconditional algebraic boundary: an arbitrary full-zero partition either supplies a nonzero common radical element for one of the two baseline relations, or lies in the one-function slice above. Section 178 proves that the radical escape is impossible on the preserved terminal-pair slice. It remains open whether the full source hypotheses force triviality of the candidate radical in general, and whether the common-first slice admits any exact zero beyond $v=0$; $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization remain open.
+
 ## 追加锚（本行以下为增补区）
