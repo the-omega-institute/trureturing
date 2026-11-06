@@ -1,0 +1,28 @@
+### 6.2　两种观察者相对化，作用不同
+
+**仿射中心化** 使用 $\Phi(a)-\Phi(o)$，只是将观察者设为坐标原点，保留差别：
+
+$$
+K^{\rm aff}_o(a,b)
+=\langle \Phi(a)-\Phi(o),\Phi(b)-\Phi(o)\rangle.
+$$
+
+其对角为 $c(a,o)$。这种相对化不需要 $\|\Phi(o)\|>0$。
+
+**正交残差** 则把沿观察者向量的分量分离出来。若 $q_o=K(o,o)>0$，令
+
+$$
+\alpha_o(a)=\frac{K(o,a)}{\sqrt{q_o}},\qquad
+K^\perp_o(a,b)=K(a,b)-\frac{K(a,o)K(o,b)}{q_o}.
+$$
+
+投影定理给
+
+$$
+K^\perp_o\succeq0,\qquad
+K(a,b)=\overline{\alpha_o(a)}\,\alpha_o(b)+K^\perp_o(a,b).
+\tag{6}
+$$
+
+完整递归保留这两部分，观察者没有被消掉。若 $q_o=0$，正性迫使观察者整行关系为零，不能除以 $q_o$；特别不能取 $o=e$ 后套用非零残差公式。
+

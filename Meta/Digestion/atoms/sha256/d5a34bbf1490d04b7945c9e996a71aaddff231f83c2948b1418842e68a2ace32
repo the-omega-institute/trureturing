@@ -1,0 +1,18 @@
+**定义 13.1（The spin-one carrier and its actual minimum）。** Let $H$
+be any finite connected simple unit-weight block graph of even order
+$m\geq2$, with graph blocks as in Definition 12.1. Put $S=1$, $s=2$
+and $k=m$. Use the original fibres $B_i$, blow-up
+$H[\overline{K_2}]$, complete complex Boolean carrier $\mathcal H_m$,
+positive ordinary token adjacency $K=K_m$ and original fibre
+projections $P_i,P_{\mathrm{sym}}$ of Definitions 1.1–1.2. Set
+
+$$
+E=\lambda_{\min}(K),\qquad \mathcal N=\ker P_{\mathrm{sym}},
+\tag{13.1}
+$$
+
+where $E$ is minimized over this entire carrier. The graph blocks
+are cliques of base vertices; every base vertex still has its own
+two-coordinate Boolean fibre. There is only the global occupancy
+constraint $k=m$.
+

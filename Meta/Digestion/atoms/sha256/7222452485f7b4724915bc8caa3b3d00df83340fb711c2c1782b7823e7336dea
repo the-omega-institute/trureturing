@@ -1,0 +1,27 @@
+**定义 9.1（Odd degree or a bipartite open neighborhood）。** Let $H$
+be a finite simple unit-weight graph of even order $m\geq2$, with no
+isolated vertices, such that
+
+$$
+\text{for every }p\in[m],\qquad
+\deg_H(p)\text{ is odd}\quad\text{or}\quad H[N_H(p)]\text{ is bipartite}.
+\tag{9.1}
+$$
+
+There is no neighborhood condition at an odd-degree vertex. Induced
+neighborhoods may have isolates, be edgeless, or be disconnected.
+Let $s\geq3$ be any odd integer, $S=s/2$, and $k=mS$. Use the original
+$B_i,\Omega,H[\overline{K_s}],\mathcal H_k,K=K_k$ and
+$P_{\mathrm{sym}}$ of Definitions 1.1–1.2. In particular $\mathcal H_k$
+is the complete complex Boolean $k$-token space, and $K$ is ordinary
+positive adjacency. Put
+
+$$
+E=\lambda_{\min}(K),\qquad
+\mathcal N=\ker P_{\mathrm{sym}},\qquad
+g=\lambda_{\min}(K|_{\mathcal N})-E.
+\tag{9.2}
+$$
+
+The existence of the last minimum is part of the following theorem.
+

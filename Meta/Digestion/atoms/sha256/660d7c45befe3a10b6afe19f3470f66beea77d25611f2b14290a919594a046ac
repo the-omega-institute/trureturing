@@ -1,0 +1,17 @@
+**Proposition 4.2 (support exposure is not sufficient).** There is a
+$243$-pair complete-support positive set compatible with different
+transported G1 relations, even when $\theta=1$.
+
+Proof. In each true component order its eight left endpoints and $27$
+right endpoints, and join right endpoint $j$ only to left endpoint
+$j\bmod8$, for $0\le j<27$. Each of the eight left stars is nonempty;
+three have four leaves and five have three. Across the nine components
+this exposes every endpoint with $243$ pairs. Take two left stars with
+the same number of leaves in different true components. Permute their
+left labels and also exchange their right-label leaf sets by a bijection.
+This is a permutation of the same full supports and preserves the positive
+set exactly. It changes the full relation, since a star now shares its
+component with different other stars. Both full maps have positive mass.
+Thus neither $243$ nor full support is a sufficient general recognition
+condition. The upper bounds in §§2–3 are not asserted optimal. $\square$
+

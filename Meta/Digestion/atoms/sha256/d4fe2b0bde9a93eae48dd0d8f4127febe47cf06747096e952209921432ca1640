@@ -1,0 +1,75 @@
+**Proposition 57.4 (the surviving scalar comparison in the original domain).**
+For either sign put
+
+$$
+\begin{aligned}
+Q_\sigma&=\{q\in(0,1):
+ D_\sigma(3/16+q/2,q)<0\},\\
+(X_\sigma^\star(q),Y_\sigma^\star(q))
+ &\in\operatorname*{arg\,max}_{(X,Y)\in\mathcal T_x}
+                  \Gamma_\sigma(x,q;X,Y),\\
+B_\sigma(q)&=K_\sigma^2(1-q)+K_{-\sigma}^2q
+ -4\Gamma_\sigma(x,q;X_\sigma^\star(q),Y_\sigma^\star(q))^2.
+\end{aligned}
+\tag{57.30}
+$$
+
+The starred pair is unique by Continuation III, Theorem 53.4.
+Both $Q_\sigma$ are nonempty, and
+
+$$
+A_\sigma=\min_{q\in Q_\sigma}B_\sigma(q),
+\quad\text{with the minimum attained.}
+\tag{57.31}
+$$
+
+*Proof.* An original complete-domain minimum exists by Theorem 57.3.
+Every tuple attaining it has population in $Q_\sigma$ and uses the
+unique fixed-population maximizing pair. Thus $Q_\sigma$ is nonempty
+and that tuple supplies equality in (57.31). Conversely every
+$B_\sigma(q)$ is the value of a feasible tuple of the complete domain,
+so it cannot be smaller than $A_\sigma$. This proves attainment in
+(57.31) without assuming that the open set $Q_\sigma$ is compact.
+
+The original-realization bridge is Continuation II, Lemma 46.2 in
+its unchanged fixed pair order. It reconstructs both recoveries from
+one whole feedback, including boundary points, and aligns them with
+the effect coherence phase using the ordinary transpose in (46.5).
+The effect is normalized, positive and pure. Only one common scalar
+on all four feedback entries is quotiented. No pairwise independent
+realization, independent pair scalar, or permutation of physical
+labels occurs. Source (23.9)--(23.13) and (46.8) give
+
+$$
+\rho_\sigma=4(1-x)+2q=\frac{13}{4}.
+\tag{57.32}
+$$
+
+The original two-sign budget (42.17)--(42.20) makes the other sign's
+distance strictly larger at this level. Thus (57.32) is the true
+joint original distance. Continuation III, Proposition 53.5 states
+the same bridge, and its Theorem 48.5 together with Definition 54.2
+identifies the original sign-selection question with the following
+remaining scalar comparison. $\square$
+
+**Open question 57.5 (the exact unresolved endpoint comparison).**
+With precisely the full-triangle optimizers in (57.30), is
+
+$$
+\min_{q_-\in Q_-}B_-(q_-)
+ \;>\;
+\min_{q_+\in Q_+}B_+(q_+)?
+\tag{57.33}
+$$
+
+This is $A_-(13/4)>A_+(13/4)$, not a new fixed-threshold question.
+The two populations are independently quantified; equal populations
+are not required. A strict ordering, equality, or reverse ordering
+has not been proved here. The canonical estimate (57.6) controls the
+slices excluded by (57.7), while every negative minimizer lies in the
+remaining negative-determinant regime. It therefore supplies no global
+negative lower comparator. Two attained upper values, one fixed
+population, or failure of an earlier sufficient threshold cannot
+settle (57.33). No uniqueness of a minimizing population follows
+from uniqueness of the lengths at each fixed population.
+

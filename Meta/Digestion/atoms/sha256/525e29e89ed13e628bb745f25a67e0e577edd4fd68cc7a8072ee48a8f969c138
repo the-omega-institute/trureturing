@@ -1,0 +1,20 @@
+**定义 25.1（任务合同）。** 一个任务合同记为
+
+$$
+\mathfrak C=(X,E,(T_e)_{e\in E},q,f),
+$$
+
+其中 $X$ 是来源域，$E$ 是允许操作，$T_e:X\to X$ 是操作，$q:X\to Q$ 是当前读数，$f:X\to Y$ 是目标。对实验词 $w=e_1\cdots e_n$ 写
+
+$$
+T_w=T_{e_n}\circ\cdots\circ T_{e_1},
+\qquad
+\mathcal B_x(w)=q(T_wx).
+$$
+
+当前摘要的目标残差为
+
+$$
+\mathcal E(q;f)=\{(x,x'):q(x)=q(x'),\ f(x)\ne f(x')\}.
+$$
+

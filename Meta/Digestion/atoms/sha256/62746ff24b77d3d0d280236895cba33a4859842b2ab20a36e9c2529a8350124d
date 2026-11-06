@@ -1,0 +1,70 @@
+### 153.C. Exact corrections protecting those same evaluations
+
+Choose an odd integer $N>10L$ and the infinite positive odd sets
+
+$$
+S_0=\{N(8k+5):k\ge0\},\qquad
+S_1=\{N(8k+1):k\ge0\},\qquad
+S_3=\{N(8k+3):k\ge0\}.
+\tag{153.17}
+$$
+
+For each $a\in I$ use the exact space $X_{E,S_a}$ of (152.16). Its elements are bounded Borel, supported in this same invariant $E$, and have finitely many frequencies in $\pm S_a$. The conclusions of 152.A–C apply to these sets: every nonzero $q_\lambda$ has infinite negative index after any finite homogeneous constraints; the six ordered functionals have a base with independent evaluations; and $q$ maps each such constrained space onto $\mathbb R^3$. These are the original three pencils $Q_{12},Q_{13},Q_{23}$, not extra moments. In particular the exact surjectivity (152.29) produces an element of an actual finite-dimensional subspace of $X_{E,S_a}$.
+
+Choose $y_a\in X_{E,S_a}$ and dual tests $h_{a,1},\ldots,h_{a,6}\in X_{E,S_a}$ from (152.27). Denote the ordered functionals of a base $w$ by
+
+$$
+(\ell_i(w)(h))_{i=1}^6
+       =\bigl(Q_r(h,w),Q_r(w,h)\bigr)_{r\in\mathcal R},
+\qquad
+\ell_i(y_a)(h_{a,k})=\delta_{ik}.
+\tag{153.18}
+$$
+
+On $z\in X_{E,S_a}$ impose the finite homogeneous constraints
+
+$$
+\ell_i(z)(h_{a,k})=0\quad(1\le i,k\le6),\qquad
+B_r(y_a,z)=0\quad(r\in\mathcal R).
+\tag{153.19}
+$$
+
+The cited constrained surjectivity supplies a $z_a$ satisfying these constraints and
+
+$$
+q(z_a)=-q(v_a)-q(y_a).
+\tag{153.20}
+$$
+
+Low and high sectors have zero ordered pair cross-pairings, since $P$ and all the weights in (152.7) preserve characters. Consequently
+
+$$
+x_a=v_a+y_a+z_a
+\quad\Longrightarrow\quad
+q(x_a)=0,\qquad
+\ell_i(x_a)(h_{a,k})=\delta_{ik}.
+\tag{153.21}
+$$
+
+This proves exact cancellation of all three diagonal quadratics and retains all six ordered evaluations for every label. The full positive spectra $\{n_a\}\cup S_a$ are pairwise disjoint.
+
+We verify that (153.21) has not changed the rank calculation. Every term of each density in (153.12) is quadratic in two *distinct* label inputs. Expanding $x_a=v_a+(y_a+z_a)$, a mixed low/high term has frequencies of absolute value at least $N-L>2L$. A high/high term from two distinct labels has frequencies that are sums or differences of their positive frequencies. A sum is at least $2N$, and a nonzero difference between the distinct residue classes $1,3,5$ modulo $8$ has absolute value at least $2N$. The difference is never zero. Multiplication by invariant $g$ and application of $P$ preserve every character. Hence no correction term has any of the protected positive frequencies $n_1\pm1,n_0\pm1$, all at most $L+1\le2L$. We obtain the exact equality
+
+$$
+\mathsf E(x)=\mathsf E(v),\qquad \operatorname{rank}\mathsf E(x)=3.
+\tag{153.22}
+$$
+
+The densities $\mathbf R_\sigma[x]$ are real bounded two-component functions, even under $R_\pi$, and have zero angular mean. The last property follows because the two label spectra in each quadratic expression are disjoint, so their signed sums never include zero. Define their real Gram matrix by
+
+$$
+\mathsf G_{\sigma\omega}
+ =\int_G\left(
+    R_\sigma^{(0)}[x]R_\omega^{(0)}[x]
+   +R_\sigma^{(1)}[x]R_\omega^{(1)}[x]\right)dm,
+ \qquad \sigma,\omega\in\mathcal T.
+\tag{153.23}
+$$
+
+It is strictly positive definite. A zero quadratic form would make the corresponding linear combination of the densities zero in $L^2(m;\mathbb R^2)$. Each component is continuous on $\Omega$, where $m$ has full support, so that combination would vanish pointwise there. Applying its four orbit coefficients would contradict (153.22). Thus $\det\mathsf G>0$ has been proved for these actual corrected original-operator inputs.
+
