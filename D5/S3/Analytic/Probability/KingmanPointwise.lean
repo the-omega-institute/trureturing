@@ -24,6 +24,8 @@ An equivalent declaration in the host-pinned Mathlib replaces this port.
 
 import D5.S3.Analytic.Probability.KingmanEstimates
 
+/-! Kingman convergence with an integrable invariant limit on finite measure spaces. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 

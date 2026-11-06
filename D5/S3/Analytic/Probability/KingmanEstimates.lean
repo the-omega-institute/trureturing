@@ -33,6 +33,8 @@ import Mathlib.Tactic.Ring
 import Mathlib.Topology.Separation.CompletelyRegular
 import D5.S3.Analytic.Probability.BirkhoffPointwise
 
+/-! Greedy block and stationary-tail estimates for nonnegative subadditive cocycles. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -306,6 +308,5 @@ theorem measure_kingmanDick_le
         (ENNReal.ofReal_toReal (measure_ne_top μ _)).symm
     _ ≤ ENNReal.ofReal ((∫ x, φ x ∂μ) / c) := ENNReal.ofReal_le_ofReal hdiv
 
-/-- N8: liminf rate function (ENNReal to avoid boundedness side conditions). -/
 
 end D5.S3.Analytic.Probability.KingmanEstimates
