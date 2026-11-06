@@ -53,7 +53,8 @@ private theorem erased_fails : ¬ arena.Law erased := by
 def family : DependentFamily.Registration arena sourceScope where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨_root_.D5.S3.Factorization.TwoDenseDivisorBlockMinimum.block_card_ge_of_dense_factor, erased, erased_fails⟩
+  variation :=
+    ⟨_root_.D5.S3.Factorization.TwoDenseDivisorBlockMinimum.block_card_ge_of_dense_factor, erased, erased_fails⟩
   sensitivity := by
     constructor
     · intro i
@@ -128,7 +129,8 @@ private theorem erased_fails : ¬ arena.Law erased := by
 def family : DependentFamily.Registration arena sourceScope where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨_root_.D5.S3.Factorization.TwoDenseDivisorBlockMinimum.first_block_min_of_dense_factor, erased, erased_fails⟩
+  variation :=
+    ⟨_root_.D5.S3.Factorization.TwoDenseDivisorBlockMinimum.first_block_min_of_dense_factor, erased, erased_fails⟩
   sensitivity := by
     constructor
     · intro i
@@ -195,7 +197,8 @@ private theorem erased_fails : ¬ arena.Law erased := by
 def family : DependentFamily.Registration arena sourceScope where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨_root_.D5.S3.Factorization.TwoDenseDivisorBlockMinimum.result, erased, erased_fails⟩
+  variation :=
+    ⟨_root_.D5.S3.Factorization.TwoDenseDivisorBlockMinimum.result, erased, erased_fails⟩
   sensitivity := by
     constructor
     · intro i
@@ -228,8 +231,10 @@ noncomputable def registration : Contract.Registration
   escapeFrom := some (List ℕ)
   sourceSelection := some {
     owner := `D5.S3.Factorization.TwoDenseDivisorBlockMinimum
-    definition := some { owner := `D5.S3.Factorization.TwoDenseDivisorBlockMinimum,
-      name := `D5.S3.Factorization.TwoDenseDivisorBlockMinimum.claim, path := #[] }
+    definition := some {
+      owner := `D5.S3.Factorization.TwoDenseDivisorBlockMinimum
+      name := `D5.S3.Factorization.TwoDenseDivisorBlockMinimum.claim
+      path := #[] }
     coordinates := #[]
     readouts := #[{
       path := #["body","body","body","body","arg"]
