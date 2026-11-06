@@ -193,6 +193,10 @@ internal static class SemanticProjectionSignatures
     internal static readonly ImmutableDictionary<string, SemanticProjectionSignature> Entries =
         new Dictionary<string, SemanticProjectionSignature>(StringComparer.Ordinal)
         {
+            // Mathlib's callable-coercion registration saturates at five arguments:
+            // F, alpha, beta, instance, map. Every later argument applies that map.
+            ["DFunLike.coe"] = new("coe", 4, 5, int.MaxValue, [0], false),
+            ["ZMod.dft"] = new("dft", 0, 5, 5, [], false, [0, 2]),
             ["Continuous"] = new("Continuous", 4, 5, 5, [0], true),
             ["ContinuousAt"] = new("ContinuousAt", 4, 6, 6, [0], true),
             ["ContinuousOn"] = new("ContinuousOn", 4, 6, 6, [0], true),
@@ -296,7 +300,7 @@ internal static class ProjectionDenoiser
         ["Iff"] = new(0, 2), ["Not"] = new(0, 1), ["Exists"] = new(0, 2),
         ["Membership.mem"] = new(0, 2), ["norm"] = new(0, 1),
         ["OfNat.ofNat"] = new(0, null, [1]), ["Neg.neg"] = new(0, 1),
-        ["DFunLike.coe"] = new(0, 2), ["HMul.hMul"] = new(0, 2), ["HDiv.hDiv"] = new(0, 2),
+        ["HMul.hMul"] = new(0, 2), ["HDiv.hDiv"] = new(0, 2),
         ["Complex.re"] = new(0, 1),
         ["LE.le"] = new(0, 2, ArgumentCount: 4),
         ["LT.lt"] = new(0, 2, ArgumentCount: 4),
@@ -531,8 +535,9 @@ internal static class StatementProjector
             if (leaf == "norm" && values.Length == 1) return new ProjectionOutcome.Projected(new Formula.Norm(values[0]));
             if (leaf == "neg" && values.Length == 1) return new ProjectionOutcome.Projected(new Formula.Negate(values[0]));
             if (headConstant.Name == "OfNat.ofNat" && values.Length == 1) return new ProjectionOutcome.Projected(values[0]);
-            if (headConstant.Name == "DFunLike.coe" && values.Length == 2)
-                return new ProjectionOutcome.Projected(new Formula.Apply(values[0], [values[1]]));
+            if (headConstant.Name == "DFunLike.coe")
+                return new ProjectionOutcome.Projected(values.Length == 1 ? values[0]
+                    : new Formula.Apply(values[0], values[1..].ToImmutableArray()));
             if (headConstant.Name == "HMul.hMul" && values.Length == 2)
                 return new ProjectionOutcome.Projected(new Formula.Binary(values[0], FormulaBinaryOperator.Multiply, values[1]));
             if (headConstant.Name == "Membership.mem" && values.Length == 2)

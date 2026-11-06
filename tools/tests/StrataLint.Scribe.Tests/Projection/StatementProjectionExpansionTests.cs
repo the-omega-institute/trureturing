@@ -283,11 +283,14 @@ public sealed class StatementProjectionExpansionTests
     }
 
     [Theory]
-    [InlineData("starRingEnd", "starRingEnd", new int[] { 0 })]
-    [InlineData("D5.S3.Fourier.FinitePoisson.annihilator", "annihilator", new int[] { 0, 2 })]
-    public void NonconsecutiveSemanticArgumentsSurviveClassErasure(string name, string notation, int[] indices)
+    [InlineData("starRingEnd", "starRingEnd", 3, new int[] { 0 })]
+    [InlineData("D5.S3.Fourier.FinitePoisson.annihilator", "annihilator", 3, new int[] { 0, 2 })]
+    [InlineData("ZMod.dft", "dft", 5, new int[] { 0, 2 })]
+    public void NonconsecutiveSemanticArgumentsSurviveClassErasure(string name, string notation, int arity, int[] indices)
     {
-        var arguments = new LeanExpr[] { Number(2), Constant("Elaboration.instance"), Number(5) };
+        var arguments = Enumerable.Repeat<LeanExpr>(Constant("Elaboration.instance"), arity).ToArray();
+        arguments[0] = Number(2);
+        arguments[2] = Number(5);
         var application = Assert.IsType<Formula.Apply>(Assert.IsType<ProjectionOutcome.Projected>(
             StatementProjector.Project(Apply(Constant(name), arguments))).Formula);
         Assert.Equal(notation, Assert.IsType<Formula.NamedConstant>(application.Function).Name.Value);
@@ -455,6 +458,63 @@ public sealed class StatementProjectionExpansionTests
             Apply(new LeanExpr.Lambda("bd", Real, new LeanExpr.Bound(1)), Number(2))));
         Assert.IsType<ProjectionOutcome.Unprojectable>(StatementProjector.Project(
             Apply(identity, Constant("Unknown.argument"))));
+    }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    [InlineData(2)]
+    [InlineData(3)]
+    public void CallableCoercionsPreserveTheMapAndEveryOrderedApplicationOperand(int tailCount)
+    {
+        var arguments = Enumerable.Repeat<LeanExpr>(Constant("Elaboration.instance"), 4)
+            .Concat([new LeanExpr.Bound((uint)tailCount)])
+            .Concat(Enumerable.Range(0, tailCount).Select(index =>
+                (LeanExpr)new LeanExpr.Bound((uint)(tailCount - index - 1)))).ToArray();
+        LeanExpr Bind(LeanExpr body)
+        {
+            for (var index = 0; index < tailCount; index++) body = new LeanExpr.Pi("bd", Real, body);
+            LeanExpr mapType = Real;
+            for (var index = 0; index < Math.Max(1, tailCount); index++) mapType = new LeanExpr.Pi("bd", Real, mapType);
+            return new LeanExpr.Pi("bd", mapType, body);
+        }
+        Formula Body(LeanExpr[] operands)
+        {
+            var formula = Assert.IsType<ProjectionOutcome.Projected>(StatementProjector.Project(
+                Bind(Apply(Constant("DFunLike.coe"), operands)))).Formula;
+            for (var index = 0; index <= tailCount; index++) formula = Assert.IsType<Formula.Bind>(formula).Body;
+            return formula;
+        }
+        var body = Body(arguments);
+        if (tailCount == 0)
+            Assert.Equal("x0", Assert.IsType<Formula.Symbol>(body).Name.Value);
+        else
+        {
+            var application = Assert.IsType<Formula.Apply>(body);
+            Assert.Equal("x0", Assert.IsType<Formula.Symbol>(application.Function).Name.Value);
+            Assert.Equal(Enumerable.Range(1, tailCount).Select(index => "x" + index),
+                application.Arguments.Select(item => Assert.IsType<Formula.Symbol>(item).Name.Value));
+        }
+        for (var index = 4; index < arguments.Length; index++)
+        {
+            var changed = arguments.ToArray();
+            changed[index] = Constant("Unknown.retainedOperand");
+            Assert.IsType<ProjectionOutcome.Unprojectable>(StatementProjector.Project(
+                Bind(Apply(Constant("DFunLike.coe"), changed))));
+            changed[index] = new LeanExpr.Bound((uint)(tailCount + 1));
+            Assert.IsType<ProjectionOutcome.Unprojectable>(StatementProjector.Project(
+                Bind(Apply(Constant("DFunLike.coe"), changed))));
+        }
+    }
+
+    [Fact]
+    public void CallableCoercionsRequireTheRegisteredSaturationBoundary()
+    {
+        for (var arity = 1; arity < 5; arity++)
+            Assert.IsType<ProjectionOutcome.Unprojectable>(StatementProjector.Project(
+                Apply(Constant("DFunLike.coe"), Enumerable.Repeat(Real, arity).ToArray())));
+        Assert.IsType<ProjectionOutcome.Unprojectable>(StatementProjector.Project(
+            Apply(Constant("Unknown.DFunLike.coe"), Enumerable.Repeat(Real, 6).ToArray())));
     }
 
     private static IEnumerable<Formula> Descendants(Formula formula)
