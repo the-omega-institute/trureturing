@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Factorization.TwoDenseDivisorBlockMinimum
 
+/-! Source-bound length observations for the three divisor-block inequalities. -/
+
 namespace Reg.D5.S3.Factorization.TwoDenseDivisorBlockMinimum
 
 open _root_.D5.S3.Factorization.TwoDenseDivisorBlockMinimum
@@ -35,10 +37,12 @@ namespace DenseCopy
 def arena : DependentFamily.Arena where
   signature := signature
   Law R := ∀ (u v : ℕ), 0 < u → 0 < v → u.Coprime v →
-    (u.divisorsAntidiagonalList.map Prod.fst).IsChain (fun a b => b ≤ 2 * a) →
+    (u.divisorsAntidiagonalList.map Prod.fst).IsChain
+      (fun a b => b ≤ 2 * a) →
     ∀ B ∈ divisorBlocks (u * v), u.divisors.card ≤ R.readout () () B
 
-abbrev sourceScope := type_of% (@_root_.D5.S3.Factorization.TwoDenseDivisorBlockMinimum.block_card_ge_of_dense_factor)
+abbrev sourceScope := type_of%
+  (@_root_.D5.S3.Factorization.TwoDenseDivisorBlockMinimum.block_card_ge_of_dense_factor)
 
 private theorem erased_fails : ¬ arena.Law erased := by
   intro h
@@ -55,7 +59,7 @@ def family : DependentFamily.Registration arena sourceScope where
     · intro i
       refine ⟨erased, ?_, rfl, erased_fails⟩
       intro j hj
-      exact (hj (Subsingleton.elim j i)).elim
+      exact (hj (@Subsingleton.elim Unit _ j i)).elim
     · intro e
       exact nomatch e
   dependence := actual_dependence
@@ -101,13 +105,15 @@ namespace FirstFactor
 def arena : DependentFamily.Arena where
   signature := signature
   Law R := ∀ (u v : ℕ), 0 < u → 0 < v → u.Coprime v →
-    (u.divisorsAntidiagonalList.map Prod.fst).IsChain (fun a b => b ≤ 2 * a) →
+    (u.divisorsAntidiagonalList.map Prod.fst).IsChain
+      (fun a b => b ≤ 2 * a) →
     (∀ p, p.Prime → p ∣ v → 2 * u < p) →
     ∀ B ∈ divisorBlocks (u * v),
       (_root_.D5.S3.Factorization.TwoDenseDivisorBlocksPalindrome.row (u * v)).headD 0 ≤
         R.readout () () B
 
-abbrev sourceScope := type_of% (@_root_.D5.S3.Factorization.TwoDenseDivisorBlockMinimum.first_block_min_of_dense_factor)
+abbrev sourceScope := type_of%
+  (@_root_.D5.S3.Factorization.TwoDenseDivisorBlockMinimum.first_block_min_of_dense_factor)
 
 private theorem erased_fails : ¬ arena.Law erased := by
   intro h
@@ -128,7 +134,7 @@ def family : DependentFamily.Registration arena sourceScope where
     · intro i
       refine ⟨erased, ?_, rfl, erased_fails⟩
       intro j hj
-      exact (hj (Subsingleton.elim j i)).elim
+      exact (hj (@Subsingleton.elim Unit _ j i)).elim
     · intro e
       exact nomatch e
   dependence := actual_dependence
@@ -177,7 +183,8 @@ def arena : DependentFamily.Arena where
     (_root_.D5.S3.Factorization.TwoDenseDivisorBlocksPalindrome.row n).headD 0 ≤
       R.readout () () B
 
-abbrev sourceScope := type_of% (@_root_.D5.S3.Factorization.TwoDenseDivisorBlockMinimum.result)
+abbrev sourceScope := type_of%
+  (@_root_.D5.S3.Factorization.TwoDenseDivisorBlockMinimum.result)
 
 private theorem erased_fails : ¬ arena.Law erased := by
   intro h
@@ -194,7 +201,7 @@ def family : DependentFamily.Registration arena sourceScope where
     · intro i
       refine ⟨erased, ?_, rfl, erased_fails⟩
       intro j hj
-      exact (hj (Subsingleton.elim j i)).elim
+      exact (hj (@Subsingleton.elim Unit _ j i)).elim
     · intro e
       exact nomatch e
   dependence := actual_dependence
@@ -221,7 +228,8 @@ noncomputable def registration : Contract.Registration
   escapeFrom := some (List ℕ)
   sourceSelection := some {
     owner := `D5.S3.Factorization.TwoDenseDivisorBlockMinimum
-    definition := some { name := `D5.S3.Factorization.TwoDenseDivisorBlockMinimum.claim, path := #[] }
+    definition := some { owner := `D5.S3.Factorization.TwoDenseDivisorBlockMinimum,
+      name := `D5.S3.Factorization.TwoDenseDivisorBlockMinimum.claim, path := #[] }
     coordinates := #[]
     readouts := #[{
       path := #["body","body","body","body","arg"]
