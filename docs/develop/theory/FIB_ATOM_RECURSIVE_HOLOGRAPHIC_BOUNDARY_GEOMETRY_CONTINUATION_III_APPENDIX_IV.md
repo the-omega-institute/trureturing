@@ -841,4 +841,238 @@ Indeed, (169.9) is the contrapositive of the exact residual criterion (167.5), w
 
 The proof uses only the original source-start density and path law, the injective self-adjoint heat semigroup, the fixed Section 166 readout identities and finite-dimensionality of $W$. It resolves the actual closure boundary left open in Section 168 without a numerical approximation.
 
+## 170. A rotation-odd exact common kernel for the full successor stack
+
+Section 169 rules out finite-dimensional closure of the concrete representer plane, but it does not by itself produce a nonzero bounded class satisfying every successor readout. The original half-turn symmetry supplies such a class family. It acts on the actual source, measure and heat operator, so the construction remains inside the retained model.
+
+**Proposition 170.1 (rotation-odd classes annihilate the full linear successor stack).** Let $J=R_\pi$ be the half-turn in the $(x,y)$ coordinates, and let $J^*$ denote pullback on functions. Use the pointwise rotation-invariant representative $\beta$ of $g_d$ supplied by Appendix III Proposition 136.2 in the formulas (134.7). Since $[\beta]=[b]$, this replacement leaves the $L^2(m)$ classes of all $f_y$, and hence the plane $W$ of (166.2), unchanged. Define
+
+$$
+V_-:=\{v\in L^\infty(G,m;\mathbb R):J^*v=-v\ \text{$m$-a.e.}\}.
+\tag{170.1}
+$$
+
+Then
+
+$$
+V_-\subseteq W_\infty
+ =L^\infty(G,m;\mathbb R)\cap
+ \overline{W+\mathcal C_R}^{\,H\,\perp},
+\qquad
+\mathcal C_R=\overline{\operatorname{span}_{\mathbb R}
+ \{P^j\psi_{yzw}:j\ge0,\ (y,z,w)\in\mathcal L^3\}}^{\,H}.
+\tag{170.2}
+$$
+
+In particular, every rotation-odd class satisfies all first-order constraints and all their specified heat-successor constraints.
+
+*Proof.* Appendix III §136 gives that $m$, $g_s$ and $T_s$ are invariant under the circle action and that $T_s$ commutes with its pullbacks. With the invariant representative $\beta$, the functions $g$ and $f_y$ are $J^*$-invariant. Each representer in (166.1) is obtained from these functions by multiplication and by $P=T_d$, so
+
+$$
+J^*\psi_{yzw}=\psi_{yzw}.
+\tag{170.3}
+$$
+
+Commutation gives $J^*P^j\psi_{yzw}=P^j\psi_{yzw}$ for every $j$. If $v\in V_-$ and $\psi$ is any one of these invariant classes, invariance of $m$ and the change of variables $x\mapsto Jx$ give
+
+$$
+\langle v,\psi\rangle_H
+ =\langle J^*v,J^*\psi\rangle_H
+ =-\langle v,\psi\rangle_H,
+$$
+
+so the pairing is zero. Thus $v$ is orthogonal to $W$ and to $\mathcal C_R$, hence to their closed sum, proving (170.2). The identity (166.4) and the successor-kernel formula (166.10) give the stated interpretation. $\square$
+
+**Corollary 170.2 (an infinite-dimensional common kernel with collapsing heat energy).** The space $V_-$, and therefore $W_\infty$, is infinite-dimensional. More explicitly, there are linearly independent bounded real Borel functions $v_n$ such that
+
+$$
+v_n\in W_\infty,\qquad \|v_n\|_\infty=1,
+\qquad 0<q_{003}(v_n)
+ \le c\int_{B_n}g^2\,dm\longrightarrow0,
+\tag{170.4}
+$$
+
+where each $B_n$ is the support of $v_n$ up to an $m$-null set.
+
+*Proof.* Choose a Borel set $U\subset G\setminus N$ with $m(U)>0$ and $U\cap J U=\varnothing$; such a set exists in a sufficiently small neighborhood of any point off the rotation axis, using the full local support of $m$ from Appendix III §136. Choose pairwise disjoint Borel subsets $A_n\subset U$ with $m(A_n)>0$ and $m(A_n)\to0$, and put
+
+$$
+B_n=A_n\cup J A_n,
+\qquad v_n=\mathbf1_{A_n}-\mathbf1_{J A_n}.
+\tag{170.5}
+$$
+
+The sets in (170.5) are disjoint in each pair, $J^*v_n=-v_n$, and $\|v_n\|_\infty=1$. The pairwise disjointness of the $A_n$ and of their images makes the $v_n$ linearly independent. Since $m$ is $J$-invariant, $m(B_n)\to0$; since $g\in L^2(m)$, absolute continuity gives $\int_{B_n}g^2\,dm\to0$. Proposition 170.1 puts every $v_n$ in $W_\infty$. Finally Proposition 134.2 and the $L^2$ contraction of $T_{d/2}$ give
+
+$$
+0<q_{003}(v_n)=c\|T_{d/2}(gv_n)\|_2^2
+\le c\|gv_n\|_2^2
+ =c\int_{B_n}g^2\,dm\longrightarrow0.
+$$
+
+Thus the full infinite-horizon common kernel contains nonzero bounded directions of unit sup norm with vanishing heat-energy infimum. This does not construct a physical successor, prove density of the successor orbit, produce a nonlinear residual-zero family, a legal simplex or $H43$ partition, or settle $SRS\text{-}20$, $F_{64}$ or a Lean/kernel theorem. $\square$
+
+By Proposition 167.2, $H_{\mathrm{cal}}=W^\perp$ for the concrete first-order kernel. The functions above lie in $W^\perp\cap\mathcal C_R^\perp$ and are nonzero, so
+
+$$
+\overline{\mathcal C_R}^{\,H}\ne H_{\mathrm{cal}}.
+\tag{170.6}
+$$
+
+Thus the concrete rotation-invariant successor stack is not dense in the calibrated Hilbert space; this conclusion is specific to the stated Section 166 readout and does not extend to an arbitrary successor or a physical realization.
+
+## 171. Exact compensation of one nonlinear residual coordinate
+
+The rotation-odd common kernel from Section 170 makes every specified linear successor readout vanish, but Proposition 158.2 leaves a strictly positive quadratic $(0,0,3)$ term. That term can be cancelled exactly by a legal terminal correction on a positive-measure invariant set. The construction records the compensator cost and makes no claim about the remaining residual coordinates.
+
+**Proposition 171.1 (a legal terminal compensator for the $003$ coordinate).** Replace the representative $b$ in (134.7) by the pointwise rotation-invariant representative $\beta$ of Appendix III Proposition 136.2; all $m$-classes and residual coordinates are unchanged. Let $0\ne v\in V=\ker\Lambda_{134}$ be bounded and real. Then there are a Borel set $E\subset G$ invariant under the circle action, a number $\varepsilon>0$, and positive scalars $s_t$ for $0<|t|<\varepsilon$ such that, with
+
+$$
+w_t=-s_t\mathbf 1_E
+\tag{171.1}
+$$
+
+the tuple $u^{(t;v,w_t)}$ of (158.1) is a pointwise legal simplex tuple on all of $G$ and
+
+$$
+\Delta\bigl(u^{(t;v,w_t)}\bigr)_{003}=0.
+\tag{171.2}
+$$
+
+Moreover, if
+
+$$
+A=q_{003}(v),\quad
+B=\mathcal C(f_0,f_0,\mathbf 1_E),\quad
+L=\mathcal C(v,f_0,\mathbf 1_E)+\mathcal C(f_0,v,\mathbf 1_E),\quad
+C=\mathcal C(v,v,\mathbf 1_E),
+\tag{171.3}
+$$
+
+then $A>0$, $B>0$, and one may choose
+
+$$
+s_t=\frac{A}{B+tL+t^2C},
+\qquad
+s_t\longrightarrow\frac AB>0\quad(t\to0).
+\tag{171.4}
+$$
+
+Thus the actual perturbation $t^2w_t$ tends to zero in $L^\infty$, while the compensator coefficient itself has a strictly positive limiting cost.
+
+*Proof.* Since $f_3=c\beta>0$ everywhere and $m(G)=1$, there is a $\delta>0$ for which the invariant Borel set
+
+$$
+E=\{x:f_3(x)\ge\delta\}
+\tag{171.5}
+$$
+
+has positive $m$-measure. Let
+
+$$
+\psi_0=P\bigl(f_0P(gf_0)\bigr).
+$$
+
+The positivity-improvement argument in Proposition 158.3 gives $\psi_0>0$ almost everywhere, so
+
+$$
+B=\int_E\psi_0\,dm>0.
+\tag{171.6}
+$$
+
+Proposition 134.2 gives $A=q_{003}(v)>0$. The boundedness of $v$, $f_0$, $g$ and the $L^2$ contraction of $P$ makes $L$ and $C$ finite. Hence for all sufficiently small $|t|$,
+
+$$
+B+tL+t^2C>B/2.
+\tag{171.7}
+$$
+
+Define $s_t$ by (171.4). Substitution of (171.1) into the exact expansion (158.2) gives
+
+$$
+\begin{aligned}
+\Delta\bigl(u^{(t;v,w_t)}\bigr)_{003}
+ &=t^2\left[A-s_tB\right]
+   -t^3s_tL-t^4s_tC\\
+ &=t^2\left[A-s_t(B+tL+t^2C)\right]=0.
+\end{aligned}
+\tag{171.8}
+$$
+
+Because $s_t\to A/B$, reduce $\varepsilon$ so that
+
+$$
+|t|\,\|v\|_\infty\le\frac14,
+\qquad
+t^2s_t\le\min\left\{\delta,\frac14\right\}
+\tag{171.9}
+$$
+
+for $0<|t|<\varepsilon$. Equation (134.8) then gives $u_0,u_1\ge0$. On $E$, $u_3=f_3-t^2s_t\ge0$, and off $E$ it equals $f_3>0$. Finally $u_B=1/4+t^2s_t$ lies between $0$ and $1$; all four coordinates sum to one by (158.1). Thus the tuple is legal on all of $G$. The limit in (171.4) is immediate. This proves (171.2) and the stated cost. $\square$
+
+In particular, every nonzero rotation-odd class supplied by Proposition 170.1 admits this exact one-coordinate compensation. The result cancels only the $003$ coordinate; it does not cancel the other $63$ coordinates, establish a full-law partition, produce an $H43$ witness, or settle SRS$\text{-}20$, $F_{64}$, a physical successor or a Lean/kernel theorem.
+
+**Corollary 171.2 (variable-ray sharpness along the rotation-odd escape).** Let $(v_n)$ be the sequence of Corollary 170.2, with supports $B_n$ and $A_n=q_{003}(v_n)$. There is one fixed sufficiently small nonzero $t$ and legal tuples
+
+$$
+u^{(n)}=u^{(t;v_n,w_n)},
+\qquad w_n=-s_n\mathbf1_E,
+\tag{171.10}
+$$
+
+such that
+
+$$
+\Delta(u^{(n)})_{003}=0,
+\qquad \|\Delta(u^{(n)})\|_{\max}\longrightarrow0,
+\qquad \|w_n\|_\infty\longrightarrow0.
+\tag{171.11}
+$$
+
+Thus the full residual map has infimum zero on legal simplex tuples with the entire countable linear successor stack still exactly silent. This is an approximation statement; it does not produce a tuple with all sixty-four residuals equal to zero.
+
+*Proof.* Put $G_0=\|g\|_\infty$ and $F=\max_y\|f_y\|_\infty$. Choose $E$ and $\delta$ as in Proposition 171.1, and write
+
+$$
+B=\mathcal C(f_0,f_0,\mathbf1_E)>0,
+\quad L_n=\mathcal C(v_n,f_0,\mathbf1_E)+\mathcal C(f_0,v_n,\mathbf1_E),
+\quad C_n=\mathcal C(v_n,v_n,\mathbf1_E).
+\tag{171.12}
+$$
+
+The bounds $\|v_n\|_\infty=1$, the Markov contraction and $g,f_y\in L^\infty$ give uniform finite bounds on $|L_n|$ and $|C_n|$. Choose one nonzero $t$ small enough that
+
+$$
+D_n:=B+tL_n+t^2C_n\ge B/2
+\tag{171.13}
+$$
+
+for all $n$, and that the legality bounds (171.9) hold for $s_n=A_n/D_n$. Set $s_n=A_n/D_n$. Then $s_n\le2A_n/B$ and $s_n\to0$ because
+
+$$
+0<A_n=c\|T_{d/2}(gv_n)\|_2^2
+\le cG_0^2m(B_n)\longrightarrow0.
+\tag{171.14}
+$$
+
+Equation (171.8) gives the first equality in (171.11), and the legality argument of Proposition 171.1 applies uniformly.
+
+It remains to bound the other coordinates. Every linear term vanishes because $v_n\in V$. Every cubic term in $v_n$ vanishes by half-turn parity: $g$, $f_y$ and $P$ are $J$-even, while $v_n$ is $J$-odd. Each of the three quadratic terms has absolute value at most $G_0F,m(B_n)$. For the term with the last occurrence of $v_n$, move $P$ across the pairing once; the remaining factor $v_n$ is then supported in $B_n$. Consequently
+
+$$
+\bigl\|\Delta(f+t\sigma v_n)-\Delta(f)\bigr\|_{\max}
+\le 3G_0F,t^2m(B_n).
+\tag{171.15}
+$$
+
+Write $r_n=t^2s_n$. After the terminal correction, each coordinate changes by replacing one bounded factor by a factor differing by at most $r_n$. With $|t|$ chosen so that $\|f_y+t\sigma_yv_n\|_\infty\le1$ and $r_n\le1$, multilinearity and $|\mathcal C(a,b,c)|\le\|a\|_\infty\|b\|_\infty\|c\|_\infty$ give
+
+$$
+\bigl\|\Delta(u^{(n)})-\Delta(f+t\sigma v_n)\bigr\|_{\max}
+\le (1+r_n)^3-1\le7r_n.
+\tag{171.16}
+$$
+
+Since $r_n=t^2s_n\to0$, (171.15)–(171.16) prove the second limit in (171.11); the third is already $s_n\to0$. The construction keeps $\Lambda_{134}(P^jv_n)=0$ for every $j\ge0$ by Corollary 170.2. The result leaves exact full-law attainment, deterministic partition realization, $H43$, SRS$\text{-}20$, $F_{64}$, physical succession and Lean/kernel formalization open. $\square$
+
 ## 追加锚（本行以下为增补区）
