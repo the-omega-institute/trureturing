@@ -316,7 +316,7 @@ theorem cohomologyCurrent_delta (a b : Cohomology D H h26 hHG hGH) :
           (parity D H h26 hHG hGH (Delta D H h26 hHG hGH a))
           (Delta D H h26 hHG hGH b) := by
     have h := h1
-    simp only [LinearMap.zero_apply, sub_zero] at h
+    change _ - 0 - _ = _ at h
     exact sub_eq_iff_eq_add.mp h
   have h2' : Delta D H h26 hHG hGH
         (product D H h26 hHG hGH (parity D H h26 hHG hGH a)
@@ -327,14 +327,12 @@ theorem cohomologyCurrent_delta (a b : Cohomology D H h26 hHG hGH) :
           (Delta D H h26 hHG hGH (parity D H h26 hHG hGH a))
           (Delta D H h26 hHG hGH b) := by
     have h := h2
-    simp only [sub_zero] at h
+    change _ - _ - 0 = _ at h
     exact sub_eq_iff_eq_add.mp h
   have hpa : Delta D H h26 hHG hGH (parity D H h26 hHG hGH a) =
       -parity D H h26 hHG hGH (Delta D H h26 hHG hGH a) := by
     have h := Delta_parity D H h26 hHG hGH a
-    have h' := congrArg
-      (fun z : Cohomology D H h26 hHG hGH => -z) h
-    simpa only [neg_neg] using h'.symm
+    exact neg_eq_iff_eq_neg.mp h.symm
   rw [← h0]
   simp only [map_sub, LinearMap.sub_apply]
   rw [Delta_square D H h26 hHG hGH (product D H h26 hHG hGH a b), h1', h2', hpa,
