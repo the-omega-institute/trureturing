@@ -1589,4 +1589,104 @@ Thus the non-kernel leakage tuning suggested by (176.4) cannot produce an exact 
 
 The new conclusion is a paired-channel consequence for the original source family. It uses the existing affine readout, positivity identity and joint-law multilinearity; it adds no native AURIC realization or physical transport and makes no Lean/kernel certification claim.
 
+## 178. Terminal-pair preservation rigidifies arbitrary partitions
+
+The preceding sections treated the symmetric first-label family. A general pointwise partition can still be considered if its terminal pair preserves the same affine channel. That single preservation condition is enough to turn the baseline's two independent label relations into quantitative obstructions.
+
+**Proposition 178.1 (preserved-channel contrast bound).** Let $u=(u_0,u_1,u_3,u_B)$ be any bounded nonnegative Borel partition with
+
+$$
+u_0+u_1+u_3+u_B=1,
+\qquad
+u_3+u_B=q+p
+$$
+
+on the original whole $G$. Retain the residual tensor $\Delta(u)$ and set
+
+$$
+\lambda=(-p,-p,1-p,1-p),
+\qquad
+|a|_1=\sum_{y\in\mathcal L}|a_y|,
+\qquad
+H_a=\sum_{y\in\mathcal L}a_yu_y.
+$$
+
+For every real label vector $a$ satisfying $\sum_y a_yf_y=0$, one has
+
+$$
+\sum_{y,z,k\in\mathcal L}a_ya_z\lambda_k\Delta(u)_{yzk}
+=\mathcal C(H_a,H_a,q)
+=q_{003}(H_a),
+\tag{178.1}
+$$
+
+and therefore
+
+$$
+\|\Delta(u)\|_{\max}
+\ge \frac{q_{003}(H_a)}{2|a|_1^2}.
+\tag{178.2}
+$$
+
+The right side is strictly positive whenever $[H_a]\ne0$ as an $m$-class.
+
+*Proof.* The terminal assumptions and the partition identity give
+
+$$
+\sum_{k\in\mathcal L}\lambda_ku_k
+=(1-p)(u_3+u_B)-p(u_0+u_1)
+=u_3+u_B-p=q.
+$$
+
+The same calculation for the baseline labels gives $\sum_k\lambda_kf_k=q$. The condition on $a$ gives $\sum_ya_yf_y=0$. Applying trilinearity to the left side of (178.1) therefore leaves exactly $\mathcal C(H_a,H_a,q)$. Its positivity identity is the existing
+
+$$
+q_{003}(H_a)=c\,\|T_{d/2}(gH_a)\|_2^2,
+$$
+
+so it is strict on every nonzero $m$-class. The absolute sum of the displayed coefficients is
+$|a|_1^2|\lambda|_1=2|a|_1^2$; the triangle inequality gives (178.2). $\square$
+
+**Corollary 178.2 (exact rigidity in the preserved terminal plane).** Under the hypotheses of Proposition 178.1, if all sixty-four residuals vanish, then
+
+$$
+u_0=u_1=F,
+\qquad
+u_3=q,
+\qquad
+u_B=p
+$$
+
+as $m$-classes. Thus the preserved terminal-pair slice of the arbitrary-partition fibre contains only the original partition.
+
+*Proof.* Use Proposition 178.1 first with
+
+$$
+a^{(01)}=(1,-1,0,0),
+$$
+
+and then with
+
+$$
+a^{(3B)}=(2,0,1,-3).
+$$
+
+The baseline identities $f_0-f_1=0$ and $2f_0+f_3-3f_B=2F+q-3p=0$ show that both vectors are admissible. Vanishing of all residuals and (178.1) force
+
+$$
+u_0-u_1=0,
+\qquad
+2u_0+u_3-3u_B=0
+$$
+
+as $m$-classes. Since $u_3+u_B=q+p$ and the four labels sum to one,
+
+$$
+2u_0=1-q-p=2F,
+$$
+
+so $u_0=u_1=F$. Substitution into the second relation and $u_3+u_B=q+p$ gives $u_B=p$ and $u_3=q$. $\square$
+
+This closes the exact-zero question on the preserved terminal-pair slice, including arbitrary first-label partitions and arbitrary pointwise representatives. It does not prove that a full zero outside the symmetric family must preserve $u_3+u_B=q+p$; establishing or refuting that implication is the next arbitrary-partition gap. The result also leaves $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization open.
+
 ## 追加锚（本行以下为增补区）
