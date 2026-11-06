@@ -53,5 +53,21 @@ internal sealed class FiniteAddActionCardinalityDocument : IScribeDocumentDefini
                         + "this free action, turning the commutator into a numerical obstruction on "
                         + "the support."))),
                 DescribeRole.Theorem
+            ),
+            Describe.Lean(
+                DescribeId.Create("card-add-group-dvd-of-invariant-relation-of-free-action"),
+                DeclarationHandle.Create(
+                    "D5/S3/ArithUnits/FiniteAddActionCardinality.card_addGroup_dvd_of_invariant_relation_of_free_action"),
+                H("A free invariant relation inherits group-order divisibility"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "A finite relation on X × X carries the diagonal additive action. If the "
+                        + "relation is invariant and the action on X is free, the diagonal action "
+                        + "is free because a fixed pair would give a fixed first coordinate. The "
+                        + "orbit count therefore forces the group cardinality to divide the number "
+                        + "of ordered pairs in the relation. This applies directly to invariant "
+                        + "directed graphs and pair constraints."))),
+                DescribeRole.Theorem
             ))));
 }

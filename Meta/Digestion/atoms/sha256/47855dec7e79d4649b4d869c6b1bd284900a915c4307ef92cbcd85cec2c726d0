@@ -1,0 +1,130 @@
+**Proposition 43.2 (the fluctuation law changes no source or native law).**
+The measures in (42.1)--(42.2) are attractive ground probabilities.
+They neither describe the original free diffusion nor implement a
+source conditioning, reset, preparation, projection or new driver.
+The comparisons retain the original fixed data, controls,
+preparations, covariance, raw measures, $2\pi$ periods, clock and
+both absorbing height faces.
+
+Proof. All full spectral and eigenstate comparisons used exactly
+(35.1). The visible average (38.5) was removed with an error below
+the spacing scale in (41.4) and (42.7); it was not substituted for
+the specified source. The coordinate changes (40.2) and (42.2)
+are probability and form changes of variables with their explicit
+Jacobians, not changes to the original generator or its clock.
+
+The actual raw conditional source already has the $D/r_s$ law
+(32.11), with height density $\phi/J_\phi$ and hidden Gaussian
+variance $2\beta$. Its ground has the narrower length
+$w/r_s\to0$, height density $u_{gc_s}^2$, and the different
+normalization in (42.2). At the unit cutoff the original conditional
+source retains the nonconstant circle density $G_{\beta b}(D)$
+of (32.10), whereas its ground concentrates on length $w\to0$.
+The three source laws (34.7)--(34.9), including their distinctions
+at $b_*$, remain unchanged. Source charge still differs from field
+mass as in (32.12). Dividing by survival changes neither subsequent
+height death nor the original free clock.
+
+The results of the free-diffusion quotient classification and its
+scope in [Free diffusion quotient rigidity, Theorem 3.1 and
+Definition 6.2](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md)
+therefore supply no additional attractive invariance or preparation
+claim. The native history and principal-symbol boundaries in
+[Probability, phase transport and holonomy, Theorems 10.3 and
+10.5](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md)
+also persist: rank-two principal covariance is unchanged by a
+spectral fluctuation calculation or a coordinate map. These are
+statements about the specified state variables, not a derivation
+of three physical spatial axes or an autonomous operational
+interface. $\square$
+
+**Source correspondence 43.3 (classical overlap and the native increment).**
+The differentiated native estimates (39.1)--(39.4), the positive
+centered compactness argument (40.3)--(40.9), and their full-form
+consequences (41.1)--(42.4) are ordinary mathematical deductions
+from the exact native suppliers. They extend the unscaled endpoint
+of §§35--37 without revising it. The original scalar ground data,
+critical times and field profiles, uniform visible separation,
+fixed-parameter simplicity, and complete comparison spectra are
+reused from §§31--37 and [G, §§23,25--29]. They are not new claims
+of this increment.
+
+The classical overlap and its applicability boundaries are as follows.
+
+- G. Teschl, *Mathematical Methods in Quantum Mechanics*, GSM 99,
+  [author text](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf),
+  Theorems 4.10, 5.11 and 6.24 supply respectively form-domain
+  min-max, the semibounded selfadjoint Trotter formula and closed
+  bounded-multiplier perturbations. All perturbations used here are
+  bounded at each fixed parameter, with relative form bound zero.
+  Compact resolvent and the domains are explicitly supplied above
+  before min-max is applied. The one-dimensional oscillator in
+  §8.3, (8.35)--(8.41), supplies its Hermite eigenvalues and normalized
+  Gaussian; the new task is its earned native correspondence.
+- B. Simon, *Semiclassical Analysis of Low Lying Eigenvalues. I.
+  Non-degenerate Minima: Asymptotic Expansions*, Ann. Inst. H.
+  Poincaré A 38 (1983), 295--308,
+  [§1, (A1)--(A4), Theorem 1.1](https://www.numdam.org/item/AIHPA_1983__38_3_295_0.pdf),
+  gives the classical fixed-index harmonic approximation for fixed
+  smooth scalar potentials with finitely many nondegenerate minima
+  and its exterior assumptions. Here only the hidden kinetic scale
+  vanishes, $\varepsilon$ is fixed, the raw field narrows, and the
+  original full square has compensating frequencies. Thus that theorem
+  is not invoked as a direct full-form theorem. Lemma 40.2 and
+  (41.6) supply the required native lower limit and exclusion.
+  The [1984 erratum, p.224](https://www.numdam.org/item/AIHPA_1984__40_2_224_0.pdf)
+  corrects Theorem 5.1's higher-order expansion in a degenerate
+  oscillator level without an additional parity condition. No
+  higher-order or degenerate-level expansion is claimed here.
+- A. Martinez, *Développements asymptotiques dans l'approximation de
+  Born-Oppenheimer*, Journées Équations aux dérivées partielles
+  (1988), article X,
+  [§2, (H1)--(H4) and stated theorem](https://proceedings.centre-mersenne.org/item/10.5802/jedp.354.pdf),
+  considers $-h^2\Delta_x-\Delta_y+V$ on Euclidean product spaces.
+  Its smooth lower-bounded potential, derivative/common-domain
+  conditions, unique nondegenerate lowest-band minimum and exterior
+  and discrete-fibre assumptions are material hypotheses. They do
+  not automatically cover the original completed degenerate form,
+  its Dirichlet cylinder or its moving raw field. The article refers
+  elsewhere for its theorem's proof; it is a comparison of methods,
+  not a proof supplier used to bypass (39.3) or (40.4).
+- J. Lampart and S. Teufel, *The adiabatic limit of Schrödinger
+  operators on fibre bundles*,
+  [arXiv:1402.0382v2, Conditions 1--3, Proposition 2.5 and §4.2](https://arxiv.org/pdf/1402.0382v2),
+  treat Riemannian fibre bundles with compact fibres, allowed
+  Dirichlet fibre boundary, complete base, bounded geometry, a
+  uniformly isolated eigenband and uniform coefficient bounds.
+  Proposition 2.5's exclusion of other bands also uses the stated
+  lower bound on the horizontal perturbation. The original full
+  rank-two principal form is not a Riemannian Laplacian on its
+  four-coordinate state space. No direct application of that theorem
+  or general adiabatic norm-resolvent estimate is asserted. The
+  native full-frequency exclusion and centered compactness needed
+  here have instead been proved in (41.6) and Lemma 40.2.
+
+Harmonic localization, Hermite spectra, fast-band separation and
+variational compactness are classical methods. The substantive
+native increment is the correspondence at the actual centered
+spacing scale for both original fields and the probability law of
+actual full grounds, including all the original frequencies and raw
+normalizations. This is a `repo-derived` application and derivation;
+no global priority or exhaustive no-overlap assertion is made.
+The singular fixed-pole comparison in
+[Fixed-pole strict ground-energy gap, Theorem 7.2 and Boundary
+8.2](FIB_NATIVE_FIXED_POLE_STRICT_GROUND_ENERGY_GAP.md)
+and the small-coupling singular restricted limit in
+[Observation quotient, Theorem 11.1](FIB_NATIVE_OBSERVATION_QUOTIENT_GREEN_ESCAPE.md)
+retain their different hypotheses and are not substituted for the
+critical-cutoff full forms.
+
+The conclusions here are ordinary proofs, without a claim of Lean
+verification or physical validation. Their exact scope is fixed-index
+centered spacings and the normalized ground fluctuation law for the
+two stated critical families and every fixed original datum. They do
+not assert growing-index or Weyl laws, an absolute subleading
+expansion about the frozen scalar energy, general norm-resolvent
+convergence, another cutoff family, uniformity in a further parameter
+limit, empirical spatial selection, a preparation or acquisition
+procedure, or many-body stability. None of those assertions is
+needed in (41.2) or (42.2).
+
