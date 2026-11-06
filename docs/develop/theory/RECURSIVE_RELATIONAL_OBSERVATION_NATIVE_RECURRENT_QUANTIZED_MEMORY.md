@@ -183,7 +183,7 @@ p_0'(t)=-2\alpha\operatorname{Im}(De^{i\alpha t}).
 \tag{3.2}
 $$
 
-The opposite mass is the constant block mass minus $p_0(t)$. There are at most two monotone phases. The exact signs of $\operatorname{Im}D$ and $\operatorname{Im}(D\zeta)$ decide an interior extremum; its value, when present, is $b\pm2\sqrt{E_D}$. Zero endpoint derivatives are endpoint turns, not additional phases. A departing mass decreasing from $d_0>0$ to $d_1\ge0$ has flip probability
+The opposite mass is the constant block mass minus $p_0(t)$. When $p_0$ increases, $q_1$ is the departing row and $q_0$ is absorbing; when $p_0$ decreases, $q_0$ is the departing row and $q_1$ is absorbing. There are at most two monotone phases. The exact signs of $\operatorname{Im}D$ and $\operatorname{Im}(D\zeta)$ decide an interior extremum; its value, when present, is $b\pm2\sqrt{E_D}$. Zero endpoint derivatives are endpoint turns, not additional phases. A departing mass decreasing from $d_0>0$ to $d_1\ge0$ has flip probability
 
 $$
 f=1-d_1/d_0.
@@ -211,7 +211,7 @@ Finite precision (2.12)–(2.16) gives the exact native phase holding and radica
 
 ## 4. Square domination without a square-law runtime
 
-**Definition 4.1 (comparison shadows).** For a fixed program, first consider the mathematical rounded process using Definition 3.1's exact native phase probabilities instead of (3.4). Its center updates and read remain unchanged. Its configuration need not have the center's square marginal.
+**Definition 4.1 (comparison shadows).** For a fixed program, first consider the mathematical rounded process using Definition 3.1's exact native phase probabilities instead of (3.4). Its center updates and read remain unchanged. Given the arrived word and the record, the center is deterministic: pulse reencoding depends on $n,j$ alone, and only the literal read selects a record projection using $q$. Thus there is one center direction per record branch, irrespective of the preceding hidden configuration history. Its configuration need not have the center's square marginal.
 
 For the proof let $z$ initially be $e_{q_{\rm r}}$, evolving by the exact original unitaries. At the read replace it by the two subnormalized vectors $z_i=M_iz$. These have their true unconditional branch norms; never normalize a zero $z_i$. Let $w$ initially be the same ready vector. It evolves by the same unitaries, but at each reencoding it keeps its norm and takes the new center's direction. At the read split it into $M_0w,M_1w$ first, then reencode each nonzero component keeping that component's norm. A zero shadow stays the zero vector. At every stage
 
