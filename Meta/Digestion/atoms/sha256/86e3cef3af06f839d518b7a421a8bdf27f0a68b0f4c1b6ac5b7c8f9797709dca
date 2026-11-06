@@ -1,0 +1,3 @@
+**【编者局部说明：素数端点及高层条件】** 第一结论是所有素数 $p\le T$ 均出现，第二结论是所有已出现素数均满足 $p<T$；若 $T$ 恰为素数，两者立即矛盾，所以实际终点的 $T$ 不可能是素数。下文对 $j\ge2$ 使用 $p^j\le T\Rightarrow\log p\le(\log T)/j\le(\log T)/2$。并且 $\log(1+u)>u/(1+u)$ 给出 $\lambda_{p,j}>1/(1+p+\cdots+p^j)$。这补足定理 7 的比较；这些层严格越过价格阈值，由 (23) 必须已取。
+<!-- editorial-note:end support-and-prime-powers -->
+

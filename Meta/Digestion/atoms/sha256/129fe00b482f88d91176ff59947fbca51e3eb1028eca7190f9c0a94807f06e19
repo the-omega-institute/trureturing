@@ -1,0 +1,43 @@
+### AURIC 尾误差
+
+令
+
+$$
+q_h=1-\prod_{j\le h}(1-b_j).
+$$
+
+仍有
+
+$$
+q_{h+1}=q_h+(1-q_h)b_{h+1}.
+$$
+
+如果尾和有上界
+
+$$
+\sum_{j>h}b_j\le\tau_h,
+$$
+
+则
+
+<a id="eq-35"></a>
+
+$$
+\boxed{
+0\le(1-W)-q_h\le(1-q_h)\tau_h.
+}
+\tag{35}
+$$
+
+<!-- editorial-note:start tail-certificate -->
+**【编者局部说明：尾证书的严格性】** 记尾乘积为 $P_{>h}$，则 $(1-W)-q_h=(1-q_h)(1-P_{>h})$；有限乘积的 $1-\prod(1-b_j)\le\sum b_j$ 取极限后给出 (35)。因此所列严格有限深度条件蕴含 $W>r$，可覆盖该指定素数族所有尚未展开的有限支撑分支；有限前缀本身没有认证未给出上界的尾部。
+<!-- editorial-note:end tail-certificate -->
+
+所以一个有限深度的证书
+
+$$
+q_h+(1-q_h)\tau_h<1-r
+$$
+
+就已经负责全部未展开分支。
+
