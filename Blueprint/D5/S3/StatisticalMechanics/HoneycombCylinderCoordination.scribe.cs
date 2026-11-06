@@ -94,7 +94,7 @@ internal sealed class HoneycombCylinderCoordinationDocument : IScribeDocumentDef
                         + "Since 1−X has constant coefficient one, it is a unit in the integer "
                         + "formal series ring. Multiplying by its square gives exactly the "
                         + "displayed equivalent cleared identity. No convergence hypothesis "
-                        + "or statement about a physical nanotube is involved.")))))));
+                        + "or statement about a physical nanotube is involved."))), DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("sloane329512"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string name, string title, Formula formula,
         string commentary) => Describe.Lean(DescribeId.Create(id),
