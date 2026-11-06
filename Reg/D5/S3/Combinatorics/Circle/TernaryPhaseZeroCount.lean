@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Combinatorics.Circle.TernaryPhaseZeroCount
 
+/-! Source-bound audit of the complete ternary physical-label count. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -51,13 +53,12 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
   refine ⟨1, (fun _ => 0), (fun _ => 1), ?_⟩
   have hz := zero_subsets_card 1 (fun _ => 0) (by simp)
   have ho := zero_subsets_card 1 (fun _ => 1) (by simp)
-  norm_num at hz ho
   change (Finset.univ.filter (fun A : Finset (Fin 1) =>
     (∑ _i ∈ A, (0 : ℤ)) = 0)).card ≠
       (Finset.univ.filter (fun A : Finset (Fin 1) =>
         (∑ _i ∈ A, (1 : ℤ)) = 0)).card
   rw [hz, ho]
-  decide
+  norm_num
 
 def familyRegistration : Registration arena (type_of% (@zero_subsets_card)) where
   actual := actual
@@ -68,7 +69,7 @@ def familyRegistration : Registration arena (type_of% (@zero_subsets_card)) wher
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro j hji
-      exact (hji (Subsingleton.elim j i)).elim
+      exact (hji (@Subsingleton.elim Unit _ j i)).elim
     · intro e
       exact nomatch e
   dependence := actual_dependence
