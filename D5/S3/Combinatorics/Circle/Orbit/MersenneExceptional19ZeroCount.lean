@@ -9,7 +9,7 @@
 -/
 module
 public import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19ZeroCountRows
-import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19ZeroCountRows.Basic
+import all D5.S3.Combinatorics.Circle.MersenneExceptional19ZeroCountRows.Basic
 import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19ZeroCountRows
 public import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19Stabilizer
 import all D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19Stabilizer
@@ -34,9 +34,230 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.MersenneExceptional19ZeroCount
 
 open SourceWidth ZeroSumSubsets
-open private rowB X Z Hjump rowValue rowZeroCount normalizedRow rowValue_normalized from D5.S3.Combinatorics.Circle.MersenneExceptional19ZeroCountRows.Basic open private row_zero_count from D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19ZeroCountRows open scoped BigOperators open private from D5.S3.Combinatorics.Circle.Orbit.ZeroSumSubsets
-open D5.S3.Combinatorics.Circle.ZeroSumSubsets (mask_surjective) open private phase_scaled_gcd from D5.S3.Combinatorics.Circle.Orbit.MersennePhaseNoncyclicFamily private def d (r : ℕ) : ℕ := 18 * r + 12 private def B (r : ℕ) : ℕ := 2 ^ d r private def N (r : ℕ) : ℕ := B r ^ 3 - 1 private def (r : ℕ) : ℕ := (B r - 1) * (2 * B r - 3) private def C (b : ℕ) : ℕ := b ^ 2 + b + 1 private def Q (r : ℕ) : ℕ := C (B r) / 19 private def K (r : ℕ) : ℕ := 19 * (B r - 1) private def M (r : ℕ) : ℕ := (B r + 8) / 152 private def L (m : ℕ) : ℕ := 152 * m - 9 private def physicalZero (r : ℕ) : Finset (Finset (Fin (3 * d r))) := Finset.univ.filter (fun A => (∑ i ∈ A, actualSource (3 * d r) (seed r) i) = 0) private theorem d_lower (r : ℕ) : 3 ≤ d r := by dsimp [d]; omega private theorem d_positive (r : ℕ) : 0 < d r := by have := d_lower r omega private theorem b_lower (r : ℕ) : 4096 ≤ B r := by have he : 12 ≤ d r := by dsimp [d]; omega have hp : (2 : ℕ) ^ 12 ≤ 2 ^ d r := Nat.pow_le_pow_right (by decide) he norm_num at hp exact hp private theorem b_multiple_eight (r : ℕ) : 8 ∣ B r := by have hd := d_lower r refine ⟨2 ^ (d r - 3), ?_⟩ change 2 ^ d r = 8 * 2 ^ (d r - 3) calc 2 ^ d r = 2 ^ (3 + (d r - 3)) := by congr 1; omega _ = 8 * 2 ^ (d r - 3) := by rw [pow_add]; norm_num private theorem b_mod_nineteen (r : ℕ) : B r % 19 = 11 := by change (2 : ℕ) ^ (18 * r + 12) % 19 = 11 rw [pow_add, pow_mul, Nat.mul_mod] have hpow : ((2 : ℕ) ^ 18) ^ r % 19 = 1 := by rw [Nat.pow_mod] norm_num rw [hpow] norm_num private theorem b_add_eight (r : ℕ) : B r + 8 = 152 * M r := by have h8 : B r % 8 = 0 := Nat.mod_eq_zero_of_dvd (b_multiple_eight r) have h19 := b_mod_nineteen r have h152 : (B r + 8) % 152 = 0 := by omega have hdiv := Nat.mod_add_div (B r + 8) 152 dsimp [M] omega private theorem b_affine (r : ℕ) : B r = 152 * M r - 8 := by have := b_add_eight r omega private theorem m_lower (r : ℕ) : 27 ≤ M r := by have := b_add_eight r have := b_lower r omega private theorem original_seed (r : ℕ) : (2 ^ d r - 1) * (2 ^ (d r + 1) - 3) = r := by simp only [seed, B, pow_succ, Nat.mul_comm] private theorem n_pow (r : ℕ) : N r = 2 ^ (3 * d r) - 1 := by change ((2 : ℕ) ^ d r) ^ 3 - 1 = 2 ^ (3 * d r) - 1 rw [← pow_mul, Nat.mul_comm (d r) 3] private theorem n_positive (r : ℕ) : 0 < N r := by have hd := d_positive r have hp := Nat.one_lt_two_pow (show 3 * d r ≠ 0 by omega) rw [n_pow] omega private theorem n_factor (r : ℕ) : N r = (B r - 1) * C (B r) := by have hb : 1 ≤ B r := by have := b_lower r; omega have he : B r - 1 + 1 = B r := Nat.sub_add_cancel hb have hp : (B r - 1 + 1) ^ 3 = (B r - 1) * C (B r - 1 + 1) + 1 := by dsimp [C]; ring rw [he] at hp dsimp [N] omega private theorem gcd_exceptional (r : ℕ) : Nat.gcd (seed r) (N r) = K r := by have hb := b_lower r have hm := b_mod_nineteen r have hdiv : 19 ∣ 2 ^ (d r + 1) - 3 := by rw [pow_succ] change 19 ∣ B r * 2 - 3 omega have hg := phase_scaled_gcd (d r) (d_positive r) rw [Nat.gcd_eq_right hdiv, original_seed r, ← n_pow r] at hg simpa only [B, K, Nat.mul_comm] using hg private theorem q_eq_quotient (r : ℕ) : N r / Nat.gcd (seed r) (N r) = Q r := by rw [gcd_exceptional, n_factor] change (B r - 1) * C (B r) / (19 * (B r - 1)) = C (B r) / 19 rw [Nat.mul_comm 19 (B r - 1)] exact Nat.mul_div_mul_left _ _ (by have := b_lower r; omega) private theorem q_positive (r : ℕ) : 0 < Q r := by rw [← q_eq_quotient r] exact Nat.div_gcd_pos_of_pos_right (seed r) (n_positive r) private theorem q_mul_k (r : ℕ) : Q r * K r = N r := by have h := Nat.div_mul_cancel (Nat.gcd_dvd_right (seed r) (N r)) rw [q_eq_quotient r, gcd_exceptional r] at h exact h private theorem zero_sum_implies_candidate (r : ℕ) (A : Finset (Fin (3 * d r))) (hA : (∑ i ∈ A, actualSource (3 * d r) (seed r) i) = 0) : Q r ∣ mask A := by have hd := zero_mask_dvd A hA rw [← n_pow r] at hd have hq := quotient_dvd (n_positive r) hd rwa [q_eq_quotient r] at hq /- The inverse is selected from the SEALED physical mask bijection. This is not a new binary-set foundation; every physical label is retained. -/ private noncomputable def subsetOfMask (r m : ℕ) : Finset (Fin (3 * d r)) := if hm : m < 2 ^ (3 * d r) then (mask_surjective (3 * d r) m hm).choose else ∅ private theorem mask_subsetOfMask (r m : ℕ) (hm : m < 2 ^ (3 * d r)) : mask (subsetOfMask r m) = m := by simp only [subsetOfMask, dite_eq_left hm] exact (mask_surjective (3 * d r) m hm).choose_spec private theorem subsetOfMask_mask (r : ℕ) (A : Finset (Fin (3 * d r))) : subsetOfMask r (mask A) = A := by apply mask_injective (3 * d r) apply mask_subsetOfMask have hb := mask_bound A have hp : 1 ≤ (2 : ℕ) ^ (3 * d r) := Nat.one_le_two_pow omega private noncomputable def sumAtMask (r m : ℕ) : ℤ := ∑ i ∈ subsetOfMask r m, actualSource (3 * d r) (seed r) i private theorem sumAtMask_mask (r : ℕ) (A : Finset (Fin (3 * d r))) : sumAtMask r (mask A) = ∑ i ∈ A, actualSource (3 * d r) (seed r) i := by unfold sumAtMask rw [subsetOfMask_mask r A] private theorem full_mask_is_zero (r : ℕ) : (∑ i : Fin (3 * d r), actualSource (3 * d r) (seed r) i) = 0 := by exact (source_cycle (show 0 < 3 * d r by have := d_positive r; omega) (seed r)).2.1 private theorem sumAtMask_full (r : ℕ) : sumAtMask r (N r) = 0 := by have h := sumAtMask_mask r (Finset.univ : Finset (Fin (3 * d r))) rw [mask_full, ← n_pow r] at h exact h.trans (full_mask_is_zero r) private noncomputable def candidateMasks (r : ℕ) : Finset ℕ := (Finset.range (K r + 1)).filter (fun k => sumAtMask r (k * Q r) = 0) /- This sieve is an exact physical-cardinality reduction, BEFORE the open carry/profile computation. It does not replace literal zero by divisibility. -/ private theorem physical_candidate_card (r : ℕ) : (physicalZero r).card = (candidateMasks r).card := by classical unfold candidateMasks apply Finset.card_nbij (fun A : Finset (Fin (3 * d r)) => mask A / Q r) · intro A hA have hz := (Finset.mem_filter.mp hA).2 have hd := zero_sum_implies_candidate r A hz have hb := mask_bound A rw [← n_pow r] at hb have hu := Nat.div_le_div_right hb (c := Q r) rw [← q_mul_k r, Nat.mul_div_cancel_left _ (q_positive r)] at hu dsimp only refine Finset.mem_filter.mpr ⟨Finset.mem_range.mpr (by omega), ?_⟩ rw [Nat.div_mul_cancel hd, sumAtMask_mask r A] exact hz · intro A hA D hD he dsimp only at he have hdA := zero_sum_implies_candidate r A (Finset.mem_filter.mp hA).2 have hdD := zero_sum_implies_candidate r D (Finset.mem_filter.mp hD).2 apply mask_injective (3 * d r) calc mask A = mask A / Q r * Q r := (Nat.div_mul_cancel hdA).symm _ = mask D / Q r * Q r := by rw [he] _ = mask D := Nat.div_mul_cancel hdD · intro k hk have hk' := Finset.mem_filter.mp hk have hkbound : k ≤ K r := by have := Finset.mem_range.mp hk'.1; omega have hm : k * Q r ≤ N r := by calc k * Q r ≤ K r * Q r := Nat.mul_le_mul_right _ hkbound _ = N r := by rw [Nat.mul_comm, q_mul_k r] have hm' : k * Q r < 2 ^ (3 * d r) := by rw [n_pow r] at hm have hp : 1 ≤ (2 : ℕ) ^ (3 * d r) := Nat.one_le_two_pow omega refine ⟨subsetOfMask r (k * Q r), ?_, ?_⟩ · apply Finset.mem_filter.mpr refine ⟨Finset.mem_univ _, ?_⟩ change sumAtMask r (k * Q r) = 0 exact hk'.2 · dsimp only rw [mask_subsetOfMask r _ hm', Nat.mul_div_cancel _ (q_positive r)] /- Correct five signed floors. EACH Nat quotient is cast BEFORE subtraction. -/ private def carryCorrection (r m : ℕ) : ℤ := ((2 * m / B r : ℕ) : ℤ) - ((8 * m / B r ^ 2 : ℕ) : ℤ) + ((4 * m / B r ^ 2 : ℕ) : ℤ) - ((m / B r ^ 2 : ℕ) : ℤ) + ((4 * m / B r ^ 3 : ℕ) : ℤ) open private from D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19Stabilizer
-open D5.S3.Combinatorics.Circle.MersenneExceptional19Stabilizer (seed seed degree base total slice charge mask_slices actual_sum_blocks)
+open private rowB X Z Hjump rowValue rowZeroCount normalizedRow rowValue_normalized
+  from D5.S3.Combinatorics.Circle.MersenneExceptional19ZeroCountRows.Basic
+open private row_zero_count from D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19ZeroCountRows
+open scoped BigOperators
+
+open D5.S3.Combinatorics.Circle.ZeroSumSubsets (mask_surjective)
+open private phase_scaled_gcd
+  from D5.S3.Combinatorics.Circle.Orbit.MersennePhaseNoncyclicFamily
+
+private def d (r : ℕ) : ℕ := 18 * r + 12
+private def B (r : ℕ) : ℕ := 2 ^ d r
+private def N (r : ℕ) : ℕ := B r ^ 3 - 1
+private def seed (r : ℕ) : ℕ := (B r - 1) * (2 * B r - 3)
+private def C (b : ℕ) : ℕ := b ^ 2 + b + 1
+private def Q (r : ℕ) : ℕ := C (B r) / 19
+private def K (r : ℕ) : ℕ := 19 * (B r - 1)
+private def M (r : ℕ) : ℕ := (B r + 8) / 152
+private def L (m : ℕ) : ℕ := 152 * m - 9
+
+private def physicalZero (r : ℕ) : Finset (Finset (Fin (3 * d r))) :=
+  Finset.univ.filter (fun A =>
+    (∑ i ∈ A, actualSource (3 * d r) (seed r) i) = 0)
+
+private theorem d_lower (r : ℕ) : 3 ≤ d r := by dsimp [d]; omega
+
+private theorem d_positive (r : ℕ) : 0 < d r := by
+  have := d_lower r
+  omega
+
+private theorem b_lower (r : ℕ) : 4096 ≤ B r := by
+  have he : 12 ≤ d r := by dsimp [d]; omega
+  have hp : (2 : ℕ) ^ 12 ≤ 2 ^ d r :=
+    Nat.pow_le_pow_right (by decide) he
+  norm_num at hp
+  exact hp
+
+private theorem b_multiple_eight (r : ℕ) : 8 ∣ B r := by
+  have hd := d_lower r
+  refine ⟨2 ^ (d r - 3), ?_⟩
+  change 2 ^ d r = 8 * 2 ^ (d r - 3)
+  calc
+    2 ^ d r = 2 ^ (3 + (d r - 3)) := by congr 1; omega
+    _ = 8 * 2 ^ (d r - 3) := by rw [pow_add]; norm_num
+
+private theorem b_mod_nineteen (r : ℕ) : B r % 19 = 11 := by
+  change (2 : ℕ) ^ (18 * r + 12) % 19 = 11
+  rw [pow_add, pow_mul, Nat.mul_mod]
+  have hpow : ((2 : ℕ) ^ 18) ^ r % 19 = 1 := by
+    rw [Nat.pow_mod]
+    norm_num
+  rw [hpow]
+  norm_num
+
+private theorem b_add_eight (r : ℕ) : B r + 8 = 152 * M r := by
+  have h8 : B r % 8 = 0 := Nat.mod_eq_zero_of_dvd (b_multiple_eight r)
+  have h19 := b_mod_nineteen r
+  have h152 : (B r + 8) % 152 = 0 := by omega
+  have hdiv := Nat.mod_add_div (B r + 8) 152
+  dsimp [M]
+  omega
+
+private theorem b_affine (r : ℕ) : B r = 152 * M r - 8 := by
+  have := b_add_eight r
+  omega
+
+private theorem m_lower (r : ℕ) : 27 ≤ M r := by
+  have := b_add_eight r
+  have := b_lower r
+  omega
+
+private theorem original_seed (r : ℕ) :
+    (2 ^ d r - 1) * (2 ^ (d r + 1) - 3) = seed r := by
+  simp only [seed, B, pow_succ, Nat.mul_comm]
+
+private theorem n_pow (r : ℕ) : N r = 2 ^ (3 * d r) - 1 := by
+  change ((2 : ℕ) ^ d r) ^ 3 - 1 = 2 ^ (3 * d r) - 1
+  rw [← pow_mul, Nat.mul_comm (d r) 3]
+
+private theorem n_positive (r : ℕ) : 0 < N r := by
+  have hd := d_positive r
+  have hp := Nat.one_lt_two_pow (show 3 * d r ≠ 0 by omega)
+  rw [n_pow]
+  omega
+
+private theorem n_factor (r : ℕ) : N r = (B r - 1) * C (B r) := by
+  have hb : 1 ≤ B r := by have := b_lower r; omega
+  have he : B r - 1 + 1 = B r := Nat.sub_add_cancel hb
+  have hp : (B r - 1 + 1) ^ 3 =
+      (B r - 1) * C (B r - 1 + 1) + 1 := by dsimp [C]; ring
+  rw [he] at hp
+  dsimp [N]
+  omega
+
+private theorem gcd_exceptional (r : ℕ) :
+    Nat.gcd (seed r) (N r) = K r := by
+  have hb := b_lower r
+  have hm := b_mod_nineteen r
+  have hdiv : 19 ∣ 2 ^ (d r + 1) - 3 := by
+    rw [pow_succ]
+    change 19 ∣ B r * 2 - 3
+    omega
+  have hg := phase_scaled_gcd (d r) (d_positive r)
+  rw [Nat.gcd_eq_right hdiv, original_seed r, ← n_pow r] at hg
+  simpa only [B, K, Nat.mul_comm] using hg
+
+private theorem q_eq_quotient (r : ℕ) :
+    N r / Nat.gcd (seed r) (N r) = Q r := by
+  rw [gcd_exceptional, n_factor]
+  change (B r - 1) * C (B r) / (19 * (B r - 1)) = C (B r) / 19
+  rw [Nat.mul_comm 19 (B r - 1)]
+  exact Nat.mul_div_mul_left _ _ (by have := b_lower r; omega)
+
+private theorem q_positive (r : ℕ) : 0 < Q r := by
+  rw [← q_eq_quotient r]
+  exact Nat.div_gcd_pos_of_pos_right (seed r) (n_positive r)
+
+private theorem q_mul_k (r : ℕ) : Q r * K r = N r := by
+  have h := Nat.div_mul_cancel (Nat.gcd_dvd_right (seed r) (N r))
+  rw [q_eq_quotient r, gcd_exceptional r] at h
+  exact h
+
+private theorem zero_sum_implies_candidate (r : ℕ)
+    (A : Finset (Fin (3 * d r)))
+    (hA : (∑ i ∈ A, actualSource (3 * d r) (seed r) i) = 0) :
+    Q r ∣ mask A := by
+  have hd := zero_mask_dvd A hA
+  rw [← n_pow r] at hd
+  have hq := quotient_dvd (n_positive r) hd
+  rwa [q_eq_quotient r] at hq
+
+/- The inverse is selected from the SEALED physical mask bijection. This is
+   not a new binary-set foundation; every physical label is retained. -/
+private noncomputable def subsetOfMask (r m : ℕ) : Finset (Fin (3 * d r)) :=
+  if hm : m < 2 ^ (3 * d r) then
+    (mask_surjective (3 * d r) m hm).choose
+  else ∅
+
+private theorem mask_subsetOfMask (r m : ℕ) (hm : m < 2 ^ (3 * d r)) :
+    mask (subsetOfMask r m) = m := by
+  simp only [subsetOfMask, dite_eq_left hm]
+  exact (mask_surjective (3 * d r) m hm).choose_spec
+
+private theorem subsetOfMask_mask (r : ℕ) (A : Finset (Fin (3 * d r))) :
+    subsetOfMask r (mask A) = A := by
+  apply mask_injective (3 * d r)
+  apply mask_subsetOfMask
+  have hb := mask_bound A
+  have hp : 1 ≤ (2 : ℕ) ^ (3 * d r) := Nat.one_le_two_pow
+  omega
+
+private noncomputable def sumAtMask (r m : ℕ) : ℤ :=
+  ∑ i ∈ subsetOfMask r m, actualSource (3 * d r) (seed r) i
+
+private theorem sumAtMask_mask (r : ℕ) (A : Finset (Fin (3 * d r))) :
+    sumAtMask r (mask A) = ∑ i ∈ A, actualSource (3 * d r) (seed r) i := by
+  unfold sumAtMask
+  rw [subsetOfMask_mask r A]
+
+private theorem full_mask_is_zero (r : ℕ) :
+    (∑ i : Fin (3 * d r), actualSource (3 * d r) (seed r) i) = 0 := by
+  exact (source_cycle (show 0 < 3 * d r by have := d_positive r; omega)
+    (seed r)).2.1
+
+private theorem sumAtMask_full (r : ℕ) : sumAtMask r (N r) = 0 := by
+  have h := sumAtMask_mask r (Finset.univ : Finset (Fin (3 * d r)))
+  rw [mask_full, ← n_pow r] at h
+  exact h.trans (full_mask_is_zero r)
+
+private noncomputable def candidateMasks (r : ℕ) : Finset ℕ :=
+  (Finset.range (K r + 1)).filter (fun k => sumAtMask r (k * Q r) = 0)
+
+/- This sieve is an exact physical-cardinality reduction, BEFORE the open
+   carry/profile computation. It does not replace literal zero by divisibility. -/
+private theorem physical_candidate_card (r : ℕ) :
+    (physicalZero r).card = (candidateMasks r).card := by
+  classical
+  unfold candidateMasks
+  apply Finset.card_nbij (fun A : Finset (Fin (3 * d r)) => mask A / Q r)
+  · intro A hA
+    have hz := (Finset.mem_filter.mp hA).2
+    have hd := zero_sum_implies_candidate r A hz
+    have hb := mask_bound A
+    rw [← n_pow r] at hb
+    have hu := Nat.div_le_div_right hb (c := Q r)
+    rw [← q_mul_k r, Nat.mul_div_cancel_left _ (q_positive r)] at hu
+    dsimp only
+    refine Finset.mem_filter.mpr ⟨Finset.mem_range.mpr (by omega), ?_⟩
+    rw [Nat.div_mul_cancel hd, sumAtMask_mask r A]
+    exact hz
+  · intro A hA D hD he
+    dsimp only at he
+    have hdA := zero_sum_implies_candidate r A (Finset.mem_filter.mp hA).2
+    have hdD := zero_sum_implies_candidate r D (Finset.mem_filter.mp hD).2
+    apply mask_injective (3 * d r)
+    calc
+      mask A = mask A / Q r * Q r := (Nat.div_mul_cancel hdA).symm
+      _ = mask D / Q r * Q r := by rw [he]
+      _ = mask D := Nat.div_mul_cancel hdD
+  · intro k hk
+    have hk' := Finset.mem_filter.mp hk
+    have hkbound : k ≤ K r := by have := Finset.mem_range.mp hk'.1; omega
+    have hm : k * Q r ≤ N r := by
+      calc
+        k * Q r ≤ K r * Q r := Nat.mul_le_mul_right _ hkbound
+        _ = N r := by rw [Nat.mul_comm, q_mul_k r]
+    have hm' : k * Q r < 2 ^ (3 * d r) := by
+      rw [n_pow r] at hm
+      have hp : 1 ≤ (2 : ℕ) ^ (3 * d r) := Nat.one_le_two_pow
+      omega
+    refine ⟨subsetOfMask r (k * Q r), ?_, ?_⟩
+    · apply Finset.mem_filter.mpr
+      refine ⟨Finset.mem_univ _, ?_⟩
+      change sumAtMask r (k * Q r) = 0
+      exact hk'.2
+    · dsimp only
+      rw [mask_subsetOfMask r _ hm', Nat.mul_div_cancel _ (q_positive r)]
+
+/- Correct five signed floors. EACH Nat quotient is cast BEFORE subtraction. -/
+private def carryCorrection (r m : ℕ) : ℤ :=
+  ((2 * m / B r : ℕ) : ℤ) - ((8 * m / B r ^ 2 : ℕ) : ℤ) +
+  ((4 * m / B r ^ 2 : ℕ) : ℤ) - ((m / B r ^ 2 : ℕ) : ℤ) +
+  ((4 * m / B r ^ 3 : ℕ) : ℤ)
+
+open D5.S3.Combinatorics.Circle.MersenneExceptional19Stabilizer (degree base total slice charge mask_slices actual_sum_blocks)
 
 private theorem scale_div (x b q : ℤ) (hq : 0 < q) (hdiv : q ∣ b) :
     q * x / b = x / (b / q) := by

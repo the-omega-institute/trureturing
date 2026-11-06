@@ -142,7 +142,7 @@ noncomputable def classificationAudit :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.MersennePhaseNoncyclicFamily
+    owner := `D5.S3.Combinatorics.Circle.Orbit.MersennePhaseNoncyclicFamily
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -178,7 +178,7 @@ noncomputable def countAudit :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.MersennePhaseNoncyclicFamily
+    owner := `D5.S3.Combinatorics.Circle.Orbit.MersennePhaseNoncyclicFamily
     definition := none
     coordinates := #[]
     readouts := #[{

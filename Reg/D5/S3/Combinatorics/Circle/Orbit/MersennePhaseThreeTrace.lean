@@ -95,7 +95,7 @@ noncomputable def registration_1 :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.MersennePhaseThreeTrace
+    owner := `D5.S3.Combinatorics.Circle.Orbit.MersennePhaseThreeTrace
     definition := none
     coordinates := #[0]
     readouts := #[{

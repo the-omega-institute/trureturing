@@ -135,7 +135,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.NarrowDoublingOrbit
+    owner := `D5.S3.Combinatorics.Circle.Orbit.NarrowDoublingOrbit
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -247,7 +247,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.NarrowDoublingOrbit
+    owner := `D5.S3.Combinatorics.Circle.Orbit.NarrowDoublingOrbit
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -358,7 +358,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.NarrowDoublingOrbit
+    owner := `D5.S3.Combinatorics.Circle.Orbit.NarrowDoublingOrbit
     definition := none
     coordinates := #[0]
     readouts := #[{

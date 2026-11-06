@@ -186,7 +186,7 @@ def classification_audit :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.TwoBitZeroSubsets
+    owner := `D5.S3.Combinatorics.Circle.Orbit.TwoBitZeroSubsets
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -224,7 +224,7 @@ def divisibility_audit :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.TwoBitZeroSubsets
+    owner := `D5.S3.Combinatorics.Circle.Orbit.TwoBitZeroSubsets
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -262,7 +262,7 @@ def count_audit :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.TwoBitZeroSubsets
+    owner := `D5.S3.Combinatorics.Circle.Orbit.TwoBitZeroSubsets
     definition := none
     coordinates := #[0]
     readouts := #[{

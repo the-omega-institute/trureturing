@@ -96,7 +96,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.TernaryPhaseZeroCount
+    owner := `D5.S3.Combinatorics.Circle.Orbit.TernaryPhaseZeroCount
     definition := none
     coordinates := #[0]
     readouts := #[{

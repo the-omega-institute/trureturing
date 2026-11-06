@@ -202,7 +202,7 @@ noncomputable def digitAudit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.RadixFourDigitBalance
+    owner := `D5.S3.Combinatorics.Circle.Orbit.RadixFourDigitBalance
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -238,7 +238,7 @@ noncomputable def spectrumAudit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.RadixFourDigitBalance
+    owner := `D5.S3.Combinatorics.Circle.Orbit.RadixFourDigitBalance
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -273,7 +273,7 @@ noncomputable def zeroAudit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.RadixFourDigitBalance
+    owner := `D5.S3.Combinatorics.Circle.Orbit.RadixFourDigitBalance
     definition := none
     coordinates := #[]
     readouts := #[{

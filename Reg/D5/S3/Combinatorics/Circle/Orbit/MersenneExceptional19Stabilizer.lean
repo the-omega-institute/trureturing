@@ -99,7 +99,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.MersenneExceptional19Stabilizer
+    owner := `D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19Stabilizer
     definition := none
     coordinates := #[0, 1]
     readouts := #[{

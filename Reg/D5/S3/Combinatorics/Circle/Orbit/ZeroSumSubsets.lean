@@ -110,7 +110,7 @@ def count_audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.ZeroSumSubsets
+    owner := `D5.S3.Combinatorics.Circle.Orbit.ZeroSumSubsets
     definition := none
     coordinates := #[0]
     readouts := #[
@@ -143,7 +143,7 @@ def blocks_audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.ZeroSumSubsets
+    owner := `D5.S3.Combinatorics.Circle.Orbit.ZeroSumSubsets
     definition := none
     coordinates := #[0]
     readouts := #[
@@ -236,7 +236,7 @@ def carry_audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.ZeroSumSubsets
+    owner := `D5.S3.Combinatorics.Circle.Orbit.ZeroSumSubsets
     definition := none
     coordinates := #[0]
     readouts := #[

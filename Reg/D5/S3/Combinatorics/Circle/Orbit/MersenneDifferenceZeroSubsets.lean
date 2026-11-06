@@ -129,7 +129,7 @@ def classification_audit :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.MersenneDifferenceZeroSubsets
+    owner := `D5.S3.Combinatorics.Circle.Orbit.MersenneDifferenceZeroSubsets
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -171,7 +171,7 @@ def count_audit :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Circle.MersenneDifferenceZeroSubsets
+    owner := `D5.S3.Combinatorics.Circle.Orbit.MersenneDifferenceZeroSubsets
     definition := none
     coordinates := #[0]
     readouts := #[{
