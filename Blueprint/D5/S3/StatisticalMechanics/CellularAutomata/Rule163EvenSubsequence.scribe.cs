@@ -27,7 +27,10 @@ internal sealed class Rule163EvenSubsequenceDocument : IScribeDocumentDefinition
                 SourceAssertions(), "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Proof of the five assertions", Disp(ClaimBody()),
                 "For every positive time n, the entire row is 1 outside [-n,n], and the central word is 100 followed by n-1 copies of 10. Induction checks the three old neighbors at every integer coordinate, including the moving boundaries. Appending 10 multiplies the binary value by 4 and adds 2, so A(n+1)=4*A(n)+2 for n at least 1. Induction gives 6*A(n)+4=7*4^n; the rational closed form holds already at n=1. Substitution at even indices gives the subsequence identity, and eliminating the constant term from two successive first-order equations gives the second-order recurrence. Comparing coefficients of the formal power series uses A(0)=1, A(1)=4 and A(2)=18, then the second-order recurrence in every degree at least 3. The two denominator factors have constant term 1, so the product equation expresses the source rational generating function without analytic convergence assumptions.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("rule-163"),
+                    ResolutionKind.Proved))),
         []));
 
     private static string SourceAssertions() =>
@@ -44,10 +47,11 @@ internal sealed class Rule163EvenSubsequenceDocument : IScribeDocumentDefinition
         "Subtractions in the indices are natural subtraction; the second-order equation and series have integer coefficients.";
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
-        string declaration, DescribeRole role, AssessedProvenance provenance) =>
+        string declaration, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("rule163-" + id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(params string[] names) =>
