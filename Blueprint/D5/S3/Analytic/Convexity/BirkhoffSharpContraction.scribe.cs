@@ -82,7 +82,7 @@ internal sealed class BirkhoffSharpContractionDocument : IScribeDocumentDefiniti
                         Both(AtMost(D(0), K), Less(K, D(1)))))))));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A positive finite rectangular matrix has exact Hilbert image diameter log Theta "
+        "A positive finite rectangular matrix with nonempty row and column types has exact Hilbert image diameter log Theta "
             + "and least nonnegative contraction coefficient (sqrt Theta-1)/(sqrt Theta+1).",
         H("Sharp rectangular Birkhoff contraction"),
         Blocks(
