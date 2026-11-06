@@ -87,7 +87,7 @@ private def plusSlabs (k : ℤ) : ℤ :=
 private def minusSlabs (k : ℤ) : ℤ :=
   if 0 ≤ k then (k + 1) / 4 else (-k) / 4
 
-private def residual (i j p q : ℤ) : ℤ :=
+def residual (i j p q : ℤ) : ℤ :=
   max 0 (max (i - p) (max (j - p) (max (i + j - p)
     (max (-q - i) (max (-q - j) (-q - i - j))))))
 
