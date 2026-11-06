@@ -48,7 +48,7 @@ private lemma score_interpolate {n : ℕ} (H : SimpleGraph (Fin n)) (s : ℤ)
   · have huv : u ≠ v := H.ne_of_adj h
     by_cases hu : u = i <;> by_cases hv : v = i
     · exact False.elim (huv (hu.trans hv.symm))
-    all_goals simp [h, Function.update, hu, hv] <;> ring
+    all_goals (simp [h, Function.update, hu, hv]; ring_nf)
   · simp [h]
 
 private lemma score_endpoint {n : ℕ} (H : SimpleGraph (Fin n)) (s : ℤ)
@@ -216,8 +216,8 @@ private lemma lift_count {n s : ℕ} (H : SimpleGraph (Fin n)) [DecidableRel H.A
       simp [hij, hi, hj, pow_two]
   exact_mod_cast he
 
-/-- Any cut is dominated by a cut consisting of whole blocks. -/
 open Classical in
+/-- Any cut is dominated by a cut consisting of whole blocks. -/
 theorem exists_block_cut {n s : ℕ} (H : SimpleGraph (Fin n)) [DecidableRel H.Adj]
     (hs : 1 ≤ s) (S : Finset (Fin (n * s))) :
     ∃ T : Finset (Fin n),
