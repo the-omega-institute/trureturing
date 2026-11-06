@@ -21,7 +21,7 @@ Its COMMENTS conjecture is:
 > Conjecture: A(n, k) is odd if and only if n is even or (n is odd and k + 2 = 2^j for some j > 0).
 
 The source is [OEIS A323206](https://oeis.org/A323206), with the locator and
-statements in `Library/RecurrenceComposition/luschny2019a323206.md`.
+statements in `Library/PermutationPatterns/luschny2019a323206.md`.
 There is no source DOI or arXiv identifier. The binding finite interpretation is
 
 $$

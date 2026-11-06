@@ -8,7 +8,7 @@ internal sealed class LuschnyA323206ParityDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Recurrence/Invariants/LuschnyA323206Parity.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/RecurrenceComposition/luschny2019a323206");
+        LibraryNoteRef.Create("D5/L/PermutationPatterns/luschny2019a323206");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Ballot coefficients and Catalan parity prove Luschny's A323206 conjecture.",
