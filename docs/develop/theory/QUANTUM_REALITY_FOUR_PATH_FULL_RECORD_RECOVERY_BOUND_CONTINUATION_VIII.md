@@ -1056,3 +1056,425 @@ $$
 几何上，§79 的椭圆把真实曲线之外的点也包了进来，调权无法删去这块多余区域；§80 沿每条真实固定和曲线找到唯一顶点；§81 则在保留同源曲率的凸域上用共同切平面支撑整个目标。存在一张恰好接触最高点的切平面，并不说明它已经低于目标阈值；最后这段高度差仍须在全部剩余人口参数上严格证明。
 
 ## 追加锚（本行以下为增补区）
+
+## 83. 原负分支最大点的符号与坐标定位
+
+**定义 83.1（原有序域与多项式因子）。** 沿用 [Continuation II](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_II.md) Definition 46.1、Lemma 46.2，[Continuation IV](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_IV.md) Definition 57.1 及本卷定义 80.1、81.1 的负号行、固定标签、一个共同反馈、普通转置和全部非负根支；完整三角域仍为 $\mathcal T_x$。以下的 $a=L^2$、$Z=u^2-t^2$、$U,W,T,J$ 均为局部标量，不分别表示原行系数、迹余弦、整体反馈、证书基或固定配对。
+
+置
+
+$$
+q_0=\frac{63}{500},\quad q_1=\frac12,\quad
+h=\frac1{\sqrt2},\quad s=\sqrt{\frac{1-h}{2}},\quad
+c=\sqrt{\frac{1+h}{2}},\quad p=1-q,
+$$
+
+$$
+L=\frac{19}{16}+\frac q2,\quad a=L^2,\quad
+j=(h-s)^2,\quad S=c^2+h^2,\quad H=S+j,\quad
+\Delta=(h+c)^2-(h+s)^2.
+$$
+
+常数恒等式为
+
+$$
+S=1+\frac h2,\quad j=1-\frac h2-2sh,\quad
+H=2-2sh,\quad \Delta=h+2s.
+\tag{83.1}
+$$
+
+最后一式可由正数恒等式 $c-s=2hs$ 得到。令
+
+$$
+\Theta=(h+s)^2+q\Delta-\frac{23}{200}
+=1-\frac h2+2sh+q(h+2s)-\frac{23}{200}.
+$$
+
+原有序域及限制域为
+
+$$
+\Omega_a=\{(u,t):t\ge0,\ u+t\le2,\ 2au-a^2-t^2\ge0\},
+\qquad \mathcal S_a=\Omega_a\cap\{u\le a\}.
+$$
+
+在 $\operatorname{int}\mathcal S_a$ 中定义下列具体多项式因子；本节的 $Z$ 是分母因子，不是原文的迹余弦：
+
+$$
+\begin{aligned}
+\delta&=a-u,& Z&=u^2-t^2,\\
+A&=(2-u)^2-t^2,& E&=a(2u-a)-t^2,\\
+J&=Z^2-4(u-1)\delta^2,\\
+Q&=\delta A(au-t^2)-(2-u)EZ,\\
+r&=sh\,a+\frac{ju}{2}+\frac{ht}{4},&
+z&=S\left(1-\frac u2\right)+\frac{ht}{4}.
+\end{aligned}
+\tag{83.2}
+$$
+
+于是 $R^2=r$、$C^2=z+2chF$，且
+
+$$
+F=\frac12\sqrt{\frac{AE}{Z}},\qquad
+g=\sqrt p\,R+\sqrt q\,C.
+\tag{83.3}
+$$
+
+在此域中 $\delta,Z,A,E,F,r,C$ 均严格为正。定义
+
+$$
+U=hQ+2jtJ,\qquad W=2StJ-hQ,\qquad T=pU+qW.
+\tag{83.4}
+$$
+
+**定理 83.2（最大点的代数定位）。**
+
+对每个 $q\in[q_0,q_1]$，原完整三角域上 $g$ 的每个最大点都满足
+
+$$
+F_u>0,\qquad Q>0,\qquad u<\frac43.
+\tag{83.5}
+$$
+
+更精确地，
+
+$$
+\begin{cases}
+3u<a+2,&a\le2,\\
+u^2+2u<2a,&a\ge2.
+\end{cases}
+\tag{83.6}
+$$
+
+在这样的最大点，令 $w=\sqrt{p/q}\,C/R$，则
+
+$$
+0<w<\frac{35}{4},\quad U>0,\quad W>0,\quad
+F=\frac{cU}{HZ^2},\quad w=\frac WU.
+\tag{83.7}
+$$
+
+这里 (83.6) 的两项在 $a=2$ 同时成立。
+
+**证明。**
+
+由 VIII (81.5)，最大点在 $\operatorname{int}\mathcal S_a$，故可使用全部光滑导数，且 $a/2<u<a$、$0<t<2-u$、$t^2<a(2u-a)$。本参数段有
+
+$$
+\frac{25}{16}\le a\le\frac{529}{256},\quad
+\sqrt{p/q}\le\sqrt7<3.
+$$
+
+由 IV (57.8) 及 VIII (77.4)，可复用
+
+$$
+h>\frac7{10},\ s>\frac38,\ h<\frac34,\ c<1,
+\qquad j<\frac{27}{256},\quad S>1.
+$$
+
+所以
+
+$$
+R^2\ge sh\,a>\frac{105}{256}>\frac9{25},\qquad R>\frac35.
+$$
+
+原同源关系给出
+
+$$
+C\le c\sqrt{1-X}+h\sqrt{1-Y}\le c+h<\frac74,
+$$
+
+因此 $w<3(7/4)/(3/5)=35/4$。
+
+对 (83.3) 直接求导，得
+
+$$
+F_u=\frac{Q}{4FZ^2},\qquad
+F_t=-\frac{tJ}{4FZ^2}.
+\tag{83.8}
+$$
+
+这里 $J>0$：若 $u<1$ 则定义即给出；若 $u\ge1$，用
+$K=u^2$、$B=(2-u)^2$、$D=a(2u-a)$、$\rho=t^2<\min(B,D)$，有
+
+$$
+Z=K-\rho>\max(K-B,K-D),\qquad
+4(u-1)\delta^2=(K-B)(K-D)\ge0,
+$$
+
+故仍有 $J>0$。
+
+两条一阶方程恰为
+
+$$
+jw-S+4chF_u=0,\qquad
+\frac h4(w+1)+2chF_t=0.
+\tag{83.9}
+$$
+
+由于
+
+$$
+jw<\frac{945}{1024}<1<S,
+$$
+
+第一式推出 $F_u>0$，再由 (83.8) 得 $Q>0$。把 (83.8) 代入 (83.9)，不平方地解这两个线性关系，得到
+
+$$
+c(hQ+2jtJ)=HFZ^2,\qquad
+w+1=\frac{2ctJ}{FZ^2}.
+$$
+
+这正给出 (83.7)，其中 $U,W$ 的正号继承自 $F,w>0$。
+
+下面将 $Q>0$ 转为可直接筛除的参数条件。除 (83.2) 外，$Q$ 还有如下具体分解：
+
+$$
+Q=(a-2)Z^2+2\delta(a+2-3u)Z-4u(u-1)\delta^2.
+\tag{83.10}
+$$
+
+若 $a\le2$ 而 $3u\ge a+2$，则 $u>1$，(83.10) 前两项非正，最后一项严格为负，矛盾。因此第一项 (83.6) 成立。
+
+若 $a\ge2$，把 $Q$ 看成 $\rho=t^2$ 的二次多项式：
+
+$$
+\begin{aligned}
+Q(\rho)={}&a u(u-2)(u^2+2u-2a)\\
+&-2\bigl((a+1)u^2-(4a+2)u+a(a+2)\bigr)\rho
++(a-2)\rho^2.
+\end{aligned}
+\tag{83.11}
+$$
+
+假设 $u\ge u_*:=\sqrt{1+2a}-1$。由 $a\ge2$、$L\le23/16$，
+
+$$
+u_*\ge\sqrt5-1>\frac65>
+\frac{305}{256}\ge1+(L-1)^2.
+$$
+
+$B=D$ 的较小根是 $1+(L-1)^2$，较大根为 $a+2+2L>2$；故在此假设下 $D>B$，且 $0<\rho<B$。又
+
+$$
+Q(0)=a u(u-2)(u^2+2u-2a)\le0,
+$$
+
+$$
+Q(B)=-(2-u)(D-B)(u^2-B)<0.
+$$
+
+(83.11) 关于 $\rho$ 凸，因为 $a-2\ge0$。它在 $0<\rho<B$ 不大于两端值的线性内插，因而严格为负，仍矛盾。因此 $u<u_*$，即第二项 (83.6)。
+
+第一项 (83.6) 直接给出 $u<4/3$；在第二项中，
+$2a\le529/128<40/9=(4/3)^2+2(4/3)$，亦得同一严格上界。来源与范围：本条的 `repo-derived` 内容是 (83.5)--(83.7) 的具体符号、坐标与比值定位；最大点内部性复用 (81.5)，一般驻点关系参见 [Continuation III](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_III.md) Proposition 51.4，特别是 (51.25)，常数包络复用 [Continuation IV](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_IV.md) (57.8) 与本卷 (77.4)。$\square$
+
+## 84. 原地板失败与带符号临界系统的双向桥
+
+**定义 84.1（固定正支的多项式系统）。**
+
+定义如下四个具体多项式，全部以 (83.1)--(83.4) 的因式形式给出，不含未指定导数、结果式或待选锚：
+
+$$
+\boxed{P_1=2(1+h)U^2-H^2Z^3AE,}
+\tag{84.1}
+$$
+
+$$
+\boxed{P_2=2qrW^2-2pzU^2-pHhAEZU,}
+\tag{84.2}
+$$
+
+$$
+\boxed{
+P_3=T\bigl(2rW(W-U)+2pLsh\,UW-pLHh\delta AZU\bigr)
+       -2p\Delta U^2W,
+}
+\tag{84.3}
+$$
+
+$$
+\boxed{P_4=rT^2-p\Theta U^2.}
+\tag{84.4}
+$$
+
+由于 $L$ 仿射、$a=L^2$，这些是 $q,u,t$ 上系数在固定实代数数域 $\mathbb Q(h,s)$ 中的多项式。若要求只用有理系数，可把常数支一并写成
+
+$$
+8s^4-8s^2+1=0,\quad \frac38<s<\frac25,\quad h=1-2s^2;
+\tag{84.5}
+$$
+
+该区间固定原来的正根，不能改取其他共轭根。
+
+令 $\mathscr C$ 为以下严格符号域：
+
+$$
+\begin{gathered}
+q_0<q<q_1,\qquad \frac a2<u<a,\qquad u<\frac43,\\
+0<t<2-u,\qquad E>0,\qquad Q>0,\qquad U>0,\\
+3U<2W,\qquad 4W<35U,\\
+(a\le2\Longrightarrow 3u<a+2),\qquad
+(a\ge2\Longrightarrow u^2+2u<2a).
+\end{gathered}
+\tag{84.6}
+$$
+
+在该域上 $p,q,Z,A,E,J,H,U,W,T,r,z$ 都严格为正。
+
+**定理 84.2（原失败与带符号临界系统有解等价）。** 记
+
+$$
+B_-(q)=\min_{(X,Y)\in\mathcal T_x}G_-(q,X,Y).
+$$
+
+以下两项等价：
+
+1. 存在残余参数 $q\in(q_0,q_1)$，原完整三角域的负地板失败，即 $B_-(q)\le23/50$。
+2. 存在 $(q,u,t)\in\mathscr C$ 满足
+
+$$
+\boxed{P_1=P_2=P_3=0,\qquad P_4\ge0.}
+\tag{84.7}
+$$
+
+其中任一满足 (84.7) 的精确根均直接给出原域合法点
+
+$$
+X=\frac{u-t}{2},\qquad Y=\frac{u+t}{2},\qquad
+G_-(q,X,Y)-\frac{23}{50}=-\frac{4P_4}{pU^2}\le0.
+\tag{84.8}
+$$
+
+不要求先证明该根唯一或是全局最优，才能使用这个反例方向。
+
+**证明。**
+
+先证原失败必给出 (84.7)，包括额外的 $q$ 驻点和 $w>3/2$ 条件。
+
+由于 $a(q)$ 连续，联合集合 $\{(q,u,t):q\in[q_0,q_1],\ (u,t)\in\Omega_{a(q)}\}$ 闭且有界，故紧；定理 80.2 的完整纤维对应保证 $Z>0$，所以 $g$ 在这个联合闭域上连续。在该联合紧集上最小化
+
+$$
+m(q,u,t)=\Theta(q)-g(q,u,t)^2.
+$$
+
+由 (81.17) 的最小值桥，若存在原失败，所取最小值不大于零。定义 78.1 的覆盖在 $q=q_0,q_1$ 均给出原地板严格成立，故最小点的 $q$ 严格处于两端之间。在固定该 $q$ 时，它最大化 $g$；VIII (81.5) 与定理 83.2 因而给出几何内部性和 (83.5)--(83.7)。所有定义域不等式在该点严格，故保持 $u,t$ 不变也能局部改变 $q$；于是
+
+$$
+\partial_q(g^2)=\Theta'(q)=\Delta.
+\tag{84.9}
+$$
+
+这里不需要假设人口值函数可微，也不需要最大点唯一。
+
+本点的 $w$ 还满足 $w>3/2$。为证明它，先在整个当前有序域给出两个精确上界。由 IV (57.8)，
+
+$$
+sh<\frac{2707}{10000},\qquad Lsh<\frac{39}{100}.
+\tag{84.10}
+$$
+
+事实上 $3827\cdot7072=27064544<27070000$，且
+$23\cdot2707=62261<62400$。利用 $t\le2-u$、$j/2-h/4<0$、$u\ge a/2$，有
+
+$$
+\begin{aligned}
+r&\le sh\,a+\frac h2+\left(\frac j2-\frac h4\right)u\\
+&\le\frac h2+\frac a4(1-h+2sh)\\
+&<\frac{7072}{20000}+\frac{529}{1024}\frac{8343}{10000}
+=\frac{8034311}{10240000}<\frac{157}{200}.
+\end{aligned}
+\tag{84.11}
+$$
+
+最后一步可直接比较同分母的 $8034311<8038400$。
+
+保持 $u,t$ 不变时，$a'=L$ 且 $F_a=-\delta F/E$，故精确地
+
+$$
+\partial_q(g^2)
+=(p+qw)\left(\frac{r(w-1)}p+Lsh-
+                    \frac{2Lch\delta F}{wE}\right).
+\tag{84.12}
+$$
+
+若 $w\le3/2$，则 $p\ge1/2$，$0<p+qw\le5/4$。由 (84.10)--(84.12)，括号内小于 $157/200+39/100=47/40$，所以
+
+$$
+\partial_q(g^2)<\frac{47}{32}<\frac{147}{100}
+<\frac{14723}{10000}<\Delta,
+$$
+
+与 (84.9) 矛盾。最右严格界是 IV (57.8) 的
+$h+2s>7071/10000+2(3826/10000)$。因而
+
+$$
+\frac32<w<\frac{35}{4}.
+\tag{84.13}
+$$
+
+结合 $w=W/U$，即得到 (84.6) 的两条严格比值筛网。
+
+现在逐项消去根号，并保留其合法支。由 (83.7) 和 $4F^2Z=AE$，
+
+$$
+4c^2U^2=H^2Z^3AE,
+$$
+
+即 $P_1=0$，这里 $4c^2=2(1+h)$。同一等式还给出
+
+$$
+2chF=\frac{HhAEZ}{2U},\qquad
+C^2=z+\frac{HhAEZ}{2U}.
+\tag{84.14}
+$$
+
+$w^2=pC^2/(qr)$ 结合 $w=W/U$、(84.14)，恰给出 $P_2=0$。
+
+在 $P_1=0$ 的正支上，(84.12) 中的最后一项可无平方地改写为
+
+$$
+\frac{2ch\delta F}{wE}
+=\frac{Hh\delta AZ}{2W}.
+\tag{84.15}
+$$
+
+将 (84.15)、$w=W/U$ 代入 (84.9)、(84.12)，只乘严格正的分母 $2pU^2W$，即得 $P_3=0$。
+
+最后，由正根和比值等式，
+
+$$
+g^2=\frac{rT^2}{pU^2},\qquad
+m=-\frac{P_4}{pU^2}.
+\tag{84.16}
+$$
+
+所选最小点 $m\le0$，故 $P_4\ge0$。必要性得证。
+
+反向，设 (84.6)--(84.7) 成立。它们给出一个原限制域内部点，特别是 $Z,A,E>0$。$P_1=0$ 与 $U>0$ 固定正根：
+
+$$
+\frac12\sqrt{AE/Z}=\frac{cU}{HZ^2}>0.
+$$
+
+因此没有把平方后的负 $F$ 支混入。$P_2=0$、(84.14)、$U,W>0$ 又固定
+
+$$
+\frac WU=\sqrt{\frac pq}\frac CR>0,
+$$
+
+没有把人口或恢复量的负根混入。于是 (84.16) 确实是原目标值。逐点恒等式 (80.2)，亦即 Continuation IV (57.3) 的负行，结合 (84.16) 给出 (84.8)。VIII Theorem 80.2 把 $(u,t)$ 送回原完整三角域；II Lemma 46.2 在该点联合实现 $R,C$，并沿用固定配对及普通转置效应。因此所得是原合法实例，绝非放松域的反例。反例方向甚至只需 $P_1=P_2=0$ 与 $P_4\ge0$；加入 $P_3=0$ 不损失失败的存在性，是因为必要方向可选取整个闭参数带上的最小点。来源与范围：本条的 `repo-derived` 内容是 (84.1)--(84.7) 中保留正号的具体多项式系统、整个闭参数带最坏失败点的 (84.13)，以及与原失败存在性的双向桥；一般驻点原则、既有内部性和标准代数消元只作证明步骤。原点的联合实现与普通转置效应复用 [Continuation II](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_II.md) Definition 46.1、Lemma 46.2，逐点目标恒等式复用 (80.2)/[Continuation IV](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_IV.md) (57.3)，最小值桥复用 (81.17)。$\square$
+
+## 85. 带符号系统的剩余严格判据
+
+**定义 85.1（原残余地板的严格符号判据）。** 固定定义 83.1 的常数正支；若将常数也作为变量，则加上 (84.5) 的代数等式与指定开区间。原残余域的统一严格地板等价于
+
+$$
+\forall(q,u,t)\in\mathscr C:\quad
+P_1=P_2=P_3=0\ \Longrightarrow\ P_4<0.
+$$
+
+由定理 84.2，另一方向的精确合法反例是该符号域中满足 $P_1=P_2=P_3=0$、$P_4\ge0$ 的一个精确根。上述蕴含尚未证明，也尚未给出这样的精确根，因此原残余区间的严格地板仍未解决。
+
+(83.5)--(83.7) 对每个固定 $q\in[q_0,q_1]$ 的最大点成立；更窄窗口 (84.13) 仅用于必要方向所选的整个闭 $q$ 带上的最坏失败点，不断言每个固定 $q$ 的最大点均满足其下界。任意满足定理 84.2 全部条件的精确根都由 (84.8) 恢复为原合法反馈与对齐效应，不需要先取得最优性或唯一性。一般驻点原则、原边界内部性及证书取得性均为所引前置；本节不作外部文献首发或物理实现的主张。
+
+## 追加锚（本行以下为增补区）
