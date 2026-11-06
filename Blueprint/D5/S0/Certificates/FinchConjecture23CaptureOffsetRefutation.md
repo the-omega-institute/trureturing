@@ -116,7 +116,7 @@ $$\neg claim$$
 
 *Commentary.*
 
-For k=2 the explicit positive-index sequence repeats (0,1,1,2). A four-residue argument verifies the recurrence at every n≥3. Periods 1, 2 and 3 fail arbitrarily far out, while period 4 holds from the first term, so the least positive eventual period is 4 and the least four-preperiod is 0. Here gaps(2)=1. The run from 5 to 9 has no extra interior zeros; any allowed earlier start would be 3 or 4, whose values are nonzero. Thus the least capture endpoint is 9, and 9-0 is not 6. This is completion of the existing #23615 hand route, without a discovery or priority claim. It proves neither an infinite exceptional family nor a corrected k≥3 or positive-preperiod law.
+For k=2 the explicit positive-index sequence repeats (0,1,1,2). A four-residue argument verifies the recurrence at every n≥3. Periods 1, 2 and 3 fail arbitrarily far out, while period 4 holds from the first term, so the least positive eventual period is 4 and the least four-preperiod is 0. Here gaps(2)=1. The run from 5 to 9 has no extra interior zeros; any allowed earlier start would be 3 or 4, whose values are nonzero. Thus the least capture endpoint is 9, and 9-0 is not 6. This is a small-case refutation, with no originality or priority claim. It proves neither an infinite exceptional family nor a corrected k≥3 or positive-preperiod law.
 
 ## References
 
