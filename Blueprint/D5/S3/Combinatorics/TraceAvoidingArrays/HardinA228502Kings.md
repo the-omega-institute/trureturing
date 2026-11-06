@@ -104,7 +104,7 @@ The displayed equality holds for every one of the sixteen binary rows. Applying 
 
 **Theorem 1.8 (The recurrence and formal generating series).**
 
-$$(\operatorname{a}\left(0\right) = 0) \land ((\operatorname{a}\left(1\right) = 3) \land ((\forall n: Nat, ((5 \leq n) \implies ((\operatorname{a}\left(n\right): Int) = 2 \cdot (\operatorname{a}\left(n - 1\right): Int) + 7 \cdot (\operatorname{a}\left(n - 2\right): Int) - 2 \cdot (\operatorname{a}\left(n - 3\right): Int) - 3 \cdot (\operatorname{a}\left(n - 4\right): Int)))) \land ((1 - 2 \cdot \operatorname{PowerSeries.X} - 7 \cdot \operatorname{PowerSeries.X}^{2} + 2 \cdot \operatorname{PowerSeries.X}^{3} + 3 \cdot \operatorname{PowerSeries.X}^{4}) \cdot \operatorname{PowerSeries.mk}\left((\lambda n: Nat \mapsto ((\operatorname{a}\left(n\right): Int)))\right) = \operatorname{PowerSeries.X} \cdot (1 - \operatorname{PowerSeries.X}) \cdot (3 + 2 \cdot \operatorname{PowerSeries.X}))))$$
+$$(\forall n: Nat, ((5 \leq n) \implies ((\operatorname{a}\left(n\right): Int) = 2 \cdot (\operatorname{a}\left(n - 1\right): Int) + 7 \cdot (\operatorname{a}\left(n - 2\right): Int) - 2 \cdot (\operatorname{a}\left(n - 3\right): Int) - 3 \cdot (\operatorname{a}\left(n - 4\right): Int)))) \land ((1 - 2 \cdot \operatorname{PowerSeries.X} - 7 \cdot \operatorname{PowerSeries.X}^{2} + 2 \cdot \operatorname{PowerSeries.X}^{3} + 3 \cdot \operatorname{PowerSeries.X}^{4}) \cdot \operatorname{PowerSeries.mk}\left((\lambda n: Nat \mapsto ((\operatorname{a}\left(n\right): Int)))\right) = \operatorname{PowerSeries.X} \cdot (1 - \operatorname{PowerSeries.X}) \cdot (3 + 2 \cdot \operatorname{PowerSeries.X}))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA228502Kings.result` (`✓ std3`). ∎
 

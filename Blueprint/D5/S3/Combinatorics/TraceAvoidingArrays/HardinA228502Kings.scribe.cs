@@ -131,8 +131,7 @@ internal sealed class HardinA228502KingsDocument : IScribeDocumentDefinition
             Mul(D(2), Pow(x, D(3)))), Mul(D(3), Pow(x, D(4))));
         var series = App(Q("PowerSeries", "mk"), Lambda("n", V("Nat"), A(n)));
         var numerator = Mul(Mul(x, Parenthesized(Sub(D(1), x))), Parenthesized(Add(D(3), Mul(D(2), x))));
-        return AndOf(Eq(Call("a", D(0)), D(0)), AndOf(Eq(Call("a", D(1)), D(3)),
-            AndOf(recurrence, Eq(Mul(Parenthesized(denominator), series), numerator))));
+        return AndOf(recurrence, Eq(Mul(Parenthesized(denominator), series), numerator));
     }
 
     private static Formula V(string name) => F.Id(name);

@@ -24,7 +24,6 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R :=
-    a 0 = 0 ∧ a 1 = 3 ∧
     (∀ n : ℕ, 5 ≤ n →
       (R.readout () () n : ℤ) =
         2 * (a (n - 1) : ℤ) + 7 * (a (n - 2) : ℤ) -
@@ -35,8 +34,8 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have impossible (n : ℕ) (hn : 5 ≤ n) : False := by
-    have hb := h.2.2.1 n hn
-    have ha := result.2.2.1 n hn
+    have hb := h.1 n hn
+    have ha := result.1 n hn
     change ((a n + 1 : ℕ) : ℤ) = _ at hb
     have he : ((a n + 1 : ℕ) : ℤ) = (a n : ℤ) := hb.trans ha.symm
     exact Nat.succ_ne_self (a n) (Int.ofNat.inj he)
@@ -52,8 +51,7 @@ def family : Registration arena (type_of% @result) where
     intro i
     refine ⟨(), 0, 1, ?_⟩
     change a 0 ≠ a 1
-    simp only [result.1, result.2.1]
-    decide
+    decide +kernel
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@result) (Realization signature) Type Unit where
@@ -78,7 +76,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["arg", "arg", "fn", "arg", "body", "body", "fn", "arg", "arg"]
+      path := #["fn", "arg", "body", "body", "fn", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]

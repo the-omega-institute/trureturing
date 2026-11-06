@@ -32,7 +32,7 @@ counting_bridge: proof_shape=content; consumers=initial, recurrence
 finite_certificate: proof_shape=content; consumers=vector_recurrence
 vector_recurrence: proof_shape=content; consumers=total_recurrence
 total_recurrence: proof_shape=content; consumers=recurrence
-initial: proof_shape=content; consumers=generating_function, result
+initial: proof_shape=content; consumers=generating_function
 recurrence: proof_shape=content; consumers=generating_function, result
 generating_function: proof_shape=content; consumers=result
 result: proof_shape=content; consumers=terminal result
@@ -294,16 +294,13 @@ private theorem generating_function :
   · rcases initial with ⟨h0, h1, h2, h3, h4⟩
     interval_cases n <;> norm_num only [h0, h1, h2, h3, h4, ite_true, ite_false]
 
-/-- The Hardin-Barker recurrence and generating series, including the empty-board convention. -/
+/-- The Hardin-Barker recurrence and generating series. -/
 theorem result :
-    a 0 = 0 ∧ a 1 = 3 ∧
     (∀ n : ℕ, 5 ≤ n → (a n : ℤ) =
       2 * (a (n - 1) : ℤ) + 7 * (a (n - 2) : ℤ) -
         2 * (a (n - 3) : ℤ) - 3 * (a (n - 4) : ℤ)) ∧
     (1 - 2 * X - 7 * X ^ 2 + 2 * X ^ 3 + 3 * X ^ 4) *
       (PowerSeries.mk fun n => (a n : ℤ)) = X * (1 - X) * (3 + 2 * X) := by
-  refine ⟨?_, ?_, recurrence, generating_function⟩
-  · exact_mod_cast initial.1
-  · exact_mod_cast initial.2.1
+  exact ⟨recurrence, generating_function⟩
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA228502Kings
