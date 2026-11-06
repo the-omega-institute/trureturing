@@ -1,4 +1,5 @@
 import LeanInformationAudit.Contract.FibFinite
+import LeanInformationAudit.Contract.FibPrediction
 import LeanInformationAudit.CompiledAxioms
 import LeanInformationAudit.Sha256
 
@@ -35,14 +36,7 @@ private def atomBits (find : Name → Option ConstantInfo) (value : Expr) : Exce
 
 private def nativeRequest (occurrence : Expr) (info : ConstantInfo)
     (args : Array Expr) : FibSource.M Json := do
-  FibSource.indexed `LeanInformationAudit.AuricFib.Contract.NativeSource args[0]! occurrence
-  let proof ← CompiledSourceScope.projectField
-    `LeanInformationAudit.AuricFib.Contract.NativeSource.reconstruction args[0]!
-  let type ← CompiledSourceScope.projectType proof
-  unless type.isAppOfArity `LeanInformationAudit.Analysis.Reconstruction 2 do
-    FibSource.fail "fib.native_reconstruction_type"
-  CompiledSourceScope.reconstruct info.type type.getAppArgs[0]!
-  CompiledSourceScope.reconstruct info.type type.getAppArgs[1]!
+  FibSource.bindNative occurrence info args[0]!
   let find := (← read).provenance.view.find?
   -- The adapter's compiled reader/source and appended-high/task equalities
   -- retain its exact complete Window domain, including rejected states.
@@ -211,7 +205,10 @@ unsafe def extract (owner : Name) (constants : Array ConstantInfo)
         {} (({} : NameSet).insert name)
       let action : FibSource.M Json := do
         let fs ← FibSource.fields (applicationHead ++ `mk) definition.value
-        request original specialized occurrence fs[0]!
+        let requested ← request original specialized occurrence fs[0]!
+        let prediction ← FibPrediction.extract occurrence specialized fs[1]!
+        let object ← IO.ofExcept requested.getObj?
+        return Json.mkObj (object.toArray.toList ++ [("compiled_prediction", prediction)])
       input := (← (action.run 524288).run context).1
     catch error => reason := error.toString
     let axioms ← CompiledAxioms.collectAxiomsShared find axiomState info.name
