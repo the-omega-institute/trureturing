@@ -77,7 +77,7 @@ internal sealed class GenericMatrixIrreducibilityDocument : IScribeDocumentDefin
                 "Utility is none: this is uniform ring theory, not a finite checker, numeric reduction or certified instance.")))));
 
     private static Formula Call(string name, params Formula[] args) =>
-        Seq(Operatorname(F.Id(name)), Open, Join(args), Close);
+        Seq(Operatorname, Grp(F.Id(name)), Open, Join(args), Close);
     private static Formula Join(Formula[] args) =>
         Seq(args.SelectMany((a, i) => i == 0 ? new[] { a } : new[] { Comma, Sp, a }).ToArray());
     private static Formula Index() => Call("Fin", F.Id("n"));

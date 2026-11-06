@@ -49,7 +49,7 @@ def family : Registration arena (type_of% (@det_generic_irreducible)) where
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨1, _, 1, ?_⟩
+    refine ⟨1, Matrix.det (Matrix.mvPolynomialX (Fin 1) (Fin 1) ℂ), 1, ?_⟩
     change decide (Irreducible _) ≠ decide (Irreducible (1 : signature.State 1))
     rw [decide_eq_true (det_generic_irreducible 1 (by decide)),
       decide_eq_false not_irreducible_one]
@@ -78,8 +78,12 @@ noncomputable def registration :
     owner := `D5.S3.Quantum.Algebra.GenericMatrixIrreducibility
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body"], stateBinder := 0,
-      functionOperand := false, stateOperand := some #["arg"], booleanPredicate := true }] }
+    readouts := #[{
+      path := #["body", "body"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -124,7 +128,9 @@ def family : Registration arena (type_of% (@charpoly_generic_irreducible_fractio
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨1, _, 1, ?_⟩
+    refine ⟨1, (Matrix.charpoly (Matrix.mvPolynomialX (Fin 1) (Fin 1) ℂ)).map
+      (algebraMap (MvPolynomial (Fin 1 × Fin 1) ℂ)
+        (FractionRing (MvPolynomial (Fin 1 × Fin 1) ℂ))), 1, ?_⟩
     change decide (Irreducible _) ≠ decide (Irreducible (1 : signature.State 1))
     rw [decide_eq_true (charpoly_generic_irreducible_fractionRing 1 (by decide)),
       decide_eq_false not_irreducible_one]
@@ -153,8 +159,12 @@ noncomputable def registration :
     owner := `D5.S3.Quantum.Algebra.GenericMatrixIrreducibility
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body"], stateBinder := 0,
-      functionOperand := false, stateOperand := some #["arg"], booleanPredicate := true }] }
+    readouts := #[{
+      path := #["body", "body"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
