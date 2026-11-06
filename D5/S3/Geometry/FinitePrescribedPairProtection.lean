@@ -159,7 +159,7 @@ theorem future_upper_cannot_resurrect (P : CollapsePair V) {L}
 /-- The computed core is a subcomplex of the original base. -/
 theorem core_le {K L} (S : Sequence K L) (H) : core S H ≤ K := by
   induction S generalizing H with
-  | refl K => rw [core_refl]; exact le_rfl
+  | refl K => rw [core_refl]
   | step P T ih =>
     rw [core_step]
     split_ifs
@@ -308,9 +308,13 @@ theorem protectedReplay_pairs {K L} (S : Sequence K L) (H) :
   induction S generalizing H with
   | refl K => simp [protectedReplay,emitted,Sequence.pairs,Sequence.pairs_cast]
   | step P T ih =>
-    by_cases hb : blocked H P <;>
-      simp [protectedReplay,hb,Sequence.pairs_cast,Sequence.pairs,emitted,unionPair,
-        CollapsePair.upper,ih]
+    by_cases hb : blocked H P
+    · simp only [protectedReplay,if_pos hb,Sequence.pairs_cast,Sequence.pairs,emitted]
+      simp only [if_pos hb]
+      exact ih (insert P.upper H)
+    · simp only [protectedReplay,if_neg hb,Sequence.pairs_cast,Sequence.pairs,emitted]
+      simp only [if_neg hb,List.map_cons]
+      exact congrArg (List.cons (P.lower,P.upper)) (ih H)
 
 private theorem restricted_retained (P : CollapsePair V) {L}
     (T : Sequence P.retained L) (H) (hb : blocked H P) :
@@ -354,9 +358,13 @@ theorem standaloneReplay_pairs {K L} (S : Sequence K L) (H) :
   induction S generalizing H with
   | refl K => simp [standaloneReplay,skipped,Sequence.pairs,Sequence.pairs_cast]
   | step P T ih =>
-    by_cases hb : blocked H P <;>
-      simp [standaloneReplay,hb,Sequence.pairs_cast,Sequence.pairs,skipped,
-        restrictPair,CollapsePair.upper,ih]
+    by_cases hb : blocked H P
+    · simp only [standaloneReplay,if_pos hb,Sequence.pairs_cast,Sequence.pairs,skipped]
+      simp only [if_pos hb,List.map_cons]
+      exact congrArg (List.cons (P.lower,P.upper)) (ih (insert P.upper H))
+    · simp only [standaloneReplay,if_neg hb,Sequence.pairs_cast,Sequence.pairs,skipped]
+      simp only [if_neg hb]
+      exact ih H
 
 /-- A separately established terminal tail can now be appended on the core. -/
 def standaloneWithTail {K L M} (S : Sequence K L) (H)

@@ -336,12 +336,14 @@ theorem reverseSequence_frames (W : Finset V) (D : PreAbstractSimplicialComplex 
         (reverseOne W D hW hp P hK)).frames = _
       unfold reverseOne
       rw [append_cast_right, Sequence.frames_cast]
-      change ((reverseSequence W D hW hp T (P.retained_le.trans hK) :
-        Sequence (dual W L) (reversePair W D hW hp P hK).ambient).append
-        (Sequence.step (reversePair W D hW hp P hK) (Sequence.refl _))).frames = _
-      rw [frames_append_one]
-      rw [reversePair_retained, ih (P.retained_le.trans hK)]
-      simp [Sequence.frames, List.reverse_cons, List.map_append]
+      calc
+        _ = (reverseSequence W D hW hp T (P.retained_le.trans hK)).frames ++
+            [(reversePair W D hW hp P hK).retained] :=
+          frames_append_one (reversePair W D hW hp P hK)
+            (reverseSequence W D hW hp T (P.retained_le.trans hK))
+        _ = _ := by
+          rw [reversePair_retained, ih (P.retained_le.trans hK)]
+          simp [Sequence.frames, List.reverse_cons, List.map_append]
 
 /-- Lift over a cone on ANY retained subcomplex. The existing owner operation
 extendAcrossCone is the special case B=L; its pair constructor is reused here. -/

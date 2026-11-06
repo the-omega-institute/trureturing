@@ -14,11 +14,12 @@ chord-index deletion, graph history, or native certificate. -/
 noncomputable section
 open SimpleGraph Finset
 namespace D5.S3.Geometry.OriginalLabelTwoSum
+universe uLeftChord uRightChord
 
 structure GraphSource (VL VR LL LR : Type*) [Fintype LL] [DecidableEq LL]
     [Fintype LR] [DecidableEq LR] where
-  left : GraphData VL LL
-  right : GraphData VR LR
+  left : GraphData.{_, _, uLeftChord} VL LL
+  right : GraphData.{_, _, uRightChord} VR LR
   aL : VL
   bL : VL
   aR : VR

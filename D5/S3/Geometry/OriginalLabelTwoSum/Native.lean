@@ -185,7 +185,7 @@ private def rectangleAux (X Y a : Finset V) (v : V)
           simp only [List.map_cons, List.toFinset_cons]
           rw [cut_cut]
           congr 2), ?_⟩
-    simpa only [Sequence.pairs_cast,Sequence.pairs,List.map_cons,emitPair,CollapsePair.upper]
+    simpa only [Sequence.pairs_cast,Sequence.pairs,List.map_cons,P,emitPair,CollapsePair.upper]
       using congrArg (List.cons (a ∪ t,insert v (a ∪ t))) T.2
 termination_by todo.length
 

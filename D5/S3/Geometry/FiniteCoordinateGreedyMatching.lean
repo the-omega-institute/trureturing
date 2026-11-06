@@ -128,7 +128,7 @@ theorem greedy_disjoint (F : Finset (Finset V)) (vs : List V)
           · exact (greedy_endpoints _ _ he).1
           · exact (greedy_endpoints _ _ he).2.1
         exact ((Finset.mem_sdiff.mp hse').2 (round_incident hf hsf)).elim
-      · exact ih (remaining F v) he hf hse hsf
+      · exact ih (remaining F v) he hf
 
 theorem survivors_subset (F : Finset (Finset V)) (vs : List V) :
     survivors F vs ⊆ F := by
