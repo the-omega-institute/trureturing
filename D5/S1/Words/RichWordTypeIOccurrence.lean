@@ -507,8 +507,7 @@ private theorem parikh_append (s t : Word) : parikh (s++t) = parikh s+parikh t :
 
 private theorem parikh_singleton (c : Letter) : parikh [c] = unit c := by
   ext a
-  by_cases h : a = c <;>
-    simp [parikh,letterCount,unit,Pi.single_apply,List.count_cons,h,eq_comm]
+  fin_cases a <;> fin_cases c <;> rfl
 
 private theorem parikh_cons (c : Letter) (s : Word) :
     parikh (c::s) = unit c+parikh s := by
@@ -839,7 +838,9 @@ private theorem base_extensions :
       obtain ⟨hs,hc⟩ := (occ_append _ _ _).mp hq
       have h6 := (occ_singleton _ _).mp hs
       have hn := (six_neighbors h6).2.2
-      simpa [(occ_singleton _ _).mp hc] using hn
+      have hletter : word (q+1) = c := by simpa using (occ_singleton _ _).mp hc
+      change c = 0 ∨ c = 6
+      simpa only [hletter] using hn
     · intro hc
       change c = 0 ∨ c = 6 at hc
       rcases hc with rfl | rfl
@@ -875,15 +876,133 @@ theorem typeI_extensions (n : ℕ) :
     · have hc := terminal_contexts_of_extensions n hn ih.1 ih.2
       have he : typeI (n+1) = terminal (typeI n) := by simp [typeI,hn,terminal]
       have hp : phase (n+1) = 0 := by apply Fin.ext; simp [phase]; omega
-      rw [he,terminal_lext _ hc,terminal_rext _ hc,ih.1,ih.2]
-      simp [Set.image_insert_eq,phase,hn,wrap,hp]
+      rw [hp,he,terminal_lext _ hc,terminal_rext _ hc,ih.1,ih.2]
+      simp [Set.image_insert_eq,phase,hn,wrap]
     · have he : typeI (n+1) = sentinel (typeI n) := by simp [typeI,hn,sentinel]
       have hp : next (phase n) = phase (n+1) := by
-        apply Fin.ext
+        have hphase : (phase n).val < 6 := by dsimp [phase]; omega
         have hmod : n % 6 < 5 := by omega
-        simp [next,phase,hmod,Nat.add_mod]
+        rw [next,dif_pos hphase]
+        apply Fin.ext
+        change n % 6+1 = (n+1) % 6
         omega
       rw [he,sentinel_lext,sentinel_rext,ih.1,ih.2]
-      simp [Set.image_insert_eq,hp,next]
+      simp only [Set.image_insert_eq,Set.image_singleton,hp,show next 6 = 6 by decide]
+      exact ⟨rfl,rfl⟩
+
+/-- The source position map includes the terminal left shift. -/
+def occurrenceMap (n a : ℕ) : ℕ :=
+  if n % 6 = 5 then boundary a-1 else boundary a
+
+private theorem occurrenceMap_strict (n : ℕ) : StrictMono (occurrenceMap n) := by
+  unfold occurrenceMap
+  split
+  · apply strictMono_nat_of_lt_succ
+    intro a
+    have hb := boundary_succ a
+    have hl : 2 ≤ (phi (word a)).length := by unfold phi; split <;> simp
+    omega
+  · exact boundary_strict
+
+/-- All-n, bidirectional native occurrence transfer. No context or return
+assumption is left in the statement. -/
+theorem typeI_occurrence_iff (n q : ℕ) :
+    Occ (typeI (n+1)) q ↔ ∃ a, q = occurrenceMap n a ∧ Occ (typeI n) a := by
+  by_cases hn : n % 6 = 5
+  · have hc := terminal_contexts_of_extensions n hn
+      (typeI_extensions n).1 (typeI_extensions n).2
+    have he : typeI (n+1) = terminal (typeI n) := by simp [typeI,hn,terminal]
+    rw [he,terminal_occurrence_iff]
+    constructor
+    · rintro ⟨a,ha,hq,ho,hleft,hright⟩
+      exact ⟨a,by simpa [occurrenceMap,hn] using hq,ho⟩
+    · rintro ⟨a,hq,ho⟩
+      obtain ⟨ha,hleft,hright⟩ := hc a ho
+      exact ⟨a,ha,by simpa [occurrenceMap,hn] using hq,ho,hleft,hright⟩
+  · simpa [typeI,hn,sentinel,occurrenceMap] using ordinary_occurrence_iff (typeI n) q
+
+private theorem consecutive_transport (s t : Word) (f : ℕ → ℕ) (hf : StrictMono f)
+    (ho : ∀ q, Occ t q ↔ ∃ a, q = f a ∧ Occ s a) (a b : ℕ) :
+    Consecutive t (f a) (f b) ↔ Consecutive s a b := by
+  have hat (i : ℕ) : Occ t (f i) ↔ Occ s i := by
+    rw [ho]
+    constructor
+    · rintro ⟨j,hj,hocc⟩
+      have he : i = j := hf.injective hj
+      simpa [he] using hocc
+    · intro hi
+      exact ⟨i,rfl,hi⟩
+  constructor
+  · rintro ⟨hab,ha,hb,hgap⟩
+    refine ⟨hf.lt_iff_lt.mp hab,(hat a).mp ha,(hat b).mp hb,?_⟩
+    intro c hac hcb hc
+    exact hgap (f c) (hf hac) (hf hcb) ((hat c).mpr hc)
+  · rintro ⟨hab,ha,hb,hgap⟩
+    refine ⟨hf hab,(hat a).mpr ha,(hat b).mpr hb,?_⟩
+    intro q haq hqb hq
+    obtain ⟨c,rfl,hc⟩ := (ho q).mp hq
+    exact hgap c (hf.lt_iff_lt.mp haq) (hf.lt_iff_lt.mp hqb) hc
+
+/-- Every actual consecutive return is transferred in both directions. -/
+theorem typeI_consecutive_iff (n a b : ℕ) :
+    Consecutive (typeI (n+1)) (occurrenceMap n a) (occurrenceMap n b) ↔
+      Consecutive (typeI n) a b :=
+  consecutive_transport _ _ _ (occurrenceMap_strict n) (typeI_occurrence_iff n) a b
+
+private theorem ordinary_return_word {a b : ℕ} (hab : a < b) :
+    returnWord (boundary a) (boundary b) = subst phi (returnWord a b) := by
+  have h := boundary_add a (b-a)
+  rw [Nat.add_sub_of_le (Nat.le_of_lt hab)] at h
+  have he : boundary b-boundary a = (subst phi (returnWord a b)).length := by
+    dsimp [returnWord]
+    omega
+  dsimp [returnWord]
+  rw [he]
+  exact factor_subst a (b-a)
+
+/-- The COMPLETE count vector is multiplied by the actual incidence matrix at
+every step, including the terminal endpoint cancellation. -/
+theorem typeI_return_parikh (n a b : ℕ) (h : Consecutive (typeI n) a b) :
+    parikh (returnWord (occurrenceMap n a) (occurrenceMap n b)) =
+      M.mulVec (parikh (returnWord a b)) := by
+  by_cases hn : n % 6 = 5
+  · have hc := terminal_contexts_of_extensions n hn
+      (typeI_extensions n).1 (typeI_extensions n).2
+    obtain ⟨ha,hal,har⟩ := hc a h.2.1
+    obtain ⟨hb,hbl,hbr⟩ := hc b h.2.2.1
+    simpa [occurrenceMap,hn] using terminal_return_parikh ha h.1 hal hbl
+  · simp only [occurrenceMap,if_neg hn,ordinary_return_word h.1,parikh_subst]
+
+private theorem mulVec_mono {v w : Letter → ℕ} (h : v ≤ w) :
+    M.mulVec v ≤ M.mulVec w := by
+  intro a
+  exact Finset.sum_le_sum (fun c _ => Nat.mul_le_mul_left (M a c) (h c))
+
+/-- At every index an ACTUAL consecutive return attains M^n e6, and EVERY
+actual consecutive return dominates it in all seven coordinates. -/
+theorem typeI_return_minimum (n : ℕ) :
+    (∃ a b, Consecutive (typeI n) a b ∧
+      parikh (returnWord a b) = (M^n).mulVec (unit 6)) ∧
+    ∀ a b, Consecutive (typeI n) a b →
+      (M^n).mulVec (unit 6) ≤ parikh (returnWord a b) := by
+  induction n with
+  | zero =>
+    constructor
+    · obtain ⟨a,b,hc,hr⟩ := base_return_minimum.1
+      exact ⟨a,b,hc,by simp [hr,parikh_singleton]⟩
+    · simpa using base_return_minimum.2
+  | succ n ih =>
+    constructor
+    · obtain ⟨a,b,hc,hr⟩ := ih.1
+      refine ⟨occurrenceMap n a,occurrenceMap n b,
+        (typeI_consecutive_iff n a b).mpr hc,?_⟩
+      rw [typeI_return_parikh n a b hc,hr,Matrix.mulVec_mulVec,← pow_succ']
+    · intro q r hqr
+      obtain ⟨a,ha,hoa⟩ := (typeI_occurrence_iff n q).mp hqr.2.1
+      obtain ⟨b,hb,hob⟩ := (typeI_occurrence_iff n r).mp hqr.2.2.1
+      rw [ha,hb] at hqr ⊢
+      have hc := (typeI_consecutive_iff n a b).mp hqr
+      rw [typeI_return_parikh n a b hc,pow_succ',← Matrix.mulVec_mulVec]
+      exact mulVec_mono (ih.2 a b hc)
 
 end D5.S1.Words.RichWordTypeIOccurrence
