@@ -769,11 +769,10 @@ private theorem switch_pair (m lo k j : Nat) (hk : 1 ≤ k) (hj : j < k)
       by_cases h1 : k = 1
       · subst k
         have he : switchBase m lo 1 0 = ∅ := by
-          ext x
-          simp only [switchBase, Finset.mem_filter, Finset.mem_univ, true_and,
-            Finset.notMem_empty]
-          have hx := x.isLt
-          omega
+          apply Finset.eq_empty_iff_forall_notMem.mpr
+          intro x hx
+          have hh := (Finset.mem_filter.mp hx).2
+          rcases hh with ⟨hl, hu, _⟩ | ⟨hl, hu, _⟩ <;> omega
         simpa [labelInterval, he] using
           (show Symbol.pair ∅ (⟨lo, by omega⟩ : Label m) ∈
             pathWord [⟨lo, by omega⟩] by simp)
@@ -865,7 +864,7 @@ private theorem collar_pair_data (m : Nat) (hm : 3 ≤ m) (h1 : m % 3 = 1)
 private theorem good_critical (m : Nat) (hm : 3 ≤ m) (h1 : m % 3 = 1) :
     Symbol.critical (labelsCongruent m 2 2) ∈ cycleWord m hm := by
   apply (criticalFaces_mem _ _).mp
-  rw [cycleWordData_word, cycleWord_critical_formula, if_neg (by omega : m % 3 ≠ 0), if_pos h1]
+  rw [cycleWord_critical_formula, if_neg (by omega : m % 3 ≠ 0), if_pos h1]
   simp
 
 private theorem cycle_no_adj (m : Nat) (hm : 3 ≤ m) {U : Finset (Label m)}

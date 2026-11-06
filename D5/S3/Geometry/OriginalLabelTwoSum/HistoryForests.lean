@@ -111,13 +111,20 @@ private theorem position_lt (m : Nat) (hm : 3 ≤ m) (x : Label m)
 
 private theorem at_position (m : Nat) (hm : 3 ≤ m) (x : Label m)
     (hx : x ∈ ground m) : «at» m hm ⟨position m x, position_lt m hm x hx⟩ = x := by
-  have hx0 : x.val ≠ 0 := by
-    have hn := (Finset.mem_erase.mp hx).1
-    exact (not_congr (Fin.ext_iff (a := x) (b := 0))).mp hn
-  have := x.isLt
-  apply Fin.ext
-  unfold «at» position
-  split_ifs <;> simp_all [firstLabel] <;> omega
+  have hx0 : x.val ≠ 0 := (not_congr (Fin.ext_iff (a := x) (b := 0))).mp
+    (Finset.mem_erase.mp hx).1
+  have hlt := x.isLt
+  by_cases h1 : x.val = 1
+  · have hp : position m x = m - 1 := by simp only [position, if_pos h1]
+    have he : m - 1 + 1 = m := by omega
+    simp only [hp, «at», dif_pos he]
+    exact Fin.ext h1.symm
+  · have hp : position m x = x.val - 2 := by simp only [position, if_neg h1]
+    have he : x.val - 2 + 1 ≠ m := by omega
+    simp only [hp, «at», dif_neg he]
+    apply Fin.ext
+    change x.val - 2 + 2 = x.val
+    omega
 
 private theorem at_injective (m : Nat) (hm : 3 ≤ m) : Function.Injective («at» m hm) := by
   intro i j h
@@ -132,7 +139,8 @@ private theorem cutRow_card (m : Nat) (hm : 3 ≤ m) (k : Fin (m - 1)) :
     (cutRow m hm k).card = 2 := by
   have hn : «at» m hm ⟨k.val, by omega⟩ ≠ «at» m hm ⟨k.val + 1, by omega⟩ := by
     intro h
-    have := congrArg Fin.val (at_injective m hm h)
+    have hv := congrArg Fin.val (at_injective m hm h)
+    change k.val = k.val + 1 at hv
     omega
   simp [cutRow, hn]
 
@@ -245,7 +253,7 @@ private theorem interval_trans {a b c : Fin m}
   intro k hl hu
   by_cases h1 : min a.val b.val ≤ k.val ∧ k.val < max a.val b.val
   · exact h k h1.1 h1.2
-  · apply g k <;> try dsimp at * <;> omega
+  · apply g k <;> omega
 
 /-- A walk crossing an original path cut must use THAT surviving cut.
 Induction is on a genuine mathlib Walk, not a bounded mask control. -/
@@ -257,10 +265,10 @@ private theorem walk_interval {a b : Fin m} (p : (reducedGraph m hm A B).Walk a 
       apply interval_trans m hm A B (b := b) ?_ ih
       obtain ⟨j, hj, h | h⟩ := hab
       · intro k hl hu
-        have he : k = j := Fin.ext (by try dsimp at *; omega)
+        have he : k = j := Fin.ext (by omega)
         exact he.symm ▸ hj
       · intro k hl hu
-        have he : k = j := Fin.ext (by try dsimp at *; omega)
+        have he : k = j := Fin.ext (by omega)
         exact he.symm ▸ hj
 
 private def ascend (a b : Fin m) (hab : a.val ≤ b.val)
@@ -279,7 +287,9 @@ private def ascend (a b : Fin m) (hab : a.val ≤ b.val)
     exact .cons ⟨k, hk, Or.inl ⟨rfl, rfl⟩⟩
       (ascend next b (by try dsimp [next]; omega) ht)
 termination_by b.val - a.val
- decreasing_by try dsimp [next]; omega
+ decreasing_by
+   change b.val - (a.val + 1) < b.val - a.val
+   omega
 
 /-- Exact graph connectivity, with neither direction supplied as input data. -/
 theorem connected_iff_interval (a b : Fin m) :
@@ -363,7 +373,7 @@ theorem component_consecutive (a x y z : Fin m)
     apply (mem_component m hm A B a z).mpr
     refine ⟨hzL, interval_trans m hm A B hax ?_⟩
     intro j hl hu
-    apply hxy j <;> try dsimp at * <;> omega
+    apply hxy j <;> omega
 
 /-- Component membership is exactly the original surviving graph relation. -/
 theorem block_mem (a b : Fin m) : «at» m hm b ∈ block m hm A B a ↔
@@ -486,7 +496,7 @@ def componentRows (a : Fin m) : Rows (Label m) where
   row c := (prune (localRows m hm A B)).row c.1
   row_supported c := c.2
 
-/-- Union of component noncovers padded by ALL other residual coordinates.
+/-- Union of component noncovers padded by ALL other HistoryCorners.residual coordinates.
 The existential over starts merely repeats equal components, without altering rows. -/
 def componentUnion : Family (Label m) where
   carrier := {s | ∃ a ∈ live m hm A B,
@@ -529,7 +539,7 @@ theorem component_root (h0 : ∀ c : (localRows m hm A B).chords,
     · obtain ⟨hxU, hxC⟩ := Finset.mem_sdiff.mp (hv hxv)
       exact Finset.mem_sdiff.mpr ⟨hxU, fun hxq => hxC (c.2 hxq)⟩
 
-/-- An isolated unforced residual coordinate is retained as its own component,
+/-- An isolated unforced HistoryCorners.residual coordinate is retained as its own component,
 including when the surviving indexed row type is empty. -/
 theorem isolated_component (a : Fin m) (ha : a ∈ live m hm A B)
     (h : ∀ b, ¬ (reducedGraph m hm A B).Adj a b) :
@@ -561,7 +571,7 @@ private theorem at_rightEnd : «at» m hm (rightEnd m hm) = firstLabel m hm := b
   simp [«at», rightEnd, firstLabel, show m - 1 + 1 = m by omega]
 
 private theorem unmasked_forced : forced (localRows m hm ∅ ∅) = ∅ := by
-  apply Finset.eq_empty_iff_forall_not_mem.mpr
+  apply Finset.eq_empty_iff_forall_notMem.mpr
   intro x hx
   obtain ⟨c, hc⟩ := (mem_forced _ x).mp hx
   have ho := original_row m hm c.1
@@ -577,9 +587,9 @@ private theorem unmasked_root : (localRows m hm ∅ ∅).root = pathRoot m hm :=
   intro s
   constructor
   · rintro ⟨c, hc⟩
-    exact ⟨c.1, by simpa [localRows, cornerRows] using hc⟩
+    exact ⟨c.1, by simpa [localRows, cornerRows, HistoryCorners.residual] using hc⟩
   · rintro ⟨c, hc⟩
-    exact ⟨⟨c, by simp⟩, by simpa [localRows, cornerRows] using hc⟩
+    exact ⟨⟨c, by simp⟩, by simpa [localRows, cornerRows, HistoryCorners.residual] using hc⟩
 
 /-- The critical arbitrary-width theorem. Connecting the ORIGINAL two path
 endpoints in the actual reduced row graph forces every original cut to survive,
@@ -607,13 +617,15 @@ theorem endpoints_connected_untouched (A B : Finset (Label m))
       exact alive_supported m hm A B k (hcuts k) (by simp [cutRow, he])
   have hremain : ∀ x ∈ ground m, x ∈ (localRows m hm A B).ground := by
     intro x hx
-    simpa only [at_position] using hall ⟨position m x, position_lt m hm x hx⟩
+    have hh := hall ⟨position m x, position_lt m hm x hx⟩
+    rw [at_position m hm x hx] at hh
+    exact hh
   have hAe : A = ∅ := by
-    apply Finset.eq_empty_iff_forall_not_mem.mpr
+    apply Finset.eq_empty_iff_forall_notMem.mpr
     intro x hx
     exact (Finset.mem_sdiff.mp (hremain x (hA hx))).2 (Finset.mem_union_left _ hx)
   have hBe : B = ∅ := by
-    apply Finset.eq_empty_iff_forall_not_mem.mpr
+    apply Finset.eq_empty_iff_forall_notMem.mpr
     intro x hx
     exact (Finset.mem_sdiff.mp (hremain x (hB hx))).2 (Finset.mem_union_right _ hx)
   have hcomp : ∀ a : Fin m, component m hm A B a = Finset.univ := by
@@ -715,7 +727,7 @@ def classifyMarkers (hA : A ⊆ ground m) (hB : B ⊆ ground m) :
         · apply MarkerCase.noMarker h hF
           ext x
           simp only [markers, rim, Finset.mem_inter, Finset.mem_insert,
-            Finset.mem_singleton, Finset.not_mem_empty, iff_false]
+            Finset.mem_singleton, Finset.notMem_empty, iff_false]
           rintro ⟨rfl | rfl, hx⟩
           · exact hf hx
           · exact hs hx
@@ -747,7 +759,7 @@ def decorated {V : Type*} [Fintype V] [DecidableEq V] (f : Label m ↪ V)
       rawJoin D (delta (((localRows m hm A B).ground \ rim m hm).image f)) else ⊥
 
 /-- A singleton at an actual surviving interface marker absorbs the D fibre.
-No old label or residual local ghost is removed by this family equality. -/
+No old label or HistoryCorners.residual local ghost is removed by this family equality. -/
 theorem forced_marker_absorbs {V : Type*} [Fintype V] [DecidableEq V]
     (f : Label m ↪ V) (X : Finset V) (D : Family V) (hD : Supported X D)
     (hF : (forced (localRows m hm A B) ∩ markers m hm A B).Nonempty) :
@@ -823,7 +835,7 @@ theorem decorated_readback {V : Type*} [Fintype V] [DecidableEq V]
       simp only [decorated, markerNormalForm, if_pos h, hE]
   | intact ha hb hf full sole labels root =>
       have hg : (localRows m hm A B).ground = ground m := by
-        simp [localRows, cornerRows, residual, ha, hb]
+        simp [localRows, cornerRows, HistoryCorners.residual, ha, hb]
       have hAR : Disjoint A (rim m hm) := by simp [ha]
       simp only [decorated, markerNormalForm, if_pos hAR, root, hg, tailGround]
 end Markers
@@ -836,17 +848,17 @@ Reuse renameRows/renameRows_root; no second relabel engine is defined. -/
 theorem corner_rows_transport (f : U ↪ V) (r : Rows U) (A B : Finset U) :
     (cornerRows (renameRows f r) (A.image f) (B.image f)).root =
       renameFamily f (cornerRows r A B).root := by
-  have hg : residual (r.ground.image f) (A.image f) (B.image f) =
-      (residual r.ground A B).image f := by
+  have hg : HistoryCorners.residual (r.ground.image f) (A.image f) (B.image f) =
+      (HistoryCorners.residual r.ground A B).image f := by
     rw [HistoryCorners.residual, HistoryCorners.residual, Finset.image_sdiff _ _ f.injective, Finset.image_union]
   apply SetLike.ext
   intro s
   change (∃ c : {c : r.chords // Disjoint ((r.row c).image f) (A.image f)},
-    s ⊆ residual (r.ground.image f) (A.image f) (B.image f) \
+    s ⊆ HistoryCorners.residual (r.ground.image f) (A.image f) (B.image f) \
       ((r.row c.1).image f \ B.image f)) ↔
     ∃ t, (∃ c : {c : r.chords // Disjoint (r.row c) A},
-      t ⊆ residual r.ground A B \ (r.row c.1 \ B)) ∧ t.image f = s
-  simp_rw [Finset.disjoint_image f.injective, hg,
+      t ⊆ HistoryCorners.residual r.ground A B \ (r.row c.1 \ B)) ∧ t.image f = s
+  simp only [Finset.disjoint_image f.injective, hg,
     ← Finset.image_sdiff _ _ f.injective]
   constructor
   · rintro ⟨c, hc⟩
@@ -915,7 +927,7 @@ theorem local_path_root (hA : A ⊆ ground m) :
 
 /-- Each derived consecutive component has exactly its consecutive path edges.
 Together with component_consecutive this is a linear forest, including isolated
-residual labels and the singleton constraint components. -/
+HistoryCorners.residual labels and the singleton constraint components. -/
 theorem component_edges (a x y : Fin m)
     (hx : x ∈ component m hm A B a) (hy : y ∈ component m hm A B a) :
     (reducedGraph m hm A B).Adj x y ↔ x.val + 1 = y.val ∨ y.val + 1 = x.val := by
@@ -987,7 +999,7 @@ theorem components_cover (a : Fin m) : a ∈ live m hm A B ↔
     obtain ⟨b, hb, rfl⟩ := Finset.mem_image.mp hC
     exact (Finset.mem_filter.mp ha).1
 
-/-- This cover is on the ORIGINAL residual ground, not on the face support. -/
+/-- This cover is on the ORIGINAL HistoryCorners.residual ground, not on the face support. -/
 theorem original_labels (x : Label m) : x ∈ (localRows m hm A B).ground ↔
     ∃ a ∈ live m hm A B, x ∈ block m hm A B a := by
   constructor
@@ -1107,8 +1119,9 @@ private theorem total_parent_readback {V : Type*} [Fintype V] [DecidableEq V]
   generalize he : classifyRows m hm A B = r
   cases r with
   | simplex c hc => exact decorated_simplex m hm A B f X D L hD hLD c hc
-  | void h => exact decorated_readback m hm A B hA hB
-      (fun c => (h.false c).elim) f X D L hD hLD
+  | void h =>
+      exact decorated_readback m hm A B hA hB
+        (fun c => (h.false c).elim) f X D L hD hLD
   | forest hi h0 => exact decorated_readback m hm A B hA hB h0 f X D L hD hLD
 
 /-- Exact structural result on actual masks. All geometry fields are conclusions
@@ -1172,7 +1185,7 @@ variable {V : Type*} [Fintype V] [DecidableEq V]
 /-- The physical source corner, at arbitrary ambient original masks. -/
 def physicalDecorated (m : Nat) (hm : 3 ≤ m) (f : Label m ↪ V)
     (A B X : Finset V) (D L : Family V) : Family V :=
-  let U := residual ((ground m).image f) A B
+  let U := HistoryCorners.residual ((ground m).image f) A B
   (rawJoin (delta X) (corner ((ground m).image f) A B
     (((PhysicalMWheel.ambientGraph m hm f).rows.without (interfaceRow m hm)).root)) ⊔
     rawJoin L (delta U)) ⊔
@@ -1194,10 +1207,10 @@ theorem physical_parent_readback (m : Nat) (hm : 3 ≤ m) (f : Label m ↪ V)
     physical_original_masks m hm f A' B' hA' hB' hAB'
   let s := parentStructure m hm A B hA hB f X D L hD hLD
   refine ⟨A, B, hA, hB, hAB, hAi, hBi, s, ?_⟩
-  have hground : residual ((ground m).image f) A' B' =
+  have hground : HistoryCorners.residual ((ground m).image f) A' B' =
       (localRows m hm A B).ground.image f := by
     rw [← hAi, ← hBi]
-    change residual ((ground m).image f) (A.image f) (B.image f) = (residual (ground m) A B).image f
+    change HistoryCorners.residual ((ground m).image f) (A.image f) (B.image f) = (HistoryCorners.residual (ground m) A B).image f
     rw [HistoryCorners.residual, HistoryCorners.residual, Finset.image_sdiff _ _ f.injective, Finset.image_union]
   have hswitch : Disjoint A' ((rim m hm).image f) ↔ Disjoint A (rim m hm) := by
     rw [← hAi]

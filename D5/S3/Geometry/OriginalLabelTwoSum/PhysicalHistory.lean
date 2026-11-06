@@ -162,6 +162,8 @@ def wheelStepRows {A : Type*} (g : GraphData A V) (i : WheelInput g) : Rows V wh
     intro c
     have hs := (physicalWheelStep g i).data.rows.row_supported
       ((physicalWheelStep_chords g i).symm c)
+    change (physicalWheelStep g i).data.rows.row _ ⊆
+      g.ground.erase i.e ∪ (AllMWheel.ground i.width).image i.labels at hs
     cases c with
     | inl c => simpa only [physicalWheelStep_rows_left] using hs
     | inr d => simpa only [physicalWheelStep_rows_right] using hs
@@ -176,9 +178,11 @@ theorem physicalWheelStep_rowRoot {A : Type*} (g : GraphData A V) (i : WheelInpu
     have he := physicalWheelStep_rows g i c
     change (physicalWheelStep g i).data.rows.row c =
       (wheelStepRows g i).row (physicalWheelStep_chords g i c) at he
+    change s ⊆ (g.ground.erase i.e ∪ (AllMWheel.ground i.width).image i.labels) \ _ at hc ⊢
     simpa only [he] using hc
   · rintro ⟨c,hc⟩
     refine ⟨(physicalWheelStep_chords g i).symm c,?_⟩
+    change s ⊆ (g.ground.erase i.e ∪ (AllMWheel.ground i.width).image i.labels) \ _ at hc ⊢
     cases c with
     | inl d => simpa only [wheelStepRows,physicalWheelStep_rows_left] using hc
     | inr d => simpa only [wheelStepRows,physicalWheelStep_rows_right] using hc
@@ -313,7 +317,7 @@ def blockInput {A : Type} {n ghosts k : Nat}
     b := b
     edge := hedge
     labels := ⟨f,hf⟩
-    zero := by simp only [f,if_pos rfl]
+    zero := by change f 0 = e; simp only [f,if_pos rfl]
     fresh := fresh }
 
 def step {A : Type*} (g : GraphData A V) (i : Input g) : PhysicalGlue A Wheel.Label V :=
@@ -324,7 +328,7 @@ theorem step_rows {A : Type*} (g : GraphData A V) (i : Input g) :
       substitute i.e (Wheel.R.image i.labels) (g.rows.row c)) ∧
     (∀ d : (Wheel.ambientGraph i.labels).PhysicalSurvivor (0 : Fin 4),
       (step g i).data.rows.row (.inr d) =
-        (![{(1 : Wheel.Label),2},{2,3},{3,4},{4,1}] d.1).image i.labels) := by
+        ((![{(1 : Wheel.Label),2},{2,3},{3,4},{4,1}] : Fin 4 → Finset Wheel.Label) d.1).image i.labels) := by
   constructor
   · exact (PhysicalCertificate.attachment_rows g i.e i.retained i.a i.b i.edge
       i.labels i.zero i.fresh).1
