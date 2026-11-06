@@ -1,12 +1,14 @@
-/-
-Source-prepared, UNCOMPILED. Intended module:
-D5.S3.Combinatorics.Circle.MersennePhaseThreeTrace
-
-SourceWidth API pinned at 13f4288c2940bd2aa4020cec789956b9265769f5.
-This file supplies only the literal integer trace, with all physical labels.
--/
+/- GID: D5/S3/Combinatorics/Circle/MersennePhaseThreeTrace
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/MersennePhaseThreeTrace
+   mirror-E: none(waiver:no-escape-mirror-specified)
+   anchors: []
+   utility: none
+   digest: Literal three-point integer phase traces on every original physical label. -/
 module
 public import D5.S3.Combinatorics.Circle.SourceWidth
+
+/-! # Three-point Mersenne phase traces on physical labels -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -43,7 +45,7 @@ private theorem centered_scaled {g q z r ell : ℤ}
 /-- The full physical phase filter has exactly these three distinct labels. -/
 private theorem phase_sum_three {d : ℕ} (hd : 0 < d) (j : Fin d)
     (f : Fin (3 * d) → ℤ) :
-    (∑ i in Finset.univ.filter (fun i : Fin (3 * d) => i.val % d = j.val), f i) =
+    (∑ i ∈ Finset.univ.filter (fun i : Fin (3 * d) => i.val % d = j.val), f i) =
       f ⟨j.val, by have := j.isLt; omega⟩ +
         f ⟨j.val + d, by have := j.isLt; omega⟩ +
         f ⟨j.val + 2 * d, by have := j.isLt; omega⟩ := by
@@ -105,7 +107,7 @@ private theorem phase_sum_three {d : ℕ} (hd : 0 < d) (j : Fin d)
 `(2^d - 1) * (2^(d+1) - 3)`, on every original physical label.
 There is no coprimality, primality, period, or upper-bound premise. -/
 theorem actual_phase_trace (d : ℕ) (hd : 3 ≤ d) (j : Fin d) :
-    (∑ i in Finset.univ.filter (fun i : Fin (3 * d) => i.val % d = j.val),
+    (∑ i ∈ Finset.univ.filter (fun i : Fin (3 * d) => i.val % d = j.val),
       actualSource (3 * d) ((2 ^ d - 1) * (2 ^ (d + 1) - 3)) i) =
       modulus (3 * d) *
         ((if j.val = d - 3 then (1 : ℤ) else 0) -
