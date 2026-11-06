@@ -107,7 +107,6 @@ def batchFibre (is : List I) (hn : is.Nodup) (B : Family V)
     dsimp only [P]
     rw [liftFibre_pairs,Q.2]
     simp only [List.flatMap_cons]
-    rfl
 
 termination_by is.length
 

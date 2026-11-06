@@ -54,7 +54,9 @@ private theorem nativeAug_retained (P : CollapsePair V) :
     nativeAug P.retained = cut (nativeAug P.ambient) {P.lower} := by
   apply SetLike.ext
   intro s
-  simpa only [cut,Finset.mem_singleton,forall_eq,Set.mem_setOf_eq] using augmented_retained P s
+  change AugmentedFace P.retained s ↔
+    AugmentedFace P.ambient s ∧ ∀ a ∈ ({P.lower} : Finset (Finset V)), ¬ a ⊆ s
+  simpa only [Finset.mem_singleton,forall_eq] using augmented_retained P s
 
 /-- One child pair, on its actual native ambient, produces a finite native
 parent sequence. Its source and target are computed Phi states. -/
@@ -204,7 +206,7 @@ def replaySequence (X Y Z : Finset V) (e : V) (E : Family V)
   induction S with
   | refl M => exact Sequence.refl _
   | @step P N T ih =>
-    have hperm : P.apex = e → Sequence (project (delta Y)) (project E) := by
+    let hperm : P.apex = e → Sequence (project (delta Y)) (project E) := by
       intro he
       have hg : Nonempty (Sequence (project (delta Y)) (project E)) :=
         permission.elim id (fun hn => False.elim (hn P (by simp [Sequence.pairs]) he))
@@ -299,7 +301,7 @@ theorem replayPair_orderedPairs
     orderedPairs (replayPair X Y Z e E hd hz heX hE hE0 P hs permission) =
       replayBranchPairs X Y Z e E P permission := by
   classical
-  unfold replayPair replayBranchPairs
+  unfold replayPair replayBranchPairs orderedPairs orderedPair
   by_cases heU : e ∈ P.upper
   · by_cases heL : e ∈ P.lower
     · simp only [dif_pos heU, if_neg (not_not.mpr heU),
@@ -347,15 +349,23 @@ private theorem replayBranchPairs_faces
           · exact Or.inl ha
           · exact Or.inr (Or.inl ⟨hv, hl⟩)
           · exact Or.inr (Or.inr ht)
-      simp [replayBranchPairs, replayFacePairs, orderedPair, heU, heL, herase]
+      simp only [replayBranchPairs, replayFacePairs, orderedPair, heU, heL,
+        not_true_eq_false, not_false_eq_true, if_false, if_true, dite_false, dite_true]
+      apply congrArg (fun f => List.map f _)
+      funext t
+      exact Prod.ext rfl (herase t)
     · have heA : P.apex = e :=
         (Finset.mem_insert.mp (show e ∈ insert P.apex P.lower from heU)).resolve_right heL |>.symm
       simp only [replayBranchPairs, replayFacePairs, orderedPair,
-        heU, heL, not_true_eq_false, not_false_eq_true, if_false, if_true,
+        heU, heL, not_true_eq_false, not_false_eq_true, if_false, if_true, dite_false, dite_true,
         dif_neg (not_not.mpr heU), dif_neg heL, dif_pos heA]
       rw [← hgamma heA]
       simp only [orderedPairs, orderedPair, List.map_map]
-  · simp [replayBranchPairs, replayFacePairs, orderedPair, heU, hupper]
+  · simp only [replayBranchPairs, replayFacePairs, orderedPair, heU,
+      not_false_eq_true, if_true, dite_true]
+    apply congrArg (fun f => List.map f _)
+    funext t
+    exact Prod.ext rfl (hupper t)
 
 /-- The complete replay list is a flat map on the ORIGINAL child faces. The
 right Gamma is the same classical choice as in the constructor. Membership is
@@ -378,7 +388,7 @@ theorem replaySequence_orderedPairs
     have htail : Supported (insert e X) (nativeAug P.retained) := by
       intro s hP
       exact hs s (hP.elim Or.inl (fun h => Or.inr h.1))
-    have hperm : P.apex = e → Sequence (project (delta Y)) (project E) := by
+    let hperm : P.apex = e → Sequence (project (delta Y)) (project E) := by
       intro h
       have hg : Nonempty (Sequence (project (delta Y)) (project E)) :=
         permission.elim id (fun hn => False.elim (hn P (by simp [Sequence.pairs]) h))

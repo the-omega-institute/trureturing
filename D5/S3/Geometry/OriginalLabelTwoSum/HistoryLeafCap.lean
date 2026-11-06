@@ -168,7 +168,7 @@ def padCertificate (W U d : Finset V) (B M : Family V)
       · exact Or.inl hs
       · exact Or.inr ⟨a, ha, t, Or.inl ht, rfl⟩
       · change q ∈ c.critical.image (fun q => d ∪ q) at hq
-        obtain ⟨q, hq, rfl⟩ := Finset.mem_image.mp hq
+        obtain ⟨q, hq, rfl⟩ := (Finset.mem_image (f := fun q : Finset V => d ∪ q) (s := c.critical)).mp hq
         refine Or.inr ⟨s ∩ d, Finset.inter_subset_right, s ∩ q,
           Or.inr ⟨q, hq, Finset.inter_subset_right⟩, ?_⟩
         exact split_union hs
@@ -176,11 +176,11 @@ def padCertificate (W U d : Finset V) (B M : Family V)
     constructor
     · intro q hq
       change q ∈ c.critical.image (fun q => d ∪ q) at hq
-      obtain ⟨q, hq, rfl⟩ := Finset.mem_image.mp hq
+      obtain ⟨q, hq, rfl⟩ := (Finset.mem_image (f := fun q : Finset V => d ∪ q) (s := c.critical)).mp hq
       exact hd.mono Finset.subset_union_left
     · intro q hq hC
       change q ∈ c.critical.image (fun q => d ∪ q) at hq
-      obtain ⟨q, hq, rfl⟩ := Finset.mem_image.mp hq
+      obtain ⟨q, hq, rfl⟩ := (Finset.mem_image (f := fun q : Finset V => d ∪ q) (s := c.critical)).mp hq
       rcases hC with hBq | ⟨a, ha, t, ht, he⟩
       · exact hmissing _ hBq Finset.subset_union_left
       · have hqt : q ⊆ t := subset_right_of_disjoint hdu ha
@@ -188,7 +188,7 @@ def padCertificate (W U d : Finset V) (B M : Family V)
         exact c.cells.absent q hq (c.core.lower hqt ht)
     · intro q hq s hs
       change q ∈ c.critical.image (fun q => d ∪ q) at hq
-      obtain ⟨q, hq, rfl⟩ := Finset.mem_image.mp hq
+      obtain ⟨q, hq, rfl⟩ := (Finset.mem_image (f := fun q : Finset V => d ∪ q) (s := c.critical)).mp hq
       have hqU := c.critical_supported q hq
       have hsDU := hs.subset.trans (Finset.union_subset_union le_rfl hqU)
       have hsplit := split_union hsDU
@@ -216,9 +216,9 @@ def padCertificate (W U d : Finset V) (B M : Family V)
         exact hboundary (s ∩ d) hproper (s ∩ U) Finset.inter_subset_right
     · intro q hq t ht hqt
       change q ∈ c.critical.image (fun q => d ∪ q) at hq
-      obtain ⟨q, hq, rfl⟩ := Finset.mem_image.mp hq
+      obtain ⟨q, hq, rfl⟩ := (Finset.mem_image (f := fun q : Finset V => d ∪ q) (s := c.critical)).mp hq
       change t ∈ c.critical.image (fun q => d ∪ q) at ht
-      obtain ⟨t, ht, rfl⟩ := Finset.mem_image.mp ht
+      obtain ⟨t, ht, rfl⟩ := (Finset.mem_image (f := fun q : Finset V => d ∪ q) (s := c.critical)).mp ht
       exact congrArg (fun s => d ∪ s) (c.cells.antichain q hq t ht
         (union_cancel_right hdu (c.critical_supported q hq) hqt))
   let T := liftFibre c.core (delta {c.vertex}) B d U hC0 (by simp) c.separate hdu
@@ -226,7 +226,7 @@ def padCertificate (W U d : Finset V) (B M : Family V)
     (noBase (delta {c.vertex}))
   let H := B ⊔ rawJoin (delta d) (delta {c.vertex})
   have hUpper : insert c.vertex d ∈ H := Or.inr
-    ⟨d, le_rfl, {c.vertex}, le_rfl, by ext v; simp only [Finset.mem_insert,
+    ⟨d, (by change d ⊆ d; exact le_rfl), {c.vertex}, (by change ({c.vertex} : Finset V) ⊆ {c.vertex}; exact le_rfl), by ext v; simp only [Finset.mem_insert,
       Finset.mem_union, Finset.mem_singleton]; tauto⟩
   have hFree : ∀ s ∈ H, d ⊆ s → s = d ∨ s = insert c.vertex d := by
     intro s hs hds
@@ -275,7 +275,7 @@ def padCertificate (W U d : Finset V) (B M : Family V)
     separate := T.append (Rseq.append (collapseCone W B x hB hx hcone)) }
   intro q hq
   change q ∈ c.critical.image (fun q => d ∪ q) at hq
-      obtain ⟨q, hq, rfl⟩ := Finset.mem_image.mp hq
+  obtain ⟨q, hq, rfl⟩ := (Finset.mem_image (f := fun q : Finset V => d ∪ q) (s := c.critical)).mp hq
   exact (Finset.union_subset_union le_rfl (c.critical_supported q hq)).trans hW
 
 /-- All three factor tags in the common padding construction. This function
@@ -453,8 +453,8 @@ private theorem oneLeaf_supported (U : Finset V) (a b : V) (K : Family V)
     (hs : Supported (insert b U) K) :
     Supported (insert a (insert b U)) (oneLeafFamily U a K) := by
   rintro s (hsU | ⟨x, hx, t, ht, rfl⟩)
-  · exact hsU.trans (by simp)
-  · exact Finset.union_subset (hx.trans (by simp)) ((hs t ht).trans (by simp))
+  · exact hsU.trans ((Finset.subset_insert b U).trans (Finset.subset_insert a _))
+  · exact Finset.union_subset (hx.trans (by intro v hv; simp_all only [Finset.mem_insert, Finset.mem_singleton]; tauto)) ((hs t ht).trans (by intro v hv; simp_all only [Finset.mem_insert]; tauto))
 
 private theorem oneLeaf_delete (U : Finset V) (a b : V) (K : Family V)
     (ha : a ∉ insert b U) (hb : b ∉ U) (hs : Supported (insert b U) K) :
@@ -526,9 +526,10 @@ private theorem twoLeaf_supported (U : Finset V) (a b c : V) (K : Family V)
     (hs : Supported (insert c U) K) :
     Supported (insert a (insert b (insert c U))) (twoLeafFamily U a b c K) := by
   rintro s ((hs | hs) | ⟨x, hx, t, ht, rfl⟩)
-  · exact hs.trans (by simp)
-  · exact hs.trans (by simp)
-  · exact Finset.union_subset (hx.trans (by simp)) ((hs t ht).trans (by simp))
+  · exact hs.trans ((Finset.subset_insert b _).trans (Finset.subset_insert a _))
+  · exact hs.trans (Finset.insert_subset_insert a
+      ((Finset.subset_insert c U).trans (Finset.subset_insert b _)))
+  · exact Finset.union_subset (hx.trans (by intro v hv; simp_all only [Finset.mem_insert, Finset.mem_singleton]; tauto)) ((hs t ht).trans (by intro v hv; simp_all only [Finset.mem_insert]; tauto))
 
 private theorem twoLeaf_delete (U : Finset V) (a b c : V) (K : Family V)
     (ha : a ∉ insert b (insert c U)) (hb : b ∉ insert c U)
@@ -599,7 +600,7 @@ private theorem twoLeaf_delete (U : Finset V) (a b c : V) (K : Family V)
         Or.inr ⟨{a}, by simp, insert c t, htK, by simp [Finset.insert_comm]⟩
       have hsub : s ⊆ insert a (insert c t) := by
         rw [he]
-        exact Finset.union_subset (hx.trans (by simp)) (by simp)
+        exact Finset.union_subset (hx.trans (by intro v hv; simp_all only [Finset.mem_insert, Finset.mem_singleton]; tauto)) (by simp)
       refine ⟨⟨hn, (twoLeafFamily U a b c K).lower hsub hbig⟩, ?_⟩
       intro hbs
       have h : b = a ∨ b = c ∨ b ∈ t := by simpa using hsub hbs
@@ -644,7 +645,9 @@ private def twoLeafEndOutput (U : Finset V) (a b c : V) (M : Family V)
       exact h.elim (fun h => haU (h ▸ hU)) (fun h => hc (h ▸ hU))
     have hB : Supported W B := by
       intro s h
-      exact h.elim (fun h => h.trans (by simp [W])) (fun h => h.trans (by simp [W]))
+      exact h.elim (fun h => h.trans (Finset.insert_subset_insert a
+        ((Finset.subset_insert c U).trans (Finset.subset_insert b _))))
+        (fun h => h.trans ((Finset.subset_insert b _).trans (Finset.subset_insert a _)))
     have hmissing : ∀ s ∈ B, ¬ ({a,c} : Finset V) ⊆ s := by
       intro s h hsub
       rcases h with h | h
@@ -658,7 +661,7 @@ private def twoLeafEndOutput (U : Finset V) (a b c : V) (M : Family V)
       · left
         have hcz : c ∉ z := by
           intro hcz
-          exact hz.ne (Finset.Subset.antisymm hz.subset (by simp [haz, hcz]))
+          exact hz.ne (Finset.Subset.antisymm hz.subset (by intro v hv; have hv' : v = a ∨ v = c := by simpa only [Finset.mem_insert, Finset.mem_singleton] using hv; exact hv'.elim (fun h => h ▸ haz) (fun h => h ▸ hcz)))
         apply Finset.union_subset _ (ht.trans (Finset.subset_insert _ _))
         intro v hv
         have h : v = a ∨ v = c := by simpa using hz.subset hv
@@ -685,7 +688,8 @@ private def twoLeafEndOutput (U : Finset V) (a b c : V) (M : Family V)
         rw [twoLeafEnd, hM, (rawJoin_unit _).2]
         apply sup_eq_right.mpr
         intro s h
-        exact h.elim (fun h => h.trans (by simp)) (fun h => h.trans (by simp))
+        exact h.elim (fun h => h.trans (by intro v hv; simp_all))
+          (fun h => h.trans (by intro v hv; simp_all))
       exact .strong (changeCertificate (coneCertificate W (delta {a,c}) a
         (fun _ h => h.trans (by simp [W])) (by simp)
         (fun s h => Finset.insert_subset (by simp) h)) he.symm)
@@ -698,7 +702,7 @@ private def twoLeafEndOutput (U : Finset V) (a b c : V) (M : Family V)
       have he : delta {a} ⊔ rawJoin (delta {c}) (delta ∅) = twoLeafEnd ∅ a c M := by
         rw [(rawJoin_unit _).2, twoLeafEnd, hM, (rawJoin_void _).2, sup_bot_eq]
         rfl
-      exact changeOutput (widenOutput (by simp [W]) small) he
+      exact changeOutput (widenOutput (by intro v hv; simp_all [W]) small) he
 
 /-- Complete D6 local output from the smaller LINK factor. In particular the
 required factor is rawLink U c K, not a deletion. The empty-U alternatives are
