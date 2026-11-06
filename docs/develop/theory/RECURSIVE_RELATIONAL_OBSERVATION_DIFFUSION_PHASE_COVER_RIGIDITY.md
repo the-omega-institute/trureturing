@@ -2620,3 +2620,733 @@ continuing programme.
 [EXT-SPECTRAL]: https://arxiv.org/html/2006.01766v1
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Numerical names of the original zero state from its actual coefficients
+
+**Definition 11.1 (access, norms and finite representatives).** Retain
+the original source, operators, coefficient maps and normalizations in
+Definitions 1.1 and 10.1. The numerical inputs are interval names of the
+exact original $a,\eta>0$ as in Definition 10.4 and a requested rational
+absolute error. A positive-discount query additionally supplies a name of
+the requested $r>0$. A general resolvent query supplies a global
+$L^2(d\mu)$ name of its forcing. The construction of $w_*$ below generates
+its own forcing from $a,\eta$. There is no input naming a local solution,
+boundary coefficient, operator matrix, resolvent, tail, normalization or
+$h$. A name is a total mathematical function on requested precisions;
+the cost of answering its queries is charged separately.
+
+A finite $L^2$ representative is a rational complex step function on
+finitely many bounded rational boxes in the original coordinates. A name
+returns such representatives with certified global norm errors tending
+to zero at a prescribed rate. In particular finite norms and inner
+products have arbitrarily accurate rational enclosures. A graph-pair
+name of an **exact** pair $(u,S^*u)$ returns $(U,V;\alpha,\beta)$ with
+
+$$
+\|U-u\|_2\le\alpha,\qquad \|V-S^*u\|_2\le\beta.
+\tag{11.1}
+$$
+
+It asserts neither $U\in D(S^*)$ nor $S^*U=V$. Errors of intermediate
+cylinder names are measured in the ordinary product Sobolev norms on
+$\mathbb R\times S^3$. Finite compact smooth tensor sums, with rational
+coefficients, ordinary spherical harmonics and computable compact smooth
+functions of the real coordinate, are a dense representation of $H^1$.
+For the real factors use the fixed bump
+$\beta(v)=\exp(-1/(1-v^2))$ on $|v|<1$, zero outside, and its rational
+translates, dilates and rational polynomial multiples. Their supports
+and derivative bounds are computable from this finite description.
+The dual norm is the ordinary $H^{-1}$ norm. Distributional multiplication
+is used for weights on this dual space.
+
+Use the exact chart [E, (109.1)--(109.3)],
+
+$$
+\begin{gathered}
+\kappa=\sqrt{\eta/a},\quad s=w-xy/2,\quad t=s/\kappa,
+\quad Z=(\xi,t),\quad R=|Z|,\quad\tau=-\log R,\\
+(\mathcal Uu)(\xi,t)=\sqrt\kappa\,u(x,y,z,\kappa t+xy/2),
+\qquad (\mathcal Uu)(R\omega)=R^{-1}H_u(\tau,\omega),\\
+\mathcal G(\xi,s)=\Gamma(x,y,z,s+xy/2),\qquad
+Y_1=\partial_x-\frac y{2\kappa}\partial_t,\quad
+Y_2=\partial_y+\frac x{2\kappa}\partial_t,\quad Y_3=\partial_z,\\
+\mathcal A=a\left(-\sum_iY_i^2-\partial_t^2\right).
+\end{gathered}
+\tag{11.2}
+$$
+
+Thus $\mathcal U$ is unitary and the original expression is
+$\mathcal A-16a\kappa\mathcal G(\xi,\kappa t)$. The polar expression of
+its form divided by $a$ is denoted by $\mathfrak p$. Let
+$\mathfrak p_0$ be exactly the comparison cylinder form (109.12), and
+$\mathfrak e=\mathfrak p-\mathfrak p_0$. These are the actual linear
+forms; the comparison does not replace the original potential. Put
+
+$$
+\begin{gathered}
+N_0=2\pi/\sqrt3,\qquad
+e_0(\sin\theta\,\Omega,\cos\theta)
+ =\frac{2\min(\theta,\pi-\theta)}{\pi N_0\sin\theta},\\
+b[v]=\|\nabla_{S^3}v\|_2^2+\|v\|_2^2
+                  -\frac4\pi\|v|_\Sigma\|_2^2,\qquad
+\Sigma=\{t=0\}\cap S^3,\qquad P_0=-\partial_\tau^2+B,\\
+X=\{J:e^{\tau/8}J\in H^1\},\qquad
+Y=\{Q:e^{\tau/8}Q\in H^{-1}\},\qquad K_0=256.
+\end{gathered}
+\tag{11.3}
+$$
+
+Here $B$ is the form operator of $b$; its nonnegativity, normalized
+kernel $\mathbb Ce_0$ and gap $B|_{e_0^\perp}\ge2$ are precisely
+[E, (109.6)--(109.7)]. Only this angular operator has that gap.
+
+Let $q(v)=0$ for $v\le0$, $q(v)=6v^5-15v^4+10v^3$ for $0<v<1$,
+and $q(v)=1$ for $v\ge1$. It is $C^2$, with
+$0\le q\le1$, $|q'|\le2$, $|q''|\le6$. Define
+
+$$
+\begin{gathered}
+C_{\rm ann}=8(\kappa^{-1}+\kappa^{-2})
+                  +128B_G\kappa^{-1/2}+640B_G\kappa^{-1/4},\qquad
+C_E=2^{40}C_{\rm ann},\qquad B_G=32,\\
+\theta_T=q(\tau-T),\qquad
+\langle K,E_TJ\rangle=\mathfrak e(\theta_TK,\theta_TJ).
+\end{gathered}
+\tag{11.4}
+$$
+
+The scalar $B_G$ is the **same Green bound** $B=32$ as in (10.3);
+$B$ in (11.3) denotes the angular operator.
+Choose an integer $T\ge4$ and a rational $\bar q<1/2$ by the strict,
+outward-enclosed inequality
+
+$$
+K_0C_Ee^{-T/4}\le\bar q<1/2.
+\tag{11.5}
+$$
+
+For $p(\tau)=1$ and $p(\tau)=\tau$ set
+
+$$
+\begin{gathered}
+D_p=2^{20}C_E
+ \left[\int_{T-2}^\infty e^{-\tau/4}(p^2+|p'|^2)d\tau\right]^{1/2},
+\quad L_T=P_0^{-1}E_T,\quad b_p=P_0^{-1}E_T(pe_0),\\
+Z_p=-\sum_{j=0}^\infty(-L_T)^jb_p,\qquad H_p=pe_0+Z_p,
+\qquad \chi_T=q(\tau-T-2),\\
+(\mathcal U\gamma_p)(R\omega)=\chi_T R^{-1}H_p,\qquad
+\mathcal U\ell_p=[\mathcal A,\chi_T](R^{-1}H_p).
+\end{gathered}
+\tag{11.6}
+$$
+
+The inverse and the series in this definition are justified and computed
+in Theorem 11.2. The vectors are zero outside the displayed source
+cutoff. Write $(\gamma_c,\ell_c)$ for $p=1$ and
+$(\gamma_l,\ell_l)$ for $p=\tau$; none of the $\ell$ symbols denotes an
+emission. All norm bounds and stopping comparisons use rational outward
+enclosures of the constants for the exact named parameters.
+
+**Theorem 11.2 (constructed local graph names for the original source).**
+From the $a,\eta$ names alone, (11.2)--(11.6) construct global original
+$L^2$ names of both graph pairs, with
+
+$$
+\begin{gathered}
+S^*\gamma_c=\ell_c,\quad (A,C)(\gamma_c)=(1,0),
+\quad\gamma_c\in D(F),\quad F\gamma_c=\ell_c,\\
+S^*\gamma_l=\ell_l,\quad (A,C)(\gamma_l)=(0,1).
+\end{gathered}
+\tag{11.7}
+$$
+
+Both vectors have compact support. Their images have compact punctured
+support $T+2\le\tau\le T+3$. Put
+
+$$
+\begin{gathered}
+\Lambda_Q=4(1+\kappa^{-2}),\qquad
+B_{\rm graph}=1+100a\Lambda_Qe^{2(T+3)},\\
+Z_{p,n}=-\sum_{j=0}^n(-L_T)^jb_p,\qquad
+\beta_{p,n}=K_0D_p\frac{\bar q^{,n+1}}{1-\bar q}.
+\end{gathered}
+\tag{11.8}
+$$
+
+Then $\|Z_p-Z_{p,n}\|_X\le\beta_{p,n}$. Applying the two maps in
+(11.6) separately to this approximation gives graph-pair naming error
+sum at most $B_{\rm graph}\beta_{p,n}$, before separately budgeted
+finite evaluation errors. For $L\ge T+3$ the source-end truncation has
+the certificate
+
+$$
+\|\mathbf1_{\{R<e^{-L}\}}\gamma_p\|_2^2
+ \le2\int_L^\infty e^{-2\tau}p(\tau)^2d\tau
+       +2e^{-9L/4}\left(\frac{K_0D_p}{1-\bar q}\right)^2.
+\tag{11.9}
+$$
+
+Every inverse and norm computation used in these names is specified
+below from the actual coefficients. No numerical local-solution or
+weak-action oracle is an additional input.
+
+Proof. First construct the original coefficient on punctured compact
+sets. Use exactly (10.11), with its literal inverse Fourier factor and
+independent $z$ Gaussian, and $\Gamma=\int_0^\infty h_t^Ldt$.
+The contour proof of (10.12) also gives
+
+$$
+h_t^L(\xi,s)\le\tfrac18t^{-5/2}
+             e^{-(|\xi|^2+|s|)/(32t)}.
+\tag{11.10}
+$$
+
+For a compact set separated from $e$, take a finite effective cover by
+charts with a certified positive lower bound either for $|\xi|^2$,
+or for $s$, or for $-s$. Use the real contour on the first charts and
+the contour $u+i(\pi/4)\operatorname{sgn}s$ on the others. The sign is
+fixed within each latter chart. On the real contour
+$u\coth u\ge1$; on the shifted contour the estimates preceding
+(10.12) hold uniformly. If $D>0$ is the certified lower bound appropriate
+to a chart, the omitted heat times have bounds
+
+$$
+\frac18\int_0^\alpha t^{-5/2}e^{-D/(32t)}dt,
+\qquad \frac1{12}b^{-3/2}\quad(t>b).
+\tag{11.11}
+$$
+
+On $\alpha\le t\le b$, the frequency tail $|u|>U\ge1$ is bounded
+by $6(U+2)e^{-U}$ times the explicit integral of the prefactor
+$t^{-5/2}/(16\pi^{5/2})$. This follows from
+$|(u+i\pi/4)/\sinh(u+i\pi/4)|\le3(|u|+1)e^{-|u|}$;
+the real contour has the same sufficient tail. Real parts of the
+quadratic exponents are nonnegative. Choose $\alpha\downarrow0$,
+$b,U\uparrow\infty$ by these three inequalities. On the remaining
+compact rectangle the integrand and its coordinate derivatives are
+computable elementary functions with bounded derivatives. Its removable
+real-contour origin is evaluated by its convergent series. Subdivision
+and interval quadrature consequently give uniform names of $\Gamma$ on
+each specified compact punctured set. Parameter enclosures refine these
+names continuously on the same positive brackets. This constructs the
+coefficient, rather than assuming its evaluator, and computes no
+interacting heat kernel.
+
+Here are quantitative bounds for the weak local problem. On
+$1/2\le|(X,u)|\le2$, put
+$W_r=r^2\mathcal G(rX,\kappa ru)$, $0<r\le1$. The exact original
+marginal [E, (109.9)] and (10.12) give
+
+$$
+\int W_rdu=\frac1{4\pi\kappa|X|},\qquad
+\int |u|^{1/4}W_rdu
+ \le10B_G\kappa^{-5/4}r^{1/4}|X|^{-1/2}.
+\tag{11.12}
+$$
+
+For the second inequality substitute $u=r|X|^2v/\kappa$ in the
+homogeneous Green bound; the remaining integral is at most
+$2/(5/4)+2/(1/4)<10$. For $|X|<1/4$, annular support forces
+$|u|>1/4$, the trace is zero, and
+$W_r\le8B_G\kappa^{-3/2}r^{1/2}$. For $|X|\ge1/4$ use
+
+$$
+|\overline{h(u)}k(u)-\overline{h(0)}k(0)|
+ \le2|u|^{1/4}\|h\|_{H^1(\mathbb R)}\|k\|_{H^1(\mathbb R)}.
+\tag{11.13}
+$$
+
+For $|u|\le1$ this follows from the fundamental theorem and the
+one-dimensional $H^1$ supremum bound; for $|u|>1$ the supremum bound
+alone suffices. Cauchy--Schwarz in $X$ and multiplication by the unchanged
+$16\kappa$ give the last two terms of $C_{\rm ann}$. Expanding the
+two shear kinetic terms in (11.2) gives an error bounded by
+$8(\kappa^{-1}+\kappa^{-2})r\|h\|_{H^1}\|k\|_{H^1}$.
+Since $r\le r^{1/4}$, the actual/model annular form difference is at
+most $C_{\rm ann}r^{1/4}$ times these norms. This is the quantitative
+version of the original bilinear comparison, including its axis.
+
+For clarity, the fixed-cylinder localization can use triangular hats
+at spacing $l=(\log2)/4$, and companion cutoffs equal to one on each
+hat and supported within $2l$ of its center. At most five enlarged
+slabs overlap. Each hat or companion has $H^1$ multiplier norm below
+$8$. The polar map to the relative annulus $[1/2,2]$ has norm below
+$3$: its squared $H^1$ integral is bounded by
+$4\|J\|_2^2+\|J+J'\|_2^2+\|\nabla_SJ\|_2^2$.
+Each product of $\theta_T$ with either relative weight
+$e^{\pm(\tau-jl)/8}$ has multiplier norm below $8$. The first
+intersecting slab contributes at most $2e^{-T/4}$.
+Partition in one slot and use its companion in the other. Locality and
+the sum of the hat derivatives being zero make this the **exact** form
+difference. The bound for its weighted sum is at most
+$9\cdot8^4\cdot5\cdot2\,C_{\rm ann}e^{-T/4}<C_Ee^{-T/4}$.
+Piecewise linear multipliers are legal by $H^1$ continuity. Thus
+
+$$
+\|E_T\|_{X\to Y}\le C_Ee^{-T/4}.
+\tag{11.14}
+$$
+
+For an affine input $pe_0$, the same paired sum leaves the squared
+weight $e^{-\tau/4}(p^2+|p'|^2)$ after Cauchy--Schwarz. The local
+$H^1$ norm of $e_0$ is less than $2$, as also computed below.
+The slot factors just bounded, finite overlap, and a unit-width terminal
+cutoff give total factor below $2^{20}C_E$. Consequently
+$\|E_T(pe_0)\|_Y\le D_p$. Removing the input beyond level $L$
+with a cutoff changing on $[L-1,L]$ gives the same sufficient bound
+with lower integration endpoint $L-2$. This is an effective vanishing
+forcing tail. The two integrals for $p=1,\tau$ equal, respectively,
+$4e^{-(T-2)/4}$ and
+$4e^{-(T-2)/4}((T-2)^2+8(T-2)+33)$.
+
+Next prove the inverse bound in the **ordinary** norms used for names.
+Integration by parts on the two hemispheres, including the derivative
+jump at $\Sigma$, gives
+
+$$
+b[v]=\int_{S^3}e_0^2|\nabla_S(v/e_0)|^2,
+\qquad
+\|v\|_{H^1}^2\le3\bigl(b[v]+\|v\|_2^2\bigr),
+\quad b[v]+\|v\|_2^2\le2\|v\|_{H^1}^2.
+\tag{11.15}
+$$
+
+Indeed $e_0$ is positive and Lipschitz, and
+$|\nabla\log e_0|=|1/\theta-\cot\theta|\le2/\pi<1$ on the
+first hemisphere and by reflection on the other. On $(0,\pi/2)$
+this quantity increases from zero, since
+$\csc^2\theta-\theta^{-2}>0$. The product rule therefore bounds
+$\|\nabla v\|_2^2$ by $2b[v]+2\|v\|_2^2$; the last inequality
+in (11.15) follows directly from trace subtraction. These arguments
+extend by form density. Direct angular integration gives
+$\|e_0\|_2=1$, $\|e_0\|_{H^1}^2=12/\pi^2$; equivalently use
+$b[e_0]=0$, its equator value $1/N_0$ and equator area $4\pi$.
+
+Conjugation of $P_0$ by $e^{\tau/8}$ and Fourier transformation give
+the symbols
+
+$$
+\mu+\zeta^2-1/64+i\zeta/4.
+\tag{11.16}
+$$
+
+At $\mu=0$ their modulus is $\zeta^2+1/64$; at $\mu\ge2$ their
+real part is at least $(1+\mu+\zeta^2)/2$. Spectral division thus
+gives an inverse bound $64$ between the $B$ Sobolev scales. The two
+norm conversions (11.15), also on their duals, cost at most $3$ in
+total. Hence $\|P_0^{-1}\|_{Y\to X}\le192<K_0$. Division by
+these symbols proves surjectivity and uniqueness, exactly on the
+weighted whole cylinder. It introduces no gap for $F$.
+
+Here is a finite procedure for that inverse and for the weak data it
+uses. On a compact dense tensor input, $P_0$ and $E_T$ have computable
+$L^2$ scalar and divergence terms and a known equatorial trace
+distribution. The actual terms use the just constructed $\Gamma$
+names and the polynomial kinetic coefficients. For a smooth compact
+density $a(\tau,\Omega)$ on $\mathbb R\times\Sigma$, replace
+$a\delta_\Sigma$ by a symmetric normal layer of width $\nu<1/4$,
+dividing its density by the spherical volume Jacobian. The fundamental
+theorem in the normal variable and Cauchy--Schwarz give
+
+$$
+\|a\delta_\Sigma-\operatorname{layer}_\nu(a)\|_{H^{-1}}
+ \le8\sqrt\nu\,\|a\|_2.
+\tag{11.17}
+$$
+
+The normal Jacobian is $\cos^2 v\ge1/2$ on this tube; integrating
+$|\phi(v)-\phi(0)|\le\sqrt{|v|}\,
+(\int_{-|v|}^{|v|}|\partial_v\phi|^2)^{1/2}$ proves this
+sufficient constant, also after integration in $\tau,\Omega$.
+The layer is an explicitly named $L^2$ function. Divergence is a bounded
+map from $L^2$ vector fields to $H^{-1}$. Approximate those fields first
+by compact smooth fields in $L^2$, with an allocated norm error, before
+evaluating their divergences. Thus all these distributions have strong
+$H^{-1}$ names, rather than just computable test pairings.
+
+Their norms can be computed by ordinary spherical harmonics and the
+real Fourier transform. For a smooth compact $L^2$ scalar approximant,
+discarding the region $\zeta^2+l(l+2)>Q$ has $H^{-1}$ norm at most
+$\|f\|_2/\sqrt{1+Q}$. The finitely many remaining harmonic integrals
+and compact Fourier integrals are computable quadratures. The preceding
+strong distributional approximations bound the additional errors. This
+also computes residual norms with cancellations. No eigenbasis of the
+interacting source is supplied or used.
+
+An effective ordinary $H^1$ name of $e_0$ needs no convergence-rate
+assumption: compute its spherical-harmonic coefficients from its explicit
+profile, and use the known total squared norm $12/\pi^2$. Parseval gives
+the squared $H^1$ projection tail as this number minus the finite weighted
+coefficient sum. Refine the coefficients and enlarge the finite projection
+until a rational upper tail bound is below the requested squared error.
+Completeness proves termination; coefficient rounding is separately
+budgeted. Compact integration treats the equator by its two continuous
+pieces and the pole values by the removable series for
+$\theta/\sin\theta$.
+
+To compute $P_0^{-1}Q$ for any named $Q\in Y$, enumerate
+$v=e^{-\tau/8}W$ over dense compact smooth tensors $W$ and dovetail
+their residual precisions. Accept a finite $v$ when a computed upper
+enclosure satisfies
+
+$$
+\|e^{\tau/8}(P_0v-Q)\|_{H^{-1}}<\varepsilon/K_0.
+\tag{11.18}
+$$
+
+This certifies $X$ error below $\varepsilon$. Surjectivity, density and
+boundedness of $P_0:X\to Y$ prove finite termination. The layer and
+norm constructions above compute every ingredient in this test. Extend
+$E_T$ from compact tensors to arbitrary $X$ names using (11.14).
+For $E_T(pe_0)$ first use its displayed forcing tail, then its finite
+cylinder $H^1$ approximations. This constructs $b_p$, every finite
+Neumann sum and their accumulated evaluation errors. Inequality (11.5)
+proves contraction and precisely the geometric remainder (11.8).
+
+The exact limit satisfies $(P_0+E_T)H_p=0$. On $\tau>T+1$ this is
+the actual original weak equation. On every punctured annulus there it
+is locally $H^1$ and the coefficients are smooth and elliptic. The local
+regularity used in [E, (108.4)] applies. Multiplying by $\chi_T$ leaves
+only the first-order commutator in (11.6). It is $L^2$ and is supported
+on the specified annulus. Testing the product against original punctured
+smooth tests proves $\gamma_p\in D(S^*)$, $S^*\gamma_p=\ell_p$.
+No distribution at the excluded point is assigned to this adjoint action.
+The decaying $X$ remainder fixes exactly the unrescaled coefficients
+in [E, (112.2)]; [E, (112.3)] then gives (11.7).
+
+For numerical graph errors, the physical cutoff map sends an $X$ error
+$\Delta Z$ to an $L^2$ error of norm at most $\|\Delta Z\|_X$.
+On the commutator annulus the physical gradient of $R^{-1}\Delta Z$
+has norm at most $3\|\Delta Z\|_X$. The free coefficient matrix
+in (11.2) has divergence zero and norm and trace bounded by
+$\Lambda_Q$ on $R\le1$; directly it is
+$\sum_iY_iY_i^{\mathsf T}+e_te_t^{\mathsf T}$.
+Also $|\nabla\chi_T|\le2e^{T+3}$ and
+$\|\operatorname{Hess}\chi_T\|\le8e^{2(T+3)}$.
+The product rule proves the sufficient factor $B_{\rm graph}$ in
+(11.8). It uses only first derivatives of $\Delta Z$. Finite Neumann
+approximants are put into this **commutator map**, not into $S^*$.
+The exact limit alone owns the original graph identity.
+
+The physical squared measure is $e^{-2\tau}d\tau d\omega$ and
+$Z_p=e^{-\tau/8}W_p$, with
+$\|W_p\|_{H^1}\le K_0D_p/(1-\bar q)$. Splitting the two squares
+proves (11.9). Discard that source tail and approximate the remaining
+compact functions and the compact commutator in $L^2$ to any prescribed
+error. This yields finite chart names.
+
+Finally these are **original-coordinate** names. First approximate a
+chart name by a compact smooth $v$ with known $L^2$ error. For its inverse
+transport $T_kv=k^{-1/2}v(\xi,s/k)$,
+
+$$
+\|\partial_kT_kv\|_2=k^{-1}\|v/2+t\partial_tv\|_2.
+\tag{11.19}
+$$
+
+A positive bracket for $\kappa$ therefore bounds replacement by a finite
+rational $k$. On the resulting compact support a rational box mesh and
+computable derivative bounds give rational step functions with certified
+$L^2$ error. This proves the conversion without an exact real coordinate
+service. Choose $n$ so that $B_{\rm graph}\beta_{p,n}$ uses less than
+one quarter of a requested graph error, and allocate the remainder to
+the finite sum, its two bounded maps, source truncation and coordinate
+conversion. Each operation just described terminates. $\square$
+
+**Theorem 11.3 (an actual original positive-discount evaluator).** From
+the names in Definition 11.1 there is a terminating procedure returning
+a finite original-coordinate $U$ and a rational $E<\varepsilon$ such
+that, for the **actual** original Friedrichs realization,
+
+$$
+\|U-(F+r)^{-1}f\|_2\le E.
+\tag{11.20}
+$$
+
+It constructs the graph information used by its residual test from
+$a,\eta$. Neither a coefficient matrix nor an assumed solver is an
+input. The finite output need not belong to $D(F)$.
+
+Proof. Fix the computable bump $\beta(v)=\exp(-1/(1-v^2))$ for
+$|v|<1$, zero elsewhere. Enumerate finite rational complex linear
+combinations of rational translates and dilates of its tensor products
+on rational original-coordinate boxes whose closures avoid $e$.
+Call them $\phi_i$. Include finite sums and all rational complex
+coefficients $z_i$ in the enumeration. Their supports and all required
+derivative bounds are finite computable data. Compact mollification
+followed by rational Riemann sums proves $C^2$ density on each compact
+punctured support; the supports may be enlarged within a fixed punctured
+neighborhood. All coefficients of $S$ are bounded there. Thus these
+functions are graph dense in the original punctured core closure.
+Theorem 11.2 and compact $\Gamma$ evaluation give names of the exact
+pairs
+
+$$
+u_i=\phi_i+z_i\gamma_c,\qquad
+v_i=S\phi_i+z_i\ell_c=Fu_i.
+\tag{11.21}
+$$
+
+Use [E, (112.3), (112.5)] on their stated original domains. Every
+$y\in D(F)$ has $y-A(y)\gamma_c\in D(\overline S)$.
+Rational approximation of this scalar and punctured-core approximation
+therefore prove graph density of (11.21) in $F$. The algorithm does not
+evaluate $A(y)$; it searches $z_i$. This reuses the domain classification,
+and adds no claim that punctured tests alone are an $F$ operator core.
+
+Find rational $0<r_-\le r\le r_+$ from the positive name. At each
+candidate and precision, compute finite names $U_i,V_i,f_0$ with errors
+$\alpha,\beta,\gamma$, and rational $r_0$ with error $e_r$.
+Compute a rational upper enclosure
+
+$$
+\mathcal R\ge
+ \|V_i+r_0U_i-f_0\|_2+\beta+r_+\alpha
+                         +e_r\|U_i\|_2+\gamma.
+\tag{11.22}
+$$
+
+All quantities are norms of finite names and rational error terms.
+Accept only when
+
+$$
+E=\alpha+\mathcal R/r_-<\varepsilon.
+\tag{11.23}
+$$
+
+The triangle inequality makes $\mathcal R$ an upper bound for the
+**exact** residual $\|(F+r)u_i-f\|_2$. Nonnegativity of $F$ gives
+$\|(F+r)^{-1}\|\le1/r$, proving (11.20). No use of $FU_i$ occurs.
+
+Enumerate every pair of candidate index and naming precision, for example
+in increasing sum of indices. Graph density and surjectivity of $F+r$
+give a candidate with exact residual smaller than $r\varepsilon/4$.
+For that fixed candidate, shrinking all name errors and norm-rounding
+errors eventually satisfies the strict inequality (11.23). Each finite
+name calculation terminates by Theorem 11.2, and every candidate occurs
+at arbitrarily fine precision. Hence the specified search terminates.
+The finite certificate consists of its dictionary index, the two
+graph-name errors, forcing and discount enclosures, and (11.22)--(11.23).
+Its soundness refers to the exact pair in (11.21). $\square$
+
+**Theorem 11.4 (the identical normalized zero line, endpoint and capacity
+have numerical names).** Under exactly the additional coefficient access
+of Definition 11.1, the preceding procedures compute global original
+$L^2$ names of the coefficient-one $w_*$ and normalized $h$, and real
+names of the original endpoint selector $\rho$. With the requested
+positive $r$ name they compute
+
+$$
+d_r=1-r\langle h,(F+r)^{-1}h\rangle,
+\qquad \operatorname{Cap}_r(\{e\})=rd_r.
+\tag{11.24}
+$$
+
+They return finite error certificates and terminate at every requested
+absolute precision. The original time $d$ may supply $r$ through its
+specified clock formula only when its numerical name is also supplied.
+No numerical name of $d$ is inferred from its mathematical positivity.
+Any other compact source graph representative with original coefficient
+$C=1$, corrected by its own original Friedrichs inverse, yields exactly
+the same $w_*$, not just a proportional zero vector.
+
+Proof. The exact $\ell_l$ of Theorem 11.2 is compactly supported
+complex $L^2$ forcing. Choose rational $\Lambda>1+\kappa$ by an upper
+parameter enclosure. On its support $R\le1$, and
+$\varrho^4=|\xi|^4+\kappa^2t^2\le1+\kappa^2$; this also contains
+the support of $\gamma_l$. Thus Theorem 10.3 applies with precisely
+this forcing, the original $C=0$ domain, raw Haar norm and the original
+$a,\eta$. Use its constants (10.3)--(10.4) **without changing their
+coefficient family**. Its modulus is valid for all compact $L^2$ data,
+so no smoothness of our $C^2$ cutoff image is needed. The source/domain
+ingredients of that bound are the exterior passage [E, (110.10)] and
+whole-closure inequality [E, (107.5)], not local source bounds for $h$.
+
+Compute positive rational $\bar t\ge\max(1,\|\ell_l\|_2)$ and an
+upper enclosure $\overline D$ of $D_\Lambda$. For requested zero-vector
+error $E_w>0$, choose a positive dyadic discount satisfying
+
+$$
+s\le\min\left\{1,R_{\min}^{-4},
+                     \left(\frac{E_w}{4\bar t\overline D}\right)^8\right\}.
+\tag{11.25}
+$$
+
+Name $\gamma_l$ to error $E_w/4$ by Theorem 11.2 and
+$(F+s)^{-1}\ell_l$ to error $E_w/4$ by Theorem 11.3. Their finite
+difference $W$ has error less than $E_w$ from
+
+$$
+w=\gamma_l-F^{-1}\ell_l,
+\tag{11.26}
+$$
+
+since (10.6) bounds the remaining error by $E_w/4$. The spectral inverse
+here defines the mathematical vector; (11.25) and the positive solver
+construct its name. The forcing name and its support were produced
+internally, and neither inverse nor its zero-energy modulus is an input.
+
+To verify exact source correspondence, let $(\gamma',\ell')$ be another
+actual compact maximal graph pair with $C(\gamma')=1$ and compact
+$L^2$ image. By the original selector,
+$k=\gamma_l-\gamma'\in D(F)$ and $Fk=\ell_l-\ell'$.
+The compact-source range result applies to both images and $\ker F=0$.
+Consequently $F^{-1}(\ell_l-\ell')=k$, proving equality of the two
+corrected vectors. In particular (11.26) equals the particular vector
+(10.2), and hence the unique original $w_*$. Its maximal action is zero
+and its original coefficient is $C(w_*)=1$. Changing $T$, the local
+solution or its cutoff has introduced no change of endpoint or source.
+
+The original Green pairing [E, (112.3)], applied with $u=w_*$ and
+$v=\gamma_c$, gives a useful denominator certificate:
+
+$$
+\langle w_*,\ell_c\rangle=a,
+\qquad
+\|w_*\|_2\ge\nu:=a_-/Q_c>0,
+\tag{11.27}
+$$
+
+where $a_->0$ is a rational lower parameter bound and
+$Q_c>\|\ell_c\|_2$ is any computed positive rational upper bound.
+Theorem 11.2 supplies $Q_c$. No global norm query is assumed. If
+$\|W-w_*\|_2\le E_w<\nu/2$, then $W\ne0$, and
+
+$$
+\left\|\frac W{\|W\|_2}-h\right\|_2\le2E_w/\nu.
+\tag{11.28}
+$$
+
+This follows by adding and subtracting $W/\|w_*\|_2$ and the reverse
+triangle inequality. For requested $h$ error $\varepsilon$, take
+$E_w\le\min(1,\varepsilon)\nu/8$. From the finite norm enclosures
+of Definition 11.1 compute a rational
+$Q_W\ge\max(1,\|W\|_2)$. Choose a positive rational
+$\theta<\varepsilon/(4Q_W)$ and a rational $q$ satisfying
+$|q-1/\|W\|_2|<\theta$. Norms of finite box functions are
+computable, and $\|W\|_2\ge\nu-E_w\ge7\nu/8>0$, so this
+reciprocal approximation terminates. Its vector-norm rounding error is
+
+$$
+\left\|qW-\frac W{\|W\|_2}\right\|_2
+\le\theta\|W\|_2<\varepsilon/4.
+$$
+
+Together with (11.28), whose bound is at most $\varepsilon/4$,
+this gives a finite rational box name $qW$ with error below
+$\varepsilon$ from the normalized vector. Uniqueness and the inherited coefficient-positive
+choice identify it with the original $h$.
+
+With $v=\gamma_l$, the **same** boundary pairing gives
+
+$$
+\langle w_*,\ell_l\rangle=-a\rho,
+\qquad \rho=-\operatorname{Re}\langle w_*,\ell_l\rangle/a.
+\tag{11.29}
+$$
+
+Indeed $A(\gamma_l)=0$, $C(\gamma_l)=C(w_*)=1$, and the inherited
+$\rho=A(w_*)$ is real. Computed $L^2$ names of the two vectors,
+Cauchy--Schwarz and the positive lower bound for $a$ give converging
+rational intervals for (11.29). Explicitly, for names $W,L$ with errors
+$E_w,E_l$ and $Q_l\ge\|\ell_l\|_2$, the inner-product error is at
+most $E_wQ_l+\|W\|_2E_l$, before scalar rounding; interval division by
+the positive $a$ bracket completes the certificate. The endpoint $A=\rho C$ is thus derived
+from its actual original zero vector, rather than supplied freely.
+
+For (11.24), choose a finite $h_0$ with
+$\|h_0-h\|_2\le\delta$ and use Theorem 11.3 to compute $U$ with
+$\|U-(F+r)^{-1}h_0\|_2\le\zeta$. If $\widehat d$ is a scalar
+evaluation of $1-r\operatorname{Re}\langle h_0,U\rangle$ with
+rounding and parameter error at most $\sigma$, then
+
+$$
+|d_r-\widehat d|
+ \le(2+\delta)\delta+r_+(1+\delta)\zeta+\sigma.
+\tag{11.30}
+$$
+
+The first term follows from $\|r(F+r)^{-1}\|\le1$ and
+$\|h\|_2=1$; the second is Cauchy--Schwarz. For example take
+$\delta\le\min(1,\varepsilon/16)$,
+$\zeta\le\varepsilon/[8r_+(1+\delta)]$, and
+$\sigma\le\varepsilon/4$. These make the displayed sum smaller than
+$\varepsilon$. Named positive $r$ causes no additional oracle: the
+solver already handles it, and interval arithmetic includes its remaining
+scalar evaluation error in $\sigma$. Multiplication computes the capacity
+with an independently allocated error. The original strict positivity
+$d_r>0$ from [S, (115.11)] implies that refining these intervals until
+their lower endpoint is positive terminates, if a positive rational
+lower certificate is requested. This includes $d_{1/(4d)}$ when the
+original $d$ has the additional numerical name.
+
+Every step is a finite algorithm on the stated names. The local Neumann
+depth is bounded by (11.8), logarithmically in reciprocal graph error
+for fixed enclosing constants. Count coefficient-name queries with their
+precisions, compact quadrature subdivisions, normal-layer approximations,
+finite spectral norm calculations, auxiliary inverse tests, Neumann
+applications and original dictionary tests. Each auxiliary and original
+search has a proved terminating strict certificate. No upper bound for
+the successful dictionary index or for the cost of parameter-name
+answers is assumed. Formula (11.25) permits $s$ of order $E_w^8$ for
+fixed enclosures, so a sufficient inner residual tolerance can be of
+order $E_w^9$. These are error budgets, not practical or polynomial
+runtime bounds. No parameter-uniform cost is asserted. $\square$
+
+**Definition 11.5 (the numerical relation and its remaining interfaces).**
+Theorems 11.2--11.4 are a repository-derived construction for the actual
+original coefficient family. The constructed local graph names pay the
+source-boundary input of the positive-discount evaluator, and its outputs
+combine with the unchanged §10 modulus to give the same normalized zero
+state. Ordinary spherical harmonics, strong Sobolev representations,
+Neumann inversion, graph-density residual certification and nonnegative
+spectral calculus are mature intermediate tools. The augmented domain
+identity itself is reused from [E, (112.5)]. An abstract dense range,
+form Ritz upper bound, or strong residual assigned to a finite $H^1$
+approximation would not provide this construction.
+
+The free coefficient used here is Krötz--Thangavelu--Xu
+[EXT-HEAT, §4.1, (4.1.2)], at $n=1$, with the original
+$1/(2\pi)$ inverse transform and independent $z$ Gaussian. Its full
+Laplacian formula with an additional central heat factor is not substituted
+for the horizontal source. Local regularity uses only Shubin,
+[*Essential self-adjointness for semi-bounded magnetic Schrödinger
+operators on non-compact manifolds*, Lemma 5.1](https://arxiv.org/html/math/0007019v1),
+on compact punctured sets with the original smooth elliptic symbol, zero
+magnetic form, raw Haar measure and locally bounded potential. The
+complete-manifold theorem following that lemma is not applied across the
+puncture. The weighted estimates retain exactly the correspondence in
+§10 to Ciatti--Cowling--Ricci [EXT-HARDY], with $p=2$, order $2$ and
+homogeneous dimension $5$. No unspecified literature constant is used
+as a numerical name. Colbrook--Horning--Townsend [EXT-SPECTRAL, §6.1,
+(26)] treats regular differential realizations with smooth coefficients,
+nonvanishing leading coefficient and client-verified self-adjointness;
+its shifted-solve input is not a supplier of the singular source graph
+names constructed here. These correspondences identify the reused
+methods without asserting worldwide novelty or formal verification.
+
+The additional access is to the mathematical model. The original
+passive chronological $0,1,3,B$ record supplies neither the parameter
+names nor the computational service. Its emission remains exactly
+$P=T_d$, $g=g_{2d}$, $M=1+\|g_d\|_\infty$, $c=1/(4M)$,
+$f_3=cg_d$ as the original bounded Borel class, $f_B=1/4$ and
+$f_0=f_1=(3/4-f_3)/2$. No exact $M$, interacting source-time density,
+word-likelihood evaluator or record-only confidence stopping rule is
+constructed by these theorems. No hidden coordinates, reset, selected
+outcome, second trajectory, stationary preparation or timed-release
+service has been added. Numerical queries of the same fixed model are
+not extra observations of its physical path.
+
+The nonlinear readout compensation of [Appendix IV,
+§171](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_IV.md)
+and the conditional insertion-comparison representation of [C128,
+§358](AURIC_C128_ORIGINAL_WORD_CALIBRATION_AND_FIXED_RELATION.md)
+have their own source and access hypotheses; neither supplies diffusion
+coefficient names or the solver. No conclusion about full passive word
+Hankel rank follows. The remaining acquisition relation is from the
+original fixed-emission record to whatever finite model/capacity
+certificates a statistical consumer requires. These theorems prove no
+such relation, impossibility or noncomputability. Mutual recovery of
+space, time, boundary and memory retains its full original scope.
+
+## 追加锚（本行以下为增补区）
