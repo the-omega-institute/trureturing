@@ -4,7 +4,7 @@
    mirror-E: none(waiver:real-cutoff-and-exact-support)
    anchors: []
    utility: none
-   digest: The same attained Robin minimum has a unique half-shift cutoff and exact prime support. -/
+   digest: The same Robin minimum has a unique half-shift cutoff and exact prime support. -/
 
 import D5.S3.Arith.Robin.PriceRecord.ActualBalancedExtremizer
 import D5.S3.Arith.GoldenResource.FirstLayerMarginalAntitone
@@ -21,6 +21,7 @@ namespace D5.S3.Arith.Robin.PriceRecord.ActualBalancedCutoff
 
 open D5.S3.Weil.GronwallLowerEnvelope
 open D5.S3.Arith.GoldenResourceOptimalInteger
+open D5.S3.Arith.GoldenResource.GoldenResourceThresholdCriterion
 open D5.S3.Arith.Robin.ActualTwoPriceDefect
 open D5.S3.Arith.Robin.ActualGlobalBracketing
 open D5.S3.Arith.Robin.ActualRobinInterval
@@ -33,6 +34,8 @@ def firstLayerPrice (t : ℝ) : ℝ := Real.log (1 + 1 / t) / Real.log t
 
 private theorem firstLayerPrice_strictAnti : StrictAntiOn firstLayerPrice (Set.Ioi 1) := by
   intro x hx y hy hxy
+  change 1 < x at hx
+  change 1 < y at hy
   have hx0 : 0 < x := by linarith only [hx]
   have hy0 : 0 < y := by linarith only [hy]
   have hn : Real.log (1 + 1 / y) < Real.log (1 + 1 / x) :=
@@ -56,9 +59,10 @@ private theorem half_shift_cutoff {L : ℝ} (hL : 12 < L) :
   have hlow : price L < firstLayerPrice a := by
     have hl := Real.lt_log_one_add_of_pos (one_div_pos.mpr ha0)
     have hid : 2 * (1 / a) / (1 / a + 2) = 1 / L := by
+      apply (div_eq_iff (show 1 / a + 2 ≠ 0 by positivity)).mpr
+      field_simp [ha0.ne', hL0.ne']
       dsimp [a]
-      field_simp
-      <;> ring
+      ring
     rw [hid] at hl
     have hcmp := div_lt_div_of_pos_left (one_div_pos.mpr hL0) hloga
       (Real.log_lt_log ha0 haL)
@@ -152,13 +156,13 @@ theorem failure_has_unique_half_shift_cutoff
   have hL : 12 < Real.log (N : ℝ) := by
     apply (Real.lt_log_iff_exp_lt (Nat.cast_pos.mpr (by omega))).mpr
     have hexp : Real.exp (12 : ℝ) = Real.exp 1 ^ 12 := by
-      simpa using (Real.exp_nat_mul 1 12)
+      simp [Real.exp_nat_mul]
     rw [hexp]
     have hp : Real.exp 1 ^ 12 < (3 : ℝ) ^ 12 :=
       pow_lt_pow_left₀ Real.exp_one_lt_three (Real.exp_pos 1).le (by norm_num)
     have hn : (223092870 : ℝ) ≤ N := by exact_mod_cast hNlarge
     norm_num at hp
-    linarith only [hp, hn]
+    linarith only [hp, hn, hexp]
   obtain ⟨z, hz, hM0, hMhalf, hroot, hunique⟩ := half_shift_cutoff hL
   have hsupport : N.primeFactors = Nat.primesLE ⌊z⌋₊ := by
     ext p
@@ -180,7 +184,7 @@ theorem failure_has_unique_half_shift_cutoff
       have hfactor : p ∈ N.primeFactors ↔ 1 ≤ N.factorization p := by
         rw [← Nat.support_factorization, Finsupp.mem_support_iff]
         omega
-      rw [hfactor, hlayer, Nat.mem_primesLE, and_iff_right hp]
+      rw [hfactor, hlayer, Nat.mem_primesLE, and_iff_left hp]
       exact (Nat.le_floor_iff (by linarith : 0 ≤ z)).symm
     · simp [Nat.mem_primeFactors, Nat.mem_primesLE, hp]
   exact ⟨N, z, hN, hSN, hmin, hp0, hpb, hopt, hstrict, hNs, hNm, hnotie,
