@@ -4638,3 +4638,133 @@ $$
 [Calibration58]: https://github.com/the-omega-institute/trureturing/blob/b0a89a1bdde2386f6c8ff7a959069a2118ecb080/docs/develop/theory/AURIC_C128_ORIGINAL_WORD_CALIBRATION_AND_FIXED_RELATION.md
 
 ## 追加锚（本行以下为增补区）
+
+## 59. 原生无穷阶端点与同接口滤片返回的全载体边界
+
+**定义 59.1（固定原源、独立前件与所需消费者）。** 采用定义 1.1–1.4、57.1 和假设 43.1 的同一完整来源；复内积、原酉门、Born 质量、保留投影更新及实际档案合同都是前件。沿用 $r=\{3,7\}$、$s=\{3,7,9\}$，在本节置
+
+$$
+\begin{gathered}
+w_r=1000100010,\qquad e=N_{w_r},\qquad
+L=\operatorname{ran}e=\operatorname{span}_{\mathbb C}(e_r,e_s),\qquad
+p=|e_s\rangle\langle e_s|=eM_1e,\\
+A=K_9^5=2\mathcal P_9-I,\qquad B=K_{10}^5=2n_9-I,\qquad
+R=(BA)|_L,\\
+Q=A^*M_1A\quad\hbox{作用于全部 }\mathcal K,\qquad
+q=eQe\quad\hbox{视为 }L\hbox{ 上的效果}.
+\end{gathered}
+\tag{59.1}
+$$
+
+这里的 $A$ 与定义 58.1 的幅度合并器不同。所检验的消费者是把这个 $p,q$ 对及 $R$ 用作同源实二维重构中的可重复尖锐滤片接口。对于 $q$ 的每份实际正成功输出 $\sigma$，该接口至少要求 $\sigma=e\sigma e$ 且 $\operatorname{Tr}(q\sigma)=\operatorname{Tr}\sigma>0$；理想局部 Lüders 成功映射为 $\rho\mapsto q\rho q$。这些是待满足的输出要求，不是原菜单已供应的能力。
+
+原签名只允许前字 $\mathsf W_{11}$ 后保留一次 $b_9$，再接外生 $f\in\mathsf W_7$ 和旧终端；没有第二读者或读后地址 $9$。以下对正输出重新施加 $A$ 并读取 $M_1$ 的一切概率，均只定义为检验同接口可重复性的数学反事实，不是合法原顺序实验。
+
+**命题 59.2（原字、反射对与局部实平面的精确对应）。** 按基序 $(e_r,e_s)$，令 $c=1-2x=-x^3$、$d=2xy$，则
+
+$$
+\begin{gathered}
+A|_L=\begin{pmatrix}-c&d\\d&c\end{pmatrix},\qquad
+B|_L=\begin{pmatrix}-1&0\\0&1\end{pmatrix},\qquad
+R=\begin{pmatrix}c&-d\\d&c\end{pmatrix},\\
+c^2+d^2=1,\qquad \det R=1,\qquad
+\operatorname{Tr}R=4-2\sqrt5,\\
+v=Ae_s=de_r+ce_s,\qquad q=|v\rangle\langle v|,\qquad
+\lambda=\operatorname{Tr}(pq)=c^2=x^6\in(0,1).
+\end{gathered}
+\tag{59.2}
+$$
+
+按调用先后写的 $(9^5,10^5)$ 因而有无穷阶端点，射影阶也无穷。$q$-确定射线 $[v]$ 在两个 $b_9$ 扇区的质量分别为 $d^2=1-\lambda$ 和 $c^2=\lambda$，均非零。$p,q$ 的含单位实 Jordan 生成空间恰为 $\operatorname{Sym}_2(\mathbb R)$；其归一正锥截面是二维圆盘。
+
+证明。旧 $W$ 固定除第九位外的全部原配置，故 $N_{w_r}$ 的像恰是上述两条基射线。两者的 $b_8=b_{10}=0$，定义 1.2 给 $\mathcal P_9|_L=Q_*$、$\mathcal P_{10}|_L=p$，而 $\zeta^5=-1$ 给两个五次幂反射。代入原 $Q_*$ 得 (59.2)，其中 $x+x^2=1$ 给 $c=-x^3$。
+
+这与 [V15 §4.1、定理 4.3][V1559] 的同一 $P=|1\rangle\langle1|,Q=Q_*$ 反射对逐项相同：这里 $B|_L=R_P$、$A|_L=R_Q$。直接消费该定理证明中由引理 4.1 得到的 $R_PR_Q$ 无穷阶结论，不另证一般共轭判据或密度定理。若 $R^n=\gamma I_L$，行列式一使 $\gamma^2=1$，从而 $R^{2n}=I_L$，矛盾。
+
+$q$ 的非对角元为 $dc\ne0$，所以 $e,p,q$ 实线性无关，张成全部实对称二阶矩阵；该空间对 Jordan 积闭合。以 $Z=\operatorname{diag}(1,-1)$、$X=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ 写归一态，即为 $\tfrac12(e+uZ+v'X)$、$u^2+(v')^2\le1$ 的圆盘。这是已经给定复载体中的局部实截面，不选择复数域，也不识别同一旧 $D$。原逆端点字 $(10^5,9^5)$ 仍只在读取前合法；$AB=(BA)^{-1}$ 不逆转调用、跳时、报告或档案的完整物理历史。范数闭包也不增加精确可调用控制。∎
+
+**命题 59.3（完整地址九分块与全器件压缩）。** 在全部 $89$ 维上，有
+
+$$
+\boxed{\quad M_1AM_1=cM_1,\qquad M_1QM_1=\lambda M_1.\quad}
+\tag{59.3}
+$$
+
+完整 $Q$ 是秩 $34$ 投影，其 $L$ 压缩才是秩一 $q$。
+
+证明。令 $\mathscr I_n$ 为 $\{1,\ldots,n\}$ 的无相邻占据子集。每条原配置恰属于下面一个块：
+
+$$
+\mathcal K=
+\bigoplus_{t\in\mathscr I_7}
+ \operatorname{span}(e_t,e_{t\cup\{9\}})
+\ \oplus\!
+\bigoplus_{u\in\mathscr I_6}\mathbb C e_{u\cup\{8\}}.
+\tag{59.4}
+$$
+
+第一组恰为 $b_8=0$ 的全部活动对；第二组恰为 $b_8=1$，合法性强制 $b_7=b_9=0$ 的阻塞单点。无相邻二元串的 Fibonacci 计数给 $|\mathscr I_7|=34$、$|\mathscr I_6|=21$，所以 $2\cdot34+21=89$，没有删去代码补空间或任何阻塞块。
+
+固定外位 $n_{10}=0$ 使定义 1.2 的完整公式成为 $\mathcal P_9=(1-n_8)(Q_*)_{b_9}$。因此，在 (59.4) 的每个活动对及每个单点上，分别有
+
+$$
+\begin{array}{c|cc}
+&\operatorname{span}(e_t,e_{t\cup\{9\}})&\mathbb C e_{u\cup\{8\}}\\ \hline
+\mathcal P_9&Q_*&0\\
+A&\begin{pmatrix}-c&d\\d&c\end{pmatrix}&-1\\
+M_1&\operatorname{diag}(0,1)&0
+\end{array}
+\tag{59.5}
+$$
+
+每个活动块的 $M_1AM_1$ 为 $c\operatorname{diag}(0,1)$，所有单点压缩均为零，故第一式在全载体成立。由 $A=A^*$、$M_1^2=M_1$，
+
+$$
+M_1QM_1=M_1AM_1AM_1=(M_1AM_1)^2=c^2M_1.
+\tag{59.6}
+$$
+
+每个活动块的 $Q$ 为单位向量 $(d,c)$ 的秩一投影，单点上为零，给秩 $34$。故 (59.3) 是完整效应恒等式，不是把局部 $q$ 的概率公式外推。∎
+
+**定理 59.4（原七地址返回的统一正质量障碍）。** 令 $\rho$ 是原理想合同实际供应的读取前次归一正算子，执行前读字 $9^5$ 并保留 $I=1$。其完整成功效果和未归一更新分别是
+
+$$
+Q=A^*M_1A,\qquad \tau=M_1A\rho A^*M_1.
+\tag{59.7}
+$$
+
+对每个实际合法 $f\in\mathsf W_7$，置 $\sigma_f=K_f\tau K_f^*$、$\mu=\operatorname{Tr}\tau$。更一般地，对任何真正另供的正保留输出 $\sigma=M_1\sigma M_1$、质量 $\operatorname{Tr}\sigma=\mu$，上述数学反事实测试器的两结果质量恰为
+
+$$
+\operatorname{Tr}(Q\sigma)=\lambda\mu,\qquad
+\operatorname{Tr}((I-Q)\sigma)=(1-\lambda)\mu.
+\tag{59.8}
+$$
+
+每个 $\sigma_f$ 都属于这个范围。若 $\mu>0$，没有这样的原后字能给定义 59.1 所需的 $e$-支持、$q$-确定返回。若 $\mu=0$，整个正输出为零，不定义归一态或条件档案。
+
+证明。式 (59.7) 直接使用已声明的 Born／投影合同，其局部输入效果为 $q$，输出却落在 $M_1$。命题 43.2 已给每个原七地址脉冲及接缝的完整尾 $(b_7,b_8,b_9)$ 守恒；特别是 $K_fM_1=M_1K_f$。故 $\sigma_f=M_1\sigma_fM_1\ge0$，其迹仍为 $\mu$。对任意所述 $\sigma$，用迹循环与 (59.3) 即得
+
+$$
+\operatorname{Tr}(Q\sigma)
+=\operatorname{Tr}(M_1QM_1\sigma)=\lambda\operatorname{Tr}\sigma.
+\tag{59.9}
+$$
+
+互补质量保留即得 (59.8) 第二式；它不是把原失败或拒绝标签改名。对 $\mu>0$，假想复测的条件接受率为 $\lambda<1$。若要求局部返回且 $\sigma_f=e\sigma_fe$，则 $L\cap\operatorname{ran}M_1=\mathbb Ce_s$ 及正性给 $\sigma_f=\mu p$，于是 $\operatorname{Tr}(q\sigma_f)=\lambda\mu<\mu$；若离开 $L$，已不满足所需局部支持。全 $Q$ 的 (59.8) 对后者仍成立，不需用局部压缩作界。
+
+这个障碍有实际非零输入：唯一 ready $e_r$ 后接 $9^5$，给 $\tau=d^2p=(1-\lambda)p$，故空后字也已有正质量。对于任意 $\rho=e\rho e\ge0$，(59.7) 更精确地是 $\rho\mapsto\operatorname{Tr}(q\rho)p$，在正成功质量时与所需 $q\rho q$ 的输出射线不同。
+
+正算子的零迹必为零、投影确定性等价于支持在其像内、以及上述迹配对，均直接使用有限维正算子谱论与仪器的标准事实，见 [Watrous §1.1.3、§2.3.2 (2.255)–(2.262)][Watrous59]；它们不是新增的一般定理。没有从任意隐藏过去或档案条件化制造 $\rho$ 或 $\sigma$。对原可读被动档案，假设 43.1 的独立发射合同保持原分支波函数；若另按事件选择，只有同时供应该实际事件边缘及条件输出的正经典—量子扩张、且正输出仍支持在 $M_1$ 时，(59.8) 才逐正质量分支适用。单有某个隐藏过去的条件配置律不满足这项供应。∎
+
+**定义 59.5（应用归属与完整原目标的剩余接口）。** 本节的 `repo-derived` 应用是把原 $\mathcal P_9$ 的全部活动／阻塞块、原有限正字、完整效应 $Q$ 与七地址尾守恒接到同接口可重复滤片的具体消费者。V15 的无穷阶与闭包结论、正算子及仪器理论均为复用；不主张历史原创。[续卷 V 命题 12.5、定义 12.6][V1259] 已区分同效果与不同保留后态，并限定实际正档案扩张；本节没有用效果相同替代输出相同，或把任意额外仪器归入原菜单。
+
+命题 59.2 的圆盘不是整个原状态空间，定理 59.4 只排除所指定的 $p,q,R$ 可重复返回路线。另供合适的读后控制、读者、辅助载体或一般量子仪器会改变其操作前件，不由此受普遍排除；例如数学上的 $Q\rho Q$ 本来就是另一种成功更新。原端点逆不供应这种仪器，也不撤销已经产生的记录。
+
+全部 $89$ 配置、$26+63$ 扇区、唯一 ready、十一前／七后地址、两个记录切口、$1024/2048$ 标签及原细结果、零、失败、拒绝、停止、告警、返回、参考、联合和档案仍按原合同保留；所有原合法有限顺序、自适应及并行历史各自保留其合法性。式 (59.8) 不重建它们的核，也不删除互补质量或真实调用历史。复结构、Born 律、酉门和保留更新在这里仍是独立输入；它们如何由更基本关系获得、如何在同一实际 $\Omega$ 上绑定全部原过程、共同参考及同一旧 $D$，仍需各自的来源桥梁。这份局部应用不代替完整量子起源目标。
+
+[V1559]: AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md#sec-4
+[V1259]: AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_V.md
+[Watrous59]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf
+
+## 追加锚（本行以下为增补区）
