@@ -406,4 +406,194 @@ theorem typeI_not_at_origin (n : ℕ) : ¬ Occ (typeI n) 0 := by
       have he : i = 0 := boundary_strict.injective (hi.symm.trans boundary_zero.symm)
       exact ih (he ▸ ho)
 
+private def next (a : Letter) : Letter :=
+  if h : a.val < 6 then ⟨a.val+1,by omega⟩ else 6
+
+private theorem next_eq_six (a : Letter) : next a = 6 ↔ a = 5 ∨ a = 6 := by
+  fin_cases a <;> norm_num [next]
+
+private theorem after_boundary (i : ℕ) : word (boundary i+1) = next (word i) := by
+  have h := block_letter i 1 (by unfold phi; split <;> simp)
+  unfold phi next at *
+  split_ifs at * <;> simpa using h
+
+private theorem before_boundary {i : ℕ} (hi : 0 < i) :
+    word (boundary i-1) = next (word (i-1)) := by
+  have he : i-1+1 = i := by omega
+  have hb := boundary_succ (i-1)
+  rw [he] at hb
+  by_cases hc : (word (i-1)).val < 6
+  · have h := block_letter (i-1) 1 (by simp [phi,hc])
+    simpa [hb,phi,next,hc] using h
+  · have h := block_letter (i-1) 2 (by simp [phi,hc])
+    simpa [hb,phi,next,hc] using h
+
+/-- Literal terminal extension of a finite source word. -/
+def terminal (s : Word) : Word := [6] ++ subst phi s ++ [0,6]
+
+private theorem terminal_eq (s : Word) : terminal s = 6::(sentinel s++[6]) := by
+  simp [terminal,sentinel,List.append_assoc]
+
+/-- Native terminal recognizability at unrestricted natural starts. The source
+contexts are part of the equivalence, rather than a recurrence assumption. -/
+theorem terminal_occurrence_iff (s : Word) (q : ℕ) :
+    Occ (terminal s) q ↔ ∃ a, 0 < a ∧ q = boundary a-1 ∧ Occ s a ∧
+      (word (a-1) = 5 ∨ word (a-1) = 6) ∧
+      (word (a+s.length) = 5 ∨ word (a+s.length) = 6) := by
+  rw [terminal_eq,occ_cons,occ_append]
+  constructor
+  · rintro ⟨hfirst,hs,hlast⟩
+    obtain ⟨a,ha,ho⟩ := (ordinary_occurrence_iff _ _).mp hs
+    have hapos : 0 < a := by
+      by_contra h
+      have hzero : a = 0 := by omega
+      rw [hzero,boundary_zero] at ha
+      omega
+    have hq : q = boundary a-1 := by omega
+    have hleft : next (word (a-1)) = 6 := by
+      rw [← before_boundary hapos, ← hq]
+      exact hfirst
+    have hpos : q+1+(sentinel s).length = boundary (a+s.length)+1 := by
+      rw [ha,boundary_occ ho]
+      simp [sentinel]
+      omega
+    have hright : next (word (a+s.length)) = 6 := by
+      rw [occ_singleton,hpos,after_boundary] at hlast
+      exact hlast
+    exact ⟨a,hapos,hq,ho,(next_eq_six _).mp hleft,(next_eq_six _).mp hright⟩
+  · rintro ⟨a,hapos,rfl,ho,hleft,hright⟩
+    have hB : 0 < boundary a := by
+      have h := boundary_strict hapos
+      rw [boundary_zero] at h
+      exact h
+    have he : boundary a-1+1 = boundary a := by omega
+    refine ⟨boundary_preceding_six hapos hleft, ?_, ?_⟩
+    · rw [he]
+      exact sentinel_transport ho
+    · rw [occ_singleton,he]
+      have hpos : boundary a+(sentinel s).length = boundary (a+s.length)+1 := by
+        rw [boundary_occ ho]
+        simp [sentinel]
+        omega
+      rw [hpos,after_boundary]
+      exact (next_eq_six _).mpr hright
+
+/-- Exact ordinary transfer of consecutive returns, including overlapping factors. -/
+theorem ordinary_consecutive_iff (s : Word) (a b : ℕ) :
+    Consecutive (sentinel s) (boundary a) (boundary b) ↔ Consecutive s a b := by
+  constructor
+  · rintro ⟨hab,ha,hb,hgap⟩
+    have hab' : a < b := (boundary_strict.lt_iff_lt).mp hab
+    refine ⟨hab',(sentinel_boundary s a).mp ha,(sentinel_boundary s b).mp hb,?_⟩
+    intro c hac hcb hc
+    exact hgap (boundary c) (boundary_strict hac) (boundary_strict hcb)
+      (sentinel_transport hc)
+  · rintro ⟨hab,ha,hb,hgap⟩
+    refine ⟨boundary_strict hab,sentinel_transport ha,sentinel_transport hb,?_⟩
+    intro q haq hqb hq
+    obtain ⟨c,rfl,hc⟩ := (ordinary_occurrence_iff _ _).mp hq
+    exact hgap c ((boundary_strict.lt_iff_lt).mp haq)
+      ((boundary_strict.lt_iff_lt).mp hqb) hc
+
+/-- Incidence columns are the actual seven-letter image counts. -/
+def M : Matrix Letter Letter ℕ := fun a b => letterCount (phi b) a
+def parikh (s : Word) : Letter → ℕ := letterCount s
+def unit (c : Letter) : Letter → ℕ := Pi.single c 1
+
+private theorem parikh_append (s t : Word) : parikh (s++t) = parikh s+parikh t := by
+  ext c
+  simp [parikh,letterCount]
+
+private theorem parikh_singleton (c : Letter) : parikh [c] = unit c := by
+  ext a
+  simp [parikh,letterCount,unit,Pi.single_apply,eq_comm]
+
+private theorem parikh_cons (c : Letter) (s : Word) :
+    parikh (c::s) = unit c+parikh s := by
+  simpa only [List.singleton_append,parikh_singleton] using parikh_append [c] s
+
+private theorem parikh_subst (s : Word) : parikh (subst phi s) = M.mulVec (parikh s) := by
+  induction s with
+  | nil =>
+    ext c
+    simp [parikh,letterCount,Matrix.mulVec,dotProduct]
+  | cons c s ih =>
+    rw [RankOneMorphismIterationBound.subst_cons,parikh_append,parikh_cons,Matrix.mulVec_add,← ih]
+    congr 1
+    ext a
+    simp [unit,Matrix.mulVec_single_one,M,parikh]
+
+/-- Terminal endpoint cancellation conserves the COMPLETE Parikh vector of
+the substituted native return interval. -/
+theorem terminal_return_parikh {a b : ℕ} (ha : 0 < a) (hab : a < b)
+    (hleft : word (a-1) = 5 ∨ word (a-1) = 6)
+    (hright : word (b-1) = 5 ∨ word (b-1) = 6) :
+    parikh (returnWord (boundary a-1) (boundary b-1)) =
+      M.mulVec (parikh (returnWord a b)) := by
+  have hA : 0 < boundary a := by
+    have h := boundary_strict ha
+    rw [boundary_zero] at h
+    exact h
+  have hAB := boundary_strict hab
+  have hlen : (subst phi (returnWord a b)).length = boundary b-boundary a := by
+    have h := boundary_add a (b-a)
+    rw [Nat.add_sub_of_le (Nat.le_of_lt hab)] at h
+    dsimp [returnWord]
+    omega
+  have hs : factor word (boundary a) (boundary b-boundary a) =
+      subst phi (returnWord a b) := by
+    rw [← hlen]
+    exact factor_subst a (b-a)
+  have hdecomp : subst phi (returnWord a b) =
+      factor word (boundary a) (boundary b-boundary a-1) ++ [6] := by
+    rw [← hs,show boundary b-boundary a = (boundary b-boundary a-1)+1 by omega,factor_add]
+    congr 1
+    have he : boundary a+(boundary b-boundary a-1) = boundary b-1 := by omega
+    simp [factor,he,boundary_preceding_six (by omega : 0 < b) hright]
+  rw [terminal_interval_cancellation ha hab hleft hright,← parikh_subst,hdecomp]
+  simp only [List.dropLast_concat,parikh_append]
+  exact add_comm _ _
+
+private theorem first_six : word 63 = 6 := by
+  exact (word_eq_iterate 6 63 (by decide)).trans (by decide)
+
+/-- A concrete native 0660 occurrence, with no primitivity or recurrence premise. -/
+private theorem base_window :
+    Occ [0,6,6,0] (boundary 63) := by
+  have hb : Occ [0,6,6] (boundary 63) := by
+    simpa [Occ,first_six,phi] using block_factor 63
+  have he : boundary 63+3 = boundary 64 := by
+    simpa [first_six,phi] using (boundary_succ 63).symm
+  exact (occ_append [0,6,6] [0] _).mpr
+    ⟨hb,(occ_singleton _ _).mpr (by simpa [he] using at_boundary 64)⟩
+
+/-- An actual adjacent-six return realizes the base vector. EVERY actual base
+return begins in 6 and hence dominates that vector componentwise. -/
+theorem base_return_minimum :
+    (∃ a b, Consecutive (typeI 0) a b ∧ returnWord a b = [6]) ∧
+    ∀ a b, Consecutive (typeI 0) a b → unit 6 ≤ parikh (returnWord a b) := by
+  have hwindow := base_window
+  have h6 (j : ℕ) (hj : j = 1 ∨ j = 2) : word (boundary 63+j) = 6 := by
+    have hh := congrArg (fun s : Word => s[j]?) hwindow
+    rcases hj with rfl | rfl <;>
+      simpa [Occ,factor] using hh
+  constructor
+  · refine ⟨boundary 63+1,boundary 63+2,?_,?_⟩
+    · refine ⟨by omega,?_,?_,?_⟩
+      · exact (occ_singleton _ _).mpr (h6 1 (Or.inl rfl))
+      · exact (occ_singleton _ _).mpr (h6 2 (Or.inr rfl))
+      · intro c hc hd
+        omega
+    · have he : boundary 63+2-(boundary 63+1) = 1 := by omega
+      simp [returnWord,he,factor,h6 1 (Or.inl rfl)]
+  · intro a b hab c
+    have hstart : word a = 6 := (occ_singleton _ _).mp hab.2.1
+    have hl : b-a = 1+(b-a-1) := by have := hab.1; omega
+    have heq : returnWord a b = [6]++factor word (a+1) (b-a-1) := by
+      dsimp [returnWord]
+      rw [hl,factor_add]
+      simp [factor,hstart]
+    rw [heq,parikh_append,parikh_singleton]
+    exact Nat.le_add_right _ _
+
 end D5.S1.Words.RichWordTypeIOccurrence
