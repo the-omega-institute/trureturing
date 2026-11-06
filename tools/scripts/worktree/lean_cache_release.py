@@ -489,7 +489,7 @@ def publish(root, partition, verification=None, *, build_report=True):
     content_validated = False
     try:
         deadline = operation_deadline()
-        with tempfile.TemporaryDirectory(prefix="lean-release-") as temporary:
+        with contextlib.ExitStack() as lifetime, tempfile.TemporaryDirectory(prefix="lean-release-") as temporary:
             stage = pathlib.Path(temporary)
             # Validate and pack under one read lock so a cache writer cannot
             # replace the validated report/build before the snapshot is packed.
@@ -538,11 +538,32 @@ def publish(root, partition, verification=None, *, build_report=True):
                 # target's disk budget with the independently downloaded bytes.
                 for name in {ASSET, *(part["name"] for part in metadata["parts"])}:
                     (stage / name).unlink(missing_ok=True)
-                # Verify this exact inventory through restore into an empty target.
-                target, downloaded = stage / "verified-target", stage / "downloaded"
-                target.mkdir()
+                downloaded = stage / "downloaded"
                 downloaded.mkdir()
-                restore_snapshot(target, partition, tag, downloaded, deadline, metadata, cache_key=cache_key)
+                if all(verification.get(field) for field in
+                       ("workflow_run_id", "workflow_run_attempt", "source_ref")):
+                    # Only the attributed native job owns a disposable source build.
+                    # Failure after retirement may leave it absent; other callers
+                    # retain their source. Hold the writer through owned cleanup.
+                    lifetime.enter_context(cache_guard(root))
+                    lake, build = root / ".lake", root / ".lake/build"
+                    if lake.is_symlink() or build.is_symlink() or not build.is_dir():
+                        raise ValueError("native verification requires a private source build")
+                    with tempfile.TemporaryDirectory(prefix=".release-verify-", dir=lake) as empty:
+                        target = pathlib.Path(empty)
+                        remaining(deadline)
+                        shutil.rmtree(build)
+                        if not restore_snapshot(target, partition, tag, downloaded, deadline, metadata,
+                                                cache_key=cache_key):
+                            raise ValueError("native verification did not install the remote build")
+                        remaining(deadline)
+                        (target / ".lake/build").rename(build)
+                else:
+                    # Local candidate publication also verifies, but owns no
+                    # disposable native workspace.
+                    target = stage / "verified-target"
+                    target.mkdir()
+                    restore_snapshot(target, partition, tag, downloaded, deadline, metadata, cache_key=cache_key)
                 pruned, prune_error = 0, None
             else:
                 current = existing_release(tag, deadline)
@@ -552,7 +573,7 @@ def publish(root, partition, verification=None, *, build_report=True):
                 confirmed.mkdir()
                 snapshot_manifest(partition, tag, confirmed, deadline, expected=metadata, metadata=current, cache_key=cache_key)
                 pruned, prune_error = prune(partition, tag, deadline)
-            receipt("publish", "published", tag=tag, pruned=pruned, prune_error=prune_error, **metadata)
+        receipt("publish", "published", tag=tag, pruned=pruned, prune_error=prune_error, **metadata)
     except ImportError as error:
         receipt("publish", "skipped", reason="POSIX cache locking unavailable: " + str(error))
         return 1 if verification is not None else 0

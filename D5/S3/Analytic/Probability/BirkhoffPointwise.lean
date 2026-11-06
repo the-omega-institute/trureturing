@@ -48,7 +48,7 @@ Proves the ergodic-case Birkhoff pointwise ergodic theorem for real integrable f
 -/
 
 /-- Hopf maximal ergodic theorem: the integral of `f` over the maximal set is nonnegative. -/
-private theorem maximal_ergodic
+theorem maximal_ergodic
     {α : Type*} [MeasurableSpace α] {μ : Measure α} [IsFiniteMeasure μ]
     {T : α → α} (hT : MeasurePreserving T μ μ)
     {f : α → ℝ} (hf : Measurable f) (hfi : Integrable f μ) :
@@ -203,13 +203,13 @@ private theorem maximal_ergodic
   exact ge_of_tendsto hlim (Filter.Eventually.of_forall hper)
 
 /-- Maximal divergence set where some Birkhoff sum exceeds `n * q` for a rational `q > c`. -/
-private noncomputable def DickSet {α : Type*} [MeasurableSpace α]
+noncomputable def DickSet {α : Type*} [MeasurableSpace α]
     (T : α → α) (g : α → ℝ) (c : ℝ) : Set α :=
   ⋃ (q : ℚ) (_ : c < (q : ℝ)), ⋂ (N : ℕ), ⋃ (n : ℕ) (_ : N ≤ n),
     {x | (n : ℝ) * (q : ℝ) < birkhoffSum T g n x}
 
 /-- The maximal divergence set is measurable. -/
-private theorem dick_measurable
+theorem dick_measurable
     {α : Type*} [MeasurableSpace α] {μ : Measure α}
     {T : α → α} (hT : MeasurePreserving T μ μ)
     {g : α → ℝ} (hg : Measurable g) (c : ℝ) :
@@ -227,7 +227,7 @@ private theorem dick_measurable
   exact hg.comp ((hT.iterate j).measurable)
 
 /-- Membership in the maximal divergence set, unfolded. -/
-private theorem dick_mem {α : Type*} [MeasurableSpace α]
+theorem dick_mem {α : Type*} [MeasurableSpace α]
     {T : α → α} {g : α → ℝ} {c : ℝ} {x : α} :
     x ∈ DickSet T g c ↔ ∃ q : ℚ, c < (q : ℝ) ∧
       ∀ N : ℕ, ∃ n : ℕ, N ≤ n ∧ (n : ℝ) * (q : ℝ) < birkhoffSum T g n x := by
@@ -296,7 +296,7 @@ private theorem dick_bwd {α : Type*} [MeasurableSpace α]
   nlinarith [hn, hpos, hS]
 
 /-- The maximal divergence set is invariant under `T`. -/
-private theorem dick_inv {α : Type*} [MeasurableSpace α]
+theorem dick_inv {α : Type*} [MeasurableSpace α]
     {T : α → α} {g : α → ℝ} {c : ℝ} :
     T ⁻¹' DickSet T g c = DickSet T g c := by
   ext y
@@ -304,7 +304,7 @@ private theorem dick_inv {α : Type*} [MeasurableSpace α]
   exact ⟨fun h => dick_bwd h, fun h => dick_fwd h⟩
 
 /-- Birkhoff sums of the truncated function agree with shifted sums inside an invariant set. -/
-private theorem dick_sum_in {α : Type*} [MeasurableSpace α]
+theorem dick_sum_in {α : Type*} [MeasurableSpace α]
     {T : α → α} {g : α → ℝ} {c : ℝ}
     (D : Set α)
     (hiter : ∀ (k : ℕ) (x : α), (T^[k] x ∈ D) ↔ (x ∈ D))
@@ -320,7 +320,7 @@ private theorem dick_sum_in {α : Type*} [MeasurableSpace α]
     Finset.card_range, nsmul_eq_mul]
 
 /-- Birkhoff sums of the truncated function vanish outside an invariant set. -/
-private theorem dick_sum_out {α : Type*} [MeasurableSpace α]
+theorem dick_sum_out {α : Type*} [MeasurableSpace α]
     {T : α → α} {g : α → ℝ} {c : ℝ}
     (D : Set α)
     (hiter : ∀ (k : ℕ) (x : α), (T^[k] x ∈ D) ↔ (x ∈ D))

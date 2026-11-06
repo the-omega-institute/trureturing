@@ -2669,4 +2669,36 @@ $$
 正性和上界都是外部承诺：若允许零坐标，$(1)$ 与 $(1,0)$ 会产生同一非零幂和
 序列而状态数不同；若 $B$ 未知或没有有限上界，则 25.32.3 不提供固定阶保证。
 
+### 25.32.5 有限矩容量与无限 successor 轨道闭包的边界
+
+本节的有限容量结论应与 FIB 续接卷的无限轨道分析并列读取，而不能互相
+替代。在正单纯形且状态数有上界 $B$ 时，前 $B$ 个幂和通过零填充与 Newton
+恒等式恢复坐标多重集；这是一个静态、有限维的来源完整性结论。FIB
+校准核的另一条边界则是：对每个固定的有限 successor 前缀，仍可有单位
+$L^\infty$ 范数而能量趋零的逃逸方向；在读数具有 $L^2$ 表示元时，全部
+无限 successor 坐标的精确共同核写成
+
+$$
+L^\infty(G,m;\mathbb R)\cap
+\overline{W+\mathcal C_R}^{\,\perp},
+$$
+
+其中 $W$ 是当前有限校准平面，$\mathcal C_R$ 是表示元的 successor
+轨道闭包。前者讨论有限正多重集的状态容量，后者讨论无限维函数空间中
+观察轨道的闭包；有限前缀的逃逸并不推出无限共同核非零，轨道稠密也不
+由有限矩完整性自动得到。
+
+因此，不能把仓内的 [acquired-dictionary 正证书](RECURSIVE_RELATIONAL_OBSERVATION_POSITIVE_RELATION_CERTIFICATES.md)、
+[native Fibonacci mixing 的有限载体稳定性](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FIBONACCI_MIXING_CERTIFICATES.md)
+和 [FIB 表示元—轨道公式](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_IV.md)
+直接合成为一个跨来源的
+``Suff\(\wedge\)Adm'' 定理。要建立这样的桥，至少还需明示并验证：同一
+来源与历史到正单纯形的映射、实际取得的矩读数、保持正性且有限秩的轨道
+表示、与 successor 动力学的交织关系，以及同一联合概率律下的取得权限和
+适用性。最新的 [AURIC C128 固定词校准](AURIC_C128_ORIGINAL_WORD_CALIBRATION_AND_FIXED_RELATION.md)
+同样是在明确同源角度、同一固定关系和有符号响应假设下的来源特定接口，
+没有供应上述跨域映射。当前这些桥接条件没有由已有卷供应，故该跨层合成
+仍是开放义务；这些结果保留为互补的静态容量、取得可达性、动态轨道和
+固定来源响应边界。
+
 ## 追加锚（本行以下为增补区）
