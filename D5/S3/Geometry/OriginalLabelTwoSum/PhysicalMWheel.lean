@@ -115,18 +115,20 @@ def rimPath (m : Nat) (hm : 3 ≤ m) (i : Fin m) :
 
 theorem rimPath_isPath (m : Nat) (hm : 3 ≤ m) (i : Fin m) :
     (rimPath m hm i).IsPath := by
-  simp [rimPath,SimpleGraph.Walk.isPath_def,label_ne_zero,
+  simp [rimPath, data, SimpleGraph.Walk.isPath_def, label_ne_zero,
+    Ne.symm (label_ne_zero m (AllMWheel.rimIndex m (by omega) i)),
     consecutive_ne m hm i]
 
 theorem fundamental_rows (m : Nat) (hm : 3 ≤ m) (i : Fin m) :
     (data m hm).rows.row i = AllMWheel.rimEdge m (by omega) i := by
   have hp := (data m hm).path_eq i (rimPath m hm i) (rimPath_isPath m hm i)
-  change (AllMWheel.ground m).filter (fun k => s(0,k) ∈ ((data m hm).path i).edges) = _
+  ext k
+  simp only [GraphData.rows, Finset.mem_filter]
   rw [hp]
   have hswap : s(AllMWheel.label m i,(0 : AllMWheel.Label m)) = s(0,AllMWheel.label m i) :=
     Sym2.eq_swap
-  ext k
-  simp only [Finset.mem_filter,rimPath,SimpleGraph.Walk.edges_cons,
+  change (k ∈ AllMWheel.ground m ∧ s(0,k) ∈ (rimPath m hm i).edges) ↔ _
+  simp only [rimPath,SimpleGraph.Walk.edges_cons,
     SimpleGraph.Walk.edges_nil,List.mem_cons,List.not_mem_nil,or_false,hswap,
     spoke_eq,AllMWheel.rimEdge,Finset.mem_insert,Finset.mem_singleton]
   constructor

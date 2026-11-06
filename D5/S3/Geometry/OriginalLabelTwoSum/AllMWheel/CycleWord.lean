@@ -166,7 +166,7 @@ private theorem erase_lift_dependency {b : V} {U T : Finset V}
 private def attachFamily (K G : Family V) (b : V) (hGK : G ≤ K) : Family V where
   carrier := {s | s ∈ K ∨ ∃ t ∈ G, insert b t = s}
   lower' := by
-    intro t s hts hs
+    intro s t hts hs
     rcases hs with hs | ⟨u, hu, he⟩
     · exact Or.inl (K.lower hts hs)
     · rw [← he] at hts
@@ -788,14 +788,8 @@ def cycleWordData (m : Nat) (hm : 3 ≤ m) :
     simp only [K,G,J,mem_pathFamily]
     rfl
   have hw : d2.word = cycleWord m hm := by
-    change
-      (((orderedFaces F).map (fun T => Symbol.pair T a) ++
-        (cycleTailWordData m hm).word.map (adjoinSymbol b)) ++
-        (cycleLastWordData m hm).word.map (adjoinSymbol c)) =
-      ((orderedFaces F).map (fun T => Symbol.pair T a) ++
-        ((cycleTailWordData m hm).word.map (adjoinSymbol b) ++
-        (cycleLastWordData m hm).word.map (adjoinSymbol c)))
-    exact List.append_assoc _ _ _
+    dsimp only [d2, d1, d0, attachWord, pairedCone]
+    simp only [cycleWord, mapSecond, mapLast, a, b, c, F, List.append_assoc]
   refine {
     word := cycleWord m hm
     supported := ?_
@@ -874,20 +868,21 @@ theorem pathChosen_labelInterval (m lo n : Nat) (h : lo + n ≤ m + 1) (x : Labe
       cases n with
       | zero =>
           simp only [labelInterval, FiniteIndependentPathGreedy.pathChosen,
-            Finset.notMem_empty]
+            Finset.notMem_empty, false_iff]
+          rintro ⟨hl, hu, _⟩
           omega
       | succ n =>
           cases n with
           | zero =>
               simp only [labelInterval, FiniteIndependentPathGreedy.pathChosen,
-                Finset.notMem_empty]
+                Finset.notMem_empty, false_iff]
+              rintro ⟨hl, hu, _⟩
               omega
           | succ n =>
               cases n with
               | zero =>
                   simp only [labelInterval, FiniteIndependentPathGreedy.pathChosen,
                     Finset.mem_singleton, Fin.ext_iff]
-                  dsimp only
                   omega
               | succ n =>
                   change x ∈ insert (⟨lo + 1, by omega⟩ : Label m)
@@ -895,7 +890,6 @@ theorem pathChosen_labelInterval (m lo n : Nat) (h : lo + n ≤ m + 1) (x : Labe
                       (labelInterval m (lo + 3) n (by omega))) ↔ _
                   rw [Finset.mem_insert, ih n (by omega) (lo + 3) (by omega)]
                   simp only [Fin.ext_iff]
-                  dsimp only
                   omega
 
 private theorem chosen_second (m : Nat) (hm : 3 ≤ m) (hr : m % 3 ≠ 2) :
