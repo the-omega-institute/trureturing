@@ -1171,6 +1171,227 @@ private theorem derivative_positive_coeff_le (r M q : ℕ) (hq : q ≤ M+r) :
   simpa only [norm_mul, norm_pow, norm_neg, norm_one, one_pow, one_mul,
     Complex.norm_natCast] using choose_energy_le r M q hq
 
+private def wordOrder (ω : List (Index D)) : ℕ := wordWeight ω + ω.length
+
+private def wordConstant : List (Index D) → ℝ
+  | [] => 1
+  | x::ω => ((x.2 : ℝ)+2) * derivativeConstant x.2 *
+      Real.sqrt (3*(D.G x.1 x.1 : ℝ)) * wordConstant ω
+
+private theorem wordConstant_nonneg (ω : List (Index D)) :
+    0 ≤ wordConstant ω := by
+  induction ω with
+  | nil => norm_num [wordConstant]
+  | cons x ω ih =>
+    dsimp [wordConstant]
+    exact mul_nonneg (mul_nonneg (mul_nonneg (by positivity)
+      (derivativeConstant_nonneg _)) (Real.sqrt_nonneg _)) ih
+
+/-- The actual nested neutral word is uniformly bounded between any two
+nonnegative grades; no charge, support-size or oscillator-degree factor occurs. -/
+private theorem original_word_energy_le (hD : (gramReal D).PosDef)
+    (ω : List (Index D)) : ∀ (E F M : ℕ) (n : ℤ),
+    (E : ℤ)+wordWeight ω-n-1=F → E ≤ M → F ≤ M →
+    ∀ v : Carrier D, v ∈ grade D (E : ℤ) →
+      normD (((wordField D 0 ω)[[n]]) v) ≤
+        wordConstant ω * ((M : ℝ)+1)^(wordOrder ω) * normD v := by
+  induction ω with
+  | nil =>
+    intro E F M n hEF hE hF v hv
+    rw [wordField, actual_zero, identity_modes]
+    split_ifs with hn
+    · simp [wordConstant, wordOrder, wordWeight]
+    · simp [wordConstant, wordOrder, wordWeight, normD, Real.sqrt_nonneg]
+  | cons x ω ih =>
+    intro E F M n hEF hE hF v hv
+    classical
+    let b : ℝ := (M : ℝ)+1
+    let A := derivativeConstant x.2
+    let L := Real.sqrt (3*(D.G x.1 x.1 : ℝ))
+    let K := wordConstant ω
+    let P := wordOrder ω
+    let T := A*L*K*b^(x.2+1+P)*normD v
+    have hA : 0 ≤ A := derivativeConstant_nonneg _
+    have hL : 0 ≤ L := Real.sqrt_nonneg _
+    have hK : 0 ≤ K := wordConstant_nonneg _
+    have hb : 0 ≤ b := by dsimp [b]; positivity
+    have hvn : 0 ≤ normD v := Real.sqrt_nonneg _
+    have hT : 0 ≤ T := by dsimp [T]; positivity
+    have hw : wordWeight (x::ω) = x.2+1+wordWeight ω := by simp [wordWeight]
+    have hp : wordOrder (x::ω) = x.2+2+P := by
+      dsimp [wordOrder, P]
+      rw [hw]
+      omega
+    have hleft (q : ℕ) : normD (wordLeft x ω n v q) ≤ T := by
+      by_cases hq : F < q+x.2+1
+      · rw [wordLeft_vanish hD x ω E F n hEF v hv q hq]
+        simpa [normD] using hT
+      have hq' : q+x.2+1 ≤ F := by omega
+      let G := F-(q+x.2+1)
+      have hG : G ≤ M := by dsimp [G]; omega
+      have htail : (E : ℤ)+wordWeight ω-(n+q)-1=G := by
+        rw [hw] at hEF
+        dsimp [G]
+        push_cast at hEF
+        omega
+      have hg : ((wordField D 0 ω)[[n+q]]) v ∈ grade D (G : ℤ) := by
+        rw [← htail]
+        exact word_mode_grade ω E (n+q) v hv
+      have ht := ih E G M (n+q) htail hE hG v hv
+      have hc := original_current_energy_le hD x.1 (-(q : ℤ)-1-x.2) G F M
+        (by dsimp [G]; omega) hG hF _ hg
+      have ha := derivative_negative_coeff_le x.2 M q (by omega)
+      rw [wordLeft, derivative_modes D x, LinearMap.smul_apply, normD_smul hD]
+      calc
+        _ ≤ (A*b^x.2) * (L*b*normD (((wordField D 0 ω)[[n+q]]) v)) :=
+          mul_le_mul ha hc (Real.sqrt_nonneg _) (by positivity)
+        _ ≤ (A*b^x.2) * (L*b*(K*b^P*normD v)) :=
+          mul_le_mul_of_nonneg_left
+            (mul_le_mul_of_nonneg_left ht (mul_nonneg hL hb)) (by positivity)
+        _ = T := by dsimp [T]; rw [pow_add, pow_add, pow_one]; ring
+    have hright (q : ℕ) : normD (wordRight x ω n v q) ≤ T := by
+      by_cases hs : q < x.2
+      · rw [wordRight_strip x ω n v q hs]
+        simpa [normD] using hT
+      by_cases hq : E+x.2 < q
+      · rw [wordRight_vanish hD x ω E n v hv q hq]
+        simpa [normD] using hT
+      let G := E-(q-x.2)
+      have hG : G ≤ M := by dsimp [G]; omega
+      have hcurr : (E : ℤ)-((q : ℤ)-x.2)=G := by dsimp [G]; omega
+      have hg : LatticeFiniteNegativeGeneration.neutralMode D x.1
+          ((q : ℤ)-x.2) v ∈ grade D (G : ℤ) := by
+        rw [← hcurr]
+        exact current_mode_grade x.1 E _ v hv
+      have htail : (G : ℤ)+wordWeight ω-(n-q-1)-1=F := by
+        rw [hw] at hEF
+        push_cast at hEF
+        omega
+      have ht := ih G F M (n-q-1) htail hG hF _ hg
+      have hc := original_current_energy_le hD x.1 ((q : ℤ)-x.2) E G M
+        hcurr hE hG v hv
+      have ha := derivative_positive_coeff_le x.2 M q (by omega)
+      rw [wordRight, derivative_modes D x, LinearMap.smul_apply, map_smul,
+        normD_smul hD]
+      calc
+        _ ≤ (A*b^x.2) * (K*b^P*
+            normD (LatticeFiniteNegativeGeneration.neutralMode D x.1 ((q : ℤ)-x.2) v)) :=
+          mul_le_mul ha ht (Real.sqrt_nonneg _) (by positivity)
+        _ ≤ (A*b^x.2) * (K*b^P*(L*b*normD v)) :=
+          mul_le_mul_of_nonneg_left
+            (mul_le_mul_of_nonneg_left hc (by positivity)) (by positivity)
+        _ = T := by dsimp [T]; rw [pow_add, pow_add, pow_one]; ring
+    have hsumL : (∑ q ∈ Finset.range (F+1), normD (wordLeft x ω n v q)) ≤
+        ((F : ℝ)+1)*T := by
+      calc
+        _ ≤ ∑ _q ∈ Finset.range (F+1), T := Finset.sum_le_sum (fun q _ => hleft q)
+        _ = _ := by simp
+    have hsumR : (∑ q ∈ Finset.range (E+x.2+1), normD (wordRight x ω n v q)) ≤
+        ((E : ℝ)+x.2+1)*T := by
+      calc
+        _ ≤ ∑ _q ∈ Finset.range (E+x.2+1), T := Finset.sum_le_sum (fun q _ => hright q)
+        _ = _ := by simp
+    have hcount : ((F : ℝ)+1)+((E : ℝ)+x.2+1) ≤ ((x.2 : ℝ)+2)*b := by
+      have he : (E : ℝ) ≤ M := by exact_mod_cast hE
+      have hf : (F : ℝ) ≤ M := by exact_mod_cast hF
+      dsimp [b]
+      nlinarith [Nat.cast_nonneg (α := ℝ) x.2, Nat.cast_nonneg (α := ℝ) M]
+    rw [word_cons_finite hD x ω E F n hEF v hv]
+    calc
+      _ ≤ normD (∑ q ∈ Finset.range (F+1), wordLeft x ω n v q) +
+          normD (∑ q ∈ Finset.range (E+x.2+1), wordRight x ω n v q) := normD_add_le hD _ _
+      _ ≤ ((F : ℝ)+1)*T + ((E : ℝ)+x.2+1)*T :=
+        add_le_add ((normD_sum_le hD _ _).trans hsumL) ((normD_sum_le hD _ _).trans hsumR)
+      _ = (((F : ℝ)+1)+((E : ℝ)+x.2+1))*T := by ring
+      _ ≤ (((x.2 : ℝ)+2)*b)*T := mul_le_mul_of_nonneg_right hcount hT
+      _ = _ := by
+        rw [hp]
+        change (((x.2 : ℝ)+2)*b)*T =
+          (((x.2 : ℝ)+2)*A*L*K)*b^(x.2+2+P)*normD v
+        dsimp [T]
+        rw [show x.2+2+P = (x.2+1+P)+1 by omega, pow_succ]
+        ring
+
+private theorem wordOrder_le (ω : List (Index D)) : wordOrder ω ≤ 2*wordWeight ω := by
+  have hh : ω.length ≤ wordWeight ω := by
+    induction ω with
+    | nil => simp [wordWeight]
+    | cons x ω ih => simp only [List.length_cons, wordWeight, List.map_cons,
+        List.sum_cons] at *; omega
+  unfold wordOrder
+  omega
+
+private theorem occurrence_weight (e : Index D →₀ ℕ) :
+    wordWeight (occurrences D e) = Finsupp.weight (fun x : Index D => x.2+1) e := by
+  exact LatticeHalfFockFiniteCorrection.wordWeight_occurrences D e
+
+private def neutralConstant (p : Oscillator D) : ℝ :=
+  1 + ∑ e ∈ p.support, ‖p.coeff e‖ * wordConstant (occurrences D e)
+
+private theorem neutralConstant_pos (p : Oscillator D) : 0 < neutralConstant p := by
+  have hn : 0 ≤ ∑ e ∈ p.support, ‖p.coeff e‖ * wordConstant (occurrences D e) :=
+    Finset.sum_nonneg (fun e _ => mul_nonneg (norm_nonneg _) (wordConstant_nonneg _))
+  unfold neutralConstant
+  linarith
+
+private theorem neutral_polynomial_expansion (p : Oscillator D) (n : ℤ) (v : Carrier D) :
+    ((Y D (Finsupp.single 0 p))[[n]]) v =
+      ∑ e ∈ p.support, p.coeff e • (((wordField D 0 (occurrences D e))[[n]]) v) := by
+  have hp : p = ∑ e ∈ p.support, p.coeff e • MvPolynomial.monomial e 1 := by
+    simpa only [MvPolynomial.smul_monomial, smul_eq_mul, mul_one] using MvPolynomial.as_sum p
+  rw [Y_single]
+  conv_lhs => rw [hp]
+  simp only [map_sum, map_smul, polynomialField_monomial, Finset.sum_apply,
+    LinearMap.sum_apply, Pi.smul_apply, LinearMap.smul_apply]
+
+/-- One constant controls every original mixed state in every nonnegative grade. -/
+private theorem original_neutral_grade_le (hD : (gramReal D).PosDef)
+    (p : Oscillator D) (w : ℕ)
+    (hp : MvPolynomial.IsWeightedHomogeneous (fun x : Index D => x.2+1) p w)
+    (E : ℕ) (v : Carrier D) (hv : v ∈ grade D (E : ℤ)) :
+    normD (((Y D (Finsupp.single 0 p))[[(w : ℤ)-1]]) v) ≤
+      neutralConstant p * ((E : ℝ)+1)^(2*w) * normD v := by
+  classical
+  let B := ((E : ℝ)+1)^(2*w)*normD v
+  have hvn : 0 ≤ normD v := Real.sqrt_nonneg _
+  have hB : 0 ≤ B := by dsimp [B]; positivity
+  have hterm (e : Index D →₀ ℕ) (he : e ∈ p.support) :
+      normD (p.coeff e • (((wordField D 0 (occurrences D e))[[(w : ℤ)-1]]) v)) ≤
+        (‖p.coeff e‖ * wordConstant (occurrences D e))*B := by
+    have hw : wordWeight (occurrences D e) = w := by
+      rw [occurrence_weight]
+      exact hp (MvPolynomial.mem_support_iff.mp he)
+    have ho : wordOrder (occurrences D e) ≤ 2*w := by
+      simpa only [hw] using wordOrder_le (occurrences D e)
+    have hpow : ((E : ℝ)+1)^(wordOrder (occurrences D e)) ≤ ((E : ℝ)+1)^(2*w) :=
+      pow_le_pow_right₀ (by have hn := Nat.cast_nonneg (α := ℝ) E; linarith) ho
+    have hword := original_word_energy_le hD (occurrences D e) E E E ((w : ℤ)-1)
+      (by rw [hw]; omega) le_rfl le_rfl v hv
+    have hword' : normD (((wordField D 0 (occurrences D e))[[(w : ℤ)-1]]) v) ≤
+        wordConstant (occurrences D e)*((E : ℝ)+1)^(2*w)*normD v :=
+      hword.trans (mul_le_mul_of_nonneg_right
+        (mul_le_mul_of_nonneg_left hpow (wordConstant_nonneg _)) hvn)
+    rw [normD_smul hD]
+    exact (mul_le_mul_of_nonneg_left hword' (norm_nonneg _)).trans_eq (by dsimp [B]; ring)
+  rw [neutral_polynomial_expansion]
+  calc
+    _ ≤ ∑ e ∈ p.support,
+        normD (p.coeff e • (((wordField D 0 (occurrences D e))[[(w : ℤ)-1]]) v)) :=
+      normD_sum_le hD _ _
+    _ ≤ ∑ e ∈ p.support, (‖p.coeff e‖ * wordConstant (occurrences D e))*B :=
+      Finset.sum_le_sum hterm
+    _ = (∑ e ∈ p.support, ‖p.coeff e‖ * wordConstant (occurrences D e))*B :=
+      (Finset.sum_mul _ _ _).symm
+    _ ≤ (1+∑ e ∈ p.support, ‖p.coeff e‖ * wordConstant (occurrences D e))*B :=
+      mul_le_mul_of_nonneg_right (by linarith) hB
+    _ = _ := by dsimp [neutralConstant, B]; ring
+
+#check @original_neutral_grade_le
+#print axioms original_neutral_grade_le
+
+#check @original_word_energy_le
+#print axioms original_word_energy_le
+
 #check @word_mode_grade
 #print axioms word_mode_grade
 #check @derivative_zero_strip
