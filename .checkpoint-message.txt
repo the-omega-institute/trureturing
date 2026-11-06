@@ -1,3 +1,0 @@
-chore: reconcile collective insertion branch with current dev
-
-Restore the branch tree to the refreshed origin/dev baseline and retain the reviewed collective-prime insertion source unit.
