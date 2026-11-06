@@ -1142,3 +1142,471 @@ criterion is introduced, and no external priority is asserted.
 [HC-T]: https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf
 
 ## 追加锚（本行以下为增补区）
+
+## 8. The original calibrated entrance law from one continuing record
+
+**Definition 8.1 (the unchanged source, words and comparison law).**
+Retain the entire source of Definitions 1.1 and 7.1, for every fixed
+original finite $a,\eta,d>0$. Thus $G$, $\mu$, $e$, the unit-source
+field $\Gamma$, the full complex endpoint $H=H_{\rm end}$ with
+$A=\rho C$, $\rho=A(h)/C(h)$, and the coefficient-positive normalized
+$h=w_*/\|w_*\|_{L^2(\mu)}$ are unchanged. In particular
+
+$$
+\begin{gathered}
+D(H)=\{u\in D(S_{\min}^*):A(u)=\rho C(u)\},\quad Hu=S_{\min}^*u,\\
+m=h^2\mu,\quad m(G)=1,\quad m(\{e\})=0,\quad
+K=J_h^{-1}HJ_h\ge0,\quad\ker K=\mathbb C1,\\
+T_t=e^{-tK},\quad T_t1=1,\quad P=T_d=P^*,\\
+\mathbb P_e(Z_t\in dx)=g_t(x)m(dx),\quad
+g_t\in L^2(m),\quad g_t>0\ (m\text{-a.e.}),\quad
+\int g_t\,dm=1,\quad g_{t+s}=T_sg_t\quad(t>0,s\ge0).
+\end{gathered}
+\tag{8.1}
+$$
+
+These are the owning endpoint statements and [HC-S, Theorems 115.3,
+117.2 and 133.2], not additional regularity or spectral hypotheses.
+Keep every permitted repaired Borel representative $b$ and exactly
+
+$$
+\begin{gathered}
+M=1+\|g_d\|_\infty<\infty,\quad M\ge2,\quad
+c=\frac1{4M},\quad [b]=g_d,\quad0<b\le M,\\
+\mathcal L=\{0,1,3,B\},\quad
+f_3=cb,\quad f_B=\frac14,\quad
+f_0=f_1=\frac{3/4-f_3}{2}.
+\end{gathered}
+\tag{8.2}
+$$
+
+All four emissions are strictly positive pointwise and sum to one;
+$f_3\le1/4$ and $1/4\le f_0=f_1<3/8$. The boundedness of $g_d$
+is supplied for this original tuple, without a parameter-uniform bound.
+No upper estimate is substituted for the norm in (8.2).
+
+Use the already specified fixed-gap passive contract [HC-S, Definition
+117.3] with its permitted positive lead-in: the actual process still
+starts at $Z_0=e$, and the sampled hidden states and emitted labels are
+
+$$
+X_j=Z_{(j+2)d},\qquad Y_j\in\mathcal L\qquad(j\ge0).
+\tag{8.3}
+$$
+
+Conditional on the entire source path, the labels have probabilities
+$f_y(X_j)$ with independent fresh read noise. Reading leaves the source
+and every subsequent transition unchanged. Thus the first three reads
+remain exactly at $2d,3d,4d$, and every subsequent gap is the original
+$d$. Write $Q_e$ for the actual law of $(Y_j)_{j\ge0}$.
+
+For a finite word $u$ let $F_\varnothing=1$ and recursively set
+$F_{yu}=f_yP F_u$, as bounded real $m$-classes. Conservation gives
+$F_y=f_y$. The complete original $k$-read law is
+
+$$
+\nu_e^{(k)}(u)=\langle g_{2d},F_u\rangle_m
+             =\mathbb P_e(Y_0\cdots Y_{k-1}=u)
+\quad(u\in\mathcal L^k).
+\tag{8.4}
+$$
+
+For $k=3$ this is precisely [HC-S, (123.1)–(123.3)] and [HC-C,
+(134.10)]: $\nu_e^{(3)}(y,z,w)=\int g_{2d}f_yP(f_zPf_w)\,dm$,
+with all 64 coordinates.
+
+Define $\widetilde Q_m$ on the joint one-sided hidden/read sequence
+space by initial hidden law $m$, the same actual transition kernel
+$P$, and the same emissions with fresh conditionally independent
+noise. Its output marginal is $Q_m$, with cylinder probabilities
+
+$$
+q(u)=Q_m([u])=\int F_u\,dm,\qquad
+[u]=\{y:y_0\cdots y_{|u|-1}=u\}.
+\tag{8.5}
+$$
+
+These measures are comparison objects defined by the original kernels.
+Neither $m$-initialization, a sample from $\widetilde Q_m$, nor any
+coefficient $q(u)$ is an input to the actual observer. The shift on
+output sequence space is $S(y)_j=y_{j+1}$. Since $P1=1$ and $P=P^*$,
+$\int Pv\,dm=\int v\,dm$ for bounded real $v$, so $m$ is invariant
+and $Q_m$ is stationary.
+
+**Theorem 8.2 (source-specific marked-word identity and actual-path
+frequency transfer).** Under Definition 8.1, for every $k\ge1$ and
+$u\in\mathcal L^k$,
+
+$$
+q(3)=c,\qquad q(3u)=c\,\nu_e^{(k)}(u).
+\tag{8.6}
+$$
+
+The shift $(S,Q_m)$ is ergodic. There is one $Q_e$-probability-one
+event on which, simultaneously for every nonempty finite word $v$,
+
+$$
+\frac1N\sum_{j=0}^{N-1}
+ \mathbf1\{Y_j\cdots Y_{j+|v|-1}=v\}
+ \longrightarrow q(v)\qquad(N\longrightarrow\infty).
+\tag{8.7}
+$$
+
+This is a statement for each fixed original source and every fixed
+finite word, without a rate, spectral gap or independence of windows.
+
+*Proof.* The first identity in (8.6) is
+$\int f_3\,dm=c\int g_d\,dm=c$. For an entire word $u$, the original
+read product, the repaired class identity and self-adjointness give
+
+$$
+\begin{aligned}
+q(3u)&=\langle f_3,PF_u\rangle_m
+ =c\langle g_d,PF_u\rangle_m\\
+ &=c\langle Pg_d,F_u\rangle_m
+ =c\langle g_{2d},F_u\rangle_m
+ =c\,\nu_e^{(k)}(u).
+\end{aligned}
+\tag{8.8}
+$$
+
+In particular the single original interval $d$ propagates the
+calibration class $g_d$ to exactly the original first-read density
+$g_{2d}$. This uses the same $P$ and $f$, not a newly calibrated source.
+For $k=3$, (8.8) reads
+$q(3yzw)=c\int g_{2d}f_yP(f_zPf_w)\,dm$ for every original triple.
+
+We next establish the ergodicity needed for (8.7). The original zero
+line $\ker H=\mathbb Ch$ and the unitary $J_h$ give
+$\ker K=\mathbb C1$. Let $E_K$ be its spectral resolution and put
+$\Pi_0v=(\int v\,dm)1$. The spectral calculus of Teschl,
+[*Mathematical Methods in Quantum Mechanics*, the online edition
+corresponding to Graduate Studies in Mathematics 99, §3.1, Theorems
+3.1 and 3.7, (3.18)–(3.21)][HC-T], applies to this self-adjoint
+nonnegative $K$. Its bounded-multiplier norm identity gives
+
+$$
+\|P^nv-\Pi_0v\|_2^2
+ =\int_{(0,\infty)}e^{-2nd\lambda}\,
+       d\|E_K(\lambda)v\|_2^2\longrightarrow0
+\quad(v\in L^2(m)).
+\tag{8.9}
+$$
+
+The notation on the right denotes integration against the finite
+spectral measure $A\mapsto\|E_K(A)v\|_2^2$. Bounded convergence
+proves the limit even if positive spectrum accumulates at zero.
+No compact resolvent, pure point spectrum or uniform rate is used.
+
+For finite output cylinder events $A,B$, let $A$ use indices
+$0,\ldots,r$ and shift $B$ to start at $n>r$. On the stationary
+joint comparison space take
+$a_A(x)=\mathbb E_m[\mathbf1_A\mid X_r=x]$ and let $b_B(x)$ be
+the probability of the finite block $B$ given its first hidden state
+$x$. Both functions are in $[0,1]$, and their $m$-integrals are
+$Q_m(A)$ and $Q_m(B)$. The actual Markov transitions and fresh read
+noise imply
+
+$$
+Q_m(A\cap S^{-n}B)
+ =\langle a_A,P^{n-r}b_B\rangle_m
+ \longrightarrow Q_m(A)Q_m(B)
+\tag{8.10}
+$$
+
+by (8.9). Finite-coordinate events approximate every measurable output
+event in $Q_m$-measure. Stationarity makes the approximation error of
+$S^{-n}B$ independent of $n$, so the same limit holds for arbitrary
+measurable $A,B$. For an invariant event $A$ modulo null sets, its
+left side with $B=A$ equals $Q_m(A)$ for every $n$, while its limit
+is $Q_m(A)^2$. Hence invariant events have probability zero or one:
+the output shift is ergodic. This qualitative mixing consequence is
+not a numerical mixing estimate.
+
+Apply the existing pointwise ergodic theorem to the bounded cylinder
+indicator $\mathbf1_{[v]}$ on $(\mathcal L^{\mathbb N},Q_m,S)$.
+Its orbit average is exactly the left side of (8.7), and its integral
+is $q(v)$. The reusable repository supplier is
+[BirkhoffPointwise.birkhoff_pointwise_ergodic](../../../D5/S3/Analytic/Probability/BirkhoffPointwise.lean),
+whose inputs are a probability measure, an ergodic transformation
+and a real integrable observable. Here these inputs are respectively
+$Q_m$, $S$ and $\mathbf1_{[v]}$; no generic ergodic theorem is added.
+For a primary qualitative statement see Avigad–Gerhardy–Towsner,
+[*Local stability of ergodic averages*, arXiv:0706.1512v3, Theorem
+3.1][MW-A]. That statement supplies almost-everywhere convergence
+for $L^1$ observables of a measure-preserving probability
+transformation; ergodicity identifies the invariant limit with the
+integral, as also expressed in their Corollary 5.4. There are only
+countably many finite words, so their conull convergence events have
+one conull intersection $E$ under $Q_m$.
+
+It remains to transfer this event to the actual source, rather than
+assuming stationarity of $Q_e$. Let $\widetilde Q_e$ be the joint
+hidden/read law from (8.3). At its first sampled time the hidden law
+is $g_{2d}m$ by (8.1). All later hidden transitions and read kernels
+are exactly those defining $\widetilde Q_m$. Their finite-cylinder
+products therefore satisfy, and a monotone-class extension gives on
+the entire joint sequence sigma algebra,
+
+$$
+\widetilde Q_e(D)
+ =\int g_{2d}(X_0)\mathbf1_D\,d\widetilde Q_m,
+\qquad
+\frac{d\widetilde Q_e}{d\widetilde Q_m}=g_{2d}(X_0).
+\tag{8.11}
+$$
+
+The right side has mass one. In particular for every measurable output
+event $D$, pulling it back to the joint space shows
+
+$$
+Q_e(D)\le\|g_{2d}\|_\infty Q_m(D)
+        \le(M-1)Q_m(D),
+\qquad Q_e\ll Q_m.
+\tag{8.12}
+$$
+
+The last norm bound is the actual $g_{2d}=Pg_d$ and the Markov
+$L^\infty$ contraction. No numerical value of this bound is required
+to transfer null sets. Apply (8.12) to $E^c$ to obtain (8.7) under
+the original $e$-start law. Equation (8.11) transfers the complete
+future path law after the already specified lead-in; it is stronger
+than a separate absolute-continuity assertion for each finite marginal.
+It neither supplies a second trajectory nor changes the initial source.
+
+Finally, the Borel repairs in (8.2) cause no ambiguity. Under the
+stationary comparison, every $X_j$ has law $m$; under the actual
+source, it has law $g_{(j+2)d}m$. Every fixed Borel $m$-null repair
+set is therefore avoided at all sampled indices simultaneously,
+by a countable union of null events. The properly exceptional set of
+the original process is treated in the same way. Transition-kernel
+and bounded-class representatives suffice in every displayed integral.
+This argument concerns the countable positive-time skeleton, not
+avoidance of the source by the continuous path at all times. It
+assigns no value to $h(e)$ and no density at time zero. $\square$
+
+**Definition 8.3 (a total finite-record statistic).** Fix a target
+length $k\ge1$ and put $K_k=4^k$. For any acquired finite record
+$Y_0,\ldots,Y_{L-1}$, including $L=0$, let $N=(L-k)_+$ and retain
+all $4^{k+1}$ counters
+
+$$
+\begin{gathered}
+A_{N,k}(v)=\sum_{j=0}^{N-1}
+ \mathbf1\{Y_j\cdots Y_{j+k}=v\}
+ \quad(v\in\mathcal L^{k+1}),\\
+\sum_{v\in\mathcal L^{k+1}}A_{N,k}(v)=N,\qquad
+Z_N=\sum_{u\in\mathcal L^k}A_{N,k}(3u)
+   =\sum_{j=0}^{N-1}\mathbf1\{Y_j=3\},\\
+\widehat\nu_{N,k}(u)=\frac{A_{N,k}(3u)+1}{Z_N+K_k}
+ \quad(u\in\mathcal L^k).
+\end{gathered}
+\tag{8.13}
+$$
+
+Empty sums are zero. For $L\le k$, no window is complete, so $N=0$
+and the statistic is the uniform vector. For any $L$, if $Z_N=0$,
+all its marked counters vanish and it is again the uniform vector.
+The integer $1$ added to each numerator is numerical smoothing of
+the retained counters, not an emission or an added observation.
+
+**Theorem 8.4 (the complete original three-read law is consistently
+acquired at fixed horizon).** For every fixed original source in
+Definition 8.1, (8.13) is a rational probability vector for every
+finite record. Under its actual $Q_e$ law, on one probability-one
+event, for every fixed $k\ge1$,
+
+$$
+\begin{gathered}
+\frac{A_{N,k}(3u)}N\longrightarrow c\nu_e^{(k)}(u)
+ \quad(u\in\mathcal L^k),\qquad
+\frac{Z_N}N\longrightarrow c>0,\\
+\operatorname{TV}(\widehat\nu_{N,k},\nu_e^{(k)})
+ =\frac12\sum_{u\in\mathcal L^k}
+       |\widehat\nu_{N,k}(u)-\nu_e^{(k)}(u)|
+ \longrightarrow0.
+\end{gathered}
+\tag{8.14}
+$$
+
+Here $N\to\infty$ uses the first $L=N+k$ actual labels. The TV
+error also tends to zero in $Q_e$ expectation. In particular $k=3$
+recovers every one of the original 64 probabilities at $2d,3d,4d$
+from the complete 256-counter four-word histogram.
+
+*Proof.* Nonnegativity is immediate and the sum of the numerators is
+$Z_N+K_k$, a strictly positive denominator even at $N=0$. Theorem
+8.2 applied to every $3u$ gives the first limit in (8.14). Summing
+its finitely many terms, or applying (8.7) to the one-letter word
+$3$, gives $Z_N/N\to q(3)=c$. Thus $Z_N>0$ eventually almost
+surely. Divide numerator and denominator of (8.13) by $N$:
+
+$$
+\widehat\nu_{N,k}(u)
+ =\frac{A_{N,k}(3u)/N+1/N}{Z_N/N+K_k/N}
+ \longrightarrow\frac{c\nu_e^{(k)}(u)}c
+ =\nu_e^{(k)}(u).
+\tag{8.15}
+$$
+
+For fixed $k$ there are finitely many coordinates, proving TV
+convergence. TV is at most one, so bounded convergence gives the
+expectation assertion. The common event from Theorem 8.2 supports all
+fixed $k$, but supplies no uniform control when $k$ grows with $N$.
+The windows can overlap and have arbitrarily long dependence; no
+independent-sample premise was used. $\square$
+
+**Proposition 8.5 (conditional error transfer for these exact counters).**
+For $N\ge1$ define the unknown true-frequency discrepancy
+
+$$
+\delta_{N,k}=\sum_{u\in\mathcal L^k}
+ \left|\frac{A_{N,k}(3u)}N-q(3u)\right|.
+\tag{8.16}
+$$
+
+For every record, without any independence assumption,
+
+$$
+\operatorname{TV}(\widehat\nu_{N,k},\nu_e^{(k)})
+ \le\min\left\{1,\frac{N\delta_{N,k}+K_k}{Z_N+K_k}\right\}.
+\tag{8.17}
+$$
+
+Under $Q_e$, $\delta_{N,k}\to0$ almost surely for fixed $k$.
+The right side in (8.17) is a conditional error transfer, not an
+acquired error bar.
+
+*Proof.* Put $a_u=A_{N,k}(3u)/N$, $p_u=q(3u)=c\nu_e^{(k)}(u)$,
+and $z=Z_N/N$. Since $\sum a_u=z$ and $\sum p_u=c$,
+$|z-c|\le\delta_{N,k}$. With $\nu_u=\nu_e^{(k)}(u)$, the
+numerator of $\widehat\nu_{N,k}(u)-\nu_u$ can be written
+
+$$
+N(a_u-p_u)+N(c-z)\nu_u+1-K_k\nu_u.
+\tag{8.18}
+$$
+
+The sum of its absolute values is at most
+$N\delta_{N,k}+N|c-z|+2K_k$. Divide by
+$2(Z_N+K_k)$ and use TV at most one. The convergence of
+$\delta_{N,k}$ follows from Theorem 8.2. Its definition contains
+unknown $q(3u)$, so finite counter values alone do not evaluate it.
+For example a separately certified bound $\delta_{N,3}\le r_N$
+would give $(Nr_N+64)/(Z_N+64)$ as an error bound for the original
+64-coordinate consumer. No such $r_N$ is supplied here. $\square$
+
+**Proposition 8.6 (paid chronology, finite memory and the remaining
+recovery relations).** For $N\ge1$, the statistic (8.13) at fixed
+$k$ consumes exactly $N+k$ chronological labels, with final read at
+original time $(N+k+1)d$. For $k=3$ these are $N+3$ reads, ending
+at $(N+4)d$. It can retain the complete histogram with
+$4^{k+1}$ integer counters and a buffer of $k+1$ labels. Its
+persistent working storage can be bounded by
+
+$$
+O\!\left(4^{k+1}\log_2(N+2)+k+\log_2(k+2)\right)
+\quad\text{bits}.
+\tag{8.19}
+$$
+
+All these operations terminate for a supplied finite record, including
+every zero-marker branch. Their consistency does not supply a stopping
+time certified to reach a requested TV precision, a confidence radius,
+or a current-history predictor.
+
+*Proof.* The last complete window starts at $N-1$ and ends at
+$N+k-1$; (8.3) places that last label at $(N+k+1)d$. The initial
+$2d$ lead-in and every later gap are paid elapsed time. All $N$
+windows increment exactly one of the $4^{k+1}$ counters, including
+windows starting with $0,1,B$, and the final $k$ labels are paid
+reads completing those windows. No retained label or failed branch
+is removed from the histogram. $Z_N$ counts natural markers among
+the $N$ starting positions, not independent trials or free prepared
+states. The finite law conditioned on an actual marker at a particular
+nonstationary time is not asserted to equal $\nu_e^{(k)}$; (8.6)
+is a comparison-cylinder identity, used only through the long-record
+limits. The source is never reset or conditioned by an intervention.
+
+A counter in $[0,N]$ needs at most $\lceil\log_2(N+2)\rceil$
+bits. A rolling word buffer uses $2(k+1)$ bits, and its position,
+window total and marked total require only the corresponding finite
+integer registers. For $N\ge1$, the record length $L=N+k$ can be
+encoded within the order in (8.19). Initializing all histogram
+entries, processing each acquired label and summing the marked row
+are finite integer operations. The output can share its denominator
+$Z_N+K_k$ among $K_k$ integer numerators; its additional written
+size is $O(K_k\log_2(N+K_k+1))$ bits. At $k=3$ the retained
+histogram has exactly 256 counters and the output has 64 numerators.
+The counters' bit lengths grow with $N$; a finite fixed-state
+observer is not asserted. A record shorter than a window is handled
+by the uniform branch of Definition 8.3.
+
+The statistic takes only $k$ and the actual finite label record as
+inputs. It does not query $a,\eta,d,h,\rho,g_d,M$, hidden states
+or coefficient/posterior values. This presupposes the unchanged
+calibrated passive channel as a mathematical experiment; it constructs
+no physical instrument realizing that channel. In particular,
+removing $M$ from the statistic's input does not replace the exact
+$M$ defining the installed emissions.
+
+The almost-sure statement has the quantifiers: for each fixed source,
+each fixed $k$ and almost every actual record, every positive error
+tolerance eventually holds for all sufficiently large $N$. It gives
+no finite-record test locating that eventual time. A confidence
+statement for adaptive stopping would additionally require an
+appropriately simultaneous probabilistic guarantee. The discrepancy
+in (8.16) identifies a sufficient next obligation for this estimator;
+it is not an assertion that all acquisition routes must compute $M$
+first or must use these counters.
+
+For a fixed finite history $v$ of length $r\ge1$ and fixed continuation
+word $w$, strict positivity of the original emissions gives
+$\nu_e^{(r)}(v)>0$. The identity (8.6) then implies
+
+$$
+\frac{\nu_e^{(r+|w|)}(vw)}{\nu_e^{(r)}(v)}
+ =\frac{q(3vw)}{q(3v)}.
+\tag{8.20}
+$$
+
+Thus fixed-history conditionals can be obtained as limits of the
+corresponding fixed-word probabilities. This does not give error
+control for the actual growing history $Y_0\cdots Y_{L-1}$ at the
+current cut: its length changes with $L$, and its probability can
+shrink. Nor does fixed-horizon convergence establish an inverse from
+record laws to $G,H,h,\rho$, source parameters or boundary geometry.
+Exact continuation of the linear calibration on all bounded inputs
+in Corollary 7.3 has a different domain and remains as stated.
+Direct model evaluation from effective parameter names, finite-error
+acquisition, current-cut prediction and full mutual recovery of
+spatial structure, chronology, boundary and usable memory remain
+separate mathematical obligations. Their absence here is not an
+impossibility theorem. $\square$
+
+The source correspondence (8.8), its complete actual-path transfer
+(8.11), and its original three-read consumer are `repo-derived`
+application mathematics. The original full endpoint, normalized zero
+line, source densities, boundedness and calibration are the cited
+owning suppliers; spectral calculus and Birkhoff convergence are
+mature results used inside this derivation. In particular this adds
+no general spectral/ergodic theorem or finite-positive existence
+claim. The source statements retain their conditional mathematical
+scope, and no external priority or formal verification of this
+application is asserted.
+
+Avigad–Gerhardy–Towsner's Theorems 5.2–5.3 and Corollary 5.4
+also separate convergence from effective access: their rate conclusions
+consume representations of the observable and operator, with the
+limiting projection norm in Theorems 5.2–5.3, or effective measure
+data in the ergodic case. Here the relevant operator would be the
+Koopman operator of $S$ on the comparison path probability space,
+and the observable a fixed cylinder indicator. A single observed
+record supplies neither that effective path-space presentation nor
+the required integration procedure. Those positive rate results
+therefore do not furnish a rate from the present input; their general
+negative examples do not prove one impossible for this diffusion.
+
+[MW-A]: https://arxiv.org/html/0706.1512v3
+
+## 追加锚（本行以下为增补区）
