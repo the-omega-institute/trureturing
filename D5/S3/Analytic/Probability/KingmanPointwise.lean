@@ -829,29 +829,29 @@ theorem kingman_subadditive
   by_cases hμ : μ = 0
   · subst μ
     exact ⟨fun _ => 0, integrable_zero _ _ _, by simp, by simp⟩
-  letI : NeZero μ := ⟨hμ⟩
+  haveI : NeZero μ := ⟨hμ⟩
   let ν : Measure α := (μ Set.univ)⁻¹ • μ
   have hν : IsProbabilityMeasure ν := inferInstance
-  letI := hν
+  haveI := hν
   have hTν : MeasurePreserving T ν ν := hT.smul_measure _
   have hae : ae ν = ae μ :=
-    ae_ennreal_smul_measure_eq (ENNReal.inv_ne_zero.mpr (measure_ne_top μ _)) μ
+    Measure.ae_ennreal_smul_measure_eq (ENNReal.inv_ne_zero.mpr (measure_ne_top μ _)) μ
   have hXi : ∀ n, Integrable (X n) ν := fun n => (hX_int n).to_average
   let Y : ℕ → α → ℝ := fun n =>
     if n = 0 then 0 else (hXi n).aestronglyMeasurable.mk (X n)
   have hYm : ∀ n, Measurable (Y n) := by
     intro n
     by_cases hn : n = 0
-    · simp only [Y, if_pos hn]; exact measurable_const
-    · simpa only [Y, if_neg hn] using (hXi n).aestronglyMeasurable.measurable_mk
+    · simp only [Y, ite_eq_left hn]; exact measurable_const
+    · simpa only [Y, ite_eq_right hn] using (hXi n).aestronglyMeasurable.measurable_mk
   have hYeq : ∀ n, n ≠ 0 → Y n =ᵐ[ν] X n := by
     intro n hn
-    simpa only [Y, if_neg hn] using (hXi n).aestronglyMeasurable.ae_eq_mk.symm
+    simpa only [Y, ite_eq_right hn] using (hXi n).aestronglyMeasurable.ae_eq_mk.symm
   have hY0 : ∀ x, Y 0 x = 0 := by simp [Y]
   have hYi : ∀ n, Integrable (Y n) ν := by
     intro n
     by_cases hn : n = 0
-    · subst n; simpa only [Y, if_pos rfl] using (integrable_zero α ℝ ν)
+    · subst n; simpa only [Y, ite_eq_left rfl] using (integrable_zero α ℝ ν)
     · exact (hXi n).congr (hYeq n hn).symm
   have hYnn : ∀ n, ∀ᵐ x ∂ν, 0 ≤ Y n x := by
     intro n

@@ -5,11 +5,13 @@ year: 2019
 title: "Probability: Theory and Examples, Fifth Edition"
 doi: 10.1017/9781108591034
 url: https://services.math.duke.edu/~rtd/PTE/PTE5_011119.pdf
-claim: "Exercise 3.2.9 gives uniform CDF convergence; Theorems 3.2.9 and 4.6.3 support weak tests and first-moment truncation; Section 6.2 gives almost-everywhere ergodic averages with limit equal to the mean."
+claim: "Exercise 3.2.9 gives uniform CDF convergence; Theorems 3.2.9 and 4.6.3 support weak tests and first-moment truncation; Section 6.2 gives almost-everywhere ergodic averages with limit equal to the mean; Section 6.4 gives stationary subadditive-array limits."
 strata_touched:
   - D5/S3/Analytic/Probability/UniformCDFConvergence
   - D5/S3/Analytic/Probability/FirstMomentWeakLimit
   - D5/S3/Analytic/Probability/BirkhoffPointwise
+  - D5/S3/Analytic/Probability/KingmanEstimates
+  - D5/S3/Analytic/Probability/KingmanPointwise
 license: citation-only
 triage: anchor
 ---
@@ -103,3 +105,56 @@ Concrete symbolic frequencies, context-dependent compositions,
 joint-product moments, and entropy-production rates require their own
 law, ergodicity, observable, integral and orbit-identification arguments.
 The generic autonomous theorem does not supply those bridges.
+
+## Nonnegative subadditive cocycles
+
+Section 6.4, Theorem 6.4.1 on printed page 343, with proof on printed
+pages 344–347, treats stationary subadditive arrays. The book's formulation
+also includes convergence in L1 and an infimum identity for the limiting
+mean. Those conclusions require their own proof and are not part of the
+local theorem.
+
+`KingmanPointwise.kingman_subadditive` quantifies over every measurable
+carrier and every finite measure, including zero. If T preserves that
+measure, each real X(n) is integrable and nonnegative almost everywhere,
+and X(m+n) is at most X(m)+X(n) composed with the mth iterate almost
+everywhere, there exists an integrable real g, invariant almost everywhere,
+to which X(n)/n converges almost everywhere. The original X(0) is arbitrary;
+real division at zero is totalized. No pointwise measurability, probability,
+positive total mass, ergodicity, invertibility or countability hypothesis
+is added. The limit is neither asserted constant nor identified by an
+infimum formula.
+
+The proof uses Steele's adaptive greedy blocks, a stationary-tail estimate,
+Fatou's lemma and the maximal ergodic inequality. Nonzero finite mass is
+normalized internally; measurable representatives and a forward-invariant
+full-measure set yield the everywhere cocycle. Only its internal zeroth
+term is reset. The same g transfers back to the original measure without
+scaling. Concrete stationary arrays require a realization by a common
+measure-preserving shift and an identification with its cocycle. Matrix
+products with signed logarithms require a signed reduction; first-passage
+applications additionally need the actual environment, translation,
+integrability and path correspondence. The generic theorem alone does
+not establish these applications or their constant, L1 or infimum claims.
+
+The classical sources include J. F. C. Kingman, “The ergodic theory of
+subadditive stochastic processes,” Journal of the Royal Statistical Society
+Series B 30 (1968), 499–510, DOI
+[10.1111/j.2517-6161.1968.tb00749.x](https://doi.org/10.1111/j.2517-6161.1968.tb00749.x),
+and J. M. Steele, “Kingman's subadditive ergodic theorem,” Annales de
+l'Institut Henri Poincaré, Probabilités et Statistiques 25 (1989), 93–98.
+
+The separate Lean code source is
+[facebookresearch/atlas-lean, MathlibExt/Dynamics/Ergodic/Kingman.lean](https://github.com/facebookresearch/atlas-lean/blob/a60759060b5616df0d5775b42da4d337719feb32/MathlibExt/Dynamics/Ergodic/Kingman.lean),
+revision `a60759060b5616df0d5775b42da4d337719feb32`, SHA-256
+`d7363bfb4d33d73517b93b75e361de0a8e0363f32350e25dd5ce1f6a21b2782c`.
+The neighboring `KingmanSigned.exists_invariant_limit_of_nonneg` supplies
+the broad finite-measure specification; the signed proof is not imported.
+Both local modules retain the Meta Platforms copyright and refer to the
+complete [supplier license](../../docs/reports/lovasz-suppliers/atlas-LICENSE.txt),
+including its intended-use preface, SHA-256
+`fc78801eadec58b04e0d5cabe735eb6808e23f47b0cb92b89b55792019b54131`.
+This is a credited source adaptation with no originality claim. Matching
+toolchain and Mathlib revisions do not themselves admit an external package.
+The port is replaced by a direct invocation when an equivalent declaration
+is present in the host-pinned Mathlib.
