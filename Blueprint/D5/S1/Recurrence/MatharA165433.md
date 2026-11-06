@@ -34,6 +34,10 @@ $$\forall n \in \mathbb{N},\; 3 \le n \Rightarrow (2 \cdot \operatorname{a}\left
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/MatharA165433.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mathar-2011-a165433-recurrence` (proved) by `D5/S1/Recurrence/MatharA165433.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mathar-2011-a165433-recurrence","declaration_gid":"D5/S1/Recurrence/MatharA165433.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. J. Mathar; Paul Barry (2011). *OEIS A165433*. URL: <https://oeis.org/A165433>.
