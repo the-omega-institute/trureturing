@@ -61,6 +61,22 @@ internal sealed class TeaCoordinationSequenceDocument : IScribeDocumentDefinitio
                         + "sums are not additional conjuncts."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("residual"),
+                DeclarationHandle.Create(Module + ".residual"),
+                H("Horizontal excess beyond a hexagonal region"),
+                StatementSource.FromAuthor(Disp(
+                    All("i", Integers(), All("j", Integers(), All("p", Integers(),
+                        All("q", Integers(), Equal(
+                            LocalCall("residual", X("i"), X("j"), X("p"), X("q")),
+                            Excess(X("i"), X("j"), X("p"), X("q"))))))))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "All four parameters are integers. The maximum measures the violations of "
+                        + "the six bounds −q ≤ i,j,i+j ≤ p, together with zero. At p=q=0 it is "
+                        + "the triangular lattice radius; at p=0 and q=1 its three negative "
+                        + "coordinate bounds are shifted by one."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("result"),
                 DeclarationHandle.Create(Module + ".result"),
                 H("The coordination formulas hold at every positive radius"),
