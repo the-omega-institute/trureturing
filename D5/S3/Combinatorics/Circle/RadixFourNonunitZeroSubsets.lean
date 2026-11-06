@@ -70,7 +70,7 @@ private theorem digitSum_three (n : ℕ) :
 private theorem digitSum_pos {n : ℕ} (hn : 0 < n) : 0 < digitSum n := by
   have h := Finset.single_le_sum (f := fun j : Fin n => (4 : ℕ) ^ j.val)
     (fun _ _ => Nat.zero_le _) (Finset.mem_univ (⟨0, hn⟩ : Fin n))
-  simpa only [Fin.val_mk, pow_zero] using (lt_of_lt_of_le Nat.zero_lt_one h)
+  simpa only [Fin.val_mk, pow_zero, digitSum] using (lt_of_lt_of_le Nat.zero_lt_one h)
 
 private theorem modulus_three (n : ℕ) :
     modulus (2 * n) = 3 * (digitSum n : ℤ) := by
@@ -92,10 +92,11 @@ private theorem rotated_bounds {n : ℕ} (B : Finset (Fin n)) (hB : B.Nonempty)
   classical
   constructor
   · obtain ⟨j, hj⟩ := hB
-    exact lt_of_lt_of_le (pow_pos (by decide : 0 < (4 : ℕ)) _)
-      (Finset.single_le_sum (fun _ _ => Nat.zero_le _) hj)
+    exact lt_of_lt_of_le (pow_pos (by decide : 0 < (4 : ℕ)) (finCycle i j).val)
+      (Finset.single_le_sum (f := fun j : Fin n => (4 : ℕ) ^ (finCycle i j).val)
+        (fun _ _ => Nat.zero_le _) hj)
   · have hperm : (∑ j : Fin n, 4 ^ (finCycle i j).val) = digitSum n :=
-      (finCycle i).sum_comp (fun j => (4 : ℕ) ^ j.val)
+      Equiv.sum_comp (finCycle i) (fun j : Fin n => (4 : ℕ) ^ j.val)
     rw [← hperm]
     exact Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ B)
       (fun _ _ _ => Nat.zero_le _)
@@ -107,8 +108,7 @@ private theorem power_rotation {n : ℕ} (i j : Fin n) :
   have hj := j.isLt
   rw [finCycle_apply, Fin.val_add]
   by_cases h : j.val + i.val < n
-  · rw [Nat.mod_eq_of_lt h, pow_add]
-    rw [mul_comm]
+  · rw [Nat.mod_eq_of_lt h, pow_add, mul_comm (4 ^ j.val) (4 ^ i.val)]
   · have hmod : (j.val + i.val) % n = j.val + i.val - n := by
       rw [Nat.mod_eq_sub_mod (by omega), Nat.mod_eq_of_lt (by omega)]
     rw [hmod]
@@ -170,7 +170,7 @@ private theorem rotated_trace {n : ℕ} (B : Finset (Fin n)) :
   rw [Finset.sum_comm]
   have hcol (j : Fin n) : (∑ i : Fin n, 4 ^ (finCycle i j).val) = digitSum n := by
     simpa only [finCycle_apply, add_comm, digitSum] using
-      (finCycle j).sum_comp (fun i => (4 : ℕ) ^ i.val)
+      Equiv.sum_comp (finCycle j) (fun i : Fin n => (4 : ℕ) ^ i.val)
   simp_rw [hcol]
   simp
 
@@ -307,14 +307,14 @@ theorem seed21_gcd (n : ℕ) :
     Nat.gcd 21 (2 ^ (2 * n) - 1) = if 3 ∣ n then 21 else 3 := by
   have hpow : (2 : ℕ) ^ (2 * n) - 1 = 4 ^ n - 1 := by rw [pow_four]
   by_cases h3 : 3 ∣ n
-  · rw [if_pos h3]
+  · rw [ite_eq_left h3]
     apply Nat.dvd_antisymm (Nat.gcd_dvd_left _ _)
     apply Nat.dvd_gcd (dvd_refl 21)
     have h63 : (4 : ℕ) ^ 3 - 1 ∣ 4 ^ n - 1 :=
       Nat.pow_sub_one_dvd_pow_sub_one 4 h3
     rw [hpow]
     exact (show 21 ∣ 4 ^ 3 - 1 by norm_num).trans h63
-  · rw [if_neg h3]
+  · rw [ite_eq_right h3]
     have hcop : Nat.gcd 3 n = 1 :=
       (Nat.Prime.coprime_iff_not_dvd (by decide : Nat.Prime 3)).mpr h3
     have hd63 : Nat.gcd 21 (2 ^ (2 * n) - 1) ∣ 4 ^ 3 - 1 :=
@@ -334,9 +334,18 @@ private def firstThree (n : ℕ) (hn : 3 ≤ n) : Finset (Fin n) :=
 
 private theorem firstThree_seed (n : ℕ) (hn : 3 ≤ n) :
     radixSeed (firstThree n hn) = 21 := by
-  have h01 : (⟨0, by omega⟩ : Fin n) ≠ ⟨1, by omega⟩ := by decide
-  have h02 : (⟨0, by omega⟩ : Fin n) ≠ ⟨2, by omega⟩ := by decide
-  have h12 : (⟨1, by omega⟩ : Fin n) ≠ ⟨2, by omega⟩ := by decide
+  have h01 : (⟨0, by omega⟩ : Fin n) ≠ ⟨1, by omega⟩ := by
+    intro h
+    have := congrArg Fin.val h
+    omega
+  have h02 : (⟨0, by omega⟩ : Fin n) ≠ ⟨2, by omega⟩ := by
+    intro h
+    have := congrArg Fin.val h
+    omega
+  have h12 : (⟨1, by omega⟩ : Fin n) ≠ ⟨2, by omega⟩ := by
+    intro h
+    have := congrArg Fin.val h
+    omega
   norm_num [radixSeed, firstThree, h01, h02, h12]
 
 /-- An infinite parameter family with the same exact gcd and actual modular seed
@@ -366,12 +375,21 @@ theorem seed21_separation (n : ℕ) (hn : 3 ≤ n) (h3 : ¬3 ∣ n) :
   have hB : B.Nonempty := by simp [B, firstThree]
   have hseed : radixSeed B = 21 := firstThree_seed n hn
   have hg : Nat.gcd 21 (2 ^ (2 * n) - 1) = 3 := by
-    rw [seed21_gcd, if_neg h3]
+    rw [seed21_gcd, ite_eq_right h3]
   have hgB : Nat.gcd (radixSeed B) (2 ^ (2 * n) - 1) = 3 := by rwa [hseed]
   have hcB : B.card = 3 := by
-    have h01 : (⟨0, by omega⟩ : Fin n) ≠ ⟨1, by omega⟩ := by decide
-    have h02 : (⟨0, by omega⟩ : Fin n) ≠ ⟨2, by omega⟩ := by decide
-    have h12 : (⟨1, by omega⟩ : Fin n) ≠ ⟨2, by omega⟩ := by decide
+    have h01 : (⟨0, by omega⟩ : Fin n) ≠ ⟨1, by omega⟩ := by
+      intro h
+      have := congrArg Fin.val h
+      omega
+    have h02 : (⟨0, by omega⟩ : Fin n) ≠ ⟨2, by omega⟩ := by
+      intro h
+      have := congrArg Fin.val h
+      omega
+    have h12 : (⟨1, by omega⟩ : Fin n) ≠ ⟨2, by omega⟩ := by
+      intro h
+      have := congrArg Fin.val h
+      omega
     simp [B, firstThree, h01, h02, h12]
   have hN : 0 < (2 : ℕ) ^ (2 * n) - 1 := by
     have hp := digitSum_pos (by omega : 0 < n)
@@ -385,9 +403,10 @@ theorem seed21_separation (n : ℕ) (hn : 3 ≤ n) (h3 : ¬3 ∣ n) :
       Function.minimalPeriod
         (fun x : ZMod (2 ^ (2 * n) - 1) => 2 * x) (t : ZMod (2 ^ (2 * n) - 1)) =
         2 * n := by
-    rw [D5.S3.Arith.Congruence.NonunitMultiplicationPeriod.minimalPeriod_mul_natCast
-      (2 ^ (2 * n) - 1) 2 t hN, ht]
-    exact horder
+    have hp := D5.S3.Arith.Congruence.NonunitMultiplicationPeriod.minimalPeriod_mul_natCast
+      (2 ^ (2 * n) - 1) 2 t hN
+    rw [ht] at hp
+    simpa only [Nat.cast_ofNat] using hp.trans horder
   refine ⟨hg, gcd_three_seed n, ?_, ?_, ?_, ?_, ?_,
     hperiod 3 (gcd_three_seed n), hperiod 21 hg⟩
   · intro i
