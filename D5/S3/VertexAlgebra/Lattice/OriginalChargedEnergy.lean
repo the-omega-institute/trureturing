@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Original integer charged fields and the canonical matter Hermitian norm. -/
+   digest: Uniform polynomial energy bounds for the original neutral and charged lattice fields. -/
 
 import D5.S3.VertexAlgebra.SourceBPZ.TransverseHermitian
 import D5.S3.VertexAlgebra.SourceBPZ.ChargedRawTranspose
@@ -15,7 +15,24 @@ import D5.S3.VertexAlgebra.Energy.LatticeCoefficientEnergy
 import D5.S3.VertexAlgebra.LatticeActualConformalState
 import Mathlib.Data.Nat.Choose.Bounds
 
-/-! Canonical integer-frequency prerequisites for the original charged fields. -/
+/-! Uniform analytic estimates on the original finite charge/oscillator carrier.
+
+The new estimates use the full integer-frequency factorial form after inverse
+colour substitution, including interference between different original colours.
+The literal two-branch normal-product recursion gives finite general-mode bounds;
+the intervening negative-current strip has zero derivative multiplier. No current
+factors are commuted. Exact orthogonal energy recombination uses the actual
+Sugawara zero mode with both complex inverse laws.
+
+proof_shape: neutral_energy_bound: content; charged_energy_bound: content
+admission_basis: escape-witness
+escape_witness: The mixed-direction finite Fock inequality and the uniform
+finite normal-product word estimate lie on the neutral and charged proof paths.
+The charged theorem additionally consumes the original positive quadratic
+identity and the opposite-charge adjoint at the actual shifted output energy.
+These are analytic energy bounds, not a construction of smeared closed fields,
+strong locality, string theory or an AdS/CFT correspondence.
+-/
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -110,7 +127,7 @@ private theorem original_ground_pairing (hD : (gramReal D).PosDef) (a b : Charge
     simpa [FactorialFockMetric.weight] using h
   simpa only [delta, map_one, hi] using he
 
-private def normD (v : Carrier D) : ℝ := Real.sqrt (Hm (D := D) v v).re
+def normD (v : Carrier D) : ℝ := Real.sqrt (Hm (D := D) v v).re
 
 private theorem normD_sq (hD : (gramReal D).PosDef) (v : Carrier D) :
     normD v ^ 2 = (Hm (D := D) v v).re :=
@@ -1385,6 +1402,360 @@ private theorem original_neutral_grade_le (hD : (gramReal D).PosDef)
     _ ≤ (1+∑ e ∈ p.support, ‖p.coeff e‖ * wordConstant (occurrences D e))*B :=
       mul_le_mul_of_nonneg_right (by linarith) hB
     _ = _ := by dsimp [neutralConstant, B]; ring
+
+private theorem Hm_cauchy_schwarz (hD : (gramReal D).PosDef) (u v : Carrier D) :
+    ‖Hm u v‖ ≤ normD u * normD v := by
+  letI := originalCore hD
+  exact InnerProductSpace.Core.norm_inner_le_norm (𝕜 := ℂ) u v
+
+private theorem Hm_grade_orthogonal
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H*gramComplex D=1) (hGH : gramComplex D*H=1)
+    (E F : ℤ) (hEF : E ≠ F) (u v : Carrier D)
+    (hu : u ∈ grade D E) (hv : v ∈ grade D F) : Hm u v = 0 := by
+  have he := (actualL0_eigen_iff_grade D H hHG hGH E u).mpr hu
+  have hf := (actualL0_eigen_iff_grade D H hHG hGH F v).mpr hv
+  have hh := Hm_sugawaraMode H hHG hGH 0 u v
+  rw [neg_zero, he, hf, Hm_smul_left, Hm_smul_right] at hh
+  simp only [map_intCast] at hh
+  have hz : ((E : ℂ)-(F : ℂ))*Hm u v=0 := by linear_combination hh
+  exact (mul_eq_zero.mp hz).resolve_left (sub_ne_zero.mpr (by exact_mod_cast hEF))
+
+private theorem normD_orthogonal_sum (hD : (gramReal D).PosDef)
+    {ι : Type} (s : Finset ι) (f : ι → Carrier D)
+    (hf : ∀ i ∈ s, ∀ j ∈ s, i ≠ j → Hm (f i) (f j) = 0) :
+    normD (∑ i ∈ s, f i)^2 = ∑ i ∈ s, normD (f i)^2 := by
+  classical
+  rw [normD_sq hD, Hm_finset_sum_left, Complex.re_sum]
+  apply Finset.sum_congr rfl
+  intro i hi
+  rw [Hm_finset_sum_right, normD_sq hD]
+  congr 1
+  apply Finset.sum_eq_single i
+  · intro j hj hji
+    exact hf i hi j hj (Ne.symm hji)
+  · exact fun hn => (hn hi).elim
+
+private theorem energy_power_grade
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H*gramComplex D=1) (hGH : gramComplex D*H=1)
+    (E : ℤ) (v : Carrier D) (hv : v ∈ grade D E) (N : ℕ) :
+    ((1+sugawaraMode D H 0)^N) v = ((E : ℂ)+1)^N • v := by
+  have he := (actualL0_eigen_iff_grade D H hHG hGH E v).mpr hv
+  have hs : (1+sugawaraMode D H 0) v = ((E : ℂ)+1) • v := by
+    simp only [LinearMap.add_apply, Module.End.one_apply, he, add_smul, one_smul]
+    exact add_comm _ _
+  induction N with
+  | zero => simp
+  | succ N ih =>
+    rw [pow_succ', Module.End.mul_apply, ih, map_smul, hs, smul_smul, pow_succ']
+    congr 1
+    exact mul_comm _ _
+
+private theorem stateEnergies_nonneg (hD : (gramReal D).PosDef)
+    (v : Carrier D) (E : ℤ) (hE : E ∈ stateEnergies D v) : 0 ≤ E := by
+  obtain ⟨a,ha,rfl⟩ := Finset.mem_image.mp hE
+  have hn := chargeEnergy_nonneg D hD a.1
+  dsimp [energy]
+  omega
+
+/-- Orthogonal finite energy recombination for the actual energy operator. -/
+private theorem energy_bound_of_grades (hD : (gramReal D).PosDef)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H*gramComplex D=1) (hGH : gramComplex D*H=1)
+    (T : Module.End ℂ (Carrier D)) (shift : ℤ) (K : ℝ) (hK : 0 ≤ K) (N : ℕ)
+    (hT : ∀ (E : ℤ) (v : Carrier D), v ∈ grade D E → T v ∈ grade D (E+shift))
+    (hbound : ∀ (E : ℕ) (v : Carrier D), v ∈ grade D (E : ℤ) →
+      normD (T v) ≤ K*((E : ℝ)+1)^N*normD v) (v : Carrier D) :
+    normD (T v) ≤ K*normD (((1+sugawaraMode D H 0)^N) v) := by
+  classical
+  let s := stateEnergies D v
+  let f := fun E => gradeProjection D E v
+  let R := (1+sugawaraMode D H 0)^N
+  have hf (E : ℤ) : f E ∈ grade D E := gradeProjection_mem D E v
+  have hr (E : ℤ) : R (f E) ∈ grade D E := by
+    rw [energy_power_grade H hHG hGH E _ (hf E) N]
+    exact (grade D E).smul_mem _ (hf E)
+  have hs : ∑ E ∈ s, f E = v := sum_gradeProjections D v
+  have hsumT : normD (T v)^2 = ∑ E ∈ s, normD (T (f E))^2 := by
+    calc
+      _ = normD (∑ E ∈ s, T (f E))^2 := by rw [← map_sum, hs]
+      _ = _ := normD_orthogonal_sum hD s _ (by
+        intro E hE F hF hEF
+        exact Hm_grade_orthogonal H hHG hGH (E+shift) (F+shift)
+          (by omega) _ _ (hT E _ (hf E)) (hT F _ (hf F)))
+  have hsumR : normD (R v)^2 = ∑ E ∈ s, normD (R (f E))^2 := by
+    calc
+      _ = normD (∑ E ∈ s, R (f E))^2 := by rw [← map_sum, hs]
+      _ = _ := normD_orthogonal_sum hD s _ (by
+        intro E hE F hF hEF
+        exact Hm_grade_orthogonal H hHG hGH E F hEF _ _ (hr E) (hr F))
+  have hb (E : ℤ) (hE : E ∈ s) : normD (T (f E)) ≤ K*normD (R (f E)) := by
+    have hn := stateEnergies_nonneg hD v E hE
+    have hc : (E.toNat : ℤ)=E := Int.toNat_of_nonneg hn
+    have h := hbound E.toNat (f E) (by rw [hc]; exact hf E)
+    have hnormbase : ‖((E : ℂ)+1)‖ = (E.toNat : ℝ)+1 := by
+      have hc' : ((E : ℂ)+1)=((E.toNat+1 : ℕ) : ℂ) := by
+        rw [← hc]
+        push_cast
+        rfl
+      rw [hc', Complex.norm_natCast, Nat.cast_add, Nat.cast_one]
+    have hnorm : normD (R (f E)) = ((E.toNat : ℝ)+1)^N*normD (f E) := by
+      rw [energy_power_grade H hHG hGH E _ (hf E) N, normD_smul hD, norm_pow, hnormbase]
+    rw [hnorm]
+    simpa only [mul_assoc] using h
+  have hsq : normD (T v)^2 ≤ (K*normD (R v))^2 := by
+    rw [hsumT, mul_pow, hsumR, Finset.mul_sum]
+    apply Finset.sum_le_sum
+    intro E hE
+    have hh : normD (T (f E))^2 ≤ (K*normD (R (f E)))^2 :=
+      (sq_le_sq₀ (Real.sqrt_nonneg _)
+      (mul_nonneg hK (Real.sqrt_nonneg _))).mpr (hb E hE)
+    rw [mul_pow] at hh
+    exact hh
+  exact (sq_le_sq₀ (Real.sqrt_nonneg _) (mul_nonneg hK (Real.sqrt_nonneg _))).mp hsq
+
+private theorem neutral_state_grade (p : Oscillator D) (w : ℕ)
+    (hp : MvPolynomial.IsWeightedHomogeneous (fun x : Index D => x.2+1) p w) :
+    Finsupp.single (0 : Charge D) p ∈ grade D (w : ℤ) := by
+  rw [mem_grade_iff]
+  intro a ha
+  by_cases hb : (0 : Charge D)=a.1
+  · rw [Finsupp.single_apply, if_pos hb]
+    apply hp.coeff_eq_zero a.2
+    intro he
+    apply ha
+    simp only [energy, ← hb, chargeEnergy_zero, zero_add, oscillatorEnergy]
+    exact_mod_cast he
+  · simp [Finsupp.single_apply, hb]
+
+private theorem original_neutral_energy_le (hD : (gramReal D).PosDef)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H*gramComplex D=1) (hGH : gramComplex D*H=1)
+    (p : Oscillator D) (w : ℕ)
+    (hp : MvPolynomial.IsWeightedHomogeneous (fun x : Index D => x.2+1) p w)
+    (v : Carrier D) :
+    normD (((Y D (Finsupp.single 0 p))[[(w : ℤ)-1]]) v) ≤
+      neutralConstant p * normD (((1+sugawaraMode D H 0)^(2*w)) v) := by
+  apply energy_bound_of_grades hD H hHG hGH _ 0 (neutralConstant p)
+    (neutralConstant_pos p).le (2*w) _ _ v
+  · intro E u hu
+    have hg := LatticeCoefficientEnergy.actual_mode_grade D w E ((w : ℤ)-1)
+      (Finsupp.single 0 p) u (neutral_state_grade p w hp) hu
+    convert hg using 1 <;> congr 1 <;> omega
+  · exact fun E u hu => original_neutral_grade_le hD p w hp E u hu
+
+private def chargedConstant (a : Charge D) : ℝ :=
+  Real.sqrt (neutralConstant (creationCoeff D a (2*chargeEnergy D a)))
+
+private theorem chargedConstant_pos (a : Charge D) : 0 < chargedConstant a :=
+  Real.sqrt_pos.mpr (neutralConstant_pos _)
+
+private theorem charged_mode_grade (a : Charge D) (E m : ℤ)
+    (v : Carrier D) (hv : v ∈ grade D E) :
+    ((actualField D a)[[m+chargeEnergy D a-1]]) v ∈ grade D (E-m) := by
+  have hs : Finsupp.single a (1 : Oscillator D) ∈ grade D (chargeEnergy D a) := by
+    rw [grade_eq_span]
+    apply Submodule.subset_span
+    refine ⟨(a,0), ?_, ?_⟩
+    · simp [energy, oscillatorEnergy]
+    · simp [carrierBasis_apply]
+  have hg := LatticeCoefficientEnergy.actual_mode_grade D (chargeEnergy D a) E
+    (m+chargeEnergy D a-1) (Finsupp.single a 1) v hs hv
+  rw [stateField_ground] at hg
+  convert hg using 1 <;> congr 1 <;> omega
+
+private theorem charged_positive_mode_grade_le (hD : (gramReal D).PosDef)
+    (a : Charge D) (r E : ℕ) (v : Carrier D) (hv : v ∈ grade D (E : ℤ)) :
+    normD (((actualField D a)[[r]]) v) ≤
+      chargedConstant a * ((E : ℝ)+1)^(2*(chargeEnergy D a).toNat) * normD v := by
+  let d := (chargeEnergy D a).toNat
+  have hd : (d : ℤ)=chargeEnergy D a := Int.toNat_of_nonneg (chargeEnergy_nonneg D hD a)
+  have hw : (2*chargeEnergy D a).toNat=2*d := by omega
+  have hp : MvPolynomial.IsWeightedHomogeneous (fun x : Index D => x.2+1)
+      (creationCoeff D a (2*chargeEnergy D a)) (2*d) := by
+    intro e he
+    have hh := (actual_creation_coefficient_transport D a a).1 (2*chargeEnergy D a) he
+    simpa only [Finsupp.weight_apply, hw, LatticeGeneratingFieldLocality.oscillatorWeight]
+      using hh
+  have hz := original_neutral_grade_le hD _ (2*d) hp E v hv
+  have hn : ((Y D (neutralState a))[[2*chargeEnergy D a-1]]) v =
+      ((Y D (Finsupp.single 0 (creationCoeff D a (2*chargeEnergy D a))))
+        [[((2*d : ℕ) : ℤ)-1]]) v := by
+    have hi : 2*chargeEnergy D a-1=((2*d : ℕ) : ℤ)-1 := by push_cast; omega
+    rw [neutralState_original, hi]
+  have hq := charged_annihilating_square_le hD a r v
+  rw [hn] at hq
+  have hcs := (Complex.re_le_norm _).trans (Hm_cauchy_schwarz hD v
+    (((Y D (Finsupp.single 0 (creationCoeff D a (2*chargeEnergy D a))))
+      [[((2*d : ℕ) : ℤ)-1]]) v))
+  have hnormv : 0 ≤ normD v := Real.sqrt_nonneg _
+  have hs : normD (((actualField D a)[[r]]) v)^2 ≤
+      normD v * (neutralConstant (creationCoeff D a (2*chargeEnergy D a)) *
+        ((E : ℝ)+1)^(2*(2*d)) * normD v) :=
+    hq.trans (hcs.trans (mul_le_mul_of_nonneg_left hz hnormv))
+  have hconst : chargedConstant a ^ 2 =
+      neutralConstant (creationCoeff D a (2*chargeEnergy D a)) :=
+    Real.sq_sqrt (neutralConstant_pos _).le
+  have hsq : (chargedConstant a * ((E : ℝ)+1)^(2*d) * normD v)^2 =
+      normD v * (neutralConstant (creationCoeff D a (2*chargeEnergy D a)) *
+        ((E : ℝ)+1)^(2*(2*d)) * normD v) := by
+    rw [mul_pow, mul_pow, hconst, ← pow_mul, Nat.mul_comm (2*d) 2]
+    ring
+  exact (sq_le_sq₀ (Real.sqrt_nonneg _)
+    (mul_nonneg (mul_nonneg (chargedConstant_pos a).le (by positivity)) hnormv)).mp
+      (hs.trans_eq hsq.symm)
+
+private def totalChargedConstant (a : Charge D) : ℝ :=
+  chargedConstant a + chargedConstant (-a)
+
+private theorem totalChargedConstant_pos (a : Charge D) : 0 < totalChargedConstant a :=
+  add_pos (chargedConstant_pos a) (chargedConstant_pos (-a))
+
+private theorem charged_all_modes_grade_le (hD : (gramReal D).PosDef)
+    (a : Charge D) (ha : a ≠ 0) (m : ℤ) (E : ℕ) (v : Carrier D)
+    (hv : v ∈ grade D (E : ℤ)) :
+    normD (((actualField D a)[[m+chargeEnergy D a-1]]) v) ≤
+      totalChargedConstant a * (1+|(m : ℝ)|)^(2*(chargeEnergy D a).toNat) *
+        ((E : ℝ)+1)^(2*(chargeEnergy D a).toNat) * normD v := by
+  let d := (chargeEnergy D a).toNat
+  let N := 2*d
+  let C := totalChargedConstant a
+  have hn : 0 ≤ chargeEnergy D a := chargeEnergy_nonneg D hD a
+  have hd : (d : ℤ)=chargeEnergy D a := Int.toNat_of_nonneg hn
+  have hpos : 0 < chargeEnergy D a := by
+    have hp := (charged_weight hD a ha).1
+    omega
+  have hC : 0 ≤ C := (totalChargedConstant_pos a).le
+  have hCa : chargedConstant a ≤ C := le_add_of_nonneg_right (chargedConstant_pos (-a)).le
+  have hCb : chargedConstant (-a) ≤ C := le_add_of_nonneg_left (chargedConstant_pos a).le
+  have hvn : 0 ≤ normD v := Real.sqrt_nonneg _
+  by_cases hm : 0 ≤ m+chargeEnergy D a-1
+  · have hr : (((m+chargeEnergy D a-1).toNat : ℕ) : ℤ)=m+chargeEnergy D a-1 :=
+      Int.toNat_of_nonneg hm
+    have hh := charged_positive_mode_grade_le hD a (m+chargeEnergy D a-1).toNat E v hv
+    rw [hr] at hh
+    have hmode : 1 ≤ (1+|(m : ℝ)|)^N :=
+      one_le_pow₀ (by linarith [abs_nonneg (m : ℝ)])
+    have hc : chargedConstant a ≤ C*(1+|(m : ℝ)|)^N :=
+      hCa.trans (by nlinarith [mul_nonneg hC (sub_nonneg.mpr hmode)])
+    exact hh.trans (mul_le_mul_of_nonneg_right
+      (mul_le_mul_of_nonneg_right hc (by positivity)) hvn)
+  · have hm' : m ≤ -chargeEnergy D a := by omega
+    let u := ((actualField D a)[[m+chargeEnergy D a-1]]) v
+    let F := ((E : ℤ)-m).toNat
+    have hF : (F : ℤ)=(E : ℤ)-m := Int.toNat_of_nonneg (by omega)
+    have hu : u ∈ grade D (F : ℤ) := by
+      rw [hF]
+      exact charged_mode_grade a E m v hv
+    have hneg : chargeEnergy D (-a)=chargeEnergy D a := by
+      simp [chargeEnergy, bilinear_neg_neg]
+    have hj : 0 ≤ -m+chargeEnergy D a-1 := by omega
+    have hj' : (((-m+chargeEnergy D a-1).toNat : ℕ) : ℤ)=
+        -m+chargeEnergy D a-1 := Int.toNat_of_nonneg hj
+    have hb : normD (((actualField D (-a))[[-m+chargeEnergy D a-1]]) u) ≤
+        chargedConstant (-a)*((F : ℝ)+1)^N*normD u := by
+      simpa only [hj', hneg] using
+        charged_positive_mode_grade_le hD (-a) (-m+chargeEnergy D a-1).toNat F u hu
+    have hphase : ‖paritySign (chargeEnergy D a)‖=1 := by
+      unfold paritySign
+      split_ifs <;> simp
+    have hdual : normD u ≤ chargedConstant (-a)*((F : ℝ)+1)^N*normD v := by
+      by_cases hz : normD u=0
+      · rw [hz]
+        exact mul_nonneg (mul_nonneg (chargedConstant_pos (-a)).le (by positivity)) hvn
+      have hup : 0 < normD u := lt_of_le_of_ne (Real.sqrt_nonneg _) (Ne.symm hz)
+      have hs : normD u^2 ≤ normD v *
+          normD (((actualField D (-a))[[-m+chargeEnergy D a-1]]) u) := by
+        rw [normD_sq hD]
+        calc
+          _ = (Hm v (paritySign (chargeEnergy D a) •
+              (((actualField D (-a))[[-m+chargeEnergy D a-1]]) u))).re :=
+            congrArg Complex.re (Hm_charged_circle a m v u)
+          _ ≤ normD v * normD (paritySign (chargeEnergy D a) •
+              (((actualField D (-a))[[-m+chargeEnergy D a-1]]) u)) :=
+            (Complex.re_le_norm _).trans (Hm_cauchy_schwarz hD _ _)
+          _ = _ := by rw [normD_smul hD, hphase, one_mul]
+      have hc : normD u * normD u ≤
+          (chargedConstant (-a)*((F : ℝ)+1)^N*normD v)*normD u := by
+        calc
+          _ = normD u^2 := (pow_two _).symm
+          _ ≤ normD v *
+              normD (((actualField D (-a))[[-m+chargeEnergy D a-1]]) u) := hs
+          _ ≤ normD v * (chargedConstant (-a)*((F : ℝ)+1)^N*normD u) :=
+            mul_le_mul_of_nonneg_left hb hvn
+          _ = _ := by ring
+      exact (mul_le_mul_iff_left₀ hup).mp hc
+    have hFr : (F : ℝ)=(E : ℝ)-(m : ℝ) := by exact_mod_cast hF
+    have hmr : (m : ℝ) ≤ 0 := by exact_mod_cast (show m ≤ 0 by omega)
+    have hscale : (F : ℝ)+1 ≤ (1+|(m : ℝ)|)*((E : ℝ)+1) := by
+      rw [hFr, abs_of_nonpos hmr]
+      nlinarith [mul_nonneg (Nat.cast_nonneg (α := ℝ) E) (neg_nonneg.mpr hmr)]
+    have hpow := pow_le_pow_left₀ (by positivity : 0 ≤ (F : ℝ)+1) hscale N
+    calc
+      _ ≤ chargedConstant (-a)*((F : ℝ)+1)^N*normD v := hdual
+      _ ≤ C*((1+|(m : ℝ)|)*((E : ℝ)+1))^N*normD v :=
+        mul_le_mul_of_nonneg_right (mul_le_mul hCb hpow (by positivity) hC) hvn
+      _ = _ := by rw [mul_pow]; ring
+
+private theorem original_charged_energy_le (hD : (gramReal D).PosDef)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H*gramComplex D=1) (hGH : gramComplex D*H=1)
+    (a : Charge D) (ha : a ≠ 0) (m : ℤ) (v : Carrier D) :
+    let d := (chargeEnergy D a).toNat
+    normD (((actualField D a)[[m+(d : ℤ)-1]]) v) ≤
+      totalChargedConstant a * (1+|(m : ℝ)|)^(2*d) *
+        normD (((1+sugawaraMode D H 0)^(2*d)) v) := by
+  dsimp only
+  have hd : ((chargeEnergy D a).toNat : ℤ)=chargeEnergy D a :=
+    Int.toNat_of_nonneg (chargeEnergy_nonneg D hD a)
+  rw [hd]
+  apply energy_bound_of_grades hD H hHG hGH _ (-m)
+    (totalChargedConstant a * (1+|(m : ℝ)|)^(2*(chargeEnergy D a).toNat))
+    (mul_nonneg (totalChargedConstant_pos a).le (by positivity)) _ _ _ v
+  · intro E u hu
+    simpa only [sub_eq_add_neg] using charged_mode_grade a E m u hu
+  · exact fun E u hu => charged_all_modes_grade_le hD a ha m E u hu
+
+/-- Uniform energy control for every original weighted-homogeneous neutral state. -/
+theorem neutral_energy_bound (hD : (gramReal D).PosDef)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H*gramComplex D=1) (hGH : gramComplex D*H=1)
+    (p : Oscillator D) (w : ℕ)
+    (hp : MvPolynomial.IsWeightedHomogeneous (fun x : Index D => x.2+1) p w) :
+    ∃ K : ℝ, 0 < K ∧ ∀ v : Carrier D,
+      normD (((Y D (Finsupp.single 0 p))[[(w : ℤ)-1]]) v) ≤
+        K * normD (((1+sugawaraMode D H 0)^(2*w)) v) := by
+  exact ⟨neutralConstant p, neutralConstant_pos p,
+    fun v => original_neutral_energy_le hD H hHG hGH p w hp v⟩
+
+/-- The literal charged lattice field has one polynomial energy bound in all
+integer circle modes and on all original finite mixed states. -/
+theorem charged_energy_bound (hD : (gramReal D).PosDef)
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H*gramComplex D=1) (hGH : gramComplex D*H=1)
+    (a : Charge D) (ha : a ≠ 0) :
+    let d := (chargeEnergy D a).toNat
+    ∃ C : ℝ, 0 < C ∧ ∀ (m : ℤ) (v : Carrier D),
+      normD (((actualField D a)[[m+(d : ℤ)-1]]) v) ≤
+        C * (1+|(m : ℝ)|)^(2*d) *
+          normD (((1+sugawaraMode D H 0)^(2*d)) v) := by
+  exact ⟨totalChargedConstant a, totalChargedConstant_pos a,
+    fun m v => original_charged_energy_le hD H hHG hGH a ha m v⟩
+
+#check @neutral_energy_bound
+#print axioms neutral_energy_bound
+#check @charged_energy_bound
+#print axioms charged_energy_bound
+
+#check @original_charged_energy_le
+#print axioms original_charged_energy_le
+
+#check @charged_positive_mode_grade_le
+#print axioms charged_positive_mode_grade_le
+
+#check @original_neutral_energy_le
+#print axioms original_neutral_energy_le
 
 #check @original_neutral_grade_le
 #print axioms original_neutral_grade_le
