@@ -211,7 +211,7 @@ class RefRecovery:
 
     def check(self, wanted):
         preservation, _ = worktree_modules()
-        from worktree_protocol import git_environment, scope_fds
+        from worktree_protocol import git_environment
         refs = preservation.git(self.repository, "for-each-ref", "--format=%(refname) %(objectname)").stdout
         if refs != self.refs:
             # Peel snapshot OIDs, so a moving ref cannot substitute another root.
@@ -250,7 +250,7 @@ class RefRecovery:
                 subprocess.run(["git", "--no-replace-objects", "-C", str(self.repository), "cat-file", "--batch"],
                                input=b"\n".join(wanted_blobs) + b"\n", stdout=blobs,
                                stderr=subprocess.PIPE, check=True, timeout=60,
-                               env=git_environment(), pass_fds=scope_fds())
+                               env=git_environment())
                 blobs.seek(0)
                 for oid in wanted_blobs:
                     header = blobs.readline().split()
@@ -1064,7 +1064,7 @@ def artifact_lakes(path, protected, worktrees, unobservable):
         yield entry, found
 
 
-def clean_worktrees(repository, base, delete, active_paths=(), working_directory=None):
+def clean_worktrees(repository, base, delete, working_directory=None):
     arguments = ["/bin/bash", str(repository / "tools/scripts/clean-lanes.sh"),
                  "--base", base, "--lanes-only"]
     if delete:
