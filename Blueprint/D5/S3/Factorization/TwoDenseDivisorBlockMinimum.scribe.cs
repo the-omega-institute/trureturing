@@ -99,7 +99,7 @@ internal sealed class TwoDenseDivisorBlockMinimumDocument : IScribeDocumentDefin
         var lower = first ? Call("headD", Call("row", uv), D(0))
             : Call("card", Call("divisors", u));
         return Disp(Seq(Forall, Sp, u, Comma, v, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))),
-            Comma, Sp, premise, Sp, Implies, Sp, Forall, Sp, F.Id("B"), Sp, In, Sp,
+            Comma, Sp, premise, Sp, Implies, Sp, Forall, Sp, F.Id("B"), Sp, InMacro, Sp,
             Call("divisorBlocks", uv), Comma, Sp, lower, Sp, Le, Sp, Call("length", F.Id("B"))));
     }
     private static Formula BlocksFormula() => Disp(Seq(
@@ -109,7 +109,7 @@ internal sealed class TwoDenseDivisorBlockMinimumDocument : IScribeDocumentDefin
     private static Formula ClaimFormula() => Disp(Seq(
         Forall, Sp, F.Id("n"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp,
         D(0), Sp, Lt, Sp, F.Id("n"), Sp, Implies, Sp,
-        Forall, Sp, F.Id("B"), Sp, In, Sp, Call("divisorBlocks", F.Id("n")), Comma, Sp,
+        Forall, Sp, F.Id("B"), Sp, InMacro, Sp, Call("divisorBlocks", F.Id("n")), Comma, Sp,
         Call("headD", Call("row", F.Id("n")), D(0)), Sp, Le, Sp,
         Call("length", F.Id("B"))));
 }
