@@ -10,7 +10,7 @@ import D5.S3.Combinatorics.Graph.TokenGraph.CutBoundRefutation
 
 /-! Exact ordinary cut scaling via finite coordinate rounding. -/
 
-open Finset
+open Finset Classical
 open scoped BigOperators
 set_option autoImplicit false
 namespace D5.S3.Combinatorics.Graph.TokenGraph.BlowupMaxCut
@@ -230,7 +230,9 @@ theorem exists_block_cut {n s : ℕ} (H : SimpleGraph (Fin n)) [DecidableRel H.A
     by_cases hi : y i = s
     · simp [T, hi]
     · have hz : y i = 0 := (hy i).resolve_right hi
-      simp [T, hi, hz]
+      have hit : i ∉ T := by
+        simpa only [T, Finset.mem_filter, Finset.mem_univ, true_and] using hi
+      simp only [if_neg hit, Nat.cast_zero, hz]
   refine ⟨T, ?_⟩
   have hc : (((blowup H s).edgeFinset.filter (CutBoundRefutation.crosses S)).card : ℤ) ≤
       ((blowup H s).edgeFinset.filter (CutBoundRefutation.crosses (liftCut s T))).card := by
