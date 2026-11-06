@@ -1173,7 +1173,7 @@ theorem localResidual_update (i : WheelInput g) (A B C D : Finset V) :
   tauto
 
 /-- The three exact ORIGINAL recursive mask choices lower the ACTUAL local
-HistoryCorners.residual cardinality by one, two and three. The masks do not delete old ghosts. -/
+residual cardinality by one, two and three. The masks do not delete old ghosts. -/
 theorem localCorner_decreases (i : WheelInput g) (A B : Finset V) (a b c : V)
     (ha : a ∈ HistoryFactors.localResidual g i A B)
     (hb : b ∈ HistoryFactors.localResidual g i A B)
@@ -1707,11 +1707,13 @@ theorem stepIntactOutput_main_faces (h : MixedHistory n G g) (i : WheelInput g)
   have hJ : Supported (insert i.e X) J := by
     rw [← r.prior_ground]
     exact corner_supported _ _ _ _
-  simpa only [stepIntactOutput, dif_pos hX,
-    HistoryIntact.changeOutput_mainPairsOf, groundOutput_mainPairsOf, X, J] using
-    HistoryIntact.intactOutput_main_faces i.width i.atLeastThree X i.e J i.labels
-      i.zero heX hX hXY hJ (priorOutput h i A B hA hB hAB old)
-      (changeOutput (linkedOutput h i A B hA hB hAB old) r.linked_readback)
+  simp only [stepIntactOutput, dif_pos hX,
+    HistoryIntact.changeOutput_mainPairsOf, groundOutput_mainPairsOf]
+  have hf := HistoryIntact.intactOutput_main_faces i.width i.atLeastThree X i.e J i.labels
+    i.zero heX hX hXY hJ (priorOutput h i A B hA hB hAB old)
+    (changeOutput (linkedOutput h i A B hA hB hAB old) r.linked_readback)
+  simp only [HistoryIntact.changeOutput_mainPairsOf, X, J] at hf
+  convert hf using 1
 
 /-- Literal core list at the actual physical intact terminal.
 The residue-zero expansion consumes the completed ORIGINAL marker readback. -/
@@ -1778,11 +1780,13 @@ theorem stepIntactOutput_core_faces (h : MixedHistory n G g) (i : WheelInput g)
   have hJ : Supported (insert i.e X) J := by
     rw [← r.prior_ground]
     exact corner_supported _ _ _ _
-  simpa only [stepIntactOutput, dif_pos hX,
-    HistoryIntact.changeOutput_corePairsOf, groundOutput_corePairsOf, X, J] using
-    HistoryIntact.intactOutput_core_faces i.width i.atLeastThree X i.e J i.labels
-      i.zero heX hX hXY hJ (priorOutput h i A B hA hB hAB old)
-      (changeOutput (linkedOutput h i A B hA hB hAB old) r.linked_readback)
+  simp only [stepIntactOutput, dif_pos hX,
+    HistoryIntact.changeOutput_corePairsOf, groundOutput_corePairsOf]
+  have hf := HistoryIntact.intactOutput_core_faces i.width i.atLeastThree X i.e J i.labels
+    i.zero heX hX hXY hJ (priorOutput h i A B hA hB hAB old)
+    (changeOutput (linkedOutput h i A B hA hB hAB old) r.linked_readback)
+  simp only [HistoryIntact.changeOutput_corePairsOf, X, J] at hf
+  convert hf using 1
 
 end IntactOriginalLists
 
@@ -1908,7 +1912,11 @@ private theorem subset_pair_cases (W : Finset V) (p q : V) (hW : W ⊆ {p,q}) :
     W = ∅ ∨ W = {p} ∨ W = {q} ∨ W = {p,q} := by
   classical
   by_cases hp : p ∈ W <;> by_cases hq : q ∈ W
-  · exact Or.inr (Or.inr (Or.inr (Finset.Subset.antisymm hW (by simp [hp,hq]))))
+  · exact Or.inr (Or.inr (Or.inr (Finset.Subset.antisymm hW (by
+      intro x hx
+      rcases (show x = p ∨ x = q by simpa using hx) with he | he
+      · exact he.symm ▸ hp
+      · exact he.symm ▸ hq))))
   · apply Or.inr
     apply Or.inl
     ext x
@@ -1987,11 +1995,25 @@ def stepNoRowsOutput (h : MixedHistory n G g) (i : WheelInput g)
           (by rw [r.interface_eq]; simp) (by rw [r.interface_eq]; simp) hpq old
   · exact stepAbsorbedNoRowsOutput h i A B hA hB hAB hrows hR old
 
+private theorem residual_singleton_erase (W : Finset V) (a : V) :
+    HistoryCorners.residual W {a} ∅ = W.erase a := by
+  ext x
+  simp only [HistoryCorners.residual, Finset.union_empty, Finset.mem_sdiff,
+    Finset.mem_singleton, Finset.mem_erase]
+  tauto
+
+private theorem residual_pair_erase (W : Finset V) (a b : V) :
+    HistoryCorners.residual W {a} {b} = (W.erase a).erase b := by
+  ext x
+  simp only [HistoryCorners.residual, Finset.mem_union, Finset.mem_sdiff,
+    Finset.mem_singleton, Finset.mem_erase]
+  tauto
+
+set_option maxHeartbeats 2000000 in
 /-- The total physical local solver. Recursive calls at the CURRENT history
 rank use only the exact original masks proved below and strictly decrease the
 cardinality of the ACTUAL remaining local ground. The external supplier ranges
 only over corners of the strictly earlier graph g. -/
-set_option maxHeartbeats 2000000 in
 def stepOutput (h : MixedHistory n G g) (i : WheelInput g)
     (A B : Finset V) (hA : A ⊆ (physicalWheelStep g i).data.ground)
     (hB : B ⊆ (physicalWheelStep g i).data.ground) (hAB : Disjoint A B)
@@ -2061,15 +2083,8 @@ def stepOutput (h : MixedHistory n G g) (i : WheelInput g)
                 (HistoryFactors.localResidual g i A B).card := by
               have he := localResidual_update i A B {a} ∅
               simp only [Finset.union_empty] at he
-              have he' : HistoryCorners.residual (HistoryFactors.localResidual g i A B) {a} ∅ =
-                  (HistoryFactors.localResidual g i A B).erase a := by
-                ext x
-                simp only [HistoryCorners.residual,Finset.mem_sdiff,Finset.mem_union,Finset.mem_singleton,
-                  Finset.notMem_empty,or_false,Finset.mem_erase]
-                tauto
-              rw [he,he']
-              have hc := Finset.card_erase_add_one ha
-              omega
+              rw [he, residual_singleton_erase]
+              exact Finset.card_erase_lt_of_mem ha
             exact stepSingletonFrom i A B hA a ha q (hq.trans hd)
               (stepOutput h i (A ∪ {a}) B hm.1 hB hdis old)
           · have hrows : ∀ d : (HistoryFactors.projectedRimRows g i A B).chords,
@@ -2126,13 +2141,7 @@ def stepOutput (h : MixedHistory n G g) (i : WheelInput g)
                   have hdec : (HistoryFactors.localResidual g i (A ∪ {a}) (B ∪ {b})).card <
                       (HistoryFactors.localResidual g i A B).card := by
                     rw [localResidual_update]
-                    have he : HistoryCorners.residual (HistoryFactors.localResidual g i A B) {a} {b} =
-                        ((HistoryFactors.localResidual g i A B).erase a).erase b := by
-                      ext x
-                      simp only [HistoryCorners.residual,Finset.mem_sdiff,Finset.mem_union,Finset.mem_singleton,
-                        Finset.mem_erase]
-                      tauto
-                    rw [he]
+                    rw [residual_pair_erase]
                     have hbE : b ∈ (HistoryFactors.localResidual g i A B).erase a :=
                       Finset.mem_erase.mpr ⟨hab.symm,hb⟩
                     have hca := Finset.card_erase_add_one haV
@@ -2165,8 +2174,10 @@ def stepOutput (h : MixedHistory n G g) (i : WheelInput g)
                     (localCorner_decreases i A B a b c haV hb hc hab hac hbc).2.2.2.2.2
                   exact stepTwoLeafFrom i A B hA a b c haV hb hc hab hac hbc d dbc hd hbcrow leaf leafb
                     (stepOutput h i (A ∪ {a,b,c}) B hm.1 hB hdis old)
-              · have hLA : HistoryFactors.localMask g i A = ∅ := by tauto
-                have hLB : HistoryFactors.localMask g i B = ∅ := by tauto
+              · have hLA : HistoryFactors.localMask g i A = ∅ :=
+                  Classical.byContradiction (fun hn => hcut (Or.inl hn))
+                have hLB : HistoryFactors.localMask g i B = ∅ :=
+                  Classical.byContradiction (fun hn => hcut (Or.inr hn))
                 exact stepIntactOutput h i A B hA hB hAB hLA hLB old
             · exact stepNoRowsOutput h i A B hA hB hAB ⟨fun d => hsome ⟨d⟩⟩ old
 termination_by (HistoryFactors.localResidual g i A B).card
