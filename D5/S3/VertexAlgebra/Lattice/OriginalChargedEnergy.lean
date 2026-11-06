@@ -11,6 +11,9 @@ import D5.S3.VertexAlgebra.SourceBPZ.ChargedRawTranspose
 import D5.S3.VertexAlgebra.LatticeActualStateFieldCalculus
 import D5.S3.VertexAlgebra.LatticeActualLZeroGrading
 import D5.S3.VertexAlgebra.Lattice.LatticeLightConeCoordinates
+import D5.S3.VertexAlgebra.Energy.LatticeCoefficientEnergy
+import D5.S3.VertexAlgebra.LatticeActualConformalState
+import Mathlib.Data.Nat.Choose.Bounds
 
 /-! Canonical integer-frequency prerequisites for the original charged fields. -/
 
@@ -948,6 +951,232 @@ private theorem original_current_energy_le (hD : (gramReal D).PosDef)
   have hy : 0 ≤ Real.sqrt (3 * (D.G i i : ℝ)) * ((M : ℝ)+1) * normD v :=
     mul_nonneg (mul_nonneg (Real.sqrt_nonneg _) (by positivity)) (Real.sqrt_nonneg _)
   exact (sq_le_sq₀ hx hy).mp (hs.trans_eq hr.symm)
+
+private def originalCore (hD : (gramReal D).PosDef) :
+    InnerProductSpace.Core ℂ (Carrier D) where
+  inner := Hm
+  conj_inner_symm x y := (Hm_hermitian x y).symm
+  re_inner_nonneg := original_nonnegative hD
+  add_left := Hm_add_left
+  smul_left x y c := Hm_smul_left c x y
+  definite x hx := by
+    by_contra hn
+    have hp := (original_positive hD hn).2
+    rw [hx] at hp
+    exact (lt_irrefl 0) hp
+
+private theorem normD_add_le (hD : (gramReal D).PosDef) (u v : Carrier D) :
+    normD (u+v) ≤ normD u + normD v := by
+  letI := originalCore hD
+  letI := InnerProductSpace.Core.toNormedAddCommGroup (𝕜 := ℂ) (F := Carrier D)
+  exact norm_add_le u v
+
+private theorem normD_smul (hD : (gramReal D).PosDef) (c : ℂ) (v : Carrier D) :
+    normD (c • v) = ‖c‖ * normD v := by
+  letI := originalCore hD
+  letI := InnerProductSpace.Core.toNormedAddCommGroup (𝕜 := ℂ) (F := Carrier D)
+  letI := InnerProductSpace.Core.toNormedSpace (𝕜 := ℂ) (F := Carrier D)
+  exact norm_smul c v
+
+private theorem normD_sum_le (hD : (gramReal D).PosDef) {ι : Type*}
+    (s : Finset ι) (f : ι → Carrier D) :
+    normD (∑ i ∈ s, f i) ≤ ∑ i ∈ s, normD (f i) := by
+  letI := originalCore hD
+  letI := InnerProductSpace.Core.toNormedAddCommGroup (𝕜 := ℂ) (F := Carrier D)
+  exact norm_sum_le s f
+
+private def wordWeight (ω : List (Index D)) : ℕ :=
+  (ω.map (fun x => x.2+1)).sum
+
+open private word_off_energy from D5.S3.VertexAlgebra.Energy.LatticeCoefficientEnergy
+open private word_charge chargeSpace from D5.S3.VertexAlgebra.Sectors.LatticeSectorIntertwiner
+open private wordMap wordCoeff from D5.S3.VertexAlgebra.Sewing.CanonicalOccupationRow
+
+private theorem word_mode_grade (ω : List (Index D)) (E n : ℤ)
+    (v : Carrier D) (hv : v ∈ grade D E) :
+    ((wordField D 0 ω)[[n]]) v ∈ grade D (E + wordWeight ω - n - 1) := by
+  classical
+  rw [grade_eq_span] at hv
+  induction hv using Submodule.span_induction with
+  | mem x hx =>
+    obtain ⟨⟨β,d⟩, he, rfl⟩ := hx
+    rw [carrierBasis_apply]
+    obtain ⟨p,hp⟩ := word_charge D 0 β ω n (MvPolynomial.monomial d 1)
+    have hsingle : ((wordField D 0 ω)[[n]])
+        (Finsupp.single β (MvPolynomial.monomial d 1)) = Finsupp.single β p := by
+      simpa using hp.symm
+    rw [mem_grade_iff]
+    intro a ha
+    by_cases hb : β = a.1
+    · have hc := word_off_energy D 0 β ω n a.2 d
+      change energy D (β,d) = E at he
+      have hw : (ω.map (fun x => (x.2+1 : ℤ))).sum = (wordWeight ω : ℤ) := by
+        simp [wordWeight, Nat.cast_list_sum, List.map_map, Function.comp_def]
+      have hh : (CanonicalOccupationSewing.level D a.2 : ℤ) ≠
+          (CanonicalOccupationSewing.level D d : ℤ) +
+            (ω.map (fun x => (x.2+1 : ℤ))).sum - n - 1 - bilinear D 0 β := by
+        simp only [bilinear, Pi.zero_apply, Int.cast_zero, zero_mul,
+          Finset.sum_const_zero, sub_zero, hw]
+        simp only [energy, hb] at he ha
+        dsimp [CanonicalOccupationSewing.level]
+        omega
+      have hz := hc hh
+      change ((((wordField D 0 ω)[[n]])
+        (Finsupp.single β (MvPolynomial.monomial d 1))) (0+β)).coeff a.2 = 0 at hz
+      simpa [hb] using hz
+    · rw [hsingle]
+      simp [Finsupp.single_apply, hb]
+  | zero => simp
+  | add x y hx hy ihx ihy =>
+    simpa only [map_add] using (grade D _).add_mem ihx ihy
+  | smul c x hx ih =>
+    simpa only [map_smul] using (grade D _).smul_mem c ih
+
+private theorem negative_grade_eq_zero (hD : (gramReal D).PosDef) (E : ℤ)
+    (hE : E < 0) (v : Carrier D) (hv : v ∈ grade D E) : v = 0 := by
+  apply (carrierCoeffEquiv D).injective
+  ext a
+  change (v a.1).coeff a.2 = 0
+  apply (mem_grade_iff D E v).mp hv a
+  have hn := chargeEnergy_nonneg D hD a.1
+  dsimp [energy]
+  omega
+
+open private derivative_modes from D5.S3.VertexAlgebra.LatticeAllStateField
+
+private theorem derivative_zero_strip (i : Fin D.rank) (r : ℕ) (m : ℤ)
+    (hm : 0 ≤ m) (hr : m < r) :
+    ((FieldNormalProduct.dividedDerivative r
+      (LatticeFiniteNegativeGeneration.neutralField D i))[[m]]) = 0 := by
+  rw [derivative_modes D (i,r)]
+  obtain ⟨q,hq⟩ := Int.eq_ofNat_of_zero_le (show 0 ≤ -m-1+(r : ℤ) by omega)
+  rw [hq, Ring.choose_natCast, Nat.choose_eq_zero_of_lt (show q < r by omega)]
+  simp
+
+private theorem current_mode_grade (i : Fin D.rank) (E m : ℤ)
+    (v : Carrier D) (hv : v ∈ grade D E) :
+    LatticeFiniteNegativeGeneration.neutralMode D i m v ∈ grade D (E-m) := by
+  have hs : LatticeActualConformalState.currentState D i ∈ grade D 1 := by
+    rw [grade_eq_span]
+    apply Submodule.subset_span
+    refine ⟨(0,Finsupp.single (i,0) 1), ?_, ?_⟩
+    · simp [energy, oscillatorEnergy, Finsupp.weight_single]
+    · simp [carrierBasis_apply, LatticeActualConformalState.currentState,
+        MvPolynomial.X]
+  have hg := LatticeCoefficientEnergy.actual_mode_grade D 1 E m
+    (LatticeActualConformalState.currentState D i) v hs hv
+  rw [LatticeActualConformalState.current_state_field,
+    LatticeSugawaraCurrents.neutralField_ncoeff] at hg
+  convert hg using 1 <;> congr 1 <;> omega
+
+private def wordLeft (x : Index D) (ω : List (Index D)) (n : ℤ)
+    (v : Carrier D) (q : ℕ) : Carrier D :=
+  ((FieldNormalProduct.dividedDerivative x.2
+      (LatticeFiniteNegativeGeneration.neutralField D x.1))[[-(q : ℤ)-1]])
+    (((wordField D 0 ω)[[n+q]]) v)
+
+private def wordRight (x : Index D) (ω : List (Index D)) (n : ℤ)
+    (v : Carrier D) (q : ℕ) : Carrier D :=
+  ((wordField D 0 ω)[[n-q-1]])
+    (((FieldNormalProduct.dividedDerivative x.2
+      (LatticeFiniteNegativeGeneration.neutralField D x.1))[[q]]) v)
+
+private theorem wordLeft_vanish (hD : (gramReal D).PosDef)
+    (x : Index D) (ω : List (Index D)) (E F : ℕ) (n : ℤ)
+    (hEF : (E : ℤ)+wordWeight (x::ω)-n-1=F)
+    (v : Carrier D) (hv : v ∈ grade D (E : ℤ)) (q : ℕ)
+    (hq : F < q+x.2+1) : wordLeft x ω n v q = 0 := by
+  have hg := word_mode_grade ω E (n+q) v hv
+  have hw : wordWeight (x::ω) = x.2+1+wordWeight ω := by
+    simp [wordWeight]
+  have hz := negative_grade_eq_zero hD _ (by rw [hw] at hEF; push_cast at hEF; omega)
+    _ hg
+  simp [wordLeft, hz]
+
+private theorem wordRight_strip (x : Index D) (ω : List (Index D))
+    (n : ℤ) (v : Carrier D) (q : ℕ) (hq : q < x.2) :
+    wordRight x ω n v q = 0 := by
+  have hz := derivative_zero_strip (D := D) x.1 x.2 q (by omega) (by omega)
+  simp [wordRight, hz]
+
+private theorem wordRight_vanish (hD : (gramReal D).PosDef)
+    (x : Index D) (ω : List (Index D)) (E : ℕ) (n : ℤ)
+    (v : Carrier D) (hv : v ∈ grade D (E : ℤ)) (q : ℕ)
+    (hq : E+x.2 < q) : wordRight x ω n v q = 0 := by
+  have hg := current_mode_grade x.1 E ((q : ℤ)-x.2) v hv
+  have hz := negative_grade_eq_zero hD _ (by omega) _ hg
+  dsimp [wordRight]
+  rw [derivative_modes D x, LinearMap.smul_apply, hz, smul_zero, map_zero]
+
+/-- Exact finite recursion of the literal normal product, at a general mode.
+The derivative strip remains in the second finite range with zero summands. -/
+private theorem word_cons_finite (hD : (gramReal D).PosDef)
+    (x : Index D) (ω : List (Index D)) (E F : ℕ) (n : ℤ)
+    (hEF : (E : ℤ)+wordWeight (x::ω)-n-1=F)
+    (v : Carrier D) (hv : v ∈ grade D (E : ℤ)) :
+    ((wordField D 0 (x::ω))[[n]]) v =
+      (∑ q ∈ Finset.range (F+1), wordLeft x ω n v q) +
+      ∑ q ∈ Finset.range (E+x.2+1), wordRight x ω n v q := by
+  classical
+  rw [wordField, (FieldNormalProduct.normalMinusOne _ _).2]
+  congr 1
+  · change (∑ᶠ q, wordLeft x ω n v q) = _
+    apply finsum_eq_sum_of_support_subset
+    intro q hq
+    by_contra hn
+    exact hq (wordLeft_vanish hD x ω E F n hEF v hv q (by
+      have hn' : F+1 ≤ q := by simpa using hn
+      omega))
+  · change (∑ᶠ q, wordRight x ω n v q) = _
+    apply finsum_eq_sum_of_support_subset
+    intro q hq
+    by_contra hn
+    exact hq (wordRight_vanish hD x ω E n v hv q (by
+      have hn' : E+x.2+1 ≤ q := by simpa using hn
+      omega))
+
+private def derivativeConstant (r : ℕ) : ℝ :=
+  ((r : ℝ)+1)^r / (r.factorial : ℝ)
+
+private theorem derivativeConstant_nonneg (r : ℕ) : 0 ≤ derivativeConstant r := by
+  unfold derivativeConstant
+  positivity
+
+private theorem choose_energy_le (r M t : ℕ) (ht : t ≤ M+r) :
+    (t.choose r : ℝ) ≤ derivativeConstant r * ((M : ℝ)+1)^r := by
+  have ht' : (t : ℝ) ≤ ((r : ℝ)+1)*((M : ℝ)+1) := by
+    have hh : (t : ℝ) ≤ (M : ℝ)+r := by exact_mod_cast ht
+    nlinarith [Nat.cast_nonneg (α := ℝ) M, Nat.cast_nonneg (α := ℝ) r]
+  calc
+    _ ≤ (t : ℝ)^r / (r.factorial : ℝ) := Nat.choose_le_pow_div r t
+    _ ≤ (((r : ℝ)+1)*((M : ℝ)+1))^r / (r.factorial : ℝ) :=
+      div_le_div_of_nonneg_right
+        (pow_le_pow_left₀ (Nat.cast_nonneg _) ht' r) (Nat.cast_nonneg _)
+    _ = _ := by rw [mul_pow]; unfold derivativeConstant; ring
+
+open private signed_derivative_choose from
+  D5.S3.VertexAlgebra.Sewing.CanonicalOccupationRow
+
+private theorem derivative_negative_coeff_le (r M q : ℕ) (hq : q+r ≤ M+r) :
+    ‖((Ring.choose (-(-(q : ℤ)-1)-1+r) r : ℤ) : ℂ)‖ ≤
+      derivativeConstant r * ((M : ℝ)+1)^r := by
+  rw [show -(-(q : ℤ)-1)-1+r = ((q+r : ℕ) : ℤ) by omega,
+    Ring.choose_natCast]
+  simpa only [Int.cast_natCast, Complex.norm_natCast] using choose_energy_le r M (q+r) hq
+
+private theorem derivative_positive_coeff_le (r M q : ℕ) (hq : q ≤ M+r) :
+    ‖((Ring.choose (-(q : ℤ)-1+r) r : ℤ) : ℂ)‖ ≤
+      derivativeConstant r * ((M : ℝ)+1)^r := by
+  rw [signed_derivative_choose]
+  simpa only [norm_mul, norm_pow, norm_neg, norm_one, one_pow, one_mul,
+    Complex.norm_natCast] using choose_energy_le r M q hq
+
+#check @word_mode_grade
+#print axioms word_mode_grade
+#check @derivative_zero_strip
+#print axioms derivative_zero_strip
+#check @word_cons_finite
+#print axioms word_cons_finite
 
 #check @original_gram_charge_square_le
 #check @original_zero_current_le
