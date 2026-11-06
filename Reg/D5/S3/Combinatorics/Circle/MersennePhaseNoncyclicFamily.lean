@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.Circle.MersennePhaseNoncyclicFamily
 import Reg.Support.DependentFamily
 
+/-! # Full-source audits of the physical family classification and count -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -62,7 +64,8 @@ noncomputable def classificationRegistration :
   dependence := by
     intro i
     refine ⟨3, ∅, {⟨0, by decide⟩}, ?_⟩
-    norm_num [actualSum, realize, actualSource, centered, modulus]
+    simp only [actualSum, realize, Finset.sum_empty, Finset.sum_singleton]
+    norm_num [actualSource, centered, modulus]
 
 abbrev countSignature : Signature where
   Params := Unit
