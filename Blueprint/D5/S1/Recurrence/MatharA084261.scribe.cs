@@ -37,18 +37,22 @@ internal sealed class MatharA084261Document : IScribeDocumentDefinition
                     + "open-problem-resolution under issue #27208, with utility none. No escape witness or worldwide novelty is claimed. "
                     + "The domain is inhabited (n=3); a(0)=1 and a(2)=2 distinguish actual observations, and the constant-one "
                     + "sequence fails the same law at n=3. The typed Reg mirror attempts source reconstruction, variation and sensitivity. "
-                    + "Compilation alone does not establish declared_validated. Canonical freeze, independent form and mirror reviews, "
-                    + "current binding evaluation, a Problems dossier, the resolution claim, and required CI remain publication obligations. "
-                    + "This document carries no frozen-resolution or publication claim.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                    + "The audit remains declared_unresolved with IE-C050 ClosedTruthReadout, unclassified_form, source.roles; "
+                    + "issue #27208 discloses the missing classified source-role binding and certificate. "
+                    + "The resolution claim concerns the frozen mathematical result and does not assert declared_validated.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mathar-2012-a084261-recurrence"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(
         string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("mathar-a084261-" + name),
         DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(formula), provenance,
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Integers() => Seq(Mathbb, Grp(F.Id("Z")));
