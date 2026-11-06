@@ -3121,14 +3121,27 @@ Definition 1.2 enumerates every
 full injection on these two images on both supported branches and tests
 target equality.  Its acceptance therefore applies to all of
 $\mathcal G_\theta$, not merely to the coding class used to attain the
-cache. $\square$
+cache. Conversely, any full generator containing $D(K)$ contains each
+record's acquired restriction, since $\delta_j(K)$ agrees with that
+restriction. Thus $\mathcal V(K)=\mathcal V_\theta(D(K))$: the
+erasure bridge preserves exactly the compatible full generators. $\square$
 
-The lemma is deliberately weaker than completing a mask.  A missing bit
-may be logically forced by (PCR.2503), while the original $m_j$, the
-unread value, and its indexed position stay unchanged.  If a cylinder is
+The lemma does not complete an acquired mask. A missing bit may be
+logically forced by (PCR.2503), while its acquired flag remains unset
+and the original mask and index stay unchanged.  If a cylinder is
 not a singleton, the record remains a proper partial record and no
 decoded pair is entered in $D(K)$.  Thus the construction does not
 interpret an absent value as a negative observation.
+
+A sufficient public decoder avoids searching competing maps. Intersect
+each record's restriction separately with $X(K)$ and $Y(K)$; when both
+fibres are singletons, their product gives its decoded pair. On the
+attaining domain this is (PCR.2503), by Lemma 25.2 and actual positivity.
+It requires at most $q(72+243)$ masked word comparisons after dictionary
+construction. Apply the existing label-only tests of Theorems 3.1 and
+17.1 to the resulting pair set. The injections and tuples below are
+existence witnesses, not data installed in this decoder. All dictionary,
+comparison and recognition work remains paid.
 
 ## 26. A common deterministic omission schedule
 
@@ -3166,25 +3179,203 @@ description; it is not a promise that all full injections belong to the
 class.  All full injections remain in the version set used by the
 recognizer.
 
-The classes are nonempty.  A concrete finite realization uses distinct
-prefixes for the quotient types and the literal capacities: for $G_0$,
-six-bit prefixes for the $36$ line types followed by one representative
-bit, and five-bit prefixes for the $27$ point types followed by four
-representative bits; for $G_1$, four-bit prefixes for its nine
-components followed by three left bits, and five-bit prefixes followed by
-three right bits.  Assign the suffixes in the fixed lexicographic order
-of the literal endpoints.  In the $G_1$ realization, order the first
-$324$ distinct pairs as the connected $K_{3,10}$ core and eight
-connected spanning component witnesses of §3, then use eight separately
-indexed repeats.  In the $G_0$ realization, order the $417$ chosen
-incidences by the four affine direction classes and then by their literal
-lifts.  The type-level incidence table has respectively $72$ and
-$243$ distinct acquired words; applying (PCR.2503) to that table gives
-singleton cylinders at every displayed index, and the decoded pairs pass
-Definition 1.2.  This is a finite check on $36+27$ or $9$ quotient
-types and their capacities, not an enumeration of the factorial family
-of full injections.  It is a witness of nonemptiness, not a universal
-coding theorem.
+The following constructions prove that the two classes are nonempty in
+the original alphabets. All integer codes below mean fixed-width binary
+words, most significant bit first. The coordinates, injections and ordered
+edge tuples specify positive prepared-array events; the controller is not
+given these hidden data.
+
+**A native left support for both constructions.** For $0\le u<64$ put
+
+$$
+\begin{aligned}
+D_*&=\{4k:0\le k<8\},\qquad I_*=\{4k+2:0\le k<8\},\\
+T_u&=\begin{cases}\{0,1\},&u\in D_*,\\
+                  \{1\},&u\in I_*,\\
+                  \{0\},&\text{otherwise},\end{cases}\\
+S_L&=\{2u+t:0\le u<64,\ t\in T_u\},\\
+Z_L&=\{8k,8k+1:0\le k<8\},\qquad P_L=S_L\setminus Z_L .
+\end{aligned}
+\tag{PCR.2602}
+$$
+
+There are $72$ seven-bit words in $S_L$, of which $56$ are in $P_L$.
+Write $\oplus$ for binary exclusive or. Directly from the displayed
+sets,
+
+$$
+x\oplus1\notin S_L\ (x\in P_L),\qquad
+(8k+1)\oplus2\notin S_L,\qquad
+(8k)\oplus4\notin S_L\quad(0\le k<8).
+\tag{PCR.2603}
+$$
+
+Thus a $P_L$ word is determined within $S_L$ after omission $7$;
+an odd $Z_L$ word after omission $6$; and an even $Z_L$ word after
+omission $5$. These are support statements, independent of any competing
+generator's adjacency.
+
+**The $G_0$ injections and tuple.** Use precisely the coordinates
+$w=xb_1+yb_2+zb_3$ of (PCR.1301), and put
+$h(p)=-x+y+z$ in $F_3$. Every selected line meets each of the planes
+$h=0,1,2$ once. Sort the $36$ actual line triples lexicographically in
+the original $w$ coordinates, and sort the two literal left endpoints
+of each line as $a_{\ell,0},a_{\ell,1}$. Number the first sixteen lines
+$\ell_0,\ldots,\ell_{15}$. Assign
+
+$$
+\lambda_0(a_{\ell_k,0})=8\lfloor k/2\rfloor+(k\bmod2)
+\quad(0\le k<16).
+\tag{PCR.2604}
+$$
+
+Map the other $56$ literal left endpoints, in lexicographic order, to
+the increasing list $P_L$. In particular every line has at least one
+$P_L$ representative. When a representative is needed below, choose the
+first such literal endpoint on that line.
+
+Let $r_p=(w(p),(0,0))$ be the right anchor at $p$. Use the eight-bit
+support and anchor assignments
+
+$$
+\begin{aligned}
+H_0&=\{4k:0\le k<9\}\cup\{252,253,254,255\},\\
+S_{R,0}&=\{0,\ldots,255\}\setminus H_0,\\
+\varrho_0(r_{(x,y,h+x-y)})&=
+  \begin{cases}4(3x+y)+2,&h=0,\\
+                4(3x+y)+1,&h=1.\end{cases}
+\end{aligned}
+\tag{PCR.2605}
+$$
+
+Field expressions in the point subscript are reduced modulo three;
+the code arithmetic uses the integer representatives $x,y\in\{0,1,2\}$.
+These eighteen codes are distinct and outside the thirteen holes $H_0$.
+Map the other $225$ literal right endpoints lexicographically to the
+remaining increasing codes of $S_{R,0}$. This is a full injection on
+all $243$ original endpoints, with all nine $z$ values retained.
+For an $h=0$ anchor, flipping local right bit seven (coordinate $14$)
+gives the hole $4(3x+y)$. For an $h=1$ anchor, flipping local right
+bit eight (coordinate $15$) gives the corresponding hole.
+
+Take exactly the $417$-pair construction of Theorem 17.2, with its
+$B=\{h=0,1\}$ and its six seeds $S$ from (PCR.1701). Choose $P_L$
+representatives for all nonanchor incidences: at a seed use the first
+two distinct incident line types; at a later point use its completing
+line. Make the latter choices precise by repeatedly taking the first
+lexicographic point admitting completion from the already filled
+points, and then the first such selected line. Theorem 13.2 and the
+seed argument in Theorem 17.2 ensure this terminates. This merely fixes
+the permitted representative choices in that existing certificate;
+denote it by $D_0$.
+
+Order its records as follows. First list, in line order, the $36$ edges
+from $a_{\ell,0}$ to the anchor where its line meets $h=0$. Then list
+the $36$ edges from $a_{\ell,1}$ to its $h=1$ anchor. Every literal
+left endpoint has now appeared once. Each of the eighteen anchors has
+used four of its eight edges. Among the remaining pairs, list first
+the pairs with left label in $P_L$, then those with odd $Z_L$ label,
+then those with even $Z_L$ label; sort within each block by the
+literal endpoint pair.
+
+Every literal left endpoint has exactly one remaining anchor edge.
+Only the sixteen endpoints in (PCR.2604) have a $Z_L$ label, and none
+is used in a nonanchor column. Hence the final blocks have sizes
+$329,8,8$. They occupy exactly the omission-$7,6,5$ blocks of
+(PCR.2601). All $417$ records are distinct pairs of the actual $E_0$.
+The first $72$ acquire all of $S_L$. Every anchor still has four
+later edges, and all nonanchor right words occur later, so the last
+$345$ records physically acquire every word of $S_{R,0}$.
+
+Each of the first two blocks has a unique right completion in
+$S_{R,0}$ by its specified hole. Every later block has a unique left
+completion by (PCR.2603). The other endpoint field is read in full.
+Consequently every rectangle has a singleton intersection even with the
+larger product $S_L\times S_{R,0}$, before imposing any adjacency.
+Lemma 25.2 makes these the image sets of every compatible full
+generator, so all native cylinders are singletons. The decoded pairs
+are exactly $D_0$; its existing eighteen-core proof supplies full
+recognition against both supported branches.
+
+**The $G_1$ injections and tuple.** Number the native components by
+$c=3q_1+q_2$, where $q=(w_1,w_2)\in F_3^2$. Let $v_k$,
+$0\le k<8$, list the nonzero vectors of $F_3^2$ lexicographically, and
+put
+
+$$
+a_{c,k}=(v_k,B_1(v_k,(q_1,q_2,0))),\qquad
+r_{c,9t+3z_1+z_2}=((q_1,q_2,t),(z_1,z_2)).
+\tag{PCR.2606}
+$$
+
+These are exactly the eight and twenty-seven literal endpoints of the
+component; $t,z_1,z_2$ range independently over $F_3$. Assign the
+first eleven increasing $P_L$ codes to the ordered list
+$a_{0,0},a_{0,1},a_{0,2},a_{1,0},\ldots,a_{8,0}$. Map the other
+$61$ left endpoints lexicographically to the remaining increasing
+$S_L$ codes. For the right injection use
+
+$$
+\begin{aligned}
+H_1&=\{4c+2:0\le c<4\}\cup\{17,18\}\\
+   &\quad{}\cup\{4c+1:5\le c<9\}\cup\{38,42,46\},\\
+S_{R,1}&=\{0,\ldots,255\}\setminus H_1,\\
+\varrho_1(r_{c,0})&=4c\quad(0\le c<9),\\
+\varrho_1(r_{0,k})&=32+4k\quad(k=1,2,3).
+\end{aligned}
+\tag{PCR.2607}
+$$
+
+There are thirteen distinct holes and twelve distinct assigned codes,
+all outside the holes. Map the remaining $231$ right endpoints
+lexicographically to the remaining increasing $S_{R,1}$ codes.
+Both injections therefore have exactly the original widths and
+cardinalities.
+
+Use Theorem 3.1's $D_1$: in component zero take all pairs between
+$a_{0,0},a_{0,1},a_{0,2}$ and $r_{0,0},\ldots,r_{0,9}$, attach its
+other five left endpoints to $r_{0,0}$ and its other seventeen right
+endpoints to $a_{0,0}$. In each other component take the double star
+at $a_{c,0},r_{c,0}$. For the first $72$ records, in increasing
+$(c,k)$ order, use
+
+$$
+(a_{c,k},r_{c,b(c,k)}),\qquad
+b(c,k)=\begin{cases}k+1,&c=0,\ k<3,\\0,&\text{otherwise}.\end{cases}
+\tag{PCR.2608}
+$$
+
+These are distinct pairs of $D_1$ exposing each left word once. List
+the other $252$ pairs of $D_1$ lexicographically at indices
+$73,\ldots,324$, then the eight repeats
+$(a_{c,0},r_{c,0})$, $c=1,\ldots,8$, at indices $325,\ldots,332$.
+
+For the first $36$ records, the right codes are among
+$0,36,40,44,4,8,12,16$; their flips by $2$ lie in $H_1$.
+For records $37,\ldots,72$, the right codes are among
+$16,20,24,28,32$; their flips by $1$ lie in $H_1$.
+Thus each initial right erasure has exactly one support completion.
+All subsequent left endpoints are among the eleven assigned $P_L$
+words, so their omission-$7$ fibres are also singletons.
+
+After the first $72$ records all left words are physically acquired.
+The middle block fully reads all twenty-seven right words of component
+zero: each of its ten core right endpoints still has a core edge
+outside (PCR.2608), and the other seventeen have their attached edge.
+In each other component the middle block fully reads precisely its
+twenty-six nonanchor right words. The eight final repeats acquire
+exactly the missing eight right anchors. Hence the full right dictionary
+has size $243$, every native cylinder is a singleton, and the decoded
+set is the existing $324$-pair certificate $D_1$. The repeats are
+needed for this particular construction's dictionary coverage; no
+additional requirement on the UJB continuation interface is inferred.
+
+In both constructions, the support-product singleton proof applies to
+every compatible generator after support exhaustion, not merely to the
+actual generator. No factorial relabeling search is needed to check
+these witnesses: the existing structural recognizers of Theorems 3.1
+and 17.1 suffice. The coding classes remain restricted attainment
+classes, while their recognition target and competitors are unchanged.
 
 **Theorem 26.1 (source-independent positive attainment).** For every
 $g\in\mathfrak C_i^{q_i}$, every $N\ge q_i$, and every value of
@@ -3215,60 +3406,55 @@ arbitrary $G_0$ codings outside $\mathfrak C_0^{417}$.
 The following lower bound is about a declared acquisition class, not an
 unrestricted optimum over arbitrary partial caches.
 
-**Definition 27.1 (full-field dictionary/$K_{3,10}$ class).** A
-$G_1$ cache belongs to $\mathfrak K_{3,10}^{332}$ when it has the
-support-exhausting and native-singleton properties of §25, its decoded
-positive pairs contain a $K_{3,10}$ in one component, and its distinct
-distinct decoded pairs contain a connected spanning subgraph on all eight left
-and twenty-seven right labels in each of the nine components.  The
-eight tail indices of (PCR.2601) are required to be separately indexed
-dictionary-resolution records for the eight left labels of the
-$K_{3,10}$ component.  This last clause is a continuation requirement:
-it does not identify a repeated record with its earlier occurrence.
+**Definition 27.1 (full-field dictionary/$K_{3,10}$ class).** Let
+$\mathfrak K_{3,10}$ consist of attained $G_1$ caches of $q$ proper
+records: no mask contains all fifteen coordinates. Require support
+exhaustion and native-singleton decoding as in §25. Require that
+$D(K)$ contain a $K_{3,10}$ in one actual component, and a connected
+spanning subgraph on all eight left and twenty-seven right endpoints
+of each of the nine components. No tail pattern or repetition
+requirement is part of this class.
 
-**Theorem 27.2 (exact $332$ tariff in the declared class).** Within
-$\mathfrak K_{3,10}^{332}$, the common schedule attains the complete
-labelled $G_1$ relation at $332$ original indices, and no schedule
-with the same full-field dictionary, $K_{3,10}$, and indexed-tail
-requirements can use fewer than $332$ indices.
+**Theorem 27.2 (exact scoped record minimum $332$).** Every cache in
+$\mathfrak K_{3,10}$ has $q\ge332$. The common public schedule
+(PCR.2601) attains this bound on the explicit native $G_1$ coding
+class of §26 and forces the same full labelled relation against all
+supported competitors.
 
-Proof.  In the component containing $K_{3,10}$, the $30$ core edges
-already expose three left and ten right vertices.  The core is one
-connected component.  To attach the remaining five left and seventeen
-right vertices to that component requires at least twenty-two further
-edges: each added edge can reduce the number of connected components by
-at most one, and there are twenty-two new vertices.  Thus that component
-requires at least $30+5+17=52$ distinct pairs.
-Every other component has $8+27$ vertices and must contain a connected
-spanning positive subgraph, hence at least $8+27-1=34$ edges.  The
-components are disjoint, so at least
+Proof. Select one record index for each of the thirty distinct decoded
+edges of its $K_{3,10}$. These are thirty different indices. Their
+physically acquired full fields can name at most its thirteen endpoints:
+three left words and ten right words. Each of the other $q-30$ proper
+records can physically acquire at most one full field, because the two
+fields together contain all fifteen coordinates. Counting words in the
+two dictionaries separately, support exhaustion therefore gives
 
 $$
-52+8\cdot34=324
+315=72+243\le13+(q-30),\qquad q\ge332.
 \tag{PCR.2701}
 $$
 
-distinct positive pairs are necessary.  This is the same-capacity
-argument as the $K_{3,10}$ obstruction and the connected witnesses in
-§3; it keeps the literal $8,27$ capacities and does not replace them
-by uncapacitated type weights.
+This argument permits arbitrary proper masks and arbitrary repetitions.
+It neither completes inferred fields nor assumes additional records
+from continuation. The connected-spanning conditions justify the
+existing full-relation recognizer; they do not supply an extra
+acquisition surcharge. For comparison, the distinct-pair component
+count in §3 is $52+8\cdot34=324$, which by itself is weaker than
+the new acquired-field count.
 
-Under the fixed schedule, the eight core left labels have to occur in
-the separately indexed left-omission tail to make their field
-dictionary and the old-slot continuation both available.  One original
-index has one prepared edge and therefore resolves at most one of these
-eight required tail occurrences.  The indexed-tail requirement costs at
-least eight additional records, even when their decoded pair is a
-repeat.  Hence $q\ge324+8=332$.  The construction in §26 has exactly
-the $324$ distinct pairs and exactly those eight indexed repeats; its
-native-singleton check and Lemma 25.3 give the matching upper bound.  No
-claim follows for a cache that drops the full-field dictionary, omits the
-$K_{3,10}$ source separation, or forgets original indices. $\square$
+The $G_1$ construction in §26 has $332$ proper records, acquired
+dictionary sizes $72,243$, singleton cylinders, and exactly that
+$D_1$ certificate. Lemma 25.3 and Theorem 3.1 give the matching upper
+bound and full recognition. Thus $332$ is the record minimum in this
+declared class, not a minimum over arbitrary partial caches or
+computation costs. $\square$
 
-The first $324$ records are a positive complete-pair certificate in
-the sense of §3 after erasure decoding.  The eight extra records are not
-silently folded into that set: they remain available to UJB Theorem
-17.1 as eight original indexed factors.
+The first $324$ decoded records in the attaining tuple are distinct
+positive pairs. Its last eight repeat pairs from eight other components
+at eight separate original indices. They acquire previously unacquired
+full right fields in this construction and remain eight original
+indexed factors for UJB Theorem 17.1. That theorem itself requires no
+such eight-index pattern.
 
 ## 28. Resource comparison and the two cuts
 
@@ -3278,7 +3464,7 @@ coordinates at each scheduled index gives the following exact tariff.
 
 | actual witness | cut | distinct positive pairs | Reads | operand-length sum | maximum length |
 |---|---:|---:|---:|---:|---:|
-| $G_0$ dictionary class | $417$ | $417$ witness records | $5838$ | $18\,267\,003$ | $6256$ |
+| $G_0$ dictionary class | $417$ | $417$ | $5838$ | $18\,267\,003$ | $6256$ |
 | $G_1$ dictionary/$K_{3,10}$ class | $332$ | $324$ plus $8$ indexed repeats | $4648$ | $11\,580\,284$ | $4981$ |
 
 For $G_0$, reading all fifteen coordinates through index $417$ would
@@ -3302,11 +3488,24 @@ $$
 
 For $q=332$ and $417$, the right side is respectively
 $11\,580\,284$ and $18\,267\,003$; the largest acquired coordinate
-is $14$ at the last index, giving $4981$ and $6256$.  Every repeat
+is $15$ at the last index, giving $4981$ and $6256$.  Every repeat
 is charged at its own original operand, and the fixed $N$, LAB
 preparation $75N+4$, cache flags and values, dictionary construction,
 controller, navigation, computation, output and retained records remain
 separate paid axes.
+
+For explicit payload accounting, the two acquired dictionaries contain
+$7\cdot72+8\cdot243=2448$ label bits if stored as raw lists. The
+original indexed cache retains $15N$ acquired flags and $14q$ acquired
+values at these cuts, as well as the original record/address information;
+wholly unread slots retain unset flags. A raw full-edge output contains
+$15\cdot1944=29160$ label bits. Dictionary copies, their indexing,
+decoded-pair workspace and all public-controller and recognition costs
+are additional to the Read/address tariff, even if implemented as views
+of the indexed records. All comparisons use the same original fixed
+$N$ and prepared array; the $G_1$ full-read comparator stops at its
+first $324$ slots, while its proper schedule also uses slots
+$325,\ldots,332$. No uncharged preparation or fresh sampling occurs.
 
 ## 29. Indexed continuation after erasure decoding
 
@@ -3359,14 +3558,25 @@ literal edges, every supported competing full injection, the original
 record/reply/return contract, and the distinction between acquired and
 logically forced bits. The $417$ assertion is only positive attainment
 on the explicitly declared nonempty class $\mathfrak C_0^{417}$. The
-$332$ equality is only the full-field dictionary/$K_{3,10}$ tariff of
+$332$ equality is only the full-field dictionary/$K_{3,10}$ record minimum of
 Theorem 27.2. Neither is a deterministic success guarantee, an optimum
 over arbitrary partial caches, or a replacement for the universal
 proper-mask theorem of §§20--24.
 
-The finite prefix-coded witnesses establish existence of actual coding
+The finite native-support witnesses establish existence of actual coding
 classes, while the recognizer continues to quantify over all supported
 competitors. No claim is made that the dictionaries identify a hidden
 affine frame, the realized preparation history, a serial extension, or
 the complete realized array. The general mutual recovery of space, time,
 boundary and memory remains outside this local source-specific bridge.
+
+The erasure step uses the usual unique-completion criterion on a known
+finite support; the acquired support itself is proved from the original
+full injections in Lemma 25.2. The positive recognizers, literal affine
+closure and indexed law are reused from §§3, 13, 16--17 and UJB17,
+rather than reproved as new general results. The native support choices,
+ordered acquisition witnesses and scoped proper-record charge are
+repo-derived mathematics. The literature scope of §§7 and 24 remains
+unchanged; no worldwide novelty or Lean verification is asserted here.
+
+## 追加锚（本行以下为增补区）
