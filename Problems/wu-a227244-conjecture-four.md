@@ -63,14 +63,14 @@ A value in the excluded residue class is outside its domain.
 The canonical mathematical source is
 `D5/S3/Arith/Primes/WuA227244ConjectureFour.lean`, with one public result and
 private proof helpers. Its Scribe displays the full quantified event and one
-Proved resolution. Current compilation and registration evidence is supplied
-with the StageA handoff; this dossier does not assert frozen membership.
+Proved resolution. The proof reduces the exact signed integer to the finite residue expressions
+without bounding the natural index.
 
 ## Triage
 
 | Item | Conclusion and boundary |
 | --- | --- |
-| C4 | The theorem `result` asserts the full unbounded family with the original exclusion. |
+| C4 | Proved by `result` for the full unbounded family with the original exclusion. |
 | Mechanism | Periodic modular transfer and finite residues exclude all smaller primes while 59 divides the integer. |
 | C2 | Unresolved here; C4 provides no settlement. |
 | Necessity of excluding residue 26 | Unresolved here; no assertion is made on that class. |
@@ -79,5 +79,8 @@ with the StageA handoff; this dossier does not assert frozen membership.
 ## ASSUMED-UNVERIFIED
 
 Literature completeness, global priority and a dominating theorem outside the
-searched scope are unverified. The four-slot audit outcome and any linked
-exception are reported in the StageA handoff separately from kernel evidence.
+searched scope are unverified. The four-slot audit is unfinished under the linked exception in
+[#27391](https://github.com/the-omega-institute/trureturing/issues/27391).
+The dependent-family registration exceeded its elaboration heartbeat limit;
+source-selection reconstruction and current binding evidence are missing.
+No declared_validated status is claimed.
