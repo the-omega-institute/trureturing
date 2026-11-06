@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle.MiddleGap;
 
@@ -10,7 +12,7 @@ internal sealed class ThreeNegativeMiddleGapJointLiftDocument : IScribeDocumentD
         Blocks(
             Describe.Lean(DescribeId.Create("actual-source-three-negative-middle-gap-joint-lift"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Circle/MiddleGap/ThreeNegativeMiddleGapJointLift.actualSource_three_negative_middle_gap_joint_lift"),
-                H("One complete physical permutation and one literal ear cut"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                H("One complete physical permutation and one literal ear cut"), StatementSource.FromAuthor(FullStatement()), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("For every natural a,b,c with 2<=b<a<c, put k=a+b+c and u=1+2^a+2^(a+b). The theorem constructs one list sigma of Fin(k) and a natural j<=k such that OriginalOrder(k,u,sigma) and OriginalOrder(k+1,2u,earWord(k,sigma,j)). Each OriginalOrder includes the complete permutation of all physical labels, an independent integer total zero, and a prefix sum between zero and floor((2^k-1)/2) (respectively floor((2^(k+1)-1)/2)) for every natural take-prefix, including empty and overlong prefixes. No coprimality or unit hypothesis is imposed on either seed. The old labels retain their original identity through castSucc, and the single fresh label k is inserted at the literal cut j.")),
                     Paragraph(Text("Write r=2^a, s=2^b, t=2^c, N=rst-1 and C=(N-1)/2. The old actual source is f(i)=center_N(2^i*u), and the new source is g(i)=center_(2N+1)(2^(i+1)*u). The positive physical labels are U_i=i for i<c-1, V_i=c+i for i<b-1 and W_i=c+b+i for i<a-1. The three negative labels are alpha=c-1, beta=c+b-1 and gamma=k-1. Choose m=floor(C/u). The set P is exactly the U-chain binary mask m, T is exactly the W-chain binary mask r/2-1, and Q is the literal complement of P,T and the three negative labels in range(k). The word is [P,beta,Q,alpha,T,gamma], and j=|P|+1. The bound m<t/2 follows from C<u*t/2, so P fits its chain. The T mask fits its own chain, which is disjoint from P. The existing physical-inventory lemma proves exhaustiveness and no repeated physical labels. Any fixed internal ordering of each positive block works.")),
@@ -20,4 +22,49 @@ internal sealed class ThreeNegativeMiddleGapJointLiftDocument : IScribeDocumentD
                     Paragraph(Text("The reused source_zero theorem establishes both complete actual integer totals. The complete physical inventory and these totals identify the middle block endpoint from the tail mass. The reused physical_schedule strip proof controls every interior positive prefix and both endpoints of each negative step. The reused lift_order and marked_word lemmas transfer this complete natural-label schedule to Fin(k) and to the literal earWord at j. All these helper applications are consumed in the final proof. The floor-mask remainder estimate and its connection to this simultaneous physical order supply the new mathematical inference.")),
                     Paragraph(Text("This proves the entire strict chamber 2<=b<a<c of the joint-order problem associated with Circle Conjecture 3.1 of Damasdi, Frankl, Pach and Palvolgyi, Monochromatic configurations on a circle, arXiv:2504.10687v2. The construction preserves the original floor-mask argument from PR24217. The equal-outer and minimum-two chamber conclusions are not used: only their general source, inventory, paired-chain, strip and ear helpers are reused. This statement does not settle the other gap chambers, the four-gap problem, or the full joint-order problem; full C3.1 remains open."))),
                 DescribeRole.Theorem)), []));
+
+    private static Formula FullStatement()
+    {
+        Formula a = F.Id("a"), b = F.Id("b"), c = F.Id("c");
+        Formula sigma = F.Id("sigma"), j = F.Id("j");
+        Formula k = Add(Add(a, b), c);
+        Formula seed = Add(Add(new Formula.Number(1), Pow(new Formula.Number(2), a)),
+            Pow(new Formula.Number(2), Add(a, b)));
+        Formula conclusion = Exists("sigma", Call("List", Call("Fin", k)),
+            Exists("j", Nat(), And(Le(j, k),
+                Call("OriginalOrder", k, seed, sigma),
+                Call("OriginalOrder", Add(k, new Formula.Number(1)),
+                    Mul(new Formula.Number(2), seed), Call("earWord", k, sigma, j)))));
+        Formula statement = Imp(Le(new Formula.Number(2), b),
+            Imp(Lt(b, a), Imp(Lt(a, c), conclusion)));
+        foreach (var name in new[] { "c", "b", "a" })
+            statement = new Formula.Bind(FormulaQuantifier.ForAll,
+                FormulaIdentifier.Create(name), Nat(), statement);
+        return Disp(statement);
+    }
+
+    private static Formula Le(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula Lt(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula Imp(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    private static Formula And(params Formula[] values)
+    {
+        Formula result = values[^1];
+        for (var i = values.Length - 2; i >= 0; i--)
+            result = new Formula.Logic(values[i], FormulaLogicOperator.And, result);
+        return result;
+    }
+    private static Formula Add(Formula a, Formula b) =>
+        new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+    private static Formula Mul(Formula a, Formula b) =>
+        new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
+    private static Formula Pow(Formula a, Formula b) => new Formula.Power(a, b);
+
+    private static Formula Nat() => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));
+    private static Formula Call(string name, params Formula[] arguments) =>
+        new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
+    private static Formula Exists(string name, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), domain, body);
 }
