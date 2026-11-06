@@ -3045,7 +3045,7 @@ cyclicity and general mutual recovery of space, time,
 boundary and memory are not supplied by this two-variable factor.
 
 **Definition 14.3 (mathematical attribution).** The source-specific
-deduction in §§12–14 is the composition of the original marked
+deduction in §§12–14 is repo-derived: it is the composition of the original marked
 tuple and calibrated $b$ from §§2–4 with the actual full-domain
 phase calculation (12.8)–(12.13), the reduction (12.14), and the
 same-source measured and path correspondences (13.3), (14.1) and
@@ -3056,7 +3056,7 @@ These are conditional mathematical deductions from the cited
 analytic-source suppliers.
 
 Maximal real multiplication operators, their graph cores and
-spectral representations are classical intermediates [T,
+spectral representations are literature-attested intermediates [T,
 §§2.2, 3.1–3.2]; the common-limit-core resolvent criterion is
 [T, §6.6, Lemma 6.36]. Their use here is within the source-specific
 proofs. The local commutator mechanism is already present in
