@@ -110,6 +110,10 @@ $$\forall n: \mathbb{N}, ((1 \leq n) \to ((1 - \operatorname{PowerSeries.X})^{2}
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/HoneycombCylinderCoordination.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/sloane329512` (proved) by `D5/S3/StatisticalMechanics/HoneycombCylinderCoordination.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sloane329512","declaration_gid":"D5/S3/StatisticalMechanics/HoneycombCylinderCoordination.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* N. J. A. Sloane (2019). *OEIS A329512: coordination sequences of honeycomb cylinders of width 2n*. URL: <https://oeis.org/A329512>.
