@@ -325,7 +325,7 @@ private theorem emitted_downward («prefix» suffix : List (Symbol V))
       have hface : r ∈ (Symbol.pair L v).faces := emittedOne_subset _ _ hrσ
       have hTU : T ⊆ insert v L := by
         rcases (show r = L ∨ r = insert v L by simpa [Symbol.faces] using hface) with rfl | rfl
-        · exact hTr.trans (Finset.subset_insert v L)
+        · exact hTr.trans (Finset.subset_insert v r)
         · exact hTr
       by_cases hTUeq : T = insert v L
       · exact d.face_emitted «prefix» hp hσ (by simp [hTUeq, Symbol.faces]) hTn
@@ -478,6 +478,8 @@ private theorem nativePair_retained («prefix» suffix : List (Symbol V)) L v
   have hu := complement_upper hUW hd.2.2
   apply SetLike.coe_injective
   ext s
+  change s ∈ (d.nativePair «prefix» suffix L v hword hL).retained ↔
+    s ∈ d.current («prefix» ++ [Symbol.pair L v]) suffix hnext
   rw [(d.nativePair «prefix» suffix L v hword hL).mem_retained_iff]
   change (s ∈ d.current «prefix» (Symbol.pair L v :: suffix) hword ∧
     s ≠ W \ insert v L ∧ s ≠ insert v (W \ insert v L)) ↔ _
@@ -544,6 +546,8 @@ private theorem current_terminal («prefix» : List (Symbol V))
   have hp : «prefix» = d.word := by simpa only [List.append_nil] using hword.symm
   apply SetLike.coe_injective
   ext s
+  change s ∈ d.current «prefix» [] hword ↔
+    s ∈ protectedEndpoint W K d.«protected» d.protected_upward
   rw [d.current_mem]
   change (s.Nonempty ∧ s ⊆ W ∧ W \ s ∉ emittedFaces d.«protected» «prefix») ↔
     (s.Nonempty ∧ s ⊆ W ∧ (W \ s ∉ K ∨ W \ s ∈ d.«protected»))
@@ -582,7 +586,7 @@ private def suffixSequence : (suffix «prefix» : List (Symbol V)) →
   | Symbol.critical S :: tail, «prefix», hword => by
       have hnext : d.word = («prefix» ++ [Symbol.critical S]) ++ tail := by
         simpa only [List.append_assoc, List.cons_append, List.nil_append] using hword
-      have T := d.suffixSequence tail («prefix» ++ [Symbol.critical S]) hnext
+      have T := suffixSequence tail («prefix» ++ [Symbol.critical S]) hnext
       have he := d.current_emitted_eq «prefix» (Symbol.critical S :: tail)
         («prefix» ++ [Symbol.critical S]) tail hword hnext
         (emitted_critical_append d.«protected» «prefix» S).symm
@@ -590,7 +594,7 @@ private def suffixSequence : (suffix «prefix» : List (Symbol V)) →
   | Symbol.pair L v :: tail, «prefix», hword => by
       have hnext : d.word = («prefix» ++ [Symbol.pair L v]) ++ tail := by
         simpa only [List.append_assoc, List.cons_append, List.nil_append] using hword
-      have T := d.suffixSequence tail («prefix» ++ [Symbol.pair L v]) hnext
+      have T := suffixSequence tail («prefix» ++ [Symbol.pair L v]) hnext
       by_cases hL : L ∈ d.«protected»
       · have he := d.current_emitted_eq «prefix» (Symbol.pair L v :: tail)
           («prefix» ++ [Symbol.pair L v]) tail hword hnext
@@ -608,10 +612,11 @@ def protectedDualWordSequence :
   have hstart : d.current [] d.word hword = simplex W := by
     apply SetLike.coe_injective
     ext s
+    change s ∈ d.current [] d.word hword ↔ s ∈ simplex W
     rw [d.current_mem]
     change (s.Nonempty ∧ s ⊆ W ∧ W \ s ∉ (∅ : Finset (Finset V))) ↔
       (s.Nonempty ∧ s ⊆ W)
-    simp only [Finset.not_mem_empty, and_true]
+    simp only [Finset.notMem_empty, and_true]
   exact S.cast hstart rfl
 
 end Contract
@@ -642,7 +647,7 @@ def noCritical_unprotected
     toWord := d
     «protected» := ∅
     protected_subset := by simp
-    protected_upward := by intro T U h; exact (Finset.not_mem_empty T h).elim
+    protected_upward := by intro T U h; exact (Finset.notMem_empty T h).elim
     protected_pair := by intro L v h; simp
     critical_protected := by
       intro S hS
@@ -651,7 +656,9 @@ def noCritical_unprotected
   have he : protectedEndpoint W K c.«protected» c.protected_upward = project (rawDual W K) := by
     apply SetLike.coe_injective
     ext s
-    simpa only [c, Finset.not_mem_empty, false_and, exists_false, and_false, or_false]
+    change s ∈ protectedEndpoint W K c.«protected» c.protected_upward ↔
+      s ∈ project (rawDual W K)
+    simpa only [c, Finset.notMem_empty, false_and, exists_false, and_false, or_false]
       using c.protectedEndpoint_mem s
   exact c.protectedDualWordSequence.cast rfl he
 

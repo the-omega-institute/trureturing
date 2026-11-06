@@ -95,8 +95,10 @@ private theorem fibrePair_retained (P : CollapsePair V) (B A : Family V)
     (fibrePair P B A a Y hd hY hb hbase hA).retained = fibreFrame B a P.retained := by
   rw [fibrePair,emitPair_retained]
   ext s
-  change ((s.Nonempty ∧ (s ∈ B ∨ s ∈ rawJoin (delta a) (nativeAug P.ambient))) ∧
-    ¬ a ∪ P.lower ⊆ s) ↔
+  simp only [mem_project, cut, LowerSet.mem_mk, Set.mem_setOf_eq,
+    Finset.mem_singleton, forall_eq]
+  change (s.Nonempty ∧ ((s ∈ B ∨ s ∈ rawJoin (delta a) (nativeAug P.ambient)) ∧
+    ¬ a ∪ P.lower ⊆ s)) ↔
       s.Nonempty ∧ (s ∈ B ∨ s ∈ rawJoin (delta a) (nativeAug P.retained))
   simp only [and_assoc]
   have hlow : P.lower ∉ A := by

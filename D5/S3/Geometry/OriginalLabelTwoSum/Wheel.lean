@@ -34,15 +34,13 @@ private def lower (i : Fin 4) : Finset Label := lowers[i.val]'(by
 private def apex (i : Fin 4) : Label := apices[i.val]'(by
   simp [apices])
 private def state (n : Nat) : Family Label := cut (delta Y) ((lowers.take n).toFinset)
-attribute [local reducible] Y R Z E A0 A1 B1 lowers apices lower apex state
-attribute [local reducible] OriginalLabelTwoSum.cut OriginalLabelTwoSum.delta
-  OriginalLabelTwoSum.facets OriginalLabelTwoSum.endpoint OriginalLabelTwoSum.Supported
 
 private theorem pairFacts : ∀ i : Fin 4,
     (lower i).Nonempty ∧ apex i ∉ lower i ∧
       insert (apex i) (lower i) ∈ state i.val ∧
         ∀ s ∈ state i.val, lower i ⊆ s →
           s = lower i ∨ s = insert (apex i) (lower i) := by
+  dsimp [Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]
   decide
 
 private def pair (i : Fin 4) : CollapsePair Label :=
@@ -63,7 +61,7 @@ private def step (i : Fin 4) :
 
 private theorem finalState : state 4 = E := by
   apply SetLike.ext
-  exact (by decide : ∀ s : Finset Label, s ∈ state 4 ↔ s ∈ E)
+  exact (by (dsimp [Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide) : ∀ s : Finset Label, s ∈ state 4 ↔ s ∈ E)
 
 /-- All four ORIGINAL Gamma pairs, in their actual evolving complexes. -/
 def gamma : Sequence (project (delta Y)) (project E) :=
@@ -75,53 +73,54 @@ theorem gamma_pairs : gamma.pairs.map (fun P => (P.lower,P.upper)) =
     [({1,2,4},{1,2,3,4}),({2,4},{2,3,4}),
       ({3,4},{1,3,4}),({1,3},{1,2,3})] := by
   simp [gamma,step,Sequence.pairs_append,Sequence.pairs_cast,Sequence.pairs,
-    pair,emitPair,lower,apex,lowers,apices,CollapsePair.upper]
+    pair,emitPair,lower,apex,lowers,apices,CollapsePair.upper,
+    Finset.insert_comm, Finset.insert_left_comm]
 
 /-- A0 is E intersect the original Z-simplex; A1 retains the e-row simplex. -/
 theorem interface_equations :
     Z = Y \ R ∧ A0 = E ⊓ delta Z ∧ A1 = E ⊔ delta Z := by
-  refine ⟨by decide,?_,rfl⟩
+  refine ⟨by (dsimp [Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide),?_,rfl⟩
   apply SetLike.ext
-  exact (by decide : ∀ s : Finset Label, s ∈ A0 ↔ s ∈ E ⊓ delta Z)
+  exact (by (dsimp [Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide) : ∀ s : Finset Label, s ∈ A0 ↔ s ∈ E ⊓ delta Z)
 
 /-- No pair at all in either list of filling zero. -/
 def fill0 : Filling Z A0 where
-  empty_mem := by decide
+  empty_mem := by (dsimp [Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide)
   collar := A0
   critical := {{3,4}}
   contains := le_rfl
-  supported := by decide
-  critical_supported := by decide
-  cells := by constructor <;> decide
+  supported := by (dsimp [Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide)
+  critical_supported := by (dsimp [Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide)
+  cells := by constructor <;> (dsimp [Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide)
   main := (Sequence.refl (project (delta Z))).cast rfl (by
     congr 1
     apply SetLike.ext
-    exact (by decide : ∀ s : Finset Label,
+    exact (by (dsimp [Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide) : ∀ s : Finset Label,
       s ∈ delta Z ↔ s ∈ endpoint A0 {{3,4}}))
   separate := Sequence.refl _
 
 private def collarPair : CollapsePair Label :=
-  emitPair B1 {1,3} 2 (by decide) (by decide) (by decide) (by decide)
+  emitPair B1 {1,3} 2 (by (dsimp [Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide)) (by (dsimp [Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide)) (by (dsimp [Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide)) (by (dsimp [Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide))
 
 private theorem collarRetained : collarPair.retained = project A1 := by
   rw [collarPair,emitPair_retained]
   congr 1
   apply SetLike.ext
-  exact (by decide : ∀ s : Finset Label, s ∈ cut B1 {{1,3}} ↔ s ∈ A1)
+  exact (by (dsimp [Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide) : ∀ s : Finset Label, s ∈ cut B1 {{1,3}} ↔ s ∈ A1)
 
 /-- The collar pair is on B1 alone, while the main endpoint also contains 134. -/
 def fill1 : Filling Y A1 where
-  empty_mem := by decide
+  empty_mem := by (dsimp [Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide)
   collar := B1
   critical := {{1,3,4}}
   contains := le_sup_left
-  supported := by decide
-  critical_supported := by decide
-  cells := by constructor <;> decide
+  supported := by (dsimp [Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide)
+  critical_supported := by (dsimp [Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide)
+  cells := by constructor <;> (dsimp [Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide)
   main := ((step 0).append (step 1)).cast (by simp [state]) (by
     congr 1
     apply SetLike.ext
-    exact (by decide : ∀ s : Finset Label,
+    exact (by (dsimp [Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide) : ∀ s : Finset Label,
       s ∈ state 2 ↔ s ∈ endpoint B1 {{1,3,4}}))
   separate := (Sequence.step collarPair (Sequence.refl _)).cast rfl collarRetained
 
@@ -132,19 +131,18 @@ theorem collar_not_free_in_main :
     ({1,3} : Finset Label) ⊂ {1,3,4} ∧
     ({1,2,3} : Finset Label) ∈ endpoint B1 {{1,3,4}} ∧
     ({1,3,4} : Finset Label) ∈ endpoint B1 {{1,3,4}} ∧
-    ({1,2,3} : Finset Label) ≠ {1,3,4} := by decide
+    ({1,2,3} : Finset Label) ≠ {1,3,4} := by (dsimp [Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide)
 
 private def coreLowers : List (Finset Label) := [{3},{2},{4}]
 private def coreApices : List Label := [2,1,1]
 private def coreState (n : Nat) : Family Label := cut E (coreLowers.take n).toFinset
 private def coreLower (i : Fin 3) := coreLowers[i.val]'(by simp [coreLowers])
 private def coreApex (i : Fin 3) := coreApices[i.val]'(by simp [coreApices])
-attribute [local reducible] coreLowers coreApices coreState coreLower coreApex
 private theorem coreFacts : ∀ i : Fin 3,
     (coreLower i).Nonempty ∧ coreApex i ∉ coreLower i ∧
       insert (coreApex i) (coreLower i) ∈ coreState i.val ∧
         ∀ s ∈ coreState i.val, coreLower i ⊆ s →
-          s = coreLower i ∨ s = insert (coreApex i) (coreLower i) := by decide
+          s = coreLower i ∨ s = insert (coreApex i) (coreLower i) := by (dsimp [coreLowers, coreApices, coreState, coreLower, coreApex, Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide)
 private def corePair (i : Fin 3) :=
   emitPair (coreState i.val) (coreLower i) (coreApex i) (coreFacts i).1
     (coreFacts i).2.1 (coreFacts i).2.2.1 (coreFacts i).2.2.2
@@ -161,21 +159,21 @@ private def coreStep (i : Fin 3) :
 
 /-- The wheel's absolute certificate is a consumer of the same path E. -/
 def certificate : Certificate Y A1 where
-  supported := by decide
+  supported := by (dsimp [coreLowers, coreApices, coreState, coreLower, coreApex, Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide)
   core := E
   critical := {{3,4}}
   vertex := 1
-  vertex_mem := by decide
-  core_supported := by decide
-  critical_supported := by decide
-  cells := by constructor <;> decide
+  vertex_mem := by (dsimp [coreLowers, coreApices, coreState, coreLower, coreApex, Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide)
+  core_supported := by (dsimp [coreLowers, coreApices, coreState, coreLower, coreApex, Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide)
+  critical_supported := by (dsimp [coreLowers, coreApices, coreState, coreLower, coreApex, Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide)
+  cells := by constructor <;> (dsimp [coreLowers, coreApices, coreState, coreLower, coreApex, Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide)
   main := (Sequence.refl (project A1)).cast rfl (by
     congr 1; apply SetLike.ext
-    exact (by decide : ∀ s : Finset Label, s ∈ A1 ↔ s ∈ endpoint E {{3,4}}))
+    exact (by (dsimp [coreLowers, coreApices, coreState, coreLower, coreApex, Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide) : ∀ s : Finset Label, s ∈ A1 ↔ s ∈ endpoint E {{3,4}}))
   separate := (((coreStep 0).append (coreStep 1)).append (coreStep 2)).cast
     (by simp [coreState]) (by
       congr 1; apply SetLike.ext
-      exact (by decide : ∀ s : Finset Label, s ∈ coreState 3 ↔ s ∈ delta {1}))
+      exact (by (dsimp [coreLowers, coreApices, coreState, coreLower, coreApex, Supported, endpoint, facets, delta, cut, Y, R, Z, E, A0, A1, B1, lower, apex, lowers, apices, state]; decide) : ∀ s : Finset Label, s ∈ coreState 3 ↔ s ∈ delta {1}))
 
 end D5.S3.Geometry.OriginalLabelTwoSum.Wheel
 
@@ -184,19 +182,18 @@ open FiniteRelativeSimplicialCollapse
 abbrev SeedLabel := Fin 3
 /-- p=0,u=1,v=2; no label is globally removed as a ghost. -/
 def root : Family SeedLabel := facets {{0},{1},{2}}
-attribute [local reducible] root
 def seed : Certificate (Finset.univ : Finset SeedLabel) root where
-  supported := by decide
+  supported := by (dsimp [root, Supported, endpoint, facets, delta]; decide)
   core := delta {0}
   critical := {{1},{2}}
   vertex := 0
-  vertex_mem := by decide
-  core_supported := by decide
-  critical_supported := by decide
-  cells := by constructor <;> decide
+  vertex_mem := by (dsimp [root, Supported, endpoint, facets, delta]; decide)
+  core_supported := by (dsimp [root, Supported, endpoint, facets, delta]; decide)
+  critical_supported := by (dsimp [root, Supported, endpoint, facets, delta]; decide)
+  cells := by constructor <;> (dsimp [root, Supported, endpoint, facets, delta]; decide)
   main := (Sequence.refl (project root)).cast rfl (by
     congr 1; apply SetLike.ext
-    exact (by decide : ∀ s : Finset SeedLabel,
+    exact (by (dsimp [root, Supported, endpoint, facets, delta]; decide) : ∀ s : Finset SeedLabel,
       s ∈ root ↔ s ∈ endpoint (delta {0}) {{1},{2}}))
   separate := Sequence.refl _
 end D5.S3.Geometry.OriginalLabelTwoSum.K4
