@@ -1,6 +1,6 @@
 # Four-path full-record recovery: central negative-floor continuation V
 
-This volume continues [Continuation IV](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_IV.md), retaining its Section 57 definitions, source conventions, exact attained triangle, fixed labels, one shared feedback, ordinary transpose and nonnegative root branches. Sections 65--68 below are the next exact full-triangle certificates for the same negative-floor comparison. They remain conditional paper deductions and do not claim a physical realization or settle the full endpoint comparison.
+This volume continues [Continuation IV](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_IV.md), retaining its Section 57 definitions, source conventions, exact attained triangle, fixed labels, one shared feedback, ordinary transpose and nonnegative root branches. Sections 65--69 below are the next exact full-triangle certificates for the same negative-floor comparison. They remain conditional paper deductions and do not claim a physical realization or settle the full endpoint comparison.
 
 ## 65. 高端入口的 $z=3/2$ 椭圆地板
 
@@ -611,5 +611,175 @@ $N$ 随 $u$ 严格递减。前两段均有 $u\ge a/2$，所以
  \cup\left(\frac{51}{100},\frac{53}{100}\right).
 \]
 各个已证明区间的端点均属于已证明区间；未决区间不是反例，也没有改变原注册事件的全称量词。
+
+## 追加锚（本行以下为增补区）
+
+## 69. 上方中央窄隙的闭合
+
+**定理 69.1（上方中央窄隙的全三角域地板）。** 保持定义 57.1 的负号行、固定标签、同一反馈、普通转置、非负根支及完整三角域。对
+\[
+ q\in\left[\frac{51}{100},\frac{53}{100}\right]
+ \quad\text{及全部 }(X,Y)\in\mathcal T_x
+\]
+都有
+\[
+ \boxed{G_-(q,X,Y)>\frac{23}{50}.}
+ \tag{69.1}
+\]
+
+*证明。* 在 Corollary 56.3 的辅助有序坐标中置
+\[
+ p=1-q,\qquad L=\frac{19}{16}+\frac q2,qquad
+ a=L^2,qquad u=X+Y.
+\]
+排序交换只用于上界证明；由
+$h^2-s^2=c^2-h^2=h/2>0$，交换弱增 $R,C$，再由 Lemma 46.2 的原始重构桥接回固定标签结论。当前区间给出
+\[
+ \frac{52}{25}<a<\frac{211}{100},\qquad
+ \frac a2\le u\le2.
+ \tag{69.2}
+\]
+取 $z=3/2$，于是
+\[
+ \alpha=p+\frac32\sqrt{pq},\qquad
+ \beta=q+\frac23\sqrt{pq}.
+\]
+由于 $p\le49/100$、$q\le53/100$ 且 $q>1/2$，有 $\sqrt{pq}<1/2$，从而
+\[
+ \alpha<\frac{31}{25},\qquad
+ \beta<\frac{259}{300},\qquad
+ \alpha+\beta<\frac{25}{12}.
+ \tag{69.3}
+\]
+使用
+\[
+ sh<\frac{271}{1000},\qquad
+ k^2:=(h-s)^2<\frac{27}{256},\qquad
+ S:=c^2+h^2<\frac{677}{500},\qquad
+ c^2h^2<\frac{427}{1000}.
+ \tag{69.4}
+\]
+记
+\[
+ B=(2-u)^2,qquad D=a(2u-a),\qquad
+ W=\frac{BD}{u^2},\qquad T=\min\{B,D\}.
+\]
+Corollary 56.3 给出
+\[
+ \Gamma_-^2\le\mathcal H(u):=
+ \alpha\left(sh\,a+\frac{k^2u}{2}\right)
+ +\beta S\left(1-\frac u2\right)
+ +\sqrt{\frac{625}{4608}T+\frac{427}{1000}\beta^2W}.
+ \tag{69.5}
+\]
+
+由于 $a>52/25$，按 $u$ 分四段
+\[
+ [a/2,23/20],\qquad[23/20,6/5],\qquad
+ [6/5,13/10],\qquad[13/10,2]
+ \tag{69.6}
+\]
+可取
+\[
+ \left(\frac12,\frac38\right),\quad
+ \left(\frac7{10},\frac{289}{800}\right),\quad
+ \left(\frac{16}{25},\frac{32}{75}\right),\quad
+ \left(\frac{49}{100},\frac{49}{100}\right)
+ \tag{69.7}
+\]
+作为各段的 $(T,W)$ 上界。其理由是 $u<a$ 时 $D/u^2$ 随 $u$ 增而增、随 $a$ 增而减，在端点取 $a=52/25$ 的极限并结合 $B=(2-u)^2$；$u\ge a$ 时使用 $D/u^2\le1$。退化椭圆端点由 Corollary 56.3 的连续性约定包含。
+
+由 (69.3)--(69.4) 及 (69.7)，四段根式平方分别严格小于
+\[
+ \frac{67379443}{360000000},\qquad
+ \frac{15113934143}{72000000000},\qquad
+ \frac{375633071}{1687500000},\qquad
+ \frac{2668907059}{12000000000}.
+ \tag{69.8}
+\]
+前两者严格小于 $(7/15)^2$，后两者严格小于 $1/4$。令
+\[
+ N(u)=\alpha\left(sh\,a+\frac{k^2u}{2}\right)
+      +\beta S\left(1-\frac u2\right).
+\]
+因为 $S>1$、$\beta\ge q\ge51/100$ 且
+\[
+ \alpha k^2<\frac{31}{25}\frac{27}{256}<\frac{51}{100}<\beta S,
+ \tag{69.9}
+\]
+$N$ 随 $u$ 严格递减。前两段均有 $u\ge a/2$。在第一段，系数
+$S(1-a/4)$ 严格大于 $a(sh+k^2/4)$：由 (57.8) 的
+$h>7071/10000>7/10$ 及 $S=c^2+h^2=1+h/2$ 得 $S>27/20$；再结合
+$a<211/100$、$a>52/25$ 及 (69.4)，
+\[
+ a\left(sh+\frac{k^2}{4}\right)<\frac{8031293}{12800000}
+ <\frac{1269}{2000}<S\left(1-\frac a4\right).
+ \tag{69.10}
+\]
+置
+\[
+ A=a\left(sh+\frac{k^2}{4}\right),\qquad
+ B=S\left(1-\frac a4\right).
+\]
+则 $B>A$，且
+\[
+ N(a/2)=(\alpha+\beta)A+\beta(B-A)
+ <\frac{25}{12}A+\frac{259}{300}(B-A)
+ =\frac{61}{50}A+\frac{259}{300}B.
+ \tag{69.11a}
+\]
+结合此式、(69.3)--(69.4) 与 $a<211/100$、$a>52/25$，得到
+\[
+ N(u)\le N(a/2)
+ <\frac{61}{50}\frac{211}{100}
+   \left(\frac{271}{1000}+\frac{27}{1024}\right)
+  +\frac{259}{300}\frac{677}{500}\frac{12}{25}
+ =\frac{849011337}{640000000}<\frac43.
+ \tag{69.11}
+\]
+第二段直接使用 $u\ge23/20$，后两段分别使用 $u\ge6/5,13/10$，得到
+\[
+ N(u)<\frac{614903417}{480000000}<\frac{13}{10},qquad
+ N(u)<\frac{75305669}{60000000}<\frac{13}{10},qquad
+ N(u)<\frac{74937559}{60000000}<\frac{13}{10}.
+ \tag{69.12}
+\]
+由 (69.8)、(69.11)--(69.12)，前两段满足
+$\mathcal H(u)<4/3+7/15=9/5$，后两段满足
+$\mathcal H(u)<13/10+1/2=9/5$。因此
+\[
+ \mathcal H(u)<\frac95.
+ \tag{69.13}
+\]
+
+最后，(57.9) 及 $e=2(h+s)$、$d=2(h+c)$ 给出
+\[
+ E(q)=e^2p+d^2q>
+ \frac{1187}{250}+\frac{589}{100}q
+ \ge\frac{77519}{10000}.
+ \tag{69.14}
+\]
+于是
+\[
+ \frac{E(q)-23/50}{4}>\frac{72919}{40000}
+ >\frac95.
+ \tag{69.15}
+\]
+结合 (69.5)、(69.13)--(69.15) 得
+\[
+ 4\Gamma_-^2<E(q)-\frac{23}{50},
+\]
+故 (69.1) 成立。四段覆盖 (69.2) 的全部 $u$，并包含全部三角域边界。\hfill$\square$
+
+**定义 69.2（中央残差的当前边界）。** 定理 61.1--69.1 合并后，完整原始三角域上已严格排除
+\[
+ q\in\left[\frac1{25},\frac1{10}\right]
+ \cup\left[\frac12,\frac35\right].
+\]
+因此 #27057 的剩余未决区间缩小为
+\[
+ \left(\frac1{10},\frac12\right).
+\]
+端点 $q=1/10$ 与 $q=1/2$ 均属于已证明区间；未决区间不是反例，也没有改变原注册事件的全称量词。
 
 ## 追加锚（本行以下为增补区）
