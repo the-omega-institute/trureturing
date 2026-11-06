@@ -93,9 +93,9 @@ def contractibleCollapse {X : Type*} [TopologicalSpace X] [T1Space X]
       fixed := fun _ _ => rfl }
   let γ : Path (e.toFun a) (() : Unit) :=
     (Path.refl ()).cast (Subsingleton.elim _ _) rfl
-  obtain ⟨B, _, _⟩ := SingletonRetractionBasedInverse.based_inverse
+  let B := Classical.choose (SingletonRetractionBasedInverse.based_inverse
     a () Ra RU e.toFun e.invFun
-    (Classical.choice e.left_inv) (Classical.choice e.right_inv) γ
+    (Classical.choice e.left_inv) (Classical.choice e.right_inv) γ)
   have hconst : B.backward.comp B.forward = ContinuousMap.const C a := by
     ext x
     change B.backward (B.forward x) = a

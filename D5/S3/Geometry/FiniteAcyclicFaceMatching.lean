@@ -7,7 +7,7 @@
    digest: Disjoint nonempty face pairs and the directed Hasse graph admit finite source extraction. -/
 import D5.S3.Geometry.FiniteVertexDominationCollapse
 import Mathlib.Data.Finset.Max
-import Mathlib.Tactic.Omega
+import Lean.Elab.Tactic.Omega
 
 /-! UNCOMPILED source attempt. The ordinary argument is the released CLI
 `cli_actual_core_closure_and_free_pair_extraction_proof`. No Morse theorem,

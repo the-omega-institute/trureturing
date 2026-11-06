@@ -55,7 +55,7 @@ theorem qR_injective : Function.Injective g.qR := by
     · subst y
       have : g.aL = g.bL := g.qL_injective (by simpa using h)
       exact False.elim (g.neL this)
-    · simp [qR,hya,hyb,qL] at h
+    · simp [qR,hya,hyb,qL,Ne.symm g.neR] at h
   by_cases hxb : x = g.bR
   · subst x
     by_cases hya : y = g.aR
@@ -64,11 +64,11 @@ theorem qR_injective : Function.Injective g.qR := by
       exact False.elim (g.neL this.symm)
     by_cases hyb : y = g.bR
     · exact hyb.symm
-    · simp [qR,hya,hyb,qL] at h
+    · simp [qR,hya,hyb,qL,Ne.symm g.neR] at h
   by_cases hya : y = g.aR
   · simp [qR,hxa,hxb,hya,qL] at h
   by_cases hyb : y = g.bR
-  · simp [qR,hxa,hxb,hyb,qL] at h
+  · simp [qR,hxa,hxb,hyb,qL,Ne.symm g.neR] at h
   · simpa [qR,hxa,hxb,hya,hyb] using h
 
 /-- Exact overlap, with both terminal identifications and no others. -/
@@ -113,14 +113,14 @@ def tree : SimpleGraph g.Carrier :=
 theorem adjacency (w z : g.Carrier) : g.tree.Adj w z ↔
     (∃ x y, g.cut.Adj x y ∧ g.qL x = w ∧ g.qL y = z) ∨
     (∃ x y, g.TR.Adj x y ∧ g.qR x = w ∧ g.qR y = z) := by
-  simpa only [tree,SimpleGraph.sup_adj,SimpleGraph.map_adj]
+  simpa only [tree,SimpleGraph.sup_adj,SimpleGraph.map_adj,leftEmbedding,rightEmbedding]
 
 theorem edgeSet : g.tree.edgeSet =
     Sym2.map g.qL '' g.cut.edgeSet ∪ Sym2.map g.qR '' g.TR.edgeSet := by
   simp only [tree,SimpleGraph.edgeSet_sup,SimpleGraph.edgeSet_map]
   all_goals rfl
 
-theorem no_loops (w : g.Carrier) : ¬g.tree.Adj w w := g.tree.loopless w
+theorem no_loops (w : g.Carrier) : ¬g.tree.Adj w w := g.tree.loopless.irrefl w
 
 def leftHom : g.cut →g g.tree where
   toFun := g.qL
@@ -160,7 +160,7 @@ theorem cut_side_adj {x y : VL} (h : g.cut.Adj x y) :
 /-- Every vertex connects to a terminal of its original summand by a finite
 walk. The two left components connect through the original right terminal walk. -/
 theorem connected : g.tree.Connected := by
-  apply SimpleGraph.connected_iff_exists_forall_reachable.mpr
+  apply (SimpleGraph.connected_iff_exists_forall_reachable g.tree).mpr
   refine ⟨g.qL g.aL,?_⟩
   intro w
   have hab : g.tree.Reachable (g.qL g.aL) (g.qL g.bL) := by
@@ -257,10 +257,10 @@ theorem adjacency_left (x y : VL) :
       have hy := (g.overlap y v).mp hv.symm
       rcases hx with ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩ <;>
         rcases hy with ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩
-      · exact False.elim (g.TR.loopless _ h)
+      · exact False.elim (g.TR.loopless.irrefl _ h)
       · exact Or.inr ⟨h,Or.inl ⟨rfl,rfl⟩⟩
       · exact Or.inr ⟨h.symm,Or.inr ⟨rfl,rfl⟩⟩
-      · exact False.elim (g.TR.loopless _ h)
+      · exact False.elim (g.TR.loopless.irrefl _ h)
   · rintro (h | ⟨h,⟨rfl,rfl⟩ | ⟨rfl,rfl⟩⟩)
     · exact Or.inl ⟨_,_,h,rfl,rfl⟩
     · exact Or.inr ⟨_,_,h,g.qR_a,g.qR_b⟩
@@ -278,10 +278,10 @@ theorem adjacency_right (x y : VR) :
       have hc := SimpleGraph.deleteEdges_adj.mp h
       rcases hx with ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩ <;>
         rcases hy with ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩
-      · exact False.elim (g.TL.loopless _ hc.1)
+      · exact False.elim (g.TL.loopless.irrefl _ hc.1)
       · exact False.elim (hc.2 (by simp))
       · exact False.elim (hc.2 (by simp [Sym2.eq_swap]))
-      · exact False.elim (g.TL.loopless _ hc.1)
+      · exact False.elim (g.TL.loopless.irrefl _ hc.1)
     · exact g.qR_injective hu ▸ g.qR_injective hv ▸ h
   · intro h
     exact Or.inr ⟨_,_,h,rfl,rfl⟩
@@ -298,10 +298,10 @@ theorem cross_edge_ne {x y : VL} {r s : VR} (hxy : g.cut.Adj x y)
     have hc := SimpleGraph.deleteEdges_adj.mp hxy
     rcases hx' with ⟨rfl,_⟩ | ⟨rfl,_⟩ <;>
       rcases hy' with ⟨rfl,_⟩ | ⟨rfl,_⟩
-    · exact g.TL.loopless _ hc.1
+    · exact g.TL.loopless.irrefl _ hc.1
     · exact hc.2 (by simp)
     · exact hc.2 (by simp [Sym2.eq_swap])
-    · exact g.TL.loopless _ hc.1
+    · exact g.TL.loopless.irrefl _ hc.1
   intro he
   simp only [Sym2.map_mk,Sym2.eq_iff] at he
   rcases he with ⟨hx,hy⟩ | ⟨hx,hy⟩
