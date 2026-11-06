@@ -8,9 +8,9 @@ OEIS A394697 uses the maximum coefficient of the independence polynomial of the 
 
 **Definition 1.1 (Absolute coordinate difference).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.gap`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.gap`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.gap` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.gap` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ gap(a,b) is (a-b)+(b-a) in natural arithmetic, hence the usual absolute differen
 
 **Definition 1.2 (Free king adjacency).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.freeAdjacent`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.freeAdjacent`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.freeAdjacent` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.freeAdjacent` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -32,9 +32,9 @@ Two distinct coordinate pairs are adjacent when both coordinate gaps are at most
 
 **Definition 1.3 (Periodic king adjacency).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.torusAdjacent`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.torusAdjacent`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.torusAdjacent` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.torusAdjacent` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -44,9 +44,9 @@ Two distinct coordinate pairs are adjacent when min(gap,n-gap) is at most one in
 
 **Theorem 1.4 (An empty row and column remove wraparound edges).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.empty_seam_adjacency`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.empty_seam_adjacency`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.empty_seam_adjacency` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.empty_seam_adjacency` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -56,9 +56,9 @@ For every natural n and coordinate pairs u and v whose four coordinates are less
 
 **Definition 1.5 (The square vertex set).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.board`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.board`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.board` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.board` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -68,9 +68,9 @@ board(n) is the Cartesian product of two copies of Finset.range n.
 
 **Definition 1.6 (The finite configuration family).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.independentSets`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.independentSets`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.independentSets` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.independentSets` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -80,9 +80,9 @@ Filter the powerset of the specified finite board by the requirement that no ord
 
 **Definition 1.7 (Free square configurations).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.freeCount`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.freeCount`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.freeCount` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.freeCount` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -92,9 +92,9 @@ freeCount(n) counts all independent subsets of the free n by n king board.
 
 **Definition 1.8 (Free rectangular configurations).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.rectangleCount`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.rectangleCount`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.rectangleCount` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.rectangleCount` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -104,9 +104,9 @@ rectangleCount(r,c) counts all independent subsets of range r times range c with
 
 **Definition 1.9 (Toroidal total count).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.torusCount`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.torusCount`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.torusCount` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.torusCount` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -116,9 +116,9 @@ torusCount(n) counts all independent subsets of the full n by n toroidal king gr
 
 **Definition 1.10 (Cardinality coefficient).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.coefficient`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.coefficient`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.coefficient` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.coefficient` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -128,9 +128,9 @@ coefficient(n,k) is the number of toroidal independent sets of cardinality k, in
 
 **Definition 1.11 (The A394697 maximum).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.peak`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.peak`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.peak` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.peak` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -140,9 +140,9 @@ peak(n) is the natural supremum of coefficient(n,k) for all k from zero through 
 
 **Theorem 1.12 (Injecting the smaller free board).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.free_le_torus`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.free_le_torus`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.free_le_torus` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.free_le_torus` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -152,9 +152,9 @@ For every natural n, freeCount(n-1) is at most torusCount(n). The same vertex su
 
 **Theorem 1.13 (Forgetting periodic edges).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.torus_le_free`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.torus_le_free`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.torus_le_free` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.torus_le_free` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -164,9 +164,9 @@ For every natural n, torusCount(n) is at most freeCount(n). Every toroidal indep
 
 **Theorem 1.14 (Polynomial loss from taking the maximum).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.count_le_mul_peak`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.count_le_mul_peak`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.count_le_mul_peak` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.count_le_mul_peak` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -176,9 +176,9 @@ For every natural n, torusCount(n) is at most (n squared plus one) times peak(n)
 
 **Theorem 1.15 (A coefficient is bounded by the total).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.peak_le_count`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.peak_le_count`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.peak_le_count` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.peak_le_count` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -188,9 +188,9 @@ For every natural n, peak(n) is at most torusCount(n).
 
 **Definition 1.16 (A two-by-two tile).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.squareTile`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.squareTile`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.squareTile` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.squareTile` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -200,9 +200,9 @@ squareTile(u) consists of the four cells with each coordinate equal to the corre
 
 **Definition 1.17 (Square tilings with implicit unit completion).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.tilingPlacements`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.tilingPlacements`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.tilingPlacements` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.tilingPlacements` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -212,9 +212,9 @@ For side m, choose lower-left coordinates in board(m-1) for pairwise disjoint tw
 
 **Definition 1.18 (The literal A063443 count).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.a063443`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.a063443`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.a063443` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.a063443` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -224,9 +224,9 @@ a063443(m) is the cardinality of the square-tiling placement family. Its free-bo
 
 **Definition 1.19 (Recovering the full tile collection).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.tilingBlocks`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.tilingBlocks`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.tilingBlocks` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.tilingBlocks` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -236,9 +236,9 @@ Take all selected squareTile blocks and one singleton tile for every cell of boa
 
 **Theorem 1.20 (The exact source index shift).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.tiling_free_identity`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.tiling_free_identity`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.tiling_free_identity` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.tiling_free_identity` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -248,9 +248,9 @@ For every natural m, a063443(m)=freeCount(m-1). Two two-by-two tiles overlap exa
 
 **Theorem 1.21 (Existence of the free square entropy).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.free_log_limit`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.free_log_limit`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.free_log_limit` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.free_log_limit` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -260,25 +260,25 @@ There exists a nonnegative real s such that log(freeCount(n))/n squared converge
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.a063443`
-- Truth anchor: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.board`
-- Truth anchor: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.coefficient`
-- Truth anchor: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.count_le_mul_peak`
-- Truth anchor: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.empty_seam_adjacency`
-- Truth anchor: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.freeAdjacent`
-- Truth anchor: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.freeCount`
-- Truth anchor: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.free_le_torus`
-- Truth anchor: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.free_log_limit`
-- Truth anchor: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.gap`
-- Truth anchor: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.independentSets`
-- Truth anchor: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.peak`
-- Truth anchor: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.peak_le_count`
-- Truth anchor: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.rectangleCount`
-- Truth anchor: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.squareTile`
-- Truth anchor: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.tilingBlocks`
-- Truth anchor: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.tilingPlacements`
-- Truth anchor: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.tiling_free_identity`
-- Truth anchor: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.torusAdjacent`
-- Truth anchor: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.torusCount`
-- Truth anchor: `D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.torus_le_free`
-- Dependency: [D5/S3/Combinatorics/Graph/RectangularCountEntropy](RectangularCountEntropy.md)
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.a063443`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.board`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.coefficient`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.count_le_mul_peak`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.empty_seam_adjacency`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.freeAdjacent`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.freeCount`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.free_le_torus`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.free_log_limit`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.gap`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.independentSets`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.peak`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.peak_le_count`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.rectangleCount`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.squareTile`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.tilingBlocks`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.tilingPlacements`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.tiling_free_identity`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.torusAdjacent`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.torusCount`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.torus_le_free`
+- Dependency: [D5/S3/Combinatorics/Graph/Pressure/RectangularCountEntropy](RectangularCountEntropy.md)

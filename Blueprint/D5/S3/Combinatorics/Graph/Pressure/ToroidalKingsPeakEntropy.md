@@ -8,9 +8,9 @@ The source is the conjecture in OEIS A394697 revision 24: a(n)^(1/n^2) tends to 
 
 **Definition 1.1 (Square-area root).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/ToroidalKingsPeakEntropy.rootGrowth`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsPeakEntropy.rootGrowth`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/ToroidalKingsPeakEntropy.rootGrowth` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsPeakEntropy.rootGrowth` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -22,9 +22,9 @@ Cast a(n) to a real number and raise it to the reciprocal of n squared. This is 
 
 **Definition 1.2 (The source constant).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/ToroidalKingsPeakEntropy.a247413`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsPeakEntropy.a247413`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/ToroidalKingsPeakEntropy.a247413` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsPeakEntropy.a247413` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -38,11 +38,11 @@ a247413 is limUnder atTop of rootGrowth(a063443). It is defined from the square-
 
 $$\forall e \in \mathrm{Real},\; 0 < e \Rightarrow \left(\exists N \in \mathrm{Nat},\; 3 \le N \land \left(\forall n \in \mathrm{Nat},\; N \le n \Rightarrow \mathrm{abs}\left(\mathrm{sub}\left(\mathrm{rootGrowth}\left(\mathrm{peak}, n\right), \mathrm{a247413}\right)\right) < e\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/ToroidalKingsPeakEntropy.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsPeakEntropy.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/oeis-a394697-toroidal-king-peak-entropy` (proved) by `D5/S3/Combinatorics/Graph/ToroidalKingsPeakEntropy.result`.
+*Resolves.* `Problems/oeis-a394697-toroidal-king-peak-entropy` (proved) by `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsPeakEntropy.result`.
 
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a394697-toroidal-king-peak-entropy","declaration_gid":"D5/S3/Combinatorics/Graph/ToroidalKingsPeakEntropy.result","resolution_kind":"proved"} -->
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a394697-toroidal-king-peak-entropy","declaration_gid":"D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsPeakEntropy.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
@@ -54,7 +54,7 @@ For every positive real epsilon there is a natural N at least three such that, f
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/ToroidalKingsPeakEntropy.a247413`
-- Truth anchor: `D5/S3/Combinatorics/Graph/ToroidalKingsPeakEntropy.result`
-- Truth anchor: `D5/S3/Combinatorics/Graph/ToroidalKingsPeakEntropy.rootGrowth`
-- Dependency: [D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam](ToroidalKingsEmptySeam.md)
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsPeakEntropy.a247413`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsPeakEntropy.result`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsPeakEntropy.rootGrowth`
+- Dependency: [D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam](ToroidalKingsEmptySeam.md)

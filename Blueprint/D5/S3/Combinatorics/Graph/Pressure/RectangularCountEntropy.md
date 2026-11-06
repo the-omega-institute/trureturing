@@ -6,9 +6,9 @@ Symmetric rectangular subadditivity implies a full square-area limit.
 
 **Theorem 1.1 (A square limit from fixed-width Fekete limits).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/RectangularCountEntropy.square_log_limit`
+Lean statement: `D5/S3/Combinatorics/Graph/Pressure/RectangularCountEntropy.square_log_limit`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/RectangularCountEntropy.square_log_limit` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Pressure/RectangularCountEntropy.square_log_limit` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -18,4 +18,4 @@ Let f map pairs of natural numbers to real numbers, let L be nonnegative, assume
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/RectangularCountEntropy.square_log_limit`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Pressure/RectangularCountEntropy.square_log_limit`
