@@ -58,6 +58,10 @@ $$(\forall n \in \mathbb{N},\; 1 \le n \Rightarrow (\operatorname{B}\left(2 \cdo
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/CellularAutomata/Rule163EvenSubsequence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/rule-163` (proved) by `D5/S3/StatisticalMechanics/CellularAutomata/Rule163EvenSubsequence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"rule-163","declaration_gid":"D5/S3/StatisticalMechanics/CellularAutomata/Rule163EvenSubsequence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Karl-Heinz Hofmann; Robert Price; Colin Barker; Yosu Yurramendi (2025). *OEIS A392003 and A266753: the Rule 163 even-subsequence, closed-form, recurrence and generating-function conjectures*. URL: <https://oeis.org/A392003>.
