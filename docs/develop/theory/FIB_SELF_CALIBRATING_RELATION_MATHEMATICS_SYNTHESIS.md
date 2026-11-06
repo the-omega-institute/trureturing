@@ -3079,9 +3079,25 @@ $$
 E=\{q\subseteq\{1,\ldots,9\}:q\text{ 无相邻占位}\},\qquad |E|=89,
 $$
 
-并保留原生 ready 配置 $q_0=\{3,7\}$、$q_1=\{1,3,7\}$ 及完整载体 $\mathcal K=\mathbb C^E$。一次合法物理调用只是原合同允许的一个正地址 $0$ 或 $1$ 的单位脉冲；字词按时间顺序到达，不能使用负脉冲、分数调用、重置或额外读数。每个完整测试词在其尾部仍发送原 stop request，并保留原字面终端 $W$、全部原终端标签、失败、拒绝、停止和报警坐标；理想零失败坐标虽为零，也仍属于联合输出元组。
+并保留原生 ready 配置 $q_0=\{3,7\}$、$q_1=\{1,3,7\}$ 及完整载体 $\mathcal K=\mathbb C^E$。一次合法物理调用只是原合同允许的一个正地址 $0$ 或 $1$ 的单位脉冲；字词按时间顺序到达，不能使用负脉冲、分数调用、重置或额外读数。每个完整测试词在其尾部仍发送原 stop request，并保留原字面终端 $W$、全部原终端标签、失败、拒绝、停止和报警坐标；理想零失败坐标虽为零，也仍属于联合输出元组。这里沿用 owning source [Native Recurrent Quantized Memory，Definitions 1.1–1.2](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RECURRENT_QUANTIZED_MEMORY.md) 的原生 minimal-current、no-read source；本节不改动该源本身。
 
-固定一个因果 sampler $A$。在恰好 $m$ 次原生调用、且下一请求尚未到达的接缝处，$S_A(m)$ 是所有合法前缀可达到的完整持久状态集合；状态包括影响未来转移核、控制或解码的保留随机性、计数器、控制位置、可重读输入输出和档案。令
+整个任务由一个且同一个经典因果 sampler $A$ 处理：它只在地址实际到达时接收该地址，尾部 stop request 也只在到达时接收并在其到达后终止；随机化只使用 fresh independent fair bits（新的独立公平比特）。没有预先供给的最终 horizon、可自由使用的调用/时间索引、时钟、reset、额外 read/control 或任何尚未到达的未来输入；外部输入与 schedules 固定并在各比较中相同。
+
+对每个有限 $0/1$ 词 $w$，完整要求元组为
+
+$$
+\mathbf C(w)=\bigl(Q_0,Q_1,\ldots,Q_{|w|},W,
+\text{all original failure/refusal/stop/alarm coordinates}\bigr),
+$$
+
+其中 $Q_0$ 是初始配置，$Q_j$ 是第 $j$ 个 chronological seam 的配置输出，$W$ 是 literal terminal；所有原始 failure/refusal/stop/alarm 坐标（包括理想值为零的坐标）以及原合同中的请求、顺序和 schedule metadata 都逐项保留。sampler law 必须逼近这个**完整**元组的 source law，即
+
+$$
+\operatorname{TV}\bigl(\mathcal L_A(\mathbf C(w)),\mathcal L_{\mathrm{src}}(\mathbf C(w))\bigr)\le\frac1{10}
+\qquad\text{for every finite }w\in\{0,1\}^*.
+$$
+
+固定上述同一个因果 sampler $A$。在第 $m$ 个 seam output 已完成之后、下一请求到达之前的切口，$S_A(m)$ 是所有 $m$-letter $0/1$ 前缀和所有 positive-probability finite random runs 可达到的完整持久状态集合；切口严格位于第 $m$ 个 seam output 之后、下一请求之前。状态包括影响未来转移核、控制或解码的保留随机性、计数器、控制位置、可重读输入输出和档案；这些已列出的持久信息全部继续计入 charged persistent state。令
 
 $$
 B_A(m)=\left\lceil\log _2|S_A(m)|\right\rceil,
@@ -3098,9 +3114,12 @@ $$
 
 （连续坐标时用相应的测度积分）。完整联合总变差合同是对上述整个原生输出元组的概率律作比较；只比较终端边缘不满足本节任务。一个只读取未来接缝坐标并作标签判定的函数，是对该完整元组的投影和后处理，不是物理地取得一个独立运行的隐藏配置。
 
-**命题 25.35.2（精确事件）。** 对每个满足原合同的因果 sampler $A$，存在只依赖上述原生源的正整数 $L$，使得对所有整数 $n\ge1$，
+**命题 25.35.2（精确事件）。** 在定义 25.35.1 的完整任务下，字面量词为
 
 $$
+\exists\,L\in\mathbb Z_{>0}\ {\rm(source\ only)}\quad
+\forall\,A\ {\rm(admissible\ causal\ sampler)}\quad
+\forall\,n\in\mathbb Z_{\ge1},\qquad
 B_A(Ln)\ge \frac n2-4.
 \tag{25.35.1}
 $$
@@ -3139,7 +3158,7 @@ $$
 
 个两两不同的 ready 射线，每个射线都由恰好 $Ln$ 次原生正调用得到。
 
-证明。对有限对称集 $\{I,K_0,K_1,K_0^{-1},K_1^{-1}\}\subseteq GL_2(\mathbb C)$ 应用 Breuillard, *A Strong Tits Alternative*, Theorem 1.1（arXiv:0804.1395v1，PDF 第 1–2 页）：非有限可解时含有秩二自由子群。该定理只供应成熟的自由子群存在性；这里不使用其数值曝光界。取自由生成元 $A,B$。由于 $K_j^{10}=I$，每个逆字母 $K_j^{-1}$ 可由九次正的 $K_j$ 调用替换。于是 $A,B$ 有正原生表示，长度分别为 $r,s\ge1$。$A^s,B^r$ 仍自由生成，并分别由 $a^s,b^r$ 表示，二者原生调用长度都为
+证明。对有限对称集 $\{I,K_0,K_1,K_0^{-1},K_1^{-1}\}\subseteq GL_2(\mathbb C)$ 应用 Breuillard, *A Strong Tits Alternative*, Theorem 1.1（arXiv:0804.1395v1，PDF 第 1–2 页）：由于 $\Gamma$ 不具有限指数可解子群，该定理给出秩二自由子群。该定理只供应成熟的自由子群存在性；这里不使用其数值曝光界。取自由生成元 $A,B$。由于 $K_j^{10}=I$，每个逆字母 $K_j^{-1}$ 可由九次正的 $K_j$ 调用替换。于是 $A,B$ 有正原生表示，长度分别为 $r,s\ge1$。$A^s,B^r$ 仍自由生成，并分别由 $a^s,b^r$ 表示，二者原生调用长度都为
 
 $$
 L=rs.
@@ -3174,7 +3193,7 @@ $$
 \tag{25.35.6}
 $$
 
-非本征条件给 $\ell_i<h_i$，故 $0\le r_i<1$；若周期经过节点，$\ell_i=0$，按节点约定 $r_i=0$，不在节点重采样。原生有限精度续接核的式 (2.11)–(2.12) 给出任意入口向量的持有比；[Continuation V §8.3，式 (8.3)–(8.9)] 的共同活动块公式可在这里取 $M=1$、$P_0=1-p_i$、$P_1=p_i$，因为地址 $1$ 的局部投影和 Hamiltonian 与该公式使用的活动二块相同。一个数学周期对应十次完整原生单位调用，故十调用端点的物理核为
+非本征条件给 $\ell_i<h_i$，故 $0\le r_i<1$；若周期经过节点，$\ell_i=0$，按节点约定 $r_i=0$，不在节点重采样。原生有限精度续接核的式 (2.11)–(2.12) 给出任意入口向量的持有比；[Continuation V §8.3，式 (8.3)–(8.9)] 的共同活动块公式可在这里取 $M=1$、$P_0=1-p_i$、$P_1=p_i$，因为地址 $1$ 的局部投影和 Hamiltonian 与该公式使用的活动二块相同。三个数学周期合起来恰好等于十次完整原生单位调用；物理过程没有分数调用，也没有在数学周期边界进行额外读取、重置或重采样，故十调用端点的物理核为
 
 $$
 T_i=\Pi_i+\rho_i(I-\Pi_i),\qquad
@@ -3229,7 +3248,7 @@ $$
 \tag{25.35.10}
 $$
 
-若 $S_A(Ln)$ 无限，结论立即成立。否则令 $S=|S_A(Ln)|$，对 $N$ 个合法前缀取均匀数学测试标签。随机消息计数（[原始控制事件记忆定理 4.3，式 (EM.13)](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_EVENT_MEMORY_AND_COARSE_ALIASING.md) 的经典 $S$ 状态特例）在这里的参数对应是“标签 $i$—切口消息 $s$—共同尾部解码器 $d_s$”；由于 $0\lelpha_i(s)\le1$，它给
+若 $S_A(Ln)$ 无限，结论立即成立。否则令 $S=|S_A(Ln)|$，对 $N$ 个合法前缀取均匀数学测试标签。随机消息计数（[原始控制事件记忆定理 4.3，式 (EM.13)](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_EVENT_MEMORY_AND_COARSE_ALIASING.md) 的经典 $S$ 状态特例）在这里的参数对应是“标签 $i$—切口消息 $s$—共同尾部解码器 $d_s$”；由于 $0\le\alpha_i(s)\le1$，它给
 
 $$
 \begin{aligned}
@@ -3258,7 +3277,7 @@ $$
 
 **推论 25.35.7（与已知 $H$ 的预测工作界相容）。** 已知 $H$ 的 $O(\log H)$ 预测工作空间结果与定理 25.35.6 量词不同：前者可为每个给定有限视界选择一个随 $H$ 变化的预测器，并讨论该视界内的工作空间；这里要求一个 horizon-free 的单一因果 sampler，在每个精确层 $Ln$ 同时面对所有长度的合法前缀，并由同一个源特定 $L$ 给出逐层状态容量下界。因此两者不互相替代或矛盾。
 
-本节保留原 89 载体及其零坐标，只使用原正地址调用、原接缝、原 terminal/failure 坐标和原 stop。没有自由时间索引、已知视界输入、额外读数、reset、postselection、未计费档案或分数物理调用。十调用周期的数学参数不授权在内部时刻观测；节点只由原生持有比的零值处理。source-only 的 $L$ 只是自由词存在性给出的存在常数，不是一个可计算数值。
+本节保留原 89 载体及其零坐标，只使用原正地址调用、原接缝、原 terminal/failure 坐标和原 stop。没有自由时间索引、已知视界输入、额外读数、reset、postselection、未计费档案或分数物理调用。十调用周期的数学参数不授权在内部时刻观测；节点只由原生持有比的零值处理。source-only 的 $L$ 只是自由词存在性给出的存在常数；本节既不提供 $L$ 的显式数值，也不提供计算它的程序，并不作不可计算性主张。
 
 定理 25.35.6 的新桥是原生矩阵的稠密射影控制、精确等长正前缀射线计数、地址 $1$ 任意入口的节点安全周期核，以及一个不依赖标签的共同未来接缝解码器；闭子群、Tits alternative、自由群中心化、周期协方差、Chebyshev、TV 收缩和有限消息计数均只作为已成熟工具使用。它没有把 seam-output law sampler 描述成一次物理获取独立隐藏配置，也没有给出尾词长度的定量上界或有限视界匹配的下界。
 
