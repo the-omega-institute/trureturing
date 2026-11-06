@@ -64,7 +64,9 @@ private theorem phase_sum_three {d : ℕ} (hd : 0 < d) (j : Fin d)
     · intro hi
       have hquot : i.val / d < 3 := Nat.div_lt_of_lt_mul (by simpa [Nat.mul_comm] using i.isLt)
       have he := Nat.mod_add_div i.val d
-      have hcases : i.val / d = 0 ∨ i.val / d = 1 ∨ i.val / d = 2 := by omega
+      have hcases : i.val / d = 0 ∨ i.val / d = 1 ∨ i.val / d = 2 := by
+        generalize i.val / d = n at hquot ⊢
+        omega
       rcases hcases with h | h | h
       · left
         apply Fin.ext
