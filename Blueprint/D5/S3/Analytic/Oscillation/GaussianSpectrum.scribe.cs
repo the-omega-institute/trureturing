@@ -46,7 +46,7 @@ internal sealed class GaussianSpectrumDocument : IScribeDocumentDefinition
                     + "by 2 M squared times the multiplicity divided by the ordinate squared."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("gaussianCos-summable"),
+                DescribeId.Create("gaussian-cos-summable"),
                 DeclarationHandle.Create(Prefix + "gaussianCos_summable"),
                 H("Absolute convergence of the cosine series"),
                 StatementSource.WithoutFormula(),
@@ -57,7 +57,7 @@ internal sealed class GaussianSpectrumDocument : IScribeDocumentDefinition
                     + "the Gaussian coefficients form a summable majorant."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("gaussianCos-continuous"),
+                DescribeId.Create("gaussian-cos-continuous"),
                 DeclarationHandle.Create(Prefix + "gaussianCos_continuous"),
                 H("Continuity of the cosine sum"),
                 StatementSource.WithoutFormula(),
@@ -68,7 +68,7 @@ internal sealed class GaussianSpectrumDocument : IScribeDocumentDefinition
                     + "summable bound independent of y."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("abs-gaussianCos-le"),
+                DescribeId.Create("abs-gaussian-cos-le"),
                 DeclarationHandle.Create(Prefix + "abs_gaussianCos_le"),
                 H("Uniform bound by Gaussian mass"),
                 StatementSource.WithoutFormula(),

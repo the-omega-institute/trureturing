@@ -51,7 +51,7 @@ internal sealed class GaussianCutoffDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("For positive M, the cutoff vanishes whenever the absolute frequency is at least M plus M to the one-quarter power."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("chi-contDiff"),
+                DescribeId.Create("chi-cont-diff"),
                 DeclarationHandle.Create(Prefix + "chi_contDiff"),
                 H("Smooth cutoff"),
                 StatementSource.WithoutFormula(),
@@ -59,7 +59,7 @@ internal sealed class GaussianCutoffDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("The cutoff is infinitely differentiable because its factors are smooth transitions composed with affine functions."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("cutoff-multiplier-contDiff"),
+                DescribeId.Create("cutoff-multiplier-cont-diff"),
                 DeclarationHandle.Create(Prefix + "cutoff_multiplier_contDiff"),
                 H("Smooth multiplier"),
                 StatementSource.WithoutFormula(),
@@ -67,7 +67,7 @@ internal sealed class GaussianCutoffDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("The product of the cutoff and exp(t squared divided by twice M squared) is infinitely differentiable."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("cutoff-multiplier-hasCompactSupport"),
+                DescribeId.Create("cutoff-multiplier-has-compact-support"),
                 DeclarationHandle.Create(Prefix + "cutoff_multiplier_hasCompactSupport"),
                 H("Compact frequency support"),
                 StatementSource.WithoutFormula(),
@@ -83,7 +83,7 @@ internal sealed class GaussianCutoffDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("Both the Gaussian factor and the cutoff are even, so the multiplier is even."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("cutoff-kernelSchwartz-coe"),
+                DescribeId.Create("cutoff-kernel-schwartz-coe"),
                 DeclarationHandle.Create(Prefix + "cutoff_kernelSchwartz_coe"),
                 H("Real Schwartz kernel"),
                 StatementSource.WithoutFormula(),
@@ -115,7 +115,7 @@ internal sealed class GaussianCutoffDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("For M at least one, the norm of the Mathlib Fourier transform of the complexified real kernel is at most exp(2) at every real frequency. Its transform is b(two pi xi), supported where the absolute angular frequency is at most M plus M to the one-quarter power."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("smoothTransition-derivatives-bounded"),
+                DescribeId.Create("smooth-transition-derivatives-bounded"),
                 DeclarationHandle.Create(Prefix + "smoothTransition_derivatives_bounded"),
                 H("Uniform bounds on transition derivatives"),
                 StatementSource.WithoutFormula(),

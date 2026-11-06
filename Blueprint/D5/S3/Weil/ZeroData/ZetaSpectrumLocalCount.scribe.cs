@@ -11,7 +11,7 @@ internal sealed class ZetaSpectrumLocalCountDocument : IScribeDocumentDefinition
         H("Unit windows of positive zeta zeros"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("zetaSpectrum-localCount"),
+                DescribeId.Create("zeta-spectrum-local-count"),
                 DeclarationHandle.Create(Prefix + "zetaSpectrum_localCount"),
                 H("The positive-spectrum local count"),
                 StatementSource.WithoutFormula(),
