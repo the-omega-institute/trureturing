@@ -21,13 +21,13 @@ private def testLattice : LatticeData where
 private theorem test_positive : (gramReal testLattice).PosDef := by
   simpa [gramReal, testLattice] using
     (Matrix.PosDef.diagonal (fun _ : Fin 1 => (by norm_num : (0 : ℝ)<2)))
-private def testModel : Model where
+def testModel : Model where
   D := testLattice
   positive := test_positive
   inverse := (complex_inverse_exists testLattice test_positive).choose
   inverse_left := (complex_inverse_exists testLattice test_positive).choose_spec.1
   inverse_right := (complex_inverse_exists testLattice test_positive).choose_spec.2
-private def zeroTest : Test where
+def zeroTest : Test where
   lift _ := 0
   smooth := contDiff_const
   periodic _ := rfl
@@ -38,7 +38,7 @@ private theorem zero_disjoint :
     induction x using Quotient.inductionOn with
     | h x => rfl
   simp [hz]
-private theorem vacuum_embed_ne : testModel.embed 0 (vacuum testModel.D) ≠ 0 := by
+theorem vacuum_embed_ne : testModel.embed 0 (vacuum testModel.D) ≠ 0 := by
   intro h
   apply vacuum_nonzero testModel.D
   exact UniformSpace.Completion.coe_injective (testModel.Finite 0)
@@ -55,7 +55,7 @@ def opsActual : Realization opsSignature :=
   realize opsSignature (fun _ _ x y => x=y) (fun e => nomatch e)
 def opsRejected : Realization opsSignature :=
   realize opsSignature (fun _ _ _ _ => False) (fun e => nomatch e)
-private theorem ops_dependence : ObservationalDependence opsSignature opsActual := by
+theorem ops_dependence : ObservationalDependence opsSignature opsActual := by
   intro i
   let p : OpsParams := ⟨testModel,0,0,0⟩
   have ho : testModel.order 0+testModel.order 0+0=0 := by simp [Model.order]

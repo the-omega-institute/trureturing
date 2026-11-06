@@ -79,8 +79,8 @@ private theorem equality_dependence : ObservationalDependence equalitySignature.
 namespace multiplier
 def arena : Arena where
   signature := complexSignature
-  Law R := ∀ (f : Test) (j : ℕ) (m : ℤ),
-    R.readout () () ((f.frequencyBinomial j).coefficient m) (((Ring.choose m j : ℤ) : ℂ) * f.coefficient m)
+  Law ρ := ∀ (f : Test) (j : ℕ) (m : ℤ),
+    ρ.readout () () ((f.frequencyBinomial j).coefficient m) (((Ring.choose m j : ℤ) : ℂ) * f.coefficient m)
 private theorem rejected_bad : ¬ arena.Law (complexRejected) := by
   intro h
   exact h zeroTest 0 0
@@ -121,9 +121,9 @@ end multiplier
 namespace differential_zero
 def arena : Arena where
   signature := complexSignature
-  Law R := ∀ (f g : Test)
+  Law ρ := ∀ (f g : Test)
     (hfg : ∀ x : ℝ, f.lift x * g.lift x = 0) (j : ℕ),
-    ∀ x : ℝ, R.readout () () (((f.frequencyBinomial j).product g).lift x) (0)
+    ∀ x : ℝ, ρ.readout () () (((f.frequencyBinomial j).product g).lift x) (0)
 private theorem rejected_bad : ¬ arena.Law (complexRejected) := by
   intro h
   exact h zeroTest zeroTest (by intro x; simp [zeroTest]) 0 0
@@ -164,9 +164,9 @@ end differential_zero
 namespace support
 def arena : Arena where
   signature := complexSignature
-  Law R := ∀ (f g : Test)
+  Law ρ := ∀ (f g : Test)
     (h : Disjoint (tsupport f.periodic.lift) (tsupport g.periodic.lift)),
-    ∀ x : ℝ, R.readout () () (f.lift x * g.lift x) (0)
+    ∀ x : ℝ, ρ.readout () () (f.lift x * g.lift x) (0)
 private theorem rejected_bad : ¬ arena.Law (complexRejected) := by
   intro h
   exact h zeroTest zeroTest zero_disjoint 0
@@ -207,10 +207,10 @@ end support
 namespace product
 def arena : Arena where
   signature := sumSignature
-  Law R := ∀ (T : ℝ) [Fact (0<T)],
+  Law ρ := ∀ (T : ℝ) [Fact (0<T)],
     ∀ (F G : C(AddCircle T, ℂ))
     (hF : Summable (fun m : ℤ => ‖fourierCoeff F m‖)) (t : ℤ),
-    R.readout () () (fun m : ℤ => fourierCoeff F m * fourierCoeff G (t-m))
+    ρ.readout () () (fun m : ℤ => fourierCoeff F m * fourierCoeff G (t-m))
       (fourierCoeff (F*G) t) ∧
     Summable (fun m : ℤ => ‖fourierCoeff F m * fourierCoeff G (t-m)‖)
 private theorem rejected_bad : ¬ arena.Law (sumRejected) := by
@@ -254,13 +254,13 @@ end product
 namespace double_absolute
 def arena : Arena where
   signature := seriesSignature (ℤ × ℤ)
-  Law R := ∀ (E : Type u) [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E],
+  Law ρ := ∀ (E : Type u) [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E],
     ∀ (C : ℤ → ℤ → E) (K : ℝ) (R : ℕ)
     (hK : 0 ≤ K)
     (hC : ∀ m n : ℤ,
       ‖C m n‖ ≤ K*(1+|(m : ℝ)|)^R*(1+|(n : ℝ)|)^R)
     (f g : Test),
-    R.readout () () (fun mn : ℤ × ℤ =>
+    ρ.readout () () (fun mn : ℤ × ℤ =>
       ‖(f.coefficient mn.1 * g.coefficient mn.2) • C mn.1 mn.2‖)
 private theorem rejected_bad : ¬ arena.Law (seriesRejected (ℤ × ℤ)) := by
   intro h
@@ -302,13 +302,13 @@ end double_absolute
 namespace contact_absolute
 def arena : Arena where
   signature := seriesSignature ℤ
-  Law R := ∀ (E : Type u) [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E],
+  Law ρ := ∀ (E : Type u) [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E],
     ∀ (C : ℤ → ℤ → E) (K : ℝ) (R : ℕ)
     (hK : 0 ≤ K)
     (hC : ∀ m n : ℤ,
       ‖C m n‖ ≤ K*(1+|(m : ℝ)|)^R*(1+|(n : ℝ)|)^R)
     (f g : Test) (j : ℕ),
-    R.readout () () (fun t : ℤ =>
+    ρ.readout () () (fun t : ℤ =>
       ‖(((f.frequencyBinomial j).product g).coefficient t) • contactCoefficient C j t‖)
 private theorem rejected_bad : ¬ arena.Law (seriesRejected ℤ) := by
   intro h
@@ -350,13 +350,13 @@ end contact_absolute
 namespace contact_formula
 def arena : Arena where
   signature := seriesSignature (ℤ × ℤ)
-  Law R := ∀ (E : Type u) [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E],
+  Law ρ := ∀ (E : Type u) [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E],
     ∀ (C : ℤ → ℤ → E) (K : ℝ) (R N : ℕ)
     (hK : 0 ≤ K)
     (hC : ∀ m n : ℤ,
       ‖C m n‖ ≤ K*(1+|(m : ℝ)|)^R*(1+|(n : ℝ)|)^R)
     (hdelta : delta^[N] C = 0) (f g : Test),
-    R.readout () () (fun mn : ℤ × ℤ =>
+    ρ.readout () () (fun mn : ℤ × ℤ =>
       ‖(f.coefficient mn.1 * g.coefficient mn.2) • C mn.1 mn.2‖) ∧
     (∀ j : ℕ, Summable (fun t : ℤ =>
       ‖(((f.frequencyBinomial j).product g).coefficient t) • contactCoefficient C j t‖)) ∧
@@ -403,14 +403,14 @@ end contact_formula
 namespace zero_product
 def arena : Arena where
   signature := equalitySignature.{u}
-  Law R := ∀ (E : Type u) [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E],
+  Law ρ := ∀ (E : Type u) [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E],
     ∀ (C : ℤ → ℤ → E) (K : ℝ) (R N : ℕ)
     (hK : 0 ≤ K)
     (hC : ∀ m n : ℤ,
       ‖C m n‖ ≤ K*(1+|(m : ℝ)|)^R*(1+|(n : ℝ)|)^R)
     (hdelta : delta^[N] C = 0) (f g : Test)
     (hfg : ∀ x : ℝ, f.lift x * g.lift x = 0),
-    R.readout () E ((∑' mn : ℤ × ℤ, (f.coefficient mn.1 * g.coefficient mn.2) • C mn.1 mn.2)) (0)
+    ρ.readout () E ((∑' mn : ℤ × ℤ, (f.coefficient mn.1 * g.coefficient mn.2) • C mn.1 mn.2)) (0)
 private theorem rejected_bad : ¬ arena.Law (equalityRejected) := by
   intro h
   exact h (ULift.{u} ℂ) (fun _ _ => 0) 0 0 0 (by norm_num) (by intro m n; simp) rfl zeroTest zeroTest (by intro x; simp [zeroTest])
@@ -451,13 +451,13 @@ end zero_product
 namespace separated
 def arena : Arena where
   signature := equalitySignature.{u}
-  Law R := ∀ (E : Type u) [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E],
+  Law ρ := ∀ (E : Type u) [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E],
     ∀ (C : ℤ → ℤ → E) (K : ℝ) (R N : ℕ) (hK : 0 ≤ K)
     (hC : ∀ m n : ℤ,
       ‖C m n‖ ≤ K*(1+|(m : ℝ)|)^R*(1+|(n : ℝ)|)^R)
     (hdelta : delta^[N] C = 0) (f g : Test)
     (hfg : Disjoint (tsupport f.periodic.lift) (tsupport g.periodic.lift)),
-    R.readout () E ((∑' mn : ℤ × ℤ, (f.coefficient mn.1 * g.coefficient mn.2) • C mn.1 mn.2)) (0)
+    ρ.readout () E ((∑' mn : ℤ × ℤ, (f.coefficient mn.1 * g.coefficient mn.2) • C mn.1 mn.2)) (0)
 private theorem rejected_bad : ¬ arena.Law (equalityRejected) := by
   intro h
   exact h (ULift.{u} ℂ) (fun _ _ => 0) 0 0 0 (by norm_num) (by intro m n; simp) rfl zeroTest zeroTest zero_disjoint
