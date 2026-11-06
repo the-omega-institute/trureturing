@@ -12,6 +12,8 @@ import D5.S3.Geometry.OriginalLabelTwoSum.Vertical
 collapse or its endpoint as a premise. The no-vertical permission is checked
 against actual extracted native pairs, not a guessed child schedule. -/
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Set Finset
 namespace D5.S3.Geometry.OriginalLabelTwoSum
 open FiniteElementaryCollapse FiniteRelativeSimplicialCollapse
@@ -26,7 +28,7 @@ private theorem restrict_cut (X a : Finset V) (C : Family V) :
   apply SetLike.ext
   intro s
   simp only [restrict,cut,LowerSet.mem_inf_iff,LowerSet.mem_mk,mem_delta,
-    Finset.mem_singleton,forall_eq]
+    Finset.mem_singleton,forall_eq,Set.mem_setOf_eq]
   tauto
 
 private theorem subset_insert_erase (e : V) (a s : Finset V) :
@@ -45,14 +47,14 @@ private theorem link_cut (X a : Finset V) (e : V) (C : Family V) :
   apply SetLike.ext
   intro s
   simp only [rawLink,cut,LowerSet.mem_mk,Finset.mem_singleton,forall_eq,
-    subset_insert_erase]
+    subset_insert_erase,Set.mem_setOf_eq]
   tauto
 
 private theorem nativeAug_retained (P : CollapsePair V) :
     nativeAug P.retained = cut (nativeAug P.ambient) {P.lower} := by
   apply SetLike.ext
   intro s
-  simpa only [cut,Finset.mem_singleton,forall_eq] using augmented_retained P s
+  simpa only [cut,Finset.mem_singleton,forall_eq,Set.mem_setOf_eq] using augmented_retained P s
 
 /-- One child pair, on its actual native ambient, produces a finite native
 parent sequence. Its source and target are computed Phi states. -/
@@ -115,7 +117,7 @@ def replayPair (X Y Z : Finset V) (e : V) (E : Family V)
         · right
           have hh := congrArg (fun z : Finset V => z.erase e) h
           simpa [CollapsePair.upper,Finset.erase_insert
-            (show e ∉ s from fun h => heX (hsL.1 h)),Finset.erase_insert_of_ne huE.symm,a] using hh
+            (show e ∉ s from fun h => heX (hsL.1 h)),Finset.erase_insert_of_ne huE,a] using hh
       have hDel : restrict X (cut C {P.lower}) = D := by
         apply SetLike.ext
         intro s
@@ -155,7 +157,7 @@ def replayPair (X Y Z : Finset V) (e : V) (E : Family V)
       exact (verticalGamma X Y Z P.lower D L E hd hz hD hL hE hLD haL maxD maxL
         P.lower_nonempty hE0 (permission hve)).cast rfl (by
           rw [htarget]
-          simp only [parentOf,restrict_cut,link_cut,Finset.erase_eq_of_not_mem heS]
+          simp only [parentOf,restrict_cut,link_cut,Finset.erase_eq_of_notMem heS]
           rfl)
   · -- Neither child face contains e: deletion rectangle.
     have heS : e ∉ P.lower := fun h => heU (Finset.mem_insert_of_mem h)
@@ -172,16 +174,17 @@ def replayPair (X Y Z : Finset V) (e : V) (E : Family V)
     let Q := emitPair D P.lower P.apex P.lower_nonempty P.apex_notMem huD
       (fun s hs hls => cofaces s hs.1 hls)
     have hLink : rawLink X e (cut C {P.lower}) = L := by
-      rw [link_cut,Finset.erase_eq_of_not_mem heS]
+      rw [link_cut,Finset.erase_eq_of_notMem heS]
       apply SetLike.ext
       intro s
       constructor
       · exact fun h => h.1
       · intro h
-        exact ⟨h,by intro q hq hqs
-                     have heq : q = P.lower := by simpa using hq
-                     subst q
-                     exact hnL (L.lower hqs h)⟩
+        refine ⟨h, ?_⟩
+        intro q hq hqs
+        have heq : q = P.lower := by simpa using hq
+        subst q
+        exact hnL (L.lower hqs h)
     exact (deletionLift X Y Z D L E hd hz hD hL hE Q rfl hnL).cast rfl (by
       rw [htarget]
       simp only [parentOf,restrict_cut,hLink]
@@ -344,23 +347,15 @@ private theorem replayBranchPairs_faces
           · exact Or.inl ha
           · exact Or.inr (Or.inl ⟨hv, hl⟩)
           · exact Or.inr (Or.inr ht)
-      simp only [replayBranchPairs, replayFacePairs, orderedPair,
-        if_neg (not_not.mpr heU), dif_neg (not_not.mpr heU),
-        if_pos heL, dif_pos heL]
-      congr 1
-      funext t
-      exact Prod.ext rfl (herase t)
+      simp [replayBranchPairs, replayFacePairs, orderedPair, heU, heL, herase]
     · have heA : P.apex = e :=
         (Finset.mem_insert.mp (show e ∈ insert P.apex P.lower from heU)).resolve_right heL |>.symm
       simp only [replayBranchPairs, replayFacePairs, orderedPair,
-        if_neg (not_not.mpr heU), dif_neg (not_not.mpr heU),
-        if_neg heL, dif_neg heL, dif_pos heA]
+        heU, heL, not_true_eq_false, not_false_eq_true, if_false, if_true,
+        dif_neg (not_not.mpr heU), dif_neg heL, dif_pos heA]
       rw [← hgamma heA]
       simp only [orderedPairs, orderedPair, List.map_map]
-  · simp only [replayBranchPairs, replayFacePairs, orderedPair, if_pos heU, dif_pos heU]
-    congr 1
-    funext t
-    exact Prod.ext rfl (hupper t)
+  · simp [replayBranchPairs, replayFacePairs, orderedPair, heU, hupper]
 
 /-- The complete replay list is a flat map on the ORIGINAL child faces. The
 right Gamma is the same classical choice as in the constructor. Membership is
@@ -395,6 +390,7 @@ theorem replaySequence_orderedPairs
     have hgamma : ∀ h : P.apex = e,
         orderedPairs (hperm h) = rightGammaPairs Y E := by
       intro h
+      dsimp only [hperm]
       rcases permission with hg | hn
       · change orderedPairs (Classical.choice hg) = rightGammaPairs Y E
         simp only [rightGammaPairs, dif_pos hg]

@@ -11,6 +11,8 @@ import D5.S3.Geometry.OriginalLabelTwoSum.Fibre
 and its separate collar stage. It assumes source-fibre intersection facts, never
 a collapse of the parent or an output certificate. -/
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Set Finset
 namespace D5.S3.Geometry.OriginalLabelTwoSum
 open FiniteElementaryCollapse FiniteRelativeSimplicialCollapse

@@ -20,6 +20,9 @@ computed core, with every critical TOP absent; it never starts at the main
 endpoint. The declared outer ground W may contain additional ghost labels.
 -/
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+attribute [local instance] Classical.propDecidable
 open Set Finset
 namespace D5.S3.Geometry.OriginalLabelTwoSum.HistoryLeafCap
 open OriginalLabelTwoSum HistoryCorners
@@ -164,16 +167,19 @@ def padCertificate (W U d : Finset V) (B M : Family V)
     · rintro ((hs | ⟨a, ha, t, ht, rfl⟩) | ⟨q, hq, hs⟩)
       · exact Or.inl hs
       · exact Or.inr ⟨a, ha, t, Or.inl ht, rfl⟩
-      · obtain ⟨q, hq, rfl⟩ := Finset.mem_image.mp hq
+      · change q ∈ c.critical.image (fun q => d ∪ q) at hq
+        obtain ⟨q, hq, rfl⟩ := Finset.mem_image.mp hq
         refine Or.inr ⟨s ∩ d, Finset.inter_subset_right, s ∩ q,
           Or.inr ⟨q, hq, Finset.inter_subset_right⟩, ?_⟩
         exact split_union hs
   have hCells : CriticalData C Q := by
     constructor
     · intro q hq
+      change q ∈ c.critical.image (fun q => d ∪ q) at hq
       obtain ⟨q, hq, rfl⟩ := Finset.mem_image.mp hq
       exact hd.mono Finset.subset_union_left
     · intro q hq hC
+      change q ∈ c.critical.image (fun q => d ∪ q) at hq
       obtain ⟨q, hq, rfl⟩ := Finset.mem_image.mp hq
       rcases hC with hBq | ⟨a, ha, t, ht, he⟩
       · exact hmissing _ hBq Finset.subset_union_left
@@ -181,6 +187,7 @@ def padCertificate (W U d : Finset V) (B M : Family V)
           (c.critical_supported q hq) (by rw [← he]; exact Finset.subset_union_right)
         exact c.cells.absent q hq (c.core.lower hqt ht)
     · intro q hq s hs
+      change q ∈ c.critical.image (fun q => d ∪ q) at hq
       obtain ⟨q, hq, rfl⟩ := Finset.mem_image.mp hq
       have hqU := c.critical_supported q hq
       have hsDU := hs.subset.trans (Finset.union_subset_union le_rfl hqU)
@@ -208,7 +215,9 @@ def padCertificate (W U d : Finset V) (B M : Family V)
         rw [hsplit]
         exact hboundary (s ∩ d) hproper (s ∩ U) Finset.inter_subset_right
     · intro q hq t ht hqt
+      change q ∈ c.critical.image (fun q => d ∪ q) at hq
       obtain ⟨q, hq, rfl⟩ := Finset.mem_image.mp hq
+      change t ∈ c.critical.image (fun q => d ∪ q) at ht
       obtain ⟨t, ht, rfl⟩ := Finset.mem_image.mp ht
       exact congrArg (fun s => d ∪ s) (c.cells.antichain q hq t ht
         (union_cancel_right hdu (c.critical_supported q hq) hqt))
@@ -246,10 +255,11 @@ def padCertificate (W U d : Finset V) (B M : Family V)
           exact Finset.subset_union_left⟩
         exact hboundary a hproper t (ht.trans (Finset.singleton_subset_iff.mpr hpU))
     · intro hs
-      exact ⟨Or.inl hs, by intro a ha h;
-        have he : a = d := Finset.mem_singleton.mp ha
-        subst a
-        exact hmissing s hs h⟩
+      refine ⟨Or.inl hs, ?_⟩
+      intro a ha h
+      have he : a = d := Finset.mem_singleton.mp ha
+      subst a
+      exact hmissing s hs h
   let Rseq : Sequence (project H) (project B) :=
     Sequence.step R ((Sequence.refl (project B)).cast hRetained.symm rfl)
   refine {
@@ -264,7 +274,8 @@ def padCertificate (W U d : Finset V) (B M : Family V)
     main := P.cast rfl (congrArg project hEnd)
     separate := T.append (Rseq.append (collapseCone W B x hB hx hcone)) }
   intro q hq
-  obtain ⟨q, hq, rfl⟩ := Finset.mem_image.mp hq
+  change q ∈ c.critical.image (fun q => d ∪ q) at hq
+      obtain ⟨q, hq, rfl⟩ := Finset.mem_image.mp hq
   exact (Finset.union_subset_union le_rfl (c.critical_supported q hq)).trans hW
 
 /-- All three factor tags in the common padding construction. This function
@@ -332,7 +343,7 @@ def capOutput (U : Finset V) (a : V) (M : Family V) (ha : a ∉ U)
       (fun s h hsub => ha (h (hsub (by simp)))) (by
         intro z hz t ht
         have hz0 : z = ∅ := by
-          apply Finset.eq_empty_iff_forall_not_mem.mpr
+          apply Finset.eq_empty_iff_forall_notMem.mpr
           intro v hv
           have hva := Finset.mem_singleton.mp (hz.subset hv)
           exact hz.ne (Finset.Subset.antisymm hz.subset
@@ -348,7 +359,7 @@ def capOutput (U : Finset V) (a : V) (M : Family V) (ha : a ∉ U)
         rw [hM, (rawJoin_unit _).2]
         exact sup_eq_right.mpr (fun s h => h.trans (Finset.empty_subset _))
       exact changeOutput (.strong (coneCertificate {a} (delta {a}) a (fun _ h => h)
-        le_rfl (fun s h => Finset.insert_subset (by simp) h))) he.symm
+        (by change ({a} : Finset V) ⊆ {a}; exact le_rfl) (fun s h => Finset.insert_subset (by simp) h))) he.symm
     · have hM : M = ⊥ := by
         apply SetLike.ext; intro s
         constructor
@@ -380,7 +391,7 @@ private theorem sequence_empty_target {K L : PreAbstractSimplicialComplex V}
         obtain ⟨v, hv⟩ := P.lower_nonempty
         have he : v = P.apex := Finset.mem_singleton.mp (h hv)
         exact P.apex_notMem (he ▸ hv)
-      rw [ih] at hp
+      rw [ih hL] at hp
       exact False.elim (hL _ hp)
 
 /-- Appending an already constructed output after an actual strip. For tags,
@@ -557,7 +568,7 @@ private theorem twoLeaf_delete (U : Finset V) (a b c : V) (K : Family V)
             intro v hv
             obtain ⟨hvc, hvt⟩ := Finset.mem_erase.mp hv
             exact (Finset.mem_insert.mp (hs t ht hvt)).resolve_left hvc
-          refine ⟨hn, Or.inr ⟨{a,c}, le_rfl, t.erase c,
+          refine ⟨hn, Or.inr ⟨{a,c}, (by change ({a,c} : Finset V) ⊆ {a,c}; exact le_rfl), t.erase c,
             ⟨htU, (Finset.insert_erase htC).symm ▸ ht⟩, ?_⟩⟩
           rw [he, hxA]
           ext v
@@ -585,7 +596,7 @@ private theorem twoLeaf_delete (U : Finset V) (a b c : V) (K : Family V)
         (Finset.mem_insert.mp (h hbs)).elim (fun h => hab h.symm) hbU⟩
     · exact ⟨⟨hn, Or.inl (Or.inl h)⟩, fun hbs => hb (h hbs)⟩
     · have hbig : insert a (insert c t) ∈ twoLeafFamily U a b c K :=
-        Or.inr ⟨{a}, by simp, insert c t, htK, by simp⟩
+        Or.inr ⟨{a}, by simp, insert c t, htK, by simp [Finset.insert_comm]⟩
       have hsub : s ⊆ insert a (insert c t) := by
         rw [he]
         exact Finset.union_subset (hx.trans (by simp)) (by simp)
@@ -751,7 +762,7 @@ theorem twoLeafOutput_criticalState (U : Finset V) (a b c : V) (K : Family V)
     (twoLeafOutput U a b c K ha hb hc hs o).criticalState =
       padCriticalState {a,c} o.criticalState := by
   simp only [twoLeafOutput, prependOutput_criticalState]
-  simp only [twoLeafEndOutput, dif_pos hU, paddedOutput_criticalState]
+  simp only [twoLeafEndOutput, dif_pos hU, if_pos hU, paddedOutput_criticalState]
 
 /-- The zero-ground D6 branch is determined by actual empty-face membership.
 It returns two isolated points or an edge, with critical c or no critical. -/
