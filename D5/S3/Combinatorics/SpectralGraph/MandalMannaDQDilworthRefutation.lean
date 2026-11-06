@@ -45,10 +45,9 @@ chain8: proof_shape: bind-only; consumers: dilworth8_le.
 dilworth8_le: proof_shape: bind-only; consumers: dilworth8_eq.
 dilworth8_eq: proof_shape: bind-only; consumers: result.
 no_local8: proof_shape: bind-only; consumers: result.
-label8: proof_shape: bind-only; consumers: label8_bijective, l8, l8_apply, shift8_model, eigenvalue8.
+label8: proof_shape: bind-only; consumers: label8_bijective, l8, shift8_model, eigenvalue8.
 label8_bijective: proof_shape: bind-only; consumers: l8.
-l8: proof_shape: bind-only; consumers: l8_apply, u8, v8, shift8_model, eigen8_of_kernel, mode8_independent, eigenvalue8.
-l8_apply: proof_shape: bind-only; consumers: shift8_model.
+l8: proof_shape: bind-only; consumers: u8, v8, shift8_model, eigen8_of_kernel, mode8_independent, eigenvalue8.
 u8: proof_shape: bind-only; consumers: u8_mode, mode8_independent, multiplicity8_ge, eigenvalue8.
 v8: proof_shape: bind-only; consumers: v8_mode, mode8_independent, multiplicity8_ge.
 distanceCode8: proof_shape: bind-only; consumers: distanceCode8_table.
@@ -367,8 +366,6 @@ private theorem label8_bijective : Function.Bijective label8 := by
 
 private noncomputable def l8 : Fin 8 ≃ (Fin 2 ⊕ (Fin 3 ⊕ Fin 3)) := Equiv.ofBijective label8 label8_bijective
 
-private theorem l8_apply (i : Fin 8) : l8 i = label8 i := rfl
-
 private noncomputable def u8 : (Vertices alpha8.reverse) → ℝ := fun w => familyU 2 (l8 (e8.symm w))
 private noncomputable def v8 : (Vertices alpha8.reverse) → ℝ := fun w => familyV 2 (l8 (e8.symm w))
 
@@ -399,7 +396,6 @@ private theorem shift8_model (i j : Fin 8) :
   rw [← e8.sum_comp]
   simp only [e8.injective.eq_iff]
   simp_rw [distance8_table]
-  simp only [l8_apply]
   fin_cases i <;> fin_cases j <;>
     norm_num [distanceTable8, label8, familyShift, Fin.sum_univ_succ]
 
