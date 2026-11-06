@@ -34,7 +34,7 @@ For every positive n, compare the first row entry with the length of each actual
 
 **Theorem 1.3 (A full dense copy in each block).**
 
-$$\forall u,v: \mathbb{N}, 0<u \land 0<v \land \operatorname{Coprime}(u, v) \land \operatorname{IsChain}(\operatorname{map}(\operatorname{fst}, \operatorname{divisorsAntidiagonalList}(u)), (a,b \mapsto b \le 2\cdot a)) \implies \forall B \in \operatorname{divisorBlocks}(u\cdot v), \operatorname{card}(\operatorname{divisors}(u)) \le \operatorname{length}(B)$$
+$$\forall u,v: \mathbb{N}, 0<u \land 0<v \land \operatorname{Coprime}(u, v) \land \operatorname{IsChain}((a,b \mapsto b \le 2\cdot a), \operatorname{map}(\operatorname{fst}, \operatorname{divisorsAntidiagonalList}(u))) \implies \forall B \in \operatorname{divisorBlocks}(u\cdot v), \operatorname{card}(\operatorname{divisors}(u)) \le \operatorname{length}(B)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Factorization/TwoDenseDivisorBlockMinimum.block_card_ge_of_dense_factor` (`✓ std3`). ∎
 
@@ -46,7 +46,7 @@ Assume positive coprime u,v and a dense divisor list for u. For any member d of 
 
 **Theorem 1.4 (The dense and rough factors).**
 
-$$\forall u,v: \mathbb{N}, 0<u \land 0<v \land \operatorname{Coprime}(u, v) \land \operatorname{IsChain}(\operatorname{map}(\operatorname{fst}, \operatorname{divisorsAntidiagonalList}(u)), (a,b \mapsto b \le 2\cdot a)) \land (\forall p, \operatorname{Prime}(p) \land \operatorname{dvd}(p, v) \implies 2\cdot u < p) \implies \forall B \in \operatorname{divisorBlocks}(u\cdot v), \operatorname{headD}(\operatorname{row}(u\cdot v), 0) \le \operatorname{length}(B)$$
+$$\forall u,v: \mathbb{N}, 0<u \land 0<v \land \operatorname{Coprime}(u, v) \land \operatorname{IsChain}((a,b \mapsto b \le 2\cdot a), \operatorname{map}(\operatorname{fst}, \operatorname{divisorsAntidiagonalList}(u))) \land (\forall p: \mathbb{N}, \operatorname{Prime}(p) \land \operatorname{dvd}(p, v) \implies 2\cdot u < p) \implies \forall B \in \operatorname{divisorBlocks}(u\cdot v), \operatorname{headD}(\operatorname{row}(u\cdot v), 0) \le \operatorname{length}(B)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Factorization/TwoDenseDivisorBlockMinimum.first_block_min_of_dense_factor` (`✓ std3`). ∎
 
