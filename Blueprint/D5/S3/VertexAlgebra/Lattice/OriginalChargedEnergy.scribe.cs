@@ -9,14 +9,7 @@ internal sealed class OriginalChargedEnergyDocument : IScribeDocumentDefinition
         H("Original lattice field energy bounds"),
         Blocks(
             Paragraph(Text("D is the original LatticeData, with its symmetric integral Gram matrix G and even diagonal. Carrier(D) is the original finite charge sum of oscillator polynomials. The real Gram matrix is assumed positive definite. H is a complex matrix with both H*gramComplex(D)=1 and gramComplex(D)*H=1. There is no integral determinant-unit hypothesis, diagonal-Gram restriction, support-size bound, oscillator-degree cutoff, alternative carrier or half-frequency metric.")),
-            Describe.Lean(
-                DescribeId.Create("original-charged-energy-norm"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/OriginalChargedEnergy.normD"),
-                H("The original Hermitian norm"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every original D and v:Carrier(D), normD(v)=sqrt(Re(Hm(v,v))), where Hm is OriginalMatterHermitian.Hm. The definition has no positivity premise. The proofs derive its definiteness and norm laws from positive definiteness of the original real Gram matrix, using a full real orthonormal frame and its inverse substitution."))),
-                DescribeRole.Definition),
+            Paragraph(Text("The original normD is supplied by Energy/OriginalCurrentEnergy and remains in the OriginalChargedEnergy namespace through this module import. Energy/OriginalNeutralEnergy supplies the unchanged private word estimates and finite energy recombination. This is a source-module split of the same proofs, with no additional public theorem or independent novelty claim.")),
             Describe.Lean(
                 DescribeId.Create("original-charged-energy-neutral-bound"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/OriginalChargedEnergy.neutral_energy_bound"),

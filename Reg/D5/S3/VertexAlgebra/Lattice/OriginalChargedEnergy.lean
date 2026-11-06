@@ -16,7 +16,7 @@ open _root_.D5.S3.VertexAlgebra.OriginalGram
 open _root_.D5.S3.VertexAlgebra.LatticeAllStateField
 open _root_.D5.S3.VertexAlgebra.LatticeSugawaraCurrents
 open _root_.D5.S3.VertexAlgebra.Lattice.OriginalChargedEnergy
-open private fullFrame from D5.S3.VertexAlgebra.Lattice.OriginalChargedEnergy
+open private fullFrame from D5.S3.VertexAlgebra.Energy.OriginalCurrentEnergy
 open scoped VertexOperator Matrix
 
 noncomputable section

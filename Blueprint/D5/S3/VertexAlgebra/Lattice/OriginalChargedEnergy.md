@@ -6,19 +6,9 @@ Uniform energy bounds on the original finite lattice carrier with its integer-fr
 
 D is the original LatticeData, with its symmetric integral Gram matrix G and even diagonal. Carrier(D) is the original finite charge sum of oscillator polynomials. The real Gram matrix is assumed positive definite. H is a complex matrix with both H*gramComplex(D)=1 and gramComplex(D)*H=1. There is no integral determinant-unit hypothesis, diagonal-Gram restriction, support-size bound, oscillator-degree cutoff, alternative carrier or half-frequency metric.
 
-**Definition 1.1 (The original Hermitian norm).**
+The original normD is supplied by Energy/OriginalCurrentEnergy and remains in the OriginalChargedEnergy namespace through this module import. Energy/OriginalNeutralEnergy supplies the unchanged private word estimates and finite energy recombination. This is a source-module split of the same proofs, with no additional public theorem or independent novelty claim.
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/OriginalChargedEnergy.normD`
-
-*Formalization.* `D5/S3/VertexAlgebra/Lattice/OriginalChargedEnergy.normD` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every original D and v:Carrier(D), normD(v)=sqrt(Re(Hm(v,v))), where Hm is OriginalMatterHermitian.Hm. The definition has no positivity premise. The proofs derive its definiteness and norm laws from positive definiteness of the original real Gram matrix, using a full real orthonormal frame and its inverse substitution.
-
-**Theorem 1.2 (Uniform homogeneous neutral bound).**
+**Theorem 1.1 (Uniform homogeneous neutral bound).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/OriginalChargedEnergy.neutral_energy_bound`
 
@@ -34,7 +24,7 @@ Under inverse full-frame substitution the exact original form has weights produc
 
 For a word between grades E,F<=M, positive energy gives finite left and right ranges F+1 and E+r+1 at derivative order r. Every surviving intermediate grade is between 0 and M. With A(r)=(r+1)^r/r!, an admissible recursive constant is K(empty)=1 and K((i,r)::tail)=(r+2)*A(r)*sqrt(3*G(i,i))*K(tail). The word exponent is its weight plus length, at most twice its weight. The polynomial constant is 1+sum_e |coeff(p,e)|*K(occurrences(e)), hence strictly positive even for p=0. Exact charge and energy orthogonality give the full finite-state result without an input-support multiplier.
 
-**Theorem 1.3 (All-integer charged energy bound).**
+**Theorem 1.2 (All-integer charged energy bound).**
 
 Lean statement: `D5/S3/VertexAlgebra/Lattice/OriginalChargedEnergy.charged_energy_bound`
 
@@ -54,11 +44,4 @@ The proof reuses the original lattice fields, factorial pairing, full-frame matr
 
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/OriginalChargedEnergy.charged_energy_bound`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/OriginalChargedEnergy.neutral_energy_bound`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/OriginalChargedEnergy.normD`
-- Dependency: [D5/S3/VertexAlgebra/Energy/LatticeCoefficientEnergy](../Energy/LatticeCoefficientEnergy.md)
-- Dependency: [D5/S3/VertexAlgebra/Lattice/LatticeLightConeCoordinates](LatticeLightConeCoordinates.md)
-- Dependency: [D5/S3/VertexAlgebra/LatticeActualConformalState](../LatticeActualConformalState.md)
-- Dependency: [D5/S3/VertexAlgebra/LatticeActualLZeroGrading](../LatticeActualLZeroGrading.md)
-- Dependency: [D5/S3/VertexAlgebra/LatticeActualStateFieldCalculus](../LatticeActualStateFieldCalculus.md)
-- Dependency: [D5/S3/VertexAlgebra/SourceBPZ/ChargedRawTranspose](../SourceBPZ/ChargedRawTranspose.md)
-- Dependency: [D5/S3/VertexAlgebra/SourceBPZ/TransverseHermitian](../SourceBPZ/TransverseHermitian.md)
+- Dependency: [D5/S3/VertexAlgebra/Energy/OriginalNeutralEnergy](../Energy/OriginalNeutralEnergy.md)
