@@ -97,7 +97,8 @@ def contractibleCollapse {X : Type*} [TopologicalSpace X] [T1Space X]
     a () Ra RU e.toFun e.invFun
     (Classical.choice e.left_inv) (Classical.choice e.right_inv) γ)
   have hconst : B.backward.comp B.forward = ContinuousMap.const C a := by
-    ext x
+    apply ContinuousMap.ext
+    intro x
     change B.backward (B.forward x) = a
     rw [Subsingleton.elim (B.forward x) (), B.backward_point]
   let c : (ContinuousMap.id C).HomotopyRel (ContinuousMap.const C a) {a} :=

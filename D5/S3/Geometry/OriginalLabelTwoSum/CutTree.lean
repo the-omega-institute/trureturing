@@ -113,7 +113,8 @@ def tree : SimpleGraph g.Carrier :=
 theorem adjacency (w z : g.Carrier) : g.tree.Adj w z ↔
     (∃ x y, g.cut.Adj x y ∧ g.qL x = w ∧ g.qL y = z) ∨
     (∃ x y, g.TR.Adj x y ∧ g.qR x = w ∧ g.qR y = z) := by
-  simpa only [tree,SimpleGraph.sup_adj,SimpleGraph.map_adj,leftEmbedding,rightEmbedding]
+  simp only [tree,SimpleGraph.sup_adj,SimpleGraph.map_adj]
+  rfl
 
 theorem edgeSet : g.tree.edgeSet =
     Sym2.map g.qL '' g.cut.edgeSet ∪ Sym2.map g.qR '' g.TR.edgeSet := by
@@ -164,12 +165,14 @@ theorem connected : g.tree.Connected := by
   refine ⟨g.qL g.aL,?_⟩
   intro w
   have hab : g.tree.Reachable (g.qL g.aL) (g.qL g.bL) := by
-    simpa using (g.rightTree.connected g.aR g.bR).map g.rightHom
+    simpa only [rightHom,SimpleGraph.Hom.coe_mk,g.qR_a,g.qR_b] using
+      (g.rightTree.connected g.aR g.bR).map g.rightHom
   rcases g.cover w with ⟨x,rfl⟩ | ⟨y,rfl⟩
   · rcases g.cut_cover x with hx | hx
     · exact hx.map g.leftHom
     · exact hab.trans (hx.map g.leftHom)
-  · simpa using (g.rightTree.connected g.aR y).map g.rightHom
+  · simpa only [rightHom,SimpleGraph.Hom.coe_mk,g.qR_a] using
+      (g.rightTree.connected g.aR y).map g.rightHom
 
 /-- Each retained left edge is still a bridge. Its original cut predicate is
 constant on BOTH left terminals, so it extends constantly over the right tree. -/
