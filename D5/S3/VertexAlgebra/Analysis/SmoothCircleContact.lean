@@ -14,17 +14,6 @@ import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 import Mathlib.MeasureTheory.Function.LocallyIntegrable
 
 /-!
-SOURCE-ONLY / UNCOMPILED.
-
-Integration dependency, intentionally not repaired in this packet: the accepted
-SmoothCircleFourier source makes Test.jet_periodic, Test.coefficient_circle,
-Test.coeffJet_step, Test.weight_nonneg, and Test.weighted_summable private.
-The uses below name their ordinary intended
-public names, never private generated names. The integration owner must publish
-these actual consumed suppliers at their definitions, under CLAUDE 4.3, in the
-same follow-up as this consumer. No supplier body is copied or changed here.
-Until that source visibility change this module cannot elaborate.
-
 Fourier reconstruction, integration, differentiation, binomial coefficients,
 and unconditional sum rearrangements are Mathlib suppliers, Apache 2.0. This
 module adds a pointwise PRODUCT coefficient formula, not circle convolution.

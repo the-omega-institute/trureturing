@@ -11,11 +11,7 @@ import D5.S3.VertexAlgebra.LatticeActualChargedLocality
 import Mathlib.Analysis.Normed.Operator.Bilinear
 import Mathlib.Analysis.Normed.Ring.InfiniteSum
 
-/- SOURCE-ONLY / UNCOMPILED.
-   The companion patch proposes visibility changes to exactly six consumed
-   existing private suppliers, without changing their proofs. Those changes
-   have NOT been applied. No open-private or mangled private identifier is used.
-
+/-
    All spaces, modes, constants, and tests below are the original ones.
    Composition is transported only along equality of natural Sobolev orders.
    The delta convention is delta C m n = C (m+1) n - C m (n+1).

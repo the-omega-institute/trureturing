@@ -13,8 +13,6 @@ import D5.S3.VertexAlgebra.FieldNormalProductLocality
 import Mathlib.Tactic
 
 /-!
-SOURCE-ONLY / UNCOMPILED.
-
 The forward difference and its finite shift expansion are Mathlib suppliers
 (Apache 2.0; the authors are recorded in Algebra/Group/ForwardDiff).
 Ring.choose is Mathlib's binomial-ring coefficient, including negative inputs.

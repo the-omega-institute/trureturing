@@ -10,14 +10,8 @@ import D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
 import D5.S3.VertexAlgebra.Analysis.SmoothCircleContact
 
 /-!
-SOURCE-ONLY / UNCOMPILED.
-
-This is the endpoint of the SAME proposed original weak-locality proof chain.
-The imported integer/contact and original-mode modules are uncompiled source
-candidates, to be integrated together. Their nine distinct supplier visibility
-changes are still required; this file needs no additional private supplier.
-The formal adjoint and invariance facts below are extracted from the existing
-public original_smooth_fields theorem. No private-name binding is used.
+The formal adjoint and invariance facts are supplied by the existing
+original_smooth_fields theorem.
 
 All operators act on the existing Model, Sobolev, Smooth, and smoothDomain.
 The two ordered source indices are identified with r+s+k by equality transport,
