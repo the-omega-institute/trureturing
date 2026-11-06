@@ -30,14 +30,18 @@ internal sealed class HannaA320949ModThreeDocument : IScribeDocumentDefinition
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The modulo-three conjecture is proved", ClaimBodyFormula(),
                 "Finite Newton expansion of the even polynomial t ↦ choose(t^2,k) gives an integral transform. Reciprocity forces the positive rows of that transform to vanish modulo three, and coefficientwise contraction gives a unique normalized fixed point over every commutative coefficient ring. Mapping the integral fixed point to the rationals establishes the coefficientwise equation, while reduction to ZMod(3) forces every positive coefficient to vanish there.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a320949-hanna-mod-three"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) =>
         Describe.Lean(DescribeId.Create("hanna-a320949-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] args) =>
