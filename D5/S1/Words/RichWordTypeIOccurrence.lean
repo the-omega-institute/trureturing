@@ -6,6 +6,7 @@
    utility: none
    digest: Native seven-letter fixed word, exact boundaries and Type-I return endpoint cancellation. -/
 import D5.S1.Words.MBonacciSentinelDesubstitution
+import Mathlib.Data.Matrix.Mul
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -506,7 +507,8 @@ private theorem parikh_append (s t : Word) : parikh (s++t) = parikh s+parikh t :
 
 private theorem parikh_singleton (c : Letter) : parikh [c] = unit c := by
   ext a
-  simp [parikh,letterCount,unit,Pi.single_apply,eq_comm]
+  by_cases h : a = c <;>
+    simp [parikh,letterCount,unit,Pi.single_apply,List.count_cons,h,eq_comm]
 
 private theorem parikh_cons (c : Letter) (s : Word) :
     parikh (c::s) = unit c+parikh s := by
@@ -595,5 +597,293 @@ theorem base_return_minimum :
       simp [factor,hstart]
     rw [heq,parikh_append,parikh_singleton]
     exact Nat.le_add_right _ _
+
+/-- The literal extra letters at each phase, counted in all seven coordinates. -/
+def increment (n : ℕ) : Letter → ℕ :=
+  if n % 6 = 5 then unit 0+2 • unit 6 else unit 0
+
+private theorem typeI_parikh_step (n : ℕ) :
+    parikh (typeI (n+1)) = M.mulVec (parikh (typeI n))+increment n := by
+  by_cases hn : n % 6 = 5
+  · rw [typeI,if_pos hn,increment,if_pos hn]
+    simp only [parikh_append,parikh_singleton,parikh_subst]
+    rw [parikh_cons,parikh_singleton]
+    simp only [two_nsmul]
+    abel
+  · rw [typeI,if_neg hn,increment,if_neg hn,parikh_append,parikh_singleton,parikh_subst]
+
+private theorem image_parikh (n : ℕ) (c : Letter) :
+    parikh (image phi n c) = (M^n).mulVec (unit c) := by
+  induction n with
+  | zero => simp [parikh_singleton]
+  | succ n ih =>
+    rw [RankOneMorphismIterationBound.image_succ,parikh_subst,ih,Matrix.mulVec_mulVec,
+      ← pow_succ']
+
+/-- Full actual-factor Parikh recurrence, its finite unrolling, and the exact
+matrix vector of every iterated letter image. -/
+theorem typeI_parikh_formula :
+    (∀ n, parikh (typeI (n+1)) = M.mulVec (parikh (typeI n))+increment n) ∧
+    (∀ n, parikh (typeI n) = (M^n).mulVec (unit 6) +
+      ∑ k ∈ Finset.range n, (M^(n-1-k)).mulVec (increment k)) ∧
+    (∀ n c, parikh (image phi n c) = (M^n).mulVec (unit c)) := by
+  refine ⟨typeI_parikh_step,?_,image_parikh⟩
+  intro n
+  induction n with
+  | zero => simp [typeI,parikh_singleton]
+  | succ n ih =>
+    rw [typeI_parikh_step,ih,Matrix.mulVec_add,Finset.sum_range_succ]
+    have hsum (s : Finset ℕ) (f : ℕ → Letter → ℕ) :
+        M.mulVec (∑ k ∈ s, f k) = ∑ k ∈ s, M.mulVec (f k) := by
+      classical
+      induction s using Finset.induction_on with
+      | empty => simp
+      | @insert k s hk ih => simp [hk,Matrix.mulVec_add,ih]
+    rw [hsum]
+    have hp : M.mulVec ((M^n).mulVec (unit 6)) = (M^(n+1)).mulVec (unit 6) := by
+      rw [Matrix.mulVec_mulVec,← pow_succ']
+    rw [hp]
+    have he : (∑ k ∈ Finset.range n, M.mulVec ((M^(n-1-k)).mulVec (increment k))) =
+        ∑ k ∈ Finset.range n, (M^(n+1-1-k)).mulVec (increment k) := by
+      apply Finset.sum_congr rfl
+      intro k hk
+      have hk' := Finset.mem_range.mp hk
+      have hexp : n+1-1-k = (n-1-k)+1 := by omega
+      rw [hexp,Matrix.mulVec_mulVec,← pow_succ']
+    rw [he]
+    simp only [show n+1-1-n = 0 by omega,pow_zero,Matrix.one_mulVec]
+    abel
+
+private theorem lext_iff (s : Word) (c : Letter) :
+    c ∈ Lext s ↔ ∃ a, 0 < a ∧ Occ s a ∧ word (a-1) = c := by
+  constructor
+  · rintro ⟨q,hq⟩
+    obtain ⟨hc,hs⟩ := (occ_cons _ _ _).mp hq
+    exact ⟨q+1,by omega,hs,by simpa using hc⟩
+  · rintro ⟨a,ha,hs,hc⟩
+    exact ⟨a-1,(occ_cons _ _ _).mpr ⟨hc,by simpa [Nat.sub_add_cancel ha] using hs⟩⟩
+
+private theorem rext_iff (s : Word) (c : Letter) :
+    c ∈ Rext s ↔ ∃ a, Occ s a ∧ word (a+s.length) = c := by
+  constructor
+  · rintro ⟨a,ha⟩
+    obtain ⟨hs,hc⟩ := (occ_append _ _ _).mp ha
+    exact ⟨a,hs,(occ_singleton _ _).mp hc⟩
+  · rintro ⟨a,hs,hc⟩
+    exact ⟨a,(occ_append _ _ _).mpr ⟨hs,(occ_singleton _ _).mpr hc⟩⟩
+
+private theorem sentinel_lext (s : Word) : Lext (sentinel s) = next '' Lext s := by
+  ext d
+  rw [lext_iff]
+  constructor
+  · rintro ⟨q,hq,ho,hd⟩
+    obtain ⟨a,rfl,ha⟩ := (ordinary_occurrence_iff _ _).mp ho
+    have hapos : 0 < a := by
+      by_contra h
+      have he : a = 0 := by omega
+      simpa [he,boundary_zero] using hq
+    exact ⟨word (a-1),(lext_iff s _).mpr ⟨a,hapos,ha,rfl⟩,
+      (before_boundary hapos).symm.trans hd⟩
+  · rintro ⟨c,hc,rfl⟩
+    obtain ⟨a,ha,ho,hc⟩ := (lext_iff s c).mp hc
+    have hB : 0 < boundary a := by simpa [boundary_zero] using boundary_strict ha
+    exact ⟨boundary a,hB,sentinel_transport ho,by rw [before_boundary ha,hc]⟩
+
+private theorem sentinel_rext (s : Word) : Rext (sentinel s) = next '' Rext s := by
+  ext d
+  rw [rext_iff]
+  constructor
+  · rintro ⟨q,ho,hd⟩
+    obtain ⟨a,rfl,ha⟩ := (ordinary_occurrence_iff _ _).mp ho
+    have he : boundary a+(sentinel s).length = boundary (a+s.length)+1 := by
+      rw [boundary_occ ha]; simp [sentinel]; omega
+    exact ⟨word (a+s.length),(rext_iff s _).mpr ⟨a,ha,rfl⟩,
+      by rw [he,after_boundary] at hd; exact hd⟩
+  · rintro ⟨c,hc,rfl⟩
+    obtain ⟨a,ho,hc⟩ := (rext_iff s c).mp hc
+    have he : boundary a+(sentinel s).length = boundary (a+s.length)+1 := by
+      rw [boundary_occ ho]; simp [sentinel]; omega
+    exact ⟨boundary a,sentinel_transport ho,by rw [he,after_boundary,hc]⟩
+
+private def wrap (c : Letter) : Letter := if c = 6 then 6 else 0
+
+private theorem two_before_boundary {a : ℕ} (ha : 0 < a)
+    (hc : word (a-1) = 5 ∨ word (a-1) = 6) :
+    word (boundary a-2) = wrap (word (a-1)) := by
+  have hb := boundary_succ (a-1)
+  have he : a-1+1 = a := by omega
+  rw [he] at hb
+  rcases hc with hc | hc
+  · simpa [hb,hc,phi,wrap] using at_boundary (a-1)
+  · have hh := block_letter (a-1) 1 (by simp [hc,phi])
+    simpa [hb,hc,phi,wrap] using hh
+
+private theorem two_after_boundary {a : ℕ}
+    (hc : word a = 5 ∨ word a = 6) :
+    word (boundary a+2) = wrap (word a) := by
+  rcases hc with hc | hc
+  · have h := at_boundary (a+1)
+    simpa [boundary_succ,hc,phi,wrap] using h
+  · have h := block_letter a 2 (by simp [hc,phi])
+    simpa [hc,phi,wrap] using h
+
+private def TerminalContexts (s : Word) : Prop :=
+  ∀ a, Occ s a → 0 < a ∧
+    (word (a-1) = 5 ∨ word (a-1) = 6) ∧
+    (word (a+s.length) = 5 ∨ word (a+s.length) = 6)
+
+private theorem terminal_lext (s : Word) (hs : TerminalContexts s) :
+    Lext (terminal s) = wrap '' Lext s := by
+  ext d
+  rw [lext_iff]
+  constructor
+  · rintro ⟨q,hq,ho,hd⟩
+    obtain ⟨a,ha,hqa,hoa,hleft,hright⟩ := (terminal_occurrence_iff _ _).mp ho
+    refine ⟨word (a-1),(lext_iff s _).mpr ⟨a,ha,hoa,rfl⟩,?_⟩
+    have he : q-1 = boundary a-2 := by omega
+    rw [he,two_before_boundary ha hleft] at hd
+    exact hd
+  · rintro ⟨c,hc,rfl⟩
+    obtain ⟨a,ha,ho,hc⟩ := (lext_iff s c).mp hc
+    obtain ⟨_,hleft,hright⟩ := hs a ho
+    have hB : 2 ≤ boundary a := by
+      have h := subst_length_ge (factor word 0 a)
+      simp only [factor_len] at h
+      change 2 ≤ (subst phi (factor word 0 a)).length
+      omega
+    refine ⟨boundary a-1,by omega,?_,?_⟩
+    · exact (terminal_occurrence_iff _ _).mpr ⟨a,ha,rfl,ho,hleft,hright⟩
+    · have he : boundary a-1-1 = boundary a-2 := by omega
+      rw [he,two_before_boundary ha hleft,hc]
+
+private theorem terminal_rext (s : Word) (hs : TerminalContexts s) :
+    Rext (terminal s) = wrap '' Rext s := by
+  ext d
+  rw [rext_iff]
+  constructor
+  · rintro ⟨q,ho,hd⟩
+    obtain ⟨a,ha,rfl,hoa,hleft,hright⟩ := (terminal_occurrence_iff _ _).mp ho
+    have hB : 0 < boundary a := by simpa [boundary_zero] using boundary_strict ha
+    have he : boundary a-1+(terminal s).length = boundary (a+s.length)+2 := by
+      rw [boundary_occ hoa]
+      simp [terminal]
+      omega
+    refine ⟨word (a+s.length),(rext_iff s _).mpr ⟨a,hoa,rfl⟩,?_⟩
+    rw [he,two_after_boundary hright] at hd
+    exact hd
+  · rintro ⟨c,hc,rfl⟩
+    obtain ⟨a,ho,hc⟩ := (rext_iff s c).mp hc
+    obtain ⟨ha,hleft,hright⟩ := hs a ho
+    have hB : 0 < boundary a := by simpa [boundary_zero] using boundary_strict ha
+    have he : boundary a-1+(terminal s).length = boundary (a+s.length)+2 := by
+      rw [boundary_occ ho]
+      simp [terminal]
+      omega
+    refine ⟨boundary a-1,?_,?_⟩
+    · exact (terminal_occurrence_iff _ _).mpr ⟨a,ha,rfl,ho,hleft,hright⟩
+    · rw [he,two_after_boundary hright,hc]
+
+private theorem six_neighbors {q : ℕ} (h : word q = 6) :
+    0 < q ∧ (word (q-1) = 0 ∨ word (q-1) = 6) ∧
+      (word (q+1) = 0 ∨ word (q+1) = 6) := by
+  obtain ⟨i,hi,hj⟩ := boundary_window q
+  have hne : q ≠ boundary i := by
+    intro he
+    rw [he,at_boundary] at h
+    norm_num at h
+  have hqpos : 0 < q := by omega
+  rw [boundary_succ] at hj
+  by_cases hc : (word i).val < 6
+  · have hq : q = boundary i+1 := by simp [phi,hc] at hj; omega
+    have hnext : word (q+1) = 0 := by
+      have he : q+1 = boundary (i+1) := by rw [boundary_succ]; simp [phi,hc]; omega
+      rw [he,at_boundary]
+    exact ⟨hqpos,Or.inl (by simpa [hq] using at_boundary i),Or.inl hnext⟩
+  · have hq : q = boundary i+1 ∨ q = boundary i+2 := by simp [phi,hc] at hj; omega
+    have h6 : word (boundary i+1) = 6 := by
+      simpa [phi,hc] using block_letter i 1 (by simp [phi,hc])
+    have h6' : word (boundary i+2) = 6 := by
+      simpa [phi,hc] using block_letter i 2 (by simp [phi,hc])
+    rcases hq with hq | hq
+    · exact ⟨hqpos,Or.inl (by simpa [hq] using at_boundary i),
+        Or.inr (by simpa [hq,Nat.add_assoc] using h6')⟩
+    · have hnext : word (q+1) = 0 := by
+        have he : q+1 = boundary (i+1) := by
+          rw [boundary_succ]; simp [phi,hc]; omega
+        rw [he,at_boundary]
+      exact ⟨hqpos,Or.inr (by simpa [hq,Nat.add_sub_assoc] using h6),Or.inl hnext⟩
+
+private theorem base_extensions :
+    Lext [6] = ({0,6} : Set Letter) ∧ Rext [6] = ({0,6} : Set Letter) := by
+  have h06 : Occ [0,6] (boundary 63) := occ_prefix (by decide) base_window
+  have ht : Occ [6,6,0] (boundary 63+1) := ((occ_cons _ _ _).mp base_window).2
+  have h66 : Occ [6,6] (boundary 63+1) := occ_prefix (by decide) ht
+  have h60 : Occ [6,0] (boundary 63+2) := by
+    simpa [Nat.add_assoc] using ((occ_cons _ _ _).mp ht).2
+  constructor
+  · ext c
+    constructor
+    · rintro ⟨q,hq⟩
+      obtain ⟨hc,hs⟩ := (occ_cons _ _ _).mp hq
+      have h6 := (occ_singleton _ _).mp hs
+      have hn := (six_neighbors h6).2.1
+      simpa [hc] using hn
+    · intro hc
+      change c = 0 ∨ c = 6 at hc
+      rcases hc with rfl | rfl
+      · exact ⟨boundary 63,h06⟩
+      · exact ⟨boundary 63+1,h66⟩
+  · ext c
+    constructor
+    · rintro ⟨q,hq⟩
+      obtain ⟨hs,hc⟩ := (occ_append _ _ _).mp hq
+      have h6 := (occ_singleton _ _).mp hs
+      have hn := (six_neighbors h6).2.2
+      simpa [(occ_singleton _ _).mp hc] using hn
+    · intro hc
+      change c = 0 ∨ c = 6 at hc
+      rcases hc with rfl | rfl
+      · exact ⟨boundary 63+2,h60⟩
+      · exact ⟨boundary 63+1,h66⟩
+
+def phase (n : ℕ) : Letter := ⟨n % 6,by omega⟩
+
+private theorem terminal_contexts_of_extensions (n : ℕ) (hn : n % 6 = 5)
+    (hL : Lext (typeI n) = {phase n,6}) (hR : Rext (typeI n) = {phase n,6}) :
+    TerminalContexts (typeI n) := by
+  intro a ha
+  have hapos : 0 < a := by
+    by_contra h
+    have he : a = 0 := by omega
+    exact typeI_not_at_origin n (he ▸ ha)
+  have hl : word (a-1) ∈ Lext (typeI n) :=
+    (lext_iff _ _).mpr ⟨a,hapos,ha,rfl⟩
+  have hr : word (a+(typeI n).length) ∈ Rext (typeI n) :=
+    (rext_iff _ _).mpr ⟨a,ha,rfl⟩
+  rw [hL] at hl
+  rw [hR] at hr
+  simpa [phase,hn] using And.intro hapos (And.intro hl hr)
+
+/-- Both extension sets are exactly the cyclic index and 6, with membership
+defined by actual occurrence witnesses. -/
+theorem typeI_extensions (n : ℕ) :
+    Lext (typeI n) = {phase n,6} ∧ Rext (typeI n) = {phase n,6} := by
+  induction n with
+  | zero => simpa [typeI,phase] using base_extensions
+  | succ n ih =>
+    by_cases hn : n % 6 = 5
+    · have hc := terminal_contexts_of_extensions n hn ih.1 ih.2
+      have he : typeI (n+1) = terminal (typeI n) := by simp [typeI,hn,terminal]
+      have hp : phase (n+1) = 0 := by apply Fin.ext; simp [phase]; omega
+      rw [he,terminal_lext _ hc,terminal_rext _ hc,ih.1,ih.2]
+      simp [Set.image_insert_eq,phase,hn,wrap,hp]
+    · have he : typeI (n+1) = sentinel (typeI n) := by simp [typeI,hn,sentinel]
+      have hp : next (phase n) = phase (n+1) := by
+        apply Fin.ext
+        have hmod : n % 6 < 5 := by omega
+        simp [next,phase,hmod,Nat.add_mod]
+        omega
+      rw [he,sentinel_lext,sentinel_rext,ih.1,ih.2]
+      simp [Set.image_insert_eq,hp,next]
 
 end D5.S1.Words.RichWordTypeIOccurrence
