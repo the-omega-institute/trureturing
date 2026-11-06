@@ -511,6 +511,12 @@ theorem unitIntact_main_faces (m : Nat) (hm : 3 ≤ m) (hr : m % 3 ≠ 2)
   simp only [unitIntactCertificate, Sequence.pairs_cast, relativeProduct_pairs]
   simp [fibres, mem_delta, zeroFilling, retargetFilling, renameFilling,
     Sequence.pairs_cast, renameSequence_pairs]
+  have hF : ({x ∈ {∅} | x = ∅} : Finset (Finset V)) = {∅} :=
+    Finset.filter_eq_self.mpr (by intro x hx; exact Finset.mem_singleton.mp hx)
+  simp only [hF, Finset.toList_singleton, List.mergeSort_singleton,
+    List.map_cons, List.map_nil, Finset.union_empty, ← List.map_eq_flatMap]
+  simpa only [Pair.upper, Finset.image_insert] using
+    renameSequence_pairs f (fill0 m hm).main
 
 /-- UNIT separate execution starts at B alone and is the actual common cone. -/
 theorem unitIntact_core_faces (m : Nat) (hm : 3 ≤ m) (hr : m % 3 ≠ 2)
@@ -707,7 +713,7 @@ def twoNormalization (m : Nat) (hm : 3 ≤ m) (h2 : m % 3 = 2)
     apply propext
     change (a ∈ K ∧ ¬ False) ↔ a ∈ K
     tauto
-  simp only [hbot]
+  simp only [hbot, D, L]
 
 /-- Explicit factor-main list used by the residue-two recovery. Tags emit no
 factor pair, and UNIT is not represented by an empty ordinary lower face. -/
@@ -1250,7 +1256,7 @@ def zeroNormalization (m : Nat) (hm : 3 ≤ m) (h0 : m % 3 = 0)
     apply propext
     change (a ∈ K ∧ ¬ False) ↔ a ∈ K
     tauto
-  simp only [hbot]
+  simp only [hbot, D, L]
 
 private theorem zeroCycleCells (m : Nat) (hm : 3 ≤ m) (h0 : m % 3 = 0)
     (f : Label m ↪ V) :
@@ -1293,10 +1299,25 @@ theorem zeroMarkerOutput_lists (m : Nat) (hm : 3 ≤ m) (X : Finset V) (e : V)
     corePairsOf (zeroMarkerOutput m hm X e J f heX hXY hJ oJ) =
         (corePairsOf oJ).map (fun p => (p.1.image g, p.2.image g)) := by
   dsimp only
-  simpa only [zeroMarkerOutput, HistoryMarkers.singleMarkerOutput,
-    changeOutput_mainPairsOf, ground_mainPairsOf,
-    changeOutput_corePairsOf, ground_corePairsOf] using
-    renameOutput_lists (HistoryMarkers.markerMap e (f (firstLabel m hm))) oJ
+  have hr : f (firstLabel m hm) ∉ X := fun h => Finset.disjoint_left.mp hXY h
+    (Finset.mem_image.mpr ⟨firstLabel m hm, by simp [ground, firstLabel, Fin.ext_iff], rfl⟩)
+  have hg := HistoryMarkers.marker_ground X e (f (firstLabel m hm)) heX hr
+  have h := renameOutput_lists (HistoryMarkers.markerMap e (f (firstLabel m hm))) oJ
+  constructor
+  · calc
+      mainPairsOf (zeroMarkerOutput m hm X e J f heX hXY hJ oJ) =
+          mainPairsOf (HistoryMarkers.renameOutput (HistoryMarkers.markerMap e (f (firstLabel m hm))) oJ) := by
+        simpa only [zeroMarkerOutput, HistoryMarkers.singleMarkerOutput,
+          changeOutput_mainPairsOf] using ground_mainPairsOf hg
+            (HistoryMarkers.renameOutput (HistoryMarkers.markerMap e (f (firstLabel m hm))) oJ)
+      _ = _ := h.1
+  · calc
+      corePairsOf (zeroMarkerOutput m hm X e J f heX hXY hJ oJ) =
+          corePairsOf (HistoryMarkers.renameOutput (HistoryMarkers.markerMap e (f (firstLabel m hm))) oJ) := by
+        simpa only [zeroMarkerOutput, HistoryMarkers.singleMarkerOutput,
+          changeOutput_corePairsOf] using ground_corePairsOf hg
+            (HistoryMarkers.renameOutput (HistoryMarkers.markerMap e (f (firstLabel m hm))) oJ)
+      _ = _ := h.2
 
 private theorem zeroMarkerOutput_pointFaces (m : Nat) (hm : 3 ≤ m)
     (X : Finset V) (e : V) (J : Family V) (f : Label m ↪ V) (heX : e ∉ X)
@@ -1304,9 +1325,16 @@ private theorem zeroMarkerOutput_pointFaces (m : Nat) (hm : 3 ≤ m)
     (oJ : Output (insert e X) J) (d : Finset V) :
     pointFaces d id (zeroMarkerOutput m hm X e J f heX hXY hJ oJ) =
       pointFaces d (HistoryMarkers.markerMap e (f (firstLabel m hm))) oJ := by
-  simpa only [zeroMarkerOutput, HistoryMarkers.singleMarkerOutput,
-    changeOutput_pointFaces, ground_pointFaces] using
-    renameOutput_pointFaces (HistoryMarkers.markerMap e (f (firstLabel m hm))) oJ d
+  have hr : f (firstLabel m hm) ∉ X := fun h => Finset.disjoint_left.mp hXY h
+    (Finset.mem_image.mpr ⟨firstLabel m hm, by simp [ground, firstLabel, Fin.ext_iff], rfl⟩)
+  have hg := HistoryMarkers.marker_ground X e (f (firstLabel m hm)) heX hr
+  calc
+    pointFaces d id (zeroMarkerOutput m hm X e J f heX hXY hJ oJ) =
+        pointFaces d id (HistoryMarkers.renameOutput (HistoryMarkers.markerMap e (f (firstLabel m hm))) oJ) := by
+      simpa only [zeroMarkerOutput, HistoryMarkers.singleMarkerOutput,
+        changeOutput_pointFaces] using ground_pointFaces hg
+          (HistoryMarkers.renameOutput (HistoryMarkers.markerMap e (f (firstLabel m hm))) oJ) d id
+    _ = _ := renameOutput_pointFaces (HistoryMarkers.markerMap e (f (firstLabel m hm))) oJ d
 
 /-- Recovery of BOTH literal residue-zero layers, with all tag combinations.
 The first factor is the actual renamed J; the second is its actual old link.
@@ -1593,8 +1621,8 @@ theorem zeroIntact_core_original (m : Nat) (hm : 3 ≤ m) (h0 : m % 3 = 0)
   rw [zeroIntact_core_faces]
   simp only [layer_strip_readback,
     (zeroMarkerOutput_lists m hm X e J f heX hXY hJ oJ).2,
-    zeroMarkerOutput_pointFaces, List.map_map, Function.comp_def,
-    pointFaces, id_eq, List.append_assoc]
+    zeroMarkerOutput_pointFaces, List.map_map, Function.comp_def, List.append_assoc]
+  simp only [pointFaces, id_eq]
 
 /-- The intended nonempty-X local terminal at EVERY m>=3, on actual original
 coordinates. oJ and oL are the exact strictly-earlier predecessor factors;
@@ -1727,9 +1755,9 @@ theorem intactOutput_core_faces (m : Nat) (hm : 3 ≤ m) (X : Finset V) (e : V)
   split_ifs with h0 h2
   · simpa only [intactOutput, dif_pos h0, corePairsOf] using
       zeroIntact_core_original m hm h0 X e J f heX hX hXY hJ oJ oL
-  · simpa only [intactOutput, dif_neg h0, dif_pos h2, corePairsOf,
-      two_layer_core_readback, pointFaces, id_eq] using
-      twoIntact_core_faces m hm h2 X e J f hX hXY oL
+  · simp only [intactOutput, dif_neg h0, dif_pos h2, corePairsOf]
+    rw [twoIntact_core_faces, two_layer_core_readback]
+    all_goals rfl
   · have hg : goodResidue m := ⟨m / 3, by omega⟩
     cases oJ with
     | void hv =>
