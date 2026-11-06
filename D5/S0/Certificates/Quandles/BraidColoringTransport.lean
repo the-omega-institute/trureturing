@@ -1,9 +1,10 @@
 /- GID: D5/S0/Certificates/Quandles/BraidColoringTransport
    generality: G
+   mirror-B: none(waiver:algebraically-proved)
+   mirror-E: none(waiver:algebraically-proved)
    anchors: [lake/module/Mathlib.Algebra.Quandle]
    utility: none
-   digest: A rack crossing is an invertible local coloring transport and satisfies the Yang--Baxter relation.
--/
+   digest: A rack crossing is an invertible local coloring transport and satisfies the Yang--Baxter relation. -/
 
 import Mathlib.Algebra.Quandle
 

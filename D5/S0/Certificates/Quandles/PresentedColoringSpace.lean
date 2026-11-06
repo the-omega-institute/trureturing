@@ -1,9 +1,10 @@
 /- GID: D5/S0/Certificates/Quandles/PresentedColoringSpace
    generality: G
+   mirror-B: none(waiver:algebraically-proved)
+   mirror-E: none(waiver:algebraically-proved)
    anchors: [lake/module/D5.S0.Certificates.Quandles.PresentedQuandle]
    utility: none
-   digest: Satisfying generator assignments are equivalent to homomorphisms from a presented quandle.
--/
+   digest: Satisfying generator assignments are equivalent to homomorphisms from a presented quandle. -/
 
 import D5.S0.Certificates.Quandles.PresentedQuandle
 
