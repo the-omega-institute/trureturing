@@ -1828,3 +1828,70 @@ which is exactly (180.2). If the seven coordinates in (180.1) vanish, (180.2) gi
 This is a complete equation-count reduction for the common-first slice, not a positivity or nonattainment result. The seven remaining equations are cubic conditions in $v$ with the actual terminal convention; no claim is made that they have only the solution $v=0$. The radical-triviality hypothesis of Corollary 179.3, the general terminal-pair implication, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization remain open.
 
 ## 追加锚（本行以下为增补区）
+
+## 181. Sign-definite directions are excluded in the common-first slice
+
+The seven-equation system has a simple one-sided obstruction. It uses only positivity of the actual joint-law form, so it applies before solving the genuinely sign-changing cubic system.
+
+**Proposition 181.1 (one-sided common-first obstruction).** Let
+
+$$
+u_0=u_1=F+v,\qquad u_3=q-2v,\qquad u_B=p
+$$
+
+be a pointwise legal common-first tuple, with $v$ a bounded real Borel representative. If $[v]\ne0$ as an $m$-class, then
+
+$$
+v\ge0\quad m\text{-a.e.}
+\Longrightarrow
+R_{000}>0,
+\tag{181.1}
+$$
+
+and
+
+$$
+v\le0\quad m\text{-a.e.}
+\Longrightarrow
+R_{333}>0.
+\tag{181.2}
+$$
+
+Consequently, a full-zero tuple in the common-first slice is either the baseline $v=0$ as an $m$-class or has both a positive and a negative part of positive $m$-measure.
+
+*Proof.* The retained source suppliers give $g>0$, $F>0$ and $q>0$ $m$-almost everywhere, while $P$ preserves nonnegativity and is positivity improving. Hence, for every bounded nonnegative $h$ with $[h]\ne0$ and every two strictly positive bounded factors $a,b$,
+
+$$
+\mathcal C(h,a,b)
+ =\int_G gh\,P(aPb)\,dm>0.
+\tag{181.3}
+$$
+
+Indeed, $Pb>0$ almost everywhere, so $aPb>0$ almost everywhere and then $P(aPb)>0$ almost everywhere; the integral is strict on the positive set of $h$.
+
+If $v\ge0$, multilinearity gives
+
+$$
+\begin{aligned}
+R_{000}
+={}&\mathcal C(F+v,F+v,F+v)-\mathcal C(F,F,F)\\
+={}&\mathcal C(v,F,F)+\mathcal C(F,v,F)+\mathcal C(F,F,v)\\
+&+\mathcal C(v,v,F)+\mathcal C(v,F,v)+\mathcal C(F,v,v)
+ +\mathcal C(v,v,v).
+\end{aligned}
+\tag{181.4}
+$$
+
+Every term on the right is nonnegative, and the first term is strictly positive by (181.3), proving (181.1).
+
+If $v\le0$, put $h=-v\ge0$. Then $u_3=q+2h$, and the same expansion gives
+
+$$
+R_{333}
+ =\mathcal C(q+2h,q+2h,q+2h)-\mathcal C(q,q,q).
+\tag{181.5}
+$$
+
+All terms after subtraction are nonnegative, and the term $2\mathcal C(h,q,q)$ is strictly positive by (181.3), proving (181.2). Thus an exact zero with $[v]\ne0$ cannot be one-signed. For a real measurable representative, failure of both one-sided alternatives is exactly the assertion that its positive and negative parts each have positive $m$-measure. $\square$
+
+This removes constant shifts and every other sign-definite displacement from the conditional common-first search. It does not solve the remaining sign-changing seven-equation system, remove the radical-triviality hypothesis in Corollary 179.3, or settle arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession or Lean/kernel formalization.
