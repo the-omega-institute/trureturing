@@ -1,12 +1,10 @@
-/-
-SOURCE-PREPARED — UNCOMPILED.
-
-Full physical integer-zero classification and count for every d ≥ 3 with
-19 ∤ (2^(d+1)-3). The minus-seed bridge and ternary count are imported from
-the supplied kernel-checked sources; the exact trace is imported from the
-supplied UNCOMPILED MersennePhaseThreeTrace source. This file carries no
-elaboration, kernel, axiom-closure, Scribe, Reg, or official acceptance claim.
--/
+/- GID: D5/S3/Combinatorics/Circle/MersennePhaseNoncyclicFamily
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/MersennePhaseNoncyclicFamily
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: [mathlib/module/Mathlib.Data.Nat.GCD.Basic]
+   utility: none
+   digest: Exact physical zero classification and count for the admissible three-phase family. -/
 module
 
 public import D5.S3.Combinatorics.Circle.MersenneDifferenceZeroSubsets
@@ -15,6 +13,11 @@ import all D5.S3.Combinatorics.Circle.TwoBitZeroSubsets
 public import D5.S3.Combinatorics.Circle.MersennePhaseThreeTrace
 public import D5.S3.Combinatorics.Circle.TernaryPhaseZeroCount
 public import Mathlib.Data.Nat.Prime.Basic
+
+/-! # The admissible three-phase Mersenne family
+
+Every original label is retained in the unique classification and exact count.
+-/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -112,8 +115,10 @@ private theorem rotation_eq_phaseLift (d : ℕ) (hd : 0 < d)
   have hm21 : p2 ∈ A ↔ p1 ∈ A := by simpa only [h12] using hstep p1
   have hm2 : p2 ∈ A ↔ p0 ∈ A := hm21.trans hm1
   have hmem : i ∈ A ↔ p0 ∈ A := by
-    have hquot : i.val / d < 3 := Nat.div_lt_of_lt_mul i.isLt
-    have hcases : i.val / d = 0 ∨ i.val / d = 1 ∨ i.val / d = 2 := by omega
+    have hquot : i.val / d < 3 := Nat.div_lt_of_lt_mul (by simpa only [Nat.mul_comm] using i.isLt)
+    have hcases : i.val / d = 0 ∨ i.val / d = 1 ∨ i.val / d = 2 := by
+      have exhaustive : ∀ q : Fin 3, q.val = 0 ∨ q.val = 1 ∨ q.val = 2 := by decide
+      exact exhaustive ⟨i.val / d, hquot⟩
     have he := Nat.mod_add_div i.val d
     rcases hcases with h | h | h
     · have hi : i = p0 := by
@@ -142,7 +147,7 @@ private theorem rotation_eq_phaseLift (d : ℕ) (hd : 0 < d)
 
 /- Copied only as a consumed private helper from the supplied ArithmeticSupport.lean
 (SHA256 f6323979fcaee41712bb9f735f30ce2d7eb74107ab564d962957b5ac061fc622).
-The support source, like this composition, is UNCOMPILED. -/
+This arithmetic argument is checked as part of the composition. -/
 private lemma phase_scaled_gcd (d : ℕ) (hd : 0 < d) :
     Nat.gcd ((2 ^ d - 1) * (2 ^ (d + 1) - 3)) (2 ^ (3 * d) - 1) =
       (2 ^ d - 1) * Nat.gcd (2 ^ (d + 1) - 3) 19 := by
@@ -228,7 +233,7 @@ private theorem phaseLift_sum (d : ℕ) (hd : 3 ≤ d) (B : Finset (Fin d)) :
       exact Finset.mem_filter.mpr ⟨Finset.mem_univ _,
         Fin.ext (Finset.mem_filter.mp hi).2⟩
   calc
-    _ = ∑ j ∈ B, ∑ i in Finset.univ.filter (fun i : Fin (3 * d) => rho i = j),
+    _ = ∑ j ∈ B, ∑ i ∈ Finset.univ.filter (fun i : Fin (3 * d) => rho i = j),
         actualSource (3 * d) ((2 ^ d - 1) * (2 ^ (d + 1) - 3)) i := by
       rw [← hlift]
       exact (Finset.sum_fiberwise_eq_sum_filter Finset.univ B rho
@@ -257,8 +262,12 @@ private theorem phaseWeight_zero_iff_pair (d : ℕ) (hd : 3 ≤ d)
   classical
   let p : Fin d := ⟨d - 3, by omega⟩
   let m : Fin d := ⟨d - 1, by omega⟩
-  have hp (j : Fin d) : j.val = d - 3 ↔ j = p := Fin.ext_iff.symm
-  have hm (j : Fin d) : j.val = d - 1 ↔ j = m := Fin.ext_iff.symm
+  have hp (j : Fin d) : j.val = d - 3 ↔ j = p := by
+    change j.val = p.val ↔ j = p
+    exact Fin.ext_iff.symm
+  have hm (j : Fin d) : j.val = d - 1 ↔ j = m := by
+    change j.val = m.val ↔ j = m
+    exact Fin.ext_iff.symm
   have hsum : (∑ j ∈ B, phaseWeight d j) =
       (if p ∈ B then (1 : ℤ) else 0) - (if m ∈ B then (1 : ℤ) else 0) := by
     simp only [phaseWeight, Finset.sum_sub_distrib, hp, hm]
@@ -293,7 +302,7 @@ theorem actual_zero_iff_phase_pair (d : ℕ) (hd : 3 ≤ d)
     have hq := quotient_dvd hN (zero_mask_dvd A hz)
     rw [hgcd] at hq
     have hgd : Nat.gcd d (3 * d) = d := by
-      simpa [Nat.mul_comm] using (Nat.gcd_mul_left d 1 3)
+      simp [Nat.mul_comm]
     have hgminus : Nat.gcd (2 ^ d - 1) (2 ^ (3 * d) - 1) = 2 ^ d - 1 := by
       rw [Nat.pow_sub_one_gcd_pow_sub_one, hgd]
     /- Consumed local composition of the two existing minus-seed bridges.
@@ -336,22 +345,23 @@ theorem actual_zero_subsets_card (d : ℕ) (hd : 3 ≤ d)
     have hv := congrArg Fin.val he
     dsimp [p, m] at hv
     omega
+  have hdiff : d - 3 ≠ d - 1 := by omega
   have hpositive (j : Fin d) : phaseWeight d j = 1 ↔ j = p := by
     by_cases hp : j.val = d - 3 <;> by_cases hm : j.val = d - 1
     · omega
-    · simp [phaseWeight, hp, hm, Fin.ext_iff, p]
-    · simp [phaseWeight, hp, hm, Fin.ext_iff, p]
-    · simp [phaseWeight, hp, hm, Fin.ext_iff, p]
+    · simp [phaseWeight, hp, hm, Fin.ext_iff, p, hdiff, Ne.symm hdiff]
+    · simp [phaseWeight, hp, hm, Fin.ext_iff, p, hdiff, Ne.symm hdiff]
+    · simp [phaseWeight, hp, hm, Fin.ext_iff, p, hdiff, Ne.symm hdiff]
   have hnegative (j : Fin d) : phaseWeight d j = -1 ↔ j = m := by
     by_cases hp : j.val = d - 3 <;> by_cases hm : j.val = d - 1
     · omega
-    · simp [phaseWeight, hp, hm, Fin.ext_iff, m]
-    · simp [phaseWeight, hp, hm, Fin.ext_iff, m]
-    · simp [phaseWeight, hp, hm, Fin.ext_iff, m]
+    · simp [phaseWeight, hp, hm, Fin.ext_iff, m, hdiff, Ne.symm hdiff]
+    · simp [phaseWeight, hp, hm, Fin.ext_iff, m, hdiff, Ne.symm hdiff]
+    · simp [phaseWeight, hp, hm, Fin.ext_iff, m, hdiff, Ne.symm hdiff]
   have hu (j : Fin d) :
       phaseWeight d j = -1 ∨ phaseWeight d j = 0 ∨ phaseWeight d j = 1 := by
     by_cases hp : j.val = d - 3 <;> by_cases hm : j.val = d - 1 <;>
-      simp [phaseWeight, hp, hm]
+      simp [phaseWeight, hp, hm, hdiff, Ne.symm hdiff]
   have hzero (j : Fin d) : phaseWeight d j = 0 ↔ j ≠ p ∧ j ≠ m := by
     constructor
     · intro hz
