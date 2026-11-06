@@ -102,31 +102,3 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end LogGtOne
 end Reg.D5.S3.Arith.Robin.ActualRobinInterval
-
-
-/- Boundary exposure audit feasibility: the exact source is the closed
-equality boundaryCap = 55440. A scalar constant realization cannot satisfy
-the current dependent-family actual-dependence slot. This compiled
-obstruction is not a four-slot registration or declared_validated claim. -/
-namespace Reg.D5.S3.Arith.Robin.ActualRobinInterval.BoundaryExposure
-open _root_.D5.S3.Arith.Robin.ActualGlobalBracketing
-open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open _root_.D5.S3.Arith.Robin.ActualRobinInterval
-open _root_.D5.S3.Arith.Robin.ActualTwoPriceDefect
-abbrev sourceType := type_of% (@boundaryCap_eq_55440)
-abbrev signature : Signature where
-  Params := Unit
-  State _ := Unit
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := ℕ
-  Anchor := Empty
-  finiteAnchor := inferInstance
-noncomputable def actual : Realization signature :=
-  realize signature (fun _ _ _ => boundaryCap) (fun e => nomatch e)
-theorem constant_readout_obstruction : ¬ ObservationalDependence signature actual := by
-  intro h
-  obtain ⟨p, x, y, hxy⟩ := h ()
-  exact hxy rfl
-end Reg.D5.S3.Arith.Robin.ActualRobinInterval.BoundaryExposure
