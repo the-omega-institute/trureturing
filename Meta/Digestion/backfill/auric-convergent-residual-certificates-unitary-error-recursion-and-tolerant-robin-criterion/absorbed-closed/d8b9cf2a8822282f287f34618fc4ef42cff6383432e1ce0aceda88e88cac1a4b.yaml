@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:d8b9cf2a8822282f287f34618fc4ef42cff6383432e1ce0aceda88e88cac1a4b
   normalized_sha256: sha256:d8b9cf2a8822282f287f34618fc4ef42cff6383432e1ce0aceda88e88cac1a4b
 cas_ref: sha256:d8b9cf2a8822282f287f34618fc4ef42cff6383432e1ce0aceda88e88cac1a4b
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Weil/Mertens/IntegratedExplicit/OriginalCoarseCellCoercivity.original_coarse_cell_coercivity
+    target_statement_id: sha256:13ccef514f3054c73f92d6dfac4ed647fa5249ec880ea5e31958c365cde1d32b
 receipts:
   unresolved_subitems: []
