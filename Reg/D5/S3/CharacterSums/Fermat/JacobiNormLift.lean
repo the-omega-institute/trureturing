@@ -39,18 +39,14 @@ abbrev arena : Arena where
 private theorem bridge :
     (type_of% (@_root_.D5.S3.CharacterSums.Fermat.JacobiNormLift.neg_jacobiSum_norm_lift.{u, v})) ↔
       arena.Law actual := by
-  change claim.{u, v} ↔ claim.{u, v}
-  rfl
+  constructor
+  · intro h
+    simpa [arena, actual, realize] using h
+  · intro h
+    simpa [arena, actual, realize] using h
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   simp [arena, rejected, realize]
-
-private theorem claim_ne_false.{u, v} : claim.{u, v} ≠ False := by
-  intro h
-  change claim.{u, v}
-  have hp : claim.{u, v} := by
-    exact @_root_.D5.S3.CharacterSums.Fermat.JacobiNormLift.neg_jacobiSum_norm_lift.{u, v}
-  exact h ▸ hp
 
 def evidence : Registration arena
     (type_of% (@_root_.D5.S3.CharacterSums.Fermat.JacobiNormLift.neg_jacobiSum_norm_lift.{u, v})) where
@@ -69,7 +65,7 @@ def evidence : Registration arena
   dependence := by
     intro i
     refine ⟨(), true, false, ?_⟩
-    simpa [actual, realize] using claim_ne_false
+    simp [actual, realize]
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.D5.S3.CharacterSums.Fermat.JacobiNormLift.neg_jacobiSum_norm_lift.{u, v})
