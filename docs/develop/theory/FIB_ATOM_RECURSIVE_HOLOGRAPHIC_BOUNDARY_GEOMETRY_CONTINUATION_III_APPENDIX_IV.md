@@ -1,0 +1,844 @@
+# FIB-ATOM recursive holographic boundary geometry · Continuation III Appendix IV: energy-collapse boundary
+
+This appendix continues the original source, operator, measure and common-readout telescope of Appendix III §§134–160. It records the full-kernel energy-collapse boundary left open by §§159–160. All statements retain the original finite parameters, the whole group $G$, the probability $m$, the density $g=g_{2d}$, the heat operator $P=T_d$, the first-order map $\Lambda_{134}$ and its exact kernel $V=\ker\Lambda_{134}$. The appendix adds no new physical, Lean/kernel or exact full-law claim.
+
+## 161. Energy collapse on the full infinite-dimensional kernel
+
+**Proposition 161.1 (unit kernel directions with vanishing heat energy).** Retain the complete telescope of Appendix III Definition 134.1, including the finite linear map
+
+$$
+\Lambda:L^\infty(G,m;\mathbb R)\longrightarrow\mathbb R^{64},
+\qquad V=\ker\Lambda,
+$$
+
+and write
+
+$$
+q(v)=c\langle gv,P(gv)\rangle_m
+    =c\|T_{d/2}(gv)\|_{L^2(m)}^2.
+\tag{161.1}
+$$
+
+For every fixed original finite $a,\eta,d>0$, there are bounded real Borel functions $v_n$ and Borel sets $E_n\subset G$ such that
+
+$$
+v_n\in V,\qquad \|v_n\|_\infty=1,
+\qquad \operatorname{supp}(v_n)\subset E_n,
+\qquad m(E_n)\longrightarrow0,
+\qquad q(v_n)\longrightarrow0.
+\tag{161.2}
+$$
+
+Each $v_n$ is nonzero, so Appendix III Proposition 134.2 still gives $q(v_n)>0$ for every finite $n$. Thus the unit sphere of the full infinite-dimensional kernel has zero heat-energy infimum, although the positive form has no nonzero zero vector.
+
+*Proof.* Let
+
+$$
+\nu(A)=\int_Ag^2\,dm
+$$
+
+for Borel $A$. Since $g\in L^2(m)$, $\nu$ is a finite measure absolutely continuous with respect to the nonatomic probability $m$. Choose Borel sets $B_n$ with $0<m(B_n)<1/n$. Absolute continuity then gives
+
+$$
+\nu(B_n)\longrightarrow0.
+\tag{161.3}
+$$
+
+By nonatomicity, each $B_n$ contains $65$ pairwise disjoint Borel subsets $A_{n,1},\ldots,A_{n,65}$ of positive $m$-measure. Their indicators are linearly independent. Put
+
+$$
+F_n=\operatorname{span}_{\mathbb R}
+ \{\mathbf1_{A_{n,1}},\ldots,\mathbf1_{A_{n,65}}\}.
+$$
+
+The restriction $\Lambda|_{F_n}$ has codomain $\mathbb R^{64}$, so rank-nullity supplies a nonzero vector
+
+$$
+v_n=\sum_{j=1}^{65}a_{n,j}\mathbf1_{A_{n,j}}
+ \in F_n\cap V.
+$$
+
+Scale its coefficients so that $\max_j|a_{n,j}|=1$. Disjointness gives $\|v_n\|_\infty=1$, and with $E_n=\bigcup_jA_{n,j}\subset B_n$ one has
+
+$$
+\begin{aligned}
+0<q(v_n)
+ &=c\|T_{d/2}(gv_n)\|_2^2
+ \le c\|gv_n\|_2^2 \\
+ &\le c\int_{E_n}g^2\,dm
+ \le c\nu(B_n)\longrightarrow0.
+\end{aligned}
+\tag{161.4}
+$$
+
+The first strict inequality is Appendix III Proposition 134.2, the middle inequality is the $L^2$ contraction of $T_{d/2}$, and the last one uses $|v_n|\le1$. This proves (161.2). $\square$
+
+**Corollary 161.2 (what the collapse does and does not provide).** The energy-collapse alternative in Appendix III Corollary 159.4 is nonempty for the full exact linear kernel: it occurs through normalized directions concentrating on sets of vanishing $m$-measure. Appendix III Proposition 160.2 prevents such a sequence from lying in any one fixed finite-dimensional injective reservoir, so the directions necessarily leave every fixed finite-dimensional reservoir. The construction imposes all $64$ first-order constraints, but it does not make any nonlinear residual vanish, produce a legal two-label family, supply a terminal compensator, establish an exact H43 partition, or settle SRS-20 or $F_{64}$.
+
+The source-specific statements (161.1)–(161.4) use only the finite-codimension of $V$, nonatomicity of the retained probability $m$, $g\in L^2(m)$, and the Markov $L^2$ contraction. They are a function-level boundary for the energy-collapse escape and do not assert a spectral gap failure for any fixed finite-dimensional subspace, a zero-energy nonzero vector, a nonlinear completion, a physical realization or a Lean/kernel theorem.
+
+## 追加锚（本行以下为增补区）
+
+## 162. Finite linear observations do not restore energy coercivity
+
+**Definition 162.1 (a finite observation augmentation of the exact kernel).** Retain the complete telescope of Appendix III §§134–161. In particular, let
+
+$$
+V=\ker\Lambda_{134}\subset L^\infty(G,m;\mathbb R),
+\qquad
+q(v)=c\langle gv,P(gv)\rangle_m,
+$$
+
+and let $\mathscr R:L^\infty(G,m;\mathbb R)\to\mathbb R^r$ be any finite-dimensional real-linear observation map, with $r\ge0$. Define
+
+$$
+W_{\mathscr R}=V\cap\ker\mathscr R.
+\tag{162.1}
+$$
+
+No continuity, $L^1$ representation or positivity is assumed for $\mathscr R$; it is only a finite list of linear constraints on the same $L^\infty$ classes. The original 64 first-order coordinates are already included in $V$.
+
+**Proposition 162.2 (small-support directions survive every finite linear augmentation).** Let $B_n\subset G$ be Borel sets with $m(B_n)>0$ and
+
+$$
+\int_{B_n}g^2\,dm\longrightarrow0.
+\tag{162.2}
+$$
+
+Then there are bounded real Borel functions $v_n$ such that
+
+$$
+ v_n\in W_{\mathscr R},
+ \qquad \|v_n\|_\infty=1,
+ \qquad \operatorname{supp}(v_n)\subset B_n,
+ \qquad 0<q(v_n)\le c\int_{B_n}g^2\,dm\longrightarrow0.
+\tag{162.3}
+$$
+
+*Proof.* Put $N=64+r+1$. By nonatomicity, each positive-measure $B_n$ contains $N$ pairwise disjoint Borel subsets $A_{n,1},\ldots,A_{n,N}$ of positive measure. Their indicators are linearly independent in $L^\infty(m;\mathbb R)$. Let
+
+$$
+F_n=\operatorname{span}_{\mathbb R}
+\{\mathbf1_{A_{n,1}},\ldots,\mathbf1_{A_{n,N}}\}.
+$$
+
+The combined linear map
+
+$$
+(\Lambda_{134},\mathscr R):F_n\longrightarrow\mathbb R^{64+r}
+$$
+
+has a nonzero kernel by rank-nullity. Choose a nonzero $v_n$ in that kernel and scale its coefficients so that their maximum absolute value is one. Disjointness then gives $\|v_n\|_\infty=1$, and $v_n$ is a bounded real Borel function supported in $B_n$. It belongs to $V$ and is annihilated by $\mathscr R$, hence to $W_{\mathscr R}$. Proposition 134.2 gives strict positivity for every nonzero such class. Since $|v_n|\le1$,
+
+$$
+0<q(v_n)=c\|T_{d/2}(gv_n)\|_2^2
+\le c\|gv_n\|_2^2
+\le c\int_{B_n}g^2\,dm.
+$$
+
+The last quantity tends to zero by (162.2). $\square$
+
+**Corollary 162.3 (finite readouts have zero coercivity infimum).** For every finite-dimensional real-linear $\mathscr R$,
+
+$$
+\inf\left\{q(v):v\in W_{\mathscr R},\ \|v\|_\infty=1\right\}=0.
+\tag{162.4}
+$$
+
+In particular, adjoining any finite list of additional linear marginals, probes or calibration coordinates to all 64 first-order equations cannot produce a positive lower bound for the weighted heat energy on the full calibrated kernel. The conclusion is algebraic and does not depend on whether the added functionals are represented by $L^1$ kernels.
+
+If $m(B_n)\to0$, then the same sequence can be chosen weak-star null in $L^\infty(m)$. Indeed, for every $h\in L^1(m)$, absolute continuity of the integral gives
+
+$$
+\left|\int_Gh v_n\,dm\right|
+\le\int_{B_n}|h|\,dm\longrightarrow0.
+\tag{162.5}
+$$
+
+Thus the escape can simultaneously satisfy any fixed finite linear observation list exactly and become invisible to every fixed integrable probe in the limit.
+
+The result is a finite-dimensional boundary only. It does not supply an infinite family of constraints, a nonlinear residual-zero tuple, pointwise simplex legality, an exact H43 partition, a terminal compensator, an SRS-20 construction, an $F_{64}$ witness, a physical realization or a Lean/kernel theorem. It also does not assert that an arbitrary nonlinear or discontinuous infinite-dimensional readout fails to control the energy. The source-specific statements (162.1)–(162.5) use only the original finite-codimension map, nonatomicity, rank-nullity, the $L^2$ contraction of $T_{d/2}$ and the strict positivity in Proposition 134.2.
+
+## 追加锚（本行以下为增补区）
+
+## 163. Finite-horizon successor closure remains non-coercive
+
+The R5-007 distinction between a current readout, a well-defined successor and a static state can be stated directly on the calibrated function space. The next result adds a finite successor horizon to the observation map of §162; it does not choose a physical successor operation.
+
+**Definition 163.1 (finite-horizon successor readout).** Let
+
+$$
+\mathcal X=L^\infty(G,m;\mathbb R),
+$$
+
+let $\mathscr R:\mathcal X\to\mathbb R^r$ be a finite-dimensional real-linear readout, and let
+
+$$
+T:\mathcal X\to\mathcal X
+$$
+
+be a specified real-linear successor operation. Write $T^0=\operatorname{id}$ and, for an integer horizon $H\ge0$, define
+
+$$
+\mathscr R^{[H]}(v)
+ =\bigl(\mathscr R(v),\mathscr R(Tv),\ldots,\mathscr R(T^Hv)\bigr)
+ \in(\mathbb R^r)^{H+1}.
+\tag{163.1}
+$$
+
+The corresponding finite-horizon calibrated kernel is
+
+$$
+W_{\mathscr R,T}^{(H)}
+ =V\cap\ker\mathscr R^{[H]}
+ =V\cap\bigcap_{j=0}^{H}\ker(\mathscr R\circ T^j).
+\tag{163.2}
+$$
+
+No continuity, positivity or physical realizability of $T$ is assumed; only its stated linear action on the same $L^\infty$ classes is used.
+
+**Proposition 163.2 (successor coordinates through any finite horizon still admit energy collapse).** Let $B_n\subset G$ be Borel sets with $m(B_n)>0$ and
+
+$$
+\int_{B_n}g^2\,dm\longrightarrow0.
+\tag{163.3}
+$$
+
+For every finite $H$ there are bounded real Borel functions $v_n$ such that
+
+$$
+ v_n\in W_{\mathscr R,T}^{(H)},
+ \qquad \|v_n\|_\infty=1,
+ \qquad \operatorname{supp}(v_n)\subset B_n,
+ \qquad
+ 0<q(v_n)\le c\int_{B_n}g^2\,dm\longrightarrow0.
+\tag{163.4}
+$$
+
+*Proof.* The target of the combined linear map
+
+$$
+\Phi_H
+ =\bigl(\Lambda_{134},\mathscr R,\mathscr R\circ T,\ldots,\mathscr R\circ T^H\bigr)
+$$
+
+has dimension $64+r(H+1)$. Put
+
+$$
+N=64+r(H+1)+1.
+$$
+
+By nonatomicity, each positive-measure $B_n$ contains $N$ pairwise disjoint Borel subsets $A_{n,1},\ldots,A_{n,N}$ of positive measure. Their indicators span an $N$-dimensional space $F_n$. Rank-nullity gives a nonzero $v_n\in\ker(\Phi_H|_{F_n})$. Scale its coefficients so that their maximum absolute value is one. Disjointness gives $\|v_n\|_\infty=1$, and $v_n$ is supported in $B_n$. The kernel equations put it in $V$ and annihilate every $\mathscr R\circ T^j$ for $0\le j\le H$. Proposition 134.2 gives $q(v_n)>0$, while the $L^2$ contraction of $T_{d/2}$ and $|v_n|\le1$ give
+
+$$
+0<q(v_n)
+ =c\|T_{d/2}(gv_n)\|_2^2
+ \le c\|gv_n\|_2^2
+ \le c\int_{B_n}g^2\,dm.
+$$
+
+This proves (163.4). $\square$
+
+**Corollary 163.3 (finite-horizon successor data have zero coercivity infimum).** For every finite-dimensional $\mathscr R$ and every finite $H$,
+
+$$
+\inf\left\{q(v):v\in W_{\mathscr R,T}^{(H)},\ \|v\|_\infty=1\right\}=0.
+\tag{163.5}
+$$
+
+Thus adjoining the current readout and any prescribed finite list of its successor readouts cannot create a positive lower bound for the weighted heat energy on the full calibrated kernel. If $m(B_n)\to0$, the sequence in Proposition 163.2 is also weak-star null in $L^\infty(m)$ by the argument of (162.5). This is a finite-horizon statement; it does not control an infinite or nonlinear readout.
+
+**Proposition 163.4 (the successor-factorization fibre test).** Let $X\subseteq\mathcal X$ be a linear source domain with $T(X)\subseteq X$, and let $S=\mathscr R(X)$. There exists a map
+
+$$
+\overline T:S\to S,
+\qquad
+\mathscr R\circ T=\overline T\circ\mathscr R\quad\text{on }X,
+\tag{163.6}
+$$
+
+if and only if
+
+$$
+\mathscr R(x)=\mathscr R(x')
+\ \Longrightarrow\
+\mathscr R(Tx)=\mathscr R(Tx')
+\qquad(x,x'\in X).
+\tag{163.7}
+$$
+
+*Proof.* The implication is immediate from (163.6). Conversely, define $\overline T(\mathscr R(x))=\mathscr R(Tx)$. Condition (163.7) makes this definition independent of the chosen representative, and $T(X)\subseteq X$ puts its value in $S$. $\square$
+
+When $X=V$ and $T(V)\subseteq V$, (163.7) is exactly the calibrated-kernel version of the R5-007 successor-closure criterion. If it fails, $x,x'$ are a same-current, different-successor witness. More concretely, it is enough to find
+
+$$
+ v\in V\cap\ker\mathscr R
+ \quad\text{with}\quad
+ \mathscr R(Tv)\ne0;
+\tag{163.8}
+$$
+
+then $0$ and $v$ have identical current readout and different next readout. If $T$ does not preserve $V$, the same witness still certifies failure of factorization on the calibrated domain, with the successor readout regarded as taking values in $\mathbb R^r$ rather than in $\mathscr R(V)$.
+
+**Corollary 163.5 (closure is not staticity).** Even when (163.7) holds and $\overline T$ is well-defined, it only says that the specified successor readout descends to the current summary. It does not say $\overline T$ is the identity, that $T$ fixes any state, or that a derivative vanishes. Conversely, failure of (163.7) is an information-fibre failure, not a proof that no larger summary or memory variable can close the successor. Proposition 163.2 shows that, for every fixed finite horizon, adding the missing successor coordinates still leaves normalized directions with arbitrarily small positive $q$.
+
+The source-specific statements (163.1)–(163.8) use only finite-dimensionality of the appended readout, real linearity of the specified successor, nonatomicity, rank-nullity, the $L^2$ contraction of $T_{d/2}$ and Proposition 134.2. They do not construct a nonlinear residual-zero tuple, a legal simplex family, an exact H43 partition, a terminal compensator, an SRS-20 or $F_{64}$ witness, a physical successor operation or a Lean/kernel theorem.
+
+## 追加锚（本行以下为增补区）
+
+## 164. Countable successor stacks: prefix escape and the exact-kernel boundary
+
+Section 163 treats one finite successor horizon at a time. A countable stack of successor coordinates has a stricter exact kernel, so the finite-horizon argument must be diagonalized with its quantifiers kept visible. The next statements give the diagonal finite-prefix escape and record why it does not by itself produce a vector silent to every coordinate.
+
+**Definition 164.1 (finite prefixes of a countable readout stack).** Let
+
+$$
+\mathcal X=L^\infty(G,m;\mathbb R),
+\qquad V=\ker\Lambda_{134},
+$$
+
+and let $(\mathscr R_j)_{j\ge0}$ be a countable family of real-linear maps
+
+$$
+\mathscr R_j:\mathcal X\longrightarrow\mathbb R^{r_j},
+\qquad r_j<\infty.
+$$
+
+Define
+
+$$
+W_{\le n}=V\cap\bigcap_{j=0}^{n}\ker\mathscr R_j,
+\qquad
+W_\infty=V\cap\bigcap_{j=0}^{\infty}\ker\mathscr R_j.
+\tag{164.1}
+$$
+
+When a specified real-linear successor $T$ is available, the successor stack is the special case $\mathscr R_j=\mathscr R\circ T^j$ whenever these compositions are defined on $\mathcal X$.
+
+**Proposition 164.2 (finite-prefix diagonal escape).** Let $B_n\subset G$ be Borel sets with $m(B_n)>0$ and
+
+$$
+\int_{B_n}g^2\,dm\longrightarrow0.
+\tag{164.2}
+$$
+
+Then there are bounded real Borel functions $v_n$ such that
+
+$$
+\begin{gathered}
+v_n\in W_{\le n},
+\qquad \|v_n\|_\infty=1,
+\qquad \operatorname{supp}(v_n)\subset B_n,\\
+0<q(v_n)\le c\int_{B_n}g^2\,dm\longrightarrow0.
+\end{gathered}
+\tag{164.3}
+$$
+
+Moreover, for every fixed $j$, $\mathscr R_j(v_n)=0$ for all $n\ge j$. If $m(B_n)\to0$, the sequence is weak-star null in $L^\infty(m)$.
+
+*Proof.* Put
+
+$$
+N_n=64+\sum_{j=0}^{n}r_j+1
+$$
+
+and choose $N_n$ pairwise disjoint Borel subsets $A_{n,1},\ldots,A_{n,N_n}$ of positive measure inside $B_n$. Their indicators span an $N_n$-dimensional subspace $F_n$ of $\mathcal X$. The combined map
+
+$$
+\Phi_n=(\Lambda_{134},\mathscr R_0,\ldots,\mathscr R_n):
+F_n\longrightarrow
+\mathbb R^{64+\sum_{j=0}^{n}r_j}
+$$
+
+has a nonzero kernel by rank-nullity. Choose a nonzero $v_n$ in that kernel and scale its indicator coefficients so that their maximum absolute value is one. Disjointness gives $\|v_n\|_\infty=1$ and $\operatorname{supp}(v_n)\subset B_n$; the kernel equations give $v_n\in W_{\le n}$ and the eventual vanishing of each fixed coordinate. Proposition 134.2 gives $q(v_n)>0$. Since $|v_n|\le1$, the Markov $L^2$ contraction gives
+
+$$
+0<q(v_n)=c\|T_{d/2}(gv_n)\|_2^2
+\le c\|gv_n\|_2^2
+\le c\int_{B_n}g^2\,dm,
+$$
+
+which proves (164.3). When $m(B_n)\to0$, for every $h\in L^1(m)$,
+
+$$
+\left|\int_G h v_n\,dm\right|
+\le\int_{B_n}|h|\,dm\longrightarrow0
+$$
+
+by absolute continuity of the integral. $\square$
+
+**Corollary 164.3 (finite-prefix coercivity remains zero).** For every $n$,
+
+$$
+\inf\left\{q(v):v\in W_{\le n},\ \|v\|_\infty=1\right\}=0.
+\tag{164.4}
+$$
+
+Indeed, for a fixed $n$ repeat the rank-nullity construction with the finite map $(\Lambda_{134},\mathscr R_0,\ldots,\mathscr R_n)$ on a sequence of positive-measure sets whose $g^2$-mass tends to zero. The same estimate as in (164.3) gives arbitrarily small positive values of $q$ in $W_{\le n}$. The diagonal sequence from Proposition 164.2 is eventually invisible to every fixed finite subset of the countable stack, while retaining unit $L^\infty$ norm and positive energy at each finite index. If $\mathscr R_j=\mathscr R\circ T^j$, this says that every fixed finite list of successor coordinates vanishes along the sequence after a finite stage. It does not say that any $v_n$ belongs to $W_\infty$.
+
+**Proposition 164.4 (finite-prefix escape does not imply a common infinite escape).** There is an abstract positive quadratic form and a countable readout stack for which every finite-prefix unit sphere has zero infimum, while the exact infinite kernel has a positive coercivity infimum. Take
+
+$$
+\mathcal Y=\ell^\infty(\mathbb N_0),
+\qquad
+Q(x)=x_0^2+\sum_{k=1}^{\infty}2^{-k}x_k^2,
+$$
+
+and let $\mathscr S_j(x)=x_{j+1}$. Then
+
+$$
+Y_{\le n}=\bigcap_{j=0}^{n}\ker\mathscr S_j
+$$
+
+contains every unit vector $e_k$ with $k\ge n+2$. Hence
+
+$$
+\inf\{Q(x):x\in Y_{\le n},\ \|x\|_\infty=1\}=0,
+$$
+
+and the particular choice $e_{n+2}$ gives the displayed diagonal bound
+
+$$
+Q(e_{n+2})=2^{-(n+2)}\longrightarrow0.
+$$
+
+On the other hand,
+
+$$
+Y_\infty=\bigcap_{j=0}^{\infty}\ker\mathscr S_j
+ =\operatorname{span}\{e_0\},
+$$
+
+and every unit vector in $Y_\infty$ has $Q(x)=1$. Thus
+
+$$
+\inf\{Q(x):x\in Y_\infty,\ \|x\|_\infty=1\}=1.
+\tag{164.5}
+$$
+
+This is a logical separation example, not a model of the FIB heat form. It shows that the passage from all finite prefixes to the common infinite kernel requires an additional compactness, correction, or exact-common-kernel argument.
+
+**Corollary 164.5 (the remaining infinite-horizon obligation).** Proposition 164.2 proves coordinatewise finite-prefix escape for any countable family of finite-dimensional successor readouts. To obtain a genuine FIB infinite-horizon energy-collapse statement, one must additionally construct either
+
+1. a sequence in $W_\infty$ with unit norm and shrinking $g^2$-mass, or
+2. an exact correction procedure that converts the prefix sequence into $W_\infty$ while preserving nonzero norm and the energy estimate.
+
+Neither condition follows from rank-nullity applied separately to the finite prefixes. Consequently, a countable successor stack may still control the full calibrated kernel even though every finite horizon has zero coercivity infimum. The statements (164.1)--(164.5) do not construct a physical successor, a nonlinear residual-zero tuple, a legal simplex family, an exact H43 partition, a terminal compensator, an SRS-20 or $F_{64}$ witness, or a Lean/kernel theorem.
+
+## 165. The orbit-closure criterion for a countable successor stack
+
+Section 164 leaves the exact common kernel as the missing infinite-horizon object. A useful distinction is available when the successor readout extends to $L^2(m)$ and its coordinates have Hilbert-space representers. In that case the countable stack is governed by the closed heat orbit of those representers; finite-prefix rank-nullity does not have to be used as a proxy for the exact intersection.
+
+**Definition 165.1 (an $L^2$-representable successor stack).** Retain the original probability space $(G,m)$, the calibrated bounded kernel
+
+$$
+V=\ker\Lambda_{134}\subset L^\infty(G,m;\mathbb R),
+$$
+
+and put $H=L^2(G,m;\mathbb R)$. Let $P=T_d$ be the original self-adjoint contraction on $H$. Suppose a finite-dimensional readout $R$ has scalar coordinates
+
+$$
+R_k(v)=\langle v,\psi_k\rangle_H,
+\qquad 1\le k\le r,
+$$
+
+for fixed $\psi_k\in H$, and define the specified successor stack by
+
+$$
+R_j=R\circ P^j,\qquad j\ge0.
+$$
+
+Let
+
+$$
+\mathcal C=\overline{\operatorname{span}_{\mathbb R}
+ \{P^j\psi_k:j\ge0,\ 1\le k\le r\}}^{\,H}.
+\tag{165.1}
+$$
+
+The closure is in $H$; no density or cyclicity assumption is built into the definition.
+
+**Proposition 165.2 (exact common-kernel/orbit-closure equivalence).** For every $v\in V$, viewed as its $H$-class,
+
+$$
+\bigl(\forall j\ge0,\ R_j(v)=0\bigr)
+\quad\Longleftrightarrow\quad
+v\in\mathcal C^\perp.
+\tag{165.2}
+$$
+
+Consequently the exact common infinite kernel of the bounded calibrated classes is
+
+$$
+W_\infty
+=V\cap L^\infty(G,m;\mathbb R)\cap\mathcal C^\perp,
+\tag{165.3}
+$$
+
+with the first intersection understood in the original $m$-class sense.
+
+*Proof.* For $v\in V$ and every $j,k$, self-adjointness of $P$ gives
+
+$$
+R_j(v)_k
+ =\langle P^jv,\psi_k\rangle_H
+ =\langle v,P^j\psi_k\rangle_H.
+\tag{165.4}
+$$
+
+Thus all successor coordinates vanish exactly when $v$ is orthogonal to every generator in (165.1). Orthogonality is preserved under real linear combinations and $H$-limits, so this is equivalent to $v\in\mathcal C^\perp$. Intersecting with the original bounded calibrated domain gives (165.3). The argument uses no compactness of the unit sphere and no assertion that the stack is physically realized. $\square$
+
+**Corollary 165.3 (the cyclicity boundary).** Let
+
+$$
+H_{\mathrm{cal}}=\overline{\operatorname{span}_{\mathbb R}V}^{\,H}.
+$$
+
+If $H_{\mathrm{cal}}\subseteq\mathcal C$, equivalently the successor readout orbit is dense in the $L^2$ calibration subspace, then $W_\infty=\{0\}$ as a space of $m$-classes. Hence no normalized exact infinite-horizon escape direction exists for that stack. This is a conditional observability statement: it does not assert the required density for the original FIB readout.
+
+Conversely, if $\mathcal C^\perp\cap V$ contains bounded classes supported on Borel sets $B_n$ with
+
+$$
+\|v_n\|_\infty=1,
+\qquad
+\int_{B_n}g^2\,dm\longrightarrow0,
+$$
+
+then Proposition 134.2 and the Markov contraction give
+
+$$
+0<q(v_n)\le c\int_{B_n}g^2\,dm\longrightarrow0,
+$$
+
+and every $v_n$ is silent to the entire countable stack. The corollary identifies the exact remaining construction: it does not manufacture a localized sequence from nonzeroity of $\mathcal C^\perp$ alone.
+
+**Corollary 165.4 (finite prefixes and their limit).** Define
+
+$$
+\mathcal C_n=\operatorname{span}_{\mathbb R}
+ \{P^j\psi_k:0\le j\le n,\ 1\le k\le r\}.
+$$
+
+Then
+
+$$
+W_{\le n}=V\cap L^\infty(G,m;\mathbb R)\cap\mathcal C_n^\perp,
+\qquad
+W_\infty=\bigcap_{n\ge0}W_{\le n},
+\tag{165.5}
+$$
+
+and $\overline{\bigcup_n\mathcal C_n}=\mathcal C$. The finite-prefix escape of Proposition 164.2 therefore says only that each $\mathcal C_n^\perp$ contains normalized low-energy classes. It supplies no nonzero element of the limiting orthogonal complement $\mathcal C^\perp$ unless an additional orbit-complement or correction argument is proved.
+
+If the readout coordinates are initially given only as real-linear maps on $L^\infty$, the representer hypothesis in Definition 165.1 is an additional bridge: an arbitrary algebraic functional need not extend continuously to $L^2$. In the complex formulation, real and imaginary coordinates must be split before applying the real inner-product calculation above.
+
+The statements (165.1)--(165.5) are an exact functional-analytic boundary for the countable successor question. They do not establish orbit density, a nonzero orbit complement, a physical successor, a nonlinear residual-zero tuple, a legal simplex family, an exact H43 partition, a terminal compensator, an SRS-20 or $F_{64}$ witness, or a Lean/kernel theorem.
+
+## 追加锚（本行以下为增补区）
+
+## 166. The finite $L^2$ representer bridge for the calibrated kernel
+
+Section 165 treats the original first-order kernel $V$ as a bounded-function constraint while the successor orbit is described in $L^2(m)$. For the actual equal-gap readout of Appendix III, the first-order constraints have explicit $L^2(m)$ representers. This identifies the finite calibration plane that must be added to any later successor orbit, without asserting that the orbit preserves $V$ or that a physical successor exists.
+
+**Definition 166.1 (the first-order representer plane).** Retain the complete telescope of Appendix III Definition 134.1 and the real labels $\mathcal L=\{0,1,3,B\}$. Write $H=L^2(G,m;\mathbb R)$, $P=T_d$, and use pointwise multiplication for products of functions. For $\alpha=(y,z,w)\in\mathcal L^3$, define
+
+$$
+\begin{aligned}
+A_{yzw}&=g\,P(f_z\,P f_w),\\
+B_{yzw}&=P(g f_y)\,P f_w,\\
+C_{yzw}&=P\!\bigl(f_z\,P(g f_y)\bigr),\\
+\psi_{yzw}&=\sigma_y A_{yzw}+\sigma_z B_{yzw}+\sigma_w C_{yzw}.
+\end{aligned}
+\tag{166.1}
+$$
+
+Let
+
+$$
+W=\operatorname{span}_{\mathbb R}
+\{\psi_{yzw}: (y,z,w)\in\mathcal L^3\}\subset H.
+\tag{166.2}
+$$
+
+The span is finite-dimensional, with dimension at most $64$. Orthogonal complements below are taken in $H$, while bounded functions are understood as their $m$-classes.
+
+**Proposition 166.2 (explicit representers for all first-order constraints).** For every $\alpha=(y,z,w)\in\mathcal L^3$, the function $\psi_{yzw}$ has a bounded Borel representative and belongs to $H$. For every bounded real Borel $v$,
+
+$$
+\ell_{yzw}(v)=\langle v,\psi_{yzw}\rangle_H.
+\tag{166.3}
+$$
+
+Consequently, with $V=\ker\Lambda$ as in Appendix III Definition 134.1,
+
+$$
+V=L^\infty(G,m;\mathbb R)\cap W^\perp.
+\tag{166.4}
+$$
+
+*Proof.* The inherited source estimate in Appendix III (134.4) gives $g=P g_d$, while Theorem 133.2 gives $g_d\in L^\infty(m)$. The Markov $L^\infty$-contraction of $P$ therefore gives $g\in L^\infty(m)$. Equation (134.8) gives $f_y\in L^\infty(m)$ for every label. Applying the same contraction to the products in (166.1) shows that $A_{yzw}$, $B_{yzw}$, and $C_{yzw}$ are bounded Borel $m$-classes, hence belong to $H$. Their displayed Borel representatives may be chosen simultaneously for the finite set of labels.
+
+For the first term of (134.11), self-adjointness of $P$ gives
+
+$$
+\mathcal C(v,f_z,f_w)
+ =\langle g v,P(f_z P f_w)\rangle_H
+ =\langle v,A_{yzw}\rangle_H.
+\tag{166.5}
+$$
+
+For the second term, move $P$ across the pairing once:
+
+$$
+\mathcal C(f_y,v,f_w)
+ =\langle g f_y,P(v P f_w)\rangle_H
+ =\langle P(g f_y),v P f_w\rangle_H
+ =\langle v,B_{yzw}\rangle_H.
+\tag{166.6}
+$$
+
+For the third term, move $P$ across the pairing twice:
+
+$$
+\begin{aligned}
+\mathcal C(f_y,f_z,v)
+ &=\langle g f_y,P(f_z P v)\rangle_H\\
+ &=\langle P(g f_y),f_z P v\rangle_H\\
+ &=\langle P(f_z P(g f_y)),v\rangle_H
+ =\langle v,C_{yzw}\rangle_H.
+\end{aligned}
+\tag{166.7}
+$$
+
+Substitution of (166.5)--(166.7) into the definition of $\ell_{yzw}$ in (134.11) proves (166.3). All pairings are legitimate because $m$ is a probability and every displayed factor is bounded. The simultaneous vanishing of the $64$ coordinates is therefore exactly orthogonality to $W$, which proves (166.4). $\square$
+
+**Corollary 166.3 (the calibrated plane and a successor orbit).** Let
+
+$$
+H_{\mathrm{cal}}=\overline{\operatorname{span}_{\mathbb R}V}^{\,H}.
+\tag{166.8}
+$$
+
+Then $H_{\mathrm{cal}}\subseteq W^\perp$. Equality requires an additional density statement and is not supplied by the finite representer calculation. If a finite $L^2(m)$-representable readout has representers $\psi_1,\ldots,\psi_r$ and its specified successor stack is $R_j=R\circ P^j$, put
+
+$$
+\mathcal C_R=\overline{\operatorname{span}_{\mathbb R}
+\{P^j\psi_k:j\ge0, 1\le k\le r\}}^{\,H}.
+\tag{166.9}
+$$
+
+Then the exact common kernel from Section 165 can be written as
+
+$$
+W_\infty
+ =L^\infty(G,m;\mathbb R)\cap
+ \overline{W+\mathcal C_R}^{\,H\,\perp}.
+\tag{166.10}
+$$
+
+Indeed, (166.4) supplies the condition $v\perp W$, while Proposition 165.2 supplies $v\perp\mathcal C_R$; orthogonality to both closed subspaces is equivalent to orthogonality to the closure of their algebraic sum. Formula (166.10) is an interface identity only. It does not prove that $\mathcal C_R$ is dense in $H_{\mathrm{cal}}$, that $\mathcal C_R$ has a nonzero bounded localized complement, or that the successor action maps $V$ into $V$. It also does not construct a physical successor, a nonlinear residual-zero family, a legal simplex partition, an exact $H43$ partition, a terminal compensator, an $SRS\text{-}20$ or $F_{64}$ witness, or a Lean/kernel theorem.
+
+The deductions (166.1)--(166.10) are source-specific consequences of the original bounded equal-gap readout and the self-adjoint heat contraction. They are not a claim that the representer bridge, the successor orbit, or its physical realization is present in the original model beyond the hypotheses displayed here.
+
+## 追加锚（本行以下为增补区）
+
+## 167. Bounded calibration closure and the finite residual test
+
+Section 166 identifies the first-order calibration plane through bounded $L^2(m)$ representers, but leaves two different questions separate: whether bounded calibrated classes are dense in the Hilbert orthogonal complement, and whether the heat operator preserves that bounded calibrated class. The next propositions close the first logical bridge and reduce the second to a finite residual Gram matrix. They do not evaluate that matrix for the actual 64 representers.
+
+**Definition 167.1 (the bounded calibration space).** Retain all hypotheses and notation of Section 166. Thus $H=L^2(G,m;\mathbb R)$, $W\subset H$ is the finite span of the bounded representers from (166.1), and put
+
+$$
+V_\infty=L^\infty(G,m;\mathbb R)\cap W^\perp.
+\tag{167.1}
+$$
+
+All functions and orthogonality relations are understood as $m$-classes. The finite-dimensionality of $W$ implies that it has a bounded $m$-class basis after removing linear dependencies from the at most $64$ generators.
+
+**Proposition 167.2 (bounded calibrated classes are Hilbert-dense).** With the notation of Definition 167.1,
+
+$$
+\overline{V_\infty}^{\,H}=W^\perp.
+\tag{167.2}
+$$
+
+*Proof.* Let $x\in W^\perp$. Since $m(G)=1$, bounded truncations
+
+$$
+x_n=\max(-n,\min(x,n))
+$$
+
+belong to $L^\infty(G,m;\mathbb R)$ and converge to $x$ in $H$. Let $\Pi_W$ be the orthogonal projection onto $W$. Choose a bounded basis $w_1,\ldots,w_r$ of $W$. The coefficients of $\Pi_Wx_n$ are finite linear combinations of the pairings $\langle x_n,w_i\rangle_H$, so $\Pi_Wx_n\in W\subset L^\infty$. Hence
+
+$$
+v_n=x_n-\Pi_Wx_n\in V_\infty.
+$$
+
+Because $\Pi_Wx=0$ and $\Pi_W$ is a contraction,
+
+$$
+\|v_n-x\|_H
+\le \|x_n-x\|_H+\|\Pi_W(x_n-x)\|_H
+\le 2\|x_n-x\|_H\longrightarrow0.
+$$
+
+Thus $W^\perp\subseteq\overline{V_\infty}^{\,H}$; the reverse inclusion follows from $V_\infty\subseteq W^\perp$. $\square$
+
+**Proposition 167.3 (successor preservation and calibration-plane invariance).** Let $P:H\to H$ be bounded and self-adjoint, and suppose $P(L^\infty(G,m;\mathbb R))\subseteq L^\infty(G,m;\mathbb R)$. Then
+
+$$
+P(V_\infty)\subseteq V_\infty
+\quad\Longleftrightarrow\quad
+P(W)\subseteq W.
+\tag{167.3}
+$$
+
+*Proof.* Assume first that $P(V_\infty)\subseteq V_\infty$. Proposition 167.2 and boundedness of $P$ give $P(W^\perp)\subseteq W^\perp$. If $w\in W$ and $u\in W^\perp$, then self-adjointness gives
+
+$$
+\langle Pw,u\rangle_H=\langle w,Pu\rangle_H=0.
+$$
+
+Therefore $Pw\in(W^\perp)^\perp=W$, proving $P(W)\subseteq W$.
+
+Conversely, let $v\in V_\infty$. The $L^\infty$-preservation hypothesis gives $Pv\in L^\infty$. For $w\in W$, self-adjointness and $P(W)\subseteq W$ give
+
+$$
+\langle Pv,w\rangle_H=\langle v,Pw\rangle_H=0.
+$$
+
+Thus $Pv\in W^\perp$, and hence $Pv\in V_\infty$. $\square$
+
+For the original heat operator, the hypotheses of Proposition 167.3 are inherited: $P=T_d=e^{-dK}$ is bounded self-adjoint on $H$, and the Markov semigroup preserves bounded real functions. Proposition 167.3 is therefore a conditional closure equivalence, not a claim that the actual Section 166 plane is already $P$-invariant.
+
+**Proposition 167.4 (finite residual Gram criterion).** Let $w_1,\ldots,w_r$ be an $H$-independent bounded basis of $W$, and define
+
+$$
+G_{ij}=\langle w_i,w_j\rangle_H,qquad
+K_{ij}=\langle w_i,Pw_j\rangle_H,qquad
+D_{ij}=\langle Pw_i,Pw_j\rangle_H.
+\tag{167.4}
+$$
+
+Then $G$ is positive definite and
+
+$$
+P(W)\subseteq W
+\quad\Longleftrightarrow\quad
+D-K^{\mathsf T}G^{-1}K=0.
+\tag{167.5}
+$$
+
+*Proof.* Let $S:\mathbb R^r\to H$ be the synthesis map $Se_j=w_j$. Then $G=S^*S$, $K=S^*PS$, and $D=(PS)^*PS$. Self-adjointness of $P$ makes $K$ symmetric. The orthogonal projection onto $W$ is
+
+$$
+\Pi_W=SG^{-1}S^*.
+$$
+
+Consequently the matrix on the right of (167.5) is the Gram matrix of the projection residuals:
+
+$$
+D-K^{\mathsf T}G^{-1}K
+ =(PS)^*(I-\Pi_W)PS.
+\tag{167.6}
+$$
+
+It vanishes exactly when every $(I-\Pi_W)Pw_j$ vanishes, which is equivalent to $P w_j\in W$ for each basis vector and hence to $P(W)\subseteq W$. For the original 64 generators one must first pass to an $H$-independent basis (or use the corresponding Moore--Penrose projection); the possibly singular raw 64-by-64 Gram matrix cannot be inverted. $\square$
+
+## 168. Closure boundary and applicability
+
+The density and residual statements above are ordinary Hilbert-space consequences of the inherited probability, bounded representers, self-adjoint heat operator and Markov boundedness. The residual matrix uses exact $m$-pairings; a numerical approximation, the compressed matrix $K$ alone, or the existence of the representer formula does not establish its vanishing.
+
+The current result does not assert $P(W)\subseteq W$ for the concrete Section 166 plane, $P(V_\infty)=V_\infty$, orbit density, a nonzero bounded common-kernel sequence, a physical successor, a nonlinear residual-zero family, a legal simplex or $H43$ partition, a terminal compensator, $SRS\text{-}20$, $F_{64}$, or a Lean/kernel theorem. Those questions require their own exact calculations and realization bridges.
+
+
+
+## 169. The concrete representer plane is not heat-invariant
+
+Section 168 reduces the actual closure question to a finite residual Gram matrix. The source-start law supplies an exact obstruction to that closure: the first-order representer plane already contains a positive-time source density, and no such density can have a finite-dimensional heat orbit.
+
+**Lemma 169.1 (a positive-time source density has no polynomial relation).** Let $t,d>0$ and let $g_t$ be the source-start density of Appendix III Theorem 117.2. There is no nonzero real polynomial $q$ such that
+
+$$
+q(T_d)g_t=0\quad\text{in }L^2(G,m).
+\tag{169.1}
+$$
+
+*Proof.* Write $T_s=e^{-sK}$ and let $E_K$ be the spectral resolution of the nonnegative self-adjoint $K$. If (169.1) held, then the spectral measure of $g_t$ would be supported on
+
+$$
+\Lambda=\{\lambda\ge0:q(e^{-d\lambda})=0\}.
+\tag{169.2}
+$$
+
+This set is finite: the nonzero polynomial $q$ has finitely many roots, and $\lambda\mapsto e^{-d\lambda}$ is one-to-one; a possible root at zero is not attained at a finite $\lambda$. Thus
+
+$$
+g_t=\sum_{\lambda\in\Lambda}g_{t,\lambda},
+\qquad g_{t,\lambda}=E_K(\{\lambda\})g_t.
+\tag{169.3}
+$$
+
+For $0<s<t$, the source propagation identity gives $g_t=T_{t-s}g_s$. Since $T_{t-s}$ is injective and commutes with $q(T_d)$,
+
+$$
+0=q(T_d)g_t=T_{t-s}q(T_d)g_s
+\quad\Longrightarrow\quad q(T_d)g_s=0.
+\tag{169.4}
+$$
+
+The same finite spectral decomposition therefore holds for every $g_s$. On the $\lambda$-eigenspace, $T_{t-s}$ is multiplication by $e^{-(t-s)\lambda}$, so
+
+$$
+g_s=\sum_{\lambda\in\Lambda}e^{(t-s)\lambda}g_{t,\lambda}
+\longrightarrow
+r:=\sum_{\lambda\in\Lambda}e^{t\lambda}g_{t,\lambda}
+\quad\text{in }L^2(m)\quad(s\downarrow0).
+\tag{169.5}
+$$
+
+For every $\psi\in C_c(G)$, the $L^2$ convergence and $m(G)=1$ give
+
+$$
+\int_G\psi r\,dm
+=\lim_{s\downarrow0}\int_G\psi g_s\,dm.
+\tag{169.6}
+$$
+
+The right side is $\lim_{s\downarrow0}\mathbb E_e[\psi(Z_s)]=\psi(e)$, because the retained diffusion starts at $e$ and has continuous paths. Hence the finite measure $r\,m$ equals $\delta_e$ on $C_c(G)$. This is impossible: $r\in L^2(m)\subset L^1(m)$ while $m(\{e\})=0$, so $r\,m$ is absolutely continuous with respect to $m$ and cannot be the point mass $\delta_e$. $\square$
+
+**Proposition 169.2 (the actual Section 166 plane is not $P$-invariant).** For every original finite $a,\eta,d>0$, with $P=T_d$, $g=g_{2d}$ and $W$ the concrete representer span of Section 166,
+
+$$
+P(W)\not\subseteq W.
+\tag{169.7}
+$$
+
+*Proof.* In the fixed readout of Appendix III Definition 134.1, $f_B=1/4$, $P1=1$, $\sigma_0=1$ and $\sigma_B=0$. Therefore the representer formula (166.1) gives the exact identity
+
+$$
+\psi_{0BB}=g\,P(f_B P f_B)=\frac{g}{16}.
+\tag{169.8}
+$$
+
+In particular $g/16\in W$. If $P(W)\subseteq W$, finite-dimensionality of $W$ would make the orbit $(P^ng)_{n\ge0}$ linearly dependent. Equivalently, some nonzero polynomial $q$ would satisfy $q(P)g=0$, contradicting Lemma 169.1 with $t=2d$. Thus (169.7) holds. $\square$
+
+**Corollary 169.3 (nonzero actual residual and failure of bounded calibrated closure).** Let $w_1,\ldots,w_r$ be any $L^2(m)$-independent bounded basis of the concrete Section 166 plane, and let $G,K,D$ be the exact matrices of (167.4). Then
+
+$$
+D-K^{\mathsf T}G^{-1}K\ne0,
+\tag{169.9}
+$$
+
+and, for $V_\infty=L^\infty(G,m;\mathbb R)\cap W^\perp$,
+
+$$
+P(V_\infty)\not\subseteq V_\infty.
+\tag{169.10}
+$$
+
+Indeed, (169.9) is the contrapositive of the exact residual criterion (167.5), while (169.10) follows from the closure equivalence (167.3). The conclusion is an exact non-invariance statement for the concrete calibration plane; it does not evaluate individual residual entries, construct a physical successor, prove orbit density, or supply a nonlinear residual-zero family, a legal simplex or $H43$ partition, a terminal compensator, $SRS\text{-}20$, $F_{64}$, or a Lean/kernel theorem.
+
+The proof uses only the original source-start density and path law, the injective self-adjoint heat semigroup, the fixed Section 166 readout identities and finite-dimensionality of $W$. It resolves the actual closure boundary left open in Section 168 without a numerical approximation.
+
+## 追加锚（本行以下为增补区）

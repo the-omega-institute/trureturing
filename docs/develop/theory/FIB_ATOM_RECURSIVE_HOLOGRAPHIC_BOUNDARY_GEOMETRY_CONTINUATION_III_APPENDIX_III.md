@@ -4493,3 +4493,436 @@ The two propositions isolate the unpaid bridge without changing the original pro
 The fixed-start summable continuation of Corollary 155.4 remains an independent sufficient route. It is not implied by (156.6), and it is not needed if the finite actual completion succeeds. Conversely, failure of the finite rank certificate leaves the fixed-start route open. The scalar four-score contrast and finite-horizon tests described in the proportional-containment advisory provide a diagnostic for candidate families, but they do not supply the source-specific rank or the actual finite partition required here.
 
 ## 追加锚（本行以下为增补区）
+## 157. Two zero contrast channels and the quadratic rank boundary
+
+**Definition 157.1 (the original affine readout and its zero channels).** Retain the complete original supplier telescope of Definition 155.1, the same trilinear form $\mathcal C$, the same readout $f$ and the exact $\mathcal H_{43}$ calibration of Sections 154 and 156. The calibration notation also applies to bounded Borel pointwise simplex tuples $u=(u_y)_{y\in\mathcal L}$ on the original $G$, with the same tuple in all three slots. Put
+
+$$
+\begin{gathered}
+V=\mathbb R^{\mathcal L},\qquad
+s(v)=\sum_{y\in\mathcal L}v_y,\qquad H=\ker s,\\
+a=(3/8,3/8,0,1/4),\qquad
+q=(-c/2,-c/2,c,0),\qquad f(x)=a+b(x)q,\\
+\Lambda(v)=\bigl(v_0-v_1,\ v_B-\tfrac14s(v)\bigr),
+\qquad \pi=\Lambda|_H.
+\end{gathered}
+\tag{157.1}
+$$
+
+The two components of $\Lambda(f)$ vanish pointwise, including for the originally prescribed representative $b$. For a simplex tuple $u$, their actual values are
+
+$$
+\eta_1(u)=u_0-u_1,\qquad \eta_2(u)=u_B-\tfrac14.
+\tag{157.2}
+$$
+
+These are linear combinations of the same four readout channels, not new observations, independent noises or a changed terminal. The restriction $\pi:H\to\mathbb R^2$ is onto and has kernel $\mathbb Rq$. Indeed $\pi(v)=0$ on $H$ means $v_0=v_1$, $v_B=0$ and $v_3=-2v_0$, while $c>0$.
+
+**Proposition 157.2 (the thirteen-dimensional quadratic limit).** Fix any original $\theta$. Let $B$ be a positive-radius closed ball in a finite-dimensional parameter space. For $0<t<t_0$ and $z\in B$, suppose that $u^{(t,z)}$ is a bounded Borel pointwise simplex tuple satisfying
+
+$$
+\mathcal H_{43}(u^{(t,z)})=\mathcal H_{43}(f).
+\tag{157.3}
+$$
+
+Assume that there is a finite constant $K$ such that
+
+$$
+\sup_{z\in B}\max_{y\in\mathcal L}
+\|u_y^{(t,z)}-f_y\|_{L^\infty(m)}\le Kt,
+\tag{157.4}
+$$
+
+and that the full finite-dimensional residual has a uniform quadratic limit
+
+$$
+\sup_{z\in B}
+\|t^{-2}\Delta(u^{(t,z)})-Q(z)\|\longrightarrow0.
+\tag{157.5}
+$$
+
+Then every $Q(z)$ belongs to the fixed linear space
+
+$$
+\begin{aligned}
+\mathcal W
+ &=q\otimes H\otimes H+H\otimes q\otimes H
+                         +H\otimes H\otimes q,\\
+\mathcal W_{13}
+ &=\{R\in\mathcal W:R_\sigma=0
+                         \text{ for all }\sigma\in\mathcal T_6\},\\
+\dim\mathcal W&=19,\qquad \dim\mathcal W_{13}=13.
+\end{aligned}
+\tag{157.6}
+$$
+
+The dimension is that of a containing linear space. The proposition does not assert that all thirteen directions are realized by legal source-specific tuples.
+
+*Proof.* The exact marginal and ordered-pair coordinates in (157.3), completed with the simplex identities in the slots, give all pair equalities, including those involving $B$. For example the two marginal densities of $Q_{12}$ are $g,Pg$, those of $Q_{13}$ are $g,P^2g$, and those of $Q_{23}$ are $Pg,P^2g$. Therefore every one-index contraction of $\Delta(u^{(t,z)})$ vanishes. The same calculation as Proposition 150.3, which uses only the simplex sums and multilinearity, gives
+
+$$
+\Delta(u^{(t,z)})\in H^{\otimes3}.
+\tag{157.7}
+$$
+
+Write $\delta=u-f$. Because $\Lambda f=0$ pointwise, the exact three-channel projection is
+
+$$
+\begin{aligned}
+\bigl(\Lambda^{\otimes3}\Delta(u)\bigr)_{\alpha\beta\gamma}
+ &=\mathcal C\bigl((\Lambda\delta)_\alpha,
+                   (\Lambda\delta)_\beta,
+                   (\Lambda\delta)_\gamma\bigr),\\
+&\hspace{30mm}\alpha,\beta,\gamma\in\{1,2\}.
+\end{aligned}
+\tag{157.8}
+$$
+
+The original Markov contraction and $\int g\,dm=1$ give
+
+$$
+|\mathcal C(v_1,v_2,v_3)|
+ \le\|v_1\|_\infty\|v_2\|_\infty\|v_3\|_\infty.
+\tag{157.9}
+$$
+
+On $H$, $(\Lambda\delta)_1=\delta_0-\delta_1$ and $(\Lambda\delta)_2=\delta_B$. Thus (157.4) implies the uniform bound
+
+$$
+\sup_{z\in B}\|\Lambda^{\otimes3}
+                 \Delta(u^{(t,z)})\|_{\max}
+ \le8K^3t^3.
+\tag{157.10}
+$$
+
+Equations (157.5), (157.7) and (157.10) show that
+$Q(z)\in\ker(\pi^{\otimes3})$. Choose any linear complement $U$ of $\mathbb Rq$ in $H$. The tensor decomposition of
+$H=\mathbb Rq\oplus U$ shows that this kernel is exactly the sum of the seven tensor summands having at least one $q$ slot. The only surviving quotient summand is $U^{\otimes3}$, of dimension eight. Hence the kernel is $\mathcal W$ and has dimension $27-8=19$.
+
+Every tensor in $\mathcal W$ has zero BBB coordinate because $q_B=0$. The six coordinate restrictions indexed by $\mathcal T_6$ are independent on $\mathcal W$. To see this, put $h_i=e_i-e_B$ for $i\in I$. If a functional
+$\ell=\sum_{\{i,j,k\}=I}\lambda_{ijk}[ijk]$ vanishes on $\mathcal W$, evaluate it on $q\otimes h_j\otimes h_k$ for each ordered pair of distinct $j,k\in I$. With $i$ the remaining label, exactly one summand survives:
+
+$$
+0=\ell(q\otimes h_j\otimes h_k)=q_i\lambda_{ijk}.
+\tag{157.11}
+$$
+
+All three $q_i$ are nonzero, so all six coefficients vanish. This proves that the restrictions have rank six and that their joint kernel in $\mathcal W$ has dimension $19-6=13$. The exact six distinct-label equations in (157.3) put every limit $Q(z)$ in that kernel. $\square$
+
+**Corollary 157.3 (the additional scaling obligation for SRS-20).** Retain Route condition 156.3 and require in addition the uniform proximity bound (157.4) throughout its twenty-dimensional ball. Then its proposed affine leading map cannot have $\det S_\theta\ne0$. More precisely,
+
+$$
+\operatorname{rank}S_\theta\le13.
+\tag{157.12}
+$$
+
+The same conclusion holds if (157.4) is replaced by
+
+$$
+\sup_{z\in B_{20}}\max_y
+\|u_y^{(t,z)}-f_y\|_\infty=o(t^{2/3}).
+\tag{157.13}
+$$
+
+*Proof.* On the exact $\mathcal H_{43}$ fiber, the full residual is determined linearly by the twenty selected repeated-label coordinates: Proposition 156.2 recovers the omitted row, and Proposition 150.3 recovers the coordinates containing $B$. Thus the uniform limit in (156.6) supplies the full limit (157.5). The space satisfying all pair constraints, the six distinct-label zeros and BBB has dimension $27-6-1=20$. Deleting one repeated-label row identifies it with $\mathbb R^{20}$. Proposition 157.2 puts the leading residuals inside the image of $\mathcal W_{13}$ under this identification. Since $B_{20}$ has positive radius, differences of the affine values $r_{\theta,\ast}+S_\theta z$ show that the range of $S_\theta$ lies in that thirteen-dimensional image. This proves (157.12). Under (157.13), the right side of (157.10) is replaced by $8o(t^{2/3})^3=o(t^2)$, giving the same limit argument. $\square$
+
+The new condition is not present in (156.6): its center is fixed to $f^0+tX$, but its off-center tuples are not required to remain uniformly $O(t)$ close to $f$. Since $f=f^0$ almost everywhere, the essential-supremum estimates above respect the original permitted representative and do not add a pointwise identification on the null exceptional set. Corollary 157.3 excludes a regular small-amplitude scaling class; it neither refutes Route condition 156.3 without that additional condition nor refutes $F_{64}(\theta)$.
+
+The seven unpaid leading directions have an explicit observable description. The eight tensors in (157.8) use the channels $u_0-u_1$ and $u_B-1/4$. On a zero-pair residual their all-second-channel coordinate is BBB, already fixed by $\mathcal H_{43}$. The other seven impose seven additional independent constraints on the twenty-dimensional calibrated quadratic limit. Their independence is the dimension calculation in (157.6), not a claim that seven source-specific cubic corrections exist.
+
+For an all-odd deviation under the original half-turn, the three factors in each right side of (157.8) are odd. The original invariant $g$ and commuting $P$ make that integral zero exactly. Such an exactly calibrated odd family has residual in $\mathcal W_{13}$ at every amplitude, not merely at quadratic order. Even corrections or a different scaling therefore require an actual nonzero three-channel contribution if they are to leave this subspace. For a general family, the identity (157.8) and bound (157.9) show that a nonzero projected $t^2$ limit at some fixed parameter cannot arise from deviations of size $o(t^{2/3})$. Meeting this necessary scale does not supply legality, rank, a zero or a degree estimate.
+
+Consequently one cannot replace the remaining twenty equations by thirteen equations and discard the higher-order terms. A prospective finite completion must still solve the seven contrast equations at their actual order together with the thirteen quadratic directions, the original forty-three calibrations and the whole-$G$ partition realization. The source-specific rank, mixed-scale legality, nonlinear boundary control and finite actual partition remain unresolved. The fixed-start summable route of Corollary 155.4 remains separate and unchanged.
+
+The tensor quotient, multilinearity and finite-dimensional rank count used here are standard linear-algebra tools. The source-specific thirteen-dimensional boundary is repo-derived from the retained FIB suppliers and the definitions above; no historical novelty is claimed for the standard tools. Their role is to identify the two zero channels of the original prescribed $f$ and the resulting source-specific obstruction to the uniform quadratic SRS scaling. They do not provide a new general purification theorem, a full-law witness, physical realization or Lean/kernel certification.
+
+## 追加锚（本行以下为增补区）
+## 158. Positive 003 energy and the terminal compensator boundary
+
+**Definition 158.1 (a two-label first-order-calibrated ray with terminal compensation).** Retain the complete telescope of Definition 155.1, hence Definitions 134.1, 135.1 and 154.1, including the residual $\Delta$, the positivity-improvement and conservation suppliers, the trilinear form $\mathcal C$, and the prescribed tuple $f$. Retain also the full first-order map $\Lambda_{134}$ and kernel $V=\ker\Lambda_{134}$ of Definition 134.1, Proposition 134.2, and the propagation identity $Pf_3=cg$. For bounded real Borel representatives $v,w$ and a nonzero real $t$, consider the pointwise tuple
+
+$$
+\begin{aligned}
+u^{(t;v,w)}_0&=f_0+tv,&
+u^{(t;v,w)}_1&=f_1-tv,\\
+u^{(t;v,w)}_3&=f_3+t^2w,&
+u^{(t;v,w)}_B&=f_B-t^2w.
+\end{aligned}
+\tag{158.1}
+$$
+
+The sum of its four coordinates is one identically. Whenever the four coordinates lie in the pointwise simplex, call (158.1) legal. In the $(0,0,3)$ coefficient the terminal is this tuple's own $P u^{(t;v,w)}_3$; every other coefficient retains its corresponding tuple terminal.
+
+**Proposition 158.2 (strict positive energy on the pure two-label ray).** If $v\in V$, then every legal tuple (158.1) satisfies
+
+$$
+\begin{aligned}
+\Delta\bigl(u^{(t;v,w)}\bigr)_{003}
+={}&t^2\left[c\langle gv,P(gv)\rangle_m
+                 +\mathcal C(f_0,f_0,w)\right]\\
+&+t^3\left[\mathcal C(v,f_0,w)+\mathcal C(f_0,v,w)\right]
++t^4\mathcal C(v,v,w).
+\end{aligned}
+\tag{158.2}
+$$
+
+In particular, for the uncompensated ray $w=0$ and every nonzero $v\in V$,
+
+$$
+\Delta\bigl(u^{(t;v,0)}\bigr)_{003}
+=t^2c\langle gv,P(gv)\rangle_m>0.
+\tag{158.3}
+$$
+
+Thus a nonzero pure two-label direction in the exact first-order kernel cannot by itself be an exact full-law correction at any nonzero amplitude.
+
+*Proof.* Expand the $(0,0,3)$ coefficient using multilinearity and (158.1). The coefficient of $t$ is the first-order functional $\ell_{003}(v)$ in (134.11), which vanishes because $v\in V$. The coefficient of $t^2$ from the two $0$ slots is
+
+$$
+\mathcal C(v,v,f_3)=c\langle gv,P(gv)\rangle_m
+$$
+
+by (134.15)–(134.16). The $t^2w$ change in the third slot contributes $\mathcal C(f_0,f_0,w)$; the two mixed $t^3$ terms and the $t^4$ term are the remaining multilinear choices. Equation (134.13) makes the first term strictly positive when $v\ne0$. The actual terminal convention is used throughout the expansion. $\square$
+
+**Proposition 158.3 (a quantitative terminal compensator cost).** For bounded real $v,w$, define
+
+$$
+\begin{aligned}
+\psi_0&=P\bigl(f_0P(gf_0)\bigr),\\
+\psi_{\mathrm{mix}}&=P\bigl(f_0P(gv)\bigr)+P\bigl(vP(gf_0)\bigr),\\
+\psi_v&=P\bigl(vP(gv)\bigr).
+\end{aligned}
+\tag{158.4}
+$$
+
+If $v\in V$ is nonzero, (158.1) is legal, and its $(0,0,3)$ residual vanishes, then
+
+$$
+\|w\|_{L^\infty(m)}
+\ge
+\frac{c\langle gv,P(gv)\rangle_m}
+     {\|\psi_0\|_{L^1(m)}+|t|\,\|\psi_{\mathrm{mix}}\|_{L^1(m)}
+                         +t^2\|\psi_v\|_{L^1(m)}}
+>0.
+\tag{158.5}
+$$
+
+The denominator is finite, and $\|\psi_0\|_{L^1(m)}>0$ for every original tuple.
+
+*Proof.* Self-adjointness of $P$ gives
+
+$$
+\begin{aligned}
+\mathcal C(f_0,f_0,w)&=\int_Gw\,\psi_0\,dm,\\
+\mathcal C(v,f_0,w)+\mathcal C(f_0,v,w)&=\int_Gw\,\psi_{\mathrm{mix}}\,dm,\\
+\mathcal C(v,v,w)&=\int_Gw\,\psi_v\,dm.
+\end{aligned}
+\tag{158.6}
+$$
+
+If the residual in (158.2) is zero, divide by $t^2$ and move the compensator terms to the other side. The $L^1$–$L^\infty$ bound and (158.6) give (158.5). The original bounds $g\in L^2(m)$, $f_0,v\in L^\infty(m)$ and the $L^2$ contraction of $P$ give finiteness. Since $f_0\ge1/4$ and $gf_0>0$ almost everywhere, positivity improvement gives $P(gf_0)>0$ almost everywhere. Conservation then gives
+
+$$
+\int_G\psi_0\,dm
+=\int_G f_0P(gf_0)\,dm>0,
+$$
+
+so $\psi_0\ne0$ in $L^1(m)$. The numerator is strictly positive by (134.13), so the displayed lower bound is positive. $\square$
+
+**Corollary 158.4 (the fixed-ray route boundary).** Fix a nonzero $v\in V$. No sequence of legal tuples of the form (158.1) can make the $(0,0,3)$ residual zero while its compensators satisfy $\|w\|_{L^\infty(m)}\to0$ and $t\to0$. In particular, shrinking the amplitude does not remove the positive energy that a second-order terminal correction must cancel. The lower bound is a necessary cost for this fixed-ray ansatz, not a uniform residual floor for arbitrary exact partitions. Mixed orders, a varying first-order direction, or corrections outside $V$ remain separate routes; the result neither refutes the general SRS-20 condition nor settles $F_{64}$.
+
+The source-specific statements (158.2)–(158.5) are `repo-derived` applications of the retained positive coefficient (134.13)–(134.16), self-adjointness and the original terminal convention. The positivity and $L^1$–$L^\infty$ estimates are standard intermediate tools; no historical novelty, physical realization, Lean/kernel certification or full-law witness is asserted.
+
+## 159. The variable-ray and kernel-leakage boundary
+
+**Definition 159.1 (bounded two-label rays and the first-order leakage norm).** Retain the complete telescope of Definition 155.1 and the two-label tuple of Definition 158.1. Thus $f$, $P$, $g$, the actual terminal convention, the trilinear form $\mathcal C$, the full first-order map $\Lambda_{134}$, and $V=\ker\Lambda_{134}$ are unchanged. For bounded real Borel $v,w$ and $|t|\le1$, write
+
+$$
+u_y(t;v,w)=f_y+t\sigma_yv+t^2\tau_yw,
+\qquad
+\sigma=(1,-1,0,0),\quad \tau=(0,0,1,-1),
+\tag{159.1}
+$$
+
+in the label order $(0,1,3,B)$. Let $F=\max_y\|f_y\|_\infty$ (so $F<\infty$), and for $K,W\ge0$ put
+
+$$
+\mathfrak C(F,K,W)
+ =3WF^2+3F(K+W)^2+(K+W)^3.
+\tag{159.2}
+$$
+
+The norm of a finite readout vector is its coordinate maximum. The tuple is called $(K,W)$-bounded when $\|v\|_\infty\le K$ and $\|w\|_\infty\le W$.
+
+**Proposition 159.2 (exact corrections are asymptotically first-order calibrated).** For every $(K,W)$-bounded tuple (159.1),
+
+$$
+\bigl\|\Delta(u(t;v,w))-t\Lambda_{134}(v)\bigr\|_{\max}
+ \le \mathfrak C(F,K,W)t^2.
+\tag{159.3}
+$$
+
+Consequently, if a sequence of legal $(K,W)$-bounded tuples has $t_n\ne0$, $t_n\to0$, and $\Delta(u(t_n;v_n,w_n))=0$, then
+
+$$
+\|\Lambda_{134}(v_n)\|_{\max}
+ \le \mathfrak C(F,K,W)|t_n|\longrightarrow0.
+\tag{159.4}
+$$
+
+In particular, a fixed nonzero first-order leakage cannot be cancelled by a bounded terminal correction of order $t^2$.
+
+*Proof.* For one ordered coordinate $(y,z,w)$, expand the trilinear expression in the three factors $f_\bullet+t\sigma_\bullet v+t^2\tau_\bullet w$. The terms linear in $t$ are exactly $t\ell_{yzw}(v)$. The three terms linear in $t^2w$ have absolute value at most $3t^2WF^2$. Every term containing two perturbation factors is bounded by $F(|t|K+t^2W)^2$, and the term containing three perturbation factors is bounded by $(|t|K+t^2W)^3$, because
+
+$$
+|\mathcal C(a,b,c)|\le \|a\|_\infty\|b\|_\infty\|c\|_\infty
+\tag{159.5}
+$$
+
+for all bounded real inputs. Since $|t|\le1$, the latter two contributions are bounded by $3Ft^2(K+W)^2$ and $t^2(K+W)^3$. Summing these three bounds gives (159.3), uniformly over the 64 coordinates. If the residual vanishes, divide (159.3) by $|t_n|$ to obtain (159.4). The legality assumption is only the pointwise simplex condition; the estimate itself uses boundedness and the original form. $\square$
+
+**Proposition 159.3 (a uniform-energy variable-ray obstruction).** Let $t_n\to0$ with $t_n\ne0$, let $v_n\in V$ satisfy $\|v_n\|_\infty\le K$, and let $w_n$ satisfy $\|w_n\|_\infty\le W$. Define
+
+$$
+A_n=c\langle gv_n,P(gv_n)\rangle_m
+   =c\|T_{d/2}(gv_n)\|_{L^2(m)}^2.
+\tag{159.6}
+$$
+
+If the tuples (159.1) are legal, their full residuals vanish, and $A_n\ge\alpha>0$, then
+
+$$
+\|w_n\|_\infty
+\ge
+\frac{\alpha}
+ {\|\psi_0\|_1+2FK|t_n|+K^2t_n^2},
+\tag{159.7}
+$$
+
+where $\psi_0$ is (158.4). Hence
+
+$$
+\liminf_{n\to\infty}\|w_n\|_\infty
+\ge \frac{\alpha}{\|\psi_0\|_1}>0.
+\tag{159.8}
+$$
+
+*Proof.* Because $v_n\in V$, the exact $(0,0,3)$ expansion (158.2) applies with $v=v_n$ and $w=w_n$. The dual functions of (158.4) obey
+
+$$
+\|\psi_{\mathrm{mix}}(v_n)\|_1\le2FK,
+\qquad
+\|\psi_v(v_n)\|_1\le K^2.
+\tag{159.9}
+$$
+
+Indeed, positivity and $L^1$ contraction of $P$, $\|g\|_1=1$, and $\|f_0\|_\infty\le F$ give each of the two mixed terms a bound $FK$; the quadratic term is bounded by $K^2$. Applying the $L^1$–$L^\infty$ estimate to (158.2), using its vanishing and $A_n\ge\alpha$, gives (159.7). Proposition 158.3 gives $\|\psi_0\|_1>0$, and taking the limit yields (159.8). $\square$
+
+**Corollary 159.4 (the only bounded variable-ray escape is energy collapse).** Under the bounded, legal hypotheses above, with $v_n\in V$ and $\sup_n\|w_n\|_\infty<\infty$, if $\|w_n\|_\infty\to0$ while the residuals vanish, then
+
+$$
+c\|T_{d/2}(gv_n)\|_{L^2(m)}^2=A_n\longrightarrow0.
+\tag{159.10}
+$$
+
+Thus varying the first-order direction does not evade the fixed-ray cost while its positive energy stays uniformly visible. Any bounded variable-ray construction with vanishing terminal compensators must send its weighted heat energy to zero. The estimate supplies no uniform lower bound for arbitrary directions: high-frequency or otherwise energy-collapsing sequences, mixed orders, and non-kernel corrections satisfying only the necessary leakage condition (159.4) remain open. The result neither proves the SRS-20 route nor settles $F_{64}$.
+
+The source-specific statements (159.3)–(159.10) are `repo-derived` consequences of the retained first-order map, multilinearity, the Markov $L^1$ contraction, and the positive $(0,0,3)$ coefficient. They are a boundary for bounded two-label rays and do not assert an exact whole-$G$ finite partition, a degree certificate, a uniform spectral gap or a Lean/kernel theorem.
+
+## 160. Finite-dimensional energy coercivity for the calibrated kernel
+
+**Definition 160.1 (a fixed finite-dimensional kernel reservoir).** Retain the complete telescope of Definition 155.1, the two-label family of Definition 159.1, and the positive coefficient of Proposition 134.2. Let $k\ge1$ and let
+
+$$
+B:\mathbb R^k\longrightarrow V=\ker\Lambda_{134}
+\tag{160.1}
+$$
+
+be an injective real linear map. Its range is a fixed finite-dimensional first-order calibrated reservoir. Put
+
+$$
+\mathfrak q_B(z)
+ =c\langle gBz,P(gBz)\rangle_m
+ =c\|T_{d/2}(gBz)\|_{L^2(m)}^2,
+\qquad z\in\mathbb R^k.
+\tag{160.2}
+$$
+
+All norms on the parameter space are Euclidean, while function bounds use $L^\infty(m)$.
+
+**Proposition 160.2 (uniform heat-energy coercivity on a fixed reservoir).** There is a number $\alpha_B>0$ such that
+
+$$
+\mathfrak q_B(z)\ge\alpha_B\|z\|_2^2
+\qquad(z\in\mathbb R^k).
+\tag{160.3}
+$$
+
+Moreover, with
+
+$$
+K_B=\max_{\|z\|_2=1}\|Bz\|_\infty<\infty,
+\tag{160.4}
+$$
+
+every unit parameter $z$ has $\mathfrak q_B(z)\ge\alpha_B$.
+
+*Proof.* The map $z\mapsto gBz$ is continuous from $\mathbb R^k$ into $L^2(m)$: boundedness of $g$ in $L^2(m)$ and finite-dimensional norm equivalence give
+
+$$
+\|gB(z-z')\|_2
+ \le\|g\|_2\,\|B(z-z')\|_\infty
+ \le C_B\|g\|_2\,\|z-z'\|_2
+\tag{160.5}
+$$
+
+for some finite $C_B$. The $L^2$ contraction of $T_{d/2}$ then makes $\mathfrak q_B$ continuous. If $z\ne0$, injectivity gives $Bz\ne0$, and Proposition 134.2 gives
+
+$$
+\mathfrak q_B(z)>0.
+\tag{160.6}
+$$
+
+The Euclidean unit sphere is compact, so the continuous positive function $\mathfrak q_B$ has a positive minimum $\alpha_B$ there. Since $\mathfrak q_B$ is quadratic, scaling gives (160.3). The same compactness gives (160.4). $\square$
+
+**Proposition 160.3 (a fixed finite reservoir cannot hide its energy in a vanishing terminal correction).** Let $t_n\ne0$ with $t_n\to0$, let $z_n\in\mathbb R^k$ satisfy $\|z_n\|_2=1$, and set $v_n=Bz_n$. Suppose that for bounded real Borel $w_n$ the tuples
+
+$$
+u_y^{(n)}=f_y+t_n\sigma_yv_n+t_n^2\tau_yw_n
+\tag{160.7}
+$$
+
+are legal, have zero full residual, and satisfy $\sup_n\|w_n\|_\infty<\infty$. Then
+
+$$
+\|w_n\|_\infty
+\ge
+\frac{\alpha_B}
+ {\|\psi_0\|_1+2FK_B|t_n|+K_B^2t_n^2},
+\tag{160.8}
+$$
+
+and hence
+
+$$
+\liminf_{n\to\infty}\|w_n\|_\infty
+\ge\frac{\alpha_B}{\|\psi_0\|_1}>0.
+\tag{160.9}
+$$
+
+In particular, no such fixed finite-dimensional reservoir admits exact full-law corrections whose order-$t^2$ terminal compensators tend to zero uniformly along its unit parameter sphere.
+
+*Proof.* Proposition 160.2 gives
+
+$$
+c\langle gv_n,P(gv_n)\rangle_m=\mathfrak q_B(z_n)\ge\alpha_B.
+\tag{160.10}
+$$
+
+Also $\|v_n\|_\infty\le K_B$. Apply Proposition 159.3 with $K=K_B$, $\alpha=\alpha_B$, and $w_n$ as in (160.7). Its $(0,0,3)$ identity uses the actual terminal $Pu^{(n)}_3$, so (160.8) follows without replacing that terminal by $Pf_3$. Taking the limit gives (160.9). $\square$
+
+**Corollary 160.4 (the finite-dimensional SRS escape condition).** A proposed small-amplitude completion using one fixed injective finite-dimensional map $B:\mathbb R^{20}\to\ker\Lambda_{134}$ cannot simultaneously have, on a parameter sphere of nonzero radius, exact full-law residual zero and terminal compensators $w_t\to0$. To avoid the obstruction it must leave at least one of these hypotheses: use changing finite-dimensional reservoirs, allow the compensator to retain a positive size, or arrange a genuine energy collapse outside every fixed finite-dimensional reservoir. The result does not supply any of those alternatives, and it does not settle the general SRS-20 route or $F_{64}$.
+
+The source-specific statements (160.3)–(160.10) use only finite-dimensional compactness, injectivity of the positive heat form on the retained kernel, and Proposition 159.3. They do not claim a spectral gap on the full $L^\infty$ space, an exact H43 finite partition, a nonlinear degree estimate, a physical realization or a Lean/kernel theorem.
+
+## 追加锚（本行以下为增补区）

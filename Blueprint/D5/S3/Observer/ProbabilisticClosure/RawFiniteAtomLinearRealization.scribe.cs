@@ -7,7 +7,9 @@ internal sealed class RawFiniteAtomLinearRealizationDocument : IScribeDocumentDe
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite native-test readouts through the exceptional parity quotient.",
         H("Finite atom upper bounds"),
-        Blocks(Describe.Lean(
+        Blocks(
+            Fact("actual-run-measurable", "measurable_actual_run", "Measurable original absorbing execution", "For every measurable seed space, original Policy and natural horizon, the original actualRun is a measurable function of seed and source into the discrete State space."),
+            Describe.Lean(
             DescribeId.Create("finite-atom-upper-bounds"),
             DeclarationHandle.Create("D5/S3/Observer/ProbabilisticClosure/RawFiniteAtomLinearRealization.result"),
             H("Three finite native-test carriers"),
