@@ -1,5 +1,5 @@
 /- GID: D5/S3/Weil/Mertens/IntegratedExplicit/ActualSignedGaussianEndpoint
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Weil/Mertens/IntegratedExplicit/ActualSignedGaussianEndpoint
    mirror-E: none(waiver:analytic-integral-estimate)
    anchors: []

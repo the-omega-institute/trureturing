@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/Robin/OffLinePeak/OriginalLocalA
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/Robin/OffLinePeak/OriginalLocalA
    mirror-E: none(waiver:analytic-integral-estimate)
    anchors: []
