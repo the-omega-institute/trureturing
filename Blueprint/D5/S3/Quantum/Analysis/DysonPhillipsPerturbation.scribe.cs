@@ -56,11 +56,15 @@ internal sealed class DysonPhillipsPerturbationDocument : IScribeDocumentDefinit
             r = new Formula.Logic(fs[i], FormulaLogicOperator.And, r);
         return r;
     }
+    private static Formula SpaceScope(Formula body) =>
+        All("u", Call("Universe"), All("E", Call("Type", F.Id("u")), Seq(
+            OpenBracket, Call("NormedAddCommGroup", E), CloseBracket, Sp,
+            OpenBracket, Call("NormedSpace", Call("Complex"), E), CloseBracket, Sp, body)));
+    private static Formula DefinitionScope(Formula body) =>
+        SpaceScope(All("S", Family, All("B", Clm, body)));
     private static Formula Scope(Formula body) =>
-        All("u", Call("Universe"), All("E", Call("Type", F.Id("u")),
-        All("addGroup", Call("NormedAddCommGroup", E),
-        All("complexSpace", Call("NormedSpace", Call("Complex"), E),
-        All("complete", Call("CompleteSpace", E), All("S", Family, All("B", Clm, body)))))));
+        SpaceScope(Seq(OpenBracket, Call("CompleteSpace", E), CloseBracket, Sp,
+            All("S", Family, All("B", Clm, body))));
     private static Formula Term(Formula n, Formula t, Formula x) => Call("dysonTerm", S, B, n, t, x);
     private static Formula Integral(Formula t, Formula values) => Call("intervalIntegral",
         Call("volume"), Zero, t, Lam("r", Real,
@@ -80,7 +84,7 @@ internal sealed class DysonPhillipsPerturbationDocument : IScribeDocumentDefinit
     private static Formula Definitions()
     {
         Formula n=F.Id("n"), t=F.Id("t"), x=F.Id("x");
-        return Scope(All("n", Nat, All("t", Real, All("x", E, Conj(
+        return DefinitionScope(All("n", Nat, All("t", Real, All("x", E, Conj(
             Equal(Term(Zero,t,x), At(At(S,t),x)),
             Equal(Term(Add(n,One),t,x), Integral(t, Term(n,F.Id("r"),x))),
             Equal(Call("dysonSum",S,B,t,x), Call("tsum", Lam("n",Nat,Term(n,Call("max",t,Zero),x)))))))));
