@@ -195,7 +195,9 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
       constructor
       · apply old_value i _ 0 (by rw [hNH, hq]; dsimp [H]; constructor <;> nlinarith)
         simp [h0]
-      · apply new_value i.castSucc _ 0 (by rw [hq]; dsimp only [N];
+      · apply new_value i.castSucc _ 0 (by
+          rw [hq]
+          dsimp only [N]
           constructor <;> nlinarith only [hp, hprodp, hpHalf])
         simp [h0]
     by_cases h1 : i.val = 1
