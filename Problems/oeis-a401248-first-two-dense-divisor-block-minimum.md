@@ -38,8 +38,7 @@ The bounded qualification found no complete prior resolution in the
 inspected sources. Dense/rough factorization is known mathematics;
 its relation to every actual maximal block requires a cardinality
 argument. Global literature absence and discovery priority remain
-unverified. Source fidelity, formal admission and delivery are
-separate obligations from a successful scoped Lean build.
+unverified.
 
 ## Route
 
@@ -69,36 +68,25 @@ actual block would refute the conjecture. A finite table, a restricted
 family or an assumed dense-factor existence premise cannot establish
 the universal assertion.
 
-## Evidence
+## Result
 
 `D5/S3/Factorization/TwoDenseDivisorBlockMinimum.result : claim`
 constructs the dense factor internally. The claim uses the complete
 Mathlib sorted divisor list and its actual splitBy partition; its
-first length is the existing palindrome module's row head.
-The canonical scoped Lean build and axiom report succeed. The axiom
-closure is contained in {propext, Classical.choice, Quot.sound}.
-The three public theorems have compiled source-equivalence escape
-registrations through the enrolled dependent-family template, with
-explicit unknown residuals. Independent review, canonical freezing
-and required delivery checks remain separate requirements.
+first length is the existing palindrome module's row head. Thus the
+formal event compares that first length with every actual block
+length for every positive integer.
 
-The mathematical argument is unbounded and symbolic, so utility is
-`none`, rather than finite enumeration, a checker, numeric reduction
-or a certified finite instance. The proposed admission basis is
-`open-problem-resolution` for this single externally named conjecture.
-The matching Scribe attaches one Proved resolution to `result`.
+The mathematical argument is unbounded and symbolic. It uses neither
+finite enumeration nor an assumed dense-factor existence premise.
+The matching Scribe identifies this result with the single externally
+named A401248 Conjecture 1.
 
 ## Triage
 
-The whole positive-integer conclusion and its three source-bound
-audit records have successful scoped kernel evidence. A transient
-application also establishes that the first value is a member and
-a lower bound of the whole row, hence its least element. Independent
-pre-freeze review and freezing remain pending.
-
 The decisive structure is the dense coprime divisor copy contained
 in every actual maximal block. The first block attains the common
-lower bound. At n=1 the same construction takes u=v=1, and equality
+lower bound, so the first row value is its least element. At n=1 the same construction takes u=v=1, and equality
 at ratio two is retained throughout. These are consequences inside
 the universal theorem, not additional retained finite certificates.
 
@@ -107,10 +95,10 @@ thresholds and A401248 Conjecture 2 are not settled by this result.
 They require their own exact statements and qualification. Neither
 this theorem nor the source search establishes global priority.
 
-## ASSUMED-UNVERIFIED
+## Scope and priority
 
 The correspondence between the OEIS words and the formal block model
 requires independent semantic review. The source and literature
 qualification is bounded and cannot exclude all unindexed equivalents.
-A Proved Scribe claim records a resolution assertion; canonical
-admission, freezing, required CI and merge are not inferred from it.
+The formal theorem and its identification with the source conjecture
+do not establish global priority.
