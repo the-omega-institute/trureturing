@@ -18,7 +18,22 @@ A source observation can simulate every target decision whenever a row-stochasti
 
 Conversely, the finite product of row simplexes is compact and convex. A target outside its simulated image has a strict linear separator; a uniform prior and shifted real loss turn that separator into a finite decision problem that reverses the asserted risk order.
 
+**Lemma 1.2 (Coordinates of a continuous linear functional).**
+
+$$\forall \left(I: \operatorname{Type}\right), \left(\forall \left(J: \operatorname{Type}\right), \left([\operatorname{Fintype}\left(I\right)] [\operatorname{Fintype}\left(J\right)] [\operatorname{DecidableEq}\left(I\right)] [\operatorname{DecidableEq}\left(J\right)] \forall \left(functional: \operatorname{ContinuousLinearMap}\left(\operatorname{RingHom.id}\left(\mathbb{R}\right), I \to \left(J \to \mathbb{R}\right), \mathbb{R}\right)\right), \left(\forall \left(table: I \to \left(J \to \mathbb{R}\right)\right), \left(functional\left(table\right) = \sum_{i: I} \sum_{j: J} \left(functional\left(\operatorname{Pi.single}\left(i, \operatorname{Pi.single}\left(j, 1\right)\right)\right) \cdot table\left(i, j\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Estimation/DecisionRisk/FiniteBayesRiskDominanceCriterion.continuous_linear_expansion` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary finite index types I and J with decidable equality, a real continuous linear functional on I → J → ℝ is the sum of its values on the coordinate singletons, weighted by the corresponding table entries. This identity expresses strict separating functionals as finite coefficient tables.
+
 ## References
 
+- Truth anchor: `D5/S3/Estimation/DecisionRisk/FiniteBayesRiskDominanceCriterion.continuous_linear_expansion`
 - Truth anchor: `D5/S3/Estimation/DecisionRisk/FiniteBayesRiskDominanceCriterion.finite_bayes_risk_dominance_iff_postprocessing`
+- Dependency: [D5/S3/Divergence/ClassicalDPI](../../Divergence/ClassicalDPI.md)
+- Dependency: [D5/S3/Estimation/DecisionRisk/DescentDefectBounds](DescentDefectBounds.md)
 - Dependency: [D5/S3/Estimation/SequentialDecisionRisk/FiniteDeficiencyRiskTransfer](../SequentialDecisionRisk/FiniteDeficiencyRiskTransfer.md)
