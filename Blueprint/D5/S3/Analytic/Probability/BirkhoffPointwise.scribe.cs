@@ -25,7 +25,13 @@ internal sealed class BirkhoffPointwiseDocument : IScribeDocumentDefinition
                     Paragraph(Text("Symbolic frequencies, joint-product moments, context-dependent compositions and entropy-production rates require an actual probability law, ergodicity, an integrable observable, identification of its integral and the relevant orbit or boundary correspondence. This autonomous theorem supplies the convergence step once those mathematical bridges are established."))),
                 DescribeRole.Theorem))));
 
-    private static Formula V(string name) => F.Id(name);
+    private static Formula V(string name) => name switch
+    {
+        "alpha" => Alpha,
+        "mu" => Mu,
+        _ => F.Id(name)
+    };
+    private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
     private static Formula Real => Seq(Mathbb, Grp(V("R")));
     private static Formula App(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
@@ -41,10 +47,10 @@ internal sealed class BirkhoffPointwiseDocument : IScribeDocumentDefinition
         var integral = Call("integral", V("mu"), LambdaOf("y", V("alpha"), App(V("g"), V("y"))));
         var sequence = LambdaOf("n", Nat,
             Call("birkhoffAverage", Real, V("T"), V("g"), V("n"), V("x")));
-        var convergence = Call("Tendsto", sequence, Call("atTop"), Call("nhds", integral));
+        var convergence = Call("Tendsto", sequence, Named("atTop"), Call("nhds", integral));
         var ae = Call("Eventually", LambdaOf("x", V("alpha"), convergence), Call("ae", V("mu")));
         return Disp(new Formula.Aligned([
-            Seq(All("alpha", Seq(Call("Type"), Sp, V("u"))),
+            Seq(All("alpha", Seq(Named("Type"), Sp, V("u"))),
                 Instance(Call("MeasurableSpace", V("alpha"))),
                 All("mu", Call("Measure", V("alpha"))),
                 Instance(Call("IsProbabilityMeasure", V("mu")))),
