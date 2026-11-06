@@ -1895,3 +1895,109 @@ $$
 All terms after subtraction are nonnegative, and the term $2\mathcal C(h,q,q)$ is strictly positive by (181.3), proving (181.2). Thus an exact zero with $[v]\ne0$ cannot be one-signed. For a real measurable representative, failure of both one-sided alternatives is exactly the assertion that its positive and negative parts each have positive $m$-measure. $\square$
 
 This removes constant shifts and every other sign-definite displacement from the conditional common-first search. It does not solve the remaining sign-changing seven-equation system, remove the radical-triviality hypothesis in Corollary 179.3, or settle arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession or Lean/kernel formalization.
+
+## 182. Weighted lower bounds for one-sided common-first escapes
+
+The sign obstruction of Section 181 has a quantitative form. The first positive term in each multilinear expansion already gives a source-dependent residual lower bound.
+
+**Proposition 182.1 (strict weighted one-sided bounds).** Retain the legal common-first tuple and notation of Proposition 181.1, and put
+
+$$
+\psi_F=P(FPF),
+\qquad
+\psi_q=P(qPq).
+$$
+
+Then
+
+$$
+ v\ge0
+\quad\Longrightarrow\quad
+R_{000}\ge \mathcal C(v,F,F)
+ =\int_G gv\,\psi_F\,dm,
+\tag{182.1}
+$$
+
+and
+
+$$
+ v\le0
+\quad\Longrightarrow\quad
+R_{333}\ge 2\mathcal C(-v,q,q)
+ =2\int_G g(-v)\,\psi_q\,dm.
+\tag{182.2}
+$$
+
+If $[v]\ne0$, the corresponding right-hand side is strictly positive.
+
+*Proof.* For $v\ge0$, equation (181.4) writes $R_{000}$ as the sum of seven nonnegative terms. Retaining its first term gives (182.1), and self-adjointness of $P$ in the definition of $\mathcal C$ gives the displayed integral. For $v\le0$, write $h=-v\ge0$. Expanding $\mathcal C(q+2h,q+2h,q+2h)-\mathcal C(q,q,q)$, every term is nonnegative and the term with exactly one $h$ in the first slot is $2\mathcal C(h,q,q)$, which gives (182.2). The strict positivity follows from (181.3), applied with $(a,b)=(F,F)$ or $(q,q)$. $\square$
+
+These bounds quantify the distance from the full-zero fibre for every one-sided displacement. They leave the genuinely sign-changing seven-equation system, the radical-triviality implication in Corollary 179.3, arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization open.
+
+## 183. Two-sided balance required by common-first full zeros
+
+A sign-changing candidate has two nonnegative parts whose effects can be separated using the two diagonal coordinates. Pointwise legality makes the relevant bases nonnegative, so positivity of the trilinear form gives exact compensation inequalities.
+
+**Proposition 183.1 (positive-negative balance inequalities).** Retain the common-first tuple of Proposition 181.1. Write
+
+$$
+ h=v^+=\max\{v,0\},
+ \qquad
+ k=v^- =\max\{-v,0\},
+ \qquad
+ D(a)=\mathcal C(a,a,a).
+$$
+
+Then $hk=0$ pointwise, and legality implies
+
+$$
+F-k\ge0,
+\qquad
+q-2h\ge0.
+\tag{183.1}
+$$
+
+If $R_{000}=R_{333}=0$, the positive and negative parts satisfy
+
+$$
+D(F)-D(F-k)
+ =D(F-k+h)-D(F-k)
+ \ge \mathcal C(h,F-k,F-k),
+\tag{183.2}
+$$
+
+and
+
+$$
+D(q)-D(q-2h)
+ =D(q-2h+2k)-D(q-2h)
+ \ge 2\mathcal C(k,q-2h,q-2h).
+\tag{183.3}
+$$
+
+*Proof.* Since $h$ and $k$ have disjoint supports, on the support of $k$ one has $h=0$ and the legality of $u_0=F+h-k$ gives $F-k\ge0$; off that support $F-k=F\ge0$. The same argument with $u_3=q-2h+2k$ gives $q-2h\ge0$, proving (183.1).
+
+For nonnegative $a,r$, trilinearity and positivity preservation give
+
+$$
+D(a+r)-D(a)
+=\mathcal C(r,a,a)+\mathcal C(a,r,a)+\mathcal C(a,a,r)
+ +\mathcal C(r,r,a)+\mathcal C(r,a,r)
+ +\mathcal C(a,r,r)+\mathcal C(r,r,r)\ge \mathcal C(r,a,a).
+\tag{183.4}
+$$
+
+The first diagonal residual being zero is
+
+$$
+D(F-k+h)=D(F),
+$$
+so applying (183.4) with $(a,r)=(F-k,h)$ yields (183.2). The third diagonal residual being zero is
+
+$$
+D(q-2h+2k)=D(q).
+$$
+
+Applying (183.4) with $(a,r)=(q-2h,2k)$ gives (183.3), since the first term is $2\mathcal C(k,q-2h,q-2h)$. $\square$
+
+These are necessary balance conditions for a common-first full zero. Together with Section 181 they require both sign parts as measured classes; the inequalities do not assert that a sign-changing pair is sufficient, and the remaining five equations, the radical alternative, arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization remain open.
