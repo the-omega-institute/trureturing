@@ -102,34 +102,94 @@ def count_registration : Registration countArena
       exact nomatch e
   dependence := actual_dependence
 
--- Temporary native expression extraction; removed after the raw paths are sealed.
-run_cmd do
-  for n in [``_root_.D5.S3.Combinatorics.Circle.MersenneDifferenceZeroSubsets.actual_zero_iff_rotation,
-      ``_root_.D5.S3.Combinatorics.Circle.MersenneDifferenceZeroSubsets.actual_zero_subsets_card] do
-    let ci ← Lean.getConstInfo n
-    let rec visit (fuel : Nat) (e : Lean.Expr) (p : List String) : Lean.Elab.Command.CommandElabM Unit := do
-      match fuel with
-      | 0 => pure ()
-      | fuel + 1 =>
-        if e.isAppOf ``actualSource && e.getAppNumArgs == 2 then
-          Lean.logInfo m!"SOURCE_PATH {n}: {p}"
-        match e with
-        | .forallE _ d b _ | .lam _ d b _ =>
-          visit fuel d (p ++ ["domain"])
-          visit fuel b (p ++ ["body"])
-        | .app f a =>
-          visit fuel f (p ++ ["fn"])
-          visit fuel a (p ++ ["arg"])
-        | .letE _ t v b _ =>
-          visit fuel t (p ++ ["type"])
-          visit fuel v (p ++ ["value"])
-          visit fuel b (p ++ ["body"])
-        | .mdata _ b => visit fuel b (p ++ ["body"])
-        | .proj _ _ b => visit fuel b (p ++ ["body"])
-        | _ => pure ()
-    visit 200 ci.type []
+/-- Closed original-source selection; the current report supplies binding evidence. -/
+def classification_audit :
+    Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.Combinatorics.Circle.MersenneDifferenceZeroSubsets.actual_zero_iff_rotation)
+      (type_of% (realize signature
+        (fun _ k a => actualSource k (2 ^ a - 1)) (fun e => nomatch e)))
+      Nat Unit := {
+  unitName :=
+    `D5.S3.Combinatorics.Circle.MersenneDifferenceZeroSubsets.actual_zero_iff_rotation.__information_unit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.Circle.MersenneDifferenceZeroSubsets.classification_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨classificationArena⟩
+  objectArena := .source ⟨classificationArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source classificationArena ⟨classification_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ k a => actualSource k (2 ^ a - 1)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Circle.MersenneDifferenceZeroSubsets
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #[
+      "body", "body", "body", "body", "fn", "arg",
+      "fn", "arg", "arg", "body", "fn"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+/-- Closed original-source selection; the current report supplies binding evidence. -/
+def count_audit :
+    Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.Combinatorics.Circle.MersenneDifferenceZeroSubsets.actual_zero_subsets_card)
+      (type_of% (realize signature
+        (fun _ k a => actualSource k (2 ^ a - 1)) (fun e => nomatch e)))
+      Nat Unit := {
+  unitName :=
+    `D5.S3.Combinatorics.Circle.MersenneDifferenceZeroSubsets.actual_zero_subsets_card.__information_unit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.Circle.MersenneDifferenceZeroSubsets.count_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨countArena⟩
+  objectArena := .source ⟨countArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source countArena ⟨count_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ k a => actualSource k (2 ^ a - 1)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Circle.MersenneDifferenceZeroSubsets
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #[
+      "body", "body", "body", "fn", "arg", "arg",
+      "fn", "fn", "arg", "body", "fn", "arg",
+      "arg", "body", "fn"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
 
 #print axioms classification_registration
 #print axioms count_registration
+#print axioms classification_audit
+#print axioms count_audit
 
 end Reg.D5.S3.Combinatorics.Circle.MersenneDifferenceZeroSubsets
