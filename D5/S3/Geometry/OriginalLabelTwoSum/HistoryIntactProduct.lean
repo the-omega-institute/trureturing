@@ -15,7 +15,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 
 noncomputable section
-local instance : (p : Prop) → Decidable p := Classical.propDecidable
+local instance historyIntactProductPropDecidable : (p : Prop) → Decidable p := Classical.propDecidable
 open Set Finset
 namespace D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntactProduct
 open OriginalLabelTwoSum FiniteElementaryCollapse FiniteRelativeSimplicialCollapse

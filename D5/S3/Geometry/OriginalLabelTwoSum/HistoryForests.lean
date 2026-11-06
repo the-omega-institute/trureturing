@@ -16,7 +16,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 
 noncomputable section
-local instance : (p : Prop) → Decidable p := Classical.propDecidable
+local instance historyForestsPropDecidable : (p : Prop) → Decidable p := Classical.propDecidable
 open Set Finset SimpleGraph
 namespace D5.S3.Geometry.OriginalLabelTwoSum.HistoryForests
 open OriginalLabelTwoSum HistoryCorners AllMWheel

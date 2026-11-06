@@ -14,7 +14,7 @@ namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel
 open OriginalLabelTwoSum FiniteProtectedDualWord
 open FiniteElementaryCollapse FiniteRelativeSimplicialCollapse
 variable {V : Type*} [Fintype V] [DecidableEq V]
-local instance : (p : Prop) → Decidable p := Classical.propDecidable
+local instance allMWheelCorePropDecidable : (p : Prop) → Decidable p := Classical.propDecidable
 
 private theorem edge_support (vs : List V) (e : Finset V) (he : e ∈ pathEdges vs) :
     e ⊆ vs.toFinset := by
