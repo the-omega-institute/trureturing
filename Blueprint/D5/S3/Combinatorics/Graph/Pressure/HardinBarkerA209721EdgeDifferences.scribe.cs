@@ -24,12 +24,13 @@ internal sealed class HardinBarkerA209721EdgeDifferencesDocument : IScribeDocume
             Node("source-claim", "Recurrence, existence and generating identity", "claim", Equal(Call("claim"), Parenthesized(ClaimBody())),
                 "OEIS A209721, revision 43, FORMULA (the entry has no page numbers): " + FormulaQuote + " The recurrence index is m+4 for natural m, exactly the indices at least four. The series assertion includes existence and holds for every series with the specified coefficients. Multiplication by the denominator expresses the rational generating identity in PowerSeries, since its constant coefficient is one.", AssessedProvenance.FromLiterature(Source), DescribeRole.Definition),
             Node("settling-result", "The full three-column counting theorem", "result", ClaimBody(),
-                "Reading consecutive rows gives an equivalence between the array subtype and walks in the exact 27-state compatibility graph. Prepending a state and taking the tail identify the finite successor fibers. Induction on arbitrary walk length proves the transfer count, including isolated states and disconnected graphs. The transfer vector satisfies u(n+4)+2*u(n+1)=u(n+3)+2*u(n+2); summing over starts and dividing by four gives the recurrence for the array count. PowerSeries.mk supplies a series with zero constant coefficient. Coefficient extensionality, the recurrence and a(1)=3, a(2)=4, a(3)=5 give the formal identity. No analytic convergence premise is used.", AssessedProvenance.FromRepo(Source), DescribeRole.Theorem))));
+                "Reading consecutive rows gives an equivalence between the array subtype and walks in the exact 27-state compatibility graph. Prepending a state and taking the tail identify the finite successor fibers. Induction on arbitrary walk length proves the transfer count, including isolated states and disconnected graphs. The transfer vector satisfies u(n+4)+2*u(n+1)=u(n+3)+2*u(n+2); summing over starts and dividing by four gives the recurrence for the array count. PowerSeries.mk supplies a series with zero constant coefficient. Coefficient extensionality, the recurrence and a(1)=3, a(2)=4, a(3)=5 give the formal identity. No analytic convergence premise is used.", AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin-barker-a209721"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula, string prose,
-        AssessedProvenance provenance, DescribeRole role) => Describe.Lean(DescribeId.Create(id),
+        AssessedProvenance provenance, DescribeRole role, OpenProblemResolutionClaim? openProblemResolutionClaim = null) => Describe.Lean(DescribeId.Create(id),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: openProblemResolutionClaim);
 
     private static Formula Call(string name, params Formula[] args) =>
         args.Length == 0 ? new Formula.NamedConstant(FormulaIdentifier.Create(name)) :

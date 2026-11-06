@@ -58,6 +58,10 @@ $$(\forall m \in \mathbb{N},\; \operatorname{a}\left(m + 4\right) = \operatornam
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Pressure/HardinBarkerA209721EdgeDifferences.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin-barker-a209721` (proved) by `D5/S3/Combinatorics/Graph/Pressure/HardinBarkerA209721EdgeDifferences.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin-barker-a209721","declaration_gid":"D5/S3/Combinatorics/Graph/Pressure/HardinBarkerA209721EdgeDifferences.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; Colin Barker (2012). *OEIS A209721: three-column arrays with distinct clockwise edge differences*. URL: <https://oeis.org/A209721/internal>.
