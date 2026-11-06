@@ -28,8 +28,42 @@ internal sealed class RealThreePathPolarDocument : IScribeDocumentDefinition
                 Paragraph(Text("Exchanging the original inputs cancels the two marker terms. The resulting scalar exchange relation separates an additive odd part A from an even part E. A finite sqrt(2) substitution gives E(2x)=4E(x); a finite translate recurrence gives the parallelogram identity. TauCeti.QuadraticMap.ofParallelogram is then applied directly, supplying the integer quadratic map and its existing bilinear polar companion.")),
                 Paragraph(Text("The nonnegative original q bounds E below. Integer scaling and the Archimedean order force E to be nonnegative; on its zero set the same argument forces A to vanish. The scalar exchange relation gives b(x,ty)=b(tx,y). For each fixed x, the additive scalar function t mapped to b(tx,x) is nonnegative on nonnegative t by the square-root substitution. Monotonicity and rational sandwiches identify it with t b(x,x). Polarizing this identity proves actual real bilinearity on the original real vector space.")),
                 Paragraph(Text("The original relation at x=y=0 makes U(0) invisible. It then gives Q(tU(x))=Q(tx), both even and odd invariance, and the three-direction bilinear relation. That relation forces additivity of U modulo the radical; diagonal invariance then yields full bilinear isometry. The orbit sum x+U(x)+U(U(x)) is radical. Since A vanishes there and is marker-invariant, 3A(x)=0. This proves the complete odd drift vanishes, not merely that it is additive.")),
-                Paragraph(Text("The live non-finite step is the lower-bound and Archimedean scalar estimate used in raw_even_data and real_polar. Finite polynomial and phase identities are consumed proof helpers and carry no separate escape credit. This result supplies the original_visible_quotient theorem and the original real-linear Hilbert characterization. It asserts a mathematical representation of the original readouts, not that completion creates physical preparations."))),
+                Paragraph(Text("The lower-bound and Archimedean scalar estimates in raw_even_data and real_polar supply the real scalar structure. This result supplies original_visible_quotient and the original real-linear Hilbert characterization. The representation describes the original readouts; physical preparations require their own realization assumptions.")),
+                H("Application: all-angle two-output characterization"),
+                Paragraph(Text("Let V be any real vector space, in any universe, and let A : V to the real numbers satisfy A(x) >= 0 for every x. Thus all readouts are finite. The following equivalence uses every real coefficient pair c,s with c squared plus s squared equal to one, including both signs. The existential quantifier is unique. IsPosSemidef means symmetry and a nonnegative diagonal, exactly as in LinearMap.BilinForm.IsPosSemidef.")),
+                Disp(AngleCharacterization()),
+                Paragraph(Text("Put a0=A(0) and q(x)=A(x)-a0. Subtracting the same two baseline terms preserves the rotation-total law and gives q(0)=0. The coefficients (0,1), with second input zero, give q(-x)=q(x). Put r=1/sqrt(2). Applying the law to (z,0) at (r,r) gives 2q(rz)=q(z). Applying it to (x,y) at the same coefficients, using evenness and this scaling at x+y and x-y, gives q(x+y)+q(x-y)=2q(x)+2q(y).")),
+                Paragraph(Text("Apply TauCeti.QuadraticMap.ofParallelogram with f=q, codomain the real numbers, and injectivity of multiplication by two. Its integer quadratic map E evaluates to q at every original vector. The original nonnegativity assumption gives E(x) >= -a0. Apply quadratic_nonneg with c=a0 to obtain E(x) >= 0. This step allows arbitrary nonnegative baselines; it does not assume that the centered response is positive in advance.")),
+                Paragraph(Text("For any real t, take d=sqrt(1+t squared)>0 and coefficients (1/d,t/d). Rotation of the pair (dx,dy), followed by the two axis cases (dx,0) and (dy,0), gives E(x+ty)+E(tx-y)=E(x)+E(tx)+E(y)+E(ty). Here evenness replaces E(-tx+y) by E(tx-y). Subtracting the parallelogram identity E(tx+y)+E(tx-y)=2E(tx)+2E(y) gives the precise scalar-exchange premise below. No scalar homogeneity has been supplied.")),
+                Disp(ScalarExchange()),
+                Paragraph(Text("Apply real_polar to this same E, its nonnegativity, and this exchange identity. It gives one real bilinear form B with B(x,y)=(E(x+y)-E(x)-E(y))/2, B(x,y)=B(y,x), and B(x,x)=E(x). Its internal positive_additive_scalar argument supplies real linearity; the application needs no separate exposure or repetition of that proof. The diagonal identity and nonnegativity give IsPosSemidef, and A(x)=a0+B(x,x). The parallelogram identity also identifies this B with (A(x+y)-A(x-y))/4, since the baseline cancels.")),
+                Paragraph(Text("For uniqueness, if C is another symmetric bilinear form with A(x)=a0+C(x,x), then C and B have equal diagonals at x, y, and x+y. Expanding at x+y and using symmetry gives 2C(x,y)=2B(x,y), hence C=B. Conversely, substitute A(x)=a0+B(x,x) and expand both rotated diagonals by bilinearity. The mixed terms cancel and their sum is (c squared+s squared)(B(x,x)+B(y,y)), which equals B(x,x)+B(y,y). The two baseline terms occur on both sides.")),
+                Paragraph(Text("This application has no marker U and does not invoke Balance or raw_real_polar as an extra premise. It assumes no norm, topology, continuity, dimension bound, scalar homogeneity or nondegeneracy. The zero vector space, every nonnegative constant A, the zero form and forms with a radical are included; uniqueness concerns symmetric positive semidefinite forms. It is a consequence of the existing quadratic and real-polar constructions, with no claim of mathematical novelty or physical realization. The fixed-angle Hamel construction and the later calibration of a physical source are separate assertions."))),
             DescribeRole.Theorem))));
+
+    private static Formula AngleCharacterization()
+    {
+        var a=V("V");var x=V("x");var y=V("y");var c=V("c");var s=V("s");
+        Formula A(Formula z)=>Call("A",z);
+        var law=All("x",a,All("y",a,All("c",Real,All("s",Real,Implies(
+            Equal(Add(Mul(c,c),Mul(s,s)),D(1)),
+            Equal(Add(A(Add(Mul(c,x),Mul(s,y))),A(Add(Mul(Seq(Minus,s),x),Mul(c,y)))),Add(A(x),A(y)))))));
+        var form=Call("BilinForm",Real,a);
+        var representation=Seq(Exists,Bang,Sp,Paren(Seq(V("B"),Sp,Colon,Sp,form)),Comma,Sp,
+            And(Call("IsPosSemidef",V("B")),All("x",a,Equal(A(x),Add(A(D(0)),Call("B",x,x))))));
+        return All("V",Call("Type"),Seq(OpenBracket,Call("AddCommGroup",a),CloseBracket,Sp,
+            OpenBracket,Call("Module",Real,a),CloseBracket,Comma,Sp,All("A",Arrow(a,Real),
+                Implies(All("x",a,Seq(D(0),Sp,Le,Sp,A(x))),Seq(Paren(law),Sp,Iff,Sp,Paren(representation))))));
+    }
+
+    private static Formula ScalarExchange()
+    {
+        var x=V("x");var y=V("y");var t=V("t");
+        Formula E(Formula z)=>Call("E",z);
+        return All("x",V("V"),All("y",V("V"),All("t",Real,Equal(
+            Sub(E(Add(x,Mul(t,y))),E(Add(Mul(t,x),y))),
+            Add(Sub(Sub(E(x),E(y)),E(Mul(t,x))),E(Mul(t,y))))));
+    }
 
     private static Formula Law()
     {
