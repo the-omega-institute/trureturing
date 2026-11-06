@@ -22,6 +22,10 @@ $$\neg (\forall k \in \mathbb{N},\; 2 \le k \Rightarrow ((\exists x \in \mathbb{
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/FinchZeroRunsModThree.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/finch-zero-runs` (refuted) by `D5/S1/Recurrence/FinchZeroRunsModThree.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"finch-zero-runs","declaration_gid":"D5/S1/Recurrence/FinchZeroRunsModThree.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Steven Finch (2026). *Three Quadratic Recurrences Modulo 3: What We Can Prove and What We Can Guess*. DOI: [10.48550/arXiv.2610.34300](https://doi.org/10.48550/arXiv.2610.34300). URL: <https://arxiv.org/abs/2610.34300v1>.

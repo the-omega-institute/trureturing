@@ -39,13 +39,16 @@ internal sealed class FinchZeroRunsModThreeDocument : IScribeDocumentDefinition
                     + "in the state after r−17 transitions. This contradicts universal attainment "
                     + "at k=61, where the proposed bound is fifteen. The statement refutes "
                     + "attainment and makes no assertion against the upper bound of Theorem 16.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("finch-zero-runs"), ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("finch-zero-runs-" + id), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula SourceBody()
     {

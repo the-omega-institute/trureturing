@@ -7,18 +7,20 @@
    digest: Lag 61 excludes the fifteen-gap zero run asserted by universal attainment. -/
 
 /-
-result: proof_shape: bind-only; escape_witness: none.
+result: proof_shape: content; escape_witness: designated-refutation (exempt).
 admission_basis: open-problem-resolution (#23013; Refuted).
-Direct frozen dependencies: none.
-Private proof declarations (each proof_shape: bind-only; escape_witness: none;
-Direct frozen dependencies: none), with consumers:
+Direct frozen dependency: D5/S0/Certificates/FinchConjecture23CaptureOffsetRefutation
+(module statement_id sha256:5ada2189c83a70a00ca5fc132fc7b890f1cd2802e2ab8fe49cb8d84504f099da),
+reusing its IsSourceSequence and IsRun predicates while retaining the literal
+claim expressions below.
+Private proof declarations, with proof shapes and consumers:
   states_len: orbit_mem.
-  states_map_step: step_mem.
-  states_mask_free: orbit_not_mask.
+  states_map_step: content; step_mem.
+  states_mask_free: content; escape witness consumed by orbit_not_mask.
   step_mem: orbit_mem.
   orbit_mem: orbit_not_mask.
-  maskb_eq_true_iff: orbit_not_mask.
-  orbit_not_mask: result.
+  maskb_eq_true_iff: bind-only; orbit_not_mask.
+  orbit_not_mask: content; run_mask.
   mul_add_div: digit_step.
   digit_step: digit_shift.
   new_digit: X_recurrence.
@@ -28,10 +30,11 @@ Direct frozen dependencies: none), with consumers:
   initial_old: X_old.
   X_old: X_recurrence.
   X_recurrence: X_source.
-  X_source: result.
+  X_source: content; result.
   digit_cast_eq_X: run_mask.
   digit_zero_cast: run_mask.
-  run_mask: result.
+  run_mask: content; result.
+  result: content; designated refutation.
 The claim retains the source expressions literally; proofs reuse the existing
 source-predicate and run owners through their definitional correspondence, then use
 Nat division, Function.iterate and ZMod casts directly without renamed digit or orbit operators.
