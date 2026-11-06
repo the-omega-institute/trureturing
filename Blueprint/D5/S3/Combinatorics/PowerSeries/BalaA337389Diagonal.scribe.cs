@@ -50,12 +50,12 @@ internal sealed class BalaA337389DiagonalDocument : IScribeDocumentDefinition
                 + "square equation. Lagrange inversion gives coeff n A=coeff n ((phi k)^n). "
                 + "Normalized square-root uniqueness identifies every source pair with this pair. "
                 + "The argument includes k=0 and k=4 without dividing by k or k-4.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source), new OpenProblemResolutionClaim(ProblemSlugRef.Create("bala337389"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("bala337389-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
-        H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+        H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
     private static Formula V(string name) => F.Id(name);
     private static Formula Named(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Named(name), [.. args]);

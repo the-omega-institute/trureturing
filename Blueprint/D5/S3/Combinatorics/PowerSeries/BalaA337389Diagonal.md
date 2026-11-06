@@ -60,6 +60,10 @@ $$\forall k: \mathbb{N}, ((\exists d: \operatorname{PowerSeries}\left(\mathbb{Q}
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PowerSeries/BalaA337389Diagonal.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bala337389` (proved) by `D5/S3/Combinatorics/PowerSeries/BalaA337389Diagonal.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bala337389","declaration_gid":"D5/S3/Combinatorics/PowerSeries/BalaA337389Diagonal.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Bala and Seiichi Manyama (2022). *OEIS A337389, all-column diagonal formula for Manyama's array*. URL: <https://oeis.org/A337389>.
