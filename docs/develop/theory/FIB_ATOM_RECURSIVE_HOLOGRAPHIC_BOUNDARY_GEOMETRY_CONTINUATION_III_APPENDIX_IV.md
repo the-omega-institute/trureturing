@@ -2001,3 +2001,70 @@ $$
 Applying (183.4) with $(a,r)=(q-2h,2k)$ gives (183.3), since the first term is $2\mathcal C(k,q-2h,q-2h)$. $\square$
 
 These are necessary balance conditions for a common-first full zero. Together with Section 181 they require both sign parts as measured classes; the inequalities do not assert that a sign-changing pair is sufficient, and the remaining five equations, the radical alternative, arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization remain open.
+
+## 184. Tensor-lift criterion for the common-first slice
+
+The remaining common-first equations can be expressed without choosing a preferred list of coordinates. The four labels are images of a two-dimensional coefficient space, and a full zero is exactly preservation of the induced trilinear tensor.
+
+**Proposition 184.1 (coefficient-space tensor equivalence).** Let $A=\mathbb R^2$, and for $(a,b)\in A$ define
+
+$$
+\Phi_f(a,b)=ap+bF,
+\qquad
+\Phi_v(a,b)=ap+b(F+v).
+$$
+
+Set
+
+$$
+\mathfrak T_f(r,s,t)=\mathcal C(\Phi_f(r),\Phi_f(s),\Phi_f(t)),
+\qquad
+\mathfrak T_v(r,s,t)=\mathcal C(\Phi_v(r),\Phi_v(s),\Phi_v(t)).
+$$
+
+For the coefficient vectors
+
+$$
+ c_B=(1,0),
+ \qquad c_0=c_1=(0,1),
+ \qquad c_3=(3,-2),
+\tag{184.1}
+$$
+
+one has $f_y=\Phi_f(c_y)$ and $u_y=\Phi_v(c_y)$ for every $y\in\{0,1,3,B\}$. Consequently,
+
+$$
+\Delta(u)_{yzk}=0\ \text{for all }y,z,k
+\quad\Longleftrightarrow\quad
+\mathfrak T_v=\mathfrak T_f\ \text{on }A^3.
+\tag{184.2}
+$$
+
+*Proof.* The identities for $c_B,c_0,c_1$ are immediate. Since $2F+q=3p$ and $2(F+v)+(q-2v)=3p$, one has $q=3p-2F$ and $q-2v=3p-2(F+v)$, giving the identity for $c_3$.
+
+For every label triple $(y,z,k)$, the residual is
+
+$$
+\Delta(u)_{yzk}
+ =\mathfrak T_v(c_y,c_z,c_k)-\mathfrak T_f(c_y,c_z,c_k).
+$$
+
+If all residuals vanish, the two trilinear forms agree on the four displayed coefficient vectors. The vectors $c_B$ and $c_0$ form a basis of $A$, so trilinearity extends this equality to every $(r,s,t)\in A^3$. The converse follows by evaluating (184.2) at the coefficient vectors of every label triple. $\square$
+
+**Corollary 184.2 (the common-first problem as a tensor-preserving lift).** If $p$ and $F$ are linearly independent as $m$-classes, let $E=\operatorname{span}_{\mathbb R}\{p,F\}$ and define
+
+$$
+S_v(ap+bF)=ap+b(F+v).
+$$
+
+Then a legal common-first tuple has all residuals zero if and only if
+
+$$
+\mathcal C(S_vx,S_vy,S_vz)=\mathcal C(x,y,z)
+\qquad(x,y,z\in E).
+\tag{184.3}
+$$
+
+Thus the only remaining exact-zero route in this slice is a tensor-preserving lift of the two-dimensional baseline span. The coefficient-space statement (184.2) remains valid without the independence assumption; no rigidity or positivity of such a lift is asserted here.
+
+This criterion is equivalent to the seven-coordinate reduction of Section 180, while making the remaining algebraic target explicit. It does not solve the tensor-stabilizer problem, the radical alternative, arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession or Lean/kernel formalization.
