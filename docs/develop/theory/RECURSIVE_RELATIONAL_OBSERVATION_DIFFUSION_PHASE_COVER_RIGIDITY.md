@@ -4410,8 +4410,8 @@ $$
 For
 $E_i^2=\int\theta_i\lambda^2|e^{-d\lambda}-\Phi(\lambda)|^2\,d\nu$,
 disjointness of the tents and $\lambda^2\le(1+\lambda)^2$
-give $E_1^2+E_2^2\le E^2$. Subtract the second line of
-(13.15) from the first and apply Cauchy–Schwarz twice:
+give $E_1^2+E_2^2\le E^2$. Combine the two lines of
+(13.15) and apply Cauchy–Schwarz twice:
 
 $$
 \begin{aligned}
@@ -4655,6 +4655,7 @@ The relevant correspondences are:
 | §§11–12, especially (12.5), (12.7)–(12.10), (12.29)–(12.32) | The original coefficient names give $h,z,R$, the deterministic-time source correspondence and the exact outstanding upper obligation. Their heat, calibration and word equivalences are reused. |
 | G. Teschl, [Mathematical Methods in Quantum Mechanics](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf), Theorems 3.1–3.2 and (3.21) | Scalar spectral measures and the unbounded-operator domain criterion apply to this self-adjoint $H$ and its actual $z$. They give (13.8) from (13.7), and the spectral error identity; they provide no original source trace or sharp supremum. |
 | Z.-Q. Chen, M. Fukushima and J. Ying, [Traces of symmetric Markov processes and their characterizations](https://arxiv.org/pdf/math/0606784v1), §2, hitting kernel before (2.14) | The equilibrium/hitting framework is the antecedent used by [S]. The closed set here is exactly $\{e\}$ and the energy is the original $\mathscr E$, without an imported Brownian factor or changed clock. |
+| D. Braess and W. Hackbusch, [On the approximation of Stieltjes functions by exponential sums and rational functions with applications to partial differential equations](https://doi.org/10.1007/s00211-025-01523-1), §4.3 | Positive simple-pole interpolation there assumes a Cauchy–Stieltjes target. A Laplace–Stieltjes or completely monotone target alone does not supply that hypothesis. Equation (13.14) and the actual-source two-band argument specify the obstruction needed here. |
 | A. Burchard and Á. D. Martínez, [On monotonicity of heat kernels: a new example and counterexamples](https://arxiv.org/html/2502.08212v1), Theorems 1.2 and 2.2 | Rotational symmetry on compact smooth manifolds and failures for a simple first eigenvalue concern different source families. Neither statement decides source maximality for this singular weighted endpoint. |
 
 The existing D5 tree-boundary contraction statements, including the
