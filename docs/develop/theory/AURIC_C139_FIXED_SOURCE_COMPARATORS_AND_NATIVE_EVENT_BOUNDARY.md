@@ -2198,7 +2198,7 @@ $$
 
 $$
 \boxed{G_{B_r}(W_rz,J_bW_rz)
-       =G_A(z,J_{\beta_r(b)}z)quad
+       =G_A(z,J_{\beta_r(b)}z)\quad
        (z\in V_A,\ 0\le b\le u_{B_r}).}
 \tag{40.1}
 $$
