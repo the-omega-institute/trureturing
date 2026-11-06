@@ -3067,3 +3067,220 @@ native 合同，没有把 C128 的固定 $D$、C139 的程序配对、有限矩�
 增长识别为它的配置、后验或实际操作。
 
 ## 追加锚（本行以下为增补区）
+## 25.35 原生 89 载体的逐层自校准容量
+
+本节固定原生 89 配置载体、原正脉冲、原接缝输出和原终止合同。它给出一个只依赖该源的正整数 $L$，把同一精确层的许多原生前缀变成可由一个共同的未来接缝尾词无条件区分的标签，再将完整联合总变差合同接到持久状态计数。这里的“接缝输出律”是原任务已经要求的完整输出元组在若干接缝坐标上的数学投影；它不是对每个隐藏配置另行运行一次物理系统，也不是新增读口。
+
+### 25.35.1 源、调用、状态与总变差
+
+**定义 25.35.1（原生逐层任务）。** 令
+
+$$
+E=\{q\subseteq\{1,\ldots,9\}:q\text{ 无相邻占位}\},\qquad |E|=89,
+$$
+
+并保留原生 ready 配置 $q_0=\{3,7\}$、$q_1=\{1,3,7\}$ 及完整载体 $\mathcal K=\mathbb C^E$。一次合法物理调用只是原合同允许的一个正地址 $0$ 或 $1$ 的单位脉冲；字词按时间顺序到达，不能使用负脉冲、分数调用、重置或额外读数。每个完整测试词在其尾部仍发送原 stop request，并保留原字面终端 $W$、全部原终端标签、失败、拒绝、停止和报警坐标；理想零失败坐标虽为零，也仍属于联合输出元组。这里沿用 owning source [Native Recurrent Quantized Memory，Definitions 1.1–1.2](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RECURRENT_QUANTIZED_MEMORY.md) 的原生 minimal-current、no-read source；本节不改动该源本身。
+
+整个任务由一个且同一个经典因果 sampler $A$ 处理：它只在地址实际到达时接收该地址，尾部 stop request 也只在到达时接收并在其到达后终止；随机化只使用 fresh independent fair bits（新的独立公平比特）。没有预先供给的最终 horizon、可自由使用的调用/时间索引、时钟、reset、额外 read/control 或任何尚未到达的未来输入；外部输入与 schedules 固定并在各比较中相同。
+
+对每个有限 $0/1$ 词 $w$，完整要求元组为
+
+$$
+\mathbf C(w)=\bigl(Q_0,Q_1,\ldots,Q_{|w|},W,
+\text{all original failure/refusal/stop/alarm coordinates}\bigr),
+$$
+
+其中 $Q_0$ 是初始配置，$Q_j$ 是第 $j$ 个 chronological seam 的配置输出，$W$ 是 literal terminal；所有原始 failure/refusal/stop/alarm 坐标（包括理想值为零的坐标）以及原合同中的请求、顺序和 schedule metadata 都逐项保留。sampler law 必须逼近这个**完整**元组的 source law，即
+
+$$
+\operatorname{TV}\bigl(\mathcal L_A(\mathbf C(w)),\mathcal L_{\mathrm{src}}(\mathbf C(w))\bigr)\le\frac1{10}
+\qquad\text{for every finite }w\in\{0,1\}^*.
+$$
+
+固定上述同一个因果 sampler $A$。在第 $m$ 个 seam output 已完成之后、下一请求到达之前的切口，$S_A(m)$ 是所有 $m$-letter $0/1$ 前缀和所有 positive-probability finite random runs 可达到的完整持久状态集合；切口严格位于第 $m$ 个 seam output 之后、下一请求之前。状态包括影响未来转移核、控制或解码的保留随机性、计数器、控制位置、可重读输入输出和档案；这些已列出的持久信息全部继续计入 charged persistent state。令
+
+$$
+B_A(m)=\left\lceil\log _2|S_A(m)|\right\rceil,
+$$
+
+当 $S_A(m)$ 无限时约定 $B_A(m)=+\infty$。这是精确层的持久状态容量；它不等于所有历史层合并后的全局二进制串长度，也不把一个没有在该层同时可达的历史集合计入当前层。
+
+对概率律采用
+
+$$
+\operatorname{TV}(\mu,\nu)=\sup_F|\mu(F)-\nu(F)|
+ =\frac12\sum_z|\mu(z)-\nu(z)|
+$$
+
+（连续坐标时用相应的测度积分）。完整联合总变差合同是对上述整个原生输出元组的概率律作比较；只比较终端边缘不满足本节任务。一个只读取未来接缝坐标并作标签判定的函数，是对该完整元组的投影和后处理，不是物理地取得一个独立运行的隐藏配置。
+
+**命题 25.35.2（精确事件）。** 在定义 25.35.1 的完整任务下，字面量词为
+
+$$
+\exists\,L\in\mathbb Z_{>0}\ {\rm(source\ only)}\quad
+\forall\,A\ {\rm(admissible\ causal\ sampler)}\quad
+\forall\,n\in\mathbb Z_{\ge1},\qquad
+B_A(Ln)\ge \frac n2-4.
+\tag{25.35.1}
+$$
+
+$L$ 是存在性常数，不是由本节计算出的数值。命题只断言同一精确层 $Ln$ 的状态容量；若所有这些状态能用固定宽度 $b$ 的二进制编码单射表示，则 $b\ge n/2-4$。若只知道可变长二进制串的最大长度为 $b$，由至多 $2^{b+1}-1$ 个串的计数只能推出 $b\ge n/2-5$。命题不声称物理存储成本、全局历史状态数、运行时间或编码最优性。
+
+### 25.35.2 原生二配置角与稠密投影控制
+
+**引理 25.35.3（完整 89 载体中的稠密二配置角）。** 令 $V=\operatorname{span}(e_{q_0},e_{q_1})$，并写 $x=\varphi^{-1}$、$c=x\sqrt{x}>0$、$d=x-x^2$。原地址 $0,1$ 保持 $V$，其在有序基 $(e_{q_0},e_{q_1})$ 上的投影分别为
+
+$$
+P_0=\begin{pmatrix}0&0\\0&1\end{pmatrix},\qquad
+P_1=\begin{pmatrix}x&c\\c&x^2\end{pmatrix}.
+\tag{25.35.2}
+$$
+
+从原 ready 出发，其他 87 个配置在这些词中始终为零 Born 质量；它们仍是完整 89 状态源的一部分。若 $K_j$ 是原单位脉冲，则 $K_j^{10}=I$。正词 $g=0^5 1^5$ 在 $V$ 上为
+
+$$
+K_g=\begin{pmatrix}-d&2c\\-2c&-d\end{pmatrix}.
+\tag{25.35.3}
+$$
+
+两个投影在射影 Bloch 球上给出角度为 $3\pi/5$（取方向符号）的旋转，轴线分别为 $(0,0,1)$ 与 $(2c,0,d)$。它们不共轴，且角度既非 $0$ 也非 $\pi$。令 $\theta=\arccos(-d)$；原生有限视界界定理的式 (2.3)–(2.6) 证明 $\exp(2i\theta)$ 不是单位根。因此这两个射影生成元的闭包是 $\mathrm{SO}(3)$，从而 $\Gamma=\langle K_0,K_1\rangle\le U(2)$ 不具有限指数可解子群。
+
+证明。式 (25.35.2) 是原生 89 源的实际地址投影；地址 $0,1$ 不把 $V$ 耦合到其余配置，所以不能把这个角误称为替换后的二状态物理源。式 (25.35.3) 是原五调用反射恒等式的乘积。无限射影阶来自原生相位的非单位根结论。$\mathrm{SO}(3)$ 的无限真闭子群保留一条轴线；非 $0,\pi$ 旋转只保留自身轴线，而此处两轴线不同，故闭包只能是 $\mathrm{SO}(3)$。若 $\Gamma$ 有有限指数可解子群，其射影闭包给出连通 $\mathrm{SO}(3)$ 的有限指数可解闭子群，必为整个 $\mathrm{SO}(3)$，与其非可解性矛盾。闭包中的迭代交换恒等式由连续性保持。这里的闭子群机制可对照 [原生环境记录卷定理 12.2](AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md)；实际矩阵和非单位根桥来自 [原生有限视界卷定义 1.1–1.2、定理 2.1](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_HORIZON_MEMORY_BOUNDS.md)。证毕。
+
+### 25.35.3 同一精确层的等长正前缀族
+
+**引理 25.35.4（等长射影射线）。** 存在只依赖原生源的正整数 $L$，使得每个 $n\ge1$ 都有至少
+
+$$
+N_n\ge\frac{2^n}{4n+1}
+\tag{25.35.4}
+$$
+
+个两两不同的 ready 射线，每个射线都由恰好 $Ln$ 次原生正调用得到。
+
+证明。对有限对称集 $\{I,K_0,K_1,K_0^{-1},K_1^{-1}\}\subseteq GL_2(\mathbb C)$ 应用 Breuillard, *A Strong Tits Alternative*, Theorem 1.1（arXiv:0804.1395v1，PDF 第 1–2 页）：由于 $\Gamma$ 不具有限指数可解子群，该定理给出秩二自由子群。该定理只供应成熟的自由子群存在性；这里不使用其数值曝光界。取自由生成元 $A,B$。由于 $K_j^{10}=I$，每个逆字母 $K_j^{-1}$ 可由九次正的 $K_j$ 调用替换。于是 $A,B$ 有正原生表示，长度分别为 $r,s\ge1$。$A^s,B^r$ 仍自由生成，并分别由 $a^s,b^r$ 表示，二者原生调用长度都为
+
+$$
+L=rs.
+$$
+
+固定这两个词后，所有由 $A^s,B^r$ 构成的 $n$ 字母正自由词共有 $2^n$ 个，且每个恰好使用 $Ln$ 次调用。将它们作用于 ready 射线并按射线分纤维。一个 ready 射线的 $U(2)$ 稳定子在适当正交基中为对角群，故为阿贝尔群；它与秩二自由群的交 $H$ 因而平凡或循环。固定一条纤维中的词 $w_0$，其他词写成 $w_0h^k$。两个 $n$ 字母词的自由群距离至多 $2n$；若 $H=\langle h\rangle$ 非平凡，循环约化给 $|h^k|\ge|k|$，故 $|k|\le2n$。每条纤维至多 $4n+1$ 个词，得到 (25.35.4)。整个计数在同一层完成，不使用历史单调性或不同长度补零。证毕。
+
+### 25.35.4 一个共同正尾词的未来接缝证书
+
+**引理 25.35.5（共同定位与地址 1 周期核）。** 固定 $n$ 并取引理 25.35.4 的 $N=N_n$ 条不同射线 $\psi_1,\ldots,\psi_N$。存在一个只由这整个有限族决定的正 $0/1$ 词 $u$，使 $\phi_i=K_u\psi_i$ 的地址 $1$ Born 质量
+
+$$
+ p_i=|\phi_i(q_1)|^2
+$$
+
+两两不同、均在 $(0,1)$ 内，且每个 $\phi_i$ 都不是 $P_1$ 的本征向量。随后存在有限整数 $R$，使共同尾词
+
+$$
+ t_n=u(1^{10})^R
+\tag{25.35.5}
+$$
+
+只用未来地址 $1$ 的十调用端点接缝坐标，就能以至少 $19/20$ 的概率无条件识别族中的每个 $i$。$u,R$ 可随 $n$ 变化，但不依赖未知的族成员，也不依赖 sampler $A$。
+
+证明。用 Bloch 向量表示这些不同射线。任意 $i\ne j$ 的等式
+$z\cdot R(v_i-v_j)=0$，以及把某个 $R v_i$ 送到坐标极点或 $P_1$ 本征轴的条件，都是 $\mathrm{SO}(3)$ 中的真闭集且无内点。有限并的补集非空；引理 25.35.3 的射影稠密性给出同一 $\Gamma$ 元素落在该补集。把其逆字母逐一改写成九次正调用，得到合法正词 $u$。因此所有 $p_i$ 严格分离且入口非本征。
+
+对每个 $i$，令 $\ell_i,h_i$ 是一个数学周期 $10/3$ 内地址 $1$ 配置 $q_1$ 质量的最小值和最大值，并置
+
+$$
+ r_i=\frac{\ell_i(1-h_i)}{h_i(1-\ell_i)},\qquad \rho_i=r_i^3.
+\tag{25.35.6}
+$$
+
+非本征条件给 $\ell_i<h_i$，且入口 $p_i\in(0,1)$ 保证 $h_i>0$、$\ell_i<1$，故 $0\le r_i<1$。若某个配置在周期中经过节点，则 $\ell_i=0$ 或 $h_i=1$，两种情形均按原节点约定给 $r_i=0$，不在节点重采样。原生有限精度续接核的式 (2.11)–(2.12) 给出任意入口向量的持有比；[Continuation V §8.3，式 (8.3)–(8.9)] 的共同活动块公式可在这里取 $M=1$、$P_0=1-p_i$、$P_1=p_i$，因为地址 $1$ 的局部投影和 Hamiltonian 与该公式使用的活动二块相同。三个数学周期合起来恰好等于十次完整原生单位调用；物理过程没有分数调用，也没有在数学周期边界进行额外读取、重置或重采样，故十调用端点的物理核为
+
+$$
+T_i=\Pi_i+\rho_i(I-\Pi_i),\qquad
+\Pi_i=\begin{pmatrix}1-p_i&p_i\\1-p_i&p_i\end{pmatrix}.
+\tag{25.35.7}
+$$
+
+实际向量、配置和共同核继续跨过端点；(25.35.7) 只是十次合法调用的核计算。以地址 $1$ 配置为 $1$ 的端点指标 $Y_j$，$j=1,\ldots,R$，其无条件入口律为 $(1-p_i,p_i)$，并且是该核的平稳律。因此
+
+$$
+\mathbb E_iY_j=p_i,\qquad
+\operatorname{Cov}_i(Y_j,Y_k)=p_i(1-p_i)\rho_i^{|j-k|},
+$$
+
+从而
+
+$$
+\operatorname{Var}_i\!\left(\frac1R\sum_{j=1}^RY_j\right)
+ \le\frac{1+\rho_i}{4R(1-\rho_i)}.
+\tag{25.35.8}
+$$
+
+$N=1$ 时使用常值解码器。以下设 $N\ge2$，令 $\Delta=\min_{i\ne j}|p_i-p_j|>0$，并取 $R$ 足够大，使所有 $i$ 满足
+
+$$
+\frac{1+\rho_i}{R(1-\rho_i)\Delta^2}\le\frac1{20}.
+$$
+
+对端点指标均值作最近 $p_i$ 解码，Chebyshev 给出每个族成员至少 $19/20$ 的无条件成功率。解码器只看共同尾部已经要求的未来端点接缝坐标；它不看旧请求、旧输出、切口配置、条件入口样本或隐藏标签，也没有罕见事件条件。这里没有定量估计 $R$ 的长度上界，也没有构造任何有限视界匹配下界。证毕。
+
+### 25.35.5 完整联合 TV 到同层状态计数
+
+**定理 25.35.6（原生逐层自校准下界）。** 在定义 25.35.1 的原合同下，命题 25.35.2 成立；即存在源特定的正整数 $L$，对每个因果 sampler $A$ 和每个 $n\ge1$ 有
+
+$$
+B_A(Ln)\ge n/2-4.
+$$
+
+证明。固定任意 $A$ 和 $n$，取引理 25.35.4 的 $N$ 个前缀 $a_i$，并用引理 25.35.5 的同一尾词 $t_n$。对每个完整原生词 $a_it_n$，发送原 stop request，并把包含全部接缝、原字面 $W$ 和全部失败坐标的完整输出联合律记为源律与 sampler 律。假设合同给出的完整联合概率 TV 不超过 $1/10$；将其投影到未来十调用端点并施加固定最近均值解码器，TV 收缩使 sampler 的每个标签成功率至少为
+
+$$
+19/20-1/10=17/20.
+\tag{25.35.9}
+$$
+
+这一应用需要完整联合合同；只给终端边缘相同不能推出未来端点的联合核，也不能推出 (25.35.9)。
+
+在恰好 $Ln$ 次调用后的切口，因果性使状态分布只由 $a_i$ 决定，不依赖尚未到达的 $t_n$。写 $\alpha_i(s)$ 为前缀 $a_i$ 到达状态 $s$ 的概率。给定 $s$，把共同尾词、独立新随机位和未来接缝解码合并成核 $d_s(i)$；完整持久状态的定义已把会影响这个核的随机性、控制、计数器和可读档案计入 $s$。同一状态和同一共同尾部不能同时把两个不同标签判对，故
+
+$$
+\sum_i d_s(i)\le1.
+\tag{25.35.10}
+$$
+
+若 $S_A(Ln)$ 无限，结论立即成立。否则令 $S=|S_A(Ln)|$，对 $N$ 个合法前缀取均匀数学测试标签。随机消息计数（[原始控制事件记忆定理 4.3，式 (EM.13)](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_EVENT_MEMORY_AND_COARSE_ALIASING.md) 的经典 $S$ 状态特例）在这里的参数对应是“标签 $i$—切口消息 $s$—共同尾部解码器 $d_s$”；由于 $0\le\alpha_i(s)\le1$，它给
+
+$$
+\begin{aligned}
+\frac1N\sum_i\Pr(\text{判对 }i)
+ &=\frac1N\sum_s\sum_i\alpha_i(s)d_s(i)\\
+ &\le\frac1N\sum_s\sum_i d_s(i)
+ \le\frac SN.
+\end{aligned}
+\tag{25.35.11}
+$$
+
+由 (25.35.9) 得 $S\ge(17/20)N$，所以
+
+$$
+\begin{aligned}
+B_A(Ln)
+&\ge n-\log_2(4n+1)+\log_2(17/20)\\
+&\ge n/2-4.
+\end{aligned}
+\tag{25.35.12}
+$$
+
+最后一行使用 $4n+1\le8\,2^{n/2}$（$n\ge1$）和 $\log_2(17/20)>-1$，并使用 $B_A=\lceil\log_2S\rceil$ 不会削弱下界。$L$ 在选择自由正词时一次固定，先于 $n$ 和 $A$；$1/2$ 与 $4$ 对所有 $A,n$ 通用。族和尾词可以随 $n$ 取不同值，但不随未知族成员或 sampler 取值。证毕。
+
+### 25.35.6 量词边界、已知视界结果与原生排除项
+
+**推论 25.35.7（与已知 $H$ 的预测工作界相容）。** 已知 $H$ 的 $O(\log H)$ 预测工作空间结果与定理 25.35.6 量词不同：前者可为每个给定有限视界选择一个随 $H$ 变化的预测器，并讨论该视界内的工作空间；这里要求一个 horizon-free 的单一因果 sampler，在每个精确层 $Ln$ 同时面对所有长度的合法前缀，并由同一个源特定 $L$ 给出逐层状态容量下界。因此两者不互相替代或矛盾。
+
+本节保留原 89 载体及其零坐标，只使用原正地址调用、原接缝、原 terminal/failure 坐标和原 stop。没有自由时间索引、已知视界输入、额外读数、reset、postselection、未计费档案或分数物理调用。十调用周期的数学参数不授权在内部时刻观测；节点只由原生持有比的零值处理。source-only 的 $L$ 只是自由词存在性给出的存在常数；本节既不提供 $L$ 的显式数值，也不提供计算它的程序，并不作不可计算性主张。
+
+定理 25.35.6 的新桥是原生矩阵的稠密射影控制、精确等长正前缀射线计数、地址 $1$ 任意入口的节点安全周期核，以及一个不依赖标签的共同未来接缝解码器；闭子群、Tits alternative、自由群中心化、周期协方差、Chebyshev、TV 收缩和有限消息计数均只作为已成熟工具使用。它没有把 seam-output law sampler 描述成一次物理获取独立隐藏配置，也没有给出尾词长度的定量上界或有限视界匹配的下界。
+
+本节的来源对应为：原源与完整联合合同见 [Native Recurrent Quantized Memory，Definitions 1.1–1.2](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RECURRENT_QUANTIZED_MEMORY.md)；实际二配置矩阵和非单位根相位见 [Native Finite Horizon Memory Bounds，(2.3)–(2.6)](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_HORIZON_MEMORY_BOUNDS.md)；任意入口的原生最小电流持有比见 [Native Finite Precision Continuation Kernels，(2.11)–(2.12)](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_PRECISION_CONTINUATION_KERNELS.md)；十次原生调用周期核见 [Continuation V，§8.3，(8.3)–(8.9)](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_V.md)；有限状态猜测桥见 [Original Control Event Memory，Theorem 4.3，(EM.13)](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_EVENT_MEMORY_AND_COARSE_ALIASING.md)。这些引用只承担各自声明的成熟中间工具和源合同，不把不同载体的 ready/read 合同移植到原生 89 源。
+
+## 追加锚（本行以下为增补区）

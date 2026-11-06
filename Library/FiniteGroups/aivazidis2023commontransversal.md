@@ -5,9 +5,10 @@ year: 2023
 title: On the common transversal probability in finite groups
 doi: 10.48550/arXiv.2209.00986
 url: https://arxiv.org/abs/2209.00986v2
-claim: Problem 5.2 asks whether P_G(H) ≤ P_G(HN) for every finite group G, subgroup H and normal subgroup N.
+claim: Problems 5.2 and 5.6 ask about normal-extension monotonicity and uniqueness of finite factorial-weight products.
 strata_touched:
   - D5/S3/FiniteGroups/TransversalProbabilityMonotone
+  - D5/S3/FiniteGroups/FactorialProductNonunique
 license: citation-only
 triage: anchor
 ---
@@ -38,7 +39,21 @@ The same problem mentions the homomorphism consequence obtained by combining thi
 
 Proposition 3.2 supplies the literature counting formula: a double-coset component with t left cosets contributes the probability factor t!/t^t. The formal proof connects this formula to the literal transversal subsets, then compares components under the normal extension.
 
-The published journal version is *On the common transversal probability*, Journal of Group Theory 27(6) (2024), 1233–1285, DOI 10.1515/jgth-2024-0030. Its full text was not read; retention of the question there and completeness of the literature screen are ASSUMED-UNVERIFIED. The source screen and experiment provenance are recorded in issue #22474.
+The published journal version is *On the common transversal probability*, Journal of Group Theory 27(6) (2024), 1233–1285, DOI 10.1515/jgth-2024-0030. [The journal text](https://d-nb.info/1346963460/34) retains Problem 5.6 on printed p. 1281. Completeness of any literature screen remains ASSUMED-UNVERIFIED; source retention does not establish worldwide priority.
+
+## Factorial-product uniqueness
+
+Problem 5.6, arXiv v2 printed p. 37 and journal printed p. 1281, asks whether, for distinct integers greater than one,
+
+$$\prod_{i=1}^n f(t_i)=\prod_{j=1}^k f(s_j),\qquad f(x)=\frac{\Gamma(x+1)}{x^x},$$
+
+forces the same lengths and parameters up to reordering:
+
+> Can we then conclude that n=k and t_i=s_i for all i after rearranging appropriately?
+
+The arXiv version places “distinct” in parentheses; the journal states it without parentheses. For positive integer m the factor is m!/m^m. There is no group-realizability assumption, cardinality bound, fixed sum or prime restriction in this question. Theorem 4.6 treats prime parameters and is a separate statement.
+
+The exact counterexample in `D5/S3/FiniteGroups/FactorialProductNonunique.result` uses two disjoint eighteen-element sets, so it also satisfies the interpretation requiring all parameters across both sides to be distinct. [The dossier](../../Problems/alm2024-factorial-product-uniqueness.md) gives the sets, precise scope and literature limits.
 
 ## Finite computation
 
