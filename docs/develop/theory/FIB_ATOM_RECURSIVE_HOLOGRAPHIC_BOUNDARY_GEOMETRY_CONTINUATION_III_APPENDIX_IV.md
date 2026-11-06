@@ -536,11 +536,11 @@ The statements (165.1)--(165.5) are an exact functional-analytic boundary for th
 
 ## 追加锚（本行以下为增补区）
 
-## 166. The finite (L^2) representer bridge for the calibrated kernel
+## 166. The finite $L^2$ representer bridge for the calibrated kernel
 
-Section 165 treats the original first-order kernel (V) as a bounded-function constraint while the successor orbit is described in (L^2(m)). For the actual equal-gap readout of Appendix III, the first-order constraints have explicit (L^2(m)) representers. This identifies the finite calibration plane that must be added to any later successor orbit, without asserting that the orbit preserves (V) or that a physical successor exists.
+Section 165 treats the original first-order kernel $V$ as a bounded-function constraint while the successor orbit is described in $L^2(m)$. For the actual equal-gap readout of Appendix III, the first-order constraints have explicit $L^2(m)$ representers. This identifies the finite calibration plane that must be added to any later successor orbit, without asserting that the orbit preserves $V$ or that a physical successor exists.
 
-**Definition 166.1 (the first-order representer plane).** Retain the complete telescope of Appendix III Definition 134.1 and the real labels (mathcal L={0,1,3,B}). Write (H=L^2(G,m;mathbb R)), (P=T_d), and use pointwise multiplication for products of functions. For (alpha=(y,z,w)inmathcal L^3), define
+**Definition 166.1 (the first-order representer plane).** Retain the complete telescope of Appendix III Definition 134.1 and the real labels $\mathcal L=\{0,1,3,B\}$. Write $H=L^2(G,m;\mathbb R)$, $P=T_d$, and use pointwise multiplication for products of functions. For $\alpha=(y,z,w)\in\mathcal L^3$, define
 
 $$
 \begin{aligned}
@@ -560,25 +560,25 @@ W=\operatorname{span}_{\mathbb R}
 \tag{166.2}
 $$
 
-The span is finite-dimensional, with dimension at most (64). Orthogonal complements below are taken in (H), while bounded functions are understood as their (m)-classes.
+The span is finite-dimensional, with dimension at most $64$. Orthogonal complements below are taken in $H$, while bounded functions are understood as their $m$-classes.
 
-**Proposition 166.2 (explicit representers for all first-order constraints).** For every (alpha=(y,z,w)inmathcal L^3), the function (psi_{yzw}) has a bounded Borel representative and belongs to (H). For every bounded real Borel (v),
+**Proposition 166.2 (explicit representers for all first-order constraints).** For every $\alpha=(y,z,w)\in\mathcal L^3$, the function $\psi_{yzw}$ has a bounded Borel representative and belongs to $H$. For every bounded real Borel $v$,
 
 $$
 \ell_{yzw}(v)=\langle v,\psi_{yzw}\rangle_H.
 \tag{166.3}
 $$
 
-Consequently, with (V=\ker\Lambda) as in Appendix III Definition 134.1,
+Consequently, with $V=\ker\Lambda$ as in Appendix III Definition 134.1,
 
 $$
 V=L^\infty(G,m;\mathbb R)\cap W^\perp.
 \tag{166.4}
 $$
 
-*Proof.* The inherited source estimate in Appendix III (134.4) gives (g=P g_d), while Theorem 133.2 gives (g_din L^\infty(m)). The Markov (L^\infty)-contraction of (P) therefore gives (g\in L^\infty(m)). Equation (134.8) gives (f_y\in L^\infty(m)) for every label. Applying the same contraction to the products in (166.1) shows that (A_{yzw}), (B_{yzw}), and (C_{yzw}) are bounded Borel (m)-classes, hence belong to (H). Their displayed Borel representatives may be chosen simultaneously for the finite set of labels.
+*Proof.* The inherited source estimate in Appendix III (134.4) gives $g=P g_d$, while Theorem 133.2 gives $g_d\in L^\infty(m)$. The Markov $L^\infty$-contraction of $P$ therefore gives $g\in L^\infty(m)$. Equation (134.8) gives $f_y\in L^\infty(m)$ for every label. Applying the same contraction to the products in (166.1) shows that $A_{yzw}$, $B_{yzw}$, and $C_{yzw}$ are bounded Borel $m$-classes, hence belong to $H$. Their displayed Borel representatives may be chosen simultaneously for the finite set of labels.
 
-For the first term of (134.11), self-adjointness of (P) gives
+For the first term of (134.11), self-adjointness of $P$ gives
 
 $$
 \mathcal C(v,f_z,f_w)
@@ -587,7 +587,7 @@ $$
 \tag{166.5}
 $$
 
-For the second term, move (P) across the pairing once:
+For the second term, move $P$ across the pairing once:
 
 $$
 \mathcal C(f_y,v,f_w)
@@ -597,7 +597,7 @@ $$
 \tag{166.6}
 $$
 
-For the third term, move (P) across the pairing twice:
+For the third term, move $P$ across the pairing twice:
 
 $$
 \begin{aligned}
@@ -610,7 +610,7 @@ $$
 \tag{166.7}
 $$
 
-Substitution of (166.5)--(166.7) into the definition of (ell_{yzw}) in (134.11) proves (166.3). All pairings are legitimate because (m) is a probability and every displayed factor is bounded. The simultaneous vanishing of the (64) coordinates is therefore exactly orthogonality to (W), which proves (166.4). (square)
+Substitution of (166.5)--(166.7) into the definition of $\ell_{yzw}$ in (134.11) proves (166.3). All pairings are legitimate because $m$ is a probability and every displayed factor is bounded. The simultaneous vanishing of the $64$ coordinates is therefore exactly orthogonality to $W$, which proves (166.4). $\square$
 
 **Corollary 166.3 (the calibrated plane and a successor orbit).** Let
 
@@ -619,7 +619,7 @@ H_{\mathrm{cal}}=\overline{\operatorname{span}_{\mathbb R}V}^{\,H}.
 \tag{166.8}
 $$
 
-Then (H_{\mathrm{cal}}subseteq W^\perp). Equality requires an additional density statement and is not supplied by the finite representer calculation. If a finite (L^2(m))-representable readout has representers (psi_1,ldots,psi_r) and its specified successor stack is (R_j=R\circ P^j), put
+Then $H_{\mathrm{cal}}\subseteq W^\perp$. Equality requires an additional density statement and is not supplied by the finite representer calculation. If a finite $L^2(m)$-representable readout has representers $\psi_1,\ldots,\psi_r$ and its specified successor stack is $R_j=R\circ P^j$, put
 
 $$
 \mathcal C_R=\overline{\operatorname{span}_{\mathbb R}
@@ -636,7 +636,7 @@ W_\infty
 \tag{166.10}
 $$
 
-Indeed, (166.4) supplies the condition (v\perp W), while Proposition 165.2 supplies (v\perp\mathcal C_R); orthogonality to both closed subspaces is equivalent to orthogonality to the closure of their algebraic sum. Formula (166.10) is an interface identity only. It does not prove that (mathcal C_R) is dense in (H_{\mathrm{cal}}), that (mathcal C_R) has a nonzero bounded localized complement, or that the successor action maps (V) into (V). It also does not construct a physical successor, a nonlinear residual-zero family, a legal simplex partition, an exact (H43) partition, a terminal compensator, an (SRS	ext{-}20) or (F_{64}) witness, or a Lean/kernel theorem.
+Indeed, (166.4) supplies the condition $v\perp W$, while Proposition 165.2 supplies $v\perp\mathcal C_R$; orthogonality to both closed subspaces is equivalent to orthogonality to the closure of their algebraic sum. Formula (166.10) is an interface identity only. It does not prove that $\mathcal C_R$ is dense in $H_{\mathrm{cal}}$, that $\mathcal C_R$ has a nonzero bounded localized complement, or that the successor action maps $V$ into $V$. It also does not construct a physical successor, a nonlinear residual-zero family, a legal simplex partition, an exact $H43$ partition, a terminal compensator, an $SRS\text{-}20$ or $F_{64}$ witness, or a Lean/kernel theorem.
 
 The deductions (166.1)--(166.10) are source-specific consequences of the original bounded equal-gap readout and the self-adjoint heat contraction. They are not a claim that the representer bridge, the successor orbit, or its physical realization is present in the original model beyond the hypotheses displayed here.
 
