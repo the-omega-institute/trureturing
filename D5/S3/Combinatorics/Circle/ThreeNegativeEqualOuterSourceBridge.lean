@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Circle/ThreeNegative/EqualOuterSourceBridge
+/- GID: D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterSourceBridge
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Circle/ThreeNegative/EqualOuterSourceBridge
+   mirror-B: D5/B/S3/Combinatorics/Circle/ThreeNegativeEqualOuterSourceBridge
    mirror-E: none(waiver:consumed-module-boundary-bridge)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none

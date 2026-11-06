@@ -5,9 +5,7 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Private chain, schedule and charge preparation for the ordered-cone joint lift. -/
-import D5.S3.Combinatorics.Circle.ThreeBitSource
-import Batteries.Tactic.OpenPrivate
-import D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterJointLift
+import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -15,136 +13,6 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.ThreeNegativeOrderedConeJointLift
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open scoped BigOperators
-open private label lift_order marked_word from
-  D5.S3.Combinatorics.Circle.ThreeNegative.EqualOuterJointLift
-open private mask_labels mask_labels_bound mask_labels_sum labelled_permutation from
-  D5.S3.Combinatorics.Circle.ThreeBitSource
-
-private theorem paired_chains (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) :
-    let r : ℤ := 2 ^ a
-    let s : ℤ := 2 ^ b
-    let t : ℤ := 2 ^ c
-    let k := a + b + c
-    let N := modulus k
-    let v := 1 + r + r * s
-    let B := 1 + t + t * r
-    let L := 1 + s + s * t
-    let f := fun i : ℕ => centered N ((2 : ℤ) ^ i * v)
-    let g := fun i : ℕ => centered (modulus (k + 1)) ((2 : ℤ) ^ i * (2 * v))
-    (1 ≤ v ∧ v < N) ∧ (1 ≤ B ∧ B < N) ∧ (1 ≤ L ∧ L < N) ∧
-    (∀ i < c - 1, f i = (2 : ℤ) ^ i * v ∧ g i = (2 : ℤ) ^ i * (2 * v)) ∧
-    (∀ i < b - 1, f (c + i) = (2 : ℤ) ^ i * B ∧
-      g (c + i) = (2 : ℤ) ^ i * (2 * B - 1)) ∧
-    (∀ i < a - 1, f (c + b + i) = (2 : ℤ) ^ i * L ∧
-      g (c + b + i) = (2 : ℤ) ^ i * (2 * L - s - 1)) ∧
-    f (c - 1) = -(N - B) / 2 ∧
-    f (c + b - 1) = -(N - L) / 2 ∧
-    f (k - 1) = -(N - v) / 2 ∧
-    g (c - 1) = -((2 * N + 1) - (2 * B - 1)) / 2 ∧
-    g (c + b - 1) = -((2 * N + 1) - (2 * L - s - 1)) / 2 ∧
-    g (k - 1) = -((2 * N + 1) - v) / 2 ∧ g k = v := by
-  dsimp only
-  let r : ℤ := 2 ^ a
-  let s : ℤ := 2 ^ b
-  let t : ℤ := 2 ^ c
-  let k := a + b + c
-  let N := modulus k
-  let M := modulus (k + 1)
-  let v := 1 + r + r * s
-  let B := 1 + t + t * r
-  let L := 1 + s + s * t
-  let f := fun i : ℕ => centered N ((2 : ℤ) ^ i * v)
-  let F := fun i : ℕ => centered M ((2 : ℤ) ^ i * v)
-  let g := fun i : ℕ => centered M ((2 : ℤ) ^ i * (2 * v))
-  change (1 ≤ v ∧ v < N) ∧ (1 ≤ B ∧ B < N) ∧ (1 ≤ L ∧ L < N) ∧
-    (∀ i < c - 1, f i = (2 : ℤ) ^ i * v ∧ g i = (2 : ℤ) ^ i * (2 * v)) ∧
-    (∀ i < b - 1, f (c + i) = (2 : ℤ) ^ i * B ∧
-      g (c + i) = (2 : ℤ) ^ i * (2 * B - 1)) ∧
-    (∀ i < a - 1, f (c + b + i) = (2 : ℤ) ^ i * L ∧
-      g (c + b + i) = (2 : ℤ) ^ i * (2 * L - s - 1)) ∧
-    f (c - 1) = -(N - B) / 2 ∧ f (c + b - 1) = -(N - L) / 2 ∧
-    f (k - 1) = -(N - v) / 2 ∧
-    g (c - 1) = -((2 * N + 1) - (2 * B - 1)) / 2 ∧
-    g (c + b - 1) = -((2 * N + 1) - (2 * L - s - 1)) / 2 ∧
-    g (k - 1) = -((2 * N + 1) - v) / 2 ∧ g k = v
-  obtain ⟨hv, hB, hL, _, hU, hV, hW⟩ :=
-    ThreeNegativeEqualOuterSourceBridge.actual_source_chains a b c (by omega) (by omega) hc
-  change (1 ≤ v ∧ v < N) at hv
-  change (1 ≤ B ∧ B < N) at hB
-  change (1 ≤ L ∧ L < N) at hL
-  change ∀ e < c, f e = if e + 1 < c then (2 : ℤ) ^ e * v else -(N - B) / 2 at hU
-  change ∀ e < b, f (c + e) = if e + 1 < b then (2 : ℤ) ^ e * B else -(N - L) / 2 at hV
-  change ∀ e < a, f (c + b + e) = if e + 1 < a then (2 : ℤ) ^ e * L else -(N - v) / 2 at hW
-  obtain ⟨_, _, _, _, hU', hV', hW'⟩ :=
-    ThreeNegativeEqualOuterSourceBridge.actual_source_chains a b (c + 1) (by omega) (by omega) (by omega)
-  have hM : modulus (a + b + (c + 1)) = M := rfl
-  have ht : (2 : ℤ) ^ (c + 1) = 2 * t := by dsimp [t]; rw [pow_succ]; ring
-  have hB' : 1 + (2 : ℤ) ^ (c + 1) + 2 ^ (c + 1) * 2 ^ a = 2 * B - 1 := by
-    rw [ht]; change 1 + 2 * t + 2 * t * r = _; dsimp [B]; ring
-  have hL' : 1 + (2 : ℤ) ^ b + 2 ^ b * 2 ^ (c + 1) = 2 * L - s - 1 := by
-    rw [ht]; change 1 + s + s * (2 * t) = _; dsimp [L]; ring
-  rw [hM, hB'] at hU'
-  rw [hM, hB', hL'] at hV'
-  rw [hM, hL'] at hW'
-  have hshift (i : ℕ) : g i = F (i + 1) := by
-    dsimp [g, F]; rw [pow_succ]; congr 1; ring
-  have hMN : M = 2 * N + 1 := by dsimp [M, N, modulus]; rw [pow_succ]; ring
-  refine ⟨hv, hB, hL, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
-  · intro i hi
-    constructor
-    · simpa only [ite_eq_left (show i + 1 < c by omega)] using hU i (by omega)
-    · rw [hshift]
-      have h := hU' (i + 1) (by omega)
-      rw [ite_eq_left (by omega), pow_succ] at h
-      change F (i + 1) = _ at h
-      rw [h]; ring
-  · intro i hi
-    constructor
-    · simpa only [ite_eq_left (show i + 1 < b by omega)] using hV i (by omega)
-    · rw [hshift, show c + i + 1 = (c + 1) + i by omega]
-      exact (hV' i (by omega)).trans (ite_eq_left (by omega))
-  · intro i hi
-    constructor
-    · simpa only [ite_eq_left (show i + 1 < a by omega)] using hW i (by omega)
-    · rw [hshift, show c + b + i + 1 = (c + 1) + b + i by omega]
-      exact (hW' i (by omega)).trans (ite_eq_left (by omega))
-  · simpa only [ite_eq_right (by omega : ¬ c - 1 + 1 < c)] using hU (c - 1) (by omega)
-  · simpa only [show c + (b - 1) = c + b - 1 by omega,
-      ite_eq_right (by omega : ¬ b - 1 + 1 < b)] using hV (b - 1) (by omega)
-  · simpa only [show c + b + (a - 1) = k - 1 by dsimp [k]; omega,
-      ite_eq_right (by omega : ¬ a - 1 + 1 < a)] using hW (a - 1) (by omega)
-  · rw [hshift, show c - 1 + 1 = c by omega]
-    simpa only [ite_eq_right (by omega : ¬ c + 1 < c + 1), F, hMN] using hU' c (by omega)
-  · rw [hshift, show c + b - 1 + 1 = (c + 1) + (b - 1) by omega]
-    simpa only [ite_eq_right (by omega : ¬ b - 1 + 1 < b), F, hMN] using hV' (b - 1) (by omega)
-  · rw [hshift, show k - 1 + 1 = (c + 1) + b + (a - 1) by dsimp [k]; omega]
-    simpa only [ite_eq_right (by omega : ¬ a - 1 + 1 < a), F, hMN] using hW' (a - 1) (by omega)
-  · have hvNat : ((1 + 2 ^ a + 2 ^ (a + b) : ℕ) : ℤ) = v := by
-      push_cast; dsimp [v, r, s]; rw [pow_add]
-    have hp : g k = centered M v := by
-      rw [hshift]
-      change centered M ((2 : ℤ) ^ (k + 1) * v) = _
-      rw [← hvNat]
-      exact centered_full_period (k + 1) _
-    rw [hp]
-    dsimp [centered]
-    have hhalf : M / 2 = N := by omega
-    rw [hhalf, Int.emod_eq_of_lt (by omega) (by omega)]
-    omega
-
-
-private theorem positive_block_strip {α : Type*} {f : α → ℤ} {C h : ℤ} {l : List α}
-    (hp : ∀ i ∈ l, 0 ≤ f i) (hh : 0 ≤ h) (hend : h + (l.map f).sum ≤ C) :
-    InStrip f C h l := by
-  apply inStrip_reflect
-  apply inStrip_nonpos
-  · intro i hi
-    have := hp i hi
-    omega
-  · omega
-  · rw [sum_neg_map]
-    omega
-
 private theorem list_map_cons_sum {α : Type*} (f : α → ℤ) (x : α) (l : List α) :
     ((x :: l).map f).sum = f x + (l.map f).sum := by
   rfl
@@ -199,44 +67,9 @@ private theorem ordered_schedule {α : Type*} (f : α → ℤ) (labels P Q T : L
       (P.map f).sum - Ha + (Q.map f).sum - Hb ≤ C)
     (htotal : (labels.map f).sum = 0) :
     InStrip f C 0 (P ++ alpha :: Q ++ beta :: T ++ [gamma]) := by
-  have hs := (hperm.map f).sum_eq
-  simp only [List.map_append, List.sum_append, List.map_cons, List.sum_cons,
-    List.map_nil, List.sum_nil, add_zero, halpha, hbeta, hgamma, htotal] at hs
-  have htail : (P.map f).sum - Ha + (Q.map f).sum - Hb + (T.map f).sum = Hg := by
-    omega
-  have hT : InStrip f C ((P.map f).sum - Ha + (Q.map f).sum - Hb) T :=
-    positive_block_strip hTpos (by omega) (by omega)
-  have hT' : InStrip f C ((P.map f).sum - Ha + (Q.map f).sum - Hb)
-      (T ++ [gamma]) := by
-    apply inStrip_append hT
-    simp only [InStrip, List.map_cons, List.map_nil, List.sum_cons, List.sum_nil, add_zero,
-      hgamma]
-    omega
-  have hQ : InStrip f C ((P.map f).sum - Ha) Q :=
-    positive_block_strip hQpos (by omega) hQend.2
-  have hQ' : InStrip f C ((P.map f).sum - Ha)
-      (Q ++ beta :: (T ++ [gamma])) := by
-    apply inStrip_append (l := Q) (r := beta :: (T ++ [gamma])) hQ
-    change 0 ≤ (P.map f).sum - Ha + (Q.map f).sum ∧
-      (P.map f).sum - Ha + (Q.map f).sum ≤ C ∧ _
-    refine ⟨hQend.1, hQend.2, ?_⟩
-    simpa only [hbeta, ← sub_eq_add_neg, List.append_assoc] using hT'
-  have hP : InStrip f C 0 P := positive_block_strip hPpos (by omega) (by simpa using hPmass.2)
-  have hrest : InStrip f C ((P.map f).sum)
-      (alpha :: (Q ++ (beta :: (T ++ [gamma])))) := by
-    change 0 ≤ (P.map f).sum ∧ (P.map f).sum ≤ C ∧ _
-    refine ⟨hPmass.1, hPmass.2, ?_⟩
-    simpa only [halpha, ← sub_eq_add_neg] using hQ'
-  have hrest0 : InStrip f C (0 + (P.map f).sum)
-      (alpha :: (Q ++ (beta :: (T ++ [gamma])))) := by
-    simpa only [zero_add] using hrest
-  have hstrip :=
-    inStrip_append (l := P) (r := alpha :: (Q ++ (beta :: (T ++ [gamma])))) hP hrest0
-  have hlist : P ++ (alpha :: (Q ++ (beta :: (T ++ [gamma])))) =
-      P ++ alpha :: Q ++ beta :: T ++ [gamma] := by
-    simp only [List.cons_append, List.append_assoc]
-  rw [hlist] at hstrip
-  exact hstrip
+  exact ThreeNegativeEqualOuterSourceBridge.physical_schedule f labels P Q T
+    alpha beta gamma Ha Hb Hg C hperm halpha hbeta hgamma hHa hHb hHg
+    hPpos hQpos hTpos ⟨by omega, hPmass.2⟩ ⟨by omega, hQend.2⟩ htotal
 
 private theorem floor_tail_bound (x d rem v : ℤ)
     (h : x = rem + d * v) (hrem : rem < d) : x - d ≤ d * v := by
