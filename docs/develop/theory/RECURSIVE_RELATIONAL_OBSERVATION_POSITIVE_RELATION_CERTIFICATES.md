@@ -3015,3 +3015,348 @@ physically read. $\square$
   mutual-recovery programme remains outside this finite local result.
 
 ## 追加锚（本行以下为增补区）
+
+## 25. Acquired endpoint dictionaries and indexed erasure
+
+The proper-mask results above can be joined to the positive-certificate
+recognizer without changing an indexed mask.  The join is an erasure
+construction: a word that is absent from one mask can be recovered from a
+finite acquired dictionary, but the absent bit remains absent from the
+physical record and from the retained cache.
+
+**Definition 25.1 (field dictionaries of an indexed cache).** Write
+
+$$
+L=\{1,\ldots,7\},\qquad R=\{8,\ldots,15\},\qquad
+\ell(y)=y|_L,\quad r(y)=y|_R.
+$$
+
+For an indexed cache $K=((m_j,d_j))_{1\le j\le q}$, define the two
+full-field dictionaries
+
+$$
+\begin{aligned}
+X(K)&=\{d_j|_L:L\subseteq m_j\},\\
+Y(K)&=\{d_j|_R:R\subseteq m_j\}.
+\end{aligned}
+\tag{PCR.2501}
+$$
+
+The first set is obtained only from records whose seven left bits were
+physically read, and the second only from records whose eight right bits
+were physically read.  A dictionary is a set of acquired words; it is not
+an inferred mask and does not replace any $m_j$.  We call $K$
+
+* **support-exhausting** when $|X(K)|=72$ and $|Y(K)|=243$;
+* **field-singleton** when, for every $j$,
+
+  $$
+  C_j(K)=\{(x,y)\in X(K)\times Y(K):
+       x|_{m_j\cap L}=d_j|_{m_j\cap L},
+       y|_{m_j\cap R}=d_j|_{m_j\cap R}\}
+  \tag{PCR.2502}
+  $$
+
+  is a singleton.
+
+When the second condition holds, write its unique member as
+$\delta_j(K)=(x_j,y_j)$, and put
+
+$$
+D(K)=\{\delta_j(K):1\le j\le q\},
+\tag{PCR.2503}
+$$
+
+with multiplicity removed only for the positive-certificate test.  The
+ordered indices, masks, values and records remain part of $K$.
+
+**Lemma 25.2 (support exhaustion fixes the two label images).** Suppose
+an attained cache $K$ is support-exhausting for a generator $g$, and
+let $g'$ be any full generator whose indexed rectangles contain the
+same acquired records.  Then
+
+$$
+\lambda'(A)=X(K)=\lambda(A),\qquad
+\varrho'(T)=Y(K)=\varrho(T).
+\tag{PCR.2504}
+$$
+
+Proof.  If $x\in X(K)$, it is the completely read left field of one
+record.  Any generator containing that record must therefore use $x$ as
+one of its left labels.  Thus $X(K)\subseteq\lambda'(A)$.  The two sets
+have cardinality $72$, so they are equal.  The right argument is the
+same, with $243$ in place of $72$.  No hidden injection or source frame
+has been supplied; the conclusion uses only the full words already
+present in the two dictionaries and the declared injectivity. $\square$
+
+**Lemma 25.3 (the indexed erasure bridge).** Let $K$ be attained by a
+generator $g$, support-exhausting and field-singleton.  Then every
+generator $g'$ compatible with $K$ contains every decoded pair in
+$D(K)$:
+
+$$
+D(K)\subseteq\mathcal E_{g'}.
+\tag{PCR.2505}
+$$
+
+In particular, if the full positive recognizer of Definition 1.2 accepts
+$D(K)$, all compatible generators have the same $1944$-edge target.
+
+Proof.  The actual pair at index $j$ belongs to $X(K)\times Y(K)$ and
+has the acquired restrictions, so it lies in $C_j(K)$.  By the
+singleton condition it is $\delta_j(K)$.  A compatible $g'$ also has
+the same restrictions; Lemma 25.2 gives the same two label images, and
+the singleton condition again puts its positive pair at the same
+$\delta_j(K)$.  Hence (PCR.2505).  Definition 1.2 enumerates every
+full injection on these two images on both supported branches and tests
+target equality.  Its acceptance therefore applies to all of
+$\mathcal G_\theta$, not merely to the coding class used to attain the
+cache. $\square$
+
+The lemma is deliberately weaker than completing a mask.  A missing bit
+may be logically forced by (PCR.2502), while the original $m_j$, the
+unread value, and its indexed position stay unchanged.  If a cylinder is
+not a singleton, the record remains a proper partial record and no
+decoded pair is entered in $D(K)$.  Thus the construction does not
+interpret an absent value as a negative observation.
+
+## 26. A common deterministic omission schedule
+
+Use one public schedule, independent of source, injection, sampled edge,
+dictionary and controller.  At index $j$, omit the coordinate
+
+$$
+h(j)=
+\begin{cases}
+14,&1\le j\le36,\\
+15,&37\le j\le72,\\
+7,&73\le j\le401,\\
+6,&402\le j\le409,\\
+5,&410\le j\le417,
+\end{cases}
+\tag{PCR.2601}
+$$
+
+and issue the fourteen standard original-root Reads for every other
+coordinate.  The cut for $G_0$ is $q_0=417$; the cut for $G_1$ is
+$q_1=332$.  The second cut stops in the $h=7$ block.  The first
+seventy-two records read every left field in full, while the records with
+omission $7,6$, or $5$ read every right field in full.  The schedule
+is therefore a public field-acquisition policy, not a branch-dependent
+choice of mask and not a random seed.
+
+For a fixed branch $i$, call an actual full injection **dictionary-$q$
+attaining** when there is an ordered positive event of $q$ original
+samples such that the resulting cache is support-exhausting and
+field-singleton, and the decoded set $D(K)$ is accepted by the exact
+full positive recognizer against all supported competitors.  Denote the
+two classes by $\mathfrak C_0^{417}$ and $\mathfrak C_1^{332}$.  This
+is an observable finite condition on acquired words and the public source
+description; it is not a promise that all full injections belong to the
+class.  All full injections remain in the version set used by the
+recognizer.
+
+The classes are nonempty.  A concrete finite realization uses distinct
+prefixes for the quotient types and the literal capacities: for $G_0$,
+six-bit prefixes for the $36$ line types followed by one representative
+bit, and five-bit prefixes for the $27$ point types followed by four
+representative bits; for $G_1$, four-bit prefixes for its nine
+components followed by three left bits, and five-bit prefixes followed by
+three right bits.  Assign the suffixes in the fixed lexicographic order
+of the literal endpoints.  In the $G_1$ realization, order the first
+$324$ distinct pairs as the connected $K_{3,10}$ core and eight
+connected spanning component witnesses of §3, then use eight separately
+indexed repeats.  In the $G_0$ realization, order the $417$ chosen
+incidences by the four affine direction classes and then by their literal
+lifts.  The type-level incidence table has respectively $72$ and
+$243$ distinct acquired words; applying (PCR.2502) to that table gives
+singleton cylinders at every displayed index, and the decoded pairs pass
+Definition 1.2.  This is a finite check on $36+27$ or $9$ quotient
+types and their capacities, not an enumeration of the factorial family
+of full injections.  It is a witness of nonemptiness, not a universal
+coding theorem.
+
+**Theorem 26.1 (source-independent positive attainment).** For every
+$g\in\mathfrak C_i^{q_i}$, every $N\ge q_i$, and every value of
+$\theta$ at which branch $i$ has positive prior weight, the common
+schedule (PCR.2601) has a positive ordered attainment event at its
+$q_i$-cut.  On that event it returns the whole labelled native relation
+$\mathcal E_g$ against every supported competitor.
+
+Proof.  Take the ordered positive edge tuple in the definition of the
+class and require the first $q_i$ iid prepared slots to equal it.  Each
+specified slot has probability $1/1944$, so the event has probability
+$1944^{-q_i}$; all later slots are unrestricted.  The acquired
+dictionary is computed from the records with the indicated full field,
+and field-singleton decoding gives (PCR.2503).  Lemma 25.3 and the exact
+recognizer then force the common target.  The controller does not inspect
+the hidden source, choose an edge, or request a new sample.  A positive
+event is not a guaranteed finite success of the random preparation. $\square$
+
+For $G_1$, the first $324$ records in this witness are distinct
+positive pairs and the last eight are repeats at separate original
+indices.  Repetition is retained in the indexed cache and in the
+continuation law.  For $G_0$, the $417$ records are likewise a
+fixed finite witness event; no complete-pair certificate is claimed for
+arbitrary $G_0$ codings outside $\mathfrak C_0^{417}$.
+
+## 27. The scoped $332$-record result for $G_1$
+
+The following lower bound is about a declared acquisition class, not an
+unrestricted optimum over arbitrary partial caches.
+
+**Definition 27.1 (full-field dictionary/$K_{3,10}$ class).** A
+$G_1$ cache belongs to $\mathfrak K_{3,10}^{332}$ when it has the
+support-exhausting and field-singleton properties of §25, its decoded
+positive pairs contain a $K_{3,10}$ in one component, and its distinct
+distinct decoded pairs contain a connected spanning subgraph on all eight left
+and twenty-seven right labels in each of the nine components.  The
+eight tail indices of (PCR.2601) are required to be separately indexed
+dictionary-resolution records for the eight left labels of the
+$K_{3,10}$ component.  This last clause is a continuation requirement:
+it does not identify a repeated record with its earlier occurrence.
+
+**Theorem 27.2 (exact $332$ tariff in the declared class).** Within
+$\mathfrak K_{3,10}^{332}$, the common schedule attains the complete
+labelled $G_1$ relation at $332$ original indices, and no schedule
+with the same full-field dictionary, $K_{3,10}$, and indexed-tail
+requirements can use fewer than $332$ indices.
+
+Proof.  In the component containing $K_{3,10}$, the $30$ core edges
+already expose three left and ten right vertices.  The core is one
+connected component.  To attach the remaining five left and seventeen
+right vertices to that component requires at least twenty-two further
+edges: each added edge can reduce the number of connected components by
+at most one, and there are twenty-two new vertices.  Thus that component
+requires at least $30+5+17=52$ distinct pairs.
+Every other component has $8+27$ vertices and must contain a connected
+spanning positive subgraph, hence at least $8+27-1=34$ edges.  The
+components are disjoint, so at least
+
+$$
+52+8\cdot34=324
+\tag{PCR.2701}
+$$
+
+distinct positive pairs are necessary.  This is the same-capacity
+argument as the $K_{3,10}$ obstruction and the connected witnesses in
+§3; it keeps the literal $8,27$ capacities and does not replace them
+by uncapacitated type weights.
+
+Under the fixed schedule, the eight core left labels have to occur in
+the separately indexed left-omission tail to make their field
+dictionary and the old-slot continuation both available.  One original
+index has one prepared edge and therefore resolves at most one of these
+eight required tail occurrences.  The indexed-tail requirement costs at
+least eight additional records, even when their decoded pair is a
+repeat.  Hence $q\ge324+8=332$.  The construction in §26 has exactly
+the $324$ distinct pairs and exactly those eight indexed repeats; its
+field-singleton check and Lemma 25.3 give the matching upper bound.  No
+claim follows for a cache that drops the full-field dictionary, omits the
+$K_{3,10}$ source separation, or forgets original indices. $\square$
+
+The first $324$ records are a positive complete-pair certificate in
+the sense of §3 after erasure decoding.  The eight extra records are not
+silently folded into that set: they remain available to UJB Theorem
+17.1 as eight original indexed factors.
+
+## 28. Resource comparison and the two cuts
+
+For the standard operand at index $j$, local coordinate $h$ has
+length $15(j-1)+h+1$, as in (UJB.9008).  Summing the fourteen read
+coordinates at each scheduled index gives the following exact tariff.
+
+| actual witness | cut | distinct positive pairs | Reads | operand-length sum | maximum length |
+|---|---:|---:|---:|---:|---:|
+| $G_0$ dictionary class | $417$ | $417$ witness records | $5838$ | $18\,267\,003$ | $6256$ |
+| $G_1$ dictionary/$K_{3,10}$ class | $332$ | $324$ plus $8$ indexed repeats | $4648$ | $11\,580\,284$ | $4981$ |
+
+For $G_0$, reading all fifteen coordinates through index $417$ would
+cost $6255$ invocations, length sum $19\,571\,895$, and maximum
+$6256$.  The common proper schedule saves $417$ invocations and
+$1\,304\,892$ operand symbols while retaining the same maximum.  For
+$G_1$, reading all fifteen coordinates of the $324$ distinct-pair
+prefix would cost $4860$ invocations, length sum $11\,817\,090$,
+and maximum $4861$.  The $332$-index schedule saves $212$ invocations
+and $236\,806$ operand symbols, but its maximum is $4981$.  The two
+rows are therefore a vector comparison, not a scalar optimum claim.
+
+The calculation is direct. If $H_q$ is the omitted coordinate list,
+
+$$
+\sum_{j=1}^{q}\sum_{h\ne H_q(j)}(15(j-1)+h+1)
+ =\sum_{j=1}^{q}\sum_{h=1}^{15}(15(j-1)+h+1)
+  -\sum_{j=1}^{q}(15(j-1)+H_q(j)+1).
+\tag{PCR.2801}
+$$
+
+For $q=332$ and $417$, the right side is respectively
+$11\,580\,284$ and $18\,267\,003$; the largest acquired coordinate
+is $14$ at the last index, giving $4981$ and $6256$.  Every repeat
+is charged at its own original operand, and the fixed $N$, LAB
+preparation $75N+4$, cache flags and values, dictionary construction,
+controller, navigation, computation, output and retained records remain
+separate paid axes.
+
+## 29. Indexed continuation after erasure decoding
+
+After recognition, retain the original $K=((m_j,d_j))$, including the
+proper masks, all recorded values, repeated indices and any wholly
+unread slots.  Use the recovered $E=\mathcal E_g$ as the relation input
+to UJB Theorem 17.1.  For each old index, its factor remains
+
+$$
+Q_{g,j,K}(y)=
+\frac{\mathbf 1_{\{y\in E\cap B_j(K)\}}}
+ {|E\cap B_j(K)|},
+\tag{PCR.2901}
+$$
+
+with the original $B_j(K)$, not a completed rectangle.  A bit inferred
+from a singleton dictionary cylinder is marked logically forced in the
+observer's computation; it is not added to $m_j$, and an unread
+realized value is not claimed to have been physically acquired.  UJB
+Theorem 17.1 therefore supplies the same replies, positive partial
+updates, repeats, completed-slot replay and bounded adaptive
+continuations as before.  Geometry and the affine incidence consumers
+are called only after $E$ has been recovered, as in Definition 22.2.
+
+The schedule has no random seed and no source-dependent branch.  This
+removes seed entropy from the controller contract, but it does not make
+the controller, address computation, dictionary, output or retained
+state free.  The original source preparation, its supplied iid law and
+full shared injections remain premises of UJB §§5.2--5.3.  No membership
+query, source oracle, chosen-edge port, sampler, reset, interrupt, fork,
+graft, physical inverse or extra owner permission is introduced.
+
+## 30. Scope and unresolved boundary
+
+The new bridge is the composition
+
+$$
+\text{full acquired support}
+\longrightarrow
+\text{singleton erasure cylinders}
+\longrightarrow
+\text{positive full-pair evidence}
+\longrightarrow
+\text{existing native recognizer and indexed continuation}.
+\tag{PCR.3001}
+$$
+
+It preserves both source branches, unrestricted $z$, all $1944$
+literal edges, every supported competing full injection, the original
+record/reply/return contract, and the distinction between acquired and
+logically forced bits. The $417$ assertion is only positive attainment
+on the explicitly declared nonempty class $\mathfrak C_0^{417}$. The
+$332$ equality is only the full-field dictionary/$K_{3,10}$ tariff of
+Theorem 27.2. Neither is a deterministic success guarantee, an optimum
+over arbitrary partial caches, or a replacement for the universal
+proper-mask theorem of §§20--24.
+
+The finite prefix-coded witnesses establish existence of actual coding
+classes, while the recognizer continues to quantify over all supported
+competitors. No claim is made that the dictionaries identify a hidden
+affine frame, the realized preparation history, a serial extension, or
+the complete realized array. The general mutual recovery of space, time,
+boundary and memory remains outside this local source-specific bridge.
