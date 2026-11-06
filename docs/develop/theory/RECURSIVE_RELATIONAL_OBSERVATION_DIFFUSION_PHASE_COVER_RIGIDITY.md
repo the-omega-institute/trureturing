@@ -2652,6 +2652,10 @@ cylinder names are measured in the ordinary product Sobolev norms on
 $\mathbb R\times S^3$. Finite compact smooth tensor sums, with rational
 coefficients, ordinary spherical harmonics and computable compact smooth
 functions of the real coordinate, are a dense representation of $H^1$.
+For the real factors use the fixed bump
+$\beta(v)=\exp(-1/(1-v^2))$ on $|v|<1$, zero outside, and its rational
+translates, dilates and rational polynomial multiples. Their supports
+and derivative bounds are computable from this finite description.
 The dual norm is the ordinary $H^{-1}$ norm. Distributional multiplication
 is used for weights on this dual space.
 
@@ -3233,7 +3237,10 @@ $$
 Indeed $A(\gamma_l)=0$, $C(\gamma_l)=C(w_*)=1$, and the inherited
 $\rho=A(w_*)$ is real. Computed $L^2$ names of the two vectors,
 Cauchy--Schwarz and the positive lower bound for $a$ give converging
-rational intervals for (11.29). The endpoint $A=\rho C$ is thus derived
+rational intervals for (11.29). Explicitly, for names $W,L$ with errors
+$E_w,E_l$ and $Q_l\ge\|\ell_l\|_2$, the inner-product error is at
+most $E_wQ_l+\|W\|_2E_l$, before scalar rounding; interval division by
+the positive $a$ bracket completes the certificate. The endpoint $A=\rho C$ is thus derived
 from its actual original zero vector, rather than supplied freely.
 
 For (11.24), choose a finite $h_0$ with
