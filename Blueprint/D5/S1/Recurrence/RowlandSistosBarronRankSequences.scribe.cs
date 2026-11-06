@@ -64,13 +64,17 @@ internal sealed class RowlandSistosBarronRankSequencesDocument : IScribeDocument
                 + "parameters contradict finiteness at initial rank three. This argument does "
                 + "not determine the first cancellation or settle the questions about general "
                 + "rank sequences and eventual pseudo-polynomial behaviour.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("rowland-sistos-barron-2025-rank-sequences"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, string declaration,
-        Formula formula, string prose, DescribeRole role, AssessedProvenance provenance) =>
+        Formula formula, string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("rsb-" + id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula RecurrenceFormula()
     {

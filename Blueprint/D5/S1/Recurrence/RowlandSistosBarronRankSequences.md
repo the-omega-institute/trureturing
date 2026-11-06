@@ -70,6 +70,10 @@ $$\neg (\forall (r: \mathbb{N}), (1 \le r) \Rightarrow (\operatorname{Set}.\oper
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/RowlandSistosBarronRankSequences.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/rowland-sistos-barron-2025-rank-sequences` (refuted) by `D5/S1/Recurrence/RowlandSistosBarronRankSequences.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"rowland-sistos-barron-2025-rank-sequences","declaration_gid":"D5/S1/Recurrence/RowlandSistosBarronRankSequences.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Eric Rowland and Jesús Sistos Barrón (2025). *Complexity of powers of a constant-recursive sequence*. DOI: [10.48550/arXiv.2501.14643](https://doi.org/10.48550/arXiv.2501.14643). URL: <https://arxiv.org/abs/2501.14643v1>.
