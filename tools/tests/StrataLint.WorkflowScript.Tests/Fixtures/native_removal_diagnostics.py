@@ -32,7 +32,7 @@ class RemovalDiagnostics(MaintenanceLogTests):
                          "refs/heads/" + branch, head, "0" * len(head))
                 self.git("worktree", "add", path, branch)
             else:
-                self.git("worktree", "add", "-b", "lane/governance/victim", path)
+                self.git("worktree", "add", "-b", "lane/governance/victim-" + str(index), path)
             paths.append(path)
         victim = paths[0]
         branch = self.git("-C", victim, "symbolic-ref", "HEAD").decode()
