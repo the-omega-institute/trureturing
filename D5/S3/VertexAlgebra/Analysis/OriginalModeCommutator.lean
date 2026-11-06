@@ -22,7 +22,7 @@ import Mathlib.Analysis.Normed.Ring.InfiniteSum
 
 set_option autoImplicit false
 set_option maxHeartbeats 1000000
-set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency true
 noncomputable section
 open scoped BigOperators Topology VertexOperator
 
@@ -238,8 +238,10 @@ private theorem modeCommutatorTerm_eq_sub (a b : Charge M.D) (f g : Test)
     (k : ℕ) (p : ℤ × ℤ) :
     M.modeCommutatorTerm a b f g k p =
       M.modeProductTerm a b f g k p - M.reverseModeProductTerm a b f g k p := by
-  simp only [Model.modeCommutatorTerm, Model.modeCommutator,
-    Model.modeProductTerm, Model.reverseModeProductTerm, smul_sub]
+  change (f.coefficient p.1 * g.coefficient p.2) •
+      (M.modeProduct a b k p.1 p.2 - M.reverseModeProduct a b k p.1 p.2) = _
+  exact smul_sub (f.coefficient p.1 * g.coefficient p.2)
+    (M.modeProduct a b k p.1 p.2) (M.reverseModeProduct a b k p.1 p.2)
 
 private theorem weight_product_summable (f g : Test) (p q : ℕ) :
     Summable (fun z : ℤ × ℤ => f.weight p z.1 * g.weight q z.2) :=
@@ -382,7 +384,8 @@ theorem smearComposition_eq_tsum (a b : Charge M.D) (f g : Test) (k : ℕ) :
             (M.operatorTerm b g (M.order a + k) n)
         exact (L (M.operatorTerm a f k m)).map_tsum
           hB
-      _ = _ := hjoint.tsum_prod.symm
+      _ = _ := (hjoint.tsum_prod' (fun m =>
+        (L (M.operatorTerm a f k m)).summable hB)).symm
   rw [Model.smearComposition, hraw, castSource_tsum]
   exact tsum_congr (fun p => (modeProductTerm_cast M a b f g k p).symm)
 
@@ -429,7 +432,8 @@ theorem reverseSmearComposition_eq_tsum (a b : Charge M.D) (f g : Test) (k : ℕ
             (M.operatorTerm b g k n)
         exact (L.flip (M.operatorTerm a f (M.order b + k) m)).map_tsum
           hB
-      _ = _ := hjoint.tsum_prod.symm
+      _ = _ := (hjoint.tsum_prod' (fun m =>
+        (L.flip (M.operatorTerm a f (M.order b + k) m)).summable hB)).symm
   rw [Model.reverseSmearComposition, hraw, castSource_tsum]
   exact tsum_congr (fun p => (reverseModeProductTerm_cast M a b f g k p).symm)
 
