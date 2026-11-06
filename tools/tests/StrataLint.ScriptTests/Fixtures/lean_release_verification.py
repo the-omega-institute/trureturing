@@ -1,4 +1,6 @@
 """Native integration publication contracts with local Git and transport fixtures."""
+import fcntl
+import io
 import json
 import pathlib
 import random
@@ -166,10 +168,17 @@ os.execv({real_git}, [{real_git}, *sys.argv[1:]])
         material = self.root / ".lake/build/lib/lean/D5/A.olean"
         material.write_bytes(payload)
         write(self.bin / "sitecustomize.py", '''
-import errno, json, os, pathlib, tarfile
-import sys
+import errno, json, os, pathlib, sys, tarfile
 sys.path.insert(0, os.environ["FAKE_RELEASE_HELPER"])
 import lean_cache_release_io
+def observe(frame, event, arg):
+    if event == "call" and frame.f_code.co_name == "restore_snapshot":
+        root, stage = frame.f_locals["root"], frame.f_locals["stage"]
+        pathlib.Path(os.environ["FAKE_RESTORE_ENTRY"]).write_text(json.dumps(
+            dict(root=str(root), entries=list(p.name for p in root.iterdir()), stage=str(stage),
+                 local_assets=frame.f_locals.get("local_assets"))))
+        sys.setprofile(None)
+sys.setprofile(observe)
 original_extract = lean_cache_release_io.extract_members
 def extract(archive, path, members, deadline):
     downloaded = pathlib.Path(archive.name).parent
@@ -178,24 +187,58 @@ def extract(archive, path, members, deadline):
     resident = sum(member.stat().st_size for member in stage.rglob("lean-build.tgz*") if member.is_file())
     unpacked = sum(member.size for member in archive.getmembers() if member.isfile())
     archive_bytes = manifest["archive_bytes"]
-    # Extraction needs only the assembled archive and one unpacked build.
+    source = pathlib.Path(os.environ["FAKE_SOURCE_ROOT"]) / ".lake/build"
+    source_bytes = sum(p.stat().st_size for p in source.rglob("*") if p.is_file())
+    # The workspace can hold compressed transport plus one unpacked generation.
     budget = unpacked + archive_bytes
-    reading = dict(resident=resident, unpacked=unpacked, budget=budget, archive_bytes=archive_bytes,
-                   parts=len(manifest["parts"]))
+    reading = dict(resident=resident, source_bytes=source_bytes, unpacked=unpacked,
+                   budget=budget, archive_bytes=archive_bytes, parts=len(manifest["parts"]))
     pathlib.Path(os.environ["FAKE_SPACE_READING"]).write_text(json.dumps(reading))
-    if resident + unpacked > budget:
+    if source_bytes + resident + unpacked > budget:
         raise OSError(errno.ENOSPC, "verification transport exhausted the restore workspace")
-    return original_extract(archive, path, members, deadline)
+    result = original_extract(archive, path, members, deadline)
+    reading["actual_unpacked"] = sum(p.stat().st_size for p in pathlib.Path(path).rglob("*") if p.is_file())
+    reading["payload_inode"] = (pathlib.Path(path) / "build/lib/lean/D5/A.olean").stat().st_ino
+    pathlib.Path(os.environ["FAKE_SPACE_READING"]).write_text(json.dumps(reading))
+    return result
 lean_cache_release_io.extract_members = extract
 ''')
         reading = self.root / "space-reading.json"
+        entry = self.root / "restore-entry.json"
+        write(self.root / ".lake/packages/keep", "dependency")
+        source = (self.root / "D5/A.lean").read_bytes()
         result = self.verification("publish", PYTHONPATH=str(self.bin), FAKE_SPACE_READING=str(reading),
+                                   FAKE_SOURCE_ROOT=str(self.root.resolve()), FAKE_RESTORE_ENTRY=str(entry),
             FAKE_RELEASE_HELPER=str(self.publisher.parent))
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertIn('"status":"published"', result.stdout)
         self.assertEqual(payload, material.read_bytes())
+        publication = json.loads(next(line.partition(" ")[2] for line in result.stdout.splitlines()
+                                      if line.startswith("LEAN_CACHE_PUBLISH ")))
+        snapshot = self.remote / publication["tag"]
+        packed = b"".join((snapshot / part["name"]).read_bytes() for part in publication["parts"])
+        with tarfile.open(fileobj=io.BytesIO(packed), mode="r:gz") as archive:
+            for member in archive.getmembers():
+                if member.isfile():
+                    self.assertEqual(archive.extractfile(member).read(),
+                                     (self.root / ".lake" / member.name).read_bytes(), member.name)
         measured = json.loads(reading.read_text())
-        self.assertLessEqual(measured["resident"] + measured["unpacked"], measured["budget"])
+        self.assertEqual(0, measured["source_bytes"])
+        self.assertEqual(measured["unpacked"], measured["actual_unpacked"])
+        self.assertEqual(measured["payload_inode"], material.stat().st_ino)
+        restored = json.loads(entry.read_text())
+        self.assertEqual([], restored["entries"])
+        target = pathlib.Path(restored["root"])
+        self.assertNotEqual(self.root, target)
+        self.assertEqual(self.root.resolve() / ".lake", target.parent)
+        self.assertFalse(target.exists())
+        self.assertFalse(pathlib.Path(restored["stage"]).parent.exists())
+        self.assertIsNone(restored["local_assets"])
+        self.assertEqual("dependency", (self.root / ".lake/packages/keep").read_text())
+        self.assertEqual(source, (self.root / "D5/A.lean").read_bytes())
+        self.assertEqual([], list((self.root / ".lake").glob(".release-*")))
+        self.assertLessEqual(measured["source_bytes"] + measured["resident"] + measured["unpacked"],
+                             measured["budget"])
         self.assertEqual(chunk_bytes is not None, measured["parts"] > 1)
         calls = self.verification_calls()
         self.assertTrue(any(call[:2] == ["release", "download"] for call in calls))
@@ -207,6 +250,154 @@ lean_cache_release_io.extract_members = extract
 
     def test_multipart_verification_fits_restore_workspace(self):
         self.assert_verification_fits_restore_workspace(16 * 1024)
+
+    def native_lifetime_probe(self, failure=""):
+        write(self.bin / "sitecustomize.py", '''
+import errno, fcntl, hashlib, json, os, pathlib, shutil, sys, tarfile
+if sys.argv[0].endswith("lean_cache_release.py"):
+    sys.path.insert(0, os.environ["FAKE_RELEASE_HELPER"])
+    import lean_cache_release_io
+    root = pathlib.Path(os.environ["FAKE_SOURCE_ROOT"])
+    build = root / ".lake/build"
+    failure = os.environ["FAKE_LIFETIME_FAILURE"]
+    def record(operation, path=None):
+        with open(os.environ["FAKE_LIFETIME_LOG"], "a") as log:
+            log.write(json.dumps(dict(operation=operation, path=str(path))) + "\\n")
+    def guarded(operation, path=None):
+        address = hashlib.sha256(str((root / ".lake").resolve()).encode()).hexdigest()
+        lock = root / ".cache/stratalint-lean-cache-guards" / (address + ".lock")
+        with lock.open("a+b") as handle:
+            try:
+                fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError:
+                record(operation, path)
+            else:
+                raise AssertionError("source cache guard released during " + operation)
+    original_remove, original_rename = shutil.rmtree, pathlib.Path.rename
+    original_extract = lean_cache_release_io.extract_members
+    def remove(path, *args, **kwargs):
+        path = pathlib.Path(path)
+        operation = ("retire" if path == build else "cleanup" if path.parent == root / ".lake"
+                     and path.name.startswith(".release-verify-") else "publisher-cleanup"
+                     if path.name.startswith("lean-release-") else "")
+        if operation:
+            guarded(operation, path)
+            if failure == operation:
+                raise OSError(errno.EIO, "injected " + operation)
+        return original_remove(path, *args, **kwargs)
+    def rename(source, target):
+        if pathlib.Path(target) == build:
+            guarded("handoff")
+            if failure == "handoff":
+                raise OSError(errno.EIO, "injected handoff")
+        return original_rename(source, target)
+    def extract(archive, path, members, deadline):
+        guarded("extract")
+        if failure == "extract":
+            raise OSError(errno.ENOSPC, "injected extract")
+        return original_extract(archive, path, members, deadline)
+    def forbid(*args, **kwargs):
+        raise AssertionError("verification cannot copy or hardlink a local build")
+    shutil.rmtree, pathlib.Path.rename = remove, rename
+    lean_cache_release_io.extract_members = extract
+    shutil.copytree, os.link = forbid, forbid
+    if failure == "not-installed":
+        def occupy(frame, event, arg):
+            if event == "call" and frame.f_code.co_name == "restore_snapshot":
+                destination = frame.f_locals["root"] / ".lake/build"
+                destination.mkdir(parents=True)
+                (destination / "keep").write_text("occupied")
+                sys.setprofile(None)
+        sys.setprofile(occupy)
+''')
+        return dict(PYTHONPATH=str(self.bin), FAKE_SOURCE_ROOT=str(self.root.resolve()),
+                    FAKE_LIFETIME_FAILURE=failure, FAKE_LIFETIME_LOG=str(self.root / "lifetime-events"),
+                    FAKE_RELEASE_HELPER=str(self.publisher.parent))
+
+    def test_native_verification_holds_writer_through_handoff_and_all_owned_cleanup(self):
+        self.verification_fixture()
+        result = self.verification("publish", **self.native_lifetime_probe())
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        events = [json.loads(line)["operation"] for line in (self.root / "lifetime-events").read_text().splitlines()]
+        self.assertEqual(["retire", "extract", "handoff", "cleanup", "publisher-cleanup"], events)
+
+    def test_native_verification_failures_are_nonzero_without_publication_receipt(self):
+        self.verification_fixture()
+        write(self.root / ".lake/packages/keep", "dependency")
+        material = self.root / ".lake/build/lib/lean/D5/A.olean"
+        for failure in ("retire", "extract", "handoff", "cleanup", "publisher-cleanup", "integrity", "not-installed"):
+            with self.subTest(failure=failure):
+                # Every attempt is a distinct remote publication, using the same source.
+                shutil.rmtree(self.remote)
+                self.remote.mkdir()
+                write(material, "locally-produced-olean")
+                (self.root / "lifetime-events").unlink(missing_ok=True)
+                environment = self.native_lifetime_probe(failure)
+                if failure == "integrity":
+                    environment["FAKE_PART_ASSET"] = json.dumps({"digest": "sha256:" + "0" * 64})
+                result = self.verification("publish", **environment)
+                self.assertNotEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertIn('"status":"failed"', result.stdout)
+                self.assertNotIn('"status":"published"', result.stdout)
+                self.assertEqual(failure in ("retire", "cleanup", "publisher-cleanup"), material.exists())
+                if material.exists():
+                    self.assertEqual("locally-produced-olean", material.read_text())
+                self.assertEqual("dependency", (self.root / ".lake/packages/keep").read_text())
+                residues = list((self.root / ".lake").glob(".release-*"))
+                self.assertEqual(failure == "cleanup", bool(residues))
+                for residue in residues:
+                    shutil.rmtree(residue)
+                # The cleanup-failure injection leaves its own staging to the test.
+                events = [json.loads(line) for line in (self.root / "lifetime-events").read_text().splitlines()]
+                for event in events:
+                    if event["operation"] == "publisher-cleanup":
+                        stage = pathlib.Path(event["path"])
+                        if stage.exists():
+                            shutil.rmtree(stage)
+
+    def test_native_verification_busy_writer_fails_before_retiring_source(self):
+        self.verification_fixture()
+        material = self.root / ".lake/build/lib/lean/D5/A.olean"
+        original = material.read_bytes(), material.stat().st_ino
+        address = digest(str((self.root / ".lake").resolve()).encode())
+        directory = self.root / ".cache/stratalint-lean-cache-guards"
+        directory.mkdir(parents=True, exist_ok=True)
+        # A reader permits publication's read lock but prevents retirement's writer.
+        with (directory / (address + ".lock")).open("a+b") as lock:
+            fcntl.flock(lock, fcntl.LOCK_SH | fcntl.LOCK_NB)
+            result = self.verification("publish")
+        self.assertNotEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertNotIn('"status":"published"', result.stdout)
+        self.assertEqual(original, (material.read_bytes(), material.stat().st_ino))
+        calls = self.verification_calls()
+        self.assertTrue(any(call[:2] == ["release", "edit"] for call in calls))
+        self.assertFalse(any(call[:2] == ["release", "download"] for call in calls))
+        self.assertEqual([], list((self.root / ".lake").glob(".release-*")))
+
+    def test_native_verification_refuses_symlink_source_without_touching_referent(self):
+        self.verification_fixture()
+        build = self.root / ".lake/build"
+        foreign = self.root / "foreign-build"
+        build.rename(foreign)
+        build.symlink_to(foreign, target_is_directory=True)
+        result = self.verification("publish")
+        self.assertNotEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertNotIn('"status":"published"', result.stdout)
+        self.assertTrue(build.is_symlink())
+        self.assertEqual("locally-produced-olean", (foreign / "lib/lean/D5/A.olean").read_text())
+        self.assertFalse(any(call[:2] == ["release", "download"] for call in self.verification_calls()))
+
+    def test_non_native_publication_preserves_source_build_identity(self):
+        self.candidate_fixture()
+        material = self.root / ".lake/build/lib/lean/D5/A.olean"
+        original = material.read_bytes(), material.stat().st_ino
+        for candidate in (False, True):
+            with self.subTest(candidate=candidate):
+                result = self.candidate_transport("publish") if candidate else self.transport("publish")
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertEqual(original, (material.read_bytes(), material.stat().st_ino))
+                self.assertIn('"status":"published"', result.stdout)
+                self.assertEqual([], list((self.root / ".lake").glob(".release-*")))
 
     def test_verification_failure_never_falls_back_or_clobbers_tags(self):
         self.verification_fixture()

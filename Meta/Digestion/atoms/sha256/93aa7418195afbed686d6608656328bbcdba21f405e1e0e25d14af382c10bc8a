@@ -1,0 +1,29 @@
+**Proposition 167.2 (bounded calibrated classes are Hilbert-dense).** With the notation of Definition 167.1,
+
+$$
+\overline{V_\infty}^{\,H}=W^\perp.
+\tag{167.2}
+$$
+
+*Proof.* Let $x\in W^\perp$. Since $m(G)=1$, bounded truncations
+
+$$
+x_n=\max(-n,\min(x,n))
+$$
+
+belong to $L^\infty(G,m;\mathbb R)$ and converge to $x$ in $H$. Let $\Pi_W$ be the orthogonal projection onto $W$. Choose a bounded basis $w_1,\ldots,w_r$ of $W$. The coefficients of $\Pi_Wx_n$ are finite linear combinations of the pairings $\langle x_n,w_i\rangle_H$, so $\Pi_Wx_n\in W\subset L^\infty$. Hence
+
+$$
+v_n=x_n-\Pi_Wx_n\in V_\infty.
+$$
+
+Because $\Pi_Wx=0$ and $\Pi_W$ is a contraction,
+
+$$
+\|v_n-x\|_H
+\le \|x_n-x\|_H+\|\Pi_W(x_n-x)\|_H
+\le 2\|x_n-x\|_H\longrightarrow0.
+$$
+
+Thus $W^\perp\subseteq\overline{V_\infty}^{\,H}$; the reverse inclusion follows from $V_\infty\subseteq W^\perp$. $\square$
+

@@ -52,6 +52,7 @@ class UniversalProductionTests(unittest.TestCase):
         fixture_root = ROOT / 'tools/lean-inspector/LeanInformationAuditFibTests/AuricFib'
         native_fixture = (fixture_root / 'CompiledFixture.lean').read_text().replace(
             'LeanInformationAuditFibTests.AuricFib.CompiledFixture', 'AuricFibUniversalCompiled')
+        native_fixture = native_fixture.replace('`AuricFibUniversalCompiled\n', '`' + MODULE + '\n')
         generic_fixture = (fixture_root / 'UniversalFixture.lean').read_text().replace(
             'import LeanInformationAuditFibTests.AuricFib.CompiledFixture\n', '')
         generic_fixture = generic_fixture.replace(
@@ -105,6 +106,9 @@ end AuricFibUniversalProduction
             raise AssertionError('parent report schema must remain v3')
         if set(raw['modules'][0]['fib_analysis']) != {'applications'}:
             raise AssertionError('FIB partition must have no independent version field')
+        cls.native = {row['application'].removeprefix('AuricFibUniversalCompiled.'): row
+                      for row in consumed['applications']
+                      if row['application'].startswith('AuricFibUniversalCompiled.')}
         cls.first = {row['application'].removeprefix(PREFIX): row for row in consumed['applications']
                      if row['application'].startswith(PREFIX)}
 
@@ -189,6 +193,47 @@ end AuricFibUniversalProduction
             if row['request'] is not None:
                 self.assertLessEqual(set(row['request']['binding']['accepted_axioms']),
                                      {'propext', 'Classical.choice', 'Quot.sound'})
+
+    def test_source_bound_prediction(self):
+        def prediction(key):
+            row = self.native[key]
+            self.assertIsNotNone(row['request'], row)
+            self.assertEqual(row['request']['compiled_prediction'],
+                             row['reading']['continuation_target']['predictive_closure'])
+            return row['reading']['continuation_target']['predictive_closure']
+        closed = prediction('predictionClosed')
+        self.assertEqual((closed['kind'], closed['claim'], closed['summary']),
+                         ('available', 'closed', 'memory'))
+        self.assertEqual(closed['actions'], ['zero', 'low', 'high', 'ends', 'middle'])
+        self.assertIn('every finite word', closed['word_scope'])
+        self.assertIn('integer evaluator', closed['scope'])
+        self.assertIn('no finite state', closed['state_finiteness'])
+        for key, summary, left, right, word in (
+                ('predictionQuantity', 'seamReply', [3, 0], [0, 2], ['zero']),
+                ('predictionRejection', 'reply', [0, 0], [0, 0], ['high'])):
+            found = prediction(key)
+            self.assertEqual((found['kind'], found['claim'], found['summary']),
+                             ('available', 'separated', summary))
+            witness = found['witness']
+            self.assertEqual(witness['left']['composition'], left)
+            self.assertEqual(witness['right']['composition'], right)
+            self.assertEqual(witness['word'], word)
+            self.assertTrue(witness['same_summary']['identity'])
+            self.assertTrue(witness['different_reply']['identity'])
+        rejected = prediction('predictionRejection')['witness']
+        self.assertEqual([rejected[side]['seam'] for side in ('left', 'right')], [False, True])
+        empty = prediction('predictionEmpty')
+        self.assertEqual((empty['claim'], empty['actions']), ('closed', []))
+        for key in ('predictionUnknown', 'absent'):
+            self.assertEqual(prediction(key)['kind'], 'unknown')
+        wrong = prediction('predictionWrongSource')
+        self.assertEqual(wrong['kind'], 'unknown')
+        self.assertIn('source.statement_reconstruction', wrong['reason'])
+        # This proof has no source law and supplies no global finite pair rate.
+        reading = self.native['predictionClosed']['reading']
+        self.assertEqual(reading['disposition']['readings']['association_coordinate']['kind'], 'unknown')
+        self.assertEqual(reading['arena']['cardinality'], 5)
+        self.assertFalse(reading['disposition']['is_lean_proof'])
 
     def test_data_free_ingress(self):
         current = self.first

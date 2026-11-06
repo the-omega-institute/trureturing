@@ -1,0 +1,42 @@
+**Proposition 163.2 (successor coordinates through any finite horizon still admit energy collapse).** Let $B_n\subset G$ be Borel sets with $m(B_n)>0$ and
+
+$$
+\int_{B_n}g^2\,dm\longrightarrow0.
+\tag{163.3}
+$$
+
+For every finite $H$ there are bounded real Borel functions $v_n$ such that
+
+$$
+ v_n\in W_{\mathscr R,T}^{(H)},
+ \qquad \|v_n\|_\infty=1,
+ \qquad \operatorname{supp}(v_n)\subset B_n,
+ \qquad
+ 0<q(v_n)\le c\int_{B_n}g^2\,dm\longrightarrow0.
+\tag{163.4}
+$$
+
+*Proof.* The target of the combined linear map
+
+$$
+\Phi_H
+ =\bigl(\Lambda_{134},\mathscr R,\mathscr R\circ T,\ldots,\mathscr R\circ T^H\bigr)
+$$
+
+has dimension $64+r(H+1)$. Put
+
+$$
+N=64+r(H+1)+1.
+$$
+
+By nonatomicity, each positive-measure $B_n$ contains $N$ pairwise disjoint Borel subsets $A_{n,1},\ldots,A_{n,N}$ of positive measure. Their indicators span an $N$-dimensional space $F_n$. Rank-nullity gives a nonzero $v_n\in\ker(\Phi_H|_{F_n})$. Scale its coefficients so that their maximum absolute value is one. Disjointness gives $\|v_n\|_\infty=1$, and $v_n$ is supported in $B_n$. The kernel equations put it in $V$ and annihilate every $\mathscr R\circ T^j$ for $0\le j\le H$. Proposition 134.2 gives $q(v_n)>0$, while the $L^2$ contraction of $T_{d/2}$ and $|v_n|\le1$ give
+
+$$
+0<q(v_n)
+ =c\|T_{d/2}(gv_n)\|_2^2
+ \le c\|gv_n\|_2^2
+ \le c\int_{B_n}g^2\,dm.
+$$
+
+This proves (163.4). $\square$
+
