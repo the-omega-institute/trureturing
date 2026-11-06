@@ -9,6 +9,7 @@
 -/
 module
 public import D5.S3.Combinatorics.Circle.MersenneExceptional19ZeroCountRows
+import all D5.S3.Combinatorics.Circle.MersenneExceptional19ZeroCountRows.Basic
 import all D5.S3.Combinatorics.Circle.MersenneExceptional19ZeroCountRows
 public import D5.S3.Combinatorics.Circle.MersenneExceptional19Stabilizer
 import all D5.S3.Combinatorics.Circle.MersenneExceptional19Stabilizer
@@ -33,8 +34,9 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.MersenneExceptional19ZeroCount
 
 open SourceWidth ZeroSumSubsets
-open private rowB X Z Hjump rowValue rowZeroCount normalizedRow rowValue_normalized row_zero_count
-  from D5.S3.Combinatorics.Circle.MersenneExceptional19ZeroCountRows
+open private rowB X Z Hjump rowValue rowZeroCount normalizedRow rowValue_normalized
+  from D5.S3.Combinatorics.Circle.MersenneExceptional19ZeroCountRows.Basic
+open private row_zero_count from D5.S3.Combinatorics.Circle.MersenneExceptional19ZeroCountRows
 open scoped BigOperators
 
 open private mask_surjective
