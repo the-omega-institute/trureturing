@@ -55,7 +55,9 @@ internal sealed class TransversalProbabilityMonotoneDocument : IScribeDocumentDe
                     + "a group representative. Thus each upstairs component has at least the "
                     + "downstairs size. Comparing the factors within each nonempty fibre, and "
                     + "then multiplying, proves the displayed inequality."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("alm2024"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string heading, Formula formula,
         AssessedProvenance provenance, string prose) => Describe.Lean(

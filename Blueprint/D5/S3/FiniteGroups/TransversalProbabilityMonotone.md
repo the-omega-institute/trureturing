@@ -58,6 +58,10 @@ $$\forall G \in Type,\; [Group\left(G\right)] [Finite\left(G\right)] \forall H \
 
 *Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/TransversalProbabilityMonotone.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/alm2024` (proved) by `D5/S3/FiniteGroups/TransversalProbabilityMonotone.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"alm2024","declaration_gid":"D5/S3/FiniteGroups/TransversalProbabilityMonotone.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* S. Aivazidis; M. Loukaki; T. W. Müller (2023). *On the common transversal probability in finite groups*. DOI: [10.48550/arXiv.2209.00986](https://doi.org/10.48550/arXiv.2209.00986). URL: <https://arxiv.org/abs/2209.00986v2>.
