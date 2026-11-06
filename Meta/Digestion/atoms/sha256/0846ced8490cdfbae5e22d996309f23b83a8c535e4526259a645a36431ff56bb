@@ -1,0 +1,52 @@
+**Proposition 17.2 (the uniquely fixed $L^2$ Coulomb column).** Let $t=R/\chi^2$ as above. The operator $(H_0+t)^{-1}U_C$, initially on smooth functions supported away from zero, has a bounded extension $T_t$ to all complex $L^2$. The operator $I-T_t$ has a bounded inverse there. The real function
+
+$$
+\zeta_R=Q(I-T_t)^{-1}Y_t\in L^2(\mathbb R^3)
+\tag{17.7}
+$$
+
+is strictly positive almost everywhere and is the unique $L^2$ distributional solution, on all of $\mathbb R^3$, of
+
+$$
+(H_C+R/\chi^2)\zeta_R=Q\delta_0.
+\tag{17.8}
+$$
+
+It is the column determined by the original Friedrichs operator; there is no boundary parameter at the origin.
+
+Proof. The linear change $\mathbf z=M^{1/2}y$ reduces the needed Hardy bound to the classical three-dimensional inequality. It gives
+
+$$
+\|U_Cv\|_2\le C\|H_0^{1/2}v\|_2\qquad(v\in H^1).
+\tag{17.9}
+$$
+
+Consequently $U_C(H_0+t)^{-1}$ is bounded; define $T_t$ as its adjoint. This agrees with the stated initial product. Fourier interpolation in (17.9) gives, for every $\epsilon>0$, $\|U_Cv\|_2\le\epsilon\|H_0v\|_2+C_\epsilon\|v\|_2$ on $H^2$. Thus the form realization $H_C$ has operator domain $H^2$. One direct justification is to choose $L$ so large that $\|U_C(H_0+L)^{-1}\|<1$, by (17.9) and spectral calculus. The factorization of $H_0-U_C+L$ then gives its inverse into $H^2$; symmetry and the same factorization at nonreal parameters give the selfadjoint operator on $H^2$, whose form is the Friedrichs form (17.3).
+
+P (72.3) gives $\inf\sigma(H_C)=e_C$, so $H_C+t\ge(t+e_C)I>0$. For $v=(H_C+t)^{-1}f$, put $x=\|H_0^{1/2}v\|_2$ and $y=\|v\|_2$. The spectral bound gives $y\le(t+e_C)^{-1}\|f\|_2$, while its real energy identity and (17.9) give
+
+$$
+x^2\le y\|f\|_2+Cxy.
+\tag{17.10}
+$$
+
+Young's inequality therefore bounds $x$, and hence $\|U_Cv\|_2$, by a fixed multiple of $\|f\|_2$. Write $A=U_C(H_0+t)^{-1}$ and $B=U_C(H_C+t)^{-1}$. Both are bounded. The two resolvent identities, with the products justified by the common $H^2$ domain and the preceding bounds, give $B=A+AB=A+BA$. Hence $(I-A)^{-1}=I+B$. Taking adjoints proves bounded invertibility of $I-T_t$, with
+
+$$
+(I-T_t)^{-1}=I+B^*,\qquad
+B^*=[(H_C+t)^{-1}U_C]_{\rm ext}.
+\tag{17.11}
+$$
+
+For a smooth compact test $v$, integration of $-\partial_u(e^{-tu/a}\Gamma_{M,u})$ from zero to infinity gives $v(0)$ after pairing with $v$. This follows from the Gaussian approximate identity at zero and exponential decay at infinity, and proves the distributional identity below. Evaluating the Gaussian integral radially after $\mathbf z=M^{1/2}y$ gives the formula in (17.6); integrating its square with radial measure $4\pi\sqrt{\det M}r^2dr$ gives
+
+$$
+(H_0+t)Y_t=\delta_0\quad\text{in distributions},\qquad
+\|Y_t\|_2^2=\frac1{8\pi a^2\sqrt{\det M}\sqrt{t/a}}<\infty.
+\tag{17.12}
+$$
+
+For any $f\in L^2$ and any smooth compact test $v$, $U_Cv\in L^2$. The adjoint definition therefore gives $(H_0+t)T_tf=U_Cf$ distributionally. Here $U_Cf$ is locally integrable by Cauchy–Schwarz. Applying this to (17.7) proves (17.8). Conversely an $L^2$ homogeneous solution $u$ satisfies $(H_0+t)(u-T_tu)=0$ distributionally. Fourier transformation and $a\eta^{\mathsf T}M\eta+t>0$ force $u=T_tu$, and invertibility forces $u=0$. This proves uniqueness without imposing a punctured-space boundary condition.
+
+Finally $(H_C+t)^{-1}$ preserves nonnegativity. Indeed conjugation first makes its solution real for real input; testing its form equation against the negative part gives $-\mathfrak h_t[v_-]=\langle v_-,f\rangle\ge0$ for $f\ge0$, whereas $\mathfrak h_t[v_-]\ge(t+e_C)\|v_-\|_2^2$. Thus $v_-=0$. Positive annular approximations extend this order property to the bounded $B^*$ in (17.11). It follows that $\zeta_R=Q(Y_t+B^*Y_t)\ge QY_t>0$ almost everywhere. All inverses here belong to the auxiliary original Coulomb operator on the entire phase space. No $H^1$ property of $\zeta_R$, and no native-domain assertion for it, has been used. $\square$
+

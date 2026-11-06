@@ -1,0 +1,13 @@
+**Proposition 34.1 (the particular first Fredholm correction).** Let $A=I-\gamma\mathcal N_0$. There is a unique $g_1\in L^2$ satisfying
+
+$$
+Ag_1=\gamma\mathcal N_1g_0,\qquad \langle p,g_1\rangle=0.
+\tag{34.1}
+$$
+
+It is real and odd under $\sigma$. This assertion supplies no weighted tail estimate for $g_1$.
+
+Proof. P §§87–88 factor $K_{\rm rec}=TM$ and $K_0=MT$, with compact $T$ and bounded $M=V^{1/2}$. The nonzero spectral correspondence of these products and the simple top eigenvalue of the selfadjoint $K_0$ give
+$\ker A=\mathbb Cg_0$ and $\ker A^*=\mathbb Cp$.
+One can also check the second equality directly from $K_{\rm rec}p=\gamma^{-1}p$ and P (88.2), then use the Fredholm index zero of identity minus compact. The nonzero pairing $\langle p,g_0\rangle=1$ fixes the kernel ambiguity. The coefficient kernels satisfy reflection parity $j$ in (30.1); the field coefficients have parity $k$ by (23.1). Thus $\mathcal N_1g_0$ is real odd, in $L^2$ by Theorem 33.2, and orthogonal to the even $p$. The Fredholm alternative therefore gives a solution, and subtraction of its $g_0$ coordinate enforces (34.1)'s normalization. Reflection and conjugation preserve this equation and normalization, so uniqueness gives oddness and reality. These are properties of this fixed correction, not of actual states. This is the classical compact Fredholm alternative applied to the specified bounded reconstruction, not inversion of $\mathcal E$ on arbitrary $L^2$. $\square$
+
