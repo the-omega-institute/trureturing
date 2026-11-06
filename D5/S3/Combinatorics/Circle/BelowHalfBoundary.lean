@@ -1,8 +1,8 @@
-/- SOURCE PREPARATION / UNCOMPILED. Explicit physical-label alternative.
-Fixed library pin: 1d7563a7afc3c179b50e46b14c30e3d8338e5aa5.
-No elaboration, kernel, official acceptance, or independent review is claimed.
+/- Explicit physical-label construction.
+Fixed compatible library pin: 1d7563a7afc3c179b50e46b14c30e3d8338e5aa5.
 The centered-value setup is adapted from the authorized pre-dispatch candidate;
-the selection layer below follows the four cases of the advisory Pro conclusion. -/
+the selection layer follows the four cases of the advisory Pro conclusion.
+Native validation evidence is recorded separately from this candidate source. -/
 
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Circle.TwoNegativeJointLift
@@ -27,7 +27,7 @@ private theorem ascending_perm {r : ℕ} (S : Finset (Fin r)) :
   apply (List.perm_ext_iff_of_nodup
     ((List.nodup_finRange r).filter _) S.nodup_toList).mpr
   intro i
-  simp [ascending]
+  simp
 
 private theorem ascending_sum {r : ℕ} (S : Finset (Fin r)) (f : Fin r → ℤ) :
     ((ascending S).map f).sum = ∑ i ∈ S, f i := by
@@ -61,7 +61,7 @@ private theorem window_sum (r lo n : ℕ) (h : lo + n ≤ r)
       · intro j hj
         have hj' := Finset.mem_range.mp hj
         refine ⟨⟨lo + j, by omega⟩, ?_, ?_⟩
-        · simp [window] <;> omega
+        · simp [window]
         · simp
       · intro i hi; exact hf i hi
     _ = c * (2 ^ n - 1) := by rw [← Finset.mul_sum, pow_sum]
@@ -171,7 +171,7 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
       ((2 ^ (r - 2) + 2 ^ (b - 2) : ℕ) : ℤ)) % modulus r = x % modulus r
     rw [hqNat]
     rw [centered_mod, he]
-    simp [Int.add_emod, Int.mul_emod]
+    simp [Int.add_emod]
   have new_value (i : Fin (r + 1)) (x m : ℤ)
       (hx : -N ≤ x ∧ x ≤ N)
       (he : (2 : ℤ) ^ i.val * ((2 * q : ℤ)) = x + m * modulus (r + 1)) : gn i = x := by
@@ -182,7 +182,7 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
     rw [show ((2 * (2 ^ (r - 2) + 2 ^ (b - 2)) : ℕ) : ℤ) = 2 * q by
       norm_num [hqNat]]
     rw [centered_mod, he]
-    simp [Int.add_emod, Int.mul_emod]
+    simp [Int.add_emod]
   have hvalues (i : Fin r) :
       f i = (if i.val = 0 then q else if i.val = 1 then -B
         else if i.val < a + 1 then (2 * p + 1) * 2 ^ (i.val - 2)
@@ -204,7 +204,7 @@ private theorem boundary_joint (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
           constructor <;> linarith only [hp, hprodp, hpHalf])
         simp [h0]
     by_cases h1 : i.val = 1
-    · simp only [h0, ite_false, h1, ite_true]
+    · simp only [h1, show (1 : ℕ) ≠ 0 by omega, ite_false, ite_true]
       constructor
       · apply old_value i _ 1 (by
           rw [hNH]
