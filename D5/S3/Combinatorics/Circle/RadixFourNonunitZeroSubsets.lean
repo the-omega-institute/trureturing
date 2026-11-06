@@ -21,12 +21,12 @@ import Lean.Elab.Tactic.Omega
 /-!
 # Radix-four supported nonunit sources
 
-Prepared source, UNCOMPILED. Requires the accompanying visibility-only patch,
-and integration of the sealed TwoBitZeroSubsets source at its canonical owner,
-with the accompanying five-name `open private` consumer adjustment.
-All labels below are the actual full `Fin (2*n)` physical labels.
-The amended separation conjunction includes both actual modular seed minimal
-periods. The centered doubleStep period is a separate, unfinished bridge.
+All labels below are the actual full `Fin (2*n)` physical labels. Radix-four
+rotation proves actual even-label positivity and the integral trace. Exact gcd
+three then leaves only empty and full integer-zero subsets. The separation
+conjunction includes both actual modular seed minimal periods via the generic
+nonunit return bridge and the accepted quotient order. The centered doubleStep
+period is a separate, unfinished bridge.
 -/
 
 set_option autoImplicit false
@@ -424,21 +424,10 @@ theorem seed21_separation (n : ℕ) (hn : 3 ≤ n) (h3 : ¬3 ∣ n) :
       simpa using (show Even (2 * n) from ⟨n, by omega⟩)
     simpa [heven] using ht
 
-/- SOURCE-ONLY STATUS
-
-The conjunction above now derives both modular minimalPeriods from the actual
-seed-return theorem, at the original n>=3, not 3|n domain. PowerQuotientOrder is
-consumed without reproving its order formula. All proposed changes are UNCOMPILED.
-
-This does not yet identify TwoRunSource.period, whose state is a centered integer
-under doubleStep, with the modular seed period. That would require the return
-iff for those two actual dynamics, centered representative uniqueness and the
-integer/natural modulus cast bridge. No physical geometry is inferred merely
-from modular returns; the integer zero-fibre clauses above retain their original
-proofs and full Fin(2*n) labels. This amended public theorem retains its later
-faithful Reg or linked-issue obligation, as do the new generic theorems. The sealed
-source's visibility and TwoBitZeroSubsets prerequisites also remain. No kernel,
-axiom-closure, review, registration, freeze or integration acceptance is asserted.
--/
+/- The modular periods above do not identify TwoRunSource.period, whose state
+is a centered integer under doubleStep. That interface still needs the return
+iff for the two actual dynamics, centered representative uniqueness and the
+integer/natural modulus cast bridge. The integer zero-fibre clauses above are
+proved independently and retain the full Fin(2*n) labels. -/
 
 end D5.S3.Combinatorics.Circle.RadixFourNonunitZeroSubsets

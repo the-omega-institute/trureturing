@@ -14,23 +14,20 @@ public import Mathlib.GroupTheory.OrderOfElement
 /-!
 # Multiplication periods at nonunit modular seeds
 
-SOURCE ONLY, UNCOMPILED against Lean 4.35 / mathlib
-56a005855ea17e0b0958f73ec801ae140b0a1679.
-
 The effective modulus of the seed `t` modulo positive `M` is `M / gcd t M`.
 Mathlib's gcd cancellation gives the forward return implication; multiplication
 by the removed gcd restores the reverse implication. We use congruences rather
 than natural subtraction, so `u = 0` and exponent zero need no exceptions.
 
-The return theorem is consumed by the minimal-period theorem. The proposed
-RadixFourNonunitZeroSubsets patch consumes that theorem in its existing physical
+The return theorem is consumed by the minimal-period theorem. RadixFourNonunitZeroSubsets consumes that theorem in its full physical
 separation conjunction. These are consumed bridges to pinned upstream results,
 not a claim of a new order formula. The accepted PowerQuotientOrder is reused.
 
-Both public declarations retain their later faithful Reg mirror or linked-issue
-obligation. No registration, kernel, axiom-closure or integration check is claimed.
-The owning exposition is Blueprint/D5/S3/Arith/Congruence/
-NonunitMultiplicationPeriod.scribe.cs.
+The centered integer doubleStep dynamics are a separate interface: no equality
+with TwoRunSource.period follows without a centered-return bridge. The owning
+prepared exposition is Blueprint/D5/S3/Arith/Congruence/
+NonunitMultiplicationPeriod.scribe.cs; its projector/emit and Reg acceptance are
+separate from the mathematical kernel check.
 -/
 
 set_option autoImplicit false
