@@ -7,6 +7,7 @@
    digest: Dense divisor copies are contained in whole maximal divisor blocks. -/
 
 import D5.S3.Factorization.TwoDenseDivisorBlocksPalindrome
+import Mathlib.Data.Finset.Max
 import Mathlib.Data.Nat.GCD.Basic
 import Mathlib.Data.List.Pairwise
 
@@ -36,7 +37,8 @@ private theorem mem_divisor_list (n d : ℕ) (hn : 0 < n) :
       Nat.mem_divisorsAntidiagonalList.mpr
         ⟨Nat.mul_div_cancel' hd, hn.ne'⟩, rfl⟩
 
-private theorem separated_blocks_connect : ∀ Q : List (List ℕ), Q.flatten.Pairwise (· < ·) → [] ∉ Q →
+private theorem separated_blocks_connect :
+    ∀ Q : List (List ℕ), Q.flatten.Pairwise (· < ·) → [] ∉ Q →
     Q.IsChain (fun A C => ∃ ha hc, 2 * A.getLast ha < C.head hc) →
     ∀ x ∈ Q.flatten, ∀ y ∈ Q.flatten, x ≤ 2 * y → y ≤ 2 * x →
     ∀ B ∈ Q, (x ∈ B ↔ y ∈ B) := by
@@ -227,7 +229,7 @@ private theorem first_block_length_of_gap (n u : ℕ) (hn : 0 < n) (hu : 0 < u)
   have hUne : U ≠ [] := by
     intro hz
     have : 1 ∈ U := (memU 1).mpr (one_dvd u)
-    simpa [hz] using this
+    simp [hz] at this
   have hsplit : divisorBlocks n = U :: R.splitBy
       (fun a b => decide (b ≤ 2 * a)) := by
     change D.splitBy _ = _
@@ -274,6 +276,112 @@ theorem first_block_min_of_dense_factor (u v : ℕ) (hu : 0 < u) (hv : 0 < v)
   rw [first_block_length_of_gap (u * v) u (Nat.mul_pos hu hv) hu
     (dvd_mul_right u v) hdense hgap]
   exact block_card_ge_of_dense_factor u v hu hv hcop hdense B hB
+
+
+/-- Integer interval coverage of the positive divisors. -/
+private def IntervalDense (u : ℕ) : Prop :=
+  ∀ x : ℕ, 0 < x → x < u → ∃ d, d ∣ u ∧ x < d ∧ d ≤ 2 * x
+
+private theorem intervalDense_mul (u p : ℕ) (hp : 0 < p)
+    (hd : IntervalDense u) (hpu : p ≤ 2 * u) : IntervalDense (u * p) := by
+  intro x hx hxu
+  by_cases hsmall : x < u
+  · obtain ⟨d, hdu, hxd, hd2⟩ := hd x hx hsmall
+    exact ⟨d, hdu.trans (dvd_mul_right u p), hxd, hd2⟩
+  · have hux : u ≤ x := Nat.le_of_not_gt hsmall
+    by_cases hxp : x < p
+    · exact ⟨p, dvd_mul_left p u, hxp, by omega⟩
+    · have hqpos : 0 < x / p := Nat.div_pos (Nat.le_of_not_gt hxp) hp
+      have hqlt : x / p < u := (Nat.div_lt_iff_lt_mul hp).mpr hxu
+      obtain ⟨d, hdu, hqd, hd2⟩ := hd (x / p) hqpos hqlt
+      refine ⟨d * p, Nat.mul_dvd_mul hdu (dvd_refl p),
+        (Nat.div_lt_iff_lt_mul hp).mp hqd, ?_⟩
+      have hmul := Nat.mul_le_mul_right p hd2
+      have hfloor := Nat.div_mul_le_self x p
+      nlinarith
+
+private theorem chain_of_interval_cover (u : ℕ) (L : List ℕ) :
+    L.Pairwise (· < ·) → (∀ x ∈ L, 0 < x) → (∀ x ∈ L, x ≤ u) →
+    (∀ x ∈ L, x < u → ∃ d ∈ L, x < d ∧ d ≤ 2 * x) →
+    L.IsChain (fun a b => b ≤ 2 * a) := by
+  induction L with
+  | nil => simp
+  | cons a T ih =>
+    intro hs hpos hle hcover
+    cases T with
+    | nil => simp
+    | cons b T =>
+      have hs' := List.pairwise_cons.mp hs
+      have hab : a < b := hs'.1 b (by simp)
+      have hbu : b ≤ u := hle b (by simp)
+      obtain ⟨d, hd, had, hd2⟩ := hcover a (by simp) (by omega)
+      have hbd : b ≤ d := by
+        rcases List.mem_cons.mp hd with he | hd
+        · omega
+        · exact (hs'.2.imp (fun h => Nat.le_of_lt h)).rel_head hd
+      apply List.isChain_cons_cons.mpr
+      refine ⟨by omega, ih hs'.2 (fun x hx => hpos x (List.mem_cons_of_mem a hx))
+        (fun x hx => hle x (List.mem_cons_of_mem a hx)) ?_⟩
+      intro x hx hxu
+      obtain ⟨d, hd, hxd, hd2⟩ := hcover x (List.mem_cons_of_mem a hx) hxu
+      rcases List.mem_cons.mp hd with he | hd
+      · have hax := hs'.1 x hx
+        omega
+      · exact ⟨d, hd, hxd, hd2⟩
+
+private theorem intervalDense_chain (u : ℕ) (hu : 0 < u) (hd : IntervalDense u) :
+    (u.divisorsAntidiagonalList.map Prod.fst).IsChain (fun a b => b ≤ 2 * a) := by
+  apply chain_of_interval_cover u
+  · exact Nat.sortedLT_map_fst_divisorsAntidiagonalList.pairwise
+  · intro x hx
+    exact Nat.pos_of_mem_divisors
+      (Nat.mem_divisors.mpr ⟨(mem_divisor_list u x hu).mp hx, hu.ne'⟩)
+  · intro x hx
+    exact Nat.le_of_dvd hu ((mem_divisor_list u x hu).mp hx)
+  · intro x hx hxu
+    have hxpos := Nat.pos_of_mem_divisors
+      (Nat.mem_divisors.mpr ⟨(mem_divisor_list u x hu).mp hx, hu.ne'⟩)
+    obtain ⟨d, hdu, hxd, hd2⟩ := hd x hxpos hxu
+    exact ⟨d, (mem_divisor_list u d hu).mpr hdu, hxd, hd2⟩
+
+/-- Every positive integer satisfies the literal unrestricted first-block event. -/
+theorem result : claim := by
+  classical
+  intro n hn
+  let S := n.divisors.filter IntervalDense
+  have h1 : 1 ∈ S := by
+    apply Finset.mem_filter.mpr
+    refine ⟨Nat.mem_divisors.mpr ⟨one_dvd n, hn.ne'⟩, ?_⟩
+    intro x hx hx1
+    omega
+  have hSne : S.Nonempty := ⟨1, h1⟩
+  let u := S.max' hSne
+  have huS : u ∈ S := S.max'_mem hSne
+  obtain ⟨hun, hudense⟩ := Finset.mem_filter.mp huS
+  have hu : 0 < u := Nat.pos_of_mem_divisors hun
+  have hudvd : u ∣ n := (Nat.mem_divisors.mp hun).1
+  let v := n / u
+  have hv : 0 < v := Nat.div_pos (Nat.le_of_dvd hn hudvd) hu
+  have he : u * v = n := Nat.mul_div_cancel' hudvd
+  have hrough : ∀ p, p.Prime → p ∣ v → 2 * u < p := by
+    intro p hp hpv
+    by_contra hnot
+    have hpu : p ≤ 2 * u := Nat.le_of_not_gt hnot
+    have hupn : u * p ∣ n := he ▸ Nat.mul_dvd_mul (dvd_refl u) hpv
+    have hupS : u * p ∈ S := Finset.mem_filter.mpr
+      ⟨Nat.mem_divisors.mpr ⟨hupn, hn.ne'⟩,
+        intervalDense_mul u p hp.pos hudense hpu⟩
+    have hmax : u * p ≤ u := S.le_max' (u * p) hupS
+    nlinarith [hp.two_le]
+  have hcop : u.Coprime v := Nat.coprime_of_dvd (fun p hp hpu hpv => by
+    have hpbig := hrough p hp hpv
+    have hple := Nat.le_of_dvd hu hpu
+    omega)
+  have hmin := first_block_min_of_dense_factor u v hu hv hcop
+    (intervalDense_chain u hu hudense) hrough
+  simpa only [he] using hmin
+
+#print axioms result
 
 #print axioms first_block_min_of_dense_factor
 
