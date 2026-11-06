@@ -10,10 +10,11 @@
 admission_basis: open-problem-resolution (#27075; Proved)
 escape_witness: geodesic constructs a honeycomb walk of the explicit potential length for every
 integer-coordinate vertex by strong induction; plane_distance and quotient_minimum use it.
-Direct frozen dependencies: D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation.potential_dist
+Direct frozen dependencies:
+D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation.potential_dist
 (module statement_id sha256:f8b677ea402e38581fbfa04887d18040684e7baa21f05cad6421d45525c0cd21).
-The shape classification is conservative: explicit coordinate normalisations, equivalences,
-cardinalities and series algebra are bind-only helpers with the consumers named below.
+Proof shapes inline the new helpers. The distance and counting conclusions retain the
+inductive constructions; coordinate normalisations are bind-only with the consumers below.
 Vertex: proof_shape=bind-only; consumers=honeycombGraph, translationSetoid
 edge: proof_shape=bind-only; consumers=honeycombGraph, potential_step, potential_descent, shift_adj
 honeycombGraph: proof_shape=bind-only; consumers=geodesic, cylinderGraph, projectHom
@@ -24,7 +25,7 @@ potential_step: proof_shape=bind-only; consumers=plane_distance
 potential_zero: proof_shape=bind-only; consumers=geodesic
 potential_descent: proof_shape=bind-only; consumers=geodesic
 geodesic: proof_shape=content; consumers=plane_distance, quotient_reachable, quotient_upper
-plane_distance: proof_shape=bind-only; consumers=quotient_minimum
+plane_distance: proof_shape=content; consumers=quotient_minimum
 shift: proof_shape=bind-only; consumers=translationSetoid, shift_adj, normal, band_minimum
 shift_zero: proof_shape=bind-only; consumers=translationSetoid, band_unique, band_minimum
 shift_add: proof_shape=bind-only; consumers=translationSetoid
@@ -35,11 +36,11 @@ origin: proof_shape=bind-only; consumers=c, quotient_reachable, quotient_minimum
 c: proof_shape=bind-only; consumers=even_card, odd_card, zero_card, count_formula, result
 shift_adj: proof_shape=bind-only; consumers=lift_edge
 projectHom: proof_shape=bind-only; consumers=quotient_reachable, quotient_upper
-quotient_reachable: proof_shape=bind-only; consumers=quotient_minimum, zero_card
-quotient_upper: proof_shape=bind-only; consumers=quotient_minimum, rep_distance
+quotient_reachable: proof_shape=content; consumers=quotient_minimum, zero_card
+quotient_upper: proof_shape=content; consumers=quotient_minimum, rep_distance
 lift_edge: proof_shape=bind-only; consumers=lift_walk
 lift_walk: proof_shape=content; consumers=quotient_minimum
-quotient_minimum: proof_shape=bind-only; consumers=rep_distance
+quotient_minimum: proof_shape=content; consumers=rep_distance
 lower: proof_shape=bind-only; consumers=InBand, normal, evenShellEquiv, oddShellEquiv
 InBand: proof_shape=bind-only; consumers=normal_band, band_unique, band_minimum, Rep
 normal: proof_shape=bind-only; consumers=normal_class, normal_band, repEquiv
@@ -49,23 +50,24 @@ band_unique: proof_shape=bind-only; consumers=repEquiv
 band_minimum: proof_shape=bind-only; consumers=rep_distance
 Rep: proof_shape=bind-only; consumers=repEquiv, rep_distance, evenShellEquiv, oddShellEquiv
 repEquiv: proof_shape=bind-only; consumers=shellEquiv
-rep_distance: proof_shape=bind-only; consumers=shellEquiv
-shellEquiv: proof_shape=bind-only; consumers=finite_shell, even_card, odd_card
+rep_distance: proof_shape=content; consumers=shellEquiv
+shellEquiv: proof_shape=content; consumers=finite_shell, even_card, odd_card
 AFiber: proof_shape=bind-only; consumers=finiteAFiber, evenShellEquiv, a_fiber_card
 BFiber: proof_shape=bind-only; consumers=finiteBFiber, oddShellEquiv, b_fiber_card
 finiteAFiber: proof_shape=bind-only; consumers=finite_shell
 finiteBFiber: proof_shape=bind-only; consumers=finite_shell
 evenShellEquiv: proof_shape=bind-only; consumers=finite_shell, even_card
 oddShellEquiv: proof_shape=bind-only; consumers=finite_shell, odd_card
-finite_shell: proof_shape=bind-only; consumers=zero_card
+finite_shell: proof_shape=content; consumers=zero_card
 a_fiber_card: proof_shape=bind-only; consumers=even_card
 b_fiber_card: proof_shape=bind-only; consumers=odd_card
 interval_sum: proof_shape=bind-only; consumers=even_card, odd_card
-even_card: proof_shape=bind-only; consumers=count_formula
-odd_card: proof_shape=bind-only; consumers=count_formula
-zero_card: proof_shape=bind-only; consumers=count_formula
-count_formula: proof_shape=bind-only; consumers=result
-result: proof_shape=bind-only; consumers=Reg.D5.S3.StatisticalMechanics.HoneycombCylinderCoordination.initial_values, Reg.D5.S3.StatisticalMechanics.HoneycombCylinderCoordination.family
+even_card: proof_shape=content; consumers=count_formula
+odd_card: proof_shape=content; consumers=count_formula
+zero_card: proof_shape=content; consumers=count_formula
+count_formula: proof_shape=content; consumers=result
+Reg below denotes Reg.D5.S3.StatisticalMechanics.HoneycombCylinderCoordination.
+result: proof_shape=content; consumers=Reg.initial_values, Reg.family
 -/
 
 import D5.S3.Combinatorics.PositionSets.VertexPositionRatioRefutation
@@ -635,6 +637,7 @@ private lemma count_formula {n : ℕ} (hn : 0 < n) (m : ℕ) :
 open PowerSeries
 
 set_option maxHeartbeats 2000000 in
+-- The symbolic second differences require simultaneous width and radius case analysis.
 /-- The registered identity for every positive cylinder width, with denominators cleared. -/
 theorem result : ∀ n : ℕ, 1 ≤ n →
     (1 - X)^2 * (PowerSeries.mk fun m => (c n m : ℤ)) =
