@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Angular Fejer kernels, their notched variants, and logarithmic averages.
- -/
+   digest: Angular Fejer kernels, their notched variants, and logarithmic averages. -/
 
 import D5.S3.TotalVariation.Asymptotics.StatLeanFourierCore
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Sinc
