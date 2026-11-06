@@ -68,7 +68,7 @@ actual block would refute the conjecture. A finite table, a restricted
 family or an assumed dense-factor existence premise cannot establish
 the universal assertion.
 
-## Result
+## Evidence
 
 `D5/S3/Factorization/TwoDenseDivisorBlockMinimum.result : claim`
 constructs the dense factor internally. The claim uses the complete
@@ -95,7 +95,7 @@ thresholds and A401248 Conjecture 2 are not settled by this result.
 They require their own exact statements and qualification. Neither
 this theorem nor the source search establishes global priority.
 
-## Scope and priority
+## ASSUMED-UNVERIFIED
 
 The correspondence between the OEIS words and the formal block model
 requires independent semantic review. The source and literature
