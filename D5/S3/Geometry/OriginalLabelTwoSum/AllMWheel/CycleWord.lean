@@ -5,7 +5,11 @@
    The selected AllMWheel/PathWord/P02 authorities are imported unchanged. -/
 import D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel
 
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 noncomputable section
+local instance : (p : Prop) → Decidable p := Classical.propDecidable
 open Set Finset
 namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel
 open FiniteProtectedDualWord OriginalLabelTwoSum
@@ -95,9 +99,9 @@ private theorem word_face {W : Finset V} {K : Family V} (d : Word W K)
       subst s; exact d.critical_data S hq
   | pair L a =>
       rcases (show s = L ∨ s = insert a L by
-        simpa [FiniteProtectedDualWord.Symbol.faces] using hs) with rfl | rfl
-      · exact (d.pair_data L a hq).1
-      · exact (d.pair_data L a hq).2.1
+        simpa [FiniteProtectedDualWord.Symbol.faces] using hs) with he | he
+      · exact he.symm ▸ (d.pair_data L a hq).1
+      · exact he.symm ▸ (d.pair_data L a hq).2.1
 
 private theorem insert_injective_on {b : V} {A B : Finset V}
     (hA : b ∉ A) (hB : b ∉ B) (h : insert b A = insert b B) : A = B := by
@@ -108,7 +112,7 @@ private theorem pair_face_erase {a : V} {A S : Finset V} (ha : a ∉ A)
     (hS : S ∈ (Symbol.pair A a).faces) : S.erase a = A := by
   rcases (show S = A ∨ S = insert a A by
     simpa [FiniteProtectedDualWord.Symbol.faces] using hS) with rfl | rfl
-  · exact Finset.erase_eq_of_not_mem ha
+  · exact Finset.erase_eq_of_notMem ha
   · exact Finset.erase_insert ha
 
 private theorem first_disjoint {a : V} {A B : Finset V}
@@ -145,7 +149,7 @@ private theorem erase_dependency {a : V} {A T : Finset V}
   by_cases hat : a ∈ T
   · have ht : T = insert a A := by rw [← he, Finset.insert_erase hat]
     exact hT.ne ht
-  · exact hne ((Finset.erase_eq_of_not_mem hat).symm.trans he)
+  · exact hne ((Finset.erase_eq_of_notMem hat).symm.trans he)
 
 private theorem erase_lift_dependency {b : V} {U T : Finset V}
     (hT : T ⊂ insert b U) (hbT : b ∈ T) : T.erase b ⊂ U := by
@@ -162,9 +166,11 @@ private theorem erase_lift_dependency {b : V} {U T : Finset V}
 private def attachFamily (K G : Family V) (b : V) (hGK : G ≤ K) : Family V where
   carrier := {s | s ∈ K ∨ ∃ t ∈ G, insert b t = s}
   lower' := by
-    rintro t s hts (hs | ⟨u, hu, rfl⟩)
+    intro t s hts hs
+    rcases hs with hs | ⟨u, hu, he⟩
     · exact Or.inl (K.lower hts hs)
-    · have herase : t.erase b ⊆ u := by
+    · rw [← he] at hts
+      have herase : t.erase b ⊆ u := by
         intro x hx
         exact (Finset.mem_insert.mp (hts (Finset.mem_of_mem_erase hx))).resolve_left
           (Finset.mem_erase.mp hx).1
@@ -248,7 +254,7 @@ private def pairedCone (W : Finset V) (F : Finset (Finset V)) (a : V)
       exact List.mem_map.mpr ⟨T.erase a, hRp, rfl⟩
     · by_cases hat : a ∈ T
       · simp [FiniteProtectedDualWord.Symbol.faces, Finset.insert_erase hat]
-      · simp [FiniteProtectedDualWord.Symbol.faces, Finset.erase_eq_of_not_mem hat]
+      · simp [FiniteProtectedDualWord.Symbol.faces, Finset.erase_eq_of_notMem hat]
   · intro p s S h
     obtain ⟨_, A, _, _, _, he, _⟩ := split_map (fun A => Symbol.pair A a)
       xs p (Symbol.critical S) s h
@@ -340,9 +346,10 @@ private def attachWord {W X : Finset V} {K G : Family V}
     · rintro ⟨q, hq, hs⟩
       rcases List.mem_append.mp hq with hq | hq
       · exact Or.inl (word_face d hq hs)
-      · obtain ⟨q, hq, rfl⟩ := List.mem_map.mp hq
-        obtain ⟨A, hA, rfl⟩ := (mem_adjoinSymbol_faces b q s).mp hs
-        exact Or.inr ⟨A, hfaceG q hq A hA, rfl⟩
+      · change q ∈ e.word.map (adjoinSymbol b) at hq
+        obtain ⟨q₀, hq₀, rfl⟩ := List.mem_map.mp hq
+        obtain ⟨A, hA, rfl⟩ := (mem_adjoinSymbol_faces b q₀ s).mp hs
+        exact Or.inr ⟨A, hfaceG q₀ hq₀ A hA, rfl⟩
   · intro p s L v hword T hT hne
     rcases split_append d.word (e.word.map (adjoinSymbol b)) p (Symbol.pair L v) s hword with
       ⟨p₁, s₁, h₁, hp, _⟩ | ⟨p₂, s₂, h₂, hp, _⟩
@@ -427,7 +434,7 @@ private theorem interval_independent (m lo n : Nat) (h : lo + n ≤ m + 1)
     have hxI := (mem_labelInterval m lo n h x).mp (List.mem_toFinset.mp (hs hx))
     have hyI := (mem_labelInterval m lo n h y).mp (List.mem_toFinset.mp (hs hy))
     exact he {x,y} ((labelInterval_edges m lo n h _).mpr
-      ⟨x,y,hxI.1,hxy,hyI.2,rfl⟩) (by simp [hx,hy])
+      ⟨x,y,hxI.1,hxy,hyI.2,rfl⟩) (Finset.insert_subset_iff.mpr ⟨hx, Finset.singleton_subset_iff.mpr hy⟩)
   · rintro ⟨hs, he⟩
     refine ⟨?_, ?_⟩
     · intro x hx
@@ -460,17 +467,18 @@ private theorem cycle_numeric (m : Nat) (hm : 3 ≤ m) (s : Finset (Label m)) :
       (lastLabel m ∉ s ∨ firstLabel m hm ∉ s) := by
   rw [mem_cycleIndependentOn]
   have hground : s ⊆ ground m ↔ ∀ x ∈ s, 1 ≤ x.val := by
-    simp only [ground, Finset.subset_iff, Finset.mem_erase, Finset.mem_univ, and_true]
     constructor
     · intro h x hx
-      have hn := h x hx
+      have hn : x ≠ 0 := (Finset.mem_erase.mp (h hx)).1
       have hz : x ≠ 0 ↔ x.val ≠ 0 := not_congr Fin.ext_iff
       rw [hz] at hn
       omega
-    · intro h x hx he
+    · intro h x hx
+      refine Finset.mem_erase.mpr ⟨?_, Finset.mem_univ x⟩
+      intro he
       have hp := h x hx
       have he' := congrArg Fin.val he
-      simp only [Fin.val_zero] at he'
+      change x.val = 0 at he'
       omega
   rw [hground]
   constructor
@@ -478,10 +486,10 @@ private theorem cycle_numeric (m : Nat) (hm : 3 ≤ m) (s : Finset (Label m)) :
     refine ⟨hW, ?_, ?_⟩
     · intro x hx y hy hxy
       exact hE {x,y} ((cycleEdges_mem m hm _).mpr (Or.inl
-        ⟨x,y,hW x hx,hxy,by have := y.isLt; omega,rfl⟩)) (by simp [hx,hy])
+        ⟨x,y,hW x hx,hxy,by have := y.isLt; omega,rfl⟩)) (Finset.insert_subset_iff.mpr ⟨hx, Finset.singleton_subset_iff.mpr hy⟩)
     · by_cases hl : lastLabel m ∈ s
       · exact Or.inr (fun hf => hE _ ((cycleEdges_mem m hm _).mpr (Or.inr rfl))
-          (by simp [hl,hf]))
+          (Finset.insert_subset_iff.mpr ⟨hl, Finset.singleton_subset_iff.mpr hf⟩))
       · exact Or.inl hl
   · rintro ⟨hW,hE,hwrap⟩
     refine ⟨hW, ?_⟩
@@ -778,6 +786,7 @@ def cycleWordData (m : Nat) (hm : 3 ≤ m) :
     change ((s ∈ K ∨ ∃ t ∈ K, insert a t = s) ∨
       ∃ t ∈ G, insert b t = s) ∨ (∃ t ∈ J, insert c t = s) ↔ _
     simp only [K,G,J,mem_pathFamily]
+    rfl
   have hw : d2.word = cycleWord m hm := by
     change
       (((orderedFaces F).map (fun T => Symbol.pair T a) ++
@@ -865,20 +874,20 @@ theorem pathChosen_labelInterval (m lo n : Nat) (h : lo + n ≤ m + 1) (x : Labe
       cases n with
       | zero =>
           simp only [labelInterval, FiniteIndependentPathGreedy.pathChosen,
-            Finset.not_mem_empty]
+            Finset.notMem_empty]
           omega
       | succ n =>
           cases n with
           | zero =>
               simp only [labelInterval, FiniteIndependentPathGreedy.pathChosen,
-                Finset.not_mem_empty]
+                Finset.notMem_empty]
               omega
           | succ n =>
               cases n with
               | zero =>
                   simp only [labelInterval, FiniteIndependentPathGreedy.pathChosen,
                     Finset.mem_singleton, Fin.ext_iff]
-                  dsimp
+                  dsimp only
                   omega
               | succ n =>
                   change x ∈ insert (⟨lo + 1, by omega⟩ : Label m)
@@ -886,7 +895,7 @@ theorem pathChosen_labelInterval (m lo n : Nat) (h : lo + n ≤ m + 1) (x : Labe
                       (labelInterval m (lo + 3) n (by omega))) ↔ _
                   rw [Finset.mem_insert, ih n (by omega) (lo + 3) (by omega)]
                   simp only [Fin.ext_iff]
-                  dsimp
+                  dsimp only
                   omega
 
 private theorem chosen_second (m : Nat) (hm : 3 ≤ m) (hr : m % 3 ≠ 2) :

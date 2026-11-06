@@ -10,6 +10,9 @@ import Mathlib.Combinatorics.SimpleGraph.Star
 /-! SOURCE_ONLY_UNCOMPILED. Vertices are the literal hub 0 and rim 1,...,m.
 The rows below are proved by uniqueness from explicit two-edge tree walks.
 No row, root, spanning-tree or parent correctness is an input field. -/
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 noncomputable section
 open Set Finset SimpleGraph
 namespace D5.S3.Geometry.OriginalLabelTwoSum.PhysicalMWheel
@@ -54,14 +57,14 @@ private theorem consecutive_ne (m : Nat) (hm : 3 ≤ m) (i : Fin m) :
 def rimGraph (m : Nat) (hm : 3 ≤ m) : SimpleGraph (AllMWheel.Label m) where
   Adj x y := ∃ i : Fin m,
     s(x,y) = s(AllMWheel.label m i,AllMWheel.label m (AllMWheel.rimIndex m (by omega) i))
-  symm := by
+  symm := ⟨by
     rintro x y ⟨i,hi⟩
-    exact ⟨i,Sym2.eq_swap.trans hi⟩
-  loopless := by
+    exact ⟨i,Sym2.eq_swap.trans hi⟩⟩
+  loopless := ⟨by
     rintro x ⟨i,hi⟩
     rcases Sym2.eq_iff.mp hi with ⟨hx,hy⟩ | ⟨hx,hy⟩
     · exact consecutive_ne m hm i (hx.symm.trans hy)
-    · exact consecutive_ne m hm i (hy.symm.trans hx)
+    · exact consecutive_ne m hm i (hy.symm.trans hx)⟩
 
 def data (m : Nat) (hm : 3 ≤ m) : GraphData (AllMWheel.Label m) (AllMWheel.Label m) where
   graph := SimpleGraph.starGraph 0 ⊔ rimGraph m hm
@@ -112,7 +115,7 @@ def rimPath (m : Nat) (hm : 3 ≤ m) (i : Fin m) :
 
 theorem rimPath_isPath (m : Nat) (hm : 3 ≤ m) (i : Fin m) :
     (rimPath m hm i).IsPath := by
-  simp [rimPath,SimpleGraph.Walk.cons_isPath_iff,label_ne_zero,
+  simp [rimPath,SimpleGraph.Walk.isPath_def,label_ne_zero,
     consecutive_ne m hm i]
 
 theorem fundamental_rows (m : Nat) (hm : 3 ≤ m) (i : Fin m) :
@@ -168,11 +171,13 @@ def ambientGraph (m : Nat) (hm : 3 ≤ m) (f : AllMWheel.Label m ↪ V) :
 
 theorem ambient_row (m : Nat) (hm : 3 ≤ m) (f : AllMWheel.Label m ↪ V) (i : Fin m) :
     (ambientGraph m hm f).rows.row i = (AllMWheel.rimEdge m (by omega) i).image f := by
-  rw [ambientGraph,PhysicalLabels.row,fundamental_rows]
+  dsimp only [ambientGraph]
+  rw [PhysicalLabels.row,fundamental_rows]
 
 theorem ambient_interface_row (m : Nat) (hm : 3 ≤ m) (f : AllMWheel.Label m ↪ V) :
     (ambientGraph m hm f).rows.row (AllMWheel.interfaceRow m hm) = (AllMWheel.rim m hm).image f := by
-  rw [ambientGraph,PhysicalLabels.row,interface_row]
+  dsimp only [ambientGraph]
+  rw [PhysicalLabels.row,interface_row]
 
 theorem ambient_uniqueInterface (m : Nat) (hm : 3 ≤ m) (f : AllMWheel.Label m ↪ V) :
     (ambientGraph m hm f).UniqueInterface (AllMWheel.interfaceRow m hm) :=
