@@ -11,24 +11,6 @@ internal sealed class DampedIdentityDocument : IScribeDocumentDefinition
         H("Damped convolution identities"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("phi-continuous"),
-                DeclarationHandle.Create(Prefix + "phi_continuous"),
-                H("Continuity of the tent weight"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "The Fejer tent Fourier weight is continuous for every real bandwidth."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("phi-eq-zero"),
-                DeclarationHandle.Create(Prefix + "phi_eq_zero"),
-                H("Vanishing outside the bandwidth"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "For positive b, the Fejer tent weight vanishes at every t with absolute value at least b."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("admissible-laws"),
                 DeclarationHandle.Create(Prefix + "admissible_laws"),
                 H("Continuity, positivity and Fourier support"),
@@ -134,7 +116,7 @@ internal sealed class DampedIdentityDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For logarithmic spectral counting asymptotics, paired Laplace data, continuous w and M at least four, the integrals over [-M,M] of w(t) times the regular part at damping(n)+i*t times exp(i*t*y) converge to the corresponding boundary integral at i*t."))),
+                    "For logarithmic spectral counting asymptotics, paired Laplace data, continuous w and M at least one, the integrals over [-M,M] of w(t) times the regular part at damping(n)+i*t times exp(i*t*y) converge to the corresponding boundary integral at i*t."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("admissible-bounded"),

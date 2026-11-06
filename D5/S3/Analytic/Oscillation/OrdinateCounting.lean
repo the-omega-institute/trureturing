@@ -13,7 +13,7 @@ import D5.S3.Analytic.Asymptotics.LogarithmicPhaseStiffness
 
 namespace D5.S3.Analytic.Oscillation.OrdinateCounting
 
-open D5.S3.Analytic.Fourier.AngularFejerKernel (phi)
+open D5.S3.Analytic.Fourier.AngularFejerKernel (phi phi_eq_zero phi_continuous)
 open Set Filter MeasureTheory
 open scoped Topology BigOperators
 
@@ -263,11 +263,6 @@ theorem lower_triangular_mass (S : Spectrum) (hN : CountAsymptotic S) :
   filter_upwards [eventually_gt_atTop (0 : ℝ)] with M hM
   rw [triangular_integral S hM, ← integral_div]
 
-private lemma phi_zero_of_le {b t : ℝ} (hb : 0 < b) (ht : b ≤ |t|) :
-    phi b t = 0 := by
-  rw [phi, max_eq_left]
-  exact sub_nonpos.mpr ((le_div_iff₀ hb).mpr (by simpa using ht))
-
 private lemma localized_sums (S : Spectrum) {b U R : ℝ} (hb : 0 < b)
     (hR : U + b ≤ R) :
     Wplus S b U = ∑ j ∈ S.cut R, (S.mult j : ℝ) * phi b (S.gamma j - U) ∧
@@ -283,7 +278,7 @@ private lemma localized_sums (S : Spectrum) {b U R : ℝ} (hb : 0 < b)
     exact le_trans (by linarith) (le_abs_self _)
   constructor
   · exact Finset.sum_subset hsub (fun j _ hj => by
-      rw [phi_zero_of_le hb (hout j hj), mul_zero])
+      rw [phi_eq_zero hb (hout j hj), mul_zero])
   · simp only [windowMass, Nat.cast_sum, Nat.cast_ite, Nat.cast_zero]
     exact Finset.sum_subset hsub (fun j _ hj => ite_eq_right (not_lt.mpr (hout j hj)))
 
@@ -315,15 +310,13 @@ private lemma window_integral_bound {b : ℝ} (hb : 0 < b) (g a d : ℝ) :
     hb.le, show 0 ≤ g + b - (g - b) by linarith,
     show g + b - (g - b) = 2 * b by ring] using hh
 
-private lemma phi_continuous (b g : ℝ) : Continuous (fun U : ℝ => phi b (g - U)) := by
-  exact continuous_const.max
-    (continuous_const.sub ((continuous_const.sub continuous_id).abs.div_const b))
-
 private lemma phi_integral_lower {b g a d : ℝ} (hb : 0 < b)
     (hga : a ≤ g - b / 2) (hgd : g + b / 2 ≤ d) :
     b / 2 ≤ ∫ U in Icc a d, phi b (g - U) := by
+  have hphi : Continuous (fun U : ℝ => phi b (g - U)) :=
+    (phi_continuous b).comp (continuous_const.sub continuous_id)
   have hi : IntegrableOn (fun U : ℝ => phi b (g - U)) (Icc a d) :=
-    (phi_continuous b g).integrableOn_Icc
+    hphi.integrableOn_Icc
   have hsub : Icc (g - b / 2) (g + b / 2) ⊆ Icc a d :=
     fun U hU => ⟨hga.trans hU.1, hU.2.trans hgd⟩
   have hm := setIntegral_mono_set hi
@@ -332,7 +325,7 @@ private lemma phi_integral_lower {b g a d : ℝ} (hb : 0 < b)
   have hl : (∫ _U in Icc (g - b / 2) (g + b / 2), (1 / 2 : ℝ)) ≤
       ∫ U in Icc (g - b / 2) (g + b / 2), phi b (g - U) := by
     apply setIntegral_mono_on (integrableOn_const (by simp))
-      ((phi_continuous b g).continuousOn.integrableOn_Icc) measurableSet_Icc
+      (hphi.continuousOn.integrableOn_Icc) measurableSet_Icc
     intro U hU
     apply le_trans _ (le_max_right _ _)
     have ha : |g - U| ≤ b / 2 := abs_le.mpr ⟨by linarith [hU.2], by linarith [hU.1]⟩
@@ -381,10 +374,12 @@ theorem select_upper_band (S : Spectrum) (hN : CountAsymptotic S) {b : ℝ} (hb 
   let w : ℝ → ℝ := fun U => ∑ j ∈ s, (S.mult j : ℝ) * phi b (S.gamma j - U)
   let n : ℝ → ℝ := fun U =>
     ∑ j ∈ s, if |S.gamma j - U| < b then (S.mult j : ℝ) else 0
+  have hphi (j : S.index) : Continuous (fun U : ℝ => phi b (S.gamma j - U)) :=
+    (phi_continuous b).comp (continuous_const.sub continuous_id)
   have hwint : IntegrableOn w (Icc T (2 * T)) := by
     apply integrable_finsetSum
     intro j _
-    exact ((phi_continuous b (S.gamma j)).const_mul (S.mult j : ℝ)).integrableOn_Icc
+    exact ((hphi j).const_mul (S.mult j : ℝ)).integrableOn_Icc
   have hnterm (j : S.index) :
       IntegrableOn (fun U : ℝ => if |S.gamma j - U| < b then (S.mult j : ℝ) else 0)
         (Icc T (2 * T)) := by
@@ -453,7 +448,7 @@ theorem select_upper_band (S : Spectrum) (hN : CountAsymptotic S) {b : ℝ} (hb 
           (integral_nonneg (fun _ => le_max_left (0 : ℝ) _))
       _ = ∫ U in Icc T (2 * T), w U := by
         rw [integral_finsetSum s (fun j _ =>
-          ((phi_continuous b (S.gamma j)).const_mul (S.mult j : ℝ)).integrableOn_Icc)]
+          ((hphi j).const_mul (S.mult j : ℝ)).integrableOn_Icc)]
         simp only [integral_const_mul]
   have hex : ∃ U ∈ Icc T (2 * T),
       n U ≤ 12 * w U ∧ (b * c / 100) * Real.log T ≤ w U := by

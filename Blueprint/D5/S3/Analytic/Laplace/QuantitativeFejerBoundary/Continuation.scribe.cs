@@ -191,30 +191,12 @@ internal sealed class ContinuationDocument : IScribeDocumentDefinition
                     "A measurable real function whose damped integrands are integrable on the nonnegative ray for every positive real parameter has a complex differentiable Laplace transform throughout the full right strip."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("cut-complement"),
-                DeclarationHandle.Create(Prefix + "cutComplement"),
-                H("Reindexing the complementary spectral tail"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "The indices outside the finite spectral cutoff at T are in bijection with the indices whose ordinates are strictly greater than T."))),
-                DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("pole-tsum-summable"),
-                DeclarationHandle.Create(Prefix + "pole_tsum_summable"),
-                H("Absolute summability of paired poles"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "For a positive spectrum with logarithmic counting asymptotics, the paired pole terms form a summable family at every complex argument."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("pole-tsum-holomorphic"),
                 DeclarationHandle.Create(Prefix + "pole_tsum_holomorphic"),
                 H("Holomorphy of the full paired pole sum"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For a positive spectrum with logarithmic counting asymptotics, the sum of all paired pole terms is complex differentiable throughout the full right strip."))),
+                    "For a positive spectrum with logarithmic counting asymptotics, the sum of all paired pole terms is complex differentiable throughout the full right strip, away from the poles. At a pole the Lean expression uses the convention 1/0 = 0."))),
                 DescribeRole.Theorem))));
 }

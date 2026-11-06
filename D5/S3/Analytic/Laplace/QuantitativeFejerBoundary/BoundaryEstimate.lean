@@ -284,7 +284,7 @@ private lemma admissible_oscillatory_bound {g w : ℝ → ℝ} {b M y B : ℝ}
 lemma boundary_regular_integral_bound (S : Spectrum) (hN : CountAsymptotic S)
     {f : ℝ → ℝ} {k : ℕ} (D : PairedLaplaceData S f k) :
     ∃ A : ℝ, 0 < A ∧ ∀ (g w : ℝ → ℝ) (b M y : ℝ),
-      0 < b → 4 ≤ M → 1 ≤ y → Admissible g w b M →
+      0 < b → 1 ≤ M → 1 ≤ y → Admissible g w b M →
       ‖(((1/(2*Real.pi) : ℝ) : ℂ) *
         ∫ t in Icc (-M) M, (w t : ℂ)*regularPart S D.J M ((t : ℂ)*Complex.I)*
           Complex.exp (Complex.I*(t : ℂ)*(y : ℂ)))‖ ≤

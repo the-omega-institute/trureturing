@@ -11,6 +11,69 @@ internal sealed class AngularFejerKernelDocument : IScribeDocumentDefinition
         H("Angular Fejer kernels"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("phi-continuous"),
+                DeclarationHandle.Create(Prefix + "phi_continuous"),
+                H("Continuity of the tent weight"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The Fejer tent Fourier weight is continuous for every real bandwidth."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("phi-eq-zero"),
+                DeclarationHandle.Create(Prefix + "phi_eq_zero"),
+                H("Vanishing outside the bandwidth"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For positive b, the Fejer tent weight vanishes at every t with absolute value at least b."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("kernel-cap"),
+                DeclarationHandle.Create(Prefix + "K_cap"),
+                H("The height of the Fejer kernel"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For positive b, K(b,v) is at most b/(2*pi) at every real v."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("kernel-continuous"),
+                DeclarationHandle.Create(Prefix + "K_continuous"),
+                H("Continuity of the Fejer kernel"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The angular Fejer kernel is continuous for every real bandwidth."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("notched-kernel-continuous"),
+                DeclarationHandle.Create(Prefix + "H_continuous"),
+                H("Continuity of the notched kernel"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The notched Fejer kernel is continuous for every real bandwidth and notch location."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("angular-fourier"),
+                DeclarationHandle.Create(Prefix + "aft_fourier"),
+                H("Angular and cyclic Fourier conventions"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The angular Fourier transform at t equals the cyclic Fourier transform at t/(2*pi)."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("log-ell-nonneg"),
+                DeclarationHandle.Create(Prefix + "log_ell_nonneg"),
+                H("Nonnegativity of the logarithmic envelope"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For nonnegative u, log(exp(1)+u) is nonnegative."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("fejer-law"),
                 DeclarationHandle.Create(Prefix + "fejer_law"),
                 H("The angular Fejer kernel"),

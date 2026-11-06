@@ -30,10 +30,6 @@ def OmegaPMLog (f : ℝ → ℝ) : Prop :=
 
 private lemma phi_nonneg (b t : ℝ) : 0 ≤ phi b t := le_max_left _ _
 
-private lemma phi_zero {b t : ℝ} (hb : 0 < b) (ht : b ≤ |t|) : phi b t = 0 := by
-  rw [phi, max_eq_left]
-  exact sub_nonpos.mpr ((le_div_iff₀ hb).mpr (by simpa using ht))
-
 private lemma cut_card_le (S : Spectrum) (M : ℝ) : (S.cut M).card ≤ S.N M := by
   classical
   rw [Spectrum.N, Finset.card_eq_sum_ones]
@@ -84,7 +80,7 @@ private lemma negative_spectral (S : Spectrum) {M y : ℝ} (hM : 0 < M)
     (S.mult j : ℝ) * phi M (S.gamma j) * Real.cos (S.gamma j * y))
     (fun j _ hj => by
       have hj' : ¬ S.gamma j ≤ M := by simpa [Spectrum.cut] using hj
-      rw [phi_zero hM (by rw [abs_of_pos (S.gamma_pos j)]; linarith), mul_zero, zero_mul])
+      rw [phi_eq_zero hM (by rw [abs_of_pos (S.gamma_pos j)]; linarith), mul_zero, zero_mul])
   rw [← heq, Wminus, Finset.mul_sum]
   apply Finset.sum_le_sum
   intro j hj
@@ -104,9 +100,9 @@ private lemma positive_spectral (S : Spectrum) {b U y : ℝ}
   have hU0 : 0 < U := by linarith
   have hpsi (j : S.index) : psi b U (S.gamma j) = -phi b (S.gamma j - U) / 2 := by
     have hcentral : phi b (S.gamma j) = 0 :=
-      phi_zero hb (by rw [abs_of_pos (S.gamma_pos j)]; exact (hgap j).le)
+      phi_eq_zero hb (by rw [abs_of_pos (S.gamma_pos j)]; exact (hgap j).le)
     have hfar : phi b (S.gamma j + U) = 0 :=
-      phi_zero hb (by rw [abs_of_pos (by linarith [S.gamma_pos j])]; linarith [hgap j])
+      phi_eq_zero hb (by rw [abs_of_pos (by linarith [S.gamma_pos j])]; linarith [hgap j])
     rw [psi, hcentral, hfar]
     ring
   have hsub : S.cut (U + b) ⊆ S.cut (2 * (U + b)) := by
@@ -117,7 +113,7 @@ private lemma positive_spectral (S : Spectrum) {b U y : ℝ}
     (S.mult j : ℝ) * phi b (S.gamma j - U) * Real.cos (S.gamma j * y))
     (fun j _ hj => by
       have hj' : ¬ S.gamma j ≤ U + b := by simpa [Spectrum.cut] using hj
-      rw [phi_zero hb (by exact (show b ≤ S.gamma j - U by linarith).trans (le_abs_self _)),
+      rw [phi_eq_zero hb (by exact (show b ≤ S.gamma j - U by linarith).trans (le_abs_self _)),
         mul_zero, zero_mul])
   have hmain : -(∑ j ∈ S.cut (2 * (U + b)), (S.mult j : ℝ) * psi b U (S.gamma j) *
       Real.cos (S.gamma j * y)) =
@@ -136,7 +132,7 @@ private lemma positive_spectral (S : Spectrum) {b U y : ℝ}
       (ha j (Finset.mem_filter.mpr ⟨hj, hjwin⟩))
       (mul_nonneg (Nat.cast_nonneg (S.mult j)) (phi_nonneg b (S.gamma j - U)))
     nlinarith
-  · rw [phi_zero hb (le_of_not_gt hjwin)]
+  · rw [phi_eq_zero hb (le_of_not_gt hjwin)]
     simp
 
 private lemma count_upper (S : Spectrum) (hN : CountAsymptotic S) :
@@ -296,11 +292,6 @@ private lemma positive_growth (p : ℕ) (b cb : ℝ) (hb : 0 < b) (hcb : 0 < cb)
     _ ≤ (F / cb) * W + 12 * Real.log 8 * W := add_le_add hscale le_rfl
     _ = _ := by ring
 
-private lemma ell_nonneg {u : ℝ} (hu : 0 ≤ u) : 0 ≤ ell u := by
-  apply Real.log_nonneg
-  have he : 1 ≤ Real.exp 1 := Real.one_le_exp_iff.mpr (by norm_num)
-  linarith
-
 private lemma log_le_ell {u : ℝ} (hu : 0 < u) : Real.log u ≤ ell u := by
   exact Real.log_le_log hu (by linarith [Real.exp_pos (1 : ℝ)])
 
@@ -317,7 +308,7 @@ private lemma envelope_of_eventual (S : Spectrum) {f : ℝ → ℝ} {k : ℕ}
         e * f u ≤ |e * f u| := le_abs_self _
         _ = |f u| := by rw [abs_mul, he, one_mul]
         _ ≤ B := hbound u ⟨hu, hsmall⟩
-    linarith [mul_nonneg hκ (ell_nonneg hu)]
+    linarith [mul_nonneg hκ (log_ell_nonneg hu)]
   · have hlarge : max Y 2 < u := lt_of_not_ge hsmall
     have hh := hY u ((le_max_left _ _).trans hlarge.le)
       (by have := le_max_right Y 2; linarith)
@@ -405,7 +396,7 @@ private lemma negative_excursions (S : Spectrum) (hN : CountAsymptotic S)
         ((S.cut M).card : ℝ) * Real.log 8 := by
       simpa only [Real.log_pow] using hlog
     have hell := hg (S.cut M).card y (by exact_mod_cast cut_card_le S M) hy hlog'
-    obtain ⟨hfi, hform⟩ := hboundary (K M) (phi M) M M y hM0 hM hy
+    obtain ⟨hfi, hform⟩ := hboundary (K M) (phi M) M M y hM0 hM1 hy
       (Or.inl ⟨rfl, rfl, le_rfl⟩) hbound
     have he1 := he M y (by linarith) le_rfl hLy
     have hform1 : |(∫ u in Ici 0, f u * K M (y - u)) +
@@ -474,7 +465,7 @@ private lemma positive_excursions (S : Spectrum) (hN : CountAsymptotic S)
         (s.card : ℝ) * Real.log 8 := by
       simpa only [Real.log_pow] using hlog
     have hell := hg U (Wplus S b U) s.card y hU hmass hd hy hlog'
-    obtain ⟨hfi, hform⟩ := hboundary (H b U) (psi b U) b (U + b) y hb hM hy
+    obtain ⟨hfi, hform⟩ := hboundary (H b U) (psi b U) b (U + b) y hb hM1 hy
       (Or.inr ⟨U, hUT, rfl, rfl, le_rfl⟩) hbound
     have hRM : R ≤ U + b := by have := (le_max_left R _).trans hT; linarith [hU.1]
     have he1 := hR (U + b) hRM b y le_rfl (by linarith [hU.1]) hLy

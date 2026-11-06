@@ -22,17 +22,6 @@ noncomputable section
 
 set_option backward.isDefEq.respectTransparency false
 
-private lemma aft_cyclic (g : ℝ → ℝ) (t : ℝ) :
-    aft g t = FourierTransform.fourier (fun v => (g v : ℂ)) (t / (2 * Real.pi)) := by
-  rw [Real.fourier_real_eq_integral_exp_smul]
-  apply integral_congr_ae
-  filter_upwards [] with v
-  simp only [smul_eq_mul]
-  have he : (((-2 * Real.pi * v * (t / (2 * Real.pi)) : ℝ) : ℂ) * Complex.I) =
-      -Complex.I * (t : ℂ) * (v : ℂ) := by
-    push_cast; field_simp
-  rw [he, mul_comm]
-
 private lemma angular_inversion {g w : ℝ → ℝ} (hg : Continuous g)
     (hgi : Integrable g) (hwi : Integrable w)
     (hft : ∀ t : ℝ, aft g t = (w t : ℂ)) (v : ℝ) :
@@ -42,7 +31,7 @@ private lemma angular_inversion {g w : ℝ → ℝ} (hg : Continuous g)
   have he (t : ℝ) : FourierTransform.fourier (fun u => (g u : ℂ)) t =
       (w (2 * Real.pi * t) : ℂ) := by
     have hh := hft (2 * Real.pi * t)
-    rw [aft_cyclic] at hh
+    rw [aft_fourier] at hh
     simpa only [mul_div_cancel_left₀ _ hp.ne'] using hh
   have hfi : Integrable (FourierTransform.fourier (fun u => (g u : ℂ))) := by
     exact (hwi.ofReal.comp_mul_left' hp.ne').congr
@@ -66,21 +55,10 @@ private lemma angular_inversion {g w : ℝ → ℝ} (hg : Continuous g)
   rw [hc] at hv
   simpa only [abs_of_pos (inv_pos.mpr hp), Complex.real_smul, one_div] using hv.symm
 
-lemma phi_continuous (b : ℝ) : Continuous (phi b) := by
-  unfold phi; fun_prop
-
-lemma phi_eq_zero {b t : ℝ} (hb : 0 < b) (ht : b ≤ |t|) : phi b t = 0 := by
-  exact max_eq_left ((sub_nonpos.mpr ((le_div_iff₀ hb).mpr (by simpa using ht))))
-
 lemma admissible_laws {g w : ℝ → ℝ} {b M : ℝ} (hb : 0 < b)
     (had : Admissible g w b M) :
     Continuous g ∧ Continuous w ∧ (∀ v, 0 ≤ g v) ∧ Integrable g ∧ Integrable w ∧
       (∀ t, aft g t = (w t : ℂ)) ∧ (∀ t, M < |t| → w t = 0) := by
-  have hK (b : ℝ) : Continuous (K b) := by
-    unfold K
-    exact continuous_const.mul ((Real.continuous_sinc.comp (by fun_prop)).pow 2)
-  have hH (b U : ℝ) : Continuous (H b U) := by
-    unfold H; exact (hK b).mul (continuous_const.sub (Real.continuous_cos.comp (by fun_prop)))
   have hphi : Integrable (phi b) := by
     apply (phi_continuous b).integrable_of_hasCompactSupport
     apply HasCompactSupport.intro (isCompact_Icc (a := -b) (b := b))
@@ -91,7 +69,7 @@ lemma admissible_laws {g w : ℝ → ℝ} {b M : ℝ} (hb : 0 < b)
     exact (lt_of_not_ge hh).le
   rcases had with ⟨rfl, rfl, hbM⟩ | ⟨U, hU, rfl, rfl, hUM⟩
   · obtain ⟨hpos, hgi, _, hft, _⟩ := fejer_law hb
-    exact ⟨hK b, phi_continuous b, hpos, hgi, hphi, hft,
+    exact ⟨K_continuous b, phi_continuous b, hpos, hgi, hphi, hft,
       fun t ht => phi_eq_zero hb (by linarith)⟩
   · obtain ⟨hpos, hgi, _, hft, _⟩ := notched_fejer_law hb hU
     have hw : Continuous (psi b U) := by
@@ -99,7 +77,7 @@ lemma admissible_laws {g w : ℝ → ℝ} {b M : ℝ} (hb : 0 < b)
       exact ((phi_continuous b).sub (((phi_continuous b).comp
         (continuous_id.sub continuous_const)).div_const 2)).sub
         (((phi_continuous b).comp (continuous_id.add continuous_const)).div_const 2)
-    refine ⟨hH b U, hw, fun v => (hpos v).1, hgi, ?_, hft, ?_⟩
+    refine ⟨H_continuous b U, hw, fun v => (hpos v).1, hgi, ?_, hft, ?_⟩
     · exact (hphi.sub ((hphi.comp_sub_right U).div_const 2)).sub
         ((hphi.comp_add_right U).div_const 2)
     · intro t ht
@@ -393,7 +371,7 @@ lemma admissible_log_integrable {g w : ℝ → ℝ} {b M y : ℝ}
 
 lemma regular_integral_tendsto (S : Spectrum) (hN : CountAsymptotic S)
     {f : ℝ → ℝ} {k : ℕ} (D : PairedLaplaceData S f k)
-    {w : ℝ → ℝ} (hw : Continuous w) {M : ℝ} (hM : 4 ≤ M) (y : ℝ) :
+    {w : ℝ → ℝ} (hw : Continuous w) {M : ℝ} (hM : 1 ≤ M) (y : ℝ) :
     Tendsto (fun n => ∫ t in Icc (-M) M, (w t : ℂ) *
       regularPart S D.J M ((damping n : ℂ) + (t : ℂ) * Complex.I) *
         Complex.exp (Complex.I * (t : ℂ) * (y : ℂ))) atTop
@@ -464,13 +442,7 @@ lemma regular_integral_tendsto (S : Spectrum) (hN : CountAsymptotic S)
 
 lemma admissible_bounded {g w : ℝ → ℝ} {b M : ℝ} (hb : 0 < b)
     (had : Admissible g w b M) (v : ℝ) : |g v| ≤ b / Real.pi := by
-  have hK : K b v ≤ b / (2*Real.pi) := by
-    have hs := Real.abs_sinc_le_one (b*v/2)
-    have hsq : Real.sinc (b*v/2)^2 ≤ 1 := by
-      obtain ⟨hl, hr⟩ := abs_le.mp hs
-      nlinarith
-    unfold K
-    nlinarith [div_pos hb (mul_pos (by norm_num : (0 : ℝ)<2) Real.pi_pos)]
+  have hK := K_cap hb v
   rcases had with ⟨rfl, _, _⟩ | ⟨U, hU, rfl, _, _⟩
   · rw [abs_of_nonneg ((fejer_law hb).1 v)]
     have hpos : 0 ≤ b / (2*Real.pi) := by positivity

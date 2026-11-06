@@ -244,31 +244,7 @@ Lean statement: `D5/S3/Analytic/Laplace/QuantitativeFejerBoundary/Continuation.l
 
 A measurable real function whose damped integrands are integrable on the nonnegative ray for every positive real parameter has a complex differentiable Laplace transform throughout the full right strip.
 
-**Definition 1.21 (Reindexing the complementary spectral tail).**
-
-Lean statement: `D5/S3/Analytic/Laplace/QuantitativeFejerBoundary/Continuation.cutComplement`
-
-*Formalization.* `D5/S3/Analytic/Laplace/QuantitativeFejerBoundary/Continuation.cutComplement` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The indices outside the finite spectral cutoff at T are in bijection with the indices whose ordinates are strictly greater than T.
-
-**Theorem 1.22 (Absolute summability of paired poles).**
-
-Lean statement: `D5/S3/Analytic/Laplace/QuantitativeFejerBoundary/Continuation.pole_tsum_summable`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Laplace/QuantitativeFejerBoundary/Continuation.pole_tsum_summable` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For a positive spectrum with logarithmic counting asymptotics, the paired pole terms form a summable family at every complex argument.
-
-**Theorem 1.23 (Holomorphy of the full paired pole sum).**
+**Theorem 1.21 (Holomorphy of the full paired pole sum).**
 
 Lean statement: `D5/S3/Analytic/Laplace/QuantitativeFejerBoundary/Continuation.pole_tsum_holomorphic`
 
@@ -278,7 +254,7 @@ Lean statement: `D5/S3/Analytic/Laplace/QuantitativeFejerBoundary/Continuation.p
 
 *Commentary.*
 
-For a positive spectrum with logarithmic counting asymptotics, the sum of all paired pole terms is complex differentiable throughout the full right strip.
+For a positive spectrum with logarithmic counting asymptotics, the sum of all paired pole terms is complex differentiable throughout the full right strip, away from the poles. At a pole the Lean expression uses the convention 1/0 = 0.
 
 ## References
 
@@ -289,13 +265,11 @@ For a positive spectrum with logarithmic counting asymptotics, the sum of all pa
 - Truth anchor: `D5/S3/Analytic/Laplace/QuantitativeFejerBoundary/Continuation.continuation`
 - Truth anchor: `D5/S3/Analytic/Laplace/QuantitativeFejerBoundary/Continuation.continuation_holomorphic`
 - Truth anchor: `D5/S3/Analytic/Laplace/QuantitativeFejerBoundary/Continuation.continuation_initial`
-- Truth anchor: `D5/S3/Analytic/Laplace/QuantitativeFejerBoundary/Continuation.cutComplement`
 - Truth anchor: `D5/S3/Analytic/Laplace/QuantitativeFejerBoundary/Continuation.exp_integrable`
 - Truth anchor: `D5/S3/Analytic/Laplace/QuantitativeFejerBoundary/Continuation.laplace_holomorphic`
 - Truth anchor: `D5/S3/Analytic/Laplace/QuantitativeFejerBoundary/Continuation.laplace_integrable`
 - Truth anchor: `D5/S3/Analytic/Laplace/QuantitativeFejerBoundary/Continuation.laplace_sub_const_mul`
 - Truth anchor: `D5/S3/Analytic/Laplace/QuantitativeFejerBoundary/Continuation.pole_tsum_holomorphic`
-- Truth anchor: `D5/S3/Analytic/Laplace/QuantitativeFejerBoundary/Continuation.pole_tsum_summable`
 - Truth anchor: `D5/S3/Analytic/Laplace/QuantitativeFejerBoundary/Continuation.positive_convergence`
 - Truth anchor: `D5/S3/Analytic/Laplace/QuantitativeFejerBoundary/Continuation.rayMeasure`
 - Truth anchor: `D5/S3/Analytic/Laplace/QuantitativeFejerBoundary/Continuation.ray_integrable_iff`

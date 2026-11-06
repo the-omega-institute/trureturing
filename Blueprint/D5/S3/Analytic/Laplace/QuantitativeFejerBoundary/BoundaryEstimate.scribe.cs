@@ -17,6 +17,6 @@ internal sealed class BoundaryEstimateDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For a spectrum with logarithmic counting asymptotics and paired Laplace data of growth degree k, there is a positive A such that every admissible kernel of positive bandwidth b, M at least four and y at least one has regular boundary integral of norm at most A*(1+b)*M^(max(k,1))/y. The constant is independent of the kernel, bandwidth, cutoff and translation."))),
+                    "For a spectrum with logarithmic counting asymptotics and paired Laplace data of growth degree k, there is a positive A such that every admissible kernel of positive bandwidth b, M at least one and y at least one has regular boundary integral of norm at most A*(1+b)*M^(max(k,1))/y. The constant is independent of the kernel, bandwidth, cutoff and translation."))),
                 DescribeRole.Theorem))));
 }

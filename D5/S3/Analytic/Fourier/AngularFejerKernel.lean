@@ -35,11 +35,17 @@ noncomputable def ell (u : ℝ) : ℝ := Real.log (Real.exp 1 + u)
 
 open StatLean.HypothesisTesting
 
+lemma phi_continuous (b : ℝ) : Continuous (phi b) := by
+  unfold phi; fun_prop
+
+lemma phi_eq_zero {b t : ℝ} (hb : 0 < b) (ht : b ≤ |t|) : phi b t = 0 := by
+  exact max_eq_left ((sub_nonpos.mpr ((le_div_iff₀ hb).mpr (by simpa using ht))))
+
 private lemma K_nonneg {b : ℝ} (hb : 0 < b) (v : ℝ) : 0 ≤ K b v := by
   unfold K
   positivity
 
-private lemma K_cap {b : ℝ} (hb : 0 < b) (v : ℝ) : K b v ≤ b / (2 * Real.pi) := by
+lemma K_cap {b : ℝ} (hb : 0 < b) (v : ℝ) : K b v ≤ b / (2 * Real.pi) := by
   have hs := Real.abs_sinc_le_one (b * v / 2)
   have hs2 : Real.sinc (b * v / 2) ^ 2 ≤ 1 := by
     rcases abs_le.mp hs with ⟨hlo, hhi⟩
@@ -64,11 +70,11 @@ private lemma H_le {b : ℝ} (hb : 0 < b) (U v : ℝ) : H b U v ≤ 2 * K b v :=
   unfold H
   nlinarith [Real.neg_one_le_cos (U*v), K_nonneg hb v]
 
-private lemma K_continuous (b : ℝ) : Continuous (K b) := by
+lemma K_continuous (b : ℝ) : Continuous (K b) := by
   unfold K
   exact continuous_const.mul ((Real.continuous_sinc.comp (by fun_prop)).pow 2)
 
-private lemma H_continuous (b U : ℝ) : Continuous (H b U) := by
+lemma H_continuous (b U : ℝ) : Continuous (H b U) := by
   exact (K_continuous b).mul (continuous_const.sub (Real.continuous_cos.comp (by fun_prop)))
 
 private lemma K_tail {b : ℝ} (hb : 0 < b) (hi : Integrable (K b))
@@ -124,7 +130,7 @@ private lemma K_integrable {b : ℝ} (hb : 0 < b) : Integrable (K b) := by
 private lemma K_mass {b : ℝ} (hb : 0 < b) : (∫ v, K b v) = 1 := by
   rw [integral_congr_ae (K_ae b), integral_fejerKernel hb]
 
-private lemma aft_fourier (g : ℝ → ℝ) (t : ℝ) :
+lemma aft_fourier (g : ℝ → ℝ) (t : ℝ) :
     aft g t = 𝓕 (fun v => (g v : ℂ)) (t / (2 * Real.pi)) := by
   rw [Real.fourier_real_eq_integral_exp_smul]
   apply integral_congr_ae
@@ -216,8 +222,12 @@ private lemma H_mass {b U : ℝ} (hb : 0 < b) (hU : 2*b < U) :
     (∫ v, H b U v) = 1 := by
   have hz : psi b U 0 = 1 := by
     have hu : 0 < U := by linarith
-    have hd : 1 ≤ U / b := (le_div_iff₀ hb).mpr (by linarith)
-    simp [psi, phi, abs_of_pos hu, max_eq_left (by linarith : 1 - U / b ≤ 0)]
+    have hneg : phi b (0 - U) = 0 := phi_eq_zero hb (by
+      rw [zero_sub, abs_neg, abs_of_pos hu]; linarith)
+    have hpos : phi b (0 + U) = 0 := phi_eq_zero hb (by
+      rw [zero_add, abs_of_pos hu]; linarith)
+    rw [psi, hneg, hpos]
+    norm_num [phi]
   have h := H_aft hb U 0
   rw [aft_zero, hz, Complex.ofReal_one] at h
   exact_mod_cast h
@@ -281,7 +291,7 @@ private lemma log_moment_integrable {b : ℝ} (hb : 0 < b)
         rw [hr]
         ring
 
-private lemma log_ell_nonneg {u : ℝ} (hu : 0 ≤ u) : 0 ≤ ell u := by
+lemma log_ell_nonneg {u : ℝ} (hu : 0 ≤ u) : 0 ≤ ell u := by
   apply Real.log_nonneg
   have he : 1 ≤ Real.exp 1 := Real.one_le_exp_iff.mpr (by norm_num)
   linarith

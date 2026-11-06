@@ -105,12 +105,8 @@ private lemma laplace_eq_finite_poles_full_strip (S : Spectrum) (hN : CountAsymp
     laplace f s = -(1 / 2 : ℂ) * (∑ j ∈ S.cut (2 * M), poleTerm S j s) +
       regularPart S D.J M s := by
   classical
-  have hsplit := (pole_tsum_summable S hN s).sum_add_tsum_subtype_compl (S.cut (2 * M))
-  have heq : (∑' j : {j : S.index // j ∉ S.cut (2 * M)}, poleTerm S j.val s) =
-      ∑' j : {j : S.index // 2 * M < S.gamma j}, poleTerm S j.val s :=
-    (cutComplement S (2 * M)).tsum_eq (fun j => poleTerm S j.val s)
-  rw [heq] at hsplit
-  rw [laplace_eq_poles_full_strip S hN D hbound hs, ← hsplit, regularPart]
+  rw [laplace_eq_poles_full_strip S hN D hbound hs, pole_sum_split S hN (2 * M) s,
+    regularPart]
   ring
 
 
@@ -157,7 +153,7 @@ private lemma damped_boundary_identity (S : Spectrum) (hN : CountAsymptotic S)
 
 private lemma boundary_integrable_and_identity (S : Spectrum) (hN : CountAsymptotic S)
     {f : ℝ → ℝ} {k : ℕ} (D : PairedLaplaceData S f k) (hbound : HasLogEnvelope f)
-    {g w : ℝ → ℝ} {b M y : ℝ} (hb : 0 < b) (hM : 4 ≤ M) (hy : 1 ≤ y)
+    {g w : ℝ → ℝ} {b M y : ℝ} (hb : 0 < b) (hM : 1 ≤ M) (hy : 1 ≤ y)
     (had : Admissible g w b M) :
     IntegrableOn (fun u => f u*g (y-u)) (Ici 0) ∧
       ((∫ u in Ici 0, (f u-polePolynomial S M u)*g (y-u) : ℝ) : ℂ) =
@@ -245,7 +241,7 @@ private lemma boundary_integrable_and_identity (S : Spectrum) (hN : CountAsympto
 theorem quantitative_boundary_formula (S : Spectrum) (hN : CountAsymptotic S)
     {f : ℝ → ℝ} {k : ℕ} (D : PairedLaplaceData S f k) :
     ∃ A : ℝ, 0 < A ∧ ∀ (g w : ℝ → ℝ) (b M y : ℝ),
-      0 < b → 4 ≤ M → 1 ≤ y → Admissible g w b M → HasLogEnvelope f →
+      0 < b → 1 ≤ M → 1 ≤ y → Admissible g w b M → HasLogEnvelope f →
       IntegrableOn (fun u => f u * g (y - u)) (Set.Ici 0) ∧
       |(∫ u in Set.Ici 0, f u * g (y - u)) +
         ∑ j ∈ S.cut (2 * M), (S.mult j : ℝ) * w (S.gamma j) * Real.cos (S.gamma j * y)|

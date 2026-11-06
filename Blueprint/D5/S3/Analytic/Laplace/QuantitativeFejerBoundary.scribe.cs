@@ -41,7 +41,7 @@ internal sealed class QuantitativeFejerBoundaryDocument : IScribeDocumentDefinit
                     "Under the same spectral and Laplace hypotheses, there is a positive constant "
                     + "depending only on the given spectrum and Laplace data. For every Fejer kernel "
                     + "or notched Fejer kernel of positive bandwidth b whose Fourier transform is "
-                    + "supported in the interval from minus M to M, with M at least four and y at "
+                    + "supported in the interval from minus M to M, with M at least one and y at "
                     + "least one, the convolution of f with the kernel over the nonnegative ray is "
                     + "absolutely integrable whenever f has a one-sided logarithmic envelope. Its "
                     + "difference from minus the finite cosine sum over ordinates at most twice M, "

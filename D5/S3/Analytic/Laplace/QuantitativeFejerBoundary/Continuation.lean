@@ -104,25 +104,20 @@ private lemma strip_convex : Convex ℝ strip := by
   exact (((convex_halfSpace_re_gt 0).inter (convex_halfSpace_re_lt 1)).inter
     (convex_halfSpace_im_gt (-1))).inter (convex_halfSpace_im_lt 1)
 
-private lemma pole_differentiable (S : Spectrum) (j : S.index) :
-    DifferentiableOn ℂ (poleTerm S j) strip := by
+def rightStrip : Set ℂ := {s | 0 < s.re ∧ s.re < 1}
+
+private lemma pole_holomorphic (S : Spectrum) (j : S.index) :
+    DifferentiableOn ℂ (poleTerm S j) rightStrip := by
   intro s hs
   have hm : s - (S.gamma j : ℂ) * Complex.I ≠ 0 := by
-    intro h
-    have hh := congrArg Complex.re h
+    intro h; have hh := congrArg Complex.re h
     simp at hh
     exact (ne_of_gt hs.1) hh
   have hp : s + (S.gamma j : ℂ) * Complex.I ≠ 0 := by
-    intro h
-    have hh := congrArg Complex.re h
+    intro h; have hh := congrArg Complex.re h
     simp at hh
     exact (ne_of_gt hs.1) hh
-  have hid : DifferentiableAt ℂ (fun z : ℂ => z) s := differentiableAt_id
-  have hmder := hid.sub (differentiableAt_const ((S.gamma j : ℂ) * Complex.I))
-  have hpder := hid.add (differentiableAt_const ((S.gamma j : ℂ) * Complex.I))
-  exact ((((differentiableAt_const (1 : ℂ)).div hmder hm).add
-    ((differentiableAt_const (1 : ℂ)).div hpder hp)).const_mul
-    (S.mult j : ℂ)).differentiableWithinAt
+  exact (poleTerm_differentiableAt S j hm hp).differentiableWithinAt
 
 private lemma pole_tail_bound (S : Spectrum) (j : S.index) (hj : 8 < S.gamma j)
     {s : ℂ} (hs : s ∈ strip) :
@@ -131,34 +126,8 @@ private lemma pole_tail_bound (S : Spectrum) (j : S.index) (hj : 8 < S.gamma j)
     have := Complex.norm_le_abs_re_add_abs_im s
     have hr : |s.re| < 1 := by rw [abs_of_pos hs.1]; exact hs.2.1
     linarith [hs.2.2]
-  have hg := S.gamma_pos j
-  have hgamma : ‖(S.gamma j : ℂ) * Complex.I‖ = S.gamma j := by
-    simp [abs_of_pos hg]
-  have hm := norm_sub_norm_le ((S.gamma j : ℂ) * Complex.I) s
-  have hp := norm_sub_norm_le (-((S.gamma j : ℂ) * Complex.I)) s
-  rw [hgamma, norm_sub_rev] at hm
-  rw [norm_neg, hgamma, norm_sub_rev, sub_neg_eq_add] at hp
-  have hm0 : s - (S.gamma j : ℂ) * Complex.I ≠ 0 := norm_pos_iff.mp (by linarith)
-  have hp0 : s + (S.gamma j : ℂ) * Complex.I ≠ 0 := norm_pos_iff.mp (by linarith)
-  have heq : poleTerm S j s = (S.mult j : ℂ) * (2 * s) /
-      ((s - (S.gamma j : ℂ) * Complex.I) * (s + (S.gamma j : ℂ) * Complex.I)) := by
-    unfold poleTerm
-    field_simp
-    ring
-  rw [heq, norm_div, norm_mul, norm_mul, norm_mul, Complex.norm_natCast]
-  norm_num only [Complex.norm_ofNat]
-  apply (div_le_iff₀ (mul_pos (norm_pos_iff.mpr hm0) (norm_pos_iff.mpr hp0))).mpr
-  have hl : S.gamma j / 2 ≤ ‖s - (S.gamma j : ℂ) * Complex.I‖ := by linarith
-  have hr : S.gamma j / 2 ≤ ‖s + (S.gamma j : ℂ) * Complex.I‖ := by linarith
-  have hprod := mul_le_mul hl hr (by positivity) (norm_nonneg _)
-  have he : (64 * ((S.mult j : ℝ) / (S.gamma j) ^ 2)) *
-      ((S.gamma j / 2) * (S.gamma j / 2)) = 16 * (S.mult j : ℝ) := by
-    field_simp
-    ring
-  have hh := mul_le_mul_of_nonneg_left hprod
-    (show 0 ≤ 64 * ((S.mult j : ℝ) / (S.gamma j) ^ 2) by positivity)
-  rw [he] at hh
-  nlinarith [show (0 : ℝ) ≤ (S.mult j : ℝ) from Nat.cast_nonneg _]
+  exact (pole_bound S j (by linarith)).trans
+    (by nlinarith [show 0 ≤ (S.mult j : ℝ) / (S.gamma j) ^ 2 by positivity])
 
 def continuation (S : Spectrum) (J : ℂ → ℂ) (s : ℂ) : ℂ :=
   -(1 / 2 : ℂ) * (∑ j ∈ S.cut 8, poleTerm S j s) + regularPart S J 4 s
@@ -172,7 +141,7 @@ lemma continuation_holomorphic (S : Spectrum) (hN : CountAsymptotic S)
     apply Complex.differentiableOn_tsum_of_summable_norm
       (((htail (2 * 4) (by norm_num)).1).mul_left 64)
     · intro j
-      exact pole_differentiable S j.val
+      exact (pole_holomorphic S j.val).mono (fun s hs => ⟨hs.1, hs.2.1⟩)
     · exact strip_open
     · intro j s hs
       exact pole_tail_bound S j.val (by nlinarith [j.property]) hs
@@ -182,7 +151,7 @@ lemma continuation_holomorphic (S : Spectrum) (hN : CountAsymptotic S)
   have hfin : DifferentiableOn ℂ (fun s => ∑ j ∈ S.cut 8, poleTerm S j s) strip := by
     apply DifferentiableOn.fun_sum
     intro j _
-    exact pole_differentiable S j
+    exact (pole_holomorphic S j).mono (fun s hs => ⟨hs.1, hs.2.1⟩)
   unfold continuation regularPart
   exact (hfin.const_mul (-(1 / 2 : ℂ))).add (hJ.sub (ht.const_mul (1 / 2 : ℂ)))
 
@@ -307,8 +276,6 @@ lemma laplace_sub_const_mul {a f : ℝ → ℝ} (ha : Measurable a)
 
 set_option backward.isDefEq.respectTransparency false
 
-def rightStrip : Set ℂ := {s | 0 < s.re ∧ s.re < 1}
-
 lemma rightStrip_open : IsOpen rightStrip :=
   (isOpen_lt continuous_const Complex.continuous_re).inter
     (isOpen_lt Complex.continuous_re continuous_const)
@@ -371,71 +338,6 @@ lemma laplace_holomorphic {f : ℝ → ℝ} (hf : Measurable f)
   exact ((positive_laplace_holomorphic hq hqpos hqc).sub
     (positive_laplace_holomorphic hr hrpos hrc)).congr heq
 
-private lemma pole_holomorphic (S : Spectrum) (j : S.index) :
-    DifferentiableOn ℂ (poleTerm S j) rightStrip := by
-  intro s hs
-  have hm : s - (S.gamma j : ℂ) * Complex.I ≠ 0 := by
-    intro h; have hh := congrArg Complex.re h
-    simp at hh
-    exact (ne_of_gt hs.1) hh
-  have hp : s + (S.gamma j : ℂ) * Complex.I ≠ 0 := by
-    intro h; have hh := congrArg Complex.re h
-    simp at hh
-    exact (ne_of_gt hs.1) hh
-  have hid : DifferentiableAt ℂ (fun z : ℂ => z) s := differentiableAt_id
-  exact ((((differentiableAt_const (1 : ℂ)).div
-    (hid.sub (differentiableAt_const _)) hm).add
-    ((differentiableAt_const (1 : ℂ)).div
-      (hid.add (differentiableAt_const _)) hp)).const_mul
-    (S.mult j : ℂ)).differentiableWithinAt
-
-private lemma pole_comparison (S : Spectrum) (j : S.index) {s : ℂ}
-    (hs : ‖s‖ ≤ 3 * S.gamma j / 4) :
-    ‖poleTerm S j s‖ ≤ 32 * ‖s‖ * ((S.mult j : ℝ) / (S.gamma j) ^ 2) := by
-  have hg := S.gamma_pos j
-  have hn : ‖(S.gamma j : ℂ) * Complex.I‖ = S.gamma j := by
-    simp [abs_of_pos hg]
-  have hm := norm_sub_norm_le ((S.gamma j : ℂ) * Complex.I) s
-  have hp := norm_sub_norm_le (-((S.gamma j : ℂ) * Complex.I)) s
-  rw [hn, norm_sub_rev] at hm
-  rw [norm_neg, hn, norm_sub_rev, sub_neg_eq_add] at hp
-  have hl : S.gamma j / 4 ≤ ‖s - (S.gamma j : ℂ) * Complex.I‖ := by linarith
-  have hr : S.gamma j / 4 ≤ ‖s + (S.gamma j : ℂ) * Complex.I‖ := by linarith
-  have hm0 : s - (S.gamma j : ℂ) * Complex.I ≠ 0 := norm_pos_iff.mp (by linarith)
-  have hp0 : s + (S.gamma j : ℂ) * Complex.I ≠ 0 := norm_pos_iff.mp (by linarith)
-  have heq : poleTerm S j s = (S.mult j : ℂ) * (2 * s) /
-      ((s - (S.gamma j : ℂ) * Complex.I) * (s + (S.gamma j : ℂ) * Complex.I)) := by
-    unfold poleTerm; field_simp; ring
-  rw [heq, norm_div, norm_mul, norm_mul, norm_mul, Complex.norm_natCast]
-  norm_num only [Complex.norm_ofNat]
-  apply (div_le_iff₀ (mul_pos (norm_pos_iff.mpr hm0) (norm_pos_iff.mpr hp0))).mpr
-  have hprod := mul_le_mul hl hr (by positivity) (norm_nonneg _)
-  have he : (32 * ‖s‖ * ((S.mult j : ℝ) / (S.gamma j) ^ 2)) *
-      ((S.gamma j / 4) * (S.gamma j / 4)) = (S.mult j : ℝ) * (2 * ‖s‖) := by
-    field_simp; ring
-  rw [← he]
-  exact mul_le_mul_of_nonneg_left hprod (by positivity)
-
-def cutComplement (S : Spectrum) (T : ℝ) :
-    {j : S.index // j ∉ S.cut T} ≃ {j : S.index // T < S.gamma j} :=
-  Equiv.subtypeEquivRight (fun j => by classical simp [Spectrum.cut])
-
-lemma pole_tsum_summable (S : Spectrum) (hN : CountAsymptotic S) (s : ℂ) :
-    Summable (fun j : S.index => poleTerm S j s) := by
-  classical
-  let T : ℝ := max 4 (2 * ‖s‖)
-  obtain ⟨C, _, htail⟩ := inverse_square_tail S hN
-  have ht : Summable (fun j : {j : S.index // T < S.gamma j} => poleTerm S j.val s) := by
-    apply Summable.of_norm_bounded
-      (((htail T (le_max_left _ _)).1).mul_left (32 * ‖s‖))
-    intro j
-    apply pole_comparison
-    have hT := le_max_right 4 (2 * ‖s‖)
-    have := j.property
-    dsimp [T] at *
-    nlinarith [norm_nonneg s]
-  exact (S.cut T).summable_compl_iff.mp ((cutComplement S T).symm.summable_iff.mp ht)
-
 lemma pole_tsum_holomorphic (S : Spectrum) (hN : CountAsymptotic S) :
     DifferentiableOn ℂ (fun s => ∑' j : S.index, poleTerm S j s) rightStrip := by
   classical
@@ -461,21 +363,13 @@ lemma pole_tsum_holomorphic (S : Spectrum) (hN : CountAsymptotic S) :
         have := Complex.norm_le_abs_re_add_abs_im z
         rw [abs_of_pos hz.1.1] at this
         linarith [hz.1.2, hz.2]
-      exact (pole_comparison S j.val (by linarith [j.property])).trans
+      exact (pole_bound S j.val (by linarith [j.property])).trans
         (mul_le_mul_of_nonneg_right
           (mul_le_mul_of_nonneg_left hn (by norm_num)) (by positivity))
   have hf : DifferentiableOn ℂ
       (fun z => ∑ j ∈ S.cut (2 * M), poleTerm S j z) U :=
     DifferentiableOn.fun_sum (fun j _ => (pole_holomorphic S j).mono inter_subset_left)
-  have he (z : ℂ) : (∑' j : S.index, poleTerm S j z) =
-      (∑ j ∈ S.cut (2 * M), poleTerm S j z) +
-        ∑' j : {j : S.index // 2 * M < S.gamma j}, poleTerm S j.val z := by
-    have hh := (pole_tsum_summable S hN z).sum_add_tsum_subtype_compl (S.cut (2 * M))
-    have heq : (∑' j : {j : S.index // j ∉ S.cut (2 * M)}, poleTerm S j.val z) =
-        ∑' j : {j : S.index // 2 * M < S.gamma j}, poleTerm S j.val z :=
-      (cutComplement S (2 * M)).tsum_eq (fun j => poleTerm S j.val z)
-    rw [heq] at hh
-    exact hh.symm
+  have he := pole_sum_split S hN (2 * M)
   have hd : DifferentiableAt ℂ (fun z => ∑' j : S.index, poleTerm S j z) s := by
     simp_rw [he]
     exact (hf.add ht).differentiableAt (hU.mem_nhds hsU)
