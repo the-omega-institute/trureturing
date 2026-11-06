@@ -33,56 +33,74 @@ internal sealed class FinchConjecture23CaptureOffsetRefutationDocument : IScribe
                 H("The original universal offset identity is false"),
                 StatementSource.FromAuthor(Disp(new Formula.Not(V("claim")))), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
-                    "For k=2 the explicit positive-index sequence repeats (0,1,1,2). A four-residue argument verifies the recurrence at every n≥3. Periods 1, 2 and 3 fail arbitrarily far out, while period 4 holds from the first term, so the least positive eventual period is 4 and the least four-preperiod is 0. Here gaps(2)=1. The run from 5 to 9 has no extra interior zeros; any allowed earlier start would be 3 or 4, whose values are nonzero. Thus the least capture endpoint is 9, and 9-0 is not 6. This is completion of the existing #23615 hand route, without a discovery or priority claim. It proves neither an infinite exceptional family nor a corrected k≥3 or positive-preperiod law."))),
+                    "For k=2 the explicit positive-index sequence repeats (0,1,1,2). A four-residue argument verifies the recurrence at every n≥3. Periods 1, 2 and 3 fail arbitrarily far out, while period 4 holds from the first term, so the least positive eventual period is 4 and the least four-preperiod is 0. Here gaps(2)=1. The run from 5 to 9 has no extra interior zeros; any allowed earlier start would be 3 or 4, whose values are nonzero. Thus the least capture endpoint is 9, and 9-0 is not 6. This is a small-case refutation, with no originality or priority claim. It proves neither an infinite exceptional family nor a corrected k≥3 or positive-preperiod law."))),
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("finch-2026-conjecture-23-capture-offset"), ResolutionKind.Refuted)))));
 
     private static Formula SourceFormula()
     {
         var k = V("k"); var x = V("x"); var n = V("n");
-        return All("k", Nat(), All("x", Sequence(), Iff(Call("IsSourceSequence", k, x), And(
-            All("n", Nat(), Imp(Le(D(1), n), Imp(Lt(n, k), Eq(Call("x", n), D(0))))),
-            Eq(Call("x", k), D(1)),
-            All("n", Nat(), Imp(Le(Add(k, D(1)), n), Eq(Call("x", n),
-                Add(Call("x", Sub(n, D(1))), new Formula.Power(Call("x", Sub(n, k)), D(2)))))))));
+        var initial = All("n", Nat(), Imp(Le(D(1), n), Imp(Lt(n, k), Eq(Call("x", n), D(0)))));
+        var rhs = Add(Call("x", Sub(n, D(1))), new Formula.Power(Call("x", Sub(n, k)), D(2)));
+        var step = All("n", Nat(), Imp(Le(Add(k, D(1)), n), Eq(Call("x", n), rhs)));
+        var body = And(initial, Eq(Call("x", k), D(1)), step);
+        return All("k", Nat(), All("x", Sequence(), Iff(Call("IsSourceSequence", k, x), body)));
     }
-    private static Formula PeriodFormula() => All("x", Sequence(), All("p", Nat(),
-        Iff(Call("IsEventualPeriod", V("x"), V("p")), And(Lt(D(0), V("p")),
-            Ex("m", Nat(), All("n", Nat(), Imp(Lt(V("m"), V("n")),
-                Eq(Call("x", Add(V("n"), V("p"))), Call("x", V("n")))))))));
-    private static Formula LeastPeriodFormula() => All("x", Sequence(), All("p", Nat(),
-        Iff(Call("HasLeastEventualPeriod", V("x"), V("p")), And(
-            Call("IsEventualPeriod", V("x"), V("p")), All("q", Nat(),
-                Imp(Call("IsEventualPeriod", V("x"), V("q")), Le(V("p"), V("q")))))));
+    private static Formula PeriodFormula()
+    {
+        var tail = All("n", Nat(), Imp(Lt(V("m"), V("n")),
+            Eq(Call("x", Add(V("n"), V("p"))), Call("x", V("n")))));
+        var body = And(Lt(D(0), V("p")), Ex("m", Nat(), tail));
+        return All("x", Sequence(), All("p", Nat(), Iff(Call("IsEventualPeriod", V("x"), V("p")), body)));
+    }
+    private static Formula LeastPeriodFormula()
+    {
+        var lower = All("q", Nat(), Imp(Call("IsEventualPeriod", V("x"), V("q")), Le(V("p"), V("q"))));
+        var body = And(Call("IsEventualPeriod", V("x"), V("p")), lower);
+        return All("x", Sequence(), All("p", Nat(), Iff(Call("HasLeastEventualPeriod", V("x"), V("p")), body)));
+    }
     private static Formula RunFormula()
     {
-        var k=V("k"); var x=V("x"); var r=V("r"); var g=V("g"); var n=V("n"); var i=V("i");
-        return All("k", Nat(), All("x", Sequence(), All("r", Nat(), All("g", Nat(),
-            Iff(Call("IsRun", k,x,r,g), And(Le(Add(k,D(1)),r), Le(D(1),g),
-                All("i",Nat(),Imp(Le(i,g),Eq(Call("x",Add(r,Mul(D(4),i))),D(0)))),
-                All("n",Nat(),Imp(Lt(r,n),Imp(Lt(n,Add(r,Mul(D(4),g))),
-                    Imp(new Formula.Not(Eq(Call("NatMod",Sub(n,r),D(4)),D(0))),new Formula.Not(Eq(Call("x",n),D(0))))))))))));
+        var k = V("k"); var x = V("x"); var r = V("r"); var g = V("g"); var n = V("n"); var i = V("i");
+        var listed = All("i", Nat(), Imp(Le(i, g), Eq(Call("x", Add(r, Mul(D(4), i))), D(0))));
+        var offGrid = new Formula.Not(Eq(Call("NatMod", Sub(n, r), D(4)), D(0)));
+        var nonzero = new Formula.Not(Eq(Call("x", n), D(0)));
+        var interior = All("n", Nat(), Imp(Lt(r, n), Imp(Lt(n, Add(r, Mul(D(4), g))), Imp(offGrid, nonzero))));
+        var body = And(Le(Add(k, D(1)), r), Le(D(1), g), listed, interior);
+        var predicate = Iff(Call("IsRun", k, x, r, g), body);
+        return All("k", Nat(), All("x", Sequence(), All("r", Nat(), All("g", Nat(), predicate))));
     }
-    private static Formula Endpoint(Formula t) => Ex("r", Nat(), And(
-        Call("IsRun",V("k"),V("x"),V("r"),Call("gaps",V("k"))),
-        Eq(t,Add(V("r"),Mul(D(4),Call("gaps",V("k")))))));
-    private static Formula CaptureFormula() => All("k",Nat(),All("x",Sequence(),All("z",Nat(),
-        Iff(Call("IsCapturePoint",V("k"),V("x"),V("z")),And(Endpoint(V("z")),
-            All("t",Nat(),Imp(Endpoint(V("t")),Le(V("z"),V("t"))))))));
-    private static Formula FourTail(Formula m) => All("n",Nat(),Imp(Lt(m,V("n")),
-        Eq(Call("x",Add(V("n"),D(4))),Call("x",V("n")))));
-    private static Formula PreperiodFormula() => All("x",Sequence(),All("m",Nat(),
-        Iff(Call("IsPreperiod",V("x"),V("m")),And(FourTail(V("m")),
-            All("t",Nat(),Imp(FourTail(V("t")),Le(V("m"),V("t")))))));
+    private static Formula Endpoint(Formula t)
+    {
+        var run = Call("IsRun", V("k"), V("x"), V("r"), Call("gaps", V("k")));
+        var end = Eq(t, Add(V("r"), Mul(D(4), Call("gaps", V("k")))));
+        return Ex("r", Nat(), And(run, end));
+    }
+    private static Formula CaptureFormula()
+    {
+        var lower = All("t", Nat(), Imp(Endpoint(V("t")), Le(V("z"), V("t"))));
+        var body = And(Endpoint(V("z")), lower);
+        var predicate = Iff(Call("IsCapturePoint", V("k"), V("x"), V("z")), body);
+        return All("k", Nat(), All("x", Sequence(), All("z", Nat(), predicate)));
+    }
+    private static Formula FourTail(Formula m) => All("n", Nat(), Imp(Lt(m, V("n")),
+        Eq(Call("x", Add(V("n"), D(4))), Call("x", V("n")))));
+    private static Formula PreperiodFormula()
+    {
+        var lower = All("t", Nat(), Imp(FourTail(V("t")), Le(V("m"), V("t"))));
+        var body = And(FourTail(V("m")), lower);
+        return All("x", Sequence(), All("m", Nat(), Iff(Call("IsPreperiod", V("x"), V("m")), body)));
+    }
     private static Formula ClaimBody()
     {
-        var k=V("k"); var x=V("x");
-        var existence=All("k",Nat(),Imp(Le(D(2),k),Ex("x",Sequence(),Call("IsSourceSequence",k,x))));
-        var conclusion=Ex("z",Nat(),Ex("m",Nat(),And(Call("IsCapturePoint",k,x,V("z")),
-            Call("IsPreperiod",x,V("m")),Eq(Sub(Cast(V("z")),Cast(V("m"))),D(6)))));
-        return And(existence,All("k",Nat(),All("x",Sequence(),Imp(Le(D(2),k),
-            Imp(Call("IsSourceSequence",k,x),Imp(Or(Eq(Call("NatMod",k,D(4)),D(2)),Eq(Call("NatMod",k,D(4)),D(3))),
-                Imp(Call("HasLeastEventualPeriod",x,D(4)),conclusion)))))));
+        var k = V("k"); var x = V("x");
+        var existence = All("k", Nat(), Imp(Le(D(2), k), Ex("x", Sequence(), Call("IsSourceSequence", k, x))));
+        var conclusion = Ex("z", Nat(), Ex("m", Nat(), And(Call("IsCapturePoint", k, x, V("z")),
+            Call("IsPreperiod", x, V("m")), Eq(Sub(Cast(V("z")), Cast(V("m"))), D(6)))));
+        var residue = Or(Eq(Call("NatMod", k, D(4)), D(2)), Eq(Call("NatMod", k, D(4)), D(3)));
+        var conditional = Imp(Le(D(2), k), Imp(Call("IsSourceSequence", k, x),
+            Imp(residue, Imp(Call("HasLeastEventualPeriod", x, D(4)), conclusion))));
+        return And(existence, All("k", Nat(), All("x", Sequence(), conditional)));
     }
     private static DocumentBlock Node(string name,string title,Formula formula,string prose) => Describe.Lean(
         DescribeId.Create("finch-capture-offset-"+name.ToLowerInvariant()),DeclarationHandle.Create(Prefix+name),

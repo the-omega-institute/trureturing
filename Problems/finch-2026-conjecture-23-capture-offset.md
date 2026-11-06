@@ -28,9 +28,8 @@ that x(n+4)=x(n) for all n>μ. N_A(k) is the least positive eventual period.
 
 The conjecture gives a uniform offset between two independently defined
 least indices. Its stated domain contains a purely periodic boundary case.
-This contribution completes the existing #23615 route; the hand case was
-already disclosed. It makes no discovery, priority or blind-prediction claim.
-The earlier unresolved #22730 remains a separate unresolved contribution.
+The binding statement and source conventions are specified in #23615.
+The small-case refutation makes no originality or priority claim.
 
 ## Gap
 
