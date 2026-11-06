@@ -24,6 +24,10 @@ $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; (0 < n) \Rightarrow ((
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Primes/OeisA369378FermatCovering.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ordowski` (proved) by `D5/S3/Arith/Primes/OeisA369378FermatCovering.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ordowski","declaration_gid":"D5/S3/Arith/Primes/OeisA369378FermatCovering.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* T. Ordowski (2024). *OEIS A369378: Fermat-number covering conjecture*. URL: <https://oeis.org/A369378>.

@@ -32,13 +32,16 @@ internal sealed class OeisA369378FermatCoveringDocument : IScribeDocumentDefinit
                     + "2^(2^j)+1 divides the target by the congruences 2^(2^n) = 1 and 2^k = -1 "
                     + "in its residue ring, and it is a proper divisor. The finite fidelity examples "
                     + "at n = 1 and n = 2 certify the boundary primes 11 and 47.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ordowski"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("a369378-" + name),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
