@@ -2,7 +2,9 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.Probability.KingmanPointwise
 import Reg.Support.DependentFamily
 
-/-! Complete source reconstruction and actual laws for the dependent observation families. -/
+/-! Complete source reconstruction and actual laws for the dependent observation families.
+Whole-family variation, sensitivity, observational dependence and exact source binding
+remain unfinished: https://github.com/the-omega-institute/trureturing/issues/27172. -/
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Analytic.Probability.KingmanEstimates
@@ -43,7 +45,7 @@ abbrev arena : Arena where
 theorem source_bridge :
     (type_of% @kingman_subadditive.{u}) ↔ arena.{u}.Law actual := Iff.rfl
 
-theorem actual_law : arena.{u}.Law actual := @kingman_subadditive.{u}
+theorem actual_law : arena.{u}.Law actual := source_bridge.mp @kingman_subadditive.{u}
 
 end Reg.D5.S3.Analytic.Probability.KingmanPointwise
 

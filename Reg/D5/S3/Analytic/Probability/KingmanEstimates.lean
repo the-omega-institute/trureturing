@@ -2,7 +2,9 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.Probability.KingmanEstimates
 import Reg.Support.DependentFamily
 
-/-! Complete source reconstruction and actual laws for the dependent observation families. -/
+/-! Complete source reconstruction and actual laws for the dependent observation families.
+Whole-family variation, sensitivity, observational dependence and exact source binding
+remain unfinished: https://github.com/the-omega-institute/trureturing/issues/27172. -/
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Analytic.Probability.KingmanEstimates
@@ -52,7 +54,7 @@ abbrev arena : Arena where
 
 theorem source_bridge : (type_of% @greedy_block_bound) ↔ arena.Law actual := Iff.rfl
 
-theorem actual_law : arena.Law actual := @greedy_block_bound
+theorem actual_law : arena.Law actual := source_bridge.mp @greedy_block_bound
 
 end Reg.D5.S3.Analytic.Probability.KingmanEstimates.Greedy
 
@@ -82,7 +84,7 @@ abbrev arena : Arena where
 theorem source_bridge :
     (type_of% @ae_tendsto_comp_iterate_div_nat.{u}) ↔ arena.{u}.Law actual := Iff.rfl
 
-theorem actual_law : arena.{u}.Law actual := @ae_tendsto_comp_iterate_div_nat.{u}
+theorem actual_law : arena.{u}.Law actual := source_bridge.mp @ae_tendsto_comp_iterate_div_nat.{u}
 
 end Reg.D5.S3.Analytic.Probability.KingmanEstimates.StationaryTail
 
@@ -119,7 +121,7 @@ abbrev arena : Arena where
 theorem source_bridge :
     (type_of% @measure_kingmanDick_le.{u}) ↔ arena.{u}.Law actual := Iff.rfl
 
-theorem actual_law : arena.{u}.Law actual := @measure_kingmanDick_le.{u}
+theorem actual_law : arena.{u}.Law actual := source_bridge.mp @measure_kingmanDick_le.{u}
 
 end Reg.D5.S3.Analytic.Probability.KingmanEstimates.WeakMaximal
 

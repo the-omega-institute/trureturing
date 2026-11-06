@@ -109,7 +109,11 @@ The generic autonomous theorem does not supply those bridges.
 ## Nonnegative subadditive cocycles
 
 Section 6.4, Theorem 6.4.1 on printed page 343, with proof on printed
-pages 344–347, treats stationary subadditive arrays. The book's formulation
+pages 344–347, gives Liggett's version of Kingman's theorem for subadditive
+arrays. It assumes subadditivity from time zero, stationarity of the
+nonoverlapping blocks at each fixed block size, shift-independent laws
+for the forward rows, integrability of the positive first increment and
+a finite linear lower bound on the means. The book's formulation
 also includes convergence in L1 and an infimum identity for the limiting
 mean. Those conclusions require their own proof and are not part of the
 local theorem.
