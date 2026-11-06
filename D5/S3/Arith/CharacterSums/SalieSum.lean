@@ -6,19 +6,22 @@
    utility: none
    digest: Quadratic-character reciprocal phases are controlled by a quadratic root fiber. -/
 
-import D5.S3.Arith.CharacterSums.GaussSumSubgroupOrbit
-import D5.S3.Arith.FiniteFieldQuadraticCharacterSum
-import Mathlib.NumberTheory.LegendreSymbol.QuadraticChar.GaussSum
+module
+
+public import Mathlib.NumberTheory.LegendreSymbol.QuadraticChar.GaussSum
+public import Mathlib.Analysis.Normed.Ring.Finite
 
 /-!
 # Salié sums and quadratic stationary fibers
 
 For an odd finite field, the quadratic character turns the reciprocal phase
 `a * x + b / x` into a sum over the quadratic fiber `y^2 = 4 * a * b`.
-The boundary formula with `b = 0` is included first; the exact reciprocal
-phase evaluation and its square-root consequence use the same character and
-Gauss-sum bridge.
+Additive orthogonality and completion of the square identify this fiber with
+the reciprocal phase sum. The character is the multiplicative-translation
+eigencharacter in the Gauss-sum shift law.
 -/
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -109,20 +112,87 @@ theorem quadraticPhase_sum_eq (hF : ringChar F ≠ 2) (ψ : AddChar F ℂ)
       rw [MulChar.inv_apply_eq_inv']
       rfl
 
-theorem salieSum_zero_right (hF : ringChar F ≠ 2) (ψ : AddChar F ℂ)
-    (hψ : ψ ≠ 1) (a : F) :
+private theorem quadraticCharacterComplex_isQuadratic :
+    (quadraticCharacterComplex (F := F)).IsQuadratic :=
+  (quadraticChar_isQuadratic F).comp (Int.castRingHom ℂ)
+
+private theorem quadraticCharacterComplex_ne_one (hF : ringChar F ≠ 2) :
+    quadraticCharacterComplex (F := F) ≠ 1 :=
+  (MulChar.ringHomComp_ne_one_iff
+    (Int.cast_injective : Function.Injective (Int.cast : ℤ → ℂ))).mpr
+    (quadraticChar_ne_one hF)
+
+private theorem quadraticCharacterComplex_inv (x : F) :
+    (quadraticCharacterComplex x)⁻¹ = quadraticCharacterComplex x := by
+  rw [← MulChar.inv_apply_eq_inv', quadraticCharacterComplex_isQuadratic.inv]
+
+private theorem quadraticCharacterComplex_sq {x : F} (hx : x ≠ 0) :
+    quadraticCharacterComplex x ^ 2 = 1 := by
+  simpa using congrArg (Int.castRingHom ℂ) (quadraticChar_sq_one hx)
+
+/-- Completing the square evaluates a quadratic phase with linear coefficient one. -/
+theorem quadraticLinearPhase_sum_eq (hF : ringChar F ≠ 2) (ψ : AddChar F ℂ)
+    (hψ : ψ ≠ 1) (t : Fˣ) :
+    (∑ y : F, ψ ((t : F) * y ^ 2 + y)) =
+      (quadraticCharacterComplex (t : F))⁻¹ * quadraticGaussSum ψ *
+        ψ (-(4 * (t : F))⁻¹) := by
+  have htwo : (2 : F) ≠ 0 := Ring.two_ne_zero hF
+  have hfour : (4 : F) ≠ 0 := by
+    simpa only [show (4 : F) = 2 * 2 by ring] using mul_ne_zero htwo htwo
+  have hcomplete (y : F) :
+      (t : F) * y ^ 2 + y =
+        (t : F) * (y + (2 * (t : F))⁻¹) ^ 2 + -(4 * (t : F))⁻¹ := by
+    field_simp [htwo, hfour, t.ne_zero]
+    <;> ring
+  calc
+    _ = ∑ y : F, ψ ((t : F) * (y + (2 * (t : F))⁻¹) ^ 2) *
+        ψ (-(4 * (t : F))⁻¹) := by
+      apply Finset.sum_congr rfl
+      intro y _
+      rw [hcomplete, AddChar.map_add_eq_mul]
+    _ = (∑ y : F, ψ ((t : F) * y ^ 2)) * ψ (-(4 * (t : F))⁻¹) := by
+      rw [Finset.sum_mul]
+      exact Fintype.sum_equiv (Equiv.addRight (2 * (t : F))⁻¹) _ _ (fun _ ↦ rfl)
+    _ = _ := by rw [quadraticPhase_sum_eq hF ψ hψ t]
+
+/-- Additive orthogonality expresses the stationary root fiber as a quadratic Fourier sum. -/
+theorem quadraticRootPhase_fourier (ψ : AddChar F ℂ) (hψ : ψ ≠ 1) (a b : F) :
+    (Fintype.card F : ℂ) * quadraticRootPhase ψ a b =
+      ∑ t : F, ψ (-(4 * a * b) * t) * (∑ y : F, ψ (t * y ^ 2 + y)) := by
+  classical
+  symm
+  calc
+    _ = ∑ y : F, ψ y * ∑ t : F, ψ (t * (y ^ 2 - 4 * a * b)) := by
+      simp_rw [Finset.mul_sum]
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro y _
+      apply Finset.sum_congr rfl
+      intro t _
+      rw [← AddChar.map_add_eq_mul, ← AddChar.map_add_eq_mul]
+      congr 1
+      ring
+    _ = ∑ y : F, if y ^ 2 = 4 * a * b then ψ y * (Fintype.card F : ℂ) else 0 := by
+      apply Finset.sum_congr rfl
+      intro y _
+      rw [AddChar.sum_mulShift _ (AddChar.IsPrimitive.of_ne_one hψ)]
+      simp only [sub_eq_zero, Nat.cast_ite, Nat.cast_zero, mul_ite, mul_zero]
+    _ = _ := by
+      simp only [quadraticRootPhase, Set.toFinset_ofPred, Finset.sum_filter]
+      rw [Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro y _
+      split_ifs <;> ring
+
+theorem salieSum_zero_right (hF : ringChar F ≠ 2) (ψ : AddChar F ℂ) (a : F) :
     salieSum ψ a 0 =
       if a = 0 then 0 else
-        (quadraticCharacterComplex a)⁻¹ * quadraticGaussSum ψ := by
+        quadraticCharacterComplex a * quadraticGaussSum ψ := by
   classical
   by_cases ha : a = 0
-  · have hχ : quadraticCharacterComplex ≠ 1 :=
-      (MulChar.ringHomComp_ne_one_iff
-        (Int.cast_injective : Function.Injective (Int.cast : ℤ → ℂ))).mpr
-        (quadraticChar_ne_one hF)
-    rw [if_pos ha]
+  · rw [if_pos ha]
     simp only [salieSum, ha, zero_mul, zero_add, AddChar.map_zero_eq_one, mul_one]
-    exact MulChar.sum_eq_zero_of_ne_one hχ
+    exact MulChar.sum_eq_zero_of_ne_one (quadraticCharacterComplex_ne_one hF)
   · let u : Fˣ := Units.mk0 a ha
     rw [if_neg ha]
     have hsum : salieSum ψ a 0 = gaussSum quadraticCharacterComplex (ψ.mulShift u) := by
@@ -136,7 +206,7 @@ theorem salieSum_zero_right (hF : ringChar F ≠ 2) (ψ : AddChar F ℂ)
         (quadraticCharacterComplex a)⁻¹ := by
       rw [MulChar.inv_apply_eq_inv']
       congr 1
-    rw [hu]
+    rw [hu, quadraticCharacterComplex_inv]
     rfl
 
 end
