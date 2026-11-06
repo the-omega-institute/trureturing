@@ -10,6 +10,7 @@ import D5.S3.Arith.Robin.ForwardKernel.MellinPolynomialGrowth
 import D5.S3.Arith.Robin.ForwardKernel.Fubini
 import D5.S3.Weil.ZeroData.PairedXiExpansion
 import D5.S3.Analytic.Oscillation.FejerDirichletTransfer
+import D5.S3.AnalyticClosure.Polylogarithm.CompositionBanksLeadingClosure
 import D5.S3.Weil.Mertens.IntegratedExplicit.ActualZeroLaplace
 import D5.S3.Weil.Mertens.Cryptids.DigammaBinet
 import Mathlib.MeasureTheory.Integral.IntegralEqImproper
@@ -191,11 +192,9 @@ theorem forwardRegularPart_growth
         Real.log ‖w‖⁻¹ ≤ ‖w‖⁻¹ - 1 := h
         _ ≤ ‖w‖ + 1 / ‖w‖ := by simp only [one_div]; nlinarith [norm_nonneg w]
   have hlog : ‖Complex.log w‖ ≤ ‖w‖ + 1 / ‖w‖ + Real.pi := by
-    rw [← Complex.re_add_im (Complex.log w), Complex.log_re, Complex.log_im]
-    refine (norm_add_le _ _).trans ?_
-    rw [Complex.norm_real, Real.norm_eq_abs, norm_mul, Complex.norm_real,
-      Real.norm_eq_abs, Complex.norm_I, mul_one]
-    exact add_le_add hlognorm (Complex.abs_arg_le_pi w)
+    have h := D5.S3.AnalyticClosure.Polylogarithm.CompositionBanksLeadingClosure.norm_neg_log_le_abs_log_norm_add_pi w
+    rw [norm_neg] at h
+    exact h.trans (add_le_add hlognorm le_rfl)
   have hdig0 := norm_digamma_sub_log_le_two_add_pi_div_four_norm (lt_of_lt_of_le (by norm_num) hwr)
   have hdig : ‖Complex.digamma w‖ ≤ 8 * (1 + |s.im|) + 30 + 10 * Real.pi := by
     have hsum := norm_add_le (Complex.digamma w - Complex.log w) (Complex.log w)
