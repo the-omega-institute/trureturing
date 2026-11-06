@@ -4,7 +4,7 @@ import D5.S3.Arith.Robin.ActualBalancedExtremizer
 import D5.S3.Arith.Robin.PriceRecord.FullPrimePowerArithmeticSurplus
 import Reg.Support.DependentFamily
 
-/- Source-bound full-telescope audit attempt. Producer status is determined
+/-! Source-bound full-telescope audit attempt. Producer status is determined
 by the current scoped report, never by this comment or kernel success alone. -/
 noncomputable section
 set_option autoImplicit false
@@ -50,6 +50,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hs : (6 : ℕ).primeFactors = Nat.primesLE ⌊(4 : ℝ)⌋₊ := by
     norm_num [Nat.primesLE]
+    decide
   have hb := h (z := 4) (by norm_num) (n := 6) (by norm_num) hs
   change Real.log 2 / (6 * 4 * Real.log 4) <
     (fullPrimePowerResidual 4 - (Real.log (6 : ℝ) - Chebyshev.psi 4) /
@@ -104,11 +105,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Arith.Robin.PriceRecord.FullPrimePowerArithmeticSurplus
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "arg", "fn", "arg", "fn", "arg"]
-                   stateBinder := 2
-                   functionOperand := false
-                   stateOperand := none
-                   booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

@@ -4,7 +4,7 @@ import D5.S3.Arith.Robin.ActualBalancedExtremizer
 import D5.S3.Arith.Robin.PriceRecord.FullPrimePowerArithmeticSurplus
 import Reg.Support.DependentFamily
 
-/- Source-bound full-telescope audit attempt. Producer status is determined
+/-! Source-bound full-telescope audit attempt. Producer status is determined
 by the current scoped report, never by this comment or kernel success alone. -/
 noncomputable section
 set_option autoImplicit false
@@ -64,7 +64,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
   by_contra h
-  push_neg at h
+  push Not at h
   have hc : robinLogMargin = fun _ : ℕ => Real.eulerMascheroniConstant := by
     funext n
     have he := h () n 0
@@ -112,11 +112,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Arith.Robin.ActualBalancedExtremizer
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "fn", "arg", "arg", "body", "arg", "fn", "arg"]
-                   stateBinder := 0
-                   functionOperand := false
-                   stateOperand := none
-                   booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "fn", "arg", "arg", "body", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

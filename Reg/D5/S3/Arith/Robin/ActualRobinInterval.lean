@@ -109,6 +109,7 @@ equality boundaryCap = 55440. A scalar constant realization cannot satisfy
 the current dependent-family actual-dependence slot. This compiled
 obstruction is not a four-slot registration or declared_validated claim. -/
 namespace Reg.D5.S3.Arith.Robin.ActualRobinInterval.BoundaryExposure
+open _root_.D5.S3.Arith.Robin.ActualGlobalBracketing
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Arith.Robin.ActualRobinInterval
 open _root_.D5.S3.Arith.Robin.ActualTwoPriceDefect
