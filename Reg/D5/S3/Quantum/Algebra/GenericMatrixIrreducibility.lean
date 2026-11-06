@@ -57,7 +57,7 @@ def family : Registration arena (type_of% (@det_generic_irreducible)) where
 
 noncomputable def registration :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@det_generic_irreducible) (Realization signature) (type_of% (@Irreducible.{0})) Unit where
+      (@det_generic_irreducible) (Realization signature) Unit Unit where
   unitName := `D5.S3.Quantum.Algebra.GenericMatrixIrreducibility.det_generic_irreducible.__information_unit
   realizationName := `Reg.D5.S3.Quantum.Algebra.GenericMatrixIrreducibility.Determinant.family
   realizationSource := none
@@ -73,7 +73,7 @@ noncomputable def registration :
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (@Irreducible.{0})
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Algebra.GenericMatrixIrreducibility
     definition := none
@@ -138,7 +138,7 @@ def family : Registration arena (type_of% (@charpoly_generic_irreducible_fractio
 
 noncomputable def registration :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-      (@charpoly_generic_irreducible_fractionRing) (Realization signature) (type_of% (@Irreducible.{0})) Unit where
+      (@charpoly_generic_irreducible_fractionRing) (Realization signature) Unit Unit where
   unitName := `D5.S3.Quantum.Algebra.GenericMatrixIrreducibility.charpoly_generic_irreducible_fractionRing.__information_unit
   realizationName := `Reg.D5.S3.Quantum.Algebra.GenericMatrixIrreducibility.Characteristic.family
   realizationSource := none
@@ -154,7 +154,7 @@ noncomputable def registration :
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (@Irreducible.{0})
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Algebra.GenericMatrixIrreducibility
     definition := none

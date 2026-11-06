@@ -20,7 +20,7 @@ internal sealed class GenericMatrixIrreducibilityDocument : IScribeDocumentDefin
                 DeclarationHandle.Create("D5/S3/Quantum/Algebra/GenericMatrixIrreducibility.det_generic_irreducible"),
                 H("The full generic determinant"),
                 StatementSource.FromAuthor(PositiveSize(Call("Irreducible", Call("det", Generic())))),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/etingof2026genericdeterminant")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Factorization/etingof2026genericdeterminant")),
                 Blocks(
                     Paragraph(Text("The clean Apache-2.0 release theorem det_auxiliaryMatrix_irreducible_of_pos " +
                         "is transplanted faithfully. Its private generic matrix is definitionally Matrix.mvPolynomialX. " +
@@ -47,7 +47,7 @@ internal sealed class GenericMatrixIrreducibilityDocument : IScribeDocumentDefin
                 H("The characteristic polynomial over the exact fraction field"),
                 StatementSource.FromAuthor(PositiveSize(Call("Irreducible",
                     Call("map", Call("algebraMap", Ring(), Call("FractionRing", Ring())), Call("charpoly", Generic()))))),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/bresarspenko2013functional")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Factorization/bresarspenko2013functional")),
                 Blocks(
                     Paragraph(Text("This is the irreducibility assertion of closed Lemma 2.1, specialized to Complex with the full " +
                         "coefficient ring retained. No unused quotient-domain companion is introduced. The local formal bridge first " +
