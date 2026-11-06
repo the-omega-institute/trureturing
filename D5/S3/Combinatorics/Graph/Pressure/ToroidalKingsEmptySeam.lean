@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam
+/- GID: D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/ToroidalKingsEmptySeam
+   mirror-B: D5/B/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -9,7 +9,7 @@ import Mathlib.Data.Finset.Powerset
 import Mathlib.Data.Finset.Prod
 import Mathlib.Data.Finset.Max
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import D5.S3.Combinatorics.Graph.RectangularCountEntropy
+import D5.S3.Combinatorics.Graph.Pressure.RectangularCountEntropy
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Lean.Elab.Tactic.Omega
 
@@ -19,7 +19,7 @@ The coordinate and cardinality definitions retain both periodic coordinates and
 all side lengths. The peak counts all cardinality fibers, including the empty set.
 -/
 
-namespace D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam
+namespace D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam
 
 open Finset
 open Filter
@@ -315,4 +315,4 @@ theorem free_log_limit : ∃ s : ℝ, 0 ≤ s ∧
 #print axioms tiling_free_identity
 #print axioms free_log_limit
 end
-end D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam
+end D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam

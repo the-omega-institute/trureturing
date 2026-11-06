@@ -1,5 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Combinatorics.Graph.RectangularCountEntropy
+import D5.S3.Combinatorics.Graph.Pressure.RectangularCountEntropy
 import Reg.Support.DependentFamily
 
 /-! The complete rectangular telescope, observing its source function. -/
@@ -8,7 +8,7 @@ open LeanInformationAudit Set Filter
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open scoped Topology
 
-namespace Reg.D5.S3.Combinatorics.Graph.RectangularCountEntropy
+namespace Reg.D5.S3.Combinatorics.Graph.Pressure.RectangularCountEntropy
 
 noncomputable section
 
@@ -59,10 +59,10 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
   norm_num at h0
 
 def family : Registration arena
-    (type_of% (@_root_.D5.S3.Combinatorics.Graph.RectangularCountEntropy.square_log_limit)) where
+    (type_of% (@_root_.D5.S3.Combinatorics.Graph.Pressure.RectangularCountEntropy.square_log_limit)) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@_root_.D5.S3.Combinatorics.Graph.RectangularCountEntropy.square_log_limit,
+  variation := ⟨@_root_.D5.S3.Combinatorics.Graph.Pressure.RectangularCountEntropy.square_log_limit,
     rejected, rejected_law⟩
   sensitivity := by
     constructor
@@ -75,10 +75,10 @@ def family : Registration arena
   dependence := actual_dependence
 
 noncomputable def registration_1 : Contract.Registration
-    (@_root_.D5.S3.Combinatorics.Graph.RectangularCountEntropy.square_log_limit)
+    (@_root_.D5.S3.Combinatorics.Graph.Pressure.RectangularCountEntropy.square_log_limit)
     (Realization signature) Unit Unit where
-  unitName := `Reg.D5.S3.Combinatorics.Graph.RectangularCountEntropy.square_log_limit.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Graph.RectangularCountEntropy.family
+  unitName := `Reg.D5.S3.Combinatorics.Graph.Pressure.RectangularCountEntropy.square_log_limit.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.Pressure.RectangularCountEntropy.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -94,7 +94,7 @@ noncomputable def registration_1 : Contract.Registration
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Graph.RectangularCountEntropy
+    owner := `D5.S3.Combinatorics.Graph.Pressure.RectangularCountEntropy
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -109,4 +109,4 @@ noncomputable def registration_1 : Contract.Registration
   options := #[]
 
 end
-end Reg.D5.S3.Combinatorics.Graph.RectangularCountEntropy
+end Reg.D5.S3.Combinatorics.Graph.Pressure.RectangularCountEntropy

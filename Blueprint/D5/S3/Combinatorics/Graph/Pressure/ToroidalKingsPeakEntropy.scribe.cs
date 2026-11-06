@@ -2,13 +2,13 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Pressure;
 
 internal sealed class ToroidalKingsPeakEntropyDocument : IScribeDocumentDefinition
 {
-    private const string Owner = "D5/S3/Combinatorics/Graph/ToroidalKingsPeakEntropy.";
+    private const string Owner = "D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsPeakEntropy.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/kotesovec2026a394697");
+        LibraryNoteRef.Create("D5/L/StatisticalMechanics/kotesovec2026a394697");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Toroidal king modal coefficients and the literal square-tiling growth constant.",

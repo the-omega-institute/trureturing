@@ -1,5 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam
+import D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam
 import Reg.Support.DependentFamily
 
 /-! Original finite-count laws with source-indexed numerical observations. -/
@@ -7,9 +7,9 @@ import Reg.Support.DependentFamily
 open LeanInformationAudit Filter
 open scoped Topology
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open _root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam
+open _root_.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam
 
-namespace Reg.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam
+namespace Reg.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam
 
 noncomputable section
 
@@ -76,10 +76,10 @@ private theorem lowerDependence : ObservationalDependence countSignature lowerAc
       Finset.product_eq_biUnion, singleton_powerset]
 
 def lowerFamily : Registration lowerArena
-    (type_of% (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.free_le_torus)) where
+    (type_of% (@_root_.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.free_le_torus)) where
   actual := lowerActual
   bridge := Iff.rfl
-  variation := ⟨@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.free_le_torus,
+  variation := ⟨@_root_.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.free_le_torus,
     lowerRejected, lowerRejectedLaw⟩
   sensitivity := by
     constructor
@@ -92,10 +92,10 @@ def lowerFamily : Registration lowerArena
   dependence := lowerDependence
 
 noncomputable def lowerRegistration : Contract.Registration
-    (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.free_le_torus)
+    (@_root_.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.free_le_torus)
     (Realization countSignature) Unit Unit where
-  unitName := `Reg.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.free_le_torus.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.lowerFamily
+  unitName := `Reg.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.free_le_torus.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.lowerFamily
   realizationSource := none
   generated := false
   arena := .source ⟨lowerArena⟩
@@ -111,7 +111,7 @@ noncomputable def lowerRegistration : Contract.Registration
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam
+    owner := `D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -149,10 +149,10 @@ private theorem upperDependence : ObservationalDependence countSignature upperAc
       Finset.product_eq_biUnion, singleton_powerset]
 
 def upperFamily : Registration upperArena
-    (type_of% (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.torus_le_free)) where
+    (type_of% (@_root_.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.torus_le_free)) where
   actual := upperActual
   bridge := Iff.rfl
-  variation := ⟨@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.torus_le_free,
+  variation := ⟨@_root_.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.torus_le_free,
     upperRejected, upperRejectedLaw⟩
   sensitivity := by
     constructor
@@ -165,10 +165,10 @@ def upperFamily : Registration upperArena
   dependence := upperDependence
 
 noncomputable def upperRegistration : Contract.Registration
-    (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.torus_le_free)
+    (@_root_.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.torus_le_free)
     (Realization countSignature) Unit Unit where
-  unitName := `Reg.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.torus_le_free.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.upperFamily
+  unitName := `Reg.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.torus_le_free.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.upperFamily
   realizationSource := none
   generated := false
   arena := .source ⟨upperArena⟩
@@ -184,7 +184,7 @@ noncomputable def upperRegistration : Contract.Registration
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam
+    owner := `D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -223,10 +223,10 @@ private theorem modalLossDependence : ObservationalDependence countSignature mod
       Finset.product_eq_biUnion, singleton_powerset]
 
 def modalLossFamily : Registration modalLossArena
-    (type_of% (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.count_le_mul_peak)) where
+    (type_of% (@_root_.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.count_le_mul_peak)) where
   actual := modalLossActual
   bridge := Iff.rfl
-  variation := ⟨@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.count_le_mul_peak,
+  variation := ⟨@_root_.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.count_le_mul_peak,
     modalLossRejected, modalLossRejectedLaw⟩
   sensitivity := by
     constructor
@@ -239,10 +239,10 @@ def modalLossFamily : Registration modalLossArena
   dependence := modalLossDependence
 
 noncomputable def modalLossRegistration : Contract.Registration
-    (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.count_le_mul_peak)
+    (@_root_.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.count_le_mul_peak)
     (Realization countSignature) Unit Unit where
-  unitName := `Reg.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.count_le_mul_peak.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.modalLossFamily
+  unitName := `Reg.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.count_le_mul_peak.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.modalLossFamily
   realizationSource := none
   generated := false
   arena := .source ⟨modalLossArena⟩
@@ -258,7 +258,7 @@ noncomputable def modalLossRegistration : Contract.Registration
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam
+    owner := `D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -295,10 +295,10 @@ private theorem modalUpperDependence : ObservationalDependence countSignature mo
   exact ne_of_lt peak_two_gt_one
 
 def modalUpperFamily : Registration modalUpperArena
-    (type_of% (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.peak_le_count)) where
+    (type_of% (@_root_.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.peak_le_count)) where
   actual := modalUpperActual
   bridge := Iff.rfl
-  variation := ⟨@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.peak_le_count,
+  variation := ⟨@_root_.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.peak_le_count,
     modalUpperRejected, modalUpperRejectedLaw⟩
   sensitivity := by
     constructor
@@ -311,10 +311,10 @@ def modalUpperFamily : Registration modalUpperArena
   dependence := modalUpperDependence
 
 noncomputable def modalUpperRegistration : Contract.Registration
-    (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.peak_le_count)
+    (@_root_.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.peak_le_count)
     (Realization countSignature) Unit Unit where
-  unitName := `Reg.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.peak_le_count.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.modalUpperFamily
+  unitName := `Reg.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.peak_le_count.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.modalUpperFamily
   realizationSource := none
   generated := false
   arena := .source ⟨modalUpperArena⟩
@@ -330,7 +330,7 @@ noncomputable def modalUpperRegistration : Contract.Registration
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam
+    owner := `D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -368,10 +368,10 @@ private theorem tilingDependence : ObservationalDependence countSignature tiling
       Finset.product_eq_biUnion, singleton_powerset]
 
 def tilingFamily : Registration tilingArena
-    (type_of% (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.tiling_free_identity)) where
+    (type_of% (@_root_.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.tiling_free_identity)) where
   actual := tilingActual
   bridge := Iff.rfl
-  variation := ⟨@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.tiling_free_identity,
+  variation := ⟨@_root_.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.tiling_free_identity,
     tilingRejected, tilingRejectedLaw⟩
   sensitivity := by
     constructor
@@ -384,10 +384,10 @@ def tilingFamily : Registration tilingArena
   dependence := tilingDependence
 
 noncomputable def tilingRegistration : Contract.Registration
-    (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.tiling_free_identity)
+    (@_root_.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.tiling_free_identity)
     (Realization countSignature) Unit Unit where
-  unitName := `Reg.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.tiling_free_identity.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.tilingFamily
+  unitName := `Reg.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.tiling_free_identity.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.tilingFamily
   realizationSource := none
   generated := false
   arena := .source ⟨tilingArena⟩
@@ -403,7 +403,7 @@ noncomputable def tilingRegistration : Contract.Registration
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam
+    owner := `D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -525,10 +525,10 @@ def logFamily : Registration logArena (type_of% (@free_log_limit)) where
   dependence := logDependence
 
 noncomputable def seamRegistration : Contract.Registration
-    (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.empty_seam_adjacency)
+    (@_root_.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.empty_seam_adjacency)
     (Realization seamSignature) Unit Unit where
-  unitName := `Reg.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.empty_seam_adjacency.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.seamFamily
+  unitName := `Reg.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.empty_seam_adjacency.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.seamFamily
   realizationSource := none
   generated := false
   arena := .source ⟨seamArena⟩
@@ -544,7 +544,7 @@ noncomputable def seamRegistration : Contract.Registration
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam
+    owner := `D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam
     definition := none
     coordinates := #[0, 1]
     readouts := #[{
@@ -558,10 +558,10 @@ noncomputable def seamRegistration : Contract.Registration
   options := #[]
 
 noncomputable def logRegistration : Contract.Registration
-    (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.free_log_limit)
+    (@_root_.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.free_log_limit)
     (Realization logSignature) Unit Unit where
-  unitName := `Reg.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.free_log_limit.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam.logFamily
+  unitName := `Reg.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.free_log_limit.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam.logFamily
   realizationSource := none
   generated := false
   arena := .source ⟨logArena⟩
@@ -577,7 +577,7 @@ noncomputable def logRegistration : Contract.Registration
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam
+    owner := `D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -591,4 +591,4 @@ noncomputable def logRegistration : Contract.Registration
   options := #[]
 
 end
-end Reg.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam
+end Reg.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam

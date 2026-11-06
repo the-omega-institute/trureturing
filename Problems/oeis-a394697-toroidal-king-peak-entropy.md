@@ -5,7 +5,7 @@ doi: null
 url: https://oeis.org/A394697
 triage: theorem
 motivation_gids:
-  - D5/S3/Combinatorics/Graph/ToroidalKingsPeakEntropy
+  - D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsPeakEntropy
 ---
 
 # Toroidal king peak entropy

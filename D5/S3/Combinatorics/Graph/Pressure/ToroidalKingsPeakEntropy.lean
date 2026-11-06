@@ -1,11 +1,11 @@
-/- GID: D5/S3/Combinatorics/Graph/ToroidalKingsPeakEntropy
+/- GID: D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsPeakEntropy
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/ToroidalKingsPeakEntropy
+   mirror-B: D5/B/S3/Combinatorics/Graph/Pressure/ToroidalKingsPeakEntropy
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Toroidal king modal coefficients have the literal square-tiling growth constant. -/
-import D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam
+import D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam
 
 /-! # Toroidal king peak entropy
 
@@ -15,7 +15,7 @@ The maximum ranges over every cardinality and the final statement includes all
 integers at least three, with no parity restriction.
 -/
 
-namespace D5.S3.Combinatorics.Graph.ToroidalKingsPeakEntropy
+namespace D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsPeakEntropy
 
 open ToroidalKingsEmptySeam Filter
 open scoped Topology
@@ -141,4 +141,4 @@ theorem result : ∀ ε : ℝ, 0 < ε → ∃ N : ℕ, 3 ≤ N ∧
 #print axioms result
 
 end
-end D5.S3.Combinatorics.Graph.ToroidalKingsPeakEntropy
+end D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsPeakEntropy

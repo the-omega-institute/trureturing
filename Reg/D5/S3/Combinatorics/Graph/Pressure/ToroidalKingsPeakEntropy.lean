@@ -1,15 +1,15 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Combinatorics.Graph.ToroidalKingsPeakEntropy
+import D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsPeakEntropy
 import Reg.Support.DependentFamily
 
 /-! The original all-integer convergence law with its numerical sequence readout. -/
 
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open _root_.D5.S3.Combinatorics.Graph.ToroidalKingsPeakEntropy
-open _root_.D5.S3.Combinatorics.Graph.ToroidalKingsEmptySeam
+open _root_.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsPeakEntropy
+open _root_.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsEmptySeam
 
-namespace Reg.D5.S3.Combinatorics.Graph.ToroidalKingsPeakEntropy
+namespace Reg.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsPeakEntropy
 
 noncomputable section
 
@@ -81,10 +81,10 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
   simpa only [rootGrowth, peak_zero, Nat.cast_one, Real.one_rpow] using hr.ne
 
 def family : Registration arena
-    (type_of% (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsPeakEntropy.result)) where
+    (type_of% (@_root_.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsPeakEntropy.result)) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsPeakEntropy.result,
+  variation := ⟨@_root_.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsPeakEntropy.result,
     rejected, rejected_law⟩
   sensitivity := by
     constructor
@@ -97,10 +97,10 @@ def family : Registration arena
   dependence := actual_dependence
 
 noncomputable def registration_1 : Contract.Registration
-    (@_root_.D5.S3.Combinatorics.Graph.ToroidalKingsPeakEntropy.result)
+    (@_root_.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsPeakEntropy.result)
     (Realization signature) Unit Unit where
-  unitName := `Reg.D5.S3.Combinatorics.Graph.ToroidalKingsPeakEntropy.result.__information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Graph.ToroidalKingsPeakEntropy.family
+  unitName := `Reg.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsPeakEntropy.result.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsPeakEntropy.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -116,7 +116,7 @@ noncomputable def registration_1 : Contract.Registration
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Graph.ToroidalKingsPeakEntropy
+    owner := `D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsPeakEntropy
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -134,4 +134,4 @@ noncomputable def registration_1 : Contract.Registration
 #print axioms registration_1
 
 end
-end Reg.D5.S3.Combinatorics.Graph.ToroidalKingsPeakEntropy
+end Reg.D5.S3.Combinatorics.Graph.Pressure.ToroidalKingsPeakEntropy

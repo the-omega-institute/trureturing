@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Pressure;
 
 internal sealed class ToroidalKingsEmptySeamDocument : IScribeDocumentDefinition
 {
-    private const string Owner = "D5/S3/Combinatorics/Graph/ToroidalKingsEmptySeam.";
+    private const string Owner = "D5/S3/Combinatorics/Graph/Pressure/ToroidalKingsEmptySeam.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite free and toroidal king configurations, their coefficients, and square tilings.",

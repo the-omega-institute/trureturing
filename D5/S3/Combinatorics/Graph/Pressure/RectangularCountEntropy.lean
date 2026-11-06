@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Graph/RectangularCountEntropy
+/- GID: D5/S3/Combinatorics/Graph/Pressure/RectangularCountEntropy
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/RectangularCountEntropy
+   mirror-B: D5/B/S3/Combinatorics/Graph/Pressure/RectangularCountEntropy
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -19,7 +19,7 @@ the leftover strip has vanishing area proportion. No periodic-boundary premise
 or assumed diagonal limit occurs.
 -/
 
-namespace D5.S3.Combinatorics.Graph.RectangularCountEntropy
+namespace D5.S3.Combinatorics.Graph.Pressure.RectangularCountEntropy
 
 open Set Filter
 open scoped Topology
@@ -100,4 +100,4 @@ theorem square_log_limit (f : ℕ → ℕ → ℝ) (L : ℝ) (hL : 0 ≤ L)
 #print axioms square_log_limit
 
 end
-end D5.S3.Combinatorics.Graph.RectangularCountEntropy
+end D5.S3.Combinatorics.Graph.Pressure.RectangularCountEntropy
