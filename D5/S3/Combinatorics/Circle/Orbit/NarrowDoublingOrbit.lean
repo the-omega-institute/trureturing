@@ -47,7 +47,6 @@ namespace D5.S3.Combinatorics.Circle.NarrowDoublingOrbit
 
 open D5.S1.Words.AssociatedMersenne.CircularWords
 
-/-- Standard representatives, including nonunit seeds. -/
 /-- All-odd-modulus classification, including nonunit seeds.
 Its source proof uses the actual sorted gap cycle; no transitivity,
 recurrence, reduced-modulus classification, or unit-seed premise is added.

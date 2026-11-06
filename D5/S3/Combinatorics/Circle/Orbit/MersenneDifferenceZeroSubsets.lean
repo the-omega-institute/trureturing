@@ -29,7 +29,7 @@ namespace D5.S3.Combinatorics.Circle.MersenneDifferenceZeroSubsets
 open SourceWidth ZeroSumSubsets
 open scoped BigOperators
 
-open private modulus_nat modulus_half pow_rotate_mod mask_image_cast mask_lt_of_ne_univ image_proper from D5.S3.Combinatorics.Circle.Orbit.TwoBitZeroSubsets open private from D5.S3.Combinatorics.Circle.Orbit.ZeroSumSubsets
+open private modulus_nat modulus_half pow_rotate_mod mask_image_cast mask_lt_of_ne_univ image_proper from D5.S3.Combinatorics.Circle.Orbit.TwoBitZeroSubsets
 open D5.S3.Combinatorics.Circle.ZeroSumSubsets (divisible_mask_card)
 
 /- The accepted one-step congruence already includes the wrap at the full

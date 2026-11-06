@@ -34,7 +34,8 @@ namespace D5.S3.Combinatorics.Circle.MersenneExceptional19Stabilizer
 
 open scoped BigOperators
 open SourceWidth ZeroSumSubsets
-open private rotate_pow_val from D5.S3.Combinatorics.Circle.Orbit.MersennePhaseRotationStabilizer open private centered_scaled from D5.S3.Combinatorics.Circle.Orbit.MersennePhaseThreeTrace open private from D5.S3.Combinatorics.Circle.Orbit.ZeroSumSubsets
+open private rotate_pow_val from D5.S3.Combinatorics.Circle.Orbit.MersennePhaseRotationStabilizer
+open private centered_scaled from D5.S3.Combinatorics.Circle.Orbit.MersennePhaseThreeTrace
 open D5.S3.Combinatorics.Circle.ZeroSumSubsets (mask_surjective mask_as_geom)
 open private pow_rotate_mod image_proper mask_lt_of_ne_univ from D5.S3.Combinatorics.Circle.Orbit.TwoBitZeroSubsets
 
