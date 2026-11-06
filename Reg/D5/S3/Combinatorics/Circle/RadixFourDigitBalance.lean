@@ -118,12 +118,9 @@ def spectrumRegistration : Registration spectrumArena
     refine ⟨1, 0, 3, ?_⟩
     have h0 := even_trace_seed_spectrum (n := 1) (by decide) 0
     have h3 := even_trace_seed_spectrum (n := 1) (by decide) 3
-    norm_num only [Nat.reduceMul, Nat.choose_zero_right, Nat.choose_eq_zero_of_lt (by decide : 2 < 3),
-      show (0 : ℕ) ≠ 1 by decide, show (3 : ℕ) ≠ 1 by decide, if_false, add_zero] at h0 h3
-    change (Finset.univ.filter (fun t : Fin (4 ^ 1 - 1) =>
-      3 * evenTrace 1 t.val = modulus (2 * 1) * ((0 : ℤ) - (1 : ℤ)))).card ≠
-      (Finset.univ.filter (fun t : Fin (4 ^ 1 - 1) =>
-      3 * evenTrace 1 t.val = modulus (2 * 1) * ((3 : ℤ) - (1 : ℤ)))).card
+    change spectrumActual.readout () 1 0 + 0 = 1 at h0
+    change spectrumActual.readout () 1 3 + 0 = 0 at h3
+    change spectrumActual.readout () 1 0 ≠ spectrumActual.readout () 1 3
     omega
 
 abbrev zeroSignature : Signature where
@@ -173,9 +170,9 @@ def zeroRegistration : Registration zeroArena
     refine ⟨(), 1, 2, ?_⟩
     have h1 := zero_even_trace_seed_count (n := 1) (by decide)
     have h2 := zero_even_trace_seed_count (n := 2) (by decide)
-    norm_num only [Nat.reduceMul, Nat.choose_one_right, Nat.reduceChoose] at h1 h2
-    change (Finset.univ.filter (fun t : Fin (4 ^ 1 - 1) => evenTrace 1 t.val = 0)).card ≠
-      (Finset.univ.filter (fun t : Fin (4 ^ 2 - 1) => evenTrace 2 t.val = 0)).card
+    change zeroActual.readout () () 1 + 1 = 2 at h1
+    change zeroActual.readout () () 2 + 1 = 6 at h2
+    change zeroActual.readout () () 1 ≠ zeroActual.readout () () 2
     omega
 
 noncomputable def digitAudit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
