@@ -52,8 +52,8 @@ internal sealed class BirkhoffSharpContractionDocument : IScribeDocumentDefiniti
                     Indexed(Max, Member(V("k"), V("K")), Fraction(Call("x", V("k")), Call("y", V("k")))),
                     Indexed(Min, Member(V("k"), V("K")), Fraction(Call("x", V("k")), Call("y", V("k")))))))))));
     private static Formula ThetaDefinition => Context(Equal(Th,
-        Indexed(Max, Seq(V("i"), Comma, V("k"), InMacro, V("I"), Semi,
-                V("j"), Comma, V("l"), InMacro, V("J")),
+        Indexed(Max, Seq(V("i"), Comma, V("k"), Sp, InMacro, Sp, V("I"), Semi,
+                V("j"), Comma, V("l"), Sp, InMacro, Sp, V("J")),
             Fraction(Product(Entry(V("i"), V("j")), Entry(V("k"), V("l"))),
                 Product(Entry(V("i"), V("l")), Entry(V("k"), V("j")))))));
     private static Formula KappaDefinition => Context(Equal(K,
