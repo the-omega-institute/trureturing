@@ -34,13 +34,17 @@ $$\forall n \in \mathbb{N},\; 3 \le n \Rightarrow (2 \cdot (\operatorname{a}\lef
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/MatharA084261.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mathar-2012-a084261-recurrence` (proved) by `D5/S1/Recurrence/MatharA084261.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mathar-2012-a084261-recurrence","declaration_gid":"D5/S1/Recurrence/MatharA084261.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. J. Mathar; Paul Barry (2012). *OEIS A084261, A binomial transform of factorial numbers*. URL: <https://oeis.org/A084261>.
 
 *Commentary.*
 
-Write b(k)=(k/2)! for even k and zero for odd k, and T(c,n)=Sum_{k=0..n} C(n,k)c(k), in the integers. Pascal's identity supplies the shifted-transform relation. Parity and factorial succession give 2*b(k+3)+2*b(k+2)-3*b(k+1)-2*b(k)=k*b(k+1)+k*b(k). The weighted binomial identity, with its vanishing boundary terms and justified subtraction cast, then eliminates the shifted transforms. A nonzero-summand bijection k -> k/2 identifies T(b,n) with the literal finite sum, including odd-term vanishing and both endpoints. Substituting n=m+3 covers every n>=3. The proof is bind-only after inlining normalization and upstream identities; the intended admission basis is open-problem-resolution under issue #27208, with utility none. No escape witness or worldwide novelty is claimed. The domain is inhabited (n=3); a(0)=1 and a(2)=2 distinguish actual observations, and the constant-one sequence fails the same law at n=3. The typed Reg mirror attempts source reconstruction, variation and sensitivity. Compilation alone does not establish declared_validated. Canonical freeze, independent form and mirror reviews, current binding evaluation, a Problems dossier, the resolution claim, and required CI remain publication obligations. This document carries no frozen-resolution or publication claim.
+Write b(k)=(k/2)! for even k and zero for odd k, and T(c,n)=Sum_{k=0..n} C(n,k)c(k), in the integers. Pascal's identity supplies the shifted-transform relation. Parity and factorial succession give 2*b(k+3)+2*b(k+2)-3*b(k+1)-2*b(k)=k*b(k+1)+k*b(k). The weighted binomial identity, with its vanishing boundary terms and justified subtraction cast, then eliminates the shifted transforms. A nonzero-summand bijection k -> k/2 identifies T(b,n) with the literal finite sum, including odd-term vanishing and both endpoints. Substituting n=m+3 covers every n>=3. The proof is bind-only after inlining normalization and upstream identities; the intended admission basis is open-problem-resolution under issue #27208, with utility none. No escape witness or worldwide novelty is claimed. The domain is inhabited (n=3); a(0)=1 and a(2)=2 distinguish actual observations, and the constant-one sequence fails the same law at n=3. The typed Reg mirror attempts source reconstruction, variation and sensitivity. The audit remains declared_unresolved with IE-C050 ClosedTruthReadout, unclassified_form, source.roles; issue #27208 discloses the missing classified source-role binding and certificate. The resolution claim concerns the frozen mathematical result and does not assert declared_validated.
 
 ## References
 
