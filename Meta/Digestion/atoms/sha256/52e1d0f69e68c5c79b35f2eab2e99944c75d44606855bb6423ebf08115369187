@@ -1,0 +1,17 @@
+**约定 C-83.1（本组综合推导的来源范围）。** 以下来源各承担所列数学中间结构；
+归一化、参数桥和新增结论的假设仍以对应条目为准。
+
+| 来源 | 实际使用的内容与边界 |
+| --- | --- |
+| 原卷 C-12.2–C-15.3；本续卷 C-67、C-68、C-73、C-74 | 四角相位行列式、同概率乘积与最大纠缠见证、全周期相位商、底面关联椭圆、水平最短度量及有限端点主项。本组保留这些供应的明确归属，连接到归一化 concurrence、固定质量锐曲率及完整解析完备化；并非重立上述先例。 |
+| [《辛预测完成》§35.5–35.9](SYMPLECTIC_PREDICTIVE_COMPLETION.md#355-固定可见均值后的真正辛约化) | 真正固定矩后再取 $T^3$ 商；§35.7 的反相位、两倍度量及对数坐标尺度；§35.8 的正号角速度。§35.9 的四次不变 Hamilton 函数可改变 $\kappa$，与 C-78.1 固定对角相位操作不同；本组没有从其非线性交换推得固定五阶线性仪器。 |
+| William K. Wootters，*Entanglement of Formation of an Arbitrary State of Two Qubits*，[quant-ph/9709029v2](https://arxiv.org/abs/quant-ph/9709029v2)，式 (2)、(6)–(8) | 归一化二元两因子纯态的约化熵、spin-flip concurrence 及二元谱关系。本文按式 (C76.5) 对应为 $2|\det\mathsf B|$；不借一般混态结论恢复未供应的相干或张量因子。 |
+| Leandro Aolita、Florian Mintert，*Measuring multipartite concurrence with a single factorizable observable*，[quant-ph/0608012v2](https://arxiv.org/abs/quant-ph/0608012v2)，式 (1)–(2) | 两份纯态及反对称子空间投影的经典关系；两二元因子时为 $4P_-^A\otimes P_-^B$。式 (C78.7) 明列重排，条件底面投影概率为 $\mathcal C^2/4$，五态无条件概率另乘 $r^2$。 |
+| G. Romero、C. E. López、F. Lastra、E. Solano、J. C. Retamal，*Direct measurement of concurrence for atomic two-qubit pure states*，[quant-ph/0611016v1](https://arxiv.org/abs/quant-ph/0611016v1)，式 (2)–(5) | 两份已供应纯态经特定电路后的 $P_{gggg}=\mathcal C^2/8$。仅作两份读出背景，不替代本文四项投影的归一化或 Lüders 后态合同。 |
+| Hanbing Fang、Bin Xu、Bairui Yang，*The Gauss-Bonnet formula of a conical metric on a compact Riemann surface*，[1912.01187v3](https://arxiv.org/abs/1912.01187v3)，文首锥度量定义及 Theorem | 紧 Riemann 曲面、锥指数大于 $-1$ 及相对于度量面积 $L^1$ 的曲率条件下的锥 Gauss–Bonnet。C-80、C-81 逐项给这些条件；它不是四概率曲率锐界、等号分类或本度量拓扑的来源。 |
+
+式 (C79.5)–(C79.6) 的四角加权平方和与等号分类、它们与
+式 (C82.5) 的纤维层面存在性等价，是在这里指定的五模式、矩约束及尺度下的综合推导。
+Schmidt 谱、Cauchy–Schwarz、旋转对称度量曲率、解析逆函数与锥 Gauss–Bonnet
+是经典中间工具；上述来源对应不作全局原创性主张。
+

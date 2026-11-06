@@ -6,7 +6,7 @@ A policy-visible loop effect requires nontrivial memory transport.
 
 **Theorem 1.1 (Policy change implies memory change).**
 
-$$\forall x3 \in \left(\forall x3 \in \mathord{\cdot},\; \forall x4 \in \mathord{\cdot},\; \mathord{\cdot}\right),\; \forall x4 \in \mathord{\cdot},\; \forall x5 \in \left(\forall x5 \in \mathord{\cdot},\; \mathord{\cdot}\right),\; \forall x6 \in \mathord{\cdot},\; \mathit{x3}\left(\mathit{x4}, \mathit{x5}\left(\mathit{x6}\right)\right) \ne \mathit{x3}\left(\mathit{x4}, \mathit{x6}\right) \Rightarrow \mathit{x5}\left(\mathit{x6}\right) \ne \mathit{x6}$$
+$$\forall x3 \in \mathord{\cdot} \to \left(\mathord{\cdot} \to \mathord{\cdot}\right),\; \forall x4 \in \mathord{\cdot},\; \forall x5 \in \mathord{\cdot} \to \mathord{\cdot},\; \forall x6 \in \mathord{\cdot},\; \mathit{x3}\left(\mathit{x4}, \mathit{x5}\left(\mathit{x6}\right)\right) \ne \mathit{x3}\left(\mathit{x4}, \mathit{x6}\right) \Rightarrow \mathit{x5}\left(\mathit{x6}\right) \ne \mathit{x6}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/AgencyHolonomy/ActionLoopRequiresMemory.policy_change_implies_memory_change` (`✓ std3`). ∎
 

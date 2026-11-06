@@ -1,0 +1,35 @@
+### 52.5. Scalar endpoint and arbitrary whole feedback
+
+If $x=1$, use the direct endpoint (47.11):
+$U=\lambda U_-$, $\xi=2q>0$ and $g=d^2q$. Since $q\le1$,
+
+$$
+H(2q)=\frac{2q}{25}+\frac{q^2}{6}
+              \le\frac{37q}{150}<d^2q.
+\tag{52.34}
+$$
+
+No singular coefficient containing $1/y$ is evaluated.
+For $x<1$, Sections 52.2--52.4 cover every feasible $x$ and the
+complete triangle, so Lemma 46.2 gives (52.6) for every phase feedback
+and every effect phase.
+
+For an arbitrary original whole $U$, apply Continuation II, Theorem
+42.3 and the variance identity (42.16), exactly as in Theorem 47.3.
+The finite phase replacements retain the same $E$, the same complex
+negative active trace, and hence the same $q,x$ and active distance.
+Because $\xi\le61/25<13/4$, the two-sign separation (42.17)--(42.20)
+makes that distance the true $\rho$ and the negative sign uniquely
+active for every replacement. With nonnegative weights summing to one,
+
+$$
+g(E,U)=\sum_j\theta_jg(E,U_j)+\mathcal V,\qquad
+\mathcal V\ge0.
+\tag{52.35}
+$$
+
+Every positive-weight term is strictly greater than the same
+$H(\xi)$, so (52.35) is strictly greater too. This proves (52.5)--(52.6).
+It is a pure-input assertion and uses no purification of an arbitrary
+mixed input. $\square$
+

@@ -1,0 +1,24 @@
+**Theorem 4.1 (all used labels must be exposed).** Assume the ambient
+alphabets $128>72$, $256>243$, all full injections on each supported
+source, and positive complete-pair evidence alone. Every certificate for
+any supported $g$ must expose the entire left image of $\lambda$ and
+the entire right image of $\varrho$. In particular it has at least $243$
+distinct pairs, and complete-slot acquisition requires at least $243$ slots.
+
+Proof. Suppose a used left label $\lambda(a)$ does not occur in $D$.
+There is an unused ambient left word $\ell\notin\lambda(A)$. Replace
+only $\lambda(a)$ by $\ell$. This is another full injection, has the same
+supported source, and has strictly positive prior mass. It leaves every
+pair of $D$ unchanged and valid. But $a$ has $27>0$ neighbors, so its
+transported relation changes. This contradicts target constancy. The same
+argument replaces an unexposed used right label by an unused ambient right
+word; its degree is $8>0$. Every right label must occur in some evidence
+pair, giving $|D|\ge243$. One completed slot supplies only one full pair,
+so repetitions cannot reduce the slot lower bound. $\square$
+
+This bound does not apply to an arbitrary partial-bit cache containing
+additional restrictions: the changed map must preserve that evidence too.
+It uses the actual ambient alphabet slack and full-injection prior,
+and does not assert the same conclusion for a restricted prior or a
+previously supplied complete support dictionary.
+

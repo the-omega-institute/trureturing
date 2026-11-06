@@ -1,0 +1,12 @@
+**命题 226.1（互易不预先标定转动）。** 命题 218.1 的裸简单模型
+
+$$
+D_{ab}=\frac{it}{2}[a,b]
++\lambda\bigl(\operatorname{Tr}(a)b-\operatorname{Tr}(a\circ b)I\bigr)
+\tag{226.1}
+$$
+
+的总读数为 $\lambda(\operatorname{Tr}(a)\operatorname{Tr}(b)-n\operatorname{Tr}(a\circ b))$，故任意 primitive 基都满足互易。$t=\lambda=1$ 仍满足全部保留三层，却有 $D_ee=e-I\ne0$。因此有限互易没有暗中加入 SC 或把径向参数置零；此例仍不是完整原参考与历史的反模型。
+
+证明。交换子的迹为零，所列径向读数对称。其余性质直接消费命题 218.1。定理 223.1 恢复奇部后，引理 213.1 给 $\sigma_T^2=1+4\lambda_T-4\lambda_T^2$；$\sigma_T>0$ 时，$e-s,y,2(\delta_T)_ey/\sigma_T$ 张成同一四维自旋角的三维无迹截面。$\sigma_T=0$ 时不除以该数。完整原参考关系再取得 $\lambda_T=0$、$\sigma_T^2=1$。这只描述原数学角，没有增加实际二阶系统、时钟或 $\hbar$。∎
+

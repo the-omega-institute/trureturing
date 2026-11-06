@@ -1,0 +1,27 @@
+**命题 C-68.3（单位剪切与规范椭圆的黄金参数对应）。** 令 $\varphi=(1+\sqrt5)/2$。单位剪切
+
+$$
+T=\begin{pmatrix}1&1\\0&1\end{pmatrix}
+$$
+
+把欧氏单位圆映为半轴 $\varphi,\varphi^{-1}$ 的椭圆。将其长轴对应到规范椭圆的 $e_+$ 标记时，该形状对应
+
+$$
+\eta=\log\varphi,\qquad
+\rho_*=\frac{\sqrt5}{3},\qquad\Omega=\varphi^8.
+\tag{C68.5}
+$$
+
+证明。线性像的半轴是奇异值。$T^{\mathsf T}T=\left(\begin{smallmatrix}1&1\\1&2\end{smallmatrix}\right)$ 的特征多项式是 $u^2-3u+1$，两个根为 $(3\pm\sqrt5)/2=\varphi^{\pm2}$。平方根给 $\varphi,\varphi^{-1}$；行列式一也给像的面积 $\pi$。这是一个局部欧氏计算，不需要额外格点或概率来源。
+
+用式 (C67.7) 对应 $e^\eta=\varphi$，得到 $\eta=\log\varphi$、$\Omega=e^{8\eta}$。又由 $\varphi-\varphi^{-1}=1$ 和 $\varphi+\varphi^{-1}=\sqrt5$，有
+
+$$
+\varphi^2-\varphi^{-2}=\sqrt5,\qquad
+\varphi^2+\varphi^{-2}=3.
+$$
+
+所以 $\rho_*=\tanh(2\log\varphi)=(\varphi^2-\varphi^{-2})/(\varphi^2+\varphi^{-2})=\sqrt5/3$。反之用这个 $\rho_*$ 构造式 (C67.8) 的平衡表，再任选 $0<r<1$，取底面质量 $rQ_*$、中位质量 $1-r$，即有全正五律实现此形状。
+
+若把长轴对应到 $e_-$，则应取负的 $\eta$、负的 $\rho_*$ 和倒数 $\Omega$；无标记形状本身不选择符号。这个对应只说某一种四角关联具有黄金半轴，不说任意 FIB 五律必有该值，也不把剪切的坐标基、概率端点标签与某个格点来源自动识别。证毕。
+

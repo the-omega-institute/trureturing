@@ -1,0 +1,19 @@
+**【编者局部说明：钉版输入及曲率】** 这里具体使用 Christian Axler, *On Robin’s Inequality*, [arXiv:2110.13478v3](https://arxiv.org/pdf/2110.13478v3)，第 1 页 Proposition 1.1 与第 2 页 Theorems 1.3、1.4。Theorem 1.3 的原范围是正整数 $n\notin A$，其中
+
+$$
+A=\{1,2,4,5,6,8,9,10,12,16,18,20,24,30,36,48,60,72,84,120,180,240,360,840,2520,5040\}.
+$$
+
+因此本文每个 $n>5040$ 均在其范围内，除以正的 $e^\gamma\log\log n$ 即得 (1)。Theorem 1.4 在 $n\ge5041$ 下的第一项确为 $v_2(n)\le20$，从其逆否命题得到 (3)；这里没有把“21-free”与单独的 $2$-进指数条件混同。原稿无版本 URL 保留为原引文，实际编号与常数以本处 v3 为准。另有
+
+$$
+\kappa'(T)=-\frac{2(\log T)^2+3\log T+2}{T^3(\log T)^3}<0\qquad(T>1),
+$$
+
+这给出后文使用的严格下降性，而不仅是 $f''<0$。
+<!-- editorial-note:end axler-domain-and-curvature -->
+
+---
+
+<a id="sec-2"></a>
+

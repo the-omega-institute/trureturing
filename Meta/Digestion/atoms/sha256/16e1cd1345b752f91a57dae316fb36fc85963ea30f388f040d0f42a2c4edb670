@@ -1,0 +1,9 @@
+#### 定义 12.4：内容读出
+
+对单位振幅 $q\in\mathcal Q$，定义
+
+$$
+X(q)=q \iota  q^*\in\mathfrak g,\qquad n(q)=R^{-1}(X(q))\in W.
+\tag{12.3}
+$$
+

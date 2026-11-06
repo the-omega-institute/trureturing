@@ -1348,3 +1348,252 @@ $$
 本节结论只关于全实中心函数，不推出 §481 所述被选整数来源上的下界，也不推出 RH 或每个 $n>5040$ 的严格 Robin 不等式。
 
 ## 追加锚（本行以下为增补区）
+
+## 487. RH 下原前向价格核的 $\log\log x$ 双侧振荡
+
+沿用 §481 的 $E,H_x,\lambda,w,\rho_x$、(481.1) 的 $\mathcal T$ 与命题 481.1 的 $\mathcal F,R_{x_0}$。§486 证明了 $\mathcal T$ 双侧无界；本节在 RH 下给出显式速率。全节假设 RH，零点记为 $1/2\pm i\gamma$（$\gamma>0$），$m_\gamma$ 为重数，不同纵坐标只列一次，并令 $N(T)=\sum_{0<\gamma\le T}m_\gamma$。
+
+取 $y_0=\log x_0$，令 $f(y)=\mathcal T(e^y)$（$y\ge y_0$），$f(y)=0$（$0\le y<y_0$）。则在 $\Re s>1/2$ 有 $\int_0^\infty f(y)e^{-sy}\,dy=\mathcal F(s)$，且由 von Koch 界，$f(y)=O(e^{y/5}y^2)$。
+
+经典输入如下，均只作为假设使用：
+
+$$
+N(T)\sim\frac1{2\pi}T\log T,
+\tag{487.1}
+$$
+
+以及 RH 下 $\xi(z)=\tfrac12z(z-1)\pi^{-z/2}\Gamma(z/2)\zeta(z)$ 的对称 Hadamard 展开
+
+$$
+\frac{\xi'}{\xi}\Bigl(\frac12+s\Bigr)=\sum_{\gamma>0}m_\gamma\Bigl(\frac1{s-i\gamma}+\frac1{s+i\gamma}\Bigr),
+\tag{487.2}
+$$
+
+级数按 $\pm\gamma$ 配对，在避开极点的紧集上绝对一致收敛。
+
+**命题 487.1（余项的多项式增长）。** 对每个 $0<\delta<1/5$，存在 $C_\delta$，使
+
+$$
+|R_{x_0}(\sigma+i\tau)|\le C_\delta(1+|\tau|)^2\qquad\Bigl(-\frac15+\delta\le\sigma\le1,\ \tau\in\mathbb R\Bigr).
+\tag{487.3}
+$$
+
+证明。取 (481.4) 的伴随核 $q_s$ 与命题 481.1 证明中的换元 $t=x+zx^a$（$a=4/5$），写 $L(t,z)=\log(x(t,z)/t)$，并令
+
+$$
+A(t,z)=D^{-1}\int_z^1\frac{w(x+ux^a)}{w(x)}\,du,\qquad q_s(t)=\int_0^1x^{-s-1/2}A(t,z)\,dz .
+$$
+
+记 $h_w=(\log w)'$。由 $h_w=O(1/x)$、$h_w'=O(1/x^2)$ 与 $D=1+azx^{a-1}$，得 $L_t=\frac{(1-a)zx^a}{txD}$，并且 $\partial_t\frac{w(x+ux^a)}{w(x)}=\frac{w(x+ux^a)}{w(x)}D^{-1}\bigl[(1+aux^{a-1})h_w(x+ux^a)-h_w(x)\bigr]$，其中方括号为 $O(x^{a-2})$。由此 $L=O(t^{-1/5})$、$L_t=O(t^{-6/5})$、$A=(1-z)+O(t^{-1/5})$、$A_t=O(t^{-6/5})$，且这些界关于 $z\in[0,1]$ 一致。令 $p_s=e^{-(s+1/2)L}$。当 $-1/5\le\Re s\le1$ 时 $L$ 为实数，故 $|p_s|\ll1$，$|p_s-1|\ll(1+|s|)t^{-1/5}$，$|\partial_tp_s|\ll(1+|s|)t^{-6/5}$。于是
+
+$$
+q_s(t)=\tfrac12t^{-s-1/2}+r_s(t),\qquad
+|r_s(t)|\ll(1+|s|)t^{-\sigma-7/10},\qquad
+|r_s'(t)|\ll(1+|s|)^2t^{-\sigma-17/10}.
+$$
+
+主项 $\tfrac12t^{-s-1/2}$ 给出 (481.3) 的 $\zeta'/\zeta$ 项与 $-1/(2(s-1/2))$，余项 $R_{x_0}$ 由 $r_s$ 生成。固定充分大的 $T_*$（位于 §481 证明中初始修正区间之外），把有限区间部分合并为整函数 $H_0$，分部积分得
+
+$$
+R_{x_0}(s)=H_0(s)-E(T_*)r_s(T_*)-\int_{T_*}^\infty E(t)r_s'(t)\,dt .
+$$
+
+$H_0$ 在固定实部条带上关于 $\tau$ 有界，端点项为 $O(1+|\tau|)$。由 $|E(t)|\ll t^{1/2}\log^2t$，当 $\sigma\ge-1/5+\delta$ 时积分项至多为 $(1+|\tau|)^2\int_{T_*}^\infty t^{-1-\delta}\log^2t\,dt\ll_\delta(1+|\tau|)^2$。证毕。
+
+**引理 487.2（定量边界公式）。** 采用 $\widehat g(t)=\int_{\mathbb R}g(v)e^{-itv}\,dv$。对 $b>0$ 令 $K_b(v)=\dfrac{1-\cos bv}{\pi bv^2}$（$K_b(0)=b/(2\pi)$），对 $U>2b$ 令 $H_{b,U}(v)=K_b(v)(1-\cos Uv)$。二者非负、积分为 $1$，$H_{b,U}\le2K_b$，且（Fejér 核的 Fourier 对；乘以 $\cos Uv$ 对应频移）
+
+$$
+\widehat K_b(t)=\phi_b(t):=\Bigl(1-\frac{|t|}b\Bigr)_+,\qquad
+\widehat H_{b,U}(t)=\phi_b(t)-\tfrac12\phi_b(t-U)-\tfrac12\phi_b(t+U).
+\tag{487.4}
+$$
+
+设 $\kappa,C\ge0$，且 $f(u)\le\kappa\log(e+u)+C$ 对所有 $u\ge0$ 成立，或 $f(u)\ge-\kappa\log(e+u)-C$ 对所有 $u\ge0$ 成立。设 $g=K_b$ 或 $g=H_{b,U}$，$\operatorname{supp}\widehat g\subset[-M,M]$，$M\ge1$。则对 $y\ge1$，$\int_0^\infty f(u)g(y-u)\,du$ 绝对收敛，且
+
+$$
+\int_0^\infty f(u)g(y-u)\,du=-\sum_{0<\gamma\le2M}m_\gamma\widehat g(\gamma)\cos(\gamma y)
++O\Bigl(\frac{(1+b)M^2}y+\frac{N(2M)}{by}\Bigr),
+\tag{487.5}
+$$
+
+其中隐含常数与 $b,U,M,y$ 无关。
+
+证明。由 (481.3) 与 (487.2)，并用 $-\zeta'/\zeta(z)=-\xi'/\xi(z)+1/z+1/(z-1)-\tfrac12\log\pi+\tfrac12\Gamma'/\Gamma(z/2)$，
+
+$$
+\mathcal F(s)=-\frac12\sum_{\gamma>0}m_\gamma\Bigl(\frac1{s-i\gamma}+\frac1{s+i\gamma}\Bigr)+J(s),\qquad
+J(s)=R_{x_0}(s)+\frac1{2(s+1/2)}-\frac14\log\pi+\frac14\frac{\Gamma'}{\Gamma}\Bigl(\frac{s+1/2}2\Bigr).
+$$
+
+$s=1/2$ 处的两项主部互相抵消，$J$ 在 $\Re s>-1/5$ 全纯。令 $G_M(s)=\mathcal F(s)+\tfrac12\sum_{0<\gamma\le2M}m_\gamma\bigl(\frac1{s-i\gamma}+\frac1{s+i\gamma}\bigr)$。由 (487.1) 分部求和得 $\sum_{\gamma>2M}m_\gamma\gamma^{-2}\ll\log(2+M)/M$，配对项为 $2s/(s^2+\gamma^2)=O(|s|/\gamma^2)$，故在 $|\Im s|\le M+1/4$、$|\Re s|\le1/10$ 上，未减去部分为 $O(\log(2+M))$。结合命题 487.1、Cauchy 导数估计与 $\Gamma'/\Gamma$ 的条带估计，
+
+$$
+\sup_{|t|\le M}\bigl(|G_M(it)|+|G_M'(it)|\bigr)\ll M^2 .
+\tag{487.6}
+$$
+
+令 $a(u)=\kappa\log(e+u)+C$，$h=a\mp f\ge0$（符号按所设单侧界选取）。$h$ 的 Laplace 变换为 $a$ 的变换与 $\mp\mathcal F$ 之和；RH 下前者与后者沿正实轴均全纯（$s=1/2$ 处已相消），故由 Landau 关于非负函数 Laplace 变换的定理，$\int_0^\infty h(u)e^{-\sigma u}\,du<\infty$ 对每个 $\sigma>0$ 成立；由 $|f|\le h+a$，$f$ 的 Laplace 积分也对每个 $\sigma>0$ 绝对收敛。
+
+令 $p_M(u)=-\sum_{0<\gamma\le2M}m_\gamma\cos\gamma u$，其 Laplace 变换恰为 $G_M-\mathcal F$ 的相反数。对 $\sigma>0$ 由绝对 Fubini，
+
+$$
+\int_0^\infty\bigl(f(u)-p_M(u)\bigr)e^{-\sigma u}g(y-u)\,du=\frac1{2\pi}\int_{\mathbb R}\widehat g(t)G_M(\sigma+it)e^{ity}\,dt .
+$$
+
+右边被积函数在 $[-M,M]$ 上关于 $\sigma\in[0,1/10]$ 一致有界，故 $\sigma\downarrow0$ 时收敛。$p_M$ 有界，由控制收敛取极限；对 $h(u)e^{-\sigma u}g(y-u)\ge0$ 用单调收敛，得 $h*g<\infty$，进而 $f*g$ 绝对收敛且上式在 $\sigma=0$ 成立。$p_M*g$ 在全实轴上等于 $-\sum m_\gamma\widehat g(\gamma)\cos\gamma y$；改为 $[0,\infty)$ 的误差至多 $N(2M)\int_y^\infty g\ll N(2M)/(by)$，因为两类核均满足 $g(v)\ll1/(bv^2)$。最后，$\widehat g$ 连续、分段线性、支撑在 $[-M,M]$，$\|\widehat g\|_1\ll b$，$\|\widehat g'\|_1\ll1$，对正则部分分部积分一次并用 (487.6)，得 $O((1+b)M^2/y)$。证毕。
+
+**定理 487.3（RH 下的 $\log\log x$ 双侧振荡）。** 设 RH、(487.1) 与 (487.2)。则存在常数 $c>0$，使
+
+$$
+\liminf_{x\to\infty}\frac{\mathcal T(x)}{\log\log x}\le-c,\qquad
+\limsup_{x\to\infty}\frac{\mathcal T(x)}{\log\log x}\ge c .
+\tag{487.7}
+$$
+
+等价地，存在 $c>0$，使 $T_\psi(x,x^{4/5})\le-cx^{11/10}\log\log x$ 与 $T_\psi(x,x^{4/5})\ge cx^{11/10}\log\log x$ 各对任意大的 $x$ 成立。
+
+证明。在 $y=\log x$ 上证明 $f(y)=\Omega_\pm(\log y)$。固定 $Q=8$，$c_Q=\cos(\pi/4)>0$，并取 $L=M^5$。证明用到两个经典事实。其一（Dirichlet 同时逼近，抽屉原理）：给定实数 $\lambda_1,\dots,\lambda_d$ 与 $L\ge1$，存在 $y\in[L,LQ^d]$ 使 $\cos(\lambda_jy)\ge c_Q$ 对所有 $j$ 成立。其二：由 $\log(e+u)\le\log(e+y)+\log(1+|u-y|)$、$K_M(v)=MK_1(Mv)$、$\int K_1(v)\log(1+|v|)\,dv<\infty$ 与 $H_{b,U}\le2K_b$，存在 $C_0$ 使 $\int_0^\infty g(y-u)\log(e+u)\,du\le\log(e+y)+C_0$ 对 $g=K_M$（$M\ge1$）与 $g=H_{b,U}$（$b$ 固定）一致成立。
+
+负侧。设 $W_-(M)=\sum_{0<\gamma<M}m_\gamma(1-\gamma/M)$。由 (487.1)，$W_-(M)=\frac1M\int_0^MN(t)\,dt\sim\frac1{4\pi}M\log M$，$N(M)\sim2W_-(M)$。对 $0<\gamma<M$ 的不同纵坐标（个数 $d\le N(M)$）应用 Dirichlet 同时逼近，得 $y\in[M^5,M^5Q^{N(M)}]$ 使 $\cos\gamma y\ge c_Q$，从而 $\log(e+y)\le C_1W_-(M)$。反设 $f(u)\ge-\kappa\log(e+u)$ 对充分大的 $u$ 成立；由局部有界性加一个常数后对所有 $u\ge0$ 成立。取 $g=K_M$（$\widehat g=\phi_M$），由 (487.5)，
+
+$$
+\int_0^\infty f(u)K_M(y-u)\,du\le-c_QW_-(M)+o(1),
+$$
+
+而对数包络的平均给出该积分 $\ge-\kappa(C_1W_-(M)+C_0)-O(1)$。取 $\kappa<c_Q/(2C_1)$ 并令 $M\to\infty$，矛盾。
+
+正侧。先选频带。由 $\zeta(1/2)\ne0$ 与连续性，取 $b>0$ 使 $(0,b]$ 中没有零点纵坐标。令 $n(U)=\sum_{|\gamma-U|<b}m_\gamma$，$W_+(U)=\sum_\gamma m_\gamma(1-|\gamma-U|/b)_+$。由 (487.1) 与有限和积分交换，$\int_T^{2T}n\sim\frac{2b}{2\pi}T\log T$，$A_T:=\int_T^{2T}W_+\sim\frac b{2\pi}T\log T$，端点修正以 $T$ 与 $2T$ 附近定宽邻域的零点质量为界，为 $o(T\log T)$。故充分大时 $\int_T^{2T}n\le3A_T$。在 $\{n>12W_+\}$ 上 $\int W_+\le\frac1{12}\int n\le A_T/4$；在 $\{W_+<A_T/(4T)\}$ 上 $\int W_+\le A_T/4$；两集合之外承载至少 $A_T/2$ 的质量。于是对充分大的 $T$ 存在 $U\in[T,2T]$ 使
+
+$$
+n(U)\le12W_+(U),\qquad W_+(U)\ge c_b\log T,
+\tag{487.8}
+$$
+
+其中 $c_b>0$ 只依赖 $b$。对这样的 $U$ 令 $M=U+b$。由 (487.4)，中央频带 $(0,b]$ 无零点，$\widehat H_{b,U}(\gamma)=-\tfrac12\phi_b(\gamma-U)$ 对 $\gamma>2b$ 成立，故 (487.5) 的主和为 $\tfrac12\sum_{|\gamma-U|<b}m_\gamma\phi_b(\gamma-U)\cos\gamma y$。只对 $|\gamma-U|<b$ 的不同纵坐标同步，得 $y\in[M^5,M^5Q^{n(U)}]$，由 (487.8)，$\log(e+y)\le5\log M+n(U)\log Q+O(1)\le C_2W_+(U)$。反设 $f(u)\le\kappa\log(e+u)$ 最终成立，则
+
+$$
+\tfrac12c_QW_+(U)+o(1)\le\int_0^\infty f(u)H_{b,U}(y-u)\,du\le\kappa(C_2W_+(U)+C_0)+O(1),
+$$
+
+取 $\kappa<c_Q/(4C_2)$，令 $T\to\infty$，矛盾。
+
+两侧所得 $y$ 均可任意大，且两处误差项因 $y\ge M^5$ 而为 $o(1)$。由 $y=\log x$ 得 (487.7)。证毕。
+
+**注 487.4（与 $\psi(x)-x$ 的比较与未决部分）。** $\psi(x)-x$ 的显式公式带权重 $1/\rho$，同一方法只给出 Littlewood 的 $\sqrt x\log\log\log x$；$\mathcal F$ 在 $i\gamma$ 处的留数恒为 $-m_\gamma/2$，不随 $\gamma$ 衰减，零点质量 $N(M)\asymp M\log M$ 直接成为振幅，故得到 $\log\log x$。定理 487.3 只给出 $\log\log x$ 的下界，不主张其为真实阶，也不给出匹配的上界。§486 的正性论证需要整个尾部为正测度：$[X,Y]$ 上的有限窗口正性只产生紧支撑测度，其 Laplace 变换为整函数，看不到边界留数；因此显式的 $Y(X,\kappa)$ 需要额外的有效尾部输入，本节不处理。
+
+**范围与文献归属。** 经典输入：
+- RH、(487.1)、(487.2)、von Koch 界；
+- Landau 关于非负函数 Laplace 变换的定理；
+- Fejér 核的 Fourier 对；
+- Dirichlet 同时逼近。
+
+带边界极点的正性振荡方法属于 Ingham [Two conjectures in the theory of numbers, Amer. J. Math. 64 (1942)] 的框架。Diamond–Pintz [Oscillation of Mertens' product formula, J. Théor. Nombres Bordeaux 21 (2009)] 的 Lemma 5.1 在单侧对数包络下给出固定截断的同类论证。Kaczorowski–Wiertelak [Ω-estimates for a class of arithmetic error terms, Math. Proc. Cambridge Philos. Soc. 142 (2007)] 给出上半平面调和函数边界值型误差项的一般 Ω 方法；本节不主张该定理对本核的任何应用。Goldston–Yıldırım [Higher correlations of divisor sums related to primes II: variations of the error term in the prime number theorem, Proc. London Math. Soc. 95 (2007)] 的定理 3 在 Dirichlet $L$ 函数的 GRH 下，对 $(\log N)^{14}\ll h\ll N^{1/7-\varepsilon}$ 给出 $\psi(n+h)-\psi(n)-h=\Omega_\pm(\sqrt{h\log N})$；de la Bretèche–Fiorilli [Math. Ann. 381 (2021)] 给出平滑短区间计数的矩下界。二者的对象、区间长度范围或所得符号与本核不同。
+
+本节的 `repo-derived` 内容：
+- 命题 487.1 对原核余项的显式多项式增长；
+- 引理 487.2 对本核的定量边界公式（截断随 $M$ 增长、误差显式）；
+- 定理 487.3 对全实中心函数 $\mathcal T$ 的双侧 $\log\log x$ 振荡。
+
+本节结论只关于全实中心函数，不推出 §481 所述被选整数来源上的下界，也不推出 RH 或每个 $n>5040$ 的严格 Robin 不等式。
+
+## 追加锚（本行以下为增补区）
+
+## 488. RH 下原前向价格核的幂次均方下界
+
+沿用 §481 的 $E,H_x,w,\rho_x$、(481.1) 的 $\mathcal T$，以及 §487 的记号：全节假设 RH，零点记为 $1/2\pm i\gamma$（$\gamma>0$），$m_\gamma$ 为重数，不同纵坐标只列一次；$N(T)=\sum_{0<\gamma\le T}m_\gamma$。令 $f(y)=\mathcal T(e^y)$（$y>\log3$），$f(y)=0$（$y\le\log3$）。§487 给出 $\mathcal T=\Omega_\pm(\log\log x)$；本节给出 $|\mathcal T|$ 的一个幂次下界。
+
+经典输入如下，均只作为假设使用：von Koch 界 $E(x)=O(\sqrt x\log^2x)$；配对 Hadamard 展开 (487.2)；Riemann–von Mangoldt 公式给出的局部零点计数
+
+$$
+N(T+1)-N(T)\ll\log(2+T);
+\tag{488.1}
+$$
+
+以及 Montgomery 函数
+
+$$
+F(\alpha,T)=\frac{2\pi}{T\log T}\sum_{0<\gamma,\gamma'\le T}m_\gamma m_{\gamma'}T^{i\alpha(\gamma-\gamma')}\frac4{4+(\gamma-\gamma')^2}
+$$
+
+的平均下界
+
+$$
+\liminf_{T\to\infty}\int_{17}^{19}F(\alpha,T)\,d\alpha\ge\frac23 .
+\tag{488.2}
+$$
+
+(488.2) 是 Carneiro–Chandee–Chirre–Milinovich [On Montgomery's pair correlation conjecture: a tale of three integrals, J. Reine Angew. Math. (2022)] Theorem 9 在 $b=17$、$\ell=2$ 时的结论，只假设 RH；该文指出 $\ell\le2$ 的下界情形源自 Goldston–Gonek [A note on the number of primes in short intervals, Proc. Amer. Math. Soc. 108 (1990)]。
+
+**引理 488.1（高斯边界公式）。** 令 $q_M(v)=\dfrac{M}{\sqrt{2\pi}}e^{-M^2v^2/2}$，$A_M(y)=\int_0^\infty f(u)q_M(y-u)\,du$，$G_M(y)=\sum_{\gamma>0}m_\gamma e^{-\gamma^2/(2M^2)}\cos(\gamma y)$。则对 $M,y\ge1$，
+
+$$
+A_M(y)=-G_M(y)+O\bigl(M^3e^{-y/6}\bigr),
+\tag{488.3}
+$$
+
+隐含常数与 $M,y$ 无关。
+
+证明。由 von Koch 界、$0<\rho_x(u)\le1$ 与 $H_x\le x$，$|f(y)|\ll e^{y/5}(1+y)^2$。由命题 481.1、(487.2) 与 $\xi'/\xi$ 和 $\zeta'/\zeta$ 的关系，在 $\Re s>1/2$ 上
+
+$$
+\mathcal F(s):=\int_0^\infty f(y)e^{-sy}\,dy=-\sum_{\gamma>0}m_\gamma\frac{s}{s^2+\gamma^2}+J(s),
+$$
+
+其中 $J(s)=R(s)+\frac1{2(s+1/2)}-\frac14\log\pi+\frac14\frac{\Gamma'}{\Gamma}\bigl(\frac{s+1/2}2\bigr)$ 在 $\Re s>-1/5$ 全纯；由命题 487.1（取 $\delta=1/30$）与 digamma 的条带估计（其自变量实部至少 $1/6$），$|J(\sigma+it)|\ll(1+|t|)^2$ 于 $-1/6\le\sigma\le3/4$。取 $c=3/4$，高斯反演 $q_M(v)=\frac1{2\pi i}\int_{(c)}e^{sv+s^2/(2M^2)}\,ds$ 与绝对 Fubini 给出 $A_M(y)=\frac1{2\pi i}\int_{(c)}\mathcal F(s)e^{sy+s^2/(2M^2)}\,ds$。$J$ 的部分移到 $\Re s=-1/6$：被积函数全纯，水平边上高斯衰减压过多项式增长，所得积分至多 $Ce^{-y/6}\int(1+|t|)^2e^{-t^2/(2M^2)}dt\ll M^3e^{-y/6}$。配对极点部分逐项反演：令 $S_2=\sum_{\gamma>0}m_\gamma\gamma^{-2}$，由 (488.1) 它有限。在 $s=c+it$ 上按 $\gamma=2|s|$ 分开：低频配对项以 $2/c$ 为界，个数受 $N(2|s|)\le4|s|^2S_2$ 控制；高频部分为 $O(|s|S_2)$。故每个有限配对部分和受 $C(1+|t|)^2$ 控制，乘以高斯因子后可积，由控制收敛可逐项交换。单项给出 $\int_0^\infty\cos(\gamma u)q_M(y-u)\,du=e^{-\gamma^2/(2M^2)}\cos(\gamma y)-B_\gamma(y)$，其中半直线修正 $B_\gamma(y)=\int_0^\infty\cos(\gamma v)q_M(y+v)\,dv$；两次分部积分并用 $q_M''(w)\ge0$（$w\ge y\ge1$，$M\ge1$）得 $|B_\gamma(y)|\le2M^2yq_M(y)/\gamma^2$，故 $\sum_\gamma m_\gamma|B_\gamma(y)|\ll M^3e^{-y/6}$。合并即得 (488.3)。证毕。
+
+**引理 488.2（零点和的窗口均方）。** 令 $L=\log M$，$C_M(y)=\sum_{0<\gamma\le M}m_\gamma\cos(\gamma y)$，$J=[16L,20L]$。则对充分大的 $M$，
+
+$$
+\int_J C_M(y)^2\,dy\gg ML^2 .
+\tag{488.4}
+$$
+
+证明。令 $S_M(y)=\sum_{0<\gamma\le M}m_\gamma e^{i\gamma y}$，$h(v)=e^{-2|v|}$，则 $\int h=1$，$\int h(v)e^{itv}dv=4/(4+t^2)$。展开有限和得
+
+$$
+(h*|S_M|^2)(y)=\frac{ML}{2\pi}F\Bigl(\frac yL,M\Bigr),
+$$
+
+故由 (488.2)，$\int_{17L}^{19L}(h*|S_M|^2)\,dy=\frac{ML^2}{2\pi}\int_{17}^{19}F(\alpha,M)\,d\alpha\gg ML^2$。由 $C_M^2=\frac12|S_M|^2+\frac12\Re(S_M^2)$，交叉项 $h*\Re(S_M^2)$ 的绝对值至多 $\sum_{\gamma,\gamma'\le M}m_\gamma m_{\gamma'}\frac4{4+(\gamma+\gamma')^2}$；按 $\max(\gamma,\gamma')$ 的二进尺度 $2^j$ 分组，每组贡献 $O(2^{-2j}N(2^{j+1})^2)=O((j+1)^2)$，总和为 $O(L^3)$，在长为 $2L$ 的区间上积分损失 $O(L^4)$。于是 $\int_{17L}^{19L}(h*C_M^2)\,dy\gg ML^2$。对 $y\in[17L,19L]$ 与 $z\notin J$，$|y-z|\ge L$，且 $\|C_M\|_\infty\le N(M)\ll ML$，故 $z\notin J$ 的贡献总计 $O(N(M)^2\cdot L\cdot e^{-2L})=O(L^3)$；$z\in J$ 的贡献至多 $\int_JC_M^2$（$h$ 的质量为 $1$）。由此得 (488.4)。证毕。
+
+**定理 488.3（宽窗口幂次均方下界）。** 设 RH、von Koch 界、(487.2)、(488.1) 与 (488.2)。则存在 $c>0$ 与 $M_0$，使对 $M\ge M_0$
+
+$$
+\int_{e^{-2}M^{16}}^{e^2M^{20}}\mathcal T(x)^2\,\frac{dx}x\ge cM(\log M)^2 .
+\tag{488.5}
+$$
+
+因而存在 $c_1>0$，使 $|\mathcal T(x)|\ge c_1x^{1/40}\sqrt{\log x}$ 对任意大的 $x$ 成立；等价地，$|T_\psi(x,x^{4/5})|\ge c_1x^{9/8}\sqrt{\log x}$ 对任意大的 $x$ 成立。
+
+证明。**第一步：从硬截断到高斯权。** 取 $\Delta=M^{1/4}$ 与偶的光滑截断 $\chi_M$：$0\le\chi_M\le1$，$|t|\le M$ 时 $\chi_M=1$，$|t|\ge M+\Delta$ 时 $\chi_M=0$，过渡带上 $|\chi_M^{(r)}|\ll_r\Delta^{-r}$。令 $b_M(t)=e^{t^2/(2M^2)}\chi_M(t)$，$k_M(v)=\frac1{2\pi}\int b_M(t)e^{itv}\,dt$。则 $\|b_M\|_\infty\le e^2$；由 Leibniz 公式，$\|b_M^{(5)}\|_1\ll\Delta^{-4}+M^{-4}\ll M^{-1}$，五次分部积分给出 $\int_{|v|\ge1}|k_M|\ll M^{-1}$。又 $k_M*G_M=\sum_\gamma m_\gamma\chi_M(\gamma)\cos(\gamma y)$，它与 $C_M$ 只在过渡带不同；由 (488.1)，$N(M+\Delta)-N(M)\ll\Delta L$，故 $\|k_M*G_M-C_M\|_\infty\ll M^{1/4}L$。令 $J^+=[16L-1,20L+1]$，$g_M=G_M\mathbf 1_{J^+}$。由 $\|G_M\|_\infty\ll ML$ 与 $k_M$ 的尾部界，在 $J$ 上 $|k_M*g_M-k_M*G_M|\ll L$。结合 (488.4)，
+
+$$
+\|k_M*g_M\|_{L^2(J)}\ge c\sqrt ML-O(M^{1/4}L^{3/2})-O(L^{3/2})\gg\sqrt ML .
+$$
+
+由 Plancherel，$\|k_M*g_M\|_2\le\|b_M\|_\infty\|g_M\|_2\le e^2\|g_M\|_2$，故 $\|G_M\|_{L^2(J^+)}\gg\sqrt ML$。
+
+**第二步：回到 $f$。** 在 $J^+$ 上 (488.3) 的误差为 $O(M^3e^{-(16L-1)/6})=O(M^{1/3})$，其 $L^2(J^+)$ 范数为 $o(\sqrt ML)$，故 $\|A_M\|_{L^2(J^+)}\gg\sqrt ML$。令 $J^{++}=[16L-2,20L+2]$，$f_M=f\mathbf 1_{J^{++}}$。对 $y\in J^+$，$u\notin J^{++}$ 时 $|u-y|\ge1$，由 $|f(u)|\ll e^{u/5}(1+u)^2$ 与高斯衰减，$|A_M(y)-(q_M*f_M)(y)|\ll M^4L^2e^{-M^2/8}$，在所需尺度上可忽略。由 $q_M\ge0$、$\|q_M\|_1=1$ 与 Young 不等式，$\|q_M*f_M\|_2\le\|f_M\|_2$。于是 $\int_{J^{++}}f^2\gg ML^2$，换元 $x=e^y$ 即得 (488.5)。
+
+**第三步：取点。** $J^{++}$ 的长度为 $4L+4$，故存在 $u\in J^{++}$ 使 $f(u)^2\gg ML^2/(4L+4)\gg ML$。令 $x=e^u$，则 $e^{-2}M^{16}\le x\le e^2M^{20}$，$x^{1/40}\sqrt{\log x}\le e^{1/20}M^{1/2}\sqrt{20L+2}\ll\sqrt{ML}\ll|\mathcal T(x)|$；$M\to\infty$ 时这些 $x$ 任意大。最后由 $T_\psi(x,x^{4/5})=x^{11/10}\mathcal T(x)$ 与 $\frac{11}{10}+\frac1{40}=\frac98$ 得最后一式。证毕。
+
+**命题 488.4（二倍区间均方上界）。** 设 RH，并设短区间均方估计 $\int_X^{2X}|E((1+\theta)x)-E(x)|^2dx\ll\theta X^2\log^2(2/\theta)$（$0<\theta\le1$；Saffari–Vaughan，见 Chan [More precise pair correlation of zeros and primes in short intervals, J. London Math. Soc. 68 (2003)] 式 (2)）。则
+
+$$
+\int_X^{2X}\mathcal T(x)^2\,\frac{dx}x\ll X^{1/5}(\log X)^2 .
+\tag{488.6}
+$$
+
+证明。令 $D(x,\theta)=E((1+\theta)x)-E(x)$。换元 $u=\theta x$ 并由 $0<\rho_x(u)\le1$ 与 Cauchy–Schwarz，
+
+$$
+\frac{\mathcal T(x)^2}x\le\frac x{H_x^3}\int_0^{x^{-1/5}}D(x,\theta)^2\,d\theta .
+$$
+
+在 $[X,2X]$ 上积分，交换次序并代入 Selberg 型估计，右边至多 $\ll X^{-7/5}\int_0^{X^{-1/5}}\theta X^2\log^2(2/\theta)\,d\theta\ll X^{1/5}(\log X)^2$。证毕。
+
+**范围说明。** 定理 488.3 把 §487 的 $\log\log x$ 提升为 $|\mathcal T|$ 的幂次下界 $x^{1/40}\sqrt{\log x}$；命题 488.4 说明在二倍区间上 $\mathcal T$ 的均方至多 $X^{1/5}(\log X)^2$，即二次平均意义下的量级不超过 $x^{1/10}\log x$。以下仍未决：二倍区间上的下界 $\int_X^{2X}\mathcal T^2dx/x\gg X^{1/5}\log X$（Chan 前引文讨论的是普通短区间方差渐近与强对相关的等价，不直接涉及本核的加权下界）；带符号的幂次 $\Omega_\pm$——均方只控制 $|\mathcal T|$，而 §487 的 Dirichlet 同步只保证 $\log y$ 量级；以及 §481 所述被选整数来源上的下界。
+
+**范围与文献归属。** 经典输入：RH、von Koch 界、(487.2)、(488.1)、(488.2)、Saffari–Vaughan 短区间均方上界；高斯反演、Plancherel 与 Young 不等式。(488.2) 及其 $\ell\le2$ 情形的来源见上文；de la Bretèche–Fiorilli [Math. Ann. 381 (2021)] 的平滑短区间矩下界要求偶的内层平滑与非负 Fourier 变换，不能直接用于本核的单侧、随 $x$ 变化的权。本节的 `repo-derived` 内容：引理 488.1 对本核的高斯边界公式（含半直线修正与余项移线）；引理 488.2 由 (488.2) 推出的零点余弦和窗口均方下界；定理 488.3 把该下界运输到 $\mathcal T$ 的幂次均方下界与 $\Omega(x^{1/40}\sqrt{\log x})$；命题 488.4 对本核的二倍区间均方上界。本节结论只关于全实中心函数，不推出 §481 所述被选整数来源上的下界，也不推出 RH 或每个 $n>5040$ 的严格 Robin 不等式。
+
+## 追加锚（本行以下为增补区）
