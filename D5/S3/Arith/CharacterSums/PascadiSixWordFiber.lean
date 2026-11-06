@@ -7,6 +7,7 @@
    digest: Central six-letter return words force a gcd-periodic completion fiber. -/
 
 import Mathlib.Data.ZMod.Basic
+import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Ring
 
@@ -75,28 +76,45 @@ theorem completion_equations_of_sixReturnWord
     rw [show sixReturnWord a₁ a₂ h₁ h₂ h₃ h₄ h₅ h₆ =
         returnStep x₁ * returnStep x₂ * returnStep x₃ * returnStep x₄ *
           returnStep x₅ * returnStep x₆ by rfl] at h
-    rw [mul_assoc, hpair, Matrix.mul_one] at h
-    simpa [scalarReturn] using h
+    have h' :
+        (returnStep x₁ * returnStep x₂ * returnStep x₃ * returnStep x₄) *
+            (returnStep x₅ * returnStep x₆ * pairInv) =
+          scalarReturn γ * pairInv := by
+      simpa [mul_assoc] using h
+    rw [hpair, Matrix.mul_one] at h'
+    exact h'
   have h01 := congrArg (fun M : Matrix (Fin 2) (Fin 2) (ZMod c) => M 0 1) hcancel
   have h10 := congrArg (fun M : Matrix (Fin 2) (Fin 2) (ZMod c) => M 1 0) hcancel
   have h11 := congrArg (fun M : Matrix (Fin 2) (Fin 2) (ZMod c) => M 1 1) hcancel
   have h01' : a₁ * (-(γ * h₅) + h₁ - a₁ * a₂ * h₁ * h₂ * h₃ + h₃) = 0 := by
-    simpa [returnStep, pairInv, scalarReturn, x₁, x₂, x₃, x₄, x₅, x₆,
-      Matrix.mul_apply, Fin.sum_univ_two] using h01
+    have h := sub_eq_zero.mpr h01
+    simp [returnStep, pairInv, scalarReturn, x₁, x₂, x₃, x₄, x₅, x₆,
+      Matrix.mul_apply, Fin.sum_univ_two] at h
+    ring_nf at h ⊢
+    exact h
   have h10' : a₂ * (γ * h₆ + a₁ * a₂ * h₂ * h₃ * h₄ - h₂ - h₄) = 0 := by
-    simpa [returnStep, pairInv, scalarReturn, x₁, x₂, x₃, x₄, x₅, x₆,
-      Matrix.mul_apply, Fin.sum_univ_two] using h10
+    have h := sub_eq_zero.mpr h10
+    simp [returnStep, pairInv, scalarReturn, x₁, x₂, x₃, x₄, x₅, x₆,
+      Matrix.mul_apply, Fin.sum_univ_two] at h
+    ring_nf at h ⊢
+    exact h
   have h11' : -(γ * (a₁ * a₂ * h₅ * h₆ - 1)) +
       (1 - a₁ * a₂ * h₂ * h₃) = 0 := by
-    simpa [returnStep, pairInv, scalarReturn, x₁, x₂, x₃, x₄, x₅, x₆,
-      Matrix.mul_apply, Fin.sum_univ_two] using h11
-  have h01'' := ha₁.mul_left_cancel h01'
-  have h10'' := ha₂.mul_left_cancel h10'
-  refine ⟨by ring_nf at h11' ⊢; exact h11'.symm, ?_, ?_⟩
-  · ring_nf at h01'' ⊢
-    exact h01''.symm
-  · ring_nf at h10'' ⊢
-    exact h10''.symm
+    have h := sub_eq_zero.mpr h11
+    simp [returnStep, pairInv, scalarReturn, x₁, x₂, x₃, x₄, x₅, x₆,
+      Matrix.mul_apply, Fin.sum_univ_two] at h
+    ring_nf at h ⊢
+    exact h
+  have h01'' := ha₁.mul_left_cancel (show a₁ * _ = a₁ * 0 by simpa using h01')
+  have h10'' := ha₂.mul_left_cancel (show a₂ * _ = a₂ * 0 by simpa using h10')
+  refine ⟨?_, ?_, ?_⟩
+  · apply sub_eq_zero.mp
+    convert h11' using 1 <;> ring
+  · apply sub_eq_zero.mp
+    convert h01'' using 1 <;> ring
+  · apply sub_eq_zero.mp
+    have h10neg := congrArg (fun z : ZMod c => -z) h10''
+    convert h10neg using 1 <;> ring
 
 /-- Every two completions in the same fixed-middle fiber differ by the additive order of
 its coefficient.  This is the gcd-periodic stratum behind the finite counting bound. -/
@@ -105,9 +123,9 @@ theorem completionFiber_period
     {p q : ZMod c × ZMod c}
     (hp : p ∈ completionFiber a₁ a₂ γ h₂ h₃ h₅ h₆)
     (hq : q ∈ completionFiber a₁ a₂ γ h₂ h₃ h₅ h₆) :
-    (c / Nat.gcd c (1 - a₁ * a₂ * h₂ * h₃).val : ℤ) ∣
+    ((c / Nat.gcd c (1 - a₁ * a₂ * h₂ * h₃).val : ℕ) : ℤ) ∣
         (p.1.val : ℤ) - q.1.val ∧
-      (c / Nat.gcd c (1 - a₁ * a₂ * h₂ * h₃).val : ℤ) ∣
+      ((c / Nat.gcd c (1 - a₁ * a₂ * h₂ * h₃).val : ℕ) : ℤ) ∣
         (p.2.val : ℤ) - q.2.val := by
   have hD : (1 - a₁ * a₂ * h₂ * h₃) =
       ((1 - a₁ * a₂ * h₂ * h₃).val : ZMod c) := by
@@ -115,15 +133,23 @@ theorem completionFiber_period
     exact ZMod.natCast_zmod_val _
   have hperiod : addOrderOf (1 - a₁ * a₂ * h₂ * h₃) =
       c / Nat.gcd c (1 - a₁ * a₂ * h₂ * h₃).val := by
-    rw [hD, ZMod.addOrderOf_coe _ (NeZero.ne c)]
+    rw [hD]
+    simpa only [ZMod.natCast_zmod_val] using
+      (ZMod.addOrderOf_coe (1 - a₁ * a₂ * h₂ * h₃).val (NeZero.ne c))
   have h₁eq :
       (1 - a₁ * a₂ * h₂ * h₃) * (p.1 - q.1) = 0 := by
-    rw [sub_mul]
-    exact sub_eq_zero.mp (hp.1.trans hq.1.symm)
+    calc
+      (1 - a₁ * a₂ * h₂ * h₃) * (p.1 - q.1) =
+          (1 - a₁ * a₂ * h₂ * h₃) * p.1 -
+            (1 - a₁ * a₂ * h₂ * h₃) * q.1 := by ring
+      _ = 0 := sub_eq_zero.mpr (hp.1.trans hq.1.symm)
   have h₂eq :
       (1 - a₁ * a₂ * h₂ * h₃) * (p.2 - q.2) = 0 := by
-    rw [sub_mul]
-    exact sub_eq_zero.mp (hp.2.trans hq.2.symm)
+    calc
+      (1 - a₁ * a₂ * h₂ * h₃) * (p.2 - q.2) =
+          (1 - a₁ * a₂ * h₂ * h₃) * p.2 -
+            (1 - a₁ * a₂ * h₂ * h₃) * q.2 := by ring
+      _ = 0 := sub_eq_zero.mpr (hp.2.trans hq.2.symm)
   have hz₁ : ((p.1.val : ℤ) - q.1.val) •
       (1 - a₁ * a₂ * h₂ * h₃) = 0 := by
     rw [zsmul_eq_mul']
@@ -132,9 +158,9 @@ theorem completionFiber_period
       (1 - a₁ * a₂ * h₂ * h₃) = 0 := by
     rw [zsmul_eq_mul']
     simpa [Int.cast_sub, ZMod.natCast_zmod_val, mul_comm] using h₂eq
-  rw [← hperiod]
-  exact ⟨(addOrderOf_dvd_iff_zsmul_eq_zero).mpr hz₁,
-    (addOrderOf_dvd_iff_zsmul_eq_zero).mpr hz₂⟩
+  have hd₁ := (addOrderOf_dvd_iff_zsmul_eq_zero).mpr hz₁
+  have hd₂ := (addOrderOf_dvd_iff_zsmul_eq_zero).mpr hz₂
+  exact ⟨by simpa only [hperiod] using hd₁, by simpa only [hperiod] using hd₂⟩
 
 end
 
