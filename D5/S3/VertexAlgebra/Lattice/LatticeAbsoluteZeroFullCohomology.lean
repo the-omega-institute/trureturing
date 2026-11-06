@@ -4,7 +4,7 @@
    mirror-E: none(waiver:algebraic-original-absolute-full-retract)
    anchors: []
    utility: none
-   digest: Original charge and energy projection reflects arbitrary ambient BRST primitives and splits absolute-zero classes into the full quotient. -/
+   digest: Actual BRST projection reflects ambient primitives into the absolute-zero quotient. -/
 
 /- The original lattice, ghost, BRST and absolute-zero constructions retain
 their suppliers' authorship. The projection route uses the supplied Pro
@@ -17,19 +17,21 @@ import D5.S3.VertexAlgebra.Lattice.LatticeBRSTZeroEnergyReduction
 import D5.S3.VertexAlgebra.Lattice.LatticeRelativeBRSTGround
 import Mathlib.LinearAlgebra.Basis.Prod
 
+/-! A split inclusion into the literal full BRST quotient, with arbitrary primitives. -/
+
 set_option autoImplicit false
-set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency true
 
 noncomputable section
-open scoped TensorProduct Classical
+open scoped TensorProduct
 
 namespace D5.S3.VertexAlgebra.LatticeAbsoluteZeroFullCohomology
 
-open LatticeGeneratingFieldLocality (LatticeData)
+open LatticeGeneratingFieldLocality (LatticeData Charge)
 open LatticeSugawaraCurrents (gramComplex)
 open LatticeMatterGhostCoupling (State)
 open LatticeBRST (totalCharge)
-open LatticeRelativeMassShell (Charge TensorLabel tensorBasis tensorCoeffEquiv coeff
+open LatticeRelativeMassShell (TensorLabel tensorBasis tensorCoeffEquiv coeff
   fixedMomentum mem_fixedMomentum_iff totalCharge_mem_fixedMomentum totalL0 totalL0_basis)
 open LatticeQuartetContraction (chargeProject)
 open LatticeOriginalAbsoluteZeroCohomology
@@ -41,24 +43,29 @@ variable (D : LatticeData) (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
 
 private theorem project_fixed (p : Charge D) (x : State D) :
     chargeProject p x ∈ fixedMomentum D p := by
+  classical
   apply (mem_fixedMomentum_iff D p _).mpr
   intro i hi
   rw [chargeProject_original_coeff, if_neg hi]
 
 private theorem project_other (p q : Charge D) (hpq : p ≠ q)
     (x : State D) (hx : x ∈ fixedMomentum D q) : chargeProject p x = 0 := by
+  classical
   apply (tensorCoeffEquiv D).injective
   ext i
   change coeff D (chargeProject p x) i = coeff D 0 i
+  rw [show coeff D (0 : State D) i = 0 by
+    change (tensorCoeffEquiv D 0) i = 0
+    rw [(tensorCoeffEquiv D).map_zero]
+    rfl]
   rw [chargeProject_original_coeff]
   by_cases hi : i.1.1 = p
-  · rw [if_pos hi, (mem_fixedMomentum_iff D q x).mp hx i (hi ▸ hpq)]
-    rfl
+  · rw [if_pos hi, (mem_fixedMomentum_iff D q x).mp hx i (by simpa only [hi] using hpq)]
   · rw [if_neg hi]
-    rfl
 
 private theorem chargeProject_Q (p : Charge D) :
     chargeProject p * totalCharge D H = totalCharge D H * chargeProject p := by
+  classical
   apply (tensorBasis D).ext
   intro i
   have hi : tensorBasis D i ∈ fixedMomentum D i.1.1 :=
@@ -89,6 +96,7 @@ def rho : Module.End ℂ (State D) :=
 variable (h26 : D.rank = 26)
 variable (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
 
+include h26 hHG hGH in
 theorem rho_chain : rho D * totalCharge D H = totalCharge D H * rho D := by
   change (chargeProject (0 : Charge D) * LatticeBRSTZeroEnergyReduction.P0 D) *
       totalCharge D H = totalCharge D H *
@@ -96,6 +104,7 @@ theorem rho_chain : rho D * totalCharge D H = totalCharge D H * rho D := by
   rw [mul_assoc, LatticeBRSTZeroEnergyReduction.P0_commutes D H h26 hHG hGH,
     ← mul_assoc, chargeProject_Q D H, mul_assoc]
 
+include hHG hGH in
 private theorem rho_mem (x : State D) : rho D x ∈ E0 D H := by
   refine ⟨project_fixed D 0 _, ?_⟩
   change totalL0 D H (chargeProject 0 (LatticeBRSTZeroEnergyReduction.P0 D x)) = 0
@@ -116,12 +125,14 @@ private theorem retractState_fixed (x : E0 D H) :
   rw [(LatticeBRSTZeroEnergyReduction.P0_fixed_iff D H hHG hGH _).mpr x.2.2]
   exact (mem_fixedMomentum_iff_chargeProject 0 _).mp x.2.1
 
+include h26 in
 private theorem retractState_chain (y : State D) :
     Q0 D H hHG hGH (retractState D H hHG hGH y) =
       retractState D H hHG hGH (totalCharge D H y) := by
   apply Subtype.ext
   exact (LinearMap.congr_fun (rho_chain D H h26 hHG hGH) y).symm
 
+include h26 in
 /-- No restriction is imposed on the original full-state boundary primitive y. -/
 theorem ambient_primitive (x : E0 D H) (y : State D)
     (hy : totalCharge D H y = (x : State D)) :
@@ -129,6 +140,7 @@ theorem ambient_primitive (x : E0 D H) (y : State D)
   rw [retractState_chain D H h26 hHG hGH, hy,
     retractState_fixed D H hHG hGH]
 
+include h26 in
 theorem range_Q0_eq_comap : LinearMap.range (Q0 D H hHG hGH) =
     (LinearMap.range (totalCharge D H)).comap (E0 D H).subtype := by
   ext x
@@ -210,6 +222,10 @@ def fullClass : ClassCoordinates D →ₗ[ℂ]
     LatticeBRSTCohomologyField.Cohomology D H h26 hHG hGH :=
   (inclusion D H h26 hHG hGH).comp (classOf D H hHG hGH)
 
+def fullCoordinates : LatticeBRSTCohomologyField.Cohomology D H h26 hHG hGH →ₗ[ℂ]
+    ClassCoordinates D :=
+  (cohomologyEquiv D H hHG hGH).toLinearMap.comp (retraction D H h26 hHG hGH)
+
 private theorem fullClass_injective : Function.Injective (fullClass D H h26 hHG hGH) := by
   apply LinearMap.ker_eq_bot.mp
   apply LinearMap.ker_eq_bot'.mpr
@@ -219,7 +235,8 @@ private theorem fullClass_injective : Function.Injective (fullClass D H h26 hHG 
   have hz : classOf D H hHG hGH t = 0 :=
     (Submodule.Quotient.mk_eq_zero _).mpr hb
   have := congrArg (cohomologyEquiv D H hHG hGH) hz
-  simpa only [cohomologyEquiv_classOf, map_zero] using this
+  rw [cohomologyEquiv_classOf, (cohomologyEquiv D H hHG hGH).map_zero] at this
+  exact this
 
 /-- Scalar, first vector, second vector, scalar: the original four slots. -/
 abbrev ClassIndex := Unit ⊕ (Fin D.rank ⊕ (Fin D.rank ⊕ Unit))
@@ -235,12 +252,18 @@ def fullClasses : ClassIndex D →
 
 /-- A finite independent family in the full quotient, without a dimension claim. -/
 theorem fullClasses_independent :
+    Function.LeftInverse (fullCoordinates D H h26 hHG hGH) (fullClass D H h26 hHG hGH) ∧
     LinearIndependent ℂ (fullClasses D H h26 hHG hGH) ∧
       Fintype.card (ClassIndex D) = 2 + 2 * D.rank ∧
       Fintype.card (ClassIndex D) = 54 := by
-  refine ⟨(coordinateBasis D).linearIndependent.map'
+  refine ⟨?_, (coordinateBasis D).linearIndependent.map'
     (fullClass D H h26 hHG hGH)
     (LinearMap.ker_eq_bot.mpr (fullClass_injective D H h26 hHG hGH)), ?_, ?_⟩
+  · intro t
+    change cohomologyEquiv D H hHG hGH
+      (retraction D H h26 hHG hGH (inclusion D H h26 hHG hGH
+        (classOf D H hHG hGH t))) = t
+    rw [retraction_inclusion D H h26 hHG hGH, cohomologyEquiv_classOf]
   · simp [ClassIndex]; omega
   · simp [ClassIndex, h26]
 
