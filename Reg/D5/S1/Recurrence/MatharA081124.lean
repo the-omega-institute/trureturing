@@ -42,7 +42,7 @@ def family : Registration arena (type_of% @result) where
     norm_num [a, Finset.sum_range_succ, Nat.choose]
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    (@result) (Realization signature) (ℕ → ℕ) Unit where
+    (@result) (Realization signature) Unit Unit where
   unitName := `Reg.D5.S1.Recurrence.MatharA081124.auditUnit
   realizationName := `Reg.D5.S1.Recurrence.MatharA081124.family
   realizationSource := none
@@ -58,7 +58,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some a
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S1.Recurrence.MatharA081124
     definition := some {
