@@ -753,4 +753,92 @@ The current result does not assert $P(W)\subseteq W$ for the concrete Section 16
 
 
 
+## 169. The concrete representer plane is not heat-invariant
+
+Section 168 reduces the actual closure question to a finite residual Gram matrix. The source-start law supplies an exact obstruction to that closure: the first-order representer plane already contains a positive-time source density, and no such density can have a finite-dimensional heat orbit.
+
+**Lemma 169.1 (a positive-time source density has no polynomial relation).** Let $t,d>0$ and let $g_t$ be the source-start density of Appendix III Theorem 117.2. There is no nonzero real polynomial $q$ such that
+
+$$
+q(T_d)g_t=0\quad\text{in }L^2(G,m).
+\tag{169.1}
+$$
+
+*Proof.* Write $T_s=e^{-sK}$ and let $E_K$ be the spectral resolution of the nonnegative self-adjoint $K$. If (169.1) held, then the spectral measure of $g_t$ would be supported on
+
+$$
+\Lambda=\{\lambda\ge0:q(e^{-d\lambda})=0\}.
+\tag{169.2}
+$$
+
+This set is finite: the nonzero polynomial $q$ has finitely many roots, and $\lambda\mapsto e^{-d\lambda}$ is one-to-one; a possible root at zero is not attained at a finite $\lambda$. Thus
+
+$$
+g_t=\sum_{\lambda\in\Lambda}g_{t,\lambda},
+\qquad g_{t,\lambda}=E_K(\{\lambda\})g_t.
+\tag{169.3}
+$$
+
+For $0<s<t$, the source propagation identity gives $g_t=T_{t-s}g_s$. Since $T_{t-s}$ is injective and commutes with $q(T_d)$,
+
+$$
+0=q(T_d)g_t=T_{t-s}q(T_d)g_s
+\quad\Longrightarrow\quad q(T_d)g_s=0.
+\tag{169.4}
+$$
+
+The same finite spectral decomposition therefore holds for every $g_s$. On the $\lambda$-eigenspace, $T_{t-s}$ is multiplication by $e^{-(t-s)\lambda}$, so
+
+$$
+g_s=\sum_{\lambda\in\Lambda}e^{(t-s)\lambda}g_{t,\lambda}
+\longrightarrow
+r:=\sum_{\lambda\in\Lambda}e^{t\lambda}g_{t,\lambda}
+\quad\text{in }L^2(m)\quad(s\downarrow0).
+\tag{169.5}
+$$
+
+For every $\psi\in C_c(G)$, the $L^2$ convergence and $m(G)=1$ give
+
+$$
+\int_G\psi r\,dm
+=\lim_{s\downarrow0}\int_G\psi g_s\,dm.
+\tag{169.6}
+$$
+
+The right side is $\lim_{s\downarrow0}\mathbb E_e[\psi(Z_s)]=\psi(e)$, because the retained diffusion starts at $e$ and has continuous paths. Hence the finite measure $r\,m$ equals $\delta_e$ on $C_c(G)$. This is impossible: $r\in L^2(m)\subset L^1(m)$ while $m(\{e\})=0$, so $r\,m$ is absolutely continuous with respect to $m$ and cannot be the point mass $\delta_e$. $\square$
+
+**Proposition 169.2 (the actual Section 166 plane is not $P$-invariant).** For every original finite $a,\eta,d>0$, with $P=T_d$, $g=g_{2d}$ and $W$ the concrete representer span of Section 166,
+
+$$
+P(W)\not\subseteq W.
+\tag{169.7}
+$$
+
+*Proof.* In the fixed readout of Appendix III Definition 134.1, $f_B=1/4$, $P1=1$, $\sigma_0=1$ and $\sigma_B=0$. Therefore the representer formula (166.1) gives the exact identity
+
+$$
+\psi_{0BB}=g\,P(f_B P f_B)=\frac{g}{16}.
+\tag{169.8}
+$$
+
+In particular $g/16\in W$. If $P(W)\subseteq W$, finite-dimensionality of $W$ would make the orbit $(P^ng)_{n\ge0}$ linearly dependent. Equivalently, some nonzero polynomial $q$ would satisfy $q(P)g=0$, contradicting Lemma 169.1 with $t=2d$. Thus (169.7) holds. $\square$
+
+**Corollary 169.3 (nonzero actual residual and failure of bounded calibrated closure).** Let $w_1,\ldots,w_r$ be any $L^2(m)$-independent bounded basis of the concrete Section 166 plane, and let $G,K,D$ be the exact matrices of (167.4). Then
+
+$$
+D-K^{\mathsf T}G^{-1}K\ne0,
+\tag{169.9}
+$$
+
+and, for $V_\infty=L^\infty(G,m;\mathbb R)\cap W^\perp$,
+
+$$
+P(V_\infty)\not\subseteq V_\infty.
+\tag{169.10}
+$$
+
+Indeed, (169.9) is the contrapositive of the exact residual criterion (167.5), while (169.10) follows from the closure equivalence (167.3). The conclusion is an exact non-invariance statement for the concrete calibration plane; it does not evaluate individual residual entries, construct a physical successor, prove orbit density, or supply a nonlinear residual-zero family, a legal simplex or $H43$ partition, a terminal compensator, $SRS\text{-}20$, $F_{64}$, or a Lean/kernel theorem.
+
+The proof uses only the original source-start density and path law, the injective self-adjoint heat semigroup, the fixed Section 166 readout identities and finite-dimensionality of $W$. It resolves the actual closure boundary left open in Section 168 without a numerical approximation.
+
 ## 追加锚（本行以下为增补区）

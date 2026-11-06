@@ -1,0 +1,18 @@
+**Corollary 169.3 (nonzero actual residual and failure of bounded calibrated closure).** Let $w_1,\ldots,w_r$ be any $L^2(m)$-independent bounded basis of the concrete Section 166 plane, and let $G,K,D$ be the exact matrices of (167.4). Then
+
+$$
+D-K^{\mathsf T}G^{-1}K\ne0,
+\tag{169.9}
+$$
+
+and, for $V_\infty=L^\infty(G,m;\mathbb R)\cap W^\perp$,
+
+$$
+P(V_\infty)\not\subseteq V_\infty.
+\tag{169.10}
+$$
+
+Indeed, (169.9) is the contrapositive of the exact residual criterion (167.5), while (169.10) follows from the closure equivalence (167.3). The conclusion is an exact non-invariance statement for the concrete calibration plane; it does not evaluate individual residual entries, construct a physical successor, prove orbit density, or supply a nonlinear residual-zero family, a legal simplex or $H43$ partition, a terminal compensator, $SRS\text{-}20$, $F_{64}$, or a Lean/kernel theorem.
+
+The proof uses only the original source-start density and path law, the injective self-adjoint heat semigroup, the fixed Section 166 readout identities and finite-dimensionality of $W$. It resolves the actual closure boundary left open in Section 168 without a numerical approximation.
+

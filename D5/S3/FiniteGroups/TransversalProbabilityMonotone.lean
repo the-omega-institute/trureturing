@@ -533,7 +533,7 @@ end D5.S3.FiniteGroups.TransversalProbabilityMonotone
 
 namespace D5.S3.FiniteGroups.TransversalProbabilityMonotone
 
-private noncomputable def orbitWeight (n : ℕ) : ℚ := (n.factorial : ℚ) / (n : ℚ) ^ n
+noncomputable def orbitWeight (n : ℕ) : ℚ := (n.factorial : ℚ) / (n : ℚ) ^ n
 
 private theorem orbit_weight_nonneg (n : ℕ) : 0 ≤ orbitWeight n :=
   div_nonneg (Nat.cast_nonneg _) (pow_nonneg (Nat.cast_nonneg _) _)
