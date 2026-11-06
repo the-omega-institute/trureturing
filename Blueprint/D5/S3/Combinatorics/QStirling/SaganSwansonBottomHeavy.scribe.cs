@@ -67,13 +67,16 @@ internal sealed class SaganSwansonBottomHeavyDocument : IScribeDocumentDefinitio
                     + "have different degrees. The four recurrences preserve this class, "
                     + "which proves the stated inequality for every integer k. This does "
                     + "not assert unimodality or log-concavity of the resulting sums.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ss2205-bottomheavy"), ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Int() => Seq(Mathbb, Grp(F.Id("Z")));
