@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Probability;
 
@@ -12,7 +14,7 @@ internal sealed class KingmanPointwiseDocument : IScribeDocumentDefinition
                 DescribeId.Create("kingman-finite-measure"),
                 DeclarationHandle.Create("D5/S3/Analytic/Probability/KingmanPointwise.kingman_subadditive"),
                 H("An integrable invariant limit"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Statement()),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Asymptotics/durrett2019probability")),
                 Blocks(
                     Paragraph(Text("The carrier alpha ranges over every universe u and has an arbitrary measurable-space structure. The measure mu is finite, including zero. The transformation T preserves mu. For each natural n the real function X(n) is integrable and nonnegative almost everywhere. For every m,n, X(m+n,x) is at most X(m,x)+X(n,T^m x) almost everywhere. The exceptional sets may depend on the indices.")),
@@ -24,4 +26,48 @@ internal sealed class KingmanPointwiseDocument : IScribeDocumentDefinition
                     Paragraph(Text("Durrett, fifth edition, Section 6.4, Theorem 6.4.1 on printed page 343 with proof on pages 344–347, treats stationary subadditive arrays and also states L1 convergence and an infimum formula. Those further conclusions and a constant ergodic limit are not asserted here. Applying the theorem to a concrete array, matrix product or first-passage model requires the actual common law, shift action, integrability, nonnegativity and subadditive identification. Signed logarithmic cocycles require a separate argument.")),
                     Paragraph(Text("The Lean proof is an attributed adaptation of facebookresearch/atlas-lean, MathlibExt/Dynamics/Ergodic/Kingman.lean, revision a60759060b5616df0d5775b42da4d337719feb32. The Meta Platforms copyright and complete supplier license, including its intended-use preface, are retained. KingmanSigned.exists_invariant_limit_of_nonneg supplies the broad finite-measure specification; no signed-cocycle conclusion is used. The book is a citation-only mathematical source."))),
                 DescribeRole.Theorem))));
+
+    private static Formula V(string name) => name switch
+    {
+        "alpha" => Alpha,
+        "mu" => Mu,
+        _ => F.Id(name)
+    };
+    private static Formula Nat => Seq(Mathbb, Grp(V("N")));
+    private static Formula Real => Seq(Mathbb, Grp(V("R")));
+    private static Formula Fn(Formula a, Formula b) => new Formula.TypeArrow(a, b);
+    private static Formula Par(Formula value) => Seq(Open, value, Close);
+    private static Formula All(string name, Formula type) =>
+        Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp);
+    private static Formula Instance(Formula type) => Seq(OpenBracket, type, CloseBracket, Sp);
+    private static Formula Lam(string name, Formula type, Formula body) =>
+        Seq(LambdaLower, Sp, Par(Seq(V(name), Colon, Sp, type)), Sp, Mapsto, Sp, body);
+    private static Formula App(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
+    private static Formula Ae(Formula body) =>
+        Call("Eventually", Lam("x", V("alpha"), body), Call("ae", V("mu")));
+    private static Formula Term(Formula n, Formula x) => App(V("X"), n, x);
+    private static Formula Statement() => Disp(new Formula.Aligned([
+        Seq(All("alpha", Seq(Call("Type"), Sp, V("u"))),
+            Instance(Call("MeasurableSpace", V("alpha"))),
+            All("mu", Call("Measure", V("alpha"))),
+            Instance(Call("IsFiniteMeasure", V("mu")))),
+        Seq(All("T", Fn(V("alpha"), V("alpha"))),
+            Call("MeasurePreserving", V("T"), V("mu"), V("mu")), Sp, Rightarrow,
+            All("X", Fn(Nat, Fn(V("alpha"), Real)))),
+        Seq(Par(Seq(All("n", Nat), Call("Integrable", App(V("X"), V("n")), V("mu")))),
+            Sp, Rightarrow),
+        Seq(Par(Seq(All("n", Nat), Ae(Seq(D(0), Leq, Term(V("n"), V("x")))))),
+            Sp, Rightarrow),
+        Seq(Par(Seq(All("m", Nat), All("n", Nat),
+            Ae(Seq(Term(Seq(V("m"), Plus, V("n")), V("x")), Leq,
+                Term(V("m"), V("x")), Plus,
+                Term(V("n"), App(Call("iterate", V("T"), V("m")), V("x"))))))),
+            Sp, Rightarrow),
+        Seq(Exists, Sp, V("g"), Colon, Fn(V("alpha"), Real), Comma, Sp,
+            Call("Integrable", V("g"), V("mu")), Land,
+            Ae(Seq(App(V("g"), App(V("T"), V("x"))), Eq, App(V("g"), V("x")))), Land),
+        Ae(Call("Tendsto", Lam("n", Nat,
+                Seq(Frac, Grp(Term(V("n"), V("x"))), Grp(V("n")))),
+            Call("atTop"), Call("nhds", App(V("g"), V("x")))))
+    ]));
 }
