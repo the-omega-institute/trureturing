@@ -8,6 +8,11 @@ internal sealed class OriginalEndpointPrimeTailDocument : IScribeDocumentDefinit
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "All-price prime tails for the original strict and maximal resource optimizers.",
+        Blocks(Describe.Lean(
+            DescribeId.Create("same-integer-euler-log-sigma"),
+            DeclarationHandle.Create("D5/S3/Arith/Robin/OriginalEndpointPrimeTail.log_sigma_div_eq_eulerMass_sub_tail"),
+            H("The same integer Euler truncation equality"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("For every positive integer N, log(sigma(N)/N)=eulerMass(N)-tail(N). This exposes the unchanged canonical finite Euler-product proof for the complete signed margin consumer. No new factorization mechanism or analytic premise is introduced."))), DescribeRole.Theorem)),
         H("Original endpoint prime tails"),
         Blocks(
             Paragraph(Text(

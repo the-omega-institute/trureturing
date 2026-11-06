@@ -8,6 +8,11 @@ internal sealed class CompleteMertensPeakDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Complete cumulative and literal arithmetic-kernel peaks locate strict finite Robin violations.",
+        Blocks(Describe.Lean(
+            DescribeId.Create("unconditional-complete-mertens-ledger"),
+            DeclarationHandle.Create("D5/S3/Arith/Robin/CompleteMertensPeak.complete_mertens_ledger"),
+            H("The unconditional full weighted ledger"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("For every real t>=2, the actual complete Chebyshev error kernel and its existing WeightedTailTransport logarithmic weight are integrable on (t,infinity), and E2Lambda(t)=(psi(t)-t)/(t*log(t))-WeightedTailTransport.weightedTail(psiErrorKernel,t). WeightedPrimeLimit supplies absolute integrability and CompleteChebyshevTailIdentity supplies the complete normalized identity internally. There is no public hLay, normalization or integrability hypothesis, and no new integral owner. The existing calculus and both existing internal consumers are retained."))), DescribeRole.Theorem)),
         H("Complete Mertens peaks and finite Robin witnesses"),
         Blocks(
             Paragraph(Text("Conditional fixed-B0 application of the positive-U composite. Assume an actual nontrivial rho0 with beta=Re(rho0)>1/2 and gamma=Im(rho0)>0. Use delta, D, m0, m1 and A from the complete positive-U derivation in the WholeFormula, ActualZeroLaplace, ActualReciprocalSquareBounds, ZeroPowerSum and CountableGaussianQuadraticFourthMoment expositions. Separately assume hJY: for EVERY REAL u>=2, |Chebyshev.psi(u)-u|<=(939/100)*u*(log(u))^(303/200)*exp(-(4137/5000)*sqrt(log(u))), where the real exponent is Real.rpow. This is the exact additional quantitative Johnston-Yang premise used by complete_mertens_peak. No instance of it and no implication to it from the zero premises is asserted.")),
