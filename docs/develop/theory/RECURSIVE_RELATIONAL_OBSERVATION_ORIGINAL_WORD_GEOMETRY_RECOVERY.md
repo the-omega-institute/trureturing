@@ -1253,3 +1253,826 @@ the proofs, not additional geometry-recovery theorems.
 [TJ]: https://www.jmlr.org/papers/volume16/thon15a/thon15a.pdf
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Finite original-record geometry with ambient continuation certificates
+
+### 9.1. The original record and its common uncertainty packet
+
+**Definition 9.1 (the finite access contract).** Retain Assumption 1.1
+and Definition 1.2, but replace Assumption 1.3 by one finite initial
+segment of the actual label record. In particular the source remains
+$G=H^1\times\mathbb R$ with raw Haar measure, the full complex endpoint
+$A=\rho C$, the normalized $h$ and $m=h^2\mu$, the $e$-start, first
+read at $2d$, gaps $d$, and exactly the original four emissions and
+fresh conditional read noise. The mathematical constants $c$ and
+$\|g_d\|_\infty$ are not numerical inputs.
+
+Fix an integer $\ell\ge0$ and a finite list of distinct words
+$S=(u_1,\ldots,u_q)$ in $\{3,B\}^{\le\ell}$, containing the empty
+word. Put
+
+$$
+T=2\ell+3,\qquad K_T=4^T.
+\tag{9.1}
+$$
+
+For $N\ge1$, use the original statistic [R, Definition 8.3] at
+target length $T$. Thus $A(3v)$ counts the $N$ overlapping windows
+with prescribed word $3v$, $v\in\mathcal L^T$, and
+
+$$
+Z=\sum_v A(3v),\qquad
+\widehat\nu(v)=\frac{A(3v)+1}{Z+K_T}.
+\tag{9.2}
+$$
+
+Use the full $4^{T+1}$-counter convention of that supplier. There
+are exactly $N+T$ acquired labels, namely $Y_0$ through
+$Y_{N+T-1}$; the last read is at $(N+T+1)d$. For any word
+$w$ with $|w|\le T$, let $\widehat p(w)$ be its prefix marginal
+under $\widehat\nu$, with $\widehat p(\varnothing)=1$.
+
+A numerical confidence packet additionally specifies the same original
+source and clock, rational $t>0$, and validated rational bounds
+
+$$
+0<D_0^-\le d_{1/(4d)},\qquad
+0<D_N^-\le d_{1/(Nd)},\qquad D_0^-,D_N^-\le1.
+\tag{9.3}
+$$
+
+These are precisely the full-source defects of [R, §§9, 11]. They
+can be supplied as validated certificates, or constructed using the
+additional original coefficient and clock names of [R, Definition
+11.1 and Theorem 11.4]. Their encoding and construction or validation
+cost belong to the input bill. They are not inferred from labels.
+Define the rational variance envelope and the failure bound
+
+$$
+\begin{gathered}
+\overline V=\frac{2T+1}{4N}
+             +2\frac{1-D_N^-}{D_N^-},\qquad
+\alpha=\min\left\{1,\frac{4^{T+1}}t
+                      \sqrt{\frac{\overline V}{D_0^-}}\right\},\\
+e_p=\min\left\{1,\frac{Nt+K_T}{Z+K_T}\right\}.
+\end{gathered}
+\tag{9.4}
+$$
+
+An upward rational enclosure of $\alpha$ may replace it. The packet's
+$N,T,t$ and defect certificates are selected without consulting the
+record used for this packet. Selection from a predeclared sequence of
+packets is treated in Definition 9.8 below.
+
+The supplied results give a single event $\mathcal E$ with
+
+$$
+\mathbb P_e(\mathcal E)\ge1-\alpha,\qquad
+\mathcal E\ \Longrightarrow\
+\operatorname{TV}(\widehat\nu,p|_{\mathcal L^T})\le e_p,
+\quad |\widehat p(w)-p(w)|\le e_p\quad(|w|\le T).
+\tag{9.5}
+$$
+
+Here and below $p|_{\mathcal L^T}$ means the original length-$T$
+probability vector, not restriction to a new experiment. To identify
+the interface exactly, take
+$\Delta=\sum_v|A(3v)/N-\pi_{T+1}(3v)|$. The marked identity of
+[R, Theorem 8.2] is $\pi_{T+1}(3v)=cp(v)$. Theorem 9.4 there,
+with window length $T+1$, bounds
+$\mathbb P_e(\Delta>t)$ by (9.4), since
+$\Delta\le2\operatorname{TV}(a_{N,T+1},\pi_{T+1})$.
+Proposition 8.5 there gives (9.5) on $\{\Delta\le t\}$.
+These existing sampler and dependence estimates are the suppliers;
+no independent-window or stationary-preparation hypothesis is added.
+In particular $Z=0$ is allowed, giving $e_p=1$ rather than a false
+precise certificate. Label-only access provides (9.2) and its fixed
+horizon consistency, but not a nontrivial numerical (9.5).
+
+### 9.2. Two original prefixes and a finite positive carrier
+
+**Definition 9.2 (normalized marked vectors and the measured blocks).**
+Work on the real part of the source sector $\mathcal O$; all the
+following real pairings extend by complexification. Theorem 2.2 gives
+the source proof vectors and operators
+
+$$
+\begin{gathered}
+\beta_i=4^{|u_i|},\qquad v_i=\beta_i U[u_i],\qquad
+Va=\sum_{i=1}^q a_i v_i,\\
+R_B=P,\qquad R_3=4P^{1/2}M_3P^{1/2},\qquad
+0\le R_3\le R_B\le I,\qquad \|v_i\|_m\le1.
+\end{gathered}
+\tag{9.6}
+$$
+
+The factor four normalizes an existing prefix; it changes neither an
+emission nor its calibration. The order follows from $0\le4f_3\le1$.
+Also $v_i=R_{u_{i,1}}\cdots R_{u_{i,|u_i|}}U[\varnothing]$,
+and $\|U[\varnothing]\|^2=p(3)\le1$, proving the last bound.
+These are source correspondences used in proofs, not hidden-coordinate
+inputs to the finite construction.
+
+For $y\in\{B,3\}$ define real symmetric blocks
+
+$$
+\begin{aligned}
+G_{ij}&=\langle v_i,v_j\rangle_m
+       =\beta_i\beta_jp(u_i^Ru_j3),\\
+(B_y)_{ij}&=\langle v_i,R_yv_j\rangle_m
+       =4\beta_i\beta_jp(u_i^Ryu_j3),\\
+(D_y)_{ij}&=\langle R_yv_i,R_yv_j\rangle_m
+       =16\beta_i\beta_jp(u_i^Ryyu_j3).
+\end{aligned}
+\tag{9.7}
+$$
+
+Every probability here is an original legal word of length at most
+$T$. In particular $D_y$ measures the whole source norm after a
+prefix, including the component orthogonal to $\operatorname{ran}V$.
+It is not reconstructed by multiplying fitted $q\times q$ matrices.
+
+Replace $p$ by $\widehat p$ in (9.7), round each entry to a dyadic
+with absolute error at most a specified $\zeta=2^{-b}$, $b\ge0$,
+and average each matrix with its transpose. Denote the five resulting
+rational symmetric matrices by
+$\widehat G,\widehat B_B,\widehat B_3,\widehat D_B,\widehat D_3$.
+Exact rational entries with $\zeta=0$ are also permitted. Put
+
+$$
+\epsilon=4^{2\ell+2}e_p+\zeta,\qquad \delta=q\epsilon.
+\tag{9.8}
+$$
+
+On $\mathcal E$, each of the five entry errors is at most
+$\epsilon$, and each Euclidean operator-norm error is at most
+$\delta$. Symmetrization preserves these bounds. This is the only
+word-noise amplification used to fit the carrier; no later query
+length is inserted into (9.8).
+
+Choose rational $\lambda>0$ and set
+
+$$
+\begin{gathered}
+S_f=\widehat G+(5\delta+\lambda)I,\qquad
+L_3=\widehat B_3+\delta I,\qquad
+L_B=\widehat B_B+3\delta I,\\
+A_3=S_f^{-1}L_3,\qquad A_B=S_f^{-1}L_B,\qquad
+\langle a,b\rangle_f=a^{\mathsf T}S_f b.
+\end{gathered}
+\tag{9.9}
+$$
+
+The rational construction first checks
+$S_f\ge\lambda I$, $L_3\ge0$, $L_B-L_3\ge0$ and
+$S_f-L_B\ge0$. These are finite rational quadratic-form order
+tests. If one fails, the result is inconclusive; a total carrier
+value can be assigned as $S_f=(1+\lambda)I$, $A_B=A_3=0$,
+without asserting the source comparison below. No exact rank or
+zero test of an unknown real number occurs.
+
+**Theorem 9.3 (acquired marked geometry in the original source).**
+On the single event $\mathcal E$, the order tests in Definition 9.2
+pass. The rational Hilbert carrier
+$(\mathbb R^q,\langle\cdot,\cdot\rangle_f)$ has
+$S_f$-self-adjoint operators
+
+$$
+0\le A_3\le A_B\le I.
+\tag{9.10}
+$$
+
+The actual-source map $V$ satisfies, simultaneously for all real
+coefficient vectors $a$,
+
+$$
+\begin{gathered}
+G+(4\delta+\lambda)I\le S_f
+                  \le G+(6\delta+\lambda)I,\qquad
+\|Va\|_m\le\|a\|_f,\\
+0\le\|a\|_f^2-\|Va\|_m^2
+               \le(6\delta+\lambda)\|a\|_2^2.
+\end{gathered}
+\tag{9.11}
+$$
+
+Consequently (9.11), applied to differences, certifies the squared
+distances of all retained marked combinations. The operator
+$A_B$ represents one original sample-time step, and $A_3$ the
+normalized original marker prefix, with the source-error certificate
+in Theorem 9.4. The comparison is valid for singular and arbitrarily
+ill-conditioned $G$.
+
+*Proof.* Apply (2.8) to the scaled words in (9.6). Inserting one
+or two self-adjoint prefixes gives exactly (9.7), in its displayed
+order. Thus
+$0\le B_3\le B_B\le G$ and $D_y=V^*R_y^2V$.
+Equation (9.5), scaling and rounding give (9.8). A symmetric
+$q\times q$ entry error bounded by $\epsilon$ has operator norm
+at most $q\epsilon$, by Cauchy--Schwarz in the finite sums.
+It follows that
+
+$$
+\begin{gathered}
+L_3\ge B_3\ge0,\qquad
+L_B-L_3\ge B_B-B_3\ge0,\\
+L_B\le B_B+4\delta I\le G+4\delta I,\qquad
+S_f\ge G+(4\delta+\lambda)I.
+\end{gathered}
+\tag{9.12}
+$$
+
+This proves all rational tests, including strict invertibility of
+$S_f$. In its inner product, $A_y$ has quadratic form $L_y$;
+(9.12) proves (9.10), self-adjointness and contractivity.
+The upper error bound for $\widehat G$ also gives the upper
+inequality in (9.11). Taking quadratic forms proves the remaining
+claims. This uses ordinary finite positive-form calculus; the new
+source input is the three original-word identities (9.7).
+$\square$
+
+The retained $q$ is a chosen coordinate count, not a certified Gram
+rank. If $Va=0$, (9.11) bounds the artificial squared length by
+$(6\delta+\lambda)\|a\|_2^2$. Keeping such directions avoids
+deciding which nearly null combinations are exactly null. In
+particular the finite carrier is not asserted to be isometric to an
+exact $q$-dimensional hidden source.
+
+### 9.3. Ambient leakage, original letters and repeated use
+
+**Theorem 9.4 (a source-space continuation certificate).** On
+$\mathcal E$, for every $a\in\mathbb R^q$ and
+$y\in\{B,3\}$, define
+
+$$
+\begin{aligned}
+\widehat Q_y(a)
+ &=a^{\mathsf T}\widehat D_y a
+   -2(A_ya)^{\mathsf T}\widehat B_y a
+   +(A_ya)^{\mathsf T}\widehat G(A_ya),\\
+r_y(a)
+ &=\min\left\{2\|a\|_f,
+  \sqrt{\max(0,\widehat Q_y(a))
+           +\epsilon(\|a\|_1+\|A_ya\|_1)^2}\right\}.
+\end{aligned}
+\tag{9.13}
+$$
+
+Then
+
+$$
+\|R_yVa-VA_ya\|_m\le r_y(a).
+\tag{9.14}
+$$
+
+In particular (9.14) bounds
+$\|(I-\Pi_S)R_yVa\|_m$, where $\Pi_S$ is the actual
+orthogonal projection onto $\operatorname{ran}V$. The projection
+and this range are proof objects; no observer access to them is used.
+
+For every original letter define its source sandwich operator
+$C_z=P^{1/2}M_zP^{1/2}$ and its finite representative by
+
+$$
+\begin{array}{c|c|c|c}
+z&C_z&F_z&\kappa_z\\ \hline
+B&R_B/4&A_B/4&1/4\\
+3&R_3/4&A_3/4&1/4\\
+0,1&(3R_B-R_3)/8&(3A_B-A_3)/8&3/8
+\end{array}
+\tag{9.15}
+$$
+
+Both source and finite operators in each row are positive, with norm
+at most $\kappa_z$ in their respective Hilbert spaces. Valid local
+residual bounds are
+
+$$
+s_B(a)=r_B(a)/4,\qquad s_3(a)=r_3(a)/4,\qquad
+s_0(a)=s_1(a)=\frac{3r_B(a)+r_3(a)}8.
+\tag{9.16}
+$$
+
+Consider any finite application sequence $O_1,\ldots,O_H$, where
+each $O_j$ is either $R_B,R_3$ or one of the four $C_z$. Use
+the corresponding finite map $A_B,A_3$ or $F_z$, denoted by
+$\widetilde O_j$. Let $\kappa_j=1$ for $R_B,R_3$, and use
+(9.15) for the letters. Starting from an arbitrary rational $a_0$,
+put
+
+$$
+\begin{gathered}
+a_j=\widetilde O_j a_{j-1},\qquad z_0=Va_0,\qquad
+z_j=O_jz_{j-1},\\
+E_0=0,\qquad
+E_j=\kappa_jE_{j-1}+s_{O_j}(a_{j-1}),
+\end{gathered}
+\tag{9.17}
+$$
+
+where $s_{R_y}=r_y$ and $s_{C_z}=s_z$. Then
+
+$$
+\|z_j-Va_j\|_m\le E_j\qquad(0\le j\le H).
+\tag{9.18}
+$$
+
+These inequalities hold on the same $\mathcal E$ for all finite
+query lengths, sequences and rational starting coefficients,
+including choices made from this packet's acquired matrices.
+There is no additional independence assumption or multiplication of
+confidence levels.
+
+*Proof.* Expansion of the actual squared norm gives
+
+$$
+\|R_yVa-VA_ya\|_m^2
+ =a^{\mathsf T}D_ya-2(A_ya)^{\mathsf T}B_ya
+                   +(A_ya)^{\mathsf T}G(A_ya).
+\tag{9.19}
+$$
+
+Its difference from $\widehat Q_y(a)$ has absolute value at most
+$\epsilon(\|a\|_1+\|A_ya\|_1)^2$, term by term. Both
+$V$ and $A_y$ are contractions in (9.11) and (9.10), so the
+norm in (9.19) is also at most $2\|a\|_f$. This proves (9.14).
+The orthogonal projection kills $VA_ya$ and is a contraction,
+proving the ambient leakage assertion. In particular a small fitted
+normal-equation residual is not substituted for the measured
+$D_y$ term.
+
+The source identities in (9.15) are exactly (2.9) and $C_B=P/4$.
+For $0,1$, positivity follows from $R_3\le R_B$ and
+$A_3\le A_B$; the upper bound follows from
+$3R_B-R_3\le3I$ and $3A_B-A_3\le3I$.
+The other two rows follow immediately. Linear combination of the
+two actual residual vectors gives (9.16). Finally
+
+$$
+z_j-Va_j=O_j(z_{j-1}-Va_{j-1})
+            +(O_jVa_{j-1}-V\widetilde O_ja_{j-1}).
+\tag{9.20}
+$$
+
+Apply the operator bounds and induct. This is the usual residual
+propagation argument, also used in [PRE]; (9.7) and (9.19) pay its
+previously missing original-source measurement obligation. All
+entrywise inequalities were established on one event before any
+coefficient or query was chosen. They hold for every real vector,
+so their subsequent data-dependent applications require no union
+bound over queries. $\square$
+
+### 9.4. Sample time and specified original future events
+
+**Theorem 9.5 (finite relational outputs and original prediction
+tests).** Start (9.17) at $a_0=e_j$. For every retained $i$, put
+
+$$
+\mathcal B_i=E_H+\epsilon\|a_H\|_1
+                         +(5\delta+\lambda)|(a_H)_i|.
+\tag{9.21}
+$$
+
+On $\mathcal E$,
+
+$$
+\left|\langle v_i,O_H\cdots O_1v_j\rangle_m
+                   -e_i^{\mathsf T}S_fa_H\right|
+ \le\mathcal B_i.
+\tag{9.22}
+$$
+
+In particular the following outputs are certified.
+
+For $n\ge0$, apply $A_B$ $n$ times. The clipped estimate
+$[e_i^{\mathsf T}S_fA_B^ne_j/(\beta_i\beta_j)]_{[0,1]}$
+has error at most $\min(1,\mathcal B_i/(\beta_i\beta_j))$
+against the original sample-time pairing
+
+$$
+\frac{\langle v_i,P^nv_j\rangle_m}{\beta_i\beta_j}
+       =4^np(u_i^RB^nu_j3).
+\tag{9.23}
+$$
+
+This compares the actual heat evolution for $n$ sample steps on
+the retained smoothed word functions. When a numerical clock name
+is supplied, these are the times $nd$; without it this action still
+has its sample-step meaning. No extra read at an intermediate time
+or selected $B$ outcome is performed.
+
+For an arbitrary word $w=w_1\cdots w_H\in\mathcal L^H$,
+apply the finite maps in the order
+$F_{w_H},F_{w_{H-1}},\ldots,F_{w_1}$. Then
+
+$$
+\begin{gathered}
+n_{i,w,j}=p(u_i^Rwu_j3)
+     =\frac{\langle v_i,C_{w_1}\cdots C_{w_H}v_j\rangle_m}
+                  {\beta_i\beta_j},\\
+\widehat n_{i,w,j}
+ =\left[\frac{e_i^{\mathsf T}S_f
+                 F_{w_1}\cdots F_{w_H}e_j}
+                    {\beta_i\beta_j}\right]_{[0,1]},\qquad
+|\widehat n_{i,w,j}-n_{i,w,j}|
+       \le\Delta_{i,w,j}:=\min\left(1,
+                                 \frac{\mathcal B_i}{\beta_i\beta_j}\right).
+\end{gathered}
+\tag{9.24}
+$$
+
+Thus a fixed training horizon $T$ supports certificates for inserted
+words longer than $T$, at the price of the measured and accumulated
+leakage. The bound may be inconclusive. The reversed order of applying
+matrices in this assertion is essential: the chronological word is
+$u_i^Rw_1\cdots w_Hu_j3$, not $u_i^Rw_H\cdots w_1u_j3$.
+
+For the fixed original history $h=u_i^R$, use its marginal
+$\widehat p(h)$ from Definition 9.1. If
+
+$$
+\widehat p(h)>e_p,
+\tag{9.25}
+$$
+
+then the clipped scalar conditional test
+
+$$
+\widehat r_{i,w,j}
+ =\left[\frac{\widehat n_{i,w,j}}{\widehat p(h)}\right]_{[0,1]}
+\tag{9.26}
+$$
+
+satisfies, simultaneously with (9.22)--(9.24),
+
+$$
+\left|\widehat r_{i,w,j}
+   -\mathbb P_e\{Y_{|h|}\cdots
+      Y_{|h|+|wu_j3|-1}=wu_j3\mid Y_0\cdots Y_{|h|-1}=h\}\right|
+ \le\min\left\{1,
+        \frac{\Delta_{i,w,j}+e_p}{\widehat p(h)}\right\}.
+\tag{9.27}
+$$
+
+For the empty history use its exact probability one and denominator
+error zero. If (9.25) fails, the conditional output is inconclusive.
+No lower probability bound for a rare history is presumed.
+
+*Proof.* The difference in (9.22) is bounded by
+$\|v_i\|_mE_H+|e_i^{\mathsf T}(G-S_f)a_H|$.
+Use $\|v_i\|_m\le1$, the entry error for $\widehat G$ and
+the explicit diagonal shift in (9.9), obtaining (9.21).
+Theorem 2.2 gives (9.23). Inserting $C_{w_1}\cdots C_{w_H}$
+between the two marked vectors in (2.8) gives (9.24), including
+its chronological order for all four letters. Both true scalars in
+(9.23) and (9.24) belong to $[0,1]$: for the former use positive
+source word functions, positivity preservation of $P$, and their
+norm bound; for the latter use the original word probability.
+Clipping a real estimate to this interval cannot increase its error.
+
+For (9.27), let $n=p(hwu_j3)$, $p_h=p(h)$ and
+$\widehat p_h=\widehat p(h)$. On $\mathcal E$, (9.25)
+gives $p_h\ge\widehat p_h-e_p>0$. The source also gives
+$0\le n\le p_h$. Therefore
+
+$$
+\left|\frac{\widehat n}{\widehat p_h}-\frac n{p_h}\right|
+ \le\frac{|\widehat n-n|}{\widehat p_h}
+      +\frac n{p_h}\frac{|p_h-\widehat p_h|}{\widehat p_h}
+ \le\frac{\Delta_{i,w,j}+e_p}{\widehat p_h}.
+\tag{9.28}
+$$
+
+Clip once more and use the original cylinder conditioning identity.
+No separately optimized probabilities or independently sampled
+histories have been combined. $\square$
+
+Individual tests (9.27) need not form a normalized distribution as
+$w,j$ vary. Products of positive sandwich operators need not give
+nonnegative finite fitted pairings; this is why scalar clipping is
+specified. Nor does $\sum_zF_z=A_B$ supply a finite Markov filter:
+no fitted fixed constant vector or normalized all-future law has
+been constructed. The retained vectors are marked observable
+directions, not the current hidden state or the exact predictive
+vectors $z_u$ of (3.6). In particular (9.27) concerns a named
+original history; substituting the growing history at the current
+record cut requires a new denominator and horizon contract.
+
+### 9.5. Finite arithmetic and the acquisition bill
+
+**Definition 9.6 (precision, retention and cost of these outputs).**
+All quantities in (9.2), the rounded matrices, the order tests,
+their inverses, and the coefficient iterates are rational. Positive
+semidefiniteness of a rational symmetric matrix is decidable by
+successive rational Schur complements: pivot on a positive diagonal;
+a zero diagonal in a positive semidefinite matrix must have zero
+row, which can be tested exactly and removed. A negative diagonal,
+or a zero diagonal with a nonzero row, rejects. The dimension
+decreases at each step. Strict invertibility in (9.9) is secured
+by the checked lower bound $S_f\ge\lambda I$. These are tests of
+known rational numbers, never of the unknown source Gram rank.
+
+The radical bounds in (9.4), (9.13) and (9.17) have rational squared
+arguments. Bisection with outward rounding returns upper rational
+bounds at any requested absolute precision. If each local residual
+is rounded upwards by at most $\omega$, (9.17) increases by at
+most $H\omega$, since all $\kappa_j\le1$. Thus precision
+$\omega\le\tau/(H+1)$ pays a declared total arithmetic allowance
+$\tau$ for a query. Exact rational coefficient iterates introduce
+no additional roundoff; implementations using rounded iterates would
+have to add their own normed recurrence errors to (9.17).
+
+The full-counter acquisition route retains
+
+$$
+O\bigl(4^{T+1}\log(N+1)+T\bigr)
+\quad\text{bits}
+\tag{9.29}
+$$
+
+for the counters and a $T+1$-label buffer. Prefix marginalization
+and extraction of (9.7) can be bounded by
+$O(T4^{T+1}+q^2T)$ rational or integer operations after the
+stream has been counted; a direct buffer route costs
+$O((N+T)(T+1))$ elementary symbol operations. No claim of optimal
+counter retention is needed. After extraction only five symmetric
+blocks, the two finite maps, the metric, the packet and the desired
+history marginals need be retained; raw past labels can be discarded
+for these particular outputs.
+
+More explicitly, let $B_0$ bound the bit lengths of a common
+denominator and all integer numerators for the finite matrices in
+(9.9), the measured blocks and the rational radii. It can be chosen
+of order
+
+$$
+b+\ell+\log(q+1)+\log(N+4^T)
+ +\text{the total bit length of }(t,\lambda,D_0^-,D_N^-).
+\tag{9.30}
+$$
+
+The shared denominator $Z+4^T$ in (9.2), a dyadic denominator for
+the rounded entries, and the denominators of $t,\lambda$ suffice
+to see this. Exact elimination uses $O(q^3)$ arithmetic operations.
+Integer determinant/minor bounds give an encoding for each fitted
+map with a common denominator and numerators of at most
+$F=O(q(B_0+\log(q+1)))$ bits. Fraction-free elimination and
+rational order tests therefore have finite polynomial bit cost in
+$q,B_0$; their retention is $O(q^2F)$ bits.
+
+A query of $H$ prefixes or letters uses $O(Hq^2)$ rational
+operations, including its local quadratic residual evaluations.
+With common-denominator arithmetic its coefficient bit lengths are
+$O((H+1)(F+\log(q+1)))$, and its workspace beyond the retained
+blocks is $O(q(H+1)(F+\log(q+1)))$ bits, plus the chosen radical
+precision. The elementary integer operations and bisections have
+polynomial bit cost in these displayed quantities. Arbitrarily long
+reuse is consequently not a fixed-bit memory assertion, even when
+the retained coordinate count $q$ stays fixed.
+
+The complete bill also includes the construction or validation cost
+$C_{\rm cap}$ of (9.3) from the specified original numerical names,
+and the physical acquisition of $N+T$ labels through time
+$(N+T+1)d$. No rate for $C_{\rm cap}$ or for finding an adequate
+$N$ is obtained merely from positivity of $d_r$. Known valid
+certificates at a given $N$ make (9.4) finite. From the numerical
+services of [R, §11], refining absolute error enclosures eventually
+produces positive lower certificates because each $d_r>0$.
+Searching $N$ with progressively accurate certificates can meet
+any fixed positive failure target and fixed $t,T$: the supplied
+fact $d_{1/(Nd)}\to1$ makes $\overline V\to0$ when those lower
+certificates are chosen to approach one. This is termination for
+each fixed original member, without a uniform sample bound over
+the coefficient family. A finite observed radius or conditional
+guard can still fail to be useful.
+
+### 9.6. What accuracy growth does and does not imply
+
+**Proposition 9.7 (finite task recovery without a rank oracle).**
+Fix the original source, a finite dictionary $S$ and finitely many
+queries from Theorem 9.5. Write $E=\operatorname{ran}V$. Consider
+packets and precision choices along which
+
+$$
+\lambda\longrightarrow0,\qquad
+\delta/\lambda\longrightarrow0,\qquad \epsilon\longrightarrow0,
+\tag{9.31}
+$$
+
+on their common good event. Let $G^\dagger$ denote the Moore--Penrose
+inverse only for the following mathematical limit, not as an
+observer input. Then
+
+$$
+A_y\longrightarrow G^\dagger B_y,\qquad
+VA_ya\longrightarrow\Pi_SR_yVa
+\quad(y=B,3).
+\tag{9.32}
+$$
+
+For fixed coefficient vectors the unrounded $r_y$ in (9.13)
+converges to the actual projection leakage
+$\|(I-\Pi_S)R_yVa\|_m$. More generally this statement holds
+along convergent coefficient vectors. Thus a fixed frame does not
+lose its ambient error by merely increasing the record length.
+
+For finite-task recovery impose the following sufficient condition
+on each of the finitely many query trajectories: every intermediate
+source vector belongs to $E$, and at a $C_0$ or $C_1$ step with
+input $z$, both component images $R_Bz,R_3z$ belong to $E$.
+Then the error certificates (9.21)--(9.24) tend to zero under
+(9.31) and vanishing arithmetic allowances. Conditional certificates
+also tend to zero for each of their fixed histories once $e_p\to0$.
+Such histories have strictly positive probability by Theorem 3.3.
+This is a condition on the specified finite trajectories, not an
+assumed invariant finite hidden model.
+
+For the singleton dictionary $S=(\varnothing)$ the limiting squared
+one-step sample-time leakage is strictly positive and equals
+
+$$
+16\left(p(BB3)-\frac{p(B3)^2}{p(3)}\right)>0.
+\tag{9.34}
+$$
+
+Thus even in this actual original source, confidence refinement
+alone cannot turn its smallest retained marked line into a closed
+sample-time carrier.
+
+*Proof.* If $a\in\ker G$, then $Va=0$ and $B_ya=0$.
+Symmetry therefore gives $\operatorname{ran}B_y\subseteq
+(\ker G)^\perp$. On this finite-dimensional complement the
+positive eigenvalues of $G$ have a positive minimum, unless the
+complement is zero, in which case the assertion is immediate.
+This minimum is used to prove a limit, not supplied or tested by
+the observer.
+
+Compare (9.9) with
+$A_y^0=(G+\lambda I)^{-1}B_y$. For the fixed dictionary,
+$A_y^0$ stays bounded and tends to $G^\dagger B_y$ by this
+orthogonal decomposition. The matrix difference identity gives
+
+$$
+A_y-A_y^0
+ =S_f^{-1}\bigl[(L_y-B_y)
+                    +(G+\lambda I-S_f)A_y^0\bigr].
+\tag{9.33}
+$$
+
+Here $\|S_f^{-1}\|\le\lambda^{-1}$,
+$\|L_y-B_y\|\le4\delta$, and
+$\|G+\lambda I-S_f\|\le6\delta$. Equation (9.31)
+proves the first limit. The normal equations, or the ordinary
+Hilbert projection theorem, identify
+$VG^\dagger B_ya=\Pi_SR_yVa$, proving the second.
+Equation (9.19), entry convergence and coefficient convergence
+show that the square-root expression in (9.13) tends to the
+projection leakage. Its other cap tends to $2\|Va\|_m$,
+which is at least that leakage. This proves the residual claim,
+including exactly degenerate frames.
+
+The same limit holds for the fixed linear combinations (9.15).
+If all intermediate source vectors of a query belong to $E$,
+successive projected actions equal those original vectors.
+Induction in the finite coefficient recurrences gives convergent
+coefficients with zero limiting ambient residual on every queried
+step. Equations (9.17) and (9.21) then tend to zero. The stated
+component condition at a $0$ or $1$ step ensures that both terms
+in (9.16) vanish. A dictionary containing the finitely many $3,B$
+words in the two-prefix expansions of all query trajectories always
+supplies this sufficient condition. Finally the denominators in
+(9.27) tend to their fixed positive original probabilities.
+
+For the singleton, the squared projection leakage is
+$D_B-B_B^2/G$, yielding (9.34) by (9.7). It is positive because
+$v_\varnothing$ and $Pv_\varnothing$ are independent. Indeed
+$v_\varnothing=\sqrt c\,P^{1/2}g_d$; applying $P^{1/2}$
+to a dependence would give a dependence of $g_{2d}$ and
+$Pg_{2d}$, contrary to the original heat-orbit independence
+used in [MEM, Theorem 3.1]. Also $p(3)>0$ by Theorem 3.3.
+$\square$
+
+Cancellation between two nonzero component leakages alone need not
+make the conservative sum (9.16) vanish. For a pure sample-time
+query there is only the $R_B$ path, so this distinction disappears.
+
+**Definition 9.8 (joint growth and the remaining infinite task).**
+For a predeclared countable family of packets, assign failure
+allowances $\alpha_s$ with $\sum_s\alpha_s\le\alpha_*$,
+and make (9.4) at most $\alpha_s$ for each packet before using
+its record. A union bound gives one event of probability at least
+$1-\alpha_*$ on which all their conclusions hold. The records may
+be nested initial segments of the same trajectory. Stopping at a
+successful displayed error bound or selecting a finite query from
+these packets is valid on that event; repeatedly trying unbudgeted
+fixed-$N$ certificates is not the same confidence statement.
+
+For each fixed dictionary, the sampler supplies $e_p\to0$ when
+$t\to0$, $K_T/N\to0$ and $Z/N\to c>0$. The last fact is
+the original one-marker ergodic limit [R, Theorem 8.2], and does
+not require knowing $c$ numerically. One can therefore refine
+record and rounding precision, and choose $\lambda$, to attain
+(9.31) for a fixed task using the additional capacity services.
+No exact lower frame eigenvalue is needed to evaluate the finite
+certificates. The preceding limit proof supplies no uniform rate
+as that eigenvalue approaches zero.
+
+The dictionary, the finite query menu, and the query lengths may grow.
+For any such sequence, sufficient checkable accuracy conditions are
+that the displayed accumulated residual $E_H$, the metric term in
+(9.21), and the chosen arithmetic allowances tend to zero after the
+normalizations of the declared output. For conditional tests, their
+sum with $e_p$ divided by the guarded observed denominator must
+also tend to zero. Shrinking word error alone does not imply these
+conditions when $q,\ell,H$ or the rarity of histories grows.
+In particular (9.8) carries an explicit $4^{2\ell+2}$
+amplification, (9.29) an exponential counter bill, and repeated
+sample-time use can accumulate nonvanishing leakage.
+
+Theorem 2.2 ensures that increasing $3,B$ dictionaries have dense
+marked span. For any fixed finite trajectory its required prefix
+vectors can be included, and Proposition 9.7 then gives finite-task
+convergence. For example, if the chosen starting words have length
+at most $\ell_0$ and there are at most $H$ applications, retaining
+all $3,B$ words through length $L=\ell_0+H$ suffices for those
+trajectories. This blanket choice has $q=2^{L+1}-1$ and training
+horizon $T=2L+3$, and pays the corresponding bill (9.29); it is
+not a free growing-horizon limit. Density by itself gives neither a uniform frame
+condition nor uniformly small leakage on a growing menu. Broader
+quantitative recovery needs estimates controlling precisely these
+task tails, coefficient/regularization costs, horizons and guarded
+history probabilities, in addition to the acquisition schedule.
+
+The actual source has infinite algebraic Hankel rank and countably
+infinitely many exactly reachable predictive profiles, by
+[original passive predictive memory, Theorems 3.1 and 5.1][MEM].
+The finite carrier above is consequently an approximation with a
+measured ambient residual. Neither (9.10) nor successful finite
+tests turn it into a finite exact realization. There is no asserted
+uniform all-history or all-future recovery, current-cut filter,
+reconstruction of $\Omega$ or the exact $c$, bounded inverse heat,
+source trace evaluation, full spatial multiplication algebra, or
+parameter calibration. Those stronger interfaces in §§3--7 retain
+their separate hypotheses and unpaid stability obligations.
+
+### 9.7. Mathematical suppliers and the source-specific increment
+
+**Definition 9.9 (correspondence and literature scope).** The
+`repo-derived` addition is the finite composition (9.7)--(9.28):
+actual dependent-record confidence produces a positive marked
+carrier, its two source-bound prefixes, an ambient rather than
+merely fitted residual, and joint certificates for original sample
+time and specified conditional future events. Its finite precision
+and access contracts are Definitions 9.1, 9.6 and 9.8. The sampler
+of [R, §§8--9], its coefficient/clock capacity service in §11,
+and the exact marked geometry of Theorem 2.2 are reused, not
+additional results claimed here. The source-resolvent supremum
+and separation results in [R, §13] do not replace the unchanged
+heat calibration by a resolvent readout. The present bridge does
+not need that substitution or a numerical name of the sharp
+normalizer.
+
+The mature dictionary/Galerkin shape is `literature-attested` in
+Williams--Kevrekidis--Rowley [EDMD, §§2.2--2.3]. Their observation
+interface uses state-observable snapshot pairs; no such snapshots
+are available here. Equations (9.7) and (9.19) give the original
+word substitute for the needed inner products and whole-source
+norm, while (9.5) supplies the appropriate dependent-record error.
+The finite positive-form, diagonal regularization, projection and
+triangle-inequality steps are established tools inside this
+source-specific result, with no general-theorem priority claim.
+
+The existing D5 source [PRE], including its private
+`stateError_step_bound` and `weightedResidual_succ`, supplies
+the residual-recursion and output-bound pattern. Its public
+`stateError_le_residual_sum` and `outputError_le_residual_sum`
+concern supplied continuous linear dynamics, projection and lift.
+Here $V$, $R_y$, $A_y$ instantiate the lift/intertwining role;
+the varying-letter recurrence is displayed in (9.20). That library
+does not acquire $D_y$ or bind its residual to this original
+passive record. [NoisyHoKalmanRecovery, `run_noisy_recovery`][NHK]
+and [HoKalmanPredictionBudget][HKB] instead require a true finite
+matrix realization of the declared order; their finite-rank
+contract is not instantiated by this source. The predictive
+factorization [PRED] and positive-conditioning result [PCOND]
+likewise preserve their complete-law premises; they do not supply
+a normalized finite fitted future law from (9.24).
+
+At the pinned Mathlib revision of §8, the standard positive-form
+and Hilbert projection ingredients are in
+`Mathlib.LinearAlgebra.Matrix.PosDef` and
+`Mathlib.Analysis.InnerProductSpace.Projection.Minimal`, including
+`exists_norm_eq_iInf_of_complete_subspace`. These support the
+finite algebra and the mathematical projection used in Proposition
+9.7, without a rank oracle or a quantitative smallest-eigenvalue
+input. The statements in this section are mathematical prose;
+no new Lean verification is asserted.
+
+[MEM]: RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_PASSIVE_PREDICTIVE_MEMORY.md
+[PRE]: ../../../D5/S3/Observer/Hankel/ProjectedRealizationError.lean
+[NHK]: ../../../D5/S3/Observer/Hankel/NoisyHoKalmanRecovery.lean
+[HKB]: ../../../D5/S3/Observer/Hankel/HoKalmanPredictionBudget.lean
+[PCOND]: ../../../D5/S3/ObserverMemory/PredictionFactors/PositiveConditioningPredictionStability.lean
+[EDMD]: https://arxiv.org/pdf/1408.4408v1
+
+## 追加锚（本行以下为增补区）
