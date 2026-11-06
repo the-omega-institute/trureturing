@@ -1,0 +1,25 @@
+### 命题 12.1（三维中不对易二态仍不足以认证全部输入）
+
+在 $\mathbb C^3$ 中取
+
+$$
+\begin{gathered}
+ P=\operatorname{diag}(1,1,0),\quad Q=I-P,
+ \qquad N(X)=PXP+QXQ,\\
+ \sigma=\operatorname{diag}(1/2,1/3,1/6),\qquad
+ d=\frac{E_{12}+E_{21}}6,\\
+ \rho_0=\sigma+d,\quad\rho_1=\sigma-d.
+ \end{gathered}
+$$
+
+两态均忠实且不对易，C90 成立，但 $N$ 不存在全态恢复通道。
+
+**证明。**
+两态左上 $2\times2$ 块的行列式为 $5/36>0$，
+第三个对角元为 $1/6$，故均正定。
+而 $[\rho_0,\rho_1]=-(E_{12}-E_{21})/18\ne0$。
+通道固定 $\rho_0,\rho_1,\sigma$，所以输入输出的 $J$ 相同。
+由于 $P,Q$ 与 $\sigma$ 对易，直接代入 Petz 公式还得到 $R_{\sigma,N}=N$。
+然而 $\lvert \psi_\pm\rangle=(\lvert 1\rangle\pm\lvert 3\rangle)/\sqrt2$ 的两个纯态
+经 $N$ 得到同一输出，故无法共同恢复全部态。
+

@@ -1,0 +1,85 @@
+#### 定理 11.1（二元共同强度的显式式子）
+
+对 $x\ne y$，
+
+<a id="eq-pair"></a>
+
+$$
+\boxed{
+t_*=
+\frac{\left\lVert x\right\rVert ^2\left\lVert y\right\rVert ^2-|\langle x,y\rangle |^2}
+     {\left\lVert x-y\right\rVert ^2}.
+}\tag{11.1}
+$$
+
+若 $x=y$，单独取 $`t_*=\left\lVert x\right\rVert ^2`$。
+特别地，对单位态，记 $z=\langle x,y\rangle$，
+
+$$
+t_*=\frac{1-|z|^2}{2-2\operatorname{Re}  z}\quad(x\ne y).
+$$
+
+若实际相位已对齐使 $z\in[0,1)$，则 $`t_*=(1+z)/2`$。
+
+**证明。**
+
+当 $x\ne y$ 时，$D=\operatorname{span} \{x-y\}$，
+
+$$
+q=x-(x-y)\frac{\langle x-y,x\rangle }{\left\lVert x-y\right\rVert ^2}.
+$$
+
+由正交投影，
+$\left\lVert q\right\rVert ^2=\left\lVert x\right\rVert ^2-|\langle x-y,x\rangle |^2/\left\lVert x-y\right\rVert ^2$。
+记 $a=\left\lVert x\right\rVert ^2,b=\left\lVert y\right\rVert ^2,z=\langle x,y\rangle$，
+分子化简为
+$a(a+b-2\operatorname{Re}  z)-|a-\bar z|^2=ab-|z|^2$。
+单位且实非负重叠时约去 $1-z$，得到最后一句。
+
+□
+
+对单位二元对，抽出同一强度 $t$ 后，剩余 Gram 正性是
+
+$$
+\begin{pmatrix}1-t&z-t\\\bar z-t&1-t\end{pmatrix}\succeq0,
+$$
+
+即
+
+<a id="eq-disk"></a>
+
+$$
+\boxed{|z-t|\le1-t,\qquad 0\le t\le1.}\tag{11.2}
+$$
+
+在复重叠平面中，这是中心 $(t,0)$、半径 $1-t$ 的圆盘。
+
+一般二元对采用式[(7.1)](#eq-bloch)，$s=a+b$。
+共同幅度的归一关系点是 $\mathbf e_x=(1,0,0)$。
+若 $s-2t>0$，剩余关系可归一，且
+
+<a id="eq-commonbary"></a>
+
+$$
+\boxed{
+\mathbf r=\lambda\mathbf e_x+(1-\lambda)\mathbf r_{\rm res},
+\qquad\lambda=\frac{2t}{s},\quad\left\lVert \mathbf r_{\rm res}\right\rVert \le1.
+}\tag{11.3}
+$$
+
+它由原二元 Gram 减去 $`t\mathbf1\mathbf1^*`$ 后按迹归一直接得到。
+若 $x\ne y$，最大值满足
+
+$$
+\lambda_*=\frac{1-\left\lVert \mathbf r\right\rVert ^2}{2(1-r_x)}.
+$$
+
+因为
+$\left\lVert \mathbf r-\lambda\mathbf e_x\right\rVert ^2\le(1-\lambda)^2$
+恰等价于
+$2\lambda(1-r_x)\le1-\left\lVert \mathbf r\right\rVert ^2$。
+两者相同非零且全量提取时，$\lambda=1$，剩余为零，不定义剩余球点。
+两者均零时也不定义原归一球点。
+
+<a id="figure-2"></a>
+

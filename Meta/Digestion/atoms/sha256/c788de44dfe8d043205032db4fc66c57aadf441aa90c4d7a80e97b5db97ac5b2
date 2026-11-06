@@ -1,0 +1,75 @@
+**Theorem 43.2 (a complete local chart on actual phase feedbacks).**
+Fix $0<\delta_0<2$, $x_0=1-\delta_0/2$,
+$y_0=\sqrt{1-x_0^2}$ and $\tau\in\{+1,-1\}$.
+A neighborhood, modulo the one common scalar, of
+$(x_0+\tau i y_0,x_0-\tau i y_0,1,1)$ in $\mathbb T^4$
+has the real analytic coordinates $(\delta,a,b)$
+near $(\delta_0,0,0)$ given by
+
+$$
+\begin{aligned}
+ x&=1-\delta/2,\\
+ X&=-\cos b\cos a+
+              \sqrt{(1+x)^2-\cos^2b\sin^2a},&
+ Y&=\sqrt{1-X^2},\\
+ w_\tau(\delta,a,b)
+   &=\bigl(e^{ia}(X+\tau iY),e^{ia}(X-\tau iY),
+                         e^{i\tau b},e^{-i\tau b}\bigr),\\
+ U&=\lambda\operatorname{diag}(w_\tau(\delta,a,b))U_+,
+                         &|\lambda|&=1.
+\end{aligned}
+\tag{43.2}
+$$
+
+All square roots here are the positive branches at the base point.
+The coordinate $\delta$ is exactly $4-A(w)$, not a new distance.
+For this single actual feedback, before multiplication by $\lambda$,
+
+$$
+\begin{aligned}
+ A&=2(1+x)=4-\delta,\\
+ P&=2(hXe^{ia}+c\cos b),\\
+ Q&=2\tau(ihYe^{ia}-s\sin b),\\
+ B&=2|iYe^{ia}-\sin b|.
+\end{aligned}
+\tag{43.3}
+$$
+
+Thus varying $\delta$ in (36.47), along with its two phase variables,
+exhausts every nearby phase feedback after exactly the original
+scalar identification.
+
+*Proof.* Use continuous local arguments for four phase entries near
+the displayed base point. Their third and fourth arguments determine
+one common mean phase $\lambda$. After removing it, write the last
+two entries as $e^{i\tau b},e^{-i\tau b}$, with $b$ small. The mean
+argument of the first two entries determines $a$ near zero. Their
+half difference has the form $\tau\theta$, where
+$\theta$ is near $\arccos x_0\in(0,\pi/2)$. Hence the first two
+entries are uniquely $e^{ia}(X+\tau iY),e^{ia}(X-\tau iY)$,
+where $X=\cos\theta>0$, $Y=\sin\theta>0$.
+These choices recover all three local coordinates of the quotient;
+no relative phase has been removed by the common normalization.
+
+Their trace modulus is $2|Xe^{ia}+\cos b|$. Set
+$x=A/2-1$ and $\delta=2(1-x)$. The equation for this modulus is
+
+$$
+ X^2+2X\cos b\cos a+\cos^2b=(1+x)^2.
+\tag{43.4}
+$$
+
+At the base point its derivative in $X$ is $2(1+x_0)>0$.
+The quadratic root near $x_0$ is exactly (43.2); its other root is
+$-2-x_0$ at the base point and cannot represent the recovered $X$.
+The radicals remain positive and $0<X<1$ on a smaller neighborhood.
+Conversely (43.2) solves (43.4), has four entries of modulus one,
+and recovers the same local arguments and trace coordinate.
+The argument coordinates and these square roots are analytic there,
+so both the chart and its local inverse are analytic.
+Every displayed feedback is an actual unitary. Substitution in the
+original linear amplitude formulas (23.2) proves (43.3).
+Multiplication by $\lambda$ multiplies $P,Q$ by that same scalar
+and preserves $A,B,u,v$. It supplies every actual scalar representative.
+$\square$
+

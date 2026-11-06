@@ -1,0 +1,48 @@
+**Mathematical source correspondence 41.6.** The identities (41.2)--(41.3)
+are the original normalized-effect, joint-distance and linear-defect
+identities (23.9)--(23.12). Theorem 41.3 uses the affine sections of
+their complex coherence disk while retaining its original starting
+point and its actual coherence contribution to $g$.
+The scalar value in Theorem 41.2 is precisely the selected attained
+value of Theorem 37.5 and (38.2); selector continuity is Theorem 39.2.
+The difference-quotient argument (41.7) is the elementary sensitivity
+argument for an interior unique minimum. It adds no replacement scalar
+selection. The local impurity comparison (34.20)--(34.22), the cap and
+fixed-feedback profiles of Sections 36--37, the phase-instability
+comparisons of Sections 36 and 38--39, and the geometric ordering and
+selected-feedback margins of Section 40 retain their stated domains.
+Theorem 41.4 consumes Theorem 39.5's already defined value-preserving
+prefix; (41.19) consumes the existing local exclusion in Theorem 40.4.
+The fixed-feedback, fixed-level diagnostic of Proposition 40.5 is
+consistent with (41.10), whose level increases by its impurity reduction.
+
+For the primary-literature correspondence,
+Gregoratti--Werner, [*Quantum Lost and Found*, quant-ph/0209025v1,
+Proposition 8 and (16)--(21)](https://arxiv.org/html/quant-ph/0209025v1#ThmThe8),
+fix a Kraus decomposition while optimizing correction fidelity.
+Their operators here are $t_j=\operatorname{diag}(R_0b_j)$ in input
+dimension four. The correction bound and its polar equality form do
+not impose the present joint distance or give its prescribed-level
+ordering. In particular the columns of one original effect retain
+one shared $U$ in (41.3).
+Buscemi--Chiribella--D'Ariano,
+[*Inverting Quantum Decoherence by Classical Feedback from the Environment*,
+quant-ph/0504195v5, (6) and (9)](https://arxiv.org/html/quant-ph/0504195v5),
+supply the four-dimensional rank-two correlation example. Their
+Heisenberg matrix is $\overline{R_0R_0^\dagger}$; the Schrödinger
+transpose in their (6) gives the source's Schur record. The ordinary
+transpose on the effects remains exactly the one in source (1.4)--(1.5).
+
+Thompson's prescribed complex-diagonal and singular-value theorem,
+as stated by Jasper--Loreaux--Weiss,
+[*Thompson's theorem for compact operators and diagonals of unitary operators*,
+arXiv:1602.08435v1, Theorem 1.3](https://arxiv.org/html/1602.08435v1#S1.Thmtheorem3),
+with four singular values equal to one, gives exactly $\mathcal W$
+in source Theorem 23.2. It supplies the existing feedback-realization
+input. The motion (41.12) keeps an already actual $U$ and requires
+no new lifting theorem. These cited theorem statements provide record,
+correction and realization correspondences; they do not assert
+(41.4), (41.10), the prefix increment (41.15), or the first-boundary
+consequences (41.18). No exhaustive literature-absence or priority
+claim is attached to these fixed-record deductions.
+

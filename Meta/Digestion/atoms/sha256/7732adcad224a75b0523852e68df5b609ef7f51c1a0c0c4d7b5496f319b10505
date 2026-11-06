@@ -1,0 +1,26 @@
+### 22.3 从完整关系保持到酉门与 Schrödinger 方程
+
+若实际线性过程保持共同内积，它满足 $U^\dagger U=I$，是等距。
+在同一有限载体上可逆时即为酉矩阵。
+项目 V80 从更具体的完整强度关系与定向锚点给出这一接口，
+不能把仅保持某一个当前态、某条曲线或少量读数替代完整关系保持 [5](#ref-v80)。
+
+对满足 $U(0)=I$ 的实际 $C^1$ 酉族 $U(t)$，令
+
+$$
+H(t)=i\hbar\dot U(t)U(t)^\dagger.
+$$
+
+微分 $U(t)U(t)^\dagger=I$ 得 $H(t)^\dagger=H(t)$。
+于是 $\lvert \psi(t)\rangle=U(t)\lvert \psi(0)\rangle$ 满足
+
+$$
+i\hbar\frac{d}{dt}\lvert \psi(t)\rangle=H(t)\lvert \psi(t)\rangle,
+\qquad
+i\hbar\dot\rho=[H,\rho].
+$$
+
+若还具有一参数群结构，生成元可取常量。
+平滑门参数只有在与内部时钟及单位校准连接以后才是物理时间。
+内部参照的模参数不因同样写成 $t$ 就自动成为实验室时间。
+

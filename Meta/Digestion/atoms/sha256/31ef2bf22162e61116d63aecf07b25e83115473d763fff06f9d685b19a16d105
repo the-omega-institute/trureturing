@@ -1,0 +1,39 @@
+**Proposition 22.2 (same-task journal sufficiency and conditioning).**
+Replace the routing tapes by one actually acquired literal journal of
+successful addresses, appending $A(p)=1^{|p|}0p$ after each successful
+event and before the next Ready. Under the same source initialization,
+rights, finite-input and return premises, this journal also suffices for
+the entire $Q_g$ task. Its literal address content after that run is
+
+$$
+J=\sum_e(2|\operatorname{addr}(e)|+1)=2D+N.
+\tag{AA.80}
+$$
+
+A separate kind bit per event is sufficient but unnecessary on this legal
+domain. Neither this journal nor the routing construction is proved to
+minimize total price or dominate the other on all resource coordinates.
+
+Proof. The address framing uniquely parses the actual finite address list.
+At a born-$\beta$ position its sole possible event is $S$. At a
+born-$\alpha$ position its first event is $P$ and its only possible second
+event is $S$. Thus the event kinds can be recovered by counting the earlier
+occurrences of that address, or by replaying the finite list from the known
+initial root. Both methods are ordinary paid finite work. Scanning to an
+acquired index recovers the same event as FetchGrowth, including checked
+OutOfRange. The actual source still supplies Tag, guards and the current
+left descent; use the same Next consumer and append its real new address.
+The acquisition, printing and return argument of §20 applies with journal
+append in place of ancestor maintenance. Equation (AA.80) counts the exact
+written payload. A linked bit implementation also pays its cells, links,
+head/tail, framing and access work.
+
+For equal source and task, the routing tapes write $D$ literal side bits
+at their actual ancestors, but require $S$ located headers and those
+ancestor visits. The journal writes $2D+N$ address bits in one stream and
+can instead pay scans, occurrence counting or replay for recall. The source
+construction (AA.78) is common to both. These are different sufficient
+representations; no weighted price model or workload has identified a
+whole-run optimum. In particular a content-alphabet bound is not a bound
+on simultaneous material, pointer bits, running time or energy. $\square$
+

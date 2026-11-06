@@ -1,0 +1,55 @@
+**定理 22.1（实际联合比较的精确盲核分类）。** 在定义 20.1 下，使用定理 21.2 得到的共同 $\lambda$，记
+
+$$
+\begin{aligned}
+M_{\rm q}&=S_A\otimes S_B-\lambda B_A\otimes B_B,\\
+Z_i&=\ker D_i,
+\qquad Z_i^0=Z_i\cap1_i^\perp,
+\qquad V=Z_A^0\otimes Z_B^0.
+\end{aligned}\tag{22.1}
+$$
+
+$Z_i$ 正是局部有限复代数的自伴中心。所有实际联合比较恰为
+
+$$
+\boxed{M(X,Y)=M_{\rm q}(X,Y)+C(P_VX,P_VY),}
+\tag{22.2}
+$$
+
+其中 $P_V$ 是正交投影，$C:V\times V\to V$ 的配对
+
+$$
+\chi(u,v,w)=g_{AB}(C(u,v),w)
+\tag{22.3}
+$$
+
+是任意全对称三线性型。反过来，每个这样的 $\chi$ 都保留定义 20.1 的全部条件，且实际 $\Gamma$ 始终是 (21.1)。若 $r_i=\dim Z_i$，自由空间的维数为
+
+$$
+\boxed{\dim\operatorname{Sym}^3(V^*)
+=\frac{k(k+1)(k+2)}6,
+\qquad k=(r_A-1)(r_B-1).}
+\tag{22.4}
+$$
+
+任一方中心一维时，这个自由空间为零，两方条件已足以确定实际联合模板。
+
+证明。在重构的矩阵代数中，$D_ac=i(ac-ca)/(2\sqrt\lambda)$，故 $Z_i$ 是中心，而 $W_i=Z_i^\perp$。令 $F_1=M-M_{\rm q}$。式 (21.2) 与 (21.4) 给
+
+$$
+F_1(z\otimes b,Y)=0\ (z\in W_A),
+\qquad F_1(a\otimes w,Y)=0\ (w\in W_B).
+\tag{22.5}
+$$
+
+$g_{AB}(F_1(X,Y),Z)$ 因交换及 Frobenius 性而全对称。所以其每一槽都只能落在 $(W_A\otimes J_B+J_A\otimes W_B)^\perp=Z_A\otimes Z_B$。式 (20.1) 又迫它在任一槽属于 $Z_A\otimes1+1\otimes Z_B$ 时为零；在中心张量空间内取其正交补恰得 $V$。Riesz 对应给 (22.2)–(22.3) 的唯一表达。
+
+反向取任意这样的 $\chi$。补项交换、Frobenius，且遇局部模输入为零，也不改变单位；正内积本身没有改变。$\Gamma_H$ 消去 $Z_A\otimes Z_B$，并且由 (21.1) 对乘积内积斜伴随，故其像垂直于该中心张量空间。于是
+
+$$
+\Gamma_HC(P_VX,P_VY)=0,
+\qquad C(P_V\Gamma_HX,P_VY)=C(P_VX,P_V\Gamma_HY)=0.
+$$
+
+标准量子部分满足导子律，补项的三项均为零，故实际 $M$ 仍满足完整 (20.3)。条件作用不变。有限维对称三线性型的标准维数公式给 (22.4)。∎
+

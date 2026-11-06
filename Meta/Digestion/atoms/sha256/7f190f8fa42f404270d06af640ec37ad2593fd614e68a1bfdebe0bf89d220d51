@@ -1,0 +1,6 @@
+### [3]
+
+ the-omega-institute. *RunningIntersectionRecords.lean*. Source inspected 2026-11-03, including `extend_record_at_neighbor` and `local_row_extends_raw_join`. The latter asserts extension existence, not unique extension. [Repository source](https://github.com/the-omega-institute/trureturing/blob/dev/D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean).
+
+<a id="ref-repo-marginal"></a>
+

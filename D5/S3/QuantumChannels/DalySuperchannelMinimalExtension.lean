@@ -6,7 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/QuantumChannels/DalySuperchannelMinimalExtension.claim; result=D5/S3/QuantumChannels/DalySuperchannelMinimalExtension.result; claim=D5/S3/QuantumChannels/DalySuperchannelMinimalExtension.claim
    digest: A two-qubit QSC has full-rank extensions and a non-extreme minimizing extension. -/
 
-/-
+/- Owner publication escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/25799.
 proof_shape: result: content
 escape_witness: Rank.coherent_block_full_rank
 admission_basis: open-problem-resolution (#19620; Refuted)
@@ -241,7 +241,7 @@ private theorem kronLift_tmul {A B C D : Type*} [Fintype A] [DecidableEq A]
   rfl
 
 set_option maxHeartbeats 2000000 in
-private theorem choi_induced_apply {d₁ r₁ d₂ r₂ : ℕ}
+theorem choi_induced_apply {d₁ r₁ d₂ r₂ : ℕ}
     (S : MatrixMap (Fin d₁) (Fin r₁) ℂ →ₗ[ℂ] MatrixMap (Fin d₂) (Fin r₂) ℂ)
     (φ : MatrixMap (Fin d₁) (Fin r₁) ℂ) :
     inputFirstChoi (S φ) = induced S (inputFirstChoi φ) := by
@@ -394,7 +394,7 @@ private theorem entangled_cp (d r : ℕ) : (kronLift (entangledTensor d r)).IsCo
   exact Matrix.posSemidef_vecMulVec_self_star _
 
 set_option maxHeartbeats 2000000 in
-private theorem preserving_cp_induced {d₁ r₁ d₂ r₂ : ℕ}
+theorem preserving_cp_induced {d₁ r₁ d₂ r₂ : ℕ}
     (S : MatrixMap (Fin d₁) (Fin r₁) ℂ →ₗ[ℂ] MatrixMap (Fin d₂) (Fin r₂) ℂ)
     (hS : ∀ d r : ℕ, ∀ t : MatrixMap (Fin d₁) (Fin r₁) ℂ ⊗[ℂ] MatrixMap (Fin d) (Fin r) ℂ,
       (kronLift t).IsCompletelyPositive →

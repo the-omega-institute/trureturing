@@ -1,0 +1,56 @@
+### 定理 4.3（两扰动、一读口的实三维 Gram 实现）
+
+<a id="thm-c122-three-dimensional-readout"></a>
+
+取两份 Hermitian、迹为零的扰动 $X_1,X_2$，以及同一个实际二元效果 $0\le F\le I$。设
+
+$$
+F_0=F-\operatorname{Tr}(\tau F)I,\qquad
+ \beta=\|\Gamma_\tau^{1/2}(F_0)\|_2>0,
+ \qquad b=\Gamma_\tau^{1/2}(F_0)/\beta.
+$$
+
+记 $x_i=\Gamma_\sigma^{-1/2}X_i$ 与
+
+$$
+a_i=\langle b,Tx_i\rangle_{\rm HS}=\frac{\operatorname{Tr}(FN(X_i))}{\beta}.
+$$
+
+存在 $v_0,v_1,v_2\in\mathbb R^3$，使
+
+$$
+\|v_0\|=1,\qquad v_0\cdot v_i=a_i,\qquad
+ v_i\cdot v_j=g_\sigma(X_i,X_j)\quad(i,j=1,2).
+$$
+
+即一条坐标轴保留实际读出，另外至多两个坐标补齐两份扰动的全部二元 Gram 关系。
+
+**证明。**
+Hermitian 矩阵的 Hilbert–Schmidt 内积为实数，故以下在实 Hilbert 空间中进行。$\|b\|=1$ 且 $T$ 收缩，因此对任意实数 $c_1,c_2$，
+
+$$
+\left(\sum_i c_i a_i\right)^2
+ \le\left\|T\sum_i c_i x_i\right\|_2^2
+ \le\left\|\sum_i c_i x_i\right\|_2^2.
+$$
+
+所以二阶矩阵 $H_{ij}=\langle x_i,x_j\rangle-a_i a_j$ 半正定。取两个实二维向量 $z_i$ 使 $z_i\cdot z_j=H_{ij}$，再置
+
+$$
+v_0=(1,0,0),\qquad v_i=(a_i,z_i).
+$$
+
+这给出所需实现；$H$ 的平方根或 Cholesky 分解均可构造 $z_i$。读出等式来自 $\Gamma_\tau^{1/2}$ 的自伴性以及 $\operatorname{Tr} N(X_i)=0$。若 $\beta=0$，则 $F$ 是常数效果，两份扰动的读出均为零，可取 $a_i=0$ 作同样提升。
+
+等价地，下面的三阶矩阵必为正：
+
+$$
+\begin{pmatrix}
+ 1&a_1&a_2\\
+ a_1&\|x_1\|_2^2&\langle x_1,x_2\rangle\\
+ a_2&\langle x_2,x_1\rangle&\|x_2\|_2^2
+ \end{pmatrix}\ge0.
+$$
+
+这项“三维”指两个扰动与*一个标量读口*的有限关系。若要同时保留一个二维输出空间和一个二维正交余量空间，三维一般不够：取 $T=cI$，$0<c<1$，以及正交的 $x_1,x_2$，则 $Tx_1,Tx_2$ 与 $D^{1/2}x_1,D^{1/2}x_2$ 在直和空间中构成四个非零正交方向。完整提升仍由式~[(28)](#eq-c122-orthogonal-lift) 承担。实际实验还须供应相应准备与 $F$；一个数学扰动可以写成合法态的差，并不自行把该准备加入观察者菜单。
+

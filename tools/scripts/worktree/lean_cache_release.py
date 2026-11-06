@@ -19,6 +19,12 @@ import tempfile
 import time
 from urllib.parse import quote
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
+try:
+    from maintenance_log import MaintenanceLog
+except ImportError:
+    MaintenanceLog = None
+
 from lean_cache import SHARED_SEED_PLATFORMS, normalized_platform, partition_path, seed_partitions
 from cache_material import sha
 from lean_cache_topology import checkout_topology, git_absolute_path, warm_dev_remediation
@@ -483,7 +489,7 @@ def publish(root, partition, verification=None, *, build_report=True):
     content_validated = False
     try:
         deadline = operation_deadline()
-        with tempfile.TemporaryDirectory(prefix="lean-release-") as temporary:
+        with contextlib.ExitStack() as lifetime, tempfile.TemporaryDirectory(prefix="lean-release-") as temporary:
             stage = pathlib.Path(temporary)
             # Validate and pack under one read lock so a cache writer cannot
             # replace the validated report/build before the snapshot is packed.
@@ -532,11 +538,32 @@ def publish(root, partition, verification=None, *, build_report=True):
                 # target's disk budget with the independently downloaded bytes.
                 for name in {ASSET, *(part["name"] for part in metadata["parts"])}:
                     (stage / name).unlink(missing_ok=True)
-                # Verify this exact inventory through restore into an empty target.
-                target, downloaded = stage / "verified-target", stage / "downloaded"
-                target.mkdir()
+                downloaded = stage / "downloaded"
                 downloaded.mkdir()
-                restore_snapshot(target, partition, tag, downloaded, deadline, metadata, cache_key=cache_key)
+                if all(verification.get(field) for field in
+                       ("workflow_run_id", "workflow_run_attempt", "source_ref")):
+                    # Only the attributed native job owns a disposable source build.
+                    # Failure after retirement may leave it absent; other callers
+                    # retain their source. Hold the writer through owned cleanup.
+                    lifetime.enter_context(cache_guard(root))
+                    lake, build = root / ".lake", root / ".lake/build"
+                    if lake.is_symlink() or build.is_symlink() or not build.is_dir():
+                        raise ValueError("native verification requires a private source build")
+                    with tempfile.TemporaryDirectory(prefix=".release-verify-", dir=lake) as empty:
+                        target = pathlib.Path(empty)
+                        remaining(deadline)
+                        shutil.rmtree(build)
+                        if not restore_snapshot(target, partition, tag, downloaded, deadline, metadata,
+                                                cache_key=cache_key):
+                            raise ValueError("native verification did not install the remote build")
+                        remaining(deadline)
+                        (target / ".lake/build").rename(build)
+                else:
+                    # Local candidate publication also verifies, but owns no
+                    # disposable native workspace.
+                    target = stage / "verified-target"
+                    target.mkdir()
+                    restore_snapshot(target, partition, tag, downloaded, deadline, metadata, cache_key=cache_key)
                 pruned, prune_error = 0, None
             else:
                 current = existing_release(tag, deadline)
@@ -546,7 +573,7 @@ def publish(root, partition, verification=None, *, build_report=True):
                 confirmed.mkdir()
                 snapshot_manifest(partition, tag, confirmed, deadline, expected=metadata, metadata=current, cache_key=cache_key)
                 pruned, prune_error = prune(partition, tag, deadline)
-            receipt("publish", "published", tag=tag, pruned=pruned, prune_error=prune_error, **metadata)
+        receipt("publish", "published", tag=tag, pruned=pruned, prune_error=prune_error, **metadata)
     except ImportError as error:
         receipt("publish", "skipped", reason="POSIX cache locking unavailable: " + str(error))
         return 1 if verification is not None else 0
@@ -661,8 +688,14 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
     if len(parts) > 1:
         with (stage / ASSET).open("wb") as archive:
             for part in parts:
-                with (stage / part["name"]).open("rb") as source:
+                path = stage / part["name"]
+                start = archive.tell()
+                with path.open("rb") as source:
                     shutil.copyfileobj(source, archive, length=1024 * 1024)
+                archive.flush()
+                if archive.tell() - start != part["bytes"]:
+                    raise ValueError("part copy size mismatch: " + part["name"])
+                path.unlink()
     if (manifest.get("archive_sha256") != sha(stage / ASSET)
             or manifest.get("archive_bytes") != (stage / ASSET).stat().st_size):
         raise ValueError("archive checksum or size mismatch")
@@ -918,7 +951,7 @@ def latest_snapshot(root, partition, deadline):
     return None
 
 
-def main():
+def _main():
     parser = argparse.ArgumentParser()
     parser.add_argument("command", choices=("address", "publish", "fetch"))
     parser.add_argument("--repository", type=pathlib.Path, default=pathlib.Path(__file__).resolve().parents[3])
@@ -985,6 +1018,32 @@ def main():
         receipt(args.command, "miss" if args.command == "fetch" else "failed",
                 reason=("verification: " if args.mode == "verification" else "") + str(error))
         return 1 if args.command == "fetch" else 2
+
+
+def main():
+    log = MaintenanceLog.from_environment() if MaintenanceLog else None
+    if log is not None:
+        log.emit("run_started")
+    previous_run_id = os.environ.get("TRURETURING_MAINTENANCE_RUN_ID")
+    if log is not None:
+        os.environ["TRURETURING_MAINTENANCE_RUN_ID"] = log.run_id
+    try:
+        try:
+            exit_code = _main()
+        except BaseException as error:
+            if log is not None:
+                code = error.code if isinstance(error, SystemExit) and isinstance(error.code, int) else 130 \
+                    if isinstance(error, KeyboardInterrupt) else 1
+                log.finish(code, error_type=type(error).__name__)
+            raise
+        if log is not None:
+            log.finish(exit_code)
+        return exit_code
+    finally:
+        if previous_run_id is None:
+            os.environ.pop("TRURETURING_MAINTENANCE_RUN_ID", None)
+        else:
+            os.environ["TRURETURING_MAINTENANCE_RUN_ID"] = previous_run_id
 
 
 if __name__ == "__main__":

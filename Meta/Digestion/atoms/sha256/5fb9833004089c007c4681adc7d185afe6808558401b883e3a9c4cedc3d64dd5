@@ -1,0 +1,21 @@
+**定理 11.5（实际效果滤波的正确缩放双侧支撑返回）。** 对非零效果 $E$，令 $p_E=\operatorname{supp}E$，选任意
+
+$$
+ 0<c\le\min\bigl(\operatorname{spec}(E)\setminus\{0\}\bigr),\qquad
+ H=cE^+\le p_E\le I_o.
+$$
+
+定理 11.1 对 $H$ 供应原成功词 $W_H$，并有
+
+$$
+ \mathcal W_H\mathcal W_E=\mathcal W_E\mathcal W_H
+ =c\,\operatorname{Ad}_{p_E}.
+\tag{11.6}
+$$
+
+两词及其所有失败叶均实际供应。$E=0$ 单独取零成功支，不给正返回因素。这个构造给新词的支撑返回，不替代任何已命名原设备的原指定返回。
+
+证明。$\sqrt H=\sqrt c\,E^{+1/2}$ 为收缩，且它与 $\sqrt E$ 的两个乘积均为 $\sqrt c\,p_E$，所以 (11.6) 成立。$H$ 在全部中心块上是合法效果，故可再次用定理 11.1；原词接续由 E 供应。奇异时只在支持角上回到原输入并带因素 $c$，不是对核的逆，也不是成功率一的全空间逆。
+
+对一般原细支，定理 10.6 保留的是其已给 $q$ 与 $U=q\operatorname{Ad}_{K^+}$；合法范围为 $q\le\lambda_{\min}^+(KK^*)$。即使另能构造同一个返回映射，也不能把原 $U$ 的实现身份换成新词。∎
+

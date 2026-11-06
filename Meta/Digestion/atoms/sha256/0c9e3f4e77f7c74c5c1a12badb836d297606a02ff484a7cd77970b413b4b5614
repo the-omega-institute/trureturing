@@ -1,0 +1,10 @@
+对有限 $\mathcal S$ 与忠实 $\tau$，以下条件等价：
+
+1. $\mathfrak m_{\mathcal S,\tau}$ 在全部密度态上具有同一个 CPTP 实现；
+
+2. 它具有复线性保迹、二值参考保正的实现；
+
+3. $(H,\mathcal S,\tau)$ 满足 C94 的存在性条件；
+
+4. $\mathcal S+i\mathcal S$ 是通常 $C^*$ 子代数，且被 $\tau$ 的模群保持。
+

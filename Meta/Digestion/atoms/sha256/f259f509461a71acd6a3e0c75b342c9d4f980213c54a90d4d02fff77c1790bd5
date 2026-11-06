@@ -1,0 +1,15 @@
+#### 命题 2.3（根态回返不足以认证逆门）
+
+存在酉门 $U,G$，使 $GU\omega_0=\omega_0$，但 $GU\ne I$。
+
+**证明。**
+
+取 $\omega_0=|0\rangle$，$U=H_{\mathrm{Had}}$，$G=ZH_{\mathrm{Had}}$。
+有 $GU=Z$，所以 $GU|0\rangle =|0\rangle$，但
+$GU|+\rangle =|-\rangle \ne|+\rangle$。
+根态回返只检验一个输入。
+
+□
+
+<a id="figure-1"></a>
+

@@ -1,0 +1,47 @@
+### 定义 4.1（加权比较空间）
+
+定义正的 Hilbert–Schmidt 超算子
+
+$$
+\Gamma_\sigma(X)=\sigma^{1/2}X\sigma^{1/2},\qquad
+ \Gamma_\sigma^t(X)=\sigma^{t/2}X\sigma^{t/2},
+$$
+
+以及矩阵之间的内积
+
+$$
+g_\sigma(X,Y)=\operatorname{Tr}\bigl(X^*\Gamma_\sigma^{-1}(Y)\bigr),
+ \qquad \|X\|_\sigma^2=g_\sigma(X,X).
+$$
+
+令
+
+<a id="eq-c122-geometry-operators"></a>
+
+$$
+P=\Gamma_\sigma N^*\Gamma_\tau^{-1},\qquad
+ S=PN,\qquad
+ T=\Gamma_\tau^{-1/2}N\Gamma_\sigma^{1/2}.
+\tag{24}
+$$
+
+$N^*$ 表示通常迹配对的伴随，$T^\dagger$ 表示 Hilbert–Schmidt 空间的伴随。$P$ 是指定参考态下的 Petz 反向，$S$ 是一次前向后接同一反向的过程。
+
+内积的双变量互易式为
+
+<a id="eq-c122-weighted-reciprocity"></a>
+
+$$
+g_\tau(NX,Y)=g_\sigma(X,PY).
+\tag{25}
+$$
+
+因此固定这个非退化配对后，$P$ 被唯一确定。它是量子通道：式~[(24)](#eq-c122-geometry-operators) 的三个因子完全正，且
+
+$$
+\operatorname{Tr} P(Y)=\operatorname{Tr}\bigl(\tau\tau^{-1/2}Y\tau^{-1/2}\bigr)=\operatorname{Tr} Y,
+ \qquad P(\tau)=\sigma^{1/2}N^*(I)\sigma^{1/2}=\sigma.
+$$
+
+故 $S$ 也是通道，并满足 $S(\sigma)=\sigma$。
+

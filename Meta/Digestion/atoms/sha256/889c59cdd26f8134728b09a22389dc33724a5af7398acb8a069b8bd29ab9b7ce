@@ -1,0 +1,37 @@
+**定义 27.1（Local spaces and the singlet threshold）。** Let
+$G=K_{p_1,\ldots,p_q}$, where $q\geq2$ and every $p_a$ is a
+positive integer. No parity condition is imposed on
+$n=\sum_a p_a$. For an integer $S\geq1$, put the same spin $S$
+at each vertex, with the normalized ladders of (19.5), and set
+
+$$
+\begin{aligned}
+K_G&=\sum_{ij\in E(G)}(J_i^+J_j^-+J_i^-J_j^+),&
+\mathcal V_G(0)&=\ker\sum_i Z_i,\\
+\mathcal S_G&=\ker\sum_iJ_i^+\cap\ker\sum_iJ_i^-,&
+e_G(0)&=\min\operatorname{spec}(K_G|_{\mathcal V_G(0)}),\\
+\mathcal G_G(0)&=\ker(K_G-e_G(0)I)\cap\mathcal V_G(0),&
+L_a&=p_aS.
+\end{aligned}
+\tag{27.1}
+$$
+
+All spaces are complex subspaces of $V_S^{\otimes n}$; in
+particular $\mathcal S_G$ includes every total-singlet copy.
+Let $\boldsymbol T_a$ be the sum of the site spins in part $a$.
+Define a list $j_a^*$ and a positive number $C_*$ as follows:
+
+$$
+\begin{aligned}
+2\max_aL_a\leq\sum_aL_a:quad&j_a^*=L_a\quad\hbox{for all }a;\\
+L_d>R:=\sum_{a\ne d}L_a:\quad&j_d^*=R,\quad
+ j_a^*=L_a\quad(a\ne d);\\
+C_*&=\sum_a j_a^*(j_a^*+1),\qquad b_G=-\frac23 C_*.
+\end{aligned}
+\tag{27.2}
+$$
+
+The two alternatives are exhaustive, and $d$ in the second is
+unique. Equality in the first alternative is included there.
+Every $j_a^*$ is a positive integer, including $q=2$.
+

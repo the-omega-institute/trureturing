@@ -1,0 +1,20 @@
+**Definition 1.2 (observable whole words and immutable data).** A record
+value is a finite binary word **with its current end observable**, including
+$\varepsilon$. Write $q\preceq x$ for literal, non-strict word prefix.
+Two words may be prefix-related within one source fibre. A decoder reads
+the entire present word through its end; encountering an earlier codeword
+prefix does not end decoding. There is no instantaneous or prefix-free
+code requirement. A successful extension must preserve all old data bits
+in order: $J(h)\preceq J(he)$. The end can move when a suffix is appended.
+An immutable old delimiter, fixed-width field or immutable old tail link
+would impose a different contract.
+
+The selected payload charge is $|J(h)|$. Observable termination is part of
+the word alphabet, not an uncounted independent history field. Its actual
+header, links, reference widths, end movement and observation work are
+separately paid as in §§5 and 7. No source-dependent event boundary,
+per-event counter, persistent codebook, request archive or extra serial
+metadata accompanies the word. The conditioning is the current source and
+the fixed binding/rights context specified in Assumption 5.1. A separately
+observable varying history channel would change that conditioning.
+

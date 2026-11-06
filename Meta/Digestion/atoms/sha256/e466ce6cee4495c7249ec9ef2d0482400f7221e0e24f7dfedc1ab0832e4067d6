@@ -1,0 +1,27 @@
+**定义 145.1（原全载体上的内部生成模型）。** 沿用 138.1 的全部对象，将完整合法路径基记为 $E$，$|E|=89$，$|q\rangle$ 表示其中一条路径，$P_q=|q\rangle\langle q|$。令 $q_{\rm r}$ 是 $R_0v=J(e_{00100},0)$ 对应的唯一基路径。对象始终为整个 $\mathcal K=\mathbb C^E$；不投影到二十六维代码，也不删除其六十三维补空间。控制仍只有前读的十一地址及后读的七地址，程序仍只有 $\mathsf T(a)$、$\mathsf R(a,f)$。对每次原地址 $j$ 调用，指定内部单位时间 $0\le s\le1$ 上的固定 Hamiltonian
+
+$$
+\alpha=\frac{3\pi}{5},\qquad
+H_j=-\alpha(I+\mathcal P_j),\qquad
+U_j(s)=e^{-isH_j}
+=e^{i\alpha s}[I+(e^{i\alpha s}-1)\mathcal P_j].
+\tag{145.1}
+$$
+
+这里 $\mathcal P_j$ 是 (138.2a) 的原投影，故 $U_j(1)=K_j$，包括一维边界块。使用 $\hbar=1$。内部时间只是本模型对一次门调用的展开；不能中断、改变脉冲、在内部读出、以非整数时间调用门或请求其逆演化。门外等待取 $H=0$。对已发生的读取结果依下款更新向量，门内则令 $\psi_s=U_j(s)\psi_0$。
+
+对 $q\ne r$，采用 Bell 的最小电流率
+
+$$
+\begin{aligned}
+p_s(q)&=|\langle q,\psi_s\rangle|^2,\\
+J_s(q,r)&=2\operatorname{Im}
+ \bigl(\overline{\psi_s(q)}\langle q|H_j|r\rangle\psi_s(r)\bigr),\\
+\sigma_s(q\mid r)&=\frac{[J_s(q,r)]_+}{p_s(r)}
+\quad\text{当 }p_s(r)>0.
+\end{aligned}
+\tag{145.2}
+$$
+
+节点 $p_s(r)=0$ 不以商式赋予可占据状态；过程在正质量支撑上定义，节点的零测扩充由存在性结论处理。初始取 $\psi_0=|q_{\rm r}\rangle$、$Q_0=q_{\rm r}$ 确定，不另抽一个非平凡初始配置混合。最小率、Schrödinger 演化和平方权重进入 (145.2) 是生成模型的独立前提。其文献供应是 [Dürr–Goldstein–Tumulka–Zanghì][DGTZ145] §2.7 的 (23)–(29)；原文明确以等变于平方分布为设计目标，这里不把该设计重新解释为 FIB 对概率指数的唯一推导。
+

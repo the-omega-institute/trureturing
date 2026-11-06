@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:29ba135759e7f9966f8902c0bfbbaa7d906ce4cb6493f3571522566d4f70bdf0
+  normalized_sha256: sha256:29ba135759e7f9966f8902c0bfbbaa7d906ce4cb6493f3571522566d4f70bdf0
+cas_ref: sha256:29ba135759e7f9966f8902c0bfbbaa7d906ce4cb6493f3571522566d4f70bdf0
+coverage_gids:
+  - gid: D5/S3/Zeros/Resolvent/ActualXiDictionary.actual_xi_hankel_identity
+    target_statement_id: sha256:defa6d7e0baa0a59c95e67b6a497577ba6a2eff73c59e7e747c26eaf130483bc
+receipts:
+  unresolved_subitems: []

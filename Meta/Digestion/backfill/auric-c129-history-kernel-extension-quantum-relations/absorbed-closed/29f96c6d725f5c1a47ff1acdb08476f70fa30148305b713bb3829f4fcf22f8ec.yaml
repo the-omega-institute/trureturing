@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:29f96c6d725f5c1a47ff1acdb08476f70fa30148305b713bb3829f4fcf22f8ec
+  normalized_sha256: sha256:29f96c6d725f5c1a47ff1acdb08476f70fa30148305b713bb3829f4fcf22f8ec
+cas_ref: sha256:29f96c6d725f5c1a47ff1acdb08476f70fa30148305b713bb3829f4fcf22f8ec
+coverage_gids:
+  - gid: D5/S3/Quantum/Completion/HistoryKernelExtension.extensionLaw_kernel_posSemidef
+    target_statement_id: sha256:5b6dc8aee0859df0f64b922ec8840b88291e64de34dbb801bac14d94c661030c
+receipts:
+  unresolved_subitems: []

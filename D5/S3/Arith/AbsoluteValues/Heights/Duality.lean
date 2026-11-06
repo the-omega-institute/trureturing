@@ -225,7 +225,7 @@ variable [LinearOrder ι]
 /-- The enumeration of `ι` that lists the elements of `s` in increasing order and then those of
 its complement. This is the index identification the complementary-minor identity runs on; the
 determinant of a matrix read through it depends on `s` only up to a sign. -/
-private noncomputable def enumEquiv {s : Finset ι} (hs : s.card = k) (hsc : sᶜ.card = l) :
+noncomputable def enumEquiv {s : Finset ι} (hs : s.card = k) (hsc : sᶜ.card = l) :
     Fin k ⊕ Fin l ≃ ι :=
   (Equiv.sumCongr (s.orderIsoOfFin hs).toEquiv
     ((sᶜ.orderIsoOfFin hsc).toEquiv.trans
@@ -236,7 +236,7 @@ another for the standard bilinear form, then the maximal minor of the first bloc
 columns `s` is the complementary minor of the second block of `D` times the determinant of `C`
 read through the enumeration attached to `s`. This is the whole content of duality: the
 `s`-dependence of the factor is a sign, by `Matrix.det_permute'`. -/
-private theorem det_submatrix_inl_eq_mul (C D : Matrix (Fin k ⊕ Fin l) ι R) (hCD : C * Dᵀ = 1)
+theorem det_submatrix_inl_eq_mul (C D : Matrix (Fin k ⊕ Fin l) ι R) (hCD : C * Dᵀ = 1)
     {s : Finset ι} (hs : s.card = k) (hsc : sᶜ.card = l) :
     ((C.submatrix Sum.inl id).submatrix id (s.orderEmbOfFin hs)).det
       = (C.submatrix id (enumEquiv hs hsc)).det *

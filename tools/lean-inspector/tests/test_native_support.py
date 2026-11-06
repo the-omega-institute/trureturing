@@ -26,7 +26,8 @@ def copy_contract_interface(source, target):
     Indexed mathematical contracts compile against D5 in the Reg Lean tests.
     These fixtures exercise transport and discovery with no mathematical library.
     """
-    shutil.copytree(source, target, ignore=shutil.ignore_patterns('.lake', 'Implementation.lean', 'Registration.lean', 'AuricFib.lean', 'Analysis'))
+    shutil.copytree(source, target, ignore=shutil.ignore_patterns(
+        '.lake', 'Implementation.lean', 'Registration.lean', 'AuricFib.lean', 'NativePrediction.lean', 'Analysis'))
     catalog = target / 'LeanInformationAuditInterface/Contract/Catalog.lean'
     declarations = catalog.read_text().split('/-- Each occurrence retains', 1)[0]
     declarations = declarations.replace(
@@ -284,18 +285,21 @@ defaultFacets = ["static"]
     command_clock = staticmethod(time.monotonic)
 
     @staticmethod
-    def command_processes():
+    def command_processes(*, include_commands=True):
         # Same PID/start identity discipline as report-supervisor; ancestry and
         # sessions, rather than process groups, include its nested worker group.
-        output = subprocess.check_output(['ps', '-axo', 'pid=,ppid=,pgid=,lstart=,stat=,command='],
+        columns = 'pid=,ppid=,pgid=,lstart=,stat=' + (',command=' if include_commands else '')
+        output = subprocess.check_output(['ps', '-axo', columns],
             text=True, env=dict(os.environ, LC_ALL='C'), timeout=5)
         rows = {}
         for line in output.splitlines():
-            fields = line.split(None, 9)
-            if len(fields) == 10:
+            fields = line.split(None, 9 if include_commands else 8)
+            if len(fields) == (10 if include_commands else 9):
                 pid, parent, group = map(int, fields[:3])
                 rows[pid] = dict(pid=pid, parent=parent, group=group,
-                    identity=' '.join(fields[3:8]), state=fields[8], command=fields[9])
+                    identity=' '.join(fields[3:8]), state=fields[8])
+                if include_commands:
+                    rows[pid]['command'] = fields[9]
         return rows
 
     def owned_processes(self, command, *, sessions=False):
@@ -327,10 +331,12 @@ defaultFacets = ["static"]
     def observed_processes(self):
         observation = getattr(self, '_command_observation', None)
         if observation is None:
-            return self.command_processes()
+            return self.command_processes(include_commands=False)
         started = observation_value(time.perf_counter)
         try:
-            return self.command_processes()
+            # Ownership needs identities and ancestry, not the arguments of
+            # every unrelated host process on every half-second sample.
+            return self.command_processes(include_commands=False)
         finally:
             elapsed = observation_delta(started, observation_value(time.perf_counter))
             observation['process_scan_count'] += 1
@@ -350,8 +356,14 @@ defaultFacets = ["static"]
                         logs[str(path.relative_to(self.root))] = path.read_bytes()[-16384:].decode('utf-8', 'replace')
                     except FileNotFoundError:
                         pass  # A live phase may be moving startup logs to final.
+        processes = self.owned_processes(command, sessions=True)
+        descriptions = self.command_processes()
+        for row in processes:
+            current = descriptions.get(row['pid'])
+            if current and current['identity'] == row['identity']:
+                row['command'] = current['command']
         diagnostic = dict(command=list(args), timeout_seconds=120, fixture=str(self.root),
-            processes=self.owned_processes(command, sessions=True), logs=logs,
+            processes=processes, logs=logs,
             stdout=stdout, stderr=stderr)
         self.last_command_diagnostic = diagnostic
         print('NATIVE_COMMAND_TIMEOUT ' + json.dumps(diagnostic), file=sys.stderr, flush=True)
@@ -578,7 +590,7 @@ defaultFacets = ["static"]
             output = Path(output) / self._testMethodName / phase
             output.mkdir(parents=True, exist_ok=True)
             for path in paths:
-                destination = output / path.relative_to(self.root)
+                destination = output / path.resolve().relative_to(self.root.resolve())
                 destination.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(path, destination)
             (output / 'result.json').write_text(json.dumps(result, indent=2) + '\n')

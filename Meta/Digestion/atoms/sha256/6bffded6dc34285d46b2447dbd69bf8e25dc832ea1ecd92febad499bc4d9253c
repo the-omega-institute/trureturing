@@ -1,0 +1,28 @@
+### 例 5.4（隐藏的重数部门）
+
+<a id="ex-c123-hidden-multiplicity"></a>
+
+令真实来源是 $H'=\mathbb C^d\otimes\mathbb C^m$，$m>1$，并准备
+
+$$
+\rho_i=\lvert i\rangle\langle i\rvert\otimes\omega,
+ \qquad F_{ij}=\lvert i\rangle\langle i\rvert\otimes I_m\quad(i<j).
+$$
+
+所有二元错误都为零，但均匀混合只得到
+
+$$
+\bar\sigma=\frac{I_d}{d}\otimes\omega,
+ \qquad
+ \left\|\bar\sigma-\frac{I_{dm}}{dm}\right\|_1
+ =\left\|\omega-\frac{I_m}{m}\right\|_1.
+$$
+
+取 $\omega=(1-\zeta)\lvert 0\rangle\langle 0\rvert+\zeta I_m/m$，$0<\zeta<1$，它甚至忠实，而右端为
+$2(1-\zeta)(1-1/m)$，可接近最大值。
+
+如果全部实际控制和效果只在第一个因子上作用，那么任何有限或无限长的这类实验都无法区分不同的 $\omega$。前一因子的完美判别证书，没有认证后一因子不存在。
+
+因此观察到 $d$ 份准确可区分内容，只给出来源容量的下界；要使用定理
+[5.3](#thm-c123-neutral-reference)，还需已给定的 $d$ 维源编码、完整角代数或其他真实的维数上界证书。它可以是观察者内部已构造的一块有限逻辑来源，不必是对整个 $\Omega$ 的维数宣称。有限抽样给出的则是概率区间，不是准确的零错误陈述。
+

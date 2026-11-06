@@ -86,11 +86,11 @@ def claim : Prop :=
       IsLinearDoily U → Odd (negativeLines U).card
 
 /-- The multiplication exponent in the fourth roots of unity. -/
-private def localExponent (u v : ZMod 2 × ZMod 2) : ZMod 4 :=
+def localExponent (u v : ZMod 2 × ZMod 2) : ZMod 4 :=
   (u.1.val * u.2.val : ℕ) + (v.1.val * v.2.val : ℕ) -
     ((u + v).1.val * (u + v).2.val : ℕ) + 2 * (u.2.val * v.1.val : ℕ)
 
-private def phase {N : ℕ} (u v : Fin N → ZMod 2 × ZMod 2) : ℂ :=
+def phase {N : ℕ} (u v : Fin N → ZMod 2 × ZMod 2) : ℂ :=
   ∏ j, AddChar.zmodChar 4 Complex.I_pow_four (localExponent (u j) (v j))
 
 private theorem local_mul (u v : ZMod 2 × ZMod 2) :
@@ -321,16 +321,16 @@ private theorem B_smul_left {N : ℕ} (c : ZMod 2) (u v : Fin N → ZMod 2 × ZM
   simp only [Pi.smul_apply, Prod.smul_fst, Prod.smul_snd, smul_eq_mul]
   ring
 
-private theorem B_comm {N : ℕ} (u v : Fin N → ZMod 2 × ZMod 2) : B u v = B v u := by
+theorem B_comm {N : ℕ} (u v : Fin N → ZMod 2 × ZMod 2) : B u v = B v u := by
   apply Finset.sum_congr rfl
   intro j _
   ring
 
-private theorem B_add_right {N : ℕ} (u v w : Fin N → ZMod 2 × ZMod 2) :
+theorem B_add_right {N : ℕ} (u v w : Fin N → ZMod 2 × ZMod 2) :
     B u (v + w) = B u v + B u w := by
   rw [B_comm, B_add_left, B_comm v u, B_comm w u]
 
-private theorem B_self {N : ℕ} (u : Fin N → ZMod 2 × ZMod 2) : B u u = 0 := by
+theorem B_self {N : ℕ} (u : Fin N → ZMod 2 × ZMod 2) : B u u = 0 := by
   apply Finset.sum_eq_zero
   intro j _
   rw [mul_comm (u j).2 (u j).1]
@@ -512,7 +512,7 @@ private theorem commute_of_B_zero {N : ℕ} (u v : Fin N → ZMod 2 × ZMod 2)
   rw [observable_comm, h]
   simp [complexSign]
 
-private theorem lineProduct_triple {N : ℕ} (u v : Fin N → ZMod 2 × ZMod 2)
+theorem lineProduct_triple {N : ℕ} (u v : Fin N → ZMod 2 × ZMod 2)
     (hu : u ≠ 0) (hv : v ≠ 0) (huv : u ≠ v) (hB : B u v = 0) :
     lineProduct {u, v, u + v} = phase u v • 1 := by
   classical

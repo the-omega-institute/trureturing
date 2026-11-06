@@ -1,0 +1,5 @@
+source_id = "auric-c128-native-cut-balance-continuation"
+path = "docs/develop/theory/AURIC_C128_NATIVE_CUT_BALANCE_CONTINUATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

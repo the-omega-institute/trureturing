@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a99dbf91ca1b7bb25bd96aeb2eb9670cb1517757b749a398324914e6add98123
+  normalized_sha256: sha256:a99dbf91ca1b7bb25bd96aeb2eb9670cb1517757b749a398324914e6add98123
+cas_ref: sha256:a99dbf91ca1b7bb25bd96aeb2eb9670cb1517757b749a398324914e6add98123
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Upstream-only proposition, reused at the lake-manifest.json Mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679; no applicable frozen repository GID supplies this outgoing-existence clause. For the full actual named graph of Assumption 1.3, use its actual V and arrow fiber {e in E | s(e)=a and t(e)=b}, retaining each edge identity and every parallel name. Strong connectivity is exactly Quiver.IsStronglyConnected V, and the nonempty actual E supplies i0,j0 and e0:i0 -> j0. Quiver.IsStronglyConnected.isSStronglyConnected_of_hom applied to h_sc and e0 yields positive-path strong connectivity. For each actual vertex v, Quiver.IsSStronglyConnected.pos_cycle yields p:Quiver.Path v v with 0<p.length. Project Quiver.Path.length_ne_zero_iff_eq_comp at p after the normalization 0<p.length implies p.length != 0: it supplies a target c and an actual first arrow e:v -> c. Projecting its underlying member of E proves an outgoing actual named edge at v. This includes a singleton, where its source and target coincide. The derivation uses only these pinned upstream applications, existential projections and normalization; neither finiteness, clock arithmetic, an assumed source lift nor a new Lean declaration is needed. Only this 182-byte outgoing-existence paragraph is settled; exhaustive cycle enumeration, complete-response/source correspondence, lap/path correspondence and the inverse on the actual image are outside this receipt.'
+    previous_atom_id: db6652e30a36ffe0ae744dad00a90e3899749d7c308b5e30f5d5c45265527779
+    next_atom_id: 5a1fa0f9fead816667131503efdcc7bee0b27d877c4dbb8bd539f3641a1b36c7

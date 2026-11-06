@@ -1,0 +1,46 @@
+### 命题 5.1（二元菜单与 C92 等价）
+
+<a id="prop-c92-binary-equivalence"></a>
+
+在局部输入为 Hermitian 且逐块满足 $\operatorname{Tr} R_C=1$ 的前提下，C92 等价于
+
+<a id="eq-c92-binary-upper"></a>
+
+$$
+b_R^w(E)\le\lambda_{\max}(F(E))
+ \quad\text{对全部 }(E_C)_C\in\prod_C[0,I_C].
+\tag{5.2}
+$$
+
+同一条件也给出下界
+$b_R^w(E)\ge\lambda_{\min}(F(E))$。
+
+**证明。**
+C92 蕴含式 [(5.2)](#eq-c92-binary-upper)，只需取 $h_C=w_CE_C$。
+反过来，给任意 Hermitian 族 $h_C$，选择一个足够大的 $a>0$，使
+$\left\lVert h_C\right\rVert_\infty\le aw_C/2$ 对全部 $C$ 成立。
+于是
+
+$$
+E_C=\frac{h_C}{aw_C}+\frac12I_C\in[0,I_C],
+ \qquad
+ F(E)=\frac1aW(h)+\frac12I.
+$$
+
+由于每个 $R_C$ 迹为一，
+$b_R^w(E)=b_R(h)/a+1/2$。
+把这两式代入式 [(5.2)](#eq-c92-binary-upper)，便得 C92。
+最后把全部 $E_C$ 同时换成 $I_C-E_C$：总效果变成 $I-F$，
+读数变成 $1-b_R^w(E)$，上界就变成所需下界。
+
+权重决定怎样量化不同 patch 的误差，但只要全部严格为正，
+它不改变零缺额的兼容资格。
+归一前件不能在本命题中省略：若所有 $R_C=0$，它们会通过仅对正效果的上界，
+却没有概率总量一；C92 对 $h_C=\pm I_C$ 的测试已经排除了这种情况。
+
+**白话图景。**每次只选一块、问一个是或否的问题，也能组织完整的相容检查。
+任何组合读口在整体里都有自己的可达范围，局部资料汇总后必须落在这个范围里。
+换成补问题就得到另一侧界限。选择各块的频率只改变误差怎样计分，不改变有没有共同整体。
+
+<a id="section-6"></a>
+

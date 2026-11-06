@@ -1,0 +1,49 @@
+### 定理 8.3（有限三维恢复证书及尺度条件）
+
+定义
+
+$$
+a=\left\lVert u\right\rVert_2^2,\qquad b=\left\lVert r\right\rVert_2^2,\qquad c=\langle u,r\rangle_{\rm HS}.
+$$
+
+则 $a=\mathcal I$、$c=\ell_{\mathcal N}$ 为实数，且
+
+<a id="eq-c90-gram-region"></a>
+
+$$
+\boxed{\quad0\le b\le c\le a\le1,
+ \qquad c^2\le ab.\quad}
+\tag{8.2}
+$$
+
+二态精确恢复当且仅当 $b=c=0$。
+当 $a,b>0$ 时，
+
+$$
+\mathbf q=\frac{(c,0,\sqrt{ab-c^2})}{\sqrt{ab}}\in S^2_+.
+$$
+
+其第二坐标固定为零，故只占据一条子午线的四分之一圆弧。
+当 $a+b>0$ 时，也可采用 Bloch 球内坐标
+
+$$
+\frac1{a+b}\begin{pmatrix}a&c\\c&b\end{pmatrix}
+ =\frac12(I+\mathbf z\cdot\boldsymbol\sigma),
+ \qquad
+ \mathbf z=\left(\frac{2c}{a+b},0,\frac{a-b}{a+b}\right).
+$$
+
+保留 $a,b$ 与 $\mathbf q$，或保留 $a+b$ 与 $\mathbf z$，才能重构整个 Gram 块。
+
+**证明。**
+$b=\langle u,B^2u\rangle\le\langle u,Bu\rangle=c\le a$，
+而 Cauchy–Schwarz 给 $c^2\le ab$。
+若 $c=0$，正性使 $B^{1/2}u=0$，故 $r=0$；反向由 $c=\langle u,r\rangle$。
+球坐标由 $ab-c^2\ge0$ 直接归一；Bloch 球内条件等价于
+$4c^2+(a-b)^2\le(a+b)^2$。
+
+在后一图形中还满足 $z_x,z_z\ge0$、$z_x+z_z\ge1$。
+若原区别 $a>0$，精确恢复对应北极 $(0,0,1)$。
+在前一上半球图形中，精确恢复时 $b=0$，归一式反而没有定义。
+若 $a=0$，两态本来相同，全部 Gram 数据为零，不能由此认证通道在其他态上的作用。
+

@@ -248,7 +248,7 @@ private lemma von_neumann_entropy_eq_eigenvalue_sum (rho : DensityState n) :
   rw [trace_mul_cfc_eq_sum (densityMatrix rho)
     (densityMatrix_posSemidef rho).isHermitian Real.log]
 
-private lemma von_neumann_entropy_basisPinchingState (rho : DensityState n) :
+lemma von_neumann_entropy_basisPinchingState (rho : DensityState n) :
     vonNeumannEntropy (basisPinchingState rho) =
       -(∑ i, (densityMatrix rho i i).re * Real.log (densityMatrix rho i i).re) := by
   unfold vonNeumannEntropy

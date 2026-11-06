@@ -1,0 +1,76 @@
+**Lemma 10.2 (nearest-ray Kraus comparison).** Use the feedback-preserving refinement (3.2)--(3.4) and write
+
+$$
+ b_j=T\begin{pmatrix}\xi_j\\\eta_j\end{pmatrix},\qquad
+ p_j=|\xi_j|^2,\quad q_j=|\eta_j|^2,\quad
+ d_j^2=\min\{p_j,q_j\}.
+\tag{10.3}
+$$
+
+Put
+
+$$
+ S_{\mathrm{cert}}=\sum_j\delta(b_j),\qquad
+ S_{\mathrm{tr}}=\sum_j\tau_j,\qquad
+ M=\sum_jd_j^2,
+\tag{10.4}
+$$
+
+where $\tau_j$ is the actual-feedback defect defined in the proof of Theorem 8.2. Assign $j$ to $\sigma_j=+$ when $p_j\ge q_j$ and to $\sigma_j=-$ otherwise, and let
+
+$$
+ z_j=\begin{cases}
+ \xi_j,&\sigma_j=+,\\
+ \eta_j,&\sigma_j=-,
+ \end{cases}\qquad
+ b_j^0=z_jb_{\sigma_j},\qquad
+ A_\sigma=\operatorname{diag}(|R_0b_\sigma|).
+\tag{10.5}
+$$
+
+For the phase supplied by Lemma 10.1 applied to $K_j=U_y\operatorname{diag}(R_0b_j)$, define
+
+$$
+ B_j=\lambda_j|z_j|A_{\sigma_j}.
+\tag{10.6}
+$$
+
+Then
+
+$$
+\boxed{\ \sum_j\|K_j-B_j\|_{\mathrm{HS}}^2
+ \le4S_{\mathrm{tr}}+2\|R_0\|_{\mathrm{op}}^2M.\ }
+\tag{10.7}
+$$
+
+Moreover, with
+
+$$
+ m_+=\sum_{\sigma_j=+}p_j,\qquad m_-=\sum_{\sigma_j=-}q_j,
+\tag{10.8}
+$$
+
+one has $0\le m_\sigma\le1$ and
+
+$$
+(1-m_+)+(1-m_-)=M.
+\tag{10.9}
+$$
+
+**Proof.** The coordinatewise modulus is $1$-Lipschitz, so
+
+$$
+\|\operatorname{diag}(|R_0b_j|)-|z_j|A_{\sigma_j}\|_{\mathrm{HS}}^2
+ \le\|R_0(b_j-b_j^0)\|_2^2
+ \le\|R_0\|_{\mathrm{op}}^2d_j^2.
+$$
+
+Combining this with (10.2) and $\|X+Y\|_{\mathrm{HS}}^2\le2\|X\|_{\mathrm{HS}}^2+2\|Y\|_{\mathrm{HS}}^2$ gives (10.7). Completeness in (3.6) gives $\sum_jp_j=\sum_jq_j=1$, hence
+
+$$
+1-m_+=\sum_{\sigma_j=-}p_j,\qquad
+1-m_-=\sum_{\sigma_j=+}q_j.
+$$
+
+Their sum is $\sum_j\min\{p_j,q_j\}=M$. $\square$
+

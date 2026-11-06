@@ -1,0 +1,51 @@
+### 定义 1：去除粗均值后的实际残差
+
+令
+
+$$
+f_{k,i}(t)
+=
+-\sum_s d_{i,s}K'(t-s),
+\qquad 0<t<D.
+$$
+
+记 $\Pi_{\mathrm{cell}}$ 为对每个固定粗网格小区间取平均的 $L^2$ 投影，定义
+
+$$
+g_{k,i}
+=
+\mathbf 1_I
+(I-\Pi_{\mathrm{cell}})f_{k,i},
+$$
+
+并在窗口外取零。
+
+由于
+
+$$
+K'\in L^2_{\mathrm{loc}},
+$$
+
+这些都是合法的 $L^2$ 函数。原点处的对数奇性和实际素数幂处的导数跳跃都包括在内。
+
+定义误差矩阵
+
+$$
+\boxed{
+\mathcal E_k(i,j)
+=
+\frac1{2\pi}
+\int_{\mathbb R}
+\frac{
+\overline{\widehat g_{k,i}(\xi)}
+\widehat g_{k,j}(\xi)
+}{
+1+m(\xi)
+}\,d\xi.
+}
+$$
+<a id="eq-6"></a>
+<div class="equation-caption">Equation (6).</div>
+
+它显然正半定。
+

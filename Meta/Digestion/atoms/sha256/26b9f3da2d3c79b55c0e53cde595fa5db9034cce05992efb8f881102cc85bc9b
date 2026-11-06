@@ -1,0 +1,24 @@
+### 1.2.3. Entropy and the finite prefix
+
+For every finite law with largest atom $p_*$,
+
+$$
+H(X)=\sum_{k:\Pr(X=k)>0}\Pr(X=k)\log_2\frac1{\Pr(X=k)}
+\ge\log_2\frac1{p_*}.
+$$
+
+Applying the point-probability estimate, for $n\ge2r$ we obtain
+
+$$
+H(X)\ge\frac12\log_2\frac nr-\frac12\log_2\frac\pi{c_r}
+\ge\frac12\log_2\frac nr-K_r.
+$$
+
+For the remaining integers $r<n<2r$, nonnegativity of Shannon entropy and $K_r\ge1/2$ give
+
+$$
+H(X)\ge0\ge\frac12\log_2\frac nr-K_r.
+$$
+
+This proves the theorem for every integer $n>r$, with one finite constant for each fixed $r\ge3$.
+

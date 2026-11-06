@@ -1,0 +1,8 @@
+以下三项等价：
+
+1.  $M(K,L)\in\operatorname{span}\{I_W,P_e\}$；
+
+2.  对全部 $h\in H_e,z\in W$，$\mathcal E(hz)=\mathcal E(z)$；
+
+3.  若 $\lVert z\rVert=\lVert z'\rVert$ 且 $B(e,z)^2=B(e,z')^2$，则 $\mathcal E(z)=\mathcal E(z')$。
+

@@ -1,0 +1,54 @@
+### 定理 3.1（有限维完整分类）
+
+<a id="c133geo-classification"></a>
+
+设 $V$ 有限维，$U$ 任意。商算子 $\bar U$ 在 $W$ 上满足
+
+$$
+I+\bar U+\bar U^2=0,\qquad
+ J=\frac{I+2\bar U}{\sqrt3},\qquad J^2=-I.
+$$
+
+因此
+
+<a id="c133geo-visible-dimension"></a>
+
+$$
+\dim_{\mathbb R}W=2k,\qquad
+ k=\frac{\dim_{\mathbb R}V-\operatorname{rank}_{\mathbb R}D}{2}.
+\tag{7}
+$$
+
+选取由 $J$ 定义的复坐标 $\ell:V\to\mathbb C^k$，使
+$\operatorname{ker}\ell=DV$、$\ell U=\omega\ell$，其中 $\omega=e^{2\pi i/3}$。
+则满足候选~[(C133)](#c133-axiom) 的全部 $R$ 恰为
+
+<a id="c133geo-all-readings"></a>
+
+$$
+R(f,g)=\Re\!\left(\ell(f)^*H\ell(g)\right),
+ \qquad H=H^*\succeq0.
+\tag{8}
+$$
+
+这个对应一一成立，且
+
+<a id="c133geo-rank"></a>
+
+$$
+\operatorname{rank}_{\mathbb R}R=2\operatorname{rank}_{\mathbb C}H\le2k.
+\tag{9}
+$$
+
+特别地，$D$ 可逆当且仅当唯一合法读数是 $R=0$。
+
+**证明。**
+$DV$ 对 $U$ 稳定，而 $D$ 在商上为零；直接平方给 $J^2=-I$。于是令 $iw=Jw$，$W$ 成为 $k$ 维复空间，$\bar U$ 是乘 $\omega$。内部复化的标准构造见  [7](#ref-moretti2017)。
+主等价定理把合法 $R$ 与 $W$ 上的 Hermitian 正半定形式一一对应，选复基后正好得到式~[(8)](#c133geo-all-readings)。
+复正半定形式的每个非零方向给两个非零实方向；拉回所用的 $\ell$ 满射，故实秩为复秩的两倍。
+若 $k=0$，只剩零形；若 $k>0$，取 $H=I$ 即得非零解。
+
+所以指定原时钟后，并非任意方向都能被这个读口读取。$D$ 可逆的源根本没有非零合法读口；若 $k>0$，全部选择恰组成 $\operatorname{Herm}_k^+(\mathbb C)$。实际零空间为
+$\mathcal N=\ell^{-1}(\operatorname{ker} H)\supseteq DV$；只有 $H$ 正定时才恰为 $DV$。
+这给出了完整模型族，同时保留了源是否供应非零读口这一问题。
+

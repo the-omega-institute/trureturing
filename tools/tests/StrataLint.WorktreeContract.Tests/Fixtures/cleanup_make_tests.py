@@ -54,7 +54,16 @@ class CleanupMakeTests(NativeFixture):
     def git(self, *arguments, cwd=None, input=None):
         return self.run_command(["git", *arguments], cwd, input).stdout.strip()
 
-    def build_cli(self, repository):
+    def build_cli(self, repository, now=None):
+        # The Make entrance exercises production sweep logic, but every deletion
+        # must stay inside this fixture. TMPDIR alone does not exclude /tmp.
+        source = repository / "tools/StrataLint.Cli/Commands/Worktrees/CleanLanesCommand.cs"
+        content = source.read_text()
+        original = "DefaultTempRoots(), now, Directory.SetCurrentDirectory);"
+        self.assertEqual(1, content.count(original))
+        clock = "now" if now is None else f"DateTimeOffset.FromUnixTimeSeconds({now})"
+        source.write_text(content.replace(original,
+            f"new[] {{ Path.GetTempPath() }}, {clock}, Directory.SetCurrentDirectory);"))
         self.mark_phase("canonical-build")
         self.run_command(["make", "--no-print-directory", "-C", repository / "tools", "dotnet",
                           "DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj"], phase="canonical-build")
@@ -114,8 +123,8 @@ class CleanupMakeTests(NativeFixture):
             self.git("checkout", "--detach", cwd=tree)
         (self.detached_dirty / "owned").write_text("detached tracked\n")
         (self.detached_dirty / "untracked").write_text("detached untracked\n")
-        # A current Git lock keeps the separate orphan/snapshot sweep out of
-        # host-wide temporary roots while exercising the real canonical door.
+        # Keep an intentional lock in the qualification fixture; independent
+        # sweeps still run within the fixture's isolated temporary root.
         self.current = self.add_lane("current-lock")
         self.git("worktree", "lock", "--reason", "fixture", self.current)
         self.mark_phase("participant-start")
@@ -144,16 +153,6 @@ class CleanupMakeTests(NativeFixture):
         branch = "lane/governance/" + name
         self.git("worktree", "add", "-b", branch, tree, self.baseline)
         self.git("push", "origin", branch)
-        # Eligibility uses history/reflog age, independent of source-path handling.
-        administration = Path(self.git("rev-parse", "--absolute-git-dir", cwd=tree))
-        for log in (administration / "logs/HEAD", self.repository / ".git/logs/refs/heads" / branch):
-            lines = []
-            for line in log.read_text().splitlines():
-                metadata, separator, message = line.partition("\t")
-                fields = metadata.split(" ")
-                fields[-2] = "1700000000"
-                lines.append(" ".join(fields) + separator + message)
-            log.write_text("\n".join(lines) + "\n")
         return tree
 
     def diverge_main_adapter(self):
@@ -208,7 +207,7 @@ class CleanupMakeTests(NativeFixture):
         self.assertTrue(self.current.exists())
         self.assertEqual("locked_recent", items[str(self.current)]["reason"])
         if not preview:
-            self.assertEqual("stale_behind", items[str(self.local)]["reason"])
+            self.assertEqual("head_commit_age", items[str(self.local)]["reason"])
             recovery = self.root / "recovered-dirty"
             self.git("worktree", "add", recovery, "lane/governance/dirty")
             self.assertEqual("unpublished dirty\n", (recovery / "owned").read_text())
@@ -226,6 +225,41 @@ class CleanupMakeTests(NativeFixture):
                     self.assertEqual("detached tracked\n", (recovery / "owned").read_text())
                     self.assertEqual("detached untracked\n", (recovery / "untracked").read_text())
         self.assertIsNone(self.job.poll(), "independent participant must survive cleanup")
+
+    def test_single_tree_refusal_keeps_aggregate_success_and_warning(self):
+        nested = self.cache / ".lake/nested-repository"
+        self.git("init", nested)
+        recent = self.add_lane("recent")
+        previous = self.environment["GIT_COMMITTER_DATE"]
+        self.environment["GIT_COMMITTER_DATE"] = str(int(time.time())) + " +0000"
+        try:
+            self.git("commit", "--allow-empty", "-m", "recent saved work", cwd=recent)
+        finally:
+            self.environment["GIT_COMMITTER_DATE"] = previous
+        self.build_cli(self.repository)
+        arguments = ["make", "--no-print-directory", "-C", self.repository / "tools", "clean-all",
+                     "BASE=dev", "FORCE=1", "VERBOSE=1",
+                     "CLEAN_CODEX_HOME=" + str(self.root / "codex"),
+                     "CLEAN_SSHX_HOME=" + str(self.root / "sshx"),
+                     "CLEAN_TMP_ROOT=" + self.environment["TMPDIR"]]
+        result = self.run_command(arguments, self.root, phase="aggregate-tree-refusal", check=False)
+        self.assert_aggregate_result(result)
+        warnings = [json.loads(line) for line in result.stderr.splitlines() if line.startswith('{')]
+        warning = next(row for row in warnings if row.get("event") == "clean_lanes_warning"
+                       and row.get("path") == str(self.cache))
+        self.assertEqual("skipped", warning["action"])
+        self.assertIn("nested_git_boundary:", warning["reason"])
+        self.assertTrue(warning["diagnostic"])
+        self.assertEqual([str(self.cache)], [row["path"] for row in warnings
+                                           if row.get("event") == "clean_lanes_warning"])
+        rows = [json.loads(line) for line in result.stdout.splitlines() if line.startswith('{')]
+        items = {row.get("path"): row for row in rows
+                 if row.get("event") == "clean_lanes_item"}
+        self.assertEqual("recently_updated", items[str(recent)]["reason"])
+        self.assertEqual("locked_recent", items[str(self.current)]["reason"])
+        self.assertTrue(recent.exists())
+        self.assertTrue(nested.exists())
+        self.assertFalse(self.dirty.exists())
 
     def test_aggregate_survives_repository_removal(self):
         selected = self.add_lane("aggregate-anchor")
@@ -335,7 +369,8 @@ class CleanupMakeTests(NativeFixture):
             recovery_verified=True)), flush=True)
 
     def test_production_cleanup_entrances(self):
-        self.build_cli(self.repository)
+        now = int(time.time()) + 1
+        self.build_cli(self.repository, now=now)
         entrances = [
             (["-C", self.repository / "tools"], "clean-lanes", self.root),
             (["-C", self.repository / "tools"], "clean-all", self.root),
@@ -354,6 +389,25 @@ class CleanupMakeTests(NativeFixture):
                 name = "eligible-" + str(index)
                 self.mark_phase("eligible-lane")
                 eligible = self.add_lane(name)
+                ages = []
+                for seconds in (21599, 21600, 21601):
+                    tree = self.add_lane("age-" + str(seconds))
+                    self.run_command(["env", f"GIT_COMMITTER_DATE={now - seconds} +0000",
+                                      "git", "commit", "--allow-empty", "-m", "age boundary"], tree)
+                    ages.append((tree, seconds, self.git("rev-parse", "HEAD", cwd=tree)))
+
+                def assert_commit_ages(events, preview=False):
+                    items = {item["path"]: item for item in events
+                             if item["event"] == "clean_lanes_item"}
+                    for tree, seconds, head in ages:
+                        selected = seconds >= 21600
+                        item = items[str(tree)]
+                        self.assertEqual("head_commit_age" if selected else "recently_updated", item["reason"])
+                        self.assertEqual(("would_remove" if preview else "removed") if selected else "skipped",
+                                         item["action"])
+                        self.assertEqual(preview or not selected, tree.exists())
+                        self.assertEqual(head, self.git("rev-parse", "refs/heads/lane/governance/age-" + str(seconds)))
+
                 arguments = ["make", "--no-print-directory", *options, target, "BASE=dev"]
                 if target == "clean-all":
                     arguments += ["CLEAN_CODEX_HOME=" + str(self.root / "codex"),
@@ -371,6 +425,7 @@ class CleanupMakeTests(NativeFixture):
                     self.assertEqual("would_remove", item["action"], item)
                     self.assertTrue(eligible.exists())
                     self.assert_recoverable(preview_events, preview=True)
+                    assert_commit_ages(preview_events, preview=True)
                 self.mark_phase(target + ":force")
                 removed = self.run_command(arguments + ["FORCE=1"], cwd, phase=target + ":force", check=False)
                 if target == "clean-all":
@@ -387,6 +442,7 @@ class CleanupMakeTests(NativeFixture):
                 self.assertEqual(self.baseline, self.git("ls-remote", "origin",
                     "refs/heads/lane/governance/" + name).split()[0])
                 self.assert_recoverable(events)
+                assert_commit_ages(events)
                 print(json.dumps(dict(entrance=target, options=list(map(str, options)),
                     source=str(self.repository), exit=removed.returncode,
                     removed=[str(eligible)], recoverable=[str(tree) for tree in
