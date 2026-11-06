@@ -14,8 +14,6 @@ public import Mathlib.Data.Nat.Choose.Basic
 /-!
 # Exact zero-subset count for ternary physical labels
 
-UNCOMPILED source candidate. No kernel, registration, or acceptance claim.
-
 All subsets are finsets of the original labels `Fin n`; equal integer values
 at different labels remain distinct choices. The only hypothesis is that
 each value is -1, 0, or 1. In particular, no full-sum-zero hypothesis or
@@ -116,8 +114,9 @@ private theorem card_filter_nonzero {n : ℕ} (u : Fin n → ℤ) (r : ℕ) :
       apply Finset.mem_filter.mpr
       refine ⟨Finset.mem_univ _, ?_⟩
       change ((B ∪ C).filter (fun i => u i ≠ 0)).card = r
-      rw [congrArg Prod.snd (hparts B C (Finset.mem_powerset.mp hB) hCS)]
-      exact hCr
+      have hc := congrArg (fun BC : Finset (Fin n) × Finset (Fin n) => BC.2.card)
+        (hparts B C (Finset.mem_powerset.mp hB) hCS)
+      exact hc.trans hCr
     · intro A _
       change A.filter (fun i => u i = 0) ∪ A.filter (fun i => u i ≠ 0) = A
       apply Finset.ext
