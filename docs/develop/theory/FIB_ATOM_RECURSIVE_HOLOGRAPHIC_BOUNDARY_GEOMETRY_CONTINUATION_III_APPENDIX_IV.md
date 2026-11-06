@@ -1895,3 +1895,41 @@ $$
 All terms after subtraction are nonnegative, and the term $2\mathcal C(h,q,q)$ is strictly positive by (181.3), proving (181.2). Thus an exact zero with $[v]\ne0$ cannot be one-signed. For a real measurable representative, failure of both one-sided alternatives is exactly the assertion that its positive and negative parts each have positive $m$-measure. $\square$
 
 This removes constant shifts and every other sign-definite displacement from the conditional common-first search. It does not solve the remaining sign-changing seven-equation system, remove the radical-triviality hypothesis in Corollary 179.3, or settle arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession or Lean/kernel formalization.
+
+## 182. Weighted lower bounds for one-sided common-first escapes
+
+The sign obstruction of Section 181 has a quantitative form. The first positive term in each multilinear expansion already gives a source-dependent residual lower bound.
+
+**Proposition 182.1 (strict weighted one-sided bounds).** Retain the legal common-first tuple and notation of Proposition 181.1, and put
+
+$$
+\psi_F=P(FPF),
+\qquad
+\psi_q=P(qPq).
+$$
+
+Then
+
+$$
+ v\ge0
+\quad\Longrightarrow\quad
+R_{000}\ge \mathcal C(v,F,F)
+ =\int_G gv\,\psi_F\,dm,
+\tag{182.1}
+$$
+
+and
+
+$$
+ v\le0
+\quad\Longrightarrow\quad
+R_{333}\ge 2\mathcal C(-v,q,q)
+ =2\int_G g(-v)\,\psi_q\,dm.
+\tag{182.2}
+$$
+
+If $[v]\ne0$, the corresponding right-hand side is strictly positive.
+
+*Proof.* For $v\ge0$, equation (181.4) writes $R_{000}$ as the sum of seven nonnegative terms. Retaining its first term gives (182.1), and self-adjointness of $P$ in the definition of $\mathcal C$ gives the displayed integral. For $v\le0$, write $h=-v\ge0$. Expanding $\mathcal C(q+2h,q+2h,q+2h)-\mathcal C(q,q,q)$, every term is nonnegative and the term with exactly one $h$ in the first slot is $2\mathcal C(h,q,q)$, which gives (182.2). The strict positivity follows from (181.3), applied with $(a,b)=(F,F)$ or $(q,q)$. $\square$
+
+These bounds quantify the distance from the full-zero fibre for every one-sided displacement. They leave the genuinely sign-changing seven-equation system, the radical-triviality implication in Corollary 179.3, arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization open.
