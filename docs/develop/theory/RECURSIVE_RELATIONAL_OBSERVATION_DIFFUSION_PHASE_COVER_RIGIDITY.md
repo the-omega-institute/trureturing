@@ -1610,3 +1610,444 @@ negative examples do not prove one impossible for this diffusion.
 [MW-A]: https://arxiv.org/html/0706.1512v3
 
 ## 追加锚（本行以下为增补区）
+
+## 9. The original contact defect controls dependent word counts
+
+**Definition 9.1 (the unchanged source and the capacity-defect profile).**
+Fix the original finite positive $a,\eta,d$, the full endpoint
+$H=H_{\rm end}$ with its selector $A=\rho C$, the coefficient-positive
+normalized zero vector $h$, and
+
+$$
+m=h^2\mu,\qquad K=U_h^{-1}HU_h,\qquad T_t=e^{-tK},\qquad P=T_d.
+$$
+
+All of these are the source, boundary and clock of Definitions 1.1,
+7.1 and 8.1. In particular $m$ is the original invariant probability,
+$K$ is the full source-inclusive operator, $T$ is conservative,
+self-adjoint and Markov, and $\ker K=\mathbb R1$ on real classes. Let
+$F$ be the original Friedrichs operator in Appendix II §115 and write
+
+$$
+R_r^0=U_h^{-1}(F+r)^{-1}U_h,\qquad R_r=(K+r)^{-1},\qquad
+b_r=1-rR_r^01,\qquad d_r=\int_Gb_r\,dm
+$$
+
+for $r>0$. The original §§115--116 identities give
+
+$$
+0\le b_r\le1,\qquad 0<d_r<1,\qquad
+R_r=R_r^0+\frac{|b_r\rangle\langle b_r|}{r d_r},\qquad
+d_r\longrightarrow1\quad(r\downarrow0).
+$$
+
+Define the source-specific capacity defect
+
+$$
+\Theta(r)=\frac{1-d_r}{d_r}.
+\tag{9.1}
+$$
+
+The number $d_r$ is the exact shifted source capacity divided by $r$:
+Appendix II (116.4) gives $\operatorname{Cap}_r(\{e\})=r d_r$.
+It is a mathematical value of the fixed original source, not a supplied
+numerical name and not a quantity read from the label record.
+
+**Theorem 9.2 (a source-specific centered resolvent estimate).**
+Let $u\in L^\infty(G,m;\mathbb R)$ satisfy
+$\int u\,dm=0$ and $\|u\|_\infty\le L$. For every $r>0$,
+
+$$
+r\langle u,R_ru\rangle_m\le L^2\Theta(r).
+\tag{9.2}
+$$
+
+If $\nu_u$ is the spectral measure of $K$ at $u$, then
+
+$$
+\nu_u((0,r])\le2L^2\Theta(r),\qquad
+\langle u,T_su\rangle_m\le L^2\Theta(1/s)\quad(s>0).
+\tag{9.3}
+$$
+
+The zero spectral atom is absent because $u$ is orthogonal to
+$\ker K=\mathbb R1$. Thus (9.1)--(9.3) give a weak low-energy profile
+for every centered bounded observable, although they give no power,
+exponential or parameter-uniform rate.
+
+*Proof.* Put $Q_r=rR_r^0$ and $\alpha_r=1-d_r$. The resolvent definition
+gives $Q_r1=1-b_r$ and $\int Q_r1\,dm=\alpha_r$. Positivity of the
+killed resolvent implies
+
+$$
+\langle u,Q_ru\rangle_m
+ \le\langle |u|,Q_r|u|\rangle_m
+ \le L^2\langle1,Q_r1\rangle_m=L^2\alpha_r.
+\tag{9.4}
+$$
+
+The first inequality follows by writing $u=u_+-u_-$; the cross term
+of the positive operator $Q_r$ is nonnegative. The second follows from
+$0\le|u|\le L1$ and positivity. Since $\int u\,dm=0$,
+
+$$
+|\langle b_r,u\rangle_m|
+ =|\langle b_r-1,u\rangle_m|
+ \le L\alpha_r.
+\tag{9.5}
+$$
+
+Multiplying the exact rank-one formula by $r$ and using (9.4)--(9.5)
+gives
+
+$$
+r\langle u,R_ru\rangle_m
+ \le L^2\alpha_r+\frac{L^2\alpha_r^2}{d_r}
+ =L^2\frac{\alpha_r}{d_r}=L^2\Theta(r).
+$$
+
+The spectral theorem gives
+$r\langle u,R_ru\rangle=\int r(\lambda+r)^{-1}\,d\nu_u(\lambda)$.
+The multiplier is at least $1/2$ on $(0,r]$, proving the first part of
+(9.3). Also $e^{-s\lambda}\le(1+s\lambda)^{-1}$; taking $r=1/s$ in
+(9.2) and using functional calculus proves the second part. Finally,
+$\nu_u(\{0\})=0$ by the centering assumption. $\square$
+
+**Definition 9.3 (the original passive word stream).** Keep exactly the
+readout of Definition 8.1:
+
+$$
+M=1+\|g_d\|_\infty,\qquad c=\frac1{4M},\qquad
+f_3=cg_d,\qquad f_B=\frac14,\qquad
+f_0=f_1=\frac{3/4-f_3}{2},\qquad
+\mathcal L=\{0,1,3,B\}.
+\tag{9.6}
+$$
+
+Here $g_d$ means any permitted bounded Borel representative of its
+original $L^2(m)$ class; the exact norm in (9.6) is retained. The source
+starts at $e$ at time zero, the lead-in is $2d$, and $Y_j$ is the
+passive read at time $(j+2)d$. Conditional on the one source path, all
+reads use the fixed functions (9.6) and fresh independent conditional
+read noise. No source reset, selected outcome, hidden coordinate or
+second trajectory is introduced.
+
+For a nonempty word $w=(w_0,\ldots,w_{L-1})\in\mathcal L^L$ define
+
+$$
+F_\varnothing=1,\qquad
+F_w=f_{w_0}P F_{(w_1,\ldots,w_{L-1})},\qquad
+\pi_L(w)=\int_G F_w\,dm.
+\tag{9.7}
+$$
+
+The probability vector $\pi_L$ is the invariant comparison law of the
+same source and same readout. It is a proof comparison, not a prepared
+stationary experiment. Write $w^{\leftarrow}$ for the reversed word and
+$\bar F_w=F_{w^{\leftarrow}}$. Reversibility gives
+$\int\bar F_w\,dm=\pi_L(w)$, and all these functions take values in
+$[0,1]$.
+
+For $N\ge1$ let
+
+$$
+A_{N,L}(w)=\sum_{j=0}^{N-1}
+ \mathbf1\{Y_j\cdots Y_{j+L-1}=w\},\qquad
+a_{N,L}(w)=\frac{A_{N,L}(w)}N.
+\tag{9.8}
+$$
+
+The windows overlap and use one chronological record. The last label is
+$Y_{N+L-2}$, acquired at the original time $(N+L)d$.
+
+**Theorem 9.4 (capacity defect, overlap and the actual source start).**
+For every fixed $L\ge1$, every $w\in\mathcal L^L$ and every $N\ge1$, put
+
+$$
+V_{N,L}=\min\left\{\frac14,
+ \frac{2L-1}{4N}+2\Theta\left(\frac1{Nd}\right)\right\}.
+\tag{9.9}
+$$
+
+Under the invariant comparison law,
+
+$$
+\operatorname{Var}_m(a_{N,L}(w))\le V_{N,L}.
+\tag{9.10}
+$$
+
+Under the actual $e$-start law $Q_e$,
+
+$$
+\mathbb E_e\left[(a_{N,L}(w)-\pi_L(w))^2\right]
+ \le (M-1)V_{N,L}.
+\tag{9.11}
+$$
+
+There is also a certificate-friendly bound that does not require a
+numerical name for $M$. Set
+
+$$
+D_0=d_{1/(4d)}.
+\tag{9.12}
+$$
+
+Then the complete $4^L$-vector $a_{N,L}$ satisfies, for every
+$\varepsilon>0$,
+
+$$
+\mathbb P_e\left(
+ \operatorname{TV}(a_{N,L},\pi_L)>\varepsilon\right)
+ \le\min\left\{1,\frac{2^{2L-1}}{\varepsilon}
+ \sqrt{\frac{V_{N,L}}{D_0}}\right\}.
+\tag{9.13}
+$$
+
+For $L=4$, this controls all $256$ word counters simultaneously.
+
+*Proof.* Under the invariant law, for a word $w$ and a lag $j\ge L$,
+conditioning on the end of the first window and the start of the next,
+then using reversibility and the fresh read noises, gives
+
+$$
+\operatorname{Cov}_m(I_0(w),I_j(w))
+ =\left\langle \bar F_w-\pi_L(w),
+ T_{(j-L+1)d}\bigl(F_w-\pi_L(w)\bigr)\right\rangle_m.
+\tag{9.14}
+$$
+
+Both centered factors have sup norm at most one. Since $T_s$ is positive
+self-adjoint, Cauchy--Schwarz in the positive form
+$\langle x,T_sy\rangle$ and (9.3) give
+
+$$
+|\operatorname{Cov}_m(I_0(w),I_j(w))|
+ \le\Theta\left(\frac1{(j-L+1)d}\right).
+\tag{9.15}
+$$
+
+For $1\le j<L$ the universal Bernoulli bound is $1/4$; it is used
+because the windows overlap. To sum the separated lags, let
+
+$$
+S_N=\sum_{n=1}^{N-1}(N-n)T_{nd},\qquad
+r_N=\frac1{Nd}.
+$$
+
+Its spectral multiplier obeys
+
+$$
+\sum_{n=1}^{N-1}(N-n)e^{-nd\lambda}
+ \le\int_0^N(N-t)e^{-td\lambda}\,dt
+ \le\frac{N^2}{1+Nd\lambda}
+ =N^2\frac{r_N}{\lambda+r_N}.
+\tag{9.16}
+$$
+
+The final inequality is $(1+x)e^{-x}\le1$ after putting
+$x=Nd\lambda$; the value at $\lambda=0$ follows by continuity.
+Thus $S_N\le N^2r_NR_{r_N}$ in the spectral order. Applying the
+positive-form Cauchy--Schwarz inequality to the two centered factors in
+(9.14), then (9.2), shows that all separated-lag contributions to the
+variance, after division by $N^2$, are at most
+$2\Theta(r_N)$. The diagonal and the at most $L-1$ overlapping lags
+contribute at most $(2L-1)/(4N)$. The variance is also at most $1/4$,
+which proves (9.10).
+
+For the actual source start, the future hidden-and-read path beginning
+at time $2d$ has Radon--Nikodym derivative $g_{2d}(X_0)$ relative to
+the invariant comparison path. The Markov contraction and the original
+propagation identity give
+
+$$
+\|g_{2d}\|_\infty=\|T_dg_d\|_\infty\le\|g_d\|_\infty=M-1.
+\tag{9.17}
+$$
+
+Therefore every nonnegative future-record functional $H$ satisfies
+$\mathbb E_eH\le(M-1)\mathbb E_mH$. Applying this to the squared
+error and using (9.10) proves (9.11).
+
+For (9.13), the source-density estimate of Appendix II (117.3), with
+$t=2d$ and $r=1/(4d)$, has
+$\sup_{\lambda\ge0}(\lambda+r)e^{-4d\lambda}=r$, hence
+
+$$
+\|g_{2d}\|_2^2\le D_0^{-1}.
+\tag{9.18}
+$$
+
+For every event $E$ depending on the future record,
+$\mathbb P_e(E)\le D_0^{-1/2}\mathbb P_m(E)^{1/2}$ by Cauchy--Schwarz.
+Under $Q_m$, Cauchy--Schwarz over the $4^L$ coordinates and (9.10)
+give
+
+$$
+\mathbb E_m\|a_{N,L}-\pi_L\|_1^2
+ \le4^{2L}V_{N,L}.
+$$
+
+Markov's inequality for $\operatorname{TV}=\frac12\|\cdot\|_1$ and
+the preceding change of initial law yield (9.13). $\square$
+
+The defect profile in (9.1) tends to zero as its argument decreases to
+zero. Consequently $V_{N,L}\to0$ for every fixed original source and
+fixed $L$. This is a fixed-word mathematical convergence statement;
+it is not a finite-record stopping rule. It also does not estimate a
+growing current history.
+
+**Corollary 9.5 (the complete 256-to-64 original consumer).**
+For $w\in\mathcal L^3$, let
+
+$$
+\nu_e^{(3)}(w)=\int_G g_{2d}f_{w_0}P(f_{w_1}Pf_{w_2})\,dm,
+\tag{9.19}
+$$
+
+the original $e$-start law at exactly $2d,3d,4d$. For every such $w$,
+
+$$
+\pi_4(3w)=c\,\nu_e^{(3)}(w),\qquad
+\sum_{w\in\mathcal L^3}\pi_4(3w)=c.
+\tag{9.20}
+$$
+
+Indeed, if $F_w=f_{w_0}P(f_{w_1}Pf_{w_2})$, then
+
+$$
+\pi_4(3w)=\langle f_3,PF_w\rangle_m
+ =c\langle g_d,PF_w\rangle_m
+ =c\langle Pg_d,F_w\rangle_m
+ =c\langle g_{2d},F_w\rangle_m.
+$$
+
+This uses the exact original $f_3=cg_d$, the same $P=T_d$ and the
+original density propagation; label $3$ is not a selected outcome or a
+source contact.
+
+Retain all $256$ counters from (9.8) at $L=4$. Put
+
+$$
+Z_N=\sum_{w\in\mathcal L^3}A_{N,4}(3w),\qquad
+\widehat\nu_N(w)=\frac{A_{N,4}(3w)+1}{Z_N+64}.
+\tag{9.21}
+$$
+
+The integer $1$ is record-side smoothing. It adds no emission and no
+source operation. For
+
+$$
+\Delta_N=\sum_{w\in\mathcal L^3}
+ \left|a_{N,4}(3w)-c\nu_e^{(3)}(w)\right|,
+$$
+
+every record satisfies
+
+$$
+\operatorname{TV}(\widehat\nu_N,\nu_e^{(3)})
+ \le\min\left\{1,
+ \frac{\Delta_N+64/N}{Z_N/N+64/N}\right\}.
+\tag{9.22}
+$$
+
+To see this, use $|Z_N/N-c|\le\Delta_N$ and
+$\sum_w|1-64\nu_e^{(3)}(w)|\le128$ after putting the two fractions
+over the common denominator. In particular, for every $0<t<c$,
+
+$$
+\mathbb P_e(\Delta_N>t)
+ \le\min\left\{1,\frac{256}{t}
+ \sqrt{\frac{V_{N,4}}{D_0}}\right\},
+\tag{9.23}
+$$
+
+and on $\{\Delta_N\le t\}$ the right side of (9.22) is at most
+
+$$
+\frac{t+64/N}{c-t+64/N}.
+\tag{9.24}
+$$
+
+Thus a fixed mathematical confidence statement is obtained by choosing
+$N$ and $t$ so that the expression in (9.23) is at most a prescribed
+$\alpha$ and (9.24) is at most a prescribed error
+$\varepsilon$. The statement retains every one of the $256$ length-four
+outcomes and all $64$ original length-three outcomes. The $N$ windows
+use exactly $N+3$ chronological labels, ending at original time
+$(N+4)d$, and a streaming implementation needs $256$ counters, a
+four-label buffer and integer arithmetic on counters of $O(\log(N+1))$
+bits.
+
+**Proposition 9.6 (what a numerical certificate would and would not
+close).** The preceding inequalities are symbolic source-specific
+bounds. They become a finite numerical confidence certificate for a
+fixed $N$ only if an input packet supplies certified lower bounds
+
+$$
+0<D_0^-\le d_{1/(4d)},\qquad
+0<D_N^-\le d_{1/(Nd)}.
+\tag{9.25}
+$$
+
+The packet must identify the same $a,\eta,d$, the same $H_{\rm end}$
+selector, the same $h,m,F$ and the original clock, and must state the
+encoding, precision and construction or validation cost of the two
+rational bounds. Substitution gives the explicit rational upper envelope
+
+$$
+\overline V_{N,4}=\frac7{4N}+2\frac{1-D_N^-}{D_N^-},\qquad
+\mathbb P_e(\Delta_N>t)
+ \le\min\left\{1,\frac{256}{t}
+ \sqrt{\frac{\overline V_{N,4}}{D_0^-}}\right\}.
+\tag{9.26}
+$$
+
+An alternative certificate may supply an original-domain vector $v$ and
+validated residual data for $(F+q)^{-1}h$; such data can lower-bound
+$d_q$ without using a global $F^{-1}$. Concretely, if
+$v\in D(F)$, $\|h-(F+q)v\|_2\le\epsilon_q$ and
+$\langle h,v\rangle\le B_q$, then
+
+$$
+d_q=1-q\langle h,(F+q)^{-1}h\rangle
+ \ge1-qB_q-\epsilon_q.
+\tag{9.27}
+$$
+
+Indeed $\|(F+q)^{-1}\|\le q^{-1}$, so
+$\|(F+q)^{-1}h-v\|_2\le\epsilon_q/q$. The residual proof still has to
+refer to the original normalized $h$ and the full space, and its
+construction cost is an additional resource. The present passive
+contract supplies neither (9.25), a residual evaluator, nor a numerical
+name for the fixed real parameters. A conditional evaluator taking those
+extra inputs would therefore be a separate access contract, not a
+record-only acquisition result. The label record alone supplies the
+counters and the observed denominator $Z_N$, but it does not certify
+$d_r$, $D_0$, $M$, a confidence radius or a stopping time.
+
+The exact rank-one/contact identities used here are the original
+Appendix II §§115--117 suppliers; the readout and $Pg_d=c^{-1}Pf_3
+=g_{2d}$ correspondence is the original Appendix III Definition 134.1
+and (134.15). The covariance summation, spectral calculus, Cauchy--Schwarz,
+Markov inequality and change-of-initial-law step are mature tools used
+inside this source-specific composition. General weak-Poincaré and
+reversible-chain rate results, such as Röckner--Wang [RW] and
+Andrieu--Lee--Power--Wang [ALPW], require a supplied profile or
+certificate and do not furnish one for this singular original endpoint;
+Paulin's [PAULIN] spectral-gap route likewise is not invoked. No
+finite-chain replacement,
+global Nash or doubling hypothesis, spectral gap, source reset or
+stationary preparation has been added.
+
+The bridge changes the missing relation from an unspecified covariance
+supplier to the explicit original scalar $d_r$ and its certified lower
+bound. It does not close effective numerical acquisition, record-only
+stopping, current-history prediction, or mutual recovery of space, time,
+boundary and memory. Those remain separate relations for the same
+source and clock.
+
+[RW]: https://doi.org/10.1006/jfan.2001.3776
+[ALPW]: https://arxiv.org/html/2312.11689v1
+[PAULIN]: https://arxiv.org/html/1212.2015v3
+
+## 追加锚（本行以下为增补区）

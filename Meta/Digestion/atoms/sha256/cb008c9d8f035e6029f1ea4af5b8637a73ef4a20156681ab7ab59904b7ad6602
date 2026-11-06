@@ -1,0 +1,89 @@
+**定理 C-79.3（固定 $r$ 的最佳正曲率下界及完整等号条件）。** 对每个满足 C-76 的内部点，
+
+$$
+\mathcal K\ge\frac2r>0.
+\tag{C79.4}
+$$
+
+在某个内部点取等号，当且仅当该固定均值纤维满足 $X=Y=r/2$；
+此时对全部内部 $\kappa$ 及全部 $\chi$ 均取等号。因此对每个固定 $r\in(0,1)$，
+$2/r$ 是跨越该 $r$ 下所有允许均值和内部状态的最佳下界。
+
+证明。以下求和仅遍历四底角，顺序为 $(0,1,3,13)$，置
+
+$$
+d=(1,-1,-1,1),\qquad
+A_2=\sum_s\frac{d_s}{p_s^2},\qquad
+A_3=\sum_s\frac1{p_s^3},\qquad
+\beta=\frac{A_2}{\mathcal I}.
+$$
+
+固定均值时 $p_s'=d_s$，所以
+$\mathcal I'=-A_2$、$\mathcal I''=2A_3$。
+将平方展开，不遗漏交叉项，得
+
+$$
+\begin{aligned}
+S&:=\sum_s\frac{(d_s-\beta p_s)^2}{p_s^3}\\
+&=A_3-2\beta A_2+\beta^2\mathcal I
+=A_3-\frac{A_2^2}{\mathcal I},\\
+\mathcal K&=\frac{2S}{\mathcal I^2}.
+\end{aligned}
+\tag{C79.5}
+$$
+
+令 $u_s=(d_s-\beta p_s)/p_s^{3/2}$、$v_s=d_s\sqrt{p_s}$。
+因 $\sum_s d_s=0$、$d_s^2=1$、$\sum_s p_s=r$，有
+
+$$
+\sum_su_sv_s
+=\sum_s\left(\frac1{p_s}-\beta d_s\right)=\mathcal I,
+\qquad
+\sum_su_s^2=S,\qquad \sum_sv_s^2=r.
+$$
+
+加权 Cauchy–Schwarz 因此给
+$\mathcal I^2\le Sr$，代入式 (C79.5) 得下界。
+这是对任意正参数的证明，未用有限样本替代不等式。
+
+等号恰要求 $u=cv$，且内积关系强制
+
+$$
+c=\frac{\mathcal I}{r}>0,\qquad
+d_s-\beta p_s=c\,d_s p_s^2.
+\tag{C79.6}
+$$
+
+对 $d_s=1$，正概率满足 $cp_s^2+\beta p_s-1=0$；
+对 $d_s=-1$，满足 $cp_s^2-\beta p_s-1=0$。
+两式的常数项均为 $-1$、首项系数 $c>0$，
+根的乘积为 $-1/c<0$，判别式 $\beta^2+4c>0$，
+所以各有且仅有一个正根，分别为
+
+$$
+\frac{-\beta+\sqrt{\beta^2+4c}}{2c},\qquad
+\frac{\beta+\sqrt{\beta^2+4c}}{2c}.
+$$
+
+同号的两个概率必须相等：
+$p_0=p_{13}$、$p_1=p_3$。由式 (C76.2)，它们依次等价于
+$X+Y=r$、$X=Y$，合起来恰为 $X=Y=r/2$。
+
+反之，若 $p_0=p_{13}=a$、$p_1=p_3=b$，则
+$a,b>0$、$r=2(a+b)$，
+
+$$
+\mathcal I=\frac2a+\frac2b,\qquad
+c=\frac{\mathcal I}{r}=\frac1{ab},\qquad
+\beta=\frac{2/a^2-2/b^2}{2/a+2/b}=\frac1a-\frac1b.
+$$
+
+于是 $1-\beta a=a/b=ca^2$、
+$-1-\beta b=-b/a=-cb^2$，确满足全部等号方程。
+在对称均值下 $a=\kappa$、$b=r/2-\kappa$，每个内部 $\kappa$ 都满足；
+度量与曲率又独立于 $\chi$。对每个固定 $r$ 可选此纤维取等，证明锐性。证毕。
+
+命题 C-79.2 与定理 C-79.3 的解释边界为：$\sinh,\cosh,\tanh$ 可以出现在概率伸缩及相关读数的参数化中，
+但函数形状不决定度量曲率。式 (C79.2) 所选状态面恰有严格正曲率。
+这里的最佳界是固定底面质量 $r=1-Z$ 的界，不能省去尺度与固定 $r$ 的量词。
+

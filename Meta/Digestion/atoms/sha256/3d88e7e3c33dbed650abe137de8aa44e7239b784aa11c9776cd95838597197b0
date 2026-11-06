@@ -1,0 +1,36 @@
+**命题 C-65.1（均匀来源在外部五律中的闭式）。** 取全部 $\lambda_j=1$，以 $F_0=0,F_1=1,F_{k+2}=F_{k+1}+F_k$ 定义 Fibonacci 数，并置 $L_n=F_{n-1}+F_{n+1}$。对每个 $n\ge5$，
+
+$$
+H_i=J^{n-2}
+=\begin{pmatrix}F_{n-1}&F_{n-2}\\F_{n-2}&F_{n-3}\end{pmatrix},
+\qquad\mathcal Z=L_n,
+\tag{C65.1}
+$$
+
+所以
+
+$$
+p^{(i)}=\frac{(F_{n-1},F_{n-2},F_{n-1},F_{n-2},F_{n-3})}{L_n},
+\qquad
+\Delta_i=\frac{(-1)^n}{L_n^2},
+\tag{C65.2}
+$$
+
+且
+
+$$
+\Omega_i=\frac{F_{n-1}F_{n-3}}{F_{n-2}^2}.
+\tag{C65.3}
+$$
+
+证明。C-8.3 的等权路径矩阵以路径顶点数 $N=n-1$ 代入，给式 (C65.1) 的矩阵；这个代入具有 $N-1=n-2$ 条边，正是外部路径，不能误用完整环的 $n$ 条边。式 (C60.3) 得五项，其和为
+
+$$
+2F_{n-1}+2F_{n-2}+F_{n-3}
+=F_{n-1}+F_{n+1}=L_n.
+$$
+
+这里使用两次 Fibonacci 递推。也可在同一来源上使用 C-26.11 的迹，$\mathcal Z=\operatorname{tr}(J^n)=F_{n+1}+F_{n-1}$。式 (C60.5) 给残差，式 (C61.2) 给四角比。全部所用 Fibonacci、Lucas 及矩阵幂都是既有中间公式，当前结论是它们在外部窗口五律中的明确参数对应。证毕。
+
+例如 $n=5$ 时，$H_i=\left(\begin{smallmatrix}3&2\\2&1\end{smallmatrix}\right)$，$p=(3,2,3,2,1)/11$，$\Delta=-1/121$、$\Omega=3/4$；$n=6$ 时，$H_i=\left(\begin{smallmatrix}5&3\\3&2\end{smallmatrix}\right)$，$p=(5,3,5,3,2)/18$，$\Delta=1/324$、$\Omega=10/9$。这两组直接代入式 (C65.1)–(C65.3)，分别展示两种严格符号。
+
