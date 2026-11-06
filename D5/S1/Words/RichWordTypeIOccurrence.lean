@@ -298,4 +298,112 @@ theorem terminal_interval_cancellation {a b : ℕ} (ha : 0 < a) (hab : a < b)
   have he' : boundary a-1+1 = boundary a := by omega
   simp [factor, he', boundary_preceding_six ha hleft]
 
+/-- The trailing zero reserves the next true boundary. -/
+def sentinel (s : Word) : Word := subst phi s ++ [0]
+
+private theorem sentinel_cons (a : Letter) (s : Word) :
+    sentinel (a::s) = phi a ++ sentinel s := by simp [sentinel, List.append_assoc]
+
+private theorem sentinel_head (s : Word) : ∃ v, sentinel s = 0::v := by
+  cases s with
+  | nil => exact ⟨[], rfl⟩
+  | cons a s =>
+    rw [sentinel_cons]
+    unfold phi
+    split <;> exact ⟨_,rfl⟩
+
+private theorem occ_prefix {s t : Word} {q : ℕ} (hp : s <+: t) (ho : Occ t q) :
+    Occ s q := by
+  have ht := congrArg (List.take s.length) ho
+  rw [factor_take _ _ _ _ hp.length_le, ← List.prefix_iff_eq_take.mp hp] at ht
+  exact ht
+
+private theorem boundary_occ {s : Word} {a : ℕ} (h : Occ s a) :
+    boundary (a+s.length) = boundary a+(subst phi s).length := by
+  rw [boundary_add,h]
+
+private theorem sentinel_transport {s : Word} {a : ℕ} (h : Occ s a) :
+    Occ (sentinel s) (boundary a) := by
+  apply (occ_append _ _ _).mpr
+  constructor
+  · have hf := factor_subst a s.length
+    rw [h] at hf
+    exact hf
+  · apply (occ_singleton _ _).mpr
+    rw [← boundary_occ h]
+    exact at_boundary _
+
+private def code (a : Letter) : Word := (phi a++[0]).take 3
+
+private theorem code_length (a : Letter) : (code a).length = 3 := by
+  unfold code phi
+  split <;> simp
+
+private theorem code_injective : Function.Injective code := by
+  intro a b h
+  fin_cases a <;> fin_cases b <;> simp_all [code,phi]
+
+private theorem sentinel_code_prefix (a : Letter) (s : Word) :
+    code a <+: sentinel (a::s) := by
+  apply (List.take_prefix 3 (phi a++[0])).trans
+  obtain ⟨v,hv⟩ := sentinel_head s
+  rw [sentinel_cons,hv]
+  exact ⟨v,by simp [List.append_assoc]⟩
+
+private theorem sentinel_decode {a : Letter} {s : Word} {i : ℕ}
+    (h : Occ (sentinel (a::s)) (boundary i)) : word i = a := by
+  have ho : Occ [word i] i := (occ_singleton _ _).mpr rfl
+  have hc := occ_prefix (sentinel_code_prefix (word i) []) (sentinel_transport ho)
+  have ha := occ_prefix (sentinel_code_prefix a s) h
+  apply code_injective
+  unfold Occ at hc ha
+  rw [code_length] at hc ha
+  exact hc.symm.trans ha
+
+private theorem sentinel_boundary (s : Word) (i : ℕ) :
+    Occ (sentinel s) (boundary i) ↔ Occ s i := by
+  constructor
+  · induction s generalizing i with
+    | nil => intro _; simp [Occ,factor]
+    | cons a s ih =>
+      intro h
+      have ha := sentinel_decode h
+      rw [sentinel_cons] at h
+      have ht := ((occ_append _ _ _).mp h).2
+      rw [← ha, ← boundary_succ] at ht
+      exact (occ_cons _ _ _).mpr ⟨ha, ih (i+1) ht⟩
+  · exact sentinel_transport
+
+/-- Every occurrence, at every natural position, parses to exactly one
+preimage occurrence. The third letter distinguishes 06 from 066. -/
+theorem ordinary_occurrence_iff (s : Word) (q : ℕ) :
+    Occ (sentinel s) q ↔ ∃ i, q = boundary i ∧ Occ s i := by
+  constructor
+  · intro h
+    obtain ⟨v,hv⟩ := sentinel_head s
+    have hz : word q = 0 := by
+      rw [hv] at h
+      exact ((occ_cons _ _ _).mp h).1
+    obtain ⟨i,hi⟩ := (zero_boundary q).mp hz
+    exact ⟨i,hi,(sentinel_boundary s i).mp (hi ▸ h)⟩
+  · rintro ⟨i,rfl,hi⟩
+    exact sentinel_transport hi
+
+/-- No Type-I occurrence is at the one-sided origin. -/
+theorem typeI_not_at_origin (n : ℕ) : ¬ Occ (typeI n) 0 := by
+  induction n with
+  | zero => simp [typeI,occ_singleton,word_zero]
+  | succ n ih =>
+    intro h
+    by_cases hn : n % 6 = 5
+    · simp only [typeI,if_pos hn,List.singleton_append] at h
+      have hh := ((occ_cons _ _ _).mp h).1
+      rw [word_zero] at hh
+      norm_num at hh
+    · simp only [typeI,if_neg hn] at h
+      change Occ (sentinel (typeI n)) 0 at h
+      obtain ⟨i,hi,ho⟩ := (ordinary_occurrence_iff _ _).mp h
+      have he : i = 0 := boundary_strict.injective (hi.symm.trans boundary_zero.symm)
+      exact ih (he ▸ ho)
+
 end D5.S1.Words.RichWordTypeIOccurrence

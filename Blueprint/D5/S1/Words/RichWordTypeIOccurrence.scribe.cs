@@ -30,7 +30,8 @@ internal sealed class RichWordTypeIOccurrenceDocument : IScribeDocumentDefinitio
                 + "make the pointwise definition total. Substituting arbitrary prefix "
                 + "windows gives the fixed-point block equation. Every image starts "
                 + "with zero and has no other zero, so the zeros are precisely the "
-                + "unique true boundaries, including B(0)=0."),
+                + "unique true boundaries, including B(0)=0. The displayed "
+                + "prefixImageLengthSum(i) denotes the sum of |phi(u(j))| over j<i."),
             Theorem("terminal_interval_cancellation", "terminal-interval-cancellation",
                 "Final-six deletion on actual return intervals", Cancellation(),
                 "For positive a<b with the actual predecessor letters at a and b in "
@@ -40,15 +41,29 @@ internal sealed class RichWordTypeIOccurrenceDocument : IScribeDocumentDefinitio
                 + "final 6 of phi(u[a,b)); it does not increase the length. The proof "
                 + "uses contiguous native factors and applies whether or not the "
                 + "occurrence windows at a and b overlap."),
+            Theorem("ordinary_occurrence_iff", "ordinary-occurrence",
+                "Bidirectional ordinary occurrence parsing", Ordinary(),
+                "For every native finite word s and every natural q, phi(s) followed "
+                + "by zero occurs at q exactly when q=B(i) for an occurrence of s at i. "
+                + "The three-letter prefix of phi(c)[0] is injective in c: it is "
+                + "[0,c+1,0] below 6 and [0,6,6] at 6. Reserving the final zero "
+                + "therefore disambiguates the images of both 5 and 6. Recursive "
+                + "decoding includes empty s and imposes no nonoverlap condition."),
+            Theorem("typeI_not_at_origin", "typei-origin",
+                "No Type-I occurrence at the origin", Origin(),
+                "An ordinary step desubstitutes an occurrence at zero to an "
+                + "occurrence at zero at the previous index. A terminal step "
+                + "starts with 6, whereas u(0)=0. Induction from W(0)=[6] "
+                + "excludes position zero at every index."),
             Paragraph(Text("These boundary and cancellation results do not establish "
                 + "the complete Type-I prerequisite. Still required are the all-index "
-                + "bidirectional occurrence correspondence, absence at the origin, "
+                + "bidirectional occurrence correspondence at terminal phases, "
                 + "exact extension sets with witnesses, the full Parikh recurrence, "
                 + "and both existence of a minimum actual consecutive return and the "
                 + "componentwise bound for every actual consecutive return. No "
                 + "ordinary exponent, richness or Type-II conclusion is asserted.")))));
 
-    private static Describe Theorem(string name, string id, string title,
+    private static DocumentBlock Theorem(string name, string id, string title,
         Formula statement, string exposition) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(F.Disp(statement)), AssessedProvenance.FromRepo(),
@@ -57,20 +72,39 @@ internal sealed class RichWordTypeIOccurrenceDocument : IScribeDocumentDefinitio
     private static Formula FixedPoint()
     {
         Formula k = F.Id("k"), i = F.Id("i"), n = F.Id("n"), q = F.Id("q");
-        Formula j = F.Id("j"), u = F.Id("u");
+        Formula u = C("word");
         Formula B(Formula x) => C("boundary", x);
         Formula P(Formula x) => C("image", C("phi"), x, F.D(0));
         Formula S(Formula x, Formula y) => C("subst", C("phi"), C("factor", u, x, y));
         return And(
             All("k", N(), Eq(C("factor", u, F.D(0), C("length", P(k))), P(k))),
             And(C("StrictMono", C("boundary")), And(Eq(B(F.D(0)), F.D(0)),
-            And(All("i", N(), Eq(B(i), C("sumRange",
-                C("imageLengths", u), i))),
+            And(All("i", N(), Eq(B(i), C("prefixImageLengthSum", i))),
             And(All("i", N(), All("n", N(),
                 Eq(C("factor", u, B(i), C("length", S(i,n))), S(i,n)))),
             All("q", N(), Iff(Eq(C("word", q), F.D(0)),
-                C("ExistsUniqueBoundary", q))))))));
+                UniqueBoundary(q))))))));
     }
+
+    private static Formula UniqueBoundary(Formula q)
+    {
+        Formula i = F.Id("i"), j = F.Id("j");
+        return new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("i"),
+            N(), And(Eq(q, C("boundary", i)),
+                All("j", N(), Imp(Eq(q, C("boundary", j)), Eq(j,i)))));
+    }
+
+    private static Formula Ordinary()
+    {
+        Formula s = F.Id("s"), q = F.Id("q"), i = F.Id("i");
+        return All("s", C("List", C("Fin", F.D(7))), All("q", N(),
+            Iff(C("Occ", C("sentinel", s), q),
+                new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create("i"),
+                    N(), And(Eq(q, C("boundary", i)), C("Occ", s, i))))));
+    }
+
+    private static Formula Origin() => All("n", N(),
+        Imp(C("Occ", C("typeI", F.Id("n")), F.D(0)), C("False")));
 
     private static Formula Cancellation()
     {
