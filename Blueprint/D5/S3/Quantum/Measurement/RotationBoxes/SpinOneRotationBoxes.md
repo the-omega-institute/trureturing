@@ -46,6 +46,10 @@ $$\forall (A : Type) , [\operatorname{Fintype}\left(A\right)] , 3 \le \operatorn
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/RotationBoxes/SpinOneRotationBoxes.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/spin-one-rotation-boxes` (proved) by `D5/S3/Quantum/Measurement/RotationBoxes/SpinOneRotationBoxes.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"spin-one-rotation-boxes","declaration_gid":"D5/S3/Quantum/Measurement/RotationBoxes/SpinOneRotationBoxes.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Albert Aloy; Thomas D. Galley; Caroline L. Jones; Stefan L. Ludescher; Markus P. Müller (2024). *Spin-Bounded Correlations — Rotation Boxes Within and Beyond Quantum Theory*. DOI: [10.1007/s00220-024-05123-2](https://doi.org/10.1007/s00220-024-05123-2). URL: <https://arxiv.org/abs/2312.09278v2>.
