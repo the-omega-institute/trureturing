@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/PowerSeries/BalaA337389Diagonal
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/PowerSeries/BalaA337389Diagonal
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []

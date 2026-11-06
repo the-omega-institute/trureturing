@@ -4,6 +4,7 @@ using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.PowerSeries;
 
+// generality: I
 internal sealed class BalaA337389DiagonalDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/PowerSeries/BalaA337389Diagonal.";
