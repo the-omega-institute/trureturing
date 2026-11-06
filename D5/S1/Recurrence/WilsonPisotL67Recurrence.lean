@@ -6,8 +6,6 @@
    utility: none
    digest: The native Pisot sequence L(6,7) satisfies Wilson's signed recurrence. -/
 
-import Mathlib.Data.Rat.Floor
-import Mathlib.Data.Nat.Init
 import Mathlib.Tactic
 
 /-! The elementary second-difference and determinant induction is the prior public
