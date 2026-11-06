@@ -693,6 +693,83 @@ private lemma finite_lower_bound {a b : ℝ} (ha : 10000 ≤ a) (hab : a ≤ b)
   simp only [div_eq_mul_inv] at hmono hsb ⊢
   linarith only [hmono, hsb]
 
+/-- The signed endpoint pays for a strict finite Mertens peak at the same B. -/
+theorem finite_mertens_peak_of_signed_endpoint
+    (hLay : ∀ t : ℝ, 2 ≤ t → Q t = Chebyshev.psi t / t -
+      (∑ n ∈ Finset.Ioc 0 ⌊t⌋₊, ArithmeticFunction.vonMangoldt n / (n : ℝ)) +
+        log t - 1 - eulerMascheroniConstant)
+    {A B : ℝ} (hA : 10000 ≤ A) (hAB : A ≤ B)
+    (htailLower : -(1 / (2 * sqrt A)) < Q B -
+      (∫ u in Ioi B, psiErrorKernel u * QuotientIntegralBudget.weightEnvelope u) /
+        QuotientIntegralBudget.weightEnvelope B)
+    (hpeak : sqrt A * (4 * (log A) ^ 2 / (1 + log A) + 9) < U A) :
+    ∃ t ∈ Icc A B,
+      let N := Nat.lcmUpto ⌊t⌋₊
+      5040 < N ∧ (N : ℝ) ≤ exp (B * log B) ∧
+        divisorRatio N > exp eulerMascheroniConstant * log (log N) := by
+  change -(1 / (2 * sqrt A)) < Q B - I B / r B at htailLower
+  have hA2 : 2 ≤ A := by linarith
+  have hA0 : 0 < A := by linarith
+  have hsA : 0 < sqrt A := sqrt_pos.2 hA0
+  have hledger (t : ℝ) (ht : 2 ≤ t) := complete_mertens_ledger hLay ht
+  have hex : ∃ t ∈ Icc A B, Mertens.E₃ t <
+      -4 / sqrt t - (Chebyshev.psi t - t) / (t * log t) := by
+    by_contra hnone
+    have hI : ∀ t ∈ Icc A B, -4 / sqrt t ≤ I t := by
+      intro t ht
+      have ht2 : 2 ≤ t := hA2.trans ht.1
+      have hE : -4 / sqrt t - (Chebyshev.psi t - t) / (t * log t) ≤ Mertens.E₃ t := by
+        apply not_lt.mp
+        intro h
+        exact hnone ⟨t, ht, h⟩
+      have hcmp := complete_mangoldt_le_neg_E3 ht2
+      rw [(hledger t ht2).2.2] at hcmp
+      linarith
+    have hAf := hledger A hA2
+    have hchange := finite_kernel_change hA2 hAB hAf.1 hAf.2.1
+    have hfinite := finite_lower_bound hA hAB hchange.1 hI
+    have hfirst := div_le_div_of_nonneg_right (hI A ⟨le_rfl, hAB⟩)
+      (r_pos (show 1 < A by linarith)).le
+    have hQlow : -(4 / r A + 17 / 2) / sqrt A < Q A := by
+      have heq : (-4 / sqrt A) / r A - 8 / sqrt A - 1 / (2 * sqrt A) =
+          -(4 / r A + 17 / 2) / sqrt A := by ring
+      rw [← heq]
+      have hchg := hchange.2
+      simp only [div_eq_mul_inv] at hfirst hfinite htailLower hchg ⊢
+      linarith only [hfirst, hfinite, htailLower, hchg]
+    have hU : U A = -A * Q A := by
+      unfold U
+      rw [hLay A hA2]
+      field_simp [hA0.ne']
+      ring
+    have hr : 4 / r A = 4 * (log A) ^ 2 / (1 + log A) := by
+      simp only [r, QuotientIntegralBudget.weightEnvelope, div_div_eq_mul_div]
+    have hpeak' : sqrt A * (4 / r A + 9) < -A * Q A := by
+      rw [hr, ← hU]
+      exact hpeak
+    have hp : 4 / r A + 9 < -sqrt A * Q A := by
+      have hmul : -A * Q A = sqrt A * (-sqrt A * Q A) := by
+        calc
+          -A * Q A = -(sqrt A * sqrt A) * Q A := by
+            rw [Real.mul_self_sqrt hA0.le]
+          _ = sqrt A * (-sqrt A * Q A) := by ring
+      have hh : sqrt A * (4 / r A + 9) < sqrt A * (-sqrt A * Q A) := by
+        exact hmul ▸ hpeak'
+      exact (mul_lt_mul_iff_right₀ hsA).mp hh
+    have hq := (div_lt_iff₀ hsA).mp hQlow
+    nlinarith
+  obtain ⟨t, ht, hE⟩ := hex
+  have ht10000 : 10000 ≤ t := hA.trans ht.1
+  have hresponse := LcmRobinResponse.common_robin_response ht10000 hE
+  have ht0 : 0 < t := by linarith
+  have hB0 : 0 ≤ B := (hA0.le.trans hAB)
+  have hlogt : 0 ≤ log t := log_nonneg (by linarith)
+  have hscale : t * log t ≤ B * log B :=
+    mul_le_mul ht.2 (log_le_log ht0 ht.2) hlogt hB0
+  refine ⟨t, ht, ?_⟩
+  dsimp only
+  exact ⟨hresponse.2.1, hresponse.2.2.2.trans (exp_le_exp.mpr hscale), hresponse.1⟩
+
 /-- The shared finite-window argument uses only a sufficiently small actual far tail. -/
 private theorem finite_mertens_peak
     (hLay : ∀ t : ℝ, 2 ≤ t → Q t = Chebyshev.psi t / t -
