@@ -34,7 +34,7 @@ def rejected : Realization signature :=
 private def zeroSemigroup : Contraction PUnit.{u+1} where
   operator _ := 1
   zero := rfl
-  add _ _ := by ext x; rfl
+  add _ _ := by ext x
   norm_le _ := ContinuousLinearMap.norm_id_le
   continuous _ := continuous_const
 
@@ -44,12 +44,12 @@ def arena : Arena where
   signature := signature
   Law R := ∀ {E : Type u} [NormedAddCommGroup E] [NormedSpace ℂ E],
     ∀ (S : Contraction E) (B : ℝ → E →L[ℂ] E),
-    ∀ {r T M C : ℝ} (hrT : r ≤ T)
-    (hB : ContinuousOn B (Set.Icc r T)) (hM : 0 ≤ M)
-    (hBM : ∀ s ∈ Set.Icc r T, ‖B s‖ ≤ M)
-    {v : ℝ → E} (hv : ContinuousOn v (Set.Icc r T))
-    (hvC : ∀ s ∈ Set.Icc r T, ‖v s‖ ≤ C)
-    (n : ℕ) {t : ℝ} (ht : t ∈ Set.Icc r T),
+    ∀ {r T M C : ℝ} (_hrT : r ≤ T)
+    (_hB : ContinuousOn B (Set.Icc r T)) (_hM : 0 ≤ M)
+    (_hBM : ∀ s ∈ Set.Icc r T, ‖B s‖ ≤ M)
+    {v : ℝ → E} (_hv : ContinuousOn v (Set.Icc r T))
+    (_hvC : ∀ s ∈ Set.Icc r T, ‖v s‖ ≤ C)
+    (n : ℕ) {t : ℝ} (_ht : t ∈ Set.Icc r T),
     R.readout () () ‖causalIterate S B r v n t‖ (C * ((M * (t - r)) ^ n / n !))
 
 private theorem actual_law : arena.{u}.Law actual := @causal_iterate_bound.{u}
@@ -120,11 +120,11 @@ namespace Evolution
 
 def arena : Arena where
   signature := signature
-  Law R := ∀ {E : Type u} [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E],
-    ∀ (S : Contraction E) (B : ℝ → E →L[ℂ] E),
-    ∀ {T M : ℝ} (hT : 0 ≤ T)
-    (hB : ContinuousOn B (Set.Icc 0 T)) (hM : 0 ≤ M)
-    (hBM : ∀ s ∈ Set.Icc 0 T, ‖B s‖ ≤ M),
+  Law R := ∀ {E : Type u} [NormedAddCommGroup E] [NormedSpace ℂ E],
+    ∀ (S : Contraction E) (B : ℝ → E →L[ℂ] E) [CompleteSpace E],
+    ∀ {T M : ℝ} (_hT : 0 ≤ T)
+    (_hB : ContinuousOn B (Set.Icc 0 T)) (_hM : 0 ≤ M)
+    (_hBM : ∀ s ∈ Set.Icc 0 T, ‖B s‖ ≤ M),
     (∀ n t r, (t, r) ∈ triangle T → ∀ x : E,
       R.readout () () ‖term S B n t r x‖ (M ^ n * (t - r) ^ n / n ! * ‖x‖)) ∧
     (∀ t r, (t, r) ∈ triangle T → ∀ x : E,

@@ -254,8 +254,10 @@ private theorem term_add {r T : ℝ} (hrT : r ≤ T)
         dsimp only
         rw [ih ⟨hs.1, hs.2.trans ht.2⟩, map_add, map_add]
       _ = _ := intervalIntegral.integral_add
-        ((causal_integrand_continuous S B hB (term_continuous S B hrT hB n x) ht).intervalIntegrable_of_Icc ht.1)
-        ((causal_integrand_continuous S B hB (term_continuous S B hrT hB n y) ht).intervalIntegrable_of_Icc ht.1)
+        ((causal_integrand_continuous S B hB (term_continuous S B hrT hB n x) ht)
+          |>.intervalIntegrable_of_Icc ht.1)
+        ((causal_integrand_continuous S B hB (term_continuous S B hrT hB n y) ht)
+          |>.intervalIntegrable_of_Icc ht.1)
 
 private theorem term_smul (n : ℕ) (t r : ℝ) (c : ℂ) (x : E) :
     term S B n t r (c • x) = c • term S B n t r x := by
@@ -354,7 +356,8 @@ private theorem sum_mild {r T M : ℝ} (hrT : r ≤ T)
     apply intervalIntegral.hasSum_integral_of_dominated_convergence
       (bound := fun n _ => M * ((M * (t - r)) ^ n / n ! * ‖x‖))
     · intro n
-      exact ((causal_integrand_continuous S B hB (term_continuous S B hrT hB n x) ht).intervalIntegrable_of_Icc ht.1).aestronglyMeasurable_restrict_uIoc
+      exact ((causal_integrand_continuous S B hB (term_continuous S B hrT hB n x) ht)
+          |>.intervalIntegrable_of_Icc ht.1).aestronglyMeasurable_restrict_uIoc
     · intro n
       exact Filter.Eventually.of_forall fun s hs => by
         rw [Set.uIoc_of_le ht.1] at hs
@@ -408,8 +411,10 @@ private theorem sum_unique {T M r : ℝ} (hT : 0 ≤ T)
   have hYc : ContinuousOn Y (Set.Icc r T) := hX.sub hSc
   have hYeq : ∀ t ∈ Set.Icc r T, Y t = causal S B r Y t := by
     intro t ht
-    have hiX := (causal_integrand_continuous S B hBr hX ht).intervalIntegrable_of_Icc (μ := volume) ht.1
-    have hiS := (causal_integrand_continuous S B hBr hSc ht).intervalIntegrable_of_Icc (μ := volume) ht.1
+    have hiX := (causal_integrand_continuous S B hBr hX ht)
+      |>.intervalIntegrable_of_Icc (μ := volume) ht.1
+    have hiS := (causal_integrand_continuous S B hBr hSc ht)
+      |>.intervalIntegrable_of_Icc (μ := volume) ht.1
     change X t - sum S B t r x = ∫ s in r..t, S.action (t - s) (B s (Y s))
     rw [hXeq t ht, sum_mild S B hr.2 hBr hM hBMr ht x]
     rw [show (∫ s in r..t, S.action (t - s) (B s (Y s))) =
