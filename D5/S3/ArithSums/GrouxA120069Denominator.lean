@@ -2,21 +2,14 @@
    generality: G
    mirror-B: D5/B/S3/ArithSums/GrouxA120069Denominator
    mirror-E: none(waiver:universal-rational-denominator-proof)
-   anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.Catalan.Basic,mathlib/module/Mathlib.Data.Rat.Lemmas]
+   anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.Catalan.Basic,mathlib/module/Mathlib.Algebra.BigOperators.Intervals]
    utility: none
    digest: The reduced denominator equality for the original Groux A120069 Catalan partial sums. -/
 
 
 
 import Mathlib.Combinatorics.Enumerative.Catalan.Basic
-import Mathlib.Data.Rat.Lemmas
-import Mathlib.Order.Interval.Finset.Nat
 import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Push
 /-!
 The finite-sum identity is the Catalan form of Mostert's identity in A119951.
 The only public result is the original positive-index A120069 conjecture.

@@ -11,8 +11,11 @@ internal sealed class GrouxA120069DenominatorDocument : IScribeDocumentDefinitio
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
+    private static Formula Rational(Formula value) =>
+        Seq(Open, value, Colon, Sp, Mathbb, Grp(V("Q")), Close);
     private static Formula Term(Formula k) => new Formula.Fraction(
-        Call("catalan", k), new Formula.Power(D(4), Subtract(k, D(1))));
+        Rational(Call("catalan", k)),
+        new Formula.Power(Rational(D(4)), Subtract(k, D(1))));
     private static Formula PartialSum(Formula n) => Seq(F.Sum, Underscore,
         Grp(Seq(D(1), Sp, Leq, Sp, V("k"), Sp, Leq, Sp, n)), Sp, Term(V("k")));
     private static Formula Positive(Formula n) =>
@@ -36,7 +39,7 @@ internal sealed class GrouxA120069DenominatorDocument : IScribeDocumentDefinitio
                 H("The complete positive-index equality"),
                 StatementSource.FromAuthor(Disp(All(Equal(
                     Call("den", PartialSum(V("n"))), Call("den", Term(V("n"))))))),
-                AssessedProvenance.FromLiterature(Source),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Every positive integer source index corresponds "
                     + "uniquely to a natural n with 0<n. There is no upper bound, "
                     + "recurrence-only replacement, convergence assumption or finite-case "
