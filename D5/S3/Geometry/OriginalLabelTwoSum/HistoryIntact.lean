@@ -19,7 +19,11 @@ excluded-residue normalizations have globally expanded pair lists. The
 public intactOutput below has the intended local predecessor telescope.
 No elaboration, kernel acceptance or physical-history induction is claimed.
 -/
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 noncomputable section
+local instance historyIntactPropDecidable : (p : Prop) → Decidable p := Classical.propDecidable
 open Set Finset
 namespace D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact
 open OriginalLabelTwoSum AllMWheel HistoryLeafCap HistoryIsolated HistoryCycles
@@ -42,9 +46,9 @@ private theorem parent_unit (m : Nat) (hm : 3 ≤ m) :
   have hL : rawLink ∅ (0 : Label m) (delta ∅) = ⊥ := by
     apply SetLike.ext
     intro s
-    simp [rawLink, delta]
+    simp [rawLink]
   simp only [parentOf, phi, hD, hL, (rawJoin_unit _).1, (rawJoin_void _).1,
-    sup_bot_eq, A1, sup_comm]
+    sup_bot_eq, bot_sup_eq, A1, sup_comm]
 
 private theorem parent_point (m : Nat) (hm : 3 ≤ m) :
     parentOf ∅ (ground m) (tailGround m hm) 0 (pathRoot m hm) (delta {0}) = delta (ground m) := by
@@ -55,7 +59,11 @@ private theorem parent_point (m : Nat) (hm : 3 ≤ m) :
   have hL : rawLink ∅ (0 : Label m) (delta {0}) = delta ∅ := by
     apply SetLike.ext
     intro s
-    simp [rawLink, delta, Finset.subset_empty]
+    change (s ⊆ ∅ ∧ insert 0 s ⊆ {0}) ↔ s ⊆ ∅
+    constructor
+    · exact And.left
+    · intro hs
+      exact ⟨hs, Finset.insert_subset (by simp) (hs.trans (Finset.empty_subset _))⟩
   have hZY : delta (tailGround m hm) ≤ delta (ground m) :=
     fun s hs => hs.trans Finset.sdiff_subset
   have hEY : pathRoot m hm ≤ delta (ground m) :=
@@ -85,11 +93,11 @@ def emptyOldIntactOutput (m : Nat) (hm : 3 ≤ m) (J : Family (Label m))
         constructor
         · intro hs
           have he : s = ∅ := by
-            apply Finset.eq_empty_iff_forall_not_mem.mpr
+            apply Finset.eq_empty_iff_forall_notMem.mpr
             intro v hv
             have hv0 : v = 0 := Finset.mem_singleton.mp (hJ s hs hv)
             exact hp (J.lower (Finset.singleton_subset_iff.mpr (hv0 ▸ hv)) hs)
-          simpa only [he] using (Finset.empty_subset (∅ : Finset (Label m)))
+          exact (mem_delta _ _).mpr (by rw [he]; exact Finset.empty_subset _)
         · intro hs
           exact J.lower hs h0
       exact changeOutput (.strong (cycleCertificate m hm))
@@ -156,7 +164,7 @@ private theorem join_sup (K L M : Family V) :
 private theorem facets_single (d : Finset V) : facets {d} = delta d := by
   apply SetLike.ext
   intro s
-  simp [facets, delta]
+  simp [facets]
 
 private theorem rename_support {U : Type*} [Fintype U] [DecidableEq U]
     (f : U ↪ V) {W : Finset U} {K : Family U} (h : Supported W K) :
@@ -229,13 +237,13 @@ private theorem parent_unit_general (X Y Z : Finset V) (e : V) (E : Family V) :
   have hd : restrict X (delta (∅ : Finset V)) = delta ∅ := by
     apply SetLike.ext
     intro s
-    simp [restrict, delta]
+    simp [restrict]
   have hl : rawLink X e (delta (∅ : Finset V)) = ⊥ := by
     apply SetLike.ext
     intro s
-    simp [rawLink, delta]
+    simp [rawLink]
   simp only [parentOf, phi, hd, hl, (rawJoin_unit _).1,
-    (rawJoin_void _).1, sup_bot_eq, sup_comm]
+    (rawJoin_void _).1, sup_bot_eq, bot_sup_eq, sup_comm]
 
 private def retargetFilling {W : Finset V} {A B : Family V}
     (g : Filling W A) (h : A = B) : Filling W B where
@@ -285,7 +293,11 @@ def emptyOldEmbeddedIntactOutput (m : Nat) (hm : 3 ≤ m) (e : V)
     have hl : rawLink (∅ : Finset V) e (delta {e}) = delta ∅ := by
       apply SetLike.ext
       intro s
-      simp [rawLink, delta, Finset.subset_empty]
+      change (s ⊆ ∅ ∧ insert e s ⊆ {e}) ↔ s ⊆ ∅
+      constructor
+      · exact And.left
+      · intro hs
+        exact ⟨hs, Finset.insert_subset (by simp) (hs.trans (Finset.empty_subset _))⟩
     have hZZ : delta Z ≤ delta Y := fun _ h => h.trans hZY
     simp only [parentOf, phi, hd, hl, (rawJoin_unit _).1,
       sup_eq_right.mpr hZZ, sup_eq_left.mpr hEY]
@@ -302,11 +314,11 @@ def emptyOldEmbeddedIntactOutput (m : Nat) (hm : 3 ≤ m) (e : V)
         constructor
         · intro hs
           have hs0 : s = ∅ := by
-            apply Finset.eq_empty_iff_forall_not_mem.mpr
+            apply Finset.eq_empty_iff_forall_notMem.mpr
             intro v hv
             have hve : v = e := Finset.mem_singleton.mp (hJ s hs hv)
             exact hp (J.lower (Finset.singleton_subset_iff.mpr (hve ▸ hv)) hs)
-          simpa only [hs0] using (Finset.empty_subset (∅ : Finset V))
+          exact (mem_delta _ _).mpr (by rw [hs0]; exact Finset.empty_subset _)
         · intro hs
           exact J.lower hs h0
       have hh : renameFamily f (A1 m hm) = E ⊔ delta Z := by
@@ -338,7 +350,7 @@ path cases expose the literal injective images of BOTH original native lists.
 theorem emptyOldEmbedded_lists (m : Nat) (hm : 3 ≤ m) (e : V) (J : Family V)
     (f : Label m ↪ V) (hf0 : f 0 = e) (hJ : Supported ({e} : Finset V) J) :
     let hn : ((ground m).image f).Nonempty :=
-      Finset.image_nonempty.mpr ⟨firstLabel m hm, by simp [ground]⟩
+      Finset.image_nonempty.mpr ⟨firstLabel m hm, by simp [ground, firstLabel, Fin.ext_iff]⟩
     (({e} : Finset V) ∈ J →
       mainPairsOf (emptyOldEmbeddedIntactOutput m hm e J f hf0 hJ) = [] ∧
       corePairsOf (emptyOldEmbeddedIntactOutput m hm e J f hf0 hJ) =
@@ -360,14 +372,14 @@ theorem emptyOldEmbedded_lists (m : Nat) (hm : 3 ≤ m) (e : V) (J : Family V)
   refine ⟨?_, ?_, ?_⟩
   · intro hp
     have hn : ((ground m).image f).Nonempty :=
-      Finset.image_nonempty.mpr ⟨firstLabel m hm, by simp [ground]⟩
+      Finset.image_nonempty.mpr ⟨firstLabel m hm, by simp [ground, firstLabel, Fin.ext_iff]⟩
     constructor
     · simp only [emptyOldEmbeddedIntactOutput, dif_pos hp, changeOutput_mainPairsOf,
         simplexOutput, dif_pos hn, mainPairsOf, coneCertificate, orderedPairs, orderedPair,
         Sequence.pairs_cast, Sequence.pairs, List.map_nil]
     · simp only [emptyOldEmbeddedIntactOutput, dif_pos hp, changeOutput_corePairsOf,
         simplexOutput, dif_pos hn, corePairsOf, coneCertificate]
-      simpa only [delta] using collapseCone_orderedPairs ((ground m).image f)
+      simpa only [mem_delta] using collapseCone_orderedPairs ((ground m).image f)
         (delta ((ground m).image f)) hn.choose (fun _ h => h)
         (Finset.singleton_subset_iff.mpr hn.choose_spec)
         (fun s hs => Finset.insert_subset hn.choose_spec hs)
@@ -494,7 +506,7 @@ theorem unitIntact_main_faces (m : Nat) (hm : 3 ≤ m) (hr : m % 3 ≠ 2)
       (fill0 m hm).main.pairs.map (fun P => (P.lower.image f, P.upper.image f)) := by
   simp only [unitIntactCertificate, orderedPairs, orderedPair,
     Sequence.pairs_cast, relativeProduct_pairs]
-  simp [fibres, delta, zeroFilling, retargetFilling, renameFilling,
+  simp [fibres, mem_delta, zeroFilling, retargetFilling, renameFilling,
     Sequence.pairs_cast, renameSequence_pairs]
 
 /-- UNIT separate execution starts at B alone and is the actual common cone. -/
@@ -743,12 +755,14 @@ private theorem renameOutput_lists {W : Finset V} {K : Family V}
   | unit h => subst K; exact ⟨rfl, rfl⟩
   | strong c =>
       constructor
-      · simpa only [HistoryMarkers.renameOutput, mainPairsOf, renameCertificate,
-          orderedPairs, orderedPair, Sequence.pairs_cast, List.map_map,
-          Function.comp_def] using renameSequence_pairs g c.main
-      · simpa only [HistoryMarkers.renameOutput, corePairsOf, renameCertificate,
-          orderedPairs, orderedPair, Sequence.pairs_cast, List.map_map,
-          Function.comp_def] using renameSequence_pairs g c.separate
+      · simp only [HistoryMarkers.renameOutput, mainPairsOf, renameCertificate,
+          orderedPairs, Sequence.pairs_cast, List.map_map, Function.comp_def]
+        unfold orderedPair
+        exact renameSequence_pairs g c.main
+      · simp only [HistoryMarkers.renameOutput, corePairsOf, renameCertificate,
+          orderedPairs, Sequence.pairs_cast, List.map_map, Function.comp_def]
+        unfold orderedPair
+        exact renameSequence_pairs g c.separate
 
 private theorem renameOutput_pointFaces {W : Finset V} {K : Family V}
     (g : V ↪ V) (o : Output W K) (d : Finset V) :
@@ -818,8 +832,8 @@ private def twoRecovered (m : Nat) (hm : 3 ≤ m) (h2 : m % 3 = 2)
   have hx : x ∈ X := hX.choose_spec
   have hc := twoPathCells m hm h2 f
   have hdY : d ⊆ Y := Finset.image_subset_image Finset.sdiff_subset
-  have hd : d.Nonempty := hc.nonempty d (by simp)
-  have hdE : d ∉ E := hc.absent d (by simp)
+  have hd : d.Nonempty := hc.nonempty d (by simp [d])
+  have hdE : d ∉ E := hc.absent d (by simp [d])
   have hdX : Disjoint d X := Finset.disjoint_left.mpr
     (fun v hv hx' => Finset.disjoint_left.mp hXY hx' (hdY hv))
   let R := HistoryIntactLayers.oneLayer (X ∪ Y) X d B (rawLink X e J) oL x
@@ -834,7 +848,7 @@ private def twoRecovered (m : Nat) (hm : 3 ≤ m) (h2 : m % 3 = 2)
         (by rw [← he]; simpa only [Finset.empty_union] using hds)) ht))
     (by
       intro z hz t ht
-      exact ⟨t, ht, z, hc.boundary d (by simp) z hz, Finset.union_comm _ _⟩)
+      exact ⟨t, ht, z, hc.boundary d (by simp [d]) z hz, Finset.union_comm _ _⟩)
   refine ⟨replaceCertificate R.1 (by rw [join_comm (delta d) (rawLink X e J)]), ?_, ?_⟩
   · have h := R.2.1
     have hf : HistoryIntactLayers.mainFaces d oL = layerMainFaces d oL := by
@@ -1035,7 +1049,7 @@ def zeroOneSequence (m : Nat) (hm : 3 ≤ m) (h0 : m % 3 = 0) (f : Label m ↪ V
       delta ((eta1 m hm).image f) ⊔ delta (zeroOtherTop m hm f) := by
     apply SetLike.ext
     intro s
-    simp [facets, delta]
+    simp [facets]
   exact g.main.cast rfl (by rw [hq, endpoint, hf, one_interface]; rfl)
 
 /-- The original zero filling with eta retained, at every residue-zero width
@@ -1180,7 +1194,7 @@ def zeroNormalization (m : Nat) (hm : 3 ≤ m) (h0 : m % 3 = 0)
         right
         intro w hw
         exact (Finset.mem_insert.mp (hRho ▸ htr hw)).resolve_left
-          (fun heq => hrZ (heq ▸ ht hw))
+          (fun (heq : w = r) => hrZ (heq ▸ ht hw))
       · have htd : t ⊆ d := (local_part hXY (ht.trans hZY) (hL u hu)
           (by rw [← he])).trans hv
         have hp : t ⊂ d := Finset.ssubset_iff_subset_ne.mpr
@@ -1198,6 +1212,7 @@ def zeroNormalization (m : Nat) (hm : 3 ≤ m) (h0 : m % 3 = 0)
         ((B ⊔ rawJoin D (E ⊓ delta Z)) ⊔ rawJoin D (delta eta)) ⊔
           (rawJoin L (delta rho) ⊔ rawJoin L (delta d)) := by ac_rfl
     rw [hs, sup_eq_left.mpr hDA, ← hRho]
+    dsimp only [D, L]
     ac_rfl
   refine ⟨(T1.1.cast (congrArg project hS1) (congrArg project hT1)).append
     (T0.1.cast rfl (congrArg project hT0)), ?_⟩
@@ -1228,7 +1243,7 @@ def zeroMarkerOutput (m : Nat) (hm : 3 ≤ m) (X : Finset V) (e : V) (J : Family
     Output (insert (f (firstLabel m hm)) X)
       (renameFamily (HistoryMarkers.markerMap e (f (firstLabel m hm))) J) := by
   have hr : f (firstLabel m hm) ∉ X := fun h => Finset.disjoint_left.mp hXY h
-    (Finset.mem_image.mpr ⟨firstLabel m hm, by simp [ground], rfl⟩)
+    (Finset.mem_image.mpr ⟨firstLabel m hm, by simp [ground, firstLabel, Fin.ext_iff], rfl⟩)
   exact changeOutput (HistoryMarkers.singleMarkerOutput X e _ J heX hr hJ oJ)
     (HistoryMarkers.single_marker_family X e _ J heX hr hJ).symm
 
@@ -1304,7 +1319,7 @@ def zeroRecovered (m : Nat) (hm : 3 ≤ m) (h0 : m % 3 = 0)
   let x := hX.choose
   have hx : x ∈ X := hX.choose_spec
   have hrY : r ∈ Y := Finset.mem_image.mpr
-    ⟨firstLabel m hm, by simp [ground], rfl⟩
+    ⟨firstLabel m hm, by simp [ground, firstLabel, Fin.ext_iff], rfl⟩
   have hrX : r ∉ X := fun h => Finset.disjoint_left.mp hXY h hrY
   have hrZ : r ∉ Z := by
     intro h
@@ -1336,6 +1351,7 @@ def zeroRecovered (m : Nat) (hm : 3 ≤ m) (h0 : m % 3 = 0)
   have hdX : Disjoint d X := Finset.disjoint_left.mpr
     (fun v hv hx' => Finset.disjoint_left.mp hXY hx' (hdY hv))
   have hM : Supported U M := by
+    change Supported U (renameFamily (HistoryMarkers.markerMap e r) J)
     rw [HistoryMarkers.single_marker_family X e r J heX hrX hJ]
     rintro s (hs | ⟨a, ha, t, ht, rfl⟩)
     · exact hs.2.trans (Finset.subset_insert _ _)
@@ -1365,14 +1381,14 @@ def zeroRecovered (m : Nat) (hm : 3 ≤ m) (h0 : m % 3 = 0)
     intro s hs hsub
     rcases hs with hs | ⟨a, ha, t, ht, rfl⟩
     · exact hEtaE (base_local (a := ∅) hXY (hEtaZ.trans hZY)
-        (by simpa only [Finset.empty_union] using B.lower hsub hs))
+        (by simpa only [Finset.empty_union, B] using B.lower hsub hs))
     · exact hEtaNotD ((local_part (a := ∅) hXY (hEtaZ.trans hZY) ht
         (by simpa only [Finset.empty_union, Finset.union_comm] using hsub)).trans ha)
   have hMissing' : ∀ s ∈ B ⊔ rawJoin (delta eta) (delta U), ¬ d ⊆ s := by
     intro s hs hsub
     rcases hs with hs | ⟨a, ha, t, ht, rfl⟩
     · exact hdE (base_local (a := ∅) hXY hdY
-        (by simpa only [Finset.empty_union] using B.lower hsub hs))
+        (by simpa only [Finset.empty_union, B] using B.lower hsub hs))
     · apply hDNotRho
       intro v hv
       rcases Finset.mem_union.mp (hsub hv) with hva | hvt
@@ -1392,9 +1408,9 @@ def zeroRecovered (m : Nat) (hm : 3 ≤ m) (h0 : m % 3 = 0)
         apply Finset.Subset.antisymm hz.subset
         intro v hv
         exact (Finset.mem_insert.mp (he.symm ▸ Finset.mem_insert_of_mem hv)).resolve_left
-          (fun hvr => hrEta (hvr ▸ hv))
+          (fun (hvr : v = r) => hrEta (hvr ▸ hv))
       have hLocal : insert r z ∈ E :=
-        (hCycle.boundary rho (by simp) _ hp).resolve_right
+        (hCycle.boundary rho (by simp [rho]) _ hp).resolve_right
           (fun hZ => hrZ (hZ (Finset.mem_insert_self _ _)))
       have htX : t.erase r ⊆ X := by
         intro v hv
