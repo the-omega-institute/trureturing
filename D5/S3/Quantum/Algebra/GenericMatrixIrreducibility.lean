@@ -352,10 +352,16 @@ theorem charpoly_generic_irreducible_fractionRing (n : ℕ) (hn : 0 < n) :
   let φ : Polynomial R →+* Polynomial R := Polynomial.eval₂RingHom ψ Polynomial.X
   have hφX : φ Polynomial.X = Polynomial.X := by simp [φ]
   have hφC (c : ℂ) : φ (Polynomial.C (MvPolynomial.C c)) =
-      Polynomial.C (MvPolynomial.C c) := by simp [φ, ψ]
+      Polynomial.C (MvPolynomial.C c) := by
+    change Polynomial.eval₂ ψ Polynomial.X (Polynomial.C (MvPolynomial.C c)) = _
+    rw [Polynomial.eval₂_C]
+    exact MvPolynomial.eval₂Hom_C _ _ c
   have hφV (ij : Fin n × Fin n) : φ (Polynomial.C (MvPolynomial.X ij)) =
       (if ij.1 = ij.2 then Polynomial.X else 0) -
-        Polynomial.C (MvPolynomial.X ij) := by simp [φ, ψ]
+        Polynomial.C (MvPolynomial.X ij) := by
+    change Polynomial.eval₂ ψ Polynomial.X (Polynomial.C (MvPolynomial.X ij)) = _
+    rw [Polynomial.eval₂_C]
+    exact MvPolynomial.eval₂Hom_X' _ _ ij
   have hinv : φ.comp φ = RingHom.id (Polynomial R) := by
     ext c ij
     · simp [RingHom.comp_apply, hφC]
