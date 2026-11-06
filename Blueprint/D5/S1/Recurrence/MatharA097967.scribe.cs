@@ -56,7 +56,13 @@ internal sealed class MatharA097967Document : IScribeDocumentDefinition
     private static Formula Par(Formula x) => Seq(Open, x, Close);
     private static Formula Cast(Formula x) => Par(Seq(x, Sp, Colon, Sp, Q()));
     private static Formula Named(string x) => Seq(Operatorname, Grp(F.Id(x)));
-    private static Formula Apply(string x, params Formula[] args) => new Formula.Apply(Named(x), [.. args]);
+    private static Formula Apply(string x, params Formula[] args)
+    {
+        var parts = x.Split('.');
+        Formula function = Named(parts[0]);
+        for (int i = 1; i < parts.Length; i++) function = Seq(function, Dot, Named(parts[i]));
+        return new Formula.Apply(function, [.. args]);
+    }
     private static Formula All(string x, Formula domain, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(x), domain, body);
     private static Formula SumOver(Formula k, Formula range, Formula body) =>
@@ -79,10 +85,10 @@ internal sealed class MatharA097967Document : IScribeDocumentDefinition
     private static Formula RecurrenceFormula()
     {
         Formula n = F.Id("n"), z = Cast(n);
-        Formula A(int j) => Apply("literal", j == 0 ? n : Subtract(n, D(j)));
+        Formula A(byte j) => Apply("literal", j == 0 ? n : Subtract(n, D(j)));
         var t1 = Multiply(Par(Subtract(Subtract(D(0), z), D(6))), A(1));
         var t2 = Multiply(Par(Add(Multiply(D(6), z), D(7))), A(2));
-        var t3 = Multiply(Par(Add(Multiply(Seq(Minus, D(13)), z), D(14))), A(3));
+        var t3 = Multiply(Par(Add(Multiply(Seq(Minus, D(1, 3)), z), D(1, 4))), A(3));
         var t4 = Multiply(Multiply(D(4), Par(Subtract(Multiply(D(3), z), D(8)))), A(4));
         var t5 = Multiply(Multiply(D(4), Par(Add(Subtract(D(0), z), D(4)))), A(5));
         var sum = Add(Add(Add(Add(Add(A(0), t1), t2), t3), t4), t5);
