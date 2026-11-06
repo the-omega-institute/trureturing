@@ -15,9 +15,9 @@ open scoped BigOperators
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-/-! These three registrations keep the literal source and every seed/state in
-scope.  The source-selection slots remain explicit evidence fields; they are
-filled only from a current native report, never from the prepared source. -/
+/-! Full-source bindings use the enrolled dependent-family realization. The
+digit law observes its literal trace; the spectrum and zero-count laws observe
+their complete cardinalities, including every residue seed in each filter. -/
 
 abbrev digitSignature : Signature where
   Params := ℕ
@@ -72,31 +72,32 @@ def digitRegistration : Registration digitArena
 
 abbrev spectrumSignature : Signature where
   Params := ℕ
-  State n := Fin (4 ^ n - 1)
+  State _ := ℕ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := ℤ
+  Output _ _ := ℕ
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def spectrumActual : Realization spectrumSignature :=
-  realize spectrumSignature (fun _ n t => evenTrace n t.val) (fun e => nomatch e)
+  realize spectrumSignature (fun _ n r =>
+    (Finset.univ.filter (fun t : Fin (4 ^ n - 1) =>
+      3 * evenTrace n t.val = modulus (2 * n) * ((r : ℤ) - (n : ℤ)))).card)
+    (fun e => nomatch e)
 
 def spectrumRejected : Realization spectrumSignature :=
-  realize spectrumSignature (fun _ _ _ => (0 : ℤ)) (fun e => nomatch e)
+  realize spectrumSignature (fun _ _ _ => 0) (fun e => nomatch e)
 
 abbrev spectrumArena : Arena where
   signature := spectrumSignature
   Law R := ∀ {n : ℕ} (hn : 0 < n) (r : ℕ),
-    (Finset.univ.filter (fun t : Fin (4 ^ n - 1) =>
-      3 * R.readout () n t = modulus (2 * n) * ((r : ℤ) - (n : ℤ)))).card +
-      (if r = n then 1 else 0) = Nat.choose (2 * n) r
+    R.readout () n r + (if r = n then 1 else 0) = Nat.choose (2 * n) r
 
 private theorem spectrumRejectedLaw : ¬ spectrumArena.Law spectrumRejected := by
   intro h
   have hh := h (n := 1) (by decide) 0
-  norm_num [spectrumRejected, realize, modulus] at hh
+  norm_num [spectrumRejected, realize] at hh
 
 def spectrumRegistration : Registration spectrumArena
     (type_of% (@_root_.D5.S3.Combinatorics.Circle.RadixFourDigitBalance.even_trace_seed_spectrum)) where
@@ -114,31 +115,39 @@ def spectrumRegistration : Registration spectrumArena
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨1, ⟨0, by decide⟩, ⟨1, by decide⟩, ?_⟩
-    change evenTrace 1 0 ≠ evenTrace 1 1
-    norm_num [evenTrace, actualSource, centered, modulus, evenLabel]
+    refine ⟨1, 0, 3, ?_⟩
+    have h0 := even_trace_seed_spectrum (n := 1) (by decide) 0
+    have h3 := even_trace_seed_spectrum (n := 1) (by decide) 3
+    norm_num only [Nat.reduceMul, Nat.choose_zero_right, Nat.choose_eq_zero_of_lt (by decide : 2 < 3),
+      show (0 : ℕ) ≠ 1 by decide, show (3 : ℕ) ≠ 1 by decide, if_false, add_zero] at h0 h3
+    change (Finset.univ.filter (fun t : Fin (4 ^ 1 - 1) =>
+      3 * evenTrace 1 t.val = modulus (2 * 1) * ((0 : ℤ) - (1 : ℤ)))).card ≠
+      (Finset.univ.filter (fun t : Fin (4 ^ 1 - 1) =>
+      3 * evenTrace 1 t.val = modulus (2 * 1) * ((3 : ℤ) - (1 : ℤ)))).card
+    omega
 
 abbrev zeroSignature : Signature where
-  Params := ℕ
-  State n := Fin (4 ^ n - 1)
+  Params := Unit
+  State _ := ℕ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := ℤ
+  Output _ _ := ℕ
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def zeroActual : Realization zeroSignature :=
-  realize zeroSignature (fun _ n t => evenTrace n t.val) (fun e => nomatch e)
+  realize zeroSignature (fun _ _ n =>
+    (Finset.univ.filter (fun t : Fin (4 ^ n - 1) => evenTrace n t.val = 0)).card)
+    (fun e => nomatch e)
 
 def zeroRejected : Realization zeroSignature :=
-  realize zeroSignature (fun _ _ _ => (1 : ℤ)) (fun e => nomatch e)
+  realize zeroSignature (fun _ _ _ => 0) (fun e => nomatch e)
 
 abbrev zeroArena : Arena where
   signature := zeroSignature
   Law R := ∀ {n : ℕ} (hn : 0 < n),
-    (Finset.univ.filter (fun t : Fin (4 ^ n - 1) =>
-      R.readout () n t = 0)).card + 1 = Nat.choose (2 * n) n
+    R.readout () () n + 1 = Nat.choose (2 * n) n
 
 private theorem zeroRejectedLaw : ¬ zeroArena.Law zeroRejected := by
   intro h
@@ -161,9 +170,13 @@ def zeroRegistration : Registration zeroArena
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨1, ⟨0, by decide⟩, ⟨1, by decide⟩, ?_⟩
-    change evenTrace 1 0 ≠ evenTrace 1 1
-    norm_num [evenTrace, actualSource, centered, modulus, evenLabel]
+    refine ⟨(), 1, 2, ?_⟩
+    have h1 := zero_even_trace_seed_count (n := 1) (by decide)
+    have h2 := zero_even_trace_seed_count (n := 2) (by decide)
+    norm_num only [Nat.reduceMul, Nat.choose_one_right, Nat.reduceChoose] at h1 h2
+    change (Finset.univ.filter (fun t : Fin (4 ^ 1 - 1) => evenTrace 1 t.val = 0)).card ≠
+      (Finset.univ.filter (fun t : Fin (4 ^ 2 - 1) => evenTrace 2 t.val = 0)).card
+    omega
 
 noncomputable def digitAudit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@_root_.D5.S3.Combinatorics.Circle.RadixFourDigitBalance.actual_even_digit_balance)
@@ -179,12 +192,22 @@ noncomputable def digitAudit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   realization := .source digitArena ⟨digitRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some digitActual
+  readout := some (realize digitSignature (fun _ n t => evenTrace n t)
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Circle.RadixFourDigitBalance
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -203,12 +226,24 @@ noncomputable def spectrumAudit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0
   realization := .source spectrumArena ⟨spectrumRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some spectrumActual
+  readout := some (realize spectrumSignature (fun _ n r =>
+    (Finset.univ.filter (fun t : Fin (4 ^ n - 1) =>
+      3 * evenTrace n t.val = modulus (2 * n) * ((r : ℤ) - (n : ℤ)))).card)
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Circle.RadixFourDigitBalance
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -227,12 +262,23 @@ noncomputable def zeroAudit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   realization := .source zeroArena ⟨zeroRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some zeroActual
+  readout := some (realize zeroSignature (fun _ _ n =>
+    (Finset.univ.filter (fun t : Fin (4 ^ n - 1) => evenTrace n t.val = 0)).card)
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Circle.RadixFourDigitBalance
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
