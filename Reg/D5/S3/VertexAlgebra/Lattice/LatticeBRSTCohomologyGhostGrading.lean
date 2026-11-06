@@ -177,9 +177,9 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def lhs (x : signature.Params) : signature.State x :=
-  classOf x.1.D x.1.H x.1.h26 x.1.hHG x.1.hGH
-    (cycleProject x.1.D x.1.H x.2.1 x.2.2.1)
+def lhs : (x : signature.Params) → signature.State x
+  | ⟨p, g, z, _⟩ => classOf p.D p.H p.h26 p.hHG p.hGH
+      (cycleProject p.D p.H g z)
 def actual : Realization signature := realize signature
   (fun _ x y => lhs x = y) (fun e => nomatch e)
 def rejected : Realization signature := realize signature
