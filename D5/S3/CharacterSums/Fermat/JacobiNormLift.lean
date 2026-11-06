@@ -74,9 +74,9 @@ theorem neg_jacobiSum_norm_lift
     (F := K) (F' := ℂ) hcardK hχφK' (AddChar.IsPrimitive.of_ne_one hψK)
   have hJ_k := jacobiSum_eq_gaussSum_mul_gaussSum_div_gaussSum
     (F := k) (F' := ℂ) hcardk hχφ (AddChar.IsPrimitive.of_ne_one hψ)
-  have hχ := negative_gauss_norm_lift χ ψ hψ
-  have hφ := negative_gauss_norm_lift φ ψ hψ
-  have hprodLift := negative_gauss_norm_lift (χ * φ) ψ hψ
+  have hχ := negative_gauss_norm_lift (k := k) (K := K) χ ψ hψ
+  have hφ := negative_gauss_norm_lift (k := k) (K := K) φ ψ hψ
+  have hprodLift := negative_gauss_norm_lift (k := k) (K := K) (χ * φ) ψ hψ
   have hJ_K_neg :
       -jacobiSum χK φK =
         (-gaussSum χK ψK) * (-gaussSum φK ψK) /
