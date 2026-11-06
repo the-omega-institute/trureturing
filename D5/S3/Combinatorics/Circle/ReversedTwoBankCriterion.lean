@@ -1,4 +1,8 @@
-import Mathlib
+import Mathlib.Algebra.Order.Ring.Int
+import Mathlib.Algebra.Order.GroupWithZero.Basic
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Ring
+import Lean.Elab.Tactic.Omega
 
 /-!
 Source-only candidate: UNCOMPILED. No elaboration, kernel, axiom-closure,
