@@ -4,6 +4,8 @@ import D5.S3.Arith.Congruence.PowerPlusOneDivisibility
 import D5.S3.Combinatorics.Circle.HighPhaseTwoNegativeClassification
 import D5.S3.Combinatorics.Circle.ReversedHighPhaseTwoNegativeClassification
 
+/-! Complete cyclic two-bit physical classification, retaining all physical labels and literal cuts. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -109,7 +111,7 @@ theorem actualSource_full_cyclic_two_bit_physical_joint_iff (a b h : ℕ)
                 (2 * (2 ^ (a + b - 1) + 2 ^ (a - 1)))
                 (earWord (a + b) sigma cut)) ↔
               (b = a + 1 ∨ 2 * a < b) := by
-          simpa only [Nat.add_comm b a] using hreverse
+          exact (Nat.add_comm b a) ▸ hreverse
         have hane : a ≠ 0 := by omega
         simpa [hane, hab_eq] using hreverse'
     · rcases lt_or_gt_of_ne h_at with hlt | hgt
@@ -135,7 +137,7 @@ theorem actualSource_full_cyclic_two_bit_physical_joint_iff (a b h : ℕ)
                 ((finRotate (b + a) : Equiv.Perm (Fin (b + a))) ^
                   (a - 2 - (h - 1))),
               cut, hcut, hlowj.1, hlowj.2⟩
-          simpa only [Nat.add_comm b a] using hlowcertBA
+          exact (Nat.add_comm b a) ▸ hlowcertBA
       · have hpos : 0 < h := by omega
         have hj : h - a - 1 ≤ b - 2 := by omega
         have hlow :=
