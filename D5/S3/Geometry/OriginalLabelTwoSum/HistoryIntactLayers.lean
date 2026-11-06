@@ -12,7 +12,11 @@ import D5.S3.Geometry.OriginalLabelTwoSum.Compiler
 factor outputs. The fixed base is NOT assumed to collapse. A final common
 cone is used only after both relative core strips have actually ended.
 -/
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 noncomputable section
+local instance : (p : Prop) → Decidable p := Classical.propDecidable
 open Set Finset
 namespace D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntactLayers
 open OriginalLabelTwoSum HistoryLeafCap
@@ -110,24 +114,24 @@ private def strongRelative (U d : Finset V) (B M : Family V)
     · rintro ((hs | ⟨a, ha, t, ht, rfl⟩) | ⟨q, hq, hs⟩)
       · exact Or.inl hs
       · exact Or.inr ⟨a, ha, t, Or.inl ht, rfl⟩
-      · obtain ⟨q, hq, rfl⟩ := Finset.mem_image.mp hq
+      · obtain ⟨q, hqSource, rfl⟩ := Finset.mem_image.mp hq
         exact Or.inr ⟨s ∩ d, Finset.inter_subset_right, s ∩ q,
-          Or.inr ⟨q, hq, Finset.inter_subset_right⟩, split_union hs⟩
+          Or.inr ⟨q, hqSource, Finset.inter_subset_right⟩, split_union hs⟩
   have hCells : CriticalData C Q := by
     constructor
     · intro q hq
-      obtain ⟨q, hq, rfl⟩ := Finset.mem_image.mp hq
+      obtain ⟨q, hqSource, rfl⟩ := Finset.mem_image.mp hq
       exact hd.mono Finset.subset_union_left
     · intro q hq hC
-      obtain ⟨q, hq, rfl⟩ := Finset.mem_image.mp hq
+      obtain ⟨q, hqSource, rfl⟩ := Finset.mem_image.mp hq
       rcases hC with hBq | ⟨a, ha, t, ht, he⟩
       · exact hmissing _ hBq Finset.subset_union_left
       · have hqt : q ⊆ t := right_part hdu ha (c.critical_supported q hq)
           (by rw [← he]; exact Finset.subset_union_right)
         exact c.cells.absent q hq (c.core.lower hqt ht)
     · intro q hq s hs
-      obtain ⟨q, hq, rfl⟩ := Finset.mem_image.mp hq
-      have hqU := c.critical_supported q hq
+      obtain ⟨q, hqSource, rfl⟩ := Finset.mem_image.mp hq
+      have hqU := c.critical_supported q hqSource
       have hsDU := hs.subset.trans (Finset.union_subset_union le_rfl hqU)
       have hsplit := split_union hsDU
       by_cases hdS : d ⊆ s
@@ -153,10 +157,10 @@ private def strongRelative (U d : Finset V) (B M : Family V)
         rw [hsplit]
         exact hboundary (s ∩ d) hproper (s ∩ U) Finset.inter_subset_right
     · intro q hq t ht hqt
-      obtain ⟨q, hq, rfl⟩ := Finset.mem_image.mp hq
-      obtain ⟨t, ht, rfl⟩ := Finset.mem_image.mp ht
-      exact congrArg (fun s => d ∪ s) (c.cells.antichain q hq t ht
-        (right_part hdu le_rfl (c.critical_supported q hq)
+      obtain ⟨q, hqSource, rfl⟩ := Finset.mem_image.mp hq
+      obtain ⟨t, htSource, rfl⟩ := Finset.mem_image.mp ht
+      exact congrArg (fun s => d ∪ s) (c.cells.antichain q hqSource t htSource
+        (right_part hdu le_rfl (c.critical_supported q hqSource)
           (Finset.subset_union_right.trans hqt)))
   let T := liftFibre c.core (delta {c.vertex}) B d U hC0 (by simp) c.separate hdu
     c.core_supported (fun z hz t ht => hboundary z hz t (c.core_supported t ht))
@@ -192,7 +196,8 @@ private def strongRelative (U d : Finset V) (B M : Family V)
           exact Finset.subset_union_left⟩
         exact hboundary a hproper t (ht.trans (Finset.singleton_subset_iff.mpr hpU))
     · intro hs
-      exact ⟨Or.inl hs, by intro a ha h;
+      exact ⟨Or.inl hs, by
+        intro a ha h
         have he : a = d := Finset.mem_singleton.mp ha
         subst a
         exact hmissing s hs h⟩
@@ -229,6 +234,7 @@ def relativeLayer (U d : Finset V) (B M : Family V) (o : Output U M)
   cases o with
   | void h =>
       subst M
+      change RelativeLayer B (rawJoin (delta d) ⊥) ⊥ ∅ [] []
       have hR : B ⊔ rawJoin (delta d) (⊥ : Family V) = B := by
         rw [(rawJoin_void _).2, sup_bot_eq]
       have hE : endpoint (B ⊔ (⊥ : Family V)) ∅ = B := by
@@ -246,23 +252,35 @@ def relativeLayer (U d : Finset V) (B M : Family V) (o : Output U M)
           Sequence.pairs, stripFaces] }
   | unit h =>
       subst M
+      change RelativeLayer B (rawJoin (delta d) (delta ∅)) ⊥ {d} [] []
       have hR : B ⊔ rawJoin (delta d) (delta (∅ : Finset V)) =
           endpoint (B ⊔ ⊥) {d} := by
         rw [(rawJoin_unit _).2]
         apply SetLike.ext
         intro s
-        simp [endpoint, facets, delta]
+        simp [endpoint, facets, delta, LowerSet.mem_mk, Set.mem_setOf_eq]
       exact {
         cells := {
-          nonempty := by intro s hs; have he := Finset.mem_singleton.mp hs
-                         subst s; exact hd
-          absent := by intro s hs hB; have he := Finset.mem_singleton.mp hs
-                       subst s; exact hmissing d (by simpa using hB) le_rfl
-          boundary := by intro s hs t ht; have he := Finset.mem_singleton.mp hs
-                         subst s; exact Or.inl (by simpa using
-                           hboundary t ht ∅ (Finset.empty_subset U))
-          antichain := by intro s hs t ht _; exact
-            (Finset.mem_singleton.mp hs).trans (Finset.mem_singleton.mp ht).symm }
+          nonempty := by
+            intro s hs
+            have he := Finset.mem_singleton.mp hs
+            subst s
+            exact hd
+          absent := by
+            intro s hs hB
+            have he := Finset.mem_singleton.mp hs
+            subst s
+            exact hmissing d (by simpa only [sup_bot_eq] using hB) le_rfl
+          boundary := by
+            intro s hs t ht
+            have he := Finset.mem_singleton.mp hs
+            subst s
+            exact Or.inl (by simpa only [Finset.union_empty] using
+              hboundary t ht ∅ (Finset.empty_subset U))
+          antichain := by
+            intro s hs t ht _
+            exact (Finset.mem_singleton.mp hs).trans (Finset.mem_singleton.mp ht).symm }
+
         main := (Sequence.refl _).cast rfl (congrArg project hR)
         separate := (Sequence.refl (project B)).cast (by rw [sup_bot_eq]) rfl
         main_faces := by simp [orderedPairs, orderedPair, Sequence.pairs_cast,
@@ -289,10 +307,10 @@ theorem layer_bound (U d : Finset V) (M : Family V) (o : Output U M) :
   | strong c =>
       rintro s (⟨a, ha, t, ht, rfl⟩ | ⟨q, hq, hsq⟩)
       · exact ⟨a, ha, t, c.core_supported t ht, rfl⟩
-      · obtain ⟨q, hq, rfl⟩ := Finset.mem_image.mp hq
+      · obtain ⟨q, hqSource, rfl⟩ := Finset.mem_image.mp hq
         exact ⟨s ∩ d, Finset.inter_subset_right, s ∩ U, Finset.inter_subset_right,
           split_union (hsq.trans (Finset.union_subset_union le_rfl
-            (c.critical_supported q hq)))⟩
+            (c.critical_supported q hqSource)))⟩
 
 private theorem facets_union (Q R : Finset (Finset V)) :
     facets (Q ∪ R) = facets Q ⊔ facets R := by
@@ -417,7 +435,10 @@ def twoLayers (W : Finset V) (B : Family V) (x : V)
     (miss' le_sup_left) (bd' le_rfl)
   have hSC : (B ⊔ A') ⊔ A = C := by dsimp [C]; ac_rfl
   have hCells : CriticalData C (Q ∪ Q') := by
-    have hc : CriticalData C Q := by simpa only [hSC] using T.cells
+    have hc : CriticalData C Q := by
+      have hh : CriticalData ((B ⊔ A') ⊔ A) Q := T.cells
+      rw [hSC] at hh
+      exact hh
     have hc' : CriticalData C Q' := T'.cells
     constructor
     · intro q hq

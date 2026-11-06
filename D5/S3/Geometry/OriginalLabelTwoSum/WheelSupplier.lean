@@ -15,6 +15,9 @@ formula, for ANY retained interface, including the current core vertex. The
 general graph/path binding is NOT supplied by this algebraic theorem. f(0)=e is
 only an ambient label: 0 is outside the right ground and e is outside the parent
 ground. It is never a retained fake tree coordinate. -/
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 noncomputable section
 open Set Finset
 namespace D5.S3.Geometry.OriginalLabelTwoSum.WheelSupplier
@@ -94,7 +97,8 @@ theorem oneStep_critical {X : Finset V} {e : V} {K : Family V}
     (oneStep c f hf0 heX hXY).critical =
       c.critical.image (wheelCell e (f 1) (f 3) (f 4)) := by
   unfold oneStep
-  rw [compileParent_critical]
+  dsimp only
+  erw [compileParent_critical]
   change parentCritical e c.critical
     (Wheel.fill0.critical.image (fun t => t.image f))
     (Wheel.fill1.critical.image (fun t => t.image f)) = _
@@ -227,7 +231,7 @@ theorem oneStep_main_orderedPairs {X : Finset V} {e : V} {K : Family V}
   have h := compileParent_consumed_expansion c g0 g1 heX heY hXY hr hrne
     (image_interfaces f).1 (image_supported f) (Or.inl ⟨G⟩)
   simpa only [oneStep, oneStepMainSchedule, oneStepMainFrom,
-    orderedPairs, flatMap_faces] using h.1
+    g0, g1, orderedPairs, List.flatMap_map] using h.1
 
  theorem oneStep_separate_orderedPairs {X : Finset V} {e : V} {K : Family V}
     (c : Certificate (insert e X) K) (f : Wheel.Label ↪ V)
@@ -248,7 +252,7 @@ theorem oneStep_main_orderedPairs {X : Finset V} {e : V} {K : Family V}
   have h := compileParent_consumed_expansion c g0 g1 heX heY hXY hr hrne
     (image_interfaces f).1 (image_supported f) (Or.inl ⟨G⟩)
   simpa only [oneStep, oneStepSeparateSchedule, oneStepSeparateFrom,
-    orderedPairs, flatMap_faces, finishPairSchedule_faces] using h.2
+    g0, g1, orderedPairs, List.flatMap_map, finishPairSchedule_faces] using h.2
 
 /-- The exact terminal choice used by the independent row vertex recursion. -/
 theorem oneStep_vertex {X : Finset V} {e : V} {K : Family V}
@@ -258,6 +262,7 @@ theorem oneStep_vertex {X : Finset V} {e : V} {K : Family V}
       finishVertex X (Wheel.R.image f) e c.vertex
         (Finset.image_nonempty.mpr (by decide : Wheel.R.Nonempty)) := by
   unfold oneStep
-  rw [compileParent_vertex]
+  dsimp only
+  erw [compileParent_vertex]
 
 end D5.S3.Geometry.OriginalLabelTwoSum.WheelSupplier
