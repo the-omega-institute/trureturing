@@ -1,0 +1,26 @@
+**Definition 38.2 (exact visible average and a scalar common center).**
+In each family let $W_\kappa$ denote its original multiplier in (35.1),
+and define its average over the two visible phases by
+
+$$
+U_\kappa(k,D)=\frac1{(2\pi)^2}
+       \int_{\mathbb T^2}W_\kappa(k,\theta,v,D)\,d\theta\,dv.
+\tag{38.5}
+$$
+
+This is an auxiliary analytic average of the actual field; it changes
+neither the specified physical source nor the full operator being
+studied. On $L^2(I,dk)$ put
+
+$$
+H_\kappa^{\rm ht}=-\varepsilon^2\partial_k^2-gU_\kappa(k,0),
+\qquad Q(H_\kappa^{\rm ht})=H_0^1(I),
+\tag{38.6}
+$$
+
+and let $\xi_\kappa$ and $v_\kappa>0$ be its first eigenvalue and
+normalized ground. This one-dimensional center is computable without
+any full attractive eigenvalue. It will cancel from centered spacings;
+no estimate of $\xi_\kappa-e(c_\sigma)$ at order $h_{\sigma,\kappa}$
+is assumed.
+

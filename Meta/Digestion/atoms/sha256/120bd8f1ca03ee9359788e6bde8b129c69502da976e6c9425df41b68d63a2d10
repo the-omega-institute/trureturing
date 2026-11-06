@@ -1,0 +1,50 @@
+**Corollary 43.1 (what the quantitative reduction preserves).**
+For either critical family and every fixed $N$, subtracting the actual
+full ground energy and dividing by the explicit native scale gives
+
+$$
+\frac{\Lambda_{\sigma,N}-\Lambda_{\sigma,1}}
+                         {h_{\sigma,\kappa}}
+ \longrightarrow2(N-1)\omega_\sigma.
+\tag{43.1}
+$$
+
+The corresponding rescaled actual ground law is (42.2). These statements
+provide a centered fixed-index oscillator description retaining the
+hidden fluctuation. They do not identify the complete theory with its
+actual native $\kappa=0$ three-coordinate leaf or with its complete
+$D$-independent restriction, even at $b_*$ of (34.2).
+
+Proof. Equations (41.2) and (42.2) prove the quantitative assertions.
+For the actual zero leaf and complete sector, reuse the complete
+ordered spectra and strictly positive gaps (36.7)--(36.8). Their
+unscaled first spacings tend respectively to
+$\Gamma(0)$ in the raw regime and to
+$\Gamma(gc_0)$ and $\Gamma(gc_0/(2\pi))$ in the unit regime.
+Every one is positive, whereas the full spacings in (41.2) have
+positive finite limits only after division by a scale tending to
+zero. Thus even subtracting the respective actual ground energies
+cannot match their fixed low spectra. At $b_*$ the equality of
+unscaled ground energies and embedded probabilities in (37.1)
+persists, but the hidden oscillator and its collapsing original-clock
+gap persist as well. Away from $b_*$ the original ground comparisons
+of Theorem 34.1 already distinguish the actual leaf.
+
+The complete restriction is exactly the closed-form restriction in
+(36.6), under $Jh=(2\pi)^{-1/2}h$. It therefore retains coupling
+$g/(2\pi)$ against the raw $D$-integrated field, with both height
+faces and the original clock. It is distinct from the visible-zero
+block (40.1), which retains the entire hidden circle and its
+fluctuations. A normalized $D$-independent amplitude has uniform
+hidden probability $dD/(2\pi)$, in contrast to (42.1)--(42.3).
+No invariance of that restricted subspace under the original
+attractive operator is used or concluded.
+
+The actual zero leaf instead has raw measure $d\nu_B$, unit pole
+and $D=0$ on its native histories. Embedding its probabilities at
+$D=0$ is not a Hilbert-space embedding into the original raw
+$L^2(d\mu)$ space. The full amplitudes still lose unscaled strong
+compactness as in Theorem 33.2; the strong statement (42.8) uses
+an explicitly changing hidden coordinate and its Jacobian.
+This proves the asserted limits of replacement. $\square$
+
