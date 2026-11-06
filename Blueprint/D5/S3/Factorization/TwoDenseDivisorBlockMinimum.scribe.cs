@@ -87,7 +87,7 @@ internal sealed class TwoDenseDivisorBlockMinimumDocument : IScribeDocumentDefin
     }
     private static Formula DenseRelation(bool boolean = false)
     {
-        var inequality = Seq(F.Id("b"), Sp, Le, Sp, D(2), Cdot, F.Id("a"));
+        var inequality = Seq(F.Id("b"), Sp, Le, Sp, D(2), Cdot, Sp, F.Id("a"));
         return Seq(Open, F.Id("a"), Comma, F.Id("b"), Sp, Mapsto, Sp,
             boolean ? Call("decide", inequality) : inequality, Close);
     }
@@ -95,7 +95,7 @@ internal sealed class TwoDenseDivisorBlockMinimumDocument : IScribeDocumentDefin
     {
         var u = F.Id("u");
         var v = F.Id("v");
-        var uv = Seq(u, Cdot, v);
+        var uv = Seq(u, Cdot, Sp, v);
         var positive = Seq(D(0), Lt, u, Sp, Land, Sp, D(0), Lt, v);
         var dense = Call("IsChain", Call("map", Named("fst"),
             Call("divisorsAntidiagonalList", u)), DenseRelation());
@@ -105,7 +105,7 @@ internal sealed class TwoDenseDivisorBlockMinimumDocument : IScribeDocumentDefin
             var p = F.Id("p");
             premise = Seq(premise, Sp, Land, Sp, Open, Forall, Sp, p, Comma, Sp,
                 Call("Prime", p), Sp, Land, Sp, Call("dvd", p, v), Sp, Implies, Sp,
-                D(2), Cdot, u, Sp, Lt, Sp, p, Close);
+                D(2), Cdot, Sp, u, Sp, Lt, Sp, p, Close);
         }
         var lower = first ? Call("headD", Call("row", uv), D(0))
             : Call("card", Call("divisors", u));
