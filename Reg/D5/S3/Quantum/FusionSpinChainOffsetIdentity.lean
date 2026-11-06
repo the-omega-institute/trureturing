@@ -87,7 +87,17 @@ noncomputable def audit :
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.FusionSpinChainOffsetIdentity
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
