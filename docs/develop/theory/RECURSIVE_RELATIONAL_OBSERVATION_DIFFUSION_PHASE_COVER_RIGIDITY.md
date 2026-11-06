@@ -3219,11 +3219,22 @@ $$
 
 This follows by adding and subtracting $W/\|w_*\|_2$ and the reverse
 triangle inequality. For requested $h$ error $\varepsilon$, take
-$E_w\le\min(1,\varepsilon)\nu/8$ and approximate the scalar
-normalization with error below $\varepsilon/4$. Norms of finite box
-functions are computable, and their denominator is now bounded away
-from zero. Rational rounding of the scalar gives a finite box name of
-the normalized vector. Uniqueness and the inherited coefficient-positive
+$E_w\le\min(1,\varepsilon)\nu/8$. From the finite norm enclosures
+of Definition 11.1 compute a rational
+$Q_W\ge\max(1,\|W\|_2)$. Choose a positive rational
+$\theta<\varepsilon/(4Q_W)$ and a rational $q$ satisfying
+$|q-1/\|W\|_2|<\theta$. Norms of finite box functions are
+computable, and $\|W\|_2\ge\nu-E_w\ge7\nu/8>0$, so this
+reciprocal approximation terminates. Its vector-norm rounding error is
+
+$$
+\left\|qW-\frac W{\|W\|_2}\right\|_2
+\le\theta\|W\|_2<\varepsilon/4.
+$$
+
+Together with (11.28), whose bound is at most $\varepsilon/4$,
+this gives a finite rational box name $qW$ with error below
+$\varepsilon$ from the normalized vector. Uniqueness and the inherited coefficient-positive
 choice identify it with the original $h$.
 
 With $v=\gamma_l$, the **same** boundary pairing gives
