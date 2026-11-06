@@ -2517,3 +2517,501 @@ above keep the following hypotheses and conclusion domains.
   is unchanged by this scoped acquired-incidence bridge.
 
 ## 追加锚（本行以下为增补区）
+
+## 20. Positive puncture profiles and full labelled recovery
+
+**Definition 20.1 (proper indexed evidence).** Retain (PCR.1), the full
+ambient alphabets, every full injection and the original finite prepared
+array. Write $Q_d=\{0,1\}^d$, and let $x^h$ toggle coordinate $h$ of a
+word. The open cube neighbourhood is
+$\Gamma_d(S)=\{x^h:x\in S,\ 1\le h\le d\}$. It need not contain $S$.
+For an attained indexed cache $K$, let $B_j(K)$ be its original
+fifteen-bit coordinate rectangle, with repeated reads joined at that
+same index. Its compatible generators are
+
+$$
+\mathcal V_\theta(K)=\{g\in\mathcal G_\theta:
+       \mathcal E_g\cap B_j(K)\ne\varnothing\text{ for every }j\le N\}.
+\tag{PCR.2001}
+$$
+
+A slot is proper when its acquired mask has fewer than fifteen
+coordinates. Inference of its value does not enlarge that acquired mask.
+A record with exactly fourteen acquired coordinates and omitted left
+coordinate $h\le7$ gives only the positive clause
+$\{(x,y),(x^h,y)\}$; its right word $y$ is fully read. An omitted right
+coordinate gives $\{(x,y),(x,y^h)\}$ with fully read $x$. The two
+presentations of the same clause are identified for computation only.
+The indices, masks, values and full original records remain retained.
+No absent pair or absent clause is an observed negative. Different
+indices are never identified merely because their clauses overlap.
+
+For $S\subseteq Q_7$, define its full incident-edge profile by
+
+$$
+\mathsf H(S)=\{\{x,x^h\}:x\in S,\ 1\le h\le7\}.
+\tag{PCR.2002}
+$$
+
+This is a set of undirected cube edges, rather than a set of acquired
+complete left words.
+
+**Definition 20.2 (acquired profile and probe criterion).** The following
+finite procedure is defined on the retained cache, without a supplied
+relation, chart or hidden map.
+
+1. From exactly-fourteen-bit records omitting a left coordinate, form
+   the graph $H_y$ on all $128$ left words, one graph for each fully
+   read right word $y$ in such records. Insert the corresponding cube
+   edge for each record. Require exactly $243$ different such $y$.
+2. Let $U_y$ be the degree-seven vertices of $H_y$. Require
+   $|U_y|\in\{8,9\}$. Among its at most nine eight-element subsets,
+   require a unique $S_y$ satisfying $H_y=\mathsf H(S_y)$. Construct
+   $F=\{(x,y):x\in S_y\}$. Require exactly $72$ used left words,
+   every row of $F$ to have degree $27$, and
+   $|S_y\cap S_z|\le2$ whenever $S_y\ne S_z$.
+3. Group the $243$ right words into classes $C$ according to equality
+   of their $S_y$. For every incident pair $(x,C)$, meaning
+   $x\in S_y$ for $y\in C$, form
+
+$$
+T_{x,C}=\{y\in C:\text{for every }1\le h\le8,
+ \ \{(x,y),(x,y^h)\}\text{ occurs as an acquired right-omission clause}\}.
+\tag{PCR.2003}
+$$
+
+   Require $|\Gamma_8(T_{x,C})|>27$ for every such $(x,C)$.
+   Accept and return $F$ precisely when all these tests pass;
+   otherwise return failure.
+
+The equality in step 2 is a shape condition on the positive records
+actually supplied to this procedure. It does not require a compatible
+source to have no additional edges or clause profiles. Extra records
+can make this sufficient criterion reject; it is not the exact general
+criterion of UJB §16. It uses no enumeration of full injections.
+
+**Theorem 20.3 (soundness, full profiles and six probes).** On every
+attained cache accepted by Definition 20.2, every compatible generator
+has exactly the returned $1944$-edge labelled relation $F$. The same
+conclusion holds against either native branch with any full injections,
+including the union of both branches before a value of $\theta$ is fixed.
+For every eight-set $S\subseteq Q_7$, a graph $H_y=\mathsf H(S)$ passes
+the profile test and returns $S$. Six distinct right words in each
+$T_{x,C}$ suffice for its expansion test, regardless of their coding.
+
+Proof. Two distinct vertices of $Q_7$ have at most two common neighbours:
+a common neighbour entails distance two, and then the two changed
+coordinates give exactly two choices. Thus the union of their two
+seven-element neighbour sets has at least $7+7-2=12$ elements.
+
+First verify the profile test. Every member of $S$ has degree seven in
+$\mathsf H(S)$. A vertex $t\notin S$ has degree seven precisely when
+all seven neighbours of $t$ belong to $S$. There is at most one such
+$t$, since two would require at least twelve elements in an eight-set.
+Consequently $S\subseteq U_y$ and $|U_y|$ is eight or nine.
+
+Suppose two eight-sets $S,R$ have the same full profile. If $x\in S\setminus R$,
+all seven neighbours of $x$ must lie in $R$ to meet its incident edges.
+There cannot be two such $x$, by the twelve-neighbour bound. If the
+sets differ, write $S=W\cup\{x\}$ and $R=W\cup\{t\}$, with $|W|=7$.
+If $x,t$ are not adjacent, both neighbour sets must equal $W$, contrary
+to their common-neighbour bound. If they are adjacent, each of
+$\Gamma_7(\{x\})\setminus\{t\}$ and
+$\Gamma_7(\{t\})\setminus\{x\}$ must lie in $W$. These two six-sets
+are disjoint, since adjacent vertices have opposite parity and hence
+neighbour sets of opposite parity. Again seven places cannot hold
+twelve vertices. Thus $S=R$, proving the asserted exact-profile
+recognition with at most nine candidates.
+
+Now compare the constructed $F$ with any native relation $E'$ satisfying
+all the acquired positive clauses. Every constructed $y$ occurs in a
+left-omission clause, so $E'$ uses all $243$ of these right words and
+no others. For each used $x$ of $F$, the expansion condition supplies
+right-omission records with that fully read $x$. Hence $E'$ also uses
+all $72$ constructed left words and no others. The literal degrees
+of (PCR.1) give eight-element candidate columns $R_y$ and
+$27$-element candidate rows.
+
+If $x\in S_y\setminus R_y$, all seven left neighbours of $x$ must
+belong to $R_y$: each edge incident to $x$ is an acquired clause and
+must be met. Two lost vertices would put twelve neighbours in $R_y$.
+Therefore
+
+$$
+|S_y\setminus R_y|\le1,\qquad |S_y\cap R_y|\ge7.
+\tag{PCR.2004}
+$$
+
+UJB Theorem 15.2 and the proof of its Theorem 18.2 show that distinct
+native column neighbourhoods intersect in at most two left words,
+for both branches. If $S_y=S_z$, (PCR.2004) gives
+$|R_y\cap R_z|\ge6$, forcing $R_y=R_z$. Conversely if $R_y=R_z$,
+then $|S_y\cap S_z|\ge6$; step 2 forces $S_y=S_z$. Thus the entire
+labelled right twin partition agrees in $F$ and $E'$, in both directions.
+In particular its classes necessarily have the actual candidate
+capacities, nine in $G_0$ or twenty-seven in $G_1$. If $F$ is itself a
+transported native relation, those different class sizes exclude a
+substitution of the other branch.
+
+If an incidence $(x,y)$ of $F$ is absent from $E'$, its whole common
+right class $C$ is absent from the candidate row at $x$. For each
+$y\in T_{x,C}$, all eight acquired right-omission clauses then require
+all eight words $y^h$ to belong to that row. They require
+$\Gamma_8(T_{x,C})$ to fit inside a $27$-element set, contradicting
+step 3. No incidence is lost. Both $F$ and $E'$ have $243\cdot8=1944$
+edges, so $F=E'$. Attainment supplies at least one such native $E'$.
+This argument has used only positive clause constraints; equality of
+the acquired profile was never imposed on a competitor.
+
+For the coding-independent six-probe assertion, use Harper's classical
+vertex-isoperimetric theorem as an intermediate. Its precise
+closed-neighbourhood statement is Theorem 1 of Eero Räty,
+[*Uniqueness in Harper's vertex-isoperimetric theorem*,
+arXiv:1806.11061v2](https://arxiv.org/html/1806.11061v2#S1): an equally
+sized initial segment of the simplicial order minimizes
+$|A\cup\Gamma_d(A)|$. The cited order first sorts by cardinality and
+then lexicographically within a layer. The theorem is attributed there
+to L. H. Harper, *Optimal numberings and isoperimetric problems on
+graphs*, J. Combinatorial Theory 1, 385–393,
+[doi:10.1016/S0021-9800(66)80059-5](https://doi.org/10.1016/S0021-9800(66)80059-5).
+Only this minimization theorem is used, not a uniqueness or stability
+conclusion.
+
+For $Q_7$, the minima of the closed neighbourhood at sizes zero through
+six are
+
+$$
+(f(0),\ldots,f(6))=(0,8,14,19,23,26,28).
+\tag{PCR.2005}
+$$
+
+Indeed the nonempty initial segments here are the zero word followed
+by $k-1$ unit vectors. For $1\le k\le6$ their closed neighbourhood
+contains the zero word, all seven unit vectors and exactly the
+weight-two words containing at least one of those $k-1$ coordinates:
+$f(k)=8+\binom72-\binom{8-k}{2}$.
+
+Split a six-set in $Q_8$ by parity, with sizes $r,6-r$. On each parity
+class, deletion of the eighth coordinate is a bijection to $Q_7$.
+Under that bijection its open $Q_8$ neighbourhood corresponds to the
+closed $Q_7$ neighbourhood: toggling the eighth bit keeps the first
+seven coordinates, and toggling any other bit changes just that
+coordinate. The two resulting target parities are disjoint. Therefore
+
+$$
+|\Gamma_8(T)|\ge f(r)+f(6-r),\qquad
+(f(r)+f(6-r))_{r=0}^6=(28,34,37,38,37,34,28).
+\tag{PCR.2006}
+$$
+
+Thus six words always expand to at least $28>27$. Five unit vectors
+have only $1+\binom82-\binom32=26$ open neighbours, whereas six have
+$1+\binom82-\binom22=28$. Six is sharp for this cardinality-only
+auxiliary expansion step. This proves no minimum number of native
+probes, original slots or Reads. $\square$
+
+**Proposition 20.4 (a full profile need not have a unique positive cover).**
+Exact-profile recognition in Definition 20.2 cannot be replaced in its
+proof by an assertion that a column's acquired profile has only one
+positive eight-cover, even for a profile realizable at a native column.
+
+Proof. Identify cube words with their binary integers and put
+
+$$
+S=\{0,1,2,4,8,16,32,127\},\qquad
+R=\{1,2,4,8,16,32,64,127\}.
+\tag{PCR.2007}
+$$
+
+Every edge incident to $0$ is met by one of the seven unit words in
+$R$, and every other member of $S$ already belongs to $R$. Hence
+$\mathsf H(S)\subseteq\mathsf H(R)$. The containment is strict, since
+$\{64,65\}$ occurs only on the right. Thus $R$ meets every acquired
+clause of $\mathsf H(S)$ without having the same profile. The eight
+literal neighbours of any fixed right endpoint of either native
+branch may be assigned the labels in $S$ by a full left injection;
+all remaining literal endpoints can be assigned unused words.
+This realizes the local ambiguity without changing the source family.
+The common-twin and right-expansion steps of Theorem 20.3, rather
+than a negative interpretation of missing profile edges, exclude full
+native competitors. $\square$
+
+## 21. Uniform attainment on the original fixed array
+
+**Theorem 21.1 (no completed slot, every supported full injection).** Define
+
+$$
+\begin{aligned}
+a&=7\cdot1944=13608,\\
+b_0&=27\cdot8\cdot6\cdot8=10368,& q_0&=a+b_0=23976,\\
+b_1&=9\cdot8\cdot6\cdot8=3456,& q_1&=a+b_1=17064.
+\end{aligned}
+\tag{PCR.2101}
+$$
+
+For every $\theta\in[0,1]$, every branch $i$ supported at that value,
+every full injection pair on that branch and every originally fixed
+$N\ge q_i$, a public source-independent original-root Read schedule
+has an attained cache at its $q_i$-slot cut which passes Definition
+20.2 and forces the entire actual labelled relation. Every scanned
+slot has exactly fourteen acquired bits; every other original slot
+is unread. Conditional on that generator, a specified sufficient event
+has probability $1944^{-q_i}>0$.
+
+Proof. Fix the generator only to describe an event in its original iid
+preparation. Order its $1944$ actual edges. For each edge assign seven
+separate original indices, one per omitted left coordinate. These
+$a$ indices give exactly $H_y=\mathsf H(S_y)$ at every actual right
+word. Every actual column is an eight-set, so the profile tests pass.
+The support, degree and intersection conditions come directly from
+(PCR.1) and UJB Theorem 15.2, with no coding restriction.
+
+In each actual right twin class choose six of its distinct labels.
+This is a mathematical choice for the event, not observer knowledge.
+For each of the class's eight neighbouring left labels, and each of
+its six chosen right labels, assign eight further separate indices,
+one per omitted right coordinate. In $G_0$ there are twenty-seven
+classes of size nine, giving $b_0$ indices. In $G_1$ there are nine
+classes of size twenty-seven, giving $b_1$. Each $T_{x,C}$ contains
+these six words and passes (PCR.2006). Thus the criterion returns the
+entire actual relation against every full injection of both branches.
+
+The single public sequence of omitted coordinates is
+
+$$
+h(j)=
+\begin{cases}
+1+((j-1)\bmod7),&1\le j\le a,\\
+8+((j-a-1)\bmod8),&j>a.
+\end{cases}
+\tag{PCR.2102}
+$$
+
+At index $j$, read every other local coordinate with the canonical
+original-root operand from UJB §5.3. The order of those fourteen
+queries can be increasing coordinate order. The sequence uses only
+$j$ and public constants. It has no branch, hidden map, chosen-edge
+or sample-equality input. The two displayed cuts are public positions
+in this same sequence; a controller with a declared public finite cap
+may inspect the criterion there. No unknown branch is supplied as a
+stopping instruction.
+
+Order the witness edges at the fresh indices so that their intended
+omissions follow (PCR.2102). Each index in the first portion lists
+its edge's seven omissions consecutively; each index group in the
+second lists its edge's eight right omissions. The event that the
+first $q_i$ originally prepared samples equal this ordered edge sequence
+has probability $1944^{-q_i}$. All remaining original slots are
+unrestricted. The schedule does not assert that its samples realize
+this event or that repeated partial records came from equal edges.
+The event proves positive attainment; recognition uses only the
+acquired clauses. All specified repetitions occupy distinct paid
+indices. The theorem applies at the displayed cut without enlarging
+$N$ or requesting a sample.
+
+At $\theta=0$ the attained statement concerns every $G_0$ injection;
+at $\theta=1$ every $G_1$ injection; for $0<\theta<1$ it concerns each
+branch and every injection on that branch. Soundness was proved even
+against the union of both native families. Unsupported branches do
+not acquire positive prior mass at an endpoint. A wholly unread
+reserved original index requires $N\ge q_i+1$ and leaving it untouched.
+$\square$
+
+**Proposition 21.2 (literal tariff at the two cuts).** The schedule through
+a displayed cut $q=a+b_i$ makes exactly $14q$ original-root Reads. Its
+sum of literal operand lengths is $105q^2+25a+(35/2)b_i$, and its
+maximum literal operand length is $15q$. The values are
+
+| Actual witness branch | Proper scanned slots | Read invocations | Operand-length sum | Maximum length |
+| --- | --- | --- | --- | --- |
+| $G_0$ | $23976$ | $335664$ | $60359622120$ | $359640$ |
+| $G_1$ | $17064$ | $238896$ | $30574310760$ | $255960$ |
+
+Proof. For acquired local coordinate $h$ of index $j$, UJB's operand
+is $R^{15(j-1)+h-1}LL$, of length $15(j-1)+h+1$. Omitting $h(j)$
+leaves length sum $210(j-1)+134-h(j)$ at that index. The first
+$a$ omissions have mean $4$, since $a$ is divisible by seven; the
+remaining $b_i$ have mean $23/2$, since $b_i$ is divisible by eight.
+Summing gives
+
+$$
+105q(q-1)+134q-4a-\frac{23}{2}b_i
+   =105q^2+25a+\frac{35}{2}b_i.
+\tag{PCR.2103}
+$$
+
+The last omitted coordinate is fifteen. The last acquired coordinate
+is fourteen at $j=q$, with length $15q$; all earlier lengths are
+smaller. Every actual repetition or additional Read is charged at its
+own invocation and length. The values count the prescribed cut, not
+an assumed earlier successful stop. $\square$
+
+## 22. Full relation recovery with genuinely unresolved realized bits
+
+**Theorem 22.1 (some codings preserve many fair missing bits).** Among the
+full injections allowed in Theorem 21.1 there are $G_0$ codings whose
+attained witness caches retain at least $1944$ unresolved realized
+bits, and $G_1$ codings with at least $5832$. Each listed bit is fair
+conditional on the acquired cache, even though that cache forces the
+entire labelled relation. These examples impose no coding condition
+on Theorems 20.3 and 21.1.
+
+Proof. In $G_0$, label the two endpoints in each of the thirty-six
+literal left twin pairs by $p0,p1$, using thirty-six distinct six-bit
+prefixes $p$. These are $72$ distinct seven-bit words. Any full right
+injection is allowed. At each of the $1944$ first-portion indices
+omitting the final left bit, the two possible left words are these
+twins, with the same fully read right neighbour. Both completions
+belong to the now-forced relation.
+
+In $G_1$, assign the eight left endpoints of each of its nine components
+the words $pu$, with nine distinct four-bit prefixes $p$ and all
+three-bit suffixes $u$. Toggling any suffix bit stays in that component.
+For each of the last three left coordinates, all $1944$ corresponding
+first-portion indices therefore have two supported completions. This
+gives $3\cdot1944=5832$ such indices. Both constructions extend to the
+original full injections, and their right labels remain unrestricted.
+
+Apply the existing UJB.9004–9005 conditional product law, equivalently
+UJB Theorem 17.1, with the actual indexed masks retained. Once the
+criterion has forced $E$, every compatible generator has this same
+relation, and each of these rectangles has exactly two edges of $E$.
+Its missing bit has probability $1/2$ for each value. The conditioning
+here is on the acquired cache, not additionally on the unobserved
+ordered witness event used to prove attainment. In particular that
+event does not give the observer its prescribed full samples. The
+original masks remain proper after relation inference. $\square$
+
+**Definition 22.2 (unchanged recovery consumers).** On acceptance use the
+returned whole $E$, together with the entire actual indexed cache,
+as input to UJB Theorem 17.1 and Proposition 6.1. Their existing
+$Q_{E,j}$ law supplies each original reply, positive partial update,
+repeat, completed-slot replay and bounded adaptive continuation with
+the declared controller. It does not identify unacquired realized
+values. For $G_0$, the same returned $1944$-edge labelled relation is
+valid input to Proposition 8.7 for intrinsic heap, marked directions
+and full affine incidence. UJB Theorem 17.2 retains its fixed prior,
+fixed indexed cache and actual wholly unread index on its stated
+inverse domains. The reserved index in Theorem 21.1 is an original
+slot, not a replacement sample.
+
+## 23. Mask obstructions and essential endpoint evidence
+
+**Theorem 23.1 (one globally unread coordinate always obstructs).** Fix
+either supported actual branch, any full injections, any fixed $N$,
+and any attained cache $K$. If some one of the fifteen coordinates
+is omitted from every original index mask, then $K$ does not force
+the entire labelled relation. This holds for every such injection,
+including the invariant-left case, at every $\theta$ endpoint at
+which the actual branch is supported.
+
+Proof. Postcompose the corresponding entire label injection with the
+fixed coordinate flip, as in the global transport of UJB §9.4. This
+is another supported full injection on the same branch. Flipping that
+coordinate in the actual samples leaves every acquired restriction
+unchanged, because it was unread everywhere. If the transported
+relation changes, it is already a compatible different target.
+
+For a right coordinate the relation always changes: its used right
+support has odd cardinality $243$ and cannot be invariant under a
+fixed-point-free involution. For a left coordinate suppose instead
+that the entire relation is flip invariant. Each used left word $x$
+then has a used partner $x^h$ with the identical row neighbourhood.
+Choose one $x$ and move only its literal endpoint's injection value
+to an unused left word $u$; there are $128-72=56$ choices. Keep the
+other injection values and branch unchanged. Any rectangle previously
+met at an edge $(x,y)$ is still met at $(x^h,y)$, since the omitted
+coordinate cannot distinguish them; all other edge witnesses remain
+unchanged. Thus every original rectangle is still positive. The new
+relation changes its left support from $x$ to $u$, so its target is
+different. All these full injections have positive prior mass on the
+same supported branch. The alternative generators and compatible
+finite arrays are possible source worlds, not physical source edits,
+inverses or extra operations. $\square$
+
+**Theorem 23.2 (positive-essential endpoints and the finite-slot floor).**
+For an attained cache $K$ with actual relation $E$, call an original
+index $j$ right-essential for a used right word $y$ when the right
+projection of $E\cap B_j(K)$ is exactly $\{y\}$. Define left-essential
+symmetrically. If $K$ forces the entire actual $E$, each of its $243$
+right words and $72$ left words has an essential original index.
+Consequently at least $243$ distinct indices with nonempty acquired
+masks are necessary, even if completed slots are allowed. In particular
+no cache can force the whole target when the original $N<243$.
+
+Proof. If $y$ has no essential index, every nonempty intersection
+$E\cap B_j(K)$ has an edge whose right endpoint differs from $y$.
+Move just the literal endpoint labelled $y$ to an unused right word,
+keeping all other injection values and the branch. There are
+$256-243=13$ unused choices. Each rectangle keeps its unchanged
+witness at a different endpoint, so the new generator is compatible.
+Its target differs, since the moved endpoint has degree eight. The
+same proof on the left uses the $56$ unused words and degree $27$.
+Each alternative remains a full injection on the same supported
+branch with positive prior mass, including at its allowed $\theta$
+endpoints.
+
+One original index is right-essential for at most one right word.
+An empty-mask rectangle meets all of $E$ and is essential for none.
+Thus $243$ distinct nonempty-mask indices are required. A single index
+can be essential on both sides, so adding $72$ and $243$ would not
+prove a general $315$-index bound. This argument concerns the actual
+partial rectangles, and does not assume that any whole endpoint was
+physically read. $\square$
+
+## 24. Domains and mathematical suppliers of proper-mask recovery
+
+**Definition 24.1 (scope of the recovered structure).** The results in
+§§20–23 keep the following mathematical and operational domains.
+
+* The full source is (PCR.1), with $B_i(v,w)=s$ and unrestricted $z$.
+  Its degrees, twin capacities and distinct-column intersection bound
+  are reused from UJB §§15 and 18. The new source-specific bridge is
+  positive proper-mask profile recovery, preservation of the entire
+  labelled right twin partition under both varying injections, and
+  exclusion of a lost incidence by the acquired right-probe expansion.
+  The general target criteria cited in §7 and UJB's all-mask evaluator,
+  exact posterior, continuation and closure results are suppliers,
+  not new results of these sections.
+* Harper's theorem is used only in the attributed intermediate step
+  inside Theorem 20.3. The profile, native-capacity and attained-array
+  argument is repository-derived ordinary mathematics. No general
+  literature theorem or worldwide priority is claimed for it, and
+  no new Lean declaration or fresh kernel verification is asserted.
+* The witness gives positive attainment for every injection at the
+  stated sufficient fixed-$N$ thresholds. It is not guaranteed on
+  every preparation, an exact acceptance probability or a deterministic
+  acquisition budget. Repeated samples may fail to expose enough
+  evidence; once the original finite array is exhausted there is no
+  new draw. The minimum feasible $N$, optimum Reads and recognition
+  of all forcing partial caches are unresolved. Theorems 23.1–23.2
+  are necessary obstructions, not a complete converse.
+* All scanned witness slots remain proper and the complete-pair set
+  used in Definition 1.1 is empty. This is a different recovery
+  capability, outside the positive-complete-pair lower bounds of §4.
+  No Read, address-length or acquisition-probability improvement over
+  the existing $417$-pair $G_0$ or $324$-pair $G_1$ routes is asserted.
+  The six-probe sharpness concerns only (PCR.2006), not native optimality.
+* Actual $\alpha/\beta$ LAB $P/S$ preparation remains UJB §§5.2–5.3,
+  with $75N+4$ events for the whole originally fixed $N$. Random
+  preparation, its iid edge law and once-shared full injections remain
+  supplied premises. Preparation operands and maps, controller
+  installation and counters, graph and clause computations, comparisons,
+  output and retained storage are separately paid resources. The
+  acquired-profile computation uses at most $243\cdot9$ small profile
+  candidates, each generated by $8\cdot7$ cube adjacencies, plus degree,
+  intersection and finite probe tests on the $128/256$ ambient words.
+  Deduplicating clauses for those tests does not discard the full
+  indexed masks, values or original records. No source-aware state
+  or free controller is supplied.
+* Every original record/reply/return behavior and private-owner
+  permission remains in force. No Busy query, membership or source
+  oracle, chosen-edge port, sampler, fork, reset, interrupt, graft,
+  physical inverse or new owner access is introduced. The returned
+  relation does not recover a hidden frame, actual affine origin,
+  twin coordinates, serial preparation history, physical spacetime
+  or all unacquired realized bits. Its geometry and lawful continuation
+  consumers have the exact domains in Definition 22.2. The broader
+  mutual-recovery programme remains outside this finite local result.
+
+## 追加锚（本行以下为增补区）
