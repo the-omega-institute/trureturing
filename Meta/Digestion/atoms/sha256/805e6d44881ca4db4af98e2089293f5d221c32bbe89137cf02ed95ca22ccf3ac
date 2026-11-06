@@ -1,0 +1,115 @@
+## 90. 跨纤维的底面质量缩放与消失分支
+
+**定义 C-90.1（固定条件态的比较及表面映射）。** 固定
+$0<\widehat X,\widehat Y<1$，令
+
+$$
+\widehat\kappa_-=\max(0,\widehat X+\widehat Y-1),\qquad
+\widehat\kappa_+=\min(\widehat X,\widehat Y).
+$$
+
+在归一化底面上取
+$\widehat\kappa\in[\widehat\kappa_-,\widehat\kappa_+]$，
+底角概率为
+$(1-\widehat X-\widehat Y+\widehat\kappa,
+\widehat X-\widehat\kappa,\widehat Y-\widehat\kappa,\widehat\kappa)$。
+另固定各个实际复振幅，得到一个归一化底面纯态 $|\phi\rangle$；
+这比固定 $\chi$ 或概率表更强。对 $0<r<1$ 定义
+
+$$
+|\psi_r\rangle=\sqrt{1-r}|2\rangle+\sqrt r|\phi\rangle,\qquad
+(X,Y,Z,\kappa)=(r\widehat X,r\widehat Y,1-r,r\widehat\kappa).
+\tag{C90.1}
+$$
+
+中模式系数取正，故相对底面的共同相位也已固定。
+每个 $r$ 有不同的固定均值纤维；这里不是在一条固定 $(X,Y,Z)$ 曲面上改变 $r$。
+为比较整个曲面，令 $\widehat\kappa,\chi$ 变化，使用对应映射
+
+$$
+F_r:(\widehat\kappa,\chi)\longmapsto(r\widehat\kappa,\chi).
+\tag{C90.2}
+$$
+
+帽号几何是总底面质量一的参数模型；不宣称它是 $Z>0$ 的五模式全正纤维。
+
+**定理 C-90.2（同条件坐标下的精确缩放）。** 在各自全正内部，有
+
+$$
+\kappa_\pm=r\widehat\kappa_\pm,\qquad
+w=r\widehat w,\qquad
+\nu=\widehat w,\qquad
+\mathcal I=\frac{\widehat{\mathcal I}}r,
+$$
+
+$$
+F_r^*g_r=r\widehat g,\qquad
+F_r^*\omega_r=r\widehat\omega,\qquad
+\mathcal K_r\circ F_r=\frac{\widehat{\mathcal K}}r.
+\tag{C90.3}
+$$
+
+对应曲线长度及距离乘 $\sqrt r$，面积乘 $r$。
+条件 $\eta,\chi,\mathcal C,\nu$ 均不变，其中 $\eta,\chi$ 的坐标解释限于定义域；
+$\mathcal C$ 与谱可以用振幅延伸到闭端点。
+
+证明。因 $r>0$，乘 $r$ 与 $\min,\max$ 交换，得到两端及宽度关系。
+四底角每项都是 $r\widehat p_s$，故倒数和为 $\widehat{\mathcal I}/r$；
+此处只在每个 $r$ 固定的表面上微分，所以 $d\kappa=r\,d\widehat\kappa$。代入得
+
+$$
+F_r^*g_r
+=\frac{\widehat{\mathcal I}}{2r}r^2d\widehat\kappa^2
++\frac{2r}{\widehat{\mathcal I}}d\chi^2=r\widehat g,\qquad
+F_r^*\omega_r=r\,d\chi\wedge d\widehat\kappa.
+$$
+
+每条曲线的速度范数乘 $\sqrt r$，积分给长度缩放；
+对所有连接路径取下确界给距离缩放，进而也延伸到 Cauchy 完备化。
+二维度量行列式的平方根乘 $r$，给面积缩放。
+另置 $f_r=2/\mathcal I=r\widehat f(\widehat\kappa)$，
+对 $\kappa$ 求两次导数得 $f_r''=\widehat f''/r$，
+由 C-79.2 得曲率缩放；曲率在规则部分使用。
+
+四角比中的 $r^2$ 抵消，故 $\eta$ 不变，实际相位原已固定；
+条件系数除以 $\sqrt r$ 后恰为 $\phi$，所以 $\mathcal C$、谱不变，
+而 $w/r=\widehat w$。证毕。
+
+**命题 C-90.3（条件最大联合与完整纯态趋于中模式可以并存）。** 采用迹距离约定
+
+$$
+D(\rho,\sigma)=\frac12\|\rho-\sigma\|_1,
+$$
+
+则式 (C90.1) 满足
+
+$$
+D(|\psi_r\rangle\langle\psi_r|,|2\rangle\langle2|)=\sqrt r.
+\tag{C90.4}
+$$
+
+存在固定全正条件态使所有 $r>0$ 都有 $\mathcal C=1$，
+同时 $\mathcal K=2/r\to+\infty$，而完整态的迹距离趋零。
+
+证明。$\phi$ 与 $|2\rangle$ 正交，在正交基 $(|2\rangle,|\phi\rangle)$ 上，
+两个密度矩阵之差为
+
+$$
+\begin{pmatrix}
+-r&\sqrt{r(1-r)}\\
+\sqrt{r(1-r)}&r
+\end{pmatrix}.
+$$
+
+其迹为零、行列式为 $-r$，故特征值为 $\pm\sqrt r$；
+正交补上为零，迹范数为 $2\sqrt r$。
+例如取
+$|\phi\rangle=(|0\rangle+|1\rangle+|3\rangle-|13\rangle)/2$，
+则条件四格全正，$\widehat X=\widehat Y=1/2$、$\widehat\kappa=1/4$，
+$B=\frac12\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$ 给 $\mathcal C=1$。
+C-82.1 给所选尺度的 $\mathcal K=2/r$。证毕。
+
+这里 $r=0$ 不在条件化定义域，不能在质量已消失的分支上继续声称有一个实际条件态。
+上述极限同时保留了 $r>0$ 时的条件关系和完整态的分支稀有性。
+曲率发散来自指定度量的整体缩小，不推出信息量单调增加或引力增强。
+
