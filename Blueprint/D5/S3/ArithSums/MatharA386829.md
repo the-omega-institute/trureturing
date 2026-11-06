@@ -38,6 +38,10 @@ $$(\forall n:\mathbb{N}, 2 \le n \implies 2 \cdot n \cdot \operatorname{a}\left(
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/MatharA386829.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mathar-a386829-recurrence-dfinite` (proved) by `D5/S3/ArithSums/MatharA386829.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mathar-a386829-recurrence-dfinite","declaration_gid":"D5/S3/ArithSums/MatharA386829.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. J. Mathar; Seiichi Manyama (2026). *OEIS A386829: binomial sum recurrence and D-finiteness*. URL: <https://oeis.org/A386829>.
