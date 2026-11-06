@@ -46,5 +46,6 @@ The integrals of the Gaussian-weighted finite paired-pole sums converge, as the 
 - Truth anchor: `D5/S3/Analytic/Laplace/GaussianBoundaryPoles.pole_gaussian_tsum_integrable`
 - Truth anchor: `D5/S3/Analytic/Laplace/GaussianBoundaryPoles.spectrum_cut_tendsto`
 - Dependency: [D5/S3/Analytic/Fourier/GaussianKernel](../Fourier/GaussianKernel.md)
+- Dependency: [D5/S3/Analytic/Laplace/GaussianBoundaryContour](GaussianBoundaryContour.md)
 - Dependency: [D5/S3/Analytic/Laplace/PairedPoleRegularity](PairedPoleRegularity.md)
 - Dependency: [D5/S3/Analytic/Oscillation/GaussianSpectrum](../Oscillation/GaussianSpectrum.md)

@@ -201,3 +201,4 @@ There exists a positive constant C independent of M such that, for every M at le
 - Truth anchor: `D5/S3/Analytic/Fourier/GaussianCutoff.cutoff_multiplier_even`
 - Truth anchor: `D5/S3/Analytic/Fourier/GaussianCutoff.cutoff_multiplier_hasCompactSupport`
 - Truth anchor: `D5/S3/Analytic/Fourier/GaussianCutoff.smoothTransition_derivatives_bounded`
+- Dependency: [D5/S3/Analytic/Fourier/AngularFejerKernel](AngularFejerKernel.md)

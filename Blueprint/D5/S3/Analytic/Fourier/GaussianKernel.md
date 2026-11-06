@@ -4,7 +4,19 @@
 
 Normalized Gaussian kernels and their cosine averages.
 
-**Theorem 1.1 (Gaussian probability densities).**
+**Theorem 1.1 (Expanding the vertical Gaussian exponent).**
+
+Lean statement: `D5/S3/Analytic/Fourier/GaussianKernel.bromwich_exponent`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Fourier/GaussianKernel.bromwich_exponent` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary real M, c, v, and t, the vertical Gaussian exponent expands into its quadratic, linear, and constant terms in t.
+
+**Theorem 1.2 (Gaussian probability densities).**
 
 Lean statement: `D5/S3/Analytic/Fourier/GaussianKernel.q_laws`
 
@@ -16,7 +28,7 @@ Lean statement: `D5/S3/Analytic/Fourier/GaussianKernel.q_laws`
 
 For every positive M, q(M,v)=M exp(-M²v²/2)/sqrt(2 pi) is nonnegative and integrable on the real line, with integral one. Scaling the Gaussian integral supplies the normalization.
 
-**Theorem 1.2 (Angular Gaussian transform).**
+**Theorem 1.3 (Angular Gaussian transform).**
 
 Lean statement: `D5/S3/Analytic/Fourier/GaussianKernel.q_aft`
 
@@ -28,7 +40,7 @@ Lean statement: `D5/S3/Analytic/Fourier/GaussianKernel.q_aft`
 
 The cosine transform of q(M,·) at t is exp(-t²/(2M²)), and its sine transform vanishes. These are the real and imaginary parts of the complex Gaussian integral with angular frequency t.
 
-**Theorem 1.3 (Absolute convergence on vertical lines).**
+**Theorem 1.4 (Absolute convergence on vertical lines).**
 
 Lean statement: `D5/S3/Analytic/Fourier/GaussianKernel.q_bromwich_integrable`
 
@@ -40,7 +52,7 @@ Lean statement: `D5/S3/Analytic/Fourier/GaussianKernel.q_bromwich_integrable`
 
 For positive M and arbitrary real c and v, the exponential of (c+it)v+(c+it)²/(2M²) is integrable as a function of t. Its exponent is a quadratic polynomial with negative real leading coefficient.
 
-**Theorem 1.4 (Gaussian inversion on vertical lines).**
+**Theorem 1.5 (Gaussian inversion on vertical lines).**
 
 Lean statement: `D5/S3/Analytic/Fourier/GaussianKernel.q_bromwich`
 
@@ -52,7 +64,7 @@ Lean statement: `D5/S3/Analytic/Fourier/GaussianKernel.q_bromwich`
 
 For positive M, q(M,v) equals one divided by 2 pi times the integral over real t of exp((c+it)v+(c+it)²/(2M²)), for every real c. Completing the square evaluates the integral and cancels the dependence on c.
 
-**Theorem 1.5 (Gaussian convolution of a cosine).**
+**Theorem 1.6 (Gaussian convolution of a cosine).**
 
 Lean statement: `D5/S3/Analytic/Fourier/GaussianKernel.q_cos_convolution`
 
@@ -64,7 +76,7 @@ Lean statement: `D5/S3/Analytic/Fourier/GaussianKernel.q_cos_convolution`
 
 The convolution of cos(gamma u) with q(M,y-u) is exp(-gamma²/(2M²)) cos(gamma y). Translation and the cosine subtraction identity reduce the formula to the cosine and sine transforms.
 
-**Theorem 1.6 (The half-line correction).**
+**Theorem 1.7 (The half-line correction).**
 
 Lean statement: `D5/S3/Analytic/Fourier/GaussianKernel.gaussian_halfline_correction`
 
@@ -78,6 +90,7 @@ For M and y at least one and positive gamma, the absolute integral over v at lea
 
 ## References
 
+- Truth anchor: `D5/S3/Analytic/Fourier/GaussianKernel.bromwich_exponent`
 - Truth anchor: `D5/S3/Analytic/Fourier/GaussianKernel.gaussian_halfline_correction`
 - Truth anchor: `D5/S3/Analytic/Fourier/GaussianKernel.q_aft`
 - Truth anchor: `D5/S3/Analytic/Fourier/GaussianKernel.q_bromwich`

@@ -28,15 +28,6 @@ internal sealed class GaussianKernelDocument : IScribeDocumentDefinition
                     "For every positive M, q(M,v)=M exp(-M²v²/2)/sqrt(2 pi) is nonnegative and integrable on the real line, with integral one. Scaling the Gaussian integral supplies the normalization."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("q-aft"),
-                DeclarationHandle.Create(Prefix + "q_aft"),
-                H("Angular Gaussian transform"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "The cosine transform of q(M,·) at t is exp(-t²/(2M²)), and its sine transform vanishes. These are the real and imaginary parts of the complex Gaussian integral with angular frequency t."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("q-bromwich-integrable"),
                 DeclarationHandle.Create(Prefix + "q_bromwich_integrable"),
                 H("Absolute convergence on vertical lines"),

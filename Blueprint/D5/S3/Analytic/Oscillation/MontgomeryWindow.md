@@ -4,7 +4,19 @@
 
 Averaged pair correlation forces mean-square mass in a logarithmic window.
 
-**Theorem 1.1 (Mean-square mass in the hard cosine window).**
+**Theorem 1.1 (Continuity of finite cosine sums).**
+
+Lean statement: `D5/S3/Analytic/Oscillation/MontgomeryWindow.hardCos_continuous`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Oscillation/MontgomeryWindow.hardCos_continuous` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every spectrum and cutoff M, the multiplicity-weighted finite cosine sum is continuous.
+
+**Theorem 1.2 (Mean-square mass in the hard cosine window).**
 
 Lean statement: `D5/S3/Analytic/Oscillation/MontgomeryWindow.hard_window_lower`
 
@@ -20,5 +32,8 @@ The kernel h(v)=exp(-2 abs(v)) has mass one and cosine transform 4/(4+t^2), obta
 
 ## References
 
+- Truth anchor: `D5/S3/Analytic/Oscillation/MontgomeryWindow.hardCos_continuous`
 - Truth anchor: `D5/S3/Analytic/Oscillation/MontgomeryWindow.hard_window_lower`
+- Dependency: [D5/S3/Analytic/Fourier/AngularFejerKernel](../Fourier/AngularFejerKernel.md)
+- Dependency: [D5/S3/Analytic/Laplace/QuantitativeFejerBoundary/DampedIdentity](../Laplace/QuantitativeFejerBoundary/DampedIdentity.md)
 - Dependency: [D5/S3/Analytic/Oscillation/OrdinateCounting](OrdinateCounting.md)

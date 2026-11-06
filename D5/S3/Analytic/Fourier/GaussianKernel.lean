@@ -99,27 +99,6 @@ private lemma q_complex_transform {M : ℝ} (hM : 0 < M) (t : ℝ) :
   field_simp
   ring
 
-/-- The angular cosine transform of the Gaussian is a Gaussian. -/
-theorem q_aft {M : ℝ} (hM : 0 < M) (t : ℝ) :
-    (∫ v, q M v * Real.cos (t * v)) = Real.exp (-t ^ 2 / (2 * M ^ 2)) ∧
-      (∫ v, q M v * Real.sin (t * v)) = 0 := by
-  have hi : Integrable (fun v : ℝ =>
-      (q M v : ℂ) * Complex.exp (-Complex.I * (t : ℂ) * v)) := by
-    apply (q_integrable hM).ofReal.mul_bdd (by fun_prop) (c := 1)
-    filter_upwards with v
-    rw [Complex.norm_exp]
-    simp
-  have hr := congrArg Complex.re (q_complex_transform hM t)
-  have him := congrArg Complex.im (q_complex_transform hM t)
-  change Complex.reCLM _ = Real.exp (-t ^ 2 / (2 * M ^ 2)) at hr
-  rw [← Complex.reCLM.integral_comp_comm hi] at hr
-  change Complex.imCLM _ = (0 : ℝ) at him
-  rw [← Complex.imCLM.integral_comp_comm hi] at him
-  constructor
-  · simpa [Complex.mul_re, Complex.exp_re, mul_assoc, Complex.mul_im] using hr
-  · simp [Complex.mul_im, Complex.exp_im, mul_assoc, Complex.mul_re] at him
-    simpa only [integral_neg, neg_eq_zero] using him
-
 lemma bromwich_exponent (M c v t : ℝ) :
     ((c : ℂ) + t * Complex.I) * v + ((c : ℂ) + t * Complex.I) ^ 2 / (2 * M ^ 2) =
       -(1 / (2 * (M : ℂ) ^ 2)) * (t : ℂ) ^ 2 +

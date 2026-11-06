@@ -4,7 +4,19 @@
 
 Weighted counts and triangular averages of a locally finite positive spectrum.
 
-**Theorem 1.1 (Monotonicity of weighted counts).**
+**Theorem 1.1 (An eventual logarithmic counting bound).**
+
+Lean statement: `D5/S3/Analytic/Oscillation/OrdinateCounting.count_upper`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Oscillation/OrdinateCounting.count_upper` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The counting asymptotic implies a positive constant B with N(M) at most B M log M for all sufficiently large M.
+
+**Theorem 1.2 (Monotonicity of weighted counts).**
 
 Lean statement: `D5/S3/Analytic/Oscillation/OrdinateCounting.count_mono`
 
@@ -16,7 +28,7 @@ Lean statement: `D5/S3/Analytic/Oscillation/OrdinateCounting.count_mono`
 
 The multiplicity-weighted counting function of a positive locally finite spectrum is monotone in the real cutoff. Increasing the cutoff enlarges the finite sum of nonnegative multiplicities.
 
-**Theorem 1.2 (Separation from zero).**
+**Theorem 1.3 (Separation from zero).**
 
 Lean statement: `D5/S3/Analytic/Oscillation/OrdinateCounting.positive_gap`
 
@@ -28,7 +40,7 @@ Lean statement: `D5/S3/Analytic/Oscillation/OrdinateCounting.positive_gap`
 
 Let gamma be a family of distinct positive real ordinates, with only finitely many ordinates below each real bound. There exists b>0 such that every ordinate is greater than b. A positive minimum for the finite set below one, together with the bound one for its complement, gives the gap.
 
-**Theorem 1.3 (Inverse-square tails).**
+**Theorem 1.4 (Inverse-square tails).**
 
 Lean statement: `D5/S3/Analytic/Oscillation/OrdinateCounting.inverse_square_tail`
 
@@ -40,7 +52,7 @@ Lean statement: `D5/S3/Analytic/Oscillation/OrdinateCounting.inverse_square_tail
 
 If N(T)/(T log T) tends to 1/(2 pi), there is a nonnegative constant C such that, for every T at least four, the sum of multiplicity divided by the square of the ordinate over all ordinates greater than T converges and is at most C log(T)/T. Monotonicity extends an eventual logarithmic counting bound to all cutoffs at least four. Integrating that bound controls every finite subset of the tail and hence the infinite sum.
 
-**Theorem 1.4 (Triangular lower mass).**
+**Theorem 1.5 (Triangular lower mass).**
 
 Lean statement: `D5/S3/Analytic/Oscillation/OrdinateCounting.lower_triangular_mass`
 
@@ -52,7 +64,7 @@ Lean statement: `D5/S3/Analytic/Oscillation/OrdinateCounting.lower_triangular_ma
 
 Give each ordinate a positive integer multiplicity and write N(T) for the total multiplicity at ordinates at most T. If N(T)/(T log T) tends to 1/(2 pi), then the sum of multiplicities weighted by max(0,1-gamma/M), divided by M log M, tends to 1/(4 pi). The triangular sum is the integral of N(Mu) for 0<u<=1. After normalization, the integrand tends to u/(2 pi); monotonicity of N supplies a constant integrable bound.
 
-**Theorem 1.5 (An upper band with substantial triangular mass).**
+**Theorem 1.6 (An upper band with substantial triangular mass).**
 
 Lean statement: `D5/S3/Analytic/Oscillation/OrdinateCounting.select_upper_band`
 
@@ -67,6 +79,7 @@ Assume N(T)/(T log T) tends to 1/(2 pi). For every fixed b>0 there is a constant
 ## References
 
 - Truth anchor: `D5/S3/Analytic/Oscillation/OrdinateCounting.count_mono`
+- Truth anchor: `D5/S3/Analytic/Oscillation/OrdinateCounting.count_upper`
 - Truth anchor: `D5/S3/Analytic/Oscillation/OrdinateCounting.inverse_square_tail`
 - Truth anchor: `D5/S3/Analytic/Oscillation/OrdinateCounting.lower_triangular_mass`
 - Truth anchor: `D5/S3/Analytic/Oscillation/OrdinateCounting.positive_gap`
