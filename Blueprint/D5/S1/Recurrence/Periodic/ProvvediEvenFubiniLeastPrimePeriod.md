@@ -26,6 +26,10 @@ $$\forall (p : \mathbb{N}), \operatorname{Nat}.\operatorname{Prime}\left(p\right
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Periodic/ProvvediEvenFubiniLeastPrimePeriod.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/prov249938` (proved) by `D5/S1/Recurrence/Periodic/ProvvediEvenFubiniLeastPrimePeriod.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"prov249938","declaration_gid":"D5/S1/Recurrence/Periodic/ProvvediEvenFubiniLeastPrimePeriod.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Federico Provvedi; Paul D. Hanna (2020). *OEIS A249938, even-index Fubini numbers: prime-modulus least periods*. URL: <https://oeis.org/A249938>.

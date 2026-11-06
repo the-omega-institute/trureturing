@@ -52,13 +52,17 @@ internal sealed class ProvvediEvenFubiniLeastPrimePeriodDocument : IScribeDocume
                 + "At p=2 and p=3 the positive-index sequences are constant 1 and "
                 + "constant 0, respectively, and their least positive period is one. "
                 + "The centered dot denotes Lean's anonymous binder _.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("prov249938"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("provvedi-even-fubini-" + name),
         DeclarationHandle.Create(Prefix + name), H(title),
-        StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+        StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role,
+        openProblemResolutionClaim: resolution);
 
     private static Formula ClaimBody() => All("p", Naturals(),
         Implication(App(Qualified("Nat", "Prime"), F.Id("p")),
