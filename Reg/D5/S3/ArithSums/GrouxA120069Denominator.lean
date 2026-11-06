@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ArithSums.GrouxA120069Denominator
 import Reg.Support.SingleDependentReadout
 
+/-! A whole positive-index denominator readout with a nonconstant actual family. -/
+
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.ArithSums.GrouxA120069Denominator
 open LeanInformationAudit
@@ -42,8 +44,9 @@ def evidence : Registration arena (type_of% (@result)) where
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
+    change ObservationalDependence signature actual
     intro i
-    refine ⟨(), 1, 2, ?_⟩
+    refine ⟨(), (1 : ℕ), (2 : ℕ), ?_⟩
     change (∑ k ∈ Finset.Icc 1 1, (catalan k : ℚ) / (4 : ℚ)^(k-1)).den ≠
       (∑ k ∈ Finset.Icc 1 2, (catalan k : ℚ) / (4 : ℚ)^(k-1)).den
     rw [result 1 (by omega), result 2 (by omega)]
@@ -73,7 +76,8 @@ def registration_result : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.ArithSums.GrouxA120069Denominator
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "fn", "arg"]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none
