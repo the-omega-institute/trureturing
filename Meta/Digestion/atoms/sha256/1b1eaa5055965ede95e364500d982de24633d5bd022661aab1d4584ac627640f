@@ -1,0 +1,5 @@
+**【编者局部说明：曲率下界的端点】** 在 $[T_k,T_{k+1}]$ 上有 $f''\le-\kappa(T_{k+1})$；将 $\kappa(T_{k+1})t^2/2$ 加到 $f(t)$ 后仍为凹函数，应用弦不等式即得 (12)。$0<\theta<1$ 时，$T_{k+1}>T_k>1$ 保证所给下界严格为正；$\theta=0,1$ 时 $\Gamma=0$。
+<!-- editorial-note:end curvature-bound -->
+
+当 $0<\theta<1$ 时，右侧严格为正。
+

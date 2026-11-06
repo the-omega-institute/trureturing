@@ -1,0 +1,24 @@
+**【编者局部说明：严格曲率间隔的积分依据】** 对已占用层，合法删除保证 $T-h>1$，且
+
+$$
+f(T)-f(T-h)-\eta h
+=\int_{T-h}^T\int_t^T\kappa(u)\,du\,dt
+>\frac{\kappa(T)}2h^2.
+$$
+
+对任一加入方向，
+
+$$
+\eta h-[f(T+h)-f(T)]
+=\int_T^{T+h}\int_T^t\kappa(u)\,du\,dt
+>\frac{\kappa(T+h)}2h^2.
+$$
+
+$h>0$ 与 $\kappa$ 严格下降给出严格号；再结合终止时各边收益非正即得 (25)、(26)。层收益严格递减把 (22)、(23) 扩展到全部已取和未取层，任意不同整数的有限层差至少有一个严格损失，故 (24) 是全整数价格目标的唯一最大点。
+<!-- editorial-note:end strict-integral-gaps -->
+
+所以，终点不只是落在一个价格分界上；已取层与未取层之间还隔着一个由曲率确定的严格区间。
+
+这类极值归约与已有的 CA、GA 数研究相联系。已有文献也用素数删除、倍数比较与极值整数研究 Robin；这里的终点只保证单素数乘除邻域的极大性，GA2 所要求的全部倍数极大性更强。[arxiv.org](https://arxiv.org/abs/1112.6010?utm_source=chatgpt.com)
+
+<!-- editorial-note:start classical-ca-ga-attribution -->
