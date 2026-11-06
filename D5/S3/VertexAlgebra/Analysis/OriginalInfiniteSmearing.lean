@@ -20,9 +20,9 @@ open scoped BigOperators Topology
 namespace D5.S3.VertexAlgebra.Analysis.OriginalSmearing
 open LatticeGeneratingFieldLocality
 open SmoothCircleFourier
-open private modeConstant_pos modeExtension_norm modeExtension_embed modeExtension_compatible from
+open private modeExtension_compatible from
   D5.S3.VertexAlgebra.Analysis.OriginalModeExtension
-open private weighted_summable weight_nonneg W_le from
+open private W_le from
   D5.S3.VertexAlgebra.Analysis.SmoothCircleFourier
 
 open Model
