@@ -78,8 +78,7 @@ open scoped BigOperators
 private def row : (Fin 32) → (Fin 5 → Fin 2) := ![![0, 0, 0, 0, 0], ![0, 0, 0, 0, 1], ![0, 0, 0, 1, 0], ![0, 0, 0, 1, 1], ![0, 0, 1, 0, 0], ![0, 0, 1, 0, 1], ![0, 0, 1, 1, 0], ![0, 0, 1, 1, 1], ![0, 1, 0, 0, 0], ![0, 1, 0, 0, 1], ![0, 1, 0, 1, 0], ![0, 1, 0, 1, 1], ![0, 1, 1, 0, 0], ![0, 1, 1, 0, 1], ![0, 1, 1, 1, 0], ![0, 1, 1, 1, 1], ![1, 0, 0, 0, 0], ![1, 0, 0, 0, 1], ![1, 0, 0, 1, 0], ![1, 0, 0, 1, 1], ![1, 0, 1, 0, 0], ![1, 0, 1, 0, 1], ![1, 0, 1, 1, 0], ![1, 0, 1, 1, 1], ![1, 1, 0, 0, 0], ![1, 1, 0, 0, 1], ![1, 1, 0, 1, 0], ![1, 1, 0, 1, 1], ![1, 1, 1, 0, 0], ![1, 1, 1, 0, 1], ![1, 1, 1, 1, 0], ![1, 1, 1, 1, 1]]
 
 private def delta (b c : (Fin 32)) (j : Fin 4) : ℤ :=
-  Matrix.det !![((row b j.castSucc).val : ℤ), ((row b j.succ).val : ℤ);
-    ((row c j.castSucc).val : ℤ), ((row c j.succ).val : ℤ)]
+  minor (n := 1) ![row b, row c] 0 j
 
 
 private def stateRow : (Fin 68) → (Fin 32) := ![0, 1, 1, 2, 3, 3, 3, 4, 5, 6, 7, 7, 8, 9, 9, 10, 11, 11, 12, 13, 14, 15, 15, 16, 16, 17, 17, 17, 17, 18, 18, 19, 19, 19, 19, 19, 19, 20, 21, 22, 23, 23, 24, 24, 24, 25, 25, 25, 25, 25, 25, 26, 26, 27, 27, 27, 27, 27, 28, 28, 29, 29, 30, 30, 31, 31, 31, 31]
@@ -124,7 +123,7 @@ private theorem next_spec (s : (Fin 68)) (c : (Fin 32)) (h : valid s c) :
 private theorem transfer_spec (s t : (Fin 68)) :
     T t s = if valid s (stateRow t) ∧ (fun s c => stateOf (stateRow s) c) s (stateRow t) = t then 1 else 0 := by
   revert s t
-  simp only [valid, delta, Matrix.det_fin_two]
+  simp only [valid, delta, minor, Matrix.det_fin_two]
   decide
 
 private theorem initial_spec (t : (Fin 68)) : initial t =
