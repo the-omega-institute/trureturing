@@ -12,7 +12,7 @@ recurses on the complete remaining local ground, and allCornersOutput supplies
 its external old-corner input by genuine MixedHistory induction.
 The only external physical recursive supplier is on the graph of the OLD history.
 The local reduction lemmas consume only the explicitly displayed smaller corner.
-All grounds are full original HistoryCorners.residual grounds; rows keep their original indices.
+All grounds are full original residual grounds; rows keep their original indices.
 -/
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
@@ -142,6 +142,8 @@ theorem singleton_original_corner (r : Rows V) (A B : Finset V)
       corner r.ground (A ∪ {a}) B r.root := by
   rw [avoiding_corner (cornerRows r A B) a ha,
     ← corner_root r A B hA]
+  change corner (HistoryCorners.residual r.ground A B) {a} ∅
+    (corner r.ground A B r.root) = _
   simpa only [Finset.union_empty] using
     corner_compose r.ground A B {a} ∅ r.root
       (Finset.singleton_subset_iff.mpr ha)
@@ -334,6 +336,8 @@ theorem twoLeaf_factor (r : Rows V) (a b c : V)
     rw [hground]
     exact Finset.singleton_subset_iff.mpr hb')
   rw [hground,Finset.union_empty] at h1
+  change corner ((r.ground.erase a).erase b) {c} ∅
+    (corner (r.ground.erase a) {b} ∅ (corner r.ground {a} ∅ r.root)) = _
   rw [h1]
   have h2 := corner_compose r.ground ({a} ∪ {b}) ∅ {c} ∅ r.root (by
     intro x hx
@@ -356,8 +360,12 @@ theorem oneLeaf_original_corner (r : Rows V) (A B : Finset V) (hA : A ⊆ r.grou
     restrict (((HistoryCorners.residual r.ground A B).erase a).erase b)
       (avoiding (cornerRows r A B) a).root =
       corner r.ground (A ∪ {a}) (B ∪ {b}) r.root := by
+  change restrict (((cornerRows r A B).ground.erase a).erase b)
+    (avoiding (cornerRows r A B) a).root = _
   rw [oneLeaf_factor (cornerRows r A B) a b ha hb hab,
     ← corner_root r A B hA]
+  change corner (HistoryCorners.residual r.ground A B) {a} {b}
+    (corner r.ground A B r.root) = _
   exact corner_compose r.ground A B {a} {b} r.root
     (Finset.singleton_subset_iff.mpr ha)
 
@@ -370,8 +378,12 @@ theorem twoLeaf_original_corner (r : Rows V) (A B : Finset V) (hA : A ⊆ r.grou
     rawLink ((((HistoryCorners.residual r.ground A B).erase a).erase b).erase c) c
       (avoiding (avoiding (cornerRows r A B) a) b).root =
       corner r.ground (A ∪ {a,b,c}) B r.root := by
+  change rawLink ((((cornerRows r A B).ground.erase a).erase b).erase c) c
+    (avoiding (avoiding (cornerRows r A B) a) b).root = _
   rw [twoLeaf_factor (cornerRows r A B) a b c ha hb hc hab hac hbc,
     ← corner_root r A B hA]
+  change corner (HistoryCorners.residual r.ground A B) {a,b,c} ∅
+    (corner r.ground A B r.root) = _
   simpa only [Finset.union_empty] using
     corner_compose r.ground A B {a,b,c} ∅ r.root (by
       intro x hx
@@ -605,9 +617,9 @@ private theorem adjacent_live (m : Nat) (hm : 3 ≤ m)
   obtain ⟨hne,d,hd⟩ := (HistoryForests.graph_actual_rows m hm A B x y).mp hxy
   constructor <;> apply Finset.mem_filter.mpr <;> refine ⟨Finset.mem_univ _,?_⟩
   · exact (HistoryForests.prune (HistoryForests.localRows m hm A B)).row_supported d
-      (hd.symm ▸ (by change a = Classical.choose singleton; rfl))
+      (hd.symm ▸ (by simp))
   · exact (HistoryForests.prune (HistoryForests.localRows m hm A B)).row_supported d
-      (hd.symm ▸ (by change a = Classical.choose singleton; rfl))
+      (hd.symm ▸ (by simp))
 
 private theorem adjacent_component (m : Nat) (hm : 3 ≤ m)
     (A B : Finset (AllMWheel.Label m)) (a x y : Fin m)
@@ -724,7 +736,8 @@ theorem unmarked_path_leaf (m : Nat) (hm : 3 ≤ m)
       · exact hleft he
       · have := hi.isLt
         dsimp [HistoryForests.rightEnd] at he
-        have := congrArg Fin.val he
+        have heval := congrArg Fin.val he
+        change lo.val = m - 1 at heval
         omega
     · obtain ⟨y,hxy,hy⟩ := component_extreme_leaf m hm A B a hi lo hhi hlo
         (fun h => by have := congrArg Fin.val h; omega) (Or.inr high)
@@ -765,8 +778,8 @@ private def projectedRimIndexEquiv {G : Type} (g : GraphData G V)
     change Disjoint
       ((PhysicalMWheel.ambientGraph i.width i.atLeastThree i.labels).rows.row c.1.1)
       (HistoryFactors.localMask g i A) at hd
-    rw [PhysicalMWheel.ambient_row, ← hC] at hd
-    exact (Finset.disjoint_image i.labels.injective).mp hd⟩
+    rw [PhysicalMWheel.ambient_row] at hd
+    exact (Finset.disjoint_image i.labels.injective).mp (hd.mono_right hC.le)⟩
   invFun c := ⟨c.1,by
     change Disjoint
       ((PhysicalMWheel.ambientGraph i.width i.atLeastThree i.labels).rows.row c.1.1)
@@ -876,7 +889,7 @@ theorem physical_local_incidence {G : Type} (g : GraphData G V) (i : WheelInput 
         fun h => ⟨h.1,fun hb => h.2 ⟨hb,hq h.1⟩⟩⟩
 
 /-- The usable physical leaf, with incidence transferred to ALL current indexed
-rows, including substituted old rows. The masks, HistoryCorners.residual ground and both
+rows, including substituted old rows. The masks, residual ground and both
 original marker coordinates are the actual physical ones. -/
 theorem physical_unmarked_leaf
     {G : Type} (g : GraphData G V) (i : PhysicalHistory.WheelInput g)
@@ -935,7 +948,7 @@ theorem physical_unmarked_leaf
     (path_at_injective _ _ (i.labels.injective h))
   have hd' : (HistoryFactors.projectedRimRows g i A B).row (e.symm d) = {a,b} := by
     rw [hr]
-    simpa only [e,Equiv.apply_symm_apply,hd,Finset.image_insert,Finset.image_singleton]
+    simpa only [e,Equiv.apply_symm_apply,hd,Finset.image_insert,Finset.image_singleton,a,b]
   obtain ⟨d',hd'phys⟩ := physical_rim_indexed g i A B (e.symm d)
   refine ⟨a,ha,b,hb,hab,d',hd'phys.trans hd',?_⟩
   intro c hc
@@ -947,7 +960,7 @@ theorem physical_unmarked_leaf
   obtain ⟨z,hz,he⟩ := Finset.mem_image.mp hm
   have he' : z = HistoryForests.«at» i.width i.atLeastThree x := i.labels.injective he
   rw [hq,hr,leaf (e q) (he' ▸ hz)]
-  simp only [Finset.image_insert,Finset.image_singleton]
+  simp only [Finset.image_insert,Finset.image_singleton,a,b]
 
 private theorem graph_edge_steps (m : Nat) (hm : 3 ≤ m)
     (A B : Finset (AllMWheel.Label m)) {x y : Fin m}
@@ -1088,9 +1101,9 @@ theorem physical_neighbour_cases {G : Type} (g : GraphData G V) (i : WheelInput 
       rw [hq,he] at hd
       simpa only [Finset.mem_insert,Finset.mem_singleton] using hd
     have hu : u ∈ HistoryFactors.localResidual g i A B :=
-      (HistoryFactors.projectedRimRows g i A B).row_supported q (he.symm ▸ (by simp))
+      (HistoryFactors.projectedRimRows g i A B).row_supported q (he.symm ▸ (by simp only [u,Finset.mem_insert,Finset.mem_singleton, true_or, eq_self]))
     have hv : v ∈ HistoryFactors.localResidual g i A B :=
-      (HistoryFactors.projectedRimRows g i A B).row_supported q (he.symm ▸ (by simp))
+      (HistoryFactors.projectedRimRows g i A B).row_supported q (he.symm ▸ (by simp only [v,Finset.mem_insert,Finset.mem_singleton, or_true, eq_self]))
     rcases hb' with rfl | rfl
     · exact ⟨v,hv,huv,hq.trans he⟩
     · exact ⟨u,hu,huv.symm,by simpa only [Finset.pair_comm] using hq.trans he⟩
@@ -1140,7 +1153,8 @@ theorem physical_projected_row_cases {G : Type} (g : GraphData G V) (i : WheelIn
     have hn : HistoryForests.«at» i.width i.atLeastThree (⟨k.val,by omega⟩ : Fin i.width) ≠
         HistoryForests.«at» i.width i.atLeastThree (⟨k.val + 1,by omega⟩ : Fin i.width) := by
       intro h
-      have := congrArg Fin.val (path_at_injective _ _ h)
+      have he := congrArg Fin.val (path_at_injective _ _ h)
+      change k.val = k.val + 1 at he
       omega
     rw [hr,h2,Finset.card_image_of_injective _ i.labels.injective]
     simp only [HistoryForests.cutRow,Finset.card_pair hn]
@@ -1149,7 +1163,7 @@ section EarlierHistory
 variable {n : Nat} {G : Type} {g : GraphData G V}
 
 /-- Exact current LOCAL-ground update for the recursive original masks.
-The old X is not moved into this measure and HistoryCorners.residual ghosts are not dropped. -/
+The old X is not moved into this measure and residual ghosts are not dropped. -/
 theorem localResidual_update (i : WheelInput g) (A B C D : Finset V) :
     HistoryFactors.localResidual g i (A ∪ C) (B ∪ D) =
       HistoryCorners.residual (HistoryFactors.localResidual g i A B) C D := by
@@ -1247,7 +1261,8 @@ theorem step_parent_readback (h : MixedHistory n G g) (i : WheelInput g)
         (HistoryFactors.deleted g i A B) (HistoryFactors.linked g i A B) := by
     rw [r.factorization]
     unfold HistoryForests.physicalDecorated
-    rw [corner_root (HistoryFactors.localRows g i)
+    simp only [HistoryFactors.projectedRimRows]
+    rw [← corner_root (HistoryFactors.localRows g i)
       (HistoryFactors.localMask g i A) (HistoryFactors.localMask g i B)
       Finset.inter_subset_right]
     rfl
@@ -1693,7 +1708,7 @@ theorem stepIntactOutput_main_faces (h : MixedHistory n G g) (i : WheelInput g)
     rw [← r.prior_ground]
     exact corner_supported _ _ _ _
   simpa only [stepIntactOutput, dif_pos hX,
-    HistoryIntact.changeOutput_mainPairsOf, groundOutput_mainPairsOf] using
+    HistoryIntact.changeOutput_mainPairsOf, groundOutput_mainPairsOf, X, J] using
     HistoryIntact.intactOutput_main_faces i.width i.atLeastThree X i.e J i.labels
       i.zero heX hX hXY hJ (priorOutput h i A B hA hB hAB old)
       (changeOutput (linkedOutput h i A B hA hB hAB old) r.linked_readback)
@@ -1764,7 +1779,7 @@ theorem stepIntactOutput_core_faces (h : MixedHistory n G g) (i : WheelInput g)
     rw [← r.prior_ground]
     exact corner_supported _ _ _ _
   simpa only [stepIntactOutput, dif_pos hX,
-    HistoryIntact.changeOutput_corePairsOf, groundOutput_corePairsOf] using
+    HistoryIntact.changeOutput_corePairsOf, groundOutput_corePairsOf, X, J] using
     HistoryIntact.intactOutput_core_faces i.width i.atLeastThree X i.e J i.labels
       i.zero heX hX hXY hJ (priorOutput h i A B hA hB hAB old)
       (changeOutput (linkedOutput h i A B hA hB hAB old) r.linked_readback)
@@ -1873,6 +1888,8 @@ private def stepTwoLeafFrom (i : WheelInput g) (A B : Finset V)
   have he : corner (HistoryCorners.residual W A B) {a,b,c} ∅ (cornerRows (wheelStepRows g i) A B).root =
       corner W (A ∪ {a,b,c}) B (wheelStepRows g i).root := by
     rw [← corner_root (wheelStepRows g i) A B hA]
+    change corner (HistoryCorners.residual W A B) {a,b,c} ∅
+      (corner W A B (wheelStepRows g i).root) = _
     simpa only [Finset.union_empty] using
       corner_compose W A B {a,b,c} ∅ (wheelStepRows g i).root (by
         intro x hx
@@ -1898,7 +1915,7 @@ private theorem subset_pair_cases (W : Finset V) (p q : V) (hW : W ⊆ {p,q}) :
     constructor
     · intro hx
       rcases (show x = p ∨ x = q by simpa using hW hx) with he | he
-      · simpa only [Finset.mem_singleton] using he
+      · exact Finset.mem_singleton.mpr he
       · exact (hq (he ▸ hx)).elim
     · intro hx
       exact (Finset.mem_singleton.mp hx).symm ▸ hp
@@ -1974,6 +1991,7 @@ def stepNoRowsOutput (h : MixedHistory n G g) (i : WheelInput g)
 rank use only the exact original masks proved below and strictly decrease the
 cardinality of the ACTUAL remaining local ground. The external supplier ranges
 only over corners of the strictly earlier graph g. -/
+set_option maxHeartbeats 2000000 in
 def stepOutput (h : MixedHistory n G g) (i : WheelInput g)
     (A B : Finset V) (hA : A ⊆ (physicalWheelStep g i).data.ground)
     (hB : B ⊆ (physicalWheelStep g i).data.ground) (hAB : Disjoint A B)
@@ -2031,7 +2049,7 @@ def stepOutput (h : MixedHistory n G g) (i : WheelInput g)
             let a := Classical.choose singleton
             have hd := Classical.choose_spec singleton
             have ha : a ∈ HistoryFactors.localResidual g i A B :=
-              (HistoryFactors.projectedRimRows g i A B).row_supported d (hd.symm ▸ (by change a = Classical.choose singleton; rfl))
+              (HistoryFactors.projectedRimRows g i A B).row_supported d (hd.symm ▸ (by simp only [a, Finset.mem_singleton]))
             have ha' := local_subset_current i A B ha
             have indexed := physical_rim_indexed g i A B d
             let q := Classical.choose indexed
@@ -2104,7 +2122,7 @@ def stepOutput (h : MixedHistory n G g) (i : WheelInput g)
                           (cornerRows (wheelStepRows g i) A B).row q = {a,b}
                 · have hm := next_masks (physicalWheelStep g i).data.ground A B {a} {b}
                     hA hB hAB (Finset.singleton_subset_iff.mpr ha')
-                    (Finset.singleton_subset_iff.mpr hb') (by simpa using hab)
+                    (Finset.singleton_subset_iff.mpr hb') (by simpa only [Finset.disjoint_singleton] using (show a ≠ b from hab))
                   have hdec : (HistoryFactors.localResidual g i (A ∪ {a}) (B ∪ {b})).card <
                       (HistoryFactors.localResidual g i A B).card := by
                     rw [localResidual_update]
