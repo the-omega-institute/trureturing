@@ -59,7 +59,7 @@ theorem parent_fibre_base {X Y Z : Finset V} {e : V} {K E : Family V}
       criticalPart e q ∪ t ∈ parentOf X Y Z e E c.core →
       t ∈ localBase e Z q E) := by
   have ha := part_supported (c.critical_supported q hq)
-  have hw := window_supported (q := q) hZ
+  have hw := window_supported (e := e) (q := q) hZ
   have hd : Disjoint (criticalPart e q) (localWindow e Y Z q) :=
     hXY.mono ha hw
   refine ⟨ha,hd,?_,?_⟩
@@ -122,12 +122,12 @@ theorem parent_fibre_cross {X Y Z : Finset V} {e : V} {K E : Family V}
   obtain ⟨x,hx,y,hy,heq⟩ := hm
   have ha := part_supported (c.critical_supported q hq)
   have ha' := part_supported (c.critical_supported q' hq')
-  have htY := ht.trans (window_supported hZ)
-  have hyY := (hM y hy).trans (window_supported hZ)
+  have htY := ht.trans (window_supported (e := e) hZ)
+  have hyY := (hM y hy).trans (window_supported (e := e) hZ)
   have hin : criticalPart e q ⊆ criticalPart e q' := by
     intro v hv
     have hh : v ∈ x ∪ y := by rw [← heq]; exact Finset.mem_union_left _ hv
-    exact (Finset.mem_union.mp hh).elim hx
+    exact (Finset.mem_union.mp hh).elim (fun hvx => hx hvx)
       (fun hv' => False.elim (Finset.disjoint_left.mp hXY (ha hv) (hyY hv')))
   have hty : t ⊆ y := by
     intro v hv

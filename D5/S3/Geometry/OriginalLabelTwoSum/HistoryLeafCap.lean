@@ -170,7 +170,7 @@ def padCertificate (W U d : Finset V) (B M : Family V)
       · change q ∈ c.critical.image (fun q => d ∪ q) at hq
         obtain ⟨q, hqSource, rfl⟩ := (Finset.mem_image (f := fun q : Finset V => d ∪ q) (s := c.critical)).mp hq
         clear hq
-        rename hqSource => hq
+        have hq := hqSource
         refine Or.inr ⟨s ∩ d, Finset.inter_subset_right, s ∩ q,
           Or.inr ⟨q, hq, Finset.inter_subset_right⟩, ?_⟩
         exact split_union hs
@@ -180,13 +180,13 @@ def padCertificate (W U d : Finset V) (B M : Family V)
       change q ∈ c.critical.image (fun q => d ∪ q) at hq
       obtain ⟨q, hqSource, rfl⟩ := (Finset.mem_image (f := fun q : Finset V => d ∪ q) (s := c.critical)).mp hq
       clear hq
-      rename hqSource => hq
+      have hq := hqSource
       exact hd.mono Finset.subset_union_left
     · intro q hq hC
       change q ∈ c.critical.image (fun q => d ∪ q) at hq
       obtain ⟨q, hqSource, rfl⟩ := (Finset.mem_image (f := fun q : Finset V => d ∪ q) (s := c.critical)).mp hq
       clear hq
-      rename hqSource => hq
+      have hq := hqSource
       rcases hC with hBq | ⟨a, ha, t, ht, he⟩
       · exact hmissing _ hBq Finset.subset_union_left
       · have hqt : q ⊆ t := subset_right_of_disjoint hdu ha
@@ -196,7 +196,7 @@ def padCertificate (W U d : Finset V) (B M : Family V)
       change q ∈ c.critical.image (fun q => d ∪ q) at hq
       obtain ⟨q, hqSource, rfl⟩ := (Finset.mem_image (f := fun q : Finset V => d ∪ q) (s := c.critical)).mp hq
       clear hq
-      rename hqSource => hq
+      have hq := hqSource
       have hqU := c.critical_supported q hq
       have hsDU := hs.subset.trans (Finset.union_subset_union le_rfl hqU)
       have hsplit := split_union hsDU
@@ -226,11 +226,11 @@ def padCertificate (W U d : Finset V) (B M : Family V)
       change q ∈ c.critical.image (fun q => d ∪ q) at hq
       obtain ⟨q, hqSource, rfl⟩ := (Finset.mem_image (f := fun q : Finset V => d ∪ q) (s := c.critical)).mp hq
       clear hq
-      rename hqSource => hq
+      have hq := hqSource
       change t ∈ c.critical.image (fun q => d ∪ q) at ht
       obtain ⟨t, htSource, rfl⟩ := (Finset.mem_image (f := fun q : Finset V => d ∪ q) (s := c.critical)).mp ht
       clear ht
-      rename htSource => ht
+      have ht := htSource
       exact congrArg (fun s => d ∪ s) (c.cells.antichain q hq t ht
         (union_cancel_right hdu (c.critical_supported q hq) hqt))
   let T := liftFibre c.core (delta {c.vertex}) B d U hC0 (by simp) c.separate hdu
@@ -258,7 +258,8 @@ def padCertificate (W U d : Finset V) (B M : Family V)
       · exact Finset.mem_insert.mpr (Or.inl (Finset.mem_singleton.mp (ht hvt)))
   let R := emitPair H d c.vertex hd hpD hUpper hFree
   have hRetained : R.retained = project B := by
-    rw [R, emitPair_retained]
+    dsimp only [R]
+    rw [emitPair_retained]
     congr 1
     apply SetLike.ext
     intro s
@@ -296,7 +297,7 @@ def padCertificate (W U d : Finset V) (B M : Family V)
   change q ∈ c.critical.image (fun q => d ∪ q) at hq
   obtain ⟨q, hqSource, rfl⟩ := (Finset.mem_image (f := fun q : Finset V => d ∪ q) (s := c.critical)).mp hq
   clear hq
-  rename hqSource => hq
+  have hq := hqSource
   exact (Finset.union_subset_union le_rfl (c.critical_supported q hq)).trans hW
 
 /-- All three factor tags in the common padding construction. This function
@@ -715,7 +716,7 @@ private def twoLeafEndOutput (U : Finset V) (a b c : V) (M : Family V)
           (fun h => (show s ⊆ insert a ∅ from h).trans
             (by simp only [Finset.insert_empty, Finset.singleton_subset_iff, Finset.mem_insert_self]))
           (fun h => (show s ⊆ insert c ∅ from h).trans
-            (by simp only [Finset.insert_empty, Finset.singleton_subset_iff, Finset.mem_insert, Finset.mem_singleton]; exact Or.inr rfl))
+            (by simp only [Finset.insert_empty, Finset.singleton_subset_iff, Finset.mem_insert, Finset.mem_singleton]; exact Or.inr trivial))
       exact .strong (changeCertificate (coneCertificate W (delta {a,c}) a
         (fun _ h => h.trans (by simp [W])) (by simp)
         (fun s h => Finset.insert_subset (by simp) h)) he.symm)

@@ -113,6 +113,7 @@ theorem normalized_row (g : GraphData Vertex Label) (c : g.chords)
   change g.ground.filter (fun i => g.edge i ∈ ((g.normalizeInterface c).path d).edges) =
     g.ground.filter (fun i => g.edge i ∈ (g.path d.1).edges)
   rw [hp]
+  rfl
 
 /-- The interface's actual path row is preserved. -/
 theorem normalized_distinguished_row (g : GraphData Vertex Label) (c : g.chords) :
@@ -352,6 +353,9 @@ theorem wheel_uniqueInterface : wheelGraphData.UniqueInterface (0 : Fin 4) := by
     · apply Sym2.eq_iff.mpr
       exact Or.inr ⟨rimVertex_injective ha,rimVertex_injective hb⟩
   exact CyclicInterface.cyclic_edge_injective (by decide) hcyc
+
+local instance : OfNat wheelGraphData.chords 0 :=
+  inferInstanceAs (OfNat (Fin 4) 0)
 
 /-- Physical W4 deletion is the existing literal E, using the local corollary. -/
 theorem wheel_E_edge : wheelGraphData.E_edge (0 : Fin 4) = E :=
