@@ -97,7 +97,7 @@ def emptyOldIntactOutput (m : Nat) (hm : 3 ≤ m) (J : Family (Label m))
             intro v hv
             have hv0 : v = 0 := Finset.mem_singleton.mp (hJ s hs hv)
             exact hp (J.lower (Finset.singleton_subset_iff.mpr (hv0 ▸ hv)) hs)
-          exact (mem_delta _ _).mpr (by rw [he]; exact Finset.empty_subset _)
+          exact (mem_delta _ _).mpr (by simpa only [he] using Finset.empty_subset (∅ : Finset (Label m)))
         · intro hs
           exact J.lower hs h0
       exact changeOutput (.strong (cycleCertificate m hm))
@@ -237,7 +237,8 @@ private theorem parent_unit_general (X Y Z : Finset V) (e : V) (E : Family V) :
   have hd : restrict X (delta (∅ : Finset V)) = delta ∅ := by
     apply SetLike.ext
     intro s
-    simp [restrict]
+    change (s ⊆ ∅ ∧ s ⊆ X) ↔ s ⊆ ∅
+    exact ⟨And.left, fun hs => ⟨hs, hs.trans (Finset.empty_subset _)⟩⟩
   have hl : rawLink X e (delta (∅ : Finset V)) = ⊥ := by
     apply SetLike.ext
     intro s
@@ -318,7 +319,7 @@ def emptyOldEmbeddedIntactOutput (m : Nat) (hm : 3 ≤ m) (e : V)
             intro v hv
             have hve : v = e := Finset.mem_singleton.mp (hJ s hs hv)
             exact hp (J.lower (Finset.singleton_subset_iff.mpr (hve ▸ hv)) hs)
-          exact (mem_delta _ _).mpr (by rw [hs0]; exact Finset.empty_subset _)
+          exact (mem_delta _ _).mpr (by simpa only [hs0] using Finset.empty_subset (∅ : Finset V))
         · intro hs
           exact J.lower hs h0
       have hh : renameFamily f (A1 m hm) = E ⊔ delta Z := by
@@ -374,25 +375,27 @@ theorem emptyOldEmbedded_lists (m : Nat) (hm : 3 ≤ m) (e : V) (J : Family V)
     have hn : ((ground m).image f).Nonempty :=
       Finset.image_nonempty.mpr ⟨firstLabel m hm, by simp [ground, firstLabel, Fin.ext_iff]⟩
     constructor
-    · simp only [emptyOldEmbeddedIntactOutput, dif_pos hp, changeOutput_mainPairsOf,
-        simplexOutput, dif_pos hn, mainPairsOf, coneCertificate, orderedPairs, orderedPair,
+    · simp only [emptyOldEmbeddedIntactOutput, dif_pos hp, changeOutput_mainPairsOf]
+      simp only [simplexOutput, dif_pos hn, mainPairsOf, coneCertificate, orderedPairs, orderedPair,
         Sequence.pairs_cast, Sequence.pairs, List.map_nil]
-    · simp only [emptyOldEmbeddedIntactOutput, dif_pos hp, changeOutput_corePairsOf,
-        simplexOutput, dif_pos hn, corePairsOf, coneCertificate]
+    · simp only [emptyOldEmbeddedIntactOutput, dif_pos hp, changeOutput_corePairsOf]
+      simp only [simplexOutput, dif_pos hn, corePairsOf, coneCertificate]
       simpa only [mem_delta] using collapseCone_orderedPairs ((ground m).image f)
         (delta ((ground m).image f)) hn.choose (fun _ h => h)
         (Finset.singleton_subset_iff.mpr hn.choose_spec)
         (fun s hs => Finset.insert_subset hn.choose_spec hs)
   · intro hp h0
     simp only [emptyOldEmbeddedIntactOutput, dif_neg hp, dif_pos h0,
-      changeOutput_mainPairsOf, changeOutput_corePairsOf, mainPairsOf, corePairsOf,
-      renameCertificate, orderedPairs, orderedPair, Sequence.pairs_cast, renameSequence_pairs,
-      and_self]
+      changeOutput_mainPairsOf, changeOutput_corePairsOf]
+    simp only [mainPairsOf, corePairsOf, renameCertificate, orderedPairs, Sequence.pairs_cast]
+    unfold orderedPair
+    simp only [renameSequence_pairs, and_self]
   · intro hp h0
     simp only [emptyOldEmbeddedIntactOutput, dif_neg hp, dif_neg h0,
-      changeOutput_mainPairsOf, changeOutput_corePairsOf, mainPairsOf, corePairsOf,
-      renameCertificate, orderedPairs, orderedPair, Sequence.pairs_cast, renameSequence_pairs,
-      and_self]
+      changeOutput_mainPairsOf, changeOutput_corePairsOf]
+    simp only [mainPairsOf, corePairsOf, renameCertificate, orderedPairs, Sequence.pairs_cast]
+    unfold orderedPair
+    simp only [renameSequence_pairs, and_self]
 
 private theorem zero_collar (m : Nat) (hm : 3 ≤ m) (f : Label m ↪ V) :
     (zeroFilling m hm f).collar =
@@ -504,8 +507,8 @@ theorem unitIntact_main_faces (m : Nat) (hm : 3 ≤ m) (hr : m % 3 ≠ 2)
     (hXY : Disjoint X ((ground m).image f)) :
     orderedPairs (unitIntactCertificate m hm hr X e f hX hXY).main =
       (fill0 m hm).main.pairs.map (fun P => (P.lower.image f, P.upper.image f)) := by
-  simp only [unitIntactCertificate, orderedPairs, orderedPair,
-    Sequence.pairs_cast, relativeProduct_pairs]
+  unfold orderedPairs orderedPair
+  simp only [unitIntactCertificate, Sequence.pairs_cast, relativeProduct_pairs]
   simp [fibres, mem_delta, zeroFilling, retargetFilling, renameFilling,
     Sequence.pairs_cast, renameSequence_pairs]
 
@@ -517,7 +520,11 @@ theorem unitIntact_core_faces (m : Nat) (hm : 3 ≤ m) (hr : m % 3 ≠ 2)
       (fibres (((X ∪ (ground m).image f).erase hX.choose).powerset.filter
         (fun s => s.Nonempty ∧ s ∈ rawJoin (delta X) (renameFamily f (pathRoot m hm))))).map
         (fun s => (s, insert hX.choose s)) := by
-  exact collapseCone_orderedPairs _ _ _ _ _ _
+  exact collapseCone_orderedPairs (X ∪ (ground m).image f)
+    (rawJoin (delta X) (renameFamily f (pathRoot m hm))) hX.choose
+    (base_support X _ _ (local_support m hm f))
+    (base_vertex X _ _ hX.choose_spec (local_empty m hm f))
+    (base_cone X _ _ hX.choose_spec)
 
 /-- Good residue, with ALL old tags. The strong branch consumes the original
 compiler and its actual collar at its real Gamma hypothesis. Source core=e
@@ -558,9 +565,14 @@ theorem goodVoid_lists (m : Nat) (hm : 3 ≤ m) (hg : goodResidue m)
         (fun s => s.Nonempty ∧ s ∈ rawJoin (delta X) (renameFamily f (pathRoot m hm))))).map
         (fun s => (s, insert hX.choose s)) := by
   constructor
-  · simp only [goodIntactCertificate, replaceCertificate, coneCertificate,
-      orderedPairs, orderedPair, Sequence.pairs_cast, Sequence.pairs, List.map_nil]
-  · exact collapseCone_orderedPairs _ _ _ _ _ _
+  · unfold orderedPairs orderedPair
+    simp only [goodIntactCertificate, replaceCertificate, coneCertificate,
+      Sequence.pairs_cast, Sequence.pairs, List.map_nil]
+  · exact collapseCone_orderedPairs (X ∪ (ground m).image f)
+      (rawJoin (delta X) (renameFamily f (pathRoot m hm))) hX.choose
+      (base_support X _ _ (local_support m hm f))
+      (base_vertex X _ _ hX.choose_spec (local_empty m hm f))
+      (base_cone X _ _ hX.choose_spec)
 
 /-- Good-residue UNIT uses the original P0 main and the independent base
 cone, as in the constructed unit terminal, for every original ghost. -/
@@ -659,7 +671,9 @@ def twoNormalization (m : Nat) (hm : 3 ≤ m) (h2 : m % 3 = 2)
     (fun v hv hz => Finset.disjoint_left.mp hXY hv (hZY hz))
   have hA0 : (∅ : Finset V) ∈ A0' := ⟨local_empty m hm f, Finset.empty_subset _⟩
   let T0 := relativeProduct X Z D L middle (delta Z) A0' hXZ hD
-    (fun s hs => Or.inr (join_mono le_rfl (fun _ ht => ht.trans hZY) hs))
+    (by
+      rintro s ⟨a, ha, t, ht, rfl⟩
+      exact Or.inr ⟨a, ha, t, ht.trans hZY, rfl⟩)
     (Finset.empty_subset _) hA0 (fun _ hs => hs) (twoZeroSequence m hm h2 f) (by
       intro a ha hna t ht h
       rcases h with hB | ⟨u, hu, v, hv, he⟩
@@ -671,8 +685,8 @@ def twoNormalization (m : Nat) (hm : 3 ≤ m) (h2 : m % 3 = 2)
     ac_rfl
   have hTarget : middle ⊔ rawJoin D A0' = middle := by
     apply sup_eq_left.mpr
-    intro s hs
-    exact Or.inl (join_mono hD (fun _ ht => ht.1) hs)
+    rintro s ⟨a, ha, t, ht, rfl⟩
+    exact Or.inl ⟨a, hD a ha, t, ht.1, rfl⟩
   let T1 := relativeProduct X Y L ⊥ B (delta Y) N hXY hL
     (by rintro s ⟨a, ha, _, _, _⟩; exact ha.elim)
     (Finset.empty_subset _) (Or.inl (local_empty m hm f)) (fun _ hs => hs)
@@ -687,7 +701,13 @@ def twoNormalization (m : Nat) (hm : 3 ≤ m) (h2 : m % 3 = 2)
     (T1.1.cast rfl (congrArg project hFinal)), ?_⟩
   rw [Sequence.pairs_append, List.map_append, Sequence.pairs_cast,
     Sequence.pairs_cast, T0.2, T1.2]
-  simp only [Set.mem_empty_iff_false, not_false_eq_true, and_true]
+  have hbot (K : Family V) :
+      (fun a : Finset V => a ∈ K ∧ a ∉ (⊥ : Family V)) = (fun a => a ∈ K) := by
+    funext a
+    apply propext
+    change (a ∈ K ∧ ¬ False) ↔ a ∈ K
+    tauto
+  simp only [hbot]
 
 /-- Explicit factor-main list used by the residue-two recovery. Tags emit no
 factor pair, and UNIT is not represented by an empty ordinary lower face. -/
@@ -912,9 +932,10 @@ theorem twoIntact_main_faces (m : Nat) (hm : 3 ≤ m) (h2 : m % 3 = 2)
       layerMainFaces (twoPathTop m hm f) oL := by
   have hT := (twoNormalization m hm h2 X e J f hXY).2
   have hR := twoRecovered_main_faces m hm h2 X e J f hX hXY oL
-  simpa only [twoIntactCertificate, orderedPairs, orderedPair,
-    Sequence.pairs_append, List.map_append, List.append_assoc] using
-    congrArg₂ List.append hT hR
+  have h := congrArg₂ (fun (xs ys : List (Finset V × Finset V)) => xs ++ ys) hT hR
+  unfold orderedPairs orderedPair at h ⊢
+  simpa only [twoIntactCertificate, Sequence.pairs_append, List.map_append,
+    List.append_assoc] using h
 
 /-- GLOBAL C-ALONE readback of the actual residue-two certificate. Its final
 cone is on the whole original ground, filtering by actual B membership; a
@@ -957,7 +978,8 @@ private theorem zero_rho (m : Nat) (hm : 3 ≤ m) (h0 : m % 3 = 0) :
   simp only [eta1, eta0, tailGround, tailCritical, if_neg (by omega : m % 3 ≠ 2),
     ground, rim, labelsCongruent, Finset.mem_sdiff, Finset.mem_filter,
     Finset.mem_univ, Finset.mem_erase, Finset.mem_insert, Finset.mem_singleton,
-    true_and, and_true, Fin.ext_iff, firstLabel, secondLabel]
+    true_and, and_true, Fin.ext_iff, firstLabel, secondLabel,
+    ne_eq, Fin.val_zero, Fin.val_mk]
   have := x.isLt
   omega
 
@@ -1032,6 +1054,7 @@ theorem goodStrong_core_faces (m : Nat) (hm : 3 ≤ m) (hg : goodResidue m)
   change orderedPairs (AllMWheel.oneStep m hm hg c f hf0 heX hXY).separate = _
   unfold AllMWheel.oneStep
   rw [compileParent_separate_orderedPairs, finishPairSchedule_faces]
+  rfl
 
 /-- The original excluded-cycle filling in residue zero, including BOTH
 critical tops and its exact ordinary native sequence. -/
@@ -1050,7 +1073,10 @@ def zeroOneSequence (m : Nat) (hm : 3 ≤ m) (h0 : m % 3 = 0) (f : Label m ↪ V
     apply SetLike.ext
     intro s
     simp [facets]
-  exact g.main.cast rfl (by rw [hq, endpoint, hf, one_interface]; rfl)
+  have hcollar : g.collar = renameFamily f (pathRoot m hm) ⊔
+      delta ((tailGround m hm).image f) := one_interface m hm f
+  exact g.main.cast rfl (congrArg project
+    (congrArg₂ (fun A B : Family V => A ⊔ B) hcollar ((congrArg facets hq).trans hf)))
 
 /-- The original zero filling with eta retained, at every residue-zero width
 including m=3 where its genuine local list is empty. -/
@@ -1218,7 +1244,13 @@ def zeroNormalization (m : Nat) (hm : 3 ≤ m) (h0 : m % 3 = 0)
     (T0.1.cast rfl (congrArg project hT0)), ?_⟩
   rw [Sequence.pairs_append, List.map_append, Sequence.pairs_cast,
     Sequence.pairs_cast, T1.2, T0.2]
-  simp only [Set.mem_empty_iff_false, not_false_eq_true, and_true]
+  have hbot (K : Family V) :
+      (fun a : Finset V => a ∈ K ∧ a ∉ (⊥ : Family V)) = (fun a => a ∈ K) := by
+    funext a
+    apply propext
+    change (a ∈ K ∧ ¬ False) ↔ a ∈ K
+    tauto
+  simp only [hbot]
 
 private theorem zeroCycleCells (m : Nat) (hm : 3 ≤ m) (h0 : m % 3 = 0)
     (f : Label m ↪ V) :
@@ -1355,7 +1387,9 @@ def zeroRecovered (m : Nat) (hm : 3 ≤ m) (h0 : m % 3 = 0)
     rw [HistoryMarkers.single_marker_family X e r J heX hrX hJ]
     rintro s (hs | ⟨a, ha, t, ht, rfl⟩)
     · exact hs.2.trans (Finset.subset_insert _ _)
-    · exact Finset.union_subset (ha.trans (by simp)) (ht.1.trans (Finset.subset_insert _ _))
+    · exact Finset.union_subset
+        (ha.trans (Finset.singleton_subset_iff.mpr (Finset.mem_insert_self _ _)))
+        (ht.1.trans (Finset.subset_insert _ _))
   have hL : Supported X L := fun _ hs => hs.1
   have hCycle := zeroCycleCells m hm h0 f
   have hEtaNotD : ¬ eta ⊆ d := by
@@ -1381,14 +1415,14 @@ def zeroRecovered (m : Nat) (hm : 3 ≤ m) (h0 : m % 3 = 0)
     intro s hs hsub
     rcases hs with hs | ⟨a, ha, t, ht, rfl⟩
     · exact hEtaE (base_local (a := ∅) hXY (hEtaZ.trans hZY)
-        (by simpa only [Finset.empty_union, B] using B.lower hsub hs))
+        (by change ∅ ∪ _ ∈ B; rw [Finset.empty_union]; exact B.lower hsub hs))
     · exact hEtaNotD ((local_part (a := ∅) hXY (hEtaZ.trans hZY) ht
         (by simpa only [Finset.empty_union, Finset.union_comm] using hsub)).trans ha)
   have hMissing' : ∀ s ∈ B ⊔ rawJoin (delta eta) (delta U), ¬ d ⊆ s := by
     intro s hs hsub
     rcases hs with hs | ⟨a, ha, t, ht, rfl⟩
     · exact hdE (base_local (a := ∅) hXY hdY
-        (by simpa only [Finset.empty_union, B] using B.lower hsub hs))
+        (by change ∅ ∪ _ ∈ B; rw [Finset.empty_union]; exact B.lower hsub hs))
     · apply hDNotRho
       intro v hv
       rcases Finset.mem_union.mp (hsub hv) with hva | hvt
@@ -1484,9 +1518,10 @@ theorem zeroIntact_main_faces (m : Nat) (hm : 3 ≤ m) (h0 : m % 3 = 0)
       HistoryIntactLayers.mainFaces (zeroOtherTop m hm f) oL := by
   have hT := (zeroNormalization m hm h0 X e J f heX hXY hJ).2
   have hR := (zeroRecovered m hm h0 X e J f heX hX hXY hJ oJ oL).2.1
-  simpa only [zeroIntactCertificate, orderedPairs, orderedPair,
-    Sequence.pairs_append, List.map_append, List.append_assoc] using
-    congrArg₂ List.append hT hR
+  have h := congrArg₂ (fun (xs ys : List (Finset V × Finset V)) => xs ++ ys) hT hR
+  unfold orderedPairs orderedPair at h ⊢
+  simpa only [zeroIntactCertificate, Sequence.pairs_append, List.map_append,
+    List.append_assoc] using h
 
 /-- Complete C-ALONE readback: the two core strips precede the sole cone. -/
 theorem zeroIntact_core_faces (m : Nat) (hm : 3 ≤ m) (h0 : m % 3 = 0)

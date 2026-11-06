@@ -129,8 +129,10 @@ def singleMarkerOutput (X : Finset V) (e r : V) (J : Family V)
     (o : Output (insert e X) J) :
     Output (insert r X) (singleFamily (restrict X J) (rawLink X e J) r) := by
   have out := renameOutput (markerMap e r) o
-  rw [marker_ground X e r he hr] at out
-  exact changeOutput out (single_marker_family X e r J he hr hJ)
+  have moved : Output (insert r X) (renameFamily (markerMap e r) J) :=
+    Eq.mp (congrArg (fun T : Finset V => Output T (renameFamily (markerMap e r) J))
+      (marker_ground X e r he hr)) out
+  exact changeOutput moved (single_marker_family X e r J he hr hJ)
 
 /-- Two isolated markers: actual twin strip followed by the renamed J main.
 The source J is never replaced by its collapse endpoint. The s-coordinate
