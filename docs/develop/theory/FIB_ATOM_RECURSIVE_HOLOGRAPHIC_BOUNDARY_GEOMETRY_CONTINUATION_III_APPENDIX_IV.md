@@ -1454,4 +1454,72 @@ The source-specific application is repo-derived: (175.7)–(175.8) use the origi
 
 The universal partition target (155.3) retains all original $\theta$ and all whole-$G$ pointwise Borel partitions. This theorem excludes only the nonzero family (158.1); it neither excludes arbitrary partitions or other families nor settles $F_{64}$, $H43$ or SRS$\text{-}20$. It supplies no native AURIC realization, physical successor, common reference or joint-operation transport, or correspondence for all legal futures. Complete quantum origin remains unresolved. These are paper deductions conditional on the retained suppliers, with no Lean/kernel certification asserted.
 
+## 176. First-order leakage required outside the calibrated kernel
+
+Section 175 used the full first-order kernel to turn the preserved terminal channel into a strict quadratic obstruction. Removing that kernel assumption leaves an exact scalar compatibility condition rather than an unrestricted escape.
+
+**Definition 176.1 (the $003$ leakage functional).** Retain the complete telescope and the legal family (175.1)--(175.3). For a bounded real Borel function $v$, define
+
+$$
+\ell_{003}(v)
+=\mathcal C(v,F,q)+\mathcal C(F,v,q),
+\qquad
+A_\theta(v)=\mathcal C(v,v,q).
+\tag{176.1}
+$$
+
+The first quantity is the $003$ component of the original first-order map, and $A_\theta(v)>0$ for every nonzero $m$-class by Appendix III Proposition 134.2.
+
+**Proposition 176.2 (exact leakage identity for arbitrary directions).** For every original $\theta$, every bounded real Borel $v,w$, and every nonzero real $t$ for which (175.2) is legal, one has
+
+$$
+\frac34\bigl(\Delta(u)_{003}+\Delta(u)_{00B}\bigr)
+-\frac14\bigl(\Delta(u)_{000}+\Delta(u)_{001}\bigr)
+=t\,\ell_{003}(v)+t^2A_\theta(v).
+\tag{176.2}
+$$
+
+Consequently,
+
+$$
+\|\Delta(u)\|_{\max}
+\ge
+\frac{|t|}{2}\,\bigl|\ell_{003}(v)+tA_\theta(v)\bigr|.
+\tag{176.3}
+$$
+
+*Proof.* The affine terminal combination in (175.7) remains $q$ for every $v$ and $w$. The same multilinearity calculation as (175.8), without setting the first-order term to zero, gives
+
+$$
+\sum_{k\in\mathcal L}\alpha_k\Delta(u)_{00k}
+=t\bigl[\mathcal C(v,F,q)+\mathcal C(F,v,q)\bigr]
+ +t^2\mathcal C(v,v,q),
+$$
+
+which is (176.2). The sum of absolute coefficients is $2p+2(1-p)=2$, so the triangle inequality gives (176.3). The calculation never uses a sign, rotation, or invariance condition on $w$. $\square$
+
+**Corollary 176.3 (the only scalar escape from the preserved channel).** Let $v$ be nonzero as an $m$-class. If a legal tuple of the family (175.2) has all sixty-four residuals equal to zero, then
+
+$$
+\ell_{003}(v)+tA_\theta(v)=0,
+\qquad
+t=-\frac{\ell_{003}(v)}{A_\theta(v)}.
+\tag{176.4}
+$$
+
+In particular, $\ell_{003}(v)\ne0$; every nonzero direction in the $003$ kernel, including every nonzero $v\in V$, is excluded by Proposition 176.2. The terminal compensator cannot alter either side of (176.4).
+
+For any sequence of legal tuples in this family with $t_n\ne0$ and $\|\Delta(u^{(n)})\|_{\max}\to0$,
+
+$$
+\ell_{003}(v_n)+t_nA_{\theta_n}(v_n)\longrightarrow0.
+\tag{176.5}
+$$
+
+Thus a prospective full-law escape outside $V$ must carry nonzero first-order leakage and tune its amplitude against the positive quadratic energy; changing only the terminal correction cannot supply that tuning.
+
+*Proof.* If every residual is zero, the left side of (176.2) is zero. For nonzero $v$, Proposition 134.2 gives $A_\theta(v)>0$, yielding (176.4). If $\ell_{003}(v)=0$, then (176.4) would give $tA_\theta(v)=0$, contradicting $t\ne0$. The sequence statement follows from (176.3). $\square$
+
+This result narrows the remaining multi-direction and non-kernel routes to a coupled first-order leakage problem. It does not prove that the tuned scalar relation is sufficient, that the resulting tuple is legal for any prescribed $\theta$, or that the other $63$ coordinates can vanish. Arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization remain open.
+
 ## 追加锚（本行以下为增补区）
