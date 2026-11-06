@@ -62,7 +62,7 @@ private theorem phase_sum_three {d : ℕ} (hd : 0 < d) (j : Fin d)
       Finset.mem_insert, Finset.mem_singleton]
     constructor
     · intro hi
-      have hquot : i.val / d < 3 := Nat.div_lt_of_lt_mul i.isLt
+      have hquot : i.val / d < 3 := Nat.div_lt_of_lt_mul (by simpa [Nat.mul_comm] using i.isLt)
       have he := Nat.mod_add_div i.val d
       have hcases : i.val / d = 0 ∨ i.val / d = 1 ∨ i.val / d = 2 := by omega
       rcases hcases with h | h | h
@@ -83,8 +83,8 @@ private theorem phase_sum_three {d : ℕ} (hd : 0 < d) (j : Fin d)
         omega
     · rintro (rfl | rfl | rfl)
       · exact Nat.mod_eq_of_lt j.isLt
-      · simp [p1, Nat.add_mod, Nat.mod_eq_of_lt j.isLt]
-      · simp [p2, Nat.add_mod, Nat.mul_mod, Nat.mod_eq_of_lt j.isLt]
+      · simp [p1, Nat.mod_eq_of_lt j.isLt]
+      · simp [p2, Nat.add_mod, Nat.mod_eq_of_lt j.isLt]
   have h01 : p0 ≠ p1 := by
     intro h
     have hv := congrArg Fin.val h
@@ -101,7 +101,9 @@ private theorem phase_sum_three {d : ℕ} (hd : 0 < d) (j : Fin d)
     dsimp [p1, p2] at hv
     omega
   rw [hset]
-  simpa [h01, h02, h12, add_assoc]
+  calc
+    _ = f p0 + f p1 + f p2 := by simp [h01, h02, h12, add_assoc]
+    _ = _ := rfl
 
 /-- The literal three-point phase trace of the seed
 `(2^d - 1) * (2^(d+1) - 3)`, on every original physical label.
@@ -215,7 +217,7 @@ theorem actual_phase_trace (d : ℕ) (hd : 3 ≤ d) (j : Fin d) :
     rw [hs]
     have hj3 : j.val ≠ d - 3 := by omega
     have hj1 : j.val ≠ d - 1 := by omega
-    simp only [if_neg hj3, if_neg hj1]
+    simp only [ite_eq_right hj3, ite_eq_right hj1]
     dsimp [a, b, c]
     ring
   · by_cases hj3 : j.val = d - 3
@@ -236,7 +238,7 @@ theorem actual_phase_trace (d : ℕ) (hd : 3 ≤ d) (j : Fin d) :
         (by ring) (by dsimp [a, b, q]; ring) (by dsimp [a, c, q]; ring) ha hb hc
       rw [hs]
       have hj1 : j.val ≠ d - 1 := by omega
-      simp only [if_pos hj3, if_neg hj1]
+      simp only [ite_eq_left hj3, ite_eq_right hj1]
       dsimp [a, b, c]
       ring
     · by_cases hj2 : j.val = d - 2
@@ -257,7 +259,7 @@ theorem actual_phase_trace (d : ℕ) (hd : 3 ≤ d) (j : Fin d) :
           (by ring) (by dsimp [a, b, q]; ring) (by dsimp [a, c, q]; ring) ha hb hc
         rw [hs]
         have hj1 : j.val ≠ d - 1 := by omega
-        simp only [if_neg hj3, if_neg hj1]
+        simp only [ite_eq_right hj3, ite_eq_right hj1]
         dsimp [a, b, c]
         ring
       · have hj1 : j.val = d - 1 := by omega
@@ -279,7 +281,7 @@ theorem actual_phase_trace (d : ℕ) (hd : 3 ≤ d) (j : Fin d) :
           (2 * x - 2) ((2 * B - 5) * x + 2)
           (by ring) (by dsimp [a, b, q]; ring) (by dsimp [a, c, q]; ring) ha hb hc
         rw [hs]
-        simp only [if_neg hj3, if_pos hj1]
+        simp only [ite_eq_right hj3, ite_eq_left hj1]
         dsimp [a, b, c]
         ring
 
