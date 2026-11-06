@@ -1,0 +1,86 @@
+## 77. 椭圆伸缩、相位平方和与完整谱读出
+
+**命题 C-77.1（同一全正纤维上的归一化平方和）。** 在 C-76 的条件下，令
+$\mathscr R=\sqrt{p_0p_1p_3p_{13}}>0$。则
+
+$$
+\mathcal C^2=
+\frac{16\mathscr R}{r^2}
+\left(\sinh^2(2\eta)+\sin^2\frac\chi2\right),
+\qquad
+\mathcal C=0\ \Longleftrightarrow\
+\eta=0,\ \chi=0\pmod{2\pi}.
+\tag{C77.1}
+$$
+
+这是 C-12.2、C-73.4 的相位敏感行列式在带标记椭圆坐标和纯态 concurrence 归一化中的应用。
+
+证明。令 $a=\sqrt{p_0p_{13}}$、$b=\sqrt{p_1p_3}$。实际复乘积差为
+
+$$
+r\det\mathsf B
+=e^{-i(\theta_1+\theta_3)}(ae^{-i\chi}-b).
+$$
+
+去掉共同相位后，
+
+$$
+\begin{aligned}
+\mathcal C^2
+&=\frac4{r^2}|ae^{-i\chi}-b|^2,\\
+|ae^{-i\chi}-b|^2
+&=a^2+b^2-2ab\cos\chi
+=(a-b)^2+4ab\sin^2(\chi/2).
+\end{aligned}
+$$
+
+由 $a/b=e^{4\eta}$ 得
+$a=\sqrt{ab}\,e^{2\eta}$、$b=\sqrt{ab}\,e^{-2\eta}$，所以
+$a-b=2\sqrt{ab}\sinh(2\eta)$。再用 $ab=\mathscr R$ 即得全部系数。
+正性使前因子严格正，两平方同时零恰要求 $\eta=0$ 和 $\chi=0\bmod2\pi$。
+因而概率椭圆成为圆只消去幅度不平衡项，四角相位不闭合项仍可非零。证毕。
+
+**命题 C-77.2（同概率圆的连续相位族及三种谱图）。** 全五态纯振幅族
+
+$$
+\psi(\chi)=\frac1{\sqrt5}(1,1,1,1,e^{-i\chi})
+\tag{C77.2}
+$$
+
+满足 $p_s=1/5$、$X=Y=2/5$、$Z=1/5$、$r=4/5$、
+$\kappa=1/5$、$\eta=0$。它的概率关联图恒为圆，但条件底面矩阵和 concurrence 为
+
+$$
+\mathsf B(\chi)=\frac12\begin{pmatrix}1&1\\1&e^{-i\chi}\end{pmatrix},
+\qquad
+\mathcal C(\chi)=\left|\sin\frac\chi2\right|.
+\tag{C77.3}
+$$
+
+定义谱椭圆为两个半轴分别取 $\mathsf B$ 的奇异值 $s_+\ge s_-\ge0$ 的椭圆；
+允许 $s_-=0$ 时退化为线段。一般 C-76 条件纯态都有
+
+$$
+s_\pm^2=\frac{1\pm\sqrt{1-\mathcal C^2}}2.
+\tag{C77.4}
+$$
+
+证明。式 (C77.2) 直接给所有概率和矩。条件化除以 $\sqrt{4/5}$ 得式 (C77.3) 的矩阵；
+其行列式为 $(e^{-i\chi}-1)/4$，故 concurrence 为所列绝对正弦。
+对一般矩阵，$\mathsf B\mathsf B^\dagger$ 的迹为一、行列式为
+$|\det\mathsf B|^2=\mathcal C^2/4$，特征多项式为
+$\lambda^2-\lambda+\mathcal C^2/4$。求根给式 (C77.4)，取非负平方根即为奇异值。
+这一步是二阶正矩阵的经典谱计算，在这里连接同一概率椭圆上的相位族：
+
+| 隐藏相位 $\chi$ | 概率关联图 | $\mathcal C$ | $(s_+^2,s_-^2)$ | 谱半轴 $(s_+,s_-)$ 及图形 |
+| --- | --- | ---: | --- | --- |
+| $0$ | 圆，半轴 $(1,1)$ | $0$ | $(1,0)$ | $(1,0)$，线段 |
+| $\pi/2$ | 圆，半轴 $(1,1)$ | $1/\sqrt2$ | $((2+\sqrt2)/4,(2-\sqrt2)/4)$ | $(\sqrt{2+\sqrt2}/2,\sqrt{2-\sqrt2}/2)$，非退化椭圆 |
+| $\pi$ | 圆，半轴 $(1,1)$ | $1$ | $(1/2,1/2)$ | $(1/\sqrt2,1/\sqrt2)$，圆 |
+
+第一行和第三行复用 C-73.3 的两端见证，整族给它们之间的连续谱变化。
+概率圆表达标准化底面条件独立；谱圆表达两个 Schmidt 系数相等。
+前者的朝向在 $\eta=0$ 时不可辨，后者的谱仍随 $\chi$ 改变，故 $\chi$ 不能解释为概率圆的朝向。
+相同概率表另可供应可分的经典对角混合
+$\frac14\sum_{a,b}|ab\rangle\langle ab|$；纯相干制备是本命题的实质假设。证毕。
+

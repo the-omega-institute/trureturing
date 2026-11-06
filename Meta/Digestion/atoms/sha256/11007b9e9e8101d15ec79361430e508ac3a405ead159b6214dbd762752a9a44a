@@ -1,0 +1,81 @@
+**命题 C-67.2（外部四角比的带标记、定面积椭圆表示）。** 对式 (C67.2) 的底面表，或任意四格正的边界响应，先取其正行列等价类中总质量一、两边缘均为 $(1/2,1/2)$ 的代表 $Q_*(H)$，再取这个代表的 $\pm1$ 协方差椭圆并将面积归一化为 $\pi$。所得椭圆在固定标记方向
+
+$$
+e_+=\frac1{\sqrt2}(1,1),\qquad
+ e_-=\frac1{\sqrt2}(1,-1)
+$$
+
+上的半轴分别为 $e^\eta,e^{-\eta}$。以 $z_+,z_-$ 表示这两个方向的坐标，其方程是
+
+$$
+e^{-2\eta}z_+^2+e^{2\eta}z_-^2=1.
+\tag{C67.7}
+$$
+
+这个带标记椭圆完整确定式 (C67.4) 的等价类。对于五态底面，它成为圆当且仅当两端在事件 $B_C=0$ 下条件独立。
+
+证明中的经典中间结果取自 Dirk Hasenclever、Markus Scholz，*Comparing measures of association in 2x2 probability tables*，[arXiv:1302.6161v1](https://arxiv.org/abs/1302.6161v1)，Proposition 1、§3.1 及 Proposition 4：正行列轨道由 odds ratio 分类，轨道有唯一平衡代表，Yule's Y 在该代表上等于 Pearson 相关。以下给出这些中间步骤在本底面表示中的全部参数计算；不另把经典分类或 Yule 公式立为新结论。
+
+首先，若 $D_L=\operatorname{diag}(l_0,l_1)$、$D_R=\operatorname{diag}(r_0,r_1)$，交叉乘积的分子和分母都乘 $l_0l_1r_0r_1$，所以 $\Omega$ 不变。反之，若 $\Omega(\widetilde H)=\Omega(H)$，令
+
+$$
+t_{ij}=\frac{\widetilde H_{ij}}{H_{ij}}>0.
+$$
+
+交叉比相等给 $t_{00}t_{11}=t_{01}t_{10}$。取
+
+$$
+D_L=\operatorname{diag}(t_{00},t_{10}),\qquad
+D_R=\operatorname{diag}(1,t_{01}/t_{00}),
+$$
+
+则 $D_LHD_R$ 的前三格等于 $\widetilde H$，第四格由该乘法等式也相等。故交叉比相等正好等价于正行列等价。
+
+总质量一且两个边缘均平衡的正表必为
+
+$$
+\begin{pmatrix}x&1/2-x\\1/2-x&x\end{pmatrix},\qquad0<x<1/2.
+$$
+
+其比值比为 $[x/(1/2-x)]^2$，故唯一解是
+
+$$
+x=\frac{\sqrt\Omega}{2(1+\sqrt\Omega)}.
+$$
+
+由已证轨道分类，它确在 $H$ 的轨道中。因此
+
+$$
+Q_*(H)=\frac14
+\begin{pmatrix}1+\rho_*&1-\rho_*\\1-\rho_*&1+\rho_*\end{pmatrix},
+\qquad
+\rho_*=\frac{\sqrt{ad}-\sqrt{bc}}{\sqrt{ad}+\sqrt{bc}}
+=\frac{\sqrt\Omega-1}{\sqrt\Omega+1}
+=\tanh\frac J4.
+\tag{C67.8}
+$$
+
+四格正给 $-1<\rho_*<1$。按 $s_0=1,s_1=-1$ 编码两端，平衡边缘给均值零、方差一；对角格的乘积编码为一，非对角格为负一，故交叉矩为 $\rho_*$。协方差矩阵于是为
+
+$$
+\Sigma_*=\begin{pmatrix}1&\rho_*\\\rho_*&1\end{pmatrix}.
+$$
+
+它的带标记特征向量为 $e_+,e_-$，相应特征值 $1+\rho_*,1-\rho_*$ 都正。协方差椭圆具体定义为 $\Sigma_*^{1/2}$ 对欧氏单位圆的像，原半轴为 $\sqrt{1+\rho_*}$、$\sqrt{1-\rho_*}$，面积为 $\pi\sqrt{1-\rho_*^2}$。把全部坐标除以 $(1-\rho_*^2)^{1/4}$，面积变为 $\pi$，带标记半轴成为
+
+$$
+\left(\frac{1+\rho_*}{1-\rho_*}\right)^{1/4},\qquad
+\left(\frac{1-\rho_*}{1+\rho_*}\right)^{1/4}.
+$$
+
+由式 (C67.8)，$(1+\rho_*)/(1-\rho_*)=\sqrt\Omega=e^{J/2}$，所以两半轴正是 $e^{J/8},e^{-J/8}$。这证明式 (C67.7)。带标记半轴恢复 $\eta$，继而恢复 $\Omega=e^{8\eta}$ 和整个轨道。
+
+最后，$\eta=0$ 等价于 $ad=bc$，即正表秩一。正表秩一时可写为两个正向量的外积，归一化后是两个概率向量的外积；反过来独立概率表显然秩一。用于 $Q=H/r$，这正是底面条件独立。结合式 (C67.3)，
+
+$$
+\operatorname{sgn}\eta=\operatorname{sgn}(\det H)
+=\operatorname{sgn}(r\kappa-XY).
+$$
+
+正号表示沿 $e_+$ 伸长，负号表示沿 $e_-$ 伸长。若允许旋转并忘掉方向标记，$\eta$ 与 $-\eta$ 给同一个无标记形状，只剩轴比 $e^{2|\eta|}$，不能再区分两种关联符号。证毕。
+
