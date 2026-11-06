@@ -55,6 +55,12 @@ internal sealed class KisrhombilleFaceCoordinationDocument : IScribeDocumentDefi
                 StatementSource.FromAuthor(Disp(ResultFormula())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
+                    Paragraph(Text("Write R(i,j,p,q) for "
+                        + "TeaCoordinationSequence.residual, the nonnegative horizontal excess "
+                        + "beyond −q≤i,j,i+j≤p. The potential at V(i,j) is 1+2R(i,j,1,0), "
+                        + "at U(i,j) it is 2R(i,j,0,0), and at W(i,j) it is "
+                        + "2R(i+1,j+1,1,−1). The bound residual_le_iff gives the six "
+                        + "coordinate inequalities for each of these three cases.")),
                     Paragraph(Text("For each simplex type the proof takes the maximum of six "
                         + "affine functions of i and j and a baseline zero or one. The affine "
                         + "functions measure violations of the bounding lattice-polygon inequalities. "

@@ -13,6 +13,9 @@ Direct frozen dependencies:
 D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation.potential_dist
 statement_id: sha256:2360c26ddcdab5109d1906cf2b6884cebb254549f8cf9a5078002397a1098f09
 frozen_module_statement_id: sha256:f8b677ea402e38581fbfa04887d18040684e7baa21f05cad6421d45525c0cd21
+D5/S3/StatisticalMechanics/TeaCoordinationSequence.residual
+statement_id: sha256:10439493c286dd5db76f1c5be5de421b2b461858b90859c1ba556092626d04d8
+D5/S3/StatisticalMechanics/TeaCoordinationSequence.residual_le_iff
 Simplex: proof_shape=bind-only; consumers=graph
 support: proof_shape=bind-only; consumers=graph
 graph: proof_shape=bind-only; consumers=distance
@@ -74,6 +77,7 @@ result: proof_shape=bind-only; consumers=Reg.family
 -/
 
 import D5.S3.Combinatorics.PositionSets.VertexPositionRatioRefutation
+import D5.S3.StatisticalMechanics.TeaCoordinationSequence
 import Mathlib.RingTheory.PowerSeries.Basic
 import Mathlib.Data.Int.Interval
 import Mathlib.Tactic.IntervalCases
@@ -122,12 +126,12 @@ private def score (s : Simplex) : ℤ :=
   let i := s.2.1
   let j := s.2.2
   match s.1 with
-  | 0 => hex 1 (1 - 2 * i) (2 * i - 1) (1 - 2 * j) (2 * j - 1) (1 - 2 * (i + j)) (2 * (i + j) - 1)
+  | 0 => 1 + 2 * TeaCoordinationSequence.residual i j 1 0
   | 1 => hex 1 (-2 * i) (2 * i) (1 - 2 * j) (2 * j - 1) (-2 * (i + j)) (2 * (i + j))
   | 2 => hex 1 (1 - 2 * i) (2 * i - 1) (-2 * j) (2 * j) (-2 * (i + j)) (2 * (i + j))
   | 3 => hex 1 (-2 * i) (2 * i) (-2 * j) (2 * j) (-2 * (i + j) - 1) (2 * (i + j) + 1)
-  | 4 => hex 0 (-2 * i) (2 * i) (-2 * j) (2 * j) (-2 * (i + j)) (2 * (i + j))
-  | 5 => hex 0 (-2 * i) (2 * i) (-2 * j) (2 * j) (-2 * (i + j) - 2) (2 * (i + j) + 2)
+  | 4 => 2 * TeaCoordinationSequence.residual i j 0 0
+  | 5 => 2 * TeaCoordinationSequence.residual (i + 1) (j + 1) 1 (-1)
 
 private lemma hex_le (z a b c d e f n : ℤ) :
     hex z a b c d e f ≤ n ↔
@@ -136,7 +140,7 @@ private lemma hex_le (z a b c d e f n : ℤ) :
 
 private lemma score_nonneg (s : Simplex) : 0 ≤ score s := by
   rcases s with ⟨t, i, j⟩
-  fin_cases t <;> dsimp [score, hex] <;> omega
+  fin_cases t <;> dsimp [score, hex, TeaCoordinationSequence.residual] <;> omega
 
 private lemma support_injective : Function.Injective support := by
   rintro ⟨s, i, j⟩ ⟨t, p, q⟩ he
@@ -153,13 +157,15 @@ private lemma score_zero (s : Simplex) : score s = 0 ↔ s = root := by
     apply support_injective
     rcases s with ⟨t, i, j⟩
     have hl := hs.le
-    fin_cases t <;> dsimp only [score] at hl <;> rw [hex_le] at hl
+    fin_cases t <;> dsimp only [score] at hl <;> simp only [hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff] at hl
     all_goals
       have hi : i = 0 := by omega
       have hj : j = 0 := by omega
-      norm_num [hi, hj, score, hex] at hs <;> simp [hi, hj, support, root]
+      norm_num [hi, hj, score, hex, TeaCoordinationSequence.residual] at hs <;> simp [hi, hj, support, root]
   · rintro rfl
-    norm_num [score, hex, root]
+    norm_num [score, hex, root, TeaCoordinationSequence.residual]
 
 set_option maxHeartbeats 2000000 in
 -- The 36 pairs of simplex types have finite inclusion constraints.
@@ -172,8 +178,12 @@ private lemma score_step (s t : Simplex) (h : graph.Adj s t) : score s ≤ score
     simp only [graph, support, Finset.insert_subset_iff, Finset.singleton_subset_iff,
       Finset.mem_insert, Finset.mem_singleton, ne_eq, Prod.ext_iff] at h
     dsimp only [score] at hb ⊢
-    rw [hex_le] at hb
-    rw [hex_le]
+    simp only [hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff] at hb
+    simp only [hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff]
     repeat' constructor
     all_goals omega (config := {splitMinMax := false})
 
@@ -188,7 +198,9 @@ private lemma score_descent (s : Simplex) (hs : 0 < score s) :
     generalize hn : score (0, i, j) = n at hs ⊢
     have hb : score (0, i, j) ≤ n := hn.le
     dsimp only [score] at hb
-    rw [hex_le] at hb
+    simp only [hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff] at hb
     have he : score (4, i, j) ≤ n - 1 ∨
         score (4, i - 1, j) ≤ n - 1 ∨
         score (4, i, j - 1) ≤ n - 1 ∨
@@ -196,7 +208,9 @@ private lemma score_descent (s : Simplex) (hs : 0 < score s) :
         score (5, i - 1, j) ≤ n - 1 ∨
         score (5, i, j - 1) ≤ n - 1 := by
       clear hn
-      simp only [score, hex_le]
+      simp only [score, hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff]
       omega (config := {splitMinMax := false})
     rcases he with h0 | h1 | h2 | h3 | h4 | h5
     · have ha : graph.Adj (0, i, j) (4, i, j) := by
@@ -240,13 +254,17 @@ private lemma score_descent (s : Simplex) (hs : 0 < score s) :
     generalize hn : score (1, i, j) = n at hs ⊢
     have hb : score (1, i, j) ≤ n := hn.le
     dsimp only [score] at hb
-    rw [hex_le] at hb
+    simp only [hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff] at hb
     have he : score (0, i, j) ≤ n - 1 ∨
         score (0, i + 1, j) ≤ n - 1 ∨
         score (4, i, j) ≤ n - 1 ∨
         score (5, i, j - 1) ≤ n - 1 := by
       clear hn
-      simp only [score, hex_le]
+      simp only [score, hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff]
       omega (config := {splitMinMax := false})
     rcases he with h0 | h1 | h2 | h3
     · have ha : graph.Adj (1, i, j) (0, i, j) := by
@@ -278,13 +296,17 @@ private lemma score_descent (s : Simplex) (hs : 0 < score s) :
     generalize hn : score (2, i, j) = n at hs ⊢
     have hb : score (2, i, j) ≤ n := hn.le
     dsimp only [score] at hb
-    rw [hex_le] at hb
+    simp only [hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff] at hb
     have he : score (0, i, j) ≤ n - 1 ∨
         score (0, i, j + 1) ≤ n - 1 ∨
         score (4, i, j) ≤ n - 1 ∨
         score (5, i - 1, j) ≤ n - 1 := by
       clear hn
-      simp only [score, hex_le]
+      simp only [score, hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff]
       omega (config := {splitMinMax := false})
     rcases he with h0 | h1 | h2 | h3
     · have ha : graph.Adj (2, i, j) (0, i, j) := by
@@ -316,13 +338,17 @@ private lemma score_descent (s : Simplex) (hs : 0 < score s) :
     generalize hn : score (3, i, j) = n at hs ⊢
     have hb : score (3, i, j) ≤ n := hn.le
     dsimp only [score] at hb
-    rw [hex_le] at hb
+    simp only [hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff] at hb
     have he : score (0, i + 1, j) ≤ n - 1 ∨
         score (0, i, j + 1) ≤ n - 1 ∨
         score (4, i, j) ≤ n - 1 ∨
         score (5, i, j) ≤ n - 1 := by
       clear hn
-      simp only [score, hex_le]
+      simp only [score, hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff]
       omega (config := {splitMinMax := false})
     rcases he with h0 | h1 | h2 | h3
     · have ha : graph.Adj (3, i, j) (0, i + 1, j) := by
@@ -354,20 +380,24 @@ private lemma score_descent (s : Simplex) (hs : 0 < score s) :
     generalize hn : score (4, i, j) = n at hs ⊢
     have hb : score (4, i, j) ≤ n := hn.le
     dsimp only [score] at hb
-    rw [hex_le] at hb
+    simp only [hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff] at hb
     have hn2 : 2 ≤ n := by
       by_contra h
       have hi : i = 0 := by omega
       have hj : j = 0 := by omega
       subst i
       subst j
-      norm_num [score, hex] at hn
+      norm_num [score, hex, TeaCoordinationSequence.residual] at hn
       omega
     have he : score (0, i, j) ≤ n - 1 ∨
         score (0, i + 1, j) ≤ n - 1 ∨
         score (0, i, j + 1) ≤ n - 1 := by
       clear hn
-      simp only [score, hex_le]
+      simp only [score, hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff]
       omega (config := {splitMinMax := false})
     rcases he with h0 | h1 | h2
     · have ha : graph.Adj (4, i, j) (0, i, j) := by
@@ -393,12 +423,16 @@ private lemma score_descent (s : Simplex) (hs : 0 < score s) :
     generalize hn : score (5, i, j) = n at hs ⊢
     have hb : score (5, i, j) ≤ n := hn.le
     dsimp only [score] at hb
-    rw [hex_le] at hb
+    simp only [hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff] at hb
     have he : score (0, i + 1, j) ≤ n - 1 ∨
         score (0, i, j + 1) ≤ n - 1 ∨
         score (0, i + 1, j + 1) ≤ n - 1 := by
       clear hn
-      simp only [score, hex_le]
+      simp only [score, hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff]
       omega (config := {splitMinMax := false})
     rcases he with h0 | h1 | h2
     · have ha : graph.Adj (5, i, j) (0, i + 1, j) := by
@@ -451,7 +485,7 @@ private lemma distance_formula (s : Simplex) : distance s = (score s).toNat := b
       have hs := score_nonneg s
       have ht := score_nonneg t
       omega) w.reachable.symm
-  have hz : (score root).toNat = 0 := by norm_num [score, root, hex]
+  have hz : (score root).toNat = 0 := by norm_num [score, root, hex, TeaCoordinationSequence.residual]
   simpa only [hz, zero_add, SimpleGraph.dist_comm, distance] using hl
 
 private def triangle (n : ℕ) : Finset (ℕ × ℕ) :=
@@ -588,7 +622,9 @@ private lemma slice_mem (t : Fin 6) (n : ℕ) (p : ℤ × ℤ) :
   · intro h
     refine ⟨?_, h⟩
     rcases p with ⟨i, j⟩
-    fin_cases t <;> dsimp only [score] at h <;> rw [hex_le] at h <;> dsimp <;> omega
+    fin_cases t <;> dsimp only [score] at h <;> simp only [hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff] at h <;> dsimp <;> omega
 
 private lemma slice_card_from_polygon (t : Fin 6) (n A B l r : ℕ) (i0 j0 : ℤ)
     (hlA : l ≤ A + 1) (hlB : l ≤ B + 1) (hrA : r ≤ A + 1) (hrB : r ≤ B + 1)
@@ -609,7 +645,9 @@ private lemma slice_even_0 (k : ℕ) :
   have h := slice_card_from_polygon 0 (2 * (k + 1)) (2 * k + 1) (2 * k + 1) (k) (k + 1)
     (-(k : ℤ)) (-(k : ℤ)) (by omega) (by omega) (by omega) (by omega) (by omega) (by
       rintro ⟨i, j⟩
-      simp only [score, hex_le]
+      simp only [score, hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff]
       push_cast
       omega)
   push_cast at h ⊢
@@ -620,7 +658,9 @@ private lemma slice_even_1 (k : ℕ) :
   have h := slice_card_from_polygon 1 (2 * (k + 1)) (2 * k + 2) (2 * k + 1) (k) (k + 1)
     (-(k : ℤ) - 1) (-(k : ℤ)) (by omega) (by omega) (by omega) (by omega) (by omega) (by
       rintro ⟨i, j⟩
-      simp only [score, hex_le]
+      simp only [score, hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff]
       push_cast
       omega)
   push_cast at h ⊢
@@ -631,7 +671,9 @@ private lemma slice_even_2 (k : ℕ) :
   have h := slice_card_from_polygon 2 (2 * (k + 1)) (2 * k + 1) (2 * k + 2) (k) (k + 1)
     (-(k : ℤ)) (-(k : ℤ) - 1) (by omega) (by omega) (by omega) (by omega) (by omega) (by
       rintro ⟨i, j⟩
-      simp only [score, hex_le]
+      simp only [score, hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff]
       push_cast
       omega)
   push_cast at h ⊢
@@ -642,7 +684,9 @@ private lemma slice_even_3 (k : ℕ) :
   have h := slice_card_from_polygon 3 (2 * (k + 1)) (2 * k + 2) (2 * k + 2) (k + 1) (k + 2)
     (-(k : ℤ) - 1) (-(k : ℤ) - 1) (by omega) (by omega) (by omega) (by omega) (by omega) (by
       rintro ⟨i, j⟩
-      simp only [score, hex_le]
+      simp only [score, hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff]
       push_cast
       omega)
   push_cast at h ⊢
@@ -653,7 +697,9 @@ private lemma slice_even_4 (k : ℕ) :
   have h := slice_card_from_polygon 4 (2 * (k + 1)) (2 * k + 2) (2 * k + 2) (k + 1) (k + 1)
     (-(k : ℤ) - 1) (-(k : ℤ) - 1) (by omega) (by omega) (by omega) (by omega) (by omega) (by
       rintro ⟨i, j⟩
-      simp only [score, hex_le]
+      simp only [score, hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff]
       push_cast
       omega)
   push_cast at h ⊢
@@ -664,7 +710,9 @@ private lemma slice_even_5 (k : ℕ) :
   have h := slice_card_from_polygon 5 (2 * (k + 1)) (2 * k + 2) (2 * k + 2) (k) (k + 2)
     (-(k : ℤ) - 1) (-(k : ℤ) - 1) (by omega) (by omega) (by omega) (by omega) (by omega) (by
       rintro ⟨i, j⟩
-      simp only [score, hex_le]
+      simp only [score, hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff]
       push_cast
       omega)
   push_cast at h ⊢
@@ -675,7 +723,9 @@ private lemma slice_odd_0 (k : ℕ) :
   have h := slice_card_from_polygon 0 (2 * (k + 1) + 1) (2 * k + 3) (2 * k + 3) (k + 1) (k + 2)
     (-(k : ℤ) - 1) (-(k : ℤ) - 1) (by omega) (by omega) (by omega) (by omega) (by omega) (by
       rintro ⟨i, j⟩
-      simp only [score, hex_le]
+      simp only [score, hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff]
       push_cast
       omega)
   push_cast at h ⊢
@@ -686,7 +736,9 @@ private lemma slice_odd_1 (k : ℕ) :
   have h := slice_card_from_polygon 1 (2 * (k + 1) + 1) (2 * k + 2) (2 * k + 3) (k + 1) (k + 2)
     (-(k : ℤ) - 1) (-(k : ℤ) - 1) (by omega) (by omega) (by omega) (by omega) (by omega) (by
       rintro ⟨i, j⟩
-      simp only [score, hex_le]
+      simp only [score, hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff]
       push_cast
       omega)
   push_cast at h ⊢
@@ -697,7 +749,9 @@ private lemma slice_odd_2 (k : ℕ) :
   have h := slice_card_from_polygon 2 (2 * (k + 1) + 1) (2 * k + 3) (2 * k + 2) (k + 1) (k + 2)
     (-(k : ℤ) - 1) (-(k : ℤ) - 1) (by omega) (by omega) (by omega) (by omega) (by omega) (by
       rintro ⟨i, j⟩
-      simp only [score, hex_le]
+      simp only [score, hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff]
       push_cast
       omega)
   push_cast at h ⊢
@@ -708,7 +762,9 @@ private lemma slice_odd_3 (k : ℕ) :
   have h := slice_card_from_polygon 3 (2 * (k + 1) + 1) (2 * k + 2) (2 * k + 2) (k) (k + 1)
     (-(k : ℤ) - 1) (-(k : ℤ) - 1) (by omega) (by omega) (by omega) (by omega) (by omega) (by
       rintro ⟨i, j⟩
-      simp only [score, hex_le]
+      simp only [score, hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff]
       push_cast
       omega)
   push_cast at h ⊢
@@ -719,7 +775,9 @@ private lemma slice_odd_4 (k : ℕ) :
   have h := slice_card_from_polygon 4 (2 * (k + 1) + 1) (2 * k + 2) (2 * k + 2) (k + 1) (k + 1)
     (-(k : ℤ) - 1) (-(k : ℤ) - 1) (by omega) (by omega) (by omega) (by omega) (by omega) (by
       rintro ⟨i, j⟩
-      simp only [score, hex_le]
+      simp only [score, hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff]
       push_cast
       omega)
   push_cast at h ⊢
@@ -730,7 +788,9 @@ private lemma slice_odd_5 (k : ℕ) :
   have h := slice_card_from_polygon 5 (2 * (k + 1) + 1) (2 * k + 2) (2 * k + 2) (k) (k + 2)
     (-(k : ℤ) - 1) (-(k : ℤ) - 1) (by omega) (by omega) (by omega) (by omega) (by omega) (by
       rintro ⟨i, j⟩
-      simp only [score, hex_le]
+      simp only [score, hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff]
       push_cast
       omega)
   push_cast at h ⊢
@@ -778,7 +838,9 @@ private lemma ball_zero : ball 0 = {root} := by
 private lemma ball_one : (ball 1).card = 7 := by
   have h0 : slice 0 1 = {(0, 0), (1, 0), (0, 1)} := by
     ext ⟨i, j⟩
-    simp only [slice_mem, score, hex_le, Finset.mem_insert, Finset.mem_singleton,
+    simp only [slice_mem, score, hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff, Finset.mem_insert, Finset.mem_singleton,
       Prod.mk.injEq]
     omega
   have h1 : ∀ t : Fin 6, t ≠ 0 → t ≠ 5 → slice t 1 = {(0, 0)} := by
@@ -786,11 +848,15 @@ private lemma ball_one : (ball 1).card = 7 := by
     fin_cases t <;> try contradiction
     all_goals
       ext ⟨i, j⟩
-      simp only [slice_mem, score, hex_le, Finset.mem_singleton, Prod.mk.injEq]
+      simp only [slice_mem, score, hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff, Finset.mem_singleton, Prod.mk.injEq]
       omega
   have h5 : slice 5 1 = ∅ := by
     ext ⟨i, j⟩
-    simp only [slice_mem, score, hex_le, Finset.notMem_empty, iff_false]
+    simp only [slice_mem, score, hex_le, add_le_iff_le_sub_left, mul_comm 2,
+      ← Int.le_ediv_iff_mul_le (by decide : (0 : ℤ) < 2),
+      TeaCoordinationSequence.residual_le_iff, Finset.notMem_empty, iff_false]
     omega
   rw [ball_card_sum]
   simp [Fin.sum_univ_succ, h0, h1, h5]
