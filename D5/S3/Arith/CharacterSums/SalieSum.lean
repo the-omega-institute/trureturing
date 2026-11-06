@@ -67,6 +67,48 @@ theorem quadraticRootPhase_eq_zero_of_not_isSquare
       exact False.elim (by simpa using hy)
   simp [quadraticRootPhase, hempty]
 
+theorem quadraticPhase_sum_eq (hF : ringChar F ≠ 2) (ψ : AddChar F ℂ)
+    (hψ : ψ ≠ 1) (t : Fˣ) :
+    (∑ x : F, ψ ((t : F) * x ^ 2)) =
+      (quadraticCharacterComplex (t : F))⁻¹ * quadraticGaussSum ψ := by
+  have hψsum : (∑ z : F, ψ ((t : F) * z)) = 0 := by
+    calc
+      (∑ z : F, ψ ((t : F) * z)) = ∑ z : F, ψ z := by
+        exact Fintype.sum_bijective _ t.mulLeft_bijective _ _ (fun z ↦ rfl)
+      _ = 0 := AddChar.sum_eq_zero_of_ne_one hψ
+  calc
+    (∑ x : F, ψ ((t : F) * x ^ 2)) =
+        ∑ z : F, (Fintype.card {x : F // x ^ 2 = z} : ℂ) * ψ ((t : F) * z) := by
+      simpa using (Fintype.sum_fiberwise' (fun x : F ↦ x ^ 2)
+        (fun z : F ↦ ψ ((t : F) * z))).symm
+    _ = ∑ z : F, (quadraticCharacterComplex z + 1) * ψ ((t : F) * z) := by
+      apply Finset.sum_congr rfl
+      intro z hz
+      have hcardN : Fintype.card {x : F // x ^ 2 = z} =
+          ({x : F | x ^ 2 = z}.toFinset).card := by
+        simpa only [Fintype.card_subtype, Set.toFinset_ofPred]
+      have hcardZ : (Fintype.card {x : F // x ^ 2 = z} : ℤ) =
+          quadraticChar F z + 1 := by
+        rw [hcardN]
+        exact quadraticChar_card_sqrts hF z
+      have hcardC : (Fintype.card {x : F // x ^ 2 = z} : ℂ) =
+          quadraticCharacterComplex z + 1 := by
+        simpa [quadraticCharacterComplex_apply] using
+          congrArg (Int.castRingHom ℂ) hcardZ
+      rw [hcardC]
+    _ = (∑ z : F, quadraticCharacterComplex z * ψ ((t : F) * z)) +
+        ∑ z : F, ψ ((t : F) * z) := by
+      simp_rw [add_mul, one_mul]
+      rw [Finset.sum_add_distrib]
+    _ = ∑ z : F, quadraticCharacterComplex z * ψ ((t : F) * z) := by
+      rw [hψsum, add_zero]
+    _ = gaussSum quadraticCharacterComplex (ψ.mulShift t) := by
+      simp only [gaussSum, AddChar.mulShift_apply]
+    _ = (quadraticCharacterComplex (t : F))⁻¹ * quadraticGaussSum ψ := by
+      rw [gaussSum_mulShift_eq]
+      rw [MulChar.inv_apply_eq_inv']
+      rfl
+
 theorem salieSum_zero_right (hF : ringChar F ≠ 2) (ψ : AddChar F ℂ)
     (hψ : ψ ≠ 1) (a : F) :
     salieSum ψ a 0 =
