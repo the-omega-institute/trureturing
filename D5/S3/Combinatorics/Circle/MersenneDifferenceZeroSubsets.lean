@@ -2,7 +2,8 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/MersenneDifferenceZeroSubsets
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Logic.Equiv.Fin.Rotate, mathlib/module/Mathlib.Data.Nat.GCD.Basic]
+   anchors: [mathlib/module/Mathlib.Logic.Equiv.Fin.Rotate,
+     mathlib/module/Mathlib.Data.Nat.GCD.Basic]
    utility: none
    digest: Binary powers classify and count physical Mersenne-difference zero subsets. -/
 module
@@ -14,8 +15,8 @@ public import Mathlib.Algebra.BigOperators.ModEq
 
 /-! # Mersenne-difference seeds on all physical labels
 
-UNCOMPILED source preparation. Requires the accompanying support-extraction
-patch on the exact dependencies recorded in source-manifest.json.
+Exact integer-zero subsets of the full physical source are rotation invariant;
+the shared binary-mask count gives the complete gcd formula.
 -/
 
 set_option autoImplicit false
@@ -61,11 +62,7 @@ private theorem actual_difference {k : ℕ} (hk : 0 < k) (a : ℕ) (i : Fin k) :
         (2 : ℤ) ^ i.val := by
   by_cases hk1 : k = 1
   · subst k
-    have hi : i.val = 0 := by omega
-    have hj : (((finRotate 1 : Equiv.Perm (Fin 1)) ^ a) i).val = 0 := by
-      have := (((finRotate 1 : Equiv.Perm (Fin 1)) ^ a) i).isLt
-      omega
-    simp [actualSource, modulus, centered, hi, hj]
+    simp [actualSource, modulus, centered]
   have hk2 : 2 ≤ k := by omega
   obtain ⟨hN, hodd, hhalf⟩ := modulus_half hk2
   have hseed : ((2 ^ a - 1 : ℕ) : ℤ) = (2 : ℤ) ^ a - 1 := by
@@ -91,9 +88,7 @@ private theorem actual_difference {k : ℕ} (hk : 0 < k) (a : ℕ) (i : Fin k) :
       pow_le_pow_right₀ (by norm_num) (by omega)
     rw [hhalf]
     constructor <;> omega
-  · change centered (modulus k) ((2 : ℤ) ^ i.val * ((2 ^ a - 1 : ℕ) : ℤ)) %
-        modulus k = _
-    rw [centered_mod]
+  · rw [centered_mod]
     exact hmod.symm
 
 private theorem actual_sum_eq_mask_sub {k : ℕ} (hk : 0 < k) (a : ℕ)
@@ -176,7 +171,8 @@ private theorem actual_zero_iff_reduced_dvd (k a : ℕ) (hk : 0 < k)
     have hrot :
         (mask (A.image ((finRotate k : Equiv.Perm (Fin k)) ^ a)) : ℤ) ≡
           (2 : ℤ) ^ a * (mask A : ℤ) [ZMOD modulus k] := by
-      simpa only [mask_image_cast, mask, Nat.cast_sum, Nat.cast_pow,
+      rw [mask_image_cast]
+      simpa only [mask, Nat.cast_sum, Nat.cast_pow,
         Nat.cast_ofNat, Finset.mul_sum] using
         (Int.ModEq.sum (s := A) (fun i _ => pow_rotate_mod_all hk a i))
     have hcong := hrot.trans hmcong.symm
