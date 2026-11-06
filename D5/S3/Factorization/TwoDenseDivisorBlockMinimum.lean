@@ -240,13 +240,11 @@ private theorem first_block_length_of_gap (n u : ℕ) (hn : 0 < n) (hu : 0 < u)
     · intro x hx y hy
       have := cross x (List.mem_of_mem_getLast? hx) y (List.mem_of_mem_head? hy)
       exact decide_eq_false_iff_not.mpr (by omega)
-  have hset : U.toFinset = u.divisors := by
-    ext d
-    simp only [List.mem_toFinset, memU, Nat.mem_divisors, and_iff_left hu.ne']
   change ((divisorBlocks n).map List.length).headD 0 = _
   rw [hsplit]
   simp only [List.map_cons, List.headD_cons]
-  rw [← hset, List.toFinset_card_of_nodup hsU.nodup]
+  rw [← TwoDenseDivisorBlocksPalindrome.divisor_list_finset u,
+    List.toFinset_card_of_nodup hsU.nodup]
 
 /-- The complete first-block conclusion under the still-required dense-factor
 construction and the separating outsider bound. -/
