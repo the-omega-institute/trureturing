@@ -87,7 +87,7 @@ theorem renameSequence_pairs (f : U ↪ V) {M N : PreAbstractSimplicialComplex U
   | step P T ih =>
     simp only [renameSequence,Sequence.pairs,List.map_cons]
     erw [Sequence.pairs_cast]
-    simpa only [renamePair,CollapsePair.upper,Finset.image_insert] using
+    simpa only [renameSequence,renamePair,CollapsePair.upper,Finset.image_insert] using
       congrArg (List.cons (P.lower.image f,P.upper.image f)) ih
 
 /-- Simplex, intersections and endpoint families are transported literally. -/

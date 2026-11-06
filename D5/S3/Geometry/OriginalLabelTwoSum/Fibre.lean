@@ -100,7 +100,6 @@ private theorem fibrePair_retained (P : CollapsePair V) (B A : Family V)
   change (s.Nonempty ∧ ((s ∈ B ∨ s ∈ rawJoin (delta a) (nativeAug P.ambient)) ∧
     ¬ a ∪ P.lower ⊆ s)) ↔
       s.Nonempty ∧ (s ∈ B ∨ s ∈ rawJoin (delta a) (nativeAug P.retained))
-  simp only [and_assoc]
   have hlow : P.lower ∉ A := by
     intro hl
     exact (hA ⟨P.lower_nonempty,hl⟩).2 le_rfl

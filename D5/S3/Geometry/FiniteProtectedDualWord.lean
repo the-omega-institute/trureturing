@@ -616,7 +616,7 @@ def protectedDualWordSequence :
     rw [d.current_mem]
     change (s.Nonempty ∧ s ⊆ W ∧ W \ s ∉ (∅ : Finset (Finset V))) ↔
       (s.Nonempty ∧ s ⊆ W)
-    simp only [Finset.notMem_empty, and_true]
+    simp only [Finset.notMem_empty, not_false_eq_true, and_true]
   exact S.cast hstart rfl
 
 end Contract
