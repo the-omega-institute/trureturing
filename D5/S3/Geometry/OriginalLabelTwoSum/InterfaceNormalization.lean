@@ -116,7 +116,6 @@ theorem normalized_row (g : GraphData Vertex Label) (c : g.chords)
   change g.ground.filter (fun i => g.edge i ∈ ((g.normalizeInterface c).path d).edges) =
     g.ground.filter (fun i => g.edge i ∈ (g.path d.1).edges)
   rw [hp]
-  rfl
 
 /-- The interface's actual path row is preserved. -/
 theorem normalized_distinguished_row (g : GraphData Vertex Label) (c : g.chords) :

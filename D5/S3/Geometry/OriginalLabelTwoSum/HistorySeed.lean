@@ -144,7 +144,7 @@ def discreteCornerOutput (W A B : Finset V) (hA : A ⊆ W) :
             rcases small_face (s ∪ A) hc with he | ⟨q, he⟩
             · have hmem : a ∈ s ∪ A := Finset.mem_union_right _ ha
               rw [he] at hmem
-              exact Finset.not_mem_empty _ hmem
+              exact (Finset.notMem_empty _ hmem)
             · have haq : a = q := Finset.mem_singleton.mp (he ▸ Finset.mem_union_right s ha)
               have hvq : v = q := Finset.mem_singleton.mp (he ▸ Finset.mem_union_left A hv)
               have hvA : v ∈ A := (hvq.trans haq.symm).symm ▸ ha

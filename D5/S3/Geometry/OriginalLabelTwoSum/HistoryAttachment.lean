@@ -62,7 +62,7 @@ theorem restrictSequence_pairs {K L : PreAbstractSimplicialComplex V}
       intro hu
       simp only [restrictSequence, Sequence.pairs]
       erw [Sequence.pairs_cast]
-      simpa only [List.map_cons, restrictPair, CollapsePair.upper] using
+      simpa only [restrictSequence, List.map_cons, restrictPair, CollapsePair.upper] using
         congrArg (List.cons (P.lower, P.upper)) (ih (fun R hR =>
           hu R (by simp only [Sequence.pairs, List.mem_cons]; exact Or.inr hR)))
 

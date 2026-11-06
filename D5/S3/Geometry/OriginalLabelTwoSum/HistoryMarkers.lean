@@ -14,6 +14,9 @@ coordinate map fixing EVERY label of X, including ghosts. The twin strip is
 followed by that renamed output. No same-rank universal supplier is assumed.
 The final history induction and forest/intact branches are still obligations.
 -/
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 noncomputable section
 open Set Finset
 namespace D5.S3.Geometry.OriginalLabelTwoSum.HistoryMarkers
@@ -74,7 +77,7 @@ def renameOutput {W : Finset V} {K : Family V} (f : V ↪ V) (o : Output W K) :
         · intro hs
           have he : s = ∅ := Finset.subset_empty.mp hs
           subst s
-          exact ⟨∅, le_rfl, by simp⟩)
+          exact ⟨∅, (show (∅ : Finset V) ⊆ ∅ from le_rfl), by simp⟩)
   | strong c => exact .strong (renameCertificate f c)
 
 /-- Exact isolated ONE-marker bridge to the actual earlier model. D and L
@@ -95,7 +98,7 @@ theorem single_marker_family (X : Finset V) (e r : V) (J : Family V)
       have hi : t.image (markerMap e r) = insert r (t.erase e) := by
         conv_lhs => rw [← Finset.insert_erase het]
         rw [Finset.image_insert, markerMap_left, marker_image X e r he hr hx]
-      exact Or.inr ⟨{r}, le_rfl, t.erase e,
+      exact Or.inr ⟨{r}, (show ({r} : Finset V) ⊆ {r} from le_rfl), t.erase e,
         ⟨hx, by simpa only [Finset.insert_erase het] using ht⟩,
         by simpa only [Finset.singleton_union] using hi⟩
     · have hx : t ⊆ X := by
@@ -112,7 +115,7 @@ theorem single_marker_family (X : Finset V) (e r : V) (J : Family V)
         rw [Finset.image_insert, markerMap_left, marker_image X e r he hr htX]
         simp only [Finset.singleton_union]
       · have hae : a = ∅ := by
-          apply Finset.eq_empty_iff_forall_not_mem.mpr
+          apply Finset.eq_empty_iff_forall_notMem.mpr
           intro v hv
           exact hra (Finset.mem_singleton.mp (ha hv) ▸ hv)
         subst a
@@ -151,7 +154,7 @@ theorem single_marker_delete (X : Finset V) (e r : V) (J : Family V)
   · rintro ⟨hs | ⟨a, ha, t, ⟨htX, htJ⟩, rfl⟩, hsX⟩
     · exact hs
     · have ha0 : a = ∅ := by
-        apply Finset.eq_empty_iff_forall_not_mem.mpr
+        apply Finset.eq_empty_iff_forall_notMem.mpr
         intro v hv
         have hvr := Finset.mem_singleton.mp (ha hv)
         exact hr (hvr ▸ hsX (Finset.mem_union_left t hv))
@@ -178,6 +181,6 @@ theorem single_marker_link (X : Finset V) (e r : V) (J : Family V)
           hr (Finset.mem_singleton.mp (ha hva) ▸ hsX hv))
       exact ⟨hsX, J.lower (Finset.insert_subset_insert e hst) htJ⟩
   · intro hs
-    exact ⟨hs.1, Or.inr ⟨{r}, le_rfl, s, hs, by simp⟩⟩
+    exact ⟨hs.1, Or.inr ⟨{r}, (show ({r} : Finset V) ⊆ {r} from le_rfl), s, hs, by simp⟩⟩
 
 end D5.S3.Geometry.OriginalLabelTwoSum.HistoryMarkers

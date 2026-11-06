@@ -10,6 +10,9 @@ import D5.S3.Geometry.OriginalLabelTwoSum.ParentFibres
 /-! UNCOMPILED. The collar stage starts at Cout ALONE. It never operates on the
 retained critical simplices. Every application of the finite batch constructor
 uses the actual boundary/interference proofs from ParentFibres. -/
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 noncomputable section
 open Set Finset
 namespace D5.S3.Geometry.OriginalLabelTwoSum
@@ -65,16 +68,16 @@ private theorem core_layers {X Y Z : Finset V} {e : V} {K E : Family V}
   · rintro (hb | ⟨q,hq,h0 | h1⟩)
     · exact Or.inl hb
     · exact Or.inr ((mem_fibreLayers _ _ _ _).mpr ⟨q,(his q).mpr hq,
-        by simpa [criticalPart,selectFilling,h0.1] using h0.2⟩)
+        by simpa [criticalPart,selectFilling,localWindow,localBase,h0.1] using h0.2⟩)
     · exact Or.inr ((mem_fibreLayers _ _ _ _).mpr ⟨q,(his q).mpr hq,
-        by simpa [criticalPart,selectFilling,h1.1] using h1.2⟩)
+        by simpa [criticalPart,selectFilling,localWindow,localBase,h1.1] using h1.2⟩)
   · rintro (hb | hf)
     · exact Or.inl hb
     · obtain ⟨q,hq,hm⟩ := (mem_fibreLayers _ _ _ _).mp hf
       refine Or.inr ⟨q,(his q).mp hq,?_⟩
       by_cases he : e ∈ q
-      · exact Or.inr ⟨he,by simpa [criticalPart,selectFilling,he] using hm⟩
-      · exact Or.inl ⟨he,by simpa [criticalPart,selectFilling,he] using hm⟩
+      · exact Or.inr ⟨he,by simpa [criticalPart,selectFilling,localWindow,localBase,he] using hm⟩
+      · exact Or.inl ⟨he,by simpa [criticalPart,selectFilling,localWindow,localBase,he] using hm⟩
 
 private theorem endpoint_layers {X Y Z : Finset V} {e : V} {K E : Family V}
     (c : Certificate (insert e X) K)
@@ -100,9 +103,9 @@ private theorem endpoint_layers {X Y Z : Finset V} {e : V} {K E : Family V}
         apply mem_parentCritical.mpr
         by_cases he : e ∈ q
         · exact Or.inr ⟨q,(his q).mp hq,he,t,
-            by simpa [selectFilling,he] using ht,by simp [criticalPart,he]⟩
+            by simpa [selectFilling,localWindow,localBase,he] using ht,by simp [criticalPart,he]⟩
         · exact Or.inl ⟨q,(his q).mp hq,he,t,
-            by simpa [selectFilling,he] using ht,by simp [criticalPart,he]⟩
+            by simpa [selectFilling,localWindow,localBase,he] using ht,by simp [criticalPart,he]⟩
   · rintro ((hb | hf) | ⟨u,hu,hsu⟩)
     · exact Or.inl hb
     · obtain ⟨q,hq,hm⟩ := (mem_fibreLayers _ _ _ _).mp hf
@@ -118,14 +121,14 @@ private theorem endpoint_layers {X Y Z : Finset V} {e : V} {K E : Family V}
         refine ⟨q,(his q).mpr hq,?_⟩
         rw [join_endpoint]
         refine Or.inr ⟨q ∪ t,Finset.mem_image.mpr ⟨t,?_,?_⟩,hsu⟩
-        · simpa [selectFilling,he] using ht
+        · simpa [selectFilling,localWindow,localBase,he] using ht
         · simp [criticalPart,he]
       · apply Or.inr
         apply (mem_fibreLayers _ _ _ _).mpr
         refine ⟨q,(his q).mpr hq,?_⟩
         rw [join_endpoint]
         refine Or.inr ⟨q.erase e ∪ t,Finset.mem_image.mpr ⟨t,?_,?_⟩,hsu⟩
-        · simpa [selectFilling,he] using ht
+        · simpa [selectFilling,localWindow,localBase,he] using ht
         · simp [criticalPart,he]
 
 /-- Construct the filling-main stage on the ACTUAL parent after child replay.
@@ -140,7 +143,7 @@ def parentFillingStage {X Y Z : Finset V} {e : V} {K E : Family V}
         (parentCritical e c.critical f0.critical f1.critical))) := by
   let is := fibres c.critical
   have hi (q) : q ∈ is ↔ q ∈ c.critical := by
-    simpa only [(fibres_spec c.critical).2.1] using
+    simpa only [is,(fibres_spec c.critical).2.1] using
       (show q ∈ is ↔ q ∈ is.toFinset from List.mem_toFinset.symm)
   let f := selectFilling e f0 f1
   let T := batchFibre is (fibres_spec c.critical).1 (parentOf X Y Z e E c.core)
@@ -176,7 +179,7 @@ def parentCollarStage {X Y Z : Finset V} {e : V} {K E : Family V}
       (project (parentOf X Y Z e E c.core)) := by
   let is := fibres c.critical
   have hi (q) : q ∈ is ↔ q ∈ c.critical := by
-    simpa only [(fibres_spec c.critical).2.1] using
+    simpa only [is,(fibres_spec c.critical).2.1] using
       (show q ∈ is ↔ q ∈ is.toFinset from List.mem_toFinset.symm)
   let f := selectFilling e f0 f1
   let T := batchFibre is (fibres_spec c.critical).1 (parentOf X Y Z e E c.core)
@@ -206,7 +209,7 @@ def parentCollarStage {X Y Z : Finset V} {e : V} {K E : Family V}
       · exact Or.inr ⟨x,hx.trans haX,t,htE,rfl⟩
       · have hproper : x ⊂ q := by
           refine Finset.ssubset_iff_subset_ne.mpr ⟨?_,?_⟩
-          · have hh : criticalPart e q ⊆ q := by simp [criticalPart,he]
+          · have hh : criticalPart e q ⊆ q := by simpa only [criticalPart,if_pos he] using (Finset.erase_subset e q)
             exact hx.trans hh
           · intro h
             exact heX (haX (hx (h.symm ▸ he)))
@@ -235,7 +238,7 @@ theorem parentFillingStage_orderedPairs
   classical
   let is := fibres c.critical
   have hi (q) : q ∈ is ↔ q ∈ c.critical := by
-    simpa only [(fibres_spec c.critical).2.1] using
+    simpa only [is,(fibres_spec c.critical).2.1] using
       (show q ∈ is ↔ q ∈ is.toFinset from List.mem_toFinset.symm)
   let f := selectFilling e f0 f1
   let T := batchFibre is (fibres_spec c.critical).1 (parentOf X Y Z e E c.core)
@@ -279,7 +282,7 @@ theorem parentCollarStage_orderedPairs
   classical
   let is := fibres c.critical
   have hi (q) : q ∈ is ↔ q ∈ c.critical := by
-    simpa only [(fibres_spec c.critical).2.1] using
+    simpa only [is,(fibres_spec c.critical).2.1] using
       (show q ∈ is ↔ q ∈ is.toFinset from List.mem_toFinset.symm)
   let f := selectFilling e f0 f1
   let T := batchFibre is (fibres_spec c.critical).1 (parentOf X Y Z e E c.core)
@@ -309,7 +312,7 @@ theorem parentCollarStage_orderedPairs
       · exact Or.inr ⟨x,hx.trans haX,t,htE,rfl⟩
       · have hproper : x ⊂ q := by
           refine Finset.ssubset_iff_subset_ne.mpr ⟨?_,?_⟩
-          · have hh : criticalPart e q ⊆ q := by simp [criticalPart,he]
+          · have hh : criticalPart e q ⊆ q := by simpa only [criticalPart,if_pos he] using (Finset.erase_subset e q)
             exact hx.trans hh
           · intro h
             exact heX (haX (hx (h.symm ▸ he)))

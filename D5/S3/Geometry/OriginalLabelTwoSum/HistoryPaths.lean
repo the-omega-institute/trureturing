@@ -108,12 +108,12 @@ private theorem path_step (a b c : V) (vs : List V) (hd : (a::b::c::vs).Nodup) :
           h.elim (fun h => Or.inl ⟨hv, by simp [h]⟩) (fun h => Or.inr ⟨hv, h⟩))
       · tauto
   · rintro ((hs | hs) | ⟨x, hx, t, ⟨ht, q, hq, hqt⟩, rfl⟩)
-    · refine ⟨hs.trans ((Finset.subset_insert b _).trans (Finset.subset_insert a _)), {a,b}, by simp [pathEdges], ?_⟩
+    · refine ⟨hs.trans (by simpa only [List.toFinset_cons] using ((Finset.subset_insert b (insert c vs.toFinset)).trans (Finset.subset_insert a _))), {a,b}, by simp [pathEdges], ?_⟩
       apply Finset.disjoint_left.mpr
       intro v hv hvs
       have h : v = a ∨ v = b := by simpa using hv
       exact h.elim (fun h => haT (by simpa only [List.toFinset_cons] using (h ▸ hs hvs))) (fun h => hbT (by simpa only [List.toFinset_cons] using (h ▸ hs hvs)))
-    · refine ⟨hs.trans (Finset.insert_subset_insert a ((Finset.subset_insert c _).trans (Finset.subset_insert b _))), {b,c}, by simp [pathEdges], ?_⟩
+    · refine ⟨hs.trans (by simpa only [List.toFinset_cons] using (Finset.insert_subset_insert a ((Finset.subset_insert c vs.toFinset).trans (Finset.subset_insert b _)))), {b,c}, by simp [pathEdges], ?_⟩
       apply Finset.disjoint_left.mpr
       intro v hv hvs
       have hvU := hs hvs
@@ -194,9 +194,9 @@ private def pathOutput : (vs : List V) → vs.Nodup → Output vs.toFinset (nonc
       have hc : c ∉ vs.toFinset := by simpa using (List.nodup_cons.mp hdT).1
       let tail : Output vs.toFinset (rawLink vs.toFinset c (noncover (c::vs))) :=
         changeOutput (pathOutput vs hdU) (path_link c vs hdT).symm
-      exact changeOutput
+      exact widenOutput (by simp only [List.toFinset_cons]; exact le_rfl) (changeOutput
         (twoLeafOutput vs.toFinset a b c (noncover (c::vs)) ha hb hc
-          (fun _ h => by simpa only [List.toFinset_cons] using h.1) tail) (path_step a b c vs hd).symm
+          (fun _ h => by simpa only [List.toFinset_cons] using h.1) tail) (path_step a b c vs hd).symm)
 termination_by vs _ => vs.length
 decreasing_by simp only [List.length_cons]; omega
 
@@ -240,10 +240,10 @@ private theorem pathOutput_state (vs : List V) (hd : vs.Nodup) :
       have hb : b ∉ insert c vs.toFinset := by
         simpa using (List.nodup_cons.mp (List.nodup_cons.mp hd).2).1
       have hc : c ∉ vs.toFinset := by simpa using (List.nodup_cons.mp hdT).1
-      rw [pathOutput, changeOutput_criticalState]
+      rw [pathOutput, widenOutput_criticalState, changeOutput_criticalState]
       cases vs with
       | nil =>
-          rw [twoLeafOutput_empty_criticalState]
+          rw [twoLeafOutput_empty_criticalState (V := V)]
           have h0 : (∅ : Finset V) ∉ rawLink ∅ c (noncover [c]) := by
             rw [path_link c [] hdT]
             simp [noncover, pathEdges]
