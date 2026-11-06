@@ -4487,3 +4487,154 @@ XI23.1 的未知响应仍仅为 $\Pi:D_{\rm act}\to\Delta(E)$，没有新增连�
 [Native54]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FIBONACCI_MIXING_CERTIFICATES.md
 
 ## 追加锚（本行以下为增补区）
+
+## 57. 原九、十号正字的内部相对相位与完整报告
+
+**定义 57.1（固定原源上的字面相位字）。** 固定定义 1.1–1.4 的同一原载体、矩阵、ready、字序与读者，并采用假设 43.1 的完整源及 [III138、145–146、148][III57] 的终端、保留更新和档案合同。特别是复数内积、原酉矩阵及其平方报告律都是本节的前件。对每个整数 $m\ge0$，取按调用先后书写的原前缀
+
+$$
+a_m=(9,10^m,9^9),\qquad
+K_{a_m}=K_9^9K_{10}^mK_9,
+\qquad \mathsf R(a_m,\epsilon).
+\tag{57.1}
+$$
+
+这里 $j^k$ 只表示 $k$ 次原正向地址 $j$；全部 $m+10$ 次调用都在唯一保留读者之前，没有中间读口。令 $r=\{3,7\}$、$s=\{3,7,9\}$，沿用原 $\alpha=3\pi/5$、$\zeta=e^{i\alpha}$、$x=\varphi^{-1}$。
+
+**命题 57.2（一个实际正字族的全记录条纹）。** 上述原程序的全部报告质量为
+
+$$
+\begin{gathered}
+w_r=W(r)=W(s)=1000100010,\qquad
+p_m=x^3|\zeta^m-1|^2=2x^3(1-\cos(m\alpha)),\\
+\Pr_{\mathsf R(a_m,\epsilon)}(I=i,W=w)
+=\begin{cases}
+1-p_m,&(i,w)=(0,w_r),\\
+p_m,&(i,w)=(1,w_r),\\
+0,&\text{其余形式 }(i,w).
+\end{cases}
+\end{gathered}
+\tag{57.2}
+$$
+
+$I=0$ 对每个 $m$ 都有正质量；$I=1$ 的质量为零恰在 $10\mid m$。只在正质量分支定义条件态，分别为 $[e_r]$ 与 $[e_s]$；零质量分支的整个联合测度为零，不指定条件态或条件档案核。原理想合同中所有失败、拒绝、停止和额外告警坐标仍在，质量均为零。
+
+证明。两条配置的 $b_8=b_{10}=0$，故其数学二维张成空间在原 $K_9,K_{10}$ 下不变。按基序 $(e_r,e_s)$，直接取 (1.3)、(20.2) 的原限制：
+
+$$
+K_9=\zeta T,\qquad
+T=\begin{pmatrix}a&b\\b&d\end{pmatrix}
+=I+(\zeta-1)Q_*,
+\qquad
+K_{10}=\zeta\operatorname{diag}(1,\zeta).
+\tag{57.3}
+$$
+
+$Q_*^2=Q_*$ 和 $\zeta^{10}=1$ 给 $T^{10}=I$、$T^9=T^*$，因此原九次正向调用的端点恰是所需逆矩阵。相消原标量后，
+
+$$
+\chi_{a_m}
+=\zeta^mT^*\operatorname{diag}(1,\zeta^m)Te_r
+=\zeta^m\left[
+(x^2+x\zeta^m)e_r+
+\overline d\,b(\zeta^m-1)e_s
+\right].
+\tag{57.4}
+$$
+
+这里用了 $|a|^2=|d|^2=x^2$、$|b|^2=x$ 和列正交式 $\overline b\,a+\overline d\,b=0$，没有去掉两分量之间的相位。故第二分量的平方模为 $p_m$，第一分量的平方模为 $1-p_m$。又
+
+$$
+p_m\le4x^3=1-(x-x^2)^2<1,
+\qquad p_m=0\ \Longleftrightarrow\ \zeta^m=1
+\ \Longleftrightarrow\ 10\mid m.
+\tag{57.5}
+$$
+
+原 $M_0,M_1$ 分别选中这两分量，旧终端没有报告第九位，所以二者具有同一个十位标签 $w_r$。将它们代入 III (148.1)，即得所有 $2048$ 个形式对的 (57.2)，不作成功条件化。
+
+对原合同允许的终端前可测档案事件 $B$，记其原充分核为 $\nu_{a_m,i,\epsilon}$，并置 $p_0=1-p_m$、$p_1=p_m$。III (148.6) 同时给出
+
+$$
+\Pr_{\mathsf R(a_m,\epsilon)}(I=i,\mathcal A\in B,W=w)
+=p_i\,\nu_{a_m,i,\epsilon}(B)\,
+\mathbf1_{\{w=w_r\}}
+\quad(p_i>0).
+\tag{57.6}
+$$
+
+$p_i=0$ 时左边恒为零，不评价右边的条件核。这里没有计算或任意选择 $\nu$；它必须仍是 III145.2 的同一因果逐阶段充分档案。完整隐藏路径、跳时和档案的共同律仍由 III (148.5) 的原积分给出，不能从端点条纹反推，亦不把隐藏路径当成可读档案。∎
+
+**定义 57.3（条纹的来源对应与界限）。** IX (2.20) 已给数学干涉系数 $4x^3\sin^2(\theta/2)$，且明确不授予任意相位门；本节只将其中相位差 $\theta=\pm m\alpha$、逆矩阵和最终标签绑定到 (57.1) 的原正字及完整原报告。它使用同一准备内部的两个分量，不增加副本、外部参考、路径监测、混合、reset 或新的实际二阶对象。$\zeta^m$ 是十阶相位，不能等于非平凡三次单位根；这只约束所列相位幂，不分类其他原字或整个门群。记录概率的十周期也不合并不同 $a_m$ 的真实调用、时间和档案。地址 $9,10$ 均未移入原七地址未来菜单。
+
+## 58. 原全载体二元幅度合并的裸投影边界
+
+**定义 58.1（全输入成功映射及所比较的有限协议类）。** 保持同一个 $\mathcal K=\mathbb C^E$ 的全部 $89$ 维，取定义 1.2 的原 $P=\mathcal P_1$、原 $K_1$，定义目标成功映射
+
+$$
+A=\frac{I+K_1}{2},\qquad
+\Phi_A(\rho)=A\rho A^*.
+\tag{58.1}
+$$
+
+系数 $1/2$ 是事先固定的未归一增益；目标要求对 $\mathcal K$ 上每个密度算子都精确相等，不只要求唯一 ready 的某些概率或归一化成功态相等。
+
+裸类是同一载体上的有限协议树：量子步骤只含酉门及投影读者，后续门与成功标签可确定地依赖已经取得的有限经典结果和请求标签，成功粗化为对应细分支 CP 映射之和。容许任意酉及任意投影作为数学比较类，故原完整门和原坐标投影是其子类，不因这个扩大比较而获得新的原控制。非平凡投影结果的秩在 $1,\ldots,88$；零结果为零分支，恒等结果可从分支乘积省略。可在这份有限树内加入输入无关的独立经典随机选择。没有额外量子辅助载体、较大空间重编码、准备好的量子参考、非投影量子仪器或借档案／隐藏路径取得额外量子原语；经典分组不作不同细记录的相干擦除。
+
+**命题 58.2（原 $A$ 不在该裸类的全输入成功映射内）。** 没有定义 58.1 中的有限协议能以任何成功粗分支实现 $\Phi_A$，即使允许该有限树内的独立经典随机化。
+
+证明。原矩阵 $K_1=\zeta[I+(\zeta-1)P]$ 在 $P=0,1$ 上的特征值分别为 $\zeta,\zeta^2$。由 $\operatorname{Re}\zeta=-x/2$、$\operatorname{Re}\zeta^2=-(1+x)/2$ 得
+
+$$
+A^*A=\frac{2I+K_1+K_1^*}{4}
+=\frac{(2-x)I-P}{4}.
+\tag{58.2}
+$$
+
+原活动二分量上的 $Q_*$ 已有 $0,1$ 两个特征值，所以这两个谱值在原全载体中都出现。$A^*A$ 的两个特征值为
+
+$$
+\lambda_0=\frac{2-x}{4},\qquad
+\lambda_1=\frac{1-x}{4}=\frac{x^2}{4};
+\qquad 0<\lambda_1<\lambda_0<1.
+\tag{58.3}
+$$
+
+因此 $A$ 可逆，但 $A^*A$ 不是标量。
+
+设某个裸协议的成功细分支矩阵为 $B_\ell$；独立经典权重的平方根已乘入 $B_\ell$。只要该分支含一个非平凡投影，矩阵乘积就满足 $\operatorname{rank}B_\ell<89$；若不含，则 $B_\ell=\sqrt{q_\ell}U_\ell$，其中 $q_\ell\ge0$、$U_\ell$ 为酉。假定成功映射满足目标全输入等式：
+
+$$
+\sum_\ell B_\ell\rho B_\ell^*=A\rho A^*.
+\tag{58.4}
+$$
+
+密度算子的复线性包是整个矩阵空间，故该等式对每个矩阵成立。令 $F_\ell=A^{-1}B_\ell$，于是 $\sum_\ell F_\ell X F_\ell^*=X$。直接复用 [identity_kraus_scalar][Kraus58] 的有限恒等通道结论，得到 $F_\ell=c_\ell I$，即 $B_\ell=c_\ell A$；这是标准 Kraus 表示刚性的应用，亦见 [Watrous，Theorem 2.22、Corollary 2.23][Watrous58]。
+
+含非平凡投影的分支因 $A$ 可逆而只能有 $c_\ell=0$。其余分支若非零，则
+
+$$
+q_\ell I=B_\ell^*B_\ell=|c_\ell|^2A^*A,
+\tag{58.5}
+$$
+
+与 (58.3) 的非标量性矛盾。因此全部成功细分支都为零，不能等于非零的 $\Phi_A$。独立经典选择只改变已包括的标量权重，不改变这个论证。每个拟议有限协议分别适用，不要求把全部原合法历史预先截断到同一个深度。∎
+
+**定义 58.3（应用归属、互补输出和保留的来源义务）。** 本节的源特定应用是将既有 Kraus 刚性、投影乘积秩界及原 $K_1$ 的两谱值接到 (58.1) 的固定全输入目标；一般 CP/Kraus 事实不是新增理论。Childs–Wiebe [§II Lemma 2，(2)–(4)][LCU58] 的相加构造使用辅助量子位、受控门和辅助位测量，故不属于这里的同载体裸类；该引文不为原源供应这些资源，也不在此重复其构造。指定 $\Phi_A$ 只固定成功效果 $A^*A$ 和互补总效果 $I-A^*A$，不固定互补输出通道、细记录、档案或后续菜单。原互补质量仍须保留，不能按成功归一后冒称满足 (58.4)。
+
+此排除只针对所定义的全输入二元幅度合并接口。它不排除只在 ready 上匹配、仅匹配若干读数、另带实际辅助载体／参考／非投影仪器或不同条件化、无界停止合同的架构，也不推出一般来源供应不可能。[C139 的 T7/P9][C13958] 与 [R5 §§6、8][R558] 的共同相位、全部输入配对、聚合、强度和具名完整分支条件各自保留；并非每条量子起源路线都须经过 C12 或这个固定增益合并器。
+
+两节都沿用定义 44.2 的完整原对象及历史：全部 $89$ 配置、$26+63$ 扇区、唯一 ready、十一前／七后地址、两个记录切口、$1024/2048$ 标签、原零／失败／拒绝／停止／告警／返回、档案和所有原合法有限顺序、自适应及并行历史。数学张成、闭包、凸包及不变截面不增添精确可调用准备、混合或重置。§§54–56 的全标记历史界仍保留自身的完整源、共同核和比较坐标，不被 (57.2) 的端点边缘替代。
+
+[C128 正交迹续卷 §§389–397][Geometry58] 的共同支持／第一原子半 Peirce 切向几何及其完整背景是另一项条件结果，不据此识别原脉冲上的同一旧 $D$。[C128 词卷 §356][Calibration58] 的原对象采用和同一旧 $d_A$ 的有符号校准仍未由这里供应，不用新定义的交换子或这些 $D$-盲报告替代它。两节只给已供应复数、Born、酉及保留读合同的解析后果；这些合同怎样由原完整来源得到、如何在同一实际 $\Omega$ 上满足全部原量子起源接口，仍是原目标的来源义务。这里的来源绑定指原数学装置的对象、操作和完整律，不由这两项应用宣称量子公理的起源已获推导。
+
+[III57]: https://github.com/the-omega-institute/trureturing/blob/b0a89a1bdde2386f6c8ff7a959069a2118ecb080/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_III.md
+[Kraus58]: https://github.com/the-omega-institute/trureturing/blob/b0a89a1bdde2386f6c8ff7a959069a2118ecb080/D5/S3/Quantum/Recovery/KrausLeftInverseNecessity.lean
+[Watrous58]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf
+[LCU58]: https://arxiv.org/html/1202.5822
+[C13958]: https://github.com/the-omega-institute/trureturing/blob/b0a89a1bdde2386f6c8ff7a959069a2118ecb080/docs/develop/theory/AURIC_C139_MUTUAL_PROBES_AND_INTRINSIC_RECOVERY_OF_SQUARE_GEOMETRY.md
+[R558]: https://github.com/the-omega-institute/trureturing/blob/9d6c4658e96b91b96791d813b60de5d061c745c3/docs/develop/theory/AURIC_R5_009_POSITIVE_RECIPES_SAME_SOURCE_BALANCE_AND_QUANTUM_GEOMETRY.md
+[Geometry58]: https://github.com/the-omega-institute/trureturing/blob/64aca186adddfb598703f3e96be1f62ffed3dc49/docs/develop/theory/AURIC_C128_ORTHOGONAL_TRACE_AND_CORNER_RELATIONS_CONTINUATION.md
+[Calibration58]: https://github.com/the-omega-institute/trureturing/blob/b0a89a1bdde2386f6c8ff7a959069a2118ecb080/docs/develop/theory/AURIC_C128_ORIGINAL_WORD_CALIBRATION_AND_FIXED_RELATION.md
+
+## 追加锚（本行以下为增补区）
