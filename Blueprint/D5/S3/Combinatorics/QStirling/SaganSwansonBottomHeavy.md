@@ -70,6 +70,10 @@ $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{Z},\; \forall p \in Polynomi
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/QStirling/SaganSwansonBottomHeavy.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ss2205-bottomheavy` (proved) by `D5/S3/Combinatorics/QStirling/SaganSwansonBottomHeavy.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ss2205-bottomheavy","declaration_gid":"D5/S3/Combinatorics/QStirling/SaganSwansonBottomHeavy.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Bruce E. Sagan and Joshua P. Swanson (2022). *q-Stirling numbers in type B*. DOI: [10.1016/j.ejc.2023.103899](https://doi.org/10.1016/j.ejc.2023.103899). URL: <https://arxiv.org/abs/2205.14078v1>.
