@@ -5,18 +5,17 @@
    anchors: [mathlib/module/Mathlib.Algebra.Ring.GeomSum, mathlib/module/Mathlib.Data.Nat.GCD.Basic]
    utility: none
    digest: Radix-four rotation positivity distinguishes nonunit physical zero fibres. -/
-module
 
-public import D5.S3.Arith.Congruence.NonunitMultiplicationPeriod
-public import D5.S3.Arith.Congruence.PowerQuotientOrder
-public import D5.S3.Combinatorics.Circle.ZeroSumSubsets
-public import D5.S3.Combinatorics.Circle.TwoBitZeroSubsets
-public import Mathlib.Logic.Equiv.Fin.Rotate
-public import Mathlib.Data.Nat.Prime.Basic
-public import Mathlib.Tactic.Positivity
-public import Mathlib.Tactic.Ring
-public import Mathlib.Tactic.NormNum
-public import Mathlib.Tactic.Linarith
+import D5.S3.Arith.Congruence.NonunitMultiplicationPeriod
+import D5.S3.Arith.Congruence.PowerQuotientOrder
+import D5.S3.Combinatorics.Circle.ZeroSumSubsets
+import D5.S3.Combinatorics.Circle.TwoBitZeroSubsets
+import Mathlib.Logic.Equiv.Fin.Rotate
+import Mathlib.Data.Nat.Prime.Basic
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
 import Lean.Elab.Tactic.Omega
 
 /-!
@@ -33,7 +32,6 @@ periods. The centered doubleStep period is a separate, unfinished bridge.
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-@[expose] public section
 
 namespace D5.S3.Combinatorics.Circle.RadixFourNonunitZeroSubsets
 
