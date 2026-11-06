@@ -15,10 +15,14 @@ All simplices below use the native NONEMPTY convention. In particular an empty
 set of tops gives the empty native complex; no assertion identifies raw VOID
 with raw UNIT. Grounds and ghost labels are unchanged throughout. -/
 noncomputable section
+attribute [local instance] Classical.propDecidable
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Finset
 namespace D5.S3.Geometry.FinitePrescribedPairProtection
 open FiniteElementaryCollapse FiniteRelativeSimplicialCollapse
 variable {V : Type*} [Fintype V] [DecidableEq V]
+variable {K L : PreAbstractSimplicialComplex V} (H : Finset (Finset V))
 
 /-- Native nonempty faces of a finite union of full simplices. -/
 def simplices (H : Finset (Finset V)) : PreAbstractSimplicialComplex V where
@@ -31,11 +35,19 @@ def simplices (H : Finset (Finset V)) : PreAbstractSimplicialComplex V where
     s ∈ simplices H ↔ s.Nonempty ∧ ∃ q ∈ H, s ⊆ q := Iff.rfl
 
 @[simp] theorem simplices_empty : simplices (∅ : Finset (Finset V)) = ⊥ := by
-  ext s; simp [simplices]
+  apply SetLike.coe_injective
+  ext s
+  change (s.Nonempty ∧ ∃ q ∈ (∅ : Finset (Finset V)), s ⊆ q) ↔ False
+  simp
 
 @[simp] theorem simplices_union (H J : Finset (Finset V)) :
     simplices (H ∪ J) = simplices H ⊔ simplices J := by
-  ext s; simp [simplices]; tauto
+  apply SetLike.coe_injective
+  ext s
+  change (s.Nonempty ∧ ∃ q ∈ H ∪ J, s ⊆ q) ↔
+    (s.Nonempty ∧ ∃ q ∈ H, s ⊆ q) ∨ (s.Nonempty ∧ ∃ q ∈ J, s ⊆ q)
+  simp only [Finset.mem_union]
+  aesop
 
 /-- Skip precisely when an existing protected top contains the lower. -/
 def blocked (H : Finset (Finset V)) (P : CollapsePair V) : Prop :=
@@ -92,7 +104,7 @@ private theorem restored (P : CollapsePair V) :
     · right
       refine ⟨(P.ambient.isRelLowerSet_faces hs).1,P.upper,by simp,?_⟩
       rcases cofaces P hs hl with rfl | rfl
-      · exact subset_insert _ _
+      · exact Finset.subset_insert P.apex P.lower
       · exact le_rfl
     · exact Or.inl ⟨hs,hl⟩
 
@@ -142,7 +154,7 @@ theorem future_upper_cannot_resurrect (P : CollapsePair V) {L}
     intro hs
     have hp := future_upper_in_retained P T hQ P.lower_nonempty hs
     exact hp.2 le_rfl
-  exact ⟨hl,fun hu => hl ((subset_insert _ _).trans hu)⟩
+  exact ⟨hl,fun hu => hl ((Finset.subset_insert P.apex P.lower).trans hu)⟩
 
 /-- The computed core is a subcomplex of the original base. -/
 theorem core_le {K L} (S : Sequence K L) (H) : core S H ≤ K := by
@@ -170,7 +182,7 @@ theorem core_preserves {K L} (S : Sequence K L) (H) {s : Finset V}
       · right
         refine ⟨(P.ambient.isRelLowerSet_faces hs).1,P.upper,by simp,?_⟩
         rcases cofaces P hs hl with rfl | rfl
-        · exact subset_insert _ _
+        · exact Finset.subset_insert P.apex P.lower
         · exact le_rfl
       · left
         exact ih (insert P.upper H) ⟨hs,hl⟩ (by
@@ -213,8 +225,8 @@ theorem core_exact {K L} (S : Sequence K L) (H) (s : Finset V) :
         · rcases hQ with rfl | hQ
           · right
             rcases he with rfl | rfl
-            · exact ⟨P.lower_nonempty,P.upper,by simp,subset_insert _ _⟩
-            · exact ⟨P.lower_nonempty.mono (subset_insert _ _),P.upper,by simp,le_rfl⟩
+            · exact ⟨P.lower_nonempty,P.upper,by simp,Finset.subset_insert P.apex P.lower⟩
+            · exact ⟨P.lower_nonempty.mono (Finset.subset_insert P.apex P.lower),P.upper,by simp,le_rfl⟩
           · exact Or.inl ((ih _).mpr (Or.inr ⟨Q,hQ,he⟩))
     · simpa only [if_neg hb,Sequence.pairs,skipped] using ih H
 
@@ -274,14 +286,14 @@ def protectedReplay {K L} (S : Sequence K L) (H : Finset (Finset V)) :
   | step P T ih =>
     by_cases hb : blocked H P
     · exact (ih (insert P.upper H)).cast (by
-        rw [show insert P.upper H = H ∪ {P.upper} by ext q; simp; tauto,
+        rw [show insert P.upper H = H ∪ {P.upper} by ext q; simp [or_comm],
           simplices_union]
         calc
           P.retained ⊔ (simplices H ⊔ simplices {P.upper}) =
               (P.retained ⊔ simplices {P.upper}) ⊔ simplices H := by ac_rfl
           _ = P.ambient ⊔ simplices H := by rw [restored]) (by
         rw [core_step,if_pos hb]
-        rw [show insert P.upper H = H ∪ {P.upper} by ext q; simp; tauto,
+        rw [show insert P.upper H = H ∪ {P.upper} by ext q; simp [or_comm],
           simplices_union]
         ac_rfl)
     · exact (Sequence.step (unionPair P H hb)
@@ -303,7 +315,7 @@ private theorem restricted_retained (P : CollapsePair V) {L}
     (T : Sequence P.retained L) (H) (hb : blocked H P) :
     (restrictPair P (core (.step P T) H) (core_le _ _) (by
       rw [core_step,if_pos hb]; right
-      exact ⟨P.lower_nonempty.mono (subset_insert _ _),P.upper,by simp,le_rfl⟩)).retained =
+      exact ⟨P.lower_nonempty.mono (Finset.subset_insert P.apex P.lower),P.upper,by simp,le_rfl⟩)).retained =
       core T (insert P.upper H) := by
   ext s
   change (s ∈ core (.step P T) H ∧ ¬P.lower ⊆ s) ↔ _
@@ -329,7 +341,7 @@ def standaloneReplay {K L} (S : Sequence K L) (H : Finset (Finset V)) :
     by_cases hb : blocked H P
     · let Q := restrictPair P (core (.step P T) H) (core_le _ _) (by
         rw [core_step,if_pos hb]; right
-        exact ⟨P.lower_nonempty.mono (subset_insert _ _),P.upper,by simp,le_rfl⟩)
+        exact ⟨P.lower_nonempty.mono (Finset.subset_insert P.apex P.lower),P.upper,by simp,le_rfl⟩)
       exact Sequence.step Q ((ih (insert P.upper H)).cast
         (restricted_retained P T H hb).symm rfl)
     · exact (ih H).cast (by rw [core_step,if_neg hb]) rfl
@@ -435,7 +447,7 @@ theorem native_current_cofaces (P : CollapsePair V) (s : Finset V) :
   · rintro ⟨hs,hl⟩; exact cofaces P hs hl
   · rintro (rfl | rfl)
     · exact ⟨P.lower_mem,le_rfl⟩
-    · exact ⟨P.upper_mem,subset_insert _ _⟩
+    · exact ⟨P.upper_mem,Finset.subset_insert P.apex P.lower⟩
 
 /-- The forward decision at a cut tests exactly the original tops and EARLIER
 skipped uppers; no later upper participates in the decision. -/

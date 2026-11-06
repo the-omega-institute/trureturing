@@ -23,6 +23,8 @@ The certificate contains finite combinatorial data, never desired maps or sphere
 conclusions. The final disk-collar/sphere argument is a separate typed obligation.
 -/
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Set Finset Topology
 open scoped BigOperators unitInterval ContinuousMap
 
@@ -91,7 +93,7 @@ theorem dual_augmented (W : Finset V) (K : PreAbstractSimplicialComplex V)
     AugmentedFace (dual W K) s ↔ s ⊆ W ∧ ¬ AugmentedFace K (W \ s) := by
   constructor
   · rintro (rfl | hs)
-    · exact ⟨empty_subset _, by simpa using hp⟩
+    · exact ⟨empty_subset _, by simpa only [Finset.sdiff_empty] using hp⟩
     · exact hs.2
   · rintro ⟨hsW, hn⟩
     by_cases hs : s = ∅
@@ -251,7 +253,7 @@ def ReversePairSpec (W : Finset V) (source output : CollapsePair V) : Prop :=
 private theorem reversePair_spec (W : Finset V) (D : PreAbstractSimplicialComplex V)
     (hW : Supported W D) (hp : Proper W D) (P : CollapsePair V)
     (hP : P.ambient ≤ D) : ReversePairSpec W P (reversePair W D hW hp P hP) := by
-  exact ⟨rfl, reversePair_retained W D hW hp P hP, rfl,
+  refine ⟨rfl, reversePair_retained W D hW hp P hP, rfl,
     complement_upper W P (hW _ (hP P.upper_mem)), rfl,
     (reversePair W D hW hp P hP).lower_nonempty,
     (by have h := Finset.card_pos.mpr (reversePair W D hW hp P hP).lower_nonempty; omega),
@@ -281,17 +283,21 @@ def reverseSequence (W : Finset V) (D : PreAbstractSimplicialComplex V)
 
 private theorem pairs_append_exact {K L M : PreAbstractSimplicialComplex V}
     (S : Sequence K L) (T : Sequence L M) : (S.append T).pairs = S.pairs ++ T.pairs := by
-  induction S with
-  | refl => rfl
-  | step P S ih => simp [Sequence.append, Sequence.pairs, ih]
+  exact Sequence.pairs_append S T
 
 private theorem frames_append_one {K : PreAbstractSimplicialComplex V}
     (P : CollapsePair V) (S : Sequence K P.ambient) :
     (S.append (Sequence.step P (Sequence.refl _))).frames =
       S.frames ++ [P.retained] := by
-  induction S with
-  | refl => rfl
-  | step Q S ih => simp [Sequence.append, Sequence.frames, ih]
+  have h : ∀ {A B C : PreAbstractSimplicialComplex V}
+      (U : Sequence A B) (T : Sequence B C),
+      (U.append T).frames = U.frames ++ T.frames.tail := by
+    intro A B C U T
+    induction U with
+    | refl A => cases T <;> rfl
+    | step Q U ih => simp only [Sequence.append, Sequence.frames, ih, List.cons_append]
+  simpa only [Sequence.frames, List.tail_cons, List.tail_nil] using
+    h S (Sequence.step P (Sequence.refl _))
 
 /-- Every reversed ordered pair has the exact complement labels and endpoints. -/
 theorem reverseSequence_pairs (W : Finset V) (D : PreAbstractSimplicialComplex V)
@@ -306,8 +312,8 @@ theorem reverseSequence_pairs (W : Finset V) (D : PreAbstractSimplicialComplex V
       intro hK
       simp only [reverseSequence, pairs_append_exact, reverseOne, Sequence.pairs_cast,
         Sequence.pairs, List.reverse_cons]
-      exact List.rel_append (ih (P.retained_le.trans hK))
-        (.cons (reversePair_spec W D hW hp P hK) .nil)
+      apply List.rel_append (ih (P.retained_le.trans hK))
+      exact .cons (reversePair_spec W D hW hp P hK) .nil
 
 private theorem append_cast_right {K L M M' : PreAbstractSimplicialComplex V}
     (S : Sequence K L) (T : Sequence L M) (h : M = M') :
@@ -502,8 +508,12 @@ maximal-face deletion is separate from the ordinary nonempty-lower collapse list
 E<=D is derived below rather than supplied a second time. -/
 structure Certificate (V : Type*) [Fintype V] [DecidableEq V] where
   W : Finset V
-  D E Q : PreAbstractSimplicialComplex V
-  Dfaces Efaces Qfaces : Finset (Finset V)
+  D : PreAbstractSimplicialComplex V
+  E : PreAbstractSimplicialComplex V
+  Q : PreAbstractSimplicialComplex V
+  Dfaces : Finset (Finset V)
+  Efaces : Finset (Finset V)
+  Qfaces : Finset (Finset V)
   Dfaces_exact : ∀ s, s ∈ Dfaces ↔ AugmentedFace D s
   Efaces_exact : ∀ s, s ∈ Efaces ↔ AugmentedFace E s
   Qfaces_exact : ∀ s, s ∈ Qfaces ↔ AugmentedFace Q s

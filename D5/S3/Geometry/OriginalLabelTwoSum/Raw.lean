@@ -131,7 +131,8 @@ theorem raw_ext {K L : Family V} (h0 : (∅ : Finset V) ∈ K ↔ ∅ ∈ L)
   · simpa [hs] using h0
   · have hn := Finset.nonempty_iff_ne_empty.mpr hs
     have : s ∈ project K ↔ s ∈ project L := by rw [h]
-    simpa only [project, hn, true_and] using this
+    change (s.Nonempty ∧ s ∈ K) ↔ (s.Nonempty ∧ s ∈ L) at this
+    simpa only [hn, true_and] using this
 
 @[simp] theorem mem_delta (W s : Finset V) : s ∈ delta W ↔ s ⊆ W := Iff.rfl
 @[simp] theorem mem_project (K : Family V) (s : Finset V) :
@@ -229,8 +230,11 @@ def transportedRows (X Y : Finset V) (e : V) (R : Finset V)
       dsimp [substitute]
       split_ifs with h
       · exact Finset.union_subset_union
-          (by intro v hv; have := hq (Finset.mem_of_mem_erase hv)
-              simpa [Finset.mem_erase.mp hv |>.1] using this) hR
+          (by
+            intro v hv
+            rcases Finset.mem_insert.mp (hq (Finset.mem_of_mem_erase hv)) with heq | hx
+            · exact ((Finset.mem_erase.mp hv).1 heq).elim
+            · exact hx) hR
       · intro v hv
         have := hq hv
         rcases Finset.mem_insert.mp this with he | hx

@@ -9,6 +9,8 @@ import D5.S3.Geometry.OriginalLabelTwoSum.CutTree
 
 /-! SOURCE ONLY: proof terms have not been elaborated. -/
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 attribute [local instance] Classical.propDecidable
 open SimpleGraph
 namespace D5.S3.Geometry.OriginalLabelTwoSum.CutTree

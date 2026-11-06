@@ -32,6 +32,8 @@ obligations of the broader geometry project.
 -/
 
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Set Finset Topology
 open scoped unitInterval ContinuousMap
 
@@ -364,9 +366,8 @@ private theorem sequence_frames_terminal {K L : PreAbstractSimplicialComplex V}
     (S : Sequence K L) : S.frames.getD S.pairs.length L = L := by
   induction S with
   | refl K => rfl
-  | step P T ih =>
-      change T.frames.getD T.pairs.length L = L
-      exact ih
+  | @step P N T ih =>
+      simpa only [Sequence.frames, Sequence.pairs, List.length_cons, List.getD_cons_succ] using ih
 
 /-- Exact replay of any native sequence as deletion of the indicated prefix.
 This is a theorem about faces in the actual evolving complexes. -/
@@ -379,13 +380,13 @@ private theorem sequence_frame_mem {K L : PreAbstractSimplicialComplex V}
       have hi0 : i = 0 := by simpa only [Sequence.pairs, List.length_nil, Nat.le_zero] using hi
       subst i
       simp [Sequence.frames, Sequence.pairs]
-  | step P T ih =>
+  | @step P N T ih =>
       cases i with
       | zero => simp [Sequence.frames, Sequence.pairs]
       | succ i =>
           have hi' : i ≤ T.pairs.length := by
             simpa only [Sequence.pairs, List.length_cons, Nat.succ_le_succ_iff] using hi
-          change s ∈ T.frames.getD i L ↔ s ∈ P.ambient ∧
+          change s ∈ T.frames.getD i N ↔ s ∈ P.ambient ∧
             ∀ Q ∈ P :: T.pairs.take i, s ≠ Q.lower ∧ s ≠ Q.upper
           rw [ih i hi', P.mem_retained_iff]
           constructor
@@ -468,7 +469,7 @@ empty-lower elementary collapse. No realization point is chosen. -/
 theorem ghost_pairs (K : PreAbstractSimplicialComplex V) (u v : V)
     (huv : u ≠ v) (hExt : Extends K u v) (hf : Fresh v K) :
     (sequence K u v huv hExt).pairs = [] := by
-  apply List.length_eq_zero.mp
+  apply List.length_eq_zero_iff.mp
   rw [sequence_length, (badFaces_empty_iff K u v huv).2 hf]
   rfl
 
@@ -539,15 +540,15 @@ theorem graph_extends (G : SimpleGraph V) (p : V → Prop) (u v : V)
   intro s hs hv
   refine ⟨Finset.insert_nonempty u s, ?_, ?_⟩
   · intro a ha b hb hab hadj
-    rcases Finset.mem_insert.mp ha with rfl | ha
-    · rcases Finset.mem_insert.mp hb with rfl | hb
-      · exact G.loopless.irrefl _ hadj
-      · have hvb : G.Adj v b := hdom b (hs.2.2 b hb) hadj
-        exact hs.2.1 hv hb (G.ne_of_adj hvb) hvb
-    · rcases Finset.mem_insert.mp hb with rfl | hb
-      · have hva : G.Adj v a := hdom a (hs.2.2 a ha) hadj.symm
-        exact hs.2.1 hv ha (G.ne_of_adj hva) hva
-      · exact hs.2.1 ha hb hab hadj
+    rcases Finset.mem_insert.mp ha with hau | haS
+    · rcases Finset.mem_insert.mp hb with hbu | hbS
+      · exact G.loopless.irrefl u (by simpa only [hau, hbu] using hadj)
+      · have hvb : G.Adj v b := hdom b (hs.2.2 b hbS) (by simpa only [hau] using hadj)
+        exact hs.2.1 hv hbS (G.ne_of_adj hvb) hvb
+    · rcases Finset.mem_insert.mp hb with hbu | hbS
+      · have hva : G.Adj v a := hdom a (hs.2.2 a haS) (by simpa only [hbu] using hadj.symm)
+        exact hs.2.1 hv haS (G.ne_of_adj hva) hva
+      · exact hs.2.1 haS hbS hab hadj
   · intro a ha
     rcases Finset.mem_insert.mp ha with rfl | ha
     · exact hpu
