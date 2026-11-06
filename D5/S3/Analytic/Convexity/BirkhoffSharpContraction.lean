@@ -4,14 +4,21 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The sharp projective diameter and contraction coefficient of a positive rectangular matrix. -/
+   digest: Sharp Hilbert diameter and contraction of finite positive rectangular matrices. -/
 
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Data.Matrix.Mul
 import Mathlib.Data.Fintype.Lattice
 import Mathlib.Topology.Order.IsLUB
-import Mathlib.Tactic
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.FunProp
+import Mathlib.Tactic.GCongr
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.SplitIfs
 
 /-!
 # Sharp finite rectangular Birkhoff contraction
@@ -76,8 +83,10 @@ private theorem distance_extrema {K : Type w} [Fintype K] [Nonempty K]
   refine ⟨a, b, ha, hb, ?_⟩
   unfold distance
   congr 2
-  · exact le_antisymm (ciSup_le ha) (le_ciSup (f := fun k => x k / y k) (Set.finite_range _).bddAbove a)
-  · exact le_antisymm (ciInf_le (f := fun k => x k / y k) (Set.finite_range _).bddBelow b) (le_ciInf hb)
+  · exact le_antisymm (ciSup_le ha)
+      (le_ciSup (f := fun k => x k / y k) (Set.finite_range _).bddAbove a)
+  · exact le_antisymm
+      (ciInf_le (f := fun k => x k / y k) (Set.finite_range _).bddBelow b) (le_ciInf hb)
 
 private theorem distance_nonneg {K : Type w} [Fintype K] [Nonempty K]
     {x y : K → ℝ} (hx : Positive x) (hy : Positive y) : 0 ≤ distance x y := by
@@ -112,12 +121,16 @@ private theorem theta_attained {I : Type u} {J : Type v} [Fintype I] [Fintype J]
   obtain ⟨p,hp⟩ := Finite.exists_max (fun p : I × I × J × J =>
     A p.1 p.2.2.1 * A p.2.1 p.2.2.2 / (A p.1 p.2.2.2 * A p.2.1 p.2.2.1))
   exact ⟨p.1,p.2.1,p.2.2.1,p.2.2.2,
-    le_antisymm (ciSup_le hp) (le_ciSup (f := fun p : I × I × J × J => A p.1 p.2.2.1 * A p.2.1 p.2.2.2 / (A p.1 p.2.2.2 * A p.2.1 p.2.2.1)) (Set.finite_range _).bddAbove p)⟩
+    le_antisymm (ciSup_le hp) (le_ciSup (f := fun p : I × I × J × J =>
+      A p.1 p.2.2.1 * A p.2.1 p.2.2.2 / (A p.1 p.2.2.2 * A p.2.1 p.2.2.1))
+      (Set.finite_range _).bddAbove p)⟩
 
 private theorem entry_cross_le {I : Type u} {J : Type v} [Fintype I] [Fintype J]
     (A : Matrix I J ℝ) (i k : I) (j l : J) :
     A i j * A k l / (A i l * A k j) ≤ theta A :=
-  le_ciSup (f := fun p : I × I × J × J => A p.1 p.2.2.1 * A p.2.1 p.2.2.2 / (A p.1 p.2.2.2 * A p.2.1 p.2.2.1)) (Set.finite_range _).bddAbove (i,k,j,l)
+  le_ciSup (f := fun p : I × I × J × J =>
+    A p.1 p.2.2.1 * A p.2.1 p.2.2.2 / (A p.1 p.2.2.2 * A p.2.1 p.2.2.1))
+    (Set.finite_range _).bddAbove (i,k,j,l)
 
 private theorem theta_one_le {I : Type u} {J : Type v} [Fintype I] [Fintype J]
     [Nonempty I] [Nonempty J] {A : Matrix I J ℝ} (hA : ∀ i j, 0 < A i j) :
@@ -183,8 +196,8 @@ private theorem birkhoff_cross_ratio_le {α β α' β' s l : ℝ} (hα : 0 < α)
 /-- The two-dimensional form of Birkhoff's theorem: for `R ≥ 1`, `l ≥ 1` and positive
 `α, β, α', β'` with `α * β' ≤ l ^ 2 * (β * α')`, the logarithmic cross ratio of
 `(R * α + β, α + β)` and `(R * α' + β', α' + β')` is at most `(l - 1) / (l + 1) * log R`. -/
-private theorem log_birkhoff_cross_ratio_le {α β α' β' R l : ℝ} (hα : 0 < α) (hβ : 0 < β) (hα' : 0 < α')
-    (hβ' : 0 < β') (hR : 1 ≤ R) (hl : 1 ≤ l) (h : α * β' ≤ l ^ 2 * (β * α')) :
+private theorem log_birkhoff_cross_ratio_le {α β α' β' R l : ℝ}
+    (hα : 0 < α) (hβ : 0 < β) (hα' : 0 < α') (hβ' : 0 < β') (hR : 1 ≤ R) (hl : 1 ≤ l) (h : α * β' ≤ l ^ 2 * (β * α')) :
     log ((R * α + β) * (α' + β') / ((α + β) * (R * α' + β'))) ≤
       (l - 1) / (l + 1) * log R := by
   set s := exp (log R / 2)
@@ -216,6 +229,7 @@ section MatrixBounds
 variable {I : Type u} {J : Type v} [Fintype I] [Fintype J]
   [Nonempty I] [Nonempty J] {A : Matrix I J ℝ}
 
+omit [Nonempty I] [Nonempty J] in
 private theorem mulVec_cross_le (hA : ∀ i j, 0 < A i j) {u v : J → ℝ}
     (hu : ∀ j, 0 ≤ u j) (hv : ∀ j, 0 ≤ v j) (i k : I) :
     (A *ᵥ u) i * (A *ᵥ v) k ≤ theta A * ((A *ᵥ v) i * (A *ᵥ u) k) := by
@@ -303,7 +317,6 @@ private theorem contraction_upper (hA : ∀ i j, 0 < A i j) {x y : J → ℝ}
     have he : m * (A *ᵥ y) i * (A *ᵥ y) k /
         ((A *ᵥ y) i * (m * (A *ᵥ y) k)) = 1 := by
       field_simp [(output_positive hA hy i).ne', (output_positive hA hy k).ne', hm.ne']
-      <;> ring
     rw [he, log_one]
     simpa only [hxy] using mul_nonneg (kappa_range hA).1 (distance_nonneg hx hy)
   · rw [hd]
@@ -370,11 +383,13 @@ private theorem phi_deriv {L : ℝ} (hL : 0 < L) :
   rw [he]
   have hd := ((((hasDerivAt_exp (0 : ℝ)).const_mul L).const_add 1).log (h1 0).ne').sub
     (((hasDerivAt_exp (0 : ℝ)).const_add L).log (h2 0).ne')
-  convert hd using 1 <;> simp only [exp_zero,mul_one] <;> ring
+  convert hd using 1
+  simp only [exp_zero,mul_one]
+  ring
 
 private theorem phi_secant {L c : ℝ} (hL : 0 < L) (hc : c < (L - 1) / (L + 1)) :
     ∃ t : ℝ, 0 < t ∧ c * t < phi L t := by
-  have hzero : phi L 0 = 0 := by simp [phi, add_comm, hL.ne']
+  have hzero : phi L 0 = 0 := by simp [phi, add_comm]
   have ht := (phi_deriv hL).tendsto_slope_zero_right
   have he : ∀ᶠ t in 𝓝[>] (0 : ℝ), c < t⁻¹ * phi L t := by
     simpa only [zero_add, hzero, sub_zero, smul_eq_mul] using
