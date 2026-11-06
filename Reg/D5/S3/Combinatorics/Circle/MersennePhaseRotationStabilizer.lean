@@ -26,7 +26,7 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun role p A => if role then
+  realize signature (fun role p A => if !role then
     ∑ i ∈ A.image ((finRotate (3 * p.1) : Equiv.Perm (Fin (3 * p.1))) ^ p.2),
       actualSource (3 * p.1) ((2 ^ p.1 - 1) * (2 ^ (p.1 + 1) - 3)) i
     else ∑ i ∈ A,
@@ -41,7 +41,7 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ (d h : ℕ) (_hd : 3 ≤ d) (_h19 : ¬19 ∣ (2 ^ (d + 1) - 3)),
     (∀ A : Finset (Fin (3 * d)),
-      R.readout true (d, h) A = 0 ↔ R.readout false (d, h) A = 0) ↔
+      R.readout false (d, h) A = 0 ↔ R.readout true (d, h) A = 0) ↔
       (if d = 4 then 2 else d) ∣ h
 
 private theorem rejected_law (role : Bool) : ¬ arena.Law (rejected role) := by
@@ -82,7 +82,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun role p A => if role then
+  readout := some (realize signature (fun role p A => if !role then
     ∑ i ∈ A.image ((finRotate (3 * p.1) : Equiv.Perm (Fin (3 * p.1))) ^ p.2),
       actualSource (3 * p.1) ((2 ^ p.1 - 1) * (2 ^ (p.1 + 1) - 3)) i
     else ∑ i ∈ A,

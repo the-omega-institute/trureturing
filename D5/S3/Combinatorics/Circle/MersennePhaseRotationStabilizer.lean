@@ -28,7 +28,7 @@ open private mem_phaseLift phaseRead phaseRead_phaseLift
 bounded-exponent rotate_val from TwoBitZeroSubsets. -/
 private theorem rotate_pow_val {n : ℕ} (hn : 1 < n) (h : ℕ) (i : Fin n) :
     (((finRotate n : Equiv.Perm (Fin n)) ^ h) i).val = (i.val + h) % n := by
-  letI : NeZero n := ⟨by omega⟩
+  haveI : NeZero n := ⟨by omega⟩
   induction h with
   | zero =>
       change i.val = (i.val + 0) % n
@@ -54,7 +54,7 @@ private theorem rotation_phase (d : ℕ) (hd : 3 ≤ d) (h : ℕ)
       ⟨i.val % d, Nat.mod_lt _ (by omega)⟩).val
   rw [rotate_pow_val (by omega), rotate_pow_val (by omega)]
   rw [Nat.mod_mod_of_dvd (i.val + h) (show d ∣ 3 * d from ⟨3, by omega⟩)]
-  exact (Nat.mod_add_mod i.val h d).symm
+  exact (Nat.mod_add_mod i.val d h).symm
 
 /- Transport all physical labels by image; no quotient of the subset domain
 or identification of equal source values is made. -/
@@ -195,28 +195,30 @@ theorem actual_zero_family_rotation_iff (d h : ℕ) (hd : 3 ≤ d)
       have hSb : S b = a ∨ S b = b := (hsupport b).mpr (Or.inr rfl)
       /- Only two wraps are possible for j+e. This explicit quotient argument
       avoids asking omega to reason about division by a variable modulus. -/
-      have hmod (x : ℕ) (hx : x < 2 * d) : x % d = x ∨ x % d = x - d := by
-        have hq : x / d < 2 := Nat.div_lt_of_lt_mul hx
+      have hmod (x : ℕ) (hx : x < 2 * d) : x % d = x ∨ (d ≤ x ∧ x % d = x - d) := by
+        have hq : x / d < 2 := Nat.div_lt_of_lt_mul (by simpa only [Nat.mul_comm] using hx)
         have hm := Nat.mod_add_div x d
-        have hqc : x / d = 0 ∨ x / d = 1 := by omega
+        have hqc : x / d = 0 ∨ x / d = 1 := by
+          have exhaustive : ∀ q : Fin 2, q.val = 0 ∨ q.val = 1 := by decide
+          exact exhaustive ⟨x / d, hq⟩
         rcases hqc with hq0 | hq1
         · simp only [hq0, Nat.mul_zero, Nat.add_zero] at hm
           exact Or.inl hm
         · simp only [hq1, Nat.mul_one] at hm
-          exact Or.inr (by omega)
+          exact Or.inr ⟨by omega, by omega⟩
       rcases hSa with haa | hab'
       · left
         have hv := congrArg Fin.val haa
         rw [hval] at hv
         change (d - 3 + e) % d = d - 3 at hv
         have hm := hmod (d - 3 + e) (by omega)
-        rcases hm with hm | hm <;> omega
+        rcases hm with hm | ⟨hwrap, hm⟩ <;> omega
       · have he2 : e = 2 := by
           have hv := congrArg Fin.val hab'
           rw [hval] at hv
           change (d - 3 + e) % d = d - 1 at hv
           have hm := hmod (d - 3 + e) (by omega)
-          rcases hm with hm | hm <;> omega
+          rcases hm with hm | ⟨hwrap, hm⟩ <;> omega
         have hba : S b = a := by
           rcases hSb with hba | hbb
           · exact hba
@@ -226,7 +228,7 @@ theorem actual_zero_family_rotation_iff (d h : ℕ) (hd : 3 ≤ d)
           rw [hval] at hv
           change (d - 1 + e) % d = d - 3 at hv
           have hm := hmod (d - 1 + e) (by omega)
-          rcases hm with hm | hm <;> omega
+          rcases hm with hm | ⟨hwrap, hm⟩ <;> omega
         exact Or.inr ⟨hd4, he2⟩
     · intro he
       have hsend : (S a = a ∧ S b = b) ∨ (S a = b ∧ S b = a) := by
@@ -256,12 +258,12 @@ theorem actual_zero_family_rotation_iff (d h : ℕ) (hd : 3 ≤ d)
             simpa only [haa] using hmem B a
           have hmb : b ∈ B.image S ↔ b ∈ B := by
             simpa only [hbb] using hmem B b
-          exact Iff.congr hma hmb
+          exact iff_congr hma hmb
         · have hma : b ∈ B.image S ↔ a ∈ B := by
             simpa only [hab'] using hmem B a
           have hmb : a ∈ B.image S ↔ b ∈ B := by
             simpa only [hba] using hmem B b
-          exact (Iff.congr hmb hma).trans iff_comm
+          exact (iff_congr hmb hma).trans iff_comm
       intro A
       constructor
       · intro hz
@@ -270,7 +272,7 @@ theorem actual_zero_family_rotation_iff (d h : ℕ) (hd : 3 ≤ d)
         let B : Finset (Fin d) := C.image S.symm
         have hBC : B.image S = C := by
           simp only [B, Finset.image_image, Function.comp_def, S.apply_symm_apply,
-            Finset.image_id]
+            Finset.image_id']
         have hAB : A = phaseLift d B := by
           apply Finset.image_injective R.injective
           calc
@@ -297,7 +299,7 @@ theorem actual_zero_family_rotation_iff (d h : ℕ) (hd : 3 ≤ d)
   change (h % d = 0 ∨ (d = 4 ∧ h % d = 2)) ↔ (if d = 4 then 2 else d) ∣ h
   by_cases hd4 : d = 4
   · subst d
-    simp only [if_pos rfl, eq_self_iff_true, true_and]
+    simp only [ite_true, true_and]
     omega
   · simp only [hd4, false_and, or_false, ite_false]
     exact Nat.dvd_iff_mod_eq_zero.symm
