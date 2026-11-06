@@ -155,8 +155,7 @@ theorem certificate_cells : CriticalData (out).core
 /-- Literal full-boundary attachment, including raw empty membership. -/
 theorem certificate_boundary {s : Finset V} (hs : s ∈ (out).critical) :
     delta s ⊓ (out).core =
-      (⟨{t | t ⊂ s}, by intro u t hut hts
-                         exact lt_of_le_of_lt hut hts⟩ : Family V) :=
+      (⟨{t | t ⊂ s}, fun u t hut hts => lt_of_le_of_lt hut hts⟩ : Family V) :=
   critical_intersection (out).core (out).critical (out).cells hs
 
 /-- Exact computed terminal label. In the p=e case it is chosen from X when

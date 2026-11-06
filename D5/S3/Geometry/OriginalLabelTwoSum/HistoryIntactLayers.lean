@@ -167,7 +167,8 @@ private def strongRelative (U d : Finset V) (B M : Family V)
     (noBase (delta {c.vertex}))
   let H := B ⊔ rawJoin (delta d) (delta {c.vertex})
   have hUpper : insert c.vertex d ∈ H := by
-    refine Or.inr ⟨d, le_rfl, {c.vertex}, le_rfl, ?_⟩
+    refine Or.inr ⟨d, (show d ⊆ d from le_rfl), {c.vertex},
+      (show ({c.vertex} : Finset V) ⊆ {c.vertex} from le_rfl), ?_⟩
     ext v
     simp only [Finset.mem_insert, Finset.mem_union, Finset.mem_singleton]
     tauto
@@ -182,7 +183,8 @@ private def strongRelative (U d : Finset V) (B M : Family V)
       · exact Finset.mem_insert.mpr (Or.inl (Finset.mem_singleton.mp (ht hvt)))
   let R := emitPair H d c.vertex hd hpD hUpper hFree
   have hRetained : R.retained = project B := by
-    rw [R, emitPair_retained]
+    dsimp only [R]
+    rw [emitPair_retained]
     congr 1
     apply SetLike.ext
     intro s

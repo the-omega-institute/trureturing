@@ -84,7 +84,7 @@ private def strongOfSingleton {W : Finset V} {K : Family V}
       obtain ⟨x, hx⟩ := has
       rw [he] at hx
       change ({x} : Finset V) ⊆ ∅ at hx
-      exact Finset.not_mem_empty x (hx (Finset.mem_singleton_self x))
+      exact Finset.notMem_empty x (hx (Finset.mem_singleton_self x))
   | strong c => exact c
 
 /-- Construct the strong certificate on the ACTUAL uncornered root. The only

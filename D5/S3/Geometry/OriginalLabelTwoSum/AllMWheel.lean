@@ -94,9 +94,9 @@ theorem labelInterval_nodup (m lo n : Nat) (h : lo + n ≤ m + 1) :
       apply List.nodup_cons.mpr
       exact ⟨by rw [mem_labelInterval]; dsimp; omega, ih (lo + 1) (by omega)⟩
 
+set_option maxHeartbeats 1600000 in
 /-- Every edge and both of its actual endpoints are identified. The statement
     includes empty and singleton segments, with no fabricated endpoint. -/
-set_option maxHeartbeats 1600000 in
 theorem labelInterval_edges (m lo n : Nat) (h : lo + n ≤ m + 1)
     (e : Finset (Label m)) :
     e ∈ pathEdges (labelInterval m lo n h) ↔
@@ -126,7 +126,10 @@ theorem labelInterval_edges (m lo n : Nat) (h : lo + n ≤ m + 1)
             by_cases hxl : x.val = lo
             · left
               have hx' : x = (⟨lo, by omega⟩ : Label m) := Fin.ext hxl
-              have hy' : y = (⟨lo + 1, by omega⟩ : Label m) := Fin.ext (by omega)
+              have hy' : y = (⟨lo + 1, by omega⟩ : Label m) := by
+                apply Fin.ext
+                change y.val = lo + 1
+                omega
               simpa only [hx', hy'] using he
             · exact Or.inr ⟨x, y, by omega, hy, by omega, he⟩
 
