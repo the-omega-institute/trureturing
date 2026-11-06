@@ -16,6 +16,7 @@ import Mathlib.LinearAlgebra.Matrix.MvPolynomial
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
 import Mathlib.RingTheory.MvPolynomial.IrreducibleQuadratic
 import Mathlib.RingTheory.Polynomial.GaussLemma
+import Mathlib.RingTheory.Polynomial.UniqueFactorization
 import Mathlib.Tactic
 
 /-!
@@ -334,5 +335,46 @@ theorem det_generic_irreducible (n : ℕ) (hn : 0 < n) :
       simp only [genMatrix_apply, Fin.val_zero, pow_zero, one_mul]
       congr 1
       · ring
+
+/-- The characteristic polynomial of the full generic complex matrix remains
+irreducible over the fraction field of its exact coefficient ring. -/
+theorem charpoly_generic_irreducible_fractionRing (n : ℕ) (hn : 0 < n) :
+    Irreducible ((charpoly (mvPolynomialX (Fin n) (Fin n) ℂ)).map
+      (algebraMap (MvPolynomial (Fin n × Fin n) ℂ)
+        (FractionRing (MvPolynomial (Fin n × Fin n) ℂ)))) := by
+  classical
+  let R := MvPolynomial (Fin n × Fin n) ℂ
+  let Y := mvPolynomialX (Fin n) (Fin n) ℂ
+  let ψ : R →+* Polynomial R := MvPolynomial.eval₂Hom
+    (Polynomial.C.comp MvPolynomial.C)
+    (fun ij => (if ij.1 = ij.2 then Polynomial.X else 0) -
+      Polynomial.C (MvPolynomial.X ij))
+  let φ : Polynomial R →+* Polynomial R := Polynomial.eval₂RingHom ψ Polynomial.X
+  have hφX : φ Polynomial.X = Polynomial.X := by simp [φ]
+  have hφC (c : ℂ) : φ (Polynomial.C (MvPolynomial.C c)) =
+      Polynomial.C (MvPolynomial.C c) := by simp [φ, ψ]
+  have hφV (ij : Fin n × Fin n) : φ (Polynomial.C (MvPolynomial.X ij)) =
+      (if ij.1 = ij.2 then Polynomial.X else 0) -
+        Polynomial.C (MvPolynomial.X ij) := by simp [φ, ψ]
+  have hinv : φ.comp φ = RingHom.id (Polynomial R) := by
+    ext c ij
+    · simp [RingHom.comp_apply, hφC]
+    · simp only [RingHom.comp_apply, RingHom.id_apply, hφV, map_sub]
+      split <;> simp_all
+    · simp [RingHom.comp_apply, hφX]
+  have invol : Function.Involutive φ := fun p => DFunLike.congr_fun hinv p
+  let e : Polynomial R ≃+* Polynomial R := RingEquiv.ofBijective φ invol.bijective
+  have hdet : Irreducible (Polynomial.C (det Y)) :=
+    (Polynomial.prime_C_iff.2 (det_generic_irreducible n hn).prime).irreducible
+  have hedet : e (Polynomial.C (det Y)) = charpoly Y := by
+    change φ (Polynomial.C (det Y)) = det (charmatrix Y)
+    rw [← RingHom.comp_apply, RingHom.map_det]
+    congr 1
+    ext i j
+    simp only [RingHom.mapMatrix_apply, Matrix.map_apply, RingHom.comp_apply,
+      Y, mvPolynomialX_apply, hφV, charmatrix_apply, diagonal_apply]
+  have hchar : Irreducible (charpoly Y) := hedet ▸ hdet.map e.toMulEquiv
+  exact ((charpoly_monic Y).irreducible_iff_irreducible_map_fraction_map
+    (K := FractionRing R)).1 hchar
 
 end D5.S3.Quantum.Algebra.GenericMatrixIrreducibility
