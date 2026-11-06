@@ -42,7 +42,7 @@ private theorem sum_bound (r u v : ℕ) (hr : 4 ≤ r)
   have e₁ : (2 : ℕ) ^ (r - 1) = 2 * 2 ^ (r - 2) := by
     rw [show r - 1 = (r - 2) + 1 by omega, pow_succ]; omega
   have e₂ : (2 : ℕ) ^ r = 4 * 2 ^ (r - 2) := by
-    rw [show r = (r - 2) + 2 by omega, pow_add]; norm_num <;> ring
+    rw [show r = (r - 2) + 2 by omega, pow_add]; norm_num; ring
   norm_num at h₃
   omega
 
@@ -150,8 +150,8 @@ theorem actual_period (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
       have hlo := low_phase a b h ha hb hh hhr hne
       change residue M Q h < 2 ^ (a + b - 1) at hlo
       rw [he] at hlo
-      dsimp [Q] at hlo
-      omega
+      have hbig : 2 ^ (a + b - 1) ≤ Q := Nat.le_add_right _ _
+      exact (Nat.not_lt_of_ge hbig) hlo
     subst h
     have he' : 2 ^ (a + b - 1) + 2 ^ (a - 1) =
         2 ^ (a + b - 1) + 2 ^ (b - 1) := by
@@ -160,7 +160,7 @@ theorem actual_period (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
       (Nat.add_left_cancel he')
     exact ⟨rfl, by omega⟩
   by_cases hab : a = b
-  · rw [if_pos hab]
+  · rw [ite_eq_left hab]
     have hQa : residue M Q a = Q := by
       simpa only [M, Q, hab] using phase_at a b ha hb
     have hra : Function.IsPeriodicPt (fun z : ZMod M => 2 * z) a (Q : ZMod M) := by
@@ -169,7 +169,7 @@ theorem actual_period (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
       rw [hQa, Nat.mod_eq_of_lt hQ]
     have hpa : period M Q ≤ a := hra.minimalPeriod_le (by omega)
     exact (early (period M Q) hp (by omega) hret).1
-  · rw [if_neg hab]
+  · rw [ite_eq_right hab]
     change period M Q = a + b
     by_contra hne
     exact hab (early (period M Q) hp (by omega) hret).2

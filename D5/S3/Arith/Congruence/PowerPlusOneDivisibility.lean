@@ -1,5 +1,7 @@
 import Mathlib.Data.Int.ModEq
 import Mathlib.Algebra.Order.GroupWithZero.Basic
+import Mathlib.Algebra.Order.Ring.Nat
+import Mathlib.Algebra.Ring.Divisibility.Basic
 import Lean.Elab.Tactic.Omega
 
 /-!
