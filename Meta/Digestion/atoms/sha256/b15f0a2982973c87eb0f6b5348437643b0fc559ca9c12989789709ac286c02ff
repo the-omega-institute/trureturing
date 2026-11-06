@@ -1,0 +1,59 @@
+### 定理 6：终点包含每个 $p\le T$ 的素数
+
+假设素数 $p\le T$ 没有出现。
+
+首先，
+
+$$
+\begin{aligned}
+f(T+\log T)-f(T)
+&=
+\log\left[
+1+\frac{\log(1+(\log T)/T)}{\log T}
+\right]\\
+&<
+\log(1+1/T),
+\end{aligned}
+$$
+
+其中使用了 $\log(1+u)<u$。
+
+而
+
+$$
+\log(1+1/p)\ge\log(1+1/T),
+$$
+
+$$
+f(T+\log p)-f(T)
+\le f(T+\log T)-f(T).
+$$
+
+所以
+
+$$
+D_p^+(N)>0,
+$$
+
+与终止矛盾。证毕。
+
+另一方面，已出现素数由式 (22) 满足
+
+$$
+\eta\log p<\lambda_{p,a}\le\log(1+1/p)<1/p,
+$$
+
+从而
+
+$$
+p\log p<T\log T,
+$$
+
+故 $p<T$。
+
+因此终点的素数支持恰好是 $T$ 以下的完整素数段。
+
+<!-- editorial-note:start support-and-prime-powers -->
+**【编者局部说明：素数端点及高层条件】** 第一结论是所有素数 $p\le T$ 均出现，第二结论是所有已出现素数均满足 $p<T$；若 $T$ 恰为素数，两者立即矛盾，所以实际终点的 $T$ 不可能是素数。下文对 $j\ge2$ 使用 $p^j\le T\Rightarrow\log p\le(\log T)/j\le(\log T)/2$。并且 $\log(1+u)>u/(1+u)$ 给出 $\lambda_{p,j}>1/(1+p+\cdots+p^j)$。这补足定理 7 的比较；这些层严格越过价格阈值，由 (23) 必须已取。
+<!-- editorial-note:end support-and-prime-powers -->
+
