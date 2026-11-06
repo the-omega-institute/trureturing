@@ -18,7 +18,7 @@ internal sealed class BatchDocument : IScribeDocumentDefinition
         Blocks(
             Node("fibrelayers", "fibreLayers", "fibreLayers",
                 "Literal union of indexed fibre families. Repeated indices are not needed. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition),
-            Node("mem_fibrelayers", "mem_fibreLayers", "mem_fibreLayers",
+            Node("mem-fibrelayers", "mem_fibreLayers", "mem_fibreLayers",
                 "Membership retains the actual fibre index and local face. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Theorem),
             Node("batchfibre", "batchFibre", "batchFibre",
                 "A finite batch, with actual evolving base (finished N-fibres and unfinished M-fibres). The pair list is precisely the concatenation of the lifted local lists, in the supplied finite index order. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition)

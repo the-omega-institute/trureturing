@@ -18,7 +18,7 @@ internal sealed class GraphDocument : IScribeDocumentDefinition
         Blocks(
             Node("wheelgraphdata", "wheelGraphData", "wheelGraphData",
                 "Actual hub-star/rim-interface wheel. The marked e is rim edge 1--2, not a spoke or a coordinate of this right tree. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition),
-            Node("fundamental_rows", "fundamental_rows", "fundamental_rows",
+            Node("fundamental-rows", "fundamental_rows", "fundamental_rows",
                 "These are path-derived rows, not an input equation. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Theorem),
             Node("wheeloriginalroot", "wheelOriginalRoot", "wheelOriginalRoot",
                 "Deleting the ACTUAL interface chord row gives E; the full root is A1. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Theorem),

@@ -20,7 +20,7 @@ internal sealed class ParentCellsDocument : IScribeDocumentDefinition
                 "Exact Cout from the ORIGINAL proof, on the full original parent ground. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition),
             Node("parentcritical", "parentCritical", "parentCritical",
                 "Ordered-index provenance is retained by the compiler schedules; this finite set is the actual output critical family, after proving no unwanted inclusions. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition),
-            Node("mem_parentcritical", "mem_parentCritical", "mem_parentCritical",
+            Node("mem-parentcritical", "mem_parentCritical", "mem_parentCritical",
                 "Literal critical provenance, consumed by the filling endpoint assembly. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Theorem),
             Node("parentcelldata", "parentCellData", "parentCellData",
                 "Complete critical-face proof for the COMPUTED Cout. Compiler constructs the main and separate core lists; neither collapse is a hypothesis here. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition)

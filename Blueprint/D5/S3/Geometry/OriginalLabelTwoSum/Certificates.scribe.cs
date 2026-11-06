@@ -26,9 +26,9 @@ internal sealed class CertificatesDocument : IScribeDocumentDefinition
                 "A local filling need not have a contractible collar. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition),
             Node("certificate", "Certificate", "Certificate",
                 "A left input carries an actual vertex and ordinary main/core lists. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition),
-            Node("critical_intersection", "critical_intersection", "critical_intersection",
+            Node("critical-intersection", "critical_intersection", "critical_intersection",
                 "Actual literal simplex/core intersection, with the empty face retained. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Theorem),
-            Node("critical_overlap", "critical_overlap", "critical_overlap",
+            Node("critical-overlap", "critical_overlap", "critical_overlap",
                 "Distinct retained cells meet only in proper boundary faces. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Theorem)
         )));
 

@@ -16,7 +16,7 @@ internal sealed class RectanglesDocument : IScribeDocumentDefinition
             [], Digest.Create("Original-label Gamma/two-filling source preparation; native verification remains open.")),
         H("Rectangles"),
         Blocks(
-            Node("phi_split", "phi_split", "phi_split",
+            Node("phi-split", "phi_split", "phi_split",
                 "Exact split-coordinate membership of the raw parent, including raw empty. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Theorem),
             Node("deletionrectangle", "deletionRectangle", "deletionRectangle",
                 "The deletion rectangle has no assumed local or parent schedule. All cofaces are derived from native child freeness, alpha not in L, and raw E downwardness. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition),

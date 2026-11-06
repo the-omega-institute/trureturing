@@ -18,7 +18,7 @@ internal sealed class FibreDocument : IScribeDocumentDefinition
         Blocks(
             Node("liftfibre", "liftFibre", "liftFibre",
                 "Non-VOID local sequences lift over a literal fibre. This is used for Gamma and filling/collar schedules; all ordinary lower faces are still nonempty even when a=empty. No homotopy or parent certificate is an input. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition),
-            Node("liftfibre_pairs", "liftFibre_pairs", "liftFibre_pairs",
+            Node("liftfibre-pairs", "liftFibre_pairs", "liftFibre_pairs",
                 "Exact ordered coverage for the ACTUAL native fibre list, including every pair of a supplied Gamma, filling-main or separate collar sequence. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Theorem)
         )));
 
