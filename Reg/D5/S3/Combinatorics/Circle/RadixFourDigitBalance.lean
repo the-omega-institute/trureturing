@@ -121,7 +121,10 @@ def spectrumRegistration : Registration spectrumArena
     change spectrumActual.readout () 1 0 + 0 = 1 at h0
     change spectrumActual.readout () 1 3 + 0 = 0 at h3
     change spectrumActual.readout () 1 0 ≠ spectrumActual.readout () 1 3
-    omega
+    simp only [Nat.add_zero] at h0 h3
+    intro heq
+    have hbad : (1 : ℕ) = 0 := h0.symm.trans (heq.trans h3)
+    exact Nat.one_ne_zero hbad
 
 abbrev zeroSignature : Signature where
   Params := Unit
@@ -173,7 +176,10 @@ def zeroRegistration : Registration zeroArena
     change zeroActual.readout () () 1 + 1 = 2 at h1
     change zeroActual.readout () () 2 + 1 = 6 at h2
     change zeroActual.readout () () 1 ≠ zeroActual.readout () () 2
-    omega
+    intro heq
+    have hbad : (2 : ℕ) = 6 :=
+      h1.symm.trans ((congrArg (fun x : ℕ => x + 1) heq).trans h2)
+    exact (by decide : (2 : ℕ) ≠ 6) hbad
 
 noncomputable def digitAudit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@_root_.D5.S3.Combinatorics.Circle.RadixFourDigitBalance.actual_even_digit_balance)
