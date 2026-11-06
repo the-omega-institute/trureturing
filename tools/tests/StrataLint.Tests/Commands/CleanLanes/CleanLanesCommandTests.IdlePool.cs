@@ -8,6 +8,49 @@ namespace StrataLint.Tests;
 
 public sealed partial class CleanLanesCommandTests
 {
+    [Fact]
+    public void OldIdleTreeUsesCommitAgeRemovalWithoutCallingPool()
+    {
+        using var fixture = new CleanLanesFixture();
+        var path = AddIdleSweepCandidate(fixture, 'd', 1000000000);
+        var runner = fixture.CreateRunner();
+        var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
+        Assert.True(result.Success, result.Error);
+        Assert.False(Directory.Exists(path));
+        Assert.Equal("head_commit_age", ReasonFor(result.Output, path));
+        Assert.True(fixture.BranchExists("lane/governance/idle-" + new string('d', 32)));
+        Assert.DoesNotContain(runner.Invocations, call => IsProtocol(call.Arguments, "pool"));
+    }
+
+    [Fact]
+    public void MixedIdleAgesExcludeOldTreeFromYoungPoolSweep()
+    {
+        using var fixture = new CleanLanesFixture();
+        var old = AddIdleSweepCandidate(fixture, 'e', 1000000000);
+        CleanLanesFixture.GitAt(fixture.RepositoryWorkingDirectory,
+            new DateTimeOffset(2030, 1, 1, 23, 0, 0, TimeSpan.Zero), "commit", "--allow-empty", "-m", "recent pool commit");
+        var young = AddIdleSweepCandidate(fixture, 'f', 1000000001);
+        var native = InjectIdlePoolProgram(fixture,
+            "sys.modules['worktree_pool'].available_fraction = lambda source: 0.04\n");
+        var poolCalls = 0;
+        var runner = fixture.CreateRunner((file, args, directory) =>
+        {
+            if (file != "python3" || !IsProtocol(args, "pool")) return null;
+            poolCalls++;
+            Assert.Equal(old, ProtocolValue(args, "--exclude-path"));
+            return native.Run(file, args, directory, TestBudgets.LongWorkflowProcessHangGuard);
+        });
+        var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");
+        Assert.True(result.Success, result.Output + result.Error);
+        Assert.Equal(1, poolCalls);
+        Assert.False(Directory.Exists(old));
+        Assert.False(Directory.Exists(young));
+        Assert.Equal("head_commit_age", ReasonFor(result.Output, old));
+        Assert.Equal("idle_disk_pressure", ReasonFor(result.Output, young));
+        AssertItemProperty(ReadItems(result.Output), "path", old, "kind", "stale_worktree");
+        AssertItemProperty(ReadItems(result.Output), "path", young, "kind", "idle_worktree");
+    }
+
     [Theory]
     [InlineData(false, "revalidate")]
     [InlineData(true, "revalidate")]
@@ -19,7 +62,7 @@ public sealed partial class CleanLanesCommandTests
     [InlineData(true, "partial_or_indeterminate")]
     public void IdlePoolProductionSweepContinuesAfterCandidateFailure(bool force, string failure)
     {
-        using var fixture = new CleanLanesFixture();
+        using var fixture = new CleanLanesFixture(recentCommit: true);
         var older = AddIdleSweepCandidate(fixture, 'a', 1000000000);
         var newer = AddIdleSweepCandidate(fixture, 'b', 1000000001);
         var injection = "pool = sys.modules['worktree_pool']\n"
@@ -68,7 +111,7 @@ public sealed partial class CleanLanesCommandTests
     [InlineData(true)]
     public void IdlePoolProductionInventoryFailureRemainsGlobal(bool force)
     {
-        using var fixture = new CleanLanesFixture();
+        using var fixture = new CleanLanesFixture(recentCommit: true);
         var path = AddIdleSweepCandidate(fixture, 'c', 1000000000);
         var judge = fixture.AddGitlessJudgeSnapshot("trureturing-pool-inventory-control");
         const string injection = "def fail_inventory(source):\n"
@@ -117,7 +160,7 @@ public sealed partial class CleanLanesCommandTests
     [InlineData(true, "remove", "locked_recent")]
     public void IdlePoolSelectedRefusalPreservesCauseAndContinues(bool force, string stage, string reason)
     {
-        using var fixture = new CleanLanesFixture();
+        using var fixture = new CleanLanesFixture(recentCommit: true);
         const string branch = "lane/governance/idle-selected";
         var path = fixture.AddMergedLane(branch);
         var payload = JsonSerializer.Serialize(new
@@ -150,7 +193,7 @@ public sealed partial class CleanLanesCommandTests
     [InlineData(true)]
     public void IdlePoolRetainsFailedTaskReturnedBeforeFreshInventory(bool inject)
     {
-        using var fixture = new CleanLanesFixture();
+        using var fixture = new CleanLanesFixture(recentCommit: true);
         fixture.AddMergedLane("lane/governance/idle-trigger");
         var path = fixture.AddMergedLane("lane/governance/task-returning");
         var calls = 0;
@@ -200,7 +243,7 @@ public sealed partial class CleanLanesCommandTests
     [InlineData(true, true, true)]
     public void IdleInitialIdentityFailureMustRemainFailed(bool inject, bool force, bool poolTimeout)
     {
-        using var fixture = new CleanLanesFixture();
+        using var fixture = new CleanLanesFixture(recentCommit: true);
         var token = new string('a', 32);
         var branch = "lane/governance/idle-" + token;
         var path = fixture.AddMergedLane(branch);
@@ -240,7 +283,7 @@ public sealed partial class CleanLanesCommandTests
     [InlineData(true)]
     public void BusyPoolBeforeEntryReportsOnlyPoolFailure(bool force)
     {
-        using var fixture = new CleanLanesFixture();
+        using var fixture = new CleanLanesFixture(recentCommit: true);
         var path = fixture.AddMergedLane("lane/governance/idle-busy");
         var payload = JsonSerializer.Serialize(new
         {
@@ -272,7 +315,7 @@ public sealed partial class CleanLanesCommandTests
     [Fact]
     public void IdlePoolTreeFailureKeepsCompletedEvictionsAndContinuesSweeps()
     {
-        using var fixture = new CleanLanesFixture();
+        using var fixture = new CleanLanesFixture(recentCommit: true);
         const string removedBranch = "lane/governance/idle-removed";
         const string failedBranch = "lane/governance/idle-failed";
         var removedPath = fixture.AddMergedLane(removedBranch);
@@ -318,7 +361,7 @@ public sealed partial class CleanLanesCommandTests
     [InlineData(true)]
     public void IdlePoolUnresolvedAggregateIsFailedRatherThanSkipped(bool hasReceipt)
     {
-        using var fixture = new CleanLanesFixture();
+        using var fixture = new CleanLanesFixture(recentCommit: true);
         var path = fixture.AddMergedLane("lane/governance/idle-unresolved");
         var payload = hasReceipt ? JsonSerializer.Serialize(new
         {
@@ -342,7 +385,7 @@ public sealed partial class CleanLanesCommandTests
     [InlineData("partial_or_indeterminate", "partially_removed")]
     public void IdlePoolFailurePreservesRecoveryAndContinuesSweeps(string outcome, string action)
     {
-        using var fixture = new CleanLanesFixture();
+        using var fixture = new CleanLanesFixture(recentCommit: true);
         const string branch = "lane/governance/idle-fixture";
         var path = fixture.AddMergedLane(branch);
         const string recovery = "refs/heads/lane/governance/recovery-confirmed";
@@ -374,7 +417,7 @@ public sealed partial class CleanLanesCommandTests
     [Fact]
     public void IdlePoolReceiptIncludesTreeReturnedAfterInventory()
     {
-        using var fixture = new CleanLanesFixture();
+        using var fixture = new CleanLanesFixture(recentCommit: true);
         fixture.AddMergedLane("lane/governance/idle-trigger");
         string? returnedPath = null;
         var runner = fixture.CreateRunner((file, args, _) =>
@@ -407,7 +450,7 @@ public sealed partial class CleanLanesCommandTests
     [InlineData(true)]
     public void IdlePoolCarriesNativeLockEvidence(bool checkpointFailed)
     {
-        using var fixture = new CleanLanesFixture();
+        using var fixture = new CleanLanesFixture(recentCommit: true);
         const string branch = "lane/governance/idle-evidence";
         var path = fixture.AddMergedLane(branch);
         var locks = new[] { new { path = path + "/index.lock", size = 9, age_seconds = 0.0,
@@ -434,11 +477,11 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Fact]
-    public void IdlePrefixedTaskKeepsOrdinaryAllocationProtection()
+    public void IdlePrefixedTaskKeepsRecentCommitProtection()
     {
-        using var fixture = new CleanLanesFixture();
+        using var fixture = new CleanLanesFixture(recentCommit: true);
         var path = fixture.AddMergedLane("lane/governance/idle-analysis");
-        var result = fixture.RunAt(fixture.CreationTime(path).AddHours(1), "--force", "--lanes-only");
+        var result = fixture.RunAt(fixture.CommitTime(path).AddHours(1), "--force", "--lanes-only");
         Assert.True(result.Success, result.Error);
         var item = Assert.Single(ReadItems(result.Output), row => row.GetProperty("path").GetString() == path);
         Assert.Equal("lane_worktree", item.GetProperty("kind").GetString());

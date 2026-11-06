@@ -1,0 +1,54 @@
+**Definition 41.1 (selected raw value and original sign distances).**
+Retain the original domain $\mathcal K=\operatorname{Dens}_2\times U(4)$,
+ordinary transpose, certificate basis $T$, constants $h,c,s,d,e,\kappa$,
+and actual shared feedback of Definition 40.1. All references to
+Sections 23 and 24--39 have the source-volume conventions stated there.
+For $0<\xi\le4$ put
+
+$$
+ V(\xi)=N_{\mathrm{geo}}(\xi)+\kappa\xi.
+\tag{41.1}
+$$
+
+Here $N_{\mathrm{geo}}$, its argument $\delta_\circ(\xi/2)$ and
+$\mathcal G_\xi$ are exactly (38.2), Theorem 37.5 and (39.2).
+Thus $V(\xi)$ is the actual $g$-value attained by every pair in
+$\mathcal G_\xi$. Its definition makes no assertion of unrestricted
+geometric optimality. Keep $\mathcal A_\xi$, $\mathcal B$, $\mathcal S$,
+$\alpha$ and $\beta$ exactly as in Definition 39.1; in particular
+$0<\alpha\le\beta<18/5$ is Theorem 39.4.
+
+For an arbitrary original pair write
+
+$$
+\begin{aligned}
+ w&=\operatorname{diag}(UU_+^\dagger),&
+ F&=T^\dagger E^{\mathsf T}T
+       =\begin{pmatrix}p&z\\\bar z&1-p\end{pmatrix},\\
+ \epsilon&=\epsilon(E)=1-\operatorname{Tr}(E^2)
+       =2\bigl(p(1-p)-|z|^2\bigr),\\
+ \rho_\sigma(E,U)
+   &=\|E-E_\sigma\|_{\mathrm F}^2
+           +\min_{|\lambda|=1}\|U-\lambda U_\sigma\|_{\mathrm F}^2.
+\end{aligned}
+\tag{41.2}
+$$
+
+The scalar $\lambda$ multiplies the entire feedback matrix.
+The original distance is $\rho=\min\{\rho_+,\rho_-\}$.
+The identities (23.9)--(23.12) give, on these same actual data,
+
+$$
+\begin{aligned}
+ \rho_+(E,U)&=10-2p-2A(w)-\epsilon,\\
+ \rho_-(E,U)&=8+2p-2B(w)-\epsilon,\\
+ g(E,U)&=d^2p+e^2(1-p)-pu^2-(1-p)v^2
+                          -2\operatorname{Re}(Pz\bar Q).
+\end{aligned}
+\tag{41.3}
+$$
+
+All of $A,B,P,Q,u,v$ in this section are evaluated on that one $w$.
+An effect is mixed precisely when $\epsilon>0$; for a normalized
+positive two-by-two effect this is equivalent to positive definiteness.
+

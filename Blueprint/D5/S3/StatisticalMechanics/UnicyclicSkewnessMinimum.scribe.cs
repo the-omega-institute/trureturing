@@ -66,6 +66,16 @@ internal sealed class UnicyclicSkewnessMinimumDocument : IScribeDocumentDefiniti
                     + "Its definition requires neither positivity nor membership in the simplex."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("normalized-simplex"),
+                DeclarationHandle.Create(Prefix + "normalized_simplex"),
+                H("Normalized inverse rates belong to the standard simplex"),
+                StatementSource.FromAuthor(Disp(NormalizedSimplexFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For every positive natural n and every positive real rate vector k on Fin n, "
+                    + "the inverse rates divided by their first power sum are nonnegative and sum to one."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("skewness-normalized"),
                 DeclarationHandle.Create(Prefix + "skewness_normalized"),
                 H("Skewness as a functional of normalized inverse rates"),
@@ -178,6 +188,20 @@ internal sealed class UnicyclicSkewnessMinimumDocument : IScribeDocumentDefiniti
         return All("n", Naturals(), All("k", RateType(),
             Equal(At(Local("skewness"), X("k")),
                 At(Local("simplexFunctional"), normalized))));
+    }
+
+    private static Formula NormalizedSimplexFormula()
+    {
+        Formula inverseRates = LambdaOf("j", FinOf(X("n")),
+            At(Qualified("Inv", "inv"), At(X("k"), X("j"))));
+        Formula normalized = LambdaOf("i", FinOf(X("n")),
+            Divide(At(Qualified("Inv", "inv"), At(X("k"), X("i"))),
+                PowerSum(D(1), inverseRates)));
+        return All("n", Naturals(), Implication(Less(Typed(D(0), Naturals()), X("n")),
+            All("k", RateType(), Implication(
+                All("i", FinOf(X("n")), Less(Typed(D(0), Reals()), At(X("k"), X("i")))),
+                new Formula.Relation(Parenthesized(normalized), FormulaRelationOperator.MemberOf,
+                    At(Qualified("stdSimplex"), Reals(), FinOf(X("n"))))))));
     }
 
     private static Formula MinimumValueFormula()

@@ -54,10 +54,40 @@ A finite witness used by the proof is M=2(abs(B'(0))+integral_[0,D] abs(B''(s)) 
 
 This is the finite perturbation estimate for the complete actual kernel. It proves no global PSD, no full actual-K finite-codimension positivity and no RH claim by itself. Finite-codimension coercivity additionally requires a uniform high-moment correlation estimate and growth of the complete positive-kernel mixture.
 
+**Theorem 1.4 (Exact complete remainder correlation identity).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelPrefixPerturbation.actual_remainder_correlation_identity`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelPrefixPerturbation.actual_remainder_correlation_identity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The source extension states the exact identity for every D>=0, natural N>exp(D), arbitrary finite complex atomic family in [0,D] with zero mass: Re Q_(K-P)=-d0 E-2 sum_(2<=n<=floor(exp D)) Lambda(n)exp(-log(n)/2)c(log(n))+2 integral_[0,D] exp(s/2)c(s)ds-(1/2)integral_[0,D](K(s)-P(s))c(s)ds. Here c(s)=Re integral_R conjugate(prefix(v+s))prefix(v)dv, d0=gamma-1+log(2pi), and P is the full damped trivial-zero source. There is no ordering, distinctness, real-coefficient, nonempty or E>0 premise. N is a localization witness and the final prime set is the original inclusive Icc, including a term entering exactly at D.
+
+The extension stays in the actual source owner to consume its private reverse_hinge, clipped_representation, Q_integral, local_remainder and smooth/base derivative declarations. The published oriented hinge identity gives Re Q_H(s)=-2c(s). Its s=0 specialization gives c(0)=E. The base slope at zero is d0/2 and each actual ramp slope at log(n) is Lambda(n)exp(-log(n)/2). The compact curvature integrals combine exactly to (1/4)integral fullR*c-integral exp(s/2)c. This is a direct finite-ramp FTC argument, without an assumed distribution or Fourier bridge.
+
+The correlation identity enters the complete-kernel moment balance through the resolvent rearrangement, the cutoff payment V and the continuum moment payment H.
+
+**Theorem 1.5 (Actual growing-exponential prefix curvature).**
+
+Lean statement: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelPrefixPerturbation.growing_exponential_correlation_identity`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelPrefixPerturbation.growing_exponential_correlation_identity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original owner clipped-ramp FTC proves Re Q_exp(abs(t)/2)=-E-(1/2)integral_[0,D]exp(s/2)c(s) for arbitrary finite complex zero-mass atoms in [0,D]. The origin slope is 1/2 and the smooth second derivative is exp(s/2)/4. This consumed identity supplies the actual continuum realization; no distributional or Fourier bridge is a premise.
+
 ## References
 
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelPrefixPerturbation.actual_remainder_correlation_identity`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelPrefixPerturbation.actual_remainder_prefix_bound`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelPrefixPerturbation.actual_remainder_prefix_bound_with_finite_cost`
 - Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelPrefixPerturbation.finite_curvature_cost`
+- Truth anchor: `D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelPrefixPerturbation.growing_exponential_correlation_identity`
 - Dependency: [D5/S3/Analytic/Interpolation/AtomicPrefixEnergy](../../../Analytic/Interpolation/AtomicPrefixEnergy.md)
 - Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/ActualKernelLocalPositivity](ActualKernelLocalPositivity.md)

@@ -10,7 +10,7 @@ $$\forall V \in \mathrm{Type}\left(u\right),\; \forall G \in \mathrm{SimpleGraph
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Characterization.isChordal` (`✓ std3`). ∎
 
-*Citation.* Juan Pablo Traverso Gianini (2026). *BrooksSubcubic and finite chordal elimination: Lean source*. URL: <https://github.com/Vilin97/lean-pool/tree/91c154506e3d08a1a25e4966c22c99212bf9df54/LeanPool/BrooksSubcubic>.
+*Citation.* Juan Pablo Traverso Gianini (2026). *Graph theorem Lean sources: BrooksSubcubic, chordal elimination, Menger and Hamiltonian closure*. URL: <https://github.com/jtraverso>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ $$\forall V \in \mathrm{Type}\left(u\right),\; \forall G \in \mathrm{SimpleGraph
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Characterization.isChordal_iff_exists_isPEO` (`✓ std3`). ∎
 
-*Citation.* Juan Pablo Traverso Gianini (2026). *BrooksSubcubic and finite chordal elimination: Lean source*. URL: <https://github.com/Vilin97/lean-pool/tree/91c154506e3d08a1a25e4966c22c99212bf9df54/LeanPool/BrooksSubcubic>.
+*Citation.* Juan Pablo Traverso Gianini (2026). *Graph theorem Lean sources: BrooksSubcubic, chordal elimination, Menger and Hamiltonian closure*. URL: <https://github.com/jtraverso>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ $$\forall V \in \mathrm{Type}\left(0\right),\; \forall G \in \mathrm{SimpleGraph
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Characterization.native_chordal_iff_isChordal` (`✓ std3`). ∎
 
-*Citation.* Juan Pablo Traverso Gianini (2026). *BrooksSubcubic and finite chordal elimination: Lean source*. URL: <https://github.com/Vilin97/lean-pool/tree/91c154506e3d08a1a25e4966c22c99212bf9df54/LeanPool/BrooksSubcubic>.
+*Citation.* Juan Pablo Traverso Gianini (2026). *Graph theorem Lean sources: BrooksSubcubic, chordal elimination, Menger and Hamiltonian closure*. URL: <https://github.com/jtraverso>.
 
 *Commentary.*
 
@@ -46,7 +46,7 @@ $$\forall V \in \mathrm{Type}\left(0\right),\; \forall G \in \mathrm{SimpleGraph
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Chordal/Characterization.chordal_iff_exists_order` (`✓ std3`). ∎
 
-*Citation.* Juan Pablo Traverso Gianini (2026). *BrooksSubcubic and finite chordal elimination: Lean source*. URL: <https://github.com/Vilin97/lean-pool/tree/91c154506e3d08a1a25e4966c22c99212bf9df54/LeanPool/BrooksSubcubic>.
+*Citation.* Juan Pablo Traverso Gianini (2026). *Graph theorem Lean sources: BrooksSubcubic, chordal elimination, Menger and Hamiltonian closure*. URL: <https://github.com/jtraverso>.
 
 *Commentary.*
 

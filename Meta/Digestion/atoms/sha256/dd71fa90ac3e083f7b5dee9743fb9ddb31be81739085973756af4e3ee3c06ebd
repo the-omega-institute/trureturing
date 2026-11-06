@@ -1,0 +1,7 @@
+**【编者局部说明：有限性与并列】** Euler 分解为 $Z(m)=\prod_{p\mid m}S_p(v_p(m))$，约定 $S_p(0)=1$。式 (5) 来自 $\log(1+u)<u$ 及 $p+\cdots+p^j\ge p^j$；分母随 $j$ 严格增加，故密度严格下降。若 $\rho_{p,j}\ge\varepsilon>0$，则 $p^j\log p<1/\varepsilon$，从而 $p$ 有界且每个 $p$ 的 $j$ 有界。因此正价格层与零价格层都有限，正层在每个素数上构成前缀，零层若存在紧接其后。所有最大点均取全部正层、任选零层、不取负层；不取零层的 $C_\eta$ 整除其余最大点，因而是最小者。这也包括空正层时的 $C_\eta=1$。
+<!-- editorial-note:end finite-price-and-ties -->
+
+---
+
+<a id="sec-3"></a>
+

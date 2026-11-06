@@ -1,0 +1,8 @@
+**定义 2.2（乘法四点缺陷与完整行列等价）。**置
+
+$$
+D(a,u)=D_0(a,u)=e_{a\cdot u}-e_a-e_u.
+$$
+
+记 $\mathrm{BR}$ 为 $D(a,u)\in\mathcal N$ 对全部 $a,u$ 成立。记 $x\approx y$ 为对每个 $z$ 都同时有 $c(x,z)=c(y,z)$、$c(z,x)=c(z,y)$。
+

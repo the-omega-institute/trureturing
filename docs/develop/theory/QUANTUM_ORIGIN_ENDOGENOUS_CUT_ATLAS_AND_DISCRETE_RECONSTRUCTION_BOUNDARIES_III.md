@@ -3985,3 +3985,96 @@ Theorem 56.1 embeds each face row with all five legality effects on the original
 **定义 60.2（Scope and mathematical attribution）。** Theorem 60.1 concerns the exact original-Hermitian relation for the specific family (57.1). It does not assert the parent's approximate-density existence conclusion or a physical realization. The integral decomposition, orthogonal parity exchange and exceptional-margin unit choice are reused from Part I, Theorem 33.1; its cited Hermite bounds and Gaussian module facts retain their original attributions. The new deduction is the strict squared-norm descent (59.5)--(59.9), its complete small-norm initialization and the exact norm-seven exchange, which supply finite coefficient bounds at the formerly omitted scales. The fine constant and the final complementary-column row are reused from Theorem 57.1.
 
 ## 追加锚（本行以下为增补区）
+
+## 61. Complement transfer closes the full quadratic-margin event
+
+**定理 61.1（四维二次谱析取的全事件闭合）。** Retain the original table, the labelled binary and ternary menus, and the tomography matrix $H$ of Definition 50.1. Let $A_0$ and $C_0$ be the finite constants of Definition 53.1, and put
+
+$$
+ A_{\mathrm{full}}=A_0,\qquad
+ C_{\mathrm{full}}=C_0+902824+10.
+\tag{61.1}
+$$
+
+For every integer $m\ge1$, with $N=2^m$, every $\epsilon\in[0,1/10]$, and every $E\in K_{4,m}$ satisfying
+
+$$
+ \lambda_{\max}(E)\le 1-\frac{A_{\mathrm{full}}}{N^2}
+ \quad\text{or}\quad
+ \lambda_{\min}(E)\ge\frac{A_{\mathrm{full}}}{N^2},
+\tag{61.2}
+$$
+
+the same single table obeys
+
+$$
+ \boxed{\ |p(E)-\operatorname{Tr}(HE)|
+       \le C_{\mathrm{full}}\left(\epsilon+\frac1N\right).\ }
+\tag{61.3}
+$$
+
+The constants are independent of $N$, the table, $\epsilon$ and $E$.
+
+**证明。** Write $e(X)=p(X)-\operatorname{Tr}(HX)$, with the convention $e(0)=p(0)$ when a residual is zero. For $N<2048$, Part I, Theorem 16.2 gives $\lVert H\rVert_{\mathrm{op}}\le8$ and hence $|e(E)|\le33$. Since $N_0\ge2048$ and $C_0\ge33N_0$ by Definition 53.1, (61.3) follows at every such scale.
+
+Assume now $N\ge2048$. First suppose the upper alternative in (61.2). It gives $\lVert E\rVert_{\mathrm{op}}<1$, so Part I, Theorem 57.4 supplies a decomposition residual $G_0=G/N$, either zero or a positive-definite Gaussian integral interval atom, with
+
+$$
+ |e(E)-e(G_0)|\le902824\epsilon,\qquad 0\preceq G_0\preceq E.
+\tag{61.4}
+$$
+
+If $G=0$, the zero convention and $p(0)\le2\epsilon$ give the required estimate. Otherwise $G_0\preceq E$ implies
+
+$$
+ \lambda_{\max}(G_0)\le\lambda_{\max}(E)
+ \le1-A_0/N^2.
+\tag{61.5}
+$$
+
+Part III, Theorem 53.3 therefore gives $|e(G_0)|\le C_0(\epsilon+1/N)$. Combining this with (61.4) proves (61.3) in the upper branch.
+
+Now suppose the lower alternative in (61.2), and set $F=I_4-E$. Then $F\in K_{4,m}$, $\lVert F\rVert_{\mathrm{op}}<1$, and
+
+$$
+ \lambda_{\max}(F)=1-\lambda_{\min}(E)
+ \le1-A_0/N^2.
+\tag{61.6}
+$$
+
+Apply Part I, Theorem 57.4 to $F$. It supplies a residual $G_F/N$, zero or a positive-definite interval atom, with $G_F/N\preceq F$ and
+
+$$
+ |e(F)-e(G_F/N)|\le902824\epsilon.
+\tag{61.7}
+$$
+
+The zero case again has $|e(0)|\le2\epsilon$. In the nonzero case, (61.6) and $G_F/N\preceq F$ give the upper margin required by Part III, Theorem 53.3, so
+
+$$
+ |e(F)|\le(C_0+902824)\epsilon+C_0/N.
+\tag{61.8}
+$$
+
+Finally the original binary row for $(E,F)$ and the existing anchor estimate $|\operatorname{Tr}H-1|\le9\epsilon$ give
+
+$$
+ |e(E)+e(F)|
+ =|p(E)+p(F)-\operatorname{Tr}H|
+ \le10\epsilon.
+\tag{61.9}
+$$
+
+Equations (61.8)--(61.9) yield
+
+$$
+ |e(E)|\le(C_0+902824+10)\left(\epsilon+\frac1N\right),
+$$
+
+which is (61.3). The lower branch therefore uses the complement before extraction; no lower spectral margin is asserted for a subatom of $E$.
+
+The only inputs beyond the displayed definitions are the original-grid residual decomposition of Theorem 57.4, the absolute upper-margin atom estimate of Theorem 53.3, and the binary complement estimate (61.9), which is the same relation recorded in Part II, (164.11). The result is an ordinary theory-text consequence on one supplied finite table. It adds no cross-scale relation, continuum extension, probability-acquisition premise, physical realization or kernel verification, and it makes no claim about the smaller value of $A$ or the optimality of $C_{\mathrm{full}}$. $\square$
+
+**定义 61.2（Result boundary）。** Theorem 61.1 closes the original four-dimensional quadratic-margin estimate at the explicit finite threshold $A_0=2A_\dagger$ inherited from Definition 53.1. It does not assert the estimate for every $A>2$, remove the dependence on the previously fixed finite-menu constants, or supply a physical implementation of the table. The former residual atom obligation (57.15) is consumed by the upper-margin closure (53.21) together with complement-before-extraction; the source's dimension-$d\ge4$ unrestricted finite-menu counterfamily remains a separate statement.
+
+## 追加锚（本行以下为增补区）

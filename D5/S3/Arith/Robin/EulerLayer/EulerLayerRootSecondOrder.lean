@@ -29,14 +29,14 @@ noncomputable section
 
 /-- A canonical choice of the root of `x^2 log x = t log t` when it exists.
 The fallback is never used by the asymptotic statements, whose thresholds are >2. -/
-private noncomputable def second_cutoff_root (t : ℝ) : ℝ := by
+noncomputable def second_cutoff_root (t : ℝ) : ℝ := by
   classical
   exact if h : ∃ x : ℝ, 1 < x ∧ x ^ 2 * Real.log x = t * Real.log t then
     Classical.choose h
   else 2
 
 /-- Strict monotonicity supplies uniqueness without any inventory witness. -/
-private theorem second_cutoff_strictMono :
+theorem second_cutoff_strictMono :
     StrictMonoOn (fun x : ℝ => x ^ 2 * Real.log x) (Set.Ioi 1) := by
   intro x hx y hy hxy
   have hx0 : 0 < x := lt_trans zero_lt_one hx
@@ -54,7 +54,7 @@ private theorem second_cutoff_root_unique {t x y : ℝ} (hx : 1 < x) (hy : 1 < y
   second_cutoff_strictMono.injOn hx hy (hxeq.trans hyeq.symm)
 
 /-- IVT and uniqueness specify the original classical choice for every `t ≥ 2`. -/
-private theorem second_cutoff_root_spec {t : ℝ} (ht : 2 ≤ t) :
+theorem second_cutoff_root_spec {t : ℝ} (ht : 2 ≤ t) :
     1 < second_cutoff_root t ∧
       Real.sqrt t < second_cutoff_root t ∧
       second_cutoff_root t < Real.sqrt (2 * t) ∧

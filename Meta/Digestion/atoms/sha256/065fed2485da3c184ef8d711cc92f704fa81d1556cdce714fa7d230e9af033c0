@@ -1,0 +1,69 @@
+**Definition 53.1 (full original parameter domain and objective).**
+Retain the fixed labels of Definition 46.1 and Definition 51.1. Fix
+
+$$
+ \sigma\in\{+,-\},\qquad 0<\xi\le\frac{13}{4},\qquad
+ 0<q<\min\{1,\xi/2\},\qquad p=1-q,
+\tag{53.1}
+$$
+
+and put
+
+$$
+ x=1-\frac\xi4+\frac q2,\qquad y=\sqrt{1-x^2},\qquad L=1+x,
+ \qquad h=\frac1{\sqrt2},\quad c=\cos(\pi/8),\quad s=\sin(\pi/8).
+\tag{53.2}
+$$
+
+Thus $3/16<x<1$ and $p,q,y>0$, including when $\xi=13/4$.
+Use exactly the two rows
+
+$$
+\begin{array}{c|c|c|c}
+ \sigma&J&K&(a,b,\ell,m)\\ \hline
+ +&(1,2)&(3,4)&(h,c,h,s)\\
+ -&(3,4)&(1,2)&(s,h,c,h).
+\end{array}
+\tag{53.3}
+$$
+
+Here $0<a<b$, $\ell>m>0$ and $k=b-a>0$. The complete domain is
+
+$$
+ \mathcal T_x=\{(X,Y)\in[0,1]^2:\sqrt X+\sqrt Y\ge L\}.
+\tag{53.4}
+$$
+
+On this whole domain, with nonnegative square roots, retain
+
+$$
+\begin{aligned}
+ Z&=\frac{L^2-X-Y}{2\sqrt{XY}},\\
+ F&=\sqrt{(1-X)(1-Y)}\sqrt{1-Z^2},\\
+ R&=\sqrt{a^2X+b^2Y+ab(L^2-X-Y)},\\
+ C&=\sqrt{\ell^2(1-X)+m^2(1-Y)+2\ell mF},\\
+ \Gamma_\sigma(x,q;X,Y)&=\sqrt p\,R+\sqrt q\,C.
+\end{aligned}
+\tag{53.5}
+$$
+
+Lemma 46.2 gives $X,Y\ge x^2>0$, $XY\ge x^2$ and $|Z|\le1$
+throughout $\mathcal T_x$. These are therefore the original continuous
+functions on the entire compact triangle, including its curved and
+straight boundaries and both endpoint fibres. Finally set
+
+$$
+\begin{aligned}
+ R_0&=ax+b,\\
+ \mu&=\frac12\left(\frac{ak\sqrt p}{R_0}
+                              +\frac{\ell\sqrt q}{y}\right),\\
+ \nu&=\frac12\left(k\sqrt p+
+                 \frac{(\ell^2x-m^2)\sqrt q}{\ell y}\right),\\
+ D_\sigma(x,q)&=\frac{4\mu\nu x^2}{1+x}-m^2q.
+\end{aligned}
+\tag{53.6}
+$$
+
+These are the quantities of (46.13) and (51.11); $\mu>0$, and no
+hypothesis on the sign of $\nu$ is imposed.
+

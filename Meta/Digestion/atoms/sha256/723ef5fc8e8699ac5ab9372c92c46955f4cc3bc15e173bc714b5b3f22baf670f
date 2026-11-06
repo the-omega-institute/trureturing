@@ -1,0 +1,36 @@
+### 命题 2.3（零泄漏时，显式反向恢复全部来源）
+
+<a id="prop-c122-exact-source"></a>
+
+若 $\mathcal N$ 的补通道为常量替代，则对每个忠实参考态 $\sigma$ 都有
+
+$$
+\mathcal P_{\sigma,\mathcal N}\mathcal N=\operatorname{id}_H.
+$$
+
+在可达输出支撑上，该反向不依赖 $\sigma$。
+
+**证明。**
+常量补通道的矩阵元给出 $E_i^*E_j=\alpha_{ij}I$。
+对正矩阵 $\alpha$ 对角化并旋转 Kraus 表示，可写成
+
+$$
+\mathcal N(X)=\sum_a\lambda_a U_aXU_a^*,\qquad
+ U_a^*U_b=\delta_{ab}I,\qquad
+ \lambda_a>0,\quad\sum_a\lambda_a=1.
+$$
+
+于是 $\tau=\sum_a\lambda_a U_a\sigma U_a^*$，正交支撑上的逆为
+$\tau^{-1/2}=\sum_a\lambda_a^{-1/2}U_a\sigma^{-1/2}U_a^*$。
+Petz 的第 $a$ 个 Kraus 算子因而恰为
+
+$$
+\sigma^{1/2}\sqrt{\lambda_a}\,U_a^*\tau^{-1/2}=U_a^*.
+$$
+
+故 $\mathcal P(X)=\sum_aU_a^*XU_a$，与 $\sigma$ 无关；与 $\mathcal N$ 复合得到 $\sum_a\lambda_a X=X$。这也保持任意参考，因为复合是整个矩阵代数上的恒等映射。
+
+**白话。**先给每个有限来源一份内部参考，再沿已有通道把参考送出去，反向规则就被这两端的配对固定下来。两条路接起来，反向会按相反顺序接起来；两份独立内容并排放着，反向也能并排做。只有当遗漏的一边完全不区分输入时，这条明确的反向才把所有未知内容都原样找回。
+
+<a id="section-3"></a>
+

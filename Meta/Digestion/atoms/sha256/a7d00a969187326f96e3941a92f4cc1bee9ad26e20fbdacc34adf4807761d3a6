@@ -1,0 +1,26 @@
+### 13.3　从三维球进入四维正锥
+
+在上节已构造的振幅表示中，记 $\sigma_z=\widehat{R_z}$。 对归一内容坐标 $z$ 与未归一总质量 $t$，定义
+
+$$
+Q(t,z)=\tfrac12(tI+\sigma_z).
+$$
+
+$\sigma_z^2=\|z\|^2I$、$\operatorname{Tr}\sigma_z=0$ 给
+
+$$
+\operatorname{spec}Q(t,z)=\left\{\frac{t+\|z\|}{2},\frac{t-\|z\|}{2}\right\},
+$$
+
+故
+
+$$
+\boxed{Q(t,z)\succeq0\iff t\ge\|z\|,\qquad
+\det Q(t,z)=\tfrac14(t^2-\|z\|^2).}
+\tag{13.2}
+$$
+
+这是一张四实维 Lorentz 正锥；$t=1$ 的截面为三维态球，锥面非零点对应秩一正矩阵。若全部原准备外半径为 $R_*$，此处 $z$ 已是 $w/R_*$，不是未标定的原来源坐标。
+
+对任意 $A\in SL_2(\mathbb C)$，$Q\mapsto AQA^*$ 保持正锥与行列式，因为 $\det A=1$。这给更大的保锥几何；酉子群保 $t$，在归一截面上给旋转。$t$ 在此是概率总质量，不是从该恒等式推出来的物理时间。
+

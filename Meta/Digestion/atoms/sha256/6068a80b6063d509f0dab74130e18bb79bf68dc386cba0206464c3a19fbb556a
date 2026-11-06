@@ -1,0 +1,14 @@
+**命题 61.3（共同包络严格弱于有限线性速度）。** C105 可包含没有有限线性速度的连续核族，并对其取得统一趋零结论。
+
+证明。对 $0<\varepsilon\le1$ 取 $\phi_\varepsilon(s)=e^{-\varepsilon|s|}$。其正定性可用有限构造核对：将任意点表排序，相邻间隔记为 $\Delta_i\ge0$，递推取单位向量 $v_i=e^{-\varepsilon\Delta_i}v_{i-1}+\sqrt{1-e^{-2\varepsilon\Delta_i}}\,e_i$，其中新 $e_i$ 与此前向量正交。所得有限 Gram 矩阵恰为 $[e^{-\varepsilon|s_i-s_j|}]$，重复点亦可。
+
+这里 $c=1$，且
+
+$$
+d_\varepsilon(h)=\sqrt{2(1-e^{-\varepsilon|h|})}
+\le\sqrt{2|h|}.
+\tag{61.2}
+$$
+
+所以全族共享可用包络 $\omega(r)=\sqrt{2r}$。但对每个固定 $\varepsilon>0$，$d_\varepsilon(h)/|h|\to\infty$，不存在有限线性速度。两条亏损 $1-e^{-\varepsilon a}$、$1-e^{-\varepsilon b}$ 随 $\varepsilon\downarrow0$ 趋零，故定理 60.2 仍给全部有限效果的统一平方根极限；直接由 (60.6) 和 $d_\varepsilon(-u)\le\sqrt{2\varepsilon u}$ 还可得上界 $2\sqrt{2\varepsilon/e}$。这说明有限速度是便于使用的充分特例，不是本候选的必要条件。∎
+

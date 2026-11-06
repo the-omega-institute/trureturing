@@ -1,0 +1,73 @@
+### 定理 8：一个乘积预算证明整棵无限分支树安全
+
+如果
+
+<a id="eq-32"></a>
+
+$$
+\boxed{W>r,}
+\tag{32}
+$$
+
+那么对任意有限支撑指数列 $e_j\ge0$，
+
+<a id="eq-33"></a>
+
+$$
+\boxed{
+R\!\left(B\prod_jp_j^{e_j}\right)
+\le\frac rW<1.
+}
+\tag{33}
+$$
+
+**证明。**
+
+每个素数方向的增长满足
+
+$$
+\frac{S_{p_j}(v_{p_j}(B)+e_j)}
+{S_{p_j}(v_{p_j}(B))}
+=
+\frac{1-b_jp_j^{-e_j}}{1-b_j}
+\le\frac1{1-b_j}.
+$$
+
+同时实际整数增大，使 $\log\log n$ 不减。因此所有方向合并后，
+
+$$
+R(n)
+\le r\prod_{j:e_j>0}(1-b_j)^{-1}
+\le r/W<1.
+$$
+
+证毕。
+
+这覆盖任意多个素数方向、每个方向任意大的指数。
+
+一个明确的贪心选择是：每次取新的素数
+
+$$
+p_j\nmid B,
+\qquad
+p_j\ge\frac{2^{j+1}}{1-r}.
+$$
+
+素数无限性保证可以持续选择。于是
+
+$$
+\sum_jb_j\le\frac{1-r}{2},
+$$
+
+从而
+
+<a id="eq-34"></a>
+
+$$
+W\ge\frac{1+r}{2},
+\qquad
+\boxed{R(n)\le\frac{2r}{1+r}<1.}
+\tag{34}
+$$
+
+<!-- editorial-note:start infinite-family-scope -->

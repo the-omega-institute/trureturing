@@ -1,0 +1,12 @@
+Proof. Formula (27.1) is continuous, $m(w)=0$ exactly when $w=0$,
+and $m(tw)=t m(w)$ for every real $t\ge0$. Its two inequalities are
+exactly (23.1). Continuity makes $\{m<1\}$ open. If $m(z)=1$, the
+points $(1+\eta)z$, $\eta>0$, lie outside $\mathcal W$ and approach $z$;
+thus such a point is on the boundary. These observations prove (27.2)
+and the radial representation, without division at $w=0$.
+The first boundary type requires only one saturated coordinate; the
+second can have all coordinates strictly below one, as at
+$z=(2/3,2/3,2/3,0)$. This example has $m(z)=1$ and is realizable by
+Theorem 23.2. The full boundary is therefore not the coordinate torus.
+$\square$
+

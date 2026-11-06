@@ -1,0 +1,42 @@
+**定理 4.2（原角保持前缀的十六条质量律）。**设定义 2.1 的全部条件成立。对每个原切口 $\xi$，以及每个属于原前接域且保持固定 $S$ 的实际 $h\in U_{27}(D)$，令 $h_3=J^*hJ\in U_3(D)$。则两套固定原叶满足
+
+$$
+\begin{aligned}
+\widehat\mu_\xi(hM_jh^*)&=\frac19\operatorname{Tr}(\tau h_3Q_{s_j}h_3^*)
+=\frac19 a^{\rm old}_{\xi,h,s_j},\\
+\widehat\mu_\xi(hN_jh^*)&=\frac19\operatorname{Tr}(\tau h_3Q_{q_j}h_3^*)
+=\frac19 a^{\rm old}_{\xi,h,q_j}.
+\end{aligned}
+\tag{4.4}
+$$
+
+特别地，旧定义 17.5 的实际算术前接 $h=h_3\oplus I_{24}$、$h_3\in U_3(A)$ 全部在此域内；不只是在恒等前缀成立。对同一运输响应，(4.4) 正是母卷 (21.11) 的未归一数值内容；$w>0$ 时才除以同一个 $w$ 得其概率形式。两套粗成功仍为同一个实际 $hGh^*$，故
+
+$$
+\begin{aligned}
+\widehat\mu_\xi(hGh^*)
+&=\frac{6a^{\rm old}_{\xi,h,-1}+2a^{\rm old}_{\xi,h,1}}9\\
+&=\frac{4a^{\rm old}_{\xi,h,\zeta}+4a^{\rm old}_{\xi,h,\zeta^2}}9
+=\mu^{\rm old}_\xi(L_{h,1})=\mu^{\rm old}_\xi(R_{h,1}).
+\end{aligned}
+\tag{4.5}
+$$
+
+(4.4)–(4.5) 是实际事件的当前质量等式，不是独立旗、后态、过程、档案或未来权限的身份等式。
+
+**证明。**$hSh^*=S$ 给 $hJ=Jh_3$ 及 $h^*J=Jh_3^*$，且 $h_3$ 酉。全框架 Born 表示作用于已供应的原锐利读口，随后只对已证支撑的正态作迹配对：
+
+$$
+\begin{aligned}
+\mu(hE_{\alpha,j}h^*)
+&=\operatorname{Tr}(J\tau J^*hE_{\alpha,j}h^*)\\
+&=\operatorname{Tr}(\tau h_3J^*E_{\alpha,j}Jh_3^*)
+=\tfrac19\operatorname{Tr}(\tau h_3Q_{\alpha,j}h_3^*).
+\end{aligned}
+\tag{4.6}
+$$
+
+原生 (2.1) 将右侧的九倍识别为同一原 $a^{\rm old}$；这一步继续使用原准备、参考、质量和历史接口。母卷 (21.10) 的共同 $G$、框架内粗可加、(21.6) 的六／二及四／四重数、两只原抽签仿射性给 (4.5)。原第九空叶各自贡献零，其停止／销毁程序仍在。$w=0$ 时 $\tau=0$，所有式子无需归一即成立。
+
+使用的成熟事实仅为有限维迹配对；新的原网络结论是：在已经取得全菜单刚性及固定 $S$ 支撑的此候选中，两套固定实际叶的上述数值不再需要另设标量来源公理。母卷命题 21.11 第 2 项及推论 21.10 的有限菜单横向自由并不与此冲突：这里增加了定理 1.5 所消费的同切口全部框架关系。原叶／旗的操作身份部分并未由此删除。$\square$
+

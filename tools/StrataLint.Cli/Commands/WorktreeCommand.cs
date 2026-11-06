@@ -115,6 +115,7 @@ internal static class WorktreeCommand
         int? failureExitCode = null;
         IDisposable? initializationScope = null;
         string? idleClaimFallback = null;
+        JsonElement[] idleClaimRefusals = [];
         try
         {
             if (runner is ProductionWorktreeProcessRunner production)
@@ -125,8 +126,13 @@ internal static class WorktreeCommand
                 options = options with { Path = attachedPath };
             else
             {
-                var claimed = WorktreePoolCommand.TryClaim(options, runner, out idleClaimFallback);
-                if (claimed is not null) return claimed;
+                var claimed = WorktreePoolCommand.TryClaim(options, runner, out idleClaimFallback, out idleClaimRefusals);
+                if (claimed is not null)
+                {
+                    MaintenanceLogAdapter.Record("worktree-init", claimed.Success ? "succeeded" : "failed",
+                        "claim", claimed.Success ? null : "claim_failed", claimed.Success ? null : "CommandResult");
+                    return claimed;
+                }
             }
             if (Directory.Exists(options.Path) || RunProcess(runner, "git",
                 ["show-ref", "--verify", "--quiet", $"refs/heads/{options.Branch}"], options.Source,
@@ -141,7 +147,20 @@ internal static class WorktreeCommand
                 }
                 if (LeanPinSet.TryReadWorktree(options.Path, out var reason) is null)
                     throw new InvalidOperationException(reason);
-                return reused;
+                MaintenanceLogAdapter.Record("worktree-init", "succeeded", "recovery", null, null);
+                return WithIdleClaimEvidence(reused);
+            }
+            if (Environment.GetEnvironmentVariable("WORKTREE_REQUIRE_DISK_CHECK") == "1")
+            {
+                stage = "disk";
+                var disk = WorktreeProtocolCommand.CheckCreationDisk(options.Source, options.Path, runner);
+                if (!disk.Success)
+                {
+                    MaintenanceLogAdapter.Record("worktree-init", "failed", stage, "disk_refused", "CommandResult");
+                    return idleClaimFallback is null && idleClaimRefusals.Length == 0 ? disk
+                        : disk with { Error = disk.Error + FailureReceipt(disk.Error) };
+                }
+                stage = "preflight";
             }
             initializationScope = WorktreeInitializationScope.Acquire(options.Source, options.Path, options.Branch);
             halfBuiltRecovered = ValidatePreflight(options, runner);
@@ -210,11 +229,15 @@ internal static class WorktreeCommand
                 halfbuilt_recovered = halfBuiltRecovered,
                 dotnet_restore = options.SkipRestore ? "skipped" : "restored",
                 idle_claim_fallback = idleClaimFallback,
+                idle_claim_refusals = idleClaimRefusals,
             }) + "\n";
+            MaintenanceLogAdapter.Record("worktree-init", "succeeded", "complete", null, null);
             return new CommandResult(true, summary, RenderDonorWarning(options, donor));
         }
         catch (Exception exception)
         {
+            MaintenanceLogAdapter.Record("worktree-init", "failed", stage, "initialization_failed",
+                exception.GetType().Name);
             var cleanup = string.Empty;
             string? recoveryResult = null;
             try
@@ -238,7 +261,18 @@ internal static class WorktreeCommand
             {
                 cleanup = cleanupException.Message;
             }
-            var receipt = JsonSerializer.Serialize(new
+            return new CommandResult(false, string.Empty,
+                FailureReceipt(exception.Message, cleanup, recoveryResult), failureExitCode);
+        }
+        finally
+        {
+            initializationScope?.Dispose();
+        }
+
+        // The disk gate keeps its original output/error and exit code; its
+        // additional receipt uses the same failure contract as initialization.
+        string FailureReceipt(string reason, string cleanup = "", string? recoveryResult = null) =>
+            "WORKTREE_FAILED " + JsonSerializer.Serialize(new
             {
                 @event = "worktree_init",
                 status = "failed",
@@ -247,20 +281,25 @@ internal static class WorktreeCommand
                 target = options?.Path,
                 stage,
                 base_revision = options?.Base,
-                reason = exception.Message,
+                reason,
                 cleanup_error = cleanup.Length == 0 ? null : cleanup.TrimStart(';', ' '),
                 retained_material = new { branch = options?.Branch, path = options?.Path },
                 recovery_result = recoveryResult,
                 recovery_action = "rerun make worktree with the same KIND/NAME/DEST; or reclaim the registered target with make worktree-remove",
-            });
-            return new CommandResult(
-                false,
-                string.Empty,
-                $"WORKTREE_FAILED {receipt}\n", failureExitCode);
-        }
-        finally
+                idle_claim_fallback = idleClaimFallback,
+                idle_claim_refusals = idleClaimRefusals,
+            }) + "\n";
+
+        CommandResult WithIdleClaimEvidence(CommandResult result)
         {
-            initializationScope?.Dispose();
+            if (idleClaimFallback is null && idleClaimRefusals.Length == 0) return result;
+            // Recovery owns its receipt schema. Extend the structured payload,
+            // retaining its status and fields without borrowing JSON storage.
+            var receipt = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(result.Output)
+                ?? throw new InvalidOperationException("worktree recovery receipt is absent");
+            receipt["idle_claim_fallback"] = JsonSerializer.SerializeToElement(idleClaimFallback);
+            receipt["idle_claim_refusals"] = JsonSerializer.SerializeToElement(idleClaimRefusals);
+            return result with { Output = JsonSerializer.Serialize(receipt) + "\n" };
         }
     }
 

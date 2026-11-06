@@ -35,6 +35,9 @@ internal sealed class ParametricExponentialSquareCongruenceDocument : IScribeDoc
                     + "here and receives no second problem claim. The new work is strong "
                     + "induction transporting odd parameters modulo two, and endpoint "
                     + "separation of the parameter-two convolution modulo eight.")),
+            Node("exp_subst_zero", "Constant coefficient of a substituted exponential",
+                ExpConstantFormula(),
+                "For a rational series L with zero constant coefficient, exp(L) has constant coefficient one."),
             Node("linear_ode_unique", "Uniqueness for a formal linear differential equation",
                 LinearOdeUniqueFormula(),
                 "Over the rationals, two series with the same constant coefficient satisfying F'=HF and G'=HG are equal. Strong induction compares the convolution coefficients."),
@@ -118,6 +121,13 @@ internal sealed class ParametricExponentialSquareCongruenceDocument : IScribeDoc
             slug is null ? null : new OpenProblemResolutionClaim(
                 ProblemSlugRef.Create(slug), ResolutionKind.Proved));
 
+    private static Formula ExpConstantFormula()
+    {
+        var l = F.Id("L");
+        return Disp(Seq(Bind("L", Call("PowerSeries", Rat())), Impl(
+            Eqn(Call("constantCoeff", l), D(0)),
+            Eqn(Call("constantCoeff", Call("subst", l, Call("exp", Rat()))), D(1)))));
+    }
     private static Formula Q() => F.Id("q");
     private static Formula N() => F.Id("n");
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));

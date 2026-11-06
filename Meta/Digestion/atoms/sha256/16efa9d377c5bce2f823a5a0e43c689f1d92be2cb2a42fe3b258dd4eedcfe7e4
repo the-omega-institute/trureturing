@@ -1,0 +1,9 @@
+**Corollary 164.3 (finite-prefix coercivity remains zero).** For every $n$,
+
+$$
+\inf\left\{q(v):v\in W_{\le n},\ \|v\|_\infty=1\right\}=0.
+\tag{164.4}
+$$
+
+Indeed, for a fixed $n$ repeat the rank-nullity construction with the finite map $(\Lambda_{134},\mathscr R_0,\ldots,\mathscr R_n)$ on a sequence of positive-measure sets whose $g^2$-mass tends to zero. The same estimate as in (164.3) gives arbitrarily small positive values of $q$ in $W_{\le n}$. The diagonal sequence from Proposition 164.2 is eventually invisible to every fixed finite subset of the countable stack, while retaining unit $L^\infty$ norm and positive energy at each finite index. If $\mathscr R_j=\mathscr R\circ T^j$, this says that every fixed finite list of successor coordinates vanishes along the sequence after a finite stage. It does not say that any $v_n$ belongs to $W_\infty$.
+

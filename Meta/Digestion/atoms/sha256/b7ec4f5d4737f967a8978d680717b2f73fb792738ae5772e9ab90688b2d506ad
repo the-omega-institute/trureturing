@@ -1,0 +1,31 @@
+**Theorem 8.2 (Finite lists, chronology and finite annihilation).** For every allowed history let $\nu(t)$ count events strictly before time $t$. Then
+
+$$
+u_t=M^tF_{\nu(t)}u_0,\qquad
+\|u_t\|_Q=\|F_{\nu(t)}u_0\|_Q.
+\tag{8.5}
+$$
+
+For $r<\infty$ events the exact full-time limiting norm is $\|F_ru_0\|_Q$, and the stable space is $\ker F_r$. Its dimension is $2-\operatorname{rank}F_r$. In particular the empty list has $F_0=I$ and stable space $\{0\}$; so does every finite wholly nonsingular list. Every finite list containing a singular factor has rank zero or one, distinguishable by its finite matrix $F_r$.
+
+For any finite or infinite event list, an initial vector reaches zero in finite time exactly when $F_nu_0=0$ for some finite event prefix $n$, with $n=0$ allowed for $u_0=0$. A nonzero vector can first reach zero only just after a singular event $j$, and the exact condition at that event is
+
+$$
+F_ju_0\ne0,\qquad \lambda_j=0,\qquad e_j^TGF_ju_0=0.
+\tag{8.6}
+$$
+
+All initial states have been annihilated by the end of event $j$ exactly when $F_{j+1}=0$. If $F_j\ne0$, this is equivalent to $\lambda_j=0$ and the finite row $e_j^TGF_j=0$.
+
+*Proof.* The original factorization (7.5), with its actual event parameter at each occurrence, is $N_{\alpha_j}=M(P+\lambda_j(I-P))$. Conjugating its second factor by $M^{t_j}$ gives exactly $K_j$. Before the first event the interaction vector is $u_0$; an undamped transfer leaves it fixed and event $j$ multiplies it by $K_j$. Induction over chronological time proves (8.5). This is the identity (7.8) without any use of (U). Also
+
+$$
+\|K_jw\|_Q^2=\|w\|_Q^2-\delta_j|\langle q_j,w\rangle_Q|^2,
+\qquad |\lambda_j|\|w\|_Q\leq\|K_jw\|_Q\leq\|w\|_Q.
+\tag{8.7}
+$$
+
+After a finite list the norm therefore remains exactly $\|F_ru_0\|_Q$. Positive definiteness gives decay precisely on its kernel: $x_t^2\leq aQ(u_t)$ and $y_t^2\leq cQ(u_t)$, while continuity supplies the converse implication. Rank-nullity gives the dimension assertions. Each $K_j$ has eigenvalues $1,\lambda_j$, so finite nonsingular products are invertible; a singular factor has rank one and cannot subsequently increase rank.
+
+The map $M$ never kills a nonzero vector. A nonsingular $K_j$ cannot do so either. At a singular event $K_j=P_j=e_je_j^TG$, which kills exactly $e_j^{\perp_Q}$. This proves (8.6), including the actual first zero time $t_j+1$. Applied to every input, the same calculation proves the matrix and row conditions. Zero is preserved by every later transfer. These finite tests therefore cover every possible finite annihilation, also within an infinite history. $\square$
+

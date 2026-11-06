@@ -1,0 +1,23 @@
+**Theorem 3.3 (exactness and attainment of the recurrence).** For all $G,k,T,S$ in the stated domain, (3.6)–(3.8) terminate and give
+
+$$
+ L(S)=\lambda_G(S).
+ \tag{3.9}
+$$
+
+Whenever $L(S)$ is finite, it is attained by an admitted nonempty set $W\subseteq V\setminus S$. The saturation loses no information needed to decide feasibility of $S$.
+
+*Proof.* Fix $\sigma$. We prove the table meaning in Definition 3.1 by induction over subtrees, and, inside a subtree, over its processed children. Initially there is only the vertex $v$. It has bit $b$ and hence nonemptiness bit $b$; there are no internal tree edges and no selected child, giving $a=0,t=0$. No cost has yet been charged at $v$.
+
+When a child $u$ is attached, a subtree assignment restricts uniquely to an assignment on the processed part and an assignment on $V_u$, with parent bit $b$ for $u$. Conversely any two such assignments with the same prescribed $b$ combine: the vertex sets are disjoint, all restrictions on $S$ and $\sigma$ are local, and $vu$ is the sole tree edge between them. The two old costs concern disjoint vertices; the cost at $v$ is still deferred. The new sum of child bits is given by $t\oplus c$, and nonemptiness by $\max(h,h')$.
+
+For a coordinate $x\in X$, all newly internal edges are the old internal edges, the edges internal to $V_u$, and $vu$. The edge $vu$ contributes $c$ to the selected-neighbor count of $v$ if $v\in X$, and $b$ to that of $u$ if $u\in X$. These are exactly the two terms in $e_x$; if neither endpoint is in $X$, there is no vector contribution. Thus (3.6) gives precisely (3.4). This remains true when both endpoints lie in $X$: the two contributions occupy their two different coordinates. Identity (3.2) makes repeated saturation equivalent to saturating the complete sum.
+
+It follows that every pair considered by the recurrence produces an admitted assignment of the new state, and every admitted assignment arises from a considered pair. Retaining a least cost therefore retains exactly the minimum for that state. Replacing one partial assignment by a cheaper one of the same state does not change any subsequent transition or final vertex charge, since those depend only on the displayed indices and the fixed bits. This proves the induction over children.
+
+After all children, every $z\in V_v\setminus(X\cup\{v\})$ has already been charged correctly in its own subtree. If $v\notin X$, it has no incident edge of $J$, since both endpoints of every such edge belong to $X$. Its neighbor count in $G$ is therefore its tree neighbor count, namely its parent bit plus the sum of child bits. The indicator that this count is one is exactly the condition $p+t=1$, by (3.2). Its cost is one precisely when it is also outside $W$, namely $b=0$. Equation (3.7) supplies this remaining charge. If $v\in X$, no charge is due yet. This proves (3.5) and the subtree induction, including leaves and the root.
+
+At the root, every tree edge is internal. Thus $a_x$ is the saturated count of all selected tree neighbors of $x$. All other neighbors of $x$ come through $J$, with contribution (3.3). The sum in (3.8) charges exactly the outside vertices in $X$ with one selected neighbor. All outside vertices not in $X$ have already been charged in (3.5). Their combined charge is consequently exactly $b_G(W)$, and the root condition $h=1$ is equivalent to $W\ne\varnothing$. Enumerating $\sigma$ enumerates every possible restriction of $W$ to $X$. This proves (3.9).
+
+All choices range over finite sets; table operations use minima of finite lists. Finite entries at initialization are attained, and each finite update combines two attaining assignments. Induction therefore proves attainment of every finite entry and root minimum. A rooted tree has finitely many vertices and child edges, so all loops terminate. For reconstruction, retain one attaining pair whenever an entry is improved, choosing the first pair in the fixed order on ties; recursively following these pairs recovers the bits of an attaining $W$. Alternatively recompute the same finite minima when a witness is needed. No count larger than two affects an equality to one, which proves the last assertion. $\square$
+

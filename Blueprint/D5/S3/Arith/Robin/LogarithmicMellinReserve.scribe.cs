@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
 
@@ -20,6 +22,16 @@ internal sealed class LogarithmicMellinReserveDocument : IScribeDocumentDefiniti
                 + "+mu*(1/alpha+1/alpha^2). The low endpoint imposes alpha<1 and "
                 + "the high endpoint imposes alpha>0. The logarithmic factors give the "
                 + "squared denominators. Real powers denote Real.rpow.")),
+            Describe.Lean(
+                DescribeId.Create("low-logarithmic-integrability"),
+                DeclarationHandle.Create(Prefix + "low_log_integrable"),
+                H("Integrability of the low logarithmic moment"),
+                StatementSource.FromAuthor(LowLogIntegrabilityFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every positive real exponent b, the function -log(y) times "
+                        + "y to the power b-1 is Lebesgue integrable on the interval (0,1]."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("absolute-mellin-payment"),
                 DeclarationHandle.Create(Prefix + "logarithmic_mellin_reserve"),
@@ -69,4 +81,24 @@ internal sealed class LogarithmicMellinReserveDocument : IScribeDocumentDefiniti
                         + "The envelopes and this variation bound do not establish "
                         + "the complete Robin inequality or the Riemann hypothesis."))),
                 DescribeRole.Theorem))));
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
+    private static Formula LowLogIntegrabilityFormula()
+    {
+        Formula real = Seq(Mathbb, Grp(F.Id("R")));
+        Formula exponent = F.Id("b");
+        Formula variable = F.Id("y");
+        Formula qualified(string owner, string name) => Seq(Operatorname,
+            Grp(F.Id(owner), Dot, F.Id(name)));
+        Formula at(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
+        Formula moment = Parenthesized(Seq(
+            variable, Colon, Sp, real, Sp, Mapsto, Sp,
+            Minus, at(qualified("Real", "log"), variable), Sp, Cdot, Sp,
+            variable, Caret, Grp(Seq(exponent, Minus, D(1)))));
+        Formula integrable = at(qualified("MeasureTheory", "IntegrableOn"), moment,
+            at(qualified("Set", "Ioc"), D(0), D(1)), qualified("MeasureTheory", "volume"));
+        return Disp(Seq(Forall, Sp, Parenthesized(Seq(exponent, Colon, Sp, real)), Comma, Sp,
+            Parenthesized(Seq(D(0), Sp, Lt, Sp, exponent)), Sp, Rightarrow, Sp, integrable));
+    }
 }

@@ -12,7 +12,8 @@ import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 import Mathlib.LinearAlgebra.Dimension.Constructions
 import Mathlib.Data.Finset.Max
 import Mathlib.Tactic.Linarith
-import Mathlib.Basic.Sign.Defs
+import Mathlib.Basic.Sign.Basic
+import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
 
 /-
 The classical elementary-vector argument uses a signed kernel direction and
@@ -42,6 +43,12 @@ OrderedField.subtract_to_boundary and OrderedField.mem_support: proof_shape: bin
   their consumers are OrderedField.compress_conic and the global circuit proof.
 The Real subtract_to_boundary retains its Finite-only telescope and delegates to
   the single ordered-field minimum-ratio proof.
+OrderedField.signConformalGlobalKernelCircuitDecomposition: proof_shape: content;
+  escape_witness: terminating residual-support construction with a one-sided
+    nonzero pivot outside the span of the later conformal summands;
+  live path: boundary erasure -> smaller-support induction -> Fin.cons independence
+    -> independent family in the kernel -> nullity bound;
+  admission_basis: escape-witness.
 utility: not-applicable(kind=none): these are general existence and linear-algebra
   theorems, not bounded enumeration, certified instances or numerical reductions.
 -/
@@ -746,5 +753,178 @@ theorem signConformalGlobalKernelCircuit
     intro hwi
     apply hdi
     simp [d, hwi]
+
+
+-- The induction carries signed circuit minimality and the one-sided span invariant.
+set_option maxHeartbeats 1000000 in
+/-- Every finite signed kernel vector is an independent conformal sum of global circuits.
+Positive coefficients are absorbed in the summands; the empty sum represents zero. -/
+theorem signConformalGlobalKernelCircuitDecomposition
+    (A : Matrix (Fin m) E F) (x : E → F) (hx : A *ᵥ x = 0) :
+    ∃ (n : ℕ) (c : Fin n → (E → F)),
+      (∑ j, c j) = x ∧ LinearIndependent F c ∧
+      n ≤ (support x).card ∧
+      n ≤ Module.finrank F (LinearMap.ker (Matrix.mulVecLin A)) ∧
+      ∀ j, c j ≠ 0 ∧ A *ᵥ c j = 0 ∧
+        (∀ i, c j i = 0 ∨ SignType.sign (c j i) = SignType.sign (x i)) ∧
+        (∀ w : E → F, A *ᵥ w = 0 → w ≠ 0 →
+          Function.support w ⊆ Function.support (c j) →
+          Function.support w = Function.support (c j)) := by
+  classical
+  have zero_of_conformal {a b : F}
+      (h : a = 0 ∨ SignType.sign a = SignType.sign b) (hb : b = 0) : a = 0 := by
+    rcases h with h | h
+    · exact h
+    · exact sign_eq_zero_iff.mp (by simpa [hb] using h)
+  have trans_conformal {a b d : F}
+      (hab : a = 0 ∨ SignType.sign a = SignType.sign b)
+      (hbd : b = 0 ∨ SignType.sign b = SignType.sign d) :
+      a = 0 ∨ SignType.sign a = SignType.sign d := by
+    rcases hab with ha | hab
+    · exact Or.inl ha
+    rcases hbd with hb | hbd
+    · exact Or.inl (zero_of_conformal (Or.inr hab) hb)
+    · exact Or.inr (hab.trans hbd)
+  have main : ∀ N : ℕ, ∀ x : E → F, (support x).card = N → A *ᵥ x = 0 →
+      ∃ (n : ℕ) (c : Fin n → (E → F)),
+        (∑ j, c j) = x ∧ LinearIndependent F c ∧ n ≤ (support x).card ∧
+        ∀ j, c j ≠ 0 ∧ A *ᵥ c j = 0 ∧
+          (∀ i, c j i = 0 ∨ SignType.sign (c j i) = SignType.sign (x i)) ∧
+          (∀ w : E → F, A *ᵥ w = 0 → w ≠ 0 →
+            Function.support w ⊆ Function.support (c j) →
+            Function.support w = Function.support (c j)) := by
+    intro N
+    induction N using Nat.strong_induction_on with
+    | h N ih =>
+      intro x hN hx
+      by_cases hx0 : x = 0
+      · subst x
+        exact ⟨0, Fin.elim0, by simp, linearIndependent_empty_type, Nat.zero_le _, (fun j => Fin.elim0 j)⟩
+      obtain ⟨e, he⟩ := Function.ne_iff.mp hx0
+      obtain ⟨z, hzK, hze, hzsign, hzmin⟩ :=
+        signConformalGlobalKernelCircuit A x e hx he
+      have hzx (i : E) (hi : z i ≠ 0) : x i ≠ 0 := by
+        intro hxi
+        exact hi (zero_of_conformal (hzsign i) hxi)
+      obtain ⟨a, ha, hbound, k, hzk, hboundary⟩ :=
+        subtract_to_boundary (fun i => |x i|) (fun i => |z i|)
+          (fun i => abs_nonneg _) (fun i hi => abs_pos.mpr (hzx i (by simpa using hi)))
+          ⟨e, abs_pos.mpr hze⟩
+      let b : E → F := a • z
+      let y : E → F := x - b
+      have hbK : A *ᵥ b = 0 := by simp [b, Matrix.mulVec_smul, hzK]
+      have hyK : A *ᵥ y = 0 := by simp [y, Matrix.mulVec_sub, hx, hbK]
+      have hb0 : b ≠ 0 := by
+        intro h
+        have := congrFun h e
+        exact (mul_ne_zero ha.ne' hze) this
+      have hb_support : Function.support b = Function.support z := by
+        ext i
+        simp [b, Function.mem_support, ha.ne']
+      have hbsign (i : E) :
+          b i = 0 ∨ SignType.sign (b i) = SignType.sign (x i) := by
+        rcases hzsign i with hi | hi
+        · exact Or.inl (by simp [b, hi])
+        · exact Or.inr (by simpa [b, sign_mul, sign_pos ha] using hi)
+      have hy_sign (i : E) :
+          y i = 0 ∨ SignType.sign (y i) = SignType.sign (x i) := by
+        by_cases hzi : z i = 0
+        · right
+          simp [y, b, hzi]
+        have hxi := hzx i hzi
+        have hsign : SignType.sign (z i) = SignType.sign (x i) :=
+          (hzsign i).resolve_left hzi
+        by_cases hxp : 0 < x i
+        · have hzp : 0 < z i :=
+            sign_eq_one_iff.mp (hsign.trans (sign_pos hxp))
+          have hbi := hbound i
+          rw [abs_of_pos hxp, abs_of_pos hzp] at hbi
+          by_cases hyi : y i = 0
+          · exact Or.inl hyi
+          · right
+            have hyp : 0 < y i := lt_of_le_of_ne hbi (Ne.symm hyi)
+            rw [sign_pos hyp, sign_pos hxp]
+        · have hxn : x i < 0 := lt_of_le_of_ne (le_of_not_gt hxp) hxi
+          have hzn : z i < 0 :=
+            sign_eq_neg_one_iff.mp (hsign.trans (sign_neg hxn))
+          have hbi := hbound i
+          rw [abs_of_neg hxn, abs_of_neg hzn] at hbi
+          by_cases hyi : y i = 0
+          · exact Or.inl hyi
+          · right
+            have hyn : y i < 0 := by
+              change x i - a * z i < 0
+              have hyne : x i - a * z i ≠ 0 := hyi
+              have hyle : x i - a * z i ≤ 0 := by linarith
+              exact lt_of_le_of_ne hyle hyne
+            rw [sign_neg hyn, sign_neg hxn]
+      have hyk : y k = 0 := by
+        have hzne : z k ≠ 0 := abs_pos.mp hzk
+        have hxne := hzx k hzne
+        have hs := (hzsign k).resolve_left hzne
+        by_cases hxp : 0 < x k
+        · have hzp := sign_eq_one_iff.mp (hs.trans (sign_pos hxp))
+          rw [abs_of_pos hxp, abs_of_pos hzp] at hboundary
+          exact hboundary
+        · have hxn := lt_of_le_of_ne (le_of_not_gt hxp) hxne
+          have hzn := sign_eq_neg_one_iff.mp (hs.trans (sign_neg hxn))
+          rw [abs_of_neg hxn, abs_of_neg hzn] at hboundary
+          change x k - a * z k = 0
+          linarith
+      have hys : support y ⊆ (support x).erase k := by
+        intro i hi
+        refine mem_erase.mpr ⟨?_, ?_⟩
+        · intro hik
+          subst i
+          exact mem_support.mp hi hyk
+        · apply mem_support.mpr
+          intro hxi
+          exact mem_support.mp hi (zero_of_conformal (hy_sign i) hxi)
+      have hkx : k ∈ support x := mem_support.mpr (hzx k (abs_pos.mp hzk))
+      have hlt : (support y).card < N := by
+        have hle := card_le_card hys
+        have hpos := card_pos.mpr ⟨k, hkx⟩
+        rw [card_erase_of_mem hkx] at hle
+        omega
+      obtain ⟨n, c, hsum, hli, hn, hc⟩ := ih _ hlt y rfl hyK
+      have hck (j : Fin n) : c j k = 0 :=
+        zero_of_conformal ((hc j).2.2.1 k) hyk
+      have hbspan : b ∉ Submodule.span F (Set.range c) := by
+        intro hb
+        have hzero : ∀ v ∈ Submodule.span F (Set.range c), v k = 0 := by
+          intro v hv
+          induction hv using Submodule.span_induction with
+          | mem v hv =>
+            obtain ⟨j, rfl⟩ := hv
+            exact hck j
+          | zero => rfl
+          | add u v _ _ hu hv => simp [hu, hv]
+          | smul a v _ hv => simp [hv]
+        exact (mul_ne_zero ha.ne' (abs_pos.mp hzk)) (hzero b hb)
+      refine ⟨n + 1, Fin.cons b c, ?_, hli.finCons hbspan, ?_, ?_⟩
+      · rw [Fin.sum_univ_succ]
+        simp only [Fin.cons_zero, Fin.cons_succ, hsum]
+        dsimp [y]
+        abel
+      · have hle := card_le_card hys
+        have hpos := card_pos.mpr ⟨k, hkx⟩
+        rw [card_erase_of_mem hkx] at hle
+        omega
+      · intro j
+        refine Fin.cases ?_ (fun j => ?_) j
+        · refine ⟨hb0, hbK, hbsign, ?_⟩
+          intro w hw hwn hws
+          change Function.support w ⊆ Function.support b at hws
+          change Function.support w = Function.support b
+          rw [hb_support] at hws ⊢
+          exact hzmin w hw hwn hws
+        · exact ⟨(hc j).1, (hc j).2.1,
+            fun i => trans_conformal ((hc j).2.2.1 i) (hy_sign i), (hc j).2.2.2⟩
+  obtain ⟨n, c, hsum, hli, hn, hc⟩ := main _ x rfl hx
+  let d : Fin n → LinearMap.ker (Matrix.mulVecLin A) :=
+    fun j => ⟨c j, (hc j).2.1⟩
+  have hd : LinearIndependent F d :=
+    LinearIndependent.of_comp (LinearMap.ker (Matrix.mulVecLin A)).subtype hli
+  exact ⟨n, c, hsum, hli, hn, by simpa using hd.fintype_card_le_finrank, hc⟩
 
 end D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCircuit.OrderedField

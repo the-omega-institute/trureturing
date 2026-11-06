@@ -1,0 +1,27 @@
+**Corollary 46.5 (all actual original equality lifts in the nonnegative
+slices).** Suppose $0<\xi\le R_\star$, the active sign is $\sigma$, and
+$\mathfrak D_\sigma(x,q)\ge0$. The lower bound (46.27) and its equality set
+hold for every actual $U\in U(4)$ with the stated pure effect, active trace
+and distance. The complete original equality lifts are as follows.
+
+1. If $0<q<1$, the two effects in (46.28) are distinct. A source42
+spectral/Birkhoff decomposition of the given $U$ has the same effect, the same
+complex active trace and positive weights. Equality in the source42 identity
+(42.16) forces every positive-weight phase replacement to be one of the same
+canonical orientation. The effect selects one $\tau$, and the nonzero trace
+$2L\lambda$ fixes the same common scalar in every replacement. Their averaged
+diagonal therefore has four entries of modulus one. Row norms of the actual
+unitary $UU_\sigma^\dagger$ force all off-diagonal entries to vanish, so
+
+$$
+ U=\lambda\operatorname{diag}(v_\sigma^\tau)U_\sigma.
+\tag{46.32}
+$$
+
+2. If $q=1$, the two orientations represent the same singleton effect, but
+their nonzero scalar recoveries are opposite: they are
+$2\tau i\ell y\lambda$ on the positive row and $2\tau\ell y\lambda$ on
+the negative row. The variance term in (42.16) permits only one orientation
+with positive weight. The same row-norm argument gives (46.32), with either
+orientation allowed for this singleton effect.
+
