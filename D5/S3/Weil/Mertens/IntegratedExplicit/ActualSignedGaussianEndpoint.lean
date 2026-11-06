@@ -7,6 +7,9 @@
    digest: The complete actual zeta formula supplies the signed logarithmic endpoint without JY. -/
 
 import D5.S3.Weil.Mertens.IntegratedExplicit.SignedGaussianEndpoint
+import D5.S3.Weil.Mertens.IntegratedExplicit.WholeFormula
+import D5.S3.Weil.Mertens.WeightedPrimeLimit
+import D5.S3.Weil.Mertens.IntegratedExplicit.TrivialZeroLaplace
 import D5.S3.Weil.Mertens.IntegratedExplicit.ActualZeroLaplace
 import D5.S3.Weil.Mertens.CompleteChebyshevTailIdentity
 import D5.S3.Arith.Robin.OffLinePeak.ZeroCoefficientBudget
@@ -41,7 +44,10 @@ theorem actual_coefficient_mass :
   have hm : firstLiMass = ZeroCoefficientBudget.massConstant := by
     unfold firstLiMass ZeroCoefficientBudget.massConstant
     rw [← hs, Real.log_pow]
-  simpa only [actualCoeff, one_div, hm] using actualCoeff_hasSum
+    norm_num
+  have h := actualCoeff_hasSum
+  change HasSum (fun k => 1 / (actualZero k * (1 - actualZero k))) (firstLiMass : ℂ) at h
+  simpa only [one_div, hm] using h
 
 private def actualCompleteSpectrum : CountableSpectrum where
   zero := actualZero

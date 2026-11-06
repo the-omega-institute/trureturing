@@ -9,6 +9,7 @@ internal sealed class SpectralAverageDocument : IScribeDocumentDefinition
         H("A Gaussian average of the complete signed spectrum"),
         Blocks(
             Paragraph(Text("Let S be the complete countable spectrum described in CountableResolvent and let H>=20000. The averaging measure is the Gaussian of mean 2*(H+20)^2 and variance (H+20)^2/2 restricted to the closed window [H,4*(H+20)^2]. The conclusion bounds the norm of the complex average, retaining every supplied occurrence and both imaginary signs.")),
+            Paragraph(Text("The existing windowMeasure_mass helper is now public and reused by SignedGaussianEndpoint to integrate its bounded correction over this identical window. The original spectral_average_bound proof remains the sole supplier of the complete complex average estimate.")),
             Describe.Lean(
                 DescribeId.Create("spectralaverage-spectral-average-bound"),
                 DeclarationHandle.Create("D5/S3/Weil/Mertens/IntegratedExplicit/SpectralAverage.spectral_average_bound"),
