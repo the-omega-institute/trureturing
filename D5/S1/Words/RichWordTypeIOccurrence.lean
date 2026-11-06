@@ -4,9 +4,12 @@
    mirror-E: none(waiver:source-word-combinatorics)
    anchors: []
    utility: none
-   digest: Native seven-letter fixed word, exact boundaries and Type-I return endpoint cancellation. -/
+   digest: Native seven-letter occurrences and Type-I return transport. -/
 import D5.S1.Words.MBonacciSentinelDesubstitution
 import Mathlib.Data.Matrix.Mul
+
+/-! Native positions, exact cyclic extensions and componentwise return minima
+for the fixed point of the seven-letter substitution with terminal image 066. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -100,7 +103,8 @@ private theorem substituted_prefix (i : ℕ) :
   have hp : factor word 0 i <+: image phi (i+1) 0 := by
     rw [← iterate_factor (i+1)]
     apply List.prefix_iff_eq_take.mpr
-    simp [factor, ← List.map_take, List.take_range, Nat.min_eq_left hg]
+    simp only [factor, List.length_map, List.length_range, ← List.map_take,
+      List.take_range, Nat.min_eq_left hg]
   exact factor_of_prefix (show subst phi (factor word 0 i) <+: image phi (i+2) 0 from
     hp.flatMap phi)
 
@@ -249,21 +253,21 @@ theorem actual_fixed_point :
     · rintro ⟨i,hi,_⟩; exact ⟨i,hi⟩
 
 private theorem boundary_preceding_six {i : ℕ} (hi : 0 < i)
-    (hc : word (i-1) = 5 ∨ word (i-1) = 6) : word (boundary i-1) = 6 := by
+    (hc : word (i - 1) = 5 ∨ word (i - 1) = 6) : word (boundary i-1) = 6 := by
   have he : i-1+1 = i := by omega
-  have hb := boundary_succ (i-1)
+  have hb := boundary_succ (i - 1)
   rw [he] at hb
   rcases hc with hc | hc
-  · have hh := block_letter (i-1) 1 (by simp [hc, phi])
+  · have hh := block_letter (i - 1) 1 (by simp [hc, phi])
     simpa [hb, hc, phi] using hh
-  · have hh := block_letter (i-1) 2 (by simp [hc, phi])
+  · have hh := block_letter (i - 1) 2 (by simp [hc, phi])
     simpa [hb, hc, phi] using hh
 
 /-- The terminal interval is 6 followed by the substituted return with its FINAL
 6 deleted. Both endpoints are actual boundaries; overlapping source windows are allowed. -/
 theorem terminal_interval_cancellation {a b : ℕ} (ha : 0 < a) (hab : a < b)
-    (hleft : word (a-1) = 5 ∨ word (a-1) = 6)
-    (hright : word (b-1) = 5 ∨ word (b-1) = 6) :
+    (hleft : word (a - 1) = 5 ∨ word (a - 1) = 6)
+    (hright : word (b - 1) = 5 ∨ word (b - 1) = 6) :
     returnWord (boundary a-1) (boundary b-1) =
       [6] ++ (subst phi (returnWord a b)).dropLast := by
   have hA : 0 < boundary a := by
@@ -417,14 +421,14 @@ private theorem after_boundary (i : ℕ) : word (boundary i+1) = next (word i) :
   split_ifs at * <;> simpa using h
 
 private theorem before_boundary {i : ℕ} (hi : 0 < i) :
-    word (boundary i-1) = next (word (i-1)) := by
+    word (boundary i-1) = next (word (i - 1)) := by
   have he : i-1+1 = i := by omega
-  have hb := boundary_succ (i-1)
+  have hb := boundary_succ (i - 1)
   rw [he] at hb
-  by_cases hc : (word (i-1)).val < 6
-  · have h := block_letter (i-1) 1 (by simp [phi,hc])
+  by_cases hc : (word (i - 1)).val < 6
+  · have h := block_letter (i - 1) 1 (by simp [phi,hc])
     simpa [hb,phi,next,hc] using h
-  · have h := block_letter (i-1) 2 (by simp [phi,hc])
+  · have h := block_letter (i - 1) 2 (by simp [phi,hc])
     simpa [hb,phi,next,hc] using h
 
 /-- Literal terminal extension of a finite source word. -/
@@ -437,7 +441,7 @@ private theorem terminal_eq (s : Word) : terminal s = 6::(sentinel s++[6]) := by
 contexts are part of the equivalence, rather than a recurrence assumption. -/
 theorem terminal_occurrence_iff (s : Word) (q : ℕ) :
     Occ (terminal s) q ↔ ∃ a, 0 < a ∧ q = boundary a-1 ∧ Occ s a ∧
-      (word (a-1) = 5 ∨ word (a-1) = 6) ∧
+      (word (a - 1) = 5 ∨ word (a - 1) = 6) ∧
       (word (a+s.length) = 5 ∨ word (a+s.length) = 6) := by
   rw [terminal_eq,occ_cons,occ_append]
   constructor
@@ -449,7 +453,7 @@ theorem terminal_occurrence_iff (s : Word) (q : ℕ) :
       rw [hzero,boundary_zero] at ha
       omega
     have hq : q = boundary a-1 := by omega
-    have hleft : next (word (a-1)) = 6 := by
+    have hleft : next (word (a - 1)) = 6 := by
       rw [← before_boundary hapos, ← hq]
       exact hfirst
     have hpos : q+1+(sentinel s).length = boundary (a+s.length)+1 := by
@@ -525,8 +529,8 @@ private theorem parikh_subst (s : Word) : parikh (subst phi s) = M.mulVec (parik
 /-- Terminal endpoint cancellation conserves the COMPLETE Parikh vector of
 the substituted native return interval. -/
 theorem terminal_return_parikh {a b : ℕ} (ha : 0 < a) (hab : a < b)
-    (hleft : word (a-1) = 5 ∨ word (a-1) = 6)
-    (hright : word (b-1) = 5 ∨ word (b-1) = 6) :
+    (hleft : word (a - 1) = 5 ∨ word (a - 1) = 6)
+    (hright : word (b - 1) = 5 ∨ word (b - 1) = 6) :
     parikh (returnWord (boundary a-1) (boundary b-1)) =
       M.mulVec (parikh (returnWord a b)) := by
   have hA : 0 < boundary a := by
@@ -652,7 +656,7 @@ theorem typeI_parikh_formula :
     abel
 
 private theorem lext_iff (s : Word) (c : Letter) :
-    c ∈ Lext s ↔ ∃ a, 0 < a ∧ Occ s a ∧ word (a-1) = c := by
+    c ∈ Lext s ↔ ∃ a, 0 < a ∧ Occ s a ∧ word (a - 1) = c := by
   constructor
   · rintro ⟨q,hq⟩
     obtain ⟨hc,hs⟩ := (occ_cons _ _ _).mp hq
@@ -679,7 +683,7 @@ private theorem sentinel_lext (s : Word) : Lext (sentinel s) = next '' Lext s :=
       by_contra h
       have he : a = 0 := by omega
       simpa [he,boundary_zero] using hq
-    exact ⟨word (a-1),(lext_iff s _).mpr ⟨a,hapos,ha,rfl⟩,
+    exact ⟨word (a - 1),(lext_iff s _).mpr ⟨a,hapos,ha,rfl⟩,
       (before_boundary hapos).symm.trans hd⟩
   · rintro ⟨c,hc,rfl⟩
     obtain ⟨a,ha,ho,hc⟩ := (lext_iff s c).mp hc
@@ -705,14 +709,14 @@ private theorem sentinel_rext (s : Word) : Rext (sentinel s) = next '' Rext s :=
 private def wrap (c : Letter) : Letter := if c = 6 then 6 else 0
 
 private theorem two_before_boundary {a : ℕ} (ha : 0 < a)
-    (hc : word (a-1) = 5 ∨ word (a-1) = 6) :
-    word (boundary a-2) = wrap (word (a-1)) := by
-  have hb := boundary_succ (a-1)
+    (hc : word (a - 1) = 5 ∨ word (a - 1) = 6) :
+    word (boundary a-2) = wrap (word (a - 1)) := by
+  have hb := boundary_succ (a - 1)
   have he : a-1+1 = a := by omega
   rw [he] at hb
   rcases hc with hc | hc
-  · simpa [hb,hc,phi,wrap] using at_boundary (a-1)
-  · have hh := block_letter (a-1) 1 (by simp [hc,phi])
+  · simpa [hb,hc,phi,wrap] using at_boundary (a - 1)
+  · have hh := block_letter (a - 1) 1 (by simp [hc,phi])
     simpa [hb,hc,phi,wrap] using hh
 
 private theorem two_after_boundary {a : ℕ}
@@ -726,7 +730,7 @@ private theorem two_after_boundary {a : ℕ}
 
 private def TerminalContexts (s : Word) : Prop :=
   ∀ a, Occ s a → 0 < a ∧
-    (word (a-1) = 5 ∨ word (a-1) = 6) ∧
+    (word (a - 1) = 5 ∨ word (a - 1) = 6) ∧
     (word (a+s.length) = 5 ∨ word (a+s.length) = 6)
 
 private theorem terminal_lext (s : Word) (hs : TerminalContexts s) :
@@ -736,7 +740,7 @@ private theorem terminal_lext (s : Word) (hs : TerminalContexts s) :
   constructor
   · rintro ⟨q,hq,ho,hd⟩
     obtain ⟨a,ha,hqa,hoa,hleft,hright⟩ := (terminal_occurrence_iff _ _).mp ho
-    refine ⟨word (a-1),(lext_iff s _).mpr ⟨a,ha,hoa,rfl⟩,?_⟩
+    refine ⟨word (a - 1),(lext_iff s _).mpr ⟨a,ha,hoa,rfl⟩,?_⟩
     have he : q-1 = boundary a-2 := by omega
     rw [he,two_before_boundary ha hleft] at hd
     exact hd
@@ -855,7 +859,7 @@ private theorem terminal_contexts_of_extensions (n : ℕ) (hn : n % 6 = 5)
     by_contra h
     have he : a = 0 := by omega
     exact typeI_not_at_origin n (he ▸ ha)
-  have hl : word (a-1) ∈ Lext (typeI n) :=
+  have hl : word (a - 1) ∈ Lext (typeI n) :=
     (lext_iff _ _).mpr ⟨a,hapos,ha,rfl⟩
   have hr : word (a+(typeI n).length) ∈ Rext (typeI n) :=
     (rext_iff _ _).mpr ⟨a,ha,rfl⟩
