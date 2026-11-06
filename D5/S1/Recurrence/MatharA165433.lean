@@ -9,6 +9,9 @@
 import Mathlib.Data.Nat.Choose.Central
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Tactic.LinearCombination
+import Mathlib.Tactic.FieldSimp
+
+/-! The literal rational factorial sum and its full recurrence. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -53,8 +56,12 @@ theorem result : claim := by
       by_cases h2 : 2 * k ≤ n + 1
       · unfold t
         rw [show n + 1 - k = (n - k) + 1 by omega]
-        have e1 : ((n - k : ℕ) : ℚ) = (n : ℚ) - k := by omega
-        have e2 : ((n - k + 1 - k : ℕ) : ℚ) = (n : ℚ) + 1 - 2 * k := by omega
+        have e1 : ((n - k : ℕ) : ℚ) = (n : ℚ) - k := by
+          rw [Nat.cast_sub hk]
+        have e2 : ((n - k + 1 - k : ℕ) : ℚ) = (n : ℚ) + 1 - 2 * k := by
+          rw [Nat.cast_sub (show k ≤ n - k + 1 by omega), Nat.cast_add,
+            Nat.cast_sub hk, Nat.cast_one]
+          ring
         rw [e1, e2] at h'
         linear_combination -h'
       · rw [t_zero (by omega), t_zero (by omega)]
@@ -95,19 +102,6 @@ theorem result : claim := by
     change ((n : ℚ) + 1) * tr c (n + 1) - 2 * wt c (n + 1) =
       ((n : ℚ) + 1) * tr c n - wt c n at h
     linear_combination h
-  have wt_pascal (c : ℕ → ℚ) (n : ℕ) :
-      wt c (n + 2) = wt c (n + 1) + wt (fun k => c (k + 1)) n +
-        tr (fun k => c (k + 1)) n := by
-    change tr (fun k => (k : ℚ) * c k) (n + 2) = _
-    rw [tr_pascal]
-    rw [add_assoc (wt c (n + 1))]
-    congr 1
-    unfold wt tr
-    rw [← sum_add_distrib]
-    apply sum_congr rfl
-    intro k hk
-    push_cast
-    ring
   have b_rec (k : ℕ) : b (k + 1) = (2 * (k : ℚ) + 1) * b k := by
     have hk : (k.factorial : ℚ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero k
     have hp : (2 : ℚ) ^ k ≠ 0 := pow_ne_zero _ (by norm_num)
@@ -115,7 +109,8 @@ theorem result : claim := by
     rw [show 2 * (k + 1) = (2 * k + 1) + 1 by omega]
     rw [Nat.factorial_succ, Nat.factorial_succ, Nat.factorial_succ, pow_succ]
     push_cast
-    field_simp
+    have hs : (k : ℚ) + 1 ≠ 0 := by positivity
+    field_simp [hk, hp, hs]
     <;> ring
   have tr_brec (n : ℕ) : tr (fun k => b (k + 1)) n = 2 * wt b n + tr b n := by
     unfold tr wt
@@ -150,5 +145,7 @@ theorem result : claim := by
   simp_rw [tr_eq_a] at h
   simpa only [Nat.add_sub_cancel, show m + 3 - 1 = m + 2 by omega,
     show m + 3 - 2 = m + 1 by omega, Nat.cast_add, Nat.cast_ofNat] using h
+
+#print axioms result
 
 end D5.S1.Recurrence.MatharA165433
