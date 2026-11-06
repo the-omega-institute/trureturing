@@ -58,6 +58,10 @@ $$\forall k \in \mathrm{Nat},\; \forall n \in \mathrm{Nat},\; (0 < k) \Rightarro
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Latin/PerfectBalanceDimension.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/li-ganesh-perfect-latin-dimension` (proved) by `D5/S3/Combinatorics/Latin/PerfectBalanceDimension.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"li-ganesh-perfect-latin-dimension","declaration_gid":"D5/S3/Combinatorics/Latin/PerfectBalanceDimension.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Zhengyu Li, Vijay Ganesh (2026). *How Unbalanced Must a Latin Rectangle Be?*. DOI: [10.48550/arXiv.2611.06003](https://doi.org/10.48550/arXiv.2611.06003). URL: <https://arxiv.org/abs/2611.06003v1>.
