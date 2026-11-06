@@ -9,7 +9,7 @@ internal sealed class ThreeNegativeOrderedConeJointLiftDocument : IScribeDocumen
         H("The complete ordered cone chamber"),
         Blocks(
             Describe.Lean(DescribeId.Create("actual-source-three-negative-ordered-cone-joint-lift"),
-                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/ThreeNegativeOrderedConeJointLift.actualSource_three_negative_ordered_cone_joint_lift"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/ThreeNegativeOrderedConeJointLift/Endpoint.actualSource_three_negative_ordered_cone_joint_lift"),
                 H("One complete physical permutation and one literal ear cut"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("For every natural a,b,c with 2<=a<b<=c, put k=a+b+c and u=1+2^a+2^(a+b). The theorem constructs one list sigma of Fin(k) and a natural j<=k such that OriginalOrder(k,u,sigma) and OriginalOrder(k+1,2u,earWord(k,sigma,j)). Each OriginalOrder includes the complete permutation of all physical labels, integer total zero, and both half-modulus bounds on every natural take-prefix, including empty and overlong prefixes. The old labels retain their original identity through castSucc, and the single fresh label k is inserted at the literal cut j.")),
