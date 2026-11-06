@@ -207,7 +207,8 @@ private theorem frequencyBinomial_zero_off_support (f : Test) (j : ℕ) (x : ℝ
     have hh := hcircle.comp_tendsto (AddCircle.continuous_mk' period).continuousAt
     change (fun y : ℝ => f.periodic.lift (y : AddCircle period)) =ᶠ[𝓝 x]
       (fun _ => (0 : ℂ)) at hh
-    simpa only [Function.Periodic.lift_coe] using hh
+    filter_upwards [hh] with y hy
+    exact hy
   exact (frequencyBinomial_eventually_zero f j x hreal).eq_of_nhds
 
 /-- Stronger than separated supports: a pointwise zero product suffices. -/
@@ -302,7 +303,9 @@ theorem fourierCoeff_mul_hasSum (F G : C(AddCircle T, ℂ))
     (hasSum_fourier_series_of_summable hF.of_norm)
   have hsum : HasSum (fun m : ℤ => fourierCoeff F m * fourierCoeff G (t-m))
       (fourierCoeff (F*G) t) := by
-    simpa only [map_smul, productCoefficientCLM_fourier, smul_eq_mul] using h
+    simp only [map_smul, productCoefficientCLM_fourier, smul_eq_mul] at h
+    simpa only [productCoefficientCLM, LinearMap.mkContinuous_apply,
+      productCoefficientLinear, LinearMap.coe_mk, AddHom.coe_mk] using h
   have habs : Summable (fun m : ℤ => ‖fourierCoeff F m * fourierCoeff G (t-m)‖) := by
     apply Summable.of_nonneg_of_le (fun _ => norm_nonneg _) _
       (hF.mul_right ‖productCoefficientCLM G t‖)
@@ -323,7 +326,8 @@ private theorem coefficient_product_hasSum (f g : Test) (t : ℤ) :
       ((f.product g).coefficient t) ∧
     Summable (fun m : ℤ => ‖f.coefficient m * g.coefficient (t-m)‖) := by
   have hf : Summable (fun m : ℤ => ‖fourierCoeff f.circle m‖) := by
-    simpa only [weight, pow_zero, mul_one, coefficient_circle_map] using f.weighted_summable 0
+    simpa only [weight, pow_zero, mul_one, coefficient_circle_map] using
+      (show Summable (fun m : ℤ => f.weight 0 m) from f.weighted_summable 0)
   have h := fourierCoeff_mul_hasSum f.circle g.circle hf t
   simpa only [← circle_product, ← coefficient_circle_map] using h
 
