@@ -2076,3 +2076,367 @@ no new Lean verification is asserted.
 [EDMD]: https://arxiv.org/pdf/1408.4408v1
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Finite constant initialization and unmarked continuation
+
+### 10.1. A confidence enclosure for the original constant
+
+**Definition 10.1 (the same-record marker certificate).** Retain
+Definitions 9.1--9.8 and the unchanged source of Assumption 1.1.
+Thus $a,\eta,d>0$, the unit-source field, the full conservative
+endpoint $H$ with $A=\rho C$, the distinct killed/Friedrichs endpoint
+$F$, the normalized positive $h$, the $e$-start, first read at $2d$,
+subsequent gaps $d$, the four original emissions, every permitted
+Borel representative, and the original clock are all fixed. No new
+read, stationary preparation, reset, or capacity experiment is
+introduced. Use one of the independently preselected packets of
+Definition 9.1 with $N\ge1$ and put
+
+$$
+ \widehat c=\frac ZN,\qquad
+ c_-=[\widehat c-t]_+,\qquad
+ c_+=[\widehat c+t]_{[0,1]},
+ \tag{10.1}
+$$
+
+where $[x]_+=\max\{0,x\}$ and
+$[x]_{[0,1]}=\min\{1,\max\{0,x\}\}$.
+The number $\widehat c$ is a statistic of this record, not a new
+source constant. If $N=0$, or if $\widehat c\le t$, the packet
+returns an inconclusive normalization branch.
+
+Let $\Delta$ be the full-source frequency discrepancy used in the
+proof of (9.5), so that
+
+$$
+ \Delta=\sum_{v\in\mathcal L^T}
+ \left|\frac{A(3v)}N-cp(v)\right|.
+ \tag{10.2}
+$$
+
+Write $\mathcal E$ for the same $\Delta\le t$ capacity event
+underlying (9.5). Since
+$\sum_vp(v)=1$ and $\sum_vA(3v)/N=Z/N$, this gives
+
+$$
+ \mathcal E\Longrightarrow c\in[c_-,c_+].
+ \tag{10.3}
+$$
+
+This is a finite confidence enclosure for the original $c$ on the
+same event that supplies (9.5); it is not a claim of a sharp or exact
+numerical value.
+
+For an integer $n\ge0$ with $2n+1\le T$, define
+
+$$
+ \widehat s_n=4^{2n}\widehat p(B^{2n}3),\qquad
+ \eta_n=4^{2n}e_p,\qquad
+ \rho_n=\sqrt{\max\{0,\widehat s_n+\eta_n-c_-\}}.
+ \tag{10.4}
+$$
+
+The marked identity (2.5) gives the exact source quantity
+
+$$
+ s_n:=\|P^nv_*\|_m^2
+      =4^{2n}p(B^{2n}3),\qquad v_*:=v_\varnothing=U[\varnothing].
+ \tag{10.5}
+$$
+
+Consequently, on $\mathcal E$,
+$|\widehat s_n-s_n|\le\eta_n$. Theorem 2.3 gives
+$U\Omega=1$, $\|\Omega\|=1$ and
+$\langle\Omega,v_*\rangle=\sqrt c$. Since
+$P1=1$ (equivalently $\widehat P\Omega=\Omega$), (10.5) therefore
+has the exact geometric
+identity
+
+$$
+ s_n-c=\|P^nv_*-\sqrt c\,\Omega\|^2
+       =\|P^nv_*-\sqrt c\,1\|_m^2.
+ \tag{10.6}
+$$
+
+The quantity $\rho_n$ is thus an observable upper radius for the
+heat-averaged distance to the source constant; no spectral gap or
+mixing rate is used.
+
+**Theorem 10.2 (a finite carrier vector for the constant).** Use the
+finite maps and residuals of Definitions 9.2--9.4. Starting with the
+empty-word coordinate $e_*$, set
+
+$$
+ a^{(0)}=e_*,\qquad a^{(j+1)}=A_Ba^{(j)},\qquad a_n=a^{(n)},
+ \tag{10.7}
+$$
+
+and compute $E_n^B$ from (9.17) with $O_j=R_B$ and
+$\widetilde O_j=A_B$. If $\widehat c>t$, define
+
+$$
+ \bar a_n=\frac{a_n}{\sqrt{\widehat c}},\qquad
+ r_{\mathbf1}(n)=
+ \frac{E_n^B+\rho_n}{\sqrt{\widehat c}}+\frac{t}{\widehat c}.
+ \tag{10.8}
+$$
+
+On $\mathcal E$,
+
+$$
+ \|V\bar a_n-1\|_m\le r_{\mathbf1}(n).
+ \tag{10.9}
+$$
+
+The vector $V\bar a_n$ is a finite source-bound carrier vector. It
+is not an actual stationary preparation.
+
+*Proof.* Theorem 9.4 and (10.7) give
+$\|Va_n-P^nv_*\|_m\le E_n^B$. Equations (10.4)--(10.6) give
+$\|P^nv_*-\sqrt c\,1\|_m\le\rho_n$. Divide these two bounds by
+$\sqrt{\widehat c}$. Finally, (10.3) implies
+
+$$
+ \left|\frac{\sqrt c}{\sqrt{\widehat c}}-1\right|
+ =\frac{|c-\widehat c|}
+ {\sqrt{\widehat c}(\sqrt c+\sqrt{\widehat c})}
+ \le\frac{t}{\widehat c}.
+$$
+
+The triangle inequality proves (10.9). The argument uses the same
+event as (9.5), so no confidence factor is multiplied for the
+normalization. $\square$
+
+### 10.2. A finite unmarked continuation consumer
+
+**Definition 10.3 (unmarked menu and its fixed readout).** Let
+$\mathcal M\subset\mathcal L^*$ be a declared finite menu, with the
+empty word allowed, and write $w=w_1\cdots w_h$. Let $C_z,F_z$ be
+the source and finite letter maps in (9.15), and put
+
+$$
+ \Phi_w=C_3C_{w_1}\cdots C_{w_h},\qquad
+ \widetilde\Phi_w=F_3F_{w_1}\cdots F_{w_h}.
+ \tag{10.10}
+$$
+
+The residual $E_w$ is the value of (9.17) for the reverse application
+sequence
+
+$$
+ C_{w_h},\ldots,C_{w_1},C_3
+ \quad\hbox{and}\quad
+ F_{w_h},\ldots,F_{w_1},F_3,
+ \tag{10.11}
+$$
+
+started at $\bar a_n$; its final finite vector is
+$b_w=\widetilde\Phi_w\bar a_n$. Put
+
+$$
+ \kappa_f=6\delta+\lambda,\qquad
+ \nu_w=\|C_3\|\prod_{j=1}^h\|C_{w_j}\|
+ \le\frac14\prod_{j=1}^h\kappa_{w_j},
+ \tag{10.12}
+$$
+
+where $\kappa_z$ is the row bound in (9.15), and define the finite
+outward-rounded radius
+
+$$
+ \rho_w^{\rm out}=
+ \|\bar a_n\|_fE_w
+ +\frac{\kappa_f}{2}
+   \bigl(\|\bar a_n\|_2^2+\|b_w\|_2^2\bigr)
+ +\nu_w\bigl(2r_{\mathbf1}(n)+r_{\mathbf1}(n)^2\bigr)+\tau_w.
+ \tag{10.13}
+$$
+
+Here $\tau_w\ge0$ is a predeclared allowance for outward rounding
+of the displayed radicals and finite arithmetic. All quantities in
+(10.13) are obtained from the packet matrices and rational
+coefficient vectors; no rank, path, or terminal-marker oracle is
+used.
+
+**Theorem 10.4 (finite unmarked word readout).** Assume
+$N\ge1$, $\widehat c>t$, and that the order tests of Definition 9.2
+pass. For every $w\in\mathcal M$, define
+
+$$
+ \widehat q_w=\bar a_n^{\mathsf T}S_f b_w,\qquad
+ \widehat p_w=\left[\frac{\widehat q_w}{\widehat c}\right]_{[0,1]},\qquad
+ R_w=\min\left\{1,\frac{\rho_w^{\rm out}+t}{\widehat c}\right\}.
+ \tag{10.14}
+$$
+
+Then, on $\mathcal E$,
+
+$$
+ |\widehat p_w-p(w)|\le R_w.
+ \tag{10.15}
+$$
+
+The word $w$ is unmarked: it may end in any of $0,1,3,B$ and no
+terminal $3$ is appended to the menu. The fixed $C_3$ in (10.10) is
+the canonical readout in Theorems 3.1 and 3.2, not an additional
+chronological emission.
+
+For a finite collection of fixed histories and continuations, use the
+same estimate for $h$ and $hw$. If $\widehat p_h>R_h$, then
+
+$$
+ \widehat r_{h,w}=\left[\frac{\widehat p_{hw}}{\widehat p_h}\right]_{[0,1]},\qquad
+ |\widehat r_{h,w}-p(hw)/p(h)|
+ \le\min\left\{1,\frac{R_{hw}+R_h}{\widehat p_h}\right\}.
+ \tag{10.16}
+$$
+
+If the displayed denominator guard fails, the conditional output is
+inconclusive. Theorem 3.3 supplies $p(h)>0$ for every fixed finite
+history, but it supplies no uniform lower bound for a growing or rare
+history.
+
+*Proof.* Theorem 3.1 and (3.2) identify
+
+$$
+ q_w:=\langle1,\Phi_w1\rangle_m=c\,p(w).
+ \tag{10.17}
+$$
+
+By (9.17), (10.11) and the residual induction,
+$\|\Phi_wV\bar a_n-Vb_w\|_m\le E_w$. The metric defect in (9.11),
+polarized, gives for any $a,b$
+
+$$
+ \left|a^{\mathsf T}S_fb-\langle Va,Vb\rangle_m\right|
+ \le\frac{\kappa_f}{2}(\|a\|_2^2+\|b\|_2^2).
+ \tag{10.18}
+$$
+
+Since $\|V\bar a_n\|_m\le\|\bar a_n\|_f$, (10.13), before its
+outward allowance, bounds the difference between $\widehat q_w$ and
+$\langle V\bar a_n,\Phi_wV\bar a_n\rangle_m$. Writing
+$V\bar a_n=1+\xi$ and using $\|\Phi_w\|\le\nu_w$ bounds the latter
+quantity's difference from $q_w$ by
+$\nu_w(2\|\xi\|+\|\xi\|^2)$. Equation (10.9) gives (10.13), hence
+$|\widehat q_w-q_w|\le\rho_w^{\rm out}$ on $\mathcal E$.
+Because $0\le p(w)\le1$ and $|c-\widehat c|\le t$,
+
+$$
+ \left|\frac{\widehat q_w}{\widehat c}-p(w)\right|
+ \le\frac{\rho_w^{\rm out}+t}{\widehat c}.
+$$
+
+Clipping proves (10.15). If $\widehat p_h>R_h$, the same event gives
+$p(h)>0$ and $|p(h)-\widehat p_h|\le R_h$; the elementary ratio
+inequality used in (9.28) proves (10.16). $\square$
+
+The readout in (10.14) is a finite consumer of the initialized
+carrier and of the existing letter/residual transport. It uses the
+original chronological word law through (10.17), while its requested
+menu contains no marked terminal. It does not make the finite maps a
+normalized all-future law: different menu products may be clipped
+individually, and no fitted multiplication algebra or current-cut
+filter is inferred.
+
+### 10.3. Stopping and the paid finite task
+
+**Proposition 10.5 (predeclared finite stopping).** Fix one original
+source, a finite menu $\mathcal M$, finitely many fixed history pairs
+$(h,w)$, and positive tolerances $\tau_{\mathbf1},\tau_p$.
+Choose a countable predeclared packet schedule with failure allowances
+$\alpha_s$ satisfying $\sum_s\alpha_s\le\alpha_*$, nested initial
+records, and a dovetailed list of finite choices
+
+$$
+ n_s,\ L_s,\ S_s=\{3,B\}^{\le L_s},\quad
+ T_s=2L_s+3,\quad N_s,\ t_s,\ D_{0,s}^-,D_{N,s}^-,
+ \lambda_s,\ \zeta_s,\ \tau_{w,s}.
+ \tag{10.19}
+$$
+
+The list is required to contain every finite $n,L$ and every positive
+rational refinement of the displayed error and confidence allowances.
+Each packet's defect certificates are chosen so that its (9.4) failure
+bound is at most $\alpha_s$, as required by Definition 9.8.
+At stage $s$, stop at the first packet for which the order tests pass,
+$\widehat c_s>t_s$, $r_{\mathbf1}(n_s)\le\tau_{\mathbf1}$,
+$R_{w,s}\le\tau_p$ for every requested menu word, and all guards in
+(10.16) pass.
+
+For every fixed source and the declared finite task, this stopping
+rule terminates on the common event
+$\bigcap_s\mathcal E_s$, whose probability is at least
+$1-\alpha_*$. The assertion is source- and menu-specific; it gives
+no uniform rate over sources, menus, rare histories, or future
+normalizations.
+
+*Proof.* Theorem 2.3 and the spectral convergence in Theorem 3.2 give
+$P^nv_*\to\sqrt c\,1$ in the source norm. Hence some finite $n$
+makes the exact term in (10.6) smaller than any prescribed positive
+part of $\tau_{\mathbf1}$. For that finite $n$ and menu, expand
+each $C_0$ and $C_1$ into the $C_B,C_3$ words in (2.9). A finite
+$L$ therefore contains every intermediate source vector in the
+corresponding finite trajectories. Proposition 9.7 then supplies
+finite packet precision choices with vanishing metric and residual
+allowances; Definition 9.8 supplies the same-record confidence union
+and the capacity refinement $e_p\to0$ for this fixed task. The
+dovetailed list (10.19) contains such a finite choice. Since $c>0$
+and every fixed history has positive probability by Theorem 3.3,
+sufficiently refined packets also satisfy the positive denominator and
+history guards. At that stage (10.9), (10.15) and (10.16) meet the
+declared tolerances, so the first successful stage is finite. $\square$
+
+The stage bill retains the original access costs. It acquires exactly
+$N_s+T_s$ labels, ending at time $(N_s+T_s+1)d$, keeps the
+$4^{T_s+1}$ full counters and the buffer of Definition 9.1, and pays
+the validated capacity construction or certification cost
+$C_{\rm cap}$. It also pays the existing fit and query bounds in
+(9.29), with $q_s=2^{L_s+1}-1$. The new finite work consists of
+$n_s$ applications of $A_B$, the reverse applications in (10.11) for
+the declared menu, their quadratic residual evaluations, outward
+radical bounds, and retention of the $q_s$-vectors and finite outputs.
+Its arithmetic cost is $O((n_s+\sum_{w\in\mathcal M}|w|)q_s^2)$
+apart from the already charged matrix fits and counter extraction.
+No independent path samples, selected emissions, extra read/preparation
+port, or sharp $N d$ oracle is charged or assumed.
+
+## 11. Scope, suppliers and the positive-state boundary
+
+**Definition 11.1 (literature and source status).** The
+repo-derived result is the finite composition of (10.1)--(10.18):
+the existing dependent-record confidence event supplies a reliable
+interval for the original $c$, (2.5) and Theorem 2.3 turn it into a
+measurable heat-averaged constant-vector radius, and (9.14)--(9.20)
+transport that vector through a finite unmarked menu. Theorem 3.1 and
+(3.2) supply the fixed marker readout; Theorem 3.3 supplies the
+fixed-history positivity used only by the guards. The source sampler,
+capacity defects and full-source chronology are reused from [R,
+Definitions 8.1 and 8.3, Theorem 8.2, Proposition 8.5 and
+Proposition 8.6], not re-proved or replaced. Strong convergence of the
+positive self-adjoint semigroup is the spectral supplier already used
+in [T, §3.1]; finite positive-form and residual transport are the
+existing tools recorded in §9.7. No general priority claim is made.
+
+The finite vector in (10.9) is a certified mathematical element of
+$L^2(G,m)$ relative to the original constant $1$. It is not a
+stationary preparation, a positive state for each actual history, or
+a physical operation on the source. The supplied DEV C128375--378
+direct chronological positive-state binding result states that such a
+binding on the same prefix multiplication exists exactly when the
+prediction vector is constant and excludes the empty and all-finite-$B$
+histories. The present certificate cannot overturn that source
+obstruction.
+
+This unit does not claim a physical multiplication algebra, a
+current-cut filter, a normalized all-future fitted law, a full C139
+backend, old $D$ or Jordan data, an actual $A$, a joint/reference
+interface, physical instruments, exact global sharp calibration, a
+complete quantum origin, or a uniform source/menu/rare-history rate.
+It also does not supply an exact numerical $c$, a sharp $N d$ oracle,
+a stationary reset, or growing all-future normalization. All claims
+remain conditional on the original full-source endpoint and capacity
+contract, with no Lean or executable mathematical verification
+asserted.
+
+## 追加锚（本行以下为增补区）
