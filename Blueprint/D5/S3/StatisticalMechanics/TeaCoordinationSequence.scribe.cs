@@ -235,13 +235,14 @@ internal sealed class TeaCoordinationSequenceDocument : IScribeDocumentDefinitio
         var d = X("d");
         var upper = Add(p, d);
         var lower = Subtract(new Formula.Negate(q), d);
+        var lowerBounds = And(LessEqual(lower, i),
+            And(LessEqual(lower, j), LessEqual(lower, Add(i, j))));
+        var coordinateBounds = And(LessEqual(i, upper),
+            And(LessEqual(j, upper), And(LessEqual(Add(i, j), upper), lowerBounds)));
+        var statement = Equivalence(LessEqual(LocalCall("residual", i, j, p, q), d),
+            And(LessEqual(D(0), d), coordinateBounds));
         return All("i", Integers(), All("j", Integers(), All("p", Integers(),
-            All("q", Integers(), All("d", Integers(), Equivalence(
-                LessEqual(LocalCall("residual", i, j, p, q), d),
-                And(LessEqual(D(0), d), And(LessEqual(i, upper),
-                    And(LessEqual(j, upper), And(LessEqual(Add(i, j), upper),
-                        And(LessEqual(lower, i),
-                            And(LessEqual(lower, j), LessEqual(lower, Add(i, j)))))))))))));
+            All("q", Integers(), All("d", Integers(), statement)))));
     }
 
     private static Formula MetricFormula() =>
