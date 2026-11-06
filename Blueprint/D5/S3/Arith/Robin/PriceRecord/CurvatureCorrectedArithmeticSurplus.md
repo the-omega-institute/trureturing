@@ -4,7 +4,19 @@
 
 The full prime-power arithmetic surplus pays the literal log-log curvature loss.
 
-**Theorem 1.1 (A strict positive remainder for the actual finite state).**
+**Theorem 1.1 (The quantitative root-scale remainder).**
+
+Lean statement: `D5/S3/Arith/Robin/PriceRecord/CurvatureCorrectedArithmeticSurplus.arithmetic_surplus_sub_curvature_root_scale`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/CurvatureCorrectedArithmeticSurplus.arithmetic_surplus_sub_curvature_root_scale` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For z>11, 0<M<1/2 and every positive integer n on the exact initial prime support, the full signed surplus minus K exceeds 1/(4000*sqrt(z)*log(z)), where K=log(log(z))+M/(z*log(z))-log(log(z+M)). The existing curvature bound and old arithmetic estimate prove K<Delta/2. The all-z root-scale theorem supplies Delta>1/(2000*sqrt(z)*log(z)); thus half of the actual surplus remains. No exponent, containment, signed-integral or extremality premise is added.
+
+**Theorem 1.2 (A strict positive remainder for the actual finite state).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/CurvatureCorrectedArithmeticSurplus.arithmetic_surplus_dominates_loglog_curvature`
 
@@ -21,5 +33,6 @@ The private curvature estimate uses two applications of log(1+u)>=u-u^2/2, obtai
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/CurvatureCorrectedArithmeticSurplus.arithmetic_surplus_dominates_loglog_curvature`
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/CurvatureCorrectedArithmeticSurplus.arithmetic_surplus_sub_curvature_root_scale`
 - Dependency: [D5/S3/Arith/Robin/LogarithmBounds](../LogarithmBounds.md)
 - Dependency: [D5/S3/Arith/Robin/PriceRecord/FullPrimePowerArithmeticSurplus](FullPrimePowerArithmeticSurplus.md)
