@@ -41,13 +41,17 @@ internal sealed class MatharA165433Document : IScribeDocumentDefinition
                 + "All terms with k>floor(n/2) vanish, so T(b,n) equals the entire defining inclusive sum a(n). "
                 + "Writing any index at least three as n+3 completes the result. "
                 + "No assertion of integrality or of a double-factorial replacement is needed.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mathar-2011-a165433-recurrence"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("mathar-a165433-" + name), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(formula), provenance,
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Rationals() => Seq(Mathbb, Grp(F.Id("Q")));
