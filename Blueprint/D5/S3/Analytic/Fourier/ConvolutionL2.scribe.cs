@@ -45,5 +45,14 @@ internal sealed class ConvolutionL2Document : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Let k be a real Schwartz kernel whose complex Fourier transform has norm at most B, with B nonnegative. If f is real and measurable with integrable square, then the integral of (k*f)² is at most B² times the integral of f². The kernel is integrable, and compactly supported bounded measurable inputs satisfy the stated hypotheses. Complexification preserves the integrals and the norms."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("real-schwartz-convolution-l2-multiplier-of-complex"),
+                DeclarationHandle.Create(Prefix + "real_schwartz_convolution_l2_multiplier_of_complex"),
+                H("Real-valued complex Schwartz kernels"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Suppose a complex Schwartz kernel k is the complexification of a real function r, and its Fourier transform has norm at most a nonnegative B. For every measurable real f with integrable square, the square of r*f is integrable and its integral is at most B² times the integral of f². The complex convolution multiplier bound supplies square integrability, and taking real parts identifies the real convolution."))),
                 DescribeRole.Theorem))));
 }

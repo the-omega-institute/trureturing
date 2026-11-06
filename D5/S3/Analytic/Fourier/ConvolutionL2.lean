@@ -276,4 +276,23 @@ theorem real_schwartz_convolution_l2_multiplier
   rw [hK] at h
   exact real_integral_bound hfL hB h.1 h.2
 
+/-- A real-valued complex Schwartz kernel gives an integrable square
+and the real multiplier bound. -/
+theorem real_schwartz_convolution_l2_multiplier_of_complex
+    (k : SchwartzMap ℝ ℂ) {r f : ℝ → ℝ}
+    (hk : ∀ v, k v = (r v : ℂ))
+    (hf : AEStronglyMeasurable f volume) (hf2 : Integrable (fun y => f y ^ 2))
+    {B : ℝ} (hB : 0 ≤ B) (hbound : ∀ ξ : ℝ, ‖𝓕 k ξ‖ ≤ B) :
+    Integrable (fun y => (∫ v, r v * f (y - v)) ^ 2) ∧
+      (∫ y, (∫ v, r v * f (y - v)) ^ 2) ≤ B ^ 2 * ∫ y, f y ^ 2 := by
+  have hfL : MemLp f 2 := (memLp_two_iff_integrable_sq hf).mpr hf2
+  have h := schwartz_convolution_l2_multiplier k (hfL.ofReal (K := ℂ)) hB hbound
+  have he : (k : ℝ → ℂ) = fun v => (r v : ℂ) := funext hk
+  rw [he] at h
+  have hr : MemLp (fun y => ∫ v, r v * f (y - v)) 2 := by
+    have hrC := h.1.re
+    change MemLp (fun y => (conv (fun v => (r v : ℂ)) (fun v => (f v : ℂ)) y).re) 2 at hrC
+    simpa only [real_convolution_identity, Complex.ofReal_re] using hrC
+  exact ⟨hr.integrable_sq, real_integral_bound hfL hB h.1 h.2⟩
+
 end D5.S3.Analytic.Fourier.ConvolutionL2
