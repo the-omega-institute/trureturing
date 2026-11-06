@@ -70,7 +70,16 @@ noncomputable def audit :
       (@_root_.D5.S3.Quantum.FusionSpinChainOffsetIdentity.exact_offset_identity)
       (type_of% (realize.{0, 0, 0, 0, 0} signature
         (fun _ _ (n : ℤ) => fusionDim n) (fun e => nomatch e))) (Unit) (Unit) := {
-  unitName := `D5.S3.Quantum.FusionSpinChainOffsetIdentity.exact_offset_identity.__information_unit
+  unitName := (Lean.Name.str
+    (Lean.Name.str
+      (Lean.Name.str
+        (Lean.Name.str
+          (Lean.Name.str
+            (Lean.Name.str
+              (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum")
+            "FusionSpinChainOffsetIdentity") "exact_offset_identity")
+        "Reg.D5.S3.Quantum.FusionSpinChainOffsetIdentity/Reg.D5.S3.Quantum.FusionSpinChainOffsetIdentity.arena/[anonymous]")
+      "__information_unit")
   realizationName := `Reg.D5.S3.Quantum.FusionSpinChainOffsetIdentity.registration
   realizationSource := none
   generated := false
