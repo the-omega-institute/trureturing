@@ -16,9 +16,9 @@ The substantive addition is the signed endpoint-to-finite-arithmetic chain and t
 
 **Theorem 1.1 (The exact original local-A Robin5040 implication).**
 
-Lean statement: `D5/S3/Arith/Robin/OriginalLocalA.original_zero_robin5040_localA`
+Lean statement: `D5/S3/Arith/Robin/OffLinePeak/OriginalLocalA.original_zero_robin5040_localA`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalLocalA.original_zero_robin5040_localA` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OffLinePeak/OriginalLocalA.original_zero_robin5040_localA` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -28,8 +28,8 @@ The exact original four-binder implication with its strict peak, strict 5040 cut
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/Robin/OriginalLocalA.original_zero_robin5040_localA`
-- Dependency: [D5/S3/Arith/Robin/OffLinePeak/FullZeroGaussianResponse](OffLinePeak/FullZeroGaussianResponse.md)
-- Dependency: [D5/S3/Arith/Robin/OffLinePeak/GaussianPeakLocalization](OffLinePeak/GaussianPeakLocalization.md)
-- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/ActualSignedGaussianEndpoint](../../Weil/Mertens/IntegratedExplicit/ActualSignedGaussianEndpoint.md)
-- Dependency: [D5/S3/Weil/Mertens/WeightedTailTransport](../../Weil/Mertens/WeightedTailTransport.md)
+- Truth anchor: `D5/S3/Arith/Robin/OffLinePeak/OriginalLocalA.original_zero_robin5040_localA`
+- Dependency: [D5/S3/Arith/Robin/OffLinePeak/FullZeroGaussianResponse](FullZeroGaussianResponse.md)
+- Dependency: [D5/S3/Arith/Robin/OffLinePeak/GaussianPeakLocalization](GaussianPeakLocalization.md)
+- Dependency: [D5/S3/Weil/Mertens/IntegratedExplicit/ActualSignedGaussianEndpoint](../../../Weil/Mertens/IntegratedExplicit/ActualSignedGaussianEndpoint.md)
+- Dependency: [D5/S3/Weil/Mertens/WeightedTailTransport](../../../Weil/Mertens/WeightedTailTransport.md)
