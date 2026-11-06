@@ -41,7 +41,7 @@ set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 noncomputable section
 open scoped BigOperators ComplexConjugate Topology ContDiff
-open Complex MeasureTheory Set Finset Function
+open Complex MeasureTheory Set Finset Function AddCircle
 
 namespace D5.S3.VertexAlgebra.Analysis
 open IntegerNewton
@@ -65,13 +65,13 @@ def scale (c : ℂ) (f : Test) : Test where
 def subtract (f g : Test) : Test where
   lift x := f.lift x - g.lift x
   smooth := f.smooth.sub g.smooth
-  periodic x := by rw [f.periodic x, g.periodic x]
+  periodic x := by dsimp only; rw [f.periodic x, g.periodic x]
 
 /-- Ordinary pointwise multiplication of the existing smooth tests. -/
 def product (f g : Test) : Test where
   lift x := f.lift x * g.lift x
   smooth := f.smooth.mul g.smooth
-  periodic x := by rw [f.periodic x, g.periodic x]
+  periodic x := by dsimp only; rw [f.periodic x, g.periodic x]
 
 def derivative (f : Test) : Test where
   lift := deriv f.lift
@@ -87,6 +87,9 @@ def frequencyBinomial (f : Test) : ℕ → Test
   | j+1 => scale ((j+1 : ℂ)⁻¹)
       ((f.frequencyBinomial j).frequencyDerivative.subtract
         (scale (j : ℂ) (f.frequencyBinomial j)))
+
+private theorem coefficient_circle_map (f : Test) (m : ℤ) :
+    f.coefficient m = fourierCoeff f.circle m := coefficient_circle f m
 
 private theorem circle_scale (c : ℂ) (f : Test) :
     (scale c f).circle = c • f.circle := by
@@ -108,13 +111,14 @@ private theorem circle_product (f g : Test) :
 
 private theorem coefficient_scale (c : ℂ) (f : Test) (m : ℤ) :
     (scale c f).coefficient m = c * f.coefficient m := by
-  rw [coefficient_circle, coefficient_circle]
+  rw [coefficient_circle_map, coefficient_circle_map]
   change fourierCoeff (scale c f).circle m = c * fourierCoeff f.circle m
-  rw [circle_scale, fourierCoeff.const_smul, smul_eq_mul]
+  rw [circle_scale]
+  exact fourierCoeff.const_smul f.circle c m
 
 private theorem coefficient_subtract (f g : Test) (m : ℤ) :
     (f.subtract g).coefficient m = f.coefficient m - g.coefficient m := by
-  rw [coefficient_circle, coefficient_circle, coefficient_circle]
+  rw [coefficient_circle_map, coefficient_circle_map, coefficient_circle_map]
   change fourierCoeff (f.subtract g).circle m =
     fourierCoeff f.circle m - fourierCoeff g.circle m
   rw [circle_subtract]
@@ -132,7 +136,7 @@ private theorem coefficient_derivative_zero (f : Test) :
   have hend : f.lift period = f.lift 0 := by simpa using f.periodic 0
   rw [hend, sub_self] at hint
   simp only [coefficient, coeffJet, jet, iteratedDeriv_zero,
-    fourierCoeffOn_eq_integral, fourier_zero, one_smul, derivative]
+    fourierCoeffOn_eq_integral, neg_zero, fourier_zero, one_smul, derivative]
   rw [hint, smul_zero]
 
 /-- Differentiation multiplies by i*m at EVERY integer, including zero. -/
@@ -200,8 +204,10 @@ private theorem frequencyBinomial_zero_off_support (f : Test) (j : ℕ) (x : ℝ
   have hcircle : f.periodic.lift =ᶠ[𝓝 (x : AddCircle period)] 0 :=
     notMem_tsupport_iff_eventuallyEq.mp hx
   have hreal : f.lift =ᶠ[𝓝 x] 0 := by
-    simpa only [Function.comp_def, Function.Periodic.lift_coe, Pi.zero_apply] using
-      hcircle.comp_tendsto (AddCircle.continuous_mk' period).continuousAt
+    have hh := hcircle.comp_tendsto (AddCircle.continuous_mk' period).continuousAt
+    change (fun y : ℝ => f.periodic.lift (y : AddCircle period)) =ᶠ[𝓝 x]
+      (fun _ => (0 : ℂ)) at hh
+    simpa only [Function.Periodic.lift_coe] using hh
   exact (frequencyBinomial_eventually_zero f j x hreal).eq_of_nhds
 
 /-- Stronger than separated supports: a pointwise zero product suffices. -/
@@ -212,12 +218,12 @@ theorem frequencyBinomial_product_zero (f g : Test)
   by_cases hg : g.lift x = 0
   · simp [product, hg]
   · have hgcircle : g.circle (x : AddCircle period) ≠ 0 := by
-      simpa only [circle, Function.Periodic.lift_coe] using hg
+      simpa only [circle, ContinuousMap.coe_mk, Function.Periodic.lift_coe] using hg
     have hgnear : ∀ᶠ y in 𝓝 (x : AddCircle period), g.circle y ≠ 0 :=
       g.circle.continuous.continuousAt.eventually_ne hgcircle
     have hfgcircle (y : AddCircle period) : f.circle y * g.circle y = 0 := by
       induction y using Quotient.inductionOn with
-      | h y => simpa only [circle, Function.Periodic.lift_coe] using hfg y
+      | h y => simpa only [circle, ContinuousMap.coe_mk, Function.Periodic.lift_coe] using hfg y
     have hfnear : f.periodic.lift =ᶠ[𝓝 (x : AddCircle period)] 0 := by
       filter_upwards [hgnear] with y hy
       exact (mul_eq_zero.mp (hfgcircle y)).resolve_right hy
@@ -317,9 +323,9 @@ private theorem coefficient_product_hasSum (f g : Test) (t : ℤ) :
       ((f.product g).coefficient t) ∧
     Summable (fun m : ℤ => ‖f.coefficient m * g.coefficient (t-m)‖) := by
   have hf : Summable (fun m : ℤ => ‖fourierCoeff f.circle m‖) := by
-    simpa only [weight, pow_zero, mul_one, coefficient_circle] using f.weighted_summable 0
+    simpa only [weight, pow_zero, mul_one, coefficient_circle_map] using f.weighted_summable 0
   have h := fourierCoeff_mul_hasSum f.circle g.circle hf t
-  simpa only [← circle_product, ← coefficient_circle] using h
+  simpa only [← circle_product, ← coefficient_circle_map] using h
 
 private theorem binomial_product_hasSum (f g : Test) (j : ℕ) (t : ℤ) :
     HasSum (fun m : ℤ =>
@@ -340,7 +346,7 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E
 private theorem one_abs_add (m n : ℤ) :
     1+|((m+n : ℤ) : ℝ)| ≤ (1+|(m : ℝ)|)*(1+|(n : ℝ)|) := by
   simp only [Int.cast_add]
-  have h := abs_add (m : ℝ) (n : ℝ)
+  have h := abs_add_le (m : ℝ) (n : ℝ)
   nlinarith [mul_nonneg (abs_nonneg (m : ℝ)) (abs_nonneg (n : ℝ))]
 
 private theorem one_abs_sub (t i : ℤ) :
@@ -378,6 +384,7 @@ private theorem contactCoefficient_bound (C : ℤ → ℤ → E) (K : ℝ) (R : 
       apply sum_le_sum
       intro i hi
       rw [← Int.cast_smul_eq_zsmul ℂ, norm_smul]
+      simp only [Int.cast_mul, Int.cast_pow]
       have hshift : (1+|((t-(i : ℤ) : ℤ) : ℝ)|)^R ≤
           (1+|(t : ℝ)|)^R * (1+|(i : ℝ)|)^R := by
         simpa only [mul_pow, Int.cast_natCast] using
@@ -475,7 +482,11 @@ private theorem contact_row_hasSum (C : ℤ → ℤ → E) (f g : Test) (j : ℕ
     (contactCoefficient C j t)
   convert h using 1
   funext m
-  simp only [newtonTerm, sumCoordinates, show m+(t-m) = t by omega]
+  change ((f.coefficient m * g.coefficient (t-m)) *
+      ((Ring.choose m j : ℤ) : ℂ)) • contactCoefficient C j (m+(t-m)) =
+    (((Ring.choose m j : ℤ) : ℂ) * f.coefficient m * g.coefficient (t-m)) •
+      contactCoefficient C j t
+  rw [show m+(t-m) = t by omega]
   congr 1
   ring
 
