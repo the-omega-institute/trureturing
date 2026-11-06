@@ -1,0 +1,74 @@
+**Lemma 24.1 (a uniform disk-support bound).** For every real $\lambda\ge1$
+and every $z\in\mathbb C^4$ with $|z_j|\le1$,
+
+$$
+\left|h(z_1-z_2)+is(z_3-z_4)\right|
+ +\lambda\operatorname{Re}\sum_{j=1}^4z_j
+\le 2\sqrt{\lambda^2+h^2}+2\lambda.
+\tag{24.2}
+$$
+
+Proof. Write $q=(h,-h,is,-is)$. For every real $\phi$, the support function
+of each coordinate disk gives
+
+$$
+\lambda\operatorname{Re}\sum_jz_j
+ +\operatorname{Re}\left(e^{-i\phi}\sum_jq_jz_j\right)
+\le\sum_j|\lambda+e^{-i\phi}q_j|.
+\tag{24.3}
+$$
+
+We bound the right side uniformly in $\phi$. For $a\in\{h,s\}$ and
+$0\le t\le1$, define
+
+$$
+\begin{aligned}
+D_a(t)&=\sqrt{(\lambda^2+a^2)^2-4\lambda^2a^2t},\\
+F_a(t)&=\sqrt{2(\lambda^2+a^2)+2D_a(t)}.
+\end{aligned}
+\tag{24.4}
+$$
+
+In particular, $F_a(t)$ is the sum of the two square roots with radicands
+$\lambda^2+a^2\pm2\lambda a\sqrt t$. Since $\lambda\ge1>h>s>0$,
+these functions and their derivatives are defined on the entire closed
+interval. Both $D_a$ and $F_a$ decrease with $t$, and
+
+$$
+F_a'(t)=-\frac{2\lambda^2a^2}{F_a(t)D_a(t)}.
+\tag{24.5}
+$$
+
+Consequently $F_a'$ is nonincreasing. With $t=\cos^2\phi$, the right side
+of (24.3) is exactly $F_h(t)+F_s(1-t)$, whose derivative satisfies
+
+$$
+\begin{aligned}
+\frac{d}{dt}\bigl(F_h(t)+F_s(1-t)\bigr)
+&\le F_h'(0)-F_s'(1)\\
+&=-\frac{\lambda^2h^2}{(\lambda^2+h^2)^{3/2}}
+  +\frac{\lambda s^2}{\lambda^2-s^2}<0.
+\end{aligned}
+\tag{24.6}
+$$
+
+Here the strict inequality has a uniform elementary certificate. Using
+$h^2=1/2$, $s^2=(2-\sqrt2)/4<1/6$ and $\lambda\ge1$ gives
+
+$$
+\begin{aligned}
+\frac{h^2\lambda(\lambda^2-s^2)}{\lambda^3}
+&=\frac12\left(1-\frac{s^2}{\lambda^2}\right)>\frac5{12},\\
+\frac{s^2(\lambda^2+h^2)^{3/2}}{\lambda^3}
+&\le s^2\left(\frac32\right)^{3/2}<\frac13.
+\end{aligned}
+\tag{24.7}
+$$
+
+The last bound uses $(3/2)^{3/2}<2$. Multiplication by the positive
+denominators in (24.6) shows that (24.7) is sufficient for its sign.
+Thus the maximum in $t$ is its value at $0$, namely
+$2\sqrt{\lambda^2+h^2}+2\lambda$. Choose $\phi$ to align
+$e^{-i\phi}\sum_jq_jz_j$ with the nonnegative real axis in (24.3).
+If that sum is zero, every $\phi$ suffices. This proves (24.2). $\square$
+

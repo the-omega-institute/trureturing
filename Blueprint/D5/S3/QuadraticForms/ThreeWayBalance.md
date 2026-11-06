@@ -4,7 +4,19 @@
 
 Nonnegative three-way balance on an arbitrary abelian group forces an integer quadratic map and makes every orbit sum invisible in every background.
 
-**Theorem 1.1 (Visible quadratic structure without scalar assumptions).**
+**Theorem 1.1 (A nonnegative forward recurrence is constant at its first step).**
+
+$$\forall (a : (\mathbb{N} \to \mathbb{R})), (\forall (n : \mathbb{N}), 0 \le a(n)) \Rightarrow (\forall (n : \mathbb{N}), a(n + 2) + a(n + 1) = 2 \cdot a(n)) \Rightarrow a(1) = a(0)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/ThreeWayBalance.nonneg_recurrence_constant` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+This is the original recurrence lemma, exposed for actual original-domain marker-invariance consumers. Its hypotheses range over every natural index; no finite depth cap is substituted.
+
+**Theorem 1.2 (Visible quadratic structure without scalar assumptions).**
 
 $$\forall (A : \operatorname{Type}\left(\right)), [\operatorname{AddCommGroup}\left(A\right)], \forall (U : \operatorname{AddMonoidHom}\left(A, A\right)), \forall (q : (A \to \mathbb{R})), (\forall (x : A), 0 \le \operatorname{q}\left(x\right)) \Rightarrow (\forall (x : A), \forall (y : A), \operatorname{q}\left(x + y\right) + \operatorname{q}\left(x + \operatorname{U}\left(y\right)\right) + \operatorname{q}\left(x + \operatorname{U}\left(\operatorname{U}\left(y\right)\right)\right) = 3 \cdot \operatorname{q}\left(x\right) + 3 \cdot \operatorname{q}\left(y\right)) \Rightarrow (\forall (x : A), \operatorname{q}\left(\operatorname{U}\left(x\right)\right) = \operatorname{q}\left(x\right)) \land (\forall (z : A), \forall (y : A), \operatorname{q}\left(z + y + \operatorname{U}\left(y\right) + \operatorname{U}\left(\operatorname{U}\left(y\right)\right)\right) = \operatorname{q}\left(z\right)) \land (\forall (x : A), \operatorname{q}\left(-x\right) = \operatorname{q}\left(x\right)) \land (\forall (x : A), \forall (y : A), \operatorname{q}\left(x + y\right) + \operatorname{q}\left(x - y\right) = 2 \cdot \operatorname{q}\left(x\right) + 2 \cdot \operatorname{q}\left(y\right)) \land (\exists (Q : \operatorname{QuadraticMap}\left(\mathbb{Z}, A, \mathbb{R}\right)), \forall (x : A), \operatorname{Q}\left(x\right) = \operatorname{q}\left(x\right))$$
 
@@ -30,5 +42,6 @@ This is the structural part of the original integer-interface representation pro
 
 ## References
 
+- Truth anchor: `D5/S3/QuadraticForms/ThreeWayBalance.nonneg_recurrence_constant`
 - Truth anchor: `D5/S3/QuadraticForms/ThreeWayBalance.three_way_quadratic_structure`
 - Dependency: [D5/S3/QuadraticForms/ParallelogramConstruction](ParallelogramConstruction.md)

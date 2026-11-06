@@ -1,0 +1,14 @@
+**定义 187.1（无正交自读的完整候选）。** 任一原完整背景 $B_*$ 分别取定义 41.1 的 $B$ 或定义 67.1 的 $\mathsf B_{\rm cl}$，二者不互换。记 $\mathsf F_{-\rm self}$ 为命题 185.1 已定义的条件：在全部原对象及全部实际联合上，同一原关系仍为
+
+$$
+\boxed{W_c(p)=2q(D_pc,r)+W_c(2D_cp),}
+\tag{187.1}
+$$
+
+其带标签域 $\mathcal T_{-\rm self}(E)$ 准确如下。
+
+| 层 | 切口及输入 | 读回 |
+| --- | --- | --- |
+| 正交 | $c=e$，$e,p$ 是整个 $E$ 的 primitive，$e\perp p$ | $r=p$ 或 $r\perp e,p$ |
+| 二原子内部 | $c^2=c$，$\operatorname{rank}_Ec=2$，$p\le c$ 是整个 $E$ 的 primitive | $r=p$ |
+| 半重叠 | $c=e$，$e,p$ 是整个 $E$ 的 primitive，$\tau(e\circ p)=1/2$ | $r=e$ 或 $r\perp e,p$ |

@@ -1,0 +1,95 @@
+### 52.1. A complete attained positive comparator below H
+
+For $0<\xi\le61/25<4$, choose the unique $\zeta\in(0,2/3)$ with
+
+$$
+\xi=\Xi(\zeta)=\frac{4\zeta(4+3\zeta)}{2+3\zeta},\qquad
+\Xi'(\zeta)=\frac{4(9\zeta^2+12\zeta+8)}{(2+3\zeta)^2}>0.
+\tag{52.7}
+$$
+
+Existence and uniqueness follow from $\Xi(0)=0$, $\Xi(2/3)=4$ and
+continuity. Set
+
+$$
+\bar x=1-\zeta,\quad \bar q=\frac{4\zeta}{2+3\zeta},\quad
+\bar p=\frac{2-\zeta}{2+3\zeta},\quad
+\bar y=\sqrt{\zeta(2-\zeta)}.
+\tag{52.8}
+$$
+
+Here $\bar p+\bar q=1$, $1/3<\bar x<1$, $0<\bar q<2/3$,
+$\bar p>1/3$, and $4(1-\bar x)+2\bar q=\xi$. Thus these data give an
+actual positive geometric pair at the same original level, with
+$\bar q\le\xi/2$. Explicitly its effect and feedback are (51.9) with
+$q_\xi,x_\xi,y_\xi$ replaced by $\bar q,\bar x,\bar y$.
+The positive distance is $\xi$, and direct source calculation gives
+
+$$
+\rho_--\rho_+=2(1+2\bar p+2\bar x-2\bar y)
+                    \ge6-4\sqrt2>0.
+\tag{52.9}
+$$
+
+For a direct verification, put $t_+=\xi/2$ and
+$\delta_+=2(1-\bar x)$, so $\bar q=t_+-\delta_+$. Then
+$1+2\bar p+2\bar x-2\bar y=5-2t_++\delta_+-2\bar y$.
+Since $\delta_+-2\bar y=2-2(\bar x+\bar y)\ge2-2\sqrt2$
+and $t_+\le2$, this proves (52.9), exactly the scalar-distance
+calculation (37.23). This is the true minimum of both sign
+distances with one common scalar, rather than just the positive branch
+expression. The square roots obey
+
+$$
+\sqrt{\bar q}\,\bar y=2\zeta\sqrt{\bar p},\qquad
+\sqrt{\bar p}(h\bar x+c)+h\sqrt{\bar q}\,\bar y
+                =\sqrt{\bar p}[h(1+\zeta)+c].
+\tag{52.10}
+$$
+
+Put $D=4(2hs+s^2-hc)=2(1-h)(1-2s)$. Substitution into the original
+same-feedback objective yields
+
+$$
+\begin{aligned}
+G_+&=\frac4{2+3\zeta}
+ \bigl((2-\zeta)(h+c)^2+4\zeta(h+s)^2
+                 -(2-\zeta)[h(1+\zeta)+c]^2\bigr)\\
+&=\xi\,\frac{D+2hc\zeta+\zeta^2/2}{4+3\zeta},\\
+\frac{H(\xi)-G_+}{\xi}
+ &=\frac{P_H(\zeta)}{(4+3\zeta)(2+3\zeta)},\\
+P_H(z)&=\left(\frac8{25}-2D\right)
+ +\left(\frac{18}{25}+\frac83-3D-4hc\right)z
+ +\left(\frac{84}{25}-6hc\right)z^2.
+\end{aligned}
+\tag{52.11}
+$$
+
+The elementary radical inequalities
+$7/10<h<5/7$, $9/10<c$, and $3/8<s<31/80$ follow by squaring their
+positive sides using $h^2=1/2$, $s^2=(1-h)/2$, $c^2=(1+h)/2$.
+They imply $hc>63/100>14/25$, so the quadratic coefficient of $P_H$
+is negative. Its endpoint values have the exact bounds
+
+$$
+\begin{aligned}
+P_H(0)&=-\frac{92}{25}+4h+8(1-h)s
+             >h-\frac{17}{25}>\frac1{50},\\
+P_H(2/3)&=-\frac{884}{225}+8h+\frac{32}{3}(1-2h)s\\
+&>\frac{46}{225}-\frac4{15}h>\frac{22}{1575}>0.
+\end{aligned}
+\tag{52.12}
+$$
+
+For the second line $1-2h<0$ makes $s<31/80$ the correct lower-bound
+substitution. Concavity places $P_H$ above its positive endpoint chord.
+Theorem 37.5 orders this actual member of its restricted family, so
+
+$$
+                     V(\xi)\le G_+<H(\xi).
+\tag{52.13}
+$$
+
+The positive comparison population $\bar q$ is used only here and is
+not the negative population $q$ of (52.1).
+

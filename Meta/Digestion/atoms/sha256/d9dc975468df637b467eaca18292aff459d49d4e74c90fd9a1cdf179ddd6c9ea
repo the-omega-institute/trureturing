@@ -1,0 +1,56 @@
+**引理 221.1（角外能量的二阶角谐波）。** 设简单有限 EJA $T$ 的秩 $n\ge3$，原 $q_T=w_T\tau_T(\,\cdot\circ\cdot\,)$、$w_T>0$，原 $D$ 满足右单位及全部正交、二原子内部和半角角外配平。引理 211.1 给同一个 $\lambda$ 和交替、共同框架消失的 $\delta$。取正交 primitive $e,s$，正规 Peirce 元 $y\in V_{es}$、$y^2=c=e+s$，令 $h=e-s$、$v=\delta_e y$。则
+
+$$
+q_T(v,e-s)=q_T(v,y)=0,
+\qquad q_T(v,r)=0\quad(r\text{ primitive},\ r\perp c).
+\tag{221.1}
+$$
+
+此处及引理 211.1 中的正规半角构造均取 $y\in V_{es}$；孤立的平方等式 $y^2=e+s$ 不替代 Peirce 条件。
+
+证明。引理 211.1 的正反角外相减给最后一式，不消费任何自身奇部。对每个实数 $\theta$ 定义
+
+$$
+\begin{aligned}
+h_\theta&=\cos\theta\,h+\sin\theta\,y,&
+y_\theta&=-\sin\theta\,h+\cos\theta\,y,\\
+e_\theta&=(c+h_\theta)/2,&
+p_{\theta,\pm}&=(c\pm y_\theta)/2.
+\end{aligned}
+\tag{221.2}
+$$
+
+原 Peirce 角内 $h^2=y^2=c$、$h\circ y=0$。故 $e_\theta,p_{\theta,\pm}$ 都是同一 $T$ 内的 primitive，且 $\tau_T(e_\theta\circ p_{\theta,\pm})=1/2$。它们没有被当作新的实际准备。$c$ 分别与 $h$、$y$ 共同可谱化，故 $\delta_c h=\delta_c y=0$；交替及双线性给
+
+$$
+\delta_{e_\theta}y_\theta
+=\tfrac12\delta_{h_\theta}y_\theta
+=\tfrac12\delta_hy=v.
+\tag{221.3}
+$$
+
+因 $n\ge3$，可取同一角外 primitive $r\perp c$。引理 211.1 的正反差亦适用于每个旋转角，给 $q_T(v,r)=0$。半角角外配平精确化为
+
+$$
+\frac{w_T}{4}
+=-\lambda w_T
++\frac12\|P_{e_\theta}v+\lambda y_\theta\|_{q_T}^{2}.
+\tag{221.4}
+$$
+
+这里原径向项为 $\lambda(\tau_T(a)b-\tau_T(a\circ b)u_T)$：它在读回 $r$ 贡献 $-\lambda w_T$，投影后的能量中贡献 $\lambda y_\theta$。没有提前将 $\lambda$ 置零，也没有先令 $\delta$ 为导子。
+
+primitive 的正交投影满足 $P_f=2L_f-2\Pi_f$，其中 $\Pi_f x=q_T(x,f)f/w_T$。故
+
+$$
+\begin{aligned}
+\|P_{e_\theta}v+\lambda y_\theta\|^2
+&=2q_T(v^2,e_\theta)
+-\frac{2q_T(v,e_\theta)^2}{w_T}\\
+&\quad+2\lambda q_T(v,y_\theta)+2\lambda^2w_T.
+\end{aligned}
+\tag{221.5}
+$$
+
+置 $A=q_T(v,h)$、$B=q_T(v,y)$、$C=q_T(v,c)$。除平方项以外，右边至多含一阶角谐波；$q_T(v,e_\theta)=(C+A\cos\theta+B\sin\theta)/2$。恒定式 (221.4) 的二阶系数因而给 $A^2-B^2=0$、$AB=0$。实数域上得到 $A=B=0$，证明 (221.1)。这只给 $q_T(v,e)=q_T(v,s)$，没有给二者分别为零。∎
+

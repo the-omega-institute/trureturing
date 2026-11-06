@@ -36,7 +36,7 @@ public sealed partial class CleanLanesCommandTests
             disposeWorktrees = worktrees.Dispose;
             disposeTemp = temp.Dispose;
             CopyDirectory(TemplateRepositoryPath, repository.Path);
-            if (recentCommit) GitAt(repository.Path, new DateTimeOffset(2030, 1, 1, 12, 0, 0, TimeSpan.Zero),
+            if (recentCommit) GitAt(repository.Path, new DateTimeOffset(2030, 1, 1, 23, 0, 0, TimeSpan.Zero),
                 "commit", "--allow-empty", "-m", "recent pool commit");
             var remote = Path.Combine(temp.Path, "remote.git");
             Git(temp.Path, "init", "--bare", remote);

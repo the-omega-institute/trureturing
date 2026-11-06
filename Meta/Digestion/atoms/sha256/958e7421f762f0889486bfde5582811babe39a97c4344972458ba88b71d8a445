@@ -1,0 +1,20 @@
+**Definition 1.2 (public recognition and reconstruction).** From $D$ alone
+compute its used left and right label sets $X,Y$. If $|X|\ne72$ or
+$|Y|\ne243$, reject. Otherwise, for each supported $i$, enumerate all
+bijections $A\to X$ and $T\to Y$. Construct each transported $E_i$ from
+(PCR.1), and retain it exactly when it contains $D$. Accept precisely when
+at least one relation survives and all surviving relations are equal.
+Return that relation, denoted $\widehat E(D)$; otherwise return failure.
+
+These are computations on acquired words and public finite structures.
+Canonical hidden coordinates are used to enumerate public candidates, not
+supplied as the observer's true frame. The algorithm does not ask the
+source for membership or for a chosen label. At most
+$2\cdot72!\cdot243!$ candidate maps are enumerated, with unsupported
+branches omitted. Each candidate can be constructed in $1944$ edge
+insertions after its maps are specified and checked against $|D|$ pairs.
+The literal edge lists can first be computed once from the public $B_i$
+by $72\cdot243$ equation tests per supported branch. Map enumeration,
+bit operations, integer lengths and working storage are additional finite
+costs. This bound asserts termination, not efficient discovery.
+

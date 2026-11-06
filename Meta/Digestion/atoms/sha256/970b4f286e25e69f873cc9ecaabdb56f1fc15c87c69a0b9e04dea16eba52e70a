@@ -1,0 +1,11 @@
+**定义 230.2（有限乘法闭包）。** 对有限原子集 $G\subset T$，置
+
+$$
+V_0=\operatorname{span}_{\mathbb R}(\{u_T\}\cup G),
+\qquad
+V_{k+1}=V_k+\operatorname{span}_{\mathbb R}\{a\circ b:a,b\in V_k\}.
+\tag{230.4}
+$$
+
+若 $d_T=\dim_{\mathbb R}T$，则 $G$ 含幺 Jordan 生成整个 $T$ 当且仅当 $V_{d_T}=T$。因为任一相邻层相等便永久稳定；尚未稳定时维数严格增加，至多 $d_T$ 步已达到生成子代数。此处只定义原数学乘法闭包，不提供实际可操作性或认证成本。
+

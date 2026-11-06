@@ -1,0 +1,63 @@
+**Lemma 6.3 (Coupled core allocation and its exact equality
+conditions).** Fix $j,N$ and a partition as above. Among the
+allocations in (6.2) with prescribed $z_i=e_i-o_i$, the least
+core contribution to $E$ is exactly $\mathcal C_{j,N}(z)$.
+All allocations attaining it are precisely
+
+$$
+e_i=z_i^++\ell_i,\qquad o_i=z_i^-+\ell_i,\qquad
+\ell_i\in\mathbb Z_{\ge0},\quad
+\sum_i\ell_i=L(z),\quad
+\ell_i=0\text{ for }i\notin I_0(z).
+\tag{6.9}
+$$
+
+Every $z\in\mathcal Z_{m,n,d}$ has such an allocation, and every
+feasible pair $(e,o)$ has a unique expression of the first two
+forms with $\ell_i=\min(e_i,o_i)$, before imposing the last
+condition in (6.9).
+
+**Proof.** Subtracting $e_i-o_i=z_i$ gives the claimed unique
+expression. Summing it gives exactly $\sum_i\ell_i=L(z)$ and
+(6.4). Conversely any nonnegative allocation of this integer $L$
+gives a feasible pair, so (6.4) is also sufficient.
+
+For fixed $z$ the actual core degrees $D_i=F+d+z_i$ do not
+change when $\ell$ changes. Substitution in (6.6) leaves a base
+sum, the sum in (6.5), plus
+
+$$
+\sum_i\ell_i\Delta(D_i),\qquad
+\Delta(x)=f_2(x)-f_r(x).
+\tag{6.10}
+$$
+
+Here $r>2$ in the inherited domain. For $x>0$,
+
+$$
+\Delta'(x)=\frac1{x^2}
+ \left(\frac{r^2}{\sqrt{x^2+r^2}}
+              -\frac4{\sqrt{x^2+4}}\right)>0,
+\tag{6.11}
+$$
+
+because $k^2/\sqrt{x^2+k^2}$ is strictly increasing in $k>0$.
+Consequently the least coefficient in (6.10) occurs exactly at
+$I_0(z)$.
+
+The corresponding strict improvement is a legal graph change.
+If $\ell_i>0$, select a connector ending at $i$ and a missing-one
+source omitting $i$. To move one unit of $\ell$ from $i$ to $l$,
+move that connector's core endpoint to $l$ and make that
+missing-one source omit $l$ instead. All source degrees, all
+sink degrees, and both budgets stay fixed. Simplicity is retained:
+the connector's other endpoint is a tail, and the modified
+missing-one neighborhood is exactly $C\setminus\{l\}$. Full-core
+sources and the tail connectors still ensure connectedness. The
+orientation is unchanged since every degree is unchanged. The
+change in $E$ is exactly $\Delta(D_l)-\Delta(D_i)$.
+Thus every unit outside $I_0$ is strictly improvable, and all
+placements inside $I_0$ have the same exact value. This proves
+both the minimum and every equality condition, including $L=0$
+and all ties among the minimum-degree core labels. ∎
+

@@ -1,0 +1,8 @@
+**Definition 4.1 (First return of a real line).** For the arbitrary positive triple and angle of Definition 3.1 put
+
+$$
+\delta=\min\{d\in\mathbb Z_{\geq1}:d\theta\in\pi\mathbb Z\}
+$$
+
+when this set is nonempty, and put $\delta=\infty$ otherwise. Every finite integer is less than $\infty$. Damping gap bound $L$ retains Definition 1.2: every length-$L$ window of the entire one-sided binary schedule contains an occurrence of $N_\alpha$.
+

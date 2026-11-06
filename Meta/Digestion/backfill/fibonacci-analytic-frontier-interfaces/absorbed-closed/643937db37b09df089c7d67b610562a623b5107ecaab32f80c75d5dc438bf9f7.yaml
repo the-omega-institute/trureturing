@@ -1,0 +1,25 @@
+fingerprints:
+  raw_sha256: sha256:643937db37b09df089c7d67b610562a623b5107ecaab32f80c75d5dc438bf9f7
+  normalized_sha256: sha256:643937db37b09df089c7d67b610562a623b5107ecaab32f80c75d5dc438bf9f7
+cas_ref: sha256:643937db37b09df089c7d67b610562a623b5107ecaab32f80c75d5dc438bf9f7
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/CompleteMertensPeak.U
+    target_statement_id: sha256:6fe59e2227105889f00cc64f0eadbd310f3527835901596c618ac8688fddf2cc
+  - gid: D5/S3/Arith/Robin/ZeroPowerSum.exists_pow_sum_re_ge_one
+    target_statement_id: sha256:0c6325aa84093ec5808a7e3b42b18397002997e5ed934ec357fae617bf6add08
+  - gid: D5/S3/Fourier/Asymptotics/CountableGaussianQuadraticFourthMoment.centralMoment_two_mul
+    target_statement_id: sha256:78a18309f7011e3f1cce4982ae2172df37c6f122cdde68c0f3ebecfcb36284cf
+  - gid: D5/S3/Weil/Mertens/IntegratedExplicit/ActualZeroLaplace.actual_complete_H_package
+    target_statement_id: sha256:d1806526523da1895522adbd0fcd8e16f1317c1607aa35c2f67ca4452708049b
+  - gid: D5/S3/Weil/Mertens/IntegratedExplicit/WholeFormula.actual_integrated_explicit_formula
+    target_statement_id: sha256:fe1b3c28c93e1b2fc0220e9698cd6c88bedf7f3cf88c672b16c8af739e63f9c4
+  - gid: D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_height_gt_ten
+    target_statement_id: sha256:592add2c8fd54696229c5f955af2022f2f70eb47e6de52a1157a0ddd0802b895
+  - gid: D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_inverse_square_mass_le_height
+    target_statement_id: sha256:c51046f3a5c603082a526850ccd0f9b5744851c1d79a8dbb04933b95dfcdebcd
+  - gid: D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_sigma_inverse_square_summable
+    target_statement_id: sha256:747bcf5c4e3ddd6d579a15f3ce9aa4412c87a841775427bbc7ed07ac68ded892
+  - gid: D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.firstLiMass_lt_one
+    target_statement_id: sha256:58095d09259ba1f6c7bd4d13cb2e30dac2709dc9773fc49da63afc78af24e906
+receipts:
+  unresolved_subitems: []
