@@ -4161,3 +4161,740 @@ coefficient-to-exact-word objective remains unresolved at
 reductions do not complete the continuing recovery programme.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 13. Sharp source-resolvent suprema and separation from the original fixed-time source
+
+**Definition 13.1 (the original source and its simple-resolvent cone).**
+Retain all hypotheses and normalizations of Definition 12.1, for every
+finite positive $a,\eta,d$. Thus $G=H^1\times\mathbb R$, raw Haar $\mu$,
+the unit-source $\Gamma$, $C(w_*)=1$, $h=w_*/\|w_*\|_2$,
+$m=h^2\mu$ and $m(G)=1$ remain fixed. The actual complex operator is
+$H=H_{\rm end}$ with $A=\rho C$, not the auxiliary $F$ with $C=0$.
+All discounts below use the original time units. Put
+
+$$
+\begin{gathered}
+G_r=(F+r)^{-1},\quad n_r=h-rG_rh,\quad
+ d_r=\langle h,n_r\rangle>0,\quad b_r=J_h^{-1}n_r,\\
+p_r=\frac{n_r}{r d_r},\quad
+\psi_r=J_h^{-1}p_r=\frac{b_r}{r d_r},\qquad r>0,\\
+D=d_1,\quad z=n_1/D,\quad R=(H+1)^{-1}.
+\end{gathered}
+\tag{13.1}
+$$
+
+The $z,R$ in (13.1) are exactly (12.4)–(12.5). In particular
+$p_1=z$, and $R=G_1+|n_1\rangle\langle n_1|/D$ is the full
+endpoint resolvent. The inverse $J_h^{-1}$ denotes the unitary map
+between the two Hilbert spaces, not a numerical pointwise division.
+For a finite integer $J\ge0$, arbitrary real $\beta$, nonnegative
+real coefficients $\alpha_j$ and positive real discounts $r_j$, define
+
+$$
+\begin{gathered}
+B=\beta+\sum_{j=1}^J\alpha_j\psi_{r_j},\qquad
+W=J_hB=\beta h+\sum_{j=1}^J\alpha_jp_{r_j},\\
+\Phi(\lambda)=\sum_{j=1}^J\frac{\alpha_j}{\lambda+r_j},\qquad
+S_B=\beta+\sum_{j=1}^J\frac{\alpha_j}{r_jd_{r_j}}.
+\end{gathered}
+\tag{13.2}
+$$
+
+An empty sum is permitted. This is the cone of positive simple source
+resolvents with arbitrary constant addition. It is a mathematical
+comparison class, without a change to the source evolution or readout.
+The exponentially averaged probability density is
+$\zeta_r=r\psi_r=b_r/d_r$, since [S, (116.14)] gives
+$\psi_r=\int_0^\infty e^{-rt}g_t\,dt$ in $L^2(m)$.
+Consequently finite probability mixtures $\sum_jq_j\zeta_{r_j}$,
+$q_j\ge0$, $\sum_jq_j=1$, are the subclass
+$\beta=0$, $\alpha_j=q_jr_j$. The coefficients in (13.2) have
+no mass constraint; their integrals are
+$\int B\,dm=\beta+\sum_j\alpha_j/r_j$.
+
+**Theorem 13.2 (an exact global supremum for the source-resolvent
+cone).** For every $B$ in (13.2),
+
+$$
+\mathop{\rm ess\,sup}_{m}B
+ =\operatorname{tr}B=S_B.
+\tag{13.3}
+$$
+
+For $\beta\ge0$, also $\|B\|_{L^\infty(m)}=S_B$.
+If the finite coefficients and discounts have total interval names,
+then the original coefficient services of §11 compute $S_B$ to every
+requested absolute error and enumerate cofinal rational global upper
+certificates $B\le U$. No value $h(e)$ is needed.
+
+Proof. The equilibrium-potential identity [S, (116.4)] states
+$b_r\in\mathscr V$, $0\le b_r\le1$ quasi-everywhere and
+$\operatorname{tr}b_r=1$. Constants belong to the full form domain.
+Thus $B\in\mathscr V$, $B\le S_B$ almost everywhere, and
+$\operatorname{tr}B=S_B$. These are statements for the same full
+form and nonpolar source.
+
+For any real form vector $v$ and real constant $U$, the implication
+
+$$
+v\le U\quad m\text{-a.e.}
+\quad\Longrightarrow\quad\operatorname{tr}v\le U
+\tag{13.4}
+$$
+
+follows from normal contraction and quasi-continuous evaluation:
+$(v-U)_+$ is the zero form vector, so its source trace is zero,
+whereas that trace equals $(\operatorname{tr}v-U)_+$.
+This is the same order argument used in Proposition 12.7; it does
+not assign a value to an arbitrary density representative at $e$.
+Taking $U=\mathop{\rm ess\,sup} B$ proves the lower bound in
+(13.3); boundedness makes this a finite essential upper bound.
+If $\beta\ge0$, then $B\ge0$ and its norm is its essential supremum.
+For negative $\beta$, (13.3) is an essential-supremum formula;
+no formula for the absolute norm is inferred from it.
+
+For the numerical assertion, §11 computes each $d_{r_j}$ from the
+original names. Refine its intervals until their lower endpoints
+are positive. This terminates because $r_j,d_{r_j}>0$. Finite
+interval multiplication, division and addition then enclose $S_B$
+with arbitrarily small width. Rational upper endpoints, enlarged by
+a vanishing rational slack if necessary, give $U\ge S_B$ converging
+to $S_B$. Formula (13.3) proves soundness and cofinality for this
+comparison class. The argument uses the supplied nonnegativity of
+the coefficients, without attempting to decide equality to zero.
+$\square$
+
+**Theorem 13.3 (positive distance in every original source member,
+including arbitrary constant addition).** For every original
+$a,\eta,d>0$ there is a rational $\delta>0$ such that, simultaneously
+for every finite $J$, every $\beta\in\mathbb R$, every
+$\alpha_j\ge0$ and every $r_j>0$,
+
+$$
+\begin{aligned}
+\left\|v_d-\beta h-\sum_{j=1}^J\alpha_jp_{r_j}\right\|_{L^2(\mu)}
+ &=\left\|g_d-\beta-\sum_{j=1}^J\alpha_j\psi_{r_j}\right\|_{L^2(m)}
+ \ge\delta.
+\end{aligned}
+\tag{13.5}
+$$
+
+The same $\delta$ works for the $L^2(m)$ closure of this entire
+comparison class. A construction of such a $\delta$ from only the
+original coefficient and clock names is given in Theorem 13.4.
+
+Proof. Let $E_H$ be the spectral resolution of the actual $H$ and set
+
+$$
+\nu(A)=\langle z,E_H(A)z\rangle_\mu.
+\tag{13.6}
+$$
+
+This is a finite positive measure on $[0,\infty)$. It is the spectral
+measure of the actual source-resolvent vector, not that of an
+independently chosen example. The original maximal-domain identity
+[S, (116.5)] gives
+
+$$
+A(z)-\rho C(z)=-\frac1{a c_h}\ne0.
+\tag{13.7}
+$$
+
+Indeed its boundary defect for $n_1$ is $-D/(a c_h)$; divide by
+$D>0$. Hence $z\notin D(H)$, although $z$ is a full form vector
+and is in $D(S_{\min}^*)$. If $\nu$ were supported in a bounded
+interval, the spectral domain criterion
+$\int\lambda^2\,d\nu<\infty$ would put $z$ in $D(H)$,
+contradicting (13.7). Thus
+
+$$
+\nu((L,\infty))>0\qquad\text{for every finite }L\ge0.
+\tag{13.8}
+$$
+
+Only this consequence of the defect, rather than any numerical
+estimate of its high-frequency mass, will be needed.
+
+Theorem 12.3 supplies the exact fixed-time identity
+$v_d=(H+1)e^{-dH}z$. The corresponding resolvent identity is
+
+$$
+p_r=(H+1)(H+r)^{-1}z.
+\tag{13.9}
+$$
+
+Here the right side is the bounded spectral multiplier
+$(1+\lambda)/(r+\lambda)$ applied to $z$; it does not apply
+$H$ directly to $z$. To verify its source factor, transport
+[S, (116.4)] to the raw form $\mathfrak q_H$:
+
+$$
+\mathfrak q_{H,r}[p_r,y]
+ =\operatorname{tr}(J_h^{-1}y)
+ =\mathfrak q_{H,1}[z,y].
+\tag{13.10}
+$$
+
+For $y\in D(H)$ the last expression is
+$\langle z,(H+1)y\rangle$, and the first is
+$\langle p_r,(H+r)y\rangle$. Since $H+r$ maps $D(H)$ onto
+$\mathcal H$, bounded spectral calculus proves (13.9).
+All pairings have the antilinear-first convention of §12.
+This calculation reuses the source-trace and heat identities;
+it supplies the correspondence needed for the separation.
+
+Also $\langle h,z\rangle=1$, so
+$E_H(\{0\})z=h$, because $\ker H=\mathbb Ch$ and $\|h\|_2=1$.
+For $E=\|v_d-W\|_2$, spectral orthogonality now gives
+
+$$
+E^2=
+ \left|1-\beta-\sum_j\frac{\alpha_j}{r_j}\right|^2
+ +\int_{(0,\infty)}(1+\lambda)^2
+       |e^{-d\lambda}-\Phi(\lambda)|^2\,d\nu(\lambda).
+\tag{13.11}
+$$
+
+In particular the arbitrary, possibly negative constant affects only
+the zero eigenspace. It cannot cancel a positive-frequency discrepancy.
+
+Choose rational bands and rational triangular tents satisfying
+
+$$
+\begin{gathered}
+1/d<L_1<U_1<L_2<U_2,\qquad I_i=[L_i,U_i],\\
+0\le\theta_i\le1,\quad\theta_i=0\text{ outside }I_i,
+\quad\theta_i(L_i)=\theta_i(U_i)=0,\\
+\sigma_i=\int\theta_i\,d\nu>0\quad(i=1,2).
+\end{gathered}
+\tag{13.12}
+$$
+
+The peak of each tent is at a rational interior point and has height
+one. Such bands and tents exist by (13.8): choose a finite open
+interval of positive mass above $1/d$, and then another above its
+upper endpoint. Each interval is covered by countably many rational
+tents' positivity sets, so some such tent has positive integral.
+No absolute continuity or absence of spectral atoms is required.
+
+The scalar function $k_d(\lambda)=\lambda e^{-d\lambda}$ is strictly
+decreasing for $\lambda>1/d$. Consequently
+
+$$
+\Delta=U_1e^{-dU_1}-L_2e^{-dL_2}>0.
+\tag{13.13}
+$$
+
+In contrast, every permitted positive simple-resolvent sum satisfies
+
+$$
+\frac{d}{d\lambda}\bigl[\lambda\Phi(\lambda)\bigr]
+ =\sum_j\frac{\alpha_jr_j}{(\lambda+r_j)^2}\ge0.
+\tag{13.14}
+$$
+
+This elementary Stieltjes-cone property is used as a classical scalar
+fact, not as a new functional-calculus assertion. Define probability
+measures $d\pi_i=\theta_i\,d\nu/\sigma_i$ on the two bands. Then
+
+$$
+\begin{gathered}
+\int k_d\,d\pi_1-\int k_d\,d\pi_2\ge\Delta,\\
+\int\lambda\Phi(\lambda)\,d\pi_1
+ \le\int\lambda\Phi(\lambda)\,d\pi_2.
+\end{gathered}
+\tag{13.15}
+$$
+
+For
+$E_i^2=\int\theta_i\lambda^2|e^{-d\lambda}-\Phi(\lambda)|^2\,d\nu$,
+disjointness of the tents and $\lambda^2\le(1+\lambda)^2$
+give $E_1^2+E_2^2\le E^2$. Combine the two lines of
+(13.15) and apply Cauchy–Schwarz twice:
+
+$$
+\begin{aligned}
+\Delta
+ &\le \left|\int(k_d-\lambda\Phi)\,d\pi_1\right|
+       +\left|\int(k_d-\lambda\Phi)\,d\pi_2\right|\\
+ &\le E_1/\sqrt{\sigma_1}+E_2/\sqrt{\sigma_2}
+ \le E\sqrt{1/\sigma_1+1/\sigma_2}.
+\end{aligned}
+\tag{13.16}
+$$
+
+Thus every member has distance at least
+$\Delta\sqrt{\sigma_1\sigma_2/(\sigma_1+\sigma_2)}>0$.
+Any smaller positive rational proves (13.5). Distance is continuous
+in $L^2$, giving the closure assertion. Equations (13.7) and
+(13.9) are why this is an obstruction for every original member:
+the separated bands are forced by its actual source boundary defect
+and refer to its actual entrance vector at its actual clock $d$.
+$\square$
+
+**Theorem 13.4 (a finite effective separation certificate).** From
+only total interval names of the original positive $a,\eta,d$ and
+the constructed services of §11, there is a terminating mathematical
+algorithm returning a rational $\delta>0$ for (13.5). A finite
+certificate consists of the rational bands and tents in (13.12),
+certified scalar enclosures for their masses and for (13.13), and
+positive rational $s_1,s_2,q,\delta$ satisfying
+
+$$
+\sigma_i\ge s_i>0,\qquad \Delta\ge q>0,\qquad
+0<\delta^2<q^2\frac{s_1s_2}{s_1+s_2}.
+\tag{13.17}
+$$
+
+Acceptance requires finitely many certified interval and rational
+inequalities. It never tests whether an unknown spectral mass is zero.
+
+Proof. First use §11 and Theorem 12.2 to construct the global raw
+name of $z$ and the action of the contraction $R$ on global names.
+Refine the $D$ intervals to a rational $0<\ell<D$ and fix the
+rational norm bound $Q=1/\ell\ge\|z\|_2$. That search terminates
+by $D>0$. This reuses the already constructed full resolvent;
+a semigroup or a spectral-projection oracle is not an input.
+
+Here is a scalar mass evaluator with explicit finite errors.
+For a candidate tent $\theta$ supported in a rational
+$[L,U]\subset(0,\infty)$, define on $[0,1]$
+
+$$
+\varphi(x)=
+\begin{cases}
+\theta(x^{-1}-1),&x>0,\\
+0,&x=0.
+\end{cases}
+\qquad
+\int\theta\,d\nu=\langle z,\varphi(R)z\rangle.
+\tag{13.18}
+$$
+
+The function vanishes on $[0,(1+U)^{-1}]$ and on
+$[(1+L)^{-1},1]$. If $L_\theta$ bounds the absolute slopes
+of the tent, the rational number
+$L_\varphi=L_\theta(1+U)^2$ is a global Lipschitz bound.
+On the active interval this follows by differentiating
+$x^{-1}-1$; across the endpoints it follows from continuity and
+the zero endpoint values. Therefore $\varphi$ is computably
+continuous at $0$ without a high-frequency tail estimate.
+
+Use the rational Bernstein polynomial
+
+$$
+P_N(x)=\sum_{k=0}^N\varphi(k/N){N\choose k}
+                         x^k(1-x)^{N-k}.
+\tag{13.19}
+$$
+
+All its coefficients are rational, including the value at $k=0$.
+The usual binomial-variance estimate gives
+$\|P_N-\varphi\|_\infty\le L_\varphi/(2\sqrt N)$:
+for a binomial random variable $Y$ with parameters $N,x$, bound
+$\mathbb E|\varphi(Y/N)-\varphi(x)|$ by
+$L_\varphi\sqrt{x(1-x)/N}$. This is a reused polynomial
+approximation estimate. For any rational $\varepsilon_P>0$,
+choose $N$ by the rational test
+$L_\varphi^2<4N\varepsilon_P^2$. Spectral calculus gives
+$\|P_N(R)z-\varphi(R)z\|_2\le Q\varepsilon_P$.
+
+For completeness, polynomial action has a terminating error budget
+using exactly the supplied resolvent action. Expand
+$P_N(x)=\sum_{k=0}^Nc_kx^k$ in monomials. Choose a finite rational
+box-step $Z$ with $\|Z-z\|_2\le\varepsilon_0$ and put $Y_0=Z$.
+For each $k\ge1$ compute a finite box-step $Y_k$ with
+$\|Y_k-RY_{k-1}\|_2\le\varepsilon_k$. Since $\|R\|\le1$,
+
+$$
+\|Y_k-R^kz\|_2\le\varepsilon_0+\sum_{j=1}^k\varepsilon_j.
+\tag{13.20}
+$$
+
+The finite combination $W=\sum_kc_kY_k$, including any chosen
+finite arithmetic error $\varepsilon_A$, obeys
+
+$$
+\begin{gathered}
+\|W-\varphi(R)z\|_2\le e_W,\\
+e_W=Q\varepsilon_P+
+ \sum_{k=0}^N|c_k|
+       \left(\varepsilon_0+\sum_{j=1}^k\varepsilon_j\right)
+       +\varepsilon_A.
+\end{gathered}
+\tag{13.21}
+$$
+
+The finite inner product $\operatorname{Re}\langle Z,W\rangle$
+is computed on the common rational box partition. If its rounding
+allowance is $\varepsilon_I$, it encloses the desired mass with
+absolute error at most
+
+$$
+\varepsilon_0Q+(Q+\varepsilon_0)e_W+\varepsilon_I.
+\tag{13.22}
+$$
+
+Indeed $\|\varphi(R)z\|_2\le Q$, and split the pairing error
+as $\langle Z-z,\varphi(R)z\rangle+
+\langle Z,W-\varphi(R)z\rangle$. First choose the polynomial
+error, then choose the finitely many action tolerances using its
+known coefficients. Every term in (13.22) can be made arbitrarily
+small. Large polynomial coefficients affect cost, not convergence
+of this finite error search. Formula (13.22) supplies total interval
+names of every candidate mass from the original inputs.
+
+To choose the bands, refine the positive $d$ name to a rational
+$d_->0$ with $d_-\le d$, and choose a rational $L_*>1/d_-$.
+Enumerate all rational quadruples
+$L_*<L_1<U_1<L_2<U_2$ and all rational interior tent peaks.
+Dovetail their mass evaluations, so that no zero-mass candidate
+can block the search. Accept a pair when both mass intervals
+have strictly positive rational lower endpoints $s_i$.
+Existence in (13.12) ensures that a positive pair appears, and
+convergence of its enclosures ensures eventual acceptance.
+
+For an accepted pair compute (13.13) from the total $d$ name,
+using certified elementary exponential arithmetic, until its
+lower endpoint $q$ is positive. This terminates: all four
+endpoints exceed $1/d$, so $\Delta>0$. Ordinary scalar
+exponential intervals can, for example, use range reduction and
+Taylor remainder bounds on a rational compact interval; their
+width tends to zero. Finally enumerate positive dyadic
+$\delta$ until the rational squared inequality in (13.17)
+holds. Its positive right side proves termination.
+
+The function $xy/(x+y)$ is increasing separately on
+$(0,\infty)^2$, since its partial derivatives are
+$y^2/(x+y)^2$ and $x^2/(x+y)^2$. Thus the lower mass bounds
+in (13.17) and $q\le\Delta$ imply the lower distance in
+(13.16) is strictly greater than $\delta$. This proves
+soundness of the finite acceptance rule for every permitted
+$\beta,\alpha_j,r_j$, whether or not those parameters are
+computably named. Only construction of the certificate uses
+the original numerical names. No uniform bound on the successful
+band indices, polynomial degrees or number of precision queries
+is asserted. $\square$
+
+**Proposition 13.5 (the excluded transfer and the surviving sharp
+upper obligation).** For a fixed original member, no sequence
+$B_n$ of (13.2) converges to $g_d$ in $L^2(m)$ or uniformly in
+essential supremum. More quantitatively, there is no such $B$
+with a global relative-carrier error
+
+$$
+|v_d-J_hB|\le\varepsilon h\quad\mu\text{-a.e.},
+\qquad 0\le\varepsilon<\delta,
+\tag{13.23}
+$$
+
+where $\delta$ is any certificate of Theorem 13.4. This includes
+unrestricted positive coefficient sums and probability mixtures,
+even with arbitrary constant addition. It excludes neither signed
+simple-resolvent sums, repeated resolvent powers, nor pure upper
+envelopes without an approximation assertion. In particular it does
+not decide $N_d=\operatorname{tr}g_d$ or the existence of the cofinal
+upper certificates (12.31).
+
+Proof. The $L^2$ statement is (13.5). Since $m(G)=1$,
+$\|g_d-B\|_2\le\|g_d-B\|_\infty$, and (13.23) would imply
+$\|v_d-J_hB\|_2\le\varepsilon\|h\|_2=\varepsilon$,
+contradicting (13.5). Thus approximation of the original source
+by this cone cannot transfer (13.3) to an exact name of $N_d$.
+Signed coefficients do not obey (13.14); a repeated pole
+$(\lambda+r)^{-k}$, $k\ge2$, has derivative
+$[r-(k-1)\lambda]/(\lambda+r)^{k+1}$ after multiplication by
+$\lambda$, so the monotonicity used in the proof also fails for
+that different class. The theorem makes no exclusion for either.
+
+A one-sided upper envelope $g_d\le B$ need not have small
+$\|B-g_d\|_2$, even if its essential supremum approaches $N_d$.
+Consequently (13.5) is not an obstruction to every possible use
+of the cone in upper certificates. Its precise target is a
+vanishing-error approximation retaining the simple positive
+source-resolvent formula. Equations (13.3) and (13.5) alone
+provide no certificates (12.31) for $g_d$.
+
+The original likelihood consumer remains (12.3), with exactly
+$c=1/[4(1+N_d)]$, $f_3=cg_d$, $f_B=1/4$ and
+$f_0=f_1=(3/4-f_3)/2$. It has the original $e$-start, first passive
+read at $2d$, gaps $d$, and fresh conditional noise without
+disturbance. Theorems 12.5–12.6 already identify the exact calibration,
+first-read and finite-word numerical interfaces. A computable
+upper bound substituted for $N_d$ would change these emissions.
+Theorem 13.2 supplies sharp suprema for $B$, not that calibration.
+
+For comparison, a proof of $N_d=\operatorname{tr}g_d$ would use
+the computed scalar (12.29) directly, and would not require a
+full pointwise kernel. A different global supersolution certificate
+could instead bound the functional (12.32), provided both soundness
+and cofinality were established. Effective local-to-global peak
+detection would need quantitative control of the original source
+neighborhood and exterior, together with a proved global error.
+Spatial $L^2$ tails alone bound integrated error and do not certify
+$g_d\le U$ on all $G$. None of these additional relations follows
+from the source-resolvent norm formula or the separation theorem.
+Numerical evaluation, resource bounds and confidence from a single
+passive record likewise require their respective hypotheses; the
+present mathematical certificate performs no source preparation,
+record acquisition or hidden-coordinate observation. $\square$
+
+**Definition 13.6 (source correspondence, antecedents and scope).**
+The spectral theorem and elementary positive-kernel facts used inside
+the proofs are `literature-attested`; the relations (13.3), (13.5)
+and their effective certificate are `repo-derived` for the source
+of Definition 12.1. The classical scalar monotonicity (13.14),
+polynomial approximation and generic resolvent-to-functional-calculus
+steps are antecedents, not additional singular-source constructions.
+The relevant correspondences are:
+
+| Antecedent | Exact use and boundary |
+| --- | --- |
+| [S, (115.5), (116.4)–(116.5), (116.13)–(116.14)] | The full complex endpoint supplies $b_r$, its nonpolar trace, the actual rank-one resolvent and the nonzero boundary defect (13.7). $F$ supplies only $G_r$; it is never substituted for $H$. |
+| §§11–12, especially (12.5), (12.7)–(12.10), (12.29)–(12.32) | The original coefficient names give $h,z,R$, the deterministic-time source correspondence and the exact outstanding upper obligation. Their heat, calibration and word equivalences are reused. |
+| G. Teschl, [Mathematical Methods in Quantum Mechanics](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf), Theorems 3.1–3.2 and (3.21) | Scalar spectral measures and the unbounded-operator domain criterion apply to this self-adjoint $H$ and its actual $z$. They give (13.8) from (13.7), and the spectral error identity; they provide no original source trace or sharp supremum. |
+| Z.-Q. Chen, M. Fukushima and J. Ying, [Traces of symmetric Markov processes and their characterizations](https://arxiv.org/pdf/math/0606784v1), §2, hitting kernel before (2.14) | The equilibrium/hitting framework is the antecedent used by [S]. The closed set here is exactly $\{e\}$ and the energy is the original $\mathscr E$, without an imported Brownian factor or changed clock. |
+| D. Braess and W. Hackbusch, [On the approximation of Stieltjes functions by exponential sums and rational functions with applications to partial differential equations](https://doi.org/10.1007/s00211-025-01523-1), §4.3 | Positive simple-pole interpolation there assumes a Cauchy–Stieltjes target. A Laplace–Stieltjes or completely monotone target alone does not supply that hypothesis. Equation (13.14) and the actual-source two-band argument specify the obstruction needed here. |
+| A. Burchard and Á. D. Martínez, [On monotonicity of heat kernels: a new example and counterexamples](https://arxiv.org/html/2502.08212v1), Theorems 1.2 and 2.2 | Rotational symmetry on compact smooth manifolds and failures for a simple first eigenvalue concern different source families. Neither statement decides source maximality for this singular weighted endpoint. |
+
+The existing D5 tree-boundary contraction statements, including the
+private helpers in `BiasedBoundaryMarkovSemigroup`, have tree carriers;
+the private pair argument and public representative theorem in
+`IntervalLInfinityRepresentative` assume interval translation control.
+Neither instantiates the source/domain map (13.7)–(13.10).
+`LocalizedStieltjesNevanlinnaKernel` treats finite atomic complex
+Cauchy kernels and their support localizer, rather than this actual
+unbounded spectral source measure. Pinned mathlib
+`56a005855ea17e0b0958f73ec801ae140b0a1679` supplies generic
+essential-supremum and continuous-functional-calculus order results;
+these do not construct the source-specific upper side (12.31).
+The antecedents support the displayed deductions within their stated
+hypotheses, without a worldwide-priority assertion or a new Lean claim.
+The exact original $N_d$ upper enumeration, source maximum relation
+and finite-record confidence remain separate mathematical obligations.
+
+## 追加锚（本行以下为增补区）
+
+## 14. Gaussian exterior decay for the original source quotient
+
+**Definition 14.1 (full-source hypotheses and propagation gauge).** Retain the analytic suppliers of Definition 12.1: [E, §§109–112] and [S, §§115–117, 133], with their hypotheses. For arbitrary original $a,\eta,d>0$, the group is $G=H^1\times\mathbb R$, with $e=0$, product $pp'=(x+x',y+y',z+z',w+w'+xy')$, raw Haar measure $\mu=dx\,dy\,dz\,dw$, and fields $X_1=\partial_x$, $X_2=\partial_y+x\partial_w$, $X_3=\partial_z$. Write
+
+$$
+P=aL-\eta\partial_w^2,\quad L=-\sum_{i=1}^3X_i^2,\quad
+V=16\sqrt{a\eta}\,\Gamma,\quad L\Gamma=\delta_e.
+\tag{14.1}
+$$
+
+Here $\Gamma$ is the original unit-source Green field of $L$, not that of $P$. Retain the full nonnegative endpoint $H$ with $A=\rho C$, its coefficient-positive normalized zero state $h=w_*/\|w_*\|_2$, $C(w_*)=1$, $m=h^2\mu$, $J_hu=hu$, $K=J_h^{-1}HJ_h$, and $T_t=e^{-tK}$. Thus $\|h\|_2=1$, $m(G)=1$, and $h$ is smooth and strictly positive on $G\setminus\{e\}$, where $(P-V)h=0$. The full regular strongly local form is
+
+$$
+\mathscr E[u]=\int_G\left(a\sum_{i=1}^3|X_i u|^2+\eta|\partial_wu|^2\right)dm,
+\qquad \mathscr V=\mathscr V_0\dotplus\mathbb C1.
+\tag{14.2}
+$$
+
+Its source trace $\operatorname{tr}$ is quasi-continuous evaluation at the nonpolar $e$. For the original deterministic-time source density $g_t$, put $v_t=hg_t$. The suppliers give
+
+$$
+\operatorname{tr}(T_tf)=\int_Gg_tf\,dm,\qquad
+|\operatorname{tr}u|^2\le\frac{\mathscr E[u]+\|u\|_{L^2(m)}^2}{D},\qquad
+D=\langle h,h-(F+1)^{-1}h\rangle=d_1>0.
+\tag{14.3}
+$$
+
+The scalar $D$ has the name constructed in §12. In symmetric coordinates $\xi=(x,y,z)$ and $s=w-xy/2$, set
+
+$$
+\varrho=(|\xi|^4+s^2)^{1/4},\quad
+q=(1+|\xi|^4+s^2)^{1/4},\quad
+\psi=(q-1)/\beta,\quad \tau=\min(d/4,1),
+\tag{14.4}
+$$
+
+where $\beta>0$ is rational and $\beta^2\ge a+\eta/4$. Such a $\beta$ is obtained from positive rational coefficient enclosures. The original bound from §10 is $0<\Gamma(p)\le32\varrho(p)^{-3}$. All times and coordinates retain the original units.
+
+**Theorem 14.2 (computed global source-vector Gaussian tail).** For every $t,r>0$,
+
+$$
+\|1_{\{\psi\ge r\}}v_t\|_{L^2(\mu)}
+\le\frac{2(1+t/r)}{\sqrt{\pi tD}}e^{-r^2/(4t)}.
+\tag{14.5}
+$$
+
+Consequently, for $R>1$,
+
+$$
+\|1_{\{\varrho\ge R\}}v_t\|_2
+\le\frac{2(1+\beta t/(R-1))}{\sqrt{\pi tD}}
+\exp\left(-\frac{(R-1)^2}{4\beta^2t}\right).
+\tag{14.6}
+$$
+
+The right side is computable from the permitted coefficient/time names and $D$. This is a norm-tail bound; it is not an exterior pointwise order certificate.
+
+Proof. Let $d_A$ be the length distance for velocities $\sum_i u_iX_i+u_4\partial_w$, with length integrand $\sqrt{\sum_i u_i^2/a+u_4^2/\eta}$. It is a complete smooth left-invariant Riemannian distance. Its energy density is exactly (14.2), relative to $m$; multiplication by $h$ does not alter the principal symbol.
+
+Compact Lipschitz tests belong to the local full form also at $e$. To see this, subtract the source value using a fixed local cutoff, and cut the remainder off on an Euclidean $\epsilon$-ball. There $|f-f(e)|\le C\epsilon$ and $|D\chi_\epsilon|\le C/\epsilon$, so the cutoff energy error is bounded by a constant times $m(B_{2\epsilon})\to0$. The gradient and norm errors also tend to zero. The subtracted cutoff is a full-form vector: locally it is the constant $1$, with its remaining part supported away from $e$. Punctured local smoothing and the full form core finish the approximation. Here $m=h^2\mu$ has no atom at $e$. The argument applies to Lipschitz distance cutoffs. Thus $d_A$ is the full form's intrinsic metric, with the original topology and source coordinate retained.
+
+For bounded Lipschitz $\phi$ with $a\sum_i|X_i\phi|^2+\eta|\partial_w\phi|^2\le1$, the full-form product rule and weighted energy estimate give
+
+$$
+\|e^{\alpha\phi}T_te^{-\alpha\phi}\|_{2\to2}\le e^{\alpha^2t}.
+\tag{14.7}
+$$
+
+Optimizing $\alpha$ between separated supports gives the Davies–Gaffney bound $\exp[-\operatorname{dist}_A(U,W)^2/(4t)]$. For this nonnegative self-adjoint $K$, the Davies–Gaffney/finite-wave equivalence [GT-CS, Theorem 3.4] therefore says that $\cos(u\sqrt K)$ propagates supports by at most $|u|$ in $d_A$. No global doubling or global $A_2$ property is assumed.
+
+In symmetric coordinates the horizontal fields are $Y_1=\partial_x-(y/2)\partial_s$, $Y_2=\partial_y+(x/2)\partial_s$, $Y_3=\partial_z$. Writing $F_0=1+|\xi|^4+s^2$, direct differentiation gives
+
+$$
+\sum_i|Y_iq|^2=
+\frac{16|\xi|^6+(x^2+y^2)s^2}{16F_0^{3/2}}\le1,
+\qquad |\partial_sq|^2=\frac{s^2}{4F_0^{3/2}}\le\frac14.
+\tag{14.8}
+$$
+
+Hence $\psi$ is $1$-Lipschitz in $d_A$ and $\psi(e)=0$. If $f\in\mathscr V$ is supported in $\{\psi>r\}$, finite propagation gives $\operatorname{tr}(\cos(u\sqrt K)f)=0$ for $0\le u<r$. Indeed the wave vector stays in the form domain and vanishes on a source neighborhood, so its actual quasi-continuous trace is zero.
+
+Define the bounded spectral multiplier
+
+$$
+m_{r,t}(\lambda)=\frac1{\sqrt{\pi t}}\int_r^\infty e^{-u^2/(4t)}\cos(u\sqrt\lambda)\,du.
+\tag{14.9}
+$$
+
+Heat transmutation [GT-CS, (3.8)] and the preceding trace vanishing give $\operatorname{tr}(T_tf)=\operatorname{tr}(m_{r,t}(K)f)$. For form inputs the transmutation integral converges in form norm, so this trace operation is legitimate. One integration by parts yields
+
+$$
+\begin{aligned}
+|m_{r,t}(\lambda)|&\le\frac1{\sqrt{\pi t}}\int_r^\infty e^{-u^2/(4t)}du
+ \le\frac{2t}{r\sqrt{\pi t}}e^{-r^2/(4t)},\\
+\sqrt\lambda|m_{r,t}(\lambda)|&\le\frac2{\sqrt{\pi t}}e^{-r^2/(4t)}.
+\end{aligned}
+\tag{14.10}
+$$
+
+For the second bound, the boundary term and the integral of the absolute Gaussian derivative are each $e^{-r^2/(4t)}$; $\lambda=0$ is immediate. Since $\sqrt{1+\lambda}\le1+\sqrt\lambda$,
+
+$$
+\|(K+1)^{1/2}m_{r,t}(K)\|
+\le\frac{2(1+t/r)}{\sqrt{\pi t}}e^{-r^2/(4t)}.
+\tag{14.11}
+$$
+
+Applying the exact trace bound (14.3) gives the same right side divided by $\sqrt D$, times $\|f\|_{L^2(m)}$. Punctured smooth tests are dense in $L^2(\{\psi>r\},m)$. To include $\{\psi\ge r\}$, apply the bound first with $r'<r$ and then let $r'\uparrow r$. Duality proves the $L^2(m)$ tail of $g_t$, equal to the raw tail of $v_t$. Since $q\ge\varrho$, using $r=(R-1)/\beta$ gives (14.6). At no point is the source delta treated as an $L^2$ vector. $\square$
+
+**Theorem 14.3 (exterior order decay of the actual quotient).** For every original $a,\eta,d>0$, there exist finite $C_d,R_d>0$ such that the smooth punctured representative satisfies
+
+$$
+0\le g_d(p)\le C_d\exp\left(-\frac{\varrho(p)^2}{32d\beta^2}\right)
+\quad(\varrho(p)\ge R_d).
+\tag{14.12}
+$$
+
+In particular $\lim_{R\to\infty}\operatorname{ess\,sup}_{\varrho\ge R}g_d=0$. Equivalently, for every $\epsilon>0$, $v_d\le\epsilon h$ outside a sufficiently large original coordinate box. The constants specified in the proof exist mathematically; no total coefficient-name algorithm for them or for these exterior radii is asserted.
+
+Proof. Use left-translate charts $pQ$, with $Q=(-1/4,1/4)^4$, and the nested cube $Q'=(-1/8,1/8)^4$, in original coordinates. The principal symbol in a chart is
+
+$$
+a[\zeta_x^2+(\zeta_y+u_x\zeta_w)^2+\zeta_z^2]+\eta\zeta_w^2,
+\qquad |u_x|\le1/4.
+\tag{14.13}
+$$
+
+It has uniform ellipticity bounds $\lambda_0=\min(a,\eta)/3$ and $\Lambda_0=3\max(a,\eta)$. The gauge satisfies $\varrho(u)<1$ on $Q$ and $\varrho(pu)\ge\varrho(p)/2-\varrho(u)$. Thus, if $\varrho(p)\ge4$, the whole chart has $\varrho\ge1$, and
+
+$$
+0\le V(pu)\le V_0:=512\sqrt{a\eta}.
+\tag{14.14}
+$$
+
+Bounded-potential local elliptic Harnack supplies a finite $H_0\ge2$ comparing any two values of a positive solution on $pQ'$, uniformly over these $p$. Its dependencies are dimension four, the fixed nested cubes, $\lambda_0,\Lambda_0,V_0$. This is the local Harnack intermediate used for the same $h$ in [S, §§115, 130]. In the Stummel formulation of [GT-CFG, Theorem 2.5], the dimension-four modulus of the bounded potential is at most $\pi^2V_0\sigma^2$ at radius $\sigma$, uniformly on these charts. No Harnack estimate across $e$ is used, and $H_0$ is not a supplied numerical name.
+
+Set $m_4=\min_{\varrho=4}h>0$. A horizontal path from $e$ to $p$ consists of the $X_1,X_2,X_3$ segments, followed by a horizontal commutator rectangle of central area $w-xy$. Its length is bounded by
+
+$$
+|x|+|y|+|z|+4\sqrt{|w-xy|}<8\varrho(p),\qquad
+|w-xy|\le|s|+|xy|/2\le5\varrho(p)^2/4.
+\tag{14.15}
+$$
+
+For $\varrho(p)\ge8$, keep the path after its last exit from $\{\varrho<4\}$. Subdivide each of its at most seven horizontal segments into pieces of length at most $1/32$. At most $300(1+\varrho(p))$ links suffice. Each consecutive pair lies in a translated $Q'$, with chart center of gauge at least $4$. Harnack iteration gives
+
+$$
+h(p)\ge m_4H_0^{-300(1+\varrho(p))}=c_0e^{-c_1\varrho(p)},\quad
+c_0=m_4H_0^{-300}>0,\quad c_1=300\log H_0.
+\tag{14.16}
+$$
+
+For $t>0$, the actual source vector is $v_t=(H+1)e^{-tH}z$, with $z$ as in (12.4). Spectral smoothing and punctured local elliptic/parabolic regularity make it smooth on punctured compact space-time cylinders; it is nonnegative and satisfies $\partial_tv=\operatorname{div}(A\nabla v)+Vv$ there. Haar measure and the operator are preserved by the left charts. Ordinary uniformly elliptic parabolic Moser iteration supplies a finite uniform constant $A_d$ such that
+
+$$
+v_d(p)\le A_d\left(\int_{d-2\tau}^d\int_{pQ}|v_t|^2d\mu\,dt\right)^{1/2},
+\qquad \varrho(p)\ge8.
+\tag{14.17}
+$$
+
+Its dependencies are only $\lambda_0,\Lambda_0,Q,Q',\tau,V_0$. One may take $e^{2V_0\tau}$ times the zero-potential subsolution constant: apply that estimate to $e^{-V_0(t-d+2\tau)}v_t$. Only exterior unweighted local regularity is needed here.
+
+For $u\in Q$, the straight coordinate path from $e$ to $u$ has $d_A$-length at most
+
+$$
+L=\sqrt{\frac3{16a}+\frac{25}{256\eta}},\qquad
+|\psi(pu)-\psi(p)|\le L.
+\tag{14.18}
+$$
+
+Put $r_p=\psi(p)-L$. If $r_p>0$, then (14.5), $d-2\tau\ge d/2$ and $t\le d$ imply
+
+$$
+\begin{aligned}
+\|1_{pQ}v_t\|_2
+&\le\frac{2\sqrt2(1+d/r_p)}{\sqrt{\pi dD}}e^{-r_p^2/(4d)},\\
+v_d(p)&\le4A_d\sqrt{\frac\tau{\pi dD}}(1+d/r_p)e^{-r_p^2/(4d)}.
+\end{aligned}
+\tag{14.19}
+$$
+
+The second inequality integrates over an interval of length $2\tau$. Write $b=1+\beta L$ and $r(\rho')=(\rho'-b)/\beta$, using $\rho'$ only as a scalar gauge variable, distinct from the endpoint selector $\rho$. Since $q\ge\varrho$, $r_p\ge r(\varrho(p))$. Dividing by the lower bound for this same actual $h$ in (14.16) gives, when $\varrho(p)\ge8$ and $r(\varrho(p))>0$,
+
+$$
+g_d(p)\le\frac{4A_d}{c_0}\sqrt{\frac\tau{\pi dD}}
+\left(1+\frac d{r(\varrho(p))}\right)
+\exp\left(c_1\varrho(p)-\frac{r(\varrho(p))^2}{4d}\right).
+\tag{14.20}
+$$
+
+Take
+
+$$
+\begin{gathered}
+R_d=\max(8,2b,b+\beta,32d\beta^2c_1),\\
+C_d=\frac{4A_d}{c_0}(1+d)\sqrt{\frac\tau{\pi dD}}.
+\end{gathered}
+\tag{14.21}
+$$
+
+For $\rho'\ge R_d$, $r(\rho')\ge\rho'/(2\beta)$, $r(\rho')\ge1$, and $c_1\rho'-r(\rho')^2/(4d)\le-(\rho')^2/(32d\beta^2)$. This proves (14.12) and the exterior essential-supremum limit. Finally $\varrho(p)\le r$ implies $|x|,|y|,|z|\le r$ and $|w|\le|s|+|xy|/2\le5r^2/4$. The gauge ball lies in the original coordinate box of radius $\max(r,5r^2/4)$, proving the asserted exterior box statement. $\square$
+
+**Corollary 14.4 (qualitative compact localization and its numerical boundary).** Some finite compact gauge ball contains the full essential supremum $N_d$. Also one finite exterior radius suffices for $v_d\le(B_d+2^{-k})h$ simultaneously for all $k\ge0$, where $B_d=\|v_{d/2}\|_2^2$. These are existence assertions, without an algorithm producing that radius.
+
+Proof. The original source law has mass one, so $N_d\ge1$. Choose an exterior bound in (14.12) below $1/2$. The essential supremum is then carried by the remaining compact ball. Cauchy–Schwarz and $m(G)=1$ give $B_d=\|g_{d/2}\|_{L^2(m)}^2\ge(\int g_{d/2}dm)^2=1$, so the same exterior bound is below every $B_d+2^{-k}$. This does not locate a maximum at the source trace. $\square$
+
+The scalars $\beta,D$, (14.6), and the elementary geometry are available from the allowed names. The constants $H_0,A_d$ and the positive normalized anchor $m_4$ have been identified mathematically, but a fully specified total rational extraction of them from those names is not supplied. Nor is sharp certified compact upper approximation of $g_d$ including the nonpolar source supplied. Punctured smoothness and compact localization do not provide that source-inclusive modulus. These are sufficient obligations of this regional route, not necessary conditions for every possible solution of (12.31).
+
+The global cofinal-upper-certificate producer in (12.31) remains unresolved: neither its construction nor its negation follows. The consumer remains exactly $M=1+N_d$, $P=T_d$, $f_3=g_d/(4M)$, $f_B=1/4$, $f_0=f_1=(3/4-f_3)/2$, with the original $e$-start, first read at $2d$, gaps $d$, all labels and finite word laws. A loose upper bound cannot replace this $M$.
+
+**Definition 14.5 (mathematical sources and scope).** The source-specific deductions (14.5) and (14.12) are `repo-derived` conditional on the stated analytic suppliers. Finite propagation, transmutation, spectral calculus, elliptic Harnack and parabolic Moser estimates are `literature-attested` intermediates, not new generic results.
+
+| Mathematical source | Correspondence and scope |
+| --- | --- |
+| This volume, §§10–12, especially (10.12), (12.2), (12.4)–(12.10), Proposition 12.7 and Definition 12.8 | Original unit Green bound, normalized full endpoint, scalar $D$, deterministic source vector and unchanged calibration consumer. The tail-to-order deduction retains these inputs. |
+| [S, §§115–117, 130–133](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md) | Positivity and punctured smoothness of $h$, full strongly local form, nonpolar trace and actual deterministic-time law. The extension weight of §131 is not substituted for the actual global $m$; Theorem 133.2 remains the source-neighborhood boundedness supplier. |
+| [GT-CS] T. Coulhon and A. Sikora, [Gaussian heat kernel upper bounds via Phragmén–Lindelöf theorem](https://arxiv.org/html/math/0609429v1), §3.2, Theorem 3.4 and (3.8) | Nonnegative self-adjoint Davies–Gaffney/finite-wave equivalence and heat transmutation, applied to $K$ after (14.7). Gaussian kernel results needing extra on-diagonal or doubling assumptions are not used. |
+| [GT-CFG] F. Chiarenza, E. Fabes and N. Garofalo, [Harnack's inequality for Schrödinger operators and the continuity of solutions](https://doi.org/10.1090/S0002-9939-1986-0857933-4), Proc. Amer. Math. Soc. 98, 415–425, Theorem 2.5; correspondence in [S, §130] | Only local signed-potential Harnack on the exterior charts, with ellipticity (14.13) and bounded Stummel modulus. No effective numerical constant is imported. |
+
+The parabolic step (14.17) uses ordinary local Moser iteration for the displayed uniformly elliptic divergence-form equation with bounded potential; its analytic hypotheses and constant dependencies are given explicitly above. It supplies existence of $A_d$, not a coefficient-name numerical service. The conclusions are ordinary conditional mathematical deductions within those boundaries.
+
+## 追加锚（本行以下为增补区）
