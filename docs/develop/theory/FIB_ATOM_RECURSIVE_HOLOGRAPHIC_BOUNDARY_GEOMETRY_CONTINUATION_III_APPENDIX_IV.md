@@ -641,3 +641,116 @@ Indeed, (166.4) supplies the condition $v\perp W$, while Proposition 165.2 suppl
 The deductions (166.1)--(166.10) are source-specific consequences of the original bounded equal-gap readout and the self-adjoint heat contraction. They are not a claim that the representer bridge, the successor orbit, or its physical realization is present in the original model beyond the hypotheses displayed here.
 
 ## 追加锚（本行以下为增补区）
+
+## 167. Bounded calibration closure and the finite residual test
+
+Section 166 identifies the first-order calibration plane through bounded $L^2(m)$ representers, but leaves two different questions separate: whether bounded calibrated classes are dense in the Hilbert orthogonal complement, and whether the heat operator preserves that bounded calibrated class. The next propositions close the first logical bridge and reduce the second to a finite residual Gram matrix. They do not evaluate that matrix for the actual 64 representers.
+
+**Definition 167.1 (the bounded calibration space).** Retain all hypotheses and notation of Section 166. Thus $H=L^2(G,m;\mathbb R)$, $W\subset H$ is the finite span of the bounded representers from (166.1), and put
+
+$$
+V_\infty=L^\infty(G,m;\mathbb R)\cap W^\perp.
+\tag{167.1}
+$$
+
+All functions and orthogonality relations are understood as $m$-classes. The finite-dimensionality of $W$ implies that it has a bounded $m$-class basis after removing linear dependencies from the at most $64$ generators.
+
+**Proposition 167.2 (bounded calibrated classes are Hilbert-dense).** With the notation of Definition 167.1,
+
+$$
+\overline{V_\infty}^{\,H}=W^\perp.
+\tag{167.2}
+$$
+
+*Proof.* Let $x\in W^\perp$. Since $m(G)=1$, bounded truncations
+
+$$
+x_n=\max(-n,\min(x,n))
+$$
+
+belong to $L^\infty(G,m;\mathbb R)$ and converge to $x$ in $H$. Let $\Pi_W$ be the orthogonal projection onto $W$. Choose a bounded basis $w_1,\ldots,w_r$ of $W$. The coefficients of $\Pi_Wx_n$ are finite linear combinations of the pairings $\langle x_n,w_i\rangle_H$, so $\Pi_Wx_n\in W\subset L^\infty$. Hence
+
+$$
+v_n=x_n-\Pi_Wx_n\in V_\infty.
+$$
+
+Because $\Pi_Wx=0$ and $\Pi_W$ is a contraction,
+
+$$
+\|v_n-x\|_H
+\le \|x_n-x\|_H+\|\Pi_W(x_n-x)\|_H
+\le 2\|x_n-x\|_H\longrightarrow0.
+$$
+
+Thus $W^\perp\subseteq\overline{V_\infty}^{\,H}$; the reverse inclusion follows from $V_\infty\subseteq W^\perp$. $\square$
+
+**Proposition 167.3 (successor preservation and calibration-plane invariance).** Let $P:H\to H$ be bounded and self-adjoint, and suppose $P(L^\infty(G,m;\mathbb R))\subseteq L^\infty(G,m;\mathbb R)$. Then
+
+$$
+P(V_\infty)\subseteq V_\infty
+\quad\Longleftrightarrow\quad
+P(W)\subseteq W.
+\tag{167.3}
+$$
+
+*Proof.* Assume first that $P(V_\infty)\subseteq V_\infty$. Proposition 167.2 and boundedness of $P$ give $P(W^\perp)\subseteq W^\perp$. If $w\in W$ and $u\in W^\perp$, then self-adjointness gives
+
+$$
+\langle Pw,u\rangle_H=\langle w,Pu\rangle_H=0.
+$$
+
+Therefore $Pw\in(W^\perp)^\perp=W$, proving $P(W)\subseteq W$.
+
+Conversely, let $v\in V_\infty$. The $L^\infty$-preservation hypothesis gives $Pv\in L^\infty$. For $w\in W$, self-adjointness and $P(W)\subseteq W$ give
+
+$$
+\langle Pv,w\rangle_H=\langle v,Pw\rangle_H=0.
+$$
+
+Thus $Pv\in W^\perp$, and hence $Pv\in V_\infty$. $\square$
+
+For the original heat operator, the hypotheses of Proposition 167.3 are inherited: $P=T_d=e^{-dK}$ is bounded self-adjoint on $H$, and the Markov semigroup preserves bounded real functions. Proposition 167.3 is therefore a conditional closure equivalence, not a claim that the actual Section 166 plane is already $P$-invariant.
+
+**Proposition 167.4 (finite residual Gram criterion).** Let $w_1,\ldots,w_r$ be an $H$-independent bounded basis of $W$, and define
+
+$$
+G_{ij}=\langle w_i,w_j\rangle_H,qquad
+K_{ij}=\langle w_i,Pw_j\rangle_H,qquad
+D_{ij}=\langle Pw_i,Pw_j\rangle_H.
+\tag{167.4}
+$$
+
+Then $G$ is positive definite and
+
+$$
+P(W)\subseteq W
+\quad\Longleftrightarrow\quad
+D-K^{\mathsf T}G^{-1}K=0.
+\tag{167.5}
+$$
+
+*Proof.* Let $S:\mathbb R^r\to H$ be the synthesis map $Se_j=w_j$. Then $G=S^*S$, $K=S^*PS$, and $D=(PS)^*PS$. Self-adjointness of $P$ makes $K$ symmetric. The orthogonal projection onto $W$ is
+
+$$
+\Pi_W=SG^{-1}S^*.
+$$
+
+Consequently the matrix on the right of (167.5) is the Gram matrix of the projection residuals:
+
+$$
+D-K^{\mathsf T}G^{-1}K
+ =(PS)^*(I-\Pi_W)PS.
+\tag{167.6}
+$$
+
+It vanishes exactly when every $(I-\Pi_W)Pw_j$ vanishes, which is equivalent to $P w_j\in W$ for each basis vector and hence to $P(W)\subseteq W$. For the original 64 generators one must first pass to an $H$-independent basis (or use the corresponding Moore--Penrose projection); the possibly singular raw 64-by-64 Gram matrix cannot be inverted. $\square$
+
+## 168. Closure boundary and applicability
+
+The density and residual statements above are ordinary Hilbert-space consequences of the inherited probability, bounded representers, self-adjoint heat operator and Markov boundedness. The residual matrix uses exact $m$-pairings; a numerical approximation, the compressed matrix $K$ alone, or the existence of the representer formula does not establish its vanishing.
+
+The current result does not assert $P(W)\subseteq W$ for the concrete Section 166 plane, $P(V_\infty)=V_\infty$, orbit density, a nonzero bounded common-kernel sequence, a physical successor, a nonlinear residual-zero family, a legal simplex or $H43$ partition, a terminal compensator, $SRS\text{-}20$, $F_{64}$, or a Lean/kernel theorem. Those questions require their own exact calculations and realization bridges.
+
+
+
+## 追加锚（本行以下为增补区）

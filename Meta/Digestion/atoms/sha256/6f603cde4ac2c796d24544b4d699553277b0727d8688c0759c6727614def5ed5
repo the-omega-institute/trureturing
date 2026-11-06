@@ -1,0 +1,41 @@
+**命题 12.4（两模核心和三模 Fourier 线的精确恒等式）。** 原矩阵满足
+
+$$
+Ue_1=q,\qquad Ue_2=\zeta\tau q,
+$$
+
+以及在 $(1,2)$ 块上
+
+$$
+M:=U^*\tau U
+=\begin{pmatrix}0&\zeta\\ \zeta^2&0\end{pmatrix}
+=\operatorname{diag}_{(1,2)}(\zeta,\zeta^2)\,\tau.
+$$
+
+在其余坐标上 $M$ 为恒等，且
+
+$$
+W^*\tau=\tau W^*,\qquad
+U^*\tau=MU^*,\qquad
+V^*\tau=MV^*,\qquad
+\tau V=VM,\qquad
+M^*C_1M=C_2.
+$$
+
+因而
+
+$$
+(\tau V)C_1(\tau V)^*=VC_2V^*=P'.
+$$
+
+**证明。** 由 $\eta\zeta=\zeta-\zeta^2$ 为纯虚数，$q^*\tau q=0$ 且 $q,\tau q$ 都是单位向量。显示的 $R$ 的第二列是 $(-\bar\eta e_1+e_2)/2$，所以
+$$
+Ue_2=Z_2Re_2
+ =\frac{-\bar\eta e_1+\zeta e_2}{2}
+ =\frac{\eta\zeta^2e_1+\zeta e_2}{2}
+ =\zeta\tau q.
+$$
+其中 $\eta\zeta^2=-\bar\eta$。在基 $(q,\zeta\tau q)$ 中，$\tau$ 将第一向量送到第二向量的 $\zeta^2$ 倍，将第二向量送到第一向量的 $\zeta$ 倍，故得 $M$。三模 $W$ 的指数 $ab$ 在行或列指标取模三取负时都变为 $-ab$；交换 $1,2$ 正是该取负，故 $W\tau=\tau W$，再代入 $V=WU$ 得其余恒等式。最后，$M$ 是相位乘以交换，故 $M^*C_1M=C_2$，并由 $\tau V=VM$ 得投影等式。所有等式都在原矩阵定义中逐项成立，没有使用数值协变前提。$\square$
+
+这些恒等式只定位一条精确的局部目标：三模 Fourier 线、双模 $R_2$ 核心和终端坐标边界。它们不是 A/F/R/C 实际证书。
+
