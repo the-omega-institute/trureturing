@@ -412,10 +412,12 @@ private theorem lower_coefficient (hA : ∀ i j, 0 < A i j) {c : ℝ}
   have hLsq : L ^ 2 = theta A := Real.sq_sqrt (by linarith)
   let q := A i l * L / A i j
   have hq : 0 < q := div_pos (mul_pos (hA i l) hL) (hA i j)
-  have hbal₁ : A i j * q = A i l * L := by dsimp [q]; field_simp; ring
+  have hbal₁ : A i j * q = A i l * L := by
+    dsimp [q]
+    field_simp [(hA i j).ne']
   have hminor : A i j * A k l = L ^ 2 * (A i l * A k j) := by
-    rw [hLsq,hm]
-    field_simp
+    rw [hLsq]
+    exact (div_eq_iff (mul_pos (hA i l) (hA k j)).ne').1 hm.symm
   have hbal₂ : A k j * q * L = A k l := by
     apply mul_left_cancel₀ (hA i j).ne'
     calc A i j * (A k j * q * L) = (A i j * q) * (A k j * L) := by ring
@@ -433,7 +435,7 @@ private theorem lower_coefficient (hA : ∀ i j, 0 < A i j) {c : ℝ}
       w η t s / w η 0 s = if s = j then exp t else 1 := by
     by_cases hs : s = j
     · simp [w,hs,hq.ne']
-    · by_cases hs' : s = l <;> simp [w,hs,hs',hη.ne']
+    · by_cases hs' : s = l <;> simp [w,hs,hs',hη.ne',hjl.symm]
   have hdist (η : ℝ) (hη : 0 < η) : distance (w η t) (w η 0) = t := by
     have hmax : (⨆ s, w η t s / w η 0 s) = exp t := by
       apply le_antisymm
@@ -445,12 +447,12 @@ private theorem lower_coefficient (hA : ∀ i j, 0 < A i j) {c : ℝ}
         · exact one_le_exp ht.le
       · have hh := le_ciSup (f := fun s => w η t s / w η 0 s)
           (Set.finite_range _).bddAbove j
-        simpa only [hratio η hη, if_pos rfl] using hh
+        simpa [hratio η hη] using hh
     have hmin : (⨅ s, w η t s / w η 0 s) = 1 := by
       apply le_antisymm
       · have hh := ciInf_le (f := fun s => w η t s / w η 0 s)
           (Set.finite_range _).bddBelow l
-        simpa only [hratio η hη, if_neg hjl.symm] using hh
+        simpa [hratio η hη,hjl.symm] using hh
       · apply le_ciInf
         intro s
         rw [hratio η hη s]
@@ -474,7 +476,8 @@ private theorem lower_coefficient (hA : ∀ i j, 0 < A i j) {c : ℝ}
       _ = _ := by rw [Finset.sum_add_distrib]; simp
   have hZcont (p : I) (s : ℝ) : ContinuousAt (fun η => Z p η s) 0 := by
     change ContinuousAt (fun η => ∑ r, A p r * w η s r) 0
-    apply ContinuousAt.sum
+    apply Continuous.continuousAt
+    apply continuous_finsetSum
     intro r hr
     dsimp [w]
     split_ifs <;> fun_prop
@@ -496,7 +499,8 @@ private theorem lower_coefficient (hA : ∀ i j, 0 < A i j) {c : ℝ}
     have hgq := (mul_pos (hA k j) hq).ne'
     have hLp : L + 1 ≠ 0 := by positivity
     have hLe : L + exp t ≠ 0 := by positivity
-    field_simp
+    field_simp [(hA i j).ne', (hA i l).ne', (hA k j).ne', (hA k l).ne',
+      hL.ne', hq.ne',hLp,hLe]
     <;> ring
   obtain ⟨η,hη,hηG⟩ := positive_parameter hGc (b := c * t) (by rw [hGzero]; exact hct)
   refine ⟨w η t,w η 0,hw η t hη,hw η 0 hη,?_⟩
