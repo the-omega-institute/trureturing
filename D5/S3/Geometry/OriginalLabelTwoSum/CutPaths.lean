@@ -9,6 +9,7 @@ import D5.S3.Geometry.OriginalLabelTwoSum.CutTree
 
 /-! SOURCE ONLY: proof terms have not been elaborated. -/
 noncomputable section
+attribute [local instance] Classical.propDecidable
 open SimpleGraph
 namespace D5.S3.Geometry.OriginalLabelTwoSum.CutTree
 universe u v
@@ -43,7 +44,7 @@ theorem right_path_edge_mem (x y : VR) (e : Sym2 g.Carrier) :
     e ∈ (g.path (g.qR x) (g.qR y)).edges ↔
       ∃ d ∈ (g.rightPath x y).edges, Sym2.map g.qR d = e := by
   rw [g.right_path]
-  simpa only [SimpleGraph.Walk.edges_map,List.mem_map]
+  simp only [rightHom,RelHom.coeFn_mk,SimpleGraph.Walk.edges_map,List.mem_map]
 
 /-- An avoiding left walk is mapped through the actual deleted-edge graph. -/
 def avoidingImage {x y : VL} (p : g.TL.Walk x y)
@@ -52,7 +53,8 @@ def avoidingImage {x y : VL} (p : g.TL.Walk x y)
 
 theorem avoidingImage_edges {x y : VL} (p : g.TL.Walk x y) (hp) :
     (g.avoidingImage p hp).edges = p.edges.map (Sym2.map g.qL) := by
-  simp [avoidingImage,SimpleGraph.Walk.edges_transfer]
+  simp [avoidingImage,leftHom,RelHom.coeFn_mk,SimpleGraph.Walk.edges_map,
+    SimpleGraph.Walk.toDeleteEdge,SimpleGraph.Walk.toDeleteEdges,SimpleGraph.Walk.edges_transfer]
 
 theorem avoidingImage_isPath {x y : VL} (p : g.TL.Walk x y) (hp)
     (hpath : p.IsPath) : (g.avoidingImage p hp).IsPath :=
@@ -71,7 +73,7 @@ def terminalPath : g.tree.Walk (g.qL g.aL) (g.qL g.bL) :=
 theorem terminalPath_isPath : g.terminalPath.IsPath := by
   have h : ((g.rightPath g.aR g.bR).map g.rightHom).IsPath :=
     (treePath_isPath g.rightTree g.aR g.bR).map g.qR_injective
-  simpa only [terminalPath,SimpleGraph.Walk.isPath_copy] using h
+  simpa only [terminalPath,rightHom,RelHom.coeFn_mk,SimpleGraph.Walk.isPath_copy] using h
 
 /-- The forward splice writes the common endpoints once, using Walk.append. -/
 def spliceAB {x y : VL} (p₀ : g.cut.Walk x g.aL) (p₁ : g.cut.Walk g.bL y) :
@@ -123,23 +125,23 @@ theorem spliceAB_isPath {x y : VL} (p₀ : g.cut.Walk x g.aL)
   have hi₀ : ∀ z, z ∈ (p₀.map g.leftHom).support →
       z ∈ g.terminalPath.support → z = g.qL g.aL := by
     intro z hz ht
-    simp only [SimpleGraph.Walk.support_map,List.mem_map] at hz
+    simp only [leftHom,RelHom.coeFn_mk,SimpleGraph.Walk.support_map,List.mem_map] at hz
     obtain ⟨l,hl,rfl⟩ := hz
-    simp only [terminalPath,SimpleGraph.Walk.support_copy,
+    simp only [terminalPath,rightHom,RelHom.coeFn_mk,SimpleGraph.Walk.support_copy,
       SimpleGraph.Walk.support_map,List.mem_map] at ht
     obtain ⟨r,hr,he⟩ := ht
     exact congrArg g.qL (g.support_overlap_a p₀ hl he.symm)
   have hfirst := CutWalk.append_path hm₀ g.terminalPath_isPath hi₀
   apply CutWalk.append_path hfirst hm₁
   intro z hz hz₁
-  simp only [SimpleGraph.Walk.support_map,List.mem_map] at hz₁
+  simp only [leftHom,RelHom.coeFn_mk,SimpleGraph.Walk.support_map,List.mem_map] at hz₁
   obtain ⟨l,hl,rfl⟩ := hz₁
   rcases SimpleGraph.Walk.mem_support_append_iff.mp hz with hz₀ | ht
-  · simp only [SimpleGraph.Walk.support_map,List.mem_map] at hz₀
+  · simp only [leftHom,RelHom.coeFn_mk,SimpleGraph.Walk.support_map,List.mem_map] at hz₀
     obtain ⟨k,hk,he⟩ := hz₀
     have hkl : k = l := g.qL_injective he
     exact False.elim (g.segments_disjoint p₀ p₁ (hkl ▸ hk) hl)
-  · simp only [terminalPath,SimpleGraph.Walk.support_copy,
+  · simp only [terminalPath,rightHom,RelHom.coeFn_mk,SimpleGraph.Walk.support_copy,
       SimpleGraph.Walk.support_map,List.mem_map] at ht
     obtain ⟨r,hr,he⟩ := ht
     exact congrArg g.qL (g.support_overlap_b p₁ hl he.symm)
@@ -155,7 +157,7 @@ theorem spliceAB_edge_mem {x y : VL} (p₀ : g.cut.Walk x g.aL)
     e ∈ (g.spliceAB p₀ p₁).edges ↔
       (∃ d, (d ∈ p₀.edges ∨ d ∈ p₁.edges) ∧ Sym2.map g.qL d = e) ∨
       ∃ d ∈ (g.rightPath g.aR g.bR).edges, Sym2.map g.qR d = e := by
-  simp only [spliceAB,terminalPath,SimpleGraph.Walk.edges_append,
+  simp only [spliceAB,terminalPath,leftHom,rightHom,RelHom.coeFn_mk,SimpleGraph.Walk.edges_append,
     SimpleGraph.Walk.edges_copy,SimpleGraph.Walk.edges_map,List.mem_append,List.mem_map]
   change ((∃ d ∈ p₀.edges, Sym2.map g.qL d = e) ∨
       (∃ d ∈ (g.rightPath g.aR g.bR).edges, Sym2.map g.qR d = e)) ∨
@@ -249,7 +251,7 @@ theorem left_path_edgeSet (x y : VL) :
         Sym2.map g.qR '' (g.rightPath g.aR g.bR).edgeSet else ∅) := by
   classical
   ext e
-  rw [SimpleGraph.Walk.mem_edgeSet,g.left_path_edge_mem _ (treePath_isPath _ _ _)]
+  rw [SimpleGraph.Walk.mem_edgeSet,g.left_path_edge_mem _ (treePath_isPath g.leftTree x y)]
   by_cases h : s(g.aL,g.bL) ∈ (g.leftPath x y).edges <;>
     simp [h,Set.mem_image,SimpleGraph.Walk.mem_edgeSet,and_assoc]
 

@@ -146,7 +146,7 @@ theorem getD_mem_of_lt {α : Type*} {xs : List α} {i : Nat} {d : α}
       | zero => simp
       | succ i =>
           simp only [List.length_cons, Nat.succ_lt_succ_iff] at hi
-          simpa using ih hi
+          simpa using (List.mem_cons_of_mem x (ih hi))
 
 @[simp] theorem pairs_cast {K L K' L' : PreAbstractSimplicialComplex V}
     (S : Sequence K L) (hK : K = K') (hL : L = L') :
@@ -182,7 +182,7 @@ theorem frames_source_zero {K L : PreAbstractSimplicialComplex V}
     (S.append T).pairs.length = S.pairs.length + T.pairs.length := by
   induction S with
   | refl K => simp [Sequence.append, Sequence.pairs]
-  | step P S ih => simp [Sequence.append, Sequence.pairs, ih, Nat.add_assoc]
+  | step P S ih => simp [Sequence.append, Sequence.pairs, ih, Nat.add_assoc, Nat.add_comm]
 
 end Sequence
 
@@ -265,7 +265,8 @@ def collapseEquiv (S : Sequence K L) : Space K ≃ₕ Space L where
   left_inv := ⟨S.collapseHomotopy.toHomotopy.symm⟩
   right_inv := by
     have he : S.sequenceRetraction.comp S.inclusion = ContinuousMap.id _ := by
-      ext y
+      apply ContinuousMap.ext
+      intro y
       exact S.sequenceRetraction_inclusion y
     rw [he]
 
@@ -374,7 +375,7 @@ private theorem insert_subset_iff_erase {v : V} {a s : Finset V}
     insert v a ⊆ s ↔ a ⊆ s.erase v := by
   constructor
   · intro h
-    exact subset_erase_of_notMem ha ((subset_insert _ _).trans h)
+    exact subset_erase_of_notMem ha ((Finset.subset_insert _ _).trans h)
   · intro h
     exact Finset.insert_subset_iff.mpr ⟨hv, h.trans (Finset.erase_subset _ _)⟩
 
@@ -454,7 +455,9 @@ theorem deletion_union_link_cone (K : PreAbstractSimplicialComplex V) (v : V)
       by_cases he : s.erase v = ∅
       · exact Or.inl he
       · exact Or.inr ⟨Finset.nonempty_iff_ne_empty.mpr he,
-          Finset.notMem_erase _ _, by simpa [Finset.insert_erase hvs] using hs⟩
+          Finset.notMem_erase _ _, by
+            change insert v (s.erase v) ∈ K.faces
+            simpa only [Finset.insert_erase hvs] using hs⟩
     · exact Or.inl ⟨hs, hvs⟩
 
 namespace Pair
@@ -581,7 +584,7 @@ theorem pairs_liftOver_forall2
   | @step P N T ih =>
       simp only [Sequence.liftOver, Sequence.pairs, Sequence.pairs_cast, List.forall₂_cons]
       refine ⟨?_, ih (P.retained_le.trans hMD) hvD⟩
-      exact ⟨hMD, hvD, rfl⟩
+      exact ⟨hMD, hvD, trivial⟩
 
 theorem frames_liftOver
     {M N D : PreAbstractSimplicialComplex V} (S : Sequence M N)
@@ -591,8 +594,8 @@ theorem frames_liftOver
   induction S generalizing D with
   | refl M => rfl
   | @step P N T ih =>
-      simp [Sequence.liftOver, Sequence.frames, Sequence.frames_cast, Pair.liftPairOver,
-        ih (P.retained_le.trans hMD) hvD]
+      simp only [Sequence.liftOver, Sequence.frames, Sequence.frames_cast, List.map_cons]
+      exact congrArg (List.cons _) (ih (P.retained_le.trans hMD) hvD)
 
 theorem list_getD_map {α β : Type*} (f : α → β) (xs : List α)
     (i : Nat) (a : α) :
@@ -677,7 +680,7 @@ theorem terminalPair_retained (D : PreAbstractSimplicialComplex V) (v w : V)
   · rintro ⟨hs, hn⟩
     have hvs : v ∉ s := fun h => hn (Finset.singleton_subset_iff.mpr h)
     exact (mem_union_avoiding D (vertexComplex w) v
-      (fun t ht => by
+      (fun (t : Finset V) (ht : t ∈ vertexComplex w) => by
         change t = {w} at ht
         rw [ht]
         exact hwD) hvs).mp hs
@@ -807,7 +810,7 @@ def coneContraction (v : V) (L : PreAbstractSimplicialComplex V) :
   toHomotopy := straight _ _ (by
     intro t x
     change mix (t : ℝ) x.val (conePoint v L).val ∈ realization (cone v L)
-    simpa only [mix, conePoint] using
+    simpa only [mix, conePoint, selfConePair] using
       ((selfConePair v L).cone_segment x x.property (t : ℝ) t.2.1 t.2.2))
   prop' := by
     intro t x hx
@@ -815,8 +818,8 @@ def coneContraction (v : V) (L : PreAbstractSimplicialComplex V) :
     subst x
     apply Subtype.ext
     funext a
-    change mix t (conePoint v L).val (conePoint v L).val a = _
-    simp only [mix]
+    change mix t (conePoint v L).val (conePoint v L).val a = (conePoint v L).val a
+    dsimp only [mix]
     ring
 
 namespace Sequence
@@ -862,7 +865,7 @@ def coneExtensionContraction {K L : PreAbstractSimplicialComplex V}
         i (D.retraction (i (conePoint v L)))
       rw [hr]
       exact congrArg i ((coneContraction v L).eq_fst t
-        (Set.mem_singleton_self (conePoint v L))) }
+        (by simp)) }
   exact (A.trans B).cast (by ext x; rfl) (by ext x; rfl)
 
 end Sequence
