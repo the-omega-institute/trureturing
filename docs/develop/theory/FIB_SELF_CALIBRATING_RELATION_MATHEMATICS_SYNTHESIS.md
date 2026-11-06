@@ -2701,4 +2701,369 @@ $$
 仍是开放义务；这些结果保留为互补的静态容量、取得可达性、动态轨道和
 固定来源响应边界。
 
+## 25.33 原生有限速率的偏交换边界
+
+本节只综合 [Recursive Relational Observation: Native Finite-Rate Continuation](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_RATE_CONTINUATION.md)
+的来源特定结果。这里的“偏交换”只指有限调用串中 cap 与读切的两种有条件
+排列：读前 cap 只能在精确承认域内接上原读与纯更新；若先执行原始前缀、原始
+读和原始更新，再从该实际切点对未来后缀加 cap，则对任意原始前缀都成立。它
+不把两种排列推广成无条件的 cap/读交换，也不引入另一来源的接口。
+
+### 25.33.1 支持递推与 cap 无关的承认域
+
+对有限前缀 $a=(j_1,\ldots,j_p)$，令 $S_0=\{\{3,7\}\}$，并按来源式
+(2.2) 递推
+
+$$
+S_k=S_{k-1}\cup\{q:\exists r\in S_{k-1},\ \{q,r\}\text{ 对 }j_k
+\text{ 为 active pair},\ \exists s\in(0,1):J_k(q,r;s)>0\}.
+$$
+
+则对每个有限 $L>0$，$S_p$ 恰为 capped pre-read endpoint configuration
+distribution 的 support。若 $E_i=\{q:b_9(q)=i\}$ 且
+$\tau_i(a)=\lVert M_iK_ae_{\rm r}\rVert^2$，原读可接上的精确条件为
+
+$$
+\mathsf{Adm}(a):\qquad
+S_p\cap E_i\ne\varnothing\ \Longrightarrow\ \tau_i(a)>0
+\qquad(i=0,1).
+$$
+
+这个条件对所有有限正 cap 都相同；它是原始有限前缀的有限精确识别条件，
+不是新增 reader。于是，若 $\mathsf{Adm}(a)$ 成立，任意有限原始后缀 $f$
+都可在保持规定读、保留 $Q$ 和原 pure update 的条件下接续；若不成立，
+则某个正质量报告要求 $0/0$ 的 successor，所需 capped $\mathsf R(a,f)$
+不在该合同的定义域内。[来源 Theorem 2.2–2.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_RATE_CONTINUATION.md#2-bounded-node-extension-and-exact-read-admission)
+还给出 $a=\epsilon$ 与 $a=(9)$ admitted，以及省略地址 $9$ 的每个前缀
+仍 admitted；这些例子不改变上述量词。
+
+### 25.33.2 admitted 前缀的有限 $N$ 总变差账
+
+令 $P=\mathsf T(a)$ 时 $n=|a|$；令 $P=\mathsf R(a,f)$ 时要求
+$\mathsf{Adm}(a)$ 并取 $n=|a|+|f|$。设
+
+$$
+\vartheta_L=\frac{(2\alpha c)^2}{L^2+(2\alpha c)^2}.
+$$
+
+对每个这样的有限 $P$，来源 Theorem 4.2 的 complete-history 比较为
+
+$$
+\operatorname{TV}(\mu^P,\mu_L^P)
+\le \min\{1,\mathcal E_L(P)\}
+\le \min\{1,2n\vartheta_L\}
+\le \min\{1,8\alpha^2c^2n/L^2\}.
+$$
+
+因此对任意固定 $N\ge1$，在上述 admitted programme 族中统一取 $n\le N$
+时有 $\operatorname{TV}\le\min\{1,2N\vartheta_L\}$；给定
+$0<\varepsilon<1$，取
+
+$$
+L\ge2\alpha c\sqrt{2N/\varepsilon}
+$$
+
+即可得到 complete-history TV 不超过 $\varepsilon$（来源 Theorem 6.1）。
+这里的 $L$ 是比较过程的 cap，proposal count 对一个 $n$-call programme
+服从均值 $nL$ 的 Poisson 分布，因而只是数学比较资源；Poisson 计数虽几乎
+处处有限却无有界支撑，也没有由此得到有限位计算、硬超时或物理实现定理。
+
+### 25.33.3 任意前缀的 post-read-only cap
+
+对每一个原始有限 $\mathsf R(a,f)$，先保留原始 prefix、实际 report/read、
+pure update、已经发生的 configuration 和 archive，然后只从该实际 read cut
+对 $f$ 使用 capped continuation。这个 law 对所有前缀 $a$ 存在，不要求
+$\mathsf{Adm}(a)$；其来源式 (4.11) 为
+
+$$
+\operatorname{TV}\!\left(\mu^{\mathsf R(a,f)},
+\mu_{L,\mathrm{post}}^{a,f}\right)
+\le \min\left\{1,\sum_{i,\ell}C_L(w_{i,\ell},h_\ell)\right\}
+\le \min\{1,2|f|\vartheta_L\}.
+$$
+
+误差只支付后缀 $|f|$；原始前缀、read 和其取得成本完整保留。这个结论不
+声称对每个隐藏过去条件化后仍有同一 bound，也不把 post-read-only law 当作
+读前 capped law。[来源 Theorem 4.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_RATE_CONTINUATION.md#4-native-excess-current-bound-and-full-history-composition)
+
+### 25.33.4 $9^{10}$ 的零投影与受限 bounded-rate 下界
+
+对任意有限 $L>0$，读前 cap 的 $a=9^{10}$ 有
+$\tau_1(a)=0$，但 literal report $1$ 的 capped probability 严格为正；
+因此保持原 literal report、保留 $Q$、使用 unchanged pure update 的完整
+$\mathsf R(9^{10},f)$ law 对任意原始有限 $f$（包括 $\epsilon$ 与 $(1)$）
+都不存在。该非存在来自正质量的 $0/0$ successor，不是删去路径或把它改记为
+failure（来源 Theorem 3.1）。
+
+对任一固定原始有限后缀 $f$，令 $P=\mathsf R(9^{10},f)$；同一来源的下界
+只对以下明确受限的 comparison class 成立：
+law 有 exact original pre-read vector、literal report、read 时保留 $Q$ 和
+unchanged original pure update；configuration 是整个 $E$ 上的 causal pure-jump
+process，predictable total exit intensity 被某个有限 $L$ 统一有界；没有 forced
+或 deterministic configuration changes、killing 或 censored paths。对该类任一
+law $\eta$，
+
+$$
+\operatorname{TV}(\eta,\mu^P)\ge A=4c^2.
+$$
+
+这不是对所有 finite-resource model 的下界；unbounded integrated risk、改变
+vector history、额外 deterministic configuration changes 或改变 update 均在
+该定理范围之外，并须另行给出来源和对应关系。[来源 Theorems 3.1–3.2](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_RATE_CONTINUATION.md#3-actual-zero-projection-obstruction-and-its-bounded-rate-class)
+
+### 25.33.5 有限 $N$ 与无界长度的次序
+
+对 finite no-read words 定义
+
+$$
+B_N(L)=\sup_{|a|\le N}\operatorname{TV}(\mu^{\mathsf T(a)},
+\mu_L^{\mathsf T(a)}).
+$$
+
+当 $N\ge10$ 且 $L\ge L_{\rm f}$，来源 Theorem 5.1 给出
+
+$$
+1-(1-F_L)^{3\lfloor N/10\rfloor}
+\le B_N(L)\le\min\{1,2N\vartheta_L\},
+$$
+
+其中
+
+$$
+L_{\rm f}=\frac{A\alpha}{2d},\qquad
+r_L=\frac{A\alpha^2}{L^2+\alpha^2},\qquad
+F_L=r_L\exp\!\left[-\frac{2L}{\alpha}\arctan(\alpha/L)\right].
+$$
+
+当 $N\ge10$ 且 $L\ge\max\{L_{\rm f},\alpha\}$ 时，上下界具有只依赖该
+native source 的常数下的 $\min\{1,N/L^2\}$ 阶。可是对每个固定有限
+$L>0$，所有有限 no-read words 的 complete-history TV 上确界为 $1$；在
+$\mathsf T(1^{10m})$ 上，terminal TV 可对 $m$ 保持 $O(L^{-2})$，而
+complete-history TV 随 $m\to\infty$ 趋于 $1$。所以固定有限 $N$ 的 cap
+选择不能外推成对无界 word length 的统一小误差。[来源 Theorem 5.1]
+
+这里的有限长度结论只涉及同一 native source 中已声明的 finite words、exact
+history 与指定 terminal projection。它没有把有限 $N$ bound 变成所有长度的
+uniform bound，也没有把 almost-sure finite Poisson proposal count 变成确定的
+finite budget；这些边界与 source 的 Definition 6.2 一致。
+
+## 追加锚（本行以下为增补区）
+
+## 25.34 条件续接行的精度、同切口组合与边缘盲区
+
+### 25.34.1 同一原切口上的条件关系
+
+**定义 25.34.1（原条件行与共同投影）。** 固定
+[native finite precision](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_PRECISION_CONTINUATION_KERNELS.md)
+定义 1.1–1.3 的原来源：完整的 $89$ 点配置集 $E$、唯一 ready
+$q_{\rm r}=\{3,7\}$、原十一地址前词 $a$、原七地址外生后词 $h$、原正单位脉冲、
+原最小电流过程、字面记录 $I=b_9(Q_-)$ 与配置保持的原纯更新，以及保留全部
+$1024$ 个标签的旧终端 $W$。外生 $h$ 在两个记录分支上是同一请求。这里只比较
+程序 $\mathsf R(a,h)$，其读前与读取部分始终取原过程。
+
+在原读取和已有档案完成后的切口，记
+
+$$
+z_i=M_iK_ae_{q_{\rm r}},\qquad
+\tau_i=\|z_i\|^2,\qquad
+u_i=z_i/\sqrt{\tau_i},\qquad
+\pi_i(q)=|u_i(q)|^2\quad(\tau_i>0).
+$$
+
+取一份符合原 XI43.1 的固定标准 Borel 变量 $Y$：它是同一切口已经发生的过去的
+可测函数，包含原可读过去，也可包含数学上的隐藏过去；它不含未用创新或未执行的
+反事实结果，并且不随后来的请求 $h$ 改变。在正记录分支上，令 $\nu_i$ 为 $Y$ 的
+原条件律，$\rho_{i,y}$ 为切口配置的原后验。$T_h^i(q,\cdot)$ 是入口向量仍为
+$u_i$、入口配置为 $q$ 时的原条件终端行，只在 $\pi_i(q)>0$ 上使用；不能把
+入口向量改成 $e_q$。令 $\mu^{a,h}$ 为保留完整原过去与未来路径的原联合律，定义
+
+$$
+\begin{aligned}
+\Pi_{a,h}:\mathcal H_{a,h}&\longrightarrow\{0,1\}\times\mathcal Y\times\Omega_{10},
+&\Pi_{a,h}(\omega)&=(I(\omega),Y(\omega),W(\omega)),\\
+\Lambda_h&=(\Pi_{a,h})_\#\mu^{a,h},
+&\Lambda_h(\{i\}\times dy\times\{w\})
+&=\tau_i\sum_{q:\pi_i(q)>0}\rho_{i,y}(q)T_h^i(q,w)\,\nu_i(dy).
+\end{aligned}
+$$
+
+这里 $\mathcal H_{a,h}$ 是该程序的共同历史空间，保留原有全部零、失败、拒绝、
+停止、报警和返回坐标；$\Omega_{10}$ 是全部旧终端标签集。未占据记录分支给零测度，
+不定义条件态。零平方质量配置的后验在每份固定 $Y$ 下几乎处处为零。
+
+对整数 $r\ge1$，使用上述精度卷定理 2.1 的随机 dyadic 表
+$\widehat T_{h,r}^i(q,\cdot)$，其在每个正实际入口上满足
+
+$$
+\operatorname{TV}\bigl(T_h^i(q,\cdot),\widehat T_{h,r}^i(q,\cdot)\bigr)
+\le2|h|\,2^{-r}.
+$$
+
+此处“随机表”只指每行非负且总和为一。该表来自固定原矩阵、字面词和整数精度的
+有限算术结论；没有把原条件概率当成额外已知输入。定义
+$\widehat\Lambda_{h,r}$ 时，只将 $\Lambda_h$ 公式中的 $T_h^i$ 替换为
+$\widehat T_{h,r}^i$，保留同一 $\tau_i,\nu_i,\rho_{i,y}$。这些原测度不因
+写出表而成为已取得的数据。
+
+另使用 [finite rate](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_RATE_CONTINUATION.md)
+定理 4.3 的 $\mu_{L,\mathrm{post}}^{a,h}$：完整原过去、实际读取、纯更新与切口
+配置完全按原联合律保留，仅在该切口之后以有限 $L>0$ 截断原速率。令
+
+$$
+\Gamma_{L,h}=(\Pi_{a,h})_\#\mu_{L,\mathrm{post}}^{a,h},\qquad
+\lambda=2\alpha c,\qquad
+\vartheta_L=\frac{\lambda^2}{L^2+\lambda^2},\qquad c=xy.
+$$
+
+同一 $\Pi_{a,h}$ 在两份历史上读取相同原过去中的 $Y$ 和各自的字面终端。
+若 $Y$ 包含原已有档案，其版本在共同历史空间上固定。未来档案不在此投影内；
+只有另行供应两边共同的合法被动档案核时，才在下面的扩展中加入。
+
+### 25.34.2 同切口的速率与精度误差可以相加
+
+**定理 25.34.2（投影限定的双参数续接界）。** 在定义 25.34.1 的同一来源、
+同一原切口及同一投影下，对每个原有限 $a,h$、每个 $L>0$、整数 $r\ge1$，
+两种续接近似在该投影上满足
+
+$$
+\boxed{
+\operatorname{TV}(\Gamma_{L,h},\widehat\Lambda_{h,r})
+\le\min\{1,\,2|h|(\vartheta_L+2^{-r})\}.
+}
+$$
+
+当 $h=\emptyset$ 时两者相等。对每个固定整数 $A,N\ge0$，该式对
+$|a|\le A,|h|\le N$ 的原词使用同一误差常数；其中每份 $Y$ 分别按定义
+25.34.1 固定，不声称所有 $Y$ 具有一个共同的逐点条件版本。若 $N\ge1$、
+$0<\epsilon<1$，则充分选择为
+
+$$
+L\ge2\lambda\sqrt{N/\epsilon},\qquad
+r\ge\max\left\{1,\left\lceil\log_2(4N/\epsilon)\right\rceil\right\};
+$$
+
+由此这些词的投影误差均至多 $\epsilon$。该结论不要求任何正 $\tau_i$ 或正
+配置质量具有共同下界。
+
+证明。有限速率卷定理 4.3 给完整历史界
+$\operatorname{TV}(\mu^{a,h},\mu_{L,\mathrm{post}}^{a,h})
+\le2|h|\vartheta_L$。共同可测投影的 TV 收缩给
+
+$$
+\operatorname{TV}(\Gamma_{L,h},\Lambda_h)\le2|h|\vartheta_L.
+$$
+
+对第二项，在每份固定 $Y$ 的正记录分支上使用共同支配测度 $\tau_i\nu_i$。
+有限配置和非负后验给
+
+$$
+\begin{aligned}
+\operatorname{TV}(\Lambda_h,\widehat\Lambda_{h,r})
+&\le\sum_{i:\tau_i>0}\tau_i\int
+  \sum_{q:\pi_i(q)>0}\rho_{i,y}(q)
+  \operatorname{TV}(T_h^i(q,\cdot),\widehat T_{h,r}^i(q,\cdot))\,\nu_i(dy)\\
+&\le2|h|\,2^{-r}\sum_i\tau_i=2|h|\,2^{-r}.
+\end{aligned}
+$$
+
+这正是精度卷定理 2.1 的同切口全联合估计：被检验的终端事件可以依赖 $y$，
+并非只估计一个选定过去事件。三角不等式及概率律的 TV 至多一给所述结果。
+全部混合使用原无条件权重，没有除以稀有记录质量。空后词只读同一原终端，
+两误差均为零。最后由 $\vartheta_L\le\lambda^2/L^2$ 及给定 $L,r$，两项各
+至多 $\epsilon/2$。证毕。
+
+若另有符合精度卷 (2.20) 的共同合法被动档案核
+$\mathcal K_{a,h}(d\mathcal A\mid g(y),i,w)$，其中 $g(y)$ 解出同一原可读
+切口过去，且有限速率卷假设 1.3 的版本条件也成立，则对两份投影律附加这个
+同核后，上界仍成立。这是再次应用 TV 收缩；若保留原投影作为扩展的坐标，
+TV 还保持相等。这里没有加入依赖隐藏配置、跳时或被丢弃中间路径的档案。
+精度卷的 dyadic 表没有给连续路径律，因此本式的左侧只能是已定义的终端／过去
+投影律，不能改写成精度近似对完整连续历史的 TV 界。
+
+### 25.34.3 同一个 Born 边缘仍丢失条件续接
+
+**命题 25.34.3（原两调用中的锐利无配置行误差）。** 取精度卷定理 3.1 的
+原程序 $\mathsf R((1),(1))$，并在定义 25.34.1 中选择含切口配置 $Q$ 的
+数学过去变量。令 $q_0=\{3,7\}$、$q_1=\{1,3,7\}$、$w_j=W(q_j)$，记
+
+$$
+p=3x-1,\qquad d_*=x^2/4,\qquad
+v_0=p(1-d_*),\qquad v_1=1-d_*,\qquad
+\Delta=v_1-v_0=(1-p)(1-d_*)>0.
+$$
+
+令 $J$ 为 $\Lambda_1$ 在 $(Q,W)$ 上的边缘。对任意旧终端标签上的概率律
+$b$，用相同的一行 $b$ 替换两个切口配置的条件行，记所得律为
+
+$$
+J_b=(1-x)\,\delta_{q_0}\otimes b+x\,\delta_{q_1}\otimes b.
+$$
+
+则
+
+$$
+\inf_b\operatorname{TV}(J,J_b)=(1-x)\Delta>0.
+$$
+
+若选 $b=\overline T$ 为该程序的原 Born 终端边缘，即
+$\overline T(w_1)=p$，则误差更具体地为
+
+$$
+\operatorname{TV}(J,J_{\overline T})=2x(1-x)\Delta.
+$$
+
+定义 25.34.1 的原 dyadic 表在这个程序上给 $\widehat J_r$ 时，还满足
+
+$$
+\inf_b\operatorname{TV}(\widehat J_r,J_b)
+\ge\max\{0,(1-x)\Delta-2^{1-r}\}.
+$$
+
+因而只要 $2^{1-r}<(1-x)\Delta$，保留两条条件行的精度近似就仍与任意
+单行替换有严格正的全联合误差间隔。
+
+证明。精度卷定理 3.1 给 $I=0$、切口质量 $(1-x,x)$ 及两行
+$T_0(w_1)=v_0,T_1(w_1)=v_1$；两行都只支撑在 $w_0,w_1$，且
+$(1-x)v_0+xv_1=p$。该既有来源见证只用于以下新的最优误差计算。
+因为 $Q$ 的两个值是互斥坐标，直接按这两个切片求 TV 得
+
+$$
+\operatorname{TV}(J,J_b)
+=(1-x)\operatorname{TV}(T_0,b)+x\operatorname{TV}(T_1,b).
+$$
+
+$x>1-x>0$，且两行的 TV 距离为 $\Delta$。三角不等式给右侧至少
+$(1-x)\Delta$，选择 $b=T_1$ 恰好达到；允许 $b$ 给其他旧标签正质量也不能
+降低此界。对 $b=\overline T=(1-x)T_0+xT_1$，两项分别是
+$x\Delta$ 与 $(1-x)\Delta$，遂得第二式。最后同切口精度界给
+$\operatorname{TV}(J,\widehat J_r)\le2^{1-r}$，再次用三角不等式并对 $b$
+取下确界即得末式。证毕。
+
+此命题比较的是保留 $Q$ 的数学联合；它不把 $Q$ 装成原实际读口。若只保留
+终端 $W$，$J$ 与 $J_{\overline T}$ 的投影完全相同。故 Born 边缘对这个
+终端目标足够；若目标仍保留同一原 $Q$，却用与该 $Q$ 无关的一行替换条件
+续接，上述正误差间隔就不能消去。
+
+### 25.34.4 两个精度参数的适用边界
+
+**定义 25.34.4（来源与目标的分层）。** 定理 25.34.2 的 $L$ 改变原切口后
+的配置路径律，$r$ 近似原条件终端行；二者在共同投影上可比较，是因为它们
+沿同一原切口律、同一字面后词和同一 $\Pi_{a,h}$ 回接。命题 25.34.3 的
+正间隔度量的是这个投影中仍保留的过去—终端关联。有限算术精度、随机速率、
+条件关系的可计算性与隐藏切口的实际可取得性因此是分别声明的性质。
+
+支撑递推 $S_p$、读前截断的精确 $\mathsf{Adm}(a)$、$9^{10}$ 的零投影障碍
+及其有限速率分离仍取有限速率卷的原结论；本节不以有限 dyadic 表扩大该
+读前准入域。这里原读取已经按原过程完成，故后续的 $L,r$ 都不代替读前
+取得、读取或原纯更新。完整连续历史、任意隐藏路径档案、原后验的实际取得、
+逆恢复及无界词长的共同有限预算也不在本节的结论域内。
+
+本节的来源特定推导为 $\texttt{repo-derived}$：同切口投影使两种误差落到
+一个明确的联合目标上，原两调用见证又给出单行替换的锐利正损失。原条件行、
+dyadic 精度及算术界由精度卷定理 2.1 供应，原行碰撞由其定理 3.1 供应，
+后读速率界由有限速率卷定理 4.3 供应；TV 收缩、混合与三角不等式是成熟中间
+工具。这里不另交付原算术构造，也不主张普遍原创性。全部关系限于这个同源
+native 合同，没有把 C128 的固定 $D$、C139 的程序配对、有限矩容量或图谱
+增长识别为它的配置、后验或实际操作。
+
 ## 追加锚（本行以下为增补区）
