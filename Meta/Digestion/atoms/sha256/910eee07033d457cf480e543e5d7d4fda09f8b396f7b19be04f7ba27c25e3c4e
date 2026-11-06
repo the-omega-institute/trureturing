@@ -1,0 +1,19 @@
+## 5　最新几何：正对象的变化沿共同正面的球面相切
+
+项目最新 C128 §§371–378 把已有两个局部约束合成一个精确几何条件。令
+
+$$
+E=\bigoplus_s\operatorname{Herm}(\mathbb C^{n_s}),\qquad
+g_E(A,B)=\sum_s w_s\operatorname{Tr}(A_sB_s),\quad w_s>0,
+$$
+
+并给定实双线性关系输出 $D:E\times E\to E$，满足右单位 $D(A,I)=0$。对 $A,B\ge0$，令 $C=\operatorname{supp}(A+B)$。要求
+
+$$
+\boxed{D(A,B)=CD(A,B)C,\qquad
+g_E(A+B,D(A,B))=0.}
+\tag{12}
+$$
+
+第一式将输出留在两输入共同支持的面内，第二式使它沿等 $g_E$ 长度球面相切。切向量不要求为正；这里也没有先断言它是实际可执行的时间流。[\[4\]](#ref-c128)
+

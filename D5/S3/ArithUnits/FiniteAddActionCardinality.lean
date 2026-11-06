@@ -92,8 +92,26 @@ theorem card_addGroup_dvd_of_invariant_finset_of_free_action
     card_addGroup_dvd_of_free_finite_action (G := G) (X := D) hfree'
   simpa only [Fintype.card_coe] using hcard
 
+/-! A relation is a support on the diagonal product action.  This formulation
+is useful for invariant directed graphs and pair constraints: freeness on one
+coordinate already makes the diagonal action free. -/
+
+theorem card_addGroup_dvd_of_invariant_relation_of_free_action
+    {G X : Type*} [AddGroup G] [AddAction G X]
+    [Fintype G] [Fintype X] [DecidableEq X] (R : Finset (X × X))
+    (hR : ∀ g : G, R.image (fun z => g +ᵥ z) = R)
+    (hfree : ∀ g : G, g ≠ 0 → ∀ x : X, g +ᵥ x ≠ x) :
+    Fintype.card G ∣ R.card := by
+  have hfree_prod : ∀ g : G, g ≠ 0 → ∀ z : X × X, g +ᵥ z ≠ z := by
+    intro g hg z hfix
+    apply hfree g hg z.1
+    exact congrArg Prod.fst hfix
+  exact card_addGroup_dvd_of_invariant_finset_of_free_action
+    (G := G) (X := X × X) R hR hfree_prod
+
 #print axioms invariant_finset_empty_or_univ_of_pretransitive
 #print axioms card_addGroup_dvd_of_free_finite_action
 #print axioms card_addGroup_dvd_of_invariant_finset_of_free_action
+#print axioms card_addGroup_dvd_of_invariant_relation_of_free_action
 
 end D5.S3.ArithUnits.FiniteAddActionCardinality
