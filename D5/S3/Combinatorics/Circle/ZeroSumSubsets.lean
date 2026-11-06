@@ -38,14 +38,14 @@ private theorem mask_as_geom {k : ℕ} (A : Finset (Fin k)) :
   · intro p hp q hq he
     exact Fin.ext he
 
-private theorem mask_injective (k : ℕ) : Function.Injective (@mask k) := by
+theorem mask_injective (k : ℕ) : Function.Injective (@mask k) := by
   intro A B he
   have hi : A.image Fin.val = B.image Fin.val :=
     Finset.geomSum_injective (by decide : 2 ≤ (2 : ℕ))
       (by simpa only [mask_as_geom] using he)
   exact Finset.image_injective Fin.val_injective hi
 
-private theorem mask_bound {k : ℕ} (A : Finset (Fin k)) : mask A ≤ 2 ^ k - 1 := by
+theorem mask_bound {k : ℕ} (A : Finset (Fin k)) : mask A ≤ 2 ^ k - 1 := by
   have h : mask A < 2 ^ k := by
     rw [mask_as_geom]
     apply Nat.geomSum_lt (by decide)
@@ -79,14 +79,14 @@ private theorem coefficient_weight_dvd {k t : ℕ} (n : Fin k → ℕ)
   rw [hm] at hs
   exact_mod_cast hs
 
-private theorem zero_mask_dvd {k t : ℕ} (A : Finset (Fin k))
+theorem zero_mask_dvd {k t : ℕ} (A : Finset (Fin k))
     (hA : (∑ p ∈ A, actualSource k t p) = 0) : (2 ^ k - 1) ∣ t * mask A := by
   classical
   have he := coefficient_weight_dvd (t := t) (fun i => if i ∈ A then 1 else 0)
     (by simpa using hA)
   simpa [mask] using he
 
-private theorem quotient_dvd {N t m : ℕ} (hN : 0 < N) (h : N ∣ t * m) :
+theorem quotient_dvd {N t m : ℕ} (hN : 0 < N) (h : N ∣ t * m) :
     N / Nat.gcd t N ∣ m := by
   have hg := Nat.gcd_pos_of_pos_right t hN
   have hc : Nat.gcd t N * (N / Nat.gcd t N) ∣
@@ -241,7 +241,7 @@ private theorem mask_pos {k : ℕ} {A : Finset (Fin k)} (hA : A.Nonempty) : 0 < 
   exact lt_of_lt_of_le (pow_pos (by decide : 0 < (2 : ℕ)) i.val)
     (Finset.single_le_sum (f := fun p : Fin k => 2 ^ p.val) (fun _ _ => Nat.zero_le _) hi)
 
-private theorem mask_full (k : ℕ) : mask (Finset.univ : Finset (Fin k)) = 2 ^ k - 1 := by
+theorem mask_full (k : ℕ) : mask (Finset.univ : Finset (Fin k)) = 2 ^ k - 1 := by
   have he := Nat.geomSum_eq (by decide : 2 ≤ (2 : ℕ)) k
   rw [Finset.sum_range] at he
   simpa [mask] using he

@@ -223,8 +223,8 @@ private theorem rotated_high_sum {n : ℕ} (hn : 0 < n) (d : Word n) :
   let e : Equiv.Perm (Fin n) :=
     { toFun := fun i => top hn - i
       invFun := fun i => top hn - i
-      left_inv := by intro i; abel
-      right_inv := by intro i; abel }
+      left_inv := by intro i; exact sub_sub_cancel _ _
+      right_inv := by intro i; exact sub_sub_cancel _ _ }
   change (∑ i : Fin n, high (d (e i))) = ∑ j : Fin n, high (d j)
   exact Equiv.sum_comp e (fun j => high (d j))
 
@@ -472,6 +472,6 @@ theorem zero_even_trace_seed_count {n : ℕ} (hn : 0 < n) :
         evenTrace n t.val = 0 := by
     simp only [sub_self, mul_zero]
     omega
-  simpa only [hz, if_pos rfl] using even_trace_seed_spectrum hn n
+  simpa [hz] using even_trace_seed_spectrum hn n
 
 end D5.S3.Combinatorics.Circle.RadixFourDigitBalance
