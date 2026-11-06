@@ -472,12 +472,12 @@ $$
 Two actual histories give the same vector $z_u$ if and only if
 all their future conditional word probabilities agree.
 
-*Proof.* The emissions are positive almost everywhere and $P$
-preserves strictly positive functions: if $f>0$ a.e. and $f\ge0$,
-the integral transition expectation is positive a.e. by positivity
-improvement, or directly by applying it to a nonzero positive
-sublevel truncation. Induction in (1.7), followed by $g_{2d}>0$,
-gives $p(u)>0$. Equations (3.2) and
+*Proof.* At each of the finitely many positive read times the
+hidden law is absolutely continuous with respect to $m$, and
+every prescribed emission is strictly positive $m$-a.e.
+Conditional independence makes the cylinder's conditional
+probability the product of these positive factors. Its expectation
+is therefore positive, giving $p(u)>0$. Equations (3.2) and
 $\widehat C_{uv}=\widehat C_u\widehat C_v$ give (3.7).
 By (2.10), $\widehat C_v\Omega$ has dense span; hence equality
 of every pairing in (3.7) is equivalent to equality of the two
