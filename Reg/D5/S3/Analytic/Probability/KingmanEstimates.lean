@@ -6,7 +6,6 @@ import Reg.Support.DependentFamily
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Analytic.Probability.KingmanEstimates
-open _root_.D5.S3.Analytic.Probability.KingmanPointwise
 open _root_.D5.S3.Analytic.Probability.BirkhoffPointwise
 open MeasureTheory Filter
 open scoped Topology BigOperators
