@@ -448,7 +448,13 @@ theorem result {X : Type*} (b : Label → X → ℝ)
       have he : A = 0 := hh hA
       simp [he] at hr
     · intro hh
-      have hh' : ∃ A ∈ body b r₁, A ≠ 0 := by simpa using hh
+      have hh' : ∃ A ∈ body b r₁, A ≠ 0 := by
+        by_contra hn
+        apply hh
+        intro A hA
+        change A = 0
+        by_contra hA'
+        exact hn ⟨A, hA, hA'⟩
       obtain ⟨A, hA, hn⟩ := hh'
       have hp := rank_pos hn
       have hb : A.rank ≤ 1 := by simpa using A.rank_le_card_width
