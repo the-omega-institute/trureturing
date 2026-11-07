@@ -4164,3 +4164,224 @@ The covariance estimate used in (208.11) and (208.20) is classical Cauchy–Schw
 These necessary inequalities neither construct a full-zero partition nor give a fixed-start successor. They assume no globally bounded or small $\chi$, no source label $q$ in the hard label span, no ideal property of a tensor radical, no positivity of $\mathcal C(r,r,1)$ and no local forward Gram definiteness. Coefficient correction rank, coarse moment rank and actual label-span rank retain their separate meanings; none is identified by this budget. The universal original $F_{64}$ target and the original physical succession question remain unresolved. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 209. Strict asymptotic slack of the native-source hard-partition budgets
+
+**Definition 209.1 (a weak-star calibrated sequence).** Retain Definition 208.1, all of the original telescope of Appendix III Definitions 154.1 and 155.1, and the original source, clock, measure, operator and own-terminal convention. Fix one original $\theta$. Let $D_n=(D_{n,i})_{i\in\mathcal L}$ be deterministic whole-$G$ Borel partitions satisfying exactly (208.1), and write $u_{n,i}=\mathbf1_{D_{n,i}}$. Assume only
+
+$$
+u_{n,i}\overset{*}{\rightharpoonup}f_i\quad\text{in }L^\infty(G,m)
+\qquad(i\in\mathcal L).
+\tag{209.1}
+$$
+
+For $a\in\mathbb R^{\mathcal L}$ put
+
+$$
+h_{n,a}=\sum_i a_i u_{n,i},\qquad
+t_{n,a}=Ph_{n,a},\qquad
+s_{n,a}=\frac{P(gh_{n,a})}{v},
+\tag{209.2}
+$$
+
+and define $G_{j,n}^\pm$, $H_{\chi,j,n}$ and $M_{j,n}$ from (208.15) with $u_j$ replaced by $u_{n,j}$. Thus $\pi_j$ remains the fixed number in (208.2), because (208.1) preserves the middle marginal. Put
+
+$$
+w=v\chi,\qquad
+\xi_j=\frac1{\pi_j}\int_G f_jw\,dm,\qquad
+\Lambda_j(a,b)=\frac1{\pi_j}\int_G f_jw\,P(F_{a\odot b})\,dm
+\quad(a,b\in K_{\rm rel}).
+\tag{209.3}
+$$
+
+No bounded global likelihood ratio, compact $L^2$ heat operator, source-span witness or parameter-uniform constant is included in this definition.
+
+**Proposition 209.2 (the limiting relation budgets).** For every original $\theta$, the function $w$ is integrable and strictly positive almost everywhere. Each $\xi_j$ is finite and positive, each $\Lambda_j$ is a finite positive-definite symmetric form on $K_{\rm rel}$, and
+
+$$
+G_{j,n}^+\longrightarrow0,\qquad
+G_{j,n}^-\longrightarrow0,\qquad
+H_{\chi,j,n}\longrightarrow\Lambda_j
+\quad\text{in matrix norm on }K_{\rm rel}.
+\tag{209.4}
+$$
+
+Consequently, with
+
+$$
+S_{j,n}=G_{j,n}^++G_{j,n}^--H_{\chi,j,n},
+\tag{209.5}
+$$
+
+one has $S_{j,n}\to-\Lambda_j$. There is one index after which all four $S_{j,n}$ are strictly negative definite, simultaneously for every nonzero relation direction.
+
+*Proof.* The reversed conditional law (208.7) gives
+
+$$
+0\le w=v\chi=\frac{P(g^2)}{v}-v\le G_0-v,
+\tag{209.6}
+$$
+
+so $w\in L^1(m)$. The original positive heat kernel and the source-start nonconstancy supplier imply that the conditional variance of $g$ in (208.7) is strictly positive at almost every middle state; hence $w>0$ almost everywhere. Since every $f_j$ is positive and bounded, this proves $0<\xi_j<\infty$.
+
+For $a\in K_{\rm rel}$, (209.1) gives $h_{n,a}\overset{*}{\rightharpoonup}0$. The forward and reversed three-time kernels are integrable probability kernels: the forward one is the density used in Appendix II §123, and the reversed one is obtained from (208.7). Rectangular-tensor approximation in their respective $L^1$ spaces therefore makes their bounded multilinear integrals continuous under componentwise weak-star convergence. Applying this to (209.2) gives
+
+$$
+G_{j,n}^+(a,b)\to0,\qquad G_{j,n}^-(a,b)\to0
+\quad(a,b\in K_{\rm rel}).
+\tag{209.7}
+$$
+
+For the weighted term, $h_{n,a\odot b}\overset{*}{\rightharpoonup}F_{a\odot b}$, while $w\in L^1(m)$. The same two-variable tensor approximation, now for the kernel $w(x)P(x,dy)$, yields
+
+$$
+\frac1{\pi_j}\int_Gu_{n,j}wP(h_{n,a\odot b})\,dm
+\longrightarrow
+\frac1{\pi_j}\int_Gf_jwP(F_{a\odot b})\,dm.
+\tag{209.8}
+$$
+
+The subtracted term in $H_{\chi,j,n}$ is $\mathbb E_{\nu_{j,n}}[\chi t_{n,a}t_{n,b}]$. To control this weighted term, use the original transition density $p_d(x,y)$ of $P$ from Appendix II Definition 123.1. For almost every $x$, its row $p_d(x,\cdot)$ belongs to $L^1(m)$ and has integral one. Thus weak-star convergence gives, for every $a\in K_{\rm rel}$,
+
+$$
+t_{n,a}(x)=\int_Gp_d(x,y)h_{n,a}(y)\,m(dy)
+\longrightarrow\int_Gp_d(x,y)F_a(y)\,m(dy)=0
+\quad\text{for almost every }x.
+$$
+
+Because the $u_{n,i}$ form a hard partition, $|h_{n,a}|\le\|a\|_\infty$, and the Markov property gives $|t_{n,a}|\le\|a\|_\infty$. Since $0\le u_{n,j}\le1$ and $w\in L^1(m)$, dominated convergence with dominator $\|a\|_\infty\|b\|_\infty w$ yields
+
+$$
+\left|\mathbb E_{\nu_{j,n}}[\chi t_{n,a}t_{n,b}]\right|
+=\left|\frac1{\pi_j}\int_Gu_{n,j}w\,t_{n,a}t_{n,b}\,dm\right|
+\le\frac1{\pi_j}\int_Gw\,|t_{n,a}t_{n,b}|\,dm
+\longrightarrow0.
+$$
+
+Combining this with (209.8) and the exact definition (208.15) proves the third limit in (209.4). The coefficient space $K_{\rm rel}$ is finite-dimensional, hence entrywise convergence is matrix-norm convergence.
+
+For $a\ne0$,
+
+$$
+F_{a\odot a}=\sum_i a_i^2f_i>0\quad\text{almost everywhere}.
+\tag{209.9}
+$$
+
+Positivity improvement of $P$ gives $P(F_{a\odot a})>0$ almost everywhere. Thus (209.3) gives $\Lambda_j(a,a)>0$. Symmetry follows from $a\odot b=b\odot a$. Positive definiteness on the unit sphere of the finite-dimensional $K_{\rm rel}$ gives a positive minimum eigenvalue for each $j$; taking the minimum over the four labels and using (209.4) proves the final assertion. The only analytic inputs here are the original positive kernel, the bounded native source and the tensor-continuity mechanism already used for the actual path density; no global likelihood-ratio or compactness assumption has been added. $\square$
+
+**Proposition 209.3 (finite-$k$ refinement and its eventual sign).** Let
+
+$$
+k_{j,n}=\operatorname*{ess\,sup}_{D_{n,j}}\chi
+$$
+
+with respect to $v\,m$. Whenever $k_{j,n}<\infty$,
+
+$$
+k_{j,n}\ge\frac{\xi_j}{2}
+\tag{209.10}
+$$
+
+for all sufficiently large $n$. For those indices, the refined form
+
+$$
+R_{j,n}=\left(1+\frac1{k_{j,n}}\right)G_{j,n}^+
+       +\frac1{k_{j,n}}G_{j,n}^- -V_{j,n}
+\tag{209.11}
+$$
+
+is strictly negative definite on $K_{\rm rel}$ once $n$ is sufficiently large. If $k_{j,n}=\infty$, this refinement is inapplicable.
+
+*Proof.* Since $w\in L^1(m)$, (209.1) gives
+
+$$
+\frac1{\pi_j}\int_Gu_{n,j}w\,dm\longrightarrow\xi_j.
+\tag{209.12}
+$$
+
+The left side is the $\nu_{j,n}$-mean of $\chi$ and is at most $k_{j,n}$ whenever that essential supremum is finite. This proves (209.10). The conditional-variance estimate (208.24), with the current partition, gives
+
+$$
+H_{\chi,j,n}\preceq k_{j,n}(V_{j,n}-G_{j,n}^+).
+\tag{209.13}
+$$
+
+Rearranging (209.13) yields
+
+$$
+R_{j,n}\preceq\frac1{k_{j,n}}S_{j,n}.
+\tag{209.14}
+$$
+
+By Proposition 209.2, $S_{j,n}$ is eventually strictly negative definite, and (209.10) makes the scalar factor positive. Equation (209.14) therefore makes $R_{j,n}$ strictly negative definite as well. Infinite $k_{j,n}$ supplies no expression of the form (209.11). $\square$
+
+**Corollary 209.4 (the unpaid $B3B$ coordinate has zero actual limit).** Let $\beta=e_B-\frac14\mathbf1_{\mathcal L}$. For each $j\in\mathcal L$, the unrefined lower-bound expression from (208.5) satisfies
+
+$$
+\frac{\pi_j}{2}\bigl(A_{j,n}+B_{j,n}-H_{j,n}\bigr)
+\longrightarrow
+-\frac3{32}\int_G f_jv\chi\,dm<0,
+\tag{209.15}
+$$
+
+where $A_{j,n}=G_{j,n}^+(\beta,\beta)$, $B_{j,n}=G_{j,n}^-(\beta,\beta)$ and $H_{j,n}=H_{\chi,j,n}(\beta,\beta)$. At the same time,
+
+$$
+\Delta(D_n)_{BjB}\longrightarrow0,
+\qquad
+\|\Delta(D_n)\|_{\max}\longrightarrow0.
+\tag{209.16}
+$$
+
+*Proof.* The hard product identity in (208.27) gives $F_{\beta\odot\beta}=3/16$. Therefore (209.3) gives
+
+$$
+\Lambda_j(\beta,\beta)=\frac3{16\pi_j}\int_Gf_jv\chi\,dm.
+\tag{209.17}
+$$
+
+The first limit in (209.15) follows from Proposition 209.2 and (209.17), and its strict sign follows from $f_jw>0$ almost everywhere. The inequality (208.5) still holds for each $D_n$, but its right side has the negative limit (209.15).
+
+For (209.16), approximate the original three-time density by finite sums of rectangular $L^1(m^3)$ tensors as in Appendix II §123.2. Every coefficient
+
+$$
+\mathcal C(u_{n,y},u_{n,z},u_{n,k})
+$$
+
+then converges to $\mathcal C(f_y,f_z,f_k)$, with the third factor interpreted through the same partition's actual $P u_{n,k}$. Hence all sixty-four residuals converge to zero, including the displayed $BjB$ coordinate. The negative limit in (209.15) is therefore a lower-bound slack, not a residual obstruction. $\square$
+
+**Theorem 209.5 (a source-specific co-selected sequence realizing the slack).** For every original $\theta$, there exists a sequence of deterministic whole-$G$ Borel partitions
+
+$$
+D_n\in\mathscr F_{154}(\theta)
+$$
+
+whose own terminals are used in every coordinate, such that (208.1) holds, $u_{n,i}\overset{*}{\rightharpoonup}f_i$ for every $i$, and
+
+$$
+\Delta(D_n)_{BB3}>0,\qquad
+\|\Delta(D_n)\|_{\max}\longrightarrow0.
+\tag{209.18}
+$$
+
+*Proof.* Use the actual finite construction of Appendix III §§154.E and 155.2. For its fixed original $\theta$, write $\kappa=R_{BB3}>0$ and $J=\|R\|_\infty>0$ as in (155.4). Choose $t_n\downarrow0$ with $t_n<t_0$ and set, for example,
+
+$$
+\varepsilon=\frac12,\qquad
+\delta_n=\frac{t_n^2}{32}\min\{\kappa,J\}.
+\tag{209.19}
+$$
+
+Then the strict restriction in (155.5) holds for $(t,t',\delta)=(t_n,t_n/2,\delta_n)$. Theorem 155.2 supplies co-selected actual partitions $D_n,D_n'\in\mathscr F_{154}(\theta)$ from one common finite-cell quantile construction. Retain the first endpoint. Its estimates give
+
+$$
+\Delta(D_n)_{BB3}>t_n^2\kappa-\delta_n>0,\qquad
+\|\Delta(D_n)\|_{\max}\le t_n^2J+\delta_n\longrightarrow0.
+\tag{209.20}
+$$
+
+It remains to make the weak-star quantifier explicit. Fix a countable $L^1(m)$-dense family of tests. In the quantile construction of 154.E, refine the finite coordinate partition far enough at the $n$th step to match the center $u^{(t_n)}$ on the first $n$ tests to error $<1/n$; the cell-mass identities and density of the refining partitions give this uniformly for the finitely many tests. Since $u^{(t_n)}\to f$ in $L^\infty$ as $t_n\downarrow0$, choose $t_n$ recursively so that its first $n$ test pairings differ from those of $f$ by $<1/n$. The diagonal sequence of indicators therefore converges componentwise weak-star to $f$. The same refinement is allowed in the Brouwer step because the approximation estimates in (154.30) and (155.15) improve along the refining partitions. The exact $\mathcal H_{43}$ roots give (208.1), and every coefficient in (209.20) is evaluated with the corresponding partition's own propagated terminals. No endpoint is held fixed and no physical successor is asserted. $\square$
+
+Theorem 209.5 consumes the finite calibrated endpoints of §155.2 to realize the sequence hypothesis of Propositions 209.2–209.4 for every original parameter. It shows that the particular exclusion mechanism of Section 208 loses its sign margin on actual original hard approximants: the matrix budgets converge to the strictly negative source form $-\Lambda_j$, the refined finite-$k$ budgets are eventually negative where defined, and the unrefined $B3B$ lower bound converges to a negative number while the actual residual converges to zero. This does not construct an original $F_{64}$ witness, prove nonattainment, or provide a successor from an arbitrary fixed endpoint; the fixed-start summable chain of (155.31), the universal $F_{64}$ question and the physical succession question remain open.
+
+## 追加锚（本行以下为增补区）
