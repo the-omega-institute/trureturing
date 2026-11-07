@@ -493,25 +493,25 @@ $$
 由 (493.2) 及交替性直接有局部差分预算
 
 $$
-|\delta(x+tu,w)-\delta(x,w)|
-\le t\bigl[\mathcal A(x,u)+\mathcal A(u,w-x)\bigr]
+|\delta(x+th,w)-\delta(x,w)|
+\le t\bigl[\mathcal A(x,h)+\mathcal A(h,w-x)\bigr]
 \quad(t>0).
 \tag{493.5}
 $$
 
-这里先用 $|\delta(X,w)-\delta(Y,w)|\le\mathcal A(X,Y)+\mathcal A(Y-X,w-X)$，再取 $X=x,Y=x+tu$；面积化简只用已恢复的实双线性型，不使用 $D$ 可加或标签连续。
+这里先用 $|\delta(X,w)-\delta(Y,w)|\le\mathcal A(X,Y)+\mathcal A(Y-X,w-X)$，再取 $X=x,Y=x+th$；面积化简只用已恢复的实双线性型，不使用 $D$ 可加或标签连续。
 
-固定任意原 $x,u,w$，记其第二槽加法缺陷
-$\mathcal E(x;u,w)=\delta(x,u)+\delta(x,w)-\delta(x,u+w)$。
-对 $t=t_n>0$，在原三角形 $x,x+tu,x+t(u+w)$ 上使用闭合预算。三条有向边由单位剪切及已证二等分律分别为 $t\delta(x,u)$、$t\delta(x+tu,w)$、$-t\delta(x,u+w)$；其面积是 $t^2\mathcal A(u,w)$。除以 $t$ 后，再用 (493.5)，得到
+固定任意原 $x,h,w$，记其第二槽加法缺陷
+$\mathcal E(x;h,w)=\delta(x,h)+\delta(x,w)-\delta(x,h+w)$。
+对 $t=t_n>0$，在原三角形 $x,x+th,x+t(h+w)$ 上使用闭合预算。三条有向边由单位剪切及已证二等分律分别为 $t\delta(x,h)$、$t\delta(x+th,w)$、$-t\delta(x,h+w)$；其面积是 $t^2\mathcal A(h,w)$。除以 $t$ 后，再用 (493.5)，得到
 
 $$
 \begin{aligned}
-|\delta(x,u)+\delta(x+tu,w)-\delta(x,u+w)|
-&\le t\mathcal A(u,w),\\
-|\mathcal E(x;u,w)|
-&\le 2^{-n}\bigl[\mathcal A(u,w)+\mathcal A(x,u)
-\mathcal A(u,w-x)\bigr].
+|\delta(x,h)+\delta(x+th,w)-\delta(x,h+w)|
+&\le t\mathcal A(h,w),\\
+|\mathcal E(x;h,w)|
+&\le 2^{-n}\bigl[\mathcal A(h,w)+\mathcal A(x,h)
++\mathcal A(h,w-x)\bigr].
 \end{aligned}
 \tag{493.6}
 $$
