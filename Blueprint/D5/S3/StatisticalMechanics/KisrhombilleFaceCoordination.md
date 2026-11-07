@@ -96,6 +96,10 @@ $$(1 - (\operatorname{PowerSeries.X}: \operatorname{PowerSeries}\left(\mathbb{Z}
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/KisrhombilleFaceCoordination.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/sloane298038` (proved) by `D5/S3/StatisticalMechanics/KisrhombilleFaceCoordination.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sloane298038","declaration_gid":"D5/S3/StatisticalMechanics/KisrhombilleFaceCoordination.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* N. J. A. Sloane, Colin Barker (2018). *OEIS A298038: coordination sequence of Dual(4.6.12) at a hexavalent node*. URL: <https://oeis.org/A298038>.

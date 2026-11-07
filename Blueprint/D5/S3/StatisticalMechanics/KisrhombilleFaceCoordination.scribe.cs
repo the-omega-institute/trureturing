@@ -97,7 +97,7 @@ internal sealed class KisrhombilleFaceCoordinationDocument : IScribeDocumentDefi
                         + "analytic convergence assumption. OEIS A298038 revision 45 names the "
                         + "hexavalent-root sequence and attributes the rational generating-function "
                         + "conjecture to Colin Barker."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("sloane298038"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string name, string title,
         Formula formula, string prose) =>
