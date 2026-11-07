@@ -53,7 +53,7 @@ private theorem g_one : g 1 = 1 := by
 private def gFunction : ArithmeticFunction ℤ :=
   ⟨g, by simp [g, h]⟩
 
-private def gOneInvertible : Invertible (gFunction 1) := by
+@[instance_reducible] private def gOneInvertible : Invertible (gFunction 1) := by
   have he : gFunction 1 = 1 := g_one
   rw [he]
   exact invertibleOne
@@ -149,7 +149,7 @@ theorem unit_fraction_count (n : ℕ) (hn : 0 < n) :
     congrArg (fun k : ℕ => (k : ℤ)) H
 
 private theorem c_recursion : InverseRecursion c := by
-  letI : Invertible (gFunction 1) := gOneInvertible
+  let : Invertible (gFunction 1) := gOneInvertible
   have hi : ⅟(gFunction 1) = 1 := invOf_eq_iff_right.mpr (by
     change g 1 * 1 = 1
     rw [g_one, mul_one])
@@ -252,8 +252,9 @@ private theorem fourth_power_free_divisor_box (n : ℕ) (hn : 0 < n) :
     · intro H p
       exact (le_min_iff.mp (H p)).2
   simp only [Function.Embedding.coeFn_mk]
-  simp_rw [hf]
   rw [Finset.card_map]
+  simp only [Function.comp_apply]
+  simp_rw [hf]
   have he :
       ((Finset.Iic n.factorization).attach.filter
         (fun v => v.val ≤ cappedExponents n.factorization)).card =
@@ -297,7 +298,8 @@ theorem ceiling_sum_exponent_box (n : ℕ) (hn : 0 < n) :
       Finset.card_map, Finset.card_attach,
       Nat.factorization_prod_pow_eq_self_of_le_factorization hv]
   simp_rw [ht]
-  exact Finset.sum_attach _ _
+  exact Finset.sum_attach (Finset.Iic n.factorization)
+    (fun f : ℕ →₀ ℕ => (⌈(((Finset.Iic f).card : ℚ) / 2)⌉₊ : ℤ))
 
 /-- The source recursion has a unique positive-domain solution. -/
 theorem inverse_recursion_unique (v : ℕ → ℤ) (hv : InverseRecursion v) :
