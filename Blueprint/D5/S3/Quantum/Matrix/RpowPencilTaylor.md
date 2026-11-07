@@ -4,7 +4,19 @@
 
 Actual noncommutative CFC cube roots of positive definite Hermitian pencils.
 
-**Theorem 1.1 (The cubic linearization in a fixed eigenbasis).**
+**Theorem 1.1 (The cubic linearization in diagonal coordinates).**
+
+Lean statement: `D5/S3/Quantum/Matrix/RpowPencilTaylor.cubicLinear_coordinates_entry`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/RpowPencilTaylor.cubicLinear_coordinates_entry` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any finite index type n with decidable equality, let e be a complex star-algebra equivalence from Matrix n n C to itself, P and E arbitrary complex matrices, and p a real-valued function on n. If e(P)=diag(p), then for every i,j, e(cubicLinear(P,E))_ij equals (p_i squared+p_i p_j+p_j squared)e(E)_ij, with the real factor cast to C. No positivity, distinctness, Hermitian condition on E, or nonempty index type is assumed. Taking e to be the identity and P=diag(p) gives the diagonal coefficient equation used to solve the ordered root-jet recurrences.
+
+**Theorem 1.2 (The cubic linearization in a fixed eigenbasis).**
 
 Lean statement: `D5/S3/Quantum/Matrix/RpowPencilTaylor.cubicLinear_entry`
 
@@ -16,7 +28,7 @@ Lean statement: `D5/S3/Quantum/Matrix/RpowPencilTaylor.cubicLinear_entry`
 
 For Hermitian P, the map E to P squared E plus P E P plus E P squared acts in the fixed eigenbasis of P by multiplication of entry ij by p_i squared plus p_i p_j plus p_j squared. Positive definiteness makes every divisor positive, including repeated eigenvalues. This constructs an invertible derivative on the full real space of complex matrices, without restricting perturbations to commute.
 
-**Theorem 1.2 (Smoothness of the actual CFC cube root).**
+**Theorem 1.3 (Smoothness of the actual CFC cube root).**
 
 Lean statement: `D5/S3/Quantum/Matrix/RpowPencilTaylor.contDiffAt_cubeRoot`
 
@@ -28,7 +40,7 @@ Lean statement: `D5/S3/Quantum/Matrix/RpowPencilTaylor.contDiffAt_cubeRoot`
 
 In every finite dimension, if Y is positive definite and K Hermitian, the actual function t to CFC.rpow(Y+tK,1/3) is C infinity at zero. The polynomial map Q to Q cubed has an invertible derivative at P=Y^(1/3). The classical smooth inverse function theorem supplies a local inverse. CFC continuity and the exact cube identity identify that inverse with the actual positive cube root near zero. No derivative or Taylor expansion is assumed, and eigenvectors are never differentiated.
 
-**Theorem 1.3 (Exact ordered cubic jet recurrences).**
+**Theorem 1.4 (Exact ordered cubic jet recurrences).**
 
 Lean statement: `D5/S3/Quantum/Matrix/RpowPencilTaylor.cubeRoot_jet_recurrences`
 
@@ -40,7 +52,7 @@ Lean statement: `D5/S3/Quantum/Matrix/RpowPencilTaylor.cubeRoot_jet_recurrences`
 
 Let C_j be the actual jth derivative at zero of Q(t)=(Y+tK)^(1/3) divided by j factorial, and P=C_0. Then A_P(C_1)=K, A_P(C_2)=-(P C_1 C_1+C_1 P C_1+C_1 C_1 P), and A_P(C_3) is minus the seven ordered cubic terms with indices summing to three and each index less than three. These follow by differentiating the actual local identity Q(t)^3=Y+tK. The coefficients are not free formal variables.
 
-**Theorem 1.4 (Smoothness of the two-thirds CFC power).**
+**Theorem 1.5 (Smoothness of the two-thirds CFC power).**
 
 Lean statement: `D5/S3/Quantum/Matrix/RpowPencilTaylor.contDiffAt_twoThirds`
 
@@ -52,7 +64,7 @@ Lean statement: `D5/S3/Quantum/Matrix/RpowPencilTaylor.contDiffAt_twoThirds`
 
 For the same arbitrary finite complex Hermitian pencil, t to CFC.rpow(Y+tK,2/3) is C infinity at zero. The proof identifies it locally with the square of the actual cube root.
 
-**Theorem 1.5 (The normalized two-thirds jet bridge).**
+**Theorem 1.6 (The normalized two-thirds jet bridge).**
 
 Lean statement: `D5/S3/Quantum/Matrix/RpowPencilTaylor.normalized_twoThirds_jet`
 
@@ -64,7 +76,7 @@ Lean statement: `D5/S3/Quantum/Matrix/RpowPencilTaylor.normalized_twoThirds_jet`
 
 For F(t)=P inverse (Y+tK)^(2/3) P inverse and j from zero through three, the actual jth derivative divided by j factorial equals P inverse times the sum of C_a C_(j-a), for a from zero to j, times P inverse. Multiplication order and factorial normalization are preserved. No commuting assumption or desired bound occurs among the hypotheses.
 
-**Theorem 1.6 (The fixed-Y spectral coefficient interface).**
+**Theorem 1.7 (The fixed-Y spectral coefficient interface).**
 
 Lean statement: `D5/S3/Quantum/Matrix/RpowPencilTaylor.cubeRoot_jet_spectral`
 
@@ -78,7 +90,7 @@ Use the fixed spectral unitary of Y and put p_i=lambda_i^(1/3), T=diag(p_i), D_j
 
 The proof is a repository formalization of classical finite dimensional spectral calculus and the inverse function theorem, using Mathlib's ContDiffAt.to_localInverse, CFC.continuousOn_rpow and Matrix.IsHermitian spectral theorem. No mathematical novelty claim is made. The scope is the exponents 1/3 and, through squaring, 2/3. This calculus supplier does not prove the balanced spectral inequality or the full He–Saunderson–Fawzi conjecture for independent X,Y and all alpha greater than two (arXiv:2502.05627v1, Conjecture 6.2; DOI 10.1007/s10107-025-02314-0, Conjecture 1).
 
-The six typed theorem-registration attempts compile, but their source-selection bindings remain unfinished. The linked issue is https://github.com/the-omega-institute/trureturing/issues/23103; registration acceptance is not claimed.
+The seven typed theorem-registration attempts compile, but their source-selection bindings remain unfinished. The linked issue is https://github.com/the-omega-institute/trureturing/issues/23103; registration acceptance is not claimed.
 
 ## References
 
@@ -86,5 +98,6 @@ The six typed theorem-registration attempts compile, but their source-selection 
 - Truth anchor: `D5/S3/Quantum/Matrix/RpowPencilTaylor.contDiffAt_twoThirds`
 - Truth anchor: `D5/S3/Quantum/Matrix/RpowPencilTaylor.cubeRoot_jet_recurrences`
 - Truth anchor: `D5/S3/Quantum/Matrix/RpowPencilTaylor.cubeRoot_jet_spectral`
+- Truth anchor: `D5/S3/Quantum/Matrix/RpowPencilTaylor.cubicLinear_coordinates_entry`
 - Truth anchor: `D5/S3/Quantum/Matrix/RpowPencilTaylor.cubicLinear_entry`
 - Truth anchor: `D5/S3/Quantum/Matrix/RpowPencilTaylor.normalized_twoThirds_jet`

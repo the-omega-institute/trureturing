@@ -4,7 +4,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
 /-! Source-bound registration attempts for actual CFC cube-root calculus.
-Source-selection binding remains unfinished for all six theorem registrations;
+Source-selection binding remains unfinished for all seven theorem registrations;
 see https://github.com/the-omega-institute/trureturing/issues/23103.
 Binding acceptance is separate from the mathematical kernel proofs. -/
 
@@ -40,6 +40,63 @@ private def entryRejected : Realization entrySignature :=
 private theorem entryDependence : ObservationalDependence entrySignature entryActual := by
   intro i
   exact ⟨(), (0,0), (0,1), by simp [entryActual, realize]⟩
+
+namespace CubicCoordinatesEntry
+private abbrev arena : Arena where
+  signature := entrySignature
+  Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n]
+    (e : Matrix n n ℂ ≃⋆ₐ[ℂ] Matrix n n ℂ) (P E : Matrix n n ℂ)
+    (p : n → ℝ) (_hp : e P = Matrix.diagonal (fun i => (p i : ℂ))) (i j : n),
+    R.readout () () (e (cubicLinear P E) i j,
+      ((p i ^ 2 + p i*p j + p j ^ 2 : ℝ) : ℂ) * e E i j)
+private theorem rejected_law : ¬ arena.{u}.Law entryRejected := by
+  intro h
+  exact h (n := ULift.{u} Unit) (StarAlgEquiv.refl ℂ (Matrix _ _ ℂ))
+    0 0 (fun _ => 0) (by simp) ⟨()⟩ ⟨()⟩
+private theorem sensitivity : Sensitivity arena.{u} entryActual := by
+  constructor
+  · intro i
+    refine ⟨entryRejected, ?_, ?_, rejected_law.{u}⟩
+    · intro j hji
+      exact (hji (Subsingleton.elim _ _)).elim
+    · funext e
+      exact nomatch e
+  · intro e
+    exact nomatch e
+
+def family : Registration arena.{u}
+    (type_of% (@_root_.D5.S3.Quantum.Matrix.RpowPencilTaylor.cubicLinear_coordinates_entry.{u})) where
+  actual := entryActual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.Quantum.Matrix.RpowPencilTaylor.cubicLinear_coordinates_entry.{u},
+    entryRejected, rejected_law.{u}⟩
+  sensitivity := sensitivity.{u}
+  dependence := entryDependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Quantum.Matrix.RpowPencilTaylor.cubicLinear_coordinates_entry.{u})
+    (Realization entrySignature) Type Unit where
+  unitName := `Reg.D5.S3.Quantum.Matrix.RpowPencilTaylor.CubicCoordinatesEntry.unit
+  realizationName := `Reg.D5.S3.Quantum.Matrix.RpowPencilTaylor.CubicCoordinatesEntry.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨family.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize entrySignature (fun _ _ s => s.1 = s.2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end CubicCoordinatesEntry
 
 private abbrev smoothSignature : Signature where
   Params := MatrixScope.{u}

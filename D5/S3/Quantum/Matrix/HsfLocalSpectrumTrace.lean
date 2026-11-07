@@ -18,9 +18,6 @@ variable {n : Type*} [Fintype n] [DecidableEq n]
 
 private def tr (M : Matrix n n ℂ) : ℂ := M.trace
 
-private theorem tr_comm (A B : Matrix n n ℂ) : tr (A*B) = tr (B*A) :=
-  Matrix.trace_mul_comm A B
-
 private theorem tr_cycle (A B C : Matrix n n ℂ) : tr (A*B*C) = tr (B*C*A) :=
   (Matrix.trace_mul_cycle B C A).symm
 

@@ -329,7 +329,7 @@ private theorem coordinates_cubeRoot {Y : Matrix n n ℂ} (hY : Y.PosDef) :
   ext i j
   simp [Function.comp_def, RCLike.ofReal]
 
-private theorem cubicLinear_coordinates_entry (e : Matrix n n ℂ ≃⋆ₐ[ℂ] Matrix n n ℂ)
+theorem cubicLinear_coordinates_entry (e : Matrix n n ℂ ≃⋆ₐ[ℂ] Matrix n n ℂ)
     (P E : Matrix n n ℂ) (p : n → ℝ) (hp : e P = Matrix.diagonal (fun i => (p i : ℂ)))
     (i j : n) :
     e (cubicLinear P E) i j = ((p i ^ 2 + p i*p j + p j ^ 2 : ℝ) : ℂ) * e E i j := by

@@ -10,6 +10,16 @@ internal sealed class RpowPencilTaylorDocument : IScribeDocumentDefinition
         "Actual noncommutative CFC cube roots of positive definite Hermitian pencils.",
         H("CFC cube roots and ordered matrix jets"),
         Blocks(
+            Entry("cubicLinear_coordinates_entry", "The cubic linearization in diagonal coordinates",
+                "For any finite index type n with decidable equality, let e be a complex "
+                + "star-algebra equivalence from Matrix n n C to itself, P and E arbitrary "
+                + "complex matrices, and p a real-valued function on n. If e(P)=diag(p), "
+                + "then for every i,j, e(cubicLinear(P,E))_ij equals "
+                + "(p_i squared+p_i p_j+p_j squared)e(E)_ij, with the real factor "
+                + "cast to C. No positivity, distinctness, Hermitian condition on E, "
+                + "or nonempty index type is assumed. Taking e to be the identity "
+                + "and P=diag(p) gives the diagonal coefficient equation used to solve "
+                + "the ordered root-jet recurrences.", DescribeRole.Theorem),
             Entry("cubicLinear_entry", "The cubic linearization in a fixed eigenbasis",
                 "For Hermitian P, the map E to P squared E plus P E P plus E P squared "
                 + "acts in the fixed eigenbasis of P by multiplication of entry ij by "
@@ -64,7 +74,7 @@ internal sealed class RpowPencilTaylorDocument : IScribeDocumentDefinition
                 + "inequality or the full He–Saunderson–Fawzi conjecture for independent "
                 + "X,Y and all alpha greater than two (arXiv:2502.05627v1, Conjecture "
                 + "6.2; DOI 10.1007/s10107-025-02314-0, Conjecture 1).")),
-            Paragraph(Text("The six typed theorem-registration attempts compile, but "
+            Paragraph(Text("The seven typed theorem-registration attempts compile, but "
                 + "their source-selection bindings remain unfinished. The linked issue "
                 + "is https://github.com/the-omega-institute/trureturing/issues/23103; "
                 + "registration acceptance is not claimed.")))));

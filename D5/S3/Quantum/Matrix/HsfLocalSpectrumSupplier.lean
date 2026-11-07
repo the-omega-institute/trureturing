@@ -387,12 +387,8 @@ private theorem pencilDirection_hermitian (p : n → ℝ) {X : Matrix n n ℂ}
 private theorem cubicLinear_diagonal_entry (p : n → ℝ) (C : Matrix n n ℂ) (i j : n) :
     RpowPencilTaylor.cubicLinear (rootP p) C i j =
       (spectralDen (p i) (p j) : ℂ)*C i j := by
-  change (rootP p*rootP p*C+rootP p*C*rootP p+C*rootP p*rootP p) i j = _
-  simp only [rootP, Matrix.add_apply, Matrix.diagonal_mul_diagonal,
-    Matrix.diagonal_mul, Matrix.mul_diagonal, Pi.mul_apply]
-  unfold spectralDen
-  push_cast
-  ring
+  exact RpowPencilTaylor.cubicLinear_coordinates_entry
+    (StarAlgEquiv.refl ℂ (Matrix n n ℂ)) (rootP p) C p rfl i j
 
 private theorem first_root_entry {p : n → ℝ} (hp : ∀ i, 0 < p i)
     (X C : Matrix n n ℂ)
