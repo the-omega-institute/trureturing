@@ -316,9 +316,11 @@ private lemma finite_price_identity {S : Finset ℕ} (hS : naturalSupport S)
       (boundaryCoordinates L p) - priceObjective (p : ℝ) (x p))) = _
     rw [sum_sub_distrib, hsum, hsum, clock_coordinates, clock_coordinates]
     ring
-  rw [phi_coordinates, phi_coordinates, residualQ, residualJ, hloss]
-  dsimp [tangentRemainder]
-  rw [hb]
+  rw [residualQ, hloss, phi_coordinates, phi_coordinates]
+  dsimp only [residualJ, tangentRemainder, terminalCost, clockLambda,
+    D5.S3.Arith.Robin.ActualRobinClockCovariance.g]
+  rw [← hb]
+  simp only [clock_coordinates]
   ring
 
 private lemma price_losses_nonneg {S : Finset ℕ} (hS : naturalSupport S)

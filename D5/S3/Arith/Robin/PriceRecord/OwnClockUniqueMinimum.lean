@@ -52,7 +52,7 @@ lemma coordinate_hasDerivAt {S : Finset ℕ} (hS : naturalSupport S) (hθ : 1 < 
           (hasDerivAt_id (a p)).mul_const (log (p : ℝ))
       · simpa only [Function.update_of_ne hqp, if_false, hqp] using
           hasDerivAt_const (a p) (a q * log (q : ℝ))
-    simpa only [clock_coordinates, sum_ite_eq', mem_univ, if_true] using hs
+    simpa only [clock_coordinates, sum_ite_eq', Finset.mem_univ, ite_true] using hs
   have hb : HasDerivAt
       (fun t : ℝ => ∑ q : S, benefit q (Function.update a p t q))
       (log (p : ℝ) / ((p : ℝ) ^ (a p + 1) - 1)) (a p) := by
@@ -68,7 +68,7 @@ lemma coordinate_hasDerivAt {S : Finset ℕ} (hS : naturalSupport S) (hθ : 1 < 
           continuous_prime_hasDerivAt (x := a p) hp (by linarith [ha p])
       · simpa only [Function.update_of_ne hqp, if_false, hqp] using
           hasDerivAt_const (a p) (benefit q (a q))
-    simpa only [sum_ite_eq', mem_univ, if_true] using hs
+    simpa only [sum_ite_eq', Finset.mem_univ, ite_true] using hs
   have hL := ray_bounds hS hθ (theta_le_clock_of_naturalSupport hS (extend_admissible ha))
   have hL0 : clock S (extend a) ≠ 0 := ne_of_gt (by linarith [hL.2.1])
   have hl0 : log (clock S (extend a)) ≠ 0 := ne_of_gt (by linarith [hL.2.2])
@@ -106,6 +106,7 @@ theorem minimizer_kkt {S : Finset ℕ} (hS : naturalSupport S) (hθ : 1 < theta 
   dsimp only
   let f : ℝ → ℝ := fun t => phi S (extend (Function.update a p t))
   have hf : IsMinOn f (Ici 1) (a p) := by
+    apply isMinOn_iff.mpr
     intro t ht
     simpa only [f, Function.update_eq_self] using
       (isMinOn_iff.mp hmin) (Function.update a p t) (update_feasible ha p ht)
@@ -170,8 +171,9 @@ theorem minimizer_response {S : Finset ℕ} (hS : naturalSupport S) (hθ : 1 < t
     ∀ p : S, a p = max 1 (logCutoff (clock S (extend a)) / log (p : ℝ) - 1) := by
   intro p
   have hkkt := minimizer_kkt hS hθ ha hmin p
-  exact solve_coordinate (by exact_mod_cast lt_of_lt_of_le (by norm_num : (1 : ℕ) < 2)
-        (hS p p.property))
+  have hp : (1 : ℝ) < (p : ℕ) := by
+    exact_mod_cast (lt_of_lt_of_le (by norm_num : (1 : ℕ) < 2) (hS p p.property))
+  exact solve_coordinate hp
     (ray_bounds hS hθ (theta_le_clock_of_naturalSupport hS (extend_admissible ha))).2.1 (ha p) hkkt.1 hkkt.2
 
 lemma response_clock_identity {S : Finset ℕ} (hS : naturalSupport S)
@@ -185,8 +187,9 @@ lemma response_clock_identity {S : Finset ℕ} (hS : naturalSupport S)
         (logCutoff (clock S (extend a)) - log (p : ℝ)) := by
       apply sum_congr rfl
       intro p _
-      have hw : 0 < log (p : ℝ) := log_pos (by exact_mod_cast lt_of_lt_of_le (by norm_num : (1 : ℕ) < 2)
-        (hS p p.property))
+      have hp : (1 : ℝ) < (p : ℕ) := by
+        exact_mod_cast (lt_of_lt_of_le (by norm_num : (1 : ℕ) < 2) (hS p p.property))
+      have hw : 0 < log (p : ℝ) := log_pos hp
       rw [hresponse p, max_mul_of_nonneg _ _ hw.le, one_mul]
       congr 1
       field_simp [hw.ne']
