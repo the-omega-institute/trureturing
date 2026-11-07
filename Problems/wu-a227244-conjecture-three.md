@@ -56,7 +56,6 @@ would refute this precise conditional assertion.
 | --- | --- |
 | Conditional C3 | The canonical result retains the complete stated conditional family. |
 | Interpretation | Progression-index noncoverage is disclosed; author intent is not established. |
-| Admission | External named open-problem resolution exception; all proof declarations are bind-only applications with consumed private helpers. |
 | General method and priority | No new general method, escape witness or global priority claim. |
 | Literature | No exact supplier on the bounded checked surfaces; completeness remains unverified. |
 
