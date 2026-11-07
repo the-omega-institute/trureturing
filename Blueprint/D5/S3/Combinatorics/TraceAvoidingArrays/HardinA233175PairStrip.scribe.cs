@@ -85,7 +85,7 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
             All("n", V("Nat"), All("s", V("Seen"),
                 All("f", Arrow(Call("Fin", Add(n, D(1))), Fin(6)),
                     Iff(Call("good", s, f), And(Call("allowed", s, App(f, D(0))),
-                        Call("good", Call("advance", s, App(f, D(0))), Call("Fintail", f)))))))]);
+                        Call("good", Call("advance", s, App(f, D(0))), Call("Fin.tail", f)))))))]);
     }
 
     private static Formula FinishFormula()
@@ -97,7 +97,7 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
             All("n", V("Nat"), All("s", V("Seen"),
                 All("f", Arrow(Call("Fin", Add(n, D(1))), Fin(6)),
                     Eq(Call("finish", s, f),
-                        Call("finish", Call("advance", s, App(f, D(0))), Call("Fintail", f))))))]);
+                        Call("finish", Call("advance", s, App(f, D(0))), Call("Fin.tail", f))))))]);
     }
 
     private static Formula PairsFormula()
@@ -118,7 +118,7 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
         var first = Ex("j", Call("Fin", n), And(Eq(Call("val", j), D(0)),
             Eq(App(a, Pair(D(0), j)), D(0))));
         var here = App(a, Pair(r, j));
-        var next = App(a, Pair(s, Call("Finmk", Add(Call("val", j), D(1)))));
+        var next = App(a, Pair(s, Call("Fin.mk", Add(Call("val", j), D(1)))));
         var bonds = All("j", Call("Fin", n), Imp(Lt(Add(Call("val", j), D(1)), n),
             All("r", Fin(2), All("s", Fin(2), And(Ne(here, next),
                 Ne(Add(Call("val", here), Call("val", next)), D(5)))))));
@@ -128,8 +128,8 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
             Imp(Eq(App(a, p), D(3)), Earlier(2))));
         var predicate = Seq(LambdaLower, Sp, a, Colon, Sp, Arrow(cells, Fin(6)), Sp,
             Mapsto, Sp, Parenthesized(And(first, And(bonds, normal))));
-        var boards = Call("Finsetfilter", predicate, V("Finsetuniv"));
-        return All("n", V("Nat"), Eq(Call("a", n), Call("Finsetcard", boards)));
+        var boards = Call("Finset.filter", predicate, Call("Finset.univ"));
+        return All("n", V("Nat"), Eq(Call("a", n), Call("Finset.card", boards)));
     }
 
     private static Formula StateFunction() => Arrow(V("Seen"), Arrow(V("Seen"),
@@ -185,7 +185,7 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
         var x = V("X"); var n = V("n");
         var left = Mul(Mul(Sub(D(1), Mul(D(4), x)),
             Sub(Sub(D(1), Mul(D(8), x)), Mul(D(3,2), Pow(x, D(2))))),
-            Call("PowerSeriesmk", Seq(LambdaLower, Sp, n, Colon, Sp, V("Nat"), Sp, Mapsto, Sp,
+            Call("PowerSeries.mk", Seq(LambdaLower, Sp, n, Colon, Sp, V("Nat"), Sp, Mapsto, Sp,
                 Cast(Call("a", n)))));
         var right = Mul(x, Add(Sub(Sub(D(3), Mul(D(2,8), x)), Mul(D(1,6), Pow(x, D(2)))),
             Mul(D(2,2,4), Pow(x, D(3)))));
@@ -195,7 +195,8 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
     private static Formula States(Formula body) => All("q", V("Seen"), All("t", V("Seen"),
         All("b", V("Seen"), All("p", Product(Fin(3), Fin(3)), body))));
     private static Formula Number(int n) => Seq(n.ToString(System.Globalization.CultureInfo.InvariantCulture).Select(c => D((byte)(c-'0'))).ToArray());
-    private static Formula TextFormula(string s) => Seq(Operatorname, Grp(V(s)));
+    private static Formula TextFormula(string s) => Seq(Operatorname,
+        s.Contains('.') ? Grp(V(s.Split('.')[0]), Dot, V(s.Split('.')[1])) : Grp(V(s)));
     private static Formula V(string name) => F.Id(name);
     private static Formula Fin(byte n) => Call("Fin", D(n));
     private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);

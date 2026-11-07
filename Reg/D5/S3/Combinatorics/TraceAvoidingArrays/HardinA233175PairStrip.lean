@@ -3,6 +3,8 @@ import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
+/-! Readout registrations for the generating-function identity and its finite certificate. -/
+
 namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
 
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
@@ -35,7 +37,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
       (PowerSeries.mk fun n => ((a n + 1 : ℕ) : ℤ)) =
         X * (3 - 28 * X - 16 * X ^ 2 + 224 * X ^ 3) at h
   have h0 : a 0 = 0 := by unfold a; decide +kernel
-  have hb := congrArg (PowerSeries.coeff ℤ 0) h
+  have hb := congrArg (PowerSeries.coeff 0) h
   simpa [PowerSeries.coeff_mul, h0] using hb
 
 def family : Registration arena (type_of% @result) where
@@ -127,8 +129,10 @@ def family : Registration arena (type_of% @finite_certificate) where
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@finite_certificate) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.FiniteCertificate.auditUnit
-  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.FiniteCertificate.family
+  unitName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.FiniteCertificate.auditUnit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.FiniteCertificate.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
