@@ -191,3 +191,303 @@ $$
 回到原域的只是这个准确单位等式；镜面值及平方根可留在完成中，4.1 给出具体区别。原两张关系中的有向部分、同一复乘法、实际联合和完整设备来源仍承担 3.2 的条件，不由这幅数学镜面代付。
 
 ## 追加锚（本行以下为增补区）
+
+## 6. 同一原平方的忠实 JB 完成识别
+
+**定理 6.1（原乘法、原锥与原范数的同一完成）。** 在定义 2.1 的任一原入口下，令 $i:E\to X$、$C_X=\overline{i(C)}^{\,X}$、$\bar N$ 和 $\bar S:X^2\to X$ 分别为定理 2.2 已构造的忠实范数完成、完成锥、原范数延拓和同一原乘法的唯一有界延拓；仍以 $u$ 记 $i(u)$。这些是该定理的输出，不是另加的前提。那么
+
+$$
+(X,\bar S,\bar N,u)\ \text{是含单位 JB 代数},\qquad
+C_X=\{\bar S(x,x):x\in X\}.
+\tag{6.1}
+$$
+
+它正是指定完成空间、指定序单位范数、指定单位和指定锥上的唯一 JB 结构，乘法在全部 $X\times X$ 上准确为 $\bar S$。原嵌入满足
+
+$$
+\begin{gathered}
+i(S(a,b))=\bar S(i(a),i(b)),\qquad
+\bar N(i(a))=N(a),\qquad i(C)=i(E)\cap C_X,\\
+\overline{\{S(a,a):a\in E\}}^{\,E}=C.
+\end{gathered}
+\tag{6.2}
+$$
+
+因此同一原 $E$ 是其中的稠密含单位 Jordan 子代数；只有原 $E$ 完备时才把它本身称为这个 JB 完成。每个原正实线性评价 $\alpha$ 都有唯一连续正延拓 $\bar\alpha$，满足 $\bar\alpha\circ i=\alpha$ 及 $\bar\alpha(u)=m_\alpha=\alpha(u)$，包括零质量评价，不要求正常性。在总映射入口，三标签卷约定 1.1、定义 8.2–8.4 及定理 29.2 的全部原来源和消费者量词仍逐项保留，原质量与原 $q$ 保持其原定义和原适用域；这里不定义完成上的 $q$。无限支撑输入没有被有限截面替换，也不要求原域对逆元或平方根封闭。
+
+证明。$E=0$ 时完成及全部等式均为零，以下设 $E\ne0$。定理 2.2 已经给出 $\bar N(u)=1$、$\bar S(u,x)=x$、$C_X\cap i(E)=i(C)$，且 $(X,C_X,u)$ 是完备 Archimedean 序单位空间，其序单位范数就是 $\bar N$。置 $M=M_\theta=2/\theta-1\ge1$，该定理的有界性给
+
+$$
+\bar N(\bar S(x,y))\le M\bar N(x)\bar N(y)
+\quad(x,y\in X).
+\tag{6.3}
+$$
+
+记 $\mathcal O=\operatorname{int}C_X$。原平方方程 $z'=-\bar S(z,z)$ 的流仍记 $\Psi_t$；定理 2.2 的 (2.12)、(2.14) 在已经证得 $K=0$ 后给出整个内部上的映射
+
+$$
+J(c)=u-\Psi_1(c-u),\qquad
+J^2=I_{\mathcal O},\qquad J(u)=u,\qquad
+J(sc)=s^{-1}J(c)\quad(s>0).
+\tag{6.4}
+$$
+
+$J$ 反序且为双射，由对合性，其逆也反序。因此这里已具备原完成锥内部的反序同构和准确的 $-1$ 次齐次性；它们不是对原 $E$ 增加的假设。按 Roelands–Tiersma，*An order-theoretic characterization of JB-algebras*，[arXiv:2507.09526v3](https://arxiv.org/html/2507.09526v3)，Proposition 2.22，$J:\mathcal O\to\mathcal O$ 是 gauge-reversing 双射。
+
+先直接从同一原平方核对规范化所需的导数，并保留足够强的余项。取 $h\in X$，令 $r=\bar N(h)<1/(8M)$，故 $u+h\in\mathcal O$。$h=0$ 时下列式子显然成立；否则令 $z(t)=\Psi_t(h)$，其积分方程为
+
+$$
+z(t)=h-\int_0^t\bar S(z(s),z(s))\,ds.
+\tag{6.5}
+$$
+
+在 $0\le t\le1$ 上有 $\bar N(z(t))\le2r$：若首次达到 $2r$，此前 (6.3)、(6.5) 给 $\bar N(z(t))\le r+4Mr^2t\le3r/2$，矛盾。有界双线性场在此球上有统一 Lipschitz 界，解和导数有界；故有限端点处存在范数极限并可由局部存在定理延拓，排除了在 $t=1$ 前终止。于是整个区间还有
+
+$$
+\begin{aligned}
+\bar N(z(t)-h)&\le4Mr^2t,\\
+\bar N\bigl(\bar S(z(t),z(t))-\bar S(h,h)\bigr)
+&\le M\bar N(z(t)-h)\bigl(\bar N(z(t))+r\bigr)
+\le12M^2r^3t.
+\end{aligned}
+\tag{6.6}
+$$
+
+将第二行代回积分方程并积分到 $1$，得到球上一致展开
+
+$$
+J(u+h)=u-h+\bar S(h,h)+R_S(h),\qquad
+\bar N(R_S(h))\le6M^2\bar N(h)^3.
+\tag{6.7}
+$$
+
+这只用了原乘法的有界实双线性，没有使用 Jordan 律或幂结合性。特别地，余项及 (6.3) 给出真正的 Fréchet 导数 $\mathrm dJ_u=-I_X$；这里 $\mathrm d$ 是该数学映射的微分，和旧二元关系 $D$ 无关。
+
+现在只在完备空间 $X$ 上调用上述文献 Theorem 5.34。其参数对应为 $V=W=X$、$V_+=W_+=C_X$、$v=w=u$、两个开锥均为 $\mathcal O$，$\Phi=J$；$J(u)=u$ 也已由 (6.4) 给出。Theorem 5.34(3)–(5) 给同一序单位空间上的唯一 JB 乘法，暂记 $\bullet$，单位为 $u$，平方锥为 $C_X$，且其内部逆元映射准确为
+
+$$
+j=-[\mathrm dJ_u]^{-1}\circ J=J.
+\tag{6.8}
+$$
+
+其 JB 范数正是指定的序单位范数 $\bar N$，这也是该文 Theorem 1.1 的范数表述。这里只复用完整空间重构及其导数规范化，不应用要求原内部镜面取值仍在原域的非完备空间结论。尤其 (6.8) 还没有自行识别原 $\bar S$；下一步才补这一点。
+
+在这个暂记乘法的 JB 代数中，$u$ 与任意单个 $h$ 生成的闭含单位子代数是结合的；这是成熟 JB 单元素生成函数演算，也是该文 Theorem 5.34 证明中使用 Hua 恒等式的同一背景。以 $h^{\bullet0}=u$、$h^{\bullet1}=h$ 记其幂。当 $r=\bar N(h)<1$ 时，Neumann 级数在此子代数收敛并给 $u+h$ 的逆元。由 JB 乘法的范数不等式，尾项满足
+
+$$
+\begin{aligned}
+J(u+h)=j(u+h)
+&=\sum_{n=0}^{\infty}(-1)^nh^{\bullet n}
+=u-h+h\bullet h+R_J(h),\\
+\bar N(R_J(h))&\le\sum_{n=3}^{\infty}r^n
+=\frac{r^3}{1-r}.
+\end{aligned}
+\tag{6.9}
+$$
+
+此处仅对已经重构出的 $\bullet$ 使用幂结合性；没有预设原 $\bar S$ 具备它。现在 (6.7) 与 (6.9) 是同一个 $J$ 在同一个 $X$、同一个范数中的展开。在 $r<1/(8M)$ 内相减，得到
+
+$$
+\bar N\bigl(\bar S(h,h)-h\bullet h\bigr)
+\le\left(6M^2+\frac1{1-r}\right)r^3.
+\tag{6.10}
+$$
+
+固定任意 $a\in X$，取 $h=ta$ 并令非零实数 $t\to0$。两种乘法的实双线性使左侧等于 $t^2\bar N(\bar S(a,a)-a\bullet a)$；右侧除以 $t^2$ 后趋于零，故 $\bar S(a,a)=a\bullet a$ 对每个 $a\in X$ 成立。对任意 $x,y\in X$ 极化即得
+
+$$
+\begin{aligned}
+\bar S(x,y)
+&=\tfrac12\bigl(\bar S(x+y,x+y)-\bar S(x,x)-\bar S(y,y)\bigr)\\
+&=\tfrac12\bigl((x+y)\bullet(x+y)-x\bullet x-y\bullet y\bigr)
+=x\bullet y.
+\end{aligned}
+\tag{6.11}
+$$
+
+这证明的是全部完成元素对上的准确等式，而非只在正元、有限支撑或某个稠密子集上相同。成熟重构所给的 Jordan 律、JB 范数性质和平方锥现在都属于原有界延拓 $\bar S$；特别 $\bar N(\bar S(x,y))\le\bar N(x)\bar N(y)$ 及 $\bar N(\bar S(x,x))=\bar N(x)^2$。于是 (6.1) 及所述唯一性成立。
+
+回到原域，延拓的定义已给 (6.2) 前三项：原 $S(a,b)$ 本来就在 $E$，(6.11) 说明其像正是完成的 JB 乘积，故 Jordan 恒等式由嵌入单射性返回原 $E$；范数与锥也忠实返回，没有另选原乘法或原正锥。为证明最后一项，取任意 $c\in C$，在完成的 JB 代数中取 $b$ 使 $\bar S(b,b)=i(c)$，再由稠密性取 $i(a_n)\to b$。连续性给 $i(S(a_n,a_n))\to i(c)$，等距性使 $S(a_n,a_n)\to c$ 在原 $N$ 中成立；反向包含来自原平方正性与 $C$ 在 $E$ 中闭。这里取平方根及求极限均在完成中进行，不声称 $b\in i(E)$。因此 $C$ 是原平方集在原域内的闭包，未必就是原平方集；逆元和平方根是否返回原域仍受 4.1 的边界限制。
+
+最后，对任意原正实线性评价 $\alpha$，原序单位界给
+
+$$
+|\alpha(a)|\le m_\alpha N(a),\qquad
+\bar\alpha(i(a))=\alpha(a),\qquad
+\bar\alpha(u)=m_\alpha,\qquad
+\bar\alpha\bigl(\bar S(i(a),i(b))\bigr)=\alpha(S(a,b)).
+\tag{6.12}
+$$
+
+第一式由 $-ru\le a\le ru$ 及 $r\downarrow N(a)$ 得出，故完成的泛函延拓唯一；其在 $C_X$ 上正来自 $i(C)$ 的稠密性。$m_\alpha=0$ 时第一式强制原评价及其延拓恒零，无须也不能除以该质量。这适用于全部原正评价，而非只选一个忠实态、正常态或归一化子族。于是全部原评价、原质量及原乘积读数都逐点保留；没有改变原 $q$ 的定义、权或量词，也没有把新的数学态加入原准备。
+
+本条 $\texttt{repo-derived}$ 内容是把原平方流的统一二阶项、其准确导数规范化和完成逆元的二阶项接在同一原载体及乘法上，支付第 1 章及 3.2 在定义 2.1 范围内留下的 JB 识别接口。一般 gauge-reversing 重构、JB 单元素生成演算与 Neumann 级数是证明内复用的成熟工具，不作为本仓新增的一般定理或历史优先权主张。结论始终是原平方前件下的纸面条件命题；不声称无这些前件的一般无限 raw $S$ 已恢复为 JB，也不声称实际物理来源满足这些前件。旧 $D$ 的中央中性、实际输出覆盖、双线性、连续性、正常性、动力对应及交换子条件均未由本条支付；同一复乘法的一般复 $C^*$ 恢复仍需自己的前件。三标签卷约定 1.1、定义 8.2–8.4 及定理 29.2 中原准备、设备、完整仪器与细记录、真实相关联合、全部合法顺序／自适应／并行历史及其全部仍合法未来、失败／拒绝／停止／销毁、真正遗忘和各类实际返回，均保其原类型、原来源及原消费者的全部量词。指定正规表示与前对偶、非离散记录、可数可加性、无限历史，以及原物理钟、强连续酉实现、Hamiltonian 能量和共同作用量单位 $\hbar$ 也仍需各自原对应；本条的数学完成、微分和逆元均不供应这些对象。∎
+
+## 追加锚（本行以下为增补区）
+
+## 7. 同一原有向关系的精确中央零行与零列
+
+**定义 7.1（同一 JB 完成上的原二表与实部换括号）。** 先给定一个实含单位 JB 代数 $(X,\circ,\|\cdot\|,1)$，以及忠实、等距、保单位且像范数稠密的原 Jordan 子代数嵌入 $i:E\to X$。原乘法、范数和单位满足
+
+$$
+i(S(a,b))=i(a)\circ i(b),\qquad N(a)=\|i(a)\|,\qquad i(u)=1.
+\tag{7.1}
+$$
+
+原 $E$ 可以不完备，$X$ 可以含例外 JB 部分。固定原分离实线性评价族 $\mathcal P$，要求它定义的原锥准确满足
+
+$$
+C=\{e\in E:\alpha(e)\ge0\ \text{对每个原 }\alpha\in\mathcal P\}
+  =\{e\in E:i(e)\in X_+\}.
+\tag{7.2}
+$$
+
+旧 $D:E\times E\to E$ 仅为总映射。对每个原 $\alpha\in\mathcal P$ 和每对原标签 $a_1,a_2\in E$，要求完整有向二表
+
+$$
+K_\alpha(a_1,a_2)
+=\bigl[\alpha(S(a_j,a_k))-\mathrm i\alpha(D(a_j,a_k))\bigr]_{j,k=1}^2
+\succeq0.
+\tag{7.3}
+$$
+
+这里包括原对角项，没有先行删除虚部或替换某一方向的条目。另要求全部原 $a,b,x\in E$ 的实部换括号式
+
+$$
+S(S(a,b),x)-S(a,S(b,x))
+=D(D(a,b),x)-D(a,D(b,x)).
+\tag{7.4}
+$$
+
+不预设 $D$ 的可加性、齐次性、奇性、连续性或正常性，也不要求复三标签正性、中央平移、输出外延性、输出覆盖或原域函数演算封闭。
+
+在本卷定义 2.1 的总映射入口上使用此背景时，保留该入口关于同一 $E,S,D,\mathcal P,C,N,u,\theta$ 的全部原假设，取定理 6.1 实际构造的 $i$、$X$ 与同一原 $S$ 的延拓为 (7.1)，并增加原域上的 (7.4)。于是 (7.2) 来自 (6.2)，(7.3) 正是原二标签前件。定义 2.1 的约化 $S$ 入口单独不供应旧 $D$、原评价或 (7.3)–(7.4)。另行给定一般 JB 完成是本定义的数学条件，不是一般物理来源已经满足这些条件的断言。
+
+**定理 7.2（原零行、原零列与完成中心准确相等）。** 在定义 7.1 下，以完成乘法定义有界算子 $L_\xi\eta=\xi\circ\eta$ 及 Jordan 中心
+
+$$
+Z(X)=\{\zeta\in X:[L_\zeta,L_\xi]=0\ \text{对全部 }\xi\in X\}.
+\tag{7.5}
+$$
+
+则同一个原 $D$ 满足完整等式
+
+$$
+\boxed{
+\begin{aligned}
+\{c\in E:D(c,a)=0\ \text{对全部 }a\in E\}
+&=\{c\in E:D(a,c)=0\ \text{对全部 }a\in E\}\\
+&=\{c\in E:i(c)\in Z(X)\}.
+\end{aligned}}
+\tag{7.6}
+$$
+
+把 $E$ 与其忠实像认同时，最后一项就是 $E\cap Z(X)$。特别地，同一原单位的整行、整列及其全部实标量倍都满足
+
+$$
+D(tu,a)=D(a,tu)=0\qquad(t\in\mathbb R,\ a\in E).
+\tag{7.7}
+$$
+
+在定义 2.1 的总映射入口加 (7.4) 时，以上结论适用于定理 6.1 的那个准确完成、那个原锥及全部原输入；不另换平方背景。
+
+证明。若 $E=0$，由稠密性 $X=0$，结论成立。以下设 $E\ne0$，记 $\widehat e=i(e)$，并仅在原 $E$ 上记 $T_a b=S(a,b)$。
+
+首先，(7.3) 的 Hermitian 性和原评价分离给 $D(a,b)=-D(b,a)$ 及 $D(a,a)=0$。原 Jordan 乘法有 $S(0,0)=0$，所以同一二表在标签 $(0,a)$ 上有零首对角；正半定性使该行列的非对角项为零，原评价分离再给 $D(0,a)=D(a,0)=0$。这些结论均对全部原标签成立。
+
+现在直接复用三标签卷定理 13.1 证明内的三循环消元 (13.2)，亦即该卷 (59.4) 的维数无关子论证。其所需的 $S$ 对称、$D$ 反对称和原实部式已分别由 (7.1)、上段和 (7.4) 供应，故
+
+$$
+D(D(a,b),x)=[T_b,T_a]x\qquad(a,b,x\in E).
+\tag{7.8}
+$$
+
+这只是在原 $E$ 中联立原等式，不展开未知 $D$ 的输入之和，也不使用有限 EJA 分类、有限中央理想、II₁ 背景或三标签复正性。
+
+还需把原二表正性准确传给证明所用的数学态。直接使用三标签卷 (59.5) 的原锥论证：对每对原 $a,b$ 和每个 $z_1,z_2\in\mathbb C$，原元素
+
+$$
+\begin{aligned}
+w={}&|z_1|^2S(a,a)+|z_2|^2S(b,b)\\
+ &+2\Re(\overline{z_1}z_2)S(a,b)
+   +2\Im(\overline{z_1}z_2)D(a,b)
+\end{aligned}
+\tag{7.9}
+$$
+
+满足 $\alpha(w)\ge0$ 对每个原 $\alpha$ 成立，故由 (7.2) 有 $w\in C$、$i(w)\in X_+$。因此每个数学态 $\varphi$（即 $X$ 上满足 $\varphi(1)=1$ 的连续正实线性泛函）都给
+
+$$
+M_\varphi(a,b)=
+\begin{pmatrix}
+\varphi(\widehat a\circ\widehat a)&
+\varphi(\widehat a\circ\widehat b)-\mathrm i\varphi(\widehat{D(a,b)})\\
+\varphi(\widehat a\circ\widehat b)+\mathrm i\varphi(\widehat{D(a,b)})&
+\varphi(\widehat b\circ\widehat b)
+\end{pmatrix}\succeq0.
+\tag{7.10}
+$$
+
+这不是对原评价族作正常性或对偶稠密性假设；它来自同一原元素 (7.9) 的锥成员身份。数学态也没有被加入实际准备族。
+
+令 $R=\{r\in E:D(r,a)=0\text{ 对全部 }a\in E\}$。反对称性已使零列集合等于 $R$。若 $r\in R$，(7.8) 给
+
+$$
+[T_b,T_r]x=D(D(r,b),x)=D(0,x)=0
+\qquad(b,x\in E).
+\tag{7.11}
+$$
+
+在 $X$ 上，$L_{\widehat b}$、$L_{\widehat r}$ 有界，且 (7.1) 使其交换子在稠密的 $i(E)$ 上为零，故在全部 $X$ 上为零。再以 $i(E)$ 的稠密性和 $\xi\mapsto L_\xi$ 的范数连续性，得到 $[L_\xi,L_{\widehat r}]=0$ 对每个 $\xi\in X$ 成立，即 $\widehat r\in Z(X)$。这里延拓的只有已知 JB 乘法算子，没有延拓 $D$。
+
+反向固定任意原 $c$，使 $\widehat c\in Z(X)$，并固定任意原 $a\in E$。令
+
+$$
+d=D(c,a)\in E.
+\tag{7.12}
+$$
+
+由 (7.8) 和中心条件，$D(d,x)=[T_a,T_c]x=0$ 对全部原 $x\in E$ 成立。因此 $d\in R$，上段已经证明的包含关系给 $\widehat d\in Z(X)$。到此尚未把 $d\in R$ 当成 $d=0$；须继续消掉这个可能的中央输出。
+
+只在完成中构造一个辅助交换子代数。成熟中心事实取 Hanche-Olsen–Størmer，[*Jordan Operator Algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，§2.5.1 及 Lemma 2.5.3（印刷页 44–45）：中心是结合子代数，且中央元与任意元相结合。后一性质也可直接由 (7.5) 读出：对中央 $z$ 和任意 $x,y$，
+
+$$
+z\circ(x\circ y)=x\circ(z\circ y)=y\circ(z\circ x)=(z\circ x)\circ y.
+\tag{7.13}
+$$
+
+令 $A_0$ 为 $1,\widehat c,\widehat d$ 代数生成的中央结合子代数。由该书 §3.2.3（印刷页 79），单元 $\widehat a$ 与 $1$ 生成的 Jordan 代数是结合的。故对 $z,w\in A_0$ 及实多项式 $p,r$，(7.13) 给
+
+$$
+\bigl(z\circ p(\widehat a)\bigr)\circ\bigl(w\circ r(\widehat a)\bigr)
+=(z\circ w)\circ\bigl(p(\widehat a)\circ r(\widehat a)\bigr).
+\tag{7.14}
+$$
+
+这些元素的实线性张成是含单位结合 Jordan 子代数；(7.14) 也使其三重乘积不依赖括号。取范数闭包得到 $X$ 的含单位结合 JB 子代数 $B$，其中包含 $\widehat a,\widehat c,\widehat d$。这里的多项式、闭包都只用于完成中的已知乘法；既不要求它们全部返回 $i(E)$，也不对其中的新元素使用 $D$。
+
+该书 Theorem 3.2.2（印刷页 78–79）应用于这个 $B$，给一个紧 Hausdorff 空间 $K$ 及等距含单位代数同构 $B\cong C(K,\mathbb R)$。于是点值特征 $\chi:B\to\mathbb R$ 分离 $B$，满足 $\|\chi\|=\chi(1)=1$。对每个这样的 $\chi$，实 Hahn–Banach 定理给保持范数的实线性延拓 $\varphi_\chi:X\to\mathbb R$。该书 Proposition 3.3.10（印刷页 84）说明 $X$ 的 JB 范数准确是其序单位范数；所以 $\|\varphi_\chi\|=\varphi_\chi(1)=1$ 由 Lemma 1.2.2（印刷页 8）保证 $\varphi_\chi$ 为正。这正是 Lemma 1.2.4 同页的态延拓方法。无须要求延拓保乘法、正常或属于原 $\mathcal P$；只需它在 $B$ 上准确等于 $\chi$。
+
+在 (7.10) 中取原标签 $(c,a)$ 及数学态 $\varphi_\chi$。全部四个实乘积和 $\widehat d$ 均在 $B$ 中，因此特征的乘法性使该正矩阵准确成为
+
+$$
+\begin{pmatrix}
+\chi(\widehat c)^2&
+\chi(\widehat c)\chi(\widehat a)-\mathrm i\chi(\widehat d)\\
+\chi(\widehat c)\chi(\widehat a)+\mathrm i\chi(\widehat d)&
+\chi(\widehat a)^2
+\end{pmatrix}\succeq0.
+\tag{7.15}
+$$
+
+其行列式是 $-\chi(\widehat d)^2$，故 $\chi(\widehat d)=0$。特征分离 $B$，得到 $\widehat d=0$；原嵌入忠实再给 $d=0$。这对每个原 $a\in E$ 成立，故 $c\in R$，支付 (7.6) 的反向包含。论证没有除以 $\chi(\widehat c)$、$\chi(\widehat a)$ 或任何原质量，零值也包括在内。最后 $L_1=I$，全部 $t1$ 都在 $Z(X)$，所以 (7.6) 直接给 (7.7)，无须另作单位行证明。
+
+在定义 2.1 的总映射入口，定理 6.1 给的准确原乘法、原锥、原范数与原单位满足 (7.1)–(7.2)，其原二表就是 (7.3)；额外前件只是同一原 $D$ 的 (7.4)。因此上述每一步直接作用于那些原对象。本条 $\texttt{repo-derived}$ 综合是：原二重式先把中央输入的任意原输出送入原零行，再由零行对应中心，将该输出与原输入放在同一个辅助结合 JB 子代数中，以原锥传递的二表和特征态消去它。中心、结合 JB 谱表示、序单位范数及态延拓只是上述引文的成熟中间工具；不把它们另算为新一般定理，也不主张历史优先权。∎
+
+**定义 7.3（精确中性与其余原接口的范围）。** 定理 7.2 支付的是 (7.6) 的输入中性及零行／零列的准确识别。中央平移等式 $D(a+c,b)=D(a,b)$、一般旧 $D$ 的实双线性、连续性、正常性、实际输出覆盖、输出外延性和线性动力对应仍须各自论证；本条没有对它们给出成立或不成立的结算。Baez，[arXiv:2006.14741v5](https://arxiv.org/html/2006.14741v5)，Theorem 12 的动力对应前件包含线性，不能用来预付任意总映射 $D$ 的正则性。辅助 $B\cong C(K,\mathbb R)$ 只表示证明中的结合子代数，没有把整个 $X$ 假定为特殊 JB、自伴算子代数或一般复 $C^*$ 代数。一般复 $C^*$ 恢复也不在本条结论中。
+
+对全部原正实线性评价，序单位界仍是 $|\alpha(e)|\le m_\alpha N(e)$，$m_\alpha=\alpha(u)\ge0$；$m_\alpha=0$ 时原评价恒零。没有只选正常态、只选一种质量或把原评价改成特征态，原不等质量及零质量全部保留。原 $q$ 及其适用域、全部原标签和无限支撑输入均原样保持；完成中的特征、态延拓和极限都不定义完成上的旧 $D$ 或 $q$。整个证明对 $D$ 的每一次调用，其两个输入与输出都在原 $E$ 内。
+
+在本卷总映射入口，三标签卷约定 1.1、定义 8.2–8.4 及定理 29.2 中全部原来源与消费者量词继续逐项保留：原准备、设备、完整仪器及细记录、真实相关联合、每个合法顺序／自适应／并行历史及其全部仍合法未来、失败／拒绝／停止／销毁、真正遗忘和各类实际返回，都保持原类型、原发生关系、原质量及原消费者。指定正规表示和前对偶、非离散记录、可数可加性、无限历史，以及原物理钟、强连续酉实现、Hamiltonian 能量与共同作用量单位 $\hbar$，仍各须自己的原对应。数学谱点、特征态、完成与单位零行不供应上述实际来源，也不构成完整量子起源的结论。
+
+## 追加锚（本行以下为增补区）
