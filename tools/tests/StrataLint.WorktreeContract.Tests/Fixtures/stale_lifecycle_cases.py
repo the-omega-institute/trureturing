@@ -243,25 +243,124 @@ class LifecycleTests(unittest.TestCase):
                                  "lane/governance/new-" + reason)
                 self.assertEqual(run(self.main, "rev-parse", branch).stdout.strip(), head)
 
-    def test_cli_cleans_later_expired_inventory_before_returning_claim_or_continuation(self):
-        for continuation in (False, True):
-            with self.subTest(continuation=continuation):
-                eligible = self.root / ("a-eligible-" + str(continuation))
-                expired = self.root / ("z-expired-" + str(continuation))
-                name = "task-" + str(continuation)
+    def test_cli_expires_inventory_before_selection_or_continuation(self):
+        for continuation, reuse_any, expired_first in (
+                (continuation, reuse_any, expired_first)
+                for continuation in (False, True) for reuse_any in (False, True)
+                for expired_first in (False, True)):
+            with self.subTest(continuation=continuation, reuse_any=reuse_any, expired_first=expired_first):
+                name = f"task-{continuation}-{reuse_any}-{expired_first}"
+                eligible = self.root / (("z" if expired_first else "a") + "-eligible-" + name)
+                expired = self.root / (("a" if expired_first else "z") + "-expired-" + name)
                 branch = "lane/governance/" + (name if continuation else "old-" + name)
                 self.commit_branch(branch, eligible, 60 if continuation else 5 * 3600)
+                (eligible / "payload").write_text("ordinary tracked bytes")
+                (eligible / "untracked").write_text("ordinary untracked bytes")
                 old_branch = "lane/governance/expired-" + name
                 head = self.commit_branch(old_branch, expired, 7 * 3600)
                 (expired / "payload").write_text("dirty")
                 (expired / "untracked").write_text("discard")
-                result = self.create(name, self.root / "unused", reuse_any=True)
-                self.assertFalse(expired.exists(), result.stdout)
+                result = self.create(name, eligible, reuse_any=reuse_any)
+                receipt = json.loads(result.stdout)
+                selected = Path(receipt["path"])
+                self.assertIn(str(expired), receipt["removed_worktrees"])
                 self.assertEqual(run(self.main, "rev-parse", old_branch).stdout.strip(), head)
-                self.assertEqual(run(eligible, "branch", "--show-current").stdout.strip(),
+                if expired.exists():
+                    # Default selection may recreate the expired pathname.
+                    self.assertNotEqual(run(expired, "rev-parse", "HEAD").stdout.strip(), head)
+                    self.assertFalse((expired / "untracked").exists())
+                if not reuse_any or continuation:
+                    self.assertEqual(selected, eligible)
+                self.assertEqual(run(selected, "branch", "--show-current").stdout.strip(),
                                  "lane/governance/" + name)
+                if continuation:
+                    self.assertEqual((eligible / "payload").read_text(), "ordinary tracked bytes")
+                    self.assertEqual((eligible / "untracked").read_text(), "ordinary untracked bytes")
                 # Keep the next subcase's inventory independent without a cleanup entrance.
                 run(self.main, "worktree", "remove", "--force", eligible)
+                if selected != eligible:
+                    run(self.main, "worktree", "remove", "--force", selected)
+
+    def test_make_and_cli_expire_inventory_before_fresh_explicit_destination(self):
+        self.prepare_make()
+        eligible = self.root / "b-eligible"
+        eligible_head = self.commit_branch("lane/governance/eligible", eligible, 5 * 3600)
+        for entrance in ("cli", "make"):
+            with self.subTest(entrance=entrance):
+                expired = []
+                for prefix in ("a", "z"):
+                    branch = f"lane/governance/expired-{prefix}-{entrance}"
+                    path = self.root / f"{prefix}-expired-{entrance}"
+                    head = self.commit_branch(branch, path, 7 * 3600)
+                    (path / "payload").write_text("dirty")
+                    (path / "untracked").write_text("discard")
+                    expired.append((path, branch, head))
+                destination = self.root / ("fresh explicit " + entrance)
+                name = "fresh-" + entrance
+                result = (self.create(name, destination) if entrance == "cli" else
+                          self.make("worktree", "KIND=theory", "NAME=" + name,
+                                    "DEST=" + str(destination), "BASE=" + self.base, "ALLOW_LOW_DISK=1"))
+                self.assertIn('"status":"succeeded"', result.stdout)
+                for path, branch, head in expired:
+                    self.assertFalse(path.exists(), result.stdout)
+                    self.assertIn(str(path), result.stdout)
+                    self.assertEqual(run(self.main, "rev-parse", branch).stdout.strip(), head)
+                self.assertEqual(run(destination, "rev-parse", "HEAD").stdout.strip(), self.base)
+                self.assertEqual(run(eligible, "rev-parse", "HEAD").stdout.strip(), eligible_head)
+                self.assertEqual(run(self.main, "branch", "--show-current").stdout.strip(), "dev")
+
+    def test_make_and_cli_fresh_fallback_survives_expired_invoking_source(self):
+        self.prepare_make()
+        for entrance in ("cli", "make"):
+            with self.subTest(entrance=entrance):
+                invoking = self.root / ("expired invoking " + entrance)
+                branch = "lane/governance/invoking-" + entrance
+                head = self.commit_branch(branch, invoking, 7 * 3600)
+                (invoking / "untracked").write_text("discard")
+                destination = self.root / ("fresh fallback " + entrance)
+                name = "fallback-" + entrance
+                result = (self.cli("worktree", "--kind", "math", "--name", name,
+                                   "--path", destination, "--base", "HEAD", "--skip-restore", cwd=invoking)
+                          if entrance == "cli" else
+                          self.make("worktree", "KIND=math", "NAME=" + name, "DEST=" + str(destination),
+                                    "BASE=HEAD", "ALLOW_LOW_DISK=1", cwd=invoking))
+                self.assertIn('"status":"succeeded"', result.stdout)
+                self.assertIn(str(invoking), result.stdout)
+                self.assertFalse(invoking.exists())
+                self.assertEqual(run(self.main, "rev-parse", branch).stdout.strip(), head)
+                self.assertEqual(run(destination, "rev-parse", "HEAD").stdout.strip(), head)
+                self.assertEqual(run(self.main, "branch", "--show-current").stdout.strip(), "dev")
+
+    def test_make_fresh_creation_stops_on_expiry_failure_with_partial_effects(self):
+        self.prepare_make()
+        good, blocked = self.root / "a-expired", self.root / "z-expired"
+        retained = {}
+        for name, path in (("good", good), ("blocked", blocked)):
+            branch = "lane/governance/" + name
+            retained[branch] = self.commit_branch(branch, path, 7 * 3600)
+        launcher = self.bin / "git"
+        launcher.write_text('#!/bin/bash\n'
+            'if [[ "$*" == *"worktree remove"* && "${!#}" == "$EXPIRY_TEST_BLOCKED" ]]; then\n'
+            '  echo "injected native removal failure" >&2\n  exit 1\nfi\n'
+            'exec "$EXPIRY_TEST_GIT" "$@"\n')
+        launcher.chmod(0o755)
+        self.env.update(EXPIRY_TEST_GIT=shutil.which("git"), EXPIRY_TEST_BLOCKED=str(blocked))
+        destination = self.root / "fresh refused"
+        result = self.make("worktree", "KIND=governance", "NAME=refused", "DEST=" + str(destination),
+                           "BASE=" + self.base, "ALLOW_LOW_DISK=1", check=False)
+        self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+        self.assertIn("expired_cleanup_failed:", result.stderr)
+        self.assertIn("injected native removal failure", result.stderr)
+        self.assertIn("expired_worktrees_removed=", result.stderr)
+        self.assertIn(str(good), result.stderr)
+        self.assertFalse(good.exists())
+        self.assertTrue(blocked.exists())
+        self.assertFalse(destination.exists())
+        self.assertNotEqual(run(self.main, "show-ref", "--verify", "refs/heads/lane/governance/refused",
+                                check=False).returncode, 0)
+        for branch, head in retained.items():
+            self.assertEqual(run(self.main, "rev-parse", branch).stdout.strip(), head)
+        self.assertEqual(run(self.main, "branch", "--show-current").stdout.strip(), "dev")
 
     def test_cli_expired_same_task_is_removed_and_reports_retained_branch_failure(self):
         tree = self.root / "expired same task"

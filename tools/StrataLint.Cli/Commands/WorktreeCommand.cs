@@ -105,6 +105,8 @@ internal static class WorktreeCommand
         }
 
         WorktreeOptions? options = null;
+        string? requestedBase = null;
+        string[] removedWorktrees = [];
         var worktreeCreated = false;
         string? branchOid = null;
         WorktreeBranchTracking? branchTracking = null;
@@ -116,16 +118,31 @@ internal static class WorktreeCommand
             if (runner is ProductionWorktreeProcessRunner production)
                 runner = production.WithEnvironment(WorktreeProtocolCommand.InitializationEnvironment(repositoryRoot));
             options = ParseArguments(repositoryRoot, arguments);
-            if (options.AllowReuseSelection || Directory.Exists(options.Path))
+            requestedBase = options.Base;
+            GitWorktreeInventory.FetchRemoteBase(options.Source, options.Base, runner);
+            var baseRevision = VerifyBase(options, runner);
+            var main = RegisteredWorktreeInventory.ReadWorktrees(options.Source, runner,
+                resolveGitDirectories: false).FirstOrDefault()?.Path
+                ?? throw new InvalidOperationException("worktree_inventory_empty");
+            // Expiry can remove the invoking source. Resolve its base first and
+            // anchor every subsequent operation, including fresh fallback, to main.
+            options = options with { Source = main, Base = baseRevision };
+            stage = "claim";
+            var prepared = WorktreePoolCommand.PrepareAllocation(options, runner);
+            if (!prepared.Success)
             {
-                var claimed = WorktreePoolCommand.TryReuse(options, runner);
-                if (claimed is not null)
-                {
-                    MaintenanceLogAdapter.Record("worktree-init", claimed.Success ? "succeeded" : "failed",
-                        "claim", claimed.Success ? null : "claim_failed", claimed.Success ? null : "CommandResult");
-                    return claimed;
-                }
+                MaintenanceLogAdapter.Record("worktree-init", "failed", stage, "claim_failed", "CommandResult");
+                return prepared;
             }
+            using var preparation = JsonDocument.Parse(prepared.Output);
+            removedWorktrees = preparation.RootElement.GetProperty("removed_worktrees")
+                .EnumerateArray().Select(path => path.GetString()!).ToArray();
+            if (preparation.RootElement.GetProperty("status").GetString() != "no_reusable")
+            {
+                MaintenanceLogAdapter.Record("worktree-init", "succeeded", stage, null, null);
+                return prepared;
+            }
+            stage = "preflight";
             if (Directory.Exists(options.Path))
             {
                 stage = "recovery";
@@ -198,7 +215,8 @@ internal static class WorktreeCommand
                 status = "succeeded",
                 branch = options.Branch,
                 path = options.Path,
-                base_revision = options.Base,
+                base_revision = requestedBase,
+                removed_worktrees = removedWorktrees,
                 pin_sha256 = pins.Sha256,
                 donor_behind_base = donor.BehindBase,
                 donor_cache_pin = donor.CachePin,
@@ -244,7 +262,8 @@ internal static class WorktreeCommand
                 path = options?.Path,
                 target = options?.Path,
                 stage,
-                base_revision = options?.Base,
+                base_revision = requestedBase,
+                removed_worktrees = removedWorktrees,
                 reason,
                 cleanup_error = cleanup.Length == 0 ? null : cleanup.TrimStart(';', ' '),
                 retained_material = new { branch = options?.Branch, path = options?.Path },
