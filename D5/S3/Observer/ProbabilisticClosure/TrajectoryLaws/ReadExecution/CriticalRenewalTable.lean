@@ -319,7 +319,7 @@ private lemma stirling_at_one (m : ℕ) :
     simp [hmj]
   · simp
 
-private lemma scaled_powerSum_limit (m : ℕ) :
+lemma scaled_powerSum_limit (m : ℕ) :
     Tendsto (fun s : ℝ => s^(m+1) * powerSum m s) (𝓝[>] 0)
       (𝓝 (m.factorial : ℝ)) := by
   have hid : Tendsto (fun s : ℝ => s) (𝓝[>] 0) (𝓝 0) :=
