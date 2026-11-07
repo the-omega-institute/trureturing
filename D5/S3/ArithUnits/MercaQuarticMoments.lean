@@ -160,7 +160,8 @@ private lemma mem_coset_iff (r : ℕ) [Fact r.Prime] (hr : r % 8 = 5)
     Units.ext_iff, MulChar.coe_toUnitHom]
   exact eq_comm
 
-private lemma fourth_values (z : ℂ) (hz : z ^ 4 = 1) :
+/-- The four possible values of a fourth root of unity in the complex numbers. -/
+lemma fourth_values (z : ℂ) (hz : z ^ 4 = 1) :
     z = 1 ∨ z = Complex.I ∨ z = -1 ∨ z = -Complex.I := by
   have hs : z ^ 2 = 1 ∨ z ^ 2 = -1 :=
     sq_eq_one_iff.mp (by simpa only [← pow_mul] using hz)
@@ -650,7 +651,8 @@ theorem conjugate_coordinates (r : ℕ) [Fact r.Prime] (hr : r % 8 = 5)
 def intervalSum (r : ℕ) [Fact r.Prime] (hr : r % 8 = 5) (n : ℕ) : ℂ :=
   ∑ a ∈ Finset.Icc 1 n, character r hr (a : ZMod r)
 
-private lemma intervalSum_eq_zmod (r : ℕ) [Fact r.Prime] (hr : r % 8 = 5)
+/-- Positive-interval sums equal the native residue sum with its literal representative cutoff. -/
+lemma intervalSum_eq_zmod (r : ℕ) [Fact r.Prime] (hr : r % 8 = 5)
     (n : ℕ) (hn : n < r) :
     intervalSum r hr n =
       ∑ x : ZMod r, if x.val ≤ n then character r hr x else 0 := by

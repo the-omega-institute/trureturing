@@ -17,7 +17,7 @@ internal sealed class MercaImaginaryQuadraticDocument : IScribeDocumentDefinitio
         Blocks(
             Paragraph(Text("This supplies the actual-field and maximal-order portion of the "
                 + "historical Ma–Zhang sign criterion. The signed finite-character class-number "
-                + "formula is a separate obligation; it is not asserted by this field construction. "
+                + "formula is established separately in MercaImaginaryClassNumber; it is not asserted by this field construction. "
                 + "The note's byline, CC BY 4.0 license, Farland attribution and classical "
                 + "sources are retained in the linked Library entry. The source-owner "
                 + "four-slot audits remain unfinished at "

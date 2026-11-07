@@ -90,7 +90,19 @@ Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.representative_properties`
 
 For every prime r>5 with r mod 8 equal to 5, all unit representatives are positive and below r. For every coset cK, r divides s(cK), s(-cK)=r m-s(cK), and its integral coordinate is odd and nonzero. The kernel has m>1 elements. Multiplication by a nonidentity kernel element permutes every coset and fixes its residue-class sum. In the prime field that forces the sum to zero. Negation permutes cK onto -cK and replaces each representative a by r-a. Finally m is odd, so twice an integer minus m is odd.
 
-**Theorem 1.8 (The actual Bernoulli coordinates and L-value).**
+**Theorem 1.8 (The four quartic values).**
+
+Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.fourth_values`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ArithUnits/MercaQuarticMoments.fourth_values` (`✓ std3`). ∎
+
+*Citation.* Haobo Ma; Wenlin Zhang (2026). *A class-number criterion for the quartic equality after Theorem 5.5*. URL: <https://oeis.org/A392984>.
+
+*Commentary.*
+
+Every complex fourth root of unity is one, i, minus one or minus i. This supplier also gives the pointwise parity used by the actual class-number sign criterion.
+
+**Theorem 1.9 (The actual Bernoulli coordinates and L-value).**
 
 Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.bernoulli_coordinates`
 
@@ -102,7 +114,7 @@ Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.bernoulli_coordinates`
 
 For every prime r>5 with r mod 8 equal to 5, let k and t be the preceding integer coordinates. Then B=k+i t; k and t are odd and nonzero; k=2s(K)/r-m and t=2s(2K)/r-m in the rationals; B is the literal sum of a chi(a) for a=1,...,r-1 divided by r; and the actual Dirichlet L-function satisfies L(0,chi)=-B. The character fibers are the ordered cosets K, 2K, -K, -2K with values 1, i, -1, -i. Decompose the moment along these fibers and use the complement identities and exact divisibility. For the final analytic equality, apply the existing prime nonprincipal character special-value theorem with its hypotheses discharged.
 
-**Definition 1.9 (The actual lifted kernel).**
+**Definition 1.10 (The actual lifted kernel).**
 
 Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.liftedKernel`
 
@@ -114,7 +126,7 @@ Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.liftedKernel`
 
 H is the reduction preimage of K in the native units modulo r q.
 
-**Definition 1.10 (The actual CRT identification).**
+**Definition 1.11 (The actual CRT identification).**
 
 Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.liftedKernelEquiv`
 
@@ -126,7 +138,7 @@ Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.liftedKernelEquiv`
 
 For coprime r and q, the native Chinese remainder equivalence restricts to a multiplicative equivalence from H to K times the full unit group modulo q. Its first coordinate is reduction modulo r.
 
-**Theorem 1.11 (Cyclicity, index and the omitted involution).**
+**Theorem 1.12 (Cyclicity, index and the omitted involution).**
 
 Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.lifted_structure`
 
@@ -138,7 +150,7 @@ Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.lifted_structure`
 
 For distinct primes q and r with r congruent to five modulo eight, H is cyclic exactly when gcd(m,q-1)=1, has index four, and omits minus one. Both CRT factors are cyclic, with orders m and q-1. The finite product cyclicity theorem gives the exact criterion. Surjectivity of reduction preserves the kernel index, and minus one reduces to the already excluded local involution.
 
-**Definition 1.12 (The literal centered sum).**
+**Definition 1.13 (The literal centered sum).**
 
 Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.centered`
 
@@ -150,7 +162,7 @@ Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.centered`
 
 The integer identity twice the sum of the least-positive representatives of H equals r q m(q-1). Only H itself is tested.
 
-**Theorem 1.13 (The full prime-lift coordinate criterion).**
+**Theorem 1.14 (The full prime-lift coordinate criterion).**
 
 Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.centered_coordinates`
 
@@ -162,7 +174,7 @@ Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.centered_coordinates`
 
 For every prime r>5 congruent to five modulo eight and every distinct prime q, H has order m(q-1), all its native unit representatives are strictly between zero and r q, and its literal sum is centered if and only if chi(q)=1, or k=t and chi(q)=-i, or k=-t and chi(q)=i. The existing coset-fiber lift gives deviation equal to q times s(K)-s(q inverse K). The four values of chi(q) identify the inverse coset. The complement identities give the three branches and k nonzero excludes chi(q)=-1. This finite first-moment identity needs neither q>3 nor q>r; it applies in particular to every admissible odd prime in the MMZ domain. The subsequent class-number and sign bridges remain separate proof obligations.
 
-**Theorem 1.14 (The eligible source generators).**
+**Theorem 1.15 (The eligible source generators).**
 
 Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.generator_eligible`
 
@@ -174,7 +186,7 @@ Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.generator_eligible`
 
 For r>5 and distinct odd prime q, every generator of H has representative a with gcd(a-1,r q)=1. Its projections generate both local factors. Both factors have order greater than one, so neither projection is the identity. Reduction shows a-1 is a unit at both primes. Together with lifted_structure this retains exactly the source generator eligibility on gcd(m,q-1)=1.
 
-**Theorem 1.15 (Conjugation and the branch orientation).**
+**Theorem 1.16 (Conjugation and the branch orientation).**
 
 Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.conjugate_coordinates`
 
@@ -186,7 +198,7 @@ Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.conjugate_coordinates`
 
 The conjugate character has order four, value -i at two, the identical native kernel, value -1 at minus one and value i on -2K. Its actual Bernoulli sum is k+i(-t). Thus the same ordered cosets K,2K,-K,-2K now have values 1,-i,-1,i. The centered branch k=t uses the conjugate q-value i, and k=-t uses -i. This is an explicit simultaneous transformation of character values and imaginary coordinate; the normalized sign formula is not reused unchanged.
 
-**Definition 1.16 (Literal positive interval sums).**
+**Definition 1.17 (Literal positive interval sums).**
 
 Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.intervalSum`
 
@@ -198,7 +210,19 @@ Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.intervalSum`
 
 intervalSum r chi n is the sum of the actual normalized character at the positive integers from one through n, reduced modulo r.
 
-**Theorem 1.17 (The half and quarter identities).**
+**Theorem 1.18 (The native representative cutoff).**
+
+Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.intervalSum_eq_zmod`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ArithUnits/MercaQuarticMoments.intervalSum_eq_zmod` (`✓ std3`). ∎
+
+*Citation.* Haobo Ma; Wenlin Zhang (2026). *A class-number criterion for the quartic equality after Theorem 5.5*. URL: <https://oeis.org/A392984>.
+
+*Commentary.*
+
+For every cutoff n below r, the literal positive-interval character sum equals the sum over native residues with val at most n; the zero term vanishes. The actual kernel-bin proof consumes this identity.
+
+**Theorem 1.19 (The half and quarter identities).**
 
 Lean statement: `D5/S3/ArithUnits/MercaQuarticMoments.interval_identities`
 
@@ -218,9 +242,11 @@ For every prime r>5 congruent to five modulo eight, let S be the literal half-in
 - Truth anchor: `D5/S3/ArithUnits/MercaQuarticMoments.centered_coordinates`
 - Truth anchor: `D5/S3/ArithUnits/MercaQuarticMoments.conjugate_coordinates`
 - Truth anchor: `D5/S3/ArithUnits/MercaQuarticMoments.coordinate`
+- Truth anchor: `D5/S3/ArithUnits/MercaQuarticMoments.fourth_values`
 - Truth anchor: `D5/S3/ArithUnits/MercaQuarticMoments.generator_eligible`
 - Truth anchor: `D5/S3/ArithUnits/MercaQuarticMoments.imagCoordinate`
 - Truth anchor: `D5/S3/ArithUnits/MercaQuarticMoments.intervalSum`
+- Truth anchor: `D5/S3/ArithUnits/MercaQuarticMoments.intervalSum_eq_zmod`
 - Truth anchor: `D5/S3/ArithUnits/MercaQuarticMoments.interval_identities`
 - Truth anchor: `D5/S3/ArithUnits/MercaQuarticMoments.liftedKernel`
 - Truth anchor: `D5/S3/ArithUnits/MercaQuarticMoments.liftedKernelEquiv`

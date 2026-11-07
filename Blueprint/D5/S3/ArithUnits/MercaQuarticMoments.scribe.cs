@@ -22,6 +22,7 @@ internal sealed class MercaQuarticMomentsDocument : IScribeDocumentDefinition
                 + "representative strictly between zero and r, so these are precisely "
                 + "the source's least-positive representatives. The coordinate theorem "
                 + "and divisibility require r>5. This excludes the singleton kernel at r=5.")),
+            Paragraph(Text("For the MMZ source notation, choose any primitive unit g with chi(g)=i. Such a g exists: a generator has character value i or -i, since a value of order at most two would force chi squared to be principal; invert the generator in the second case. Equality of character values identifies gK with 2K, so the source coordinate v equals the present t. This uses no primitive-root assumption on two. The correspondence is a transient exact application of the character and coset results, not an additional retained mathematical declaration.")),
             Node("two", "The unit two", "twoUnit", DescribeRole.Definition,
                 "The native unit represented by two modulo r. No assumption about its order is made."),
             Node("sum", "Coset representative sum", "sumRep", DescribeRole.Definition,
@@ -50,6 +51,8 @@ internal sealed class MercaQuarticMomentsDocument : IScribeDocumentDefinition
                     + "In the prime field that forces the sum to zero. Negation permutes "
                     + "cK onto -cK and replaces each representative a by r-a. "
                     + "Finally m is odd, so twice an integer minus m is odd."),
+            Node("fourth-values", "The four quartic values", "fourth_values", DescribeRole.Theorem,
+                "Every complex fourth root of unity is one, i, minus one or minus i. This supplier also gives the pointwise parity used by the actual class-number sign criterion."),
             Node("coordinates", "The actual Bernoulli coordinates and L-value",
                 "bernoulli_coordinates", DescribeRole.Theorem,
                 "For every prime r>5 with r mod 8 equal to 5, let k and t be the "
@@ -92,7 +95,7 @@ internal sealed class MercaQuarticMomentsDocument : IScribeDocumentDefinition
                     + "branches and k nonzero excludes chi(q)=-1. This finite first-moment "
                     + "identity needs neither q>3 nor q>r; it applies in particular to "
                     + "every admissible odd prime in the MMZ domain. The subsequent "
-                    + "class-number and sign bridges remain separate proof obligations.",
+                    + "class-number and sign bridges are established separately in MercaRelativeClassNumber, MercaImaginaryClassNumber and MercaClassNumberCriterion.",
                 AssessedProvenance.FromLiterature(Source)),
             Node("generator", "The eligible source generators", "generator_eligible",
                 DescribeRole.Theorem,
@@ -116,6 +119,9 @@ internal sealed class MercaQuarticMomentsDocument : IScribeDocumentDefinition
                 DescribeRole.Definition,
                 "intervalSum r chi n is the sum of the actual normalized character "
                     + "at the positive integers from one through n, reduced modulo r."),
+            Node("interval-native", "The native representative cutoff", "intervalSum_eq_zmod",
+                DescribeRole.Theorem,
+                "For every cutoff n below r, the literal positive-interval character sum equals the sum over native residues with val at most n; the zero term vanishes. The actual kernel-bin proof consumes this identity."),
             Node("interval-identities", "The half and quarter identities", "interval_identities",
                 DescribeRole.Theorem,
                 "For every prime r>5 congruent to five modulo eight, let S be the "
@@ -125,7 +131,7 @@ internal sealed class MercaQuarticMomentsDocument : IScribeDocumentDefinition
                     + "formula supplies S, and the permutation a maps to 2a below "
                     + "the quarter endpoint and r-2a above it supplies the relation "
                     + "with Q. These are universal literal character sums, independent "
-                    + "of the still open signed class-number formula.")),
+                    + "of the signed class-number formula established in MercaImaginaryClassNumber.")),
         edges: [
             DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/ArithUnits/MercaQuarticCharacter")),
             DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/ArithUnits/MercaPrimeCharacterMoment")),

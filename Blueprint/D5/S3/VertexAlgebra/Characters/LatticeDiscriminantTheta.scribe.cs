@@ -9,6 +9,21 @@ internal sealed class LatticeDiscriminantThetaDocument : IScribeDocumentDefiniti
         H("Original lattice discriminant theta sectors"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("latticediscriminanttheta-phase-mk"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Characters/LatticeDiscriminantTheta.phase_mk"),
+                H("Phase on a rational representative"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The faithful phase of the rational class of x is its literal complex exponential exp(2 pi i x). The rank-one positive Gauss evaluation consumes this existing representative formula."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("latticediscriminanttheta-pair-raw"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Characters/LatticeDiscriminantTheta.pairRaw"),
+                H("Raw inverse-Gram pairing"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The raw rational pairing is inverse-Gram dual coordinates dotted with the original charge. It is public for the rank-one discriminant half-norm calculation."))), DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("latticediscriminanttheta-quadratic-class-mk"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Characters/LatticeDiscriminantTheta.quadraticClass_mk"),
+                H("Half norm on an actual representative"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every positive original lattice and every original integer charge, the discriminant quadratic class is the class of the literal raw self-pairing divided by two. The rank-one Gauss evaluation uses this actual quotient formula."))), DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("latticediscriminanttheta-discriminant"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Characters/LatticeDiscriminantTheta.Discriminant"),
                 H("Original Gram cokernel"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

@@ -9,6 +9,23 @@ claim: "The normalized quartic character, its coset coordinates, the actual rela
 strata_touched:
   - D5/S3/ArithUnits/MercaQuarticCharacter
   - D5/S3/ArithUnits/MercaQuarticMoments
+  - D5/S3/ArithUnits/MercaClassNumberCriterion
+  - D5/S3/ArithUnits/MercaKernelBins
+  - D5/S3/Arith/CyclotomicFields/MercaQuarticField
+  - D5/S3/Arith/CyclotomicFields/MercaQuadraticSubfield
+  - D5/S3/Arith/CyclotomicFields/MercaQuarticDiscriminant
+  - D5/S3/Arith/CyclotomicFields/MercaQuarticEulerFactors
+  - D5/S3/Arith/CyclotomicFields/MercaRealEulerFactors
+  - D5/S3/Arith/QuadraticFields/MercaImaginaryQuadratic
+  - D5/S3/Arith/QuadraticFields/MercaImaginaryEulerFactors
+  - D5/S3/Arith/CharacterSums/MercaPositiveGauss
+  - D5/S3/Arith/CharacterSums/MercaImaginaryGauss
+  - D5/S3/Arith/CharacterSums/MercaQuadraticQuarter
+  - D5/S3/Analytic/Zeta/MercaRelativeClassNumber
+  - D5/S3/Analytic/Zeta/MercaImaginaryCharacter
+  - D5/S3/Analytic/Zeta/MercaImaginaryClassNumber
+  - D5/S3/Analytic/Zeta/MercaSufficientCondition
+  - D5/S0/Certificates/MercaSquareClassNumberRefutation
 license: "CC-BY-4.0 for the Ma–Zhang note; external references retain their own terms."
 triage: anchor
 ---
@@ -78,3 +95,14 @@ retained notices. These finite and special-value results do not establish
 the actual-field class-number theorem. No novelty, priority, publication or
 author-consent claim is made. Existing mathlib author notices and the
 Yao Xu/catalan-lean4 license and attribution chain remain with their suppliers.
+
+The actual-field modules establish the maximal orders, discriminants, CM
+unit and torsion constants, local Euler factors and analytic residue bridges.
+They prove the relative norm and the signed imaginary class-number quarter
+sum in genuine ideal-class semantics. The sign criterion composes these
+bridges with the literal subgroup moment, and the sufficient-condition proof
+includes the unit square. The conductor-181 refutation uses finite residue
+sums together with those universal bridges; it does not claim an independent
+class-group computation. The full original first-ten table, interval checks,
+r=13 reduced forms and census remain finite scientific custody, with no new
+positive-instance theorem library or density claim.

@@ -60,8 +60,8 @@ internal sealed class MercaQuadraticSubfieldDocument : IScribeDocumentDefinition
                 + "Farland's criterion attribution, the joint Ma–Merca–Zhang "
                 + "application, and the classical, Louboutin and Hudson sources "
                 + "remain recorded in the Library entry. This field identification "
-                + "does not yet prove the analytic relative-class-number formula "
-                + "or the signed imaginary-quadratic class-number formula."))),
+                + "feeds MercaRelativeClassNumber; the signed imaginary-quadratic "
+                + "formula is proved separately in MercaImaginaryClassNumber."))),
         edges: [
             DocumentEdge.Dependency.Create(
                 GidRef.Create("D5/S3/Arith/CyclotomicFields/MercaQuarticField")),
