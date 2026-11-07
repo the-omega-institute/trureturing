@@ -61,11 +61,11 @@ class LifecycleTests(unittest.TestCase):
                                                      "GIT_COMMITTER_DATE": "@" + stamp})
         return run(path, "rev-parse", "HEAD").stdout.strip()
 
-    def cli(self, *args, cwd=None, check=True):
+    def cli(self, *args, cwd=None, check=True, env=None):
         result = subprocess.run([shutil.which("dotnet"), str(ROOT /
             "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"), *map(str, args)],
             cwd=cwd or self.source, text=True, capture_output=True,
-            env=protocol.git_environment(), timeout=60)
+            env=protocol.git_environment(env), timeout=60)
         if check:
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         return result
@@ -330,6 +330,51 @@ class LifecycleTests(unittest.TestCase):
                 self.assertEqual(run(self.main, "rev-parse", branch).stdout.strip(), head)
                 self.assertEqual(run(destination, "rev-parse", "HEAD").stdout.strip(), head)
                 self.assertEqual(run(self.main, "branch", "--show-current").stdout.strip(), "dev")
+
+    def test_make_default_fresh_fallback_retains_recent_candidate(self):
+        self.prepare_make()
+        recent = self.root / "recent"
+        head = self.commit_branch("lane/governance/recent", recent, 60)
+        (recent / "untracked").write_text("ordinary bytes")
+        result = self.make("worktree", "KIND=governance", "NAME=default-fallback",
+                           "BASE=" + self.base, "ALLOW_LOW_DISK=1")
+        self.assertIn('"status":"succeeded"', result.stdout)
+        destination = self.root / "trureturing-default-fallback"
+        self.assertEqual(run(destination, "rev-parse", "HEAD").stdout.strip(), self.base)
+        self.assertEqual(run(recent, "rev-parse", "HEAD").stdout.strip(), head)
+        self.assertEqual((recent / "untracked").read_text(), "ordinary bytes")
+
+    def test_cli_fresh_fallback_refusals_report_completed_expiry(self):
+        self.prepare_make()
+        python = self.bin / "python3"
+        python.write_text('#!/bin/bash\nfor arg in "$@"; do\n'
+            '  if [[ "$arg" == check-disk ]]; then\n'
+            '    echo "injected disk refusal" >&2\n    exit 78\n  fi\ndone\n'
+            'exec "$EXPIRY_TEST_PYTHON" "$@"\n')
+        python.chmod(0o755)
+        for reason in ("branch", "disk"):
+            with self.subTest(reason=reason):
+                expired = self.root / ("expired before " + reason)
+                old_branch = "lane/governance/expired-before-" + reason
+                head = self.commit_branch(old_branch, expired, 7 * 3600)
+                name = "refused-" + reason
+                if reason == "branch":
+                    run(self.main, "branch", "lane/governance/" + name, self.base)
+                destination = self.root / ("refused " + reason)
+                env = None if reason == "branch" else {
+                    "PATH": str(self.bin) + os.pathsep + os.environ["PATH"],
+                    "EXPIRY_TEST_PYTHON": shutil.which("python3"), "WORKTREE_REQUIRE_DISK_CHECK": "1"}
+                failed = self.cli("worktree", "--kind", "governance", "--name", name,
+                                  "--path", destination, "--base", self.base, "--skip-restore",
+                                  check=False, env=env)
+                self.assertEqual(failed.returncode, 78 if reason == "disk" else 2,
+                                 failed.stdout + failed.stderr)
+                self.assertIn("injected disk refusal" if reason == "disk" else "branch already exists",
+                              failed.stderr)
+                self.assertIn('"removed_worktrees":["' + str(expired), failed.stderr)
+                self.assertFalse(expired.exists())
+                self.assertFalse(destination.exists())
+                self.assertEqual(run(self.main, "rev-parse", old_branch).stdout.strip(), head)
 
     def test_make_fresh_creation_stops_on_expiry_failure_with_partial_effects(self):
         self.prepare_make()

@@ -170,7 +170,8 @@ internal static class WorktreeCommand
                 if (!disk.Success)
                 {
                     MaintenanceLogAdapter.Record("worktree-init", "failed", stage, "disk_refused", "CommandResult");
-                    return disk;
+                    return removedWorktrees.Length == 0 ? disk
+                        : disk with { Error = disk.Error + FailureReceipt("disk_refused") };
                 }
                 stage = "preflight";
             }
