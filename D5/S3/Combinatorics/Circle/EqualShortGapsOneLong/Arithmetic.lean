@@ -7,6 +7,8 @@
    digest: Exact native charges for arbitrarily many equal short gaps and one long gap. -/
 import D5.S3.Combinatorics.Circle.PeriodicShorteningArithmetic
 
+/-! Exact quotient arithmetic, retaining the physical source phase. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -16,10 +18,10 @@ open scoped BigOperators
 
 def width (a p d : ℕ) : ℕ := d + a * (p - 1)
 
-theorem radix_ge (a : ℕ) (ha : 2 ≤ a) : (4 : ℤ) ≤ 2 ^ a := by
+private theorem radix_ge (a : ℕ) (ha : 2 ≤ a) : (4 : ℤ) ≤ 2 ^ a := by
   simpa using pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) ha
 
-theorem geom_left (a n : ℕ) (ha : 1 ≤ a) :
+private theorem geom_left (a n : ℕ) (ha : 1 ≤ a) :
     (geom a (n + 1) : ℤ) = (2 : ℤ)^a * geom a n + 1 := by
   have h1 := geom_mul a n ha
   have h2 := geom_mul a (n+1) ha
@@ -28,7 +30,7 @@ theorem geom_left (a n : ℕ) (ha : 1 ≤ a) :
     simpa using pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) ha
   nlinarith
 
-theorem geom_split (a n m : ℕ) (ha : 1 ≤ a) :
+private theorem geom_split (a n m : ℕ) (ha : 1 ≤ a) :
     (geom a (n+m) : ℤ) = ((2 : ℤ)^a)^m * geom a n + geom a m := by
   have hn := geom_mul a n ha
   have hm := geom_mul a m ha
@@ -43,46 +45,49 @@ theorem geom_split (a n m : ℕ) (ha : 1 ≤ a) :
   · omega
   · omega
 
-theorem geom_small (a n : ℕ) (ha : 2 ≤ a) :
+private theorem geom_small (a n : ℕ) (ha : 2 ≤ a) :
     2 * (geom a n : ℤ) < ((2 : ℤ)^a)^n := by
   have h := geom_mul a n (by omega)
   have hR := radix_ge a ha
   have hE := Int.natCast_nonneg (geom a n)
   nlinarith
 
-theorem geom_tail_bound (a n : ℕ) (ha : 2 ≤ a) :
+private theorem geom_tail_bound (a n : ℕ) (ha : 2 ≤ a) :
     (geom a (n+1) : ℤ) < 2*((2 : ℤ)^a)^n := by
   rw [geom_succ a n (by omega)]
   have hs := geom_small a n ha
   have hn := Int.natCast_nonneg (geom a n)
   omega
 
-theorem width_ge (a p d : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p) (hd : a ≤ d) :
+private theorem width_ge (a p d : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p) (hd : a ≤ d) :
     2 ≤ width a p d ∧ a*p ≤ width a p d := by
-  have he : a*p = a*(p-1)+a := by rw [← mul_add]; congr 1; omega
+  have he : a*p = a*(p-1)+a := by
+    calc a*p = a*((p-1)+1) := by congr 1;omega
+         _ = a*(p-1)+a := by ring
   dsimp [width]
   omega
 
-theorem seed_bound (a p d : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p) (hd : a ≤ d) :
+private theorem seed_bound (a p d : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p) (hd : a ≤ d) :
     geom a p ≤ 2 ^ (width a p d - 1) - 1 := by
   have hk := width_ge a p d ha hp hd
   have hs := geom_small a p ha
   rw [← pow_mul] at hs
   have hmono := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hk.2
   have hpow : (2 : ℤ) ^ width a p d = 2 * 2 ^ (width a p d - 1) := by
-    rw [show width a p d = (width a p d-1)+1 by omega, pow_succ]
-    ring
+    calc (2 : ℤ)^width a p d = 2^((width a p d-1)+1) := by congr 1;omega
+         _ = 2*2^(width a p d-1) := by rw [pow_succ];ring
   rw [hpow] at hmono
   have hb : (geom a p : ℤ)+1 ≤ (2 : ℤ)^(width a p d-1) := by omega
   have hb' : geom a p + 1 ≤ 2 ^ (width a p d-1) := by exact_mod_cast hb
   omega
 
-theorem negative_quotient (a p d j : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p)
+private theorem negative_quotient (a p d j : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p)
     (hd : a ≤ d) (hj : j < p) :
     (geom a p : ℤ) / (2 : ℤ)^(width a p d-1-(d-1+a*j)) = geom a (j+1) := by
   have he : width a p d-1-(d-1+a*j) = a*(p-1-j) := by
+    have hmul : a*(p-1-j)=a*(p-1)-a*j := Nat.mul_sub_left_distrib a (p-1) j
+    have hja : a*j ≤ a*(p-1) := Nat.mul_le_mul_left a (by omega)
     dsimp [width]
-    have : a*j ≤ a*(p-1) := Nat.mul_le_mul_left a (by omega)
     omega
   rw [he, pow_mul]
   have hs := geom_split a (j+1) (p-1-j) (by omega)
@@ -95,7 +100,7 @@ theorem negative_quotient (a p d j : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p)
     omega
   simp only [hzero, zero_add]
 
-theorem long_charge_zero (a p d : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p)
+private theorem long_charge_zero (a p d : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p)
     (hd : a ≤ d) (i : Fin (width a p d)) (hi : i.val < d-1) :
     charge (width a p d) (geom a p) i = 0 := by
   have hs := geom_tail_bound a (p-1) ha
@@ -107,7 +112,7 @@ theorem long_charge_zero (a p d : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p)
     Int.ediv_eq_zero_of_lt (Int.natCast_nonneg _) (by linarith)
   simp [charge,hzero]
 
-theorem negative_charge (a p d j : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p)
+private theorem negative_charge (a p d j : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p)
     (hd : a ≤ d) (hj : j < p) (hlabel : d-1+a*j < width a p d) :
     charge (width a p d) (geom a p) ⟨d-1+a*j,hlabel⟩ =
       ((geom a (j+1) : ℤ)+1)/2 ∧
@@ -115,7 +120,8 @@ theorem negative_charge (a p d j : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p)
       (geom a (j+1) : ℤ)+1 := by
   have hodd := geom_left a j (by omega)
   have hpw : (2 : ℤ)^a = 2*2^(a-1) := by
-    rw [show a=(a-1)+1 by omega,pow_succ]; ring
+    calc (2 : ℤ)^a = 2^((a-1)+1) := by congr 1;omega
+         _ = 2*2^(a-1) := by rw [pow_succ];ring
   rw [hpw] at hodd
   have hodd' : (geom a (j+1) : ℤ) = 2*(2^(a-1)*(geom a j : ℤ))+1 := by
     linarith [hodd]
@@ -123,7 +129,7 @@ theorem negative_charge (a p d j : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p)
   rw [negative_quotient a p d j ha hp hd hj]
   omega
 
-theorem positive_quotient (a p d j u : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p)
+private theorem positive_quotient (a p d j u : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p)
     (hd : a ≤ d) (hj : j+1 < p) (hu : u < a-1) :
     (geom a p : ℤ)/(2 : ℤ)^(width a p d-1-(d+a*j+u)) =
       (2 : ℤ)^(u+1)*geom a (j+1) := by
@@ -132,10 +138,12 @@ theorem positive_quotient (a p d j u : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p)
   have hr : 1 ≤ r := by dsimp [r]; omega
   have hb : 0 < b := by dsimp [b]; positivity
   have he : width a p d-1-(d+a*j+u) = a*r-1-u := by
-    dsimp [width,r]
+    have hmul : a*r=a*(p-1)-a*j := by
+      dsimp [r];exact Nat.mul_sub_left_distrib a (p-1) j
     have hja : a*(j+1) ≤ a*(p-1) := Nat.mul_le_mul_left a (by omega)
-    have hu' : u+1 ≤ a := by omega
-    nlinarith
+    rw [Nat.mul_add,Nat.mul_one] at hja
+    dsimp [width]
+    omega
   have hpow : ((2 : ℤ)^a)^r = b*2^(u+1) := by
     dsimp [b]
     rw [he,←pow_mul,←pow_add]
@@ -146,7 +154,9 @@ theorem positive_quotient (a p d j u : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p)
   rw [show j+1+r=p by dsimp [r];omega,hpow] at hs
   have hbmin : 2*(2 : ℤ)^(a*(r-1)) ≤ b := by
     have hemin : a*(r-1)+1 ≤ a*r-1-u := by
-      have her : a*r = a*(r-1)+a := by rw [←mul_add]; congr 1;omega
+      have her : a*r = a*(r-1)+a := by
+        calc a*r = a*((r-1)+1) := by congr 1;omega
+             _ = a*(r-1)+a := by ring
       omega
     have h := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hemin
     dsimp [b]
@@ -161,7 +171,7 @@ theorem positive_quotient (a p d j u : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p)
     rw [hs]; ring
   rw [hs',Int.add_mul_ediv_left _ _ (ne_of_gt hb),hzero,zero_add]
 
-theorem positive_charge (a p d j u : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p)
+private theorem positive_charge (a p d j u : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p)
     (hd : a ≤ d) (hj : j+1 < p) (hu : u < a-1)
     (hlabel : d+a*j+u < width a p d) :
     charge (width a p d) (geom a p) ⟨d+a*j+u,hlabel⟩ =
@@ -173,7 +183,7 @@ theorem positive_charge (a p d j u : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p)
   rw [he]
   omega
 
-theorem native_pair (a p d : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p) (hd : a ≤ d)
+private theorem native_pair (a p d : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p) (hd : a ≤ d)
     (i : Fin (width a p d)) :
     0 ≤ charge (width a p d) (geom a p) i ∧
     actualSource (width a p d) (geom a p) i =
@@ -191,7 +201,7 @@ theorem native_pair (a p d : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p) (hd : a ≤ d)
   simp only [Fin.val_castSucc,Fin.val_mk,Nat.cast_mul,Nat.cast_ofNat,pow_succ]
   ring
 
-theorem native_fresh (a p d : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p) (hd : a ≤ d) :
+private theorem native_fresh (a p d : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p) (hd : a ≤ d) :
     actualSource (width a p d+1) (2*geom a p) (Fin.last (width a p d)) =
       (geom a p : ℤ) := by
   have hk := (width_ge a p d ha hp hd).1
@@ -205,10 +215,154 @@ theorem native_fresh (a p d : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p) (hd : a ≤ d) 
   have hh : modulus (width a p d+1)/2 = (2 : ℤ)^width a p d-1 := by
     unfold modulus;rw [pow_succ];omega
   have hs' : (geom a p : ℤ) < (2 : ℤ)^(width a p d-1) := by
+    have hpw := Nat.one_le_two_pow (n := width a p d-1)
     exact_mod_cast (show geom a p < 2^(width a p d-1) by omega)
   have hmono := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2)
     (show width a p d-1 ≤ width a p d by omega)
   exact centered_unique hN ho (centered_bounds hN ho _) (by rw [hh];constructor <;>omega)
     (centered_mod _ _)
+
+def packetBase (a p d j : ℕ) : ℤ :=
+  (geom a (j+1) : ℤ) + (2 : ℤ)^d * ((2 : ℤ)^a)^j * geom a (p-1-j)
+
+private theorem packet_base_source (a p d j : ℕ) (ha : 2 ≤ a)
+    (hp : 1 ≤ p) (hj : j < p) :
+    packetBase a p d j = (2 : ℤ)^d*((2 : ℤ)^a)^j*(geom a p : ℤ) -
+      ((2 : ℤ)^d*((2 : ℤ)^a)^(p-1)-1)*(geom a (j+1) : ℤ) := by
+  have hs := geom_split a (j+1) (p-1-j) (by omega)
+  rw [show j+1+(p-1-j)=p by omega] at hs
+  have hpow : ((2 : ℤ)^a)^(p-1) =
+      ((2 : ℤ)^a)^j*((2 : ℤ)^a)^(p-1-j) := by
+    rw [←pow_add];congr 1;omega
+  rw [hs,hpow]
+  dsimp [packetBase]
+  ring
+
+private theorem negative_source_twice (a p d j : ℕ) (ha : 2 ≤ a)
+    (hp : 1 ≤ p) (hd : a ≤ d) (hj : j < p)
+    (hlabel : d-1+a*j < width a p d) :
+    2*actualSource (width a p d) (geom a p) ⟨d-1+a*j,hlabel⟩ =
+      (2 : ℤ)^d*((2 : ℤ)^a)^j*(geom a p : ℤ) -
+        ((2 : ℤ)^d*((2 : ℤ)^a)^(p-1)-1)*((geom a (j+1) : ℤ)+1) := by
+  have hn := (native_pair a p d ha hp hd ⟨d-1+a*j,hlabel⟩).2.1
+  have hc := (negative_charge a p d j ha hp hd hj hlabel).2
+  have hpow : 2*(2 : ℤ)^(d-1+a*j) = (2 : ℤ)^d*((2 : ℤ)^a)^j := by
+    rw [pow_add,pow_mul]
+    have he : (2 : ℤ)^d=2*2^(d-1) := by
+      calc (2 : ℤ)^d=2^((d-1)+1) := by congr 1;omega
+           _=2*2^(d-1) := by rw [pow_succ];ring
+    rw [he];ring
+  have hk : (2 : ℤ)^width a p d = (2 : ℤ)^d*((2 : ℤ)^a)^(p-1) := by
+    dsimp [width];rw [pow_add,pow_mul]
+  rw [hk] at hn
+  change actualSource _ _ _ = (2 : ℤ)^(d-1+a*j)*(geom a p : ℤ)-_ at hn
+  linear_combination 2*hn - ((2 : ℤ)^d*((2 : ℤ)^a)^(p-1)-1)*hc +
+    (geom a p : ℤ)*hpow
+
+private theorem positive_data (a p d j u : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p)
+    (hd : a ≤ d) (hj : j+1 < p) (hu : u < a-1)
+    (hlabel : d+a*j+u < width a p d) :
+    charge (width a p d) (geom a p) ⟨d+a*j+u,hlabel⟩ =
+      (2 : ℤ)^u*geom a (j+1) ∧
+    actualSource (width a p d) (geom a p) ⟨d+a*j+u,hlabel⟩ =
+      (2 : ℤ)^u*packetBase a p d j ∧
+    actualSource (width a p d+1) (2*geom a p)
+        (⟨d+a*j+u,hlabel⟩ : Fin (width a p d)).castSucc =
+      (2 : ℤ)^u*(2*packetBase a p d j-(geom a (j+1) : ℤ)) ∧
+    0 < packetBase a p d j ∧
+    0 < 2*packetBase a p d j-(geom a (j+1) : ℤ) := by
+  have hc := positive_charge a p d j u ha hp hd hj hu hlabel
+  have hn := native_pair a p d ha hp hd ⟨d+a*j+u,hlabel⟩
+  have hb := packet_base_source a p d j ha hp (by omega)
+  have he : (2 : ℤ)^(d+a*j+u) = (2 : ℤ)^u*((2 : ℤ)^d*((2 : ℤ)^a)^j) := by
+    rw [pow_add,pow_add,pow_mul];ring
+  have hk : (2 : ℤ)^width a p d=(2 : ℤ)^d*((2 : ℤ)^a)^(p-1) := by
+    dsimp [width];rw [pow_add,pow_mul]
+  have hf : actualSource (width a p d) (geom a p) ⟨d+a*j+u,hlabel⟩ =
+      (2 : ℤ)^u*packetBase a p d j := by
+    rw [hn.2.1,hc,hk]
+    change (2 : ℤ)^(d+a*j+u)*_ - _ = _
+    rw [he,hb];ring
+  have hg := hn.2.2
+  rw [hf,hc] at hg
+  have hA : 1 ≤ (geom a (j+1) : ℤ) := by
+    rw [geom_left a j (by omega)]
+    have h := Int.natCast_nonneg (geom a j)
+    have hR := radix_ge a ha
+    nlinarith
+  have htail : 0 ≤ (2 : ℤ)^d*((2 : ℤ)^a)^j*(geom a (p-1-j) : ℤ) := by positivity
+  refine ⟨hc,hf,?_,?_,?_⟩
+  · linear_combination hg
+  · dsimp [packetBase];linarith
+  · dsimp [packetBase];linarith
+
+private theorem packet_drift (a p d j : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p)
+    (hd : a ≤ d) (hj : j < p) (hlabel : d-1+a*j < width a p d) :
+    2*(actualSource (width a p d) (geom a p) ⟨d-1+a*j,hlabel⟩ +
+      ((2 : ℤ)^(a-1)-1)*packetBase a p d j) =
+      ((2 : ℤ)^a)^j*((2 : ℤ)^a-2^d) := by
+  have hn := negative_source_twice a p d j ha hp hd hj hlabel
+  have hb := packet_base_source a p d j ha hp hj
+  have hE := geom_mul a p (by omega)
+  rw [show p=(p-1)+1 by omega,pow_succ] at hE
+  rw [show p-1+1=p by omega] at hE
+  have hA := geom_mul a (j+1) (by omega)
+  rw [pow_succ] at hA
+  have hR : (2 : ℤ)^a=2*2^(a-1) := by
+    calc (2 : ℤ)^a=2^((a-1)+1) := by congr 1;omega
+         _=2*2^(a-1) := by rw [pow_succ];ring
+  have he : 2*actualSource (width a p d) (geom a p) ⟨d-1+a*j,hlabel⟩ +
+      ((2 : ℤ)^a-2)*packetBase a p d j =
+      ((2 : ℤ)^a)^j*((2 : ℤ)^a-2^d) := by
+    linear_combination hn + ((2 : ℤ)^a-2)*hb +
+      ((2 : ℤ)^d*((2 : ℤ)^a)^j)*hE -
+      ((2 : ℤ)^d*((2 : ℤ)^a)^(p-1)-1)*hA
+  rw [hR] at he ⊢
+  linear_combination he
+
+private theorem valley_drift (a p d j : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p)
+    (hd : a ≤ d) (hj : j+1 < p) (hlabel : d-1+a*(j+1) < width a p d) :
+    ((2 : ℤ)^(a-1)-1)*packetBase a p d j +
+      actualSource (width a p d) (geom a p) ⟨d-1+a*(j+1),hlabel⟩ =
+      ((2 : ℤ)^a)^j*((2 : ℤ)^a-2^d) := by
+  have hn := negative_source_twice a p d (j+1) ha hp hd hj hlabel
+  have hb := packet_base_source a p d j ha hp (by omega)
+  have hE := geom_mul a p (by omega)
+  rw [show p=(p-1)+1 by omega,pow_succ] at hE
+  rw [show p-1+1=p by omega] at hE
+  have hA := geom_mul a (j+1) (by omega)
+  rw [pow_succ] at hA
+  have hnext := geom_left a (j+1) (by omega)
+  rw [hnext,pow_succ] at hn
+  have hR : (2 : ℤ)^a=2*2^(a-1) := by
+    calc (2 : ℤ)^a=2^((a-1)+1) := by congr 1;omega
+         _=2*2^(a-1) := by rw [pow_succ];ring
+  have he : ((2 : ℤ)^a-2)*packetBase a p d j +
+      2*actualSource (width a p d) (geom a p) ⟨d-1+a*(j+1),hlabel⟩ =
+      2*((2 : ℤ)^a)^j*((2 : ℤ)^a-2^d) := by
+    linear_combination hn + ((2 : ℤ)^a-2)*hb +
+      (2*(2 : ℤ)^d*((2 : ℤ)^a)^j)*hE -
+      (2*((2 : ℤ)^d*((2 : ℤ)^a)^(p-1)-1))*hA
+  rw [hR] at he ⊢
+  nlinarith [he]
+
+private theorem negative_nonpos (a p d j : ℕ) (ha : 2 ≤ a) (hp : 1 ≤ p)
+    (hd : a ≤ d) (hj : j < p) (hlabel : d-1+a*j < width a p d) :
+    actualSource (width a p d) (geom a p) ⟨d-1+a*j,hlabel⟩ ≤ 0 ∧
+    actualSource (width a p d+1) (2*geom a p)
+      (⟨d-1+a*j,hlabel⟩ : Fin (width a p d)).castSucc ≤ 0 := by
+  have h := packet_drift a p d j ha hp hd hj hlabel
+  have hRD := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hd
+  have hs : 0 ≤ ((2 : ℤ)^a)^j := by positivity
+  have hright : ((2 : ℤ)^a)^j*((2 : ℤ)^a-2^d) ≤ 0 :=
+    mul_nonpos_of_nonneg_of_nonpos hs (by linarith)
+  have hq : 1 ≤ (2 : ℤ)^(a-1) := one_le_pow₀ (by norm_num)
+  have hP : 0 ≤ packetBase a p d j := by dsimp [packetBase];positivity
+  have hmass : 0 ≤ ((2 : ℤ)^(a-1)-1)*packetBase a p d j :=
+    mul_nonneg (by omega) hP
+  have hn := native_pair a p d ha hp hd ⟨d-1+a*j,hlabel⟩
+  constructor
+  · linarith
+  · rw [hn.2.2];linarith [hn.1]
 
 end D5.S3.Combinatorics.Circle.EqualShortGapsOneLong
