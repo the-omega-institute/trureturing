@@ -22,12 +22,15 @@ internal sealed class ZimmermannStoyeCodimensionOneCurvatureDocument : IScribeDo
             Node("claim", "The conjectured sharp interval", Equal(Call("claim"), ClaimBody()), AssessedProvenance.FromLiterature(Source), DescribeRole.Definition,
                 "The source states: “For n ≥ 4 and (n, p) = (n, n − 1), sharp bounds on the sectional curvature of the Stiefel manifold under the Euclidean metric are −1/2 ≤ K_e^St(X,Y) ≤ 1/2.” (Conjecture 1, PDF page 17.) Here p=n−1, the bottom blocks have one row, and sharpness means that each endpoint is attained in every such dimension."),
             Node("result", "The sharp interval and both endpoints", ClaimBody(), AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
-                "The row Gram matrix is diagonalized by an orthogonal change of the tangent-plane basis. A second orthogonal change puts the rows on distinct coordinate axes. The curvature expansion preserves the coupled cross term; the real skew commutator estimate and a scalar two-square deficit give the interval. Fixed coordinate patterns attain both endpoints in every target dimension.")),
+                "The row Gram matrix is diagonalized by an orthogonal change of the tangent-plane basis. A second orthogonal change puts the rows on distinct coordinate axes. The curvature expansion preserves the coupled cross term; the real skew commutator estimate and a scalar two-square deficit give the interval. Fixed coordinate patterns attain both endpoints in every target dimension.",
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("zs2403"), ResolutionKind.Proved))),
         []));
 
-    private static DocumentBlock Node(string name, string title, Formula formula, AssessedProvenance provenance, DescribeRole role, string prose) =>
+    private static DocumentBlock Node(string name, string title, Formula formula, AssessedProvenance provenance, DescribeRole role, string prose,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("zimmermann-stoye-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role,
+            openProblemResolutionClaim: resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula N => Call("Nat");
