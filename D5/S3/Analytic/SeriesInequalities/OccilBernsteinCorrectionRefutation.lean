@@ -2,12 +2,14 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/SeriesInequalities/OccilBernsteinCorrectionRefutation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [occil2026bernreq]
+   anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Analytic/SeriesInequalities/OccilBernsteinCorrectionRefutation.claim; result=D5/S3/Analytic/SeriesInequalities/OccilBernsteinCorrectionRefutation.result; claim=D5/S3/Analytic/SeriesInequalities/OccilBernsteinCorrectionRefutation.claim
    digest: Both original convex Bernstein correction prescriptions have a negative normalized coefficient. -/
 
 import D5.S3.Observer.BlockStructure.CommonDenominatorPolynomialBasis
 import Mathlib.Tactic
+
+/-! Both correction prescriptions fail already at the scale n = 2. -/
 
 open Polynomial Finset
 noncomputable section
@@ -50,13 +52,13 @@ private theorem B_two : B 2 f = C (1/2) * (X^2-X) + C (1/2) := by
   apply Polynomial.funext
   intro x
   norm_num [B, f, Finset.sum_range_succ, bernsteinPolynomial, Nat.choose, eval_finsetSum]
-  <;> ring
+  ring
 
 private theorem B_four : B 4 f = C (3/4) * (X^2-X) + C (1/2) := by
   apply Polynomial.funext
   intro x
   norm_num [B, f, Finset.sum_range_succ, bernsteinPolynomial, Nat.choose, eval_finsetSum]
-  <;> ring
+  ring
 
 private theorem error_two (x : ℝ) : (B 2 f).eval x-f x = x*(1-x)/2 := by
   rw [B_two]; simp [f]; ring
@@ -92,17 +94,17 @@ private theorem representation : (B 4 f-C (1/16))-(B 2 f-C (1/8)) =
   apply Polynomial.funext
   intro x
   norm_num [coeff, Fin.sum_univ_succ, bernsteinPolynomial, Nat.choose, eval_finsetSum]
-  <;> ring
+  ring
 
 private theorem negative : coeff 2 < 0 := by norm_num [coeff]
 
 /-- Normalized Bernstein realization at the specified representation degree. -/
-def realization (d : ℕ) (a : Fin (d+1) → ℝ) : ℝ[X] :=
-  ∑ j : Fin (d+1), C (a j) * bernsteinPolynomial ℝ d j
+def realization (d : ℕ) (a : Fin (d + 1) → ℝ) : ℝ[X] :=
+  ∑ j : Fin (d + 1), C (a j) * bernsteinPolynomial ℝ d j
 
 /-- Nonnegativity in the normalized basis at this exact representation degree. -/
 def nonnegativeCoefficients (d : ℕ) (p : ℝ[X]) : Prop :=
-  ∃ a : Fin (d+1) → ℝ, p = realization d a ∧ ∀ j, 0 ≤ a j
+  ∃ a : Fin (d + 1) → ℝ, p = realization d a ∧ ∀ j, 0 ≤ a j
 
 /-- The original attained-maximum correction assertion, without a continuity premise. -/
 def maximumBranch : Prop :=
@@ -122,12 +124,13 @@ def midpointBranch : Prop :=
 /-- The unchanged conjunction registered for the original two prescriptions. -/
 def claim : Prop := maximumBranch ∧ midpointBranch
 
-private theorem realization_unique (d : ℕ) (a b : Fin (d+1) → ℝ)
+private theorem realization_unique (d : ℕ) (a b : Fin (d + 1) → ℝ)
     (h : realization d a = realization d b) : a = b := by
   have hc := congrArg (Polynomial.map Complex.ofRealHom) h
-  have hs : (∑ j : Fin (d+1), (a j : ℂ) • bernsteinPolynomial ℂ d j) =
-      ∑ j : Fin (d+1), (b j : ℂ) • bernsteinPolynomial ℂ d j := by
-    simpa [realization, smul_eq_C_mul] using hc
+  have hs : (∑ j : Fin (d + 1), (a j : ℂ) • bernsteinPolynomial ℂ d j) =
+      ∑ j : Fin (d + 1), (b j : ℂ) • bernsteinPolynomial ℂ d j := by
+    simpa only [realization, Polynomial.map_sum, Polynomial.map_mul, Polynomial.map_C,
+      bernsteinPolynomial.map, Complex.ofRealHom_eq_coe, smul_eq_C_mul] using hc
   have hi := Fintype.linearIndependent_iffₛ.mp
     (D5.S3.Observer.BlockStructure.CommonDenominatorPolynomialBasis.bernstein_linearIndependent_complex d)
     (fun j => (a j : ℂ)) (fun j => (b j : ℂ)) hs
