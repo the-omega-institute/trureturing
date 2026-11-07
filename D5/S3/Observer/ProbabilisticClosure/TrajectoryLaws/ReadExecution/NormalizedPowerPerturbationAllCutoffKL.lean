@@ -116,10 +116,12 @@ private lemma normalized_power_perturbation_energy
     intro k
     by_cases hk : k = 0
     · simp [D, hk, hd0, term]
-    · simpa [D, term, hk, mul_assoc] using
-        ⟨mul_nonneg (hd k (Nat.pos_of_ne_zero hk)).1 (Real.exp_pos _).le,
-         mul_le_mul_of_nonneg_right (hd k (Nat.pos_of_ne_zero hk)).2
-           (Real.exp_pos (-s * (k : ℝ))).le⟩
+    · constructor
+      · exact mul_nonneg (hd k (Nat.pos_of_ne_zero hk)).1 (Real.exp_pos _).le
+      · calc
+          D k ≤ (δ * (k : ℝ) ^ (m - 1)) * Real.exp (-s * (k : ℝ)) :=
+            mul_le_mul_of_nonneg_right (hd k (Nat.pos_of_ne_zero hk)).2 (Real.exp_pos _).le
+          _ = δ * term (m - 1) s k := by simp [term, hk, mul_assoc]
   have hDs : Summable D := by
     apply ((summable_term (m - 1) hs).mul_left δ).of_norm_bounded
     intro k
