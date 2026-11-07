@@ -2,7 +2,7 @@
 
 ## 211. The exact antisymmetric contrast and its twelve-dimensional slice
 
-**Definition 211.1 (the original telescope and the additional contrast).** Retain exactly [Appendix III Definitions 134.1, 154.1 and 155.1](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_III.md), with all their inherited endpoint, source and analytic suppliers, and [Appendix IV Definition 210.1](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_IV.md#210-one-original-common-partition-paying-the-seven-cubic-contrast-obligations). Thus $\theta=(a,\eta,d,b)$ ranges over every original finite $a,\eta,d>0$ and every permitted everywhere Borel representative $0<b\le M$ of $g_d$. The group $G=H^1\times\mathbb R$, original product, raw Haar measure $\mu$, source $e$, unit-source field $L\Gamma=\delta_e$, coefficient-one $w_*$, positive normalized $h$, selector $A_{\rm src}=\rho C_{\rm src}$ and full conservative source-inclusive operator $K$ are unchanged. In particular,
+**Definition 211.1 (the original telescope and the additional contrast).** Retain exactly [Appendix III Definitions 134.1, 154.1 and 155.1](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_III.md), with all their inherited endpoint, source and analytic suppliers, and [Appendix IV Definition 210.1](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_IV.md#210-one-actual-common-partition-with-both-cubic-contrast-channels-zero). Thus $\theta=(a,\eta,d,b)$ ranges over every original finite $a,\eta,d>0$ and every permitted everywhere Borel representative $0<b\le M$ of $g_d$. The group $G=H^1\times\mathbb R$, original product, raw Haar measure $\mu$, source $e$, unit-source field $L\Gamma=\delta_e$, coefficient-one $w_*$, positive normalized $h$, selector $A_{\rm src}=\rho C_{\rm src}$ and full conservative source-inclusive operator $K$ are unchanged. In particular,
 
 $$
 \begin{gathered}
@@ -16,7 +16,7 @@ M=1+\|g_d\|_\infty,\quad c=(4M)^{-1},\quad p=\tfrac14,\qquad
 \tag{211.1}
 $$
 
-The diffusion starts at $e$ at time zero, in the original units and clock; the epochs remain $2d,3d,4d$. The target uses the same $f$ and its original conditionally independent fresh read noises at those epochs. Write $I=\{0,1,3\}$, $\mathcal L=I\cup\{B\}$, and let $\mathcal T_6$ be the six permutations of $013$. For a bounded pointwise Borel simplex tuple $u$ on the whole $G$, retain $\mathcal H_{36}$, $\mathcal H_{50}$ and $\eta_1(u)=u_0-u_1$, $\eta_2(u)=u_B-p$ from §§152 and 210, and put
+The diffusion starts at $e$ at time zero, in the original units and clock; the epochs remain $2d,3d,4d$. The target uses the same $f$ and its original conditionally independent fresh read noises at those epochs. Write $I=\{0,1,3\}$, $\mathcal L=I\cup\{B\}$, and let $\mathcal T_6$ be the six permutations of $013$. For a bounded pointwise Borel simplex tuple $u$ on the whole $G$, retain $\mathcal H_{36}$, $\mathcal H_{50}$ and $\eta_1(u)=u_0-u_1$, $\eta_2(u)=u_B-p$ from Definition 210.1 (the first thirty-six coordinates of (154.2), followed by its six distinct-label and eight contrast coordinates), and put
 
 $$
 \begin{aligned}
