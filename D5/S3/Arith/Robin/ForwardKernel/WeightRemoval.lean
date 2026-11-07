@@ -30,20 +30,11 @@ def VonKochBoundFor (E : ℝ → ℝ) : Prop :=
   ∃ C t₀ : ℝ, 0 ≤ C ∧ 3 ≤ t₀ ∧
     ∀ t : ℝ, t₀ ≤ t → |E t| ≤ C * Real.sqrt t * (Real.log t) ^ 2
 
-private lemma price_measurable : Measurable (fun p : ℝ × ℝ => priceRatio p.1 p.2) := by
+lemma price_measurable : Measurable (fun p : ℝ × ℝ => priceRatio p.1 p.2) := by
   unfold priceRatio MellinWeightedVariation.weight
   fun_prop
 
-private lemma price_bounds {x u : ℝ} (hx : 3 ≤ x) (hu : 0 ≤ u) :
-    0 ≤ priceRatio x u ∧ priceRatio x u ≤ 1 := by
-  have hx1 : 1 < x := by linarith
-  have hy : x ≤ x + u := le_add_of_nonneg_right hu
-  exact ⟨div_nonneg (MellinWeightedVariation.weight_nonneg (by linarith))
-    (OriginalMovingWindowMoment.weight_pos hx1).le,
-    (div_le_one (OriginalMovingWindowMoment.weight_pos hx1)).mpr
-      (OriginalMovingWindowMoment.weight_antitone hx1 hy)⟩
-
-private lemma normalized_eq {E g : ℝ → ℝ} {θ x : ℝ} (hx : 0 < x) :
+lemma normalized_eq {E g : ℝ → ℝ} {θ x : ℝ} (hx : 0 < x) :
     profileResponse E θ g x / Real.sqrt x =
       (∫ s, g s * increment E (s * x ^ θ) x * priceRatio x (s * x ^ θ)
         ∂unitMeasure) / x ^ θ := by
@@ -64,7 +55,7 @@ private lemma normalized_eq {E g : ℝ → ℝ} {θ x : ℝ} (hx : 0 < x) :
       apply integral_congr_ae
       exact Eventually.of_forall (fun s => by ring)
 
-private lemma local_increment_bound {E : ℝ → ℝ} (hE : LocallyBoundedMeasurable E)
+lemma local_increment_bound {E : ℝ → ℝ} (hE : LocallyBoundedMeasurable E)
     (θ : ℝ) {a b : ℝ} (ha : 0 < a) (hab : a ≤ b) :
     ∃ M : ℝ, 0 ≤ M ∧ ∀ x ∈ Icc a b, ∀ s ∈ Icc (0 : ℝ) 1,
       |increment E (s * x ^ θ) x| ≤ M := by
@@ -84,7 +75,7 @@ private lemma local_increment_bound {E : ℝ → ℝ} (hE : LocallyBoundedMeasur
     ⟨by nlinarith [hx.1, hs.1], by nlinarith [hx.2, hs.2]⟩
   exact (abs_sub _ _).trans (by linarith)
 
-private lemma increment_measurable {E : ℝ → ℝ} (hE : LocallyBoundedMeasurable E) (θ : ℝ) :
+lemma increment_measurable {E : ℝ → ℝ} (hE : LocallyBoundedMeasurable E) (θ : ℝ) :
     Measurable (fun p : ℝ × ℝ => increment E (p.2 * p.1 ^ θ) p.1) := by
   exact (hE.1.comp (measurable_fst.add
     (measurable_snd.mul (measurable_fst.pow_const θ)))).sub (hE.1.comp measurable_fst)
@@ -125,7 +116,7 @@ theorem profileResponse_normalized_memLp {E g : ℝ → ℝ}
       have hb : ∀ᵐ s ∂unitMeasure,
           ‖g s * increment E (s * x ^ θ) x * priceRatio x (s * x ^ θ)‖ ≤ |g s| * M := by
         filter_upwards [ae_restrict_mem measurableSet_Ioc] with s hs
-        obtain ⟨h0, h1⟩ := price_bounds (ha.trans hx'.1)
+        obtain ⟨h0, h1⟩ := WeightControl.price_bounds (ha.trans hx'.1)
           (mul_nonneg hs.1.le (Real.rpow_pos_of_pos hx0 θ).le)
         rw [Real.norm_eq_abs, abs_mul, abs_mul, abs_of_nonneg h0]
         exact (mul_le_mul_of_nonneg_right
@@ -159,7 +150,8 @@ private lemma normalized_error_bound {E g : ℝ → ℝ}
       (fun s => g s * increment E (s * x ^ θ) x * priceRatio x (s * x ^ θ)) unitMeasure := by
     apply hD.mul_bdd hρ.aestronglyMeasurable
     filter_upwards [ae_restrict_mem measurableSet_Ioc] with s hs
-    obtain ⟨h0, h1⟩ := price_bounds (by linarith : 3 ≤ x) (mul_nonneg hs.1.le hh.le)
+    obtain ⟨h0, h1⟩ := WeightControl.price_bounds (by linarith : 3 ≤ x)
+      (mul_nonneg hs.1.le hh.le)
     simpa only [Real.norm_eq_abs, abs_of_nonneg h0] using h1
   have hmajor := (unit_increment_integrable hE (profile_s_integrable hg).abs (x ^ θ) x).norm
   have hmajor : Integrable (fun s => |s * g s| * |increment E (s * x ^ θ) x|)
