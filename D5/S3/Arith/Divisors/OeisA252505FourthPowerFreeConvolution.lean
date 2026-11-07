@@ -4,24 +4,15 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Native counting and inverse definitions for the whole A252505 convolution. -/
+   digest: The whole A252505 fourth-power-free divisor convolution. -/
 
-/- Declaration form.
-   FourthPowerFree, a, UnitFractionPair, b, tau, h, g, c, claim,
-   InverseRecursion, factorPairs: definitions.
-   gFunction, gOneInvertible: private implementation definitions.
-   unitFractionEquiv: content construction; consumer=unit_fraction_count.
-   g_one: bind-only; consumers=gOneInvertible,c_recursion.
-   unit_fraction_iff_factor: content; consumer=unitFractionEquiv.
-   unit_fraction_count: content; consumer=unit_fraction_divisor_formula.
-   c_recursion: bind-only; consumer=inverse_recursion_unique.
-   factor_pair_balance: content; consumer=unit_fraction_divisor_formula.
-   unit_fraction_divisor_formula: content.
-   inverse_recursion_unique: content (strong induction on positive proper divisors).
-   No whole-problem admission is claimed: claim has no settling theorem.
-   The proposed complete-result basis is open-problem-resolution (#27491).
-   Computational content: none; all proved statements are unbounded symbolic statements.
-   The unfinished source-family audit is https://github.com/the-omega-institute/trureturing/issues/27506.
+/- The complete result has admission_basis=open-problem-resolution (#27491).
+   The independent rational-solution count, exponent-box convolution and integer
+   parity argument are on its live proof path. The theorem includes n=1.
+   Definitions and library-only interfaces are implementation structure; the
+   finite residue calculations support the universal symbolic proof.
+   The unfinished source-family audit is
+   https://github.com/the-omega-institute/trureturing/issues/27506.
 -/
 
 import Mathlib.NumberTheory.ArithmeticFunction.Misc
@@ -415,8 +406,8 @@ private theorem local_convolution (e : ℕ) :
     · interval_cases e <;> decide +kernel
     · obtain ⟨q, rfl⟩ : ∃ q, e=q+4 := ⟨e-4, by omega⟩
       have hq := ih q (by omega)
-      rw [recur S (by intro k; simp [S, Nat.add_mod]) (by norm_num [S]) (by norm_num [S]),
-        recur R (by intro k; simp [R, Nat.add_mod]) (by norm_num [R]) (by norm_num [R])]
+      rw [recur S (by intro k; simp [S]) (by norm_num [S]) (by norm_num [S]),
+        recur R (by intro k; simp [R]) (by norm_num [R]) (by norm_num [R])]
       norm_num [S, R] at *
       constructor <;> linarith [hq.1, hq.2]
 
@@ -475,7 +466,7 @@ private theorem product_residue (s : Finset ℕ) (v : ℕ → ℕ) :
   exact ho.2.trans (by rw [hs, hr])
 
 private def P (f : ℕ →₀ ℕ) (L : ℕ → ℤ) : ℤ := f.prod (fun _ e => L e)
-private theorem pad (f v : ℕ →₀ ℕ) (hv : v ≤ f) (L : ℕ → ℤ) (hL : L 0=1) :
+private theorem pad (f v : ℕ →₀ ℕ) (hv : v ≤ f) (L : ℕ → ℤ) (hL : L 0 = 1) :
     P v L = ∏ p ∈ f.support, L (v p) := by
   exact Finsupp.prod_of_support_subset _ (Finsupp.support_mono hv) _ (by intro p hp; exact hL)
 
@@ -500,7 +491,7 @@ private theorem hbox_formula (f : ℕ →₀ ℕ) :
       simp only [Nat.cast_prod, Nat.cast_add, Nat.cast_one]
       rw [eprod]
     _ = P f T + P f U := by
-      rw [sum_add_distrib, boxSum, boxSum]
+      rw [sum_add_distrib, boxSum f (fun _ k => (k:ℤ)+1), boxSum f (fun _ k => E k)]
       rfl
 
 private def Gamma (f : ℕ →₀ ℕ) : ℤ := (P f S+P f R)/2
@@ -521,7 +512,7 @@ private theorem gamma_law (f : ℕ →₀ ℕ) :
         rcases ih with ⟨hss,hrr⟩ | ⟨hss,hrr|hrr⟩ <;> simp [hs,hr,hss,hrr]
   have hh := hi f.support
   unfold Gamma P
-  rcases hh with ⟨hs,hr⟩ | ⟨hs,hr|hr⟩ <;> simp_all
+  rcases hh with ⟨hs,hr⟩ | ⟨hs,hr|hr⟩ <;> simp only [Finsupp.prod] at * <;> rw [hs,hr] <;> norm_num
 
 private theorem hbox_parity (f : ℕ →₀ ℕ) : Hbox f % 2 = Gamma f := by
   have hf := hbox_formula f
@@ -549,7 +540,7 @@ private theorem box_convolution (f : ℕ →₀ ℕ) :
       simp only [Finsupp.tsub_apply]
       rw [mul_add, ←prod_mul_distrib, ←prod_mul_distrib]
     _ = (∏ p ∈ f.support, (2*(f p:ℤ)+1))+1 := by
-      rw [sum_add_distrib, boxSum, boxSum]
+      rw [sum_add_distrib, boxSum f (fun p k => A k*S (f p-k)), boxSum f (fun p k => A k*R (f p-k))]
       have hc (e : ℕ) (L : ℕ → ℤ) :
           (∑ k ∈ range (e+1), A k*L (e-k)) = ∑ k ∈ range (e+1), A (e-k)*L k := by
         rw [←sum_range_reflect (fun k => A k*L (e-k))]
@@ -561,18 +552,18 @@ private theorem box_convolution (f : ℕ →₀ ℕ) :
       simp
 
 
-private theorem a_product (n : ℕ) (hn : 0<n) : a n = P n.factorization A := by
+private theorem a_product (n : ℕ) (hn : 0 < n) : a n = P n.factorization A := by
   rw [fourth_power_free_divisor_count n hn]
   unfold P Finsupp.prod A
   rw [Nat.support_factorization]
   push_cast
   rfl
 
-private theorem g_gamma (n : ℕ) (hn : 0<n) : g n = Gamma n.factorization := by
+private theorem g_gamma (n : ℕ) (hn : 0 < n) : g n = Gamma n.factorization := by
   rw [g, ceiling_sum_exponent_box n hn]
   exact hbox_parity n.factorization
 
-private theorem tau_square (n : ℕ) (hn : 0<n) :
+private theorem tau_square (n : ℕ) (hn : 0 < n) :
     (tau (n^2) : ℤ) = ∏ p ∈ n.factorization.support, (2*(n.factorization p:ℤ)+1) := by
   rw [tau, Nat.card_divisors (pow_ne_zero _ hn.ne')]
   rw [Nat.primeFactors_pow n (by decide : 2≠0), Nat.factorization_pow]
@@ -581,7 +572,7 @@ private theorem tau_square (n : ℕ) (hn : 0<n) :
   rfl
 
 /-- The independently defined counts satisfy the full positive-domain convolution. -/
-private theorem native_convolution (n : ℕ) (hn : 0<n) :
+private theorem native_convolution (n : ℕ) (hn : 0 < n) :
     b n = ∑ d ∈ n.divisors, a d*g (n/d) := by
   classical
   have hs : (∑ d ∈ n.divisors, a d*g (n/d)) =
@@ -600,7 +591,8 @@ private theorem native_convolution (n : ℕ) (hn : 0<n) :
         have hdiv : 0<n/(v.val.prod (· ^ ·)) := Nat.div_pos (Nat.le_of_dvd hn hdvd) (Nat.pos_of_ne_zero hd0)
         rw [a_product _ (Nat.pos_of_ne_zero hd0), g_gamma _ hdiv,
           Nat.factorization_div hdvd, Nat.factorization_prod_pow_eq_self_of_le_factorization hle]
-      _ = _ := sum_attach _ _
+      _ = _ := Finset.sum_attach (Iic n.factorization)
+        (fun v : ℕ →₀ ℕ => P v A * Gamma (n.factorization-v))
   have hc := box_convolution n.factorization
   have hb := unit_fraction_divisor_formula n hn
   rw [tau_square n hn] at hb

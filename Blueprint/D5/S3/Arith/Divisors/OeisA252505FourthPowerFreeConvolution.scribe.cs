@@ -13,10 +13,10 @@ internal sealed class OeisA252505FourthPowerFreeConvolutionDocument : IScribeDoc
     private static readonly Formula Dv = F.Id("d");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Native counting and inverse definitions for the whole A252505 convolution.",
+        "The whole A252505 fourth-power-free divisor convolution.",
         H("The whole A252505 identity and its native counting bridges"),
         Blocks(
-            Paragraph(Text("The universal convolution is open in Lean. The statements below give the unchanged target and its native counting and recursion interfaces. No settling theorem or Proved open-problem resolution is asserted.")),
+            Paragraph(Text("The complete identity follows from the original counts, a finite prime-exponent-box convolution and an integer parity calculation. The positive domain includes one, arbitrary prime support and the diagonal unit-fraction solution.")),
             Def("FourthPowerFree", "The prime fourth-power exclusion",
                 All("d", Iff(Call("FourthPowerFree", Dv), All("p",
                     Implies(Call("Nat.Prime", F.Id("p")),
@@ -63,7 +63,7 @@ internal sealed class OeisA252505FourthPowerFreeConvolutionDocument : IScribeDoc
                 Eq(F.Id("claim"), All("n", Implies(Le(D(1), N),
                     Eq(Call("a", N), Sum(Divisors(N), "d",
                         Multiply(Call("b", Dv), Call("c", App(Q("Nat", "div"), N, Dv)))))))),
-                "OEIS A252505 FORMULA: a(n) = Sum_{d|n} A018892(d)*A378214(n/d). [Conjectured]. This definition includes n=1, arbitrary prime support and every exponent. It is an unproved proposition in this module."),
+                "OEIS A252505 FORMULA: a(n) = Sum_{d|n} A018892(d)*A378214(n/d). [Conjectured]. This definition includes n=1, arbitrary prime support and every exponent. The result theorem proves this proposition with all its clauses."),
             Def("factorPairs", "Finite ordered factor pairs",
                 All("n", Eq(Call("factorPairs", N),
                     App(Q("Finset", "filter"), Fun("uv", Le(Call("Prod.fst", F.Id("uv")),
@@ -83,18 +83,26 @@ internal sealed class OeisA252505FourthPowerFreeConvolutionDocument : IScribeDoc
                 AllFunction("v", Implies(Call("InverseRecursion", F.Id("v")),
                     All("n", Implies(Lt(D(0), N), Eq(Call("v", N), Call("c", N)))))),
                 "Strong induction uses only positive proper divisors, each strictly smaller than n. The n=1 clause comes directly from the specification. The arbitrary value v(0) is immaterial."),
-            Paragraph(Text("The remaining whole gap is b=a*g for the independently defined functions. The remaining native fourth-power-free and ceiling exponent-box bridges require a real whole-proof consumer. A finite-prime-support series proof must then encode divisor convolution, prove its series identities, prove the zero-or-one coefficient law, and descend the integral identity before reducing modulo two. Final inverse cancellation is then required. These missing steps are not certified by the native bridges above."))
+            Thm("result", "The complete convolution for every positive integer",
+                All("n", Implies(Le(D(1), N), Eq(Call("a", N), Sum(Divisors(N), "d",
+                    Multiply(Call("b", Dv), Call("c", App(Q("Nat", "div"), N, Dv))))))),
+                "Encode divisors by all exponent vectors below the factorization of n. The fourth-power-free count is the product of min(e,3)+1. Write T(e) as the sum of k+1 for 0<=k<=e and U(e) as the number of even k in that range. Twice the native ceiling sum is the product of T plus the product of U. Define S(e)=1 on residues 0,1 modulo four and zero otherwise, and R(e)=1 on residue zero, -1 on residue one, and zero otherwise. An integer calculation modulo four gives product(T)+product(U) congruent to product(S)+product(R). The half-sum Gamma=(product(S)+product(R))/2 is zero or one, so h modulo two equals Gamma. The two local convolutions of min(e,3)+1 with S and R are respectively 2e+1 and one. Expanding finite box products therefore gives twice a*Gamma equal to tau(n^2)+1, hence b=a*g by the actual solution count. Associativity and the exact recursive Dirichlet inverse give a=b*c. Empty products retain n=1. All congruences are integral; no reduction from rational coefficients to characteristic two is used.",
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a252505-fourth-power-free-convolution"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Def(string name, string title, Formula formula, string prose) =>
         Node(name, title, formula, prose, DescribeRole.Definition);
-    private static DocumentBlock Thm(string name, string title, Formula formula, string prose) =>
-        Node(name, title, formula, prose, DescribeRole.Theorem);
-    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role) =>
+    private static DocumentBlock Thm(string name, string title, Formula formula, string prose,
+        OpenProblemResolutionClaim? resolution = null) =>
+        Node(name, title, formula, prose, DescribeRole.Theorem, resolution);
+    private static DocumentBlock Node(string name, string title, Formula formula, string prose, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("a252505-" + name.ToLowerInvariant().Replace("_", "-")),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
     private static Formula AllFunction(string name, Formula body) => new Formula.Bind(
         FormulaQuantifier.ForAll, FormulaIdentifier.Create(name),
         new Formula.TypeArrow(F.Id("Nat"), F.Id("Int")), body);

@@ -50,42 +50,60 @@ $(x,y)=(2n,2n)$.
 The canonical Mathlib Dirichlet inverse satisfies the stated recursion, whose
 positive-domain solution is unique. No value at zero occurs in 'claim'.
 
-## Remaining whole gap
+## Finite exponent-box proof
 
-There is no Lean theorem 'result : claim'. The missing universal bridge is
-$$
-b(n)=\sum_{d\mid n}a(d)g(n/d).
-$$
-The native fourth-power-free divisor count still needs its capped exponent-box
-bridge $\prod_{p\mid n}(1+\min(v_p(n),3))$ in a live proof. The native ceiling
-sum similarly needs its full exponent-box staircase bridge. These direct
-library applications require an actual consumer in the whole proof.
-In the finite-prime-support argument, the missing formal ingredients are the
-coefficient encodings, lawful series identities, the residue characterization
-of the zero-or-one coefficient gamma, and the integral parity descent
-$h\bmod2=\gamma$. The final inverse-convolution cancellation also remains to
-be applied to that bridge. The existing counting formulas do not by
-themselves establish it.
+Write $f(p)=v_p(n)$. Positive divisors correspond to the complete finite box
+$0\le v\le f$, and fourth-power-free divisors impose $v(p)\le3$. Hence
+$a(n)=\prod_p(\min(f(p),3)+1)$.
 
-For a fixed finite prime support, write
-$N=\prod_i(1+X_i)+\prod_i(1-X_i)$.
-The candidate identities over rational formal series are
+Define the integer local functions
 $$
-A=\prod_i\frac{1-X_i^4}{(1-X_i)^2},\quad
-B=\frac{N}{2\prod_i(1-X_i)^2},\quad
-G=\frac{N}{2\prod_i(1-X_i^4)},
+T(e)=\sum_{k=0}^e(k+1),\qquad U(e)=\sum_{k=0}^e[2\mid k],
 $$
-and
+and define $S(e)$ to be one on residues zero and one modulo four and zero
+elsewhere. Let $R(e)$ be one on residue zero, minus one on residue one,
+and zero elsewhere. Products range over the finite support of $f$.
+The ordinary ceiling identity $2\lceil m/2\rceil=m+(m\bmod2)$ and a finite
+box expansion give
 $$
-H=G\prod_i\frac{1+X_i^2}{(1-X_i)^2}.
+2h(n)=\prod_pT(f(p))+\prod_pU(f(p)).
 $$
-Each local factor in the last product is
-$1+2\sum_{k\ge1}kX_i^k$.
-The coefficients of $G$ are zero or one: all exponent residues must lie in
-$\{0,1\}$ modulo four, with an even number of one residues.
-An integer-coefficient identity must precede reduction modulo two; there is
-no coefficient homomorphism from $\mathbb Q$ to $\mathbb Z/2\mathbb Z$.
+The local formulas $2T(e)=(e+1)(e+2)$ and $U(e)=\lfloor e/2\rfloor+1$
+yield the following congruences in $\mathbb Z/4\mathbb Z$:
+$$
+T(e)^2=S(e),\qquad T(e)U(e)=R(e),\qquad
+T(e)^2=U(e)^2,\quad T(e)+U(e)=T(e)^2+T(e)U(e).
+$$
+The last two relations are preserved under coordinatewise multiplication
+of pairs. Consequently
+$$
+\prod_pT(f(p))+\prod_pU(f(p))\equiv
+\prod_pS(f(p))+\prod_pR(f(p))\pmod4.
+$$
+Set $\Gamma(f)=(\prod_pS(f(p))+\prod_pR(f(p)))/2$. The two products are
+either both zero, or one and a sign. Thus $\Gamma(f)\in\{0,1\}$ and
+$g(n)=h(n)\bmod2=\Gamma(f)$, as an equality of integers.
 
-These are the uncompiled central proof obligations, not a stronger substitute
-problem or a finite-range certificate. No settlement or solved-problem KPI is
-claimed; no Proved OpenProblemResolutionClaim is attached to this source.
+The local finite convolution identities are
+$$
+\sum_{k=0}^e(\min(e-k,3)+1)S(k)=2e+1,\qquad
+\sum_{k=0}^e(\min(e-k,3)+1)R(k)=1.
+$$
+Both follow from the four-step recurrence and their first four values.
+Expanding the finite exponent box now gives
+$$
+2\sum_{d\mid n}a(d)g(n/d)=\prod_p(2f(p)+1)+1
+=\tau(n^2)+1=2b(n).
+$$
+Therefore $b=a*g$ on every positive index. The exact inverse recursion then
+cancels $g$ and gives $a=b*c$, the unchanged complete conjecture. Empty
+support gives $n=1$; the original unit-fraction count retains $(2n,2n)$.
+
+The resolving declaration is
+`D5.S3.Arith.Divisors.OeisA252505FourthPowerFreeConvolution.result : claim`.
+It assumes no multiplicativity of $b$ or $g$. The parity argument stays over
+the integers before passing to the finite ring of characteristic four.
+
+The proposed admission basis is `open-problem-resolution` under #27491.
+The source-family audit limitations are tracked in
+https://github.com/the-omega-institute/trureturing/issues/27506.
