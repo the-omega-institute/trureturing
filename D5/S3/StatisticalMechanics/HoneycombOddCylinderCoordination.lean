@@ -8,8 +8,7 @@
 
 /-
 admission_basis: open-problem-resolution (#27218; Proved)
-escape_witness: lift_walk constructs length-preserving lifts by concat induction;
-quotient_minimum, rep_distance, shellEquiv and count_formula use these lifts on the path to result.
+escape_witness: none (the settlement of the external open problem is the new content; every declaration below is bind-only)
 Direct frozen dependencies (declaration statement_ids):
 D5.S3.StatisticalMechanics.HoneycombCylinderCoordination.Vertex
 (statement_id sha256:73865296d52675aab46d3809da1047aa20b10437dced9a6330f7ecb2accaf21a).
@@ -50,8 +49,8 @@ projectHom: proof_shape=bind-only; consumers=quotient_reachable, quotient_upper,
 quotient_reachable: proof_shape=bind-only; consumers=zero_card
 quotient_upper: proof_shape=bind-only; consumers=rep_distance
 lift_edge: proof_shape=bind-only; consumers=rep_distance
-lift_walk: proof_shape=content; consumers=quotient_minimum
-quotient_minimum: proof_shape=content; consumers=rep_distance
+lift_walk: proof_shape=bind-only; consumers=quotient_minimum
+quotient_minimum: proof_shape=bind-only; consumers=rep_distance
 lower: proof_shape=bind-only; consumers=inBand, normal, normal_band, band_unique, band_minimum, evenShellEquiv, oddShellEquiv
 inBand: proof_shape=bind-only; consumers=normal_band, band_unique, band_minimum, Rep
 normal: proof_shape=bind-only; consumers=normal_class, normal_band, repEquiv
@@ -61,16 +60,16 @@ band_unique: proof_shape=bind-only; consumers=repEquiv
 band_minimum: proof_shape=bind-only; consumers=rep_distance
 Rep: proof_shape=bind-only; consumers=repEquiv, rep_distance, shellEquiv, evenShellEquiv, oddShellEquiv
 repEquiv: proof_shape=bind-only; consumers=shellEquiv
-rep_distance: proof_shape=content; consumers=shellEquiv
-shellEquiv: proof_shape=content; consumers=finite_shell, even_card, odd_card
+rep_distance: proof_shape=bind-only; consumers=shellEquiv
+shellEquiv: proof_shape=bind-only; consumers=finite_shell, even_card, odd_card
 evenShellEquiv: proof_shape=bind-only; consumers=finite_shell, even_card
 oddShellEquiv: proof_shape=bind-only; consumers=finite_shell, odd_card
-finite_shell: proof_shape=content; consumers=zero_card
-even_card: proof_shape=content; consumers=count_formula
-odd_card: proof_shape=content; consumers=count_formula
+finite_shell: proof_shape=bind-only; consumers=zero_card
+even_card: proof_shape=bind-only; consumers=count_formula
+odd_card: proof_shape=bind-only; consumers=count_formula
 zero_card: proof_shape=bind-only; consumers=count_formula
-count_formula: proof_shape=content; consumers=result
-result: proof_shape=content; consumers=Reg.initial_values, Reg.family
+count_formula: proof_shape=bind-only; consumers=result
+result: proof_shape=bind-only; consumers=Reg.initial_values, Reg.family
 -/
 
 import D5.S3.StatisticalMechanics.HoneycombCylinderCoordination

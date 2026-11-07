@@ -72,6 +72,10 @@ $$\forall n: \mathbb{N}, ((1 - \operatorname{PowerSeries.X})^{2} \cdot \operator
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/HoneycombOddCylinderCoordination.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/sloane329515` (proved) by `D5/S3/StatisticalMechanics/HoneycombOddCylinderCoordination.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sloane329515","declaration_gid":"D5/S3/StatisticalMechanics/HoneycombOddCylinderCoordination.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* N. J. A. Sloane (2019). *OEIS A329515: coordination sequences of honeycomb cylinders of odd width 2n+1*. URL: <https://oeis.org/A329515>.

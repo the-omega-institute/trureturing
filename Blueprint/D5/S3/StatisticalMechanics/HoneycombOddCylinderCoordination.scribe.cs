@@ -45,7 +45,7 @@ internal sealed class HoneycombOddCylinderCoordinationDocument : IScribeDocument
                     Paragraph(Text("At A-radius 2k with k>0, the shell count is 6k for k<n, 6n for k=n, and 4n+2 for k>n. At B-radius 2k+1 it is 6k+3 for k<n, 5n+2 for k=n, and 4n+2 for k>n; the radius-zero count is one. "
                         + "Thus positive radii are 3m before 2n+1, 5n+2 at 2n+1, and 4n+2 afterwards.")),
                     Paragraph(Text("Comparing second differences of the integer-cast shell series gives exactly the displayed identity. C maps an integer to its constant power series; n−2 is formed after casting n to ℤ. Powers have natural exponents, and X lies in PowerSeries ℤ. At n=0 the source term x²x^(−1) is combined before clearing denominators. Since 1−X has constant coefficient one, it is a unit, so the displayed cleared identity is equivalent to the source expression. No convergence or physical realization is asserted."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("sloane329515"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string name, string title, Formula formula, string commentary) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + name), H(title),
