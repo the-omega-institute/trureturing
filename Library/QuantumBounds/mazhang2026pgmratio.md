@@ -4,7 +4,7 @@ authors: "Haobo Ma, Wenlin Zhang"
 year: 2026
 title: "No universal factor compares centered PGM scores; Verification of the unbounded centered PGM ratio"
 doi: null
-url: null
+url: "https://github.com/the-omega-institute/trureturing/blob/e766f6c09bc629e934d0b4d1de2162768da42dea/Library/QuantumBounds/mazhang2026pgmratio.md"
 claim: "Every-real-C unbounded centered ratio at fixed dimension and label counts, exact symmetric active sets and failure region, and the sharp loading threshold."
 strata_touched: []
 license: CC-BY-4.0
@@ -36,3 +36,8 @@ the symmetric score calculations and qubit and commuting constructions. The
 supplied symbolic checker and its finite checks are evidence of their stated
 scope, and do not establish the universal claims. General all-pure comparisons
 and quantitative spectral-floor comparisons remain open.
+
+The metadata URL identifies this repository citation and custody record at an
+immutable source checkpoint, published as an ancestor of the formal delivery.
+It is not a public URL for the supplied manuscript, and makes no assertion
+that the original manuscript has been published or licensed for redistribution.

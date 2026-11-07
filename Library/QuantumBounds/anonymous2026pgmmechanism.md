@@ -4,7 +4,7 @@ authors: "Anonymous"
 year: 2026
 title: "Why the Active-Set PGM Comparison Can Fail: Mechanism, a minimal qubit family, and a classical model"
 doi: null
-url: null
+url: "https://github.com/the-omega-institute/trureturing/blob/e766f6c09bc629e934d0b4d1de2162768da42dea/Library/QuantumBounds/anonymous2026pgmmechanism.md"
 claim: "Universal centered support identity and separate valid PGM bounds; the qubit and commuting controls and minimality."
 strata_touched: []
 license: citation-only
@@ -28,3 +28,8 @@ minimality/pure-pair limits; section 9 distinguishes the two individually valid
 upper bounds from their false proposed ordering. Attribution of the symmetric
 scores and qubit/commuting constructions to Hyunho Cha is retained as in the
 later verification note. The general all-pure comparison remains unresolved.
+
+The metadata URL identifies this repository citation and custody record at an
+immutable source checkpoint, published as an ancestor of the formal delivery.
+It is not a public URL for the supplied manuscript, and makes no assertion
+that the original manuscript has been published or licensed for redistribution.

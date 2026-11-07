@@ -30,8 +30,12 @@ def actual : Realization signature :=
 private theorem observed_dependence (i : Unit) :
     ∃ p s t, actual.readout i p s ≠ actual.readout i p t := by
   refine ⟨⟨1, 1, fun _ => 1⟩, ∅, {0}, ?_⟩
-  intro h
-  norm_num [actual, realize, pgmScore, CFC.one_rpow, trace] at h
+  change pgmScore (fun _ : Fin 1 => (1 : Matrix (Fin 1) (Fin 1) ℂ)) ∅ ≠
+    pgmScore (fun _ : Fin 1 => (1 : Matrix (Fin 1) (Fin 1) ℂ)) {0}
+  rw [D5.S3.Quantum.Measurement.EquiprobablePgmSupportIdentity.singleton_score _
+    (by decide) (fun _ => Matrix.PosSemidef.one)
+    (by intro i; norm_num [trace])]
+  norm_num [pgmScore]
 
 namespace Centered
 
@@ -122,7 +126,11 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hr := h (fun _ : Fin 1 => (1 : Matrix (Fin 1) (Fin 1) ℂ))
     (by decide) (fun _ => Matrix.PosSemidef.one)
     (by intro i; norm_num [trace]) {0} (Finset.singleton_nonempty 0)
-  norm_num [rejected, realize, pgmScore, CFC.one_rpow, trace] at hr
+  dsimp only [rejected, realize] at hr
+  rw [D5.S3.Quantum.Measurement.EquiprobablePgmSupportIdentity.singleton_score _
+    (by decide) (fun _ => Matrix.PosSemidef.one)
+    (by intro i; norm_num [trace])] at hr
+  norm_num at hr
 
 def family : Registration arena (type_of% (@random_guessing_le)) where
   actual := actual

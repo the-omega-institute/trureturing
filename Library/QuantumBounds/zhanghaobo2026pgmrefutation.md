@@ -4,7 +4,7 @@ authors: "Wenlin Zhang and Haobo / trureturing"
 year: 2026
 title: "An equiprobable mixed-state counterexample to the active-set PGM comparison"
 doi: null
-url: null
+url: "https://github.com/the-omega-institute/trureturing/blob/e766f6c09bc629e934d0b4d1de2162768da42dea/Library/QuantumBounds/zhanghaobo2026pgmrefutation.md"
 claim: "The existing three-state rational actual-density/POVM/CFC refutation, reused without a second proof."
 strata_touched: []
 license: citation-only
@@ -26,3 +26,8 @@ every-optimum active-pair argument, and exact original-prior CFC scores. Its
 reference to Cha and Lee's comparison is documented separately in
 `cha2026structural.md`. The later implementation reuses this source and does not
 claim the old refutation as a new outcome.
+
+The metadata URL identifies this repository citation and custody record at an
+immutable source checkpoint, published as an ancestor of the formal delivery.
+It is not a public URL for the supplied manuscript, and makes no assertion
+that the original manuscript has been published or licensed for redistribution.
