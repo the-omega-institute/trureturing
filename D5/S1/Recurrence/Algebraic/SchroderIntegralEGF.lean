@@ -6,6 +6,17 @@
    utility: none
    digest: A338193 EGF coefficients equal Kurkov's two-index recurrence. -/
 
+/-
+The primitive and its two coefficient identities are public for EGF constructions.
+Escape audit unfinished:
+https://github.com/the-omega-institute/trureturing/issues/21972
+Declaration names below are relative to this module.
+primitive: proof_shape: bind-only; consumer: derivative_primitive
+primitive_zero: proof_shape: bind-only; consumer: BalaA281181TotientSquarePeriod.BalaPolynomialSystem.constant_H
+derivative_primitive: proof_shape: bind-only; consumer: BalaA281181TotientSquarePeriod.BalaPolynomialSystem.derivative_H
+-/
+
+import D5.S1.Recurrence.Residue.IntegralEGFComposition
 import D5.S1.Recurrence.Residue.QuarticEGFFixedPoint
 import Mathlib.RingTheory.PowerSeries.Schroder
 import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
@@ -122,13 +133,13 @@ private theorem algebraic_iff_linear (S : PowerSeries ℚ) (hS : constantCoeff S
     linear_combination -S^2 * D_quadratic +
       ((1+X)*D*S - 2*X*(D*PowerSeries.derivative (R := ℚ) S+S)) * h
 
-private noncomputable def primitive (S : PowerSeries ℚ) : PowerSeries ℚ :=
+noncomputable def primitive (S : PowerSeries ℚ) : PowerSeries ℚ :=
   mk (fun n => if n = 0 then 0 else coeff (n-1) S / n)
 
-private theorem primitive_zero (S : PowerSeries ℚ) : constantCoeff (primitive S) = 0 := by
+theorem primitive_zero (S : PowerSeries ℚ) : constantCoeff (primitive S) = 0 := by
   simp [primitive]
 
-private theorem derivative_primitive (S : PowerSeries ℚ) : PowerSeries.derivative (R := ℚ) (primitive S) = S := by
+theorem derivative_primitive (S : PowerSeries ℚ) : PowerSeries.derivative (R := ℚ) (primitive S) = S := by
   ext n
   simp [primitive, coeff_derivative, Nat.cast_add, Nat.cast_one,
     show (n : ℚ) + 1 ≠ 0 by positivity]
@@ -227,7 +238,5 @@ theorem egf_coeff_eq_f (n : ℕ) (hn : 1 ≤ n) :
   change eCoeff A (m+1) = (f 0 m : ℚ)
   rw [← hBA, ← eCoeff_derivative, B_derivative, F_coeff]
 
-#print axioms egf_coeff_eq_f
-#print axioms original_exists_unique
 
 end D5.S1.Recurrence.Algebraic.SchroderIntegralEGF

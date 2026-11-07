@@ -16,7 +16,43 @@ Lean statement: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.f`
 
 Set f(j,0)=1. For positive m, the boundary is f(0,m)=f(0,m-1)+m f(1,m-1). For positive j and m, use f(j,m)=f(j-1,m)+m(f(j,m-1)+f(j+1,m-1)). Recursion first decreases m, then j; all values are natural numbers.
 
-**Remark 1.2 (The original integral equation).**
+**Definition 1.2 (Formal primitive).**
+
+$$\forall (S : PowerSeries \mathbb{Q}) , primitive S = \operatorname{PowerSeries}.\operatorname{mk} (fun n : \mathbb{N} \mapsto if n = 0 then 0 else \operatorname{PowerSeries}.\operatorname{coeff} (n - 1) S / (n : \mathbb{Q}))$$
+
+*Formalization.* `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.primitive` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The formal primitive divides the preceding coefficient by its positive degree and has constant coefficient zero.
+
+**Theorem 1.3 (Zero constant coefficient).**
+
+$$\forall (S : PowerSeries \mathbb{Q}) , \operatorname{PowerSeries}.\operatorname{constantCoeff} (primitive S) = 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.primitive_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The primitive starts at zero.
+
+**Theorem 1.4 (Derivative of the primitive).**
+
+$$\forall (S : PowerSeries \mathbb{Q}) , \operatorname{PowerSeries}.\operatorname{derivative} (primitive S) = S$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.derivative_primitive` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Differentiating cancels each positive degree denominator.
+
+**Remark 1.5 (The original integral equation).**
 
 Lean statement: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.Original`
 
@@ -28,7 +64,7 @@ Lean statement: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.Original`
 
 A has constant coefficient one and satisfies A=1+Integral ((x/A)' / (x/A^2)') dx. Integration is formal, with constant term zero, and all series have rational coefficients. The inverse series and the derivative in the denominator have constant coefficient one.
 
-**Remark 1.3 (Existence and coefficient uniqueness).**
+**Remark 1.6 (Existence and coefficient uniqueness).**
 
 Lean statement: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.original_exists_unique`
 
@@ -42,7 +78,7 @@ Lean statement: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.original_exists_
 
 Write F(j) for the EGF of row j. The recurrence gives F(j+1)=F(j)+x(F(j+1)+F(j+2)). Mathlib's large Schroeder series R satisfies R=1+xR+xR^2. Induction first on degree and then on j proves F(j)=F(0)R^j. The boundary gives B'=F(0) for B=F(0)(1-xR), and B has constant term one. Clearing the units in the original equation gives (1+x)AA'-2x(A')^2-A^2=0. Its constant-one branch is exactly (1-xR)A'=A: the alternative factor has constant term minus one. Strong induction on coefficients then proves uniqueness, canceling the nonzero rational factor n+1.
 
-**Remark 1.4 (The series specified by the source equation).**
+**Remark 1.7 (The series specified by the source equation).**
 
 Lean statement: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.A`
 
@@ -56,7 +92,7 @@ Lean statement: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.A`
 
 Choose the unique series satisfying Original. The selection predicate contains only the original integral equation and initial value. The recurrence and the coefficient identity are proved separately.
 
-**Remark 1.5 (The defining equation holds).**
+**Remark 1.8 (The defining equation holds).**
 
 Lean statement: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.A_original`
 
@@ -70,7 +106,7 @@ Lean statement: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.A_original`
 
 The chosen A satisfies the original integral equation and A(0)=1.
 
-**Theorem 1.6 (The coefficient identity).**
+**Theorem 1.9 (The coefficient identity).**
 
 $$\forall n \in \mathbb{N}, 1 \le n \implies n! [x^{n}]A = f\left(0, n-1\right)$$
 
@@ -93,7 +129,11 @@ For every natural n at least one, n! times coefficient n of A equals f(0,n-1), v
 - Truth anchor: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.A`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.A_original`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.Original`
+- Truth anchor: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.derivative_primitive`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.egf_coeff_eq_f`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.f`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.original_exists_unique`
+- Truth anchor: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.primitive`
+- Truth anchor: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.primitive_zero`
+- Dependency: [D5/S1/Recurrence/Residue/IntegralEGFComposition](../Residue/IntegralEGFComposition.md)
 - Dependency: [D5/S1/Recurrence/Residue/QuarticEGFFixedPoint](../Residue/QuarticEGFFixedPoint.md)
