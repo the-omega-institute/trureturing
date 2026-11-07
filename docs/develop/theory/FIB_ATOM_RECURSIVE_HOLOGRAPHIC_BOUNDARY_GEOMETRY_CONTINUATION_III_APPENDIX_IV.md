@@ -2981,3 +2981,107 @@ $$
 $$
 
 Any linear complement of $\mathcal R_u$ in $\mathcal W_u$ therefore carries a copy of the baseline tensor through $T_u$, but the complement is not canonical and need not respect the pointwise simplex constraints. In particular, (197.5) does not construct a rank-three or rank-four partition and does not eliminate the out-of-plane lift problem. The arbitrary-partition realization, the residual-zero search beyond the quotient, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization remain open.
+
+## 198. The full-zero fibre is an affine radical lift
+
+The quotient reconstruction makes the remaining radical freedom explicit. Once one full-zero candidate is fixed, every other legal label family in the same candidate span with the same quotient labels differs from it by finitely many common-radical functions, and the residual tensor cannot see those differences.
+
+**Definition 198.1 (a normalized quotient section).** Retain the notation of Section 197 for a full-zero bounded partition $u$. Since
+
+$$
+1=u_0+u_1+u_3+u_B\in\mathcal W_u,
+\qquad
+T_u(1)=1,
+$$
+
+choose a linear section
+
+$$
+S_u:E_f\longrightarrow\mathcal W_u,
+\qquad
+T_u\circ S_u=\operatorname{id}_{E_f},
+\qquad
+S_u(1)=1.
+\tag{198.1}
+$$
+
+For each label $y\in\mathcal L$, put
+
+$$
+\rho_y=u_y-S_u(f_y).
+\tag{198.2}
+$$
+
+**Proposition 198.2 (radical-fibre normal form).** The corrections in (198.2) satisfy
+
+$$
+\rho_y\in\mathcal R_u,
+\qquad
+\sum_{y\in\mathcal L}\rho_y=0,
+\qquad
+\mathcal R_u=\operatorname{span}_{\mathbb R}\{\rho_y:y\in\mathcal L\}.
+\tag{198.3}
+$$
+
+Let $(\widetilde\rho_y)_{y\in\mathcal L}$ be any family of elements of $\mathcal R_u$ with
+
+$$
+\sum_{y\in\mathcal L}\widetilde\rho_y=0,
+\tag{198.4}
+$$
+
+and define
+
+$$
+\widetilde u_y=S_u(f_y)+\widetilde\rho_y.
+\tag{198.5}
+$$
+
+If the four functions in (198.5) are pointwise nonnegative and sum to one, then their sixty-four residuals vanish. Consequently, inside the fixed span and quotient data, the full-zero families are exactly the intersection of the affine radical fibre
+
+$$
+\left\{\bigl(S_u(f_y)+\widetilde\rho_y\bigr)_{y\in\mathcal L}:
+\widetilde\rho_y\in\mathcal R_u,\ \sum_y\widetilde\rho_y=0\right\}
+\tag{198.6}
+$$
+
+with the pointwise simplex constraints.
+
+*Proof.* By (197.1),
+
+$$
+T_u(\rho_y)=T_u(u_y)-T_u(S_u(f_y))=f_y-f_y=0,
+$$
+
+so $\rho_y\in\ker T_u=\mathcal R_u$ by Proposition 197.2. The baseline labels satisfy $\sum_yf_y=1$, and (198.1) gives
+
+$$
+\sum_y\rho_y=\sum_yu_y-S_u\left(\sum_yf_y\right)=1-S_u(1)=0.
+$$
+
+To prove the spanning assertion, let $r\in\mathcal R_u$. Choose $x\in\mathcal W_u$ with $T_u(x)=0$ and write $x=\sum_y a_yu_y$. Then
+
+$$
+r=x-S_u(T_u x)=\sum_y a_y\bigl(u_y-S_u(f_y)\bigr)=\sum_y a_y\rho_y,
+$$
+
+which proves (198.3).
+
+For the converse, every $\widetilde u_y$ belongs to $\mathcal W_u$, and (198.4) together with (198.1) gives $\sum_y\widetilde u_y=1$. The pointwise hypotheses therefore make it a legal bounded partition. Since each $\widetilde\rho_y$ is in the common radical, multilinearity removes every term containing a correction from
+
+$$
+\mathcal C(\widetilde u_y,\widetilde u_z,\widetilde u_k).
+$$
+
+The remaining term is
+
+$$
+\mathcal C(S_u(f_y),S_u(f_z),S_u(f_k))
+ =\mathcal C(f_y,f_z,f_k)
+$$
+
+by (197.4). Thus every residual is zero. Conversely, any full-zero family in the fixed $\mathcal W_u$ with the same quotient labels is recovered by (198.2), so it lies in (198.6). $\square$
+
+**Corollary 198.3 (the residual search becomes a fibre-feasibility search).** For a rank-three or rank-four full-zero candidate, the nonlinear residual equations impose no additional conditions after the quotient identity: all remaining freedom is respectively a one- or two-dimensional radical correction subject to (198.4) and the pointwise simplex inequalities. In the rank-two branch, $\mathcal R_u=0$, so the normalized quotient section determines the label family uniquely inside its candidate span.
+
+This is an exact closure statement for a fixed candidate span, not an existence theorem. It does not produce a nonzero radical, guarantee that any correction satisfies the pointwise inequalities, or settle arbitrary partition realization, $F_{64}$, $H43$, SRS\text{-}20, physical succession or Lean/kernel formalization.
