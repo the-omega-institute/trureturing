@@ -12,7 +12,7 @@ namespace Reg.D5.S3.Combinatorics.Circle.SparseNecklaceRounding.Endpoint
 open _root_.D5.S3.Combinatorics.Circle.SourceWidth
 open _root_.D5.S3.Combinatorics.Circle.RunFirstEarTransport
 open _root_.D5.S3.Combinatorics.Circle.SparseNecklaceRounding
-open private bits_seed from D5.S3.Combinatorics.Circle.SparseNecklaceRounding.Endpoint
+open private bits_seed from D5.S3.Combinatorics.Circle.SparseNecklaceRounding.PhysicalStreams
 
 abbrev signature : Signature where
   Params := Unit
