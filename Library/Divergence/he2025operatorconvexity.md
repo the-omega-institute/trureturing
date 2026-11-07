@@ -13,6 +13,7 @@ strata_touched:
   - D5/S3/Quantum/Matrix/HsfBalancedCfcBridge
   - D5/S3/Quantum/Matrix/HsfLocalSpectrumTrace
   - D5/S3/Quantum/Matrix/HsfLocalSpectrumSupplier
+  - D5/S3/Quantum/Matrix/HsfThreeLevelSupplier
 license: citation-only
 triage: anchor
 ---
@@ -110,8 +111,8 @@ analytic consequence of the external measure theorem. The measure
 prerequisite and this all-alpha corollary have no Lean proof here; arbitrary
 independent \(H,K\) and the full HSF conjecture remain OPEN.
 
-The current formal library extends this record with a separate, explicitly
-scoped two-level supplier. `D5/S3/Quantum/Matrix/RpowPencilTaylor` proves
+The formal library supplies the following actual-CFC results with explicit
+spectral and directional scope. `D5/S3/Quantum/Matrix/RpowPencilTaylor` proves
 for an arbitrary finite-dimensional positive definite complex Hermitian center
 `Y` and Hermitian direction `K` that the actual CFC cube-root pencil is smooth
 near zero (`contDiffAt_cubeRoot`), that its first three
@@ -164,6 +165,66 @@ the result is local on this affine slice, with no global neighborhood or
 arbitrary-direction claim. It does not claim the full all-`alpha` HSF
 conjecture, novelty, or an official open-problem resolution. The primary HSF
 source and the original radial `alpha=3` exposition remain the citation anchor.
+
+## Uniform local supplier and global three-level supplier
+
+`HsfLocalSpectrumSupplier.finite_spectrum_uniform_local_supplier` uses the
+same actual function and factorial-normalized jets, with `S=I+H`, for every
+finite positive diagonal spectrum. For arbitrary complex Hermitian `H,Z`,
+put \(A_{ij}=\tau_{ij}H_{ij}\) and
+\(g=\|H\|_F^2-\|A\|_F^2\). If \(\|H\|_F\le1/20\), then
+\[
+\operatorname{Re}\operatorname{Tr}
+ (B_3+2ZB_2+B_1Z^2-\tfrac5{48}B_1^3)\ge g/6\ge0.
+\]
+The radius is independent of the spectrum and dimension. Equal-level blocks
+of `H`, scalar spectra, repeated levels and the empty dimension are included;
+there is no bound on `Z` or cross-level support restriction. This is a local
+neighborhood result, rather than an arbitrary-spectrum global supplier.
+
+`HsfThreeLevelSupplier.actual_threeLevel_supplier` proves the global
+supplier in a supplied diagonal spectral frame: let `n` be any finite index
+type, `level : n -> Fin 3`, and `p : Fin 3 -> R` have strictly positive
+values, and put \(P=\operatorname{diag}(p_{\mathrm{level}(i)})\).
+For every complex PSD `S`, define
+\[
+ F(t)=P^{-1}(P^3+tP^{3/2}SP^{3/2})^{2/3}P^{-1},\qquad
+ B_j=(j!)^{-1}F^{(j)}(0).
+\]
+For every Hermitian `Z`, the same real trace expression is nonnegative,
+without a smallness condition on `S`. The powers and jets are the actual CFC
+ones. Label collisions, empty label fibres, arbitrary finite multiplicities,
+complex phases, singular PSD `S` and the empty carrier are included.
+The theorem takes this frame as data; it does not extract or transport one
+from a bare eigenvalue-count premise.
+
+For positive definite `S`,
+`HsfThreeLevelSupplier.actual_threeLevel_PD_sylvester` also constructs the
+Hermitian Sylvester solution and proves an exact equality criterion. Write
+\(a_i=p_{\mathrm{level}(i)}\), let `c` denote
+`HsfLocalSpectrumSupplier.spectralKernel`, and set
+\[
+ X_{ij}=\tau(a_i,a_j)S_{ij},\qquad
+ Q_{ij}=\sum_k\left[\tfrac23\tau(a_i,a_k)\tau(a_k,a_j)
+                  +3c(a_i,a_j,a_k)\right]S_{ik}S_{kj},\qquad D=Q-X^2.
+\]
+It proves `X` positive definite and supplies Hermitian `Y` with
+\(XY+YX=D\). For this solution,
+\[
+ E=4\operatorname{Re}\operatorname{Tr}(S^3-X^3)
+   -6\operatorname{Re}\operatorname{Tr}(XD)
+   -6\operatorname{Re}\operatorname{Tr}(DY)\ge0,\qquad
+ E=0\ \Longleftrightarrow\ PS=SP.
+\]
+This rigidity statement requires positive definite `S`; it asserts no
+singular-PSD rigidity. These results give no global supplier for arbitrary
+spectra, all-exponent theorem, full HSF resolution or novelty claim.
+
+The corresponding source-binding registrations remain `declared_unresolved`:
+source-selection reconstruction and `escapeFrom` evidence are missing under
+[issue 23103](https://github.com/the-omega-institute/trureturing/issues/23103)
+(`IE-C050`, `source.selection_missing`). Kernel acceptance does not validate
+those audits.
 
 ## Probability transform derivative bounds
 
