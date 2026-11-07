@@ -1,0 +1,2 @@
+**定义 25.2（成熟工具与综合范围）。** 同一平方恢复直接复用 8.2、6.1；有限依赖的代数恢复、实 JB 标量双对偶与 Peirce 导子桥、一般 JB 动力对应直接复用 12.2 的代数子证明、12.4 从有界性起的证明及 13.2。一般 JB 二次表示保正取 Hanche-Olsen–Størmer，[*Jordan operator algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，Proposition 3.3.6；动力对应的成熟原接口仍是 Alfsen–Shultz，[*Orientation in operator algebras*](https://pmc.ncbi.nlm.nih.gov/articles/PMC22571/)，Theorem 1。范数支撑泛函、等距群预解和有界交换子障碍只作证明工具。这里的 $\texttt{repo-derived}$ 综合是：用同输入有限反映支付代数身份，用原序单位区间的两次代入支付不完备域自动有界，再把同一个旧关系接回全部兼容静态结构；中央一次系数模型准确分开精确反映与极限控制。不主张历史优先权、普遍正常性、实际操作已供应或全局公理最少。这是纸面理论，未声明 Lean 核验或冻结。
+
