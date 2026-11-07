@@ -30,7 +30,31 @@ $$claim = (\forall n \in \mathbb{N},\; (\operatorname{mod}\left(n, 55\right) \ne
 
 OEIS A227244, FORMULA, Chai Wah Wu: Conjecture 4: a(168*n+43) = 59 if n>=0 and n mod 55 <> 26. Least prime divisor means primality of 59, divisibility by 59, and a lower bound on every natural prime divisor of that same signed integer. The assertion includes n=0 and has no upper bound. It makes no assertion at residue 26 and does not assert that the exclusion is necessary.
 
-**Definition 1.3 (Finite residues of the nested powers).**
+**Theorem 1.3 (Power reduction along an arithmetic progression).**
+
+$$\forall M \in Type,\; \forall c \in \operatorname{CommMonoid}\left(M\right),\; \forall a \in M,\; \forall s \in \mathbb{N},\; \forall t \in \mathbb{N},\; \forall L \in \mathbb{N},\; \forall n \in \mathbb{N},\; (a^{s \cdot L + t} = a^{t}) \Rightarrow (a^{s \cdot n + t} = a^{s \cdot \operatorname{mod}\left(n, L\right) + t})$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Primes/WuA227244ConjectureFour.progression_reduce` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original repository declaration D5.S3.Arith.Primes.WuA227244ConjectureFour.progression_reduce applies to every carrier M in any universe and every CommMonoid structure c on M. Powers use that structure. All four indices s, t, L and n are arbitrary natural numbers, including zero. The sole hypothesis is the displayed period equation. The proof uses Function.Periodic.map_mod_nat. This same declaration is used by formula_reduce here and by WuA227244ConjectureThree.formula_reduce; it is an existing helper, not a new general method.
+
+**Theorem 1.4 (Power reduction after an initial tail).**
+
+$$\forall M \in Type,\; \forall c \in \operatorname{CommMonoid}\left(M\right),\; \forall a \in M,\; \forall p \in \mathbb{N},\; \forall e \in \mathbb{N},\; (a^{p + p} = a^{p}) \Rightarrow ((p \le e) \Rightarrow (a^{e} = a^{p + \operatorname{mod}\left(e, p\right)}))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Primes/WuA227244ConjectureFour.tail_reduce` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original repository declaration D5.S3.Arith.Primes.WuA227244ConjectureFour.tail_reduce applies to every carrier M in any universe and every CommMonoid structure c on M. Powers use that structure. Both p and e range over all natural numbers, including zero. It requires both the displayed power equation and p at most e; no positivity assumption is added. The proof uses Function.Periodic.map_mod_nat and natural subtraction only inside the proof. This same declaration is used by formula_reduce here and by WuA227244ConjectureThree.formula_reduce; it is an existing helper, not a new general method.
+
+**Definition 1.5 (Finite residues of the nested powers).**
 
 $$\forall q \in \mathbb{N},\; \forall d \in \mathbb{N},\; \forall p \in \mathbb{N},\; \forall L \in \mathbb{N},\; \forall r \in \mathbb{N},\; \operatorname{reduced}\left(q, d, p, L, r\right) = ((2: \operatorname{ZMod}\left(q\right))^{\operatorname{mod}\left(2^{168 \cdot r + 43}, d\right)} + 1) \cdot (2: \operatorname{ZMod}\left(q\right))^{\operatorname{mod}\left(2^{p + \operatorname{mod}\left(2^{168 \cdot r + 43}, p\right)}, d\right)} - 1$$
 
@@ -44,7 +68,7 @@ $$\forall q \in \mathbb{N},\; \forall d \in \mathbb{N},\; \forall p \in \mathbb{
 
 This residue expression is in ZMod q. Its five natural parameters are q, d, p, L and r; L records the period used to choose r. The first exponent is reduced modulo d. For the second exponent, a tail of length p precedes reduction modulo p, and the resulting outer exponent is reduced modulo d. Periodicity of powers along 168*n+43 transfers this expression to every natural n.
 
-**Theorem 1.4 (The fourth conjecture holds).**
+**Theorem 1.6 (The fourth conjecture holds).**
 
 $$\forall n \in \mathbb{N},\; (\operatorname{mod}\left(n, 55\right) \neq 26) \Rightarrow ((\operatorname{Prime}\left(59\right)) \land (((59: \mathbb{Z}) \mid ((2: \mathbb{Z})^{2^{168 \cdot n + 43}} + 1) \cdot (2: \mathbb{Z})^{2^{2^{168 \cdot n + 43}}} - 1) \land (\forall q \in \mathbb{N},\; (\operatorname{Prime}\left(q\right)) \Rightarrow (((q: \mathbb{Z}) \mid ((2: \mathbb{Z})^{2^{168 \cdot n + 43}} + 1) \cdot (2: \mathbb{Z})^{2^{2^{168 \cdot n + 43}}} - 1) \Rightarrow (59 \le q)))))$$
 
@@ -66,5 +90,7 @@ Powers along an arithmetic progression repeat once a period equation holds. Afte
 
 - Truth anchor: `D5/S3/Arith/Primes/WuA227244ConjectureFour.G`
 - Truth anchor: `D5/S3/Arith/Primes/WuA227244ConjectureFour.claim`
+- Truth anchor: `D5/S3/Arith/Primes/WuA227244ConjectureFour.progression_reduce`
 - Truth anchor: `D5/S3/Arith/Primes/WuA227244ConjectureFour.reduced`
 - Truth anchor: `D5/S3/Arith/Primes/WuA227244ConjectureFour.result`
+- Truth anchor: `D5/S3/Arith/Primes/WuA227244ConjectureFour.tail_reduce`

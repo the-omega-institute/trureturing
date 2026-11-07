@@ -55,3 +55,4 @@ The source says: Conjecture 3: a(72*n+32) = 149 for n >= 0 and a(72*n+32) is not
 - Truth anchor: `D5/S3/Arith/Primes/WuA227244ConjectureThree.G`
 - Truth anchor: `D5/S3/Arith/Primes/WuA227244ConjectureThree.reduced`
 - Truth anchor: `D5/S3/Arith/Primes/WuA227244ConjectureThree.result`
+- Dependency: [D5/S3/Arith/Primes/WuA227244ConjectureFour](WuA227244ConjectureFour.md)
