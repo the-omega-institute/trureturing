@@ -358,10 +358,16 @@ For a mathematical input $v\in\mathbb C^E$, let $\psi_s=U_j(s)v$ and
 use its unnormalized current in
 
 $$
-C_L(v,j)=\sum_{r\ne q}\int_0^1
- \bigl([J_s(q,r)]_+-L|\psi_s(r)|^2\bigr)_+\,ds.
+C_L(v,j)=\sum_{r\in E}\sum_{\substack{q\in E\\q\ne r}}
+ \int_0^1\bigl([J_s(q,r)]_+-L|\psi_s(r)|^2\bigr)_+\,ds.
 \tag{4.2}
 $$
+
+In (4.2), the sum is over ordered pairs, with both variables bound. The outer
+variable $r$ is the departing configuration and the inner variable $q$ is the
+destination. Off-diagonal terms outside the active pairs for $j$ vanish by the
+native Hamiltonian, so this is only a binding clarification of (4.2); the
+statement, quantifiers, and scope of Theorem 4.1 are unchanged.
 
 Then for every original address, every input and every $L>0$,
 

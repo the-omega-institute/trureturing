@@ -11,7 +11,7 @@ internal sealed record WorktreeOptions(
     string Base,
     string Source,
     bool SkipRestore,
-    bool PreferIdle = false);
+    bool AllowReuseSelection = false);
 
 internal static class WorktreeCommand
 {
@@ -30,11 +30,11 @@ internal static class WorktreeCommand
     private static string CreationKindList => string.Join(", ", CreationKinds);
 
     internal static string Usage { get; } =
-        "USAGE: StrataLint worktree with [--path DIR] [--read PATH] [--write PATH] [--git] -- COMMAND [ARG ...] | "
+        "USAGE: StrataLint worktree with [--path DIR] -- COMMAND [ARG ...] | "
         + "StrataLint worktree checkpoint --message-file FILE | "
         + "StrataLint worktree publish --branch NAME [--commit REV] | "
         + "StrataLint worktree finalize --branch NAME --writers-joined | "
-        + "StrataLint worktree return [--pr N] --writers-joined | "
+        + "StrataLint worktree stale [--path DIR] | StrataLint worktree return [--path DIR] | "
         + "StrataLint worktree ensure-cache [--path DIR] [--restore-dependencies] | "
         + "StrataLint worktree ensure-cache [--path DIR] [--restore-dependencies] | "
         + "StrataLint worktree with-cache-writer [--path DIR] -- COMMAND [ARG ...] | "
@@ -73,7 +73,7 @@ internal static class WorktreeCommand
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentNullException.ThrowIfNull(runner);
         ArgumentNullException.ThrowIfNull(cloner);
-        if (arguments.Count > 0 && arguments[0] is "with" or "checkpoint" or "publish" or "finalize" or "return")
+        if (arguments.Count > 0 && arguments[0] is "with" or "checkpoint" or "publish" or "finalize" or "return" or "stale")
             return WorktreeProtocolCommand.Run(repositoryRoot, arguments, runner, Timeout.InfiniteTimeSpan);
         if (arguments.Count > 0
             && string.Equals(arguments[0], "remove", StringComparison.Ordinal))
@@ -105,33 +105,63 @@ internal static class WorktreeCommand
         }
 
         WorktreeOptions? options = null;
+        string? requestedBase = null;
+        string? invokingDirectory = null;
+        string[] removedWorktrees = [];
         var worktreeCreated = false;
         string? branchOid = null;
-        string? creationLock = null;
-        string? creationMetadata = null;
         WorktreeBranchTracking? branchTracking = null;
         var halfBuiltRecovered = false;
         var stage = "preflight";
         int? failureExitCode = null;
-        IDisposable? initializationScope = null;
-        string? idleClaimFallback = null;
-        JsonElement[] idleClaimRefusals = [];
         try
         {
             if (runner is ProductionWorktreeProcessRunner production)
                 runner = production.WithEnvironment(WorktreeProtocolCommand.InitializationEnvironment(repositoryRoot));
             options = ParseArguments(repositoryRoot, arguments);
-            var attachedPath = WorktreePoolCommand.FindAttachedTaskPath(options, runner);
-            if (attachedPath is not null)
-                options = options with { Path = attachedPath };
-            else
+            requestedBase = options.Base;
+            GitWorktreeInventory.FetchRemoteBase(options.Source, options.Base, runner);
+            var baseRevision = VerifyBase(options, runner);
+            var symbolicBase = RunProcess(runner, "git",
+                ["rev-parse", "--symbolic-full-name", "--verify", "--end-of-options", options.Base],
+                options.Source, BoundedProcessRunner.HangDetectionBudget);
+            if (symbolicBase.ExitCode != 0)
+                throw new InvalidOperationException(ProcessError(symbolicBase, "could not resolve base reference"));
+            var baseReference = Encoding.UTF8.GetString(symbolicBase.StandardOutput).Trim();
+            var worktrees = RegisteredWorktreeInventory.ReadWorktrees(options.Source, runner,
+                resolveGitDirectories: false);
+            var main = worktrees.FirstOrDefault()?.Path
+                ?? throw new InvalidOperationException("worktree_inventory_empty");
+            // Expiry can remove the invoking source. Resolve its base first and
+            // anchor every subsequent operation, including fresh fallback, to main.
+            options = options with { Source = main, Base = baseReference.Length == 0 ? baseRevision : baseReference };
+            var currentDirectory = Directory.GetCurrentDirectory();
+            var physicalDirectory = LeanCacheGuard.PhysicalPath(currentDirectory);
+            var comparison = OperatingSystem.IsWindows() ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
+            if (worktrees.Skip(1).Any(tree => string.Equals(physicalDirectory, tree.Path, comparison)
+                || physicalDirectory.StartsWith(Path.TrimEndingDirectorySeparator(tree.Path)
+                    + Path.DirectorySeparatorChar, comparison)))
             {
-                var claimed = WorktreePoolCommand.TryClaim(options, runner, out idleClaimFallback, out idleClaimRefusals);
-                if (claimed is not null) return claimed;
+                invokingDirectory = currentDirectory;
+                Directory.SetCurrentDirectory(main);
             }
-            if (Directory.Exists(options.Path) || RunProcess(runner, "git",
-                ["show-ref", "--verify", "--quiet", $"refs/heads/{options.Branch}"], options.Source,
-                BoundedProcessRunner.HangDetectionBudget).ExitCode == 0)
+            stage = "claim";
+            var prepared = WorktreePoolCommand.PrepareAllocation(options with { Base = baseRevision }, runner);
+            if (!prepared.Success)
+            {
+                MaintenanceLogAdapter.Record("worktree-init", "failed", stage, "claim_failed", "CommandResult");
+                return prepared;
+            }
+            using var preparation = JsonDocument.Parse(prepared.Output);
+            removedWorktrees = preparation.RootElement.GetProperty("removed_worktrees")
+                .EnumerateArray().Select(path => path.GetString()!).ToArray();
+            if (preparation.RootElement.GetProperty("status").GetString() != "no_reusable")
+            {
+                MaintenanceLogAdapter.Record("worktree-init", "succeeded", stage, null, null);
+                return prepared;
+            }
+            stage = "preflight";
+            if (Directory.Exists(options.Path))
             {
                 stage = "recovery";
                 var reused = RecoverInitialization(options, runner);
@@ -142,31 +172,32 @@ internal static class WorktreeCommand
                 }
                 if (LeanPinSet.TryReadWorktree(options.Path, out var reason) is null)
                     throw new InvalidOperationException(reason);
-                return WithIdleClaimEvidence(reused);
+                MaintenanceLogAdapter.Record("worktree-init", "succeeded", "recovery", null, null);
+                return reused;
             }
             if (Environment.GetEnvironmentVariable("WORKTREE_REQUIRE_DISK_CHECK") == "1")
             {
                 stage = "disk";
                 var disk = WorktreeProtocolCommand.CheckCreationDisk(options.Source, options.Path, runner);
                 if (!disk.Success)
-                    return idleClaimFallback is null && idleClaimRefusals.Length == 0 ? disk
-                        : disk with { Error = disk.Error + FailureReceipt(disk.Error) };
+                {
+                    MaintenanceLogAdapter.Record("worktree-init", "failed", stage, "disk_refused", "CommandResult");
+                    return removedWorktrees.Length == 0 ? disk
+                        : disk with { Error = disk.Error + FailureReceipt("disk_refused") };
+                }
                 stage = "preflight";
             }
-            initializationScope = WorktreeInitializationScope.Acquire(options.Source, options.Path, options.Branch);
             halfBuiltRecovered = ValidatePreflight(options, runner);
-            GitWorktreeInventory.FetchRemoteBase(options.Source, options.Base, runner);
-            branchOid = VerifyBase(options, runner);
+            branchOid = baseRevision;
             var pins = LeanPinSet.ReadBase(options.Source, branchOid, runner);
             var donor = ProbeDonor(options, pins, runner);
             branchTracking = WorktreeBranchTracking.Prepare(options, runner);
 
-            creationLock = $"worktree-init:{Guid.NewGuid():N}";
             stage = "branch";
             RunRequired(
                 runner,
                 "git",
-                ["update-ref", "--no-deref", "--create-reflog", "-m", creationLock,
+                ["update-ref", "--no-deref", "--create-reflog",
                     $"refs/heads/{options.Branch}", branchOid, new string('0', branchOid.Length)],
                 options.Source,
                 BoundedProcessRunner.HangDetectionBudget,
@@ -176,13 +207,11 @@ internal static class WorktreeCommand
             RunRequired(
                 runner,
                 "git",
-                ["worktree", "add", "--no-checkout", "--lock",
-                    "--reason", creationLock, options.Path, options.Branch],
+                ["worktree", "add", "--no-checkout", options.Path, options.Branch],
                 options.Source,
                 BoundedProcessRunner.HangDetectionBudget,
                 "git worktree add failed");
             worktreeCreated = true;
-            creationMetadata = WorktreeCreationSafety.FindCreationMetadata(options, creationLock, runner);
             WorktreeCreationSafety.ValidateCreatedWorktree(options, runner);
             stage = "checkout";
             WorktreeCreationSafety.CheckoutCreatedWorktree(options, runner);
@@ -198,51 +227,35 @@ internal static class WorktreeCommand
                 }
             }
             WorktreeCreationSafety.ValidateCreatedWorktree(options, runner);
-            stage = "unlock";
-            RunRequired(
-                runner,
-                "git",
-                ["worktree", "unlock", options.Path],
-                options.Source,
-                BoundedProcessRunner.HangDetectionBudget,
-                "git worktree unlock failed");
-
             var summary = JsonSerializer.Serialize(new
             {
                 @event = "worktree_init",
                 status = "succeeded",
                 branch = options.Branch,
                 path = options.Path,
-                base_revision = options.Base,
+                base_revision = requestedBase,
+                removed_worktrees = removedWorktrees,
                 pin_sha256 = pins.Sha256,
                 donor_behind_base = donor.BehindBase,
                 donor_cache_pin = donor.CachePin,
                 halfbuilt_recovered = halfBuiltRecovered,
                 dotnet_restore = options.SkipRestore ? "skipped" : "restored",
-                idle_claim_fallback = idleClaimFallback,
-                idle_claim_refusals = idleClaimRefusals,
             }) + "\n";
+            MaintenanceLogAdapter.Record("worktree-init", "succeeded", "complete", null, null);
             return new CommandResult(true, summary, RenderDonorWarning(options, donor));
         }
         catch (Exception exception)
         {
+            MaintenanceLogAdapter.Record("worktree-init", "failed", stage, "initialization_failed",
+                exception.GetType().Name);
             var cleanup = string.Empty;
             string? recoveryResult = null;
             try
             {
                 // Either Git command can finish before acknowledging success.
-                if (options is not null && creationLock is not null && branchOid is not null)
+                if (options is not null && branchOid is not null && worktreeCreated)
                 {
-                    creationMetadata ??= WorktreeCreationSafety.FindCreationMetadata(options, creationLock, runner);
-                    if (worktreeCreated || creationMetadata is not null)
-                        cleanup = Cleanup(options, creationLock, creationMetadata, runner);
-                    // The runner has settled its owned commands before returning.
-                    // The common recovery path takes its own exclusive descriptor.
-                    initializationScope?.Dispose();
-                    initializationScope = null;
-                    var recovered = RecoverInitialization(options, runner, creationLock);
-                    if (recovered.Success) recoveryResult = recovered.Output.Trim();
-                    cleanup = recovered.Success ? string.Empty : "initialization worktree retained: " + recovered.Error.Trim();
+                    cleanup = Cleanup(options, runner);
                 }
             }
             catch (Exception cleanupException) when (cleanupException is not OutOfMemoryException)
@@ -254,7 +267,8 @@ internal static class WorktreeCommand
         }
         finally
         {
-            initializationScope?.Dispose();
+            if (invokingDirectory is not null && Directory.Exists(invokingDirectory))
+                Directory.SetCurrentDirectory(invokingDirectory);
         }
 
         // The disk gate keeps its original output/error and exit code; its
@@ -268,27 +282,14 @@ internal static class WorktreeCommand
                 path = options?.Path,
                 target = options?.Path,
                 stage,
-                base_revision = options?.Base,
+                base_revision = requestedBase,
+                removed_worktrees = removedWorktrees,
                 reason,
                 cleanup_error = cleanup.Length == 0 ? null : cleanup.TrimStart(';', ' '),
                 retained_material = new { branch = options?.Branch, path = options?.Path },
                 recovery_result = recoveryResult,
                 recovery_action = "rerun make worktree with the same KIND/NAME/DEST; or reclaim the registered target with make worktree-remove",
-                idle_claim_fallback = idleClaimFallback,
-                idle_claim_refusals = idleClaimRefusals,
             }) + "\n";
-
-        CommandResult WithIdleClaimEvidence(CommandResult result)
-        {
-            if (idleClaimFallback is null && idleClaimRefusals.Length == 0) return result;
-            // Recovery owns its receipt schema. Extend the structured payload,
-            // retaining its status and fields without borrowing JSON storage.
-            var receipt = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(result.Output)
-                ?? throw new InvalidOperationException("worktree recovery receipt is absent");
-            receipt["idle_claim_fallback"] = JsonSerializer.SerializeToElement(idleClaimFallback);
-            receipt["idle_claim_refusals"] = JsonSerializer.SerializeToElement(idleClaimRefusals);
-            return result with { Output = JsonSerializer.Serialize(receipt) + "\n" };
-        }
     }
 
     /// <summary>
@@ -425,14 +426,14 @@ internal static class WorktreeCommand
         var baseRevision = "origin/dev";
         var source = repositoryRoot;
         var skipRestore = false;
-        var preferIdle = false;
+        var allowReuseSelection = false;
 
         for (var index = 0; index < arguments.Count; index++)
         {
             switch (arguments[index])
             {
-                case "--prefer-idle" when !preferIdle:
-                    preferIdle = true;
+                case "--reuse-any" when !allowReuseSelection:
+                    allowReuseSelection = true;
                     break;
                 case "--skip-restore" when !skipRestore:
                     skipRestore = true;
@@ -470,7 +471,7 @@ internal static class WorktreeCommand
             baseRevision,
             System.IO.Path.GetFullPath(source),
             skipRestore,
-            preferIdle);
+            allowReuseSelection);
     }
 
     private static string ReadValue(
@@ -619,23 +620,17 @@ internal static class WorktreeCommand
         return Encoding.UTF8.GetString(result.StandardOutput).Trim();
     }
 
-    private static string Cleanup(
-        WorktreeOptions options,
-        string creationLock,
-        string? creationMetadata,
-        IWorktreeProcessRunner runner)
+    private static string Cleanup(WorktreeOptions options, IWorktreeProcessRunner runner)
     {
-        WorktreeCreationSafety.ValidateCleanupOwnership(options, creationLock, creationMetadata, runner);
         return "initialization material retained for same-DEST recovery or reclaim";
     }
 
     internal static CommandResult RecoverInitialization(WorktreeOptions options,
-        IWorktreeProcessRunner runner, string? token = null)
+        IWorktreeProcessRunner runner)
     {
         var arguments = new List<string> { "recover-init", "--path", options.Path,
             "--branch", options.Branch, "--base", options.Base };
         if (options.SkipRestore) arguments.Add("--skip-restore");
-        if (token is not null) arguments.AddRange(["--expected-token", token]);
         return WorktreeProtocolCommand.Run(options.Source, arguments, runner, Timeout.InfiniteTimeSpan);
     }
 

@@ -1,0 +1,64 @@
+**定理 359.1（固定两原子测试的全源消去）。** 在 $B_*+\mathsf G_{0h}$ 中，对原选中对象 $X$，(358.1) 迫使 343.1 的每个全源泛函 $F_s:E_X\to\mathbb R$ 为零。因此在全部完整输入上
+
+$$
+D^X(a,b)=\bigoplus_s\gamma_s\,\mathrm i[a_s,b_s].
+\tag{359.1}
+$$
+
+证明。复用不带任何迹或自比较前件的 343.1，以及 (351.1) 的原正权 Frobenius 型。对自输入，交换子直接消失，所以仍有
+
+$$
+P_X(a)=q_X(a,D^X(a,a))
+=\sum_sw_s\operatorname{Tr}(a_s^2)F_s(a),
+\qquad F_s(u_X)=0.
+\tag{359.2}
+$$
+
+固定任意完整 Jordan 框架 $e_1,\ldots,e_N$，其中 $\sum_ie_i=u_X$、$N=\operatorname{rank}E_X>p_*\ge2$。$N$ 是原 Jordan 秩，不是实维数或中心数。记 $s(i)$ 为 $e_i$ 所属中心，定义纯证明坐标
+
+$$
+A_{ij}:=w_{s(i)}F_{s(i)}(e_j),\qquad
+d_i:=A_{ii},\qquad S:=\sum_id_i.
+\tag{359.3}
+$$
+
+原右单位在正常形中给的 $F_s(u_X)=0$ 使每行满足
+
+$$
+\sum_jA_{ij}=w_{s(i)}F_{s(i)}\!\left(\sum_je_j\right)=0.
+\tag{359.4}
+$$
+
+对 $i\ne j$，展开 (359.2) 得
+
+$$
+P_X(e_i+\lambda e_j)
+=d_i+\lambda A_{ij}+\lambda^2A_{ji}+\lambda^3d_j.
+\tag{359.5}
+$$
+
+若 $s(i)\ne s(j)$，这是两个中心各自的平方长度贡献。若二者同块，则 $A_{ij}=d_j$、$A_{ji}=d_i$，右边为 $(1+\lambda^2)(d_i+\lambda d_j)$，同样等于该单块的直接展开。故本式没有将同块原子偷换成独立中心，也没有丢掉经典块或跨中心来源。这里只在 $\lambda=1/2$ 消费 (358.1)，不假设其他比例也被测试。
+
+两个有序对 $(e_i,e_j)$ 与 $(e_j,e_i)$ 分别给
+
+$$
+\begin{aligned}
+8d_i+4A_{ij}+2A_{ji}+d_j&=0,\\
+d_i+2A_{ij}+4A_{ji}+8d_j&=0.
+\end{aligned}
+\tag{359.6}
+$$
+
+消元得到 $A_{ij}=d_j-\tfrac52d_i$。代回每行的 (359.4)，并对全部行求和：
+
+$$
+0=S-\tfrac52(N-1)d_i,\qquad
+0=\left(N-\tfrac52(N-1)\right)S
+=\tfrac{5-3N}{2}S.
+\tag{359.7}
+$$
+
+$N\ge3$，故 $5-3N\ne0$，于是 $S=0$、每个 $d_i=0$，再由 (359.6) 得全部 $A_{ij}=0$。
+
+现在任取完整输入 $b\in E_X$，选其完整谱框架，写 $b=\sum_j\beta_je_j$。对任意目标中心 $s$，该框架在 $s$ 中有至少一颗 $e_i$；上述结论给 $w_sF_s(e_j)=A_{ij}=0$ 对每个 $j$ 成立。因为 $w_s>0$，$F_s(b)=\sum_j\beta_jF_s(e_j)=0$。$s,b$ 任意，故每个全源 $F_s$ 为零，得 (359.1)。框架仅用于证明原关系的推论，不是新实际读口或公理选择。∎
+

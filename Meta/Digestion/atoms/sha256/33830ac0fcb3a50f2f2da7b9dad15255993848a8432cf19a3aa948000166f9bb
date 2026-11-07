@@ -1,0 +1,39 @@
+**定理 C-82.2（纤维层面的曲率取等与最大纠缠存在性）。** 固定 C-76 的
+$(X,Y,Z)$，以下三项等价：
+
+$$
+\begin{gathered}
+X=Y=r/2;\\
+\text{存在内部 }(\kappa,\chi)\text{ 使 }\mathcal K=2/r;\\
+\text{存在内部条件底面纯态使 }\mathcal C=1.
+\end{gathered}
+\tag{C82.5}
+$$
+
+在这条对称纤维上，$\chi=\pi\bmod2\pi$ 的每个内部 $\kappa$ 都有 $\mathcal C=1$；
+曲率则在全部内部点取等，包括 $\mathcal C=0$ 的点。
+
+证明。第一项与第二项的等价由定理 C-79.3 的完整等号条件给出。
+若 $\mathcal C=1$，式 (C76.8) 使
+$\mathsf B\mathsf B^\dagger=I_2/2$。
+由于 $\mathsf B$ 可逆，由
+$\mathsf B\mathsf B^\dagger=I_2/2$ 左乘 $\mathsf B^{-1}$ 再右乘 $\mathsf B$，
+得 $\mathsf B^\dagger\mathsf B=I_2/2$，因此另一侧约化态也为 $I_2/2$。
+两侧占位为一的概率分别是
+
+$$
+(\rho_A)_{11}=\frac{p_1+p_{13}}r=\frac Xr,\qquad
+(\rho_B)_{11}=\frac{p_3+p_{13}}r=\frac Yr.
+$$
+
+二者必须均为 $1/2$，故 $X=Y=r/2$。
+反之，在对称纤维中 $a=\kappa$、$b=L-\kappa$，
+选 $\chi=\pi$，行列式模为 $(a+b)/r=L/(2L)=1/2$，所以
+
+$$
+\mathcal C=\frac{2}{r}|-\kappa-(L-\kappa)|=1.
+$$
+
+每个内部 $\kappa$ 均可作此选择，且可由前四相位为零、最后相位为 $\pi$ 的实际五态代表实现。
+这证明存在性的反向及整条相位经线结论。证毕。
+

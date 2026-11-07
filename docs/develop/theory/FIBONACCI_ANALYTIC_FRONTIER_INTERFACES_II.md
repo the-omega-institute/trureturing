@@ -1497,3 +1497,515 @@ $$
 本节结论只关于全实中心函数，不推出 §481 所述被选整数来源上的下界，也不推出 RH 或每个 $n>5040$ 的严格 Robin 不等式。
 
 ## 追加锚（本行以下为增补区）
+
+## 488. RH 下原前向价格核的幂次均方下界
+
+沿用 §481 的 $E,H_x,w,\rho_x$、(481.1) 的 $\mathcal T$，以及 §487 的记号：全节假设 RH，零点记为 $1/2\pm i\gamma$（$\gamma>0$），$m_\gamma$ 为重数，不同纵坐标只列一次；$N(T)=\sum_{0<\gamma\le T}m_\gamma$。令 $f(y)=\mathcal T(e^y)$（$y>\log3$），$f(y)=0$（$y\le\log3$）。§487 给出 $\mathcal T=\Omega_\pm(\log\log x)$；本节给出 $|\mathcal T|$ 的一个幂次下界。
+
+经典输入如下，均只作为假设使用：von Koch 界 $E(x)=O(\sqrt x\log^2x)$；配对 Hadamard 展开 (487.2)；Riemann–von Mangoldt 公式给出的局部零点计数
+
+$$
+N(T+1)-N(T)\ll\log(2+T);
+\tag{488.1}
+$$
+
+以及 Montgomery 函数
+
+$$
+F(\alpha,T)=\frac{2\pi}{T\log T}\sum_{0<\gamma,\gamma'\le T}m_\gamma m_{\gamma'}T^{i\alpha(\gamma-\gamma')}\frac4{4+(\gamma-\gamma')^2}
+$$
+
+的平均下界
+
+$$
+\liminf_{T\to\infty}\int_{17}^{19}F(\alpha,T)\,d\alpha\ge\frac23 .
+\tag{488.2}
+$$
+
+(488.2) 是 Carneiro–Chandee–Chirre–Milinovich [On Montgomery's pair correlation conjecture: a tale of three integrals, J. Reine Angew. Math. (2022)] Theorem 9 在 $b=17$、$\ell=2$ 时的结论，只假设 RH；该文指出 $\ell\le2$ 的下界情形源自 Goldston–Gonek [A note on the number of primes in short intervals, Proc. Amer. Math. Soc. 108 (1990)]。
+
+**引理 488.1（高斯边界公式）。** 令 $q_M(v)=\dfrac{M}{\sqrt{2\pi}}e^{-M^2v^2/2}$，$A_M(y)=\int_0^\infty f(u)q_M(y-u)\,du$，$G_M(y)=\sum_{\gamma>0}m_\gamma e^{-\gamma^2/(2M^2)}\cos(\gamma y)$。则对 $M,y\ge1$，
+
+$$
+A_M(y)=-G_M(y)+O\bigl(M^3e^{-y/6}\bigr),
+\tag{488.3}
+$$
+
+隐含常数与 $M,y$ 无关。
+
+证明。由 von Koch 界、$0<\rho_x(u)\le1$ 与 $H_x\le x$，$|f(y)|\ll e^{y/5}(1+y)^2$。由命题 481.1、(487.2) 与 $\xi'/\xi$ 和 $\zeta'/\zeta$ 的关系，在 $\Re s>1/2$ 上
+
+$$
+\mathcal F(s):=\int_0^\infty f(y)e^{-sy}\,dy=-\sum_{\gamma>0}m_\gamma\frac{s}{s^2+\gamma^2}+J(s),
+$$
+
+其中 $J(s)=R(s)+\frac1{2(s+1/2)}-\frac14\log\pi+\frac14\frac{\Gamma'}{\Gamma}\bigl(\frac{s+1/2}2\bigr)$ 在 $\Re s>-1/5$ 全纯；由命题 487.1（取 $\delta=1/30$）与 digamma 的条带估计（其自变量实部至少 $1/6$），$|J(\sigma+it)|\ll(1+|t|)^2$ 于 $-1/6\le\sigma\le3/4$。取 $c=3/4$，高斯反演 $q_M(v)=\frac1{2\pi i}\int_{(c)}e^{sv+s^2/(2M^2)}\,ds$ 与绝对 Fubini 给出 $A_M(y)=\frac1{2\pi i}\int_{(c)}\mathcal F(s)e^{sy+s^2/(2M^2)}\,ds$。$J$ 的部分移到 $\Re s=-1/6$：被积函数全纯，水平边上高斯衰减压过多项式增长，所得积分至多 $Ce^{-y/6}\int(1+|t|)^2e^{-t^2/(2M^2)}dt\ll M^3e^{-y/6}$。配对极点部分逐项反演：令 $S_2=\sum_{\gamma>0}m_\gamma\gamma^{-2}$，由 (488.1) 它有限。在 $s=c+it$ 上按 $\gamma=2|s|$ 分开：低频配对项以 $2/c$ 为界，个数受 $N(2|s|)\le4|s|^2S_2$ 控制；高频部分为 $O(|s|S_2)$。故每个有限配对部分和受 $C(1+|t|)^2$ 控制，乘以高斯因子后可积，由控制收敛可逐项交换。单项给出 $\int_0^\infty\cos(\gamma u)q_M(y-u)\,du=e^{-\gamma^2/(2M^2)}\cos(\gamma y)-B_\gamma(y)$，其中半直线修正 $B_\gamma(y)=\int_0^\infty\cos(\gamma v)q_M(y+v)\,dv$；两次分部积分并用 $q_M''(w)\ge0$（$w\ge y\ge1$，$M\ge1$）得 $|B_\gamma(y)|\le2M^2yq_M(y)/\gamma^2$，故 $\sum_\gamma m_\gamma|B_\gamma(y)|\ll M^3e^{-y/6}$。合并即得 (488.3)。证毕。
+
+**引理 488.2（零点和的窗口均方）。** 令 $L=\log M$，$C_M(y)=\sum_{0<\gamma\le M}m_\gamma\cos(\gamma y)$，$J=[16L,20L]$。则对充分大的 $M$，
+
+$$
+\int_J C_M(y)^2\,dy\gg ML^2 .
+\tag{488.4}
+$$
+
+证明。令 $S_M(y)=\sum_{0<\gamma\le M}m_\gamma e^{i\gamma y}$，$h(v)=e^{-2|v|}$，则 $\int h=1$，$\int h(v)e^{itv}dv=4/(4+t^2)$。展开有限和得
+
+$$
+(h*|S_M|^2)(y)=\frac{ML}{2\pi}F\Bigl(\frac yL,M\Bigr),
+$$
+
+故由 (488.2)，$\int_{17L}^{19L}(h*|S_M|^2)\,dy=\frac{ML^2}{2\pi}\int_{17}^{19}F(\alpha,M)\,d\alpha\gg ML^2$。由 $C_M^2=\frac12|S_M|^2+\frac12\Re(S_M^2)$，交叉项 $h*\Re(S_M^2)$ 的绝对值至多 $\sum_{\gamma,\gamma'\le M}m_\gamma m_{\gamma'}\frac4{4+(\gamma+\gamma')^2}$；按 $\max(\gamma,\gamma')$ 的二进尺度 $2^j$ 分组，每组贡献 $O(2^{-2j}N(2^{j+1})^2)=O((j+1)^2)$，总和为 $O(L^3)$，在长为 $2L$ 的区间上积分损失 $O(L^4)$。于是 $\int_{17L}^{19L}(h*C_M^2)\,dy\gg ML^2$。对 $y\in[17L,19L]$ 与 $z\notin J$，$|y-z|\ge L$，且 $\|C_M\|_\infty\le N(M)\ll ML$，故 $z\notin J$ 的贡献总计 $O(N(M)^2\cdot L\cdot e^{-2L})=O(L^3)$；$z\in J$ 的贡献至多 $\int_JC_M^2$（$h$ 的质量为 $1$）。由此得 (488.4)。证毕。
+
+**定理 488.3（宽窗口幂次均方下界）。** 设 RH、von Koch 界、(487.2)、(488.1) 与 (488.2)。则存在 $c>0$ 与 $M_0$，使对 $M\ge M_0$
+
+$$
+\int_{e^{-2}M^{16}}^{e^2M^{20}}\mathcal T(x)^2\,\frac{dx}x\ge cM(\log M)^2 .
+\tag{488.5}
+$$
+
+因而存在 $c_1>0$，使 $|\mathcal T(x)|\ge c_1x^{1/40}\sqrt{\log x}$ 对任意大的 $x$ 成立；等价地，$|T_\psi(x,x^{4/5})|\ge c_1x^{9/8}\sqrt{\log x}$ 对任意大的 $x$ 成立。
+
+证明。**第一步：从硬截断到高斯权。** 取 $\Delta=M^{1/4}$ 与偶的光滑截断 $\chi_M$：$0\le\chi_M\le1$，$|t|\le M$ 时 $\chi_M=1$，$|t|\ge M+\Delta$ 时 $\chi_M=0$，过渡带上 $|\chi_M^{(r)}|\ll_r\Delta^{-r}$。令 $b_M(t)=e^{t^2/(2M^2)}\chi_M(t)$，$k_M(v)=\frac1{2\pi}\int b_M(t)e^{itv}\,dt$。则 $\|b_M\|_\infty\le e^2$；由 Leibniz 公式，$\|b_M^{(5)}\|_1\ll\Delta^{-4}+M^{-4}\ll M^{-1}$，五次分部积分给出 $\int_{|v|\ge1}|k_M|\ll M^{-1}$。又 $k_M*G_M=\sum_\gamma m_\gamma\chi_M(\gamma)\cos(\gamma y)$，它与 $C_M$ 只在过渡带不同；由 (488.1)，$N(M+\Delta)-N(M)\ll\Delta L$，故 $\|k_M*G_M-C_M\|_\infty\ll M^{1/4}L$。令 $J^+=[16L-1,20L+1]$，$g_M=G_M\mathbf 1_{J^+}$。由 $\|G_M\|_\infty\ll ML$ 与 $k_M$ 的尾部界，在 $J$ 上 $|k_M*g_M-k_M*G_M|\ll L$。结合 (488.4)，
+
+$$
+\|k_M*g_M\|_{L^2(J)}\ge c\sqrt ML-O(M^{1/4}L^{3/2})-O(L^{3/2})\gg\sqrt ML .
+$$
+
+由 Plancherel，$\|k_M*g_M\|_2\le\|b_M\|_\infty\|g_M\|_2\le e^2\|g_M\|_2$，故 $\|G_M\|_{L^2(J^+)}\gg\sqrt ML$。
+
+**第二步：回到 $f$。** 在 $J^+$ 上 (488.3) 的误差为 $O(M^3e^{-(16L-1)/6})=O(M^{1/3})$，其 $L^2(J^+)$ 范数为 $o(\sqrt ML)$，故 $\|A_M\|_{L^2(J^+)}\gg\sqrt ML$。令 $J^{++}=[16L-2,20L+2]$，$f_M=f\mathbf 1_{J^{++}}$。对 $y\in J^+$，$u\notin J^{++}$ 时 $|u-y|\ge1$，由 $|f(u)|\ll e^{u/5}(1+u)^2$ 与高斯衰减，$|A_M(y)-(q_M*f_M)(y)|\ll M^4L^2e^{-M^2/8}$，在所需尺度上可忽略。由 $q_M\ge0$、$\|q_M\|_1=1$ 与 Young 不等式，$\|q_M*f_M\|_2\le\|f_M\|_2$。于是 $\int_{J^{++}}f^2\gg ML^2$，换元 $x=e^y$ 即得 (488.5)。
+
+**第三步：取点。** $J^{++}$ 的长度为 $4L+4$，故存在 $u\in J^{++}$ 使 $f(u)^2\gg ML^2/(4L+4)\gg ML$。令 $x=e^u$，则 $e^{-2}M^{16}\le x\le e^2M^{20}$，$x^{1/40}\sqrt{\log x}\le e^{1/20}M^{1/2}\sqrt{20L+2}\ll\sqrt{ML}\ll|\mathcal T(x)|$；$M\to\infty$ 时这些 $x$ 任意大。最后由 $T_\psi(x,x^{4/5})=x^{11/10}\mathcal T(x)$ 与 $\frac{11}{10}+\frac1{40}=\frac98$ 得最后一式。证毕。
+
+**命题 488.4（二倍区间均方上界）。** 设 RH，并设短区间均方估计 $\int_X^{2X}|E((1+\theta)x)-E(x)|^2dx\ll\theta X^2\log^2(2/\theta)$（$0<\theta\le1$；Saffari–Vaughan，见 Chan [More precise pair correlation of zeros and primes in short intervals, J. London Math. Soc. 68 (2003)] 式 (2)）。则
+
+$$
+\int_X^{2X}\mathcal T(x)^2\,\frac{dx}x\ll X^{1/5}(\log X)^2 .
+\tag{488.6}
+$$
+
+证明。令 $D(x,\theta)=E((1+\theta)x)-E(x)$。换元 $u=\theta x$ 并由 $0<\rho_x(u)\le1$ 与 Cauchy–Schwarz，
+
+$$
+\frac{\mathcal T(x)^2}x\le\frac x{H_x^3}\int_0^{x^{-1/5}}D(x,\theta)^2\,d\theta .
+$$
+
+在 $[X,2X]$ 上积分，交换次序并代入 Selberg 型估计，右边至多 $\ll X^{-7/5}\int_0^{X^{-1/5}}\theta X^2\log^2(2/\theta)\,d\theta\ll X^{1/5}(\log X)^2$。证毕。
+
+**范围说明。** 定理 488.3 把 §487 的 $\log\log x$ 提升为 $|\mathcal T|$ 的幂次下界 $x^{1/40}\sqrt{\log x}$；命题 488.4 说明在二倍区间上 $\mathcal T$ 的均方至多 $X^{1/5}(\log X)^2$，即二次平均意义下的量级不超过 $x^{1/10}\log x$。以下仍未决：二倍区间上的下界 $\int_X^{2X}\mathcal T^2dx/x\gg X^{1/5}\log X$（Chan 前引文讨论的是普通短区间方差渐近与强对相关的等价，不直接涉及本核的加权下界）；带符号的幂次 $\Omega_\pm$——均方只控制 $|\mathcal T|$，而 §487 的 Dirichlet 同步只保证 $\log y$ 量级；以及 §481 所述被选整数来源上的下界。
+
+**范围与文献归属。** 经典输入：RH、von Koch 界、(487.2)、(488.1)、(488.2)、Saffari–Vaughan 短区间均方上界；高斯反演、Plancherel 与 Young 不等式。(488.2) 及其 $\ell\le2$ 情形的来源见上文；de la Bretèche–Fiorilli [Math. Ann. 381 (2021)] 的平滑短区间矩下界要求偶的内层平滑与非负 Fourier 变换，不能直接用于本核的单侧、随 $x$ 变化的权。本节的 `repo-derived` 内容：引理 488.1 对本核的高斯边界公式（含半直线修正与余项移线）；引理 488.2 由 (488.2) 推出的零点余弦和窗口均方下界；定理 488.3 把该下界运输到 $\mathcal T$ 的幂次均方下界与 $\Omega(x^{1/40}\sqrt{\log x})$；命题 488.4 对本核的二倍区间均方上界。本节结论只关于全实中心函数，不推出 §481 所述被选整数来源上的下界，也不推出 RH 或每个 $n>5040$ 的严格 Robin 不等式。
+
+## 追加锚（本行以下为增补区）
+
+## 489. 原前向价格核的二倍区间均方渐近
+
+沿用 §481 的 $E,H_x,w,\rho_x$ 与 (481.1) 的 $\mathcal T$，其中 $H_x=x^{4/5}$。记
+
+$$
+D_u(x)=E(x+u)-E(x),\qquad B_h(x)=\int_0^hD_u(x)\,du,\qquad P_h(x)=\frac{B_h(x)}{h^2},\qquad V(Y,h)=\int_1^YD_h(x)^2\,dx .
+$$
+
+本节只使用以下三项作为假设。von Koch 界：$E(x)\ll\sqrt x\log^2x$。命题 488.4 的短区间均方上界：存在 $C,X_0$，使对 $X\ge X_0$、$0<\theta\le1$，
+
+$$
+\int_X^{2X}\bigl(E((1+\theta)x)-E(x)\bigr)^2\,dx\le C\theta X^2\log^2(2/\theta).
+\tag{489.1}
+$$
+
+以及在 $h\asymp Y^{4/5}$ 附近一致的普通短区间方差渐近：
+
+$$
+\sup_{Y^{3/4}\le h\le Y^{7/8}}\left|\frac{V(Y,h)}{Yh\log(Y/h)}-1\right|\longrightarrow0\qquad(Y\to\infty).
+\tag{489.2}
+$$
+
+在 RH 下，(489.2) 由 Montgomery 强对相关猜想推出：Goldston–Montgomery [Pair correlation of zeros and primes in short intervals, Progr. Math. 70 (1987)] 证明了普通方差渐近与强对相关的等价；见 Goldston [Notes on pair correlation of zeros and prime numbers, arXiv:math/0412313] §9 定理 7 与式 (9.3)，那里的渐近对相对长度 $h/Y\in[Y^{-B_2},Y^{-B_1}]$（$0<B_1\le B_2<1$ 固定）一致成立，取 $B_1=1/8$、$B_2=1/4$ 即给出 (489.2)。指数 $3/4$、$7/8$ 可换为任意 $4/5\mp\eta$（$0<\eta<1/5$）。(489.2) 是本节额外采用的一致方差渐近假设；(488.2) 在 RH 下已知，它是固定 $\alpha$ 区间 $[17,19]$ 上的平均下界，而二倍 $x$ 区间对应的 $\alpha$ 区间长度为 $\log2/\log T$，故 (488.2) 不能替代这里所需的局部渐近信息。
+
+**引理 489.1（去掉价格权）。** 令 $\mathcal T_0(x)=\sqrt x\,P_{H_x}(x)$。则 $\mathcal T(x)-\mathcal T_0(x)=O(\log^2x)$。
+
+证明。对 $x\ge3$，$(\log w)'(x)=-\frac2x+\frac1{x(1+\log x)}-\frac2{x\log x}$，其中 $0<-x(\log w)'(x)=2+\frac2{\log x}-\frac1{1+\log x}<4$。令 $A_x(u)=-\int_x^{x+u}(\log w)'(v)\,dv$，则 $\rho_x(u)=e^{-A_x(u)}$ 且 $0\le A_x(u)\le4\log(1+u/x)\le4u/x$，故 $0\le1-\rho_x(u)\le A_x(u)\le4u/x$（$0\le u\le H_x$）。由 von Koch 界，$|D_u(x)|\ll\sqrt x\log^2x$。于是 $|\mathcal T-\mathcal T_0|\ll\frac{\sqrt x}{H_x^2}\int_0^{H_x}\sqrt x\log^2x\cdot\frac{4u}x\,du\ll\log^2x$。证毕。
+
+由此 $\|\mathcal T-\mathcal T_0\|_{L^2([X,2X],dx/x)}=O(\log^2X)$，且 $\int_X^{2X}\mathcal T_0^2\,dx/x=\int_X^{2X}P_{H_x}(x)^2\,dx$。
+
+以下引理 489.2–489.3 是经典方差转移方法（由普通方差经极化得协方差，再作三角平均）在本节长度尺度上的实现。
+
+**引理 489.2（固定长度的协方差）。** 固定 $1\le a<b\le2$、$c>0$，令 $h=cX^{4/5}$、$\ell_X=\log(X/h)$。对固定 $s,t\in[0,1]$，
+
+$$
+\frac1{Xh\ell_X}\int_{aX}^{bX}D_{sh}(x)D_{th}(x)\,dx\longrightarrow(b-a)\min(s,t).
+$$
+
+证明。对固定的正倍数 $q$ 与 $k=qh$，所需端点均为 $Y=dX+O(h)$（$d\in[1,2]$），故 $k/Y^{3/4}\asymp X^{1/20}\to\infty$、$k/Y^{7/8}\asymp X^{-3/40}\to0$，$k$ 最终落在 (489.2) 的范围内，且每个端点处的误差 $o(Yk\log(Y/k))$ 都是 $o(Xh\ell_X)$。对固定 $s>0$，$\int_{aX}^{bX}D_{sh}^2=V(bX,sh)-V(aX,sh)=(b-a)Xsh\ell_X+o(Xh\ell_X)$，因为固定倍数的 $X^{4/5}$ 最终落在 (489.2) 的范围内，且 $\log(aX/(sh))=\ell_X+O(1)$。设 $s>t>0$。由恒等式 $D_{sh}(x)-D_{th}(x)=D_{(s-t)h}(x+th)$，$\int_{aX}^{bX}(D_{sh}-D_{th})^2=V(bX+th,(s-t)h)-V(aX+th,(s-t)h)=(b-a)X(s-t)h\ell_X+o(Xh\ell_X)$。极化恒等式 $2D_{sh}D_{th}=D_{sh}^2+D_{th}^2-(D_{sh}-D_{th})^2$ 给出极限 $\frac{b-a}2(s+t-|s-t|)=(b-a)\min(s,t)$。$s=t$ 或 $st=0$ 的情形直接成立。证毕。
+
+**引理 489.3（固定长度的三角平均）。** 在引理 489.2 的记号下，
+
+$$
+\int_{aX}^{bX}P_h(x)^2\,dx\sim\frac{(b-a)X}{3h}\log(X/h).
+$$
+
+证明。令 $U=X^{31/40}$，最终 $U<h$。由 Cauchy–Schwarz 与换元 $u=x\theta$，再用 (489.1)，
+
+$$
+\int_X^{2X}B_U(x)^2\,dx\le2UX\int_0^{U/X}\!\!\int_X^{2X}\bigl(E((1+\theta)x)-E(x)\bigr)^2\,dx\,d\theta\ll UX^3\int_0^{U/X}\theta\log^2(2/\theta)\,d\theta\ll XU^3\log^2X,
+$$
+
+它与 $Xh^3\ell_X$ 之比为 $O(X^{-3/40}\log X)\to0$。对 $u\in[U,h]$，(489.2) 给出 $\int_{aX}^{bX}D_u^2\ll Xu\log X$；故当 $sh,th\ge U$ 时，协方差除以 $Xh\ell_X$ 后受 $C\sqrt{st}$ 控制。在 $[0,1]^2$ 上对 $\mathbf 1_{\{s,t\ge U/h\}}$ 加权的协方差用引理 489.2 与控制收敛，得
+
+$$
+\frac1{Xh^3\ell_X}\int_{aX}^{bX}\Bigl(\int_U^hD_u(x)\,du\Bigr)^2dx\longrightarrow(b-a)\int_0^1\!\!\int_0^1\min(s,t)\,ds\,dt=\frac{b-a}3 .
+$$
+
+由 $L^2$ 三角不等式补回 $[0,U]$ 段，得 $\int_{aX}^{bX}B_h^2\sim\frac{b-a}3Xh^3\ell_X$；除以 $h^4$ 即得结论。证毕。
+
+**引理 489.4（移动长度）。** 令 $S_X=X^{1/5}\log X$。则
+
+$$
+\int_X^{2X}P_{H_x}(x)^2\,dx\sim\frac{2^{1/5}-1}3\,S_X .
+$$
+
+证明。固定正整数 $n$，令 $\eta=1/n$、$a_j=1+j\eta$、$I_j=[a_jX,a_{j+1}X]$、$h_j=(a_jX)^{4/5}$，并在 $I_j$ 上令 $P^{(n)}_X=P_{h_j}$。由引理 489.3（取 $c=a_j^{4/5}$，$\ell_X\sim\frac15\log X$），
+
+$$
+\frac{\|P^{(n)}_X\|_{L^2[X,2X]}^2}{S_X}\longrightarrow C_n=\frac1{15n}\sum_{j=0}^{n-1}a_j^{-4/5}.
+$$
+
+令 $H_0=X^{4/5}$、$\delta_j=(a_{j+1}^{4/5}-a_j^{4/5})H_0\le\frac45\eta H_0$；在 $I_j$ 上 $h_j\le H_x\le h_j+\delta_j$，且有分解
+
+$$
+P_{H_x}(x)-P_{h_j}(x)=\bigl(H_x^{-2}-h_j^{-2}\bigr)B_{h_j}(x)+H_x^{-2}\int_{h_j}^{H_x}D_u(x)\,du .
+$$
+
+第一项的 $L^2$ 范数至多 $C\eta\|P^{(n)}_X\|_2$。对第二项，由 Cauchy–Schwarz，$\int_{I_j}\bigl|\int_{h_j}^{H_x}D_u\,du\bigr|^2dx\le\delta_j\int_{h_j}^{h_j+\delta_j}\int_{I_j}D_u^2\,dx\,du$；再由 $\int_{I_j}D_u^2\le V(2X,u)\ll XH_0\log X$（$u\asymp H_0$），它在 $I_j$ 上的平方范数为 $O(H_0^{-4}\cdot\eta H_0\cdot\eta H_0\cdot XH_0\log X)=O(\eta^2S_X)$；对 $n$ 个格子求和得 $O(\eta S_X)$。故 $\limsup_{X\to\infty}\|P_{H_\cdot}-P^{(n)}_X\|_2/\sqrt{S_X}\ll n^{-1/2}$，常数与 $n$ 无关。又 $C_n\le\frac1{15}$ 且 $C_n\to C:=\frac1{15}\int_1^2v^{-4/5}\,dv=\frac{2^{1/5}-1}3$。令 $A_X=\|P_{H_\cdot}\|_2/\sqrt{S_X}$，由反三角不等式，对每个固定 $n$，$\limsup_{X\to\infty}|A_X-\sqrt{C_n}|\le Kn^{-1/2}$，$K$ 与 $n$ 无关；于是 $\limsup_{X\to\infty}|A_X-\sqrt C|\le Kn^{-1/2}+|\sqrt{C_n}-\sqrt C|$，令 $n\to\infty$ 得 $A_X\to\sqrt C$。证毕。
+
+**定理 489.5（二倍区间均方渐近）。** 设 von Koch 界、(489.1) 与 (489.2)。则
+
+$$
+\lim_{X\to\infty}\frac1{X^{1/5}\log X}\int_X^{2X}\mathcal T(x)^2\,\frac{dx}x=\frac{2^{1/5}-1}3 .
+\tag{489.3}
+$$
+
+因而对每个 $0<c<1/\sqrt{15}$，所有充分大的 $X$ 都有 $x\in[X,2X]$ 使
+
+$$
+|\mathcal T(x)|\ge c\,x^{1/10}\sqrt{\log x}.
+\tag{489.4}
+$$
+
+证明。由引理 489.1，在 $L^2([X,2X],dx/x)$ 中 $\mathcal T$ 与 $\mathcal T_0$ 相差 $O(\log^2X)=o(\sqrt{S_X})$；再由引理 489.4 得 (489.3)。又 $W_X=\int_X^{2X}x^{1/5}\log x\,\frac{dx}x\sim5(2^{1/5}-1)X^{1/5}\log X$，故 $\int_X^{2X}\mathcal T^2\,dx/x\,\big/\,W_X\to1/15$。固定 $c<1/\sqrt{15}$，取 $X_0(c)$ 使 $X\ge X_0(c)$ 时该比值大于 $c^2$。若某个 $X\ge X_0(c)$ 的 $[X,2X]$ 上处处 $|\mathcal T(x)|<cx^{1/10}\sqrt{\log x}$，则 $\mathcal T(x)^2<c^2x^{1/5}\log x$，该比值至多 $c^2$，矛盾。证毕。
+
+**范围说明。** 定理 489.5 给出 $\mathcal T$ 在每个充分大二倍区间上的均方渐近与精确主项常数，把 §488 的宽窗口下界 $x^{1/40}\sqrt{\log x}$ 提到自然尺度 $x^{1/10}\sqrt{\log x}$，并与命题 488.4 的上界在 $X^{1/5}$ 的幂次上相符；代价是额外假设 (489.2)，它在 RH 下由强对相关推出。(489.3) 只控制 $|\mathcal T|$，不给出带符号的幂次 $\Omega_\pm$；也不涉及 §481 所述被选整数来源上的下界。
+
+**范围与文献归属。** 经典输入：von Koch 界；Saffari–Vaughan 短区间均方上界 (489.1)（见 Chan [More precise pair correlation of zeros and primes in short intervals, J. London Math. Soc. 68 (2003)] 式 (2)）；Goldston–Montgomery 的方差—对相关等价给出的 (489.2)。引理 489.2–489.3 所用的极化与三角平均是经典的方差转移方法。本节的 `repo-derived` 内容：引理 489.1 对原价格权的去除；引理 489.3–489.4 中对移动长度 $H_x=x^{4/5}$ 的转移，包括小长度截断与先 $X$ 后 $n$ 的双重极限；定理 489.5 对原核的渐近式 (489.3)、常数 $(2^{1/5}-1)/3$ 与逐二倍区间的取点结论 (489.4)。
+
+## 追加锚（本行以下为增补区）
+
+## 490. 一般指数与 $L^1$ 观测剖面的移动价格核均方定律
+
+沿用 §481 的 $w,\rho_x$。本节令 $E:[1,\infty)\to\mathbb R$ 为局部有界的 Borel 可测函数；算术应用取 $E=\psi-\mathrm{id}$。固定 $0<\theta<1$ 与实值 $g\in L^1(0,1)$（取 Borel 代表元），令 $H_x=x^\theta$，并记
+
+$$
+D_u(x)=E(x+u)-E(x),\qquad V(Y,h)=\int_1^YD_h(x)^2\,dx,
+$$
+
+$$
+F_{h,g}(x)=\int_0^1g(s)D_{sh}(x)\,ds,\qquad P_{h,g}(x)=\frac1{h^2}\int_0^hg(u/h)D_u(x)\,du=\frac{F_{h,g}(x)}h .
+$$
+
+**移动剖面核**为
+
+$$
+\mathcal T_{\theta,g}(x)=\frac{\sqrt x}{H_x^2}\int_0^{H_x}g(u/H_x)\,D_u(x)\,\rho_x(u)\,du .
+\tag{490.1}
+$$
+
+取 $\theta=4/5$、$g\equiv1$ 时，$\mathcal T_{4/5,1}$ 就是 (481.1) 的 $\mathcal T$，$P_{h,1}$ 就是 §489 的 $P_h$。令
+
+$$
+G_g(r)=\int_r^1g(s)\,ds,\qquad Q(g)=\int_0^1\!\!\int_0^1g(s)g(t)\min(s,t)\,ds\,dt,\qquad S_X=X^{1-\theta}\log X .
+$$
+
+本节唯一的数论型假设是指数带上一致的普通方差渐近：对某对 $0<\alpha<\theta<\beta<1$，
+
+$$
+\sup_{Y^\alpha\le h\le Y^\beta}\left|\frac{V(Y,h)}{Yh\log(Y/h)}-1\right|\longrightarrow0\qquad(Y\to\infty).
+\tag{490.2}
+$$
+
+对 $E=\psi-\mathrm{id}$，在 RH 下 (490.2) 由 Montgomery 强对相关猜想推出。Goldston [Notes on pair correlation of zeros and prime numbers, arXiv:math/0412313] §9 定理 7（p.18）对比例窗参数 $\delta$ 给出 (9.1) 的一致渐近，一致范围为 $\delta\in[Y^{-B_2},Y^{-B_1}]$（$0<B_1\le B_2<1$ 固定）；其后经 Saffari–Vaughan 转移得到加法窗的方差律 (9.3)（p.19），在 $h/Y\in[Y^{-B_2},Y^{-B_1}]$ 上一致。取 $B_1=1-\beta$、$B_2=1-\alpha$ 即得 (490.2)。因此对算术情形，任意 $0<\alpha<\theta<\beta<1$ 都可用；(489.2) 是 $\alpha=3/4$、$\beta=7/8$ 的情形。
+
+**引理 490.1（较短增量与移动增量的一致界）。** 设 (490.2)，令 $h_0=X^\theta$。
+
+(i) 对固定 $c>0$ 与 $h=cX^\theta$，存在常数 $C$，使对所有充分大的 $X$ 与所有 $0\le u\le h$，
+
+$$
+\int_X^{2X}D_u(x)^2\,dx\le C\,Xh\log(X/h).
+$$
+
+(ii) 存在常数 $C$，使对所有充分大的 $X$，
+
+$$
+\sup_{0\le s\le1}\int_X^{2X}D_{sx^\theta}(x)^2\,dx\le C\,Xh_0\log X .
+$$
+
+证明。(i) 由恒等式 $D_u(x)=D_{h+u}(x)-D_h(x+u)$，
+
+$$
+\int_X^{2X}D_u^2\le2\int_X^{2X}D_{h+u}^2+2\int_{X+u}^{2X+u}D_h^2\le2V(3X,h+u)+2V(3X,h).
+$$
+
+对 $v\in[h,2h]$ 一致地有 $v/(3X)^\alpha\ge c3^{-\alpha}X^{\theta-\alpha}\to\infty$、$v/(3X)^\beta\le2c3^{-\beta}X^{\theta-\beta}\to0$，且 $\log(3X/v)=\log(X/h)+O(1)$；故 (490.2) 的同一个 $X$ 门槛对全部 $u\in[0,h]$ 适用，两项都 $\ll Xh\log(X/h)$。
+
+(ii) 令 $L_s(x)=sx^\theta$、$\phi_s(x)=x+L_s(x)$。在 $[X,2X]$ 上 $0\le L_s\le2^\theta h_0<2h_0$、$\phi_s'(x)=1+s\theta x^{\theta-1}\ge1$，且对充分大的 $X$，$\phi_s([X,2X])\subset[X,3X]$，门槛与 $s$ 无关。对每个 $v\in[3h_0,4h_0]$，有恒等式 $D_{L_s(x)}(x)=D_v(x)-D_{v-L_s(x)}(\phi_s(x))$，且 $v-L_s(x)\in[h_0,4h_0]$。平方后对 $v\in[3h_0,4h_0]$ 取平均，再对 $x$ 积分。第一部分至多 $\frac2{h_0}\int_{3h_0}^{4h_0}V(3X,v)\,dv\ll Xh_0\log X$。第二部分中，内层令 $w=v-L_s(x)$ 并把积分区间放大到 $[h_0,4h_0]$（被积函数非负），再由 Tonelli 及换元 $y=\phi_s(x)$（逆映射导数不超过 $1$）：
+
+$$
+\int_X^{2X}\!\!\int_{3h_0}^{4h_0}D_{v-L_s(x)}(\phi_s(x))^2\,dv\,dx\le\int_{h_0}^{4h_0}\!\!\int_X^{3X}D_w(y)^2\,dy\,dw\le\int_{h_0}^{4h_0}V(3X,w)\,dw\ll Xh_0^2\log X .
+$$
+
+除以 $h_0$ 即得 (ii)。证毕。
+
+**引理 490.2（固定长度的剖面均方）。** 设 (490.2)。固定 $1\le a<b\le2$、$c>0$，令 $h=cX^\theta$、$\ell_X=\log(X/h)$。则
+
+$$
+\frac1{Xh\ell_X}\int_{aX}^{bX}F_{h,g}(x)^2\,dx\longrightarrow(b-a)\,Q(g),
+\qquad\text{即}\qquad
+\int_{aX}^{bX}P_{h,g}(x)^2\,dx=(b-a)Q(g)\frac Xh\log\frac Xh+o\!\Bigl(\frac Xh\log\frac Xh\Bigr).
+$$
+
+证明。令 $K_X(s,t)=\frac1{Xh\ell_X}\int_{aX}^{bX}D_{sh}(x)D_{th}(x)\,dx$。在包含全部 $x+sh$ 的紧区间上 $|D_{sh}(x)|\le2B$，故未归一化的三重绝对积分至多 $4B^2(b-a)X\|g\|_1^2$，Fubini 给出
+
+$$
+\frac1{Xh\ell_X}\int_{aX}^{bX}F_{h,g}^2\,dx=\int_0^1\!\!\int_0^1g(s)g(t)K_X(s,t)\,ds\,dt .
+$$
+
+对固定 $s,t\in[0,1]$，$K_X(s,t)\to(b-a)\min(s,t)$：这是由普通方差经极化恢复两点相关的经典计算（见 Leung [Joint distribution of primes in multiple short intervals, Adv. Math. 490 (2026), 110847] 附注 2.3），其证明与引理 489.2 逐字相同，只需核对所用长度落在 (490.2) 的指数带内。所需端点为 $Y=dX+O(h)$（$d\in[1,2]$ 固定），所需长度为 $qh$（$q\in\{s,t,|s-t|\}$ 为正的固定数），故 $qh/Y^\alpha\asymp X^{\theta-\alpha}\to\infty$、$qh/Y^\beta\asymp X^{\theta-\beta}\to0$，且 $\log(Y/(qh))=\ell_X+O(1)$；$s=t$ 或 $st=0$ 的情形无需长度 $|s-t|h$。另一方面，由引理 490.1(i) 与 Cauchy–Schwarz，存在 $C$ 使对充分大的 $X$，$\sup_{s,t\in[0,1]}|K_X(s,t)|\le C$。于是被积函数受 $C|g(s)g(t)|$ 控制，后者在单位正方形上可积；由控制收敛定理得极限 $(b-a)\iint g(s)g(t)\min(s,t)=(b-a)Q(g)$。证毕。
+
+**引理 490.3（移动算子的一致界）。** 设 (490.2)。存在常数 $C$（只依赖 $\theta$ 与 (490.2)），使对所有 $g\in L^1(0,1)$ 与所有充分大的 $X$（门槛与 $g$ 无关），
+
+$$
+\Bigl\|P_{H_\cdot,g}\Bigr\|_{L^2[X,2X]}\le C\,\|g\|_1\sqrt{S_X},
+\qquad P_{H_\cdot,g}(x):=P_{H_x,g}(x)=\frac1{x^\theta}\int_0^1g(s)D_{sx^\theta}(x)\,ds .
+$$
+
+证明。由 Minkowski 不等式与引理 490.1(ii)，$\|P_{H_\cdot,g}\|_2\le X^{-\theta}\int_0^1|g(s)|\,\|D_{sx^\theta}(x)\|_{L^2[X,2X]}\,ds\le X^{-\theta}\|g\|_1\sqrt{CX^{1+\theta}\log X}=\sqrt C\,\|g\|_1\sqrt{S_X}$。证毕。
+
+**引理 490.4（移动长度的剖面均方）。** 设 (490.2)。则
+
+$$
+\frac1{S_X}\int_X^{2X}P_{H_x,g}(x)^2\,dx\longrightarrow Q(g)\bigl(2^{1-\theta}-1\bigr).
+$$
+
+证明。先设 $g$ 为 Lipschitz 函数，记 $M=\|g\|_\infty$、$L=\mathrm{Lip}(g)$。固定正整数 $n$，令 $\eta=1/n$、$a_j=1+j\eta$、$I_j=[a_jX,a_{j+1}X]$、$h_j=(a_jX)^\theta$，并在 $I_j$ 上令 $P^{(n)}_X=P_{h_j,g}$。由引理 490.2（取 $c=a_j^\theta$；$X/h_j=a_j^{-\theta}X^{1-\theta}$，$\log(X/h_j)=(1-\theta)\log X-\theta\log a_j$），
+
+$$
+\frac{\|P^{(n)}_X\|_{L^2[X,2X]}^2}{S_X}\longrightarrow C_n=\frac{(1-\theta)Q(g)}n\sum_{j=0}^{n-1}a_j^{-\theta}.
+$$
+
+在 $I_j$ 上 $h_j\le H_x\le h_j+d_j$，$d_j=(a_{j+1}^\theta-a_j^\theta)X^\theta\le\theta\eta h_0$，并有分解
+
+$$
+P_{H_x,g}(x)-P_{h_j,g}(x)=\int_0^{h_j}\Bigl[H_x^{-2}g(u/H_x)-h_j^{-2}g(u/h_j)\Bigr]D_u(x)\,du+H_x^{-2}\int_{h_j}^{H_x}g(u/H_x)D_u(x)\,du .
+$$
+
+对 $0\le u\le h_j$，由 $|H^{-2}-h^{-2}|\le2d/h^3$ 与 $|H^{-1}-h^{-1}|\le d/h^2$，方括号的绝对值至多 $(2M+L)d_j/h_j^3$。全部比值 $h_j/h_0$ 与全部尾部长度与 $h_0$ 之比都落在固定紧区间 $[1,2^\theta]$ 内，故下面引理 490.1 与 (490.2) 的常数及 $X$ 门槛可对全部 $j$ 与全部 $n$ 一致选取。由 Minkowski 不等式与引理 490.1(i)，第一项在 $I_j$ 上的平方范数至多 $(2M+L)^2d_j^2h_j^{-6}\bigl(h_j\sqrt{CXh_j\log X}\bigr)^2\ll_g\eta^2S_X$。对第二项，由 Cauchy–Schwarz，
+
+$$
+\int_{I_j}\Bigl|H_x^{-2}\int_{h_j}^{H_x}g(u/H_x)D_u(x)\,du\Bigr|^2dx\le M^2h_j^{-4}d_j\int_{h_j}^{h_j+d_j}\int_{I_j}D_u(x)^2\,dx\,du\ll_g\eta^2S_X ,
+$$
+
+这里对 $u\in[h_j,h_j+d_j]$ 用了 $\int_{I_j}D_u^2\le V(2X,u)\ll Xh_0\log X$。对 $n$ 个不相交格子求和得 $O_g(\eta S_X)$，故
+
+$$
+\limsup_{X\to\infty}\frac{\|P_{H_\cdot,g}-P^{(n)}_X\|_2}{\sqrt{S_X}}\le K_gn^{-1/2},
+$$
+
+$K_g$ 与 $n$ 无关。又 $a\mapsto a^{-\theta}$ 在 $[1,2]$ 上递减，上下矩形和相差 $(1-2^{-\theta})/n$，故 $C_n\to(1-\theta)Q(g)\int_1^2v^{-\theta}\,dv=Q(g)(2^{1-\theta}-1)$。令 $A_X=\|P_{H_\cdot,g}\|_2/\sqrt{S_X}$，由反三角不等式，对每个固定 $n$ 有 $\limsup_X|A_X-\sqrt{C_n}|\le K_gn^{-1/2}$；令 $n\to\infty$ 得 Lipschitz 情形。
+
+一般 $g\in L^1(0,1)$。由 $\min(s,t)=\int_0^1\mathbf 1_{\{r\le s\}}\mathbf 1_{\{r\le t\}}\,dr$ 及 $\iint|g(s)g(t)|\min(s,t)\le\|g\|_1^2$，Fubini 给出 $Q(g)=\int_0^1G_g(r)^2\,dr=\|G_g\|_{L^2(0,1)}^2$；于是对 $f,g\in L^1(0,1)$，$|\sqrt{Q(g)}-\sqrt{Q(f)}|\le\|G_{g-f}\|_{L^2(0,1)}\le\sup_r|G_{g-f}(r)|\le\|g-f\|_1$。Lipschitz 函数在 $L^1(0,1)$ 中稠密，取 Lipschitz 的 $g_m$ 使 $\|g_m-g\|_1\to0$。由 $P_{H_x,g}-P_{H_x,g_m}=P_{H_x,g-g_m}$ 与引理 490.3，$\|P_{H_\cdot,g}-P_{H_\cdot,g_m}\|_2\le C\|g-g_m\|_1\sqrt{S_X}$ 对充分大的 $X$ 一致成立；又 $\sqrt{Q(g_m)}\to\sqrt{Q(g)}$。在反三角不等式中先令 $X\to\infty$、再令 $m\to\infty$ 即得。证毕。
+
+**引理 490.5（去掉价格权）。** 设 (490.2)。则在 $L^2([X,2X],dx/x)$ 中 $\|\mathcal T_{\theta,g}-\sqrt x\,P_{H_x,g}\|=o(\sqrt{S_X})$。若再设 von Koch 界 $E(x)\ll\sqrt x\log^2x$，则逐点地 $\mathcal T_{\theta,g}(x)-\sqrt x\,P_{H_x,g}(x)=O\bigl(\log^2x\int_0^1s|g(s)|\,ds\bigr)$。
+
+证明。由引理 489.1 的证明，$0\le1-\rho_x(u)\le4u/x$（$x\ge3$，$0\le u\le H_x$）。于是
+
+$$
+\Bigl|\frac{\mathcal T_{\theta,g}(x)}{\sqrt x}-P_{H_x,g}(x)\Bigr|\le\frac1{x^\theta}\int_0^1|g(s)|\,|D_{sx^\theta}(x)|\,\frac{4sx^\theta}x\,ds=\frac4x\int_0^1s|g(s)|\,|D_{sx^\theta}(x)|\,ds .
+$$
+
+由 Minkowski 不等式与引理 490.1(ii)，其 $L^2[X,2X]$ 范数 $\ll X^{-1}\|sg\|_1\sqrt{X^{1+\theta}\log X}$，与 $\sqrt{S_X}$ 之比为 $O(X^{\theta-1})\to0$。又 $\int_X^{2X}(\mathcal T_{\theta,g}-\sqrt xP_{H_x,g})^2\,dx/x=\int_X^{2X}(\mathcal T_{\theta,g}/\sqrt x-P_{H_x,g})^2\,dx$，得第一结论。逐点结论：von Koch 界给出 $|D_u(x)|\ll\sqrt x\log^2x$（$0\le u\le H_x\le x$），代入上式。证毕。
+
+**定理 490.6（移动剖面均方定律）。** 设 $E$ 局部有界 Borel 可测，$0<\alpha<\theta<\beta<1$，(490.2) 成立，$g\in L^1(0,1)$ 实值。则
+
+$$
+\lim_{X\to\infty}\frac1{X^{1-\theta}\log X}\int_X^{2X}\mathcal T_{\theta,g}(x)^2\,\frac{dx}x=Q(g)\bigl(2^{1-\theta}-1\bigr).
+\tag{490.3}
+$$
+
+若 $g$ 不几乎处处为零，则对每个 $0<c<\sqrt{(1-\theta)Q(g)}$，存在 $X_0$，使每个 $X\ge X_0$ 的 $[X,2X]$ 中满足
+
+$$
+|\mathcal T_{\theta,g}(x)|>c\,x^{(1-\theta)/2}\sqrt{\log x}
+\tag{490.4}
+$$
+
+的 $x$ 构成正测度集。
+
+证明。$\int_X^{2X}(\sqrt xP_{H_x,g})^2\,dx/x=\int_X^{2X}P_{H_x,g}^2\,dx$；由引理 490.4、490.5 与反三角不等式得 (490.3)。若 $g$ 不几乎处处为零，则 $Q(g)>0$：由引理 490.4 证明中的恒等式 $Q(g)=\|G_g\|_2^2$，若 $Q(g)=0$，则绝对连续函数 $G_g$ 几乎处处为零，由连续性处处为零，而 $G_g'=-g$ 几乎处处，故 $g=0$ 几乎处处。令 $W_X=\int_X^{2X}x^{1-\theta}\log x\,\frac{dx}x$；换元 $x=Xv$ 得 $W_X=X^{1-\theta}\bigl[\log X\int_1^2v^{-\theta}dv+\int_1^2v^{-\theta}\log v\,dv\bigr]\sim\frac{2^{1-\theta}-1}{1-\theta}X^{1-\theta}\log X$。故 $\int_X^{2X}\mathcal T_{\theta,g}^2\,\frac{dx}x\big/W_X\to(1-\theta)Q(g)>0$。固定 $c$ 后取 $X_0$ 使 $X\ge X_0$ 时该比值大于 $c^2$。若 (490.4) 在 $[X,2X]$ 上只在零测集上成立，则几乎处处 $\mathcal T_{\theta,g}(x)^2\le c^2x^{1-\theta}\log x$，比值至多 $c^2$，矛盾。证毕。
+
+**推论 490.7（§489 假设的精简）。** 取 $\theta=4/5$、$g\equiv1$、$\alpha=3/4$、$\beta=7/8$：$Q(1)=\int_0^1(1-r)^2dr=\frac13$，(490.3) 成为 (489.3)，阈值 $\sqrt{(1-\theta)Q(1)}=1/\sqrt{15}$ 与 (489.4) 相同。因此定理 489.5 的结论只需 (489.2) 与 $E$ 的局部有界可测性；§489 的证明所用的 von Koch 界与 (489.1) 分别只服务于引理 489.1 的逐点误差与 §489 的小长度截断。
+
+**附注 490.8（二阶 Brownian 结构）。** 引理 490.2 的证明说明：在 (490.2) 下，关于概率测度 $dx/((b-a)X)$ 在 $[aX,bX]$ 上平均，归一化增量 $s\mapsto D_{sh}(x)/\sqrt{h\log(X/h)}$ 的二阶矩核趋于 $\min(s,t)$，即标准 Brownian 运动的协方差；素数计数的 Brownian（Hurst 指数 $1/2$）预期见 Gorodetsky–Matomäki–Radziwiłł–Rodgers [On the variance of squarefree integers in short intervals and arithmetic progressions, Geom. Funct. Anal. 31 (2021), 111–149] §1.2，$x^\theta$ 窗中方差的 $1-\theta$ 因子见 Montgomery–Soundararajan [Primes in short intervals, Comm. Math. Phys. 252 (2004), 589–617] p.8。若再设 von Koch 界，则 $\int_{aX}^{bX}D_{sh}(x)\,dx=\int_{bX}^{bX+sh}E-\int_{aX}^{aX+sh}E=O(h\sqrt X\log^2X)$，归一化均值为 $O\bigl(\sqrt{h/X}\log^{3/2}X\bigr)=o(1)$，故中心化协方差有同一极限。对 $E=\psi-\mathrm{id}$，$E$ 在紧区间上有界变差，$D_{sh}(x)=\int_{(x,x+sh]}dE(t)$，绝对 Fubini 给出
+
+$$
+F_{h,g}(x)=\int_{(x,x+h]}G_g\Bigl(\frac{t-x}h\Bigr)\,dE(t),
+$$
+
+其中连续部分为 $-\int_x^{x+h}G_g((t-x)/h)\,dt=-h\int_0^1s\,g(s)\,ds$，与 $F_{h,g}(x)=\int_0^1g(s)\bigl(\psi(x+sh)-\psi(x)-sh\bigr)ds$ 的漂移项一致；于是 $Q(g)=\|G_g\|_{L^2(0,1)}^2$ 是这一短窗线性统计在该协方差下的二次能量。本节只用到二阶结构；高阶混合矩、有限维高斯分布与紧性都不在本节结论之内，本节不给出随机过程意义下的收敛。
+
+**范围。** 比例窗与加法窗之间的方差转移另见 Bui–Keating–Smith [On the variance of sums of arithmetic functions over primes in short intervals and pair correlation for $L$-functions in the Selberg class, J. London Math. Soc. 94 (2016), 161–185] 定理 $C_1,C_2,D_1,D_2$，那里的定量结论要求幂次节省的误差。Leung 前引文定理 10.1 的移动窗结论在 RH、LI 与 QLI 下对对数取样 $x=e^u$ 成立，并要求 $\log(1/\delta)=o(\log U)$，不覆盖这里固定 $\theta<1$ 的普通二倍区间取样。定理 490.6 只控制 $|\mathcal T_{\theta,g}|$，不给出带符号的幂次 $\Omega_\pm$。
+
+## 追加锚（本行以下为增补区）
+
+## 491. 不同指数的移动剖面核的渐近正交
+
+沿用 §490 的 $E,D_u,V,\rho_x,\mathcal T_{\theta,g}$ 与 (490.2)。固定 $0<a<b<1$、实值 $g_1,g_2\in L^1(0,1)$，令
+
+$$
+h=X^a,\qquad k=X^b,\qquad A_X=(X\log X)^{1/2},\qquad N_X=X^{1-(a+b)/2}\log X,
+$$
+
+$$
+f_s(x)=D_{sx^a}(x),\qquad z_t(x)=D_{tx^b}(x)\qquad(s,t\in[0,1]).
+$$
+
+由 (490.1)，$\mathcal T_{\theta,g}(x)=x^{1/2-\theta}\int_0^1g(s)D_{sx^\theta}(x)\rho_x(sx^\theta)\,ds$；由定理 490.6，$\|\mathcal T_{a,g_1}\|_{L^2([X,2X],dx/x)}\|\mathcal T_{b,g_2}\|_{L^2([X,2X],dx/x)}\asymp N_X$（$g_1,g_2$ 非零时）。
+
+下面只用 (490.2) 推出的**上界**。称尺度 $R=R(X)$ 满足**可比长度上界**，若对每组固定的 $0<c_1\le c_2$ 与 $C\ge1$，对充分大的 $X$，
+
+$$
+V(CX,u)\ll XR\log X\qquad(c_1R\le u\le c_2R).
+\tag{491.1}
+$$
+
+若 (490.2) 在某个包含 $\rho$ 的开指数带上成立，则 $R=X^\rho$ 满足 (491.1)。全部范数取在 $[X,2X]$ 的固定放大区间（例如 $[X/2,4X]$）上；下面所有平移都是 $O(k)=o(X)$，故放大区间足够；所有常数对 $s,t\in[0,1]$ 与 $[X,2X]$ 的子区间一致。
+
+**引理 491.1（两端移动的增量）。** 设尺度 $R$ 满足 (491.1)。设 $p,q$ 是工作区间上递增的 $C^1$ 映射，导数有固定正下界，像落在固定放大区间内，且 $0\le q(x)-p(x)\le C_0R$。则 $\|E\circ q-E\circ p\|_2\ll A_X\sqrt R$。特别地（取 $p(x)=x$、$q(x)=x+u$），$\sup_{0\le u\le C_0R}\|D_u\|_2\ll A_X\sqrt R$。
+
+证明。令 $\delta=q-p$。对 $v\in[(C_0+1)R,(C_0+2)R]$ 有恒等式 $E(q(x))-E(p(x))=D_v(p(x))-D_{v-\delta(x)}(q(x))$，因为 $q+(v-\delta)=p+v$。平方后用 $(u-v)^2\le2u^2+2v^2$ 并对 $v$ 取平均。第一项经换元 $y=p(x)$（逆映射导数有界）至多 $\frac2R\int_{(C_0+1)R}^{(C_0+2)R}V(CX,v)\,dv\ll XR\log X$。第二项中先令 $w=v-\delta(x)$ 并把 $w$ 的范围放大到 $[R,(C_0+2)R]$（被积函数非负），再由 Tonelli 与换元 $y=q(x)$ 得同一界。证毕。
+
+当 $p(x)=x$、$q(x)=x+u$ 时，这正是引理 490.1(i) 所用的恒等式 $D_u(x)=D_{R+u}(x)-D_R(x+u)$ 的移动形式。
+
+**引理 491.2（移动短增量的平均）。** 设 $h$ 与 $M$ 满足 (491.1)，$h\ll M=o(X)$，令 $\mathscr A_Mu(x)=\frac1M\int_0^Mu(x+r)\,dr$。则对 $s\in[0,1]$ 一致地，
+
+$$
+\|\mathscr A_Mf_s\|_2\ll\frac hM\,A_X\sqrt M .
+$$
+
+证明。令 $L(x)=sx^a$、$\phi(x)=x+L(x)$、$\xi=\phi^{-1}$、$q=\xi'$。在放大区间上 $L\ll h$、$0\le L'\ll h/X$、$|q-1|\ll h/X$。固定 $x$，令 $P=\phi(x)$、$Q=\phi(x+M)$、$Q_0=x+M+L(x)$、$\delta=Q-Q_0$，则 $0\le\delta\ll hM/X$。由 $\int_0^ME(\phi(x+r))\,dr=\int_P^QE(y)q(y)\,dy$，得恒等式
+
+$$
+M\,\mathscr A_Mf_s(x)=\int_0^{L(x)}D_M(x+r)\,dr+\int_P^Q(q(y)-1)\bigl(E(y)-E(x)\bigr)\,dy+\int_{Q_0}^Q\bigl(E(y)-E(x)\bigr)\,dy ,
+$$
+
+其中减去 $E(x)$ 合法，因为 $\int_P^Q(q-1)\,dy+\delta=M-(M+\delta)+\delta=0$。第一项由 Minkowski 不等式与 (491.1) 的 $L^2$ 范数为 $O(hA_X\sqrt M)$。第二项中令 $y=x+u$，$u$ 的范围放大到 $[0,CM]$，由引理 491.1，其范数为 $O\bigl(\frac{hM}XA_X\sqrt M\bigr)$。第三项中令 $y=Q_0(x)+v$，插入示性函数 $\mathbf 1_{v\le\delta(x)}$ 并对 $0\le v\le ChM/X$ 积分；对每个固定的 $v$，端点映射 $x$ 与 $x+M+L(x)+v$ 满足引理 491.1 的条件，故由 Minkowski 不等式得同一界。除以 $M$ 并用 $M=o(X)$。证毕。
+
+**引理 491.3（四尺度分离）。** 设 $h,M,T,k$ 都满足 (491.1)，$h\ll M\ll T\ll k$。则对每个区间 $I\subset[X,2X]$ 与 $s,t\in[0,1]$，
+
+$$
+\Bigl|\int_If_s(x)z_t(x)\,dx\Bigr|\ll A_X^2\sqrt{hk}\Bigl(\sqrt{\frac hM}+\sqrt{\frac MT}+\sqrt{\frac Tk}\Bigr).
+$$
+
+证明。由引理 491.1，$\|f_s\|_2\ll A_X\sqrt h$、$\|z_t\|_2\ll A_X\sqrt k$。令 $\psi(x)=x+tx^b$。对 $0\le r\le R$（$R=M$ 或 $T$），$z_t(x+r)-z_t(x)=\bigl[E(\psi(x+r))-E(\psi(x))\bigr]-D_r(x)$；前一项的端点映射之差为 $O(R)$，由引理 491.1，
+
+$$
+\|z_t(\cdot+r)-z_t\|_2\ll A_X\sqrt R .
+\tag{491.2}
+$$
+
+对长度至多 $M$ 的区间 $J$，把 $z_t(x)^2\le2z_t(x+r)^2+2|z_t(x+r)-z_t(x)|^2$ 对 $r\in[0,T]$ 取平均再在 $J$ 上积分，由 Fubini 与 (491.2)，
+
+$$
+\int_Jz_t^2\ll\frac MT\|z_t\|_2^2+A_X^2T\ll A_X^2\Bigl(\frac{Mk}T+T\Bigr).
+\tag{491.3}
+$$
+
+现在比较 $\int_If_sz_t$ 与 $\int_I(\mathscr A_Mf_s)z_t$。后者由引理 491.2 至多 $\frac hMA_X\sqrt M\cdot A_X\sqrt k=A_X^2\sqrt{hk}\sqrt{h/M}$。对每个 $r\le M$，$\int_If_s(x+r)z_t(x)\,dx$ 经平移变为 $I+r$ 上 $f_s(y)z_t(y-r)$ 的积分；在 $I\cap(I+r)$ 上，与 $\int f_sz_t$ 之差由 (491.2) 与 Cauchy–Schwarz 至多 $A_X\sqrt h\cdot A_X\sqrt M\le A_X^2\sqrt{hk}\sqrt{M/T}\sqrt{T/k}$；其余是长度至多 $M$ 的端点条，由 Cauchy–Schwarz 与 (491.3) 至多 $A_X\sqrt h\cdot A_X\sqrt{Mk/T+T}=A_X^2\sqrt{hk}\sqrt{M/T+T/k}$。对 $r$ 取平均，并用 $\sqrt{M/k}=\sqrt{M/T}\sqrt{T/k}\le\sqrt{M/T}+\sqrt{T/k}$ 吸收重叠项，即得。$|I|<M$ 时同样成立。证毕。
+
+**引理 491.4（移动差的转移）。** 令 $\phi(x)=x+sx^a$，$I\subset[X,2X]$。对放大区间上的 $u\in L^2$ 与 $v\in C^1$，
+
+$$
+\Bigl|\int_I\bigl[u(\phi(x))-u(x)\bigr]v(x)\,dx\Bigr|\ll h\|u\|_2\|v'\|_2+\frac hX\|u\|_2\|v\|_2+\|v\|_\infty\int_{J}|u| ,
+$$
+
+其中 $J$ 是总长 $O(h)$ 的端点条；末项至多 $Ch\|u\|_\infty\|v\|_\infty$，也至多 $C\sqrt h\|u\|_2\|v\|_\infty$。又对 $u\in C^1$，$\|u\circ\phi-u\|_2\ll h\|u'\|_2$；对长映射 $\psi(x)=x+tx^b$（$1\le\psi'\le2$），$\|u\circ\psi-u\|_2\ll\|u\|_2$、$\|(u\circ\psi-u)'\|_2\ll\|u'\|_2$。
+
+证明。对第一项作换元 $y=\phi(x)$。在 $I\cap\phi(I)$ 上令 $\xi=\phi^{-1}$、$q=\xi'$，被积函数之差为 $u(y)\bigl\{v(\xi(y))-v(y)+(q(y)-1)v(\xi(y))\bigr\}$，其中 $0\le y-\xi(y)\ll h$、$|q-1|\ll h/X$，且 $|v(\xi(y))-v(y)|\le\int_{y-Ch}^y|v'|$；由 Fubini 与 Cauchy–Schwarz，后者的 $L^2$ 范数至多 $Ch\|v'\|_2$。$I\triangle\phi(I)$ 的测度为 $O(h)$，给出端点项。其余估计直接由同样的换元得到。证毕。
+
+**二重平均与二进分解。** 设 (490.2) 在一个指数带 $0<\alpha<a<b<\beta<1$ 上成立。令 $Z_R=\mathscr A_R^2E$、$B_R=Z_R-Z_{2R}$、$r_h=E-Z_h$。则 $Z_R\in C^1$ 且
+
+$$
+Z_R'=\frac1R\,\mathscr A_RD_RE ,
+\qquad
+B_R=-\tfrac12\mathscr A_R^2D_RE-\tfrac14\mathscr A_R^2D_{2R}E .
+\tag{491.4}
+$$
+
+前者因为 $\mathscr A_RE$ 局部绝对连续且导数为 $D_RE/R$，再作一次平均；后者由 $\mathscr A_{2R}=\frac12(I+T_R)\mathscr A_R$（$T_Ru=u(\cdot+R)$）展开 $Z_{2R}=\frac14(Z_R+2T_RZ_R+T_{2R}Z_R)$ 得到。由 (490.2) 得 $\|D_u\|_2\ll A_X\sqrt u$（$h\le u\le8k$）与 $\sup_{0\le u\le2h}\|D_u\|_2\ll A_X\sqrt h$（引理 491.1）。于是对 $h\le R\le2k$，由 (491.4)、Minkowski 不等式，以及 $|\mathscr A_Ru(x)|\le R^{-1/2}\|u\|_2$：
+
+$$
+\|B_R\|_2\ll A_X\sqrt R,\quad\|B_R'\|_2\ll\frac{A_X}{\sqrt R},\quad\|B_R\|_\infty\ll A_X,\quad\|Z_R'\|_2\ll\frac{A_X}{\sqrt R},\quad\|Z_R'\|_\infty\ll\frac{A_X}R ;
+\tag{491.5}
+$$
+
+又 $r_h$ 是长度至多 $2h$ 的增量的平均，故 $\|r_h\|_2\ll A_X\sqrt h$。取 $N$ 使 $K=2^Nh\in[k,2k)$，则 $N\ll1+\log(k/h)$ 且 $Z_h=Z_K+\sum_{j=0}^{N-1}B_{2^jh}$。
+
+**引理 491.5（共同指数带上的一致协方差界）。** 设 (490.2) 在 $0<\alpha<a<b<\beta<1$ 上成立。则对每个区间 $I\subset[X,2X]$ 与 $s,t\in[0,1]$，
+
+$$
+\Bigl|\int_If_s(x)z_t(x)\,dx\Bigr|\ll Xh\log X\,\bigl(1+\log(k/h)\bigr)^2 .
+$$
+
+证明。记 $U_au=u\circ\phi-u$、$U_bu=u\circ\psi-u$，则 $f_s=U_aE$、$z_t=U_bE$，$E=Z_h+r_h$。(i) $|\langle U_aE,U_br_h\rangle_I|\le\|f_s\|_2\|U_br_h\|_2\ll A_X^2h$。(ii) 令 $v=U_bZ_h$；由 (491.5) 与引理 491.4，$\|v'\|_2\ll A_X/\sqrt h$、$\|v\|_2\le\|z_t\|_2+\|U_br_h\|_2\ll A_X\sqrt k$，且 $\|v\|_\infty\le\sum_j\|U_bB_{2^jh}\|_\infty+k\|Z_K'\|_\infty\ll A_X(N+1)$。由引理 491.4（$u=r_h$，末项取 $L^2$ 形式），$|\langle U_ar_h,v\rangle_I|\ll A_X^2h(N+1)$，因为 $\frac hX\|r_h\|_2\|v\|_2\ll A_X^2h\sqrt{hk}/X\le A_X^2h$。(iii) 余下 $\langle U_aZ_h,U_bZ_h\rangle_I$，按二进分解展开两个因子。第一因子为 $Z_K$ 时，$\|U_aZ_K\|_2\ll h\|Z_K'\|_2\ll A_Xh/\sqrt k$，乘以 $\|U_bZ_h\|_2\ll A_X\sqrt k$ 得 $A_X^2h$。第一因子为 $B_R$、第二因子为 $Z_K$ 时，由引理 491.4（末项取上确界形式）与 $\|U_bZ_K\|_2\ll A_X\sqrt k$、$\|(U_bZ_K)'\|_2\ll A_X/\sqrt k$、$\|U_bZ_K\|_\infty\ll A_X$，得 $O(A_X^2h)$。两个因子为 $B_R,B_S$ 时：若 $S\le R$，$\|U_aB_R\|_2\|U_bB_S\|_2\ll\frac{A_Xh}{\sqrt R}A_X\sqrt S\le A_X^2h$；若 $S>R$，由引理 491.4，界为 $A_X^2h\bigl(\sqrt{R/S}+\sqrt{RS}/X+1\bigr)\ll A_X^2h$。共 $(N+1)^2$ 对，合计 $O\bigl(A_X^2h(N+1)^2\bigr)$。证毕。
+
+**定理 491.6（跨指数渐近正交）。** 设 $E$ 局部有界 Borel 可测，$0<a<b<1$，$g_1,g_2\in L^1(0,1)$ 实值。
+
+(i) **两条指数带。** 设 (490.2) 分别在 $0<\alpha_1<a<\beta_1<1$ 与 $0<\alpha_2<b<\beta_2<1$ 上成立。任取固定的 $a<\mu<\nu<\min(\beta_1,b)$，令 $\eta_0=\frac12\min\{\mu-a,\nu-\mu,b-\nu\}$。则
+
+$$
+\Bigl|\int_X^{2X}\mathcal T_{a,g_1}(x)\mathcal T_{b,g_2}(x)\,\frac{dx}x\Bigr|\ll\|g_1\|_1\|g_2\|_1\,N_X\,X^{-\eta_0}.
+\tag{491.6}
+$$
+
+(ii) **共同指数带。** 设 (490.2) 在 $0<\alpha<a<b<\beta<1$ 上成立。则
+
+$$
+\Bigl|\int_X^{2X}\mathcal T_{a,g_1}(x)\mathcal T_{b,g_2}(x)\,\frac{dx}x\Bigr|\ll\|g_1\|_1\|g_2\|_1\,X^{1-b}\log X\,\bigl(1+(b-a)\log X\bigr)^2 ,
+\tag{491.7}
+$$
+
+即相对于 $N_X$ 为 $O\bigl(\|g_1\|_1\|g_2\|_1X^{-(b-a)/2}(\log X)^2\bigr)$。
+
+两处常数只依赖 $E$、指数带与 $a,b$，对剖面的依赖只经 $\|g_1\|_1\|g_2\|_1$。
+
+证明。令 $r_{\theta,s}(x)=\rho_x(sx^\theta)$、$W_{s,t}(x)=x^{-a-b}r_{a,s}(x)r_{b,t}(x)$，则
+
+$$
+\int_X^{2X}\mathcal T_{a,g_1}\mathcal T_{b,g_2}\frac{dx}x=\int_0^1\!\!\int_0^1g_1(s)g_2(t)\int_X^{2X}W_{s,t}(x)f_s(x)z_t(x)\,dx\,ds\,dt ;
+$$
+
+对固定的 $X$，所用 $E$ 的值都在一个紧区间内，局部有界性给出对 $|g_1(s)g_2(t)|\,ds\,dt\,dx$ 的绝对可积性，Fubini 成立。令 $\ell=\log w$。由 §481 的显式公式，$\ell'(x)=O(x^{-1})$、$\ell''(x)=O(x^{-2})$；由 $\frac d{dx}\log r_{\theta,s}=\ell'(x+sx^\theta)(1+s\theta x^{\theta-1})-\ell'(x)$，对 $s\in[0,1]$ 一致地 $r_{\theta,s}=O(1)$、$r_{\theta,s}'=O(X^{\theta-2})$（$X\le x\le2X$）。于是 $|W_{s,t}(2X)|+\int_X^{2X}|W_{s,t}'|\ll X^{-a-b}$。令 $F_{s,t}(y)=\int_X^yf_sz_t$；分部积分给出
+
+$$
+\Bigl|\int_X^{2X}W_{s,t}f_sz_t\,dx\Bigr|\le\sup_{y\in[X,2X]}|F_{s,t}(y)|\Bigl(|W_{s,t}(2X)|+\int_X^{2X}|W_{s,t}'|\Bigr).
+$$
+
+(i) 取 $M=X^\mu$、$T=X^\nu$。尺度 $h,M,T$ 落在第一条带内，$k$ 落在第二条带内，故都满足 (491.1)。由引理 491.3，$\sup_y|F_{s,t}(y)|\ll A_X^2\sqrt{hk}\,X^{-\eta_0}$，乘以 $X^{-a-b}$ 得 $N_XX^{-\eta_0}$，再对 $|g_1(s)g_2(t)|$ 积分。(ii) 由引理 491.5，$\sup_y|F_{s,t}(y)|\ll Xh\log X(1+\log(k/h))^2$，乘以 $X^{-a-b}$ 得 $X^{1-b}\log X(1+(b-a)\log X)^2$。证毕。
+
+**推论 491.7（多尺度归一化）。** 设 $0<\theta_1<\dots<\theta_m<1$，$m$ 固定，(490.2) 在包含每个 $\theta_j$ 的开指数带上成立，$g_j\in L^1(0,1)$ 实值，$c_j\in\mathbb R$。则
+
+$$
+\int_X^{2X}\Bigl(\sum_{j=1}^mc_j\frac{\mathcal T_{\theta_j,g_j}(x)}{\sqrt{X^{1-\theta_j}\log X}}\Bigr)^2\frac{dx}x\longrightarrow\sum_{j=1}^mc_j^2\bigl(2^{1-\theta_j}-1\bigr)Q(g_j).
+$$
+
+证明。展开有限平方：对角项由定理 490.6 收敛；非对角项由定理 491.6(i) 趋于零。证毕。
+
+**范围。** 由普通方差经极化恢复两点相关，见 Leung [Joint distribution of primes in multiple short intervals, Adv. Math. 490 (2026), 110847, doi:10.1016/j.aim.2026.110847] 附注 2.3；该文命题 2.2 给出等长、互不相交的比例短区间的协方差，定理 10.1 的移动窗结论在 RH、LI 与 QLI 下对对数取样成立，要求 $\log(1/\delta)=o(\log U)$。增量关系 $D_k-D_h=D_{k-h}(\cdot+h)$ 也出现在 Bui–Keating–Smith [On the variance of sums of arithmetic functions over primes in short intervals and pair correlation for $L$-functions in the Selberg class, J. London Math. Soc. 94 (2016), 161–185, doi:10.1112/jlms/jdw030] §5.3 定理 $C_1$ 的证明中，那里用于长度 $H_1<H_2<2H_1$ 之间的方差转移。Montgomery–Soundararajan [Primes in short intervals, Comm. Math. Phys. 252 (2004), 589–617, doi:10.1007/s00220-004-1222-4] 处理单一长度的矩，Goldston–Yıldırım [Canad. J. Math. 50 (1998), 563–580] 处理单一长度在算术级数中的方差，Coppola–Laporta [Afrika Mat. 29 (2018), 1245–1263] 处理固定位移的相关；这些文献都不处理两个幂次分离长度 $x^a,x^b$（$a<b$）的增量之间的协方差。直接对 $\int D_hD_k$ 作极化只给出 $O(Xh\log X)+O(\varepsilon_XXk\log X)$，其中 $\varepsilon_X\to0$ 是 (490.2) 的一致误差；当 $k/h\to\infty$ 时，归一化后的第二项不必趋于零。定理 491.6 的证明采用引理 491.1–491.5 的平均与二进分解，仅依赖 (490.2) 推出的上界 (491.1)。定理 491.6 与推论 491.7 只涉及二阶量，不给出渐近独立、高斯性或随机过程意义下的收敛，也不给出带符号的幂次 $\Omega_\pm$。

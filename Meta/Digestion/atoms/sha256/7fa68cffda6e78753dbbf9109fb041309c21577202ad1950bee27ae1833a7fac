@@ -1,0 +1,18 @@
+**定义 334.1（同一原来源与匹配资料）。** 续接 §§319–333；前卷与母卷仍指 319.1 的两卷。分别固定完整 $B$ 和完整 $\mathsf B_{\rm cl}$，任一记为 $B_*$，同一原 $\Omega,q,D,L,\circ$ 和规范谱迹 $\tau$ 保持。固定 $N\ge\max\{3,p_*\}$，$p_*=\operatorname{rank}E_P\ge2$。对每个非零原对象 $A$，先于原 $D$ 的输出选择前卷 202.1 所供应的同一个实际 $J_A$、原含幺 Jordan/$D$ 单射 $i_A:E_A\to E_{J_A}$ 及有限非空高简单块族 $\mathcal V_A$，满足
+
+$$
+n_T>N\quad(T\in\mathcal V_A),\qquad
+\bigcap_{T\in\mathcal V_A}\ker(\pi_Ti_A)=\{0\}.
+\tag{334.1}
+$$
+
+再以 $J_A$ 自己的原身份事件及完整全事件 R，选择一份实际
+
+$$
+K_A=J_AR_A,\qquad R_A=P^{\otimes k_A},\quad k_A\ge1,
+\qquad n_{V_A}\ge\max_{T\in\mathcal V_A}n_T
+\tag{334.2}
+$$
+
+及其中一个非经典参考块 $V_A$。记原有序嵌入为 $k:E_{J_A}\to E_{K_A}$、$l:E_{R_A}\to E_{K_A}$，$h_A=ki_A$。每个目标 $U=U_{A,T}=(T,V_A)$ 共用这同一份 $K_A,R_A$。后述静态坐标、原子、线性补偿和基均在考察 $D$ 的值前固定；它们是数学标签，不是新原事件或准备。
+

@@ -81,7 +81,7 @@ private lemma adjointKernel_measurable (x0 : ℝ) (s : ℂ) :
   exact (hm.stronglyMeasurable.integral_prod_right'
     (ν := volume.restrict (Ici x0))).measurable
 
-private lemma adjointKernel_eq_fixed {x0 b t : ℝ} (hxb : x0 ≤ b) (htb : t ≤ b) (s : ℂ) :
+lemma adjointKernel_eq_fixed {x0 b t : ℝ} (hxb : x0 ≤ b) (htb : t ≤ b) (s : ℂ) :
     ForwardKernel.Adjoint.adjointKernel x0 s t =
       ∫ x in Icc x0 b, (x : ℂ) ^ (-s - 1) *
         (OriginalMovingWindowMoment.kernel x t : ℂ) := by

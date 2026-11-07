@@ -4441,3 +4441,149 @@ $\Theta(q)\ge\Theta(3/50)=11579/10000>11/10$。
  \left(\frac1{10},\frac{599}{1000}\right).
 \]
 这里的端点 $q=1/10$ 属于已证明区间；未决边界不是反例，也没有改变原注册事件的全称量词。
+
+## 64. 高端人口的三段椭圆地板
+
+**定理 64.1（高端人口的全三角域地板）。** 保持定义 57.1 的负号行、固定标签、同一反馈、普通转置、非负根支及完整三角域。对
+\[
+ q\in\left[\frac{109}{200},\frac35\right]
+ \quad\text{及全部 }(X,Y)\in\mathcal T_x
+\]
+都有
+\[
+ \boxed{G_-(q,X,Y)>\frac{23}{50}.}
+ \tag{64.1}
+\]
+
+*证明。* 在有序化的辅助坐标中令
+\[
+ p=1-q,\qquad L=\frac{19}{16}+\frac q2,\qquad a=L^2,\qquad u=X+Y.
+\]
+交换 $X,Y$ 只用于 Corollary 56.3 的上界证明；因为
+\(h^2-s^2=c^2-h^2=h/2>0\)，交换弱增 $R,C$，所以不会改变原固定标签结论的方向。此区间满足
+\[
+ \frac{213}{100}<a<\frac{111}{50},\qquad
+ u\ge\frac a2\ge\frac{5329}{5000}>1.
+ \tag{64.2}
+\]
+因此 Corollary 56.3 中 $T=\min\{B,D\}$，其中
+\[
+ B=(2-u)^2,\qquad D=a(2u-a),\qquad W=\frac{BD}{u^2}.
+\]
+
+取 $z=1$，即
+\[
+ \alpha=p+\sqrt{pq},\qquad \beta=q+\sqrt{pq}.
+\]
+由于 $q\ge109/200$，有
+\[
+ \sqrt{pq}<\frac12,\qquad
+ \alpha<\frac{191}{200},\qquad
+ \beta<\frac{109}{100},\qquad
+ \alpha+\beta=1+2\sqrt{pq}\le2.
+ \tag{64.3}
+\]
+既有有理包络给出
+\[
+ sh<\frac{11}{40},\qquad
+ (h-s)^2<\frac{11}{100},\qquad
+ S:=c^2+h^2<\frac{271}{200},\qquad
+ c^2h^2<\frac{171}{400}.
+ \tag{64.4}
+\]
+将这些界代入 Corollary 56.3，记其右端为 $\mathcal H(u)$，得到
+\[
+ \mathcal H(u)
+ <\frac{823991}{400000}-\frac{13719}{20000}u
+ +\sqrt{\frac T8+\frac{51}{100}W}.
+ \tag{64.5}
+\]
+这里使用了
+\[
+ \alpha(sh\,a) < \frac{191}{200}\frac{11}{40}\frac{111}{50},\qquad
+ \frac{\alpha(h-s)^2}{2}<\frac{191}{200}\frac{11}{100}\frac12,
+\]
+以及
+\(\beta S<\frac{109}{100}\frac{271}{200}\)；根式中的第二项满足
+\[
+ \beta^2c^2h^2
+ <\frac{109^2}{100^2}\frac{171}{400}<\frac{51}{100}.
+\]
+
+分三段估计。若 $a/2\le u\le6/5$，则
+\[
+ D<\frac{5751}{10000}<\frac{29}{50},\qquad
+ \frac D{u^2}<\frac{5751}{14400}<\frac25,\qquad
+ W<\frac7{20},\qquad T<\frac{29}{50}.
+\]
+其中 $a>u$，所以 $D/u^2$ 随 $a$ 减小、随 $u$ 增大；并且
+\(B<(4671/5000)^2<7/8\)。故
+\[
+ \sqrt{\frac T8+\frac{51}{100}W}
+ <\sqrt{\frac{251}{1000}}<\frac{251}{500},\qquad
+ \frac{823991}{400000}-\frac{13719}{20000}u<\frac43,
+\]
+从而
+\[
+ \mathcal H(u)<\frac{2753}{1500}.
+ \tag{64.6}
+\]
+
+若 $6/5\le u\le13/10$，同理有
+\[
+ \frac D{u^2}<\frac{10011}{16900}<\frac35,\qquad
+ W<\frac{48}{125},\qquad T\le\frac{16}{25}.
+\]
+所以
+\[
+ \sqrt{\frac T8+\frac{51}{100}W}
+ <\sqrt{\frac{862}{3125}}<\frac{53}{100},\qquad
+ \frac{823991}{400000}-\frac{13719}{20000}u<\frac54,
+\]
+即
+\[
+ \mathcal H(u)<\frac{89}{50}.
+ \tag{64.7}
+\]
+
+最后若 $u\ge13/10$，则 $T,W\le B\le49/100$，故
+\[
+ \sqrt{\frac T8+\frac{51}{100}W}
+ <\sqrt{\frac{6223}{20000}}<\frac{14}{25},\qquad
+ \frac{823991}{400000}-\frac{13719}{20000}u<\frac65,
+\]
+从而
+\[
+ \mathcal H(u)<\frac{44}{25}.
+ \tag{64.8}
+\]
+
+另一方面，(57.9) 及 $e=2(h+s)$、$d=2(h+c)$ 给出
+\[
+ e^2>\frac{1187}{250},\qquad d^2>\frac{5319}{500},\qquad
+ E(q)=e^2p+d^2q>\frac{1187}{250}+\frac{589}{100}q
+ \ge\frac{7861}{1000}.
+\]
+并且
+\[
+ \frac{E(q)-23/50}{4}>\frac{7401}{4000},\qquad
+ \frac{2753}{1500}<\frac{7401}{4000},\quad
+ \frac{89}{50}<\frac{7401}{4000},\quad
+ \frac{44}{25}<\frac{7401}{4000}.
+\]
+由 (64.5)--(64.8) 得 $4\Gamma_-^2< E(q)-23/50$，故
+\[
+ G_-(q,X,Y)=E(q)-4\Gamma_-^2>\frac{23}{50}.
+\]
+三段覆盖 $u\in[a/2,2]$，并按 Corollary 56.3 的连续性约定包含退化椭圆端点和三角域边界。\hfill$\square$
+
+**定义 64.2（中央残差的当前边界）。** 定理 61.1、62.1、63.1 与 64.1 合并后，完整原始三角域上已严格排除
+\[
+ q\in\left[\frac1{25},\frac1{10}\right]
+ \cup\left[\frac{109}{200},\frac35\right].
+\]
+因此 #27057 的剩余未决区间缩小为
+\[
+ \left(\frac1{10},\frac{109}{200}\right).
+\]
+端点 $q=1/10$ 与 $q=109/200$ 均属于已证明区间；未决边界不是反例，也没有改变原注册事件的全称量词。
