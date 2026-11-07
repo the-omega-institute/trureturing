@@ -15,8 +15,6 @@ open _root_.D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality
 open _root_.D5.S3.VertexAlgebra.LatticePositiveEnergy
 open _root_.D5.S3.VertexAlgebra.LatticeAllStateField
 open _root_.D5.S3.VertexAlgebra.OriginalGram
-open private embed_injective from
-  D5.S3.VertexAlgebra.Analysis.OriginalSobolev
 
 namespace Reg.D5.S3.VertexAlgebra.Analysis.OriginalSmoothFields
 

@@ -34,7 +34,7 @@ namespace heatSmoothing_embed
 abbrev signature := vectorSignature
 def actual : Realization signature :=
   realize signature (fun _ _ z => z) (fun e => nomatch e)
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ (M : Model) (k : ℕ) (t : ℝ≥0) (ht : 0 < t) (v : Carrier M.D),
     M.heatSmoothing k t ht (M.embed 0 v) =
@@ -57,7 +57,7 @@ def familyRegistration (M0 : Model) : Registration arena (type_of% (@D5.S3.Verte
 def registration (M0 : Model) :
     Contract.Registration.{_,0,0,0,0,0,0,0,0,0,0,0}
       (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.heatSmoothing_embed)
-      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit Unit := {
+      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit True := {
   unitName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeatSmoothing.heatSmoothing_embed.unit,
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeatSmoothing.heatSmoothing_embed.familyRegistration,
   realizationSource := none,
@@ -84,7 +84,7 @@ namespace heatSmoothing_bound
 abbrev signature := scalarSignature
 def actual : Realization signature :=
   realize signature (fun _ _ z => z) (fun e => nomatch e)
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ (M : Model) (k : ℕ) (t : ℝ≥0) (ht : 0 < t),
     ‖M.heatSmoothing k t ht‖ ≤ R.readout () () (heatSmoothingConstant k t) ∧
@@ -106,7 +106,7 @@ def familyRegistration (M0 : Model) : Registration arena (type_of% (@D5.S3.Verte
 def registration (M0 : Model) :
     Contract.Registration.{_,0,0,0,0,0,0,0,0,0,0,0}
       (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.heatSmoothing_bound)
-      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit Unit := {
+      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit True := {
   unitName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeatSmoothing.heatSmoothing_bound.unit,
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeatSmoothing.heatSmoothing_bound.familyRegistration,
   realizationSource := none,
@@ -133,7 +133,7 @@ namespace heatSmoothing_inclusion
 abbrev signature := crossMapSignature
 def actual : Realization signature :=
   realize signature (fun _ _ z => z) (fun e => nomatch e)
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ (M : Model) (j k : ℕ) (hjk : j ≤ k) (t : ℝ≥0) (ht : 0 < t),
     (M.inclusion j k hjk).comp (M.heatSmoothing k t ht) = (R.readout () ⟨M,(j,0)⟩ (M.heatSmoothing j t ht))
@@ -143,7 +143,7 @@ theorem actual_dependence (M0 : Model) : ObservationalDependence signature actua
   refine ⟨⟨M0,(0,0)⟩,0,ContinuousLinearMap.id ℂ M0.Hilbert,?_⟩
   intro h
   have hh := congrArg (fun A => A (M0.embed 0 (vacuum M0.D))) h
-  exact vacuum_ne_zero M0 0 (by simpa using hh.symm)
+  exact vacuum_ne_zero M0 0 (by simpa [actual, realize] using hh.symm)
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 private theorem rejected_law (M0 : Model) : ¬ arena.Law rejected := by
@@ -159,7 +159,7 @@ def familyRegistration (M0 : Model) : Registration arena (type_of% (@D5.S3.Verte
 def registration (M0 : Model) :
     Contract.Registration.{_,0,0,0,0,0,0,0,0,0,0,0}
       (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.heatSmoothing_inclusion)
-      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit Unit := {
+      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit True := {
   unitName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeatSmoothing.heatSmoothing_inclusion.unit,
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeatSmoothing.heatSmoothing_inclusion.familyRegistration,
   realizationSource := none,
@@ -186,7 +186,7 @@ namespace heatSmoothing_hilbert
 abbrev signature := crossMapSignature
 def actual : Realization signature :=
   realize signature (fun _ _ z => z) (fun e => nomatch e)
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ (M : Model) (k : ℕ) (t : ℝ≥0) (ht : 0 < t),
     (M.inclusion 0 k (Nat.zero_le k)).comp (M.heatSmoothing k t ht) = M.heat 0 t ∧
@@ -197,7 +197,7 @@ theorem actual_dependence (M0 : Model) : ObservationalDependence signature actua
   refine ⟨⟨M0,(0,0)⟩,0,ContinuousLinearMap.id ℂ M0.Hilbert,?_⟩
   intro h
   have hh := congrArg (fun A => A (M0.embed 0 (vacuum M0.D))) h
-  exact vacuum_ne_zero M0 0 (by simpa using hh.symm)
+  exact vacuum_ne_zero M0 0 (by simpa [actual, realize] using hh.symm)
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 private theorem rejected_law (M0 : Model) : ¬ arena.Law rejected := by
@@ -213,7 +213,7 @@ def familyRegistration (M0 : Model) : Registration arena (type_of% (@D5.S3.Verte
 def registration (M0 : Model) :
     Contract.Registration.{_,0,0,0,0,0,0,0,0,0,0,0}
       (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.heatSmoothing_hilbert)
-      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit Unit := {
+      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit True := {
   unitName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeatSmoothing.heatSmoothing_hilbert.unit,
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeatSmoothing.heatSmoothing_hilbert.familyRegistration,
   realizationSource := none,
@@ -240,7 +240,7 @@ namespace heat_smoothDomain
 abbrev signature := vectorSignature
 def actual : Realization signature :=
   realize signature (fun _ _ z => z) (fun e => nomatch e)
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ (M : Model) (t : ℝ≥0) (ht : 0 < t) (x : M.Hilbert),
     M.evaluation (M.heatFamily t ht x) = R.readout () ⟨M,0⟩ (M.heat 0 t x) ∧
@@ -262,7 +262,7 @@ def familyRegistration (M0 : Model) : Registration arena (type_of% (@D5.S3.Verte
 def registration (M0 : Model) :
     Contract.Registration.{_,0,0,0,0,0,0,0,0,0,0,0}
       (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.heat_smoothDomain)
-      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit Unit := {
+      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit True := {
   unitName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeatSmoothing.heat_smoothDomain.unit,
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeatSmoothing.heat_smoothDomain.familyRegistration,
   realizationSource := none,
@@ -289,7 +289,7 @@ namespace heatSmoothing_tail
 abbrev signature := scalarSignature
 def actual : Realization signature :=
   realize signature (fun _ _ z => z) (fun e => nomatch e)
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ (M : Model) (k : ℕ) (t : ℝ≥0) (ht : 0 < t) (N : ℕ),
     M.heatSmoothingTruncation k t ht N =
@@ -317,7 +317,7 @@ def familyRegistration (M0 : Model) : Registration arena (type_of% (@D5.S3.Verte
 def registration (M0 : Model) :
     Contract.Registration.{_,0,0,0,0,0,0,0,0,0,0,0}
       (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.heatSmoothing_tail)
-      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit Unit := {
+      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit True := {
   unitName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeatSmoothing.heatSmoothing_tail.unit,
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeatSmoothing.heatSmoothing_tail.familyRegistration,
   realizationSource := none,
@@ -344,7 +344,7 @@ namespace heatSmoothing_compact
 abbrev signature := crossMapSignature
 def actual : Realization signature :=
   realize signature (fun _ _ z => z) (fun e => nomatch e)
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ (M : Model) (k : ℕ) (t : ℝ≥0) (ht : 0 < t),
     IsCompactOperator (R.readout () ⟨M,(k,0)⟩ (M.heatSmoothing k t ht))
@@ -354,7 +354,7 @@ theorem actual_dependence (M0 : Model) : ObservationalDependence signature actua
   refine ⟨⟨M0,(0,0)⟩,0,ContinuousLinearMap.id ℂ M0.Hilbert,?_⟩
   intro h
   have hh := congrArg (fun A => A (M0.embed 0 (vacuum M0.D))) h
-  exact vacuum_ne_zero M0 0 (by simpa using hh.symm)
+  exact vacuum_ne_zero M0 0 (by simpa [actual, realize] using hh.symm)
 -- AUDIT GAP: full-telescope actual law and dependence are retained; whole-family
 -- intervention, sensitivity and raw source reconstruction are not supplied.
 -- Compactness of arbitrary bounded maps cannot be refuted on a vacuum-line model.

@@ -26,7 +26,7 @@ namespace heat_completedGrade
 abbrev signature := vectorSignature
 def actual : Realization signature :=
   realize signature (fun _ _ z => z) (fun e => nomatch e)
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ (M : Model) (k : ℕ) (t : ℝ≥0) (E : ℤ)
     (x : M.completedGrade k E),
@@ -49,7 +49,7 @@ def familyRegistration (M0 : Model) : Registration arena (type_of% (@D5.S3.Verte
 def registration (M0 : Model) :
     Contract.Registration.{_,0,0,0,0,0,0,0,0,0,0,0}
       (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.heat_completedGrade)
-      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit Unit := {
+      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit True := {
   unitName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeat.heat_completedGrade.unit,
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeat.heat_completedGrade.familyRegistration,
   realizationSource := none,
@@ -76,7 +76,7 @@ namespace heat_embed
 abbrev signature := vectorSignature
 def actual : Realization signature :=
   realize signature (fun _ _ z => z) (fun e => nomatch e)
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ (M : Model) (k : ℕ) (t : ℝ≥0) (v : Carrier M.D),
     M.heat k t (M.embed k v) =
@@ -99,7 +99,7 @@ def familyRegistration (M0 : Model) : Registration arena (type_of% (@D5.S3.Verte
 def registration (M0 : Model) :
     Contract.Registration.{_,0,0,0,0,0,0,0,0,0,0,0}
       (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.heat_embed)
-      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit Unit := {
+      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit True := {
   unitName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeat.heat_embed.unit,
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeat.heat_embed.familyRegistration,
   realizationSource := none,
@@ -126,7 +126,7 @@ namespace heat_inclusion
 abbrev signature := crossMapSignature
 def actual : Realization signature :=
   realize signature (fun _ _ z => z) (fun e => nomatch e)
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ (M : Model) (j k : ℕ) (hjk : j ≤ k) (t : ℝ≥0),
     (M.inclusion j k hjk).comp (M.heat k t) =
@@ -137,7 +137,7 @@ theorem actual_dependence (M0 : Model) : ObservationalDependence signature actua
   refine ⟨⟨M0,(0,0)⟩,0,ContinuousLinearMap.id ℂ M0.Hilbert,?_⟩
   intro h
   have hh := congrArg (fun A => A (M0.embed 0 (vacuum M0.D))) h
-  exact vacuum_ne_zero M0 0 (by simpa using hh.symm)
+  exact vacuum_ne_zero M0 0 (by simpa [actual, realize] using hh.symm)
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 private theorem rejected_law (M0 : Model) : ¬ arena.Law rejected := by
@@ -154,7 +154,7 @@ def familyRegistration (M0 : Model) : Registration arena (type_of% (@D5.S3.Verte
 def registration (M0 : Model) :
     Contract.Registration.{_,0,0,0,0,0,0,0,0,0,0,0}
       (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.heat_inclusion)
-      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit Unit := {
+      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit True := {
   unitName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeat.heat_inclusion.unit,
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeat.heat_inclusion.familyRegistration,
   realizationSource := none,
@@ -181,7 +181,7 @@ namespace heat_projection
 abbrev signature := vectorSignature
 def actual : Realization signature :=
   realize signature (fun _ _ z => z) (fun e => nomatch e)
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ (M : Model) (k : ℕ) (t : ℝ≥0) (E : ℤ) (x : M.Sobolev k),
     M.heat k t (M.projection k E x) =
@@ -205,7 +205,7 @@ def familyRegistration (M0 : Model) : Registration arena (type_of% (@D5.S3.Verte
 def registration (M0 : Model) :
     Contract.Registration.{_,0,0,0,0,0,0,0,0,0,0,0}
       (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.heat_projection)
-      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit Unit := {
+      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit True := {
   unitName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeat.heat_projection.unit,
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeat.heat_projection.familyRegistration,
   realizationSource := none,
@@ -232,7 +232,7 @@ namespace heatTruncation_range
 abbrev signature := subspaceSignature
 def actual : Realization signature :=
   realize signature (fun _ _ z => z) (fun e => nomatch e)
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ (M : Model) (k : ℕ) (t : ℝ≥0) (N : ℕ),
     (M.heatTruncation k t N).range ≤ (R.readout () ⟨M,k⟩ (M.cutoffSpace k N)) ∧
@@ -262,7 +262,7 @@ def familyRegistration (M0 : Model) : Registration arena (type_of% (@D5.S3.Verte
 def registration (M0 : Model) :
     Contract.Registration.{_,0,0,0,0,0,0,0,0,0,0,0}
       (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.heatTruncation_range)
-      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit Unit := {
+      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit True := {
   unitName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeat.heatTruncation_range.unit,
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeat.heatTruncation_range.familyRegistration,
   realizationSource := none,
@@ -289,7 +289,7 @@ namespace heat_tail_bound
 abbrev signature := scalarSignature
 def actual : Realization signature :=
   realize signature (fun _ _ z => z) (fun e => nomatch e)
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ (M : Model) (k : ℕ) (t : ℝ≥0) (N : ℕ),
     ‖M.heat k t - M.heatTruncation k t N‖ ≤
@@ -311,7 +311,7 @@ def familyRegistration (M0 : Model) : Registration arena (type_of% (@D5.S3.Verte
 def registration (M0 : Model) :
     Contract.Registration.{_,0,0,0,0,0,0,0,0,0,0,0}
       (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.heat_tail_bound)
-      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit Unit := {
+      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit True := {
   unitName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeat.heat_tail_bound.unit,
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeat.heat_tail_bound.familyRegistration,
   realizationSource := none,
@@ -338,7 +338,7 @@ namespace heat_compact
 abbrev signature := crossMapSignature
 def actual : Realization signature :=
   realize signature (fun _ _ z => z) (fun e => nomatch e)
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ (M : Model) (k : ℕ) (t : ℝ≥0) (ht : 0 < t),
     Tendsto (fun N : ℕ => M.heatTruncation k t N) atTop (𝓝 (R.readout () ⟨M,(k,k)⟩ (M.heat k t))) ∧
@@ -349,7 +349,7 @@ theorem actual_dependence (M0 : Model) : ObservationalDependence signature actua
   refine ⟨⟨M0,(0,0)⟩,0,ContinuousLinearMap.id ℂ M0.Hilbert,?_⟩
   intro h
   have hh := congrArg (fun A => A (M0.embed 0 (vacuum M0.D))) h
-  exact vacuum_ne_zero M0 0 (by simpa using hh.symm)
+  exact vacuum_ne_zero M0 0 (by simpa [actual, realize] using hh.symm)
 -- AUDIT GAP: full-telescope actual law above is retained. No familyRegistration
 -- or Contract.Registration is fabricated: whole-family variation/sensitivity
 -- and raw source reconstruction are still missing for this operand choice.
@@ -359,7 +359,7 @@ namespace original_heat
 abbrev signature := scalarSignature
 def actual : Realization signature :=
   realize signature (fun _ _ z => z) (fun e => nomatch e)
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ (M : Model),
     (∀ k t v, M.heat k t (M.embed k v) = M.embed k
@@ -391,7 +391,7 @@ def familyRegistration (M0 : Model) : Registration arena (type_of% (@D5.S3.Verte
 def registration (M0 : Model) :
     Contract.Registration.{_,0,0,0,0,0,0,0,0,0,0,0}
       (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.original_heat)
-      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit Unit := {
+      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit True := {
   unitName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeat.original_heat.unit,
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalHeat.original_heat.familyRegistration,
   realizationSource := none,

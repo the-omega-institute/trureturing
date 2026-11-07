@@ -35,7 +35,7 @@ theorem gradeBot_ne_top (M : Model) (k : ℕ) :
     exact Submodule.mem_top
   exact vacuum_ne_zero M k hm
 
-def scalarSignature : Signature where
+abbrev scalarSignature : Signature where
   Params := Unit
   State _ := ℝ
   Role := Unit
@@ -45,7 +45,7 @@ def scalarSignature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def integerSignature : Signature where
+abbrev integerSignature : Signature where
   Params := Unit
   State _ := ℤ
   Role := Unit
@@ -55,7 +55,7 @@ def integerSignature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def vectorSignature : Signature where
+abbrev vectorSignature : Signature where
   Params := Σ M : Model, ℕ
   State p := p.1.Sobolev p.2
   Role := Unit
@@ -65,7 +65,7 @@ def vectorSignature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def subspaceSignature : Signature where
+abbrev subspaceSignature : Signature where
   Params := Σ M : Model, ℕ
   State p := Submodule ℂ (p.1.Sobolev p.2)
   Role := Unit
@@ -75,7 +75,7 @@ def subspaceSignature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def crossMapSignature : Signature where
+abbrev crossMapSignature : Signature where
   Params := Σ M : Model, ℕ × ℕ
   State p := p.1.Sobolev p.2.2 →L[ℂ] p.1.Sobolev p.2.1
   Role := Unit
@@ -85,7 +85,7 @@ def crossMapSignature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def basisFunctionSignature : Signature where
+abbrev basisFunctionSignature : Signature where
   Params := Σ M : Model, ℕ
   State p := p.1.energyIndex p.2 → p.1.Sobolev p.2
   Role := Unit
@@ -121,7 +121,7 @@ namespace completedGrade_negative
 abbrev signature := subspaceSignature
 def actual : Realization signature :=
   realize signature (fun _ _ z => z) (fun e => nomatch e)
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ (M : Model) (k : ℕ) (E : ℤ) (hE : E < 0),
     M.completedGrade k E = (R.readout () ⟨M,k⟩ (⊥ : Submodule ℂ (M.Sobolev k)))
@@ -142,7 +142,7 @@ def familyRegistration (M0 : Model) : Registration arena (type_of% (@D5.S3.Verte
 def registration (M0 : Model) :
     Contract.Registration.{_,0,0,0,0,0,0,0,0,0,0,0}
       (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.completedGrade_negative)
-      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit Unit := {
+      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit True := {
   unitName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalEnergyBasis.completedGrade_negative.unit,
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalEnergyBasis.completedGrade_negative.familyRegistration,
   realizationSource := none,
@@ -169,7 +169,7 @@ namespace energyBasis_coe
 abbrev signature := basisFunctionSignature
 def actual : Realization signature :=
   realize signature (fun _ _ z => z) (fun e => nomatch e)
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ (M : Model) (k : ℕ),
     (M.energyBasis k : M.energyIndex k → M.Sobolev k) = (R.readout () ⟨M,k⟩ (M.energyVector k))
@@ -183,7 +183,7 @@ namespace finiteCore_eq_energyBasis_span
 abbrev signature := subspaceSignature
 def actual : Realization signature :=
   realize signature (fun _ _ z => z) (fun e => nomatch e)
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ (M : Model) (k : ℕ),
     (M.embed k).range =
@@ -206,7 +206,7 @@ def familyRegistration (M0 : Model) : Registration arena (type_of% (@D5.S3.Verte
 def registration (M0 : Model) :
     Contract.Registration.{_,0,0,0,0,0,0,0,0,0,0,0}
       (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.finiteCore_eq_energyBasis_span)
-      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit Unit := {
+      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit True := {
   unitName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalEnergyBasis.finiteCore_eq_energyBasis_span.unit,
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalEnergyBasis.finiteCore_eq_energyBasis_span.familyRegistration,
   realizationSource := none,
@@ -233,7 +233,7 @@ namespace energyIndex_nonnegative
 abbrev signature := integerSignature
 def actual : Realization signature :=
   realize signature (fun _ _ z => z) (fun e => nomatch e)
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ (M : Model) (k : ℕ) (i : M.energyIndex k),
     0 ≤ (R.readout () () i.1)
@@ -250,7 +250,7 @@ namespace finite_grade_quadratic
 abbrev signature := scalarSignature
 def actual : Realization signature :=
   realize signature (fun _ _ z => z) (fun e => nomatch e)
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ (M : Model) (k : ℕ) (F : Finset ℤ)
     (u : ℤ → Carrier M.D) (b : ℤ → ℂ)
@@ -272,7 +272,7 @@ def familyRegistration (M0 : Model) : Registration arena (type_of% (@D5.S3.Verte
 def registration (M0 : Model) :
     Contract.Registration.{_,0,0,0,0,0,0,0,0,0,0,0}
       (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.finite_grade_quadratic)
-      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit Unit := {
+      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit True := {
   unitName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalEnergyBasis.finite_grade_quadratic.unit,
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalEnergyBasis.finite_grade_quadratic.familyRegistration,
   realizationSource := none,
@@ -299,7 +299,7 @@ namespace finite_multiplier_bound
 abbrev signature := scalarSignature
 def actual : Realization signature :=
   realize signature (fun _ _ z => z) (fun e => nomatch e)
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ (M : Model) (j k : ℕ) (B : ℝ) (hB : 0 ≤ B)
     (v : Carrier M.D) (b : ℤ → ℂ)
@@ -322,7 +322,7 @@ def familyRegistration (M0 : Model) : Registration arena (type_of% (@D5.S3.Verte
 def registration (M0 : Model) :
     Contract.Registration.{_,0,0,0,0,0,0,0,0,0,0,0}
       (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.finite_multiplier_bound)
-      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit Unit := {
+      (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit True := {
   unitName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalEnergyBasis.finite_multiplier_bound.unit,
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.OriginalEnergyBasis.finite_multiplier_bound.familyRegistration,
   realizationSource := none,
