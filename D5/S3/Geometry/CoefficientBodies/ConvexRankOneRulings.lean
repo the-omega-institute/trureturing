@@ -24,6 +24,32 @@ reduction or certified finite instance. Determinant expansions, factor choices
 and rank interfaces below are consumed proof organization, not content claims.
 -/
 
+/-
+Proof shape after inlining helpers, stopping at pinned Mathlib:
+  nonzero_entry: bind-only; consumers: rank_pos, rank_le_one_iff_minors.
+  rank_pos: bind-only; consumer: result.
+  factors: bind-only; consumers: zero_sum_factors, rank_le_one_iff_minors.
+  zero_sum_factors: bind-only; consumers: common_factor, result.
+  minor_eq: bind-only; consumers: rank_le_one_iff_minors, wedge_blend.
+  rank_le_one_iff_minors: bind-only; consumers: rank_two_iff_minor, result.
+  rank_two_iff_minor: bind-only; consumers: rank_blend_iff, result.
+  parallel_symm: bind-only; consumer: common_factor.
+  parallel_iff_scalar: bind-only; consumer: common_factor.
+  wedge_blend: bind-only; consumers: rank_blend_iff, result.
+  rank_blend_iff: bind-only; consumers: common_factor, result.
+  body_convex: bind-only; consumer: result.
+  rulings_small: bind-only; consumer: convex_classification.
+  common_factor: content; consumer: convex_classification.
+  convex_classification: content after inlining common_factor; consumer: result.
+  result: content after inlining common_factor.
+Candidate admission_basis: escape-witness (common_factor).
+The essential step is uniformity over arbitrary D after choosing A₀ and a member
+outside its left ruling. Pair compatibility with both selected members forces
+D's right factor parallel to the same v. The two witnesses cannot be chosen
+independently for each D. Factor extraction, rank interfaces and determinant
+normalization supply no escape credit. No literature novelty is asserted.
+-/
+
 noncomputable section
 open Matrix Set
 open scoped BigOperators
