@@ -247,8 +247,9 @@ internal sealed class RichWordTypeIOccurrenceDocument : IScribeDocumentDefinitio
 
     private static Formula Extensions()
     {
-        Formula n=F.Id("n"), pair=C("pair",C("phase",n),F.D(6));
-        return All("n",N(),And(Eq(C("Lext",W(n)),pair),Eq(C("Rext",W(n)),pair)));
+        Formula n=F.Id("n");
+        Formula extensions=F.Seq(F.OpenBrace,C("phase",n),F.Comma,F.D(6),F.CloseBrace);
+        return All("n",N(),And(Eq(C("Lext",W(n)),extensions),Eq(C("Rext",W(n)),extensions)));
     }
 
     private static Formula Occurrences()
