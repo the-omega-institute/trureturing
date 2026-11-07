@@ -788,7 +788,7 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
     lake = root / ".lake"
     if lake.is_symlink():
         raise ValueError("shared cache target is forbidden")
-    installed, backup, base_prepared, base_recorded = [], None, False, False
+    installed, backup, base_recorded = [], None, False
     target, base = lake / "build", root / report_reuse.BASE_RECORD
     try:
         with contextlib.ExitStack() as opened:
@@ -839,12 +839,13 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
                             and (refresh_stale or not any(target.iterdir())))):
                         (source / ".release-refreshed-at").write_text(
                             datetime.datetime.now(datetime.timezone.utc).isoformat() + "\n", encoding="utf-8")
+                        had_build = target.is_dir()
+                        had_base = base.exists() or base.is_symlink()
                         backup = pathlib.Path(tempfile.mkdtemp(prefix=".release-backup-", dir=lake))
-                        if target.is_dir():
+                        if had_build:
                             target.rename(backup / "build")
-                        if base.exists() or base.is_symlink():
+                        if had_base:
                             base.rename(backup / "base.json")
-                        base_prepared = True
                         source.rename(target)
                         installed.append("build")
                         base_recorded = report_reuse.record_seed_base(root, commit)
@@ -858,14 +859,18 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
         if backup is not None:
             # Keep both trees if rollback itself fails; never clean that backup.
             try:
-                if installed:
-                    target.rename(backup / "replacement")
-                if (backup / "build").is_dir():
-                    (backup / "build").rename(target)
-                if base_prepared:
+                # Signals can raise after a rename but before Python records its
+                # return. Recover from the saved entries and pre-mutation state.
+                saved_build, saved_base = backup / "build", backup / "base.json"
+                if saved_build.is_dir() or not had_build:
+                    if target.exists():
+                        target.rename(backup / "replacement")
+                    if saved_build.is_dir():
+                        saved_build.rename(target)
+                if saved_base.exists() or saved_base.is_symlink() or not had_base:
                     report_reuse.invalidate_seed_base(root)
-                    if (backup / "base.json").exists() or (backup / "base.json").is_symlink():
-                        (backup / "base.json").rename(base)
+                    if saved_base.exists() or saved_base.is_symlink():
+                        saved_base.rename(base)
             except OSError as rollback_error:
                 raise RollbackFailed(backup, install_error, rollback_error) from rollback_error
             # Removing discarded bytes is housekeeping after a successful rollback.

@@ -63,14 +63,17 @@ def archive_child(repository, root, mode):
             signal.pause()
 
         original_rename = Path.rename
+        armed = True
 
         def rename(source, destination):
+            nonlocal armed
             result = original_rename(source, destination)
             # Pause after the native mutation, before the caller can record it.
             boundary = ("move-build" if source == target else "move-base" if source == base
                         else "install-empty" if mode == "install-empty" and destination == target
                         else "install-build" if destination == target else None)
-            if mode == boundary:
+            if armed and mode == boundary:
+                armed = False
                 pause()
             return result
 
