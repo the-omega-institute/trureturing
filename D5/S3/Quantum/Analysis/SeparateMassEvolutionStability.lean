@@ -89,7 +89,7 @@ theorem uniform_integral_evaluation_of_mass {α : Type*} [MeasurableSpace α]
 
 variable [CompleteSpace E]
 
-private theorem term_path_error (S : Contraction E) {T : ℝ} (hT : 0 ≤ T)
+theorem term_path_error (S : Contraction E) {T : ℝ} (hT : 0 ≤ T)
     (Bseq : ℕ → ℝ → E →L[ℂ] E) (B : ℝ → E →L[ℂ] E)
     (hseq : ∀ n x, AEStronglyMeasurable (fun s => Bseq n s x)
       (volume.restrict (Set.Icc 0 T)))
