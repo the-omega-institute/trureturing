@@ -1232,3 +1232,234 @@ $\texttt{repo-derived}$ 的承重增量是：在精确 $\mathsf B$ 背景中，�
 因此一般完整候选仍保留全部原 R；新分支只是同一明确背景上的几何等价，尚未证明独立条件更少。原 $\Omega$、$q$ 与全部质量、native 和全词 $K/J$、具名标签和每条记录保持。Hilbert、Born、真实联合、CP 参考、完整仪器、历史返回和物理动力七项继续各守同一实际来源；不能用一个辅助纯锚替代全部实际准备。原菜单与接受端的接线、读后完整输出回到活动 ready 的有类型接头、保全部合法未来的真实返回，以及实际共同参考、联合设备、时钟、能量与作用量仍须构造。三轴是数学响应方向，零空间是数学一致性条件，它们都不凭空产生原世界中的设备或控制。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 22. 原评价一致的二次预测支配
+
+**定义 22.1（不预付 R 的同一 JB 背景）。** 固定定义 1.1 的同一实 Archimedean 序单位空间 $(E,C,u,N)$ 和分离且准确决定 $C$ 的原正实线性评价族 $\mathcal P$。另已供应忠实、等距、保单位且稠密的 Jordan 嵌入 $E\subset X$，其中 $X$ 为实含单位 JB 代数，同一原 $S$ 是其 Jordan 乘法的限制。此完成接口不使用 R。原域允许不完备、无限维、中心、经典支及不等块，原评价保留零、不等和次归一质量。由单位与序单位范数认回正锥，有 $C=E\cap X_+$；$X_+$ 是 $C$ 的完成闭包。以下不更换原乘法、原锥或原评价族。
+
+原 $D:E^2\to E$ 起初仅为总映射。置 $L_a b=S(a,b)$、$a^2=S(a,a)$，只保留
+
+$$
+D(a,D(a,b))=(L_a^2-L_{a^2})b\qquad(a,b\in E).
+\tag{22.1}
+$$
+
+在自由有限支撑复空间 $\mathcal F=\mathbb C^{(E)}$ 上，对原实标签定义
+
+$$
+h_\alpha([a],[b])=\alpha(S(a,b))-\mathrm i\alpha(D(a,b)),
+\qquad
+A_t[a]=[S(t,a)]-\mathrm i[D(t,a)].
+\tag{22.2}
+$$
+
+$h_\alpha$ 共轭线性于第一槽，自由延拓；$A_t$ 自由复线性延拓。要求 $h_\alpha(f,f)\ge0$ 对全部 $\alpha\in\mathcal P,f\in\mathcal F$ 成立，包括全部有限原标签的零、重复、相消、实缩放和平移。二次预测支配条件为
+
+$$
+\forall t\in E\ \exists C_t\in[0,\infty)\ \forall\alpha\in\mathcal P\ \forall f\in\mathcal F:
+\quad h_\alpha(A_tf,A_tf)\le C_t^2h_\alpha(f,f).
+\tag{22.3}
+$$
+
+$C_t$ 可依赖同一个原 $t$，但不得依赖评价或自由向量；不要求全体 $t$ 共用常数。不添加 PY、Jacobi、原投影或函数演算封闭、纯态准备、完成内实际作用者、作用者自伴性或乘法表示。$E=0$ 时全部陈述取零空间约定。
+
+## 23. 二次序支配迫使同一原乘法结合
+
+**定理 23.1（任意 JB 背景的原结合子刚性）。** 在定义 22.1 的全部背景、NN 和全部有限原复 Gram 正性下，(22.3) 当且仅当同一原 $D$ 满足完整 R：
+
+$$
+S(S(a,b),c)-S(a,S(b,c))
+=D(D(a,b),c)-D(a,D(b,c))
+\qquad(a,b,c\in E).
+\tag{23.1}
+$$
+
+成立时，原 $a\star b=S(a,b)-\mathrm iD(a,b)$ 的复双线性延拓结合，并由既有动力对应后端取得相容 C* 完成；其自伴部、单位、正锥、自伴范数和原评价分别就是 $X,u,X_+,N$ 的完成及原评价的连续延拓。该结论不限定维数、因子、矩阵图表或中央取向。
+
+证明。$E=0$ 时结论直接成立，以下设 $E\ne0$。下面全部辅助完成、双对偶、态、投影和左右乘算子仅为同一原乘法的证明工具。
+
+先支付既有代数和分析接口。原词卷引理 400.1 适用于这里固定的双线性实部和三标签共同正性，直接给同一个原 $D$ 实双线性及反对称性；不重新推导该刚性。原二表与准确原锥给
+
+$$
+|\alpha(D(a,b))|^2\le\alpha(a^2)\alpha(b^2)
+\le m_\alpha^2N(a)^2N(b)^2,
+\qquad N(D(a,b))\le N(a)N(b).
+\tag{23.2}
+$$
+
+最后一步使用原序单位范数的准确公式 $N(v)=\sup_{m_\alpha>0}|\alpha(v)|/m_\alpha$。零质量评价恒零，不除以零。单位桥定理 64.2 的前件仅为这里的 JB 接口、原二表和 NN；以 $b=u$ 应用其零核结论，得 $D(a,u)=0$。所以同一个 $D$ 唯一有界双线性延拓到 $X^2$，反对称、单位零和 NN 由范数连续性保留。
+
+在 Banach 复化 $A=X\oplus\mathrm iX$ 上定义同一延拓乘法 $x\star y=S(x,y)-\mathrm iD(x,y)$，再复双线性延拓；置 $(a+\mathrm ib)^*=a-\mathrm ib$ 和
+
+$$
+q(z)=z^*\star z,
+\qquad q(a+\mathrm ib)=a^2+b^2+2D(a,b).
+\tag{23.3}
+$$
+
+此处尚不声称结合性或 C* 范数。反对称性给反乘法的共轭线性对合，$u$ 为双侧单位。对 $z\in E\oplus\mathrm iE$，全部原评价对 $q(z)$ 非负，故 $q(z)\in C$；连续性给全部 $z\in A$ 的 $q(z)\in X_+$。因此任意数学连续正泛函 $\varphi\in X^*_+$ 都给正半定型
+
+$$
+H_\varphi(z,w)=\varphi_{\mathbb C}(z^*\star w).
+\tag{23.4}
+$$
+
+这里正性先成为原锥事实，再施加数学泛函；没有假设原评价族在全正对偶中稠密，也没有把数学态加入原准备。
+
+对 $\delta_a b=D(a,b)$，既有接触判据子论证现在具有全部前件：$\delta_a$ 有界实线性，$\delta_a u=0$；若 $c\in X_+$ 且 $\varphi(c)=0$，JB 函数演算给 $0\le c^2\le\|c\|c$，故 $\varphi(c^2)=0$。(23.4) 在 $(a,c)$ 上的 Cauchy–Schwarz 使 $\varphi(\delta_a c)=0$。完备序单位空间的有界顺序导子零面判据遂使 $e^{s\delta_a}$ 双向保锥；单位零使它保单位。在 JB 代数中这给 Jordan 自同构群，微分得到
+
+$$
+D(a,S(b,c))=S(D(a,b),c)+S(b,D(a,c)).
+\tag{23.5}
+$$
+
+此处复用三标签卷 73.1、正交迹续卷 446.1、448.1 的有界线性接触／导子子论证，而非其带 R 或其他额外前件的完整恢复结论。所用成熟零面判据的准确版本是 Niestegge §4 Lemma 3；JB 的保单位顺序导子与 Jordan 导子接口亦见 Baez §4。PY 和 Jacobi 均未用作前提。
+
+由 (23.5)，$\star$ 在实三元组上的结合子的虚部为零。其实部正是定义 10.2 的 $F$；NN 给 $F(a,a,c)=0$，而对称 $S$ 和反对称 $D$ 给 $F(c,b,a)=-F(a,b,c)$。按定理 10.3 的代数子论证极化，$F$ 全交替。因此 $A$ 是含单位交替星代数；此步只取得交替性，未取得结合性。
+
+接着构造确实延拓这个乘法的双对偶。置 $M=X^{**}$；Hanche-Olsen–Størmer Theorem 4.4.3 使它以原 Jordan 乘法的分别弱星连续延拓成为 JBW 代数，规范前对偶为 $X^*$。Peralta–Rodríguez Palacios Lemma 1.1、Lemma 3.3 及 Theorem 3.4 后的实数说明适用于任意实 JB 代数上的有界标量双线性型。对每个 $g\in X^*$，延拓
+
+$$
+u_g(a,b)=g(D(a,b)),\qquad
+\langle\widetilde D(\xi,\eta),g\rangle
+=\widetilde u_g(\xi,\eta).
+\tag{23.6}
+$$
+
+标量延拓唯一、分别弱星连续且保范数；其对 $g$ 的线性和界 $|\widetilde u_g(\xi,\eta)|\le\|g\|\|\xi\|\|\eta\|$ 说明右侧确实定义 $M$ 的元素。因此 $\widetilde D:M^2\to M$ 是原 $D$ 的有界双线性、分别弱星连续延拓。以 $S_M-\mathrm i\widetilde D$ 定义 $B=M\oplus\mathrm iM$ 的乘法，仍记为 $\star$。其对合、单位和原限制保留。交替性先写成完全极化的三线性结合子恒等式，每个变量在每一项只出现一次，再逐变量取弱星极限；所以 $B$ 仍交替。没有把含重复变量的多项式直接称为弱星连续。
+
+下面核对正性及同一个常数的延拓，而不对双对偶直接套原评价的分离性。双线性已付后，$\ell:\mathcal F\to E\oplus\mathrm iE$、$\ell(\sum_jz_j[a_j])=\sum_jz_ja_j$ 满足
+
+$$
+h_\alpha(f,f)=\alpha(q(\ell f)),\qquad
+\ell(A_tf)=t\star\ell f.
+\tag{23.7}
+$$
+
+故 (22.3) 和准确原锥等价给每个固定原 $t$ 的原序不等式
+
+$$
+0\le q(t\star z)\le C_t^2q(z)
+\qquad(z\in E\oplus\mathrm iE).
+\tag{23.8}
+$$
+
+范数连续性先将它传到 $A$。固定 $\varphi\in X^*_+$ 后，(23.4) 和
+
+$$
+K_{\varphi,t}(z,w)
+=C_t^2H_\varphi(z,w)-H_\varphi(t\star z,t\star w)
+\tag{23.9}
+$$
+
+都是 $A$ 上有界正半定半双线性型。任一这样的型 $k$ 可写成 $k(z,w)=\langle Jz,Jw\rangle$，其中 $J$ 为进入其 Hilbert 完成的有界线性映射。Hilbert 空间反身，故 $J^{**}$ 的值仍在该 Hilbert 空间，且弱星到弱连续；于是 $\langle J^{**}\zeta,J^{**}\eta\rangle$ 是 $k$ 在 $A^{**}=B$ 上的正半定、分别弱星连续延拓。分别弱星连续延拓的唯一性，将这两份延拓分别认作
+
+$$
+\widetilde H_\varphi(\zeta,\eta)
+=\varphi_{\mathbb C}(\zeta^*\star\eta),
+\quad
+\widetilde K_{\varphi,t}(\zeta,\eta)
+=C_t^2\widetilde H_\varphi(\zeta,\eta)
+-\widetilde H_\varphi(t\star\zeta,t\star\eta),
+\tag{23.10}
+$$
+
+其中 $\varphi$ 在 $M$ 上取其规范正常延拓，且固定原 $t$ 的左乘为其有界算子的双对偶延拓。这一步利用正型的 Hilbert 分解，不对二次表达式交换未经支付的联合弱星极限。
+
+$X^*_+$ 的规范正常延拓决定 $M_+$，故 (23.10) 给出
+
+$$
+q(\zeta)\in M_+,\qquad
+0\le q(t\star\zeta)\le C_t^2q(\zeta)
+\quad(t\in E,\ \zeta\in B).
+\tag{23.11}
+$$
+
+只保留每个原 $t$ 原先的常数；没有为任意完成或双对偶作用者假设支配界。并且平方是准确的：若 $q(\zeta)=0$，由 $\widetilde H_\varphi$ 的 Cauchy–Schwarz 及 $u$ 为单位，有
+
+$$
+|\varphi_{\mathbb C}(\zeta)|^2
+=|\widetilde H_\varphi(u,\zeta)|^2
+\le\varphi(u)\varphi(q(\zeta))=0.
+\tag{23.12}
+$$
+
+全部正常正泛函分离 $M$，分别取实部和虚部，得 $\zeta=0$。这不要求某一个正常态忠实。
+
+现在支付结合性的关键步骤。对任意数学投影 $p=p^2\in M$，记 $e=u-p$ 和 JB 二次表示 $U_p=2L_p^2-L_{p^2}$。交替代数的中间 Moufang 恒等式 $(xy)(ax)=x(ya)x$ 给
+
+$$
+q(\zeta\star p)
+=(p\star\zeta^*)\star(\zeta\star p)
+=p\star q(\zeta)\star p
+=U_pq(\zeta).
+\tag{23.13}
+$$
+
+末项等式由交替乘法的对称化就是 $S_M$ 以及柔性律给出。括号中的 $p\star q(\zeta)\star p$ 无歧义；这里不预付一般结合性。$U_p,U_e$ 都是正映射，且 $U_eU_p=U_pU_e=0$，这是互补 JB 投影的标准 Peirce 身份。
+
+固定原 $t$ 和任意 $\zeta\in B$，置 $w=t\star(\zeta\star p)$。将 (23.11) 用于 $\zeta\star p$，再施加正映射 $U_e$，得
+
+$$
+0\le q(w\star e)=U_eq(w)
+\le C_t^2U_eU_pq(\zeta)=0.
+\tag{23.14}
+$$
+
+由 (23.12)，$w\star e=0$，所以 $w=w\star p$。换用互补投影 $e$ 同证：原左乘 $\lambda_t:\zeta\mapsto t\star\zeta$ 分别保持 $B\star p$ 和 $B\star e$。
+
+右交替性给 $R_p^2=R_p$、$R_e=I-R_p$，其中 $R_p\zeta=\zeta\star p$。因此这两个子空间恰是互补右乘投影的像；同时保持它们意味着 $\lambda_tR_p=R_p\lambda_t$。换回乘法，得到
+
+$$
+(t\star\zeta)\star p=t\star(\zeta\star p)
+\qquad(t\in E,\ \zeta\in B,\ p=p^2\in M).
+\tag{23.15}
+$$
+
+这由二次序支配推出，未把左作用的有界性直接误认作伴随性或乘法性。
+
+JBW 谱逼近定理 Hanche-Olsen–Størmer Proposition 4.2.3 说明，$M$ 中每个实元素均可在范数下由有限实正交投影谱和逼近。结合子对第三槽线性且范数连续，故 (23.15) 对全部第三槽 $c\in M$ 成立，再复线性延拓到 $B$。特别取原 $t=a,\zeta=b,c\in E$，得到原 $\star$ 的完整结合律，其实部正是 (23.1)。所有投影只出现在辅助双对偶中，原域不需要含有任何一个这样的投影。
+
+最后按定理 10.3，完整 R 给 $[\delta_a,\delta_b]=-[L_a,L_b]$；已支付的有界实线性对应、$\delta_a a=0$ 及斜顺序导子值域，正好满足 Baez Theorem 12 所述 Alfsen–Shultz 动力对应接口。故既有后端给同一 $S-\mathrm iD$ 的相容 C* 结构及原锥、单位、自伴范数和原评价。反向，若保留的背景中完整 R 成立，同一后端给结合乘法，并在该 C* 代数内有
+
+$$
+0\le z^*\star t^2\star z\le N(t)^2z^*\star z.
+\tag{23.16}
+$$
+
+施加每个原评价并用 (23.7)，即得 (22.3)，可取 $C_t=N(t)$。此反向只在结合性已付后使用，未反用正交迹续卷 437 的构造。∎
+
+## 24. 原 Gram 伴随及准确放大常数
+
+**推论 24.1（缺失的原伴随关系与最优常数）。** 在定理 23.1 的准确前件及 (22.3) 下，对每个原 $t,a,b$ 和每个数学连续正泛函 $\varphi\in X^*_+$，自由标签型满足完整复等式
+
+$$
+h_\varphi(A_t[a],[b])=h_\varphi([a],A_t[b]).
+\tag{24.1}
+$$
+
+特别，其实部相等。每个原 $t$ 在全部原评价和全部自由向量上的最小可用支配常数恰为 $N(t)$。
+
+证明。在已证明结合的同一原复代数中，$t^*=t$，所以 $(t\star a)^*\star b=a\star(t\star b)$。以 $\varphi$ 评价并用 (23.7) 得 (24.1)。上界由 (23.16) 给出；任一可用 $C_t$ 在 (22.3) 中取 $f=[u]$，得到 $\alpha(t^2)\le C_t^2m_\alpha$ 对所有原 $\alpha$ 成立。准确原锥给 $t^2\le C_t^2u$，JB 范数平方律给 $N(t)\le C_t$。零域和零作用者仍取常数零。该推论是主刚性的消费，不是独立的 GNS 恢复前提。∎
+
+## 25. 数学来源、几何内容及原来源边界
+
+**定义 25.1（成熟工具与新增综合）。** 原词卷 400.1–400.2 的原双线性、单位桥 64.2 的 NN 零核及单位行、三标签卷 73.1 和正交迹续卷 446.1、448.1 的有界线性接触／导子子论证、本卷 10.3 的 NN 后交替结合子代数子论证，均按定理 23.1 中逐项支付的前件复用，不另认领这些工具。其余成熟来源如下：
+
+| 来源 | 准确使用范围 |
+| --- | --- |
+| A. M. Peralta、Á. Rodríguez Palacios，*Grothendieck’s inequalities for real and complex JBW*-triples*，Proc. LMS 83，605–625，[DOI:10.1112/plms/83.3.605](https://doi.org/10.1112/plms/83.3.605)，[作者版](https://www.ugr.es/~aperalta/oldweb/documentos/papers/bigGrothendieckIneq.pdf) | Lemma 1.1 给标量双线性型的分别弱星连续双对偶延拓；Lemma 3.3 和 Theorem 3.4 后的说明给实数版本，§2 明确实 JB 代数属于实 JB* 三元系。只对已经证明有界的同一 $D$ 的标量切片应用，不借用任何结合复乘法。 |
+| Hanche-Olsen、Størmer，*Jordan operator algebras*，[作者公开本](https://hanche.folk.ntnu.no/joa/joa-m.pdf) | Theorem 4.4.3 给同一实 JB 乘法的 JBW 双对偶和原态的正常延拓；Proposition 4.2.3 给 JBW 元素的有限正交投影谱和范数逼近；互补投影的正二次表示及 $U_pU_{u-p}=0$ 取 §2.6、§3.3.6、Lemma 4.2.2。这些不是原 native 投影封闭或新的实际资源。 |
+| R. D. Schafer，*An introduction to nonassociative algebras*，[公开正文](https://www.gutenberg.org/files/25156/25156-pdf.pdf)，Chapter III，印刷页 18，(9) | 一般交替代数的中间 Moufang 恒等式 $(xy)(ax)=x(ya)x$ 及其证明；只需交替性，不需要除代数、有限维、因子或八元数分类。 |
+| Niestegge，[arXiv:1402.0158v2 §4 Lemma 3](https://arxiv.org/html/1402.0158v2#S4)；Baez，[arXiv:2006.14741v5 §4 Theorem 12](https://arxiv.org/html/2006.14741v5#Thmthm12) | 有界顺序导子的全态零面判据及 JB 斜顺序导子接口；动力对应重构仅在完整交换子条件已经由主证明取得后使用。Niestegge 的其他事件／条件概率前件不被默认为本模型的性质。 |
+
+这些通用工具属于 $\texttt{literature-attested}$。这里的 $\texttt{repo-derived}$ 承重综合是：(22.3) 对固定原评价族的一致支配先成为原序不等式，再经正型延拓保持同一原作用者常数；Moufang 平方把右投影角认作精确零面，(23.14) 迫使两颗互补右角均在原左作用下稳定，故右投影进入原作用者的结合核；JBW 谱逼近最后把它接回全部原三元组。它填补的是一般 JB 上同一个原 $D$ 的 R 推论，而非重做自旋单纯锚或复述一般 GNS。这里不作穷尽文献、历史优先权或全局最小公理主张。
+
+**定义 25.2（支配条件的几何及范围）。** (22.3) 比“每个评价内分别有界”多出的准确内容，是先在全部原评价中用同一个常数得到一条序不等式。它因而能控制原族未包含的数学边界态，并在同一乘法的辅助双对偶中禁止左接作用把一个右支撑角的零质量漏到互补角。两角同时稳定意味着接上该投影时换括号无误差；谱逼近才把这种角稳定升级为原任意响应的完整换括号。只有每态各自有限的常数时，不能形成 (23.8)，本卷 19.1 的准确发散比仍适用，但不构成对 (22.3) 的反例。
+
+原 $D$ 与 $-D$ 的方向不由此选定；任何已经存在的相容中央相反选择也满足同一 $C_t=N(t)$。单位桥 66–72 的指定满矩阵链及其真正混合／平衡中央切口结论保持原范围，经典粘合端点 70.1 不被本定理排除；这里不增加全词包络中央切口、无经典商或因子前件。Schupp–Szabo [arXiv:2311.03647v3 §§2–3](https://arxiv.org/html/2311.03647v3) 的包络乘法是关联的作用复合，本证明没有把它预先等同于原 $S-\mathrm iD$，也没有由包络存在性跳过 (23.14)–(23.15)。
+
+本定理是明列候选模型前件下的纸面静态推导。辅助数学态、Hilbert 空间、双对偶投影、谱逼近及数学指数都不成为原实际准备、投影操作、共同实现者或物理钟。原全 $\Omega$、准备、native 类型及全词同一 $K/J$、父位置与 ready 类型、来源与记录、参考、时钟、真实相关联合、原 $q$ 与零／不等／未归一质量、中心经典不等维块、失败停止销毁、全部合法顺序自适应并行历史及全部仍合法未来仍保持。原来源是否供应 (22.1)–(22.3)、完整仪器和递归同源参考、接受叶活动输出构造与第一合法消费者、读后 ready 接头、保同一完整输出及全未来的真实返回、无限 CountRead、正常性和物理作用量仍须各自建立。本节不把有限整数记录／返回、数学完成或静态定理认作这些来源合同的构造，也不把条件量子代数恢复认作全部量子起源完成。
+
+## 追加锚（本行以下为增补区）
