@@ -235,8 +235,8 @@ def arena : Arena where
         (M.embed (M.order a + M.order b + k) v)) (M.embed k
         (((_root_.D5.S3.VertexAlgebra.FieldNormalProductLocality.delta^[j]
           (_root_.D5.S3.VertexAlgebra.FieldNormalProductLocality.commutator
-            (LatticeGeneratingFieldLocality.actualField M.D a)
-            (LatticeGeneratingFieldLocality.actualField M.D b)))
+            (_root_.D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality.actualField M.D a)
+            (_root_.D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality.actualField M.D b)))
           (m + chargeEnergy M.D a - 1) (n + chargeEnergy M.D b - 1)) v))
 private theorem rejected_bad : ¬ arena.Law vecRejected := by
   intro h
