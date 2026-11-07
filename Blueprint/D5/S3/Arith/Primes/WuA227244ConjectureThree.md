@@ -6,19 +6,11 @@ Under two independent progression noncoverage hypotheses, 149 is the least prime
 
 All indices and exponents are natural numbers. The outer arithmetic, including the final subtraction, is in the integers. The symbol G denotes the signed integer itself, without a natural subtraction or absolute value.
 
-**Definition 1.1 (The nested exponential integer).**
+The symbol G is the public original-owner definition D5.S3.Arith.Primes.WuA227244ConjectureFour.G, used directly throughout the Lean proof. OEIS A227244, NAME: Smallest prime factor of (2^(2^n) + 1)*2^(2^(2^n)) - 1. The exponent of the second outer power is two raised to two raised to m.
 
-$$\forall m \in \mathbb{N},\; \operatorname{G}\left(m\right) = ((2: \mathbb{Z})^{2^{m}} + 1) \cdot (2: \mathbb{Z})^{2^{2^{m}}} - 1$$
+$\forall m \in \mathbb{N},\; \operatorname{G}\left(m\right) = ((2: \mathbb{Z})^{2^{m}} + 1) \cdot (2: \mathbb{Z})^{2^{2^{m}}} - 1$
 
-*Formalization.* `D5/S3/Arith/Primes/WuA227244ConjectureThree.G` (`✓ std3`).
-
-*Citation.* Chai Wah Wu; OEIS Foundation Inc. (2026). *OEIS A227244, Conjecture 3 on the smallest prime factor*. URL: <https://oeis.org/A227244/internal>.
-
-*Commentary.*
-
-OEIS A227244, NAME: Smallest prime factor of (2^(2^n) + 1)*2^(2^(2^n)) - 1. The exponent of the second outer power is two raised to two raised to m.
-
-**Definition 1.2 (Finite residues of the nested powers).**
+**Definition 1.1 (Finite residues of the nested powers).**
 
 $$\forall q \in \mathbb{N},\; \forall d \in \mathbb{N},\; \forall p \in \mathbb{N},\; \forall L \in \mathbb{N},\; \forall r \in \mathbb{N},\; \operatorname{reduced}\left(q, d, p, L, r\right) = ((2: \operatorname{ZMod}\left(q\right))^{\operatorname{mod}\left(2^{72 \cdot r + 32}, d\right)} + 1) \cdot (2: \operatorname{ZMod}\left(q\right))^{\operatorname{mod}\left(2^{p + \operatorname{mod}\left(2^{72 \cdot r + 32}, p\right)}, d\right)} - 1$$
 
@@ -32,7 +24,7 @@ $$\forall q \in \mathbb{N},\; \forall d \in \mathbb{N},\; \forall p \in \mathbb{
 
 This residue expression is in ZMod q. Its five natural parameters are q, d, p, L and r; L records the period used to choose r. The first exponent is reduced modulo d. For the second exponent, a tail of length p precedes reduction modulo p, and the resulting outer exponent is reduced modulo d. Periodicity of powers along 72*n+32 transfers this expression to every natural n.
 
-**Theorem 1.3 (The exact conditional least-prime assertion).**
+**Theorem 1.2 (The exact conditional least-prime assertion).**
 
 $$\forall n \in \mathbb{N},\; (\neg (\exists k \in \mathbb{N},\; 72 \cdot n + 32 = 20 \cdot k + 16)) \Rightarrow ((\neg (\exists k \in \mathbb{N},\; 72 \cdot n + 32 = 220 \cdot k + 8)) \Rightarrow ((\operatorname{Prime}\left(149\right)) \land (((149: \mathbb{Z}) \mid ((2: \mathbb{Z})^{2^{72 \cdot n + 32}} + 1) \cdot (2: \mathbb{Z})^{2^{2^{72 \cdot n + 32}}} - 1) \land (\forall q \in \mathbb{N},\; (\operatorname{Prime}\left(q\right)) \Rightarrow (((q: \mathbb{Z}) \mid ((2: \mathbb{Z})^{2^{72 \cdot n + 32}} + 1) \cdot (2: \mathbb{Z})^{2^{2^{72 \cdot n + 32}}} - 1) \Rightarrow (149 \le q))))))$$
 
@@ -52,7 +44,6 @@ The source says: Conjecture 3: a(72*n+32) = 149 for n >= 0 and a(72*n+32) is not
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/Primes/WuA227244ConjectureThree.G`
 - Truth anchor: `D5/S3/Arith/Primes/WuA227244ConjectureThree.reduced`
 - Truth anchor: `D5/S3/Arith/Primes/WuA227244ConjectureThree.result`
 - Dependency: [D5/S3/Arith/Primes/WuA227244ConjectureFour](WuA227244ConjectureFour.md)
