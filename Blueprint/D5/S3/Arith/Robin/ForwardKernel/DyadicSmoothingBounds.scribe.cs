@@ -11,6 +11,33 @@ internal sealed class DyadicSmoothingBoundsDocument : IScribeDocumentDefinition
         H("Bounds for dyadic smoothing"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("increment-locally-bounded-measurable"),
+                DeclarationHandle.Create(Prefix + "increment_lbm"),
+                H("Local bounds for increments"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Every fixed forward increment of a locally bounded Borel measurable real function is again locally bounded and Borel measurable."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("locally-bounded-measurable-mem-lp"),
+                DeclarationHandle.Create(Prefix + "lbm_memLp"),
+                H("Square integrability on bounded intervals"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Every locally bounded Borel measurable real function belongs to L2 for Lebesgue measure restricted to any bounded interval (a,b]."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("continuous-locally-bounded-measurable"),
+                DeclarationHandle.Create(Prefix + "continuous_lbm"),
+                H("Compact bounds for a continuous function"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Every continuous real function is Borel measurable and bounded in absolute value on every compact real interval."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("dyadic-smoothing-bounds"),
                 DeclarationHandle.Create(Prefix + "dyadic_smoothing_bounds"),
                 H("Uniform smoothing estimates"),
