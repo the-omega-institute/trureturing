@@ -3701,7 +3701,8 @@ theorem qutrit_exact_ensemble :
       (13 : ℝ)/108 < (14-Real.sqrt 115)/27 ∧
       (1 : ℝ)/9 < 13/108 ∧ epsilonO 3 3 (3/8) = 1/9 := by
   have hpW : (3 : ℝ)/8 ≤ witnessZeroProbability 3 3 := by
-    norm_num [witnessZeroProbability,witnessSlope,supportRank,wordCount,cutCount]
+    rw [qutrit_source_arithmetic.2.2.2.2]
+    norm_num
   obtain ⟨hw,hs,hu,hm,ha,he⟩ := low_noise_attainment (n := 3) (d := 3) (by norm_num) (by norm_num) (by norm_num : (0 : ℝ) ≤ 3/8) hpW
   have hm' : noisyGhz 3 3 (3/8) =
       (1/72 : ℝ) • (1 : Matrix (Word (Fin 3) 3) (Word (Fin 3) 3) ℂ)+

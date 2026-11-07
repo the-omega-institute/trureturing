@@ -4,7 +4,8 @@ import Reg.Support.DependentFamily
 import Reg.Support.SingleDependentReadout
 
 /-! Source-bound escape evidence for the independent-phase sum and the actual
-finite-ensemble roof. Unfinished bindings retain their native diagnostics. -/
+finite-ensemble roof. The other theorem audits remain unfinished and are
+disclosed in issue #27732; no validation is claimed for them. -/
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Entanglement.Witness.NoisyGhzExactRoof
