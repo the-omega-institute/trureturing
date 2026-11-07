@@ -42,12 +42,27 @@ The modulus matrix B_ij=abs H_ij and weighted matrix W_ij=rho_ij abs H_ij satisf
 
 This is a local neighborhood theorem. It does not claim the full global HSF conjecture. The exact full-telescope Reg mirror retains the actual derivatives and radius implication; source-selection reconstruction and escape evidence remain unresolved under issue 23103, so declared_validated is not claimed.
 
+**Theorem 1.3 (The ordered identity for a general Hermitian direction).**
+
+Lean statement: `D5/S3/Quantum/Matrix/HsfLocalSpectrumSupplier.actual_shifted_supplier_identity`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/HsfLocalSpectrumSupplier.actual_shifted_supplier_identity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let n be any finite index type and p_i positive real labels. Let S be Hermitian and Z an arbitrary complex matrix. Define P, F and the actual factorial-normalized derivatives B_j as above, now using this S without a neighborhood assumption. Set X_ij=tau_ij S_ij and Q_ij=sum over k of ((2/3) tau_ik tau_kj+3 c(p_i,p_j,p_k)) S_ik S_kj, where c is the second spectral kernel. Put W=Z+X/3.
+
+Writing J=Re Tr(B_3+2 Z B_2+B_1 Z squared-(5/48) B_1 cubed), the identity is 6 J=(4 Re Tr(S cubed)-Re Tr(X cubed))/3-4 Re Tr(Q W)+4 Re Tr(X W W). It follows from the actual first and second CFC coefficients, the actual cubic trace normalization and cyclic trace algebra. The order of every matrix product is retained. This identity alone imposes no sign on J. Empty carriers, repeated positive labels and arbitrary finite multiplicities are included.
+
 The proof reuses GNSMatrix's Frobenius-square trace identity, CartesianVariance.trace_product_cauchy and Matrix.frobenius_norm_mul. It extends the finite spectral coefficient estimates; it does not reprove the radial or two-level certificates. The contextual source is He–Saunderson–Fawzi, arXiv:2502.05627v1 Conjecture 6.2 / DOI 10.1007/s10107-025-02314-0 Conjecture 1. No novelty or external official acceptance claim is made.
 
 The full-telescope typed Reg attempt retains the radius implication and actual CFC readout. Source-selection reconstruction and the escape coordinate remain unfinished under https://github.com/the-omega-institute/trureturing/issues/23103; declared_validated is not claimed.
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Matrix/HsfLocalSpectrumSupplier.actual_shifted_supplier_identity`
 - Truth anchor: `D5/S3/Quantum/Matrix/HsfLocalSpectrumSupplier.finite_spectrum_local_supplier`
 - Truth anchor: `D5/S3/Quantum/Matrix/HsfLocalSpectrumSupplier.finite_spectrum_uniform_local_supplier`
 - Dependency: [D5/S3/Quantum/GNSMatrix](../GNSMatrix.md)
