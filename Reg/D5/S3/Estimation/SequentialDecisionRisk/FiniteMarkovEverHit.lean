@@ -72,7 +72,7 @@ def family : Registration arena.{u} (type_of% (@ever_hit_harmonic.{u})) := by
       · intro i
         refine ⟨rejected, ?_, rfl, hbad⟩
         intro j h
-        exact False.elim (h (Subsingleton.elim _ _))
+        exact False.elim (h (Subsingleton.elim (α := Unit) j i))
       · intro e; exact nomatch e
     dependence := by
       intro _
