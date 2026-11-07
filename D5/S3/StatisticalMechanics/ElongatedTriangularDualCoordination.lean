@@ -76,7 +76,6 @@ inductive Vertex
   | S (m k : ℤ)
   | U (m k : ℤ)
   | D (m k : ℤ)
-  deriving DecidableEq
 
 private def adjacent : Vertex → Vertex → Prop
   | .S m k, .S p q => m = p ∧ (k = q + 1 ∨ q = k + 1)
