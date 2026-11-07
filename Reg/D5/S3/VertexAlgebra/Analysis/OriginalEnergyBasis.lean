@@ -21,6 +21,26 @@ open LeanInformationAudit
 
 namespace Reg.D5.S3.VertexAlgebra.Analysis.OriginalEnergyBasis
 
+private def auditLattice : LatticeData where
+  rank := 0
+  G := 0
+  symmetric := by intro i; exact Fin.elim0 i
+  even_diagonal := by intro i; exact Fin.elim0 i
+
+/-- A genuine model supplies a closed intervention witness for universal source laws. -/
+def auditModel : Model where
+  D := auditLattice
+  positive := by
+    have h : _root_.D5.S3.VertexAlgebra.OriginalGram.gramReal auditLattice =
+        Matrix.diagonal (fun _ : Fin 0 => (0 : ℝ)) := by
+      ext i
+      exact Fin.elim0 i
+    rw [h]
+    exact Matrix.PosDef.diagonal (fun i => Fin.elim0 i)
+  inverse := 0
+  inverse_left := by ext i; exact Fin.elim0 i
+  inverse_right := by ext i; exact Fin.elim0 i
+
 /-- Actual nonzero original vacuum, also in rank zero. -/
 theorem vacuum_ne_zero (M : Model) (k : ℕ) : M.embed k (vacuum M.D) ≠ 0 := by
   intro h
@@ -139,7 +159,7 @@ private theorem rejected_law (M0 : Model) : ¬ arena.Law rejected := by
   exact gradeBot_ne_top M0 0 heq
 def familyRegistration (M0 : Model) : Registration arena (type_of% (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.completedGrade_negative)) :=
   singletonFamily actual rejected Iff.rfl actual_law (rejected_law M0) (actual_dependence M0)
-def registration (M0 : Model) :
+def registration :
     Contract.Registration.{_,0,0,0,0,0,0,0,0,0,0,0}
       (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.completedGrade_negative)
       (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit True := {
@@ -151,7 +171,7 @@ def registration (M0 : Model) :
   objectArena := .source ⟨arena⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
-  realization := .source arena ⟨familyRegistration M0⟩,
+  realization := .source arena ⟨familyRegistration auditModel⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
   readout := some (realize signature (fun _ _ z => z) (fun e => nomatch e)),
@@ -203,7 +223,7 @@ private theorem rejected_law (M0 : Model) : ¬ arena.Law rejected := by
   exact vacuum_ne_zero M0 0 hm
 def familyRegistration (M0 : Model) : Registration arena (type_of% (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.finiteCore_eq_energyBasis_span)) :=
   singletonFamily actual rejected Iff.rfl actual_law (rejected_law M0) (actual_dependence M0)
-def registration (M0 : Model) :
+def registration :
     Contract.Registration.{_,0,0,0,0,0,0,0,0,0,0,0}
       (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.finiteCore_eq_energyBasis_span)
       (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit True := {
@@ -215,7 +235,7 @@ def registration (M0 : Model) :
   objectArena := .source ⟨arena⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
-  realization := .source arena ⟨familyRegistration M0⟩,
+  realization := .source arena ⟨familyRegistration auditModel⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
   readout := some (realize signature (fun _ _ z => z) (fun e => nomatch e)),
@@ -269,7 +289,7 @@ private theorem rejected_law (M0 : Model) : ¬ arena.Law rejected := by
   norm_num [rejected, realize] at hh
 def familyRegistration (M0 : Model) : Registration arena (type_of% (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.finite_grade_quadratic)) :=
   singletonFamily actual rejected Iff.rfl actual_law (rejected_law M0) (actual_dependence M0)
-def registration (M0 : Model) :
+def registration :
     Contract.Registration.{_,0,0,0,0,0,0,0,0,0,0,0}
       (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.finite_grade_quadratic)
       (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit True := {
@@ -281,7 +301,7 @@ def registration (M0 : Model) :
   objectArena := .source ⟨arena⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
-  realization := .source arena ⟨familyRegistration M0⟩,
+  realization := .source arena ⟨familyRegistration auditModel⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
   readout := some (realize signature (fun _ _ z => z) (fun e => nomatch e)),
@@ -319,7 +339,7 @@ private theorem rejected_law (M0 : Model) : ¬ arena.Law rejected := by
   norm_num [rejected, realize] at hh
 def familyRegistration (M0 : Model) : Registration arena (type_of% (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.finite_multiplier_bound)) :=
   singletonFamily actual rejected Iff.rfl actual_law (rejected_law M0) (actual_dependence M0)
-def registration (M0 : Model) :
+def registration :
     Contract.Registration.{_,0,0,0,0,0,0,0,0,0,0,0}
       (@D5.S3.VertexAlgebra.Analysis.OriginalSmearing.finite_multiplier_bound)
       (type_of% (realize signature (fun _ _ z => z) (fun e => nomatch e))) Unit True := {
@@ -331,7 +351,7 @@ def registration (M0 : Model) :
   objectArena := .source ⟨arena⟩,
   catalog := Lean.Name.anonymous,
   localNames := false,
-  realization := .source arena ⟨familyRegistration M0⟩,
+  realization := .source arena ⟨familyRegistration auditModel⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
   readout := some (realize signature (fun _ _ z => z) (fun e => nomatch e)),
