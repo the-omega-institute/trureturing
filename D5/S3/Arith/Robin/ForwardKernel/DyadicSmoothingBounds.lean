@@ -21,14 +21,14 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 
-private lemma continuous_lbm {f : ℝ → ℝ} (hf : Continuous f) :
+lemma continuous_lbm {f : ℝ → ℝ} (hf : Continuous f) :
     LocallyBoundedMeasurable f := by
   refine ⟨hf.measurable, fun a b => ?_⟩
   obtain ⟨M, hM⟩ := (isCompact_Icc.image hf.norm).bddAbove
   exact ⟨max M 0, le_max_right _ _, fun x hx =>
     (hM (mem_image_of_mem _ hx)).trans (le_max_left _ _)⟩
 
-private lemma increment_lbm {E : ℝ → ℝ} (hE : LocallyBoundedMeasurable E) (u : ℝ) :
+lemma increment_lbm {E : ℝ → ℝ} (hE : LocallyBoundedMeasurable E) (u : ℝ) :
     LocallyBoundedMeasurable (increment E u) := by
   refine ⟨(hE.1.comp (measurable_id.add_const u)).sub hE.1, fun a b => ?_⟩
   obtain ⟨M, hM, hb⟩ := hE.2 (a + u) (b + u)
@@ -36,7 +36,7 @@ private lemma increment_lbm {E : ℝ → ℝ} (hE : LocallyBoundedMeasurable E) 
   exact ⟨M + N, add_nonneg hM hN, fun x hx =>
     (abs_sub _ _).trans (add_le_add (hb _ ⟨by linarith [hx.1], by linarith [hx.2]⟩) (hc x hx))⟩
 
-private lemma lbm_memLp {f : ℝ → ℝ} (hf : LocallyBoundedMeasurable f) (a b : ℝ) :
+lemma lbm_memLp {f : ℝ → ℝ} (hf : LocallyBoundedMeasurable f) (a b : ℝ) :
     MemLp f 2 (volume.restrict (Ioc a b)) := by
   obtain ⟨M, _, hM⟩ := hf.2 a b
   apply MemLp.of_bound hf.1.aestronglyMeasurable M
