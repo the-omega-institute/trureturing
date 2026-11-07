@@ -11,6 +11,8 @@ strata_touched:
   - D5/S3/Quantum/Matrix/RpowPencilTaylor
   - D5/S3/Quantum/Matrix/HsfBalancedSpectralCertificate
   - D5/S3/Quantum/Matrix/HsfBalancedCfcBridge
+  - D5/S3/Quantum/Matrix/HsfLocalSpectrumTrace
+  - D5/S3/Quantum/Matrix/HsfLocalSpectrumSupplier
 license: citation-only
 triage: anchor
 ---
@@ -140,10 +142,28 @@ version permits only the supplied finite reindexing, unitary conjugation, and
 common positive scaling of the center and direction. It does not extract a
 frame from a bare eigenvalue-count premise and does not provide nonunitary
 congruence or arbitrary PSD diagonal blocks outside the displayed hypothesis.
-There is no formal three-level or arbitrary-spectrum theorem here, and this
-library update does not claim the full all-`alpha` HSF conjecture, a novelty
-result, or an official open-problem resolution. The primary HSF source and
-the original radial `alpha=3` exposition above remain the citation anchor.
+The separate `HsfLocalSpectrumSupplier.finite_spectrum_local_supplier` gives
+an explicit local all-`Z` theorem for every finite positive diagonal spectrum
+`P=diag(p_i)` with at least two distinct levels. Set
+\(\tau_{ij}=3\sqrt{p_ip_j}(p_i+p_j)/(2(p_i^2+p_ip_j+p_j^2))\) and
+\(\delta=\min_{p_i\ne p_j}(1-\tau_{ij}^2)>0\).
+For complex Hermitian `H` satisfying `H_ij=0` whenever `p_i=p_j`, let
+\(r=\|H\|_F\le3\delta/32\) and `S=I+H`. For the actual factorial
+derivatives `B_j` at zero of
+\(P^{-1}(P^3+tP^{3/2}SP^{3/2})^{2/3}P^{-1}\), it proves, for every
+Hermitian `Z`,
+\[
+\operatorname{Re}\operatorname{Tr}
+ (B_3+2ZB_2+B_1Z^2-\tfrac5{48}B_1^3)\ge\delta r^2/6.
+\]
+Repeated spectral levels, arbitrary multiplicities, complex phases and `H=0`
+are included. `HsfLocalSpectrumTrace.actual_trace_normalization` supplies the
+general actual-CFC quadratic and cubic trace identities used in this proof.
+The positive gap requires the stated equal-level block support restriction;
+the result is local on this affine slice, with no global neighborhood or
+arbitrary-direction claim. It does not claim the full all-`alpha` HSF
+conjecture, novelty, or an official open-problem resolution. The primary HSF
+source and the original radial `alpha=3` exposition remain the citation anchor.
 
 ## Verified locators
 
