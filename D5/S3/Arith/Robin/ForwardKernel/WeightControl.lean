@@ -7,6 +7,7 @@
    digest: The correlated forward weight ratio has a derivative smaller by the window scale. -/
 
 import D5.S3.Arith.Robin.OriginalEarlyDivisorQuadrature
+import D5.S3.Arith.Robin.ForwardKernel.ProfileKernelDefs
 import Mathlib.Analysis.Calculus.MeanValue
 
 namespace D5.S3.Arith.Robin.ForwardKernel.WeightControl
@@ -20,6 +21,7 @@ open Set
 open OriginalMovingWindowMoment (width)
 open MellinWeightedVariation (weight)
 open OriginalEarlyDivisorQuadrature (weightSlope)
+open ProfileKernelDefs (priceRatio)
 
 /-- The logarithmic derivative of the original positive price weight. -/
 def logSlope (x : ℝ) : ℝ :=
@@ -134,17 +136,17 @@ private lemma ratio_deriv {x u : ℝ} (hx : 1 < x) (hu : 0 ≤ u) :
     field_simp [hw.ne']
     <;> ring
 
-/-- The value of the correlated ratio differs from one by the relative window length. -/
-theorem weightRatio_sub_one {x u : ℝ} (hx : 4 ≤ x) (hu : 0 ≤ u) (hu1 : u ≤ 1) :
-    |weightRatio x u - 1| ≤ 4 * x ^ (-1 / 5 : ℝ) := by
+/-- The price ratio differs from one by at most four times the relative displacement. -/
+theorem priceRatio_sub_one {x u : ℝ} (hx : 4 ≤ x) (hu : 0 ≤ u) :
+    0 ≤ 1 - priceRatio x u ∧ 1 - priceRatio x u ≤ 4 * u / x := by
   have hx0 : 0 < x := by linarith
-  let y := x + u * width x
-  have hxy : x ≤ y := le_add_of_nonneg_right (mul_nonneg hu (Real.rpow_nonneg hx0.le _))
+  let y := x + u
+  have hxy : x ≤ y := le_add_of_nonneg_right hu
   have hy0 : 0 < y := hx0.trans_le hxy
   have hw := OriginalMovingWindowMoment.weight_pos (by linarith : 1 < x)
-  have hr : weightRatio x u ≤ 1 :=
+  have hr : priceRatio x u ≤ 1 :=
     (div_le_one hw).2 (OriginalMovingWindowMoment.weight_antitone (by linarith) hxy)
-  have hlo : (x / y) ^ 4 ≤ weightRatio x u :=
+  have hlo : (x / y) ^ 4 ≤ priceRatio x u :=
     (le_div_iff₀ hw).2 (OriginalMovingWindowMoment.weight_ratio_lower hx hxy)
   have hδ : 0 ≤ (y - x) / x := div_nonneg (sub_nonneg.mpr hxy) hx0.le
   have hpower := OriginalMovingWindowMoment.negative_power_lower hδ (by norm_num : (0 : ℝ) ≤ 4)
@@ -155,14 +157,23 @@ theorem weightRatio_sub_one {x u : ℝ} (hx : 4 ≤ x) (hu : 0 ≤ u) (hu1 : u �
     rw [div_pow, inv_div] at hpower
     rw [div_pow]
     linarith
-  rw [abs_of_nonpos (sub_nonpos.mpr hr)]
+  refine ⟨by linarith, ?_⟩
   calc
     _ ≤ 1 - (x / y) ^ 4 := by linarith
     _ ≤ 4 * ((y - x) / x) := hrel
-    _ = 4 * u * x ^ (-1 / 5 : ℝ) := by
-      dsimp [y]
-      rw [add_sub_cancel_left, mul_div_assoc, width_div hx0]
-      ring
+    _ = 4 * u / x := by dsimp [y]; ring
+
+/-- The value of the correlated ratio differs from one by the relative window length. -/
+theorem weightRatio_sub_one {x u : ℝ} (hx : 4 ≤ x) (hu : 0 ≤ u) (hu1 : u ≤ 1) :
+    |weightRatio x u - 1| ≤ 4 * x ^ (-1 / 5 : ℝ) := by
+  have hx0 : 0 < x := by linarith
+  obtain ⟨h0, h1⟩ := priceRatio_sub_one hx
+    (show 0 ≤ u * width x from mul_nonneg hu (Real.rpow_nonneg hx0.le _))
+  change |priceRatio x (u * width x) - 1| ≤ _
+  rw [abs_of_nonpos (by linarith : priceRatio x (u * width x) - 1 ≤ 0)]
+  calc
+    _ ≤ 4 * (u * width x) / x := by linarith
+    _ = 4 * u * x ^ (-1 / 5 : ℝ) := by rw [mul_assoc, mul_div_assoc, mul_div_assoc, width_div hx0]
     _ ≤ 4 * x ^ (-1 / 5 : ℝ) := by
       nlinarith [Real.rpow_pos_of_pos hx0 (-1 / 5 : ℝ)]
 

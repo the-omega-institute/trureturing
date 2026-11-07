@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Compact integrability and interval square-norm estimates transfer short-interval variance bounds to triangular primitives. -/
+   digest: Compact integrability and profile square-norm estimates control variance transfer. -/
 
 import D5.S3.Arith.Robin.ForwardKernel.VarianceTransferDefs
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
@@ -13,6 +13,8 @@ import Mathlib.MeasureTheory.Function.L2Space
 import Mathlib.MeasureTheory.Function.LpSeminorm.LpNorm
 import Mathlib.MeasureTheory.Integral.Prod
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+
+/-! Compact integrability and square-norm inequalities for profile averages. -/
 
 namespace D5.S3.Arith.Robin.ForwardKernel.VarianceTransfer
 
@@ -23,6 +25,68 @@ noncomputable section
 
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
+
+/-- Rescaling gives the unit-interval profile formula, including zero length. -/
+theorem profileAverage_eq_unit_integral (E g : ℝ → ℝ) (h x : ℝ) :
+    profileAverage E g h x =
+      (∫ s in (0 : ℝ)..1, g s * increment E (s * h) x) / h := by
+  by_cases hh : h = 0
+  · simp [hh, profileAverage]
+  have hs := intervalIntegral.smul_integral_comp_mul_right
+    (fun u => g (u / h) * increment E u x) (a := 0) (b := 1) h
+  simp only [smul_eq_mul, zero_mul, one_mul, mul_div_cancel_right₀ _ hh] at hs
+  unfold profileAverage profilePrimitive
+  rw [← hs]
+  field_simp
+
+/-- Weighted Cauchy–Schwarz with an integrable profile and a bounded measurable factor. -/
+theorem profile_cauchy_schwarz {g k : ℝ → ℝ} {M : ℝ}
+    (hg : Integrable g unitMeasure)
+    (hk : AEStronglyMeasurable k unitMeasure)
+    (hM : 0 ≤ M)
+    (hbound : ∀ᵐ s ∂unitMeasure, |k s| ≤ M) :
+    (∫ s, g s * k s ∂unitMeasure) ^ 2 ≤
+      profileL1 g * ∫ s, |g s| * k s ^ 2 ∂unitMeasure := by
+  have hki : Integrable (fun s => |g s| * k s ^ 2) unitMeasure :=
+    hg.abs.mul_bdd (hk.pow 2) (by
+      filter_upwards [hbound] with s hs
+      simpa only [Real.norm_eq_abs, abs_pow, sq_abs] using
+        (sq_le_sq₀ (abs_nonneg _) hM).mpr hs)
+  let f := fun s => Real.sqrt |g s|
+  let q := fun s => Real.sqrt |g s| * |k s|
+  have hf : MemLp f 2 unitMeasure := by
+    apply (memLp_two_iff_integrable_sq
+      (Real.continuous_sqrt.comp_aestronglyMeasurable hg.abs.aestronglyMeasurable)).mpr
+    simpa [f, Real.sq_sqrt (abs_nonneg _)] using hg.abs
+  have hq : MemLp q 2 unitMeasure := by
+    apply (memLp_two_iff_integrable_sq
+      ((Real.continuous_sqrt.comp_aestronglyMeasurable hg.abs.aestronglyMeasurable).mul
+        (by simpa only [Real.norm_eq_abs] using hk.norm))).mpr
+    simpa [q, mul_pow, Real.sq_sqrt (abs_nonneg _)] using hki
+  have hc := integral_mul_norm_le_Lp_mul_Lq Real.HolderConjugate.two_two
+    (show MemLp f (ENNReal.ofReal 2) unitMeasure by simpa using hf)
+    (show MemLp q (ENNReal.ofReal 2) unitMeasure by simpa using hq)
+  have hf0 (s : ℝ) : 0 ≤ f s := Real.sqrt_nonneg _
+  have hq0 (s : ℝ) : 0 ≤ q s := mul_nonneg (Real.sqrt_nonneg _) (abs_nonneg _)
+  simp only [Real.norm_eq_abs, abs_of_nonneg (hf0 _), abs_of_nonneg (hq0 _),
+    Real.rpow_two, ← Real.sqrt_eq_rpow] at hc
+  have he : (fun s => f s * q s) = (fun s => |g s * k s|) := by
+    funext s
+    dsimp [f, q]
+    rw [← mul_assoc, Real.mul_self_sqrt (abs_nonneg _), abs_mul]
+  have he2 : (fun s => f s ^ 2) = (fun s => |g s|) := by
+    funext s; exact Real.sq_sqrt (abs_nonneg _)
+  have he3 : (fun s => q s ^ 2) = (fun s => |g s| * k s ^ 2) := by
+    funext s
+    simp [q, mul_pow, Real.sq_sqrt (abs_nonneg _)]
+  rw [he, he2, he3] at hc
+  have hn := (norm_integral_le_integral_norm (fun s => g s * k s)
+    (μ := unitMeasure)).trans hc
+  simp only [Real.norm_eq_abs] at hn
+  have hs := (sq_le_sq₀ (abs_nonneg _) (by positivity)).mpr hn
+  rw [sq_abs, mul_pow, Real.sq_sqrt (integral_nonneg (fun s => abs_nonneg (g s))),
+    Real.sq_sqrt (integral_nonneg (fun s => mul_nonneg (abs_nonneg _) (sq_nonneg _)))] at hs
+  exact hs
 
 lemma interval_cauchy_schwarz {f : ℝ → ℝ} {b : ℝ} (hb : 0 < b)
     (hf : IntervalIntegrable f volume 0 b)
@@ -102,6 +166,20 @@ private lemma bounded_increment_comp {α : Type*} [TopologicalSpace α]
   exact ⟨A + B, add_nonneg hA hB, fun p hp =>
     (abs_sub _ _).trans (add_le_add (hAb p hp) (hBb p hp))⟩
 
+/-- An integrable unit profile times a fixed rescaled increment is integrable. -/
+theorem unit_increment_integrable {E g : ℝ → ℝ}
+    (hE : LocallyBoundedMeasurable E) (hg : Integrable g unitMeasure)
+    (h x : ℝ) :
+    Integrable (fun s => g s * increment E (s * h) x) unitMeasure := by
+  obtain ⟨M, _, hM⟩ := bounded_increment_comp hE
+    (K := Icc (0 : ℝ) 1) isCompact_Icc
+    (continuous_id.mul_const h) continuous_const
+  apply hg.mul_bdd (c := M)
+    (((hE.1.comp (measurable_const.add (measurable_id.mul_const h))).sub
+      measurable_const).aestronglyMeasurable)
+  filter_upwards [ae_restrict_mem measurableSet_Ioc] with s hs
+  exact hM s ⟨hs.1.le, hs.2⟩
+
 /-- Continuous choices of starting point and step give integrable increments on compact sets. -/
 theorem increment_comp_integrableOn {α : Type*} [TopologicalSpace α]
     [MeasurableSpace α] [BorelSpace α] [T2Space α]
@@ -143,34 +221,6 @@ theorem increment_sq_rectangle_integrable {E : ℝ → ℝ} (hE : LocallyBounded
   have hi := increment_product_comp_integrableOn (μ := volume.prod volume) hE
     (K := Icc a b ×ˢ Icc c d) (isCompact_Icc.prod isCompact_Icc) hu continuous_fst hu continuous_fst
   simpa only [pow_two, IntegrableOn] using hi.mono_set (Set.prod_mono Ioc_subset_Icc_self Ioc_subset_Icc_self)
-
-/-- A fixed-length triangular primitive is measurable as a function of its starting point. -/
-theorem triangularPrimitive_measurable {E : ℝ → ℝ} (hE : LocallyBoundedMeasurable E)
-    (h : ℝ) : Measurable (triangularPrimitive E h) := by
-  have hm : Measurable (fun p : ℝ × ℝ => increment E p.2 p.1) :=
-    (hE.1.comp (measurable_fst.add measurable_snd)).sub (hE.1.comp measurable_fst)
-  unfold triangularPrimitive intervalIntegral
-  exact (hm.stronglyMeasurable.integral_prod_right' (ν := volume.restrict (Ioc 0 h))).measurable.sub
-    (hm.stronglyMeasurable.integral_prod_right' (ν := volume.restrict (Ioc h 0))).measurable
-
-/-- Squares of fixed-length triangular primitives are integrable on finite intervals. -/
-theorem triangularPrimitive_sq_intervalIntegrable {E : ℝ → ℝ}
-    (hE : LocallyBoundedMeasurable E) (h a b : ℝ) :
-    IntervalIntegrable (fun x => triangularPrimitive E h x ^ 2) volume a b := by
-  obtain ⟨M, hM, hb⟩ := bounded_increment_comp hE
-    (K := uIcc a b ×ˢ uIcc 0 h) (isCompact_uIcc.prod isCompact_uIcc)
-    continuous_snd continuous_fst
-  have hbound (x : ℝ) (hx : x ∈ uIcc a b) :
-      |triangularPrimitive E h x| ≤ M * |h| := by
-    simpa only [triangularPrimitive, Real.norm_eq_abs, sub_zero] using
-      (intervalIntegral.norm_integral_le_of_norm_le_const (a := 0) (b := h)
-        (f := fun u => increment E u x) (fun u hu => hb (x, u) ⟨hx, uIoc_subset_uIcc hu⟩))
-  apply IntegrableOn.intervalIntegrable
-  apply IntegrableOn.of_bound isCompact_uIcc.measure_lt_top
-    ((triangularPrimitive_measurable hE h).pow_const 2).aestronglyMeasurable ((M * |h|) ^ 2)
-  filter_upwards [ae_restrict_mem measurableSet_uIcc] with x hx
-  simpa only [Real.norm_eq_abs, abs_pow, sq_abs] using
-    pow_le_pow_left₀ (abs_nonneg _) (hbound x hx) 2
 
 /-- The square-root integral norm satisfies the reverse triangle inequality on an interval. -/
 theorem interval_l2_reverse_triangle {a b : ℝ} (hab : a ≤ b) {f g : ℝ → ℝ}
@@ -223,104 +273,6 @@ theorem integral_min_unit_square :
         ((show Continuous (fun s : ℝ => s ^ 2 / 2) by fun_prop).intervalIntegrable 0 1),
         intervalIntegral.integral_div, integral_id, integral_pow]
       norm_num
-
-private lemma triangularPrimitive_sq_rectangle_le {E : ℝ → ℝ}
-    (hE : LocallyBoundedMeasurable E) {X U x : ℝ} (hX : 0 < X) (hU : 0 < U)
-    (hx : x ∈ Icc X (2 * X)) :
-    triangularPrimitive E U x ^ 2 ≤ 2 * U * X *
-      ∫ θ in (0 : ℝ)..(U / X), increment E (θ * x) x ^ 2 := by
-  have hx0 : 0 < x := hX.trans_le hx.1
-  have hf : IntervalIntegrable (fun u => increment E u x) volume 0 U :=
-    (increment_comp_integrableOn hE isCompact_uIcc continuous_id continuous_const).intervalIntegrable
-  have hf2 : IntervalIntegrable (fun u => increment E u x ^ 2) volume 0 U := by
-    simpa only [pow_two, id_eq, Pi.mul_apply] using
-      (increment_product_comp_integrableOn hE isCompact_uIcc
-        continuous_id continuous_const continuous_id continuous_const).intervalIntegrable
-  have hcs := interval_cauchy_schwarz hU hf hf2
-  have hs := intervalIntegral.smul_integral_comp_mul_right
-    (fun u => increment E u x ^ 2) (a := 0) (b := U / x) x
-  simp only [smul_eq_mul, zero_mul, div_mul_cancel₀ _ hx0.ne'] at hs
-  have hi : IntervalIntegrable (fun θ => increment E (θ * x) x ^ 2) volume 0 (U / X) := by
-    simpa only [pow_two, id_eq, Pi.mul_apply] using
-      (increment_product_comp_integrableOn hE isCompact_uIcc
-        (continuous_id.mul continuous_const) continuous_const
-        (continuous_id.mul continuous_const) continuous_const).intervalIntegrable
-  have hmono := intervalIntegral.integral_mono_interval (le_refl (0 : ℝ))
-    (div_nonneg hU.le hx0.le) (div_le_div_of_nonneg_left hU.le hX hx.1)
-    (Eventually.of_forall (fun θ => sq_nonneg (increment E (θ * x) x))) hi
-  have hnonneg := intervalIntegral.integral_nonneg_of_forall (μ := volume)
-    (div_nonneg hU.le hX.le) (fun θ => sq_nonneg (increment E (θ * x) x))
-  calc
-    _ ≤ U * ∫ u in (0 : ℝ)..U, increment E u x ^ 2 := hcs
-    _ = U * x * ∫ θ in (0 : ℝ)..(U / x), increment E (θ * x) x ^ 2 := by
-      rw [← hs]; ring
-    _ ≤ U * x * ∫ θ in (0 : ℝ)..(U / X), increment E (θ * x) x ^ 2 :=
-      mul_le_mul_of_nonneg_left hmono (mul_nonneg hU.le hx0.le)
-    _ ≤ _ := mul_le_mul_of_nonneg_right (by nlinarith [hx.2]) hnonneg
-
-/-- Short-interval mean-square bounds control triangular primitives uniformly for small lengths. -/
-theorem small_length_triangular_square_bound
-    {E : ℝ → ℝ} (hE : LocallyBoundedMeasurable E)
-    (hSV : ShortIntervalMeanSquareBoundFor E) :
-    ∃ C : ℝ, 0 < C ∧ ∀ᶠ X : ℝ in Filter.atTop,
-      ∀ U : ℝ, 0 < U → U ≤ X / 16 →
-        (∫ x in X..(2 * X), triangularPrimitive E U x ^ 2) ≤
-          C * X * U ^ 3 * (Real.log (2 * X / U)) ^ 2 := by
-  obtain ⟨C, Y, hC, hY, hSV⟩ := hSV
-  refine ⟨2 * C, by positivity, ?_⟩
-  filter_upwards [eventually_ge_atTop Y] with X hXY
-  intro U hU hUX
-  have hX : 0 < X := by linarith
-  have hXX : X ≤ 2 * X := by linarith
-  let a := U / X
-  have ha : 0 < a := div_pos hU hX
-  have ha16 : a ≤ 1 / 16 := by dsimp [a]; apply (div_le_iff₀ hX).mpr; linarith
-  have ha1 : a ≤ 1 := by linarith
-  have hi := increment_sq_rectangle_integrable hE X (2 * X) 0 a
-    (u := fun p => p.2 * p.1) (by fun_prop)
-  have hG : IntervalIntegrable (fun x => 2 * U * X *
-      ∫ θ in (0 : ℝ)..a, increment E (θ * x) x ^ 2) volume X (2 * X) := by
-    rw [intervalIntegrable_iff_integrableOn_Ioc_of_le hXX]
-    simpa only [IntegrableOn, intervalIntegral.integral_of_le ha.le] using
-      hi.integral_prod_left.const_mul (2 * U * X)
-  have hrect : (∫ x in X..(2 * X), ∫ θ in (0 : ℝ)..a, increment E (θ * x) x ^ 2) ≤
-      C * X ^ 2 * a ^ 2 * (Real.log (2 / a)) ^ 2 := by
-    simp_rw [intervalIntegral.integral_of_le hXX, intervalIntegral.integral_of_le ha.le]
-    rw [integral_integral_swap hi]
-    calc
-      _ ≤ ∫ _θ in Ioc (0 : ℝ) a, C * X ^ 2 * (a * (Real.log (2 / a)) ^ 2) := by
-        apply setIntegral_mono_on hi.integral_prod_right (integrableOn_const (by simp))
-          measurableSet_Ioc
-        intro θ hθ
-        have he : (fun x => increment E (θ * x) x ^ 2) =
-            (fun x => (E ((1 + θ) * x) - E x) ^ 2) := by
-          funext x
-          simp only [increment, show x + θ * x = (1 + θ) * x by ring]
-        have h := hSV X hXY θ hθ.1 (hθ.2.trans ha1)
-        rw [← he, intervalIntegral.integral_of_le hXX] at h
-        have hl := logarithmic_variance_mono ⟨hθ.1, hθ.2.trans ha16⟩ ⟨ha, ha16⟩ hθ.2
-        have hl' := mul_le_mul_of_nonneg_left hl (by positivity : 0 ≤ C * X ^ 2)
-        exact h.trans (by nlinarith [hl'])
-      _ = _ := by
-        rw [setIntegral_const, Measure.real, Real.volume_Ioc,
-          ENNReal.toReal_ofReal (by linarith : 0 ≤ a - 0), smul_eq_mul]
-        ring
-  calc
-    _ ≤ ∫ x in X..(2 * X), 2 * U * X *
-        ∫ θ in (0 : ℝ)..a, increment E (θ * x) x ^ 2 :=
-      intervalIntegral.integral_mono_on hXX
-        (triangularPrimitive_sq_intervalIntegrable hE U X (2 * X)) hG
-        (fun x hx => triangularPrimitive_sq_rectangle_le hE hX hU hx)
-    _ = 2 * U * X * (∫ x in X..(2 * X),
-        ∫ θ in (0 : ℝ)..a, increment E (θ * x) x ^ 2) :=
-      intervalIntegral.integral_const_mul _ _
-    _ ≤ 2 * U * X * (C * X ^ 2 * a ^ 2 * (Real.log (2 / a)) ^ 2) :=
-      mul_le_mul_of_nonneg_left hrect (by positivity)
-    _ = _ := by
-      have he : 2 / a = 2 * X / U := by dsimp [a]; field_simp
-      rw [he]
-      dsimp [a]
-      field_simp
 
 end
 end D5.S3.Arith.Robin.ForwardKernel.VarianceTransfer
