@@ -1,0 +1,10 @@
+**测不准。** 对单位态 $\psi$ 和 Hermitian $A,B$，令 $a=(A-\langle A\rangle)\psi$、$b=(B-\langle B\rangle)\psi$。共同 Gram 的 Cauchy–Schwarz 给
+
+$$
+(\Delta A)^2(\Delta B)^2
+\ge\left|\frac12\langle\{\delta A,\delta B\}\rangle\right|^2
++\left|\frac{1}{2i}\langle[A,B]\rangle\right|^2.
+$$
+
+这把不确定性落实为两个读出的共同实现约束，不与 Gödel 不完备或任意对角化自动等同。无限维规范对易关系和量子场论还需各自的定义域与极限条件；有限维不可能有 $[A,B]=i\hbar I$，因为两边迹不同。
+

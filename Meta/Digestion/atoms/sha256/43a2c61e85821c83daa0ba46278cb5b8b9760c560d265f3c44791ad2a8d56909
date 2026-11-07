@@ -1,0 +1,38 @@
+**Definition 40.1 (the exact visible-zero block).**
+Under the isometry $f(k,D)\mapsto f(k,D)/(2\pi)$ into the
+visible-constant subspace of the original raw-measure space, the
+operator with averaged multiplier $L_\kappa-gU_\kappa$ has block form
+
+$$
+\mathfrak a_\kappa[f]
+ =\int_{I\times\mathbb T}
+   \left(\varepsilon^2|\partial_k f|^2
+       +a^2b_\kappa(k)^2|\partial_D f|^2
+       -gU_\kappa(k,D)|f|^2\right)dk\,dD.
+\tag{40.1}
+$$
+
+At each nonzero parameter this block domain is the periodic $H^1$
+space with zero trace at both height faces. Indeed the exact completed
+Fourier domain [G, (26.13)] restricted to $n=m=0$, and
+$0<m\le b_\kappa\le M$, give precisely this characterization.
+It asserts no isotropic domain for the full operator. Denote the
+ordered block eigenvalues by $\nu_{\kappa,N}$. Compactness here also
+follows from this fixed-parameter elliptic form on the compact
+cylinder with Dirichlet height faces.
+
+For the remainder of §40 abbreviate $h=h_{\sigma,\kappa}$,
+$d=d_{\sigma,\kappa}$, $\ell=d\sqrt h$ and $c=c_\sigma$.
+In the actual hidden chart set
+
+$$
+F(k,y)=\sqrt\ell\, f(k,\ell y),
+\qquad -\pi/\ell<y<\pi/\ell.
+\tag{40.2}
+$$
+
+This is a unitary change of coordinates with the raw Jacobian. Extend
+$F$ by zero outside that interval only when viewing it as an $L^2$
+function on $I\times\mathbb R$; its actual domain retains the periodic
+condition at the two ends of the chart.
+

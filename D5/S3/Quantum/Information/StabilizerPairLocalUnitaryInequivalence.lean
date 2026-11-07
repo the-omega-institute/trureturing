@@ -21,7 +21,7 @@ Direct frozen dependencies: D5/S3/Quantum/FiniteDimensional (module statement_id
   `qubit_weyl_star` (sha256:be07b0533dfdb8741136a43d8272fd7a664770fb9b4a851805c5db573532362d)
 -/
 
-import D5.S3.Quantum.FiniteDimensional
+import D5.S3.Quantum.Information.Pauli.PauliMatrix
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -43,21 +43,6 @@ proof shows that `C_A` is full on every triple other than `{0,1,4}`, `{2,3,4}`, 
 not full on `{0,2,3}` and `{1,2,3}`, which share two qubits; and that `C−` is full on every
 4-set other than `{0,1,2,3}`, while `C+` is not full on `{0,1,2,3}`, `{0,1,4,5}`, `{2,3,4,5}`.
 -/
-
-/-- The single-qubit Pauli labels. -/
-inductive Pauli
-  | I | X | Y | Z
-  deriving DecidableEq
-
-/-- The four Pauli labels form a finite type. -/
-instance : Fintype Pauli := ⟨{.I, .X, .Y, .Z}, fun p => by cases p <;> simp⟩
-
-/-- The Pauli matrices: `X`, `Z` are the frozen `qubitX`, `qubitZ`, and `Y = i X Z`. -/
-noncomputable def pauliMatrix : Pauli → Matrix (Fin 2) (Fin 2) ℂ
-  | .I => 1
-  | .X => qubitX
-  | .Y => Complex.I • (qubitX * qubitZ)
-  | .Z => qubitZ
 
 /-- The tensor product `M₀ ⊗ ⋯ ⊗ M_{n-1}` on `(Fin n → Fin 2) → ℂ`. -/
 def tensorOp {n : ℕ} (M : Fin n → Matrix (Fin 2) (Fin 2) ℂ) :

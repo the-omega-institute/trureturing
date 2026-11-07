@@ -1,0 +1,18 @@
+### 6.2　保全局关系不等于能无扰读出每个局部态
+
+若一台记录装置保持每个局部纯态，写成
+
+$$
+V\psi=\psi\otimes r_\psi,\qquad V\phi=\phi\otimes r_\phi,
+\qquad \|r_\psi\|=\|r_\phi\|=1.
+$$
+
+等距给
+
+$$
+\langle\psi,\phi\rangle
+=\langle\psi,\phi\rangle\langle r_\psi,r_\phi\rangle.
+$$
+
+当输入非正交时，记录内积只能为 $1$，两记录相同，不能留下可区分新消息。观察者在整体内，正是这个联合关系约束的参与者；把它加入并不能逃过该限制。
+

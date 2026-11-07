@@ -1,0 +1,78 @@
+**Definition 8.1 (canonical sign and the already established ratio maps).** R Proposition 12.1 gives canonical quantities
+
+$$
+\begin{aligned}
+W&=j_0V,&W_j&=j_0V_j,&W_{\rm t}&=j_0V_{\rm t},&\overline C&=j_0C_*,\\
+G_{108}&=1-A-(\chi/a)(C_2+2B_1),&
+G_{\rm resp}&=(K_{\rm base}-D_{\rm resp})/a,&
+\overline D&=1+(\chi/a)T>1.
+\end{aligned}
+\tag{8.1}
+$$
+
+These, the mode and the energy-space response are canonical after the displayed normalization. With $\mathscr R=\lambda/\nu^2$,
+
+$$
+\frac{C_{108}}a=\nu^2(G_{108}-\mathscr R\overline D),\qquad
+\frac{C_{\rm resp}}a=\nu^2(G_{\rm resp}-\mathscr R\overline D),\qquad
+G_{\rm resp}=G_{108}-(t_0-1)^2-\Delta_{\rm aff}/a.
+\tag{8.2}
+$$
+
+Current R Proposition 14.1, credited separately, already proves the exact fixed-interval pole image
+
+$$
+\mathscr R=\pi^2(k_0-\alpha_\kappa)^2/L_I^2,\qquad
+\left(\frac{\pi^2(l-\alpha_\kappa)^2}{L_I^2},
+      \frac{\pi^2(u-\alpha_\kappa)^2}{L_I^2}\right).
+\tag{8.3}
+$$
+
+It also proves the exact signed-window images. For $0<H<1/2$, $0<l<u<H$ and an explicit fixed radius
+$0<b<\min\{l/4,(H-u)/2,H/4\}$, varying $k_0\in I$ and respectively $0<\kappa\le b$ or $-b\le\kappa<0$ gives exactly
+
+$$
+\begin{aligned}
+\mathscr R_+&=\left(\frac{\pi^2(l-b-b^2/H)^2}{L_I^2},
+                         \frac{\pi^2u^2}{L_I^2}\right),\\
+\mathscr R_-&=\left(\frac{\pi^2l^2}{L_I^2},
+                         \frac{\pi^2(u+b-b^2/H)^2}{L_I^2}\right).
+\end{aligned}
+\tag{8.4}
+$$
+
+Every interior value is attained and neither endpoint is. With $k_0$ fixed instead, the exact images are
+
+$$
+\left[\frac{\pi^2(k_0-b-b^2/H)^2}{L_I^2},\frac{\pi^2k_0^2}{L_I^2}\right),
+\qquad
+\left(\frac{\pi^2k_0^2}{L_I^2},\frac{\pi^2(k_0+b-b^2/H)^2}{L_I^2}\right].
+\tag{8.5}
+$$
+
+The included endpoints use $\kappa=b,-b$; the excluded endpoints require $\kappa=0$. R14 also verifies the required larger-height-interval admission neighbourhood: positive margins for all five original probabilities, a denominator margin, nonzero determinant and bounded derivatives on a slightly enlarged compact rectangle, and uniform invertibility of the quadratic scalar-fibre numerator map. The original means are $X=Y=H+\kappa$, $Z=1-2H$ and the original rational third component remains present. The heat and other analytic suppliers keep their conditional scopes; there is no unexplained further shrink of this explicit admission window.
+
+Current R Proposition 15.1, credited separately, proves that across distinct datasets in that explicit window, for each prescribed sign of $\kappa\ne0$ and fixed $H,a,\varepsilon$, the exact ratio image is $(0,\infty)$. For reference its construction is: given $\mathscr R_*>0$, put $x=\sqrt{\mathscr R_*}/\pi$, $t=\min\{x/2,1/2\}$ and $L_I=H/[2(x+1)]$; choose $\kappa=\pm\delta$ of the prescribed sign sufficiently small and set
+
+$$
+l=\alpha_\kappa+(x-t)L_I,\qquad
+k_0=\alpha_\kappa+xL_I,\qquad
+u=\alpha_\kappa+(x+1-t)L_I.
+\tag{8.6}
+$$
+
+Continuity from $\delta=0$ gives $2\delta<\min\{l/4,(H-u)/2,H/4\}$, so $b=2\delta$ is admitted and (8.3) equals $\mathscr R_*$. Each constructed dataset is fixed before its own $s$-limit. This is the existing full-image result, not authorization to vary a datum with $s$.
+
+Current R Corollary 15.2, credited separately, sets $Q_{\rm resp}=G_{\rm resp}/\overline D$ and gives
+
+$$
+C_{\rm resp}=a\nu^2\overline D(Q_{\rm resp}-\mathscr R).
+\tag{8.7}
+$$
+
+On any open image $(A,B)$ in (8.3)–(8.4), negative, positive and zero response occur exactly when $B>Q_{\rm resp}$, $A<Q_{\rm resp}$ and $A<Q_{\rm resp}<B$, respectively. Across the datasets of R15.1, negative response always occurs for each sign; positive and zero response each occur if and only if $G_{\rm resp}>0$. In particular negative response and actual unit-orbit selection already occur at fixed $H,\kappa,k_0,a,\varepsilon$ in the explicit window by taking one sufficiently narrow fixed symmetric interval about $k_0$. Its ratio tends to infinity as the interval narrows; choose an admitted interval with $\mathscr R>Q_{\rm resp}$ and fix it before $s\downarrow0$. The negative branch of (7.3) and every-ground-state orbit convergence then apply.
+
+For the affine coefficient, put $Q_{108}=G_{108}/\overline D$. Equation (8.2) gives $C_{108}=a\nu^2\overline D(Q_{108}-\mathscr R)$. The same established full ratio image therefore gives negative $C_{108}$ occurrence for each sign; across those datasets positive and zero $C_{108}$ each occur if and only if $G_{108}>0$. This is a direct algebraic consequence of current R14–15 and the inherited complete affine formula, with no evaluation of $G_{108}$.
+
+The ratio maps, their admission scope and this actual negative-response occurrence are resolved current DEV credit. Older blanket statements leaving them open are superseded at precisely these scopes. Neither R14–15 nor the present theorem evaluates $G_{\rm resp}>0$. Thus Theorem 6.1 remains conditional, while the negative branch is known to be nonempty.
+

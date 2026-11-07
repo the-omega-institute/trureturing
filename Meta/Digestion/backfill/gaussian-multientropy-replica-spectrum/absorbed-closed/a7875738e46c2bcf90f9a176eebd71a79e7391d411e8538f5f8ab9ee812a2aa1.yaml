@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a7875738e46c2bcf90f9a176eebd71a79e7391d411e8538f5f8ab9ee812a2aa1
+  normalized_sha256: sha256:a7875738e46c2bcf90f9a176eebd71a79e7391d411e8538f5f8ab9ee812a2aa1
+cas_ref: sha256:a7875738e46c2bcf90f9a176eebd71a79e7391d411e8538f5f8ab9ee812a2aa1
+coverage_gids:
+  - gid: D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeScalar.value_neg
+    target_statement_id: sha256:4e88d3e0b287e5e08f4ab9a1e46af3aca9415f43a2a71f19d688fc84d0a5dbed
+receipts:
+  unresolved_subitems: []
