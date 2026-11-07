@@ -54,10 +54,6 @@ variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 def PreservesRay (A : Matrix ι ι ℂ) (x : ι → ℂ) : Prop :=
   A *ᵥ x ∈ Submodule.span ℂ {x}
 
-/-- Every complex line is invariant. For unitaries, inclusion is equality. -/
-def RayPreserving (A : Matrix ι ι ℂ) : Prop :=
-  ∀ x : ι → ℂ, PreservesRay A x
-
 /-- Test supports connect two coordinates when they can be joined by a chain
 of tests that are nonzero at both consecutive coordinates. -/
 def RaySupportConnected (tests : Set (ι → ℂ)) : Prop :=

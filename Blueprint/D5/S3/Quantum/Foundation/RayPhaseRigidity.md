@@ -18,19 +18,7 @@ $$\forall iota \in Type,\; [\operatorname{Fintype}\left(iota\right)] \forall A \
 
 The image of x lies in its complex span. At zero the condition is automatic. For a unitary and nonzero x the inclusion gives equality of rays.
 
-**Definition 1.2 (Invariance of every complex ray).**
-
-$$\forall iota \in Type,\; [\operatorname{Fintype}\left(iota\right)] \forall A \in \operatorname{Matrix}\left(iota, iota, \mathbb{C}\right),\; \operatorname{RayPreserving}\left(A\right) \Leftrightarrow \left(\forall x \in iota\to\mathbb{C},\; \operatorname{PreservesRay}\left(A, x\right)\right)$$
-
-*Formalization.* `D5/S3/Quantum/Foundation/RayPhaseRigidity.RayPreserving` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-This is the property of the relative unitary V adjoint times U in Proposition 7.6.
-
-**Definition 1.3 (Connectivity through test supports).**
+**Definition 1.2 (Connectivity through test supports).**
 
 $$\forall iota \in Type,\; \forall S \in \operatorname{Set}\left(iota\to\mathbb{C}\right),\; \operatorname{RaySupportConnected}\left(S\right) \Leftrightarrow \left(\forall i \in iota,\; \forall j \in iota,\; \operatorname{ReflTransGen}\left((p,q)\mapsto \exists x \in iota\to\mathbb{C},\; x\in S \land \left(x(p)\neq 0 \land x(q)\neq 0\right), i, j\right)\right)$$
 
@@ -42,7 +30,7 @@ $$\forall iota \in Type,\; \forall S \in \operatorname{Set}\left(iota\to\mathbb{
 
 Two coordinates are adjacent when a test vector is nonzero at both. ReflTransGen is the reflexive transitive closure of this relation. Every pair of coordinates must be linked by a finite chain. Tests may have sparse supports; neither a full-support test nor a positive dimension is required.
 
-**Theorem 1.4 (Connected invariant ray tests force a global phase).**
+**Theorem 1.3 (Connected invariant ray tests force a global phase).**
 
 $$\forall iota \in Type,\; [\operatorname{Fintype}\left(iota\right)] [\operatorname{DecidableEq}\left(iota\right)] \forall A \in \operatorname{Matrix}\left(iota, iota, \mathbb{C}\right),\; A\in \operatorname{unitaryGroup}\left(iota, \mathbb{C}\right) \Rightarrow \left(\left(\forall i \in iota,\; \operatorname{PreservesRay}\left(A, \operatorname{single}\left(i, 1\right)\right)\right) \Rightarrow \left(\forall S \in \operatorname{Set}\left(iota\to\mathbb{C}\right),\; \left(\forall x \in iota\to\mathbb{C},\; x\in S \Rightarrow \operatorname{PreservesRay}\left(A, x\right)\right) \Rightarrow \left(\operatorname{RaySupportConnected}\left(S\right) \Rightarrow \left(\exists c \in \mathbb{C},\; \Vert c\Vert = 1 \land A = c\cdot\operatorname{IdentityMatrix}\left(iota\right)\right)\right)\right)\right)$$
 
@@ -61,6 +49,5 @@ Reuse boundary: Mathlib's LinearMap.exists_eq_smul_id_of_forall_notLinearIndepen
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Foundation/RayPhaseRigidity.PreservesRay`
-- Truth anchor: `D5/S3/Quantum/Foundation/RayPhaseRigidity.RayPreserving`
 - Truth anchor: `D5/S3/Quantum/Foundation/RayPhaseRigidity.RaySupportConnected`
 - Truth anchor: `D5/S3/Quantum/Foundation/RayPhaseRigidity.unitary_phase_of_connected_ray_tests`
