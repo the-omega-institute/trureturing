@@ -45,7 +45,10 @@ internal sealed class GrouxA120069DenominatorDocument : IScribeDocumentDefinitio
                     + "recurrence-only replacement, convergence assumption or finite-case "
                     + "surrogate. This is the Groux Roland formula in A120069; the "
                     + "separate A283208 conjecture is outside its scope."))),
-                DescribeRole.Theorem),
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("groux-2010-a120069-catalan-denominators"),
+                    ResolutionKind.Proved)),
             Paragraph(Text("The proof uses the following Catalan form of Pieter Mostert's "
                 + "finite-sum identity from A119951. It is an attributed supplier, "
                 + "proved here by induction from the pinned Catalan/central-binomial "
