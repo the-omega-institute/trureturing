@@ -314,6 +314,7 @@ private lemma affineGram_unitary (U V A G : Matrix (Fin n) (Fin n) R) (hV : V * 
     simp only [← Matrix.map_mul, ← Matrix.map_add, ← Matrix.mul_add,
       ← Matrix.add_mul, Matrix.mul_assoc]
   all_goals simp only [Matrix.add_mul, Matrix.mul_add, Matrix.mul_assoc]
+omit [StarRing R] in
 private lemma tensor_similarity (u v H K : Matrix (Fin n) (Fin n) (Polynomial R))
     (hu : u*v=1) :
     (u*H*v) ⊗ₖ (1 : Matrix (Fin n) (Fin n) (Polynomial R)) -

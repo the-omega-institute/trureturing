@@ -471,6 +471,7 @@ private noncomputable def rankOneGramPoly {s : ℕ} (a : R)
     Polynomial.X * Polynomial.C ((if i=0 then a * star (G j 0) else 0) +
       (if j=0 then G i 0 * star a else 0)) +
     Polynomial.X^2 * Polynomial.C (∑ k, G i k * star (G j k))
+omit [Nontrivial R] in
 private lemma affineGramPoly_rankOneBase {s : ℕ} (a : R)
     (G : Matrix (Fin (s+1)) (Fin (s+1)) R) :
     affineGramPoly (Matrix.single 0 0 a) G = rankOneGramPoly a G := by
@@ -486,6 +487,7 @@ private noncomputable def rowWeight {s : ℕ} (ij : Fin (s+1) × Fin (s+1)) : �
   if (ij.1=0 ∧ ij.2=0) ∨ (ij.1≠0 ∧ ij.2≠0) then 1 else 0
 private noncomputable def colWeight {s : ℕ} (ij : Fin (s+1) × Fin (s+1)) : ℕ :=
   if ij.1≠0 ∧ ij.2≠0 then 1 else 0
+omit [Nontrivial R] in
 private lemma rankOne_entry_divisibility {s : ℕ} (a : R)
     (G K : Matrix (Fin (s+1)) (Fin (s+1)) R)
     (ij kl : Fin (s+1) × Fin (s+1)) :
@@ -545,6 +547,7 @@ private lemma rankOneGramPoly_one {s : ℕ} (a : R) :
     Matrix.map_apply, smul_eq_mul, Matrix.mul_apply, Matrix.diagonal_apply]
   by_cases hij : i=j <;> by_cases hi : i=0 <;> by_cases hj : j=0 <;>
     simp_all [Matrix.one_apply]
+omit [Nontrivial R] in
 private lemma rankOneGramPoly_zero {s : ℕ} (a : R) :
     rankOneGramPoly a (0 : Matrix (Fin (s+1)) (Fin (s+1)) R) =
       Matrix.diagonal (fun i => if i=0 then Polynomial.C (a * star a) else 0) := by
@@ -632,6 +635,7 @@ end D5.S3.Analytic.Probability.GaussianPolynomialLog.Covariance
 namespace D5.S3.Analytic.Probability.GaussianPolynomialLog.Covariance
 noncomputable section
 variable {R : Type*} [CommRing R] [StarRing R] [Nontrivial R]
+omit [Nontrivial R] in
 private lemma affineGramPoly_coeff_two {n : ℕ} (A G : Matrix (Fin n) (Fin n) R) (i j : Fin n) :
     (affineGramPoly A G i j).coeff 2 = (G * Gᴴ) i j := by
   change (Polynomial.C ((A*Aᴴ) i j) + Polynomial.X * Polynomial.C ((A*Gᴴ+G*Aᴴ) i j) +
