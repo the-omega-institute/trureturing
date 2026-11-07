@@ -1,0 +1,24 @@
+**定义 3.1（固定五效果）。**
+
+置
+
+$$
+\nu=\frac1{1+2\sqrt3+\sqrt{11}},\qquad
+a_\nu=\frac{\nu(\sqrt3+\sqrt{11})}{2},\qquad
+u_0=(a_\nu,a_\nu,\nu).
+$$
+
+在 $\mathbb C^2$ 上定义
+
+$$
+\begin{aligned}
+E_{25}&=\frac\nu2(\sqrt3 I-\sigma_x-\sigma_y-\sigma_z),&
+E_0&=3E_{25},\\
+E_2&=\frac\nu2(\sqrt{11}I+3\sigma_x+\sigma_y+\sigma_z),\\
+E_5&=\frac\nu2(\sqrt{11}I+\sigma_x+3\sigma_y+\sigma_z),\\
+E_3&=\nu(I+\sigma_z).
+\end{aligned}
+$$
+
+<a id="thm:encoding"></a>
+

@@ -1,0 +1,26 @@
+### 4.3　一次有限提升不保证整个关系网自动闭合
+
+对旧 $G\succeq0$、$b\in\mathbb C^n$、$d\in\mathbb R$，新增一个标签后的关系表满足
+
+$$
+\begin{pmatrix}G&b\\b^\dagger&d\end{pmatrix}\succeq0
+\iff b\in\operatorname{Ran}G,\quad\delta=d-b^\dagger G^+b\ge0.
+\tag{11}
+$$
+
+范围条件要求旧零关系在新比较中仍为零。必要性可直接看出：若 $z\in\ker G$ 而 $z^\dagger b\ne0$，在 $(sz,1)$ 上取适当复数 $s$，便使 $2\operatorname{Re}(\bar s z^\dagger b)+d<0$。故 $b\perp\ker G$，即 $b\in\operatorname{Ran}G$。令 $y=G^+b$，则二次型是
+
+$$
+(x+yt)^\dagger G(x+yt)+\delta|t|^2,
+$$
+
+给出 (11) 及
+
+$$
+\operatorname{rank}G_{\rm new}=\operatorname{rank}G+\mathbf1_{\{\delta>0\}}.
+$$
+
+故新关系可能只是一种旧表达；只有 $\delta>0$ 才增加最小实现的独立方向。$\delta<0$ 时，继续扩维不能补救同一固定比较表。
+
+固定坐标的两两检查不够。例如三阶矩阵对角为 $1$、非对角为 $-3/4$，每个二阶主块均正，整个矩阵却在 $(1,1,1)$ 方向给 $-3/2$。T7 必须作用于全部复合配方；只测基本标签对，不能把全域相容性归零。
+

@@ -30,7 +30,7 @@ private def probe (ζ : ℂ) : Fin 3 → Qutrit :=
 
 private def sesq (v z : Qutrit) : ℂ := star v ⬝ᵥ z
 
-private lemma phase_zero (ζ z : ℂ)
+lemma phase_zero (ζ z : ℂ)
     (hζ : ζ ^ 2 + ζ + 1 = 0)
     (hsζ : star ζ = ζ ^ 2)
     (huζ : star ζ * ζ = 1)

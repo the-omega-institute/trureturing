@@ -1,0 +1,6 @@
+**Theorem 14.4 (Physical integer curve minimum).** Suppose $N\ge3$ is an integer divisible by three, $a>1$, and $b$ is a positive integer with $2b<N$. The actual integral-defined value $\mathrm{GM}^{(3)}_3(N-2b:b:b;a)$ is the scalar curve of Theorem 14.3 at $k=\kappa(N,a)$, and has its unique minimum at the allowed integer $b=N/3$. Equivalently, at the minimum $B+C=2N/3$.
+
+**Proof.** Theorem 13.2 gives the curve identity, and Theorem 14.3 gives both the inequality and its iff equality. Divisibility ensures that $N/3$ is a positive integer and the equal-party triple is an allowed physical triple of total $N$. ∎
+
+Theorems 14.1–14.4 have the same Haobo Ma then Wenlin Zhang byline and CC BY 4.0 source attribution as §13. Real $b$ in Theorem 14.3 is a scalar interpolation only; its empty-party endpoints are outside the physical positive-integer domain. Totals not divisible by three do not acquire a fractional physical minimizer from the continuous curve. Subsystem size is not an evaporation time variable. The separate fixed-$a$ Page/large-$N$ preregistration, issue 22644, keeps its original owner and open target. Existing all-replica integral/Fourier and order-four results remain prior work in their actual scopes, and the wider outreach/research writeback portfolio is unchanged.
+

@@ -1,0 +1,4 @@
+# Four-path full-record recovery: central negative-floor continuation VIII
+
+This volume continues [Continuation VII](QUANTUM_REALITY_FOUR_PATH_FULL_RECORD_RECOVERY_BOUND_CONTINUATION_VII.md). It retains Definition 57.1's complete endpoint domain, fixed labels, one shared feedback, ordinary transpose, nonnegative roots and full attained triangle. Section 75 is a conditional paper deduction using Corollary 56.2--56.3 and the clean energy bounds in (57.9); it does not claim Lean-kernel verification or a physical realization.
+

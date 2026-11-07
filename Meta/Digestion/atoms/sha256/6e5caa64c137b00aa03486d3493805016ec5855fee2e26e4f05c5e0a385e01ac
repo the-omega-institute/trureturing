@@ -1,0 +1,22 @@
+#### 定理 3.1：正配方的最小复表示
+
+式 (1) 成立，当且仅当存在复 Hilbert 空间 $H$ 及映射 $F:M\to H$，满足
+
+$$
+\boxed{\begin{gathered}
+F(x+y)=Fx+Fy,\qquad F(Ux)=\zeta Fx,\\
+q(x)=c_0+\|Fx\|^2,\qquad
+\zeta=-\frac12+i\frac{\sqrt3}{2}.
+\end{gathered}}
+\tag{3}
+$$
+
+取 $H=\overline{\operatorname{span}_{\mathbb C}F(M)}$，表示唯一到保持每个原标签像的唯一酉同构。并有
+
+$$
+F(U0)=0,\qquad F(U^3x)=Fx,\qquad
+\boxed{-Fx=F(Ux+U^2x).}
+$$
+
+这里的等式发生在可见表示；不要求原档案 $U^3x=x$。零表示允许存在，非零性须另有一个正的相对响应见证。
+
