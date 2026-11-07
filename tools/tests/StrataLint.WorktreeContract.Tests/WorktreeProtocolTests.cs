@@ -12,7 +12,9 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
-        var build = TestProcessRunner.Run("make", ["-C", "tools", "dotnet",
+        var build = TestProcessRunner.Run("env", ["MSBUILDDISABLENODEREUSE=1",
+            "DOTNET_CLI_USE_MSBUILD_SERVER=0", "UseSharedCompilation=false",
+            "UseRazorBuildServer=false", "_RazorForceBuildServer=false", "make", "-C", "tools", "dotnet",
             "DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj"], root,
             TimeSpan.FromSeconds(180), 1024 * 1024);
         Assert.True(build.ExitCode == 0,
