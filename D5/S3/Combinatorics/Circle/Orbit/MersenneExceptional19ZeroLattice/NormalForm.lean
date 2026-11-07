@@ -130,7 +130,9 @@ theorem integral_normal_form (r : ℕ) (X : Fin (3*degree r) → A)
         · subst j; simpa [x] using fr2
         · rw [fr j ⟨by omega,hj.2⟩, ih ⟨by omega,by omega⟩]
           have hp : (2 : ℤ)^j=2*2^(j-1) := by
-            rw [show j=(j-1)+1 by omega, pow_succ]; ring
+            calc
+              (2 : ℤ)^j=(2 : ℤ)^((j-1)+1) := by congr 1; omega
+              _=2*2^(j-1) := by rw [pow_succ]; ring
           simp only [Nat.add_sub_cancel]
           rw [hp]
           module
@@ -144,7 +146,9 @@ theorem integral_normal_form (r : ℕ) (X : Fin (3*degree r) → A)
         · subst j; simpa [hone] using hr2
         · rw [hr j ⟨by omega,hj.2⟩, ih ⟨by omega,by omega⟩]
           have hp : (2 : ℤ)^j=2*2^(j-1) := by
-            rw [show j=(j-1)+1 by omega, pow_succ]; ring
+            calc
+              (2 : ℤ)^j=(2 : ℤ)^((j-1)+1) := by congr 1; omega
+              _=2*2^(j-1) := by rw [pow_succ]; ring
           simp only [Nat.add_sub_cancel]
           rw [hp]
           module
@@ -200,7 +204,7 @@ theorem integral_normal_form (r : ℕ) (X : Fin (3*degree r) → A)
     · subst j; simp [first,u,show (0 : ℕ)≠d-1 by omega]
     by_cases ht : j=d-1
     · subst j
-      simpa [first,show d-1≠0 by omega,show d-1-1=d-2 by omega] using f1
+      simpa [first,show d-1≠0 by omega,show d-1-1=d-2 by omega,sub_eq_add_neg,add_assoc] using f1
     · rw [f_low j ⟨by omega,by omega⟩]
       simp [first,hz,ht]
   · intro j hj

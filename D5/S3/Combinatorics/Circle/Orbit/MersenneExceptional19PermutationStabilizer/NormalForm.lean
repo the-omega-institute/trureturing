@@ -158,7 +158,7 @@ private theorem normal_form (r : ℕ) (x : Fin (3*degree r) → ℚ)
     have h0 := gg j ⟨hj.1,by omega,by omega⟩
     have h1 := gg (j+1) ⟨by omega,by omega,by omega⟩
     have hc := carry_step g j
-    simp only [zsmul_eq_mul] at hc
+    norm_num [zsmul_eq_mul] at hc
     linarith
   have fr2 : f 2=2*f 1 := by
     have hF := ff 2 ⟨by omega,by omega⟩
@@ -180,16 +180,17 @@ private theorem normal_form (r : ℕ) (x : Fin (3*degree r) → ℚ)
     have h0 := ff j ⟨hj.1,by omega⟩
     have h1 := ff (j+1) ⟨by omega,hj.2⟩
     have hc := carry_step f j
-    simp only [zsmul_eq_mul] at hc
+    norm_num [zsmul_eq_mul] at hc
     linarith
   have hr (j : ℕ) (hj : 2≤j ∧ j+1≤d-3) : h (j+1)=2*h j := by
     have h0 := hh j ⟨hj.1,by omega⟩
     have h1 := hh (j+1) ⟨by omega,hj.2⟩
     have hc := carry_step h j
-    simp only [zsmul_eq_mul] at hc
+    norm_num [zsmul_eq_mul] at hc
     linarith
   let α : ℚ := f 1/2
-  let β : ℚ := g 0  let γ : ℚ := h 1/2
+  let β : ℚ := g 0
+  let γ : ℚ := h 1/2
   have g_low (j : ℕ) (hj : j≤d-4) : g j=β*2^j := by
     induction j with
     | zero => simp [β]
@@ -197,7 +198,7 @@ private theorem normal_form (r : ℕ) (x : Fin (3*degree r) → ℚ)
         have ih' := ih (by omega)
         by_cases hj0 : j=0
         · subst j
-          simpa [β] using gg1'
+          simpa [β,mul_comm] using gg1'
         · rw [gr j ⟨by omega,hj⟩, ih', pow_succ]
           ring
   have f_low (j : ℕ) (hj : 1≤j ∧ j≤d-2) : f j=α*2^j := by
@@ -206,11 +207,11 @@ private theorem normal_form (r : ℕ) (x : Fin (3*degree r) → ℚ)
     | succ j ih =>
         by_cases hj0 : j=0
         · subst j
-          simp [α]
+          simp [α] <;> ring
         by_cases hj1 : j=1
         · subst j
           rw [fr2]
-          simp [α]
+          simp [α] <;> ring
         · rw [fr j ⟨by omega,hj.2⟩, ih ⟨by omega,by omega⟩, pow_succ]
           ring
   have h_low (j : ℕ) (hj : 1≤j ∧ j≤d-3) : h j=γ*2^j := by
@@ -219,11 +220,11 @@ private theorem normal_form (r : ℕ) (x : Fin (3*degree r) → ℚ)
     | succ j ih =>
         by_cases hj0 : j=0
         · subst j
-          simp [γ]
+          simp [γ] <;> ring
         by_cases hj1 : j=1
         · subst j
           rw [hr2]
-          simp [γ]
+          simp [γ] <;> ring
         · rw [hr j ⟨by omega,hj.2⟩, ih ⟨by omega,by omega⟩, pow_succ]
           ring
   have slopes : α+β+γ=0 := by
@@ -276,7 +277,7 @@ private theorem normal_form (r : ℕ) (x : Fin (3*degree r) → ℚ)
       simpa [n0,show (0 : ℕ)≠d-1 by omega] using f_zero
     by_cases ht : j=d-1
     · subst j
-      simpa [n0,show d-1≠0 by omega] using f1
+      simpa [n0,show d-1≠0 by omega,sub_eq_add_neg,add_assoc] using f1
     · rw [f_low j ⟨by omega,by omega⟩]
       simp [n0,hz,ht]
   · intro j hj
@@ -302,7 +303,7 @@ private theorem normal_form (r : ℕ) (x : Fin (3*degree r) → ℚ)
       simpa [n2,show d-2≠0 by omega,show d-2≠d-1 by omega] using h2
     by_cases h1' : j=d-1
     · subst j
-      simpa [n2,show d-1≠0 by omega,show d-1≠d-2 by omega] using h1
+      simpa [n2,show d-1≠0 by omega,show d-1≠d-2 by omega,sub_add_eq_sub_sub] using h1
     · rw [h_low j ⟨by omega,by omega⟩]
       simp [n2,hz,h2',h1']
 

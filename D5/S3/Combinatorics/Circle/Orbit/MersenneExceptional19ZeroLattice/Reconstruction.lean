@@ -118,7 +118,7 @@ theorem reconstructed_normal_form (r : ℕ) (X : Fin (3*degree r) → A)
   obtain ⟨hz,hz8⟩ := q_zero r
   have zread := hX _ hz
   have z8read := hX _ hz8
-  rw [physical_read (by dsimp [degree]; omega)] at zread z8read
+  rw [physical_read (d := degree r) (by dsimp [degree]; omega)] at zread z8read
   have nz := hread (qLow r) (qMid r) 0 hL hM hU
   have nz8 := hread (q8Low r) (q8Mid r) 0 hL8 hM8 hU
   rw [zread,hρ,hC,hp] at nz

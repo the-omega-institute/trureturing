@@ -162,7 +162,7 @@ theorem actual_high_row_differences (r : ℕ) (X : Fin (3*degree r) → A) :
   have e42 := td 2 _ _ _ _ (-1) q19 q5 (by ring)
   have hi1 : degree r-3+1=degree r-2 := by omega
   have hi2 : degree r-3+2=degree r-1 := by omega
-  norm_num [read_succ,read,MersenneExceptional19PermutationStabilizer.digit,
+  norm_num [read_succ,MersenneExceptional19PermutationStabilizer.read,MersenneExceptional19PermutationStabilizer.digit,
     Fin.sum_univ_succ,hi1,hi2] at e10 e11 e12 e20 e21 e22 e30 e31 e32 e40 e41 e42
   dsimp only [affineRead]
   refine ⟨?_,?_,?_,?_⟩

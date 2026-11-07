@@ -24,7 +24,7 @@ variable {A : Type*} [AddCommGroup A]
 
 private theorem read_zsmul (d : ℕ) (f : ℕ → ℤ) (c : A) (z : ℤ) :
     read d (fun j => f j • c) z = read d f z • c := by
-  simp only [read, zsmul_eq_mul, mul_smul, Finset.sum_smul]
+  simp only [MersenneExceptional19PermutationStabilizer.read, zsmul_eq_mul, Int.cast_id, mul_smul, Finset.sum_smul]
 
 private theorem read_spike (d k : ℕ) (c : A) (z : ℤ) (hk : k<d) :
     read d (fun j => if j=k then c else 0) z = digit z k • c := by

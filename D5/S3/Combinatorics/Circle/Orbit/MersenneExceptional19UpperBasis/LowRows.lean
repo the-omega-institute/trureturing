@@ -76,7 +76,7 @@ private theorem read_two_low (d : ℕ) (hd : 2≤d) (f : ℕ → A) (z : ℤ)
           rw [hp] at hz
           omega
   rw [htail,read_succ,read_succ]
-  simp [read]
+  simp [MersenneExceptional19PermutationStabilizer.read]
 
 private theorem selected_low_triples (r : ℕ) (X : Fin (3*degree r) → A)
     (hX : SelectedAnnihilates r X) :

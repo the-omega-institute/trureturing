@@ -49,7 +49,7 @@ private theorem read_split (n k : ℕ) (f : ℕ → A) (z : ℤ) :
     read (n+k) f z=read n f z+
       read k (fun i => f (n+i)) (z/(2 : ℤ)^n) := by
   induction n generalizing f z with
-  | zero => simp [read]
+  | zero => simp [MersenneExceptional19PermutationStabilizer.read]
   | succ n ih =>
     rw [show n+1+k=(n+k)+1 by omega,read_succ,ih,read_succ]
     have hq : (z/2)/(2 : ℤ)^n=z/(2 : ℤ)^(n+1) := by
@@ -67,7 +67,7 @@ private theorem read_geom_smul (n : ℕ) (c : A) (z : ℤ)
     read n (fun i => (2 : ℤ)^i • c) z=z • c := by
   have hc : read n (fun i => (2 : ℤ)^i • c) z=
       (read n (fun i => (2 : ℤ)^i) z) • c := by
-    simp only [read,smul_smul,Finset.sum_smul,zsmul_eq_mul]
+    simp only [MersenneExceptional19PermutationStabilizer.read,smul_smul,Finset.sum_smul,zsmul_eq_mul,Int.cast_id]
   rw [hc,read_geom n z hz.1 hz.2]
   simp
 

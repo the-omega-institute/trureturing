@@ -101,8 +101,9 @@ private theorem scaled_first (r : ℕ) (c : A) (j : ℕ) :
   · subst j
     simp [first,phaseWeight,show (0 : ℕ)≠degree r-1 by omega]
   · have hp : (2 : ℤ)^j=2*2^(j-1) := by
-      rw [show j=(j-1)+1 by omega,pow_succ]
-      ring
+      calc
+        (2 : ℤ)^j=(2 : ℤ)^((j-1)+1) := by congr 1; omega
+        _=2*2^(j-1) := by rw [pow_succ]; ring
     simp only [first,phaseWeight,ite_true,if_neg hz]
     rw [hp]
     split_ifs <;> module
@@ -125,8 +126,9 @@ private theorem scaled_last (r : ℕ) (c : A) (j : ℕ) :
     simp only [ite_true,pow_zero]
     split_ifs <;> module
   · have hp : (2 : ℤ)^j=2*2^(j-1) := by
-      rw [show j=(j-1)+1 by omega,pow_succ]
-      ring
+      calc
+        (2 : ℤ)^j=(2 : ℤ)^((j-1)+1) := by congr 1; omega
+        _=2*2^(j-1) := by rw [pow_succ]; ring
     rw [if_neg hz,hp]
     split_ifs <;> module
 
