@@ -1,0 +1,6 @@
+**定义 16.1（准确来源）。** 有限 EJA 的谱、Peirce 分解、内导子和简单分解为成熟工具；primitive 路径连通及零角结构取 Nomura，*Manifold of primitive idempotents in a Jordan-Hilbert algebra*，[原文](https://www.jstage.jst.go.jp/article/jmath1948/45/1/45_1_37/_pdf)，Proposition 1.6、§§2–3。三循环方程的消元、双极定理、复多项式根和 Hermitian 矩阵铅笔均只作中间工具，不单列为新一般结果。
+
+动力对应的精确成熟接口为 Baez，*Getting to the Bottom of Noether's Theorem*，[arXiv:2006.14741v5](https://arxiv.org/html/2006.14741v5)，§4 Theorem 12 及其 Alfsen–Shultz 引文：含单位 JB 代数上实线性对应 $a\mapsto\delta_a$ 取值于斜顺序导子，满足 $\delta_a a=0$ 和 $[\delta_a,\delta_b]=-[L_a,L_b]$，才恢复乘法 $a\circ b-\mathrm i\delta_a b$。本卷先以实际输出证明这全部前件，调用后再以矩阵铅笔消灭旧总映射的中心残余；没有从该定理倒借旧 $D$ 的线性。该文 Theorem 7 的 Leibniz 前件亦不预先加入。
+
+新增 $\texttt{repo-derived}$ 综合限于固定有限平方背景下，从仅二标签和实部式恢复同一个任意旧总映射的完整链：逐元素实际输出覆盖，所得线性左作用组成动力对应，最后用每块 Hermitian 铅笔的两种根符号排除任意中心噪声。成熟动力对应分类、谱零对角接口和标准交换子不是新发现；本卷不主张这些工具或整个综合的历史优先权。§3 的连续齐次反例仍然有效，它的原锥并非 (12.1) 的平方锥且实部式失败；这里不将它改判成完整候选内的反例。13.1 是有明确背景的条件定理，不证明任意原来源必然供应该背景。
+

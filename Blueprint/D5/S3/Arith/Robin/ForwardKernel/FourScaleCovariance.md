@@ -22,5 +22,6 @@ Average the short moving increment over a window M. MovingShortAverage.averaged_
 
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/FourScaleCovariance.four_scale_covariance_bound`
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/AveragingBounds](AveragingBounds.md)
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/AveragingRegularity](AveragingRegularity.md)
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/MovingShortAverage](MovingShortAverage.md)
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/TranslationStripBounds](TranslationStripBounds.md)
