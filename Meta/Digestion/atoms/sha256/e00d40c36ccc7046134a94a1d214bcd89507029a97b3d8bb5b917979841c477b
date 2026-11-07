@@ -1,0 +1,76 @@
+**定理 73.1（忠实完成上的准确 $S-\mathrm iD$）。** 在定义 71.1 及原式 (49.1) 下，同一个 $D$ 有唯一有界实双线性延拓 $\bar D:X^2\to X$，满足 $\bar N(\bar D(x,y))\le\bar N(x)\bar N(y)$。准确乘法
+
+$$
+xy=\bar S(x,y)-\mathrm i\bar D(x,y)\qquad(x,y\in X)
+\tag{73.1}
+$$
+
+及其复双线性延拓使 $\mathcal B=X\oplus\mathrm iX$ 成为含单位复 $C^*$ 代数，其自伴部、正锥和自伴范数恰为原指定的 $X,C_X,\bar N$。同一 $A=E\oplus\mathrm iE$ 忠实嵌入为稠密含单位 pre-$C^*$ 子代数，乘法在原输入上准确为原 $S-\mathrm iD$。结论仍只需 72.1 的有限列表条件，但主入口保留完整 (49.1)。
+
+证明。$E=0$ 时完成、乘法、评价及全部范数均为零，按零代数约定保留原 $u=0$，结论直接成立。以下设 $E\ne0$。72.2 的实双线性及 (72.3) 先给唯一完成延拓。其反对称、单位零、全部实部式和 (72.4) 都由范数连续性传到 $X$，包括嵌套输入。以下先支付所有完成态的二表正性，再建立顺序导子；没有假设原评价族在完成正对偶中范数锥稠密。
+
+对原 $a,b\in E$ 和任意复数 $z_1,z_2$，定义原元素
+
+$$
+\begin{aligned}
+w={}&|z_1|^2S(a,a)+|z_2|^2S(b,b)\\
+&+2\Re(\overline{z_1}z_2)S(a,b)
+ +2\Im(\overline{z_1}z_2)D(a,b).
+\end{aligned}
+\tag{73.2}
+$$
+
+两条实际有向项及反对称性使 $\alpha(w)$ 正好是原二表的复二次型，故 $\alpha(w)\ge0$ 对全部原 $\alpha$ 成立。(71.1) 直接给 $w\in C$，于是 $i(w)\in C_X$。现在对任意数学连续正泛函 $\varphi\in X^*_+$ 评价该原锥不等式，得到同一二表在 $\varphi$ 下的正性。固定 $\varphi,z_1,z_2$，以原 $a_n\to x,b_n\to y$ 逼近，$\bar S,\bar D$ 的连续性及正矩阵锥闭性给全部完成 $x,y$ 的二表正性。这没有增加原准备，也没有用原 $P$ 的任何未证对偶密度。
+
+置 $\delta_x(y)=\bar D(x,y)$。这是 $X$ 上有界实线性算子，$\|\delta_x\|\le\bar N(x)$，且 $x\mapsto\delta_x$ 实线性。对每个完成数学态 $\varphi$、每个 $c\in C_X$ 且 $\varphi(c)=0$，JB 单元素函数演算给 $0\le\bar S(c,c)\le\bar N(c)c$，故 $\varphi(\bar S(c,c))=0$。刚已建立的全部完成二表在标签 $(x,c)$ 上有零对角行，所以
+
+$$
+\varphi(\delta_xc)=\varphi(\bar D(x,c))=0.
+\tag{73.3}
+$$
+
+本处所需成熟零面判据的准确域是：完备 Archimedean 序单位空间上的有界实线性 $T$，若每个数学态、每个正 $c$ 满足 $\varphi(c)=0\Rightarrow\varphi(Tc)=0$，则 $e^{tT}$ 对全部实 $t$ 为序自同构。其必要性由 $\varphi(e^{tT}c)\ge0$ 在 $t=0$ 的极小值直接得到。为明确充分性及避免借入额外事件假设，在此给出其证明。对 $\varepsilon>0$ 解完备 Banach 空间中的线性方程
+
+$$
+y_\varepsilon'=Ty_\varepsilon+\varepsilon u,
+\qquad y_\varepsilon(0)=c+\varepsilon u.
+\tag{73.4}
+$$
+
+解在全部有限时间存在。若它在正时间首次触及 $C_X$ 的边界，支撑超平面定理给该边界点的归一正泛函 $\varphi$，$\varphi(u)=1$、$\varphi(y_\varepsilon)=0$。此前解在锥内部，故这个固定标量函数的左导数非正；方程与零面条件却使其导数等于 $\varepsilon>0$，矛盾。因此解保持在内部。对每个固定 $t\ge0$ 令 $\varepsilon\downarrow0$，线性解的连续依赖及锥闭性给 $e^{tT}c\in C_X$。将同一证明用于 $-T$，便得所有实时间的双向保锥。这里边界支撑泛函可归一，是因为非零正泛函在内部序单位 $u$ 上严格为正。判据只针对已经有界线性的 $T$，不适用于入口的任意总映射。
+
+将判据用于 (73.3)，各 $\delta_x$ 都是顺序导子。又 $\delta_xu=0$，故其指数保单位并为序单位等距群，即 JB 上的有界斜顺序导子。Baez §4 所列的成熟等价说明这也给 Jordan 导子律。现在反对称及 (72.4) 的循环和才合法给
+
+$$
+\delta_xx=0,\qquad
+[\delta_x,\delta_y]z
+=\bar D(\bar D(x,y),z)
+=[L_y,L_x]z=-[L_x,L_y]z,
+\quad L_xy=\bar S(x,y).
+\tag{73.5}
+$$
+
+至此完整满足含单位 JB 上实线性动力对应的两个条件和有界斜顺序导子的值域条件。准确应用 [Baez，§4 Theorem 12](https://arxiv.org/html/2006.14741v5) 所述 Alfsen–Shultz 定理，得到唯一与该对应相容的复 $C^*$ 结构 (73.1)。符号正是 $-\mathrm i\delta_xy$，而非相反号；在所得结合乘法内 $\bar D(x,y)=\mathrm i[x,y]/2$。没有另造辅助括号，也没有在调用定理后才识别旧 $D$。
+
+该定理给自伴范数 $\bar N$ 和星结构 $(x+\mathrm iy)^*=x-\mathrm iy$，其全复范数为
+
+$$
+\|z\|_{\mathcal B}^2=\bar N(z^*z),\qquad
+z^*z=\bar S(x,x)+\bar S(y,y)+2\bar D(x,y)
+\quad(z=x+\mathrm iy).
+\tag{73.6}
+$$
+
+此处 $z^*z\in C_X$；完成 JB 的平方锥就是所得 $C^*$ 正锥。对 $a,b\in E$，原 $S(a,b),D(a,b)$ 本来属于 $E$，所以同一个 $A$ 对该乘法及伴随封闭，单位还是 $u$；嵌入 $i_{\mathbb C}(a+\mathrm ib)=i(a)+\mathrm i i(b)$ 为单射含单位 $*$-同态。在 $E$ 上限制范数恰为 $N$，且 $A\cap\mathcal B_+=C$。由 $\|x+\mathrm iy\|_{\mathcal B}\le\bar N(x)+\bar N(y)$ 及原 $E$ 稠密，$A$ 在 $\mathcal B$ 中稠密，其继承范数满足 $C^*$ 恒等式。因此完成的是原 pre-$C^*$ 代数，不是另一个原载体。
+
+每个原正评价都有唯一正连续延拓 $\bar\alpha$ 到 $X$，质量仍为 $m_\alpha$。其复延拓为 $\Phi_\alpha(x+\mathrm iy)=\bar\alpha(x)+\mathrm i\bar\alpha(y)$，在 $\mathcal B$ 上为正，范数为 $m_\alpha$。对任意有限原标签及复系数，$z=\sum_jz_ja_j\in A$ 给
+
+$$
+\sum_{j,k}\overline{z_j}z_k
+ [\alpha(S(a_j,a_k))-\mathrm i\alpha(D(a_j,a_k))]
+=\Phi_\alpha(z^*z)\ge0.
+\tag{73.7}
+$$
+
+零质量时评价及其延拓恒零，表也为零；非等质量从未重标。∎
+

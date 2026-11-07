@@ -1,0 +1,193 @@
+**定理 78.2（无需正则性或平移前件的全局分类）。** 在定义 78.1 的同一背景上，
+
+$$
+\boxed{\quad
+\mathsf A+\mathsf B
+\quad\Longleftrightarrow\quad
+\exists\varepsilon\in\{1,-1\}\ \forall a,b\in E,\quad
+D(a,b)=\varepsilon Q(a,b).
+\quad}
+\tag{78.4}
+$$
+
+符号是整个原载体上的同一个符号，不依赖输入、有限角或评价。没有预设旧 $D$ 的线性、连续性、正常性、中央平移、有限依赖反映或输出覆盖，也不把原输入限制为有限秩。特别地，$\mathsf A+\mathsf B+\mathsf T$ 与 (78.4) 的右侧同样等价；$\mathsf T$ 在这个固定载体上已是结论。
+
+证明。先设 $\mathsf A+\mathsf B$。实际表的 Hermitian 性及原评价分离给旧 $D$ 的反对称性、$D(a,a)=0$；标签 $(0,a)$ 的零对角再给 $D(0,a)=0$。直接复用 (13.2) 的维数无关三循环消元，即 (72.4)，得到
+
+$$
+D(D(a,b),t)=[L_b,L_a]t
+=-\frac14[[a,b],t]
+=Q(Q(a,b),t),\qquad L_a t=S(a,t).
+\tag{78.5}
+$$
+
+这里只消费已知的对称 $S$、旧 $D$ 反对称及 $\mathsf B$，没有展开未知 $D$ 的输入和。小窗口单位卷定理 7.2 在这里的完成就是原完备 $E$，其精确零行／零列为 $\mathbb RI$，并给 $D(sI,b)=0$。该卷定义 7.3 的边界仍保持：这一零输入结论本身不是 $\mathsf T$。下面直接识别全部旧值。
+
+先证明有限角确实对同一个旧 $D$ 封闭。令 $e$ 为任意非零有限秩正交投影，$a=eae,b=ebe$，置 $d=D(a,b)$。每个原向量泛函 $\alpha_v(x)=\langle v,xv\rangle$ 属于 $P$，其质量为 $\|v\|^2$。(78.3) 的行列式给
+
+$$
+|\langle v,dv\rangle|^2
+\le \|av\|^2\|bv\|^2-
+          \bigl(\Re\langle av,bv\rangle\bigr)^2
+\le \|av\|^2\|bv\|^2.
+\tag{78.6}
+$$
+
+对 $y\in(1-e)\mathcal H$，右边为零，故自伴算子 $(1-e)d(1-e)$ 的全部二次型为零，由复极化得 $(1-e)d(1-e)=0$。再对任意 $x\in e\mathcal H,y\in(1-e)\mathcal H$ 及 $z\in\mathbb C$ 取 $v=x+zy$。(78.6) 右边与 $z$ 无关，而左边的实二次型内部为
+
+$$
+\langle x,dx\rangle+2\Re\bigl(z\langle x,dy\rangle\bigr).
+\tag{78.7}
+$$
+
+它对全部复 $z$ 有界，故 $\langle x,dy\rangle=0$。于是 $ed(1-e)=(1-e)de=0$，即 $d=ede$。这一步对原无限载体中的实际输出成立，不把有限秩算子当作全 $E$ 的范数稠密集。
+
+记 $E_e=(eB(\mathcal H)e)_{\rm sa}$。有限角的任意正实线性泛函 $\beta$ 可按 $\widetilde\beta(x)=\beta(exe)$ 延为原 $P$ 中的有界正泛函。因此限制 $D_e=D|_{E_e^2}$ 是实际封闭的同一个映射，满足全部有限角正评价的 $\mathsf A$ 及全部角内三输入的 $\mathsf B$；$S$、平方锥和单位分别是原角乘法、原角正锥和 $e$。有限 EJA 定理 13.1 遂可直接应用，给 $D_e$ 的实交替双线性及 $D_e(e,x)=0$。这里只在已证明封闭的原角上消费有限定理，没有先假设全 $D$ 的正则性。
+
+为看清这个有限输入如何锁定取向，在任一秩二角内取标准 Pauli 基
+
+$$
+\sigma_1=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+\sigma_2=\begin{pmatrix}0&-\mathrm i\\\mathrm i&0\end{pmatrix},\quad
+\sigma_3=\begin{pmatrix}1&0\\0&-1\end{pmatrix},
+\qquad
+\sigma_j^2=e,\quad Q(\sigma_1,\sigma_2)=-\sigma_3
+\tag{78.8}
+$$
+
+及其循环式。这是 15.1、22.1 的成熟三实维自旋几何在该原角中的坐标。其局部结论也可直接从刚取得的双线性读出：对 $\sigma_1$ 的正、负单位本征向量，分别在 (78.6) 取首标签 $\sigma_1-e,\sigma_1+e$，另一个标签取 $\sigma_2$。首标签消灭该向量，且局部单位零使这两份输出都等于 $D_e(\sigma_1,\sigma_2)$，所以输出在 $\sigma_1$ 两个本征方向上的对角读数都为零。它的标量和 $\sigma_1$ 分量因此为零。交换两标签，对 $\sigma_2$ 本征方向作同样测试，又消去 $\sigma_2$ 分量。故可写
+
+$$
+D_e(\sigma_1,\sigma_2)=c_3\sigma_3,\quad
+D_e(\sigma_2,\sigma_3)=c_1\sigma_1,\quad
+D_e(\sigma_3,\sigma_1)=c_2\sigma_2.
+\tag{78.9}
+$$
+
+将这些实际值代入 (78.5)，例如 $D_e(D_e(\sigma_1,\sigma_2),\sigma_1)=\sigma_2$，用的只是已恢复的角内双线性，给 $c_3c_2=1$；循环得到另两式 $c_1c_3=c_2c_1=1$。所以三个系数都是同一个 $c\in\{1,-1\}$。令 $\varepsilon_e=-c$，角内单位零和双线性便给
+
+$$
+D_e(a,b)=\varepsilon_e Q(a,b),\qquad
+D_e(\mathbf v\cdot\boldsymbol\sigma,
+    \mathbf w\cdot\boldsymbol\sigma)
+=-\varepsilon_e(\mathbf v\times\mathbf w)\cdot\boldsymbol\sigma.
+\tag{78.10}
+$$
+
+特别是该角内每个无迹自伴 $h$ 都是单个实际旧输出。若 $h=\mathbf h\cdot\boldsymbol\sigma\ne0$，选单位 $\mathbf v\perp\mathbf h$，取 $\mathbf w=\varepsilon_e\mathbf v\times\mathbf h$ 即给 $h=D_e(\mathbf v\cdot\boldsymbol\sigma,\mathbf w\cdot\boldsymbol\sigma)$；零向量取零标签。此覆盖只对这些已证明的角内方向使用，不预设一般原输出覆盖。
+
+若 $h=D(x,y)$ 是这样的角内无迹元，(78.10) 给 $Q(x,y)=\varepsilon_e h$。(78.5) 因而对每个原 $t\in E$ 给
+
+$$
+D(h,t)=Q(Q(x,y),t)=\varepsilon_e Q(h,t).
+\tag{78.11}
+$$
+
+第二个输入已可有任意无限支撑；此式没有把标量移过未知的旧 $D$。若另一个秩二角 $f$ 内有无迹 $k$，旧反对称性及两份 (78.11) 给
+
+$$
+(\varepsilon_e-\varepsilon_f)Q(h,k)=0.
+\tag{78.12}
+$$
+
+两个角若共有一条复直线，取该线上的单位 $\xi$，并写 $e\mathcal H=\operatorname{span}\{\xi,\eta\}$、$f\mathcal H=\operatorname{span}\{\xi,\zeta\}$，其中两对分别正交归一。令 $h=P_\xi-P_\eta$，令 $k\xi=\zeta,k\zeta=\xi$ 且 $k=0$ 于 $f^\perp$；这里 $P_\xi v=\xi\langle\xi,v\rangle$。两者分别为相应角的无迹自伴实际输出，且不通勤：$h$ 的 $+1$ 本征空间恰为 $\mathbb C\xi$，$k\xi=\zeta\perp\xi$，故 $k$ 不保持该本征空间。(78.12) 迫使两角符号相等。任意两秩二平面可由一个中间秩二平面连接：分别从中选两条不重合的直线，取它们的张成，中间平面与两端各有公共直线。于是全部 $\varepsilon_e$ 等于一个全局 $\varepsilon\in\{1,-1\}$。取向的一致性来自这些实际输出的关系行，不来自任意有限截断上的独立选择。
+
+现在固定任意原 $a,b\in E$，不要求有限秩，令 $d=D(a,b)$。对每个秩二角无迹自伴 $h$，(78.5)、(78.11) 及反对称性给
+
+$$
+\varepsilon Q(d,h)=D(d,h)=Q(Q(a,b),h).
+\tag{78.13}
+$$
+
+因此自伴 $d-\varepsilon Q(a,b)$ 与全部这些 $h$ 通勤。其共同交换子代数在原 $B(\mathcal H)$ 内为 $\mathbb CI$：任意单位 $\xi$ 选单位 $\eta\perp\xi$，通勤于 $P_\xi-P_\eta$ 使算子保持其一维 $+1$ 本征空间 $\mathbb C\xi$；故每条直线不变，线性再使全部本征值相同。于是对每个原有序对都有一个实数 $r(a,b)$，使
+
+$$
+D(a,b)=\varepsilon Q(a,b)+r(a,b)I.
+\tag{78.14}
+$$
+
+此时没有假定 $r$ 的任何正则性，也未把这个差或任意中央元宣称为单个旧输出。
+
+最后在每个固定原有序对上消去 $r$。以下写 $r=r(a,b)$，对单位 $\psi\in\mathcal H$ 置
+
+$$
+\begin{aligned}
+c_\psi&=\langle\psi,\varepsilon Q(a,b)\psi\rangle
+       =-\varepsilon\Im\langle a\psi,b\psi\rangle,\\
+\Delta_\psi&=\|a\psi\|^2\|b\psi\|^2
+                 -\bigl(\Re\langle a\psi,b\psi\rangle\bigr)^2,\\
+(r+c_\psi)^2&\le\Delta_\psi,\qquad
+\Delta_\psi-c_\psi^2
+=\|a\psi\|^2\|b\psi\|^2-|\langle a\psi,b\psi\rangle|^2\ge0.
+\end{aligned}
+\tag{78.15}
+$$
+
+这些都是原向量评价对同一旧输出的 (78.3)。若自伴 $b$ 不可逆，有单位序列 $\psi_n$ 满足 $\|b\psi_n\|\to0$：否则存在 $\gamma>0$ 使 $\|b\psi\|\ge\gamma\|\psi\|$，故值域闭且核为零；自伴性又使值域稠密，从而 $b$ 有有界逆，矛盾。此序列上 $c_{\psi_n}\to0$、$\Delta_{\psi_n}\to0$，(78.15) 立即给 $r=0$。这包括没有零本征向量的连续谱端点。
+
+若 $b$ 可逆，考虑同一个原 Hilbert 空间上的有界复算子 $R=b^{-1}a$。有
+
+$$
+R^*=ab^{-1}=bRb^{-1},\qquad
+\sigma(R)=\overline{\sigma(R)}.
+\tag{78.16}
+$$
+
+有界复算子的谱非空且紧。其每个谱边界点 $\lambda$ 都有单位近似本征向量：取预解集中的 $\lambda_n\to\lambda$，由 Neumann 级数的预解圆盘估计，$\|(R-\lambda_n I)^{-1}\|\ge|\lambda_n-\lambda|^{-1}\to\infty$。选择单位 $y_n$ 使逆算子的像范数至少为该范数的一半，再将 $(R-\lambda_n I)^{-1}y_n$ 归一为 $\psi_n$，便得
+
+$$
+\|(R-\lambda I)\psi_n\|
+\le \frac{2}{\|(R-\lambda_n I)^{-1}\|}+|\lambda_n-\lambda|
+\longrightarrow0.
+\tag{78.17}
+$$
+
+这是成熟谱边界事实在本证明中的所需完整形式；不要求 $R$ 正常或谱点为本征值。乘以有界 $b$，得 $a\psi_n-\lambda b\psi_n\to0$。记 $k_n=\|b\psi_n\|^2$，则
+
+$$
+\begin{aligned}
+\|b^{-1}\|^{-2}\le k_n&\le\|b\|^2,\\
+c_{\psi_n}&=\varepsilon\Im(\lambda)k_n+o(1),\\
+0\le\Delta_{\psi_n}-c_{\psi_n}^2
+&\le\|a\psi_n-\lambda b\psi_n\|^2 k_n\longrightarrow0.
+\end{aligned}
+\tag{78.18}
+$$
+
+第二式的符号来自第一槽共轭线性：$\langle a\psi_n,b\psi_n\rangle=\overline\lambda k_n+o(1)$。第三式将 $a\psi_n=\lambda b\psi_n+(a\psi_n-\lambda b\psi_n)$ 代入 (78.15) 的 Gram 行列式，相关的 $\lambda b\psi_n$ 项恰好相消，再用 Cauchy–Schwarz；不需要 $k_n$ 收敛。
+
+若所取边界点 $\lambda$ 实，$c_{\psi_n}\to0$，(78.15) 再给 $r=0$。否则由 (78.16)，$\overline\lambda$ 也是谱边界点，两点各自有 (78.17) 的序列。若 $r\ne0$，选择其中满足 $r\varepsilon\Im(\lambda)>0$ 的一点；(78.18) 的正下界使该序列上 $rc_{\psi_n}>0$ 最终成立，而 (78.15) 要求
+
+$$
+r^2+2rc_{\psi_n}\le\Delta_{\psi_n}-c_{\psi_n}^2\longrightarrow0,
+\tag{78.19}
+$$
+
+与固定 $r^2>0$ 矛盾。故任意原有序对的 $r(a,b)=0$。这一步以原有界算子谱代替有限证明 (13.11)–(13.12) 的行列式根，不对未知 $D$ 取极限，也不使用 $\mathsf T$。
+
+反向令一个固定 $\varepsilon\in\{1,-1\}$ 给 $D=\varepsilon Q$。每个原正实线性 $\alpha$ 在原标准复算子代数上有复线性延拓 $\alpha_{\mathbb C}(x+\mathrm iy)=\alpha(x)+\mathrm i\alpha(y)$，$x,y\in E$。它满足 $\alpha_{\mathbb C}(w^*w)\ge0$，并保持伴随共轭。两个方向的实际条目准确为
+
+$$
+\begin{aligned}
+g^+_\alpha(a,b)&=\alpha_{\mathbb C}(ab),&
+g^+_\alpha(b,a)&=\alpha_{\mathbb C}(ba),\\
+g^-_\alpha(a,b)&=\alpha_{\mathbb C}(ba),&
+g^-_\alpha(b,a)&=\alpha_{\mathbb C}(ab).
+\end{aligned}
+\tag{78.20}
+$$
+
+对任意有限个原自伴标签 $a_j$ 及复系数 $z_j$，置 $Z=\sum_jz_ja_j$。不替换任意有向项，完整二次型分别为
+
+$$
+\begin{aligned}
+\sum_{j,k}\overline{z_j}z_k g^+_\alpha(a_j,a_k)
+ &=\alpha_{\mathbb C}(Z^*Z)\ge0,\\
+\sum_{j,k}\overline{z_j}z_k g^-_\alpha(a_j,a_k)
+ &=\alpha_{\mathbb C}(ZZ^*)\ge0.
+\end{aligned}
+\tag{78.21}
+$$
+
+第二式中 $\sum_{j,k}\overline{z_j}z_ka_ka_j=ZZ^*$，标量系数可交换而算子顺序没有交换。因此 $\mathsf A$ 对全部原正评价成立，包括奇异评价；还取得全部有限表正性。两次旧关系的符号相乘为 $\varepsilon^2=1$，由标准结合乘法的实部恒等式得 $\mathsf B$；$[I,b]=0$ 给 $\mathsf T$。全程不除以任何质量；若 $m_\alpha=0$，序界 $|\alpha(x)|\le m_\alpha\|x\|$ 使该评价及其整表为零。由具体公式还得旧 $D$ 的实双线性及 $\|D(a,b)\|\le\|a\|\|b\|$，这些均是结论。∎
+
