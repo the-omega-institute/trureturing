@@ -3,17 +3,17 @@ import D5.S3.VertexAlgebra.Analysis.OriginalHeat
 import Reg.Support.DependentFamily
 import Reg.D5.S3.VertexAlgebra.Analysis.OriginalEnergyBasis
 
-/- SOURCE-ONLY/UNCOMPILED audit attempts. Readout operands are actual mathematical
-values, never proof tags. Full original dependent telescopes are preserved.
-No compiler occurrence index, source reconstruction, rigid-universe binding or
-declared_validated status is asserted. sourceSelection/escapeFrom are deliberately
-none; continuation is unknown and familyRecord is none. Later compiled readings
-and the linked-issue exception remain obligations. See source-mapping.json. -/
+/- The dependent arenas retain the complete original source telescopes and actual
+mathematical readouts. Source selections are absent, so these proof terms are
+incomplete source-bound audit attempts. An unknown continuation states only that
+the residual is unknown. Compactness and constructor identities with no supplied
+whole-family intervention remain positive laws rather than completed registrations. -/
 noncomputable section
 open Filter
 open scoped BigOperators InnerProductSpace Topology NNReal VertexOperator
 open _root_.D5.S3.VertexAlgebra.Analysis.OriginalSmearing
 open _root_.D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality
+open _root_.D5.S3.VertexAlgebra.LatticeAllStateField
 open _root_.D5.S3.VertexAlgebra.LatticePositiveEnergy
 open _root_.D5.S3.VertexAlgebra.Lattice.OriginalChargedEnergy
 open _root_.D5.S3.VertexAlgebra.SourceBPZ.OriginalMatterHermitian

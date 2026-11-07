@@ -10,8 +10,6 @@ import D5.S3.VertexAlgebra.Analysis.OriginalHeat
 import D5.S3.VertexAlgebra.Analysis.OriginalSmoothDomain
 
 /-!
-SOURCE-ONLY/UNCOMPILED. This bounded analytic source preparation does not implement
-an unbounded Hamiltonian, thermal trace, maximal adjoint, locality or holomorphy.
 The scalar estimate is global on all nonnegative real energies; finite sums are
 used only for original algebraic proofs and finite-rank approximation. The input
 to heatSmoothing and heatFamily is an arbitrary original Hilbert vector.
@@ -35,7 +33,7 @@ open Model
 variable (M : Model)
 
 /-- Finite for every positive time; order zero is exactly one. -/
-def heatSmoothingConstant (k : ℕ) (t : ℝ) : ℝ := (max 1 ((k : ℝ)/t))^k
+def heatSmoothingConstant (k : ℕ) (t : ℝ) : ℝ := (max 1 ((k : ℝ) / t))^k
 
 private theorem heat_scalar_bound (k : ℕ) (t E : ℝ) (ht : 0 < t) (hE : 0 ≤ E) :
     (1+E)^k * Real.exp (-t*E) ≤ heatSmoothingConstant k t := by
@@ -45,12 +43,12 @@ private theorem heat_scalar_bound (k : ℕ) (t E : ℝ) (ht : 0 < t) (hE : 0 ≤
     exact Real.exp_le_one_iff.mpr (mul_nonpos_of_nonpos_of_nonneg (by linarith) hE)
   · have hk' : (0 : ℝ) < (k : ℝ) := by exact_mod_cast Nat.pos_of_ne_zero hk
     let a := t/(k : ℝ)
-    let B := max 1 ((k : ℝ)/t)
+    let B := max 1 ((k : ℝ) / t)
     have ha : 0 ≤ a := (div_pos ht hk').le
     have hB : 1 ≤ B := le_max_left _ _
     have hBa : 1 ≤ B*a := by
       calc
-        1 = ((k : ℝ)/t)*a := by dsimp [a]; field_simp [ne_of_gt ht, ne_of_gt hk']; ring
+        1 = ((k : ℝ) / t)*a := by dsimp [a]; field_simp [ne_of_gt ht, ne_of_gt hk']; ring
         _ ≤ B*a := mul_le_mul_of_nonneg_right (le_max_right _ _) ha
     have hlinear : 1+E ≤ B*(1+a*E) := by
       have hh := mul_le_mul_of_nonneg_right hBa hE
@@ -66,7 +64,7 @@ private theorem heat_scalar_bound (k : ℕ) (t E : ℝ) (ht : 0 < t) (hE : 0 ≤
         mul_le_mul_of_nonneg_right hp (Real.exp_pos _).le
       _ = B^k := by
         rw [mul_pow, ← Real.exp_nat_mul, mul_assoc, ← Real.exp_add]
-        have he : (k : ℝ)*(a*E)+(-t*E) = 0 := by dsimp [a]; field_simp [ne_of_gt ht, ne_of_gt hk']; ring
+        have he : (k : ℝ) * (a*E)+(-t*E) = 0 := by dsimp [a]; field_simp [ne_of_gt ht, ne_of_gt hk']; ring
         rw [he, Real.exp_zero, mul_one]
       _ = heatSmoothingConstant k t := rfl
 
@@ -99,7 +97,7 @@ private theorem heatSmoothing_embed_heat (k : ℕ) (t : ℝ≥0) (ht : 0 < t)
 theorem heatSmoothing_embed (k : ℕ) (t : ℝ≥0) (ht : 0 < t) (v : Carrier M.D) :
     M.heatSmoothing k t ht (M.embed 0 v) =
       M.embed k (∑ E ∈ stateEnergies M.D v,
-        (Real.exp (-(t : ℝ)*(E : ℝ)) : ℂ) • gradeProjection M.D E v) := by
+        (Real.exp (-(t : ℝ) * (E : ℝ)) : ℂ) • gradeProjection M.D E v) := by
   rw [heatSmoothing_embed_heat, heat_embed]
 
 /-- Global quantitative smoothing, for arbitrary original Hilbert inputs and every natural k. -/
@@ -119,7 +117,9 @@ theorem heatSmoothing_inclusion (j k : ℕ) (hjk : j ≤ k) (t : ℝ≥0) (ht : 
   refine (embed_dense M 0).induction_on x ?_ ?_
   · exact isClosed_eq (by fun_prop) (by fun_prop)
   · intro v
-    simp only [ContinuousLinearMap.comp_apply, heatSmoothing_embed, inclusion_embed]
+    simp only [ContinuousLinearMap.comp_apply, heatSmoothing_embed_heat]
+    simpa only [ContinuousLinearMap.comp_apply, inclusion_embed] using
+      DFunLike.congr_fun (heat_inclusion M j k hjk t) (M.embed k v)
 
 private theorem heatSmoothing_zero_order (t : ℝ≥0) (ht : 0 < t) :
     M.heatSmoothing 0 t ht = M.heat 0 t := by
@@ -138,7 +138,7 @@ theorem heatSmoothing_hilbert (k : ℕ) (t : ℝ≥0) (ht : 0 < t) :
     refine (embed_dense M k).induction_on x ?_ ?_
     · exact isClosed_eq (by fun_prop) (by fun_prop)
     · intro v
-      simp only [ContinuousLinearMap.comp_apply, inclusion_embed, heatSmoothing_embed_heat]
+      simp only [ContinuousLinearMap.comp_apply, inclusion_embed, heatSmoothing_embed, heat_embed]
 
 /-- A coherent family in EXISTING smoothFamilies, for every arbitrary Hilbert vector. -/
 def Model.heatFamily (t : ℝ≥0) (ht : 0 < t) : M.Hilbert →ₗ[ℂ] M.Smooth where
@@ -154,7 +154,11 @@ theorem heat_smoothDomain (t : ℝ≥0) (ht : 0 < t) (x : M.Hilbert) :
     M.heat 0 t x ∈ M.smoothDomain := by
   have he : M.evaluation (M.heatFamily t ht x) = M.heat 0 t x := by
     change M.heatSmoothing 0 t ht x = M.heat 0 t x
-    rw [heatSmoothing_zero_order]
+    calc
+      _ = M.inclusion 0 1 (Nat.zero_le 1) (M.heatSmoothing 1 t ht x) :=
+        (DFunLike.congr_fun (heatSmoothing_inclusion M 0 1 (Nat.zero_le 1) t ht) x).symm
+      _ = M.heat 0 t x :=
+        DFunLike.congr_fun (heatSmoothing_hilbert M 1 t ht).1 x
   exact ⟨he, ⟨M.heatFamily t ht x, he⟩⟩
 
 private theorem heatSmoothing_split (k : ℕ) (t : ℝ≥0) (ht : 0 < t) :
@@ -182,7 +186,7 @@ theorem heatSmoothing_tail (k : ℕ) (t : ℝ≥0) (ht : 0 < t) (N : ℕ) :
     (M.heatSmoothingTruncation k t ht N).range ≤ M.cutoffSpace k N ∧
     FiniteDimensional ℂ (M.heatSmoothingTruncation k t ht N).range ∧
     ‖M.heatSmoothing k t ht - M.heatSmoothingTruncation k t ht N‖ ≤
-      heatSmoothingConstant k ((t : ℝ)/2) * Real.exp (-(t : ℝ)*((N : ℝ)+1)/2) := by
+      heatSmoothingConstant k ((t : ℝ) / 2) * Real.exp (-(t : ℝ) * ((N : ℝ) + 1)/2) := by
   have hsplit := heatSmoothing_split M k t ht
   have heq : M.heatSmoothingTruncation k t ht N =
       (M.truncation k (M.energyCutoff N)).comp (M.heatSmoothing k t ht) := by
@@ -204,14 +208,14 @@ theorem heatSmoothing_tail (k : ℕ) (t : ℝ≥0) (ht : 0 < t) (N : ℕ) :
     _ ≤ ‖M.heat k (t/2) - M.heatTruncation k (t/2) N‖ *
         ‖M.heatSmoothing k (t/2) (by positivity)‖ :=
       ContinuousLinearMap.opNorm_comp_le _ _
-    _ ≤ Real.exp (-((t/2 : ℝ≥0) : ℝ)*((N : ℝ)+1)) *
+    _ ≤ Real.exp (-((t/2 : ℝ≥0) : ℝ) * ((N : ℝ) + 1)) *
         heatSmoothingConstant k ((t/2 : ℝ≥0) : ℝ) :=
       mul_le_mul (heat_tail_bound M k (t/2) N)
         (heatSmoothing_bound M k (t/2) (by positivity)).1
         (norm_nonneg _) (Real.exp_pos _).le
     _ = _ := by
-      change Real.exp (-((t : ℝ)/2)*((N : ℝ)+1)) *
-        heatSmoothingConstant k ((t : ℝ)/2) = _
+      change Real.exp (-((t : ℝ) / 2)*((N : ℝ) + 1)) *
+        heatSmoothingConstant k ((t : ℝ) / 2) = _
       rw [mul_comm]
       congr 2
       ring

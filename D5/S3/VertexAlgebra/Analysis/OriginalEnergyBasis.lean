@@ -10,14 +10,7 @@ import D5.S3.VertexAlgebra.Analysis.OriginalSobolev
 import Mathlib.Analysis.InnerProductSpace.l2Space
 
 /-!
-SOURCE-ONLY/UNCOMPILED. Requires the visibility-only OriginalSobolev,
-OriginalNeutralEnergy and OriginalWordEnergy hunks in
-phase-a.patch. No open-private or duplicated supplier proof is used here.
-
-This is the common owner of the completed-grade basis block saved in
-OriginalConformalHamiltonian. It generalizes that block from order zero to every
-original Sobolev order. The future factoring hunk removes the old private block;
-the preserved input artifact is unchanged. stdOrthonormalBasis acts on the ACTUAL
+stdOrthonormalBasis acts on the ACTUAL
 Hm energy norm of each completedGrade, not on the monomial coefficient metric.
 The lattice/Sugawara suppliers retain Bakalov--Kac and original full-frame metric
 attributions. Mathlib Hilbert-basis/completion machinery is Apache 2.0. This
@@ -99,7 +92,8 @@ private theorem original_grade_mem_energy_span (k : ℕ) (E : ℤ) (v : grade M.
   have hx : x ∈ Submodule.span ℂ (Set.range (M.energyGradeBasis k E)) := by
     rw [← OrthonormalBasis.coe_toBasis, (M.energyGradeBasis k E).toBasis.span_eq]
     exact Submodule.mem_top
-  refine Submodule.span_induction (p := fun z _ =>
+  change (x : M.Sobolev k) ∈ Submodule.span ℂ (Set.range (M.energyVector k))
+  refine Submodule.span_induction (p := fun (z : M.completedGrade k E) _ =>
       (z : M.Sobolev k) ∈ Submodule.span ℂ (Set.range (M.energyVector k)))
     ?_ ?_ ?_ ?_ hx
   · rintro z ⟨j, rfl⟩
@@ -159,12 +153,11 @@ theorem energyIndex_nonnegative (k : ℕ) (i : M.energyIndex k) : 0 ≤ i.1 := b
     rw [hbot]
     simp
   have hi := i.2.isLt
-  rw [hdim] at hi
   omega
 
 private theorem grade_embed_norm (k : ℕ) (E : ℤ) (hE : 0 ≤ E)
     (v : Carrier M.D) (hv : v ∈ grade M.D E) :
-    ‖M.embed k v‖ = ((E : ℝ) + 1)^k * normD v := by
+    ‖M.embed k v‖ = ((E : ℝ) + 1) ^ k * normD v := by
   have hc : (E.toNat : ℤ) = E := Int.toNat_of_nonneg hE
   have hcR : (E.toNat : ℝ) = (E : ℝ) := by exact_mod_cast hc
   have h := sobolev_grade_norm M k E.toNat v (by rw [hc]; exact hv)
@@ -176,7 +169,7 @@ theorem finite_grade_quadratic (k : ℕ) (F : Finset ℤ)
     (u : ℤ → Carrier M.D) (b : ℤ → ℂ)
     (hu : ∀ E ∈ F, u E ∈ grade M.D E) :
     ‖M.embed k (∑ E ∈ F, b E • u E)‖^2 =
-      ∑ E ∈ F, ‖b E‖^2 * ((E : ℝ)+1)^(2*k) * normD (u E)^2 := by
+      ∑ E ∈ F, ‖b E‖^2 * ((E : ℝ) + 1) ^ (2*k) * normD (u E)^2 := by
   classical
   rw [embed_norm, map_sum]
   rw [normD_orthogonal_sum M.positive F
@@ -206,7 +199,7 @@ theorem finite_grade_quadratic (k : ℕ) (F : Finset ℤ)
 /-- The finite original-grade quadratic certificate, used for smoothing and tails. -/
 private theorem finite_energy_quadratic (j : ℕ) (v : Carrier M.D) :
     ‖M.embed j v‖^2 = ∑ E ∈ stateEnergies M.D v,
-      ((E : ℝ)+1)^(2*j) * normD (gradeProjection M.D E v)^2 := by
+      ((E : ℝ) + 1) ^ (2*j) * normD (gradeProjection M.D E v)^2 := by
   have h := finite_grade_quadratic M j (stateEnergies M.D v)
     (fun E => gradeProjection M.D E v) (fun _ => (1 : ℂ))
     (fun E _ => gradeProjection_mem M.D E v)
@@ -216,7 +209,7 @@ private theorem finite_energy_quadratic (j : ℕ) (v : Carrier M.D) :
 theorem finite_multiplier_bound (j k : ℕ) (B : ℝ) (hB : 0 ≤ B)
     (v : Carrier M.D) (b : ℤ → ℂ)
     (hb : ∀ E ∈ stateEnergies M.D v,
-      ‖b E‖ * ((E : ℝ)+1)^k ≤ B * ((E : ℝ)+1)^j) :
+      ‖b E‖ * ((E : ℝ) + 1) ^ k ≤ B * ((E : ℝ) + 1) ^ j) :
     ‖M.embed k (∑ E ∈ stateEnergies M.D v, b E • gradeProjection M.D E v)‖ ≤
       B * ‖M.embed j v‖ := by
   have hs := finite_grade_quadratic M k (stateEnergies M.D v)
@@ -226,7 +219,7 @@ theorem finite_multiplier_bound (j k : ℕ) (B : ℝ) (hB : 0 ≤ B)
   rw [hs, mul_pow, finite_energy_quadratic, Finset.mul_sum]
   apply Finset.sum_le_sum
   intro E hE
-  have h0 : (0 : ℝ) ≤ (E : ℝ)+1 := by
+  have h0 : (0 : ℝ) ≤ (E : ℝ) + 1 := by
     have h := stateEnergies_nonneg M.positive v E hE
     have : (0 : ℝ) ≤ (E : ℝ) := by exact_mod_cast h
     linarith

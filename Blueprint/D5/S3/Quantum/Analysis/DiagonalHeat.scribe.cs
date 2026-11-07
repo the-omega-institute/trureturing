@@ -8,6 +8,9 @@ internal sealed class DiagonalHeatDocument : IScribeDocumentDefinition
         "The actual algebraic diagonal operator has a self-adjoint closure and a positive whole-space heat with precisely its full negative generator graph.",
         H("Diagonal Hamiltonian and Strong Heat"),
         Blocks(
+            Result("heat_basis", "Heat on an actual basis vector", "For every full complex Hilbert basis e, nonnegative real energy family h, nonnegative-real time t and index i, heat e h t maps e(i) to exp(-t*h(i)) times e(i). This is the direct bounded multiplier action."),
+            Result("heat_contraction", "Whole-space heat contraction", "For every full complex Hilbert basis e of a complete inner product space, nonnegative real energy family E, nonnegative-real time t and arbitrary input f, the norm of heat e E t f is at most the norm of f. Coordinatewise exponential bounds are transported by the isometric basis representation."),
+            Result("heat_continuous", "Continuous heat orbit", "For every full complex Hilbert basis e of a complete inner product space, nonnegative real energy family E and arbitrary input f, the entire nonnegative-time orbit of heat e E t f is continuous, including at zero. Finite basis approximations and uniform contraction give the result."),
             Definition("finiteOperator", "The finite algebraic operator",
                 "For every full complex Hilbert basis e of a complete Hilbert space and every real family h, this partial complex linear map has domain exactly the algebraic span of the range of e. LinearIndependent.repr supplies its finite coefficients; Finsupp.linearCombination synthesizes the basis vectors weighted by h."),
             Definition("hamiltonian", "The actual closure",
