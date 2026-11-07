@@ -2720,7 +2720,7 @@ $$
 | --- | --- |
 | II100.1、(100.2)、121.1；III138.1、(138.2a)；XI1.1–1.4 | 原全部 $89$ 配置、复规范、$26+63$、ready、十一／七菜单、两个切口和原报告顺序，特别是 $N_{w_*}$ 的单例对应。矩阵签名不自带实际概率。 |
 | III (144.12)、II (77.7)–(77.10)、(121.7)；本卷18.1 | 同一个原 $n=12,[6,6]$ Jones 来源及实际有限正向 ready 轨道密度；本卷18.1 的统一表示对应可复用，但其 Artin 关系不供应 $\mathrm F_h$。 |
-| Freedman–Larsen–Wang，[*The two-eigenvalue problem and density of Jones representation of braid groups*, math/0103200v1][FLW]，Theorem 0.1、§2 Definitions 1–2、(1)–(3) | 原始精确版本的定理给 $r=5,n=12$ Jones 直和闭像中的特殊酉因子；可容许表公式接到仓内原矩阵。只用这一密度供应，不用 §6 印刷融合矩阵，不从闭包取新控制、实际准备、停止或概率。 |
+| Freedman–Larsen–Wang，[*The two-eigenvalue problem and density of Jones representation of braid groups*, math/0103200v1][DA-FLW]，Theorem 0.1、§2 Definitions 1–2、(1)–(3) | 原始精确版本的定理给 $r=5,n=12$ Jones 直和闭像中的特殊酉因子；可容许表公式接到仓内原矩阵。只用这一密度供应，不用 §6 印刷融合矩阵，不从闭包取新控制、实际准备、停止或概率。 |
 | III177.1–177.3、177.5；本卷9.1、§6 (6.6)–(6.12) | 原有序 $Q$、完整内部 A、B 的量词、全向量十调用回返和安全判据；允许零响应块质量的零传播与任意缩放机制。§6 的两个校准和地址零响应合同不随机制一起输入。 |
 | Dürr–Goldstein–Tumulka–Zanghì，[*Bell-Type Quantum Field Theories*, quant-ph/0407116v1][DGTZ]，§2.3 (15) | 原始精确版本的一般增益减损失主方程，用于 (34.5) 的未知非负响应；不使用该文以平方分布为设计目标的最小率 (29) 来推导 Born。 |
 | 本卷9.2–9.5；XI12.2 的正赔率后段、XI13.1 | 已有弱边延拓、全域正赔率、实指数符号、内部 $j=1$ 选择及全部支撑层；Lamperti 原文的适用范围沿定理9.4既有核对继承，不将其列作本节新增原始核读。 |
