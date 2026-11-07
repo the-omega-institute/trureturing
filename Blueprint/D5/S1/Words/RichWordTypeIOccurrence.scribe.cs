@@ -30,8 +30,8 @@ internal sealed class RichWordTypeIOccurrenceDocument : IScribeDocumentDefinitio
                 + "make the pointwise definition total. Substituting arbitrary prefix "
                 + "windows gives the fixed-point block equation. Every image starts "
                 + "with zero and has no other zero, so the zeros are precisely the "
-                + "unique true boundaries, including B(0)=0. The displayed "
-                + "prefixImageLengthSum(i) denotes the sum of |phi(u(j))| over j<i."),
+                + "unique true boundaries, including B(0)=0. The boundary formula "
+                + "sums the lengths of the actual letter images over Finset.range(i)."),
             Theorem("terminal_interval_cancellation", "terminal-interval-cancellation",
                 "Final-six deletion on actual return intervals", Cancellation(),
                 "For positive a<b with the actual predecessor letters at a and b in "
@@ -85,8 +85,7 @@ internal sealed class RichWordTypeIOccurrenceDocument : IScribeDocumentDefinitio
                 "Complete factor Parikh recurrence", FactorParikh(),
                 "Write e(c) for unit(c), and increment(n)=e(0) at ordinary phases "
                 + "and e(0)+2e(6) at phase 5. The correction sum at n is the sum "
-                + "of M raised to n-1-k times increment(k), over 0<=k<n. The "
-                + "displayed parikhCorrectionSum denotes exactly this finite sum. "
+                + "of M raised to n-1-k times increment(k), over 0<=k<n. "
                 + "Induction proves both its equality with the actual factor "
                 + "counts and the matrix formula for actual iterated letter images."),
             Theorem("typeI_extensions", "extensions",
@@ -134,7 +133,7 @@ internal sealed class RichWordTypeIOccurrenceDocument : IScribeDocumentDefinitio
 
     private static Formula FixedPoint()
     {
-        Formula k = F.Id("k"), i = F.Id("i"), n = F.Id("n"), q = F.Id("q");
+        Formula k = F.Id("k"), i = F.Id("i"), j = F.Id("j"), n = F.Id("n"), q = F.Id("q");
         Formula u = C("word");
         Formula B(Formula x) => C("boundary", x);
         Formula P(Formula x) => C("image", C("phi"), x, F.D(0));
@@ -142,7 +141,7 @@ internal sealed class RichWordTypeIOccurrenceDocument : IScribeDocumentDefinitio
         return And(
             All("k", N(), Eq(C("factor", u, F.D(0), C("length", P(k))), P(k))),
             And(C("StrictMono", C("boundary")), And(Eq(B(F.D(0)), F.D(0)),
-            And(All("i", N(), Eq(B(i), C("prefixImageLengthSum", i))),
+            And(All("i", N(), Eq(B(i), Sum(j, i, C("length", C("phi", C("word", j)))))),
             And(All("i", N(), All("n", N(),
                 Eq(C("factor", u, B(i), C("length", S(i,n))), S(i,n)))),
             All("q", N(), Iff(Eq(C("word", q), F.D(0)),
@@ -184,7 +183,7 @@ internal sealed class RichWordTypeIOccurrenceDocument : IScribeDocumentDefinitio
     }
 
     private static Formula V(Formula n) =>
-        C("mulVec", C("matrixPower", C("M"), n), C("unit", F.D(6)));
+        C("mulVec", new Formula.Power(C("M"), n), C("unit", F.D(6)));
     private static Formula W(Formula n) => C("typeI", n);
     private static Formula P(Formula a, Formula b) => C("parikh", C("returnWord",a,b));
     private static Formula Map(Formula n, Formula a) => C("occurrenceMap",n,a);
@@ -235,14 +234,16 @@ internal sealed class RichWordTypeIOccurrenceDocument : IScribeDocumentDefinitio
 
     private static Formula FactorParikh()
     {
-        Formula n=F.Id("n"),c=F.Id("c");
+        Formula n=F.Id("n"),c=F.Id("c"),k=F.Id("k");
         return And(All("n",N(),Eq(C("parikh",W(Add(n,F.D(1)))),
             Add(C("mulVec",C("M"),C("parikh",W(n))),C("increment",n)))),
             And(All("n",N(),Eq(C("parikh",W(n)),
-                Add(V(n),C("parikhCorrectionSum",n)))),
+                Add(V(n),Sum(k,n,
+                    C("mulVec",new Formula.Power(C("M"),Sub(Sub(n,F.D(1)),k)),
+                        C("increment",k)))))),
                 All("n",N(),All("c",C("Fin",F.D(7)),
                     Eq(C("parikh",C("image",C("phi"),n,c)),
-                        C("mulVec",C("matrixPower",C("M"),n),C("unit",c)))))));
+                        C("mulVec",new Formula.Power(C("M"),n),C("unit",c)))))));
     }
 
     private static Formula Extensions()
@@ -286,7 +287,10 @@ internal sealed class RichWordTypeIOccurrenceDocument : IScribeDocumentDefinitio
 
     private static Formula N() => F.Seq(F.Mathbb, F.Grp(F.Id("N")));
     private static Formula C(string name, params Formula[] args) =>
-        new Formula.Apply(F.Id(name), [.. args]);
+        args.Length == 0 ? F.Id(name) : new Formula.Apply(F.Id(name), [.. args]);
+    private static Formula Sum(Formula index, Formula bound, Formula body) =>
+        F.Seq(new Formula.Subscript(F.Sum,
+            F.Seq(index, F.Sp, F.InMacro, F.Sp, new Formula.Apply(F.Seq(F.Id("Finset"), F.Dot, F.Id("range")), [bound]))), F.Sp, body);
     private static Formula All(string x, Formula domain, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(x), domain, body);
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
