@@ -95,17 +95,21 @@ private lemma calibrated_normalization :
     have hidentity : L P * (k P - 1) = -L P / (prefixC P * (k P + 1)) := by
       calc
         _ = L P * ((k P - 1) * (k P + 1)) / (k P + 1) := by
-          field_simp [show k P + 1 ≠ 0 by linarith]; ring
-        _ = _ := by rw [hkmul]; ring
+          field_simp [show k P + 1 ≠ 0 by linarith] <;> ring
+        _ = _ := by
+          rw [hkmul]
+          field_simp [hC.ne', show k P + 1 ≠ 0 by linarith] <;> ring
     rw [hidentity]
+    simp only [Pi.div_apply]
+    dsimp only [L]
     field_simp [hH.ne', hL.ne', hC.ne', show k P + 1 ≠ 0 by linarith]
     <;> ring
   have hq : Tendsto (fun P => q P / L P) atTop (𝓝 0) :=
     Real.isLittleO_log_id_atTop.tendsto_div_nhds_zero.comp ell_top
   have hq2 : Tendsto (fun P => q P ^ 2 / L P) atTop (𝓝 0) := by
-    have h := (Real.isLittleO_log_rpow_rpow_atTop (2 : ℕ)
+    have h := (isLittleO_log_rpow_rpow_atTop (2 : ℕ)
       (by norm_num : (0 : ℝ) < 1)).tendsto_div_nhds_zero.comp ell_top
-    simpa only [rpow_natCast, rpow_one] using h
+    simpa only [rpow_natCast, rpow_one, Function.comp_def, q, L] using h
   have hlogid : ∀ᶠ P : ℕ in atTop, 2 * l P = L P + q P + s P := by
     filter_upwards [eventual_log_C_identity, eventual_scale_positivity] with P hlog hP
     dsimp only [l, prefixY]
@@ -156,9 +160,10 @@ theorem actual_calibration_error_negligible :
   have hrzero : Tendsto r atTop (𝓝 (0 : ℝ)) :=
     (tendsto_sqrt_atTop.comp H_top).const_div_atTop 1
   have hellrzero : Tendsto (fun P => prefixEll P * r P) atTop (𝓝 (0 : ℝ)) := by
-    have h := (Real.isLittleO_log_rpow_rpow_atTop (1 : ℝ)
+    have h := (isLittleO_log_rpow_rpow_atTop (1 : ℝ)
       (by norm_num : (0 : ℝ) < 1 / 2)).tendsto_div_nhds_zero.comp H_top
-    simpa only [rpow_one, ← sqrt_eq_rpow, prefixEll, r, mul_one_div] using h
+    simpa only [rpow_one, ← sqrt_eq_rpow, prefixEll, r, mul_one_div,
+      Function.comp_def] using h
   have hfirst : Tendsto (fun P => (exp (r P) - 1) / r P)
       atTop (𝓝 (1 : ℝ)) :=
     exp_difference_quotient hrzero (hrpos.mono (fun _ h => h.ne'))
@@ -210,6 +215,7 @@ theorem actual_calibration_error_negligible :
     norm_num only [mul_zero, zero_mul] at h
     apply h.congr'
     filter_upwards [eventual_scale_positivity] with P hP
+    simp only [Function.comp_def]
     field_simp [hP.2.1.ne', (sqrt_pos.mpr hP.2.1).ne']
     <;> ring
   have hQr : ∀ᶠ P : ℕ in atTop, prefixQ P ≤ r P := by
@@ -220,9 +226,9 @@ theorem actual_calibration_error_negligible :
       (by simpa only [mul_comm] using hsmall)).le
   have hfour : Tendsto (fun P : ℕ => prefixEll P ^ 4 / sqrt (prefixH P))
       atTop (𝓝 (0 : ℝ)) := by
-    have h := (Real.isLittleO_log_rpow_rpow_atTop (4 : ℕ)
+    have h := (isLittleO_log_rpow_rpow_atTop (4 : ℕ)
       (by norm_num : (0 : ℝ) < 1 / 2)).tendsto_div_nhds_zero.comp H_top
-    simpa only [rpow_natCast, ← sqrt_eq_rpow, prefixEll] using h
+    simpa only [rpow_natCast, ← sqrt_eq_rpow, prefixEll, Function.comp_def] using h
   have hfactor : Tendsto (fun P : ℕ =>
       prefixEll P ^ 3 * sqrt (prefixEll P) / sqrt (prefixH P))
       atTop (𝓝 (0 : ℝ)) := by

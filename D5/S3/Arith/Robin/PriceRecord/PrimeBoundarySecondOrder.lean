@@ -23,6 +23,7 @@ open OwnClockFixedSupport BoundaryPrimePrice QuantitativePrimeAbel
 open RealInfimumPrimeBoundary
 open QuantitativePrimeAbel
 
+
 private def tailPolynomial (x : ℝ) : ℝ :=
   1 / (x * log x) - 1 / (x * log x ^ 2) + 2 / (x * log x ^ 3)
 
@@ -49,7 +50,7 @@ private lemma pi_normalized :
   norm_num at h
   apply h.congr'
   filter_upwards [eventually_gt_atTop (1 : ℝ)] with x hx
-    simp only [Pi.div_apply, Pi.mul_apply, Function.comp_def]
+  try simp only [Pi.div_apply, Pi.mul_apply, Function.comp_def]
   dsimp only [countingPolynomial]
   field_simp [show x ≠ 0 by linarith, (log_pos hx).ne']
   <;> ring
@@ -64,7 +65,7 @@ private lemma log_square_over_square_sub_one :
   norm_num at h
   apply h.congr'
   filter_upwards [eventually_gt_atTop (1 : ℝ)] with x hx
-    simp only [Pi.div_apply, Pi.mul_apply, Function.comp_def]
+  try simp only [Pi.div_apply, Pi.mul_apply, Function.comp_def]
   field_simp [show x ≠ 0 by linarith, show x ^ 2 - 1 ≠ 0 by nlinarith]
   <;> ring
 
@@ -78,7 +79,7 @@ theorem eventual_Q_exact :
         primeCount (prefixY P) * (-log (1 - 1 / prefixY P ^ 2)) +
         logarithmicTail (prefixY P) (P : ℝ) := by
   filter_upwards [eventual_prefix_domains, eventual_scale_positivity] with P hdom hpos
-    simp only [Pi.div_apply, Pi.mul_apply, Function.comp_def]
+  try simp only [Pi.div_apply, Pi.mul_apply, Function.comp_def]
   rcases hpos with ⟨hH, he, hC, hr, hl, _, hP, _⟩
   have hsq : prefixY P ^ 2 = prefixC P := sq_sqrt hC.le
   have hform := prime_prefix_boundary_formulas P hdom.2.2.2.1
@@ -94,11 +95,18 @@ theorem eventual_Q_exact :
       2 * (primeCount (prefixY P) * log (prefixY P) - Chebyshev.theta (prefixY P)) := by
     change log (cutoff (prefixPrice P)) = 2 * log (prefixY P) at hlog
     rw [hlog] at hform
-    convert hform.1 using 1 <;> dsimp only [primeCount, prefixH, prefixBoundary] <;> ring
+    change clock (Nat.primesLE P) (fun p => boundary p (prefixPrice P)) -
+      theta (Nat.primesLE P) = _
+    calc
+      _ = (Nat.primeCounting ⌊prefixY P⌋₊ : ℝ) * (2 * log (prefixY P)) -
+          2 * Chebyshev.theta (prefixY P) := hform.1
+      _ = _ := by dsimp only [primeCount]; ring
   have hdef : deficiency (Nat.primesLE P) (prefixBoundary P) =
       primeCount (prefixY P) * (-log (1 - 1 / prefixY P ^ 2)) +
       logarithmicTail (prefixY P) (P : ℝ) := by
-    simpa only [primeCount, logarithmicTail, primeInterval, Nat.floor_natCast, hsq, prefixC, prefixBoundary] using hform.2
+    change deficiency (Nat.primesLE P) (fun p => boundary p (prefixPrice P)) = _
+    simpa only [primeCount, logarithmicTail, primeInterval, Nat.floor_natCast, hsq,
+      prefixC] using hform.2
   have hden : prefixH P * prefixEll P = prefixY P ^ 2 - 1 := by
     rw [hsq, C_identity]
     ring
@@ -150,7 +158,7 @@ private lemma finite_endpoint_separation :
   norm_num only [mul_zero, zero_mul, sqrt_zero] at h
   apply h.congr'
   filter_upwards [eventual_scale_positivity] with P hP
-    simp only [Pi.div_apply, Pi.mul_apply, Function.comp_def]
+  try simp only [Pi.div_apply, Pi.mul_apply, Function.comp_def]
   rcases hP with ⟨hH, he, hC, hr, hl, _, hp, _⟩
   have hs : prefixY P ^ 2 = prefixC P := sq_sqrt hC.le
   have hid : prefixC P / (prefixH P * prefixEll P) *
@@ -172,7 +180,7 @@ private lemma finite_endpoint_zero :
   norm_num at h
   apply h.congr'
   filter_upwards [eventually_gt_atTop (1 : ℕ)] with P hP
-    simp only [Pi.div_apply, Pi.mul_apply, Function.comp_def]
+  try simp only [Pi.div_apply, Pi.mul_apply, Function.comp_def]
   have hp : (1 : ℝ) < P := by exact_mod_cast hP
   dsimp only [tailPolynomial]
   field_simp [show (P : ℝ) ≠ 0 by linarith, (log_pos hp).ne']
@@ -216,7 +224,7 @@ private lemma square_tail_error_zero :
               congr 1 <;> ring
       _ ≤ 6 / (y * log y ^ 4) + 5 / (y * log y ^ 9) := hs
       _ ≤ 6 / (y * log y ^ 4) + 5 / (y * log y ^ 4) :=
-        add_le_add_left hfrac _
+        add_le_add le_rfl hfrac
       _ = 11 / (y * log y ^ 4) := by ring
       _ ≤ 130 / (y * log y ^ 4) := by
         exact (div_le_div_iff₀ hden4 hden4).mpr (by nlinarith [hden4])
@@ -226,7 +234,7 @@ private lemma square_tail_error_zero :
         (tailPolynomial (prefixY P) - tailPolynomial (P : ℝ)))) atTop (𝓝 0) := by
     refine squeeze_zero_norm' ?_ hu
     filter_upwards [prefix_Y_atTop.eventually_ge_atTop X, eventual_prefix_domains] with P hPX hdom
-      simp only [Pi.div_apply, Pi.mul_apply, Function.comp_def]
+    try simp only [Pi.div_apply, Pi.mul_apply, Function.comp_def]
     have hy : 1 < prefixY P :=
       (Real.one_lt_exp_iff.mpr (by norm_num : (0 : ℝ) < 1)).trans
         (hX.trans_le hPX)
@@ -255,7 +263,7 @@ private lemma tail_euler_error :
     norm_num at h
     apply h.congr'
     filter_upwards [eventual_scale_positivity] with P hp
-      simp only [Pi.div_apply, Pi.mul_apply, Function.comp_def]
+    try simp only [Pi.div_apply, Pi.mul_apply, Function.comp_def]
     dsimp only [tailPolynomial]
     field_simp [hp.2.2.2.1.ne', hp.2.2.2.2.1.ne']
     <;> ring
@@ -281,6 +289,7 @@ private lemma tail_euler_error :
             (div_lt_one (pow_pos hy0 2)).mpr (by nlinarith)
           linarith]
       <;> ring
+    simp only [Function.comp_def]
     rw [← hid]
     exact mul_le_mul_of_nonneg_left (by linarith only [hb]) (by positivity [log_pos hy])
 
@@ -309,7 +318,7 @@ theorem calibrated_Q_second_order :
     norm_num at h
     apply h.congr'
     filter_upwards [eventual_prefix_domains] with P hP
-      simp only [Pi.div_apply, Pi.mul_apply, Function.comp_def]
+    try simp only [Pi.div_apply, Pi.mul_apply, Function.comp_def]
     have hr : 1 < r P := by dsimp only [r]; linarith [hP.2.2.2.2.1]
     dsimp only [u]
     field_simp [show r P ≠ 0 by linarith, show r P ^ 2 - 1 ≠ 0 by nlinarith]
@@ -317,8 +326,9 @@ theorem calibrated_Q_second_order :
   have huf : Tendsto (fun P => l P ^ 2 * (u P - 1)) atTop (𝓝 0) := by
     apply (log_square_over_square_sub_one.comp prefix_Y_atTop).congr'
     filter_upwards [eventual_prefix_domains] with P hP
-      simp only [Pi.div_apply, Pi.mul_apply, Function.comp_def]
+    try simp only [Pi.div_apply, Pi.mul_apply, Function.comp_def]
     have hr : 1 < r P := by dsimp only [r]; linarith [hP.2.2.2.2.1]
+    change log (r P) ^ 2 / (r P ^ 2 - 1) = l P ^ 2 * (u P - 1)
     dsimp only [u, l]
     field_simp [show r P ^ 2 - 1 ≠ 0 by nlinarith]
     <;> ring
@@ -334,7 +344,7 @@ theorem calibrated_Q_second_order :
   norm_num at h
   apply h.congr'
   filter_upwards [eventual_Q_exact, eventual_prefix_domains] with P hQ hP
-    simp only [Pi.div_apply, Pi.mul_apply, Function.comp_def]
+  try simp only [Pi.div_apply, Pi.mul_apply, Function.comp_def]
   have hr : 1 < r P := by dsimp only [r]; linarith [hP.2.2.2.2.1]
   have hr0 : r P ≠ 0 := ne_of_gt (by linarith)
   have hl : l P ≠ 0 := (log_pos hr).ne'
