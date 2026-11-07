@@ -203,7 +203,7 @@ private lemma tangent_remainder_quadratic_forward {H L T : ℝ} (hH : 1 < H)
   rw [intervalIntegral.integral_const_mul,
     intervalIntegral.integral_sub (f := fun u : ℝ => u) (g := fun _ : ℝ => L)
       (continuous_id.intervalIntegrable L T) intervalIntegrable_const,
-    intervalIntegral.integral_id, intervalIntegral.integral_const] at houterJ
+    integral_id, intervalIntegral.integral_const] at houterJ
   simp only [smul_eq_mul] at houterJ
   constructor
   · exact (tangent_remainder_nonnegative (hH.trans_le hHL)
@@ -252,7 +252,7 @@ private lemma tangent_remainder_quadratic_backward {H T L : ℝ} (hH : 1 < H)
   rw [intervalIntegral.integral_const_mul,
     intervalIntegral.integral_sub (f := fun _ : ℝ => L) (g := fun u : ℝ => u)
       intervalIntegrable_const (continuous_id.intervalIntegrable T L),
-    intervalIntegral.integral_const, intervalIntegral.integral_id] at houterJ
+    intervalIntegral.integral_const, integral_id] at houterJ
   simp only [smul_eq_mul] at houterJ
   constructor
   · exact (tangent_remainder_nonnegative (hH.trans_le (hHT.trans hTL))
