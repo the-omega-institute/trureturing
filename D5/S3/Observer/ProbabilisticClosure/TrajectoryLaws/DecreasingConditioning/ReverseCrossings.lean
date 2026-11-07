@@ -314,7 +314,7 @@ private lemma lintegral_upcrossings_condExp_rev_bdd [IsFiniteMeasure μ]
   -- the positive-part L¹ estimate.
   have hsub := (martingale_condExp f (revFiltration 𝔽 h_antitone h_le N) μ).submartingale
   have key := hsub.mul_lintegral_upcrossings_le_lintegral_pos_part a b
-  simp only [revFiltration_apply] at key
+  simp (config := { congrConsts := false }) only [revFiltration_apply] at key
   have sup_bdd : ⨆ M, ∫⁻ ω, ENNReal.ofReal ((μ[f | 𝔽 (N - M)] ω - a)⁺) ∂μ
       ≤ eLpNorm f 1 μ + ‖a‖ₑ * μ Set.univ :=
     iSup_le fun M => lintegral_ofReal_posPart_condExp_sub_le f a
