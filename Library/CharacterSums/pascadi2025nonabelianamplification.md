@@ -32,9 +32,21 @@ remains open in the source version.
 
 The repository module `D5/S3/Arith/CharacterSums/PascadiSixWordFiber` formalizes the
 entrywise compatibility equations for a fixed central scalar return and proves that each
-fixed-middle completion fiber is periodic with period
-`c / gcd c (1 - a₁*a₂*h₂*h₃).val`. This is a structural counting lemma toward the
-six-letter case, not a claim that Conjecture 6.1 has been settled.
+fixed-middle completion fiber has period
+$N=c/\gcd(c,(1-a_1a_2h_2h_3).\mathrm{val})$. For every $c>0$, units $a_1,a_2$ in
+$\mathbb Z/c\mathbb Z$, central scalar $\gamma$ with $\gamma^2=1$, fixed
+$h_2,h_3,h_5,h_6$ in $\mathbb Z/c\mathbb Z$, and $H\in\mathbb N$, it bounds the
+actual return solutions by
+
+$$\#\{(h_1,h_4)\in\{0,\ldots,H-1\}^2:
+\mathrm{sixReturnWord}(a_1,a_2,h_1,h_2,h_3,h_4,h_5,h_6)=\gamma I\}
+\le (\lfloor H/N\rfloor+1)^2.$$
+
+Here the natural coordinates are reduced modulo $c$ only in the matrix product.
+The bound includes $H=0$, arbitrary $H$ beyond $c$, composite moduli, and the
+singular stratum $1-a_1a_2h_2h_3=0$, where $N=1$. The period is used to make the
+coordinatewise quotient map injective on actual solutions. Summing over middle
+coordinates with the strength required by Conjecture 6.1 remains open.
 
 ## Verified locator
 

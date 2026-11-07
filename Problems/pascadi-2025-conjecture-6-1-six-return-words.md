@@ -6,6 +6,7 @@ triage: window
 motivation_gids:
   - D5/S3/Arith/CharacterSums/PascadiSixWordFiber.completion_equations_of_sixReturnWord
   - D5/S3/Arith/CharacterSums/PascadiSixWordFiber.completionFiber_period
+  - D5/S3/Arith/CharacterSums/PascadiSixWordFiber.sixReturnWord_fixed_middle_count
 url: https://arxiv.org/abs/2511.08445v2
 ---
 
@@ -32,14 +33,14 @@ median-range six-letter estimate is presented as open in arXiv:2511.08445v2, §6
 
 The six-letter central-return calculation is the first nontrivial median-range case of
 Pascadi's counting conjecture. The completion fiber isolates the arithmetic obstruction
-created by a nonunit coefficient, so a later bounded count can separate gcd strata instead
-of informally dividing modulo a composite modulus.
+created by a nonunit coefficient. Its gcd period controls a bounded count without
+dividing by that coefficient modulo a composite modulus.
 
 ## Gap
 
 The source's uniform six-letter estimate, and hence Conjecture 6.1 in its median range,
-is not proved here. The current result only supplies necessary compatibility equations and
-a periodicity lemma for a fixed middle stratum.
+is not proved here. The current result counts actual returns in a fixed middle stratum;
+the required uniform estimate over the middle coordinates remains unresolved.
 
 ## Route
 
@@ -47,39 +48,51 @@ The module fixes the middle coordinates $h_2,h_3,h_5,h_6$ and a central scalar $
 It proves the three entrywise compatibility equations forced by a six-letter central return,
 without dividing by the possibly nonunit coefficient
 $D=1-a_1a_2h_2h_3$. It then proves that two points in the same completion fiber differ by
-the additive order $c/\gcd(c,D.val)$ in each free coordinate. This supplies the gcd-periodic
-fiber decomposition needed before a finite-range count can be attempted.
+the additive order $N=c/\gcd(c,D.val)$ in each free coordinate. For arbitrary $c>0$,
+units $a_1,a_2$ in $\mathbb Z/c\mathbb Z$, $\gamma^2=1$, fixed middle coordinates
+in $\mathbb Z/c\mathbb Z$, and every natural $H$, the actual fixed-middle count is
+
+$$\#\{(h_1,h_4)\in\{0,\ldots,H-1\}^2:
+\mathrm{sixReturnWord}(a_1,a_2,h_1,h_2,h_3,h_4,h_5,h_6)=\gamma I\}
+\le (\lfloor H/N\rfloor+1)^2.$$
+
+No bound is assumed. The statement includes empty intervals, $H>c$, composite moduli,
+and $D=0$, when $N=1$.
 
 The matrix product is cancelled on the right by an explicit inverse for the final two
 transfer matrices. Entrywise comparison gives the three equations. For two completions,
 subtract the equations and use the additive-order characterization of zero scalar
-multiples in `ZMod c`; the resulting period is `c / gcd(c,D.val)`.
+multiples in `ZMod c`; the resulting period is `c / gcd(c,D.val)`. Since $N$ divides
+$c$, congruence of reduced representatives modulo $N$ gives congruence of the natural
+coordinates. Two actual solutions with equal coordinatewise quotients by $N$ therefore
+coincide. These quotients lie in $\{0,\ldots,\lfloor H/N\rfloor\}^2$, proving the count.
 
 ## Falsifier
 
 A bounded six-tuple count exceeding Pascadi's conjectured right-hand side, for fixed
 implicit constants and a growing modulus family, would falsify the source conjecture. A
 purported completion with the stated central return but violating one of the three
-compatibility equations would falsify the formal milestone.
+compatibility equations, or a fixed-middle interval count exceeding the displayed
+gcd-period bound, would falsify the formal milestone.
 
 ## Evidence
 
 The kernel-checked declarations are
-`completion_equations_of_sixReturnWord` and `completionFiber_period` in
-`D5/S3/Arith/CharacterSums/PascadiSixWordFiber`. The targeted Lean build passed under
-Lean 4.35 with 1579/1579 jobs, and the scoped Lean report extracted one module and eight
-declarations. The source locator is Alexandru Pascadi, arXiv:2511.08445v2, §6,
+`completion_equations_of_sixReturnWord`, `completionFiber_period`, and
+`sixReturnWord_fixed_middle_count` in `D5/S3/Arith/CharacterSums/PascadiSixWordFiber`.
+The count uses the first two declarations on its proof path. The source locator is
+Alexandru Pascadi, arXiv:2511.08445v2, §6,
 Conjecture 6.1 and Proposition 6.2.
 
 ## Triage
 
 This is a `window`: the source conjecture remains a live quantitative target, while the
-repository delivers a structural first step rather than a settlement. No claim is made
+repository delivers a fixed-middle finite-interval bound. No claim is made
 that the weaker Proposition 6.2 or the full conjecture has been reproved.
 
-This is a partial structural result. It does not prove the uniform Conjecture 6.1 bound,
-does not count bounded integer representatives, and does not claim a resolution of the
-source problem. Literature completeness and priority are not asserted.
+This is a partial counting result for natural representatives in $[0,H)^2$. The
+uniform Conjecture 6.1 bound and a resolution of the source problem remain open.
+Literature completeness and priority are not asserted.
 
 ## ASSUMED-UNVERIFIED
 
