@@ -121,14 +121,20 @@ internal static class WorktreeCommand
             requestedBase = options.Base;
             GitWorktreeInventory.FetchRemoteBase(options.Source, options.Base, runner);
             var baseRevision = VerifyBase(options, runner);
+            var symbolicBase = RunProcess(runner, "git",
+                ["rev-parse", "--symbolic-full-name", "--verify", "--end-of-options", options.Base],
+                options.Source, BoundedProcessRunner.HangDetectionBudget);
+            if (symbolicBase.ExitCode != 0)
+                throw new InvalidOperationException(ProcessError(symbolicBase, "could not resolve base reference"));
+            var baseReference = Encoding.UTF8.GetString(symbolicBase.StandardOutput).Trim();
             var main = RegisteredWorktreeInventory.ReadWorktrees(options.Source, runner,
                 resolveGitDirectories: false).FirstOrDefault()?.Path
                 ?? throw new InvalidOperationException("worktree_inventory_empty");
             // Expiry can remove the invoking source. Resolve its base first and
             // anchor every subsequent operation, including fresh fallback, to main.
-            options = options with { Source = main, Base = baseRevision };
+            options = options with { Source = main, Base = baseReference.Length == 0 ? baseRevision : baseReference };
             stage = "claim";
-            var prepared = WorktreePoolCommand.PrepareAllocation(options, runner);
+            var prepared = WorktreePoolCommand.PrepareAllocation(options with { Base = baseRevision }, runner);
             if (!prepared.Success)
             {
                 MaintenanceLogAdapter.Record("worktree-init", "failed", stage, "claim_failed", "CommandResult");
@@ -169,8 +175,7 @@ internal static class WorktreeCommand
                 stage = "preflight";
             }
             halfBuiltRecovered = ValidatePreflight(options, runner);
-            GitWorktreeInventory.FetchRemoteBase(options.Source, options.Base, runner);
-            branchOid = VerifyBase(options, runner);
+            branchOid = baseRevision;
             var pins = LeanPinSet.ReadBase(options.Source, branchOid, runner);
             var donor = ProbeDonor(options, pins, runner);
             branchTracking = WorktreeBranchTracking.Prepare(options, runner);
