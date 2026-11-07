@@ -3903,3 +3903,717 @@ Tuba–Wenzl §1.2 的一般可逆矩阵恒等式与其后低维简单模分类�
 [NR-TW]: https://msp.org/pjm/2001/197-2/pjm-v197-n2-p11-s.pdf
 
 ## 追加锚（本行以下为增补区）
+
+## 52. 无端点 E1 的 ready 可逆任意容量收束
+
+**定义 52.1（完整的 m9 候选来源类）。** 本节固定原 m9 来源，不裁剪配置、不商掉历史，也不改变任何既有章节。令
+
+$$
+\begin{gathered}
+\mathcal E_9=\{q\subseteq\{1,\ldots,9\}:q\text{ 无相邻元素}\},\qquad
+|\mathcal E_9|=89,\qquad |\operatorname{Edges}(\mathcal E_9)|=235,\\
+b_{-1}b_0=10,\qquad b_{10}b_{11}b_{12}=010,\qquad
+\mathcal V=\bigoplus_{q\in\mathcal E_9}V_q,\qquad \dim_{\mathbb R}V_q=d,\\
+g=\bigoplus_q g_q>0,\qquad
+\mathcal L=\bigoplus_qL_q,\qquad
+T_{qr}:V_r\longrightarrow V_q,\qquad
+T_{rq}=T_{qr}^{-1}=T_{qr}^{\dagger}.
+\end{gathered}
+\tag{52.1}
+$$
+
+这里 $d$ 是未知的共同有限实维数；$g_q$、固定实线性 $L_q$ 和实际逆等距 $T_{qr}$ 都是同一来源中的固定数据。对每条合法翻转边，$q_0$ 与 $q_1=q_0\cup\{j\}$ 的中心位分别为 $0,1$，原黄金块和原边界、阻塞块仍为
+
+$$
+\begin{gathered}
+x=\frac{\sqrt5-1}{2},\qquad c=x\sqrt{x}>0,qquad x+x^2=1,\qquad c^2=x^3,qquad \alpha=\frac{3\pi}{5},\\
+B_j\big|_{V_{q_0}\oplus V_{q_1}}
+=\begin{pmatrix}xI&cT_{q_0q_1}\\ cT_{q_1q_0}&x^2I\end{pmatrix},\\
+B_j\big|_{V_q}=b_{j-1}(q)b_{j+1}(q)I\quad\text{(阻塞内点)},\qquad
+B_0\big|_{V_q}=b_1(q)I,\qquad B_{10}\big|_{V_q}=b_9(q)I,\\
+A_j=\alpha\mathcal L(I+B_j),\qquad U_j=e^{A_j}\qquad(0\le j\le10).
+\end{gathered}
+\tag{52.2}
+$$
+
+原正定度量、实际边、左侧加权和黄金系数均保留。输入条件恰为整个 $89d$ 维实空间上的
+
+$$
+\begin{aligned}
+U_j^{10}&=I &&(0\le j\le10),\\
+U_jU_{j+1}U_j&=U_{j+1}U_jU_{j+1} &&(0\le j\le9),\\
+U_jU_\ell&=U_\ell U_j &&(0\le j<\ell\le10,\ \ell-j\ge2).
+\end{aligned}
+\tag{52.3}
+$$
+
+这正是十一回返、十个相邻 Artin 方程和四十五个远关系，量词都在整个 $89d$ 维实来源上成立。
+
+唯一实际 ready 是 $r=\{3,7\}$，其单位准备 $u_*\in V_r$ 满足
+
+$$
+\|u_*\|_{g_r}=1,qquad \operatorname{tr}_{V_r}(L_r^{\dagger}L_r)=2,
+\tag{52.4}
+$$
+
+其中迹是整个未归一的 $d$ 维纤维迹。附加的候选前件只有
+
+$$
+\mathrm N_r:\qquad \ker L_r=0.
+\tag{52.5}
+$$
+
+不把任何地址的端点 $U_j^{\dagger}U_j=I$、连续守恒、边交织、正规性、反自伴性、共同虚单位或共同频率、局部容量二、不可约性、平坦性、替换度量、主对数、谱带、谱忠实性或全部 $L_q$ 可逆放入前件。特别地，(52.5) 是同一实际来源的明确候选假设，而不是由实际 $\Omega$、唯一态叙述或后续结论导出的事实。
+
+**定理 52.2（ready 可逆而无 E1 输入时的容量与原生装配）。** 定义 52.1 的条件蕴含
+
+$$
+d=2.
+\tag{52.6}
+$$
+
+在此容量结论之后，卷内既有的实二维无 E1 供应才能被调用，从而得到原 $89$ 个配置、$235$ 条实际边上的
+
+$$
+L_q^{\dagger}=-L_q,\qquad L_q^2=-I_q,\qquad L_qT_{qt}=T_{qt}L_t,
+\tag{52.7}
+$$
+
+以及全部 $A_j$ 的原度量反自伴性、所有十一端点的 E1、整个内部单位区间的守恒、实际运输的平坦性、唯一根标架和原生脉冲装配。ready 边的生成元指数在单位 $i\pi/5$ 下分别为 $\{-3,3\}$ 与 $\{-6,-3,3,6\}$；同一边内部的不同指数没有非零模十碰撞。
+
+证明分八步进行，始终允许可约块、重复代数重数、非正规算子以及任意有符号的对数绕数。
+
+**引理 52.3（实际 ready 边的三端点限制）。** 取原实际邻点 $s=\{1,3,7\}$，只用给定等距 $T_{rs}$ 识别第二份纤维，令
+
+$$
+\begin{gathered}
+V_0=V_r,\qquad A=L_r,\qquad C=T_{rs}L_sT_{sr},\qquad
+a=1+x,\qquad b=1+x^2=2-x,\\
+H=\begin{pmatrix}aI&cI\\cI&bI\end{pmatrix},\qquad
+D=\operatorname{diag}(A,C),\qquad F=DH,\\
+S=e^{\alpha A},\qquad R=e^{\alpha C},\qquad
+\mathsf M=\operatorname{diag}(S,R),\qquad
+\mathsf E=\operatorname{diag}(S,R^2),\qquad
+\mathsf V=e^{\alpha F}.
+\end{gathered}
+\tag{52.8}
+$$
+
+在这条实际边上，地址 $0,1,10$ 的限制分别是 $\mathsf E,\mathsf V,\mathsf M$。因为 $b_1(r)=0,b_1(s)=1$ 且两端均有 $b_2=b_9=0$，(52.3) 给出
+
+$$
+\mathsf E\mathsf V\mathsf E=\mathsf V\mathsf E\mathsf V,
+\qquad [\mathsf M,\mathsf V]=[\mathsf M,\mathsf E]=0,
+\qquad \mathsf E^{10}=\mathsf V^{10}=\mathsf M^{10}=I,
+\qquad [F,\mathsf V]=0,
+\tag{52.9}
+$$
+
+并且
+
+$$
+e^{6\pi A}=e^{6\pi C}=e^{6\pi F}=I.
+\tag{52.10}
+$$
+
+这里没有从端点对易推出 $[\mathsf M,F]=0$；(52.10) 的三个对象仍可能以不同的对数分支和不同的可约块出现。∎
+
+**引理 52.4（半单性、ready 预算和两个局部判据）。** $A,C,F$ 的复化均半单，谱包含于 $(i/3)\mathbb Z$。令 $m_k$ 为 $A$ 的正频率 $ik/3$ 的复重数，则
+
+$$
+m_1+4m_2+9m_3\le9,
+\qquad d=2(m_1+m_2+m_3),
+\tag{52.11}
+$$
+
+其中第二式只用到了 (52.5)。若 $m_3>0$，预算立即给 $(m_1,m_2,m_3)=(0,0,1)$，因而 $d=2$。以下暂设 $m_3=0$；此时
+
+$$
+\operatorname{spec}S\subseteq\{\rho,\rho^2,\rho^8,\rho^9\},
+\qquad \rho=e^{i\pi/5},
+\tag{52.12}
+$$
+
+且四个相位对应的 ready 指标唯一为 $1,2,-2,-1$。另一方面：
+
+1. 若非零向量同时是 $\mathsf E,\mathsf V$ 的特征向量，特征值必相等；
+2. 若非零 $u$ 已被证明同时满足 $Au=ik u/3$、$Cu=in u/3$，其中 $k,n\in\mathbb Z$，则 $k=n$。
+
+证明。对 $Z=A,C,F$ 的复 Jordan 块，(52.10) 先把其特征值置于 $(i/3)\mathbb Z$，再由 $e^{6\pi N}=I$ 和 $e^{6\pi N}-I=N h(N)$、$h(0)=6\pi\ne0$ 消去每个幂零部，故半单。对 $A$ 作原 $g_r$ 复化后的 Schur 分解，得到
+
+$$
+2=\operatorname{tr}(A^{\dagger}A)\ge\sum_{\lambda\in\operatorname{spec}A}|\lambda|^2
+ =\frac29\sum_{k\ge1}k^2m_k.
+\tag{52.13}
+$$
+
+实性给出正负共轭重数，(52.5) 去掉零特征值，故得 (52.11)。第一项由相邻 Artin 在共同特征向量上给 $\mu^2\nu=\mu\nu^2$，再由端点可逆性消去 $\mu\nu$。第二项中，两份 $u$ 的直和是 $F$ 不变的，限制矩阵为
+
+$$
+\frac i3\begin{pmatrix}ak&ck\\cn&bn\end{pmatrix}.
+\tag{52.14}
+$$
+
+其回返使迹除以 $i/3$ 为整数，因而
+
+$$
+ak+bn=k+2n+x(k-n)\in\mathbb Z.
+\tag{52.15}
+$$
+
+$x$ 无理且 $k,n$ 为整数，遂有 $k=n$。这里的 $n$ 没有正负或大小限制，包含 $0$ 以及任意大的正、负别名；该判据只在共同向量已经被证明之后使用。∎
+
+**引理 52.5（端点扇区和缺失邻相位）。** 对每个十次单位根 $\eta$，令 $P_\eta,Q_\eta$ 为 $S,R$ 的代数谱投影，缺席相位的投影取零，令
+
+$$
+\Pi_\eta=\operatorname{diag}(P_\eta,Q_\eta),\qquad
+\mathcal H_\eta=\operatorname{ran}\Pi_\eta.
+\tag{52.16}
+$$
+
+则 $\mathsf E,\mathsf V$ 保持每个 $\mathcal H_\eta$，且
+
+$$
+\mathsf E|_{\mathcal H_\eta}=\eta I_{\operatorname{ran}P_\eta}\oplus
+\eta^2I_{\operatorname{ran}Q_\eta},
+\qquad
+\operatorname{spec}(\mathsf V|_{\mathcal H_\eta})\subseteq\{\eta,\eta^2\}.
+\tag{52.17}
+$$
+
+此外，$\operatorname{spec}R\subseteq\operatorname{spec}S$，所以 $C$ 可逆。
+
+证明。Artin 关系可写为
+
+$$
+(\mathsf E\mathsf V)\mathsf E(\mathsf E\mathsf V)^{-1}=\mathsf V.
+\tag{52.18}
+$$
+
+其共轭字与 $\mathsf M$ 对易，故相似限制在每个实际 $\mathsf M$ 扇区上；端点十回返给出半单限制和 (52.17)。这里没有说 $F$ 保持 $\mathcal H_\eta$。
+
+若 $Q_\eta\ne0$ 而 $P_\eta=0$，则该扇区纯属邻侧，(52.17) 给 $\mathsf V=\eta^2I$。对 $w\in\operatorname{ran}Q_\eta$ 和任意 $\theta\ne\eta$，有
+
+$$
+\Pi_\theta F(0,w)=(cAP_\theta w,0).
+\tag{52.19}
+$$
+
+因 $F$、$\Pi_\theta$ 与 $\mathsf V$ 对易，非零右侧既是 $\mathsf V$ 的 $\eta^2$ 特征向量，又是纯 ready 的 $\mathsf E$ 的 $\theta$ 特征向量；引理 52.4 的第一项迫使 $\theta=\eta^2$。对所有 ready 投影求和并消去可逆 $A$，得到
+
+$$
+\operatorname{ran}Q_\eta\subseteq\operatorname{ran}P_{\eta^2}.
+\tag{52.20}
+$$
+
+若右侧缺席便已矛盾；否则 $A$ 在右侧是唯一指标 $k$ 的标量。取 $C$ 在 $\operatorname{ran}Q_\eta$ 中的任一特征向量，指标记为任意的 $n\in\mathbb Z$。由 (52.20) 这才成为真正的共同 $A,C$ 特征向量，引理 52.4 给 $n=k$；但两个端点相位分别为 $\eta,\eta^2$，故 $\eta=\eta^2$，即 $\eta=1$，这与 (52.12) 矛盾。因此邻端点不能有 ready 缺席相位，特别排除 $1,-1$ 并导出 $C$ 可逆。∎
+
+**引理 52.6（不预设对数保持扇区的双向支持）。** 令 $K_0=\{1,2,8,9\}$，写 $P_k=P_{\rho^k}$、$Q_k=Q_{\rho^k}$。则
+
+$$
+P_kQ_\ell=Q_\ell P_k=0
+\quad\text{除非}\quad k=\ell\ \text{或}\ k\equiv2\ell\pmod {10}.
+\tag{52.21}
+$$
+
+证明。$\Pi_kF\Pi_\ell$ 在两个半单的 $\mathsf V$ 限制之间作 intertwiner。其像只能落在端点谱集合
+
+$$
+\{\rho^k,\rho^{2k}\}\cap\{\rho^\ell,\rho^{2\ell}\}.
+\tag{52.22}
+$$
+
+非对角非空交集只有
+
+$$
+(k,\ell;\text{共同指标})=(1,2;2),(2,1;2),(8,9;8),(9,8;8).
+\tag{52.23}
+$$
+
+在 $k\ne\ell$ 时，实际左加权的非对角块为
+
+$$
+\Pi_kF\Pi_\ell
+=\begin{pmatrix}0&cAP_kQ_\ell\\ cCQ_kP_\ell&0\end{pmatrix}.
+\tag{52.24}
+$$
+
+纯邻输入的非零纯 ready 输出同时具有 $\mathsf V$ 的共同根和 $\mathsf E$ 的根 $\rho^k$，引理 52.4 第一项只允许 $k=2\ell$；消去可逆 $A$。纯 ready 输入则只允许 $\ell=2k$；引理 52.5 已给 $C$ 可逆，随后交换指标得到另一有序积。于是 (52.21) 成立。这个论证只使用代数谱投影，允许重复特征值、缺席投影、可约块和任意对数别名，绝没有把 $F$ 假定为端点扇区保持。∎
+
+**引理 52.7（错配秩和无界有符号迹的十进制同余）。** 在低分支中，令 $P_+=P_1+P_2$、$Q_+=Q_1+Q_2$。则 $P_+=Q_+$。存在幂等元
+
+$$
+\Delta=Q_1-P_1=P_2-Q_2,
+\qquad \Delta^2=\Delta,
+\qquad v=\operatorname{rank}\Delta\in\mathbb Z_{\ge0},
+\qquad v\le m_2\le2.
+\tag{52.25}
+$$
+
+而且 $10\mid v$，故 $v=0$，从而 $P_k=Q_k$ 对全部 $k\in K_0$ 成立。
+
+证明。引理 52.5 已排除 $1,-1$，而实性把 $1\leftrightarrow9$、$2\leftrightarrow8$ 配对，所以 $P_+$、$Q_+$ 及其互补投影都各有半维数。由 (52.21) 的四个跨正负零式，$Q_-P_+=0$ 给出 $\operatorname{ran}P_+\subseteq\operatorname{ran}Q_+$，而 $P_-Q_+=0$ 给出反向包含；同时 $P_+Q_-=0$ 和 $Q_+P_-=0$ 配合半维数给出
+
+$$
+\ker P_+=\operatorname{ran}Q_-,\qquad
+\ker Q_+=\operatorname{ran}P_-.
+\tag{52.26a}
+$$
+
+因此两个代数投影具有同一像和同一核，遂 $P_+=Q_+$；此处没有使用谱投影正交性。再由
+
+$$
+P_1Q_2=Q_2P_1=0,
+\qquad P_1Q_1=Q_1P_1=P_1,
+\tag{52.26}
+$$
+
+以及 $P_+=Q_+$ 的分解，得到 (52.25)；$\Delta$ 是非正交投影之差，但 (52.26) 直接给出它的幂等性。其秩是普通有限复秩的非负整数，不是由正性或自伴性赋予的数，并且只能占用 $P_2$ 的至多 $m_2$ 个维度。由实性，$Q_1,Q_2$ 的秩分别为 $m_1+v,m_2-v$。
+
+令 $W_+=\operatorname{ran}P_+=\operatorname{ran}Q_+$，并定义
+
+$$
+K=m_1+2m_2,\qquad
+N=\frac3i\operatorname{tr}(C|_{W_+}),\qquad
+J=\frac3i\operatorname{tr}\bigl(F|_{W_+\oplus W_+}\bigr).
+\tag{52.27}
+$$
+
+$A,C$ 保持 $W_+$，故 $F$ 保持其两份直和。$N$ 是该空间中全部邻端点对数指标的带符号和，$J$ 由限制回返为整数；两者都不是绝对值和，也没有选取最小对数。ready 侧的迹指标为 $K$，原左加权 (52.8) 取迹给
+
+$$
+J=aK+bN=K+2N+x(K-N).
+\tag{52.28}
+$$
+
+因 $J,K,N\in\mathbb Z$ 且 $x$ 无理，故 $N=K$。另一方面，$Q_1$ 上每个邻指标为 $1+10\mathbb Z$，$Q_2$ 上每个邻指标为 $2+10\mathbb Z$，即使指标任意大或任意负也不变，所以
+
+$$
+N\equiv(m_1+v)+2(m_2-v)=K-v\pmod {10}.
+\tag{52.29}
+$$
+
+合并得 $10\mid v$；(52.25) 的 $0\le v\le2$ 遂给 $v=0$。秩零幂等元为零，于是正相位投影全相等，实共轭给负相位投影也全相等。这个整数同余一次覆盖 (52.11) 的全部十七个低频重数分支和邻端点所有无界有符号别名。∎
+
+**引理 52.8（共同响应之后的完整黄金根筛选）。** 低分支中有 $C=A$。在共同响应特征线上令 $\kappa\in\{1,2,-2,-1\}$，$z=e^{i\pi\kappa/5}$，并令
+
+$$
+P=\begin{pmatrix}0&0\\0&1\end{pmatrix},\qquad
+Q=\begin{pmatrix}x&c\\c&x^2\end{pmatrix},\qquad
+B_P=z[I+(z-1)P],\qquad B_Q=z[I+(z-1)Q].
+\tag{52.30}
+$$
+
+原相邻 Artin 的完整标量残差为
+
+$$
+B_PB_QB_P-B_QB_PB_Q
+=z^3(z-1)\bigl[z+x^2(z-1)^2\bigr](P-Q).
+\tag{52.31}
+$$
+
+十次根中的零点恰为 $z=1,\rho^3,\rho^7$，所以低分支没有模型。
+
+证明。引理 52.7 使 $C$ 保持每个 ready 谱空间；在每个空间内 $A$ 是单一指标 $\kappa$ 的标量。取 $C$ 的特征基，每个向量现在才是已证的共同 $A,C$ 特征向量，引理 52.4 给其指标等于 $\kappa$，故 $C=A$。这一步没有从 $[\mathsf M,\mathsf V]$ 偷换出共同对数分解。
+
+共同响应后，原黄金块逐特征线就是 (52.30)，且 $PQP=x^2P$、$QPQ=x^2Q$。令 $t=z-1$，直接展开三字得
+
+$$
+B_PB_QB_P-B_QB_PB_Q
+=z^3\{t(1+t)(P-Q)+t^3(PQP-QPQ)\}
+=z^3t[z+x^2t^2](P-Q).
+\tag{52.32}
+$$
+
+$P\ne Q$ 且 $z\ne0$，故保留 $z-1$ 因子。另一个因子除以 $z$ 后为
+
+$$
+1+x^2(z+z^{-1}-2)=0
+\quad\Longleftrightarrow\quad z+z^{-1}=2-x^{-2}=-x,
+\tag{52.33}
+$$
+
+其两个根为 $e^{3\pi i/5},e^{-3\pi i/5}$，即 $\rho^3,\rho^7$。故完整十根零点为指标 $\{0,3,7\}$；低分支指标 $\{1,2,8,9\}$ 与其不交。∎
+
+**证明定理 52.2 的容量部分。** 若 $m_3=0$，引理 52.5–52.7 先消去缺失邻相位和全部投影错配，引理 52.8 再给出真实共同响应；但低分支的 ready 指标只在 $\{1,2,8,9\}$，与完整 Artin 根集 $\{0,3,7\}$ 不交，故低分支的十七个重数分支全部排除。由引理 52.4 只剩 $m_3=1$，于是 $d=2$、$\operatorname{spec}_{\mathbb C}A=\{i,-i\}$。
+
+在 (52.13) 中此时对角特征值平方模之和正好为二，等号迫使原 $g_r$ 的 Schur 上三角部分为零。$A$ 因而在原度量中正规；其谱为 $\{i,-i\}$，所以 $A^{\dagger}=-A$ 且 $A^2=-I$。这一步发生在未知容量类内，尚未使用任何实二维全图供应；容量结论 (52.6) 已经完成。∎
+
+**证明定理 52.2 的全图消费。** 现在才将 $d=2$ 代入卷内已经存在的无 E1 实二维定理 33.2 及 §§37–39；其适用前件正是原固定正定 $g$、全部实际逆等距、原黄金 $B_j$、左侧 $\alpha\mathcal L(I+B_j)$、十一回返、十个相邻 Artin、四十五个远关系、唯一 ready、单位准备和未归一迹二，而不是端点 E1。故逐点取得 (52.7)、全部 $235$ 条实际边的交织、所有端点 E1 和原度量的连续守恒。再按同一卷内 IV210 的原消费者取得实际平坦运输、唯一根标架及全部 $89$ 标签上的原生脉冲装配。这里的调用顺序是先由 (52.6) 得到实二维，再消费既有供应；不能反向用该供应证明 (52.6)。
+
+在该装配中，ready 边的 $X=\alpha\operatorname{diag}(A,A)$ 的指标为 $\{-3,3\}$；相邻地址的 $Y=\alpha F$ 的指标为 $\{-6,-3,3,6\}$。每一集合内部不同指标的差都不是非零十的倍数，故它们各自的指数在不同谱值上忠实；重复相同特征值不造成碰撞。所有这些是算子推论，不是额外的控制、准备或物理参考。∎
+
+**定义 52.9（变体、几何和未决边界）。** 本节的量词必须按前件分开读取。
+
+| 前件 | 本节允许的结论 |
+| --- | --- |
+| (52.1)–(52.5)，无任何 E1 | 先由 (52.6) 得 $d=2$，再得到原度量 E1、全 $235$ 边交织、守恒和平坦原生装配。 |
+| 另加全部 $L_q$ 可逆 | 这是同一模型类的冗余强化；邻端点可逆已在引理 52.5 导出，全部可逆随后由实二维供应给出。 |
+| 给端点 E1 但不加 (52.5) | 这是卷内另一个端点 E1 变体；ready 可有零核，不能借本节的 ready 可逆证明。 |
+| 既不给 E1 也不给 (52.5) | 本节不结算容量；既有全 $89$ 零响应扩张说明非退化缺失仍是独立问题，但它不是 (52.5) 类的反例。 |
+
+因此，本节推进的是既有 §44.3 中“无 E1 且 ready 可逆／全部可逆”的未知容量行；无 ready 非退化的行和完整同源目标仍按各自边界保持开放，既有正文不需改写。
+
+(52.5) 的几何意义仅是固定 ready 纤维没有零无穷小响应方向。它不等于不可约、圆运动、正规性、共同虚单位、统一频率、物理时钟或可选择的对数分支。$P_\eta,Q_\eta$ 是复化后的代数谱投影，可能非正交；复化、限制、逆等距、投影、迹和指数分支都是证明运算，不授予准备、后选择、控制、复位、参考、负时间、分数调用、内部监视或物理时钟。二维 ready 复坐标也不等于物理三维空间：$\mathbb{CP}^1\simeq S^2$ 的三实坐标是两标签纯射线的表示，不是由此取得的物理空间维数。
+
+同一实际 $\Omega$ 是否真的采用 (52.1)–(52.5) 的固定正几何、实际边、黄金左响应、离散方程、根迹、单位准备，尤其是否采用新增的 ready 可逆，仍是 **ASSUMED-UNVERIFIED**。本节不从“所有读数来自唯一量子态 $\omega$ 的门序列”推出 Born、终端读出、更新、过程、源创新、CP、张量／联合、参考、档案或物理起源。完整目标仍保留全部 $89$ 配置的 $26+63$ 代码／补坐标分层、唯一实际 ready $\{3,7\}$、全部 $235$ 实际边、十一前和七后菜单、两个切口，以及所有 fine、zero、failure、refusal、stop、alarm、return 坐标、参考、联合、更新、实际可读档案和每个合法有限顺序／自适应／并行历史。不存在商来源、隐藏扇区、后选择或字长截断；$m=13$ 的 $610$ 来源、两真空接口和其它读器义务也没有被本节替代或自动取得。
+
+本节的数学增量是原来源字面类中的普通推导：实际边端点扇区的支持、缺失邻相位排除、双向投影乘积、非正交幂等元的非负错配秩、包含任意正负对数别名的迹同余，以及共同响应之后保留 $z-1$ 的完整黄金根筛选。它不作全球新颖性或优先权主张。来源对应为：IV209.1–209.2 的 m9 固定正度量、实际等距、黄金块、左响应、ready 和原边界，取自版本 `5ace7ec37be44b8f0e4f0de39c58b23500395fe3`；IV209.3 的连续守恒不作为本节前件，(52.3) 的离散关系按题定原类明确列出；卷内版本 `da480c219b32e07f72e97726c76f0163156e98e1` 的 §§33–39 只在 (52.6) 之后供应全图结论。关于可逆矩阵 Artin 共轭，只使用 Tuba–Wenzl [52-TW] §1.2 的一般恒等式；该文 Main Theorem 2.9 的低维简单模分类、有限像平均、替换度量和选定对数均未被使用。
+
+[52-TW]: https://msp.org/pjm/2001/197-2/pjm-v197-n2-p11-s.pdf
+
+## 追加锚（本行以下为增补区）
+
+## 53. 无 E1 的 ready 非退化定理：任意有限容量必回到二维
+
+**定义 53.1（字面 m9 来源与候选前件）。** 本节把原 m9 来源作为一个整体保留。令
+
+$$
+\begin{gathered}
+\mathcal E_9=\{q\subseteq\{1,\ldots,9\}:q\text{ 无相邻元素}\},\qquad
+|\mathcal E_9|=89,\qquad |\operatorname{Edges}(\mathcal E_9)|=235,\\
+ b_{-1}b_0=10,\qquad b_{10}b_{11}b_{12}=010,\qquad
+ \mathcal V=\bigoplus_{q\in\mathcal E_9}V_q,\qquad \dim_{\mathbb R}V_q=d,\\
+ g=\bigoplus_qg_q>0,\qquad \mathcal L=\bigoplus_qL_q,\qquad
+ T_{qr}:V_r\xrightarrow{\sim}V_q,\qquad T_{rq}=T_{qr}^{-1}=T_{qr}^{\dagger}.
+\end{gathered}
+\tag{53.1}
+$$
+
+这里 $d$ 是共同的未知有限实维数；$g_q,L_q,T_{qr}$ 是同一实际来源中固定的数据。置
+$x=(\sqrt5-1)/2$、$c=x\sqrt{x}>0$、$\alpha=3\pi/5$。在一条中心为 $j$ 的合法翻转边上，按中心位 $0,1$ 排序，原黄金块为
+
+$$
+ B_j=\begin{pmatrix}xI&cT_{q_0q_1}\\cT_{q_1q_0}&x^2I\end{pmatrix},
+ \qquad x+x^2=1,\qquad c^2=x^3,
+\tag{53.2}
+$$
+
+其余合法单点块、阻塞块和两个固定边界地址仍取原 m9 的标量块。定义
+
+$$
+ A_j=\alpha\mathcal L(I+B_j),\qquad U_j=e^{A_j}\qquad(0\leq j\leq10).
+\tag{53.3}
+$$
+
+整个 $89d$ 维实来源满足原始的十一回返、十个相邻 Artin 方程和四十五个远方交换方程：
+
+$$
+\begin{aligned}
+ U_j^{10}&=I &&(0\leq j\leq10),\\
+ U_jU_{j+1}U_j&=U_{j+1}U_jU_{j+1} &&(0\leq j\leq9),\\
+ U_jU_\ell&=U_\ell U_j &&(0\leq j<\ell\leq10,\ \ell-j\geq2).
+\end{aligned}
+\tag{53.4}
+$$
+
+唯一实际 ready 配置为 $r=\{3,7\}$，其准备向量 $u_*$ 满足
+
+$$
+\|u_*\|_{g_r}=1,\qquad \operatorname{tr}_{V_r}(L_r^\dagger L_r)=2,
+\tag{53.5}
+$$
+
+并增加一个明确的候选前件
+
+$$
+\mathrm N_r:\qquad \ker L_r=0.
+\tag{53.6}
+$$
+
+(53.6) 只表示固定 ready 纤维没有零无穷小响应方向。它不是由唯一态 $\omega$、门序列读出、(53.4) 或任何物理起源叙述自动得到的。除 (53.6) 外，本节不加入任何地址的端点 E1，不加入连续守恒、边交织、正规性、反自伴性、共同虚单位或频率、局部容量二、不可约性、平坦性、替换度量、主对数或谱带，也不假定邻端点或全部 $L_q$ 可逆。
+
+**定理 53.2（ready 可逆、无端点 E1 时的容量和原生后果）。** 定义 53.1 的全部前件蕴含
+
+$$
+ d=2.
+\tag{53.7}
+$$
+
+得到 (53.7) 后，才可调用卷内已有的实二维无 E1 供应（定理 33.2 及 §§37–39）。因此该供应给出全部 $89$ 个配置和全部 $235$ 条实际边上的原度量反自伴响应、平方为 $-I$ 的响应、实际边交织、十一端点 E1、整个单位区间的守恒、平坦实际运输、唯一根标架以及 IV210 所消费的原生脉冲装配。ready 边的两个生成元在单位 $i\pi/5$ 下的指数分别为 $\{-3,3\}$ 和 $\{-6,-3,3,6\}$；同一生成元内部不同谱值之间没有非零模十碰撞。
+
+**证明。** 先在一条实际边上完成容量推导，再把已得到的 $d=2$ 代回全图供应。
+
+**(i) 实际 ready 边的三端点限制。** 取 $s=\{1,3,7\}$。在不选择坐标的情况下，只用实际等距 $T_{rs}$ 把 $V_s$ 识别到 $V_r$，令
+
+$$
+\begin{gathered}
+ V_0=V_r,\quad A=L_r,\quad C=T_{rs}L_sT_{sr},\quad a=1+x,\quad b=1+x^2=2-x,\\
+ H=\begin{pmatrix}aI&cI\\cI&bI\end{pmatrix},\qquad D=\operatorname{diag}(A,C),\qquad F=DH,\\
+ S=e^{\alpha A},\quad R=e^{\alpha C},\quad
+ \mathsf M=\operatorname{diag}(S,R),\quad
+ \mathsf E=\operatorname{diag}(S,R^2),\quad
+ \mathsf V=e^{\alpha F}.
+\end{gathered}
+\tag{53.8}
+$$
+
+在 $r$ 和 $s$ 上有 $b_1(r)=0,b_1(s)=1$，且两端均有 $b_2=b_9=0$。故地址 $0,1,10$ 的限制分别是 $\mathsf E,\mathsf V,\mathsf M$，而 (53.4) 给出
+
+$$
+\mathsf E\mathsf V\mathsf E=\mathsf V\mathsf E\mathsf V,
+\qquad [\mathsf M,\mathsf V]=[\mathsf M,\mathsf E]=0,
+\qquad \mathsf E^{10}=\mathsf V^{10}=\mathsf M^{10}=I.
+\tag{53.9}
+$$
+
+又因 $\mathsf V$ 是 $e^{\alpha F}$，有 $[F,\mathsf V]=0$；但这里没有推出也没有使用 $[\mathsf M,F]=0$。由 (53.9)，
+
+$$
+ e^{6\pi A}=e^{6\pi C}=e^{6\pi F}=I.
+\tag{53.10}
+$$
+
+**(ii) 半单性、ready 预算和两个局部事实。** 对 $Z=A,C,F$ 的复化作 Jordan 分解。若一个 Jordan 块写成 $\lambda I+N$，则 (53.10) 给 $e^{6\pi\lambda}=1$，所以 $\lambda\in(i/3)\mathbb Z$；同时
+$e^{6\pi N}-I=N h(N)$ 且 $h(0)=6\pi\ne0$，故 $N=0$。三者都半单，谱都包含于 $(i/3)\mathbb Z$。
+
+令 $m_k$ 为 $A$ 的特征值 $ik/3$ 的复重数，其中 $k>0$。实性给出负频率的相同重数。对原正定内积的复化作 Schur 分解，得到
+
+$$
+ 2=\operatorname{tr}(A^\dagger A)
+ \geq\sum_{\lambda\in\operatorname{spec}A}|\lambda|^2
+ =\frac{2}{9}\sum_{k\geq1}k^2m_k.
+\tag{53.11}
+$$
+
+(53.6) 去掉零特征值，因而
+
+$$
+ m_1+4m_2+9m_3\leq9,qquad d=2(m_1+m_2+m_3).
+\tag{53.12}
+$$
+
+若 $m_3>0$，(53.12) 立即给出 $(m_1,m_2,m_3)=(0,0,1)$ 和 $d=2$。以下只需排除 $m_3=0$ 的分支；此时 $m_1+4m_2\leq9$、$m_2\leq2$，且
+
+$$
+\operatorname{spec}S\subseteq\{\rho,\rho^2,\rho^8,\rho^9\},qquad \rho=e^{i\pi/5}.
+\tag{53.13}
+$$
+
+这四个相位对应 ready 对数指标 $1,2,-2,-1$，各自唯一；没有对 $C$ 或 $F$ 的对数指标作上界或符号限制。
+
+还需记录两个只在相应前件成立后使用的事实。若非零向量同时是 $\mathsf E,\mathsf V$ 的特征向量，特征值分别为 $\mu,\nu$，则相邻 Artin 方程给 $\mu^2\nu=\mu\nu^2$；两端可逆，故 $\mu=\nu$。其次，若非零 $u$ 已被证明同时满足
+
+$$
+ Au=\frac{ik}{3}u,\qquad Cu=\frac{in}{3}u,qquad k,n\in\mathbb Z,
+\tag{53.14}
+$$
+
+则 $\operatorname{span}\{(u,0),(0,u)\}$ 对 $F$ 不变，限制矩阵为
+
+$$
+\frac i3\begin{pmatrix}ak&ck\\cn&bn\end{pmatrix}.
+\tag{53.15}
+$$
+
+其十次回返使迹除以 $i/3$ 为整数。因此
+
+$$
+ ak+bn=k+2n+x(k-n)\in\mathbb Z.
+\tag{53.16}
+$$
+
+$x$ 无理且 $k,n$ 为整数，故 $k=n$。这里的 $n$ 可以为零、任意正整数或任意负整数；(53.16) 只在 (53.14) 已经是共同特征向量时使用。
+
+**(iii) 端点谱扇区和邻端点可逆性。** 对每个十次单位根 $\eta$，令 $P_\eta,Q_\eta$ 为 $S,R$ 的代数谱投影，缺席相位的投影定义为零，并置
+
+$$
+ \Pi_\eta=\operatorname{diag}(P_\eta,Q_\eta),qquad
+ \mathcal H_\eta=\operatorname{ran}\Pi_\eta.
+\tag{53.17}
+$$
+
+Artin 方程可改写为
+
+$$
+ (\mathsf E\mathsf V)\mathsf E(\mathsf E\mathsf V)^{-1}=\mathsf V.
+\tag{53.18}
+$$
+
+$\mathsf E,\mathsf V$ 以及共轭字都与 $\mathsf M$ 对易，所以 (53.18) 限制在每个实际 $\mathsf M$ 扇区 $\mathcal H_\eta$ 上。端点均半单；在该扇区，$\mathsf E$ 在 ready 部分为 $\eta I$，在邻侧部分为 $\eta^2I$，遂有
+
+$$
+ \operatorname{spec}(\mathsf V|_{\mathcal H_\eta})\subseteq\{\eta,\eta^2\}.
+\tag{53.19}
+$$
+
+现在假设 $Q_\eta\ne0$ 而 $P_\eta=0$。此时 $\mathcal H_\eta$ 纯邻侧，(53.19) 给出 $\mathsf V=\eta^2I$。取 $w\in\operatorname{ran}Q_\eta$。由于 $F$ 和所有 $\Pi_\theta$ 都与 $\mathsf V$ 对易，对每个 $\theta\ne\eta$，向量
+
+$$
+ \Pi_\theta F(0,w)=(cAP_\theta w,0)
+\tag{53.20}
+$$
+
+的非零部分同时是 $\mathsf V$ 的 $\eta^2$ 特征向量和纯 ready 的 $\mathsf E$ 的 $\theta$ 特征向量。前面的共同特征向量事实迫使 $\theta=\eta^2$。对所有 ready 投影求和并使用 $A$ 可逆，得到
+
+$$
+ \operatorname{ran}Q_\eta\subseteq\operatorname{ran}P_{\eta^2}.
+\tag{53.21}
+$$
+
+若右侧缺席则已矛盾；若右侧存在，$A$ 在其上是 (53.13) 中唯一指标 $k$ 的标量。取 $C$ 在 $\operatorname{ran}Q_\eta$ 中的任一特征向量，记其任意整数指标为 $n$。由 (53.21) 它现在确实是共同的 $A,C$ 特征向量，(53.16) 给 $n=k$。然而邻端点相位为 $\eta$、ready 相位为 $\eta^2$，故 $\eta=\eta^2$，即 $\eta=1$，与 (53.13) 矛盾。因此
+
+$$
+\operatorname{spec}R\subseteq\operatorname{spec}S,
+\tag{53.22}
+$$
+
+并且邻端点没有零特征值，$C$ 可逆。这一步没有预先加入邻端点可逆或共同谱通道。
+
+**(iv) 不预设对数保持扇区的双向支持。** 在低分支中写 $K_0=\{1,2,8,9\}$，并令 $P_k=P_{\rho^k}$、$Q_k=Q_{\rho^k}$。对 $k\ne\ell$，块
+$\Pi_kF\Pi_\ell$ 在两个半单的 $\mathsf V$ 限制之间作 intertwiner，所以其像只能落在
+
+$$
+ \{\rho^k,\rho^{2k}\}\cap\{\rho^\ell,\rho^{2\ell}\}.
+\tag{53.23}
+$$
+
+两个集合的非对角交集只有
+
+$$
+ (k,\ell;\text{共同指标})=(1,2;2),(2,1;2),(8,9;8),(9,8;8).
+\tag{53.24}
+$$
+
+纯邻输入的 ready 输出为 $cAP_kQ_\ell w$。它的 $\mathsf E$ 特征值是 $\rho^k$，故共同特征向量事实只允许 $k=2\ell\pmod {10}$；$A$ 可逆后得到相应的 $P_kQ_\ell$ 消失。纯 ready 输入的邻侧输出为 $cCQ_kP_\ell u$；此时共同值是 $\rho^{2k}$，$C$ 已由 (53.22) 可逆，得到另一有序乘积的消失。交换指标后统一写为
+
+$$
+ P_kQ_\ell=Q_\ell P_k=0
+ \quad\text{除非 }k=\ell\text{ 或 }k\equiv2\ell\pmod {10}.
+\tag{53.25}
+$$
+
+这一步允许 $F$ 最初混合端点扇区，允许可约块和重复特征值，也不把对数分支当作已选通道。
+
+**(v) 非正交投影错配和无界有符号迹。** 令
+$P_+=P_1+P_2$、$P_-=P_8+P_9$、$Q_+=Q_1+Q_2$、$Q_-=Q_8+Q_9$。由实性，$P_+$ 和 $P_-$ 互为共轭，维数相等；(53.22) 使 $Q_+$、$Q_-$ 也覆盖同一总维数，故正、负两侧各有半维数。由 (53.25) 的跨正负零式，
+
+$$
+ Q_-P_+=P_+Q_-=0,qquad P_-Q_+=Q_+P_-=0.
+\tag{53.26}
+$$
+
+于是 $\operatorname{ran}P_+\subseteq\operatorname{ran}Q_+$ 和反向包含同时成立，且核也相同；两个代数投影因此相等：
+
+$$
+ P_+=Q_+.
+\tag{53.27}
+$$
+
+在 $W_+=\operatorname{ran}P_+=\operatorname{ran}Q_+$ 内，(53.25) 给出
+$P_1Q_2=Q_2P_1=0$ 以及 $P_1Q_1=Q_1P_1=P_1$。故
+
+$$
+ \Delta=Q_1-P_1=P_2-Q_2,qquad \Delta^2=\Delta.
+\tag{53.28}
+$$
+
+令 $v=\operatorname{rank}\Delta$。幂等元的普通复秩是非负整数；由
+$P_2\Delta=\Delta P_2=\Delta$，有
+
+$$
+ 0\le v\le\operatorname{rank}P_2=m_2\le2,
+\tag{53.29}
+$$
+
+并且
+$\operatorname{rank}Q_1=m_1+v$、$\operatorname{rank}Q_2=m_2-v$。注意这里没有使用谱投影正交性或正性。
+
+$A,C$ 都保持 $W_+$，而 $F$ 保持 $W_+\oplus W_+$。定义
+
+$$
+ K=m_1+2m_2,qquad
+ N=\frac3i\operatorname{tr}(C|_{W_+}),qquad
+ J=\frac3i\operatorname{tr}(F|_{W_+\oplus W_+}).
+\tag{53.30}
+$$
+
+$N$ 是邻侧所有对数指标的**带符号总和**，$J$ 由受限十次回返为整数。对左加权矩阵 $F=DH$ 取迹，得到
+
+$$
+ J=aK+bN=K+2N+x(K-N).
+\tag{53.31}
+$$
+
+因此无理性迫使 $N=K$。另一方面，$Q_1$ 中每个邻侧指标为 $1+10\mathbb Z$，$Q_2$ 中每个为 $2+10\mathbb Z$，无论正负和大小如何，
+
+$$
+ N\equiv(m_1+v)+2(m_2-v)=K-v\pmod {10}.
+\tag{53.32}
+$$
+
+合并 (53.31)–(53.32) 得 $10\mid v$。结合 (53.29)，$v=0$，故
+
+$$
+ P_k=Q_k\qquad(k=1,2,8,9).
+\tag{53.33}
+$$
+
+这一次同余同时消除了所有有符号、无上界的邻侧对数别名，而非只检查一个有限的主值区间。
+
+**(vi) 共同响应和黄金根筛选。** 由 (53.33)，$C$ 保持每个 ready 特征空间。对其中任意 $A$ 特征值指标
+$\kappa\in\{1,2,-2,-1\}$，取 $C$ 的特征向量；它现在是共同的 $A,C$ 特征向量，(53.16) 给出其 $C$ 指标也为 $\kappa$。故在低分支上
+
+$$
+ C=A.
+\tag{53.34}
+$$
+
+在任一共同响应线上，置 $z=e^{i\pi\kappa/5}$，并令
+
+$$
+ P=\begin{pmatrix}0&0\\0&1\end{pmatrix},qquad
+ Q=\begin{pmatrix}x&c\\c&x^2\end{pmatrix},qquad
+ B_P=z[I+(z-1)P],\qquad B_Q=z[I+(z-1)Q].
+\tag{53.35}
+$$
+
+这是 (53.2) 在已证明共同响应后的标量限制。直接展开相邻 Artin 残差，保留全部因子，得到
+
+$$
+ B_PB_QB_P-B_QB_PB_Q
+ =z^3(z-1)\bigl[z+x^2(z-1)^2\bigr](P-Q).
+\tag{53.36}
+$$
+
+$P\ne Q$ 且 $z\ne0$。除去 $z-1$ 后，另一因子为零当且仅当
+
+$$
+ 1+x^2(z+z^{-1}-2)=0
+ \quad\Longleftrightarrow\quad z+z^{-1}=-x.
+\tag{53.37}
+$$
+
+其两个根是 $e^{3\pi i/5}$ 和 $e^{-3\pi i/5}$，即十次根的指标 $3,7$。所以完整十次根的 Artin 零点集合为 $\{0,3,7\}$，与低分支指标集合 $\{1,2,8,9\}$ 不相交，低分支不可能。
+
+**(vii) 容量结论和全图供应的调用顺序。** 低分支被排除后，(53.12) 只剩 $m_3=1$，从而 $d=2$。此时 (53.11) 取等，原 $g_r$ 下的 Schur 上三角项为零，故 ready 响应已是原度量中的正规反自伴二维响应；这一观察只是容量证明的尾部，并没有作为前件。
+
+现在、且只能现在，把 $d=2$ 代入卷内已经存在的无 E1 实二维定理 33.2 及 §§37–39。它们的前件正是原固定正定 $g$、实际逆等距、黄金 $B_j$、左侧 $\alpha\mathcal L(I+B_j)$、十一回返、十个相邻 Artin、四十五个远关系、唯一 ready、单位准备和未归一迹二；这些正是定义 53.1 的前件，不包含端点 E1。于是得到所有配置的 (53.7) 后果：
+
+$$
+ L_q^\dagger=-L_q,\qquad L_q^2=-I_q,\qquad L_qT_{qt}=T_{qt}L_t
+\tag{53.38}
+$$
+
+对全部 $235$ 条实际边成立，并得到十一端点 E1、单位区间守恒和实际运输平坦性。再由 IV210 的既有消费者取得唯一根标架及全部 $89$ 标签上的原生脉冲装配。这里的逻辑方向是先由 (53.36)–(53.37) 得到 $d=2$，再消费实二维供应；不能反向用二维供应证明 (53.7)。
+
+在所得装配中，ready 边的 $X=\alpha\operatorname{diag}(A,A)$ 指标为 $\{-3,3\}$；相邻地址的 $Y=\alpha F$ 指标为 $\{-6,-3,3,6\}$。每个集合内两个不同指标之差都不是非零十的倍数，重复特征值也不造成新的碰撞，因而这只是算子谱的忠实性结论，不是额外的控制、准备或物理参考。证毕。
+
+**定义 53.3（前件分层和几何边界）。** 定理 53.2 的量词按下表读取：
+
+| 前件 | 允许的结论 |
+| --- | --- |
+| 定义 53.1 的全部前件，含 (53.6)，无任何 E1 | 先得 $d=2$，再调用实二维供应取得原度量 E1、全部 $235$ 条边和原生装配。 |
+| 再加全部 $L_q$ 可逆 | 只是冗余强化；邻端点可逆由 (53.22) 导出，其余可逆性在二维供应中取得。 |
+| 只给端点 E1 而不给 (53.6) | 是另一变体；ready 可有零核，不能使用本节的 ready 非退化推导。 |
+| 既不给端点 E1 也不给 (53.6) | 本节不结算容量；已知全 $89$ 零响应扩张说明缺少非退化仍是独立问题，但不是定理 53.2 的反例。 |
+
+(53.6) 的几何内容只有固定 ready 纤维上的零响应方向被排除。它不指定圆几何、正规性、共同虚单位、统一频率、可选择的对数分支或内部物理时钟；谱投影是复化后的代数投影，可能非正交。复化、限制、逆等距、投影、迹和指数分支都是证明运算，不创造可准备分支、后选择、控制、复位、参考、负时间、分数调用或物理时钟。
+
+定理 53.2 仍是同一个实际来源类的条件算子结果。它不把 $89$ 配置、$26+63$ 扇区、唯一 ready $\{3,7\}$、$235$ 条实际边、十一前菜单、七后菜单、两个切口、fine/zero/failure/refusal/stop/alarm/return 坐标、参考、联合、更新、档案和每个合法有限顺序／自适应／并行历史替换成商来源、隐藏扇区、后选择或字长截断。复化和算子装配也不自动供应实际 Born、读出、更新、过程、CP、张量／联合、独立档案、物理时钟、资源等价、源创新或同一实际 $\Omega$ 的采用。对原实际 $\Omega$ 是否满足 (53.1)–(53.6)，尤其是否满足新增的 ready 可逆，状态仍为 **ASSUMED-UNVERIFIED**；本定理不作完整量子起源或全球新颖性主张。
+
+**来源对应。** (53.1)–(53.6) 保留版本 `5ace7ec37be44b8f0e4f0de39c58b23500395fe3` 的 m9 IV209.1–209.2：固定正度量、实际逆等距、黄金块、左加权响应、ready、准备和原配置边界；离散的十一回返、十个相邻 Artin、四十五个远方关系按原来源类逐项保留。IV209.3 的连续守恒不是本节前件，而是在得到 $d=2$ 后由卷内版本 `da480c219b32e07f72e97726c76f0163156e98e1` 的定理 33.2 及 §§37–39 供应。实二维供应只在 (53.7) 之后使用。可逆矩阵的 Artin 共轭恒等式与 (53.18) 可见 Tuba–Wenzl [53-TW] §1.2（印刷页 492–493 的 Lemma (a),(b)）；本节没有使用其维数不超过五的简单模分类、有限像平均、替换度量或选定对数。
+
+[53-TW]: https://msp.org/pjm/2001/197-2/pjm-v197-n2-p11-s.pdf
+
+## 追加锚（本行以下为增补区）
