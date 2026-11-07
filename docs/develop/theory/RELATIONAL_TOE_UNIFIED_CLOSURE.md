@@ -420,3 +420,140 @@ The remaining theorem targets are:
 - falsifiable predictions.
 
 The current theory is therefore a structural or mathematical pre-TOE. The formal core is proved at paper level, the finite fixed point is executable, and the remaining physics is recorded as explicit theorem targets rather than hidden assumptions.
+
+
+## 10. Gravity closure and attraction
+
+The current fixed point and ClockLedger provide the data needed to state a gravity interface. They do not yet determine a unique metric or field equation.
+
+Define the gravity layer
+
+\[
+\mathsf{GravityClosure}
+=
+(\mathcal M,g,\mathsf{ClockLedger},\nabla,R,\mathcal S_{\mathrm{grav}},T),
+\]
+
+where \(\mathcal M\) is the reconstructed configuration manifold, \(g\) the candidate metric, \(\nabla\) a compatible connection, \(R\) its curvature, \(\mathcal S_{\mathrm{grav}}\) the closure-preserving dynamical action, and \(T\) the source record or stress response.
+
+A candidate metric may be reconstructed from the relation kernel by a diagonal second variation, for example
+
+\[
+g_{ij}(x)
+=
+-\left.
+\partial_i\partial_{j'}\log K(x,x')
+\right|_{x=x'},
+\]
+
+or by a Bures/Fubini--Study second variation. This is a reconstruction interface. Nondegeneracy, Lorentzian signature, and physical units remain obligations.
+
+### Conditional gravitational theorem
+
+Assume:
+
+1. the fixed ledger reconstructs a smooth Lorentzian metric \(g\);
+2. the ClockLedger selects a future cone and proper relational parameter \(\tau\);
+3. \(\nabla g=0\);
+4. source-free histories extremize
+   \[
+   \mathcal S_{\mathrm{geo}}[x]
+   =
+   \frac12\int g_{\mu\nu}(x)\dot x^\mu\dot x^\nu\,d\tau;
+   \]
+5. observed records are invariant under the common coordinate representation.
+
+Then free histories satisfy
+
+\[
+\ddot x^\mu+
+\Gamma^\mu_{\alpha\beta}
+\dot x^\alpha\dot x^\beta=0.
+\]
+
+The trajectory is universal because the action contains the metric and history parameter, not a species-dependent force coefficient. Neighboring histories satisfy
+
+\[
+\frac{D^2\xi^\mu}{D\tau^2}
+=
+-R^\mu{}_{\nu\alpha\beta}
+u^\nu\xi^\alpha u^\beta.
+\]
+
+Therefore the invariant content of gravitational attraction is convergence or separation of neighboring legal histories under curvature. The Newtonian force language is a coordinate and weak-field limit.
+
+### Proof
+
+Varying the geodesic action gives
+
+\[
+\delta\mathcal S_{\mathrm{geo}}
+=
+-\int
+\left(
+\ddot x^\mu+
+\Gamma^\mu_{\alpha\beta}
+\dot x^\alpha\dot x^\beta
+\right)
+g_{\mu\nu}\delta x^\nu\,d\tau
+\]
+
+after integration by parts and using metric compatibility. Arbitrary compactly supported variations give the geodesic equation. Varying a one-parameter family of geodesics and commuting covariant derivatives gives the Jacobi equation above. ∎
+
+In a static weak field with
+
+\[
+g_{00}=-(1+2\Phi/c^2),
+\]
+
+and slow spatial velocity, the geodesic equation reduces to
+
+\[
+\ddot{\mathbf x}=-\nabla\Phi.
+\]
+
+This is the conditional bridge from the relational metric to Newtonian attraction.
+
+### No-go result for the current axioms
+
+The present RQA and OTF closure clauses do not determine gravity uniquely. Let \(\Lambda_*\) and its ClockLedger satisfy all current finite closure rules. Pair them once with a flat metric \(g\), and once with a conformally curved metric
+
+\[
+g'_{\mu\nu}=e^{2f(x)}g_{\mu\nu}
+\]
+
+for a smooth nonconstant \(f\), while leaving the relation ledger and finite records unchanged. Without a metric-reconstruction axiom and a gravitational action, both extensions satisfy the current record-level closure but give different geodesics and curvature. Therefore attraction is not derivable from R0--R5 and ClockLedger alone.
+
+### Additional gravity obligations
+
+A unique gravity theory requires at least:
+
+- **C9, metric reconstruction:** the relation kernel determines a nondegenerate metric;
+- **C10, clocked causal cone:** ClockLedger selects the future orientation and Lorentzian cone;
+- **C11, connection compatibility:** \(\nabla g=0\), \(\nabla J=0\), and face holonomy equals curvature;
+- **C12, geodesic/action principle:** source-free legal histories are stationary paths;
+- **C13, source law:** variation with respect to \(g\) gives
+  \[
+  \mathcal E_{\mu\nu}=\kappa T_{\mu\nu},
+  \qquad
+  \nabla^\mu\mathcal E_{\mu\nu}=0;
+  \]
+- **C14, Newtonian and classical calibration:** the weak-field limit fixes \(G\), clocks, distance, and energy.
+
+The current theory provides the candidate data and the conditional theorem. It does not yet prove C9--C14.
+
+### Relation to the worldsheet layer
+
+A two-dimensional face closure may supply a worldsheet interface. If a worldsheet action and its quantum consistency conditions are added, target-space beta-function equations become a possible route to metric dynamics. This is a string-theoretic bridge, not a consequence of the current fixed-point theorem. The unified theory must therefore keep separate:
+
+\[
+\text{RQA fixed point}
+\to
+\text{ClockLedger}
+\to
+\text{candidate metric/connection}
+\to
+\text{worldsheet consistency}
+\to
+\text{gravity field equation}.
+\]
