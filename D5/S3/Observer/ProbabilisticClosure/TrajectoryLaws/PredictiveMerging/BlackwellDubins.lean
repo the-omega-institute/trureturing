@@ -352,7 +352,7 @@ private theorem full_prefix_filtration :
   refine iSup_le fun n => ?_
   have hc : Measurable[Filtration.piLE (X := X) n]
       (fun ω : History X => ω n) :=
-    (measurable_pi_apply (X := fun i : Set.Iic n => X i.1) ⟨n, le_rfl⟩).comp
+    (measurable_pi_apply (X := fun i : Set.Iic n => X i.1) ⟨n, Set.self_mem_Iic⟩).comp
       (comap_measurable (Preorder.restrictLe (π := X) n))
   exact hc.comap_le.trans (le_iSup (fun n : ℕ => Filtration.piLE (X := X) n) n)
 
@@ -459,7 +459,7 @@ private theorem overlap_limits
       rw [hfull]
       exact condExp_of_stronglyMeasurable le_rfl hqm.stronglyMeasurable hqi
     filter_upwards [hjoint.1] with ω hω
-    simpa only [htop] using hω.comp tendsto_atTop_diagonal
+    simpa only [Function.comp_def, htop] using hω.comp tendsto_atTop_diagonal
   have ha (n : ℕ) : (fun ω => overlapNumerator X P Q n (κ n) (past X n ω))
       =ᵐ[P] P[y n | Filtration.piLE (X := X) n] := by
     have he := conditional_row_integral X P n (κ n) (hκ n) (y n) (hym n) (hy0 n) (hyi n)
