@@ -112,7 +112,8 @@ def evalNoise {n : ℕ} (G K : Matrix (Fin n) (Fin n) ℂ) : (MvPolynomial (Bool
     if im then ((if b then K i j else G i j).im : ℂ)
     else ((if b then K i j else G i j).re : ℂ))
 private lemma evalNoise_C {n : ℕ} (G K : Matrix (Fin n) (Fin n) ℂ) (z : ℂ) :
-    evalNoise G K (MvPolynomial.C z) = z := by simp [evalNoise]
+    evalNoise G K (MvPolynomial.C z) = z := by
+  exact MvPolynomial.eval₂Hom_C (RingHom.id ℂ) _ z
 private lemma evalNoise_star {n : ℕ} (G K : Matrix (Fin n) (Fin n) ℂ) (p : (MvPolynomial (Bool × Bool × Fin n × Fin n) ℂ)) :
     evalNoise G K (star p) = star (evalNoise G K p) := by
   induction p using MvPolynomial.induction_on with

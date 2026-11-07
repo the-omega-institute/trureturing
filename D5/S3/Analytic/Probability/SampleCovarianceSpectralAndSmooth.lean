@@ -79,7 +79,6 @@ Unfinished escape audit: https://github.com/the-omega-institute/trureturing/issu
 -/
 import D5.S3.Analytic.Probability.GaussianPolynomialLog
 import D5.S3.SpectralTopology.HermitianEigenvaluePerturbation
-import D5.S3.Quantum.Recovery.PurifiedLocalPath
 import Mathlib.Analysis.Matrix.MeasurableSpace
 import Mathlib.Topology.Algebra.MvPolynomial
 namespace D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth
@@ -89,10 +88,7 @@ open scoped BigOperators ENNReal Matrix
 
 theorem gramHermitian (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) :
     (A * Aᴴ).IsHermitian := by
-  have h : (D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram Aᴴ).IsHermitian :=
-    Matrix.isHermitian_conjTranspose_mul_self Aᴴ
-  simpa only [D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram,
-    Matrix.conjTranspose_conjTranspose] using h
+  exact Matrix.isHermitian_mul_conjTranspose_self A
 
 noncomputable def gramEigenvalue (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ)
     (i : Fin n) : ℝ := (gramHermitian n A).eigenvalues i

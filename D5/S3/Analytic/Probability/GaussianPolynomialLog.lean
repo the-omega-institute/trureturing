@@ -75,7 +75,7 @@ private lemma negLog_integrable : Integrable (fun t : ℝ => max (-Real.log |t|)
     have hlog : IntegrableOn Real.log (Icc (-1) 1) :=
       (intervalIntegrable_iff_integrableOn_Icc_of_le (by norm_num : (-1 : ℝ) ≤ 1)).mp
         intervalIntegral.intervalIntegrable_log'
-    have hz : IntegrableOn (fun _ : ℝ => (0 : ℝ)) (Icc (-1) 1) := integrable_zero ℝ ℝ _
+    have hz : IntegrableOn (fun _ : ℝ => (0 : ℝ)) (Icc (-1) 1) := integrableOn_zero
     have hh := hlog.neg.sup hz
     change IntegrableOn (fun x : ℝ => max (-Real.log x) 0) (Icc (-1) 1) at hh
     change Integrable (fun x : ℝ => max (-Real.log |x|) 0) (volume.restrict (Icc (-1) 1))
