@@ -10,12 +10,15 @@ import Mathlib.Analysis.InnerProductSpace.GramSchmidtOrtho
 import Mathlib.Analysis.InnerProductSpace.ProdL2
 import Mathlib.Analysis.Normed.Module.Span
 import Mathlib.Algebra.Module.Rat
+import Mathlib.Basic.NNReal.Basic
 import Mathlib.Tactic
+
+/-! Nonnegative orthogonal weights invariant under the full unitary group. -/
 
 noncomputable section
 
-open scoped InnerProductSpace
-open Submodule Module
+open scoped InnerProductSpace NNReal NNRat
+open Submodule Module InnerProductSpace
 
 namespace D5.S3.Quantum.Measurements.UnitaryOrthogonalWeight
 
@@ -34,28 +37,35 @@ private theorem finite_unitary_transport [FiniteDimensional 𝕜 H]
         obtain ⟨a, ha⟩ := Submodule.mem_span_singleton.mp z.property
         have hz : z = e a := Subtype.ext ha.symm
         rw [hz]
-        simp [e, norm_smul, hxy] }
+        change ‖(e.symm (e a)) • y‖ = ‖(e a : H)‖
+        rw [e.symm_apply_apply]
+        change ‖a • y‖ = ‖a • x‖
+        simp only [norm_smul, hxy] }
   refine ⟨L.extend.toLinearIsometryEquiv rfl, ?_⟩
   change L.extend x = y
-  rw [← show (⟨x, Submodule.mem_span_singleton_self x⟩ : 𝕜 ∙ x).val = x from rfl,
-    L.extend_apply]
+  have hL := L.extend_apply (⟨x, Submodule.mem_span_singleton_self x⟩ : 𝕜 ∙ x)
+  rw [hL]
   change (LinearMap.toSpanSingleton 𝕜 H y) (e.symm ⟨x, _⟩) = y
-  simp [e, ← LinearEquiv.coord_apply, LinearEquiv.coord_self]
+  change (e.symm ⟨x, _⟩) • y = y
+  rw [show e.symm ⟨x, _⟩ = 1 from LinearEquiv.coord_self 𝕜 H x hx, one_smul]
 
 private theorem unitary_transport (x y : H) (hxy : ‖x‖ = ‖y‖) :
     ∃ U : H ≃ₗᵢ[𝕜] H, U x = y := by
   let S := Submodule.span 𝕜 ({x, y} : Set H)
-  letI : FiniteDimensional 𝕜 S := FiniteDimensional.span_of_finite 𝕜 (Set.toFinite _)
+  let : FiniteDimensional 𝕜 S := FiniteDimensional.span_of_finite 𝕜 (Set.toFinite _)
   let xs : S := ⟨x, Submodule.subset_span (by simp)⟩
   let ys : S := ⟨y, Submodule.subset_span (by simp)⟩
-  obtain ⟨V, hV⟩ := finite_unitary_transport xs ys hxy
+  obtain ⟨V, hV⟩ := finite_unitary_transport (𝕜 := 𝕜) xs ys hxy
   let D := S.orthogonalDecomposition
-  let U := D.trans ((V.withLpProdCongr 2 (LinearIsometryEquiv.refl 𝕜 Sᗮ)).trans D.symm)
+  let U := D.trans ((LinearIsometryEquiv.withLpProdCongr 2 V
+    (LinearIsometryEquiv.refl 𝕜 Sᗮ)).trans D.symm)
   refine ⟨U, ?_⟩
   have hx : D x = WithLp.toLp 2 (xs, (0 : Sᗮ)) := by
-    simp [D, Submodule.orthogonalDecomposition_apply, xs]
+    change D (xs : H) = _
+    simp [D, Submodule.orthogonalDecomposition_apply]
   have hy : D y = WithLp.toLp 2 (ys, (0 : Sᗮ)) := by
-    simp [D, Submodule.orthogonalDecomposition_apply, ys]
+    change D (ys : H) = _
+    simp [D, Submodule.orthogonalDecomposition_apply]
   apply D.injective
   simp [U, hx, hy, hV]
 
@@ -73,7 +83,7 @@ theorem unitary_orthogonal_weight_eq_norm_sq [CompleteSpace H]
   let e := gramSchmidtNormed 𝕜 b
   have he : Orthonormal 𝕜 e := gramSchmidtNormed_orthonormal hb
   have radial (x y : H) (hxy : ‖x‖ = ‖y‖) : W x = W y := by
-    obtain ⟨U, hUv⟩ := unitary_transport x y hxy
+    obtain ⟨U, hUv⟩ := unitary_transport (𝕜 := 𝕜) x y hxy
     rw [← hUv, hU]
   let f : ℝ≥0 → ℝ≥0 := fun s => W ((Real.sqrt (s : ℝ) : 𝕜) • e 0)
   have norm_radius (s : ℝ≥0) (i : Fin 2) :
@@ -83,17 +93,21 @@ theorem unitary_orthogonal_weight_eq_norm_sq [CompleteSpace H]
   have hf (s : ℝ≥0) (x : H) (hx : ‖x‖ ^ 2 = (s : ℝ)) : W x = f s := by
     apply radial
     rw [norm_radius]
-    exact (Real.sqrt_eq_iff_sq_eq (norm_nonneg _) s.property).2 hx.symm |>.symm
+    exact ((Real.sqrt_eq_iff_eq_sq s.property (norm_nonneg _)).2 hx.symm).symm
   have fadd (s t : ℝ≥0) : f (s + t) = f s + f t := by
     let x := (Real.sqrt (s : ℝ) : 𝕜) • e 0
     let y := (Real.sqrt (t : ℝ) : 𝕜) • e 1
     have horth : ⟪x, y⟫_𝕜 = 0 := by
       simp [x, y, inner_smul_left, inner_smul_right, he.inner_eq_zero (by decide : (0 : Fin 2) ≠ 1)]
-    have hxs : ‖x‖ ^ 2 = (s : ℝ) := by rw [norm_radius, Real.sq_sqrt s.property]
-    have hyt : ‖y‖ ^ 2 = (t : ℝ) := by rw [norm_radius, Real.sq_sqrt t.property]
+    have hxs : ‖x‖ ^ 2 = (s : ℝ) := by
+      rw [norm_radius]
+      exact Real.sq_sqrt s.property
+    have hyt : ‖y‖ ^ 2 = (t : ℝ) := by
+      rw [norm_radius]
+      exact Real.sq_sqrt t.property
     have hsum : ‖x + y‖ ^ 2 = ((s + t : ℝ≥0) : ℝ) := by
-      rw [norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero x y horth, hxs, hyt,
-        NNReal.coe_add]
+      have hp := norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero x y horth
+      simpa only [← sq, hxs, hyt, NNReal.coe_add] using hp
     rw [← hf (s + t) (x + y) hsum, hadd x y horth, hf s x hxs, hf t y hyt]
   have fzero : f 0 = 0 := by
     have hz := fadd 0 0
@@ -106,7 +120,7 @@ theorem unitary_orthogonal_weight_eq_norm_sq [CompleteSpace H]
     intro s t hst
     obtain ⟨r, rfl⟩ := exists_add_of_le hst
     rw [map_add]
-    exact le_add_of_nonneg_right (zero_le _)
+    exact le_add_of_nonneg_right zero_le
   have frat (q : ℚ≥0) : F (q : ℝ≥0) = q := by
     have h := map_nnrat_smul F q (1 : ℝ≥0)
     simpa [fone, NNRat.smul_def] using h
