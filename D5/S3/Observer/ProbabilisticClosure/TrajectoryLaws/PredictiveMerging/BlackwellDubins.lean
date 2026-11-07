@@ -40,15 +40,12 @@ abbrev Future (n : ℕ) := ∀ j : ℕ, X (n + 1 + j)
 
 /-- The actual dependent tail reindexing. -/
 def tailIndex (n : ℕ) : ℕ ≃ Ioi n where
-  toFun j := ⟨n + 1 + j, by change n < n + 1 + j; omega⟩
+  toFun j := ⟨n + 1 + j, Set.mem_Ioi.mpr
+    (Nat.lt_of_lt_of_le (Nat.lt_succ_self n) (Nat.le_add_right (n + 1) j))⟩
   invFun i := i.1 - (n + 1)
-  left_inv j := by omega
-  right_inv i := by
-    apply Subtype.ext
-    have hi := i.2
-    dsimp only [mem_Ioi] at hi
-    dsimp
-    omega
+  left_inv j := Nat.add_sub_cancel_left (n + 1) j
+  right_inv i := Subtype.ext
+    (Nat.add_sub_of_le (Nat.succ_le_of_lt (Set.mem_Ioi.mp i.2)))
 
 /-- The tail index equivalence acts on dependent measurable products. -/
 def tailReindex (n : ℕ) : (∀ i : Ioi n, X i) ≃ᵐ Future X n :=
