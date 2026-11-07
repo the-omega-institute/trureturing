@@ -19,6 +19,24 @@ internal sealed class DyadicMeanSquareUpperDocument : IScribeDocumentDefinition
                 + "ShortIntervalMeanSquareBound hypothesis; no separate Riemann "
                 + "hypothesis is used.")),
             Describe.Lean(
+                DescribeId.Create("cumulative-variance-band-asymptotic"),
+                DeclarationHandle.Create(Prefix + "CumulativeVarianceBandAsymptotic"),
+                H("Hypothesis (489.2)"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Hypothesis (489.2) is the uniform cumulative variance hypothesis for the complete Chebyshev error E(x)=psi(x)-x. It is an assumption: this definition asserts no proof of the variance asymptotic and includes neither a Riemann hypothesis assumption nor a separate regularity condition."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("discrepancy-locally-bounded-measurable"),
+                DeclarationHandle.Create(Prefix + "discrepancy_locallyBoundedMeasurable"),
+                H("Regularity of the Chebyshev error"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The function psi(x)-x is measurable and bounded in absolute value on every closed finite interval. Measurability comes from the measurability of the complete Chebyshev error; monotonicity and nonnegativity of psi give the compact bound."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("forward-kernel-dyadic-mean-square-upper"),
                 DeclarationHandle.Create(Prefix + "forward_kernel_dyadic_mean_square_upper"),
                 H("The dyadic upper estimate"),
