@@ -90,7 +90,8 @@ abbrev squareArena : Arena where
 private theorem squareRejected : ¬ squareArena.Law rejected := by
   intro h
   have hh := h 1
-  norm_num [rejected, realize, oddUnitaryCount, Nat.odd_iff] at hh
+  change (0 : ℚ) = (oddUnitaryCount 1 : ℚ) at hh
+  exact (by decide : (0 : ℚ) ≠ (oddUnitaryCount 1 : ℚ)) hh
 
 def squareFamily : Registration squareArena (type_of% (@root_square)) where
   actual := squareActual
