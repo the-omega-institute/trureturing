@@ -213,5 +213,102 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 #print axioms audit
 end Uniform
 
+
+namespace ShiftedIdentity
+universe u
+
+private abbrev signature : Signature where
+  Params := Unit
+  State _ := Prop
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def actual : Realization signature :=
+  realize signature (fun _ _ s => s) (fun e => nomatch e)
+private def rejected : Realization signature :=
+  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+
+private abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (n : Type u) [Fintype n] [DecidableEq n] (p : n → ℝ) (hp : ∀ i, 0 < p i)
+    (S Z : Matrix n n ℂ) (hS : S.IsHermitian),
+    let P : Matrix n n ℂ := diagonal (fun i => (p i : ℂ))
+    let F := fun t : ℝ => P⁻¹*CFC.rpow (P^3+t •
+      (CFC.rpow P (3/2 : ℝ)*S*CFC.rpow P (3/2 : ℝ))) (2/3 : ℝ)*P⁻¹
+    let B := fun j : ℕ => (j.factorial : ℝ)⁻¹ • iteratedDeriv j F 0
+    let X : Matrix n n ℂ := fun i j => (spectralTau (p i) (p j) : ℂ)*S i j
+    let Q : Matrix n n ℂ := fun i j => ∑ k,
+      (((2/3 : ℝ)*spectralTau (p i) (p k)*spectralTau (p k) (p j)+
+        3*spectralKernel (p i) (p j) (p k) : ℝ) : ℂ)*S i k*S k j
+    let W := Z+(1/3 : ℝ) • X
+    R.readout () () (6*(B 3+(2 : ℝ) • (Z*B 2)+B 1*Z^2-(5/48 : ℝ) • (B 1)^3).trace.re =
+      (4*(S^3).trace.re-(X^3).trace.re)/3-
+        4*(Q*W).trace.re+4*(X*W*W).trace.re)
+
+private theorem bridge :
+    (type_of% (@actual_shifted_supplier_identity.{u})) ↔ arena.Law actual := by
+  rfl
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h (ULift.{u} (Fin 0)) (fun _ => 1) (by intro i; norm_num)
+    0 0 (by simp)
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), True, False, ?_⟩
+  simp [actual, realize]
+
+private theorem sensitivity : Sensitivity arena actual := by
+  constructor
+  · intro i
+    refine ⟨rejected, ?_, ?_, rejected_law⟩
+    · intro j hji
+      exact (hji (Subsingleton.elim _ _)).elim
+    · funext e
+      exact nomatch e
+  · intro e
+    exact nomatch e
+
+def family : Registration arena (type_of% (@actual_shifted_supplier_identity.{u})) where
+  actual := actual
+  bridge := bridge
+  variation := ⟨bridge.mp (@actual_shifted_supplier_identity.{u}), rejected, rejected_law⟩
+  sensitivity := sensitivity
+  dependence := dependence
+
+/-- The full identity telescope is retained. Source selection and escape
+evidence remain unfinished under issue 23103. -/
+def audit : Contract.Registration
+    (@actual_shifted_supplier_identity.{u}) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.Quantum.Matrix.HsfLocalSpectrumSupplier.ShiftedIdentity.unit
+  realizationName := `Reg.D5.S3.Quantum.Matrix.HsfLocalSpectrumSupplier.ShiftedIdentity.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ s => s) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+#print axioms audit
+end ShiftedIdentity
+
 end
 end Reg.D5.S3.Quantum.Matrix.HsfLocalSpectrumSupplier
