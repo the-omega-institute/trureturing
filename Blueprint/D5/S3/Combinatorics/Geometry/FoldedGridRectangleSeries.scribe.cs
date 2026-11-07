@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Geometry;
 internal sealed class FoldedGridRectangleSeriesDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Geometry/FoldedGridRectangleSeries.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/barker2020a096222");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Geometry/barker2020a096222");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The actual endpoint rectangle counts satisfy both of Barker's generating-function and recurrence conjectures.",

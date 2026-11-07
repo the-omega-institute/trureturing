@@ -10,15 +10,20 @@
 Source: OEIS A096222 revision 13, Colin Barker's complete conjecture block.
 The cardinality below counts placements, rather than a recurrence-defined sequence.
 The natural divisions in the side lengths implement floor and ceiling respectively.
-All Prop-valued declarations have proof_shape: bind-only; escape_witness: none.
 Module admission_basis: open-problem-resolution; settling declaration: result.
-Direct frozen D5 dependencies: none. The decisive owners are Mathlib's
-Finset.card_product_filter_lt, Nat.cast_choose_two, and
-PowerSeries.eq_mul_inv_iff_mul_eq.
-Consumers: count -> countQ; countQ -> recurrence, coefficientIdentity;
-recurrenceQ -> recurrence; recurrence -> coefficientIdentity, result;
-denominator -> coefficientIdentity; denominatorConstant -> gf;
-coefficientIdentity -> gf; gf -> result; claim -> result.
+Direct frozen D5 dependencies: none. Decisive pinned Mathlib owners:
+Finset.card_product_filter_lt, Nat.cast_choose_two,
+PowerSeries.eq_mul_inv_iff_mul_eq. Every row below has escape_witness: none.
+count: proof_shape: bind-only; consumers: countQ, coefficientIdentity.
+countQ: proof_shape: bind-only; consumer: recurrence.
+recurrenceQ: proof_shape: bind-only; consumer: recurrence.
+recurrence: proof_shape: bind-only; consumers: coefficientIdentity, result.
+denominator: proof_shape: bind-only; consumer: coefficientIdentity.
+denominatorConstant: proof_shape: bind-only; consumer: gf.
+coefficientIdentity: proof_shape: bind-only; consumer: gf.
+gf: proof_shape: bind-only; consumer: result.
+claim: proof_shape: bind-only; consumer: result (statement type).
+result: proof_shape: bind-only; the full external joint settlement.
 -/
 
 import Mathlib.Data.Finset.Prod
