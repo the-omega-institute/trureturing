@@ -3362,3 +3362,65 @@ $$
 is nonzero; convexity then makes the midpoint itself a rank-four feasible lift. Conversely, if every feasible midpoint has all $2\times2$ minors zero, Proposition 201.2 places the entire body in one of the two rank-one rulings.
 
 This dichotomy sharpens the boundary interface without solving the pointwise inequalities: rank-three exclusion requires the one-column body to collapse to zero, while rank-four exclusion requires a fixed-factor identity across the whole convex body. It does not evaluate those identities for an arbitrary partition or settle $F_{64}$, $H43$, SRS\text{-}20, physical succession or Lean/kernel formalization.
+
+## 202. A transverse pair is a rank-four witness
+
+The ruling dichotomy of Section 201 can be tested pairwise. Two rank-one coefficient lifts generate a rank-two lift exactly when both their label directions and their radical-coordinate directions are independent.
+
+**Definition 202.1 (transverse rank-one pair).** Let $A$ and $B$ be nonzero rank-one $4\times2$ matrices in $\mathscr A_u$. Choose factorizations
+
+$$
+A=u v^{\mathsf T},
+\qquad
+B=s t^{\mathsf T},
+\qquad
+u,s\in\mathsf H,\quad v,t\in\mathbb R^2.
+\tag{202.1}
+$$
+
+Call $(A,B)$ transverse when
+
+$$
+ u\wedge s\ne0
+\quad\text{and}\quad
+ v\wedge t\ne0.
+\tag{202.2}
+$$
+
+The condition is independent of the nonzero rescalings in the two rank-one factorizations.
+
+**Proposition 202.2 (wedge formula for convex combinations).** For every $0<\theta<1$, every two-row set $I=\{i,k\}\subseteq\mathcal L$ and the two column indices $J=\{j,\ell\}\subseteq\{1,2\}$, one has
+
+$$
+\det\!\left(\bigl(\theta A+(1-\theta)B\bigr)_{I,J}\right)
+ =\theta(1-\theta)
+   (u_i s_k-u_k s_i)
+   (v_j t_\ell-v_\ell t_j).
+\tag{202.3}
+$$
+
+Consequently,
+
+$$
+\operatorname{rank}\bigl(\theta A+(1-\theta)B\bigr)=2
+\quad\Longleftrightarrow\quad
+(A,B)\text{ is transverse}.
+\tag{202.4}
+$$
+
+*Proof.* Expand the determinant of the $2\times2$ submatrix in (202.3). The terms quadratic in $A$ and in $B$ vanish because both matrices have rank one. The two cross terms factor as
+
+$$
+\theta(1-\theta)
+ (u_i s_k-u_k s_i)(v_j t_\ell-v_\ell t_j),
+$$
+
+which proves (202.3). All maximal minors of the convex combination vanish exactly when one of the two exterior products in (202.2) vanishes, proving (202.4). \(\square\)
+
+**Corollary 202.3 (pairwise search interface for rank four).** Assume $d_u=2$ and let $A,B\in\mathscr P_u$ be nonzero rank-one matrices. If $(A,B)$ is transverse, then every strict convex combination in (202.3) belongs to $\mathscr P_u$ and has column rank two. Hence a single transverse pair is a rank-four feasible witness.
+
+Assume every matrix in $\mathscr P_u$ has rank at most one. Then $\mathscr P_u$ contains a rank-two lift obtained from a strict convex combination exactly when it contains a transverse pair. If it contains no transverse pair, Proposition 201.2 puts the whole body in one of the two fixed-factor rulings. Thus the rank-four search can be organized as a pairwise test: either find two feasible rank-one lifts with both wedge factors nonzero, or certify a common ruling by showing that one wedge factor vanishes for every pair.
+
+*Proof.* Convexity gives the first assertion, and Proposition 202.2 gives its rank. The converse is Proposition 201.2 together with the definition of a transverse pair. \(\square\)
+
+The wedge formula makes the rank-four boundary computationally concrete while keeping the pointwise constraints unchanged: the only new data are one feasible pair and two nonvanishing $2\times2$ minors. It does not construct such a pair for an arbitrary partition, evaluate the ruling identities in a concrete candidate, or settle $F_{64}$, $H43$, SRS\text{-}20, physical succession or Lean/kernel formalization.
