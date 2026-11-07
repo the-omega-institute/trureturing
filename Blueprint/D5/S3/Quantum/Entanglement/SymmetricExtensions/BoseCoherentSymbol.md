@@ -66,19 +66,13 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseCoherentSymb
 
 Every Hermitian Bose operator has an explicit signed occupation-projector expansion after the actual diagonal twirl. This includes zero coefficients, without positivity or trace normalization.
 
-**Theorem 1.6 (Positive occupation weights).**
+## Application: nonnegative occupation weights
 
-Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseCoherentSymbol.occupationCoefficient_nonneg`
+For arbitrary natural numbers r and n, a positive semidefinite matrix E on words Fin r to Fin n, and every occupation a : Sym (Fin n) r, put w=representative a.val a.property. By definition, occupationCoefficient E a is the real natural multiplicity of a times the real part of E(w,w). Matrix.PosSemidef.diag_nonneg gives the complex-order inequality 0 <= E(w,w); the first component of Complex.nonneg_iff gives 0 <= real(E(w,w)). Nat.cast_nonneg and mul_nonneg then give 0 <= occupationCoefficient E a.
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseCoherentSymbol.occupationCoefficient_nonneg` (`✓ std3`). ∎
+Applying the existing occupationTwirl_decomposition to hE.isHermitian and full Bose support gives the actual finite sum of these nonnegative coefficients times the normalized occupation projectors vecMulVec (sectorVector r a.val) (star (sectorVector r a.val)). The equality itself holds for every Hermitian Bose-supported E with signed coefficients. This positivity application retains zero coefficients, zero and singular operators, r=0, n=0 whenever the stated data exist, n=1 and r=2; it imposes neither trace one nor a coefficient-sum normalization.
 
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For a PSD tensor operator every actual occupation coefficient is nonnegative; zero and singular operators remain in scope.
-
-**Theorem 1.7 (Complex coherent form at every cut).**
+**Theorem 1.6 (Complex coherent form at every cut).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseCoherentSymbol.partialTranspose_coherent`
 
@@ -90,7 +84,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseCoherentSymb
 
 The actual product-basis partial transpose acts on a coherent form by conjugating precisely the local vector entries at the selected sites. Empty and full cuts are retained.
 
-**Theorem 1.8 (Rank-one cut amplitude).**
+**Theorem 1.7 (Rank-one cut amplitude).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseCoherentSymbol.rankOne_partialTranspose_coherent`
 
@@ -102,7 +96,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseCoherentSymb
 
 The coherent form of a partially transposed rank-one PSD tensor is exactly the squared modulus of its cut amplitude.
 
-**Definition 1.9 (Actual real coherent polynomial).**
+**Definition 1.8 (Actual real coherent polynomial).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseCoherentSymbol.realSymbol`
 
@@ -114,7 +108,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseCoherentSymb
 
 The polynomial sums the real parts of the original matrix entries with their total row and column occupations.
 
-**Theorem 1.10 (PSD tensors give native SOS forms).**
+**Theorem 1.9 (PSD tensors give native SOS forms).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseCoherentSymbol.realSymbol_posSemidef_sos`
 
@@ -126,7 +120,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseCoherentSymb
 
 Factoring the actual PSD matrix writes its real coherent polynomial as a finite sum of real and imaginary amplitude squares. The SOS predicate is the ordinary native real polynomial predicate.
 
-**Theorem 1.11 (Exact real coherent evaluation).**
+**Theorem 1.10 (Exact real coherent evaluation).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseCoherentSymbol.eval_realSymbol`
 
@@ -138,7 +132,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseCoherentSymb
 
 Every real local vector evaluates the polynomial to the real part of the actual repeated-tensor quadratic form.
 
-**Theorem 1.12 (Cut-invariant real polynomial).**
+**Theorem 1.11 (Cut-invariant real polynomial).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseCoherentSymbol.realSymbol_partialTranspose`
 
@@ -150,7 +144,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseCoherentSymb
 
 Every product-basis partial transpose has the identical real coherent polynomial, for every cut.
 
-**Theorem 1.13 (Closed native SOS preimage).**
+**Theorem 1.12 (Closed native SOS preimage).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseCoherentSymbol.realSymbol_sos_closed`
 
@@ -168,7 +162,6 @@ The set of Hermitian tensors whose actual real coherent polynomial is a native S
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseCoherentSymbol.eval_realSymbol`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseCoherentSymbol.eval_symbol`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseCoherentSymbol.occupationCoefficient`
-- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseCoherentSymbol.occupationCoefficient_nonneg`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseCoherentSymbol.occupationTwirl_decomposition`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseCoherentSymbol.partialTranspose_coherent`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseCoherentSymbol.rankOne_partialTranspose_coherent`
