@@ -19,8 +19,8 @@ internal sealed class RichWordTypeIIOccurrenceDocument : IScribeDocumentDefiniti
                 + "factor-count recurrence and are not asserted to have the Type-II return theorem.")),
             Entry("F", "auxiliary-prefix", "Sentinel prefixes", PrefixFormula(),
                 "F(0) is empty and F(k+1)=phi(F(k))[0]. Its occurrences at every natural position "
-                + "are exactly the iterated cuts cut(k,i), including the origin. After k "
-                + "sentinel steps both contexts are obtained by iterating a map that sends "
+                + "are exactly the iterated cuts cut(k,i), including the origin. At positive source cuts, "
+                + "both contexts after k sentinel steps are obtained by iterating a map that sends "
                 + "a<6 to a+1 and fixes 6. Five iterations send 0 to 5 and every other letter to 6."),
             Entry("cut", "iterated-cut", "Iterated native boundaries", CutFormula(),
                 "cut(0,i)=i and cut(k+1,i)=boundary(cut(k,i)). These maps are strictly increasing, "
@@ -63,7 +63,7 @@ internal sealed class RichWordTypeIIOccurrenceDocument : IScribeDocumentDefiniti
                 + "i has vector M^(k+6)e(u(i)). The first sixfold image of 0 is a prefix of "
                 + "every sixfold letter image; applying further substitutions preserves this "
                 + "prefix and proves all-coordinate domination. The actual letters u(0),u(1),u(2) "
-                + "are 0,1,0, so starts 1 and 2 give context pairs (phase,6) and (6,phase), "
+                + "are 0,1,0, so the occurrences indexed by 1 and 2 give context pairs (phase,6) and (6,phase), "
                 + "and the return at index 2 attains the minimum. Every letter occurs at a "
                 + "positive source index, giving every listed return vector. At the seed the "
                 + "attaining interval is [128,192), with return word 6F(6); its two length-65 "
