@@ -19,6 +19,12 @@ Peter Webb, *A Course in Finite Group Representation Theory*, Cambridge Universi
 Press, 2016, DOI [10.1017/CBO9781316677216](https://doi.org/10.1017/CBO9781316677216).
 Locators refer to the linked prepublication PDF.
 
+## Verified locator
+
+DOI: https://doi.org/10.1017/CBO9781316677216
+
+Source: https://www-users.cse.umn.edu/~webb/RepBook/RepBookLatex.pdf
+
 Proposition 6.3.3(3), printed page 92 (PDF page 99), identifies the augmentation
 ideal of a finite p-group over a characteristic-p field with the Jacobson
 radical, hence proves its nilpotence. The proof uses the unique simple module.
