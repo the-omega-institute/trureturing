@@ -315,10 +315,10 @@ private lemma countable_kl_le_energy {ι : Type*}
       (Real.one_sub_inv_le_log_of_pos hratio) h.1.le
     have hid : p k * (p k / q k - 1) =
         p k - q k + (p k - q k) ^ 2 / q k := by
-      field_simp
+      field_simp [h.2.ne']
       <;> ring
     have hid' : p k * (1 - (p k / q k)⁻¹) = p k - q k := by
-      field_simp
+      field_simp [h.1.ne', h.2.ne']
     exact ⟨hid' ▸ hl, hid ▸ hu⟩
   have hn (k : ι) : 0 ≤ p k ∧ 0 ≤ q k := by
     rcases hpos k with h | h
@@ -353,7 +353,8 @@ private lemma split_positive_series (f : ℕ → ℝ) (hf : Summable f)
     (∑ r : Fin L, f (r.val + 1)) + (∑' k : ℕ, f (k + L + 1)) = ∑' k, f k := by
   have h := ((summable_nat_add_iff 1).2 hf).sum_add_tsum_nat_add L
   rw [hf.tsum_eq_zero_add, hf0, zero_add]
-  simpa only [Nat.add_assoc, Fin.sum_univ_eq_sum_range] using h
+  rw [Fin.sum_univ_eq_sum_range (fun k => f (k + 1)) L]
+  simpa only [Nat.add_assoc] using h
 
 private lemma collapsed_kl_bounds
     (p q : ℕ → ℝ) (hp : HasSum p 1) (hq : HasSum q 1)
@@ -400,18 +401,17 @@ private lemma collapsed_kl_bounds
     | none => exact hqt.2
     | some r => exact hqp _ (by omega)
   have ha : HasSum a 1 := by
-    rw [hasSum_fintype]
-    simp only [Fintype.sum_option, a]
-    ring
+    have hsa : ∑ z, a z = 1 := by simp only [Fintype.sum_option, a]; ring
+    simpa only [hsa] using hasSum_fintype a
   have hb : HasSum b 1 := by
-    rw [hasSum_fintype]
-    simp only [Fintype.sum_option, b]
-    ring
+    have hsb : ∑ z, b z = 1 := by simp only [Fintype.sum_option, b]; ring
+    simpa only [hsb] using hasSum_fintype b
   have hkl := (countable_kl_le_energy a b ha hb
-    (fun z => Or.inr ⟨hap z, hbp z⟩) (summable_fintype _)).2
+    (fun z => Or.inr ⟨hap z, hbp z⟩) (hasSum_fintype _).summable).2
   change klDivergence a b ≤ _ ∧ _
-  change klDivergence a b ≤ ∑' z, (a z - b z) ^ 2 / b z at hkl
-  rw [tsum_fintype, Fintype.sum_option] at hkl
+  simp only [tsum_fintype] at hkl
+  change klDivergence a b ≤ ∑ z, (a z - b z) ^ 2 / b z at hkl
+  rw [Fintype.sum_option] at hkl
   let S : ℝ := ∑ r : Fin L, E (r.val + 1)
   let π : ℝ := ∑ r : Fin L, q (r.val + 1)
   have hSn : 0 ≤ S := sum_nonneg (fun r _ => div_nonneg (sq_nonneg _) (hqp _ (by omega)).le)
@@ -457,6 +457,255 @@ private lemma collapsed_kl_bounds
       simpa only [a, b, E, S, add_comm] using hkl
     change klDivergence a b ≤ 2 * S
     linarith
+
+private lemma short_power_sum_le (n L : ℕ) (s : ℝ) (hs : 0 < s) :
+    (∑ r : Fin L, term n s (r.val + 1)) ≤ (L : ℝ) ^ (n + 1) := by
+  have hle (r : Fin L) : term n s (r.val + 1) ≤ (L : ℝ) ^ n := by
+    have hExp : Real.exp (-s * ((r.val + 1 : ℕ) : ℝ)) ≤ 1 :=
+      Real.exp_le_one_iff.mpr (mul_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr hs.le) (Nat.cast_nonneg _))
+    calc
+      term n s (r.val + 1) ≤ (((r.val + 1 : ℕ) : ℝ)) ^ n := by
+        simp only [term, Nat.succ_ne_zero, ↓reduceIte]
+        exact mul_le_of_le_one_right (by positivity) hExp
+      _ ≤ (L : ℝ) ^ n := pow_le_pow_left₀ (by positivity)
+        (by exact_mod_cast (Nat.succ_le_of_lt r.isLt)) _
+  calc
+    (∑ r : Fin L, term n s (r.val + 1)) ≤ ∑ _r : Fin L, (L : ℝ) ^ n :=
+      sum_le_sum (fun r _ => hle r)
+    _ = (L : ℝ) ^ (n + 1) := by simp [pow_succ, mul_comm]
+
+private lemma normalized_short_bounds
+    (m : ℕ) (hm : 4 ≤ m)
+    (d : ℕ → ℝ) (hd0 : d 0 = 0)
+    (δ : ℝ) (hδ : 0 ≤ δ) (hδ1 : δ ≤ 1)
+    (hd : ∀ k : ℕ, 0 < k →
+      0 ≤ d k ∧ d k ≤ δ * (k : ℝ) ^ (m - 1))
+    (s : ℝ) (hs : 0 < s)
+    (hZ : (m.factorial : ℝ) / 2 ≤ s ^ (m + 1) * powerSum m s)
+    (L : ℕ) (hL : 1 ≤ L) (hx : s * (L : ℝ) ≤ 1) :
+    let v : Bool → ℕ → ℝ := fun i k =>
+      term m s k + if i then d k * Real.exp (-s * (k : ℝ)) else 0
+    let Z : Bool → ℝ := fun i => ∑' k : ℕ, v i k
+    let p : Bool → ℕ → ℝ := fun i k => v i k / Z i
+    let w : ℕ → ℝ := fun k => p true k - p false k
+    ∀ j : Bool,
+      (∑ r : Fin L, p j (r.val + 1)) ≤ 1 / 2 ∧
+      (∑ r : Fin L, (w (r.val + 1)) ^ 2 / p j (r.val + 1)) ≤
+        2 * δ ^ 2 * s ^ 2 * (s * (L : ℝ)) ^ (m - 1) := by
+  have hAdj := adjacent_power_sum m (by omega) s hs
+  have hZpos := powerSum_pos m hs
+  have hr : 0 < 1 - Real.exp (-s) := by
+    have := Real.exp_lt_one_iff.mpr (by linarith : -s < 0)
+    linarith
+  let D : ℕ → ℝ := fun k => d k * Real.exp (-s * (k : ℝ))
+  have hD : ∀ k, 0 ≤ D k ∧ D k ≤ δ * term (m - 1) s k := by
+    intro k
+    by_cases hk : k = 0
+    · simp [D, hk, hd0, term]
+    · constructor
+      · exact mul_nonneg (hd k (Nat.pos_of_ne_zero hk)).1 (Real.exp_pos _).le
+      · calc
+          D k ≤ (δ * (k : ℝ) ^ (m - 1)) * Real.exp (-s * (k : ℝ)) :=
+            mul_le_mul_of_nonneg_right (hd k (Nat.pos_of_ne_zero hk)).2 (Real.exp_pos _).le
+          _ = δ * term (m - 1) s k := by simp [term, hk, mul_assoc]
+  have hDs : Summable D := by
+    apply ((summable_term (m - 1) hs).mul_left δ).of_norm_bounded
+    intro k
+    simpa [Real.norm_eq_abs, abs_of_nonneg (hD k).1] using (hD k).2
+  let A : ℝ := ∑' k : ℕ, D k
+  have hA : 0 ≤ A := tsum_nonneg (fun k => (hD k).1)
+  have hAb : A ≤ δ * powerSum (m - 1) s := by
+    simpa [A, powerSum, tsum_mul_left] using
+      hDs.tsum_le_tsum (fun k => (hD k).2) ((summable_term _ hs).mul_left δ)
+  let v : Bool → ℕ → ℝ := fun i k => term m s k + if i then D k else 0
+  let Z : Bool → ℝ := fun i => ∑' k : ℕ, v i k
+  let p : Bool → ℕ → ℝ := fun i k => v i k / Z i
+  let w : ℕ → ℝ := fun k => p true k - p false k
+  have hvs (i : Bool) : Summable (v i) := by
+    cases i
+    · simpa [v] using summable_term m hs
+    · simpa [v] using (summable_term m hs).add hDs
+  have hZeq : Z false = powerSum m s ∧ Z true = powerSum m s + A := by
+    constructor
+    · simp [Z, v, powerSum]
+    · simpa [Z, v, powerSum, A] using (summable_term m hs).tsum_add hDs
+  have hZp (i : Bool) : 0 < Z i := by
+    cases i
+    · simpa [hZeq.1] using hZpos
+    · rw [hZeq.2]
+      positivity
+  have hvn (i : Bool) (k : ℕ) : 0 ≤ v i k := by
+    cases i <;> simp only [v, Bool.false_eq_true, ↓reduceIte, add_zero]
+    · exact term_nonneg _ _ _
+    · exact add_nonneg (term_nonneg _ _ _) (hD k).1
+  have hvp (i : Bool) (k : ℕ) (hk : 0 < k) : 0 < v i k := by
+    have ht : 0 < term m s k := by
+      simp only [term, Nat.ne_of_gt hk, ↓reduceIte]
+      positivity
+    cases i <;> simp only [v, Bool.false_eq_true, ↓reduceIte, add_zero]
+    · exact ht
+    · exact add_pos_of_pos_of_nonneg ht (hD k).1
+  have hprob (i : Bool) : HasSum (p i) 1 ∧ p i 0 = 0 ∧
+      ∀ k : ℕ, 0 < k → 0 < p i k := by
+    constructor
+    · convert (hvs i).hasSum.div_const (Z i) using 1
+      exact (div_self (hZp i).ne').symm
+    constructor
+    · cases i <;> simp [p, v, D, hd0, term]
+    · intro k hk
+      exact div_pos (hvp i k hk) (hZp i)
+  let ε : ℝ := A / powerSum m s
+  have hε0 : 0 ≤ ε := div_nonneg hA hZpos.le
+  have hε : ε ≤ δ * (1 - Real.exp (-s)) := by
+    apply (div_le_iff₀ hZpos).2
+    exact hAb.trans (by nlinarith [mul_le_mul_of_nonneg_left hAdj hδ])
+  have hDrift (k : ℕ) :
+      w k = (D k - ε * term m s k) / Z true := by
+    have he : Z true = (1 + ε) * powerSum m s := by
+      dsimp [ε]
+      rw [hZeq.2]
+      field_simp
+      <;> ring
+    dsimp [w, p, v]
+    simp only [↓reduceIte, add_zero]
+    rw [hZeq.1]
+    dsimp [ε]
+    rw [hZeq.2]
+    field_simp
+    <;> ring
+  have hrS : 1 - Real.exp (-s) ≤ s := by
+    have hh := Real.add_one_le_exp (-s)
+    linarith
+  have hεs : ε ≤ δ * s := hε.trans (mul_le_mul_of_nonneg_left hrS hδ)
+  have hFact : (24 : ℝ) ≤ (m.factorial : ℝ) := by
+    have hf := Nat.factorial_le hm
+    norm_num at hf
+    exact_mod_cast hf
+  have hScale : 4 / powerSum m s ≤ 2 * s ^ (m + 1) := by
+    apply (div_le_iff₀ hZpos).2
+    nlinarith
+  have hLM : 4 * (L : ℝ) ^ (m + 1) ≤ powerSum m s := by
+    have hp : (s * (L : ℝ)) ^ (m + 1) ≤ 1 :=
+      pow_le_one₀ (by positivity) hx
+    apply (mul_le_mul_iff_right₀ (pow_pos hs (m + 1))).mp
+    rw [mul_pow] at hp
+    nlinarith
+  change ∀ j : Bool,
+      (∑ r : Fin L, p j (r.val + 1)) ≤ 1 / 2 ∧
+      (∑ r : Fin L, (w (r.val + 1)) ^ 2 / p j (r.val + 1)) ≤
+        2 * δ ^ 2 * s ^ 2 * (s * (L : ℝ)) ^ (m - 1)
+  intro j
+  have hZ01 : powerSum m s ≤ Z true := by rw [hZeq.2]; linarith
+  have hZZ (i : Bool) : powerSum m s ≤ Z i ∧ Z i ≤ Z true := by
+    cases i <;> simp only [hZeq.1, hZeq.2] <;> constructor <;> linarith
+  have hv2 (k : ℕ) (hk : 0 < k) : v j k ≤ 2 * term m s k := by
+    have ht : term (m - 1) s k ≤ term m s k := by
+      simp only [term, Nat.ne_of_gt hk, ↓reduceIte]
+      exact mul_le_mul_of_nonneg_right
+        (pow_le_pow_right₀ (by exact_mod_cast hk : 1 ≤ (k : ℝ)) (by omega : m - 1 ≤ m))
+        (Real.exp_pos _).le
+    have hD' : D k ≤ term m s k := (hD k).2.trans
+      ((mul_le_of_le_one_left (term_nonneg _ _ _) hδ1).trans ht)
+    cases j <;> simp only [v, Bool.false_eq_true, ↓reduceIte, add_zero] <;>
+      linarith [term_nonneg m s k]
+  constructor
+  · have hp' (r : Fin L) : p j (r.val + 1) ≤
+        2 * term m s (r.val + 1) / powerSum m s := by
+      apply (div_le_div_iff₀ (hZp j) hZpos).2
+      nlinarith [mul_le_mul_of_nonneg_right (hv2 (r.val + 1) (by omega)) hZpos.le,
+        mul_le_mul_of_nonneg_left (hZZ j).1
+          (mul_nonneg (by norm_num) (term_nonneg _ _ _))]
+    calc
+      (∑ r : Fin L, p j (r.val + 1)) ≤
+          ∑ r : Fin L, 2 * term m s (r.val + 1) / powerSum m s := sum_le_sum (fun r _ => hp' r)
+      _ = 2 * (∑ r : Fin L, term m s (r.val + 1)) / powerSum m s := by
+        rw [← sum_div, mul_sum]
+      _ ≤ 2 * (L : ℝ) ^ (m + 1) / powerSum m s := by
+        gcongr
+        exact short_power_sum_le m L s hs
+      _ ≤ 1 / 2 := (div_le_iff₀ hZpos).2 (by linarith)
+  · have hpoint (r : Fin L) : (w (r.val + 1)) ^ 2 / p j (r.val + 1) ≤
+        4 * δ ^ 2 * term (m - 2) s (r.val + 1) / powerSum m s := by
+      let k : ℕ := r.val + 1
+      have hk : k ≠ 0 := by dsimp [k]; omega
+      have ht : 0 < term m s k := by simp only [term, hk, ↓reduceIte]; positivity
+      have hks : s * (k : ℝ) ≤ 1 := by
+        apply le_trans (mul_le_mul_of_nonneg_left (by exact_mod_cast (Nat.succ_le_of_lt r.isLt)) hs.le) hx
+      have htsucc : term m s k = (k : ℝ) * term (m - 1) s k := by
+        have hm' : m = (m - 1) + 1 := by omega
+        simp only [term, hk, ↓reduceIte]
+        calc
+          (k : ℝ) ^ m * Real.exp (-s * (k : ℝ)) =
+              ((k : ℝ) ^ (m - 1) * (k : ℝ)) * Real.exp (-s * (k : ℝ)) := by
+            conv_lhs => rw [hm', pow_succ]
+          _ = _ := by ring
+      have heT : ε * term m s k ≤ δ * term (m - 1) s k := by
+        calc
+          ε * term m s k ≤ (δ * s) * term m s k := mul_le_mul_of_nonneg_right hεs ht.le
+          _ = δ * (s * (k : ℝ)) * term (m - 1) s k := by rw [htsucc]; ring
+          _ ≤ δ * term (m - 1) s k := by
+            nlinarith [mul_le_mul_of_nonneg_left hks (mul_nonneg hδ (term_nonneg (m - 1) s k))]
+      have hId : (term (m - 1) s k) ^ 2 = term (m - 2) s k * term m s k := by
+        have hm' : m = (m - 2) + 2 := by omega
+        have hm'' : m - 1 = (m - 2) + 1 := by omega
+        simp only [term, hk, ↓reduceIte]
+        have hp1 : (k : ℝ) ^ (m - 1) = (k : ℝ) ^ (m - 2) * (k : ℝ) := by
+          rw [hm'', pow_succ]
+        have hp2 : (k : ℝ) ^ m = (k : ℝ) ^ (m - 2) * (k : ℝ) ^ 2 := by
+          calc
+            (k : ℝ) ^ m = (k : ℝ) ^ ((m - 2) + 2) := congrArg (fun n => (k : ℝ) ^ n) hm'
+            _ = _ := pow_add _ _ _
+        rw [hp1, hp2]
+        ring
+      have hNum : (D k - ε * term m s k) ^ 2 ≤
+          4 * δ ^ 2 * term (m - 2) s k * term m s k := by
+        have h1 := (hD k).1
+        have h2 := (hD k).2
+        have h3 : 0 ≤ ε * term m s k := mul_nonneg hε0 ht.le
+        have hh := pow_le_pow_left₀ (by positivity : 0 ≤ D k + ε * term m s k)
+          (show D k + ε * term m s k ≤ 2 * (δ * term (m - 1) s k) by linarith) 2
+        rw [mul_pow, mul_pow, hId] at hh
+        nlinarith only [hh, mul_nonneg h1 h3]
+      have hvle : term m s k ≤ v j k := by
+        cases j <;> simp only [v, Bool.false_eq_true, ↓reduceIte, add_zero]
+        · exact le_rfl
+        · exact le_add_of_nonneg_right (hD k).1
+      have hDen : powerSum m s * term m s k * Z j ≤ Z true ^ 2 * v j k := by
+        calc
+          powerSum m s * term m s k * Z j ≤ Z true * term m s k * Z true :=
+            mul_le_mul (mul_le_mul_of_nonneg_right hZ01 ht.le) (hZZ j).2
+              (hZp j).le (mul_nonneg (hZp true).le ht.le)
+          _ ≤ Z true ^ 2 * v j k := by
+            nlinarith [mul_le_mul_of_nonneg_left hvle (sq_nonneg (Z true))]
+      change (w k) ^ 2 / p j k ≤ _
+      calc
+        (w k) ^ 2 / p j k =
+            (D k - ε * term m s k) ^ 2 * Z j / (Z true ^ 2 * v j k) := by
+          rw [hDrift]; dsimp only [p]; field_simp
+        _ ≤ (D k - ε * term m s k) ^ 2 / (powerSum m s * term m s k) := by
+          apply (div_le_div_iff₀ (mul_pos (sq_pos_of_pos (hZp true)) (hvp j k (by omega)))
+            (mul_pos hZpos ht)).2
+          nlinarith only [mul_le_mul_of_nonneg_left hDen (sq_nonneg (D k - ε * term m s k))]
+        _ ≤ 4 * δ ^ 2 * term (m - 2) s k / powerSum m s := by
+          apply (div_le_div_iff₀ (mul_pos hZpos ht) hZpos).2
+          nlinarith [mul_le_mul_of_nonneg_left hNum hZpos.le]
+    calc
+      (∑ r : Fin L, (w (r.val + 1)) ^ 2 / p j (r.val + 1)) ≤
+          ∑ r : Fin L, 4 * δ ^ 2 * term (m - 2) s (r.val + 1) / powerSum m s :=
+        sum_le_sum (fun r _ => hpoint r)
+      _ = (4 / powerSum m s) * δ ^ 2 * (∑ r : Fin L, term (m - 2) s (r.val + 1)) := by
+        rw [← sum_div, ← mul_sum]
+        ring
+      _ ≤ (2 * s ^ (m + 1)) * δ ^ 2 * (L : ℝ) ^ (m - 1) := by
+        have hsum := short_power_sum_le (m - 2) L s hs
+        rw [show m - 2 + 1 = m - 1 by omega] at hsum
+        have hnonneg : 0 ≤ ∑ r : Fin L, term (m - 2) s (r.val + 1) :=
+          sum_nonneg (fun r _ => term_nonneg _ _ _)
+        exact mul_le_mul (mul_le_mul_of_nonneg_right hScale (sq_nonneg δ)) hsum
+          hnonneg (by positivity)
+      _ = 2 * δ ^ 2 * s ^ 2 * (s * (L : ℝ)) ^ (m - 1) := by
+        rw [mul_pow, show m + 1 = (m - 1) + 2 by omega, pow_add]
+        ring
 
 theorem normalized_power_perturbation_all_cutoff_kl
     (m : ℕ) (hm : 4 ≤ m)
@@ -506,21 +755,57 @@ theorem normalized_power_perturbation_all_cutoff_kl
       (∑' k : ℕ, p i k * Real.log (p i k / p (!i) k)) ≤
         ∑' k : ℕ, (w k) ^ 2 / p (!i) k) ∧ _
   have hEnergy := normalized_power_perturbation_energy m hm d hd0 δ hδ hδ1 hd s hs hZ
-  refine ⟨hEnergy.1, hEnergy.2, ?_, by sorry⟩
-  intro i
-  have heq : ∀ k : ℕ, (p i k - p (!i) k) ^ 2 = (w k) ^ 2 := by
+  change (∀ i : Bool, HasSum (p i) 1 ∧ p i 0 = 0 ∧
+      ∀ k : ℕ, 0 < k → 0 < p i k) ∧
+    (∀ j : Bool, Summable (fun k : ℕ => (w k) ^ 2 / p j k) ∧
+      (∑' k : ℕ, (w k) ^ 2 / p j k) ≤
+        4 * δ ^ 2 * (1 - Real.exp (-s)) ^ 2) at hEnergy
+  have heq (i : Bool) : ∀ k : ℕ, (p i k - p (!i) k) ^ 2 = (w k) ^ 2 := by
     intro k
     cases i <;> simp only [Bool.not_false, Bool.not_true, w] <;> ring
-  have h := countable_kl_le_energy (p i) (p (!i)) (hEnergy.1 i).1 (hEnergy.1 (!i)).1
-    (fun k => by
-      by_cases hk : k = 0
-      · exact Or.inl ⟨hk ▸ (hEnergy.1 i).2.1, hk ▸ (hEnergy.1 (!i)).2.1⟩
-      · exact Or.inr ⟨(hEnergy.1 i).2.2 k (Nat.pos_of_ne_zero hk),
-          (hEnergy.1 (!i)).2.2 k (Nat.pos_of_ne_zero hk)⟩)
-    (by simpa only [heq] using (hEnergy.2 (!i)).1)
-  simpa only [heq] using h
+  have hes (i : Bool) : Summable (fun k => (p i k - p (!i) k) ^ 2 / p (!i) k) := by
+    simpa only [heq i] using (hEnergy.2 (!i)).1
+  refine ⟨hEnergy.1, hEnergy.2, ?_, ?_⟩
+  · intro i
+    have h := countable_kl_le_energy (p i) (p (!i)) (hEnergy.1 i).1 (hEnergy.1 (!i)).1
+      (fun k => by
+        by_cases hk : k = 0
+        · exact Or.inl ⟨hk ▸ (hEnergy.1 i).2.1, hk ▸ (hEnergy.1 (!i)).2.1⟩
+        · exact Or.inr ⟨(hEnergy.1 i).2.2 k (Nat.pos_of_ne_zero hk),
+            (hEnergy.1 (!i)).2.2 k (Nat.pos_of_ne_zero hk)⟩) (hes i)
+    simpa only [heq i] using h
+  · intro L hL i
+    have hc := collapsed_kl_bounds (p i) (p (!i)) (hEnergy.1 i).1 (hEnergy.1 (!i)).1
+      (hEnergy.1 i).2.1 (hEnergy.1 (!i)).2.1 (hEnergy.1 i).2.2
+      (hEnergy.1 (!i)).2.2 (hes i) L
+    by_cases hx : s * (L : ℝ) ≤ 1
+    · have hxpow : (s * (L : ℝ)) ^ (m - 1) ≤ 1 := pow_le_one₀ (by positivity) hx
+      rw [min_eq_right hxpow]
+      have hb := normalized_short_bounds m hm d hd0 δ hδ hδ1 hd s hs hZ L hL hx
+      change ∀ j : Bool,
+        (∑ r : Fin L, p j (r.val + 1)) ≤ 1 / 2 ∧
+        (∑ r : Fin L, (w (r.val + 1)) ^ 2 / p j (r.val + 1)) ≤
+          2 * δ ^ 2 * s ^ 2 * (s * (L : ℝ)) ^ (m - 1) at hb
+      have hh := hc.2 (hb (!i)).1
+      simp only [heq i] at hh
+      exact hh.trans (by nlinarith [(hb (!i)).2])
+    · have hxpow : 1 ≤ (s * (L : ℝ)) ^ (m - 1) := one_le_pow₀ (le_of_lt (lt_of_not_ge hx))
+      rw [min_eq_left hxpow, mul_one]
+      have hr : 0 ≤ 1 - Real.exp (-s) := by
+        have := Real.exp_le_one_iff.mpr (by linarith : -s ≤ 0)
+        linarith
+      have hrS : 1 - Real.exp (-s) ≤ s := by
+        have := Real.add_one_le_exp (-s)
+        linarith
+      have hh := hc.1
+      simp only [heq i] at hh
+      exact hh.trans (((hEnergy.2 (!i)).2).trans
+        (mul_le_mul_of_nonneg_left (pow_le_pow_left₀ hr hrS 2) (by positivity)))
 
 #print axioms countable_kl_le_energy
+#print axioms collapsed_kl_bounds
+#print axioms normalized_short_bounds
 #print axioms normalized_power_perturbation_energy
+#print axioms normalized_power_perturbation_all_cutoff_kl
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution
