@@ -211,7 +211,7 @@ def typeI : ℕ → Word
 def Lext (s : Word) : Set Letter := {c | ∃ q, Occ (c :: s) q}
 def Rext (s : Word) : Set Letter := {c | ∃ q, Occ (s ++ [c]) q}
 
-theorem occ_append (s t : Word) (q : ℕ) :
+private theorem occ_append (s t : Word) (q : ℕ) :
     Occ (s++t) q ↔ Occ s q ∧ Occ t (q+s.length) := by
   unfold Occ
   rw [List.length_append, factor_add]
@@ -225,7 +225,7 @@ theorem occ_append (s t : Word) (q : ℕ) :
 private theorem occ_singleton (a : Letter) (q : ℕ) : Occ [a] q ↔ word q = a := by
   simp [Occ, factor]
 
-theorem occ_cons (a : Letter) (s : Word) (q : ℕ) :
+private theorem occ_cons (a : Letter) (s : Word) (q : ℕ) :
     Occ (a::s) q ↔ word q = a ∧ Occ s (q+1) := by
   simpa [occ_singleton] using occ_append [a] s q
 

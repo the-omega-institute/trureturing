@@ -58,7 +58,7 @@ internal sealed class RichWordTypeIIOccurrenceDocument : IScribeDocumentDefiniti
                 + "0 while 6 remains 6. All occurrences are transported in both directions, "
                 + "so adjacent source indices give exactly the consecutive occurrences. "
                 + "Ordinary return intervals are substituted literally; terminal intervals "
-                + "prepend 6 and delete the final 6 of the substituted interval. The complete "
+                + "prepend 6 and delete the final 6 of the substituted interval, whose final letter is explicitly proved to be 6. The complete "
                 + "Parikh vector is unchanged by this cancellation. Hence the return at index "
                 + "i has vector M^(k+6)e(u(i)). The first sixfold image of 0 is a prefix of "
                 + "every sixfold letter image; applying further substitutions preserves this "
@@ -106,13 +106,25 @@ internal sealed class RichWordTypeIIOccurrenceDocument : IScribeDocumentDefiniti
             All("q",N(),Iff(C("Occ",w,q),Unique(x=>And(Lt(D(0),x),Eq(q,P(x)))))),
             All("i",N(),Imp(Lt(D(0),i),And(Eq(C("word",Sub(P(i),D(1))),Ctx(Sub(i,D(1)))),
                 Eq(C("word",Add(P(i),C("length",w))),Ctx(i))))),
+            And(Eq(C("word",Sub(P(D(1)),D(1))),phase),And(
+                Eq(C("word",Add(P(D(1)),C("length",w))),D(6)),And(
+                Eq(C("word",Sub(P(D(2)),D(1))),D(6)),
+                Eq(C("word",Add(P(D(2)),C("length",w))),phase)))),
             And(Eq(C("Lext",w),C("pair",phase,D(6))),Eq(C("Rext",w),C("pair",phase,D(6)))),
             All("a",N(),All("b",N(),Iff(C("Consecutive",w,a,b),
                 Unique(x=>And(Lt(D(0),x),And(Eq(a,P(x)),Eq(b,P(Add(x,D(1)))))))))),
             All("i",N(),Imp(Lt(D(0),i),Eq(C("returnWord",C("position",Add(k,D(1)),i),
                 C("position",Add(k,D(1)),Add(i,D(1)))),C("ite",Eq(C("mod",n,D(6)),D(5)),
                     C("cons",D(6),C("dropLast",C("subst",C("phi"),R(i)))),C("subst",C("phi"),R(i)))))),
+            All("i",N(),Imp(Lt(D(0),i),Imp(Eq(C("mod",n,D(6)),D(5)),
+                Ex("y",C("List",C("Fin",D(7))),Eq(C("subst",C("phi"),R(i)),
+                    C("append",Id("y"),C("singleton",D(6)))))))),
+            All("i",N(),Imp(Lt(D(0),i),Eq(C("factor",C("word"),P(i),
+                Add(Sub(P(Add(i,D(1))),P(i)),C("length",w))),C("append",R(i),w)))),
             All("i",N(),Imp(Lt(D(0),i),Eq(C("parikh",R(i)),V(C("word",i))))),
+            All("i",N(),Imp(Lt(D(0),i),Eq(C("returnWord",C("position",D(0),i),
+                C("position",D(0),Add(i,D(1)))),C("cons",D(6),
+                C("dropLast",C("image",C("phi"),D(6),C("word",i))))))),
             And(C("Consecutive",w,P(D(2)),P(D(3))),And(Eq(C("parikh",R(D(2))),V(D(0))),
                 All("a",N(),All("b",N(),Imp(C("Consecutive",w,a,b),C("le",V(D(0)),C("parikh",C("returnWord",a,b)))))))),
             All("v",C("Function",C("Fin",D(7)),N()),Iff(

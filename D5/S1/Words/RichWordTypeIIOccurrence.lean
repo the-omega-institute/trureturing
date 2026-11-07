@@ -4,10 +4,10 @@
    mirror - E: none(waiver:source - word - combinatorics)
    anchors: []
    utility: none
-   digest: Positive - cut Type - II factors and actual overlapping returns. -/
+   digest: Positive - cut Type-II factors and actual overlapping returns. -/
 import D5.S1.Words.RichWordTypeIOccurrence
 
-/-! Native Type - II factors, positive substitution cuts and overlapping return intervals. -/
+/-! Native Type-II factors, positive substitution cuts and overlapping return intervals. -/
 
 set_option maxHeartbeats 800000
 set_option autoImplicit false
@@ -19,6 +19,8 @@ open RichWordTypeIOccurrence
 open RankOneMorphismIterationBound (subst image subst_append image_add)
 open AbelianBorders.AbelianBorderQuestionDefs (factor letterCount)
 open MBonacciSentinelDesubstitution (factor_len factor_add factor_get)
+
+attribute [local irreducible] word boundary
 
 /-- Auxiliary sentinel prefixes, before the first terminal wrap. -/
 def F : ℕ → Word
@@ -108,6 +110,8 @@ private theorem wrap_five (a : Letter) :
 
 private theorem seed_eq : typeII 6 = terminal (F 5) := by rfl
 
+attribute [irreducible] F typeII
+
 private theorem seed_occ (q : ℕ) :
     Occ (typeII 6) q ↔ ∃ i, 0 < i ∧ q = cut 6 i - 1 := by
   rw [seed_eq,terminal_occurrence_iff]
@@ -122,7 +126,8 @@ private theorem seed_occ (q : ℕ) :
     refine ⟨i,hi,?_⟩
     change q = boundary (cut 5 i) - 1
     rw [hq,he]
-  · rintro ⟨i,hi,rfl⟩
+  · rintro ⟨i,hi,hq⟩
+    rw [hq]
     have hc := aux_context 5 i hi
     exact ⟨cut 5 i,cut_pos 5 hi,rfl,aux_at 5 i,
       by rw [hc.1]; exact next_five_context _,
@@ -145,6 +150,7 @@ private theorem seed_context (i : ℕ) (hi : 0 < i) :
       two_before_boundary (cut_pos 5 hi) hleft,hc.1,wrap_five]
   · have he : position 0 i + (typeII 6).length =
         boundary (cut 5 i + (F 5).length) + 2 := by
+      rw [seed_eq]
       change boundary (cut 5 i) - 1 + (terminal (F 5)).length = _
       simp only [terminal,List.length_append,List.length_cons,List.length_nil]
       omega
@@ -195,16 +201,17 @@ private theorem phase_step (k : ℕ) (a : Letter) :
       simp only [wrap,show (5:Letter)≠6 by decide,ite_false,Fin.val_zero,phase]
       omega
     · rw [if_neg h]
-      apply Fin.ext
+      unfold next
       have hp : (phase (k + 6)).val < 6 := hk
-      change (if (k + 6) % 6 < 6 then ((k + 6) % 6 + 1) else 6) = (k + 1 + 6) % 6
-      simp only [hk,ite_true]
+      rw [dif_pos hp]
+      apply Fin.ext
+      change (k + 6) % 6 + 1 = (k + 1 + 6) % 6
       omega
   · simp only [ha,ite_false]
     split <;> decide
 
 private theorem typeII_step (n : ℕ) : typeII (n + 1)=
-    if n % 6 = 5 then terminal (typeII n) else sentinel (typeII n) := rfl
+    if n % 6 = 5 then terminal (typeII n) else sentinel (typeII n) := by rw [typeII]
 
 private theorem native_induction (k : ℕ) :
     (∀ q, Occ (typeII (k + 6)) q ↔ ∃ i, 0 < i ∧ q = position k i) ∧
@@ -260,6 +267,7 @@ private theorem native_induction (k : ℕ) :
         · have he : position (k + 1) i + (typeII (k + 1 + 6)).length =
               boundary (position k i + (typeII (k + 6)).length) + 2 := by
             rw [show k + 1 + 6 = k + 6 + 1 by omega,typeII_step (k + 6),if_pos h]
+            rw [position,occurrenceMap,if_pos h]
             change boundary (position k i) - 1 + (terminal (typeII (k + 6))).length = _
             simp only [terminal,List.length_append,List.length_cons,List.length_nil]
             omega
@@ -272,6 +280,7 @@ private theorem native_induction (k : ℕ) :
         · have he : position (k + 1) i + (typeII (k + 1 + 6)).length =
               boundary (position k i + (typeII (k + 6)).length) + 1 := by
             rw [show k + 1 + 6 = k + 6 + 1 by omega,typeII_step (k + 6),if_neg h]
+            rw [position,occurrenceMap,if_neg h]
             change boundary (position k i) + (sentinel (typeII (k + 6))).length = _
             simp only [sentinel,List.length_append,List.length_singleton]
             omega
@@ -305,8 +314,9 @@ private theorem seed_return (i : ℕ) (hi : 0 < i) :
     rw [hd]; exact next_five_context _
   have hab := cut_strict 5 (show i < i + 1 by omega)
   constructor
-  · simpa only [position,cut,aux_return,← RankOneMorphismIterationBound.image_succ] using
-      terminal_interval_cancellation (cut_pos 5 hi) hab hl hr
+  · change returnWord (boundary (cut 5 i) - 1) (boundary (cut 5 (i + 1)) - 1) = _
+    rw [terminal_interval_cancellation (cut_pos 5 hi) hab hl hr,aux_return,
+      ← RankOneMorphismIterationBound.image_succ]
   · change parikh (returnWord (boundary (cut 5 i) - 1) (boundary (cut 5 (i + 1)) - 1)) = _
     rw [terminal_return_parikh (cut_pos 5 hi) hab hl hr,aux_return,
       ← parikh_subst,← RankOneMorphismIterationBound.image_succ,image_counts]
@@ -347,9 +357,9 @@ private theorem return_update (k i : ℕ) (hi : 0 < i) :
       rw [(native_induction k).2 i hi |>.1,hp]; split <;> simp
     have hr : word (position k (i + 1) - 1) = 5 ∨ word (position k (i + 1) - 1) = 6 := by
       rw [(native_induction k).2 (i + 1) (by omega) |>.1,hp]; split <;> simp
-    simpa [position,occurrenceMap,h] using
+    simpa only [position,occurrenceMap,if_pos h] using
       terminal_interval_cancellation (position_pos k i hi) hab hl hr
-  · simpa [position,occurrenceMap,h] using ordinary_return_word hab
+  · simpa only [position,occurrenceMap,if_neg h] using ordinary_return_word hab
 
 private theorem return_counts (k i : ℕ) (hi : 0 < i) :
     parikh (returnWord (position k i) (position k (i + 1))) =
@@ -366,11 +376,10 @@ private theorem return_counts (k i : ℕ) (hi : 0 < i) :
           rw [(native_induction k).2 i hi |>.1,hp]; split <;> simp
         have hr : word (position k (i + 1) - 1) = 5 ∨ word (position k (i + 1) - 1) = 6 := by
           rw [(native_induction k).2 (i + 1) (by omega) |>.1,hp]; split <;> simp
-        simpa [position,occurrenceMap,h] using
+        simpa only [position,occurrenceMap,if_pos h] using
           terminal_return_parikh (position_pos k i hi) hab hl hr
       · rw [return_update k i hi,if_neg h,parikh_subst]
     rw [step,ih,Matrix.mulVec_mulVec,← pow_succ']
-    congr 2 <;> omega
 
 private theorem all_image_prefix (k : ℕ) (a : Letter) :
     image phi (k + 6) 0 <+: image phi (k + 6) a := by
@@ -402,14 +411,56 @@ private theorem every_letter (a : Letter) : ∃ i, 0 < i ∧ word i = a := by
   · exact ⟨31,by omega,word_eq_iterate 6 31 (by decide)⟩
   · exact ⟨63,by omega,word_eq_iterate 6 63 (by decide)⟩
 
-private theorem exact_extensions (k : ℕ) :
-    Lext (typeII (k + 6))={phase (k + 6),6} ∧
-    Rext (typeII (k + 6))={phase (k + 6),6} := by
+private theorem context_witnesses (k : ℕ) :
+    word (position k 1 - 1) = phase (k + 6) ∧
+    word (position k 1 + (typeII (k + 6)).length) = 6 ∧
+    word (position k 2 - 1) = 6 ∧
+    word (position k 2 + (typeII (k + 6)).length) = phase (k + 6) := by
   have h1 := (native_induction k).2 1 (by omega)
   have h2 := (native_induction k).2 2 (by omega)
   simp only [show 1 - 1 = 0 by omega,show 2 - 1 = 1 by omega,
     small_letters.1,small_letters.2.1,small_letters.2.2,ite_true,
     show (1:Letter)≠0 by decide,ite_false] at h1 h2
+  exact ⟨h1.1,h1.2,h2.1,h2.2⟩
+
+private theorem complete_return (k i : ℕ) (hi : 0 < i) :
+    factor word (position k i)
+      (position k (i + 1) - position k i + (typeII (k + 6)).length)=
+      returnWord (position k i) (position k (i + 1))++typeII (k + 6) := by
+  have hab := position_strict k (show i < i + 1 by omega)
+  have ho := (native_induction k).1 (position k (i + 1)) |>.mpr ⟨i + 1,by omega,rfl⟩
+  rw [factor_add,show position k i + (position k (i + 1) - position k i)=
+      position k (i + 1) by omega,ho]
+  rfl
+
+private theorem terminal_last (k i : ℕ) (hi : 0 < i) (hk : (k + 6) % 6 = 5) :
+    ∃ Y : Word, subst phi (returnWord (position k i) (position k (i + 1))) = Y++[6] := by
+  have hab := position_strict k (show i < i + 1 by omega)
+  have hp : phase (k + 6) = 5 := by apply Fin.ext; exact hk
+  have hc : word (position k (i + 1) - 1) = 5 ∨ word (position k (i + 1) - 1) = 6 := by
+    rw [(native_induction k).2 (i + 1) (by omega) |>.1,hp]; split <;> simp
+  have hend : word (boundary (position k (i + 1)) - 1) = 6 := by
+    rw [before_boundary (position_pos k (i + 1) (by omega))]
+    rcases hc with h | h <;> rw [h] <;> decide
+  have hAB := bstrict hab
+  refine ⟨factor word (boundary (position k i))
+    (boundary (position k (i + 1)) - boundary (position k i) - 1),?_⟩
+  rw [← ordinary_return_word hab]
+  unfold returnWord
+  rw [show boundary (position k (i + 1)) - boundary (position k i)=
+      (boundary (position k (i + 1)) - boundary (position k i) - 1) + 1 by omega,factor_add]
+  congr 1
+  have he : boundary (position k i)+
+      (boundary (position k (i + 1)) - boundary (position k i) - 1)=
+      boundary (position k (i + 1)) - 1 := by omega
+  simp [factor,he,hend]
+
+private theorem exact_extensions (k : ℕ) :
+    Lext (typeII (k + 6))={phase (k + 6),6} ∧
+    Rext (typeII (k + 6))={phase (k + 6),6} := by
+  have hw := context_witnesses k
+  have h1 := And.intro hw.1 hw.2.1
+  have h2 := And.intro hw.2.2.1 hw.2.2.2
   constructor
   · ext c
     rw [lext_iff]
@@ -421,10 +472,10 @@ private theorem exact_extensions (k : ℕ) :
     · intro hc
       rcases Set.mem_insert_iff.mp hc with hc | hc
       · exact ⟨position k 1,position_pos k 1 (by omega),
-          (native_induction k).1 _ |>.mpr ⟨1,by omega,rfl⟩,hc ▸ h1.1⟩
+          (native_induction k).1 _ |>.mpr ⟨1,by omega,rfl⟩,h1.1.trans hc.symm⟩
       · have he : c = 6 := Set.mem_singleton_iff.mp hc
         exact ⟨position k 2,position_pos k 2 (by omega),
-          (native_induction k).1 _ |>.mpr ⟨2,by omega,rfl⟩,he ▸ h2.1⟩
+          (native_induction k).1 _ |>.mpr ⟨2,by omega,rfl⟩,h2.1.trans he.symm⟩
   · ext c
     rw [rext_iff]
     constructor
@@ -434,13 +485,13 @@ private theorem exact_extensions (k : ℕ) :
       split at he <;> simp_all
     · intro hc
       rcases Set.mem_insert_iff.mp hc with hc | hc
-      · exact ⟨position k 2,(native_induction k).1 _ |>.mpr ⟨2,by omega,rfl⟩,hc ▸ h2.2⟩
+      · exact ⟨position k 2,(native_induction k).1 _ |>.mpr ⟨2,by omega,rfl⟩,h2.2.trans hc.symm⟩
       · have he : c = 6 := Set.mem_singleton_iff.mp hc
-        exact ⟨position k 1,(native_induction k).1 _ |>.mpr ⟨1,by omega,rfl⟩,he ▸ h1.2⟩
+        exact ⟨position k 1,(native_induction k).1 _ |>.mpr ⟨1,by omega,rfl⟩,h1.2.trans he.symm⟩
 
 private theorem factor_counts (n : ℕ) : parikh (typeII n) = f n := by
   induction n with
-  | zero => rfl
+  | zero => rw [typeII]; rfl
   | succ n ih =>
     rw [typeII_step,f,increment]
     by_cases h : n % 6 = 5
@@ -458,16 +509,19 @@ private theorem sentinel_reverse (s : Word) :
   | nil => rfl
   | cons a s ih =>
     have comm : [0]++(phi a).reverse = phi a++[0] := by fin_cases a <;> decide
-    change (phi a++(subst phi s++[0])).reverse =
+    rw [show sentinel (a::s) = phi a++sentinel s by
+      simp only [sentinel,RankOneMorphismIterationBound.subst_cons,List.append_assoc],
+      List.reverse_append,ih,List.reverse_cons]
+    change (subst phi s.reverse++[0])++(phi a).reverse =
       subst phi (s.reverse++[a])++[0]
-    rw [List.reverse_append,ih,subst_append]
+    rw [subst_append,show subst phi [a]=phi a by simp [subst]]
     change (subst phi s.reverse++[0])++(phi a).reverse =
       (subst phi s.reverse++phi a)++[0]
     rw [List.append_assoc,comm,List.append_assoc]
 
 private theorem factor_palindrome (n : ℕ) : (typeII n).reverse = typeII n := by
   induction n with
-  | zero => rfl
+  | zero => rw [typeII]; rfl
   | succ n ih =>
     rw [typeII]
     split
@@ -498,10 +552,12 @@ private theorem seed_numerics :
   have c3 : cut 6 3 = 193 := by
     have h := cut_succ 6 2
     simpa only [c2,small_letters.2.2,show (image phi 6 0).length = 64 by decide] using h
-  refine ⟨by decide,by decide,by decide,?_,?_,?_⟩
+  refine ⟨by simp only [typeII,F]; decide,by simp only [typeII]; decide,
+    by simp only [typeII]; decide,?_,?_,?_⟩
   · change cut 6 2 - 1 = 128; omega
   · change cut 6 3 - 1 = 192; omega
   · rw [(seed_return 2 (by omega)).1,small_letters.2.2]
+    simp only [F]
     decide
 
 /-- Native words and their complete positive - cut occurrence and return data.
@@ -517,6 +573,10 @@ structure NativeData (k : ℕ) : Prop where
     word (position k i - 1) = (if word (i - 1) = 0 then phase (k + 6) else 6) ∧
     word (position k i + (typeII (k + 6)).length)=
       (if word i = 0 then phase (k + 6) else 6)
+  contextWitnesses : word (position k 1 - 1) = phase (k + 6) ∧
+    word (position k 1 + (typeII (k + 6)).length) = 6 ∧
+    word (position k 2 - 1) = 6 ∧
+    word (position k 2 + (typeII (k + 6)).length) = phase (k + 6)
   extensions : Lext (typeII (k + 6))={phase (k + 6),6} ∧
     Rext (typeII (k + 6))={phase (k + 6),6}
   consecutive : ∀ a b, Consecutive (typeII (k + 6)) a b ↔
@@ -526,9 +586,17 @@ structure NativeData (k : ℕ) : Prop where
       if (k + 6) % 6 = 5 then
         [6]++(subst phi (returnWord (position k i) (position k (i + 1)))).dropLast
       else subst phi (returnWord (position k i) (position k (i + 1)))
+  terminalLast : ∀ i, 0 < i → (k + 6) % 6 = 5 →
+    ∃ Y : Word, subst phi (returnWord (position k i) (position k (i + 1))) = Y++[6]
+  completeReturn : ∀ i, 0 < i →
+    factor word (position k i)
+      (position k (i + 1) - position k i + (typeII (k + 6)).length)=
+      returnWord (position k i) (position k (i + 1))++typeII (k + 6)
   returnCounts : ∀ i, 0 < i →
     parikh (returnWord (position k i) (position k (i + 1)))=
       (M^(k + 6)).mulVec (unit (word i))
+  seedReturns : ∀ i, 0 < i → returnWord (position 0 i) (position 0 (i + 1))=
+    [6]++(image phi 6 (word i)).dropLast
   minimum : Consecutive (typeII (k + 6)) (position k 2) (position k 3) ∧
     parikh (returnWord (position k 2) (position k 3)) = (M^(k + 6)).mulVec (unit 0) ∧
     ∀ a b, Consecutive (typeII (k + 6)) a b →
@@ -540,13 +608,14 @@ structure NativeData (k : ℕ) : Prop where
     position 0 2 = 128 ∧ position 0 3 = 192 ∧
     returnWord (position 0 2) (position 0 3) = 6::F 6
 
-/-- Every original source index n at least six has the actual Type - II factor,
-all its natural - position occurrences, and all its consecutive return vectors. -/
-theorem actual_typeII (n : ℕ) (hn : 6≤n) : NativeData (n - 6) := by
+/-- Every original source index n at least six has the actual Type-II factor,
+all its natural-position occurrences, and all its consecutive return vectors. -/
+theorem actual_typeII (n : ℕ) (_hn : 6 ≤ n) : NativeData (n - 6) := by
   generalize hk : n - 6 = k
   refine ⟨?_,factor_palindrome _,factor_counts _,position_strict k,
-    position_pos k,?_,(native_induction k).2,exact_extensions k,?_,
-    return_update k,return_counts k,?_,?_,seed_numerics⟩
+    position_pos k,?_,(native_induction k).2,context_witnesses k,exact_extensions k,?_,
+    return_update k,terminal_last k,complete_return k,return_counts k,
+    fun i hi => (seed_return i hi).1,?_,?_,seed_numerics⟩
   · cases k with
     | zero => exact seed_numerics.2.1 ▸ (by decide : 0 < 65)
     | succ k =>
