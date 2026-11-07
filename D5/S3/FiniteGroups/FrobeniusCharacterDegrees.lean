@@ -372,7 +372,14 @@ private theorem restriction_trivial_of_clifford_constituent_trivial_nonabelian
   push_cast
   ring
 
-/-- Fixed-point-free conjugation on a normal subgroup gives the nonabelian degree dichotomy. -/
+/-
+Escape audit unfinished under https://github.com/the-omega-institute/trureturing/issues/27844.
+The single same-delivery source-level Reg attempt is retained in
+`.scratch/delivery-repair/nonabelian-reg-attempt.lean`; no `declared_validated`
+registration is claimed.
+-/
+
+/- Fixed-point-free conjugation on a normal subgroup gives the nonabelian degree dichotomy. -/
 theorem degree_dvd_or_index_dvd_of_fixedPointFree_nonabelian
     (hfix : ∀ g : K, g ∉ N → ∀ n : N, MulAut.conjNormal g n = n → n = 1)
     (W : FDRep ℂ K) [Simple W] :
