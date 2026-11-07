@@ -47,12 +47,13 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have he := (h 0 1).mpr rfl (Sum.inr (Sum.inr (Sum.inr 0)))
   norm_num [rejected,realize] at he
 private theorem dependence : ObservationalDependence signature actual := by
-  intro role
+  rintro ⟨⟩
   refine ⟨⟨0,Equiv.swap (⟨0,by decide⟩ : Fin 36) ⟨1,by decide⟩⟩,
     Sum.inr (Sum.inr (Sum.inr 0)), Sum.inr (Sum.inr (Sum.inr 2)),?_⟩
   norm_num [actual,realize,selectedMask,terminalMask,triple,place,degree,
     Finset.image_insert,Finset.image_empty,Equiv.swap_apply_def,
     actualSource,centered,modulus]
+  decide +revert
 def family : Registration arena (type_of% (@actual_selected_image_zero_perm_iff)) where
   actual := actual
   bridge := Iff.rfl
