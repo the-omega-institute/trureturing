@@ -2068,3 +2068,116 @@ $$
 Thus the only remaining exact-zero route in this slice is a tensor-preserving lift of the two-dimensional baseline span. The coefficient-space statement (184.2) remains valid without the independence assumption; no rigidity or positivity of such a lift is asserted here.
 
 This criterion is equivalent to the seven-coordinate reduction of Section 180, while making the remaining algebraic target explicit. It does not solve the tensor-stabilizer problem, the radical alternative, arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession or Lean/kernel formalization.
+
+## 185. The in-span tensor stabilizer has a scalar dichotomy
+
+The tensor-lift criterion gives an immediate test for directions that remain inside the baseline span. The asymmetry of the actual ordered joint law is measured by one scalar pair of coefficients.
+
+**Proposition 185.1 (in-span stabilizer dichotomy).** Assume that $p$ and $F$ are linearly independent as $m$-classes, and let a common-first displacement have the form
+
+$$
+[v]=r[p]+(s-1)[F]
+$$
+
+for real $r,s$, so that $[F+v]=r[p]+s[F]$. Put
+
+$$
+ a=\mathcal C(p,p,p),
+ \qquad
+ b=\mathcal C(p,p,F)=\mathcal C(p,F,p),
+ \qquad
+ d=\mathcal C(F,p,p).
+\tag{185.1}
+$$
+
+If all common-first residuals vanish, then
+
+$$
+ r a+s d=d,
+ \qquad
+ r a+s b=b,
+\tag{185.2}
+$$
+
+and hence
+
+$$
+(s-1)(d-b)=0.
+\tag{185.3}
+$$
+
+In particular, if $d\ne b$, the only in-span full-zero displacement is $v=0$ as an $m$-class. If $d=b$, the displayed tensor slots leave the single relation $ra+(s-1)b=0$; the remaining tensor components are the exact residual test for that exceptional scalar case.
+
+*Proof.* Since $p=f_B=1/4$ is constant and $Pp=p$, direct use of the ordered form gives
+
+$$
+\mathcal C(p,p,F)=p^2\int_G g\,PF\,dm
+ =\mathcal C(p,F,p),
+$$
+
+so $b$ is well-defined. Positivity of $g,p$ gives $a>0$.
+
+If all residuals vanish, Corollary 184.2 says that the lift $S_v$ preserves the trilinear tensor on $\operatorname{span}\{p,F\}$. Evaluating it at $(F,p,p)$ gives
+
+$$
+\mathcal C(F+v,p,p)=d,
+$$
+
+which is the first equation in (185.2) after substituting $F+v=rp+sF$. Evaluating at $(p,F,p)$ gives the second equation, using the definition of $b$. Subtracting yields (185.3). If $d\ne b$, then $s=1$, and either equation in (185.2) gives $ra=0$; since $a>0$, $r=0$, hence $v=0$. When $d=b$, both equations reduce to the stated single relation, and no conclusion about the other tensor components follows from these two slots alone. $\square$
+
+The scalar $d-b=p^2\langle F,(I-P)g\rangle_m$ is an actual ordered-source coefficient; its vanishing is a concrete exceptional case, not an automatic symmetry. This proposition only treats displacements inside the baseline span. Tensor-preserving lifts with an out-of-span component, the exceptional case $d=b$, the radical alternative, arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization remain open.
+
+## 186. The exceptional in-span branch is a one-parameter shear test
+
+When the ordered coefficient in Section 185 is exceptional, the first tensor slots determine the direction of every possible in-span lift. The remaining slots then reduce to four polynomial equations in one scalar amplitude.
+
+**Proposition 186.1 (exceptional shear criterion).** Retain the notation and hypotheses of Proposition 185.1, and assume $d=b$. Set
+
+$$
+\kappa=\frac{b}{a},
+\qquad
+w=F-\kappa p,
+\qquad
+\alpha=s-1.
+\tag{186.1}
+$$
+
+Then $w$ is nonzero as an $m$-class. An in-span tensor-preserving lift with parameter $(r,s)$ is either the baseline $(r,s)=(0,1)$, or it has
+
+$$
+r=-\alpha\kappa,
+\qquad
+[v]=\alpha[w],
+\qquad
+S_vF=F+\alpha w,
+\tag{186.2}
+$$
+
+with $\alpha\ne0$ satisfying all four equations
+
+$$
+\begin{aligned}
+0={}&\alpha\bigl[\mathcal C(p,w,F)+\mathcal C(p,F,w)\bigr]
+      +\alpha^2\mathcal C(p,w,w),\\
+0={}&\alpha\bigl[\mathcal C(w,p,F)+\mathcal C(F,p,w)\bigr]
+      +\alpha^2\mathcal C(w,p,w),\\
+0={}&\alpha\bigl[\mathcal C(w,F,p)+\mathcal C(F,w,p)\bigr]
+      +\alpha^2\mathcal C(w,w,p),\\
+0={}&\alpha\bigl[\mathcal C(w,F,F)+\mathcal C(F,w,F)+\mathcal C(F,F,w)\bigr]\\
+&+\alpha^2\bigl[\mathcal C(w,w,F)+\mathcal C(w,F,w)+\mathcal C(F,w,w)\bigr]
+      +\alpha^3\mathcal C(w,w,w).
+\end{aligned}
+\tag{186.3}
+$$
+
+Conversely, if a nonzero $\alpha$ satisfies (186.3) and the resulting $F+\alpha w$ and $q-2\alpha w$ obey the pointwise legality inequalities, then the corresponding in-span lift preserves the full common-first tensor.
+
+*Proof.* The first two equations of (185.2), with $d=b$, give $ra+(s-1)b=0$. Hence $r=-\alpha\kappa$, and
+
+$$
+[v]=r[p]+\alpha[F]=\alpha[F-\kappa p]=\alpha[w].
+$$
+
+Linear independence of $[p]$ and $[F]$ makes $[w]\ne0$. The lift fixes $p$ and sends $F$ to $F+\alpha w$. The tensor slots containing at most one copy of $F$ are already preserved by the defining relation $\mathcal C(p,p,w)=\mathcal C(p,w,p)=\mathcal C(w,p,p)=0$. Expanding the slots $(p,F,F)$, $(F,p,F)$, $(F,F,p)$ and $(F,F,F)$ by trilinearity gives exactly (186.3). These four slots, together with the slots containing at most one $F$, form all of the two-dimensional tensor basis, so they are necessary and sufficient for tensor preservation. The legality conditions are precisely the pointwise simplex conditions for the resulting common-first tuple. $\square$
+
+Thus the exceptional scalar branch is a shear problem along the fixed nonzero class $[w]$, with no remaining freedom in the direction. Equation (186.3) does not by itself rule out a nonzero amplitude: it supplies the exact compatibility test for that case. Out-of-span tensor-preserving lifts, the radical alternative, arbitrary partitions, $F_{64}$, $H43$, SRS$\text{-}20$, physical succession and Lean/kernel formalization remain open.
