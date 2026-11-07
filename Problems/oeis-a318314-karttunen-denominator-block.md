@@ -97,6 +97,10 @@ the halving recurrence, odd-prime exponent and all-prime parity formula for the
 local factors. `root_structure` constructs a positive multiplicative rational
 Euler product. `root_denominator` proves its global denominator product through
 an odd-numerator invariant, not rational multiplicativity alone.
+`odd_local_square` gives the odd-prime convolution; `source_convolution` identifies
+the source recurrence with its full divisor-square equation. `auxiliary_structure`
+verifies the independent A317934 prescription. `root_square_prime_power` matches
+the actual source at every prime power, while leaving the global bridge open.
 
 **Open:** Identifying R with the source recurrence, then concluding the entire
 `WholeBlock` for a(n)=den(f(n)). The full-block proposition has no result theorem.

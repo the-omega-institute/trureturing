@@ -87,6 +87,10 @@ internal sealed class OeisA318314Document : IScribeDocumentDefinition
                     All("p", All("e", Imp(Call("Prime", P), Eq(Call("b", Pow(P, E)),
                         Pow(D(2), Sub(E, Call("s", E))))))))),
                 "The factorization-product definition has unit head, multiplies over coprime arguments and has exactly the independent A317934 values at every prime power.", DescribeRole.Theorem, false),
+            Node("root_square_prime_power", "The actual source at every prime power",
+                All("p", All("e", Imp(Call("Prime", P), Eq(Call("dirichletSquare", F.Id("R"), Pow(P, E)),
+                    Call("g", Pow(P, E)))))),
+                "The only unitary divisors of a prime power are its endpoints. Oddness retains just one at two, and both at an odd prime; exponent zero gives one. The two local convolution identities therefore match the original source count at every prime power. A global identification still requires the full divisor-factorization bridge.", DescribeRole.Theorem, false),
             Node("WholeBlock", "The entire published question", WholeFormula(),
                 "This proposition includes the actual source specification and its positive-index uniqueness, the product identity, a(1)=1, positive coprime multiplicativity, both prime-power types and the all-prime parity formula with explicit integer-subtraction correspondence. No theorem here asserts this full proposition until the independent Euler product has been identified with the original odd-unitary-count recurrence.", DescribeRole.Definition, false)
         )));

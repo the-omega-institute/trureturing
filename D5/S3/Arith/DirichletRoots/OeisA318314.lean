@@ -6,6 +6,33 @@
    utility: none
    digest: The rational Dirichlet square root of the odd unitary divisor count. -/
 
+
+/-
+The external question is the whole proposition WholeBlock, preregistered in
+https://github.com/the-omega-institute/trureturing/issues/27584#issuecomment-6703336229.
+Admission basis for a completed whole result: open-problem-resolution.
+The current component declarations do not constitute that result.
+
+Provisional proof_shape and actual consumers:
+source_solution_unique: content; source_convolution (unit head).
+central_local_square: content; root_positive (positivity).
+central_denominator: bind-only; local_denominators.
+local_denominators: bind-only; whole-block assembly remains unfinished.
+root_structure: bind-only; whole-block assembly remains unfinished.
+root_denominator: content; whole-block assembly remains unfinished.
+odd_local_square: content; root_square_prime_power.
+source_convolution: bind-only; global source identification remains unfinished.
+auxiliary_structure: bind-only; whole-block assembly remains unfinished.
+root_square_prime_power: content; global source identification remains unfinished.
+The unfinished assembly does not grant admission to unconsumed bind-only components.
+
+Direct pre-existing suppliers are pinned Mathlib declarations; no D5 frozen
+mathematical declaration is imported. The new induction identifying central
+coefficients with generalized binomial coefficients and the finite-product
+odd-numerator invariant are candidate live content; no independent form approval
+or whole-result escape witness is asserted.
+-/
+
 import Mathlib.NumberTheory.ArithmeticFunction.Misc
 import Mathlib.NumberTheory.Padics.PadicVal.Basic
 import Mathlib.RingTheory.PowerSeries.Binomial
@@ -244,7 +271,7 @@ private lemma halvingSum_eq (e : ℕ) : halvingSum e = 2 * e - binaryWeight e :=
   | h e ih =>
     by_cases he : e = 0
     · subst e; simp [halvingSum, binaryWeight]
-    · rw [halvingSum, dif_neg he, ih (e / 2)
+    · rw [halvingSum, dite_eq_right he, ih (e / 2)
         (Nat.div_lt_self (Nat.pos_of_ne_zero he) (by decide))]
       have hs := binaryWeight_split e
       have hle := binaryWeight_le (e / 2)
@@ -333,19 +360,19 @@ private lemma root_multiplicative : root.IsMultiplicative := by
     change (if m * n = 0 then 0 else (m * n).factorization.prod localCoefficient) =
       (if m = 0 then 0 else m.factorization.prod localCoefficient) *
       (if n = 0 then 0 else n.factorization.prod localCoefficient)
-    rw [if_neg (mul_ne_zero hm hn), if_neg hm, if_neg hn,
+    rw [ite_eq_right (mul_ne_zero hm hn), ite_eq_right hm, ite_eq_right hn,
       Nat.factorization_mul_of_coprime hmn,
       Finsupp.prod_add_index_of_disjoint hmn.disjoint_primeFactors]
 
 private lemma root_prime_power {p e : ℕ} (hp : Nat.Prime p) :
     root (p ^ e) = localCoefficient p e := by
   change (if p ^ e = 0 then 0 else (p ^ e).factorization.prod localCoefficient) = _
-  rw [if_neg (pow_ne_zero _ hp.ne_zero), hp.factorization_pow,
+  rw [ite_eq_right (pow_ne_zero _ hp.ne_zero), hp.factorization_pow,
     Finsupp.prod_single_index (localCoefficient_zero p)]
 
 private lemma root_positive {n : ℕ} (hn : 0 < n) : 0 < root n := by
   change 0 < if n = 0 then 0 else n.factorization.prod localCoefficient
-  rw [if_neg (Nat.ne_of_gt hn)]
+  rw [ite_eq_right (Nat.ne_of_gt hn)]
   apply Finset.prod_pos
   intro p _
   dsimp [localCoefficient]
@@ -390,7 +417,7 @@ private lemma product_denominator {n : ℕ} (hn : 0 < n) :
   obtain ⟨q, hq, hr⟩ := product_reduced n.factorization.support n.factorization
   have hroot : root n = (q : ℚ) / 2 ^ n.factorization.sum localExponent := by
     change (if n = 0 then 0 else n.factorization.prod localCoefficient) = _
-    rw [if_neg (Nat.ne_of_gt hn)]
+    rw [ite_eq_right (Nat.ne_of_gt hn)]
     exact hr
   rw [hroot]
   have hcop := Nat.prime_two.coprime_pow_of_not_dvd
@@ -520,7 +547,7 @@ theorem source_convolution (n : ℕ) (hn : 0 < n) :
     (∑ d ∈ n.divisors, f d * f (n / d)) = (oddUnitaryCount n : ℚ) := by
   by_cases h1 : n = 1
   · subst n
-    norm_num [oddUnitaryCount, Nat.odd_iff, source_solution_unique.1.1]
+    norm_num [oddUnitaryCount, Nat.odd_iff, source_solution_unique.1.1] <;> decide
   have hn1 : 1 < n := by omega
   have htail := f_spec.2 n hn1
   have hone : 1 ∈ n.divisors := Nat.one_mem_divisors.mpr (Nat.ne_of_gt hn)
@@ -545,5 +572,84 @@ theorem auxiliary_structure : auxiliary 1 = 1 ∧
       Finsupp.prod_add_index_of_disjoint hmn.disjoint_primeFactors]
   · intro p e hp
     simp [auxiliary, hp.factorization_pow, Finsupp.prod_single_index, binaryWeight]
+
+private lemma unitary_prime_power {p e d : ℕ} (hp : Nat.Prime p)
+    (hd : d ∈ (p ^ e).divisors) :
+    Nat.Coprime d (p ^ e / d) ↔ d = 1 ∨ d = p ^ e := by
+  constructor
+  · intro hc
+    obtain ⟨i, hi, rfl⟩ := (Nat.mem_divisors_prime_pow hp e).mp hd
+    rw [Nat.pow_div hi hp.pos] at hc
+    by_cases hi0 : i = 0
+    · simp [hi0]
+    · have hrest : e - i = 0 := by
+        by_contra hn
+        have hpi : p ∣ p ^ i := dvd_pow_self p hi0
+        have hpr : p ∣ p ^ (e - i) := dvd_pow_self p hn
+        have hpp : Nat.Coprime p p := hc.of_dvd hpi hpr
+        exact hp.ne_one (by simpa [Nat.Coprime] using hpp)
+      right
+      have : i = e := by omega
+      rw [this]
+  · rintro (rfl | rfl)
+    · simp
+    · simp [Nat.div_self (pow_pos hp.pos e)]
+
+private lemma oddUnitaryCount_prime_power {p e : ℕ} (hp : Nat.Prime p) :
+    oddUnitaryCount (p ^ e) = if e = 0 ∨ p = 2 then 1 else 2 := by
+  by_cases he : e = 0
+  · subst e
+    norm_num [oddUnitaryCount, Nat.odd_iff] <;> decide
+  have hpowe : p ^ e ≠ 1 := by
+    have : 1 < p ^ e := one_lt_pow₀ hp.one_lt he
+    omega
+  have hset : (p ^ e).divisors.filter (fun d => Odd d ∧ Nat.Coprime d (p ^ e / d)) =
+      if p = 2 then {1} else {1, p ^ e} := by
+    ext d
+    by_cases hp2 : p = 2
+    · simp only [hp2, ite_true, Finset.mem_singleton, Finset.mem_filter]
+      constructor
+      · rintro ⟨hd, ho, hc⟩
+        rcases (unitary_prime_power (hp2 ▸ hp) hd).mp hc with h | h
+        · exact h
+        · subst d
+          have hnot : ¬ Odd ((2 : ℕ) ^ e) := by
+            rw [Nat.odd_pow_iff he]
+            norm_num [Nat.odd_iff]
+          exact False.elim (hnot ho)
+      · intro hd
+        subst d
+        simp [Nat.one_mem_divisors, pow_ne_zero, hp.ne_zero]
+    · have ho := (hp.odd_of_ne_two hp2).pow (n := e)
+      simp only [hp2, ite_false, Finset.mem_insert, Finset.mem_singleton, Finset.mem_filter]
+      constructor
+      · rintro ⟨hd, _, hc⟩
+        exact (unitary_prime_power hp hd).mp hc
+      · rintro (rfl | rfl)
+        · simp [Nat.one_mem_divisors, pow_ne_zero, hp.ne_zero]
+        · exact ⟨Nat.mem_divisors_self _ (pow_ne_zero _ hp.ne_zero), ho,
+            by simp [Nat.div_self (pow_pos hp.pos e)]⟩
+  unfold oddUnitaryCount
+  rw [hset]
+  by_cases hp2 : p = 2 <;> simp [hp2, he, hpowe, Ne.symm hpowe]
+
+/-- The constructed rational square matches the actual source at every prime power. -/
+theorem root_square_prime_power {p e : ℕ} (hp : Nat.Prime p) :
+    (root * root) (p ^ e) = (oddUnitaryCount (p ^ e) : ℚ) := by
+  rw [ArithmeticFunction.mul_apply, Nat.sum_divisorsAntidiagonal (fun x y => root x * root y),
+    Nat.sum_divisors_prime_pow hp]
+  have hs : (∑ i ∈ Finset.range (e + 1), root (p ^ i) * root (p ^ e / p ^ i)) =
+      ∑ ij ∈ Finset.antidiagonal e, localCoefficient p ij.1 * localCoefficient p ij.2 := by
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
+    apply Finset.sum_congr rfl
+    intro i hi
+    have hie : i ≤ e := by simpa using hi
+    rw [Nat.pow_div hie hp.pos, root_prime_power hp, root_prime_power hp]
+  rw [hs, oddUnitaryCount_prime_power hp]
+  by_cases hp2 : p = 2
+  · simp [localCoefficient, hp2, central_convolution]
+  · simp only [localCoefficient, hp2, ite_false]
+    rw [odd_local_square]
+    split_ifs <;> simp_all
 
 end D5.S3.Arith.DirichletRoots.OeisA318314
