@@ -5,7 +5,7 @@ year: 2026
 title: "Evolution algebras: a survey of results and a list of open problems"
 doi: 10.48550/arXiv.2610.22248
 url: https://arxiv.org/abs/2610.22248v1
-claim: "Conjecture 4 asks for the simple complex evolution-algebra automorphism maximum max{n!, n(2^n-1)}; Theorem 4 and Conjecture 3 concern perfect algebra automorphisms; Question 46 asks whether dense square forces uniqueness of a Hilbert natural orthonormal basis; Question 14 asks whether an infinite natural-basis quotient can coexist with finite full automorphisms; Question 31 asks about realizing arbitrary linear algebraic groups as full evolution-algebra automorphism groups or group schemes."
+claim: "Conjecture 4 asks for the simple complex evolution-algebra automorphism maximum max{n!, n(2^n-1)}; Theorem 4 and Conjecture 3 concern perfect algebra automorphisms; Question 46 asks whether dense square forces uniqueness of a Hilbert natural orthonormal basis; Question 14 asks whether an infinite natural-basis quotient can coexist with finite full automorphisms; Question 31 asks about realizing arbitrary linear algebraic groups as full evolution-algebra automorphism groups or group schemes; Question 12 asks whether intrinsic heredity is preserved by direct sums."
 strata_touched:
   - D5/S3/QuadraticForms/EvolutionAlgebras/SimpleEvolutionAutomorphismMaximum
   - D5/S3/QuadraticForms/EvolutionAlgebras/FiniteAutomorphismsInfiniteNaturalBases
@@ -15,6 +15,7 @@ strata_touched:
   - D5/S3/QuadraticForms/EvolutionAlgebras/NilpotencySpectrumRefutation
   - D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionAutomorphismTangentBridge
   - D5/S3/QuadraticForms/EvolutionAlgebras/AlgebraicGroupRealizationRefutation
+  - D5/S3/QuadraticForms/EvolutionAlgebras/DirectSumHeredityRefutation
 license: citation-only
 triage: anchor
 ---
@@ -128,3 +129,21 @@ of the semisimple derivation classification and the tangent construction.
 The full SLn family and the abstract-group question are not formalized here.
 The literature screen recorded in issue #21840 is partial; exhaustive priority
 and journal/preprint equivalence remain ASSUMED-UNVERIFIED.
+
+## Question 12: intrinsic heredity and direct sums
+
+Section 2.2.2, Question 12 (Hereditary evolution algebras), p. 22 asks:
+
+> Characterise the evolution algebras all of whose subalgebras are evolution algebras. Is this property detected by the graphs? Is it preserved by tensor products and direct sums? What about ideals?
+
+Here heredity requires every multiplication-closed linear subspace to admit
+its own natural basis; that basis need not extend to one of the ambient algebra.
+The source permits arbitrary fields and assumes finite dimension unless stated
+otherwise.
+
+The refutation of the affirmative direct-sum assertion in
+`D5/S3/QuadraticForms/EvolutionAlgebras/DirectSumHeredityRefutation`
+is repository-derived. It uses rational hereditary factors of dimensions four
+and three whose direct sum contains a subalgebra with no intrinsic natural basis.
+The characterization, graph-detection, tensor-product and ideal clauses remain
+open in this result.
