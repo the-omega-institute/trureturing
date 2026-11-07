@@ -1060,7 +1060,12 @@ private theorem spectralRho_distance {a b : ℝ} (ha : 0 < a) (hb : 0 < b) :
   have hid : (spectralRho a b^2*(a+b)^2-(a-b)^2)*(4*(spectralDen a b)^2) =
       (a-b)^2*((a+b)^2*(4*a^2+7*a*b+4*b^2)-4*(spectralDen a b)^2) := by
     linear_combination (a+b)^2*hm
-  have hs : (a-b)^2 ≤ spectralRho a b^2*(a+b)^2 := by nlinarith only [hp, hid, hd]
+  have hs : (a-b)^2 ≤ spectralRho a b^2*(a+b)^2 := by
+    have hscaled : 0 ≤ (spectralRho a b^2*(a+b)^2-(a-b)^2)*
+        (4*(spectralDen a b)^2) := by
+      rw [hid]
+      exact hp
+    exact sub_nonneg.mp (nonneg_of_mul_nonneg_right hscaled hd)
   have hn := mul_nonneg (spectralRho_nonneg a b) (add_pos ha hb).le
   apply (sq_le_sq₀ (abs_nonneg _) hn).mp
   simpa only [sq_abs, mul_pow] using hs
