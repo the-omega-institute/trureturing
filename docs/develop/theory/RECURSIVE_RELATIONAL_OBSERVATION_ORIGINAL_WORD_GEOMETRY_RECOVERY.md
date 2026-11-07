@@ -4068,11 +4068,16 @@ arithmetic. A word operation acts on at most $w$ bits and may read
 or write a bit, compare, add, subtract, or take an integer remainder.
 A word operation is not a constant-cost real operation: the
 schoolbook bit cost is at most $O(w^2)$, including remainder.
-Numerical-service work and its own peak space are separate charges
-$C_{\rm cap}$ and $M_{\rm cap}$; let $B_{\rm cap}$ be the total
-retained bit length of its coefficient/clock inputs, validated
-capacity certificates and rational packet. No bound for these
-three quantities is implicit in a count of labels.
+Numerical-service bit work and its own peak space are separate
+charges $C_{\rm cap}$ and $M_{\rm cap}$. Names have the total
+query-function meaning of [R, Definition 11.1]; a finite packet
+uses only finitely many precision queries. Their answer costs,
+as well as construction and validation, belong to $C_{\rm cap}$.
+Let $B_{\rm cap}$ count the finite retained name representations,
+query replies, validated capacity certificates and rational packet.
+An infinite name is not treated as a finite string; oracle access
+and its costs remain the stated conditional service. No bound for
+these three quantities is implicit in a count of labels.
 
 **Proposition 21.2 (an explicit realization and its bill).** The
 statistic (18.2) has a chronological realization with exactly four
