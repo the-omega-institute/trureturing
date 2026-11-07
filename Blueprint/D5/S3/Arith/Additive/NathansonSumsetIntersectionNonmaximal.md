@@ -58,6 +58,10 @@ $$\neg (\forall (S : \operatorname{Type}), [\operatorname{AddCommSemigroup}\left
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Additive/NathansonSumsetIntersectionNonmaximal.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/nathanson-2025-sumset-intersection-nonmaximal` (refuted) by `D5/S3/Arith/Additive/NathansonSumsetIntersectionNonmaximal.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"nathanson-2025-sumset-intersection-nonmaximal","declaration_gid":"D5/S3/Arith/Additive/NathansonSumsetIntersectionNonmaximal.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Melvyn B. Nathanson (2026). *Intersections of sumsets in additive number theory*. DOI: [10.1017/S0004972726101270](https://doi.org/10.1017/S0004972726101270). URL: <https://arxiv.org/abs/2512.23574v3>.

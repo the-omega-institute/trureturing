@@ -30,14 +30,17 @@ internal sealed class NathansonSumsetIntersectionNonmaximalDocument : IScribeDoc
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "A negative answer", Disp(Not(ClaimBody())),
                 "Take S = ℤ, h = 2 and A = {n : ℤ | Even n ∧ n ≠ 2}. This is a nonbasis, and its proper superset of all even integers remains a nonbasis. In a decreasing family with this intersection and arbitrarily late unequal steps, every stage has infinitely many elements outside A. Removing the possible element 2 leaves infinitely many odd elements. For an odd integer n, choose such an odd element b different from n − 2; then n − b belongs to A and n = (n − b) + b belongs to the two-fold sumset of that stage. Thus 1 belongs to every stage's two-fold sumset and does not belong to A + A. This single instance refutes the universal assertion; no assertion about all finite punctures or all orders h ≥ 2 is needed.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("nathanson-2025-sumset-intersection-nonmaximal"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("nathanson2512-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Apply(Formula function, params Formula[] args) =>
