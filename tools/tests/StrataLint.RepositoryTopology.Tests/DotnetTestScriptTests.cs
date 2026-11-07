@@ -23,7 +23,7 @@ public sealed class DotnetTestScriptTests
     [InlineData("solution", "selected", false, 2)]
     [InlineData("solution", "selected", true, 0)]
     [InlineData("solution", "zero", true, 2)]
-    public void DotnetTestBindsEvidenceToTheExplicitRegisteredTarget(string scope, string evidence, bool filtered, int expectedExit)
+    public void DotnetTestBindsEvidenceToTheCurrentInvocationAndRegisteredTarget(string scope, string evidence, bool filtered, int expectedExit)
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
@@ -44,6 +44,11 @@ public sealed class DotnetTestScriptTests
             _ => throw new ArgumentException("unknown fixture evidence", nameof(evidence)),
         };
         using var fixture = new TemporaryDirectory();
+        var results = Path.Combine(fixture.Path, "retained results");
+        Directory.CreateDirectory(results);
+        var priorResult = Path.Combine(results, "prior.trx");
+        const string priorFailure = "<TestRun><Results><UnitTestResult outcome=\"Failed\" /></Results></TestRun>";
+        File.WriteAllText(priorResult, priorFailure);
         var binDirectory = Path.Combine(fixture.Path, "bin");
         var trx = Path.Combine(fixture.Path, "fixture.trx");
         var log = Path.Combine(fixture.Path, "dotnet.log");
@@ -101,7 +106,7 @@ public sealed class DotnetTestScriptTests
             ["-u", "MAKEFLAGS", "-u", "MAKEOVERRIDES", "-u", "TEST_PROJECT", "-u", "TEST_FILTER",
                 $"PATH={binDirectory}:/usr/bin:/bin", $"REAL_DOTNET={Encoding.UTF8.GetString(dotnetPath.StandardOutput).Trim()}",
                 $"DOTNET_TEST_LOG={log}", $"DOTNET_TEST_FIXTURE_TRX={trx}",
-                $"TEST_RESULTS_DIRECTORY={Path.Combine(fixture.Path, "results")}",
+                $"TEST_RESULTS_DIRECTORY={results}",
                 "make", "--no-print-directory", "-C", "tools", "test", $"TEST_PROJECT={target}",
                 $"TEST_FILTER={(filtered ? "FullyQualifiedName~Fixture" : "")}"],
             // This invokes the complete make -> dotnet-test -> TRX verification
@@ -111,6 +116,7 @@ public sealed class DotnetTestScriptTests
         var output = Encoding.UTF8.GetString(result.StandardOutput);
         var error = Encoding.UTF8.GetString(result.StandardError);
         Assert.True(result.ExitCode == expectedExit, $"expected exit {expectedExit}, actual {result.ExitCode}\n{output}\n{error}");
+        Assert.Equal(priorFailure, File.ReadAllText(priorResult));
         Assert.Single(File.ReadAllLines(log), line => line.StartsWith("test ", StringComparison.Ordinal));
         Assert.All(File.ReadAllLines(log).Where(line => line.StartsWith("run ", StringComparison.Ordinal)),
             line => Assert.StartsWith("run --project " + Path.Combine(root, "tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj") + " ", line));

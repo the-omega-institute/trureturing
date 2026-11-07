@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9ee5372642307cb3194614fdb007320546bb970a76a9d75b5c9c9507c166c7b2
+  normalized_sha256: sha256:9ee5372642307cb3194614fdb007320546bb970a76a9d75b5c9c9507c166c7b2
+cas_ref: sha256:9ee5372642307cb3194614fdb007320546bb970a76a9d75b5c9c9507c166c7b2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义3.1指定E=R^3、基u,e1,e2、坐标乘法、三个实线性评价及其非负锥、评价定义的E_+、Euclidean叉积和范数、分段函数f及D(a,b)=f(a×b)u/2。这些是反例的资料和函数定义，不断言其连续性、齐次性、正二表、非可加性或三标签负性；这些性质分别属于后续命题3.2、3.3及4.1、4.2，本收据不结算它们，也不结算开放问题4.3。
+    previous_atom_id: ac4d31af14a22dbdcbaa27246a4c36b00091149cf441321f42ff1d43ca823655
+    next_atom_id: f7f0759e3bda6edc3e5358659ae02248f2ee4b7e1246d1f2cb0fd5f882e66dc9

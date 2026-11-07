@@ -1,0 +1,20 @@
+**定义 22.1（准确原域与两条有限关系）。** 保留定义 8.1 的同一原 $E,C,u,N,P,S,D$、实际共轭与实部换括号 R。由 8.2、6.1 认同原 $E$ 为同一含单位 JB 完成 $X$ 中的稠密 Jordan 子代数；不要求原域完备。这里不要求原式 (49.1)、任何复正表、旧 $D$ 的线性、连续性、Leibniz、原平方根闭合或输出覆盖。记 $Q=\operatorname{ran}D$，它始终只指真正原输出。增加以下关系：
+
+$$
+\begin{gathered}
+\mathrm{FR}:\quad
+\forall a\in E,\ n\ge1,\ b_j\in E,\ r_j\in\mathbb R,\\
+\left[\forall t\in Q,\quad
+\sum_{j=1}^{n}r_jD(D(a,b_j),t)=0\right]
+\ \Longrightarrow\quad
+\sum_{j=1}^{n}r_jD(a,b_j)=0;\\[2mm]
+\mathrm O:\quad
+\forall a,b\in E,\qquad
+-u\le b+D(a,b)\le u
+\ \Longrightarrow\quad -u\le b\le u.
+\end{gathered}
+\tag{22.1}
+$$
+
+FR 只反映同一第一输入纤维中的有限输出差，不要求不同第一输入的全部输出组合都被反映。O 只比较原序区间中的三个原表达式；这里没有数学平均器、极限读回或新参考。两条关系均在同一原载体内量化。以下 $L_a x=a\circ x$、$a\circ b=S(a,b)$、$H_a=L_a^2-L_{a^2}$。
+
