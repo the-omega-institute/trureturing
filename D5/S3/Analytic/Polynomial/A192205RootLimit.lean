@@ -11,6 +11,8 @@ import Mathlib.Analysis.Polynomial.Fourier
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.Tactic
 
+/-! The original integer coefficient sum and its full natural-index root limit. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -98,7 +100,7 @@ private theorem coefficient_sum (n : ℕ) :
       apply Finset.sum_congr rfl
       intro i hi
       rw [←hmap]
-      simp only [Polynomial.coeff_map, Int.castRingHom, Complex.norm_intCast]
+      simp only [Polynomial.coeff_map, Int.castRingHom]
       simp [Nat.cast_natAbs, Int.cast_abs]
     _ = _ := by
       symm
@@ -132,7 +134,7 @@ private theorem lower_bound (n : ℕ) : radius^n ≤ (a n : ℝ) := by
   let pr : ℝ[X] := (p^n).map (Int.castRingHom ℝ)
   have heval := D5.S3.Constants.Moments.CountableHankelNegativeWitness.eval_bound pr hz.le
   have heq : pr.eval₂ Complex.ofRealHom z = (1-z-z^2+z^3)^n := by
-    simp [pr, p, Polynomial.eval₂_map]
+    simp [pr, p, Polynomial.eval₂_pow, Polynomial.eval₂_add, Polynomial.eval₂_sub]
   have hdegree : pr.natDegree ≤ 3*n := by
     dsimp [pr]
     apply (Polynomial.natDegree_map_le).trans
@@ -140,11 +142,13 @@ private theorem lower_bound (n : ℕ) : radius^n ≤ (a n : ℝ) := by
     have hp : p.natDegree ≤ 3 := by unfold p; compute_degree
     simpa [Nat.mul_comm] using Nat.mul_le_mul_right n hp
   have hsum : ∑ i ∈ pr.support, |pr.coeff i| = (a n : ℝ) := by
+    change pr.sum (fun _ c => |c|) = _
     rw [pr.sum_over_range' (fun _ => by simp) (3*n+1) (by omega)]
     simp only [a, Nat.cast_sum]
     apply Finset.sum_congr rfl
     intro i hi
-    simp [pr, Polynomial.coeff_map, Nat.cast_natAbs, Int.cast_abs]
+    simp only [pr, Polynomial.coeff_map, Int.castRingHom]
+    simp [Nat.cast_natAbs, Int.cast_abs]
   rw [heq, norm_pow, hmax, hsum] at heval
   exact heval
 
@@ -156,16 +160,19 @@ private theorem upper_bound (n : ℕ) : (a n : ℝ) ≤ (3*(n:ℝ)+1)*radius^n :
     have hs := Real.sq_sqrt (show (0:ℝ) ≤ 3 by norm_num)
     have he : pc.eval z = 1-z-z^2+z^3 := by simp [pc]
     rw [he]
+    apply (sq_le_sq₀ (norm_nonneg _) (show 0 ≤ radius from hM)).mp
     dsimp [radius]
-    nlinarith [norm_nonneg (1-z-z^2+z^3)]
+    nlinarith
   have hs := power_sum_sq_le pc radius hcircle n
   have hd : (pc^n).natDegree ≤ 3*n := by
     rw [Polynomial.natDegree_pow]
     have hp : pc.natDegree ≤ 3 := by unfold pc; compute_degree
     simpa [Nat.mul_comm] using Nat.mul_le_mul_right n hp
   have hcard : (pc^n).support.card ≤ 3*n+1 := by
-    apply (Finset.card_le_card (Polynomial.support_subset_range (pc^n))).trans
-    simpa using Nat.add_le_add_right hd 1
+    calc
+      (pc^n).support.card ≤ (Finset.range (3*n+1)).card :=
+        Finset.card_le_card (Polynomial.supp_subset_range (by omega))
+      _ = 3*n+1 := Finset.card_range _
   have hcast : ((pc^n).support.card : ℝ) ≤ 3*(n:ℝ)+1 := by exact_mod_cast hcard
   have hsum : (a n : ℝ) = ∑ i ∈ (pc^n).support, ‖(pc^n).coeff i‖ := coefficient_sum n
   rw [←hsum] at hs
@@ -174,10 +181,13 @@ private theorem upper_bound (n : ℕ) : (a n : ℝ) ≤ (3*(n:ℝ)+1)*radius^n :
       (a n : ℝ)^2 ≤ ((pc^n).support.card : ℝ) * radius^(2*n) := hs
       _ ≤ (3*(n:ℝ)+1)*radius^(2*n) := mul_le_mul_of_nonneg_right hcast (by positivity)
       _ = _ := by ring
-  have hk : (1:ℝ) ≤ 3*(n:ℝ)+1 := by positivity
+  have hk : (1:ℝ) ≤ 3*(n:ℝ)+1 := by nlinarith [(Nat.cast_nonneg n : (0:ℝ) ≤ (n:ℝ))]
   have hp : 0 ≤ radius^n := pow_nonneg hM n
   have hsq : (a n : ℝ)^2 ≤ ((3*(n:ℝ)+1)*radius^n)^2 := by
-    nlinarith [sq_nonneg ((3*(n:ℝ)+1-1)*radius^n)]
+    have hmul : (0:ℝ) ≤ (3*(n:ℝ)+1-1)*((3*(n:ℝ)+1)*(radius^n)^2) :=
+      mul_nonneg (sub_nonneg.mpr hk)
+        (mul_nonneg (show (0:ℝ) ≤ 3*(n:ℝ)+1 by positivity) (sq_nonneg (radius^n)))
+    nlinarith
   exact (sq_le_sq₀ (Nat.cast_nonneg _) (mul_nonneg (by positivity) hp)).mp hsq
 
 private theorem degree_root_limit : Tendsto (fun n : ℕ => (3*(n:ℝ)+1)^(1/(n:ℝ))) atTop (𝓝 1) := by
