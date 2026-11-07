@@ -38,18 +38,21 @@ private theorem complex_dependence : ObservationalDependence complexSignature co
   have hz : (1 : ℂ)=0 := Eq.mp hh rfl
   norm_num at hz
 abbrev seriesSignature (I : Type) : Signature :=
-  _root_.Reg.Support.UniverseSingleReadout.signature Unit (fun _ => I → ℝ) (fun _ => Prop)
+  _root_.Reg.Support.UniverseSingleReadout.signature Unit (fun _ => I → ℝ) (fun _ => Bool)
 def seriesActual (I : Type) : Realization (seriesSignature I) :=
-  realize (seriesSignature I) (fun _ _ x => Summable x) (fun e => nomatch e)
+  by
+    classical
+    exact realize (seriesSignature I) (fun _ _ x => decide (Summable x)) (fun e => nomatch e)
 def seriesRejected (I : Type) : Realization (seriesSignature I) :=
-  realize (seriesSignature I) (fun _ _ _ => False) (fun e => nomatch e)
+  realize (seriesSignature I) (fun _ _ _ => false) (fun e => nomatch e)
 private theorem series_dependence (I : Type) [Infinite I] :
     ObservationalDependence (seriesSignature I) (seriesActual I) := by
+  classical
   intro i
   refine ⟨(),0,(fun _ => 1),?_⟩
-  intro h
-  have hh : Summable (fun _ : I => (1 : ℝ)) := Eq.mp h summable_zero
-  norm_num [summable_const_iff] at hh
+  change decide (Summable (0 : I → ℝ)) ≠ decide (Summable (fun _ : I => (1 : ℝ)))
+  simpa [summable_const_iff] using (summable_zero : Summable (0 : I → ℝ))
+
 abbrev sumSignature : Signature := _root_.Reg.Support.UniverseSingleReadout.signature
   Unit (fun _ => ℤ → ℂ) (fun _ => ℂ → Prop)
 def sumActual : Realization sumSignature :=
@@ -224,7 +227,7 @@ end support
 namespace product
 def arena : Arena where
   signature := sumSignature
-  Law ρ := ∀ (T : ℝ) [Fact (0<T)],
+  Law ρ := ∀ {T : ℝ} [Fact (0<T)],
     ∀ (F G : C(AddCircle T, ℂ))
     (hF : Summable (fun m : ℤ => ‖fourierCoeff F m‖)) (t : ℤ),
     ρ.readout () () (fun m : ℤ => fourierCoeff F m * fourierCoeff G (t-m))
@@ -233,7 +236,7 @@ def arena : Arena where
 private theorem rejected_bad : ¬ arena.Law (sumRejected) := by
   intro h
   letI : Fact (0 < (1 : ℝ)) := ⟨by norm_num⟩
-  exact (h 1 0 0 (by simpa [fourierCoeff] using (summable_zero : Summable (fun _ : ℤ => (0 : ℝ)))) 0).1
+  exact (h (T := 1) 0 0 (by simpa [fourierCoeff] using (summable_zero : Summable (fun _ : ℤ => (0 : ℝ)))) 0).1
 def evidence : Registration arena (type_of% (@fourierCoeff_mul_hasSum)) where
   actual := sumActual
   bridge := Iff.rfl
@@ -276,22 +279,24 @@ end product
 namespace double_absolute
 def arena : Arena where
   signature := seriesSignature (ℤ × ℤ)
-  Law ρ := ∀ (E : Type u) [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E],
+  Law ρ := ∀ {E : Type u} [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E],
     ∀ (C : ℤ → ℤ → E) (K : ℝ) (R : ℕ)
     (hK : 0 ≤ K)
     (hC : ∀ m n : ℤ,
       ‖C m n‖ ≤ K*(1+|(m : ℝ)|)^R*(1+|(n : ℝ)|)^R)
     (f g : Test),
     ρ.readout () () (fun mn : ℤ × ℤ =>
-      ‖(f.coefficient mn.1 * g.coefficient mn.2) • C mn.1 mn.2‖)
+      ‖(f.coefficient mn.1 * g.coefficient mn.2) • C mn.1 mn.2‖) = true
 private theorem rejected_bad : ¬ arena.{u}.Law (seriesRejected (ℤ × ℤ)) := by
   intro h
-  exact h (ULift.{u} ℂ) (fun _ _ => 0) 0 0 (by norm_num) (by intro m n; simp) zeroTest zeroTest
-def evidence : Registration arena (type_of% (@FiniteDeltaContact.double_smear_absolute.{u})) where
+  have hh := h (E := ULift.{u} ℂ) (fun _ _ => 0) 0 0 (by norm_num) (by intro m n; simp) zeroTest zeroTest
+  change false = true at hh
+  cases hh
+def evidence : Registration arena.{u} (type_of% (@FiniteDeltaContact.double_smear_absolute.{u})) where
   actual := seriesActual (ℤ × ℤ)
-  bridge := Iff.rfl
-  variation := ⟨@FiniteDeltaContact.double_smear_absolute.{u},seriesRejected (ℤ × ℤ),rejected_bad⟩
-  sensitivity := _root_.Reg.Support.UniverseSingleReadout.sensitivity arena.Law (seriesActual (ℤ × ℤ)) (seriesRejected (ℤ × ℤ)) rejected_bad
+  bridge := by simp only [arena, seriesActual, realize, decide_eq_true_eq]
+  variation := ⟨by simpa only [arena, seriesActual, realize, decide_eq_true_eq] using @FiniteDeltaContact.double_smear_absolute.{u},seriesRejected (ℤ × ℤ),rejected_bad⟩
+  sensitivity := _root_.Reg.Support.UniverseSingleReadout.sensitivity arena.{u}.Law (seriesActual (ℤ × ℤ)) (seriesRejected (ℤ × ℤ)) rejected_bad
   dependence := series_dependence (ℤ × ℤ)
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@FiniteDeltaContact.double_smear_absolute.{u}) (Realization (seriesSignature (ℤ × ℤ))) Type Unit where
@@ -299,11 +304,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.SmoothCircleContact.double_absolute.evidence
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨evidence⟩
+  realization := .source arena.{u} ⟨evidence.{u}⟩
   correspondence := {stage := .evidence, objectStage := .evidence}
   bundleNonempty := .absent
   readout := some (realize (seriesSignature (ℤ × ℤ)) (seriesActual (ℤ × ℤ)).readout (seriesActual (ℤ × ℤ)).anchor)
@@ -316,11 +321,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false}] }
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := true}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -329,22 +334,24 @@ end double_absolute
 namespace contact_absolute
 def arena : Arena where
   signature := seriesSignature ℤ
-  Law ρ := ∀ (E : Type u) [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E],
+  Law ρ := ∀ {E : Type u} [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E],
     ∀ (C : ℤ → ℤ → E) (K : ℝ) (R : ℕ)
     (hK : 0 ≤ K)
     (hC : ∀ m n : ℤ,
       ‖C m n‖ ≤ K*(1+|(m : ℝ)|)^R*(1+|(n : ℝ)|)^R)
     (f g : Test) (j : ℕ),
     ρ.readout () () (fun t : ℤ =>
-      ‖(((f.frequencyBinomial j).product g).coefficient t) • contactCoefficient C j t‖)
+      ‖(((f.frequencyBinomial j).product g).coefficient t) • contactCoefficient C j t‖) = true
 private theorem rejected_bad : ¬ arena.{u}.Law (seriesRejected ℤ) := by
   intro h
-  exact h (ULift.{u} ℂ) (fun _ _ => 0) 0 0 (by norm_num) (by intro m n; simp) zeroTest zeroTest 0
-def evidence : Registration arena (type_of% (@FiniteDeltaContact.contact_series_absolute.{u})) where
+  have hh := h (E := ULift.{u} ℂ) (fun _ _ => 0) 0 0 (by norm_num) (by intro m n; simp) zeroTest zeroTest 0
+  change false = true at hh
+  cases hh
+def evidence : Registration arena.{u} (type_of% (@FiniteDeltaContact.contact_series_absolute.{u})) where
   actual := seriesActual ℤ
-  bridge := Iff.rfl
-  variation := ⟨@FiniteDeltaContact.contact_series_absolute.{u},seriesRejected ℤ,rejected_bad⟩
-  sensitivity := _root_.Reg.Support.UniverseSingleReadout.sensitivity arena.Law (seriesActual ℤ) (seriesRejected ℤ) rejected_bad
+  bridge := by simp only [arena, seriesActual, realize, decide_eq_true_eq]
+  variation := ⟨by simpa only [arena, seriesActual, realize, decide_eq_true_eq] using @FiniteDeltaContact.contact_series_absolute.{u},seriesRejected ℤ,rejected_bad⟩
+  sensitivity := _root_.Reg.Support.UniverseSingleReadout.sensitivity arena.{u}.Law (seriesActual ℤ) (seriesRejected ℤ) rejected_bad
   dependence := series_dependence ℤ
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@FiniteDeltaContact.contact_series_absolute.{u}) (Realization (seriesSignature ℤ)) Type Unit where
@@ -352,11 +359,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.SmoothCircleContact.contact_absolute.evidence
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨evidence⟩
+  realization := .source arena.{u} ⟨evidence.{u}⟩
   correspondence := {stage := .evidence, objectStage := .evidence}
   bundleNonempty := .absent
   readout := some (realize (seriesSignature ℤ) (seriesActual ℤ).readout (seriesActual ℤ).anchor)
@@ -369,11 +376,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false}] }
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := true}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -382,14 +389,14 @@ end contact_absolute
 namespace contact_formula
 def arena : Arena where
   signature := seriesSignature (ℤ × ℤ)
-  Law ρ := ∀ (E : Type u) [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E],
+  Law ρ := ∀ {E : Type u} [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E],
     ∀ (C : ℤ → ℤ → E) (K : ℝ) (R N : ℕ)
     (hK : 0 ≤ K)
     (hC : ∀ m n : ℤ,
       ‖C m n‖ ≤ K*(1+|(m : ℝ)|)^R*(1+|(n : ℝ)|)^R)
     (hdelta : delta^[N] C = 0) (f g : Test),
     ρ.readout () () (fun mn : ℤ × ℤ =>
-      ‖(f.coefficient mn.1 * g.coefficient mn.2) • C mn.1 mn.2‖) ∧
+      ‖(f.coefficient mn.1 * g.coefficient mn.2) • C mn.1 mn.2‖) = true ∧
     (∀ j : ℕ, Summable (fun t : ℤ =>
       ‖(((f.frequencyBinomial j).product g).coefficient t) • contactCoefficient C j t‖)) ∧
     (∑' mn : ℤ × ℤ, (f.coefficient mn.1 * g.coefficient mn.2) • C mn.1 mn.2) =
@@ -397,12 +404,14 @@ def arena : Arena where
         (((f.frequencyBinomial j).product g).coefficient t) • contactCoefficient C j t
 private theorem rejected_bad : ¬ arena.{u}.Law (seriesRejected (ℤ × ℤ)) := by
   intro h
-  exact (h (ULift.{u} ℂ) (fun _ _ => 0) 0 0 0 (by norm_num) (by intro m n; simp) rfl zeroTest zeroTest).1
-def evidence : Registration arena (type_of% (@FiniteDeltaContact.delta_smooth_contact_formula.{u})) where
+  have hh := (h (E := ULift.{u} ℂ) (fun _ _ => 0) 0 0 0 (by norm_num) (by intro m n; simp) rfl zeroTest zeroTest).1
+  change false = true at hh
+  cases hh
+def evidence : Registration arena.{u} (type_of% (@FiniteDeltaContact.delta_smooth_contact_formula.{u})) where
   actual := seriesActual (ℤ × ℤ)
-  bridge := Iff.rfl
-  variation := ⟨@FiniteDeltaContact.delta_smooth_contact_formula.{u},seriesRejected (ℤ × ℤ),rejected_bad⟩
-  sensitivity := _root_.Reg.Support.UniverseSingleReadout.sensitivity arena.Law (seriesActual (ℤ × ℤ)) (seriesRejected (ℤ × ℤ)) rejected_bad
+  bridge := by simp only [arena, seriesActual, realize, decide_eq_true_eq]
+  variation := ⟨by simpa only [arena, seriesActual, realize, decide_eq_true_eq] using @FiniteDeltaContact.delta_smooth_contact_formula.{u},seriesRejected (ℤ × ℤ),rejected_bad⟩
+  sensitivity := _root_.Reg.Support.UniverseSingleReadout.sensitivity arena.{u}.Law (seriesActual (ℤ × ℤ)) (seriesRejected (ℤ × ℤ)) rejected_bad
   dependence := series_dependence (ℤ × ℤ)
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@FiniteDeltaContact.delta_smooth_contact_formula.{u}) (Realization (seriesSignature (ℤ × ℤ))) Type Unit where
@@ -410,11 +419,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.SmoothCircleContact.contact_formula.evidence
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨evidence⟩
+  realization := .source arena.{u} ⟨evidence.{u}⟩
   correspondence := {stage := .evidence, objectStage := .evidence}
   bundleNonempty := .absent
   readout := some (realize (seriesSignature (ℤ × ℤ)) (seriesActual (ℤ × ℤ)).readout (seriesActual (ℤ × ℤ)).anchor)
@@ -427,11 +436,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false}] }
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := true}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -440,7 +449,7 @@ end contact_formula
 namespace zero_product
 def arena : Arena where
   signature := equalitySignature.{u}
-  Law ρ := ∀ (E : Type u) [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E],
+  Law ρ := ∀ {E : Type u} [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E],
     ∀ (C : ℤ → ℤ → E) (K : ℝ) (R N : ℕ)
     (hK : 0 ≤ K)
     (hC : ∀ m n : ℤ,
@@ -450,12 +459,12 @@ def arena : Arena where
     ρ.readout () E ((∑' mn : ℤ × ℤ, (f.coefficient mn.1 * g.coefficient mn.2) • C mn.1 mn.2)) (0)
 private theorem rejected_bad : ¬ arena.{u}.Law (equalityRejected) := by
   intro h
-  exact h (ULift.{u} ℂ) (fun _ _ => 0) 0 0 0 (by norm_num) (by intro m n; simp) rfl zeroTest zeroTest (by intro x; simp [zeroTest])
-def evidence : Registration arena (type_of% (@FiniteDeltaContact.double_smear_eq_zero_of_product_zero.{u})) where
+  exact h (E := ULift.{u} ℂ) (fun _ _ => 0) 0 0 0 (by norm_num) (by intro m n; simp) rfl zeroTest zeroTest (by intro x; simp [zeroTest])
+def evidence : Registration arena.{u} (type_of% (@FiniteDeltaContact.double_smear_eq_zero_of_product_zero.{u})) where
   actual := equalityActual
   bridge := Iff.rfl
   variation := ⟨@FiniteDeltaContact.double_smear_eq_zero_of_product_zero.{u},equalityRejected,rejected_bad⟩
-  sensitivity := _root_.Reg.Support.UniverseSingleReadout.sensitivity arena.Law (equalityActual) (equalityRejected) rejected_bad
+  sensitivity := _root_.Reg.Support.UniverseSingleReadout.sensitivity arena.{u}.Law (equalityActual) (equalityRejected) rejected_bad
   dependence := equality_dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@FiniteDeltaContact.double_smear_eq_zero_of_product_zero.{u}) (Realization (equalitySignature.{u})) Type Unit where
@@ -463,11 +472,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.SmoothCircleContact.zero_product.evidence
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨evidence⟩
+  realization := .source arena.{u} ⟨evidence.{u}⟩
   correspondence := {stage := .evidence, objectStage := .evidence}
   bundleNonempty := .absent
   readout := some (realize (equalitySignature.{u}) (equalityActual).readout (equalityActual).anchor)
@@ -480,7 +489,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      path := #[ "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn" ]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -493,7 +502,7 @@ end zero_product
 namespace separated
 def arena : Arena where
   signature := equalitySignature.{u}
-  Law ρ := ∀ (E : Type u) [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E],
+  Law ρ := ∀ {E : Type u} [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E],
     ∀ (C : ℤ → ℤ → E) (K : ℝ) (R N : ℕ) (hK : 0 ≤ K)
     (hC : ∀ m n : ℤ,
       ‖C m n‖ ≤ K*(1+|(m : ℝ)|)^R*(1+|(n : ℝ)|)^R)
@@ -502,12 +511,12 @@ def arena : Arena where
     ρ.readout () E ((∑' mn : ℤ × ℤ, (f.coefficient mn.1 * g.coefficient mn.2) • C mn.1 mn.2)) (0)
 private theorem rejected_bad : ¬ arena.{u}.Law (equalityRejected) := by
   intro h
-  exact h (ULift.{u} ℂ) (fun _ _ => 0) 0 0 0 (by norm_num) (by intro m n; simp) rfl zeroTest zeroTest zero_disjoint
-def evidence : Registration arena (type_of% (@FiniteDeltaContact.double_smear_eq_zero_of_disjoint_tsupport.{u})) where
+  exact h (E := ULift.{u} ℂ) (fun _ _ => 0) 0 0 0 (by norm_num) (by intro m n; simp) rfl zeroTest zeroTest zero_disjoint
+def evidence : Registration arena.{u} (type_of% (@FiniteDeltaContact.double_smear_eq_zero_of_disjoint_tsupport.{u})) where
   actual := equalityActual
   bridge := Iff.rfl
   variation := ⟨@FiniteDeltaContact.double_smear_eq_zero_of_disjoint_tsupport.{u},equalityRejected,rejected_bad⟩
-  sensitivity := _root_.Reg.Support.UniverseSingleReadout.sensitivity arena.Law (equalityActual) (equalityRejected) rejected_bad
+  sensitivity := _root_.Reg.Support.UniverseSingleReadout.sensitivity arena.{u}.Law (equalityActual) (equalityRejected) rejected_bad
   dependence := equality_dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@FiniteDeltaContact.double_smear_eq_zero_of_disjoint_tsupport.{u}) (Realization (equalitySignature.{u})) Type Unit where
@@ -515,11 +524,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.SmoothCircleContact.separated.evidence
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨evidence⟩
+  realization := .source arena.{u} ⟨evidence.{u}⟩
   correspondence := {stage := .evidence, objectStage := .evidence}
   bundleNonempty := .absent
   readout := some (realize (equalitySignature.{u}) (equalityActual).readout (equalityActual).anchor)
@@ -532,7 +541,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      path := #[ "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn" ]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

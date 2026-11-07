@@ -45,11 +45,11 @@ theorem vacuum_embed_ne : testModel.embed 0 (vacuum testModel.D) ≠ 0 := by
   apply vacuum_nonzero testModel.D
   exact UniformSpace.Completion.coe_injective (testModel.Finite 0)
     (h.trans (map_zero (testModel.embed 0)).symm)
-structure OpsParams where
-  M : Model
-  a : Charge M.D
-  b : Charge M.D
-  k : ℕ
+abbrev OpsParams := Σ M : Model, Σ _a : Charge M.D, Σ _b : Charge M.D, ℕ
+abbrev OpsParams.M (p : OpsParams) : Model := p.1
+abbrev OpsParams.a (p : OpsParams) : Charge p.M.D := p.2.1
+abbrev OpsParams.b (p : OpsParams) : Charge p.M.D := p.2.2.1
+abbrev OpsParams.k (p : OpsParams) : ℕ := p.2.2.2
 abbrev opsSignature : Signature := _root_.Reg.Support.UniverseSingleReadout.signature
   OpsParams (fun p => p.M.Sobolev (p.M.order p.a+p.M.order p.b+p.k) →L[ℂ] p.M.Sobolev p.k)
     (fun p => (p.M.Sobolev (p.M.order p.a+p.M.order p.b+p.k) →L[ℂ] p.M.Sobolev p.k) → Prop)

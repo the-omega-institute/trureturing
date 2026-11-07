@@ -31,13 +31,13 @@ private theorem equality_dependence :
 namespace newton
 def arena : Arena where
   signature := equalitySignature.{u}
-  Law R := ∀ (V : Type u) [AddCommGroup V] (q : ℤ → V) (N : ℕ),
+  Law R := ∀ {V : Type u} [AddCommGroup V] (q : ℤ → V) (N : ℕ),
     (fwdDiff (1 : ℤ))^[N] q = 0 → ∀ m : ℤ,
       R.readout () V (q m)
         (∑ j ∈ range N, (Ring.choose m j : ℤ) • ((fwdDiff (1 : ℤ))^[j] q) 0)
 private theorem rejected_bad : ¬ arena.{u}.Law equalityRejected := by
   intro h
-  exact h (ULift.{u} ℤ) (fun _ => 0) 0 rfl 0
+  exact h (V := ULift.{u} ℤ) (fun _ => 0) 0 rfl 0
 def evidence : Registration arena (type_of% (@int_newton_of_fwdDiff_iter_eq_zero.{u})) where
   actual := equalityActual
   bridge := Iff.rfl
@@ -46,7 +46,7 @@ def evidence : Registration arena (type_of% (@int_newton_of_fwdDiff_iter_eq_zero
     arena.Law equalityActual equalityRejected rejected_bad
   dependence := equality_dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@int_newton_of_fwdDiff_iter_eq_zero.{u}) (Realization equalitySignature) Type Unit where
+    (@int_newton_of_fwdDiff_iter_eq_zero.{u}) (Realization equalitySignature.{u}) Type Unit where
   unitName := `Reg.D5.S3.VertexAlgebra.Analysis.IntegerNewton.newton.unit
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.IntegerNewton.newton.evidence
   realizationSource := none
@@ -58,7 +58,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨evidence⟩
   correspondence := {stage := .evidence, objectStage := .evidence}
   bundleNonempty := .absent
-  readout := some (realize equalitySignature equalityActual.readout equalityActual.anchor)
+  readout := some (realize equalitySignature.{u} equalityActual.{u}.readout equalityActual.{u}.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -81,13 +81,13 @@ end newton
 namespace delta
 def arena : Arena where
   signature := equalitySignature.{u}
-  Law R := ∀ (V : Type u) [AddCommGroup V] (C : ℤ → ℤ → V) (N : ℕ),
+  Law R := ∀ {V : Type u} [AddCommGroup V] (C : ℤ → ℤ → V) (N : ℕ),
     delta^[N] C = 0 → ∀ m n : ℤ,
       R.readout () V (C m n)
         (∑ j ∈ range N, (Ring.choose m j : ℤ) • contactCoefficient C j (m+n))
 private theorem rejected_bad : ¬ arena.{u}.Law equalityRejected := by
   intro h
-  exact h (ULift.{u} ℤ) (fun _ _ => 0) 0 rfl 0 0
+  exact h (V := ULift.{u} ℤ) (fun _ _ => 0) 0 rfl 0 0
 def evidence : Registration arena (type_of% (@delta_newton.{u})) where
   actual := equalityActual
   bridge := Iff.rfl
@@ -96,7 +96,7 @@ def evidence : Registration arena (type_of% (@delta_newton.{u})) where
     arena.Law equalityActual equalityRejected rejected_bad
   dependence := equality_dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@delta_newton.{u}) (Realization equalitySignature) Type Unit where
+    (@delta_newton.{u}) (Realization equalitySignature.{u}) Type Unit where
   unitName := `Reg.D5.S3.VertexAlgebra.Analysis.IntegerNewton.delta.unit
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.IntegerNewton.delta.evidence
   realizationSource := none
@@ -108,7 +108,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨evidence⟩
   correspondence := {stage := .evidence, objectStage := .evidence}
   bundleNonempty := .absent
-  readout := some (realize equalitySignature equalityActual.readout equalityActual.anchor)
+  readout := some (realize equalitySignature.{u} equalityActual.{u}.readout equalityActual.{u}.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -131,14 +131,14 @@ end delta
 namespace choose
 def arena : Arena where
   signature := equalitySignature.{u}
-  Law R := ∀ (K : Type u) [Field K] [CharZero K] (x : K) (j : ℕ),
+  Law R := ∀ {K : Type u} [Field K] [CharZero K] (x : K) (j : ℕ),
     R.readout () K ((j+1 : K) * Ring.choose x (j+1)) ((x-j) * Ring.choose x j)
 private theorem rejected_bad : ¬ arena.{u}.Law equalityRejected := by
   intro h
   letI : CharZero (ULift.{u} ℚ) := ⟨by
     intro m n hmn
     exact Nat.cast_injective (congrArg ULift.down hmn : (m : ℚ) = (n : ℚ))⟩
-  exact h (ULift.{u} ℚ) 0 0
+  exact h (K := ULift.{u} ℚ) 0 0
 def evidence : Registration arena (type_of% (@choose_succ_mul.{u})) where
   actual := equalityActual
   bridge := Iff.rfl
@@ -147,7 +147,7 @@ def evidence : Registration arena (type_of% (@choose_succ_mul.{u})) where
     arena.Law equalityActual equalityRejected rejected_bad
   dependence := equality_dependence
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@choose_succ_mul.{u}) (Realization equalitySignature) Type Unit where
+    (@choose_succ_mul.{u}) (Realization equalitySignature.{u}) Type Unit where
   unitName := `Reg.D5.S3.VertexAlgebra.Analysis.IntegerNewton.choose.unit
   realizationName := `Reg.D5.S3.VertexAlgebra.Analysis.IntegerNewton.choose.evidence
   realizationSource := none
@@ -159,7 +159,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨evidence⟩
   correspondence := {stage := .evidence, objectStage := .evidence}
   bundleNonempty := .absent
-  readout := some (realize equalitySignature equalityActual.readout equalityActual.anchor)
+  readout := some (realize equalitySignature.{u} equalityActual.{u}.readout equalityActual.{u}.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

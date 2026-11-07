@@ -19,9 +19,9 @@ open _root_.D5.S3.VertexAlgebra.LatticeAllStateField
 open _root_.D5.S3.VertexAlgebra.FieldNormalProductLocality
 namespace Reg.D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
 open _root_.Reg.D5.S3.VertexAlgebra.Analysis.OriginalWeakSmearedLocality
-structure VecParams where
-  M : Model
-  k : ℕ
+abbrev VecParams := Σ _M : Model, ℕ
+abbrev VecParams.M (p : VecParams) : Model := p.1
+abbrev VecParams.k (p : VecParams) : ℕ := p.2
 abbrev vecSignature : Signature := _root_.Reg.Support.UniverseSingleReadout.signature
   VecParams (fun p => p.M.Sobolev p.k) (fun p => p.M.Sobolev p.k → Prop)
 def vecActual : Realization vecSignature :=
@@ -70,17 +70,20 @@ private theorem norm_dependence : ObservationalDependence normSignature normActu
   have hz : (1 : ℝ) ≤ 0 := Eq.mp hh le_rfl
   norm_num at hz
 abbrev seriesSignature : Signature := _root_.Reg.Support.UniverseSingleReadout.signature
-  Unit (fun _ => (ℤ × ℤ) → ℝ) (fun _ => Prop)
+  Unit (fun _ => (ℤ × ℤ) → ℝ) (fun _ => Bool)
 def seriesActual : Realization seriesSignature :=
-  realize seriesSignature (fun _ _ x => Summable x) (fun e => nomatch e)
+  by
+    classical
+    exact realize seriesSignature (fun _ _ x => decide (Summable x)) (fun e => nomatch e)
 def seriesRejected : Realization seriesSignature :=
-  realize seriesSignature (fun _ _ _ => False) (fun e => nomatch e)
+  realize seriesSignature (fun _ _ _ => false) (fun e => nomatch e)
 private theorem series_dependence : ObservationalDependence seriesSignature seriesActual := by
+  classical
   intro i
   refine ⟨(),0,(fun _ => 1),?_⟩
-  intro h
-  have hh : Summable (fun _ : ℤ × ℤ => (1 : ℝ)) := Eq.mp h summable_zero
-  norm_num [summable_const_iff] at hh
+  change decide (Summable (0 : (ℤ × ℤ) → ℝ)) ≠
+    decide (Summable (fun _ : ℤ × ℤ => (1 : ℝ)))
+  simpa [summable_const_iff] using (summable_zero : Summable (0 : (ℤ × ℤ) → ℝ))
 
 namespace modeProduct_embed
 def arena : Arena where
@@ -118,7 +121,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
     definition := none
-    coordinates := #[]
+    coordinates := #[0,3]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
@@ -167,7 +170,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
     definition := none
-    coordinates := #[]
+    coordinates := #[0,3]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
@@ -215,7 +218,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
     definition := none
-    coordinates := #[]
+    coordinates := #[0,3]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
@@ -269,7 +272,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
     definition := none
-    coordinates := #[]
+    coordinates := #[0,3]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
@@ -317,7 +320,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
     definition := none
-    coordinates := #[]
+    coordinates := #[0,1,2,3]
     readouts := #[{
       path := #["body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
@@ -578,14 +581,16 @@ end reverseModeProductTerm_le
 namespace modeProduct_absolute
 def arena : Arena where
   signature := seriesSignature
-  Law R := ∀ (M : Model) (a b : Charge M.D) (f g : Test) (k : ℕ) , R.readout () () (fun p : ℤ × ℤ => ‖M.modeProductTerm a b f g k p‖)
+  Law R := ∀ (M : Model) (a b : Charge M.D) (f g : Test) (k : ℕ) , R.readout () () (fun p : ℤ × ℤ => ‖M.modeProductTerm a b f g k p‖) = true
 private theorem rejected_bad : ¬ arena.Law seriesRejected := by
   intro h
-  exact h testModel 0 0 zeroTest zeroTest 0
+  have hh := h testModel 0 0 zeroTest zeroTest 0
+  change false = true at hh
+  cases hh
 def evidence : Registration arena (type_of% (@modeProduct_absolute)) where
   actual := seriesActual
-  bridge := Iff.rfl
-  variation := ⟨@modeProduct_absolute,seriesRejected,rejected_bad⟩
+  bridge := by simp only [arena, seriesActual, realize, decide_eq_true_eq]
+  variation := ⟨by simpa only [arena, seriesActual, realize, decide_eq_true_eq] using @modeProduct_absolute,seriesRejected,rejected_bad⟩
   sensitivity := _root_.Reg.Support.UniverseSingleReadout.sensitivity arena.Law
     seriesActual seriesRejected rejected_bad
   dependence := series_dependence
@@ -612,11 +617,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "fn"]
+      path := #["body", "body", "body", "body", "body", "body"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false}] }
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := true}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -625,14 +630,16 @@ end modeProduct_absolute
 namespace reverseModeProduct_absolute
 def arena : Arena where
   signature := seriesSignature
-  Law R := ∀ (M : Model) (a b : Charge M.D) (f g : Test) (k : ℕ) , R.readout () () (fun p : ℤ × ℤ => ‖M.reverseModeProductTerm a b f g k p‖)
+  Law R := ∀ (M : Model) (a b : Charge M.D) (f g : Test) (k : ℕ) , R.readout () () (fun p : ℤ × ℤ => ‖M.reverseModeProductTerm a b f g k p‖) = true
 private theorem rejected_bad : ¬ arena.Law seriesRejected := by
   intro h
-  exact h testModel 0 0 zeroTest zeroTest 0
+  have hh := h testModel 0 0 zeroTest zeroTest 0
+  change false = true at hh
+  cases hh
 def evidence : Registration arena (type_of% (@reverseModeProduct_absolute)) where
   actual := seriesActual
-  bridge := Iff.rfl
-  variation := ⟨@reverseModeProduct_absolute,seriesRejected,rejected_bad⟩
+  bridge := by simp only [arena, seriesActual, realize, decide_eq_true_eq]
+  variation := ⟨by simpa only [arena, seriesActual, realize, decide_eq_true_eq] using @reverseModeProduct_absolute,seriesRejected,rejected_bad⟩
   sensitivity := _root_.Reg.Support.UniverseSingleReadout.sensitivity arena.Law
     seriesActual seriesRejected rejected_bad
   dependence := series_dependence
@@ -659,11 +666,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "fn"]
+      path := #["body", "body", "body", "body", "body", "body"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false}] }
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := true}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -672,14 +679,16 @@ end reverseModeProduct_absolute
 namespace modeCommutator_absolute
 def arena : Arena where
   signature := seriesSignature
-  Law R := ∀ (M : Model) (a b : Charge M.D) (f g : Test) (k : ℕ) , R.readout () () (fun p : ℤ × ℤ => ‖M.modeCommutatorTerm a b f g k p‖)
+  Law R := ∀ (M : Model) (a b : Charge M.D) (f g : Test) (k : ℕ) , R.readout () () (fun p : ℤ × ℤ => ‖M.modeCommutatorTerm a b f g k p‖) = true
 private theorem rejected_bad : ¬ arena.Law seriesRejected := by
   intro h
-  exact h testModel 0 0 zeroTest zeroTest 0
+  have hh := h testModel 0 0 zeroTest zeroTest 0
+  change false = true at hh
+  cases hh
 def evidence : Registration arena (type_of% (@modeCommutator_absolute)) where
   actual := seriesActual
-  bridge := Iff.rfl
-  variation := ⟨@modeCommutator_absolute,seriesRejected,rejected_bad⟩
+  bridge := by simp only [arena, seriesActual, realize, decide_eq_true_eq]
+  variation := ⟨by simpa only [arena, seriesActual, realize, decide_eq_true_eq] using @modeCommutator_absolute,seriesRejected,rejected_bad⟩
   sensitivity := _root_.Reg.Support.UniverseSingleReadout.sensitivity arena.Law
     seriesActual seriesRejected rejected_bad
   dependence := series_dependence
@@ -706,11 +715,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "fn"]
+      path := #["body", "body", "body", "body", "body", "body"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false}] }
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := true}] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -751,7 +760,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
     definition := none
-    coordinates := #[]
+    coordinates := #[0,1,2,5]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
@@ -798,7 +807,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
     definition := none
-    coordinates := #[]
+    coordinates := #[0,1,2,5]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
@@ -851,7 +860,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.Analysis.OriginalModeCommutator
     definition := none
-    coordinates := #[]
+    coordinates := #[0,1,2,5]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
