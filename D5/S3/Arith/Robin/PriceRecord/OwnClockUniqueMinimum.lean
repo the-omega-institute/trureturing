@@ -174,7 +174,7 @@ theorem minimizer_response {S : Finset ℕ} (hS : naturalSupport S) (hθ : 1 < t
         (hS p p.property))
     (ray_bounds hS hθ (theta_le_clock_of_naturalSupport hS (extend_admissible ha))).2.1 (ha p) hkkt.1 hkkt.2
 
-private lemma response_clock_identity {S : Finset ℕ} (hS : naturalSupport S)
+lemma response_clock_identity {S : Finset ℕ} (hS : naturalSupport S)
     {a : S → ℝ}
     (hresponse : ∀ p : S, a p = max 1 (logCutoff (clock S (extend a)) / log (p : ℝ) - 1)) :
     responseClock S (clock S (extend a)) = clock S (extend a) := by

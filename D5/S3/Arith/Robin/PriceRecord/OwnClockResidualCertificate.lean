@@ -13,6 +13,7 @@ attained minimizer and never replaces the image infimum by a stationary-clock
 definition. -/
 
 import D5.S3.Arith.Robin.PriceRecord.OwnClockUniqueMinimum
+import D5.S3.Arith.Robin.ArithmeticMixedCornerResponse
 import Mathlib.Analysis.Calculus.Deriv.Inv
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
@@ -38,7 +39,7 @@ def boundaryCoordinates {S : Finset ℕ} (L : ℝ) : S → ℝ :=
 def residualJ (L T : ℝ) : ℝ := tangentRemainder L T
 
 def residualQ (S : Finset ℕ) (L : ℝ) : ℝ :=
-  phi S (extend (boundaryCoordinates L)) + residualJ L (responseClock S L)
+  phi S (extend (S := S) (boundaryCoordinates L)) + residualJ L (responseClock S L)
 
 private def reciprocalClock (t : ℝ) : ℝ := 1 / (t * log t)
 
@@ -59,30 +60,18 @@ private lemma terminalCost_hasDerivAt {t : ℝ} (ht : 1 < t) :
 
 private lemma reciprocalClock_hasDerivAt {t : ℝ} (ht : 1 < t) :
     HasDerivAt reciprocalClock (-curvatureWeight t) t := by
-  have ht0 : 0 < t := by linarith
-  have hlog : log t ≠ 0 := (log_pos ht).ne'
-  have hprod := (hasDerivAt_id t).mul (Real.hasDerivAt_log ht0.ne')
-  have hd := hprod.inv (by positivity : t * log t ≠ 0)
-  convert hd using 1 <;> dsimp [reciprocalClock, curvatureWeight] <;>
-    field_simp [ht0.ne', hlog] <;> ring
-
-private lemma curvatureWeight_hasDerivAt {t : ℝ} (ht : 1 < t) :
-    HasDerivAt curvatureWeight
-      (-(2 * (log t) ^ 2 + 3 * log t + 2) /
-        (t ^ 3 * (log t) ^ 3)) t := by
-  have ht0 : 0 < t := by linarith
-  have hlog : log t ≠ 0 := (log_pos ht).ne'
-  have hn := (hasDerivAt_const t (1 : ℝ)).add (Real.hasDerivAt_log ht0.ne')
-  have hd := ((hasDerivAt_id t).pow 2).mul
-    ((Real.hasDerivAt_log ht0.ne').pow 2)
-  have hq := hn.div hd (by positivity : t ^ 2 * (log t) ^ 2 ≠ 0)
-  convert hq using 1 <;> dsimp [curvatureWeight] <;>
-    field_simp [ht0.ne', hlog] <;> ring
+  simpa only [reciprocalClock, curvatureWeight,
+    D5.S3.Arith.Robin.ActualRobinClockCovariance.g,
+    D5.S3.Arith.Robin.ActualRobinClockCovariance.activationDensity, add_comm] using
+      D5.S3.Arith.Robin.ActualRobinClockCovariance.g_has_deriv_at ht
 
 private lemma curvatureWeight_continuousOn {H : ℝ} (hH : 1 < H) :
     ContinuousOn curvatureWeight (Ici H) := by
-  intro t ht
-  exact (curvatureWeight_hasDerivAt (hH.trans_le ht)).continuousAt.continuousWithinAt
+  have h0 : ∀ t ∈ Ici H, t ≠ 0 := fun t ht => ne_of_gt (by linarith [hH.trans_le ht])
+  have hl0 : ∀ t ∈ Ici H, log t ≠ 0 := fun t ht => (log_pos (hH.trans_le ht)).ne'
+  exact (continuousOn_const.add (continuousOn_id.log h0)).div
+    ((continuousOn_id.pow 2).mul ((continuousOn_id.log h0).pow 2))
+    (fun t ht => mul_ne_zero (pow_ne_zero 2 (h0 t ht)) (pow_ne_zero 2 (hl0 t ht)))
 
 private lemma reciprocalClock_continuousOn {H : ℝ} (hH : 1 < H) :
     ContinuousOn reciprocalClock (Ici H) := by
@@ -91,38 +80,25 @@ private lemma reciprocalClock_continuousOn {H : ℝ} (hH : 1 < H) :
 
 private lemma curvatureWeight_antitoneOn {H : ℝ} (hH : 1 < H) :
     AntitoneOn curvatureWeight (Ici H) := by
-  apply antitoneOn_of_deriv_nonpos (convex_Ici H)
-    (curvatureWeight_continuousOn hH)
-  · intro t ht
-    rw [interior_Ici] at ht
-    exact (curvatureWeight_hasDerivAt (hH.trans ht)).differentiableAt.differentiableWithinAt
-  · intro t ht
-    rw [(curvatureWeight_hasDerivAt (hH.trans_le (le_of_lt ht))).deriv]
-    have hlog : 0 ≤ log t := (log_pos (hH.trans_le (le_of_lt ht))).le
-    have hden : 0 ≤ t ^ 3 * (log t) ^ 3 := by positivity
-    exact neg_nonpos.mpr (div_nonneg (by nlinarith) hden)
+  intro s hs t ht hst
+  simpa only [curvatureWeight,
+    D5.S3.Arith.Robin.ActualRobinClockCovariance.activationDensity, add_comm] using
+      D5.S3.Arith.Robin.ArithmeticMixedCornerResponse.density_antitone (hH.trans_le hs) hst
 
 private lemma curvatureWeight_pos {t : ℝ} (ht : 1 < t) : 0 < curvatureWeight t := by
-  dsimp [curvatureWeight]
-  positivity
+  simpa only [curvatureWeight,
+    D5.S3.Arith.Robin.ActualRobinClockCovariance.activationDensity, add_comm] using
+      D5.S3.Arith.Robin.ArithmeticMixedCornerResponse.density_pos ht
 
 private lemma reciprocal_gap_forward {H L T : ℝ} (hH : 1 < H)
     (hHL : H ≤ L) (hLT : L ≤ T) :
     reciprocalClock L - reciprocalClock T =
       ∫ u in L..T, curvatureWeight u := by
-  have hcont : ContinuousOn reciprocalClock (Icc L T) := by
-    intro u hu
-    exact (reciprocalClock_hasDerivAt (hH.trans_le (hHL.trans hu.1))).continuousAt.continuousWithinAt
-  have hderiv : ∀ u ∈ Ioo L T, HasDerivAt reciprocalClock (-curvatureWeight u) u := by
-    intro u hu
-    exact reciprocalClock_hasDerivAt (hH.trans_le (hHL.trans hu.1.le))
-  have hint : IntervalIntegrable (fun u => -curvatureWeight u) volume L T := by
-    exact (curvatureWeight_continuousOn hH).neg.mono_set
-      (Icc_subset_Ici_self.trans (Ici_subset_Ici.mpr hHL))
-      |>.intervalIntegrable_of_Icc hLT
-  have hftc := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_le hLT hcont hderiv hint
-  rw [intervalIntegral.integral_neg] at hftc
-  linarith
+  simpa only [reciprocalClock, curvatureWeight,
+    D5.S3.Arith.Robin.ActualRobinClockCovariance.g,
+    D5.S3.Arith.Robin.ActualRobinClockCovariance.activationDensity, add_comm] using
+      (D5.S3.Arith.Robin.ActualRobinClockCovariance.density_integral
+        (hH.trans_le hHL) hLT).symm
 
 private lemma reciprocal_gap_backward {H T L : ℝ} (hH : 1 < H)
     (hHT : H ≤ T) (hTL : T ≤ L) :
@@ -283,7 +259,7 @@ private lemma tangent_remainder_quadratic {H L T : ℝ} (hH : 1 < H)
 
 lemma boundary_clock_eq_response {S : Finset ℕ} (hS : naturalSupport S)
     (hθ : 1 < theta S) {L : ℝ} (hL : theta S ≤ L) :
-    clock S (extend (boundaryCoordinates L)) = responseClock S L := by
+    clock S (extend (S := S) (boundaryCoordinates L)) = responseClock S L := by
   classical
   have hL1 : 1 < L := hθ.trans_le hL
   have hl : 0 < log L := log_pos hL1
@@ -307,26 +283,6 @@ lemma boundary_clock_eq_response {S : Finset ℕ} (hS : naturalSupport S)
       ring
     _ = responseClock S L := (sum_coe_sort S _).trans rfl
 
-private lemma clock_of_response {S : Finset ℕ} (hS : naturalSupport S)
-    {a : S → ℝ}
-    (hresponse : ∀ p : S, a p = max 1 (logCutoff (clock S (extend a)) /
-      log (p : ℝ) - 1)) :
-    responseClock S (clock S (extend a)) = clock S (extend a) := by
-  symm
-  calc
-    clock S (extend a) = ∑ p : S, a p * log (p : ℝ) := clock_coordinates a
-    _ = ∑ p : S, max (log (p : ℝ))
-        (logCutoff (clock S (extend a)) - log (p : ℝ)) := by
-      apply sum_congr rfl
-      intro p _
-      have hp1 : 1 < (p : ℝ) := by
-        exact_mod_cast lt_of_lt_of_le (by norm_num : (1 : ℕ) < 2) (hS p p.property)
-      have hw : 0 < log (p : ℝ) := log_pos hp1
-      rw [hresponse p, max_mul_of_nonneg _ _ hw.le, one_mul]
-      congr 1
-      field_simp [hw.ne']
-      ring
-    _ = responseClock S (clock S (extend a)) := (sum_coe_sort S _).trans rfl
 
 private lemma finite_price_identity {S : Finset ℕ} (hS : naturalSupport S)
     (hθ : 1 < theta S) {L : ℝ} (hL : theta S ≤ L) {x : S → ℝ} (hx : x ∈ orthant S) :
@@ -345,7 +301,7 @@ private lemma finite_price_identity {S : Finset ℕ} (hS : naturalSupport S)
         (∑ p : S, benefit (p : ℝ) (boundaryCoordinates L p)) -
           (∑ p : S, benefit (p : ℝ) (x p)) +
           clockLambda L * (clock S (extend x) -
-            clock S (extend (boundaryCoordinates L))) := by
+            clock S (extend (S := S) (boundaryCoordinates L))) := by
     change (∑ p : S, (priceObjective (p : ℝ) (clockLambda L)
       (boundaryCoordinates L p) - priceObjective (p : ℝ) (x p))) = _
     rw [sum_sub_distrib, hsum, hsum, clock_coordinates, clock_coordinates]
@@ -385,7 +341,7 @@ theorem real_infimum_residual_enclosure {S : Finset ℕ} (hS : naturalSupport S)
         ((1 + log (theta S)) /
           ((theta S) ^ 2 * (log (theta S)) ^ 2)) *
         (responseClock S L - L) ^ 2 ≤ realInfimum S ∧
-      realInfimum S ≤ phi S (extend (boundaryCoordinates L)) := by
+      realInfimum S ≤ phi S (extend (S := S) (boundaryCoordinates L)) := by
   obtain ⟨τ, hτray, hτfix, hτuniq, hrest⟩ := unique_real_minimum hS hθ
   dsimp at hrest
   let astar : S → ℝ := fun p => max 1 (logCutoff τ / log (p : ℝ) - 1)
@@ -396,11 +352,10 @@ theorem real_infimum_residual_enclosure {S : Finset ℕ} (hS : naturalSupport S)
     simpa [astar] using hrest.2.2.2
   have hresp := minimizer_response hS hθ hastar hmin
   have hclock_resp : responseClock S (clock S (extend astar)) =
-      clock S (extend astar) := clock_of_response hS hresp
+      clock S (extend astar) := response_clock_identity hS hresp
   have hclock_eq : clock S (extend astar) = τ := by
-    apply hτuniq
-    exact ⟨theta_le_clock_of_naturalSupport hS (extend_admissible hastar),
-      hclock_resp⟩
+    exact hτuniq _ (theta_le_clock_of_naturalSupport hS (extend_admissible hastar))
+      hclock_resp
   have hidentity := finite_price_identity hS hθ hL hastar
   have hloss_nonneg : 0 ≤ ∑ p : S,
       priceLoss (p : ℝ) (clockLambda L) (astar p) := by
@@ -408,7 +363,7 @@ theorem real_infimum_residual_enclosure {S : Finset ℕ} (hS : naturalSupport S)
   have hupper : residualQ S L - realInfimum S ≤ residualJ L τ := by
     rw [hinf, hclock_eq] at hidentity
     linarith [hidentity, hloss_nonneg]
-  have hmin_b : realInfimum S ≤ phi S (extend (boundaryCoordinates L)) := by
+  have hmin_b : realInfimum S ≤ phi S (extend (S := S) (boundaryCoordinates L)) := by
     rw [hinf]
     exact hmin (boundaryCoordinates L) (by intro p; exact le_max_left _ _)
   have hlowerJ : residualJ L (responseClock S L) ≤ residualQ S L - realInfimum S := by

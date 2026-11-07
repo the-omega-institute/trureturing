@@ -36,7 +36,7 @@ def G (n : ℕ) : ℝ :=
   Real.log (divisorRatio n) - Real.eulerMascheroniConstant -
     Real.log (Real.log (Real.log (n : ℝ)))
 
-private theorem density_pos {t : ℝ} (ht : 1 < t) : 0 < activationDensity t := by
+theorem density_pos {t : ℝ} (ht : 1 < t) : 0 < activationDensity t := by
   have h := D5.S3.Arith.Robin.LogLogHigherDerivative.positiveKernel_pos 1 0 0 ht
   have ht0 : t ≠ 0 := ne_of_gt (by linarith)
   have hl0 : Real.log t ≠ 0 := (Real.log_pos ht).ne'
@@ -46,7 +46,7 @@ private theorem density_pos {t : ℝ} (ht : 1 < t) : 0 < activationDensity t := 
     field_simp [ht0, hl0]
   exact he.symm ▸ h
 
-private theorem density_antitone {s t : ℝ} (hs : 1 < s) (hst : s ≤ t) :
+theorem density_antitone {s t : ℝ} (hs : 1 < s) (hst : s ≤ t) :
     activationDensity t ≤ activationDensity s := by
   have ht := hs.trans_le hst
   have h := D5.S3.Arith.Robin.MellinWeightedVariation.scaleWeight_antitone

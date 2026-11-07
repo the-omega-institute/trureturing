@@ -43,7 +43,7 @@ private lemma support_nonempty {S : Finset ℕ} (hθ : 1 < theta S) :
     S.Nonempty := by
   by_contra h
   have : S = ∅ := not_nonempty_iff_eq_empty.mp h
-  simp [this, theta] at hθ
+  norm_num [this, theta] at hθ
 
 lemma theta_le_clock_of_naturalSupport {S : Finset ℕ} (hS : naturalSupport S)
     {x : ℕ → ℝ} (hx : admissible S x) : theta S ≤ clock S x := by
@@ -70,8 +70,8 @@ private lemma cutoff_hasDerivAt {L : ℝ} (hL : 1 < L) :
   have hC : 0 < 1 + L * log L := by positivity
   have hd := ((hasDerivAt_const L (1 : ℝ)).add
     ((hasDerivAt_id L).mul (hasDerivAt_log h0.ne'))).log hC.ne'
-  convert hd using 1 <;> dsimp [logCutoff] <;>
-    field_simp [h0.ne', hC.ne'] <;> ring
+  convert hd using 1 <;> first | rfl |
+    (dsimp [logCutoff]; field_simp [h0.ne', hC.ne']; ring)
 
 private lemma cutoff_monotoneOn : MonotoneOn logCutoff (Ici (1 : ℝ)) := by
   intro x hx y hy hxy
@@ -79,44 +79,45 @@ private lemma cutoff_monotoneOn : MonotoneOn logCutoff (Ici (1 : ℝ)) := by
   have hmul : x * log x ≤ y * log y :=
     Real.mul_log_strictMonoOn.monotoneOn (he.trans hx) (he.trans hy) hxy
   change log (1 + x * log x) ≤ log (1 + y * log y)
+  have hx1 : 1 ≤ x := hx
   have hx0 : 0 < x := by linarith
   have hxlog : 0 ≤ log x := log_nonneg hx
   exact log_le_log (by positivity) (by linarith)
 
 private lemma active_count_le {S : Finset ℕ} (hS : naturalSupport S)
     {r : ℝ} (hr : 1 < r) :
-    ((S.filter (fun p => (p : ℝ) ≤ r)).card : ℝ) ≤ r - 1 := by
+    ((S.filter (fun p : ℕ => (p : ℝ) ≤ r)).card : ℝ) ≤ r - 1 := by
   classical
   let n : ℕ := ⌊r⌋₊
   by_cases hn : 2 ≤ n
-  · have hsub : S.filter (fun p => (p : ℝ) ≤ r) ⊆ Finset.Ico 2 (n + 1) := by
+  · have hsub : S.filter (fun p : ℕ => (p : ℝ) ≤ r) ⊆ Finset.Ico 2 (n + 1) := by
       intro p hp
       have hpS : p ∈ S := (mem_filter.mp hp).1
       have hpr : (p : ℝ) ≤ r := (mem_filter.mp hp).2
       have hp2 : 2 ≤ p := hS p hpS
       have hpn : p ≤ n := Nat.le_floor hpr
       exact mem_Ico.mpr ⟨hp2, Nat.lt_succ_of_le hpn⟩
-    have hc := card_le_card hsub
+    have hc := Finset.card_le_card hsub
     rw [Nat.card_Ico] at hc
     have hfloor : (n : ℝ) ≤ r := by
       dsimp [n]
       exact Nat.floor_le (by linarith)
     -- Eliminate truncated Nat subtraction before casting the cardinal inequality.
-    have hc' : (S.filter (fun p => (p : ℝ) ≤ r)).card + 1 ≤ n := by omega
-    have hcR : ((S.filter (fun p => (p : ℝ) ≤ r)).card : ℝ) + 1 ≤ (n : ℝ) := by
+    have hc' : (S.filter (fun p : ℕ => (p : ℝ) ≤ r)).card + 1 ≤ n := by omega
+    have hcR : ((S.filter (fun p : ℕ => (p : ℝ) ≤ r)).card : ℝ) + 1 ≤ (n : ℝ) := by
       exact_mod_cast hc'
     linarith
-  · have hsub : S.filter (fun p => (p : ℝ) ≤ r) = ∅ := by
+  · have hsub : S.filter (fun p : ℕ => (p : ℝ) ≤ r) = ∅ := by
       apply filter_eq_empty_iff.mpr
       intro p hpS hpr
       have hp2 : 2 ≤ p := hS p hpS
       have hpn : p ≤ n := Nat.le_floor hpr
       omega
-    simpa only [hsub, card_empty, Nat.cast_zero] using (sub_nonneg.mpr hr.le)
+    simpa only [hsub, Finset.card_empty, Nat.cast_zero] using (sub_nonneg.mpr hr.le)
 
 private lemma active_count_log_le {S : Finset ℕ} (hS : naturalSupport S)
     {L : ℝ} (hL : 1 < L) :
-    ((S.filter (fun p => log (p : ℝ) ≤ logCutoff L - log (p : ℝ))).card : ℝ) ≤
+    ((S.filter (fun p : ℕ => log (p : ℝ) ≤ logCutoff L - log (p : ℝ))).card : ℝ) ≤
       Real.sqrt (1 + L * log L) - 1 := by
   have hL0 : 0 < L := by linarith
   have hlogL : 0 < log L := log_pos hL
@@ -126,8 +127,8 @@ private lemma active_count_log_le {S : Finset ℕ} (hS : naturalSupport S)
     dsimp [R]
     apply (Real.lt_sqrt (by norm_num : (0 : ℝ) ≤ 1)).mpr
     nlinarith [mul_pos hL0 hlogL]
-  have hsub : S.filter (fun p => log (p : ℝ) ≤ logCutoff L - log (p : ℝ)) ⊆
-      S.filter (fun p => (p : ℝ) ≤ R) := by
+  have hsub : S.filter (fun p : ℕ => log (p : ℝ) ≤ logCutoff L - log (p : ℝ)) ⊆
+      S.filter (fun p : ℕ => (p : ℝ) ≤ R) := by
     intro p hp
     have hpS := (mem_filter.mp hp).1
     have hp0 : 0 < (p : ℝ) := by
@@ -136,6 +137,7 @@ private lemma active_count_log_le {S : Finset ℕ} (hS : naturalSupport S)
     have hpow : (p : ℝ) ^ (2 : ℕ) ≤ 1 + L * log L := by
       have h2 : log ((p : ℝ) ^ (2 : ℕ)) ≤ logCutoff L := by
         rw [log_pow]
+        norm_num only [Nat.cast_ofNat]
         linarith
       have hlog := (log_le_iff_le_exp (show 0 < (p : ℝ) ^ 2 by positivity)).mp h2
       simpa [logCutoff, Real.exp_log harg] using hlog
@@ -143,9 +145,9 @@ private lemma active_count_log_le {S : Finset ℕ} (hS : naturalSupport S)
       dsimp [R]
       exact (Real.le_sqrt hp0.le harg.le).mpr hpow
     exact mem_filter.mpr ⟨hpS, hpR⟩
-  have hc : ((S.filter (fun p => log (p : ℝ) ≤ logCutoff L - log (p : ℝ))).card : ℝ) ≤
-      ((S.filter (fun p => (p : ℝ) ≤ R)).card : ℝ) := by
-    exact_mod_cast card_le_card hsub
+  have hc : ((S.filter (fun p : ℕ => log (p : ℝ) ≤ logCutoff L - log (p : ℝ))).card : ℝ) ≤
+      ((S.filter (fun p : ℕ => (p : ℝ) ≤ R)).card : ℝ) := by
+    exact_mod_cast Finset.card_le_card hsub
   exact hc.trans (active_count_le hS hR)
 
 private def responseEnvelope (L : ℝ) : ℝ :=
@@ -185,7 +187,7 @@ private lemma response_continuousOn {S : Finset ℕ} {u v : ℝ} (hu : 1 < u)
     exact (cutoff_hasDerivAt (lt_of_lt_of_le hu hL.1)).continuousAt.continuousWithinAt
   apply continuousOn_finsetSum
   intro p hp L hL
-  exact (continuousOn_const.max (hcut.sub continuousOn_const)) hL
+  exact Filter.Tendsto.max continuousWithinAt_const ((hcut L hL).sub continuousWithinAt_const)
 
 /- At a tie, logCutoff is increasing on the right ray, so the right derivative
 is the active branch. This is the only derivative statement about max used by
@@ -210,9 +212,9 @@ private lemma response_hasDerivWithinAt_right {S : Finset ℕ} {u v L : ℝ}
             logCutoff t - log (p : ℝ) := by
         intro t ht
         exact max_eq_right (hp.trans
-          (sub_le_sub_right (hmono (show L ∈ Ici L from le_rfl) ht ht) _))
+          (sub_le_sub_right (hmono (show L ∈ Ici L from Set.mem_Ici.mpr le_rfl) ht ht) _))
       rw [if_pos hp]
-      exact (hcut.sub_const (log (p : ℝ))).hasDerivWithinAt.congr_of_mem heq le_rfl
+      exact (hcut.sub_const (log (p : ℝ))).hasDerivWithinAt.congr_of_mem heq (Set.mem_Ici.mpr le_rfl)
     · have hp' : logCutoff L - log (p : ℝ) < log (p : ℝ) := lt_of_not_ge hp
       have hlt : ∀ᶠ t in 𝓝[Ici L] L,
           logCutoff t - log (p : ℝ) < log (p : ℝ) :=
@@ -225,8 +227,7 @@ private lemma response_hasDerivWithinAt_right {S : Finset ℕ} {u v L : ℝ}
       rw [if_neg hp]
       exact (hasDerivAt_const L (log (p : ℝ))).hasDerivWithinAt.congr_of_eventuallyEq
         heq (max_eq_left hp'.le)
-  simpa only [responseClock] using
-    (HasDerivWithinAt.fun_sum (u := S) (fun p _ => hterm p))
+  convert! (HasDerivWithinAt.fun_sum (u := S) (fun p _ => hterm p)) using 1
 
 private lemma response_derivative_le_envelope {S : Finset ℕ} (hS : naturalSupport S)
     {u v L : ℝ} (hu : 1 < u) (hL : L ∈ Ico u v) :
@@ -239,7 +240,7 @@ private lemma response_derivative_le_envelope {S : Finset ℕ} (hS : naturalSupp
   have hcount := active_count_log_le hS hL1
   have hsum : (∑ p ∈ S, if log (p : ℝ) ≤ logCutoff L - log (p : ℝ)
       then (1 + log L) / (1 + L * log L) else 0) =
-      (S.filter (fun p => log (p : ℝ) ≤ logCutoff L - log (p : ℝ))).card *
+      (S.filter (fun p : ℕ => log (p : ℝ) ≤ logCutoff L - log (p : ℝ))).card *
         ((1 + log L) / (1 + L * log L)) := by
     rw [← Finset.sum_filter]
     simp only [sum_const, nsmul_eq_mul]
@@ -256,7 +257,8 @@ private lemma log_le_two_thirds_radius {L : ℝ} (hL : 1 < L) :
   have hlogexp : Real.log (L / Real.exp 1) = log L - 1 := by
     rw [Real.log_div (ne_of_gt hL0) (ne_of_gt (Real.exp_pos 1)), Real.log_exp]
   have hehalf : (3 / 2 : ℝ) ≤ Real.exp (1 / 2 : ℝ) := by
-    simpa using (add_one_le_exp (1 / 2 : ℝ))
+    have h := add_one_le_exp (1 / 2 : ℝ)
+    linarith
   have heone : (9 / 4 : ℝ) ≤ Real.exp 1 := by
     rw [show (1 : ℝ) = (1 / 2 : ℝ) + 1 / 2 by norm_num, Real.exp_add]
     have hmul := mul_le_mul hehalf hehalf (by norm_num : (0 : ℝ) ≤ 3 / 2)
@@ -279,7 +281,7 @@ private lemma log_le_two_thirds_radius {L : ℝ} (hL : 1 < L) :
     positivity
   have hsqrt := Real.lt_sqrt_of_sq_lt hsq
   have hsq' : (3 * log L) ^ 2 < (2 * Real.sqrt (1 + L * log L)) ^ 2 := by
-    nlinarith [hsq]
+    nlinarith [hsq, Real.sq_sqrt (by positivity : 0 ≤ 1 + L * log L)]
   nlinarith [hsq']
 
 private lemma response_envelope_global {L : ℝ} (hL : 1 < L) :
@@ -302,7 +304,8 @@ private lemma response_envelope_global {L : ℝ} (hL : 1 < L) :
   dsimp [responseEnvelope, R]
   have hden : 0 < 1 + L * log L := by positivity
   apply (div_le_iff₀ hden).mpr
-  nlinarith [hquad]
+  dsimp [R] at hquad
+  nlinarith [hquad, Real.sq_sqrt hden.le]
 
 private lemma response_derivative_le_global {S : Finset ℕ} (hS : naturalSupport S)
     {u v L : ℝ} (hu : 1 < u) (hL : L ∈ Ico u v) :
@@ -337,22 +340,33 @@ private lemma response_increment_le_global {S : Finset ℕ} (hS : naturalSupport
   dsimp [E] at hq
   linarith
 
+private lemma response_monotoneOn (S : Finset ℕ) :
+    MonotoneOn (responseClock S) (Ici (1 : ℝ)) := by
+  intro s hs t ht hst
+  apply sum_le_sum
+  intro p hp
+  exact max_le_max le_rfl (sub_le_sub_right (cutoff_monotoneOn hs ht hst) _)
+
 theorem response_global_lipschitz {S : Finset ℕ} (hS : naturalSupport S)
     {H s t : ℝ} (hH : 1 < H) (hs : H ≤ s) (ht : H ≤ t) :
     |responseClock S t - responseClock S s| ≤ (25 / 36 : ℝ) * |t - s| := by
+  have hs1 : s ∈ Ici (1 : ℝ) := hH.le.trans hs
+  have ht1 : t ∈ Ici (1 : ℝ) := hH.le.trans ht
   rcases le_total s t with hst | hts
   · by_cases heq : s = t
     · subst t
       simp
     · have hinc := response_increment_le_global hS (lt_of_lt_of_le hH hs) (lt_of_le_of_ne hst heq)
-      rw [abs_of_nonneg (sub_nonneg.mpr hst), abs_of_nonneg (sub_nonneg.mpr hst)]
+      have hresponse := response_monotoneOn S hs1 ht1 hst
+      rw [abs_of_nonneg (sub_nonneg.mpr hresponse), abs_of_nonneg (sub_nonneg.mpr hst)]
       exact hinc
   · by_cases heq : t = s
     · subst s
       simp
     · have hinc := response_increment_le_global hS (lt_of_lt_of_le hH ht) (lt_of_le_of_ne hts heq)
-      rw [abs_of_nonpos (sub_nonpos.mpr hts), abs_of_nonpos (sub_nonpos.mpr hts)]
-      nlinarith
+      have hresponse := response_monotoneOn S ht1 hs1 hts
+      rw [abs_of_nonpos (sub_nonpos.mpr hresponse), abs_of_nonpos (sub_nonpos.mpr hts)]
+      linarith
 
 private lemma response_interval_contracts {S : Finset ℕ} (hS : naturalSupport S)
     {u v : ℝ} (hu : 1 < u) (huv : u < v) :
