@@ -6,7 +6,55 @@ Price removal for integrable moving profiles has a negligible mean-square error.
 
 Let E be locally bounded and Borel measurable, let g be an integrable Borel profile on (0,1), and put H(x)=x^theta. The unweighted response is sqrt(x)*P(H(x),g,x), where P is the profile average. The weighted response inserts rho(x,u)=w(x+u)/w(x) into the defining integral.
 
-**Theorem 1.1 (Local square integrability).**
+**Theorem 1.1 (Joint measurability of the price ratio).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/WeightRemoval.price_measurable`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/WeightRemoval.price_measurable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The map (x,u) to w(x+u)/w(x) is Borel measurable, using the explicit logarithmic formula for w.
+
+**Theorem 1.2 (Exact unit-profile representation).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/WeightRemoval.normalized_eq`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/WeightRemoval.normalized_eq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For x>0 and any real exponent theta, the weighted profile response divided by sqrt(x) equals x^(-theta) times the integral over s in (0,1) of g(s), the increment E(x+s*x^theta)-E(x), and the price ratio at that displacement. This is the change of variables u=s*x^theta in the defining profile integral.
+
+**Theorem 1.3 (Uniform compact bound for moving increments).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/WeightRemoval.local_increment_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/WeightRemoval.local_increment_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For locally bounded measurable E, any real theta and 0<a<=b, there is M>=0 bounding the absolute value of E(x+s*x^theta)-E(x) simultaneously for a<=x<=b and 0<=s<=1. Continuity bounds x^theta on the compact spatial interval, and local boundedness controls both endpoints.
+
+**Theorem 1.4 (Joint measurability of moving increments).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/WeightRemoval.increment_measurable`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/WeightRemoval.increment_measurable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For locally bounded Borel measurable E and every real theta, the map (x,s) to E(x+s*x^theta)-E(x) is Borel measurable. This follows by composing E with the measurable endpoint maps and subtracting.
+
+**Theorem 1.5 (Local square integrability).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/WeightRemoval.profileResponse_normalized_memLp`
 
@@ -18,7 +66,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/WeightRemoval.profileResponse_n
 
 For every real theta and every 3<=a<=b, the weighted response divided by sqrt(x) belongs to L2([a,b],dx). Rescaling to (0,1) shows measurability. Compact boundedness of the increments, 0<=rho<=1, and positivity of x^theta give a uniform bound by a constant times the L1 norm of g.
 
-**Theorem 1.2 (Pointwise arithmetic error).**
+**Theorem 1.6 (Pointwise arithmetic error).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/WeightRemoval.profile_weight_removal_pointwise`
 
@@ -30,7 +78,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/WeightRemoval.profile_weight_re
 
 For 0<theta<1, assume the von Koch bound |E(x)|<=C*sqrt(x)*log(x)^2 eventually. The difference between weighted and unweighted responses is O(log(x)^2 times the integral of s*|g(s)| on (0,1)). The displacement bound 1-rho(x,u)<=4*u/x and the uniform von Koch bound for increments of length at most x^theta give this estimate for arbitrary integrable profiles.
 
-**Theorem 1.3 (Negligible mean-square error from the variance band).**
+**Theorem 1.7 (Negligible mean-square error from the variance band).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/WeightRemoval.profile_weight_removal_l2`
 
@@ -44,6 +92,10 @@ Assume a variance asymptotic uniform on the exponent band 0<alpha<theta<beta<1. 
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/WeightRemoval.increment_measurable`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/WeightRemoval.local_increment_bound`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/WeightRemoval.normalized_eq`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/WeightRemoval.price_measurable`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/WeightRemoval.profileResponse_normalized_memLp`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/WeightRemoval.profile_weight_removal_l2`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/WeightRemoval.profile_weight_removal_pointwise`

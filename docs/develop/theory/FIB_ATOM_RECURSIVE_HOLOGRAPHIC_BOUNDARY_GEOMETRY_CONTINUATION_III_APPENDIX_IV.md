@@ -3161,3 +3161,204 @@ and the basis of $\mathcal R_u$ gives unique coefficients $a_{y\ell}$. Summing t
 **Corollary 199.3 (rank-three and rank-four search interfaces).** In the rank-three branch, $d_u=1$: the radical fibre is described by one zero-sum coefficient column, and a genuine rank-three correction requires that column to be nonzero. In the rank-four branch, $d_u=2$: it is described by two zero-sum columns, and a genuine rank-four correction requires them to be linearly independent. A proposed fixed quotient lift with no feasible matrix of the required column rank cannot realize that rank branch.
 
 The feasible set can be convex even when its full-rank stratum is empty; convex feasibility alone therefore does not produce a radical of the desired dimension. This reduction removes the nonlinear residual equations only after the quotient identity is established and leaves arbitrary partition realization, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization open.
+
+## 200. Full radical rank meets a pointwise boundary
+
+The coefficient body in Section 199 separates residual closure from pointwise legality, but its full-column-rank stratum can still be empty. The relevant distinction is between a uniformly interior lift and a lift that is forced onto the boundary of one or more pointwise simplex inequalities.
+
+**Definition 200.1 (uniformly interior coefficient lift).** Retain Definition 199.1 and write
+
+$$
+\mathscr A_u
+ =\left\{A\in\mathbb R^{4\times d_u}:
+   \sum_{y\in\mathcal L}a_{y\ell}=0
+   \text{ for every }\ell\right\}.
+\tag{200.1}
+$$
+
+For a chosen bounded Borel representative and $x\in G$, put
+
+$$
+\lambda_{y,x}(A)
+ =S_u(f_y)(x)+\sum_{\ell=1}^{d_u}a_{y\ell}r_\ell(x).
+\tag{200.2}
+$$
+
+Thus $\mathscr P_u$ is the intersection of $\mathscr A_u$ with the half-spaces $\lambda_{y,x}(A)\ge0$. Define its uniformly interior part by
+
+$$
+\mathscr P_u^{\mathrm{ui}}
+ =\left\{A\in\mathscr P_u:
+   \text{there is an }\varepsilon>0\text{ with }
+   \lambda_{y,x}(A)\ge\varepsilon
+   \text{ for every }y\in\mathcal L,\ x\in G\right\}.
+\tag{200.3}
+$$
+
+This is a uniform pointwise condition; positivity merely almost everywhere does not by itself imply (200.3).
+
+**Proposition 200.2 (uniform interior produces the required radical rank).** Suppose $d_u\le2$ and $\mathscr P_u^{\mathrm{ui}}$ is nonempty. Then
+
+$$
+\mathscr P_u^{\mathrm{full}}
+ :=\{A\in\mathscr P_u:\operatorname{rank}A=d_u\}
+\ne\varnothing.
+\tag{200.4}
+$$
+
+More explicitly, if $A_0\in\mathscr P_u^{\mathrm{ui}}$, then every $D\in\mathscr A_u$ has $A_0+tD\in\mathscr P_u$ for all sufficiently small $|t|$. One may choose $D$ with column rank $d_u$, and then choose such a $t$ for which $A_0+tD$ also has column rank $d_u$.
+
+*Proof.* Let $\varepsilon$ witness (200.3). For $D\in\mathscr A_u$, boundedness of the chosen $r_\ell$ gives a finite constant
+
+$$
+C_D=\sup_{y\in\mathcal L,\ x\in G}
+\left|\sum_{\ell=1}^{d_u}d_{y\ell}r_\ell(x)\right|.
+$$
+
+Whenever $|t|C_D\le\varepsilon$, equation (200.2) gives
+
+$$
+\lambda_{y,x}(A_0+tD)
+\ge \lambda_{y,x}(A_0)-|t|C_D\ge0,
+$$
+
+so $A_0+tD$ remains in $\mathscr P_u$. For $d_u=1$, take any nonzero zero-sum column; only at most one value of $t$ can make that column vanish. For $d_u=2$, take, for example, the two zero-sum columns
+
+$$
+(1,-1,0,0)^{\mathsf T},
+\qquad
+(0,0,1,-1)^{\mathsf T}.
+$$
+
+The $2\times2$ minors of $A_0+tD$ are polynomials in $t$, and the coefficient of $t^2$ in at least one of them is a nonzero $2\times2$ minor of $D$. Hence these minors are not all identically zero, so arbitrarily small admissible $t$ can be chosen with rank two. The case $d_u=0$ is vacuous. \(\square\)
+
+**Corollary 200.3 (a necessary boundary condition for rank obstruction).** If $\mathscr P_u^{\mathrm{full}}=\varnothing$, then
+
+$$
+\inf_{y\in\mathcal L,\ x\in G}\lambda_{y,x}(A)=0
+\qquad\text{for every }A\in\mathscr P_u.
+\tag{200.5}
+$$
+
+Thus a rank-three or rank-four obstruction cannot be certified by inspecting a single feasible matrix that happens to lie on a boundary. Every feasible matrix must fail the uniform interior condition, either through an attained pointwise zero or through a sequence of positive values tending to zero. The latter asymptotic boundary is distinct from an exact active constraint.
+
+*Proof.* If the infimum in (200.5) were positive for some feasible $A$, that $A$ would belong to $\mathscr P_u^{\mathrm{ui}}$, and Proposition 200.2 would produce a full-column-rank feasible matrix. \(\square\)
+
+**Definition 200.4 (persistent active boundary).** Assume $\mathscr P_u$ is nonempty. Let
+
+$$
+\mathcal I_u
+ =\left\{(y,x):
+   \lambda_{y,x}(A)=0\text{ for every }A\in\mathscr P_u\right\}
+\tag{200.6}
+$$
+
+be the set of inequalities active throughout the whole coefficient body, and define its direction space by
+
+$$
+\mathscr V_u
+ =\left\{D\in\mathscr A_u:
+   \sum_{\ell=1}^{d_u}d_{y\ell}r_\ell(x)=0
+   \text{ for every }(y,x)\in\mathcal I_u\right\}.
+\tag{200.7}
+$$
+
+The set $\mathcal I_u$ records constraints that are forced by the entire feasible body, rather than zeros that occur only at one selected lift.
+
+**Proposition 200.5 (persistent-boundary rank certificate).** For any $A_0\in\mathscr P_u$,
+
+$$
+\mathscr P_u\subseteq A_0+\mathscr V_u.
+\tag{200.8}
+$$
+
+If every $d_u\times d_u$ minor vanishes on the affine space $A_0+\mathscr V_u$, then
+
+$$
+\mathscr P_u^{\mathrm{full}}=\varnothing.
+\tag{200.9}
+$$
+
+Conversely, a full-column-rank feasible lift requires at least one such minor to be nonzero on $A_0+\mathscr V_u$. In the rank-three case this means that the persistent active equations must not force the unique coefficient column to vanish; in the rank-four case they must not force the two coefficient columns to remain linearly dependent.
+
+*Proof.* Let $A\in\mathscr P_u$. For every $(y,x)\in\mathcal I_u$, both $\lambda_{y,x}(A)$ and $\lambda_{y,x}(A_0)$ are zero. Subtracting (200.2) gives
+
+$$
+\sum_{\ell=1}^{d_u}(a_{y\ell}-a_{0,y\ell})r_\ell(x)=0,
+$$
+
+so $A-A_0\in\mathscr V_u$, proving (200.8). If all maximal minors vanish on $A_0+\mathscr V_u$, every matrix in $\mathscr P_u$ has column rank strictly below $d_u$, which is (200.9). The converse is the definition of full column rank. \(\square\)
+
+Sections 199 and 200 therefore give a two-stage finite-dimensional interface. First, the affine equations and pointwise inequalities define $\mathscr P_u$ and automatically close all sixty-four residuals. Second, a target rank requires either a uniformly interior coefficient lift or a direct nonvanishing maximal minor that survives every persistent active boundary. Failure of the first route does not prove failure of the second, and an active boundary at one lift does not constrain the whole body. The existence of a rank-three or rank-four arbitrary partition, the evaluation of these boundary conditions for concrete candidates, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization remain open.
+
+## 201. Convex rank-one rigidity in the two radical branches
+
+The boundary criterion of Section 200 becomes exact in the two nontrivial radical dimensions. Convexity leaves no intermediate geometry once every feasible coefficient matrix has deficient column rank.
+
+**Definition 201.1 (the zero-sum coefficient space).** Put
+
+$$
+\mathsf H
+ =\left\{c\in\mathbb R^4:
+   \sum_{y\in\mathcal L}c_y=0\right\}.
+\tag{201.1}
+$$
+
+For $d_u=1$, a coefficient matrix is a single column in $\mathsf H$. For $d_u=2$, it is a $4\times2$ matrix whose two columns lie in $\mathsf H$.
+
+**Proposition 201.2 (rank-one ruling dichotomy).** Assume that $\mathscr P_u$ is nonempty.
+
+1. If $d_u=1$, then
+
+$$
+\mathscr P_u^{\mathrm{full}}\ne\varnothing
+\quad\Longleftrightarrow\quad
+\mathscr P_u\not\subseteq\{0\}.
+\tag{201.2}
+$$
+
+2. If $d_u=2$ and $\mathscr P_u^{\mathrm{full}}=\varnothing$, then one of the following two alternatives holds:
+
+$$
+\mathscr P_u
+ \subseteq
+ \{c z^{\mathsf T}:z\in\mathbb R^2\}
+ \quad\text{for some }0\ne c\in\mathsf H,
+\tag{201.3}
+$$
+
+or
+
+$$
+\mathscr P_u
+ \subseteq
+ \{v w^{\mathsf T}:v\in\mathsf H\}
+ \quad\text{for some }0\ne w\in\mathbb R^2.
+\tag{201.4}
+$$
+
+The first alternative fixes a common column direction, while the second fixes a common row direction. Conversely, either inclusion in (201.3) or (201.4) implies $\mathscr P_u^{\mathrm{full}}=\varnothing$.
+
+*Proof.* The first assertion is the definition of column rank for a single column. For the second, let $\mathscr C$ be the positive cone generated by $\mathscr P_u$. Since $\mathscr P_u$ is convex and every one of its matrices has rank at most one, every nonzero element of $\mathscr C$ is a positive scalar multiple of a convex combination of feasible matrices and therefore also has rank at most one.
+
+If $X,Y\in\mathscr C$, every $2\times2$ minor of $X+tY$ vanishes for $t\ge0$, because $X+tY\in\mathscr C$. Each minor is a polynomial in $t$, so it vanishes identically. Splitting arbitrary coefficients into positive and negative parts now shows that every matrix in the linear space
+
+$$
+\mathscr L=\operatorname{span}_{\mathbb R}\mathscr P_u
+\tag{201.5}
+$$
+
+has rank at most one.
+
+If $\mathscr P_u=\{0\}$, both alternatives are vacuous and the conclusion is immediate. Otherwise choose a nonzero $A_0\in\mathscr L$ and write $A_0=uv^{\mathsf T}$. For any $B\in\mathscr L$, the pencil $A_0+tB$ has rank at most one for every real $t$. The $2\times2$ minors of this pencil then imply that either every column of $B$ is proportional to $u$, or every row of $B$ is proportional to $v$. If the first alternative holds for every $B$, (201.3) follows. Otherwise choose $B$ of the second type whose columns are not all proportional to $u$. For an arbitrary $C\in\mathscr L$, a first-type $C$ whose rows were not proportional to $v$ would make $B+C$ have rank two, contradicting the rank-one property of $\mathscr L$. Hence every $C$ is of the second type, which gives (201.4). The converse is immediate because every matrix in either displayed family has rank at most one. \(\square\)
+
+**Corollary 201.3 (a direct rank-four feasibility test).** In the rank-three branch, one nonzero feasible coefficient column is sufficient to realize the full radical dimension. In the rank-four branch, a full-rank lift exists if and only if the feasible body escapes both fixed-factor rulings (201.3) and (201.4). In particular, it is enough to find $A,B\in\mathscr P_u$ such that one $2\times2$ minor of
+
+$$
+\frac{A+B}{2}
+\tag{201.6}
+$$
+
+is nonzero; convexity then makes the midpoint itself a rank-four feasible lift. Conversely, if every feasible midpoint has all $2\times2$ minors zero, Proposition 201.2 places the entire body in one of the two rank-one rulings.
+
+This dichotomy sharpens the boundary interface without solving the pointwise inequalities: rank-three exclusion requires the one-column body to collapse to zero, while rank-four exclusion requires a fixed-factor identity across the whole convex body. It does not evaluate those identities for an arbitrary partition or settle $F_{64}$, $H43$, SRS\text{-}20, physical succession or Lean/kernel formalization.
