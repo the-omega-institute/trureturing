@@ -1027,7 +1027,7 @@ private theorem cyclicGamma_bounds {a b c : ℝ}
     field_simp [hd, he, hf, hd', he', hf']
     ring_nf
     rw [hs₁, hs₂, hs₃]
-    unfold spectralDen cyclicPolynomial
+    unfold cyclicPolynomial spectralDen
     ring
   have hres : (3/4)*(spectralRho a b^2+spectralRho b c^2+spectralRho c a^2)-
       cyclicGamma a b c = 3/(16*denomProduct^2)*
@@ -1129,9 +1129,10 @@ private theorem defect_kernel_uniform {a b c : ℝ}
   have hfW : f*(2*W)*(a+c) ≤ 16/9 ∧ f*(2*W)*(b+c) ≤ 16/9 := by
     have hf₁ : f*(2*W) ≤ (16/9)*(a+b)*c/W := by
       dsimp only [f]
-      apply (div_le_iff₀ hW).mpr
+      apply (le_div_iff₀ hW).mpr
       have hid : 3*c*Real.sqrt (a*b)/(4*denomProduct)*(2*W)*W =
-          (3/2)*c*Real.sqrt (a*b)*W^2/denomProduct := by field_simp [hdenomProduct.ne']; ring
+          (3/2)*c*Real.sqrt (a*b)*W^2/denomProduct := by
+        field_simp [hdenomProduct.ne'] <;> ring
       rw [hid]
       apply (div_le_iff₀ hdenomProduct).mpr
       have h₁ := mul_le_mul_of_nonneg_left hsqrt (by positivity : 0 ≤ (3/4)*c*W^2)
@@ -1142,14 +1143,12 @@ private theorem defect_kernel_uniform {a b c : ℝ}
       have hid : ((16/9)*(a+b)*c/W)*(a+c) = (16/9)*c/(b+c) := by
         dsimp only [W]
         field_simp [(add_pos ha hb).ne', (add_pos ha hc).ne', (add_pos hb hc).ne']
-        ring
       rw [hid] at h
       exact h.trans ((div_le_iff₀ (add_pos hb hc)).mpr (by linarith))
     · have h := mul_le_mul_of_nonneg_right hf₁ (add_pos hb hc).le
       have hid : ((16/9)*(a+b)*c/W)*(b+c) = (16/9)*c/(a+c) := by
         dsimp only [W]
         field_simp [(add_pos ha hb).ne', (add_pos ha hc).ne', (add_pos hb hc).ne']
-        ring
       rw [hid] at h
       exact h.trans ((div_le_iff₀ (add_pos ha hc)).mpr (by linarith))
   have hd₁ := spectralRho_distance ha hc
@@ -1639,8 +1638,9 @@ theorem finite_spectrum_uniform_local_supplier {d : ℕ} (p : Fin d → ℝ)
     (frob H^2-frob A^2)/6 ≤
       (B 3+(2 : ℝ) • (Z*B 2)+B 1*Z^2-(5/48 : ℝ) • (B 1)^3).trace.re := by
   dsimp only
+  change (frob H^2-frob (schurFirst p H)^2)/6 ≤ _
   simpa only [actualCoeff, RpowPencilTaylor.jetCoeff, pencilDirection,
-    balanceP_rpow hp, rootP, tr, schurFirst] using actual_uniform_supplier hp hH hradius hZ
+    balanceP_rpow hp, rootP, tr] using actual_uniform_supplier hp hH hradius hZ
 
 #print axioms finite_spectrum_uniform_local_supplier
 end UniformActual
