@@ -47,9 +47,6 @@ $(x-n)(y-n)=n^2$, ordered by size. The swap involution has precisely the
 fixed pair $(n,n)$; consequently $2b(n)=\tau(n^2)+1$, including the diagonal
 $(x,y)=(2n,2n)$.
 
-The fourth-power-free divisor count is the capped exponent-box count
-$\prod_{p\mid n}(1+\min(v_p(n),3))$.
-The native ceiling divisor sum is a staircase sum over the full exponent box.
 The canonical Mathlib Dirichlet inverse satisfies the stated recursion, whose
 positive-domain solution is unique. No value at zero occurs in 'claim'.
 
@@ -59,7 +56,11 @@ There is no Lean theorem 'result : claim'. The missing universal bridge is
 $$
 b(n)=\sum_{d\mid n}a(d)g(n/d).
 $$
-In the finite-prime-support argument, its missing formal ingredients are the
+The native fourth-power-free divisor count still needs its capped exponent-box
+bridge $\prod_{p\mid n}(1+\min(v_p(n),3))$ in a live proof. The native ceiling
+sum similarly needs its full exponent-box staircase bridge. These direct
+library applications require an actual consumer in the whole proof.
+In the finite-prime-support argument, the missing formal ingredients are the
 coefficient encodings, lawful series identities, the residue characterization
 of the zero-or-one coefficient gamma, and the integral parity descent
 $h\bmod2=\gamma$. The final inverse-convolution cancellation also remains to

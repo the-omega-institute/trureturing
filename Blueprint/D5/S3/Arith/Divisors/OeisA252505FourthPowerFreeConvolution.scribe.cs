@@ -79,22 +79,11 @@ internal sealed class OeisA252505FourthPowerFreeConvolutionDocument : IScribeDoc
                     Eq(Multiply(D(2), Call("b", N)),
                         Add(Cast(Call("tau", Pow(N, D(2))), "Int"), D(1))))),
                 "Swap the two factors. Each off-diagonal orbit has two entries; the unique fixed pair is (n,n). Thus 2b(n)=tau(n^2)+1. This derives the formula from the rational solution definition, including x=y=2n."),
-            Thm("fourth_power_free_divisor_count", "The complete capped exponent count",
-                All("n", Implies(Lt(D(0), N), Eq(Call("a", N),
-                    Cast(App(Q("Finset", "prod"), App(Q("Nat", "primeFactors"), N),
-                        Fun("p", Add(Call("min", App(Q("Nat", "factorization"), N, F.Id("p")), D(3)), D(1)))), "Int")))),
-                "The canonical divisor/factorization equivalence restricts to exactly those exponent vectors with each coordinate at most three. Counting their finite box gives the product. Empty prime support gives one."),
-            Thm("ceiling_sum_exponent_box", "The full ceiling staircase",
-                All("n", Implies(Lt(D(0), N), Eq(Call("h", N),
-                    Sum(App(Q("Finset", "Iic"), App(Q("Nat", "factorization"), N)), "f",
-                        Cast(Ceil(Frac(Cast(App(Q("Finset", "card"),
-                            App(Q("Finset", "Iic"), F.Id("f"))), "Rat"), D(2))), "Int"))))),
-                "Every divisor corresponds to one exponent vector f bounded by the factorization of n; its own divisor count is the cardinality of Iic f. Both correspondences reuse the pinned Mathlib divisor-box map."),
             Thm("inverse_recursion_unique", "Uniqueness on the full positive domain",
                 AllFunction("v", Implies(Call("InverseRecursion", F.Id("v")),
                     All("n", Implies(Lt(D(0), N), Eq(Call("v", N), Call("c", N)))))),
                 "Strong induction uses only positive proper divisors, each strictly smaller than n. The n=1 clause comes directly from the specification. The arbitrary value v(0) is immaterial."),
-            Paragraph(Text("The remaining whole gap is b=a*g for the independently defined functions. A finite-prime-support series proof must still encode divisor convolution, prove its series identities, prove the zero-or-one coefficient law, and descend the integral identity before reducing modulo two. Final inverse cancellation is then required. These missing steps are not certified by the native bridges above."))
+            Paragraph(Text("The remaining whole gap is b=a*g for the independently defined functions. The remaining native fourth-power-free and ceiling exponent-box bridges require a real whole-proof consumer. A finite-prime-support series proof must then encode divisor convolution, prove its series identities, prove the zero-or-one coefficient law, and descend the integral identity before reducing modulo two. Final inverse cancellation is then required. These missing steps are not certified by the native bridges above."))
         )));
 
     private static DocumentBlock Def(string name, string title, Formula formula, string prose) =>

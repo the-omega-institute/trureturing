@@ -6,12 +6,28 @@
    utility: none
    digest: Native counting and inverse definitions for the whole A252505 convolution. -/
 
+/- Declaration form.
+   FourthPowerFree, a, UnitFractionPair, b, tau, h, g, c, claim,
+   InverseRecursion, factorPairs: definitions.
+   gFunction, gOneInvertible: private implementation definitions.
+   unitFractionEquiv: content construction; consumer=unit_fraction_count.
+   g_one: bind-only; consumers=gOneInvertible,c_recursion.
+   unit_fraction_iff_factor: content; consumer=unitFractionEquiv.
+   unit_fraction_count: content; consumer=unit_fraction_divisor_formula.
+   c_recursion: bind-only; consumer=inverse_recursion_unique.
+   factor_pair_balance: content; consumer=unit_fraction_divisor_formula.
+   unit_fraction_divisor_formula: content.
+   inverse_recursion_unique: content (strong induction on positive proper divisors).
+   No whole-problem admission is claimed: claim has no settling theorem.
+   The proposed complete-result basis is open-problem-resolution (#27491).
+   Computational content: none; all proved statements are unbounded symbolic statements.
+   The unfinished source-family audit is https://github.com/the-omega-institute/trureturing/issues/27506.
+-/
+
 import Mathlib.NumberTheory.ArithmeticFunction.Defs
-import Mathlib.NumberTheory.ArithmeticFunction.Misc
 import Mathlib.Data.Rat.Floor
 import Mathlib.Data.Finset.Card
 import Mathlib.SetTheory.Cardinal.Finite
-import Mathlib.Data.Nat.Factorization.Divisors
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -209,97 +225,6 @@ theorem unit_fraction_divisor_formula (n : ℕ) (hn : 0 < n) :
     2 * b n = (tau (n ^ 2) : ℤ) + 1 := by
   rw [unit_fraction_count n hn]
   exact factor_pair_balance n hn
-
-private def cappedExponents (f : ℕ →₀ ℕ) : ℕ →₀ ℕ :=
-  f.mapRange (fun e => min e 3) (by decide)
-
-private theorem fourth_power_free_iff {d : ℕ} (hd : d ≠ 0) :
-    FourthPowerFree d ↔ ∀ p : ℕ, d.factorization p ≤ 3 := by
-  constructor
-  · intro H p
-    by_cases hp : p.Prime
-    · have hh := H p hp
-      rw [hp.pow_dvd_iff_le_factorization hd] at hh
-      omega
-    · rw [Nat.factorization_eq_zero_of_not_prime d hp]
-      omega
-  · intro H p hp hdiv
-    have hh := (hp.pow_dvd_iff_le_factorization hd).mp hdiv
-    have := H p
-    omega
-
-private theorem capped_le (f : ℕ →₀ ℕ) : cappedExponents f ≤ f := by
-  intro p
-  exact min_le_left _ _
-
-/-- The fourth-power-free divisors form the full capped exponent box. -/
-private theorem fourth_power_free_divisor_box (n : ℕ) (hn : 0 < n) :
-    a n = ((Finset.Iic (cappedExponents n.factorization)).card : ℤ) := by
-  classical
-  have hn0 := hn.ne'
-  rw [a, Nat.divisors_eq_map_attach_Iic_factorization_prod_pow hn0,
-    Finset.filter_map]
-  have hf : ∀ v : ↥(Finset.Iic n.factorization),
-      FourthPowerFree (v.val.prod (· ^ ·)) ↔ v.val ≤ cappedExponents n.factorization := by
-    intro v
-    have hv : v.val ≤ n.factorization := Finset.mem_Iic.mp v.property
-    have hd : v.val.prod (· ^ ·) ≠ 0 :=
-      ne_zero_of_dvd_ne_zero hn0 (Nat.prod_pow_dvd_of_le_factorization hv)
-    rw [fourth_power_free_iff hd, Nat.factorization_prod_pow_eq_self_of_le_factorization hv]
-    constructor
-    · intro H p
-      exact le_min (hv p) (H p)
-    · intro H p
-      exact (le_min_iff.mp (H p)).2
-  simp only [Function.Embedding.coeFn_mk]
-  rw [Finset.card_map]
-  simp only [Function.comp_apply]
-  simp_rw [hf]
-  have he :
-      ((Finset.Iic n.factorization).attach.filter
-        (fun v => v.val ≤ cappedExponents n.factorization)).card =
-        (Finset.Iic (cappedExponents n.factorization)).card := by
-    apply Finset.card_bij (fun v _ => v.val)
-    · intro v hv
-      exact Finset.mem_Iic.mpr (Finset.mem_filter.mp hv).2
-    · intro u hu v hv huv
-      exact Subtype.ext huv
-    · intro v hv
-      have hv' := Finset.mem_Iic.mp hv
-      refine ⟨⟨v, Finset.mem_Iic.mpr (hv'.trans (capped_le _))⟩, ?_, rfl⟩
-      exact Finset.mem_filter.mpr ⟨Finset.mem_attach _ _, hv'⟩
-  exact_mod_cast he
-
-/-- All prime exponents contribute, with precisely the fourth-power-free cap. -/
-theorem fourth_power_free_divisor_count (n : ℕ) (hn : 0 < n) :
-    a n = ((∏ p ∈ n.primeFactors, (min (n.factorization p) 3 + 1)) : ℕ) := by
-  rw [fourth_power_free_divisor_box n hn, Finsupp.card_Iic]
-  have hs : (cappedExponents n.factorization).support = n.primeFactors := by
-    ext p
-    simp [cappedExponents, Finsupp.mem_support_iff, Nat.mem_primeFactors,
-      Nat.factorization_eq_zero_iff]
-  rw [hs]
-  simp only [Nat.card_Iic, cappedExponents, Finsupp.mapRange_apply]
-
-/-- The native ceiling divisor sum is a full exponent-box staircase sum. -/
-theorem ceiling_sum_exponent_box (n : ℕ) (hn : 0 < n) :
-    h n = ∑ f ∈ Finset.Iic n.factorization,
-      (⌈(((Finset.Iic f).card : ℚ) / 2)⌉₊ : ℤ) := by
-  classical
-  rw [h, Nat.divisors_eq_map_attach_Iic_factorization_prod_pow hn.ne', Finset.sum_map]
-  simp only [Function.Embedding.coeFn_mk]
-  have ht : ∀ v : ↥(Finset.Iic n.factorization),
-      tau (v.val.prod (· ^ ·)) = (Finset.Iic v.val).card := by
-    intro v
-    have hv : v.val ≤ n.factorization := Finset.mem_Iic.mp v.property
-    have hd : v.val.prod (· ^ ·) ≠ 0 :=
-      ne_zero_of_dvd_ne_zero hn.ne' (Nat.prod_pow_dvd_of_le_factorization hv)
-    rw [tau, Nat.divisors_eq_map_attach_Iic_factorization_prod_pow hd,
-      Finset.card_map, Finset.card_attach,
-      Nat.factorization_prod_pow_eq_self_of_le_factorization hv]
-  simp_rw [ht]
-  exact Finset.sum_attach (Finset.Iic n.factorization)
-    (fun f : ℕ →₀ ℕ => (⌈(((Finset.Iic f).card : ℚ) / 2)⌉₊ : ℤ))
 
 /-- The source recursion has a unique positive-domain solution. -/
 theorem inverse_recursion_unique (v : ℕ → ℤ) (hv : InverseRecursion v) :
