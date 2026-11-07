@@ -94,7 +94,7 @@ internal sealed class MeasurableNonautonomousDysonPhillipsDocument : IScribeDocu
     private static Formula Sum(Formula t,Formula r,Formula x) => Call("sum",S,B,t,r,x);
     private static Formula U(Formula t,Formula r) => At(F.Id("Phi"),B,t,r);
     private static Formula Value(Formula t,Formula r,Formula x) => At(U(t,r),x);
-    private static Formula Integrand(Formula t,Formula v) => Lam("s",Real,Action(Subtract(t,F.Id("s")),At(At(B,F.Id("s")),At(v,F.Id("s")))));
+    private static Formula Integrand(Formula t,Formula v) => Lam("s",Real,Action(Subtract(t,F.Id("s")),At(At(B,F.Id("s")),At(Seq(Open,v,Close),F.Id("s")))));
     private static Formula Integral(Formula t,Formula v) => Call("intervalIntegral",Call("volume"),R,t,Integrand(t,v));
     private static Formula Int(Formula t,Formula v) => Call("IntervalIntegrable",Integrand(t,v),Call("volume"),R,t);
     private static Formula Triangle(Formula t,Formula r) => Conj(Le(Zero,r),Le(r,t),Le(t,Horizon));

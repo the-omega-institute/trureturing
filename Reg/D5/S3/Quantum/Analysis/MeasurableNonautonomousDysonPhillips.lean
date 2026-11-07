@@ -72,7 +72,8 @@ def family : Registration arena (type_of% (@clock_moment)) where
     have hb : (1 : ℝ) = 0 := Eq.mp (congrFun he 0) rfl
     norm_num at hb
 
-def audit : Contract.Registration (@clock_moment) (Realization scalarSignature) (Type) Unit where
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@clock_moment) (Realization scalarSignature) (Type) Unit where
   unitName := `D5.S3.Quantum.Analysis.MeasurableNonautonomousDysonPhillips.clock_momentUnit
   realizationName := `Reg.D5.S3.Quantum.Analysis.MeasurableNonautonomousDysonPhillips.Clock.family
   realizationSource := none
@@ -156,7 +157,8 @@ def family : Registration arena.{u} (type_of% (@measurable_causal_iterate_bound.
     have hb : (1 : ℝ) ≤ 0 := Eq.mp (congrFun he 0) le_rfl
     norm_num at hb
 
-def audit : Contract.Registration (@measurable_causal_iterate_bound.{u}) (Realization scalarSignature) (Type) Unit where
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@measurable_causal_iterate_bound.{u}) (Realization scalarSignature) (Type) Unit where
   unitName := `D5.S3.Quantum.Analysis.MeasurableNonautonomousDysonPhillips.measurable_causal_iterate_boundUnit
   realizationName := `Reg.D5.S3.Quantum.Analysis.MeasurableNonautonomousDysonPhillips.Iterate.family
   realizationSource := none
@@ -248,7 +250,8 @@ def family : Registration arena.{u} (type_of% (@measurable_series.{u})) where
     have h : Summable (fun _ : ℕ => (1 : ℝ)) := Eq.mp he (by simp [actual, realize])
     simpa [summable_const_iff] using h
 
-def audit : Contract.Registration (@measurable_series.{u}) (Realization signature) (Type) Unit where
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@measurable_series.{u}) (Realization signature) (Type) Unit where
   unitName := `D5.S3.Quantum.Analysis.MeasurableNonautonomousDysonPhillips.measurable_seriesUnit
   realizationName := `Reg.D5.S3.Quantum.Analysis.MeasurableNonautonomousDysonPhillips.Series.family
   realizationSource := none
@@ -349,7 +352,8 @@ def family : Registration arena.{u} (type_of% (@continuous_residual_eq_zero.{u})
     have hb : (1 : ULift.{u} ℂ) = 0 := Eq.mp (congrFun he 0) rfl
     exact one_ne_zero (congrArg ULift.down hb)
 
-def audit : Contract.Registration (@continuous_residual_eq_zero.{u}) (Realization signature) (Type (u+1)) Unit where
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@continuous_residual_eq_zero.{u}) (Realization signature) (Type (u+1)) Unit where
   unitName := `D5.S3.Quantum.Analysis.MeasurableNonautonomousDysonPhillips.continuous_residual_eq_zeroUnit
   realizationName := `Reg.D5.S3.Quantum.Analysis.MeasurableNonautonomousDysonPhillips.Residual.family
   realizationSource := none
@@ -464,7 +468,8 @@ def family : Registration arena.{u} (type_of% (@measurable_evolution.{u})) where
     have hb : (1 : ℝ) ≤ 0 := Eq.mp (congrFun he 0) le_rfl
     norm_num at hb
 
-def audit : Contract.Registration (@measurable_evolution.{u}) (Realization scalarSignature) (Type) Unit where
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@measurable_evolution.{u}) (Realization scalarSignature) (Type) Unit where
   unitName := `D5.S3.Quantum.Analysis.MeasurableNonautonomousDysonPhillips.measurable_evolutionUnit
   realizationName := `Reg.D5.S3.Quantum.Analysis.MeasurableNonautonomousDysonPhillips.Evolution.family
   realizationSource := none
