@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Global original heat smoothing into the existing coherent smooth domain and compact tails. -/
+   digest: Original positive-time heat smoothing on the existing coherent smooth domain. -/
 
 import D5.S3.VertexAlgebra.Analysis.OriginalHeat
 import D5.S3.VertexAlgebra.Analysis.OriginalSmoothDomain
@@ -32,6 +32,8 @@ open Lattice.OriginalChargedEnergy SourceBPZ.OriginalMatterHermitian
 open Model
 variable (M : Model)
 
+attribute [local irreducible] Model.heat
+
 /-- Finite for every positive time; order zero is exactly one. -/
 def heatSmoothingConstant (k : ℕ) (t : ℝ) : ℝ := (max 1 ((k : ℝ) / t))^k
 
@@ -48,7 +50,7 @@ private theorem heat_scalar_bound (k : ℕ) (t E : ℝ) (ht : 0 < t) (hE : 0 ≤
     have hB : 1 ≤ B := le_max_left _ _
     have hBa : 1 ≤ B*a := by
       calc
-        1 = ((k : ℝ) / t)*a := by dsimp [a]; field_simp [ne_of_gt ht, ne_of_gt hk']; ring
+        1 = ((k : ℝ) / t)*a := by dsimp [a]; field_simp [ne_of_gt ht, ne_of_gt hk']
         _ ≤ B*a := mul_le_mul_of_nonneg_right (le_max_right _ _) ha
     have hlinear : 1+E ≤ B*(1+a*E) := by
       have hh := mul_le_mul_of_nonneg_right hBa hE
@@ -64,7 +66,10 @@ private theorem heat_scalar_bound (k : ℕ) (t E : ℝ) (ht : 0 < t) (hE : 0 ≤
         mul_le_mul_of_nonneg_right hp (Real.exp_pos _).le
       _ = B^k := by
         rw [mul_pow, ← Real.exp_nat_mul, mul_assoc, ← Real.exp_add]
-        have he : (k : ℝ) * (a*E)+(-t*E) = 0 := by dsimp [a]; field_simp [ne_of_gt ht, ne_of_gt hk']; ring
+        have he : (k : ℝ) * (a * E) + (-t * E) = 0 := by
+          dsimp [a]
+          field_simp [ne_of_gt ht, ne_of_gt hk']
+          ring
         rw [he, Real.exp_zero, mul_one]
       _ = heatSmoothingConstant k t := rfl
 
@@ -109,6 +114,8 @@ theorem heatSmoothing_bound (k : ℕ) (t : ℝ≥0) (ht : 0 < t) :
       (smoothing_constant_nonnegative k t) (smoothing_core_bound M k t ht)
   · exact LinearMap.norm_extendOfNorm_apply_le (embed_dense M 0)
       (heatSmoothingConstant k t) (smoothing_core_bound M k t ht)
+
+attribute [local irreducible] Model.heatSmoothing
 
 /-- One coherent lift through all the existing original inclusions. -/
 theorem heatSmoothing_inclusion (j k : ℕ) (hjk : j ≤ k) (t : ℝ≥0) (ht : 0 < t) :
@@ -193,9 +200,11 @@ theorem heatSmoothing_tail (k : ℕ) (t : ℝ≥0) (ht : 0 < t) (N : ℕ) :
     rw [hsplit]
     rfl
   have hr : (M.heatSmoothingTruncation k t ht N).range ≤ M.cutoffSpace k N := by
-    rintro z ⟨x,rfl⟩
-    exact (heatTruncation_range M k (t/2) N).1
-      ⟨M.heatSmoothing k (t/2) (by positivity) x, rfl⟩
+    dsimp only [Model.heatSmoothingTruncation]
+    exact (LinearMap.range_comp_le_range
+      (M.heatSmoothing k (t/2) (half_pos ht)).toLinearMap
+      (M.heatTruncation k (t/2) N).toLinearMap).trans
+      (heatTruncation_range M k (t/2) N).1
   refine ⟨heq, hr, Submodule.finiteDimensional_of_le hr, ?_⟩
   have herr : M.heatSmoothing k t ht - M.heatSmoothingTruncation k t ht N =
       (M.heat k (t/2) - M.heatTruncation k (t/2) N).comp
@@ -224,7 +233,8 @@ theorem heatSmoothing_tail (k : ℕ) (t : ℝ≥0) (ht : 0 < t) (N : ℕ) :
 theorem heatSmoothing_compact (k : ℕ) (t : ℝ≥0) (ht : 0 < t) :
     IsCompactOperator (M.heatSmoothing k t ht) := by
   rw [heatSmoothing_split M k t ht]
-  exact (heat_compact M k (t/2) (by positivity)).2.comp_clm
-    (M.heatSmoothing k (t/2) (by positivity))
+  simpa only [ContinuousLinearMap.coe_comp] using
+    (heat_compact M k (t/2) (half_pos ht)).2.comp_clm
+      (M.heatSmoothing k (t/2) (half_pos ht))
 
 end D5.S3.VertexAlgebra.Analysis.OriginalSmearing

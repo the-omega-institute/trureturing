@@ -143,7 +143,6 @@ theorem heat_inclusion (j k : ℕ) (hjk : j ≤ k) (t : ℝ≥0) :
     simp only [ContinuousLinearMap.comp_apply, heat_embed, inclusion_embed]
 
 /-- Both orders of composition with the genuine original projection have its heat weight. -/
-set_option maxHeartbeats 800000 in
 theorem heat_projection (k : ℕ) (t : ℝ≥0) (E : ℤ) (x : M.Sobolev k) :
     M.heat k t (M.projection k E x) =
         (Real.exp (-(t : ℝ) * (E : ℝ)) : ℂ) • M.projection k E x ∧
@@ -153,7 +152,9 @@ theorem heat_projection (k : ℕ) (t : ℝ≥0) (E : ℤ) (x : M.Sobolev k) :
   · exact heat_completedGrade M k t E
       ⟨M.projection k E x, (M.completedGrade k E).starProjection_apply_mem x⟩
   · refine (embed_dense M k).induction_on x ?_ ?_
-    · exact isClosed_eq (by fun_prop) (by fun_prop)
+    · exact isClosed_eq
+        ((M.projection k E).continuous.comp (M.heat k t).continuous)
+        ((M.projection k E).continuous.const_smul (Real.exp (-(t : ℝ) * (E : ℝ)) : ℂ))
     · intro v
       conv_lhs => rw [← sum_gradeProjections M.D v, map_sum, map_sum, map_sum]
       conv_rhs => rw [← sum_gradeProjections M.D v, map_sum, map_sum, Finset.smul_sum]
@@ -189,7 +190,7 @@ def Model.heatTruncation (k : ℕ) (t : ℝ≥0) (N : ℕ) :
 private theorem truncation_mem_cutoff (k N : ℕ) (x : M.Sobolev k) :
     M.truncation k (M.energyCutoff N) x ∈ M.cutoffSpace k N := by
   classical
-  change (∑ E ∈ M.energyCutoff N, M.projection k E x) ∈ M.cutoffSpace k N
+  simp only [Model.truncation, ContinuousLinearMap.sum_apply]
   apply Submodule.sum_mem
   intro E hE
   exact (Finset.le_sup (f := M.completedGrade k) hE)
@@ -216,7 +217,9 @@ private theorem heat_tail_core (k : ℕ) (t : ℝ≥0) (N : ℕ) (v : Carrier M.
   intro E _
   change M.heat k t (M.embed k _) -
     M.truncation k (M.energyCutoff N) (M.heat k t (M.embed k _)) = _
-  rw [heat_grade M k t E _ (gradeProjection_mem M.D E v), map_smul,
+  have hh := (heat_projection M k t E (M.embed k (gradeProjection M.D E v))).1
+  rw [projection_grade M k E E _ (gradeProjection_mem M.D E v), if_pos rfl] at hh
+  rw [hh, map_smul,
     truncation_grade M k (M.energyCutoff N) E _ (gradeProjection_mem M.D E v)]
   split_ifs <;> simp
 
@@ -278,7 +281,7 @@ private theorem cutoff_strong (k : ℕ) (x : M.Sobolev k) :
 private theorem heatTruncation_compact (k : ℕ) (t : ℝ≥0) (N : ℕ) :
     IsCompactOperator (M.heatTruncation k t N) := by
   let V := (M.heatTruncation k t N).range
-  letI : FiniteDimensional ℂ V := (heatTruncation_range M k t N).2
+  haveI : FiniteDimensional ℂ V := (heatTruncation_range M k t N).2
   let A : M.Sobolev k →L[ℂ] V :=
     (M.heatTruncation k t N).codRestrict V (fun x => ⟨x,rfl⟩)
   have hA : IsCompactOperator A := isCompactOperator_of_locallyCompactSpace_dom A
