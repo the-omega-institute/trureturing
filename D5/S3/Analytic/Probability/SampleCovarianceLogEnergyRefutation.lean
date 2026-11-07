@@ -6,10 +6,70 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Analytic/Probability/SampleCovarianceLogEnergyRefutation.claim; result=D5/S3/Analytic/Probability/SampleCovarianceLogEnergyRefutation.result; claim=D5/S3/Analytic/Probability/SampleCovarianceLogEnergyRefutation.claim
    digest: Failure of covariance logarithmic-energy monotonicity. -/
 /-
-proof_shape: pending per-declaration verification.
-escape_witness: none claimed before the upstream-only tests.
 admission_basis: open-problem-resolution (#27294; Refuted)
-Direct frozen dependencies: pending compiled-constant extraction.
+escape_witness: none (designated refutation result)
+Declaration proof shapes (names relative to this module):
+  Analytic.realNoise; proof_shape: bind-only; escape_witness: none; consumer: Analytic.eval_renamed
+  Analytic.renamed_ne_zero; proof_shape: bind-only; escape_witness: none; consumer: Analytic.gaussian_det_nonzero_integrable
+  Analytic.eval_renamed; proof_shape: bind-only; escape_witness: none; consumer: Analytic.gaussian_det_nonzero_integrable
+  Analytic.gaussian_det_nonzero_integrable; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower; consumer: Transport.conditional_det_nonzero_integrable
+  Analytic.polynomial_log_order; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower; consumer: Analytic.gaussian_pairDet_log_order
+  Analytic.finPoly; proof_shape: bind-only; escape_witness: none; consumer: Analytic.finPoly_coeff
+  Analytic.finPoly_coeff; proof_shape: bind-only; escape_witness: none; consumer: Analytic.gaussian_pairDet_log_order
+  Analytic.finPoly_eval; proof_shape: bind-only; escape_witness: none; consumer: Analytic.gaussian_pairDet_log_order
+  Analytic.gaussian_pairDet_log_order; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower; consumer: Energy.negativeLogAverage_limit
+  gramEigenvalue_sum; proof_shape: bind-only; escape_witness: none; consumer: gramEigenvalue_integrable
+  entry_second_integrable; proof_shape: bind-only; escape_witness: none; consumer: gramEigenvalue_integrable
+  entry_second_integral; proof_shape: bind-only; escape_witness: none; consumer: sum_gramEigenvalue_integrals
+  gramEigenvalue_integrable; proof_shape: bind-only; escape_witness: none; consumer: firstMoment_mean_eq_one
+  sum_gramEigenvalue_integrals; proof_shape: bind-only; escape_witness: none; consumer: firstMoment_mean_eq_one
+  firstMoment_mean_eq_one; proof_shape: bind-only; escape_witness: none; consumer: smooth_penalizedEnergy_identity
+  Transport.pi_mixture; proof_shape: bind-only; escape_witness: none; consumer: Transport.smooth_pair_law
+  Transport.pack_preserving; proof_shape: bind-only; escape_witness: none; consumer: Transport.affine_entries_preserving
+  Transport.complexGaussian_scaled; proof_shape: bind-only; escape_witness: none; consumer: Transport.affine_entries_preserving
+  Transport.affine_entries_preserving; proof_shape: bind-only; escape_witness: none; consumer: Transport.affinePair_law
+  Transport.splitEntries; proof_shape: bind-only; escape_witness: none; consumer: Transport.affinePair
+  Transport.measurable_splitEntries; proof_shape: bind-only; escape_witness: none; consumer: Transport.affinePair_law
+  Transport.entries_pair_preserving; proof_shape: bind-only; escape_witness: none; consumer: Transport.smooth_pair_law
+  Transport.smooth_probability; proof_shape: bind-only; escape_witness: none; consumer: Transport.smooth_pair_law
+  Transport.meanB; proof_shape: bind-only; escape_witness: none; consumer: Transport.affinePair
+  Transport.scale; proof_shape: bind-only; escape_witness: none; consumer: Transport.affinePair
+  Transport.affinePair; proof_shape: bind-only; escape_witness: none; consumer: Transport.affinePair_law
+  Transport.measurable_affinePair; proof_shape: bind-only; escape_witness: none; consumer: Transport.measurable_finitePair
+  Transport.weight_ne_top; proof_shape: bind-only; escape_witness: none; consumer: Transport.smooth_det_nonzero_integrable
+  Transport.scale_variance; proof_shape: bind-only; escape_witness: none; consumer: Transport.affinePair_law
+  Transport.affinePair_law; proof_shape: bind-only; escape_witness: none; consumer: Transport.smooth_pair_law
+  Transport.smooth_pair_law; proof_shape: bind-only; escape_witness: none; consumer: Transport.smooth_pair_law_finite
+  Energy.negativeLogAverage; proof_shape: bind-only; escape_witness: none; consumer: Energy.E
+  Energy.E; proof_shape: bind-only; escape_witness: none; consumer: Energy.E_limit
+  Energy.negativeLogAverage_limit; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower; consumer: Energy.E_limit
+  Energy.E_limit; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower; consumer: Energy.exists_fixed_epsilon
+  Energy.exists_fixed_epsilon; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower; consumer: result
+  Transport.toCoords_preserving; proof_shape: bind-only; escape_witness: none; consumer: Transport.smooth_pair_law_finite
+  Transport.finitePair; proof_shape: bind-only; escape_witness: none; consumer: Transport.conditional_det_nonzero_integrable
+  Transport.measurable_finitePair; proof_shape: bind-only; escape_witness: none; consumer: Transport.smooth_det_nonzero_integrable
+  Transport.smooth_pair_law_finite; proof_shape: bind-only; escape_witness: none; consumer: Transport.smooth_det_nonzero_integrable
+  Transport.finitePair_eq; proof_shape: bind-only; escape_witness: none; consumer: Transport.conditional_det_nonzero_integrable
+  Transport.detPair; proof_shape: bind-only; escape_witness: none; consumer: Transport.conditional_det_nonzero_integrable
+  Transport.measurable_detPair; proof_shape: bind-only; escape_witness: none; consumer: Transport.measurable_logdetPair
+  Transport.measurable_logdetPair; proof_shape: bind-only; escape_witness: none; consumer: Transport.smooth_det_nonzero_integrable
+  Transport.conditional_det_nonzero_integrable; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower; consumer: Transport.smooth_det_nonzero_integrable
+  Transport.smooth_det_nonzero_integrable; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower; consumer: smooth_logarithmicEnergy_identity
+  smooth_logarithmicEnergy_identity; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower; consumer: smooth_penalizedEnergy_identity
+  Transport.detPair_smul; proof_shape: bind-only; escape_witness: none; consumer: Transport.conditional_log_integral
+  Transport.finitePair_raw; proof_shape: bind-only; escape_witness: none; consumer: Transport.conditional_log_integral
+  Transport.conditional_log_integral; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower; consumer: Transport.smooth_log_integral
+  Transport.weight_toReal; proof_shape: bind-only; escape_witness: none; consumer: Transport.smooth_log_integral
+  Transport.smooth_log_integral; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower; consumer: smooth_penalizedEnergy_identity
+  smooth_penalizedEnergy_identity; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower; consumer: result
+  claim; proof_shape: bind-only; escape_witness: none; consumer: result
+  result; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower; consumer: none (settling result)
+Direct frozen dependencies:
+  D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram: sha256:0d9f33a80e1ac7a06b318c665f644b5f59c6a7e2165b62fda1db1cf395ea82e7
+  D5.S3.SpectralTopology.HermitianEigenvaluePerturbation.abs_eigenvalues0_sub_le_norm: ASSUMED-UNVERIFIED declaration identity; fresh Stage-B report required
+  D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli: ASSUMED-UNVERIFIED declaration identity; fresh Stage-B report required
+  D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli._proof_1: ASSUMED-UNVERIFIED declaration identity; fresh Stage-B report required
+Unfinished escape audit: https://github.com/the-omega-institute/trureturing/issues/27612
 -/
 import D5.S3.Analytic.Probability.GaussianPolynomialLog
 import D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth
@@ -408,7 +468,6 @@ set_option backward.isDefEq.respectTransparency.types false
 set_option maxHeartbeats 2500000
 namespace D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Transport
 noncomputable section
-
 
 private lemma toCoords_preserving (n : ℕ) (v : ℝ≥0) :
     MeasurePreserving (MeasurableEquiv.piCongrLeft (fun _ : Bool × Bool × Fin n × Fin n => ℝ) (Fintype.equivFin (Bool × Bool × Fin n × Fin n)).symm) ((fun n m v => Measure.pi (fun _ : Fin n => gaussianReal m v)) ((Fintype.card (Bool × Bool × Fin n × Fin n))) 0 v)

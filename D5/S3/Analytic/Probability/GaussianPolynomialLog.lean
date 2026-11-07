@@ -6,18 +6,58 @@
    utility: none
    digest: Gaussian polynomial logarithms and small-noise orders. -/
 /-
-proof_shape: pending per-declaration verification.
-escape_witness: none claimed before the upstream-only tests.
-admission_basis: pending escape-witness verification
-Direct frozen dependencies: pending compiled-constant extraction.
+admission_basis: escape-witness
+escape_witness: D5.S3.Analytic.Probability.GaussianPolynomialLog.log_root_lower_point
+Declaration proof shapes (names relative to this module):
+  negLog_zero_of_one_le; proof_shape: bind-only; escape_witness: none; consumer: negLog_integrable
+  negLog_integrable; proof_shape: bind-only; escape_witness: none; consumer: negLog_integrable_shift
+  negLog_integrable_shift; proof_shape: bind-only; escape_witness: none; consumer: bounded_density_negLog
+  bounded_density_negLog; proof_shape: bind-only; escape_witness: none; consumer: gaussian_negLog
+  gaussian_negLog; proof_shape: bind-only; escape_witness: none; consumer: gaussian_root_log_integrable
+  log_norm_sub_bound; proof_shape: bind-only; escape_witness: none; consumer: gaussian_root_log_integrable
+  gaussian_root_log_integrable; proof_shape: bind-only; escape_witness: none; consumer: gaussian_product_log_integrable
+  log_root_lower_point; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.GaussianPolynomialLog.log_root_lower_point; consumer: gaussian_root_log_lower
+  gaussian_root_log_lower; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.GaussianPolynomialLog.log_root_lower_point; consumer: gaussian_polynomial_log_mahler_lower
+  gaussian_roots_nonzero; proof_shape: bind-only; escape_witness: none; consumer: gaussian_polynomial_log_integrable
+  gaussian_product_log_integrable; proof_shape: bind-only; escape_witness: none; consumer: gaussian_polynomial_log_integrable
+  gaussian_polynomial_log_integrable; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower
+  gaussian_product_log_integral; proof_shape: bind-only; escape_witness: none; consumer: gaussian_polynomial_log_integral
+  gaussian_polynomial_log_integral; proof_shape: bind-only; escape_witness: none; consumer: gaussian_polynomial_log_mahler_lower
+  rootLogCost; proof_shape: bind-only; escape_witness: none; consumer: gaussian_polynomial_log_coeff_lower
+  rootLogCost_nonneg; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower
+  gaussian_polynomial_log_mahler_lower; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.GaussianPolynomialLog.log_root_lower_point; consumer: gaussian_polynomial_log_coeff_lower
+  gaussian_polynomial_log_coeff_lower; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.GaussianPolynomialLog.log_root_lower_point; consumer: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower
+  gaussian_complex_pow_integrable; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_eval_integrable
+  norm_eq_two_pos_sub; proof_shape: bind-only; escape_witness: none; consumer: integrable_prod_of_pos_and_fiber_lower
+  integrable_prod_of_pos_and_fiber_lower; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower
+  Covariance.X_pow_dvd_det_of_entry_weights; proof_shape: bind-only; escape_witness: none; consumer: Covariance.rankOne_order_lower
+  Covariance.natDegree_det_le_of_entries; proof_shape: bind-only; escape_witness: none; consumer: Covariance.pairDet_degree_le
+  Covariance.affineGramPoly; proof_shape: bind-only; escape_witness: none; consumer: Covariance.affineGramPoly_coeff_two
+  Covariance.pairDet; proof_shape: bind-only; escape_witness: none; consumer: Covariance.pairDet_degree_le
+  Covariance.rankOneGramPoly; proof_shape: bind-only; escape_witness: none; consumer: Covariance.affineGramPoly_rankOneBase
+  Covariance.affineGramPoly_rankOneBase; proof_shape: bind-only; escape_witness: none; consumer: Covariance.pairDet_rankOne_witness
+  Covariance.rowWeight; proof_shape: bind-only; escape_witness: none; consumer: Covariance.rankOne_entry_divisibility
+  Covariance.colWeight; proof_shape: bind-only; escape_witness: none; consumer: Covariance.colWeight_sum
+  Covariance.rankOne_entry_divisibility; proof_shape: bind-only; escape_witness: none; consumer: Covariance.rankOne_order_lower
+  Covariance.rowWeight_sum; proof_shape: bind-only; escape_witness: none; consumer: Covariance.rankOne_order_lower
+  Covariance.colWeight_sum; proof_shape: bind-only; escape_witness: none; consumer: Covariance.rankOne_order_lower
+  Covariance.rankOne_order_lower; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.CommonOrder.pairDet_common_lower
+  Covariance.rankOneGramPoly_one; proof_shape: bind-only; escape_witness: none; consumer: Covariance.pairDet_rankOne_witness
+  Covariance.rankOneGramPoly_zero; proof_shape: bind-only; escape_witness: none; consumer: Covariance.pairDet_rankOne_witness
+  Covariance.pairDet_rankOne_witness; proof_shape: bind-only; escape_witness: none; consumer: Covariance.pairDet_rankOne_witness_order
+  Covariance.affineGramPoly_degree_le; proof_shape: bind-only; escape_witness: none; consumer: Covariance.pairDet_degree_le
+  Covariance.pairDet_degree_le; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise.poly_degree_le
+  Covariance.coeff_det_card_mul_of_entry_degree_le; proof_shape: bind-only; escape_witness: none; consumer: Covariance.pairDet_identity_noise_topCoeff
+  Covariance.affineGramPoly_coeff_two; proof_shape: bind-only; escape_witness: none; consumer: Covariance.pairDet_identity_noise_topCoeff
+  Covariance.pairDet_identity_noise_topCoeff; proof_shape: bind-only; escape_witness: none; consumer: Covariance.pairDet_identity_noise_ne_zero
+  Covariance.pairDet_identity_noise_ne_zero; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.CommonOrder.poly_common_order
+  Covariance.pairDet_rankOne_witness_order; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.CommonOrder.diagonal_witness_order
+Direct frozen dependencies:
+  none
 Unfinished escape audit: https://github.com/the-omega-institute/trureturing/issues/27612
 -/
-import Mathlib.Topology.Algebra.MvPolynomial
 import Mathlib.Analysis.Polynomial.MahlerMeasure
 import Mathlib.Probability.Distributions.Gaussian.Real
-import Mathlib.Analysis.SpecialFunctions.Pow.Integral
-import Mathlib.Algebra.MvPolynomial.Funext
-import Mathlib.Algebra.MvPolynomial.CommRing
 open MeasureTheory Set ProbabilityTheory
 open scoped ENNReal NNReal
 set_option maxHeartbeats 2500000
@@ -25,8 +65,6 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 namespace D5.S3.Analytic.Probability.GaussianPolynomialLog
 noncomputable section
-
-
 
 private lemma negLog_zero_of_one_le {x : ℝ} (hx : 1 ≤ |x|) : (fun t : ℝ => max (-Real.log |t|) 0) x = 0 := by
   exact max_eq_right (neg_nonpos.mpr (Real.log_nonneg hx))

@@ -6,16 +6,81 @@
    utility: none
    digest: Spectral logarithmic energies and smooth entry laws. -/
 /-
-proof_shape: pending per-declaration verification.
-escape_witness: none claimed before the upstream-only tests.
-admission_basis: pending escape-witness verification
-Direct frozen dependencies: pending compiled-constant extraction.
+admission_basis: escape-witness
+escape_witness: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower
+Declaration proof shapes (names relative to this module):
+  gramHermitian; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.gramEigenvalue_sum
+  gramEigenvalue; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.firstMoment_mean_eq_one
+  empiricalSpectralMeasure; proof_shape: bind-only; escape_witness: none; consumer: empiricalSpectralMeasure_univ
+  EntryLaw; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.claim
+  matrixLaw; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Transport.entries_pair_preserving
+  meanSpectralMeasure; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.claim
+  logPositiveKernel; proof_shape: bind-only; escape_witness: none; consumer: logarithmicEnergy
+  logNegativeKernel; proof_shape: bind-only; escape_witness: none; consumer: logarithmicEnergy
+  logarithmicEnergy; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.smooth_logarithmicEnergy_identity
+  firstMoment; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.firstMoment_mean_eq_one
+  penalizedEnergy; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.claim
+  marchenkoPasturDensity; proof_shape: bind-only; escape_witness: none; consumer: marchenkoPastur
+  marchenkoPastur; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.claim
+  continuous_gram; proof_shape: bind-only; escape_witness: none; consumer: continuous_gramEigenvalue
+  continuous_gramEigenvalue; proof_shape: bind-only; escape_witness: none; consumer: measurable_gramEigenvalue
+  measurable_gramEigenvalue; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.firstMoment_mean_eq_one
+  measurable_empiricalSpectralMeasure; proof_shape: bind-only; escape_witness: none; consumer: lintegral_meanSpectralMeasure
+  empiricalSpectralMeasure_univ; proof_shape: bind-only; escape_witness: none; consumer: meanSpectralMeasure_isProbabilityMeasure
+  lintegral_empiricalSpectralMeasure; proof_shape: bind-only; escape_witness: none; consumer: lintegral_meanSpectralMeasure
+  lintegral_meanSpectralMeasure; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.firstMoment_mean_eq_one
+  two_copy_det_hermitian; proof_shape: bind-only; escape_witness: none; consumer: two_copy_gram_det
+  two_copy_gram_det; proof_shape: bind-only; escape_witness: none; consumer: log_two_copy_gram_det
+  matrixLaw_isProbabilityMeasure; proof_shape: bind-only; escape_witness: none; consumer: logarithmicEnergy_mean_eq_log_det
+  meanSpectralMeasure_isProbabilityMeasure; proof_shape: bind-only; escape_witness: none; consumer: logarithmicEnergy_mean_eq_log_det
+  measurable_logPositiveKernel; proof_shape: bind-only; escape_witness: none; consumer: logarithmicEnergy_eq_real_integral
+  measurable_logNegativeKernel; proof_shape: bind-only; escape_witness: none; consumer: logarithmicEnergy_eq_real_integral
+  two_copy_gram_det_nonzero_iff; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.smooth_logarithmicEnergy_identity
+  log_two_copy_gram_det; proof_shape: bind-only; escape_witness: none; consumer: log_two_copy_normalized_gram_det
+  logarithmicEnergy_eq_real_integral; proof_shape: bind-only; escape_witness: none; consumer: logarithmicEnergy_mean_eq_log_det
+  meanSpectralMeasure_eq_sum_map; proof_shape: bind-only; escape_witness: none; consumer: meanSpectralMeasure_prod_eq_sum_map
+  meanSpectralMeasure_prod_eq_sum_map; proof_shape: bind-only; escape_witness: none; consumer: ae_noncollision_meanSpectralMeasure
+  integrable_two_copy_meanSpectralMeasure; proof_shape: bind-only; escape_witness: none; consumer: logarithmicEnergy_mean_eq_log_det
+  integral_two_copy_meanSpectralMeasure; proof_shape: bind-only; escape_witness: none; consumer: logarithmicEnergy_mean_eq_log_det
+  ae_noncollision_meanSpectralMeasure; proof_shape: bind-only; escape_witness: none; consumer: logarithmicEnergy_mean_eq_log_det
+  log_two_copy_normalized_gram_det; proof_shape: bind-only; escape_witness: none; consumer: logarithmicEnergy_mean_eq_log_det
+  logarithmicEnergy_mean_eq_log_det; proof_shape: bind-only; escape_witness: none; consumer: logarithmicEnergy_mean_eq_log_det_of_moments
+  FiniteLog.integrable_components_of_sum_and_positive; proof_shape: bind-only; escape_witness: none; consumer: pairwise_log_integrable_of_log_det
+  gramEigenvalue_nonneg; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.firstMoment_mean_eq_one
+  pos_log_gap_le_sum; proof_shape: bind-only; escape_witness: none; consumer: pairwise_log_integrable_of_log_det
+  pairwise_log_integrable_of_log_det; proof_shape: bind-only; escape_witness: none; consumer: logarithmicEnergy_mean_eq_log_det_of_moments
+  logarithmicEnergy_mean_eq_log_det_of_moments; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.smooth_logarithmicEnergy_identity
+  Smooth.complexGaussian; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Transport.affinePair_law
+  Smooth.complexGaussian_probability; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Transport.affine_entries_preserving
+  Smooth.gaussian_square_integrable; proof_shape: bind-only; escape_witness: none; consumer: Smooth.complexGaussian_second_integrable
+  Smooth.gaussian_square_integral; proof_shape: bind-only; escape_witness: none; consumer: Smooth.complexGaussian_second_integral
+  Smooth.complex_coordinates_norm; proof_shape: bind-only; escape_witness: none; consumer: Smooth.complexGaussian_second_integrable
+  Smooth.complexGaussian_integrable; proof_shape: bind-only; escape_witness: none; consumer: Smooth.mixture_EntryLaw
+  Smooth.complexGaussian_integral; proof_shape: bind-only; escape_witness: none; consumer: Smooth.mixture_EntryLaw
+  Smooth.complexGaussian_second_integrable; proof_shape: bind-only; escape_witness: none; consumer: Smooth.mixture_EntryLaw
+  Smooth.complexGaussian_second_integral; proof_shape: bind-only; escape_witness: none; consumer: Smooth.mixture_EntryLaw
+  Smooth.mixture; proof_shape: bind-only; escape_witness: none; consumer: Smooth.mixture_EntryLaw
+  Smooth.mixture_EntryLaw; proof_shape: bind-only; escape_witness: none; consumer: Smooth.smoothLaw_EntryLaw
+  Smooth.noiseVariance; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Transport.affinePair_law
+  Smooth.smoothLaw; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Transport.smooth_det_nonzero_integrable
+  Smooth.smoothLaw_EntryLaw; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Transport.smooth_probability
+  Gaussian.realEval_continuous; proof_shape: bind-only; escape_witness: none; consumer: Gaussian.gaussian_mv_log_coeff_lower
+  Gaussian.gaussian_mv_eval_integrable; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussian_mv_abs_log_bound
+  Gaussian.gaussian_polynomial_ae_nonzero; proof_shape: bind-only; escape_witness: none; consumer: Gaussian.gaussian_mv_log_coeff_lower
+  Gaussian.realConsEquiv_apply; proof_shape: bind-only; escape_witness: none; consumer: Gaussian.gaussian_mv_log_coeff_lower
+  Gaussian.realConsEquiv_preserving; proof_shape: bind-only; escape_witness: none; consumer: Gaussian.gaussian_mv_log_coeff_lower
+  Gaussian.gaussian_mv_log_coeff_lower; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower; consumer: D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussian_mv_abs_log_bound
+Direct frozen dependencies:
+  D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram: sha256:0d9f33a80e1ac7a06b318c665f644b5f59c6a7e2165b62fda1db1cf395ea82e7
+  D5.S3.SpectralTopology.HermitianEigenvaluePerturbation.abs_eigenvalues0_sub_le_norm: ASSUMED-UNVERIFIED declaration identity; fresh Stage-B report required
+The Gram expressions remain literal; proofs use ProductPrefixRigidity.gram.
 Unfinished escape audit: https://github.com/the-omega-institute/trureturing/issues/27612
 -/
 import D5.S3.Analytic.Probability.GaussianPolynomialLog
 import D5.S3.SpectralTopology.HermitianEigenvaluePerturbation
 import D5.S3.Quantum.Recovery.PurifiedLocalPath
 import Mathlib.Analysis.Matrix.MeasurableSpace
+import Mathlib.Topology.Algebra.MvPolynomial
 namespace D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth
 
 open MeasureTheory Filter

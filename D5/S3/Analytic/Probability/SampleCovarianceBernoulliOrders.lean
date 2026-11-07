@@ -6,15 +6,76 @@
    utility: none
    digest: Bernoulli matrix determinant orders. -/
 /-
-proof_shape: pending per-declaration verification.
-escape_witness: none claimed before the upstream-only tests.
-admission_basis: pending escape-witness verification
-Direct frozen dependencies: pending compiled-constant extraction.
+admission_basis: escape-witness
+escape_witness: D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussian_noiseFamily_uniform_log
+Declaration proof shapes (names relative to this module):
+  Noise.coeffStar; proof_shape: bind-only; escape_witness: none; consumer: Noise.coeffStarRing
+  Noise.coeffStarRing; proof_shape: bind-only; escape_witness: none; consumer: Noise.evalNoise_poly
+  Noise.star_C; proof_shape: bind-only; escape_witness: none; consumer: Noise.evalNoise_star
+  Noise.star_X; proof_shape: bind-only; escape_witness: none; consumer: Noise.evalNoise_star
+  Noise.noise; proof_shape: bind-only; escape_witness: none; consumer: Noise.evalNoise_noise
+  Noise.poly; proof_shape: bind-only; escape_witness: none; consumer: CommonOrder.poly_common_order
+  Noise.evalNoise; proof_shape: bind-only; escape_witness: none; consumer: CommonOrder.poly_common_order
+  Noise.evalNoise_C; proof_shape: bind-only; escape_witness: none; consumer: Noise.evalNoise_poly
+  Noise.evalNoise_star; proof_shape: bind-only; escape_witness: none; consumer: Noise.evalNoise_poly
+  Noise.evalNoise_noise; proof_shape: bind-only; escape_witness: none; consumer: Noise.evalNoise_poly
+  Noise.map_affineGram; proof_shape: bind-only; escape_witness: none; consumer: Noise.map_pairDet
+  Noise.map_pairDet; proof_shape: bind-only; escape_witness: none; consumer: Noise.evalNoise_poly
+  Noise.evalNoise_poly; proof_shape: bind-only; escape_witness: none; consumer: Noise.evalNoise_polyAt
+  Noise.poly_ne_zero; proof_shape: bind-only; escape_witness: none; consumer: CommonOrder.poly_common_order
+  Noise.poly_degree_le; proof_shape: bind-only; escape_witness: none; consumer: Noise.poly_order_le
+  Noise.poly_order_le; proof_shape: bind-only; escape_witness: none; consumer: Events.k_le
+  Noise.evalNoise_ext; proof_shape: bind-only; escape_witness: none; consumer: CommonOrder.poly_common_order
+  Noise.poly_coeff_map; proof_shape: bind-only; escape_witness: none; consumer: CommonOrder.poly_common_order
+  Basis.exists_unitary_common; proof_shape: bind-only; escape_witness: none; consumer: Basis.common_eq_unitary_rankOne
+  Basis.common_eq_unitary_rankOne; proof_shape: bind-only; escape_witness: none; consumer: CommonOrder.pairDet_common_lower
+  Unitary.transformed_cross; proof_shape: bind-only; escape_witness: none; consumer: Unitary.affineGram_unitary
+  Unitary.affineGram_unitary; proof_shape: bind-only; escape_witness: none; consumer: Unitary.pairDet_unitary
+  Unitary.tensor_similarity; proof_shape: bind-only; escape_witness: none; consumer: Unitary.pairDet_unitary
+  Unitary.pairDet_unitary; proof_shape: bind-only; escape_witness: none; consumer: CommonOrder.pairDet_common_lower
+  CommonOrder.pairDet_common_lower; proof_shape: bind-only; escape_witness: none; consumer: CommonOrder.poly_common_order
+  CommonOrder.pairDet_common_witness; proof_shape: bind-only; escape_witness: none; consumer: CommonOrder.poly_common_order
+  CommonOrder.diagonal_witness_order; proof_shape: bind-only; escape_witness: none; consumer: CommonOrder.poly_common_order
+  CommonOrder.poly_common_order; proof_shape: bind-only; escape_witness: none; consumer: Events.k_common
+  FiniteBounds.weighted_order_upper; proof_shape: bind-only; escape_witness: none; consumer: Events.L_bounds
+  FiniteBounds.weighted_order_lower; proof_shape: bind-only; escape_witness: none; consumer: Events.L_bounds
+  FiniteBounds.coarse_bounds_at_one_over_256; proof_shape: bind-only; escape_witness: none; consumer: Events.L_gap
+  Events.bmat; proof_shape: bind-only; escape_witness: none; consumer: Events.k
+  Events.k; proof_shape: bind-only; escape_witness: none; consumer: Events.L
+  Events.L; proof_shape: bind-only; escape_witness: none; consumer: Events.L_bounds
+  Events.w_nonneg; proof_shape: bind-only; escape_witness: none; consumer: Events.L_bounds
+  Events.w_sum; proof_shape: bind-only; escape_witness: none; consumer: Events.L_bounds
+  Events.w_common; proof_shape: bind-only; escape_witness: none; consumer: Events.L_bounds
+  Events.k_le; proof_shape: bind-only; escape_witness: none; consumer: Events.L_bounds
+  Events.k_common; proof_shape: bind-only; escape_witness: none; consumer: Events.L_bounds
+  Events.L_bounds; proof_shape: bind-only; escape_witness: none; consumer: Events.L_gap
+  Events.L_gap; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Energy.exists_fixed_epsilon
+  Noise.eval_affineGram; proof_shape: bind-only; escape_witness: none; consumer: Noise.eval_pairDet
+  Noise.eval_pairDet; proof_shape: bind-only; escape_witness: none; consumer: Noise.polyAt_ne_zero
+  Noise.polyAt; proof_shape: bind-only; escape_witness: none; consumer: Noise.evalNoise_polyAt
+  Noise.evalNoise_polyAt; proof_shape: bind-only; escape_witness: none; consumer: Noise.polyAt_ne_zero
+  Noise.polyAt_ne_zero; proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Analytic.gaussian_det_nonzero_integrable
+  Gaussian.gaussian_mv_abs_log_bound; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower; consumer: Gaussian.gaussian_mv_uniform_abs_log_bound
+  Gaussian.gaussian_mv_uniform_abs_log_bound; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower; consumer: Gaussian.gaussian_noiseFamily_uniform_log
+  Gaussian.noiseFamily_zero; proof_shape: bind-only; escape_witness: none; consumer: Gaussian.gaussian_noiseFamily_log_order
+  Gaussian.noiseFamily_eval; proof_shape: bind-only; escape_witness: none; consumer: Gaussian.noiseFamily_integral_norm_bound
+  Gaussian.noiseFamily_coeff_continuous; proof_shape: bind-only; escape_witness: none; consumer: Gaussian.gaussian_noiseFamily_log_order
+  Gaussian.noiseFamily_degree_bound; proof_shape: bind-only; escape_witness: none; consumer: Gaussian.gaussian_noiseFamily_uniform_log
+  Gaussian.noiseFamily_integral_norm_bound; proof_shape: bind-only; escape_witness: none; consumer: Gaussian.gaussian_noiseFamily_uniform_log
+  Gaussian.gaussian_noiseFamily_uniform_log; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussian_noiseFamily_uniform_log; consumer: Gaussian.gaussian_noiseFamily_log_remainder_tendsto
+  Gaussian.gaussian_mv_log_integrable; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower; consumer: Gaussian.gaussian_mv_log_scalar
+  Gaussian.gaussian_mv_log_scalar; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth.Gaussian.gaussian_mv_log_coeff_lower; consumer: Gaussian.gaussian_noiseFamily_log_order
+  Gaussian.gaussian_noiseFamily_log_remainder_tendsto; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussian_noiseFamily_uniform_log; consumer: Gaussian.gaussian_noiseFamily_log_order
+  Gaussian.gaussian_noiseFamily_log_order; proof_shape: content; escape_witness: D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Gaussian.gaussian_noiseFamily_uniform_log; consumer: D5.S3.Analytic.Probability.SampleCovarianceLogEnergyRefutation.Analytic.polynomial_log_order
+Direct frozen dependencies:
+  D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli: ASSUMED-UNVERIFIED declaration identity; fresh Stage-B report required
+  D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality.bernoulli._proof_1: ASSUMED-UNVERIFIED declaration identity; fresh Stage-B report required
 Unfinished escape audit: https://github.com/the-omega-institute/trureturing/issues/27612
 -/
 import D5.S3.Analytic.Probability.GaussianPolynomialLog
 import D5.S3.Analytic.Probability.SampleCovarianceSpectralAndSmooth
 import D5.S3.StatisticalMechanics.ParticleProcesses.ExclusionMovingParticleOptimality
+import Mathlib.Algebra.MvPolynomial.Funext
 
 set_option maxHeartbeats 2500000
 set_option linter.unusedSimpArgs false
@@ -527,7 +588,6 @@ end D5.S3.Analytic.Probability.SampleCovarianceBernoulliOrders.Noise
 
 open MeasureTheory Set ProbabilityTheory
 open scoped ENNReal NNReal BigOperators
-
 
 open MeasureTheory Filter Set ProbabilityTheory
 open scoped ENNReal NNReal Topology BigOperators
