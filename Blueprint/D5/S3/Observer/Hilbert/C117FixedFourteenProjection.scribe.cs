@@ -10,7 +10,7 @@ internal sealed class C117FixedFourteenProjectionDocument : IScribeDocumentDefin
     private static Formula Op(string s) => Seq(Operatorname, Grp(F.Id(s)));
     private static Formula App(string s, params Formula[] a) => Seq(Op(s), Open,
         a.Skip(1).Aggregate(a[0], (x,y) => Seq(x,Comma,Sp,y)), Close);
-    private static Formula Norm(Formula x) => Seq(Vert,x,Vert);
+    private static Formula Norm(Formula x) => Seq(Vert,Sp,x,Vert,Sp);
     private static Formula Pow(Formula x, Formula y) => Seq(Open,x,Close,Caret,Grp(y));
     private static Formula S => F.Id("S");
     private static Formula Delta => F.Id("delta");
@@ -52,12 +52,12 @@ internal sealed class C117FixedFourteenProjectionDocument : IScribeDocumentDefin
                     Exists,Sp,S,InMacro,Sp,App("Subspace",F.Id("H")),Comma,Sp,
                     App("FiniteDimensional",S),Land,Sp,App("OrthogonalProjection",App("starProjection",S)),Land,Sp,
                     App("range",App("starProjection",S)),Eq,S,Land,Sp,
-                    D(1),Le,App("dim",S),Le,D(2,4),Land,Sp,
+                    D(1),Le,Sp,App("dim",S),Le,Sp,D(2,4),Land,Sp,
                     Open,Forall,Sp,G,InMacro,Sp,App("pair",F.Id("s"),F.Id("t")),Comma,Sp,
                     App("IsHilbertSchmidt",App("projectionDefect",S,G)),Land,Sp,
                     App("Summable",App("ambientSquareSum",F.Id("b"),S,G)),Close,Land,Sp,
-                    Open,D(0),Lt,Delta,Lt,D(1),Rightarrow,Sp,Defect,Le,
-                        D(7,8,5),Pow(Delta,Frac(D(1),D(2,4))),Close,Land,Sp,
+                    Open,D(0),Lt,Sp,Delta,Lt,Sp,D(1),Rightarrow,Sp,Defect,Le,Sp,
+                        D(7,8,5),Pow(Delta,Seq(Frac,Grp(D(1)),Grp(D(2,4)))),Close,Land,Sp,
                     Open,Delta,Eq,D(0),Rightarrow,Sp,Defect,Eq,D(0),Land,Sp,
                         Forall,Sp,G,InMacro,Sp,App("pair",F.Id("s"),F.Id("t")),Comma,Sp,
                         App("projectionDefect",S,G),Eq,D(0),Close))),
@@ -75,5 +75,5 @@ internal sealed class C117FixedFourteenProjectionDocument : IScribeDocumentDefin
                     + "generators. There is no finite ambient, invariant ambient, singular-gap, independent-column "
                     + "or Gram-inverse premise. This proves Lemma 46.2 only; Theorem 46.5 and numerical coercivity "
                     + "remain outside this result. The orbit architecture and parameter tables reuse the supplied "
-                    + "Marin cubic-Hecke calculation and are not counted as new mathematical content."))),DescribeRole.Theorem))));
+                    + "Marin, The cubic Hecke algebra on at most 5 strands, arXiv:1110.6621v1, section 2, Lemmas 2.1, 2.3, 2.4 and Theorem 3.2(4), and are not counted as new mathematical content."))),DescribeRole.Theorem))));
 }

@@ -10,7 +10,7 @@ internal sealed class FiniteRankUnitaryDefectDocument : IScribeDocumentDefinitio
     private static Formula Op(string s) => Seq(Operatorname, Grp(F.Id(s)));
     private static Formula App(string s, params Formula[] a) => Seq(Op(s), Open,
         a.Skip(1).Aggregate(a[0], (x,y) => Seq(x,Comma,Sp,y)), Close);
-    private static Formula Norm(Formula x) => Seq(Vert,Sp,x,Vert);
+    private static Formula Norm(Formula x) => Seq(Vert,Sp,x,Vert,Sp);
     private static Formula Pow(Formula x, Formula y) => Seq(Open,x,Close,Caret,Grp(y));
     private static Formula Sub(Formula x, Formula i) => Seq(x,Underscore,Grp(i));
     private static Formula S => F.Id("S");
@@ -22,7 +22,7 @@ internal sealed class FiniteRankUnitaryDefectDocument : IScribeDocumentDefinitio
     private static Formula Delta => F.Id("delta");
     private static Formula Q(Formula u) => App("projectionDefect",S,u);
     private static Formula HS(Formula u) => App("IsHilbertSchmidt",Q(u));
-    private static Formula Summable(Formula u) => App("Summable",Seq(F.Id("l"),Mapsto,
+    private static Formula Summable(Formula u) => App("Summable",Seq(F.Id("l"),Mapsto,Sp,
         Pow(Norm(Seq(Q(u),Sub(B,F.Id("l")))),D(2))));
     private static Formula PairD => App("D",S,U,B);
 
@@ -44,8 +44,8 @@ internal sealed class FiniteRankUnitaryDefectDocument : IScribeDocumentDefinitio
                     Forall,Sp,F.Id("c"),InMacro,Sp,App("OrthonormalBasis",F.Id("iota"),S),Comma,Sp,
                     U,InMacro,Sp,App("Unitary",F.Id("H")),Comma,Sp,
                     B,InMacro,Sp,App("HilbertBasis",F.Id("beta"),F.Id("H")),Comma,Sp,
-                    App("HasSum",Seq(F.Id("l"),Mapsto,Pow(Norm(Seq(Q(U),Sub(B,F.Id("l")))),D(2))),
-                        Seq(D(2),Sum,Underscore,Grp(F.Id("i"),InMacro,Sp,F.Id("iota")),
+                    App("HasSum",Seq(F.Id("l"),Mapsto,Sp,Pow(Norm(Seq(Q(U),Sub(B,F.Id("l")))),D(2))),
+                        Seq(D(2),Sum,Sp,Underscore,Grp(F.Id("i"),InMacro,Sp,F.Id("iota")),
                         Pow(Norm(Seq(Sub(F.Id("P"),Seq(S,Caret,Grp(Perp))),U,
                             Sub(F.Id("c"),F.Id("i")))),D(2))))))),
                 AssessedProvenance.FromRepo(),
@@ -62,20 +62,20 @@ internal sealed class FiniteRankUnitaryDefectDocument : IScribeDocumentDefinitio
                 DeclarationHandle.Create(Prefix + "exists_rank_twentyfour_projection_bound"), H("Rank twenty-four projection bridge"),
                 StatementSource.FromAuthor(Disp(Seq(
                     Forall,Sp,B,InMacro,Sp,App("HilbertBasis",F.Id("beta"),F.Id("H")),Comma,Sp,
-                    T,Colon,F.Id("E"),To,F.Id("H"),Comma,Sp,
+                    T,Colon,F.Id("E"),To,Sp,F.Id("H"),Comma,Sp,
                     Open,Exists,Sp,F.Id("z"),InMacro,Sp,F.Id("E"),Comma,Sp,
-                    Norm(F.Id("z")),Eq,D(1),Land,Sp,D(1),Le,Norm(Seq(T,F.Id("z"))),Close,
-                    Rightarrow,Sp,Forall,Sp,U,Colon,App("Fin",D(2)),To,App("Unitary",F.Id("H")),Comma,Sp,
-                    M,Colon,App("Fin",D(2)),To,App("End",F.Id("E")),Comma,Sp,
-                    Delta,InMacro,Sp,Seq(Mathbb,Grp(F.Id("R"))),Comma,Sp,D(0),Le,Delta,Rightarrow,Sp,
+                    Norm(F.Id("z")),Eq,D(1),Land,Sp,D(1),Le,Sp,Norm(Seq(T,F.Id("z"))),Close,
+                    Rightarrow,Sp,Forall,Sp,U,Colon,App("Fin",D(2)),To,Sp,App("Unitary",F.Id("H")),Comma,Sp,
+                    M,Colon,App("Fin",D(2)),To,Sp,App("End",F.Id("E")),Comma,Sp,
+                    Delta,InMacro,Sp,Seq(Mathbb,Grp(F.Id("R"))),Comma,Sp,D(0),Le,Sp,Delta,Rightarrow,Sp,
                     Open,Forall,Sp,G,InMacro,Sp,App("Fin",D(2)),Comma,Sp,
-                    Norm(Sub(M,G)),Le,D(8,5),Land,Sp,
-                    Norm(Seq(Sub(U,G),T,Minus,T,Sub(M,G))),Le,D(9,5),Delta,Close,
+                    Norm(Sub(M,G)),Le,Sp,D(8,5),Land,Sp,
+                    Norm(Seq(Sub(U,G),T,Minus,T,Sub(M,G))),Le,Sp,D(9,5),Delta,Close,
                     Rightarrow,Sp,Exists,Sp,S,InMacro,Sp,App("Subspace",F.Id("H")),Comma,Sp,
-                    App("FiniteDimensional",S),Land,Sp,D(1),Le,App("dim",S),Le,D(2,4),Land,Sp,
+                    App("FiniteDimensional",S),Land,Sp,D(1),Le,Sp,App("dim",S),Le,Sp,D(2,4),Land,Sp,
                     Open,Forall,Sp,G,InMacro,Sp,App("Fin",D(2)),Comma,Sp,HS(Sub(U,G)),Close,Land,Sp,
                     Open,Forall,Sp,G,InMacro,Sp,App("Fin",D(2)),Comma,Sp,Summable(Sub(U,G)),Close,Land,Sp,
-                    PairD,Le,D(7,8,5),Pow(Delta,Frac(D(1),D(2,4))),Land,Sp,
+                    PairD,Le,Sp,D(7,8,5),Pow(Delta,Seq(Frac,Grp(D(1)),Grp(D(2,4)))),Land,Sp,
                     Open,Delta,Eq,D(0),Rightarrow,Sp,Forall,Sp,G,InMacro,Sp,App("Fin",D(2)),Comma,Sp,
                     Q(Sub(U,G)),Eq,D(0),Close))),
                 AssessedProvenance.FromRepo(),
