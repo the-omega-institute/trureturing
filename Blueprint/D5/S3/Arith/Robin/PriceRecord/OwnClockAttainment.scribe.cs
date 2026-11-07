@@ -33,7 +33,7 @@ internal sealed class OwnClockAttainmentDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "phi_restrict"), H("No original objective value is lost"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every x:N->R, extending its restriction to S leaves phi S x unchanged. Hence the finite chart retains the complete original realValues set, including every admissible real vector."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("actual-ownclock-ownclockattainment-phi-continuousOn"),
+            Describe.Lean(DescribeId.Create("actual-ownclock-ownclockattainment-phi-continuous-on"),
                 DeclarationHandle.Create(Prefix + "phi_continuousOn"), H("Continuity on the actual closed orthant"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The finite clock is continuous, its two logarithms have positive arguments because theta>1, and the actual benefit is continuous by its upstream derivative. This proves ContinuousOn of the literal Phi, rather than of an auxiliary bound."))), DescribeRole.Theorem),
