@@ -20,11 +20,11 @@ internal sealed class ElongatedTriangularDualCoordinationDocument : IScribeDocum
                     + "Each constructor takes two integers m and k. The constructors are injective, "
                     + "their ranges are disjoint, and every vertex has exactly one such form. "
                     + "S denotes a square, U an upward triangle and D a downward triangle."),
-            Definition("square", "Vertex.S", "The square constructor", ConstructorFormula("S"),
+            Definition("square", "S", "The square constructor", ConstructorFormula("S"),
                 "S(m,k) is the square in strip m at position k."),
-            Definition("upward", "Vertex.U", "The upward triangle constructor", ConstructorFormula("U"),
+            Definition("upward", "U", "The upward triangle constructor", ConstructorFormula("U"),
                 "U(m,k) is the upward triangle in triangular strip m at position k."),
-            Definition("downward", "Vertex.D", "The downward triangle constructor", ConstructorFormula("D"),
+            Definition("downward", "D", "The downward triangle constructor", ConstructorFormula("D"),
                 "D(m,k) is the downward triangle in triangular strip m at position k."),
             Definition("graph", "graph", "The face adjacency graph", GraphFormula(),
                 "The displayed five edge families and their reversals are all the edges. "
