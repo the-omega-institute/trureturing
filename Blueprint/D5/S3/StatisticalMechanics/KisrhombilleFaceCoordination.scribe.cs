@@ -188,8 +188,10 @@ internal sealed class KisrhombilleFaceCoordinationDocument : IScribeDocumentDefi
         var map = Seq(LambdaLower, Sp, p, Sp, Mapsto, Sp,
             Pair(Add(V("i0"), Cast(Projection(p, 1), Integers())),
                 Add(V("j0"), Cast(Projection(p, 2), Integers()))));
+        var antidiagonal = Seq(Operatorname,
+            Grp(V("Finset"), Dot, V("HasAntidiagonal"), Dot, V("antidiagonal")));
         Formula Triangle(Formula n) => App(Q("Finset", "biUnion"),
-            App(Q("Finset", "range"), n), Q("Finset.HasAntidiagonal", "antidiagonal"));
+            App(Q("Finset", "range"), n), antidiagonal);
         var q = V("q");
         var reflection = Seq(LambdaLower, Sp, q, Colon, Sp, Product(Naturals(), Naturals()),
             Sp, Mapsto, Sp, Pair(Sub(V("A"), Projection(q, 1)), Sub(V("B"), Projection(q, 2))));
