@@ -32,6 +32,7 @@ import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.BigOperators.Group.List.Basic
 import Mathlib.Algebra.BigOperators.Ring.Finset
+import Mathlib.Algebra.Order.BigOperators.Group.List
 import Mathlib.Algebra.Polynomial.FieldDivision
 import Mathlib.Data.List.Basic
 import Mathlib.Data.List.Infix
@@ -447,12 +448,11 @@ private theorem expandedImage_length_lower (q : Nat) (hq : 0 < q) (n : Nat)
   | succ n ih =>
       have lower (word : List (Symbol × Fin q)) :
           (n + 1) * word.length ≤ (word.flatMap (image (expandedTheta theta q hq) n)).length := by
-        induction word with
-        | nil => simp
-        | cons a word hw =>
-            simp only [List.length_cons, List.flatMap_cons, List.length_append]
-            have ha := ih a
-            nlinarith
+        rw [List.length_flatMap]
+        simpa [Nat.mul_comm] using
+          (List.sum_le_sum (l := word) (f := fun _ => n + 1)
+            (g := fun a => (image (expandedTheta theta q hq) n a).length)
+            (fun a _ => ih a))
       have hl := lower (expandedTheta theta q hq state)
       have ht := theta_lengths state.1
       rw [expandedTheta_length] at hl
@@ -467,7 +467,8 @@ private theorem expandedFixedWord_eq_image_get (q : Nat) (hq : 0 < q) (n r : Nat
   have hp := expandedImage_prefix q hq n
   have hb : r < (expand q (image theta n root)).length := lt_of_lt_of_le hr hp.length_le
   have hlen : (expand q (image theta n root)).length = q * (image theta n root).length := by
-    rw [expand_as_indexed q hq, List.length_ofFn]
+    simpa [expand, letterExpand, Nat.mul_comm] using
+      (List.length_flatMap (l := image theta n root) (f := letterExpand q))
   have hparent : r / q < (image theta n root).length := by
     apply (Nat.div_lt_iff_lt_mul hq).mpr
     rw [hlen] at hb

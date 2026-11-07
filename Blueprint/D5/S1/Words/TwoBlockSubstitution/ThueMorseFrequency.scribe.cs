@@ -15,7 +15,7 @@ internal sealed class ThueMorseFrequencyDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("sign"),
                 DeclarationHandle.Create("D5/S1/Words/TwoBlockSubstitution/ThueMorseFrequency.sign"),
                 H("sign"),
-                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, Open, Seq(Operatorname, Grp(F.Id("b"))), Sp, Colon, Sp, Seq(Operatorname, Grp(F.Id("Bool"))), Close, Comma, Sp, Seq(Operatorname, Grp(F.Id("sign"))), Sp, Seq(Operatorname, Grp(F.Id("b"))), Sp, F.Eq, Sp, Open, Seq(Operatorname, Grp(F.Id("if"))), Sp, Seq(Operatorname, Grp(F.Id("b"))), Sp, Seq(Operatorname, Grp(F.Id("then"))), Sp, Minus, D(1), Sp, Seq(Operatorname, Grp(F.Id("else"))), Sp, D(1), Close))),
+                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, Parenthesized(Seq(Seq(Operatorname, Grp(F.Id("b"))), Sp, Colon, Sp, Seq(Operatorname, Grp(F.Id("Bool"))))), Comma, Sp, Seq(Operatorname, Grp(F.Id("sign"))), Sp, Seq(Operatorname, Grp(F.Id("b"))), Sp, F.Eq, Sp, Parenthesized(Seq(Seq(Operatorname, Grp(F.Id("if"))), Sp, Seq(Operatorname, Grp(F.Id("b"))), Sp, Seq(Operatorname, Grp(F.Id("then"))), Sp, Minus, D(1), Sp, Seq(Operatorname, Grp(F.Id("else"))), Sp, D(1)))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The integer sign is minus one for true and one for false."))), DescribeRole.Definition),
 

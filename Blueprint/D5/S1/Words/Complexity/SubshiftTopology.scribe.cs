@@ -14,7 +14,7 @@ internal sealed class SubshiftTopologyDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("golden-wordfactorset-card"),
                 DeclarationHandle.Create("D5/S1/Words/Complexity/SubshiftTopology.golden_wordFactorSet_card"),
                 H("golden wordFactorSet card"),
-                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, Open, Seq(Operatorname, Grp(F.Id("n"))), Sp, Colon, Sp, Seq(Operatorname, Grp(F.Id("Nat"))), Close, Comma, Sp, Open, Seq(Operatorname, Grp(F.Id("wordFactorSet"))), Sp, Seq(Operatorname, Grp(F.Id("goldenWord"))), Sp, Seq(Operatorname, Grp(F.Id("n"))), Close, Dot, Seq(Operatorname, Grp(F.Id("card"))), Sp, Eq, Sp, Seq(Operatorname, Grp(F.Id("n"))), Sp, Plus, Sp, D(1)))),
+                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, Parenthesized(Seq(Seq(Operatorname, Grp(F.Id("n"))), Sp, Colon, Sp, Seq(Operatorname, Grp(F.Id("Nat"))))), Comma, Sp, Parenthesized(Seq(Seq(Operatorname, Grp(F.Id("wordFactorSet"))), Sp, Seq(Operatorname, Grp(F.Id("goldenWord"))), Sp, Seq(Operatorname, Grp(F.Id("n"))))), Dot, Seq(Operatorname, Grp(F.Id("card"))), Sp, Eq, Sp, Seq(Operatorname, Grp(F.Id("n"))), Sp, Plus, Sp, D(1)))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The golden word has exactly n + 1 factors of length n."))), DescribeRole.Theorem),
 
@@ -92,4 +92,5 @@ internal sealed class SubshiftTopologyDocument : IScribeDocumentDefinition
                         + "continuum, so subtype monotonicity supplies the matching upper bound. "
                         + "Here c denotes the continuum cardinal."))),
                 DescribeRole.Theorem))));
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 }
