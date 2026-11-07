@@ -32,7 +32,7 @@ open D5.S3.Arith.GoldenResource.FirstLayerMarginalAntitone
 /-- The real extension of the existing first-layer marginal. -/
 def firstLayerPrice (t : ℝ) : ℝ := Real.log (1 + 1 / t) / Real.log t
 
-private theorem firstLayerPrice_strictAnti : StrictAntiOn firstLayerPrice (Set.Ioi 1) := by
+theorem firstLayerPrice_strictAnti : StrictAntiOn firstLayerPrice (Set.Ioi 1) := by
   intro x hx y hy hxy
   change 1 < x at hx
   change 1 < y at hy
@@ -45,7 +45,7 @@ private theorem firstLayerPrice_strictAnti : StrictAntiOn firstLayerPrice (Set.I
   exact (div_lt_div_of_pos_right hn (Real.log_pos hy)).trans
     (div_lt_div_of_pos_left hn0 (Real.log_pos hx) hd)
 
-private theorem half_shift_cutoff {L : ℝ} (hL : 12 < L) :
+theorem half_shift_cutoff {L : ℝ} (hL : 12 < L) :
     ∃ z : ℝ, 11 < z ∧ 0 < L - z ∧ L - z < 1 / 2 ∧
       firstLayerPrice z = price L ∧
       (∀ t : ℝ, 1 < t → firstLayerPrice t = price L → t = z) := by
