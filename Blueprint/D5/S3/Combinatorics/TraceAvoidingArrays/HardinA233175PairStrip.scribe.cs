@@ -31,7 +31,7 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
             Def("pairs", "pairs", "The two boundary labels", PairsFormula(),
                 "Only the complementary-pair labels of the preceding column affect future bonds."),
             Def("a", "a", "The literal filtered count", CountFormula(),
-                "The finite set contains all arrays on Fin 2 times Fin n, filtered by the displayed predicate. The rank r*n+j is the row-major order. The first-entry existential also makes a(0)=0."),
+                "The finite set contains all arrays on Fin 2 times Fin n, filtered by the displayed predicate. The rank r*n+j is the row-major order. The first-entry existential also makes a(0)=0.", literature: true),
             Def("step", "step", "One-column continuation", StepFormula(),
                 "The sum ranges over all thirty-six columns. Both new colours must avoid both preceding pair labels and satisfy their respective seen-colour flags."),
             Def("v", "v", "Continuation vectors", VectorFormula(),
@@ -40,17 +40,26 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
                 "The first top colour is zero. The final top flags q are also the initial bottom flags, since all top-row cells precede the bottom row. Summing over q selects the unique final top record."),
             Thm("finite-certificate", "finite_certificate", "A finite continuation identity", CertificateFormula(),
                 "The seven-step identity holds on all 576 states. The listed scalar values concern continuation lengths zero through six. Linearity propagates the identity to every continuation length."),
-            Thm("result", "result", "Barker's generating function", ResultFormula(),
+            Resolution("result", "result", "Barker's generating function", ResultFormula(),
                 "The literal filtered count equals total(v(n-1)) at every positive width, by decomposition into the first column and its tail. The seven-step identity has polynomial z^2*(z^3-12*z^2+128)*(z^2-4*z-16). The listed initial values eliminate the extra factor for the scalar count and yield a(n)=12*a(n-1)-128*a(n-3) for n at least five. Comparing every power-series coefficient gives the identity. The cast from natural counts to integers is taken before forming the series."))));
 
-    private static DocumentBlock Def(string id, string name, string title, Formula formula, string prose) =>
+    private static DocumentBlock Def(string id, string name, string title, Formula formula, string prose,
+        bool literature = false) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+            StatementSource.FromAuthor(Disp(formula)),
+            literature
+                ? AssessedProvenance.FromLiterature(LibraryNoteRef.Create(Note))
+                : AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
     private static DocumentBlock Thm(string id, string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+    private static DocumentBlock Resolution(string id, string name, string title, Formula formula, string prose) =>
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233175"), ResolutionKind.Proved));
 
     private static Formula AllowedFormula()
     {
@@ -205,7 +214,7 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
     private static Formula Product(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Times, Sp, Parenthesized(b));
     private static Formula Arrow(Formula a, Formula b) => Seq(Parenthesized(a), Sp, To, Sp, b);
     private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, Sp, b));
-    private static Formula Proj(Formula a, byte i) => Call("proj", a, D(i));
+    private static Formula Proj(Formula a, byte i) => Call(i == 1 ? "Prod.fst" : "Prod.snd", a);
     private static Formula Cast(Formula a) => Parenthesized(Seq(a, Colon, Sp, V("Int")));
     private static Formula Eq(Formula a, Formula b) => Seq(a, Sp, F.Eq, Sp, b);
     private static Formula Ne(Formula a, Formula b) => Seq(a, Sp, Neq, Sp, b);

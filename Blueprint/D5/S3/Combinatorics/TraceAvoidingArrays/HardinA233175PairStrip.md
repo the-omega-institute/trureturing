@@ -36,7 +36,7 @@ A column is an ordered function on the two row indices.
 
 **Definition 1.3 (The next colour).**
 
-$$\forall s: Seen, (\forall c: \operatorname{Fin}\left(6\right), ((\operatorname{allowed}\left(s, c\right)) \iff ((((c = 2) \lor ((c = 3) \lor (c = 4))) \implies (\operatorname{proj}\left(s, 1\right) = true)) \land ((c = 3) \implies (\operatorname{proj}\left(s, 2\right) = true)))))$$
+$$\forall s: Seen, (\forall c: \operatorname{Fin}\left(6\right), ((\operatorname{allowed}\left(s, c\right)) \iff ((((c = 2) \lor ((c = 3) \lor (c = 4))) \implies (\operatorname{Prod.fst}\left(s\right) = true)) \land ((c = 3) \implies (\operatorname{Prod.snd}\left(s\right) = true)))))$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.allowed` (`✓ std3`).
 
@@ -50,7 +50,7 @@ The two implications impose exactly the required earlier occurrences.
 
 **Definition 1.4 (Updating the flags).**
 
-$$\forall s: Seen, (\forall c: \operatorname{Fin}\left(6\right), (\operatorname{advance}\left(s, c\right) = (\operatorname{proj}\left(s, 1\right) \operatorname{or} \operatorname{decide}\left(c = 1\right), \operatorname{proj}\left(s, 2\right) \operatorname{or} \operatorname{decide}\left(c = 2\right))))$$
+$$\forall s: Seen, (\forall c: \operatorname{Fin}\left(6\right), (\operatorname{advance}\left(s, c\right) = (\operatorname{Prod.fst}\left(s\right) \operatorname{or} \operatorname{decide}\left(c = 1\right), \operatorname{Prod.snd}\left(s\right) \operatorname{or} \operatorname{decide}\left(c = 2\right))))$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.advance` (`✓ std3`).
 
@@ -120,13 +120,11 @@ Only the complementary-pair labels of the preceding column affect future bonds.
 
 **Definition 1.9 (The literal filtered count).**
 
-$$\forall n: Nat, (\operatorname{a}\left(n\right) = \operatorname{Finset.card}\left(\operatorname{Finset.filter}\left(\lambda A: ((\operatorname{Fin}\left(2\right)) \times (\operatorname{Fin}\left(n\right))) \to \operatorname{Fin}\left(6\right) \mapsto ((\exists j: \operatorname{Fin}\left(n\right), ((\operatorname{val}\left(j\right) = 0) \land (A\left((0, j)\right) = 0))) \land ((\forall j: \operatorname{Fin}\left(n\right), ((\operatorname{val}\left(j\right) + 1 < n) \implies (\forall r: \operatorname{Fin}\left(2\right), (\forall s: \operatorname{Fin}\left(2\right), ((A\left((r, j)\right) \neq A\left((s, \operatorname{Fin.mk}\left(\operatorname{val}\left(j\right) + 1\right))\right)) \land (\operatorname{val}\left(A\left((r, j)\right)\right) + \operatorname{val}\left(A\left((s, \operatorname{Fin.mk}\left(\operatorname{val}\left(j\right) + 1\right))\right)\right) \neq 5)))))) \land (\forall p: (\operatorname{Fin}\left(2\right)) \times (\operatorname{Fin}\left(n\right)), ((((A\left(p\right) = 2) \lor ((A\left(p\right) = 3) \lor (A\left(p\right) = 4))) \implies (\exists q: (\operatorname{Fin}\left(2\right)) \times (\operatorname{Fin}\left(n\right)), ((\operatorname{val}\left(\operatorname{proj}\left(q, 1\right)\right) \cdot n + \operatorname{val}\left(\operatorname{proj}\left(q, 2\right)\right) < \operatorname{val}\left(\operatorname{proj}\left(p, 1\right)\right) \cdot n + \operatorname{val}\left(\operatorname{proj}\left(p, 2\right)\right)) \land (A\left(q\right) = 1)))) \land ((A\left(p\right) = 3) \implies (\exists q: (\operatorname{Fin}\left(2\right)) \times (\operatorname{Fin}\left(n\right)), ((\operatorname{val}\left(\operatorname{proj}\left(q, 1\right)\right) \cdot n + \operatorname{val}\left(\operatorname{proj}\left(q, 2\right)\right) < \operatorname{val}\left(\operatorname{proj}\left(p, 1\right)\right) \cdot n + \operatorname{val}\left(\operatorname{proj}\left(p, 2\right)\right)) \land (A\left(q\right) = 2)))))))), \operatorname{Finset.univ}\left(\right)\right)\right))$$
+$$\forall n: Nat, (\operatorname{a}\left(n\right) = \operatorname{Finset.card}\left(\operatorname{Finset.filter}\left(\lambda A: ((\operatorname{Fin}\left(2\right)) \times (\operatorname{Fin}\left(n\right))) \to \operatorname{Fin}\left(6\right) \mapsto ((\exists j: \operatorname{Fin}\left(n\right), ((\operatorname{val}\left(j\right) = 0) \land (A\left((0, j)\right) = 0))) \land ((\forall j: \operatorname{Fin}\left(n\right), ((\operatorname{val}\left(j\right) + 1 < n) \implies (\forall r: \operatorname{Fin}\left(2\right), (\forall s: \operatorname{Fin}\left(2\right), ((A\left((r, j)\right) \neq A\left((s, \operatorname{Fin.mk}\left(\operatorname{val}\left(j\right) + 1\right))\right)) \land (\operatorname{val}\left(A\left((r, j)\right)\right) + \operatorname{val}\left(A\left((s, \operatorname{Fin.mk}\left(\operatorname{val}\left(j\right) + 1\right))\right)\right) \neq 5)))))) \land (\forall p: (\operatorname{Fin}\left(2\right)) \times (\operatorname{Fin}\left(n\right)), ((((A\left(p\right) = 2) \lor ((A\left(p\right) = 3) \lor (A\left(p\right) = 4))) \implies (\exists q: (\operatorname{Fin}\left(2\right)) \times (\operatorname{Fin}\left(n\right)), ((\operatorname{val}\left(\operatorname{Prod.fst}\left(q\right)\right) \cdot n + \operatorname{val}\left(\operatorname{Prod.snd}\left(q\right)\right) < \operatorname{val}\left(\operatorname{Prod.fst}\left(p\right)\right) \cdot n + \operatorname{val}\left(\operatorname{Prod.snd}\left(p\right)\right)) \land (A\left(q\right) = 1)))) \land ((A\left(p\right) = 3) \implies (\exists q: (\operatorname{Fin}\left(2\right)) \times (\operatorname{Fin}\left(n\right)), ((\operatorname{val}\left(\operatorname{Prod.fst}\left(q\right)\right) \cdot n + \operatorname{val}\left(\operatorname{Prod.snd}\left(q\right)\right) < \operatorname{val}\left(\operatorname{Prod.fst}\left(p\right)\right) \cdot n + \operatorname{val}\left(\operatorname{Prod.snd}\left(p\right)\right)) \land (A\left(q\right) = 2)))))))), \operatorname{Finset.univ}\left(\right)\right)\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.a` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233175: six-colour complementary-pair exclusion on a two-row strip*. URL: <https://oeis.org/A233175>.
+*Citation.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233175: six-colour complementary-pair exclusion on a two-row strip*. URL: <https://oeis.org/A233175>.
 
 *Commentary.*
 
@@ -134,7 +132,7 @@ The finite set contains all arrays on Fin 2 times Fin n, filtered by the display
 
 **Definition 1.10 (One-column continuation).**
 
-$$\forall w: (Seen) \to (Seen) \to (Seen) \to ((\operatorname{Fin}\left(3\right)) \times (\operatorname{Fin}\left(3\right))) \to Int, (\forall q: Seen, (\forall t: Seen, (\forall b: Seen, (\forall p: (\operatorname{Fin}\left(3\right)) \times (\operatorname{Fin}\left(3\right)), (\operatorname{step}\left(w, q, t, b, p\right) = \sum_{c: Col} ((\operatorname{if} ((\forall r: \operatorname{Fin}\left(2\right), ((\operatorname{pair}\left(c\left(r\right)\right) \neq \operatorname{proj}\left(p, 1\right)) \land (\operatorname{pair}\left(c\left(r\right)\right) \neq \operatorname{proj}\left(p, 2\right)))) \land ((\operatorname{allowed}\left(t, c\left(0\right)\right)) \land (\operatorname{allowed}\left(b, c\left(1\right)\right)))) \operatorname{then} w\left(q, \operatorname{advance}\left(t, c\left(0\right)\right), \operatorname{advance}\left(b, c\left(1\right)\right), \operatorname{pairs}\left(c\right)\right) \operatorname{else} 0)))))))$$
+$$\forall w: (Seen) \to (Seen) \to (Seen) \to ((\operatorname{Fin}\left(3\right)) \times (\operatorname{Fin}\left(3\right))) \to Int, (\forall q: Seen, (\forall t: Seen, (\forall b: Seen, (\forall p: (\operatorname{Fin}\left(3\right)) \times (\operatorname{Fin}\left(3\right)), (\operatorname{step}\left(w, q, t, b, p\right) = \sum_{c: Col} ((\operatorname{if} ((\forall r: \operatorname{Fin}\left(2\right), ((\operatorname{pair}\left(c\left(r\right)\right) \neq \operatorname{Prod.fst}\left(p\right)) \land (\operatorname{pair}\left(c\left(r\right)\right) \neq \operatorname{Prod.snd}\left(p\right)))) \land ((\operatorname{allowed}\left(t, c\left(0\right)\right)) \land (\operatorname{allowed}\left(b, c\left(1\right)\right)))) \operatorname{then} w\left(q, \operatorname{advance}\left(t, c\left(0\right)\right), \operatorname{advance}\left(b, c\left(1\right)\right), \operatorname{pairs}\left(c\right)\right) \operatorname{else} 0)))))))$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.step` (`✓ std3`).
 
@@ -193,6 +191,10 @@ The seven-step identity holds on all 576 states. The listed scalar values concer
 $$\left(1 - 4 \cdot X\right) \cdot \left(1 - 8 \cdot X - 32 \cdot (X)^{2}\right) \cdot \operatorname{PowerSeries.mk}\left(\lambda n: Nat \mapsto (\operatorname{a}\left(n\right): Int)\right) = X \cdot \left(3 - 28 \cdot X - 16 \cdot (X)^{2} + 224 \cdot (X)^{3}\right) \operatorname{in} \operatorname{PowerSeries}\left(Int\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/hardin233175` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233175","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
