@@ -32,7 +32,7 @@ open private q_digits_exact affine
   from D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.Physical
 open private g_selected_read f_selected_read terminal_selected_read affine_sum
   from D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.HighRows
-open private selected_low_triples selected_f2 corrected_low
+open private selected_low_triples selected_f2 corrected_low selected_low_bits
   from D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.LowRows
 
 variable {A : Type*} [AddCommGroup A]
@@ -67,9 +67,7 @@ private theorem selected_four_parameter_form (r : ℕ) (X : Fin (3*degree r) →
     linear_combination (norm := module) ef-eb
   have hG : block X 1 2=(4 : ℤ) • block X 1 0 := by
     linear_combination (norm := module) ea-eb+hz
-  obtain ⟨hae,hbe,hse⟩ := parameter_exact r
-  obtain ⟨hB,hE,hmod⟩ := eighth_facts r
-  have ha4 : aa r%4=3 := by omega
+  have ha4 : aa r%4=3 := (selected_low_bits r).1
   have hη : 4*((aa r+1)/4)-1=aa r := by omega
   have slope : (ss r/2) • block X 0 1+aa r • block X 1 0=0 := by
     calc
@@ -155,6 +153,14 @@ private theorem terminal_coefficients (r : ℕ) :
   obtain ⟨ha,hb,hs⟩ := parameter_exact r
   obtain ⟨hap,hbp,hsp⟩ := parameter_parities r
   obtain ⟨hL,hM,hL8,hM8,hp,hp8,hC,hC8,hG,hG8⟩ := q_readings r
+  generalize hB0 : (base r : ℤ) = B at q0 q1 q2 q3 ha hs
+  generalize hA0 : aa r = a at ha ⊢
+  generalize hS0 : ss r = s at hs hsp ⊢
+  generalize hL0 : qLow r = L at q0 hp ⊢
+  generalize hM0 : qMid r = M at q1 ⊢
+  generalize hL8 : q8Low r = L8 at q2 hp8 ⊢
+  generalize hM8 : q8Mid r = M8 at q3 ⊢
+  clear * - q0 q1 q2 q3 ha hs hsp hp hp8
   omega
 
 /-- Torsion-safe reconstruction in every AddCommGroup on ALL original
@@ -213,7 +219,7 @@ theorem actual_selected_upper_reconstruction (r : ℕ)
   have hxu : x=(2 : ℤ) • u := (sub_eq_zero.mp xunit).symm
   have R : ss r • u+aa r • y=0 := by
     calc
-      _=(ss r/2) • x+aa r • y := by rw [hxu,smul_smul,ck]
+      _=(ss r/2) • x+aa r • y := by rw [hxu,smul_smul,mul_comm (ss r/2) 2,ck]
       _=0 := slope
   let c : A := -(5 : ℤ) • u-(2 : ℤ) • y
   have hu : u=aa r • c := by
