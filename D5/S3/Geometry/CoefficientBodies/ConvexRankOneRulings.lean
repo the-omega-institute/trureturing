@@ -4,7 +4,7 @@
    mirror-E: none(waiver:arbitrary-pointwise-coefficient-body)
    anchors: []
    utility: none
-   digest: Whole convex families of deficient two-column coefficient matrices have one common factor. -/
+   digest: Whole convex rank-one coefficient families have one common factor. -/
 
 import Mathlib.Analysis.Convex.Basic
 import Mathlib.LinearAlgebra.Matrix.Rank
@@ -129,7 +129,9 @@ private theorem zero_sum_factors {d : ℕ} (A : Coeff d)
 
 private theorem minor_eq (A : Coeff 2) (i k : Label) (j l : Fin 2) :
     minor A i k j l = A i j * A k l - A i l * A k j := by
-  simp [minor, Matrix.det_fin_two]
+  unfold minor
+  rw [Matrix.det_fin_two]
+  rfl
 
 /-- Exact actual-rank/minor interface for rectangular real two-column matrices. -/
 private theorem rank_le_one_iff_minors (A : Coeff 2) :
@@ -388,7 +390,7 @@ theorem result {X : Type*} (b : Label → X → ℝ)
       minor (blend θ (vecMulVec u v) (vecMulVec s t)) i k j l =
         θ * (1 - θ) * wedge u s i k * wedge v t j l) ∧
     (∀ (u s : Label → ℝ) (v t : Fin 2 → ℝ) (θ : ℝ), 0 < θ → θ < 1 →
-      (blend θ (vecMulVec u v) (vecMulVec s t)).rank = 2 ↔ Transverse u s v t) ∧
+      ((blend θ (vecMulVec u v) (vecMulVec s t)).rank = 2 ↔ Transverse u s v t)) ∧
     (∀ (u s u' s' : Label → ℝ) (v t v' t' : Fin 2 → ℝ),
       vecMulVec u v = vecMulVec u' v' → vecMulVec s t = vecMulVec s' t' →
       (Transverse u s v t ↔ Transverse u' s' v' t')) ∧
@@ -467,7 +469,7 @@ theorem result {X : Type*} (b : Label → X → ℝ)
         simp only [blend, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul]
         ring
       obtain ⟨i, k, j, l, hm⟩ := (rank_two_iff_minor A).mp hr
-      exact ⟨A, hA, A, hA, i, k, j, l, by simpa [he] using hm⟩
+      exact ⟨A, hA, A, hA, i, k, j, l, by rw [he]; exact hm⟩
     · rintro ⟨A, hA, B, hB, i, k, j, l, hm⟩
       exact ⟨_, hblend A hA B hB (1 / 2) (by norm_num) (by norm_num),
         (rank_two_iff_minor _).mpr ⟨i, k, j, l, hm⟩⟩
