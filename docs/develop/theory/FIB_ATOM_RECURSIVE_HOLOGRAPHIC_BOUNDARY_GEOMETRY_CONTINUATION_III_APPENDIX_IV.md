@@ -2749,3 +2749,55 @@ $$
 The inclusion (194.2) then gives both nullity inequalities in (194.3). The final exclusion statement is the contrapositive of either inequality. $\square$
 
 The test is finite-dimensional and basis-independent: a proposed rank-three or rank-four fibre must first exhibit the required nullity in both weighted mode matrices before its nonlinear residual equations can be solved. This is a necessary filter, not a nonexistence theorem; nullity may occur accidentally, and arbitrary partition realization, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization remain open.
+
+## 195. Saturated weighted kernels identify the radical
+
+The nullity inequalities of Section 194 become an exact identification whenever one of the weighted mode maps is saturated. This separates the finite-dimensional radical calculation from the remaining nonlinear residual equations.
+
+**Proposition 195.1 (saturated-kernel identification).** Let $u$ be a full-zero bounded partition and put $r_u=\dim\mathcal W_u$. If
+
+$$
+\dim\ker\mathsf L_u=r_u-2,
+\tag{195.1}
+$$
+
+then
+
+$$
+\ker\mathsf L_u=\mathcal R_u.
+\tag{195.2}
+$$
+
+Likewise,
+
+$$
+\dim\ker\mathsf K_u=r_u-2
+\quad\Longrightarrow\quad
+\ker\mathsf K_u=\mathcal R_u.
+\tag{195.3}
+$$
+
+If both equalities in (195.1) and (195.3) hold, then
+
+$$
+\ker\mathsf L_u=\ker\mathsf K_u=\mathcal R_u,
+\tag{195.4}
+$$
+
+so the common radical is obtained by solving either finite-dimensional weighted kernel system.
+
+*Proof.* Proposition 194.2 gives the inclusions
+
+$$
+\mathcal R_u\subseteq\ker\mathsf L_u,
+\qquad
+\mathcal R_u\subseteq\ker\mathsf K_u,
+$$
+
+while Proposition 191.2 gives $\dim\mathcal R_u=r_u-2$. Under (195.1), the two subspaces $\mathcal R_u$ and $\ker\mathsf L_u$ have the same finite dimension, so the first inclusion is equality. The proof for $\mathsf K_u$ is identical, and (195.4) follows when both maps are saturated. $\square$
+
+**Corollary 195.2 (conditional closure of the radical branch).** Under the hypotheses of Proposition 195.1, if either weighted map is saturated and its kernel is zero, then $r_u=2$ and the partition lies in the radical-free common-first branch of Corollary 179.3. More generally, for a rank-three or rank-four candidate, any additional independent weighted-mode equation that reduces the corresponding kernel below $r_u-2$ rules out that rank immediately.
+
+*Proof.* If a saturated map has zero kernel, then (195.1) gives $r_u-2=0$, hence $r_u=2$. Proposition 191.2 then gives $\mathcal R_u=0$, and Corollary 179.3 supplies the common-first reduction. The final statement is the exclusion direction of Proposition 194.2. $\square$
+
+The saturated case supplies a concrete finite-dimensional route: first compute the two weighted kernels, then either identify the radical exactly or exclude the proposed rank. Saturation is not known for every candidate, so the unsaturated rank-three and rank-four branches, the nonlinear residual equations, arbitrary partition realization, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization remain open.
