@@ -6,7 +6,19 @@ The original forward weight ratio has quantitative value and derivative bounds.
 
 Use the existing functions H(x)=x^(4/5) and w(x)=(1+log(x))/(x^2*log(x)^2). For x>=4 and 0<=u<=1, let A(x,u)=w(x+u*H(x))/w(x). The center in the denominator moves together with the center in the numerator.
 
-**Theorem 1.1 (Value of the original ratio).**
+**Theorem 1.1 (Displacement bound for the price ratio).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/WeightControl.priceRatio_sub_one`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/WeightControl.priceRatio_sub_one` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For x>=4 and u>=0, the price ratio rho(x,u)=w(x+u)/w(x) satisfies 0<=1-rho(x,u)<=4*u/x. Monotonicity gives the first inequality; the lower power bound rho(x,u)>=(x/(x+u))^4 and the tangent inequality (1+v)^(-4)>=1-4*v give the second.
+
+**Theorem 1.2 (Value of the original ratio).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/WeightControl.weightRatio_sub_one`
 
@@ -16,9 +28,9 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/WeightControl.weightRatio_sub_o
 
 *Commentary.*
 
-The exact monotonicity and lower power bound for w give |A(x,u)-1|<=4*x^(-1/5). The lower bound uses (x/(x+u*H(x)))^4 rather than replacing the weight by a different window.
+Applying the displacement bound at u*H(x) gives |A(x,u)-1|<=4*x^(-1/5). The lower bound uses (x/(x+u*H(x)))^4 rather than replacing the weight by a different window.
 
-**Theorem 1.2 (Cancellation in the correlated derivative).**
+**Theorem 1.3 (Cancellation in the correlated derivative).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/WeightControl.weightRatio_control`
 
@@ -34,6 +46,8 @@ For x>=4, |L(x)|<=5/x and |L'(x)|<=8/x^2. The mean value theorem bounds L at the
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/WeightControl.priceRatio_sub_one`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/WeightControl.weightRatio_control`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/WeightControl.weightRatio_sub_one`
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/ProfileKernelDefs](ProfileKernelDefs.md)
 - Dependency: [D5/S3/Arith/Robin/OriginalEarlyDivisorQuadrature](../OriginalEarlyDivisorQuadrature.md)
