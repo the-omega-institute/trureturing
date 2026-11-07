@@ -807,7 +807,7 @@ private theorem signedNormal_parity (sign x y : ℂ) (A B : VertexOperator ℂ F
     ← smul_finsum' (x * y) (hf (parity v)), ← smul_finsum' (x * y) (hr (parity v))]
   module
 
-open private parity_ket from D5.S3.Quantum.Fermionic.CountableOccupationFock
+open D5.S3.Quantum.Fermionic.CountableOccupationFock (parity_ket)
 
 /-- Parity compatibility holds on every state, including inhomogeneous sums. -/
 theorem stateField_parity (a : Fock) (n : ℤ) :
