@@ -1,0 +1,40 @@
+**Proposition 162.2 (small-support directions survive every finite linear augmentation).** Let $B_n\subset G$ be Borel sets with $m(B_n)>0$ and
+
+$$
+\int_{B_n}g^2\,dm\longrightarrow0.
+\tag{162.2}
+$$
+
+Then there are bounded real Borel functions $v_n$ such that
+
+$$
+ v_n\in W_{\mathscr R},
+ \qquad \|v_n\|_\infty=1,
+ \qquad \operatorname{supp}(v_n)\subset B_n,
+ \qquad 0<q(v_n)\le c\int_{B_n}g^2\,dm\longrightarrow0.
+\tag{162.3}
+$$
+
+*Proof.* Put $N=64+r+1$. By nonatomicity, each positive-measure $B_n$ contains $N$ pairwise disjoint Borel subsets $A_{n,1},\ldots,A_{n,N}$ of positive measure. Their indicators are linearly independent in $L^\infty(m;\mathbb R)$. Let
+
+$$
+F_n=\operatorname{span}_{\mathbb R}
+\{\mathbf1_{A_{n,1}},\ldots,\mathbf1_{A_{n,N}}\}.
+$$
+
+The combined linear map
+
+$$
+(\Lambda_{134},\mathscr R):F_n\longrightarrow\mathbb R^{64+r}
+$$
+
+has a nonzero kernel by rank-nullity. Choose a nonzero $v_n$ in that kernel and scale its coefficients so that their maximum absolute value is one. Disjointness then gives $\|v_n\|_\infty=1$, and $v_n$ is a bounded real Borel function supported in $B_n$. It belongs to $V$ and is annihilated by $\mathscr R$, hence to $W_{\mathscr R}$. Proposition 134.2 gives strict positivity for every nonzero such class. Since $|v_n|\le1$,
+
+$$
+0<q(v_n)=c\|T_{d/2}(gv_n)\|_2^2
+\le c\|gv_n\|_2^2
+\le c\int_{B_n}g^2\,dm.
+$$
+
+The last quantity tends to zero by (162.2). $\square$
+

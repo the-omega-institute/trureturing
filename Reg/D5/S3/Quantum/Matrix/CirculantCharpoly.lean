@@ -96,3 +96,169 @@ end RealFactors
 end
 
 end Reg.D5.S3.Quantum.Matrix.CirculantCharpoly
+
+namespace Reg.D5.S3.Quantum.Matrix.CirculantCharpoly.CharacterPair
+open _root_.D5.S3.Quantum.Matrix.CirculantCharpoly
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+noncomputable section
+
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature (Σ _ : ℕ, ℕ) (fun _ => ℕ) (fun _ => ℂ)
+
+def actual : Realization signature :=
+  realize signature (fun _ p l => ((2 * Real.cos
+    (2 * Real.pi * Sigma.snd p * l / Sigma.fst p) : ℝ) : ℂ)) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (n : ℕ) [NeZero n] (j l : ℕ), l ≤ n →
+    ZMod.stdAddChar ((j : ZMod n) * (l : ZMod n)) +
+      ZMod.stdAddChar ((j : ZMod n) * ((n - l : ℕ) : ZMod n)) =
+        R.readout () ⟨n, j⟩ l
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he := h 1 0 0 (by omega)
+  norm_num [rejected, realize] at he
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨⟨2, 1⟩, 0, 1, ?_⟩
+  norm_num [actual, realize]
+
+def source : Registration arena (type_of% @character_pair) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@character_pair, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@character_pair) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Matrix.CirculantCharpoly.CharacterPair.unit
+  realizationName := `Reg.D5.S3.Quantum.Matrix.CirculantCharpoly.CharacterPair.source
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p l => ((2 * Real.cos
+    (2 * Real.pi * Sigma.snd p * l / Sigma.fst p) : ℝ) : ℂ)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Matrix.CirculantCharpoly
+    definition := none
+    coordinates := #[0, 2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms registration
+
+end
+end Reg.D5.S3.Quantum.Matrix.CirculantCharpoly.CharacterPair
+
+namespace Reg.D5.S3.Quantum.Matrix.CirculantCharpoly.TransformDet
+open _root_.D5.S3.Quantum.Matrix.CirculantCharpoly
+open _root_.D5.S3.Quantum.Dynamics.PolygonalFourierCouplings (transform)
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+noncomputable section
+
+abbrev signature : Signature :=
+  Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℂ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ n => if hn : n = 0 then 0 else
+    letI : NeZero n := ⟨hn⟩
+    (transform n).det) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (n : ℕ) [NeZero n], R.readout () () n ≠ 0
+
+private theorem actual_law : arena.Law actual := by
+  intro n hn
+  simpa only [actual, realize, dite_eq_right (NeZero.ne n)] using transform_det_ne_zero n
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h 1 rfl
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  simp only [actual, realize, dite_eq_right one_ne_zero]
+  exact (transform_det_ne_zero 1).symm
+
+def source : Registration arena (type_of% @transform_det_ne_zero) where
+  actual := actual
+  bridge := by
+    constructor
+    · intro h n hn
+      simpa only [actual, realize, dite_eq_right (NeZero.ne n)] using h n
+    · intro h n hn
+      have hh := h n
+      simpa only [actual, realize, dite_eq_right (NeZero.ne n)] using hh
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@transform_det_ne_zero) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Matrix.CirculantCharpoly.TransformDet.unit
+  realizationName := `Reg.D5.S3.Quantum.Matrix.CirculantCharpoly.TransformDet.source
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ n => if hn : n = 0 then 0 else
+    letI : NeZero n := ⟨hn⟩
+    (transform n).det) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Matrix.CirculantCharpoly
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms registration
+
+end
+end Reg.D5.S3.Quantum.Matrix.CirculantCharpoly.TransformDet

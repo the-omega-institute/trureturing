@@ -1,0 +1,164 @@
+**Lemma 2.1 (two-complex-variable majorant).** For every $\xi,\eta\in\mathbb C$,
+
+$$
+\left(
+\frac{|\xi+\eta|+|\xi-\eta|}{\sqrt2}
++|c\xi+is\eta|+|c\xi-is\eta|
+\right)^2
+\le (\sqrt2+2c)^2|\xi|^2+(\sqrt2+2s)^2|\eta|^2.
+\tag{2.2}
+$$
+
+Proof. Both sides are homogeneous of degree two. The zero pair satisfies (2.2); for a nonzero pair it suffices to divide by its Euclidean norm and assume $|\xi|^2+|\eta|^2=1$. Write
+
+$$
+\begin{aligned}
+p&=|\xi|^2,&q&=|\eta|^2,&p+q&=1,\\
+x&=\operatorname{Re}(\xi\overline\eta),&
+y&=\operatorname{Im}(\xi\overline\eta),&x^2+y^2&=pq,\\
+a&=\sqrt{c^2p+s^2q},&m&=cp+sq.
+\end{aligned}
+\tag{2.3}
+$$
+
+Here $s\le a\le c$, $s\le m\le a$, and direct expansion gives
+
+$$
+a^2-m^2=(c-s)^2pq.
+\tag{2.4}
+$$
+
+We use the elementary concavity estimate
+
+$$
+\sqrt{1+u}+\sqrt{1-u}\le2-\frac{u^2}{4},
+\qquad -1\le u\le1.
+\tag{2.5}
+$$
+
+Indeed, the square of the left side is $2+2\sqrt{1-u^2}\le4-u^2$. Taking square roots and applying the tangent bound for the square root once more gives $\sqrt{4-u^2}\le2-u^2/4$.
+
+Let
+
+$$
+A=\frac{|\xi+\eta|+|\xi-\eta|}{\sqrt2},
+\qquad B=|c\xi+is\eta|+|c\xi-is\eta|.
+$$
+
+Since $|\xi\pm\eta|^2=1\pm2x$, (2.5) with $u=2x$ gives
+
+$$
+A\le\sqrt2-\frac{x^2}{\sqrt2}.
+\tag{2.6}
+$$
+
+Similarly, $|c\xi\pm is\eta|^2=a^2\pm2cs\,y$. The argument $u=2cs\,y/a^2$ lies in $[-1,1]$ because
+
+$$
+2cs|y|\le2cs\sqrt{pq}\le c^2p+s^2q=a^2.
+$$
+
+As $c^2s^2=1/8$ and $a\ge s>0$, (2.5) therefore yields
+
+$$
+B\le2a-\frac{y^2}{8a^3}.
+\tag{2.7}
+$$
+
+Define
+
+$$
+\begin{aligned}
+I&=\sqrt2+2a,\\
+L&=\sqrt{(\sqrt2+2c)^2p+(\sqrt2+2s)^2q}
+  =\sqrt{2+4a^2+4\sqrt2m}.
+\end{aligned}
+\tag{2.8}
+$$
+
+Equations (2.6)–(2.7) and $x^2+y^2=pq$ imply
+
+$$
+A+B\le I-pq\min\left\{\frac1{\sqrt2},\frac1{8a^3}\right\}.
+\tag{2.9}
+$$
+
+Also $\sqrt2+2m\le L\le I$. Using (2.4) to rationalize twice gives the exact identity
+
+$$
+I-L
+ =\frac{4\sqrt2(a-m)}{I+L}
+ =\frac{4\sqrt2(c-s)^2pq}{(a+m)(I+L)}.
+\tag{2.10}
+$$
+
+All denominators are positive. We bound $N=(a+m)(I+L)$ in two ways.
+
+First, $a,m\ge s$ and $L\ge\sqrt2+2m$ give
+
+$$
+N\ge(2s)(2\sqrt2+4s)
+ =4\sqrt2s+8s^2
+ \ge16s^2=8(c-s)^2,
+\tag{2.11}
+$$
+
+where the second inequality uses $2s\le\sqrt2$. Substitution into (2.10) proves
+
+$$
+I-L\le\frac{pq}{\sqrt2}.
+\tag{2.12}
+$$
+
+For the second bound, $m=(a^2+cs)/(c+s)$ and the arithmetic-geometric mean inequality show
+
+$$
+\frac ma\ge\frac{2\sqrt{cs}}{c+s}
+ =\sqrt{2\sqrt2-2}>\frac9{10}.
+\tag{2.13}
+$$
+
+The strict comparison follows by squaring; for example $\sqrt2>281/200$ because $2>(281/200)^2$. Therefore
+
+$$
+\begin{aligned}
+N&\ge2(a+m)(\sqrt2+a+m)\\
+ &\ge\frac{19}{5}\sqrt2\,a+\frac{361}{50}a^2.
+\end{aligned}
+\tag{2.14}
+$$
+
+To compare (2.14) with a cubic in $a$, consider
+
+$$
+F(t)=\frac{19}{5}\sqrt2+\frac{361}{50}t
+      -32(\sqrt2-1)t^2.
+\tag{2.15}
+$$
+
+We have $c<15/16$: the rational inequality $\sqrt2<10/7$ gives $c^2=(2+\sqrt2)/4<6/7<225/256$. The polynomial $F$ is concave. Its values at the endpoints of $[0,15/16]$ are positive, since $F(0)>0$ and
+
+$$
+F(15/16)=\frac{5583-3892\sqrt2}{160}
+ >\frac{5583-3892(10/7)}{160}
+ =\frac{161}{1120}>0.
+\tag{2.16}
+$$
+
+A concave function is bounded below by its endpoint chord on an interval, so $F(a)>0$. Multiplying this inequality by $a>0$ in (2.14) gives
+
+$$
+N\ge32(\sqrt2-1)a^3
+ =32\sqrt2(c-s)^2a^3.
+\tag{2.17}
+$$
+
+Now (2.10) implies
+
+$$
+I-L\le\frac{pq}{8a^3}.
+\tag{2.18}
+$$
+
+Combining (2.12) and (2.18) with (2.9) proves $A+B\le L$. Both sides are nonnegative, so squaring proves (2.2). When $pq=0$, (2.10) simply states $I=L$, and the same argument applies. Rescaling removes the normalization. $\square$
+

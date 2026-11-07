@@ -1,0 +1,16 @@
+**Lemma 6.2 (Range and scaling of the squeezing parameter).** For $a>1$, $0<\varepsilon(a)<1$, and $\varepsilon(1)=1$. Moreover $a^2\varepsilon(a)\to(N-1)/N^2$ as $a\to\infty$. Stance: repo-derived.
+
+**Proof.** At $a=1$, $s=0$, $e^-=0$ and $\varepsilon=1$. Let $a>1$ and $K=\sqrt{s^2N^2+4s(N-1)}$. Since $2a^2=2+2s$,
+
+$$
+a+(N-1)e^-=\frac{2+sN-K}{2a}=\frac{2a}{2+sN+K},
+$$
+
+because $(2+sN)^2-K^2=4+4s=4a^2$. So $a+(N-1)e^->0$. Since $s^2(N-2)^2<K^2$, $e^-<0$, hence $a-e^->0$ and $\varepsilon>0$; and $\varepsilon<1$ iff $Ne^-<0$. For the limit,
+
+$$
+a^2\varepsilon(a)=\frac{a\,(a+(N-1)e^-)}{(a-e^-)/a}=\frac{2a^2/(2+sN+K)}{1-e^-/a}.
+$$
+
+As $a\to\infty$, $(2+sN+K)/a^2\to2N$, so the numerator tends to $1/N$; and $e^-/a=\frac{s(N-2)-K}{2a^2(N-1)}\to\frac{(N-2)-N}{2(N-1)}=-\frac1{N-1}$, so the denominator tends to $\frac N{N-1}$. ∎
+

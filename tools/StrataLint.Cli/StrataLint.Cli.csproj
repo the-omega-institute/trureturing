@@ -8,6 +8,10 @@
     <RuntimeHostConfigurationOption Include="System.GC.ConserveMemory" Value="9" />
     <EmbeddedResource Include="../scripts/worktree/worktree_*.py"
                       LogicalName="WorktreeProtocol.%(Filename)%(Extension)" />
+    <EmbeddedResource Include="../scripts/maintenance_log.py"
+                      LogicalName="WorktreeProtocol.maintenance_log.py" />
+    <EmbeddedResource Include="../scripts/host-cleanup.py"
+                      LogicalName="WorktreeProtocol.worktree_host_cleanup.py" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../StrataLint.Runtime/StrataLint.Runtime.csproj" />

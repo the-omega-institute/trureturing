@@ -385,7 +385,7 @@ def rectangleMaximum (B : Matrix H H ℝ) (R : Rectangle B) : ℝ :=
   ((R.rows ×ˢ R.cols).image fun ij => B ij.1 ij.2).max'
     ((R.rows_nonempty.product R.cols_nonempty).image _)
 
-private theorem extrema (B : Matrix H H ℝ) (R : Rectangle B) :
+theorem extrema (B : Matrix H H ℝ) (R : Rectangle B) :
     0 < rectangleMinimum B R ∧ rectangleMinimum B R ≤ rectangleMaximum B R ∧
     (∀ i ∈ R.rows, ∀ j ∈ R.cols, rectangleMinimum B R ≤ B i j) ∧
     (∀ i ∈ R.rows, ∀ j ∈ R.cols, B i j ≤ rectangleMaximum B R) := by

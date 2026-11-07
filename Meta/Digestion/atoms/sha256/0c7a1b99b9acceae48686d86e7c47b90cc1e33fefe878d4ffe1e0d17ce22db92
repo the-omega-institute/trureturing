@@ -1,0 +1,68 @@
+**引理 213.1（带径向参数的目标正常形）。** 设有限 EJA $E$ 总秩至少三，原正 Frobenius 型 $q$ 与原双线性 $D$ 满足右单位及全部正交、内部和半角角外配平。固定简单目标 $T$，其秩 $n\ge3$，且 (212.2) 只在 $T$ 内成立。令 $R=T^\perp$。则存在实数 $\lambda_T$、线性 $\ell_T:R\to\mathbb R$、标量双线性 $G_T:R\times R\to\mathbb R$，以及交替双线性 $\delta_T:T\times T\to T$，使
+
+$$
+\begin{aligned}
+\pi_TD_ab
+&=\delta_T(a_T,b_T)+f_T(a)b_T\\
+&\quad-\lambda_T\tau_T(a_T\circ b_T)u_T
++G_T(a_R,b_R)u_T,\\
+f_T(a)&=\lambda_T\tau_T(a_T)+\ell_T(a_R),\\
+G_T(x,x)&=-\ell_T(x^2).
+\end{aligned}
+\tag{213.1}
+$$
+
+每个 $(\delta_T)_a$ 是原 $q_T$ 斜伴随 Jordan 导子。令
+
+$$
+\sigma_T^2=1+4\lambda_T-4\lambda_T^2.
+$$
+
+则 $\sigma_T^2\ge0$，且对 $T$ 的全部幂等元 $c$，
+
+$$
+(\delta_T)_c^2=-\sigma_T^2P_c^T/4.
+\tag{213.2}
+$$
+
+此处没有先令 $\lambda_T=0$，也没有先固定标准转动平方。
+
+证明。两个输入来自不同简单块时，定理 181.1 与 primitive 张成使输出留在第二输入块。故 $\bar D=\pi_TD|_{T\times T}$ 具有右单位：$D_{a_T}u_R$ 的 $T$ 投影为零。$T$ 内 primitive、秩二切口和角外读回仍是整个 $E$ 的合法测试；$P_c$ 消去其他理想，所以引理 211.1 适用于 $\bar D$，取得 $\lambda_T$ 和 (211.2) 的 $\delta_T$。
+
+固定 $e\in T$ 及正规 Peirce 元 $y^2=e+s$。$\tau_T(y)=\tau_T(y\circ e)=0$，故径向项在 $\bar D_ye$ 上为零。由 (212.2) 和交替性，
+
+$$
+q_T((\delta_T)_ey,e)=0.
+$$
+
+$\delta_T$ 在共同谱框架上消失，且 $y$ 与 $e+s$ 共同可谱化，所以 $(\delta_T)_sy=-(\delta_T)_ey$；在切口 $s$ 应用奇部条件得 $q_T((\delta_T)_ey,s)=0$。(211.4) 的同一正反角外相减又给
+
+$$
+q_T((\delta_T)_ey,r)=0
+\qquad(r\text{ primitive},\ r\perp e+s).
+\tag{213.3}
+$$
+
+令 $B_e=(I-P_e)(\delta_T)_e|_{T_e}$。刚取得的 $e,s$ 与全部角外法向读数准确给出定理 175.1 证明中 (175.3) 的前件。对任意非零切向 $y$，$s_y=y^2/\lambda_y-e$、$\lambda_y=\tau_T(y^2)/2$，有
+
+$$
+y^2\circ B_e(y)=\lambda_y B_e(y)/2.
+$$
+
+该证明 (175.4) 的 $y+az$ 极化及 Peirce 交换双射只消费同一个线性 $B_e$ 和此式，遂给 $B_e=0$。这里复用其线性证明步骤，不以缺少完整自身能量的 $\delta_T$ 调用该定理的全部前件。于是 $(\delta_T)_a e\in T_e$ 对全部 $a,e$ 成立。沿 (156.4) 后的谱二次、三次极化，每个 $(\delta_T)_a$ 才成为原 $q_T$ 斜伴随 Jordan 导子。
+
+写 $q_T=w_T\tau_T(\,\cdot\circ\cdot\,)$。正规 $y$ 有 $\|y\|^2=2w_T$。对 $p_\pm$ 及任意 $r\perp e+s$，角外配平现在精确成为
+
+$$
+\frac{w_T}{4}
+=-\lambda_Tw_T
++\frac12\|(\delta_T)_ey+\lambda_Ty\|_{q_T}^2.
+\tag{213.4}
+$$
+
+斜伴随使交叉项为零，故
+$4\|(\delta_T)_ey\|^2=\sigma_T^2\|y\|^2$。
+简单块存在非零 Peirce 边，遂有 $\sigma_T^2\ge0$。导子、框架湮灭与交替性使每条 $V_{ij}$ 上 $(\delta_T)_j=-(\delta_T)_i$、其他框架原子作用为零。对任意谱幂等元逐边正交相加，再用斜伴随，正是 (156.10) 带系数 $\sigma_T^2$ 的推导，得到全部幂等元的 (213.2)。
+
+外部第一输入在 $T$ 上仍把每颗 primitive 送自身直线，故为 $\ell_T(a_R)I_T$。两个输入同在外部源块 $S$ 时，全部 $r\in T$ 的角外读回具有同一能量，迫使目标输出沿 $u_T$；对角由右单位给 $-\ell_T(e)u_T$。其余正交、Peirce 半角边及 primitive 张成，按定理 188.1 的外部源证明给 $G_T$ 及 $G_T(x,x)=-\ell_T(x^2)$。这些外部步骤不消费 $S$ 的自身读回或奇部条件。合并取得 (213.1)。∎
+

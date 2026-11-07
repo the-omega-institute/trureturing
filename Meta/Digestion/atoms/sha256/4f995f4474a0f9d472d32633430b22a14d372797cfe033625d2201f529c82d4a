@@ -1,0 +1,39 @@
+**Definition 34.1 (the causal record contract).** Fix an integer $k\ge1$.
+An input history is any sequence $h=((j_1,b_1),\ldots,(j_m,b_m))$,
+$0\le m\le k$, of distinct labels $j_i\in[k]$ and arbitrary bits
+$b_i\in\{0,1\}$. Write $A(h)=\{j_1,\ldots,j_m\}$ and
+$x_h:A(h)\to\{0,1\}$ for its partial assignment. Every order and every
+bit assignment is admitted. Fixed code and an arbitrary finite initial
+word $K_0$ may depend on $k$, but are chosen before the unknown inputs.
+At a settled cut the only variable retained record is one binary word
+$K(h)$; the current subset $A(h)$ is supplied side information. Exactness
+means, for every history and every allowed run,
+
+$$
+\operatorname{Dec}_k(A(h),K(h))=x_h.
+\tag{IV.99}
+$$
+
+Update receives only $(k,A,K,j,b)$, with $j\notin A$, and produces the
+next word by finitely many actual unit POPs and APPENDs, as in Definition
+30.1. It is causal: a run on a prefix is independent of future labels
+and bits. Deterministic update is allowed; if fresh internal choices are
+allowed, every allowed outcome must terminate and satisfy (IV.99) and
+the stated resource bounds. Such choices provide no additional retained
+state. Computation, decoding, input handling and scratch are separately
+paid, and scratch is cleared before return. No history, bits array,
+controller, old word or advice is retained outside $(A,K)$. The whole
+current word and its end are visible; there is no prefix-free or
+history-injectivity requirement.
+
+Let $c(h,j,b)$ count all actual tail edits, including detours, on the
+particular run. A worst-update bound $D\in\mathbb N$ requires $c\le D$
+on every insertion of every run. A true payload peak bound $L\in\mathbb N$
+includes $K_0$, every settled word and every intermediate edit word.
+Neither bound pays for scratch or total execution time. No canonical
+record is required: for every partial assignment $x:A\to\{0,1\}$ use
+**all** reachable settled words $R_{A,x}$ over all histories and allowed
+outcomes with that assignment. With finite peak these sets are finite,
+nonempty, and disjoint for different $x$ at the same $A$, by (IV.99).
+In particular put $R_x=R_{[k],x}$ for terminal $x\in\{0,1\}^k$.
+

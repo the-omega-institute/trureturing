@@ -20,12 +20,7 @@ set_option autoImplicit false
 
 namespace D5.S3.Arith.FactorialRatio.GridAntidiagonalTrafficBound
 
-/-- The logarithmic Stirling envelope is below one at every large-gap parity peak. -/
-private theorem uniform_peak_bound : ∀ n a k e : ℕ, 1 ≤ a → 16 ≤ k →
-    (e = 1 → 17 ≤ k) → e ≤ 1 → 2*a+k = n → n+e = 2*k*(k+1) →
-    (a : ℝ)*((n : ℝ)-2*a+1)/((n : ℝ)-1)*(Nat.choose n a : ℝ)^2 /
-      (Nat.choose (2*n-2) (n-1) : ℝ) < 1 := by
-  have upper (m : ℕ) (hm : 0 < m) :
+theorem log_factorial_upper_bound (m : ℕ) (hm : 0 < m) :
       Real.log (m.factorial : ℝ) ≤ (m : ℝ) * Real.log m - m +
         Real.log m / 2 + Real.log (2 * Real.pi) / 2 + 1 / (12 * m) := by
     let q : ℕ → ℝ := fun j => Real.log (Stirling.stirlingSeq (j + 1)) -
@@ -61,6 +56,12 @@ private theorem uniform_peak_bound : ∀ n a k e : ℕ, 1 ≤ a → 16 ≤ k →
       Real.log_mul (by norm_num) (by positivity), Real.log_sqrt (by positivity)] at hb
     rw [Real.log_mul (by norm_num) Real.pi_pos.ne']
     linarith
+
+/-- The logarithmic Stirling envelope is below one at every large-gap parity peak. -/
+private theorem uniform_peak_bound : ∀ n a k e : ℕ, 1 ≤ a → 16 ≤ k →
+    (e = 1 → 17 ≤ k) → e ≤ 1 → 2*a+k = n → n+e = 2*k*(k+1) →
+    (a : ℝ)*((n : ℝ)-2*a+1)/((n : ℝ)-1)*(Nat.choose n a : ℝ)^2 /
+      (Nat.choose (2*n-2) (n-1) : ℝ) < 1 := by
   let h : ℝ → ℝ := fun x => (1-x)*Real.log (1-x)+(1+x)*Real.log (1+x)-x^2
   have entropy (x : ℝ) (hx : 0 ≤ x) (hx1 : x < 1) : x^2 ≤
       (1-x)*Real.log (1-x)+(1+x)*Real.log (1+x) := by
@@ -154,8 +155,8 @@ private theorem uniform_peak_bound : ∀ n a k e : ℕ, 1 ≤ a → 16 ≤ k →
         2*a*Real.log a+2*((n : ℝ)-a)*Real.log ((n : ℝ)-a)-2*n*Real.log n+
           2*n*Real.log 2 := by field_simp; ring
     rw [heq,heq'] at hent'
-    have un := upper n (by omega)
-    have um := upper (n-1) (by omega)
+    have un := log_factorial_upper_bound n (by omega)
+    have um := log_factorial_upper_bound (n-1) (by omega)
     have la := Stirling.le_log_factorial_stirling (n := a) (by omega)
     have lb := Stirling.le_log_factorial_stirling (n := n-a) (by omega)
     have lm := Stirling.le_log_factorial_stirling (n := 2*n-2) (by omega)

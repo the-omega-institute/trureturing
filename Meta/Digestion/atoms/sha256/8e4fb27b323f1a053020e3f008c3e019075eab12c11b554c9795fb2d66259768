@@ -1,0 +1,4 @@
+**Proposition 12.2 (The two-label budget).** For $0<\alpha<1/2$, $\mathfrak A_2(q,\alpha)=\varnothing$ at every interior $q$.
+
+Proof. The two labels exhaust the budget, leaving no active configuration. If the source-independent initial choice emits one with probability $p$, the risks require $p\le\alpha$ and $1-p\le\alpha$, contrary to $1>2\alpha$. This is also the supplied small-budget result. Accordingly (12.2) at $M=2$, where $n_M=0$ and $L_M=X_M=1$, is a statement over an empty class. No universal lower bound asserts nonemptiness at another budget. $\square$
+

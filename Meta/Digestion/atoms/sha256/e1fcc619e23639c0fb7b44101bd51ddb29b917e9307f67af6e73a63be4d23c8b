@@ -1,0 +1,85 @@
+### 定理 4.6（稳定关系的两个侧面）
+
+<a id="thm-c122-fixed-algebra"></a>
+
+令 $\Phi=S^*$。则
+
+$$
+\mathfrak F=\{A:\Phi(A)=A\}
+$$
+
+是通常矩阵乘法下的含幺 $C^*$ 子代数，而
+
+<a id="eq-c122-state-observable-fix"></a>
+
+$$
+\operatorname{Fix}S=\Gamma_\sigma(\mathfrak F).
+\tag{31}
+$$
+
+后一个空间一般不是通常乘法下的代数，甚至不包含 $I$。并且
+
+$$
+S^n\longrightarrow E,
+$$
+
+其中 $E$ 是投影到 $\operatorname{Fix}S$ 的 $g_\sigma$ 正交投影，同时为 CPTP；$E^*$ 是保持 $\sigma$ 期望值的条件期望，值域为 $\mathfrak F$。
+
+**证明。**
+$\Phi$ 完全正且含幺，并满足 $\operatorname{Tr}(\sigma\Phi(A))=\operatorname{Tr}(\sigma A)$。若 $A\in\mathfrak F$，Schwarz 余量
+
+$$
+Q=\Phi(A^*A)-A^*A\ge0
+$$
+
+具有 $\operatorname{Tr}(\sigma Q)=0$。因 $\sigma>0$，必须 $Q=0$；对 $A^*$ 同理。为明确乘法结论，取 $\Phi(B)=W^*(B\otimes I)W$ 的等距表示，则
+
+$$
+Q=W^*(A^*\otimes I)(I-WW^*)(A\otimes I)W.
+$$
+
+零余量给出 $(A\otimes I)W=WA$，并由 $A^*$ 的零余量得到 $W^*(A\otimes I)=AW^*$。于是对所有 $B$，
+
+$$
+\Phi(AB)=A\Phi(B),\qquad \Phi(BA)=\Phi(B)A.
+$$
+
+固定点因而对乘法、伴随闭合，并含 $I$，得到 $C^*$ 子代数。
+
+由式~[(24)](#eq-c122-geometry-operators) 可核对 $S\Gamma_\sigma=\Gamma_\sigma S^*$，这立即证明式~[(31)](#eq-c122-state-observable-fix)。再由定理~[4.2](#thm-c122-weighted-contraction) 的完整谱分解，$S^n$ 在特征值 $1$ 上保持不变，在全部 $\lambda<1$ 上趋零，故极限是相应加权正交投影。CPTP 性在有限维极限下保持。其伴随 $E^*$ 含幺、完全正、固定整个 $\mathfrak F$，并具有值域 $\mathfrak F$。对 $E^*$ 重用刚才的零余量证明，得到
+
+$$
+E^*(AXB)=A E^*(X)B\quad(A,B\in\mathfrak F),
+$$
+
+即条件期望的双模关系；$E(\sigma)=\sigma$ 给出参考态保持。
+
+例如 $S(X)=\operatorname{Tr}(X)\sigma$ 的固定空间是 $\mathbb C\sigma$。若 $\sigma$ 满秩且非均匀，$\sigma^2$ 不与 $\sigma$ 成比例，所以这个状态固定空间不具通常乘法闭包；其可观测量固定代数却是 $\mathbb C I$。此外，固定空间是*所选参考态下*的恢复空间，不能直接改称 $N$ 在所有参考和恢复选择下的最大可恢复内容。取完全 $Z$ 退相干与 $\sigma=(I+rX)/2$，$0<r<1$，直接计算得
+
+$$
+S:\ (x,y,z)\longmapsto
+       \bigl(r,0,\sqrt{1-r^2}\,z\bigr).
+$$
+
+此时唯一固定态为 $\sigma$，尽管 $N$ 本身保持全部 $Z$ 对角态。
+
+还有一个不需另加物理公理的更大结构：
+
+<a id="eq-c122-markov-semigroup"></a>
+
+$$
+\mathcal Q_t=e^{t(S-\operatorname{id})}
+   =e^{-t}\sum_{n=0}^{\infty}\frac{t^n}{n!}S^n,
+ \qquad t\ge0.
+\tag{32}
+$$
+
+右端是通道的概率混合，故为 CPTP 半群，并保持 $\sigma$。每个谱方向以速率 $1-\lambda_j$ 衰减，极限仍为 $E$。在可观测量侧，$\mathcal Q_t^*$ 对 KMS 配对
+
+$$
+\langle A,B\rangle_{\sigma,\mathrm{KMS}}
+   =\operatorname{Tr}(A^*\sigma^{1/2}B\sigma^{1/2})
+$$
+
+自伴，这由 $S\Gamma_\sigma=\Gamma_\sigma S^*$ 直接推出。于是比较余量成为一个非负耗散二次型，零方向组成稳定关系代数。最大混合参考下的双交换子表达与全参考误差界见定理~[3.4](#thm-c122-dirichlet-defect)、[3.5](#thm-c122-diamond-defect)；这里没有把一般非均匀参考的状态固定空间误认成同一个普通矩阵代数。
+

@@ -1,0 +1,28 @@
+### 6.4　仪器、内部记录与完全正性
+
+还要求原随机混合对未归一分支的效果评价仿射相容，才能把纯输入作用接到同一实际混合过程：
+
+$$
+\Phi_e(\rho)=\sum_{j\in e}K_j\rho K_j^\dagger.
+$$
+
+对任意数学内部参考，
+
+$$
+(\Phi_e\otimes\operatorname{id})(R)
+=\sum_{j\in e}(K_j\otimes I)R(K_j^\dagger\otimes I)\succeq0
+\quad(R\succeq0),
+$$
+
+所以它完全正。总分支满足 $\sum K_j^\dagger K_j=I$，故保迹；单个事件为迹不增。$p_e=\operatorname{Tr}\Phi_e(\rho)>0$ 时条件态为 $\Phi_e(\rho)/p_e$，零概率时不作除法。[\[11\]](#ref-watrous)
+
+反向，任何有限维完全正映射的正 Choi 矩阵可谱分解为向量外积；将各向量按输出$\otimes$输入约定重排为矩阵 $K_j$，得到上述 Kraus 形式。保迹等价于 $\sum K_j^\dagger K_j=I$。因此此类数学仪器在有限维范围内完整。将数学参考放大认作实际过程，仍需同一原参考和分支绑定。[\[11\]](#ref-watrous)
+
+在同一输入输出空间上，若另要求一个投影事件 $P$ 保持 $\operatorname{Ran}P$ 的每条纯射线，便恢复 Lüders 更新。因为 $\sum K_j^\dagger K_j=P$，有 $K_j=K_jP$。$P=0$ 时全部 $K_j=0$；$P\ne0$ 时，输出保持每条射线使每个 $K_j$ 在该空间上为标量 $c_j I$，且 $\sum_j|c_j|^2=1$，故
+
+$$
+\Phi_P(\rho)=P\rho P.
+$$
+
+仅要求结果可重复仍允许像内酉转动，不足以选定这一具体更新。
+

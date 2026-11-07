@@ -1,0 +1,5 @@
+source_id = "periodic-binary-mps-local-phase-recovery"
+path = "docs/develop/theory/PERIODIC_BINARY_MPS_LOCAL_PHASE_RECOVERY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

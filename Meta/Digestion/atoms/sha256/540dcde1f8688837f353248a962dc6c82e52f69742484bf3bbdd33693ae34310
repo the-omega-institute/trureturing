@@ -1,0 +1,28 @@
+**定理 5.2（独立轨道平均律）。**在定义 1.1 与 (R) 下，令
+
+$$
+W(a,b;u,v)=3c(a,b)+9\bigl(\Omega(u)+\Omega(v)\bigr).
+$$
+
+对全部四标签及 $L\ge1$，有
+
+$$
+\left|K_L(a,u;b,v)-c(a,b)-C_L(u,v)\right|
+\le\frac{2W(a,b;u,v)}L.
+\tag{5.3}
+$$
+
+**证明。**令 $H_{n,m}=c(a\cdot U^nu,b\cdot U^mv)$、$Q_L=\{0,\ldots,L-1\}^2$，并写 $Q_L+k=\{(n+k,m+k):(n,m)\in Q_L\}$。引理 1.2 与推论 2.2 给 $0\le H_{n,m}\le W(a,b;u,v)$，对全部独立 $n,m\ge0$ 成立。对 (R) 的输入 $(a,b,U^nu,U^mv)$ 在 $Q_L$ 上求和，得到精确式
+
+$$
+\begin{aligned}
+&3L^2\bigl(K_L(a,u;b,v)-c(a,b)-C_L(u,v)\bigr)\\
+&\quad=\sum_{k=1}^2\left(
+\sum_{Q_L\setminus(Q_L+k)}H_{n,m}
+-\sum_{(Q_L+k)\setminus Q_L}H_{n,m}\right).
+\end{aligned}
+\tag{5.4}
+$$
+
+两差集基数相等，每个至多 $2kL$。各项属于同一 $[0,W]$，故第 $k$ 个括号绝对值至多 $2kLW$。对 $k=1,2$ 求和并除以 $3L^2$，即得 (5.3)。此外，同步等距给 $\Omega(U^ru)=\Omega(u)$；用 $U^ru,U^sv$ 替换 $u,v$，同一预算也适用于任意独立起点 $r,s\ge0$。这里仅增长一元标记次数，所有乘积仍有一个二元结点；未使用随树深增长的预算。
+

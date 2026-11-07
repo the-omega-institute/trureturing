@@ -1,0 +1,14 @@
+### 定理 2.2（原始读数的完整等价）
+
+<a id="c133-equivalence"></a>
+
+条件 [(C133)](#c133-axiom) 等价于：$R$ 对称半正定，$Q(Uf)=Q(f)$，并且
+
+$$
+D(V)\subset\mathcal N,\qquad
+ \mathcal N=\{f:Q(f)=0\}=\{f:R(f,g)=0\ \forall g\}.
+$$
+
+因此原始 $U$ 不必可逆或满足 $U^3=I$；这些结论只对可见商上的推进成立。
+
+**证明。**

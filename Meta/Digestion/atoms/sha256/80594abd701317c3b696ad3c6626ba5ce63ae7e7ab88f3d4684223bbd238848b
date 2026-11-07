@@ -1,0 +1,22 @@
+**图 1。**
+
+```latex
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[>=Stealth,every node/.style={font=\small},
+ state/.style={draw=accent,rounded corners,fill=accent!5,minimum width=24mm,minimum height=9mm}]
+\node[state] (o) at (0,1.8) {$\omega_0=\ket0$};
+\node[state] (x) at (-2.6,0) {$\ket1$};
+\node[state] (p) at (2.6,0) {$\ket+$};
+\draw[->,thick,accent,bend left=16] (o) to node[left] {$X$} (x);
+\draw[->,thick,accent,bend left=16] (x) to node[right] {$X$} (o);
+\draw[->,thick,accent,bend left=16] (o) to node[right] {$H_{\mathrm{Had}}$} (p);
+\draw[->,thick,accent,bend left=16] (p) to node[left] {$H_{\mathrm{Had}}$} (o);
+\draw[->,thick,warm] (o) edge[loop above] node {$Z\omega_0=\omega_0$} (o);
+\end{tikzpicture}
+\caption{同一个根、不同续接与根上回路可以同时存在。根上回路 $Z$ 在其他输入上仍可被区分。}
+\end{figure}
+```
+
+<a id="statement-2-4"></a>
+

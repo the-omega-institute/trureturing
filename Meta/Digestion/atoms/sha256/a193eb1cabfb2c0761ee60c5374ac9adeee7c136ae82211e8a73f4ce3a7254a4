@@ -1,0 +1,11 @@
+对上述中点与式 [(2.2)](#eq-c90-loss) 的平方损失 $\ell$，下列条件等价：
+
+1. C90 成立，即 $\ell=0$；
+
+2. $\mathcal R_\sigma\mathcal N(\rho_0)=\rho_0$；
+
+3. $\mathcal R_\sigma\mathcal N(\rho_1)=\rho_1$；
+
+4. 存在同一个 CPTP 映射 $\mathcal S$ 同时恢复两态：
+          $\mathcal S\mathcal N(\rho_i)=\rho_i$，$i=0,1$。
+

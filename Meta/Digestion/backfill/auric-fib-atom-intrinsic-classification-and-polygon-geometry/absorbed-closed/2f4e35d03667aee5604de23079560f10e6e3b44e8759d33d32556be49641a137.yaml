@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2f4e35d03667aee5604de23079560f10e6e3b44e8759d33d32556be49641a137
+  normalized_sha256: sha256:2f4e35d03667aee5604de23079560f10e6e3b44e8759d33d32556be49641a137
+cas_ref: sha256:2f4e35d03667aee5604de23079560f10e6e3b44e8759d33d32556be49641a137
+coverage_gids:
+  - gid: D5/S3/Geometry/Polygons/PolygonConditionalCounts.conditional_card
+    target_statement_id: sha256:dcec43d0c51d1f0a9826f794aa37bcf390ed4475ddfa1efe26863a1730c6c1d8
+  - gid: D5/S3/Geometry/Polygons/PolygonConditionedFan.source_conditioned_witnesses
+    target_statement_id: sha256:cf01ac22185f4654774c634fc8259d284ce045889e5fd99d79586c380e9b9e63
+receipts:
+  unresolved_subitems: []

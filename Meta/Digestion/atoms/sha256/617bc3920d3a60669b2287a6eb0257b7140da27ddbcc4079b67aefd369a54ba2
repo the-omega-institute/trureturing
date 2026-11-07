@@ -1,0 +1,17 @@
+### 例 7.10（两个 qubit 读口的正性冲突）
+
+<a id="ex-c117-overlap"></a>
+
+在同一个 qubit 上取
+$\mathcal B_Z=\operatorname{span}_\mathbb C\{I,Z\}$、
+$\mathcal B_X=\operatorname{span}_\mathbb C\{I,X\}$。
+分别赋予 $\omega_Z(Z)=1$、$\omega_X(X)=1$，两者在交集 $\mathbb C I$ 上一致。但 $X+Z$ 的最大特征值是 $\sqrt2$，故
+
+$$
+\sqrt2 I-X-Z\geq0,
+ \qquad
+ \omega(\sqrt2 I-X-Z)=\sqrt2-2<0
+$$
+
+将违反共同态的正性。因此不存在共同 qubit 态。
+

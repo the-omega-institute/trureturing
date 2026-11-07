@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:29e324561b378788a63844b77b82a1f832e47b41055c6d15f3f01917c6f550c4
+  normalized_sha256: sha256:29e324561b378788a63844b77b82a1f832e47b41055c6d15f3f01917c6f550c4
+cas_ref: sha256:29e324561b378788a63844b77b82a1f832e47b41055c6d15f3f01917c6f550c4
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Lattices/BadicaJaccardArbitraryLattices.IsStrictlyPositive
+    target_statement_id: sha256:0a71d8adace60edec19d75367c9d27a64b54be00b70ce9ade1d8bc961f60cdd2
+  - gid: D5/S3/Combinatorics/Lattices/BadicaJaccardArbitraryLattices.IsSupermodular
+    target_statement_id: sha256:e11b357287ad6190cb0ef0f06133d986cae5e185899be57f68705cd4a75bf161
+  - gid: D5/S3/Combinatorics/Lattices/BadicaJaccardArbitraryLattices.jaccardDist
+    target_statement_id: sha256:898ee37f053d76ad7cd6d04e92ccfa9bd2fbff0c4a2f67438cdb52d90b6bccab
+  - gid: D5/S3/Combinatorics/Lattices/BadicaJaccardArbitraryLattices.resultSufficiency
+    target_statement_id: sha256:f6cb1c8e4be39602f4642b9d72388204d4cfece4be903cf8f7f0c12836c15511
+  - gid: D5/S3/Quantum/Algebra/BornJaccardTracialClassification.modular_positive_triangle
+    target_statement_id: sha256:f6577c77f7465c612e0ea0f807db23adcc1913c07ff47dc523b7836dc0e05fee
+receipts:
+  unresolved_subitems: []

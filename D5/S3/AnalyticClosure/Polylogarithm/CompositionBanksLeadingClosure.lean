@@ -29,12 +29,12 @@ open private inner_arc_decay from
   D5.S3.AnalyticClosure.Polylogarithm.CompositionBanksIntegralControl
 open private radial_div_uniform_bound from
   D5.S3.AnalyticClosure.Polylogarithm.CompositionBanksIntegralControl
-open private polynomialPrimitive leading_remainder_integral_identity
-  split_leading_ones from
+open private polynomialPrimitive leading_remainder_integral_identity from
   D5.S3.AnalyticClosure.Polylogarithm.CompositionBanksLeadingTransport
-open private sourceWeight admissibleRemainder suffixConstant
-  leadingOneRemainder from
+open D5.S3.AnalyticClosure.Polylogarithm.CompositionBanksLeadingTransport (split_leading_ones)
+open private suffixConstant from
   D5.S3.AnalyticClosure.Polylogarithm.CompositionBanksSourceInduction
+open D5.S3.AnalyticClosure.Polylogarithm.CompositionBanksSourceInduction (sourceWeight admissibleRemainder leadingOneRemainder)
 
 private def imaginaryPolynomial (P : Polynomial ℂ) : Polynomial ℝ :=
   P.sum fun n a ↦ Polynomial.monomial n a.im
@@ -311,7 +311,7 @@ private theorem leading_one_upper_boundary_pow_remainder_of_extension
     _ ≤ ell * ‖a - b‖ * (‖b‖ + E) ^ (ell - 1) := hpower
     _ ≤ ell * E * (‖b‖ + E) ^ (ell - 1) := by gcongr
 
-private theorem norm_neg_log_le_abs_log_norm_add_pi (w : ℂ) :
+theorem norm_neg_log_le_abs_log_norm_add_pi (w : ℂ) :
     ‖-Complex.log w‖ ≤ |Real.log ‖w‖| + Real.pi := by
   rw [norm_neg]
   calc
@@ -323,7 +323,7 @@ private theorem norm_neg_log_le_abs_log_norm_add_pi (w : ℂ) :
       gcongr
       exact Complex.abs_arg_le_pi w
 
-private theorem slit_remainder_majorant_tendsto_zero (C : ℝ) (M : ℕ) (hC : 0 ≤ C) :
+theorem slit_remainder_majorant_tendsto_zero (C : ℝ) (M : ℕ) (hC : 0 ≤ C) :
     Tendsto (fun w : ℂ ↦ C * ‖w‖ * (1 + ‖-Complex.log w‖) ^ M)
       (𝓝[Complex.slitPlane] 0) (𝓝 0) := by
   have hnorm : Tendsto (fun w : ℂ ↦ ‖w‖) (𝓝[Complex.slitPlane] 0) (𝓝[>] 0) := by
@@ -623,7 +623,7 @@ private theorem leading_one_upper_boundary_reciprocal_im_eventually_neg
   simp only [Complex.ofReal_im, zero_mul, zero_div, Complex.ofReal_re, zero_sub]
   exact neg_lt_zero.mpr <| div_pos (mul_pos (pow_pos ht _) hpow) (Complex.normSq_pos.mpr hne)
 
-private theorem leading_one_continued_norm_bound_of_remainder
+theorem leading_one_continued_norm_bound_of_remainder
     (leadingOneRemainder : ℕ → List ℕ+ → Prop)
     (unpack : ∀ (q : ℕ) (suffix : List ℕ+), leadingOneRemainder q suffix →
       ∃ ρ C : ℝ, ∃ M : ℕ, ∃ P : Polynomial ℝ,
@@ -909,7 +909,7 @@ private theorem leading_one_remainder_succ : ∀ (q : ℕ) (suffix : List ℕ+),
       _ = (C * K) * ‖w‖ * (1 + ‖-Complex.log w‖) ^ M := by
         simp only [pow_one, show 1 - 1 = 0 by omega, pow_zero, one_mul, K]
         ring
-private theorem leading_one_remainder_iterate : ∀ (q : ℕ) (suffix : List ℕ+),
+theorem leading_one_remainder_iterate : ∀ (q : ℕ) (suffix : List ℕ+),
     leadingOneRemainder 0 suffix → leadingOneRemainder q suffix := by
   intro q suffix hzero
   induction q with
@@ -917,7 +917,7 @@ private theorem leading_one_remainder_iterate : ∀ (q : ℕ) (suffix : List ℕ
   | succ q ih =>
       simpa only [Nat.succ_eq_add_one] using
         leading_one_remainder_succ q suffix ih
-private theorem composition_continued_norm_bound : ∀ ks : List ℕ+,
+theorem composition_continued_norm_bound : ∀ ks : List ℕ+,
     (∀ (first : ℕ+) (rest : List ℕ+),
       sourceWeight (first :: rest) ≤ sourceWeight ks → 1 < (first : ℕ) →
         admissibleRemainder first rest) →

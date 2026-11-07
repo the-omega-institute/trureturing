@@ -1,0 +1,84 @@
+### 4.6 两个 qubit 实例：轴向压缩与非含幺的参考搬移
+
+本小节 $X,Y,Z$ 表示 Pauli 矩阵。先取 $\sigma=I/2$。对扰动 $H=(xX+yY+zZ)/2$，有 $\|H\|_\sigma^2=x^2+y^2+z^2$，故这个*固定参考下*的扰动空间具有普通三维欧氏几何。
+
+**例一：随机相位翻转。**
+
+令 $N_p(\rho)=(1-p)\rho+pZ\rho Z$，$0\le p\le1$。它保持最大混合参考，且 $N_p^*=N_p$，于是
+
+$$
+P=N_p,\qquad
+ N_p:\ (x,y,z)\mapsto((1-2p)x,(1-2p)y,z),
+$$
+
+$$
+S=N_p^2:\ (x,y,z)\mapsto((1-2p)^2x,(1-2p)^2y,z).
+$$
+
+当 $0<p<1$，可观测量固定代数为 $\operatorname{span}\{I,Z\}$；在端点 $p=0,1$，前向过程为酉过程，$S=\operatorname{id}$。$p>1/2$ 时前向映射有负的横向特征值，回接谱仍非负。定理~[4.2](#thm-c122-weighted-contraction) 的正谱结论属于 $S$，并未声称所有量子通道自身都有正谱。
+
+**例二：振幅阻尼。**
+
+取 $0\le\gamma<1$，前向 Kraus 矩阵为
+
+$$
+K_0=\operatorname{diag}(1,\sqrt{1-\gamma}),\qquad
+ K_1=\sqrt\gamma\,\lvert 0\rangle\langle 1\rvert.
+$$
+
+于是
+
+$$
+N_\gamma:(x,y,z)\mapsto
+   \bigl(\sqrt{1-\gamma}\,x,\sqrt{1-\gamma}\,y,
+             \gamma+(1-\gamma)z\bigr),
+ \qquad \tau=\operatorname{diag}\left(\frac{1+\gamma}2,\frac{1-\gamma}2\right).
+$$
+
+代入 $L_a=\sigma^{1/2}K_a^*\tau^{-1/2}$，Petz 反向的 Kraus 矩阵为
+
+$$
+L_0=\operatorname{diag}\left(\frac1{\sqrt{1+\gamma}},1\right),\qquad
+ L_1=\sqrt{\frac\gamma{1+\gamma}}\,\lvert 1\rangle\langle 0\rvert.
+$$
+
+它们满足 $\sum_aL_a^*L_a=I$，直接相乘得到
+
+$$
+P:(x,y,z)\mapsto
+   \left(\frac{x}{\sqrt{1+\gamma}},\frac{y}{\sqrt{1+\gamma}},
+                \frac{z-\gamma}{1+\gamma}\right).
+$$
+
+因此参考态被送回原处，而一次完整回接为
+
+<a id="eq-c122-amplitude-ellipsoid"></a>
+
+$$
+S:(x,y,z)\mapsto(ax,ay,a^2z),\qquad
+ a=\sqrt{\frac{1-\gamma}{1+\gamma}}.
+\tag{33}
+$$
+
+例如 $\gamma=1/2$ 时，前向 Bloch 椭球中心在 $z=1/2$，轴长为 $(1/\sqrt2,1/\sqrt2,1/2)$；回接后的椭球中心回到原点，轴长变成 $(1/\sqrt3,1/\sqrt3,1/3)$。Petz 反向是合法的参考态反查，一般不会放大已丢失的区别。
+
+<a id="fig-c122-amplitude"></a>
+
+```latex
+\begin{tikzpicture}[scale=2.45]
+ \draw[->,gray] (-1.15,0)--(1.2,0) node[right] {$x$};
+ \draw[->,gray] (0,-1.13)--(0,1.18) node[above] {$z$};
+ \draw[gray,dashed] (0,0) circle[radius=1];
+ \draw[teal!80!black,very thick] (0,0.5) ellipse[x radius=0.70710678,y radius=0.5];
+ \draw[orange!85!black,very thick] (0,0) ellipse[x radius=0.57735027,y radius=0.33333333];
+ \fill[teal!80!black] (0,0.5) circle[radius=0.018];
+ \fill[orange!85!black] (0,0) circle[radius=0.018];
+ \node[anchor=west,font=\small] at (1.32,0.82) {虚线：原态球截面};
+ \node[anchor=west,font=\small,text=teal!80!black] at (1.32,0.50) {前向：中心移到 $z=1/2$};
+ \node[anchor=west,font=\small,text=orange!85!black] at (1.32,0.18) {回接：中心回到 $0$};
+ \node[anchor=west,font=\small] at (1.32,-0.17) {横向半轴：$1/\sqrt3$};
+ \node[anchor=west,font=\small] at (1.32,-0.46) {纵向半轴：$1/3$};
+ \node[anchor=west,font=\small] at (1.32,-0.83) {参考返回，区别仍有压缩。};
+\end{tikzpicture}
+```
+

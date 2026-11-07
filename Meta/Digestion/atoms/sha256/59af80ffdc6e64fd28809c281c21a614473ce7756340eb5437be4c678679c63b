@@ -1,0 +1,28 @@
+**定义 23.1（The complete local zero-weight space）。** Let $D$ be the
+simple diamond with vertices $1,2,3,4$ and edges
+$12,13,14,23,24$. Its central vertices are $1,2$ and its nonadjacent
+tips are $3,4$. For an integer $S\geq1$, put one spin $S$ at each
+vertex, with the normalized weights and ladders in (19.5). On the
+entire complex tensor product $V_S^{\otimes4}$ put
+
+$$
+\begin{aligned}
+T_\alpha&=\sum_{ij\in E(D)}J_i^\alpha J_j^\alpha
+\quad(\alpha=x,y,z),&
+I_D&=T_x+T_y+T_z,\\
+K_D&=\sum_{ij\in E(D)}(J_i^+J_j^-+J_i^-J_j^+)
+       =2(T_x+T_y),&
+\mathcal V_D(0)&=\ker\sum_{i=1}^4Z_i,\\
+e_D(0)&=\min\operatorname{spec}(K_D|_{\mathcal V_D(0)}),&
+\mathcal G_D(0)&=\ker(K_D-e_D(0)I)\cap\mathcal V_D(0),\\
+\mathcal S_D&=\ker\sum_iJ_i^+\cap\ker\sum_iJ_i^-,&
+L_S&=-4S^2-\frac83S.
+\end{aligned}
+\tag{23.1}
+$$
+
+Every edge in $K_D$ has the positive coefficient one. The space
+$\mathcal S_D$ is the full total-singlet space, including all
+coupling multiplicities. Only the total weight, rather than any
+pair weight or individual weight, is fixed in $\mathcal V_D(0)$.
+

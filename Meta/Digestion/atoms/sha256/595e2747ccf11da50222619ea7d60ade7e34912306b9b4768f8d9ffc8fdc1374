@@ -1,0 +1,6 @@
+### 定理 10.2（连压缩映射也固定的全锚要求）
+
+若同一个固定 $E$ 对每个忠实 $\rho$ 都保持 $\phi_\rho$，则 $E=\operatorname{id}$，其像为 $M_d$。
+
+**证明。**对任意 $x$ 有 $\operatorname{tr}[\rho(E(x)-x)]=0$。先取 $\rho=I/d$，再取 $I/d$ 加上足够小的任意无迹 Hermitian 扰动，便知 $E(x)-x$ 与所有 Hermitian 矩阵的迹配对为零；这些矩阵复线性张成 $M_d$，故 $E(x)=x$。
+

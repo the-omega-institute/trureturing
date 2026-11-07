@@ -1,0 +1,36 @@
+#### 引理 5.1：尺度为正，来源的负差额被完整性排除
+
+在本轮完整前端中，Q17 的系数必满足
+
+$$
+\boxed{\alpha>0,\qquad\gamma=\alpha.}
+$$
+
+因此共同重标 $\bar K=K/\sqrt\alpha,\bar L=L/\sqrt\alpha$ 后，
+
+$$
+-\bar K^2-\bar L^2=I_W+P_e.
+$$
+
+**证明。**
+
+非标量性给 $n\ge2$ 与 $\gamma\ne0$。在 $E=e^\perp\ne0$ 上，正半定性给 $\alpha\ge0$。若 $\alpha=0$，则对每个 $z\in E$，
+
+$$
+\lVert Kz\rVert^2+\lVert Lz\rVert^2=B(z,Mz)=0,
+$$
+
+故 $K,L$ 均消灭 $E$。反对称性使 $Ke$ 与 $e$ 及 $E$ 都正交，故 $Ke=0$，同理 $Le=0$。于是 $K=L=0$、$M=0$，违反非标量性。因此 $\alpha>0$。
+
+共同重标不改变所生成的 Lie 代数。定理 4.3 给 $\gamma/\alpha=\pm1$，并说明 $n$ 为奇数。若 $\gamma=-\alpha$，则 $Me=0$，故 $Ke=Le=0$。完整生成给 $Ae=0$ 对全部 $A\in\mathfrak g$ 成立。
+
+对任意 $h\in G$，包括不连通分支，$h^{-1}\mathfrak gh=\mathfrak g$。因此
+
+$$
+A(he)=h(h^{-1}Ah)e=0\qquad(A\in\mathfrak g).
+$$
+
+来源循环性遂使全部 $A\in\mathfrak g$ 消灭 $W=\operatorname{span}(Ge)$，即 $\mathfrak g=0$。于是 $K=L=0$，再次违反 $M$ 非标量。负支被排除，只能 $\gamma=\alpha$。
+
+$\square$
+

@@ -1,0 +1,90 @@
+### 定理 5.2（一般参考态下的饱和、恢复及残差）
+
+<a id="thm-c90-general-recovery"></a>
+
+令
+
+$$
+\ell_\sigma(\rho)=Q_\sigma(\rho)-Q_\tau(\mathcal N\rho).
+$$
+
+则 $\ell_\sigma(\rho)\ge0$，且下列三项等价：
+
+1. $\ell_\sigma(\rho)=0$；
+
+2. $\mathcal R_\sigma\mathcal N(\rho)=\rho$；
+
+3. 存在同一个 CPTP 映射 $\mathcal S$，使
+          $\mathcal S\mathcal N(\rho)=\rho$ 且 $\mathcal S(\tau)=\sigma$。
+
+此外，
+
+<a id="eq-c90-weighted-residual"></a>
+
+$$
+\boxed{\quad
+ \ell_\sigma(\rho)
+ \ge\left\lVert \rho-\mathcal R_\sigma\mathcal N\rho\right\rVert_{2,\sigma^{-1}}^2.
+ \quad}
+\tag{5.3}
+$$
+
+**证明。**
+令 $X=W_\sigma(\rho-\sigma)$，则
+$TX=W_\tau(\mathcal N\rho-\tau)$。
+在 HS Hilbert 空间上记 $C=T^\dagger T$。
+定理 [4.2](#thm-c90-contraction) 给出 $0\le C\le I$，因此
+
+<a id="eq-c90-positive-defect"></a>
+
+$$
+\ell_\sigma(\rho)
+ =\left\lVert X\right\rVert_2^2-\left\lVert TX\right\rVert_2^2
+ =\langle X,(I-C)X\rangle_{\mathrm{HS}}\ge0.
+\tag{5.4}
+$$
+
+利用式 [(5.2)](#eq-c90-weighted-adjoint) 和
+$\mathcal R_\sigma\mathcal N(\sigma)=\sigma$，得到
+
+<a id="eq-c90-residual-coordinate"></a>
+
+$$
+(I-C)X=W_\sigma(\rho-\mathcal R_\sigma\mathcal N\rho).
+\tag{5.5}
+$$
+
+由于 $I-C\ge0$，式 [(5.4)](#eq-c90-positive-defect) 为零恰好意味着
+$(I-C)X=0$，所以前两项等价。取 $\mathcal S=\mathcal R_\sigma$ 得第三项。
+反之，若第三项成立，分别对 $\mathcal N$ 和 $\mathcal S$ 使用已经证明的加权收缩，
+得到
+
+$$
+Q_\sigma(\rho)
+ =Q_{\mathcal S\tau}(\mathcal S\mathcal N\rho)
+ \le Q_\tau(\mathcal N\rho)
+ \le Q_\sigma(\rho).
+$$
+
+两个不等式必须同时饱和。
+
+最后，$0\le I-C\le I$ 给出 $(I-C)^2\le I-C$，故
+
+$$
+\left\lVert (I-C)X\right\rVert_2^2
+ \le\langle X,(I-C)X\rangle_{\mathrm{HS}}=\ell_\sigma(\rho).
+$$
+
+代入式 [(5.5)](#eq-c90-residual-coordinate) 即得残差界。
+
+这里 $I-C$ 的正性指它作为 HS Hilbert 空间上的算符为正，
+并非声称它是矩阵正锥上的完全正映射，也并非声称
+$\rho-\mathcal R_\sigma\mathcal N\rho\ge0$。
+一般恢复映射的存在并没有被提前假定；它由明确的加权伴随构造给出。
+
+**白话图景。**平方长度没有减少，意味着加权转换在这一份差别上没有压掉任何方向。
+它的伴随经过同样的内部尺度换回去，恰好成为一条合法恢复通道。
+这条通道同时接回待比较内容与参考态；有少量损失时，同一个计算还给出接回误差。
+
+<a id="section-6"></a>
+

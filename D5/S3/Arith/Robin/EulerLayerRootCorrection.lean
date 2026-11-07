@@ -445,7 +445,7 @@ theorem strict_inventory_second_layer_limit :
   dsimp [c] at hlo
   constructor <;> linarith
 
-private theorem log_inventory_split {U : ℕ} (hU : 0 < U) :
+theorem log_inventory_split {U : ℕ} (hU : 0 < U) :
     Real.log U = (∑ q ∈ U.primeFactors, Real.log q) +
       strict_inventory_second_layer_mass U + strict_inventory_third_layer_mass U := by
   classical

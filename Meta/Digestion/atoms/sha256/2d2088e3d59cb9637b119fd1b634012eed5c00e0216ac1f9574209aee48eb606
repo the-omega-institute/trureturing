@@ -1,0 +1,40 @@
+**Corollary 45.8 (pure phase bad sets retain the original first
+boundaries).** Define subsets of $(0,R]$ by
+
+$$
+\begin{aligned}
+ \mathcal B_{\mathrm{ph,p}}
+  &=\{\xi:\exists X\in\mathcal P_{\mathrm p,\xi}\setminus\mathcal G_\xi,
+                                            \ f(X)\le N(\xi)\},\\
+ \mathcal S_{\mathrm{ph,p}}
+  &=\{\xi:\min_{w\in\mathbb T^4,\ \sigma\ \mathrm{admissible}}
+                                  C_\sigma(w,\xi)<V(\xi)\}.
+\end{aligned}
+\tag{45.25}
+$$
+
+Then
+
+$$
+\begin{aligned}
+ \mathcal B\cap(0,R]&=\mathcal B_{\mathrm{ph,p}},&
+ \mathcal S\cap(0,R]&=\mathcal S_{\mathrm{ph,p}},\\
+ \alpha&=\inf\mathcal B_{\mathrm{ph,p}},&
+ \beta&=\inf\mathcal S_{\mathrm{ph,p}}.
+\end{aligned}
+\tag{45.26}
+$$
+
+*Proof.* Strict loss is exactly the strict inequality in (45.21),
+which proves the assertion for $\mathcal S$. If the common value is
+below $N$, an attained pure phase global minimizer is outside
+$\mathcal G_\xi$ and witnesses $\mathcal B_{\mathrm{ph,p}}$.
+If the value is $N$, a bad-set witness in either domain is exactly
+an extra global minimizer; (45.23) identifies failure of exhaustive
+geometric equality in the two domains. Conversely every witness in
+$\mathcal B_{\mathrm{ph,p}}$ is an original witness by inclusion.
+This proves equality of the bad sets without asserting pointwise
+transport of every nonglobal witness. Both original boundaries lie
+strictly inside $(0,R)$ by (42.3), so restriction to this interval
+does not change their infima. $\square$
+

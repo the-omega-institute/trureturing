@@ -1,0 +1,12 @@
+**定义 34.1（中间结果的准确归属）。** 以下成熟结果及既有仓内结果只作为定理 30.1–33.4 的中间前提，不另主张其发现。
+
+| 来源 | 所消费的准确内容与边界 |
+| --- | --- |
+| 本卷定理 3.1 的 P/G 部分及定理 22.1 的无 C/D 部分；Barnum–Wilce, arXiv:1202.4513v2, Theorem 4(b)–(c) | 从指定原群及单位适配 $q$ 取得同一 $E$ 上的 EJA、原 $L$、Frobenius 型及指定群内的 $\mathfrak k$。不先用 V95 的 D 结论来取得复因子。 |
+| Barnum–Hilgert, *Strongly symmetric spectral convex bodies are Jordan algebra state spaces*, [arXiv:1904.03753v1](https://arxiv.org/pdf/1904.03753v1), §4，Theorem 4.2，Table 1，Appendix C.3，pp. 70–71；其所述 Jordan–von Neumann–Wigner 分类 | 有限 EJA 简单分解、谱、紧代数及无迹各向同性表示不可约性，用于 (31.1)–(31.2) 的中间计算。本文没有以强对称性作为新的原假设。自旋指标按 $\mathrm{Spin}_m=\mathbb R\oplus\mathbb R^m$ 单独核定，紧代数为 $\mathfrak{so}(m)$。 |
+| 紧简单 Lie 代数伴随表示的复化及 Schur 引理；实正不变型的简单理想分解 | 只在 $\mathfrak{su}(n)$ 的复化为简单 $\mathfrak{sl}_n(\mathbb C)$ 时把交换环判为实标量；不从一般实不可约性推断这一点。$\mathfrak{so}(2)$ 的中心、$\mathfrak{so}(4)$ 的两个伴随因子和所有跨块中心输入已在 (31.2) 明列。 |
+| Barnum–Graydon–Wilce, *Composites and Categories of Euclidean Jordan Algebras*, [arXiv:1606.09331v3](https://arxiv.org/pdf/1606.09331v3), Definition 2.1、Lemma 2.2、Definition 2.3；§3.1；Definition 4.1、Proposition 4.3、Corollary 4.4；Appendix E, Lemma E.1 证明及注 30 | Definition 2.1/Lemma 2.2 的乘积态分离与张量注入是已有方法；§3.1 及 Appendix E 提供 EJA 与内导子的标准语境。Definition 2.3 和 §4 的完整复合条件还要求独立动力学、伴随相容及生成，不能由这里只有的局部 X 自动取得；本证明没有套用其完整复合结论。(31.6)–(31.10) 将分离方法用于实际身份参考中已标定的指针活动块，完成本候选所需桥梁。 |
+| de Medeiros–Figueroa-O'Farrill–Méndez-Escobar–Ritter, *On the Lie-algebraic origin of metric 3-algebras*, [arXiv:0809.1086v4](https://arxiv.org/pdf/0809.1086v4), §§2.2、4.1 | Faulkner 的度量 Lie 代数/忠实表示构造及像张成属于成熟代数事实；此处不以“张成的像”偷换原 $a\mapsto D_a$ 满射，也不把这些事实当作原参考的存在定理。定理 31.1 不需要这份构造作为额外前件。 |
+| V95 Definition 1.1、Theorem 2.1、§5；本卷定理 23.1、25.1；定义 28.1 所引 Niestegge 动力对应与 Connes 取向结果 | 只在原导子律及完整曲率已经证明后，复用同空间复乘法、自守恒、反对称、中心零及实际张量结论。C125 的辅助 $J$ 是由同一原 D 唯一导出的，不是 C126 的输入。成熟取向与动力对应本身不计为这里的新内容。 |
+| 本卷命题 11.1–11.3、定理 12.1、命题 12.2、13.1–13.2、15.1、25.2、26.1–26.3；定义 9.2、17.1、28.1 中固定的 Watrous/C118 等来源 | 直接复用 Born 双运输、全事件参考 CP、精确平方根有限词、原 F/支持返回、失败输出、完整 tagged CP 和 $\mathcal D_3$、物理时钟边界。没有重证已有供应，也没有把数学 Kraus 标签提升为实际记录。 |
+

@@ -1,0 +1,7 @@
+**定义 29.1（The graphs $X_r$）。** For each integer $r\geq2$,
+take disjoint sets $A,B$ of size $r$, two further vertices $u,v$,
+and two leaves $\ell_1,\ell_2$. On $A\sqcup B\sqcup\{u\}\sqcup\{v\}$
+put the complete multipartite graph $K_{r,r,1,1}$, choose a vertex
+$a\in A$, and add exactly the edges $a\ell_1,a\ell_2$.
+There are no other edges; every edge has weight one.
+

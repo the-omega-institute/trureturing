@@ -1,0 +1,59 @@
+**定理 107.1（同向读数的有限平方见证与完整刻画）。** 在定义 106.1 的供应内，若 R、H 成立而某个原指定分支不是 $\mathcal L_E$，则存在同框架的一层有限平方效果 $E_n=E^{2^n}$ 及一个 $p_n\in\mathcal P_{E_n}$，使
+
+$$
+g_{E_n}(p_n)\le\frac14.
+\tag{107.1}
+$$
+
+因而下列条件等价：C112；全部原指定更新为平方根族；R、H 及 $g_E(p)>1/4$ 对全部原效果与支撑纯态成立。特别地，完整互易 S 是 C112 的后果。
+
+证明。只使用 R 时，直接复用原卷定理 78.1 的正常形
+
+$$
+T_E=\mathcal L_E\alpha_E,\qquad
+\alpha_E(E)=E,
+\tag{107.2}
+$$
+
+其中 $\alpha_E$ 是原支撑角的保星自同构，输入支撑压缩按原式理解。H 用于 $E^2$ 后给 $T_{E^2}=T_E^2$；$\alpha_E$ 与 $E$ 的函数演算相容，角内 $\mathcal L_{E^2}$ 可逆，所以
+
+$$
+\alpha_{E^{2^n}}=\alpha_E^{\,2^n}\qquad(n\ge0).
+\tag{107.3}
+$$
+
+若 $\alpha_E$ 移动某个中心块，取该块内任一秩一 $p$，则 $T_E(p)$ 位于另一个中心块，$r_E(p)=0$；这已给 $n=0$ 的 (107.1)。以下只需处理 $\alpha_E$ 保持各中心块的情形。
+
+在一个非恒等简单块上，有限矩阵自同构的成熟结构给 $\alpha_E=\operatorname{Ad}_U$，其中 $U$ 酉且与该块的 $E$ 对易。选择 $E,U$ 的两个共同单位特征向量 $u,v$，相应正谱值为 $x,y$，酉特征值为 $\sigma,\eta$，并使 $\zeta=\eta/\sigma\ne1$；若不存在这样的两个向量，$U$ 在该块为标量，自同构即恒等。
+
+这里使用单位圆上倍增幂的成熟逃逸机制：[Badea–Devinck–Grivaux，arXiv:1905.09592v2，命题 1.4](https://arxiv.org/html/1905.09592v2) 给序列 $2^n$ 的锐 Jamison 常数 $\sqrt3$。为保留本定理点态严格量词所需的有限层级，直接写出其相位步骤：取 $\zeta=e^{i\theta}$，$0<|\theta|\le\pi$。若 $|\theta|\ge2\pi/3$，取 $n=0$；否则取第一个使 $2^n|\theta|\ge2\pi/3$ 的整数。此时
+
+$$
+\frac{2\pi}{3}\le2^n|\theta|<\frac{4\pi}{3},\qquad
+\left|1+\zeta^{2^n}\right|^2\le1.
+\tag{107.4}
+$$
+
+置 $b_n=x^{2^{n-1}}$、$c_n=y^{2^{n-1}}$，其中 $n=0$ 时指数为 $1/2$，再取原支撑中的单位向量
+
+$$
+\psi_n=\frac{\sqrt{c_n}\,u+\sqrt{b_n}\,v}{\sqrt{b_n+c_n}},
+\qquad p_n=|\psi_n\rangle\langle\psi_n|.
+\tag{107.5}
+$$
+
+两方向在半深读数中的贡献相等；(107.2)–(107.3) 因而给
+
+$$
+\begin{aligned}
+a_{E_n}(p_n)&=\frac{2b_nc_n}{b_n+c_n},\\
+r_{E_n}(p_n)&=
+ \left(\frac{b_nc_n}{b_n+c_n}\right)^2
+ \left|\sigma^{2^n}+\eta^{2^n}\right|^2,\\
+g_{E_n}(p_n)&=\frac{|1+\zeta^{2^n}|^2}{4}\le\frac14.
+\end{aligned}
+\tag{107.6}
+$$
+
+这个纯态可随该有限层级改变；没有将极暗方向的制备成本消去。任一非标准分支故与 A 冲突。反向由标准平方根族的原完整满足模型直接得到：R、H 成立，且 $r_E(p)=a_E(p)^2$，所以 $g_E(p)=1$。标准映射还自伴，得到 S。∎
+

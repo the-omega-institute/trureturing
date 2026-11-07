@@ -1,0 +1,92 @@
+### 证明
+
+先看非对角项。固定
+
+
+<a id="display-32"></a>
+
+$$
+d=|t_i-t_j|>0.
+$$
+
+
+素数幂对数在每个有界区间内只有有限个。因此，当 $h$ 足够小时：
+
+- 若 $e^d$ 不是素数幂，式 (6) 中的窗口为空，于是
+
+  <a id="display-33"></a>
+
+  $$
+  W_h(i,j)=\Gamma_h(d)=O(h^4).
+  $$
+
+
+- 若 $e^d=p^r$，窗口内仅有这一项，于是
+
+  <a id="display-34"></a>
+
+  $$
+  W_h(i,j)
+  =
+  \Gamma_h(d)
+  -2\sinh(h)\frac{\log p}{p^{r/2}}.
+  $$
+
+
+所以
+
+
+<a id="display-35"></a>
+
+$$
+\frac{W_h(i,j)}{2h}\longrightarrow-\mathsf A_{ij}.
+$$
+
+
+再看对角项。记 $c=\cosh(h/2)$，则精确地
+
+
+<a id="display-36"></a>
+
+$$
+W_h(i,i)
+=
+(4c^2+2)S-8c\mathscr K(h)+2\mathscr K(2h).
+$$
+
+
+将式 (1) 代入，得到
+
+
+<a id="display-37"></a><a id="eq-11"></a>
+
+$$
+\boxed{
+W_h(i,i)
+=
+2h\log(1/h)
++
+2(1-\gamma-\log\pi)h
++
+O(h^2|\log h|).
+}
+$$
+
+<p align="center" data-equation-number="11"><a href="#eq-11">(11)</a></p>
+
+
+固定维数下，逐项收敛推出算子范数收敛。因此
+
+
+<a id="display-38"></a>
+
+$$
+\lambda_{\min}\!\left(\frac{W_h}{2h}\right)
+=
+\log(1/h)+1-\gamma-\log\pi
+-\lambda_{\max}(\mathsf A)+o(1).
+$$
+
+
+右端在 $h\downarrow0$ 时趋于正无穷，所以 $W_h\succ0$。证毕。
+

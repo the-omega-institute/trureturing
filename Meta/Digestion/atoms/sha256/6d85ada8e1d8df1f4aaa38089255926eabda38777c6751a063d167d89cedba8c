@@ -1,0 +1,49 @@
+**Definition 136.1 (the actual invariant coarse interface).** Fix any original tuple $\theta=(a,\eta,d,b)\in\Theta$ of Definition 135.1, with every endpoint, source and regularity hypothesis inherited there. All subsequent statements retain this entire telescope. In particular, the group product, raw measure $\mu$, unit-source field $\Gamma$, actual selector, coefficient-positive normalized $h$, probability $m=h^2\mu$, full conservative operator $K$ and its source summand remain unchanged. The diffusion starts at the original source $e$, and the observation epochs are $2d,3d,4d$. Retain $P=T_d$, $g=g_{2d}$ and the original $b,M,c,f,t_r$ of §135.
+
+Use symmetric coordinates $\xi=\zeta-xy/2$ and cylindrical coordinates $(r,\alpha,z,\xi)$ where $r>0$. Let $R_\gamma$ rotate $(x,y)$ through $\gamma$ while fixing $(z,\xi)$, and set
+
+$$
+\Omega=\{r>0\},\qquad N=G\setminus\Omega=\{x=y=0\},\qquad
+X=(0,\infty)\times\mathbb R^2,\qquad
+\pi(r,\alpha,z,\xi)=(r,z,\xi).
+$$
+
+The full-form rotation symmetry, including the source trace and original source law, is the one proved in Appendix II §120. In particular $m$, every $g_s$, and $T_s$ are invariant under this circle action, $m(N)=0$, and $T_s$ commutes with its pullbacks. The analytic heat-image and local differential suppliers are Appendix II (120.6)–(120.11), (122.6)–(122.11), (122.20)–(122.23), and the corresponding actual-operator uses in §§126 and 129. They concern the full extension off the source; no differential identity through the source is required. The finite global bound used here is exactly Theorem 133.2 for the fixed tuple. Markov propagation gives $\|g\|_\infty\le\|g_d\|_\infty<M$.
+
+Write
+
+$$
+\nu_j(A)=\int_Ag_{jd}\,dm\quad(j=2,3,4).
+$$
+
+Let $\mathscr E_\theta$ be the class of pointwise Borel partitions $E=(S,C,B)$ of the whole $G$ whose three cells are invariant under every $R_\gamma$ and satisfy
+
+$$
+\nu_j(S)=\frac34-t_j,\qquad
+\nu_j(C)=t_j,\qquad
+\nu_j(B)=\frac14
+\quad(j=2,3,4).
+\tag{136.1}
+$$
+
+For each $E\in\mathscr E_\theta$, define its single actual terminal factor, ordered bilinear form, quadratic form and coarse matrix by
+
+$$
+\begin{aligned}
+q_E&=P\mathbf1_C,\\
+Q_E(u,v)&=\int_Gg\,u\,P(q_Ev)\,dm,\qquad Q_E(v)=Q_E(v,v),\\
+(A_E)_{ij}&=Q_E(\mathbf1_{E_i},\mathbf1_{E_j}),
+\qquad (E_1,E_2,E_3)=(S,C,B).
+\end{aligned}
+\tag{136.2}
+$$
+
+These forms and matrices are real and need not be symmetric. For an invariant Borel simplex tuple $u=(u_S,u_C,u_B)$, define analogously
+
+$$
+q_u=Pu_C,\qquad (A(u))_{ij}=\mathcal C(u_i,u_j,u_C).
+\tag{136.3}
+$$
+
+Call $u$ admissible when its components lie in $[0,1]$, sum to one everywhere and have the nine integrals in (136.1). Its third argument is its own $u_C$.
+

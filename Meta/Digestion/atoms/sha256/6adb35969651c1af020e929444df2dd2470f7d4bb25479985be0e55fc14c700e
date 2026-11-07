@@ -1,0 +1,30 @@
+**定理 374.1（统一相切候选与旧完整候选等价）。** 分别在完整 $B$ 与完整 $\mathsf B_{\rm cl}$ 中，
+
+$$
+\begin{aligned}
+B_*+\mathsf F_{\rm fsph}^{>}
+&\Longleftrightarrow B_*+\mathrm I+\mathrm{SC},\\
+\mathsf C_{\rm fsph}(B_*)
+&\Longleftrightarrow\mathsf C_{\rm uneq}(B_*)
+\Longleftrightarrow\mathsf C_{\rm self}(B_*)
+\Longleftrightarrow\mathsf C_{\rm support}(B_*).
+\end{aligned}
+\tag{374.1}
+$$
+
+同一原 $D$ 在全部对象的全部实输入上满足双单位、交替、Jordan 导子、原 $q$ 斜伴随、中心及跨块零输出；不重新定义推动。
+
+证明。前卷 246.1 在各自准备背景给选中对象的静态复直和，原比较为正 Frobenius 型；原右单位独立供应。373.1 直接使每个选中对象的整个 $D$ 为逐块交换子，所以 SC 和完整 Jordan 导子缺陷都为零；没有借用 343.1 的两次实际参考正常形。
+
+对任意原对象 $A$，沿 352.1 的原身份事件及完整 R，取实际充分大的 $J=AR$ 进入选中域。原含幺 Jordan/$D$ 单射 $i$ 给
+
+$$
+i(D^A(a,a))=D^J(i(a),i(a))=0,\qquad
+ i(\Delta_A(a;b,c))=\Delta_J(i(a);i(b),i(c))=0,
+\tag{374.2}
+$$
+
+其中 $\Delta$ 逐字取 (352.3)。单射性使两缺陷在原 $A$ 上为零；有限 EJA 导子内性给原指定 I。此处仍不运输 $q$，不要求原嵌入保 primitive、等距或 $q_J$ 因子化。零对象平凡。
+
+反向，完整 $B_*+\mathrm I+\mathrm{SC}$ 直接消费前卷 275.2 在两份背景各自的准确入口，给全部原对象的逐块标量交换子和共同曲率，包含全零分支。373.1 的反向于是给全部原对象的正输入相切，特别给选中域。与既有候选的等价再用 360.1、361.1 及同一个原 $\sigma_{t_0}$。这也恢复被删去的整个 $\mathsf G_{0h}$ 和固定两原子自比较，而非只恢复一个兼容替代模型。∎
+

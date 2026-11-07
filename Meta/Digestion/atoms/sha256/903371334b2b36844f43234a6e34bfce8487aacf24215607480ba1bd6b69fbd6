@@ -1,0 +1,2 @@
+At $d=3$, these give the exact fixed-acquisition gain threshold of nine reads, a ten-read mixed gain construction $JM^8$, and the bounds nine through seventeen for complete recovery equipped with this gain-output mechanism. The seventeen-read bound is an upper bound for the particular root-aware construction, with no optimality claim or comparison theorem for unrestricted protocols.
+

@@ -1,0 +1,112 @@
+**Theorem 35.1 (original-branch separator).** Let $T$ be the tree of all
+finite binary words, with edges $w\!-!wb$, $b\in\{0,1\}$, and unit
+path metric $d$. The statement also holds for its truncation to lengths
+at most any integer $L\ge0$, with balls and components taken there.
+For every integer $k\ge1$, integer $D\ge0$, and family of finite,
+nonempty, pairwise disjoint sets $(R_x)_{x\in\{0,1\}^k}$ of vertices of
+$T$, assume
+
+$$
+\forall xy\in E(Q_k)\quad
+\exists a_{xy}\in R_x\ \exists b_{xy}\in R_y:
+\quad d(a_{xy},b_{xy})\le2D.
+\tag{IV.100}
+$$
+
+Put $N=2^k$, $B_D(v)=\{w:d(w,v)\le D\}$, and define
+
+$$
+\begin{aligned}
+C_v&=\#\{x:R_x\cap B_D(v)=\varnothing,\ R_x\text{ meets two components of }T-\{v\}\},\\
+F_v&=\#\{x:R_x\cap B_D(v)=\varnothing,\ R_x\text{ meets two components of }T-B_D(v)\}.
+\end{aligned}
+\tag{IV.101}
+$$
+
+There exists one vertex $v$ such that
+
+$$
+F_v\ge C_v\ge
+\max\!\left(0,\left\lceil\frac{N}{k+1}\right\rceil-|B_D(v)|\right)
+\ge
+\max\!\left(0,\left\lceil\frac{N}{k+1}\right\rceil-(3\cdot2^D-2)\right).
+\tag{IV.102}
+$$
+
+Thus the same conclusion applies to Lemma 34.2's all-history sets,
+without fixing edge endpoints globally or assuming fibre connectivity.
+
+**Proof.** Choose one $r_x\in R_x$ **only for weights**, assigning one
+unit of weight there. Their finite spanning subtree has a weighted
+centroid $v$: every component of $T-\{v\}$ contains at most $N/2$
+selected representatives. To prove this, start in that finite subtree
+and move toward any component of weight greater than $N/2$. After a
+move the reverse component has weight less than $N/2$, so it cannot be
+the next heavy direction. A walk without reversal in a finite tree
+cannot continue forever. At its last vertex no heavy component remains;
+branches outside the finite subtree have weight zero. Disjointness
+makes the selected representatives distinct. They need not be the
+witnesses in (IV.100).
+
+Let $I=\{x:R_x\cap B_D(v)\ne\varnothing\}$ and let $H$ be the set
+counted by $C_v$. These classes are disjoint. Selecting a ball word for
+each member of $I$ is injective, so $|I|\le|B_D(v)|$. Set $S=I\cup H$,
+as a vertex set of $Q_k$. For every surviving $x\notin S$, the whole
+nonempty $R_x$ lies in one original component of $T-\{v\}$, and all its
+words have distance at least $D+1$ from $v$.
+
+There is no cube edge between surviving fibres in different original
+components. Indeed **every** pair $a,b$ across those components has its
+unique tree path through $v$, hence
+
+$$
+d(a,b)=d(a,v)+d(v,b)\ge2D+2,
+\tag{IV.103}
+$$
+
+contrary to the edge's own witnesses in (IV.100). Each connected
+component $W$ of $Q_k-S$ therefore has all its representatives $r_x$
+in one original branch at $v$, so $|W|\le N/2$ by centroid balance.
+
+Here is a complete elementary expansion bound for the cube. For every
+subset $W\subseteq V(Q_k)$ its edge boundary satisfies
+$|\partial_E W|\ge\min(|W|,2^k-|W|)$. Induct from $Q_0$, where both
+possible subsets have zero boundary. Split $Q_k$ into two $(k-1)$-cubes
+of size $M=2^{k-1}$, and let their intersections with $W$ have sizes
+$a,b$. Internal boundaries give at least
+$\min(a,M-a)+\min(b,M-b)$ by induction. The matching between halves
+adds at least $|a-b|$ crossing edges, since at most $\min(a,b)$ matched
+pairs have both ends in $W$. Assume $a\ge b$. If $a,b\le M/2$, the
+sum of these three bounds is $2a\ge a+b$. If $a,b\ge M/2$, it is
+$2M-2b\ge2M-a-b$. In the remaining case $b\le M/2\le a$, it is
+$M\ge\min(a+b,2M-a-b)$. This proves the induction in every case.
+
+Apply this bound to each component $W$ of $Q_k-S$. Its size is at most
+$N/2$, so $|\partial_E W|\ge|W|$; all its outgoing edges end in $S$.
+Summing over the components counts each edge to $S$ once. Since every
+cube vertex has degree $k$,
+
+$$
+N-|S|=\sum_W|W|\le\sum_W|\partial_E W|
+=|E(S,V(Q_k)\setminus S)|\le k|S|.
+\tag{IV.104}
+$$
+
+This includes the empty-complement case. Thus
+$|S|\ge\lceil N/(k+1)\rceil$ and
+$C_v=|S|-|I|\ge\lceil N/(k+1)\rceil-|B_D(v)|$.
+A tree of maximum degree three has at most $3\cdot2^{i-1}$ vertices at
+distance $i\ge1$ from a fixed vertex. Therefore
+$|B_D(v)|\le1+3\sum_{i=0}^{D-1}2^i=3\cdot2^D-2$, also for $D=0$
+with the empty sum. Root and truncation only reduce this count.
+Every component of $T-B_D(v)$ lies in an original component of
+$T-\{v\}$. Hence a fibre counted by $C_v$ is counted by $F_v$.
+Nonnegativity completes (IV.102). $\square$
+
+The original-branch qualification is essential. Different fine
+components of $T-B_D(v)$ need not be more than $2D$ apart: for
+$v=\varepsilon$, $D=1$, the words $00$ and $01$ are in different fine
+components at distance two. Equation (IV.103) is used only across
+original incident branches. Nor does the weighted choice assert a
+fixed-representative embedding of the cube.
+

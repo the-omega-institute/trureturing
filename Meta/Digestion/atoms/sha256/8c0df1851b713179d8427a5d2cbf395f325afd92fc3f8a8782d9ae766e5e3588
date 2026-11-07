@@ -1,0 +1,24 @@
+**Theorem 39.3 (acquired full profile at an unchanged attained cut).** For every $B\ge1$, a finite deterministic program acquires the full $\mathsf P_B(z)$ of an unrestricted positive rational current source $z$ with at most two actual replies, zero actions, first scale $D=B^2$ and, if needed, second scale at most $B$. No original-denominator bound is assumed. If existing actual evidence already determines one of these replies, the program derives it and omits that read.
+
+Proof. Obtain the actual reply $r=q_D(z)$, or derive that same integer from retained evidence. Its exact raw cell is
+
+$$
+J_D(r)=\begin{cases}(0,1/D),&r=0,\\\left[r/D,(r+1)/D\right),&r>0.\end{cases}
+\tag{39.3}
+$$
+
+There is at most one distinct $\mathcal H_B$ cut strictly inside this interval: two interior cuts would be separated by less than $1/D=1/B^2$. For each denominator $s=1,\ldots,B$, compute the least numerator $j$ with $j/s>r/D$ and test $j/s<(r+1)/D$. This is one integer division and comparison per denominator; repetitions name the same cut. A cut at the lower endpoint is already owned by the cell, and the upper endpoint is excluded.
+
+If there is no interior cut, no further read is necessary. Otherwise write that cut as $t=p/s$ with $s\le B$ (reduction is optional), obtain the genuine reply $h=q_s(z)$ and decide $z\ge t$ by $h\ge p$. Intersect (39.3) with $[t,\infty)$ or $(0,t)$ accordingly. This is a genuine comparison at the unchanged cut, not a hypothetical continuation. If prior evidence already settles its side, omit it. Select the included positive lower endpoint of the resulting interval, or an interior rational when its lower endpoint is zero. At most one cut was crossed, so this representative has exactly the actual full profile by Theorem 39.2.
+
+For completeness, the exact containing cell is computed with $B$ further local divisions. At representative $y_0$, put $j_s=\lfloor sy_0\rfloor$. Its lower endpoint is the maximum of $0$ and $j_s/s$ over $s\le B$, and its upper endpoint is the minimum of $(j_s+1)/s$. Reduce only these selected endpoints if desired. This produces the entire finite representation, including all future words. In particular
+
+$$
+q_1(z)=\lfloor r/D\rfloor
+\tag{39.4}
+$$
+
+is derived from the first reply. For $B=1$, $D=1$, there is no interior integer cut and exactly this one read suffices unless already earned. The zero report means $(0,1)$, whose upper endpoint is finite and excluded. The construction uses only finitely many binary arithmetic operations and the supplied finite-completing services. $\square$
+
+The two-read result does not contradict the one-read divisibility condition of Theorem 15.2. Its second scale is chosen after an actual first reply; it uses the single unresolved local cut rather than a global LCM. The numerical raw scale $B^2$, as well as its binary name, is polynomially bounded.
+

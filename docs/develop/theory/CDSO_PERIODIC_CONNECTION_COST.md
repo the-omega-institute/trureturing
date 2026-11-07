@@ -4455,3 +4455,274 @@ in a value and an actual threshold-core conclusion do not supply those
 stronger assertions.
 
 ## 追加锚（本行以下为增补区）
+
+## 20. Uniform exact support and finite reconstruction at the $a^{5/2}$ scale
+
+The following statements use the actual threshold partition from Definition
+13.1. The index $j$ is therefore allowed to be a nonwinning branch. The
+finite formulas of Section 6 are extended algebraically to every
+$2\le j\le J_R$; no occurrence of $j\in J_*$ is used in this section.
+
+**Lemma 20.1 (The price slack has a uniform nonzero gap unless a core smoothing applies).**
+Fix finite $R\ge4$ and $c>0$. After increasing the $R,c$-only lower
+threshold for $a$, let $G$ be an exact minimizer at an integer budget
+$N\ge ca^{5/2}$, and use the notation of Definitions 13.1 and 17.1. Then
+
+$$
+\Pi\le C_{R,c}\frac{a^5}{N}\le \frac{C_{R,c}}c\,a^{5/2}.
+\tag{20.1}
+$$
+
+If $G$ has a bad tail-touching source, or has more than $n$ contracted
+tail connections, or has $D_0>d_{j,N}$ after all tail sources are
+singletons or connectors, (20.1) is impossible. If instead
+$D_0=d_{j,N}$ and a core-only source has degree $L\notin\{m,m-1\}$,
+then $G$ is not a minimizer.
+
+**Proof.** Put $E_{j,N}=S_j+\bar\chi_{j,N}/N$ and write
+$\varepsilon=C_{R,c}a^5/N^2$, enlarging the constant so that both
+Theorem 17.4 and Lemma 17.3 use $\varepsilon$. Theorem 17.4 gives
+
+$$
+W(G)\le L_N+\varepsilon,\qquad E_{j,N}\le L_N+\varepsilon,
+$$
+
+whereas Lemma 17.3 gives
+
+$$
+W(G)\ge E_{j,N}+\frac{\Pi}{2N}-\varepsilon.
+$$
+
+Since $E_{j,N}\ge L_N$, these three inequalities imply (20.1).
+
+The actual index supplied by Lemma 13.2 satisfies
+$n^2/(j^2a)>5/2-O_R(a^{-1/2})$. The expansions in (14.12) therefore
+give, uniformly for $2\le j\le J_R$,
+
+$$
+\eta^2\ge \kappa_Ra^3,\qquad rc_j\ge \kappa_Ra^3
+\tag{20.2}
+$$
+
+for some $\kappa_R>0$. If a bad source exists, its $D_u$ in (17.4)
+is at least $3$, so (17.5) and (17.9) give
+$\Pi\ge 3\eta^2/4$. If there is no bad source but
+$\tau>n$, (17.10) gives $\Pi\ge\eta^2$. Both bounds contradict
+(20.1) and (20.2) for large $a$.
+
+It remains to consider no bad source and $\tau=n$. Then the exact
+identity (4.6), with $b=n$, reads
+
+$$
+\Pi=(D_0-d_{j,N})c_j+
+\sum_{u:B_u=0}
+\frac{(m-L_u)(r-L_u)(m+r+L_u)}{\alpha^2}.
+\tag{20.3}
+$$
+
+The edge congruence (4.7) gives $D_0\equiv d_{j,N}\pmod r$ and
+$D_0\ge d_{j,N}$. If $D_0>d_{j,N}$, then
+$D_0-d_{j,N}\ge r$, so (20.2)--(20.3) give
+$\Pi\ge rc_j$, again contradicting (20.1).
+
+Suppose now $D_0=d_{j,N}$, and let $B\subseteq C$ be the neighborhood
+of an intermediate core-only source, with $|B|=L\le m-2$. We first show
+that a full-core source exists. Let $g$ be the number of core-only sources.
+The tail marginal sum satisfies, by (13.19),
+
+$$
+u=\frac jr+O_{R,c}\!\left(\frac{T_N}{a^3}\right)=O_{R,c}(a^{-1}),
+$$
+
+because $T_N=a^{7/2}/N\le a/c$. Every source that touches $D$ uses
+at least one tail incidence, hence $N-g\le Nu$, and therefore
+$g\ge N(1-u)\ge N/2$. If no full-core source existed, every core-only
+source would have $L_u\le r$, giving $D_0=\sum_{B_u=0}(m-L_u)\ge g>r$,
+which contradicts $D_0=d_{j,N}<r$.
+
+Choose a full-core source $U$. Since $B$ omits at least two core labels,
+choose $x\in C\setminus B$, move the edge $Ux$ to the intermediate
+source, and leave all other incidences unchanged. The two source degrees
+become $m-1$ and $L+1$, while every sink degree and every budget remain
+unchanged. Let $D_i$ denote the unchanged core sink degrees and put
+
+$$
+\Delta_k(D)=f_{k+1}(D)-f_k(D),\qquad
+f_k(D)=\sqrt{1+k^2/D^2}-1.
+$$
+
+For fixed $D>0$, $k\mapsto f_k(D)$ is strictly convex because
+
+$$
+\frac{\partial^2}{\partial k^2}f_k(D)
+=\frac{D^{-2}}{(1+k^2/D^2)^{3/2}}>0.
+$$
+
+Thus $\Delta_L(D_i)<\Delta_{m-1}(D_i)$. On every $i\in B$, the change
+in the two source contributions is
+$-\Delta_{m-1}(D_i)+\Delta_L(D_i)<0$. On every
+$i\in C\setminus(B\cup\{x\})$, it is
+$-\Delta_{m-1}(D_i)<0$, and at $x$ it is
+$f_{L+1}(D_x)-f_m(D_x)<0$. The total $E$, and hence $W=2NE$,
+strictly decreases.
+
+The move preserves simplicity because $x\notin B$, and preserves the
+source and edge counts. Lemma 13.2 gives core sink degrees at least
+$N/2$, while both new core source degrees are at most $m$, so strict
+orientation remains valid. The old full source still joins all core sinks
+except $x$, and the enlarged intermediate source joins $x$ to a core
+sink in $B$; all tails retain their connectors. Thus connectedness is
+preserved. This contradicts minimality, so no intermediate source exists.
+
+Consequently every exact minimizer has no bad source, exactly $n$ connectors,
+and $D_0=d_{j,N}$ with every core-only source of degree $m$ or $m-1$.
+The congruence and edge identity then give exactly $d_{j,N}$ sources of
+degree $m-1$, exactly
+
+$$
+F_{j,N}=\frac{(a-1)N-n-(r-1)d_{j,N}}r
+\tag{20.4}
+$$
+
+full-core sources, and all remaining sources are tail singletons. Since
+$\tau=n$ and each tail must occur in a connector, there is exactly one
+connector for every tail. ∎
+
+
+**Theorem 20.2 (Uniform exact finite allocation and exhaustive reconstruction).**
+For every fixed finite $R\ge4$ and $c>0$, there is a finite positive
+$A_{R,c}$ such that, for every integer
+$a\ge A_{R,c}$, every integer
+
+$$
+\frac72\sqrt a\le h\le R\sqrt a,\qquad N\ge ca^{5/2},
+\tag{20.5}
+$$
+
+the original graph class is nonempty and, with the notation of
+(6.1)--(6.5) extended to every $2\le j\le J_R$,
+
+$$
+V_N=\min_{2\le j\le J_R}\ \min_{z\in\mathcal Z_{m_j,n_j,d_{j,N}}}
+\mathcal A_{j,N}(z).
+\tag{20.6}
+$$
+
+Here $m_j=a+j$, $r_j=m_j-1$, $n_j=h+1-j$,
+$d_{j,N}=[n_j-(a-1)N]_{r_j}$, and $F,Q,b,t$ and
+$\mathcal A_{j,N}$ are the expressions in (6.1)--(6.5) for that branch;
+$\mathcal J_N$ is not restricted to $J_*$.
+
+Every exact minimizer, and only an exact minimizer, is obtained as follows.
+Choose a minimizing pair $(j,z)$ in (20.6), a labelled partition
+$C\dot\cup D=[s]$ of sizes $m_j,n_j$, and nonnegative
+$\ell_i$ satisfying (6.9). Put
+
+$$
+e_i=z_i^++\ell_i,\qquad o_i=z_i^-+\ell_i.
+\tag{20.7}
+$$
+
+Assign the $n_j$ labelled tails to connector endpoints with histogram $e$,
+assign the $d_{j,N}$ missing-one sources with omission histogram $o$,
+take $F_{j,N}$ full-core sources, and give the $Q-n_j$ singleton
+sources to the tails so that $n_j-t$ tails have degree $b$ and $t$
+tails have degree $b+1$. Finally permute all source labels. All ties,
+all residues, all endpoint and omission assignments allowed by (20.7), and
+all choices of the $t$ high-degree tail labels are included.
+
+**Proof.** Uniformly for $2\le j\le J_R$,
+
+$$
+m_j,r_j=\Theta_R(a),\quad n_j=\Theta_R(\sqrt a),\quad
+\alpha_j=\Theta_R(1),\quad \beta_j=\Theta_R(a^{-3/2}).
+\tag{20.8}
+$$
+
+The residue satisfies $0\le d_{j,N}<r_j$, and (20.4) gives
+$F_{j,N}=\alpha_jN-O_R(a)>N/3$ after increasing $A_{R,c}$. Also
+$Q=n_j\beta_jN+O_R(a)$, so the balanced quotient obeys
+$b=\beta_jN+O_R(\sqrt a)$ and hence $b>2$. These estimates are
+
+uniform in $j,h,N$ and in the residue.
+
+For every $z\in\mathcal Z_{m_j,n_j,d_{j,N}}$, the construction in the
+proof of Lemma 6.3 produces (20.7): its sums are
+$\sum e_i=n_j$, $\sum o_i=d_{j,N}$, and $L(z)$ units are placed only
+at $I_0(z)$. The set $\mathcal Z_{m_j,n_j,d_{j,N}}$ is nonempty: if
+$n_j\ge d_{j,N}$, place $n_j-d_{j,N}$ positive units, and if
+$d_{j,N}>n_j$, place $d_{j,N}-n_j$ negative units on distinct core
+labels. The displayed source counts are nonnegative. They total
+
+$$
+F_{j,N}+d_{j,N}+n_j+(Q-n_j)=N,
+$$
+
+and their edge count is
+
+$$
+m_jF_{j,N}+r_jd_{j,N}+2n_j+(Q-n_j)
+=N+r_jF_{j,N}+(r_j-1)d_{j,N}+n_j=aN.
+\tag{20.9}
+$$
+
+The graph is simple and bipartite by construction. A full-core source joins
+all core sinks, and the one connector at each tail joins every tail to the
+core, so it is connected. Its core sink degrees are
+$F_{j,N}+d_{j,N}+z_i\ge F_{j,N}$, hence exceed every core source degree
+$m_j$. Its tail degrees are $b$ or $b+1$, and $b>2$, so the
+connector degree two and singleton degree one are strictly smaller.
+Thus every reconstruction belongs to the original graph class, proving
+nonemptiness and the upper inequality in (20.6).
+
+Now let $G$ be an exact minimizer. Lemma 20.1 gives its exact source
+support and an actual index $2\le j\le J_R$. The proof of Lemma 6.2
+uses only the exact source types, strict orientation, and tail degrees
+larger than $4$. For this actual graph, Lemma 13.2, (13.5), gives
+$t_k=\beta_j(1+O_{R,c}(a^{-1/4}))$ for every $k\in D$. Thus (20.8) and
+$N\ge ca^{5/2}$ give, for some $\kappa_R>0$ and after increasing $A_{R,c}$,
+
+$$
+q_k=d_G(k)=Nt_k\ge\frac12\beta_jN\ge\kappa_R c\,a>4
+\qquad(k\in D).
+$$
+
+This is a lower bound for the actual tail degrees before balancing.
+Consequently every minimizing graph has $n_j-t$ tail degrees
+$b$ and $t$ tail degrees $b+1$. For its endpoint and omission
+counts put $z=e-o$. The same summation argument as (6.4) gives
+$z\in\mathcal Z_{m_j,n_j,d_{j,N}}$. Lemma 6.3 then gives the exact core
+minimum $\mathcal C_{j,N}(z)$, with equality precisely when (20.7) holds;
+the tail contribution is $\mathcal T_{j,N}$. Hence
+$W(G)\ge\mathcal A_{j,N}(z)\ge$ the right side of (20.6), proving the
+reverse inequality.
+
+Conversely, for a minimizing pair in (20.6), the construction above has
+core value $\mathcal C_{j,N}(z)$ by (6.9) and tail value
+$\mathcal T_{j,N}$, so its exact objective is
+$\mathcal A_{j,N}(z)=V_N$. The equality conditions in Lemma 6.3 and the
+balancing equality in Lemma 6.2 show that no other source, endpoint,
+omission, tail-label or tie case is present. This proves the exhaustive
+reconstruction, including all labelled preimages and all branch and
+allocation ties. ∎
+
+**Corollary 20.3 (Scope and unresolved boundaries).** Theorem 20.2 proves
+the complete fixed-$R$, fixed-$c$ source-support and finite-allocation
+package at every integer $N\ge ca^{5/2}$, including nonwinning bounded
+branches and every residue. It does not assert a law-winning branch, a
+unique optimizer, a least threshold or period, a moving-$R$ statement, or
+any conclusion outside Definition 1.1. The argument is a prose theorem;
+it is not a Lean or kernel verification.
+
+The proof reuses the actual-graph localization and nonlinear transfer in
+Lemmas 13.2--13.3, the algebraic price identities and connected contraction
+of Sections 2 and 4, the uniform slack estimate of Lemma 17.2, and the
+exact allocation identities of Section 6. The scalar strict convexity used
+in Lemma 20.1 is the one-variable criterion described in Boyd--Vandenberghe,
+*Convex Optimization*, §3.1.4, [author text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf).
+The graph normalization and source problem remain the CDSO definition of
+Albalahi--Das--Ali--Barman--Hamza, *On the hyperbolic Sombor index and its
+counterpart*, [arXiv:2510.24809v1](https://arxiv.org/html/2510.24809v1),
+§1; no external extremal theorem is used as a premise.
+
+## 追加锚（本行以下为增补区）

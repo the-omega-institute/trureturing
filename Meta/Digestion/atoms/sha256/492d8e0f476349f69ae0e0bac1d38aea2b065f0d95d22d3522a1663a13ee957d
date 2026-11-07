@@ -1,0 +1,57 @@
+**定理 101.1（C110 近邻的弱互易版本）。** 固定原非零效果和框架，令 $M=\|E\|$、$\sigma=\bar s(E,F)$、$\delta=b(E,F)\le2^{-15}$。仍按原卷 (93.1) 定义
+
+$$
+\begin{aligned}
+u&=8\delta,&w&=\frac{8\sqrt u}{1-u},&
+a&=w\sqrt{1+\delta}+\delta+\sqrt\sigma,\\
+e&=2a+(1+\delta)w^2+\sigma,&e'&=4a+\sigma.
+\end{aligned}
+\tag{101.1}
+$$
+
+则存在原支撑角的保星自同构 $\alpha$，允许等阶中心块置换，使 $A_E=\mathcal L_E\alpha$ 经输入压缩延拓后满足
+
+$$
+\|T_E-A_E\|_\diamond\le Me,\qquad
+\|T_E^\dagger-A_E^\dagger\|_\diamond\le Me',\qquad
+A_EA_E^\dagger=\mathcal L_{E^2}.
+\tag{101.2}
+$$
+
+这里 $A_E$ 是引理 100.1 可用的单 Kraus 映射，不要求 $\alpha(E)=E$，不将 $\alpha$ 当作实际过程。
+
+证明。令 $D=T_E-T_E^\dagger$。正输入范数等于自伴迹范数算子范数：对自伴 X 作正负谱分解即得上界，密度输入给反向界。迹对偶于是给
+
+$$
+\nu(D)=\|D^\dagger\|_{\infty,\mathrm{sa}\to\infty,\mathrm{sa}}
+=\|D\|_{\infty,\mathrm{sa}\to\infty,\mathrm{sa}},
+\tag{101.3}
+$$
+
+最后一步使用 $D^\dagger=-D$。正确成功效果使 $T_E$ 只读支撑角，因此 $T_E(1-P)=0$。将 (101.3) 分别用于自伴收缩 I、1-P 得
+
+$$
+\|T_E(I)-E\|\le\sigma M,\qquad
+0\le T_E^\dagger(1-P)=-D(1-P)\le\sigma MI.
+\tag{101.4}
+$$
+
+这恰是原卷 (93.3) 的两个原输入/输出质量界；不需要先把 $\nu(D)$ 升格为 diamond 范数。
+
+从 (93.4) 起，原证明只使用 (101.4)、正确成功效果和原不带参考的返回缺陷 $\delta$。具体地，原成功效果白化得到 $\Phi,\Psi$；实际返回的迹给 $\|\Phi^\dagger(P)-P\|\le\delta$；原明确保迹补全给同角近左逆 $4\delta\le u$。Schwarz、原 Stinespring 表示、紧群平均及极分解给同一个自同构 $\alpha$。原矩形 Kraus 家族中的同一环境方向给出
+
+$$
+T_E=\operatorname{Ad}_K+N,\quad
+\|K-K_0\|\le\sqrt M\,a,\quad K_0K_0^\dagger=E,\quad N\text{ 完全正},
+$$
+
+以及两种分别计算的质量
+
+$$
+\|N^\dagger(I)\|\le M((1+\delta)w^2+\sigma),\qquad
+\|N(I)\|\le M(\sigma+2a).
+\tag{101.5}
+$$
+
+这里直接复用 (93.4)–(93.12) 的完整原家族构造及其常数；该段对 $\sigma$ 的全部依赖正是 (101.4)。$\operatorname{Ad}_{K_0}=\mathcal L_E\alpha$。两种 CP 质量分别控制正向和伴随余项，给 (101.2)，没有对一个一般 diamond 小误差直接取伴随。∎
+

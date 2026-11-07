@@ -1,0 +1,59 @@
+**定理 27.4（全部六维幂等子上的有符号 QC）。**每个上述实值正交可加 $\nu$ 都满足
+
+$$
+\Delta_s(a):=6a_{-s}+2a_s-4a_{\zeta s}-4a_{\zeta^2s}=0
+\qquad(s\in\mu_6).
+\tag{27.14}
+$$
+
+不要求正性、辅助零质量、连续性或非正交和的线性。
+
+**证明。**把 §26 的三相构造同时用于两种辅助符号。置
+
+$$
+\begin{gathered}
+z_d=d_2+d_3,\quad Z_d=z_dz_d^*/2,\quad
+q'_r=(z_d+r d_1)/\eta,\quad R_r=q'_r(q'_r)^*,\\
+b_r=\nu(R_r),\quad C_d=\nu(d_1d_1^*)+2\nu(Z_d),\\
+w^\pm_{s,\epsilon}=x+s(y\pm\epsilon d_1)\pm s^2z_d,\quad
+P^\pm_{s,\epsilon}=w^\pm_{s,\epsilon}(w^\pm_{s,\epsilon})^*/6,\qquad\epsilon\in\{1,-1\},\\
+k_{s,\epsilon}=(\epsilon s d_1+s^2z_d)/\eta=s^2q'_{\epsilon\bar s}.
+\end{gathered}
+\tag{27.15}
+$$
+
+$w$ 的三个正交部分各平方范数二，故总范数平方六，$P^\pm$ 是 Hermitian $D$-幂等子。$q_s,k_{s,\epsilon}$ 是正交单位向量，且 $w^\pm=\eta(q_s\pm k_{s,\epsilon})$，故
+
+$$
+P^+_{s,\epsilon}\perp P^-_{s,\epsilon},\qquad
+P^+_{s,\epsilon}+P^-_{s,\epsilon}=Q_s+R_{\epsilon\bar s},\qquad
+\nu(P^+_{s,\epsilon})+\nu(P^-_{s,\epsilon})=a_s+b_{\epsilon\bar s}.
+\tag{27.16}
+$$
+
+令 $T$ 分别为 $\mu_3$、$-\mu_3$。同一符号族的不同 $s,t\in T$ 满足 $r=\bar s t\in\{\zeta,\zeta^2\}$，其内积为 $2(1+r+r^2)=0$。利用 $\sum_Ts=\sum_Ts^2=\sum_T\bar s=0$ 消去交叉外积，逐项得到
+
+$$
+\sum_{s\in T}P^\pm_{s,\epsilon}=K^\pm_\epsilon
+=X+(y\pm\epsilon d_1)(y\pm\epsilon d_1)^*/2+Z_d.
+\tag{27.17}
+$$
+
+每行右侧的三项互相正交；两种中间投影也互相正交，和为 $Y+d_1d_1^*$。因此分别对每行使用正交可加性，再相加实数等式，得
+$\nu(K^+_\epsilon)+\nu(K^-_\epsilon)=C+C_d$。没有对互相重叠的 $K^+_\epsilon,K^-_\epsilon$ 使用测度加法。
+
+记 $S_\pm=\sum_{s\in\pm\mu_3}a_s$、$B_\pm=\sum_{r\in\pm\mu_3}b_r$。在 (27.16) 上按 $T$ 求和，(27.17) 给
+
+$$
+\begin{array}{ll}
+\epsilon=1:&S_++B_+=S_-+B_-=C+C_d,\\
+\epsilon=-1:&S_++B_-=S_-+B_+=C+C_d.
+\end{array}
+\tag{27.18}
+$$
+
+第一组内的 $s\mapsto\bar s$ 保持正负三角形，第二组的 $s\mapsto-\bar s$ 交换两者。交叉相减给 $B_+=B_-$、$S_+=S_-$。引理 27.3 给三对总量各为 $A$，故 $S_++S_-=3A$、$S_+=S_-=3A/2$。每个 $\{s,\zeta s,\zeta^2s\}$ 为一个三角形，于是
+$\Delta_s(a)=6(a_s+a_{-s})-4(a_s+a_{\zeta s}+a_{\zeta^2s})=6A-4(3A/2)=0$。
+
+$X,H^\pm,Z_d,P^\pm,K^\pm$ 都只由 $\nu$ 在 $\mathcal P_6(D)$ 上评价；即使某个投影没有 $D$-单位基，定理也适用。没有引入 $\sqrt2,\sqrt6$，没有将长度或四面体角度解释为概率。应用到原响应时，每次 $\nu$ 的正交加法都由定理 27.2 的实际完整框架提供。$\square$
+

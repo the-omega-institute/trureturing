@@ -1,0 +1,17 @@
+**定理 251.2（完整原背景中的全部互易删除）。** 同一原签名上，
+
+$$
+\begin{aligned}
+B_*+\mathsf F_3&\Longleftrightarrow B_*+\mathsf F_{\rm pair}
+\Longleftrightarrow B_*+\mathsf F_{\rm cut},\\
+\mathsf C_3(B)&\Longleftrightarrow B+\mathrm Z+\mathrm{SC}+\mathrm{SJ},\\
+\mathsf C_3(\mathsf B_{\rm cl})
+&\Longleftrightarrow\mathsf B_{\rm cl}+\mathsf Q+\mathrm{SC}+\mathrm{SJ}.
+\end{aligned}
+\tag{251.3}
+$$
+
+证明。定理 246.1 先把所有原简单载体限定为复型，不借任何原 $D$ 识别；原右单位仍独立取母卷定理 30.1 或引理 67.3。对每个需恢复旧双锚比较的高秩简单块 $T$，定理 223.1 证明中的跨块投影步骤给内部限制的右单位，原三层均合法限制到该块。此块秩至少四，故定理 250.1 适用并给全部元对互易，自然包含旧双锚的每条比较。成熟复分类也保证旧坐标及 primitive 实基存在。
+
+至此才调用定理 239.2：同一原参考整体先恢复全域 SC，再消去径向及跨块余量，并把全部幂等元平方带回原对象。反向，$\mathsf F_{\rm pair}$ 已保留相同的三层，所以只须删除其互易条件；与 $\mathsf F_{\rm cut}$ 及两个完整背景接口的等价直接复用定理 239.2。$\mathsf Q$ 仍保持母卷定义 67.2 的全部准备、全部数学效果、任意小原质量与对象／方向相关的有限统一常数，不缩成有限探针。∎
+

@@ -1,0 +1,4 @@
+## 11. 原始效果与共享反馈的定性刚性
+
+Theorem 10.3 controls the implemented channel in the full reference-inclusive diamond norm.  The next distinction is at the producer level: an original outcome carries one normalized effect and one feedback unitary, and spectral refinement must not replace that shared unitary by separate controls.  This section extracts a uniform qualitative modulus for those original pairs.  Its consumer is a weighted producer certificate: near-optimal implementations can certify clustering of normalized effects and their actual feedback around the two joint optimizer classes, with no claim of uniform control for arbitrarily small-weight outcomes.  It does not assert a power law; the quadratic producer coercivity remains a separate open target.
+

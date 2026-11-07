@@ -1,0 +1,25 @@
+**定义 12.1（树加一边的共同响应关系与 Z）。** 完整保留定义 1.1–1.4 的 $E,\mathcal K,K_j,e_{\rm r},\chi_a,\mathsf W_{11},\mathsf W_7$。在同一个 $\Pi\in\mathscr C_{\rm end}$ 上，取一个全局连续函数 $o:\mathbb C^*\to(0,\infty)$，其中 $\mathbb C^*=\mathbb C\setminus\{0\}$。它在下面所有前字、边、旁观幅度及实际过去的量词之外。令
+
+$$
+\begin{aligned}
+\mathcal F_{\rm tr}&=\{(s\setminus\{\max s\},s):s\in E,\ s\ne\varnothing\},\\
+\mathcal F&=\mathcal F_{\rm tr}\cup\{(\{3\},\{1,3\})\},\\
+\mathrm S_o:\quad
+\Pi_{s_1}(\chi_a)&=
+ o\!\left(\frac{(\chi_a)_{s_1}}{(\chi_a)_{s_0}}\right)\Pi_{s_0}(\chi_a)
+\quad\left\{
+\begin{array}{l}
+a\in\mathsf W_{11},\ (s_0,s_1)\in\mathcal F,\\
+(\chi_a)_{s_0}(\chi_a)_{s_1}\ne0;
+\end{array}\right.\\
+\mathrm Z:\quad \Pi_{\{9\}}(e_{\rm r})&=0.
+\end{aligned}
+\tag{12.1}
+$$
+
+$\mathcal F_{\rm tr}$ 是以空配置为根的 $88$ 边生成树：每次删除最大占据位严格降低基数并最终到根。唯一附加边也是原地址一的活动对，和树中的三条边围成 $\varnothing,\{1\},\{1,3\},\{3\}$ 的方形。共测试 $89$ 条原边，不改变任何原活动对或单点分量。
+
+$\mathrm S_o$ 是不除概率的等式，允许其两端概率同时为零；在任一端幅度为零处不要求赔率式，也不评价 $o(0)$ 或无穷比值。它并未假定节点律、全支撑正性或相位对称。Z 只是一条原 ready 边界值。原 $\mathrm R_\epsilon$ 蕴涵 Z：在 (1.7) 取 $a=\epsilon,i=1,q=\{9\}$，因 $M_1e_{\rm r}=0$，右端按原约定为零，不评价 $\Pi(0)$。
+
+量词 $a\in\mathsf W_{11}$ 覆盖所有长度逐个有限而无统一长度上界的实际正向前字。它不是一组长度有界的有限观测，也不是任意射线的可执行准备。这里直接供应的是共同响应关系；可执行门与概率归一化本身均不蕴涵 $\mathrm S_o$。
+

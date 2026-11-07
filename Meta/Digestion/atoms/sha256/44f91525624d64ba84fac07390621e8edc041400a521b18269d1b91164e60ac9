@@ -1,0 +1,9 @@
+### 定义 3.3（可直接计算的回接缺陷）
+
+$$
+\beta_{ij}=\frac{\operatorname{Tr} K_{ij}}d,\qquad
+ \Delta_{ij}=K_{ij}-\beta_{ij}I_H,\qquad
+ D_{\mathrm K}=\sum_{i,j}\Delta_{ij}^*\Delta_{ij}\succeq0,
+ \qquad p=F_e(\pi,\mathcal T)=\sum_{i,j}|\beta_{ij}|^2.
+$$
+

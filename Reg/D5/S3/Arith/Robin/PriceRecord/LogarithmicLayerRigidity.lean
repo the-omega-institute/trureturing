@@ -207,4 +207,88 @@ def logarithmicAudit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
 #print axioms logarithmicFamily
 #print axioms logarithmicAudit
 
+namespace ThetaError
+
+open Filter Asymptotics
+
+def actual : Realization signature :=
+  realize signature (fun _ _ t => Chebyshev.theta t) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ t => t + t / Real.log t ^ 8) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := (fun t : ℝ => R.readout () () t - t) =o[atTop]
+    (fun t : ℝ => t / Real.log t ^ 8)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := h.def (by norm_num : (0 : ℝ) < 1 / 2)
+  obtain ⟨T, hT⟩ := eventually_atTop.mp hb
+  let t := max T 2
+  have ht : 1 < t := lt_of_lt_of_le (by norm_num) (le_max_right _ _)
+  have hq : 0 < t / Real.log t ^ 8 :=
+    div_pos (by linarith) (pow_pos (Real.log_pos ht) 8)
+  have hbad := hT t (le_max_left _ _)
+  change |(t + t / Real.log t ^ 8) - t| ≤ (1 / 2 : ℝ) * |t / Real.log t ^ 8| at hbad
+  rw [add_sub_cancel_left, abs_of_pos hq] at hbad
+  linarith
+
+def family : Registration arena (type_of% @theta_error_eight) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨theta_error_eight, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j h
+      exact (h (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), 1, 2, ?_⟩
+    change Chebyshev.theta 1 ≠ Chebyshev.theta 2
+    rw [Chebyshev.theta_one]
+    exact (Chebyshev.theta_pos (by norm_num : (2 : ℝ) ≤ 2)).ne
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@theta_error_eight) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.PriceRecord.LogarithmicLayerRigidity.theta_error_eight.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.PriceRecord.LogarithmicLayerRigidity.ThetaError.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ t => Chebyshev.theta t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.PriceRecord.LogarithmicLayerRigidity
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["fn", "arg", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+#print axioms audit
+
+end ThetaError
+
 end Reg.D5.S3.Arith.Robin.PriceRecord.LogarithmicLayerRigidity

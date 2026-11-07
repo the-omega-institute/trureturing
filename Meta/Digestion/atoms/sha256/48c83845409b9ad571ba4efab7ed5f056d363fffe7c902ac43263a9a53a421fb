@@ -1,0 +1,52 @@
+**Proposition 41.7 (finite charged arithmetic and the source boundary).**
+For a current endpoint of potential $S=A+B\ge s_0$, a finite exact
+calculation of all counts needed by (41.20)–(41.22) is obtained by filling
+(41.13)'s total-count recurrence over $\mathcal Q_+\cap\{A+B\le S\}$ in
+increasing potential, with base (41.14). It uses $O(S^2)$ table cells,
+each of $O(S+1)$ bits. Use a work-array bit-cost model charging
+$O(S+1)$ bit operations to access and add cells of that width, with
+$O(\log(S+1))$-bit indices. This gives $O((S+1)^3)$ sufficient table
+bits and arithmetic bit work per complete fill.
+A decoder can reuse this table, perform at most $S-s_0$ predecessor
+steps and materialize that many macro letters. Recomputing at every
+completed prefix of a run ending at potential $S_*$ gives a conservative
+$O((S_*+1)^4)$ total arithmetic bit-work upper bound. These bounds
+exclude native source traversal, communication and physical duration.
+
+Proof. There are $\sum_{s=1}^S s=O(S^2)$ valid pair cells. In each
+reachable cell at potential $s$, every word has length at most $s-s_0$,
+so its count is at most $\sum_{i=0}^{s-s_0}2^i=2^{s-s_0+1}-1$.
+Unreachable cells have count zero. Hence $O(S+1)$ bits per cell suffice,
+and each recurrence requires at most one addition of that width.
+Binary indices, comparisons and table addressing also fit the stated
+conservative bounds. The decreasing-potential proof of (41.22) gives
+at most $S-s_0$ rank comparisons/subtractions; their $O(S+1)$-bit work
+and the output fit within the table bound. There are at most
+$S_*-s_0$ nonempty completed prefixes, each with potential at most
+$S_*$; summing fresh-fill bounds proves the last assertion. No eventual
+$S_*$ is used by the algorithm; it is only an analysis parameter.
+$\square$
+
+This is a sufficient arithmetic realization conditional on lawful
+backed binary work records, not a claim about minimum peak workspace.
+The supplementary payload count excludes the source, authentic binding,
+rights, ancestral tapes, installed program, initial/current pair fields,
+width metadata, table, temporary arithmetic, decoder/output buffers and
+reserved cleared capacity. All are charged separately. A native $F$
+performs $a'$ promotions and $b'$ splits at current composition $(a',b')$
+after acquiring its $a'+b'$ entry rows; a $G$ performs one split after
+acquiring its actual leftmost path. Navigation, field operations,
+replies and returns add their own work. No unit-cost integer, default
+acknowledgement or modular field supplies the exact count table.
+
+Recovering $h$ does not recover an unspecified earlier source tree,
+authentic reference, complete tape or physical time. If a logical
+description of $t_0$ has itself been lawfully acquired and supplied,
+evaluating its recovered macros computes $t_h$ and their deterministic
+successful primitive edit trace in the mathematical syntax, with the
+corresponding computation and output costs. Merely supplying $v$ does
+not supply that initial tree description. Evaluation of a description
+is not physical replay, cloning, a source reset or inversion of growth.
+The rank holds at completed transactions; interruption/fault recovery
+inside a transaction requires its own contract.
+

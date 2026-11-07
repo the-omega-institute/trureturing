@@ -1,0 +1,24 @@
+**Corollary 165.3 (the cyclicity boundary).** Let
+
+$$
+H_{\mathrm{cal}}=\overline{\operatorname{span}_{\mathbb R}V}^{\,H}.
+$$
+
+If $H_{\mathrm{cal}}\subseteq\mathcal C$, equivalently the successor readout orbit is dense in the $L^2$ calibration subspace, then $W_\infty=\{0\}$ as a space of $m$-classes. Hence no normalized exact infinite-horizon escape direction exists for that stack. This is a conditional observability statement: it does not assert the required density for the original FIB readout.
+
+Conversely, if $\mathcal C^\perp\cap V$ contains bounded classes supported on Borel sets $B_n$ with
+
+$$
+\|v_n\|_\infty=1,
+\qquad
+\int_{B_n}g^2\,dm\longrightarrow0,
+$$
+
+then Proposition 134.2 and the Markov contraction give
+
+$$
+0<q(v_n)\le c\int_{B_n}g^2\,dm\longrightarrow0,
+$$
+
+and every $v_n$ is silent to the entire countable stack. The corollary identifies the exact remaining construction: it does not manufacture a localized sequence from nonzeroity of $\mathcal C^\perp$ alone.
+

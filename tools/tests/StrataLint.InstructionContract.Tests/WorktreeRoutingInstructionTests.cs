@@ -4,7 +4,7 @@ public sealed class WorktreeRoutingInstructionTests
 {
     [Theory]
     [InlineData("CLAUDE.md", "### 6.1", "### 6.2")]
-    [InlineData("docs/develop/spec/golden-ledger-repo-spec.md", "**A20 ", "**Participation")]
+    [InlineData("docs/develop/spec/golden-ledger-repo-spec.md", "**A20 ", "**A20.1 ")]
     public void GoverningRoutingKeepsObservationAndIssueWorkInExistingCheckouts(
         string path, string start, string end)
     {
@@ -27,7 +27,7 @@ public sealed class WorktreeRoutingInstructionTests
 
     [Theory]
     [InlineData("CLAUDE.md", "### 6.1", "### 6.2")]
-    [InlineData("docs/develop/spec/golden-ledger-repo-spec.md", "**A20 ", "**Participation")]
+    [InlineData("docs/develop/spec/golden-ledger-repo-spec.md", "**A20 ", "**A20.1 ")]
     public void GoverningRoutingPreservesIsolationForMutationsAndBuildSideEffects(
         string path, string start, string end)
     {
