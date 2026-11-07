@@ -31,10 +31,10 @@ internal sealed class SchulteArbitraryGcdQuotientConvolutionDocument
                 + "q=g/h is positive, q*h=g, and q divides n. In particular every "
                 + "summand queries a positive argument. The value at n=0 is an "
                 + "empty sum, rather than an additional asserted source case.",
-                DescribeRole.Definition),
+                DescribeRole.Definition, sourceDefinition: true),
             Node("H", "The divisor-totient function", HFormula(),
                 "H is A057660, interpreted in C. Each divisor e and phi(e) is "
-                + "cast separately before multiplication.", DescribeRole.Definition),
+                + "cast separately before multiplication.", DescribeRole.Definition, sourceDefinition: true),
             Node("positiveLift", "A zero extension of a positive-domain weight", LiftFormula(),
                 "At n>0 the expression f(n) means f applied to the positive "
                 + "integer with value n. The extension is zero only at n=0. "
@@ -45,12 +45,12 @@ internal sealed class SchulteArbitraryGcdQuotientConvolutionDocument
                 "A is defined by the original square with a zero extension, "
                 + "independently of its later convolution formula. Every function "
                 + "P -> C is permitted, without reality, positivity, boundedness "
-                + "or multiplicativity assumptions.", DescribeRole.Definition),
+                + "or multiplicativity assumptions.", DescribeRole.Definition, sourceDefinition: true),
             Node("PositiveMultiplicative", "Normalized coprime multiplicativity", MultiplicativeFormula(),
                 "Multiplicative means f(1)=1 and f(ab)=f(a)f(b) for coprime "
                 + "positive a,b. Complete multiplicativity is not required. "
                 + "Coprimality is that of their underlying natural numbers.",
-                DescribeRole.Definition),
+                DescribeRole.Definition, sourceDefinition: true),
             Node("result", "The whole arbitrary-function identity and its source clauses", ResultFormula(),
                 "For every f:P -> C, the first clause holds for every n>0. "
                 + "Its right side is the Dirichlet convolution of the pointwise "
@@ -97,11 +97,12 @@ internal sealed class SchulteArbitraryGcdQuotientConvolutionDocument
                 + "whose contents cannot be inferred from bibliographic data.")))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role) => Describe.Lean(
+        string prose, DescribeRole role, bool sourceDefinition = false) => Describe.Lean(
             DescribeId.Create("a350900-arbitrary-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)),
-            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
+            sourceDefinition ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))), role);
 
     private static Formula SquareFormula()
     {
@@ -145,7 +146,9 @@ internal sealed class SchulteArbitraryGcdQuotientConvolutionDocument
         var extension = All("z", C(), All("n", N(), Imp(Positive(n),
             Eqn(Call("square", Call("extension", f, V("z")), n), Call("A", f, n)))));
         var row = All("n", N(), Eqn(Call("A", V("idPositive"), n), Cast(Call("rowSum", n))));
-        return All("f", Arrow(P(), C()), Both(identity, Both(closure, Both(extension, row))));
+        return All("f", Arrow(P(), C()), new Formula.Aligned([
+            Wrap(identity), Seq(Land, Sp, Wrap(closure)),
+            Seq(Land, Sp, Wrap(extension)), Seq(Land, Sp, Wrap(row))]));
     }
 
     private static Formula V(string name) => F.Id(name);
@@ -164,6 +167,7 @@ internal sealed class SchulteArbitraryGcdQuotientConvolutionDocument
     private static Formula Both(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Iffn(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);
+    private static Formula Wrap(Formula value) => Seq(Open, value, Close);
     private static Formula Divide(Formula a, Formula b) => Seq(Open, a, Close, Sp, Slash, Sp, Open, b, Close);
     private static Formula RangeSum(Formula index, Formula n, Formula body) =>
         Seq(new Formula.Subscript(Sum, Seq(index, Sp, Eq, Sp, D(1), Dot, Dot, n)), Sp, body);
