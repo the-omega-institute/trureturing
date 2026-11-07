@@ -33,7 +33,10 @@ internal sealed class OccilBernsteinCorrectionRefutationDocument : IScribeDocume
             DeclarationHandle.Create(Prefix + name), H(title), Statement(name),
             name is "B" or "admissible" or "maxError" or "midpointError" or "maximumBranch" or "midpointBranch" or "claim"
                 ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("occil-convex-bernstein-corrections"),
+                ResolutionKind.Refuted) : null);
 
     private static StatementSource Statement(string name) => name switch
     {
