@@ -250,10 +250,14 @@ private abbrev arena : Arena where
         4*(Q*W).trace.re+4*(X*W*W).trace.re)
 
 private theorem bridge :
-    (type_of% (@actual_shifted_supplier_identity.{u})) ↔ arena.Law actual := by
-  rfl
+    (type_of% (@actual_shifted_supplier_identity.{u})) ↔ arena.{u}.Law actual := by
+  constructor
+  · intro h n _ _ p hp S Z hS
+    exact h p hp S Z hS
+  · intro h n _ _ p hp S Z hS
+    exact h n p hp S Z hS
 
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   exact h (ULift.{u} (Fin 0)) (fun _ => 1) (by intro i; norm_num)
     0 0 (by simp)
@@ -263,7 +267,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   refine ⟨(), True, False, ?_⟩
   simp [actual, realize]
 
-private theorem sensitivity : Sensitivity arena actual := by
+private theorem sensitivity : Sensitivity arena.{u} actual := by
   constructor
   · intro i
     refine ⟨rejected, ?_, ?_, rejected_law⟩
@@ -274,7 +278,7 @@ private theorem sensitivity : Sensitivity arena actual := by
   · intro e
     exact nomatch e
 
-def family : Registration arena (type_of% (@actual_shifted_supplier_identity.{u})) where
+def family : Registration arena.{u} (type_of% (@actual_shifted_supplier_identity.{u})) where
   actual := actual
   bridge := bridge
   variation := ⟨bridge.mp (@actual_shifted_supplier_identity.{u}), rejected, rejected_law⟩
@@ -289,11 +293,11 @@ def audit : Contract.Registration
   realizationName := `Reg.D5.S3.Quantum.Matrix.HsfLocalSpectrumSupplier.ShiftedIdentity.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature (fun _ _ s => s) (fun e => nomatch e))

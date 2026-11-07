@@ -50,10 +50,10 @@ private abbrev arena : Arena where
       (5/48 : ℝ) • (B 1)^3).trace.re)
 
 private theorem bridge :
-    (type_of% (@actual_threeLevel_supplier.{u})) ↔ arena.Law actual := by
+    (type_of% (@actual_threeLevel_supplier.{u})) ↔ arena.{u}.Law actual := by
   rfl
 
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   exact h (ULift.{u} (Fin 0)) (fun i => nomatch i.down)
     (fun _ => 1) (by intro i; norm_num) 0 (by simp) 0 (by simp)
@@ -63,7 +63,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   refine ⟨(), True, False, ?_⟩
   simp [actual, realize]
 
-private theorem sensitivity : Sensitivity arena actual := by
+private theorem sensitivity : Sensitivity arena.{u} actual := by
   constructor
   · intro i
     refine ⟨rejected, ?_, ?_, rejected_law⟩
@@ -74,7 +74,7 @@ private theorem sensitivity : Sensitivity arena actual := by
   · intro e
     exact nomatch e
 
-def family : Registration arena (type_of% (@actual_threeLevel_supplier.{u})) where
+def family : Registration arena.{u} (type_of% (@actual_threeLevel_supplier.{u})) where
   actual := actual
   bridge := bridge
   variation := ⟨bridge.mp (@actual_threeLevel_supplier.{u}), rejected, rejected_law⟩
@@ -87,11 +87,11 @@ def audit : Contract.Registration
   realizationName := `Reg.D5.S3.Quantum.Matrix.HsfThreeLevelSupplier.Supplier.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature (fun _ _ s => s) (fun e => nomatch e))
@@ -145,10 +145,10 @@ private abbrev arena : Arena where
       ((4*(S^3-X^3).trace.re-6*(X*D).trace.re-6*(D*Y).trace.re = 0) ↔ P*S = S*P))
 
 private theorem bridge :
-    (type_of% (@actual_threeLevel_PD_sylvester.{u})) ↔ arena.Law actual := by
+    (type_of% (@actual_threeLevel_PD_sylvester.{u})) ↔ arena.{u}.Law actual := by
   rfl
 
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   exact h (ULift.{u} (Fin 0)) (fun i => nomatch i.down)
     (fun _ => 1) (by intro i; norm_num) 0 (by simp) 
@@ -158,7 +158,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   refine ⟨(), True, False, ?_⟩
   simp [actual, realize]
 
-private theorem sensitivity : Sensitivity arena actual := by
+private theorem sensitivity : Sensitivity arena.{u} actual := by
   constructor
   · intro i
     refine ⟨rejected, ?_, ?_, rejected_law⟩
@@ -169,7 +169,7 @@ private theorem sensitivity : Sensitivity arena actual := by
   · intro e
     exact nomatch e
 
-def family : Registration arena (type_of% (@actual_threeLevel_PD_sylvester.{u})) where
+def family : Registration arena.{u} (type_of% (@actual_threeLevel_PD_sylvester.{u})) where
   actual := actual
   bridge := bridge
   variation := ⟨bridge.mp (@actual_threeLevel_PD_sylvester.{u}), rejected, rejected_law⟩
@@ -182,11 +182,11 @@ def audit : Contract.Registration
   realizationName := `Reg.D5.S3.Quantum.Matrix.HsfThreeLevelSupplier.PDSylvester.family
   realizationSource := none
   generated := false
-  arena := .source ⟨arena⟩
-  objectArena := .source ⟨arena⟩
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena ⟨family⟩
+  realization := .source arena.{u} ⟨family.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature (fun _ _ s => s) (fun e => nomatch e))
