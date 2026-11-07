@@ -39,6 +39,7 @@ import Mathlib.RingTheory.PowerSeries.Binomial
 import Mathlib.RingTheory.PowerSeries.Expand
 import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
 import Mathlib.Data.Nat.Choose.Central
+import Mathlib.Data.Finset.NatDivisors
 import Mathlib.Tactic
 
 /-! # The source recurrence of OEIS A318314 -/
@@ -542,24 +543,41 @@ private lemma interior_erase {n : ℕ} (hn : 1 < n) :
     have hdle : d ≤ n := Nat.le_of_dvd (by omega) hdiv
     exact ⟨hd, by omega, by omega⟩
 
-/-- The published proper-divisor recurrence is the full divisor-square equation. -/
-theorem source_convolution (n : ℕ) (hn : 0 < n) :
-    (∑ d ∈ n.divisors, f d * f (n / d)) = (oddUnitaryCount n : ℚ) := by
-  by_cases h1 : n = 1
-  · subst n
-    norm_num [oddUnitaryCount, Nat.odd_iff, source_solution_unique.1.1] <;> decide
-  have hn1 : 1 < n := by omega
-  have htail := f_spec.2 n hn1
-  have hone : 1 ∈ n.divisors := Nat.one_mem_divisors.mpr (Nat.ne_of_gt hn)
+private lemma divisor_square_split (u : ℕ → ℚ) (hu : u 1 = 1)
+    {n : ℕ} (hn : 1 < n) :
+    (∑ d ∈ n.divisors, u d * u (n / d)) =
+      (∑ d ∈ interior n, u d * u (n / d)) + 2 * u n := by
+  have hn0 : 0 < n := by omega
+  have hone : 1 ∈ n.divisors := Nat.one_mem_divisors.mpr (by omega)
   have hself : n ∈ n.divisors.erase 1 :=
-    Finset.mem_erase.mpr ⟨h1, Nat.mem_divisors_self n (Nat.ne_of_gt hn)⟩
+    Finset.mem_erase.mpr ⟨by omega, Nat.mem_divisors_self n (by omega)⟩
   have hs1 := Finset.sum_erase_add (n.divisors)
-    (fun d => f d * f (n / d)) hone
+    (fun d => u d * u (n / d)) hone
   have hs2 := Finset.sum_erase_add (n.divisors.erase 1)
-    (fun d => f d * f (n / d)) hself
-  rw [← interior_erase hn1] at hs2
-  simp only [Nat.div_one, Nat.div_self hn, f_spec.1, one_mul, mul_one] at hs1 hs2
+    (fun d => u d * u (n / d)) hself
+  rw [← interior_erase hn] at hs2
+  simp only [Nat.div_one, Nat.div_self hn0, hu, one_mul, mul_one] at hs1 hs2
   linarith
+
+/-- The source recurrence is equivalent to its full positive divisor-square equation. -/
+theorem source_convolution (u : ℕ → ℚ) : SourceSpec u ↔
+    u 1 = 1 ∧ ∀ n, 0 < n →
+      (∑ d ∈ n.divisors, u d * u (n / d)) = (oddUnitaryCount n : ℚ) := by
+  constructor
+  · intro hu
+    refine ⟨hu.1, fun n hn => ?_⟩
+    by_cases h1 : n = 1
+    · subst n
+      norm_num [oddUnitaryCount, Nat.odd_iff, hu.1] <;> decide
+    have hn1 : 1 < n := by omega
+    rw [divisor_square_split u hu.1 hn1]
+    have ht := hu.2 n hn1
+    linarith
+  · rintro ⟨hu, hs⟩
+    refine ⟨hu, fun n hn => ?_⟩
+    have h := hs n (by omega)
+    rw [divisor_square_split u hu hn] at h
+    linarith
 
 /-- A317934 has the independently prescribed multiplicative values. -/
 theorem auxiliary_structure : auxiliary 1 = 1 ∧
@@ -647,9 +665,99 @@ theorem root_square_prime_power {p e : ℕ} (hp : Nat.Prime p) :
     rw [Nat.pow_div hie hp.pos, root_prime_power hp, root_prime_power hp]
   rw [hs, oddUnitaryCount_prime_power hp]
   by_cases hp2 : p = 2
-  · simp [localCoefficient, hp2, central_convolution]
+  · simp [localCoefficient, hp2, fun e => (central_local_square e).2]
   · simp only [localCoefficient, hp2, ite_false]
     rw [odd_local_square]
     split_ifs <;> simp_all
+
+private lemma oddUnitaryCount_mul {m n : ℕ} (hmn : Nat.Coprime m n) :
+    oddUnitaryCount (m * n) = oddUnitaryCount m * oddUnitaryCount n := by
+  classical
+  have hpred (d : ℕ × ℕ) (hd : d ∈ m.divisors ×ˢ n.divisors) :
+      (Odd (d.1 * d.2) ∧ Nat.Coprime (d.1 * d.2) (m * n / (d.1 * d.2))) ↔
+      (Odd d.1 ∧ Nat.Coprime d.1 (m / d.1)) ∧
+        (Odd d.2 ∧ Nat.Coprime d.2 (n / d.2)) := by
+    obtain ⟨hdm, hdn⟩ := Finset.mem_product.mp hd
+    have hm := (Nat.mem_divisors.mp hdm).1
+    have hn := (Nat.mem_divisors.mp hdn).1
+    have hcross₁ : Nat.Coprime d.1 (n / d.2) :=
+      hmn.of_dvd hm (Nat.div_dvd_of_dvd hn)
+    have hcross₂ : Nat.Coprime d.2 (m / d.1) :=
+      hmn.symm.of_dvd hn (Nat.div_dvd_of_dvd hm)
+    rw [← Nat.div_mul_div_comm hm hn]
+    simp only [Nat.odd_mul, Nat.coprime_mul_iff_left, Nat.coprime_mul_iff_right]
+    tauto
+  simp only [oddUnitaryCount, Finset.card_eq_sum_ones, Finset.sum_filter]
+  rw [Nat.divisors_mul, Finset.mul_def, Finset.sum_image hmn.mul_injOn_divisors,
+    Finset.sum_mul_sum, ← Finset.sum_product']
+  apply Finset.sum_congr rfl
+  intro d hd
+  simp only [hpred d hd]
+  split_ifs <;> simp_all
+
+private def countFunction : ArithmeticFunction ℚ where
+  toFun n := oddUnitaryCount n
+  map_zero' := by simp [oddUnitaryCount]
+
+private lemma countFunction_multiplicative : countFunction.IsMultiplicative := by
+  constructor
+  · norm_num [countFunction, oddUnitaryCount, Nat.odd_iff] <;> decide
+  · intro m n hmn
+    change (oddUnitaryCount (m * n) : ℚ) = _
+    rw [oddUnitaryCount_mul hmn, Nat.cast_mul]
+    rfl
+
+/-- The global square agrees with the actual divisor-filter count at every index. -/
+theorem root_square (n : ℕ) : (root * root) n = (oddUnitaryCount n : ℚ) := by
+  have h := (root_structure.1.mul root_structure.1).eq_iff_eq_on_prime_powers
+    (root * root) countFunction countFunction_multiplicative
+  exact congrArg (fun u : ArithmeticFunction ℚ => u n)
+    (h.mpr (fun p e hp => root_square_prime_power hp))
+
+/-- The independent product satisfies the actual recurrence and hence equals its solution. -/
+theorem root_source : SourceSpec root ∧ ∀ n, 0 < n → root n = f n := by
+  have hs : SourceSpec root := (source_convolution root).mpr ⟨root_structure.1.1, ?_⟩
+  · exact ⟨hs, source_solution_unique.2 root hs⟩
+  · intro n hn
+    rw [← Nat.sum_divisorsAntidiagonal (fun x y => root x * root y),
+      ← ArithmeticFunction.mul_apply]
+    exact root_square n
+
+/-- The entire original Karttunen denominator block for the recurrence-defined function. -/
+theorem whole_block : WholeBlock := by
+  have ha (n : ℕ) (hn : 0 < n) : a n = (root n).den :=
+    congrArg Rat.den (root_source.2 n hn).symm
+  have htwo : ∀ e, a (2 ^ e) = 2 ^ halvingSum e := by
+    intro e
+    rw [ha _ (by positivity), root_structure.2.1 2 e Nat.prime_two]
+    exact local_denominators.1 e
+  have hodd : ∀ p e, Nat.Prime p → p ≠ 2 →
+      a (p ^ e) = 2 ^ (e - binaryWeight e) := by
+    intro p e hp hp2
+    rw [ha _ (pow_pos hp.pos _), root_structure.2.1 p e hp]
+    exact local_denominators.2.1 p e hp hp2
+  have hparity : ∀ p e, Nat.Prime p →
+      a (p ^ e) = 2 ^ ((2 - p % 2) * e - binaryWeight e) ∧
+      (((2 - p % 2) * e - binaryWeight e : ℕ) : ℤ) =
+        (2 - (p : ℤ) % 2) * e - binaryWeight e := by
+    intro p e hp
+    rw [ha _ (pow_pos hp.pos _), root_structure.2.1 p e hp]
+    exact local_denominators.2.2 p e hp
+  refine ⟨source_solution_unique.1, source_solution_unique.2, ?_, ?_, ?_,
+    htwo, hodd, hparity⟩
+  · intro n hn
+    rw [ha n hn]
+    exact root_denominator hn
+  · rw [ha 1 (by decide), root_structure.1.1]
+    rfl
+  · intro m n hm hn hmn
+    have hexp : (m * n).factorization 2 = m.factorization 2 + n.factorization 2 := by
+      rw [Nat.factorization_mul (by omega) (by omega), Finsupp.add_apply]
+    rw [ha (m * n) (Nat.mul_pos hm hn), root_denominator (Nat.mul_pos hm hn)]
+    rw [ha m hm, ha n hn, root_denominator hm, root_denominator hn,
+      auxiliary_structure.2.1 m n hmn]
+    unfold twoPart
+    rw [hexp, pow_add]
+    ring
 
 end D5.S3.Arith.DirichletRoots.OeisA318314

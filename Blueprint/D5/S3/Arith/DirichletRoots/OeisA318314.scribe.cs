@@ -14,7 +14,7 @@ internal sealed class OeisA318314Document : IScribeDocumentDefinition
     private static Formula U => F.Id("u");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The rational recurrence, local coefficients and denominator mechanism of OEIS A318314.",
+        "The complete denominator block of OEIS A318314 for its actual rational recurrence.",
         H("The rational Dirichlet square root in OEIS A318314"),
         Blocks(
             Node("oddUnitaryCount", "Odd unitary divisors", Eq(Call("g", N), Call("oddUnitaryCount", N)),
@@ -78,9 +78,12 @@ internal sealed class OeisA318314Document : IScribeDocumentDefinition
             Node("odd_local_square", "The local square at odd primes", All("e", Eq(Call("oddConvolution", E),
                 Call("unitThenTwo", E))),
                 "The odd convolution sums C(floor(i/2))C(floor(j/2)) over i+j=e. Its series is (1+x)B(x^2), whose square is (1+x)/(1-x). The constant coefficient is one and every positive coefficient is two.", DescribeRole.Theorem, false),
-            Node("source_convolution", "The exact source divisor-square identity", All("n", Imp(Lt(D(0), N),
-                Eq(Call("divisorSquareSum", F.Id("f"), N), Call("g", N)))),
-                "The full divisor sum has endpoint contributions f(1)f(n) and f(n)f(1), each equal to f(n). Removing both endpoints recovers precisely the original recurrence. At n=1 both sides are one.", DescribeRole.Theorem, false),
+            Node("source_convolution", "The recurrence and the full divisor square",
+                new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("u"),
+                    new Formula.Power(Rationals(), Naturals()),
+                    Iff(Call("SourceSpec", U), And(Eq(Call("u", D(1)), D(1)),
+                        All("n", Imp(Lt(D(0), N), Eq(Call("divisorSquareSum", U, N), Call("g", N))))))),
+                "For every rational function u, the source specification is equivalent to unit head together with its full divisor-square equation on every positive index. At n>1 the two endpoint terms each equal u(n); at n=1 the source count is one.", DescribeRole.Theorem, false),
             Node("auxiliary_structure", "The independent multiplicative prescription", And(
                 Eq(Call("b", D(1)), D(1)), And(All("m", All("n", Imp(Call("Coprime", F.Id("m"), N),
                     Eq(Call("b", Mul(F.Id("m"), N)), Mul(Call("b", F.Id("m")), Call("b", N)))))),
@@ -90,17 +93,37 @@ internal sealed class OeisA318314Document : IScribeDocumentDefinition
             Node("root_square_prime_power", "The actual source at every prime power",
                 All("p", All("e", Imp(Call("Prime", P), Eq(Call("dirichletSquare", F.Id("R"), Pow(P, E)),
                     Call("g", Pow(P, E)))))),
-                "The only unitary divisors of a prime power are its endpoints. Oddness retains just one at two, and both at an odd prime; exponent zero gives one. The two local convolution identities therefore match the original source count at every prime power. A global identification still requires the full divisor-factorization bridge.", DescribeRole.Theorem, false),
+                "The only unitary divisors of a prime power are its endpoints. Oddness retains just one at two, and both at an odd prime; exponent zero gives one. The two local convolution identities therefore match the original source count at every prime power. The multiplicativity of the actual divisor-filter count extends this identity to all indices in root_square.", DescribeRole.Theorem, false),
             Node("WholeBlock", "The entire published question", WholeFormula(),
-                "This proposition includes the actual source specification and its positive-index uniqueness, the product identity, a(1)=1, positive coprime multiplicativity, both prime-power types and the all-prime parity formula with explicit integer-subtraction correspondence. No theorem here asserts this full proposition until the independent Euler product has been identified with the original odd-unitary-count recurrence.", DescribeRole.Definition, false)
+                "This proposition includes the actual source specification and its positive-index uniqueness, the product identity, a(1)=1, positive coprime multiplicativity, both prime-power types and the all-prime parity formula with explicit integer-subtraction correspondence. The theorem whole_block proves this proposition after root_source identifies the independent Euler product with the actual recurrence.", DescribeRole.Definition, false),
+            Node("root_square", "The global actual-count bridge", All("n", Eq(
+                Call("dirichletSquare", F.Id("R"), N), Call("g", N))),
+                "The divisors of a coprime product correspond bijectively to pairs of divisors. Oddness and the unitary condition split into the two independent conditions; the cross coprimality follows from the original coprime pair. Thus the actual filtered count is multiplicative. The rational Dirichlet square is multiplicative as well, and equality on every prime power implies equality at every natural index, including zero.", DescribeRole.Theorem, false),
+            Node("root_source", "Identification with the original recurrence", And(
+                Call("SourceSpec", F.Id("R")), All("n", Imp(Lt(D(0), N),
+                    Eq(Call("R", N), Call("f", N))))),
+                "The global square and unit head imply the exact source recurrence. Its positive-index uniqueness then identifies R(n)=f(n) for every positive n, with no multiplicativity premise on f or its denominator.", DescribeRole.Theorem, false),
+            Node("whole_block", "Karttunen's entire denominator block", WholeFormula(),
+                "Transport the no-cancellation denominator identity through R=f. The independent factorization formulas for twoPart and A317934 prove coprime multiplicativity of the actual denominator. The local formulas give every prime-power clause and the integer-exponent correspondence. The unit and exponent-zero cases are included. This is one complete original question; no additional OEIS claim or worldwide novelty statement follows.", DescribeRole.Theorem, false,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("oeis-a318314-karttunen-denominator-block"), ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, bool literature) => Describe.Lean(
+        string prose, DescribeRole role, bool literature, OpenProblemResolutionClaim? claim = null) => Describe.Lean(
         DescribeId.Create("a318314-" + name.ToLowerInvariant().Replace('_', '-')), DeclarationHandle.Create(Prefix + name),
-        H(title), StatementSource.FromAuthor(Disp(formula)),
+        H(title), StatementSource.FromAuthor(Disp(CloseDefinition(name, formula))),
         literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, claim);
+
+    private static Formula CloseDefinition(string name, Formula formula) => name switch
+    {
+        "oddUnitaryCount" or "interior" or "auxiliary" or "twoPart" or "a" or "root" => All("n", formula),
+        "central" or "binaryWeight" => All("e", formula),
+        "localCoefficient" => All("e", formula),
+        "SourceSpec" => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("u"),
+            new Formula.Power(Rationals(), Naturals()), formula),
+        _ => formula
+    };
 
     private static Formula LocalFormulas() => And(
         All("e", Eq(Den(Call("L", D(2), E)), Pow(D(2), Call("T", E)))),
@@ -134,6 +157,7 @@ internal sealed class OeisA318314Document : IScribeDocumentDefinition
     private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula Neq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
+    private static Formula Iff(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
