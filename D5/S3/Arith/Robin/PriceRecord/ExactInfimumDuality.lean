@@ -11,8 +11,7 @@ import D5.S3.Arith.Robin.PriceRecord.RealInfimumUniformDuality
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Tactic
 
-/-! Source candidate awaiting native verification. The exact fixed-price
-identity gives Q + sum priceLoss = w + U for every admissible vector, with
+/-! Exact full-domain infimum envelopes. The fixed-price identity gives Q + sum priceLoss = w + U for every admissible vector, with
 w and U nonnegative. Monotonicity and the one-Lipschitz inequality for the
 nested logarithm yield the global envelope before passing to the image infima.
 The canonical quadratic logarithm supplier gives its explicit error bound.

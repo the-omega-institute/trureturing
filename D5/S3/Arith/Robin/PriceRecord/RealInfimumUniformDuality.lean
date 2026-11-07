@@ -11,8 +11,8 @@ import D5.S3.Arith.Robin.PriceRecord.OwnClockFixedSupport
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Tactic
 
-/-! Source candidate awaiting native verification. The objective, real domain,
-real infimum, baseline, boundary and integer gap retain their imported meanings.
+/-! Uniform finite fixed-price bounds. The objective, real domain, real infimum,
+baseline, boundary and integer gap retain their imported meanings.
 The integer infimum is the literal image infimum on supported integer vectors.
 
 At the fixed price g(theta S), the exact price-loss identity and the canonical
