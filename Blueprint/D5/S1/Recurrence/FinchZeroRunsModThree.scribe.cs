@@ -8,7 +8,7 @@ internal sealed class FinchZeroRunsModThreeDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Recurrence/FinchZeroRunsModThree.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Digit/finch2026quadratic");
+        LibraryNoteRef.Create("D5/L/Certificates/finch2026quadraticrecurrences");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "At lag 61 the ternary recurrence never attains the proposed fifteen-gap zero run.",

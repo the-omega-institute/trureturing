@@ -1,6 +1,6 @@
 ---
 slug: finch-zero-runs
-bibkey: finch2026quadratic
+bibkey: finch2026quadraticrecurrences
 doi: 10.48550/arXiv.2610.34300
 url: https://arxiv.org/abs/2610.34300v1
 triage: theorem
@@ -63,7 +63,7 @@ module.
 The settling declaration is
 `D5/S1/Recurrence/FinchZeroRunsModThree.result`, with frozen module statement
 id `sha256:1d4aef3d14b78cc1b869626637f8cb05a47e32d784c14b93b4f5c67740ea3821`.
-The source note is `Library/Digit/finch2026quadratic.md` and cites Finch,
+The source note is `Library/Certificates/finch2026quadraticrecurrences.md` and cites Finch,
 arXiv:2610.34300v1. The supporting checker is recorded at
 `the-omega-institute/trureturing-experiments` commit
 `d960dc672a3b23118e6e542d41fdddddb6390d11`, path
