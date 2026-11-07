@@ -55,14 +55,13 @@ private instance testAutSubsingleton : Subsingleton (testL.{v} ≃ₐ[testK.{u}]
   obtain ⟨r, rfl⟩ := testEquiv.surjective x
   change f (algebraMap testK.{u} testL.{v} r) =
     g (algebraMap testK.{u} testL.{v} r)
-  rw [AlgEquiv.commutes, AlgEquiv.commutes]
+  exact (f.commutes r).trans (g.commutes r).symm
 
 private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   intro h
   obtain ⟨x, hx⟩ := Algebra.trace_surjective testK.{u} testL.{v} 1
   have htrace : Algebra.trace testK.{u} testL.{v} x ≠ 0 := by
-    rw [hx]
-    exact one_ne_zero
+    simpa [hx] using (one_ne_zero : (1 : testK.{u}) ≠ 0)
   have hind := (_root_.D5.S3.FiniteGroups.GroupAlgebra.PGroupNormalTrace.linearIndependent_conjugates_iff_trace_ne_zero
     testK.{u} testL.{v} 2 (IsPGroup.of_subsingleton 2 _) x).mpr htrace
   exact (h testK.{u} testL.{v} 2 (IsPGroup.of_subsingleton 2 _) x).mp hind rfl
@@ -85,9 +84,7 @@ def family : Registration arena.{u,v}
     intro i
     obtain ⟨x, hx⟩ := Algebra.trace_surjective testK.{u} testL.{v} 1
     refine ⟨⟨testK.{u}, testL.{v}, inferInstance, inferInstance, inferInstance⟩, x, 0, ?_⟩
-    change Algebra.trace testK.{u} testL.{v} x ≠ Algebra.trace testK.{u} testL.{v} 0
-    rw [hx, map_zero]
-    exact one_ne_zero
+    simp [actual, realize, hx]
 
 noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.FiniteGroups.GroupAlgebra.PGroupNormalTrace.linearIndependent_conjugates_iff_trace_ne_zero.{u,v})

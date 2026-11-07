@@ -57,14 +57,17 @@ def family : Registration arena.{u,v}
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro j hj
-      exact (hj (Subsingleton.elim j i)).elim
+      exact (hj (@Subsingleton.elim Unit _ j i)).elim
     · intro e
       exact nomatch e
   dependence := by
     intro i
     let p : signature.Params :=
       ⟨ULift.{u} (ZMod 2), ULift.{v} Unit, inferInstance, inferInstance⟩
-    refine ⟨p, ⊤, ⊥, ?_⟩
+    letI : CommRing p.1 := p.2.2.1
+    letI : Group p.2.1 := p.2.2.2
+    refine ⟨p, (⊤ : Ideal (MonoidAlgebra p.1 p.2.1)),
+      (⊥ : Ideal (MonoidAlgebra p.1 p.2.1)), ?_⟩
     change (⊤ : Ideal (MonoidAlgebra (ULift.{u} (ZMod 2)) (ULift.{v} Unit))) ^
       Nat.card (ULift.{v} Unit) ≠ ⊥ ^ Nat.card (ULift.{v} Unit)
     simpa only [Nat.card_unique, Submodule.pow_one] using
