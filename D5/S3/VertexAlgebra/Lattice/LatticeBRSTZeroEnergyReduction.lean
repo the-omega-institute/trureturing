@@ -84,7 +84,7 @@ def EInv (D : LatticeData) : Module.End ℂ (State D) :=
 
 def h (D : LatticeData) : Module.End ℂ (State D) := (B0 D).comp (EInv D)
 
-private theorem fullBasis_apply (D : LatticeData) (label : FullLabel D) :
+theorem fullBasis_apply (D : LatticeData) (label : FullLabel D) :
     fullBasis D label = LatticePositiveEnergy.carrierBasis D label.1 ⊗ₜ[ℂ]
       ket label.2 := by
   simp [fullBasis, Module.Basis.tensorProduct_apply', Finsupp.coe_basisSingleOne, ket]
@@ -183,7 +183,7 @@ private theorem Q_energy_coeff_zero (D : LatticeData)
     exact different (Int.cast_injective (sub_eq_zero.mp equality))
   exact (mul_eq_zero.mp separated).resolve_left scalarNonzero
 
-private theorem energyWeight_basis (D : LatticeData) (weight : ℤ → ℂ)
+theorem energyWeight_basis (D : LatticeData) (weight : ℤ → ℂ)
     (label : FullLabel D) :
     energyWeight D weight (fullBasis D label) =
       weight (totalEnergy D label) • fullBasis D label :=

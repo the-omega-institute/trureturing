@@ -25,14 +25,8 @@ open LatticeBRSTCohomologyField
 open LatticeBRSTZeroEnergyReduction
 open D5.S3.VertexAlgebra.LatticeBRSTCohomologyBVSecondOrder
 open D5.S3.Quantum.Fermionic
-open D5.S3.Quantum.Fermionic.CountableOccupationFock (ket)
-open private fullBasis_apply energyWeight_basis from
-  D5.S3.VertexAlgebra.Lattice.LatticeBRSTZeroEnergyReduction
-open private parity_ket from D5.S3.Quantum.Fermionic.CountableOccupationFock
-open private b_parity from
-  D5.S3.VertexAlgebra.Lattice.LatticeBRSTCohomologyBVSecondOrder
-open private current_classOf quotient_current_leibniz from
-  D5.S3.VertexAlgebra.Lattice.LatticeBRSTCohomologyBVSecondOrder
+open D5.S3.Quantum.Fermionic.CountableOccupationFock (ket parity_ket)
+
 
 noncomputable section
 

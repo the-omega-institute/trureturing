@@ -58,7 +58,7 @@ def prefixEmbed (N : ℕ) : (Assignment N → ℂ) →ₗ[ℂ] Fock :=
     create j (ket S) = if j ∈ S then 0 else phase j S • ket (insert j S) := by
   simp only [create, ket, Finsupp.lsum_single, LinearMap.smulRight_apply, LinearMap.id_apply, one_smul]
 
-@[simp] private theorem parity_ket (S : Finset ℕ) :
+@[simp] theorem parity_ket (S : Finset ℕ) :
     parity (ket S) = (-1 : ℂ) ^ S.card • ket S := by
   simp only [parity, ket, Finsupp.lsum_single, LinearMap.smulRight_apply, LinearMap.id_apply, one_smul]
 

@@ -46,7 +46,7 @@ open LatticeMatterGhostSignedBorcherds (mu_D jacobiLeftTerm)
 open StateFieldResidueReconstruction (integerBinomial epsilon)
 open private left_vacuum_modes identity_modes from
   D5.S3.VertexAlgebra.Lattice.LatticeMatterGhostStateField
-open private parity_ket from D5.S3.Quantum.Fermionic.CountableOccupationFock
+open D5.S3.Quantum.Fermionic.CountableOccupationFock (parity_ket)
 open private parity_square from
   D5.S3.VertexAlgebra.Lattice.LatticeMatterGhostBRSTDerivation
 open private charge_parity parity_cycle cycle_mode_closed from
@@ -148,7 +148,7 @@ private theorem translation_residue (x y : State D) :
   rw [pv, back] at law
   simpa only [originalMode_apply, zero_add, smul_zero, sub_zero] using law
 
-private theorem b_parity (j : ℤ) (x : State D) :
+theorem b_parity (j : ℤ) (x : State D) :
     LatticeMatterGhostStateField.parity D (ghostB D j x) =
       -ghostB D j (LatticeMatterGhostStateField.parity D x) := by
   have h := LinearMap.congr_fun
@@ -296,7 +296,7 @@ def cohomologyCurrent : Cohomology D H h26 hHG hGH →ₗ[ℂ]
       exact (Submodule.Quotient.mk_eq_zero _).mpr
         (current_right_boundary D H h26 hHG hGH x y hy))
 
-private theorem current_classOf (x y : cycles D H) :
+theorem current_classOf (x y : cycles D H) :
     cohomologyCurrent D H h26 hHG hGH (classOf D H h26 hHG hGH x)
       (classOf D H h26 hHG hGH y) =
       classOf D H h26 hHG hGH (cycleCurrent D H hHG hGH x y) := rfl
@@ -416,7 +416,7 @@ private theorem current_leibniz (u v w : State D) (p q : ℕ)
     simp only [neg_one_smul, smul_neg]
   exact zero_mode_derivation D (ghostB D (-1) u) v w (p + 1) q shifted hv
 
-private theorem quotient_current_leibniz (a b c : Cohomology D H h26 hHG hGH)
+theorem quotient_current_leibniz (a b c : Cohomology D H h26 hHG hGH)
     (p q : ℕ)
     (ha : parity D H h26 hHG hGH a = (-1 : ℂ) ^ p • a)
     (hb : parity D H h26 hHG hGH b = (-1 : ℂ) ^ q • b) :
