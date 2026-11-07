@@ -4164,3 +4164,572 @@ The covariance estimate used in (208.11) and (208.20) is classical Cauchy–Schw
 These necessary inequalities neither construct a full-zero partition nor give a fixed-start successor. They assume no globally bounded or small $\chi$, no source label $q$ in the hard label span, no ideal property of a tensor radical, no positivity of $\mathcal C(r,r,1)$ and no local forward Gram definiteness. Coefficient correction rank, coarse moment rank and actual label-span rank retain their separate meanings; none is identified by this budget. The universal original $F_{64}$ target and the original physical succession question remain unresolved. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 209. Strict asymptotic slack of the native-source hard-partition budgets
+
+**Definition 209.1 (a weak-star calibrated sequence).** Retain Definition 208.1, all of the original telescope of Appendix III Definitions 154.1 and 155.1, and the original source, clock, measure, operator and own-terminal convention. Fix one original $\theta$. Let $D_n=(D_{n,i})_{i\in\mathcal L}$ be deterministic whole-$G$ Borel partitions satisfying exactly (208.1), and write $u_{n,i}=\mathbf1_{D_{n,i}}$. Assume only
+
+$$
+u_{n,i}\overset{*}{\rightharpoonup}f_i\quad\text{in }L^\infty(G,m)
+\qquad(i\in\mathcal L).
+\tag{209.1}
+$$
+
+For $a\in\mathbb R^{\mathcal L}$ put
+
+$$
+h_{n,a}=\sum_i a_i u_{n,i},\qquad
+t_{n,a}=Ph_{n,a},\qquad
+s_{n,a}=\frac{P(gh_{n,a})}{v},
+\tag{209.2}
+$$
+
+and define $G_{j,n}^\pm$, $H_{\chi,j,n}$ and $M_{j,n}$ from (208.15) with $u_j$ replaced by $u_{n,j}$. Thus $\pi_j$ remains the fixed number in (208.2), because (208.1) preserves the middle marginal. Put
+
+$$
+w=v\chi,\qquad
+\xi_j=\frac1{\pi_j}\int_G f_jw\,dm,\qquad
+\Lambda_j(a,b)=\frac1{\pi_j}\int_G f_jw\,P(F_{a\odot b})\,dm
+\quad(a,b\in K_{\rm rel}).
+\tag{209.3}
+$$
+
+No bounded global likelihood ratio, compact $L^2$ heat operator, source-span witness or parameter-uniform constant is included in this definition.
+
+**Proposition 209.2 (the limiting relation budgets).** For every original $\theta$, the function $w$ is integrable and strictly positive almost everywhere. Each $\xi_j$ is finite and positive, each $\Lambda_j$ is a finite positive-definite symmetric form on $K_{\rm rel}$, and
+
+$$
+G_{j,n}^+\longrightarrow0,\qquad
+G_{j,n}^-\longrightarrow0,\qquad
+H_{\chi,j,n}\longrightarrow\Lambda_j
+\quad\text{in matrix norm on }K_{\rm rel}.
+\tag{209.4}
+$$
+
+Consequently, with
+
+$$
+S_{j,n}=G_{j,n}^++G_{j,n}^--H_{\chi,j,n},
+\tag{209.5}
+$$
+
+one has $S_{j,n}\to-\Lambda_j$. There is one index after which all four $S_{j,n}$ are strictly negative definite, simultaneously for every nonzero relation direction.
+
+*Proof.* The reversed conditional law (208.7) gives
+
+$$
+0\le w=v\chi=\frac{P(g^2)}{v}-v\le G_0-v,
+\tag{209.6}
+$$
+
+so $w\in L^1(m)$. The original positive heat kernel and the source-start nonconstancy supplier imply that the conditional variance of $g$ in (208.7) is strictly positive at almost every middle state; hence $w>0$ almost everywhere. Since every $f_j$ is positive and bounded, this proves $0<\xi_j<\infty$.
+
+For $a\in K_{\rm rel}$, (209.1) gives $h_{n,a}\overset{*}{\rightharpoonup}0$. The forward and reversed three-time kernels are integrable probability kernels: the forward one is the density used in Appendix II §123, and the reversed one is obtained from (208.7). Rectangular-tensor approximation in their respective $L^1$ spaces therefore makes their bounded multilinear integrals continuous under componentwise weak-star convergence. Applying this to (209.2) gives
+
+$$
+G_{j,n}^+(a,b)\to0,\qquad G_{j,n}^-(a,b)\to0
+\quad(a,b\in K_{\rm rel}).
+\tag{209.7}
+$$
+
+For the weighted term, $h_{n,a\odot b}\overset{*}{\rightharpoonup}F_{a\odot b}$, while $w\in L^1(m)$. The same two-variable tensor approximation, now for the kernel $w(x)P(x,dy)$, yields
+
+$$
+\frac1{\pi_j}\int_Gu_{n,j}wP(h_{n,a\odot b})\,dm
+\longrightarrow
+\frac1{\pi_j}\int_Gf_jwP(F_{a\odot b})\,dm.
+\tag{209.8}
+$$
+
+The subtracted term in $H_{\chi,j,n}$ is $\mathbb E_{\nu_{j,n}}[\chi t_{n,a}t_{n,b}]$. To control this weighted term, use the original transition density $p_d(x,y)$ of $P$ from Appendix II Definition 123.1. For almost every $x$, its row $p_d(x,\cdot)$ belongs to $L^1(m)$ and has integral one. Thus weak-star convergence gives, for every $a\in K_{\rm rel}$,
+
+$$
+t_{n,a}(x)=\int_Gp_d(x,y)h_{n,a}(y)\,m(dy)
+\longrightarrow\int_Gp_d(x,y)F_a(y)\,m(dy)=0
+\quad\text{for almost every }x.
+$$
+
+Because the $u_{n,i}$ form a hard partition, $|h_{n,a}|\le\|a\|_\infty$, and the Markov property gives $|t_{n,a}|\le\|a\|_\infty$. Since $0\le u_{n,j}\le1$ and $w\in L^1(m)$, dominated convergence with dominator $\|a\|_\infty\|b\|_\infty w$ yields
+
+$$
+\left|\mathbb E_{\nu_{j,n}}[\chi t_{n,a}t_{n,b}]\right|
+=\left|\frac1{\pi_j}\int_Gu_{n,j}w\,t_{n,a}t_{n,b}\,dm\right|
+\le\frac1{\pi_j}\int_Gw\,|t_{n,a}t_{n,b}|\,dm
+\longrightarrow0.
+$$
+
+Combining this with (209.8) and the exact definition (208.15) proves the third limit in (209.4). The coefficient space $K_{\rm rel}$ is finite-dimensional, hence entrywise convergence is matrix-norm convergence.
+
+For $a\ne0$,
+
+$$
+F_{a\odot a}=\sum_i a_i^2f_i>0\quad\text{almost everywhere}.
+\tag{209.9}
+$$
+
+Positivity improvement of $P$ gives $P(F_{a\odot a})>0$ almost everywhere. Thus (209.3) gives $\Lambda_j(a,a)>0$. Symmetry follows from $a\odot b=b\odot a$. Positive definiteness on the unit sphere of the finite-dimensional $K_{\rm rel}$ gives a positive minimum eigenvalue for each $j$; taking the minimum over the four labels and using (209.4) proves the final assertion. The only analytic inputs here are the original positive kernel, the bounded native source and the tensor-continuity mechanism already used for the actual path density; no global likelihood-ratio or compactness assumption has been added. $\square$
+
+**Proposition 209.3 (finite-$k$ refinement and its eventual sign).** Let
+
+$$
+k_{j,n}=\operatorname*{ess\,sup}_{D_{n,j}}\chi
+$$
+
+with respect to $v\,m$. Whenever $k_{j,n}<\infty$,
+
+$$
+k_{j,n}\ge\frac{\xi_j}{2}
+\tag{209.10}
+$$
+
+for all sufficiently large $n$. For those indices, the refined form
+
+$$
+R_{j,n}=\left(1+\frac1{k_{j,n}}\right)G_{j,n}^+
+       +\frac1{k_{j,n}}G_{j,n}^- -V_{j,n}
+\tag{209.11}
+$$
+
+is strictly negative definite on $K_{\rm rel}$ once $n$ is sufficiently large. If $k_{j,n}=\infty$, this refinement is inapplicable.
+
+*Proof.* Since $w\in L^1(m)$, (209.1) gives
+
+$$
+\frac1{\pi_j}\int_Gu_{n,j}w\,dm\longrightarrow\xi_j.
+\tag{209.12}
+$$
+
+The left side is the $\nu_{j,n}$-mean of $\chi$ and is at most $k_{j,n}$ whenever that essential supremum is finite. This proves (209.10). The conditional-variance estimate (208.24), with the current partition, gives
+
+$$
+H_{\chi,j,n}\preceq k_{j,n}(V_{j,n}-G_{j,n}^+).
+\tag{209.13}
+$$
+
+Rearranging (209.13) yields
+
+$$
+R_{j,n}\preceq\frac1{k_{j,n}}S_{j,n}.
+\tag{209.14}
+$$
+
+By Proposition 209.2, $S_{j,n}$ is eventually strictly negative definite, and (209.10) makes the scalar factor positive. Equation (209.14) therefore makes $R_{j,n}$ strictly negative definite as well. Infinite $k_{j,n}$ supplies no expression of the form (209.11). $\square$
+
+**Corollary 209.4 (the unpaid $B3B$ coordinate has zero actual limit).** Let $\beta=e_B-\frac14\mathbf1_{\mathcal L}$. For each $j\in\mathcal L$, the unrefined lower-bound expression from (208.5) satisfies
+
+$$
+\frac{\pi_j}{2}\bigl(A_{j,n}+B_{j,n}-H_{j,n}\bigr)
+\longrightarrow
+-\frac3{32}\int_G f_jv\chi\,dm<0,
+\tag{209.15}
+$$
+
+where $A_{j,n}=G_{j,n}^+(\beta,\beta)$, $B_{j,n}=G_{j,n}^-(\beta,\beta)$ and $H_{j,n}=H_{\chi,j,n}(\beta,\beta)$. At the same time,
+
+$$
+\Delta(D_n)_{BjB}\longrightarrow0,
+\qquad
+\|\Delta(D_n)\|_{\max}\longrightarrow0.
+\tag{209.16}
+$$
+
+*Proof.* The hard product identity in (208.27) gives $F_{\beta\odot\beta}=3/16$. Therefore (209.3) gives
+
+$$
+\Lambda_j(\beta,\beta)=\frac3{16\pi_j}\int_Gf_jv\chi\,dm.
+\tag{209.17}
+$$
+
+The first limit in (209.15) follows from Proposition 209.2 and (209.17), and its strict sign follows from $f_jw>0$ almost everywhere. The inequality (208.5) still holds for each $D_n$, but its right side has the negative limit (209.15).
+
+For (209.16), approximate the original three-time density by finite sums of rectangular $L^1(m^3)$ tensors as in Appendix II §123.2. Every coefficient
+
+$$
+\mathcal C(u_{n,y},u_{n,z},u_{n,k})
+$$
+
+then converges to $\mathcal C(f_y,f_z,f_k)$, with the third factor interpreted through the same partition's actual $P u_{n,k}$. Hence all sixty-four residuals converge to zero, including the displayed $BjB$ coordinate. The negative limit in (209.15) is therefore a lower-bound slack, not a residual obstruction. $\square$
+
+**Theorem 209.5 (a source-specific co-selected sequence realizing the slack).** For every original $\theta$, there exists a sequence of deterministic whole-$G$ Borel partitions
+
+$$
+D_n\in\mathscr F_{154}(\theta)
+$$
+
+whose own terminals are used in every coordinate, such that (208.1) holds, $u_{n,i}\overset{*}{\rightharpoonup}f_i$ for every $i$, and
+
+$$
+\Delta(D_n)_{BB3}>0,\qquad
+\|\Delta(D_n)\|_{\max}\longrightarrow0.
+\tag{209.18}
+$$
+
+*Proof.* Use the actual finite construction of Appendix III §§154.E and 155.2. For its fixed original $\theta$, write $\kappa=R_{BB3}>0$ and $J=\|R\|_\infty>0$ as in (155.4). Choose $t_n\downarrow0$ with $t_n<t_0$ and set, for example,
+
+$$
+\varepsilon=\frac12,\qquad
+\delta_n=\frac{t_n^2}{32}\min\{\kappa,J\}.
+\tag{209.19}
+$$
+
+Then the strict restriction in (155.5) holds for $(t,t',\delta)=(t_n,t_n/2,\delta_n)$. Theorem 155.2 supplies co-selected actual partitions $D_n,D_n'\in\mathscr F_{154}(\theta)$ from one common finite-cell quantile construction. Retain the first endpoint. Its estimates give
+
+$$
+\Delta(D_n)_{BB3}>t_n^2\kappa-\delta_n>0,\qquad
+\|\Delta(D_n)\|_{\max}\le t_n^2J+\delta_n\longrightarrow0.
+\tag{209.20}
+$$
+
+It remains to make the weak-star quantifier explicit. Fix a countable $L^1(m)$-dense family of tests. In the quantile construction of 154.E, refine the finite coordinate partition far enough at the $n$th step to match the center $u^{(t_n)}$ on the first $n$ tests to error $<1/n$; the cell-mass identities and density of the refining partitions give this uniformly for the finitely many tests. Since $u^{(t_n)}\to f$ in $L^\infty$ as $t_n\downarrow0$, choose $t_n$ recursively so that its first $n$ test pairings differ from those of $f$ by $<1/n$. The diagonal sequence of indicators therefore converges componentwise weak-star to $f$. The same refinement is allowed in the Brouwer step because the approximation estimates in (154.30) and (155.15) improve along the refining partitions. The exact $\mathcal H_{43}$ roots give (208.1), and every coefficient in (209.20) is evaluated with the corresponding partition's own propagated terminals. No endpoint is held fixed and no physical successor is asserted. $\square$
+
+Theorem 209.5 consumes the finite calibrated endpoints of §155.2 to realize the sequence hypothesis of Propositions 209.2–209.4 for every original parameter. It shows that the particular exclusion mechanism of Section 208 loses its sign margin on actual original hard approximants: the matrix budgets converge to the strictly negative source form $-\Lambda_j$, the refined finite-$k$ budgets are eventually negative where defined, and the unrefined $B3B$ lower bound converges to a negative number while the actual residual converges to zero. This does not construct an original $F_{64}$ witness, prove nonattainment, or provide a successor from an arbitrary fixed endpoint; the fixed-start summable chain of (155.31), the universal $F_{64}$ question and the physical succession question remain open.
+
+## 追加锚（本行以下为增补区）
+## 210. One actual common partition with both cubic contrast channels zero
+
+**Definition 210.1 (the unchanged source and fifty coordinates).** Retain exactly the complete original telescope of Appendix III Definitions 134.1, 154.1 and 155.1, including every inherited endpoint, source, analytic and readout supplier of Appendix II §§115–117, 123–125 and 133. Thus $\theta=(a,\eta,d,b)$ ranges over every original finite $a,\eta,d>0$ and every permitted whole-$G$ Borel representative $b$ of $g_d$ with $0<b\le M$. Keep the original group product on $G=H^1\times\mathbb R$, raw Haar measure $\mu$, source $e$, unit-source field $L\Gamma=\delta_e$, coefficient-one $w_*$, coefficient-positive normalized $h$, selector $A_{\rm src}=\rho C_{\rm src}$, full conservative source-inclusive $K$, measure $m=h^2\mu$, semigroup $T_s$, $P=T_d$, $g=g_{2d}$, clock and units. The source starts at $e$ at time zero, the epochs remain $2d,3d,4d$, and the original common stochastic readout $f$ uses its original conditionally independent fresh noises. In particular,
+
+$$
+\begin{gathered}
+p=\tfrac14,\quad c=(4M)^{-1},\quad
+f_3=cb,\quad f_B=p,\quad f_0=f_1=(\tfrac34-cb)/2,\\
+\mathcal C(v,w,z)=\int_GgvP(wPz)\,dm,\qquad
+\eta_1(u)=u_0-u_1,\quad\eta_2(u)=u_B-p,\\
+\mathcal G_{\alpha\beta\gamma}(u)
+ =\mathcal C(\eta_\alpha(u),\eta_\beta(u),\eta_\gamma(u))
+ \quad(\alpha,\beta,\gamma\in\{1,2\}).
+\end{gathered}
+\tag{210.1}
+$$
+
+Let $\mathcal H_{36}$ denote the first thirty-six coordinates of (154.2), and put
+
+$$
+\mathcal H_{50}(u)=\left(
+ \mathcal H_{36}(u),\
+ (\mathcal C(u_y,u_z,u_w))_{yzw\in\mathcal T_6},\
+ (\mathcal G_{\alpha\beta\gamma}(u))_{\alpha,\beta,\gamma\in\{1,2\}}
+ \right).
+\tag{210.2}
+$$
+
+Here $u$ is one pointwise simplex tuple, $u_B=1-u_0-u_1-u_3$, and $\mathcal T_6$ is the six permutations of $013$. The last eight target coordinates are zero since $\eta_\alpha(f)=0$. On the exact $\mathcal H_{36}$ fiber the complement identities give all ordered pair laws and all marginals, so expansion of $u_B=p+\eta_2(u)$ gives
+
+$$
+\mathcal G_{222}(u)=\mathcal C(u_B,u_B,u_B)-p^3.
+\tag{210.3}
+$$
+
+Indeed the linear terms are its three zero marginal contrasts, and each quadratic term is a zero pair contrast. Thus exact $\mathcal H_{50}$ means exact $\mathcal H_{43}$ and the seven other contrast equations, with the same tuple throughout.
+
+**Theorem 210.2 (universal actual hard coattainment of the seven contrast obligations).** Under exactly Definition 210.1, for every original $\theta$ there exists one deterministic pointwise Borel partition $D=(D_0,D_1,D_3,D_B)$ of the whole original $G$ such that
+
+$$
+\begin{gathered}
+D\in\mathscr F_{154}(\theta),\qquad
+\mathcal G_{\alpha\beta\gamma}(\mathbf1_D)=0
+ \quad(\alpha,\beta,\gamma\in\{1,2\}),\\
+\Delta(D)\in\mathcal W_{13}\text{ of (157.6)},\qquad
+\Delta(D)_{BB3}>0.
+\end{gathered}
+\tag{210.4}
+$$
+
+All coefficients use $D$ itself in every slot and its own propagated terminal $P\mathbf1_{D_w}$. No rank, inverse, trace-regularity, full-zero seed or physical realization hypothesis is added. Containment in $\mathcal W_{13}$ asserts no realization of every direction in that space. The strict last inequality makes this particular $D$ fail the full $F_{64}$ equality.
+
+*Proof.* Fix an arbitrary original $\theta$. Use the quotient $\mathcal Q$, angular coordinate, measure $\nu$, orbit $q_\circ$, neighborhood $U$, invariant slack set $E$ and invariant representatives $b^0,f^0$ of (153.5)–(153.6). Thus $f_3^0\ge c\tau$ on $E$, whereas $f_0^0,f_1^0,f_B^0\ge1/4$ on $G$. All target integrals for $f^0$ equal those for the prescribed $f$.
+
+### 210.A. Two separated self-frequency pairs from the actual source
+
+Use the actual orbit coefficients $a_j$ of (153.7)–(153.10):
+$a_j=a_{-j}>0$ and $a_j\to0$. First choose $n_0,n_1,m_*$ exactly as in (154.5), and write $L_0=m_*$. For every fixed positive odd integer $p$, there are arbitrarily large odd $q$ with
+
+$$
+a_{q+p}\ne a_{q-p}.
+\tag{210.5}
+$$
+
+Otherwise $a_{k+2p}=a_k$ for all sufficiently large even $k$. Iteration along one such progression contradicts both $a_k>0$ and $a_k\to0$. Choose positive odd integers successively so that
+
+$$
+\begin{gathered}
+p_0>10L_0,\quad q_0>10p_0,\quad
+p_1>10q_0,\quad q_1>10p_1,\\
+a_{q_i+p_i}\ne a_{q_i-p_i}\quad(i=0,1),\qquad L=q_1.
+\end{gathered}
+\tag{210.6}
+$$
+
+These choices exist by (210.5) and impose no restriction on $\theta$. In the seed frequency set
+
+$$
+\mathcal M=\{1,n_0,n_1,m_*,p_0,q_0,p_1,q_1\},
+\qquad k_i^\pm=q_i\pm p_i,
+\tag{210.7}
+$$
+
+each $k_i^\pm$ has just one unordered representation as a positive absolute signed sum of two members of $\mathcal M$: the pair $p_i,q_i$ with the indicated sign. To check this, a later, larger new frequency paired with a different frequency has difference greater than $9$ times its predecessor and hence greater than $k_i^+$. Its double is larger still. Among frequencies up to $q_i$, a pair not using $q_i$ has sum at most $2p_i<q_i-p_i$. A pair using $q_i$ must therefore use $p_i$. Equal-frequency differences are zero. The same argument covers pairs involving the original four modes, all at most $L_0$.
+
+Use $\mathcal K_j$, $\kappa_j$ and the cosine evaluation $\mathfrak c_j^q$ from (154.6). Each of the finitely many relevant $\kappa_j$ is continuous and has $\kappa_j(q_\circ)=a_j>0$. Nonconstancy and analytic uniqueness for the original $g$, as in 154.A, supply one $q_\diamond\in U$ with
+
+$$
+\begin{gathered}
+g_1:=g(q_\diamond)\ne g_0:=g(q_\circ),\\
+\kappa_{n_1+1}(q_\diamond),\quad
+\kappa_{n_1+m_*}(q_\diamond),\quad
+\kappa_{n_0+1}(q_\diamond),\quad
+\kappa_{k_0^+}(q_\diamond),\quad
+\kappa_{k_1^+}(q_\diamond)>0.
+\end{gathered}
+\tag{210.8}
+$$
+
+Take the nonnegative normalized bumps $\phi_\epsilon$ of (154.8), and write $V_j=\phi_\epsilon(q)\cos(j\vartheta)$. Set
+
+$$
+\begin{aligned}
+z_i&=V_{p_i}+V_{q_i}\quad(i=0,1),\\
+v_0&=V_{n_0}+z_0,\qquad
+v_1=V_{n_1}+z_1,\qquad v_3=V_1+V_{m_*}.
+\end{aligned}
+\tag{210.9}
+$$
+
+They are bounded Borel, supported in $E$, odd under the half-turn and have disjoint positive spectra. The parameter $\epsilon>0$ will be fixed below.
+
+### 210.B. Actual three-slot separation at each self-frequency pair
+
+Use $\mathsf A,\mathsf B,\mathsf T$ of (154.9), and consider the three scalar densities
+
+$$
+A_i=\mathsf A(z_i,z_i),\qquad
+B_i=\mathsf B(z_i,z_i),\qquad
+T_i=\mathsf T(z_i,z_i).
+\tag{210.10}
+$$
+
+For each $i$, evaluate these three columns by the three rows
+$\mathfrak c_{k_i^+}^{q_\circ}$,
+$\mathfrak c_{k_i^-}^{q_\circ}$ and
+$\mathfrak c_{k_i^+}^{q_\diamond}$.
+Put $H_i=(a_{p_i}+a_{q_i})/2$, $a_i^\pm=a_{k_i^\pm}$ and $\kappa_i=\kappa_{k_i^+}(q_\diamond)$. The localization identities (154.12), applied to both orders of $p_i,q_i$, give the limiting evaluation matrix
+
+$$
+M_i=
+\begin{pmatrix}
+g_0H_i a_i^+&g_0a_{p_i}a_{q_i}&g_0H_i a_i^+\\
+g_0H_i a_i^-&g_0a_{p_i}a_{q_i}&g_0H_i a_i^-\\
+g_1H_i\kappa_i&b_i&g_0H_i\kappa_i
+\end{pmatrix}.
+\tag{210.11}
+$$
+
+Here $b_i=\mathfrak c_{k_i^+}^{q_\diamond}
+[g_0(\mathcal K_{p_i}+\mathcal K_{q_i})^2]$ is finite; its value is immaterial. At $q_\circ$ the mixed product in $B_i$ has coefficient $g_0a_{p_i}a_{q_i}$ at each of the two frequencies. The self products have frequencies $0,2p_i,2q_i$ and contribute to neither row. In $A_i,T_i$ the two mixed orders contribute $H_i$ times the corresponding heat character. At $q_\diamond$ their difference is $(g_1-g_0)H_i\kappa_i$. Consequently, subtracting the third column from the first gives
+
+$$
+\det M_i=(g_1-g_0)g_0^2a_{p_i}a_{q_i}
+ H_i^2\kappa_i(a_i^- -a_i^+)\ne0.
+\tag{210.12}
+$$
+
+Every nonzero factor is supplied by (210.5)–(210.8) and the actual orbit positivity. The localization is uniform on both output orbits by (154.12), including the equal-frequency terms in the expansions. Thus both actual three-by-three determinants are nonzero for all sufficiently small fixed $\epsilon>0$.
+
+The six two-component densities $\mathbf R_\sigma[v]$, $\sigma\in\mathcal T_6$, of (154.10) also retain the six-column rank certificate of (154.13)–(154.16). Indeed their component $0$ contains products of $v_1,v_3$ only, and component $1$ products of $v_0,v_3$ only. Every new contribution has frequency at least $p_0-L_0>2L_0$, whereas all seven evaluations in that certificate have frequency at most $2L_0$. Those evaluations are therefore exactly the original ones. Fix one sufficiently small $\epsilon$ for these six columns and both determinants in (210.12). All subsequent inputs are actual bounded functions for this fixed choice.
+
+### 210.C. Exact pair corrections preserving every protected evaluation
+
+Choose an odd $N>10L$ and precisely the infinite sector sets $S_0,S_1,S_3$ of (154.18). Apply 152.A–C and (154.19) to the enlarged $v_a$ in (210.9). In detail, choose $y_a,h_{a,1},\ldots,h_{a,6}\in X_{E,S_a}$ with $\ell_j(y_a)(h_{a,k})=\delta_{jk}$, and choose $w_a\in X_{E,S_a}$ satisfying
+
+$$
+\begin{gathered}
+\ell_j(w_a)(h_{a,k})=0,\qquad B_r(y_a,w_a)=0,\\
+q(w_a)=-q(v_a)-q(y_a),\qquad x_a=v_a+y_a+w_a.
+\end{gathered}
+\tag{210.13}
+$$
+
+There are only finitely many homogeneous constraints, so the exact three-quadratic surjectivity (152.29) applies. Low and high sectors are disjoint. Hence
+
+$$
+q_r(x_a)=0,\quad
+Q_r(x_a,x_b)=0\ (a\ne b),\quad
+\ell_j(x_a)(h_{a,k})=\delta_{jk}.
+\tag{210.14}
+$$
+
+The $x_a$ remain bounded, $E$-supported, odd and of finite disjoint spectra. Every positive protected frequency above is at most $2L$. A low/high product has frequency at least $N-L>2L$; a high/high product has frequency a multiple of $N$, either zero or at least $N$. Multiplication by invariant $g$ and application of $P$ preserve characters. Thus every protected coefficient of every quadratic density $\mathsf A,\mathsf B,\mathsf T$ is unchanged on both output orbits. In particular the old six-column certificate and both self-frequency determinants survive these exact corrections.
+
+Put
+
+$$
+s=x_0+x_1+x_3,\qquad
+Z_1=x_0-x_1,\quad Z_2=-s,\qquad
+v^{[0]}=(1,-1),\quad v^{[1]}=(-1,-1),\quad v^{[3]}=(0,-1).
+\tag{210.15}
+$$
+
+Thus $Z=\sum_{i\in I}v^{[i]}x_i$. For variations of components $0,1$ alone, compensated in $B$, their contrast variations are $\delta\eta=v^{[0]}h_0+v^{[1]}h_1$. Let $\mathsf Z$ remove the angular mean, componentwise. For each $\alpha,\beta,\gamma\in\{1,2\}$ define a two-component density by
+
+$$
+R_{\alpha\beta\gamma}^{(j)}=
+\mathsf Z\left[
+ v^{[j]}_\alpha\mathsf A(Z_\beta,Z_\gamma)
+ +v^{[j]}_\beta\mathsf B(Z_\alpha,Z_\gamma)
+ +v^{[j]}_\gamma\mathsf T(Z_\beta,Z_\alpha)
+\right],\qquad j=0,1.
+\tag{210.16}
+$$
+
+The order in the last term is fixed by self-adjointness:
+$\mathcal C(Z_\alpha,Z_\beta,h)=\langle h,P(Z_\beta P(gZ_\alpha))\rangle_m$.
+Together with the six $\mathbf R_\sigma[x]$, these are fourteen bounded continuous two-component densities on $\Omega$, even and with zero angular mean.
+
+They are linearly independent. Suppose a combination of the six old rows and eight rows (210.16) vanishes. Write the latter coefficients as a trilinear functional $\lambda$ on $(\mathbb R^2)^3$. At the protected frequencies $k_i^\pm$, the old six rows vanish by (210.7): each uses one input from $x_3$ and one from a different component. Among the new rows only the mixed $p_i,q_i$ terms in $x_i,x_i$ survive. For component $j=0,1$, its three protected evaluations are consequently the evaluations of
+
+$$
+\lambda(v^{[j]},v^{[i]},v^{[i]})A_i
+ +\lambda(v^{[i]},v^{[j]},v^{[i]})B_i
+ +\lambda(v^{[i]},v^{[i]},v^{[j]})T_i.
+\tag{210.17}
+$$
+
+Equations (210.12)–(210.14) force all three coefficients to vanish, for each $i,j\in\{0,1\}$. The vectors $v^{[0]},v^{[1]}$ form a basis of $\mathbb R^2$. Every length-three word in a two-element basis repeats one basis element at least twice. Thus (210.17) makes $\lambda$ zero on every basis tensor, and $\lambda=0$. The remaining six coefficients vanish by the retained six-column certificate. This proves independence for the actual corrected functions.
+
+Index the fourteen rows by $\rho$, and write them as $\mathbf R_\rho$. Their Gram matrix
+
+$$
+\mathsf G_{\rho\sigma}
+ =\int_G\left(R_\rho^{(0)}R_\sigma^{(0)}
+             +R_\rho^{(1)}R_\sigma^{(1)}\right)dm
+\tag{210.18}
+$$
+
+is positive definite: a zero quadratic form gives an almost-everywhere zero combination, hence a pointwise zero combination on $\Omega$ by continuity and full support, contrary to the protected evaluations.
+
+### 210.D. An exact stochastic zero, fifty legal directions and a positive margin
+
+Choose sufficiently small $t>0$ and put
+
+$$
+u_a^*=f_a^0+t x_a\quad(a\in I),\qquad u_B^*=p-ts.
+\tag{210.19}
+$$
+
+The tuple has positive slack in all components on $E$, and uniform global slack in $0,1,B$. Equations (210.14), parity and disjoint spectra give the exact lower laws and all six distinct-label equations exactly as in 154.D. Both contrasts at $u^*$ are $tZ_\alpha$, so their cubic coefficients vanish by simultaneous half-turn oddness. Therefore
+
+$$
+\mathcal H_{50}(u^*)=\mathcal H_{50}(f).
+\tag{210.20}
+$$
+
+For the lower thirty-six rows use the nine invariant and twenty-seven odd directions of 154.D, now with (210.14). The invariant source Gram matrix is positive definite by Lemma 147.2 and quotient analytic uniqueness. The six ordered functionals in each correction sector give the three diagonal and six off-diagonal pair directions for each corresponding label or unordered pair. Their lower thirty-six-row matrix is invertible by (152.34)–(152.36). All component-$3$ variations are supported in $E$.
+
+For each of the fourteen rows add the direction
+
+$$
+\delta_\rho u_0=R_\rho^{(0)},\quad
+\delta_\rho u_1=R_\rho^{(1)},\quad
+\delta_\rho u_3=0,\quad
+\delta_\rho u_B=-R_\rho^{(0)}-R_\rho^{(1)}.
+\tag{210.21}
+$$
+
+For any even, zero-angular-mean direction $h=(h_0,h_1)$ of this form, the lower thirty-six differentials vanish: invariant pairings vanish by zero angular mean and odd pairings by parity. The six triple differentials are (154.26). For the eight contrast coordinates the three-slot derivative at $\eta(u^*)=tZ$ is exactly $t^2$ times pairing with (210.16). Angular-mean removal changes no such pairing. Thus the last fourteen rows on these directions have matrix $t^2\mathsf G$. The full fifty-direction matrix is block triangular, with invertible diagonal blocks of sizes $36$ and $14$.
+
+Choose bounded Borel representatives with the finite character expressions on $\Omega$, and repair a common Borel null set as in 154.D. The first thirty-six directions vary component $3$ only on $E$; the last fourteen keep it fixed and vary the globally positive components $0,1,B$. Consequently a positive-radius closed Euclidean ball in these fifty directions consists of pointwise simplex tuples on all of $G$.
+
+The same center has a strictly positive BB3 residual. Its low frequency $n_0$ occurs in $s$ with nonzero coefficient and in no other component, so $s\ne0$. Using $Pf_3^0=cg$, (210.14), parity and source propagation, precisely the computation (155.11) gives
+
+$$
+\Delta(u^*)_{BB3}=t^2\kappa,\qquad
+\kappa=c\langle gs,P(gs)\rangle_m
+       =c\|T_{d/2}(gs)\|_2^2>0.
+\tag{210.22}
+$$
+
+The last step uses the original $g>0$ almost everywhere and injectivity of the full self-adjoint heat semigroup. No quantitative coercivity is required.
+
+### 210.E. One finite hard root for all fifty coordinates
+
+Write the fifty directions as $e_1,\ldots,e_{50}$, including their compensating $B$ components, and set
+
+$$
+u(z)=u^*+\sum_{k=1}^{50}z_ke_k,\qquad
+F(z)=\mathcal H_{50}(u(z))-\mathcal H_{50}(f),\qquad A=DF(0).
+\tag{210.23}
+$$
+
+The polynomial map has $F(0)=0$ and invertible $A$. Choose a legal closed radius-$r$ ball, with $r>0$, sufficiently small that
+
+$$
+\sup_{\|z\|\le r}\|z-A^{-1}F(z)\|<r/3,\qquad
+\sup_{\|z\|\le r}|\Delta(u(z))_{BB3}-t^2\kappa|
+ <t^2\kappa/3.
+\tag{210.24}
+$$
+
+The first estimate follows from $F(z)=Az+O(\|z\|^2)$; the second from continuity at the fixed positive $t$.
+
+Apply the common finite coordinate-quantile construction of 154.E to this entire ball. On each positive-mass cell of the increasing finite Borel partitions $\mathcal P_n$, consecutive nested quantile slices of masses $\int_{A_0}u_y(z)\,dm$, in order $0,1,3,B$, define one partition $D_n(z)$. Such cuts exist because $m\ll\mu$ makes every first-coordinate hyperplane null. Assign the zero-mass cells to $B$. The result is a deterministic whole-$G$ pointwise Borel partition and satisfies (154.29).
+
+Keep exactly the original path density
+
+$$
+W(x_1,x_2,x_3)=g(x_1)p_d(x_1,x_2)p_d(x_2,x_3),\qquad
+W_n=\mathbb E[W\mid\mathcal P_n^{\otimes3}],\qquad
+\|W-W_n\|_1\longrightarrow0.
+\tag{210.25}
+$$
+
+Every coordinate of $\mathcal H_{50}$ is an integral against $W$ of three slot factors of absolute value at most one. This includes the signed factors $\eta_1,\eta_2$. Their cell integrals agree for $u(z)$ and $\mathbf1_{D_n(z)}$ because they are affine combinations of the four channels and the constant function. With $W_n$ all products factor cellwise, so the integrals agree exactly. It follows that
+
+$$
+\begin{gathered}
+F_n(z)=\mathcal H_{50}(\mathbf1_{D_n(z)})-\mathcal H_{50}(f),\\
+\sup_{\|z\|\le r}\|F_n(z)-F(z)\|
+ \le2\sqrt{50}\,\|W-W_n\|_1,\\
+\sup_{\|z\|\le r}
+ |\Delta(D_n(z))_{BB3}-\Delta(u(z))_{BB3}|
+ \le2\|W-W_n\|_1.
+\end{gathered}
+\tag{210.26}
+$$
+
+Each $F_n$ is continuous. Telescope its slot products; signed contrasts change by sums of the changed indicators. Integration against the bounded original slot marginals $g,Pg,P^2g$, followed by (154.29), proves continuity. Thus no differentiation of moving quantile boundaries is used.
+
+Choose one finite $n$ with
+
+$$
+2\sqrt{50}\|A^{-1}\|\|W-W_n\|_1<r/3,\qquad
+2\|W-W_n\|_1<t^2\kappa/3.
+\tag{210.27}
+$$
+
+By (210.24), the continuous map $z\mapsto z-A^{-1}F_n(z)$ sends the closed radius-$r$ ball into its radius-$2r/3$ ball. Brouwer's finite-dimensional closed-ball theorem gives a fixed point $z_n$. Therefore the single actual partition
+
+$$
+D=D_n(z_n),\qquad
+\mathcal H_{50}(\mathbf1_D)=\mathcal H_{50}(f),\qquad
+\Delta(D)_{BB3}>t^2\kappa/3>0
+\tag{210.28}
+$$
+
+exists at one finite $n$. The last inequality follows by subtracting the two errors in (210.24) and (210.26) from (210.22).
+
+### 210.F. Exact residual containment and the completion boundary
+
+The first thirty-six equations and the complement identities recover every original marginal and every ordered pair law. Equation (210.3) recovers BBB from $\mathcal G_{222}=0$, so (210.28) gives $D\in\mathscr F_{154}(\theta)$. For this actual partition, the pair contractions give $\Delta(D)\in H^{\otimes3}$. The exact identity (157.8) and the eight zero contrasts give
+
+$$
+\pi^{\otimes3}\Delta(D)=0.
+\tag{210.29}
+$$
+
+The kernel identity in the proof of Proposition 157.2 now gives $\Delta(D)\in\mathcal W$, without a limiting or small-amplitude assumption on $\mathbf1_D-f$. The six distinct-label equations then give $\Delta(D)\in\mathcal W_{13}$. This proves (210.4). Every coefficient was evaluated against (210.25), which uses precisely this partition's own terminal. Replacing $b^0$ by the prescribed $b$ changes no target integral because all three positive-time slot laws are absolutely continuous with respect to $m$.
+
+The construction settles the seven actual cubic obligations identified after (157.12), within the finite common-partition completion problem of §156.4. The remaining residual lies in a thirteen-dimensional containing space and is nonzero by (210.28). No zero of those remaining equations, universal $F_{64}$ attainment or exclusion, fixed-start summable successor, or physical succession follows.
+
+The new source-specific deduction is the simultaneous separation (210.6)–(210.18) and its use in the finite hard root (210.28); it is repo-derived relative to the retained suppliers. The exact sector corrections are those of 152.A–C, with B. S. Mityagin, *The zero set of a real analytic function*, [arXiv:1512.07276v1](https://arxiv.org/abs/1512.07276v1), Proposition 0, and R. Meshulam and P. Šemrl, *Locally linearly dependent operators*, [doi:10.2140/pjm.2002.203.441](https://doi.org/10.2140/pjm.2002.203.441), Theorem 2.2, consumed there under their stated hypotheses. The finite fixed-point step is L. E. J. Brouwer, *Über Abbildung von Mannigfaltigkeiten*, [doi:10.1007/BF01456931](https://doi.org/10.1007/BF01456931), in the closed-ball form already consumed in 154.E. These classical intermediates are not new general splitting or purification theorems, and no historical novelty claim is attached to them or their source-specific use. $\square$
+
+## 追加锚（本行以下为增补区）
