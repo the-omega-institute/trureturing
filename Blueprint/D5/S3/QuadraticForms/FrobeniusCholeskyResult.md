@@ -22,6 +22,10 @@ $$\forall (e : \mathbb{N}), (1 \le e) \Rightarrow (\forall (n : \mathbb{N}), \ex
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/FrobeniusCholeskyResult.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/wu-zhou-cholesky` (proved) by `D5/S3/QuadraticForms/FrobeniusCholeskyResult.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"wu-zhou-cholesky","declaration_gid":"D5/S3/QuadraticForms/FrobeniusCholeskyResult.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Hongfeng Wu; Kai Zhou (2026). *Singular Cholesky Fibers over Finite Fields*. URL: <https://arxiv.org/abs/2609.00533v1>.

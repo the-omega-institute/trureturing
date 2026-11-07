@@ -74,5 +74,7 @@ internal sealed class FrobeniusCholeskyResultDocument : IScribeDocumentDefinitio
                     Paragraph(Text("The proof selects nonzero minors using only coordinate indices and zero tests. Free-coordinate kernel vectors extend independent image columns to adapted kernel frames. Coordinate transport between the two frames is bijective and preserves membership in the old image.")),
                     Paragraph(Text("The recursion transports the final column and makes the final diagonal its coordinate sum. In characteristic two the square of that sum equals the sum of coordinate squares. This gives the zero Gram equation and uniqueness of the final diagonal. Membership of the new column in the old image determines the rank increase on both sides.")),
                     Paragraph(Text("The arithmetic recipe contains no field-element ordering or enumeration. The supporting construction works over every characteristic-two field. Arbitrary coordinate-change naturality and a separately assembled theorem for all field embeddings and leading-principal truncations remain additional questions."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("wu-zhou-cholesky"), ResolutionKind.Proved)))));
 }
