@@ -239,8 +239,21 @@ private lemma assemble_block_card (m s : ℕ) (i : Fin m)
     rcases u with ⟨k,a⟩
     by_cases h : k = i
     · subst k
-      simp [assemble_mem_inside, j]
-    · simp [h, j, Ne.symm h]
+      constructor
+      · intro ht
+        exact Finset.mem_map.mpr
+          ⟨a, (assemble_mem_inside m s i R A a).mp (Finset.mem_filter.mp ht).1, rfl⟩
+      · intro ht
+        rcases Finset.mem_map.mp ht with ⟨b, hb, hba⟩
+        have heq : b = a := congrArg Prod.snd hba
+        subst b
+        exact Finset.mem_filter.mpr ⟨(assemble_mem_inside m s i R A a).mpr hb, rfl⟩
+    · constructor
+      · intro ht
+        exact False.elim (h (Finset.mem_filter.mp ht).2)
+      · intro ht
+        rcases Finset.mem_map.mp ht with ⟨b, _, hba⟩
+        exact False.elim (h (congrArg Prod.fst hba).symm)
   rw [he, Finset.card_map]
 
 private lemma number_slices (m s r : ℕ) (i : Fin m) (f : Space m s r)

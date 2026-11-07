@@ -53,8 +53,9 @@ internal sealed class TokenBlockLocalDefectDocument : IScribeDocumentDefinition
     private static Formula Params(Formula body) =>
         All(M, Call("Nat"), All(S, Call("Nat"), All(Rk, Call("Nat"), All(I, Call("Fin", M), body))));
     private static Formula Space(bool previous) => Call(previous ? "PreviousSpace" : "Space", M,S,Rk);
-    private static Formula SiteSplit() => Params(Seq(Call("siteSplit", M,S,I), Colon, Sp,
-        Call("Equiv",Call("SumType",Call("Outside", M,S,I),Call("Fin", S)),Call("Sites", M,S))));
+    private static Formula SiteSplit() => All(M, Call("Nat"), All(S, Call("Nat"),
+        All(I, Call("Fin", M), Seq(Call("siteSplit", M,S,I), Colon, Sp,
+        Call("Equiv",Call("SumType",Call("Outside", M,S,I),Call("Fin", S)),Call("Sites", M,S)))));
     private static Formula RankSplit(bool previous) => Params(Seq(Call(previous ? "previousSplit" : "rankSplit", M,S,Rk,I),
         Colon, Sp, Call("Equiv",Call(previous ? "PreviousRank" : "Rank", M,S,Rk),
         Call("Sigma",Call("Finset",Call("Outside",M,S,I)),
