@@ -8,7 +8,7 @@ internal sealed class HomogeneousSOSDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Homogeneous and parity representatives for sums of squares",
         H("Homogeneous and parity representatives for sums of squares"), Blocks(
-            Paragraph(Text("These are polynomial prerequisites for the genuine all-level GNP characterization. They do not themselves establish the tensor-moment bridge or any extension-cone characterization. The full package remains incomplete until those proofs and the normal acceptance are present.")),
+            Paragraph(Text("These polynomial results supply the homogeneous and parity decompositions used by the all-level GNP characterization in BoseHierarchy. The tensor-operator bridge is constructed in BoseSOSCertificates and BoseSOSDuality.")),
             Describe.Lean(DescribeId.Create("homogeneous-sos-iff"),
                 DeclarationHandle.Create(Prefix + "homogeneous_sos_iff"),
                 H("Homogeneous square representatives"), StatementSource.WithoutFormula(),
