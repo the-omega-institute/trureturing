@@ -65,6 +65,4 @@ The full-telescope typed Reg attempt retains the radius implication and actual C
 - Truth anchor: `D5/S3/Quantum/Matrix/HsfLocalSpectrumSupplier.actual_shifted_supplier_identity`
 - Truth anchor: `D5/S3/Quantum/Matrix/HsfLocalSpectrumSupplier.finite_spectrum_local_supplier`
 - Truth anchor: `D5/S3/Quantum/Matrix/HsfLocalSpectrumSupplier.finite_spectrum_uniform_local_supplier`
-- Dependency: [D5/S3/Quantum/GNSMatrix](../GNSMatrix.md)
-- Dependency: [D5/S3/Quantum/Matrix/CartesianVariance](CartesianVariance.md)
-- Dependency: [D5/S3/Quantum/Matrix/HsfLocalSpectrumTrace](HsfLocalSpectrumTrace.md)
+- Dependency: [D5/S3/Quantum/Matrix/HsfLocalSpectrumUniformKernel](HsfLocalSpectrumUniformKernel.md)

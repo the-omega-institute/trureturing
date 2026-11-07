@@ -61,5 +61,5 @@ These results extend the existing local and two-level actual-CFC suppliers. They
 - Truth anchor: `D5/S3/Quantum/Matrix/HsfThreeLevelSupplier.ThreeLevelSupplierTarget`
 - Truth anchor: `D5/S3/Quantum/Matrix/HsfThreeLevelSupplier.actual_threeLevel_PD_sylvester`
 - Truth anchor: `D5/S3/Quantum/Matrix/HsfThreeLevelSupplier.actual_threeLevel_supplier`
-- Dependency: [D5/S3/Quantum/Matrix/HsfBalancedCfcBridge](HsfBalancedCfcBridge.md)
-- Dependency: [D5/S3/Quantum/Matrix/HsfLocalSpectrumSupplier](HsfLocalSpectrumSupplier.md)
+- Dependency: [D5/S3/Quantum/Matrix/HsfThreeLevelCoincident](HsfThreeLevelCoincident.md)
+- Dependency: [D5/S3/Quantum/Matrix/HsfThreeLevelOrdered](HsfThreeLevelOrdered.md)
