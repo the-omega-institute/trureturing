@@ -41,7 +41,10 @@ internal sealed class DiaconisMicloUnimodalityDocument : IScribeDocumentDefiniti
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "For G=ZMod 11 and S={1,2,9,10}={±1,±2}, the gap is greater than 261/500 at a=1/5 and a=3/10, and less than 261/500 at a=1/4. No monotone-then-antitone function has this strict valley. Fourier reduction gives four-dimensional character blocks; exact Schur inequalities bound their endpoint roots by 239/500. A middle-parameter real root has larger modulus. This refutes the conjunction through its unimodality clause. The square-root comparison considered separately and product-group extensions remain open."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("op-dm2013c13"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string name, Formula formula, string heading, string prose) =>
         Describe.Lean(DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(heading),

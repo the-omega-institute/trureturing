@@ -130,6 +130,10 @@ $$\neg (\forall G \in Type,\; [Fintype\left(G\right)] [AddCommGroup\left(G\right
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/DiaconisMicloUnimodality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-dm2013c13` (refuted) by `D5/S3/Fourier/DiaconisMicloUnimodality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-dm2013c13","declaration_gid":"D5/S3/Fourier/DiaconisMicloUnimodality.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Persi Diaconis; Laurent Miclo (2013). *On the spectral analysis of second-order Markov chains*. DOI: [10.5802/afst.1383](https://doi.org/10.5802/afst.1383). URL: <https://hal.science/hal-00719047v1>.
