@@ -49,7 +49,7 @@ internal sealed class HardinA233175PairStripDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
     private static DocumentBlock Thm(string id, string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromLiterature(LibraryNoteRef.Create(Note)),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(LibraryNoteRef.Create(Note)),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 
     private static Formula AllowedFormula()

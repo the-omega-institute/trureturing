@@ -40,7 +40,7 @@ instDecidableChain: proof_shape=bind-only; consumers=instDecidableTailGood
 instDecidableGood: proof_shape=bind-only; consumers=instDecidableTailGood
 instDecidableTailGood: proof_shape=bind-only; consumers=count
 tailGood_cons: proof_shape=bind-only; consumers=count_eq_v
-step: proof_shape=bind-only; consumers=v, table_steps, vector_recurrence
+step: proof_shape=bind-only; consumers=v, table_step0, table_step1, table_step2, table_step3, table_step4, table_step5, table_step6, vector_recurrence
 v: proof_shape=bind-only; consumers=count_eq_v, counting_bridge, vector_certificate, finite_certificate, vector_recurrence, total_recurrence, initial, result
 count: proof_shape=bind-only; consumers=count_eq_v, counting_bridge
 count_eq_v: proof_shape=bind-only; consumers=counting_bridge
@@ -48,8 +48,15 @@ total: proof_shape=bind-only; consumers=counting_bridge, initial_table, finite_c
 counting_bridge: proof_shape=bind-only; consumers=initial, error_recurrence
 tables: proof_shape=bind-only; consumers=table
 seenCode: proof_shape=bind-only; consumers=table
-table: proof_shape=bind-only; consumers=table_base, table_steps, v_table, table_certificate, initial_table
+table: proof_shape=bind-only; consumers=table_base, table_step0, table_step1, table_step2, table_step3, table_step4, table_step5, table_step6, v_table, table_certificate, initial_table
 table_base: proof_shape=bind-only; consumers=v_table
+table_step0: proof_shape=bind-only; consumers=table_steps
+table_step1: proof_shape=bind-only; consumers=table_steps
+table_step2: proof_shape=bind-only; consumers=table_steps
+table_step3: proof_shape=bind-only; consumers=table_steps
+table_step4: proof_shape=bind-only; consumers=table_steps
+table_step5: proof_shape=bind-only; consumers=table_steps
+table_step6: proof_shape=bind-only; consumers=table_steps
 table_steps: proof_shape=bind-only; consumers=v_table
 v_table: proof_shape=bind-only; consumers=vector_certificate, finite_certificate
 table_certificate: proof_shape=bind-only; consumers=vector_certificate
@@ -554,9 +561,57 @@ private theorem table_base : ∀ q t b p, table 0 q t b p = v 0 q t b p := by
 
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 100000000 in
+private theorem table_step0 : ∀ q t b p,
+    table 1 q t b p = step (table 0) q t b p := by
+  decide +kernel
+
+set_option maxRecDepth 100000 in
+set_option maxHeartbeats 100000000 in
+private theorem table_step1 : ∀ q t b p,
+    table 2 q t b p = step (table 1) q t b p := by
+  decide +kernel
+
+set_option maxRecDepth 100000 in
+set_option maxHeartbeats 100000000 in
+private theorem table_step2 : ∀ q t b p,
+    table 3 q t b p = step (table 2) q t b p := by
+  decide +kernel
+
+set_option maxRecDepth 100000 in
+set_option maxHeartbeats 100000000 in
+private theorem table_step3 : ∀ q t b p,
+    table 4 q t b p = step (table 3) q t b p := by
+  decide +kernel
+
+set_option maxRecDepth 100000 in
+set_option maxHeartbeats 100000000 in
+private theorem table_step4 : ∀ q t b p,
+    table 5 q t b p = step (table 4) q t b p := by
+  decide +kernel
+
+set_option maxRecDepth 100000 in
+set_option maxHeartbeats 100000000 in
+private theorem table_step5 : ∀ q t b p,
+    table 6 q t b p = step (table 5) q t b p := by
+  decide +kernel
+
+set_option maxRecDepth 100000 in
+set_option maxHeartbeats 100000000 in
+private theorem table_step6 : ∀ q t b p,
+    table 7 q t b p = step (table 6) q t b p := by
+  decide +kernel
+
 private theorem table_steps : ∀ k : Fin 7, ∀ q t b p,
     table (k.val + 1) q t b p = step (table k.val) q t b p := by
-  decide +kernel
+  intro k
+  fin_cases k
+  · exact table_step0
+  · exact table_step1
+  · exact table_step2
+  · exact table_step3
+  · exact table_step4
+  · exact table_step5
+  · exact table_step6
 
 private theorem v_table (k : ℕ) (hk : k ≤ 7) : v k = table k := by
   induction k with

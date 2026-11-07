@@ -101,9 +101,9 @@ abbrev arena : Arena where
   Law R :=
     (∀ q t b p, v 7 q t b p = 16 * v 6 q t b p - 32 * v 5 q t b p -
       320 * v 4 q t b p + 512 * v 3 q t b p + 2048 * v 2 q t b p) ∧
-    R.readout () () 0 = 3 ∧ R.readout () () 1 = 8 ∧ R.readout () () 2 = 80 ∧
-      R.readout () () 3 = 800 ∧ R.readout () () 4 = 8576 ∧
-      R.readout () () 5 = 92672 ∧ R.readout () () 6 = 1009664
+    R.readout () () 0 = 3 ∧ total (v 1) = 8 ∧ total (v 2) = 80 ∧
+      total (v 3) = 800 ∧ total (v 4) = 8576 ∧
+      total (v 5) = 92672 ∧ total (v 6) = 1009664
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
