@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:1f7cc90070dafa0978f085a7a5f72e943f9618ce7812c53175816937241df742
   normalized_sha256: sha256:1f7cc90070dafa0978f085a7a5f72e943f9618ce7812c53175816937241df742
 cas_ref: sha256:1f7cc90070dafa0978f085a7a5f72e943f9618ce7812c53175816937241df742
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Tomography/C129ParaboloidSlice.paraboloid_slice
+    target_statement_id: sha256:c47bb518f11ddaa0a491b18483fbc89e198395570089ad63a25255f98fbbe6c4
 receipts:
   unresolved_subitems: []
