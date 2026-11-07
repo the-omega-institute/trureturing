@@ -1115,9 +1115,23 @@ def clean_from_anchor(options, caller, disk_descriptor):
     # Registered-tree disposal can remove this program's source checkout.
     worktree_modules()
     inventory = registered_worktrees(options.repository)
-    worktrees = set(inventory)
     lanes_exit = clean_worktrees(options.repository, options.base, options.delete,
                                 working_directory=next(iter(inventory), options.repository))
+    # Only artifact disposal uses the artifact owner's mutex. Registered-tree
+    # cleanup has already completed, even when another artifact sweep is active.
+    lock_path = Path(tempfile.gettempdir()) / ("trureturing-clean-all-" + str(os.getuid()) + ".lock")
+    descriptor = os.open(lock_path, os.O_CREAT | os.O_RDWR | os.O_NOFOLLOW, 0o600)
+    with os.fdopen(descriptor, "r+") as lock:
+        info = os.fstat(lock.fileno())
+        if info.st_uid != os.getuid() or info.st_nlink != 1 or not stat.S_ISREG(info.st_mode):
+            raise OSError("invalid cleanup lock")
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        return clean_artifacts(options, caller, disk_descriptor, inventory, lanes_exit,
+                               codex, sshx, roots)
+
+
+def clean_artifacts(options, caller, disk_descriptor, inventory, lanes_exit, codex, sshx, roots):
+    worktrees = set(inventory)
     try:
         active = active_paths(codex)
     except OSError as error:
@@ -1286,15 +1300,7 @@ def _main(arguments=None):
             return 0
         if options.tmp_root is None:
             options.tmp_root = [Path("/tmp"), Path(tempfile.gettempdir())]
-        # Use a named, per-user lock so concurrent sweeps cannot delete the same tree.
-        lock_path = Path(tempfile.gettempdir()) / ("trureturing-clean-all-" + str(os.getuid()) + ".lock")
-        descriptor = os.open(lock_path, os.O_CREAT | os.O_RDWR | os.O_NOFOLLOW, 0o600)
-        with os.fdopen(descriptor, "r+") as lock:
-            info = os.fstat(lock.fileno())
-            if info.st_uid != os.getuid() or info.st_nlink != 1 or not stat.S_ISREG(info.st_mode):
-                raise OSError("invalid cleanup lock")
-            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-            return run_clean(options)
+        return run_clean(options)
     except LowDiskSpace as error:
         print(str(error), file=sys.stderr)
         return 73

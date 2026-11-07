@@ -11,6 +11,7 @@ internal static class WorktreePoolCommand
     {
         GitWorktreeInventory.FetchRemoteBase(options.Source, options.Base, runner);
         var arguments = new List<string> { "claim", "--branch", options.Branch, "--base", options.Base };
+        if (!options.AllowReuseSelection) arguments.AddRange(["--path", options.Path]);
         if (options.SkipRestore) arguments.Add("--skip-restore");
         var result = WorktreeProtocolCommand.Run(options.Source, arguments, runner, Timeout.InfiniteTimeSpan);
         if (!result.Success) return result;

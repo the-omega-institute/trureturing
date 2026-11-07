@@ -3,10 +3,11 @@ import os
 from pathlib import Path
 import subprocess
 import time
+from types import SimpleNamespace
 
 from worktree_protocol import (Refused, clear_matching_stale, git, git_environment,
                                head_committer_time, head_oid, identity, inventory,
-                               mark_stale, stale_head, value)
+                               mark_stale, reuse, stale_head, value)
 
 FOUR_HOURS = 4 * 60 * 60
 SIX_HOURS = 6 * 60 * 60
@@ -94,73 +95,75 @@ def _allocate(source, path, options, base, expected, removed=False):
                 dotnet_restore="skipped" if options.skip_restore else "restored")
 
 
-def _candidate_rows(source, requested):
-    rows = inventory(source)
-    main = _main_path(rows)
-    if requested is not None:
-        target = Path(requested).resolve()
-        matches = [row for row in rows if _same(row["worktree"], target)]
-        if not matches:
-            return rows, main, []
-        return rows, main, [matches[0]]
-    return rows, main, [row for row in rows if not _same(row["worktree"], main)]
-
-
 def claim(options):
-    rows, main, candidates = _candidate_rows(options.source, options.path)
+    rows = inventory(options.source)
+    main = _main_path(rows)
     base = value(options.source, "rev-parse", "--verify", options.base + "^{commit}")
     expected = _expected_pins(options.source, base)
     excluded = {Path(path).resolve() for path in getattr(options, "exclude_path", [])}
     now = time.time()
-    refusals = []
-    for item in candidates:
-        path = Path(item["worktree"]).resolve()
-        if path in excluded or _same(path, main):
-            continue
-        if path.is_symlink():
-            refusals.append(dict(path=str(path), reason="linked_tree"))
+    refusals, candidates, removed = [], [], []
+    # Complete expiry for the whole inventory before returning any selection,
+    # including a same-task continuation or an explicit destination.
+    for item in rows[1:]:
+        path = Path(item["worktree"]).absolute()
+        if path.resolve() in excluded or _same(path, main):
             continue
         try:
             current, _ = identity(options.source, path)
-            branch = _branch(current)
-            head = head_oid(path)
             age = _age(path, now)
-            marked = branch != "HEAD" and stale_head(options.source, branch) == head
-            # Strict threshold: exactly six hours is retained. A future or
-            # unknown timestamp is never treated as old.
-            if age > SIX_HOURS:
+            head = head_oid(path)
+            expired = age > SIX_HOURS
+            if expired:
                 _remove_registered(options.source, path)
-                # Removal is first in the allocation pass. The just-freed
-                # directory is immediately eligible for the requested task.
-                return _allocate(options.source, path, options, base, expected, removed=True) | {
-                    "previous_branch": branch.removeprefix("refs/heads/"),
-                    "previous_head": head,
-                    "reuse_reason": "head_older_than_6h_removed",
-                }
-            if branch == "HEAD":
-                raise Refused("detached_head")
-            if not marked and age <= FOUR_HOURS:
-                raise Refused("head_recent")
-            _check_pins(path, expected)
-            if branch == "refs/heads/" + options.branch:
+                removed.append(str(path))
+            candidates.append((path, _branch(current), head, age, expired))
+        except (Refused, OSError, subprocess.SubprocessError) as error:
+            refusals.append(dict(path=str(path), reason=str(error)))
+            if options.path is not None and _same(path, options.path):
+                raise
+
+    def finish(result):
+        return result | {"removed_worktrees": removed}
+
+    try:
+        if options.path is not None:
+            candidates = [row for row in candidates if _same(row[0], options.path)]
+        # An unexpired attached task resumes regardless of allocation age.
+        # Base/pin/source compatibility is still checked by native recovery.
+        for path, branch, head, age, expired in candidates:
+            if not expired and branch == "refs/heads/" + options.branch:
+                result = reuse(SimpleNamespace(**(vars(options) | {"path": path})))
                 clear_matching_stale(options.source, branch, head)
-                return dict(event="worktree_init", status="reused", path=str(path),
-                            branch=options.branch, base_revision=base,
-                            reuse_reason="stale" if marked else "head_older_than_4h")
-            return _allocate(options.source, path, options, base, expected) | {
+                return finish(result)
+        for path, branch, head, age, expired in candidates:
+            try:
+                marked = not expired and branch != "HEAD" and stale_head(options.source, branch) == head
+                if not expired:
+                    if branch == "HEAD":
+                        raise Refused("detached_head")
+                    if not marked and age <= FOUR_HOURS:
+                        raise Refused("head_recent")
+                    _check_pins(path, expected)
+            except (Refused, OSError, subprocess.SubprocessError) as error:
+                refusals.append(dict(path=str(path), branch=branch, reason=str(error)))
+                if options.path is not None:
+                    raise
+                continue
+            return finish(_allocate(options.source, path, options, base, expected, removed=expired) | {
                 "previous_branch": branch.removeprefix("refs/heads/"),
                 "previous_head": head,
-                "reuse_reason": "stale" if marked else "head_older_than_4h",
-            }
-        except (Refused, OSError, subprocess.SubprocessError) as error:
-            refusals.append(dict(path=str(path), branch=branch if "branch" in locals() else None,
-                                 reason=str(error)))
-            if options.path is not None:
-                raise
-    result = dict(event="worktree_init", status="no_reusable")
-    if refusals:
-        result["candidate_refusals"] = refusals
-    return result
+                "reuse_reason": "head_older_than_6h_removed" if expired else
+                                "stale" if marked else "head_older_than_4h",
+            })
+        result = dict(event="worktree_init", status="no_reusable")
+        if refusals:
+            result["candidate_refusals"] = refusals
+        return finish(result)
+    except (Refused, OSError, subprocess.SubprocessError) as error:
+        if removed:
+            raise Refused(str(error) + "; expired_worktrees_removed=" + repr(removed)) from error
+        raise
 
 
 def return_tree(options):

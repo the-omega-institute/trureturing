@@ -116,7 +116,7 @@ internal static class WorktreeCommand
             if (runner is ProductionWorktreeProcessRunner production)
                 runner = production.WithEnvironment(WorktreeProtocolCommand.InitializationEnvironment(repositoryRoot));
             options = ParseArguments(repositoryRoot, arguments);
-            if (options.AllowReuseSelection)
+            if (options.AllowReuseSelection || Directory.Exists(options.Path))
             {
                 var claimed = WorktreePoolCommand.TryReuse(options, runner);
                 if (claimed is not null)

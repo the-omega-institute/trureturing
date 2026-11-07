@@ -332,6 +332,17 @@ def _main(argv=None):
         publication.add_argument("--branch")
         publication.add_argument("--commit", default="HEAD")
         publication.add_argument("--writers-joined", action="store_true")
+    for action in ("prepare-mirror", "validate-mirror"):
+        mirror = commands.add_parser(action)
+        mirror.add_argument("--base", required=True)
+        mirror.add_argument("--merge", required=True)
+        mirror.add_argument("--message", required=True)
+        if action == "prepare-mirror":
+            mirror.add_argument("--path", type=Path, required=True)
+            mirror.add_argument("--branch", required=True)
+            mirror.add_argument("--remote", default="origin")
+        else:
+            mirror.add_argument("--commit", required=True)
     options = parser.parse_args(argv)
     global LOG, LOG_ACTION, LOG_LAST
     LOG_ACTION, LOG_LAST = options.action, {}
@@ -372,6 +383,13 @@ def _main(argv=None):
             _log_result(options.action, result)
             print(json.dumps(result), flush=True)
             return 74 if result["status"] == "failed" else 73 if result["status"] == "refused" else 0
+        elif options.action in ("prepare-mirror", "validate-mirror"):
+            from worktree_publication import prepare_mirror, validate_mirror
+            result = (prepare_mirror(options) if options.action == "prepare-mirror" else
+                      validate_mirror(options.source, options.commit, options.base,
+                                      options.merge, options.message))
+            _log_result(options.action, result)
+            print(json.dumps(result), flush=True)
         else:
             from worktree_publication import checkpoint, publish, finalize
             result = {"checkpoint": checkpoint, "publish": publish,
@@ -384,7 +402,8 @@ def _main(argv=None):
                        status="refused" if isinstance(error, Refused) and not isinstance(error, GitFailure) else "failed",
                        outcome="refused" if isinstance(error, Refused) and not isinstance(error, GitFailure) else "failed",
                        reason=str(error) if isinstance(error, Refused) else "operation_failed", error=error)
-        print("WORKTREE_RETAINED " + str(error), file=sys.stderr, flush=True)
+        prefix = "WORKTREE_FAILED " if options.action == "claim" else "WORKTREE_RETAINED "
+        print(prefix + str(error), file=sys.stderr, flush=True)
         return 73
 
 

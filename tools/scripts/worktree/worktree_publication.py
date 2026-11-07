@@ -108,21 +108,18 @@ def prepare_mirror(options):
     git(options.source, "check-ref-format", reference)
     existing = git(options.source, "rev-parse", "--verify", reference, check=False)
     args = [] if existing.returncode == 0 else ["-b", options.branch]
-    git(options.source, "worktree", "add", "--no-checkout", *args, "--", path,
+    git(options.source, "worktree", "add", *args, "--", path,
         options.branch if not args else options.base)
-    try:
-        landing = value(path, "rev-parse", "--verify", options.merge + "^{commit}")
-        if value(path, "rev-parse", "HEAD") == value(options.source, "rev-parse", options.base):
-            parents = value(path, "show", "-s", "--format=%P", landing).split()
-            mainline = ["--mainline", "1"] if len(parents) > 1 else []
-            git(path, "cherry-pick", "--no-commit", *mainline, landing)
-            git(path, "commit", "--allow-empty", "-m", options.message +
-                "\n\nOriginal-Dev-Commit: " + landing)
-        head = value(path, "rev-parse", "HEAD")
-        validate_mirror(path, head, options.base, landing, options.message)
-        git(path, "push", "--", endpoint, head + ":" + reference)
-        evidence = confirm(path, options.remote, options.branch, head, endpoint)
-        return dict(event="worktree_mirror", status="confirmed", commit=head, **evidence)
-    finally:
-        if any(Path(row["worktree"]).resolve() == path.resolve() for row in inventory(options.source)):
-            git(options.source, "worktree", "remove", "--force", "--", path)
+    identity(options.source, path)
+    landing = value(path, "rev-parse", "--verify", options.merge + "^{commit}")
+    if value(path, "rev-parse", "HEAD") == value(options.source, "rev-parse", options.base):
+        parents = value(path, "show", "-s", "--format=%P", landing).split()
+        mainline = ["--mainline", "1"] if len(parents) > 1 else []
+        git(path, "cherry-pick", "--no-commit", *mainline, landing)
+        git(path, "commit", "--allow-empty", "-m", options.message +
+            "\n\nOriginal-Dev-Commit: " + landing)
+    head = value(path, "rev-parse", "HEAD")
+    validate_mirror(path, head, options.base, landing, options.message)
+    git(path, "push", "--", endpoint, head + ":" + reference)
+    evidence = confirm(path, options.remote, options.branch, head, endpoint)
+    return dict(event="worktree_mirror", status="confirmed", commit=head, **evidence)
