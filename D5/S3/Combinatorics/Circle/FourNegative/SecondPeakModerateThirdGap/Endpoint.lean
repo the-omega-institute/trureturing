@@ -1,5 +1,10 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakModerateThirdGap/Endpoint
-   digest: complete source-only moderate-c endpoint with one physical permutation and one ear cut. -/
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakModerateThirdGap/Endpoint
+   mirror-E: none(waiver:physical-source-family-registration)
+   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
+   utility: none
+   digest: Complete full-domain moderate-third-gap joint lift with one physical permutation and one ear cut. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakModerateThirdGap.Schedule
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
 
@@ -12,8 +17,6 @@ open private joint_construction
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakModerateThirdGap.Schedule
 open private actual_nat_joint_iff
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
-open private insertAt
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
 open private zero_period_transport
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakMiddleGap.Endpoint
 

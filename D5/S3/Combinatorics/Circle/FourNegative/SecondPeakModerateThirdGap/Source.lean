@@ -1,4 +1,9 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakModerateThirdGap/Source
+   generality: I
+   mirror-B: none(waiver:private-consumed-moderate-third-gap-construction)
+   mirror-E: none(waiver:physical-source-family-registration)
+   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
+   utility: none
    digest: physical W/X/U/V banks and exact paired actual source masses. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakModerateThirdGap.Masks
 import D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
@@ -9,8 +14,9 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakModerateThirdGap
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
-open private size base newBase chainLength chainStart oldValue newValue
-  chain_values negatives
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm
+  (size base newBase chainLength chainStart oldValue newValue negatives)
+open private chain_values
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open private uFull uRest uRest_eq u_capacity u_native_partition shifted_partition shifted_capacities
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakModerateThirdGap.Masks
@@ -105,7 +111,7 @@ private theorem bank_good (a b c d u H : ℕ)
     omega
   fin_cases j
   all_goals dsimp [bank] at hi
-  all_goals simp only [List.mem_append] at hi
+  all_goals try simp only [List.mem_append] at hi
   all_goals repeat' first
     | (have hbound := masked _ _ _ hi
        constructor
@@ -122,7 +128,7 @@ private theorem bank_masses (a b c d u H : ℕ)
     let P := bank a b c d u H
     let lam := (2^(b-c-1):ℕ)
     ((P 0).map f).sum=((2^(d-1)-1-u:ℕ):ℤ)*F 0 ∧
-    ((P 1).map f) .sum=(lam*H:ℤ)*F 2 ∧
+    ((P 1).map f).sum=(lam*H:ℤ)*F 2 ∧
     ((P 2).map f).sum=((lam*(2^c-1-H):ℕ):ℤ)*F 2+
       ((2^(a-1)-1:ℕ):ℤ)*F 3+(u:ℤ)*F 0 ∧
     ((P 3).map f).sum=((2^(c-1)-1:ℕ):ℤ)*F 1+((lam-1:ℕ):ℤ)*F 2 := by
@@ -175,11 +181,15 @@ private theorem bank_masses (a b c d u H : ℕ)
     ((P 2).map f).sum=((lam*(2^c-1-H):ℕ):ℤ)*F 2+
       ((2^(a-1)-1:ℕ):ℤ)*F 3+(u:ℤ)*F 0 ∧
     ((P 3).map f).sum=((2^(c-1)-1:ℕ):ℤ)*F 1+((lam-1:ℕ):ℤ)*F 2
-  simp only [chainLength,chainStart] at hx hv
+  dsimp [chainLength,chainStart] at hx hv
   rw [←chamberLabels_full] at hx hv
+  rw [hrest] at huq
+  dsimp [lam] at hw hf hl
   refine ⟨?_,?_,?_,?_⟩
-  all_goals simp only [P,bank,List.map_append,List.sum_append,huq,hw,hf,huu,hl,hx,hv,hrest]
-  all_goals push_cast
+  all_goals dsimp [P,bank,lam]
+  all_goals try rw [hrest]
+  all_goals try simp only [List.map_append,List.sum_append,huq,hw,hf,huu,hl,hx,hv]
+  all_goals try push_cast
   all_goals ring
 
 

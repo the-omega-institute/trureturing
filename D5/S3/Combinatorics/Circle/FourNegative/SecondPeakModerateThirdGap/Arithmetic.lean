@@ -1,4 +1,9 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakModerateThirdGap/Arithmetic
+   generality: I
+   mirror-B: none(waiver:private-consumed-moderate-third-gap-construction)
+   mirror-E: none(waiver:physical-source-family-registration)
+   anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
+   utility: none
    digest: integer selector for the moderate-c third-gap sector; all floors are
    taken before the natural mask conversion. -/
 import Mathlib.Data.Int.DivMod

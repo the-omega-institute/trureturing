@@ -1,4 +1,9 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakModerateThirdGap/Schedule
+   generality: I
+   mirror-B: none(waiver:private-consumed-moderate-third-gap-construction)
+   mirror-E: none(waiver:physical-source-family-registration)
+   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
+   utility: none
    digest: exact physical banks and the two literal cuts after W- and X-. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakModerateThirdGap.Arithmetic
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakModerateThirdGap.Source
@@ -12,16 +17,18 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakModerateThirdGap
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open private A B C D E K L N x y z t lam sAt FAt ZAt Selected
   selector_arithmetic outside_seams power_data PowerData
+  Selected.u Selected.H Selected.early Selected.u_le Selected.Hhi
+  Selected.slo Selected.shi Selected.second_lo Selected.second_hi PowerData.y_eq
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakModerateThirdGap.Arithmetic
 open private bank terminal word bank_inventory bank_good bank_masses bank_double_masses
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakModerateThirdGap.Source
-open private size seed sourceMod base newBase charge oldValue newValue negatives
-  chainLength chainStart nextBase nextNewBase source_signs source_totals chain_values new_base_bounds
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm
+  (size base newBase oldValue newValue negatives chainLength chainStart blocksWord insertAt)
+open private seed sourceMod charge nextBase nextNewBase
+  source_signs source_totals chain_values new_base_bounds
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open private native_masses
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
-open private blocksWord insertAt
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
 open private packetChecks strip_iff_packetChecks
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Packets
 
@@ -46,7 +53,7 @@ private theorem joint_construction (a b c d : ℕ)
           (insertAt (size a b c d) l j) := by
   classical
   obtain ⟨q⟩ := selector_arithmetic a b c d ha had hdc hcb hmoder
-  let u := q.u; let H := q.H
+  let u := (Selected.u q); let H := (Selected.H q)
   let P := bank a b c d u H
   let T := terminal a b c d
   let l := word a b c d u H
@@ -61,12 +68,12 @@ private theorem joint_construction (a b c d : ℕ)
   let S3 := 2*BB-CC
   let T1 := 2*S1-DD-1
   let T2 := 2*FAt (E (x a) (y b) (z c) (t d)) AA CC (z c) (lam b c) u H+
-    (if q.early then AA else -AA)-1
+    (if (Selected.early q) then AA else -AA)-1
   let T3 := 2*(SU-lam b c*SV)
-  have hu : u=0 ∨ u=1 ∨ u=2 := by have := q.u_le; dsimp [u]; omega
+  have hu : u=0 ∨ u=1 ∨ u=2 := by have := (Selected.u_le q); dsimp [u]; omega
   have hH : H<2^c := by
     have hp := Nat.two_pow_pos c
-    have := q.Hhi
+    have := (Selected.Hhi q)
     dsimp [H]
     omega
   have hp : l.Perm (List.range k) := bank_inventory a b c d u H ha had hdc hcb hu hH
@@ -147,7 +154,7 @@ private theorem joint_construction (a b c d : ℕ)
       _=S3 := by
         simp only [hNN]
         dsimp [S1,S3,AA,BB,KK,CC,LL,C,A,B,K,L,N]
-        simp only [p.y_eq]
+        simp only [(PowerData.y_eq p)]
         ring
   have totals := source_totals a b c d ha (by omega) (by omega) (by omega)
   have oldzero : (l.map f).sum=0 := (hp.map f).sum_eq.trans totals.1
@@ -162,8 +169,8 @@ private theorem joint_construction (a b c d : ℕ)
   have t1range : 0<T1 ∧ T1≤SW-1 := seams.2.1
   have s3range : 0<S3 ∧ S3≤BB-1 := seams.2.2.1
   have t3range : 0<T3 ∧ T3≤SU-1 := seams.2.2.2
-  have s2range : 0<S2 ∧ S2≤AA-1 := ⟨q.slo,q.shi⟩
-  have t2range : 0<T2 ∧ T2≤AA-1 := ⟨q.second_lo,q.second_hi⟩
+  have s2range : 0<S2 ∧ S2≤AA-1 := ⟨(Selected.slo q),(Selected.shi q)⟩
+  have t2range : 0<T2 ∧ T2≤AA-1 := ⟨(Selected.second_lo q),(Selected.second_hi q)⟩
   have oldChecks : packetChecks f (NN/2) 0
       [(P 0,T 0),(P 1,T 1),(P 2,T 2),(P 3,T 3)] := by
     simp only [packetChecks,zero_add]
@@ -187,16 +194,16 @@ private theorem joint_construction (a b c d : ℕ)
   /- The new label starts bank 1 or bank 2.  This is the literal timing,
      rather than the right-normalized withEar timing at a bank's end. -/
   let Pe : Fin 4 → List ℕ := fun j =>
-    if (q.early=true ∧ j=1) ∨ (q.early=false ∧ j=2) then k::P j else P j
-  let delta : ℤ := if q.early then 1 else 0
+    if ((Selected.early q)=true ∧ j=1) ∨ ((Selected.early q)=false ∧ j=2) then k::P j else P j
+  let delta : ℤ := if (Selected.early q) then 1 else 0
   have pe0 : ((Pe 0).map g).sum=((P 0).map g).sum := by
-    cases he : q.early <;> simp [Pe,he]
+    cases he : (Selected.early q) <;> simp [Pe,he]
   have pe1 : ((Pe 1).map g).sum=((P 1).map g).sum+delta*AA := by
-    cases he : q.early <;> simp [Pe,he,delta,hfresh,add_comm]
+    cases he : (Selected.early q) <;> simp [Pe,he,delta,hfresh,add_comm]
   have pe2 : ((Pe 2).map g).sum=((P 2).map g).sum+(1-delta)*AA := by
-    cases he : q.early <;> simp [Pe,he,delta,hfresh,add_comm]
+    cases he : (Selected.early q) <;> simp [Pe,he,delta,hfresh,add_comm]
   have pe3 : ((Pe 3).map g).sum=((P 3).map g).sum := by
-    cases he : q.early <;> simp [Pe,he]
+    cases he : (Selected.early q) <;> simp [Pe,he]
   have sn1 : 2*(((Pe 0).map g).sum+g (T 0))=T1 := by
     rw [pe0]
     calc
@@ -213,8 +220,8 @@ private theorem joint_construction (a b c d : ℕ)
       _=T2 := by
         simp only [hNN]
         dsimp [T1,S1,T2,AA,BB,KK,DD,CC,SV,FAt,sAt,ZAt,A,B,C,D,E,N,K,L]
-        simp only [p.y_eq]
-        cases he : q.early <;> simp only [delta,he,ite_true,ite_false] <;> ring
+        simp only [(PowerData.y_eq p)]
+        cases he : (Selected.early q) <;> simp only [delta,he,ite_true,ite_false] <;> ring
   have sn3 : 2*(((Pe 0).map g).sum+g (T 0)+((Pe 1).map g).sum+g (T 1)+
       ((Pe 2).map g).sum+g (T 2))=T3 := by
     rw [pe1,pe2]
@@ -226,7 +233,7 @@ private theorem joint_construction (a b c d : ℕ)
       _=T3 := by
         simp only [hNN]
         dsimp [T1,S1,T3,AA,BB,KK,DD,SV,SW,SU,N,A,B,K,D,L]
-        simp only [p.y_eq]
+        simp only [(PowerData.y_eq p)]
         ring
   have sn4 : ((Pe 0).map g).sum+g (T 0)+((Pe 1).map g).sum+g (T 1)+
       ((Pe 2).map g).sum+g (T 2)+((Pe 3).map g).sum+g (T 3)=0 := by
@@ -260,15 +267,15 @@ private theorem joint_construction (a b c d : ℕ)
     · intro b hb
       simp only [List.mem_cons,List.mem_singleton] at hb
       rcases hb with rfl|rfl|rfl|rfl <;> exact negnew _
-  let pre := if q.early then P 0 ++ [T 0]
+  let pre := if (Selected.early q) then P 0 ++ [T 0]
     else P 0 ++ [T 0] ++ P 1 ++ [T 1]
-  let post := if q.early then P 1 ++ T 1 :: P 2 ++ T 2 :: P 3 ++ [T 3]
+  let post := if (Selected.early q) then P 1 ++ T 1 :: P 2 ++ T 2 :: P 3 ++ [T 3]
     else P 2 ++ T 2 :: P 3 ++ [T 3]
   have split : l=pre++post := by
-    cases he : q.early <;> simp [pre,post,he,l,word,P,T,List.append_assoc]
+    cases he : (Selected.early q) <;> simp [pre,post,he,l,word,P,T,List.append_assoc]
   have marked : blocksWord [(Pe 0,T 0),(Pe 1,T 1),(Pe 2,T 2),(Pe 3,T 3)]=
       pre++k::post := by
-    cases he : q.early <;> simp [Pe,pre,post,he,blocksWord,List.append_assoc]
+    cases he : (Selected.early q) <;> simp [Pe,pre,post,he,blocksWord,List.append_assoc]
   have hj : pre.length≤k := by
     have hh := hp.length_eq
     rw [split] at hh
