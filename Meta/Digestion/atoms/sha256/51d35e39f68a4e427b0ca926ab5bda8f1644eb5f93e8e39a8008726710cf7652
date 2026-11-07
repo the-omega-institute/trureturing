@@ -1,0 +1,116 @@
+**命题 4.1（同边缘下的有限原前缀联合时间缺陷）。** 保留 III 定义 157.1 的整个 $\mathscr C_{\rm nat}$，取 III 定理 165.2 的同一个全域密度
+
+$$
+\Pi_q(z)=b_q(z)+\varepsilon c_qH(z),\qquad
+H=h_{\rm sm},\quad 0<\varepsilon<1,\quad
+H(z)=\frac12\prod_{s\subseteq O}\eta(u_s(z)),\qquad
+u_s(z)=\frac{\kappa_s^2|a_s(z)|^2-\|v_s(z)\|^2}{\|z\|^2}.
+\tag{4.1}
+$$
+
+这里 $O=\{1,3,5,7,9\}$，$a_s,v_s,\kappa_s,c_q,\eta$ 均为 III (164.3)、III (164.7)、III (164.10)、III (165.1) 的原定义。其可容许性直接复用 III 定理 165.2：全部 $89$ 个复坐标、十一组原 Hamiltonian、每个单点及二维支撑分量、每个非零复输入、全部非零复缩放和内部 $t\in[0,1]$ 的分量方程同时保留；未把密度换成有限次、径向或仅代码上的函数。
+
+存在同一个有限正向原字 $a\in\mathsf W_{11}$，不依赖 $\varepsilon$，使
+$H(\chi_a)>0$ 而 $H(K_9^k\chi_a)=0$ 对 $k=1,2,3$ 同时成立。对四个合法程序 $\mathsf R(a\,9^k,\emptyset)$（$k=0,1,2,3$），$\emptyset$ 表示空后读字，令 $J_k$ 为另供读取前条件律 III (174.1) 并按原不变配置字面报告所定义的直接联合描述 III (175.7)。对于原已读事件
+
+$$
+\mathcal E_*=\{I=0,\ W=1000000000\},
+\qquad
+J_k(\mathcal E_*)=\Pi_{\varnothing}(K_9^k\chi_a),
+\tag{4.2}
+$$
+
+有严格残差
+
+$$
+\begin{aligned}
+J_3(\mathcal E_*)+x^2J_1(\mathcal E_*)
+ -J_0(\mathcal E_*)-x^2J_2(\mathcal E_*)
+ &=-\varepsilon H(\chi_a)<0,\\
+\frac{J_3(\mathcal E_*)+x^2J_1(\mathcal E_*)}{1+x^2}
+-\frac{J_0(\mathcal E_*)+x^2J_2(\mathcal E_*)}{1+x^2}
+ &=-\frac{\varepsilon H(\chi_a)}{1+x^2}.
+\end{aligned}
+\tag{4.3}
+$$
+
+同一四个联合描述的 $I$、$W$ 两个边缘却分别等于参考平方边缘，均满足相应四时恒等式。这里的读取前律及报告绑定是明确的附加条件，其对同一实际 $\Omega$ 的采用仍为 **ASSUMED-UNVERIFIED**；本命题仅陈述该绑定下的条件结论。
+
+证明。直接使用 III (164.17) 的 $z_*=\sum_{s\subseteq O}w_s/\sqrt{32}$。III 式 (164.4)–(164.5) 已给互不相交的 $32$ 个扇区覆盖全部 $89$ 坐标、$\|z_*\|=1$ 且每个坐标非零；III 式 (165.6) 给 $H(z_*)>0$。只为计算原地址九的作用，在同一载体内置
+
+$$
+g_d=\sum_{r\subseteq\{2,4,6\}}
+ x^{3-|r|}(-y)^{|r|}|r\cup d\rangle
+\quad(d=\varnothing,\{8\},\{9\}),\qquad
+g_0:=g_{\varnothing},\quad g_8:=g_{\{8\}},\quad g_9:=g_{\{9\}}.
+\tag{4.4}
+$$
+
+这三个向量支撑不交，由 $x^2+y^2=1$ 正交归一。于是
+$w_{\varnothing}=xg_0-yg_8$、$w_{\{9\}}=g_9$，而
+$w_\perp=yg_0+xg_8$ 是空奇位扇区中与 $w_{\varnothing}$ 正交的单位向量。这些坐标乘积不引入物理张量因子。
+
+原 $\mathcal P_9$ 在 $(g_0,g_9)$ 上恰为 III (138.2a) 的
+$\left(\begin{smallmatrix}x&xy\\xy&x^2\end{smallmatrix}\right)$；
+由于 $b_8=1,b_{10}=0$，$\mathcal P_9g_8=0$。地址九不改变其余奇位，故 $z_*$ 中只有 $s=\varnothing,\{9\}$ 两项能在作用后进入 $R_{\varnothing}$。记
+
+$$
+\delta_k=\zeta^k-1,\qquad
+D=x^2+xy=x(x+y),\quad L=xD,\quad V=yD.
+$$
+
+将这两项和阻塞的 $g_8$ 一起代入原
+$K_9^k=\zeta^k[I+\delta_k\mathcal P_9]$，精确得到
+
+$$
+R_{\varnothing}K_9^kz_*
+=\frac{\zeta^k}{\sqrt{32}}
+ \bigl[(1+\delta_kL)w_{\varnothing}
+       +\delta_kVw_\perp\bigr].
+\tag{4.5}
+$$
+
+$xy<x$ 和 $x^2+x=1$ 给 $0<D<1$、$0<L<x<1$，所以
+
+$$
+|a_{\varnothing}(K_9^kz_*)|
+=\frac{|1-L+L\zeta^k|}{\sqrt{32}}\le\frac1{\sqrt{32}},
+\qquad
+\|v_{\varnothing}(K_9^kz_*)\|
+=\frac{|\delta_k|xy(x+y)}{\sqrt{32}}.
+\tag{4.6}
+$$
+
+对 $k=1,2,3$，$|\delta_k|^2$ 分别为 $2+x,3+x,x^2$，故 $|\delta_k|\ge x$。由 $y(x+y)=xy+x>x^2$ 及 $\kappa_{\varnothing}=x^4$，
+
+$$
+\|v_{\varnothing}(K_9^kz_*)\|
+\ge\frac{x^2y(x+y)}{\sqrt{32}}
+>\frac{x^4}{\sqrt{32}}
+\ge\kappa_{\varnothing}|a_{\varnothing}(K_9^kz_*)|.
+\tag{4.7}
+$$
+
+因此三个 $u_{\varnothing}(K_9^kz_*)$ 都严格为负，令乘积 $H$ 为零。另一方面，III (165.6) 给每个 $u_s(z_*)=x^{2m_s}/32>0$。连续性及非零复缩放不变性使
+
+$$
+\mathcal U=\{[z]:H(z)>0\}
+ \cap\bigcap_{k=1}^3\{[z]:u_{\varnothing}(K_9^kz)<0\}
+\tag{4.8}
+$$
+
+成为包含 $[z_*]$ 的非空射影开集。复用 III (144.12) 的唯一 ready 原轨道稠密性，存在实际有限正向字 $a$ 满足 $[\chi_a]\in\mathcal U$。这个同一 $a$ 适用于每个 $0<\varepsilon<1$；不要求精确制备 $z_*$。$R_{\varnothing}$ 只是验证全域函数取值的数学投影，没有将实际载体限制为空奇位扇区。
+
+事件 $\mathcal E_*$ 的十位 $W$ 依原顺序是 $(b_{-1},\ldots,b_8)$，再与 $I=b_9=0$ 合起来，恰指定原配置 $q=\varnothing$。在读取前律、$Q_+=Q_-$ 和立即调用旧字面终端的绑定下，普通推前给 (4.2)，不需要新读口或隐藏轨迹观察。
+
+最后仅消费 [II][II] (86.6)、II 命题 88.1 的两谱多项式计算：原全载体上的 $\mathcal P_9$ 是投影，故
+$K_9=\zeta[(I-\mathcal P_9)+\zeta\mathcal P_9]$，每个参考平方坐标沿整数次幂只有 $1,\zeta^k,\zeta^{-k}$ 三种频率。已有多项式
+
+$$
+R(s)=(s-1)(s-\zeta)(s-\zeta^{-1})
+=s^3-x^2s^2+x^2s-1
+$$
+
+消去这三种频率，所以 $B_k:=b_{\varnothing}(K_9^k\chi_a)$ 满足
+$B_3+x^2B_1-B_0-x^2B_2=0$。这是对已核对原 $\mathcal P_9$ 的代入，不把 II 定理 86.1 的十三维全上下文重建结论搬到另一作用域。因 $c_{\varnothing}=1$ 且后三个 $H$ 为零，(4.3) 随即成立。III 式 (175.8) 同时给每个 $k$ 的两个边缘等于 $t_i(K_9^k\chi_a)$ 与 $\|N_wK_9^k\chi_a\|^2$；它们各为二次型，故仍被同一个 $R$ 消去。∎
+

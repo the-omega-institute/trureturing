@@ -7,6 +7,8 @@
    digest: A uniform short-interval variance bound controls the dyadic mean square of the forward response. -/
 
 import D5.S3.Arith.Robin.ForwardKernel.MellinConvergence
+import D5.S3.Arith.Robin.ForwardKernel.VarianceTransfer
+import D5.S3.Arith.Robin.ForwardKernel.ProfileKernelDefs
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.MeasureTheory.Function.L2Space
 
@@ -15,6 +17,8 @@ import Mathlib.MeasureTheory.Function.L2Space
 namespace D5.S3.Arith.Robin.ForwardKernel.DyadicMeanSquareUpper
 
 open Set MeasureTheory
+open VarianceTransfer (interval_cauchy_schwarz logarithmic_variance_mono)
+open VarianceTransferDefs (LocallyBoundedMeasurable)
 open OriginalMovingWindowMoment (width weight_pos weight_antitone)
 open MellinWeightedVariation (weight)
 open ActualVonMangoldtBandCompensation (discrepancy)
@@ -28,10 +32,22 @@ set_option backward.isDefEq.respectTransparency.types false
 
 /-- The uniform Saffari–Vaughan estimate for the complete Chebyshev error. -/
 def ShortIntervalMeanSquareBound : Prop :=
-  ∃ C X₀ : ℝ, 0 < C ∧ 2 ≤ X₀ ∧ ∀ X : ℝ, X₀ ≤ X → ∀ θ : ℝ, 0 < θ → θ ≤ 1 →
-    (∫ x in X..(2 * X),
-        ((Chebyshev.psi ((1 + θ) * x) - (1 + θ) * x) - (Chebyshev.psi x - x)) ^ 2) ≤
-      C * θ * X ^ 2 * (Real.log (2 / θ)) ^ 2
+  VarianceTransferDefs.ShortIntervalMeanSquareBoundFor discrepancy
+
+/-- The complete Chebyshev error is measurable and bounded on every finite interval. -/
+theorem discrepancy_locallyBoundedMeasurable : LocallyBoundedMeasurable discrepancy := by
+  refine ⟨MellinConvergence.discrepancy_measurable, ?_⟩
+  intro a b
+  refine ⟨Chebyshev.psi b + (|a| + |b|), by positivity [Chebyshev.psi_nonneg b], ?_⟩
+  intro x hx
+  have hxabs : |x| ≤ |a| + |b| := by
+    rw [abs_le]
+    constructor
+    · linarith [neg_abs_le a, abs_nonneg b, hx.1]
+    · linarith [le_abs_self b, abs_nonneg a, hx.2]
+  exact (abs_sub _ _).trans (add_le_add
+    (by simpa only [abs_of_nonneg (Chebyshev.psi_nonneg x)] using Chebyshev.psi_mono hx.2)
+    hxabs)
 
 private def increment (x θ : ℝ) : ℝ := discrepancy ((1 + θ) * x) - discrepancy x
 
@@ -53,30 +69,6 @@ private lemma increment_bound {X x θ : ℝ} (hX : 0 < X)
       rw [abs_of_nonneg (Chebyshev.psi_nonneg t), abs_of_nonneg ht]
       exact add_le_add (Chebyshev.psi_mono ht') ht')
   exact (abs_sub _ _).trans (by linarith [hb x hx0 (by linarith [hx.2]), hb _ hy0 hy])
-
-private lemma interval_cauchy_schwarz {f : ℝ → ℝ} {b : ℝ} (hb : 0 < b)
-    (hf : IntervalIntegrable f volume 0 b)
-    (hf2 : IntervalIntegrable (fun t => f t ^ 2) volume 0 b) :
-    (∫ t in (0 : ℝ)..b, f t) ^ 2 ≤ b * ∫ t in (0 : ℝ)..b, f t ^ 2 := by
-  let μ := volume.restrict (Ioc (0 : ℝ) b)
-  have hfi : Integrable f μ :=
-    (intervalIntegrable_iff_integrableOn_Ioc_of_le hb.le).mp hf
-  have hf2i : Integrable (fun t => f t ^ 2) μ :=
-    (intervalIntegrable_iff_integrableOn_Ioc_of_le hb.le).mp hf2
-  have hmem : MemLp f (ENNReal.ofReal 2) μ := by
-    norm_num only [ENNReal.ofReal_ofNat]
-    exact (memLp_two_iff_integrable_sq hfi.aestronglyMeasurable).mpr hf2i
-  have hh := integral_mul_norm_le_Lp_mul_Lq Real.HolderConjugate.two_two hmem
-    (memLp_const (1 : ℝ) : MemLp (fun _ : ℝ => (1 : ℝ)) (ENNReal.ofReal 2) μ)
-  have hμ : μ.real Set.univ = b := by simp [μ, Real.volume_Ioc, hb.le]
-  simp only [Real.norm_eq_abs, abs_one, mul_one, Real.rpow_two, sq_abs,
-    one_pow, integral_const, smul_eq_mul, mul_one, hμ, ← Real.sqrt_eq_rpow] at hh
-  have hnorm : |∫ t, f t ∂μ| ≤ Real.sqrt (∫ t, f t ^ 2 ∂μ) * Real.sqrt b :=
-    (norm_integral_le_integral_norm f).trans hh
-  have hs := (sq_le_sq₀ (abs_nonneg _) (by positivity)).mpr hnorm
-  rw [sq_abs, mul_pow, Real.sq_sqrt (integral_nonneg (fun _ => sq_nonneg _)),
-    Real.sq_sqrt hb.le] at hs
-  simpa only [intervalIntegral.integral_of_le hb.le, μ, mul_comm] using hs
 
 private lemma increment_square_integrable {X a : ℝ} (hX : 0 < X)
     (_ha : 0 ≤ a) (ha1 : a ≤ 1) :
@@ -153,7 +145,13 @@ private lemma response_theta {x : ℝ} (hx : 0 < x) :
     funext θ
     simp only [increment, show x + θ * x = (1 + θ) * x by ring]
   rw [he] at hs
-  rw [Transport.forwardResponse, ← hs]
+  rw [ProfileKernelDefs.forwardResponse_eq_profileResponse]
+  simp only [ProfileKernelDefs.profileResponse, ProfileKernelDefs.priceRatio,
+    VarianceTransferDefs.increment, one_mul]
+  change Real.sqrt x / width x ^ 2 *
+    (∫ u in (0 : ℝ)..width x,
+      (discrepancy (x + u) - discrepancy x) * (weight (x + u) / weight x)) = _
+  rw [← hs]
   ring
 
 private lemma response_square_le {x : ℝ} (hx : 1 < x) :
@@ -184,42 +182,6 @@ private lemma response_square_le {x : ℝ} (hx : 1 < x) :
   rw [response_theta hx0, mul_pow, div_pow, mul_pow, Real.sq_sqrt hx0.le]
   have hs := mul_le_mul_of_nonneg_left h (show 0 ≤ x ^ 2 / width x ^ 4 by positivity)
   convert hs using 1 <;> field_simp
-
-private lemma logarithmic_variance_mono :
-    MonotoneOn (fun t : ℝ => t * (Real.log (2 / t)) ^ 2) (Ioc 0 (1 / 16)) := by
-  have he (t : ℝ) (ht : 0 < t) : Real.log (2 / t) = Real.log 2 - Real.log t :=
-    Real.log_div (by norm_num) ht.ne'
-  have hm : MonotoneOn (fun t : ℝ => t * (Real.log 2 - Real.log t) ^ 2)
-      (Ioc 0 (1 / 16)) := by
-    apply monotoneOn_of_hasDerivWithinAt_nonneg (f' := fun t =>
-      (Real.log 2 - Real.log t) ^ 2 - 2 * (Real.log 2 - Real.log t)) (convex_Ioc _ _)
-    · exact continuousOn_id.mul ((continuousOn_const.sub
-        (Real.continuousOn_log.mono (fun t ht => ne_of_gt ht.1))).pow 2)
-    · intro t ht
-      have ht0 : 0 < t := (interior_subset ht).1
-      have hd := (hasDerivAt_id t).mul
-        (((hasDerivAt_const t (Real.log 2)).sub (Real.hasDerivAt_log ht0.ne')).pow 2)
-      apply HasDerivAt.hasDerivWithinAt
-      convert hd using 1
-      · rfl
-      · dsimp
-        field_simp
-        ring
-    · intro t ht
-      have ht0 : 0 < t := (interior_subset ht).1
-      have ht16 : t ≤ 1 / 16 := (interior_subset ht).2
-      have hlog : 2 ≤ Real.log 2 - Real.log t := by
-        have h := Real.log_le_log ht0 ht16
-        have hl : Real.log (1 / 16 : ℝ) = -4 * Real.log 2 := by
-          rw [Real.log_div (by norm_num) (by norm_num)]
-          norm_num only [Real.log_one, zero_sub]
-          rw [show (16 : ℝ) = 2 ^ (4 : ℕ) by norm_num, Real.log_pow]
-          ring
-        rw [hl] at h
-        linarith [Real.log_two_gt_d9]
-      nlinarith
-  intro t ht a ha hta
-  simpa only [he t ht.1, he a ha.1] using hm ht ha hta
 
 private lemma response_rectangle_le {X a : ℝ} (hX : 1 < X)
     (ha : 0 < a) (ha1 : a ≤ 1) (hXa : X ^ (-1 / 5 : ℝ) ≤ a)
