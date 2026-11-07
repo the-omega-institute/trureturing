@@ -889,10 +889,12 @@ private theorem canonicalK_clear (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
   rw [detG_formula p hp]
   dsimp only [kDenominator, kNumerator, kNumeratorTerms,
     List.map_cons, List.map_nil, List.sum_cons, List.sum_nil]
-  simp only [hPoly_identity] at hH ⊢
+  field_simp [h0, h1, h2, h01, h02, h12, hq01, hq02, hq12,
+    hu01, hu02, hu12, hH]
+  simp only [hPoly_identity]
   unfold lam mu delta g q aux at *
   field_simp [h0, h1, h2, h01, h02, h12, hq01, hq02, hq12,
-    hu01, hu02, hu12, hH] <;> ring
+    hu01, hu02, hu12] <;> ring
 
 private theorem residualT_clear (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i) :
     residualT p*gapDen (p 0) (p 1) (p 2) = tNumerator (p 0) (p 1) (p 2) := by
@@ -1012,17 +1014,15 @@ private theorem baseG_posDef (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
       simp only [dotProduct, Matrix.mulVec, Fin.sum_univ_three, Pi.star_apply,
         star_trivial, baseG]
       simp only [g_self (hp 0), g_self (hp 1), g_self (hp 2), g_symm]
-      dsimp only [y0, y1, d0, d1, d2]
+      dsimp only [y0, y1, d2]
+      field_simp [hd0.ne', hd1.ne']
+      dsimp only [d0, d1]
       unfold detG
-      try simp only [g_symm]
+      simp only [g_symm]
       have hn0 := (hp 0).ne'
       have hn1 := (hp 1).ne'
       have hn2 := (hp 2).ne'
-      have hn := hd1.ne'
-      dsimp only [d1] at hn
-      field_simp [hn1] at hn
-      ring_nf at hn
-      field_simp [hn0, hn1, hn2, hn] <;> ring
+      field_simp [hn0, hn1, hn2] <;> ring
     rw [hid]
     have hn0 : 0 ≤ d0*y0^2 := mul_nonneg hd0.le (sq_nonneg _)
     have hn1 : 0 ≤ d1*y1^2 := mul_nonneg hd1.le (sq_nonneg _)
@@ -1052,11 +1052,10 @@ private theorem baseG_dual (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
     simp [baseG, dualG, Matrix.mul_apply, Fin.sum_univ_three,
       g_self (hp 0), g_self (hp 1), g_self (hp 2), g_symm]
   all_goals
-    unfold detG at *
-    try simp only [g_symm] at *
-    field_simp [hn0, hn1, hn2] at hd
-    ring_nf at hd
-    field_simp [hd, hn0, hn1, hn2] <;> ring
+    field_simp [hd, hn0, hn1, hn2]
+    unfold detG
+    simp only [g_symm]
+    field_simp [hn0, hn1, hn2] <;> ring
 
 /-- The residual allocation works for every three positive budgets, for either
 sign of K. Its proof is elementary ordered-field arithmetic. -/
@@ -1663,7 +1662,10 @@ private theorem cyclic_moment (p : Fin 3 → ℝ) (hp : ∀ i, 0 < p i)
           | exact (hij rfl).elim
           | exact (hik rfl).elim
           | exact (hjk rfl).elim
-          | (simp only [dot_comm, tau_symm] at hc ⊢ <;> linear_combination hc)
+          | (simp only [dot_comm (m p 2 0) (m p 1 0),
+              dot_comm (m p 2 1) (m p 0 1), dot_comm (m p 1 2) (m p 0 2),
+              tau_symm (p 1) (p 0), tau_symm (p 2) (p 0),
+              tau_symm (p 2) (p 1)] at hc ⊢ <;> linear_combination hc)
 
 section OrderedSquares
 variable {n : Type u} [Fintype n] [DecidableEq n]
@@ -1719,7 +1721,6 @@ private theorem ordered_row_square {ι : Type*} [Fintype ι]
     ← Finset.mul_sum, Finset.sum_mul, realTrace_sum]
   simp only [add_mul, realTrace_add, Finset.sum_mul, realTrace_sum,
     Finset.sum_add_distrib]
-  ring
 private theorem rowEnergy_nonneg {ι : Type*} [Fintype ι]
     (S W : Matrix n n ℂ) (M V : ι → Matrix n n ℂ) (hS : S.PosSemidef) :
     0 ≤ rowEnergy S W M V := by
@@ -2440,8 +2441,6 @@ theorem actual_threeLevel_supplier : ThreeLevelSupplierTarget.{u} := by
     linarith only [hpositive, henergy, hshift]
   · exact coincidentLevel_proof n level p hp hinj S hS Z hZ
 
-#print axioms actual_threeLevel_supplier
-
 
 section PDContinuation
 variable {n : Type u} [Fintype n] [DecidableEq n]
@@ -2906,7 +2905,5 @@ theorem actual_threeLevel_PD_sylvester
       0 ≤ 4*(S^3-X^3).trace.re-6*(X*D).trace.re-6*(D*Y).trace.re ∧
       ((4*(S^3-X^3).trace.re-6*(X*D).trace.re-6*(D*Y).trace.re = 0) ↔ P*S = S*P) := by
   exact pdSylvester_proof n level p hp S hS
-
-#print axioms actual_threeLevel_PD_sylvester
 
 end D5.S3.Quantum.Matrix.HsfThreeLevelSupplier
