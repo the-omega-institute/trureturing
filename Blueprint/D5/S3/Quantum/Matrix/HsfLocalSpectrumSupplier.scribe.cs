@@ -108,6 +108,26 @@ internal sealed class HsfLocalSpectrumSupplierDocument : IScribeDocumentDefiniti
                         + "source-selection reconstruction and escape evidence remain "
                         + "unresolved under issue 23103, so declared_validated is not claimed."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("hsf-actual-shifted-supplier-identity"),
+                DeclarationHandle.Create(Module + ".actual_shifted_supplier_identity"),
+                H("The ordered identity for a general Hermitian direction"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Let n be any finite index type and p_i positive real labels. "
+                        + "Let S be Hermitian and Z an arbitrary complex matrix. Define P, F "
+                        + "and the actual factorial-normalized derivatives B_j as above, now "
+                        + "using this S without a neighborhood assumption. Set X_ij=tau_ij S_ij "
+                        + "and Q_ij=sum over k of ((2/3) tau_ik tau_kj+3 c(p_i,p_j,p_k)) "
+                        + "S_ik S_kj, where c is the second spectral kernel. Put W=Z+X/3.")),
+                    Paragraph(Text("Writing J=Re Tr(B_3+2 Z B_2+B_1 Z squared-"
+                        + "(5/48) B_1 cubed), the identity is 6 J=(4 Re Tr(S cubed)-"
+                        + "Re Tr(X cubed))/3-4 Re Tr(Q W)+4 Re Tr(X W W). "
+                        + "It follows from the actual first and second CFC coefficients, "
+                        + "the actual cubic trace normalization and cyclic trace algebra. "
+                        + "The order of every matrix product is retained. This identity "
+                        + "alone imposes no sign on J. Empty carriers, repeated positive "
+                        + "labels and arbitrary finite multiplicities are included."))),
+                DescribeRole.Theorem),
             Paragraph(Text("The proof reuses GNSMatrix's Frobenius-square trace identity, "
                 + "CartesianVariance.trace_product_cauchy and Matrix.frobenius_norm_mul. "
                 + "It extends the finite spectral coefficient estimates; it does not "
