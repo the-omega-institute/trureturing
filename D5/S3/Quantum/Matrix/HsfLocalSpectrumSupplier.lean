@@ -1011,7 +1011,10 @@ private theorem cyclicGamma_bounds {a b c : ℝ}
       ((a-b)^2*cyclicPolynomial a b c+(b-c)^2*cyclicPolynomial b c a+
         (c-a)^2*cyclicPolynomial c a b) := by
     unfold cyclicGamma spectralTau spectralKernel Π
-    simp only [Real.sqrt_mul ha.le, Real.sqrt_mul hb.le, Real.sqrt_mul hc.le]
+    simp only [Real.sqrt_mul ha.le, Real.sqrt_mul hb.le, Real.sqrt_mul hc.le,
+      show spectralDen b a = spectralDen a b from spectralDen_comm _ _,
+      show spectralDen c b = spectralDen b c from spectralDen_comm _ _,
+      show spectralDen a c = spectralDen c a from spectralDen_comm _ _]
     field_simp
     ring_nf
     rw [hs₁, hs₂, hs₃]
@@ -1087,7 +1090,8 @@ private theorem defect_kernel_uniform {a b c : ℝ}
   have hid : 3*spectralKernel a b c-spectralTau a c*spectralTau c b/3 =
       f*((c-a)*linearPolynomial a b c+(c-b)*linearPolynomial b a c) := by
     unfold spectralKernel spectralTau f Π
-    rw [Real.sqrt_mul ha.le, Real.sqrt_mul hc.le, Real.sqrt_mul ha.le]
+    simp only [Real.sqrt_mul ha.le, Real.sqrt_mul hc.le,
+      show spectralDen c b = spectralDen b c from spectralDen_comm _ _]
     have hs := Real.sq_sqrt hc.le
     field_simp
     ring_nf
@@ -1291,7 +1295,7 @@ private theorem trace_defect_cycle (p : n → ℝ) (H : Matrix n n ℂ) :
     apply Finset.sum_congr rfl
     intro k _
     dsimp only [f, phase]
-    rw [spectralKernel_comm (p j) (p i) (p k), spectralTau_comm (p i) (p k)]
+    rw [spectralKernel_comm (p j) (p i) (p k)]
     push_cast
     ring
   rw [hentry]
@@ -1440,27 +1444,45 @@ private theorem cubic_uniform_bound {d : ℕ} {p : Fin d → ℝ} (hp : ∀ i, 0
     have ht := spectralTau_bounds (hp i) (hp j)
     have hu := spectralTau_bounds (hp j) (hp k)
     have hv := spectralTau_bounds (hp k) (hp i)
+    have ht₀ := ht.1.le
+    have hu₀ := hu.1.le
+    have hv₀ := hv.1.le
+    have ht₁ : 0 ≤ 1-spectralTau (p i) (p j) := sub_nonneg.mpr ht.2
+    have hu₁ : 0 ≤ 1-spectralTau (p j) (p k) := sub_nonneg.mpr hu.2
+    have hv₁ : 0 ≤ 1-spectralTau (p k) (p i) := sub_nonneg.mpr hv.2
+    have htu : spectralTau (p i) (p j)*spectralTau (p j) (p k) ≤ 1 := by
+      simpa using mul_le_mul ht.2 hu.2 hu₀ (by norm_num : (0 : ℝ) ≤ 1)
     have hn : 0 ≤ 1-spectralTau (p i) (p j)*spectralTau (p j) (p k)*spectralTau (p k) (p i) := by
-      have h := mul_le_mul (mul_le_mul ht.2 hu.2 hu.1.le (by norm_num : (0 : ℝ) ≤ 1)) hv.2 hv.1.le (by norm_num : (0 : ℝ) ≤ 1*1)
+      have h := mul_le_mul htu hv.2 hv₀ (by norm_num : (0 : ℝ) ≤ 1)
       norm_num at h
       linarith
     have hb : 1-spectralTau (p i) (p j)*spectralTau (p j) (p k)*spectralTau (p k) (p i) ≤
         spectralRho (p i) (p j)^2+spectralRho (p j) (p k)^2+spectralRho (p k) (p i)^2 := by
       rw [spectralRho_sq (hp i) (hp j), spectralRho_sq (hp j) (hp k), spectralRho_sq (hp k) (hp i)]
-      have h₁ : 0 ≤ (1-spectralTau (p i) (p j))*(1-spectralTau (p j) (p k)) := by positivity
-      have h₂ : 0 ≤ (1-spectralTau (p k) (p i))*(1-spectralTau (p i) (p j)*spectralTau (p j) (p k)) := by positivity
-      have h₃ : 0 ≤ spectralTau (p i) (p j)*(1-spectralTau (p i) (p j)) := by positivity
-      have h₄ : 0 ≤ spectralTau (p j) (p k)*(1-spectralTau (p j) (p k)) := by positivity
-      have h₅ : 0 ≤ spectralTau (p k) (p i)*(1-spectralTau (p k) (p i)) := by positivity
+      have h₁ := mul_nonneg ht₁ hu₁
+      have h₂ := mul_nonneg hv₁ (sub_nonneg.mpr htu)
+      have h₃ := mul_nonneg ht₀ ht₁
+      have h₄ := mul_nonneg hu₀ hu₁
+      have h₅ := mul_nonneg hv₀ hv₁
       nlinarith only [h₁, h₂, h₃, h₄, h₅]
     rw [abs_of_nonneg hn]
     nlinarith only [mul_le_mul_of_nonneg_right hb
       (mul_nonneg (mul_nonneg (norm_nonneg (H i j)) (norm_nonneg (H j k))) (norm_nonneg (H k i)))]
   have hs := cyclicMass_bound hp hH
-  have hsum := abs_add_le (4*(tr (H^3)-tr ((schurFirst p H)^3)).re)
-    (-6*(tr (schurFirst p H*quadraticDefect p H)).re)
-  norm_num [Complex.sub_re, Complex.mul_re, abs_mul] at hsum ⊢
-  linarith
+  calc
+    _ = |4*(tr (H^3)-tr ((schurFirst p H)^3)).re+
+        (-6)*(tr (schurFirst p H*quadraticDefect p H)).re| := by
+      congr 1
+      norm_num [Complex.sub_re, Complex.mul_re]
+      ring
+    _ ≤ |4*(tr (H^3)-tr ((schurFirst p H)^3)).re|+
+        |(-6)*(tr (schurFirst p H*quadraticDefect p H)).re| := abs_add_le _ _
+    _ = 4*|(tr (H^3)-tr ((schurFirst p H)^3)).re|+
+        6*|(tr (schurFirst p H*quadraticDefect p H)).re| := by
+      rw [abs_mul, abs_mul]
+      norm_num
+    _ ≤ 4*cyclicMass p H+6*((3/4)*cyclicMass p H) := by linarith only [hc, hAD]
+    _ ≤ _ := by nlinarith only [hs]
 
 private theorem quadratic_remainder_uniform {d : ℕ}
     (A D R : Matrix (Fin d) (Fin d) ℂ) (hR : R.IsHermitian)
