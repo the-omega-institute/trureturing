@@ -2683,3 +2683,69 @@ $$
 As $w$ ranges over $\mathcal W_u$, (193.5) is exactly (193.2)--(193.3). Taking $w=1$ shows that $Pg$ and $P^2g$ belong to $\mathcal M_u$ and that $gh$ is orthogonal to $1$; the missing $g$ mode is supplied by $\mathcal C(h,1,1)=0$ in Section 192. $\square$
 
 Thus a rank-three radical must satisfy one weighted annihilation system and a rank-four radical must satisfy two independent directions in the same system, in addition to lying in $\mathcal S_q^{\perp_m}$. This is a necessary barrier for the remaining out-of-plane branches, not a nonexistence proof: the dimensions of $\mathcal M_u$ and $\mathcal N_u$ may collapse, and the residual-zero partition, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization remain open.
+
+## 194. A rank-deficit detector for the radical branches
+
+The annihilation spaces of Section 193 give a finite-dimensional test before solving the remaining nonlinear equations. Their left nullities must be large enough to contain the radical dimensions forced by the rank trichotomy.
+
+**Definition 194.1 (weighted mode matrices).** Let $u$ be a full-zero bounded partition, put $r_u=\dim\mathcal W_u$, and choose a basis $(w_1,\ldots,w_{r_u})$ of $\mathcal W_u$. Define linear maps
+
+$$
+\begin{aligned}
+\mathsf L_u:\mathcal W_u&\longrightarrow\mathbb R^{2r_u},
+&\mathsf L_u(h)
+  &=\bigl(\langle h,P(gw_j)\rangle_m,
+          \langle h,P^2(gw_j)\rangle_m\bigr)_{j=1}^{r_u},\\
+\mathsf K_u:\mathcal W_u&\longrightarrow\mathbb R^{2r_u},
+&\mathsf K_u(h)
+  &=\bigl(\langle gh,Pw_j\rangle_m,
+          \langle gh,P^2w_j\rangle_m\bigr)_{j=1}^{r_u}.
+\end{aligned}
+\tag{194.1}
+$$
+
+Changing the basis of $\mathcal W_u$ only applies an invertible change of coordinates to the displayed families, so their kernels are intrinsic.
+
+**Proposition 194.2 (forced nullity).** If all sixty-four residuals of $u$ vanish, then
+
+$$
+\mathcal R_u\subseteq\ker\mathsf L_u\cap\ker\mathsf K_u,
+\tag{194.2}
+$$
+
+and consequently
+
+$$
+\dim\ker\mathsf L_u\ge r_u-2,
+\qquad
+\dim\ker\mathsf K_u\ge r_u-2.
+\tag{194.3}
+$$
+
+Thus a rank-three full-zero partition requires each map in (194.1) to have a nonzero kernel, while a rank-four full-zero partition requires each to have nullity at least two. If either nullity is smaller than $r_u-2$, that rank branch is impossible.
+
+*Proof.* Proposition 193.2 gives, for every $h\in\mathcal R_u$ and every basis element $w_j$,
+
+$$
+\langle h,P(gw_j)\rangle_m
+=\langle h,P^2(gw_j)\rangle_m
+=0,
+$$
+
+and
+
+$$
+\langle gh,Pw_j\rangle_m
+=\langle gh,P^2w_j\rangle_m
+=0.
+$$
+
+These are exactly the two coordinate families in (194.1), proving (194.2). Proposition 191.2 gives
+
+$$
+\dim\mathcal R_u=r_u-2.
+$$
+
+The inclusion (194.2) then gives both nullity inequalities in (194.3). The final exclusion statement is the contrapositive of either inequality. $\square$
+
+The test is finite-dimensional and basis-independent: a proposed rank-three or rank-four fibre must first exhibit the required nullity in both weighted mode matrices before its nonlinear residual equations can be solved. This is a necessary filter, not a nonexistence theorem; nullity may occur accidentally, and arbitrary partition realization, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization remain open.
