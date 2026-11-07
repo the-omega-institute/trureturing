@@ -66,17 +66,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTw
 
 For every subset of registers, including the empty and full subsets, the partial transpose of a summand equals conjugation of the same cut of the input by the cut diagonal. This is the actual product-basis transpose.
 
-**Theorem 1.6 (diagonalAction fullyPPT).**
-
-Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.diagonalAction_fullyPPT`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.diagonalAction_fullyPPT` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-All nonempty proper PPT inequalities of the input survive each summand.
+Each proper-cut PPT inequality is transported by the actual cut diagonal conjugation before any averaging; the empty and full cuts remain part of the application.
 
 ## Application: unitary conjugation at every cut
 
@@ -86,7 +76,7 @@ For every S : Finset I, cutPhase S u x instead conjugates u(x(i)) exactly when i
 
 These applications of the existing scalar and matrix results include empty index types and require no inverse of E, positivity, nonsingularity or trace normalization. In occupationTwirl the required local norm-one premise is supplied by occupationPhase_norm, so the finite average is an average of actual tensor unitaries. Its exact occupation action is proved by occupation_character_orthogonality and occupationTwirl_apply.
 
-**Theorem 1.7 (edgeMarginal diagonalAction).**
+**Theorem 1.6 (edgeMarginal diagonalAction).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.edgeMarginal_diagonalAction`
 
@@ -98,7 +88,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTw
 
 For norm-one local phases, every ordered two-register marginal transforms by the corresponding two-site local diagonal conjugation. Complement factors cancel exactly and no dimension factor occurs.
 
-**Theorem 1.8 (diagonalAction bose).**
+**Theorem 1.7 (diagonalAction bose).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.diagonalAction_bose`
 
@@ -110,7 +100,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTw
 
 Actual full Bose support is retained, using column symmetry and the canonical symmetric projector.
 
-**Definition 1.9 (diagonalAverage).**
+**Definition 1.8 (diagonalAverage).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.diagonalAverage`
 
@@ -130,7 +120,7 @@ The full symmetric-projector sandwich is preserved by the diagonal average whene
 
 A prescribed ordered marginal fixed by every local diagonal conjugation is preserved by the finite average, with its original unnormalized trace.
 
-**Definition 1.10 (occupationPhase).**
+**Definition 1.9 (occupationPhase).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.occupationPhase`
 
@@ -142,7 +132,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTw
 
 Independent local phases are sampled from the (r+1)-st roots of unity. Counts in words of length r are strictly smaller than r+1, so occupation characters cannot alias.
 
-**Theorem 1.11 (occupation character orthogonality).**
+**Theorem 1.10 (occupation character orthogonality).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.occupation_character_orthogonality`
 
@@ -154,7 +144,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTw
 
 The finite character sum is the group cardinality for equal occupations and zero for distinct occupations. Separation is proved from actual occupation counts.
 
-**Definition 1.12 (occupationTwirl).**
+**Definition 1.11 (occupationTwirl).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.occupationTwirl`
 
@@ -166,7 +156,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTw
 
 The explicit finite diagonal-unitary average uses these independent root-of-unity phases on r actual tensor registers.
 
-**Theorem 1.13 (occupationTwirl apply).**
+**Theorem 1.12 (occupationTwirl apply).**
 
 Lean statement: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.occupationTwirl_apply`
 
@@ -189,7 +179,6 @@ The same finite average transports every fully PPT cut and supplies an existence
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.cutPhase`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.diagonalAction`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.diagonalAction_bose`
-- Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.diagonalAction_fullyPPT`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.diagonalAction_posSemidef`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.diagonalAverage`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseOccupationTwirl.edgeMarginal_diagonalAction`

@@ -27,19 +27,11 @@ set_option backward.isDefEq.respectTransparency false
 
 variable {n : ℕ}
 
-/-- The symmetric P coordinates of the original upper-triangular Y weights. -/
-def coordinates (Y : Fin n → Fin n → ℝ) : Matrix (Fin n) (Fin n) ℝ :=
-  fun i j => if i = j then Y i i else (Y (min i j) (max i j)) / 2
-
 /-- The actual LDUI Dicke operator with diagonal weight P_ii and
 off-diagonal normalized-Dicke weight 2 P_ij. -/
 def ldui (P : Matrix (Fin n) (Fin n) ℝ) :
     Matrix (Fin n × Fin n) (Fin n × Fin n) ℂ :=
   dickeOperator (fun i j => if i = j then P i i else 2 * P i j)
-
-/-- The actual root-transposed CLDUI companion. -/
-def cldui (P : Matrix (Fin n) (Fin n) ℝ) :
-    Matrix (Fin n × Fin n) (Fin n × Fin n) ℂ := pairRootTranspose (ldui P)
 
 open private dicke_pair_supported from
   D5.S3.Quantum.Entanglement.SymmetricExtensions.DickeExtension

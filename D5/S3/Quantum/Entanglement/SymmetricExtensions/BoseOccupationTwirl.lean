@@ -74,14 +74,6 @@ theorem partialTranspose_diagonalAction (S : Finset I) (u : L → ℂ)
           E (S.piecewise y x) (S.piecewise x y) := by ring
     _ = _ := by rw [transposed_phase]; ring
 
-/-- The same proper-cut PPT inequalities survive each diagonal tensor summand. -/
-theorem diagonalAction_fullyPPT (u : L → ℂ)
-    (E : Matrix (I → L) (I → L) ℂ) (hE : FullyPPT E) :
-    FullyPPT (diagonalAction u E) := by
-  intro S hS hp
-  rw [partialTranspose_diagonalAction]
-  exact (hE S hS hp).mul_mul_conjTranspose_same _
-
 private lemma phase_unit (u : L → ℂ) (hu : ∀ a, ‖u a‖ = 1) (x : I → L) :
     tensorPhase u x * star (tensorPhase u x) = 1 := by
   have hn : ‖tensorPhase u x‖ = 1 := by simp [tensorPhase, norm_prod, hu]

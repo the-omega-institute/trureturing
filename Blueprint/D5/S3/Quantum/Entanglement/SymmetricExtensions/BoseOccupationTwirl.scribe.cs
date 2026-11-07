@@ -40,12 +40,7 @@ internal sealed class BoseOccupationTwirlDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every subset of registers, including the empty and full subsets, the partial transpose of a summand equals conjugation of the same cut of the input by the cut diagonal. This is the actual product-basis transpose."))),
                 DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("boseoccupationtwirl-diagonalaction-fullyppt"),
-                DeclarationHandle.Create(Prefix + "diagonalAction_fullyPPT"),
-                H("diagonalAction fullyPPT"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("All nonempty proper PPT inequalities of the input survive each summand."))),
-                DescribeRole.Theorem),
+            Paragraph(Text("Each proper-cut PPT inequality is transported by the actual cut diagonal conjugation before any averaging; the empty and full cuts remain part of the application.")),
             new DocumentBlock.Section(H("Application: unitary conjugation at every cut"), Blocks(
                 Paragraph(Text("Let I and L be arbitrary finite types and u : L to Complex satisfy norm(u(a))=1 for every a. For each computational word x : I to L, tensorPhase u x is the product over i of u(x(i)). The norm-product identity gives norm(tensorPhase u x)=1, and Complex.mul_conj' gives tensorPhase u x times its complex conjugate equal to one. Matrix.diagonal_conjTranspose and Matrix.diagonal_mul_diagonal therefore give D D-adjoint=1 for D=diagonal(tensorPhase u). Matrix.mem_unitaryGroup_iff identifies D as an actual unitary matrix.")),
                 Paragraph(Text("For every S : Finset I, cutPhase S u x instead conjugates u(x(i)) exactly when i belongs to S. Conjugation preserves the norm, so the same norm-product and Complex.mul_conj' calculation gives norm(cutPhase S u x)=1 and cutPhase S u x times its conjugate equal to one. The same diagonal identities and Matrix.mem_unitaryGroup_iff make diagonal(cutPhase S u) unitary. The existing partialTranspose_diagonalAction identity thus expresses every cut of diagonalAction u E as a unitary conjugation of that same cut of E, for arbitrary E, including empty and full cuts.")),
