@@ -112,9 +112,5 @@ internal sealed class HsfThreeLevelSupplierDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Paragraph(Text("These results extend the existing local and two-level actual-CFC "
                 + "suppliers. They assert no supplier for more than three spectral values "
-                + "and no full He–Saunderson–Fawzi conjecture or literature novelty claim.")),
-            Paragraph(Text("Full-telescope typed Reg attempts accompany both new public "
-                + "endpoints. Source-selection reconstruction and escape evidence remain "
-                + "unfinished under https://github.com/the-omega-institute/trureturing/issues/23103. "
-                + "No declared_validated registration is claimed.")))));
+                + "and no full He–Saunderson–Fawzi conjecture or literature novelty claim.")))));
 }
