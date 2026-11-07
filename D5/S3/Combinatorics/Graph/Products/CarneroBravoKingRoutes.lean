@@ -9,6 +9,7 @@ import D5.S3.Combinatorics.Graph.Products.PrescribedSubdivision
 import D5.S3.Combinatorics.Graph.Products.IntegerPolyline
 import Lean.Meta.Eval
 import Lean.Meta.Tactic.AuxLemma
+import Lean.Meta.Tactic.Cbv
 import Lean.Elab.Tactic.ElabTerm
 
 /-!
@@ -652,7 +653,6 @@ private def quoteRawVertex (v : RawVertex) : MetaM Expr := do
     let v ← mkAppOptM ``Subtype.mk #[some (mkConst ``Nat), some pred, some n, some pf]
     return mkApp3 (mkConst ``Sum.inl [.zero, .zero]) oldTy pairTy v
   | .inr p => return mkApp3 (mkConst ``Sum.inr [.zero, .zero]) oldTy pairTy (toExpr p)
-
 open Lean Meta in
 private unsafe def quoteCheckElements (input : Expr) : MetaM (Expr × List Expr) := do
   let ty ← whnf (← inferType input)
@@ -669,11 +669,41 @@ private unsafe def quoteCheckElements (input : Expr) : MetaM (Expr × List Expr)
       return mkApp4 (mkConst ``Prod.mk [.zero, .zero]) rawTy rawTy
         (← quoteRawVertex a) (← quoteRawVertex b)
     return (elt, es)
-
 private theorem checked_all_append {α : Type} (f : α → Bool) (xs ys : List α)
     (hx : xs.all f = true) (hy : ys.all f = true) : (xs ++ ys).all f = true := by
   simp only [List.all_append, hx, hy, Bool.true_and]
-
+open Lean Meta in
+/-- Normalize both sides with checked proofs; stalled computations are not values. -/
+private def kingReductionProof (target : Expr) : MetaM Expr := do
+  let target ← instantiateMVars target
+  let some (_, lhs, rhs) := target.eq? | throwError "Expected a closed equality"
+  if target.hasMVar || target.hasFVar then throwError "Expected a closed equality"
+  let normalize (e : Expr) : MetaM (Expr × Expr) := do
+    match ← Lean.Meta.Tactic.Cbv.cbvEntry e with
+    | .rfl .. => return (e, ← mkEqRefl e)
+    | .step value proof .. => return (value, proof)
+  let (lhsValue, lhsProof) ← normalize lhs
+  let (rhsValue, rhsProof) ← normalize rhs
+  let constructorValue (root : Expr) : MetaM Bool := do
+    let mut pending := [root]
+    repeat
+      let e :: rest := pending | return true
+      pending := rest
+      let e := e.consumeMData
+      if e.isLit || Lean.Meta.Tactic.Cbv.isVal e then continue
+      if ← isProof e then continue
+      let .const name _ := e.getAppFn | return false
+      let .ctorInfo info ← getConstInfo name | return false
+      let args := e.getAppArgs
+      unless args.size == info.numParams + info.numFields do return false
+      for i in [info.numParams:args.size] do
+        pending := args[i]! :: pending
+  unless (← constructorValue lhsValue) && (← constructorValue rhsValue) do
+    throwError "cbv did not finish at constructor values"
+  unless ← isDefEq lhsValue rhsValue do
+    throwError "cbv produced different constructor values"
+  let middle ← mkEqRefl lhsValue
+  mkEqTrans lhsProof (← mkEqTrans middle (← mkEqSymm rhsProof))
 open Lean Meta in
 local elab "king_kernel_all" : tactic => do
   Lean.Elab.Tactic.closeMainGoalUsing `king_kernel_all fun expected _ => do
@@ -690,18 +720,19 @@ local elab "king_kernel_all" : tactic => do
     for block in (es.toChunks 64).reverse do
       let chunk ← mkListLit elt block
       let target ← mkEq (mkApp2 all chunk f) rhs
+      let proof ← kingReductionProof target
       let name ← withOptions (Lean.Elab.async.set · false) <|
-        mkAuxLemma [] target (← mkEqRefl rhs)
+        mkAuxLemma [] target proof
       pf ← mkAppM ``checked_all_append #[f, chunk, assembled, mkConst name, pf]
       assembled ← mkAppM ``List.append #[chunk, assembled]
     let target ← mkEq xs assembled
+    let proof ← kingReductionProof target
     let name ← withOptions (Lean.Elab.async.set · false) <|
-      mkAuxLemma [] target (← mkEqRefl assembled)
+      mkAuxLemma [] target proof
     let listTy ← inferType xs
     let mapper ← withLocalDeclD `l listTy fun l => mkLambdaFVars #[l] (mkApp2 all l f)
     let heq ← mkAppM ``congrArg #[mapper, mkConst name]
     mkAppM ``Eq.trans #[heq, pf]
-
 open Lean Meta in
 /-- The evaluator supplies untrusted tree values. The exact fill equations
 below are checked by the kernel against the original literal enumeration. -/
@@ -726,7 +757,6 @@ private unsafe def quoteOccupancyValue (input : Expr) : MetaM Expr := do
       let r ← quoteTree r
       return mkApp3 node v l r
   quoteTree t
-
 local elab "king_occupancy_value " t:term : tactic => do
   let e ← Lean.Elab.Term.elabTermAndSynthesize t none
   if e.hasMVar || e.hasFVar then throwError "Expected a closed occupancy expression"
@@ -734,18 +764,14 @@ local elab "king_occupancy_value " t:term : tactic => do
   let e ← Lean.instantiateMVars e
   if e.hasMVar || e.hasFVar then throwError "Expected a closed occupancy value"
   Lean.Elab.Tactic.closeMainGoalUsing `king_occupancy_value fun _ _ => pure e
-
 local elab "king_kernel_rfl" : tactic => do
   Lean.Elab.Tactic.closeMainGoalUsing `king_kernel_rfl fun expected _ => do
-    let some (_, _, rhs) := expected.eq? | throwError "Expected a closed equality"
-    let pf ← Lean.Meta.mkEqRefl rhs
+    let pf ← kingReductionProof expected
     let name ← Lean.withOptions (Lean.Elab.async.set · false) <|
       Lean.Meta.mkAuxLemma [] expected pf
     return Lean.mkConst name
-
 private def sourceBucketTree (b : ℕ) : Occupancy RawVertex :=
   bucketTree routingBucket (subdivision.rawVertices originalVertices edgeIndices) rawCoordinate b
-
 private noncomputable def occupancy0 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 0)
 private noncomputable def occupancy1 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 1)
 private noncomputable def occupancy2 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 2)
@@ -762,7 +788,6 @@ private noncomputable def occupancy12 : Occupancy RawVertex := by king_occupancy
 private noncomputable def occupancy13 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 13)
 private noncomputable def occupancy14 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 14)
 private noncomputable def occupancy15 : Occupancy RawVertex := by king_occupancy_value (sourceBucketTree 15)
-
 noncomputable def actualTrees : ℕ → Occupancy RawVertex
   | 0 => occupancy0
   | 1 => occupancy1
@@ -781,7 +806,6 @@ noncomputable def actualTrees : ℕ → Occupancy RawVertex
   | 14 => occupancy14
   | 15 => occupancy15
   | _ => .empty
-
 private theorem occupancy_fill0 : bucketFill routingBucket (subdivision.rawVertices originalVertices edgeIndices) rawCoordinate 0 = some occupancy0 := by king_kernel_rfl
 private theorem occupancy_fill1 : bucketFill routingBucket (subdivision.rawVertices originalVertices edgeIndices) rawCoordinate 1 = some occupancy1 := by king_kernel_rfl
 private theorem occupancy_fill2 : bucketFill routingBucket (subdivision.rawVertices originalVertices edgeIndices) rawCoordinate 2 = some occupancy2 := by king_kernel_rfl
