@@ -164,13 +164,10 @@ private lemma central_convolution (e : ℕ) :
       exact h.symm
     _ = 1 := by rw [negative_one_choose, ← mul_pow]; norm_num
 
-/-- The central coefficients are positive and have the required local square. -/
-theorem central_local_square (e : ℕ) : 0 < central e ∧
+/-- The central coefficients have the required local square. -/
+theorem central_local_square (e : ℕ) :
     (∑ ij ∈ Finset.antidiagonal e, central ij.1 * central ij.2) = 1 := by
-  constructor
-  · dsimp [central]
-    exact div_pos (by exact_mod_cast Nat.centralBinom_pos e) (by positivity)
-  · exact central_convolution e
+  exact central_convolution e
 
 /-- A000120, including its zero value. -/
 def binaryWeight (e : ℕ) : ℕ := (Nat.digits 2 e).sum
@@ -360,22 +357,10 @@ private lemma root_prime_power {p e : ℕ} (hp : Nat.Prime p) :
   rw [ite_eq_right (pow_ne_zero _ hp.ne_zero), hp.factorization_pow,
     Finsupp.prod_single_index (localCoefficient_zero p)]
 
-private lemma root_positive {n : ℕ} (hn : 0 < n) : 0 < root n := by
-  change 0 < if n = 0 then 0 else n.factorization.prod localCoefficient
-  rw [ite_eq_right (Nat.ne_of_gt hn)]
-  apply Finset.prod_pos
-  intro p _
-  dsimp [localCoefficient]
-  split_ifs
-  · exact (central_local_square _).1
-  · exact (central_local_square _).1
-
-/-- The independently constructed rational root is multiplicative and strictly positive. -/
+/-- The independently constructed rational root is multiplicative with the prescribed local values. -/
 theorem root_structure : root.IsMultiplicative ∧
-    (∀ p e, Nat.Prime p → root (p ^ e) = localCoefficient p e) ∧
-    (∀ n, 0 < n → 0 < root n) := by
-  exact ⟨root_multiplicative, fun _ _ hp => root_prime_power hp,
-    fun _ hn => root_positive hn⟩
+    (∀ p e, Nat.Prime p → root (p ^ e) = localCoefficient p e) := by
+  exact ⟨root_multiplicative, fun _ _ hp => root_prime_power hp⟩
 
 private def localExponent (p e : ℕ) : ℕ :=
   if p = 2 then 2 * e - binaryWeight e else e - binaryWeight e
@@ -654,7 +639,7 @@ theorem root_square_prime_power {p e : ℕ} (hp : Nat.Prime p) :
     rw [Nat.pow_div hie hp.pos, root_prime_power hp, root_prime_power hp]
   rw [hs, oddUnitaryCount_prime_power hp]
   by_cases hp2 : p = 2
-  · simp [localCoefficient, hp2, fun e => (central_local_square e).2]
+  · simp [localCoefficient, hp2, central_local_square]
   · simp only [localCoefficient, hp2, ite_false]
     rw [odd_local_square]
     split_ifs <;> simp_all
@@ -718,19 +703,19 @@ theorem whole_block : WholeBlock := by
     congrArg Rat.den (root_source.2 n hn).symm
   have htwo : ∀ e, a (2 ^ e) = 2 ^ halvingSum e := by
     intro e
-    rw [ha _ (by positivity), root_structure.2.1 2 e Nat.prime_two]
+    rw [ha _ (by positivity), root_structure.2 2 e Nat.prime_two]
     exact local_denominators.1 e
   have hodd : ∀ p e, Nat.Prime p → p ≠ 2 →
       a (p ^ e) = 2 ^ (e - binaryWeight e) := by
     intro p e hp hp2
-    rw [ha _ (pow_pos hp.pos _), root_structure.2.1 p e hp]
+    rw [ha _ (pow_pos hp.pos _), root_structure.2 p e hp]
     exact local_denominators.2.1 p e hp hp2
   have hparity : ∀ p e, Nat.Prime p →
       a (p ^ e) = 2 ^ ((2 - p % 2) * e - binaryWeight e) ∧
       (((2 - p % 2) * e - binaryWeight e : ℕ) : ℤ) =
         (2 - (p : ℤ) % 2) * e - binaryWeight e := by
     intro p e hp
-    rw [ha _ (pow_pos hp.pos _), root_structure.2.1 p e hp]
+    rw [ha _ (pow_pos hp.pos _), root_structure.2 p e hp]
     exact local_denominators.2.2 p e hp
   refine ⟨source_solution_unique.1, source_solution_unique.2, ?_, ?_, ?_,
     htwo, hodd, hparity⟩
