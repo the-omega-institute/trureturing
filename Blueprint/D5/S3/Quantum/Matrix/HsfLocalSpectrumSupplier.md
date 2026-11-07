@@ -24,6 +24,24 @@ HsfLocalSpectrumTrace supplies actual quadratic and cubic trace normalization. T
 
 There is no division by r, so H=0 is included. The number of spectral levels and the dimension are unrestricted within finite dimension; complex cycle phases and repeated spectral levels are allowed. The support condition on equal-level blocks is essential to this positive gap. The radius is local in H and can shrink when distinct levels approach one another. This theorem constructs no Sylvester inverse or minimizing Z and proves no global neighborhood, arbitrary direction supplier, or full He–Saunderson–Fawzi conjecture.
 
+**Theorem 1.2 (The uniform Frobenius neighborhood).**
+
+Lean statement: `D5/S3/Quantum/Matrix/HsfLocalSpectrumSupplier.finite_spectrum_uniform_local_supplier`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/HsfLocalSpectrumSupplier.finite_spectrum_uniform_local_supplier` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite dimension d, every positive spectrum p, and arbitrary complex Hermitian H and Z, assume only norm H <= 1/20 in the fixed Frobenius norm. Define the actual function F and its factorial-normalized derivatives B_j exactly as in the preceding theorem, with S=I+H. Put A_ij=tau_ij H_ij and g=norm H squared-norm A squared. Then Re Tr(B_3+2 Z B_2+B_1 Z squared-(5/48) B_1 cubed) >= g/6. The radius is independent of all spectral values and multiplicities. The empty dimension, scalar spectra, repeated levels and all equal-level blocks of H are included. There is no bound on Z.
+
+Set rho(a,b)=sqrt(1-tau(a,b) squared). The exact three-point tau Gram determinant is a squared Vandermonde times a polynomial with 19 positive coefficients, divided by 4 q(a,b) squared q(a,c) squared q(b,c) squared. The proof uses this factorization and elementary square-root algebra to prove the triangle inequality for rho. A positive square-difference decomposition and a coefficient certificate give 0 <= Gamma <= (3/4) sum cyclic rho squared, where Gamma=sum cyclic tau(a,b) k(a,b,c)-tau(a,b)tau(b,c)tau(c,a)/3. The ordered defect kernel satisfies abs(3 k(a,b,c)-tau(a,c)tau(c,b)/3) <= (16/9)(rho(a,c)+rho(c,b)). All identities are proved by exact polynomial algebra, including collisions of spectral levels.
+
+The modulus matrix B_ij=abs H_ij and weighted matrix W_ij=rho_ij abs H_ij satisfy norm B=r and norm W squared=g. Entrywise domination by (16/9)(WB+BW) yields norm D squared <= (1024/81) r squared g. Cyclic relabeling retains the complex products H_ij H_jk H_ki and identifies Tr(A D) with the Gamma-weighted cyclic sum. The rho triangle inequality and Frobenius Cauchy-Schwarz give cyclic mass <= 6 r g and hence abs Re(4 Tr H cubed-4 Tr A cubed-6 Tr(A D)) <= 51 r g. The actual CFC trace completion is reused. For arbitrary R=Z-(I+A)/6, its quadratic remainder is >= -6 norm D squared when r<=1/2. Thus 18 J >= (6-51r-(2048/27)r squared)g >= 3g for r<=1/20. No jet, trace or target inequality is a premise.
+
+This is a local neighborhood theorem. It does not claim the full global HSF conjecture. The exact full-telescope Reg mirror retains the actual derivatives and radius implication; source-selection reconstruction and escape evidence remain unresolved under issue 23103, so declared_validated is not claimed.
+
 The proof reuses GNSMatrix's Frobenius-square trace identity, CartesianVariance.trace_product_cauchy and Matrix.frobenius_norm_mul. It extends the finite spectral coefficient estimates; it does not reprove the radial or two-level certificates. The contextual source is He–Saunderson–Fawzi, arXiv:2502.05627v1 Conjecture 6.2 / DOI 10.1007/s10107-025-02314-0 Conjecture 1. No novelty or external official acceptance claim is made.
 
 The full-telescope typed Reg attempt retains the radius implication and actual CFC readout. Source-selection reconstruction and the escape coordinate remain unfinished under https://github.com/the-omega-institute/trureturing/issues/23103; declared_validated is not claimed.
@@ -31,6 +49,7 @@ The full-telescope typed Reg attempt retains the radius implication and actual C
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Matrix/HsfLocalSpectrumSupplier.finite_spectrum_local_supplier`
+- Truth anchor: `D5/S3/Quantum/Matrix/HsfLocalSpectrumSupplier.finite_spectrum_uniform_local_supplier`
 - Dependency: [D5/S3/Quantum/GNSMatrix](../GNSMatrix.md)
 - Dependency: [D5/S3/Quantum/Matrix/CartesianVariance](CartesianVariance.md)
 - Dependency: [D5/S3/Quantum/Matrix/HsfLocalSpectrumTrace](HsfLocalSpectrumTrace.md)
