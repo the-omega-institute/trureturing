@@ -30,6 +30,16 @@ def logSlope (x : ℝ) : ℝ :=
 /-- The ratio keeps the same center in numerator and denominator. -/
 def weightRatio (x u : ℝ) : ℝ := weight (x + u * width x) / weight x
 
+/-- The price ratio is nonnegative and at most one for nonnegative displacements. -/
+theorem price_bounds {x u : ℝ} (hx : 3 ≤ x) (hu : 0 ≤ u) :
+    0 ≤ priceRatio x u ∧ priceRatio x u ≤ 1 := by
+  have hx1 : 1 < x := by linarith
+  have hy : x ≤ x + u := le_add_of_nonneg_right hu
+  exact ⟨div_nonneg (MellinWeightedVariation.weight_nonneg (by linarith))
+    (OriginalMovingWindowMoment.weight_pos hx1).le,
+    (div_le_one (OriginalMovingWindowMoment.weight_pos hx1)).mpr
+      (OriginalMovingWindowMoment.weight_antitone hx1 hy)⟩
+
 private def slopeDerivative (x : ℝ) : ℝ :=
   (2 - (Real.log x + 1)⁻¹ - ((Real.log x + 1)⁻¹) ^ 2 +
     2 * (Real.log x)⁻¹ + 2 * ((Real.log x)⁻¹) ^ 2) / x ^ 2
@@ -110,28 +120,28 @@ private lemma width_div {x : ℝ} (hx : 0 < x) : width x / x = x ^ (-1 / 5 : ℝ
     _ = x ^ ((4 / 5 : ℝ) - 1) := (Real.rpow_sub hx _ _).symm
     _ = x ^ (-1 / 5 : ℝ) := by norm_num
 
-private lemma ratio_deriv {x u : ℝ} (hx : 1 < x) (hu : 0 ≤ u) :
-    HasDerivAt (fun y => weightRatio y u)
-      (weightRatio x u *
-        (logSlope (x + u * width x) * (1 + (4 / 5 : ℝ) * u * x ^ (-1 / 5 : ℝ)) -
+private lemma priceRatio_deriv {θ x s : ℝ} (hx : 1 < x) (hs : 0 ≤ s) :
+    HasDerivAt (fun y => priceRatio y (s * y ^ θ))
+      (priceRatio x (s * x ^ θ) *
+        (logSlope (x + s * x ^ θ) * (1 + θ * s * x ^ (θ - 1)) -
           logSlope x)) x := by
   have hx0 : 0 < x := by linarith
-  have hy : 1 < x + u * width x := by
-    have hp : 0 ≤ u * width x := mul_nonneg hu (Real.rpow_nonneg hx0.le _)
+  have hy : 1 < x + s * x ^ θ := by
+    have hp : 0 ≤ s * x ^ θ := mul_nonneg hs (Real.rpow_nonneg hx0.le _)
     linarith
   have hw := OriginalMovingWindowMoment.weight_pos hx
   have hdw := OriginalEarlyDivisorQuadrature.weight_deriv hx
   have hdwy := OriginalEarlyDivisorQuadrature.weight_deriv hy
-  have hdx := Real.hasDerivAt_rpow_const (p := (4 / 5 : ℝ)) (Or.inl hx0.ne')
-  have hdy : HasDerivAt (fun y => y + u * width y)
-      (1 + (4 / 5 : ℝ) * u * x ^ (-1 / 5 : ℝ)) x := by
-    convert (hasDerivAt_id x).add (hdx.const_mul u) using 1 <;>
-      first | rfl | (norm_num; ring)
+  have hdx := Real.hasDerivAt_rpow_const (p := θ) (Or.inl hx0.ne')
+  have hdy : HasDerivAt (fun y => y + s * y ^ θ)
+      (1 + θ * s * x ^ (θ - 1)) x := by
+    convert (hasDerivAt_id x).add (hdx.const_mul s) using 1 <;>
+      first | rfl | ring
   have h := (hdwy.comp x hdy).div hdw hw.ne'
   convert h using 1
   · rfl
   · rw [logSlope_eq hx, logSlope_eq hy]
-    unfold weightRatio
+    unfold priceRatio
     simp only [Function.comp_apply]
     field_simp [hw.ne']
     <;> ring
@@ -177,6 +187,58 @@ theorem weightRatio_sub_one {x u : ℝ} (hx : 4 ≤ x) (hu : 0 ≤ u) (hu1 : u �
     _ ≤ 4 * x ^ (-1 / 5 : ℝ) := by
       nlinarith [Real.rpow_pos_of_pos hx0 (-1 / 5 : ℝ)]
 
+/-- The correlated price ratio at any positive sublinear power has a uniformly
+bounded value and a derivative with an additional relative-window factor. -/
+theorem priceRatio_control {θ x s : ℝ} (hθ : 0 < θ)
+    (hx : 4 ≤ x) (hs : 0 ≤ s) :
+    0 ≤ priceRatio x (s * x ^ θ) ∧ priceRatio x (s * x ^ θ) ≤ 1 ∧
+      HasDerivAt (fun y => priceRatio y (s * y ^ θ))
+        (priceRatio x (s * x ^ θ) *
+          (logSlope (x + s * x ^ θ) * (1 + θ * s * x ^ (θ - 1)) -
+            logSlope x)) x ∧
+      |priceRatio x (s * x ^ θ) *
+        (logSlope (x + s * x ^ θ) * (1 + θ * s * x ^ (θ - 1)) -
+          logSlope x)| ≤ (8 + 5 * θ) * s * x ^ (θ - 2) := by
+  have hx0 : 0 < x := by linarith
+  let y := x + s * x ^ θ
+  have hxy : x ≤ y := by
+    dsimp [y]
+    exact le_add_of_nonneg_right (mul_nonneg hs (Real.rpow_nonneg hx0.le _))
+  have hy4 : 4 ≤ y := hx.trans hxy
+  obtain ⟨hratio0, hratio1⟩ := price_bounds (by linarith : 3 ≤ x)
+    (mul_nonneg hs (Real.rpow_nonneg hx0.le _))
+  refine ⟨hratio0, hratio1, priceRatio_deriv (by linarith) hs, ?_⟩
+  have hlog : |logSlope y| ≤ 5 / x := (logSlope_bound hy4).trans (by gcongr)
+  have hdiff := logSlope_lipschitz hx hxy
+  have hp : 0 ≤ θ * s * x ^ (θ - 1) := by positivity
+  have he : y - x = s * x ^ θ := by dsimp [y]; ring
+  have hmain : |logSlope y * (1 + θ * s * x ^ (θ - 1)) - logSlope x| ≤
+      (8 + 5 * θ) * s * x ^ (θ - 2) := by
+    calc
+      _ = |(logSlope y - logSlope x) +
+          logSlope y * (θ * s * x ^ (θ - 1))| := by congr 1; ring
+      _ ≤ |logSlope y - logSlope x| +
+          |logSlope y * (θ * s * x ^ (θ - 1))| := abs_add_le _ _
+      _ ≤ (8 / x ^ 2) * (y - x) + (5 / x) * (θ * s * x ^ (θ - 1)) := by
+        rw [abs_mul, abs_of_nonneg hp]
+        exact add_le_add hdiff (mul_le_mul_of_nonneg_right hlog hp)
+      _ = (8 + 5 * θ) * s * x ^ (θ - 2) := by
+        have hpow : x ^ θ / x ^ 2 = x ^ (θ - 2) := by
+          rw [← Real.rpow_natCast, ← Real.rpow_sub hx0]
+          norm_num
+        have hpow' : x ^ (θ - 1) / x = x ^ (θ - 2) := by
+          calc
+            _ = x ^ (θ - 1) / x ^ (1 : ℝ) := by rw [Real.rpow_one]
+            _ = x ^ ((θ - 1) - 1) := (Real.rpow_sub hx0 _ _).symm
+            _ = _ := by congr 1; ring
+        rw [he]
+        calc
+          _ = 8 * s * (x ^ θ / x ^ 2) + 5 * θ * s * (x ^ (θ - 1) / x) := by ring
+          _ = _ := by rw [hpow, hpow']; ring
+  rw [abs_mul, abs_of_nonneg hratio0]
+  exact (mul_le_mul_of_nonneg_left hmain hratio0).trans
+    (mul_le_of_le_one_left (by positivity) hratio1)
+
 /-- Differentiating the correlated ratio cancels the order 1/x terms.
 The remaining derivative has the additional x^(-1/5) window factor. -/
 theorem weightRatio_control {x u : ℝ} (hx : 4 ≤ x) (hu : 0 ≤ u) (hu1 : u ≤ 1) :
@@ -188,48 +250,14 @@ theorem weightRatio_control {x u : ℝ} (hx : 4 ≤ x) (hu : 0 ≤ u) (hu1 : u �
       |weightRatio x u *
         (logSlope (x + u * width x) * (1 + (4 / 5 : ℝ) * u * x ^ (-1 / 5 : ℝ)) -
           logSlope x)| ≤ 12 * x ^ (-6 / 5 : ℝ) := by
-  have hx0 : 0 < x := by linarith
-  let y := x + u * width x
-  have hxy : x ≤ y := by
-    dsimp [y]
-    exact le_add_of_nonneg_right (mul_nonneg hu (Real.rpow_nonneg hx0.le _))
-  have hy4 : 4 ≤ y := hx.trans hxy
-  have hw := OriginalMovingWindowMoment.weight_pos (by linarith : 1 < x)
-  have hratio0 : 0 ≤ weightRatio x u :=
-    div_nonneg (MellinWeightedVariation.weight_nonneg (by dsimp [y] at hxy; linarith)) hw.le
-  have hratio1 : weightRatio x u ≤ 1 :=
-    (div_le_one hw).2 (OriginalMovingWindowMoment.weight_antitone (by linarith) hxy)
-  refine ⟨hratio0, hratio1, ratio_deriv (by linarith) hu, ?_⟩
-  have hlog : |logSlope y| ≤ 5 / x := (logSlope_bound hy4).trans (by gcongr)
-  have hdiff := logSlope_lipschitz hx hxy
-  have hp : 0 ≤ (4 / 5 : ℝ) * u * x ^ (-1 / 5 : ℝ) := by positivity
-  have he : (y - x) = u * width x := by dsimp [y]; ring
-  have hmain : |logSlope y * (1 + (4 / 5 : ℝ) * u * x ^ (-1 / 5 : ℝ)) -
-      logSlope x| ≤ 12 * x ^ (-6 / 5 : ℝ) := by
-    calc
-      _ = |(logSlope y - logSlope x) +
-          logSlope y * ((4 / 5 : ℝ) * u * x ^ (-1 / 5 : ℝ))| := by congr 1; ring
-      _ ≤ |logSlope y - logSlope x| +
-          |logSlope y * ((4 / 5 : ℝ) * u * x ^ (-1 / 5 : ℝ))| := abs_add_le _ _
-      _ ≤ (8 / x ^ 2) * (y - x) +
-          (5 / x) * ((4 / 5 : ℝ) * u * x ^ (-1 / 5 : ℝ)) := by
-        rw [abs_mul, abs_of_nonneg hp]
-        exact add_le_add hdiff (mul_le_mul_of_nonneg_right hlog hp)
-      _ = 12 * u * x ^ (-6 / 5 : ℝ) := by
-        rw [he, show width x = x * x ^ (-1 / 5 : ℝ) from
-          by simpa only [mul_comm] using (div_eq_iff hx0.ne').mp (width_div hx0)]
-        have heq : x ^ (-1 / 5 : ℝ) / x = x ^ (-6 / 5 : ℝ) := by
-          calc
-            _ = x ^ (-1 / 5 : ℝ) / x ^ (1 : ℝ) := by rw [Real.rpow_one]
-            _ = x ^ ((-1 / 5 : ℝ) - 1) := (Real.rpow_sub hx0 _ _).symm
-            _ = _ := by norm_num
-        calc
-          _ = 12 * u * (x ^ (-1 / 5 : ℝ) / x) := by field_simp; ring
-          _ = _ := by rw [heq]
-      _ ≤ 12 * x ^ (-6 / 5 : ℝ) := by nlinarith [Real.rpow_pos_of_pos hx0 (-6 / 5 : ℝ)]
-  rw [abs_mul, abs_of_nonneg hratio0]
-  exact (mul_le_mul_of_nonneg_left hmain hratio0).trans
-    (by nlinarith [Real.rpow_pos_of_pos hx0 (-6 / 5 : ℝ)])
+  obtain ⟨h0, h1, hd, hb⟩ := priceRatio_control
+    (θ := (4 / 5 : ℝ)) (by norm_num) hx hu
+  rw [show (4 / 5 : ℝ) - 1 = -1 / 5 by norm_num] at hd hb
+  rw [show (8 + 5 * (4 / 5) : ℝ) = 12 by norm_num,
+    show (4 / 5 : ℝ) - 2 = -6 / 5 by norm_num] at hb
+  refine ⟨h0, h1, hd, hb.trans ?_⟩
+  exact mul_le_mul_of_nonneg_right (by linarith : 12 * u ≤ 12)
+    (Real.rpow_nonneg (by linarith) _)
 
 #print axioms weightRatio_control
 
