@@ -1757,7 +1757,7 @@ $$
 
 ## 39. 清分母与法向连接恢复同一个原关系
 
-**定理 39.1（平方分母延伸的良定义）。** 固定 $\xi\in T$，令 $S_\xi=\{f\in\mathcal A:f(\xi)\ne0\}$ 与交换环局部化 $\mathscr A_\xi=S_\xi^{-1}\mathcal A$。点评价在 $\mathcal A$ 上满射到 $\mathbb R$；分式 $f/s$ 为单位恰当且仅当 $f(\xi)\ne0$，此时逆元为 $s/f$。因此这是剩余域为 $\mathbb R$ 的局部环，允许原 $\mathcal A$ 含零因子。在平方分母表示下定义
+**定理 39.1（平方分母延伸的良定义）。** 固定 $\xi\in T$，令 $S_\xi=\{f\in\mathcal A:f(\xi)\ne0\}$ 与交换环局部化 $\mathscr A_\xi=S_\xi^{-1}\mathcal A$，取 [Stacks Project §10.9](https://stacks.math.columbia.edu/tag/00CM) Definitions 10.9.2、10.9.6 的通常环与模定义。点评价在 $\mathcal A$ 上满射到 $\mathbb R$；分式 $f/s$ 为单位恰当且仅当 $f(\xi)\ne0$，此时逆元为 $s/f$。因此这是剩余域为 $\mathbb R$ 的局部环，允许原 $\mathcal A$ 含零因子。在平方分母表示下定义
 
 $$
 \widehat K_\xi\left(\frac{x}{s^2},\frac{y}{r^2}\right)
