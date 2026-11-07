@@ -366,11 +366,11 @@ private theorem eprod (s : Finset ℕ) (v : ℕ → ℕ) :
 private theorem t_formula (e : ℕ) : 2*T e = ((e : ℤ)+1)*((e : ℤ)+2) := by
   have hn := Finset.sum_range_id_mul_two (e+1)
   simp only [Nat.add_sub_cancel] at hn
-  have hz : (∑ k ∈ range (e+1), (k : ℤ))*2 = ((e : ℤ)+1)*e := by
-    exact_mod_cast hn
+  have hz := congrArg (fun m : ℕ => (m : ℤ)) hn
+  simp only [Nat.cast_mul, Nat.cast_sum, Nat.cast_add, Nat.cast_one, Nat.cast_ofNat] at hz
   unfold T
   rw [sum_add_distrib]
-  simp only [sum_const, card_range, nsmul_eq_mul, mul_one]
+  simp only [sum_const, card_range, nsmul_eq_mul, mul_one, Nat.cast_add, Nat.cast_one]
   nlinarith
 
 private theorem u_formula (e : ℕ) : U e = ((e / 2 : ℕ) : ℤ) + 1 := by
