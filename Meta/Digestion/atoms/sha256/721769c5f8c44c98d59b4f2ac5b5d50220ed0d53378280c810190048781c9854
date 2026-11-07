@@ -1,0 +1,16 @@
+**定理 384.1（原消费者的准确前件对应）。** 在 (379.2) 中，375.1 的完整消费者适用于同一原结构。其原前件与结论的对应如下：
+
+| 由原背景与 383.1 取得的关系 | 同一原结构上的结论 |
+| --- | --- |
+| 原 I+SC、同一 sigma、原 Jordan 乘法与同一 $D$ | $\mathcal A_A=\bigoplus_sB(H_{A,s})$，$E_A=(\mathcal A_A)_{\rm sa}$，$C_A=(\mathcal A_A)_+$；$a\cdot b=a\circ b-\mathrm iD_ab$，$D_ab=\mathrm i[a,b]/2$，$[D_a,D_b]=-[L_a,L_b]$，每个幂等元满足 $D_c^2=-P_c/4$。 |
+| 全部原准备、原 $g^0$、原不等正权 $q$ | $\rho_\alpha=B_Ax_\alpha$，$\widehat x_\alpha=\mathcal W_A^{-1}\rho_\alpha$，$\alpha(y)=\tau_A(\rho_\alpha y)=q_A(\widehat x_\alpha,y)$；$\tau_A(\rho_\alpha)=\alpha(u_A)$，包含零、奇异与次归一质量。 |
+| 原 X、同一 $D$ 保持、有序交叉零、乘积张成及实际乘积准备分离 | 每个原实际联合为保留全部中心对的同取向普通复张量，全部原相关输入包括在内；不要求联合 $q$ 或 $B_A$ 因子化。 |
+| 每个旧事件的完整 R、同设备同记录旁接、全部原相关正锥、次幺性与完整效果和 | $\Phi_f=B_BT_f^{\dagger_0}B_A^{-1}$ 为原事件的 CP/TNI 运输，原完整设备事件和为 TP。$\dagger_0$ 是原 $g^0$ 伴随，$B_A$ 是比较运输，不是背景符号 $B_*$。 |
+| 整个 AC、精确 $N_u$、X/Xs、原所选平方根词及其原相关执行 | $\rho\mapsto\sqrt e\rho\sqrt e$ 及 $X\mapsto(\sqrt e\otimes I)X(\sqrt e\otimes I)$；每个原占用失败方向的整个输出为 $\sqrt{I-e}\rho\sqrt{I-e}\otimes\Psi_\ell(p_1)$，其余原方向、中心与端口仍按原失败映射取完整输出。 |
+| 实 Jordan F、同实现实际细记录、原分组／遗忘、具名同数双返回与反向资料 | $S_\ell=\operatorname{Ad}_{K_\ell}$，$U_\ell=q_\ell\operatorname{Ad}_{K_\ell^+}$，$U_\ell S_\ell=q_\ell\mathsf C_{e_\ell}$，$S_\ell U_\ell=q_\ell\mathsf C_{h_\ell}$，$U_\ell=\mathsf C_{e_\ell}U_\ell\mathsf C_{h_\ell}$；原 $q_\ell>0$ 不归一，全部零标签、失败及原反向资料保留。 |
+| 全部原准备、末端效果和每条原合法有限历史 | $\alpha(T_{f_1}\cdots T_{f_m}w)=\tau_{A_m}(w\,\Phi_{f_m}\cdots\Phi_{f_1}(\rho_\alpha))$，覆盖空历史、顺序、按实际记录自适应、已供并行联合、细化／分组／实际遗忘、零／失败／返回／停止。只在原分母为正时取条件概率。 |
+
+这里 $P_c=4(L_c-L_c^2)$，而 $\mathsf C_e(X)=eXe$；二者均不替代 (379.1) 的整支持投影 $Q_c$。全部原设备、端口、细记录与失败身份保持，不将数学 Kraus 分解变成实际记录，不以同效果替换旧设备自己的完整输出。
+
+证明。383.1 已在各自同一背景中取得 375.1 的全部入口。逐项应用该定理及其原 353.1、361.1 消费者即得表中对应；无须重新证明状态、张量或过程重构。闭背景的正延拓只在同一已固定原执行上进行，不把数学极限准备增补为实际准备。整个表使用的是完整原事件、原标量与原历史，原子测试的数学量词没有新增任何物理资源。∎
+

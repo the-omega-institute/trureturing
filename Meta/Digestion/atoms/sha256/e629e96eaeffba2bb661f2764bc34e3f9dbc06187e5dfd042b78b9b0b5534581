@@ -1,0 +1,10 @@
+**定义 15.2（外部先例与仓内接口的对应边界）。** 本增补的承重增量为 `repo-derived` 的固定效果分类 (12.2)、黄金门三个明确纯目标的界 (13.3)，以及对原菜单和完整终端的 (14.5)–(14.9) 对应；不主张全球文献优先权。所复用供应如下。
+
+| 供应 | 精确对应与保留边界 |
+| --- | --- |
+| E. Haapasalo、J.-P. Pellonpää，[*Optimal quantum observables*, 1705.03636v1](https://arxiv.org/pdf/1705.03636v1)，§2 (1b)、脚注 7 及 §5 | `literature-attested`：随机 smearing、秩一 POVM 与 post-processing clean 背景。其概率矩阵采用输入为行；本卷 $T$ 是该约定的转置。正组合的支撑约束用于 (12.3)，但固定方向、重复射线总权重、仅标量相位的分类及黄金门常数由本编码计算，不能归给一般 clean 性质。 |
+| T. Theurer、D. Egloff、L. Zhang、M. B. Plenio，[*Quantifying Operations with an Application to Coherence*, 1806.07332v2](https://arxiv.org/pdf/1806.07332v2)，Definition 3、(7)、补充 Proposition 15、(35) | `literature-attested`：给定基底退相干 $\Delta$ 时，detection-incoherent 条件为 $\Delta\Phi=\Delta\Phi\Delta$，相应输出对角系数为输入对角的随机后处理。本卷只要求在固定二维码的全部态上满足 (12.1)，不先要求整个 $M_5$ 上的该条件，也不把它与 creation-incoherence 混同。尤其 $U_\star$ 在逻辑计算基为对角门，并不意味着它在本五效果编码中存在随机更新。 |
+| V. I. Yashin、E. O. Kiktenko、A. S. Mastiukova、A. K. Fedorov，[*Minimal informationally complete measurements for probability representation of quantum dynamics*, 2006.13727v2](https://arxiv.org/pdf/2006.13727v2)，§II A、II D、(22)–(23) | `literature-attested`：信息完备概率表示中的通道一般由允许负系数的 pseudostochastic 矩阵描述。该文以 $d^2$ 个效果的 MIC 及其对偶基为前提；本卷五效果含一条重复射线，不能直接冒用其唯一 MIC 矩阵。一般“概率表示不保证随机动力学”是已有背景，本编码的全部可行酉门和三目标常数是这里处理的具体问题。 |
+| 本卷 §§3–4、7–8；续卷 II §§77、83 | 已有完整 Bloch 编码、黄金相位矩阵、七地址／十三维有限正向字、唯一 ready 种子、相位平衡表示、全 $1024$ 标签和保档案经典模型。它们分别供应 (12.4)、(13.1)、(14.1)–(14.3) 及命题 15.1 的范围；未新增控制、读口或来源。 |
+| [FiveModeMixedCoordinates 的静态共同律响应](../../../Blueprint/D5/S1/Words/AdmissibleWords/FiveModeMixedCoordinates.scribe.cs) | 对同一给定五模式律，$\{1,x,y,z,xy\}$ 完整表示任意实响应，且明确不据此声称动态充分性。本卷采用的实际量子像还有 $p_0=3p_{25}$；静态函数完备不供应 (12.1) 的非负核。 |
+| [自校准 VIII 定义 10.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VIII.md)；[RRO rooted history recovery §§15–19](RECURSIVE_RELATIONAL_OBSERVATION_ROOTED_BOUNDARY_HISTORY_RECOVERY.md) | 前者先给种子概率空间及共同律 $\mu$，后者给确定性读取、实际源像与历史恢复边界。它们均未在本七地址载体上供应未知记录概率、独立重复或 (14.9) 所需的统计置信事件，不用来填补本卷 §10 的实际律缺项。 |

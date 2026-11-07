@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:812fd03f6308967cb61179f783675f01ecef2d229a7569d332dbd26d5c8aba66
+  normalized_sha256: sha256:812fd03f6308967cb61179f783675f01ecef2d229a7569d332dbd26d5c8aba66
+cas_ref: sha256:812fd03f6308967cb61179f783675f01ecef2d229a7569d332dbd26d5c8aba66
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Scope disclaimer: the decomposition E = Z_S + span A_D is neither assumed nor concluded; the Banach closed graph argument does not assert continuity or an extension from an incomplete original domain. This clause states boundaries and does not settle an incomplete-domain theorem.'
+    previous_atom_id: c77f7482e026fab3aad37ddd6ae454015e4aca68804c1d3f4cc22e04a63e344e
+    next_atom_id: 5478ba8793f70c3b2901fabf5d44ccdbf2d07488306ca2edf97fd889124ec063
