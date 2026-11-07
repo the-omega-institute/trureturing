@@ -4,16 +4,16 @@
    mirror-E: none(waiver:source-registration)
    anchors: [mathlib/module/Mathlib.Algebra.Ring.GeomSum]
    utility: none
-   digest: One literal joint physical order for every number of equal short gaps and one long gap. -/
+   digest: Uniform literal joint physical orders for equal short gaps and one long gap. -/
 import D5.S3.Combinatorics.Circle.EqualShortGapsOneLong.Arithmetic
 import D5.S3.Combinatorics.Circle.EqualShortGapsOneLong.PacketStrip
 import D5.S3.Combinatorics.Circle.EqualShortGapsOneLong.Physical
 import D5.S3.Combinatorics.Circle.EqualShortGapsOneLong.Boundary
 import Batteries.Tactic.OpenPrivate
 
+/-! The same literal physical word satisfies both native all-prefix contracts. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option maxHeartbeats 4000000
 
 namespace D5.S3.Combinatorics.Circle.EqualShortGapsOneLong
 open SourceWidth PeriodicShorteningArithmetic PeriodicShortening RunFirstEarTransport
@@ -33,6 +33,8 @@ open private ladder_sum from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJ
 open private positive_block_strip from D5.S3.Combinatorics.Circle.ThreeBitSource
 open private sum_linear from D5.S3.Combinatorics.Circle.PeriodicShortening
 
+set_option maxHeartbeats 4000000 in
+-- Packet arithmetic and both literal prefix contracts are elaborated together.
 private theorem nonperiodic_joint (a p d : ℕ) (ha : 2 ≤ a) (hp : 2 ≤ p)
     (hd : a + 1 ≤ d) :
     OriginalOrder (size a p d) (geom a p) (physicalWord a p d (by dsimp [size]; omega)) ∧
@@ -79,7 +81,6 @@ private theorem nonperiodic_joint (a p d : ℕ) (ha : 2 ≤ a) (hp : 2 ≤ p)
     dsimp [B, M, k, size]
     rw [show d + a * (p - 1) - 1 = a + (d - a - 1) + a * (p - 1) by omega,
       pow_add, pow_add, pow_mul]
-    rfl
   have hE : (E : ℤ) = R * A + 1 := by
     simpa only [show p - 1 + 1 = p by omega] using geom_left a (p - 1) (by omega)
   have hM : M = (R - 1) * A + 1 := by
@@ -117,11 +118,11 @@ private theorem nonperiodic_joint (a p d : ℕ) (ha : 2 ≤ a) (hp : 2 ≤ p)
   have pair (i : ℕ) (hi : i < k) :
       0 ≤ c i ∧ f i = (2 : ℤ) ^ i * E - ((2 : ℤ) ^ k - 1) * c i ∧
         g i = 2 * f i - c i := by
-    simpa only [actualSource, charge, Fin.val_mk, Fin.val_castSucc,
+    simpa only [f, g, c, k, E, size, width, actualSource, charge, Fin.val_mk, Fin.val_castSucc,
       Nat.cast_mul, Nat.cast_ofNat] using
       native_pair a p d ha (by omega) (by omega) ⟨i, hi⟩
   have fresh : g k = (E : ℤ) := by
-    simpa only [actualSource, Fin.val_last, Nat.cast_mul, Nat.cast_ofNat] using
+    simpa only [g, k, E, size, width, actualSource, Fin.val_last, Nat.cast_mul, Nat.cast_ofNat] using
       native_fresh a p d ha (by omega) (by omega)
   have long (i : ℕ) (hi : i < d - 1) : c i = 0 ∧
       f i = (2 : ℤ) ^ i * E ∧ g i = (2 : ℤ) ^ i * (2 * E) := by
@@ -150,7 +151,7 @@ private theorem nonperiodic_joint (a p d : ℕ) (ha : 2 ≤ a) (hp : 2 ≤ p)
         (2 * packetBase a p d j - (geom a (j + 1) : ℤ)) ∧
       0 < packetBase a p d j ∧
       0 < 2 * packetBase a p d j - (geom a (j + 1) : ℤ) := by
-    simpa only [actualSource, charge, Fin.val_mk, Fin.val_castSucc,
+    simpa only [f, g, c, k, E, size, width, actualSource, charge, Fin.val_mk, Fin.val_castSucc,
       Nat.cast_mul, Nat.cast_ofNat] using
       positive_data a p d j u ha (by omega) (by omega) hj hu (pos_bound j u hj hu)
   have hlastlabel : d - 1 + a * (p - 1) = k - 1 := by dsimp [k, size]; omega
@@ -220,13 +221,14 @@ private theorem nonperiodic_joint (a p d : ℕ) (ha : 2 ≤ a) (hp : 2 ≤ p)
     · have ht : d - a - 1 < d - 1 := by omega
       have hx := long (d - a - 1) ht
       simp only [List.map_singleton, List.sum_singleton, hx.1, hx.2.1]
-      refine ⟨rfl, rfl, ?_⟩
+      refine ⟨rfl, True.intro, ?_⟩
       intro i hi
       have he := List.mem_singleton.mp hi
       subst i
       rw [hx.2.1, hx.2.2]
       constructor <;> positivity
   have hinit := initial_inventory a d ha (by omega)
+  change (U ++ S).Perm (List.range (d - 1)) at hinit
   have u_bound (i : ℕ) (hi : i ∈ U) : i < d - 1 :=
     List.mem_range.mp (hinit.mem_iff.mp (List.mem_append_left S hi))
   have u_positive : ∀ i ∈ U, 0 ≤ f i ∧ 0 ≤ g i := by
@@ -250,12 +252,14 @@ private theorem nonperiodic_joint (a p d : ℕ) (ha : 2 ≤ a) (hp : 2 ≤ p)
     rw [hf, hdhalf] at hs
     omega
   have hraw := physical_decomposition a p d ha hp (by omega)
+  change rawWord a p d = U ++ W ++ S ++ Z ++ [k - 1] at hraw
   have total_f : (U.map f).sum + (W.map f).sum + (S.map f).sum +
       (Z.map f).sum + f (k - 1) = 0 := by
     have hz := (ZeroSumSubsets.source_cycle (show 0 < k by omega) E).2.1
     have he := ((raw_inventory a p d ha (by omega) (by omega)).map f).sum_eq
     rw [hraw] at he
-    rw [Fin.sum_univ_eq_sum_range] at hz
+    change (∑ i : Fin k, f i.val) = 0 at hz
+    rw [Fin.sum_univ_eq_sum_range f k] at hz
     have hz' : ((List.range k).map f).sum = 0 := by
       rw [← List.sum_toFinset _ List.nodup_range, List.toFinset_range]
       simpa only [actualSource, f] using hz
@@ -267,7 +271,8 @@ private theorem nonperiodic_joint (a p d : ℕ) (ha : 2 ≤ a) (hp : 2 ≤ p)
     have hz := charge_sum k E hk (seed_bound a p d ha (by omega) (by omega))
     have he := ((raw_inventory a p d ha (by omega) (by omega)).map c).sum_eq
     rw [hraw] at he
-    rw [Fin.sum_univ_eq_sum_range] at hz
+    change (∑ i : Fin k, c i.val) = (E : ℤ) at hz
+    rw [Fin.sum_univ_eq_sum_range c k] at hz
     have hz' : ((List.range k).map c).sum = (E : ℤ) := by
       rw [← List.sum_toFinset _ List.nodup_range, List.toFinset_range]
       simpa only [charge, c] using hz
@@ -279,7 +284,8 @@ private theorem nonperiodic_joint (a p d : ℕ) (ha : 2 ≤ a) (hp : 2 ≤ p)
   have hCmid : (W.map c).sum = A := by
     rw [u_charge, hS.2.1, zmass.2, last.1] at total_c
     dsimp [T] at total_c
-    nlinarith [total_c, hE, hRtwo]
+    have he : (E : ℤ) = 2 * q * A + 1 := by rw [hE, hRtwo]
+    nlinarith
   have hV : V = (2 * l - 1) * M - delta := by
     rw [hS.1, zmass.1, last.2.1] at total_f
     change V + delta + (q - 1) * P + (-B + T) = 0 at total_f
@@ -307,6 +313,7 @@ private theorem nonperiodic_joint (a p d : ℕ) (ha : 2 ≤ a) (hp : 2 ≤ p)
       simp only [delta, hsmall, ite_false]
       have hpoly : 0 ≤ ((l - 2) * (R - 2)) * A := by
         exact mul_nonneg (mul_nonneg (by omega) (by omega)) hA
+      have hpoly' : 0 ≤ (R - 4) * A := mul_nonneg (by omega) hA
       have hp0 : (R * l - 1) * (E : ℤ) - l * E = B - E - l := by
         rw [hE, hB, hM]
         ring
@@ -314,7 +321,7 @@ private theorem nonperiodic_joint (a p d : ℕ) (ha : 2 ≤ a) (hp : 2 ≤ p)
       · rw [hp0]
         linarith
       · rw [hM]
-        nlinarith [hpoly]
+        nlinarith [hpoly, hpoly']
   have middle_bound (i : ℕ) (hi : i ∈ W) : i < k := by
     have hb : i ∈ rawWord a p d := by
       rw [hraw]
@@ -324,9 +331,10 @@ private theorem nonperiodic_joint (a p d : ℕ) (ha : 2 ≤ a) (hp : 2 ≤ p)
   have middle_old : InStrip f (H - A) (F - A) W := by
     have h := descending_packets_strip f (fun j => d - 1 + a * j)
       (fun j => List.range' (d + a * j) (a - 1)) A H F 0 (p - 2)
+    simp only [Nat.zero_add, ← List.range_eq_range'] at h
     apply h
     · intro j hj hj'
-      simpa only [actualSource, Fin.val_mk] using
+      simpa only [f, k, E, size, width, actualSource, Fin.val_mk] using
         (negative_nonpos a p d j ha (by omega) (by omega) (by omega) (neg_bound j (by omega))).1
     · intro j hj hj' i hi
       have hb := List.mem_range'.mp hi
@@ -384,7 +392,12 @@ private theorem nonperiodic_joint (a p d : ℕ) (ha : 2 ≤ a) (hp : 2 ≤ p)
     rw [he, (zdata _ (by omega)).2.1, (zdata _ (by omega)).2.2]
     have h := pos (p - 2) 0 (by omega) (by omega)
     rw [hbase] at h
-    constructor <;> positivity
+    have hP : 0 ≤ P := le_of_lt h.2.2.2.1
+    have hG : 0 ≤ 2 * P - A := by
+      simpa only [A, show p - 2 + 1 = p - 1 by omega] using le_of_lt h.2.2.2.2
+    constructor
+    · exact mul_nonneg (by positivity) hP
+    · exact mul_nonneg (by positivity) hG
   have oldtail : InStrip f H V (S ++ Z) := by
     apply positive_block_strip
       (by intro i hi; rcases List.mem_append.mp hi with hi | hi
@@ -425,15 +438,18 @@ private theorem nonperiodic_joint (a p d : ℕ) (ha : 2 ≤ a) (hp : 2 ≤ p)
       · constructor
         · linarith [hT.1]
         · constructor <;> linarith [hEB, hEpos]
-    have hh : (U.map f).sum + (W.map f).sum + ((S ++ Z).map f).sum = B - T := by
+    have hh : ((U ++ W ++ (S ++ Z)).map f).sum = B - T := by
+      simp only [List.map_append, List.sum_append]
       rw [last.2.1] at total_f
-      linarith
+      linarith only [total_f]
     simpa only [List.append_assoc] using inStrip_append huwt (by
-      simpa only [List.map_append, List.sum_append, zero_add, hh] using hfinal)
+      simpa only [zero_add, hh] using hfinal)
   have newall : InStrip g N 0 (preWord a p d ++ [k, k - 1]) := by
     have pre_eq : preWord a p d = U ++ W ++ S ++ Z := by
-      apply List.append_cancel_right (l₂ := [k - 1])
-      simpa only [← raw_last a p d ha (by omega) (by omega), U, W, S, Z] using hraw
+      apply List.append_cancel_right (bs := [k - 1])
+      have hrawlast : rawWord a p d = preWord a p d ++ [k - 1] :=
+        raw_last a p d ha (by omega) (by omega)
+      exact hrawlast.symm.trans hraw
     rw [pre_eq]
     have hgU : (U.map g).sum = 2 * F := by
       have he : U.map g = U.map (fun i => 2 * f i - c i) :=
@@ -456,7 +472,8 @@ private theorem nonperiodic_joint (a p d : ℕ) (ha : 2 ≤ a) (hp : 2 ≤ p)
         have inv : (rawWord a p d ++ [k]).Perm (List.range (k + 1)) := by
           simpa only [List.range_succ] using (raw_inventory a p d ha (by omega) (by omega)).append_right [k]
         have hs := (inv.map g).sum_eq
-        rw [Fin.sum_univ_eq_sum_range] at hgraw
+        change (∑ i : Fin (k + 1), g i.val) = 0 at hgraw
+        rw [Fin.sum_univ_eq_sum_range g (k + 1)] at hgraw
         have hz : ((List.range (k + 1)).map g).sum = 0 := by
           rw [← List.sum_toFinset _ List.nodup_range, List.toFinset_range]
           simpa only [actualSource, g, Nat.cast_mul, Nat.cast_ofNat] using hgraw
@@ -476,10 +493,14 @@ private theorem nonperiodic_joint (a p d : ℕ) (ha : 2 ≤ a) (hp : 2 ≤ p)
           · constructor
             · linarith [hT.1]
             · constructor <;> linarith [hEB, hEpos]
+    have before' : ((U ++ W ++ (S ++ Z)).map g).sum = 2 * B - E - T := by
+      simpa only [List.append_assoc] using before
     simpa only [List.append_assoc] using inStrip_append huwt (by
-      simpa only [zero_add, before] using hfinal)
+      simpa only [zero_add, before'] using hfinal)
   exact lift_last_joint a p d E ha (by omega) (by omega) (by omega)
-    (by simpa only [hhalf] using oldall) (by simpa only [hhalf'] using newall)
+    (by change InStrip f (modulus k / 2) 0 (rawWord a p d); rw [hhalf]; exact oldall)
+    (by change InStrip g (modulus (k + 1) / 2) 0 (preWord a p d ++ [k, k - 1])
+        rw [hhalf']; exact newall)
 
 /-- A single explicit physical word works in both native coordinates, uniformly
 in the number and length of the equal short gaps and in the long gap. -/
@@ -497,8 +518,7 @@ theorem actualSource_uniform_one_long_joint (a p d : ℕ)
       have hR := radix_ge a ha
       have he : (geom a 1 : ℤ) = 1 := by nlinarith
       exact_mod_cast he
-    simpa only [unit_physical a d ha hd, unit_cut, size, Nat.sub_self,
-      Nat.mul_zero, Nat.add_zero, hg1] using ascending_unit d (by omega)
+    simpa [unit_physical a d ha hd, unit_cut, size, hg1] using ascending_unit d (by omega)
   · by_cases hda : d = a
     · subst d
       have he : size a p a = a * p := by
@@ -508,8 +528,10 @@ theorem actualSource_uniform_one_long_joint (a p d : ℕ)
             a * p = a * ((p - 1) + 1) := by congr 1; omega
             _ = a * (p - 1) + a := by ring
         omega
-      simpa only [ascending_physical a p a (by dsimp [size]; omega) (by omega),
-        cut, ite_true, he] using periodic_ascending a p ha (by omega)
+      rw [ascending_physical a p a (by dsimp [size]; omega) (by omega)]
+      simp only [cut, ite_true]
+      rw [he]
+      exact periodic_ascending a p ha (by omega)
     · exact nonperiodic_joint a p d ha (by omega) (by omega)
 
 end D5.S3.Combinatorics.Circle.EqualShortGapsOneLong
