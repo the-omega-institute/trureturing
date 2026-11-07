@@ -2339,7 +2339,12 @@ $$
 
 两个方向均取旧 $D$ 的实际值；标签包含零、重复、全部原实缩放和平移。
 
-$\mathsf B$：对全部原 $a,b,c\in E$，原实部换括号式 (12.2) 成立。
+$\mathsf B$：对全部原 $a,b,c\in E$，要求原实部换括号式 (12.2)，即
+
+$$
+S(S(a,b),c)-S(a,S(b,c))
+=D(D(a,b),c)-D(a,D(b,c)).
+$$
 
 $\mathsf C$：原输出外延性 (40.1) 成立，准确地说，只对 $p,q\in A_D$，由 $D(p,t)=D(q,t)$ 对每个 $t\in A_D$ 成立推出 $p=q$。
 
@@ -2470,7 +2475,7 @@ c_\psi&=\langle\psi,\varepsilon Q(a,b)\psi\rangle
 \tag{78.15}
 $$
 
-这些都是原向量评价对同一旧输出的 (78.3)。若自伴 $b$ 不可逆，有单位序列 $\psi_n$ 满足 $\|b\psi_n\|\to0$：否则 $b$ 有正的下界，值域闭且核为零；自伴性又使值域稠密，从而 $b$ 有有界逆，矛盾。此序列上 $c_{\psi_n}\to0$、$\Delta_{\psi_n}\to0$，(78.15) 立即给 $r=0$。这包括没有零本征向量的连续谱端点。
+这些都是原向量评价对同一旧输出的 (78.3)。若自伴 $b$ 不可逆，有单位序列 $\psi_n$ 满足 $\|b\psi_n\|\to0$：否则存在 $\gamma>0$ 使 $\|b\psi\|\ge\gamma\|\psi\|$，故值域闭且核为零；自伴性又使值域稠密，从而 $b$ 有有界逆，矛盾。此序列上 $c_{\psi_n}\to0$、$\Delta_{\psi_n}\to0$，(78.15) 立即给 $r=0$。这包括没有零本征向量的连续谱端点。
 
 若 $b$ 可逆，考虑同一个原 Hilbert 空间上的有界复算子 $R=b^{-1}a$。有
 
@@ -2495,12 +2500,13 @@ $$
 \begin{aligned}
 \|b^{-1}\|^{-2}\le k_n&\le\|b\|^2,\\
 c_{\psi_n}&=\varepsilon\Im(\lambda)k_n+o(1),\\
-\Delta_{\psi_n}-c_{\psi_n}^2&\longrightarrow0.
+0\le\Delta_{\psi_n}-c_{\psi_n}^2
+&\le\|a\psi_n-\lambda b\psi_n\|^2 k_n\longrightarrow0.
 \end{aligned}
 \tag{78.18}
 $$
 
-第二式的符号来自第一槽共轭线性：$\langle a\psi_n,b\psi_n\rangle=\overline\lambda k_n+o(1)$。第三式来自这两个有界向量的渐近共线，不需要 $k_n$ 收敛。
+第二式的符号来自第一槽共轭线性：$\langle a\psi_n,b\psi_n\rangle=\overline\lambda k_n+o(1)$。第三式将 $a\psi_n=\lambda b\psi_n+(a\psi_n-\lambda b\psi_n)$ 代入 (78.15) 的 Gram 行列式，相关的 $\lambda b\psi_n$ 项恰好相消，再用 Cauchy–Schwarz；不需要 $k_n$ 收敛。
 
 若所取边界点 $\lambda$ 实，$c_{\psi_n}\to0$，(78.15) 再给 $r=0$。否则由 (78.16)，$\overline\lambda$ 也是谱边界点，两点各自有 (78.17) 的序列。若 $r\ne0$，选择其中满足 $r\varepsilon\Im(\lambda)>0$ 的一点；(78.18) 的正下界使该序列上 $rc_{\psi_n}>0$ 最终成立，而 (78.15) 要求
 
