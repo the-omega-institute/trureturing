@@ -23,6 +23,7 @@ set_option relaxedAutoImplicit false
 noncomputable section
 namespace D5.S3.Combinatorics.Circle.MersenneExceptional19UpperBasis
 open scoped BigOperators
+open Module (Basis)
 open MersenneExceptional19Stabilizer (degree base seed place)
 open MersenneExceptional19PermutationStabilizer (aa bb parameter_exact eighth_facts)
 open MersenneExceptional19ZeroLattice
@@ -99,15 +100,19 @@ theorem actual_selected_upper_integer_basis (r : ℕ) :
   let K := LinearMap.ker (integerWeightedSum r)
   have spans : Submodule.span ℤ (Set.range (selectedKernelRow r))=⊤ := by
     apply Submodule.map_injective_of_injective K.injective_subtype
-    rw [Submodule.map_span,Submodule.map_subtype_top,Set.image_range]
+    rw [Submodule.map_span,Submodule.map_subtype_top,← Set.range_comp]
     change Submodule.span ℤ (Set.range (selectedRow r))=K
     exact actual_selected_upper_span_eq_kernel r
   let P : V →ₗ[ℤ] ℤ :=
     { toFun := fun z => ∑ i, z i*primitive r i
-      map_add' := by intro z w; simp [Pi.add_apply,add_mul,Finset.sum_add_distrib]
+      map_add' := by
+        intro z w
+        change (∑ i, (z i+w i)*primitive r i)=_
+        simp only [add_mul,Finset.sum_add_distrib]
       map_smul' := by
         intro a z
-        simp [Pi.smul_apply,smul_eq_mul,Finset.mul_sum,mul_assoc] }
+        change (∑ i, (a*z i)*primitive r i)=a*(∑ i, z i*primitive r i)
+        simp only [Finset.mul_sum,mul_assoc] }
   have scale (z : V) : integerWeightedSum r z=(19*((base r : ℤ)-1))*P z := by
     change (∑ i, z i*SourceWidth.actualSource (3*degree r) (seed r) i)=_
     simp_rw [source_eq_scale_primitive]
@@ -154,6 +159,7 @@ theorem actual_selected_upper_integer_basis (r : ℕ) :
     have rv : Module.finrank ℤ V=3*degree r := by
       simp only [V,Module.finrank_pi,Fintype.card_fin]
     rw [rv] at rn
+    change 1+Module.finrank ℤ K=3*degree r at rn
     omega
   let b : Basis (UpperIndex r) ℤ K :=
     basisOfTopLeSpanOfCardEqFinrank (selectedKernelRow r)
