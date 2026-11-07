@@ -2440,7 +2440,7 @@ theorem actual_threeLevel_supplier : ThreeLevelSupplierTarget.{u} := by
     linarith only [hpositive, henergy, hshift]
   · exact coincidentLevel_proof n level p hp hinj S hS Z hZ
 
-
+#print axioms actual_threeLevel_supplier
 
 
 section PDContinuation
@@ -2906,5 +2906,7 @@ theorem actual_threeLevel_PD_sylvester
       0 ≤ 4*(S^3-X^3).trace.re-6*(X*D).trace.re-6*(D*Y).trace.re ∧
       ((4*(S^3-X^3).trace.re-6*(X*D).trace.re-6*(D*Y).trace.re = 0) ↔ P*S = S*P) := by
   exact pdSylvester_proof n level p hp S hS
+
+#print axioms actual_threeLevel_PD_sylvester
 
 end D5.S3.Quantum.Matrix.HsfThreeLevelSupplier
