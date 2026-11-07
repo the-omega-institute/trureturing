@@ -26,6 +26,7 @@ Direct frozen dependencies:
 
 import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.ExpLog.Basic
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
+import D5.S3.QuantumStates.DensitySpan
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -45,8 +46,6 @@ commuting pair of qubit density matrices. All logarithms use continuous
 functional calculus in the matrix L2 operator norm. -/
 
 private abbrev Mat (d : ℕ) := Matrix (Fin d) (Fin d) ℂ
-
-def IsDensity {d : ℕ} (A : Mat d) : Prop := A.PosSemidef ∧ Matrix.trace A = 1
 
 def reg {d : ℕ} (ε : ℝ) (A : Mat d) : Mat d :=
   (1 - ε) • A + (ε / d) • 1
