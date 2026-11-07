@@ -7,6 +7,18 @@ internal sealed class LatticeSectorIntertwinerDocument : IScribeDocumentDefiniti
         "LatticeSectorIntertwiner", H("LatticeSectorIntertwiner"), Blocks(
             Paragraph(Text("Construction uses arbitrary ordinary symmetric even integral lattice data, including degenerate forms, zero charges and rank zero. Classification and universality require an explicit two-sided complex inverse Gram matrix, with no positivity or integer unimodularity.")),
             Describe.Lean(
+                DescribeId.Create("latticesectorintertwiner-charge-space"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.chargeSpace"),
+                H("chargeSpace"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The original charge submodule at delta is the range of Finsupp.lsingle delta on oscillator polynomials."))), DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("latticesectorintertwiner-word-charge"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.word_charge"),
+                H("word_charge"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every lattice D, charges alpha and beta, original oscillator word w, signed integer mode n and oscillator polynomial v, wordField(alpha,w)[n] applied to single(beta,v) lies in chargeSpace(alpha+beta). The original proof covers both actual normal-product branches without a nonsingularity or nonzero-charge hypothesis. It supports charge_homogeneity and the OriginalWord zero-mode calculation; its exposure adds no independently new BPZ result."))), DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("latticesectorintertwiner-sector"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.Sector"),
                 H("Sector"), StatementSource.WithoutFormula(),
