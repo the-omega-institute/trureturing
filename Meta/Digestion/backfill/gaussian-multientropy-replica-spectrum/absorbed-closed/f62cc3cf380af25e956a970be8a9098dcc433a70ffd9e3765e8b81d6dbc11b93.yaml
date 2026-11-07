@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:f62cc3cf380af25e956a970be8a9098dcc433a70ffd9e3765e8b81d6dbc11b93
+  normalized_sha256: sha256:f62cc3cf380af25e956a970be8a9098dcc433a70ffd9e3765e8b81d6dbc11b93
+cas_ref: sha256:f62cc3cf380af25e956a970be8a9098dcc433a70ffd9e3765e8b81d6dbc11b93
+coverage_gids:
+  - gid: D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeCurve.curve_boundaries
+    target_statement_id: sha256:c60057e7de66a594023fd04b2998ef0c83cf7031e1fe790cf950b898c54238c5
+  - gid: D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeCurve.curve_derivative
+    target_statement_id: sha256:eac5ae0e388b75f41e1ce53dbd3f9fed82fbe20fd9db365e221898214f252702
+  - gid: D5/S3/Quantum/Entanglement/GaussianMultiEntropy/ReplicaThreeCurve.curve_minimum
+    target_statement_id: sha256:40c661b5b2f4fe534f8dfcae68e5a9d7ef9db48adde58d9fbb693e05e5c03063
+receipts:
+  unresolved_subitems: []
