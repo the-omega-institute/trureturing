@@ -24,7 +24,7 @@ internal sealed class FoldedGridRectangleSeriesDocument : IScribeDocumentDefinit
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance) =>
-        Describe.Lean(DescribeId.Create("folded-grid-" + name.ToLowerInvariant()),
+        Describe.Lean(DescribeId.Create("folded-grid-" + (name == "A" ? "series" : name)),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             provenance, Blocks(Paragraph(Text(prose))), role);
 
@@ -40,7 +40,7 @@ internal sealed class FoldedGridRectangleSeriesDocument : IScribeDocumentDefinit
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
-    private static Formula Pow(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Power, b);
+    private static Formula Pow(Formula a, Formula b) => new Formula.Power(a, b);
     private static Formula All(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
     private static Formula Cast(Formula a, Formula type) => Par(Seq(a, Colon, type));
     private static Formula LambdaOf(string name, Formula type, Formula body) => Par(Seq(LambdaLower, Sp, F.Id(name), Colon, type, Sp, Mapsto, Sp, body));
