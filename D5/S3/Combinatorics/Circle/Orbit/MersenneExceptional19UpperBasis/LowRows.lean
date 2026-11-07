@@ -70,7 +70,10 @@ private theorem read_two_low (d : ℕ) (hd : 2≤d) (f : ℕ → A) (z : ℤ)
         apply read_geom_smul
         constructor
         · exact Int.ediv_nonneg hz.1 (by norm_num)
-        · have hp : (2 : ℤ)^d=4*(2 : ℤ)^(d-2) := by rw [he,pow_add]; ring
+        · have hp : (2 : ℤ)^d=4*(2 : ℤ)^(d-2) := by
+            calc
+              (2 : ℤ)^d=(2 : ℤ)^(2+(d-2)) := by congr 1; omega
+              _=4*(2 : ℤ)^(d-2) := by rw [pow_add]; norm_num
           rw [hp] at hz
           omega
   rw [htail,read_succ,read_succ]
@@ -130,7 +133,7 @@ private theorem selected_f2 (r : ℕ) (X : Fin (3*degree r) → A)
   let θ := highTheta r X
   let Y := correctedBlock r X θ
   obtain ⟨hl,hT⟩ := selected_corrected_ladders r X hX
-  have hdouble (p : Fin 3) (i : ℕ) (hi : 1<i) (hid : i < degree r) :
+  have hdouble (p : Fin 3) (i : ℕ) (hi : 1 < i) (hid : i < degree r) :
       Y p i=(2 : ℤ)^(i-1-1) • Y p 2 := by
     simpa only [show i-1-1=i-2 by omega] using hl p i (by omega) hid
   have hbase : affineRange r (4*eighth r) := by

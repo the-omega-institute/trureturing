@@ -52,8 +52,9 @@ theorem physical_correction_read (r : ℕ) (θ : A) (L M U : ℤ)
   have hL' : 0≤L ∧ L<(2 : ℤ)^degree r := by simpa [hp] using hL
   have hM' : 0≤M ∧ M<(2 : ℤ)^degree r := by simpa [hp] using hM
   have hU' : 0≤U ∧ U<(2 : ℤ)^degree r := by simpa [hp] using hU
-  simp only [correctionBlock,ite_true,show (1 : Fin 3)≠0 by decide,
-    show (2 : Fin 3)≠0 by decide,show (2 : Fin 3)≠1 by decide,ite_false]
+  change read (degree r) (first (degree r) 0 0 0 θ) L+
+    read (degree r) (middle (degree r) 0 θ) M+
+    read (degree r) (last (degree r) 0 0 0 0 θ) U=_
   rw [read_first _ hd 0 0 0 θ L hL',read_middle _ hd 0 θ M hM',
     read_last _ hd 0 0 0 0 θ U hU']
   obtain ⟨l2,l4,l8⟩ := top_digits (degree r) hd L hL'.1 hL'.2
@@ -86,7 +87,10 @@ theorem corrected_affine_read (r : ℕ) (X : Fin (3*degree r) → A)
   rw [physical_correction_read r (1 : ℤ) _ _ _ hL hM' hU,
     smul_eq_mul,mul_one] at hci
   rw [hci,zero_smul] at hc
-  simp only [correctedBlock,read_sub,affineRead]
+  change read (degree r) (fun j => block X 0 j-correctionBlock r θ 0 j) (M+bb r)+
+    read (degree r) (fun j => block X 1 j-correctionBlock r θ 1 j) M+
+    read (degree r) (fun j => block X 2 j-correctionBlock r θ 2 j) (M-aa r)=_
+  simp only [read_sub,affineRead]
   linear_combination (norm := abel) -hc
 
 /-- The high starting condition for the actual descending induction. -/
@@ -108,27 +112,27 @@ theorem selected_corrected_high (r : ℕ) (X : Fin (3*degree r) → A)
   refine ⟨?_,?_,?_⟩
   · intro p
     fin_cases p <;>
-      simp only [correctedBlock,correctionBlock,first,middle,last,
+      simp [correctedBlock,correctionBlock,first,middle,last,
         ite_true,show (1 : Fin 3)≠0 by decide,show (2 : Fin 3)≠0 by decide,
         show (2 : Fin 3)≠1 by decide,ite_false,if_neg hn0,if_neg hn1,
         if_neg hn01,if_neg hn02,if_neg hn12,
         if_neg (Ne.symm hn01),zero_smul,sub_zero,zero_add,add_zero,sub_self] <;>
-      dsimp only [highTheta]
+      try dsimp only [highTheta]
     · exact h2
     · linear_combination (norm := module) h3-(2 : ℤ) • h0
     · linear_combination (norm := module) h4-(2 : ℤ) • h1
   · intro p
     fin_cases p <;>
-      simp only [correctedBlock,correctionBlock,first,middle,last,
+      simp [correctedBlock,correctionBlock,first,middle,last,
         ite_true,show (1 : Fin 3)≠0 by decide,show (2 : Fin 3)≠0 by decide,
         show (2 : Fin 3)≠1 by decide,ite_false,if_neg hn0,if_neg hn2,
         if_neg hn01,if_neg hn02,if_neg (Ne.symm hn02),if_neg (Ne.symm hn12),
         zero_smul,sub_zero,zero_add,add_zero,sub_self] <;>
-      dsimp only [highTheta]
+      try dsimp only [highTheta]
     · linear_combination (norm := module) h5
     · linear_combination (norm := module) h6-(4 : ℤ) • h0
     · linear_combination (norm := module) h7-(4 : ℤ) • h1
-  · simp only [correctedBlock,correctionBlock,first,middle,last,
+  · simp [correctedBlock,correctionBlock,first,middle,last,
       ite_true,show (1 : Fin 3)≠0 by decide,show (2 : Fin 3)≠0 by decide,
       show (2 : Fin 3)≠1 by decide,ite_false,if_neg hn0,
       if_neg hn01,if_neg hn02,zero_smul,sub_zero,zero_add,add_zero,sub_self]

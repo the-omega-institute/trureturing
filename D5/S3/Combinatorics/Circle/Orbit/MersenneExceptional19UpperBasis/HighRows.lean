@@ -111,7 +111,13 @@ private theorem actual_high_quotients (r : ℕ) :
   obtain ⟨hB,hE,hmod⟩ := eighth_facts r
   obtain ⟨ha0,ha1,hb0,hb1,hs0,hs1⟩ := parameter_margins r
   have hs : ss r=aa r+bb r := rfl
-  have hEp : 0<eighth r := by omega
+  clear hB hmod
+  generalize heq : eighth r = E at *
+  generalize haq : aa r = a at *
+  generalize hbq : bb r = b at *
+  generalize hsq : ss r = s at *
+  clear heq haq hbq hsq
+  have hEp : 0<E := by omega
   repeat' constructor
   all_goals apply floor_unique hEp <;> omega
 
@@ -161,8 +167,11 @@ theorem actual_high_row_differences (r : ℕ) (X : Fin (3*degree r) → A) :
   have e42 := td 2 _ _ _ _ (-1) q19 q5 (by ring)
   have hi1 : degree r-3+1=degree r-2 := by omega
   have hi2 : degree r-3+2=degree r-1 := by omega
-  norm_num [read_succ,MersenneExceptional19PermutationStabilizer.read,MersenneExceptional19PermutationStabilizer.digit,
-    Fin.sum_univ_succ,hi1,hi2] at e10 e11 e12 e20 e21 e22 e30 e31 e32 e40 e41 e42
+  have rz (f : ℕ → A) (z : ℤ) : read 0 f z=0 := by
+    simp [MersenneExceptional19PermutationStabilizer.read]
+  norm_num [read_succ 2,read_succ 1,read_succ 0,rz,
+    MersenneExceptional19PermutationStabilizer.digit,hi1,hi2]
+    at e10 e11 e12 e20 e21 e22 e30 e31 e32 e40 e41 e42
   dsimp only [affineRead]
   refine ⟨?_,?_,?_,?_⟩
   · linear_combination (norm := abel) e10+e11+e12
