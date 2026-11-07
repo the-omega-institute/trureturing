@@ -2,6 +2,8 @@ import D5.S3.ArithSums.SchulteArbitraryGcdQuotientConvolution
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
+/-! A source-bound observation of the complete arbitrary-weight statement. -/
+
 namespace Reg.D5.S3.ArithSums.SchulteArbitraryGcdQuotientConvolution
 
 open _root_.D5.S3.ArithSums.SchulteArbitraryGcdQuotientConvolution
@@ -46,6 +48,7 @@ def family : Registration arena (type_of% @result) where
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
+    change ObservationalDependence signature actual
     intro i
     refine ⟨(fun _ => 1), 0, 1, ?_⟩
     norm_num [actual, realize, A, square, positiveLift]
