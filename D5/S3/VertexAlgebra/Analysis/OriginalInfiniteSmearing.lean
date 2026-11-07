@@ -20,9 +20,9 @@ open scoped BigOperators Topology
 namespace D5.S3.VertexAlgebra.Analysis.OriginalSmearing
 open LatticeGeneratingFieldLocality
 open SmoothCircleFourier
-open private modeConstant_pos modeExtension_norm modeExtension_embed modeExtension_compatible from
+open private modeExtension_compatible from
   D5.S3.VertexAlgebra.Analysis.OriginalModeExtension
-open private weighted_summable weight_nonneg W_le from
+open private W_le from
   D5.S3.VertexAlgebra.Analysis.SmoothCircleFourier
 
 open Model
@@ -42,7 +42,7 @@ private theorem operatorTerm_le (a : Charge M.D) (f : Test) (k : ℕ) (m : ℤ) 
 private theorem operator_absolute (a : Charge M.D) (f : Test) (k : ℕ) :
     Summable (fun m : ℤ => ‖M.operatorTerm a f k m‖) :=
   Summable.of_nonneg_of_le (fun _ => norm_nonneg _) (operatorTerm_le M a f k)
-    ((weighted_summable f (M.order a+k)).mul_left (M.modeConstant a))
+    ((Test.weighted_summable f (M.order a+k)).mul_left (M.modeConstant a))
 
 private theorem operator_summable (a : Charge M.D) (f : Test) (k : ℕ) :
     Summable (M.operatorTerm a f k) :=
@@ -57,7 +57,7 @@ private theorem smear_norm (a : Charge M.D) (f : Test) (k : ℕ) :
   calc
     _ ≤ ∑' m : ℤ, M.modeConstant a * f.weight (M.order a+k) m :=
       tsum_of_norm_bounded
-        (((weighted_summable f (M.order a+k)).mul_left (M.modeConstant a)).hasSum)
+        (((Test.weighted_summable f (M.order a+k)).mul_left (M.modeConstant a)).hasSum)
         (operatorTerm_le M a f k)
     _ = _ := by rw [tsum_mul_left]; rfl
 
