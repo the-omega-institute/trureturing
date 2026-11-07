@@ -22,14 +22,11 @@ internal sealed class NathansonSumsetIntersectionNonmaximalDocument : IScribeDoc
             Node("IsBasis", "Bases of a fixed order", BasisFormula(),
                 "Section 1 (p. 1) states: “The subset A is a basis of order h for S if hA = S, or, equivalently, if rA,h(x) ≥ 1 for all x ∈ S.” The ambient semigroup is represented by its universal set, and nonbasis means the negation of this equality.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("IsMaximalNonbasis", "Maximal nonbases", MaximalFormula(),
-                "Section 2 (p. 5) states: “A subset A of S is a maximal nonbasis of order h for S if A is not a basis of order h for S but every proper superset of A is a basis of order h for S.” Proper inclusion is denoted by ⊂.",
-                DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("AsymptoticallyStrictlyDecreasing", "Asymptotically strict decrease", DecreasingFormula(),
                 "Section 1 (p. 1) states: “The sequence of sets (A_q)_{q=1}^∞ is decreasing if A_q ⊇ A_{q+1} for all q ∈ ℕ.” It continues: “The decreasing sequence (A_q)_{q=1}^∞ is strictly decreasing if A_q ≠ A_{q+1} for all q ∈ ℕ and asymptotically strictly decreasing if A_q ≠ A_{q+1} for infinitely many q.” The Lean sequence starts at 0; infinitely many unequal steps are expressed by an unequal step beyond every natural bound.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The universal assertion in Problem 2", Disp(Equal(Call("claim"), Parenthesized(ClaimBody()))),
-                Question + "S ranges over infinite additive commutative semigroups, h over natural numbers with 1 ≤ h, and A over all subsets. Both intersections range over every nonnegative integer q. The sumset equality is written with the intersection on the left.",
+                Question + "Section 2 (p. 5) states: “A subset A of S is a maximal nonbasis of order h for S if A is not a basis of order h for S but every proper superset of A is a basis of order h for S.” This condition is inlined in the assertion; the private proof uses Mathlib Maximal through Set.maximal_iff_forall_ssuperset. S ranges over infinite additive commutative semigroups, h over natural numbers with 1 ≤ h, and A over all subsets. Both intersections range over every nonnegative integer q. The sumset equality is written with the intersection on the left.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "A negative answer", Disp(Not(ClaimBody())),
                 "Take S = ℤ, h = 2 and A = {n : ℤ | Even n ∧ n ≠ 2}. This is a nonbasis, and its proper superset of all even integers remains a nonbasis. In a decreasing family with this intersection and arbitrarily late unequal steps, every stage has infinitely many elements outside A. Removing the possible element 2 leaves infinitely many odd elements. For an odd integer n, choose such an odd element b different from n − 2; then n − b belongs to A and n = (n − b) + b belongs to the two-fold sumset of that stage. Thus 1 belongs to every stage's two-fold sumset and does not belong to A + A. This single instance refutes the universal assertion; no assertion about all finite punctures or all orders h ≥ 2 is needed.",
@@ -92,18 +89,6 @@ internal sealed class NathansonSumsetIntersectionNonmaximalDocument : IScribeDoc
             Equal(Call("IsBasis", h, a), Parenthesized(body))))));
     }
 
-    private static Formula MaximalFormula()
-    {
-        var a = F.Id("A");
-        var b = F.Id("B");
-        var h = F.Id("h");
-        var proper = Seq(a, Sp, Subset, Sp, b);
-        var body = And(Not(Call("IsBasis", h, a)),
-            All("B", Set(F.Id("S")), Imp(proper, Call("IsBasis", h, b))));
-        return Disp(Semigroup(All("h", Nat(), All("A", Set(F.Id("S")),
-            Equal(Call("IsMaximalNonbasis", h, a), Parenthesized(body))))));
-    }
-
     private static Formula DecreasingFormula()
     {
         var a = F.Id("A");
@@ -129,7 +114,8 @@ internal sealed class NathansonSumsetIntersectionNonmaximalDocument : IScribeDoc
         var sequence = Some("Aq", Family(s), And(Call("AsymptoticallyStrictlyDecreasing", aq),
             And(Equal(Inter(stage), a), Equal(Inter(Call("sumset", stage, h)), Call("sumset", a, h)))));
         var body = Imp(new Formula.Relation(D(1), FormulaRelationOperator.LessThanOrEqual, h),
-            Imp(Not(Call("IsBasis", h, a)), Imp(Not(Call("IsMaximalNonbasis", h, a)), sequence)));
+            Imp(Not(Call("IsBasis", h, a)), Imp(Not(And(Not(Call("IsBasis", h, a)),
+                All("B", Set(s), Imp(Seq(a, Sp, Subset, Sp, F.Id("B")), Call("IsBasis", h, F.Id("B")))))), sequence)));
         return Semigroup(Instance("Infinite", s, All("h", Nat(), All("A", Set(s), body))));
     }
 }

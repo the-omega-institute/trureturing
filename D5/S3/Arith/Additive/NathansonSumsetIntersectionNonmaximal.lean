@@ -18,9 +18,11 @@ punctured_even_not_maximal: proof_shape: bind-only; consumer: result.
 stage_odd_infinite: proof_shape: bind-only; consumer: result.
 odd_mem_stage_sumset: proof_shape: bind-only; consumer: result.
 Every helper has escape_witness: none and Direct frozen dependencies: none.
-The public result is the designated refutation result (`basis=refutes`) and is exempt from
-four-slot escape registration (CLAUDE.md §3.9).
-The five public definitions retain the expressions in issue #20722.
+The public result has utility: none and is an escape-audit target.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/27767.
+The four public definitions retain the expressions in issue #20722.
+The maximal-nonbasis condition is inlined literally in claim; the proof reuses Mathlib Maximal
+through Set.maximal_iff_forall_ssuperset instead of declaring a duplicate predicate.
 The sumset is defined over semigroups, including those without an identity, and its zero case is
 empty; Mathlib's monoid pointwise natural scalar action has a different zero case.
 The positive-index integer family in NathansonProblem12AffineInvariance does not define this
@@ -34,6 +36,7 @@ Only the instance S = ℤ, h = 2, A = {n | Even n ∧ n ≠ 2} is needed for the
 
 import Mathlib.Algebra.Ring.Int.Parity
 import Mathlib.Data.Fintype.Order
+import Mathlib.Order.Minimal
 import Mathlib.Algebra.Group.Pointwise.Set.Basic
 
 set_option autoImplicit false
@@ -53,10 +56,6 @@ def sumset (A : Set S) : ℕ → Set S
 /-- `A` is a basis of order `h` for `S`: `hA = S`. -/
 def IsBasis (h : ℕ) (A : Set S) : Prop := sumset A h = Set.univ
 
-/-- `A` is a maximal nonbasis of order `h`: not a basis, while every proper superset is. -/
-def IsMaximalNonbasis (h : ℕ) (A : Set S) : Prop :=
-  ¬ IsBasis h A ∧ ∀ B : Set S, A ⊂ B → IsBasis h B
-
 /-- `(A_q)` is decreasing and `A_q ≠ A_{q+1}` for infinitely many `q`. -/
 def AsymptoticallyStrictlyDecreasing (A : ℕ → Set S) : Prop :=
   (∀ q, A (q + 1) ⊆ A q) ∧ ∀ N, ∃ q, N ≤ q ∧ A q ≠ A (q + 1)
@@ -64,7 +63,7 @@ def AsymptoticallyStrictlyDecreasing (A : ℕ → Set S) : Prop :=
 /-- Problem 2, as a universal assertion over infinite abelian semigroups and orders `h ≥ 1`. -/
 def claim : Prop :=
   ∀ (S : Type) [AddCommSemigroup S] [Infinite S] (h : ℕ) (A : Set S), 1 ≤ h →
-    ¬ IsBasis h A → ¬ IsMaximalNonbasis h A →
+    ¬ IsBasis h A → ¬ (¬ IsBasis h A ∧ ∀ B : Set S, A ⊂ B → IsBasis h B) →
       ∃ Aq : ℕ → Set S, AsymptoticallyStrictlyDecreasing Aq ∧ (⋂ q, Aq q) = A ∧
         (⋂ q, sumset (Aq q) h) = sumset A h
 
@@ -111,10 +110,12 @@ private theorem not_basis_of_subset_even {B : Set ℤ} (hB : B ⊆ {n | Even n})
   have heven : Even (1 : ℤ) := hab ▸ (hB ha).add (hB hb)
   exact Int.not_even_one heven
 
-private theorem punctured_even_not_maximal : ¬ IsMaximalNonbasis 2 puncturedEven := by
+private theorem punctured_even_not_maximal :
+    ¬ Maximal (fun B : Set ℤ => ¬ IsBasis 2 B) puncturedEven := by
   intro h
+  have h := Set.maximal_iff_forall_ssuperset.mp h
   apply not_basis_of_subset_even (B := {n : ℤ | Even n}) (fun _ hx => hx)
-  apply h.2
+  apply Classical.not_not.mp (h.2 ?_)
   refine ⟨fun _ hx => hx.1, ?_⟩
   intro hback
   have h2 := hback (show (2 : ℤ) ∈ {n : ℤ | Even n} from even_two)
@@ -142,7 +143,11 @@ private theorem odd_mem_stage_sumset (B : Set ℤ) (hsub : puncturedEven ⊆ B)
 theorem result : ¬ claim := by
   intro hclaim
   obtain ⟨Aq, hseq, hinter, hsum⟩ := hclaim ℤ 2 puncturedEven (by decide)
-    (not_basis_of_subset_even (fun _ hx => hx.1)) punctured_even_not_maximal
+    (not_basis_of_subset_even (fun _ hx => hx.1)) (by
+      intro h
+      apply punctured_even_not_maximal
+      exact Set.maximal_iff_forall_ssuperset.mpr
+        ⟨h.1, fun _ hsub => not_not.mpr (h.2 _ hsub)⟩)
   have h1 : (1 : ℤ) ∈ ⋂ q, sumset (Aq q) 2 := by
     apply Set.mem_iInter.mpr
     intro q
