@@ -2114,3 +2114,67 @@ $$
 **推论 492.6。** 任给满足 (492.1) 的局部有界可测 $E_0$，$E_0,E_0\pm F$ 中有一个函数满足 (492.1)，而其交叉项不满足 $O\bigl(X^{1-b}(\log X)^{3-\eta}\bigr)$（任意固定 $\eta>0$），也不满足 $O(X^{1-b}\log X)$；若 $E_0$ 另满足 $E_0(x)=O(\sqrt x\log^2x)$，该函数也满足此界。因此在 (492.1) 的接口下，定理 491.6(ii) 的上界 $X^{1-b}(\log X)^3$ 中 $X$ 的幂次不能普遍改进，总对数幂 $3$ 不能降低任何固定正数，形如 $C_E(X)\sim c(a,b)\,X^{1-b}\log X$ 的交叉主项定律不能由 (492.1) 单独推出。
 
 **范围。** 定理 492.5 是关于抽象接口 (492.1) 的锐性结论，构造的 $E_*$ 一般不是 $\psi-\mathrm{id}$；它不给出算术情形 $E=\psi-\mathrm{id}$ 的交叉项下界，也不排除 $o\bigl(X^{1-b}(\log X)^3\bigr)$ 形式的非幂次改进。证明中的截断、Cauchy–Schwarz、凹性与二次恒等式都是标准工具，本节的新内容是三者的组合：保持整条指数带方差的扰动、端点尖峰的 $h\log^2(k/h)$ 交叉能量，以及它向原移动价格核的运输；由普通方差恢复协方差的极化方法见 Leung [Joint distribution of primes in multiple short intervals, Adv. Math. 490 (2026), 110847, doi:10.1016/j.aim.2026.110847] 附注 2.3。要对 $\psi-\mathrm{id}$ 得到交叉项主项，需要 (492.1) 之外能排除端点集中的信息，例如关于零点或素数分布的更细输入。
+
+## 追加锚（本行以下为增补区）
+
+## 493. 第四矩驱动的双侧正比例振荡
+
+沿用 §490 的 $E,D_u,V,w,\rho_x,\mathcal T_{\theta,g},Q(g)$ 与 (490.2)。固定 $0<\alpha<\theta<\beta<1$。除 (490.2) 外，本节使用第四矩上界：存在常数 $C_4$，使对所有充分大的 $Y$，
+
+$$
+\sup_{Y^\alpha\le u\le Y^\beta}\frac{\int_1^Y|D_u(x)|^4\,dx}{Yu^2\log^2(Y/u)}\le C_4 .
+\tag{493.1}
+$$
+
+由 Cauchy–Schwarz，$\int_1^YD_u^4\ge\frac1YV(Y,u)^2$，故在 (490.2) 下 (493.1) 只能在 $C_4\ge1$ 时成立。令 $h=X^\theta$、$f_s(x)=D_{sx^\theta}(x)$、$S_X=X^{1-\theta}\log X$，并在 $[X,2X]$ 上取概率测度 $d\mu_X=dx/(x\log2)$ 与 $Z_X=\mathcal T_{\theta,g}/\sqrt{S_X}$。
+
+**引理 493.1（移动增量与 $L^1$ 剖面的第四矩）。** 设 (493.1)。则存在 $C$（只依赖 $\theta$ 与指数带），使对所有充分大的 $X$，
+
+$$
+\sup_{0\le s\le1}\int_X^{2X}|f_s(x)|^4\,dx\le C\,C_4\,X h^2\log^2X ,
+\qquad
+\int_X^{2X}|\mathcal T_{\theta,g}(x)|^4\,\frac{dx}x\le C\,C_4\,\|g\|_1^4\,S_X^2 .
+$$
+
+证明。令 $L_s(x)=sx^\theta$、$\phi_s(x)=x+L_s(x)$；在 $[X,2X]$ 上 $0\le L_s<2h$、$\phi_s'\ge1$。对 $v\in[3h,4h]$ 有恒等式 $f_s(x)=D_v(x)-D_{v-L_s(x)}(\phi_s(x))$（两个增量终点同为 $x+v$），故 $|f_s(x)|^4\le8\bigl(|D_v(x)|^4+|D_{v-L_s(x)}(\phi_s(x))|^4\bigr)$；对 $v\in[3h,4h]$ 取平均后对 $x$ 积分。第一部分：$v\asymp X^\theta$ 最终落在 $Y=3X$ 的指数带内，由 (493.1) 得 $\int_1^{3X}|D_v|^4\ll C_4Xh^2\log^2X$。第二部分作联合换元 $(x,v)\mapsto(y,w)=(\phi_s(x),\,v-L_s(x))$，其 Jacobian 为 $\phi_s'(x)\ge1$，像含于 $[X,3X]\times[h,4h]$；由 Tonelli，$\int_X^{2X}\!\int_{3h}^{4h}|D_{v-L_s(x)}(\phi_s(x))|^4\,dv\,dx\le\int_h^{4h}\!\int_1^{3X}|D_w(y)|^4\,dy\,dw\ll C_4Xh^3\log^2X$。两部分除以 $h$ 即得第一式，对 $s$ 一致。
+
+对第二式，令 $G=\|g\|_1>0$，$F_g(x)=\int_0^1g(s)f_s(x)\rho_x(sx^\theta)\,ds$。由 $0<\rho\le1$ 与关于概率测度 $|g(s)|ds/G$ 的 Jensen 不等式，$|F_g(x)|^4\le G^3\int_0^1|g(s)|\,|f_s(x)|^4\,ds$；对 $x$ 积分并用第一式得 $\int_X^{2X}|F_g|^4\ll C_4G^4Xh^2\log^2X$。又 $\mathcal T_{\theta,g}=x^{1/2-\theta}F_g$，故 $\int_X^{2X}|\mathcal T_{\theta,g}|^4\,dx/x\ll X^{1-4\theta}\int_X^{2X}|F_g|^4\ll C_4G^4S_X^2$。证毕。
+
+**引理 493.2（移动价格核的一阶均值消失）。** 设 (490.2)，取固定 $\theta<\nu<\beta$。则对每个实值 $g\in L^1(0,1)$，
+
+$$
+\int_X^{2X}\mathcal T_{\theta,g}(x)\,\frac{dx}x\ll\|g\|_1\sqrt{\log X}\,\bigl(X^{(1-\nu)/2}+X^{(\nu-\theta)/2}\bigr)=o\bigl(\sqrt{S_X}\bigr).
+$$
+
+证明。令 $M=X^\nu$、$\mathscr A_Mf(x)=\frac1M\int_0^Mf(x+r)\,dr$。由引理 491.2，$\|\mathscr A_Mf_s\|_{L^2[X,2X]}\ll\frac hM\sqrt{X\log X}\sqrt M$；由引理 491.1，$\|f_s\|_2\ll\sqrt{X\log X}\sqrt h$；两者对 $s\in[0,1]$ 一致。令 $P_s(t)=\int_X^tf_s$（$X\le t\le2X$）。由 Fubini，$\int_X^t\mathscr A_Mf_s=\frac1M\int_0^M\int_{X+r}^{t+r}f_s$，它与 $P_s(t)$ 只相差长度至多 $M$ 的两个端点条；故由 Cauchy–Schwarz，
+
+$$
+|P_s(t)|\le\sqrt X\,\|\mathscr A_Mf_s\|_2+2\sqrt M\,\|f_s\|_2\ll\sqrt{\log X}\,\Bigl(\frac{X\,h}{\sqrt M}+\sqrt{XhM}\Bigr),
+$$
+
+对 $t$ 与 $s$ 一致。令 $q_s(x)=x^{-1/2-\theta}\rho_x(sx^\theta)$。由 §481 的显式 $w$，$(\log w)'=O(x^{-1})$、$(\log w)''=O(x^{-2})$，从而（与定理 491.6 的证明相同）对 $s\in[0,1]$ 一致地 $q_s=O(X^{-1/2-\theta})$、$q_s'=O(X^{-3/2-\theta})$，故 $|q_s(2X)|+\int_X^{2X}|q_s'|\ll X^{-1/2-\theta}$。分部积分给出 $\bigl|\int_X^{2X}q_sf_s\bigr|\le\sup_t|P_s(t)|\bigl(|q_s(2X)|+\int_X^{2X}|q_s'|\bigr)\ll\sqrt{\log X}\bigl(X^{(1-\nu)/2}+X^{(\nu-\theta)/2}\bigr)$。由于 $\int_X^{2X}\mathcal T_{\theta,g}\,\frac{dx}x=\int_0^1g(s)\int_X^{2X}q_sf_s\,dx\,ds$（$E$ 局部有界，Fubini 成立），得第一式；除以 $\sqrt{S_X}$ 为 $O\bigl(X^{-(\nu-\theta)/2}+X^{-(1-\nu)/2}\bigr)=o(1)$。证毕。
+
+**定理 493.3（双侧正比例振荡）。** 设 $E$ 局部有界 Borel 可测，(490.2) 与 (493.1) 在指数带 $\alpha<\theta<\beta$ 上成立，$g\in L^1(0,1)$ 实值且不几乎处处为零。令 $v=\frac12(2^{1-\theta}-1)Q(g)$，$K$ 为引理 493.1 给出的 $\sup_X\mathbb E_{\mu_X}Z_X^4$ 的上界（$K\ll C_4\|g\|_1^4$），
+
+$$
+K_1=8\Bigl(K+\frac{v^2}4\Bigr),\qquad \Lambda=\frac{(v/2)^{3/2}}{\sqrt{K_1}},\qquad c=\frac\Lambda8,\qquad \delta=\frac{\Lambda^2}{16\sqrt{K_1}} .
+$$
+
+则对所有充分大的 $X$，
+
+$$
+\mu_X\Bigl\{\mathcal T_{\theta,g}>c\sqrt{S_X}\Bigr\}\ge\delta,\qquad \mu_X\Bigl\{\mathcal T_{\theta,g}<-c\sqrt{S_X}\Bigr\}\ge\delta .
+\tag{493.2}
+$$
+
+证明。由定理 490.6，$\mathbb EZ_X^2\to Q(g)(2^{1-\theta}-1)/\log2>2v$，且该定理的证明给出 $Q(g)>0$；故充分大时 $\mathbb E Z_X^2\ge v>0$（$\mathbb E=\mathbb E_{\mu_X}$）；由引理 493.1，$\mathbb EZ_X^4\le K$；由引理 493.2，$\varepsilon_X=|\mathbb EZ_X|\to0$，故充分大时 $\varepsilon_X\le\min\{\sqrt{v/2},\Lambda/8\}$。以下是经典的 Paley–Zygmund 型论证。令 $W=Z_X-\mathbb EZ_X$，则 $\mathbb EW=0$，$\mathbb EW^2\ge v-\varepsilon_X^2\ge v/2$，$\mathbb EW^4\le8(\mathbb EZ_X^4+\varepsilon_X^4)\le K_1$。由插值不等式 $\mathbb EW^2\le(\mathbb E|W|)^{2/3}(\mathbb EW^4)^{1/3}$，$\mathbb E|W|\ge\Lambda$；又 $\mathbb EW=0$ 给出 $\mathbb EW_+=\mathbb EW_-=\frac12\mathbb E|W|\ge\Lambda/2$。取 $a=\Lambda/4$，由 $\mathbb EW_+\le a+(\mathbb EW_+^2)^{1/2}\mu_X(W>a)^{1/2}$ 与 $\mathbb EW_+^2\le\mathbb EW^2\le\sqrt{K_1}$，得 $\mu_X(W>\Lambda/4)\ge\delta$；同理 $\mu_X(W<-\Lambda/4)\ge\delta$。最后 $|\mathbb EZ_X|\le\Lambda/8$，故 $W>\Lambda/4\Rightarrow Z_X>c$、$W<-\Lambda/4\Rightarrow Z_X<-c$。证毕。
+
+**推论 493.4（条件算术形式）。** 记 $M_K(N;H)=\sum_{n\le N}(\psi(n+H)-\psi(n)-H)^K$。设 Montgomery–Soundararajan [Primes in short intervals, Comm. Math. Phys. 252 (2004), 589–617] 猜想 1 在 $K=2,4$ 时成立：对固定 $\varepsilon>0$，$M_K(N;H)=(\mu_K+o(1))\,N\,(H\log(N/H))^{K/2}$（$\mu_2=1$、$\mu_4=3$）对 $(\log N)^{1+\varepsilon}\le H\le N^{1-\varepsilon}$ 一致成立。则对 $E=\psi-\mathrm{id}$、任意 $0<\alpha<\theta<\beta<1$ 与任意不几乎处处为零的实值 $g\in L^1(0,1)$，(493.2) 成立。
+
+证明。给定 $\alpha,\beta$ 后取 $0<\varepsilon<\min\{\alpha,1-\beta\}$（猜想中的 $H$ 为正整数），则 $Y^\alpha-1\le H\le Y^\beta$ 最终落在猜想的范围内。对 $1\le x\le Y$、$u\in[Y^\alpha,Y^\beta]$，令 $n=\lfloor x\rfloor$、$H=\lfloor u\rfloor$；左端点相差不到 $1$，右端点相差不到 $2$，故 $D_u(x)-D_H(n)$ 是区间长度至多 $2$ 上的 $\psi$ 增量与 $O(1)$ 线性项之差，$|D_u(x)-D_H(n)|\ll\log(3Y)$。于是 $\int_1^Y|D_u|^4\le8\sum_{n\le Y}|D_H(n)|^4+O(Y\log^4Y)$，由 $K=4$ 的情形得 (493.1)（粗略不等式 $|a+b|^4\le8(|a|^4+|b|^4)$ 使任意固定 $C_4>8\mu_4=24$ 均可；$Y\log^4Y=o(YH^2\log^2(Y/H))$ 因 $H\ge Y^\alpha$）。同一桥接在 $L^2$ 中给出 $\bigl|\sqrt{V(Y,u)}-\sqrt{\sum_{n\le Y}D_H(n)^2}\bigr|\ll\sqrt Y\log Y=o\bigl(\sqrt{YH\log(Y/H)}\bigr)$，再由 $K=2$ 的情形与 $H\log(Y/H)\sim u\log(Y/u)$ 得 (490.2)。$E=\psi-\mathrm{id}$ 局部有界可测。由定理 493.3 得结论。证毕。
+
+**推论 493.5（原前向价格核）。** 在推论 493.4 的假设下，取 $\theta=4/5$、$g\equiv1$（$Q(1)=1/3$）：存在 $c,\delta>0$，使对所有充分大的 $X$，$[X,2X]$ 中 $\mathcal T(x)>cx^{1/10}\sqrt{\log x}$ 的点集与 $\mathcal T(x)<-cx^{1/10}\sqrt{\log x}$ 的点集的 $dx/x$ 测度都至少 $\delta$（由 $dx/x=(\log2)\,d\mu_X$，将定理 493.3 的 $\delta$ 换为 $\delta\log2$）。换算到 (481.1) 的价格量即 $T_\psi(x,x^{4/5})=x^{11/10}\mathcal T(x)$，两侧各在每个充分大二倍区间中占正比例，特别地 $T_\psi(x,x^{4/5})=\Omega_\pm\bigl(x^{6/5}\sqrt{\log x}\bigr)$。
+
+证明。$\mathcal T_{4/5,1}=\mathcal T$；在 $[X,2X]$ 上 $\log X\le\log x\le\log X+\log2$、$x^{1/10}\le2^{1/10}X^{1/10}$，减小 $c$ 即把阈值 $c\sqrt{S_X}$ 换成 $cx^{1/10}\sqrt{\log x}$。证毕。
+
+**范围。** 推论 493.4–493.5 以 Montgomery–Soundararajan 猜想 1 的 $K=2,4$ 情形为条件；该文定理 3 另以强相关估计 (20) 为条件；对 $K=4$ 的长度范围至多为 $H\le N^{1/4}$，不覆盖推论 493.5 所需的 $H\asymp N^{4/5}$。Goldston–Yıldırım [Higher correlations of divisor sums related to primes II: variations of the error term in the prime number theorem, Proc. London Math. Soc. 95 (2007), 199–247] 定理 3 在 GRH 下对 $\log^{14}N\ll h\ll N^{1/7-\varepsilon}$ 的固定长度 $h$ 给出两个符号的存在性；Kaczorowski–Pintz [Oscillatory properties of arithmetical functions. I, Acta Math. Hungar. 48 (1986), 173–185；II, 49 (1987), 441–453] 研究算术函数余项的振荡与变号，不给出这里每个充分大二倍区间中的正比例结论。对固定长度，由足够强的 Montgomery–Soundararajan 矩渐近推出两侧正比例是第二、第四矩配合 Paley–Zygmund 论证的直接推论；本节的区别在于移动长度 $sx^\theta$、任意实值 $L^1$ 剖面与原价格权，并且只用第四矩上界 (493.1) 与方差渐近 (490.2)，给出每个充分大二倍区间中两侧的统一正比例。de la Bretèche–Fiorilli [On a conjecture of Montgomery and Soundararajan, Math. Ann. 381 (2021), 575–591] 给出加权偶矩下界，不提供这里所需的第四矩上界 (493.1)。定理 493.3 不给出渐近正态性或随机过程意义下的收敛。
