@@ -78,10 +78,10 @@ internal sealed class HardinA240514StripDocument : IScribeDocumentDefinition
     private static Formula BoundaryFormula()
     {
         var r = V("r"); var s = V("s"); var j = V("j");
+        var neighbors = Add(Call("horizontal", r, j), Call("equalBit", App(s, j), App(r, j)));
+        var condition = All("j", Call("Fin", D(3)), DifferentTwo(neighbors));
         return All("r", RowType(), All("s", RowType(),
-            Seq(Call("Boundary", r, s), Sp, F.Iff, Sp, Parenthesized(
-                All("j", Call("Fin", D(3)), DifferentTwo(Add(Call("horizontal", r, j),
-                    Call("equalBit", App(s, j), App(r, j))))))));
+            Seq(Call("Boundary", r, s), Sp, F.Iff, Sp, Parenthesized(condition))));
     }
 
     private static Formula InteriorFormula()
@@ -143,7 +143,8 @@ internal sealed class HardinA240514StripDocument : IScribeDocumentDefinition
         {
             var c = Coefficients[i];
             var value = term((byte)(i + 1));
-            var magnitude = Math.Abs(c) == 1 ? value : Mul(D((byte)Math.Abs(c)), value);
+            var absolute = c < 0 ? -c : c;
+            var magnitude = absolute == 1 ? value : Mul(Number((byte)absolute), value);
             result = result is null ? magnitude : c > 0 ? Add(result, magnitude) : Sub(result, magnitude);
         }
         return result!;
@@ -153,25 +154,27 @@ internal sealed class HardinA240514StripDocument : IScribeDocumentDefinition
     {
         var r = V("r"); var s = V("s");
         var row = Arrow(Call("Fin", D(3)), V("Bool"));
-        return All("r", row, All("s", row, Eq(Call("v", D(20), r, s),
-            Recurrence(j => Call("v", D((byte)(20 - j)), r, s)))));
+        return All("r", row, All("s", row, Eq(Call("v", D(2, 0), r, s),
+            Recurrence(j => Call("v", Number((byte)(20 - j)), r, s)))));
     }
 
     private static Formula ResultFormula()
     {
         var n = V("n");
-        return All("n", V("Nat"), Imp(Seq(D(21), Sp, Leq, Sp, n),
-            Eq(Cast(Call("a", n)), Recurrence(j => Cast(Call("a", Sub(n, D(j))))))));
+        var rhs = Recurrence(j => Cast(Call("a", Sub(n, Number(j)))));
+        return All("n", V("Nat"), Imp(Seq(D(2, 1), Sp, Leq, Sp, n),
+            Eq(Cast(Call("a", n)), rhs)));
     }
 
     private static Formula RowType() => Arrow(Call("Fin", D(3)), V("Bool"));
+    private static Formula Number(byte n) => n < 10 ? D(n) : D((byte)(n / 10), (byte)(n % 10));
     private static Formula V(string name) => F.Id(name);
     private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
     private static Formula Call(string name, params Formula[] args) => App(Seq(Operatorname, Grp(V(name))), args);
     private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
     private static Formula Conditional(Formula condition, Formula yes, Formula no) =>
-        Seq(Operatorname, Grp(V("if")), Sp, Parenthesized(condition), Sp,
-            Operatorname, Grp(V("then")), Sp, yes, Sp, Operatorname, Grp(V("else")), Sp, no);
+        Parenthesized(Seq(Operatorname, Grp(V("if")), Sp, Parenthesized(condition), Sp,
+            Operatorname, Grp(V("then")), Sp, yes, Sp, Operatorname, Grp(V("else")), Sp, no));
     private static Formula DifferentTwo(Formula f) => Seq(f, Sp, Neq, Sp, D(2));
     private static Formula Arrow(Formula a, Formula b) => Seq(Parenthesized(a), Sp, To, Sp, b);
     private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, Sp, b));
