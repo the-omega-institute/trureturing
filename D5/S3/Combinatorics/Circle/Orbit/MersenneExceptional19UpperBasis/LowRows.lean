@@ -72,7 +72,7 @@ private theorem read_two_low (d : ℕ) (hd : 2≤d) (f : ℕ → A) (z : ℤ)
         · exact Int.ediv_nonneg hz.1 (by norm_num)
         · have hp : (2 : ℤ)^d=4*(2 : ℤ)^(d-2) := by
             calc
-              (2 : ℤ)^d=(2 : ℤ)^(2+(d-2)) := by congr 1; omega
+              (2 : ℤ)^d=(2 : ℤ)^(2+(d-2)) := congrArg (fun n : ℕ => (2 : ℤ)^n) he
               _=4*(2 : ℤ)^(d-2) := by rw [pow_add]; norm_num
           rw [hp] at hz
           omega
@@ -117,8 +117,9 @@ private theorem affine_low_read (r : ℕ) (X : Fin (3*degree r) → A)
     simpa only [Y,corrected_low r X θ p 0 (by omega),
       corrected_low r X θ p 1 (by omega),corrected_low r X θ p 2 (by omega)] using h
   have hsum : block X 0 2+block X 1 2+block X 2 2=0 := by
-    simpa only [corrected_low r X θ 0 2 le_rfl,corrected_low r X θ 1 2 le_rfl,
-      corrected_low r X θ 2 2 le_rfl] using hT 2 le_rfl (by dsimp [degree]; omega)
+    simpa only [corrected_low r X (highTheta r X) 0 2 le_rfl,
+      corrected_low r X (highTheta r X) 1 2 le_rfl,
+      corrected_low r X (highTheta r X) 2 2 le_rfl] using hT 2 le_rfl (by dsimp [degree]; omega)
   have hcorr := corrected_affine_read r X θ M hM
   change read (degree r) (Y 0) (M+bb r)+read (degree r) (Y 1) M+
     read (degree r) (Y 2) (M-aa r)=affineRead r X M at hcorr
@@ -149,7 +150,7 @@ private theorem selected_f2 (r : ℕ) (X : Fin (3*degree r) → A)
       read (degree r) (Y p) m'-read (degree r) (Y p) m=
         (1-2*digit m 1) • Y p 1+digit m 1 • Y p 2 := by
     rw [he]
-    apply read_add_power _ _ _ _ (by omega)
+    apply read_add_power (degree r) 1 (Y p) m (by omega)
     · simpa only [pow_one,← he,show (2 : ℤ)^degree r=(base r : ℤ) by simp [base]] using
         And.intro hm.1 hm'.2
     · exact hdouble p
@@ -215,17 +216,35 @@ theorem actual_low_row_table (r : ℕ) (X : Fin (3*degree r) → A)
       (4*eighth r)%2=0 ∧ (4*eighth r)/2%2=0 ∧
       (4*eighth r-aa r)%2=1 ∧ (4*eighth r-aa r)/2%2=0 ∧
       (4*eighth r+bb r)/4-(4*eighth r-aa r)/4=(ss r-2)/4 ∧
-      (4*eighth r)/4-(4*eighth r-aa r)/4=(aa r+1)/4 := by omega
+      (4*eighth r)/4-(4*eighth r-aa r)/4=(aa r+1)/4 := by
+    generalize hE0 : eighth r = E at hemod ⊢
+    generalize hA0 : aa r = a at ha4 hs ⊢
+    generalize hB0 : bb r = b at hb4 hs ⊢
+    generalize hS0 : ss r = s at hs ⊢
+    clear * - hemod ha4 hb4 hs
+    omega
   have hftop : (7*eighth r-bb r+bb r)%2=0 ∧
       (7*eighth r-bb r+bb r)/2%2=0 ∧
       (7*eighth r-bb r)%2=1 ∧ (7*eighth r-bb r)/2%2=0 ∧
       (7*eighth r-bb r-aa r)%2=0 ∧ (7*eighth r-bb r-aa r)/2%2=1 ∧
       (7*eighth r-bb r+bb r)/4-(7*eighth r-bb r-aa r)/4=(ss r+2)/4 ∧
-      (7*eighth r-bb r)/4-(7*eighth r-bb r-aa r)/4=(aa r+1)/4 := by omega
+      (7*eighth r-bb r)/4-(7*eighth r-bb r-aa r)/4=(aa r+1)/4 := by
+    generalize hE0 : eighth r = E at hemod ⊢
+    generalize hA0 : aa r = a at ha4 hs ⊢
+    generalize hB0 : bb r = b at hb4 hs ⊢
+    generalize hS0 : ss r = s at hs ⊢
+    clear * - hemod ha4 hb4 hs
+    omega
   have hat : (aa r+bb r)%2=0 ∧ (aa r+bb r)/2%2=1 ∧
       aa r%2=1 ∧ aa r/2%2=1 ∧ (aa r-aa r)%2=0 ∧ (aa r-aa r)/2%2=0 ∧
       (aa r+bb r)/4-(aa r-aa r)/4=(ss r-2)/4 ∧
-      aa r/4-(aa r-aa r)/4=(aa r+1)/4-1 := by omega
+      aa r/4-(aa r-aa r)/4=(aa r+1)/4-1 := by
+    generalize hE0 : eighth r = E at hemod ⊢
+    generalize hA0 : aa r = a at ha4 hs ⊢
+    generalize hB0 : bb r = b at hb4 hs ⊢
+    generalize hS0 : ss r = s at hs ⊢
+    clear * - hemod ha4 hb4 hs
+    omega
   obtain ⟨b0,b1,b2,b3,b4,b5,b6,b7⟩ := hbase
   obtain ⟨f0,f1,f2,f3,f4,f5,f6,f7⟩ := hftop
   obtain ⟨a0,a1,a2,a3,a4,a5,a6,a7⟩ := hat

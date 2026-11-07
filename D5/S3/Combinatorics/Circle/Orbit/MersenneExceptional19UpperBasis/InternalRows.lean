@@ -104,7 +104,7 @@ theorem actual_internal_bits (r j : ℕ) (hj : 2≤j ∧ j≤degree r-4) :
   · simpa only [add_comm] using digit_add_dvd (bb r) _ j h4
   · simpa only [sub_eq_add_neg,add_comm] using
       (digit_add_dvd (-aa r) _ j h4).trans na
-  · simpa only [fdef,show 8*eighth r-bb r-(2 : ℤ)^(j+1)+bb r=
+  · simpa only [fdef,digit,show 8*eighth r-bb r-(2 : ℤ)^(j+1)+bb r=
         8*eighth r-(2 : ℤ)^(j+1) by ring] using zF
   · simpa only [fdef,show 8*eighth r-bb r-(2 : ℤ)^(j+1)=
         -bb r+(8*eighth r-(2 : ℤ)^(j+1)) by ring] using
@@ -118,7 +118,7 @@ theorem actual_internal_bits (r j : ℕ) (hj : 2≤j ∧ j≤degree r-4) :
   · simpa only [hdef,show 4*eighth r+aa r-(2 : ℤ)^(j+1)=
         aa r+(4*eighth r-(2 : ℤ)^(j+1)) by ring] using
       digit_add_dvd (aa r) _ j hH
-  · simpa only [hdef,show 4*eighth r+aa r-(2 : ℤ)^(j+1)-aa r=
+  · simpa only [hdef,digit,show 4*eighth r+aa r-(2 : ℤ)^(j+1)-aa r=
         4*eighth r-(2 : ℤ)^(j+1) by ring] using zH
 
 variable {A : Type*} [AddCommGroup A]
@@ -325,7 +325,8 @@ theorem selected_internal_step (r j : ℕ) (X : Fin (3*degree r) → A) (θ : A)
   fin_cases p
   · exact (sub_eq_zero.mp HF).symm
   · exact (sub_eq_zero.mp HG).symm
-  · linear_combination (norm := module) hsum-(2 : ℤ) • HT+HF+HG
+  · change Y 2 (j+1)=(2 : ℤ) • Y 2 j
+    linear_combination (norm := module) hsum-(2 : ℤ) • HT+HF+HG
 
 /-- All corrected levels j>=2 form a geometric ladder, and every corrected
 triple at these levels sums to zero. This descent uses only selected uppers. -/
@@ -337,9 +338,12 @@ theorem selected_corrected_ladders (r : ℕ) (X : Fin (3*degree r) → A)
   have hd : 12≤degree r := by dsimp [degree]; omega
   let Y := correctedBlock r X (highTheta r X)
   obtain ⟨b1,b2,bT⟩ := selected_corrected_high r X hX
+  change ∀ p, Y p (degree r-2)=(2 : ℤ) • Y p (degree r-3) at b1
+  change ∀ p, Y p (degree r-1)=(4 : ℤ) • Y p (degree r-3) at b2
+  change Y 0 (degree r-3)+Y 1 (degree r-3)+Y 2 (degree r-3)=0 at bT
   have descent (v : ℕ) : ∀ j, 2≤j → j≤degree r-3 → degree r-3-j=v →
-      (∀ p i, j≤i → i < degree r → Y p i=(2 : ℤ)^(i-j) • Y p j) ∧
-      (∀ i, j≤i → i < degree r → Y 0 i+Y 1 i+Y 2 i=0) := by
+      (∀ p i, j ≤ i → i < degree r → Y p i=(2 : ℤ)^(i-j) • Y p j) ∧
+      (∀ i, j ≤ i → i < degree r → Y 0 i+Y 1 i+Y 2 i=0) := by
     induction v using Nat.strong_induction_on with
     | h v ih =>
       intro j hj hjtop heq
@@ -351,7 +355,8 @@ theorem selected_corrected_ladders (r : ℕ) (X : Fin (3*degree r) → A)
           rcases cases with rfl | rfl | rfl
           · simp
           · simpa only [show degree r-2-(degree r-3)=1 by omega,pow_one] using b1 p
-          · simpa only [show degree r-1-(degree r-3)=2 by omega] using b2 p
+          · simpa only [show degree r-1-(degree r-3)=2 by omega,
+              show (2 : ℤ)^2=4 by norm_num] using b2 p
         · intro i hi hid
           have cases : i=degree r-3 ∨ i=degree r-2 ∨ i=degree r-1 := by omega
           rcases cases with rfl | rfl | rfl
@@ -365,6 +370,8 @@ theorem selected_corrected_ladders (r : ℕ) (X : Fin (3*degree r) → A)
             intro p i hji hid
             simpa only [show i-(j+1)=i-j-1 by omega] using hn p i (by omega) hid)
           (hT (j+1) le_rfl (by omega))
+        change (∀ p, Y p (j+1)=(2 : ℤ) • Y p j) ∧
+          Y 0 j+Y 1 j+Y 2 j=0 at hs
         refine ⟨?_,?_⟩
         · intro p i hji hid
           by_cases he : i=j

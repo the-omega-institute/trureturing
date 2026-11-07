@@ -172,6 +172,9 @@ theorem actual_selected_upper_reconstruction (r : ℕ)
   let y := block X 1 0
   let θ := highTheta r X
   obtain ⟨hf,hg,hh,slope⟩ := selected_four_parameter_form r X hX
+  change ∀ j, j < degree r → block X 0 j=first (degree r) u x 0 θ j at hf
+  change ∀ j, j < degree r → block X 1 j=middle (degree r) y θ j at hg
+  change ∀ j, j < degree r → block X 2 j=last (degree r) u x y 0 θ j at hh
   change (ss r/2) • x+aa r • y=0 at slope
   have hread := integral_read r X u x y 0 θ hf hg hh
   obtain ⟨hL,hM,hL8,hM8,hp,hp8,hC,hC8,hG,hG8⟩ := q_readings r
