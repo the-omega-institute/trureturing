@@ -1,0 +1,33 @@
+**命题 3.3（精确负三标签压缩）。** 对命题 3.2 的同一资料，取评价 $\alpha_0$ 及
+
+$$
+x=e_2+\tfrac14u,\qquad y=e_2-\tfrac14e_1,\qquad z=e_2.
+\tag{3.9}
+$$
+
+矩阵 $M=[g_{\alpha_0}(a_j,a_k)]$，其中 $(a_1,a_2,a_3)=(x,y,z)$，不是半正定；其在列 $\varepsilon_1-\varepsilon_3,\varepsilon_2-\varepsilon_3$ 上的二阶压缩有特征值 $-1/528$。
+
+证明。$\varepsilon_j$ 表示 $\mathbb C^3$ 的坐标列。直接叉乘得
+
+$$
+\begin{gathered}
+x\times y=(1/4,-1/4,-1/16),\quad
+y\times z=(-1/4,0,0),\quad z\times x=(0,1/4,0),\\
+d(x,y)=2/33,\quad d(y,z)=-1/8,\quad d(z,x)=0,\qquad d=\alpha_0\circ D,\\
+C:=d(x,y)+d(y,z)+d(z,x)=-17/264.
+\end{gathered}
+\tag{3.10}
+$$
+
+例如第一叉积的平方范数为 $33/256$，首坐标立方为 $1/64$，故 $d(x,y)=\tfrac12(1/64)/(33/256)=2/33$。$h_{\alpha_0}$ 是 Euclidean 内积。设 $T$ 的两列为上述差分列，则 $x-z=u/4$、$y-z=-e_1/4$，两者正交，故直接展开 $T^*MT$ 给
+
+$$
+B=T^*MT=
+\begin{pmatrix}1/16&17\mathrm i/264\\-17\mathrm i/264&1/16\end{pmatrix},
+\qquad
+B\binom1{\mathrm i}=-\tfrac1{528}\binom1{\mathrm i}.
+\tag{3.11}
+$$
+
+非对角虚部是 $-\mathrm i C$；这里没有把未知 $D$ 展开到输入之和。因此对原三标签系数 $w=(1,\mathrm i,-1-\mathrm i)^{\mathsf T}=T(1,\mathrm i)^{\mathsf T}$，有 $w^*Mw=-1/264<0$。$-1/528$ 是这个非正交坐标压缩 $B$ 的特征值，不声称它是原三阶矩阵 $M$ 的特征值。∎
+
