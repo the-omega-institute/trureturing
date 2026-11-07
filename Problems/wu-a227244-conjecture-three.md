@@ -62,6 +62,9 @@ would refute this precise conditional assertion.
 
 ## ASSUMED-UNVERIFIED
 
-Global literature completeness and priority are unverified. Four-slot registration
-and current binding evidence require the source-specific attempt described in the
-linked issue; no declared_validated status is claimed here.
+Global literature completeness and priority are unverified. The four-slot audit
+is unfinished under [the linked exception](https://github.com/the-omega-institute/trureturing/issues/27415#issuecomment-6706796802).
+The dependent-family source candidate is uncompiled. Exact reconstruction,
+equivalence/realization, variation/sensitivity, observational dependence and
+current enrolled-template binding evidence are missing. No declared_validated
+status is claimed.
