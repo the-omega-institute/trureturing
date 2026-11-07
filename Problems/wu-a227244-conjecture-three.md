@@ -22,7 +22,7 @@ in 20*k+16 and 220*k+8, respectively. Each existential k ranges separately over
 all natural numbers, including zero. The conclusion is conditional on both
 hypotheses; it does not assert unconditional noncoverage.
 
-## Statement echo
+### Statement echo
 
 | Clause | Canonical counterpart |
 | --- | --- |
@@ -35,10 +35,20 @@ hypotheses; it does not assert unconditional noncoverage.
 Exponents are natural; the product and subtraction are integer operations.
 There are no additional exclusions, finite bounds or eventual-onset assumptions.
 
-## Motivation and route
+## Motivation
 
 The result determines the least prime divisor throughout an unbounded conditional
-family. Progression periodicity and a tail-period transfer reduce the nested
+family.
+
+## Gap
+
+No exact C3 supplier was found on the bounded surfaces described in the Library
+note. Literature completeness and priority remain unverified. The mathematical
+target retains the full conditional family and the disclosed interpretation.
+
+## Route
+
+Progression periodicity and a tail-period transfer reduce the nested
 powers to finite residues. The first noncoverage hypothesis yields n mod 5 != 2,
 which excludes 101; the second yields n mod 55 != 18, which excludes 47.
 Divisibility by 149 and nonzero residues for every one of the 34 smaller primes
@@ -49,6 +59,14 @@ complete the least-prime argument. Both bridges are used in the proof.
 An n satisfying both independent noncoverage hypotheses with failure of
 divisibility by 149, or a natural prime q<149 dividing the same signed integer,
 would refute this precise conditional assertion.
+
+## Evidence
+
+The mathematical source is
+`D5/S3/Arith/Primes/WuA227244ConjectureThree.lean`, with one public result
+and consumed private proof helpers. Its corresponding Blueprint Scribe states
+the signed tower, both independent natural noncoverage premises and the full
+least-prime conclusion. Both premise bridges occur in the result's proof.
 
 ## Triage
 
@@ -63,7 +81,7 @@ would refute this precise conditional assertion.
 
 Global literature completeness and priority are unverified. The four-slot audit
 is unfinished under [the linked exception](https://github.com/the-omega-institute/trureturing/issues/27415#issuecomment-6706796802).
-The dependent-family source candidate is uncompiled. Exact reconstruction,
+No compiled registration is delivered. Exact reconstruction,
 equivalence/realization, variation/sensitivity, observational dependence and
 current enrolled-template binding evidence are missing. No declared_validated
 status is claimed.
