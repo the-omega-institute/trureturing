@@ -92,7 +92,7 @@ Set.ncard is the natural cardinality of the displayed set. Every shell is proved
 
 **Definition 1.7 (Translated cut rectangles).**
 
-$$\forall A: \mathbb{N}, (\forall B: \mathbb{N}, (\forall l: \mathbb{N}, (\forall r: \mathbb{N}, (\forall i0: \mathbb{Z}, (\forall j0: \mathbb{Z}, (\operatorname{polygon}\left(A, B, l, r, i0, j0\right) = \operatorname{Finset.image}\left((\lambda p \mapsto (i0 + (p.1: \mathbb{Z}), j0 + (p.2: \mathbb{Z}))), \operatorname{cutRectangle}\left(A, B, l, r\right)\right)))))))$$
+$$\forall A: \mathbb{N}, (\forall B: \mathbb{N}, (\forall l: \mathbb{N}, (\forall r: \mathbb{N}, (\forall i0: \mathbb{Z}, (\forall j0: \mathbb{Z}, (\operatorname{polygon}\left(A, B, l, r, i0, j0\right) = \operatorname{Finset.image}\left((\lambda p \mapsto (i0 + (p.1: \mathbb{Z}), j0 + (p.2: \mathbb{Z}))), (\operatorname{Finset.product}\left(\operatorname{Finset.range}\left(A + 1\right), \operatorname{Finset.range}\left(B + 1\right)\right) \setminus (\operatorname{Finset.biUnion}\left(\operatorname{Finset.range}\left(l\right), \operatorname{Finset.HasAntidiagonal.antidiagonal}\right) \cup \operatorname{Finset.image}\left((\lambda q: \mathbb{N} \times (\mathbb{N}) \mapsto (A - q.1, B - q.2)), \operatorname{Finset.biUnion}\left(\operatorname{Finset.range}\left(r\right), \operatorname{Finset.HasAntidiagonal.antidiagonal}\right)\right)))\right)))))))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/KisrhombilleFaceCoordination.polygon` (`✓ std3`).
 
@@ -102,7 +102,7 @@ $$\forall A: \mathbb{N}, (\forall B: \mathbb{N}, (\forall l: \mathbb{N}, (\foral
 
 *Commentary.*
 
-The natural rectangle 0≤u≤A, 0≤v≤B is cut by deleting u+v<l and (A−u)+(B−v)<r. This finite set is cutRectangle(A,B,l,r). The image map casts each natural coordinate to an integer and translates by (i0,j0). The projections p.1 and p.2 are the first and second components.
+The natural rectangle 0≤u≤A, 0≤v≤B is cut by deleting u+v<l and the reflected triangle obtained from natural pairs with sum less than r. Finset.range(n) contains the naturals less than n; Finset.HasAntidiagonal.antidiagonal(n) contains natural pairs summing to n. Finset.biUnion forms their finite union, Finset.product forms the rectangle, and ∖ removes the union ∪ of both corners. Subtraction in the reflection is truncated natural subtraction. The outer image map casts each natural coordinate to an integer and translates by (i0,j0). The projections p.1 and p.2 are the first and second components.
 
 **Theorem 1.8 (Six inequalities for polygon membership).**
 
