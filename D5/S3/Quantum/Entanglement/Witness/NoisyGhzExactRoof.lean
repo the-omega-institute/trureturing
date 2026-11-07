@@ -9,13 +9,14 @@
 import Mathlib.Analysis.Fourier.ZMod
 import Mathlib.NumberTheory.LegendreSymbol.AddCharacter
 import Mathlib.Tactic
+import D5.S3.Quantum.Entanglement.Witness.NoisyGhzWitnessBoundGap
 
 /-! This module records the finite phase identity needed by the full matrix
     ensemble. The character is indexed by the whole phase vector
     `(Fin d → ZMod 3)`, so equal scalar differences are never used to identify
     distinct ordered pairs. -/
 
-open scoped BigOperators
+open scoped BigOperators ComplexOrder MatrixOrder
 
 namespace D5.S3.Quantum.Entanglement.Witness.NoisyGhzExactRoof
 
@@ -128,6 +129,655 @@ theorem pair_phase_sum {d : ℕ} (i j : Fin d) :
       if i = j then (3 ^ d : ℕ) else 0 := by
   rw [phaseCharacter_sum]
   simp [pairCoefficient_eq_zero_iff]
+
+private lemma nonzero_pairCoefficient_injective {d : ℕ} (i j k l : Fin d)
+    (hij : i ≠ j) (h : pairCoefficient i j = pairCoefficient k l) :
+    i = k ∧ j = l := by
+  have hi : i = k := by
+    by_contra hik
+    have hh : (1 : ZMod 3) = -(if i = l then 1 else 0) := by
+      simpa only [pairCoefficient, ite_true, if_neg hij, if_neg hik,
+        sub_zero, zero_sub] using congrFun h i
+    by_cases hil : i = l
+    · have hh' : (1 : ZMod 3) = -1 := by simpa [hil] using hh
+      exact (by decide : (1 : ZMod 3) ≠ -1) hh'
+    · norm_num [hil] at hh
+  subst k
+  refine ⟨rfl, ?_⟩
+  by_contra hjl
+  have hh := congrFun h j
+  simp [pairCoefficient, Ne.symm hij, hjl] at hh
+
+theorem pairCoefficient_eq_iff {d : ℕ} (i j k l : Fin d) :
+    pairCoefficient i j = pairCoefficient k l ↔
+      (i = j ∧ k = l) ∨ (i = k ∧ j = l) := by
+  constructor
+  · intro h
+    by_cases hij : i = j
+    · left
+      refine ⟨hij, ?_⟩
+      apply (pairCoefficient_eq_zero_iff k l).mp
+      rw [← h, (pairCoefficient_eq_zero_iff i j).mpr hij]
+    · exact Or.inr (nonzero_pairCoefficient_injective i j k l hij h)
+  · rintro (⟨hij, hkl⟩ | ⟨hik, hjl⟩)
+    · rw [(pairCoefficient_eq_zero_iff i j).mpr hij,
+        (pairCoefficient_eq_zero_iff k l).mpr hkl]
+    · rw [hik, hjl]
+
+private lemma phaseCharacter_mul_star {d : ℕ} (v w θ : Fin d → ZMod 3) :
+    phaseCharacter v θ * star (phaseCharacter w θ) = phaseCharacter (v - w) θ := by
+  have hs (a : ZMod 3) :
+      star (ZMod.stdAddChar a) = (ZMod.stdAddChar a)⁻¹ := by
+    simpa only [starRingEnd_apply, AddChar.inv_apply'] using
+      (AddChar.starComp_apply (R := ZMod 3) (by rw [ZMod.ringChar_zmod_n]; norm_num)
+        (φ := ZMod.stdAddChar) a)
+  unfold phaseCharacter
+  rw [hs, ← div_eq_mul_inv, ← AddChar.map_sub_eq_div]
+  congr 1
+  simp [Pi.sub_apply, sub_mul, Finset.sum_sub_distrib]
+
+/-- The complete Gram matrix of ordered-pair characters. All constant pairs
+share the zero mode; every off-diagonal ordered pair has its own character
+on the independent phase group, in every dimension. -/
+theorem pair_cross_phase_sum {d : ℕ} (i j k l : Fin d) :
+    (∑ θ : Fin d → ZMod 3,
+      phaseCharacter (pairCoefficient i j) θ *
+        star (phaseCharacter (pairCoefficient k l) θ)) =
+      if (i = j ∧ k = l) ∨ (i = k ∧ j = l) then (3 ^ d : ℕ) else 0 := by
+  simp_rw [phaseCharacter_mul_star]
+  rw [phaseCharacter_sum]
+  simp only [sub_eq_zero, pairCoefficient_eq_iff]
+
+open _root_.Matrix
+open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
+open D5.S3.Quantum.Entanglement.OccupancyWordSectors (Word)
+open D5.S3.Quantum.Information.MultiEntropyPositivityRefutation (IsUnitState)
+open D5.S3.Quantum.Recovery.ProductPrefixRigidity (readout)
+open NoisyGhzWitnessBoundGap
+
+private lemma constant_word_injective {n d : ℕ} (hn : 0 < n) :
+    Function.Injective (fun j : Fin d => (fun _ : Fin n => j)) := by
+  intro i j h
+  exact congrFun h ⟨0, hn⟩
+
+private lemma sum_supported_constants {n d : ℕ} {α : Type*} [AddCommMonoid α]
+    (hn : 0 < n) (f : Word (Fin d) n → α)
+    (hf : ∀ x, (¬ ∃ j : Fin d, ∀ i, x i = j) → f x = 0) :
+    ∑ x, f x = ∑ j : Fin d, f (fun _ => j) := by
+  classical
+  let s := Finset.univ.image (fun j : Fin d => (fun _ : Fin n => j))
+  have hs : ∑ x ∈ s, f x = ∑ x, f x := by
+    apply Finset.sum_subset (Finset.subset_univ s)
+    intro x _ hx
+    apply hf x
+    rintro ⟨j, hj⟩
+    apply hx
+    exact Finset.mem_image.mpr ⟨j, Finset.mem_univ _, (funext hj).symm⟩
+  rw [← hs]
+  exact Finset.sum_image (fun i _ j _ h => constant_word_injective hn h)
+
+/-- The actual equal-superposition vector is normalized in every nonempty
+party and local-dimension domain. -/
+theorem ghz_unit {n d : ℕ} (hn : 0 < n) (hd : 0 < d) :
+    IsUnitState (ghz n d) := by
+  classical
+  unfold IsUnitState
+  rw [sum_supported_constants hn _ (by
+    intro x hx
+    simp [ghz, hx])]
+  have hdR : (d : ℝ) ≠ 0 := by exact_mod_cast hd.ne'
+  have hg (j : Fin d) : ghz n d (fun _ => j) = (Real.sqrt d : ℂ)⁻¹ := by
+    exact if_pos ⟨j, fun _ => rfl⟩
+  simp [hg, Complex.normSq_inv, Complex.normSq_ofReal,
+    Real.sq_sqrt (Nat.cast_nonneg d), hdR]
+
+/-- For local dimension two every computational word is supported. This is
+the operator boundary identifying the witness with the fidelity witness. -/
+theorem qubit_support (n : ℕ) :
+    supportProjector n 2 = (1 : Matrix (Word (Fin 2) n) (Word (Fin 2) n) ℂ) := by
+  classical
+  have h (x : Word (Fin 2) n) : (Finset.univ.image x).card ≤ 2 := by
+    exact (Finset.card_le_univ _).trans_eq (Fintype.card_fin 2)
+  simp [supportProjector, h, diagonal_one]
+
+theorem qubit_witness (n : ℕ) :
+    witnessOp n 2 = (1 / 2 : ℝ) •
+      (1 : Matrix (Word (Fin 2) n) (Word (Fin 2) n) ℂ) -
+        rankOneDensity (ghz n 2) := by
+  simp [witnessOp, qubit_support]
+
+private lemma cs {ι : Type*} [Fintype ι] (u v : ι → ℂ) :
+    Complex.normSq (star u ⬝ᵥ v) ≤
+      (∑ i, Complex.normSq (u i)) * ∑ i, Complex.normSq (v i) := by
+  classical
+  simpa only [Complex.normSq_eq_norm_sq] using
+    D5.S3.Quantum.Entanglement.AbsoluteSeparability.LowRankRays.cs_sq u v
+
+private lemma expectation_rank_one {ι : Type*} [Fintype ι] (φ ψ : ι → ℂ) :
+    readout (rankOneDensity φ) ψ = Complex.normSq (star φ ⬝ᵥ ψ) := by
+  have h := D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction.quadratic_projector ψ φ
+  rw [star_dotProduct ψ φ, Complex.star_def, Complex.normSq_conj] at h
+  exact congrArg Complex.re h
+
+private lemma support_expectation {n d : ℕ} (ψ : Word (Fin d) n → ℂ) :
+    readout (supportProjector n d) ψ =
+      ∑ x ∈ Finset.univ.filter (fun x : Word (Fin d) n => (Finset.univ.image x).card ≤ 2),
+        Complex.normSq (ψ x) := by
+  classical
+  rw [readout, supportProjector]
+  have hdiag :
+      (fun x : Word (Fin d) n =>
+        if (Finset.univ.image x).card ≤ 2 then (1 : ℂ) else 0) =
+        (fun x : Word (Fin d) n =>
+          ((if (Finset.univ.image x).card ≤ 2 then (1 : ℝ) else 0) : ℂ)) := by
+    funext x
+    split_ifs <;> rfl
+  rw [hdiag]
+  have hquad :=
+    D5.S3.Quantum.Divergence.CanonicalChannelDPI.diagonal_quadratic_form
+      (d := fun x : Word (Fin d) n =>
+        if (Finset.univ.image x).card ≤ 2 then (1 : ℝ) else 0) ψ
+  convert hquad using 1
+  · congr 2
+    funext x
+    simp only [mulVec_diagonal]
+    split_ifs <;> rfl
+  · rw [Finset.sum_filter]
+    apply Finset.sum_congr rfl
+    intro i hi
+    split_ifs <;> simp [Complex.normSq_eq_norm_sq]
+
+private lemma ghz_expectation {n d : ℕ} (hn : 0 < n) (hd : 0 < d)
+    (ψ : Word (Fin d) n → ℂ) :
+    (d : ℝ) * readout (rankOneDensity (ghz n d)) ψ =
+      Complex.normSq (∑ i : Fin d, ψ (fun _ => i)) := by
+  classical
+  have he : star (ghz n d) ⬝ᵥ ψ =
+      (Real.sqrt d : ℂ)⁻¹ * ∑ i : Fin d, ψ (fun _ => i) := by
+    unfold dotProduct
+    rw [sum_supported_constants hn _ (by
+      intro x hx
+      simp [ghz, hx])]
+    have hg (j : Fin d) : ghz n d (fun _ => j) = (Real.sqrt d : ℂ)⁻¹ := by
+      exact if_pos ⟨j, fun _ => rfl⟩
+    simp [hg, Finset.mul_sum]
+  rw [expectation_rank_one, he, Complex.normSq_mul]
+  have hdR : (d : ℝ) ≠ 0 := by exact_mod_cast hd.ne'
+  simp [Complex.normSq_inv, Complex.normSq_ofReal,
+    Real.sq_sqrt (Nat.cast_nonneg d), hdR, ← mul_assoc]
+
+private lemma join_support {n d : ℕ} (a : Finset (Fin n)) (i j : Fin d) :
+    (Finset.univ.image (a.piecewise (fun _ => i) (fun _ => j))).card ≤ 2 := by
+  classical
+  have h : Finset.univ.image (a.piecewise (fun _ => i) (fun _ => j)) ⊆ {i, j} := by
+    intro x hx
+    obtain ⟨k, _, rfl⟩ := Finset.mem_image.mp hx
+    by_cases hk : k ∈ a <;> simp [Finset.piecewise, hk]
+  exact (Finset.card_le_card h).trans Finset.card_le_two
+
+private lemma join_injective {n d : ℕ} (a : Finset (Fin n))
+    (ha : a.Nonempty) (hc : aᶜ.Nonempty) :
+    Function.Injective (fun ij : Fin d × Fin d =>
+      a.piecewise (fun _ => ij.1) (fun _ => ij.2)) := by
+  classical
+  obtain ⟨k, hk⟩ := ha
+  obtain ⟨l, hl⟩ := hc
+  intro x y h
+  apply Prod.ext
+  · simpa [hk] using congrFun h k
+  · simpa [Finset.mem_compl.mp hl] using congrFun h l
+
+/-- The all-cut biseparable overlap inequality in the actual word space.
+No assumption on normalized factors, chosen Schmidt bases, or a scalar roof
+is introduced: the factors are exactly those in `IsBiseparable`. -/
+theorem biseparable_overlap {n d : ℕ} (hn : 0 < n) (hd : 0 < d)
+    (φ : Word (Fin d) n → ℂ) (hφ : IsBiseparable φ) :
+    (d : ℝ) * readout (rankOneDensity (ghz n d)) φ ≤
+      readout (supportProjector n d) φ := by
+  classical
+  obtain ⟨_, a, ha, hc, u, v, h⟩ := hφ
+  have hj (i j : Fin d) :
+      φ (a.piecewise (fun _ => i) (fun _ => j)) =
+        u (fun _ => i) * v (fun _ => j) := by
+    rw [h]
+    congr 1
+    · congr 1; funext k; simp [k.property]
+    · congr 1; funext k; simp [Finset.mem_compl.mp k.property]
+  have hd' (i : Fin d) : φ (fun _ => i) = u (fun _ => i) * v (fun _ => i) := h _
+  rw [ghz_expectation hn hd, support_expectation]
+  calc
+    Complex.normSq (∑ i : Fin d, φ (fun _ => i)) ≤
+        (∑ i : Fin d, Complex.normSq (u (fun _ => i))) *
+          ∑ j : Fin d, Complex.normSq (v (fun _ => j)) := by
+      simpa [dotProduct, Complex.star_def, hd'] using
+        cs (star (fun i : Fin d => u (fun _ => i))) (fun j : Fin d => v (fun _ => j))
+    _ = ∑ ij : Fin d × Fin d, Complex.normSq
+        (φ (a.piecewise (fun _ => ij.1) (fun _ => ij.2))) := by
+      simp only [Fintype.sum_prod_type, hj, Complex.normSq_mul,
+        Finset.mul_sum, Finset.sum_mul]
+      rw [Finset.sum_comm]
+    _ ≤ _ := by
+      have hs : (∑ ij : Fin d × Fin d, Complex.normSq
+          (φ (a.piecewise (fun _ => ij.1) (fun _ => ij.2)))) =
+          ∑ x ∈ Finset.univ.image (fun ij : Fin d × Fin d =>
+            a.piecewise (fun _ => ij.1) (fun _ => ij.2)), Complex.normSq (φ x) :=
+        (Finset.sum_image (f := fun x : Word (Fin d) n => Complex.normSq (φ x))
+          (s := Finset.univ) (g := fun ij : Fin d × Fin d =>
+            a.piecewise (fun _ => ij.1) (fun _ => ij.2))
+          (fun x _ y _ hxy => join_injective a ha hc hxy)).symm
+      rw [hs]
+      apply Finset.sum_le_sum_of_subset_of_nonneg
+      · intro x hx
+        obtain ⟨ij, _, rfl⟩ := Finset.mem_image.mp hx
+        exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, join_support a ij.1 ij.2⟩
+      · intro x _ _; exact Complex.normSq_nonneg _
+
+private lemma basis_unit {n d : ℕ} (x : Word (Fin d) n) :
+    IsUnitState (Pi.single x 1) := by
+  classical
+  simp [IsUnitState, Pi.single_apply]
+
+/-- Every computational vector factors across a nonempty proper cut. -/
+theorem computational_biseparable {n d : ℕ} (hn : 2 ≤ n) (w : Word (Fin d) n) :
+    IsBiseparable (Pi.single w (1 : ℂ)) := by
+  classical
+  let a : Finset (Fin n) := {⟨0, by omega⟩}
+  have ha : a.Nonempty := by simp [a]
+  have hc : aᶜ.Nonempty := by
+    refine ⟨⟨1, by omega⟩, ?_⟩
+    simp [a]
+  refine ⟨basis_unit _, a, ha, hc,
+    fun u => if ∀ i, u i = w i then 1 else 0,
+    fun v => if ∀ i, v i = w i then 1 else 0, ?_⟩
+  intro x
+  have he : x = w ↔
+      (∀ i : a, x i = w i) ∧ (∀ i : ↥aᶜ, x i = w i) := by
+    rw [← Set.eqOn_univ x w, ← Set.union_compl_self (↑a : Set (Fin n)), Set.eqOn_union]
+    simp only [Set.EqOn, Finset.mem_coe, Subtype.forall,
+      Finset.mem_compl, Set.mem_compl_iff]
+  change (if x = w then (1 : ℂ) else 0) =
+    (if ∀ i : a, x i = w i then 1 else 0) *
+      (if ∀ i : ↥aᶜ, x i = w i then 1 else 0)
+  rw [he]
+  split_ifs <;> simp_all
+
+private lemma overlap_values_nonempty {n d : ℕ} (hn : 2 ≤ n) (hd : 0 < d)
+    (ψ : Word (Fin d) n → ℂ) :
+    {t : ℝ | ∃ φ, IsBiseparable φ ∧ t = Complex.normSq (star φ ⬝ᵥ ψ)}.Nonempty := by
+  exact ⟨_, Pi.single (fun _ => (⟨0, hd⟩ : Fin d)) 1,
+    computational_biseparable hn _, rfl⟩
+
+private lemma overlap_values_bdd {n d : ℕ} (ψ : Word (Fin d) n → ℂ)
+    (hψ : IsUnitState ψ) :
+    BddAbove {t : ℝ | ∃ φ, IsBiseparable φ ∧ t = Complex.normSq (star φ ⬝ᵥ ψ)} := by
+  refine ⟨1, ?_⟩
+  rintro t ⟨φ, hφ, rfl⟩
+  have h := cs φ ψ
+  rw [hφ.1, hψ, mul_one] at h
+  exact h
+
+/-- Both bounds use a nonempty, bounded actual biseparable-overlap set. -/
+theorem pure_measure_bounds {n d : ℕ} (hn : 2 ≤ n) (hd : 0 < d)
+    (ψ : Word (Fin d) n → ℂ) (hψ : IsUnitState ψ) :
+    0 ≤ geometricMeasurePure ψ ∧ geometricMeasurePure ψ ≤ 1 := by
+  have hs := overlap_values_nonempty hn hd ψ
+  have hb := overlap_values_bdd ψ hψ
+  have hu : sSup {t : ℝ | ∃ φ, IsBiseparable φ ∧
+      t = Complex.normSq (star φ ⬝ᵥ ψ)} ≤ 1 := by
+    apply csSup_le hs
+    rintro t ⟨φ, hφ, rfl⟩
+    have h := cs φ ψ
+    rw [hφ.1, hψ, mul_one] at h
+    exact h
+  obtain ⟨t, ht⟩ := hs
+  have hl := le_csSup hb ht
+  obtain ⟨φ, hφ, rfl⟩ := ht
+  have hz := Complex.normSq_nonneg (star φ ⬝ᵥ ψ)
+  unfold geometricMeasurePure
+  constructor <;> linarith
+
+private def ensembleValues {n d : ℕ}
+    (ρ : Matrix (Word (Fin d) n) (Word (Fin d) n) ℂ) : Set ℝ :=
+  {t | ∃ (k : ℕ) (p : Fin k → ℝ) (ψ : Fin k → Word (Fin d) n → ℂ),
+    (∀ i, 0 ≤ p i) ∧ (∑ i, p i) = 1 ∧ (∀ i, IsUnitState (ψ i)) ∧
+    ρ = ∑ i, p i • rankOneDensity (ψ i) ∧ t = ∑ i, p i * geometricMeasurePure (ψ i)}
+
+private lemma ensemble_values_nonempty {n d : ℕ}
+    (ρ : D5.S3.Quantum.Foundation.FiniteStateChannel.DensityState (Word (Fin d) n)) :
+    (ensembleValues (CStarMatrix.ofMatrix.symm ρ.1)).Nonempty := by
+  classical
+  obtain ⟨k, p, ψ, hp, hs, hu, he⟩ :=
+    D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness.density_ensemble ρ
+  refine ⟨_, k, p, ψ, hp, hs, ?_, ?_, rfl⟩
+  · intro i
+    exact (D5.S3.Quantum.Information.MultiEntropyPositivityRefutation.unit_norm_iff _).mp (hu i)
+  · change CStarMatrix.ofMatrix.symm ρ.1 =
+      ∑ i, (algebraMap ℝ ℂ) (p i) • rankOneDensity (ψ i) at he
+    simpa only [algebraMap_smul] using he
+
+private lemma ensemble_values_bdd {n d : ℕ} (hn : 2 ≤ n) (hd : 0 < d)
+    (ρ : Matrix (Word (Fin d) n) (Word (Fin d) n) ℂ) :
+    BddBelow (ensembleValues ρ) := by
+  refine ⟨0, ?_⟩
+  rintro t ⟨k, p, ψ, hp, hs, hu, he, rfl⟩
+  exact Finset.sum_nonneg (fun i _ =>
+    mul_nonneg (hp i) (pure_measure_bounds hn hd (ψ i) (hu i)).1)
+
+/-- The actual finite convex-roof set of every density state is nonempty and
+bounded below; in particular the roof is nonnegative without an empty-infimum
+convention. -/
+theorem density_measure_nonneg {n d : ℕ} (hn : 2 ≤ n) (hd : 0 < d)
+    (ρ : D5.S3.Quantum.Foundation.FiniteStateChannel.DensityState (Word (Fin d) n)) :
+    0 ≤ geometricMeasure (CStarMatrix.ofMatrix.symm ρ.1) := by
+  apply le_csInf (ensemble_values_nonempty ρ)
+  rintro t ⟨k, p, ψ, hp, hs, hu, he, rfl⟩
+  exact Finset.sum_nonneg (fun i _ =>
+    mul_nonneg (hp i) (pure_measure_bounds hn hd (ψ i) (hu i)).1)
+
+/-- The complementary measured projector, on the original computational space. -/
+def complementProjector (n d : ℕ) :
+    Matrix (Word (Fin d) n) (Word (Fin d) n) ℂ := 1 - supportProjector n d
+
+private lemma ghz_supported {n d : ℕ} (hn : 0 < n) (x : Word (Fin d) n) :
+    (if (Finset.univ.image x).card ≤ 2 then (1 : ℂ) else 0) * ghz n d x = ghz n d x := by
+  classical
+  by_cases h : ∃ j : Fin d, ∀ i, x i = j
+  · obtain ⟨j, hj⟩ := h
+    have he : x = fun _ => j := funext hj
+    subst x
+    haveI : Nonempty (Fin n) := ⟨⟨0, hn⟩⟩
+    simp [Finset.image_const]
+  · simp [ghz, h]
+
+private lemma projector_data {n d : ℕ} (hn : 0 < n) (hd : 0 < d) :
+    supportProjector n d * supportProjector n d = supportProjector n d ∧
+    supportProjector n d * rankOneDensity (ghz n d) = rankOneDensity (ghz n d) ∧
+    rankOneDensity (ghz n d) * supportProjector n d = rankOneDensity (ghz n d) ∧
+    rankOneDensity (ghz n d) * rankOneDensity (ghz n d) = rankOneDensity (ghz n d) := by
+  classical
+  have hu : star (ghz n d) ⬝ᵥ ghz n d = 1 :=
+    (D5.S3.Quantum.Information.MultiEntropyPositivityRefutation.unit_norm_iff _).mpr
+      (ghz_unit hn hd)
+  refine ⟨?_, ?_, ?_,
+    (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake (ghz n d) hu 1).1⟩
+  · simp only [supportProjector, diagonal_mul_diagonal]
+    congr 1
+    funext x
+    split_ifs <;> norm_num
+  · ext x y
+    simp only [supportProjector, diagonal_mul, rankOneDensity, vecMulVec_apply, Pi.star_apply]
+    rw [← mul_assoc, ghz_supported hn]
+  · ext x y
+    simp only [supportProjector, mul_diagonal, rankOneDensity, vecMulVec_apply, Pi.star_apply]
+    by_cases h : (Finset.univ.image y).card ≤ 2
+    · simp [h]
+    · have hz : ghz n d y = 0 := by simpa [h] using (ghz_supported hn y).symm
+      simp [h, hz]
+
+private lemma orthogonal_positive {n d : ℕ} (hn : 0 < n) (hd : 0 < d) :
+    (supportProjector n d - rankOneDensity (ghz n d)).PosSemidef ∧
+      (complementProjector n d).PosSemidef := by
+  classical
+  obtain ⟨hpp, hpg, hgp, hgg⟩ := projector_data hn hd
+  have hp : (supportProjector n d).IsHermitian := by
+    apply isHermitian_diagonal_of_self_adjoint
+    funext x
+    simp only [Pi.star_apply]
+    split_ifs <;> simp
+  have hg : (rankOneDensity (ghz n d)).IsHermitian :=
+    (posSemidef_vecMulVec_self_star (ghz n d)).isHermitian
+  have hP : IsStarProjection (supportProjector n d) := ⟨hpp, hp.isSelfAdjoint⟩
+  have hG : IsStarProjection (rankOneDensity (ghz n d)) := ⟨hgg, hg.isSelfAdjoint⟩
+  exact ⟨(hG.sub_of_mul_eq_left hP hgp).nonneg.posSemidef,
+    hP.one_sub_nonneg.posSemidef⟩
+
+/-- Finite positive metrics, including the affine certificate family. -/
+def metric (n d : ℕ) (a b : ℝ) :
+    Matrix (Word (Fin d) n) (Word (Fin d) n) ℂ :=
+  a • rankOneDensity (ghz n d) +
+    b • (supportProjector n d - rankOneDensity (ghz n d)) + complementProjector n d
+
+private def metricInverse (n d : ℕ) (a b : ℝ) :
+    Matrix (Word (Fin d) n) (Word (Fin d) n) ℂ :=
+  a⁻¹ • rankOneDensity (ghz n d) +
+    b⁻¹ • (supportProjector n d - rankOneDensity (ghz n d)) + complementProjector n d
+
+private lemma metric_positive {n d : ℕ} (hn : 0 < n) (hd : 0 < d)
+    {a b : ℝ} (ha : 0 < a) (ha1 : a ≤ 1) (hab : a ≤ b) :
+    (metric n d a b).PosDef := by
+  have he : metric n d a b =
+      a • (1 : Matrix (Word (Fin d) n) (Word (Fin d) n) ℂ) +
+      (b - a) • (supportProjector n d - rankOneDensity (ghz n d)) +
+      (1 - a) • complementProjector n d := by
+    dsimp [metric, complementProjector]
+    module
+  rw [he]
+  exact ((Matrix.PosDef.one.smul ha).add_posSemidef
+    ((orthogonal_positive hn hd).1.smul (sub_nonneg.mpr hab))).add_posSemidef
+      ((orthogonal_positive hn hd).2.smul (sub_nonneg.mpr ha1))
+
+private lemma metric_inverse {n d : ℕ} (hn : 0 < n) (hd : 0 < d)
+    {a b : ℝ} (ha : a ≠ 0) (hb : b ≠ 0) :
+    metric n d a b * metricInverse n d a b = 1 := by
+  classical
+  obtain ⟨hpp, hpg, hgp, hgg⟩ := projector_data hn hd
+  simp only [metric, metricInverse, complementProjector,
+    add_mul, mul_add, sub_mul, mul_sub, Matrix.smul_mul, Matrix.mul_smul,
+    smul_smul, one_mul, mul_one, hpp, hpg, hgp, hgg]
+  module <;> simp [ha, hb]
+
+private lemma metric_weighted_cs {n d : ℕ} (hn : 0 < n) (hd : 0 < d)
+    {a b : ℝ} (ha : 0 < a) (ha1 : a ≤ 1) (hab : a ≤ b)
+    (φ ψ : Word (Fin d) n → ℂ) :
+    Complex.normSq (star φ ⬝ᵥ ψ) ≤
+      readout (metricInverse n d a b) φ * readout (metric n d a b) ψ := by
+  classical
+  have hb : 0 < b := ha.trans_le hab
+  have hi : (metricInverse n d a b).PosSemidef := by
+    exact (((posSemidef_vecMulVec_self_star (ghz n d)).smul
+      (inv_nonneg.mpr ha.le)).add
+      ((orthogonal_positive hn hd).1.smul (inv_nonneg.mpr hb.le))).add
+        (orthogonal_positive hn hd).2
+  have hm : metric n d a b *ᵥ (metricInverse n d a b *ᵥ φ) = φ := by
+    rw [mulVec_mulVec, metric_inverse hn hd ha.ne' hb.ne', one_mulVec]
+  have hr : star (metricInverse n d a b *ᵥ φ) ⬝ᵥ φ =
+      star φ ⬝ᵥ metricInverse n d a b *ᵥ φ := by
+    rw [star_mulVec, hi.isHermitian.eq, ← dotProduct_mulVec]
+  have hc := D5.S3.Quantum.Measurement.DetectorSensorDickeOptimality.psd_cauchy_schwarz
+    (metric n d a b) (metric_positive hn hd ha ha1 hab).posSemidef
+      ψ (metricInverse n d a b *ᵥ φ)
+  rw [hm, hr] at hc
+  rw [← Complex.normSq_eq_norm_sq,
+    D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness.normSq_overlap_comm ψ φ] at hc
+  simpa only [readout, mul_comm] using hc
+
+private lemma expectation_add {n d : ℕ}
+    (a c : Matrix (Word (Fin d) n) (Word (Fin d) n) ℂ)
+    (ψ : Word (Fin d) n → ℂ) : readout (a + c) ψ = readout a ψ + readout c ψ := by
+  exact RHLinalg.hermForm_add a c ψ
+
+private lemma expectation_sub {n d : ℕ}
+    (a c : Matrix (Word (Fin d) n) (Word (Fin d) n) ℂ)
+    (ψ : Word (Fin d) n → ℂ) : readout (a - c) ψ = readout a ψ - readout c ψ := by
+  exact RHLinalg.hermForm_sub a c ψ
+
+private lemma expectation_smul {n d : ℕ} (r : ℝ)
+    (a : Matrix (Word (Fin d) n) (Word (Fin d) n) ℂ)
+    (ψ : Word (Fin d) n → ℂ) : readout (r • a) ψ = r * readout a ψ := by
+  change (star ψ ⬝ᵥ ((r • a) *ᵥ ψ)).re = r * (star ψ ⬝ᵥ (a *ᵥ ψ)).re
+  rw [← Complex.coe_smul r a]
+  exact D5.S3.Quantum.Entanglement.GHZ.OddGhzTenSettingWitness.quadratic_smul ψ r a
+
+private lemma expectation_one {n d : ℕ} (ψ : Word (Fin d) n → ℂ) :
+    readout 1 ψ = ∑ x, Complex.normSq (ψ x) := by
+  simpa only [RHLinalg.hermForm, readout, RCLike.re_to_complex,
+    Complex.normSq_eq_norm_sq] using RHLinalg.hermForm_one ψ
+
+private lemma metric_inverse_bound {n d : ℕ} (hn : 0 < n) (hd : 0 < d)
+    {a b : ℝ} (ha : 0 < a) (hab : a ≤ b)
+    (he : a⁻¹ + (d - 1 : ℝ) * b⁻¹ = d)
+    (φ : Word (Fin d) n → ℂ) (hφ : IsBiseparable φ) :
+    readout (metricInverse n d a b) φ ≤ 1 := by
+  have hu : readout 1 φ = 1 := by rw [expectation_one]; exact hφ.1
+  have h := biseparable_overlap hn hd φ hφ
+  have hc : 0 ≤ a⁻¹ - b⁻¹ := sub_nonneg.mpr (inv_anti₀ ha hab)
+  have hm := mul_nonneg hc (sub_nonneg.mpr h)
+  have hdR : (0 : ℝ) < d := by exact_mod_cast hd
+  simp only [metricInverse, complementProjector, expectation_add,
+    expectation_sub, expectation_smul, hu]
+  have he' := congrArg (fun z : ℝ => z * readout (supportProjector n d) φ) he
+  nlinarith
+
+private lemma pure_metric_lower {n d : ℕ} (hn : 2 ≤ n) (hd : 0 < d)
+    {a b : ℝ} (ha : 0 < a) (ha1 : a ≤ 1) (hab : a ≤ b)
+    (he : a⁻¹ + (d - 1 : ℝ) * b⁻¹ = d)
+    (ψ : Word (Fin d) n → ℂ) (hψ : IsUnitState ψ) :
+    (1 - b) * readout (supportProjector n d) ψ +
+      (b - a) * readout (rankOneDensity (ghz n d)) ψ ≤ geometricMeasurePure ψ := by
+  have hn' : 0 < n := by omega
+  have hpos : 0 ≤ readout (metric n d a b) ψ :=
+    RHLinalg.hermForm_nonneg_of_posSemidef
+      (metric_positive hn' hd ha ha1 hab).posSemidef ψ
+  have hs : sSup {t : ℝ | ∃ φ, IsBiseparable φ ∧
+      t = Complex.normSq (star φ ⬝ᵥ ψ)} ≤ readout (metric n d a b) ψ := by
+    apply csSup_le (overlap_values_nonempty hn hd ψ)
+    rintro t ⟨φ, hφ, rfl⟩
+    exact (metric_weighted_cs hn' hd ha ha1 hab φ ψ).trans
+      (mul_le_of_le_one_left hpos (metric_inverse_bound hn' hd ha hab he φ hφ))
+  have hu : readout 1 ψ = 1 := by rw [expectation_one]; exact hψ
+  simp only [metric, complementProjector, expectation_add,
+    expectation_sub, expectation_smul, hu] at hs
+  unfold geometricMeasurePure
+  linarith
+
+/-- An observable mean in the original complex matrix representation. -/
+def observableMean {n d : ℕ}
+    (ρ A : Matrix (Word (Fin d) n) (Word (Fin d) n) ℂ) : ℝ :=
+  (trace (ρ * A)).re
+
+private lemma trace_average {n d k : ℕ} (p : Fin k → ℝ)
+    (ψ : Fin k → Word (Fin d) n → ℂ)
+    (A : Matrix (Word (Fin d) n) (Word (Fin d) n) ℂ) :
+    observableMean (∑ i, p i • rankOneDensity (ψ i)) A =
+      ∑ i, p i * readout A (ψ i) := by
+  classical
+  unfold observableMean
+  rw [trace_mul_comm]
+  have ht := congrArg Complex.re
+    (D5.S3.Zeros.CriticalPoints.RankOneTraceBound.trace_rank_one_sum
+      (fun i => WithLp.toLp 2 (ψ i)) p (fun _ => 1) A)
+  simpa only [mul_one, rankOneDensity, Complex.coe_smul,
+    EuclideanSpace.inner_eq_star_dotProduct, Matrix.toLpLin_apply,
+    WithLp.ofLp_toLp, Complex.re_sum, Complex.re_ofReal_mul, readout,
+    dotProduct_comm] using ht
+
+/-- The full finite-metric supporting family applies to every actual density
+state and the original finite-ensemble roof. Its proof uses nonempty roof and
+overlap sets, and the all-cut biseparable inequality. -/
+theorem metric_roof_bound {n d : ℕ} (hn : 2 ≤ n) (hd : 0 < d)
+    {a b : ℝ} (ha : 0 < a) (ha1 : a ≤ 1) (hab : a ≤ b)
+    (he : a⁻¹ + (d - 1 : ℝ) * b⁻¹ = d)
+    (ρ : D5.S3.Quantum.Foundation.FiniteStateChannel.DensityState (Word (Fin d) n)) :
+    (1 - b) * observableMean (CStarMatrix.ofMatrix.symm ρ.1) (supportProjector n d) +
+      (b - a) * observableMean (CStarMatrix.ofMatrix.symm ρ.1)
+        (rankOneDensity (ghz n d)) ≤ geometricMeasure (CStarMatrix.ofMatrix.symm ρ.1) := by
+  classical
+  apply le_csInf (ensemble_values_nonempty ρ)
+  rintro t ⟨k, p, ψ, hp, hs, hu, heρ, rfl⟩
+  rw [heρ, trace_average, trace_average]
+  have h := Finset.sum_le_sum (fun i (_ : i ∈ Finset.univ) =>
+    mul_le_mul_of_nonneg_left (pure_metric_lower hn hd ha ha1 hab he (ψ i) (hu i)) (hp i))
+  convert h using 1
+  rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro i hi
+  ring
+
+private def metricA (d : ℕ) (t : ℝ) : ℝ := (t + d - 1) / (d * t)
+private def metricB (d : ℕ) (t : ℝ) : ℝ := (t + d - 1) / d
+
+private lemma metric_parameters {d : ℕ} (hd : 2 ≤ d) {t : ℝ} (ht : 1 ≤ t) :
+    0 < metricA d t ∧ metricA d t ≤ 1 ∧ metricA d t ≤ metricB d t ∧
+      (metricA d t)⁻¹ + (d - 1 : ℝ) * (metricB d t)⁻¹ = d := by
+  have hdR : (2 : ℝ) ≤ d := by exact_mod_cast hd
+  have hd0 : (0 : ℝ) < d := by linarith
+  have ht0 : 0 < t := by linarith
+  have hsum : 0 < t + d - 1 := by linarith
+  have hdt : 0 < (d : ℝ) * t := mul_pos hd0 ht0
+  refine ⟨div_pos hsum hdt, (div_le_one hdt).mpr ?_, ?_, ?_⟩
+  · nlinarith [mul_nonneg (sub_nonneg.mpr hd0.le) (sub_nonneg.mpr ht)]
+  · unfold metricA metricB
+    rw [div_le_div_iff₀ hdt hd0]
+    nlinarith [mul_nonneg (mul_nonneg hsum.le hd0.le) (sub_nonneg.mpr ht)]
+  · unfold metricA metricB
+    rw [inv_div, inv_div]
+    field_simp
+    <;> ring
+
+/-- All finite supporting lines, parametrized without singular coefficients.
+The endpoint where the two means coincide is obtained by their supremum. -/
+theorem supporting_line {n d : ℕ} (hn : 2 ≤ n) (hd : 2 ≤ d)
+    {t : ℝ} (ht : 1 ≤ t)
+    (ρ : D5.S3.Quantum.Foundation.FiniteStateChannel.DensityState (Word (Fin d) n)) :
+    (observableMean (CStarMatrix.ofMatrix.symm ρ.1) (supportProjector n d) +
+      (d - 2 : ℝ) * observableMean (CStarMatrix.ofMatrix.symm ρ.1)
+        (rankOneDensity (ghz n d)) -
+      t * (observableMean (CStarMatrix.ofMatrix.symm ρ.1) (supportProjector n d) -
+        observableMean (CStarMatrix.ofMatrix.symm ρ.1) (rankOneDensity (ghz n d))) -
+      (d - 1 : ℝ) * observableMean (CStarMatrix.ofMatrix.symm ρ.1)
+        (rankOneDensity (ghz n d)) / t) / d ≤
+      geometricMeasure (CStarMatrix.ofMatrix.symm ρ.1) := by
+  obtain ⟨ha, ha1, hab, he⟩ := metric_parameters hd ht
+  have h := metric_roof_bound hn (by omega) ha ha1 hab he ρ
+  convert h using 1
+  unfold metricA metricB
+  have hd0 : (d : ℝ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
+  have ht0 : t ≠ 0 := ne_of_gt (lt_of_lt_of_le zero_lt_one ht)
+  field_simp
+  <;> ring
+
+private lemma mean_add {n d : ℕ}
+    (ρ A B : Matrix (Word (Fin d) n) (Word (Fin d) n) ℂ) :
+    observableMean ρ (A + B) = observableMean ρ A + observableMean ρ B := by
+  simp [observableMean, mul_add, trace_add]
+
+private lemma mean_sub {n d : ℕ}
+    (ρ A B : Matrix (Word (Fin d) n) (Word (Fin d) n) ℂ) :
+    observableMean ρ (A - B) = observableMean ρ A - observableMean ρ B := by
+  simp [observableMean, mul_sub, trace_sub]
+
+private lemma mean_smul {n d : ℕ} (r : ℝ)
+    (ρ A : Matrix (Word (Fin d) n) (Word (Fin d) n) ℂ) :
+    observableMean ρ (r • A) = r * observableMean ρ A := by
+  simp [observableMean, Matrix.mul_smul, trace_smul, Complex.real_smul]
+
+private lemma mean_one {n d : ℕ}
+    (ρ : D5.S3.Quantum.Foundation.FiniteStateChannel.DensityState (Word (Fin d) n)) :
+    observableMean (CStarMatrix.ofMatrix.symm ρ.1) 1 = 1 := by
+  have h : trace (CStarMatrix.ofMatrix.symm ρ.1) = 1 := ρ.2.2
+  simpa [observableMean] using congrArg Complex.re h
+
+/-- The universal analytic affine certificate, for every density operator,
+in the original witness and complementary-projector readouts. -/
+theorem affine_certificate {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d)
+    (ρ : D5.S3.Quantum.Foundation.FiniteStateChannel.DensityState (Word (Fin d) n)) :
+    -(d - 1 : ℝ) / (d * (d - 2)) *
+        observableMean (CStarMatrix.ofMatrix.symm ρ.1) (witnessOp n d) +
+      1 / ((d : ℝ)^2 * (d - 2)) *
+        observableMean (CStarMatrix.ofMatrix.symm ρ.1) (complementProjector n d) -
+      1 / ((d : ℝ)^2 * (d - 2)) ≤
+        geometricMeasure (CStarMatrix.ofMatrix.symm ρ.1) := by
+  have hdR : (3 : ℝ) ≤ d := by exact_mod_cast hd
+  have hd0 : (d : ℝ) ≠ 0 := by linarith
+  have hd2 : (d - 2 : ℝ) ≠ 0 := by linarith
+  have ht : (1 : ℝ) ≤ (d - 1 : ℝ) / (d - 2) := by
+    apply (le_div_iff₀ (by linarith)).mpr
+    linarith
+  have h := supporting_line (by omega : 2 ≤ n) (by omega : 2 ≤ d) ht ρ
+  convert h using 1
+  simp only [witnessOp, complementProjector, mean_sub, mean_smul, mean_one]
+  field_simp
+  <;> ring
 
 end
 end D5.S3.Quantum.Entanglement.Witness.NoisyGhzExactRoof
