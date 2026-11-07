@@ -1124,7 +1124,7 @@ private theorem defect_kernel_uniform {a b c : ℝ}
   have hsqrt : 2*Real.sqrt (a*b) ≤ a+b := by
     have hs := Real.sq_sqrt (mul_pos ha hb).le
     have hn := Real.sqrt_nonneg (a*b)
-    apply (sq_le_sq₀ (mul_nonneg (by norm_num) hn) (add_pos ha hb).le).mp
+    apply (sq_le_sq₀ (mul_nonneg (by norm_num : (0 : ℝ) ≤ 2) hn) (add_pos ha hb).le).mp
     nlinarith only [hs, sq_nonneg (a-b)]
   have hfW : f*(2*W)*(a+c) ≤ 16/9 ∧ f*(2*W)*(b+c) ≤ 16/9 := by
     have hf₁ : f*(2*W) ≤ (16/9)*(a+b)*c/W := by
