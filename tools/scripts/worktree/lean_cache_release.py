@@ -11,6 +11,7 @@ import pathlib
 import re
 import shlex
 import shutil
+import signal
 import stat
 import subprocess
 import sys
@@ -106,13 +107,35 @@ class GitHubCommandError(subprocess.CalledProcessError):
         return f"{super().__str__()} stderr: {self.stderr or '<empty>'}"
 
 
+class ReleaseInterrupted(KeyboardInterrupt):
+    """A native signal requests stack unwinding and the existing rollback."""
+    def __init__(self, signum):
+        self.exit_code = 128 + signum
+        super().__init__(signal.Signals(signum).name)
+
+
+def interrupt_release(signum, _frame):
+    # A second cooperative signal must not interrupt rollback or child joining.
+    # The owning process runner retains its bounded hard-stop fallback.
+    signal.signal(signal.SIGINT, signal.SIG_IGN)
+    signal.signal(signal.SIGTERM, signal.SIG_IGN)
+    raise ReleaseInterrupted(signum)
+
+
 def checked_run(command, deadline):
-    try:
-        return subprocess.run(command, check=True, capture_output=True, text=True,
-                              timeout=remaining(deadline))
-    except subprocess.CalledProcessError as error:
-        raise GitHubCommandError(error.returncode, error.cmd,
-                                 output=error.output, stderr=error.stderr) from error
+    timeout = remaining(deadline)
+    with subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) as child:
+        try:
+            stdout, stderr = child.communicate(timeout=timeout)
+        except BaseException:
+            # Only this command's child is owned here. Do not let an interrupted
+            # transport retain pipes or continue after the cache guard is released.
+            child.kill()
+            child.communicate()
+            raise
+        if child.returncode:
+            raise GitHubCommandError(child.returncode, command, output=stdout, stderr=stderr)
+        return subprocess.CompletedProcess(command, child.returncode, stdout, stderr)
 
 
 def gh(deadline, *args):
@@ -1126,20 +1149,29 @@ def main():
     previous_run_id = os.environ.get("TRURETURING_MAINTENANCE_RUN_ID")
     if LOG is not None:
         os.environ["TRURETURING_MAINTENANCE_RUN_ID"] = LOG.run_id
+    previous_signals = {kind: signal.signal(kind, interrupt_release)
+                        for kind in (signal.SIGINT, signal.SIGTERM)}
     try:
         try:
             exit_code = _main()
         except BaseException as error:
+            code = error.exit_code if isinstance(error, ReleaseInterrupted) else \
+                error.code if isinstance(error, SystemExit) and isinstance(error.code, int) else 130 \
+                if isinstance(error, KeyboardInterrupt) else 1
+            if isinstance(error, ReleaseInterrupted):
+                receipt(CURRENT_OPERATION or "fetch", "interrupted", _phase=CURRENT_PHASE,
+                        _error=error, reason=str(error), exit_code=code)
             if LOG is not None:
-                code = error.code if isinstance(error, SystemExit) and isinstance(error.code, int) else 130 \
-                    if isinstance(error, KeyboardInterrupt) else 1
-                _observe(CURRENT_OPERATION or "unknown",
-                         "cancelled" if isinstance(error, KeyboardInterrupt) else "failed",
-                         phase=CURRENT_PHASE, reason=type(error).__name__, error=error)
+                if not isinstance(error, ReleaseInterrupted):
+                    _observe(CURRENT_OPERATION or "unknown",
+                             "cancelled" if isinstance(error, KeyboardInterrupt) else "failed",
+                             phase=CURRENT_PHASE, reason=type(error).__name__, error=error)
                 LOG.finish(code, operation=CURRENT_OPERATION, action=CURRENT_OPERATION, mode=CURRENT_MODE,
                            status=LOG_LAST.get("status"), outcome=LOG_LAST.get("outcome"),
                            stage=LOG_LAST.get("phase"), error_type=LOG_LAST.get("error_type"),
                            reason_code=LOG_LAST.get("reason_code"))
+            if isinstance(error, ReleaseInterrupted):
+                return code
             raise
         if LOG is not None:
             LOG.finish(exit_code, operation=CURRENT_OPERATION, action=CURRENT_OPERATION, mode=CURRENT_MODE,
@@ -1148,6 +1180,8 @@ def main():
                        reason_code=LOG_LAST.get("reason_code"))
         return exit_code
     finally:
+        for kind, handler in previous_signals.items():
+            signal.signal(kind, handler)
         if previous_run_id is None:
             os.environ.pop("TRURETURING_MAINTENANCE_RUN_ID", None)
         else:
