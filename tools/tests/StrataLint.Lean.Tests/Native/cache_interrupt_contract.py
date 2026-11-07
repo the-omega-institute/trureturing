@@ -37,11 +37,12 @@ def archive_child(repository, root, mode):
                                 time.monotonic() + 60)
             return 0
         target = root / ".lake/build"
-        target.mkdir()
-        (target / "previous").write_text("original build")
         base = root / release.report_reuse.BASE_RECORD
-        base.parent.mkdir(parents=True, exist_ok=True)
-        base.write_text("original base")
+        if mode != "install-empty":
+            target.mkdir()
+            (target / "previous").write_text("original build")
+            base.parent.mkdir(parents=True, exist_ok=True)
+            base.write_text("original base")
         stage = root / "assets"
         stage.mkdir()
         source = root / "replacement/build"
@@ -57,16 +58,32 @@ def archive_child(repository, root, mode):
         release.gh = lambda *args: ""
         release.report_reuse.record_seed_base = lambda *args: False
 
-        def installed():
+        def pause():
             (root / "ready").write_text(str(os.getpid()))
             signal.pause()
 
+        original_rename = Path.rename
+
+        def rename(source, destination):
+            result = original_rename(source, destination)
+            # Pause after the native mutation, before the caller can record it.
+            boundary = ("move-build" if source == target else "move-base" if source == base
+                        else "install-empty" if mode == "install-empty" and destination == target
+                        else "install-build" if destination == target else None)
+            if mode == boundary:
+                pause()
+            return result
+
+        Path.rename = rename
         release.restore_snapshot(root, "partition", "tag", stage, time.monotonic() + 60,
-                                 cache_key={}, refresh_stale=True, on_installed=installed)
+                                 cache_key={}, refresh_stale=True,
+                                 on_installed=pause if mode == "install" else None)
         return 0
 
     release._main = operation
-    raise SystemExit(release.main())
+    code = release.main()
+    (root / "archive-exit").write_text(str(code))
+    raise SystemExit(code)
 
 
 class InterruptionTests(unittest.TestCase):
@@ -117,7 +134,7 @@ class InterruptionTests(unittest.TestCase):
         with guard.open("a+b") as stream:
             fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
 
-    def interrupt(self, mode, signum):
+    def interrupt(self, mode, signum, *, group_signal=False):
         script = self.root / "tools/scripts/worktree/lean-cache-publish.sh"
         script.write_text("#!/bin/bash\nexec " + shlex.join([sys.executable, __file__, "archive",
                           str(REPOSITORY), str(self.root), mode]) + "\n")
@@ -131,9 +148,15 @@ class InterruptionTests(unittest.TestCase):
                                   capture_output=True, text=True, timeout=10)
             self.assertEqual(2, busy.returncode, busy.stdout + busy.stderr)
             self.assertIn('"status":"busy"', (busy.stdout + busy.stderr).replace(" ", ""))
-            process.send_signal(signum)
+            if group_signal:
+                # Both the native entrance and its archive receive this signal.
+                os.killpg(process.pid, signum)
+            else:
+                process.send_signal(signum)
             stdout, stderr = process.communicate(timeout=15)
             self.assertEqual(128 + signum, process.returncode, stdout + stderr)
+            if group_signal:
+                self.assertEqual(str(128 + signum), (self.root / "archive-exit").read_text())
             with self.assertRaises(ProcessLookupError):
                 os.kill(child_pid, 0)
             self.assert_guard_free()
@@ -145,9 +168,13 @@ class InterruptionTests(unittest.TestCase):
                        .read_text().splitlines()]
             self.assertTrue(any(row["event"] == "run_finished" and row["exit_code"] == 128 + signum
                                 and row.get("status") == "interrupted" for row in records))
-            if mode == "install":
-                self.assertEqual("original build", (self.root / ".lake/build/previous").read_text())
-                self.assertEqual("original base", (self.root / ".lake/lean-report-seed-base.json").read_text())
+            if mode != "transport":
+                if mode == "install-empty":
+                    self.assertFalse((self.root / ".lake/build").exists())
+                    self.assertFalse((self.root / ".lake/lean-report-seed-base.json").exists())
+                else:
+                    self.assertEqual("original build", (self.root / ".lake/build/previous").read_text())
+                    self.assertEqual("original base", (self.root / ".lake/lean-report-seed-base.json").read_text())
                 self.assertFalse((self.root / ".lake/build/replacement").exists())
                 self.assertEqual([], list((self.root / ".lake").glob(".release-*")))
         finally:
@@ -167,6 +194,30 @@ class InterruptionTests(unittest.TestCase):
 
     def test_int_during_install_rolls_back(self):
         self.interrupt("install", signal.SIGINT)
+
+    def test_term_after_old_build_move(self):
+        self.interrupt("move-build", signal.SIGTERM, group_signal=True)
+
+    def test_int_after_old_build_move(self):
+        self.interrupt("move-build", signal.SIGINT, group_signal=True)
+
+    def test_term_after_old_base_move(self):
+        self.interrupt("move-base", signal.SIGTERM, group_signal=True)
+
+    def test_int_after_old_base_move(self):
+        self.interrupt("move-base", signal.SIGINT, group_signal=True)
+
+    def test_term_after_new_build_move(self):
+        self.interrupt("install-build", signal.SIGTERM, group_signal=True)
+
+    def test_int_after_new_build_move(self):
+        self.interrupt("install-build", signal.SIGINT, group_signal=True)
+
+    def test_term_after_first_build_move(self):
+        self.interrupt("install-empty", signal.SIGTERM, group_signal=True)
+
+    def test_int_after_first_build_move(self):
+        self.interrupt("install-empty", signal.SIGINT, group_signal=True)
 
     def test_normal_and_argument_failure_have_terminal_outcomes(self):
         oleans = self.root / ".lake/build/lib/lean/D5"
