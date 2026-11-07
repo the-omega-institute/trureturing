@@ -178,15 +178,20 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
 
     private bool TrackedFilesMatch(string revision)
     {
-        string[] arguments = ["diff", "--quiet", "--no-ext-diff", "--no-textconv", revision, "--"];
-        var result = GitRaw(arguments, allowNonzero: true);
-        return result.ExitCode switch
+        string[][] probes =
+        [
+            ["diff", "--cached", "--quiet", "--no-ext-diff", "--no-textconv", revision, "--"],
+            ["diff", "--quiet", "--no-ext-diff", "--no-textconv", revision, "--"],
+        ];
+        foreach (var arguments in probes)
         {
-            0 => true,
-            1 => false,
-            _ => throw InfrastructureFailure(GitCommandFailureKind.NonzeroExit, arguments,
-                exitCode: result.ExitCode, standardError: DecodeFailureText(result.StandardError)),
-        };
+            var result = GitRaw(arguments, allowNonzero: true);
+            if (result.ExitCode == 1) return false;
+            if (result.ExitCode != 0)
+                throw InfrastructureFailure(GitCommandFailureKind.NonzeroExit, arguments,
+                    exitCode: result.ExitCode, standardError: DecodeFailureText(result.StandardError));
+        }
+        return true;
     }
 
     private static int ChangeKindPriority(RawChangeKind kind) => kind switch

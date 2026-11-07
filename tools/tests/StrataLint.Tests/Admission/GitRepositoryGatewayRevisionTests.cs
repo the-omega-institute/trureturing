@@ -670,7 +670,7 @@ public sealed class GitRepositoryGatewayRevisionTests
         Assert.Contains(actual, entry => entry.Path.Value == "untracked.txt" && entry.Kind == RawChangeKind.Added);
         Assert.Contains(actual, entry => entry.Path.Value == "old.txt" && entry.Kind == RawChangeKind.Deleted);
         Assert.Contains(actual, entry => entry.Path.Value == "renamed.txt" && entry.Kind == RawChangeKind.Added);
-        Assert.Equal(state is "committed" or "reverted-index", runner.UsedObjectComparison);
+        Assert.Equal(state == "committed", runner.UsedObjectComparison);
         if (state is "committed" or "reverted-index")
             Assert.Contains(actual, entry => entry.Path.Value == "source.txt" && entry.Kind == RawChangeKind.Copied);
     }
