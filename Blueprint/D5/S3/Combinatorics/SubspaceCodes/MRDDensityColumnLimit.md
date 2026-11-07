@@ -22,6 +22,10 @@ $$\forall K \in \operatorname{Type},\; [\operatorname{Field}\left(K\right)] [\op
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SubspaceCodes/MRDDensityColumnLimit.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-grsz2023mrd` (proved) by `D5/S3/Combinatorics/SubspaceCodes/MRDDensityColumnLimit.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-grsz2023mrd","declaration_gid":"D5/S3/Combinatorics/SubspaceCodes/MRDDensityColumnLimit.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Anina Gruica; Alberto Ravagnani; John Sheekey; Ferdinando Zullo (2023). *Rank-Metric Codes, Semifields, and the Average Critical Problem*. DOI: [10.1137/22M1486893](https://doi.org/10.1137/22M1486893). URL: <https://arxiv.org/abs/2201.07193v1>.
