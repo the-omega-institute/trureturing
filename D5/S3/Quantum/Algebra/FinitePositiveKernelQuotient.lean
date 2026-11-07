@@ -4,13 +4,15 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Finite positive Gram matrices define complete matrix-kernel quotients and unique labelled isometries. -/
+   digest: Positive Gram matrices define complete kernel quotients and labelled isometries. -/
 
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Analysis.InnerProductSpace.Reproducing
 import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.LinearAlgebra.Isomorphisms
 import Mathlib.Analysis.InnerProductSpace.GramMatrix
+
+/-! # Finite positive matrix kernel quotients -/
 
 noncomputable section
 open scoped InnerProductSpace Matrix ComplexOrder
@@ -21,13 +23,8 @@ variable {M : Type*} [Fintype M]
 def Coefficients (D : Matrix M M ℂ) (_hD : D.PosSemidef) := M → ℂ
 instance (D : Matrix M M ℂ) (hD : D.PosSemidef) : SeminormedAddCommGroup (Coefficients D hD) :=
   Matrix.toSeminormedAddCommGroup D hD
-instance (D : Matrix M M ℂ) (hD : D.PosSemidef) : Module ℂ (Coefficients D hD) :=
-  inferInstanceAs (Module ℂ (M → ℂ))
 instance (D : Matrix M M ℂ) (hD : D.PosSemidef) : InnerProductSpace ℂ (Coefficients D hD) :=
   Matrix.toInnerProductSpace D hD
-
-instance (D : Matrix M M ℂ) (hD : D.PosSemidef) : NormedSpace ℂ (Coefficients D hD) :=
-  (Matrix.toInnerProductSpace D hD).toNormedSpace
 
 private theorem inner_coeff (D : Matrix M M ℂ) (hD : D.PosSemidef)
     (c d : Coefficients D hD) :
@@ -43,11 +40,12 @@ private theorem projection_ker (D : Matrix M M ℂ) (hD : D.PosSemidef) :
     (projection D hD).ker = D.mulVecLin.ker := by
   ext c
   rw [LinearMap.mem_ker, LinearMap.mem_ker]
-  change SeparationQuotient.mk (c : Coefficients D hD) = 0 ↔ D *ᵥ c = 0
+  change @SeparationQuotient.mk (Coefficients D hD) _ c = 0 ↔ D *ᵥ c = 0
   rw [← inner_self_eq_zero (𝕜 := ℂ)]
-  change ⟪SeparationQuotient.mk (c : Coefficients D hD),
-    SeparationQuotient.mk (c : Coefficients D hD)⟫_ℂ = 0 ↔ _
-  rw [SeparationQuotient.inner_mk_mk, inner_coeff, hD.dotProduct_mulVec_zero_iff]
+  change ⟪@SeparationQuotient.mk (Coefficients D hD) _ c,
+    @SeparationQuotient.mk (Coefficients D hD) _ c⟫_ℂ = 0 ↔ _
+  erw [SeparationQuotient.inner_mk_mk, inner_coeff]
+  exact hD.dotProduct_mulVec_zero_iff
 
 private def quotientEquiv (D : Matrix M M ℂ) (hD : D.PosSemidef) :
     ((M → ℂ) ⧸ D.mulVecLin.ker) ≃ₗ[ℂ] SeparationQuotient (Coefficients D hD) :=
@@ -62,14 +60,14 @@ variable {M : Type*} [Fintype M]
 def Space (D : Matrix M M ℂ) (_hD : D.PosSemidef) := (M → ℂ) ⧸ D.mulVecLin.ker
 instance (D : Matrix M M ℂ) (hD : D.PosSemidef) : AddCommGroup (Space D hD) :=
   inferInstanceAs (AddCommGroup ((M → ℂ) ⧸ D.mulVecLin.ker))
-instance (D : Matrix M M ℂ) (hD : D.PosSemidef) : Module ℂ (Space D hD) :=
-  inferInstanceAs (Module ℂ ((M → ℂ) ⧸ D.mulVecLin.ker))
 instance (D : Matrix M M ℂ) (hD : D.PosSemidef) : NormedAddCommGroup (Space D hD) :=
   NormedAddCommGroup.induced _ _ (quotientEquiv D hD) (quotientEquiv D hD).injective
 instance (D : Matrix M M ℂ) (hD : D.PosSemidef) : InnerProductSpace ℂ (Space D hD) :=
   InnerProductSpace.induced (quotientEquiv D hD).toLinearMap
 instance (D : Matrix M M ℂ) (hD : D.PosSemidef) : FiniteDimensional ℂ (Space D hD) :=
   inferInstanceAs (FiniteDimensional ℂ ((M → ℂ) ⧸ D.mulVecLin.ker))
+instance (D : Matrix M M ℂ) (hD : D.PosSemidef) : NormedSpace ℂ (Space D hD) :=
+  (inferInstance : InnerProductSpace ℂ (Space D hD)).toNormedSpace
 instance (D : Matrix M M ℂ) (hD : D.PosSemidef) : CompleteSpace (Space D hD) :=
   FiniteDimensional.complete ℂ _
 
@@ -77,13 +75,17 @@ def mk (D : Matrix M M ℂ) (hD : D.PosSemidef) : (M → ℂ) →ₗ[ℂ] Space 
   D.mulVecLin.ker.mkQ
 
 private theorem quotientEquiv_mk (D : Matrix M M ℂ) (hD : D.PosSemidef) (c : M → ℂ) :
-    quotientEquiv D hD (mk D hD c) = SeparationQuotient.mk (c : Coefficients D hD) := by
-  simp [quotientEquiv, mk, projection, Submodule.quotEquivOfEq_mk]
+    quotientEquiv D hD (mk D hD c) = @SeparationQuotient.mk (Coefficients D hD) _ c := by
+  change (projection D hD).quotKerEquivOfSurjective (fun x => Quotient.mk_surjective x)
+    (Submodule.quotEquivOfEq _ _ _ (Submodule.Quotient.mk c)) = _
+  rw [Submodule.quotEquivOfEq_mk, LinearMap.quotKerEquivOfSurjective_apply_mk]
+  rfl
 
 theorem inner_mk (D : Matrix M M ℂ) (hD : D.PosSemidef) (c d : M → ℂ) :
     ⟪mk D hD c, mk D hD d⟫_ℂ = star c ⬝ᵥ D *ᵥ d := by
   change ⟪quotientEquiv D hD (mk D hD c), quotientEquiv D hD (mk D hD d)⟫_ℂ = _
-  rw [quotientEquiv_mk, quotientEquiv_mk, SeparationQuotient.inner_mk_mk, inner_coeff]
+  rw [quotientEquiv_mk, quotientEquiv_mk]
+  erw [SeparationQuotient.inner_mk_mk, inner_coeff]
 
 def label (D : Matrix M M ℂ) (hD : D.PosSemidef) [DecidableEq M] (i : M) : Space D hD :=
   mk D hD (Pi.single i 1)
@@ -93,9 +95,7 @@ private theorem labels_span (D : Matrix M M ℂ) (hD : D.PosSemidef) [DecidableE
   apply top_unique
   intro x _
   obtain ⟨c, rfl⟩ := (Submodule.Quotient.mk_surjective D.mulVecLin.ker) x
-  have hc : c = ∑ i, c i • (Pi.single i 1 : M → ℂ) := by
-    ext j
-    simp
+  have hc : c = ∑ i, c i • (Pi.single i 1 : M → ℂ) := pi_eq_sum_univ' c
   rw [show (Submodule.Quotient.mk c : Space D hD) = mk D hD c from rfl, hc, map_sum]
   exact Submodule.sum_mem _ fun i _ =>
     (map_smul (mk D hD) (c i) _).symm ▸
@@ -119,6 +119,7 @@ private theorem spanning_analysis_injective {E : Type*} [NormedAddCommGroup E]
     | smul c a _ ha => simp [inner_smul_left, ha]
   exact hz (x - y) (hv ▸ Submodule.mem_top)
 
+@[instance_reducible]
 private def familyRKHS {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
     (v : M → E) (hv : Submodule.span ℂ (Set.range v) = ⊤) : RKHS ℂ E M ℂ where
   coeCLM := ContinuousLinearMap.pi fun i => innerSL ℂ (v i)
@@ -132,7 +133,8 @@ private theorem family_kerFun {E : Type*} [NormedAddCommGroup E] [InnerProductSp
   apply ext_inner_right ℂ
   intro x
   rw [RKHS.kerFun_inner, inner_smul_left]
-  simp [familyRKHS, RCLike.inner_apply]
+  change ⟪z, ⟪v i, x⟫_ℂ⟫_ℂ = _
+  simp [RCLike.inner_apply, mul_comm]
 
 private def familyEquiv {E F : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
     [CompleteSpace E] [NormedAddCommGroup F] [InnerProductSpace ℂ F] [CompleteSpace F]
