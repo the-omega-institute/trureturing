@@ -10,8 +10,8 @@
 admission_basis: open-problem-resolution (#27079; Proved)
 escape_witness: none (open-problem-resolution; the settlement itself is the new content)
 Direct frozen dependencies: HardinA240513Ladder.equalBit.
-Proof shapes and consumers are listed below; bounded table checks and linear
-propagation are bind-only. The counting induction and conclusions using it are content.
+Proof shapes and consumers are listed below; every declaration, including the counting
+induction, the bounded table checks and the linear propagation, is bind-only.
 horizontal: proof_shape=bind-only; consumers=Legal, Boundary, Interior
 Legal: proof_shape=bind-only; consumers=a, legal_iff
 instDecidableLegal: proof_shape=bind-only; consumers=a
