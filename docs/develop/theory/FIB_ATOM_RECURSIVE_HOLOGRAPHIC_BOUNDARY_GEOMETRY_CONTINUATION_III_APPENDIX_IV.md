@@ -4224,7 +4224,7 @@ $$
 
 so $w\in L^1(m)$. The original positive heat kernel and the source-start nonconstancy supplier imply that the conditional variance of $g$ in (208.7) is strictly positive at almost every middle state; hence $w>0$ almost everywhere. Since every $f_j$ is positive and bounded, this proves $0<\xi_j<\infty$.
 
-For $a\in K_{\rm rel}$, (209.1) gives $h_{n,a}\overset{*}{\rightharpoonup}0$. The forward and reversed three-time kernels are integrable probability kernels: the forward one is the density used in Appendix III §123, and the reversed one is obtained from (208.7). Rectangular-tensor approximation in their respective $L^1$ spaces therefore makes their bounded multilinear integrals continuous under componentwise weak-star convergence. Applying this to (209.2) gives
+For $a\in K_{\rm rel}$, (209.1) gives $h_{n,a}\overset{*}{\rightharpoonup}0$. The forward and reversed three-time kernels are integrable probability kernels: the forward one is the density used in Appendix II §123, and the reversed one is obtained from (208.7). Rectangular-tensor approximation in their respective $L^1$ spaces therefore makes their bounded multilinear integrals continuous under componentwise weak-star convergence. Applying this to (209.2) gives
 
 $$
 G_{j,n}^+(a,b)\to0,\qquad G_{j,n}^-(a,b)\to0
@@ -4241,7 +4241,24 @@ $$
 \tag{209.8}
 $$
 
-The second term in $H_{\chi,j,n}$ is the already vanishing $G_{j,n}^+(a,b)$, so (209.8) proves the third limit in (209.4). The coefficient space $K_{\rm rel}$ is finite-dimensional, hence entrywise convergence is matrix-norm convergence.
+The subtracted term in $H_{\chi,j,n}$ is $\mathbb E_{\nu_{j,n}}[\chi t_{n,a}t_{n,b}]$. To control this weighted term, use the original transition density $p_d(x,y)$ of $P$ from Appendix II Definition 123.1. For almost every $x$, its row $p_d(x,\cdot)$ belongs to $L^1(m)$ and has integral one. Thus weak-star convergence gives, for every $a\in K_{\rm rel}$,
+
+$$
+t_{n,a}(x)=\int_Gp_d(x,y)h_{n,a}(y)\,m(dy)
+\longrightarrow\int_Gp_d(x,y)F_a(y)\,m(dy)=0
+\quad\text{for almost every }x.
+$$
+
+Because the $u_{n,i}$ form a hard partition, $|h_{n,a}|\le\|a\|_\infty$, and the Markov property gives $|t_{n,a}|\le\|a\|_\infty$. Since $0\le u_{n,j}\le1$ and $w\in L^1(m)$, dominated convergence with dominator $\|a\|_\infty\|b\|_\infty w$ yields
+
+$$
+\left|\mathbb E_{\nu_{j,n}}[\chi t_{n,a}t_{n,b}]\right|
+=\left|\frac1{\pi_j}\int_Gu_{n,j}w\,t_{n,a}t_{n,b}\,dm\right|
+\le\frac1{\pi_j}\int_Gw\,|t_{n,a}t_{n,b}|\,dm
+\longrightarrow0.
+$$
+
+Combining this with (209.8) and the exact definition (208.15) proves the third limit in (209.4). The coefficient space $K_{\rm rel}$ is finite-dimensional, hence entrywise convergence is matrix-norm convergence.
 
 For $a\ne0$,
 
@@ -4325,7 +4342,7 @@ $$
 
 The first limit in (209.15) follows from Proposition 209.2 and (209.17), and its strict sign follows from $f_jw>0$ almost everywhere. The inequality (208.5) still holds for each $D_n$, but its right side has the negative limit (209.15).
 
-For (209.16), approximate the original three-time density by finite sums of rectangular $L^1(m^3)$ tensors as in Appendix III §123.2. Every coefficient
+For (209.16), approximate the original three-time density by finite sums of rectangular $L^1(m^3)$ tensors as in Appendix II §123.2. Every coefficient
 
 $$
 \mathcal C(u_{n,y},u_{n,z},u_{n,k})
