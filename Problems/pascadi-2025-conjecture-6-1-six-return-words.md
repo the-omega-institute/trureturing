@@ -77,8 +77,6 @@ This is a `window`: the source conjecture remains a live quantitative target, wh
 repository delivers a structural first step rather than a settlement. No claim is made
 that the weaker Proposition 6.2 or the full conjecture has been reproved.
 
-## Status
-
 This is a partial structural result. It does not prove the uniform Conjecture 6.1 bound,
 does not count bounded integer representatives, and does not claim a resolution of the
 source problem. Literature completeness and priority are not asserted.
