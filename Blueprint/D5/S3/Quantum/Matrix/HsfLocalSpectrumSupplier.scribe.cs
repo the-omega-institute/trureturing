@@ -62,6 +62,52 @@ internal sealed class HsfLocalSpectrumSupplierDocument : IScribeDocumentDefiniti
                         + "no Sylvester inverse or minimizing Z and proves no global neighborhood, "
                         + "arbitrary direction supplier, or full He–Saunderson–Fawzi conjecture."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("hsf-uniform-local-actual-supplier"),
+                DeclarationHandle.Create(Module + ".finite_spectrum_uniform_local_supplier"),
+                H("The uniform Frobenius neighborhood"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For every finite dimension d, every positive spectrum p, "
+                        + "and arbitrary complex Hermitian H and Z, assume only norm H <= 1/20 "
+                        + "in the fixed Frobenius norm. Define the actual function F and its "
+                        + "factorial-normalized derivatives B_j exactly as in the preceding "
+                        + "theorem, with S=I+H. Put A_ij=tau_ij H_ij and "
+                        + "g=norm H squared-norm A squared. Then "
+                        + "Re Tr(B_3+2 Z B_2+B_1 Z squared-(5/48) B_1 cubed) >= g/6. "
+                        + "The radius is independent of all spectral values and multiplicities. "
+                        + "The empty dimension, scalar spectra, repeated levels and all "
+                        + "equal-level blocks of H are included. There is no bound on Z.")),
+                    Paragraph(Text("Set rho(a,b)=sqrt(1-tau(a,b) squared). The exact "
+                        + "three-point tau Gram determinant is a squared Vandermonde times "
+                        + "a polynomial with 19 positive coefficients, divided by "
+                        + "4 q(a,b) squared q(a,c) squared q(b,c) squared. The proof uses "
+                        + "this factorization and elementary square-root algebra to prove "
+                        + "the triangle inequality for rho. A positive square-difference "
+                        + "decomposition and a coefficient certificate give "
+                        + "0 <= Gamma <= (3/4) sum cyclic rho squared, where "
+                        + "Gamma=sum cyclic tau(a,b) k(a,b,c)-tau(a,b)tau(b,c)tau(c,a)/3. "
+                        + "The ordered defect kernel satisfies "
+                        + "abs(3 k(a,b,c)-tau(a,c)tau(c,b)/3) "
+                        + "<= (16/9)(rho(a,c)+rho(c,b)). All identities are proved by "
+                        + "exact polynomial algebra, including collisions of spectral levels.")),
+                    Paragraph(Text("The modulus matrix B_ij=abs H_ij and weighted matrix "
+                        + "W_ij=rho_ij abs H_ij satisfy norm B=r and norm W squared=g. "
+                        + "Entrywise domination by (16/9)(WB+BW) yields "
+                        + "norm D squared <= (1024/81) r squared g. Cyclic relabeling "
+                        + "retains the complex products H_ij H_jk H_ki and identifies "
+                        + "Tr(A D) with the Gamma-weighted cyclic sum. The rho triangle "
+                        + "inequality and Frobenius Cauchy-Schwarz give cyclic mass <= 6 r g "
+                        + "and hence abs Re(4 Tr H cubed-4 Tr A cubed-6 Tr(A D)) <= 51 r g. "
+                        + "The actual CFC trace completion is reused. For arbitrary "
+                        + "R=Z-(I+A)/6, its quadratic remainder is >= -6 norm D squared "
+                        + "when r<=1/2. Thus 18 J >= (6-51r-(2048/27)r squared)g >= 3g "
+                        + "for r<=1/20. No jet, trace or target inequality is a premise.")),
+                    Paragraph(Text("This is a local neighborhood theorem. It does not "
+                        + "claim the full global HSF conjecture. The exact full-telescope "
+                        + "Reg mirror retains the actual derivatives and radius implication; "
+                        + "source-selection reconstruction and escape evidence remain "
+                        + "unresolved under issue 23103, so declared_validated is not claimed."))),
+                DescribeRole.Theorem),
             Paragraph(Text("The proof reuses GNSMatrix's Frobenius-square trace identity, "
                 + "CartesianVariance.trace_product_cauchy and Matrix.frobenius_norm_mul. "
                 + "It extends the finite spectral coefficient estimates; it does not "

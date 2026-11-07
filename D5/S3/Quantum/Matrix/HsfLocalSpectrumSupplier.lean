@@ -954,11 +954,11 @@ private theorem spectralRho_triangle {a b c : ℝ}
     have hbound : (u*v-x*y)^2 ≤ w^2 :=
       (sq_le_sq₀ hlow hw.1.le).mpr hwlow
     have hid : 1-(u*v-x*y)^2 = (u*y+v*x)^2 := by
-      nlinarith only [hx₂, hy₂, mul_nonneg (sq_nonneg u) (sq_nonneg v),
-        show (u*v-x*y)^2+(u*y+v*x)^2 = 1 by
-          calc
-            _ = (u^2+x^2)*(v^2+y^2) := by ring
-            _ = 1 := by rw [hx₂, hy₂]; ring]
+      have heq : (u*v-x*y)^2+(u*y+v*x)^2 = 1 := by
+        calc
+          _ = (u^2+x^2)*(v^2+y^2) := by ring
+          _ = 1 := by rw [hx₂, hy₂]; ring
+      linarith only [heq]
     have hnonneg : 0 ≤ u*y+v*x := add_nonneg (mul_nonneg hu.1.le hy) (mul_nonneg hv.1.le hx)
     have hzbound : z ≤ u*y+v*x := by nlinarith only [hz₂, hbound, hid, hz, hnonneg]
     have hu' : u*y ≤ y := by nlinarith [mul_le_mul_of_nonneg_right hu.2 hy]
@@ -1223,8 +1223,9 @@ private theorem quadraticDefect_uniform {p : n → ℝ} (hp : ∀ i, 0 < p i)
   have hs := (sq_le_sq₀ (frob_nonneg (quadraticDefect p H))
     (by positivity : 0 ≤ (32/9)*frob W*frob H)).mpr hnorm
   have hg : frob W^2 = frob H^2-frob (schurFirst p H)^2 := rhoMatrix_gap hp H
-  nlinarith only [hs, show ((32/9)*frob W*frob H)^2 =
-    (1024/81)*frob H^2*frob W^2 by ring, hg]
+  calc
+    _ ≤ ((32/9)*frob W*frob H)^2 := hs
+    _ = _ := by rw [← hg]; ring
 
 private theorem sum_cycle {R : Type*} [AddCommMonoid R] (f : n → n → n → R) :
     (∑ i, ∑ j, ∑ k, f i j k) = ∑ i, ∑ j, ∑ k, f j k i := by
@@ -1240,15 +1241,19 @@ private def phase (H : Matrix n n ℂ) (i j k : n) : ℂ := H i j*H j k*H k i
 private theorem phase_sum_cycle (f : n → n → n → ℝ) (H : Matrix n n ℂ) :
     (∑ i, ∑ j, ∑ k, (f j k i : ℂ)*phase H i j k) =
       ∑ i, ∑ j, ∑ k, (f i j k : ℂ)*phase H i j k := by
-  rw [sum_cycle]
-  apply Finset.sum_congr rfl
-  intro i _
-  apply Finset.sum_congr rfl
-  intro j _
-  apply Finset.sum_congr rfl
-  intro k _
-  dsimp [phase]
-  ring
+  symm
+  calc
+    _ = ∑ i, ∑ j, ∑ k, (f j k i : ℂ)*phase H j k i :=
+      sum_cycle (fun i j k => (f i j k : ℂ)*phase H i j k)
+    _ = _ := by
+      apply Finset.sum_congr rfl
+      intro i _
+      apply Finset.sum_congr rfl
+      intro j _
+      apply Finset.sum_congr rfl
+      intro k _
+      dsimp only [phase]
+      ring
 
 private theorem trace_cube_sum (M : Matrix n n ℂ) :
     tr (M^3) = ∑ i, ∑ j, ∑ k, phase M i j k := by
@@ -1385,7 +1390,8 @@ private theorem cyclicMass_bound {d : ℕ} {p : Fin d → ℝ} (hp : ∀ i, 0 < 
   change frob W^2 = _ at hgap
   rw [hmass]
   rw [htrace] at htbound
-  nlinarith only [htbound, hbound, hgap]
+  rw [← hgap]
+  nlinarith only [htbound, hbound]
 
 private theorem cubic_uniform_bound {d : ℕ} {p : Fin d → ℝ} (hp : ∀ i, 0 < p i)
     {H : Matrix (Fin d) (Fin d) ℂ} (hH : H.IsHermitian) :
